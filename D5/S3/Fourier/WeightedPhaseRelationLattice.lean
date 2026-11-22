@@ -8,12 +8,14 @@
 
 import D5.S3.Fourier.TorusOrbitClosure
 import Mathlib.Analysis.Real.Cardinality
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Matrix.PosDef
 
 /-! The real-time phase orbit closure is the annihilator of its integer relations. -/
+
+set_option autoImplicit false
 
 open Set
 open Matrix
@@ -215,7 +217,7 @@ theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
     rw [← hx, hQ]
     exact Finset.sum_nonneg fun j _ => mul_nonneg (hw j).le (sq_nonneg _)
   have him (a : ℝ) : (Circle.exp a : ℂ).im = Real.sin a := by
-    simp [Circle.coe_exp, Complex.exp_ofReal_mul_I, Complex.sin_ofReal_re]
+    exact Complex.exp_ofReal_mul_I_im a
   have hscore : Continuous score := by
     exact (continuous_finsetSum _ fun j _ => continuous_const.mul
       (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply j)))).div_const W

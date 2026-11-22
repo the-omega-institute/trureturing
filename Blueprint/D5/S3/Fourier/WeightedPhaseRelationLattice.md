@@ -1,0 +1,52 @@
+# Weighted Phase Deficit and the Complete Relation Lattice
+
+## Abstract
+
+The complete integer relation lattice gives uniform lower and upper bounds for the weighted sine deficit at a common real time.
+
+**Theorem 1.1 (Continuous orbit closure).**
+
+$$\forall J \in FiniteType, g \in \mathbb{R}^{J},\; \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right) = \{p\in \mathbb{T}^{J} \mid \forall k \in \mathbb{Z}^{J},\; \sum_{j\in J} k_{j} \cdot g_{j} = 0 \Rightarrow \prod_{j\in J} \left(p_{j}\right)^{k_{j}} = 1\}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/WeightedPhaseRelationLattice.closure_real_phase_orbit` (`✓ std3`). ∎
+
+*Citation.* A. L. Onishchik (2020). *Kronecker theorem*. URL: <https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528>.
+
+*Commentary.*
+
+For each nonzero integer dot product with the frequency vector, the steps that turn it into an integral multiple of 2π form a countable set. One step in (0,1) avoids their union. Its discrete characters are exactly the zero-dot-product characters, so TorusOrbitClosure.result puts every common zero of these characters in the real orbit closure. The forward inclusion follows from character continuity.
+
+**Theorem 1.2 (Centered angles and integer congruences).**
+
+$$\forall J \in FiniteType, A \in FiniteType, g \in \mathbb{R}^{J}, K \in \mathbb{Z}^{A\times J}, R \in \mathbb{R}^{A\times J}, x \in \mathbb{R}^{J},\; \left(R = \operatorname{cast}\left(K\right) \land \left(\forall k \in \mathbb{Z}^{J},\; k \in \operatorname{spanZ}\left(\operatorname{rows}\left(K\right)\right) \Leftrightarrow \sum_{j\in J} k_{j} \cdot g_{j} = 0\right)\right) \Rightarrow \left(\left(\operatorname{exp}\left(i \cdot \left(x_{j} + \frac{\pi}{2}\right)\right)\right)_{j \in J} \in \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right) \Leftrightarrow \left(\exists z \in \mathbb{Z}^{A},\; R \cdot x = 2 \cdot \pi \cdot z - \frac{\pi}{2} \cdot R \cdot \mathbf{1}\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/WeightedPhaseRelationLattice.centered_lift_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here R is the entrywise real cast of the integer row matrix K. Testing each row gives an integer winding number for the angle x + (π/2)1. Conversely, an integral combination of rows gives the same integral combination of their winding numbers, so the row congruences imply every character equation. Every point of the closure has a lift of this form with x in (−π,π] coordinatewise. Rotate by −π/2 and take the argument on the unit circle.
+
+**Theorem 1.3 (Uniform inverse Gram energy comparison).**
+
+$$\forall J \in FiniteType, A \in FiniteType, g \in \mathbb{R}^{J}, w \in \mathbb{R}^{J}, K \in \mathbb{Z}^{A\times J}, R \in \mathbb{R}^{A\times J}, W \in \mathbb{R}, M \in \mathbb{R}^{J\times J}, G \in \mathbb{R}^{A\times A}, b \in \mathbb{Z}^{A} \to \mathbb{R}^{A}, E \in \mathbb{R}, D \in \mathbb{R},\; \left(\left(\forall j \in J,\; 0 < w_{j}\right) \land \left(0 < W \land \left(R = \operatorname{cast}\left(K\right) \land \left(\left(\forall k \in \mathbb{Z}^{J},\; k \in \operatorname{spanZ}\left(\operatorname{rows}\left(K\right)\right) \Leftrightarrow \sum_{j\in J} k_{j} \cdot g_{j} = 0\right) \land \operatorname{LinearlyIndependent}\left(\mathbb{R}, \operatorname{rows}\left(R\right)\right)\right)\right)\right)\right) \Rightarrow \left(\left(W = \sum_{j\in J} w_{j} \land \left(M = \operatorname{diag}\left(w\right) \land \left(G = R \cdot M^{-1} \cdot R^{T} \land \left(\left(\forall z \in \mathbb{Z}^{A},\; \operatorname{b}\left(z\right) = 2 \cdot \pi \cdot z - \frac{\pi}{2} \cdot R \cdot \mathbf{1}\right) \land \left(E = \operatorname{inf}_{z\in \mathbb{Z}^{A}} \operatorname{b}\left(z\right)^{T} \cdot G^{-1} \cdot \operatorname{b}\left(z\right) \land D = 1 - \operatorname{sup}_{t\in \mathbb{R}} \frac{\sum_{j\in J} w_{j} \cdot \operatorname{sin}\left(g_{j} \cdot t\right)}{W}\right)\right)\right)\right)\right) \Rightarrow \left(\frac{2 \cdot E}{\pi^{2} \cdot W} \le D \land \left(D \le \frac{E}{2 \cdot W} \land \left(\operatorname{IsEmpty}\left(A\right) \Rightarrow E = 0\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/WeightedPhaseRelationLattice.weighted_phase_deficit_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The weights are positive and their sum W is positive. Real independence of the cast rows and positivity of the diagonal matrix M make G = R M⁻¹ Rᵀ positive definite. For each z, the vector x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is b(z)ᵀG⁻¹b(z). The M-cross term vanishes for each displacement in the kernel of R, so this is the attained minimum for that fiber.
+
+The continuous weighted sine deficit on the orbit closure has the same infimum as along the real-time orbit. In principal centered angles, the pointwise lower estimate for 1 − cos x has coefficient 2/π² on x². The upper estimate has coefficient 1/2 for every real x and applies to the affine minimizers. Taking the infimum over all integer windings gives the bounds. Empty A gives zero inverse Gram energy and hence zero deficit.
+
+For an inclusive positive ζ-ordinate cutoff, take the finite index type of members of Spectrum.cut, frequencies from zetaSpectrum.gamma, and weights from zetaSpectrum.mult times the chosen positive weight per occurrence. This keeps the boundary ordinate and its analytic multiplicity. The comparison is conditional on a complete relation basis and supplies no estimate for the actual normalized energy at these cutoffs.
+
+## References
+
+- Truth anchor: `D5/S3/Fourier/WeightedPhaseRelationLattice.centered_lift_iff`
+- Truth anchor: `D5/S3/Fourier/WeightedPhaseRelationLattice.closure_real_phase_orbit`
+- Truth anchor: `D5/S3/Fourier/WeightedPhaseRelationLattice.weighted_phase_deficit_bounds`
+- Dependency: [D5/S3/Fourier/TorusOrbitClosure](TorusOrbitClosure.md)

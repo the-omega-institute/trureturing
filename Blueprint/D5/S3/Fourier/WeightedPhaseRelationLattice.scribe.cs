@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier;
 
@@ -72,19 +73,19 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                         + "at these cutoffs."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Real => Seq(Mathbb, Grp(Id("R")));
-    private static Formula Integer => Seq(Mathbb, Grp(Id("Z")));
-    private static Formula Circle => Seq(Mathbb, Grp(Id("T")));
-    private static Formula Vector(Formula field, string index) => new Formula.Power(field, Id(index));
-    private static Formula Matrix(Formula field) => new Formula.Power(field, Seq(Id("A"), Times, Sp, Id("J")));
-    private static Formula At(string name) => new Formula.Subscript(Id(name), Id("j"));
+    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Integer => Seq(Mathbb, Grp(F.Id("Z")));
+    private static Formula Circle => Seq(Mathbb, Grp(F.Id("T")));
+    private static Formula Vector(Formula field, string index) => new Formula.Power(field, F.Id(index));
+    private static Formula Matrix(Formula field) => new Formula.Power(field, Seq(F.Id("A"), Times, Sp, F.Id("J")));
+    private static Formula At(string name) => new Formula.Subscript(F.Id(name), F.Id("j"));
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Diff(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula PlusOf(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula PiHalf => new Formula.Fraction(Pi, D(2));
     private static Formula Inv(Formula x) => new Formula.Power(x, new Formula.Negate(D(1)));
-    private static Formula Tr(Formula x) => new Formula.Power(x, Id("T"));
-    private static Formula SumJ(Formula x) => Seq(Sum, Underscore, Grp(Id("j"), InMacro, Sp, Id("J")), Sp, x);
+    private static Formula Tr(Formula x) => new Formula.Power(x, F.Id("T"));
+    private static Formula SumJ(Formula x) => Seq(Sum, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("J")), Sp, x);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Equivalence(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Iff, y);
@@ -96,70 +97,72 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
         new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
 
     private static Formula TorusPoint(Formula angle) =>
-        new Formula.Sequence(Call("exp", Mul(Id("i"), angle)), Id("j"), Id("J"));
+        new Formula.Sequence(Call("exp", Mul(F.Id("i"), angle)), F.Id("j"), F.Id("J"));
 
     private static Formula Orbit() =>
-        Call("closure", new Formula.SetBuilder(TorusPoint(Mul(At("g"), Id("t"))), Id("t"), Real));
+        Call("closure", new Formula.SetBuilder(TorusPoint(Mul(At("g"), F.Id("t"))), F.Id("t"), Real));
 
     private static Formula RelationDot() => Equal(SumJ(Mul(At("k"), At("g"))), D(0));
 
     private static Formula OrbitFormula()
     {
-        var character = Seq(Prod, Underscore, Grp(Id("j"), InMacro, Sp, Id("J")), Sp,
+        var character = Seq(Prod, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("J")), Sp,
             new Formula.Power(At("p"), At("k")));
         var relations = All(Imp(RelationDot(), Equal(character, D(1))), Var("k", Vector(Integer, "J")));
-        var points = Seq(OpenBrace, Id("p"), InMacro, Sp, Vector(Circle, "J"), Sp, Mid, Sp,
+        var points = Seq(OpenBrace, F.Id("p"), InMacro, Sp, Vector(Circle, "J"), Sp, Mid, Sp,
             relations, CloseBrace);
-        return Disp(All(Equal(Orbit(), points), Var("J", Id("FiniteType")), Var("g", Vector(Real, "J"))));
+        return Disp(All(Equal(Orbit(), points), Var("J", F.Id("FiniteType")), Var("g", Vector(Real, "J"))));
     }
 
     private static Formula LatticeHypothesis() =>
-        All(Equivalence(Member(Id("k"), Call("spanZ", Call("rows", Id("K")))), RelationDot()),
+        All(Equivalence(Member(F.Id("k"), Call("spanZ", Call("rows", F.Id("K")))), RelationDot()),
             Var("k", Vector(Integer, "J")));
 
-    private static Formula CastEquality() => Equal(Id("R"), Call("cast", Id("K")));
+    private static Formula CastEquality() => Equal(F.Id("R"), Call("cast", F.Id("K")));
 
     private static Formula Offset() =>
-        Diff(Mul(Mul(D(2), Pi), Id("z")), Mul(PiHalf, Mul(Id("R"), Seq(Mathbf, Grp(D(1))))));
+        Diff(Mul(Mul(D(2), Pi), F.Id("z")), Mul(PiHalf, Mul(F.Id("R"), Seq(Mathbf, Grp(D(1))))));
 
     private static Formula LiftFormula()
     {
         var winding = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("z"),
-            Vector(Integer, "A"), Equal(Mul(Id("R"), Id("x")), Offset()));
+            Vector(Integer, "A"), Equal(Mul(F.Id("R"), F.Id("x")), Offset()));
         return Disp(All(
             Imp(And(CastEquality(), LatticeHypothesis()),
                 Equivalence(Member(TorusPoint(PlusOf(At("x"), PiHalf)), Orbit()), winding)),
-            Var("J", Id("FiniteType")), Var("A", Id("FiniteType")), Var("g", Vector(Real, "J")),
+            Var("J", F.Id("FiniteType")), Var("A", F.Id("FiniteType")), Var("g", Vector(Real, "J")),
             Var("K", Matrix(Integer)), Var("R", Matrix(Real)), Var("x", Vector(Real, "J"))));
     }
 
     private static Formula BoundsFormula()
     {
-        var w = Id("W");
-        var e = Id("E");
-        var d = Id("D");
-        var bz = Call("b", Id("z"));
-        var score = new Formula.Fraction(SumJ(Mul(At("w"), Call("sin", Mul(At("g"), Id("t"))))), w);
-        var infimum = Seq(Operatorname, Grp(Id("inf")), Underscore,
-            Grp(Id("z"), InMacro, Sp, Vector(Integer, "A")), Sp, Mul(Mul(Tr(bz), Inv(Id("G"))), bz));
-        var supremum = Seq(Operatorname, Grp(Id("sup")), Underscore, Grp(Id("t"), InMacro, Sp, Real),
+        var w = F.Id("W");
+        var e = F.Id("E");
+        var d = F.Id("D");
+        var bz = Call("b", F.Id("z"));
+        var score = new Formula.Fraction(SumJ(Mul(At("w"), Call("sin", Mul(At("g"), F.Id("t"))))), w);
+        var infimum = Seq(Operatorname, Grp(F.Id("inf")), Underscore,
+            Grp(F.Id("z"), InMacro, Sp, Vector(Integer, "A")), Sp, Mul(Mul(Tr(bz), Inv(F.Id("G"))), bz));
+        var supremum = Seq(Operatorname, Grp(F.Id("sup")), Underscore, Grp(F.Id("t"), InMacro, Sp, Real),
             Sp, score);
-        var hypothesis = And(All(Positive(At("w")), Var("j", Id("J"))), And(Positive(w),
+        var hypothesis = And(All(Positive(At("w")), Var("j", F.Id("J"))), And(Positive(w),
             And(CastEquality(), And(LatticeHypothesis(),
-                Call("LinearlyIndependent", Real, Call("rows", Id("R")))))));
-        var definitions = And(Equal(w, SumJ(At("w"))), And(Equal(Id("M"), Call("diag", Id("w"))),
-            And(Equal(Id("G"), Mul(Mul(Id("R"), Inv(Id("M"))), Tr(Id("R")))),
-            And(All(Equal(bz, Offset()), Var("z", Vector(Integer, "A"))),
-                And(Equal(e, infimum), Equal(d, Diff(D(1), supremum))))));
+                Call("LinearlyIndependent", Real, Call("rows", F.Id("R")))))));
+        var weightSum = Equal(w, SumJ(At("w")));
+        var diagonal = Equal(F.Id("M"), Call("diag", F.Id("w")));
+        var gram = Equal(F.Id("G"), Mul(Mul(F.Id("R"), Inv(F.Id("M"))), Tr(F.Id("R"))));
+        var offset = All(Equal(bz, Offset()), Var("z", Vector(Integer, "A")));
+        var energyAndDeficit = And(Equal(e, infimum), Equal(d, Diff(D(1), supremum)));
+        var definitions = And(weightSum, And(diagonal, And(gram, And(offset, energyAndDeficit))));
         var comparison = And(AtMost(new Formula.Fraction(Mul(D(2), e), Mul(new Formula.Power(Pi, D(2)), w)), d),
             And(AtMost(d, new Formula.Fraction(e, Mul(D(2), w))),
-                Imp(Call("IsEmpty", Id("A")), Equal(e, D(0)))));
+                Imp(Call("IsEmpty", F.Id("A")), Equal(e, D(0)))));
         return Disp(All(Imp(hypothesis, Imp(definitions, comparison)),
-            Var("J", Id("FiniteType")), Var("A", Id("FiniteType")),
+            Var("J", F.Id("FiniteType")), Var("A", F.Id("FiniteType")),
             Var("g", Vector(Real, "J")), Var("w", Vector(Real, "J")),
             Var("K", Matrix(Integer)), Var("R", Matrix(Real)),
-            Var("W", Real), Var("M", new Formula.Power(Real, Seq(Id("J"), Times, Sp, Id("J")))),
-            Var("G", new Formula.Power(Real, Seq(Id("A"), Times, Sp, Id("A")))),
+            Var("W", Real), Var("M", new Formula.Power(Real, Seq(F.Id("J"), Times, Sp, F.Id("J")))),
+            Var("G", new Formula.Power(Real, Seq(F.Id("A"), Times, Sp, F.Id("A")))),
             Var("b", new Formula.TypeArrow(Vector(Integer, "A"), Vector(Real, "A"))),
             Var("E", Real), Var("D", Real)));
     }
