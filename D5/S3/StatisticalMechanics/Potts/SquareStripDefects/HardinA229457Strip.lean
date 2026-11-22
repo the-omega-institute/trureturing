@@ -121,7 +121,9 @@ private theorem map_start (r : Row) (hr : HardinA229635State.h r ≤ 2) :
   rw [HardinA229635State.startClass, ite_eq_left hr]
   change startImage (HardinA229635State.cl r d) = _
   rw [← hclass, HardinA229635State.cl, ite_eq_right hfresh, startImage, Fin.addCases_right,
-    hrep, hh, he, HardinA229457StripClasses.class_relabel]
+    hrep]
+  dsimp only
+  rw [hh, he, HardinA229457StripClasses.class_relabel]
 
 theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
