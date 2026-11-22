@@ -342,16 +342,17 @@ private theorem ratio_derivative_neg {f D : ℝ → ℝ} {u k : ℝ}
   apply div_neg_of_neg_of_pos _ (sq_pos_of_pos (mul_pos hD hk))
   nlinarith only [mul_neg_of_neg_of_pos hnum hk]
 
-/-- Concavity transfers the numerator bound to the original mixed kernel
-once the negative marginal has the indicated slopes at the two endpoints. -/
-theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
-    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u)
+/-- A strictly negative weighted numerator on the whole integration interval
+transfers to the mixed derivative of the original kernel. -/
+private theorem leftStrip_logKernel_mixed_lt_of_weighted {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v)
     (hsmall : u*deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
       Real.sqrt (compositionMoment p 0 (-u)))
-    (hγ : 5/12 ≤ deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
-      Real.sqrt (compositionMoment p 0 (-v)))
-    (hγmax : deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
-      Real.sqrt (compositionMoment p 0 (-v)) ≤ 1) :
+    (hweighted :
+      let D (t : ℝ) := Real.sqrt (compositionMoment p 0 (-t))
+      let N (x y : ℝ) := compositionMoment p x y -
+        Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+      ∀ a ∈ Ioo 0 u, weightedThird N a v (deriv D v/D v) < 0) :
     deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
   let C := compositionMoment p
   let D (t : ℝ) := Real.sqrt (C 0 (-t))
@@ -360,8 +361,7 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
   let R (x y : ℝ) := deriv (N x) y
   let γ := deriv D v/D v
   let f (x : ℝ) := R x v-γ*N x v
-  have hp₀ : 0 < p := by omega
-  have huv : u < v := by linarith
+  have hp₀ := hp
   have hv : 0 < v := hu.trans huv
   have hC : ContDiff ℝ 3 (Function.uncurry C) := compositionMoment_smooth p
   have hPos (t : ℝ) (ht : 0 < t) : 0 < D t :=
@@ -418,8 +418,7 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
     rw [(hf 0 hv).deriv,hP₀.deriv_eq,hP₀.eq_of_nhds,deriv_const,mul_zero,sub_zero]
   have hf'' (x : ℝ) (hx : x ∈ Ioo 0 u) : deriv (deriv f) x < 0 := by
     rw [(hf' x (hx.2.trans huv)).deriv]
-    exact (leftStrip_numerator_weighted_mixed_lt hp hx.1 (hx.2.le.trans humax)
-      (hgap.trans_le (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+    exact hweighted x hx
   have hRatio := ratio_derivative_neg hu (hPos u hu) (hPos v hv)
     (fun x hx ↦ (hf x (hx.2.trans_lt huv)).differentiableAt)
     (fun x hx ↦ (hf' x (hx.2.trans_lt huv)).continuousAt.continuousWithinAt)
@@ -448,6 +447,60 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
   rw [← mixed_partial_eq hK₂, hnear.deriv_eq]
   exact hRatio
 
+/-- The separated-strip slope estimates supply the weighted numerator hypothesis. -/
+theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u)
+    (hsmall : u*deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
+      Real.sqrt (compositionMoment p 0 (-u)))
+    (hγ : 5/12 ≤ deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)))
+    (hγmax : deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)) ≤ 1) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  refine leftStrip_logKernel_mixed_lt_of_weighted (by omega) hu (by linarith) hsmall ?_
+  dsimp only
+  intro a ha
+  exact (leftStrip_numerator_weighted_mixed_lt hp ha.1 (ha.2.le.trans humax)
+    (hgap.trans_le (sub_le_sub_left ha.2.le _)) hγ hγmax).trans (by norm_num)
+
+private theorem leftStrip_small_slope {p : ℕ} (hp : 11 ≤ p) {u : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) :
+    u * deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
+      Real.sqrt (compositionMoment p 0 (-u)) := by
+  let M (t : ℝ) := compositionMoment p 0 (-t)
+  let D (t : ℝ) := Real.sqrt (M t)
+  have hp₀ : 0 < p := by omega
+  have hMpos (t : ℝ) (ht : 0 < t) : 0 < M t :=
+    compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr ht.ne')
+  have hMs : ContDiff ℝ 3 M :=
+    (compositionMoment_smooth p).comp (contDiff_const.prodMk contDiff_id.neg :
+      ContDiff ℝ 3 (fun t : ℝ ↦ ((0 : ℝ),-t)))
+  have hM (t : ℝ) : HasDerivAt M (deriv M t) t := (hMs.differentiable (by decide) t).hasDerivAt
+  have hD (t : ℝ) (ht : 0 < t) : HasDerivAt D (deriv M t/(2*D t)) t :=
+    (hM t).sqrt (hMpos t ht).ne'
+  have hDpos (t : ℝ) (ht : 0 < t) : 0 < D t := Real.sqrt_pos.mpr (hMpos t ht)
+  have hDsq (t : ℝ) (ht : 0 < t) : D t^2 = M t := Real.sq_sqrt (hMpos t ht).le
+  have hreg := (SmallCorner.hasDerivAt_G p (c := 1) one_ne_zero
+    (neg_ne_zero.mpr hu.ne')).comp u (hasDerivAt_id' u).neg
+  change HasDerivAt (fun t ↦ compositionMoment p 0 (-t)/(1*(-t)^2))
+    (SmallCorner.GPrime p 1 (-u)*(-1)) u at hreg
+  have hreg' : HasDerivAt (fun t ↦ M t/t^2) (-SmallCorner.GPrime p 1 (-u)) u := by
+    simpa only [M, one_mul, neg_sq, mul_neg, mul_one] using hreg
+  have hd := (hM u).fun_div (hasDerivAt_pow 2 u) (pow_ne_zero 2 hu.ne')
+  have hcmp := hd.deriv.symm.trans hreg'.deriv
+  have hnonpos : (deriv M u*u^2-M u*(↑(2 : ℕ)*u^(2-1)))/(u^2)^2 ≤ 0 := by
+    rw [hcmp]
+    exact neg_nonpos.mpr (leftStrip_GPrime_nonneg hp hu humax)
+  have hcross := (div_le_iff₀ (sq_pos_of_ne_zero (pow_ne_zero 2 hu.ne'))).mp hnonpos
+  norm_num at hcross
+  have hbound : u*deriv M u ≤ 2*M u := by
+    by_contra! hbad
+    have hm := mul_pos hu (sub_pos.mpr hbad)
+    nlinarith only [hcross,hm]
+  rw [(hD u hu).deriv, ← mul_div_assoc,
+    div_le_iff₀ (mul_pos (by norm_num : (0 : ℝ) < 2) (hDpos u hu))]
+  nlinarith only [hbound,hDsq u hu]
+
 /-- The original refined BMV kernel has strictly negative mixed derivative
 throughout the separated left strip for every degree at least eleven. -/
 theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
@@ -468,27 +521,6 @@ theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
     (hM t).sqrt (hMpos t ht).ne'
   have hDpos (t : ℝ) (ht : 0 < t) : 0 < D t := Real.sqrt_pos.mpr (hMpos t ht)
   have hDsq (t : ℝ) (ht : 0 < t) : D t^2 = M t := Real.sq_sqrt (hMpos t ht).le
-  have hsmall : u*deriv D u ≤ D u := by
-    have hreg := (SmallCorner.hasDerivAt_G p (c := 1) one_ne_zero
-      (neg_ne_zero.mpr hu.ne')).comp u (hasDerivAt_id' u).neg
-    change HasDerivAt (fun t ↦ compositionMoment p 0 (-t)/(1*(-t)^2))
-      (SmallCorner.GPrime p 1 (-u)*(-1)) u at hreg
-    have hreg' : HasDerivAt (fun t ↦ M t/t^2) (-SmallCorner.GPrime p 1 (-u)) u := by
-      simpa only [M, one_mul, neg_sq, mul_neg, mul_one] using hreg
-    have hd := (hM u).fun_div (hasDerivAt_pow 2 u) (pow_ne_zero 2 hu.ne')
-    have hcmp := hd.deriv.symm.trans hreg'.deriv
-    have hnonpos : (deriv M u*u^2-M u*(↑(2 : ℕ)*u^(2-1)))/(u^2)^2 ≤ 0 := by
-      rw [hcmp]
-      exact neg_nonpos.mpr (leftStrip_GPrime_nonneg hp hu humax)
-    have hcross := (div_le_iff₀ (sq_pos_of_ne_zero (pow_ne_zero 2 hu.ne'))).mp hnonpos
-    norm_num at hcross
-    have hbound : u*deriv M u ≤ 2*M u := by
-      by_contra! hbad
-      have hm := mul_pos hu (sub_pos.mpr hbad)
-      nlinarith only [hcross,hm]
-    rw [(hD u hu).deriv, ← mul_div_assoc,
-      div_le_iff₀ (mul_pos (by norm_num : (0 : ℝ) < 2) (hDpos u hu))]
-    nlinarith only [hbound,hDsq u hu]
   have hγ : deriv D v/D v = (deriv M v/M v)/2 := by
     rw [(hD v hv₀).deriv, div_div, div_div]
     congr 1
@@ -497,8 +529,374 @@ theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
   have hhi := negativeMarginal_logDeriv_le hp₀ (by linarith : 2 ≤ v)
   change 5/6 ≤ deriv M v/M v at hlo
   change deriv M v/M v ≤ 2 at hhi
-  exact leftStrip_logKernel_mixed_lt_of_slopes hp hu humax hgap hsmall
+  exact leftStrip_logKernel_mixed_lt_of_slopes hp hu humax hgap
+    (leftStrip_small_slope hp hu humax)
     (by rw [hγ]; linarith only [hlo]) (by rw [hγ]; linarith only [hhi])
+
+private abbrev leftStripS (p : ℕ) (t : ℝ) := Real.sqrt (compositionMoment p 0 t)
+
+private abbrev leftStripGap := ℕ × ℕ × ℕ
+
+private def leftStripX (p : ℕ) (g : leftStripGap) : ℝ := 3 * (g.2.1 : ℝ) / p - 1
+
+private def leftStripY (p : ℕ) (g : leftStripGap) : ℝ := 3 * (g.2.2 : ℝ) / p - 1
+
+/-- The tilted joint moment with polynomial weight `X^i Y^j` under the
+uniform law on the degree-`p` compositions. -/
+def leftStripExpMoment (p i j : ℕ) (a v : ℝ) : ℝ :=
+  ((DimThree.gaps p).map fun g ↦ leftStripX p g ^ i * leftStripY p g ^ j *
+    Real.exp (leftStripX p g * a + leftStripY p g * v)).sum / (DimThree.gaps p).length
+
+private theorem leftStrip_hasDerivAt_exp_sum (l : List leftStripGap) (w A B : leftStripGap → ℝ)
+    (t : ℝ) :
+    HasDerivAt (fun x ↦ (l.map fun g ↦ w g * Real.exp (A g * x + B g)).sum)
+      (l.map fun g ↦ (w g * A g) * Real.exp (A g * t + B g)).sum t := by
+  induction l with
+  | nil => simpa using hasDerivAt_const t (0 : ℝ)
+  | cons g l ih =>
+    have hg : HasDerivAt (fun x ↦ w g * Real.exp (A g * x + B g))
+        ((w g * A g) * Real.exp (A g * t + B g)) t := by
+      convert (((hasDerivAt_const_mul (A g)).add_const (B g)).exp.const_mul (w g)) using 1
+      ring
+    exact hg.add ih
+
+private theorem leftStrip_hasDerivAt_expMoment_left (p i j : ℕ) (a v : ℝ) :
+    HasDerivAt (leftStripExpMoment p i j · v) (leftStripExpMoment p (i+1) j a v) a := by
+  have h := (leftStrip_hasDerivAt_exp_sum (DimThree.gaps p)
+    (fun g ↦ leftStripX p g ^ i * leftStripY p g ^ j) (leftStripX p)
+    (fun g ↦ leftStripY p g * v) a).div_const ((DimThree.gaps p).length : ℝ)
+  simpa only [leftStripExpMoment, pow_succ, mul_right_comm] using h
+
+private theorem leftStrip_hasDerivAt_expMoment_right (p i j : ℕ) (a v : ℝ) :
+    HasDerivAt (leftStripExpMoment p i j a) (leftStripExpMoment p i (j+1) a v) v := by
+  have h := (leftStrip_hasDerivAt_exp_sum (DimThree.gaps p)
+    (fun g ↦ leftStripX p g ^ i * leftStripY p g ^ j) (leftStripY p)
+    (fun g ↦ leftStripX p g * a) v).div_const ((DimThree.gaps p).length : ℝ)
+  unfold leftStripExpMoment
+  simpa only [pow_succ, mul_assoc, add_comm] using h
+
+private theorem leftStrip_hasDerivAt_moment_left (p : ℕ) (a v : ℝ) :
+    HasDerivAt (compositionMoment p · v) (leftStripExpMoment p 1 0 a v) a := by
+  have h : ∀ t : ℝ, compositionMoment p t v = leftStripExpMoment p 0 0 t v - 1 := by
+    intro t
+    simp only [compositionMoment, leftStripExpMoment, pow_zero, mul_one, one_mul]
+    rfl
+  exact ((leftStrip_hasDerivAt_expMoment_left p 0 0 a v).sub_const 1).congr_of_eventuallyEq
+    (Eventually.of_forall h)
+
+/-- The second partial of the exact kernel numerator in its first coordinate. -/
+def leftStripE (p : ℕ) (a v : ℝ) : ℝ :=
+  leftStripExpMoment p 2 0 a v - leftStripS p v * deriv (deriv (leftStripS p)) (v-a)
+
+private theorem leftStrip_contDiffAt_S {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    ContDiffAt ℝ 3 (leftStripS p) t := by
+  have h := (compositionMoment_smooth p).comp
+    (contDiff_const.prodMk contDiff_id : ContDiff ℝ 3 (fun t : ℝ ↦ ((0 : ℝ), t)))
+  exact h.contDiffAt.sqrt (compositionMoment_marginal_pos hp ht).ne'
+
+private theorem leftStrip_numerator_second_eq_E {p : ℕ} (hp : 0 < p) {a v : ℝ}
+    (hv : 0 < v) (hav : a < v) :
+    let N (x y : ℝ) := compositionMoment p x y -
+      Real.sqrt (compositionMoment p 0 y * compositionMoment p 0 (y-x))
+    deriv (deriv (N · v)) a = leftStripE p a v := by
+  let S := leftStripS p
+  have hN : ∀ x : ℝ, compositionMoment p x v -
+      Real.sqrt (compositionMoment p 0 v * compositionMoment p 0 (v-x)) =
+      compositionMoment p x v - S v * S (v-x) := by
+    intro x
+    rw [Real.sqrt_mul (compositionMoment_marginal_pos hp hv.ne').le]
+  have hgap (x : ℝ) : HasDerivAt (fun t : ℝ ↦ v-t) (-1) x :=
+    (hasDerivAt_id' x).const_sub v
+  have hfirst : (fun x ↦ deriv (fun t ↦ compositionMoment p t v -
+      Real.sqrt (compositionMoment p 0 v * compositionMoment p 0 (v-t))) x)
+      =ᶠ[𝓝 a] fun x ↦ leftStripExpMoment p 1 0 x v + S v * deriv S (v-x) := by
+    filter_upwards [eventually_lt_nhds hav] with x hx
+    have hs := ((leftStrip_contDiffAt_S hp (sub_pos.mpr hx).ne').differentiableAt
+      (by decide)).hasDerivAt
+    have hd := (leftStrip_hasDerivAt_moment_left p x v).sub
+      ((hs.comp x (hgap x)).const_mul (S v))
+    have he := (hd.congr_of_eventuallyEq (Eventually.of_forall hN)).deriv
+    simpa only [mul_neg, mul_one, sub_neg_eq_add] using he
+  change deriv (fun x ↦ deriv (fun t ↦ compositionMoment p t v -
+    Real.sqrt (compositionMoment p 0 v * compositionMoment p 0 (v-t))) x) a = _
+  rw [hfirst.deriv_eq]
+  have hs := ((leftStrip_contDiffAt_S hp (sub_pos.mpr hav).ne').derivWithin
+    (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)).differentiableAt (by decide)
+  have hd := (leftStrip_hasDerivAt_expMoment_left p 1 0 a v).add
+    ((hs.hasDerivAt.comp a (hgap a)).const_mul (S v))
+  simpa only [leftStripE, Pi.add_def, Function.comp_apply, mul_neg, mul_one, sub_eq_add_neg]
+    using hd.deriv
+
+/-- The weighted third derivative uses the ordinary second-coordinate derivative of `E`
+with `a` fixed. The weight `γ` is a scalar at the evaluation point. -/
+theorem leftStrip_weightedThird_eq {p : ℕ} (hp : 0 < p) {a v γ : ℝ}
+    (hv : 0 < v) (hav : a < v) :
+    let N (x y : ℝ) := compositionMoment p x y -
+      Real.sqrt (compositionMoment p 0 y * compositionMoment p 0 (y-x))
+    deriv (fun y ↦ deriv (deriv (N · y)) a) v - γ * deriv (deriv (N · v)) a =
+      deriv (leftStripE p a) v - γ * leftStripE p a v := by
+  let N (x y : ℝ) := compositionMoment p x y -
+    Real.sqrt (compositionMoment p 0 y * compositionMoment p 0 (y-x))
+  have he : (fun y ↦ deriv (deriv (N · y)) a) =ᶠ[𝓝 v] leftStripE p a := by
+    filter_upwards [eventually_gt_nhds hv, eventually_gt_nhds hav] with y hy hay
+    exact leftStrip_numerator_second_eq_E hp hy hay
+  change weightedThird N a v γ = _
+  rw [weightedThird, he.deriv_eq, he.eq_of_nhds]
+
+/-- The explicit derivative of `E` in its second coordinate. -/
+theorem leftStrip_hasDerivAt_E_right {p : ℕ} (hp : 0 < p) {a v : ℝ}
+    (hv : 0 < v) (hav : a < v) :
+    let S (t : ℝ) := Real.sqrt (compositionMoment p 0 t)
+    HasDerivAt (leftStripE p a)
+      (leftStripExpMoment p 2 1 a v -
+        (deriv S v * deriv (deriv S) (v-a) + S v * deriv (deriv (deriv S)) (v-a))) v := by
+  let S := leftStripS p
+  have hS := ((leftStrip_contDiffAt_S hp hv.ne').differentiableAt (by decide)).hasDerivAt
+  have hS'' := ((leftStrip_contDiffAt_S hp (sub_pos.mpr hav).ne').derivWithin
+    (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)).derivWithin
+    (show (1 : WithTop ℕ∞)+1 ≤ 2 by decide)
+  have hd := (hS''.differentiableAt (by decide)).hasDerivAt.comp v
+    ((hasDerivAt_id' v).sub_const a)
+  have hm := (leftStrip_hasDerivAt_expMoment_right p 2 0 a v).sub (hS.mul hd)
+  change HasDerivAt (fun t ↦ leftStripExpMoment p 2 0 a t - S t * deriv (deriv S) (t-a)) _ v
+  simpa only [Pi.sub_def, Pi.mul_def, Function.comp_apply, mul_one, add_comm] using hm
+
+/-- The negative marginal's half-log slope, with the reflection included. -/
+def leftStripReflectedSlope (p : ℕ) (v : ℝ) : ℝ :=
+  deriv (fun t ↦ leftStripS p (-t)) v / leftStripS p (-v)
+
+/-- The rescaled sign of the differentiated numerator used at the origin. -/
+def leftStripScaledIntegrand (p : ℕ) (a v : ℝ) : ℝ :=
+  v * (leftStripReflectedSlope p v * leftStripE p a v - deriv (leftStripE p a) v)
+
+private abbrev leftStripVarianceHalf (p : ℕ) := compositionMarginalVariance p / 2
+
+private abbrev leftStripZ (p k : ℕ) :=
+  SmallCorner.integralMarginalDerivative p (leftStripVarianceHalf p) k
+
+private theorem leftStrip_hasDerivAt_Z (p k : ℕ) (t : ℝ) :
+    HasDerivAt (leftStripZ p k) (leftStripZ p (k + 1) t) t := by
+  simpa only [SmallCorner.affineMarginalJet, zero_mul, zero_add, one_mul] using
+    (SmallCorner.continuedMarginalJet_isAt p k 0 1 0 t).2.1
+
+private theorem leftStrip_Z_eq_G {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    leftStripZ p 0 t = SmallCorner.G p (leftStripVarianceHalf p) t := by
+  simpa only [iteratedDeriv_zero] using
+    (SmallCorner.iteratedDeriv_G_eq_integral hp
+      (half_pos (compositionMarginalVariance_pos p)).ne' ht 0).symm
+
+private theorem leftStrip_Z_pos {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    0 < leftStripZ p 0 t := by
+  rw [leftStrip_Z_eq_G hp ht]
+  exact SmallCorner.G_pos hp (half_pos (compositionMarginalVariance_pos p)) ht
+
+private def leftStripRoot (p : ℕ) (t : ℝ) : ℝ := Real.sqrt (leftStripZ p 0 t)
+
+private def leftStripRootOne (p : ℕ) (t : ℝ) : ℝ :=
+  leftStripZ p 1 t / (2 * leftStripRoot p t)
+
+private def leftStripRootTwo (p : ℕ) (t : ℝ) : ℝ :=
+  (leftStripZ p 2 t - 2 * leftStripRootOne p t ^ 2) / (2 * leftStripRoot p t)
+
+private def leftStripRootThree (p : ℕ) (t : ℝ) : ℝ :=
+  (leftStripZ p 3 t - 6 * leftStripRootOne p t * leftStripRootTwo p t) /
+    (2 * leftStripRoot p t)
+
+private theorem leftStrip_root_derivatives {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    HasDerivAt (leftStripRoot p) (leftStripRootOne p t) t ∧
+    HasDerivAt (leftStripRootOne p) (leftStripRootTwo p t) t ∧
+    HasDerivAt (leftStripRootTwo p) (leftStripRootThree p t) t := by
+  have hr : 0 < leftStripRoot p t := Real.sqrt_pos.mpr (leftStrip_Z_pos hp ht)
+  have hden := (mul_pos (by norm_num : (0 : ℝ) < 2) hr).ne'
+  have h₁ : HasDerivAt (leftStripRoot p) (leftStripRootOne p t) t :=
+    (leftStrip_hasDerivAt_Z p 0 t).sqrt (leftStrip_Z_pos hp ht).ne'
+  have hn₁ := (div_mul_cancel₀ (leftStripZ p 1 t) hden).symm
+  have h₂ : HasDerivAt (leftStripRootOne p) (leftStripRootTwo p t) t := by
+    apply ((leftStrip_hasDerivAt_Z p 1 t).fun_div (h₁.const_mul 2) hden).congr_deriv
+    change _ = (leftStripZ p 2 t - 2 * leftStripRootOne p t ^ 2) / (2 * leftStripRoot p t)
+    rw [show leftStripZ p 1 t = leftStripRootOne p t * (2 * leftStripRoot p t) from hn₁]
+    field_simp [hr.ne']
+    <;> ring
+  have hn₂ := (div_mul_cancel₀ (leftStripZ p 2 t - 2 * leftStripRootOne p t ^ 2) hden).symm
+  refine ⟨h₁, h₂, ?_⟩
+  apply (((leftStrip_hasDerivAt_Z p 2 t).sub ((h₂.pow 2).const_mul 2)).fun_div
+    (h₁.const_mul 2) hden).congr_deriv
+  change _ = (leftStripZ p 3 t - 6 * leftStripRootOne p t * leftStripRootTwo p t) /
+    (2 * leftStripRoot p t)
+  simp only [Pi.sub_apply, Pi.pow_apply]
+  rw [show leftStripZ p 2 t - 2 * leftStripRootOne p t ^ 2 =
+    leftStripRootTwo p t * (2 * leftStripRoot p t) from hn₂]
+  field_simp [hr.ne']
+  <;> ring
+
+private theorem leftStrip_S_eq_root {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    leftStripS p t = Real.sqrt (leftStripVarianceHalf p) * |t| * leftStripRoot p t := by
+  have hc := half_pos (compositionMarginalVariance_pos p)
+  have hm : compositionMoment p 0 t = leftStripVarianceHalf p * t ^ 2 * leftStripZ p 0 t := by
+    rw [leftStrip_Z_eq_G hp ht, SmallCorner.G,
+      mul_div_cancel₀ _ (mul_ne_zero hc.ne' (pow_ne_zero 2 ht))]
+  change Real.sqrt (compositionMoment p 0 t) = _
+  rw [hm, Real.sqrt_mul (mul_nonneg hc.le (sq_nonneg _)), Real.sqrt_mul hc.le,
+    Real.sqrt_sq_eq_abs]
+  rfl
+
+private theorem leftStrip_S_derivatives {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
+    let k := Real.sqrt (leftStripVarianceHalf p)
+    deriv (leftStripS p) t = k * (leftStripRoot p t + t * leftStripRootOne p t) ∧
+    deriv (deriv (leftStripS p)) t = k * (2 * leftStripRootOne p t + t * leftStripRootTwo p t) ∧
+    deriv (deriv (deriv (leftStripS p))) t =
+      k * (3 * leftStripRootTwo p t + t * leftStripRootThree p t) := by
+  let k := Real.sqrt (leftStripVarianceHalf p)
+  have h₁ {x : ℝ} (hx : 0 < x) :
+      deriv (leftStripS p) x = k * (leftStripRoot p x + x * leftStripRootOne p x) := by
+    have hd := ((hasDerivAt_id' x).mul (leftStrip_root_derivatives hp hx.ne').1).const_mul k
+    have he : leftStripS p =ᶠ[𝓝 x] fun y ↦ k * (y * leftStripRoot p y) := by
+      filter_upwards [eventually_gt_nhds hx] with y hy
+      simpa only [abs_of_pos hy, mul_assoc] using leftStrip_S_eq_root hp hy.ne'
+    simpa only [id_eq, mul_one, one_mul, add_comm] using (hd.congr_of_eventuallyEq he).deriv
+  have h₂ {x : ℝ} (hx : 0 < x) :
+      deriv (deriv (leftStripS p)) x =
+        k * (2 * leftStripRootOne p x + x * leftStripRootTwo p x) := by
+    have h := leftStrip_root_derivatives hp hx.ne'
+    have hd := (h.1.add ((hasDerivAt_id' x).mul h.2.1)).const_mul k
+    have he : deriv (leftStripS p) =ᶠ[𝓝 x]
+        fun y ↦ k * (leftStripRoot p y + y * leftStripRootOne p y) := by
+      filter_upwards [eventually_gt_nhds hx] with y hy using h₁ hy
+    convert (hd.congr_of_eventuallyEq he).deriv using 1
+    ring
+  refine ⟨h₁ ht, h₂ ht, ?_⟩
+  have h := leftStrip_root_derivatives hp ht.ne'
+  have hd := ((h.2.1.const_mul 2).add ((hasDerivAt_id' t).mul h.2.2)).const_mul k
+  have he : deriv (deriv (leftStripS p)) =ᶠ[𝓝 t]
+      fun y ↦ k * (2 * leftStripRootOne p y + y * leftStripRootTwo p y) := by
+    filter_upwards [eventually_gt_nhds ht] with y hy using h₂ hy
+  convert (hd.congr_of_eventuallyEq he).deriv using 1
+  ring
+
+private theorem leftStrip_S_reflected_slope {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 0 < v) :
+    leftStripReflectedSlope p v = 1 / v - leftStripRootOne p (-v) / leftStripRoot p (-v) := by
+  let k := Real.sqrt (leftStripVarianceHalf p)
+  have hk : 0 < k := Real.sqrt_pos.mpr (half_pos (compositionMarginalVariance_pos p))
+  have hr : 0 < leftStripRoot p (-v) :=
+    Real.sqrt_pos.mpr (leftStrip_Z_pos hp (neg_ne_zero.mpr hv.ne'))
+  have he : (fun t ↦ leftStripS p (-t)) =ᶠ[𝓝 v] fun t ↦ k * (t * leftStripRoot p (-t)) := by
+    filter_upwards [eventually_gt_nhds hv] with t ht
+    simpa only [abs_neg, abs_of_pos ht, mul_assoc] using
+      leftStrip_S_eq_root hp (neg_ne_zero.mpr ht.ne')
+  have h := ((leftStrip_root_derivatives hp (neg_ne_zero.mpr hv.ne')).1.comp v
+    (hasDerivAt_id' v).neg)
+  have hd := ((hasDerivAt_id' v).mul h).const_mul k
+  rw [leftStripReflectedSlope, (hd.congr_of_eventuallyEq he).deriv, he.eq_of_nhds]
+  simp only [id_eq, Function.comp_apply, mul_neg, mul_one, one_mul]
+  field_simp [hk.ne', hr.ne', hv.ne']
+  <;> ring
+
+private theorem leftStrip_S_mul_second {p : ℕ} (hp : 0 < p) {v d : ℝ}
+    (hv : 0 < v) (hd : 0 < d) :
+    leftStripS p v * deriv (deriv (leftStripS p)) d =
+      leftStripVarianceHalf p * v * leftStripRoot p v *
+        (2 * leftStripRootOne p d + d * leftStripRootTwo p d) := by
+  have hk : Real.sqrt (leftStripVarianceHalf p) ^ 2 = leftStripVarianceHalf p :=
+    Real.sq_sqrt (half_pos (compositionMarginalVariance_pos p)).le
+  rw [leftStrip_S_eq_root hp hv.ne', abs_of_pos hv, (leftStrip_S_derivatives hp hd).2.1]
+  calc
+    _ = Real.sqrt (leftStripVarianceHalf p) ^ 2 * v * leftStripRoot p v *
+        (2 * leftStripRootOne p d + d * leftStripRootTwo p d) := by ring
+    _ = _ := by rw [hk]
+
+/-- The normalized radical in `E` uses the existing continued marginal jet. -/
+theorem leftStrip_E_eq_regularized {p : ℕ} (hp : 0 < p) {a v : ℝ}
+    (hv : 0 < v) (hav : a < v) :
+    leftStripE p a v = leftStripExpMoment p 2 0 a v -
+      leftStripVarianceHalf p * v * leftStripRoot p v *
+        (2 * leftStripRootOne p (v-a) + (v-a) * leftStripRootTwo p (v-a)) := by
+  rw [leftStripE, leftStrip_S_mul_second hp hv (sub_pos.mpr hav)]
+
+private def leftStripRegularizedSlope (p : ℕ) (t : ℝ) : ℝ :=
+  leftStripZ p 1 t / (2 * leftStripZ p 0 t)
+
+private theorem leftStrip_root_log_slope {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : t ≠ 0) :
+    leftStripRootOne p t / leftStripRoot p t = leftStripRegularizedSlope p t := by
+  rw [leftStripRootOne, leftStripRegularizedSlope, div_div, mul_assoc, ← sq,
+    show leftStripRoot p t ^ 2 = leftStripZ p 0 t from Real.sq_sqrt (leftStrip_Z_pos hp ht).le]
+
+/-- The expression bounded by the origin replay, in terms of the tilted moments
+and the regularized marginal jet. -/
+def leftStripRegularizedIntegrand (p : ℕ) (a v : ℝ) : ℝ :=
+  let d := v-a
+  let b := leftStripRegularizedSlope p (-v)
+  let radical := ((1 + 3 / (p : ℝ)) / 4) * v * leftStripRoot p v *
+    (3 * leftStripRootTwo p d + d * leftStripRootThree p d +
+      (leftStripRegularizedSlope p v + b) *
+        (2 * leftStripRootOne p d + d * leftStripRootTwo p d))
+  v * (radical - leftStripExpMoment p 2 1 a v) + (1 - v * b) * leftStripExpMoment p 2 0 a v
+
+/-- The regularized expression equals `v * (γ * E - E_v)` for the exact reflected slope. -/
+theorem leftStrip_scaled_integrand_eq_regularized {p : ℕ} (hp : 0 < p) {a v : ℝ}
+    (hv : 0 < v) (hav : a < v) :
+    leftStripScaledIntegrand p a v = leftStripRegularizedIntegrand p a v := by
+  let d := v-a
+  let k := Real.sqrt (leftStripVarianceHalf p)
+  let r := leftStripRoot p v
+  let r₁ := leftStripRootOne p v
+  let b := leftStripRegularizedSlope p (-v)
+  let A := 2 * leftStripRootOne p d + d * leftStripRootTwo p d
+  let B := 3 * leftStripRootTwo p d + d * leftStripRootThree p d
+  have hd : 0 < d := sub_pos.mpr hav
+  have hk : k ^ 2 = leftStripVarianceHalf p :=
+    Real.sq_sqrt (half_pos (compositionMarginalVariance_pos p)).le
+  have hr : 0 < r := Real.sqrt_pos.mpr (leftStrip_Z_pos hp hv.ne')
+  have hs : leftStripS p v = k * v * r := by rw [leftStrip_S_eq_root hp hv.ne', abs_of_pos hv]
+  have hγ : leftStripReflectedSlope p v = 1 / v - b := by
+    rw [leftStrip_S_reflected_slope hp hv, leftStrip_root_log_slope hp (neg_ne_zero.mpr hv.ne')]
+  have hSlope : leftStripRegularizedSlope p v = r₁ / r :=
+    (leftStrip_root_log_slope hp hv.ne').symm
+  unfold leftStripScaledIntegrand leftStripRegularizedIntegrand
+  rw [hγ, (leftStrip_hasDerivAt_E_right hp hv hav).deriv, leftStrip_E_eq_regularized hp hv hav]
+  change v * ((1 / v - b) * (leftStripExpMoment p 2 0 a v - leftStripVarianceHalf p * v * r * A) -
+      (leftStripExpMoment p 2 1 a v - (deriv (leftStripS p) v * deriv (deriv (leftStripS p)) d +
+        leftStripS p v * deriv (deriv (deriv (leftStripS p))) d))) =
+    v * (((1 + 3 / (p : ℝ)) / 4) * v * r * (B + (leftStripRegularizedSlope p v + b) * A) -
+      leftStripExpMoment p 2 1 a v) + (1 - v * b) * leftStripExpMoment p 2 0 a v
+  rw [hs, (leftStrip_S_derivatives hp hv).1, (leftStrip_S_derivatives hp hd).2.1,
+    (leftStrip_S_derivatives hp hd).2.2, hSlope, ← SmallCorner.joint_normalization_eq hp]
+  change v * ((1 / v - b) * (leftStripExpMoment p 2 0 a v - leftStripVarianceHalf p * v * r * A) -
+      (leftStripExpMoment p 2 1 a v - (k * (r + v * r₁) * (k * A) + k * v * r * (k * B)))) =
+    v * (leftStripVarianceHalf p * v * r * (B + (r₁ / r + b) * A) -
+      leftStripExpMoment p 2 1 a v) +
+      (1 - v * b) * leftStripExpMoment p 2 0 a v
+  generalize k = K at hk ⊢
+  generalize leftStripVarianceHalf p = c at hk ⊢
+  rw [← hk]
+  field_simp [hv.ne', hr.ne']
+  <;> ring
+
+/-- For an endpoint with gap at most `1/2`, the integration interval lies in
+the union of the origin and adjacent ranges. The adjacent input uses the
+unscaled inequality. -/
+theorem leftStrip_logKernel_mixed_lt_of_low_integrand {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1 / 2) (huv : u < v) (hgap : v - u ≤ 1 / 2)
+    (horigin : ∀ a y : ℝ, 0 ≤ a → a ≤ 1 / 2 → 0 < y - a → y - a ≤ 1 / 2 →
+      0 < leftStripRegularizedIntegrand p a y)
+    (hadjacent : ∀ a y : ℝ, 0 ≤ a → a ≤ 1 / 2 → 1 / 2 ≤ y - a → y - a ≤ 1 →
+      0 < leftStripRegularizedIntegrand p a y / y) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  have hp₀ : 0 < p := by omega
+  have hv := hu.trans huv
+  refine leftStrip_logKernel_mixed_lt_of_weighted hp₀ hu huv
+    (leftStrip_small_slope hp hu humax) ?_
+  dsimp only
+  intro a ha
+  have hav := ha.2.trans huv
+  have ha₂ := ha.2.le.trans humax
+  have hsign : 0 < leftStripScaledIntegrand p a v := by
+    rw [leftStrip_scaled_integrand_eq_regularized hp₀ hv hav]
+    by_cases hd : v - a ≤ 1 / 2
+    · exact horigin a v ha.1.le ha₂ (sub_pos.mpr hav) hd
+    · exact (div_pos_iff_of_pos_right hv).mp (hadjacent a v ha.1.le ha₂ (le_of_not_ge hd)
+        (by linarith only [hgap, humax, ha.1]))
+  have he := leftStrip_weightedThird_eq (γ := leftStripReflectedSlope p v) hp₀ hv hav
+  exact he.trans_lt (sub_neg.mpr (lt_of_sub_pos ((mul_pos_iff_of_pos_left hv).mp hsign)))
 
 private theorem logKernel_mixed_continuousAt {p : ℕ} (hp : 0 < p) {u v : ℝ}
     (hu : 0 < u) (huv : u < v) :
@@ -548,5 +946,10 @@ theorem leftStrip_logKernel_mixed_nonpos {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
 #print axioms leftStrip_logKernel_mixed_lt_of_slopes
 #print axioms leftStrip_logKernel_mixed_lt
 #print axioms leftStrip_logKernel_mixed_nonpos
+#print axioms leftStrip_weightedThird_eq
+#print axioms leftStrip_hasDerivAt_E_right
+#print axioms leftStrip_E_eq_regularized
+#print axioms leftStrip_scaled_integrand_eq_regularized
+#print axioms leftStrip_logKernel_mixed_lt_of_low_integrand
 
 end RefinedBMV.PositiveCenter
