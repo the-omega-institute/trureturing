@@ -36,4 +36,5 @@ Normalize the two endpoint values of the root primitive by the same positive gap
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusEvenCutoff.signed_window_even_cutoff_cesaro`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusEvenCutoff.signed_window_even_cutoff_expansion`
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootPrimitiveFourier](../RootPrimitiveFourier.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusOddCutoff](RHMobiusOddCutoff.md)
