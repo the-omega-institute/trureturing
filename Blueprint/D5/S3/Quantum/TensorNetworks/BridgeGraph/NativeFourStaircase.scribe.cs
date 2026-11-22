@@ -39,7 +39,7 @@ internal sealed class NativeFourStaircaseDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "At the four-thirds threshold the excess left inputs share the unused right " +
                         "coordinates across three parts of the right input. At the five-thirds threshold " +
-                        "the right complement receives one full-height rectangle and two rectangles " +
+                        "the right complement receives one rectangle spanning its full height and two rectangles " +
                         "with common left output and disjoint right output. At the five-halves threshold " +
                         "two full left blocks use separate right ranges. The two remaining rectangles " +
                         "use disjoint left ranges in the right complement.")),
@@ -54,6 +54,39 @@ internal sealed class NativeFourStaircaseDocument : IScribeDocumentDefinition
                     "The four-thirds construction gives the column Gram. The width-three rectangular " +
                     "bound requires three times the right input dimension to be at most twice the right " +
                     "output dimension. The dimensions three and four violate that bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pure-rank-two-kernel-bound"),
+                DeclarationHandle.Create(Owner + ".pure_rank_two_kernel_bound"), H("Pure rank-two kernel bound"),
+                StatementSource.FromAuthor(Disp(PureRankTwo())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "When the left factor shrinks, a common kernel direction separates one isometric " +
+                    "right range. The remaining three factors act on the kernel of the isolated left " +
+                    "factor, which has positive dimension. Their right stack is injective and gives " +
+                    "c ≤ 3(d − c). A neutral three-dimensional coefficient subspace instead gives " +
+                    "three orthogonal isometric right ranges."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-four-scalar-gram-iff"),
+                DeclarationHandle.Create(Owner + ".native_four_scalar_gram_iff"), H("Exact thresholds above twice the left output"),
+                StatementSource.FromAuthor(Disp(Classification(false))), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "A positive eigenspace of dimension at least two would give a subspace of " +
+                        "codimension at most twice the left output dimension. Such a subspace meets " +
+                        "the image of the left stack, contradicting zero compression. The same " +
+                        "argument applied to the negative eigenspace leaves Hermitian rank at most two.")),
+                    Paragraph(Text(
+                        "The common kernel case gives a residual width-three sum with left input " +
+                        "dimension at least b − a and right output dimension d − c. The two " +
+                        "width-three rectangular estimates give the first two thresholds. Above " +
+                        "three times the left output dimension the coefficient kernel vanishes, " +
+                        "and the four right ranges fit precisely when four times c is at most d."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-four-scalar-gram-swap-iff"),
+                DeclarationHandle.Create(Owner + ".native_four_scalar_gram_swap_iff"), H("Exact thresholds above twice the right output"),
+                StatementSource.FromAuthor(Disp(Classification(true))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The coordinate permutations for the exchange of factors preserve the Gram " +
+                    "identity and give the right-hand version of each threshold."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -79,19 +112,19 @@ internal sealed class NativeFourStaircaseDocument : IScribeDocumentDefinition
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Mul(Formula a, Formula b) =>
         new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Times(int n, Formula v) => Mul(D(n), v);
+    private static Formula Times(int n, Formula v) => Mul(D((byte)n), v);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Matrix(Formula rows, Formula cols) =>
         Call("Matrix", rows, cols, V("Complex"));
     private static Formula Factors(int width, Formula rows, Formula cols) =>
-        new Formula.TypeArrow(Fin(D(width)), Matrix(Fin(rows), Fin(cols)));
+        new Formula.TypeArrow(Fin(D((byte)width)), Matrix(Fin(rows), Fin(cols)));
     private static Formula Dimensions(Formula body) =>
         All("a", V("Nat"), All("b", V("Nat"), All("c", V("Nat"), All("d", V("Nat"), body))));
     private static Formula AtWidth(int width, Formula a, Formula b, Formula c, Formula d, Formula lam)
     {
         Formula i = V("i");
         Formula X = V("X"), Y = V("Y");
-        Formula sum = Seq(new Formula.Subscript(F.Sum, Seq(i, Colon, Fin(D(width)))), Sp,
+        Formula sum = Seq(new Formula.Subscript(F.Sum, Seq(i, Colon, Fin(D((byte)width)))), Sp,
             Call("kronecker", Apply(X, i), Apply(Y, i)));
         Formula cols = Call("Prod", Fin(b), Fin(c));
         Formula identity = Parens(Seq(D(1), Colon, Sp, Matrix(cols, cols)));
@@ -149,5 +182,42 @@ internal sealed class NativeFourStaircaseDocument : IScribeDocumentDefinition
         return All("lambda", V("Real"), Implies(Lt(D(0), lam),
             And(Call("FourScalarGram", D(3), D(4), D(3), D(4), lam),
                 Seq(Neg, Parens(AtWidth(3, D(3), D(4), D(3), D(4), lam))))));
+    }
+
+    private static Formula GramSum(int width, string x, string y)
+    {
+        Formula i = V("i");
+        return Seq(new Formula.Subscript(F.Sum, Seq(i, Colon, Fin(D((byte)width)))), Sp,
+            Call("kronecker", Apply(V(x), i), Apply(V(y), i)));
+    }
+
+    private static Formula PureRankTwo()
+    {
+        Formula a = V("a"), b = V("b"), c = V("c"), d = V("d");
+        Formula X = V("X"), T = V("T"), i = V("i");
+        Formula sum = GramSum(4, "X", "Y");
+        Formula leftGram = Seq(new Formula.Subscript(F.Sum, Seq(i, Colon, Fin(D(4)))), Sp,
+            Mul(Call("conjTranspose", Apply(X, i)), Apply(X, i)));
+        Formula rank = All("T", Matrix(Fin(D(4)), Fin(D(4))),
+            Implies(Call("IsHermitian", T),
+                Implies(Equal(Call("compression", X, T), D(0)),
+                    Implies(new Formula.Relation(T, FormulaRelationOperator.NotEqual, D(0)),
+                        Equal(Call("rank", T), D(2))))));
+        Formula result = Implies(Lt(a, b), Implies(Call("LinearIndependent", V("Complex"), X),
+            Implies(Equal(Mul(Call("conjTranspose", sum), sum), D(1)),
+                Implies(Equal(leftGram, D(1)), Implies(rank, Le(Times(4, c), Times(3, d)))))));
+        return Dimensions(All("X", Factors(4, a, b), All("Y", Factors(4, d, c), result)));
+    }
+
+    private static Formula Classification(bool exchange)
+    {
+        Formula a = V("a"), b = V("b"), c = V("c"), d = V("d"), lam = V("lambda");
+        Formula expandingInput = exchange ? b : c;
+        Formula shrinkingInput = exchange ? c : b;
+        Formula shrinkingOutput = exchange ? d : a;
+        Formula rows = exchange ? LargeRows(d, c, b, a) : LargeRows(a, b, c, d);
+        return Dimensions(All("lambda", V("Real"), Implies(Lt(D(0), lam),
+            Implies(Lt(D(0), expandingInput), Implies(Lt(Times(2, shrinkingOutput), shrinkingInput),
+                Iff(Call("FourScalarGram", a, b, c, d, lam), rows))))));
     }
 }

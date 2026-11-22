@@ -540,7 +540,7 @@ private theorem kernel_columns {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) :
     exact Matrix.rank_eq_finrank_range_toLin _ _ _
   have hK : finrank ℂ K = n - A.rank := by
     have h := A.toEuclideanLin.finrank_range_add_finrank_ker
-    rw [← hr, EuclideanSpace.finrank_eq, Fintype.card_fin] at h
+    rw [← hr, finrank_euclideanSpace_fin] at h
     omega
   let B := (stdOrthonormalBasis ℂ K).reindex (finCongr hK)
   let L : Matrix (Fin n) (Fin (n - A.rank)) ℂ := fun i j => (B j).1 i
@@ -646,14 +646,15 @@ private theorem common_kernel_reduction {a b c d : ℕ}
     dsimp [p]
     omega
   obtain ⟨L, hL, hUL, _⟩ := kernel_columns U
-  obtain ⟨R, hR, _, hfix⟩ := kernel_columns Zᴴ
-  rw [hZrank] at R hR hfix
+  have hRcolumns := kernel_columns Zᴴ
+  rw [hZrank] at hRcolumns
+  obtain ⟨R, hR, _, hfix⟩ := hRcolumns
   let A' : Fin 4 → Matrix (Fin a) (Fin p) ℂ := fun r => X r * L
   let B' : Fin 4 → Matrix (Fin (d - c)) (Fin c) ℂ := fun r => Rᴴ * W r
   have hBdep : ¬ LinearIndependent ℂ B' := by
     intro h
     apply hWdep
-    apply LinearIndependent.of_comp (Matrix.mulLeftLinearMap ℂ Rᴴ)
+    apply LinearIndependent.of_comp (Matrix.mulLeftLinearMap (Fin c) ℂ Rᴴ)
     exact h
   obtain ⟨A, B, hAB⟩ := cut_dependent_right A' B' hBdep
   have hcompress : tensorSum X Y * kronecker L (1 : Matrix (Fin c) (Fin c) ℂ) =

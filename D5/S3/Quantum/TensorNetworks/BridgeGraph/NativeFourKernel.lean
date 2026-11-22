@@ -8,14 +8,14 @@
 
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeRectangularBound
 
-/-! Spectral dimension bounds and Schör complement identities for four coefficient directions. -/
+/-! Spectral dimension bounds and Schur complement identities for four coefficient directions. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
-open Matrix Module
+open Matrix Module Unitary
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 
 namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
@@ -178,10 +178,10 @@ private theorem schur_entries (T : Matrix (Fin 4) (Fin 4) ℂ)
   have h0 := minor_det_zero T h i j
   have h₊ := minor_det_zero _ hp i j
   have h₋ := minor_det_zero _ hm i j
-  have hi₀ : corner i ≠ 0 := by exact Fin.ne_of_gt (by simp [corner])
-  have hi₁ : corner i ≠ 1 := by exact Fin.ne_of_gt (by simp [corner])
-  have hj₀ : corner j ≠ 0 := by exact Fin.ne_of_gt (by simp [corner])
-  have hj₁ : corner j ≠ 1 := by exact Fin.ne_of_gt (by simp [corner])
+  have hi₀ : corner i ≠ 0 := by exact ne_of_gt (by simp [corner])
+  have hi₁ : corner i ≠ 1 := by exact ne_of_gt (by simp [corner])
+  have hj₀ : corner j ≠ 0 := by exact ne_of_gt (by simp [corner])
+  have hj₁ : corner j ≠ 1 := by exact ne_of_gt (by simp [corner])
   simp only [Matrix.det_fin_three, Matrix.submatrix_apply, principal,
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
     Matrix.add_apply, Matrix.sub_apply, signature, Matrix.diagonal_apply,
@@ -366,7 +366,7 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       | exact hc₁₁
       | simpa [u, v, topRow, corner] using hv₀
       | simpa [u, v, topRow, corner] using hv₁
-      | linear_combination hq T hT
+      | linear_combination (hq T hT)
       | rw [hermitian_entry (hHerm T hT) 2 0, hermitian_entry (hHerm T hT) 2 1]
         have h := congrArg star hv₀
         simp only [u, v, topRow, corner, Pi.smul_apply, smul_eq_mul, star_mul] at h
@@ -486,7 +486,7 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
   classical
   let e := hT.eigenvalues
   let U : Matrix (Fin 4) (Fin 4) ℂ := hT.eigenvectorUnitary
-  have hU : IsUnit U := Unitary.isUnit hT.eigenvectorUnitary
+  have hU : IsUnit U := Unitary.isUnit_coe
   have hdiag : Uᴴ * T * U = diagonal (fun i => (e i : ℂ)) := by
     simpa [U, e, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
       hT.conjStarAlgAut_star_eigenvectorUnitary
@@ -540,7 +540,7 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
   have hPP : Pᴴ * P = 1 := by
     simp [P, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
       Matrix.submatrix_one_equiv]
-  have hP : IsUnit P := Matrix.isUnit_of_left_inverse _ _ hPP
+  have hP : IsUnit P := isUnit_iff_exists_inv'.mpr ⟨Pᴴ, hPP⟩
   let w : Fin 4 → ℝ := ![(Real.sqrt (e i))⁻¹, (Real.sqrt (-e j))⁻¹, 1, 1]
   let D := diagonal (fun r => (w r : ℂ))
   have hD : IsUnit D := by
