@@ -20,7 +20,19 @@ Write P_A = slitPeriod(1 − 1/x), P_B = slitPeriod(x), P_f = slitPeriod(1 − x
 
 Here chargeTheta is the shifted theta of the doubled Gram lattice in the discriminant class corresponding to a. Its lattice sum (tsum) runs over integral charges q with reduceCharge(D,q) = a, with summand exp(π i τ_c ⟨q,q⟩_G/2 + 2π i (Gq)·Z). The Gram contraction is bilinear.
 
-**Theorem 1.2 (Finite charge transforms of the physical products).**
+**Theorem 1.2 (Expansion in the literal mod-two charge fiber).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physical_product_marked_charge_fiber`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physical_product_marked_charge_fiber` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The period-normalized product expands in charges with reduceCharge(D,q) = a. Each summand has the original quadratic charge energy and the physical Gaussian. The mean at mark i is −⟨e_colour(i),q⟩ times its physical source divided by the chart period. The same relative sign multiplies the occurrence weight in the linear and quadratic terms.
+
+**Theorem 1.3 (Finite charge transforms of the physical products).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physical_chart_product`
 
@@ -42,4 +54,5 @@ For the B transform, the period before inversion is t_B = i P_B/P_f. The A perio
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physicalProduct`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physical_chart_product`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalProduct.physical_product_marked_charge_fiber`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalCovariance](OriginalFourMPhysicalCovariance.md)
