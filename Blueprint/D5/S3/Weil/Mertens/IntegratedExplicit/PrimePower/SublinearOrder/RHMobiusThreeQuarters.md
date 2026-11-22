@@ -16,7 +16,9 @@ $$RH \Rightarrow \left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow
 
 RH denotes Mathlib RiemannHypothesis. The window discrepancy is the integral of max(−primeTail(x),0)/sqrt(x) on [a,B] minus 2 log(B/a). The tail primeTail(x) integrates (θ(t)−t)/t² over t>x, where θ(t) sums log p over primes p≤t.
 
-The ordinary and root primitives use actual zeta-zero occurrences with analytic multiplicity. The residual subtracts their prescribed signed differences, with the strict retained condition 2n<m+1, and the signed arithmetic correction over 3≤n≤m.
+The zero series use all actual nontrivial zero occurrences, each repeated according to its analytic multiplicity. The ordinary primitive P(x) is the real part of the sum of exp(i Im(ρ) log x)/(ρ(1−ρ)i Im(ρ)). The degree-n root primitive Pₙ(x) is the real part of the sum of 2n² x^(ρ/n−1/2)/(ρ(n−ρ)(n−2ρ)), for x>0.
+
+The signed residual E(m,a,B) subtracts P(B)−P(a) from the window discrepancy and then subtracts both signed correction sums. For 3≤n≤m, the first sum uses −2 μ(n)n²/((n−1)(n−2)) multiplied by a^(1/n−1/2)−B^(1/n−1/2). For 2≤n≤m and 2n<m+1, the second sum uses −μ(n) multiplied by Pₙ(B)−Pₙ(a).
 
 Write q=m+1 and η=min(ε/3,1/12). The ordinary Möbius prefix exponent 1/2+η controls the arithmetic and near-range terms. The normalized omitted density for u≥q has three costs: q^(1/2+η)(H+1)^(1/2+η), (H+1)^(1+η), and q H^(η−1/2).
 

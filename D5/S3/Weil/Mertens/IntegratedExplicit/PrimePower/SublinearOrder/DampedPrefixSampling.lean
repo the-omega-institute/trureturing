@@ -162,7 +162,7 @@ private theorem integral_reflected_prefix_exp (J : Finset ℕ)
 square bin masses aggregate counts with the same frequency, including repetitions. -/
 theorem exists_damped_reciprocal_sum_le_square_mass :
     ∃ K : ℝ, 0 < K ∧ ∀ (J T : Finset ℕ) (v γ : ℕ → ℝ) (a c : ℕ → ℂ)
-      (P : ℝ) (b : ℤ → ℝ), 0 ≤ P →
+      (P : ℝ) (b : ℤ → ℝ),
       (∀ n ∈ J, v n ≤ 0) →
       (∀ t ≤ (0 : ℝ), ‖∑ n ∈ J, if t ≤ v n then a n else 0‖ ≤ P) →
       (Summable fun k => b k ^ 2) → (∀ k, binMass T γ c k ≤ b k) →
@@ -172,7 +172,8 @@ theorem exists_damped_reciprocal_sum_le_square_mass :
         K * P * Real.sqrt (∑' k : ℤ, b k ^ 2) := by
   obtain ⟨K, hK, hbound⟩ := exists_damped_mode_integral_le_square_mass
   refine ⟨K, hK, ?_⟩
-  intro J T v γ a c P b hP hv hpref hb hbin
+  intro J T v γ a c P b hv hpref hb hbin
+  have hP : 0 ≤ P := (norm_nonneg _).trans (hpref 0 le_rfl)
   let A (t : ℝ) : ℂ := ∑ n ∈ J, if t ≤ v n then a n else 0
   let z (i : ℕ) : ℂ := 1 / 2 + Complex.I * (γ i : ℂ)
   have hz (i : ℕ) : (z i).re = 1 / 2 := by

@@ -166,8 +166,8 @@ private theorem rootCoeff_partial_fractions (hRH : RiemannHypothesis) {n : ℕ}
 square-root loss in the number of frequency bins. -/
 theorem signed_low_occurrence_sum_of_damped_prefix (hRH : RiemannHypothesis)
     {η : ℝ} (hη : 0 < η) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (q p m H : ℕ), 3 ≤ q → 0 < p → p ≤ m → m ≤ q → q ≤ 2*p →
-      ∀ u ≥ (0 : ℝ), ∀ (a : ℕ → ℂ) (A : ℝ), 0 ≤ A →
+    ∃ C : ℝ, 0 < C ∧ ∀ (q p m H : ℕ), 3 ≤ q → m ≤ q → q ≤ 2*p →
+      ∀ u ≥ (0 : ℝ), ∀ (a : ℕ → ℂ) (A : ℝ),
         (∀ n, ‖a n‖ ≤ 1) →
         (∀ k ≤ m + 1, ‖∑ n ∈ Finset.range k, a n‖ ≤ A) →
         ∀ T : Finset ℕ,
@@ -178,7 +178,9 @@ theorem signed_low_occurrence_sum_of_damped_prefix (hRH : RiemannHypothesis)
   obtain ⟨G, hG, hsample⟩ := exists_damped_reciprocal_sum_le_square_mass
   obtain ⟨D, hD, hcount⟩ := occurrence_count_and_square_bins hη
   refine ⟨2*G*D+3*D, by positivity, ?_⟩
-  intro q p m H hq hp hpm hmq hhalf u hu a A hA han ha T
+  intro q p m H hq hmq hhalf u hu a A han ha T
+  have hp : 0 < p := by omega
+  have hA : 0 ≤ A := (norm_nonneg _).trans (ha 0 (Nat.zero_le _))
   let S := Finset.Icc p m
   let U := T.filter (fun i => frequencyBin (occurrenceFrequency i) ∈ lowBins H)
   let γ := occurrenceFrequency
@@ -233,7 +235,7 @@ theorem signed_low_occurrence_sum_of_damped_prefix (hRH : RiemannHypothesis)
       ‖∑ n ∈ S, a n * ∑ i ∈ U, L n i‖ ≤ (2*G*D)*A*x^(1/2+η) := by
     have hpre (t : ℝ) (ht : t ≤ 0) :=
       norm_filtered_degree_prefix (t := t) hva hA ha
-    have hs := hsample S U v γ a c (2*A) b (by positivity) hv hpre hb hbin
+    have hs := hsample S U v γ a c (2*A) b hv hpre hb hbin
     have he :
         (∑ n ∈ S, a n * ∑ i ∈ U, L n i) =
           -(∑ i ∈ U, c i * ∑ n ∈ S, a n *
@@ -324,10 +326,7 @@ theorem signed_omitted_root_density_of_damped_prefix (hRH : RiemannHypothesis)
   have hqu : (q : ℝ) ≤ u := by simpa only [hq'] using hu
   have hu₀ := (Nat.cast_nonneg q : (0 : ℝ) ≤ q).trans hqu
   have hq : 3 ≤ q := by dsimp [q]; omega
-  have hp : 0 < p := by dsimp [p, q]; omega
-  have hpm : p ≤ m := by dsimp [p, q]; omega
   have hhalf : q ≤ 2*p := by dsimp [p]; omega
-  have hA : 0 ≤ A := (abs_nonneg _).trans (ha 0 (Nat.zero_le _))
   have ha' (k : ℕ) (hk : k ≤ m+1) : ‖∑ n ∈ Finset.range k, a n‖ ≤ A := by
     simpa only [a, Finset.sum_neg_distrib, ← Complex.ofReal_sum, norm_neg, Complex.norm_real,
       Real.norm_eq_abs] using ha k hk
@@ -339,11 +338,12 @@ theorem signed_omitted_root_density_of_damped_prefix (hRH : RiemannHypothesis)
   have hl : ∀ T : Finset ℕ, ‖∑ n ∈ Finset.Icc p m, a n *
       ∑ i ∈ T with frequencyBin (occurrenceFrequency i) ∈ lowBins H,
         normalizedMode q u n i‖ ≤ F*P :=
-    hhead q p m H hq hp hpm (Nat.le_add_right _ _) hhalf u hu₀ a A hA han ha'
+    hhead q p m H hq (Nat.le_add_right _ _) hhalf u hu₀ a A han ha'
   have hb := signed_omitted_root_density_of_finite_bounds (H := H) (Q := G*Q)
     hRH hm hu₀ hl (fun T => (htail q H hq hH u hqu T).trans_eq (mul_assoc _ _ _))
   rw [← hq']
   refine hb.trans (mul_le_mul_of_nonneg_left ?_ (Real.exp_nonneg _))
+  have hA : 0 ≤ A := (abs_nonneg _).trans (ha 0 (Nat.zero_le _))
   have hP : 0 ≤ P := by dsimp [P]; positivity
   have hQ : 0 ≤ Q := by dsimp [Q]; positivity
   calc
