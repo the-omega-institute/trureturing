@@ -31,9 +31,9 @@ private theorem normalizer_dependence : ObservationalDependence normalizerSignat
   refine ⟨(), 1, 2, ?_⟩
   change Real.log 1 ^ 2 ≠ Real.log 2 ^ 2
   rw [Real.log_one, zero_pow (by decide : (2 : ℕ) ≠ 0)]
-  exact (pow_pos (Real.log_pos (by norm_num)) _).ne'
+  exact (pow_pos (Real.log_pos (show (1 : ℝ) < 2 by norm_num)) 2).ne
 
-private def oneFinite (T : ℝ) : {j : ULift.{u} Unit | (1 : ℝ) ≤ T}.Finite :=
+private theorem oneFinite (T : ℝ) : {_j : ULift.{u} Unit | (1 : ℝ) ≤ T}.Finite :=
   Set.toFinite _
 
 private theorem one_cutoff (a : ℝ) :
@@ -43,7 +43,9 @@ private theorem one_cutoff (a : ℝ) :
   have hcut : (oneFinite T).toFinset = Finset.univ := by
     ext j
     simp [hT]
-  simp [cutoffSum, hcut]
+  unfold cutoffSum
+  rw [hcut]
+  simp
 
 private theorem one_count :
     Tendsto (fun T => cutoffSum (fun _ : ULift.{u} Unit => 1) oneFinite (fun _ => 1) T /
