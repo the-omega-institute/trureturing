@@ -37,7 +37,7 @@ abbrev arena : Arena where
   Law r := ∀ {V : Type u} [ord : LinearOrder V] [Fintype V]
       (M : Matroid V) (E : Finset V) (_ : M.E = (E : Set V)) (_ : M✶.eRank = 2)
       (_ : ∀ a ∈ E, M✶.IsNonloop a) (y : Set V → ℤ),
-      (∃ z : Chain V, TopCycle M z ∧ ∀ P ∈ dualClasses M E,
+      (∃! z : Chain V, TopCycle M z ∧ ∀ P ∈ dualClasses M E,
         r.readout () ⟨V, ord, M, E⟩ z P =
           y P • contractionGenerator (E \ classVertices M E P) (classVertices M E P)) ↔
         (∑ P ∈ dualClasses M E, ((classVertices M E P).card : ℤ) * y P) = 0 ∧
@@ -64,7 +64,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hground : sample.{u}.E = (ground : Set Sample.{u}) := by simp [sample, ground]
   have hn : ∀ a ∈ ground, sample.{u}✶.IsNonloop a := by
     simp [sample, freeOn_isNonloop_iff]
-  obtain ⟨_, _, hread⟩ :=
+  obtain ⟨_, ⟨_, hread⟩, _⟩ :=
     (h sample ground hground sample_rank hn (fun _ => 0)).2 (by simp)
   have hzero := congrFun (hread {b} class_label) (∅ : Finset Sample.{u})
   exact Int.one_ne_zero (by simpa only [rejected, realize, zero_smul, Pi.zero_apply] using hzero)

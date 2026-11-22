@@ -213,6 +213,27 @@ private lemma recover_potential {M : Matroid V} {E : Finset V}
   by_contra hw
   exact h (hface hxF (potentialChain_support (Ne.symm hw)))
 
+private lemma recover_class_potential {M : Matroid V} {E : Finset V}
+    (hE : M.E = (E : Set V)) (hr : M✶.eRank = 2) (hn : ∀ a ∈ E, M✶.IsNonloop a)
+    {x : V} (hx : x ∈ E) {z : Chain V} (hz : TopCycle M z) :
+    ∃ q : Set V → ℤ, z = potentialChain E (fun a => q (M✶.closure {a})) := by
+  classical
+  let cl (a : V) := M✶.closure {a}
+  obtain ⟨p, rfl⟩ := recover_potential hE hr hx hz
+  have hconst := (potential_iff_topCycle hE hr hn p).1 hz
+  let q (P : Set V) : ℤ := if h : ∃ a ∈ E, cl a = P then p h.choose else 0
+  have hq (a : V) (ha : a ∈ E) : p a = q (cl a) := by
+    have h : ∃ b ∈ E, cl b = cl a := ⟨a, ha, rfl⟩
+    simp only [q, dite_eq_left h]
+    exact hconst a ha h.choose h.choose_spec.1 h.choose_spec.2.symm
+  refine ⟨q, cycle_eq_of_away (x := x) (potentialChain_cycle _ _) (potentialChain_cycle _ _) ?_⟩
+  intro F _
+  by_cases h : ∃ a ∈ E, ∃ b ∈ E, a ≠ b ∧ F = E \ {a, b}
+  · obtain ⟨a, ha, b, hb, hab, rfl⟩ := h
+    rw [potentialChain_pair p ha hb hab, potentialChain_pair _ ha hb hab, hq a ha, hq b hb]
+  · rw [not_ne_iff.mp (mt potentialChain_support h),
+      not_ne_iff.mp (mt potentialChain_support h)]
+
 
 omit [Fintype V] in
 private lemma erase_pair_face {E K S : Finset V} {a b : V}
@@ -414,12 +435,12 @@ noncomputable def jointRestrict (M : Matroid V) (E : Finset V) (z : Chain V) (P 
     Chain V :=
   aggregateRestrict M (E \ classVertices M E P) z
 
-/-- One integral top cycle realizes all signed circuit aggregates precisely when the
-class-size-weighted sum is zero and all labels are congruent modulo the ground size. -/
+/-- A unique integral top cycle realizes all signed circuit aggregates precisely when the
+class-size-weighted sum is zero and all scalars are congruent modulo the ground size. -/
 theorem exists_topCycle_joint_aggregateRestrict_iff
     (M : Matroid V) (E : Finset V) (hE : M.E = (E : Set V)) (hr : M✶.eRank = 2)
     (hn : ∀ a ∈ E, M✶.IsNonloop a) (y : Set V → ℤ) :
-    (∃ z : Chain V, TopCycle M z ∧ ∀ P ∈ dualClasses M E,
+    (∃! z : Chain V, TopCycle M z ∧ ∀ P ∈ dualClasses M E,
       jointRestrict M E z P =
         y P • contractionGenerator (E \ classVertices M E P) (classVertices M E P)) ↔
       (∑ P ∈ dualClasses M E, ((classVertices M E P).card : ℤ) * y P) = 0 ∧
@@ -431,31 +452,19 @@ theorem exists_topCycle_joint_aggregateRestrict_iff
   have hnE : (E.card : ℤ) ≠ 0 := by exact_mod_cast (card_ne_zero.mpr ⟨x, hx⟩)
   have hweights : (∑ P ∈ dualClasses M E, ((classVertices M E P).card : ℤ) * y P) =
       ∑ a ∈ E, y (cl a) := (CircuitRestrictionImage.sum_fibers (S := E) cl y).symm
+  have readout_scalar (q : Set V → ℤ) (P : Set V) (hP : P ∈ dualClasses M E)
+      (hread : jointRestrict M E (potentialChain E (fun a => q (cl a))) P =
+        y P • contractionGenerator (E \ classVertices M E P) (classVertices M E P)) :
+      y P = (∑ a ∈ E, q (cl a)) - (E.card : ℤ) * q P := by
+    rw [jointRestrict, aggregate_potential hE hr hn hP q] at hread
+    obtain ⟨T, hT⟩ := Function.ne_iff.mp (contractionGenerator_ne_zero hP)
+    exact (mul_right_cancel₀ hT (congrFun hread T)).symm
   constructor
-  · rintro ⟨z, hz, hread⟩
-    obtain ⟨p, rfl⟩ := recover_potential hE hr hx hz
-    have hconst := (potential_iff_topCycle hE hr hn p).1 hz
-    let q (P : Set V) : ℤ := if h : ∃ a ∈ E, cl a = P then p h.choose else 0
-    have hq (a : V) (ha : a ∈ E) : p a = q (cl a) := by
-      have h : ∃ b ∈ E, cl b = cl a := ⟨a, ha, rfl⟩
-      simp only [q, dite_eq_left h]
-      exact hconst a ha h.choose h.choose_spec.1 h.choose_spec.2.symm
-    have hpchain : potentialChain E p = potentialChain E (fun a => q (cl a)) := by
-      apply cycle_eq_of_away (x := x) (potentialChain_cycle _ _) (potentialChain_cycle _ _)
-      intro F _
-      by_cases h : ∃ a ∈ E, ∃ b ∈ E, a ≠ b ∧ F = E \ {a, b}
-      · obtain ⟨a, ha, b, hb, hab, rfl⟩ := h
-        rw [potentialChain_pair p ha hb hab, potentialChain_pair _ ha hb hab, hq a ha, hq b hb]
-      · rw [not_ne_iff.mp (mt potentialChain_support h),
-          not_ne_iff.mp (mt potentialChain_support h)]
+  · rintro ⟨z, ⟨hz, hread⟩, _⟩
+    obtain ⟨q, rfl⟩ := recover_class_potential hE hr hn hx hz
     let total := ∑ a ∈ E, q (cl a)
     have hy (P : Set V) (hP : P ∈ dualClasses M E) :
-        y P = total - (E.card : ℤ) * q P := by
-      have he := hread P hP
-      rw [jointRestrict, hpchain, aggregate_potential hE hr hn hP q] at he
-      obtain ⟨T, hT⟩ := Function.ne_iff.mp (contractionGenerator_ne_zero hP)
-      have hcoef := congrFun he T
-      exact (mul_right_cancel₀ hT hcoef).symm
+        y P = total - (E.card : ℤ) * q P := readout_scalar q P hP (hread P hP)
     refine ⟨?_, ?_⟩
     · rw [hweights]
       calc
@@ -482,14 +491,34 @@ theorem exists_topCycle_joint_aggregateRestrict_iff
         _ = ∑ a ∈ E, (E.card : ℤ) * p a := mul_sum _ _ _
         _ = ∑ a ∈ E, (y ref - y (cl a)) := sum_congr rfl fun a ha => (hq _ (hlabel a ha)).symm
         _ = _ := by simp [sum_sub_distrib, hbalance]
-    refine ⟨potentialChain E p, (potential_iff_topCycle hE hr hn p).2 ?_, ?_⟩
-    · intro a _ b _ hab
-      exact congrArg q hab
-    · intro P hP
+    have hcycle : TopCycle M (potentialChain E p) :=
+      (potential_iff_topCycle hE hr hn p).2 (fun _ _ _ _ hab => congrArg q hab)
+    have hrealizes (P : Set V) (hP : P ∈ dualClasses M E) :
+        jointRestrict M E (potentialChain E p) P =
+          y P • contractionGenerator (E \ classVertices M E P) (classVertices M E P) := by
       rw [jointRestrict, aggregate_potential hE hr hn hP q]
       change ((∑ a ∈ E, p a) - (E.card : ℤ) * q P) • _ = _
       rw [htotal, ← hq P hP]
       congr 1
       ring
+    refine ⟨potentialChain E p, ⟨hcycle, hrealizes⟩, ?_⟩
+    intro z ⟨hz, hread⟩
+    obtain ⟨q', rfl⟩ := recover_class_potential hE hr hn hx hz
+    funext F
+    by_cases hF : M.IsBase (F : Set V)
+    · obtain ⟨a, ha, b, hb, hab, rfl⟩ := primal_base_complement_pair hE hF
+        (fun _ hB => hB.encard_eq_eRank.trans hr)
+      have hdiff (r : Set V → ℤ)
+          (h : ∀ P ∈ dualClasses M E,
+            jointRestrict M E (potentialChain E (fun a => r (cl a))) P =
+              y P • contractionGenerator (E \ classVertices M E P) (classVertices M E P)) :
+          (E.card : ℤ) * (r (cl b) - r (cl a)) = y (cl a) - y (cl b) := by
+        rw [readout_scalar r _ (hlabel a ha) (h _ (hlabel a ha)),
+          readout_scalar r _ (hlabel b hb) (h _ (hlabel b hb))]
+        ring
+      have heq : q' (cl b) - q' (cl a) = p b - p a :=
+        mul_left_cancel₀ hnE ((hdiff q' hread).trans (hdiff q hrealizes).symm)
+      rw [potentialChain_pair _ ha hb hab, potentialChain_pair p ha hb hab, heq]
+    · rw [hz.vanishes F hF, hcycle.vanishes F hF]
 
 end D5.S3.Combinatorics.Matroids.JointCircuitRestrictionImage

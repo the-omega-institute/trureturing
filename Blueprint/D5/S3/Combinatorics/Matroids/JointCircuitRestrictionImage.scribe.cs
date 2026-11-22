@@ -13,7 +13,7 @@ internal sealed class JointCircuitRestrictionImageDocument : IScribeDocumentDefi
             Describe.Lean(
                 DescribeId.Create("joint-integral-circuit-restriction"),
                 DeclarationHandle.Create(Module + ".exists_topCycle_joint_aggregateRestrict_iff"),
-                H("Weighted balance and common congruence characterize the joint image"),
+                H("Weighted balance and common congruence characterize the unique lift"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -22,7 +22,10 @@ internal sealed class JointCircuitRestrictionImageDocument : IScribeDocumentDefi
                         + "ordered carrier V. Assume the dual has rank two and every vertex of E "
                         + "is a dual nonloop. The class labels are the distinct dual closures of "
                         + "singletons in E. For each such label P, let S be its fiber on E and K "
-                        + "the complement of S in E. These complements are exactly the circuits of M.")),
+                        + "the complement of S in E. Dual rank two makes every dual base a pair, "
+                        + "so every primal base is a pair complement. Dual looplessness makes the "
+                        + "nonloop classes partition all of E. In rank two these classes are the "
+                        + "dual hyperplanes, whose complements are exactly the circuits of M.")),
                     Paragraph(Text(
                         "At each basis T of the contraction by K, the aggregate sums over a in K "
                         + "the source coefficient on the union of T with the facet K without a. "
@@ -33,7 +36,7 @@ internal sealed class JointCircuitRestrictionImageDocument : IScribeDocumentDefi
                         + "by minus one to the power |K| minus one. A singleton fiber contributes "
                         + "an empty-face coordinate.")),
                     Paragraph(Text(
-                        "Let y assign integers to the labels. There is one integral augmented top "
+                        "Let y assign integers to the labels. There is a unique integral augmented top "
                         + "cycle whose aggregate at every P equals y(P) times its signed generator "
                         + "if and only if the sum of |S| times y(P) over all labels is zero, and "
                         + "|E| divides y(P) minus y(Q) for every pair of labels P and Q. Lean "
@@ -54,6 +57,13 @@ internal sealed class JointCircuitRestrictionImageDocument : IScribeDocumentDefi
                         + "the potential obtained by dividing y(R) minus y(P) by |E|. Weighted "
                         + "balance makes the sum of the vertex potentials equal y(R), giving "
                         + "all requested coefficients from the same cycle.")),
+                    Paragraph(Text(
+                        "For a primal base F omitting a and b, subtract the readout scalars at "
+                        + "the classes of a and b. The difference, in that order, is |E| times "
+                        + "the potential of b minus the potential of a. Since |E| is nonzero, "
+                        + "the readouts determine this potential difference. The complementary-pair "
+                        + "sign then determines the coefficient on F, and the coefficients on "
+                        + "nonbases are zero. Thus the readouts determine the whole cycle.")),
                     Paragraph(Text(
                         "Complementary faces use the sign convention of combinatorial Alexander "
                         + "duality studied by Björner and Tancer (DOI 10.1007/s00454-008-9102-x). "
