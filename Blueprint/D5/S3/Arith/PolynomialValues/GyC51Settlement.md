@@ -122,6 +122,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/PolynomialValues/GyC51Settlement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gy26c51` (refuted) by `D5/S3/Arith/PolynomialValues/GyC51Settlement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gy26c51","declaration_gid":"D5/S3/Arith/PolynomialValues/GyC51Settlement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* René Gy (2026). *On Certain Products of Three Stirling Numbers*. DOI: [10.5281/zenodo.22082106](https://doi.org/10.5281/zenodo.22082106). URL: <https://math.colgate.edu/~integers/aa108/aa108.pdf#page=16>.

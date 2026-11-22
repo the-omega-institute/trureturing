@@ -57,7 +57,8 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                     "A separate kernel-checked calculation gives H = Cgₜ⁴ for the same family. At the same triple "
                     + "it gives the same determinant −200. Both polynomials have nonnegative coefficients."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("gy26c51"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula statement, string prose) =>
         Definition(name, title, statement, Blocks(Paragraph(Text(prose))));
