@@ -1,0 +1,265 @@
+/- GID: D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates
+   mirror-E: none(waiver:algebraic-inference)
+   anchors: []
+   utility: none
+   digest: Circuit equations with a family of omitted uniform bases. -/
+
+module
+
+public import D5.S3.Combinatorics.Matroids.PuncturedCircuitCoordinates
+
+/-! Separation of the omitted bases in the signed circuit comparison. -/
+
+@[expose] public section
+
+namespace D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates
+
+open Finset
+open scoped Matroid
+
+set_option autoImplicit false
+
+variable {I : Type*} [Fintype I] [LinearOrder I] {M : Matroid I}
+variable {holes : Set (Finset I)} {r : ℕ}
+
+private lemma extending_base_exists (hr : r < Fintype.card I)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
+    (F : Finset I) (hf : F.card < r) :
+    ∃ B : Finset I, F ⊆ B ∧ B.card = r ∧ B ∉ holes := by
+  obtain ⟨B, hFB, _, hBc⟩ :=
+    exists_subsuperset_card_eq (subset_univ F) hf.le (by simpa using hr.le)
+  by_cases hB : B ∈ holes
+  · obtain ⟨t, _, ht⟩ := exists_mem_notMem_of_card_lt_card
+      (show B.card < (univ : Finset I).card by simpa [hBc] using hr)
+    obtain ⟨j, hj, hjF⟩ := exists_mem_notMem_of_card_lt_card (show F.card < B.card by omega)
+    let K := insert t (B.erase j)
+    have hBK : B ≠ K := fun he => ht (he.symm ▸ mem_insert_self t _)
+    have hsub : F ⊆ K := by
+      intro i hi
+      exact mem_insert_of_mem (mem_erase.mpr ⟨fun h => hjF (h ▸ hi), hFB hi⟩)
+    have hcardK : K.card = r := by
+      change (insert t (B.erase j)).card = r
+      rw [card_insert_of_notMem (fun h => ht (mem_of_mem_erase h)), card_erase_of_mem hj, hBc]
+      omega
+    refine ⟨K, hsub, hcardK, fun hK => ?_⟩
+    have hlarge := hsparse hB hK hBK
+    have hsmall := card_le_card (subset_inter (erase_subset j B)
+      (show B.erase j ⊆ K from subset_insert _ _))
+    rw [card_erase_of_mem hj, hBc] at hsmall
+    omega
+  · exact ⟨B, hFB, hBc, hB⟩
+
+private lemma indep_iff_card_and_allowed (hr : r < Fintype.card I)
+    (hsize : ∀ H ∈ holes, H.card = r)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes)
+    (F : Finset I) : M.Indep (F : Set I) ↔ F.card ≤ r ∧ F ∉ holes := by
+  constructor
+  · intro hf
+    obtain ⟨B, hbase, hsub⟩ := hf.exists_isBase_superset
+    let T := B.toFinite.toFinset
+    have hT : (T : Set I) = B := Set.Finite.coe_toFinset _
+    obtain ⟨hcard, hallowed⟩ := (hB T).mp (hT.symm ▸ hbase)
+    have hFT : F ⊆ T := Finset.coe_subset.mp (hT.symm ▸ hsub)
+    refine ⟨(card_le_card hFT).trans_eq hcard, fun h => ?_⟩
+    have he := eq_of_subset_of_card_le hFT (hcard.trans (hsize F h).symm).le
+    exact hallowed (he ▸ h)
+  · rintro ⟨hcard, hF⟩
+    rcases hcard.eq_or_lt with he | hlt
+    · exact ((hB F).mpr ⟨he, hF⟩).indep
+    · obtain ⟨B, hsub, hsize, hallowed⟩ := extending_base_exists hr hsparse F hlt
+      exact ((hB B).mpr ⟨hsize, hallowed⟩).indep.subset (Finset.coe_subset.mpr hsub)
+
+omit [Fintype I] in
+private lemma hole_unique_in_succ (hsize : ∀ H ∈ holes, H.card = r)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
+    {C H K : Finset I} (hC : C.card = r + 1) (hH : H ∈ holes) (hK : K ∈ holes)
+    (hHC : H ⊆ C) (hKC : K ⊆ C) : H = K := by
+  by_contra hne
+  have hsep := hsparse hH hK hne
+  have hunion := card_le_card (union_subset hHC hKC)
+  have hcount := card_union_add_card_inter H K
+  rw [hsize H hH, hsize K hK] at hcount
+  omega
+
+private lemma circuits_iff_omitted_or_large (hr : r < Fintype.card I)
+    (hsize : ∀ H ∈ holes, H.card = r)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
+    (hground : M.E = Set.univ)
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes)
+    (C : Finset I) :
+    M.IsCircuit (C : Set I) ↔ C ∈ holes ∨ (C.card = r + 1 ∧ ∀ H ∈ holes, ¬ H ⊆ C) := by
+  have hind := indep_iff_card_and_allowed hr hsize hsparse hB
+  rw [Matroid.isCircuit_iff_forall_ssubset, Matroid.dep_iff, hground,
+    and_iff_left (Set.subset_univ _), hind]
+  constructor
+  · rintro ⟨hdep, hminimal⟩
+    by_cases hC : C ∈ holes
+    · exact Or.inl hC
+    have hlt : r < C.card := by
+      by_contra! hcr
+      exact hdep ⟨hcr, hC⟩
+    have hav (H : Finset I) (hH : H ∈ holes) : ¬ H ⊆ C := by
+      intro hsub
+      have hne : H ≠ C := fun h => hC (h ▸ hH)
+      have hs := Finset.ssubset_iff_subset_ne.mpr ⟨hsub, hne⟩
+      exact ((hind H).mp (hminimal (Finset.coe_ssubset.mpr hs))).2 hH
+    obtain ⟨i, hi⟩ := card_pos.mp (by omega : 0 < C.card)
+    have hle := ((hind _).mp (hminimal (Finset.coe_ssubset.mpr (erase_ssubset hi)))).1
+    rw [card_erase_of_mem hi] at hle
+    exact Or.inr ⟨by omega, hav⟩
+  · intro h
+    refine ⟨?_, ?_⟩
+    · rcases h with hC | ⟨hC, -⟩
+      · exact fun hi => hi.2 hC
+      · exact fun hi => by have := hi.1; omega
+    · intro B hproper
+      let F := B.toFinite.toFinset
+      have hF : (F : Set I) = B := Set.Finite.coe_toFinset _
+      have hsub := Finset.coe_ssubset.mp (hF.symm ▸ hproper)
+      have hlt := card_lt_card hsub
+      rw [← hF, hind]
+      rcases h with hC | ⟨hC, hav⟩
+      · have hc := hsize C hC
+        exact ⟨by omega, fun h => by have := hsize F h; omega⟩
+      · exact ⟨by omega, fun h => hav F h hsub.le⟩
+
+private lemma contracted_bases
+    (hr : r < Fintype.card I) (hsize : ∀ H ∈ holes, H.card = r)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
+    (hground : M.E = Set.univ)
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes)
+    {C : Finset I} (hC : M.IsCircuit (C : Set I)) (T : Finset I) :
+    (M ／ (C : Set I)).IsBase (T : Set I) ↔
+      (C ∈ holes ∧ ∃ t ∉ C, T = {t}) ∨ (C ∉ holes ∧ T = ∅) := by
+  obtain ⟨j, hj⟩ := hC.nonempty
+  have hJ : M.IsBasis (↑(C.erase j) : Set I) (C : Set I) := by
+    simpa only [coe_erase] using hC.sdiff_singleton_isBasis hj
+  have hind (F : Finset I) :
+      (M ／ (C : Set I)).Indep (F : Set I) ↔
+        (F ∪ C.erase j).card ≤ r ∧ F ∪ C.erase j ∉ holes ∧ Disjoint C F := by
+    rw [hJ.contract_indep_iff, ← coe_union, indep_iff_card_and_allowed hr hsize hsparse hB,
+      disjoint_coe, and_assoc]
+  have hcard (F : Finset I) (hd : Disjoint C F) :
+      (F ∪ C.erase j).card = F.card + (C.card - 1) := by
+    rw [card_union_of_disjoint (hd.symm.mono_right (erase_subset _ _)), card_erase_of_mem hj]
+  rcases (circuits_iff_omitted_or_large hr hsize hsparse hground hB C).mp hC with h | ⟨hc, hav⟩
+  · have hc := hsize C h
+    have hsingle (t : I) (ht : t ∉ C) : (M ／ (C : Set I)).Indep ({t} : Set I) := by
+      have hd : Disjoint C ({t} : Finset I) := disjoint_singleton_right.mpr ht
+      rw [← coe_singleton, hind, hcard _ hd, card_singleton, hc]
+      refine ⟨by have := card_pos.mpr ⟨j, hj⟩; omega, ?_, hd⟩
+      intro hK
+      let K := ({t} : Finset I) ∪ C.erase j
+      have hKC : K ⊆ insert t C := by
+        change ({t} : Finset I) ∪ C.erase j ⊆ insert t C
+        rw [singleton_union]
+        exact insert_subset (mem_insert_self _ _) ((erase_subset _ _).trans (subset_insert _ _))
+      have hcen : (insert t C).card = r + 1 := by rw [card_insert_of_notMem ht, hc]
+      have he := hole_unique_in_succ hsize hsparse hcen h hK (subset_insert _ _) hKC
+      exact ht (he ▸ mem_union_left (C.erase j) (mem_singleton_self t))
+    have hle (F : Finset I) (hF : (M ／ (C : Set I)).Indep (F : Set I)) : F.card ≤ 1 := by
+      obtain ⟨hLe, _, hd⟩ := (hind F).mp hF
+      rw [hcard F hd, hc] at hLe
+      have hpos : 0 < r := hc ▸ card_pos.mpr ⟨j, hj⟩
+      omega
+    simp only [h, true_and, not_true_eq_false, false_and, or_false]
+    constructor
+    · intro hT
+      have hne : T ≠ ∅ := by
+        intro he
+        obtain ⟨t, -, ht⟩ := exists_mem_notMem_of_card_lt_card
+          (show C.card < (univ : Finset I).card by simpa [hc] using hr)
+        have heq := hT.eq_of_subset_indep (hsingle t ht) (by simp [he])
+        rw [he] at heq
+        simp at heq
+      have hpos : 0 < T.card := card_pos.mpr (nonempty_iff_ne_empty.mpr hne)
+      obtain ⟨t, ht⟩ := card_eq_one.mp (show T.card = 1 by have := hle T hT.indep; omega)
+      have hd := ((hind T).mp hT.indep).2.2
+      exact ⟨t, disjoint_singleton_right.mp (ht ▸ hd), ht⟩
+    · rintro ⟨t, ht, rfl⟩
+      rw [coe_singleton]
+      apply (hsingle t ht).isBase_of_maximal
+      intro B hB hsub
+      let F := B.toFinite.toFinset
+      have hF : (F : Set I) = B := Set.Finite.coe_toFinset _
+      have hs : ({t} : Finset I) ⊆ F := Finset.coe_subset.mp (hF.symm ▸ (by simpa using hsub))
+      have he := eq_of_subset_of_card_le hs (by simpa using hle F (hF.symm ▸ hB))
+      rw [← hF, ← he, coe_singleton]
+  · have h : C ∉ holes := fun hm => by have := hsize C hm; omega
+    simp only [h, false_and, not_false_eq_true, true_and, false_or]
+    have hempty (B : Set I) (hB : (M ／ (C : Set I)).Indep B) : B = ∅ := by
+      let F := B.toFinite.toFinset
+      have hF : (F : Set I) = B := Set.Finite.coe_toFinset _
+      obtain ⟨hl, _, hd⟩ := (hind F).mp (hF.symm ▸ hB)
+      rw [hcard F hd, hc] at hl
+      have hf : F = ∅ := card_eq_zero.mp (by omega)
+      rw [← hF, hf, coe_empty]
+    constructor
+    · intro hT
+      exact Finset.coe_inj.mp (by simpa using hempty _ hT.indep)
+    · rintro rfl
+      simpa using (Matroid.empty_indep (M ／ (C : Set I))).isBase_of_maximal
+        (fun B hB _ => (hempty B hB).symm)
+
+open RationalJointCircuitImage (RationalResidue)
+open ParallelCircuitObstruction (weightedBoundary weightedCircuitResidues circuitReadout)
+open PuncturedCircuitCoordinates (joined_readout)
+open OrderedCycleFactorization (sign_sq)
+
+/-- For pairwise separated omitted bases, the circuit equations are the
+uniform deletion rows with the coefficient of each omitted basis set to zero. -/
+theorem mem_weightedCircuitResidues_iff {V : Type*} [Fintype V] (p : V → I)
+    (hr : r < Fintype.card I) (hsize : ∀ H ∈ holes, H.card = r)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r)) (hground : M.E = Set.univ)
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes)
+    (f : Finset I → RationalResidue) :
+    f ∈ weightedCircuitResidues M p ↔
+      (∀ F : Finset I, F.card ≠ r → f F = 0) ∧ (∀ H ∈ holes, f H = 0) ∧
+      (∀ R : Finset I, weightedBoundary p f R = 0) ∧
+      ∀ C : Finset I, C.card = r + 1 → circuitReadout f C ∅ = 0 := by
+  classical
+  have hcir := circuits_iff_omitted_or_large hr hsize hsparse hground hB
+  have hbase {C : Finset I} (hC : M.IsCircuit (C : Set I)) :=
+    contracted_bases hr hsize hsparse hground hB hC
+  constructor
+  · intro hf
+    have hvanish (H : Finset I) (hH : H ∈ holes) : f H = 0 :=
+      hf.1 H (fun h => ((hB H).mp h).2 hH)
+    refine ⟨fun F h => hf.1 F (fun hF => h ((hB F).mp hF).1), hvanish, hf.2.1, ?_⟩
+    intro C hC
+    by_cases hav : ∀ H ∈ holes, ¬ H ⊆ C
+    · have hc := (hcir C).mpr (Or.inr ⟨hC, hav⟩)
+      have hnot : C ∉ holes := fun h => by have := hsize C h; omega
+      exact hf.2.2 ⟨C, hc⟩ ∅ ((hbase hc ∅).mpr (Or.inr ⟨hnot, rfl⟩))
+    · push Not at hav
+      obtain ⟨H, hH, hsub⟩ := hav
+      obtain ⟨t, htC, htH⟩ := exists_mem_notMem_of_card_lt_card
+        (show H.card < C.card by rw [hsize H hH, hC]; omega)
+      have he : C = insert t H := (eq_of_subset_of_card_le (insert_subset htC hsub)
+        (by rw [card_insert_of_notMem htH, hsize H hH, hC])).symm
+      have hHC := (hcir H).mpr (Or.inl hH)
+      rw [he, joined_readout f (hvanish H hH) htH,
+        hf.2.2 ⟨H, hHC⟩ {t} ((hbase hHC {t}).mpr (Or.inl ⟨hH, t, htH, rfl⟩)), smul_zero]
+  · rintro ⟨hs, hz, hw, hc⟩
+    refine ⟨?_, hw, ?_⟩
+    · intro F hF
+      by_cases h : F ∈ holes
+      · exact hz F h
+      · exact hs F (fun he => hF ((hB F).mpr ⟨he, h⟩))
+    · intro C T hT
+      rcases (hbase C.prop T).mp hT with ⟨hmem, t, ht, rfl⟩ | ⟨hnot, rfl⟩
+      · have hrow := joined_readout f (hz C.val hmem) ht
+        rw [hc _ (by rw [card_insert_of_notMem ht, hsize C.val hmem])] at hrow
+        let s : ℤ := (-1) ^ (C.val.filter (t < ·)).card
+        calc
+          circuitReadout f C.val {t} = s • (s • circuitReadout f C.val {t}) := by
+            rw [smul_smul, sign_sq, one_smul]
+          _ = 0 := by rw [← hrow, smul_zero]
+      · rcases (hcir C.val).mp C.prop with h | ⟨hcard, _⟩
+        · exact (hnot h).elim
+        · exact hc C.val hcard
+
+end D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates

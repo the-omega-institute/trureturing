@@ -213,7 +213,7 @@ private lemma joined_sign (H : Finset I) {t i : I} (ht : t ∉ H) (hi : i ∈ H)
     norm_num
 
 omit [Fintype I] in
-private lemma joined_readout (f : Finset I → RationalResidue) (hf : f H = 0)
+lemma joined_readout (f : Finset I → RationalResidue) (hf : f H = 0)
     {t : I} (ht : t ∉ H) :
     circuitReadout f (insert t H) ∅ =
       (-1 : ℤ) ^ (H.filter (t < ·)).card • circuitReadout f H {t} := by
