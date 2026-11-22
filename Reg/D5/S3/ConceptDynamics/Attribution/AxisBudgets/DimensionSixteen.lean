@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Fin 16
+  Params := Unit
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -24,18 +24,28 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ _ budget => decide (2036 ≤ budget)) (fun a => nomatch a)
+private def threshold (limit : ℕ) : Realization signature :=
+  realize signature (fun _ _ budget => decide (limit ≤ budget)) (fun a => nomatch a)
 
-def constantFalse : Realization signature :=
+private def constantFalse : Realization signature :=
   realize signature (fun _ _ _ => false) (fun a => nomatch a)
 
-abbrev arena : Arena where
+private abbrev fullArena : Arena where
   signature := signature
-  Law R := ∀ (i : Fin 16) (budget : ℕ), axisFactorWithin 3 i budget →
-    R.readout () i budget = true
+  Law R := ∀ budget : ℕ, axisFactorWithin 3 (0 : Fin 16) budget ↔
+    R.readout () () budget = true
 
-private theorem some_budget (i : Fin 16) : ∃ budget, axisFactorWithin 3 i budget := by
+private abbrev coverArena : Arena where
+  signature := signature
+  Law R := ∀ budget : ℕ, coverWithin budget → R.readout () () budget = true
+
+private theorem full_false_fails : ¬ fullArena.Law constantFalse := by
+  intro law
+  have feasible := (full_budget_iff 2036).2 (by decide)
+  exact Bool.false_ne_true ((law 2036).mp feasible)
+
+private theorem some_cover_budget : ∃ budget, coverWithin budget := by
+  let i : Fin 16 := 0
   let edge (a b : AxisSubset 16 i) := decide (a = b ∧ a ≠ axisTop i)
   have degree (a : AxisSubset 16 i) :
       (∑ b, (edge a b).toNat) = if a = axisTop i then 0 else 1 := by
@@ -61,43 +71,44 @@ private theorem some_budget (i : Fin 16) : ∃ budget, axisFactorWithin 3 i budg
   · intro a b _ h
     have he : a = b := (of_decide_eq_true h).1
     subst b
-    exact Subset.rfl
+    exact ⟨Subset.rfl, Or.inl rfl⟩
 
-private theorem constant_false_fails : ¬ arena.Law constantFalse := by
+private theorem cover_false_fails : ¬ coverArena.Law constantFalse := by
   intro law
-  obtain ⟨budget, feasible⟩ := some_budget 0
-  exact Bool.false_ne_true (law 0 budget feasible)
+  obtain ⟨budget, feasible⟩ := some_cover_budget
+  exact Bool.false_ne_true (law budget feasible)
 
-def family : Registration arena (type_of% axis_budget_ge_2036) where
-  actual := actual
-  bridge := by simp [arena, actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using axis_budget_ge_2036,
-    constantFalse, constant_false_fails⟩
+def fullFamily : Registration fullArena (type_of% full_budget_iff) where
+  actual := threshold 2036
+  bridge := by simp [fullArena, threshold, realize]
+  variation := ⟨by simpa [fullArena, threshold, realize] using full_budget_iff,
+    constantFalse, full_false_fails⟩
   sensitivity := by
     constructor
     · intro role
       exact ⟨constantFalse, fun other h => (h (Subsingleton.elim other role)).elim,
-        rfl, constant_false_fails⟩
+        rfl, full_false_fails⟩
     · intro a
       exact nomatch a
   dependence := by
     rintro ⟨⟩
-    exact ⟨0, 2035, 2036, by decide⟩
+    exact ⟨(), 2035, 2036, by decide⟩
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    axis_budget_ge_2036 (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.budget
-  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.family
+def fullRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    full_budget_iff (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.fullBudget
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.fullFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨fullArena⟩
+  objectArena := .source ⟨fullArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source fullArena ⟨fullFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ budget => decide (2036 ≤ budget)) (fun a => nomatch a))
+  readout := some (realize signature
+    (fun _ _ budget => decide (2036 ≤ budget)) (fun a => nomatch a))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -105,10 +116,59 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body"]
-      stateBinder := 1
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def coverFamily : Registration coverArena (type_of% cover_budget_ge) where
+  actual := threshold 2044
+  bridge := by simp [coverArena, threshold, realize]
+  variation := ⟨by simpa [coverArena, threshold, realize] using cover_budget_ge,
+    constantFalse, cover_false_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      exact ⟨constantFalse, fun other h => (h (Subsingleton.elim other role)).elim,
+        rfl, cover_false_fails⟩
+    · intro a
+      exact nomatch a
+  dependence := by
+    rintro ⟨⟩
+    exact ⟨(), 2043, 2044, by decide⟩
+
+def coverRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    cover_budget_ge (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.coverBudget
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen.coverFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨coverArena⟩
+  objectArena := .source ⟨coverArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source coverArena ⟨coverFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ budget => decide (2044 ≤ budget)) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteen
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := true }] }
