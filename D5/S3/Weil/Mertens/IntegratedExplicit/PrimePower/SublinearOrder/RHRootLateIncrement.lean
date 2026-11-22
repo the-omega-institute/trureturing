@@ -28,11 +28,13 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit phaseOr
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency exp_mode_norm)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder (phaseOrbit_eq_mode)
 
+/-- Read the shifted centered spectrum from a vector of actual occurrence phases. -/
 def readSignal (r v : ℝ) (p : ℕ → Circle) : ℝ :=
   (∑' k, rootCoeff r k * (p k : ℂ) * Complex.exp (frequency k * ((v / r : ℝ) : ℂ))).re /
     (1 / 2 - (2 * r)⁻¹)
 
-private theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+/-- The shifted spectrum readout is continuous in the phase vector. -/
+theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (v : ℝ) : Continuous (readSignal r v) := by
   unfold readSignal
   apply Continuous.div_const
@@ -41,6 +43,7 @@ private theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr :
   intro k p
   simpa only [norm_mul, Circle.norm_coe, exp_mode_norm hRH, mul_one] using rootCoeff_bound hr k
 
+/-- On the actual phase orbit the shifted readout recovers the centered spectrum. -/
 theorem read_signal_orbit (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (v t : ℝ) : readSignal r v (phaseOrbit t) = rootSignal r (r * t + v) := by
   unfold readSignal rootSignal

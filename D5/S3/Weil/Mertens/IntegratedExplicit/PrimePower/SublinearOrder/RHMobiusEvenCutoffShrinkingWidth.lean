@@ -47,6 +47,7 @@ private theorem phase_uniformContinuous :
     simp [Complex.norm_exp, Complex.mul_re], mul_one]
   exact Real.norm_exp_I_mul_ofReal_sub_one_le
 
+/-- The full centered spectrum is uniformly continuous under RH. -/
 theorem root_signal_uniformContinuous (hRH : RiemannHypothesis) {r : ℝ}
     (hr : 1 < r) : UniformContinuous (rootSignal r) := by
   let term (k : ℕ) (u : ℝ) := rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))
