@@ -9,6 +9,8 @@ set_option autoImplicit false
 namespace Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum
 
 open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
+open _root_.D5.S3.ConceptDynamics.Attribution.ParitySeedBudget
 open _root_.D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization
 open _root_.D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -252,6 +254,120 @@ def relabelRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+structure CoordinateParameters where
+  n : ℕ
+  State : Type
+  action : MulAction (Acting (Fin (n + 2))) State
+  i : Fin (n + 2)
+
+abbrev fixationSignature : Signature where
+  Params := CoordinateParameters
+  State p := p.State
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+open Classical in
+def observesGenerator : Realization fixationSignature :=
+  realize fixationSignature
+    (fun _ p s => letI := p.action; decide (generator p.i • s = s)) (fun e => nomatch e)
+
+def ignoresGenerator : Realization fixationSignature :=
+  realize fixationSignature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev fixationArena : Arena where
+  signature := fixationSignature
+  Law R := ∀ {n : ℕ} {S : Type} [action : MulAction (Acting (Fin (n + 2))) S]
+      (i : Fin (n + 2)) (s : S),
+    (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) ↔
+      R.readout () ⟨n, S, action, i⟩ s = true
+
+private def fixedPair : Pair 0 :=
+  (⟨⟨![true, true], 0⟩, by
+    change parity (bitProfile _) = 0
+    rw [parity, Fin.sum_univ_two]
+    rfl⟩,
+    ⟨⟨![true, false], 0⟩, by
+      change parity (bitProfile _) = 1
+      rw [parity, Fin.sum_univ_two]
+      rfl⟩)
+
+private theorem fixed_pair_generator : generator (0 : Fin 2) • fixedPair = fixedPair :=
+  (coordinate_fixed_iff_generator (n := 0) 0 fixedPair).mp
+    ((pair_fixed_coordinate (n := 0) fixedPair 0).mpr ⟨rfl, rfl⟩)
+
+private theorem ignoring_generator_fails : ¬ fixationArena.Law ignoresGenerator := by
+  intro law
+  have all := (coordinate_fixed_iff_generator (n := 0) 0 fixedPair).mpr fixed_pair_generator
+  exact Bool.false_ne_true ((law (n := 0) 0 fixedPair).mp all)
+
+def fixationFamily : Registration fixationArena
+    (type_of% (@coordinate_fixed_iff_generator)) where
+  actual := observesGenerator
+  bridge := by
+    simp [observesGenerator, realize]
+  variation := ⟨by
+    intro n S action i s
+    simpa [observesGenerator, realize] using coordinate_fixed_iff_generator i s,
+    ignoresGenerator, ignoring_generator_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨ignoresGenerator, ?_, rfl, ignoring_generator_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := by
+    rintro ⟨⟩
+    let p : CoordinateParameters := ⟨0, Pair 0, inferInstance, 0⟩
+    let moved : Pair 0 := (⟨⟨![false, false], 0⟩, by
+      change parity (bitProfile _) = 0
+      rw [parity, Fin.sum_univ_two]
+      rfl⟩, fixedPair.2)
+    have moves : ¬ generator (0 : Fin 2) • moved = moved := by
+      intro fixed
+      have all := (coordinate_fixed_iff_generator (n := 0) 0 moved).mpr fixed
+      have bit : false = true := ((pair_fixed_coordinate moved 0).mp all).1
+      exact Bool.false_ne_true bit
+    exact ⟨p, fixedPair, moved, by simp [observesGenerator, realize, p, fixed_pair_generator, moves]⟩
+
+open Classical in
+def fixationRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@coordinate_fixed_iff_generator) (Realization fixationSignature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum.generatorFixation
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum.fixationFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨fixationArena⟩
+  objectArena := .source ⟨fixationArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source fixationArena ⟨fixationFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize fixationSignature
+    (fun _ p s => letI := p.action; decide (generator p.i • s = s)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
