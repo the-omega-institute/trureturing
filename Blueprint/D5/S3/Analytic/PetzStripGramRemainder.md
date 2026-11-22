@@ -64,9 +64,9 @@ Lean statement: `D5/S3/Analytic/PetzStripGramRemainder.weighted_strip_gram`
 
 *Commentary.*
 
-The weighted conjugate products on the lines with real parts zero and one half are integrable, and the sum of their whole-line integrals is the closed strip Gram entry.
+The weighted conjugate products on the lines with real parts zero and one half are integrable, and the sum of their whole-line integrals is the closed strip Gram entry. The weights are pi/(cosh(2 pi t) - 1) on the lower line and pi/(cosh(2 pi t) + 1) on the upper line. At x=y the entry is exp(x) - 1 - x.
 
-On the lower line, the two diagonal deficits dominate the absolute value of the mixed product. Reflecting the imaginary coordinate then reduces the integral to three compensated cosine modes. On the upper line each individual Fourier mode is integrable. Combining the coth and logistic transforms gives the claimed formula, including zero and coincident frequencies.
+On the lower line, the two diagonal deficits dominate the absolute value of the mixed product. Reflecting the imaginary coordinate then reduces the integral to three compensated cosine modes. On the upper line each individual Fourier mode is integrable. The logistic Gram factorization supplies its real transform and fixes the unit mass. The finite-overlap strip identity evaluates the cosine coefficient using the coth integral on the lower line. Summing the two boundary contributions gives the closed formula, including zero and coincident frequencies.
 
 **Definition 1.6 (Logistic remainder entry).**
 
