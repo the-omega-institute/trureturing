@@ -8,7 +8,8 @@
 
 /-
 admission_basis: escape-witness (registered noncrossing comparison boundary)
-Direct frozen dependencies: none.
+Direct frozen dependency: D5/S3/Combinatorics/PriorityLattice/ForestCovers.atom_card_orderIso
+  (module statement_id: sha256:c9bd9da94d8db519931cb03b6ea673b2f78c35b33d3374df52d13eb7bf0fd1ac).
 proof_shape: no_tamari_noncrossing_iso: content; escape_witness: no_tamari_noncrossing_iso
 proof_shape: nc_one_subsingleton: bind-only; consumers: tamariNcOne
 proof_shape: nc_two_bot_or_top: content; escape_witness: nc_two_bot_or_top
@@ -16,6 +17,7 @@ proof_shape: nc_two_bot_ne_top: bind-only; consumers: ncTwo
 -/
 
 import D5.S3.Combinatorics.Lattices.Tamari.MaximumFamilies
+import D5.S3.Combinatorics.PriorityLattice.ForestCovers
 import Mathlib.Order.Partition.Finpartition
 
 /-! # Noncrossing refinement and its comparison with Tamari order -/
@@ -226,7 +228,7 @@ theorem no_tamari_noncrossing_iso (n : ℕ) (hn : 3 ≤ n) :
   rintro ⟨e⟩
   have h₁ := tamari_atom_card_le k
   have h₂ := nc_atom_card_ge (k + 1) hn
-  rw [← orderIso_atomCard e] at h₂
+  rw [← PriorityLattice.ForestCovers.atom_card_orderIso e] at h₂
   omega
 
 theorem nc_one_subsingleton : Subsingleton (NoncrossingPartitions 1) := by

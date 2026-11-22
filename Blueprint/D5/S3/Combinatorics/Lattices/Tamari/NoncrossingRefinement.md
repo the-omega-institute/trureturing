@@ -137,3 +137,4 @@ The partition into singletons and the one-block partition differ on whether the 
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/NoncrossingRefinement.nc_two_bot_or_top`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/NoncrossingRefinement.no_tamari_noncrossing_iso`
 - Dependency: [D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies](MaximumFamilies.md)
+- Dependency: [D5/S3/Combinatorics/PriorityLattice/ForestCovers](../../PriorityLattice/ForestCovers.md)

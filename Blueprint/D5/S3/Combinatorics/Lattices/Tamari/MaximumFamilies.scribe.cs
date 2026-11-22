@@ -48,11 +48,6 @@ internal sealed class MaximumFamiliesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Transport the bracket cardinality bound and the attaining family along the tree bracket order"
                     + " isomorphism."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("order-iso-atom-card"),
-                DeclarationHandle.Create(Owner + "orderIso_atomCard"), H("Atom count is an order invariant"),
-                StatementSource.FromAuthor(F.Disp(AtomCardinalityInvariant())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An order isomorphism of orders with bottom induces an equivalence of their atom subtypes."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("tamari-atom-card-le"),
                 DeclarationHandle.Create(Owner + "tamari_atom_card_le"), H("Tamari atom bound"),
                 StatementSource.FromAuthor(F.Disp(Bind(FormulaQuantifier.ForAll, "n", NatType,
@@ -75,26 +70,6 @@ internal sealed class MaximumFamiliesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At n ≥ 2 the bracket coatoms from two different right endpoints transport to distinct coatoms in"
                     + " Trees(n + 1)."))), DescribeRole.Theorem))));
-
-    private static Formula AtomCardinalityInvariant()
-    {
-        var forall = FormulaQuantifier.ForAll;
-        var aType = F.Id("A");
-        var bType = F.Id("B");
-        var equality = Rel(AtomSubtypeCard("a", aType), FormulaRelationOperator.Equal,
-            AtomSubtypeCard("b", bType));
-        return Bind(forall, "A", F.Id("Type"),
-            Bind(forall, "B", F.Id("Type"),
-                Bind(forall, "poA", Call("PartialOrder", aType),
-                    Bind(forall, "poB", Call("PartialOrder", bType),
-                        Bind(forall, "botA", Call("OrderBot", aType),
-                            Bind(forall, "botB", Call("OrderBot", bType),
-                                Bind(forall, "e", Call("OrderIso", aType, bType), equality)))))));
-    }
-
-    private static Formula AtomSubtypeCard(string name, Formula type) =>
-        Call("NatCard", Seq(OpenBrace, F.Id(name), Colon, Sp, type, Sp, Mid, Sp,
-            Call("IsAtom", F.Id(name)), CloseBrace));
 
     private static Formula Call(string name, params Formula[] values) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. values]);

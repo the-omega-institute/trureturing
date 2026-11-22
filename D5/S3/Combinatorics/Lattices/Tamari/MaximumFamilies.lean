@@ -8,15 +8,16 @@
 
 /-
 admission_basis: escape-witness (registered maximum attainment and induced order)
-Direct frozen dependencies: none.
+Direct frozen dependency: D5/S3/Combinatorics/PriorityLattice/ForestCovers.atom_card_orderIso
+  (module statement_id: sha256:c9bd9da94d8db519931cb03b6ea673b2f78c35b33d3374df52d13eb7bf0fd1ac).
 proof_shape: maximumTamari_card: content; escape_witness: booleanFamily_maximum
-proof_shape: orderIso_atomCard: bind-only; consumers: no_tamari_noncrossing_iso, tamari_atom_card_le
 proof_shape: tamari_atom_card_le: content; escape_witness: atom_is_increment
 proof_shape: tamari_two_coatoms: content; escape_witness: tamari_two_coatoms
 -/
 
 import D5.S3.Combinatorics.Lattices.Tamari.BooleanRows
 import D5.S3.Combinatorics.Lattices.Tamari.TreeRotations
+import D5.S3.Combinatorics.PriorityLattice.ForestCovers
 import Mathlib.Order.Hom.CompleteLattice
 import Mathlib.Order.Atoms
 
@@ -351,13 +352,9 @@ private theorem bracket_atom_card_le (n : ℕ) : Nat.card {b : Brackets n // IsA
     Subtype.ext ((hs b).symm.trans (h ▸ hs c))
   exact (Nat.card_le_card_of_injective select hinj).trans_eq (Nat.card_fin n)
 
-theorem orderIso_atomCard {α β : Type*} [PartialOrder α] [PartialOrder β]
-    [OrderBot α] [OrderBot β] (e : α ≃o β) :
-    Nat.card {a : α // IsAtom a} = Nat.card {b : β // IsAtom b} :=
-  Nat.card_congr (e.toEquiv.subtypeEquiv fun a => (e.isAtom_iff a).symm)
-
 theorem tamari_atom_card_le (n : ℕ) : Nat.card {t : Trees (n + 1) // IsAtom t} ≤ n :=
-  (orderIso_atomCard (treeBracketOrderIso (n + 1))).trans_le (bracket_atom_card_le n)
+  (PriorityLattice.ForestCovers.atom_card_orderIso
+    (treeBracketOrderIso (n + 1))).trans_le (bracket_atom_card_le n)
 
 private def coatomAt (s : RowIndex n) : Brackets n :=
   row s ⟨s.val, s.property.1, le_rfl⟩

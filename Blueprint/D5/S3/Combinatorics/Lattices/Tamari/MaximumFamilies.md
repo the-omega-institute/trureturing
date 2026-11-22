@@ -64,19 +64,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{IsGreatest}\left(\{k \in \mathbb{N} 
 
 Transport the bracket cardinality bound and the attaining family along the tree bracket order isomorphism.
 
-**Theorem 1.6 (Atom count is an order invariant).**
-
-$$\forall A \in Type,\; \forall B \in Type,\; \forall poA \in \operatorname{PartialOrder}\left(A\right),\; \forall poB \in \operatorname{PartialOrder}\left(B\right),\; \forall botA \in \operatorname{OrderBot}\left(A\right),\; \forall botB \in \operatorname{OrderBot}\left(B\right),\; \forall e \in \operatorname{OrderIso}\left(A, B\right),\; \operatorname{NatCard}\left(\{a: A \mid \operatorname{IsAtom}\left(a\right)\}\right) = \operatorname{NatCard}\left(\{b: B \mid \operatorname{IsAtom}\left(b\right)\}\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.orderIso_atomCard` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-An order isomorphism of orders with bottom induces an equivalence of their atom subtypes.
-
-**Theorem 1.7 (Tamari atom bound).**
+**Theorem 1.6 (Tamari atom bound).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{NatCard}\left(\{x \mid x \in \operatorname{Trees}\left(n + 1\right) \land \operatorname{IsAtom}\left(x\right)\}\right) \le n$$
 
@@ -88,7 +76,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{NatCard}\left(\{x \mid x \in \operat
 
 An atom of the bracket order must be a single one-step increase from the identity bracket. In rank n + 1 there are at most n available coordinates.
 
-**Theorem 1.8 (Two distinct Tamari coatoms).**
+**Theorem 1.7 (Two distinct Tamari coatoms).**
 
 $$\forall n \in \mathbb{N},\; 2 \le n \Rightarrow (\exists a \in \operatorname{Trees}\left(n + 1\right),\; \exists b \in \operatorname{Trees}\left(n + 1\right),\; \operatorname{IsCoatom}\left(a\right) \land \left(\operatorname{IsCoatom}\left(b\right) \land a \ne b\right))$$
 
@@ -106,9 +94,9 @@ At n ≥ 2 the bracket coatoms from two different right endpoints transport to d
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.maximumFamiliesOrder`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.maximumTamariOrderIso`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.maximumTamari_card`
-- Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.orderIso_atomCard`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.tamariCompleteLattice`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.tamari_atom_card_le`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.tamari_two_coatoms`
 - Dependency: [D5/S3/Combinatorics/Lattices/Tamari/BooleanRows](BooleanRows.md)
 - Dependency: [D5/S3/Combinatorics/Lattices/Tamari/TreeRotations](TreeRotations.md)
+- Dependency: [D5/S3/Combinatorics/PriorityLattice/ForestCovers](../../PriorityLattice/ForestCovers.md)
