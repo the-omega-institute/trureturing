@@ -52,7 +52,23 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.chartJ`
 
 The chart evaluates the product of the two original signed sources times the difference rationalJ(e,f,u,v,r) − correction(r), then subtracts cauchy(e,f,u,v). On ‖u‖ + ‖r‖ < 1 and ‖v‖ + ‖r‖ < 1 with G ≠ 0, the root-square and source normalization identities reduce this expression to the regular candidateJ.
 
-**Theorem 1.5 (Signed J displacement with the original source).**
+**Theorem 1.5 (Regular J for normalized chart roots).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.regularJ_chart_algebra`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.regularJ_chart_algebra` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let e and f be Boolean labels and let u, v, r, me, mf, U and V be complex, with me and mf denoting the two source factors. Assume U² b(u) = h(e,u,r), V² b(v) = h(f,v,r), me b(u) U = 1 and mf b(v) V = 1. The equality holds on this domain with b(u) ≠ 0, b(v) ≠ 0, U ≠ 0, V ≠ 0, G(e,f,u,v) ≠ 0 and U + V ≠ 0.
+
+$$
+\mathit{me} \cdot \mathit{mf} \cdot \operatorname{rationalJ}\left(e, f, u, v, r\right) - \operatorname{cauchy}\left(e, f, u, v\right) = \mathit{me} \cdot \mathit{mf} \cdot \left(\frac{r}{4} + \frac{r^{2} \cdot \rho\left(e, f, u, v\right)}{4 \cdot \operatorname{b}\left(u\right) \cdot \operatorname{b}\left(v\right) \cdot \left(U + V\right)^{2}}\right)
+$$
+
+**Theorem 1.6 (Signed J displacement with the original source).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_original_displacement`
 
@@ -75,4 +91,5 @@ For mixed labels, ‖uv‖ < 1 excludes chart poles. For equal labels, joint ana
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.cauchy`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.chartJ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.rationalJ`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.regularJ_chart_algebra`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/Signed/CandidateSource](CandidateSource.md)
