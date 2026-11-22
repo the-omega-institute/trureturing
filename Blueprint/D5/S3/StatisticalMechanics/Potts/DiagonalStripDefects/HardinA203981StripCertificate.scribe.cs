@@ -19,7 +19,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("allocated-counts"), DeclarationHandle.Create(Prefix + "allocated_counts"),
             H("Allocate exact cost between the parity classes"), StatementSource.FromAuthor(Disp(AllocatedCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The half-strip class counts give the summands for all ordered allocations of the cost. Each summand reads the unordered target class. The proof h certifies that d minus Fin.val(k) is less than d + 1."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("The half-strip class counts give the summands for all ordered allocations of the cost. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k)."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("reversed-count"), DeclarationHandle.Create(Prefix + "reversed_count"),
             H("Reindex the target triple under reversal"), StatementSource.FromAuthor(Disp(ReversedCountFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -108,9 +108,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         var boundary = Call("HardinA203981StripData.boundary", r);
         var cost = Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), representative, r);
         var full = SumOver("r", Row("6"), If(And(Eq(cost, d), Eq(boundary, j)), CastInt(N("1")), CastInt(N("0"))));
-        var residual = Typed(Seq(Langle, Sp,
-            new Formula.Binary(d, FormulaBinaryOperator.Subtract, Call("Fin.val", k)),
-            Comma, Sp, V("h"), Rangle), allocations);
+        var residual = Call("Fin.rev", k);
         var sum = SumOver("k", allocations,
             Call("HardinA203981StripData.classProduct", App(m, k), App(m, residual), i, j));
         return All("d", V("Nat"), All("m", Arr(allocations, matrix),

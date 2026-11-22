@@ -35,6 +35,8 @@ import Mathlib.Data.Fin.Basic
 import Mathlib.Order.Fin.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.NatAntidiagonal
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Logic.Equiv.Prod
 import Mathlib.Basic.Logic.Basic
@@ -150,26 +152,15 @@ private theorem pair_sum (P R : Col → Prop) [DecidablePred P] [DecidablePred R
 private theorem allocation_indicator (u v d : ℕ) (P : Prop) [Decidable P] :
     (if u + v = d ∧ P then (1 : ℤ) else 0) =
       ∑ k : Fin (d + 1), if (u = k.val ∧ v = d - k.val) ∧ P then 1 else 0 := by
-  by_cases h : u + v = d ∧ P
-  · have hsum := h.1
-    let k : Fin (d + 1) := ⟨u, by omega⟩
-    rw [if_pos h, Finset.sum_eq_single k]
-    · have hv : v = d - k.val := by change v = d - u; omega
-      exact (if_pos ⟨⟨rfl, hv⟩, h.2⟩).symm
-    · intro l _ hl
-      exact if_neg fun e => hl (Fin.ext e.1.1.symm)
-    · exact fun hk => (hk (Finset.mem_univ k)).elim
-  · rw [if_neg h]
-    symm
-    calc
-      _ = ∑ _ : Fin (d + 1), (0 : ℤ) := by
-        apply Finset.sum_congr rfl
-        intro k _
-        apply if_neg
-        rintro ⟨⟨hu, hv⟩, hp⟩
-        have hk := k.isLt
-        exact h ⟨by omega, hp⟩
-      _ = 0 := Finset.sum_const_zero
+  rw [Fin.sum_univ_eq_sum_range
+      (fun k : ℕ => if (u = k ∧ v = d - k) ∧ P then (1 : ℤ) else 0) (d + 1),
+    ← Finset.Nat.sum_antidiagonal_eq_sum_range_succ
+      (fun x y => if (u = x ∧ v = y) ∧ P then (1 : ℤ) else 0)]
+  by_cases h : P
+  · simp only [h, and_true, ← Prod.mk.injEq]
+    rw [Finset.sum_ite_eq]
+    simp
+  · simp [h]
 
 /-- Each full-strip transition is the sum of products for the exact-cost allocations. -/
 theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) ℤ)
@@ -178,7 +169,7 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
     (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (HardinA203981StripData.representatives i) r = d ∧
       boundary r = j then (1 : ℤ) else 0) =
-      ∑ k : Fin (d + 1), classProduct (K k) (K ⟨d - k.val, by omega⟩) i j := by
+      ∑ k : Fin (d + 1), classProduct (K k) (K k.rev) i j := by
   let p := HardinA203981StripData.representatives i
   let a := (parityRows p).1
   let b := (parityRows p).2
@@ -204,11 +195,11 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
       rw [pair_sum (fun y => halfCost a y = k.val) (fun x => halfCost b x = d - k.val)]
       have ha : cls a = (classPair i).1 := (hcls i).1
       have hb : cls b = (classPair i).2 := (hcls i).2
-      change _ = unordered (K k (classPair i).1) (K ⟨d - k.val, by omega⟩ (classPair i).2) j
+      change _ = unordered (K k (classPair i).1) (K k.rev (classPair i).2) j
       rw [show (fun c => ∑ y : Col, if halfCost a y = k.val ∧ cls y = c then (1 : ℤ) else 0) =
         K k (cls a) from funext (h k a)]
       rw [show (fun c => ∑ x : Col, if halfCost b x = d - k.val ∧ cls x = c then (1 : ℤ) else 0) =
-        K ⟨d - k.val, by omega⟩ (cls b) from funext (h ⟨d - k.val, by omega⟩ b)]
+        K k.rev (cls b) by simpa only [Fin.val_rev, Nat.succ_sub_succ_eq_sub] using funext (h k.rev b)]
       rw [ha, hb]
 
 /-- Reverse the target before applying a half-strip class count. -/
