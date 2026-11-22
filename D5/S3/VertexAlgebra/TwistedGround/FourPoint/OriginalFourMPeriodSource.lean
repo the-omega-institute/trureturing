@@ -18,7 +18,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Complex Filter Set
-open scoped Topology
+open scoped Topology ComplexConjugate
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMPeriodSource
 
@@ -204,6 +204,38 @@ private theorem real_d_aux {t : ℝ} (ht : 1 < t) :
   · apply doubleSlit_of_re
     · simpa [sub_re] using sub_pos.mpr hInv
     · simpa [sub_re] using hi
+
+private theorem tau_conj {r : ℂ} (hr : r ∈ doubleSlit) :
+    tau (conj r) = -conj (tau r) := by
+  have he : 1 - conj r = conj (1 - r) := by simp
+  rw [tau, he, slitPeriod_conj (complement_mem hr), slitPeriod_conj hr.1, tau]
+  simp [neg_mul, neg_div]
+
+private theorem dPeriod_conj_of_mem {r : ℂ}
+    (h₁ : 1 - r ∈ slitDomain) (h₂ : 1 - r⁻¹ ∈ doubleSlit) :
+    dPeriod false (conj r) = conj (dPeriod true r) := by
+  have hsub : 1 - conj r = conj (1 - r) := by simp
+  have hinv : 1 - (conj r)⁻¹ = conj (1 - r⁻¹) := by simp
+  rw [dPeriod, hinv, hsub, tau_conj h₂, slitPeriod_conj h₁, dPeriod]
+  simp only [lipSign, Bool.false_eq_true, ite_false, ite_true, map_div₀, map_mul,
+    map_add, map_one, Complex.conj_I, div_neg]
+  rw [← neg_div, ← neg_mul, neg_add, sub_eq_add_neg]
+
+/-- Near each real t > 1, the upper D period is the Schwarz reflection of the lower one. -/
+theorem dPeriod_upper_reflection {t : ℝ} (ht : 1 < t) :
+    dPeriod false =ᶠ[𝓝 (t : ℂ)] fun r => conj (dPeriod true (conj r)) := by
+  have ht₀ : 0 < t := by linarith
+  obtain ⟨h₁, h₂⟩ := real_d_aux ht
+  have c₁ : ContinuousAt (fun r : ℂ => 1 - conj r) (t : ℂ) := by fun_prop
+  have c₂ : ContinuousAt (fun r : ℂ => 1 - (conj r)⁻¹) (t : ℂ) :=
+    continuousAt_const.sub (continuous_conj.continuousAt.inv₀
+      (by simpa using (ofReal_ne_zero.mpr ht₀.ne')))
+  have n₁ : ∀ᶠ r in 𝓝 (t : ℂ), 1 - conj r ∈ slitDomain :=
+    c₁.tendsto (isOpen_slitDomain.mem_nhds (by simpa using h₁))
+  have n₂ : ∀ᶠ r in 𝓝 (t : ℂ), 1 - (conj r)⁻¹ ∈ doubleSlit :=
+    c₂.tendsto (isOpen_doubleSlit.mem_nhds (by simpa using h₂))
+  filter_upwards [n₁, n₂] with r hr₁ hr₂
+  simpa only [Complex.conj_conj] using dPeriod_conj_of_mem hr₁ hr₂
 
 /-- The continued D period is analytic at each real boundary point greater than one. -/
 theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :

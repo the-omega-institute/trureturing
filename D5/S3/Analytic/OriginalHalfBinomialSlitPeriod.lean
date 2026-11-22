@@ -70,6 +70,21 @@ private lemma base_mem {r : ℂ} (hr : r ∈ slitDomain) (θ : ℝ) :
     nlinarith [Real.sin_sq_le_one θ]
   · exact Or.inr (mul_ne_zero hr hs0.ne')
 
+/-- The principal Euler period commutes with complex conjugation on its slit domain. -/
+theorem slitPeriod_conj {r : ℂ} (hr : r ∈ slitDomain) :
+    slitPeriod (conj r) = conj (slitPeriod r) := by
+  have hk (θ : ℝ) :
+      (1 - conj r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ) =
+        conj ((1 - r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ)) := by
+    have hbase : 1 - r * (Real.sin θ ^ 2 : ℝ) ∈ Complex.slitPlane := base_mem hr θ
+    have hconj : 1 - conj r * (Real.sin θ ^ 2 : ℝ) = conj (1 - r * (Real.sin θ ^ 2 : ℝ)) := by
+      simp only [map_sub, map_one, map_mul, Complex.conj_ofReal]
+    rw [hconj, Complex.conj_cpow _ _ (Complex.slitPlane_arg_ne_pi hbase)]
+    congr 2
+    simp [map_ofNat]
+  simp only [slitPeriod, map_mul, map_div₀, map_ofNat, Complex.conj_ofReal,
+    intervalIntegral, map_sub, ← integral_conj, hk]
+
 private lemma continuous_base : Continuous (fun p : ℂ × ℝ => base p.1 p.2) := by
   unfold base
   fun_prop

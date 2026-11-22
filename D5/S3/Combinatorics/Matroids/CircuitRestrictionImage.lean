@@ -51,7 +51,7 @@ private lemma sign_square (F : Finset V) (a : V) :
 private def facetChain (E : Finset V) (p : V → ℤ) (F : Finset V) : ℤ :=
   ∑ a ∈ E, (insertionSign E a * p a) * simplex (E.erase a) F
 
-private def potentialChain (E : Finset V) (p : V → ℤ) : Chain V :=
+@[no_expose] def potentialChain (E : Finset V) (p : V → ℤ) : Chain V :=
   boundaryOn E (facetChain E p)
 
 private lemma facetChain_erase (E : Finset V) (p : V → ℤ) {a : V} (ha : a ∈ E) :
@@ -114,7 +114,7 @@ private lemma potentialChain_pair_sum {E : Finset V} (p : V → ℤ) {a b : V}
   rw [hd, sum_insert (by simpa using hab), sum_singleton, insert_sdiff_pair ha hab, hinB,
     facetChain_erase E p hb, facetChain_erase E p ha]
 
-private lemma potentialChain_pair {E : Finset V} (p : V → ℤ) {a b : V}
+lemma potentialChain_pair {E : Finset V} (p : V → ℤ) {a b : V}
     (ha : a ∈ E) (hb : b ∈ E) (hab : a ≠ b) :
     let F := E \ {a, b}
     potentialChain E p F =
@@ -132,7 +132,7 @@ private lemma potentialChain_pair {E : Finset V} (p : V → ℤ) {a b : V}
   rw [potentialChain_pair_sum p ha hb hab, ← mul_assoc, ← mul_assoc, hopp]
   ring
 
-private lemma potentialChain_support {E : Finset V} {p : V → ℤ} {F : Finset V}
+lemma potentialChain_support {E : Finset V} {p : V → ℤ} {F : Finset V}
     (hn : potentialChain E p F ≠ 0) :
     ∃ a ∈ E, ∃ b ∈ E, a ≠ b ∧ F = E \ {a, b} := by
   classical
@@ -155,7 +155,7 @@ private lemma potentialChain_support {E : Finset V} {p : V → ℤ} {F : Finset 
     tauto
   simp [simplex, hne]
 
-private lemma potentialChain_cycle [Fintype V] (E : Finset V) (p : V → ℤ)
+lemma potentialChain_cycle [Fintype V] (E : Finset V) (p : V → ℤ)
     (R : Finset V) : boundaryOn univ (potentialChain E p) R = 0 := by
   classical
   have hs : E \ R ⊆ univ \ R := by simp
@@ -172,7 +172,7 @@ private lemma potentialChain_cycle [Fintype V] (E : Finset V) (p : V → ℤ)
     rw [hz, mul_zero]
   rw [he, potentialChain, boundaryOn_squared]
 
-private lemma cycle_eq_of_away [Fintype V] {z w : Chain V} {x : V}
+lemma cycle_eq_of_away [Fintype V] {z w : Chain V} {x : V}
     (hz : ∀ R, boundaryOn univ z R = 0) (hw : ∀ R, boundaryOn univ w R = 0)
     (haway : ∀ F : Finset V, x ∉ F → z F = w F) : z = w := by
   classical
@@ -199,7 +199,7 @@ lemma dual_complement_base {M : Matroid V} {E A : Finset V}
     M✶.IsBase (↑A : Set V) ↔ M.IsBase (↑(E \ A) : Set V) := by
   rw [Matroid.dual_isBase_iff (hE.symm ▸ coe_subset.mpr hA), hE, coe_sdiff]
 
-private lemma primal_base_complement_pair {M : Matroid V} {E F : Finset V}
+lemma primal_base_complement_pair {M : Matroid V} {E F : Finset V}
     (hE : M.E = (E : Set V)) (hF : M.IsBase (F : Set V))
     (hcard : ∀ B, M✶.IsBase B → B.encard = 2) :
     ∃ a ∈ E, ∃ b ∈ E, a ≠ b ∧ F = E \ {a, b} := by
@@ -252,7 +252,7 @@ private lemma dual_star_base {M : Matroid V} {K : Finset V} {x a : V}
   simpa only [coe_insert, coe_singleton] using hB
 
 omit [LinearOrder V] in
-private lemma pair_base_iff_indep {M : Matroid V}
+lemma pair_base_iff_indep {M : Matroid V}
     (hcard : ∀ B, M.IsBase B → B.encard = 2) {a b : V} (hab : a ≠ b) :
     M.IsBase {a, b} ↔ M.Indep {a, b} := by
   refine ⟨Matroid.IsBase.indep, fun h => ?_⟩
@@ -262,7 +262,7 @@ private lemma pair_base_iff_indep {M : Matroid V}
     (Set.toFinite _).eq_of_subset_of_encard_le hsub (by rw [hcard B hB, hpair])
   exact he ▸ hB
 
-private def restrictionChain (K : Finset V) (x : V) (p : V → ℤ) : Chain V :=
+def restrictionChain (K : Finset V) (x : V) (p : V → ℤ) : Chain V :=
   potentialChain (insert x K) (fun a => -insertionSign (insert x K) x * p a)
 
 private lemma restrictionChain_erase {K : Finset V} {x a : V}
@@ -286,7 +286,7 @@ private lemma signedRestriction_chain {K : Finset V} {x : V} (hx : x ∉ K)
   rw [simplexBoundary_erase ha, restrictionChain_erase hx ha hp, ← mul_assoc, sign_square,
     one_mul]
 
-private lemma eq_restrictionChain_of_cycle [Fintype V] {M : Matroid V}
+lemma eq_restrictionChain_of_cycle [Fintype V] {M : Matroid V}
     {K : Finset V} {x : V} (hE : M.E = (↑(insert x K) : Set V)) (hx : x ∉ K)
     (hcard : ∀ B, M✶.IsBase B → B.encard = 2) {z : Chain V} (hz : TopCycle M z) :
     ∃ p : V → ℤ, p x = 0 ∧ z = restrictionChain K x p := by

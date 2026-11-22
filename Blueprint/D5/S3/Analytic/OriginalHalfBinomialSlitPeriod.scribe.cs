@@ -43,6 +43,9 @@ internal sealed class OriginalHalfBinomialSlitPeriodDocument : IScribeDocumentDe
             Result("slit-period", "slitPeriod", "Euler's principal integral",
                 "Integrate the principal complex power (1 − r sin² θ)^(−1/2) on [0, π/2] and multiply by 2/π.",
                 DescribeRole.Definition),
+            Result("slit-period-conjugation", "slitPeriod_conj", "Conjugation of the Euler period",
+                "For a parameter in the Euler slit domain, every base 1 − r sin² θ stays off the principal cut. "
+                + "Conjugation commutes with the inverse square root of each base and with its Euler integral."),
             Result("slit-differentiable", "slitPeriod_differentiableAt", "Differentiation under the integral",
                 "On the slit domain the kernel stays off the branch cut. Its parameter derivative "
                 + "is bounded on a smaller closed parameter disk times the integration interval. "

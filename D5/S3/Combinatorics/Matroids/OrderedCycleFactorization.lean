@@ -74,7 +74,7 @@ private lemma card_filter_partition (R C : Finset V) (x : V) :
     simp only [mem_filter, mem_inter, mem_sdiff]
     tauto
 
-private lemma left_insertion_sign (R C : Finset V) {x : V}
+lemma left_insertion_sign (R C : Finset V) {x : V}
     (hx : x ∉ R) :
     insertionSign R x * shuffleSign (insert x (R ∩ C)) (R \ C) =
       shuffleSign (R ∩ C) (R \ C) * insertionSign (R ∩ C) x := by
