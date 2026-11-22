@@ -24,7 +24,7 @@ internal sealed class IsotropicShellInversionDocument : IScribeDocumentDefinitio
         Minus, D(2), R, F.Id("f"), Apos, Open, R, Close));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The uniform coordinate kernel of a positive-radius shell gives a density transform. Differentiating the marginal recovers every continuous shell density at positive radii.",
+        "The uniform coordinate kernel of a positive-radius shell gives a density transform. If the shell density is continuous and its projection tails are absolutely integrable, differentiation recovers it at every positive radius.",
         H("Recovering an isotropic shell density from one coordinate"),
         Blocks(
             Describe.Lean(DescribeId.Create("projection"), DeclarationHandle.Create(Prefix + "projection"),
@@ -35,7 +35,7 @@ internal sealed class IsotropicShellInversionDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Here d is the derivative of the coordinate density on the nonnegative half-line."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("projection-mass"), DeclarationHandle.Create(Prefix + "shell_projection_mass"),
                 H("Projection and mass of the reconstructed density"), StatementSource.FromAuthor(Mass()),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Assume that f has derivative d at every r≥0, that d≤0 on positive radii, and that f(r) and r f(r) tend to zero at infinity. Both f and r d(r) are absolutely integrable on the positive half-line. For h(r)=−2r d(r), the tail integrand is −d(r) for r>0. Integrating the derivative recovers f(t), and integration by parts against r gives the total mass of the even extension of f."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Assume f is right-continuous at zero and absolutely integrable on the positive half-line, with derivative d(r)≤0 at every positive radius. Monotonicity bounds r f(r) by integrals of |f| on tails and yields its decay. Applying the improper fundamental theorem to r f(r) minus an antiderivative of f gives absolute integrability of r d(r). For h(r)=−2r d(r), the tail integrand is −d(r) for r>0. Integrating the derivative recovers f(t), and integration by parts against r gives the total mass of the even extension of f."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("unique-density"), DeclarationHandle.Create(Prefix + "shell_density_unique"),
                 H("Pointwise recovery on positive radii"), StatementSource.FromAuthor(Unique()),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Assume h is continuous on positive radii, h(r)/(2r) is absolutely integrable on every positive tail, and its tail integral equals f(t) at every t>0. Subtracting two tails gives the integral on their intervening interval. The fundamental theorem of calculus then gives f′(r)=−h(r)/(2r) at every positive r."))), DescribeRole.Theorem))));

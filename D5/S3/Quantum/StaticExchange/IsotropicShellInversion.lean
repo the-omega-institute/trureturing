@@ -25,14 +25,59 @@ noncomputable def projection (h : ℝ → ℝ) (t : ℝ) : ℝ :=
 /-- Radial shell density reconstructed from a coordinate-density derivative. -/
 def shell (d : ℝ → ℝ) (r : ℝ) : ℝ := -2 * (r * d r)
 
+private theorem weighted_decay {f : ℝ → ℝ} (hm : AntitoneOn f (Ioi 0))
+    (hf : IntegrableOn f (Ioi 0)) : Tendsto (fun r => r * f r) atTop (𝓝 0) := by
+  have bound {a b c : ℝ} (ha : 0 < a) (hab : a ≤ b)
+      (h : ∀ x ∈ Icc a b, c ≤ |f x|) :
+      (b - a) * c ≤ ∫ x in Ioi a, |f x| := by
+    have habs : IntegrableOn (fun x => |f x|) (Ioi 0) := hf.abs
+    have hi := habs.mono_set (Ioi_subset_Ioi ha.le)
+    have sub := intervalIntegral.integral_Ioi_sub_Ioi hi hab
+    have loc : IntervalIntegrable (fun x => |f x|) volume a b :=
+      (intervalIntegrable_iff_integrableOn_Ioc_of_le hab).mpr (hi.mono_set Ioc_subset_Ioi_self)
+    have cmp := intervalIntegral.integral_mono_on hab (intervalIntegrable_const (c := c)) loc h
+    rw [intervalIntegral.integral_const, smul_eq_mul] at cmp
+    linarith [show 0 ≤ ∫ x in Ioi b, |f x| from integral_nonneg (fun _ => abs_nonneg _)]
+  have halfTop : Tendsto (fun r : ℝ => r/2) atTop atTop :=
+    by simpa [div_eq_mul_inv, mul_comm] using
+        tendsto_id.const_mul_atTop (by norm_num : 0 < (2:ℝ)⁻¹)
+  have ht := tendsto_integral_Ioi_zero (f := fun x => |f x|) (μ := volume) halfTop
+  have ht' := tendsto_integral_Ioi_zero (f := fun x => |f x|) (μ := volume)
+    (tendsto_id (x := atTop))
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' (show Tendsto
+    (fun r : ℝ => -(∫ x in Ioi r, |f x|)) atTop (𝓝 0) by simpa using ht'.neg)
+    (show Tendsto (fun r : ℝ => 2 * ∫ x in Ioi (r/2), |f x|) atTop (𝓝 0)
+      by simpa using ht.const_mul 2)
+  · filter_upwards [eventually_gt_atTop (0:ℝ)] with r hr
+    have B := bound hr (by linarith : r ≤ r+r) (c := -f r)
+      (fun x hx => le_trans (neg_le_neg (hm hr (hr.trans_le hx.1) hx.1)) (neg_le_abs _))
+    nlinarith only [B]
+  · filter_upwards [eventually_gt_atTop (0:ℝ)] with r hr
+    have hp : 0 < r/2 := by linarith
+    have B := bound hp (by linarith : r/2 ≤ r) (c := f r)
+      (fun x hx => le_trans (hm (hp.trans_le hx.1) hr hx.2) (le_abs_self _))
+    nlinarith only [B]
+
 /-- For a decaying differentiable profile, inversion gives a nonnegative shell density,
 recovers the marginal and preserves the mass of its even extension. -/
 theorem shell_projection_mass {f d : ℝ → ℝ}
-    (hd : ∀ r, 0 ≤ r → HasDerivAt f (d r) r) (hs : ∀ r, 0 < r → d r ≤ 0)
-    (h∞ : Tendsto f atTop (𝓝 0)) (hr∞ : Tendsto (fun r => r * f r) atTop (𝓝 0))
-    (hf : IntegrableOn f (Ioi 0)) (hrd : IntegrableOn (fun r => r * d r) (Ioi 0)) :
+    (hc : ContinuousWithinAt f (Ici 0) 0)
+    (hd : ∀ r, 0 < r → HasDerivAt f (d r) r) (hs : ∀ r, 0 < r → d r ≤ 0)
+    (hf : IntegrableOn f (Ioi 0)) :
     (∀ r, 0 ≤ r → 0 ≤ shell d r) ∧ (∀ t, 0 ≤ t → projection (shell d) t = f t) ∧
       ∫ r in Ioi (0 : ℝ), shell d r = 2 * ∫ r in Ioi (0 : ℝ), f r := by
+  have hm : AntitoneOn f (Ioi 0) := by
+    apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ioi _)
+      (fun x hx => (hd x hx).continuousAt.continuousWithinAt)
+    · intro x hx; rw [interior_Ioi] at hx
+      exact (hd x hx).hasDerivWithinAt
+    · intro x hx; rw [interior_Ioi] at hx; exact hs x hx
+  have hrDecay := weighted_decay hm hf
+  have hDecay : Tendsto f atTop (𝓝 0) := by
+    apply (hrDecay.div_atTop (tendsto_id (x := atTop))).congr'
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with r hr
+    change r * f r / r = f r
+    field_simp
   refine ⟨?_, ?_, ?_⟩
   · intro r hr
     rcases hr.eq_or_lt with h | h
@@ -46,16 +91,40 @@ theorem shell_projection_mass {f d : ℝ → ℝ}
       have hp : 0 < r := lt_of_le_of_lt ht hr
       unfold shell
       field_simp
-      <;> ring
-    rw [heq, integral_neg, integral_Ioi_of_hasDerivAt_of_nonpos'
-      (fun r hr => hd r (ht.trans hr)) (fun r hr => hs r (ht.trans_lt hr)) h∞]
+    have hct : ContinuousWithinAt f (Ici t) t := by
+      rcases ht.eq_or_lt with h | h
+      · simpa [← h] using hc
+      · exact (hd t h).continuousAt.continuousWithinAt
+    rw [heq, integral_neg, integral_Ioi_of_hasDerivAt_of_nonpos hct
+      (fun r hr => hd r (ht.trans_lt hr)) (fun r hr => hs r (ht.trans_lt hr)) hDecay]
     ring
   · have zero : Tendsto (fun r => r * f r) (𝓝[>] 0) (𝓝 0) := by
-      simpa using ((continuousAt_id (x := (0 : ℝ))).mul
-        (hd 0 le_rfl).continuousAt).continuousWithinAt
+      have idlim : Tendsto id (𝓝[>] (0 : ℝ)) (𝓝 0) := nhdsWithin_le_nhds
+      simpa using idlim.mul (hc.mono Ioi_subset_Ici_self).tendsto
+    let j := (Ioi (0 : ℝ)).indicator f
+    have hj : Integrable j := (integrable_indicator_iff measurableSet_Ioi).mpr hf
+    let G := fun t : ℝ => t * f t - ∫ x in (0 : ℝ)..t, j x
+    have hgDeriv (t : ℝ) (ht : 0 < t) : HasDerivAt G (t * d t) t := by
+      have jeq : j =ᶠ[𝓝 t] f := by
+        filter_upwards [Ioi_mem_nhds ht] with x hx
+        exact indicator_of_mem hx f
+      have hjAt : ContinuousAt j t := (hd t ht).continuousAt.congr_of_eventuallyEq jeq
+      have prim := intervalIntegral.integral_hasDerivAt_right (a := 0) (b := t) hj.intervalIntegrable
+        hj.aestronglyMeasurable.stronglyMeasurableAtFilter hjAt
+      convert ((hasDerivAt_id t).mul (hd t ht)).sub prim using 1
+      · rfl
+      · rw [jeq.eq_of_nhds]
+        simp
+    have hgCont : ContinuousWithinAt G (Ici 0) 0 :=
+      (continuousWithinAt_id.mul hc).sub (hj.continuous_primitive 0).continuousWithinAt
+    have hgLimit := hrDecay.sub (intervalIntegral_tendsto_integral_Ioi 0 hj.integrableOn
+      (tendsto_id (x := atTop)))
+    have hrd : IntegrableOn (fun r => r * d r) (Ioi 0) :=
+      integrableOn_Ioi_deriv_of_nonpos hgCont hgDeriv
+        (fun r hr => mul_nonpos_of_nonneg_of_nonpos hr.le (hs r hr)) hgLimit
     have ip := integral_Ioi_mul_deriv_eq_deriv_mul (u := id) (u' := fun _ => (1 : ℝ))
-      (v := f) (v' := d) (a := 0) (fun r _ => hasDerivAt_id r) (fun r hr => hd r hr.le)
-      hrd (by simpa using hf) zero hr∞
+      (v := f) (v' := d) (a := 0) (fun r _ => hasDerivAt_id r) (fun r hr => hd r hr)
+      hrd (by simpa only [Pi.mul_def, one_mul] using hf) zero hrDecay
     simp only [id_eq, one_mul, sub_self, zero_sub] at ip
     rw [show (∫ r in Ioi (0 : ℝ), shell d r) = -2 * ∫ r in Ioi (0 : ℝ), r * d r
       from integral_const_mul _ _, ip]
@@ -86,6 +155,6 @@ theorem shell_density_unique {h f : ℝ → ℝ}
   rw [shell, deriv_f.deriv]
   dsimp [g]
   field_simp
-  <;> ring
+  ring
 
 end D5.S3.Quantum.StaticExchange.IsotropicShellInversion

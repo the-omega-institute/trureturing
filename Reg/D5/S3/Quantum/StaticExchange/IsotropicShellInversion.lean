@@ -23,17 +23,16 @@ def shifted : Realization signature := realize signature (fun _ _ f r => f r + 1
 def arena : Arena where
   signature := signature
   Law R := ∀ {f d : ℝ → ℝ}
-    (hd : ∀ r, 0 ≤ r → HasDerivAt f (d r) r) (hs : ∀ r, 0 < r → d r ≤ 0)
-    (h∞ : Tendsto f atTop (𝓝 0)) (hr∞ : Tendsto (fun r => r * f r) atTop (𝓝 0))
-    (hf : IntegrableOn f (Ioi 0)) (hrd : IntegrableOn (fun r => r * d r) (Ioi 0)),
+    (hc : ContinuousWithinAt f (Ici 0) 0)
+    (hd : ∀ r, 0 < r → HasDerivAt f (d r) r) (hs : ∀ r, 0 < r → d r ≤ 0)
+    (hf : IntegrableOn f (Ioi 0)),
     (∀ r, 0 ≤ r → 0 ≤ shell d r) ∧ (∀ t, 0 ≤ t → projection (shell d) t = R.readout () () f t) ∧
       ∫ r in Ioi (0 : ℝ), shell d r = 2 * ∫ r in Ioi (0 : ℝ), f r
 
 private theorem shifted_fails : ¬arena.Law shifted := by
   intro law
   have h := law (f := fun _ => 0) (d := fun _ => 0)
-    (fun r _ => hasDerivAt_const r 0) (by simp) tendsto_const_nhds (by simp)
-    (by simp) (by simp)
+    continuousWithinAt_const (fun r _ => hasDerivAt_const r 0) (by simp) (by simp)
   have eq := h.2.1 1 (by norm_num)
   change projection (shell (fun _ => 0)) 1 = 0 + 1 at eq
   simp [projection, shell] at eq
@@ -73,7 +72,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "body", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "body", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
