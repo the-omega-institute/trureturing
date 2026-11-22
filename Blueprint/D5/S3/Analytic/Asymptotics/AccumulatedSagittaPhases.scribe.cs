@@ -18,6 +18,25 @@ internal sealed class AccumulatedSagittaPhasesDocument : IScribeDocumentDefiniti
                 + "The versine 1 - cos theta is the sagitta of a unit-circle arc of half-angle "
                 + "theta, which is why the Lean declarations are named after the sagitta.")),
             Describe.Lean(
+                DescribeId.Create("versine-ge"),
+                DeclarationHandle.Create(
+                    "D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases."
+                    + "versine_ge"),
+                H("A quartic lower bound for the versine"),
+                StatementSource.FromAuthor(VersineFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real x, 1 - cos x is at least x^2/2 - x^4/24. No bound on "
+                        + "|x| is assumed. Write 1 - cos x = 2 sin^2(x/2) and put y = x/2. The "
+                        + "Mathlib bound |y - sin y| <= |y|^3/6 gives y (y - sin y) <= y^4/6, "
+                        + "and expanding sin^2 y = (y - (y - sin y))^2 and discarding the square "
+                        + "of the difference gives sin^2 y >= y^2 - y^4/3, which is the claim. "
+                        + "This is a classical Taylor-remainder estimate for the cosine; the "
+                        + "pinned Mathlib states the quartic estimate only for |x| <= 1 and with "
+                        + "the constant 5/96."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("accumulated-sagitta-bounds"),
                 DeclarationHandle.Create(
                     "D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases."
@@ -104,6 +123,12 @@ internal sealed class AccumulatedSagittaPhasesDocument : IScribeDocumentDefiniti
         N, F.Sp, F.Open, Ratio(Pow(Theta, 2), F.D(2)), F.Sp, F.Minus, F.Sp,
         Ratio(Pow(Theta, 4), F.D(2, 4)), F.Close, F.Sp, F.Le, F.Sp, Acc, F.Sp, F.Le, F.Sp,
         N, F.Sp, Ratio(Pow(Theta, 2), F.D(2)), F.Dot));
+
+    private static Formula X => F.Id("x");
+
+    private static Formula VersineFormula() => F.Disp(F.Seq(
+        Ratio(Pow(X, 2), F.D(2)), F.Sp, F.Minus, F.Sp, Ratio(Pow(X, 4), F.D(2, 4)), F.Sp, F.Le,
+        F.Sp, F.D(1), F.Sp, F.Minus, F.Sp, F.Operatorname, F.Grp(F.Id("cos")), F.Sp, X, F.Dot));
 
     private static Formula TPositive => F.Seq(F.Id("T"), F.Sp, F.Gt, F.Sp, F.D(0));
 

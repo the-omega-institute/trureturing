@@ -4,7 +4,7 @@
 
 Shifted determinant order for the real isotropic three-mode Bravyi blocks.
 
-Bravyi studies the isotropic three-mode channel in Classical capacity of fermionic product channels (arXiv:quant-ph/0507282, Section V.B). The chiral and complementary real blocks have sizes four and two. Each comparator takes the first and third amplitudes to be the positive square root of one half and the second to be zero.
+Bravyi studies the isotropic three-mode channel in Classical capacity of fermionic product channels (arXiv:quant-ph/0507282, Section V.B). The chiral and complementary real blocks have sizes four and two. Both comparator blocks use the first and third amplitudes equal to the positive square root of one half and the second equal to zero. The normalization of this spinor and the exact comparator determinant formulas also supply the physical entropy comparison.
 
 **Theorem 1.1 (The three chiral coefficient differences).**
 

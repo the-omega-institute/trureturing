@@ -10,6 +10,12 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/IntervalObstruction
   - D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness
   - D5/S1/Dynamics/Shadowing/DendriteObstruction
+  - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
+  - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
+  - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
+  - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
+  - D5/S3/Topology/CoveringDimension/GluedCircle
+  - D5/S1/Dynamics/Symbolic/RightTailBranching
 license: citation-only
 triage: anchor
 ---
@@ -69,6 +75,126 @@ The Lean package proves and consumes this static input through
 ProperExpansion, CoconnectedOpening and TentObstruction; it does not assume
 it as an axiom or claim it as a new static theorem.
 
+## Exact expansion order for a gluing construction
+
+Question 3.2 asks which one-dimensional continua admit finitely
+positively expansive systems. The theorem
+`InvarianceGluedSheets.exact_order_infDist` treats a concrete
+construction over a positively expansive base. Take $N\geq 2$ graphs
+of integer multiples of distance to a nonempty compact forward-invariant
+set $K$. A sufficiently small strict forward Bowen ball lies in a
+single fiber of the projection, so its cardinality is at most $N$.
+The map is positively expansive exactly when $K$ is the set of points
+whose entire forward orbits stay in some open neighborhood of $K$.
+Otherwise, for every positive radius there are $N$ distinct points in
+one fiber that stay pairwise closer than that radius under every
+forward iterate. This gives the exact expansion order of the glued
+system.
+
+Remark 3.10 of the arXiv version realizes each exact finite order on a
+finite bouquet of circles. At order N at least two on the bouquet of N
+circles, the displayed map has image equal to its last circle.
+
+The repository also constructs a topologically exact continuous surjection
+of exact positive expansivity order N on the bouquet of N circles for every
+N at least two. On each circle the map runs through all N circles in order.
+The projection forgetting the circle label semiconjugates the map to
+multiplication by N on the circle. Each nonempty open set projects to a
+set containing an arc, whose image under sufficiently many iterates
+covers the circle. The next application of the traversal covers the
+whole bouquet. Distinct points with the same phase close to the common
+vertex coalesce in one step and witness all N points in a forward Bowen ball.
+[Finite bouquet construction](../../Blueprint/D5/S1/Dynamics/Shadowing/BouquetExactExpansivity.md)
+
+Hisao Kato constructs a surjective positively pseudo-expansive map on every
+finite connected graph containing a simple closed curve. His condition (P1)
+gives a finite closed cover with a positive separation scale on each member.
+A forward Bowen ball at less than half the minimum of those scales meets each
+member in at most one point, giving a uniform finite cardinal bound. The
+relevant locators are §2, pp. 202–203 and Theorem (4.3), pp. 207–208. The
+explicit bouquet traversal above specifies the exact order and proves
+topological exactness.
+[Kato 1991](https://doi.org/10.4064/fm-137-3-201-210)
+
+## Endpoint obstruction under topological exactness
+
+An embedded closed interval whose image away from one endpoint is open
+in the carrier obstructs finite positive expansivity of continuous exact
+selfmaps on compact metric spaces. When the fibers are finite, exactness
+sends an interior point of each open subarc to the free endpoint, and
+both nearby sides cover a common smaller arc. Controlling the finite
+prefix before each such fold produces arbitrarily large, eventually
+coalescing families at each strict forward Bowen scale. An infinite
+fiber supplies such families inside one small ball. This applies to
+any finite graph with a leaf.
+The argument uses the coalescing-witness mechanism of Remark 3.4 and
+Lemma 3.7. Question 3.2 asks about general continuous selfmaps and does
+not impose topological exactness.
+[Pendant arc obstruction](../../Blueprint/D5/S1/Dynamics/Shadowing/ExactPendantObstruction.md)
+
+For a graph without leaves, the constructive direction uses a reduced
+walk from each dart back to the same dart that covers every undirected
+edge. The cycle case goes once around the cycle and repeats its first
+dart. In the other case each potential reversal can be replaced by a
+detour through a cycle in the appropriate component after deleting its
+underlying edge. The tour supplies the edge traversal for a candidate
+exact map. Charatonik and Miklos use related nonbacktracking edge walks
+in their construction of local expansions, see Lemmas 1–3 and Theorem 1.
+[All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.md)
+[Charatonik–Miklos 1981](https://doi.org/10.4064/fm-113-3-235-252)
+
+For a finite connected graph with at least one edge, continuous topologically
+exact finitely positively expansive dynamics exist precisely when the graph has
+no vertex of degree one. The constructive direction gives positive expansivity.
+The map traverses the chosen tour of each edge at constant speed. Adjacent
+closed cells meet with distinct image germs, giving a uniform expansion scale.
+Shrinking inverse branches through a point of any open set eventually fit inside
+that set and map onto a whole edge, which covers the graph in one further step.
+Subdivision into three segments per edge preserves the degree-one condition
+and gives a homeomorphism of the closed-edge quotient with the affine simple
+graph realization. This includes loops, which contribute two incidences, and
+parallel edges. The reverse implication transports the pendant arc obstruction
+through the same homeomorphism.
+[Finite graph classification](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics.md)
+
+For each integer m at least two, a graph with two vertices and m plus one
+parallel edges admits a topologically exact map of least forward Bowen
+order m. The map is a factor of the bouquet traversal obtained by
+identifying the sheets over one semicircle. Multiplication by m on the
+projected circle gives the upper bound, and m points on distinct arms
+coalesce in one step arbitrarily close to a branching vertex. The
+construction relates the exact order to the local valence m plus one.
+[Parallel-edge graph construction](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.md)
+
+For any continuous transitive finitely positively expansive self-map on a
+finite connected graph of maximum valence D at least two, the least forward
+Bowen order is at most D minus one. Orienting the graph edges for the quotient
+construction does not restrict the map, and each loop contributes two to the
+valence. The parallel-edge examples realize equality for D at least three.
+[Sharp bound for transitive finite graphs](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphTransitiveValence.md)
+
+Yokoi's *Strong Transitivity and Graph Maps*, Theorem 4.1, derives strong
+transitivity from transitivity and finitely many fixed points for every
+positive iterate. Harańczyk, Kwietniak and Oprocha give the finite-cover
+conclusion in Theorem 7.5 of *Topological structure and entropy of mixing
+graph maps*. Corollary 2.10(4) in Gangloff, Guillon and Oprocha supplies
+periodic point finiteness. The Lean proof derives pointwise hitting by
+excluding the finite set missed by the forward images of a free subarc.
+[Yokoi](https://doi.org/10.4064/ba53-4-3)
+[Harańczyk, Kwietniak and Oprocha](https://arxiv.org/html/1111.0566#S7.Thmtheorem5)
+
+For each integer N at least two, the repository constructs a compact connected
+metric space of covering dimension one with a continuous surjection of least
+positive expansivity order N. It glues N circles along the image of the
+ternary Cantor set and applies tripling on each circle. For positive Cantor
+points x tending to zero, (1 + x)/3 lies in the open middle third and enters
+the Cantor image in one step. These points give fibers that witness failure
+of every scale of order N − 1. The closed finite-to-one projection onto the
+circle gives the upper covering-dimension bound, and connectedness gives the
+lower bound. The result combines surjectivity with exact order on a
+one-dimensional continuum. The classification in Question 3.2 remains open.
+[Construction and covering dimension](../../Blueprint/D5/S3/Topology/CoveringDimension/GluedCircle.md)
+
 The GGO journal DOI
 [10.1016/j.topol.2025.109597](https://doi.org/10.1016/j.topol.2025.109597)
 is confirmed bibliographic metadata. The question and theorem locators here
@@ -77,8 +203,37 @@ body associated with [DOI 10.1016/j.topol.2026.110006](https://doi.org/10.1016/j
 remain unavailable for comparison. No worldwide originality or priority
 claim follows from this repository result.
 
+## Finite positive expansivity for S-adic shifts
+
+Question 4.1 asks which two-sided subshifts are finitely positively expansive,
+including substitutions and S-adic systems. Lemma 4.7 identifies the exact order
+with the largest number of two-sided extensions of a right tail. The repository
+proves that a finite set (B) of right tails with multiple immediate predecessors
+gives the uniform bound (1+|B|(|A|-1)) over an alphabet (A), exactly when
+periodic right tails have only periodic extensions. The proof encodes a past by
+its last departure from a chosen default predecessor and relates the bound to
+strict forward Bowen balls for any compatible metric.
+[Branching futures and finite positive expansivity](../../Blueprint/D5/S1/Dynamics/Symbolic/RightTailBranching.md)
+
+For an everywhere-growing directive sequence of finite alphabet rank (K), the
+finite-word factorization theorem of Espinoza and Maass bounds (|B|) by
+(122K^7). Reflect left and right in Theorem 1.2 and the proof of Theorem 1.3,
+then apply the bound at a cofinal sequence of levels with at most (K) tiles
+and arbitrarily long minimum tile length. Distinct branching futures have
+distinct prefixes at sufficiently high levels. The argument applies to points
+defined by the S-adic language and also to the all-tilings limit set of
+Definition 4.14, where every point has the requisite factorizations. This gives a
+criterion for that class in Question 4.1. The factorization theorem is the
+literature input used in the mathematical deduction.
+[Espinoza and Maass, arXiv:2008.05996v2](https://arxiv.org/abs/2008.05996v2)
+
 ## Verified locator
 
 - https://arxiv.org/abs/2310.17241v1
+- https://doi.org/10.1016/j.topol.2025.109597
 - Question 3.1, Section 3, page 7.
+- Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
+- Remark 3.10, Section 3.2, page 9.
+- Question 4.1, Section 4, page 10.
+- Lemma 4.7, Section 4.2, page 11.

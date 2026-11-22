@@ -178,7 +178,7 @@ def IsBalanced {n : Nat} (C : Finset (Q n)) : Prop :=
 def switchingVector {n : Nat} (C : Finset (Q n)) (sigma : Q n → Real) : Q n → Real :=
   fun x => if x ∈ C then sigma x else 0
 
-private theorem switching_sq {n : Nat} {C : Finset (Q n)} {sigma : Q n → Real}
+theorem switching_sq {n : Nat} {C : Finset (Q n)} {sigma : Q n → Real}
     (hs : IsSwitching C sigma) {x : Q n} (hx : x ∈ C) : sigma x ^ 2 = 1 := by
   rcases hs.1 x hx with h | h <;> rw [h] <;> norm_num
 

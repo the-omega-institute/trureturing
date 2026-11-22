@@ -65,22 +65,26 @@ def claim : Prop :=
       ∃ (m : ℕ) (e : Fin m → ℝ) (U : Matrix.unitaryGroup (Fin d × Fin m) ℂ),
         0 < m ∧ IsEnergyConserving E e U ∧ thermalOutput e U ρ = σ
 
-private def levels : Fin 4 → ℝ := ![0, 1, 3, 7]
+/-- The system energies `0, 1, 3, 7`. -/
+def levels : Fin 4 → ℝ := ![0, 1, 3, 7]
 
-private def factor : Matrix (Fin 4) (Fin 2) ℂ :=
+/-- The rows `(1, 0), (0, 1), (3/5, 4/5), (3/5, 4i/5)` of `B`. -/
+def factor : Matrix (Fin 4) (Fin 2) ℂ :=
   !![1, 0; 0, 1; 3 / 5, 4 / 5; 3 / 5, 4 * Complex.I / 5]
 
-private def sigma : Matrix (Fin 4) (Fin 4) ℂ := (1 / 4 : ℝ) • (factor * factorᴴ)
+/-- The target state `σ = B B* / 4`. -/
+def sigma : Matrix (Fin 4) (Fin 4) ℂ := (1 / 4 : ℝ) • (factor * factorᴴ)
 
-private def kraus (a : Fin 2) : Matrix (Fin 4) (Fin 4) ℂ :=
+/-- The two diagonal cooling Kraus operators, the columns of `B`. -/
+def kraus (a : Fin 2) : Matrix (Fin 4) (Fin 4) ℂ :=
   diagonal (fun i => factor i a)
 
-private lemma levels_valid : StrictMono levels ∧
+theorem levels_valid : StrictMono levels ∧
     (∀ i j k l : Fin 4, i < j → k < l → levels j - levels i = levels l - levels k →
       i = k ∧ j = l) := by
   norm_num [StrictMono, Fin.forall_fin_succ, levels.eq_1]
 
-private lemma kraus_complete : (∑ i, (kraus i)ᴴ * kraus i) = 1 := by
+theorem kraus_complete : (∑ i, (kraus i)ᴴ * kraus i) = 1 := by
   simp only [kraus.eq_1]
   apply D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_complete
   intro i
@@ -95,7 +99,7 @@ private lemma sigma_diagonal (j : Fin 4) : sigma j j = 1 / 4 := by
   all_goals ring_nf
   all_goals norm_num
 
-private lemma instance_density : IsDensity Pm ∧ IsDensity sigma := by
+theorem instance_density : IsDensity Pm ∧ IsDensity sigma := by
   change (Pm.PosSemidef ∧ trace Pm = 1) ∧ (sigma.PosSemidef ∧ trace sigma = 1)
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
   · convert posSemidef_vecMulVec_self_star (fun _ : Fin 4 => (1 / 2 : ℂ)) using 1
@@ -107,7 +111,7 @@ private lemma instance_density : IsDensity Pm ∧ IsDensity sigma := by
     simp only [sigma_diagonal]
     norm_num
 
-private lemma instance_cooling : IsCoolingMap Pm sigma := by
+theorem instance_cooling : IsCoolingMap Pm sigma := by
   refine ⟨2, kraus, ?_, kraus_complete, ?_⟩
   · intro i
     left
@@ -491,7 +495,9 @@ private lemma unitary_obstruction {n : Type*} [Fintype n] [DecidableEq n]
     (⟨A 0, hU 0⟩ : Matrix.unitaryGroup n ℂ) *
       star (⟨A 1, hU 1⟩ : Matrix.unitaryGroup n ℂ))).ne_zero hx
 
-private lemma thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
+/-- The cooling transition `|+⟩⟨+| ↦ σ` has no energy-conserving thermal realization, for every
+finite ancilla with any energies and any ground degeneracy. -/
+theorem thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
     (h : IsEnergyConserving levels e U) (hout : thermalOutput e U Pm = sigma) : False := by
   have hs := population_support hm e U h hout

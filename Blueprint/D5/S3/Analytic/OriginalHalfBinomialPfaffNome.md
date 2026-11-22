@@ -4,9 +4,21 @@
 
 Exact Pfaff jumps of the original complementary ratio and its signed charge nome.
 
+**Lemma 1.1 (Analyticity of the complementary ratio).**
+
+Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_analyticAt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_analyticAt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At each point of the double slit, the complementary Euler period ratio is complex analytic.
+
 With r = k² the supplier's normalized period is P(r) = 2K(k)/π. DLMF 19.7.2a and 19.7.3b give the two jump identities by taking the period ratio. For the principal k with Re k > 0, the upper sign in 19.7.3b applies to Im(k²) > 0 and the lower sign to Im(k²) < 0, as credited there to Fettis. DLMF 22.2.1 fixes the nome convention q = exp(−π K′(k)/K(k)). The Lean proofs use the literal Euler period and its compiled Pfaff transformation (DLMF 15.8.1 at a = b = 1/2 and c = 1).
 
-**Theorem 1.1 (Exact upper-half-plane jump).**
+**Theorem 1.2 (Exact upper-half-plane jump).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_upper`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_upper`
 
 For Im r > 0, τ(r) = τ(r/(r − 1)) + 1. The Pfaff period square and the chain rule make the difference constant. The map r ↦ 1/(1 − r) fixes u = (1 + i√3)/2. Differentiating the reciprocal ratio identity there and cancelling the nonzero quotient derivative gives τ(u)² = u². The positive imaginary parts give τ(u) = u, and u + 1/u = 1 fixes the addend.
 
-**Theorem 1.2 (Exact lower-half-plane jump).**
+**Theorem 1.3 (Exact lower-half-plane jump).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_lower`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_lower`
 
 For Im r < 0, τ(r) = τ(r/(r − 1)) − 1. The Pfaff map interchanges the half-planes and is an involution, so the upper identity gives the lower one.
 
-**Definition 1.3 (Signed Pfaff nome).**
+**Definition 1.4 (Signed Pfaff nome).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.negativeChartNome`
 
@@ -42,7 +54,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.negativeChartNome`
 
 At r use minus the exponential of iπτ(r/(r − 1)).
 
-**Theorem 1.4 (Holomorphic charge factors).**
+**Theorem 1.5 (Holomorphic charge factors).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.negative_real_nome_extension`
 
@@ -58,6 +70,7 @@ Every real x < 0 has an open complex neighborhood on which the signed Pfaff nome
 
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.negativeChartNome`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.negative_real_nome_extension`
+- Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_analyticAt`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_lower`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_pfaff_upper`
 - Dependency: [D5/S3/Analytic/OriginalHalfBinomialSlitPeriod](OriginalHalfBinomialSlitPeriod.md)

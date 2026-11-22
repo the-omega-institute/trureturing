@@ -5,11 +5,13 @@ year: 2025
 title: Shadowing with small diameter sets of bounded cardinality
 doi: null
 url: https://arxiv.org/abs/2509.04312v1
-claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels; Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type; Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
+claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels. Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type. Question 5.4 asks for a shadowing characterization of quasi-finite type. Question 5.5 asks for a language characterization of neighborhood two-shadowing. Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
 strata_touched:
   - D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances
   - D5/S1/Dynamics/Shadowing/ProgressionExample
   - D5/S1/Dynamics/Shadowing/LacunaryShadowingHierarchy
+  - D5/S1/Dynamics/Shadowing/LanguageCharacterization
+  - D5/S1/Dynamics/Shadowing/QuasiFiniteType
 license: citation-only
 triage: anchor
 ---
@@ -107,6 +109,56 @@ for Ellie Stephens, *Local Variations of Shadowing*, advised by Jonathan
 Meddaugh. The announcement discusses neighborhood shadowing but states no
 hierarchy theorem, and the full dissertation was inaccessible. Priority
 relative to that dissertation remains unverified.
+
+## Shadowing both tails of a single jump
+
+Question 5.4 asks for a shadowing characterization of exact-length
+quasi-finite type. For any compatible metric on a two-sided finite-alphabet
+subshift, quasi-finite type is equivalent to the following property.
+For every accuracy there are a tolerance and an integer cutoff.
+Take two points closer than that tolerance and form a pseudo-orbit
+from the entire past of the first and the entire future of the second.
+One true orbit traces both tails at the original times outside the
+interval set by the cutoff. The cutoff is uniform over both inputs.
+
+The forward argument uses Definition 3.5 on increasingly long exterior
+contexts of the common central block. Compactness gives a point realizing
+both infinite tails. Conversely, take accuracy small enough to detect
+coordinate zero, align occurrences with a long common bridge, and use the
+tracing point to retain the two exterior contexts. Its central coordinates
+supply the replacement of exactly the original bridge length.
+
+The single-jump pseudo-orbit also occurs in simple two-sided limit
+shadowing. That property describes eventual tracing for all pairs with
+pair-dependent onset. Two-sided limit shadowing with a phase gap allows
+shifting the positive-time comparison. The criterion for quasi-finite
+type applies to nearby inputs with a uniform interval and the original phase.
+[Primary comparison](https://arxiv.org/html/1402.0674v1)
+
+## Finite-language characterization
+
+Question 5.5 asks whether neighborhood two-shadowing in subshifts can be
+characterized by the language. For any positive integer $N$ on a two-sided
+finite-alphabet subshift, the criterion uses finite words and colorings.
+For each tracing window radius $k$, one local radius $m\geq k$ must work
+for every $n$ and every word on $[-m,n+m]$ whose radius-$m$ blocks at
+times $0,\ldots,n$ occur in the language. The times $1,\ldots,n$ must
+admit an $N$-coloring. Each color class must have an extension in the
+language that simultaneously matches the initial radius-$k$ block and
+the radius-$k$ block at each time of that color.
+
+The theorem `LanguageCharacterization.neighborhoodFiniteShadowing_iff_languageColoring`
+proves the equivalence for every compatible metric on the subshift.
+Finite requirements yield one fixed tracing tuple by compactness. The
+initial block is included in every color class's extension requirement
+because the initial tracer diameter is small and the set traces time zero.
+
+The comparison included the mixing-sofic and quasi-finite-type sufficient
+conditions in the primary version and the usual $N=1$ equivalence with
+finite type. The authors' later [arXiv:2608.28845v2](https://arxiv.org/abs/2608.28845v2)
+addresses ordinary shadowing and inverse shadowing. The search found
+no prior equivalent for $N=2$ among the inspected sources. The full text
+of Stephens's dissertation remains unavailable for comparison.
 
 ## Literature boundary
 

@@ -8,13 +8,19 @@ internal sealed class StructuredRankOneFamilyDocument : IScribeDocumentDefinitio
 {
     private const string Owner = "D5/S3/QuadraticForms/StructuredRankOneFamily.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original finite-puncture simplex domain supplies nonemptiness, constant pivot sign and one globally unique negative diagonal coordinate.",
+        "On every nonempty connected domain, in particular the open simplex minus a countable set, the pivot has constant sign and the diagonal has a fixed sign pattern: all entries nonnegative, or one globally unique negative coordinate.",
         H("Continuous structured downdates on the original domain"),
         Blocks(
             Entry("openSimplex", "Independent barycentric coordinates", All(V("m"), Nat,
                 Equal(Call("openSimplex", V("m")), Call("setOf", Seq(Typed(V("u"), Arrow(Call("Fin",V("m")),Real)),Sp,Mapsto,Sp,
                     And(All(V("i"),Call("Fin",V("m")),Lt(D(0),Call("u",V("i")))),
                         Lt(SumOver(V("i"),Call("Fin",V("m")),Call("u",V("i"))),D(1))))))), DescribeRole.Definition),
+            Prose("countable_punctured_simplex_pathConnected", "Countable punctures preserve path connectedness",
+                "For n at least three and any space X homeomorphic to the open (n − 1)-simplex, the complement of every countable subset of X is path connected (and nonempty). The transported chart maps the countable set into real space of dimension n − 1 > 1, where Mathlib's countable-complement theorem applies."),
+            Prose("connected_family", "The family theorem on an arbitrary connected domain",
+                "Let Y be a nonempty connected topological space and d, x : Y → ℝⁿ continuous. If Δ(y) = pivot(diag d(y), x(y)) never vanishes and every downdate M(y) is positive semidefinite, then either Δ > 0 everywhere and every d_i ≥ 0 everywhere, or Δ < 0 everywhere and a unique index j has d_j < 0 everywhere while every other d_i ≥ 0 everywhere. In the positive case the inertia theorem gives n₋(diag d) = n₋(M) = 0; in the negative case n₋(diag d) = 1 at every point, and the open-and-closed set where a fixed coordinate is negative is everything."),
+            Prose("countable_family", "The simplex family with countable punctures",
+                "On the open simplex minus any countable set, with n at least three, the complement is nonempty and the conclusion of the connected-domain theorem holds, including nonnegativity of every diagonal entry in the positive case."),
             Entry("punctured_simplex_pathConnected", "Finite punctures preserve path connectedness", Domain(
                 Implies(Call("Finite",V("A")),Call("IsPathConnected",Complement))), DescribeRole.Theorem),
             Entry("continuous_family", "Constant sign and the globally unique negative index", Family(), DescribeRole.Theorem),
@@ -25,7 +31,7 @@ internal sealed class StructuredRankOneFamilyDocument : IScribeDocumentDefinitio
             Paragraph(Text("The chart from real m-space sends t to exp(t_i)/(1+sum exp(t_j)). Its inverse sends u to log(u_i/(1-sum u_j)). Both maps are continuous and inverse on their full domains. The image of A under the transported chart is finite. For n at least three the real vector-space dimension n-1 is greater than one, so Mathlib's countable-complement theorem supplies a nonempty path-connected complement. Homeomorphic transport establishes nonemptiness and path connectedness of Y. Neither is added as an independent family premise.")),
             Paragraph(Text("The diagonal entries d and vector x are continuous on exactly Y. Delta(y)=pivot(diagonal(d(y)),x(y)) is continuous, nonzero at every point, and therefore has one constant strict sign on connected Y. M is exactly the structured downdate, not an independently supplied family. Its continuity follows from these data and nonvanishing Delta. The positive-semidefinite premise applies at every point of Y.")),
             Paragraph(Text("In the negative-sign case, the additive inertia identity gives negIndex(D)=negIndex(M)+1. Positive semidefiniteness gives negIndex(M)=0 using the existing positive-index/rank identity and the positive-plus-negative rank partition. The real diagonal sign-count theorem therefore supplies exactly one negative diagonal coordinate at every point. For each coordinate j, the set where d_j is negative is open. Its complement is the union of the other negative-coordinate sets, so it is also closed. Nonemptiness selects one j, and connectedness forces its negative set to be all Y. Every other coordinate is nonnegative everywhere, and a point of Y proves global uniqueness.")),
-            Paragraph(Text("Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. The open-simplex definition, explicit domain chart and finite-puncture transport, global fixed-index argument, and complete conjunction here are repository-derived. Lucid's revision supplies the source questions and proposed matrix mechanism, not an attestation of these completed theorems. The matrix argument implements the author's proposed block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made.")))));
+            Paragraph(Text("Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. The open-simplex definition, explicit domain chart and finite-puncture transport were derived in this repository. The general connected-domain theorem, with nonnegative diagonal entries in the positive case, is Theorem 5 of H. Ma and W. Zhang (DOI 10.5281/zenodo.23920598), and the countable-puncture extension is their Corollary 7; the finite-puncture statement is now obtained from them. Lucid's revision supplies the source questions and the proposed matrix mechanism. The matrix argument implements that block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made.")))));
 
     private static DocumentBlock Entry(string name, string title, Formula formula, DescribeRole role,
         OpenProblemResolutionClaim? resolutionClaim = null) => Describe.Lean(
@@ -38,6 +44,11 @@ internal sealed class StructuredRankOneFamilyDocument : IScribeDocumentDefinitio
             "continuous_family" => "Nonemptiness, the strict sign dichotomy and uniqueness of one global coordinate are all included.",
             _ => "Both universal source clauses hold together, with the matrix clause quantified over every finite dimension."
         }))), role, openProblemResolutionClaim: resolutionClaim);
+    private static DocumentBlock Prose(string name, string title, string text) => Describe.Lean(
+        DescribeId.Create("structured-rank-one-family-"+name.Replace('_','-').ToLowerInvariant()), DeclarationHandle.Create(Owner+name), H(title),
+        StatementSource.WithoutFormula(),
+        AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mazhang2026scaleddowndate")),
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     private static Formula V(string s) => F.Id(s);
     private static Formula Real => Seq(Mathbb,Grp(V("R")));
     private static Formula Nat => Seq(Mathbb,Grp(V("N")));
