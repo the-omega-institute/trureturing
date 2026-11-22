@@ -700,19 +700,8 @@ private theorem checkLow_sound (p : Sparse) (h : checkLow p = true) (n : ℕ) (h
     obtain ⟨t, ht, rfl⟩ := List.mem_map.mp hc
     exact ite_eq_right (he t ht)
 
-private def finTheta (a b c d : Fin 10) : Sparse :=
-  spTheta ((a.val : ℤ), (b.val : ℤ), (c.val : ℤ), (d.val : ℤ))
-
-private def checkSlice (a : Fin 10) : Bool :=
-  (List.finRange 10).all fun b => (List.finRange 10).all fun c => (List.finRange 10).all fun d =>
-    checkLow (finTheta a b c d)
-
 set_option maxHeartbeats 0 in
--- Each slice reduces a thousand specialized generators in the kernel.
 set_option maxRecDepth 100000 in
-private theorem check_all_slices (a : Fin 10) : checkSlice a = true := by
-  fin_cases a <;> decide +kernel
-
 private theorem theta_trace_low (x : Indices) (n : ℕ) (hn : n < 10) :
     (trace (theta x)).coeff n = 0 := by
   obtain ⟨a,b,c,d⟩ := x
@@ -723,7 +712,16 @@ private theorem theta_trace_low (x : Indices) (n : ℕ) (hn : n < 10) :
     change ((representative x).toNat : ℤ) = representative x
     have := representative_bounds x
     omega
-  have hc := check_all_slices (toFin a)
+  let finTheta (a b c d : Fin 10) : Sparse :=
+    spTheta ((a.val : ℤ), (b.val : ℤ), (c.val : ℤ), (d.val : ℤ))
+  let checkSlice (a : Fin 10) : Bool :=
+    (List.finRange 10).all fun b => (List.finRange 10).all fun c => (List.finRange 10).all fun d =>
+      checkLow (finTheta a b c d)
+  -- Discharge the representative cases in the proof of the integer-indexed statement.
+  have checked (r : Fin 10) : checkSlice r = true := by
+    dsimp only [checkSlice, finTheta]
+    fin_cases r <;> decide
+  have hc := checked (toFin a)
   have hs : checkLow (finTheta (toFin a) (toFin b) (toFin c) (toFin d)) = true :=
     List.all_eq_true.mp (List.all_eq_true.mp (List.all_eq_true.mp hc
       (toFin b) (List.mem_finRange _)) (toFin c) (List.mem_finRange _))
