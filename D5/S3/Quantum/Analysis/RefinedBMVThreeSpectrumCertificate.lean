@@ -36,6 +36,13 @@ private theorem logGap_nonneg (p s t : ℝ) (hp : 1 ≤ p) (hs : 0 ≤ s) (ht : 
   exact nonneg_of_static_check GroupedMasks.quartic.terms GroupedMasks.quartic.rootsX GroupedMasks.quartic.rootsY
     quartic_matches_grouped certificateStatic (GroupedMasks.quartic.masks_of_check checked_masks) p s t hp hs ht
 
+/-- The checked quartic on nonnegative roots in increasing order. -/
+theorem ordered_quartic_nonneg (p : ℕ) (hp : 0 < p) {a x y : ℝ}
+    (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) : 0 ≤ quartic p a x y := by
+  have hp' : (1 : ℝ) ≤ p := by exact_mod_cast hp
+  exact quartic_nonneg_of_log_gaps p (fun s t hs ht => logGap_nonneg p s t hp' hs ht)
+    ha hax hxy
+
 open Matrix NormedSpace
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
