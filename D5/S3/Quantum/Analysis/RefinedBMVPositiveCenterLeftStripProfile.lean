@@ -779,6 +779,131 @@ theorem separated_radical_difference_bounds {h s v : ℝ}
     hMVT (deriv (deriv b)) (83/10) (by norm_num) (fun x hx ↦ (hb₂ x hx).differentiableAt (by decide))
       (fun x hx ↦ (separated_radical_derivative_bounds hh hhmax hx).2.2)⟩
 
+private def leftStripWeight (h a v : ℝ) : ℝ :=
+  Real.exp (logReciprocalGap h v + logReciprocalGap h (v-a)) /
+    ((3+h)*(3+2*h)/2)
+
+/-- The squared difference of the marginal roots, with the same weight as
+the geometric and repeat-node terms of the lower-collision profile. -/
+def leftStripRadicalTerm (h a v : ℝ) : ℝ :=
+  leftStripWeight h a v *
+    (Real.sqrt (1 - upperTailLambda h v) - Real.sqrt (1 - upperTailLambda h (v-a)))^2 / 2
+
+/-- The weighted third derivative of the root-difference term. The two
+translated differences remain factored in the formula. -/
+theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3/11) (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+    let s := v-a
+    let b : ℝ → ℝ := fun x ↦ Real.sqrt (1 - upperTailLambda h x)
+    let Δ := b v - b s
+    let Δ₁ := deriv b v - deriv b s
+    let L := profileSlope h s
+    let q := profileCurvature h s
+    let q₁ := -q*(h+2*upperTailSlope h s)
+    let b₁ := deriv b s
+    let b₂ := deriv (deriv b) s
+    let b₃ := deriv (deriv (deriv b)) s
+    let M := b₁^2 - Δ*b₂ - 2*L*Δ*b₁ + (L^2+q)*Δ^2/2
+    let M₁ := 2*b₁*b₂ - Δ₁*b₂ - Δ*b₃ - 2*q*Δ*b₁ -
+      2*L*(Δ₁*b₁+Δ*b₂) + (2*L*q+q₁)*Δ^2/2 + (L^2+q)*Δ*Δ₁
+    deriv (fun y ↦ deriv (fun x ↦ deriv (fun t ↦ leftStripRadicalTerm h t y) x) a) v -
+      γ * deriv (fun x ↦ deriv (fun t ↦ leftStripRadicalTerm h t v) x) a =
+      leftStripWeight h a v * ((profileSlope h v + L - γ)*M + M₁) := by
+  let S : ℝ → ℝ := fun t ↦ 1 - upperTailLambda h t
+  let b : ℝ → ℝ := fun t ↦ Real.sqrt (S t)
+  let W := leftStripWeight h
+  let L := profileSlope h
+  let q := profileCurvature h
+  let δ (x y : ℝ) := b y-b (y-x)
+  let M (x y : ℝ) := (deriv b (y-x))^2 - δ x y*deriv (deriv b) (y-x) -
+    2*L (y-x)*δ x y*deriv b (y-x) + (L (y-x)^2+q (y-x))*(δ x y)^2/2
+  have hS : ContDiff ℝ 3 S := by unfold S upperTailLambda upperTailGap; fun_prop
+  have hb (x : ℝ) (hx : 0 < S x) : ContDiffAt ℝ 3 b x := hS.contDiffAt.sqrt hx.ne'
+  have hb₀ (x : ℝ) (hx : 0 < S x) : HasDerivAt b (deriv b x) x :=
+    ((hb x hx).differentiableAt (by decide)).hasDerivAt
+  have hb₁ (x : ℝ) (hx : 0 < S x) : ContDiffAt ℝ 2 (deriv b) x :=
+    (hb x hx).derivWithin (by norm_num)
+  have hb₂ (x : ℝ) (hx : 0 < S x) : HasDerivAt (deriv b) (deriv (deriv b) x) x :=
+    ((hb₁ x hx).differentiableAt (by decide)).hasDerivAt
+  have hb₃ (x : ℝ) (hx : 0 < S x) :
+      HasDerivAt (deriv (deriv b)) (deriv (deriv (deriv b)) x) x := by
+    have hd : ContDiffAt ℝ 1 (deriv (deriv b)) x := (hb₁ x hx).derivWithin (by norm_num)
+    exact (hd.differentiableAt (by decide)).hasDerivAt
+  have hWleft (x y : ℝ) (hxy : x < y) :
+      HasDerivAt (W · y) (-W x y*L (y-x)) x := by
+    have hd := (hasDerivAt_logReciprocalGap hh (sub_pos.mpr hxy)).comp x
+      ((hasDerivAt_id' x).const_sub y)
+    have hw := (hd.const_add (logReciprocalGap h y)).exp.div_const ((3+h)*(3+2*h)/2)
+    change HasDerivAt (W · y) _ x at hw
+    exact hw.congr_deriv (by
+      dsimp [W, L, leftStripWeight, Function.comp_def]
+      ring)
+  have hδleft (x y : ℝ) (hx : 0 < S (y-x)) :
+      HasDerivAt (δ · y) (deriv b (y-x)) x := by
+    have hd := (hb₀ _ hx).comp x ((hasDerivAt_id' x).const_sub y)
+    have hδ := hd.const_sub (b y)
+    change HasDerivAt (δ · y) _ x at hδ
+    simpa only [mul_neg, mul_one, neg_neg] using hδ
+  have hfirst (x y : ℝ) (hxy : x < y) (hx : 0 < S (y-x)) :
+      deriv (fun t ↦ leftStripRadicalTerm h t y) x =
+        W x y * (δ x y*deriv b (y-x) - L (y-x)*(δ x y)^2/2) := by
+    have hd := ((hWleft x y hxy).mul ((hδleft x y hx).pow 2)).div_const 2
+    change HasDerivAt (fun t ↦ leftStripRadicalTerm h t y) _ x at hd
+    rw [hd.deriv]
+    simp only [Pi.pow_apply]
+    ring
+  have hsecond (x y : ℝ) (hxy : x < y) (hx : 0 < S (y-x)) :
+      deriv (fun r ↦ deriv (fun t ↦ leftStripRadicalTerm h t y) r) x = W x y*M x y := by
+    have hnear : ∀ᶠ r in 𝓝 x, 0 < S (y-r) :=
+      (hS.continuous.comp (continuous_const.sub continuous_id)).continuousAt.eventually
+        (eventually_gt_nhds hx)
+    have heq : (fun r ↦ deriv (fun t ↦ leftStripRadicalTerm h t y) r) =ᶠ[𝓝 x]
+        fun r ↦ W r y*(δ r y*deriv b (y-r)-L (y-r)*(δ r y)^2/2) := by
+      filter_upwards [eventually_lt_nhds hxy, hnear] with r h₁ h₂ using hfirst r y h₁ h₂
+    have hshift := (hasDerivAt_id' x).const_sub y
+    have hb' := (hb₂ _ hx).comp x hshift
+    have hL := (hasDerivAt_profileSlope hh (sub_pos.mpr hxy)).comp x hshift
+    have hδ := hδleft x y hx
+    have hd := (hWleft x y hxy).mul
+      ((hδ.mul hb').sub ((hL.mul (hδ.pow 2)).div_const 2))
+    change HasDerivAt (fun r ↦ W r y*(δ r y*deriv b (y-r)-L (y-r)*(δ r y)^2/2)) _ x at hd
+    rw [heq.deriv_eq, hd.deriv]
+    dsimp [M, L, q]
+    ring
+  have hs : 0 < v-a := by linarith
+  have hv : 0 < v := by linarith
+  have hsv : a < v := sub_pos.mp hs
+  have hpos (x : ℝ) (hx : 6 ≤ x) : 0 < S x :=
+    Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
+      (separated_radical_lower hh hhmax hx).2)
+  have hxs := hpos (v-a) hgap
+  have hxv := hpos v (by linarith)
+  have hnear : ∀ᶠ y in 𝓝 v, 0 < S (y-a) :=
+    (hS.continuous.comp (continuous_id.sub continuous_const)).continuousAt.eventually
+      (eventually_gt_nhds hxs)
+  have heq : (fun y ↦ deriv (fun x ↦ deriv (fun t ↦ leftStripRadicalTerm h t y) x) a) =ᶠ[𝓝 v]
+      fun y ↦ W a y*M a y := by
+    filter_upwards [eventually_gt_nhds hsv, hnear] with y hy hys using hsecond a y hy hys
+  have hshift := (hasDerivAt_id' v).sub_const a
+  have hL := (hasDerivAt_profileSlope hh hs).comp v hshift
+  have hq := (hasDerivAt_profileCurvature hh hs).comp v hshift
+  have hδ := (hb₀ _ hxv).sub ((hb₀ _ hxs).comp v hshift)
+  have hb₁s := (hb₂ _ hxs).comp v hshift
+  have hb₂s := (hb₃ _ hxs).comp v hshift
+  have hw := (((hasDerivAt_logReciprocalGap hh hv).add
+    ((hasDerivAt_logReciprocalGap hh hs).comp v hshift)).exp).div_const ((3+h)*(3+2*h)/2)
+  change HasDerivAt (W a) _ v at hw
+  have hm := (((hb₁s.pow 2).sub (hδ.mul hb₂s)).sub
+    (((hL.const_mul 2).mul hδ).mul hb₁s)).add
+      ((((hL.pow 2).add hq).mul (hδ.pow 2)).div_const 2)
+  change HasDerivAt (M a) _ v at hm
+  have hd := hw.mul hm
+  change HasDerivAt (fun y ↦ W a y*M a y) _ v at hd
+  dsimp only
+  rw [heq.deriv_eq, hd.deriv, hsecond a v hsv hxs]
+  dsimp [W, M, L, q, b, S, δ, leftStripWeight]
+  ring
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
 #print axioms separated_marginal_correction_lt
@@ -786,5 +911,6 @@ theorem separated_radical_difference_bounds {h s v : ℝ}
 #print axioms separated_correction_derivative_bounds
 #print axioms separated_radical_derivative_bounds
 #print axioms separated_radical_difference_bounds
+#print axioms leftStrip_radical_mixed_formula
 
 end RefinedBMV.PositiveCenter
