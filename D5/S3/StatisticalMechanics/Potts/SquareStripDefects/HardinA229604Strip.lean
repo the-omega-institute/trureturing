@@ -15,6 +15,8 @@ finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
+import Init.Core
+import Init.Data.Fin.Lemmas
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
