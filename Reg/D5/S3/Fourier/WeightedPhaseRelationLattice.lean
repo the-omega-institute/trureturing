@@ -61,7 +61,8 @@ abbrev orbitArena : Arena where
   Law r := ∀ {J : Type u} [Fintype J] (γ : J → ℝ),
     let T := r.readout () J γ
     T = {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1} ∧
-      closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici 0) = T
+      ∀ a : ℝ, closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici a) = T ∧
+        closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ioi a) = T
 
 private theorem orbitRejectedLaw : ¬ orbitArena.{u}.Law orbitRejected := by
   intro law

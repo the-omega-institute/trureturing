@@ -13,8 +13,8 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
-/-! The all-real and nonnegative-time phase orbit closures are the annihilator of the
-integer relations. -/
+/-! The all-real phase orbit and every open or closed upper time tail have the same
+closure, the annihilator of the integer relations. -/
 
 set_option autoImplicit false
 
@@ -48,16 +48,17 @@ private theorem circle_character_exp {J : Type*} [Fintype J] (k : J → ℤ) (θ
   exact (map_sum Circle.expHom _ _).symm
 
 /-- The all-real orbit closure is the common kernel of the zero-dot-product integer
-characters, and nonnegative times give the same closure. -/
+characters. Both upper time tails at any real threshold have the same closure. -/
 theorem closure_real_phase_orbit {J : Type*} [Fintype J] (γ : J → ℝ) :
     let T := closure (range (fun (t : ℝ) (j : J) => Circle.exp (γ j * t)))
     T = {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1} ∧
-      closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici 0) = T := by
+      ∀ a : ℝ, closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici a) = T ∧
+        closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ioi a) = T := by
   intro T
   let orbit (t : ℝ) (j : J) := Circle.exp (γ j * t)
   let kernel : Set (J → Circle) :=
     {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1}
-  change T = kernel ∧ closure (orbit '' Ici 0) = T
+  change T = kernel ∧ ∀ a : ℝ, closure (orbit '' Ici a) = T ∧ closure (orbit '' Ioi a) = T
   have hchar (k : J → ℤ) (t : ℝ) :
       (∏ j, orbit t j ^ k j) = Circle.exp ((∑ j, (k j : ℝ) * γ j) * t) := by
     simp only [orbit, circle_character_exp, ← mul_assoc, ← Finset.sum_mul]
@@ -70,24 +71,41 @@ theorem closure_real_phase_orbit {J : Type*} [Fintype J] (γ : J → ℝ) :
     rintro _ ⟨t, rfl⟩
     change (∏ j, orbit t j ^ k j) = 1
     rw [hchar, hk, zero_mul, Circle.exp_zero]
-  have hkernel : kernel ⊆ closure (orbit '' Ici 0) := by
+  obtain ⟨s, hs01, hs⟩ := exists_nonresonant_step γ
+  have hkernel (a : ℝ) : kernel ⊆ closure (orbit '' Ioi a) := by
     intro z hz
-    obtain ⟨s, hs01, hs⟩ := exists_nonresonant_step γ
-    have hd : z ∈ closure (range (fun n : ℕ => orbit s ^ n)) := by
-      apply (D5.S3.Fourier.TorusOrbitClosure.result (orbit s) z).2
+    let b := a + 1
+    have hd : z / orbit b ∈ closure (range (fun n : ℕ => orbit s ^ n)) := by
+      apply (D5.S3.Fourier.TorusOrbitClosure.result (orbit s) (z / orbit b)).2
       intro k hk
       rw [hchar] at hk
       obtain ⟨m, hm⟩ := Circle.exp_eq_one.mp hk
-      exact hz k (hs k m hm)
-    refine closure_mono ?_ hd
-    rintro _ ⟨n, rfl⟩
-    refine ⟨(n : ℝ) * s, mul_nonneg (Nat.cast_nonneg n) hs01.1.le, ?_⟩
-    funext j
-    change Circle.exp (γ j * ((n : ℝ) * s)) = Circle.exp (γ j * s) ^ n
-    rw [mul_left_comm, Circle.exp_natCast_mul]
-
-  have hnonneg : closure (orbit '' Ici 0) ⊆ T := closure_mono (image_subset_range _ _)
-  exact ⟨hreal.antisymm (hkernel.trans hnonneg), hnonneg.antisymm (hreal.trans hkernel)⟩
+      have hk₀ := hs k m hm
+      simp only [Pi.div_apply, div_zpow, Finset.prod_div_distrib, hz k hk₀, hchar, hk₀,
+        zero_mul, Circle.exp_zero, div_one]
+    let shift (p : J → Circle) := p * orbit b
+    have hshift : Continuous shift := continuous_id.mul continuous_const
+    have hmem : z ∈ closure (shift '' range (fun n : ℕ => orbit s ^ n)) := by
+      have h := mem_closure_image hshift.continuousAt hd
+      simpa only [shift, div_mul_cancel] using h
+    refine closure_mono ?_ hmem
+    rintro _ ⟨_, ⟨n, rfl⟩, rfl⟩
+    have hn : 0 ≤ (n : ℝ) * s := mul_nonneg (Nat.cast_nonneg n) hs01.1.le
+    refine ⟨(n : ℝ) * s + b, mem_Ioi.mpr ?_, ?_⟩
+    · dsimp [b]
+      linarith
+    · funext j
+      change Circle.exp (γ j * ((n : ℝ) * s + b)) =
+        Circle.exp (γ j * s) ^ n * Circle.exp (γ j * b)
+      rw [mul_add, Circle.exp_add, mul_left_comm (γ j) (n : ℝ), Circle.exp_natCast_mul]
+  have hclosed (a : ℝ) : closure (orbit '' Ici a) ⊆ T :=
+    closure_mono (image_subset_range _ _)
+  have htail (a : ℝ) : closure (orbit '' Ioi a) ⊆ closure (orbit '' Ici a) :=
+    closure_mono (image_mono Ioi_subset_Ici_self)
+  refine ⟨hreal.antisymm ((hkernel 0).trans ((htail 0).trans (hclosed 0))), fun a => ?_⟩
+  have ha := hreal.trans (hkernel a)
+  exact ⟨(hclosed a).antisymm (ha.trans (htail a)),
+    ((htail a).trans (hclosed a)).antisymm ha⟩
 
 /-- For every real lift centered at the sine-maximizing phase, membership in the
 continuous orbit closure is equivalent to the affine congruences for the complete

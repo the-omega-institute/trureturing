@@ -6,7 +6,7 @@ The complete integer relation lattice gives uniform bounds and an exact vanishin
 
 **Theorem 1.1 (Continuous orbit closure).**
 
-$$\forall J \in FiniteType, g \in \mathbb{R}^{J},\; \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right) = \{p\in \mathbb{T}^{J} \mid \forall k \in \mathbb{Z}^{J},\; \sum_{j\in J} k_{j} \cdot g_{j} = 0 \Rightarrow \prod_{j\in J} \left(p_{j}\right)^{k_{j}} = 1\} \land \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}_{\ge0}\right\}\right) = \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right)$$
+$$\forall J \in FiniteType, g \in \mathbb{R}^{J},\; \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right) = \{p\in \mathbb{T}^{J} \mid \forall k \in \mathbb{Z}^{J},\; \sum_{j\in J} k_{j} \cdot g_{j} = 0 \Rightarrow \prod_{j\in J} \left(p_{j}\right)^{k_{j}} = 1\} \land \left(\forall a \in \mathbb{R},\; \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in [a, \infty)\right\}\right) = \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right) \land \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in (a, \infty)\right\}\right) = \operatorname{closure}\left(\left\{\left(\operatorname{exp}\left(i \cdot g_{j} \cdot t\right)\right)_{j \in J} \mid t \in \mathbb{R}\right\}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/WeightedPhaseRelationLattice.closure_real_phase_orbit` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\forall J \in FiniteType, g \in \mathbb{R}^{J},\; \operatorname{closure}\left(
 
 *Commentary.*
 
-For each nonzero integer dot product with the frequency vector, the steps that turn it into an integral multiple of 2π form a countable set. One step in (0,1) avoids their union. Its discrete characters are exactly the zero-dot-product characters. The discrete torus criterion puts their common kernel in the closure of the samples at times ns for n ≥ 0. These times are nonnegative. Character continuity puts the all-real orbit closure inside the kernel, so both closures equal the kernel.
+For each nonzero integer dot product with the frequency vector, the steps that turn it into an integral multiple of 2π form a countable set. One step in (0,1) avoids their union. Its discrete characters are exactly the zero-dot-product characters. The discrete torus criterion identifies their common kernel with the closure of the samples at times ns for n ≥ 0. For any real threshold a, shifting the sample times by a + 1 puts them strictly above a. The shift multiplies each phase by the orbit point at a + 1, which preserves the kernel because every relation character is one at that point. Character continuity puts the all-real orbit closure inside the kernel. Both tail closures therefore equal the kernel.
 
 **Theorem 1.2 (Centered angles and integer congruences).**
 

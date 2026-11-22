@@ -22,10 +22,13 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                     "For each nonzero integer dot product with the frequency vector, the "
                     + "steps that turn it into an integral multiple of 2π form a countable set. "
                     + "One step in (0,1) avoids their union. Its discrete characters are exactly "
-                    + "the zero-dot-product characters. The discrete torus criterion puts their "
-                    + "common kernel in the closure of the samples at times ns for n ≥ 0. "
-                    + "These times are nonnegative. Character continuity puts the all-real "
-                    + "orbit closure inside the kernel, so both closures equal the kernel."))),
+                    + "the zero-dot-product characters. The discrete torus criterion identifies "
+                    + "their common kernel with the closure of the samples at times ns for n ≥ 0. "
+                    + "For any real threshold a, shifting the sample times by a + 1 puts them "
+                    + "strictly above a. The shift multiplies each phase by the orbit point at "
+                    + "a + 1, which preserves the kernel because every relation character is "
+                    + "one at that point. Character continuity puts the all-real orbit closure "
+                    + "inside the kernel. Both tail closures therefore equal the kernel."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("centered-phase-lift"),
@@ -137,8 +140,12 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
         var relations = All(Imp(RelationDot(), Equal(character, D(1))), Var("k", Vector(Integer, "J")));
         var points = Seq(OpenBrace, F.Id("p"), InMacro, Sp, Vector(Circle, "J"), Sp, Mid, Sp,
             relations, CloseBrace);
-        var nonnegative = Seq(Real, Underscore, Grp(Seq(Ge, D(0))));
-        return Disp(All(And(Equal(Orbit(), points), Equal(Orbit(nonnegative), Orbit())),
+        var a = F.Id("a");
+        var closedTail = Seq(OpenBracket, a, Comma, Sp, Infty, Close);
+        var openTail = Seq(Open, a, Comma, Sp, Infty, Close);
+        var tails = All(And(Equal(Orbit(closedTail), Orbit()), Equal(Orbit(openTail), Orbit())),
+            Var("a", Real));
+        return Disp(All(And(Equal(Orbit(), points), tails),
             Var("J", F.Id("FiniteType")), Var("g", Vector(Real, "J"))));
     }
 
