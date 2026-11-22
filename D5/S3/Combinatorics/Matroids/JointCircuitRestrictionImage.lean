@@ -181,37 +181,12 @@ private lemma recover_potential {M : Matroid V} {E : Finset V}
     (hE : M.E = (E : Set V)) (hr : M✶.eRank = 2)
     {x : V} (hx : x ∈ E) {z : Chain V} (hz : TopCycle M z) :
     ∃ p : V → ℤ, z = potentialChain E p := by
-  classical
-  let p (a : V) :=
-    if a = x then 0 else
-      -((insertionSign (E \ {a, x}) a * insertionSign E x) * z (E \ {a, x}))
-  have hp (a : V) (ha : a ∈ E) (hax : a ≠ x) :
-      z (E \ {a, x}) = potentialChain E p (E \ {a, x}) := by
-    rw [potentialChain_pair p ha hx hax]
-    simp only [p, ite_eq_left rfl, ite_eq_right hax, zero_sub, neg_neg]
-    rw [← mul_assoc, show (insertionSign (E \ {a, x}) a * insertionSign E x) *
-      (insertionSign (E \ {a, x}) a * insertionSign E x) = 1 by
-        unfold insertionSign
-        rw [← pow_add, sign_sq], one_mul]
-  have hface {F : Finset V} (hxF : x ∉ F)
-      (h : ∃ a ∈ E, ∃ b ∈ E, a ≠ b ∧ F = E \ {a, b}) :
-      ∃ a ∈ E, a ≠ x ∧ F = E \ {a, x} := by
-    obtain ⟨a, ha, b, hb, hab, rfl⟩ := h
-    have hxb : x = a ∨ x = b := by
-      by_contra h
-      exact hxF (mem_sdiff.mpr ⟨hx, by simpa using h⟩)
-    rcases hxb with rfl | rfl
-    · exact ⟨b, hb, hab.symm, by rw [pair_comm]⟩
-    · exact ⟨a, ha, hab, rfl⟩
-  refine ⟨p, cycle_eq_of_away (x := x) hz.cycle (potentialChain_cycle _ _) ?_⟩
-  intro F hxF
-  by_cases h : ∃ a ∈ E, a ≠ x ∧ F = E \ {a, x}
-  · obtain ⟨a, ha, hax, rfl⟩ := h
-    exact hp a ha hax
-  rw [hz.vanishes F (fun hF => h (hface hxF (primal_base_complement_pair hE hF
-    (fun _ hB => hB.encard_eq_eRank.trans hr))))]
-  by_contra hw
-  exact h (hface hxF (potentialChain_support (Ne.symm hw)))
+  have he : insert x (E.erase x) = E := insert_erase hx
+  obtain ⟨p, _, hp⟩ :=
+    eq_restrictionChain_of_cycle (K := E.erase x) (x := x)
+      (by rw [he, hE]) (notMem_erase x E)
+      (fun _ hB => hB.encard_eq_eRank.trans hr) hz
+  exact ⟨fun a => -insertionSign E x * p a, by simpa only [restrictionChain, he] using hp⟩
 
 private lemma recover_class_potential {M : Matroid V} {E : Finset V}
     (hE : M.E = (E : Set V)) (hr : M✶.eRank = 2) (hn : ∀ a ∈ E, M✶.IsNonloop a)

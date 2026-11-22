@@ -262,7 +262,7 @@ lemma pair_base_iff_indep {M : Matroid V}
     (Set.toFinite _).eq_of_subset_of_encard_le hsub (by rw [hcard B hB, hpair])
   exact he ▸ hB
 
-private def restrictionChain (K : Finset V) (x : V) (p : V → ℤ) : Chain V :=
+def restrictionChain (K : Finset V) (x : V) (p : V → ℤ) : Chain V :=
   potentialChain (insert x K) (fun a => -insertionSign (insert x K) x * p a)
 
 private lemma restrictionChain_erase {K : Finset V} {x a : V}
@@ -286,7 +286,7 @@ private lemma signedRestriction_chain {K : Finset V} {x : V} (hx : x ∉ K)
   rw [simplexBoundary_erase ha, restrictionChain_erase hx ha hp, ← mul_assoc, sign_square,
     one_mul]
 
-private lemma eq_restrictionChain_of_cycle [Fintype V] {M : Matroid V}
+lemma eq_restrictionChain_of_cycle [Fintype V] {M : Matroid V}
     {K : Finset V} {x : V} (hE : M.E = (↑(insert x K) : Set V)) (hx : x ∉ K)
     (hcard : ∀ B, M✶.IsBase B → B.encard = 2) {z : Chain V} (hz : TopCycle M z) :
     ∃ p : V → ℤ, p x = 0 ∧ z = restrictionChain K x p := by
