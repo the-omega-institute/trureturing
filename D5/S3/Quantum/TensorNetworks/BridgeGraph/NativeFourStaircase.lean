@@ -58,7 +58,7 @@ private def tensorSum {a b c d k : ℕ}
 private theorem scale_tensor {a b c d k : ℕ} (z : ℂ)
     (X : Fin k → Matrix (Fin a) (Fin b) ℂ) (Y : Fin k → Matrix (Fin d) (Fin c) ℂ) :
     tensorSum (fun i => z • X i) Y = z • tensorSum X Y := by
-  rw [tensorSum, tensorSum, Finset.smul_sum]
+  simp only [tensorSum, Finset.smul_sum]
   exact Finset.sum_congr rfl (fun i _ => Matrix.smul_kronecker _ _ _)
 
 private theorem of_unit_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
@@ -362,7 +362,7 @@ private theorem compression_add {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b
 private theorem compression_smul {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ)
     (z : ℂ) (T : Matrix (Fin 4) (Fin 4) ℂ) :
     compression X (z • T) = z • compression X T := by
-  simp only [compression, Matrix.smul_kronecker, Matrix.mul_smul, Matrix.smul_mul]
+  simp only [compression, Matrix.kronecker, Matrix.smul_kronecker, Matrix.mul_smul, Matrix.smul_mul]
 
 private theorem compress_block {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -642,7 +642,8 @@ private theorem common_kernel_reduction {a b c d : ℕ}
     have hZY := congrArg Matrix.conjTranspose (hYZ r)
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
       Matrix.conjTranspose_smul, Matrix.conjTranspose_one] at hZY
-    rw [W, Matrix.mul_sub, Matrix.mul_smul, hZY, hZ, smul_smul, div_mul_cancel₀ _ hz, sub_self]
+    dsimp only [W]
+    rw [Matrix.mul_sub, Matrix.mul_smul, hZY, hZ, smul_smul, div_mul_cancel₀ _ hz, sub_self]
   have hWdep : ¬ LinearIndependent ℂ W := by
     intro h
     apply hv
@@ -681,26 +682,32 @@ private theorem common_kernel_reduction {a b c d : ℕ}
     apply LinearIndependent.of_comp (Matrix.mulLeftLinearMap (Fin c) ℂ Rᴴ)
     exact h
   obtain ⟨A, B, hAB⟩ := cut_dependent_right A' B' hBdep
-  have hcompress : tensorSum X Y * kronecker L (1 : Matrix (Fin c) (Fin c) ℂ) =
-      kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R * tensorSum A B := by
-    rw [hsplit, Matrix.add_mul, ← Matrix.mul_kronecker_mul, hUL, Matrix.mul_one,
-      Matrix.zero_kronecker, zero_add, hAB]
-    simp only [tensorSum, A', B', Matrix.mul_sum, Matrix.sum_mul, ← Matrix.mul_kronecker_mul,
-      Matrix.one_mul, hfix _ (hZW _), Matrix.mul_one]
-  have hleft : (kronecker L (1 : Matrix (Fin c) (Fin c) ℂ))ᴴ *
-      kronecker L (1 : Matrix (Fin c) (Fin c) ℂ) = 1 := by
-    rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul,
-      hL, Matrix.one_mul, Matrix.one_kronecker_one]
-  have hright : (kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R)ᴴ *
-      kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R = 1 := by
-    rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul,
-      hR, Matrix.one_mul, Matrix.one_kronecker_one]
+  have hWfix (r : Fin 4) : R * (Rᴴ * W r) = W r := hfix _ (hZW r)
+  let K := kronecker L (1 : Matrix (Fin c) (Fin c) ℂ)
+  let J := kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R
+  have hcompress : tensorSum X Y * K = J * tensorSum A B := by
+    rw [hsplit, Matrix.add_mul, hAB]
+    dsimp only [K, J, Matrix.kronecker]
+    rw [← Matrix.mul_kronecker_mul, hUL, Matrix.mul_one, Matrix.zero_kronecker, zero_add]
+    simp only [tensorSum, A', B', Matrix.kronecker, Matrix.mul_sum, Matrix.sum_mul,
+      ← Matrix.mul_kronecker_mul, Matrix.one_mul, hWfix, Matrix.mul_one]
+  have hleft : Kᴴ * K = 1 := by
+    simp only [K, Matrix.kronecker, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+      ← Matrix.mul_kronecker_mul, hL, Matrix.one_mul, Matrix.one_kronecker_one]
+  have hright : Jᴴ * J = 1 := by
+    simp only [J, Matrix.kronecker, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+      ← Matrix.mul_kronecker_mul, hR, Matrix.one_mul, Matrix.one_kronecker_one]
   refine ⟨p, hp, A, B, ?_⟩
-  have hg := congrArg (fun M => Mᴴ * M) hcompress
-  simpa only [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc
-    (tensorSum X Y)ᴴ (tensorSum X Y), hF, Matrix.one_mul,
-    ← Matrix.mul_assoc (kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R)ᴴ
-      (kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R), hright, hleft] using hg.symm
+  calc
+    (tensorSum A B)ᴴ * tensorSum A B = (J * tensorSum A B)ᴴ * (J * tensorSum A B) := by
+      rw [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc Jᴴ J, hright,
+        Matrix.one_mul]
+    _ = (tensorSum X Y * K)ᴴ * (tensorSum X Y * K) :=
+      congrArg (fun M => Mᴴ * M) hcompress.symm
+    _ = 1 := by
+      rw [Matrix.conjTranspose_mul, Matrix.mul_assoc,
+        ← Matrix.mul_assoc (tensorSum X Y)ᴴ (tensorSum X Y), hF, Matrix.one_mul, hleft]
+
 private theorem trivial_kernel_dimension {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
     (hF : (tensorSum X Y)ᴴ * tensorSum X Y = 1)
