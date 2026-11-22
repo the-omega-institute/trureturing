@@ -78,21 +78,25 @@ theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
     have hyr : 1 - Complex.normSq y = 0 :=
       (mul_eq_zero.mp (show (8 * m + f * (f + g) / C - w) *
         (1 - Complex.normSq y) = 0 by
-          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hw.ne'
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
+            hw.ne'
     have hyi : y.im = 0 := by
       have hs : y.im ^ 2 = 0 := (mul_eq_zero.mp (show f * (f + g) / C *
         y.im ^ 2 = 0 by
-          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hyCoeff.ne'
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
+            hyCoeff.ne'
       exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hzi : z.im = 0 := by
       have hs : z.im ^ 2 = 0 := (mul_eq_zero.mp (show g * (f + g) / C *
         z.im ^ 2 = 0 by
-          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hzCoeff.ne'
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
+            hzCoeff.ne'
       exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hreal : y.re + z.re = 0 := by
       have hs : (y.re + z.re) ^ 2 = 0 := (mul_eq_zero.mp (show f * g / C *
         (y.re + z.re) ^ 2 = 0 by
-          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hphaseCoeff.ne'
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
+            hphaseCoeff.ne'
       exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hySign : y.re = 1 ∨ y.re = -1 := by
       rw [Complex.normSq_apply, hyi] at hyr
@@ -166,7 +170,7 @@ theorem matrix_twoFlag_maximum
     calc
       _ ≤ ∑ i, a i * (1 - Complex.normSq (entry i.2)) :=
         Finset.sum_le_sum fun i _ =>
-          mul_le_mul_of_nonneg_left (le_sub_of_add_le_left (by simpa [add_comm] using hrow i)) (ha i)
+          mul_le_mul_of_nonneg_left (le_sub_iff_add_le.mpr (hrow i)) (ha i)
       _ = _ := by
         simp only [Fintype.sum_prod_type, Fin.sum_univ_two]
         ring
@@ -181,8 +185,13 @@ theorem matrix_twoFlag_maximum
     linarith only [henvelope, hbound, h]
   · intro h
     have habs (s : Fin 2) : Complex.normSq (entry s) = 1 := by
-      rcases h with ⟨hp, hn⟩ | ⟨hn, hp⟩ <;>
-        fin_cases s <;> simp_all only [Complex.normSq_neg, Complex.normSq_one]
+      fin_cases s
+      · change Complex.normSq (entry 0) = 1
+        rcases h with ⟨h₀, _⟩ | ⟨h₀, _⟩ <;>
+          simp only [h₀, Complex.normSq_neg, Complex.normSq_one]
+      · change Complex.normSq (entry 1) = 1
+        rcases h with ⟨_, h₁⟩ | ⟨_, h₁⟩ <;>
+          simp only [h₁, Complex.normSq_neg, Complex.normSq_one]
     have hzero (i : Fin 2 × Fin 2) : rest i = 0 := by
       have hi := hrow i
       rw [habs] at hi
