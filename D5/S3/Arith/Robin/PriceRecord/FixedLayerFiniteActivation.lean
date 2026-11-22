@@ -40,7 +40,7 @@ def layerGain (p j : ℕ) : ℝ :=
 def clippedLayers (p : ℕ) (q : ℝ) (K : ℕ) : ℝ :=
   ∑ j ∈ Finset.Ioc 1 K, min q (layerGain p j)
 
-private lemma layerGain_eq_eulerTerm_sub {p j : ℕ} (hp : p.Prime) (hj : 1 ≤ j) :
+lemma layerGain_eq_eulerTerm_sub {p j : ℕ} (hp : p.Prime) (hj : 1 ≤ j) :
     layerGain p j = eulerTerm p (j - 1) - eulerTerm p j := by
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
   have hpInvPos : 0 < (p : ℝ)⁻¹ := inv_pos.mpr (zero_lt_one.trans hp1)

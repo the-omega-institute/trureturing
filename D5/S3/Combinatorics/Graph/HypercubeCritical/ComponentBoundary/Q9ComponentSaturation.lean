@@ -28,7 +28,7 @@ open Q9WeightedSaturation (Rows)
 open Q9WeightedBoundaryGram (signed switched gram_split signed_mulVec signed_transpose)
 open Q9SignedContactCells (unit_weight weighted_cross weighted_square)
 open Q9WeightedSaturation (defect)
-open TwoBalancedComponents (zero_iff_of_reachable)
+open TwoBalancedComponents (componentFinset mem_componentFinset zero_iff_of_reachable)
 
 private abbrev Comp (U : Finset (Q 9)) :=
   ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent
@@ -144,6 +144,73 @@ def componentDefect {R : Type*} [CommRing R] (w : Fin 9 → R)
     (C : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent) :
     Matrix {i : Rows U b // label i = C} {i : Rows U b // label i = C} R :=
   (signedDefect w U b (rowEmbedding U b)).toSquareBlock label C
+
+open Classical in
+/-- The vertices of an actual component on a specified cube parity. -/
+def componentParityFinset (U : Finset (Q 9)) (b : Bool)
+    (C : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent) : Finset (Q 9) :=
+  (componentFinset U C).filter fun x => parity x = b
+
+private def componentRowEquiv (U : Finset (Q 9)) (b : Bool) (C : Comp U) :
+    {i : Rows U b // label i = C} ≃ ↥(componentParityFinset U b C) := by
+  classical
+  let f (i : {i : Rows U b // label i = C}) : ↥(componentParityFinset U b C) :=
+    ⟨i.1.1.1, Finset.mem_filter.mpr
+      ⟨(mem_componentFinset U C _).mpr ⟨i.1.1.property, i.property⟩, row_parity i.1⟩⟩
+  refine Equiv.ofBijective f ⟨?_, ?_⟩
+  · intro i j h
+    have hv : i.1.1.1 = j.1.1.1 := congrArg (fun x : ↥(componentParityFinset U b C) => x.1) h
+    exact Subtype.ext (Subtype.ext (Subtype.ext hv))
+  · intro x
+    obtain ⟨hx, hp⟩ := Finset.mem_filter.mp x.property
+    obtain ⟨hxU, hxC⟩ := (mem_componentFinset U C _).mp hx
+    exact ⟨⟨⟨⟨x.1, hxU⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hp⟩⟩, hxC⟩,
+      Subtype.ext rfl⟩
+
+open Classical in
+/-- The determinant of an actual component defect uses only its signed block
+between the two cube parities. -/
+theorem componentDefect_det_eq {R : Type*} [CommRing R] (w : Fin 9 → R)
+    (U : Finset (Q 9)) (b : Bool)
+    (C : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent) :
+    (componentDefect w U b C).det =
+      (defect w ((signed w).submatrix
+        (fun x : ↥(componentParityFinset U b C) => x.1)
+        (fun y : ↥(componentParityFinset U (!b) C) => y.1))).det := by
+  classical
+  let e := componentRowEquiv U b C
+  rw [← Matrix.det_reindex_self e]
+  congr 1
+  let T := componentParityFinset U (!b) C
+  let column (y : ↥T) : Interior U b :=
+    ⟨⟨y.1, by
+        have hp := (Finset.mem_filter.mp y.property).2
+        exact (Bool.not_eq_iff.mp hp.symm).symm⟩,
+      ((mem_componentFinset U C _).mp (Finset.mem_filter.mp y.property).1).choose⟩
+  have hrow (x : ↥(componentParityFinset U b C)) :
+      rowEmbedding U b (e.symm x).1 = x.1 :=
+    congrArg Subtype.val (e.apply_symm_apply x)
+  ext i j
+  simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.of_apply, componentDefect,
+    Matrix.toSquareBlock_def, signedDefect, defect, Matrix.sub_apply, Matrix.smul_apply,
+    Matrix.one_apply, Subtype.coe_inj, e.symm.injective.eq_iff, Matrix.mul_apply,
+    Matrix.transpose_apply, signedInterior, hrow]
+  congr 1
+  symm
+  refine Fintype.sum_of_injective column (fun _ _ h => Subtype.ext
+    (congrArg (fun k : Interior U b => k.1.1) h)) _ _ ?_ (fun _ => rfl)
+  intro k hk
+  have hki : ¬ (hypercube 9).Adj i.1 k.1.1 := by
+    intro hadj
+    obtain ⟨hiU, hiC⟩ := (mem_componentFinset U C _).mp (Finset.mem_filter.mp i.property).1
+    have hkC : (⟨k.1.1, k.property⟩ : (U : Set (Q 9))) ∈ C.supp :=
+      (C.mem_supp_congr_adj (show ((hypercube 9).induce (U : Set (Q 9))).Adj
+        ⟨i.1, hiU⟩ ⟨k.1.1, k.property⟩ from hadj)).mp hiC
+    have hp : parity k.1.1 = !b := Bool.eq_not_of_ne k.1.property
+    have hT : k.1.1 ∈ T := Finset.mem_filter.mpr
+      ⟨(mem_componentFinset U C _).mpr ⟨k.property, hkC⟩, hp⟩
+    exact hk ⟨⟨k.1.1, hT⟩, Subtype.ext (Subtype.ext rfl)⟩
+  rw [signed_zero w hki, zero_mul]
 
 private theorem unit_kernel_extension {ι : Type*} [Fintype ι] [DecidableEq ι]
     (U : Finset (Q 9)) (b : Bool) (r : ι ↪ Q 9)
