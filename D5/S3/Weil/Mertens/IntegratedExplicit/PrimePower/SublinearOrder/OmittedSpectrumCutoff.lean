@@ -49,7 +49,7 @@ private theorem sum_Ico_adjacent_sub (f : ℕ → ℝ) {p m : ℕ} (hpm : p ≤ 
   have h := congrArg Neg.neg (Finset.sum_Ico_sub f hpm)
   simpa only [← Finset.sum_neg_distrib, neg_sub] using h
 
-private def normalizedMode (q : ℕ) (u : ℝ) (n i : ℕ) : ℂ :=
+def normalizedMode (q : ℕ) (u : ℝ) (n i : ℕ) : ℂ :=
   (Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) : ℂ) *
     (rootCoeff n i * Complex.exp (Complex.I * (occurrenceFrequency i : ℂ) * ((u/(n : ℝ) : ℝ) : ℂ)))
 
@@ -215,12 +215,12 @@ private theorem normalized_mode_variation (hRH : RiemannHypothesis)
   exact mul_le_mul_of_nonneg_right
     (add_le_add le_rfl (mul_le_mul_of_nonneg_left (min_le_right _ _) (by positivity))) (by positivity)
 
-private def lowBins (H : ℕ) : Finset ℤ := Finset.Icc (-(H : ℤ)) H
+def lowBins (H : ℕ) : Finset ℤ := Finset.Icc (-(H : ℤ)) H
 
-private theorem mem_lowBins {H : ℕ} {k : ℤ} : k ∈ lowBins H ↔ k.natAbs ≤ H := by
+theorem mem_lowBins {H : ℕ} {k : ℤ} : k ∈ lowBins H ↔ k.natAbs ≤ H := by
   rw [lowBins, Finset.mem_Icc, ← Nat.cast_le (α := ℤ), Int.natCast_natAbs, abs_le]
 
-private theorem masked_occurrence_tail_at (hRH : RiemannHypothesis)
+theorem masked_occurrence_tail_at (hRH : RiemannHypothesis)
     {η : ℝ} (hη : 0 < η) (hηhalf : η < 1/2) :
     ∃ C : ℝ, 0 < C ∧ ∀ (q H : ℕ), 3 ≤ q → 0 < H →
       ∀ u : ℝ, (q : ℝ) ≤ u → ∀ T : Finset ℕ,
@@ -452,7 +452,7 @@ private theorem uniform_low_occurrence_sum (hRH : RiemannHypothesis) {η : ℝ} 
     _ ≤ A*(36*D*h^(1+η)) := by rw [← Finset.mul_sum]; exact mul_le_mul_of_nonneg_left hhead hA
     _ = _ := by ring
 
-private theorem signed_omitted_root_density_of_finite_bounds (hRH : RiemannHypothesis)
+theorem signed_omitted_root_density_of_finite_bounds (hRH : RiemannHypothesis)
     {m H : ℕ} (hm : 2 ≤ m) {u P Q : ℝ} (hu : 0 ≤ u)
     (hlow : let S := Finset.Icc ((m+2)/2) m
       ∀ T : Finset ℕ, ‖∑ n ∈ S, -((μ n : ℝ) : ℂ) *
