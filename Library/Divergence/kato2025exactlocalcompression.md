@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Recovery/LocalCompression/KatoRankRefutation
   - D5/S3/Quantum/Recovery/LocalCompression/JointMarginalRank
   - D5/S3/Quantum/Measurements/FiniteLabelRecordDilation
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
 license: citation-only
 triage: anchor
 ---
@@ -80,3 +81,12 @@ coordinates through the corresponding joint eigenvalue sum.
 [Fan, Theorem 1](https://doi.org/10.1073/pnas.35.11.652). Li, Poon and Wang
 study rank constraints when the marginals are prescribed.
 [Li–Poon–Wang](https://arxiv.org/abs/1710.11416v2)
+
+## Approximate pure-qutrit compression
+
+Section VII proposes approximate local compression as a direction for further
+work. The pure-qutrit increment keeps the normalized Bell source and its
+reference, and measures half the joint trace norm of the reconstruction error.
+For output in a fixed two-dimensional subspace the minimum is 2/3. Projection
+with reset attains it. A fixed encoder and decoder through a qubit attain at
+most 10189/15750 using a decoder with two Kraus operators. [Primary text, §VII](https://arxiv.org/abs/2309.07434v2)
