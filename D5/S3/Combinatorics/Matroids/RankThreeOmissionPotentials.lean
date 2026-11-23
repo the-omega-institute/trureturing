@@ -6,6 +6,7 @@
    utility: none
    digest: Rank-three omitted triangle gaps identify normalized three-torsion potentials. -/
 
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Data.Fintype.Fin
@@ -514,5 +515,53 @@ theorem affine_plane_potential_card :
       left_inv := fun u => Subtype.ext ((affine_plane_potential_coordinates u.val).mp u.prop).symm
       right_inv := fun _ => rfl }
   rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_prod, ZMod.card]
+
+private theorem affine_triangle_injective :
+    ∀ t, Function.Injective (affineLines t) := by decide
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 4000000 in
+private theorem affine_pair_unique :
+    ∀ t s i j, i ≠ j → covers (affineLines t) i j → covers (affineLines s) i j → t = s := by
+  unfold covers
+  decide
+
+set_option maxRecDepth 8192 in
+private theorem affine_pair_covered :
+    ∀ i j : Fin 9, i ≠ j → ∃ t a b, affineLines t a = i ∧ affineLines t b = j := by decide
+
+private theorem affine_compatible_iff (u : Fin 9 → ZMod 3) :
+    IsOmissionPotential affineLines 0 u ↔ u 0 = 0 ∧ ∀ i, lineConstraint u i := by
+  constructor
+  · intro h
+    exact ⟨h.1, h.2.2.2.2⟩
+  · rintro ⟨h0, hline⟩
+    have h012 : u 0 + u 1 + u 2 = 0 := hline 0
+    have h345 : u 3 + u 4 + u 5 = 0 := hline 10
+    have h678 : u 6 + u 7 + u 8 = 0 := hline 11
+    refine ⟨h0, ?_, ?_, ?_, hline⟩
+    · simp [Fin.sum_univ_succ]
+      linear_combination h012 + h345 + h678
+    · intro i
+      rw [nsmul_eq_mul, show ((3 : ℕ) : ZMod 3) = 0 by decide, zero_mul]
+    · intro i j huncovered
+      by_cases h : i = j
+      · exact congrArg u h
+      · exact (huncovered (affine_pair_covered i j h)).elim
+
+/-- The twelve reduced affine-line rows have a two-dimensional relation space
+over the field of three elements. -/
+theorem affine_plane_reduced_relation_card :
+    Nat.card {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} = 9 := by
+  let e : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
+      {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} :=
+    Equiv.ofBijective _ (potential_to_relations_bijective affineLines affine_triangle_injective
+      affine_pair_unique 8 0 (by decide) (by
+        intro x
+        rw [Fintype.card_fin, nsmul_eq_mul, show ((9 : ℕ) : ZMod 3) = 0 by decide, zero_mul])).bijective
+  let potentialEq : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
+      {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} :=
+    Equiv.subtypeEquivRight affine_compatible_iff
+  rw [Nat.card_congr (e.symm.trans potentialEq), affine_plane_potential_card]
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
