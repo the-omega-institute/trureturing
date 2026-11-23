@@ -55,6 +55,7 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
     private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
     private static Formula CastInt(Formula a) => Parenthesized(Seq(a, Colon, Sp, V("Int")));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
