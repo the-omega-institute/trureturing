@@ -1,6 +1,6 @@
 name: Lean build cache publication
 
-# Dev pushes and pinned manual builds refresh the Actions cache.
+# Protected dev pushes refresh the Actions cache. Pinned manual builds consume it.
 # Scheduled runs publish the protected-dev Release.
 # Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
 # allow up to the GitHub-hosted 360-minute job limit.  Example:
@@ -56,10 +56,10 @@ concurrency:
 
 jobs:
   producer:
-    name: Produce the protected branch Lean cache
+    name: Prepare the protected branch Lean build
     permissions:
-      contents: write
-      actions: write
+      contents: read
+      actions: read
       pull-requests: read
     if: >-
       (github.event_name == 'push' && github.event.deleted == false && github.ref_protected &&
@@ -68,12 +68,11 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      # Hosted integration builds write branch-scoped Actions caches.
       group: ${{ startsWith(github.ref, 'refs/heads/integration-') && 'lean-cache-integration-producer' || 'lean-cache-producer' }}
       queue: max
       cancel-in-progress: false
     env:
-      STRATALINT_CACHE_WRITES: 'true'
+      STRATALINT_CACHE_WRITES: 'false'
     steps:
       - uses: actions/checkout@v5
         with:
@@ -145,16 +144,116 @@ jobs:
           fi
           bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
+        if: github.event_name == 'push' && github.ref_protected && !github.event.deleted
         uses: ./.github/actions/lean-cache-produce
         env:
-          STRATALINT_RELEASE_SEED_TAG: ${{ inputs.release_seed_tag }}
-          STRATALINT_RELEASE_SEED_PRODUCER: ${{ inputs.release_seed_producer }}
+          STRATALINT_CACHE_WRITES: 'true'
         with:
-          shard-history-anchor: ${{ inputs.shard_history_anchor || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
-          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts && 'true' || 'false' }}
-          native-report-batch-modules: ${{ inputs.native_report_batch_modules || '100' }}
-          release-seed-tag: ${{ inputs.release_seed_tag }}
-          release-seed-producer: ${{ inputs.release_seed_producer }}
+          shard-history-anchor: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+      # A manual pin can predate the push-only writer. Run only restore/build
+      # operations against that checkout, including on retries and failures.
+      - if: github.event_name == 'workflow_dispatch'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - if: github.event_name == 'workflow_dispatch'
+        name: Build the pinned Lean producer with locked dependencies
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - if: github.event_name == 'workflow_dispatch'
+        id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - if: steps.keys.outputs.elan_key != ''
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: github.event_name == 'workflow_dispatch'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: shards
+        if: github.event_name == 'workflow_dispatch' && inputs.release_seed_tag == '' && inputs.release_seed_producer == '' && (inputs.shard_history_anchor != '' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')) && hashFiles('.github/actions/lean-cache-shards/action.yml') != ''
+        uses: ./.github/actions/lean-cache-shards
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+      - id: project
+        if: steps.keys.outputs.project_key != '' && inputs.release_seed_tag == '' && inputs.release_seed_producer == '' && (steps.shards.outputs.available || '0') == '0'
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_restore_key || steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - if: github.event_name == 'workflow_dispatch'
+        name: Validate the restored build inputs
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          REQUESTED_PROJECT_KEY: ${{ steps.keys.outputs.project_restore_key || steps.keys.outputs.project_key }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+          SHARDS: ${{ steps.shards.outputs.available || '0' }}
+          COMPLETE: ${{ steps.shards.outputs.complete }}
+        run: |
+          args=(--dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME")
+          if [[ "$SHARDS" == 0 ]]; then
+            args+=(--project-key "$PROJECT_KEY" --project-restore-key "$REQUESTED_PROJECT_KEY" --project-outcome "$PROJECT_OUTCOME")
+          else
+            args+=(--layers dependency)
+          fi
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" "${args[@]}"
+          if [[ "$COMPLETE" == true ]]; then echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"; fi
+      - if: github.event_name == 'workflow_dispatch' && (inputs.release_seed_tag != '' || inputs.release_seed_producer != '')
+        name: Restore the explicitly selected Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.release_seed_tag }}
+          PRODUCER: ${{ inputs.release_seed_producer }}
+        run: |
+          [[ "$TAG" =~ ^[A-Za-z0-9._-]+$ && "$PRODUCER" =~ ^[0-9a-f]{40}$ && "$PRODUCER" != 0000000000000000000000000000000000000000 ]]
+          make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$TAG" LEAN_CACHE_SOURCE_COMMIT="$PRODUCER"
+      - if: github.event_name == 'workflow_dispatch'
+        name: Prepare the pinned compiler and reports on this runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          LEAN_NUM_THREADS: '1'
+          PARTIAL_INDEXED_PROJECT: ${{ (steps.shards.outputs.available || '0') != '0' && steps.shards.outputs.complete != 'true' }}
+          STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native_report_batch_modules || '100' }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegTests","regInspector/compiledJudgeTests"]'
+          REGENERATE: ${{ inputs.regenerate_report_artifacts && '1' || '0' }}
+        run: |
+          [[ "$STRATALINT_NATIVE_BATCH_MODULES" =~ ^([1-9]|[1-9][0-9]|100)$ ]]
+          export STRATALINT_LEAN_PRODUCER_DLL="$GITHUB_WORKSPACE/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll"
+          if [[ -f tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean ]]; then
+            STRATALINT_LEAN_BUILD_TARGETS="$(jq -c '. + ["regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/auricFibAnalysis"]' <<< "$STRATALINT_LEAN_BUILD_TARGETS")"
+          fi
+          target=lean-report
+          for entry in lean-cache-prepare check-lean-report; do
+            if grep -qs "^${entry}:" Makefile tools/consumer/Makefile; then target="$entry"; break; fi
+          done
+          diagnostics=()
+          if [[ -f tools/scripts/report/runner-diagnostics.py ]]; then
+            diagnostics=(python3 tools/scripts/report/runner-diagnostics.py --)
+          fi
+          "${diagnostics[@]}" bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
+            make "$target" FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$REGENERATE"
+          if [[ "$target" != lean-cache-prepare ]]; then
+            python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE"
+          fi
 
   scheduled-compile:
     if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
@@ -173,7 +272,7 @@ jobs:
     if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
     permissions:
       contents: write
-      actions: write
+      actions: read
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
@@ -321,7 +420,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
     permissions:
       contents: write
-      actions: write
+      actions: read
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
