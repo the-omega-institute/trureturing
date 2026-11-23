@@ -375,9 +375,6 @@ private theorem mem_paperPairs (a b : ℤ) : (a,b) ∈ paperPairs ↔ 1 ≤ a �
   simp [paperPairs, mem_paperIndices, and_assoc]
   omega
 
-private theorem paperIndices_nodup : paperIndices.Nodup := by decide
-private theorem paperPairs_nodup : paperPairs.Nodup := by decide
-
 private def cCoefficient (a : ℤ) : K := sign a * 2 * (a : K)
 
 private def bCoefficient (a b : ℤ) : K :=
@@ -415,11 +412,13 @@ private def fullB : Sparse :=
     (spMul (spMul (zTerms a) (zTerms b)) (spMul (zTerms (a+b)) (zTerms (b-a)))))
 
 private theorem denote_fullC : denote fullC = paperC := by
-  rw [paperC, ← paperIndices_toFinset, List.sum_toFinset _ paperIndices_nodup]
+  have h : paperIndices.Nodup := by decide
+  rw [paperC, ← paperIndices_toFinset, List.sum_toFinset _ h]
   simp only [fullC, denote_normalize, denote_sparseSum, denote_scale, denote_zTerms]
 
 private theorem denote_fullB : denote fullB = paperB := by
-  rw [paperB, ← paperPairs_toFinset, List.sum_toFinset _ paperPairs_nodup]
+  have h : paperPairs.Nodup := by decide
+  rw [paperB, ← paperPairs_toFinset, List.sum_toFinset _ h]
   simp only [fullB, denote_normalize, denote_sparseSum, denote_scale, denote_spMul, denote_zTerms]
 
 private def leftSparse : Sparse :=
@@ -542,14 +541,11 @@ private theorem denote_rightSparse (first : K) :
     denote_relationSparse]
 
 set_option maxHeartbeats 0 in
--- Kernel reduction compares the complete normalized degree-seven polynomials.
 set_option maxRecDepth 100000 in
-private theorem sparse_identity : normalize leftSparse = normalize (rightSparse 3) := by
-  decide +kernel
-
 private theorem certificate_identity : F11 = S_Z * Q + orbitRelations 3 := by
-  have h := congrArg denote sparse_identity
-  simpa only [denote_normalize, denote_leftSparse, denote_rightSparse] using h
+  -- Compare the complete normalized degree-seven polynomials.
+  have h : normalize leftSparse = normalize (rightSparse 3) := by decide
+  simpa only [denote_normalize, denote_leftSparse, denote_rightSparse] using congrArg denote h
 
 private theorem Q_grades : Q.IsHomogeneous 4 ∧ Q.IsWeightedHomogeneous w (9 : K) := by
   have grades (p : Sparse)
@@ -566,7 +562,7 @@ private theorem Q_grades : Q.IsHomogeneous 4 ∧ Q.IsWeightedHomogeneous w (9 : 
   rw [← denote_qSparse]
   apply grades
   have h : qSparse.all (fun t => decide (t.1.length = 4 ∧ wordWeight t.1 = (9 : K))) := by
-    decide +kernel
+    decide
   simpa only [List.all_eq_true, decide_eq_true_eq] using h
 
 private theorem relations_mem (first : K) : orbitRelations first ∈ ITheta := by
@@ -684,22 +680,6 @@ private theorem trace_coeff (n : ℕ) (p : Sparse) :
     rw [denote_cons, map_add, Polynomial.coeff_add, trace_term, ih]
     simp [traceCoeff, Polynomial.coeff_monomial]
 
-private def checkLow (p : Sparse) : Bool :=
-  p.all fun t => if traceDegree t.1 < 10 then decide (traceCoeff (traceDegree t.1) p = 0) else true
-
-private theorem checkLow_sound (p : Sparse) (h : checkLow p = true) (n : ℕ) (hn : n < 10) :
-    traceCoeff n p = 0 := by
-  by_cases he : ∃ t ∈ p, traceDegree t.1 = n
-  · obtain ⟨t,ht,hw⟩ := he
-    have h' := List.all_eq_true.mp h t ht
-    simpa [hw, hn] using h'
-  · simp only [not_exists, not_and] at he
-    unfold traceCoeff
-    apply List.sum_eq_zero
-    intro c hc
-    obtain ⟨t, ht, rfl⟩ := List.mem_map.mp hc
-    exact ite_eq_right (he t ht)
-
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 100000 in
 private theorem theta_trace_low (x : Indices) (n : ℕ) (hn : n < 10) :
@@ -714,20 +694,35 @@ private theorem theta_trace_low (x : Indices) (n : ℕ) (hn : n < 10) :
     omega
   let finTheta (a b c d : Fin 10) : Sparse :=
     spTheta ((a.val : ℤ), (b.val : ℤ), (c.val : ℤ), (d.val : ℤ))
+  let vanishesOnSupport (p : Sparse) : Bool :=
+    p.all fun t => if traceDegree t.1 < 10 then decide (traceCoeff (traceDegree t.1) p = 0)
+      else true
   let checkSlice (a : Fin 10) : Bool :=
     (List.finRange 10).all fun b => (List.finRange 10).all fun c => (List.finRange 10).all fun d =>
-      checkLow (finTheta a b c d)
+      vanishesOnSupport (finTheta a b c d)
   -- Discharge the representative cases in the proof of the integer-indexed statement.
   have checked (r : Fin 10) : checkSlice r = true := by
-    dsimp only [checkSlice, finTheta]
+    dsimp only [checkSlice, finTheta, vanishesOnSupport]
     fin_cases r <;> decide
   have hc := checked (toFin a)
-  have hs : checkLow (finTheta (toFin a) (toFin b) (toFin c) (toFin d)) = true :=
+  let p := finTheta (toFin a) (toFin b) (toFin c) (toFin d)
+  have hs : vanishesOnSupport p = true :=
     List.all_eq_true.mp (List.all_eq_true.mp (List.all_eq_true.mp hc
       (toFin b) (List.mem_finRange _)) (toFin c) (List.mem_finRange _))
       (toFin d) (List.mem_finRange _)
+  have hcoeff : traceCoeff n p = 0 := by
+    by_cases he : ∃ t ∈ p, traceDegree t.1 = n
+    · obtain ⟨t, ht, hw⟩ := he
+      have h := List.all_eq_true.mp hs t ht
+      simpa [hw, hn] using h
+    · simp only [not_exists, not_and] at he
+      unfold traceCoeff
+      apply List.sum_eq_zero
+      intro c hc
+      obtain ⟨t, ht, rfl⟩ := List.mem_map.mp hc
+      exact ite_eq_right (he t ht)
   rw [theta_reduce, ← denote_spTheta, trace_coeff]
-  simpa only [finTheta, cast_toFin] using checkLow_sound _ hs n hn
+  simpa only [p, finTheta, cast_toFin] using hcoeff
 
 private noncomputable def traceIdeal : Ideal (Polynomial K) :=
   Ideal.span {Polynomial.X ^ 10}
@@ -739,10 +734,6 @@ private theorem theta_le_traceIdeal : ITheta ≤ Ideal.comap trace.toRingHom tra
   rw [traceIdeal, Ideal.mem_span_singleton, Polynomial.X_pow_dvd_iff]
   exact theta_trace_low x
 
-private theorem trace_Q_coeff : (trace Q).coeff 9 = 1 := by
-  rw [← denote_qSparse, trace_coeff]
-  decide +kernel
-
 private theorem Q_class_ne_zero : Ideal.Quotient.mk ITheta Q ≠ 0 := by
   intro he
   rw [← map_zero (Ideal.Quotient.mk ITheta), Ideal.Quotient.mk_eq_mk_iff_sub_mem, sub_zero] at he
@@ -750,7 +741,10 @@ private theorem Q_class_ne_zero : Ideal.Quotient.mk ITheta Q ≠ 0 := by
   change trace Q ∈ traceIdeal at hm
   rw [traceIdeal, Ideal.mem_span_singleton, Polynomial.X_pow_dvd_iff] at hm
   have h := hm 9 (by decide)
-  rw [trace_Q_coeff] at h
+  have hcoeff : (trace Q).coeff 9 = 1 := by
+    rw [← denote_qSparse, trace_coeff]
+    decide
+  rw [hcoeff] at h
   exact (show (1 : K) ≠ 0 by decide) h
 
 /-- The algebraic existence clause of Bilgici's Question 1, with a cofactor whose class
