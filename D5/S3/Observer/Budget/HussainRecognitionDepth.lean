@@ -235,15 +235,16 @@ private theorem queryAll_spec {Query : Type v} {State : Type w} {B depth : Nat}
     UsesReadoutFamily readout protocol ∧
       ∀ left right, adaptiveTranscript protocol left = adaptiveTranscript protocol right →
         ∀ i, readout (coordinate i) left = readout (coordinate i) right := by
-  induction depth with
-  | zero =>
-      exact ⟨trivial, fun _ _ _ i => Fin.elim0 i⟩
-  | succ depth ih =>
-      obtain ⟨allowed, recovers⟩ := ih (fun i => coordinate i.castSucc)
-      refine ⟨⟨⟨coordinate (Fin.last depth), rfl⟩, fun _ => allowed⟩, ?_⟩
-      intro left right equal i
-      simp only [adaptiveProtocol, adaptiveTranscript, List.cons.injEq] at equal
-      exact Fin.lastCases equal.1 (recovers left right equal.2) i
+  constructor
+  · induction depth with
+    | zero => trivial
+    | succ depth ih =>
+        exact ⟨⟨coordinate (Fin.last depth), rfl⟩, fun _ =>
+          ih (fun i => coordinate i.castSucc)⟩
+  · intro left right equal i
+    have codes_equal := (adaptiveTranscript_adaptiveProtocol_eq_iff
+      (fun state i => readout (coordinate i) state) left right).mp equal
+    exact congrFun codes_equal i
 
 private theorem protocol_exists {Alphabet : Type u} [Fintype Alphabet]
     (language : Set (List Alphabet)) (n : Nat) :
