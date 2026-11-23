@@ -41,7 +41,7 @@ abbrev scoreSignature : Signature where
 def scoreActual : Realization scoreSignature :=
   realize scoreSignature (fun _ p v => sine p.1 p.2.1 p.2.2 v) (fun e => nomatch e)
 
-private def scoreRejected : Realization scoreSignature :=
+def scoreRejected : Realization scoreSignature :=
   realize scoreSignature (fun _ p _ => mass p.1 p.2.1 p.2.2) (fun e => nomatch e)
 
 abbrev scoreArena : Arena where
@@ -66,7 +66,7 @@ private theorem score_rejected : ¬ scoreArena.Law scoreRejected := by
   change mass S w T < (1 / 2 : ℝ) ^ 2 * mass S w T - Real.log T at hlt
   linarith only [hlt, hW, Real.log_nonneg hT]
 
-private theorem score_dependence : ObservationalDependence scoreSignature scoreActual := by
+theorem score_dependence : ObservationalDependence scoreSignature scoreActual := by
   rintro ⟨⟩
   refine ⟨⟨unitSpectrum, fun _ => 1, 1⟩, 0, Real.pi / 2, ?_⟩
   have hcut : unitSpectrum.cut 1 = {()} := by
@@ -81,20 +81,23 @@ private theorem score_dependence : ObservationalDependence scoreSignature scoreA
     sine unitSpectrum (fun _ => 1) 1 (Real.pi / 2)
   simp [sine, hcut, Real.sin_pi_div_two]
 
+theorem score_sensitivity (law : Realization scoreSignature → Prop)
+    (hrejected : ¬ law scoreRejected) : Sensitivity ⟨scoreSignature, law⟩ scoreActual := by
+  constructor
+  · intro i
+    refine ⟨scoreRejected, ?_, ?_, hrejected⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
 def scoreEvidence : Registration scoreArena (type_of% @eventual_critical_missing_window) where
   actual := scoreActual
   bridge := Iff.rfl
   variation := ⟨@eventual_critical_missing_window, scoreRejected, score_rejected⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨scoreRejected, ?_, ?_, score_rejected⟩
-      · intro j hj
-        exact (hj (Subsingleton.elim j i)).elim
-      · funext e
-        exact nomatch e
-    · intro e
-      exact nomatch e
+  sensitivity := score_sensitivity scoreArena.Law score_rejected
   dependence := score_dependence
 
 def scoreAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
