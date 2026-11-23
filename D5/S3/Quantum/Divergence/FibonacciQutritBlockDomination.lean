@@ -249,4 +249,10 @@ theorem strict_block_domination (Cₚ F : Qubit) (h : Matrix (Fin 2) Unit ℂ)
 
 #print axioms strict_block_domination
 
+namespace Block
+
+export _root_.D5.S3.Quantum.Divergence.FibonacciQutritBlockDomination (blockHom log_block)
+
+end Block
+
 end D5.S3.Quantum.Divergence.FibonacciQutritBlockDomination
