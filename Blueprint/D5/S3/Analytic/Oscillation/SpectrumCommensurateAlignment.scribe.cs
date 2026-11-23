@@ -37,9 +37,9 @@ internal sealed class SpectrumCommensurateAlignmentDocument : IScribeDocumentDef
                         + "with quotient congruent to one modulo four. Multiplying each retained "
                         + "frequency by q therefore gives an integer congruent to one modulo four. "
                         + "All retained sines equal one at πq/2 and at every translate of that "
-                        + "time by an integer multiple of 2πq. Since q ≤ N+1, the distance from "
-                        + "any real start to the next member of this progression is less than "
-                        + "(2π/log 2) log T.")),
+                        + "time by an integer multiple of 2πq, simultaneously at every smaller "
+                        + "inclusive cutoff. The estimate q+1 ≤ log T/log 2 puts at least 2π "
+                        + "between that period and the stated interval length.")),
                     Paragraph(Text(
                         "Thus the logarithmic mass and square-tail laws permit a spectrum "
                         + "that reaches full mass in every sufficiently long window. The "
@@ -68,22 +68,32 @@ internal sealed class SpectrumCommensurateAlignmentDocument : IScribeDocumentDef
     {
         var s = F.Id("S");
         var w = F.Id("w");
-        var c = F.Id("C");
         var t = F.Id("T");
         var a = F.Id("A");
-        var u = F.Id("u");
+        var q = F.Id("q");
+        var m = F.Id("m");
+        var x = F.Id("X");
         var index = Call("index", s);
         var reals = Seq(Mathbb, Grp(F.Id("R")));
-        var mass = Call("mass", s, w, t);
-        var sine = Call("sine", s, w, t, u);
-        var right = Seq(a, Sp, Plus, Sp, Multiply(c, Call("log", t)));
-        var aligned = Bind(FormulaQuantifier.Exists, "u", reals,
-            And(AtMost(a, u), And(Less(u, right),
-                new Formula.Relation(sine, FormulaRelationOperator.Equal, mass))));
+        var integers = Seq(Mathbb, Grp(F.Id("Z")));
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
+        var time = Add(new Formula.Fraction(Multiply(Pi, q), D(2)),
+            Multiply(m, Multiply(D(2), Multiply(Pi, q))));
+        var right = Add(a, Multiply(new Formula.Fraction(Multiply(D(2), Pi), Call("log", D(2))),
+            Call("log", t)));
+        var visits = Bind(FormulaQuantifier.ForAll, "A", reals,
+            Bind(FormulaQuantifier.Exists, "m", integers, And(Less(a, time), Less(time, right))));
+        var alignment = Bind(FormulaQuantifier.ForAll, "m", integers,
+            Bind(FormulaQuantifier.ForAll, "X", reals,
+                new Formula.Logic(AtMost(x, t), FormulaLogicOperator.Implies,
+                    new Formula.Relation(Call("sine", s, w, x, time),
+                        FormulaRelationOperator.Equal, Call("mass", s, w, x)))));
+        var bound = AtMost(Add(q, D(1)), new Formula.Fraction(Call("log", t), Call("log", D(2))));
         var window = new Formula.Logic(AtMost(D(5), t), FormulaLogicOperator.Implies,
-            And(Less(D(0), mass), Bind(FormulaQuantifier.ForAll, "A", reals, aligned)));
-        var recurrence = Bind(FormulaQuantifier.Exists, "C", reals,
-            And(Less(D(0), c), Bind(FormulaQuantifier.ForAll, "T", reals, window)));
+            And(Less(D(0), Call("mass", s, w, t)),
+                Bind(FormulaQuantifier.Exists, "q", naturals,
+                    And(Less(D(0), q), And(bound, And(alignment, visits))))));
+        var recurrence = Bind(FormulaQuantifier.ForAll, "T", reals, window);
         var positive = Bind(FormulaQuantifier.ForAll, "j", index, Less(D(0), Call("w", F.Id("j"))));
         return Disp(Bind(FormulaQuantifier.Exists, "S", F.Id("Spectrum"),
             Bind(FormulaQuantifier.Exists, "w", Seq(index, Sp, To, Sp, reals),

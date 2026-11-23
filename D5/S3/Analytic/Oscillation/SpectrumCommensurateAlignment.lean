@@ -396,46 +396,52 @@ private theorem mass_pos {T : ℝ} (hT : 5 ≤ T) : 0 < mass spectrum weight T :
   exact lt_of_lt_of_le (weight_pos j)
     (Finset.single_le_sum (fun k _ => (weight_pos k).le) hj)
 
-private theorem full_alignment_in_interval {T : ℝ} (hT : 5 ≤ T) (A : ℝ) :
-    ∃ u ∈ Ico A (A + (2 * Real.pi / Real.log 2) * Real.log T),
-      sine spectrum weight T u = mass spectrum weight T := by
-  obtain ⟨N, hlo, hhi⟩ := cutoff_block (by linarith : 4 ≤ T)
-  let u₀ := Real.pi * (denominator N : ℝ) / 2
-  let P := 2 * Real.pi * (denominator N : ℝ)
-  have hP : 0 < P := by
-    have hq : (0 : ℝ) < (denominator N : ℝ) := by exact_mod_cast denominator_pos N
-    dsimp [P]
-    positivity
-  let m := ⌈(A - u₀) / P⌉
-  have hlow := (div_le_iff₀ hP).1 (Int.le_ceil ((A - u₀) / P))
-  have hhigh := Int.ceil_lt_add_one ((A - u₀) / P)
-  have hperiod : P ≤ (2 * Real.pi / Real.log 2) * Real.log T := by
-    have hq := (denominator_bounds N).1
-    have hqr : (denominator N : ℝ) ≤ (N : ℝ) + 1 := by exact_mod_cast hq
-    obtain ⟨hlog, _⟩ := log_bounds hlo hhi
+private theorem progression_visits {T : ℝ} {q : ℕ} (hq : 0 < q)
+    (hbound : (q : ℝ) + 1 ≤ Real.log T / Real.log 2) (A : ℝ) :
+    ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q) ∈
+      Ioo A (A + (2 * Real.pi / Real.log 2) * Real.log T) := by
+  let start := Real.pi * (q : ℝ) / 2
+  let period := 2 * Real.pi * (q : ℝ)
+  have hpi := Real.pi_pos
+  have hq' : (0 : ℝ) < q := by exact_mod_cast hq
+  have hperiod : 0 < period := by dsimp [period]; positivity
+  let m := ⌈(A + Real.pi - start) / period⌉
+  have hlow : A + Real.pi - start ≤ (m : ℝ) * period :=
+    (div_le_iff₀ hperiod).1 (Int.le_ceil _)
+  have hhigh : (m : ℝ) < (A + Real.pi - start) / period + 1 := Int.ceil_lt_add_one _
+  have hceil := mul_lt_mul_of_pos_right hhigh hperiod
+  rw [add_mul, div_mul_cancel₀ _ hperiod.ne', one_mul] at hceil
+  have hslack : period + 2 * Real.pi ≤ (2 * Real.pi / Real.log 2) * Real.log T := by
     calc
-      _ ≤ (2 * Real.pi) * (Real.log T / Real.log 2) :=
-        mul_le_mul_of_nonneg_left (by linarith) (by positivity)
+      _ = 2 * Real.pi * ((q : ℝ) + 1) := by dsimp [period]; ring
+      _ ≤ 2 * Real.pi * (Real.log T / Real.log 2) :=
+        mul_le_mul_of_nonneg_left hbound (by positivity)
       _ = _ := by ring
-  refine ⟨u₀ + (m : ℝ) * P, ⟨by linarith [show A - u₀ ≤ (m : ℝ) * P from hlow], ?_⟩,
-    full_alignment hhi m⟩
-  change (m : ℝ) < (A - u₀) / P + 1 at hhigh
-  have hceil := (mul_lt_mul_of_pos_right hhigh hP)
-  rw [add_mul, div_mul_cancel₀ _ hP.ne', one_mul] at hceil
-  linarith
+  refine ⟨m, ?_⟩
+  change A < start + (m : ℝ) * period ∧
+    start + (m : ℝ) * period < A + (2 * Real.pi / Real.log 2) * Real.log T
+  exact ⟨by linarith, by linarith⟩
 
-/-- Both mass laws hold on a positive infinite spectrum with full sine alignment
-in every translated interval of logarithmic length at all cutoffs at least five. -/
+/-- At each cutoff at least five, one progression aligns every smaller cutoff. -/
 theorem exists_logarithmic_full_alignment :
     ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
       (∀ j, 0 < w j) ∧ HasLogSquaredMass S w ∧ HasLogarithmicSquareTail S w ∧
-      ∃ C : ℝ, 0 < C ∧ ∀ T : ℝ, 5 ≤ T →
-        0 < mass S w T ∧ ∀ A : ℝ, ∃ u ∈ Ico A (A + C * Real.log T),
-          sine S w T u = mass S w T := by
+      ∀ T : ℝ, 5 ≤ T → 0 < mass S w T ∧
+        ∃ q : ℕ, 0 < q ∧ (q : ℝ) + 1 ≤ Real.log T / Real.log 2 ∧
+          (∀ (m : ℤ) (X : ℝ), X ≤ T →
+            sine S w X (Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q)) = mass S w X) ∧
+          ∀ A : ℝ, ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q) ∈
+            Ioo A (A + (2 * Real.pi / Real.log 2) * Real.log T) := by
   refine ⟨spectrum, weight, index_infinite, weight_pos, has_log_squared_mass,
-    has_logarithmic_square_tail, 2 * Real.pi / Real.log 2, by positivity, ?_⟩
+    has_logarithmic_square_tail, ?_⟩
   intro T hT
-  exact ⟨mass_pos hT, full_alignment_in_interval hT⟩
+  obtain ⟨N, hlo, hhi⟩ := cutoff_block (by linarith : 4 ≤ T)
+  have hq : (denominator N : ℝ) ≤ (N : ℝ) + 1 := by
+    exact_mod_cast (denominator_bounds N).1
+  have hbound : (denominator N : ℝ) + 1 ≤ Real.log T / Real.log 2 := by
+    linarith [(log_bounds hlo hhi).1]
+  exact ⟨mass_pos hT, denominator N, denominator_pos N, hbound,
+    fun m X hX => full_alignment (hX.trans_lt hhi) m, progression_visits (denominator_pos N) hbound⟩
 
 #print axioms exists_logarithmic_full_alignment
 

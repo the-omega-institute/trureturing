@@ -22,9 +22,12 @@ abbrev alignmentWeightArena : Arena where
   signature := weightSignature
   Law V := ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
     (∀ j, 0 < V.readout () ⟨S, w⟩ j) ∧ HasLogSquaredMass S w ∧ HasLogarithmicSquareTail S w ∧
-    ∃ C : ℝ, 0 < C ∧ ∀ T : ℝ, 5 ≤ T →
-      0 < mass S w T ∧ ∀ A : ℝ, ∃ u ∈ Set.Ico A (A + C * Real.log T),
-        sine S w T u = mass S w T
+    ∀ T : ℝ, 5 ≤ T → 0 < mass S w T ∧
+      ∃ q : ℕ, 0 < q ∧ (q : ℝ) + 1 ≤ Real.log T / Real.log 2 ∧
+        (∀ (m : ℤ) (X : ℝ), X ≤ T →
+          sine S w X (Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q)) = mass S w X) ∧
+        ∀ A : ℝ, ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q) ∈
+          Set.Ioo A (A + (2 * Real.pi / Real.log 2) * Real.log T)
 
 private theorem alignmentWeightRejected : ¬ alignmentWeightArena.Law weightRejected := by
   rintro ⟨S, _, hInf, hw, _⟩
