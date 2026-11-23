@@ -176,6 +176,4 @@ theorem result (I : Set E) (label : E → A) :
     exact hc a b (((exec_data hx).2.2 a).mp ha).2
       (((exec_data hy).2.2 b).mp hb).2 haf hbf hab
 
-#print axioms result
-
 end D5.S3.ConceptDynamics.PartialIdentification.RelativePastWordRecovery
