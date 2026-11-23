@@ -61,7 +61,7 @@ private theorem fourth_root_gap_sq {k : ℤ} (h : ¬ (4 : ℤ) ∣ k) :
       show (3 : ℤ) = (3 : ℕ) from rfl, zpow_natCast, Complex.I_sq, Complex.I_pow_three]
 
 omit [DecidableEq J] in
-private theorem large_loss_of_short_relation (s : Finset J) (g : J → ℝ) (k : J → ℤ) (H t : ℝ)
+theorem large_loss_of_short_relation (s : Finset J) (g : J → ℝ) (k : J → ℤ) (H t : ℝ)
     (hH : 0 < H) (hr : ∑ j ∈ s, (k j : ℝ) * g j = 0)
     (hb : ¬ (4 : ℤ) ∣ ∑ j ∈ s, k j) (hk : ∑ j ∈ s, |(k j : ℝ)| ≤ H) :
     ∃ j ∈ s, k j ≠ 0 ∧ 1 / H ^ 2 ≤ 1 - Real.sin (g j * t) := by
