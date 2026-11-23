@@ -3,12 +3,16 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripCompletion
    mirror-E: none(waiver:finite-completion-certificate)
    anchors: []
-   utility: kind=bounded-enumeration; basis=consumer=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.exactExits_count; premises=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripCompletion.completionRows_count,D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripCompletion.completionCodes_eq
+   utility: kind=checker; basis=consumer=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.count_transfer; instance=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.transition_counts
    digest: Exact enumeration of rows under adjacent and boundary match costs. -/
 
 /-
 admission_basis: escape-witness (#33283)
-escape_witness: completionRows_count proves the exact-cost multiplicities computed by the pruned enumeration
+escape_witness: completionRows_count proves exact-cost counting with budget pruning, and
+completionCodes_eq preserves those counts when the checker computes with packed rows.
+The width-seven activeGroups checks certify the exhausted-destination histograms.
+exactExits_count and exitCodes_eq apply the checker to these histograms in transition_counts,
+which count_transfer uses for the two-defect strip.
 completionCodes: proof_shape=content; consumers=completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
 completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
 completionCost: proof_shape=content; consumers=completionCost_row, completionRows_count, completionRows_length_le, exactExits_count
