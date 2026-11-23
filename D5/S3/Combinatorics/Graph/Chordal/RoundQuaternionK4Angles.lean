@@ -3,7 +3,7 @@
    mirror-B: none(waiver:covered-by-round-quaternion-k4-bounds-blueprint)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Chordal/RoundQuaternionK4Bounds.reconstruction_bound; premises=D5/S3/Combinatorics/Graph/Chordal/RoundQuaternionK4Angles.midpoint_bound_table,D5/S3/Combinatorics/Graph/Chordal/RoundQuaternionK4Angles.midpoint_trig_table,D5/S3/Combinatorics/Graph/Chordal/RoundQuaternionK4Angles.small_tan_endpoint
    digest: Cosine estimates for the angles in four-vertex quaternion reconstruction. -/
 
 import Mathlib.Analysis.Real.Pi.Bounds
