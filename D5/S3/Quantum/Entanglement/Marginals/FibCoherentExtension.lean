@@ -129,17 +129,9 @@ private theorem product_completion {A C : Type*} [Fintype A] [Fintype C]
   have ht : 0 ≤ L.trace⁻¹ := by
     rw [Complex.nonneg_iff] at hlo ⊢
     simp [Complex.inv_re, Complex.inv_im, ← hlo.2, div_nonneg hlo.1 (Complex.normSq_nonneg _)]
-  refine ⟨L.trace⁻¹ • kronecker L R, (hL.kronecker hR).smul ht, ?_, ?_⟩
-  · have hm : partialTraceRight (L.trace⁻¹ • kronecker L R) =
-        L.trace⁻¹ • partialTraceRight (kronecker L R) := by
-      ext i j
-      simp [partialTraceRight, Finset.mul_sum]
-    rw [hm, partialTraceRight_kronecker, ← htr, smul_smul, inv_mul_cancel₀ hz, one_smul]
-  · have hm : partialTraceLeft (L.trace⁻¹ • kronecker L R) =
-        L.trace⁻¹ • partialTraceLeft (kronecker L R) := by
-      ext i j
-      simp [partialTraceLeft, Finset.mul_sum]
-    rw [hm, partialTraceLeft_kronecker, smul_smul, inv_mul_cancel₀ hz, one_smul]
+  refine ⟨kronecker (L.trace⁻¹ • L) R, (hL.smul ht).kronecker hR, ?_, ?_⟩
+  · rw [partialTraceRight_kronecker, ← htr, smul_smul, mul_inv_cancel₀ hz, one_smul]
+  · rw [partialTraceLeft_kronecker, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz, one_smul]
 
 private theorem block_marginals_iff {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C] (b : ℝ) (v : A × C → ℂ)
@@ -164,7 +156,6 @@ private theorem block_marginals_iff {A C : Type*} [Fintype A] [Fintype C]
 
 
 open D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension (Word Site edgeTrace)
-open private vacuum endpoints from D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
 
 private def wordEquiv : Unit ⊕ (Bool × Bool) ≃ Word where
   toFun
@@ -225,7 +216,8 @@ private theorem left_read (b : ℝ) (row : Bool × Bool → ℂ)
       coherentEdge b (partialTraceRight T) (row (false, false)) (row (true, false)) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [edgeTrace, original, assemble,
-    wordEquiv, cross, pivot, coherentEdge, partialTraceRight, vacuum, endpoints, add_comm]
+    wordEquiv, cross, pivot, coherentEdge, partialTraceRight, add_comm]
+  all_goals first | rfl | exact add_comm _ _
 
 private theorem right_read (b : ℝ) (row : Bool × Bool → ℂ)
     (T : Matrix (Bool × Bool) (Bool × Bool) ℂ) :
@@ -233,7 +225,8 @@ private theorem right_read (b : ℝ) (row : Bool × Bool → ℂ)
       coherentEdge b (partialTraceLeft T) (row (false, false)) (row (false, true)) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [edgeTrace, original, assemble,
-    wordEquiv, cross, pivot, coherentEdge, partialTraceLeft, vacuum, endpoints, add_comm]
+    wordEquiv, cross, pivot, coherentEdge, partialTraceLeft, add_comm]
+  all_goals first | rfl | exact add_comm _ _
 
 private theorem split_state (ρ : Matrix Word Word ℂ) (hρ : ρ.IsHermitian) :
     let b := (ρ (.inl 0) (.inl 0)).re
