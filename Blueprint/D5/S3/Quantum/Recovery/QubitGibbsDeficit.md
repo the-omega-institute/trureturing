@@ -60,6 +60,7 @@ The same trial gives F_s = m + (s - r) z at every s. Whenever that trial satisfi
 - Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Divergence/GibbsVariationalIdentity](../Divergence/GibbsVariationalIdentity.md)
 - Dependency: [D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary](../Divergence/LegacyRelativeEntropyBoundary.md)
+- Dependency: [D5/S3/Quantum/Divergence/UmegakiKernelContraction](../Divergence/UmegakiKernelContraction.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
 - Dependency: [D5/S3/Quantum/ProcessReconstruction/ReconstructionChannels](../ProcessReconstruction/ReconstructionChannels.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinement](BKMFlagRefinement.md)

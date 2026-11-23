@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
+import D5.S3.Quantum.Divergence.UmegakiKernelContraction
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.ProcessReconstruction.ReconstructionChannels
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
@@ -29,6 +30,7 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 open D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
+open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (partialTraceRight_mul_embed)
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Matrix.SpectralPower (mpow)
@@ -66,8 +68,11 @@ def retainedMarginal (ρ : DensityState (Fin 2 × E)) : DensityState (Fin 2) :=
 
 private theorem trace_block (T : Fin 2 → Matrix E E ℂ) :
     (retainedBlock T).trace = ∑ i, (T i).trace := by
-  rw [Matrix.trace, Fintype.sum_prod_type]
-  simp [block_apply, Matrix.trace]
+  let swap := Equiv.prodComm (Fin 2) E
+  calc
+    (retainedBlock T).trace = (joint T).trace :=
+      swap.sum_comp (fun i => joint T i i)
+    _ = ∑ i, (T i).trace := Matrix.trace_blockDiagonal T
 
 private def blockState (γ : Fin 2 → DensityState E) (w : Fin 2 → ℝ)
     (hw : ∀ i, 0 ≤ w i) (hs : ∑ i, w i = 1) : DensityState (Fin 2 × E) :=
@@ -125,25 +130,37 @@ private theorem mat_log {n : Type*} [Fintype n] [DecidableEq n] (ρ : DensitySta
 
 open private log_smul_faithful from D5.S3.Quantum.Recovery.BKMFlagRefinement
 
+private theorem trace_tensor_identity (X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
+    (Y : Matrix (Fin 2) (Fin 2) ℂ) :
+    (X * (Y ⊗ₖ (1 : Matrix E E ℂ))).trace = (partialTraceRight X * Y).trace := by
+  let lift : Fin 2 ≃ ULift.{u_1} (Fin 2) := Equiv.ulift.symm
+  let liftQubit := Matrix.reindexAlgEquiv ℂ ℂ lift
+  let liftJoint := Matrix.reindexAlgEquiv ℂ ℂ (lift.prodCongr (Equiv.refl E))
+  have hTrace (Z : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
+      partialTraceRight (liftJoint Z) = liftQubit (partialTraceRight Z) := rfl
+  have hTensor : liftJoint (Y ⊗ₖ (1 : Matrix E E ℂ)) = liftQubit Y ⊗ₖ (1 : Matrix E E ℂ) :=
+    (Matrix.kroneckerMap_reindex_left (· * ·) lift lift Y (1 : Matrix E E ℂ)).symm
+  rw [← trace_partialTraceRight (X * _)]
+  apply congrArg Matrix.trace
+  apply liftQubit.injective
+  rw [map_mul, ← hTrace, map_mul, hTensor, partialTraceRight_mul_embed, hTrace]
+
 private theorem trace_mul_scalar_blocks (R : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
     (a : Fin 2 → ℝ) :
     (R * retainedBlock (fun i => a i • (1 : Matrix E E ℂ))).trace.re =
       ∑ i, ((partialTraceRight R) i i).re * a i := by
   have hdiag : retainedBlock (fun i => a i • (1 : Matrix E E ℂ)) =
-      Matrix.diagonal (fun x : Fin 2 × E => (a x.1 : ℂ)) := by
-    ext ⟨i, e⟩ ⟨j, f⟩
-    by_cases hij : i = j <;> by_cases hef : e = f <;>
-      simp [block_apply, hij, hef, Matrix.diagonal_apply, Matrix.one_apply, Complex.real_smul]
-  rw [hdiag, Matrix.trace, Fintype.sum_prod_type, Complex.re_sum]
-  apply Finset.sum_congr rfl
-  intro i _
+      Matrix.diagonal (fun i => (a i : ℂ)) ⊗ₖ (1 : Matrix E E ℂ) := by
+    simpa only [retainedBlock, joint, ← Complex.coe_smul] using
+      (Matrix.diagonal_kronecker (fun i => (a i : ℂ)) (1 : Matrix E E ℂ)).symm
+  rw [hdiag, trace_tensor_identity, Matrix.trace, Complex.re_sum]
   simp only [Matrix.diag_apply, Matrix.mul_diagonal, Complex.mul_re, Complex.ofReal_re,
-    Complex.ofReal_im, mul_zero, sub_zero, partialTraceRight, Complex.re_sum, Finset.sum_mul]
+    Complex.ofReal_im, mul_zero, sub_zero]
 
 private theorem block_sub (T U : Fin 2 → Matrix E E ℂ) :
     retainedBlock (fun i => T i - U i) = retainedBlock T - retainedBlock U := by
-  ext ⟨i, e⟩ ⟨j, f⟩
-  by_cases hij : i = j <;> simp [block_apply, hij]
+  exact congrArg (Matrix.reindex (Equiv.prodComm E (Fin 2)) (Equiv.prodComm E (Fin 2)))
+    (Matrix.blockDiagonal_sub T U)
 
 private theorem entropy_cross {n : Type*} [Fintype n] [DecidableEq n] (ρ σ : DensityState n) :
     finiteTraceLogRelativeEntropy ρ σ = -vonNeumannEntropy (toLegacyDensityState ρ) -
@@ -284,16 +301,6 @@ private theorem conditionalLoss_nonneg (γ : Fin 2 → DensityState E)
     extendedQuantumRelativeEntropy_eq_coe_of_support hMarginal] at h
   exact sub_nonneg.mpr (WithTop.coe_le_coe.mp h)
 
-private theorem trace_tensor_identity (X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
-    (Y : Matrix (Fin 2) (Fin 2) ℂ) :
-    (X * (Y ⊗ₖ (1 : Matrix E E ℂ))).trace = (partialTraceRight X * Y).trace := by
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Fintype.sum_prod_type,
-    Matrix.kronecker_apply, Matrix.one_apply, mul_ite, mul_one, mul_zero,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true, partialTraceRight, Finset.sum_mul]
-  apply Finset.sum_congr rfl
-  intro i _
-  rw [Finset.sum_comm]
-
 private theorem partialTrace_adjoint
     {Φ : QuantumChannel (Fin 2 × E) (Fin 2)}
     (hΦ : ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
@@ -322,10 +329,11 @@ private theorem root_square (A : Matrix E E ℂ) (hA : A.PosSemidef) : root A * 
 private theorem root_half (A : Matrix E E ℂ) (hA : A.PosSemidef) :
     root ((1 / 2 : ℝ) • A) = (√(1 / 2 : ℝ)) • root A := by
   have hhalf : (0 : ℝ) ≤ 1 / 2 := by norm_num
-  have hcoeff : (√(1 / 2 : ℝ)) * √(1 / 2 : ℝ) = 1 / 2 := Real.mul_self_sqrt hhalf
-  rw [root_eq_sqrt _ (hA.smul hhalf)]
-  apply CFC.sqrt_unique _ (smul_nonneg (Real.sqrt_nonneg _) (root_nonneg A hA))
-  rw [smul_mul_assoc, mul_smul_comm, smul_smul, hcoeff, root_square A hA]
+  change cfc Real.sqrt ((1 / 2 : ℝ) • A) = (√(1 / 2 : ℝ)) • cfc Real.sqrt A
+  rw [← cfc_comp_const_mul (1 / 2 : ℝ) Real.sqrt A
+    Real.continuous_sqrt.continuousOn hA.isHermitian.isSelfAdjoint,
+    ← cfc_const_mul _ Real.sqrt A Real.continuous_sqrt.continuousOn]
+  exact cfc_congr (fun x _ => Real.sqrt_mul hhalf x)
 
 private theorem root_reference (γ : Fin 2 → DensityState E) :
     cfc Real.sqrt (mat (qubitBlockReference γ).1) =
@@ -626,9 +634,8 @@ private theorem basis_marginal_pure (i : Fin 2) :
     ∃ v : EuclideanSpace ℂ (Fin 2), ‖v‖ = 1 ∧
       Matrix.single i i (1 : ℂ) = Matrix.vecMulVec v.ofLp (star v.ofLp) := by
   refine ⟨EuclideanSpace.single i 1, by simp, ?_⟩
-  ext j k
-  by_cases hij : j = i <;> by_cases hik : k = i <;>
-    simp [Matrix.single, Matrix.vecMulVec_apply, EuclideanSpace.single, hij, hik] <;> aesop
+  simpa only [EuclideanSpace.single, PiLp.ofLp_single, Pi.star_single, star_one] using
+    (Matrix.single_eq_single_vecMulVec_single (α := ℂ) i i)
 
 omit [Nonempty E] in
 private theorem endpoint_sum (γ : Fin 2 → DensityState E) (p : Fin 2 → ℝ) :
