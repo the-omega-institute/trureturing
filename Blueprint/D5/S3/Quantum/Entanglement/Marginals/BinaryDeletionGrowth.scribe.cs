@@ -60,11 +60,11 @@ internal sealed class BinaryDeletionGrowthDocument : IScribeDocumentDefinition
                     + "of n sites with no four consecutive occupied sites. For n at least four, "
                     + "d(n+6) + d(n+1) + d(n) equals d(n+5) + 2d(n+4) + 2d(n+3) + 2d(n+2).")),
                     Paragraph(Text(
-                    "Each surviving pattern has both directions in its first four sites. "
-                    + "Its first window determines the two ages and the newer direction. "
+                    "Scan from the right end, so the initial window is the last four sites in list order. "
+                    + "That window determines the two ages and the newer direction. "
                     + "Every subsequent legal symbol determines a unique move. "
-                    + "Conversely, each allowed move sequence produces one surviving pattern. "
+                    + "With that window fixed, each allowed move sequence produces one surviving pattern. "
                     + "The six-state successor operator satisfies the displayed recurrence, "
-                    + "so summing the exact extension counts over the first windows proves it."))),
+                    + "so summing the exact extension counts over the initial windows proves it."))),
                 DescribeRole.Theorem))));
 }

@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Marginals/BinaryDeletionGrowth.kerne
 
 Let d(n) be the dimension of the one-site deletion kernel on an open chain of n sites with no four consecutive occupied sites. For n at least four, d(n+6) + d(n+1) + d(n) equals d(n+5) + 2d(n+4) + 2d(n+3) + 2d(n+2).
 
-Each surviving pattern has both directions in its first four sites. Its first window determines the two ages and the newer direction. Every subsequent legal symbol determines a unique move. Conversely, each allowed move sequence produces one surviving pattern. The six-state successor operator satisfies the displayed recurrence, so summing the exact extension counts over the first windows proves it.
+Scan from the right end, so the initial window is the last four sites in list order. That window determines the two ages and the newer direction. Every subsequent legal symbol determines a unique move. With that window fixed, each allowed move sequence produces one surviving pattern. The six-state successor operator satisfies the displayed recurrence, so summing the exact extension counts over the initial windows proves it.
 
 ## References
 
