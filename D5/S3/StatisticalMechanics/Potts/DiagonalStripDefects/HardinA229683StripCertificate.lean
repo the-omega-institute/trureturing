@@ -52,6 +52,7 @@ import Init.Data.Nat.Lemmas
 import Init.Data.Sum.Basic
 import Init.Data.Sum.Lemmas
 import Init.Prelude
+import Init.Tactics
 import Init.SimpLemmas
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
 import Mathlib.Algebra.BigOperators.Fin

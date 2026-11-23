@@ -48,6 +48,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
+import Init.Data.Int.Basic
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Lemmas
 import Init.Data.Sum.Basic
@@ -68,6 +69,7 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Function.Iterate
+import Mathlib.Logic.Function.Conjugate
 
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripCertificate
 open HardinA229508StripData

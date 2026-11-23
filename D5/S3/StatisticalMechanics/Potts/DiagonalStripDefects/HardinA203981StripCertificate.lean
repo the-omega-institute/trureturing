@@ -67,6 +67,7 @@ import Init.Data.Function
 import Init.Data.Int.Basic
 import Init.Prelude
 import Init.SimpLemmas
+import Init.Tactics
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
