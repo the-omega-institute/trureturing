@@ -249,10 +249,7 @@ private theorem exists_large_degree_step {J : Type*} [Fintype J] [DecidableEq J]
     rw [hm, ← hlast, ← hilast] at hle
     exact ⟨i, h.trans_le hle⟩
 
-/-- The gap between some distinct degree vectors is at most the sum interval's width
-divided by the number of vectors when there are at least three coordinates and the degree
-is at least two. In the other cases the denominator is the number of vectors minus one. -/
-theorem exists_close_degree_vectors {J : Type*} [Fintype J]
+private theorem exists_close_degree_vectors_bound {J : Type*} [Fintype J]
     (g : J → ℝ) (p : ℕ) {a b : ℝ} (hg : ∀ j, g j ∈ Set.Icc a b)
     (hmany : 2 ≤ Nat.multichoose (Fintype.card J) p) :
     ∃ m n : J → ℕ, m ≠ n ∧ (∑ j, m j) = p ∧ (∑ j, n j) = p ∧
@@ -352,6 +349,29 @@ theorem exists_close_degree_vectors {J : Type*} [Fintype J]
   have heq : denom = (q : ℝ) + 1 := by simp [denom, hstrong, hqR]
   rw [heq, add_mul, one_mul] at hflat
   exact hend.ne hflat
+
+/-- The gap between some distinct degree vectors is at most the sum interval's width
+divided by the number of vectors when there are at least three coordinates and the degree
+is at least two. In the other cases the denominator is the number of vectors minus one. -/
+theorem exists_close_degree_vectors {J : Type*} [Fintype J]
+    (g : J → ℝ) (p : ℕ) {a b : ℝ} (hg : ∀ j, g j ∈ Set.Icc a b)
+    (hmany : 2 ≤ Nat.multichoose (Fintype.card J) p) :
+    ∃ m n : J → ℕ, m ≠ n ∧ (∑ j, m j) = p ∧ (∑ j, n j) = p ∧
+      let gap := |monomialFrequency g m - monomialFrequency g n|
+      gap ≤ (p : ℝ) * (b - a) / ((Nat.multichoose (Fintype.card J) p : ℝ) - 1) ∧
+        (3 ≤ Fintype.card J ∧ 2 ≤ p →
+          gap ≤ (p : ℝ) * (b - a) / (Nat.multichoose (Fintype.card J) p : ℝ)) := by
+  obtain ⟨m, n, hne, hm, hn, hgap⟩ := exists_close_degree_vectors_bound g p hg hmany
+  refine ⟨m, n, hne, hm, hn, ?_⟩
+  by_cases h : 3 ≤ Fintype.card J ∧ 2 ≤ p
+  · rw [ite_eq_left h] at hgap
+    have hw : 0 ≤ (p : ℝ) * (b - a) := by
+      have hspan := degree_frequency_mem_Icc g hg ⟨m, hm⟩
+      linarith [hspan.1.trans hspan.2]
+    have ht : (2 : ℝ) ≤ Nat.multichoose (Fintype.card J) p := by exact_mod_cast hmany
+    exact ⟨hgap.trans (div_le_div_of_nonneg_left hw (by linarith) (by linarith)), fun _ => hgap⟩
+  · rw [ite_eq_right h] at hgap
+    exact ⟨hgap, fun h' => (h h').elim⟩
 
 #print axioms exists_close_degree_vectors
 
