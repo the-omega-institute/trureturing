@@ -13,23 +13,23 @@ a: proof_shape=content; consumers=result, scale_count
 leading: proof_shape=content; consumers=forward_table, leadingCheck, leading_rec, leading_step, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
-rightColumn: proof_shape=content; consumers=checkColumn, columnGroup, exhausted_step, exhausted_step._simp_1_3, rightColumn_eq
-arithmeticRow: proof_shape=content; consumers=arithmeticRow_eq, arithmeticRow_length, arithmeticRow_length._proof_1_1, checkColumn, exhausted_step, exhausted_step._simp_1_2, w
-w: proof_shape=content; consumers=arithmeticRow_eq, checkColumn, exhausted_step, exhausted_step._simp_1_2, forward_table, forward_table._proof_1_1, leadingCheck, leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, w_leading
+rightColumn: proof_shape=content; consumers=checkColumn, columnGroup, exhausted_step, rightColumn_eq
+arithmeticRow: proof_shape=content; consumers=arithmeticRow_eq, arithmeticRow_length, arithmeticRow_length._proof_1_1, checkColumn, exhausted_step, w
+w: proof_shape=content; consumers=arithmeticRow_eq, checkColumn, exhausted_step, forward_table, forward_table._proof_1_1, leadingCheck, leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, w_leading
 arithmeticRow_length: proof_shape=content; consumers=arithmeticRow_eq
-arithmeticRow_eq: proof_shape=content; consumers=exhausted_step._simp_1_2
+arithmeticRow_eq: proof_shape=content; consumers=exhausted_step._simp_1_5
 leadingCheck: proof_shape=content; consumers=w_leading, w_leading._proof_1_1, w_leading._proof_1_10, w_leading._proof_1_11, w_leading._proof_1_12, w_leading._proof_1_13, w_leading._proof_1_14, w_leading._proof_1_15, w_leading._proof_1_2, w_leading._proof_1_3, w_leading._proof_1_4, w_leading._proof_1_5, w_leading._proof_1_6, w_leading._proof_1_7, w_leading._proof_1_8, w_leading._proof_1_9
 w_leading: proof_shape=content; consumers=forward_table, leading_rec
 columnGroup: proof_shape=content; consumers=columnGroup_check, columnGroup_check._proof_1_1, columnGroup_check._proof_1_10, columnGroup_check._proof_1_11, columnGroup_check._proof_1_12, columnGroup_check._proof_1_13, columnGroup_check._proof_1_14, columnGroup_check._proof_1_15, columnGroup_check._proof_1_16, columnGroup_check._proof_1_17, columnGroup_check._proof_1_18, columnGroup_check._proof_1_19, columnGroup_check._proof_1_2, columnGroup_check._proof_1_20, columnGroup_check._proof_1_21, columnGroup_check._proof_1_22, columnGroup_check._proof_1_23, columnGroup_check._proof_1_24, columnGroup_check._proof_1_3, columnGroup_check._proof_1_4, columnGroup_check._proof_1_5, columnGroup_check._proof_1_6, columnGroup_check._proof_1_7, columnGroup_check._proof_1_8, columnGroup_check._proof_1_9
 columnGroup_check: proof_shape=bind-only; consumers=rightColumn_eq
-rightColumn_eq: proof_shape=content; consumers=exhausted_step._simp_1_3
+rightColumn_eq: proof_shape=content; consumers=exhausted_step._simp_1_6
 leadingCoefficient: proof_shape=content; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step
 leadingIndex: proof_shape=content; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step, leading_step._proof_1_8
 leadingCoordinates: proof_shape=content; consumers=leading_rec
 leading_rec: proof_shape=content; consumers=leading_step
 leading_step: proof_shape=content; consumers=forward_table
-checkColumn: proof_shape=content; consumers=exhaustedSteps, exhaustedSteps._proof_1_1, exhausted_step
-stepGroup: proof_shape=content; consumers=exhaustedSteps, exhausted_step
+checkColumn: proof_shape=content; consumers=exhausted_step
+stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
 exhausted_step: proof_shape=content; consumers=forward_table
 leading_action: proof_shape=bind-only; consumers=forward_table
@@ -37,7 +37,7 @@ forward_table: proof_shape=content; consumers=polynomial_relation
 polynomialCoordinates: proof_shape=content; consumers=polynomial_relation
 polynomial_relation: proof_shape=content; consumers=result
 scale_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.family, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.audit
+result: proof_shape=content; consumers=Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer

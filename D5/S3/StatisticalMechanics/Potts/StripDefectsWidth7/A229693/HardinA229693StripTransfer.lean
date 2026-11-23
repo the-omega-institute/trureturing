@@ -17,15 +17,15 @@ newPatterns: proof_shape=content; consumers=cl_relabel, class_counts_canonical, 
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, initialExhausted.eq_1, initialExits_count, old_exhausted_counts
 exhaustedClass: proof_shape=content; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, leading_counts, old_exhausted_counts, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, terminal_eq, transition_counts, transition_counts._simp_1_1
 cl: proof_shape=content; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, count_transfer, exhausted_cut, initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, terminal_eq, transition_counts, transition_counts._simp_1_1
-exitRead: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, activeWeight, activeWeight.eq_1, exhaustedWeight
-activeExits: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, activeWeight, activeWeight.eq_1
+exitRead: proof_shape=content; consumers=activeWeight, exhaustedWeight
+activeExits: proof_shape=content; consumers=activeWeight
 exhaustedExits: proof_shape=content; consumers=exhaustedWeight
-activeWeight: proof_shape=content; consumers=T, T.eq_1, activeOneGroups, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroups, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
+activeWeight: proof_shape=content; consumers=T, T.eq_1, activeProfileCheck, activeProfileCheck.eq_1, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
 exhaustedWeight: proof_shape=content; consumers=T, T.eq_1, class_counts_canonical, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, leading_counts, old_exhausted_counts
-weightPack: proof_shape=bind-only; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
+weightPack: proof_shape=bind-only; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
 weightPack_sum: proof_shape=bind-only; consumers=classPack_count
 weightPack_injective: proof_shape=bind-only; consumers=checkHistogram_count
-classPack: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
+classPack: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
 classPack_count: proof_shape=content; consumers=checkHistogram_count
 pushOld: proof_shape=bind-only; consumers=T, T.eq_1, class_counts_canonical, leading_counts, old_exhausted_counts
 T: proof_shape=content; consumers=class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
@@ -48,24 +48,24 @@ horizontalCost: proof_shape=bind-only; consumers=completionCost_initial, complet
 horizontalCost_eq: proof_shape=bind-only; consumers=initial_counts._simp_1_4, rowCost_eq
 rowCost: proof_shape=bind-only; consumers=completionCost_row, exactExits_count, rowCost_eq
 rowCost_eq: proof_shape=bind-only; consumers=exactExits_count
-matchCost: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+matchCost: proof_shape=content; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
 completionCost: proof_shape=content; consumers=completionCost_initial, completionCost_row, completionRows_count, completionRows_length_le, exactExits_count, initial_counts
 completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq, initial_counts
 completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count, initial_counts
 completionCost_row: proof_shape=content; consumers=exactExits_count
 completionCost_initial: proof_shape=content; consumers=initial_counts
-completionCodes: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
+completionCodes: proof_shape=content; consumers=completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
 rowCode_cons: proof_shape=content; consumers=completionCodes_eq, rowCode_tail
 completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
 rowCode_tail: proof_shape=content; consumers=exitCodes_eq
-packedClass: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
+packedClass: proof_shape=content; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
 packedClass_all: proof_shape=content; consumers=packedClass_eq
 packedClass_eq: proof_shape=content; consumers=exitCodes_eq
-exitCodes: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
+exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
 exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound, initial_counts
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
 exitCodes_bound: proof_shape=content; consumers=checkHistogram_count
-checkHistogram: proof_shape=content; consumers=activeOneGroups, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroups, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
+checkHistogram: proof_shape=content; consumers=activeProfileCheck, activeProfileCheck.eq_1, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
 checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new, initialExits_count
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
 activeGroups: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeOneGroups, activeProfiles, activeTwoGroups
