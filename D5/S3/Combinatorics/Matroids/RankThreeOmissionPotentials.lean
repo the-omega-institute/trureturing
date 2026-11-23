@@ -7,6 +7,8 @@
    digest: Rank-three omitted triangle gaps identify normalized three-torsion potentials. -/
 
 import D5.S3.Combinatorics.Matroids.CircuitDifferenceBasis
+import D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates
+import D5.S3.Combinatorics.Matroids.RankTwoCircuitInvariantFactors
 import D5.S3.Combinatorics.Matroids.UniformCircuitResidueDiagonal
 import D5.S3.Combinatorics.Matroids.UniformCircuitResidueForms
 import Mathlib.Algebra.BigOperators.Fin
@@ -1025,6 +1027,172 @@ private theorem unit_total_vector {I : Type*} [Fintype I] [DecidableEq I]
 
 
 open Function Matrix
+open scoped Matroid
+open SparsePavingCircuitCoordinates ParallelCircuitObstruction UniformCircuitBasis
+open RationalJointCircuitImage (RationalResidue)
+open RankTwoCircuitInvariantFactors (ResidueTorsion residueTorsion_equiv_zmod)
+open JointCircuitLiftingObstruction (JointSaturatedImage JointImageInSaturation)
+
+private theorem reducedMatrix_intCast {I T R : Type*} [LinearOrder I] [CommRing R]
+    (points : T → Fin 3 → I) (root anchor : I) (t : T) (ij : RemainingPair root anchor) :
+    ↑((reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) ℤ) t ij) =
+      (reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) R) t ij := by
+  classical
+  have castRow (i j : I) : ↑(row (points t) (1 : ℤ) i j) = (row (points t) 1 i j : R) := by
+    by_cases h : forward (points t) i j
+    · simp [row, h]
+    by_cases h' : forward (points t) j i <;> simp [row, h, h']
+  simp [reducedMatrix, castRow]
+
+/-- The integral joint lifting obstruction for a rank-three sparse-paving matroid
+with singleton parallel classes is the kernel of its reduced omitted-triangle matrix. -/
+theorem rank_three_lifting_obstruction_equiv_kernel {I T : Type*}
+    [Fintype I] [LinearOrder I] (M : Matroid I) (triangles : T → Fin 3 ↪o I)
+    (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
+    (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
+      (fun H J => (H ∩ J).card + 2 ≤ 3))
+    (hground : M.E = Set.univ)
+    (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
+      B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val) :
+    Nonempty ((JointSaturatedImage (M.comap (id : I → I)) ⧸
+      JointImageInSaturation (M.comap (id : I → I))) ≃ₗ[ℤ]
+      ((reducedMatrix (fun t => triangles t) root anchor :
+        Matrix T (RemainingPair root anchor) (ZMod (Fintype.card I))).mulVecLin.ker.restrictScalars ℤ)) := by
+  classical
+  let n := Fintype.card I
+  have hn0 : n ≠ 0 := by omega
+  let _ : Nonempty I := ⟨root⟩
+  let points (t : T) : Fin 3 → I := triangles t
+  let holes : Set (Finset I) := Set.range fun t => (ofFinEmbEquiv (triangles t)).val
+  have hsize (H : Finset I) (hH : H ∈ holes) : H.card = 3 := by
+    obtain ⟨t, rfl⟩ := hH
+    exact (ofFinEmbEquiv (triangles t)).prop
+  have hnonloop (i : I) : M.IsNonloop i := by
+    apply Matroid.indep_singleton.mp
+    rw [← coe_singleton, indep_iff_card_and_allowed (holes := holes) hn hsize hsparse hbase]
+    refine ⟨by simp, fun h => ?_⟩
+    have := hsize _ h
+    simp at this
+  obtain ⟨comparison, _⟩ := parallel_lifting_obstruction (M := M) Function.surjective_id
+    (fun {_ _} h => h) hnonloop
+  let standard := Pi.basisFun ℤ I
+  let a := sumCovector I
+  have ha (i : I) : a (standard i) = 1 := by simp [a, sumCovector, standard, Pi.basisFun]
+  let idx (H : holes) : T := H.prop.choose
+  have hidx (H : holes) : (ofFinEmbEquiv (triangles (idx H))).val = H.val := H.prop.choose_spec
+  let rep (H : holes) : I := triangles (idx H) 0
+  have hrep (H : holes) : rep H ∈ H.val := by
+    rw [← hidx H]
+    exact (mem_ofFinEmbEquiv_iff_mem_range _ _).mpr ⟨0, rfl⟩
+  obtain ⟨pivot⟩ := sparse_paving_pivot_forms_equiv (id : I → I) (d := 1) hn
+    hsize hsparse hground hbase standard a ha root rep hrep
+  let y := ∑ i, (univ.filter fun x : I => id x = i).card • standard i
+  have hstd (i : I) : standard i = Pi.single i 1 := Pi.basisFun_apply ℤ I i
+  have hy : y = ∑ i, standard i := by
+    simp only [y, id_eq, filter_eq', mem_univ, ite_true, card_singleton, one_nsmul]
+  have hay : a y = n := by
+    rw [hy, map_sum]
+    simp [ha, n]
+  obtain ⟨b, hbroot, hbanchor, hb⟩ := unit_difference_basis root anchor hne
+  have hy' : y = (n : ℤ) • b root + b anchor :=
+    hy.trans ((Finset.sum_congr rfl fun i _ => hstd i).trans
+      (unit_total_vector root anchor b hbroot hbanchor))
+  let F := (I → ℤ) [⋀^Fin 2]→ₗ[ℤ] RationalResidue
+  let P := ((insertVector (N := RationalResidue) (n := 1) (standard root)).ker ⊓
+    (insertVector y).ker) ⊓ Submodule.torsionBy ℤ F (a y)
+  let tuple (H : holes) (i : Fin 2) :=
+    let S : Set.powersetCard I 2 := ⟨H.val.erase (rep H), by
+      change (H.val.erase (rep H)).card = 2
+      rw [card_erase_of_mem (hrep H), hsize H.val H.prop]⟩
+    standard (ofFinEmbEquiv.symm S i) - standard (rep H)
+  let eval (H : holes) : F →ₗ[ℤ] RationalResidue :=
+    { toFun := fun f => f (tuple H)
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  change weightedCircuitResidues M (id : I → I) ≃ₗ[ℤ] ↥(P ⊓ ⨅ H, (eval H).ker) at pivot
+  let D := diagonalCoordinates RationalResidue 2 root anchor n 1
+  have diag (f : F) : f ∈ P ↔ (basisFormEquiv b).symm f ∈ D := by
+    change (f.curryLeft (standard root) = 0 ∧ f.curryLeft y = 0) ∧ a y • f = 0 ↔ _
+    rw [hay]
+    have hr : standard root = b root := (hstd root).trans hbroot.symm
+    rw [hr, hy']
+    simpa only [one_smul, and_assoc] using (reduced_equations b root anchor n 1 f)
+  let diagonal : P ≃ₗ[ℤ] D := (basisFormEquiv b).symm.ofSubmodules P D (by
+    rw [Submodule.map_equiv_eq_comap_symm]
+    ext g
+    change (basisFormEquiv b) g ∈ P ↔ g ∈ D
+    rw [diag, LinearEquiv.symm_apply_apply])
+  obtain ⟨zmod⟩ := residueTorsion_equiv_zmod n hn0
+  let coord := (diagonal.trans (activeCoordinates root anchor n)).trans
+    (LinearEquiv.piCongrRight fun _ : RemainingPair root anchor => zmod)
+  let A : Matrix T (RemainingPair root anchor) (ZMod n) := reducedMatrix points root anchor
+  let K := A.mulVecLin.ker.restrictScalars ℤ
+  let dif (i : I) : I → ℤ := Pi.single i 1 - Pi.single root 1
+  have read (f : P) (t : T) :
+      A.mulVec (coord f) t = 0 ↔
+        f.val ![dif (points t 1) - dif (points t 0), dif (points t 2) - dif (points t 0)] = 0 := by
+    have hr : f.val.curryLeft (b root) = 0 := by
+      rw [hbroot, ← hstd]
+      exact f.prop.1.1
+    have hyzero : f.val.curryLeft y = 0 := f.prop.1.2
+    have hfanchor : f.val.curryLeft (b anchor) = 0 := by
+      rwa [hy', map_add, map_smul, hr, smul_zero, zero_add] at hyzero
+    let v := activeCoordinates (N := RationalResidue) root anchor (n : ℤ) (diagonal f)
+    let w : ResidueTorsion n := ∑ ij,
+      (reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) ℤ) t ij • v ij
+    have hz : A.mulVec (coord f) t = zmod w := by
+      change (∑ ij, A t ij * zmod (v ij)) = zmod w
+      simp only [w, map_sum, map_zsmul, zsmul_eq_mul, reducedMatrix_intCast, A]
+    have hw : (w : RationalResidue) =
+        f.val ![dif (points t 1) - dif (points t 0), dif (points t 2) - dif (points t 0)] := by
+      rw [reduced_readout points t (triangles t).injective root anchor hne b hbanchor hb f.val hr hfanchor]
+      change ((ResidueTorsion n).subtype w) = _
+      simp only [w, map_sum, map_zsmul, v, activeCoordinates_apply]
+      rfl
+    rw [hz, ← hw, ← zmod.map_zero, zmod.injective.eq_iff]
+    exact ⟨fun h => congrArg Subtype.val h, fun h => Subtype.ext (by exact h)⟩
+  have tuple_eq (t : T) (H : holes) (hH : (ofFinEmbEquiv (triangles t)).val = H.val)
+      (he : triangles t = triangles (idx H)) :
+      tuple H = ![dif (points t 1) - dif (points t 0), dif (points t 2) - dif (points t 0)] := by
+    let E := (Fin.succAboveOrderEmb (0 : Fin 3)).trans (triangles t)
+    have hr : triangles t 0 = rep H := congrArg (fun e : Fin 3 ↪o I => e 0) he
+    have herm : (ofFinEmbEquiv E).val = H.val.erase (rep H) := by
+      rw [face_embedding_erase, hH, hr]
+    have hS : ofFinEmbEquiv E = ⟨H.val.erase (rep H), by
+        change (H.val.erase (rep H)).card = 2
+        rw [card_erase_of_mem (hrep H), hsize H.val H.prop]⟩ := Subtype.ext herm
+    funext i
+    dsimp only [tuple]
+    rw [← hS, Equiv.symm_apply_apply, ← hr]
+    simp only [hstd]
+    fin_cases i <;> simp [E, dif, points] <;> abel
+  have hcoord (f : P) : f.val ∈ (⨅ H, (eval H).ker) ↔ coord f ∈ K := by
+    simp only [K, Submodule.restrictScalars_mem, Submodule.mem_iInf, LinearMap.mem_ker]
+    change (∀ H, f.val (tuple H) = 0) ↔ A.mulVec (coord f) = 0
+    rw [funext_iff]
+    constructor
+    · intro h t
+      let H : holes := ⟨_, ⟨t, rfl⟩⟩
+      have he : triangles t = triangles (idx H) :=
+        ofFinEmbEquiv.injective (Subtype.ext (hidx H).symm)
+      exact (read f t).mpr (tuple_eq t H rfl he ▸ h H)
+    · intro h H
+      rw [tuple_eq (idx H) H (hidx H) rfl]
+      exact (read f (idx H)).mp (h _)
+  let P' := (⨅ H, (eval H).ker).comap P.subtype
+  let restrict : ↥(P ⊓ ⨅ H, (eval H).ker) ≃ₗ[ℤ] P' :=
+    { toFun := fun f => ⟨⟨f.val, f.prop.1⟩, f.prop.2⟩
+      invFun := fun f => ⟨f.val.val, ⟨f.val.prop, f.prop⟩⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let finish := coord.ofSubmodules P' K (by
+    rw [Submodule.map_equiv_eq_comap_symm]
+    ext z
+    change (coord.symm z).val ∈ (⨅ H, (eval H).ker) ↔ _
+    rw [hcoord, LinearEquiv.apply_symm_apply])
+  exact ⟨comparison.trans (pivot.trans (restrict.trans finish))⟩
 
 /-- The cokernel of a matrix over a finite residue ring has the same size
 as the kernel of its transpose. This uses the perfect character pairing. -/
