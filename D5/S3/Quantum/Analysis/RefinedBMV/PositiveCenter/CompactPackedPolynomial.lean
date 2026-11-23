@@ -294,64 +294,80 @@ theorem packTerms_eq_eval (width bits : ℕ) (xs : List Term) :
       simp only [evalTerms, List.map_cons, List.sum_cons, add_assoc]
   simpa only [packTerms, zero_add] using hfold xs 0
 
-private def unpackProduct (bits : ℕ) (packed : ℤ) : List Term := Id.run do
+private def unpackProduct (width bits : ℕ) (packed : ℤ) : List Term := Id.run do
   let base : ℤ := 2 ^ bits
   let midpoint := base / 2
   -- Add a midpoint at every digit so coefficients of either sign can be read independently.
-  let planeBits := bits * 25 ^ 2
-  let offset := midpoint * (((1 : ℤ) <<< (24 * planeBits + bits)) - 1) / (base - 1)
+  let planeBits := bits * width ^ 2
+  let offset := midpoint * (((1 : ℤ) <<< ((width - 1) * planeBits + bits)) - 1) / (base - 1)
   let biased := (packed + offset).toNat
   let digitMask := base.toNat - 1
   let planeMask := ((1 : ℕ) <<< planeBits) - 1
   -- Extract a plane once before reading its coefficients in the original term order.
-  let planes := (List.range 25).toArray.map fun z ↦ (biased >>> (z * planeBits)) &&& planeMask
+  let planes := (List.range width).toArray.map fun z ↦ (biased >>> (z * planeBits)) &&& planeMask
   let mut terms := []
-  for x in [:25] do
-    for y in [:25 - x] do
-      for z in [:25 - x - y] do
-        let digit := (planes[z]! >>> (bits * (x + 25 * y))) &&& digitMask
+  for x in [:width] do
+    for y in [:width - x] do
+      for z in [:width - x - y] do
+        let digit := (planes[z]! >>> (bits * (x + width * y))) &&& digitMask
         let coefficient := (digit : ℤ) - midpoint
         if coefficient != 0 then
           terms := ⟨(x, y, z), coefficient⟩ :: terms
   return terms.reverse
 
-private def packedProductMatches (xs ys zs : List Term) (mass bits : ℕ) (packed : ℤ) : Bool :=
-  xs.all (fun a ↦ decide (ExponentsLE (12, 12, 12) a)) &&
-        ys.all (fun a ↦ decide (ExponentsLE (12, 12, 12) a)) &&
-        zs.all (fun a ↦ decide (ExponentsLE (24, 24, 24) a)) &&
+private def packedProductMatches (degree : ℕ) (xs ys zs : List Term) (mass bits : ℕ)
+    (packed : ℤ) : Bool :=
+  xs.all (fun a ↦ decide (ExponentsLE (degree, degree, degree) a)) &&
+        ys.all (fun a ↦ decide (ExponentsLE (degree, degree, degree) a)) &&
+        zs.all (fun a ↦ decide (ExponentsLE (2 * degree, 2 * degree, 2 * degree) a)) &&
         decide (((mass + termMass zs : ℕ) : ℤ) < (2 : ℤ) ^ bits) &&
-        decide (packed = packTerms 25 bits zs)
+        decide (packed = packTerms (2 * degree + 1) bits zs)
 
 /-- Verify proposed exact coefficients without enumerating the product of two supports. -/
 def checkPackedProduct (xs ys zs : List Term) : Bool :=
   let mass := termMass xs * termMass ys
   let bits := mass.log2 + 3
-  packedProductMatches xs ys zs mass bits (packTerms 25 bits xs * packTerms 25 bits ys)
+  packedProductMatches 12 xs ys zs mass bits (packTerms 25 bits xs * packTerms 25 bits ys)
 
-theorem eval_of_checkPackedProduct (s t u : ℝ) {xs ys zs : List Term}
-    (hc : checkPackedProduct xs ys zs = true) :
+private theorem eval_of_packedProductMatches (s t u : ℝ) {degree bits : ℕ}
+    {xs ys zs : List Term}
+    (hc : packedProductMatches degree xs ys zs (termMass xs * termMass ys) bits
+      (packTerms (2 * degree + 1) bits xs * packTerms (2 * degree + 1) bits ys) = true) :
     evalTerms s t u zs = evalTerms s t u xs * evalTerms s t u ys := by
-  unfold checkPackedProduct packedProductMatches at hc
-  dsimp only at hc
+  unfold packedProductMatches at hc
   simp only [Bool.and_eq_true, decide_eq_true_eq] at hc
   obtain ⟨⟨⟨⟨hx, hy⟩, hz⟩, hmass⟩, hpacked⟩ := hc
   symm
-  refine evalTerms_mul_eq_of_packed (width := 25) (by decide) (by positivity)
+  have hsum : degree + degree < 2 * degree + 1 := by omega
+  have hdegree : 2 * degree < 2 * degree + 1 := Nat.lt_succ_self _
+  refine evalTerms_mul_eq_of_packed (width := 2 * degree + 1) (base := (2 : ℤ) ^ bits)
+    (l := (degree, degree, degree)) (r := (degree, degree, degree))
+    (z := (2 * degree, 2 * degree, 2 * degree)) (by omega) (by positivity)
     (fun a ha ↦ of_decide_eq_true (List.all_eq_true.mp hx a ha))
     (fun a ha ↦ of_decide_eq_true (List.all_eq_true.mp hy a ha))
     (fun a ha ↦ of_decide_eq_true (List.all_eq_true.mp hz a ha))
-    (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) hmass ?_ s t u
+    hsum hsum hsum hdegree hdegree hdegree hmass ?_ s t u
   simpa only [packTerms_eq_eval] using hpacked
 
-/-- Use packed multiplication when a dense degree-twelve product passes the exact checks. -/
+theorem eval_of_checkPackedProduct (s t u : ℝ) {xs ys zs : List Term}
+    (hc : checkPackedProduct xs ys zs = true) :
+    evalTerms s t u zs = evalTerms s t u xs * evalTerms s t u ys :=
+  eval_of_packedProductMatches s t u (degree := 12) hc
+
+private def smallDegree (a : Term) : Bool :=
+  decide (a.exponents.1 + a.exponents.2.1 + a.exponents.2.2 ≤ 6)
+
+/-- Use packed multiplication for dense products when the exact comparison passes. -/
 def checkedProduct (xs ys : List Term) : List Term :=
-  if xs.length < 120 || ys.length < 120 then multiply xs ys
+  if xs.length < 32 || ys.length < 32 then multiply xs ys
   else
+    let degree := if xs.all smallDegree && ys.all smallDegree then 6 else 12
+    let width := 2 * degree + 1
     let mass := termMass xs * termMass ys
     let bits := mass.log2 + 3
-    let packed := packTerms 25 bits xs * packTerms 25 bits ys
-    let zs := unpackProduct bits packed
-    if packedProductMatches xs ys zs mass bits packed then zs else multiply xs ys
+    let packed := packTerms width bits xs * packTerms width bits ys
+    let zs := unpackProduct width bits packed
+    if packedProductMatches degree xs ys zs mass bits packed then zs else multiply xs ys
 
 theorem eval_checkedProduct (s t u : ℝ) (xs ys : List Term) :
     evalTerms s t u (checkedProduct xs ys) = evalTerms s t u xs * evalTerms s t u ys := by
@@ -362,8 +378,10 @@ theorem eval_checkedProduct (s t u : ℝ) (xs ys : List Term) :
   · exact hmul
   dsimp only
   split
-  · rename_i h
-    exact eval_of_checkPackedProduct s t u h
-  · exact hmul
+  all_goals
+    split
+    · rename_i h
+      exact eval_of_packedProductMatches s t u h
+    · exact hmul
 
 end RefinedBMV.DimThree.Certificate
