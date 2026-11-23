@@ -29,6 +29,7 @@ For the Fibonacci triple use q = (a,b,c) and p = (4a/3,5b/3,7c/3). The construct
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/FibonacciQutritSingularSupport.singular_support_reduction`
+- Dependency: [D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination](FibonacciQutritBlockDomination.md)
 - Dependency: [D5/S3/Quantum/Divergence/FibonacciQutritSpectralTransport](FibonacciQutritSpectralTransport.md)
 - Dependency: [D5/S3/Quantum/Divergence/SingularWeightedLogIncrement](SingularWeightedLogIncrement.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
