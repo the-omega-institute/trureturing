@@ -35,6 +35,8 @@ internal sealed class FibonacciQutritSingularSupportDocument : IScribeDocumentDe
                     Paragraph(Text(
                         "Both weighted sums have a zero scalar block. The block logarithm and "
                         + "unitary trace invariance identify D(A‖C) with D(A₂‖C₂). "
+                        + "For these supported, possibly subnormalized pairs, "
+                        + "D(S‖T) means Re Tr[S(log S − log T)]. "
                         + "The supported weighted log increment with bounds 4/3 and 7/3 supplies "
                         + "the ambient loss and its zero set, including when B is singular.")),
                     Paragraph(Text(
