@@ -80,6 +80,10 @@ $$\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{sourceSp
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/WeightedBond/CompleteGraphSpecialization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gonzalez-dleon-wachs-question-7-1` (proved) by `D5/S3/Combinatorics/WeightedBond/CompleteGraphSpecialization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gonzalez-dleon-wachs-question-7-1","declaration_gid":"D5/S3/Combinatorics/WeightedBond/CompleteGraphSpecialization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and a new chromatic symmetric function*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
