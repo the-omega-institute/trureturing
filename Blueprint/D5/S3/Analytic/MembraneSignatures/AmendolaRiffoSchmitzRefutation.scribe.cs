@@ -8,7 +8,7 @@ internal sealed class AmendolaRiffoSchmitzRefutationDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/MembraneSignatures/amendolariffoschmitz2026membranes");
+        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/amendolariffoschmitz2026membranes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A normalized two-letter array satisfies the printed membrane shuffle equations and has no piecewise bilinear realization.",
