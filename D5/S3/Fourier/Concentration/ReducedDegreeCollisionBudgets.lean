@@ -16,7 +16,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Finset
-open D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations (weightedPairBudget)
+open D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations (pairRadius weightedPairBudget)
 open D5.S3.Fourier.Concentration.LocalizedCollisionBudgets
 open D5.S3.Fourier.Concentration.FiniteMultinomialOverlap (weighted_count_difference_sq_ge)
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
@@ -28,7 +28,7 @@ namespace D5.S3.Fourier.Concentration.ReducedDegreeCollisionBudgets
 
 private theorem reducedDegree_ge_of_reachable {J : Type*} [Fintype J]
     (g radius : J → ℝ) (η : ℝ) (p k : ℕ)
-    (hsep : ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k →
+    (hsep : ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k → d ≤ p →
       (∑ j, u j) = d → (∑ j, v j) = d → (∀ j, min (u j) (v j) = 0) →
       η + ∑ j, ((u j : ℝ) + v j) * radius j <
         |monomialFrequency g u - monomialFrequency g v|)
@@ -73,32 +73,33 @@ private theorem reducedDegree_ge_of_reachable {J : Type*} [Fintype J]
   by_contra! hdk
   have hmin (j : J) : min (u j) (v j) = 0 := by
     rcases hdisjoint j with h | h <;> simp [h]
-  exact (not_lt_of_ge (by simpa only [hgap, habs] using hreach)) (hsep d u v hd hdk hu hv hmin)
+  exact (not_lt_of_ge (by simpa only [hgap, habs] using hreach))
+    (hsep d u v hd hdk (Nat.sub_le _ _) hu hv hmin)
 
 /-- Reject pairs below the separation threshold and bound the remaining weighted budget. -/
 theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [DecidableEq J]
     (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j) {ρ η : ℝ} (hρ : 0 < ρ)
     (hr : ∀ j, ρ ≤ radius j) (hη : 0 ≤ η) (p k : ℕ) (hk : 0 < k)
-    (hsep : ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k →
+    (hsep : ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k → d ≤ p →
       (∑ j, u j) = d → (∑ j, v j) = d → (∀ j, min (u j) (v j) = 0) →
       η + ∑ j, ((u j : ℝ) + v j) * radius j <
         |monomialFrequency g u - monomialFrequency g v|) :
     (p < k → localizedExcessBound g w radius p η = 0) ∧
       localizedExcessBound g w radius p η ≤
         ENNReal.ofReal (((∑ j, w j) ^ (2 * p) - diagonal w p) *
-          min 1 (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
+          min (min 1 (η / ρ)) (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
             (ρ * Real.sqrt (2 * (k : ℝ))))) := by
   let s := piAntidiag (univ : Finset J) p
   let c := monomialWeight w
   let C := Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η
   let L := ρ * Real.sqrt (2 * (k : ℝ))
-  let b := min 1 (C / L)
+  let b := min (min 1 (η / ρ)) (C / L)
   have hL : 0 < L := by
     have : (0 : ℝ) < k := by exact_mod_cast hk
     dsimp [L]
     positivity
   have hC : 0 ≤ C := by dsimp [C]; positivity
-  have hb : 0 ≤ b := le_min zero_le_one (div_nonneg hC hL.le)
+  have hb : 0 ≤ b := le_min (le_min zero_le_one (div_nonneg hη hρ.le)) (div_nonneg hC hL.le)
   have hweight (m n : J → ℕ) : 0 ≤ c m * c n :=
     mul_nonneg (monomialWeight_nonneg w hw m) (monomialWeight_nonneg w hw n)
   have hpair (m n : J → ℕ) (hm : m ∈ s) (hn : n ∈ s.erase m) :
@@ -106,11 +107,12 @@ theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [Decid
         localizedPairBound g radius η m n ≤ ENNReal.ofReal b := by
     have hmp := (mem_piAntidiag.mp hm).1
     have hnp := (mem_piAntidiag.mp (mem_of_mem_erase hn)).1
+    have hne := (ne_of_mem_erase hn).symm
     unfold localizedPairBound
     split_ifs with hreach
     · have hdegree :=
         reducedDegree_ge_of_reachable g radius η p k hsep m n hmp hnp
-          (ne_of_mem_erase hn).symm hreach
+          hne hreach
       refine ⟨fun h => False.elim ((not_lt_of_ge (hdegree.trans (Nat.sub_le _ _))) h), ?_⟩
       have hl : (∑ j, min (m j) (n j)) ≤ p := by
         rw [← hmp]
@@ -125,13 +127,34 @@ theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [Decid
         calc
           _ = (2 * ρ ^ 2) * k := by ring
           _ ≤ _ := mul_le_mul_of_nonneg_left (by linarith) (by positivity)
-      change min (min 1 _) (ENNReal.ofReal
+      have hradius : ρ ≤ pairRadius radius m n := by
+        obtain ⟨j, hj⟩ := Function.ne_iff.mp hne
+        have hdiff : 1 ≤ |(m j : ℝ) - n j| := by
+          rcases lt_or_gt_of_ne hj with h | h
+          · have hReal : (m j : ℝ) + 1 ≤ n j := by exact_mod_cast Nat.succ_le_of_lt h
+            rw [abs_of_nonpos (by linarith)]
+            linarith
+          · have hReal : (n j : ℝ) + 1 ≤ m j := by exact_mod_cast Nat.succ_le_of_lt h
+            rw [abs_of_nonneg (by linarith)]
+            linarith
+        have hrj := hρ.le.trans (hr j)
+        calc
+          ρ ≤ |(m j : ℝ) - n j| * radius j :=
+            (hr j).trans (le_mul_of_one_le_left hrj hdiff)
+          _ ≤ pairRadius radius m n := by
+            unfold pairRadius
+            rw [← Real.coe_toNNReal _ (mul_nonneg (abs_nonneg _) hrj)]
+            exact NNReal.coe_le_coe.mpr (Finset.le_sup
+              (f := fun i => (|(m i : ℝ) - n i| * radius i).toNNReal) (mem_univ j))
+      change min (min 1 (ENNReal.ofReal (η / pairRadius radius m n))) (ENNReal.ofReal
         (C / Real.sqrt (∑ j, (((m j : ℝ) - n j) * radius j) ^ 2))) ≤ ENNReal.ofReal b
-      rw [show ENNReal.ofReal b = min 1 (ENNReal.ofReal (C / L)) by
+      rw [show ENNReal.ofReal b = min (min 1 (ENNReal.ofReal (η / ρ))) (ENNReal.ofReal (C / L)) by
         simp [b, ENNReal.ofReal_min]]
-      exact le_min ((min_le_left _ _).trans (min_le_left _ _))
-        ((min_le_right _ _).trans (ENNReal.ofReal_le_ofReal
-          (div_le_div_of_nonneg_left hC hL hscale)))
+      refine le_min (le_min ((min_le_left _ _).trans (min_le_left _ _)) ?_) ?_
+      · exact ((min_le_left _ _).trans (min_le_right _ _)).trans
+          (ENNReal.ofReal_le_ofReal (div_le_div_of_nonneg_left hη hρ hradius))
+      · exact (min_le_right _ _).trans (ENNReal.ofReal_le_ofReal
+          (div_le_div_of_nonneg_left hC hL hscale))
     · exact ⟨fun _ => rfl, zero_le⟩
   constructor
   · intro hpk

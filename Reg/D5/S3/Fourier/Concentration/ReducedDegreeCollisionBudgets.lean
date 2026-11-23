@@ -29,14 +29,14 @@ abbrev frequencyArena : Arena where
   Law V := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     (g w radius : J → ℝ) (_ : ∀ j, 0 ≤ w j) {ρ η : ℝ} (_ : 0 < ρ)
     (_ : ∀ j, ρ ≤ radius j) (_ : 0 ≤ η) (p k : ℕ) (_ : 0 < k)
-    (_ : ∀ (d : ℕ) (a b : J → ℕ), 0 < d → d < k →
+    (_ : ∀ (d : ℕ) (a b : J → ℕ), 0 < d → d < k → d ≤ p →
       (∑ j, a j) = d → (∑ j, b j) = d → (∀ j, min (a j) (b j) = 0) →
       η + ∑ j, ((a j : ℝ) + b j) * radius j <
         |monomialFrequency g a - monomialFrequency g b|),
     (p < k → localizedExcessBound (V.readout () ⟨J, g⟩) w radius p η = 0) ∧
       localizedExcessBound g w radius p η ≤
         ENNReal.ofReal (((∑ j, w j) ^ (2 * p) - diagonal w p) *
-          min 1 (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
+          min (min 1 (η / ρ)) (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
             (ρ * Real.sqrt (2 * (k : ℝ)))))
 
 private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
@@ -53,7 +53,7 @@ private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
   let g : ULift.{u} Bool → ℝ := fun x => if x.down then 4 else 0
   let w : ULift.{u} Bool → ℝ := 1
   have hsep (d : ℕ) (a b : ULift.{u} Bool → ℕ) (hd : 0 < d) (hdk : d < 2)
-      (ha : (∑ x, a x) = d) (hb : (∑ x, b x) = d)
+      (_ : d ≤ 1) (ha : (∑ x, a x) = d) (hb : (∑ x, b x) = d)
       (hmin : ∀ x, min (a x) (b x) = 0) :
       (1 : ℝ) + ∑ x, ((a x : ℝ) + b x) * w x <
         |monomialFrequency g a - monomialFrequency g b| := by
