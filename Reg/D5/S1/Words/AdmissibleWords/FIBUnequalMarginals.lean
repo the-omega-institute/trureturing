@@ -39,7 +39,7 @@ private abbrev arena : Arena where
       volume.real (A 0) = s ∧ volume.real (A 1) = h ∧ volume.real (A 2) = k ∧
       volume.real (A 3) = t ∧ volume.real (A 4) = w ∧
       volume.real (A 4 \ A 0) = a ∧ volume.real (A 3 \ A 1) = b) ↔
-      0 ≤ s ∧ h ≤ 1 ∧ k ≤ 1 ∧ t ≤ k ∧
+      k ≤ 1 ∧ t ≤ k ∧
       (max 0 (w - s) ≤ a ∧ a ≤ min w (h - s)) ∧
       (max 0 (t - h) ≤ b ∧ b ≤ min t (1 - h)) ∧ R.readout () a b ≤ k - s)
 
@@ -86,7 +86,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"]
+        "arg", "arg", "arg", "arg", "arg", "fn", "arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none

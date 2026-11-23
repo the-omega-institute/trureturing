@@ -17,7 +17,7 @@ internal sealed class FIBUnequalMarginalsDocument : IScribeDocumentDefinition
                     "Prescribe Lebesgue masses s, h, k, t and w for measurable subsets S, H, K, T "
                     + "and W of the half-open unit interval. Require S and W to lie in both H and K, "
                     + "and T to lie in K. The two differences W outside S and T outside H have masses "
-                    + "a and b exactly when s is nonnegative, h and k are at most one, t is at most k, "
+                    + "a and b exactly when k is at most one, t is at most k, "
                     + "a lies between the maximum of zero and w minus s and the minimum of w and "
                     + "h minus s, b lies between the maximum of zero and t minus h and the minimum "
                     + "of t and one minus h, and a plus b is at most k minus s.")),

@@ -24,7 +24,7 @@ theorem joint_range {s h k t w a b : ℝ} :
       volume.real (A 0) = s ∧ volume.real (A 1) = h ∧ volume.real (A 2) = k ∧
       volume.real (A 3) = t ∧ volume.real (A 4) = w ∧
       volume.real (A 4 \ A 0) = a ∧ volume.real (A 3 \ A 1) = b) ↔
-      0 ≤ s ∧ h ≤ 1 ∧ k ≤ 1 ∧ t ≤ k ∧
+      k ≤ 1 ∧ t ≤ k ∧
       (max 0 (w - s) ≤ a ∧ a ≤ min w (h - s)) ∧
       (max 0 (t - h) ≤ b ∧ b ≤ min t (1 - h)) ∧ a + b ≤ k - s := by
   constructor
@@ -45,11 +45,8 @@ theorem joint_range {s h k t w a b : ℝ} :
       exact measureReal_mono (sdiff_subset_sdiff_left wH)
         (measure_ne_top_of_subset sdiff_subset (finite 1))
     have asLower : w - s ≤ a := by
-      have split := measureReal_inter_add_sdiff (μ := volume) (s := A 4) (measured 0).1 (finite 4)
-      have overlap := measureReal_mono (μ := volume) (s₁ := A 4 ∩ A 0) inter_subset_right (finite 0)
-      rw [wa, wMass] at split
-      rw [sMass] at overlap
-      linarith
+      rw [← wMass, ← sMass, ← wa]
+      exact le_measureReal_sdiff (finite 0)
     have bt : b ≤ t := by
       rw [← tb, ← tMass]
       exact measureReal_mono sdiff_subset (finite 3)
@@ -60,21 +57,19 @@ theorem joint_range {s h k t w a b : ℝ} :
       rw [measureReal_sdiff (measured 1).2 (measured 1).1 (by simp), hMass]
       simp [Real.volume_real_Ico]
     have bhLower : t - h ≤ b := by
-      have split := measureReal_inter_add_sdiff (μ := volume) (s := A 3) (measured 1).1 (finite 3)
-      have overlap := measureReal_mono (μ := volume) (s₁ := A 3 ∩ A 1) inter_subset_right (finite 1)
-      rw [tb, tMass] at split
-      rw [hMass] at overlap
-      linarith
-    refine ⟨sMass ▸ measureReal_nonneg, hMass ▸ upper 1, kMass ▸ upper 2, ?_,
+      rw [← tMass, ← hMass, ← tb]
+      exact le_measureReal_sdiff (finite 1)
+    refine ⟨kMass ▸ upper 2, ?_,
       ⟨max_le (wa ▸ measureReal_nonneg) asLower, le_min aw ah⟩,
       ⟨max_le (tb ▸ measureReal_nonneg) bhLower, le_min bt bh⟩, cap⟩
     rw [← tMass, ← kMass]
     exact measureReal_mono tK (finite 2)
-  · rintro ⟨hs, hh, hk, htk, ⟨haLower, haUpper⟩, ⟨hbLower, hbUpper⟩, hab⟩
+  · rintro ⟨hk, htk, ⟨haLower, haUpper⟩, ⟨hbLower, hbUpper⟩, hab⟩
     obtain ⟨ha, hws⟩ := max_le_iff.mp haLower
     obtain ⟨haw, hah⟩ := le_min_iff.mp haUpper
     obtain ⟨hb, hth⟩ := max_le_iff.mp hbLower
     obtain ⟨hbt, hbh⟩ := le_min_iff.mp hbUpper
+    have hs : 0 ≤ s := by linarith
     let r := max (s + a) (max (t - b) (h + k - 1))
     have hsa : s + a ≤ r := le_max_left _ _
     have htb : t - b ≤ r := (le_max_left _ _).trans (le_max_right _ _)
