@@ -4,7 +4,7 @@
 
 A product of shifted gaps bounds the weighted excess caused by modular wraparound.
 
-Take a finite integer spectrum with nonnegative weights w and degree p. Let L be the weighted mass of ordered pairs whose integer gap has absolute value at most the integer H≥0, and C(q) their cyclic band mass modulo q. Write W for the sum of the weights. Let P be a finite set of primes at least Q≥2. Suppose every integer gap has absolute value at most D. For B≥0 assume that Q to the power B+1 exceeds the product of the absolute values of D−y over integers y in [−H,H].
+Take a finite indexed integer spectrum with nonnegative real weights w. Let p, H, D, Q and B be natural numbers. Each ordered pair of degree-p count vectors has weight equal to the product of its two weighted multinomial coefficients. Let L be the mass of pairs with absolute integer gap at most H, and C(q) the mass obtained by testing the gap modulo q against the image of the closed integer band [−H,H]. Write W for the sum of the base weights. Let P be a finite set of primes at least Q, with Q≥2. Suppose every degree-p gap has absolute value at most D. Assume that Q to the power B+1 strictly exceeds the product of |D−y| over the integers y in [−H,H].
 
 **Theorem 1.1 (An upper bound on the sum of modular excesses).**
 
