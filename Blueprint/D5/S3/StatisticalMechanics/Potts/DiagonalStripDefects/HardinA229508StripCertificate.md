@@ -48,7 +48,7 @@ A step stays in its sector when it has no defects, or enters the second sector b
 
 **Theorem 1.4 (Forward projection of an upper-block transfer).**
 
-$$\forall (l: \mathit{Type}) (r: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(l\right)] [\operatorname{\mathit{Fintype}}\left(r\right)] [\operatorname{\mathit{DecidableEq}}\left(l\right)] [\operatorname{\mathit{DecidableEq}}\left(r\right)], (\forall a: \operatorname{\mathit{Matrix}}\left(l, l, \mathit{Int}\right), (\forall b: \operatorname{\mathit{Matrix}}\left(l, r, \mathit{Int}\right), (\forall c: \operatorname{\mathit{Matrix}}\left(r, r, \mathit{Int}\right), (\forall v: (\operatorname{\mathit{Sum}}\left(l, r\right)) \to (\mathit{Int}), (\forall n: \mathit{Nat}, (\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{Matrix}}.\operatorname{\mathit{fromBlocks}}\left(a, b, (0: \operatorname{\mathit{Matrix}}\left(r, l, \mathit{Int}\right)), c\right), v, n\right), (\operatorname{\mathit{Sum}}.\operatorname{\mathit{inl}}: (l) \to (\operatorname{\mathit{Sum}}\left(l, r\right)))\right) = \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(a, \operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(v, (\operatorname{\mathit{Sum}}.\operatorname{\mathit{inl}}: (l) \to (\operatorname{\mathit{Sum}}\left(l, r\right)))\right), n\right)))))))$$
+$$\forall (l: \mathit{Type}) (r: \mathit{Type}) (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(l\right)] [\operatorname{\mathit{Fintype}}\left(r\right)] [\operatorname{\mathit{NonUnitalNonAssocSemiring}}\left(\mathit{alpha}\right)], (\forall a: \operatorname{\mathit{Matrix}}\left(l, l, \mathit{alpha}\right), (\forall b: \operatorname{\mathit{Matrix}}\left(l, r, \mathit{alpha}\right), (\forall c: \operatorname{\mathit{Matrix}}\left(r, r, \mathit{alpha}\right), (\forall v: (\operatorname{\mathit{Sum}}\left(l, r\right)) \to (\mathit{alpha}), (\forall n: \mathit{Nat}, (\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{Nat}}.\operatorname{\mathit{iterate}}\left((\lambda w: (\operatorname{\mathit{Sum}}\left(l, r\right)) \to (\mathit{alpha}) \mapsto (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(w, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{fromBlocks}}\left(a, b, (0: \operatorname{\mathit{Matrix}}\left(r, l, \mathit{alpha}\right)), c\right)\right))), n, v\right), (\operatorname{\mathit{Sum}}.\operatorname{\mathit{inl}}: (l) \to (\operatorname{\mathit{Sum}}\left(l, r\right)))\right) = \operatorname{\mathit{Nat}}.\operatorname{\mathit{iterate}}\left((\lambda w: (l) \to (\mathit{alpha}) \mapsto (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(w, a\right))), n, \operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(v, (\operatorname{\mathit{Sum}}.\operatorname{\mathit{inl}}: (l) \to (\operatorname{\mathit{Sum}}\left(l, r\right)))\right)\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.block_projection` (`✓ std3`). ∎
 
@@ -58,7 +58,7 @@ $$\forall (l: \mathit{Type}) (r: \mathit{Type}) [\operatorname{\mathit{Fintype}}
 
 *Commentary.*
 
-The index types have finite enumerations and decidable equality. The zero lower-left block makes left projection commute with one step, and iteration preserves that identity.
+The finite enumerations and semiring operations define the matrix-vector sums. The zero lower-left block makes left projection commute with one step, and iteration preserves that identity.
 
 **Theorem 1.5 (Reuse of the zero-cost iteration).**
 
@@ -144,7 +144,21 @@ $$(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{c
 
 The coefficients are listed in increasing order of input index.
 
-**Theorem 1.11 (Second-sector forward vectors).**
+**Theorem 1.11 (Update on both sectors).**
+
+$$\forall k: \operatorname{\mathit{Fin}}\left(20\right), (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(\operatorname{\mathit{Sum}}.\operatorname{\mathit{elim}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castSucc}}\left(k\right)\right), \operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castSucc}}\left(k\right)\right)\right), \operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}\right) = \operatorname{\mathit{Sum}}.\operatorname{\mathit{elim}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{succ}}\left(k\right)\right), \operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{succ}}\left(k\right)\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229508: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A229508>.
+
+*Commentary.*
+
+The left component uses the zero-degree update. The right component adds the incoming degree-one transitions to the degree-zero transfers within that sector.
+
+**Theorem 1.12 (Second-sector forward vectors).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right), \operatorname{\mathit{Sum}}.\operatorname{\mathit{inr}}\right) = \operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{W}\left(i\right))$$
 
@@ -158,9 +172,9 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{
 
 Each update combines transitions with one new defect from the first sector and zero new defects from the second.
 
-**Theorem 1.12 (A shifted forward relation in one coordinate).**
+**Theorem 1.13 (A shifted forward relation in one coordinate).**
 
-$$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)] [\operatorname{\mathit{DecidableEq}}\left(s\right)], (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{Int}\right), (\forall v: (s) \to (\mathit{Int}), (\forall d: \mathit{Nat}, (\forall b: \mathit{Nat}, (\forall c: (\operatorname{\mathit{Fin}}\left(d\right)) \to (\mathit{Int}), ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + d\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(c\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))) \to (\forall n: \mathit{Nat}, (\forall j: s, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + d\right)\left(j\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (c\left(k\right) \cdot \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\left(j\right)))))))))))$$
+$$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)], (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{Int}\right), (\forall v: (s) \to (\mathit{Int}), (\forall d: \mathit{Nat}, (\forall b: \mathit{Nat}, (\forall c: (\operatorname{\mathit{Fin}}\left(d\right)) \to (\mathit{Int}), ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + d\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(c\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))) \to (\forall n: \mathit{Nat}, (\forall j: s, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + d\right)\left(j\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (c\left(k\right) \cdot \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\left(j\right)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.shifted_coordinate` (`✓ std3`). ∎
 
@@ -170,9 +184,9 @@ $$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)] [\o
 
 *Commentary.*
 
-The index type has a finite enumeration and decidable equality. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation.
+The finite enumeration defines the matrix-vector sums. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation.
 
-**Theorem 1.13 (Forward relation at exponent thirteen).**
+**Theorem 1.14 (Forward relation at exponent thirteen).**
 
 $$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + 12\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(12\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))$$
 
@@ -194,6 +208,7 @@ Seven applications of the coordinate shift to the order-six relation give the in
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.coeff_values`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_one`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_step`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_zeroth`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.halfForwardOne`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.one_counts`

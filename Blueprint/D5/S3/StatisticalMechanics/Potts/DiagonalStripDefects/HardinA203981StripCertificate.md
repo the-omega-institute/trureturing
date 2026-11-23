@@ -20,7 +20,7 @@ The five half-strip bonds read the target triple in reverse order.
 
 **Theorem 1.2 (Allocate exact cost between the parity classes).**
 
-$$\forall d: \mathit{Nat}, (\forall m: (\operatorname{\mathit{Fin}}\left(d + 1\right)) \to (\operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{Int}\right)), ((\forall k: \operatorname{\mathit{Fin}}\left(d + 1\right), (\forall a: \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{Col}}, (\forall c: \operatorname{\mathit{Fin}}\left(5\right), (\sum_{b: \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{Col}}} ((\operatorname{\mathit{if}} ((\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{halfCost}}\left(a, b\right) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)) \land (\operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(b\right) = c)) \operatorname{\mathit{then}} (1: \mathit{Int}) \operatorname{\mathit{else}} (0: \mathit{Int}))) = m\left(k, \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(a\right), c\right))))) \to (\forall i: \operatorname{\mathit{Fin}}\left(15\right), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), (\sum_{r: (\operatorname{\mathit{Fin}}\left(6\right)) \to (\operatorname{\mathit{Fin}}\left(3\right))} ((\operatorname{\mathit{if}} ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{betw}}\left(6\right), \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right), r\right) = d) \land (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{boundary}}\left(r\right) = j)) \operatorname{\mathit{then}} (1: \mathit{Int}) \operatorname{\mathit{else}} (0: \mathit{Int}))) = \sum_{k: \operatorname{\mathit{Fin}}\left(d + 1\right)} (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classProduct}}\left(m\left(k\right), m\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{rev}}\left(k\right)\right), i, j\right)))))))$$
+$$\forall d: \mathit{Nat}, (\forall m: (\operatorname{\mathit{Fin}}\left(d + 1\right)) \to (\operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{Int}\right)), (\forall i: \operatorname{\mathit{Fin}}\left(15\right), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), ((\forall k: \operatorname{\mathit{Fin}}\left(d + 1\right), (\forall a: \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{Col}}, (\forall c: \operatorname{\mathit{Fin}}\left(5\right), (((a = \operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{parityRows}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right)\right)\right)) \lor (a = \operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{parityRows}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right)\right)\right))) \to ((c = \operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)) \lor (c = \operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right))) \to (\sum_{b: \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{Col}}} ((\operatorname{\mathit{if}} ((\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{halfCost}}\left(a, b\right) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)) \land (\operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(b\right) = c)) \operatorname{\mathit{then}} (1: \mathit{Int}) \operatorname{\mathit{else}} (0: \mathit{Int}))) = m\left(k, \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(a\right), c\right)))))) \to (\sum_{r: (\operatorname{\mathit{Fin}}\left(6\right)) \to (\operatorname{\mathit{Fin}}\left(3\right))} ((\operatorname{\mathit{if}} ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{betw}}\left(6\right), \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right), r\right) = d) \land (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{boundary}}\left(r\right) = j)) \operatorname{\mathit{then}} (1: \mathit{Int}) \operatorname{\mathit{else}} (0: \mathit{Int}))) = \sum_{k: \operatorname{\mathit{Fin}}\left(d + 1\right)} (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classProduct}}\left(m\left(k\right), m\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{rev}}\left(k\right)\right), i, j\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.allocated_counts` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\forall d: \mathit{Nat}, (\forall m: (\operatorname{\mathit{Fin}}\left(d + 1\r
 
 *Commentary.*
 
-The half-strip class counts give the summands for all ordered allocations of the cost. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k).
+The count uses only the two source triples of the chosen representative and the two classes in the chosen target pair. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k).
 
 **Theorem 1.3 (Reindex the target triple under reversal).**
 
@@ -144,7 +144,35 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA203981StripCertificate}
 
 Below degree six, the polynomial coefficients are the negatives of the recurrence weights. The leading coefficient is one and all higher coefficients vanish.
 
-**Theorem 1.11 (Forward iteration agrees with the table).**
+**Theorem 1.11 (Forward vectors from adjacent updates).**
+
+$$\forall (s: \mathit{Type}) (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)] [\operatorname{\mathit{NonUnitalNonAssocSemiring}}\left(\mathit{alpha}\right)], (\forall n: \mathit{Nat}, (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{alpha}\right), (\forall v: (s) \to (\mathit{alpha}), (\forall w: (\operatorname{\mathit{Fin}}\left(n + 1\right)) \to ((s) \to (\mathit{alpha})), ((\forall i: \operatorname{\mathit{Fin}}\left(n + 1\right), (\operatorname{\mathit{Nat}}.\operatorname{\mathit{iterate}}\left((\lambda x: (s) \to (\mathit{alpha}) \mapsto (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(x, t\right))), \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right), v\right) = w\left(i\right))) \iff ((w\left((0: \operatorname{\mathit{Fin}}\left(n + 1\right))\right) = v) \land (\forall k: \operatorname{\mathit{Fin}}\left(n\right), (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(w\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castSucc}}\left(k\right)\right), t\right) = w\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{succ}}\left(k\right)\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.forward_table_of_steps` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.
+
+*Commentary.*
+
+The list of table rows starts at the initial vector. Its adjacent update equations determine the forward vector at each index.
+
+**Theorem 1.12 (Zero-degree table update).**
+
+$$\forall k: \operatorname{\mathit{Fin}}\left(20\right), (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castSucc}}\left(k\right)\right), \operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}\right) = \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{succ}}\left(k\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.forward_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.
+
+*Commentary.*
+
+The finite calculation checks the transfer on each adjacent pair of rows.
+
+**Theorem 1.13 (Forward iteration agrees with the table).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right) = \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(i\right))$$
 
@@ -158,7 +186,7 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{
 
 The integer vectors are obtained from the initial vector by repeated right multiplication.
 
-**Theorem 1.12 (The forward relation at exponent seven).**
+**Theorem 1.14 (The forward relation at exponent seven).**
 
 $$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{initial}}, 1 + 6\right) = \sum_{j: \operatorname{\mathit{Fin}}\left(6\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{coeff}}\left(j\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{initial}}, 1 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(j\right)\right)\right))$$
 
@@ -179,7 +207,9 @@ The entrywise relation follows from the tabulated forward vectors.
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.coeff`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.counts`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.finite_certificate`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.forward_step`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.forward_table`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.forward_table_of_steps`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.halfCost`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.halfForwardZero`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.initial_counts`

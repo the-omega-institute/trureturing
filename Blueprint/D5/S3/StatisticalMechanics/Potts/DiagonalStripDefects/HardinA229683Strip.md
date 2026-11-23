@@ -18,7 +18,7 @@ The index counts rows. The arrays have exactly two monochromatic diagonal or ant
 
 **Theorem 1.2 (Labelled transfer and canonical count).**
 
-$$\forall m: \mathit{Nat}, ((1 \le m) \implies (\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}^{m}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{terminal}}\right)\right) = 6 \cdot (\operatorname{\mathit{HardinA229683Strip}}.\operatorname{a}\left(m + 1\right): \mathit{Int})))$$
+$$\forall m: \mathit{Nat}, (\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}^{m}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{terminal}}\right)\right) = 6 \cdot (\operatorname{\mathit{HardinA229683Strip}}.\operatorname{a}\left(m + 1\right): \mathit{Int}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683Strip.counting_bridge` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\forall m: \mathit{Nat}, ((1 \le m) \implies (\operatorname{\mathit{dotProduct
 
 *Commentary.*
 
-For at least two rows, every array in the two-defect count has six distinct global colour relabellings.
+The transfer counts labelled arrays at budget two. Constant arrays have a multiple of ten defects, so each canonical array at budget two has six labelled realizations. For a single row both counts vanish.
 
 **Theorem 1.3 (Order-eighteen recurrence).**
 

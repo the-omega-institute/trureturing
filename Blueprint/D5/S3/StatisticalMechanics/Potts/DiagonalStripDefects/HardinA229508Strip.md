@@ -18,7 +18,7 @@ The index gives the number of rows. The count selects exactly one monochromatic 
 
 **Theorem 1.2 (Labelled transfer and canonical count).**
 
-$$\forall m: \mathit{Nat}, ((1 \le m) \implies (\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}^{m}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{terminal}}\right)\right) = 6 \cdot (\operatorname{\mathit{HardinA229508Strip}}.\operatorname{a}\left(m + 1\right): \mathit{Int})))$$
+$$\forall m: \mathit{Nat}, (\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}^{m}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{terminal}}\right)\right) = 6 \cdot (\operatorname{\mathit{HardinA229508Strip}}.\operatorname{a}\left(m + 1\right): \mathit{Int}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508Strip.counting_bridge` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\forall m: \mathit{Nat}, ((1 \le m) \implies (\operatorname{\mathit{dotProduct
 
 *Commentary.*
 
-The transfer counts labelled arrays at budget one. For at least two rows the global permutation orbit has size six.
+The transfer counts labelled arrays at budget one. Constant arrays have a multiple of ten defects, so each canonical array at budget one has six labelled realizations. For a single row both counts vanish.
 
 **Theorem 1.3 (Order-twelve recurrence).**
 
