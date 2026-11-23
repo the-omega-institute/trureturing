@@ -118,15 +118,15 @@ theorem representative_spec (w : Weights) (Y : Joint)
       have he := congrFun (congrFun hZ b) d
       simp only [partialTraceRight, Fin.sum_univ_two, Matrix.zero_apply] at he
       exact eq_neg_of_add_eq_zero_right he
-    simp only [representative, if_true, ite_eq_right (show (1 : Fin 2) ≠ 0 by decide),
+    simp only [representative, ite_true, ite_eq_right (show (1 : Fin 2) ≠ 0 by decide),
       ite_eq_right (show (0 : Fin 2) ≠ 1 by decide), hz, star_neg, neg_mul_neg,
-      pair_scaled, div_self (hw _ _).ne', one_mul, mul_neg, Complex.neg_re]
+      pair_scaled, div_self (hw _ _).ne', one_mul, mul_neg, neg_mul, neg_neg, Complex.neg_re]
     rw [← add_mul, hd, one_mul, star_sub, sub_mul, Complex.sub_re]
     ring
   · unfold energy
     rw [sum_entries]
     refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun d _ => ?_
-    simp only [representative, if_true, ite_eq_right (show (1 : Fin 2) ≠ 0 by decide),
+    simp only [representative, ite_true, ite_eq_right (show (1 : Fin 2) ≠ 0 by decide),
       ite_eq_right (show (0 : Fin 2) ≠ 1 by decide), Complex.normSq_neg, normSq_scaled]
     have hsquare (a w q : ℝ) : a ^ 2 * q / w = (a / w) * (a * q) := by ring
     rw [hsquare, hsquare, ← add_mul, hd, one_mul, hsquare, hsquare,
