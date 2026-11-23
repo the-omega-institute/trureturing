@@ -12,7 +12,7 @@ private def intervalValue (q : RoundedInterval) : Expr :=
   mkApp (mkConst ``RoundedInterval.mk) (toExpr q.endpoints)
 
 open private Model from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricCertificate
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricModels
 
 open Lean Meta in
 private def quoteModel (P : Model) : MetaM Expr := do
@@ -25,7 +25,7 @@ private def quoteModel (P : Model) : MetaM Expr := do
 open private Arithmetic Arithmetic.mk Arithmetic.scalar Arithmetic.num Arithmetic.add
   Arithmetic.sub Arithmetic.mul Arithmetic.exp Arithmetic.phi Arithmetic.root Arithmetic.defect
   Arithmetic.inverse modelArithmetic from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricCertificate
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricModels
 
 private inductive Expression where
   | value (v : Option Model)
