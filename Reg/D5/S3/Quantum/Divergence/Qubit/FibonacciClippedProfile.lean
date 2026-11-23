@@ -94,4 +94,69 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
+section Integral
+
+open scoped Matrix.Norms.L2Operator
+
+abbrev entropyArena : Arena where
+  signature := signature
+  Law R := ∀ (ψ : Fin 3 → Fin 2 → ℂ) (_ : ∀ i, star (ψ i) ⬝ᵥ ψ i = 1),
+    let A := contrast ![(88 / 141 : ℝ), 25 / 141, 28 / 141] ψ
+    let C := contrast ![(66 / 141 : ℝ), 15 / 141, 12 / 141] ψ
+    R.readout () () (A * (CFC.log A - CFC.log C)).trace.re
+      (((113 / 141 : ℝ) * Real.log (113 / 81) + (28 / 141) * Real.log (7 / 3)) -
+        (3 * (1 - overlap ψ 0 1) + 11 * overlap ψ 0 2) / 63360)
+
+private theorem entropyRejected : ¬ entropyArena.Law rejected := by
+  intro h
+  have hunit (i : Fin 3) : star (benchmark i) ⬝ᵥ benchmark i = 1 := by
+    fin_cases i <;> simp [benchmark, dotProduct, Fin.sum_univ_two]
+  exact h benchmark hunit
+
+def entropyFamily : Registration entropyArena (type_of% @traceLog_le_benchmark_sub_margin) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@traceLog_le_benchmark_sub_margin, rejected, entropyRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    entropyArena.Law actual rejected entropyRejected
+  dependence := dependence
+
+set_option linter.style.longLine false in
+def entropyAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@traceLog_le_benchmark_sub_margin) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile.traceLog_le_benchmark_sub_margin.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile.entropyFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨entropyArena⟩
+  objectArena := .source ⟨entropyArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source entropyArena ⟨entropyFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms entropyFamily
+#print axioms entropyAudit
+
+end Integral
+
 end Reg.D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
