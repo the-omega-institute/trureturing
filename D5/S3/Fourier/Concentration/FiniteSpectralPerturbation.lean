@@ -309,6 +309,8 @@ theorem exists_nearby_collision_bound {J : Type*} [Fintype J] [DecidableEq J]
     let D := ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
     ∃ g' : J → ℝ,
       (∀ j, |g' j - g j| ≤ ε) ∧
+      (∃ f : J → Fin (M + 2), ∀ j,
+        g' j = g j + ε * (2 * ((f j).val : ℝ) / ((M : ℝ) + 1) - 1)) ∧
       tailCollisionMass g' w p η ≤
         D + (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) *
           (W ^ (2 * p) - D) := by
@@ -328,7 +330,7 @@ theorem exists_nearby_collision_bound {J : Type*} [Fintype J] [DecidableEq J]
     simp only [sum_const, card_univ, nsmul_eq_mul] at hlt
     exact (not_lt_of_ge hbound) hlt
   obtain ⟨f, hf⟩ := hex
-  refine ⟨fun j => g j + offset ε (f j), fun j => ?_, hf⟩
+  refine ⟨fun j => g j + offset ε (f j), fun j => ?_, ⟨f, fun _ => rfl⟩, hf⟩
   rw [add_sub_cancel_left]
   exact offset_abs_le hε.le (f j)
 

@@ -34,6 +34,8 @@ abbrev frequencyArena : Arena where
     let D := ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
     ∃ g' : J → ℝ,
       (∀ j, |V.readout () ⟨J, g'⟩ j - g j| ≤ ε) ∧
+      (∃ f : J → Fin (M + 2), ∀ j,
+        g' j = g j + ε * (2 * ((f j).val : ℝ) / ((M : ℝ) + 1) - 1)) ∧
       tailCollisionMass g' w p η ≤
         D + (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) *
           (W ^ (2 * p) - D)
