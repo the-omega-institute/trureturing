@@ -112,6 +112,7 @@ import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Nat.Init
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
