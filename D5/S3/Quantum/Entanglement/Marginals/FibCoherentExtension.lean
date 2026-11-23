@@ -261,8 +261,8 @@ private theorem split_state (ρ : Matrix Word Word ℂ) (hρ : ρ.IsHermitian) :
   · exact hρ.apply _ _
   · rfl
 
-/-- Common extensions are determined by the consistency of the two reduced residuals after
-one chooses the unobserved coupling from the middle singleton to double occupation. -/
+/-- The two residual endpoint marginals determine whether a common extension exists
+for a choice of the unobserved coupling from the middle singleton to double occupation. -/
 theorem coherent_extendible_iff (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) :
     CoherentExtendible b L R u v w ↔
       0 ≤ b ∧ L.trace + (b : ℂ) = 1 ∧ R.trace = L.trace ∧

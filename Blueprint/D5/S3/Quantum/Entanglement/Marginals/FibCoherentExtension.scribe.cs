@@ -24,11 +24,12 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                     "A common positive semidefinite trace-one state exists exactly when b is "
                     + "nonnegative, the two endpoint block traces both equal 1 - b, and there "
-                    + "is a choice of the free entry for which the two residual blocks are "
-                    + "positive semidefinite. For positive b the residuals subtract the "
+                    + "is a choice of the free entry for which both residual blocks are "
+                    + "positive semidefinite and the entire coupling row vanishes if b = 0. "
+                    + "For positive b the residuals subtract the "
                     + "respective endpoint marginals of the outer product of the conjugated "
-                    + "middle row divided by b. At b = 0 the entire row coupling must vanish "
-                    + "and the endpoint blocks themselves are the residuals.")),
+                    + "middle row divided by b. At b = 0 the endpoint blocks themselves "
+                    + "are the residuals.")),
                     Paragraph(Text(
                     "The scalar Schur complement gives the necessity of the residual conditions. "
                     + "Their traces agree by trace preservation. If their trace is positive, "
