@@ -235,7 +235,8 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       (hxy : G.Adj x y) : dist (φ x + g x y) (φ y) ≤ bound := by
     cases i with
     | zero =>
-      subst x via hconn.dist_eq_zero_iff.mp hx
+      have he := hconn.dist_eq_zero_iff.mp hx
+      subst x
       rw [eval o 0 (by simp), atSucc hy, firstPred hy]
       simpa [atLevel, Q, anchorSum, a, mean, path, diagonal_zero hrev] using nonnegBound
     | succ i =>
@@ -383,7 +384,7 @@ theorem IsChordal.exists_clique_bounded_banach_gain_potential
       let e : c ↪ V := ⟨Subtype.val, Subtype.val_injective⟩
       simpa only [Finset.card_map] using hclique (s.map e) (by
         rw [Finset.coe_map]
-        exact (isClique_map_iff (f := e)).mp hs)
+        exact isClique_induce_iff.mp hs)
     exact CliqueBoundedBanach.connected_bound (hG.induce c.supp) c.connected_toSimpleGraph ⟨o, ho⟩
       k hk hc (fun i j => g i.val j.val) ε hε (fun i j => hrev i.val j.val)
       (fun i j l => htri i.val j.val l.val)
