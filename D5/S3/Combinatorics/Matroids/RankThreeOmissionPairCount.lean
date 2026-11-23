@@ -168,4 +168,188 @@ private theorem liftedTriple_existsUnique {d s : ℕ} (x y : LiftPoint d s)
       exact eq_neg_of_add_eq_zero_right (by simpa only [add_assoc] using hsum)
     rw [restore, hwz]
 
+private abbrev LiftTriangle (d s : ℕ) :=
+  {triangle : Finset (LiftPoint d s) // liftedTriple triangle}
+
+private noncomputable def liftedPoints {d s : ℕ} (t : LiftTriangle d s) (k : Fin 3) :
+    LiftPoint d s := ((Finset.equivFinOfCardEq t.prop.1).symm k).val
+
+private theorem liftedPoints_injective {d s : ℕ} (t : LiftTriangle d s) :
+    Function.Injective (liftedPoints t) := by
+  intro i j h
+  exact (Finset.equivFinOfCardEq t.prop.1).symm.injective (Subtype.ext h)
+
+private theorem liftedPoints_range {d s : ℕ} (t : LiftTriangle d s) (p : LiftPoint d s) :
+    (∃ k, liftedPoints t k = p) ↔ p ∈ t.val := by
+  constructor
+  · rintro ⟨k, rfl⟩
+    exact ((Finset.equivFinOfCardEq t.prop.1).symm k).prop
+  · intro hp
+    use (Finset.equivFinOfCardEq t.prop.1) ⟨p, hp⟩
+    simp [liftedPoints]
+
+private theorem liftedPoints_coverage {d s : ℕ} (x y : LiftPoint d s)
+    (hne : x ≠ y) :
+    (∃ t : LiftTriangle d s, covers (liftedPoints t) x y) ↔ x.1 ≠ y.1 := by
+  constructor
+  · rintro ⟨t, a, b, ha, hb⟩ h
+    exact hne (t.prop.2.1 ((liftedPoints_range t x).mp ⟨a, ha⟩)
+      ((liftedPoints_range t y).mp ⟨b, hb⟩) h)
+  · intro different
+    obtain ⟨S, ⟨admissible, hx, hy⟩, _⟩ := liftedTriple_existsUnique x y different
+    let t : LiftTriangle d s := ⟨S, admissible⟩
+    obtain ⟨a, ha⟩ := (liftedPoints_range t x).mpr hx
+    obtain ⟨b, hb⟩ := (liftedPoints_range t y).mpr hy
+    exact ⟨t, a, b, ha, hb⟩
+
+private theorem liftedPoints_pair_unique {d s : ℕ} (t u : LiftTriangle d s)
+    (x y : LiftPoint d s) (hne : x ≠ y)
+    (ht : covers (liftedPoints t) x y) (hu : covers (liftedPoints u) x y) : t = u := by
+  have distinct := (liftedPoints_coverage x y hne).mp ⟨t, ht⟩
+  obtain ⟨S, _, unique⟩ := liftedTriple_existsUnique x y distinct
+  have member_pair (a : LiftTriangle d s) (h : covers (liftedPoints a) x y) :
+      liftedTriple a.val ∧ x ∈ a.val ∧ y ∈ a.val := by
+    obtain ⟨i, j, hi, hj⟩ := h
+    exact ⟨a.prop, (liftedPoints_range a x).mp ⟨i, hi⟩, (liftedPoints_range a y).mp ⟨j, hj⟩⟩
+  exact Subtype.ext ((unique t.val (member_pair t ht)).trans (unique u.val (member_pair u hu)).symm)
+
+private theorem liftedPoints_sum {d s : ℕ} {A : Type*} [AddCommMonoid A]
+    (t : LiftTriangle d s) (f : LiftPoint d s → A) :
+    (∑ k, f (liftedPoints t k)) = ∑ p ∈ t.val, f p := by
+  classical
+  let e := (Finset.equivFinOfCardEq t.prop.1).symm
+  calc
+    _ = ∑ p : {p // p ∈ t.val}, f p.val :=
+      Equiv.sum_comp e (fun p => f p.val)
+    _ = _ := Finset.sum_attach _ _
+
+private theorem liftedPotential_constant {d s : ℕ} [NeZero s]
+    {u : LiftPoint d s → ZMod 3} (hu : IsOmissionPotential liftedPoints 0 u)
+    (p : LiftPoint d s) : u p = u (p.1, 0) := by
+  by_cases same : p = (p.1, 0)
+  · rw [same]
+  · apply hu.2.2.2.1
+    intro covered
+    exact ((liftedPoints_coverage p (p.1, 0) same).mp covered) rfl
+
+private theorem liftedCoordinate_isPotential {d s : ℕ} [NeZero s] (k : Fin d) :
+    IsOmissionPotential (liftedPoints (d := d) (s := s)) 0 (fun p => p.1 k) := by
+  classical
+  refine ⟨rfl, ?_, fun p => ZModModule.char_nsmul_eq_zero 3 (p.1 k), ?_, ?_⟩
+  · have h := Equiv.sum_comp (Equiv.neg (LiftPoint d s)) (fun p : LiftPoint d s => p.1 k)
+    simp only [Equiv.neg_apply, Prod.fst_neg, Pi.neg_apply, sum_neg_distrib] at h
+    let total : ZMod 3 := ∑ p : LiftPoint d s, p.1 k
+    change -total = total at h
+    change total = 0
+    have twice : total + total = 0 :=
+      (congrArg (· + total) h.symm).trans (neg_add_cancel total)
+    have thrice : (total + total) + total = 0 := by
+      simpa only [three_nsmul, add_assoc] using ZModModule.char_nsmul_eq_zero 3 total
+    simpa only [twice, zero_add] using thrice
+  · intro p q missing
+    by_contra h
+    have different : p.1 ≠ q.1 := fun eq => h (congrArg (fun a => a k) eq)
+    have distinct : p ≠ q := fun eq => different (congrArg Prod.fst eq)
+    exact missing ((liftedPoints_coverage p q distinct).mpr different)
+  · intro t
+    have line := liftedPoints_sum t id
+    have zero : (∑ j, liftedPoints t j) = 0 := line.trans t.prop.2.2
+    let coord : LiftPoint d s →+ ZMod 3 :=
+      { toFun := fun p => p.1 k, map_zero' := rfl, map_add' := fun _ _ => rfl }
+    have h := congrArg coord zero
+    rw [map_sum, map_zero] at h
+    simpa only [coord, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Fin.sum_univ_three] using h
+
+private theorem liftedPotential_finrank (d s : ℕ) [NeZero s] :
+    Module.finrank (ZMod 3) (potentialSpace (liftedPoints (d := d) (s := s)) 0) = d := by
+  classical
+  let P := potentialSpace (liftedPoints (d := d) (s := s)) 0
+  let e := Module.finrank (ZMod 3) P
+  let b := Module.finBasis (ZMod 3) P
+  have ev := point_potential_evaluations liftedPoints liftedPoints_injective
+    liftedPoints_pair_unique (0 : LiftPoint d s) b
+  let rowValue (x : Fin d → ZMod 3) (k : Fin e) := (b k).val (x, 0)
+  have onto : Function.Surjective rowValue := by
+    intro z
+    obtain ⟨p, hp⟩ := ev.1 z
+    refine ⟨p.1, funext fun k => ?_⟩
+    exact (liftedPotential_constant (b k).prop p).symm.trans (congrFun hp k)
+  have upper := Fintype.card_le_of_surjective rowValue onto
+  have upper' : 3 ^ e ≤ 3 ^ d := by
+    simpa only [Fintype.card_fun, Fintype.card_fin, ZMod.card] using upper
+  let coord (k : Fin d) : P := ⟨fun p => p.1 k, liftedCoordinate_isPotential k⟩
+  have independent : LinearIndependent (ZMod 3) coord := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro c hc k
+    have hk := congrArg (fun u : P => u.val (Pi.single k 1, 0)) hc
+    simpa [coord, Submodule.coe_sum, Finset.sum_apply, Pi.smul_apply, Pi.single_apply,
+      mul_ite, eq_comm] using hk
+  exact le_antisymm ((Nat.pow_le_pow_iff_right (by decide : 1 < 3)).mp upper')
+    (by simpa only [Fintype.card_fin] using independent.fintype_card_le_finrank)
+
+private theorem liftedTriangle_count (d s : ℕ) [NeZero s] :
+    6 * Nat.card (LiftTriangle d s) = 3 ^ d * (3 ^ d - 1) * s ^ 2 := by
+  classical
+  let slots := {e : Fin 3 × Fin 3 // e.1 ≠ e.2}
+  let mixed := {p : LiftPoint d s × LiftPoint d s // p.1.1 ≠ p.2.1}
+  have different (t : LiftTriangle d s) (a : slots) :
+      (liftedPoints t a.val.1).1 ≠ (liftedPoints t a.val.2).1 := by
+    intro eq
+    exact a.prop (liftedPoints_injective t (t.prop.2.1
+      ((liftedPoints_range t _).mp ⟨a.val.1, rfl⟩)
+      ((liftedPoints_range t _).mp ⟨a.val.2, rfl⟩) eq))
+  let toPair (w : LiftTriangle d s × slots) : mixed :=
+    ⟨(liftedPoints w.1 w.2.val.1, liftedPoints w.1 w.2.val.2), different w.1 w.2⟩
+  have inj : Function.Injective toPair := by
+    rintro ⟨t, a⟩ ⟨u, b⟩ eq
+    have first := congrArg (fun p : mixed => p.val.1) eq
+    have second := congrArg (fun p : mixed => p.val.2) eq
+    change liftedPoints t a.val.1 = liftedPoints u b.val.1 at first
+    change liftedPoints t a.val.2 = liftedPoints u b.val.2 at second
+    have distinct := (liftedPoints_injective t).ne a.prop
+    have tu := liftedPoints_pair_unique t u _ _ distinct ⟨a.val.1, a.val.2, rfl, rfl⟩
+      ⟨b.val.1, b.val.2, first.symm, second.symm⟩
+    subst u
+    exact congrArg (Prod.mk t) (Subtype.ext (Prod.ext
+      (liftedPoints_injective t first) (liftedPoints_injective t second)))
+  have onto : Function.Surjective toPair := by
+    rintro ⟨⟨x,y⟩, different⟩
+    have distinct : x ≠ y := fun eq => different (congrArg Prod.fst eq)
+    obtain ⟨t, i, j, hi, hj⟩ := (liftedPoints_coverage x y distinct).mpr different
+    have ij : i ≠ j := fun eq => distinct (hi.symm.trans (eq ▸ hj))
+    exact ⟨(t, ⟨(i,j), ij⟩), Subtype.ext (Prod.ext hi hj)⟩
+  have hcount := Nat.card_congr (Equiv.ofBijective toPair ⟨inj, onto⟩)
+  have six : Nat.card slots = 6 := by
+    rw [Nat.card_eq_fintype_card]
+    decide
+  rw [Nat.card_prod, six, Nat.mul_comm] at hcount
+  have row_size (x : Fin d → ZMod 3) :
+      Nat.card {p : LiftPoint d s // p.1 = x} = s := by
+    let e : {p : LiftPoint d s // p.1 = x} ≃ ZMod s :=
+      { toFun := fun p => p.val.2
+        invFun := fun y => ⟨(x, y), rfl⟩
+        left_inv := fun p => Subtype.ext (Prod.ext p.prop.symm rfl)
+        right_inv := fun _ => rfl }
+    exact (Nat.card_congr e).trans (Nat.card_zmod s)
+  have total : Fintype.card (LiftPoint d s) = 3 ^ d * s := by
+    simp [LiftPoint, Fintype.card_prod, ZMod.card]
+  change 6 * Nat.card (LiftTriangle d s) =
+    Nat.card {p : LiftPoint d s × LiftPoint d s // p.1.1 ≠ p.2.1} at hcount
+  rw [hcount, mixed_pair_card Prod.fst s row_size, total]
+  have diff : 3 ^ d * s - s = (3 ^ d - 1) * s := by rw [Nat.sub_mul, Nat.one_mul]
+  rw [diff]
+  ring
+
+/-- Lift every ternary affine line by cyclic coordinates with zero sum.
+The resulting family has the prescribed potential dimension and attains the pair count. -/
+theorem exists_lifted_omission_family (d s : ℕ) [NeZero s] :
+    ∃ (T : Type) (points : T → Fin 3 → (Fin d → ZMod 3) × ZMod s),
+      Finite T ∧ (∀ t, Function.Injective (points t)) ∧
+      (∀ t u x y, x ≠ y → covers (points t) x y → covers (points u) x y → t = u) ∧
+      Module.finrank (ZMod 3) (potentialSpace points 0) = d ∧
+      6 * Nat.card T = 3 ^ d * (3 ^ d - 1) * s ^ 2 := by
+  classical
+  exact ⟨LiftTriangle d s, liftedPoints, inferInstance, liftedPoints_injective,
+    liftedPoints_pair_unique, liftedPotential_finrank d s, liftedTriangle_count d s⟩
+
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPairCount
