@@ -17,8 +17,9 @@ internal sealed class RankThreeMinimumInternalAdditionsDocument : IScribeDocumen
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "When the internal residue test permits the extra dimension, the total number of rows in basis coordinates is multiplied by three and each resulting fiber has size r. "
-                    + "Apply the mixed-pair lower bound to the enlarged triple family. Subtracting the exact number of original mixed triples leaves at least r squared internal triples per original row."))),
+                    "When the internal residue test permits the extra dimension, every ordered pair in a row with distinct residues must occur in an internal triple. "
+                    + "Each row supplies six ordered pairs of distinct residue labels and r squared choices of points for each label pair. "
+                    + "Selecting a containing triple and two ordered slots gives an injection, and each triple supplies six slots. This gives at least r squared additions for each row on average."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("minimum-internal-additions-attainment"),
