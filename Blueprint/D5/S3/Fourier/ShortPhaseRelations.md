@@ -24,7 +24,7 @@ A finite H exists for every fixed finite frequency system. Choose one incompatib
 
 **Theorem 1.2 (Quadratic separation for consecutive frequencies).**
 
-$$P = \frac{1}{2} \land \left(\operatorname{Short}\left(S, g, H\right) \land \left(\frac{1}{2 \cdot H^{2}} \le D \land \left(D \le 1 - \operatorname{cos}\left(\frac{\pi}{2 \cdot H}\right) \land 1 - \operatorname{cos}\left(\frac{\pi}{2 \cdot H}\right) \le \frac{\pi^{2}}{8 \cdot H^{2}}\right)\right)\right)$$
+$$P = \frac{1}{2} \land \left(\operatorname{Short}\left(S, g, H\right) \land \left((T \ne \emptyset \Rightarrow \frac{1}{H^{2} + 1} \le D) \land ((\exists a \in \mathbb{R},\; [a,\infty) \subseteq T) \Rightarrow (D \le 1 - \operatorname{cos}\left(\frac{\pi}{2 \cdot H}\right) \land \left(1 - \operatorname{cos}\left(\frac{\pi}{2 \cdot H}\right) \le \frac{\pi^{2}}{8 \cdot H^{2}} \land (n = 0 \Rightarrow D = \frac{1}{2})\right)))\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/ShortPhaseRelations.consecutive_pair_separation` (`✓ std3`). ∎
 
@@ -32,7 +32,11 @@ $$P = \frac{1}{2} \land \left(\operatorname{Short}\left(S, g, H\right) \land \le
 
 *Commentary.*
 
-Take the frequencies (n,n + 1) with n a natural number and any equal positive weights. The time set T contains an upper ray. The relation (n + 1,−n) has coefficient sum one and length H = 2n + 1. The full pair is incompatible, and the singleton {n + 1} is compatible, so the deleted fraction is 1/2. For n > 0 both singletons are compatible. At n = 0 the singleton {0} has a length-one incompatible relation. Thus the short relation condition holds at H for all n. At time π/H the phases are π/2 ± π/(2H). Adding nonnegative integral multiples of 2π puts this time in any upper ray while preserving the score. The pointwise deficit there is 1 − cos(π/(2H)), at most π²/(8H²). The weighted lower bound gives 1/(2H²).
+Take the frequencies (n,n + 1) with n a natural number and any equal positive weights w. The relation (n + 1,−n) has coefficient sum one and length H = 2n + 1. The full pair is incompatible, and the singleton {n + 1} is compatible, so the deleted fraction is 1/2. For n > 0 both singletons are compatible. At n = 0 the singleton {0} has a length-one incompatible relation. Thus the short relation condition holds at H for all n.
+
+The weighted single-row character bound uses squared chord distance 2 from 1 to the quarter character i of this relation. Its weighted squared coefficient norm is ((n + 1)² + n²)/w, and the total weight is 2w. This gives D ≥ 1/(H² + 1) over all real times. Restricting the supremum to any nonempty T preserves the bound.
+
+At time π/H the phases are π/2 ± π/(2H). Adding nonnegative integral multiples of 2π puts this time in any upper ray while preserving the score. The pointwise deficit there is 1 − cos(π/(2H)), at most π²/(8H²). At n = 0 the first frequency contributes zero. A translate of π/2 by a multiple of 2π in the ray makes the second sine equal one, giving D ≤ 1/2. The lower bound at H = 1 gives D = 1/2.
 
 ## References
 

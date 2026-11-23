@@ -20,7 +20,8 @@ open scoped BigOperators
 namespace D5.S3.Fourier.ShortPhaseRelations
 
 open D5.S3.Fourier.WeightedIntegerRelations
-  (chord_prod_zpow quarter quarter_character quarter_chord_sq orbit_character)
+  (chord_prod_zpow quarter quarter_character quarter_chord_sq orbit_character
+    weighted_phase_deficit)
 open D5.S3.Fourier.WeightedPhaseRelationLattice (closure_real_phase_orbit)
 
 noncomputable section
@@ -362,6 +363,41 @@ private theorem pairDeletion (n : ℕ) (w : ℝ) (hw : 0 < w) :
     change w ≤ mass (Finset.univ \ u) (fun _ => w) at hmass
     linarith only [hmass]
 
+private theorem pairLower (n : ℕ) (w : ℝ) (hw : 0 < w) {T : Set ℝ}
+    (hT : T.Nonempty) :
+    1 / ((2 * (n : ℝ) + 1) ^ 2 + 1) ≤
+      weightedDeficit Finset.univ (pairFreq n) (fun _ => w) T := by
+  let C := ∑ j : Fin 2, |(pairRelation n j : ℝ)| ^ 2 / w
+  have hC : C = (((n : ℝ) + 1) ^ 2 + (n : ℝ) ^ 2) / w := by
+    simp [C, Fin.sum_univ_two, pairRelation, sq_abs, add_div]
+  have hCpos : 0 < C := by rw [hC]; positivity
+  have hmass : mass (Finset.univ : Finset (Fin 2)) (fun _ => w) = 2 * w := by
+    simp [mass, two_mul]
+  have hden : 2 * (2 * w) * C = 2 * ((2 * (n : ℝ) + 1) ^ 2 + 1) := by
+    rw [hC]
+    field_simp
+    ring
+  have hchord : ‖(1 : ℂ) - Complex.I ^ (∑ j : Fin 2, pairRelation n j)‖ ^ 2 = 2 := by
+    rw [pairRelation_sum, zpow_one, Complex.sq_norm, Complex.normSq_apply]
+    norm_num [Complex.sub_re, Complex.sub_im]
+  have hbound := weighted_phase_deficit Finset.univ ({()} : Finset Unit)
+    (pairFreq n) (fun _ => w) (fun _ => pairRelation n) (fun _ => 1)
+    (fun _ _ => hw) (fun _ _ => zero_le_one) (fun _ _ => pairRelation_dot n)
+  simp only [Finset.sum_singleton, one_mul] at hbound
+  have h := hbound hCpos
+  change _ / (2 * mass (Finset.univ : Finset (Fin 2)) (fun _ => w) * C) ≤
+    1 - sSup (range (score Finset.univ (pairFreq n) (fun _ => w))) /
+      mass (Finset.univ : Finset (Fin 2)) (fun _ => w) at h
+  rw [hchord, hmass, hden, ← div_div, div_self (by norm_num : (2 : ℝ) ≠ 0)] at h
+  have hsup : sSup (score Finset.univ (pairFreq n) (fun _ => w) '' T) ≤
+      sSup (range (score Finset.univ (pairFreq n) (fun _ => w))) := by
+    rw [← image_univ]
+    exact csSup_le_csSup (scoreBdd _ _ _ univ (fun _ _ => hw.le))
+      (image_nonempty.mpr hT) (image_mono (subset_univ T))
+  unfold weightedDeficit
+  rw [hmass]
+  exact h.trans (sub_le_sub_left (div_le_div_of_nonneg_right hsup (by positivity)) _)
+
 private theorem pairUpper (n : ℕ) (w : ℝ) (hw : 0 < w) {T : Set ℝ}
     (htail : ∃ a, Ici a ⊆ T) :
     weightedDeficit Finset.univ (pairFreq n) (fun _ => w) T ≤
@@ -409,34 +445,57 @@ private theorem pairUpper (n : ℕ) (w : ℝ) (hw : 0 < w) {T : Set ℝ}
     (show Real.cos x * (2 * w) ≤ _ by simpa only [mul_comm (Real.cos x)] using hsup)
   linarith only [h]
 
+private theorem pairZeroUpper (w : ℝ) (hw : 0 < w) {T : Set ℝ} {a : ℝ}
+    (htail : Ici a ⊆ T) :
+    weightedDeficit Finset.univ (pairFreq 0) (fun _ => w) T ≤ 1 / 2 := by
+  obtain ⟨m, hm⟩ := exists_nat_ge ((a - Real.pi / 2) / (2 * Real.pi))
+  let t := Real.pi / 2 + (m : ℝ) * (2 * Real.pi)
+  have ht : t ∈ T := htail (mem_Ici.mpr (by
+    have h := (div_le_iff₀ (by positivity : 0 < 2 * Real.pi)).mp hm
+    dsimp [t]
+    linarith only [h]))
+  have hscore : score Finset.univ (pairFreq 0) (fun _ => w) t = w := by
+    simp [score, Fin.sum_univ_two, pairFreq, t, Real.sin_add_nat_mul_two_pi]
+  have hmass : mass (Finset.univ : Finset (Fin 2)) (fun _ => w) = 2 * w := by
+    simp [mass, two_mul]
+  have hsup := le_csSup (scoreBdd Finset.univ (pairFreq 0) (fun _ => w) T (fun _ _ => hw.le))
+    (mem_image_of_mem (score Finset.univ (pairFreq 0) (fun _ => w)) ht)
+  rw [hscore] at hsup
+  unfold weightedDeficit
+  rw [hmass, sub_le_comm, le_div_iff₀ (by positivity : 0 < 2 * w)]
+  linarith only [hsup]
+
 /-- Consecutive natural frequencies exhibit quadratic separation. -/
 theorem consecutive_pair_separation (n : ℕ) (w : ℝ) (hw : 0 < w)
-    (T : Set ℝ) (htail : ∃ a, Ici a ⊆ T) :
+    (T : Set ℝ) :
     let H := 2 * (n : ℝ) + 1
     let g := pairFreq n
     let D := weightedDeficit Finset.univ g (fun _ => w) T
     deletionFraction Finset.univ g (fun _ => w) = 1 / 2 ∧
       HasShortIncompatibleRelations Finset.univ g H ∧
-      1 / (2 * H ^ 2) ≤ D ∧
-      D ≤ 1 - Real.cos (Real.pi / (2 * H)) ∧
-      1 - Real.cos (Real.pi / (2 * H)) ≤ (Real.pi ^ 2 / 8) / H ^ 2 := by
+      (T.Nonempty → 1 / (H ^ 2 + 1) ≤ D) ∧
+      ((∃ a, Ici a ⊆ T) →
+        D ≤ 1 - Real.cos (Real.pi / (2 * H)) ∧
+        1 - Real.cos (Real.pi / (2 * H)) ≤ (Real.pi ^ 2 / 8) / H ^ 2 ∧
+        (n = 0 → D = 1 / 2)) := by
   dsimp only
+  refine ⟨pairDeletion n w hw, pairShort n, pairLower n w hw, ?_⟩
+  intro htail
   have hH : 0 < 2 * (n : ℝ) + 1 := by positivity
-  have hs := pairShort n
-  have hp := pairDeletion n w hw
-  have hmass : 0 < ∑ _ : Fin 2, w := Finset.sum_pos (fun _ _ => hw) Finset.univ_nonempty
-  obtain ⟨a, ha⟩ := htail
-  have hT : T.Nonempty := ⟨a, ha (mem_Ici.mpr le_rfl)⟩
-  have hd := (weighted_deletion_bounds Finset.univ (pairFreq n) (fun _ => w)
-    T (fun _ _ => hw.le) hmass).1 _ hT hH hs
-  rw [hp] at hd
-  refine ⟨hp, hs, ?_, pairUpper n w hw ⟨a, ha⟩, ?_⟩
-  · simpa only [div_div] using hd
+  have hupper := pairUpper n w hw htail
+  refine ⟨hupper, ?_, ?_⟩
   · calc
       _ ≤ (Real.pi / (2 * (2 * (n : ℝ) + 1))) ^ 2 / 2 := by
         linarith only [Real.one_sub_sq_div_two_le_cos
           (x := Real.pi / (2 * (2 * (n : ℝ) + 1)))]
       _ = _ := by field_simp; ring
+  · intro hn
+    subst n
+    obtain ⟨a, ha⟩ := htail
+    have hT : T.Nonempty := ⟨a, ha (mem_Ici.mpr le_rfl)⟩
+    have hlower := pairLower 0 w hw hT
+    norm_num at hlower
+    exact le_antisymm (pairZeroUpper w hw ha) hlower
 
 end
 
