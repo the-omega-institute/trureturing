@@ -83,7 +83,7 @@ theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     Function.comp_apply, e.injective.eq_iff, e.injective.ne_iff]
   rfl
 
-theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
+private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
   simpa only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
     Nat.add_zero] using DefectTransfer.relabel_defects horizontal antidiagonal e [r]

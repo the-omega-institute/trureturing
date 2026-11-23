@@ -10,6 +10,11 @@ internal sealed class HardinA229635IntegerCertificateDocument : IScribeDocumentD
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The checked initial vector and sparse steps imply a zero scalar residual at every offset.", H("Signed residual certificate"),
         Blocks(
+            Describe.Lean(DescribeId.Create("forward-table"),
+                DeclarationHandle.Create(Prefix + "forward_table"), H("Forward iteration from a table"),
+                StatementSource.FromAuthor(Disp(Equal(Call("DefectTransfer.forward", V("M"), V("v"), Call("Fin.val", V("i"))), App(V("p"), V("i"))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Let M be a square integer matrix on Fin d, v an integer row vector, and i an index of Fin 31. Let p assign a row vector to each index of Fin 31. Assume next maps each row vector w to Matrix.vecMul(w,M), p at zero equals v, and p at the successor of each j in Fin 30 equals next applied to p at j cast to Fin 31. Then the displayed equality gives the forward iterate at i."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("residual-all-offsets"),
                 DeclarationHandle.Create(Prefix + "residual_all_offsets"), H("Vanishing scalar residual at every offset"),
                 StatementSource.FromAuthor(Disp(All("t", Call("Nat"), Equal(Call("residual", Call("T"), Call("initial"), Call("terminal"), V("t")), D(0))))),

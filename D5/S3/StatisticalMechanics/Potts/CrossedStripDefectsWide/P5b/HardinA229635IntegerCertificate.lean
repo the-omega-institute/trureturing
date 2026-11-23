@@ -46,7 +46,7 @@ private theorem step_checks (i : Fin 30) : power i.succ = step (power i.castSucc
     have hi : (⟨20 + k.val, by omega⟩ : Fin 30) = i := Fin.ext (by dsimp [k]; omega)
     simpa only [hi] using HardinA229635PowerCheck2.checked k
 
-private theorem forward_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
+theorem forward_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
     (v : Fin d → ℤ) (next : (Fin d → ℤ) → Fin d → ℤ) (p : Fin 31 → Fin d → ℤ)
     (hnext : ∀ w, next w = Matrix.vecMul w M) (hzero : p 0 = v)
     (hstep : ∀ i : Fin 30, p i.succ = next (p i.castSucc)) (i : Fin 31) :
