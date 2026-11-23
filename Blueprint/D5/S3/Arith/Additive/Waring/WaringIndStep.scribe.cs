@@ -15,7 +15,7 @@ internal sealed class WaringIndStepDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("For a positive power s, the cardinality of any phase fiber is bounded by the unit-interval integral of the displacement norm to the power 2s."))),
+                Blocks(Paragraph(Text("For every natural number s, including zero, the cardinality of any phase fiber is bounded by the unit-interval integral of the displacement norm to the power 2s."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("bpow"),

@@ -24,7 +24,7 @@ internal sealed class WaringIndStep2EstimatesDocument : IScribeDocumentDefinitio
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("Integration over the unit interval retains the four phase fibers whose integer phases sum to zero, weighted by the product of their cardinalities."))),
+                Blocks(Paragraph(Text("For every natural number s, including zero, the fourth power of the sum of displacement norms raised to 2s expands pointwise over four phase fibers. Integration over the unit interval retains exactly the terms whose integer phases sum to zero, weighted by the product of the four fiber cardinalities."))),
                 DescribeRole.Theorem)
         )));
 }

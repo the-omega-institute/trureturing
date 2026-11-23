@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringIndStep.BCount_le_integral`
 
 *Commentary.*
 
-For a positive power s, the cardinality of any phase fiber is bounded by the unit-interval integral of the displacement norm to the power 2s.
+For every natural number s, including zero, the cardinality of any phase fiber is bounded by the unit-interval integral of the displacement norm to the power 2s.
 
 **Theorem 1.2 (Grouping by phase).**
 

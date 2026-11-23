@@ -131,7 +131,7 @@ theorem continuous_TN (f : ℤ → ℤ) (N s : ℕ) (h1 h2 h3 h4 Q1 Q2 Q3 Q4 : �
 attribute [fun_prop] continuous_TN
 
 /-- **点态四重展开**：`↑((Σ_h ‖b_h‖^{2s})^4)` 展开成八重嵌套和。 -/
-theorem pointwise_expand (f : ℤ → ℤ) (N s : ℕ) (hs : 1 ≤ s) (S : Finset ℤ) (α : ℝ) :
+theorem pointwise_expand (f : ℤ → ℤ) (N s : ℕ) (S : Finset ℤ) (α : ℝ) :
     (((∑ h ∈ S, ‖T f N α h‖ ^ (2*s)) ^ 4 : ℝ) : ℂ)
       = ∑ h1 ∈ S, ∑ h2 ∈ S, ∑ h3 ∈ S, ∑ h4 ∈ S,
           ∑ Q1 ∈ QSet f N h1 s, ∑ Q2 ∈ QSet f N h2 s,
@@ -199,7 +199,7 @@ theorem integral_compute (f : ℤ → ℤ) (N s : ℕ) (S : Finset ℤ) :
 
 相位约定：`T f N α h = Σ_n e(α(f(n+h)−f(n)))`，频率 `Q` 不含 `h` 因子，
 故正交性条件是 `Q₁+Q₂+Q₃+Q₄ = 0`。 -/
-theorem integral_sum_pow_four (f : ℤ → ℤ) (N : ℕ) (s : ℕ) (hs : 1 ≤ s) :
+theorem integral_sum_pow_four (f : ℤ → ℤ) (N : ℕ) (s : ℕ) :
     (∫ α in (0:ℝ)..1,
       (∑ h ∈ (Finset.Icc (-(N:ℤ)) (N:ℤ)).erase 0, ‖T f N α h‖ ^ (2*s)) ^ 4)
       = ∑ h1 ∈ (Finset.Icc (-(N:ℤ)) (N:ℤ)).erase 0,
@@ -216,7 +216,7 @@ theorem integral_sum_pow_four (f : ℤ → ℤ) (N : ℕ) (s : ℕ) (hs : 1 ≤ 
   set S : Finset ℤ := (Finset.Icc (-(N:ℤ)) (N:ℤ)).erase 0 with hS
   apply Complex.ofReal_inj.mp
   rw [← intervalIntegral.integral_ofReal]
-  simp_rw [pointwise_expand f N s hs S]
+  simp_rw [pointwise_expand f N s S]
   rw [integral_compute f N s S]
   have hconv : ∀ (c : ℕ) (m : ℤ), ((c : ℂ) * (if m = 0 then 1 else 0))
       = (((if m = 0 then (c : ℝ) else 0) : ℝ) : ℂ) := by
@@ -373,14 +373,11 @@ theorem four_sum_eq {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) (M : ℕ) :
               * BCount (fun n => polyEval a d n) M h3 (4 * 8 ^ (d - 3)) Q3
               * BCount (fun n => polyEval a d n) M h4 (4 * 8 ^ (d - 3)) Q4 : ℝ)
           else 0) := by
-  have hs1 : 1 ≤ 4 * 8 ^ (d - 3) := by
-    have h : 0 < 4 * 8 ^ (d - 3) := by positivity
-    omega
   have h2s : 2 * (4 * 8 ^ (d - 3)) = 8 ^ (d - 2) := by
     have h1 : d - 2 = (d - 3) + 1 := by omega
     rw [h1, pow_succ]
     ring
-  have h := integral_sum_pow_four (fun n => polyEval a d n) M (4 * 8 ^ (d - 3)) hs1
+  have h := integral_sum_pow_four (fun n => polyEval a d n) M (4 * 8 ^ (d - 3))
   rw [h2s] at h
   exact h
 
@@ -518,8 +515,7 @@ theorem BCount_le_Rtot {d : ℕ} (hd : 3 ≤ d) {R₀ : ℕ → ℝ}
       (BCount (fun n => polyEval a d n) M h (4 * 8 ^ (d - 3)) Q : ℝ)
         ≤ max (R₀ (coeffConst c d)) 1 * (N : ℝ) ^ (8 ^ (d - 2) - (d - 1)) := by
   intro c N M hN hM1 hMN a had ha h hS Q
-  have h1 := BCount_le_integral (fun n => polyEval a d n) M h (4 * 8 ^ (d - 3))
-    (one_le_s d) Q
+  have h1 := BCount_le_integral (fun n => polyEval a d n) M h (4 * 8 ^ (d - 3)) Q
   rw [two_mul_s hd] at h1
   exact le_trans h1 (integral_norm_T_pow_le_R hd hMV c N M hN hM1 hMN a had ha h hS)
 

@@ -268,40 +268,13 @@ theorem T_neg {f : ℤ → ℤ} {N : ℕ} {h : ℤ} (hh : 0 ≤ h) (hN : h.toNat
     rw [T_eq_TS, map_sum]
     exact Finset.sum_congr rfl (fun n _ => by rw [← e_neg])
   rw [hconj, T_eq_TS, TS_neg_eq_Icc hh, TS_eq_range hh hN]
-  refine Finset.sum_bij (fun n _ => n - h.toNat) ?_ ?_ ?_ ?_
-  · -- 像落在 `range (N+1−h)`
-    intro n hn
-    rw [Finset.mem_Icc] at hn
-    rw [Finset.mem_range]
-    omega
-  · -- 单射
-    intro n₁ hn₁ n₂ hn₂ heq
-    rw [Finset.mem_Icc] at hn₁ hn₂
-    omega
-  · -- 满射
-    intro b hb
-    rw [Finset.mem_range] at hb
-    refine ⟨b + h.toNat, ?_, ?_⟩
-    · rw [Finset.mem_Icc]
-      omega
-    · show b + h.toNat - h.toNat = b
-      omega
-  · -- 求和项
-    intro n hn
-    rw [Finset.mem_Icc] at hn
-    have hn' : h.toNat ≤ n := hn.1
-    have hcast : ((h.toNat : ℕ) : ℤ) = h := Int.toNat_of_nonneg hh
-    have hsub : ((n - h.toNat : ℕ) : ℤ) = (n : ℤ) - h := by
-      have hle : ((h.toNat : ℕ) : ℤ) ≤ (n : ℤ) := by exact_mod_cast hn'
-      rw [Nat.cast_sub hn', hcast]
-    unfold dshift
-    rw [hsub]
-    have e1 : ((n : ℕ) : ℤ) - h + h = ((n : ℕ) : ℤ) := by ring
-    have e2 : ((n : ℕ) : ℤ) + -h = ((n : ℕ) : ℤ) - h := by ring
-    rw [e1, e2]
-    congr 1
-    push_cast
-    ring
+  rw [← Finset.Ico_succ_right_eq_Icc, Finset.sum_Ico_eq_sum_range]
+  refine Finset.sum_congr rfl (fun n _ => ?_)
+  simp only [dshift, Nat.cast_add, Int.toNat_of_nonneg hh]
+  rw [show h + (n : ℤ) + -h = n by omega, add_comm h (n : ℤ)]
+  congr 1
+  push_cast
+  ring
 
 /-- `‖b_{−h}‖ = ‖b_h‖`（`h ≥ 0`）。 -/
 theorem norm_T_neg {f : ℤ → ℤ} {N : ℕ} {h : ℤ} (hh : 0 ≤ h) (hN : h.toNat ≤ N) (α : ℝ) :
@@ -599,7 +572,7 @@ theorem BCount_eq_zero_of_not_mem {f : ℤ → ℤ} {N : ℕ} {h : ℤ} {s : ℕ
 
 set_option maxHeartbeats 2000000 in
 /-- **`BCount` 被 `L¹` 范数控制**：`BCount f N h s Q ≤ ∫₀¹‖b_h‖^{2s} dα`。 -/
-theorem BCount_le_integral (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (s : ℕ) (hs : 1 ≤ s) (Q : ℤ) :
+theorem BCount_le_integral (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (s : ℕ) (Q : ℤ) :
     (BCount f N h s Q : ℝ) ≤ ∫ α in (0 : ℝ)..1, ‖T f N α h‖ ^ (2 * s) := by
   classical
   rcases Classical.em (Q ∈ QSet f N h s) with hQmem | hQnot
