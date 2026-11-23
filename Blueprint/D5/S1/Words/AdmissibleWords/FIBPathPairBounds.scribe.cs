@@ -14,8 +14,10 @@ internal sealed class FIBPathPairBoundsDocument : IScribeDocumentDefinition
                 "Starting at the chosen site, add the positive part of each successive decrease in the "
                 + "transformed profile up to the target site.", DescribeRole.Definition),
             Entry("hard-core-bound", "sharp_hard_core_difference", "The sharp event difference",
-                "Prescribe occupancies between zero and one with adjacent sums at most one. Complement "
-                + "the odd-indexed events and their marginals. For any target at or after a fixed source, "
+                "Prescribe occupancies between zero and one with adjacent sums at most one. Consider "
+                + "measurable events in the half-open unit interval with the prescribed occupancies "
+                + "and pointwise disjoint adjacent events. Complement the odd-indexed events within "
+                + "that interval and complement their marginals. For any target at or after a fixed source, "
                 + "the mass in the transformed source event outside the transformed target event is at "
                 + "most the least of the source mass, the complement of the target mass, and the downward "
                 + "variation between them. One family of measurable occupation events attains the bound "
@@ -29,7 +31,9 @@ internal sealed class FIBPathPairBoundsDocument : IScribeDocumentDefinition
             Entry("finite-word", "word_attainment", "One law on admissible finite words",
                 "For any finite profile satisfying the same bounds, the indicator of each occupied "
                 + "event yields a word with no adjacent ones. The site measures are the prescribed "
-                + "occupancies. The oriented differences after alternating complementation reach their "
+                + "occupancies, and each occupancy event is measurable and contained in the "
+                + "half-open unit interval. The oriented differences within the interval after "
+                + "alternating complementation reach their "
                 + "bounds simultaneously from the chosen source to all later targets.",
                 DescribeRole.Theorem))));
 
