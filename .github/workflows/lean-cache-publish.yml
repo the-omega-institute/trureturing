@@ -143,6 +143,14 @@ jobs:
             export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
           fi
           bash tools/scripts/workflow/ci-entry.sh
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - name: Produce the Actions cache
         if: github.event_name == 'push' && github.ref_protected && !github.event.deleted
         uses: ./.github/actions/lean-cache-produce
@@ -152,10 +160,6 @@ jobs:
           shard-history-anchor: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
       # A manual pin can predate the push-only writer. Run only restore/build
       # operations against that checkout, including on retries and failures.
-      - if: github.event_name == 'workflow_dispatch'
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
       - if: github.event_name == 'workflow_dispatch'
         name: Build the pinned Lean producer with locked dependencies
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
