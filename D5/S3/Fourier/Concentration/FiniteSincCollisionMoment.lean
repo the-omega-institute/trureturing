@@ -108,8 +108,34 @@ private theorem sinc_sq_le_binKernel (x y : ℝ) :
       _ = _ := by rw [div_pow, one_pow]
 
 /-- The mass of pairs of sampled frequencies whose difference has magnitude at most `r`. -/
-private def nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) : ℝ :=
+def nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) : ℝ :=
   ∑ i ∈ s, ∑ j ∈ s, if |x i - x j| ≤ r then c i * c j else 0
+
+/-- The sum of squared masses of bins of diameter at most `r` counts only near-collisions. -/
+theorem sum_bin_mass_sq_le_nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ)
+    (b : I → ℤ) (r : ℝ) (hc : ∀ i ∈ s, 0 ≤ c i)
+    (hsame : ∀ i ∈ s, ∀ j ∈ s, b i = b j → |x i - x j| ≤ r) :
+    (∑ k ∈ s.image b, (∑ i ∈ s with b i = k, c i) ^ 2) ≤ nearCollisionMass s x c r := by
+  let mass (k : ℤ) := ∑ i ∈ s with b i = k, c i
+  have hregroup := regroup_binEnergy s b c (fun k l => if k = l then 1 else 0)
+  simp only [mul_ite, mul_one, mul_zero] at hregroup
+  have heq : (∑ i ∈ s, ∑ j ∈ s, if b i = b j then c i * c j else 0) =
+      ∑ k ∈ s.image b, mass k ^ 2 := by
+    simp only [pow_two]
+    change _ = ∑ k ∈ s.image b, mass k * mass k
+    rw [hregroup]
+    apply sum_congr rfl
+    intro k hk
+    simp [hk, mass]
+  change (∑ k ∈ s.image b, mass k ^ 2) ≤ _
+  rw [← heq]
+  refine sum_le_sum fun i hi => sum_le_sum fun j hj => ?_
+  by_cases hij : b i = b j
+  · simp [hij, hsame i hi j hj hij]
+  · simp only [hij, ite_false]
+    split_ifs
+    · exact mul_nonneg (hc i hi) (hc j hj)
+    · exact le_rfl
 
 private theorem sin_one_sq_le_sinc_sq {x : ℝ} (hx : |x| ≤ 1) :
     Real.sin 1 ^ 2 ≤ Real.sinc x ^ 2 := by
@@ -156,35 +182,18 @@ private theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ
     let bins := s.image b
     let mass (k : ℤ) := ∑ i ∈ s with b i = k, c i
     have hdiag : (∑ k ∈ bins, mass k ^ 2) ≤ nearCollisionMass s x c r := by
-      have hregroup := regroup_binEnergy s b c (fun k l => if k = l then 1 else 0)
-      simp only [mul_ite, mul_one, mul_zero] at hregroup
-      have heq : (∑ i ∈ s, ∑ j ∈ s, if b i = b j then c i * c j else 0) =
-          ∑ k ∈ bins, mass k ^ 2 := by
-        simp only [pow_two]
-        change _ = ∑ k ∈ s.image b, mass k * mass k
-        rw [hregroup]
-        apply sum_congr rfl
-        intro k hk
-        simp [hk, mass]
-      rw [← heq]
-      refine sum_le_sum fun i hi => sum_le_sum fun j hj => ?_
-      by_cases hij : b i = b j
-      · have hx := mem_frequencyBin (x i / r)
-        have hy := mem_frequencyBin (x j / r)
-        change (x i / r) ∈ Set.Ioc (b i : ℝ) ((b i : ℝ) + 1) at hx
-        change (x j / r) ∈ Set.Ioc (b j : ℝ) ((b j : ℝ) + 1) at hy
-        rw [← hij] at hy
-        have hdist : |x i - x j| ≤ r := by
-          have hs : |(x i - x j) / r| ≤ 1 := by
-            rw [sub_div]
-            exact abs_le.mpr ⟨by linarith [hx.1, hy.2], by linarith [hx.2, hy.1]⟩
-          rw [abs_div, abs_of_pos hr, div_le_iff₀ hr, one_mul] at hs
-          exact hs
-        simp [hij, hdist]
-      · simp only [hij, ite_false]
-        split_ifs
-        · exact mul_nonneg (hc i hi) (hc j hj)
-        · exact le_rfl
+      apply sum_bin_mass_sq_le_nearCollisionMass s x c b r hc
+      intro i _ j _ hij
+      have hx := mem_frequencyBin (x i / r)
+      have hy := mem_frequencyBin (x j / r)
+      change (x i / r) ∈ Set.Ioc (b i : ℝ) ((b i : ℝ) + 1) at hx
+      change (x j / r) ∈ Set.Ioc (b j : ℝ) ((b j : ℝ) + 1) at hy
+      rw [← hij] at hy
+      have hs : |(x i - x j) / r| ≤ 1 := by
+        rw [sub_div]
+        exact abs_le.mpr ⟨by linarith [hx.1, hy.2], by linarith [hx.2, hy.1]⟩
+      rw [abs_div, abs_of_pos hr, div_le_iff₀ hr, one_mul] at hs
+      exact hs
     calc
       _ ≤ ∑ i ∈ s, ∑ j ∈ s, c i * c j * binKernel (b i - b j) := by
         refine sum_le_sum fun i hi => sum_le_sum fun j hj => ?_
@@ -413,7 +422,7 @@ def tailCollisionMass {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) (r : ℝ) : ℝ :=
   nearCollisionMass (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) r
 
-private theorem monomialWeight_nonneg {J : Type*} [Fintype J] (w : J → ℝ)
+theorem monomialWeight_nonneg {J : Type*} [Fintype J] (w : J → ℝ)
     (hw : ∀ j, 0 ≤ w j) (m : J → ℕ) : 0 ≤ monomialWeight w m := by
   exact mul_nonneg (Nat.cast_nonneg _) (prod_nonneg (fun j _ => pow_nonneg (hw j) _))
 
