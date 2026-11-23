@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
-between_six: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.cost_formula
+between_six: proof_shape=bind-only; consumers=HardinA203981Strip.scale_count, HardinA203981StripSymmetry.cost_formula
 parityRows: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.recolor_match, boundary, representatives
 sorted_pair_mem: proof_shape=bind-only; consumers=pairClass
 classPair: proof_shape=bind-only; consumers=pairClass, sorted_pair_mem, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
