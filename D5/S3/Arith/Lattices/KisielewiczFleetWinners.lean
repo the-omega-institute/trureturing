@@ -1,10 +1,17 @@
 /- GID: D5/S3/Arith/Lattices/KisielewiczFleetWinners
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Arith/Lattices/KisielewiczFleetWinners
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Two fixed nonperiodic cube fleets have a non-eventually-periodic winner sequence. -/
+
+/-
+admission_basis: open-problem-resolution (#33707; Proved)
+proof_shape: content (exists_nonperiodic_fleets)
+escape_witness: prefix_at_endpoint, fleet_stabilizer, witness_no_period
+Direct frozen dependencies: none. The proof uses pinned Mathlib.
+-/
 
 import Mathlib.Data.Int.CardIntervalMod
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -667,7 +674,5 @@ theorem exists_nonperiodic_fleets :
   refine ⟨side k, side (k + 1), hB, hB.trans (side_step k), ?_, ?_⟩
   · rw [witness_outcome, ite_eq_left heven]
   · rw [witness_outcome, ite_eq_right hodd]
-
-#print axioms exists_nonperiodic_fleets
 
 end KisielewiczFleetWinners
