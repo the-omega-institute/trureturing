@@ -19,6 +19,5 @@ Fix a rank of at least three below the ground size, and use cores on the same fi
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SunflowerCircuitResidueProduct.sunflower_residue_product`
-- Dependency: [D5/S3/Combinatorics/Matroids/CircuitDifferenceBasis](CircuitDifferenceBasis.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates](SparsePavingCircuitCoordinates.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/PrivatePairCircuitResidueProduct](PrivatePairCircuitResidueProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SunflowerPivotProduct](SunflowerPivotProduct.md)

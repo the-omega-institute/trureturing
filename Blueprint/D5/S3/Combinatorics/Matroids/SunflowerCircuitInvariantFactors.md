@@ -19,7 +19,5 @@ Let the full ground set have K elements and let 3 <= r < K. Fix a family of t se
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SunflowerCircuitInvariantFactors.sunflower_lifting_obstruction_invariant_factors`
-- Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitInvariantFactors](PuncturedCircuitInvariantFactors.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/PrivatePairCircuitInvariantFactors](PrivatePairCircuitInvariantFactors.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SunflowerCircuitResidueProduct](SunflowerCircuitResidueProduct.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/UniformCircuitInvariantFactors](UniformCircuitInvariantFactors.md)
-- Dependency: [D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation](../../FiniteGroups/Modules/FiniteModuleProductCancellation.md)
