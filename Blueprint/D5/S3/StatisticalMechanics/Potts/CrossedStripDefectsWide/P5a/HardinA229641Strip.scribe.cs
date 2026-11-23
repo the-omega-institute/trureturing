@@ -10,7 +10,7 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Canonical two-defect colourings of five-row HDA arrays", H("Canonical two-defect colourings of five-row HDA arrays"), Blocks(
-            Paragraph(Text("Colours are introduced in row-major order. At the widths used in the recurrence, each canonical array has six distinct label permutations.")),
+            Paragraph(Text("Colours are introduced in row-major order. At the widths used in the recurrence, the exact defect count excludes constant arrays. Each counted array has six distinct labelled representatives.")),
             Node("a",Count(),false,"The five-row entry of the A229637 table counts arrays with exactly two monochromatic horizontal, diagonal or antidiagonal bonds and canonical row-major colour introduction."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("twoDefect", TwoDefect(), false, "This entry is one exactly when a cut contains two monochromatic bonds."),
