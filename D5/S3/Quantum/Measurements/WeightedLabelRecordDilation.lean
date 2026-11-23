@@ -593,7 +593,9 @@ private theorem uniform_sortedWeight [Nonempty B] (c : B → J)
   have hx (k : Fin (d * e)) : sortedWeight c (uniformPrior B) hN j k =
       if P (s k) then (Fintype.card B : ℝ)⁻¹ else 0 := by
     change Sum.elim (labelWeight c (uniformPrior B) j) (fun _ => 0) (s k) = _
-    cases s k <;> simp [P, labelWeight, uniformPrior] <;> split_ifs <;> rfl
+    cases s k with
+    | inl b => by_cases hb : c b = j <;> simp [P, labelWeight, uniformPrior, hb]
+    | inr z => simp [P]
   have hcount : (univ.filter fun k => P (s k)).card = classSize c j := by
     calc
       _ = (univ.filter P).card := by
@@ -625,7 +627,8 @@ private theorem uniform_sortedWeight [Nonempty B] (c : B → J)
   rw [hx]
   by_cases h : i.val < classSize c j
   · simp [h, hi.mp h]
-  · simp [h, fun hp => h (hi.mpr hp)]
+  · have hk : ¬ P (s i) := fun hp => h (hi.mpr hp)
+    simp only [ite_eq_right h, ite_eq_right hk]
 
 private def blockSize (c : B → J) (e : ℕ) (j : J) (i : ℕ) : ℕ :=
   if i < classSize c j / e then e
@@ -669,8 +672,11 @@ private theorem uniform_blockMass [Nonempty B] (c : B → J)
         (Fintype.card B : ℝ)⁻¹ else 0) =
       if (t : ℕ) < blockSize c e j i then (Fintype.card B : ℝ)⁻¹ else 0 := by
     by_cases ht : (t : ℕ) < blockSize c e j i
-    · simp [ht, (hcount t).mpr ht]
-    · simp [ht, fun hp => ht ((hcount t).mp hp)]
+    · have hp : (finProdFinEquiv (i, t)).val < classSize c j := (hcount t).mpr ht
+      simp only [ite_eq_left ht, ite_eq_left hp]
+    · have hp : ¬ (finProdFinEquiv (i, t)).val < classSize c j :=
+        fun hp => ht ((hcount t).mp hp)
+      simp only [ite_eq_right ht, ite_eq_right hp]
   simp_rw [hterms]
   rw [← Finset.sum_filter]
   simp [Fin.card_filter_val_lt, min_eq_right hblock, div_eq_mul_inv]
@@ -864,8 +870,10 @@ theorem uniform_optimalSuccess_eq [Nonempty B] (c : B → J) (he : 0 < e)
   let R := (T \ F).filter fun a => a.2.val = classSize c a.1 / e
   have hi : Set.InjOn Prod.fst (R : Set (J × Fin d)) := remainder_inj c fun a ha => (mem_filter.mp ha).2
   have hR : (R.image Prod.fst).card ≤ d - fullBlockCount c e := by
-    rw [card_image_of_injOn hi, ← hT, ← hF, ← card_sdiff_of_subset hFT]
-    exact card_filter_le _ _
+    rw [card_image_of_injOn hi]
+    calc
+      R.card ≤ (T \ F).card := card_filter_le _ _
+      _ = d - fullBlockCount c e := by rw [card_sdiff_of_subset hFT, hT, hF]
   refine le_antisymm ?_ (uniform_full_add_remainders_le c he hN _ (by
     rw [card_topSet]; exact min_le_left _ _))
   change (Fintype.card B : ℝ) * (∑ a ∈ T, w a) ≤ _
@@ -882,7 +890,7 @@ theorem uniform_optimalSuccess_eq [Nonempty B] (c : B → J) (he : 0 < e)
       simpa [F, fullBlocks] using (mem_sdiff.mp ha).2
     simp [r, blockSize_eq_remainder c _ _ hf, Nat.cast_ite]
   rw [hfst, hsnd, add_comm]
-  exact add_le_add_left (sum_le_topSet r (fun _ => by positivity) _ _ hR) _
+  exact add_le_add (le_refl _) (sum_le_topSet r (fun _ => by positivity) _ _ hR)
 
 
 
@@ -949,7 +957,8 @@ theorem uniform_record_memory_bounds [Nonempty B] (c : B → J) (he : 0 < e)
     (Reaches → max (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M - fullLabelCount c e) ≤ d) ∧
     (max (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M) ≤ d → Reaches) := by
   have hK := fullBlockCount_le c he hN
-  have hC := (ceilDiv_le_iff_le_mul he).mpr (by simpa [Nat.mul_comm] using hN)
+  have hC : Fintype.card B ⌈/⌉ e ≤ d :=
+    (ceilDiv_le_iff_le_mul he).mpr (by simpa only [Nat.mul_comm e d] using hN)
   obtain ⟨S, hCard, hMass, hMin⟩ := hM
   letI : Nonempty J := ⟨c (Classical.choice inferInstance)⟩
   have op := weightedLabelRecord_optimum c (uniformPrior B)

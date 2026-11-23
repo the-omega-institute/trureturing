@@ -1,9 +1,9 @@
 ---
-bibkey: nomurahan2013secondorder
+bibkey: nomurahan2012secondorder
 authors: Ryo Nomura and Te Sun Han
-year: 2013
+year: 2012
 title: "Second-Order Resolvability, Intrinsic Randomness, and Fixed-Length Source Coding for Mixed Sources: Information Spectrum Approach"
-doi: 10.1109/TIT.2013.2281392
+doi: 10.1109/TIT.2012.2215836
 url: https://arxiv.org/abs/1106.1879v4
 claim: Section VII relates fixed-length source coding to source information thresholds through the one-shot bounds of Lemmas 7.1 and 7.2.
 strata_touched:

@@ -71,7 +71,7 @@ internal sealed class WeightedLabelRecordDilationDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(UniformFormula()),
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/Observer/elroneldar2007optimalencoding"),
-                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2013secondorder")),
+                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2012secondorder")),
                 Blocks(
                     Paragraph(Text(
                         "Let B be a nonempty finite input basis and J a finite set of labels, "
@@ -99,7 +99,7 @@ internal sealed class WeightedLabelRecordDilationDocument : IScribeDocumentDefin
                 H("Necessary and sufficient memory bounds from a minimum class cover"),
                 StatementSource.FromAuthor(MemoryFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2013secondorder")),
+                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2012secondorder")),
                 Blocks(
                     Paragraph(Text(
                         "Use the same finite model and feasibility assumptions. Class mass is "
