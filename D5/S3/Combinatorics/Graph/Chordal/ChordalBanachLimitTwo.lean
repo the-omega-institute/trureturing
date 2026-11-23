@@ -1,9 +1,9 @@
-/- GID: D5 / S3 / Combinatorics / Graph / Chordal / ChordalBanachLimitTwo
+/- GID: D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo
    generality: G
-   mirror - B: D5 / B / S3 / Combinatorics / Graph / Chordal / ChordalBanachLimitTwo
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind = certified - instance; basis = refutes = gid:D5 / S3 / Combinatorics / Graph / Chordal / ChordalBanachLimitTwo.subtwo_banach_chordal_claim; result = D5 / S3 / Combinatorics / Graph / Chordal / ChordalBanachLimitTwo.not_subtwo_banach_chordal; claim = D5 / S3 / Combinatorics / Graph / Chordal / ChordalBanachLimitTwo.subtwo_banach_chordal_claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo.subtwo_banach_chordal_claim; result=D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo.not_subtwo_banach_chordal; claim=D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo.subtwo_banach_chordal_claim
    digest: Averaging block potentials and summing periodic residuals give the exact Banach limit for path powers. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
