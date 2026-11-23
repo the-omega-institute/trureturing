@@ -14,14 +14,14 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData
 
-private theorem nonprincipal_example : ∃ χ : DirichletCharacter ℂ 3, χ ≠ 1 := by
+theorem nonprincipal_example : ∃ χ : DirichletCharacter ℂ 3, χ ≠ 1 := by
   obtain ⟨χ, hχ⟩ := DirichletCharacter.exists_apply_ne_one_of_hasEnoughRootsOfUnity ℂ
     (show (-1 : ZMod 3) ≠ 1 by decide)
   refine ⟨χ, ?_⟩
   rintro rfl
   exact hχ (MulChar.one_apply_coe (-1 : (ZMod 3)ˣ))
 
-private theorem primitive_example : ∃ q : ℕ, q ≠ 0 ∧
+theorem primitive_example : ∃ q : ℕ, q ≠ 0 ∧
     ∃ χ : DirichletCharacter ℂ q, χ.IsPrimitive ∧ χ ≠ 1 := by
   obtain ⟨χ, hχ⟩ := nonprincipal_example
   letI : NeZero χ.conductor := ⟨χ.conductor_ne_zero⟩

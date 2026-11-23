@@ -2,7 +2,6 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.CharacterSums.DirichletCompletion
 import Reg.Support.SingleDependentReadout
 import Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData
-import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -13,8 +12,8 @@ open scoped Topology
 open _root_.D5.S3.CharacterSums.DirichletCompletion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private nonprincipal_example primitive_example from
-  Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData
+open Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData
+  (nonprincipal_example primitive_example)
 namespace Reg.D5.S3.CharacterSums.DirichletCompletion.Bounds
 
 namespace RightRadius

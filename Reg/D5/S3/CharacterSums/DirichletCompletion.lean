@@ -18,24 +18,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.CharacterSums.DirichletCompletion
 
-private theorem nonprincipal_example : ∃ χ : DirichletCharacter ℂ 3, χ ≠ 1 := by
-  obtain ⟨χ, hχ⟩ := DirichletCharacter.exists_apply_ne_one_of_hasEnoughRootsOfUnity ℂ
-    (show (-1 : ZMod 3) ≠ 1 by decide)
-  refine ⟨χ, ?_⟩
-  rintro rfl
-  exact hχ (MulChar.one_apply_coe (-1 : (ZMod 3)ˣ))
-
-private theorem primitive_example : ∃ q : ℕ, q ≠ 0 ∧
-    ∃ χ : DirichletCharacter ℂ q, χ.IsPrimitive ∧ χ ≠ 1 := by
-  obtain ⟨χ, hχ⟩ := nonprincipal_example
-  letI : NeZero χ.conductor := ⟨χ.conductor_ne_zero⟩
-  refine ⟨χ.conductor, χ.conductor_ne_zero, χ.primitiveCharacter,
-    χ.primitiveCharacter_isPrimitive, ?_⟩
-  intro he
-  have hc := χ.primitiveCharacter_isPrimitive
-  change χ.primitiveCharacter.conductor = χ.conductor at hc
-  rw [he, DirichletCharacter.conductor_one] at hc
-  exact hχ ((χ.eq_one_iff_conductor_eq_one).mpr hc.symm)
+open ZeroData (nonprincipal_example primitive_example)
 
 namespace Entire
 abbrev signature : Signature :=
