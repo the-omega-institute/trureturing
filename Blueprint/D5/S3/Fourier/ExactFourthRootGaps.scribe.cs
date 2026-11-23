@@ -11,15 +11,16 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
         H("Exact Fourth-Root Gaps"),
         Blocks(
             Paragraph(Text(
-                "A finite index set S carries real frequencies g and weights w. An incompatible "
+                "Let S be a finite subset of an index type J with real frequencies g and weights w. "
+                + "An incompatible "
                 + "relation is an integer vector k whose frequency sum is zero and whose coefficient "
                 + "sum is indivisible by four. Its support consists of the coordinates in S with "
                 + "nonzero coefficients, and its length is the sum of their absolute values. "
                 + "The threshold τ is the squared chord gap from 1 to i raised to the coefficient "
                 + "sum, divided by twice the squared length. Write R(k) for incompatibility, "
-                + "V(k) for support, M(v) for the maximum on support v and E(t,j) for the sine "
-                + "loss at index j. Write C(x) for the candidate omitted weight fractions and "
-                + "Q(x) for their minimum. A(t) is the weighted sine average and D(T) is "
+                + "V(k) for support, len(k) for length and M(v) for the support maximum. "
+                + "The sine loss E(t,j) is 1 − sin(g(j)t). Write C(x) for the candidate omitted "
+                + "weight fractions and Q(x) for their minimum. A(t) is the weighted sine average and D(T) is "
                 + "one minus its supremum over T. The integral bounds and length comparisons "
                 + "assume nonnegative weights. The support, minimum and partition assertions "
                 + "allow arbitrary real weights.")),
@@ -38,17 +39,19 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
                 + "support maximum. The squared gaps of incompatible residues are 2 and 4. "
                 + "An empty support family contributes the default zero."),
             Result("least_hitting_weight", "Minimum omitted weight at each threshold",
-                Call("IsLeast", Call("C", F.Id("x")), Q(F.Id("x"))),
+                All("x", Reals, Call("IsLeast", Call("C", F.Id("x")), Q(F.Id("x")))),
                 "At threshold x, the omitted set meets every incompatible relation support whose "
-                + "threshold is at least x. The candidate weight fractions range over a finite "
-                + "nonempty family because retaining the empty set always works."),
+                + "threshold is at least x. Each candidate fraction is the weight of the omitted "
+                + "set divided by the total weight of S. Retaining the empty set gives a candidate."),
             Result("breakpoint_partition", "Finite partition into intervals of constant cost",
                 Partition(),
                 "Add 0 and 2 to the maxima of all exact supports in the powerset of S. For a "
                 + "positive threshold, a retained subset is admissible precisely when every "
                 + "support it contains has maximum strictly below the threshold. On each "
                 + "interval from one cut to the next, exclude the left endpoint and include "
-                + "the right endpoint. The active support family is constant throughout that interval."),
+                + "the right endpoint. Write B for the nonzero cuts, prev(b) for the cut preceding b "
+                + "and I(b) for the cell ending at b. The active support family is constant throughout "
+                + "each cell."),
             Result("finite_step_integral", "Exact finite sum for the integral",
                 FiniteIntegral(),
                 "Sum the width of each interval times the omission fraction at its right endpoint."),
@@ -68,20 +71,22 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
                 + "Throughout the inverse-square interval ending at 1/h², the exact threshold "
                 + "cost bounds the minimum omission fraction at length h. Integrate the "
                 + "inequality over the adjacent intervals. The interval from 0 to the next "
-                + "threshold supplies the single-scale residual. Write T(h) for the length "
-                + "summand, P(h) for the omitted fraction at length h and L for the full series."),
+                + "threshold supplies the single-scale residual. Write P(h) for the omitted fraction "
+                + "at length h and T(h) for (h⁻² − (h+1)⁻²)P(h). The full series L sums T(h) over "
+                + "positive integer lengths."),
             Result("length_series_le_integral", "Comparison with the length series",
                 Le(F.Id("L"), Integral()),
                 "Take the limit of the bounded partial sums using convergence of the length series."),
             Result("pair_exact_Q", "Exact cost for frequencies (1, 3)",
                 PairCost(),
-                "For any common positive weight, every incompatible relation uses both coordinates and has length at least "
-                + "four. The relation (3, −1) has length four and squared chord gap four, so "
+                "For any common positive weight, every incompatible relation uses both coordinates "
+                + "and has length at least four. The relation (3, −1) has length four and squared chord gap four, so "
                 + "the threshold is exactly 1/8. At or below it one of the two equal-weight "
                 + "coordinates must be omitted. Above it no omission is needed."),
             Result("pair_strict", "Strict improvement for frequencies (1, 3)",
                 PairStrict(),
-                "The single interval of cost 1/2 yields an integral of 1/16. The length-only "
+                "With equal positive weights, the interval of cost 1/2 yields an integral of 1/16. "
+                + "The length-only "
                 + "omission fraction is 1/2 from length four onward and zero at smaller lengths. "
                 + "The weighted series telescopes to 1/32."),
             Paragraph(Text(
@@ -89,7 +94,6 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
                 + "weight conditions. A quantitative application to actual zeta ordinates "
                 + "requires separate evidence about which incompatible relations hold, their "
                 + "supports and their coefficient lengths.")))));
-
 
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
@@ -167,7 +171,7 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
         var n = F.Id("n");
         var h = F.Id("h");
         var next = Add(n, D(1));
-        var partial = Seq(Sum, Underscore, Grp(Le(D(1), h)), Caret, Grp(n), Sp, T(h));
+        var partial = Seq(Sum, Underscore, Grp(Equal(h, D(1))), Caret, Grp(n), Sp, T(h));
         var residual = Frac(P(next), new Formula.Power(Seq(Open, next, Close), D(2)));
         return All("n", Naturals, Le(Add(partial, residual), Integral()));
     }
