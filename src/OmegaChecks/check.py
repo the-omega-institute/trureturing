@@ -27,7 +27,7 @@ def build():
 
 
 def audit(name, modules, paths, error=None):
-    args = ["lean", "--run", "src/OmegaChecks/Audit.lean", "--exact", name,
+    args = ["lake", "env", "lean", "--run", "src/OmegaChecks/Audit.lean", "--exact", name,
             os.pathsep.join(map(str, paths)), *modules]
     result = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
     output = result.stdout + result.stderr
@@ -56,20 +56,27 @@ def check_audits():
             lean.write_text(source)
             run("lake", "env", "lean", "-R", tmp, "-o", tmp / f"{name}.olean", lean)
             audit(name, [*math, name], [tmp, LIB], reason)
-
-
-    # Compile the same mirrored module with each error in isolation; the real artifacts stay intact.
-    name = "OmegaInit.Data.Nat.Basic"
+    # Temporary modules exercise the naming check against the installed upstream artifacts.
+    init = "OmegaInit.Data.Nat.Basic"
+    prime = "OmegaMath.Data.Nat.Prime.Defs"
+    original = "OmegaMath.Projective.Local"
     with tempfile.TemporaryDirectory(prefix="omega-name-") as tmp:
         tmp = Path(tmp)
-        source = tmp / "OmegaInit/Data/Nat/Basic.lean"
-        source.parent.mkdir(parents=True)
-        for declaration, error in [
-            ("Omega.Nat.add", "official owner of Nat.add is Init.Prelude"),
-            ("OutsideOmega", "public foundation name outside Omega"),
-            ("Omega.Nat.unknownOfficialName", "missing official declaration Nat.unknownOfficialName"),
+        for name, declaration, error in [
+            (init, "def Omega.Nat.add", "official owner of Nat.add is Init.Prelude"),
+            (init, "def OutsideOmega", "public name outside Omega"),
+            (init, "def Omega.Nat.unknownOfficialName", "missing official declaration Nat.unknownOfficialName"),
+            (prime, "def Omega.Nat.Prime", None),
+            (prime, "def Omega.Nat.unknownMathlibName", "missing official declaration Nat.unknownMathlibName"),
+            (prime, "def Omega.Nat.add", "official owner of Nat.add is Init.Prelude"),
+            (original, "def Omega.Projective.localValue", None),
+            (original, "axiom Omega.Projective.unused", "inadmissible declaration Omega.Projective.unused"),
         ]:
-            source.write_text(f"module\nprelude\npublic def {declaration} : Prop := ∀ p : Prop, p → p\n")
+            source = tmp / (name.replace(".", "/") + ".lean")
+            source.parent.mkdir(parents=True, exist_ok=True)
+            marker = "/-! Omega original. -/\n" if name == original else ""
+            body = "" if declaration.startswith("axiom ") else " := ∀ p : Prop, p → p"
+            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n")
             run("lake", "env", "lean", "-R", tmp, "-o", source.with_suffix(".olean"), source)
             audit(name, [name], [tmp], error)
     example = """prelude

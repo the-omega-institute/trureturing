@@ -6,6 +6,12 @@ module
 prelude
 public import OmegaMath.Data.Ratio
 
+/-!
+Omega original.
+
+The chapter 39 overlap of homogeneous coordinates.
+-/
+
 @[expose] public section
 
 namespace Omega.Projective

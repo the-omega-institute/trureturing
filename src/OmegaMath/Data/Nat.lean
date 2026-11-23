@@ -7,6 +7,12 @@ prelude
 
 public import OmegaInit.Data.Nat.Lemmas
 
+/-!
+Omega original.
+
+Natural-number helpers for exact ratios and homogeneous coordinates.
+-/
+
 @[expose] public section
 
 namespace Omega.Nat

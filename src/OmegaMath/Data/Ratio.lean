@@ -6,6 +6,12 @@ module
 prelude
 public import OmegaMath.Data.Nat
 
+/-!
+Omega original.
+
+Exact nonnegative ratios with an explicit undefined value for a zero denominator.
+-/
+
 @[expose] public section
 
 namespace Omega

@@ -69,6 +69,19 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入 `OmegaMath`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
 
+## OmegaMath 的专题与来源
+
+按用途选目录。能脱离某个 D5 证明独立使用的定义或定理放在 `OmegaMath` 对应的数学专题下。只为一个 D5 证明服务的辅助结果可以与该证明放在一起。第 39 章的 `kappa` 接受任意一对坐标的绝对值，缩放定理对任意正自然数倍成立，两者都可以直接由其他证明导入，因此保留在 `OmegaMath.Projective`。[读数定义](OmegaMath/Projective/Basic.lean) · [缩放定理](OmegaMath/Projective.lean)
+
+| 来源 | 模块位置 | 公开名称与来源标注 |
+| --- | --- | --- |
+| 从钉版 Mathlib 移植 | 保留上游定义所在模块的路径，把 `Mathlib` 换成 `OmegaMath` | 在上游声明的完整名字前加 `Omega.` |
+| Omega 原创形式化 | 放在相关专题附近，可与移植模块同目录 | 在 `Omega` 命名空间中取名，模块文档第一行写 `Omega original.`，随后说明用途 |
+
+例如，钉版 Mathlib 的 `Nat.Prime` 定义在 `Mathlib.Data.Nat.Prime.Defs`。移植时应写在 `src/OmegaMath/Data/Nat/Prime/Defs.lean`，声明名为 `Omega.Nat.Prime`。本仓用临时模块测试这条命名规则，当前交付的数学模块只含基础引理、精确比值和射影读数。[上游定义](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Nat/Prime/Defs.lean#L42)
+
+来源标记以文件为单位，描述这份形式化的来源。给移植专题补充原创引理时，将引理放在相邻文件，便于逐模块识别。审计器对移植声明核对上游名字与定义模块，陈述及实现的对应关系由评审确认。只有严格闭包中实际包含 Mathlib 移植声明时，才定向准备上游模块，在独立环境读取其编译产物。原创和移植模块都须通过同一套零公理审计。[审计实现](OmegaChecks/Audit.lean)
+
 ## 主仓 CI
 
 `OmegaInit` 和 `OmegaMath` 是 trureturing 的内部库。主仓的 `current` 检查从改动的 Lean 文件沿 `import` 找出受影响的模块，按根包的模块名构建 `src/` 下的代码，并为引用它的 D5 模块选择常规报告。缓存按同一模块名复用。`src/**/*.lean` 也适用主仓的文件行数检查。

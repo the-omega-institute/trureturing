@@ -3,12 +3,19 @@ import Lean.Replay
 
 open Lean
 
-private def isStrict (name : String) : Bool :=
-  name.toName.getRoot == `OmegaMath || name.toName.getRoot == `OmegaInit
+private def isStrict (name : Name) : Bool :=
+  name.getRoot == `OmegaMath || name.getRoot == `OmegaInit
 
-/-- Compare names and declaring modules against a separate environment of installed Lean artifacts. -/
-private def checkFoundationNames (strict : Environment) : IO Unit := do
-  let lib ← getLibDir (← findSysroot)
+private def isOriginalMath (env : Environment) (owner : Name) : Bool := Id.run do
+  unless owner.getRoot == `OmegaMath do return false
+  let some docs := getModuleDoc? env owner | return false
+  let some first := docs[0]? | return false
+  return (first.doc.splitOn "\n").head!.trimAscii == "Omega original."
+
+/-- Compare public names and defining modules in a separate upstream environment. -/
+private def checkUpstreamNames (strict : Environment) : IO Unit := do
+  let sysroot ← findSysroot
+  let lib ← getLibDir sysroot
   let foundation := strict.allImportedModuleNames.filter (·.getRoot == `OmegaInit)
   for owner in foundation do
     let official := owner.replacePrefix `OmegaInit `Init
@@ -16,17 +23,27 @@ private def checkFoundationNames (strict : Environment) : IO Unit := do
       throw <| IO.userError s!"no official module {official} for {owner}"
   let mut bindings := #[]
   let mut owners := #[]
+  let originals := strict.allImportedModuleNames.filter (isOriginalMath strict)
   for (name, _) in strict.constants.toList do
     let some idx := strict.getModuleIdxFor? name | continue
     let owner := strict.header.moduleNames[idx]!
-    if owner.getRoot != `OmegaInit || isPrivateName name || name.isInternal then continue
+    if !isStrict owner || isPrivateName name || name.isInternal then continue
     unless name.getRoot == `Omega do
-      throw <| IO.userError s!"public foundation name outside Omega: {name} in {owner}"
-    let official := owner.replacePrefix `OmegaInit `Init
+      throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
+    if originals.contains owner then continue
+    let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
+    let official := owner.replacePrefix owner.getRoot upstream
     bindings := bindings.push (name, official)
     if !owners.contains official then owners := owners.push official
   if owners.isEmpty then return
-  searchPathRef.set [lib]
+  let mathlib := owners.filter (·.getRoot == `Mathlib)
+  if mathlib.isEmpty then
+    searchPathRef.set [lib]
+  else
+    let targets := mathlib.map fun name => s!"@mathlib/+{name}:olean"
+    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ targets }
+    unless (← proc.wait) == 0 do throw <| IO.userError s!"failed to build upstream modules {mathlib}"
+    initSearchPath sysroot [lib]
   let reference ← importModules (owners.map fun moduleName => {module := moduleName}) {}
   for (name, owner) in bindings do
     let counterpart := name.replacePrefix `Omega Name.anonymous
@@ -35,7 +52,7 @@ private def checkFoundationNames (strict : Environment) : IO Unit := do
     let actual := reference.header.moduleNames[idx]!
     unless actual == owner do
       throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
-  IO.println s!"Official Init names and owning modules matched for {bindings.size} declarations."
+  IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String) (expected : Option (List String)) : IO Unit := do
@@ -47,7 +64,7 @@ private def audit (roots : List String) (path label : String) (expected : Option
       throw <| IO.userError s!"module closure differs: found {actual}, expected {modules}"
   else
     for name in actual do
-      unless isStrict name do
+      unless isStrict name.toName do
         throw <| IO.userError s!"unexpected strict library import {name}"
   let check : CoreM Nat := do
     let mut count := 0
@@ -61,13 +78,13 @@ private def audit (roots : List String) (path label : String) (expected : Option
     return count
   let count ← check.toIO' {fileName := "<audit>", fileMap := default} {env}
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
-  checkFoundationNames env
+  checkUpstreamNames env
   IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
 
 private def testLibrary (selected : List String) : IO Unit := do
   if selected.isEmpty then
     throw <| IO.userError "pass a module scope, for example: lake test -- OmegaMath.Projective"
-  let strict := selected.filter isStrict
+  let strict := selected.filter fun name => isStrict name.toName
   let roots := if strict.isEmpty && selected.contains "OmegaChecks.Audit" then ["OmegaInit.Prelude"] else strict
   if roots.isEmpty then return
   let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ roots.toArray.map ("+" ++ ·) }

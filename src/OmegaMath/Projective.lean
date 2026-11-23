@@ -6,6 +6,12 @@ module
 prelude
 public import OmegaMath.Projective.Basic
 
+/-!
+Omega original.
+
+Positive scaling preserves the chapter 39 overlap of homogeneous coordinates.
+-/
+
 public section
 
 namespace Omega.Projective
