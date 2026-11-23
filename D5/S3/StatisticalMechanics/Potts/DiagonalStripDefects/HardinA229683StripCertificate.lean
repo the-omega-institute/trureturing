@@ -273,8 +273,10 @@ theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
       (Matrix.vecMul (previous k.castSucc) HardinA229508StripData.T + Matrix.vecMul (W k.castSucc) 0)
       (Matrix.vecMul (previous k.castSucc) (Sum.elim costTwo HardinA229508StripData.costOne) +
         Matrix.vecMul (W k.castSucc) HardinA203981StripData.T) = table k.succ
-    simp only [Matrix.vecMul_zero, add_zero, table, HardinA229508StripCertificate.forward_step k,
-      incoming, right_step k]
+    have left_step : Matrix.vecMul (previous k.castSucc) HardinA229508StripData.T =
+        previous k.succ :=
+      HardinA229508StripCertificate.forward_step k
+    simp only [Matrix.vecMul_zero, add_zero, left_step, incoming, right_step k, table]
   have zero : table 0 = initial := by
     funext j
     rcases j with (j | j) | j
