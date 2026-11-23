@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Parking;
 internal sealed class PeakTieDescentRecurrenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Parking/PeakTieDescentRecurrence.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Parking/alexandersson2026parking");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/alexandersson2026parking");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An insertion operator on trivariate polynomials gives the recurrence and recovers Alexandersson’s bivariate operator at descent marker one.",
