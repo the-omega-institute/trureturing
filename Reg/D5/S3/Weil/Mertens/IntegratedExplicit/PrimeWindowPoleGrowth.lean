@@ -9,6 +9,7 @@ open Complex Set MeasureTheory Filter
 open scoped Topology Interval
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection (primeTail)
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
+open _root_.D5.S3.Arith.Robin.CompleteMertensPeak (Q)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -109,6 +110,73 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+namespace SignedComplete
+
+abbrev signedArena : Arena where
+  signature := signature
+  Law V := ∀ {z₀ : ℂ} (_ : V.readout () () z₀ = 0) (_ : 1/2 < z₀.re)
+    {b ε : ℝ} (_ : 1 < b) (_ : 0 < ε),
+    ∀ᶠ Y : ℝ in atTop, ∀ e : ℝ, e = 1 ∨ e = -1 →
+      Y^(b*(z₀.re-1/2)-ε) ≤ ∫ x in Y..Y^b, max (e * (-Q x)) 0 / Real.sqrt x
+
+private theorem all_zeros_fails_signed : ¬ signedArena.Law allZeros := by
+  intro h
+  apply all_zeros_fails
+  intro z₀ hz hβ b ε hb hε
+  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  filter_upwards [h hz hβ hb hε, eventually_ge_atTop (1 : ℝ)] with Y hY hY1
+  have hpower := Real.rpow_le_rpow_of_exponent_le hY1 hb.le
+  rw [Real.rpow_one] at hpower
+  apply le_trans _ (compare_prime_mass (C := C) (fun t _ => hC t) hY1 hpower).1
+  simpa only [one_mul] using hY 1 (Or.inl rfl)
+
+def evidence : Registration signedArena
+    (type_of% @off_line_zero_forces_signed_complete_window_mass) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@off_line_zero_forces_signed_complete_window_mass, allZeros, all_zeros_fails_signed⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    signedArena.Law actual allZeros all_zeros_fails_signed
+  dependence := actual_dependence
+
+noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@off_line_zero_forces_signed_complete_window_mass) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth.off_line_zero_forces_signed_complete_window_mass
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth.SignedComplete.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨signedArena⟩
+  objectArena := .source ⟨signedArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source signedArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ z => riemannZeta z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "domain", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SignedComplete
 
 namespace Criterion
 
