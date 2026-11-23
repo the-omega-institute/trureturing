@@ -44,9 +44,9 @@ namespace RelativeCohomology
 variable (F : NullFrame hyperbolicPlane) (B : Module.Basis (Fin 0) ℂ F.K)
 variable (p : Charge hyperbolicPlane)
 
-local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
+private local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
 
-local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
+private local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
   Submodule.addCommGroup (relativeShell p)
 
 private def attachGhost (w : Fock) : Matter →ₗ[ℂ] AssocState :=
