@@ -14,11 +14,11 @@ internal sealed class DesignatedSummandThetaDissectionDocument : IScribeDocument
         Blocks(
             Paragraph(Text("The three factors use the weighted Jacobi specialization, a sign twist on the Laurent support cone, and constant-unit evaluation. For the product U(q)U(q³), write the starting integer indices as a and b. The two affine coordinates come from a+3b and a−b divided by two. Folding one coordinate in each parity case gives the two disjoint lattices. The bijection preserves the degrees and turns the original signs into a positive even summand and a negative odd summand. The contributing index pairs at each fixed degree lie in a finite set.")),
             Node("prod_split_two", "A product through 2N consecutive indices is the product through the N even and the N odd indices.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
-            Node("U", "The signed weighted Jacobi sum J at weight parameters 2 and 1, as a rational formal power series.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+            Node("U", "The signed weighted Jacobi sum J at weight parameters 2 and 1, as a rational formal power series. In all three series q is the formal indeterminate.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
                 UFormula()),
-            Node("phi", "The bilateral theta series with square exponents. The defining specialization at weights 0 and 1 follows the Laurent twist with unit −1 and the identity coefficient map.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
+            Node("phi", "The bilateral theta series with square exponents. The defining specialization at weights 0 and 1 follows the Laurent twist with the unit −1 of the rationals and the identity ring homomorphism on the rational coefficients.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 PhiFormula()),
-            Node("psi", "The unilateral theta series with triangular exponents. The defining Jacobi evaluation uses the identity coefficient map and the unit −1, with a constant factor of one half.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
+            Node("psi", "The unilateral theta series with triangular exponents. The defining Jacobi evaluation uses the identity ring homomorphism on the rational coefficients and the rational unit −1. C embeds the rational number one half as a constant series.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 PsiFormula()),
             Node("U_product", "The series U times the Euler factor f2 is f4 f1.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("phi_product", "The series phi times f1 squared and f4 squared is f2 to the fifth power.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
@@ -55,7 +55,7 @@ internal sealed class DesignatedSummandThetaDissectionDocument : IScribeDocument
         var index = F.Id("j");
         var half = new Formula.Fraction(F.D(1), F.D(2));
         var degree = new Formula.Fraction(F.Seq(index, Parens(F.Seq(index, F.Plus, F.D(1)))), F.D(2));
-        return Define(F.Psi, F.Seq(half, F.Thin, Call("jacobiEvaluation", F.Id("id"), MinusOne())),
+        return Define(F.Psi, F.Seq(Call("C", half), F.Thin, Call("jacobiEvaluation", F.Id("id"), MinusOne())),
             Sum(index, NumberSet("N"), new Formula.Power(F.Id("q"), degree)));
     }
 
@@ -66,5 +66,6 @@ internal sealed class DesignatedSummandThetaDissectionDocument : IScribeDocument
         F.Seq(new Formula.Subscript(F.Sum, F.Seq(index, F.Sp, F.InMacro, F.Sp, domain)), F.Sp, body);
 
     private static Formula Define(Formula left, Formula definingExpression, Formula series) =>
-        F.Disp(F.Seq(left, F.Sp, F.Colon, F.Eq, F.Sp, definingExpression, F.Sp, F.Eq, F.Sp, series));
+        F.Disp(F.Seq(left, F.Sp, F.Colon, F.Sp, Call("PowerSeries", NumberSet("Q")),
+            F.Sp, F.Colon, F.Eq, F.Sp, definingExpression, F.Sp, F.Eq, F.Sp, series));
 }
