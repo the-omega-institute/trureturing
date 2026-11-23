@@ -68,7 +68,7 @@ internal sealed class HussainRecognitionDepthDocument : IScribeDocumentDefinitio
         Formula a = F.Id("A"), l = F.Id("L"), n = F.Id("n"), start = F.Id("N"), d = F.Id("d");
         Formula exponentConditions = Logical(Call("Finite", Call("HomExponents", l)),
             FormulaLogicOperator.And, Call("Finite", Call("HetExponents", l)));
-        Formula hypotheses = Logical(Le(D(2), Seq(Vert, a, Vert)), FormulaLogicOperator.And,
+        Formula hypotheses = Logical(Le(D(2), Seq(Lvert, Sp, a, Rvert)), FormulaLogicOperator.And,
             Logical(Call("SubwordClosed", l), FormulaLogicOperator.And, exponentConditions));
         Formula settles = Logical(Le(D(1), start), FormulaLogicOperator.And,
             Bind(FormulaQuantifier.ForAll, "n", Naturals(),

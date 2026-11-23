@@ -16,7 +16,7 @@ noncomputable section
 
 universe u
 
-abbrev Parameters := Σ Alphabet : Type u, Fintype Alphabet × Set (List Alphabet)
+abbrev Parameters := Σ Alphabet : Type u, Σ _ : Fintype Alphabet, Set (List Alphabet)
 
 abbrev signature : Signature :=
   Reg.Support.UniverseSingleReadout.signature Parameters.{u} (fun _ => ℕ) (fun _ => ℕ)
@@ -73,7 +73,8 @@ private theorem depth_one_ne_zero : recognitionDepth shortLanguage.{u} 1 ≠ 0 :
     intro equal
     exact Bool.false_ne_true (congrArg (fun word : Promise shortLanguage 1 =>
       (word.val 0).down) equal)
-  have feasible : SourceExactAtDepth coordinateReadout (recognitionDepth shortLanguage.{u} 1) := by
+  have feasible : SourceExactAtDepth (@coordinateReadout (ULift.{u} Bool) shortLanguage 1)
+      (recognitionDepth shortLanguage.{u} 1) := by
     unfold recognitionDepth
     exact Nat.find_spec _
   intro zero
@@ -95,7 +96,8 @@ def sourceRegistration : Registration arena.{u} claim.{u} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨result, rejected, rejected_law⟩
-  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity :=
+    Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
     exact ⟨⟨ULift.{u} Bool, inferInstance, shortLanguage⟩, 1, 2,
@@ -127,7 +129,7 @@ def registration :
       owner := `D5.S3.Observer.Budget.HussainRecognitionDepth
       name := `D5.S3.Observer.Budget.HussainRecognitionDepth.claim
       path := #[] }
-    coordinates := #[0, 1, 2]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "body", "body", "fn", "arg"]

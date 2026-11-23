@@ -100,3 +100,9 @@ are used in the proof of the source claim.
   length and then has depth zero by the empty-promise convention.
 - The recognition conclusion is on promised inputs for each length.
   Membership queries have the entire length slice as their input domain.
+
+## ASSUMED-UNVERIFIED
+
+Literature coverage of citing work and versions beyond the inspected
+source remains incomplete. The proof settles the statement in arXiv v1.
+[Issue #33567](https://github.com/the-omega-institute/trureturing/issues/33567)
