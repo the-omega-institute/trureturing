@@ -133,10 +133,10 @@ private theorem radical_rate_slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 1 < t) 
   apply (div_le_div_iff₀ hH ht₁).mpr
   simpa only [one_mul] using (mul_le_mul_of_nonneg_right hKt ht₁.le).trans hHt
 
-/-- From gap seven halves the positive radical density decays at rate at least `46/35`. -/
-theorem middleTail_radical_logDeriv_le {h t : ℝ} (hh : 0 < h) (ht : 7 / 2 ≤ t) :
+/-- From gap thirteen fourths the positive radical density decays at rate at least `31/25`. -/
+theorem middleTail_radical_logDeriv_le {h t : ℝ} (hh : 0 < h) (ht : 13 / 4 ≤ t) :
     let T := deriv (upperTailRadicalRoot h)
-    0 < T t ∧ DifferentiableAt ℝ T t ∧ deriv T t / T t ≤ -(46 / 35 : ℝ) := by
+    0 < T t ∧ DifferentiableAt ℝ T t ∧ deriv T t / T t ≤ -(31 / 25 : ℝ) := by
   let z := upperTailRadicalRoot h
   let T := deriv z
   have ht₀ : 0 < t := by linarith
@@ -149,32 +149,32 @@ theorem middleTail_radical_logDeriv_le {h t : ℝ} (hh : 0 < h) (ht : 7 / 2 ≤ 
       (tail_gap_pos hh ht₀)) hH) hZ
   have hTd := hasDerivAt_radicalRootDeriv hh ht₀ hH
   have hLmax := (upperTailSlope_bounds hh ht₀).2.1.trans
-    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 7 / 2) ht)
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 13 / 4) ht)
   have hKmax := hK.trans
-    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 5 / 2) (by linarith : 5 / 2 ≤ t - 1))
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 9 / 4) (by linarith : 9 / 4 ≤ t - 1))
   refine ⟨hT, hTd.differentiableAt, ?_⟩
-  change deriv T t / T t ≤ -(46 / 35 : ℝ)
+  change deriv T t / T t ≤ -(31 / 25 : ℝ)
   rw [hTd.deriv, mul_div_cancel_left₀ _ hT.ne']
   linarith only [hLmax, hKmax, div_nonneg hT.le hZ.le]
 
 /-- Lower divided-difference bounds obtained by integrating the radical decay. -/
 theorem middleTail_radical_dividedDifference {h d v : ℝ}
-    (hh : 0 < h) (hd : 7 / 2 ≤ d) (hdv : d < v) :
+    (hh : 0 < h) (hd : 13 / 4 ≤ d) (hdv : d < v) :
     let z := upperTailRadicalRoot h
     let T := deriv z
     let D := z v - z d
-    0 < D ∧ (46 / 35 : ℝ) ≤ (T d - T v) / D ∧
+    0 < D ∧ (31 / 25 : ℝ) ≤ (T d - T v) / D ∧
       (T d - T v) / D ≤ T d / D ∧
-      (46 / 35 : ℝ) / (1 - Real.exp (-((46 / 35) * (v - d)))) ≤ T d / D := by
+      (31 / 25 : ℝ) / (1 - Real.exp (-((31 / 25) * (v - d)))) ≤ T d / D := by
   let z := upperTailRadicalRoot h
   let T := deriv z
   let D := z v - z d
-  let k : ℝ := 46 / 35
+  let k : ℝ := 31 / 25
   have hk : 0 < k := by norm_num [k]
-  have hzd (s : ℝ) (hs : 7 / 2 ≤ s) : HasDerivAt z (T s) s :=
+  have hzd (s : ℝ) (hs : 13 / 4 ≤ s) : HasDerivAt z (T s) s :=
     (hasDerivAt_upperTailRadicalRoot hh (by linarith : 0 < s)).differentiableAt.hasDerivAt
-  have hlower (s : ℝ) (hs : 7 / 2 ≤ s) := middleTail_radical_logDeriv_le hh hs
-  have hzmono : StrictMonoOn z (Ici (7 / 2)) := by
+  have hlower (s : ℝ) (hs : 13 / 4 ≤ s) := middleTail_radical_logDeriv_le hh hs
+  have hzmono : StrictMonoOn z (Ici (13 / 4)) := by
     apply strictMonoOn_of_deriv_pos (convex_Ici _)
     · exact fun s hs ↦ (hzd s hs).continuousAt.continuousWithinAt
     · intro s hs
@@ -379,9 +379,9 @@ private theorem radical_dividedDifference_bounds {h d v : ℝ}
     linarith only [hw]
   exact ⟨hD, hM, hmean, hRlower, hRupper⟩
 
-/-- The actual radical contribution has strictly negative mixed derivative from gap seven halves. -/
+/-- The actual radical contribution has strictly negative mixed derivative from gap thirteen fourths. -/
 theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
-    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hd : 7 / 2 ≤ v - u) :
+    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hd : 13 / 4 ≤ v - u) :
     deriv (fun y ↦ deriv (fun x ↦ separatedGapRadicalContribution p x y) u) v < 0 := by
   let h : ℝ := 3 / (p : ℝ)
   let c := (3 + h) * (3 + 2 * h) / 2
@@ -403,7 +403,7 @@ theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
   have hu₀ : 0 < u := by linarith only [hu]
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
   have hh : 0 < h := by dsimp [h]; positivity
-  change 7 / 2 ≤ d at hd
+  change 13 / 4 ≤ d at hd
   have hvdu : v = d + u := by dsimp [d]; ring
   have hvd : v - d = u := by dsimp [d]; ring
   have hdv : d < v := by linarith only [hvdu, hu₀]
@@ -430,9 +430,9 @@ theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
   let U := α - j d + 2 * R
   let V := β + j d + 2 * (M / D v)
   change 0 < D v at hD
-  change (46 / 35 : ℝ) ≤ Y at hy
+  change (31 / 25 : ℝ) ≤ Y at hy
   change Y ≤ R at hyR
-  change (46 / 35 : ℝ) / (1 - Real.exp (-((46 / 35) * (v - d)))) ≤ R at hR
+  change (31 / 25 : ℝ) / (1 - Real.exp (-((31 / 25) * (v - d)))) ≤ R at hR
   rw [hvd] at hR
   have hR₀ := middleTail_dividedDifference_lower hu₀ hR
   have hL := (upperTailSlope_bounds hh hd₀).1
@@ -445,8 +445,8 @@ theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
   have hH : β + j d ≤ 3 / 2 := by
     dsimp only [j]
     linarith only [hβ, hL]
-  have hκ : (46 / 35 : ℝ) ≤ -rho d := by
-    change rho d ≤ -(46 / 35 : ℝ) at hρ
+  have hκ : (31 / 25 : ℝ) ≤ -rho d := by
+    change rho d ≤ -(31 / 25 : ℝ) at hρ
     linarith only [hρ]
   have hscalar := middleTail_radicalScalar_neg hu hu₄ hy hyR hR₀ hA hH hκ hq
   have hmY : M / D v = -Y := by

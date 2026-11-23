@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Scalar sign of the radical correction from gap seven halves. -/
+   digest: Scalar sign of the radical correction from gap thirteen fourths. -/
 
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FieldSimp
@@ -21,9 +21,9 @@ open Set Real
 
 /-- The exponential decay comparison gives a lower divided-difference slope. -/
 theorem middleTail_dividedDifference_lower {u z : ℝ} (hu : 0 < u)
-    (hz : (46 / 35 : ℝ) / (1 - exp (-((46 / 35) * u))) ≤ z) :
-    1 / u + 23 / 35 ≤ z := by
-  let k : ℝ := 46 / 35
+    (hz : (31 / 25 : ℝ) / (1 - exp (-((31 / 25) * u))) ≤ z) :
+    1 / u + 31 / 50 ≤ z := by
+  let k : ℝ := 31 / 25
   let x : ℝ := k * u / 2
   have hk : 0 < k := by norm_num [k]
   have hx : 0 < x := by dsimp only [x]; positivity
@@ -50,41 +50,39 @@ theorem middleTail_dividedDifference_lower {u z : ℝ} (hu : 0 < u)
   linarith only [hstep, hz]
 
 private theorem middleTail_quadratic_pos {u z : ℝ} (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4)
-    (hz : 1 / u + 23 / 35 ≤ z) :
+    (hz : 1 / u + 31 / 50 ≤ z) :
     let A := 1 / u + 13 / 10
-    0 < 2 * z ^ 2 - 2 * z * (A + 13 / 70) + (3 / 2) * A := by
+    0 < 2 * z ^ 2 - 2 * z * (A + 13 / 50) + (3 / 2) * A := by
   let A : ℝ := 1 / u + 13 / 10
-  let w : ℝ := 1 / u + 23 / 35
-  let b : ℝ := 13 / 70
+  let w : ℝ := 1 / u + 31 / 50
+  let b : ℝ := 13 / 50
   let F (x : ℝ) := 2 * x ^ 2 - 2 * x * (A + b) + (3 / 2) * A
   change 0 < F z
   have hu' : 0 < u := by linarith
   have hinv : (1 / 4 : ℝ) ≤ 1 / u := one_div_le_one_div_of_le hu' hu₄
   have hinv₂ : 1 / u ≤ 2 := (div_le_iff₀ hu').mpr (by linarith only [hu])
-  have hw : A + b ≤ 2 * w := by
+  have hw : -(7 / 100 : ℝ) ≤ 2 * w - (A + b) := by
     dsimp only [A, b, w]
     linarith only [hinv]
-  have hFw : F w = 4219 / 4900 - (11 / 70) * (1 / u) := by
+  have hFw : F w = 1961 / 2500 - (19 / 50) * (1 / u) := by
     dsimp only [F, A, b, w]
     ring
-  have hwpos : 0 < F w := by
+  have hmargin : (61 / 2500 : ℝ) ≤ F w := by
     rw [hFw]
     linarith only [hinv₂]
-  have hwz : w ≤ z := hz
-  have hdiff := mul_nonneg (sub_nonneg.mpr hwz)
-    (show 0 ≤ 2 * (z + w - (A + b)) by linarith)
-  apply hwpos.trans_le
-  have he : F z - F w = (z - w) * (2 * (z + w - (A + b))) := by
+  have hdiff := mul_nonneg (sub_nonneg.mpr hz)
+    (show 0 ≤ 2 * (2 * w - (A + b)) + 7 / 50 by linarith only [hw])
+  have he : F z - F w =
+      2 * (z - w) ^ 2 + (z - w) * (2 * (2 * w - (A + b))) := by
     dsimp only [F]
     ring
-  rw [← he] at hdiff
-  exact sub_nonneg.mp hdiff
+  nlinarith only [hmargin, he, hdiff, sq_nonneg (z - w - 7 / 200)]
 
-/-- A decay rate of `46/35` and the lower divided-difference bounds imply the radical sign. -/
+/-- A decay rate of `31/25` and the lower divided-difference bounds imply the radical sign. -/
 theorem middleTail_radicalScalar_neg {u z y A H kappa eta : ℝ}
-    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hy : 46 / 35 ≤ y) (hyz : y ≤ z)
-    (hz : 1 / u + 23 / 35 ≤ z)
-    (hA : A ≤ 1 / u + 13 / 10) (hH : H ≤ 3 / 2) (hκ : 46 / 35 ≤ kappa) (hη : 0 ≤ eta) :
+    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hy : 31 / 25 ≤ y) (hyz : y ≤ z)
+    (hz : 1 / u + 31 / 50 ≤ z)
+    (hA : A ≤ 1 / u + 13 / 10) (hH : H ≤ 3 / 2) (hκ : 31 / 25 ≤ kappa) (hη : 0 ≤ eta) :
     (2 * z - A) * H + 2 * (A - z) * y - 2 * kappa * z - eta < 0 := by
   let B : ℝ := 1 / u + 13 / 10
   have hu' : 0 < u := by linarith
@@ -100,7 +98,7 @@ theorem middleTail_radicalScalar_neg {u z y A H kappa eta : ℝ}
   have hstepκ := mul_nonneg (sub_nonneg.mpr hκ) hz₀
   have htop :
       (2 * z - A) * H + 2 * (A - z) * y - 2 * kappa * z - eta ≤
-        (2 * z - B) * (3 / 2) + 2 * (B - z) * y - 2 * (46 / 35) * z := by
+        (2 * z - B) * (3 / 2) + 2 * (B - z) * y - 2 * (31 / 25) * z := by
     nlinarith only [hstepA, hstepH, hstepκ, hη]
   apply htop.trans_lt
   by_cases hzB : B ≤ z
@@ -111,7 +109,7 @@ theorem middleTail_radicalScalar_neg {u z y A H kappa eta : ℝ}
     nlinarith only [h, hgap]
   · have h := mul_nonneg (sub_nonneg.mpr (le_of_not_ge hzB)) (sub_nonneg.mpr hyz)
     have hF := middleTail_quadratic_pos hu hu₄ hz
-    change 0 < 2 * z ^ 2 - 2 * z * (B + 13 / 70) + (3 / 2) * B at hF
+    change 0 < 2 * z ^ 2 - 2 * z * (B + 13 / 50) + (3 / 2) * B at hF
     nlinarith only [h, hF]
 
 end RefinedBMV.PositiveCenter
