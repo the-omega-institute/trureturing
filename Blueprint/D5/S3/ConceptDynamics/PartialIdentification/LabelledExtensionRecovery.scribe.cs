@@ -1,9 +1,21 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.PartialIdentification;
 
 internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinition
 {
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
+    private static Formula All(Formula variable, Formula type, Formula body) =>
+        Seq(Forall, Sp, Par(Seq(variable, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Imp(Formula premise, Formula conclusion) =>
+        Seq(Par(premise), Sp, Implies, Sp, Par(conclusion));
+    private static Formula Equal(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A complete label history identifies its event order exactly when every label fiber " +
         "is a chain in the finite induced partial order.",
@@ -15,13 +27,15 @@ internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinit
                 "may be empty or infinite. A complete extension has no repeated event, contains " +
                 "exactly F, and never places a predecessor after its successor. The order is " +
                 "the order induced on F. An arbitrary F need not be a lower set of E, so these " +
-                "lists do not assert global execution in the ambient event system.")),
+                "lists do not assert global execution in the ambient event system. " +
+                "ExtensionList is the original EnabledPathSwapConnectivity predicate, with F " +
+                "viewed as its underlying set in the displayed formula.")),
             Describe.Lean(
                 DescribeId.Create("labelled-extension-recovery"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/PartialIdentification/LabelledExtensionRecovery.result"),
                 H("Exact classification of label recovery"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -52,4 +66,30 @@ internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinit
                         "and Proposition 2.12. The present statement concerns complete extensions " +
                         "of arbitrary finite induced subsets and an arbitrary alphabet."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ResultFormula()
+    {
+        var e = V("E");
+        var alphabet = V("A");
+        var support = V("F");
+        var label = V("label");
+        var a = V("a");
+        var b = V("b");
+        var l = V("l");
+        var m = V("m");
+        var sameLabel = Equal(new Formula.Apply(label, [a]), new Formula.Apply(label, [b]));
+        var comparable = Seq(Par(Seq(a, Sp, Le, Sp, b)), Sp, Lor, Sp,
+            Par(Seq(b, Sp, Le, Sp, a)));
+        var chains = All(a, e, Imp(Seq(a, Sp, InMacro, Sp, support),
+            All(b, e, Imp(Seq(b, Sp, InMacro, Sp, support), Imp(sameLabel, comparable)))));
+        var recovery = All(l, Call("List", e), All(m, Call("List", e),
+            Imp(Call("ExtensionList", Emptyset, support, l),
+                Imp(Call("ExtensionList", Emptyset, support, m),
+                    Imp(Equal(Call("map", label, l), Call("map", label, m)), Equal(l, m))))));
+        var classification = Seq(Par(chains), Sp, Iff, Sp, Par(recovery));
+        return All(e, V("Type"), All(alphabet, V("Type"),
+            Seq(OpenBracket, Call("PartialOrder", e), CloseBracket, Sp,
+                All(support, Call("Finset", e),
+                    All(label, Seq(e, Sp, To, Sp, alphabet), classification)))));
+    }
 }
