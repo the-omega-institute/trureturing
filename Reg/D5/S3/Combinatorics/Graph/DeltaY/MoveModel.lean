@@ -1,8 +1,8 @@
 import D5.S3.Combinatorics.Graph.DeltaY.MoveModel
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
-/-! Source-bound edge-count registrations for strong histories and graph isomorphism. -/
+/-! Source-bound registrations for edge counts and the forward update. -/
 
 namespace Reg.D5.S3.Combinatorics.Graph.DeltaY.MoveModel
 
@@ -163,5 +163,86 @@ noncomputable def registration :
   options := #[] }
 
 end Isomorphism
+
+namespace ForwardValidity
+
+private abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Triple, ℕ)
+    (fun _ => State) (fun _ => State)
+
+private def actual : Realization signature :=
+  realize signature (fun _ p G => G.forward p.1 p.2) (fun e => nomatch e)
+
+private def invalid : State := ⟨{0}, {s(0, 0)}⟩
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => invalid) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {G : State} {T : Triple} {o : ℕ},
+    G.Valid → T.verts ⊆ G.active → o ∉ G.active → (R.readout () ⟨T, o⟩ G).Valid
+
+private def triangle : Triple := ⟨0, 1, 2, by decide, by decide, by decide⟩
+
+private def seed : State := ⟨{0, 1, 2}, ∅⟩
+
+private theorem rejects_invalid : ¬ arena.Law rejected := by
+  intro h
+  have hSeed : seed.Valid := by
+    intro x y hxy
+    simp [State.Adj, seed] at hxy
+  have hInvalid : invalid.Valid :=
+    h (G := seed) (T := triangle) (o := 3) hSeed (by decide) (by decide)
+  exact (hInvalid (x := 0) (y := 0) (by decide : invalid.Adj 0 0)).2.2 rfl
+
+private theorem update_varies : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨triangle, 3⟩, seed, ⟨{0, 1, 2, 4}, ∅⟩, ?_⟩
+  have hActive : insert 3 seed.active ≠ insert 3 ({0, 1, 2, 4} : Finset ℕ) := by decide
+  exact fun h => hActive (congrArg State.active h)
+
+def sourceEvidence : Registration arena (type_of% @forward_valid) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@forward_valid, rejected, rejects_invalid⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejects_invalid
+  dependence := update_varies
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@forward_valid) (Realization signature) Unit Unit := {
+  unitName := `DeltaY.forward_valid.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.DeltaY.MoveModel.ForwardValidity.sourceEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨sourceEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p G => G.forward p.1 p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.DeltaY.MoveModel
+    definition := none
+    coordinates := #[1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end ForwardValidity
 
 end Reg.D5.S3.Combinatorics.Graph.DeltaY.MoveModel

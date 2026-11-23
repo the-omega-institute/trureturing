@@ -4,9 +4,9 @@
 
 A two-color invariant forces strong reverse moves above the minimum-degree threshold.
 
-**Theorem 1.1 (Strong reachability at minimum degree six).**
+**Theorem 1.1 (Ordinary and strong reachability at minimum degree six).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/TwoColorInvariant.source_degree_six_histories`
+$$\forall G \in FiniteGraph,\; \forall H \in FiniteGraph,\; \operatorname{MinDegree}\left(G, 6\right) \Rightarrow (\operatorname{SourceReach}\left(false, G, H\right) \Leftrightarrow \operatorname{SourceReach}\left(true, G, H\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DeltaY/TwoColorInvariant.source_degree_six_histories` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ Initially all vertices have the same color. Edges joining different colors weigh
 
 A forward move colors the new center opposite the triangle. A reverse move preserves the colors of the surviving vertices. In either case, affected survivors exchange weight two for weight two. The triangle and four-cycle conditions prevent a new mixed triangle or a new all-crossing four-cycle.
 
-Induction over the ordinary history gives a strong history with the same successive graphs. The reflexive case is the empty history.
+Induction over the ordinary history gives a strong history with the same successive graphs. The reflexive case is the empty history. Every strong step is also ordinary, giving the converse for the same endpoints.
 
 **Theorem 1.2 (Independence at every reachable reverse site).**
 

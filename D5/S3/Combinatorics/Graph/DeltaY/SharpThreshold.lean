@@ -50,9 +50,9 @@ private theorem P_six : P.{u} 6 := by
   intro G hd H
   constructor
   · rintro ⟨K, h, e⟩
-    exact ⟨K, source_degree_six_histories hd h, e⟩
+    exact ⟨K, (source_degree_six_histories hd).mp h, e⟩
   · rintro ⟨K, h, e⟩
-    exact ⟨K, source_strong_to_ordinary h, e⟩
+    exact ⟨K, (source_degree_six_histories hd).mpr h, e⟩
 
 private theorem P_below_six (d : ℕ) (hd : d < 6) : ¬ P.{u} d := by
   intro hp

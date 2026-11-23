@@ -40,7 +40,21 @@ Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.GraphMove`
 
 Every forward move is allowed in both relations. A strong reverse move requires the three neighbors to form an independent set before the move.
 
-**Theorem 1.4 (Invariance under relabeling).**
+**Theorem 1.4 (Validity of the forward update).**
+
+$$\forall G \in State,\; \forall T \in Triple,\; \forall o \in Nat,\; \operatorname{Valid}\left(G\right) \Rightarrow \left(\operatorname{verts}\left(T\right) \subseteq \operatorname{active}\left(G\right) \Rightarrow \left(\left(\neg o \in \operatorname{active}\left(G\right)\right) \Rightarrow \operatorname{Valid}\left(\operatorname{forward}\left(G, T, o\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.forward_valid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zhichen Zhou (2026). *Δ-Y Moves and Partial Steiner Systems*. DOI: [10.48550/arXiv.2609.08963](https://doi.org/10.48550/arXiv.2609.08963). URL: <https://arxiv.org/html/2609.08963v1>.
+
+*Commentary.*
+
+Retained edges inherit validity from the starting state. Each new spoke joins an active triple vertex to the fresh center. The legal forward move requires all three triangle edges to exist.
+
+**Theorem 1.5 (Invariance under relabeling).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.transport`
 
@@ -54,7 +68,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.transport`
 
 Isomorphisms of the initial and final graphs transport a move and preserve its strength. Every finite graph also has a representation by finite active natural labels and unordered edges.
 
-**Theorem 1.5 (Degree of a reverse center).**
+**Theorem 1.6 (Degree of a reverse center).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.source_reverse_degree_three`
 
@@ -68,7 +82,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.source_reverse_degre
 
 The Option equivalence lists every vertex of the starting graph. The center consequently has precisely the three distinct neighbors in the reverse site.
 
-**Theorem 1.6 (Edge count along strong histories).**
+**Theorem 1.7 (Edge count along strong histories).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.source_strong_edge_count`
 
@@ -87,6 +101,7 @@ A forward move exchanges three triangle edges for three spokes. A strong reverse
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.ForwardSpec`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.GraphMove`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.ReverseSpec`
+- Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.forward_valid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.source_reverse_degree_three`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.source_strong_edge_count`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.transport`

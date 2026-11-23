@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.DeltaY;
 
@@ -21,6 +23,11 @@ internal sealed class MoveModelDocument : IScribeDocumentDefinition
             Node("delta-y-strong", "Ordinary and strong moves", "GraphMove", DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Zhou),
                 "Every forward move is allowed in both relations. A strong reverse move requires the three neighbors to form an independent set before the move."),
+            Describe.Lean(DescribeId.Create("delta-y-forward-valid"), DeclarationHandle.Create(Prefix + "forward_valid"),
+                H("Validity of the forward update"), StatementSource.FromAuthor(ForwardValidity()),
+                AssessedProvenance.FromRepo(Zhou),
+                Blocks(Paragraph(Text("Retained edges inherit validity from the starting state. Each new spoke joins an active triple vertex to the fresh center. The legal forward move requires all three triangle edges to exist."))),
+                DescribeRole.Theorem),
             Node("delta-y-transport", "Invariance under relabeling", "transport", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Zhou),
                 "Isomorphisms of the initial and final graphs transport a move and preserve its strength. Every finite graph also has a representation by finite active natural labels and unordered edges."),
@@ -36,4 +43,26 @@ internal sealed class MoveModelDocument : IScribeDocumentDefinition
         AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula ForwardValidity()
+    {
+        var g = F.Id("G");
+        var t = F.Id("T");
+        var o = F.Id("o");
+        var active = Call("active", g);
+        var vertices = new Formula.Relation(Call("verts", t), FormulaRelationOperator.SubsetOf, active);
+        var present = new Formula.Relation(o, FormulaRelationOperator.MemberOf, active);
+        var conclusion = Call("Valid", Call("forward", g, t, o));
+        var body = Implies(Call("Valid", g), Implies(vertices, Implies(new Formula.Not(present), conclusion)));
+        return Disp(All("G", "State", All("T", "Triple", All("o", "Nat", body))));
+    }
+
+    private static Formula All(string name, string type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), F.Id(type), body);
+
+    private static Formula Implies(Formula premise, Formula conclusion) =>
+        new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
 }
