@@ -9,8 +9,7 @@
 import D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
 import D5.S3.Fourier.Concentration.DiffuseSincProduct
 import D5.S3.Fourier.Concentration.GaussianCharacteristicWindow
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+import Mathlib.Probability.Independence.CharacteristicFunction
 
 /-! Coordinate character factorization for affine sums on the perturbation law. -/
 
@@ -55,23 +54,19 @@ private theorem charFun_sum_intervalNoise {J : Type*} [Fintype J] (r a : J → �
     charFun ((Measure.pi fun j => intervalNoise (r j)).map
       (fun x : J → ℝ => ∑ j, a j * x j)) t =
       ∏ j, (Real.sinc (r j * (t * a j)) : ℂ) := by
-  have (j : J) : IsProbabilityMeasure (intervalNoise (r j)) := intervalNoise_probability (hr j)
-  have hf : Measurable (fun x : J → ℝ => ∑ j, a j * x j) := by fun_prop
-  rw [charFun_apply_real, integral_map hf.aemeasurable (by fun_prop)]
-  have hphase (x : J → ℝ) :
-      Complex.exp (t * (∑ j, (a j : ℂ) * x j) * I) =
-        ∏ j, Complex.exp ((t * a j : ℝ) * (x j : ℂ) * I) := by
-    rw [← Complex.exp_sum]
-    congr 1
-    simp only [ofReal_mul, mul_sum, sum_mul]
-    exact sum_congr rfl (fun j _ => by ring)
-  simp_rw [ofReal_sum, ofReal_mul, hphase]
-  calc
-    _ = ∏ j, ∫ x : ℝ, Complex.exp ((t * a j : ℝ) * (x : ℂ) * I) ∂intervalNoise (r j) :=
-      integral_fintype_prod_eq_prod
-        (fun (j : J) (x : ℝ) => Complex.exp ((t * a j : ℝ) * (x : ℂ) * I))
-    _ = _ := prod_congr rfl (fun j _ => by
-      rw [← charFun_apply_real, charFun_intervalNoise (hr j)])
+  let μ (j : J) := intervalNoise (r j)
+  have (j : J) : IsProbabilityMeasure (μ j) := intervalNoise_probability (hr j)
+  have hindep : ProbabilityTheory.iIndepFun (fun j (x : J → ℝ) => a j * x j)
+      (Measure.pi μ) :=
+    ProbabilityTheory.iIndepFun_pi (X := fun j y => a j * y) (fun j => by fun_prop)
+  have hmeas (j : J) : AEMeasurable (fun x : J → ℝ => a j * x j) (Measure.pi μ) :=
+    (measurable_const.mul (measurable_pi_apply j)).aemeasurable
+  have hprod := congrFun (hindep.charFun_map_fun_sum_eq_prod hmeas) t
+  change charFun ((Measure.pi μ).map (fun x => ∑ j, a j * x j)) t = _
+  rw [hprod, Finset.prod_apply]
+  refine prod_congr rfl (fun j _ => ?_)
+  rw [charFun_map_mul_comp (measurable_pi_apply j).aemeasurable, (measurePreserving_eval μ j).map_eq,
+    mul_comm (a j) t, charFun_intervalNoise (hr j)]
 
 /-- The probability of a closed affine band under finite independent uniform
 perturbations is bounded at the Euclidean scale of the coefficients. -/

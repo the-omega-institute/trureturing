@@ -32,7 +32,7 @@ internal sealed class UniformPerturbationEuclideanDocument : IScribeDocumentDefi
                         + "on the law of the same sum, and yields B(η).")),
                     Paragraph(Text(
                         "If the fourth-power condition fails, at least one c(j)² exceeds S/2. "
-                        + "Conditioning on the other coordinates gives the interval length ratio "
+                        + "Conditioning on the other coordinates gives a probability at most the interval length ratio "
                         + "η/|c(j)|, bounded by √2η/√S. At zero resolution use the "
                         + "same conditioning argument with any nonzero coefficient. "
                         + "The probability is also bounded by one.")),

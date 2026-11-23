@@ -18,7 +18,7 @@ $$\operatorname{P}\left(eta\right) \le \operatorname{min}\left(1, \operatorname{
 
 Fubini factors the characteristic function of the sum into sinc(c(j)t). When the fourth-power sum is at most S²/2, the reciprocal quadratic envelope with coefficient S/15 controls the modulus. The Gaussian window bound applies at center −b on the law of the same sum, and yields B(η).
 
-If the fourth-power condition fails, at least one c(j)² exceeds S/2. Conditioning on the other coordinates gives the interval length ratio η/|c(j)|, bounded by √2η/√S. At zero resolution use the same conditioning argument with any nonzero coefficient. The probability is also bounded by one.
+If the fourth-power condition fails, at least one c(j)² exceeds S/2. Conditioning on the other coordinates gives a probability at most the interval length ratio η/|c(j)|, bounded by √2η/√S. At zero resolution use the same conditioning argument with any nonzero coefficient. The probability is also bounded by one.
 
 This estimate concerns the product law on the admitted intervals. The center shift leaves the coefficient scale unchanged. In a collision test the coefficients are the differences of the degree vectors and the perturbation coordinates are shared.
 
@@ -27,3 +27,4 @@ This estimate concerns the product law on the admitted intervals. The center shi
 - Truth anchor: `D5/S3/Fourier/Concentration/UniformPerturbationEuclidean.intervalNoise_pi_affine_le_euclidean`
 - Dependency: [D5/S3/Fourier/Concentration/ContinuousSpectralPerturbations](ContinuousSpectralPerturbations.md)
 - Dependency: [D5/S3/Fourier/Concentration/DiffuseSincProduct](DiffuseSincProduct.md)
+- Dependency: [D5/S3/Fourier/Concentration/GaussianCharacteristicWindow](GaussianCharacteristicWindow.md)
