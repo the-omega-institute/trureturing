@@ -28,7 +28,7 @@ powers_table: proof_shape=content; consumers=HardinA233178Chromatic.vector_certi
 table_certificate: proof_shape=content; consumers=HardinA233178Chromatic.vector_certificate
 vector_certificate: proof_shape=content; consumers=HardinA233178Chromatic.result, HardinA229538Strip.zero_values, HardinA229538Strip.inherited_polynomial
 v: proof_shape=bind-only; consumers=HardinA233178Chromatic.result
-result: proof_shape=content; consumers=HardinA229538Strip.chromatic_coordinate, HardinA233178Recurrence.chromatic_recurrence
+result: proof_shape=content; consumers=HardinA233178Recurrence.chromatic_recurrence
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
