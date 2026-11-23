@@ -6,11 +6,13 @@ title: "An effective Linear Independence Conjecture for the zeros of the Riemann
 doi: 10.48550/arXiv.2311.04860
 url: https://arxiv.org/html/2311.04860v2
 claim: Conjecture 1.1 gives a uniform lower bound for nonzero bounded integer combinations of distinct positive zeta ordinates. Theorem 1.5 gives conditional extreme values for a class of weighted sums over zeta zeros.
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHWeightedSineCutoff
 license: citation-only
 triage: anchor
 ---
 
+<!-- GID: D5/L/Weil/lamzouri2024effective -->
 # Effective linear independence for zeta ordinates
 
 Conjecture 1.1 states that for each real \(d>0\) there is a positive constant \(C_d\), possibly ineffective, such that for every real \(X\ge 2\),

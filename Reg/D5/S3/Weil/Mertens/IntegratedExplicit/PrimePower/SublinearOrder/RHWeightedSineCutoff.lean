@@ -78,7 +78,8 @@ private theorem actual_dependence (hRH : RiemannHypothesis) (hELI : EffectiveLI 
   obtain ⟨T, u, hT, hu⟩ := half_loss actual actual_law hRH hELI
   have hpos : 0 < weightedSine hRH T u := by
     change 1 - weightedSine hRH T u / harmonicMass hRH T < 1 / 2 at hu
-    exact pos_of_div_pos_left (by linarith only [hu]) hT.le
+    have hscore : 0 < weightedSine hRH T u / harmonicMass hRH T := by linarith only [hu]
+    simpa only [zero_mul] using (lt_div_iff₀ hT).mp hscore
   refine ⟨(⟨hRH⟩, T), u, 0, ?_⟩
   change weightedSine hRH T u ≠ weightedSine hRH T 0
   simpa [weightedSine] using hpos.ne'

@@ -47,9 +47,9 @@ internal sealed class RHWeightedSineCutoffDocument : IScribeDocumentDefinition
                     Paragraph(Text("Write W(h,T) for harmonicMass and S(h,T,v) for weightedSine. "
                         + "Both use the same weight mγ γ/(1/4 + γ²) at each distinct positive "
                         + "ordinate, where mγ is analytic multiplicity. The variables b and e "
-                        + "are the window exponent and the allowed normalized loss. Eventually "
-                        + "at atTop means that one sufficiently large cutoff suffices for "
-                        + "all later T and all interval starts a. "),
+                        + "are the window exponent and the allowed normalized loss. The eventual "
+                        + "quantifier at positive infinity gives one cutoff above which the "
+                        + "bound holds for every T and every interval start a. "),
                         Ref("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootWeightedSine")),
                     Paragraph(Text("Choose 0 < α < min(b,1) and a positive prefix tolerance e₀ "
                         + "such that 2(1 − α²) + α² e₀ < e. Set X = T^α. Normalize the weights "
@@ -61,11 +61,13 @@ internal sealed class RHWeightedSineCutoffDocument : IScribeDocumentDefinition
                         Ref("D5/S3/Fourier/WeightedPhaseRecurrence")),
                     Paragraph(Text("Choose d > 0 with α(1+d) < b. The logarithm of the product "
                         + "of the window length and δ is T^b − T^(α(1+d)) + log(C/r). "
-                        + "If D is the number of distinct prefix ordinates, D ≤ N(X) = O(X log X). "
+                        + "If D is the number of distinct prefix ordinates, D ≤ N(X) because "
+                        + "each has multiplicity at least one, and N(X) = O(X log X). "
                         + "Therefore the logarithm of M^D is D log M = O(T^α log T). The "
                         + "positive T^b term eventually dominates both costs and the fixed "
-                        + "constants in the strict recurrence inequality. This gives prefix "
-                        + "loss less than e₀ in every interval of length exp(T^b).")),
+                        + "constants. For R = exp(T^b) the recurrence inequality requires "
+                        + "Rδ(e₀ − 1/M) > 2(e₀ M^D − (e₀ − 1/M)). It then gives prefix "
+                        + "loss less than e₀ in every interval of length R.")),
                     Paragraph(Text("The common limit of W(h,Y)/log²(Y) as Y tends to infinity is "
                         + "1/(4π). In W(h,T^α)/W(h,T), the two normalized masses have ratio "
                         + "tending to one, while (log(T^α)/log T)² equals α² for T > 1. Thus "
@@ -75,10 +77,10 @@ internal sealed class RHWeightedSineCutoffDocument : IScribeDocumentDefinition
                         + "less than e by the strict parameter choice.")),
                     Paragraph(Text("The result applies the finite recurrence theorem under RH "
                         + "and Conjecture 1.1 to the actual harmonic weights in every translated "
-                        + "time interval of the stated length. Lamzouri's Theorem 1.5 instead "
-                        + "proves extreme values for a class of coefficient sequences satisfying "
-                        + "Assumptions 1–3, over a fixed range with its own truncation and "
-                        + "logarithmic scale."))),
+                        + "time interval of the stated length. Lamzouri's Theorem 1.5 concerns "
+                        + "extreme values of Φ at truncation X² over [2,X] on the scale "
+                        + "(log log log X)^A, for coefficient sequences satisfying Assumptions "
+                        + "1–3 and under ELI."))),
                 DescribeRole.Theorem))));
 
     private static Formula Reals => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
