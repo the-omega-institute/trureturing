@@ -48,7 +48,7 @@ a: proof_shape=bind-only; consumers=HardinA229538Strip.result
 residual: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count
 transition_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count
 transfer_count: proof_shape=bind-only; consumers=HardinA229538Strip.result
-labelled_scale: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
+labelled_scale: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 result: proof_shape=content; consumers=none (external open-problem-resolution #32224)
 -/
 
