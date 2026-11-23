@@ -15,10 +15,10 @@
    square-root-degree-scaled vector at eigenvalue one for every positive weighting.
    adjacency_refuted: proof_shape: content; escape_witness: adjacency_witness constructs a
    nonzero null vector with interior zero coordinates for every positive weighting.
-   directed_refuted: proof_shape: content; escape_witness: outPath_arborescence constructs the
-   required spanning out-tree and directed_witness finds a vanishing-coordinate right eigenvector.
-   result: proof_shape: content after expanding all three branch proofs; escape_witness: the
-   three support-specific eigenvector constructions on its disjunction-elimination branches.
+   directed_witness: proof_shape: bind-only, consumed by directed_refuted to refute S2.
+   directed_refuted: proof_shape: content, using the spanning out-tree from outPath_arborescence.
+   result: proof_shape: content after expanding all three branch proofs, including the
+   normalized and adjacency mode constructions on their disjunction-elimination branches.
 -/
 
 import D5.S3.Combinatorics.SpectralGraph.AlbrightKemenyEdgeDerivativeRefutation
