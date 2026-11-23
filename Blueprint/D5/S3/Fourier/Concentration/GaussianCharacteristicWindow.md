@@ -20,11 +20,11 @@ Inside the window, exp(−((x−b)/s)²) is at least exp(−(r/s)²). The Gaussi
 
 With the factor exp(itξ), the Gaussian transform at ξ=2(x−b)/s is √π exp(−((x−b)/s)²). The modulus of the product integrand is exp(−t²), which is integrable against Lebesgue measure times μ. Fubini and the definition of χ give the phase-sensitive integral G(b,s). The triangle inequality bounds its modulus by A(s). The first inequality is an equality for a unit atom on the boundary |x−b|=r.
 
-For k>0 and r>0, define Q(k,r)=exp(1/2)√π r/(√2√k). A reciprocal quadratic envelope means |χ(t)|≤1/(1+kt²) for every real t.
+For k>0 and r>0, define Q(k,r)=exp(1/2)√π r/(√2√k). A reciprocal quadratic envelope means that χ satisfies the pointwise inequality in the hypothesis below.
 
 **Theorem 1.2 (A bound linear in the radius).**
 
-$$\operatorname{M}\left(b, r\right) \le \operatorname{Q}\left(k, r\right)$$
+$$\left(\forall t \in \mathbb{R},\; \left|\operatorname{chi}\left(t\right)\right| \le \frac{1}{1 + k \cdot t^{2}}\right) \Rightarrow \operatorname{M}\left(b, r\right) \le \operatorname{Q}\left(k, r\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/GaussianCharacteristicWindow.measureReal_closedWindow_le_of_quadratic_charFun` (`✓ std3`). ∎
 

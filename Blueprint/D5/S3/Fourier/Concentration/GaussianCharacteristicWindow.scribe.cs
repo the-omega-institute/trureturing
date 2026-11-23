@@ -37,7 +37,7 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
                         + "is an equality for a unit atom on the boundary |x−b|=r."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "For k>0 and r>0, define Q(k,r)=exp(1/2)√π r/(√2√k). A reciprocal quadratic envelope "
-                + "means |χ(t)|≤1/(1+kt²) for every real t.")),
+                + "means that χ satisfies the pointwise inequality in the hypothesis below.")),
             Describe.Lean(
                 DescribeId.Create("measure-real-closed-window-le-of-quadratic-char-fun"),
                 DeclarationHandle.Create(Owner + ".measureReal_closedWindow_le_of_quadratic_charFun"),
@@ -73,7 +73,17 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
     private static Formula QuadraticBound()
     {
         var radius = F.Id("r");
-        return Disp(new Formula.Relation(Call("M", F.Id("b"), radius),
-            FormulaRelationOperator.LessThanOrEqual, Call("Q", F.Id("k"), radius)));
+        var parameter = F.Id("k");
+        var frequency = F.Id("t");
+        var reals = Seq(Mathbb, Grp(F.Id("R")));
+        var envelope = new Formula.Fraction(D(1),
+            Add(D(1), Multiply(parameter, new Formula.Power(frequency, D(2)))));
+        var pointwiseBound = new Formula.Relation(new Formula.Absolute(Call("chi", frequency)),
+            FormulaRelationOperator.LessThanOrEqual, envelope);
+        var hypothesis = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("t"), reals, pointwiseBound);
+        var massBound = new Formula.Relation(Call("M", F.Id("b"), radius),
+            FormulaRelationOperator.LessThanOrEqual, Call("Q", parameter, radius));
+        return Disp(new Formula.Logic(hypothesis, FormulaLogicOperator.Implies, massBound));
     }
 }
