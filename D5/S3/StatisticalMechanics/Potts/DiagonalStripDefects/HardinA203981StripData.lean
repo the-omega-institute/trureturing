@@ -11,7 +11,8 @@ admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
 between_six: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.cost_formula
 parityRows: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.recolor_match, boundary, representatives
-classPair: proof_shape=bind-only; consumers=HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
+sorted_pair_mem: proof_shape=bind-only; consumers=pairClass
+classPair: proof_shape=bind-only; consumers=pairClass, sorted_pair_mem, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
 pairClass: proof_shape=bind-only; consumers=HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.boundary_reflect._proof_1, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, boundary
 boundary: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981StripCertificate.counts, HardinA203981StripCertificate.initial_counts, HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA229508Strip.counting_bridge, HardinA229508StripCertificate.one_counts, HardinA229508StripCertificate.representative_counts, HardinA229508StripCertificate.transition_counts, HardinA229508StripData.cl, HardinA229508StripData.cl.eq_1, HardinA229683Strip.counting_bridge, HardinA229683StripCertificate.cut_inherited, HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.representative_counts, HardinA229683StripCertificate.transition_counts, HardinA229683StripCertificate.transition_counts._simp_1, HardinA229683StripCertificate.two_counts, HardinA229683StripData.cl, HardinA229683StripData.cl.eq_1
 representatives: proof_shape=bind-only; consumers=HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA229508StripCertificate.representative_counts, HardinA229683StripCertificate.representative_counts
@@ -24,6 +25,8 @@ unordered: proof_shape=bind-only; consumers=classProduct
 halfInitial: proof_shape=bind-only; consumers=initial
 -/
 
+import Init.Data.List.Find
+import Init.Data.List.OfFn
 import Init.Tactics
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Literal
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
@@ -72,22 +75,23 @@ def parityRows : Row 3 6 ≃ Col × Col :=
     ((Equiv.arrowCongr Fin.revPerm (Equiv.refl (Fin 3))).trans columnRows.symm)
   onGrid.trans (toPairPerPosition.trans (toPairOfTriples.trans toColumns))
 
-/-- A class index for two triple patterns, invariant under their exchange. -/
-def pairClass : Fin 5 → Fin 5 → Fin 15 :=
-  ![![0, 1, 2, 3, 4],
-    ![1, 5, 6, 7, 8],
-    ![2, 6, 9, 10, 11],
-    ![3, 7, 10, 12, 13],
-    ![4, 8, 11, 13, 14]]
-
-/-- Classify the even columns from the left and the odd columns from the right. -/
-def boundary (p : Row 3 6) : Fin 15 :=
-  pairClass (cls (parityRows p).1) (cls (parityRows p).2)
-
 /-- The sorted pair of triple classes for each boundary index. -/
 def classPair : Fin 15 → Fin 5 × Fin 5 :=
   ![(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (1, 4),
     (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]
+
+private theorem sorted_pair_mem : ∀ x y : Fin 5,
+    (min x y, max x y) ∈ List.ofFn classPair := by
+  decide +kernel
+
+/-- A class index for two triple patterns, invariant under their exchange. -/
+def pairClass (x y : Fin 5) : Fin 15 :=
+  ⟨(List.ofFn classPair).idxOf (min x y, max x y),
+    List.length_ofFn ▸ List.idxOf_lt_length_of_mem (sorted_pair_mem x y)⟩
+
+/-- Classify the even columns from the left and the odd columns from the right. -/
+def boundary (p : Row 3 6) : Fin 15 :=
+  pairClass (cls (parityRows p).1) (cls (parityRows p).2)
 
 /-- Interleave the labelled triple representatives. -/
 def representatives (i : Fin 15) : Row 3 6 :=
