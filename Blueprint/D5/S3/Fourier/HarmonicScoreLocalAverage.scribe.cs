@@ -43,7 +43,7 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     "D5/S3/Fourier/HarmonicScoreLocalAverage.cutoffScore_average_lower"),
                 H("Lower bound for the window mean"),
-                StatementSource.FromAuthor(Disp(Le(LowerBound(), Mean()))),
+                StatementSource.FromAuthor(Disp(Seq(LowerBound(), Le, Mean()))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -69,7 +69,7 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
                 H("A score at least the bound in the same window"),
                 StatementSource.FromAuthor(Disp(Seq(Exists, Sp, F.Id("u"), InMacro,
                     OpenBracket, F.Id("b"), Comma, Add(F.Id("b"), F.Id("h")), CloseBracket,
-                    Comma, Quad, Le(LowerBound(), S(F.Id("T"), Div(F.Id("u"), F.Id("r"))))))),
+                    Comma, Quad, LowerBound(), Le, S(F.Id("T"), Div(F.Id("u"), F.Id("r")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The finite score is continuous. The first integral mean value theorem "
@@ -84,7 +84,7 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
     private static Formula Frequency(Formula j) => Subscript(GammaLower, j);
 
     private static Formula Summation(Formula j) =>
-        Seq(Subscript(Sum, Seq(j, InMacro, Sp, F.Id("s"), Comma, Le(Frequency(j), F.Id("Z")))), Thin);
+        Seq(Subscript(Sum, Seq(j, InMacro, Sp, F.Id("s"), Comma, Frequency(j), Le, F.Id("Z"))), Thin);
 
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula W(Formula z) => Subscript(F.Id("W"), z);
