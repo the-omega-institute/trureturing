@@ -136,15 +136,14 @@ internal sealed class AmendolaRiffoSchmitzRefutationDocument : IScribeDocumentDe
             All(Eq(Axes(V("l")), Product(Axis(V("l")), Axis(V("l")))), ("l", N)),
             "The first axis supplies row coordinates and the second supplies column coordinates."),
         Definition("cube", "Unit cube", "cube",
-            All(Eq(Call("cube", V("l")),
-                    new Formula.SetBuilder(V("x"), Axis(V("l")),
-                        All(Member(App(V("x"), V("i")), Named("UnitInterval")), ("i", Fin(V("l")))))),
-                ("l", N)),
+            All(IffOf(Member(V("x"), Call("cube", V("l"))),
+                    Parenthesized(All(Member(App(V("x"), V("i")), Named("UnitInterval")), ("i", Fin(V("l")))))),
+                ("l", N), ("x", Axis(V("l")))),
             "Every coordinate belongs to the closed unit interval."),
         Definition("simplex", "Weakly increasing unit simplex", "simplex",
-            All(Eq(Call("simplex", V("l")),
-                    new Formula.SetBuilder(V("x"), Call("cube", V("l")), Call("Monotone", V("x")))),
-                ("l", N)),
+            All(IffOf(Member(V("x"), Call("simplex", V("l"))),
+                    And(Member(V("x"), Call("cube", V("l"))), Call("Monotone", V("x")))),
+                ("l", N), ("x", Axis(V("l")))),
             "The entries are weakly increasing in slot order."),
         Definition("coordinate", "Paired coordinate evaluation", "coordinate",
             All(Eq(Call("coordinate", V("i"), V("j"), V("z")),
@@ -358,10 +357,9 @@ internal sealed class AmendolaRiffoSchmitzRefutationDocument : IScribeDocumentDe
             ("i", Fin(V("m"))), ("j", Fin(V("m"))));
         var right = All(If(LT(i, j), LT(App(pi, RightSlot(i)), App(pi, RightSlot(j)))),
             ("i", Fin(V("n"))), ("j", Fin(V("n"))));
-        return All(Eq(Call("shuffles", V("m"), V("n")),
-                new Formula.SetBuilder(pi, Rank(Add(V("m"), V("n"))),
-                    And(Parenthesized(left), Parenthesized(right)))),
-            ("m", N), ("n", N));
+        return All(IffOf(Member(pi, Call("shuffles", V("m"), V("n"))),
+                And(Parenthesized(left), Parenthesized(right))),
+            ("m", N), ("n", N), ("p", Rank(Add(V("m"), V("n")))));
     }
 
     private static Formula ShuffleSumFormula()

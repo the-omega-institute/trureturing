@@ -186,7 +186,7 @@ castAdd and natAdd are the two Fin embeddings. The second offsets a slot by the 
 
 **Definition 1.16 (Block-increasing permutations).**
 
-$$\forall m \in \mathbb{N}, n \in \mathbb{N},\; \operatorname{shuffles}\left(m, n\right) = \left\{p \mid \operatorname{Rank}\left(m + n\right) \in (\forall i \in \operatorname{Fin}\left(m\right), j \in \operatorname{Fin}\left(m\right),\; i < j \Rightarrow p\left(\operatorname{castAdd}\left(n, i\right)\right) < p\left(\operatorname{castAdd}\left(n, j\right)\right)) \land (\forall i \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right),\; i < j \Rightarrow p\left(\operatorname{natAdd}\left(m, i\right)\right) < p\left(\operatorname{natAdd}\left(m, j\right)\right))\right\}$$
+$$\forall m \in \mathbb{N}, n \in \mathbb{N}, p \in \operatorname{Rank}\left(m + n\right),\; p \in \operatorname{shuffles}\left(m, n\right) \Leftrightarrow \left((\forall i \in \operatorname{Fin}\left(m\right), j \in \operatorname{Fin}\left(m\right),\; i < j \Rightarrow p\left(\operatorname{castAdd}\left(n, i\right)\right) < p\left(\operatorname{castAdd}\left(n, j\right)\right)) \land (\forall i \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right),\; i < j \Rightarrow p\left(\operatorname{natAdd}\left(m, i\right)\right) < p\left(\operatorname{natAdd}\left(m, j\right)\right))\right)$$
 
 *Formalization.* `D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.shuffles` (`✓ std3`).
 
@@ -270,7 +270,7 @@ The first axis supplies row coordinates and the second supplies column coordinat
 
 **Definition 1.23 (Unit cube).**
 
-$$\forall l \in \mathbb{N},\; \operatorname{cube}\left(l\right) = \left\{x \mid \operatorname{Axis}\left(l\right) \in \forall i \in \operatorname{Fin}\left(l\right),\; x\left(i\right) \in \operatorname{UnitInterval}\right\}$$
+$$\forall l \in \mathbb{N}, x \in \operatorname{Axis}\left(l\right),\; x \in \operatorname{cube}\left(l\right) \Leftrightarrow (\forall i \in \operatorname{Fin}\left(l\right),\; x\left(i\right) \in \operatorname{UnitInterval})$$
 
 *Formalization.* `D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.cube` (`✓ std3`).
 
@@ -282,7 +282,7 @@ Every coordinate belongs to the closed unit interval.
 
 **Definition 1.24 (Weakly increasing unit simplex).**
 
-$$\forall l \in \mathbb{N},\; \operatorname{simplex}\left(l\right) = \left\{x \mid \operatorname{cube}\left(l\right) \in \operatorname{Monotone}\left(x\right)\right\}$$
+$$\forall l \in \mathbb{N}, x \in \operatorname{Axis}\left(l\right),\; x \in \operatorname{simplex}\left(l\right) \Leftrightarrow \left(x \in \operatorname{cube}\left(l\right) \land \operatorname{Monotone}\left(x\right)\right)$$
 
 *Formalization.* `D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.simplex` (`✓ std3`).
 
