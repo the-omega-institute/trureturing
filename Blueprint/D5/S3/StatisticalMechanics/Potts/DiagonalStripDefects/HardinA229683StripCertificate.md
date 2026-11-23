@@ -48,7 +48,7 @@ The upper-block projection gives the one-budget transfer on the first two sector
 
 **Definition 1.4 (Forward vectors in total cost degree 2).**
 
-$$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{W}\left(i, j\right) = \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{halfForwardZero}}\left(i\right), v_{2}\left(i\right), j\right) + \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{halfForwardOne}}\left(i\right), \operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{halfForwardOne}}\left(i\right), j\right) + \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(v_{2}\left(i\right), \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{halfForwardZero}}\left(i\right), j\right)))$$
+$$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{W}\left(i, j\right) = \operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right), \operatorname{\mathit{Sum}}.\operatorname{\mathit{inr}}\right)\left(j\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.W` (`✓ std3`).
 
@@ -58,11 +58,11 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\forall j: \operatorna
 
 *Commentary.*
 
-Here v₂ is the 21 by 5 table of degree-two half-strip vectors. Each unordered product reads a single target coordinate, counting both orders when its classes differ. The degree-two half-strip table starts at zero and uses the last five coordinates of HardinA229696StripData.W for exponents one and two, with classes 1 and 3 exchanged at exponent two. The theorem forward_two pins the entries against the three-sector update.
+The degree-two vector is the sum of the unordered products for half-strip degrees zero and two, one and one, and two and zero. Each unordered product reads a single target coordinate, counting both orders when its classes differ. The degree-two half-strip table starts at zero and uses the last five coordinates of HardinA229696StripData.W for exponents one and two, with classes 1 and 3 exchanged at exponent two. The theorem forward_two pins the entries against the three-sector update.
 
 **Definition 1.5 (Order-eighteen coefficients).**
 
-$$(\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{\mathit{coeff}}: (\operatorname{\mathit{Fin}}\left(18\right)) \to (\mathit{Int})) = [-282429536481, 470715894135, 0, -366499782594, 132368667075, 92909172825, -54520532190, -6257717775, 8082823950, -601275555, -435322350, 70536825, 7404210, -2206575, 60075, 19486, -2010, 75]$$
+$$\forall k: \operatorname{\mathit{Fin}}\left(18\right), (\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right) = -(\sum_{p \in \operatorname{\mathit{Finset}}.\operatorname{\mathit{HasAntidiagonal}}.\operatorname{\mathit{antidiagonal}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)} (\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{squareMonicCoeff}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(p\right)\right) \cdot \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{monicCoeff}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(p\right)\right))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.coeff` (`✓ std3`).
 
@@ -72,9 +72,23 @@ $$(\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{\mathit{c
 
 *Commentary.*
 
+The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial.
+
+**Theorem 1.6 (Numerical expansion).**
+
+$$(\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{\mathit{coeff}}: (\operatorname{\mathit{Fin}}\left(18\right)) \to (\mathit{Int})) = [-282429536481, 470715894135, 0, -366499782594, 132368667075, 92909172825, -54520532190, -6257717775, 8082823950, -601275555, -435322350, 70536825, 7404210, -2206575, 60075, 19486, -2010, 75]$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.coeff_values` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229683: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A229683>.
+
+*Commentary.*
+
 The entries are in increasing order of input index. The zero coefficient is at lag sixteen.
 
-**Theorem 1.6 (Last-sector forward vectors).**
+**Theorem 1.7 (Last-sector forward vectors).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right), \operatorname{\mathit{Sum}}.\operatorname{\mathit{inr}}\right) = \operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{W}\left(i\right))$$
 
@@ -88,7 +102,7 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{
 
 Each update sums exact-two, exact-one and exact-zero transitions from the three sectors.
 
-**Theorem 1.7 (Forward relation at exponent twenty).**
+**Theorem 1.8 (Forward relation at exponent twenty).**
 
 $$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, 2 + 18\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(18\right)} (\operatorname{\mathit{HSMul}}.\operatorname{\mathit{hSMul}}\left(\operatorname{\mathit{HardinA229683StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229683StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229683StripData}}.\operatorname{\mathit{initial}}, 2 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))$$
 
@@ -106,6 +120,7 @@ Seven coordinate shifts of the order-twelve relation give the relation on the fi
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.W`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.coeff`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.coeff_values`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.forward_inherited`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.forward_two`

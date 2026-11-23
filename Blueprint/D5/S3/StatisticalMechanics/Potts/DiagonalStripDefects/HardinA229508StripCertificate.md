@@ -102,9 +102,23 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\forall j: \operatorna
 
 The degree-zero and degree-one half-strip vectors contribute in both orders at each exponent through twenty.
 
-**Definition 1.8 (Order-twelve coefficients).**
+**Definition 1.8 (Squared monic polynomial coefficients).**
 
-$$(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}: (\operatorname{\mathit{Fin}}\left(12\right)) \to (\mathit{Int})) = [-43046721, 47829690, 13286025, -27398736, 2329155, 4556250, -940491, -180630, 50175, 324, -715, 50]$$
+$$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{squareMonicCoeff}}\left(n\right) = \sum_{p \in \operatorname{\mathit{Finset}}.\operatorname{\mathit{HasAntidiagonal}}.\operatorname{\mathit{antidiagonal}}\left(n\right)} (\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{monicCoeff}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(p\right)\right) \cdot \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{\mathit{monicCoeff}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(p\right)\right)))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.squareMonicCoeff` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229508: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A229508>.
+
+*Commentary.*
+
+The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent.
+
+**Definition 1.9 (Order-twelve coefficients).**
+
+$$\forall k: \operatorname{\mathit{Fin}}\left(12\right), (\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right) = -\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{squareMonicCoeff}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.coeff` (`✓ std3`).
 
@@ -114,9 +128,23 @@ $$(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{c
 
 *Commentary.*
 
+The recurrence weights are the negatives of the coefficients below degree 12 in the square of the order-six monic polynomial.
+
+**Theorem 1.10 (Numerical expansion).**
+
+$$(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}: (\operatorname{\mathit{Fin}}\left(12\right)) \to (\mathit{Int})) = [-43046721, 47829690, 13286025, -27398736, 2329155, 4556250, -940491, -180630, 50175, 324, -715, 50]$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.coeff_values` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229508: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A229508>.
+
+*Commentary.*
+
 The coefficients are listed in increasing order of input index.
 
-**Theorem 1.9 (Second-sector forward vectors).**
+**Theorem 1.11 (Second-sector forward vectors).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right), \operatorname{\mathit{Sum}}.\operatorname{\mathit{inr}}\right) = \operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{W}\left(i\right))$$
 
@@ -130,7 +158,7 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(21\right), (\operatorname{\mathit{
 
 Each update combines transitions with one new defect from the first sector and zero new defects from the second.
 
-**Theorem 1.10 (A shifted forward relation in one coordinate).**
+**Theorem 1.12 (A shifted forward relation in one coordinate).**
 
 $$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)] [\operatorname{\mathit{DecidableEq}}\left(s\right)], (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{Int}\right), (\forall v: (s) \to (\mathit{Int}), (\forall d: \mathit{Nat}, (\forall b: \mathit{Nat}, (\forall c: (\operatorname{\mathit{Fin}}\left(d\right)) \to (\mathit{Int}), ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + d\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(c\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))) \to (\forall n: \mathit{Nat}, (\forall j: s, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + d\right)\left(j\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (c\left(k\right) \cdot \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\left(j\right)))))))))))$$
 
@@ -144,7 +172,7 @@ $$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)] [\o
 
 The index type has a finite enumeration and decidable equality. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation.
 
-**Theorem 1.11 (Forward relation at exponent thirteen).**
+**Theorem 1.13 (Forward relation at exponent thirteen).**
 
 $$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + 12\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(12\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))$$
 
@@ -163,6 +191,7 @@ Seven applications of the coordinate shift to the order-six relation give the in
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.W`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.block_projection`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.coeff`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.coeff_values`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_one`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.forward_zeroth`
@@ -170,6 +199,7 @@ Seven applications of the coordinate shift to the order-six relation give the in
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.one_counts`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.one_exact`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.shifted_coordinate`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.squareMonicCoeff`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate](HardinA203981StripCertificate.md)

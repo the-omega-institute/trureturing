@@ -16,7 +16,7 @@ $$\operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{betw}}\le
 
 *Commentary.*
 
-Each pair lists the upper and lower column indices of a bond.
+Each pair lists the upper and lower column indices of a bond. HardinA229635Literal.same_between identifies the width-six bond set with the union whose pairs are listed here.
 
 **Definition 1.2 (Column as a three-position row).**
 
@@ -202,6 +202,8 @@ The two independent labelled triples contribute the product of their populations
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.representatives`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.unordered`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Literal](../CrossedStripDefectsWide/P5b/HardinA229635Literal.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripData](../CrossedStripDefectsWide/WidthSix/HardinA229532StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229588Strip](../StripDefects/HardinA229588Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn](../StripDefects/HardinA229637RowColumn.md)
