@@ -11,22 +11,20 @@ import D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentialFibers
 namespace D5.S3.Combinatorics.Matroids.RankThreeInternalTriplePotentials
 
 open Finset
-open RankThreeOmissionPotentialFibers (IsThird potentialSpace)
+open RankThreeOmissionPotentialFibers (IsThird potentialSpace third_value)
 open RankThreeOmissionPotentials (covers IsOmissionPotential)
 
 abbrev Row (d : ℕ) := Fin d → ZMod 3
 
-abbrev Point (d s : ℕ) := Row d × ZMod s
-
 /-- Every mixed pair has its product zero-sum completion. Every listed triple
 is internal to a row or has zero product sum. -/
-def LiftedLineFamily {d s : ℕ} {T : Type*} (points : T → Fin 3 → Point d s) : Prop :=
+def LiftedLineFamily {d s : ℕ} {T : Type*} (points : T → Fin 3 → (Row d × ZMod s)) : Prop :=
   (∀ (x y : Row d) (a b : ZMod s), x ≠ y →
     IsThird points (x,a) (y,b) (-(x+y),-(a+b))) ∧
   ∀ t, (∀ j, (points t j).1 = (points t 0).1) ∨ (∑ j, points t j) = 0
 
 /-- The internal observations that must vanish under the common cyclic map. -/
-def InternalConstraints {d s : ℕ} {T : Type*} (points : T → Fin 3 → Point d s)
+def InternalConstraints {d s : ℕ} {T : Type*} (points : T → Fin 3 → (Row d × ZMod s))
     (g : ZMod s →+ ZMod 3) : Prop :=
   (∀ x a b, (¬ ∃ t, covers (points t) (x,a) (x,b)) → g (a-b) = 0) ∧
   ∀ t, (∀ j, (points t j).1 = (points t 0).1) → g (∑ j, (points t j).2) = 0
@@ -66,32 +64,21 @@ private theorem common_additive_term {A B : Type*} [AddCommGroup A] [AddCommGrou
     dsimp [V]
     abel
 
-private theorem sum_on_third {I T : Type*} {points : T → Fin 3 → I}
-    (u : I → ZMod 3) (hs : ∀ t, (∑ j, u (points t j)) = 0)
-    {x y z : I} (h : IsThird points x y z) : u x + u y + u z = 0 := by
-  classical
-  obtain ⟨t,i,j,k,hij,hki,hkj,hi,hj,hk⟩ := h
-  have hall : ({i,j,k} : Finset (Fin 3)) = univ := by
-    apply eq_univ_of_card
-    simpa using (card_eq_three.mpr ⟨i,j,k,hij,hki.symm,hkj.symm,rfl⟩)
-  have hsum := hs t
-  rw [← hall, sum_insert (by simp [hij,hki.symm]), sum_insert (by simp [hkj.symm]),
-    sum_singleton, hi, hj, hk] at hsum
-  simpa only [add_assoc] using hsum
-
-private theorem mixed_equations {d s : ℕ} {T : Type*} (points : T → Fin 3 → Point d s)
-    (family : LiftedLineFamily points) (u : Point d s → ZMod 3)
+private theorem mixed_equations {d s : ℕ} {T : Type*} (points : T → Fin 3 → (Row d × ZMod s))
+    (family : LiftedLineFamily points) (u : (Row d × ZMod s) → ZMod 3)
     (hs : ∀ t, (∑ j, u (points t j)) = 0) :
     ∀ (x y : Row d) (a b : ZMod s), x ≠ y →
       u (x,a) + u (y,b) + u (-(x+y),-(a+b)) = 0 :=
-  fun x y a b different => sum_on_third u hs (family.1 x y a b different)
+  by
+    intro x y a b different
+    rw [third_value points u hs (family.1 x y a b different), add_neg_cancel]
 
-private theorem decompose_mixed {d s : ℕ} (hd : 0 < d) (u : Point d s → ZMod 3)
+private theorem decompose_mixed {d s : ℕ} (hd : 0 < d) (u : (Row d × ZMod s) → ZMod 3)
     (anchor : u 0 = 0)
     (mixed : ∀ (x y : Row d) (a b : ZMod s), x ≠ y →
       u (x,a) + u (y,b) + u (-(x+y),-(a+b)) = 0) :
     ∃ (l : Row d →ₗ[ZMod 3] ZMod 3) (g : ZMod s →+ ZMod 3),
-      ∀ p : Point d s, u p = l p.1 + g p.2 := by
+      ∀ p : (Row d × ZMod s), u p = l p.1 + g p.2 := by
   have across (x y : Row d) (hne : x ≠ y) :
       ∃ g : ZMod s →+ ZMod 3, (∀ a, u (x,a) = u (x,0) + g a) ∧
         (∀ a, u (y,a) = u (y,0) + g a) :=
@@ -130,7 +117,7 @@ private theorem decompose_mixed {d s : ℕ} (hd : 0 < d) (u : Point d s → ZMod
   exact ⟨l.toZModLinearMap 3, g, fun p => rows p.1 p.2⟩
 
 private def separatedValue {d s : ℕ} (l : Row d →ₗ[ZMod 3] ZMod 3)
-    (g : ZMod s →+ ZMod 3) : Point d s →+ ZMod 3 where
+    (g : ZMod s →+ ZMod 3) : (Row d × ZMod s) →+ ZMod 3 where
   toFun p := l p.1 + g p.2
   map_zero' := by simp
   map_add' p q := by
@@ -150,7 +137,7 @@ private theorem sum_hom_zero {A : Type*} [Fintype A] [AddCommGroup A]
     simpa only [three_nsmul,add_assoc] using ZModModule.char_nsmul_eq_zero 3 v
   simpa only [twice,zero_add] using three
 
-private theorem internal_sum {d s : ℕ} {T : Type*} (points : T → Fin 3 → Point d s)
+private theorem internal_sum {d s : ℕ} {T : Type*} (points : T → Fin 3 → (Row d × ZMod s))
     (l : Row d →ₗ[ZMod 3] ZMod 3) (g : ZMod s →+ ZMod 3) (t : T)
     (same : ∀ j, (points t j).1 = (points t 0).1) :
     (∑ j, separatedValue l g (points t j)) = g (∑ j, (points t j).2) := by
@@ -163,7 +150,7 @@ private theorem internal_sum {d s : ℕ} {T : Type*} (points : T → Fin 3 → P
   rw [rowSum, zero_add]
 
 private theorem separated_isPotential {d s : ℕ} [NeZero s] {T : Type*}
-    (points : T → Fin 3 → Point d s) (family : LiftedLineFamily points)
+    (points : T → Fin 3 → (Row d × ZMod s)) (family : LiftedLineFamily points)
     (l : Row d →ₗ[ZMod 3] ZMod 3) (g : ZMod s →+ ZMod 3)
     (constraints : InternalConstraints points g) :
     IsOmissionPotential points 0 (separatedValue l g) := by
@@ -189,11 +176,11 @@ private theorem separated_isPotential {d s : ℕ} [NeZero s] {T : Type*}
 /-- After adjoining internal triples, every normalized ternary potential splits
 into a row functional and one additive map shared by the cyclic coordinates. -/
 theorem potential_iff_separated {d s : ℕ} [NeZero s] {T : Type*}
-    (points : T → Fin 3 → Point d s) (hd : 0 < d) (family : LiftedLineFamily points)
-    (u : Point d s → ZMod 3) :
+    (points : T → Fin 3 → (Row d × ZMod s)) (hd : 0 < d) (family : LiftedLineFamily points)
+    (u : (Row d × ZMod s) → ZMod 3) :
     IsOmissionPotential points 0 u ↔
       ∃ (l : Row d →ₗ[ZMod 3] ZMod 3) (g : ZMod s →+ ZMod 3),
-        InternalConstraints points g ∧ ∀ p : Point d s, u p = l p.1 + g p.2 := by
+        InternalConstraints points g ∧ ∀ p : (Row d × ZMod s), u p = l p.1 + g p.2 := by
   constructor
   · intro hu
     have all (t : T) : (∑ j, u (points t j)) = 0 := by
@@ -205,12 +192,12 @@ theorem potential_iff_separated {d s : ℕ} [NeZero s] {T : Type*}
       rw [h (x,a), h (x,b)] at he
       exact (map_sub g a b).trans (sub_eq_zero.mpr (add_left_cancel he))
     · intro t same
-      have hf : (separatedValue l g : Point d s → ZMod 3) = u :=
+      have hf : (separatedValue l g : (Row d × ZMod s) → ZMod 3) = u :=
         funext (fun p => (h p).symm)
       rw [← internal_sum points l g t same, hf]
       exact all t
   · rintro ⟨l,g,hg,h⟩
-    have hf : (separatedValue l g : Point d s → ZMod 3) = u :=
+    have hf : (separatedValue l g : (Row d × ZMod s) → ZMod 3) = u :=
       funext (fun p => (h p).symm)
     rw [← hf]
     exact separated_isPotential points family l g hg
@@ -223,7 +210,7 @@ noncomputable def cyclicReduction (s : ℕ) : ZMod s →+ ZMod 3 := by
 
 /-- The extra cyclic coefficient is available exactly when all internal
 constraints are compatible with reduction modulo three. -/
-def AllowsExtra {d s : ℕ} {T : Type*} (points : T → Fin 3 → Point d s) : Prop :=
+def AllowsExtra {d s : ℕ} {T : Type*} (points : T → Fin 3 → (Row d × ZMod s)) : Prop :=
   3 ∣ s ∧ InternalConstraints points (cyclicReduction s)
 
 private def scaleCyclic {s : ℕ} (c : ZMod 3) (g : ZMod s →+ ZMod 3) :
@@ -267,19 +254,19 @@ private theorem reduction_one {s : ℕ} (h : 3 ∣ s) : cyclicReduction s 1 = 1 
   simp [cyclicReduction,h]
 
 private noncomputable def coefficientSpace {d s : ℕ} {T : Type*}
-    (points : T → Fin 3 → Point d s) : Submodule (ZMod 3) (ZMod 3) := by
+    (points : T → Fin 3 → (Row d × ZMod s)) : Submodule (ZMod 3) (ZMod 3) := by
   classical
   exact if AllowsExtra points then ⊤ else ⊥
 
 private theorem coefficient_zero {d s : ℕ} {T : Type*}
-    (points : T → Fin 3 → Point d s) (closed : ¬ AllowsExtra points)
+    (points : T → Fin 3 → (Row d × ZMod s)) (closed : ¬ AllowsExtra points)
     (c : ZMod 3) (hc : c ∈ coefficientSpace points) : c = 0 := by
   classical
   unfold coefficientSpace at hc
   rw [ite_eq_right closed] at hc
   exact (Submodule.mem_bot (ZMod 3)).mp hc
 
-private theorem coefficient_valid {d s : ℕ} [NeZero s] {T : Type*} (points : T → Fin 3 → Point d s)
+private theorem coefficient_valid {d s : ℕ} [NeZero s] {T : Type*} (points : T → Fin 3 → (Row d × ZMod s))
     (g : ZMod s →+ ZMod 3) (hg : InternalConstraints points g) :
     g 1 ∈ coefficientSpace points := by
   classical
@@ -300,7 +287,7 @@ private theorem coefficient_valid {d s : ℕ} [NeZero s] {T : Type*} (points : T
   simp [coefficientSpace,hall]
 
 private theorem coefficient_constraints {d s : ℕ} {T : Type*}
-    (points : T → Fin 3 → Point d s) (c : coefficientSpace points) :
+    (points : T → Fin 3 → (Row d × ZMod s)) (c : coefficientSpace points) :
     InternalConstraints points (scaleCyclic c.val (cyclicReduction s)) := by
   classical
   have annihilates (a : ZMod s) (h : AllowsExtra points → cyclicReduction s a = 0) :
@@ -312,7 +299,7 @@ private theorem coefficient_constraints {d s : ℕ} {T : Type*}
     fun t same => annihilates _ (fun h => h.2.2 t same)⟩
 
 private noncomputable def parameterMap {d s : ℕ} [NeZero s] {T : Type*}
-    (points : T → Fin 3 → Point d s) (family : LiftedLineFamily points) :
+    (points : T → Fin 3 → (Row d × ZMod s)) (family : LiftedLineFamily points) :
     ((Row d →ₗ[ZMod 3] ZMod 3) × coefficientSpace points) →ₗ[ZMod 3]
       potentialSpace points 0 where
   toFun p :=
@@ -334,12 +321,12 @@ private noncomputable def parameterMap {d s : ℕ} [NeZero s] {T : Type*}
     rw [mul_add,mul_assoc]
 
 private theorem parameterMap_bijective {d s : ℕ} [NeZero s] {T : Type*}
-    (points : T → Fin 3 → Point d s) (hd : 0 < d) (family : LiftedLineFamily points) :
+    (points : T → Fin 3 → (Row d × ZMod s)) (hd : 0 < d) (family : LiftedLineFamily points) :
     Function.Bijective (parameterMap points family) := by
   classical
   constructor
   · intro p q h
-    have equal (x : Point d s) :
+    have equal (x : (Row d × ZMod s)) :
         p.1 x.1 + p.2.val * cyclicReduction s x.2 =
           q.1 x.1 + q.2.val * cyclicReduction s x.2 :=
       congrArg (fun v : potentialSpace points 0 => v.val x) h
@@ -364,7 +351,7 @@ open Classical in
 /-- The point-potential dimension increases by one exactly when the ordinary
 mod-three residue of the cyclic coordinate satisfies every internal constraint. -/
 theorem potential_finrank_internal_triples {d s : ℕ} [NeZero s] {T : Type*}
-    (points : T → Fin 3 → Point d s) (hd : 0 < d) (family : LiftedLineFamily points) :
+    (points : T → Fin 3 → (Row d × ZMod s)) (hd : 0 < d) (family : LiftedLineFamily points) :
     Module.finrank (ZMod 3) (potentialSpace points 0) =
       if AllowsExtra points then d + 1 else d := by
   classical
