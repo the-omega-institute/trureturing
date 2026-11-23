@@ -256,6 +256,13 @@ def of_kraus (M N : κ → Matrix B A R) : MatrixMap A B R :=
     map_smul' r x := by rw [RingHom.id_apply, Matrix.mul_smul, Matrix.smul_mul]
   }
 
+open scoped Matrix in
+omit [DecidableEq A] in
+theorem of_kraus_apply (K : κ → Matrix B A ℂ) (X : Matrix A A ℂ) :
+    MatrixMap.of_kraus K K X = ∑ a, K a * X * (K a)ᴴ := by
+  simp only [MatrixMap.of_kraus, LinearMap.coe_sum, LinearMap.coe_mk, AddHom.coe_mk,
+    Finset.sum_apply]
+
 end kraus
 
 section kron
