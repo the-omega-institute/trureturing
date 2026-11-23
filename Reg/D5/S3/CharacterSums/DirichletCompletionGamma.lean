@@ -146,27 +146,33 @@ end Convex
 
 namespace Exponential
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Prop)
-    (fun _ => Prop → Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
+    (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => fun y => x ∨ y) (fun e => nomatch e)
+  realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M := ∀ {u : ℝ} (hu : 1 / 4 ≤ u),
-    M.readout () () (Real.Gamma u ≤ Real.Gamma (1 / 4))
-      (Real.Gamma u < Real.exp ((u + 1) * Real.log (u + 1)))
+    Real.Gamma u ≤ Real.Gamma (1 / 4) ∨
+      Real.Gamma u < M.readout () () ((u + 1) * Real.log (u + 1))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := h (u := 1) (by norm_num)
-  exact hh
+  have hc := Real.convexOn_Gamma.le_max_of_mem_Icc
+    (by norm_num : (1 : ℝ) ∈ Set.Ioi 0)
+    (by norm_num : (2 : ℝ) ∈ Set.Ioi 0)
+    (show (1 / 4 + 1 : ℝ) ∈ Set.Icc 1 2 by norm_num)
+  rw [Real.Gamma_add_one (by norm_num : (1 / 4 : ℝ) ≠ 0)] at hc
+  norm_num at hc
+  have hh := h (u := 4) (by norm_num)
+  norm_num [rejected, realize] at hh
+  linarith
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), True, False, ?_⟩
-  intro h
-  have hh := congrFun h False
-  norm_num [actual, realize] at hh
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.exp 0 ≠ Real.exp 1
+  exact Real.exp_injective.ne (by norm_num)
 def family : Registration arena (type_of% @Gamma_le_exp_bound) where
   actual := actual
   bridge := Iff.rfl
@@ -191,7 +197,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => fun y => x ∨ y) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -201,7 +207,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "fn"]
+      path := #["body", "body", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
