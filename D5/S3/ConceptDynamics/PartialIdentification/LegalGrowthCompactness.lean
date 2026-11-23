@@ -6,10 +6,14 @@
    utility: none
    digest: Legal growth compactness is equivalent to finite enabled frontiers. -/
 
-import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
+public import Mathlib.Topology.Compactness.Compact
 
 /-! Compactness for injective locally legal growth in an arbitrary discrete partial order. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
