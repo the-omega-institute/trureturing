@@ -37,7 +37,7 @@ forward_table: proof_shape=content; consumers=polynomial_relation
 polynomialCoordinates: proof_shape=content; consumers=polynomial_relation
 polynomial_relation: proof_shape=content; consumers=result
 scale_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family
+result: proof_shape=content; consumers=Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family._proof_2
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
