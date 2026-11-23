@@ -34,6 +34,7 @@ Continuity provides a common nonzero neighborhood of the center for F and the pr
 
 - Truth anchor: `D5/S3/Zeros/Resolvent/XiNormalizedResolvent.xi_reading_normalized_resolvent_hasSum`
 - Dependency: [D5/S3/Analytic/Dilation/ScalarUnitDressing](../../Analytic/Dilation/ScalarUnitDressing.md)
+- Dependency: [D5/S3/Analytic/Resolvent/EntireLogDerivDifference](../../Analytic/Resolvent/EntireLogDerivDifference.md)
 - Dependency: [D5/S3/Analytic/Resolvent/XiGlobalGrowth](../../Analytic/Resolvent/XiGlobalGrowth.md)
 - Dependency: [D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup](../../Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.md)
 - Dependency: [D5/S3/Zeros/Endpoints/XiEndpointValues](../Endpoints/XiEndpointValues.md)
