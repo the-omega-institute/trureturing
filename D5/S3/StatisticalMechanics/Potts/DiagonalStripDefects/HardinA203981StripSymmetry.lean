@@ -140,7 +140,9 @@ theorem lift_counts (d : ℕ) (p : Row 3 6) (j : Fin 15) :
             simp only [cost_recolor, boundary_recolor]
       _ = _ := by
         rw [hr]
-        exact (recolor f e).sum_comp _
+        exact (recolor f e).sum_comp (fun r =>
+          if bondDefects (betw 6) (representatives (boundary p)) r = d ∧ boundary r = j
+            then (1 : ℤ) else 0)
   rcases pair_match (cls (parityRows p).1) (cls (parityRows p).2) with
     ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩
   · exact transport p (recolor_match _ _ h₀ h₁)

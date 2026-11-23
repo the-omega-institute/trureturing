@@ -14,7 +14,7 @@ two_counts: proof_shape=bind-only; consumers=transition_counts
 cut_inherited: proof_shape=bind-only; consumers=transition_counts
 cut_terminal: proof_shape=bind-only; consumers=transition_counts._simp_1
 transition_counts: proof_shape=bind-only; consumers=HardinA229683Strip.counting_bridge
-forward_inherited: proof_shape=bind-only; consumers=finite_certificate, forward_two
+forward_inherited: proof_shape=bind-only; consumers=finite_certificate
 W: proof_shape=bind-only; consumers=finite_certificate, finite_certificate._proof_1, forward_two, forward_two._proof_1
 coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229683Strip.result
 coeff_values: proof_shape=bind-only; consumers=finite_certificate, inherited_relation, HardinA229683Strip.result
