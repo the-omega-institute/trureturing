@@ -82,7 +82,7 @@ private theorem quarter_chord_sq (x : ℝ) :
   nlinarith only [hn]
 
 omit [DecidableEq J] in
-private theorem large_loss_of_short_relation (s : Finset J) (g : J → ℝ) (k : J → ℤ) (H t : ℝ)
+theorem large_loss_of_short_relation (s : Finset J) (g : J → ℝ) (k : J → ℤ) (H t : ℝ)
     (hH : 1 ≤ H) (hr : ∑ j ∈ s, (k j : ℝ) * g j = 0)
     (hb : ¬ (4 : ℤ) ∣ ∑ j ∈ s, k j) (hk : ∑ j ∈ s, |(k j : ℝ)| ≤ H) :
     ∃ j ∈ s, k j ≠ 0 ∧ 1 / H ^ 2 ≤ 1 - Real.sin (g j * t) := by
