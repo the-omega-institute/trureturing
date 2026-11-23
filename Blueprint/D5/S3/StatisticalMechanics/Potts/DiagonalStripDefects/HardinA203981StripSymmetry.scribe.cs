@@ -43,7 +43,7 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
         var q = V("q");
         var same = Eq(Call("HardinA203981StripData.boundary", p), Call("HardinA203981StripData.boundary", q));
         return All("d", V("Nat"), All("p", Row("6"), All("q", Row("6"), All("j", Fin("15"),
-            Seq(Parenthesized(same), Sp, Implies, Sp, Parenthesized(Eq(Count(p), Count(q)))))));
+            Seq(Parenthesized(same), Sp, Implies, Sp, Parenthesized(Eq(Count(p), Count(q))))))));
     }
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Neg, Sp, N(digits)) :

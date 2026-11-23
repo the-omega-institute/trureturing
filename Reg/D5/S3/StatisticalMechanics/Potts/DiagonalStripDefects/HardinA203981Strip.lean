@@ -57,12 +57,13 @@ private theorem count_distinct : a 1 ≠ a 2 := by
       dotProduct (HardinA203981StripCertificate.W 2) e := by
     decide +kernel
   intro equal
-  exact different ((evaluate 1).symm.trans
-    ((show dotProduct v ((t ^ 1).mulVec e) = 6 * (a 1 : ℤ) from by
-      simpa only [Nat.one_ne_zero, if_false, add_zero] using counting_bridge 1).trans
-      ((congrArg (fun k : ℕ => (6 : ℤ) * (k : ℤ)) equal).trans
-        ((show dotProduct v ((t ^ 2).mulVec e) = 6 * (a 2 : ℤ) from by
-          simpa only [show (2 : ℕ) ≠ 0 by decide, if_false, add_zero] using counting_bridge 2).symm.trans (evaluate 2)))))
+  apply different
+  have first := counting_bridge 1
+  have second := counting_bridge 2
+  rw [evaluate 1, equal] at first
+  rw [evaluate 2] at second
+  simp only [Nat.one_ne_zero, show (2 : ℕ) ≠ 0 by decide, if_false, add_zero] at first second
+  exact first.trans second.symm
 
 def family : Registration arena (type_of% @result) where
   actual := readout

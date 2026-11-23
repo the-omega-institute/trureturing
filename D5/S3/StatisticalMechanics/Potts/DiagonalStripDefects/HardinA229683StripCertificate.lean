@@ -74,7 +74,7 @@ import Mathlib.LinearAlgebra.Matrix.Defs
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripCertificate
 
 open HardinA229683StripData
-open HardinA203981StripData (boundary representatives)
+open HardinA203981StripData (boundary classPair parityRows representatives)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (Row bondDefects forward)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (betw)
 set_option maxRecDepth 100000
@@ -145,12 +145,12 @@ private theorem representative_counts (i j : Fin 15) :
       cls (parityRows (representatives i)).2 = (classPair i).2 := by
     simp only [representatives, Equiv.apply_symm_apply]
     decide +kernel
-  simpa only [(cls_at_rep i).1, (cls_at_rep i).2] using h
+  rw [(cls_at_rep i).1, (cls_at_rep i).2] at h
+  exact h
 
 theorem two_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 2 ∧ boundary r = j
-      then (1 : ℤ) else 0) = costTwo (boundary p) j :=
-  by
+      then (1 : ℤ) else 0) = costTwo (boundary p) j := by
   have boundary_at_rep : ∀ i : Fin 15, boundary (representatives i) = i := by
     decide +kernel
   exact (HardinA203981StripSymmetry.lift_counts 2 p (representatives (boundary p)) j
