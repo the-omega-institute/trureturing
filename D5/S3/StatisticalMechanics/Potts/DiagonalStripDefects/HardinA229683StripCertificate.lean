@@ -250,34 +250,39 @@ theorem coeff_values : coeff = ![-282429536481, 470715894135, 0, -366499782594, 
   fin_cases k <;> decide +kernel
 
 theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := by
-  induction i using Fin.induction with
-  | zero => funext j; fin_cases j <;> rfl
-  | succ i ih =>
-    have step : ∀ k : Fin 20,
+  let previous (k : Fin 21) :=
+    Sum.elim (HardinA203981StripCertificate.W k) (HardinA229508StripCertificate.W k)
+  let table (k : Fin 21) := Sum.elim (previous k) (W k)
+  have right_step (k : Fin 20) :
       Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costTwo +
         Matrix.vecMul (HardinA229508StripCertificate.W k.castSucc) HardinA229508StripData.costOne +
         Matrix.vecMul (W k.castSucc) HardinA203981StripData.T = W k.succ := by
-      intro k
-      fin_cases k <;> decide +kernel
-    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
-    change Matrix.vecMul (forward T initial i.val) T ∘ Sum.inr = W i.succ
-    rw [show Matrix.vecMul (forward T initial i.val) T = _ from
-      Matrix.vecMul_fromBlocks HardinA229508StripData.T (Sum.elim costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T _]
-    change Matrix.vecMul (forward T initial i.val ∘ Sum.inl) (Sum.elim costTwo HardinA229508StripData.costOne) +
-      Matrix.vecMul (forward T initial i.val ∘ Sum.inr) HardinA203981StripData.T = W i.succ
-    rw [forward_inherited, show forward T initial i.val ∘ Sum.inr = W i.castSucc from ih]
-    have split (f : (Fin 15 ⊕ Fin 15) → ℤ) :
-        Matrix.vecMul f (Sum.elim costTwo HardinA229508StripData.costOne) =
-          Matrix.vecMul (f ∘ Sum.inl) costTwo + Matrix.vecMul (f ∘ Sum.inr) HardinA229508StripData.costOne := by
-      exact congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
+    fin_cases k <;> decide +kernel
+  have step (k : Fin 20) : Matrix.vecMul (table k.castSucc) T = table k.succ := by
+    have incoming :
+        Matrix.vecMul (previous k.castSucc) (Sum.elim costTwo HardinA229508StripData.costOne) =
+          Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costTwo +
+            Matrix.vecMul (HardinA229508StripCertificate.W k.castSucc) HardinA229508StripData.costOne :=
+      congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
         (Matrix.vecMul_fromBlocks (0 : Matrix (Fin 15) (Fin 15) ℤ)
-          costTwo 0 HardinA229508StripData.costOne f)
-    rw [split, HardinA229508StripCertificate.forward_zeroth]
-    rw [show forward HardinA203981StripData.T HardinA203981StripData.initial i.val =
-      HardinA203981StripCertificate.W i.castSucc from HardinA203981StripCertificate.forward_table i.castSucc]
-    rw [show forward HardinA229508StripData.T HardinA229508StripData.initial i.val ∘ Sum.inr =
-      HardinA229508StripCertificate.W i.castSucc from HardinA229508StripCertificate.forward_one i.castSucc]
-    exact step i
+          costTwo 0 HardinA229508StripData.costOne (previous k.castSucc))
+    rw [show Matrix.vecMul (table k.castSucc) T = _ from
+      Matrix.vecMul_fromBlocks HardinA229508StripData.T
+        (Sum.elim costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T _]
+    change Sum.elim
+      (Matrix.vecMul (previous k.castSucc) HardinA229508StripData.T + Matrix.vecMul (W k.castSucc) 0)
+      (Matrix.vecMul (previous k.castSucc) (Sum.elim costTwo HardinA229508StripData.costOne) +
+        Matrix.vecMul (W k.castSucc) HardinA203981StripData.T) = table k.succ
+    simp only [Matrix.vecMul_zero, add_zero, table, HardinA229508StripCertificate.forward_step k,
+      incoming, right_step k]
+  have zero : table 0 = initial := by
+    funext j
+    rcases j with (j | j) | j
+    · rfl
+    · fin_cases j <;> rfl
+    · fin_cases j <;> rfl
+  exact congrArg (· ∘ (Sum.inr : Fin 15 → (Fin 15 ⊕ Fin 15) ⊕ Fin 15))
+    (HardinA203981StripCertificate.forward_table_of_steps T initial table zero step i)
 
 private theorem inherited_relation (j : Fin 15 ⊕ Fin 15) :
     forward HardinA229508StripData.T HardinA229508StripData.initial (2 + 18) j =

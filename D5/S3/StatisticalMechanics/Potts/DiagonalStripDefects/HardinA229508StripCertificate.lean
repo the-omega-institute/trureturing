@@ -18,7 +18,8 @@ W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, H
 coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
 squareMonicCoeff: proof_shape=bind-only; consumers=coeff, HardinA229683StripCertificate.coeff
 coeff_values: proof_shape=bind-only; consumers=inherited_relation, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
-forward_one: proof_shape=content; consumers=HardinA229683StripCertificate.forward_two, finite_certificate
+forward_step: proof_shape=content; consumers=HardinA229683StripCertificate.forward_two, forward_one
+forward_one: proof_shape=content; consumers=finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
@@ -250,25 +251,31 @@ theorem coeff_values : coeff = ![-43046721, 47829690, 13286025, -27398736, 23291
   funext k
   fin_cases k <;> decide +kernel
 
+/-- Check the update on the whole table of zero- and one-degree vectors. -/
+theorem forward_step (k : Fin 20) :
+    Matrix.vecMul (Sum.elim (HardinA203981StripCertificate.W k.castSucc) (W k.castSucc)) T =
+      Sum.elim (HardinA203981StripCertificate.W k.succ) (W k.succ) := by
+  have step : Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costOne +
+      Matrix.vecMul (W k.castSucc) HardinA203981StripData.T = W k.succ := by
+    fin_cases k <;> decide +kernel
+  rw [show Matrix.vecMul _ T = _ from
+    Matrix.vecMul_fromBlocks HardinA203981StripData.T costOne 0 HardinA203981StripData.T _]
+  change Sum.elim
+    (Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) HardinA203981StripData.T +
+      Matrix.vecMul (W k.castSucc) 0)
+    (Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costOne +
+      Matrix.vecMul (W k.castSucc) HardinA203981StripData.T) = _
+  simp only [Matrix.vecMul_zero, add_zero, HardinA203981StripCertificate.forward_step k, step]
+
 theorem forward_one (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := by
-  induction i using Fin.induction with
-  | zero => funext j; fin_cases j <;> rfl
-  | succ i ih =>
-    have step : ∀ k : Fin 20, Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costOne +
-        Matrix.vecMul (W k.castSucc) HardinA203981StripData.T = W k.succ := by
-      intro k
-      fin_cases k <;> decide +kernel
-    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
-    change Matrix.vecMul (forward T initial i.val) T ∘ Sum.inr = W i.succ
-    rw [show Matrix.vecMul (forward T initial i.val) T = _ from
-      Matrix.vecMul_fromBlocks HardinA203981StripData.T costOne 0 HardinA203981StripData.T _]
-    change Matrix.vecMul (forward T initial i.val ∘ Sum.inl) costOne +
-      Matrix.vecMul (forward T initial i.val ∘ Sum.inr) HardinA203981StripData.T = W i.succ
-    rw [forward_zeroth, show forward T initial i.val ∘ Sum.inr = W i.castSucc from ih]
-    rw [show forward HardinA203981StripData.T HardinA203981StripData.initial i.val =
-      HardinA203981StripCertificate.W i.castSucc from
-        HardinA203981StripCertificate.forward_table i.castSucc]
-    exact step i
+  let table (k : Fin 21) := Sum.elim (HardinA203981StripCertificate.W k) (W k)
+  have zero : table 0 = initial := by
+    funext j
+    cases j with
+    | inl j => rfl
+    | inr j => fin_cases j <;> rfl
+  exact congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
+    (HardinA203981StripCertificate.forward_table_of_steps T initial table zero forward_step i)
 
 /-- Shift a forward relation and read it at a single coordinate. -/
 theorem shifted_coordinate {s : Type} [Fintype s] [DecidableEq s] (t : Matrix s s ℤ)

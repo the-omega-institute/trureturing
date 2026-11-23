@@ -17,7 +17,9 @@ initial_counts: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bri
 W: proof_shape=bind-only; consumers=HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_one._proof_1, HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_table, forward_table._proof_1
 coeff: proof_shape=bind-only; consumers=HardinA203981Strip.result, HardinA203981StripCertificate.coeff.eq_1, HardinA229508StripCertificate.inherited_relation, finite_certificate, finite_certificate._proof_1, monicCoeff
 monicCoeff: proof_shape=bind-only; consumers=HardinA229508StripCertificate.squareMonicCoeff, HardinA229683StripCertificate.coeff
-forward_table: proof_shape=content; consumers=HardinA229508StripCertificate.forward_one, HardinA229683StripCertificate.forward_two, finite_certificate
+forward_step: proof_shape=content; consumers=HardinA229508StripCertificate.forward_step, forward_table
+forward_table_of_steps: proof_shape=bind-only; consumers=HardinA229508StripCertificate.forward_one, HardinA229683StripCertificate.forward_two, forward_table
+forward_table: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA203981Strip.result, HardinA229508StripCertificate.inherited_relation
 allocated_counts: proof_shape=bind-only; consumers=representative_counts
 allocation_indicator: proof_shape=bind-only; consumers=allocated_counts
@@ -29,6 +31,9 @@ zero_exact: proof_shape=bind-only; consumers=representative_counts
 halfForwardZero: proof_shape=bind-only; consumers=W
 -/
 
+import Init.Data.List.OfFn
+import Mathlib.Data.List.Chain
+import Mathlib.Data.List.ChainOfFn
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Fin
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
 import Mathlib.Data.Fin.Basic
@@ -316,17 +321,26 @@ def coeff : Fin 6 → ℤ := ![-6561, 3645, 2025, -963, -45, 25]
 def monicCoeff (n : ℕ) : ℤ :=
   if h : n < 6 then -coeff ⟨n, h⟩ else if n = 6 then 1 else 0
 
-theorem forward_table (i : Fin 21) : forward T initial i.val = W i := by
-  induction i using Fin.induction with
-  | zero => rfl
-  | succ i ih =>
-    have step : ∀ k : Fin 20, Matrix.vecMul (W k.castSucc) T = W k.succ := by
-      intro k
-      fin_cases k <;> decide +kernel
-    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
-    change Matrix.vecMul (forward T initial i.val) T = W i.succ
-    rw [show forward T initial i.val = W i.castSucc from ih]
-    exact step i
+/-- A finite table with the prescribed start and each successive update gives the forward vectors. -/
+theorem forward_table_of_steps {s : Type} [Fintype s] [DecidableEq s] {n : ℕ}
+    (t : Matrix s s ℤ) (v : s → ℤ) (table : Fin (n + 1) → s → ℤ)
+    (h0 : table 0 = v)
+    (step : ∀ k : Fin n, Matrix.vecMul (table k.castSucc) t = table k.succ)
+    (i : Fin (n + 1)) : forward t v i.val = table i := by
+  have chain : (List.ofFn table).IsChain (fun x y => Matrix.vecMul x t = y) :=
+    List.isChain_ofFn.mpr fun k hk => step ⟨k, Nat.lt_of_succ_lt_succ hk⟩
+  have h := chain.iterate_eq_of_apply_eq i.val (by simpa only [List.length_ofFn] using i.isLt)
+  simp only [List.getElem_ofFn] at h
+  have zero : (⟨0, Nat.zero_lt_succ n⟩ : Fin (n + 1)) = 0 := Fin.ext rfl
+  change (fun w => Matrix.vecMul w t)^[i.val] (table ⟨0, Nat.zero_lt_succ n⟩) = table i at h
+  simpa only [zero, h0, forward] using h
+
+/-- Check one zero-degree update for each adjacent pair of rows in the table. -/
+theorem forward_step (k : Fin 20) : Matrix.vecMul (W k.castSucc) T = W k.succ := by
+  fin_cases k <;> decide +kernel
+
+theorem forward_table (i : Fin 21) : forward T initial i.val = W i :=
+  forward_table_of_steps T initial W rfl forward_step i
 
 /-- One forward relation suffices to propagate the recurrence. -/
 theorem finite_certificate :
