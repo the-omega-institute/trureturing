@@ -331,22 +331,22 @@ def monicCoeff (n : ℕ) : ℤ :=
   if h : n < 6 then -coeff ⟨n, h⟩ else if n = 6 then 1 else 0
 
 /-- A finite table with the prescribed start and each successive update gives the forward vectors. -/
-theorem forward_table_of_steps {s α : Type*} [Fintype s] [NonUnitalNonAssocSemiring α] {n : ℕ}
-    (t : Matrix s s α) (v : s → α) (table : Fin (n + 1) → s → α) :
-    (∀ i : Fin (n + 1), (fun w => Matrix.vecMul w t)^[i.val] v = table i) ↔
-      table 0 = v ∧ ∀ k : Fin n, Matrix.vecMul (table k.castSucc) t = table k.succ := by
+theorem forward_table_of_steps {X : Type*} {n : ℕ}
+    (f : X → X) (v : X) (table : Fin (n + 1) → X) :
+    (∀ i : Fin (n + 1), f^[i.val] v = table i) ↔
+      table 0 = v ∧ ∀ k : Fin n, f (table k.castSucc) = table k.succ := by
   constructor
   · intro h
     refine ⟨(h 0).symm, fun k => ?_⟩
     rw [← h k.castSucc, ← h k.succ]
-    exact (Function.iterate_succ_apply' (fun w => Matrix.vecMul w t) k.val v).symm
+    exact (Function.iterate_succ_apply' f k.val v).symm
   · rintro ⟨h0, step⟩ i
-    have chain : (List.ofFn table).IsChain (fun x y => Matrix.vecMul x t = y) :=
+    have chain : (List.ofFn table).IsChain (fun x y => f x = y) :=
       List.isChain_ofFn.mpr fun k hk => step ⟨k, Nat.lt_of_succ_lt_succ hk⟩
     have h := chain.iterate_eq_of_apply_eq i.val (by simpa only [List.length_ofFn] using i.isLt)
     simp only [List.getElem_ofFn] at h
     have zero : (⟨0, Nat.zero_lt_succ n⟩ : Fin (n + 1)) = 0 := Fin.ext rfl
-    change (fun w => Matrix.vecMul w t)^[i.val] (table ⟨0, Nat.zero_lt_succ n⟩) = table i at h
+    change f^[i.val] (table ⟨0, Nat.zero_lt_succ n⟩) = table i at h
     simpa only [zero, h0] using h
 
 /-- Check one zero-degree update for each adjacent pair of rows in the table. -/
@@ -354,7 +354,7 @@ theorem forward_step (k : Fin 20) : Matrix.vecMul (W k.castSucc) T = W k.succ :=
   fin_cases k <;> decide +kernel
 
 theorem forward_table (i : Fin 21) : forward T initial i.val = W i :=
-  (forward_table_of_steps T initial W).2 ⟨rfl, forward_step⟩ i
+  (forward_table_of_steps (fun w => Matrix.vecMul w T) initial W).2 ⟨rfl, forward_step⟩ i
 
 /-- One forward relation suffices to propagate the recurrence. -/
 theorem finite_certificate :

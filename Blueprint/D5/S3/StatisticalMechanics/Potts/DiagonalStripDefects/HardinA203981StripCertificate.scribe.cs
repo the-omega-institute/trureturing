@@ -132,25 +132,16 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
 
     private static Formula ForwardTableOfStepsFormula()
     {
-        var s = V("s"); var n = V("n"); var t = V("t"); var v = V("v"); var w = V("w");
-        var k = V("k"); var i = V("i");
+        var x = V("X"); var f = V("f"); var n = V("n");
+        var v = V("v"); var table = V("table"); var k = V("k"); var i = V("i");
         var index = Call("Fin", Add(n, N("1")));
-        var alpha = V("alpha");
-        var vector = Arr(s, alpha);
-        var zero = Eq(App(w, Typed(N("0"), index)), v);
-        var update = All("k", Call("Fin", n), Eq(
-            Call("Matrix.vecMul", App(w, Call("Fin.castSucc", k)), t),
-            App(w, Call("Fin.succ", k))));
-        var step = Seq(LambdaLower, Sp, V("x"), Colon, Sp, vector, Sp, Mapsto, Sp,
-            Parenthesized(Call("Matrix.vecMul", V("x"), t)));
-        var value = All("i", index, Eq(Call("Nat.iterate", Parenthesized(step), Call("Fin.val", i), v), App(w, i)));
-        var body = All("n", V("Nat"), All("t", Call("Matrix", s, s, alpha),
-            All("v", vector, All("w", Arr(index, vector), Seq(
-                Parenthesized(value), Sp, F.Iff, Sp, Parenthesized(And(zero, update)))))));
-        return Seq(Forall, Sp, Typed(s, V("Type")), Sp, Typed(alpha, V("Type")), Sp,
-            OpenBracket, Call("Fintype", s), CloseBracket, Sp,
-            OpenBracket, Call("NonUnitalNonAssocSemiring", alpha), CloseBracket,
-            Comma, Sp, Parenthesized(body));
+        var zero = Eq(App(table, Typed(N("0"), index)), v);
+        var update = All("k", Call("Fin", n), Eq(App(f, App(table, Call("Fin.castSucc", k))),
+            App(table, Call("Fin.succ", k))));
+        var value = All("i", index, Eq(Call("Nat.iterate", f, Call("Fin.val", i), v), App(table, i)));
+        return All("X", V("Type"), All("n", V("Nat"), All("f", Arr(x, x),
+            All("v", x, All("table", Arr(index, x), Seq(
+                Parenthesized(value), Sp, F.Iff, Sp, Parenthesized(And(zero, update))))))));
     }
 
     private static Formula ForwardStepFormula()

@@ -280,7 +280,7 @@ theorem forward_one (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
     | inl j => rfl
     | inr j => fin_cases j <;> rfl
   exact congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
-    ((HardinA203981StripCertificate.forward_table_of_steps T initial table).2 ⟨zero, forward_step⟩ i)
+    ((HardinA203981StripCertificate.forward_table_of_steps (fun w => Matrix.vecMul w T) initial table).2 ⟨zero, forward_step⟩ i)
 
 /-- Shift a forward relation and read it at a single coordinate. -/
 theorem shifted_coordinate {s : Type*} [Fintype s] (t : Matrix s s ℤ)
