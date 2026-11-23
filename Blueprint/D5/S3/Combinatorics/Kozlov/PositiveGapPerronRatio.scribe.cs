@@ -35,7 +35,9 @@ internal sealed class PositiveGapPerronRatioDocument : IScribeDocumentDefinition
                     Paragraph(Text("P and L are the counted transfers defined above. The radii are taken after casting every natural entry to the complex numbers. The function toReal reads the finite radius as a real number. The lattice radius is positive as a real denominator.")),
                     Paragraph(Text("Complete skeletons supply consecutive transitions and loops in both positive-degree supports. In the full proper matrix the two columns of degrees −1 and 0 vanish, so adjoining these states adds only zero roots to the characteristic polynomial.")),
                     Paragraph(Text("The lattice vector (1,n,2,1,0,…) has top three and first deficiency two. A three-element face would force at least three two-element faces, so this vector increases the lattice count in row one and column three. Pairing the matrix difference with a positive right vector of the proper block and a positive left vector of the lattice matrix gives a strictly positive sum."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("snellman-positive-gap-kozlov-perron-ratio"), ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \left(4 \le n \land 1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/PositiveGapPerronRatio.positive_gap_perron_root_ratio` (`✓ std3`). ∎
 
+*Resolves.* `Problems/snellman-positive-gap-kozlov-perron-ratio` (proved) by `D5/S3/Combinatorics/Kozlov/PositiveGapPerronRatio.positive_gap_perron_root_ratio`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"snellman-positive-gap-kozlov-perron-ratio","declaration_gid":"D5/S3/Combinatorics/Kozlov/PositiveGapPerronRatio.positive_gap_perron_root_ratio","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
