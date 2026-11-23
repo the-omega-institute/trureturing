@@ -77,12 +77,6 @@ private theorem blockEnd_mono {A B : ℝ} (hA : 0 ≤ A) : Monotone (blockEnd A 
     (pow_right_mono₀ (by norm_num : (1 : ℝ) ≤ 2) hij) hA
   exact le_min (min_le_left _ _) ((min_le_right _ _).trans hpow)
 
-theorem blockCount_le {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
-    (blockCount A B : ℝ) ≤ log (B / A) / log 2 + 1 := by
-  have hratio : 1 ≤ B / A := (le_div_iff₀ hA).mpr (by simpa only [one_mul] using hAB)
-  simpa only [blockCount, Real.logb] using
-    (Nat.ceil_lt_add_one (Real.logb_nonneg (by norm_num : (1 : ℝ) < 2) hratio)).le
-
 private theorem blockEnd_last {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
     blockEnd A B (blockCount A B) = B := by
   have hB := hA.trans_le hAB
@@ -101,7 +95,7 @@ private theorem rawBlock_lt {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
   simpa only [mul_comm] using (lt_div_iff₀ hA).mp hpow
 
 /-- Every used block has a strict left endpoint and ends at its double or at the window end. -/
-theorem blockEnd_succ {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
+private theorem blockEnd_succ {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
     {j : ℕ} (hj : j < blockCount A B) :
     blockEnd A B j < blockEnd A B (j + 1) ∧
       blockEnd A B (j + 1) = min B (2 * blockEnd A B j) := by
@@ -150,7 +144,7 @@ private theorem equalMesh {a b h : ℝ} (hab : a < b) (hh : 0 < h) :
       _ = (b - a) / (N : ℝ) := by push_cast; ring
       _ ≤ h := hstep
 
-theorem meshPoint_spec {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
+private theorem meshPoint_spec {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
     {j : ℕ} (hj : j < blockCount A B) :
     0 < cellCount A B j ∧
       meshPoint A B j 0 = blockEnd A B j ∧
@@ -185,7 +179,7 @@ private theorem blockPoints_subset {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
 
 /-- The two nodes of every chord are among the samples. A shared block endpoint
 is supplied by the following block, or by the terminal node. -/
-theorem meshPoint_mem_samplePoints {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
+private theorem meshPoint_mem_samplePoints {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
     {j i : ℕ} (hj : j < blockCount A B) (hi : i ≤ cellCount A B j) :
     meshPoint A B j i ∈ samplePoints A B := by
   classical
@@ -205,7 +199,7 @@ theorem meshPoint_mem_samplePoints {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
 
 /-- Shared block endpoints are counted once, so the number of distinct samples
 is exactly the number of cells plus one. -/
-theorem samplePoints_card {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
+private theorem samplePoints_card {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
     (samplePoints A B).card = (∑ j ∈ range (blockCount A B), cellCount A B j) + 1 := by
   classical
   have mono := blockEnd_mono (B := B) hA.le
@@ -473,16 +467,8 @@ theorem window_sampling {A B : ℝ} (hA : exp 1 ≤ A) (hAB : A ≤ B) :
           _ ≤ 2 * (K * geometricConstant) + 1 := add_le_add_left hbound 1
           _ = _ := by ring
 
-/-- An explicit count bound in terms of the window ratio, including rounding. -/
-theorem samplePoints_card_le_log {A B : ℝ} (hA : exp 1 ≤ A) (hAB : A ≤ B) :
-    ((samplePoints A B).card : ℝ) ≤
-      geometricConstant * B ^ (1 / 4 : ℝ) + log (B / A) / log 2 + 2 := by
-  have hcount := (window_sampling hA hAB).2.1
-  have hblocks := blockCount_le ((exp_pos 1).trans_le hA) hAB
-  linarith only [hcount, hblocks]
-
 /-- Every stored sample lies inside the requested window. -/
-theorem samplePoints_subset {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
+private theorem samplePoints_subset {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) :
     (samplePoints A B : Set ℝ) ⊆ Icc A B := by
   classical
   intro t ht
@@ -511,11 +497,11 @@ private def chordMassFrom (values : ℝ → ℝ) (a b : ℝ) : ℝ :=
   ∫ t in a..b, (log t / (1 + log t)) / (t * sqrt t) * max (H t) 0
 
 /-- The sampled chord sum can be evaluated from any extension of the sampled data. -/
-def windowChordSumFrom (values : ℝ → ℝ) (A B : ℝ) : ℝ :=
+private def windowChordSumFrom (values : ℝ → ℝ) (A B : ℝ) : ℝ :=
   ∑ j ∈ range (blockCount A B), ∑ i ∈ range (cellCount A B j),
     chordMassFrom values (meshPoint A B j i) (meshPoint A B j (i + 1))
 
-theorem windowChordSumFrom_eq {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
+private theorem windowChordSumFrom_eq {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
     {values : ℝ → ℝ} (hvalues : EqOn values R (samplePoints A B : Set ℝ)) :
     windowChordSumFrom values A B = windowChordSum A B := by
   unfold windowChordSumFrom windowChordSum
@@ -530,7 +516,7 @@ theorem windowChordSumFrom_eq {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B)
   simp only [chordMassFrom, chordMass, hleft, hright]
 
 /-- On a power window the sample bounds have leading order `Y^(b/4)`. -/
-theorem power_window_sampling {Y b : ℝ} (hY : exp 1 ≤ Y) (hb : 1 ≤ b) :
+private theorem power_window_sampling {Y b : ℝ} (hY : exp 1 ≤ Y) (hb : 1 ≤ b) :
     |weightedNegativeMass psiErrorKernel Y (Y ^ b) - windowChordSum Y (Y ^ b)| ≤
       9 * geometricConstant ∧
     ((samplePoints Y (Y ^ b)).card : ℝ) ≤
@@ -543,13 +529,25 @@ theorem power_window_sampling {Y b : ℝ} (hY : exp 1 ≤ Y) (hb : 1 ≤ b) :
     ring
   simpa only [hscale] using window_sampling hY (Real.self_le_rpow_of_one_le hY1 hb)
 
-/-- Transfer a cofinal subpower bound on actual chord samples to the whole-window
-mass hypothesis of ZeroFreeStripRobinWindow, at the same outer exponent. -/
-theorem frequently_small_weightedNegativeMass_of_frequently_small_windowChordSum
-    {b : ℝ} (hb : 1 ≤ b)
-    (hsamples : ∀ η : ℝ, 0 < η → ∃ᶠ Y : ℝ in atTop, windowChordSum Y (Y ^ b) ≤ Y ^ η) :
+/-- The chord sum computed with a common inclusive Mangoldt cutoff at `⌊B⌋₊`. -/
+def arithmeticWindowChordSum (A B : ℝ) : ℝ :=
+  windowChordSumFrom (fun x =>
+    (∑ n ∈ Finset.Icc 2 ⌊B⌋₊, ArithmeticFunction.vonMangoldt n *
+      max (u x / u (n : ℝ) - 1) 0) - u x * (log (log x) + eulerMascheroniConstant) + x) A B
+
+/-- The finite arithmetic chord sum is exact, and a cofinal subpower bound on it
+transfers to the whole-window mass at the same outer exponent. -/
+theorem arithmetic_window_sampling :
+    (∀ {A B : ℝ}, exp 1 ≤ A → A ≤ B → arithmeticWindowChordSum A B = windowChordSum A B) ∧
+    ∀ {b : ℝ}, 1 ≤ b →
+    (∀ η : ℝ, 0 < η → ∃ᶠ Y : ℝ in atTop, arithmeticWindowChordSum Y (Y ^ b) ≤ Y ^ η) →
     ∀ η : ℝ, 0 < η → ∃ᶠ Y : ℝ in atTop, weightedNegativeMass psiErrorKernel Y (Y ^ b) ≤ Y ^ η := by
-  intro η hη
+  have hexact {A B : ℝ} (hA : exp 1 ≤ A) (hAB : A ≤ B) :
+      arithmeticWindowChordSum A B = windowChordSum A B :=
+    windowChordSumFrom_eq ((exp_pos 1).trans_le hA) hAB
+      (fun _ hx => (sample_value_eq_sum hA hAB hx).symm)
+  refine ⟨@hexact, ?_⟩
+  intro b hb hsamples η hη
   have hhalf : 0 < η / 2 := half_pos hη
   have hlarge : ∀ᶠ Y : ℝ in atTop, 9 * geometricConstant + 1 ≤ Y ^ (η / 2) :=
     (tendsto_rpow_atTop hhalf).eventually_ge_atTop _
@@ -558,6 +556,7 @@ theorem frequently_small_weightedNegativeMass_of_frequently_small_windowChordSum
   intro Y hY
   obtain ⟨hsmall, hstart, hlargeY⟩ := hY
   have hY1 := (one_lt_of_exp_one_le hstart).le
+  rw [hexact hstart (Real.self_le_rpow_of_one_le hY1 hb)] at hsmall
   have hpow1 : 1 ≤ Y ^ (η / 2) := Real.one_le_rpow hY1 hhalf.le
   have herror := (abs_le.mp (power_window_sampling hstart hb).1).2
   calc

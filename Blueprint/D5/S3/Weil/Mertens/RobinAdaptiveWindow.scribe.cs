@@ -26,8 +26,15 @@ internal sealed class RobinAdaptiveWindowDocument : IScribeDocumentDefinition
                         + "the cell count after division by B^(1/4) and allowance for the ceiling.")),
                     Paragraph(Text("Each block contributes its left and interior nodes. Insert B "
                         + "once to obtain exactly one more distinct sample than the total cell count. "
-                        + "The equal-endpoint window has one sample and zero chord mass. "
-                        + "All signed values can use the same Mangoldt cutoff at the floor of B."))),
+                        + "The equal-endpoint window has one sample and zero chord mass.")),
+                    Paragraph(Text("The sample_value_eq_sum theorem evaluates each signed sample "
+                        + "using all Mangoldt terms from 2 through the floor of B, inclusive. "
+                        + "The arithmetic_window_sampling theorem identifies the resulting chord "
+                        + "sum with P, since every chord endpoint is a stored sample.")),
+                    Paragraph(Text("On windows [Y,Y^b] with b at least 1, if the arithmetic chord sum "
+                        + "is at most Y^η cofinally for every η>0, the weighted negative mass "
+                        + "satisfies the same condition at that b. Apply the sampled bound at η/2 "
+                        + "and absorb the constant error as Y grows."))),
                 DescribeRole.Theorem))));
 
     private static Formula At(string name, params Formula[] args) =>
