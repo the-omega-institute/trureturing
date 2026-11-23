@@ -181,7 +181,7 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {G : State} {T : Triple} {o : ℕ},
-    G.Valid → T.verts ⊆ G.active → o ∉ G.active → (R.readout () ⟨T, o⟩ G).Valid
+    G.Valid → (R.readout () ⟨T, o⟩ G).Valid ↔ T.verts ⊆ G.active ∧ o ∉ T.verts
 
 private def triangle : Triple := ⟨0, 1, 2, by decide, by decide, by decide⟩
 
@@ -193,7 +193,7 @@ private theorem rejects_invalid : ¬ arena.Law rejected := by
     intro x y hxy
     simp [State.Adj, seed] at hxy
   have hInvalid : invalid.Valid :=
-    h (G := seed) (T := triangle) (o := 3) hSeed (by decide) (by decide)
+    (h (G := seed) (T := triangle) (o := 3) hSeed).mpr ⟨by decide, by decide⟩
   exact (hInvalid (x := 0) (y := 0) (by decide : invalid.Adj 0 0)).2.2 rfl
 
 private theorem update_varies : ObservationalDependence signature actual := by
@@ -234,7 +234,7 @@ def registration :
     definition := none
     coordinates := #[1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "fn", "arg"]

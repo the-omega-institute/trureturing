@@ -149,17 +149,23 @@ private theorem ReverseOK.degree_eq_three {G : State} {T : Triple} {o : ℕ}
     (h : ReverseOK G T o) : G.degree o = 3 := by
   simp [State.degree, h.2, Triple.card_verts]
 
-theorem forward_valid {G : State} {T : Triple} {o : ℕ}
-    (hG : G.Valid) (hverts : T.verts ⊆ G.active) (hfresh : o ∉ G.active) :
-    (G.forward T o).Valid := by
-  intro x y hxy
-  have ho : o ∉ T.verts := fun ht => hfresh (hverts ht)
-  simp only [State.forward, mem_insert]
-  rw [forward_adj] at hxy
-  rcases hxy with ⟨hadj, _⟩ | ⟨rfl, hy⟩ | ⟨rfl, hx⟩
-  · exact ⟨Or.inr (hG hadj).1, Or.inr (hG hadj).2.1, (hG hadj).2.2⟩
-  · exact ⟨Or.inl rfl, Or.inr (hverts hy), fun he => ho (he ▸ hy)⟩
-  · exact ⟨Or.inr (hverts hx), Or.inl rfl, fun he => ho (he ▸ hx)⟩
+theorem forward_valid {G : State} {T : Triple} {o : ℕ} (hG : G.Valid) :
+    (G.forward T o).Valid ↔ T.verts ⊆ G.active ∧ o ∉ T.verts := by
+  constructor
+  · intro h
+    have spoke {x : ℕ} (hx : x ∈ T.verts) : (G.forward T o).Adj o x :=
+      forward_adj.mpr (Or.inr (Or.inl ⟨rfl, hx⟩))
+    refine ⟨?_, fun ho => (h (spoke ho)).2.2 rfl⟩
+    intro x hx
+    obtain ⟨_, hxActive, hne⟩ := h (spoke hx)
+    exact (mem_insert.mp hxActive).resolve_left hne.symm
+  · rintro ⟨hverts, ho⟩ x y hxy
+    simp only [State.forward, mem_insert]
+    rw [forward_adj] at hxy
+    rcases hxy with ⟨hadj, _⟩ | ⟨rfl, hy⟩ | ⟨rfl, hx⟩
+    · exact ⟨Or.inr (hG hadj).1, Or.inr (hG hadj).2.1, (hG hadj).2.2⟩
+    · exact ⟨Or.inl rfl, Or.inr (hverts hy), fun he => ho (he ▸ hy)⟩
+    · exact ⟨Or.inr (hverts hx), Or.inl rfl, fun he => ho (he ▸ hx)⟩
 
 theorem reverse_valid {G : State} {T : Triple} {o : ℕ}
     (hG : G.Valid) (h : ReverseOK G T o) : (G.reverse T o).Valid := by
@@ -191,7 +197,7 @@ inductive Move (strong : Bool) : State → State → Prop
 theorem Move.valid {strong : Bool} {G H : State} (m : Move strong G H)
     (hG : G.Valid) : H.Valid := by
   cases m with
-  | forward T o h => exact forward_valid hG h.1 h.2.1
+  | forward T o h => exact (forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩
   | reverse T o h _ => exact reverse_valid hG h
 
 abbrev Reach (strong : Bool) := ReflTransGen (Move strong)
@@ -488,7 +494,8 @@ private def Triple.restrict (T : Triple) {S : Finset ℕ} (h : T.verts ⊆ S) : 
 
 private theorem realize_forward {G : State} {T : Triple} {o : ℕ} {strong : Bool}
     (hG : G.Valid) (h : ForwardOK G T o) :
-    GraphMove strong (G.graph hG) ((G.forward T o).graph (forward_valid hG h.1 h.2.1)) := by
+    GraphMove strong (G.graph hG) ((G.forward T o).graph
+      ((forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩)) := by
   left
   refine ⟨⟨T.restrict h.1, forwardLabels h.2.1, ?_, ?_, ?_⟩⟩
   · intro x y hx hy hne
@@ -544,7 +551,7 @@ private theorem lift_forward {G : State} {B : Type*} {H : SimpleGraph B}
     (hG : G.Valid) (m : ForwardSpec (G.graph hG) H) {o : ℕ} (ho : o ∉ G.active) :
     ∃ ok : ForwardOK G (m.T.labels G.vertexEmbedding) o,
       Nonempty (H ≃g (G.forward (m.T.labels G.vertexEmbedding) o).graph
-        (forward_valid hG ok.1 ok.2.1)) := by
+        ((forward_valid hG).mpr ⟨ok.1, ok.2.1 ∘ ok.1⟩)) := by
   let T := m.T.labels G.vertexEmbedding
   have ht : T.verts ⊆ G.active := by
     intro x hx
@@ -572,7 +579,8 @@ private theorem lift_forward {G : State} {B : Type*} {H : SimpleGraph B}
     cases y with
     | none =>
       change (G.forward T o).Adj o o ↔ H.Adj (m.place none) (m.place none)
-      exact iff_of_false (fun h => (forward_valid hG ok.1 ok.2.1 h).2.2 rfl) (fun h => H.irrefl h)
+      exact iff_of_false (fun h => (((forward_valid hG).mpr ⟨ok.1, ok.2.1 ∘ ok.1⟩) h).2.2 rfl)
+        (fun h => H.irrefl h)
     | some y =>
       change (G.forward T o).Adj o y.val ↔ H.Adj (m.place none) (m.place (some y))
       rw [forward_center_adj hG ok, m.center]

@@ -26,7 +26,7 @@ internal sealed class MoveModelDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("delta-y-forward-valid"), DeclarationHandle.Create(Prefix + "forward_valid"),
                 H("Validity of the forward update"), StatementSource.FromAuthor(ForwardValidity()),
                 AssessedProvenance.FromRepo(Zhou),
-                Blocks(Paragraph(Text("Retained edges inherit validity from the starting state. Each new spoke joins an active triple vertex to the fresh center. The legal forward move requires all three triangle edges to exist."))),
+                Blocks(Paragraph(Text("Retained edges inherit validity from the starting state. Each inserted spoke forces its triple vertex to belong to the old active set and to differ from the center. These conditions also make every spoke valid. For example, an already active vertex outside the triple can serve as the center of a valid update. Starting validity excludes defects that could survive the update, such as a loop outside the triple. A legal forward move requires a fresh center and all three triangle edges."))),
                 DescribeRole.Theorem),
             Node("delta-y-transport", "Invariance under relabeling", "transport", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Zhou),
@@ -50,10 +50,12 @@ internal sealed class MoveModelDocument : IScribeDocumentDefinition
         var t = F.Id("T");
         var o = F.Id("o");
         var active = Call("active", g);
-        var vertices = new Formula.Relation(Call("verts", t), FormulaRelationOperator.SubsetOf, active);
-        var present = new Formula.Relation(o, FormulaRelationOperator.MemberOf, active);
-        var conclusion = Call("Valid", Call("forward", g, t, o));
-        var body = Implies(Call("Valid", g), Implies(vertices, Implies(new Formula.Not(present), conclusion)));
+        var verts = Call("verts", t);
+        var activeTriple = new Formula.Relation(verts, FormulaRelationOperator.SubsetOf, active);
+        var centerInTriple = new Formula.Relation(o, FormulaRelationOperator.MemberOf, verts);
+        var criterion = new Formula.Logic(activeTriple, FormulaLogicOperator.And, new Formula.Not(centerInTriple));
+        var validUpdate = Call("Valid", Call("forward", g, t, o));
+        var body = Implies(Call("Valid", g), new Formula.Logic(validUpdate, FormulaLogicOperator.Iff, criterion));
         return Disp(All("G", "State", All("T", "Triple", All("o", "Nat", body))));
     }
 
