@@ -58,7 +58,7 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "More generally, let q(k,m,n) be any extended nonnegative upper bound for the "
-                + "probability that the distinct pair m,n hits the closed band under the product "
+                + "probability that the distinct ordered degree pair m,n hits the closed band under the product "
                 + "of the normalized intervals on test k's support. Define Cq by replacing the "
                 + "single-coordinate factor in A(k) with q(k,m,n) and summing the new A(k)/b(k).")),
             Describe.Lean(

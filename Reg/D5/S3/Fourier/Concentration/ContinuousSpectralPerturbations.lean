@@ -97,7 +97,7 @@ abbrev pairProbabilityArena : Arena where
     (support : K → Finset J) (w : ∀ k, support k → ℝ) (_ : ∀ k j, 0 ≤ w k j)
     (p : K → ℕ) (η budget : K → ℝ) (_ : ∀ k, 0 ≤ η k) (_ : ∀ k, 0 < budget k)
     (bound : ∀ k, (support k → ℕ) → (support k → ℕ) → ℝ≥0∞)
-    (_ : ∀ k m n, m ≠ n →
+    (_ : ∀ k, ∀ m ∈ piAntidiag univ (p k), ∀ n ∈ (piAntidiag univ (p k)).erase m,
       (Measure.pi fun j : support k => intervalNoise (radius j))
         {x | |monomialFrequency (fun j : support k => g j + x j) m -
           monomialFrequency (fun j : support k => g j + x j) n| ≤ η k} ≤ bound k m n)

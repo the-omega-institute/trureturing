@@ -213,7 +213,7 @@ theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
 private theorem expected_excess_le {J : Type*} [Fintype J] [DecidableEq J]
     (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j)
     (p : ℕ) {η : ℝ} (hη : 0 ≤ η) (bound : (J → ℕ) → (J → ℕ) → ℝ≥0∞)
-    (hpair : ∀ m n, m ≠ n →
+    (hpair : ∀ m ∈ piAntidiag univ p, ∀ n ∈ (piAntidiag univ p).erase m,
       (Measure.pi fun j => intervalNoise (radius j))
         {x | |monomialFrequency (fun j => g j + x j) m -
           monomialFrequency (fun j => g j + x j) n| ≤ η} ≤ bound m n) :
@@ -258,11 +258,11 @@ private theorem expected_excess_le {J : Type*} [Fintype J] [DecidableEq J]
     Finset.measurable_sum _ (fun n _ => hterm m n)
   rw [lintegral_finsetSum _ (fun m _ => hsum m)]
   unfold weightedPairBudget
-  refine sum_le_sum (fun m _ => ?_)
+  refine sum_le_sum (fun m hm => ?_)
   rw [lintegral_finsetSum _ (fun n _ => hterm m n)]
   refine sum_le_sum (fun n hn => ?_)
   rw [show term m n = _ from rfl, lintegral_indicator_const (hmeas m n)]
-  exact mul_le_mul_right (hpair m n (ne_of_mem_erase hn).symm) _
+  exact mul_le_mul_right (hpair m hm n hn) _
 
 private theorem measurable_collision_of_offsets {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) (η : ℝ) :
@@ -280,7 +280,7 @@ theorem exists_continuous_common_nearby_bounds_of_pair_probabilities {J K : Type
     (support : K → Finset J) (w : ∀ k, support k → ℝ) (hw : ∀ k j, 0 ≤ w k j)
     (p : K → ℕ) (η budget : K → ℝ) (hη : ∀ k, 0 ≤ η k) (hbudget : ∀ k, 0 < budget k)
     (bound : ∀ k, (support k → ℕ) → (support k → ℕ) → ℝ≥0∞)
-    (hpair : ∀ k m n, m ≠ n →
+    (hpair : ∀ k, ∀ m ∈ piAntidiag univ (p k), ∀ n ∈ (piAntidiag univ (p k)).erase m,
       (Measure.pi fun j : support k => intervalNoise (radius j))
         {x | |monomialFrequency (fun j : support k => g j + x j) m -
           monomialFrequency (fun j : support k => g j + x j) n| ≤ η k} ≤ bound k m n)
@@ -365,9 +365,9 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     min 1 (ENNReal.ofReal (η k / pairRadius (fun j : support k => radius j) m n))
   apply exists_continuous_common_nearby_bounds_of_pair_probabilities
     g radius hradius support w hw p η budget hη hbudget bound ?_ htotal
-  intro k m n hmn
+  intro k m _ n hn
   exact pair_event_measure_le (fun j : support k => g j) (fun j : support k => radius j)
-    (fun j => hradius j) hmn
+    (fun j => hradius j) (ne_of_mem_erase hn).symm
 
 #print axioms exists_continuous_common_nearby_bounds
 

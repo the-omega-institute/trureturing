@@ -26,7 +26,7 @@ Positive radii give interval laws with nonzero length. Countability lets us impo
 
 The result constructs a comparison spectrum. A prescribed counting law would also need estimates on threshold crossings, and the fixed zeta ordinates require arithmetic control of their own weighted near-collisions.
 
-More generally, let q(k,m,n) be any extended nonnegative upper bound for the probability that the distinct pair m,n hits the closed band under the product of the normalized intervals on test k's support. Define Cq by replacing the single-coordinate factor in A(k) with q(k,m,n) and summing the new A(k)/b(k).
+More generally, let q(k,m,n) be any extended nonnegative upper bound for the probability that the distinct ordered degree pair m,n hits the closed band under the product of the normalized intervals on test k's support. Define Cq by replacing the single-coordinate factor in A(k) with q(k,m,n) and summing the new A(k)/b(k).
 
 **Theorem 1.2 (Pair probabilities suffice for a common perturbation).**
 

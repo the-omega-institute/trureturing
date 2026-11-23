@@ -116,9 +116,9 @@ theorem exists_continuous_common_nearby_localized_bounds {J K : Type*} [Decidabl
     (fun j : support k => radius j) (η k)
   apply exists_continuous_common_nearby_bounds_of_pair_probabilities
     g radius hradius support w hw p η budget hη hbudget bound ?_ htotal
-  intro k m n hmn
+  intro k m _ n hn
   exact pair_event_measure_le_localized (fun j : support k => g j)
-    (fun j : support k => radius j) (fun j => hradius j) hmn (hη k)
+    (fun j : support k => radius j) (fun j => hradius j) (ne_of_mem_erase hn).symm (hη k)
 
 #print axioms exists_continuous_common_nearby_localized_bounds
 
