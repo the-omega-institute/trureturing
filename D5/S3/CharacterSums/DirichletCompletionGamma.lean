@@ -22,6 +22,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Complex Set MeasureTheory Filter Topology
+open ConjectureMachines.Semantics.Riemann.DigammaBinet
 
 namespace D5.S3.CharacterSums.DirichletCompletionGamma
 
@@ -94,23 +95,32 @@ theorem logarithmic_series_bound :
   let g : ℝ → ℝ := fun x => -(Real.log x + 1) / x
   have hd (x : ℝ) (hx : 3 ≤ x) : HasDerivAt g (f x) x := by
     have hx0 : x ≠ 0 := by linarith
-    convert (((Real.hasDerivAt_log hx0).add_const 1).neg.div
-      (hasDerivAt_id x) hx0) using 1 <;> dsimp [f, g]
-    field_simp
-    ring
+    have hh := (((Real.hasDerivAt_log hx0).add_const 1).neg.div
+      (hasDerivAt_id x) hx0)
+    convert hh using 1
+    · rfl
+    · dsimp [f]
+      field_simp [hx0]
+      <;> ring
   have hn (x : ℝ) (hx : 3 < x) : 0 ≤ f x :=
     div_nonneg (Real.log_nonneg (by linarith)) (sq_nonneg _)
   have ht : Tendsto g atTop (𝓝 0) := by
     have hlog := Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
     have hinv : Tendsto (fun x : ℝ => 1 / x) atTop (𝓝 0) := tendsto_const_nhds.div_atTop
       tendsto_id
-    convert (hlog.add hinv).neg using 1 <;> simp [g, add_div]
+    convert (hlog.add hinv).neg using 1
+    · funext x
+      simp [g, add_div, div_eq_mul_inv, mul_add, add_mul]
+    · norm_num
   have hi := integrableOn_Ioi_deriv_of_nonneg' hd hn ht
   have he := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht
   have hanti : AntitoneOn f (Ici (3 : ℝ)) := by
     apply antitoneOn_of_deriv_nonpos (convex_Ici _) ?_ ?_ ?_
-    · exact (continuousOn_log.mono (by intro x hx; simp; linarith)).div
-        (continuous_pow 2).continuousOn (by intro x hx; exact pow_ne_zero _ (by linarith))
+    · intro x hx
+      have hx3 : 3 ≤ x := hx
+      have hx0 : x ≠ 0 := by linarith
+      exact ((Real.continuousAt_log hx0).div
+        ((continuous_id.pow 2).continuousAt) (pow_ne_zero _ hx0)).continuousWithinAt
     · intro x hx
       have hx0 : x ≠ 0 := by simp only [interior_Ici, mem_Ioi] at hx; linarith
       exact (((Real.differentiableAt_log hx0).div
@@ -124,8 +134,10 @@ theorem logarithmic_series_bound :
       have hl : 1 / 2 ≤ Real.log x := by
         have := Real.log_le_log (by norm_num : (0 : ℝ) < 2) (by linarith : 2 ≤ x)
         linarith [Real.log_two_gt_d9]
+      dsimp only [Pi.pow_apply, id_eq]
       apply div_nonpos_of_nonpos_of_nonneg _ (sq_nonneg _)
-      field_simp
+      simp only [Nat.cast_ofNat, Nat.reduceSub, pow_one, mul_one]
+      field_simp [hx0]
       nlinarith
   have hs := hanti.summable_of_integrableOn_Ioi (N := 3) hi hn
   have htbound := hanti.tsum_comp_add_le_integral 3 hi hn
@@ -134,10 +146,13 @@ theorem logarithmic_series_bound :
   have hb : (∑' n : ℕ, f n) ≤ f 2 + f 3 + (Real.log 3 + 1) / 3 := by
     dsimp [g] at he
     have hh : (∫ x : ℝ in Ioi 3, f x) = (Real.log 3 + 1) / 3 := by
-      simpa using he
+      convert he using 1 <;> ring
+    norm_num only [Nat.cast_ofNat] at htbound
     rw [hh] at htbound
     norm_num [Finset.sum_range_succ, f] at hsplit
     change (∑' n : ℕ, f n) ≤ _
+    dsimp [f] at htbound ⊢
+    norm_num [Nat.cast_add, add_assoc] at htbound ⊢
     linarith
   constructor
   · convert hb using 1 <;> dsimp [f] <;> ring
@@ -149,8 +164,7 @@ theorem logarithmic_series_bound :
 theorem digamma_re_lt_log_height {z : ℂ} (hz : 1 ≤ z.re) (hz' : z.re ≤ 3 / 2) :
     (Complex.digamma z).re < Real.log (2 * |z.im| + 3) := by
   have hp : 0 < z.re := by linarith
-  have hb := ConjectureMachines.Semantics.Riemann.DigammaBinet.
-    norm_digamma_sub_log_add_half_inv_le_re hp
+  have hb := norm_digamma_sub_log_add_half_inv_le_re hp
   have hrep := (Complex.re_le_norm _).trans hb
   have hi : 0 ≤ (1 / (2 * z)).re := by
     rw [one_div, Complex.inv_re]

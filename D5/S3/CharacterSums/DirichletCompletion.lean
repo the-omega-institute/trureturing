@@ -11,6 +11,7 @@ import Mathlib.NumberTheory.LSeries.Nonvanishing
 import D5.S3.CharacterSums.DirichletCompletionGamma
 import Mathlib.Analysis.Calculus.Deriv.Star
 import Mathlib.Analysis.Real.Pi.Bounds
+import D5.S3.Analytic.Resolvent.EntireLogDerivDifference
 
 /-! # Modulus-normalized Dirichlet completions -/
 
@@ -55,10 +56,18 @@ theorem completion_one_sub {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
 
 /-- The completion is nonzero on the closed right half-plane, except at a principal pole. -/
 theorem completion_ne_zero_of_one_le_re {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1) (hs : 1 ≤ s.re) :
+    (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1 ∨ q = 1) (hs : 1 ≤ s.re) :
     completion χ s ≠ 0 := by
   have hs0 : s ≠ 0 := by intro h; simp [h] at hs; linarith
-  have hL := χ.LFunction_ne_zero_of_one_le_re hχs hs
+  have hL : χ.LFunction s ≠ 0 := by
+    rcases hχs with hne | hs1 | hq1
+    · exact χ.LFunction_ne_zero_of_one_le_re (.inl hne) hs
+    · exact χ.LFunction_ne_zero_of_one_le_re (.inr hs1) hs
+    · subst q
+      rw [DirichletCharacter.LFunction_modOne_eq]
+      by_cases hs1 : s = 1
+      · simpa [hs1] using riemannZeta_one_ne_zero
+      · exact riemannZeta_ne_zero_of_one_le_re hs
   apply mul_ne_zero (Complex.exp_ne_zero _)
   intro h
   exact hL (by rw [χ.LFunction_eq_completed_div_gammaFactor s (.inl hs0), h, zero_div])
@@ -69,18 +78,20 @@ theorem rootNumber_ne_zero {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
   intro h
   have he := completion_one_sub hχ (-1)
   rw [h, zero_mul] at he
-  have hn := completion_ne_zero_of_one_le_re χ (s := 2) (.inr (by norm_num))
+  have hn := completion_ne_zero_of_one_le_re χ (s := 2) (.inr (.inl (by norm_num)))
     (by norm_num)
   exact hn (by convert he using 1 <;> norm_num)
 
-/-- Nonprincipal primitive completions are also nonzero on the closed left half-plane. -/
+/-- Primitive completions are nonzero on the closed left half-plane. -/
 theorem completion_ne_zero_of_re_le_zero {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 0)
-    (hs : s.re ≤ 0) : completion χ s ≠ 0 := by
-  have hni : χ⁻¹ ≠ 1 ∨ 1 - s ≠ 1 := by
-    rcases hχs with hne | hs0
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive)
+    {s : ℂ} (hs : s.re ≤ 0) : completion χ s ≠ 0 := by
+  have hni : χ⁻¹ ≠ 1 ∨ 1 - s ≠ 1 ∨ q = 1 := by
+    by_cases hne : χ = 1
+    · right; right
+      simpa only [DirichletCharacter.IsPrimitive, hne,
+        DirichletCharacter.conductor_one] using hχ.symm
     · exact .inl (inv_ne_one.mpr hne)
-    · exact .inr (by intro h; apply hs0; linear_combination -h)
   have hn := completion_ne_zero_of_one_le_re χ⁻¹ (s := 1 - s) hni
     (by simp only [sub_re, one_re]; linarith)
   have he := completion_one_sub hχ (1 - s)
@@ -190,7 +201,7 @@ theorem norm_rootNumber {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
   rw [him] at ha
   rw [hi2] at hb
   have hp : 0 < ‖completion χ (-1)‖ := norm_pos_iff.mpr
-    (completion_ne_zero_of_re_le_zero hχ (.inl hne) (by norm_num))
+    (completion_ne_zero_of_re_le_zero hχ (by norm_num))
   have hsq : ‖χ.rootNumber‖ ^ 2 = 1 := by
     have he : (‖χ.rootNumber‖ ^ 2 - 1) * ‖completion χ (-1)‖ = 0 := by
       rw [ha] at hb
@@ -348,5 +359,125 @@ theorem completion_growth_log {q : ℕ} [NeZero q]
     _ = Real.exp (Real.log A + Real.log R + (b * R + U * Real.log U)) := by
       simp only [Real.exp_add, Real.exp_log hAp, Real.exp_log hRp]
     _ ≤ _ := Real.exp_le_exp.mpr he
+
+private theorem completion_power_growth {q : ℕ} [NeZero q]
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    ‖completion χ s‖ ≤ Real.exp (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ)) := by
+  let R := 1 + ‖s‖
+  have hR : 1 ≤ R := by dsimp [R]; linarith [norm_nonneg s]
+  have hp : 0 < R := by linarith
+  have hroot : 1 ≤ R ^ (1 / 2 : ℝ) := Real.one_le_rpow hR (by norm_num)
+  have hl : Real.log R ≤ 2 * R ^ (1 / 2 : ℝ) := by
+    have hh := Real.log_le_rpow_div hp.le (by norm_num : (0 : ℝ) < 1 / 2)
+    linarith
+  have hC : 0 ≤ growthConstant q := (by norm_num : (0 : ℝ) ≤ 3).trans (le_max_right _ _)
+  refine (completion_growth_log hχ hne s).le.trans (Real.exp_le_exp.mpr ?_)
+  change growthConstant q * R * (1 + Real.log R) ≤ _
+  have he : R ^ (3 / 2 : ℝ) = R * R ^ (1 / 2 : ℝ) := by
+    rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, Real.rpow_add hp, Real.rpow_one]
+  change _ ≤ 3 * growthConstant q * R ^ (3 / 2 : ℝ)
+  rw [he]
+  nlinarith [mul_nonneg (mul_nonneg hC hp.le) (by linarith :
+    0 ≤ 3 * R ^ (1 / 2 : ℝ) - (1 + Real.log R))]
+
+/-- Nonprincipal completions have finite order at every point, and positive order at zeros. -/
+theorem completion_zero_order {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
+    (hne : χ ≠ 1) (ρ : ℂ) : analyticOrderAt (completion χ) ρ ≠ ⊤ ∧
+      (completion χ ρ = 0 ↔ 0 < analyticOrderNatAt (completion χ) ρ) := by
+  have ha := (differentiable_completion χ hne).analyticAt
+  have hn := completion_ne_zero_of_one_le_re χ (s := 2) (.inl hne) (by norm_num)
+  have hf : analyticOrderAt (completion χ) ρ ≠ ⊤ :=
+    (fun z (_ : z ∈ (Set.univ : Set ℂ)) => ha z).analyticOrderAt_ne_top_of_isPreconnected
+      isPreconnected_univ (mem_univ 2) (mem_univ ρ)
+      (by rw [(ha 2).analyticOrderAt_eq_zero.mpr hn]; simp)
+  refine ⟨hf, ?_⟩
+  rw [← Nat.pos_iff_ne_zero, analyticOrderNatAt, ENat.toNat_eq_zero]
+  simp only [not_or, hf, and_true]
+  exact (ha ρ).analyticOrderAt_ne_zero.symm
+
+/-- Every zero of a primitive nonprincipal completion lies in the open critical strip. -/
+theorem completion_zero_strip {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {ρ : ℂ} (hρ : completion χ ρ = 0) :
+    0 < ρ.re ∧ ρ.re < 1 := by
+  constructor
+  · by_contra! h
+    exact completion_ne_zero_of_re_le_zero hχ h hρ
+  · by_contra! h
+    exact completion_ne_zero_of_one_le_re χ (.inl hne) h hρ
+
+/-- Reflection in the critical line is conjugate covariance with the root number. -/
+theorem completion_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) (s : ℂ) :
+    completion χ (1 - conj s) = χ.rootNumber * conj (completion χ s) := by
+  rw [completion_one_sub hχ, completion_inv_conj]
+
+private theorem iteratedDeriv_inv_conj {q : ℕ} [NeZero q]
+    (χ : DirichletCharacter ℂ q) (n : ℕ) (s : ℂ) :
+    iteratedDeriv n (completion χ⁻¹) (conj s) =
+      conj (iteratedDeriv n (completion χ) s) := by
+  induction n generalizing s with
+  | zero => simpa using completion_inv_conj χ s
+  | succ n ih =>
+    have he : iteratedDeriv n (completion χ⁻¹) =
+        conj ∘ iteratedDeriv n (completion χ) ∘ conj := by
+      funext z
+      simpa using ih (conj z)
+    rw [iteratedDeriv_succ, he, deriv_conj_conj, iteratedDeriv_succ]
+    simp only [Function.comp_apply, conj_conj]
+
+/-- Critical-line reflection preserves the zero divisor, including analytic multiplicity. -/
+theorem completion_reflect_order {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    (completion χ (1 - conj s) = 0 ↔ completion χ s = 0) ∧
+    analyticOrderNatAt (completion χ) (1 - conj s) =
+      analyticOrderNatAt (completion χ) s := by
+  have hF := differentiable_completion χ hne
+  have hFi := differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)
+  have hf := (completion_zero_order χ hne s).1
+  have hi : analyticOrderAt (completion χ⁻¹) (conj s) =
+      analyticOrderAt (completion χ) s := by
+    let n := analyticOrderNatAt (completion χ) s
+    have he : analyticOrderAt (completion χ) s = n :=
+      (ENat.natCast_toNat hf).symm
+    have hh := ((hF.analyticAt s).analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero).mp he
+    have he' : analyticOrderAt (completion χ⁻¹) (conj s) = n := by
+      apply ((hFi.analyticAt _).analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero).mpr
+      simpa only [iteratedDeriv_inv_conj, map_eq_zero] using hh
+    exact he'.trans he.symm
+  have heq : (fun z : ℂ => completion χ (1 - z)) =
+      fun z => χ.rootNumber * completion χ⁻¹ z := funext (completion_one_sub hχ)
+  have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := completion χ)
+    (g := fun z : ℂ => 1 - z) (z₀ := conj s) (by fun_prop) (by simp)
+  have hm := analyticOrderAt_mul analyticAt_const (hFi.analyticAt (conj s))
+  have hr : analyticOrderAt (fun _ : ℂ => χ.rootNumber) (conj s) = 0 :=
+    analyticAt_const.analyticOrderAt_eq_zero.mpr (rootNumber_ne_zero hχ)
+  have ho : analyticOrderAt (completion χ) (1 - conj s) =
+      analyticOrderAt (completion χ) s := by
+    rw [Function.comp_def, heq, hm, hr, zero_add] at hc
+    exact hc.symm.trans hi
+  refine ⟨?_, congrArg ENat.toNat ho⟩
+  rw [completion_reflect hχ, mul_eq_zero]
+  simp [rootNumber_ne_zero hχ]
+
+private theorem logDeriv_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    logDeriv (completion χ) (1 - conj s) = -conj (logDeriv (completion χ) s) := by
+  have hF := differentiable_completion χ hne
+  have hFi := differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)
+  have heq : completion χ⁻¹ = conj ∘ completion χ ∘ conj := by
+    funext z; simpa using completion_inv_conj χ (conj z)
+  have hd : deriv (completion χ⁻¹) (conj s) = conj (deriv (completion χ) s) := by
+    rw [heq, deriv_conj_conj]
+    simp only [Function.comp_apply, conj_conj]
+  have hl : logDeriv (completion χ⁻¹) (conj s) = conj (logDeriv (completion χ) s) := by
+    simp only [logDeriv_apply, hd, completion_inv_conj, map_div₀]
+  have he : (completion χ) ∘ (fun z : ℂ => 1 - z) =
+      fun z => χ.rootNumber * completion χ⁻¹ z := funext (completion_one_sub hχ)
+  have hh := logDeriv_comp (x := conj s) (f := completion χ)
+    (g := fun z : ℂ => 1 - z) (hF _) (by fun_prop)
+  rw [he, logDeriv_const_mul _ _ (rootNumber_ne_zero hχ), hl] at hh
+  have hh' : conj (logDeriv (completion χ) s) =
+      logDeriv (completion χ) (1 - conj s) * (-1) := by simpa using hh
+  linear_combination hh'
 
 end D5.S3.CharacterSums.DirichletCompletion
