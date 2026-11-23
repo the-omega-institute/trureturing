@@ -9,6 +9,9 @@ internal sealed class BinaryDeletionGrowthDocument : IScribeDocumentDefinition
     private const string Ratio =
         "D5/S3/Quantum/Entanglement/Marginals/BinaryDeletionGrowth.kernelDimension_to_allowedCount";
 
+    private const string Recurrence =
+        "D5/S3/Quantum/Entanglement/Marginals/BinaryDeletionGrowth.kernelDimension_four_recurrence";
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Growth of the one-site deletion kernel on open chains with forbidden occupied runs.",
         H("Exponential growth of the binary deletion kernel"),
@@ -48,5 +51,20 @@ internal sealed class BinaryDeletionGrowthDocument : IScribeDocumentDefinition
                     + "Dividing the kernel lower bound by this upper bound shows that "
                     + "the ratio of the kernel dimension to the number of allowed words "
                     + "is at least one quarter of (50/43) to the power k."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("four-site-deletion-kernel-recurrence"),
+                DeclarationHandle.Create(Recurrence), H("Exact recurrence for four-site windows"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let d(n) be the dimension of the one-site deletion kernel on an open chain "
+                    + "of n sites with no four consecutive occupied sites. For n at least four, "
+                    + "d(n+6) + d(n+1) + d(n) equals d(n+5) + 2d(n+4) + 2d(n+3) + 2d(n+2).")),
+                    Paragraph(Text(
+                    "Scan from the right end, so the initial window is the last four sites in list order. "
+                    + "That window determines the two ages and the newer direction. "
+                    + "Every subsequent legal symbol determines a unique move. "
+                    + "With that window fixed, each allowed move sequence produces one surviving pattern. "
+                    + "The six-state successor operator satisfies the displayed recurrence, "
+                    + "so summing the exact extension counts over the initial windows proves it."))),
                 DescribeRole.Theorem))));
 }

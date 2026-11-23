@@ -20,6 +20,13 @@ internal sealed class AudenaertBinaryHolevoBoundDocument : IScribeDocumentDefini
                 H("Real scaling of the logarithmic derivative direction"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural n, all complex matrices m and X on Fin n and every real c, logDeriv(m,c times X) equals c times logDeriv(m,X). Here logDeriv is LogDerivTrace.logDeriv, the actual Bochner integral of the two-resolvent sandwich. The equality uses the totalized Bochner integral and does not assume positive definiteness, integrability, a sign for c or a nonzero dimension. This scaling identity serves the differential skew bound and the local second-order expansion in UmegakiFaithfulLowerRatio. The repository assembly is not a new result attributed to Audenaert's paper."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("matrix-log-resolvent-integral"),
+                DeclarationHandle.Create("D5/S3/Divergence/AudenaertBinaryHolevoBound.matrix_log_resolvent_integral"),
+                H("Matrix logarithm as a resolvent integral"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Divergence/audenaert2014skew")),
+                Blocks(Paragraph(Text("For a positive definite complex matrix M, the difference of the scalar reference resolvent and the resolvent of M is Bochner integrable on the positive half-line. Its integral is the matrix logarithm of M."))),
                 DescribeRole.Theorem))));
     private static Formula V(string n) => F.Id(n);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
