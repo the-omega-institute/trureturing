@@ -173,7 +173,7 @@ def family : Registration arena.{u} (type_of% (@partition_eq_filters.{u})) where
   dependence := listDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@partition_eq_filters.{u}) (Realization listSignature) Type Unit where
+    (@partition_eq_filters.{u}) (Realization listSignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.partition_eq_filters.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.partition_eq_filters.family
   realizationSource := none
@@ -185,7 +185,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize listSignature listEqual.readout listEqual.anchor)
+  readout := some (realize listSignature.{u} listEqual.{u}.readout listEqual.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -287,7 +287,7 @@ def family : Registration arena.{u} (type_of% (@wick_dependsOn.{u})) where
   dependence := supportDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@wick_dependsOn.{u}) (Realization supportSignature) Type Unit where
+    (@wick_dependsOn.{u}) (Realization supportSignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.wick_dependsOn.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.wick_dependsOn.family
   realizationSource := none
@@ -299,7 +299,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize supportSignature supportLaw.readout supportLaw.anchor)
+  readout := some (realize supportSignature.{u} supportLaw.{u}.readout supportLaw.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -401,7 +401,7 @@ def family : Registration arena.{u} (type_of% (@wick_analytic.{u})) where
   dependence := germDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@wick_analytic.{u}) (Realization germSignature) Type Unit where
+    (@wick_analytic.{u}) (Realization germSignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.wick_analytic.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction.wick_analytic.family
   realizationSource := none
@@ -413,7 +413,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize germSignature germAnalytic.readout germAnalytic.anchor)
+  readout := some (realize germSignature.{u} germAnalytic.{u}.readout germAnalytic.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
