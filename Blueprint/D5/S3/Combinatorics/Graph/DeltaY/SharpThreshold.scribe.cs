@@ -24,8 +24,8 @@ internal sealed class SharpThresholdDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Threshold()), AssessedProvenance.FromRepo(Zhou),
                 Blocks(
                     Paragraph(Text("The two-color invariant makes every reachable reverse move strong when the starting graph has minimum degree at least six.")),
-                    Paragraph(Text("Start with the complete graph on 0 through 6 and remove the pairs 06 and 14. Perform forward moves on 012 at 7 and 034 at 8, reverse at 0, perform a forward move on 157 at 9, then reverse at 1.")),
-                    Paragraph(Text("The last center has neighbors 3, 6 and 9, with just the pair 36 already present. Its removal lowers the edge count from 19 to 18. Strong histories and graph isomorphisms preserve edge count, so the endpoint separates the two reachable families at every threshold below six."))),
+                    Paragraph(Text("Start with the complete graph on 0 through 6 and remove the pairs 06 and 14. The resulting graph has minimum degree five. Perform forward moves on 012 at 7 and 034 at 8, reverse at 0 with independent neighbors 5, 7 and 8, perform a forward move on 157 at 9, then reverse at 1.")),
+                    Paragraph(Text("The last center has neighbors 3, 6 and 9, with just the pair 36 already present. The sharpness proof checks the five moves and the edge counts 19, 19, 19, 19, 19 and 18. Strong histories and graph isomorphisms preserve edge count, so the endpoint separates the two reachable families at every threshold below six."))),
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("zhou-strong-reverse-degree-six"), ResolutionKind.Proved))),
         []));

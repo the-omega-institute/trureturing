@@ -66,8 +66,8 @@ theorem Triple.mem_verts (T : Triple) (x : ℕ) :
     x ∈ T.verts ↔ x = T.a ∨ x = T.b ∨ x = T.c := by
   simp [Triple.verts]
 
-theorem Triple.card_verts (T : Triple) : T.verts.card = 3 := by
-  simp [Triple.verts, card_insert_of_notMem, T.ab, T.ac, T.bc]
+theorem Triple.card_verts (T : Triple) : T.verts.card = 3 :=
+  Finset.card_triple_eq_three_iff.mpr ⟨T.ab, T.ac, T.bc⟩
 
 def Triple.pairs (T : Triple) : Finset (Sym2 ℕ) :=
   {s(T.a, T.b), s(T.a, T.c), s(T.b, T.c)}
@@ -87,26 +87,22 @@ private theorem Triple.mem_spokes (T : Triple) (o x y : ℕ) :
   grind
 
 private theorem Triple.card_pairs (T : Triple) : T.pairs.card = 3 := by
-  have h₁ : s(T.a, T.b) ∉ ({s(T.a, T.c), s(T.b, T.c)} : Finset (Sym2 ℕ)) := by
-    have := T.ab; have := T.ac; have := T.bc
-    simp only [mem_insert, mem_singleton, Sym2.eq_iff]
-    grind
-  have h₂ : s(T.a, T.c) ∉ ({s(T.b, T.c)} : Finset (Sym2 ℕ)) := by
-    have := T.ab; have := T.ac; have := T.bc
-    simp only [mem_singleton, Sym2.eq_iff]
-    grind
-  simp [Triple.pairs, card_insert_of_notMem, h₁, h₂]
+  unfold Triple.pairs
+  apply Finset.card_triple_eq_three_iff.mpr
+  have hab := T.ab
+  have hac := T.ac
+  have hbc := T.bc
+  simp only [ne_eq, Sym2.eq_iff]
+  grind
 
 private theorem Triple.card_spokes (T : Triple) (o : ℕ) : (T.spokes o).card = 3 := by
-  have h₁ : s(o, T.a) ∉ ({s(o, T.b), s(o, T.c)} : Finset (Sym2 ℕ)) := by
-    have := T.ab; have := T.ac
-    simp only [mem_insert, mem_singleton, Sym2.eq_iff]
-    grind
-  have h₂ : s(o, T.b) ∉ ({s(o, T.c)} : Finset (Sym2 ℕ)) := by
-    have := T.bc
-    simp only [mem_singleton, Sym2.eq_iff]
-    grind
-  simp [Triple.spokes, card_insert_of_notMem, h₁, h₂]
+  unfold Triple.spokes
+  apply Finset.card_triple_eq_three_iff.mpr
+  have hab := T.ab
+  have hac := T.ac
+  have hbc := T.bc
+  simp only [ne_eq, Sym2.eq_iff]
+  grind
 
 def State.forward (G : State) (T : Triple) (o : ℕ) : State :=
   ⟨insert o G.active, (G.edges \ T.pairs) ∪ T.spokes o⟩
@@ -736,7 +732,7 @@ def State.asFiniteGraph (G : State) (hG : G.Valid) : FiniteGraph.{u} :=
 
 def asFiniteGraph_iso {G : State} (hG : G.Valid) :
     (G.asFiniteGraph.{u} hG).graph ≃g G.graph hG :=
-  { toEquiv := Equiv.ulift, map_rel_iff' := Iff.rfl }
+  SimpleGraph.Iso.comap Equiv.ulift (G.graph hG)
 
 theorem iso_degree_of_state {A : Type*} {F : SimpleGraph A} {G : State} (hG : G.Valid)
     (e : F ≃g G.graph hG) (x : A) :
