@@ -29,4 +29,5 @@ Paper consequence, not an additional Lean claim: if m equals r times k squared, 
 - Truth anchor: `D5/S3/Quantum/Entanglement/SectorChannels/CompactMatchedReplacementBranchGap.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.replacer_diamond_exact`
 - Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorChannelModel](../FiniteSectorChannelModel.md)
+- Dependency: [D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact](WeightedBinaryReplacementExact.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Foundation/FiniteKrausChannel.md)

@@ -7,6 +7,7 @@
    digest: The shared-classical branch lower bound for correlated replacement on actual compact flat carriers. -/
 
 import D5.S3.Quantum.Entanglement.FiniteSectorChannelModel
+import D5.S3.Quantum.Entanglement.SectorChannels.WeightedBinaryReplacementExact
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.Real.Sqrt
@@ -157,22 +158,6 @@ private theorem shared_branch_l1_lower {ι β : Type*} [Fintype ι] [DecidableEq
   rw [hn, hqsum]
   linarith
 
-private theorem diagonal_l1_le_traceNorm {n : Type*} [Fintype n] [DecidableEq n]
-    (X : Matrix n n ℂ) (hX : X.IsHermitian) : ∑ i, |(X i i).re| ≤ traceNorm X := by
-  let P := posPart X
-  let N := negPart X
-  have hP : P.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg X)
-  have hN : N.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg X)
-  have he : X = P - N := (CFC.posPart_sub_negPart X hX).symm
-  rw [trace_norm_jordan_mass X hX]
-  change (∑ i, |(X i i).re|) ≤ P.trace.re + N.trace.re
-  have hi (i : n) : |(X i i).re| ≤ (P i i).re + (N i i).re := by
-    rw [he]
-    change |(P i i).re - (N i i).re| ≤ _
-    exact abs_sub_le_iff.mpr ⟨by linarith [(Complex.nonneg_iff.mp (hN.diag_nonneg (i := i))).1],
-      by linarith [(Complex.nonneg_iff.mp (hP.diag_nonneg (i := i))).1]⟩
-  simpa [trace, Matrix.diag, Finset.sum_add_distrib] using Finset.sum_le_sum fun i _ => hi i
-
 private theorem referenceError_le_diamond {s t : Type*} [Fintype s] [DecidableEq s]
     [Fintype t] [DecidableEq t] {n : ℕ}
     (A B : QuantumChannel s t) (rho : DensityState (Fin n × s)) :
@@ -221,7 +206,9 @@ private theorem shared_branch_native_diamond {s ι β : Type*} [Fintype s] [Deci
     rw [hC,hQ]
   calc
     _ ≤ _ := hs
-    _ ≤ traceNorm X := by rw [← he]; exact diagonal_l1_le_traceNorm X hx
+    _ ≤ traceNorm X := by
+      rw [← he]
+      exact WeightedBinaryReplacementExact.diagonal_l1_le_traceNorm X hx
     _ ≤ _ := referenceError_le_diamond C Q rho
 
 private def rawEntry {A B : Type*} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
@@ -354,49 +341,6 @@ private theorem physical_shared_branch_gap {S A B T : Type*} [Fintype S] [Decida
       (fun i j => (hdiag C (i,j)).trans (hC i j))
       (fun i j => (hdiag Q (i,j)).trans (mixture_basis_born w left right Q hQ a b i j))
 
-private theorem sum_vary_single {A B D : Type*} [Fintype D] [DecidableEq A] [DecidableEq B]
-    (a : A) (b : B) (v : D → ℂ) :
-    (∑ i, Matrix.single a b (v i)) = Matrix.single a b (∑ i, v i) := by
-  ext i j
-  by_cases hi : a = i <;> by_cases hj : b = j <;> simp [Matrix.sum_apply, hi, hj]
-
-/-- Explicit Kraus family |t⟩⟨a| scaled by sqrt(d t), with no formal
-assumption about existence of the matched-replacement channel. -/
-private theorem diagonal_replacement_exists {A T : Type*} [Fintype A] [DecidableEq A]
-    [Fintype T] [DecidableEq T] (d : T → ℝ) (hd : ∀ t, 0 ≤ d t)
-    (hs : ∑ t, d t = 1) :
-    ∃ C : QuantumChannel A T, ∀ X,
-      rawEntry C X = X.trace • Matrix.diagonal (fun t => (d t : ℂ)) := by
-  let e (t : T) : ℂ := (Real.sqrt (d t) : ℂ)
-  have he₁ (t : T) : star (e t) = e t := by simp [e]
-  have he₂ (t : T) : e t * e t = (d t : ℂ) := by
-    dsimp [e]
-    exact_mod_cast Real.mul_self_sqrt (hd t)
-  let K (i : A × T) : Matrix T A ℂ := Matrix.single i.2 i.1 (e i.2)
-  have hkc (i : A × T) : (K i)ᴴ = Matrix.single i.1 i.2 (e i.2) := by
-    simp [K, Matrix.conjTranspose_single, he₁]
-  have hs' : (∑ t, (d t : ℂ)) = 1 := by exact_mod_cast hs
-  have hK : (∑ i, (K i)ᴴ * K i) = 1 := by
-    simp_rw [hkc, K, Matrix.single_mul_single_same, he₂]
-    rw [Fintype.sum_prod_type]
-    simp_rw [sum_vary_single, hs']
-    exact Matrix.sum_single_one
-  obtain ⟨C, hC⟩ := finite_kraus_quantum_channel K hK
-  refine ⟨C, fun X => ?_⟩
-  change CStarMatrix.ofMatrix.symm (C.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = _
-  rw [hC]
-  simp_rw [hkc, K, Matrix.single_mul_mul_single]
-  rw [Fintype.sum_prod_type, Finset.sum_comm]
-  simp_rw [sum_vary_single]
-  have hq (t : T) : (∑ a, e t * X a a * e t) = X.trace * (d t : ℂ) := by
-    simp_rw [show ∀ z : ℂ, e t * z * e t = (e t * e t) * z from fun _ => by ring,
-      he₂, ← Finset.mul_sum]
-    rw [Matrix.trace, mul_comm]
-    rfl
-  simp_rw [hq, Matrix.sum_single_eq_diagonal]
-  ext i j
-  by_cases hij : i = j <;> simp [hij, smul_eq_mul]
-
 private theorem matched_target_exists {A B T : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype T] [DecidableEq T]
     (c : ℝ) (hc : (Fintype.card T : ℝ) * c^2 = 1) :
@@ -416,7 +360,9 @@ private theorem matched_target_exists {A B T : Type*} [Fintype A] [DecidableEq A
     change (∑ i, ∑ j, if i = j then c^2 else 0) = 1
     simp_rw [hsum, Finset.sum_const, nsmul_eq_mul, Finset.card_univ]
     exact hc
-  obtain ⟨C, hC⟩ := diagonal_replacement_exists (A := A × B) d hd hds
+  obtain ⟨C, hC⟩ := WeightedBinaryReplacementExact.diagonal_replacement_exists
+    (A := A × B) d hd hds
+  change ∀ X, rawEntry C X = X.trace • Matrix.diagonal (fun t => (d t : ℂ)) at hC
   refine ⟨C, ?_, ?_⟩
   · intro X
     rw [hC]
@@ -490,8 +436,10 @@ private theorem matched_LOSR_exists {A B : Type*} [Fintype A] [DecidableEq A] [F
   let d (t i : Fin m) : ℝ := if t=i then 1 else 0
   have hd (t i : Fin m) : 0 ≤ d t i := by dsimp [d]; split <;> norm_num
   have hs (t : Fin m) : ∑ i, d t i = 1 := by simp [d]
-  choose L hL using fun t => diagonal_replacement_exists (A := A) (d t) (hd t) (hs t)
-  choose R hR using fun t => diagonal_replacement_exists (A := B) (d t) (hd t) (hs t)
+  choose L hL using fun t =>
+    WeightedBinaryReplacementExact.diagonal_replacement_exists (A := A) (d t) (hd t) (hs t)
+  choose R hR using fun t =>
+    WeightedBinaryReplacementExact.diagonal_replacement_exists (A := B) (d t) (hd t) (hs t)
   obtain ⟨C, hC, hb⟩ := matched_target_exists (A := A) (B := B) (T := Fin m) c
     (by simpa using hc)
   refine ⟨C,L,R,?_,hb⟩

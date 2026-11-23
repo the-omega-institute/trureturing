@@ -29,7 +29,7 @@ set_option relaxedAutoImplicit false
 universe u
 noncomputable section
 
-private theorem diagonal_l1_le_traceNorm {n : Type*} [Fintype n] [DecidableEq n]
+theorem diagonal_l1_le_traceNorm {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (hX : X.IsHermitian) : ∑ i, |(X i i).re| ≤ traceNorm X := by
   let P := posPart X
   let N := negPart X
@@ -102,7 +102,7 @@ private theorem sum_vary_single {A Bit D : Type*} [Fintype D] [DecidableEq A] [D
   ext i j
   by_cases hi : a = i <;> by_cases hj : b = j <;> simp [Matrix.sum_apply, hi, hj]
 
-private theorem diagonal_replacement_exists {A T : Type*} [Fintype A] [DecidableEq A]
+theorem diagonal_replacement_exists {A T : Type*} [Fintype A] [DecidableEq A]
     [Fintype T] [DecidableEq T] (d : T → ℝ) (hd : ∀ t, 0 ≤ d t)
     (hs : ∑ t, d t = 1) :
     ∃ C : QuantumChannel A T, ∀ X,
