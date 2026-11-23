@@ -294,7 +294,8 @@ theorem overlapping_mask_xor_intersection
           simp [f₀, g₀, parityPart_apply, cell_apply, hx, hy, ht, hp x hy, hq x hx]
       · simp [hx, hy, parityPart_apply, hg₀ x hy]
     · simp [hx, parityPart_apply, hf₀ x hx]
-  have shifted_eq (t : Bool) : signedXorPair a b (parityPart t f₁, parityPart t g₁) = shifted t := by
+  have shifted_eq (t : Bool) :
+      signedXorPair a b (parityPart t f₁, parityPart t g₁) = shifted t := by
     have hX : X t =
         Finset.univ.filter (fun x => x ∈ F ∧ cubeFlip (cubeFlip x a) b ∈ G ∧ parity x = t) := by
       ext x
@@ -375,6 +376,12 @@ theorem overlapping_mask_xor_intersection
     by_contra h
     exact hshiftPos.ne' (by simp [shifted, Finset.not_nonempty_iff_eq_empty.mp h])
 
+/--
+info: 'D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9MaskedXorObstruction.overlapping_mask_xor_intersection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in
 #print axioms overlapping_mask_xor_intersection
 
 end
