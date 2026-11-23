@@ -29,6 +29,9 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                         + "The lower bound at p−1 exceeds the upper bounds at the two odd exponents p−2 and p. "
                         + "Thus the strict rise at p−2 and the strict fall at p−1 both lie in the prescribed tail."))
                 ),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("benfield-lippard-2025-exception-set-oscillation"),
+                    ResolutionKind.Proved))
         )));
 }
