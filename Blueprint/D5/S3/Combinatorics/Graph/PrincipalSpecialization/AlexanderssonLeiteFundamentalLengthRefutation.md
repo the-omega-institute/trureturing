@@ -18,7 +18,7 @@ The source uses vertex labels 1 through n. Lean uses Fin n and adds one to each 
 
 The coefficient at a monomial sums the weights of all proper colorings with exactly its actual color multiplicities. Ranking its used colors preserves the multiplicities in increasing color order, properness, and the ascent count. The strict positions of the sorted color word give the proper partial sums of these multiplicities.
 
-In degree n the fundamental element F indexed by S has coefficient one at each cut set T containing S. The map Ψ sends F to t to the power |S| + 1. The corresponding weight of cut set T is t to the power |T| + 1 times (1 − t) to the power n − |T| − 1. Summing over the optional cuts gives the prescribed value, and descending through the supersets of S gives uniqueness. The symbol X in the formula is the source alphabet, and t is the polynomial indeterminate. In degree zero Ψ sends 1 to 1.
+In degree n the fundamental element F indexed by S has coefficient one at each cut set T containing S. The map Ψ sends F to t to the power |S| + 1. The corresponding weight of cut set T is t to the power |T| + 1 times (1 − t) to the power n − |T| − 1. Summing over the optional cuts gives the prescribed value. Möbius inversion on the lattice of cut sets recovers the monomial values and gives uniqueness. The symbol X in the formula is the source alphabet, and t is the polynomial indeterminate. In degree zero Ψ sends 1 to 1.
 
 **Theorem 1.2 (The weighted image can have nonreal roots).**
 
