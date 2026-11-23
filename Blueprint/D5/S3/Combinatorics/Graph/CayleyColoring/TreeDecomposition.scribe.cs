@@ -16,7 +16,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
                 H("Peak and rooted-leaf counts"),
                 StatementSource.FromAuthor(Disp(Statement1())),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/seitz2011labelledtrees")),
-                Blocks(Paragraph(Text("A peak has no greater-labeled neighbor. A rooted leaf has no adjacent vertex farther from the root. The equivalence removes the least label, recursively replaces the attached branches, and relabels the pivot to the specified root. Seitz gives the peak-to-leaf bijection in Corollary 5.2.2 and §5.3.1.2, and de Panafieu et al. use its distributional consequence in Proposition 5."))),
+                Blocks(Paragraph(Text("A peak has no greater-labeled neighbor. A rooted leaf has no adjacent vertex farther from the root. For local minima, Seitz reroots at the greatest label, recursively transforms the attached branches, and finally swaps that label with the original root label. Reversing the label order gives the peak-to-leaf equivalence. It cuts at the least label, recursively replaces the attached branches, and swaps the least label with the specified root. See Seitz, Corollary 5.2.2 and §5.3.1.2, and de Panafieu et al., Proposition 5."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cayley-probe-frame"),

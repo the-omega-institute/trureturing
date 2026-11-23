@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.CayleyColoring.ForestReassembly
 import D5.S3.Combinatorics.Graph.CayleyColoring.CentralScheduler
 import D5.S3.Combinatorics.Graph.CayleyColoring.CayleyCode
+import Mathlib.Combinatorics.SimpleGraph.Star
 
 section
 
@@ -362,12 +363,10 @@ theorem sample_spaces_positive {k : Nat} (hk : 2 ≤ k) (anchor : V) :
     0 < Nat.card (Equiv.Perm V × Colored V (ZMod k)) ∧
       0 < Nat.card (Throws anchor (ZMod k)) := by
   let : NeZero k := ⟨by omega⟩
+  let : Nonempty (Equiv.Perm V × Colored V (ZMod k)) :=
+    ⟨(Equiv.refl V, (anchor, ⟨starGraph anchor, isTree_starGraph anchor⟩), fun _ => 0)⟩
   let : Nonempty (Throws anchor (ZMod k)) := ⟨fun _ => (anchor,0)⟩
-  let : Nonempty V := ⟨anchor⟩
-  constructor
-  · rw [Nat.card_congr (countEquiv (A := ZMod k) anchor)]
-    exact Nat.card_pos
-  · exact Nat.card_pos
+  exact ⟨Nat.card_pos, Nat.card_pos⟩
 
 /-- The exact all-size finite law for native labeled trees. The natural counts are the numerator
 and denominator of each uniform sample probability. A throw is one independent uniform pair

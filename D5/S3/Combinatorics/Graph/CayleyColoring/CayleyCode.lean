@@ -115,27 +115,6 @@ private theorem eventually_periodic [Finite V] (f : V → V) (x : V) :
   · exact ⟨m, aux h he⟩
   · exact ⟨n, aux h he.symm⟩
 
-private theorem periodic_closed (f : V → V) : Set.MapsTo f (periodicPts f) (periodicPts f) := by
-  intro x hx
-  obtain ⟨n,hn,hp⟩ := mem_periodicPts.mp hx
-  apply mk_mem_periodicPts hn
-  change (f^[n]) (f x) = f x
-  rw [← iterate_succ_apply, iterate_succ_apply', show (f^[n]) x = x from hp]
-
-private theorem periodic_restrict [Finite V] (f : V → V) : Bijective
-    (fun x : periodicPts f => (⟨f x.val, periodic_closed f x.prop⟩ : periodicPts f)) := by
-  let g : periodicPts f → periodicPts f := fun x => ⟨f x.val, periodic_closed f x.prop⟩
-  have hi (n : Nat) (x : periodicPts f) : ((g^[n]) x).val = (f^[n]) x.val := by
-    induction n generalizing x with
-    | zero => rfl
-    | succ n ih => rw [iterate_succ_apply, iterate_succ_apply, ih]
-  have hg : periodicPts g = Set.univ := by
-    apply Set.eq_univ_of_forall
-    intro x
-    obtain ⟨n, hn, hp⟩ := mem_periodicPts.mp x.prop
-    exact mk_mem_periodicPts hn (Subtype.ext ((hi n x).trans hp))
-  exact (Finite.injective_iff_bijective).mp ((injective_iff_periodicPts_eq_univ).mpr hg)
-
 /-- A patched permutation makes precisely the vertices of its core periodic. -/
 private theorem periodic_patch [Finite V] {a : V} (F : Frame a) (e : Equiv.Perm F.core) :
     periodicPts (F.patch e) = F.core := by
@@ -169,7 +148,7 @@ private noncomputable def cyclicSplit [Finite V] (a : V) (f : Anchored a) :
     Σ F : Frame a, FixedPerm F := by
   let F := Frame.ofFunction f.val (periodicPts f.val)
     (mk_mem_periodicPts Nat.one_pos f.prop) (eventually_periodic f.val)
-  let e : Equiv.Perm F.core := Equiv.ofBijective _ (periodic_restrict f.val)
+  let e : Equiv.Perm F.core := Equiv.ofBijective _ (bijOn_periodicPts f.val).bijective
   exact ⟨F, ⟨e, Subtype.ext f.prop⟩⟩
 
 private noncomputable def cyclicJoin {a : V} (d : Σ F : Frame a, FixedPerm F) : Anchored a :=
@@ -179,7 +158,8 @@ private theorem cyclic_join_split [Finite V] (a : V) (f : Anchored a) :
     cyclicJoin (cyclicSplit a f) = f := by
   apply Subtype.ext
   exact Frame.patch_recover f.val (periodicPts f.val)
-    (mk_mem_periodicPts Nat.one_pos f.prop) (eventually_periodic f.val) (periodic_closed f.val)
+    (mk_mem_periodicPts Nat.one_pos f.prop) (eventually_periodic f.val)
+    (bijOn_periodicPts f.val).mapsTo
 
 private theorem cyclic_split_join [Finite V] {a : V} (d : Σ F : Frame a, FixedPerm F) :
     cyclicSplit a (cyclicJoin d) = d := by

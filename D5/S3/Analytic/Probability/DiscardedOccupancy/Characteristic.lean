@@ -50,7 +50,10 @@ private theorem throwMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) :
 
 private theorem wordMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
     ∑ ω : History n j, wordMass n p ω = 1 := by
-  simpa [expect, average, smul_eq_mul] using expect_const hn p j (1 : ℝ)
+  classical
+  unfold wordMass
+  simpa [throwMass_sum hn] using
+    (Finset.sum_prod_piFinset (ι := Fin j) Finset.univ fun _ b => throwMass n p b)
 
 private theorem throwMass_nonneg (n : ℕ) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     (b : Option (Fin n)) : 0 ≤ throwMass n p b := by

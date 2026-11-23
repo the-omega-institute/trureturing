@@ -47,10 +47,12 @@ private def cutWalk {G : SimpleGraph V} {p x y : V} (w : G.Walk x y)
 
 private theorem cut_reachable_ne {G : SimpleGraph V} {p x y : V} (hx : x ≠ p)
     (h : (cut G p).Reachable x y) : y ≠ p := by
-  obtain ⟨w⟩ := h
-  induction w with
-  | nil => exact hx
-  | cons ha w ih => exact ih ha.2.1
+  intro hy
+  subst y
+  have hcut : (cut G p).neighborSet p = ∅ := by
+    ext v
+    simp [neighborSet, cut]
+  exact not_reachable_of_neighborSet_right_eq_empty hx hcut h
 
 private theorem existsUnique_attachment {G : SimpleGraph V} (hG : G.IsTree)
     {p x : V} (hx : x ≠ p) :

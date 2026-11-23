@@ -239,9 +239,8 @@ theorem depth_step (r : V) (f : RootMap r) {v : V} (hv : v ≠ r) :
 
 private theorem parent_not_self (r : V) (f : RootMap r) {v : V} (hv : v ≠ r) : f.val v ≠ v := by
   intro h
-  have hs := depth_step r f hv
-  rw [h] at hs
-  omega
+  obtain ⟨m, hm⟩ := f.prop.2 v
+  exact hv ((Function.iterate_fixed h m).symm.trans hm)
 
 def toGraph (r : V) (f : RootMap r) : SimpleGraph V where
   Adj v w := (v ≠ r ∧ f.val v = w) ∨ (w ≠ r ∧ f.val w = v)
