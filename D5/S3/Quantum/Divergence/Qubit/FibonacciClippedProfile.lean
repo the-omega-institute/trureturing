@@ -939,4 +939,11 @@ theorem traceLog_le_benchmark_sub_margin (ψ : Fin 3 → Fin 2 → ℂ)
 
 end Integral
 
+namespace Benchmark
+
+export _root_.D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
+  (inputWeights referenceWeights C3)
+
+end Benchmark
+
 end D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
