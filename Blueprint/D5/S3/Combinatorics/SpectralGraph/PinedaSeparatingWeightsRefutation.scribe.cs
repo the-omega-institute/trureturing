@@ -16,14 +16,14 @@ internal sealed class PinedaSeparatingWeightsRefutationDocument : IScribeDocumen
         Blocks(
             Paragraph(Text("Separation requires a separable characteristic polynomial, nonzero coordinates in every nonzero right eigenvector, and pairwise distinct coordinates in the specified modes. The nonzero-coordinate requirement includes the zero eigenspace. Weights are real and strictly positive on actual unordered edges or ordered arcs. Each support has its own polynomial and its own degree.")),
             Definition("normalized", "Normalized Laplacian analogue", "NormalizedClaim",
-                Undirected("normalizedSep"),
-                "The operator is the symmetric normalized Laplacian I minus the adjacency matrix scaled on both sides by inverse square-root degrees. The eigenvectors are real. For the distinct-coordinate requirement the modes are orthogonal to the vector of square-root degrees."),
+                Undirected(NormalizedSeparation()),
+                "The operator is the symmetric normalized Laplacian I minus the adjacency matrix scaled on both sides by inverse square-root degrees. The symbol s(i,j) denotes the unordered pair in the edge subtype when i and j are adjacent. The eigenvectors are real. For the distinct-coordinate requirement the modes are orthogonal to the vector of square-root degrees."),
             Definition("adjacency", "Adjacency analogue", "AdjacencyClaim",
-                Undirected("adjacencySep"),
-                "The symmetric weighted adjacency has one variable per edge and zero entries off the support. The eigenvectors are real. The distinct-coordinate requirement applies at eigenvalues strictly below the largest eigenvalue."),
+                Undirected(AdjacencySeparation()),
+                "The symmetric weighted adjacency has one variable per unordered edge and zero entries off the support. The symbol s(i,j) denotes the unordered pair in the edge subtype when i and j are adjacent. The eigenvectors are real. The distinct-coordinate requirement applies when the adjacency has a strictly larger eigenvalue."),
             Definition("directed", "Directed Laplacian analogue", "DirectedClaim",
                 Directed(),
-                "The loopless digraph contains a spanning out-arborescence. Rows receive arcs, so entry (i,j) of the adjacency reads the arc from j to i. The receiving-degree Laplacian is the diagonal row-sum matrix minus that adjacency. The eigenvectors are complex and the distinct-coordinate requirement applies at nonzero eigenvalues."),
+                "The loopless digraph contains a spanning out-arborescence. Path in T means a directed quiver path using the arcs of T, with the empty path allowed at the root. Rows receive arcs, so entry (i,j) of the adjacency reads the arc from j to i. The receiving-degree Laplacian is the diagonal row-sum matrix minus that adjacency, with entries then embedded in the complex numbers. The distinct-coordinate requirement applies at nonzero eigenvalues."),
             Definition("claim", "Question 7.5", "claim",
                 new Formula.Logic(C("NormalizedClaim"), FormulaLogicOperator.Or,
                     new Formula.Logic(C("AdjacencyClaim"), FormulaLogicOperator.Or, C("DirectedClaim"))),
@@ -51,45 +51,143 @@ internal sealed class PinedaSeparatingWeightsRefutationDocument : IScribeDocumen
             StatementSource.FromAuthor(Disp(new Formula.Not(C(proposition)))),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
 
-    private static Formula Undirected(string separation) =>
-        All("n", C("Nat"), Imp(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, F.Id("n")),
-            All("G", Call("SimpleGraph", Call("Fin", F.Id("n"))),
-                Imp(Member(F.Id("G"), "Connected"), Certificate(Member(F.Id("G"), "edgeSet"), separation)))));
+    private static Formula Undirected(Formula separation) =>
+        OnVertices("SimpleGraph", graph => Imp(Member(graph, "Connected"),
+            Let("E", Member(graph, "edgeSet"), Certificate(separation))));
 
-    private static Formula Directed() =>
-        All("n", C("Nat"), Imp(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, F.Id("n")),
-            All("G", Call("Digraph", Call("Fin", F.Id("n"))),
-                Imp(All("i", Call("Fin", F.Id("n")),
-                        new Formula.Not(App(Member(F.Id("G"), "Adj"), F.Id("i"), F.Id("i")))),
-                    Imp(Call("HasSpanningOutArborescence", F.Id("G")),
-                        Certificate(Call("Arc", F.Id("G")), "directedSep"))))));
-
-    private static Formula Certificate(Formula index, string separation)
+    private static Formula Directed()
     {
-        Formula p = F.Id("P"), w = F.Id("w"), degree = F.Id("d");
+        Formula i = F.Id("i"), j = F.Id("j"), vertices = F.Id("V");
+        return OnVertices("Digraph", graph =>
+        {
+            Formula loopless = All("i", vertices, new Formula.Not(Adjacent(graph, i, i)));
+            Formula arcs = Seq(Left, OpenBrace,
+                Rel(Pair(i, j), FormulaRelationOperator.MemberOf, Seq(vertices, Sp, Times, Sp, vertices)),
+                Sp, Mid, Sp, Adjacent(graph, i, j), Right, CloseBrace);
+            return Imp(loopless, Lines(
+                Seq(Parens(SpanningOutArborescence(graph)), Sp, Rightarrow),
+                Let("E", arcs, Certificate(DirectedSeparation()))));
+        });
+    }
+
+    private static Formula OnVertices(string graphType, Func<Formula, Formula> body) =>
+        All("n", Blackboard("N"),
+            Imp(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, F.Id("n")),
+                Let("V", Call("Fin", F.Id("n")),
+                    All("G", Call(graphType, F.Id("V")), body(F.Id("G"))))));
+
+    private static Formula SpanningOutArborescence(Formula graph)
+    {
+        Formula tree = F.Id("T"), vertices = F.Id("V");
+        Formula paths = App(new Formula.Subscript(C("Path"), tree), F.Id("r"), F.Id("v"));
+        Formula uniquePaths = Ex("r", vertices, All("v", vertices,
+            Ex("p", paths, All("q", paths, Equal(F.Id("q"), F.Id("p"))))));
+        return Ex("T", Call("Digraph", vertices),
+            Lines(Seq(Rel(tree, FormulaRelationOperator.LessThanOrEqual, graph), Sp, Land), uniquePaths));
+    }
+
+    private static Formula Certificate(Formula separation)
+    {
+        Formula index = F.Id("E"), p = F.Id("P"), w = F.Id("w");
         Formula eval = Seq(C("MvPolynomial"), Dot, new Formula.Subscript(C("eval"), D(2)));
-        Formula cast = App(Member(C("Int"), "castRingHom"), C("Real"));
+        Formula cast = App(Member(C("Int"), "castRingHom"), Blackboard("R"));
         Formula ev = App(eval, Parens(cast), w, p);
-        return Bind(FormulaQuantifier.Exists, "d", C("Nat"),
-            Bind(FormulaQuantifier.Exists, "P", Call("MvPolynomial", index, C("Int")),
-                new Formula.Logic(Rel(p, FormulaRelationOperator.NotEqual, D(0)), FormulaLogicOperator.And,
-                    new Formula.Logic(App(Member(p, "IsHomogeneous"), degree), FormulaLogicOperator.And,
-                        All("w", new Formula.TypeArrow(index, C("Real")),
-                            Imp(Call("Positive", w), new Formula.Logic(Call(separation, F.Id("G"), w),
-                                FormulaLogicOperator.Iff, Rel(ev, FormulaRelationOperator.NotEqual, D(0)))))))));
+        Formula positive = All("e", index,
+            Rel(D(0), FormulaRelationOperator.LessThan, App(w, F.Id("e"))));
+        Formula criterion = new Formula.Logic(Parens(separation), FormulaLogicOperator.Iff,
+            Nonzero(ev));
+        return Ex("d", Blackboard("N"), Ex("P", Call("MvPolynomial", index, new Formula.Integers()),
+            Lines(
+                Seq(Nonzero(p), Sp, Land, Sp, App(Member(p, "IsHomogeneous"), F.Id("d")), Sp, Land),
+                All("w", new Formula.TypeArrow(index, Blackboard("R")),
+                    Lines(Seq(Parens(positive), Sp, Rightarrow), Parens(criterion))))));
+    }
+
+    private static Formula NormalizedSeparation()
+    {
+        Formula a = F.Id("A"), i = F.Id("i"), j = F.Id("j"), m = F.Id("M");
+        Formula factor = F.Id("h");
+        Formula normalizedEntries = Entries(new Formula.Fraction(
+            App(a, i, j), Multiply(App(factor, i), App(factor, j))));
+        Formula mode = Equal(SumOver("i", Multiply(App(factor, i), App(F.Id("x"), i))), D(0));
+        return Let("A", WeightedAdjacency(),
+            Let("h", Seq(i, Sp, Mapsto, Sp, Seq(Sqrt, Grp(SumOver("j", App(a, i, j))))),
+                Let("M", new Formula.Binary(F.Id("I"), FormulaBinaryOperator.Subtract, normalizedEntries),
+                    Separating(m, Blackboard("R"), mode))));
+    }
+
+    private static Formula AdjacencySeparation()
+    {
+        Formula a = F.Id("A"), mu = F.Id("mu"), real = Blackboard("R");
+        Formula mode = Ex("mu", real, new Formula.Logic(Call("HasEigenvalue", a, mu),
+            FormulaLogicOperator.And, Rel(F.Id("lambda"), FormulaRelationOperator.LessThan, mu)));
+        return Let("A", WeightedAdjacency(), Separating(a, real, mode));
+    }
+
+    private static Formula DirectedSeparation()
+    {
+        Formula i = F.Id("i"), j = F.Id("j"), a = F.Id("A"), m = F.Id("M");
+        Formula receivingAdjacency = Entries(If(Adjacent(F.Id("G"), j, i), App(F.Id("w"), Pair(j, i))));
+        Formula diagonal = Call("diag",
+            Seq(i, Sp, Mapsto, Sp, SumOver("j", App(a, i, j))));
+        Formula receivingLaplacian = new Formula.Binary(diagonal, FormulaBinaryOperator.Subtract, a);
+        return Let("A", receivingAdjacency,
+            Let("M", Call("Complexify", receivingLaplacian),
+                Separating(m, Blackboard("C"), Nonzero(F.Id("lambda")))));
+    }
+
+    private static Formula Separating(Formula matrix, Formula field, Formula mode)
+    {
+        Formula x = F.Id("x"), lambda = F.Id("lambda"), vertices = F.Id("V");
+        Formula rightEigenvector = new Formula.Logic(Nonzero(x), FormulaLogicOperator.And,
+            Equal(Multiply(matrix, x), Multiply(lambda, x)));
+        Formula vectors = new Formula.TypeArrow(vertices, field);
+        Formula s1 = Call("Separable", Call("charpoly", matrix));
+        Formula s2 = All("lambda", field, All("x", vectors,
+            Imp(rightEigenvector, All("i", vertices, Nonzero(App(x, F.Id("i")))))));
+        Formula s3 = All("lambda", field, All("x", vectors,
+            Imp(rightEigenvector, Imp(mode, Call("Injective", x)))));
+        return Lines(s1, Seq(Land, Sp, Parens(s2)), Seq(Land, Sp, Parens(s3)));
+    }
+
+    private static Formula WeightedAdjacency()
+    {
+        Formula i = F.Id("i"), j = F.Id("j");
+        return Entries(If(Adjacent(F.Id("G"), i, j), App(F.Id("w"), App(F.Id("s"), i, j))));
     }
 
     private static Formula C(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Member(Formula obj, string name) => Seq(obj, Dot, C(name));
     private static Formula Parens(Formula formula) => Seq(Open, formula, Close);
+    private static Formula Blackboard(string symbol) => Seq(Mathbb, Grp(F.Id(symbol)));
+    private static Formula Pair(Formula left, Formula right) => Seq(Open, left, Comma, right, Close);
+    private static Formula Adjacent(Formula graph, Formula i, Formula j) => App(Member(graph, "Adj"), i, j);
+    private static Formula If(Formula condition, Formula value) =>
+        Seq(C("if"), Sp, condition, Sp, C("then"), Sp, value, Sp, C("else"), Sp, D(0));
+    private static Formula Entries(Formula entry) =>
+        new Formula.Subscript(Seq(OpenBracket, entry, CloseBracket), Seq(
+            F.Id("i"), Comma, Rel(F.Id("j"), FormulaRelationOperator.MemberOf, F.Id("V"))));
+    private static Formula SumOver(string variable, Formula term) =>
+        Seq(new Formula.Subscript(Sum, Rel(F.Id(variable), FormulaRelationOperator.MemberOf, F.Id("V"))),
+            Sp, term);
+    private static Formula Multiply(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+    private static Formula Lines(params Formula[] rows) =>
+        new Formula.Aligned([.. rows.Select(row => Seq(Amp, row))]);
+    private static Formula Let(string variable, Formula value, Formula body) =>
+        Lines(Seq(C("let"), Sp, F.Id(variable), Sp, Colon, Eq, Sp, value, Sp, C("in")), body);
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(C(name), args);
     private static Formula Bind(FormulaQuantifier quantifier, string name, Formula type, Formula body) =>
         new Formula.Bind(quantifier, FormulaIdentifier.Create(name), type, body);
     private static Formula All(string name, Formula type, Formula body) =>
         Bind(FormulaQuantifier.ForAll, name, type, body);
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Bind(FormulaQuantifier.Exists, name, type, body);
     private static Formula Rel(Formula lhs, FormulaRelationOperator relation, Formula rhs) =>
         new Formula.Relation(lhs, relation, rhs);
+    private static Formula Equal(Formula left, Formula right) => Rel(left, FormulaRelationOperator.Equal, right);
+    private static Formula Nonzero(Formula formula) => Rel(formula, FormulaRelationOperator.NotEqual, D(0));
     private static Formula Imp(Formula lhs, Formula rhs) =>
         new Formula.Logic(Parens(lhs), FormulaLogicOperator.Implies, Parens(rhs));
 }
