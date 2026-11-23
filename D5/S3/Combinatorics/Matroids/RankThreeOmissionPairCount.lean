@@ -104,4 +104,68 @@ theorem potential_fiber_pair_count_le
   convert bound using 1
   ring
 
+private abbrev LiftPoint (d s : ℕ) := (Fin d → ZMod 3) × ZMod s
+
+private def liftedTriple {d s : ℕ} (triangle : Finset (LiftPoint d s)) : Prop :=
+  triangle.card = 3 ∧ Set.InjOn Prod.fst (triangle : Set (LiftPoint d s)) ∧ ∑ p ∈ triangle, p = 0
+
+private theorem liftedTriple_existsUnique {d s : ℕ} (x y : LiftPoint d s)
+    (different : x.1 ≠ y.1) :
+    ∃! triangle : Finset (LiftPoint d s), liftedTriple triangle ∧ x ∈ triangle ∧ y ∈ triangle := by
+  classical
+  let z := -(x + y)
+  have neg_add_ne (a b : Fin d → ZMod 3) (hne : a ≠ b) : -(a + b) ≠ a := by
+    intro he
+    have triple : (a + a) + a = 0 := by
+      simpa only [three_nsmul, add_assoc] using ZModModule.char_nsmul_eq_zero 3 a
+    have separate : (a + a) + b = 0 := by
+      calc
+        (a + a) + b = a + (a + b) := add_assoc _ _ _
+        _ = -(a + b) + (a + b) := congrArg (· + (a + b)) he.symm
+        _ = 0 := neg_add_cancel _
+    exact hne (add_left_cancel (triple.trans separate.symm))
+  have zx : z.1 ≠ x.1 := neg_add_ne x.1 y.1 different
+  have zy : z.1 ≠ y.1 := by
+    change -(x.1 + y.1) ≠ y.1
+    rw [add_comm]
+    exact neg_add_ne y.1 x.1 (Ne.symm different)
+  have xy_ne : x ≠ y := fun h => different (congrArg Prod.fst h)
+  have xz_ne : x ≠ z := fun h => zx (congrArg Prod.fst h.symm)
+  have yz_ne : y ≠ z := fun h => zy (congrArg Prod.fst h.symm)
+  have x_out : x ∉ ({y,z} : Finset (LiftPoint d s)) := by simp [xy_ne, xz_ne]
+  have y_out : y ∉ ({z} : Finset (LiftPoint d s)) := by simp [yz_ne]
+  refine ⟨{x,y,z}, ⟨⟨card_eq_three.mpr ⟨x,y,z,xy_ne,xz_ne,yz_ne,rfl⟩, ?_, ?_⟩,
+    by simp, by simp⟩, ?_⟩
+  · intro i hi j hj he
+    simp only [mem_coe, mem_insert, mem_singleton] at hi hj
+    rcases hi with (rfl | rfl | rfl) <;> rcases hj with (rfl | rfl | rfl) <;>
+      first | rfl | exact (different he).elim | exact (different he.symm).elim |
+        exact (zx he).elim | exact (zx he.symm).elim |
+        exact (zy he).elim | exact (zy he.symm).elim
+  · rw [sum_insert x_out, sum_insert y_out, sum_singleton]
+    change x + (y + -(x + y)) = 0
+    rw [← add_assoc, add_neg_cancel]
+  · intro triangle h
+    obtain ⟨⟨hcard, _, hsum⟩, hx, hy⟩ := h
+    have hy' : y ∈ triangle.erase x := mem_erase.mpr ⟨Ne.symm xy_ne, hy⟩
+    have singleton : ((triangle.erase x).erase y).card = 1 := by
+      rw [card_erase_of_mem hy', card_erase_of_mem hx, hcard]
+    obtain ⟨w, hw⟩ := card_eq_one.mp singleton
+    have yw : y ≠ w := by
+      have hwy : w ∈ (triangle.erase x).erase y := by rw [hw, mem_singleton]
+      exact (mem_erase.mp hwy).1.symm
+    have xw : x ≠ w := by
+      have hwy : w ∈ (triangle.erase x).erase y := by rw [hw, mem_singleton]
+      exact (mem_erase.mp (mem_erase.mp hwy).2).1.symm
+    have restore_y : insert y ({w} : Finset (LiftPoint d s)) = triangle.erase x := by
+      rw [← hw, insert_erase hy']
+    have restore : triangle = {x,y,w} := calc
+      triangle = insert x (triangle.erase x) := (insert_erase hx).symm
+      _ = _ := by rw [← restore_y]
+    rw [restore, sum_insert (by simp [xy_ne,xw]), sum_insert (by simp [yw]), sum_singleton] at hsum
+    have hwz : w = z := by
+      change w = -(x + y)
+      exact eq_neg_of_add_eq_zero_right (by simpa only [add_assoc] using hsum)
+    rw [restore, hwz]
+
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPairCount
