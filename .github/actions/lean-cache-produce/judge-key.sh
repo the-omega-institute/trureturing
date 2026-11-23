@@ -8,6 +8,7 @@ recipe="$(python3 tools/scripts/workflow/ci_checks.py judge-recipe | sha256sum |
 packages="$(dotnet nuget locals global-packages --list --force-english-output)"
 [[ "$packages" == 'global-packages: /'* ]] || { echo 'Cannot resolve the global packages directory' >&2; exit 2; }
 # Scribe's compiled analyzer metadata refers to this absolute directory.
+echo "packages_path=${packages#global-packages: }"
 package_location="$(printf '%s' "${packages#global-packages: }" | sha256sum | cut -c1-16)"
 inputs=(Meta/tools-release.json .editorconfig .globalconfig 'Directory.Build.*' Directory.Packages.props
         NuGet.Config NuGet.config nuget.config global.json)

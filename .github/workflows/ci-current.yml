@@ -82,7 +82,6 @@ jobs:
     outputs:
       source_status: ${{ steps.prefix.outputs.source_status }}
       continuation: ${{ steps.prefix.outputs.continuation }}
-      judge_key: ${{ steps.judge_key.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     steps:
       - uses: actions/checkout@v5
@@ -114,18 +113,14 @@ jobs:
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: false
-      - id: nuget
-        run: |
-          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
-          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - id: judge_key
+        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
       - id: nuget_cache
         name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
-          path: ${{ steps.nuget.outputs.path }}
+          path: ${{ steps.judge_key.outputs.packages_path }}
           key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
-      - id: judge_key
-        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
       - id: judge
         continue-on-error: true
         uses: actions/cache/restore@v5
@@ -196,15 +191,13 @@ jobs:
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: false
-      - id: nuget
-        run: |
-          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
-          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - id: judge_key
+        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
       - id: nuget_cache
         name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
-          path: ${{ steps.nuget.outputs.path }}
+          path: ${{ steps.judge_key.outputs.packages_path }}
           key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge
         if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
@@ -214,7 +207,7 @@ jobs:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
+          key: ${{ steps.judge_key.outputs.key }}
       - id: compute_budget
         name: Resume the cumulative current compute allowance
         env:
