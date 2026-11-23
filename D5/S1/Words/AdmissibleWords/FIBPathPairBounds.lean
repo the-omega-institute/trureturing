@@ -11,6 +11,7 @@ import Mathlib.MeasureTheory.Measure.Real
 import Mathlib.Tactic.Linarith
 import Lean.Elab.Tactic.Omega
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import D5.S1.Words.AdmissibleWords.SourceOverlapCoupling
 
 open Set MeasureTheory
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
@@ -135,60 +136,6 @@ private theorem overlap_step (q : ℕ → ℝ) (bound : ∀ k, 0 ≤ q k ∧ q k
       apply step_max ⟨le_rfl, by linarith⟩
       apply step_max <;> constructor <;> linarith
 
-private def event (q : ℕ → ℝ) (start k : ℕ) : Set ℝ :=
-  let u := overlap q start k
-  Ico 0 u ∪ Ico (q start) (q start + (q k - u))
-
-private theorem event_subset_unit (q : ℕ → ℝ) (bounds : ∀ k, 0 ≤ q k ∧ q k ≤ 1)
-    (start k : ℕ) : event q start k ⊆ Ico 0 1 := by
-  obtain ⟨hu0, hus, huk, hku⟩ := overlap_bounds q bounds start k
-  intro x hx
-  change x ∈ Ico 0 (overlap q start k) ∪
-    Ico (q start) (q start + (q k - overlap q start k)) at hx
-  rcases hx with ⟨h0, h1⟩ | ⟨h0, h1⟩
-  · exact ⟨h0, h1.trans_le (hus.trans (bounds start).2)⟩
-  · refine ⟨(bounds start).1.trans h0, h1.trans_le ?_⟩
-    linarith
-
-private theorem event_measure (q : ℕ → ℝ) (bounds : ∀ k, 0 ≤ q k ∧ q k ≤ 1)
-    (start k : ℕ) : volume.real (event q start k) = q k := by
-  obtain ⟨hu0, hus, huk, _⟩ := overlap_bounds q bounds start k
-  unfold event
-  dsimp only
-  have hd : Disjoint (Ico 0 (overlap q start k))
-      (Ico (q start) (q start + (q k - overlap q start k))) :=
-    Set.disjoint_left.mpr (fun _ hx hy => (not_lt_of_ge (hus.trans hy.1)) hx.2)
-  rw [measureReal_union hd measurableSet_Ico (by simp) (by simp),
-    Real.volume_real_Ico_of_le hu0, Real.volume_real_Ico_of_le (by linarith)]
-  linarith
-
-private theorem event_nested (q : ℕ → ℝ) (bounds : ∀ k, 0 ≤ q k ∧ q k ≤ 1)
-    (start k : ℕ) :
-    (q k ≤ q (k + 1) → event q start k ⊆ event q start (k + 1)) ∧
-    (q (k + 1) ≤ q k → event q start (k + 1) ⊆ event q start k) := by
-  have subset {s t : ℕ} (h : Step (overlap q start s) (overlap q start t) (q t - q s)) :
-      event q start s ⊆ event q start t := by
-    apply union_subset_union (Ico_subset_Ico_right h.1)
-    apply Ico_subset_Ico_right
-    have := h.2
-    linarith
-  exact ⟨fun h => subset ((overlap_step q bounds start k).1 h),
-    fun h => subset ((overlap_step q bounds start k).2 h)⟩
-
-private theorem event_sdiff (q : ℕ → ℝ) (bounds : ∀ k, 0 ≤ q k ∧ q k ≤ 1)
-    {start k : ℕ} (hk : start ≤ k) :
-    volume.real (event q start start \ event q start k) =
-      min (q start) (min (1 - q k) (downwardVariation q start k)) := by
-  obtain ⟨hu0, hus, _, _⟩ := overlap_bounds q bounds start k
-  have shape : event q start start \ event q start k = Ico (overlap q start k) (q start) := by
-    unfold event
-    dsimp only
-    rw [overlap_at_start q bounds, sub_self, add_zero, Ico_self, union_empty]
-    ext x
-    simp only [mem_sdiff, mem_Ico, mem_union, not_or, not_and_or, not_le, not_lt]
-    constructor <;> intro h <;> rcases h with ⟨h₁, h₂⟩ <;> grind
-  rw [shape, Real.volume_real_Ico_of_le hus, drop_formula q hk]
-
 private structure NestedProfile (q : ℕ → ℝ) (A : ℕ → Set ℝ) : Prop where
   measurable : ∀ k, MeasurableSet (A k)
   within : ∀ k, A k ⊆ Ico 0 1
@@ -306,36 +253,61 @@ private theorem hard_core_nested {p : ℕ → ℝ} {B : ℕ → Set ℝ} (h : Ha
     simp only [flipEvent, even, next, ite_true, ite_false]
     exact Or.inr (fun _ hy => ⟨h.within _ hy, fun hx => Set.disjoint_left.mp (h.adjacent k) hx hy⟩)
 
-private theorem event_hard_core (p : ℕ → ℝ) (bounds : ∀ k, 0 ≤ p k ∧ p k ≤ 1)
+private theorem hard_core_attainment (p : ℕ → ℝ) (bounds : ∀ k, 0 ≤ p k ∧ p k ≤ 1)
     (adjacent : ∀ k, p k + p (k + 1) ≤ 1) (start : ℕ) :
-    HardCoreProfile p (flipEvent (event (flipProb p) start)) := by
-  let q := flipProb p
+    let q := flipProb p
+    ∃ B, HardCoreProfile p B ∧ ∀ k ≥ start,
+      volume.real (flipEvent B start \ flipEvent B k) =
+        min (q start) (min (1 - q k) (downwardVariation q start k)) := by
+  intro q
   have hq (k : ℕ) : 0 ≤ q k ∧ q k ≤ 1 := by
     simp only [q, flipProb]
     split
     · exact bounds k
     · constructor <;> linarith [(bounds k).1, (bounds k).2]
-  have hm (k : ℕ) : MeasurableSet (event q start k) :=
-    measurableSet_Ico.union measurableSet_Ico
-  have hp := flipEvent_marginals hm (event_subset_unit q hq start) (event_measure q hq start)
+  let R (u v : ℕ) := q u ≤ q v ∧ (u + 1 = v ∨ v + 1 = u)
+  have left (k : ℕ) : overlap q start k ∈ Icc 0 (q start) := by
+    have b := overlap_bounds q hq start k
+    exact ⟨b.1, b.2.1⟩
+  have right (k : ℕ) : q k - overlap q start k ∈ Icc 0 (1 - q start) := by
+    have b := overlap_bounds q hq start k
+    exact ⟨sub_nonneg.mpr b.2.2.1, b.2.2.2⟩
+  have ordered ⦃u v⦄ (edge : R u v) :
+      overlap q start u ≤ overlap q start v ∧
+        q u - overlap q start u ≤ q v - overlap q start v := by
+    obtain ⟨massOrder, h | h⟩ := edge
+    · subst v
+      obtain ⟨hle, hδ⟩ := (overlap_step q hq start u).1 massOrder
+      exact ⟨hle, by linarith⟩
+    · subst u
+      obtain ⟨hle, hδ⟩ := (overlap_step q hq start v).2 massOrder
+      exact ⟨hle, by linarith⟩
+  obtain ⟨A, law, inclusion, difference⟩ :=
+    SourceOverlapCoupling.exists_nested_events R q (overlap q start) start (hq start)
+      (overlap_at_start q hq start) left right ordered
+  have hm (k : ℕ) := (law k).1
+  have inside (k : ℕ) := (law k).2.1
+  have hp := flipEvent_marginals hm inside (fun k => (law k).2.2)
   change ∀ k, _ = flipProb (flipProb p) k at hp
   rw [flipProb_twice] at hp
-  refine ⟨flipEvent_measurable hm, flipEvent_within (event_subset_unit q hq start), hp, ?_⟩
-  intro k
-  apply Set.disjoint_left.mpr
-  by_cases even : k % 2 = 0
-  · have next : ¬ (k + 1) % 2 = 0 := by omega
-    have le : q k ≤ q (k + 1) := by
-      simp [q, flipProb, even, next]
-      linarith [adjacent k]
-    simp only [flipEvent, even, next, ite_true, ite_false]
-    exact fun _ hx hy => hy.2 ((event_nested q hq start k).1 le hx)
-  · have next : (k + 1) % 2 = 0 := by omega
-    have le : q (k + 1) ≤ q k := by
-      simp [q, flipProb, even, next]
-      linarith [adjacent k]
-    simp only [flipEvent, even, next, ite_true, ite_false]
-    exact fun _ hx hy => hx.2 ((event_nested q hq start k).2 le hy)
+  refine ⟨flipEvent A, ⟨flipEvent_measurable hm, flipEvent_within inside, hp, ?_⟩, ?_⟩
+  · intro k
+    apply Set.disjoint_left.mpr
+    by_cases even : k % 2 = 0
+    · have next : ¬ (k + 1) % 2 = 0 := by omega
+      have le : q k ≤ q (k + 1) := by
+        simp [q, flipProb, even, next]
+        linarith [adjacent k]
+      simp only [flipEvent, even, next, ite_true, ite_false]
+      exact fun _ hx hy => hy.2 (inclusion ⟨le, Or.inl rfl⟩ hx)
+    · have next : (k + 1) % 2 = 0 := by omega
+      have le : q (k + 1) ≤ q k := by
+        simp [q, flipProb, even, next]
+        linarith [adjacent k]
+      simp only [flipEvent, even, next, ite_true, ite_false]
+      exact fun _ hx hy => hx.2 (inclusion ⟨le, Or.inr rfl⟩ hy)
+  · intro k hk
+    rw [flipEvent_twice inside, difference, drop_formula q hk]
 
 theorem sharp_hard_core_difference (p : ℕ → ℝ) (nonneg : ∀ k, 0 ≤ p k)
     (adjacent : ∀ k, p k + p (k + 1) ≤ 1) (start : ℕ) :
@@ -349,16 +321,8 @@ theorem sharp_hard_core_difference (p : ℕ → ℝ) (nonneg : ∀ k, 0 ≤ p k)
   intro q
   have bounds (k : ℕ) : 0 ≤ p k ∧ p k ≤ 1 :=
     ⟨nonneg k, by linarith [nonneg (k + 1), adjacent k]⟩
-  have hq (k : ℕ) : 0 ≤ q k ∧ q k ≤ 1 := by
-    simp only [q, flipProb]
-    split
-    · exact bounds k
-    · constructor <;> linarith [(bounds k).1, (bounds k).2]
-  refine ⟨fun B h k hk => difference_le (hard_core_nested h) hk,
-    flipEvent (event q start), event_hard_core p bounds adjacent start, ?_⟩
-  intro k hk
-  rw [flipEvent_twice (event_subset_unit q hq start)]
-  exact event_sdiff q hq hk
+  exact ⟨fun B h k hk => difference_le (hard_core_nested h) hk,
+    hard_core_attainment p bounds adjacent start⟩
 
 def extendProfile {n : ℕ} (p : Fin n → ℝ) (k : ℕ) : ℝ :=
   if h : k < n then p ⟨k, h⟩ else 0

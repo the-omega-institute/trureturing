@@ -46,3 +46,4 @@ For a finite profile whose occupancies lie between zero and one and whose adjace
 - Truth anchor: `D5/S1/Words/AdmissibleWords/FIBPathPairBounds.sharp_hard_core_difference`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/FIBPathPairBounds.word_attainment`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](AdmissibleCount.md)
+- Dependency: [D5/S1/Words/AdmissibleWords/SourceOverlapCoupling](SourceOverlapCoupling.md)
