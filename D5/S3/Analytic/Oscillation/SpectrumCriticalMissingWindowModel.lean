@@ -24,7 +24,7 @@ namespace D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
 
 open OrdinateCounting (Spectrum)
 open SpectrumPhaseCutoff (mass)
-open SpectrumCriticalMissingWindow (HasLogSquaredMass HasSmallSquareTail)
+open SpectrumCriticalMissingWindow (HasLogSquaredMass HasSmallSquareTail HasLogarithmicSquareTail)
 
 private theorem rational_scale_into {v l h : ℝ} (hv : v ≠ 0) (hl : 0 < l) (hlh : l < h) :
     ∃ q : ℚˣ, l < q • v ∧ q • v < h := by
@@ -230,21 +230,21 @@ private theorem summable_model_square :
         mul_assoc, ← Real.rpow_add hx]
       norm_num
 
-private theorem eventually_model_tail (g : ℕ → ℝ)
+private theorem model_square_tail_bound (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
     (hinj : Function.Injective g) :
-    HasSmallSquareTail (modelSpectrum g hg hinj) modelWeight := by
+    let S := modelSpectrum g hg hinj
+    ∃ B : ℝ, 0 < B ∧ ∀ (decEq : DecidableEq ℕ) (X T : ℝ), 1 ≤ X →
+      ∑ n ∈ @SDiff.sdiff _ (@Finset.instSDiff ℕ decEq) (S.cut T) (S.cut X),
+        modelWeight n ^ 2 ≤ B / X ^ 2 := by
   let S := modelSpectrum g hg hinj
   let f (n : ℕ) := ((n : ℝ) + 1) ^ (1 / 2 : ℝ) * modelWeight n ^ 2
   let C := ∑' n, f n
   have hsum : Summable f := summable_model_square
   have hf (n : ℕ) : 0 ≤ f n := by dsimp [f]; positivity
-  intro η hη
-  filter_upwards [eventually_ge_atTop (2 * C / η),
-    Real.tendsto_log_atTop.eventually_ge_atTop 1, eventually_ge_atTop (1 : ℝ)]
-    with X hXbig hlog hX
-  intro T _
-  let decEq : DecidableEq ℕ := fun a b => Classical.propDecidable (a = b)
+  have hC : 0 ≤ C := tsum_nonneg hf
+  refine ⟨2 * C + 1, by linarith, ?_⟩
+  intro decEq X T hX
   let tail : Finset ℕ := @SDiff.sdiff _ (@Finset.instSDiff ℕ decEq) (S.cut T) (S.cut X)
   have hXpos := zero_lt_one.trans_le hX
   have hbound (n : ℕ) (hn : n ∈ tail) : X ^ 2 ≤ 2 * ((n : ℝ) + 1) ^ (1 / 2 : ℝ) := by
@@ -275,17 +275,45 @@ private theorem eventually_model_tail (g : ℕ → ℝ)
           exact mul_le_mul_of_nonneg_right (hbound n hn) (sq_nonneg _)
       _ = 2 * ∑ n ∈ tail, f n := (Finset.mul_sum _ _ _).symm
       _ ≤ _ := mul_le_mul_of_nonneg_left (hsum.sum_le_tsum tail fun n _ => hf n) (by norm_num)
-  have hlog₂ : 1 ≤ Real.log X ^ 2 := by nlinarith only [hlog, mul_nonneg (by linarith : 0 ≤ Real.log X - 1) (by linarith : 0 ≤ Real.log X)]
-  change ∑ n ∈ tail, modelWeight n ^ 2 ≤ η * Real.log X ^ 2 / X
-  apply (le_div_iff₀ hXpos).mpr
-  have hh : 2 * C ≤ η * X := by
-    have h := (div_le_iff₀ hη).mp hXbig
-    linarith
-  have hsX : (∑ n ∈ tail, modelWeight n ^ 2) * X ≤ η := by
-    apply (mul_le_mul_iff_left₀ hXpos).mp
-    rw [mul_assoc, ← pow_two, mul_comm _ (X ^ 2)]
-    exact htail.trans hh
-  exact hsX.trans (by simpa using mul_le_mul_of_nonneg_left hlog₂ hη.le)
+  change (∑ n ∈ tail, modelWeight n ^ 2) ≤ (2 * C + 1) / X ^ 2
+  apply (le_div_iff₀ (sq_pos_of_pos hXpos)).mpr
+  rw [mul_comm]
+  exact htail.trans (le_add_of_nonneg_right zero_le_one)
+
+private theorem eventually_model_tail (g : ℕ → ℝ)
+    (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
+    (hinj : Function.Injective g) :
+    HasSmallSquareTail (modelSpectrum g hg hinj) modelWeight := by
+  obtain ⟨B, hB, hbound⟩ := model_square_tail_bound g hg hinj
+  intro η hη
+  filter_upwards [eventually_ge_atTop (B / η),
+    Real.tendsto_log_atTop.eventually_ge_atTop 1, eventually_ge_atTop (1 : ℝ)]
+    with X hXbig hlog hX
+  intro T _
+  have hXpos := zero_lt_one.trans_le hX
+  have hBdiv : B / X ≤ η := (div_le_iff₀ hXpos).mpr
+    (by simpa only [mul_comm] using (div_le_iff₀ hη).mp hXbig)
+  have hlog₂ : 1 ≤ Real.log X ^ 2 := by
+    simpa using pow_le_pow_left₀ zero_le_one hlog 2
+  refine (hbound (fun a b => Classical.propDecidable (a = b)) X T hX).trans ?_
+  rw [pow_two, ← div_div]
+  exact div_le_div_of_nonneg_right
+    (hBdiv.trans (le_mul_of_one_le_right hη.le hlog₂)) hXpos.le
+
+private theorem eventually_model_logarithmic_tail (g : ℕ → ℝ)
+    (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
+    (hinj : Function.Injective g) :
+    HasLogarithmicSquareTail (modelSpectrum g hg hinj) modelWeight := by
+  obtain ⟨B, hB, hbound⟩ := model_square_tail_bound g hg hinj
+  refine ⟨B, hB, ?_⟩
+  filter_upwards [Real.tendsto_log_atTop.eventually_ge_atTop (1 : ℝ),
+    eventually_ge_atTop (1 : ℝ)] with X hlog hX
+  intro T _
+  have hXpos := zero_lt_one.trans_le hX
+  refine (hbound (fun a b => Classical.propDecidable (a = b)) X T hX).trans ?_
+  rw [pow_two, ← div_div]
+  exact div_le_div_of_nonneg_right
+    ((div_le_self hB.le hX).trans (le_mul_of_one_le_right hB.le hlog)) hXpos.le
 
 /-- The endpoint hypotheses hold on an infinite spectrum with every weight strictly positive. -/
 theorem exists_infinite_critical_model :
@@ -297,6 +325,18 @@ theorem exists_infinite_critical_model :
   exact ⟨S, modelWeight, inferInstanceAs (Infinite ℕ), modelWeight_pos, hli,
     eventually_model_mass g hg hli.injective, eventually_model_tail g hg hli.injective⟩
 
+/-- The same fourth-root-bin weights realize the stronger square-tail hypothesis
+on an infinite independent spectrum. -/
+theorem exists_infinite_logarithmic_model :
+    ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
+      (∀ j, 0 < w j) ∧ LinearIndependent ℚ S.gamma ∧
+      HasLogSquaredMass S w ∧ HasLogarithmicSquareTail S w := by
+  obtain ⟨g, hli, hg⟩ := exists_independent_bins
+  let S := modelSpectrum g hg hli.injective
+  exact ⟨S, modelWeight, inferInstanceAs (Infinite ℕ), modelWeight_pos, hli,
+    eventually_model_mass g hg hli.injective, eventually_model_logarithmic_tail g hg hli.injective⟩
+
 #print axioms exists_infinite_critical_model
+#print axioms exists_infinite_logarithmic_model
 
 end D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
