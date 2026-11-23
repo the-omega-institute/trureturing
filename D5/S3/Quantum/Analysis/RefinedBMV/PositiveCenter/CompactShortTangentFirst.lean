@@ -122,7 +122,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hInvV := inverse_sound hb hV hiv
   have hcurvature : curvature.Encloses s t z (deriv (compactZSlope p) (v - u)) := by
     rw [deriv_compactZSlope hp₀, ← iteratedDeriv_compactZ_eq_integral hp₀]
-    simpa only [curvature, ZD, SD, div_eq_mul_inv] using Model.sub_sound
+    simpa only [curvature, ZD, SD, div_eq_mul_inv, one_mul] using Model.sub_sound
       (Model.mul_sound hb (marginal_sound hp₀ 2 hb hH hD bD) (inverse_sound hb hZD hzd))
       (Model.pow_sound hb hSD 2)
   have hMul := shortRootMultiplier_sound hb hD hSUneg hSVneg hSV hSD hcurvature hInvU
@@ -131,11 +131,11 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hOne : (Model.ofRat 1).Encloses s t z 1 := by simpa using Model.ofRat_sound 1 s t z
   have hA : A.Encloses s t z (reflectedHalfLogSlope (compositionMoment p 0) u) := by
     rw [reflectedHalfLogSlope_eq_compactZSlope hp₀ hu.ne']
-    simpa only [A, SUneg, div_eq_mul_inv] using
+    simpa only [A, SUneg, div_eq_mul_inv, one_mul] using
       Model.sub_sound hInvU (Model.mul_sound hb hSUneg hHalf)
   have hB : B.Encloses s t z (reflectedHalfLogSlope (compositionMoment p 0) v) := by
     rw [reflectedHalfLogSlope_eq_compactZSlope hp₀ hv.ne']
-    simpa only [B, SVneg, div_eq_mul_inv] using
+    simpa only [B, SVneg, div_eq_mul_inv, one_mul] using
       Model.sub_sound hInvV (Model.mul_sound hb hSVneg hHalf)
   have hHalfGap : halfGap.Encloses s t z ((v - u) / 2) := by
     simpa [halfGap, div_eq_mul_inv] using Model.mul_sound hb hD hHalf

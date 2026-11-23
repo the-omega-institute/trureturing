@@ -6,7 +6,7 @@
    utility: none
    digest: Scalar sign of the radical correction from gap seven halves. -/
 
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
@@ -27,7 +27,7 @@ theorem middleTail_dividedDifference_lower {u z : ℝ} (hu : 0 < u)
   let x : ℝ := k * u / 2
   have hk : 0 < k := by norm_num [k]
   have hx : 0 < x := by dsimp only [x]; positivity
-  have hs := sinh_pos_of_pos hx
+  have hs : 0 < sinh x := Real.sinh_pos_iff.mpr hx
   have he : 0 < exp x - exp (-x) := sub_pos.mpr (exp_lt_exp.mpr (by linarith))
   have hexp : exp (-(k * u)) = exp (-x) / exp x := by
     rw [← exp_sub]
@@ -74,8 +74,11 @@ private theorem middleTail_quadratic_pos {u z : ℝ} (hu : 1 / 2 ≤ u) (hu₄ :
   have hdiff := mul_nonneg (sub_nonneg.mpr hwz)
     (show 0 ≤ 2 * (z + w - (A + b)) by linarith)
   apply hwpos.trans_le
-  dsimp only [F]
-  nlinarith only [hdiff]
+  have he : F z - F w = (z - w) * (2 * (z + w - (A + b))) := by
+    dsimp only [F]
+    ring
+  rw [← he] at hdiff
+  exact sub_nonneg.mp hdiff
 
 /-- A decay rate of `46/35` and the lower divided-difference bounds imply the radical sign. -/
 theorem middleTail_radicalScalar_neg {u z y A H kappa eta : ℝ}

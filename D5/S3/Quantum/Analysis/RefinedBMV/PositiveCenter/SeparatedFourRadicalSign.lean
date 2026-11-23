@@ -207,8 +207,10 @@ theorem middleTail_radical_dividedDifference {h d v : ℝ}
   have hTv := (hlower v (hd.trans hdv.le)).1
   refine ⟨hD, (le_div_iff₀ hD).mpr ?_, div_le_div_of_nonneg_right (by linarith) hD.le,
     (div_le_div_iff₀ hden hD).mpr ?_⟩
-  · linarith only [hsec v ⟨hdv.le, le_rfl⟩]
-  · linarith only [hscaled]
+  · change k * (z v - z d) ≤ T d - T v
+    linarith only [hsec v ⟨hdv.le, le_rfl⟩]
+  · change k * (z v - z d) ≤ T d * (1 - Real.exp (-(k * (v - d))))
+    linarith only [hscaled]
 
 private theorem radical_root_relative_slope_le {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
     (ht : 4 ≤ t) : deriv (upperTailRadicalRoot h) t / upperTailRadicalRoot h t ≤ 1 / 20 := by
