@@ -268,6 +268,13 @@ def IsPartialSteiner {r : ℕ} (family : Set (Set (Fin r))) : Prop :=
   (∀ s ∈ family, s.ncard = 3) ∧
   (∀ s ∈ family, ∀ t ∈ family, ∀ a b, a ≠ b → a ∈ s → b ∈ s → a ∈ t → b ∈ t → s = t)
 
+/-- The unordered family of internal triples from prescribed square and packing data. -/
+def extendedFamily {d r : ℕ} (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
+    (L : Row d → Fin r → Fin r → Fin r) (P : Row d → ZMod 3 → Set (Set (Fin r))) :
+    Set (Set (Row d × ZMod (3 * r))) :=
+  Set.range (fun u => Set.range (latinPoint e L u)) ∪
+    {t | ∃ x c s, s ∈ P x c ∧ t = (fun a => (x, (e x).symm (c, a))) '' s}
+
 /-- Within a fixed row and residue, the label triples form a partial Steiner system. -/
 private theorem monochromatic_partial_steiner {d r : ℕ} {U : Type*}
     (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
@@ -317,7 +324,7 @@ private theorem monochromatic_partial_steiner {d r : ℕ} {U : Type*}
 
 /-- An extension with the extra dimension consists of the Latin part and a
 partial Steiner system in every actual row and residue class. -/
-theorem forward_decomposition {d r : ℕ} {T U : Type*} [NeZero (3 * r)] [Fintype U]
+theorem forward_decomposition {d r : ℕ} {T U : Type*} [NeZero (3 * r)]
     (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
     (he : ∀ x a, (e x a).1 = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a)
     (hd : 0 < d) (mixed : T → Fin 3 → Row d × ZMod (3 * r))
@@ -331,9 +338,7 @@ theorem forward_decomposition {d r : ℕ} {T U : Type*} [NeZero (3 * r)] [Fintyp
     (dim : Module.finrank (ZMod 3) (potentialSpace (Sum.elim mixed internal) 0) = d + 1) :
     ∃ (L : Row d → Fin r → Fin r → Fin r) (P : Row d → ZMod 3 → Set (Set (Fin r))),
       (∀ x, IsLatin r (L x)) ∧ (∀ x c, IsPartialSteiner (P x c)) ∧
-      Set.range (fun u => Set.range (internal u)) =
-        Set.range (fun u => Set.range (latinPoint e L u)) ∪
-          {t | ∃ x c s, s ∈ P x c ∧ t = (fun a => (x, (e x).symm (c, a))) '' s} := by
+      Set.range (fun u => Set.range (internal u)) = extendedFamily e L P := by
   classical
   let reduce := cyclicReduction (3 * r)
   let point (x : Row d) (c : ZMod 3) (a : Fin r) := (x, (e x).symm (c,a))
@@ -341,11 +346,17 @@ theorem forward_decomposition {d r : ℕ} {T U : Type*} [NeZero (3 * r)] [Fintyp
   let blocks (x : Row d) (c : ZMod 3) : Set (Set (Fin r)) :=
     {s | ∃ u, (internal u 0).1 = x ∧ (∀ i, (e x (internal u i).2).1 = c) ∧
       s = Set.range (label x u)}
-  obtain ⟨L, hLatin, hL⟩ :=
-    transversal_part_latin e he hd mixed internal family crosses sameRow pairUnique dim
   have internalUnique : ∀ t u x y, x ≠ y → covers (internal t) x y →
       covers (internal u) x y → t = u :=
     fun t u x y ne ht hu => Sum.inr.inj (pairUnique (Sum.inr t) (Sum.inr u) x y ne ht hu)
+  have indexInj : Function.Injective internal := by
+    intro u v eq
+    exact internalUnique u v (internal u 0) (internal u 1)
+      ((injective u).ne (by decide : (0 : Fin 3) ≠ 1))
+      ⟨0, 1, rfl, rfl⟩ ⟨0, 1, congrFun eq.symm 0, congrFun eq.symm 1⟩
+  letI : Fintype U := Fintype.ofInjective internal indexInj
+  obtain ⟨L, hLatin, hL⟩ :=
+    transversal_part_latin e he hd mixed internal family crosses sameRow pairUnique dim
   have hblocks (x : Row d) (c : ZMod 3) : IsPartialSteiner (blocks x c) :=
     monochromatic_partial_steiner e internal sameRow injective internalUnique x c
   have combined : LiftedLineFamily (Sum.elim mixed internal) := by
@@ -527,10 +538,12 @@ theorem realize_decomposition {d r : ℕ} [NeZero (3 * r)] {T : Type*}
     (family : LiftedLineFamily mixed)
     (crosses : ∀ t, Function.Injective (fun i => (mixed t i).1))
     (mixedUnique : ∀ t u x y, x ≠ y → covers (mixed t) x y → covers (mixed u) x y → t = u) :
-    ∃ mono : MonochromaticIndex P → Fin 3 → Row d × ZMod (3 * r),
+    ∃ (M : Type) (_ : Finite M) (mono : M → Fin 3 → Row d × ZMod (3 * r)),
+      let internal := Sum.elim (latinPoint e L) mono
       let combined := Sum.elim (Sum.elim mixed (latinPoint e L)) mono
-      (∀ u, Set.range (mono u) =
-        (fun a => (u.val.1, (e u.val.1).symm (u.val.2.1, a))) '' u.val.2.2) ∧
+      Set.range (fun u => Set.range (internal u)) = extendedFamily e L P ∧
+      (∀ u, ∃ x c s, s ∈ P x c ∧
+        Set.range (mono u) = (fun a => (x, (e x).symm (c, a))) '' s) ∧
       (∀ t, Function.Injective (combined t)) ∧
       (∀ t u x y, x ≠ y → covers (combined t) x y →
         covers (combined u) x y → t = u) ∧
@@ -581,7 +594,19 @@ theorem realize_decomposition {d r : ℕ} [NeZero (3 * r)] {T : Type*}
       rw [← he u.val.1]
       exact (mono_observations e hP u (mono u i) ⟨i,rfl⟩).2.1
     exact (eq i).trans (eq 0).symm
-  refine ⟨mono, mono_range e hP, ?_, ?_, ?_⟩
+  refine ⟨MonochromaticIndex P, inferInstance, mono, ?_, ?_, ?_, ?_, ?_⟩
+  · ext s
+    constructor
+    · rintro ⟨u, rfl⟩
+      cases u with
+      | inl u => exact Or.inl ⟨u, rfl⟩
+      | inr u => exact Or.inr ⟨u.val.1, u.val.2.1, u.val.2.2, u.prop, mono_range e hP u⟩
+    · rintro (⟨u, rfl⟩ | ⟨x, c, s, hs, rfl⟩)
+      · exact ⟨Sum.inl u, rfl⟩
+      · let u : MonochromaticIndex P := ⟨(x, c, s), hs⟩
+        exact ⟨Sum.inr u, mono_range e hP u⟩
+  · intro u
+    exact ⟨u.val.1, u.val.2.1, u.val.2.2, u.prop, mono_range e hP u⟩
   · intro t
     cases t with
     | inl t => exact baseInj t
@@ -597,13 +622,6 @@ theorem realize_decomposition {d r : ℕ} [NeZero (3 * r)] {T : Type*}
       | inl u => exact (conflicting u t x y neq hu ht).elim
       | inr u => exact congrArg Sum.inr (mono_pair_unique e hP t u x y neq ht hu)
   · exact add_constant_residue_triples hd base mono baseFamily baseExtra (fun _ _ => rfl) sameResidue
-
-/-- The unordered family of internal triples from prescribed square and packing data. -/
-def extendedFamily {d r : ℕ} (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
-    (L : Row d → Fin r → Fin r → Fin r) (P : Row d → ZMod 3 → Set (Set (Fin r))) :
-    Set (Set (Row d × ZMod (3 * r))) :=
-  Set.range (fun u => Set.range (latinPoint e L u)) ∪
-    {t | ∃ x c s, s ∈ P x c ∧ t = (fun a => (x, (e x).symm (c, a))) '' s}
 
 /-- The unordered family uniquely determines its square and packing data. -/
 theorem decomposition_unique {d r : ℕ} (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
