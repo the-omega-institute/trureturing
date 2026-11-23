@@ -12,6 +12,20 @@ internal sealed class MakowskiSchinzelPrimeDeletionDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prime sources in a minimal counterexample",
         H("Prime sources in a minimal counterexample"), Blocks(
+            Describe.Lean(
+                DescribeId.Create("makowski-schinzel-abundancy-prime-power-product"),
+                DeclarationHandle.Create(Prefix + "abundancy_prime_power_product"),
+                H("Abundancy of distinct prime powers"),
+                StatementSource.FromAuthor(Disp(PrimePowerProduct())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For a finite set of bases and arbitrary nonnegative exponents, the " +
+                    "abundancy of their product equals the product of the finite reciprocal " +
+                    "geometric factors, provided every base with nonzero exponent is prime. " +
+                    "Zero exponents impose no primality condition and contribute one. " +
+                    "Primality cannot be omitted: the singleton base 1 at exponent 1 has " +
+                    "abundancy 1 but geometric factor 2. The identity includes the empty set."))),
+                DescribeRole.Theorem),
             Node("primeSources", "Sources of a totient prime", Sources(),
                 "The sources are the prime divisors q of n for which r divides q-1.", true),
             Node("prime_deletion_necessary", "The prime-source deletion obstruction",
@@ -47,6 +61,18 @@ internal sealed class MakowskiSchinzelPrimeDeletionDocument : IScribeDocumentDef
         return All("m", Nat(), All("r", Nat(), Imp(Ne(m, D(0)),
             Imp(Call("Prime", r), Imp(Dvd(r, Call("totient", m)),
                 Imp(Lt(Call("alpha", m), D(1)), Imp(minimal, result)))))));
+    }
+
+    private static Formula PrimePowerProduct()
+    {
+        var s = V("S"); var e = V("e"); var p = V("p");
+        var ep = Call("e", p);
+        var prime = All("p", Nat(), Imp(Mem(p, s), Imp(Ne(ep, D(0)), Call("Prime", p))));
+        var left = Call("abundancyIndex", Prod("p", s, new Formula.Power(p, ep)));
+        var right = Prod("p", s, Call("geom", p, ep));
+        return All("S", Call("Finset", Nat()),
+            All("e", new Formula.TypeArrow(Nat(), Nat()), Imp(prime,
+                new Formula.Relation(left, FormulaRelationOperator.Equal, right))));
     }
 
     private static Formula V(string name) => F.Id(name);

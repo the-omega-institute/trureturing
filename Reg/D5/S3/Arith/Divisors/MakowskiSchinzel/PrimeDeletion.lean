@@ -159,4 +159,92 @@ def powAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+namespace primePowerProduct
+
+abbrev signature : Signature where
+  Params := ℕ → ℕ
+  State _ := Finset ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℚ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ e s => (∏ p ∈ s, p ^ e p).abundancyIndex)
+    (fun a => nomatch a)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (s : Finset ℕ) (e : ℕ → ℕ),
+    (∀ p ∈ s, e p ≠ 0 → p.Prime) →
+      R.readout () e s = ∏ p ∈ s, geom p (e p)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun a => nomatch a)
+
+private theorem rejected_law : ¬arena.Law rejected := by
+  intro h
+  have hh := h ∅ (fun _ => 0) (by simp)
+  norm_num [rejected, realize] at hh
+
+def evidence : Registration arena
+    (type_of% (@SmoothPredecessor.abundancy_prime_power_product)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@SmoothPredecessor.abundancy_prime_power_product, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(fun _ => 1), ∅, {2}, ?_⟩
+    simp only [actual, realize, Finset.prod_empty, Finset.prod_singleton, pow_one]
+    norm_num [Nat.abundancyIndex,
+      show Nat.divisors 2 = {1, 2} from by decide]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@SmoothPredecessor.abundancy_prime_power_product)
+    (Realization signature) Type Unit where
+  unitName :=
+    `D5.S3.Arith.MakowskiSchinzel.SmoothPredecessor.abundancy_prime_power_product.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Arith.Divisors.MakowskiSchinzel.PrimeDeletion.primePowerProduct.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ e s => (∏ p ∈ s, p ^ e p).abundancyIndex) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Divisors.MakowskiSchinzel.PrimeDeletion
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end primePowerProduct
+
 end Reg.D5.S3.Arith.Divisors.MakowskiSchinzel.PrimeDeletion

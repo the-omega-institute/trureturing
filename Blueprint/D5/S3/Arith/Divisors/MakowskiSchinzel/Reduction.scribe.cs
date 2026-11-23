@@ -32,6 +32,12 @@ internal sealed class MakowskiSchinzelReductionDocument : IScribeDocumentDefinit
                 "totient's abundancy index by divisibility. The result compares the " +
                 "normalized ratios independently of the prime exponents. The nonzero condition " +
                 "is necessary: radical(0)=1, alpha(1)=1 and alpha(0)=0."),
+            Node("alpha_two_mul", "Adjoining the factor two", All("m", Nat(),
+                Imp(Call("Odd", V("m")), Eq(Call("alpha", Mul(D(2), V("m"))),
+                    Div(Call("alpha", V("m")), D(2))))),
+                "For odd m, adjoining two preserves the totient and halves the " +
+                "normalized sigma-totient ratio. The oddness premise cannot be dropped: at m=2 " +
+                "the two sides are 3/4 and 1/4. The identity also holds at m=0."),
             Node("exists_minimal_odd_counterexample", "A squarefree minimal counterexample",
                 Minimal(),
                 "For a class P closed under divisors of odd members, an odd counterexample " +
