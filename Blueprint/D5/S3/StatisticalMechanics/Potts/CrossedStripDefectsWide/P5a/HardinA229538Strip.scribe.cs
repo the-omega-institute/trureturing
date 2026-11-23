@@ -14,7 +14,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("canonicalCount",CanonicalCount(),false,"The filter counts five-by-n arrays with exactly D monochromatic bonds and row-major canonical colour introduction."),
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
-            Node("transition_entry",TransitionEntry(),true,"The equality holds for all successors when the budget is at most one, the cut has zero cost, or the cost exceeds the budget. In the other cases take the successor at q with residual budget d minus the cost. The left indicator is one. The right side tests for zero cost if the residual is positive and for cost one if it is zero. Both tests fail in their respective cases."),
+            Node("transition_entry",TransitionEntry(),true,"Disagreement requires a budget above one and a positive cost within that budget. The affordable residual successor then has left entry one and right entry zero. At cost one the exhausted successor also disagrees, with left entry zero and right entry one."),
             Node("labelled_scale",LabelledScale(),true,"The nonconstant arrays contribute six labelled representatives per canonical array. At width m + 1 every constant array has m times the cut cardinality as its defect count. At that budget the three labelled constant arrays form a single canonical class represented by the all-zero array. Adding three to the labelled count makes its constant contribution six. The subscript on literalCount gives the palette size."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
@@ -165,9 +165,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var cost=Own("cost",p,q);
         var left=If(And(Le(cost,d),Eq(Own("residual",q,Sub(d,cost)),s)),N(1),N(0));
         var rhs=If(Eq(Call("Sum.elim",Q("id"),Q("id"),s),q),Own("transfer",Own("residual",p,d),s),N(0));
-        var allowed = Or(Le(d, N(1)), Or(Eq(cost, N(0)), Lt(d, cost)));
-        return All("p", Column(), All("q", Column(), All("d", Q("Nat"),
-            Iff(All("s", Columns(), Eq(AsInt(left), rhs)), allowed))));
+        var mismatch = And(Lt(N(1), d), And(Lt(N(0), cost), And(Le(cost, d),
+            Or(Eq(s, Own("residual", q, Sub(d, cost))), And(Eq(cost, N(1)), Eq(s, Call("Sum.inr", q))))));
+        return All("p", Column(), All("q", Column(), All("d", Q("Nat"), All("s", Columns(),
+            Iff(Ne(AsInt(left), rhs), mismatch)))));
     }
 
     private static Formula LabelledScale() {
