@@ -393,9 +393,6 @@ def ReverseSpec.Independent {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B
 def GraphMove {A B : Type*} (strong : Bool) (G : SimpleGraph A) (H : SimpleGraph B) : Prop :=
   Nonempty (ForwardSpec G H) ∨ ∃ m : ReverseSpec G H, strong = true → m.Independent
 
-private theorem graphIso_symm_equiv_apply {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B}
-    (e : G ≃g H) (x : B) : e.toEquiv.symm x = e.symm x := rfl
-
 @[simp] private theorem Site.has_map_iso {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B}
     (T : Site A) (e : G ≃g H) (x : A) :
     (T.map e.toEquiv.toEmbedding).Has (e x) ↔ T.Has x := T.has_map e.toEquiv.toEmbedding x
@@ -405,6 +402,7 @@ theorem GraphMove.transport {A B A' B' : Type*} {G : SimpleGraph A} {H : SimpleG
     {strong : Bool} (m : GraphMove strong G H) : GraphMove strong G' H' := by
   rcases m with ⟨⟨m⟩⟩ | ⟨m, hm⟩
   · let p := (e.toEquiv.symm.optionCongr.trans m.place).trans f.toEquiv
+    have cancel (x : A) : e.toEquiv.symm (e x) = x := e.toEquiv.symm_apply_apply x
     left
     refine ⟨⟨m.T.map e.toEquiv.toEmbedding, p, ?_, ?_, ?_⟩⟩
     · intro x y
@@ -416,14 +414,15 @@ theorem GraphMove.transport {A B A' B' : Type*} {G : SimpleGraph A} {H : SimpleG
       obtain ⟨x, rfl⟩ := e.toEquiv.surjective x
       obtain ⟨y, rfl⟩ := e.toEquiv.surjective y
       simpa only [p, Equiv.trans_apply, Equiv.optionCongr_apply, Option.map_some,
-        RelIso.coe_fn_toEquiv, graphIso_symm_equiv_apply, RelIso.symm_apply_apply,
+        RelIso.coe_fn_toEquiv, cancel,
         Site.has_map_iso, e.injective.ne_iff, e.map_adj_iff, f.map_adj_iff] using m.old_old x y
     · intro x
       obtain ⟨x, rfl⟩ := e.toEquiv.surjective x
       simpa only [p, Equiv.trans_apply, Equiv.optionCongr_apply, Option.map_none,
-        Option.map_some, RelIso.coe_fn_toEquiv, graphIso_symm_equiv_apply,
-        RelIso.symm_apply_apply, Site.has_map_iso, f.map_adj_iff] using m.center x
+        Option.map_some, RelIso.coe_fn_toEquiv, cancel, Site.has_map_iso, f.map_adj_iff]
+        using m.center x
   · let p := (f.toEquiv.symm.optionCongr.trans m.place).trans e.toEquiv
+    have cancel (x : B) : f.toEquiv.symm (f x) = x := f.toEquiv.symm_apply_apply x
     right
     let m' : ReverseSpec G' H' := {
       T := m.T.map f.toEquiv.toEmbedding
@@ -432,16 +431,14 @@ theorem GraphMove.transport {A B A' B' : Type*} {G : SimpleGraph A} {H : SimpleG
         intro x
         obtain ⟨x, rfl⟩ := f.toEquiv.surjective x
         simpa only [p, Equiv.trans_apply, Equiv.optionCongr_apply, Option.map_none,
-          Option.map_some, Equiv.symm_apply_apply, Site.has_map_iso,
-          RelIso.coe_fn_toEquiv, graphIso_symm_equiv_apply, RelIso.symm_apply_apply,
+          Option.map_some, Site.has_map_iso, RelIso.coe_fn_toEquiv, cancel,
           e.map_adj_iff] using m.center x
       old_old := by
         intro x y
         obtain ⟨x, rfl⟩ := f.toEquiv.surjective x
         obtain ⟨y, rfl⟩ := f.toEquiv.surjective y
-        simpa only [p, Equiv.trans_apply, Equiv.optionCongr_apply, Option.map_none,
-          Option.map_some, Equiv.symm_apply_apply, Site.has_map_iso,
-          RelIso.coe_fn_toEquiv, graphIso_symm_equiv_apply, RelIso.symm_apply_apply,
+        simpa only [p, Equiv.trans_apply, Equiv.optionCongr_apply,
+          Option.map_some, Site.has_map_iso, RelIso.coe_fn_toEquiv, cancel,
           e.map_adj_iff, f.map_adj_iff, f.injective.ne_iff] using m.old_old x y
     }
     refine ⟨m', fun hs => ?_⟩
@@ -449,9 +446,7 @@ theorem GraphMove.transport {A B A' B' : Type*} {G : SimpleGraph A} {H : SimpleG
     obtain ⟨x, rfl⟩ := f.toEquiv.surjective x
     obtain ⟨y, rfl⟩ := f.toEquiv.surjective y
     simpa only [m', p, Equiv.trans_apply, Equiv.optionCongr_apply, Option.map_some,
-      Equiv.symm_apply_apply, Site.has_map_iso, RelIso.coe_fn_toEquiv,
-      graphIso_symm_equiv_apply, RelIso.symm_apply_apply,
-          e.map_adj_iff, f.injective.ne_iff]
+      Site.has_map_iso, RelIso.coe_fn_toEquiv, cancel, e.map_adj_iff, f.injective.ne_iff]
       using hm hs x y
 
 private def forwardApex {G : State} {T : Triple} (o : ℕ) : ↥(G.forward T o).active :=
@@ -469,9 +464,6 @@ private noncomputable def forwardLabels {G : State} {T : Triple} {o : ℕ} (ho :
     Option ↥G.active ≃ ↥(G.forward T o).active :=
   ((Equiv.optionSubtype (forwardApex o)).symm (forwardSurvivors ho)).1
 
-@[simp] private theorem forwardLabels_none {G : State} {T : Triple} {o : ℕ} (ho : o ∉ G.active) :
-    (forwardLabels (T := T) ho none).val = o := rfl
-
 @[simp] private theorem forwardLabels_some {G : State} {T : Triple} {o : ℕ} (ho : o ∉ G.active)
     (x : ↥G.active) : (forwardLabels (T := T) ho (some x)).val = x.val := rfl
 
@@ -487,12 +479,6 @@ private def reverseSurvivors {G : State} {T : Triple} {o : ℕ} (ho : o ∈ G.ac
 private noncomputable def reverseLabels {G : State} {T : Triple} {o : ℕ} (ho : o ∈ G.active) :
     Option ↥(G.reverse T o).active ≃ ↥G.active :=
   ((Equiv.optionSubtype (reverseCenter ho)).symm (reverseSurvivors ho)).1
-
-@[simp] private theorem reverseLabels_none {G : State} {T : Triple} {o : ℕ} (ho : o ∈ G.active) :
-    (reverseLabels (T := T) ho none).val = o := rfl
-
-@[simp] private theorem reverseLabels_some {G : State} {T : Triple} {o : ℕ} (ho : o ∈ G.active)
-    (x : ↥(G.reverse T o).active) : (reverseLabels ho (some x)).val = x.val := rfl
 
 private def Triple.restrict (T : Triple) {S : Finset ℕ} (h : T.verts ⊆ S) : Site ↥S :=
   ⟨⟨T.a, h (by simp [Triple.mem_verts])⟩, ⟨T.b, h (by simp [Triple.mem_verts])⟩,
@@ -516,7 +502,8 @@ private theorem realize_forward {G : State} {T : Triple} {o : ℕ} {strong : Boo
       (forward_old_adj (G := G) (T := T) (o := o)
         (fun he => h.2.1 (he ▸ x.2)) (fun he => h.2.1 (he ▸ y.2)))
   · intro x
-    simpa using forward_center_adj (y := x.val) hG h
+    change (G.forward T o).Adj o x.val ↔ (T.restrict h.1).Has x
+    simpa only [Triple.has_restrict] using forward_center_adj (y := x.val) hG h
 
 private theorem realize_reverse {G : State} {T : Triple} {o : ℕ} {strong : Bool}
     (hG : G.Valid) (h : ReverseOK G T o) (hi : strong = true → Independent G T) :
@@ -528,10 +515,13 @@ private theorem realize_reverse {G : State} {T : Triple} {o : ℕ} {strong : Boo
     place := reverseLabels h.1
     center := by
       intro x
-      simpa using h.adj hG x.val
+      change G.Adj o x.val ↔ (T.restrict hT).Has x
+      simpa only [Triple.has_restrict] using h.adj hG x.val
     old_old := by
       intro x y
-      simpa only [State.graph_adj, reverseLabels_some, Triple.has_restrict, Subtype.coe_ne_coe]
+      change (G.reverse T o).Adj x.val y.val ↔
+        G.Adj x.val y.val ∨ ((T.restrict hT).Has x ∧ (T.restrict hT).Has y ∧ x ≠ y)
+      simpa only [Triple.has_restrict, Subtype.coe_ne_coe]
         using (reverse_old_adj (G := G) (T := T) (o := o) (mem_erase.mp x.2).1 (mem_erase.mp y.2).1)
   }
   refine ⟨m, fun hs x y hx hy hne => ?_⟩
@@ -583,15 +573,16 @@ private theorem lift_forward {G : State} {B : Type*} {H : SimpleGraph B}
   | none =>
     cases y with
     | none =>
-      simp only [forwardLabels_none]
+      change (G.forward T o).Adj o o ↔ H.Adj (m.place none) (m.place none)
       exact iff_of_false (fun h => (forward_valid hG ok h).2.2 rfl) (fun h => H.irrefl h)
     | some y =>
-      simp only [forwardLabels_none, forwardLabels_some, forward_center_adj hG ok, m.center]
+      change (G.forward T o).Adj o y.val ↔ H.Adj (m.place none) (m.place (some y))
+      rw [forward_center_adj hG ok, m.center]
       exact m.T.mem_labels G.vertexEmbedding y
   | some x =>
     cases y with
     | none =>
-      simp only [forwardLabels_none, forwardLabels_some]
+      change (G.forward T o).Adj x.val o ↔ H.Adj (m.place (some x)) (m.place none)
       rw [show (G.forward T o).Adj x.val o ↔ (G.forward T o).Adj o x.val from
         ⟨State.adj_symm, State.adj_symm⟩, forward_center_adj hG ok, H.adj_comm, m.center]
       exact m.T.mem_labels G.vertexEmbedding x
