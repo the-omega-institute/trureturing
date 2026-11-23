@@ -24,15 +24,17 @@ abbrev radiusArena : Arena where
   signature := frequencySignature.{u}
   Law A := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     (w radius : J → ℝ) (_ : ∀ j, 0 ≤ w j) {ρ : ℝ} (_ : 0 < ρ)
-    (_ : ∀ j, ρ ≤ radius j) (p k : ℕ) (_ : k ≤ p),
+    (_ : ∀ j, ρ ≤ radius j) (p : ℕ),
+    let T := (∑ j, w j) ^ (2 * p)
+    let Q (h : ℕ) := (ρ * Real.sqrt (2 * ((p - h : ℕ) : ℝ)))⁻¹
+    let B (h : ℕ) := (range (h + 1)).inf' ⟨0, mem_range.mpr (Nat.succ_pos h)⟩
+      (fun i => min ((Nat.choose p i : ℝ) ^ 2 * (∑ j, w j) ^ (2 * (p - i)) * diagonal w i) T) -
+        diagonal w p
     (∑ m ∈ piAntidiag univ p, ∑ n ∈ (piAntidiag univ p).erase m,
       monomialWeight w m * monomialWeight w n /
         Real.sqrt (∑ j, (((m j : ℝ) - n j) * A.readout () ⟨J, radius⟩ j) ^ 2)) ≤
-      ((∑ j, w j) ^ (2 * p) - diagonal w p) /
-          (ρ * Real.sqrt (2 * ((p - k + 1 : ℕ) : ℝ))) +
-        (min ((Nat.choose p k : ℝ) ^ 2 * (∑ j, w j) ^ (2 * (p - k)) * diagonal w k)
-          ((∑ j, w j) ^ (2 * p)) - diagonal w p) *
-          ((ρ * Real.sqrt 2)⁻¹ - (ρ * Real.sqrt (2 * ((p - k + 1 : ℕ) : ℝ)))⁻¹)
+      (T - diagonal w p) * Q 0 +
+        ∑ h ∈ range (p - 1), B (h + 1) * (Q (h + 1) - Q h)
 
 private theorem sum_liftBool {A : Type*} [AddCommMonoid A] (f : ULift.{u} Bool → A) :
     (∑ j, f j) = f (ULift.up false) + f (ULift.up true) := by
@@ -77,13 +79,13 @@ private theorem smallRadius_fails : ¬ radiusArena.{u}.Law smallRadiusReadout :=
     (single_le_sum (fun b _ => hterm m b) hns).trans
       (single_le_sum (fun a _ => sum_nonneg (fun b _ => hterm a b)) hms)
   have h := law (J := ULift.{u} Bool) w 1 (fun _ => zero_le_one) (ρ := 1)
-    zero_lt_one (fun _ => le_rfl) 1 0 (by simp)
+    zero_lt_one (fun _ => le_rfl) 1
   change (∑ a ∈ s, ∑ b ∈ s.erase a, term a b) ≤ _ at h
   have hbad := hsel.trans h
   have hW : (∑ j, w j) = 2 := by rw [sum_liftBool]; norm_num [w]
-  have hD0 : diagonal w 0 = 1 := by simp [diagonal, monomialWeight, Nat.multinomial]
   have hD1 : 0 ≤ diagonal w 1 := sum_nonneg fun _ _ => sq_nonneg _
-  rw [hW, hD0] at hbad
+  dsimp at hbad
+  rw [hW] at hbad
   have hwM : monomialWeight w m = 1 := unit_weight_of_degree_one m hm
   have hwN : monomialWeight w n = 1 := unit_weight_of_degree_one n hn
   have hsum : (∑ j, (((m j : ℝ) - n j) * (1 / 100 : ℝ)) ^ 2) = 2 / 100 ^ 2 := by
@@ -92,13 +94,10 @@ private theorem smallRadius_fails : ¬ radiusArena.{u}.Law smallRadiusReadout :=
   dsimp [term] at hbad
   rw [hwM, hwN, hsum, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 2),
     Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 100)] at hbad
-  norm_num [show (2 * 2 : ℝ) = 2 ^ 2 by norm_num,
-    Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)] at hbad
+  norm_num at hbad
   have hS : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
   have hle : 100 / √2 ≤ (4 - diagonal w 1) / √2 := by
-    refine hbad.trans_eq ?_
-    change (4 - diagonal w 1) / 2 + (4 - diagonal w 1) * ((√2)⁻¹ - 1 / 2) = _
-    ring
+    simpa only [div_eq_mul_inv] using hbad
   have := (div_le_div_iff_of_pos_right hS).mp hle
   linarith
 
@@ -136,9 +135,9 @@ def radiusRegistration :
     coordinates := #[0, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "arg", "arg", "body", "arg", "body", "arg", "arg",
-        "arg", "body", "fn", "arg", "arg"]
-      stateBinder := 14
+        "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg",
+        "body", "arg", "arg", "arg", "body", "fn", "arg", "arg"]
+      stateBinder := 15
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
