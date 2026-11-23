@@ -27,7 +27,13 @@ theorem scaleIndex_one (k : K) (i : Fin 9) (h : k * digit i = 1) :
   decide
 
 private theorem scaleIndex_neg (k : K) (i : Fin 9) : scaleIndex (-k) i = scaleIndex k i := by
-  decide +revert
+  simp only [scaleIndex, neg_mul]
+  let r := k * digit i
+  change absIndex (-r) = absIndex r
+  by_cases hr : r = 0
+  · simp [hr]
+  · unfold absIndex
+    rw [ZMod.neg_val, if_neg hr, Nat.sub_sub_self (ZMod.val_lt r).le, min_comm]
 
 theorem scaleIndex_injective {k : K} (hk : k ≠ 0) :
     Function.Injective (scaleIndex k) := by
@@ -391,25 +397,13 @@ private theorem count_expand (f : Fin 9 → ℕ) (l : Word) (hl : l.Nodup) (a : 
       simp [hn.1]
     · simp [h, Ne.symm h]
 
-private theorem length_expand (f : Fin 9 → ℕ) (l : Word) :
-    (expand f l).length = (l.map f).sum := by
-  induction l with
-  | nil => rfl
-  | cons i l ih =>
-    simp only [expand, List.flatMap_cons, List.length_append, List.length_replicate,
-      List.map_cons, List.sum_cons]
-    exact congrArg (f i + ·) ih
-
 private def unpack (cs : List ℕ) (ls : Word) : Word :=
   (List.zipWith List.replicate cs ls).flatten
 
 private theorem expand_unpack (f : Fin 9 → ℕ) (l : Word) :
     expand f l = unpack (l.map f) l := by
-  induction l with
-  | nil => rfl
-  | cons i l ih =>
-    change List.replicate (f i) i ++ expand f l = List.replicate (f i) i ++ unpack (l.map f) l
-    rw [ih]
+  rw [unpack, List.zipWith_map_left, List.zipWith_self]
+  rfl
 
 private def groupedLabels (m : Word) : Word :=
   m.dedup.insertionSort (fun i j => m.count j ≤ m.count i)
@@ -436,8 +430,8 @@ def multiplicities (m : Word) : List ℕ := (groupedLabels m).map (fun i => m.co
 
 private theorem multiplicities_sum (m : Word) : (multiplicities m).sum = m.length := by
   unfold multiplicities
-  rw [← length_expand]
-  exact (perm_expand m).length_eq.symm
+  rw [((groupedLabels_perm m).map (m.count ·)).sum_eq]
+  exact List.sum_map_count_dedup_eq_length m
 
 private theorem multiplicities_positive (m : Word) : ∀ k ∈ multiplicities m, 0 < k := by
   intro k hk
@@ -474,15 +468,6 @@ private theorem mem_compositions (l : List ℕ) (f : ℕ) (hf : l.length ≤ f)
         refine ⟨a, List.mem_range.mpr (by omega), List.mem_map.mpr ?_⟩
         exact ⟨l, by simpa using h, rfl⟩
 
-private theorem length_le_sum_positive (l : List ℕ) (h : ∀ k ∈ l, 0 < k) : l.length ≤ l.sum := by
-  induction l with
-  | nil => simp
-  | cons k l ih =>
-    have hk := h k (by simp)
-    have hl := ih (fun j hj => h j (by simp [hj]))
-    simp only [List.length_cons, List.sum_cons]
-    omega
-
 private def profiles7 : List (List ℕ) :=
   (compositions 7 7).filter fun l => decide (l.Pairwise (· ≥ ·))
 
@@ -490,7 +475,7 @@ private theorem multiplicities_cases (m : Word) (hm : m.length = 7) :
     multiplicities m ∈ profiles7 := by
   have hsum : (multiplicities m).sum = 7 := (multiplicities_sum m).trans hm
   have hpos := multiplicities_positive m
-  have hlen := length_le_sum_positive _ hpos
+  have hlen := List.length_le_sum_of_one_le _ hpos
   rw [hsum] at hlen
   have h := mem_compositions _ 7 hlen hpos
   rw [hsum] at h

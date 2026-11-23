@@ -405,23 +405,13 @@ private theorem eta_signed_word (l : List K) :
         smul_eq_mul]
       ring
 
-private theorem totalDegree_sub_le {p q : MvPolynomial (Fin 5) K} :
-    (p - q).totalDegree ≤ max p.totalDegree q.totalDegree := by
-  rw [sub_eq_add_neg]
-  refine (totalDegree_add ..).trans (max_le_max_left _ ?_)
-  rw [← neg_one_smul K q]
-  exact totalDegree_smul_le _ _
-
 private theorem bounded_list_prod {ps : List (MvPolynomial (Fin 5) K)}
     (h : ∀ p ∈ ps, p.totalDegree ≤ 1) : ps.prod.totalDegree ≤ ps.length := by
-  induction ps with
-  | nil => simp
-  | cons p ps ih =>
-    rw [List.prod_cons, List.length_cons]
-    have hp := h p (by simp)
-    have hq := ih (fun q hq => h q (List.mem_cons_of_mem _ hq))
-    have hmul := totalDegree_mul p ps.prod
-    omega
+  refine (totalDegree_list_prod ps).trans ?_
+  simpa using List.sum_le_length_nsmul (ps.map totalDegree) 1 (by
+    intro d hd
+    obtain ⟨q, hq, rfl⟩ := List.mem_map.mp hd
+    exact h q hq)
 
 private theorem bounded_list_fourth_sum {ps : List (MvPolynomial (Fin 5) K)}
     (h : ∀ p ∈ ps, p.totalDegree ≤ 1) :
@@ -481,7 +471,7 @@ private theorem moment_degree : momentPoly.totalDegree ≤ 54 := by
     · exact ha
     · exact hb
     · exact add_degree ha hb
-    · exact totalDegree_sub_le.trans (max_le ha hb)
+    · exact (totalDegree_sub a b).trans (max_le ha hb)
     · exact hc
     · exact hd
     · exact he
@@ -490,10 +480,10 @@ private theorem moment_degree : momentPoly.totalDegree ≤ 54 := by
       (mul_degree (totalDegree_C (3 : K)).le (add_degree (pow_degree ha 2) (pow_degree hb 2)))
       (pow_degree hc 2)) (pow_degree hd 2)) (pow_degree he 2)
   have hf : (1 - (C 3*(a^2+b^2)+c^2+d^2+e^2)^18).totalDegree ≤ 36 :=
-    totalDegree_sub_le.trans (max_le (totalDegree_one.trans_le (Nat.zero_le _))
+    (totalDegree_sub _ _).trans (max_le (totalDegree_one.trans_le (Nat.zero_le _))
       (pow_degree hcenter 18))
   have hab : (b^2-a^2).totalDegree ≤ 2 :=
-    totalDegree_sub_le.trans (max_le (pow_degree hb 2) (pow_degree ha 2))
+    (totalDegree_sub _ _).trans (max_le (pow_degree hb 2) (pow_degree ha 2))
   have hcoeff : (C (3/8) * a * b * (b^2-a^2) * c * d * e).totalDegree ≤ 7 :=
     mul_degree (mul_degree (mul_degree (mul_degree (mul_degree (mul_degree
       (totalDegree_C (3/8 : K)).le ha) hb) hab) hc) hd) he
