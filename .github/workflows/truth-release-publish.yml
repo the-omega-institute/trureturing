@@ -10,7 +10,7 @@ permissions: {}
 
 # Inspector and Scribe follow the source pin. The publisher has its own revision.
 env:
-  TRUTH_TOOLS_COMMIT: 9566f70cb7f56736639b89ce3dbb6a32ac6c2f86
+  TRUTH_TOOLS_COMMIT: bde58fcea76c0538fd182630f05cc1ab12e5bee9
 
 concurrency:
   group: truth-release-publish-dev
