@@ -27,6 +27,15 @@ internal sealed class IndependentWordMarginalsDocument : IScribeDocumentDefiniti
                     + "neighbor empty, use its deletion equation after setting the original "
                     + "vertex to one. Setting both endpoints to one is then forbidden, so both "
                     + "summands for the original vertex vanish. Conversely the agreement and "
-                    + "isolated-vertex conditions cancel every deletion equation."))),
+                    + "isolated-vertex conditions cancel every deletion equation.")),
+                    Paragraph(Text(
+                    "Each support condition is necessary for this characterization of arbitrary "
+                    + "complex matrices. On a single edge, set the row-column entries (01,00) "
+                    + "and (11,10) to one and minus one, with all other entries zero. The two "
+                    + "terms cancel when the first bit is deleted. Both entries have different "
+                    + "second bits, so neither appears when the second bit is deleted. The row "
+                    + "11 is forbidden, all occupied columns are legal, and the nonzero entry "
+                    + "at (01,00) has equal first bits. Transposing the matrix gives the "
+                    + "corresponding example with legal rows and a forbidden column."))),
                 DescribeRole.Theorem))));
 }
