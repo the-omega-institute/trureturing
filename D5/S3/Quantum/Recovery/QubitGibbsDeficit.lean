@@ -6,9 +6,9 @@
    utility: none
    digest: The exact reducing qubit Gibbs deficit splits into conditional relative entropy loss and weighted block gaps. -/
 
+import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
@@ -161,7 +161,9 @@ def gibbsValue (B : Fin 2 → CStarMatrix E E ℂ) (ρ : DensityState (Fin 2 × 
     vonNeumannEntropy (toLegacyDensityState (retainedMarginal ρ)) +
     (mat ρ.1 * retainedBlock (fun i => mat (B i))).trace.re
 
-/-- The loss of Umegaki relative entropy under the physical partial trace. -/
+/-- The difference of the joint and retained finite trace-log relative entropies.
+This is the Umegaki relative entropy loss when `supp ρ ⊆ supp τ` and the support of
+`retainedMarginal ρ` is contained in the support of `retainedMarginal τ`. -/
 def conditionalLoss (ρ τ : DensityState (Fin 2 × E)) : ℝ :=
   finiteTraceLogRelativeEntropy ρ τ -
     finiteTraceLogRelativeEntropy (retainedMarginal ρ) (retainedMarginal τ)
@@ -235,25 +237,12 @@ open D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 private theorem exists_partialTraceChannel :
     ∃ Φ : QuantumChannel (Fin 2 × E) (Fin 2), ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
       mat (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = partialTraceRight X := by
-  let K (e : E) : Matrix (Fin 2) (Fin 2 × E) ℂ :=
-    (1 : Matrix (Fin 2 × E) (Fin 2 × E) ℂ).submatrix (fun i => (i, e)) (Equiv.refl _)
-  have hcomplete : ∑ e, Matrix.conjTranspose (K e) * K e = 1 := by
-    ext ⟨i,e⟩ ⟨j,f⟩
-    simp [K, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Matrix.submatrix_apply, Matrix.one_apply, Prod.mk.injEq, apply_ite, ite_and, eq_comm]
-    split_ifs <;> simp_all
-  obtain ⟨Φ, hΦ⟩ := D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
-    K hcomplete
+  obtain ⟨Φ, hΦ⟩ :=
+    D5.S3.Quantum.Divergence.FannesRootFidelityHolevo.exists_eraseChannel (n := Fin 2) (ι := E)
   refine ⟨Φ, fun X => ?_⟩
   rw [hΦ]
-  have hcompression (e : E) :
-      K e * X * Matrix.conjTranspose (K e) = X.submatrix (fun i => (i,e)) (fun i => (i,e)) := by
-    dsimp only [K]
-    rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one,
-      Matrix.one_submatrix_mul _ (Equiv.refl _) X, Matrix.mul_submatrix_one (Equiv.refl _)]
-    rfl
   ext i j
-  simp [partialTraceRight, Matrix.sum_apply, hcompression]
+  simp only [partialTraceRight, Matrix.sum_apply, Matrix.submatrix_apply]
 
 private theorem mapState_partialTrace
     {Φ : QuantumChannel (Fin 2 × E) (Fin 2)}
