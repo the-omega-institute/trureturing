@@ -35,7 +35,8 @@ abbrev frequencyArena : Arena where
     ∃ g' : J → ℝ,
       (∀ j, |V.readout () ⟨J, g'⟩ j - g j| ≤ ε) ∧
       tailCollisionMass g' w p η ≤
-        D + ((1 + η * ((M : ℝ) + 1) / ε) / (M + 2)) * (W ^ (2 * p) - D)
+        D + (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) *
+          (W ^ (2 * p) - D)
 
 private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
   intro law

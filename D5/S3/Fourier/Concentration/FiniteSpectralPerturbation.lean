@@ -126,11 +126,12 @@ private theorem sum_hit_le {J : Type*} [Fintype J] [DecidableEq J] {M : ℕ}
     (i : J) (hi : c i ≠ 0) :
     (∑ f : J → Fin (M + 2),
       if |∑ j, (c j : ℝ) * (g j + offset ε (f j))| ≤ η then (1 : ℝ) else 0) ≤
-      (Fintype.card (J → Fin (M + 2)) : ℝ) * ((1 + η * ((M : ℝ) + 1) / ε) / (M + 2)) := by
+      (Fintype.card (J → Fin (M + 2)) : ℝ) *
+        (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) := by
   let e := Equiv.funSplitAt i (Fin (M + 2))
   let A := ({j // j ≠ i} → Fin (M + 2))
   let t : ℝ := 2 * ε / ((M : ℝ) + 1)
-  let α : ℝ := 1 + η * ((M : ℝ) + 1) / ε
+  let α : ℝ := (min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ)
   have hd : 0 < (M : ℝ) + 1 := by positivity
   have ht : 0 < t := by dsimp [t]; positivity
   have hcast : (c i : ℝ) ≠ 0 := by exact_mod_cast hi
@@ -160,13 +161,23 @@ private theorem sum_hit_le {J : Type*} [Fintype J] [DecidableEq J] {M : ℕ}
     change (∑ k : Fin (M + 2), if |a * (k.val : ℝ) + b| ≤ η then (1 : ℝ) else 0) ≤ α
     rw [← sum_filter]
     simp only [sum_const, nsmul_eq_mul, mul_one]
-    calc
-      _ ≤ 1 + 2 * η / |a| := affine_fin_hit_count a b ha hη
-      _ ≤ α := by
-        dsimp [α]
-        rw [← hη']
-        have hh := div_le_div_of_nonneg_left (show 0 ≤ 2 * η by positivity) ht habs
-        linarith only [hh]
+    let hits := (univ : Finset (Fin (M + 2))).filter (fun k => |a * (k.val : ℝ) + b| ≤ η)
+    have hreal : (hits.card : ℝ) ≤ 1 + η * ((M : ℝ) + 1) / ε := by
+      rw [← hη']
+      have hh := div_le_div_of_nonneg_left (show 0 ≤ 2 * η by positivity) ht habs
+      have hcount := affine_fin_hit_count a b ha hη (M := M + 2)
+      change (hits.card : ℝ) ≤ _ at hcount
+      linarith only [hcount, hh]
+    have hfloor : hits.card ≤ 1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊ := by
+      have hnonneg : 0 ≤ η * ((M : ℝ) + 1) / ε := by positivity
+      calc
+        _ ≤ ⌊1 + η * ((M : ℝ) + 1) / ε⌋₊ := Nat.le_floor hreal
+        _ = _ := by rw [add_comm (1 : ℝ), Nat.floor_add_one hnonneg, add_comm]
+    have hgrid : hits.card ≤ M + 2 := by
+      simpa using (card_filter_le (univ : Finset (Fin (M + 2))) _)
+    change (hits.card : ℝ) ≤
+      ((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ)
+    exact Nat.cast_le.mpr (le_min hgrid hfloor)
   have hcard : Fintype.card (J → Fin (M + 2)) = (M + 2) * Fintype.card A := by
     simpa only [Fintype.card_prod, Fintype.card_fin] using Fintype.card_congr e
   change (∑ f, I f) ≤ _
@@ -184,7 +195,8 @@ private theorem sum_pair_le {J : Type*} [Fintype J] [DecidableEq J] {M : ℕ}
         |monomialFrequency (fun j => g j + offset ε (f j)) m -
          monomialFrequency (fun j => g j + offset ε (f j)) n| ≤ η
         then (1 : ℝ) else 0) ≤
-      (Fintype.card (J → Fin (M + 2)) : ℝ) * ((1 + η * ((M : ℝ) + 1) / ε) / (M + 2)) := by
+      (Fintype.card (J → Fin (M + 2)) : ℝ) *
+        (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) := by
   have hcoord : ∃ i, m i ≠ n i := by
     by_contra! h
     exact hmn (funext h)
@@ -216,14 +228,15 @@ theorem exists_nearby_collision_bound {J : Type*} [Fintype J] [DecidableEq J]
     ∃ g' : J → ℝ,
       (∀ j, |g' j - g j| ≤ ε) ∧
       tailCollisionMass g' w p η ≤
-        D + ((1 + η * ((M : ℝ) + 1) / ε) / (M + 2)) * (W ^ (2 * p) - D) := by
+        D + (((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)) *
+          (W ^ (2 * p) - D) := by
   classical
   intro W D
   let A := J → Fin (M + 2)
   let S := piAntidiag (univ : Finset J) p
   let c := monomialWeight w
   let Q : ℝ := Fintype.card A
-  let α : ℝ := (1 + η * ((M : ℝ) + 1) / ε) / (M + 2)
+  let α : ℝ := ((min (M + 2) (1 + ⌊η * ((M : ℝ) + 1) / ε⌋₊) : ℕ) : ℝ) / (M + 2)
   let x (f : A) (m : J → ℕ) : ℝ := monomialFrequency (fun j => g j + offset ε (f j)) m
   let E (f : A) := tailCollisionMass (fun j => g j + offset ε (f j)) w p η
   let Mpair (m n : J → ℕ) : ℝ := ∑ f : A, if |x f m - x f n| ≤ η then 1 else 0

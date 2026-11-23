@@ -32,9 +32,9 @@ internal sealed class FiniteSpectralPerturbationDocument : IScribeDocumentDefini
                         + "of the perturbed frequency sums is affine with slope magnitude at least "
                         + "2ε/(M+1) in the remaining grid index.")),
                     Paragraph(Text(
-                        "The least and greatest admissible indices differ by at most 2η divided by "
-                        + "the slope magnitude. The fiber has at most 1+η(M+1)/ε points including "
-                        + "both endpoints. Averaging each indicator over the finite product gives "
+                        "If any indices qualify, the least and greatest differ by at most 2η divided by "
+                        + "the slope magnitude. The integer count is at most 1+floor(η(M+1)/ε) and "
+                        + "at most M+2. Averaging each indicator over the finite product gives "
                         + "the displayed factor. Diagonal pairs contribute D at every assignment. "
                         + "Since the total coefficient weight is Wᵖ, the other pairs have total "
                         + "weight W²ᵖ−D. A single assignment is at most the upper bound on the mean.")),
@@ -71,9 +71,10 @@ internal sealed class FiniteSpectralPerturbationDocument : IScribeDocumentDefini
         var weightCondition = Bind(FormulaQuantifier.ForAll, "j", index, AtMost(D(0), Call("w", j)));
         var proximity = Bind(FormulaQuantifier.ForAll, "j", index,
             AtMost(new Formula.Absolute(Seq(Call("h", j), Minus, Call("g", j))), radius));
-        var factor = new Formula.Fraction(
-            Add(D(1), new Formula.Fraction(Multiply(eta, Seq(Open, Add(m, D(1)), Close)), radius)),
-            Add(m, D(2)));
+        var gridSize = Add(m, D(2));
+        var span = new Formula.Fraction(Multiply(eta, Seq(Open, Add(m, D(1)), Close)), radius);
+        var hitCount = Seq(Min, Open, gridSize, Comma, Sp, Add(D(1), new Formula.Floor(span)), Close);
+        var factor = new Formula.Fraction(hitCount, gridSize);
         var offDiagonal = Seq(Open, new Formula.Power(w, Multiply(D(2), p)), Minus, diagonal, Close);
         var bound = AtMost(Call("E", gPrime, p, eta), Add(diagonal, Multiply(factor, offDiagonal)));
         var law = Bind(FormulaQuantifier.Exists, "h", Seq(index, Sp, To, Sp, reals),
