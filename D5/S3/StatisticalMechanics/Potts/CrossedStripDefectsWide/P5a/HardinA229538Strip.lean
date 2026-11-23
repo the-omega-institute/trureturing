@@ -869,11 +869,11 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
   by_cases hempty : k = 0 ∨ n = 0
   · letI : IsEmpty C := ⟨fun (i, j) => hempty.elim
       (fun hk => Fin.elim0 (hk ▸ i)) (fun hn => Fin.elim0 (hn ▸ j))⟩
-    let : Unique (C → Fin 3) := ⟨⟨fun _ => 0⟩, fun _ => funext isEmptyElim⟩
+    letI : Unique (C → Fin 3) := Pi.uniqueOfIsEmpty _
     have hK (A : C → Fin 3) : K A := fun x => isEmptyElim x
     have ht : t = s := Finset.filter_true_of_mem fun A _ => hK A
     have hP (A : C → Fin 3) : P A ↔ D = 0 := by
-      have hA : A = fun _ => 0 := funext isEmptyElim
+      have hA : A = fun _ => 0 := Subsingleton.elim _ _
       rw [hA]
       rcases n with _ | m
       · simp [P, defects, eq_comm]
