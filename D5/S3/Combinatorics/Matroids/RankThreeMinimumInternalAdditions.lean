@@ -17,7 +17,8 @@ open RankThreeInternalTriplePotentials (Row LiftedLineFamily AllowsExtra cyclicR
 open RankThreeOmissionPotentialFibers (potentialSpace)
 open RankThreeOmissionPotentials (covers)
 
-private theorem residue_indexing (r : ℕ) [NeZero (3 * r)] :
+/-- Each actual residue class modulo three has a uniform labelling by `Fin r`. -/
+theorem residue_indexing (r : ℕ) [NeZero (3 * r)] :
     ∃ e : ZMod (3 * r) ≃ ZMod 3 × Fin r,
       ∀ a, (e a).1 = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a := by
   let red := ZMod.castHom (dvd_mul_right 3 r) (ZMod 3)
