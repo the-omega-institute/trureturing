@@ -24,7 +24,11 @@ theorem leftStrip_logKernel_mixed_lt_ge_one {p : ℕ} (hp : 11 ≤ p) {u v : ℝ
   leftStrip_logKernel_mixed_lt_of_certificate LocalTaylor.moderateLeftStripCheck_verified
     hp hu humax hd
 
-/-- info: 'RefinedBMV.PositiveCenter.leftStrip_logKernel_mixed_lt_ge_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/--
+info: 'RefinedBMV.PositiveCenter.leftStrip_logKernel_mixed_lt_ge_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
 #guard_msgs in
 #print axioms leftStrip_logKernel_mixed_lt_ge_one
 
