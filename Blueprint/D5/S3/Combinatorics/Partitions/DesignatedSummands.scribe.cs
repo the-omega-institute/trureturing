@@ -12,6 +12,13 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
         H("Ordered tuples with designated summands"),
         Blocks(
             Paragraph(Text("For each distinct part size of multiplicity m, a marked partition carries a choice in Fin m. An ordered tuple uses a degree assignment on the component positions with total degree n. A component of degree zero is the empty partition. The local multiplicity series is 1 plus the sum of m times q to the power im for positive m, where i is the part size. Multiplying its Euler denominators gives the factor in degree 6i. Taking the product over all part sizes yields the quotient F, and coefficient convolution gives the ordered tuple count.")),
+            Node("euler", "Dilate the pentagonal series by a positive natural degree.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("etaUnit", "The corresponding unit, with inverse at constant coefficient one.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("tendsto_expand_discrete", "Dilation is continuous for coefficientwise convergence over a discrete ring.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("euler_tendsto", "The finite Euler products with exponents d(i+1) converge to the dilated series.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("euler_const", "The constant coefficient of a dilated Euler product is one.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("map_eta", "A ring homomorphism on the coefficients preserves the dilated Euler unit.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("expand_eta", "Dilating an Euler unit again multiplies its dilation index.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("MarkedPartition", "A partition of n together with one choice of actual occurrence for each part size present.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("MarkedTuple", "An ordered tuple of k marked partitions with total size n. Each position may have degree zero.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("markedCount", "The cardinality of the type of ordered marked tuples.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),

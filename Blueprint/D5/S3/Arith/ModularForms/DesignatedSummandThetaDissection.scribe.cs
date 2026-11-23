@@ -12,6 +12,7 @@ internal sealed class DesignatedSummandThetaDissectionDocument : IScribeDocument
         H("The Jacobi parity dissection"),
         Blocks(
             Paragraph(Text("The three factors use the weighted Jacobi specialization, a sign twist on the Laurent support cone, and constant-unit evaluation. For the product U(q)U(q³), write the starting integer indices as a and b. The two affine coordinates come from a+3b and a−b divided by two. Folding one coordinate in each parity case gives the two disjoint lattices. The bijection preserves the degrees and turns the original signs into a positive even summand and a negative odd summand. The contributing index pairs at each fixed degree lie in a finite set.")),
+            Node("prod_split_two", "A product through 2N consecutive indices is the product through the N even and the N odd indices.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("U", "The signed weighted Jacobi sum at weight parameters 2 and 1.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("phi", "The bilateral theta series with square exponents.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("psi", "The unilateral theta series with triangular exponents.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),

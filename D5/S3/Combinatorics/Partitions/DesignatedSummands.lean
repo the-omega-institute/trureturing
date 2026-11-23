@@ -13,13 +13,25 @@ F_const proof_shape: bind-only
   Consumers: coeff_seven_period, coefficient_formula_three
 marked_count_coeff proof_shape: content
   escape_witness: the cardinalities of dependent marking choices and the weighted Euler-product comparison
+tendsto_expand_discrete proof_shape: bind-only
+  Consumers: euler_tendsto, hasSum_dilate
+euler_tendsto proof_shape: bind-only
+  Consumers: marked_series_eq_F, U_product, phi_product, psi_product, euler_pair_odd
+euler_const proof_shape: bind-only
+  Consumers: etaUnit, F_const, F_eq_unit, F_mul_den, coefficient_formula_three, exceptional_sharp
+map_eta proof_shape: bind-only
+  Consumers: H_dissection
+expand_eta proof_shape: bind-only
+  Consumers: H_dissection_rat, H_norm, W_factor
 Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
 
 Direct frozen dependencies:
   none
 -/
 
-import D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
+import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
+import Mathlib.RingTheory.PowerSeries.Expand
+import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Combinatorics.Enumerative.Partition.GenFun
 import Mathlib.RingTheory.PowerSeries.WellKnown
 
@@ -29,6 +41,74 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1000000
 set_option linter.unusedSimpArgs false
+
+namespace D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
+
+open Filter Finset _root_.PowerSeries
+open scoped PowerSeries.WithPiTopology
+
+theorem tendsto_expand_discrete {R : Type*} [CommRing R] [TopologicalSpace R]
+    [DiscreteTopology R] (d : ℕ) (hd : d ≠ 0) :
+    Continuous (expand d hd (R := R)) := by
+  rename_i t _
+  have ht : t = (⊥ : TopologicalSpace R) := DiscreteTopology.eq_bot
+  subst t
+  let : UniformSpace R := ⊥
+  let : DiscreteUniformity R := ⟨rfl⟩
+  simpa only [PowerSeries.expand, MvPowerSeries.expand, MvPowerSeries.coe_substAlgHom] using
+    (MvPowerSeries.continuous_subst (R := R)
+      (MvPowerSeries.HasSubst.X_pow (σ := Unit) (S := R) hd))
+
+noncomputable def euler {R : Type*} [CommRing R] (d : ℕ) (hd : d ≠ 0) : PowerSeries R :=
+  expand d hd (PowerSeries.pentagonalSeries R)
+
+theorem euler_tendsto {R : Type*} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
+    (d : ℕ) (hd : d ≠ 0) :
+    Tendsto (fun N => ∏ i ∈ Finset.range N, (1 - PowerSeries.X ^ (d * (i + 1)) : PowerSeries R))
+      atTop (nhds (euler d hd)) := by
+  have h := (tendsto_expand_discrete (R := R) d hd).continuousAt.tendsto.comp
+    (PowerSeries.WithPiTopology.hasProd_one_sub_X_pow R).tendsto_prod_nat
+  simpa only [Function.comp_def, map_prod, map_sub, map_one, map_pow, expand_X,
+    ← pow_mul, euler, Nat.mul_comm] using h
+
+theorem euler_const {R : Type*} [CommRing R] (d : ℕ) (hd : d ≠ 0) :
+    constantCoeff (euler d hd : PowerSeries R) = 1 := by
+  rw [euler, constantCoeff_expand, ← coeff_zero_eq_constantCoeff]
+  conv_lhs => rw [← show pentagonal 0 = 0 by decide]
+  rw [coeff_pentagonalSeries_pentagonal]
+  simp
+
+noncomputable def etaUnit {R : Type*} [CommRing R] (d : ℕ) (hd : d ≠ 0) :
+    (PowerSeries R)ˣ where
+  val := euler d hd
+  inv := invOfUnit (euler d hd) 1
+  val_inv := mul_invOfUnit _ 1 (euler_const _ _)
+  inv_val := by rw [mul_comm]; exact mul_invOfUnit _ 1 (euler_const _ _)
+
+private theorem map_euler {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
+    (d : ℕ) (hd : d ≠ 0) : (euler d hd).map g = euler d hd := by
+  rw [euler, euler, map_expand]
+  congr 1
+  ext n
+  classical
+  simp only [coeff_map, pentagonalSeries, coeff_mk]
+  split_ifs with h
+  · simp only [Int.coe_negOnePow, map_pow, map_neg, map_one]
+  · simp
+
+theorem map_eta {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
+    (d : ℕ) (hd : d ≠ 0) :
+    Units.map (PowerSeries.map g).toMonoidHom (etaUnit d hd) = etaUnit d hd := by
+  apply Units.ext
+  exact map_euler g d hd
+
+theorem expand_eta {R : Type*} [CommRing R] (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
+    Units.map (expand a ha (R := R)).toMonoidHom (etaUnit b hb) =
+      etaUnit (a*b) (Nat.mul_ne_zero ha hb) := by
+  apply Units.ext
+  exact (expand_mul a ha b hb _).symm
+
+end D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 
 namespace D5.S3.Combinatorics.Partitions.DesignatedSummands
 

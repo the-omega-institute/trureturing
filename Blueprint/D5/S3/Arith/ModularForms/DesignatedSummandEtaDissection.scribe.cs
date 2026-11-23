@@ -13,6 +13,12 @@ internal sealed class DesignatedSummandEtaDissectionDocument : IScribeDocumentDe
         H("Integral reciprocal and square dissections"),
         Blocks(
             Paragraph(Text("The Jacobi product identities turn the parity dissection into an identity between Euler units. The coefficient map from integers to rationals is injective, so the reciprocal dissection holds integrally. Pairing odd Euler factors at q and −q gives the sign norm used to square F. The factor W reduces modulo four to f6 squared, which is supported on even degrees.")),
+            Paragraph(Text("Lemma 2.2 of Yaqubi and Mirzavaziri gives the prime-power Frobenius congruence. The dyadic lift uses the iterated Frobenius over ZMod 2, then raises the integral congruence to the required modulus.")),
+            Node("reduce", "Reduce every integer coefficient modulo the given natural modulus.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("coeff_reduce_eq_zero", "A reduced coefficient vanishes exactly when the modulus divides the original coefficient.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("map_mod_eq_iff", "Two reductions coincide exactly when the constant series of the modulus divides the difference.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("reduce_lift", "For every integral formal series p(q) and natural j and r, the coefficientwise reduction of p(q)^(2^(j+1+r)) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j) at the same modulus.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("reduce_lift_mul", "For every integral formal series p(q) and natural j, r and t, the coefficientwise reduction of p(q)^(2^(j+1+r)·t) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j·t) at the same modulus.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("H", "The inverse unit of the generating series F.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("H0", "The Euler quotient f1^2 f4^2 f6^4 divided by f2^2 f3^2 f12^2, whose degree doubling is the even part of H over the integers.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("T", "The Euler quotient f1^4 f6^2 divided by f2^2 f3^2. Over the integers, the odd part of H is −q T(q⁴).", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),

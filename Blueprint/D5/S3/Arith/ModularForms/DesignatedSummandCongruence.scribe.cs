@@ -17,7 +17,7 @@ internal sealed class DesignatedSummandCongruenceDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "exceptional_sharp"),
                 H("Degree seven in the exceptional class"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every natural k congruent to 2 modulo 16, the degree-seven coefficient of F to the power k is 8 modulo 16. Dyadic dilation makes F to the power 64 reduce to one through degree seven. Convolution modulo 16 through that degree gives residue 8 for each of the resulting exponent classes 2, 18, 34 and 50 modulo 64."))),
+                Blocks(Paragraph(Text("For every natural k congruent to 2 modulo 16, the degree-seven coefficient of F to the power k is 8 modulo 16. Modulo 16, F to the power 64 has constant coefficient one and zero coefficients in degrees one through seven. For every natural k, the degree-seven coefficient of F to the power k modulo 16 therefore depends only on k modulo 64. Convolution modulo 16 through degree seven gives residue 8 for each of the four classes 2, 18, 34 and 50 modulo 64."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("designatedsummand-common-dyadic-exponent"),
                 DeclarationHandle.Create(Prefix + "result"), H("Common dyadic exponent"),

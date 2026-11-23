@@ -8,7 +8,6 @@ url: https://arxiv.org/abs/2611.05623v1
 claim: "Conjecture 6.1 gives the exact common power of 2 dividing the ordered designated-summand counts at degrees 4n+3."
 strata_touched:
   - D5/S3/Combinatorics/Partitions/DesignatedSummands
-  - D5/S3/Combinatorics/PowerSeries/DyadicDilation
   - D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection
   - D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection
   - D5/S3/Arith/ModularForms/DesignatedSummandCongruence

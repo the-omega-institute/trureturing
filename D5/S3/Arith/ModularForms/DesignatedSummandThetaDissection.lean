@@ -16,6 +16,8 @@ psi_product proof_shape: content
   escape_witness: the constant-unit Jacobi product and triangular pairing
 U_dissection proof_shape: content
   escape_witness: the signed parity bijection and finite degree fibers
+prod_split_two proof_shape: bind-only
+  Consumers: finiteE_split, U_product, finEta_split
 Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
 
 Direct frozen dependencies:
@@ -27,7 +29,9 @@ Direct frozen dependencies:
   D5.S3.Combinatorics.PowerSeries.LaurentSpecialization
 -/
 
-import D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
+import D5.S3.Combinatorics.Partitions.DesignatedSummands
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Algebra.BigOperators.Fin
 import D5.S3.Arith.ModularForms.WeightedJacobiSpecialization
 import D5.S3.Arith.ModularForms.CubicThetaTwistedColumns
 
@@ -38,6 +42,28 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 set_option linter.unusedSimpArgs false
+
+namespace D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
+
+open Finset
+
+theorem prod_split_two {M : Type*} [CommMonoid M] (g : ℕ → M) (N : ℕ) :
+    (∏ j ∈ range (2 * N), g j) =
+    (∏ j ∈ range N, g (2 * j)) * (∏ j ∈ range N, g (2 * j + 1)) := by
+  let e : Fin N × Fin 2 ≃ Fin (2 * N) := finProdFinEquiv.trans (finCongr (Nat.mul_comm N 2))
+  calc
+    _ = ∏ i : Fin (2 * N), g i := (Fin.prod_univ_eq_prod_range g _).symm
+    _ = ∏ pair : Fin N × Fin 2, g (e pair) :=
+      (Fintype.prod_equiv e _ _ (fun _ => rfl)).symm
+    _ = _ := by
+      rw [← univ_product_univ, prod_product]
+      simp only [Fin.prod_univ_two, e, Equiv.trans_apply, finCongr_apply, Fin.val_cast,
+        finProdFinEquiv_apply_val, Fin.val_zero, Fin.val_one, zero_add, add_comm 1,
+        prod_mul_distrib]
+      rw [Fin.prod_univ_eq_prod_range (fun j : ℕ => g (2 * j)) N,
+        Fin.prod_univ_eq_prod_range (fun j : ℕ => g (2 * j + 1)) N]
+
+end D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 
 namespace D5.S3.Arith.ModularForms.DesignatedSummandThetaDissection
 

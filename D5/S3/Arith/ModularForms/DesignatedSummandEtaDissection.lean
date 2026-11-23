@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/DesignatedSummandEtaDissection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries, mathlib/module/Mathlib.RingTheory.PowerSeries.Expand]
    utility: none
    digest: Integral dissections control the progression supports of the reciprocal and square. -/
 
@@ -17,8 +17,19 @@ H_support proof_shape: content
   escape_witness: the reciprocal parity dissection and the two missing dilation residues
 F_square proof_shape: content
   escape_witness: the integral sign norm built from Euler-factor pairing
-W_support proof_shape: content
-  escape_witness: the dyadic comparison of Euler factors modulo four
+reduce_W proof_shape: bind-only
+  Consumers: W_support
+W_support proof_shape: bind-only
+  escape_witness: none
+  Consumers: full_lower
+coeff_reduce_eq_zero proof_shape: bind-only
+  Consumers: W_support, lower_four_divides_k, lower_from_square, lower_odd_k, result
+map_mod_eq_iff proof_shape: bind-only
+  Consumers: reduce_lift, reduce_power_after_even_multiple
+reduce_lift proof_shape: bind-only
+  Consumers: reduce_lift_mul, reduce_W, coeff_seven_period
+reduce_lift_mul proof_shape: bind-only
+  Consumers: lower_four_divides_k, lower_odd_k, lower_from_square
 Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
 
 Direct frozen dependencies:
@@ -33,7 +44,9 @@ Direct frozen dependencies:
 
 import D5.S3.Arith.ModularForms.DesignatedSummandThetaDissection
 import D5.S3.Combinatorics.Partitions.DesignatedSummands
-import D5.S3.Combinatorics.PowerSeries.DyadicDilation
+import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.NumberTheory.Basic
 
 /-! The reciprocal of the designated-summand series has no coefficients of degree 3 modulo 4. The square has an integral odd multiplier with coefficients divisible by 4 in odd degree. -/
 
@@ -42,6 +55,68 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1800000
 set_option backward.isDefEq.respectTransparency false
 set_option linter.unusedSimpArgs false
+
+namespace D5.S3.Combinatorics.PowerSeries.DyadicDilation
+
+open _root_.PowerSeries
+open D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators (C_dvd_iff_coeff)
+
+noncomputable def reduce (m : ℕ) : PowerSeries ℤ →+* PowerSeries (ZMod m) :=
+  PowerSeries.map (Int.castRingHom (ZMod m))
+
+theorem coeff_reduce_eq_zero (m n : ℕ) (p : PowerSeries ℤ) :
+    coeff n (reduce m p) = 0 ↔ (m : ℤ) ∣ coeff n p := by
+  rw [reduce, coeff_map]
+  exact ZMod.intCast_zmod_eq_zero_iff_dvd _ _
+
+theorem map_mod_eq_iff (m : ℕ) (p q : PowerSeries ℤ) :
+    p.map (Int.castRingHom (ZMod m)) = q.map (Int.castRingHom (ZMod m)) ↔
+      C (m : ℤ) ∣ p - q := by
+  rw [C_dvd_iff_coeff]
+  constructor
+  · intro h n
+    apply (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp
+    have hn := congrArg (coeff n) h
+    simp only [coeff_map, map_sub, Int.cast_sub, sub_eq_zero] at hn ⊢
+    exact hn
+  · intro h
+    ext n
+    simp only [coeff_map]
+    apply sub_eq_zero.mp
+    rw [← map_sub, ← map_sub]
+    exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mpr (h n)
+
+theorem reduce_lift (p : PowerSeries ℤ) (j r : ℕ) :
+    reduce (2^(j+1)) (p ^ (2^(j+1+r))) =
+      reduce (2^(j+1)) (expand (2^(r+1)) (by positivity) (p ^ (2^j))) := by
+  let d := 2 ^ (r + 1)
+  have hd : d ≠ 0 := by dsimp [d]; positivity
+  have hf : iterateFrobenius (ZMod 2) 2 (r + 1) = RingHom.id (ZMod 2) := by
+    ext x
+    change x ^ 2 ^ (r + 1) = x
+    exact ZMod.pow_card_pow x
+  have h := map_iterateFrobenius_expand 2 (by decide) (reduce 2 p) (r + 1)
+  rw [hf, PowerSeries.map_id, id_eq] at h
+  have h₂ : (2 : PowerSeries ℤ) ∣ p ^ d - expand d hd p := by
+    have hm : reduce 2 (p ^ d) = reduce 2 (expand d hd p) := by
+      simpa only [reduce, map_pow, map_expand, d] using h.symm
+    simpa only [Nat.cast_ofNat, map_ofNat] using (map_mod_eq_iff 2 _ _).mp hm
+  have hpow := dvd_sub_pow_of_dvd_sub (p := 2) h₂ j
+  apply (map_mod_eq_iff _ _ _).mpr
+  have he : d * 2^j = 2^(j+1+r) := by
+    dsimp [d]
+    rw [← pow_add, show r + 1 + j = j + 1 + r by omega]
+  simpa only [Nat.cast_pow, Nat.cast_ofNat, map_pow C, map_ofNat, ← pow_mul, he,
+    ← map_pow (expand d hd), d] using hpow
+
+theorem reduce_lift_mul (p : PowerSeries ℤ) (j r t : ℕ) :
+    reduce (2^(j+1)) (p ^ (2^(j+1+r)*t)) =
+      expand (2^(r+1)) (by positivity) (reduce (2^(j+1)) p ^ (2^j*t)) := by
+  have h := congrArg (fun q : PowerSeries (ZMod (2^(j+1))) => q ^ t)
+    (reduce_lift p j r)
+  simpa only [reduce, map_pow, map_expand, ← pow_mul] using h
+
+end D5.S3.Combinatorics.PowerSeries.DyadicDilation
 
 namespace D5.S3.Arith.ModularForms.DesignatedSummandEtaDissection
 
