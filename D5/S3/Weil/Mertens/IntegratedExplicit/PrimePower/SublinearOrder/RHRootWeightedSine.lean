@@ -155,10 +155,12 @@ private theorem leading_taylor (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r) 
   rw [add_mul]
   exact add_le_add h₁ h₂
 
-private def harmonicWeight (j : PositiveZetaZero) : ℝ :=
+/-- Analytic multiplicity times the harmonic weight of a positive zeta ordinate. -/
+def harmonicWeight (j : PositiveZetaZero) : ℝ :=
   (Zeta23.zeroMult j.val : ℝ) * ordinate j / (1 / 4 + (ordinate j) ^ 2)
 
-private def positiveCutoff (hRH : RiemannHypothesis) (T : ℝ) : Finset PositiveZetaZero :=
+/-- The finite set of positive zeta zeros with ordinate at most the cutoff. -/
+def positiveCutoff (hRH : RiemannHypothesis) (T : ℝ) : Finset PositiveZetaZero :=
   (zetaSpectrum hRH).cut T
 
 /-- The harmonic mass of the actual positive zeros through the inclusive cutoff. -/
@@ -379,7 +381,7 @@ private theorem weighted_sine_abs_le_mass (hRH : RiemannHypothesis) (T v : ℝ) 
   rw [abs_mul, abs_of_nonneg hw]
   exact mul_le_of_le_one_right hw (Real.abs_sin_le_one _)
 
-private theorem weighted_sine_bddAbove (hRH : RiemannHypothesis) (T : ℝ) :
+theorem weighted_sine_bddAbove (hRH : RiemannHypothesis) (T : ℝ) :
     BddAbove (range (weightedSine hRH T)) :=
   ⟨harmonicMass hRH T, fun _ ⟨v, hv⟩ => hv ▸
     (le_abs_self (weightedSine hRH T v)).trans (weighted_sine_abs_le_mass hRH T v)⟩
