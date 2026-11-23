@@ -37,7 +37,6 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Class
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Classes8
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Classes9
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.ZeroTemperature
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators

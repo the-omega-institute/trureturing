@@ -3,18 +3,18 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Classes2
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229751.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Certificate.transition_counts,D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Forward.structural_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Certificate.transition_counts; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Classes2.class_successors
    digest: Width-4 exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229751.result)
+admission_basis: escape-witness
+escape_witness: Class 2 has no admissible successor. The reflected width-six image has no allowed shift for any source in this class, so its width-four successor list is empty. Certificate.canonical_successors uses this absence to verify the class-2 row.
 extend: proof_shape=bind-only; consumers=proper_extend,raw_extend,exact_image,class_successors
 raw: proof_shape=bind-only; consumers=raw_extend,exact_image,class_successors
 proper_extend: proof_shape=bind-only; consumers=exact_image
 raw_extend: proof_shape=bind-only; consumers=exact_image
-exact_image: proof_shape=bind-only; consumers=class_successors
-class_successors: proof_shape=bind-only; consumers=Certificate.canonical_successors
+exact_image: proof_shape=content; consumers=class_successors
+class_successors: proof_shape=content; consumers=Certificate.canonical_successors
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip

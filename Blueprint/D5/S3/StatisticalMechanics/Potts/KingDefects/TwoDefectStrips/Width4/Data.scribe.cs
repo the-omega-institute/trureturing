@@ -57,7 +57,12 @@ internal sealed class DataDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "successors"), H("successors"),
                 StatementSource.FromAuthor(Disp(All("p", Arrow(Call("Fin", Num("4")), Call("Fin", Num("4"))), All("d", Call("Nat"), Eq(Call("successors", V("p"), V("d")), Call("List.insertionSort", Lam("a", Call("Fin", Num("19")), Lam("b", Call("Fin", Num("19")), Leq(V("a"), V("b")))), Call("List.filterMap", Lam("r", Arrow(Call("Fin", Num("4")), Call("Fin", Num("4"))), Conditional(Leq(Add(Call("DefectTransfer.bondDefects", Call("between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("horizontal"), V("r"), V("r"))), V("d")), Call("some", Call("cl", V("r"), Sub(V("d"), Add(Call("DefectTransfer.bondDefects", Call("between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("horizontal"), V("r"), V("r")))))), Call("none"))), Call("List.ofFn", Lam("i", Call("Fin", Pow(Num("4"), Num("4"))), Call("Equiv.symm", Call("finFunctionFinEquiv"), V("i"))))))))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is HardinA233164KingStrip.Boundary -> Nat -> List (Fin 19). Enumerate every labelled next row, retain exactly those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("The Lean type is HardinA233164KingStrip.Boundary -> Nat -> List (Fin 19). Enumerate every labelled next row, retain exactly those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("transition-counts"),
+                DeclarationHandle.Create(Prefix + "transition_counts"), H("The zero-budget transfer"),
+                StatementSource.FromAuthor(Disp(All("p", Call("HardinA233164KingStrip.Boundary"), Imp(Or(Call("HardinA233164KingStrip.proper", V("p")), Eq(Call("Data.cl", V("p"), Num("0")), Num("14"))), All("s", Call("Fin", Num("19")), Eq(SumOver("r", Call("HardinA233164KingStrip.Boundary"), Conditional(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))), Num("0")), Eq(Call("Data.cl", V("r"), Sub(Num("0"), Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))))), V("s"))), Typed(Num("1"), Call("Int")), Typed(Num("0"), Call("Int")))), Call("Data.T", Call("Data.cl", V("p"), Num("0")), V("s")))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229751")),
+                Blocks(Paragraph(Text("The map beta sends complementary signed colours to the same four-colour label. Every raw boundary has exactly 16 signed preimages, with two independent choices per column. SignedFibres.sum_beta gives the weighted identity with factor 2^4. The signed row predicate is equivalent to zero defects after applying the map. The owner saturated_certificate preserves the productive boundary type and gives the signed rate. The class containing alternating ABAB also contains ABBA, whose two middle entries coincide. Replacing ABBA by ABAB preserves the zero-defect next-row constraint, and both source rows have class 14. Class correspondence transports kind to the two zero-budget classes, so dividing the signed rate by 16 gives the displayed entry. At width 4, the two signed rates are 32 and 16, hence the raw rates are two and one. All sums and matrix entries are integers; the subtraction inside Data.cl is natural subtraction."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -95,4 +100,10 @@ internal sealed class DataDocument : IScribeDocumentDefinition
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
 
     private static Formula SetOf(params Formula[] entries) => Seq(OpenBrace, Seq(entries.SelectMany((a,i) => i == 0 ? new[] { a } : new[] { Comma, Sp, a }).ToArray()), CloseBrace);
+
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+
+    private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x), t)), Sp, Parenthesized(b));
 }

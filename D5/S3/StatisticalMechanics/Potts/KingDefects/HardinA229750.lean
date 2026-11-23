@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Forward.structural_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data.structural_certificate
    digest: The registered width-3 two-defect king recurrence. -/
 
 /-
@@ -23,7 +23,6 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Forward
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Algebra.LinearRecurrence

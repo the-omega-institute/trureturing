@@ -6,6 +6,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Data.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229752");
+    private static readonly LibraryNoteRef ZeroBudgetSource = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233166");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite data support the literal width-five king-grid recurrence.", H("Two-defect king transfers"),
         Blocks(
@@ -67,7 +68,19 @@ internal sealed class DataDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "successors"), H("successors"),
                 StatementSource.FromAuthor(Disp(All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), All("d", Call("Nat"), Eq(Call("successors", V("p"), V("d")), Conditional(And(Eq(V("d"), Num("0")), Eq(Call("DefectTransfer.bondDefects", Call("horizontal"), V("p"), V("p")), Num("0"))), Call("properSuccessors", V("p")), Call("List.insertionSort", Lam("a", Call("Fin", Num("43")), Lam("b", Call("Fin", Num("43")), Leq(V("a"), V("b")))), Call("List.filterMap", Lam("r", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Conditional(Leq(Add(Call("DefectTransfer.bondDefects", Call("between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("horizontal"), V("r"), V("r"))), V("d")), Call("some", Call("cl", V("r"), Sub(V("d"), Add(Call("DefectTransfer.bondDefects", Call("between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("horizontal"), V("r"), V("r")))))), Call("none"))), Call("List.ofFn", Lam("i", Call("Fin", Pow(Num("4"), Num("5"))), Call("Equiv.symm", Call("finFunctionFinEquiv"), V("i")))))))))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Row -> Nat -> List (Fin 43). For a horizontally proper source at zero budget use properSuccessors. Otherwise enumerate every labelled next row, retain those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("The Lean type is Row -> Nat -> List (Fin 43). For a horizontally proper source at zero budget use properSuccessors. Otherwise enumerate every labelled next row, retain those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum."))), DescribeRole.Definition),
+            ZeroBudgetNode("extend", "The reflected-column extension", "extend",
+                "A width-five row is extended by reflecting its penultimate column into the sixth column. The new adjacent square reflects the preceding square, so it adds no new inequality.", DescribeRole.Definition),
+            ZeroBudgetNode("raw5", "The width-five zero-defect relation", "raw5",
+                "The raw successor relation records zero between-row and horizontal defects for width five.", DescribeRole.Definition),
+            ZeroBudgetNode("proper-extend", "Properness is preserved by extension", "proper_extend",
+                "The reflected extension has no horizontal defects exactly when the original width-five row has none.", DescribeRole.Theorem),
+            ZeroBudgetNode("raw-extend", "Raw successors are preserved by extension", "raw_extend",
+                "The width-six owner relation on reflected extensions is equivalent to the width-five raw relation.", DescribeRole.Theorem),
+            ZeroBudgetNode("raw-iff-owner", "The restricted owner image", "raw_iff_owner",
+                "For every horizontally proper width-five source, every zero-defect successor is the restriction of an owner allowed shift, and every such restriction is a successor. The shift is recovered uniquely as r(0) xor p(0), giving fibre multiplicity one.", DescribeRole.Theorem),
+            ZeroBudgetNode("transition-counts", "The zero-temperature transfer row", "transition_counts",
+                "For every horizontally proper width-five source and every class column, the zero-budget successor sum equals the width-five transfer row.", DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -107,4 +120,27 @@ internal sealed class DataDocument : IScribeDocumentDefinition
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
 
     private static Formula SetOf(params Formula[] entries) => Seq(OpenBrace, Seq(entries.SelectMany((a,i) => i == 0 ? new[] { a } : new[] { Comma, Sp, a }).ToArray()), CloseBrace);
+
+    private static DocumentBlock ZeroBudgetNode(string id, string title, string declaration, string prose,
+        DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.FromAuthor(Disp(NodeFormula(declaration))), AssessedProvenance.FromRepo(ZeroBudgetSource),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula NodeFormula(string declaration) => declaration switch
+    {
+        "raw5" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), All("r", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Iff(Call("raw5", V("p"), V("r")), Eq(Add(Call("DefectTransfer.bondDefects", Call("Width5.Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("r"), V("r"))), Num("0"))))),
+        "raw_iff_owner" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), All("r", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Imp(Eq(Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("p"), V("p")), Num("0")), Iff(Call("raw5", V("p"), V("r")), Ex("v", Call("Fin", Num("4")), And(Member(V("v"), Call("HardinA233166KingStrip.offsetChoices", Call("Width6.ZeroTemperature.offsets", Call("extend", V("p"))))), Eq(V("r"), Lam("j", Call("Fin", Num("5")), Call("Fin.xor", V("v"), App(V("p"), V("j"))))))))))),
+        "transition_counts" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Imp(Eq(Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("p"), V("p")), Num("0")), All("s", Call("Fin", Num("43")), Eq(SumOver("r", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Conditional(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("Width5.Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("r"), V("r"))), Num("0")), Eq(Call("Width5.Data.cl", V("r"), Sub(Num("0"), Add(Call("DefectTransfer.bondDefects", Call("Width5.Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("r"), V("r"))))), V("s"))), Typed(Num("1"), Call("Int")), Typed(Num("0"), Call("Int")))), Call("Width5.Data.T", Call("Width5.Data.cl", V("p"), Num("0")), V("s")))))),
+        "extend" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Eq(Call("extend", V("p")), Word(App(V("p"), Num("0")), App(V("p"), Num("1")), App(V("p"), Num("2")), App(V("p"), Num("3")), App(V("p"), Num("4")), App(V("p"), Num("3"))))),
+        "proper_extend" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Iff(Eq(Call("DefectTransfer.bondDefects", Call("Width6.Data.horizontal"), Call("extend", V("p")), Call("extend", V("p"))), Num("0")), Eq(Call("DefectTransfer.bondDefects", Call("Width5.Data.horizontal"), V("p"), V("p")), Num("0")))),
+        "raw_extend" => All("p", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), All("r", Arrow(Call("Fin", Num("5")), Call("Fin", Num("4"))), Iff(Call("Width6.ZeroTemperature.raw", Call("extend", V("p")), Call("extend", V("r"))), Call("raw5", V("p"), V("r"))))),
+        _ => throw new System.ArgumentOutOfRangeException(nameof(declaration))
+    };
+
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+
+    private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x),t)), Sp, Parenthesized(b));
+
+    private static Formula Ex(string x, Formula t, Formula b) => Seq(Exists, Sp, Typed(V(x),t), Comma, Sp, Parenthesized(b));
 }
