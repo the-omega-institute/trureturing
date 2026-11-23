@@ -29,5 +29,11 @@ internal sealed class BilgiciThetaDetectorsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "tests_mul_S_Z"), H("Two tests on cubic multiples"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The degree-eleven trace coefficient and the dual-number coefficient both vanish on "
-                    + "every quotient multiple of the cubic."))), DescribeRole.Theorem))));
+                    + "every quotient multiple of the cubic."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bilgici-detector-columns"),
+                DeclarationHandle.Create(Prefix + "detector_coordinates_zero"), H("Independent detector columns"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The tests take the values (17, 13) and (0, 1) on the projected words "
+                    + "5899999 and 1234699, respectively. If the tests vanish on a linear combination of "
+                    + "these two projected words, both coefficients are zero."))), DescribeRole.Theorem))));
 }

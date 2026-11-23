@@ -403,13 +403,13 @@ theorem epsilon_abs (r : K) : r = epsilon r * digit (absIndex r) := by
   have hv := absIndex_digit_val r hr
   have hlt : r.val < 19 := ZMod.val_lt r
   by_cases h : r.val ≤ 9
-  · rw [epsilon, if_neg hr, if_pos h, one_mul]
+  · rw [epsilon, ite_eq_right hr, ite_eq_left h, one_mul]
     apply ZMod.val_injective
     rw [hv, min_eq_left (by omega)]
-  · rw [epsilon, if_neg hr, if_neg h, neg_one_mul, eq_neg_iff_add_eq_zero]
+  · rw [epsilon, ite_eq_right hr, ite_eq_right h, neg_one_mul, eq_neg_iff_add_eq_zero]
     have hd : -r = digit (absIndex r) := by
       apply ZMod.val_injective
-      rw [ZMod.neg_val, if_neg hr, hv, min_eq_right (by omega)]
+      rw [ZMod.neg_val, ite_eq_right hr, hv, min_eq_right (by omega)]
     rw [← hd, add_neg_cancel]
 
 private theorem epsilon_cases (r : K) : epsilon r = 0 ∨ epsilon r = 1 ∨ epsilon r = -1 := by
@@ -441,7 +441,9 @@ theorem abs_square (r : K) (hr : r ≠ 0) : digit (absIndex r) ^ 2 = r ^ 2 := by
   · rw [he, one_mul] at h
     rw [← h]
   · rw [he, neg_one_mul] at h
-    exact (congrArg (fun z : K => z ^ 2) h).symm.trans (neg_sq _)
+    have hs : r ^ 2 = (-digit (absIndex r)) ^ 2 := congrArg (fun z : K => z ^ 2) h
+    rw [neg_sq] at hs
+    exact hs.symm
 
 theorem digit_nonzero (i : Fin 9) : digit i ≠ 0 := by
   intro h
@@ -456,7 +458,7 @@ theorem digit_square_injective : Function.Injective (fun i : Fin 9 => digit i ^ 
     rw [digit_val, digit_val] at hv
     exact Fin.ext (by omega)
   · have hv := congrArg ZMod.val h'
-    rw [digit_val, ZMod.neg_val, if_neg (digit_nonzero j), digit_val] at hv
+    rw [digit_val, ZMod.neg_val, ite_eq_right (digit_nonzero j), digit_val] at hv
     have hi := i.isLt
     have hj := j.isLt
     omega

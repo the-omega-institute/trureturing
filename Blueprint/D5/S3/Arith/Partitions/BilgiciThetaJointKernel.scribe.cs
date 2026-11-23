@@ -23,7 +23,7 @@ internal sealed class BilgiciThetaJointKernelDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("bilgici-detector-coordinates"),
                 DeclarationHandle.Create(Prefix + "kernel_coordinates"), H("Coordinates after the detector tests"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The two tests take the values (17, 13) and (0, 1) on the projected words "
-                    + "5899999 and 1234699. Their vanishing forces both projected-word coefficients to vanish, "
-                    + "leaving only the two cubic multiples."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("If the tests vanish on a class in the component, both projected-word "
+                    + "coefficients are zero. The class is then a linear combination of the two cubic "
+                    + "multiples."))), DescribeRole.Theorem))));
 }

@@ -114,7 +114,6 @@ private theorem requestedSpan_family : requestedSpan = Submodule.span K (Set.ran
   simp only [requestedSpan, rootFamily, Matrix.range_cons_empty, Matrix.range_cons,
     Set.singleton_union]
 
-
 private theorem eigengrade_le_requestedSpan : eigengrade 7 11 ≤ requestedSpan := by
   rw [eigengrade_exact (by decide : (2 : K)*11=14*(7 : ℕ))]
   rintro _ ⟨f, hf, rfl⟩
