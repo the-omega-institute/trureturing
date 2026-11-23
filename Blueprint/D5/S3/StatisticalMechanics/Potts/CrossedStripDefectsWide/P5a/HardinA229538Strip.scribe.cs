@@ -51,7 +51,16 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
 
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
-    private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());
+    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, i) =>
+        i == 0 ? new[] { NamePart(part) } : new[] { Dot, NamePart(part) }).ToArray());
+    private static Formula NamePart(string name)
+    {
+        var words = name.Split('_');
+        Formula result = V(words[^1]);
+        for (var i = words.Length - 2; i >= 0; i--)
+            result = Seq(V(words[i]), Underscore, Grp(result));
+        return Seq(Operatorname, Grp(result));
+    }
     private static Formula Call(string n, params Formula[] a) => a.Length==0?Q(n):new Formula.Apply(Q(n),[..a]);
     private static Formula App(Formula f,params Formula[] a) => new Formula.Apply(f,[..a]);
     private static Formula Parenthesized(Formula a) => Seq(Open,a,Close);
