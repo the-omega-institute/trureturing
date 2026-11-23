@@ -203,7 +203,8 @@ theorem shortMidpointJointModel_sound {p : ℕ} {s t z a b r w : ℝ} {radius : 
       (Model.sub_sound (Model.mul_sound hb (Model.sub_sound (hm J 2) (hm j.succ 0)) hquarter)
         (Model.mul_sound hb (Model.mul_sound hb (Model.add_sound ha hb') hhalf) (hm J 1)))
       (Model.mul_sound hb (Model.mul_sound hb ha hb') (hm J 0))
-    convert h using 1 <;> ring
+    convert h using 1 <;>
+      simp only [J, Fin.val_castLE, Fin.val_succ, Fin.val_zero, Fin.val_one, Fin.val_two] <;> ring
   have hskew := Model.mul_sound hb (Model.sub_sound hb' ha) hhalf
   have he := Model.mul_sound hb
     (Model.mul_sound hb (Model.add_sound hone ha) (Model.add_sound hone hb'))
