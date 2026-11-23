@@ -13,7 +13,6 @@ internal sealed class BrezisLiebPowerDefectDocument : IScribeDocumentDefinition
     private static Formula At(Formula f, Formula x) => Seq(f, Open, x, Close);
     private static Formula Lam(string name, Formula body) =>
         Seq(Open, V(name), Sp, Mapsto, Sp, body, Close);
-    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Sub(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
     private static Formula Pow(Formula a) => Seq(a, Caret, Grp(V("p")));
