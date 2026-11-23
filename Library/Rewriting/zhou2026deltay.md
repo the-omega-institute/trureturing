@@ -19,3 +19,9 @@ triage: anchor
 Definition 3 specifies the triangle-to-star and star-to-triangle moves. Definition 5 calls a reverse move strong when the neighbors of the degree-three center are an independent set. Lemma 10 proves strong-move sufficiency from minimum degree seven. The paragraph immediately after it conjectures the sharp threshold six. [Definitions and conjecture](https://arxiv.org/html/2609.08963v1#S2.p8.1)
 
 The paper also describes forward reachability as a graph rewriting system. Each forward move records the incidence of one triangle. From a complete seed on at least eight vertices, these records identify the forward system with the graded directed graph of partial Steiner systems. [Main results](https://arxiv.org/html/2609.08963v1#S1)
+
+## Verified locator
+
+Zhichen Zhou, *Δ-Y Moves and Partial Steiner Systems*, arXiv:2609.08963v1.
+Definitions 3–5 appear on page 3, and Lemma 10 and the degree-six conjecture appear on page 4.
+[DOI 10.48550/arXiv.2609.08963](https://doi.org/10.48550/arXiv.2609.08963) · [Version 1](https://arxiv.org/html/2609.08963v1)
