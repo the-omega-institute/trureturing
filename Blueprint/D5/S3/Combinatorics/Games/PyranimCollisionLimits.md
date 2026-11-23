@@ -66,6 +66,10 @@ $$(\operatorname{Tendsto}\left((\lambda (n:\mathbb{N})\mapsto(\operatorname{coll
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/PyranimCollisionLimits.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/binyamin-kniffen-2026-pyranim-collision-limits` (proved) by `D5/S3/Combinatorics/Games/PyranimCollisionLimits.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"binyamin-kniffen-2026-pyranim-collision-limits","declaration_gid":"D5/S3/Combinatorics/Games/PyranimCollisionLimits.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yoav Binyamin, Evan Kniffen (2026). *Enumerating Pyranim Isomorphisms*. URL: <https://arxiv.org/abs/2611.16153v1>.

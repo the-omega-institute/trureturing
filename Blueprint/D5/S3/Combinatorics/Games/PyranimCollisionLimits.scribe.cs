@@ -33,7 +33,8 @@ internal sealed class PyranimCollisionLimitsDocument : IScribeDocumentDefinition
             Node("result", "Root and zero limits for both distributions",
                 ResultBody(),
                 "The root tends to one and the probability tends to zero at all widths tending to infinity, for independent uniform draws and for uniform distinct pairs. A sharp decay rate, random-start expectations, and the full reverse reconstruction are open within this result’s scope.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("binyamin-kniffen-2026-pyranim-collision-limits"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature = false, OpenProblemResolutionClaim? resolution = null) =>
