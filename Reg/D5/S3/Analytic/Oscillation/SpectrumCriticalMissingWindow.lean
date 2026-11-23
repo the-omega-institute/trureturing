@@ -52,17 +52,19 @@ abbrev scoreArena : Arena where
     {r β : ℝ}, 0 < r → 0 < β → β < 1 →
     ∀ᶠ T : ℝ in atTop, 0 < mass S w T ∧
       ∀ A : ℝ, ∃ a > A, ∀ u ∈ Icc a (a + Real.exp (T ^ β)),
-        V.readout () ⟨S, w, T⟩ (u / r) < β ^ 2 * mass S w T
+        V.readout () ⟨S, w, T⟩ (u / r) < β ^ 2 * mass S w T - Real.log T
 
 private theorem score_rejected : ¬ scoreArena.Law scoreRejected := by
   intro h
   obtain ⟨S, w, _, hw, hli, hmass, htail⟩ := exists_infinite_critical_model
-  obtain ⟨T, hW, hwindow⟩ := (h S w (fun j => (hw j).le) hli hmass htail
-    (r := 1) (β := 1 / 2) (by norm_num) (by norm_num) (by norm_num)).exists
+  have hevent := (h S w (fun j => (hw j).le) hli hmass htail
+    (r := 1) (β := 1 / 2) (by norm_num) (by norm_num) (by norm_num)).and
+    (eventually_ge_atTop (1 : ℝ))
+  obtain ⟨T, ⟨hW, hwindow⟩, hT⟩ := hevent.exists
   obtain ⟨a, _, ha⟩ := hwindow 0
   have hlt := ha a ⟨le_rfl, le_add_of_nonneg_right (Real.exp_pos _).le⟩
-  change mass S w T < (1 / 2 : ℝ) ^ 2 * mass S w T at hlt
-  linarith only [hlt, hW]
+  change mass S w T < (1 / 2 : ℝ) ^ 2 * mass S w T - Real.log T at hlt
+  linarith only [hlt, hW, Real.log_nonneg hT]
 
 private theorem score_dependence : ObservationalDependence scoreSignature scoreActual := by
   rintro ⟨⟩

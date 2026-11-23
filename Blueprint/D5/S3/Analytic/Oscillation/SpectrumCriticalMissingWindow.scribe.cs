@@ -64,7 +64,7 @@ internal sealed class SpectrumCriticalMissingWindowDocument : IScribeDocumentDef
                             + ".exists_arbitrarily_late_missing_window")),
                     Paragraph(Text(
                         "Restrict rational linear independence to the finite cutoff. "
-                        + "The head mass, threshold and mesh allowance fit strictly below β²W(T), "
+                        + "The head mass, threshold and mesh allowance fit strictly below β²W(T) − log T, "
                         + "so the finite orbit theorem gives a closed score-time window starting "
                         + "above A/r. Multiplying the endpoints by r gives the asserted "
                         + "window starting above A.")),
@@ -95,7 +95,7 @@ internal sealed class SpectrumCriticalMissingWindowDocument : IScribeDocumentDef
                         + "with a quadratic factor in k converges. Since wγ² ≤ mγ²/γ² and "
                         + "mγ/log γ tends to zero, the squared-weight tail is o(log² X/X) "
                         + "uniformly over every finite upper cutoff. The theorem therefore gives "
-                        + "actual ζ windows with deficit strictly greater than 1 − β² at every point. "
+                        + "actual ζ windows with deficit strictly greater than 1 − β² + log(T)/W(T) at every point. "
                         + "The proof uses rational independence for the finite orbit step."))),
                 DescribeRole.Theorem))));
 
@@ -180,7 +180,8 @@ internal sealed class SpectrumCriticalMissingWindowDocument : IScribeDocumentDef
                 And(Less(D(0), r), And(Less(D(0), b), Less(b, D(1))))))));
         var interval = Seq(OpenBracket, a, Comma, Add(a, Call("exp", new Formula.Power(t, b))),
             CloseBracket);
-        var strict = Less(Call("sine", s, w, t, new Formula.Fraction(u, r)), Multiply(Square(b), Mass(t)));
+        var strict = Less(Call("sine", s, w, t, new Formula.Fraction(u, r)),
+            Subtract(Multiply(Square(b), Mass(t)), Call("log", t)));
         var windows = All("A", Reals, ExistsReal("a",
             And(Less(F.Id("A"), a), All("u", interval, strict))));
         return OverSpectrum(All("r", Reals, All("beta", Reals, Implies(conditions,

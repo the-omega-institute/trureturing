@@ -86,11 +86,11 @@ private theorem modelWeight_pos (n : ℕ) : 0 < modelWeight n := by
 
 private theorem sum_modelWeight (n : ℕ) :
     ∑ j ∈ Finset.range n, modelWeight j = Real.log ((n : ℝ) + 1) ^ 2 := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [Finset.sum_range_succ, ih, modelWeight, Nat.cast_succ]
-    ring_nf
+  have h := Finset.sum_range_sub (fun j : ℕ => Real.log ((j : ℝ) + 1) ^ 2) n
+  simp only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, zero_add, add_assoc,
+    show (1 : ℝ) + 1 = 2 by norm_num, Real.log_one] at h
+  norm_num at h
+  simpa only [modelWeight, Finset.sum_sub_distrib] using h
 
 private abbrev modelSpectrum (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)

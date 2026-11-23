@@ -164,14 +164,14 @@ private theorem tail_sums {S : Spectrum} {X T : ℝ} (f : S.index → ℝ) :
     rfl
 
 /-- At the critical mass fraction, there are arbitrarily late closed windows of length
-`exp (T ^ β)` on which the sine score stays strictly below `β ^ 2 * mass S w T`. -/
+`exp (T ^ β)` on which the sine score stays strictly below `β ^ 2 * mass S w T - Real.log T`. -/
 theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
     (hw : ∀ j, 0 ≤ w j) (hli : LinearIndependent ℚ S.gamma)
     (hmass : HasLogSquaredMass S w) (htail : HasSmallSquareTail S w)
     {r β : ℝ} (hr : 0 < r) (hβ : 0 < β) (hβ₁ : β < 1) :
     ∀ᶠ T : ℝ in atTop, 0 < mass S w T ∧
       ∀ A : ℝ, ∃ a > A, ∀ u ∈ Icc a (a + Real.exp (T ^ β)),
-        sine S w T (u / r) < β ^ 2 * mass S w T := by
+        sine S w T (u / r) < β ^ 2 * mass S w T - Real.log T := by
   classical
   obtain ⟨a, C, ha, hC, hmass⟩ := hmass
   obtain ⟨K, hK, hmargin⟩ := eventual_mass_margin ha hC hβ hmass
@@ -257,7 +257,7 @@ theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
     _ = mass S w T / T := by field_simp
     _ < _ := hmeshT
   have hfiniteMargin : (∑ j ∈ head, (p j : ℝ)) + Real.log T +
-      (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < β ^ 2 * mass S w T := by
+      (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < β ^ 2 * mass S w T - Real.log T := by
     have hhead : (∑ j ∈ head, (p j : ℝ)) = mass S w (X T) := cutoff_sums hXT w
     linarith only [hcost, hhead, hmarginT, hL]
   refine ⟨hWT, fun A => ?_⟩
