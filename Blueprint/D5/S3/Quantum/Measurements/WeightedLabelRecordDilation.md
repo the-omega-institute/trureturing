@@ -72,7 +72,9 @@ $$\begin{aligned}\operatorname{FiniteTypes}\left(B, J\right) \land \operatorname
 
 Use the same finite model and feasibility assumptions. Class mass is the sum of the fibre sizes divided by N. Suppose M is the least cardinality of a label set with class mass at least alpha. Put C equal to the ceiling of N/e and J_full equal to the number of fibres of size at least e. Reaches(alpha,d,e,c) means there exist a full-input isometric encoder and a memory POVM with average success at least alpha under u.
 
-The K full blocks represent J_full classes and the remaining d minus K slots can represent at most that many additional classes. Conversely, a minimum cover fits using at most K full blocks and M remainder blocks. For alpha strictly between zero and one, the least feasible d reaching alpha therefore lies between the two displayed dimensions.
+The K full blocks represent J_full classes and the remaining d minus K slots can represent at most that many additional classes. Conversely, a minimum cover fits using at most K full blocks and M remainder blocks. For alpha strictly between zero and one, the least feasible d reaching alpha therefore lies between the two displayed dimensions. At an intermediate feasible dimension, the exact remainder formula tests whether e times K plus R(c,e,d minus K) is at least alpha times N.
+
+For a fixed AURIC horizon with n fair binary steps, take the input basis of all length-n histories, N equal to 2 to the power n, and c equal to the apparatus record-class map at that horizon. The target alpha is one minus the allowed average error. Given the same-horizon projective record identification, the class masses are those of the walk endpoints. The full-block and remainder counts use those endpoint multiplicities and the chosen environment dimension.
 
 ## References
 

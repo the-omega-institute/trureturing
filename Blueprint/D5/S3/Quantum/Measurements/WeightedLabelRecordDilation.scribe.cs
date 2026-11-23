@@ -113,7 +113,17 @@ internal sealed class WeightedLabelRecordDilationDocument : IScribeDocumentDefin
                         + "slots can represent at most that many additional classes. Conversely, "
                         + "a minimum cover fits using at most K full blocks and M remainder blocks. "
                         + "For alpha strictly between zero and one, the least feasible d reaching "
-                        + "alpha therefore lies between the two displayed dimensions."))),
+                        + "alpha therefore lies between the two displayed dimensions. At an "
+                        + "intermediate feasible dimension, the exact remainder formula tests whether "
+                        + "e times K plus R(c,e,d minus K) is at least alpha times N.")),
+                    Paragraph(Text(
+                        "For a fixed AURIC horizon with n fair binary steps, take the input basis "
+                        + "of all length-n histories, N equal to 2 to the power n, and c equal to "
+                        + "the apparatus record-class map at that horizon. The target alpha is one "
+                        + "minus the allowed average error. Given the same-horizon projective record "
+                        + "identification, the class masses are those of the walk endpoints. "
+                        + "The full-block and remainder counts use those endpoint multiplicities "
+                        + "and the chosen environment dimension."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
