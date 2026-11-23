@@ -49,6 +49,14 @@ jobs:
         working-directory: truth-release-source
         run: |
           printf '%s\n' "$HOME/.local/bin" /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin /opt/homebrew/opt/gnu-tar/libexec/gnubin >> "$GITHUB_PATH"
+      - name: Install Python for the release tools
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.10.12'
+          python-version: '3.12'
+          activate-environment: true
+          working-directory: ${{ runner.temp }}
+          enable-cache: false
       - name: Install the tools pinned by the source
         working-directory: truth-release-source
         run: make install-tools
