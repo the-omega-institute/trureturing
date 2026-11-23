@@ -181,7 +181,7 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {G : State} {T : Triple} {o : ℕ},
-    G.Valid → (R.readout () ⟨T, o⟩ G).Valid ↔ T.verts ⊆ G.active ∧ o ∉ T.verts
+    G.Valid → ((R.readout () ⟨T, o⟩ G).Valid ↔ T.verts ⊆ G.active ∧ o ∉ T.verts)
 
 private def triangle : Triple := ⟨0, 1, 2, by decide, by decide, by decide⟩
 
