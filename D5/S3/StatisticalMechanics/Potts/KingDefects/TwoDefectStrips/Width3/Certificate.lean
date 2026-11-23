@@ -3,16 +3,16 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Certificate
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Certificate.transition_counts,D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data.structural_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.labelled; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Certificate.transition_counts,D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data.structural_certificate
    digest: Width-3 exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229750.result)
+admission_basis: escape-witness
+escape_witness: class_counts verifies the multiplicities of the width-3 canonical successor lists against the transfer matrix. transition_counts matches the actual next rows to those multiplicities after colour relabelling, with a separate zero-budget branch.
 class_relabel: proof_shape=bind-only; consumers=transition_counts
 bond_relabel: proof_shape=bind-only; consumers=transition_counts
 canonical_successors: proof_shape=content; consumers=transition_counts
-class_counts: proof_shape=bind-only; consumers=transition_counts
+class_counts: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229750.labelled
 -/
 

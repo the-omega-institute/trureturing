@@ -3,12 +3,12 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Classes4
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229751.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Certificate.transition_counts,D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Forward.structural_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Certificate.transition_counts; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Classes4.class_successors
    digest: Width-4 exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229751.result)
+admission_basis: escape-witness
+escape_witness: class_successors verifies the sorted successor multiplicities of every valid canonical width-4 source in class 4. Certificate.canonical_successors substitutes that list into the width-4 transfer sum.
 class_successors: proof_shape=content; consumers=Certificate.canonical_successors
 -/
 

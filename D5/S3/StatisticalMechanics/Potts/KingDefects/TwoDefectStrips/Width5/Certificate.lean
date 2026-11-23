@@ -7,12 +7,12 @@
    digest: Width-five exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229752.result)
+admission_basis: escape-witness
+escape_witness: class_counts verifies the multiplicities of the width-5 canonical successor lists against the transfer matrix. transition_counts matches the actual next rows to those multiplicities after colour relabelling, with a separate zero-budget branch.
 class_relabel: proof_shape=bind-only; consumers=transition_counts
 bond_relabel: proof_shape=bind-only; consumers=transition_counts
 canonical_successors: proof_shape=content; consumers=transition_counts
-class_counts: proof_shape=bind-only; consumers=transition_counts
+class_counts: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229752.result
 -/
 

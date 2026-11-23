@@ -7,8 +7,8 @@
    digest: Width-five exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229752.result)
+admission_basis: escape-witness
+escape_witness: structural_certificate counts the initial boundary objects and verifies each step of the forty-three-coordinate forward table and its annihilation relation. HardinA229752.result uses those equalities to identify the actual forward sequence and descend the recurrence.
 structural_certificate: proof_shape=content; consumers=HardinA229752.result
 -/
 
