@@ -194,23 +194,23 @@ def terminal {C : Type*} {Z : Type*} {R : Type*} [Zero R] [One R] : C ⊕ Z → 
   Sum.elim 0 1
 
 /-- The vector recurrence is equivalent to every shifted scalar readout recurrence. -/
-theorem transfer_readout {S R : Type*} [Fintype S] [DecidableEq S] [CommSemiring R]
-    (M : Matrix S S R) (u : S → R) (d b : ℕ) (c : Fin d → R) :
+theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
+    [Semiring R] [DistribSMul K R] [SMulCommClass K R R]
+    (M : Matrix S S R) (u : S → R) (d b : ℕ) (c : Fin d → K) :
     ((M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) ↔
       ∀ (v : S → R) (n : ℕ),
         dotProduct v ((M ^ (n + b + d)).mulVec u) =
-          ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
+          ∑ j : Fin d, c j • dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
   constructor
   · intro h v n
     have shifted := congrArg ((M ^ n).mulVec) h
     simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.mulVec_mulVec, ← pow_add,
       ← Nat.add_assoc] at shifted
     rw [shifted, dotProduct_sum]
-    simp_rw [dotProduct_smul, smul_eq_mul]
+    simp_rw [dotProduct_smul]
   · intro h
     funext p
-    simpa only [Nat.zero_add, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
-      smul_eq_mul] using h (Pi.single p 1) 0
+    simpa only [Nat.zero_add, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply] using h (Pi.single p 1) 0
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
@@ -988,6 +988,7 @@ theorem result (n : ℕ) :
     rfl
   have h := (transfer_readout transfer terminal 20 2 _).mp
     vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
+  simp only [smul_eq_mul] at h
   rw [bridge (n + 2 + 20)] at h
   simp_rw [fun k : Fin 20 => bridge (n + 2 + k.val)] at h
   norm_num [coefficients538, Fin.sum_univ_succ, Nat.add_assoc] at h

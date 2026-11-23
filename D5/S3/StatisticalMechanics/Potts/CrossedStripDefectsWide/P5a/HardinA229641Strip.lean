@@ -941,6 +941,7 @@ theorem result (n : ℕ) :
     rfl
   have h := (transfer_readout transfer terminal 30 3 _).mp
     vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
+  simp only [smul_eq_mul] at h
   rw [bridge (n + 3 + 30)] at h
   simp_rw [fun k : Fin 30 => bridge (n + 3 + k.val)] at h
   norm_num [coefficients641, Fin.sum_univ_succ, Nat.add_assoc] at h
