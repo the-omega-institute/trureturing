@@ -10,7 +10,15 @@ import LeanInformationAuditInterface.Contract.Registration
 import Init.Data.Int.Basic
 import Init.Data.Nat.Basic
 import Init.Prelude
+import Mathlib.Algebra.Group.Monoid
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Filter
+import Mathlib.Data.Fintype.Defs
+import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Nat.Cast.Defs
+import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Order.Basic
 import Mathlib.Order.Defs.PartialOrder
 
 /-! Readout registrations for exact defective-strip counts and finite transfer data. -/
