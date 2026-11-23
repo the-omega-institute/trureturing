@@ -163,7 +163,7 @@ theorem supportedKernel_finrank [Finite V] (Allowed : (V → Bool) → Prop) :
   rw [equiv.finrank_eq, Module.finrank_fintype_fun_eq_card, Nat.card_eq_fintype_card]
 
 omit [DecidableEq V] in
-private theorem allowed_pattern_hyperedges (forbidden : Set (Set V)) (p : Pattern V) :
+theorem allowed_pattern_hyperedges (forbidden : Set (Set V)) (p : Pattern V) :
     AllowedPattern (fun w => ∀ edge ∈ forbidden, ∃ i ∈ edge, w i = false) p ↔
       ∀ edge ∈ forbidden, (∃ i ∈ edge, p i = some false) ∧
         (∃ i ∈ edge, p i = some true) := by

@@ -4,7 +4,19 @@
 
 A uniform actual zero strip gives the critical arithmetic Mertens envelope.
 
-**Theorem 1.1 (The full-strip power and logarithm estimate).**
+**Theorem 1.1 (The terminal defect in logarithmic coordinates).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_terminal_defect_exp_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_terminal_defect_exp_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let 0<α≤1/2 and assume that every actual nontrivial zero has real part at most 1-α. There is a real C≥0 such that for every real y≥1 the absolute value of Q(exp(y))-a(exp(y))Jpsi(exp(y)) is at most C exp(-αy)/y. Here a(exp(y))=y²/(1+y). Subtract the leading term Q(exp(y))/y from Jpsi(exp(y)). The residual is bounded by a constant times exp(-αy)/y². Multiplication by a(exp(y))≤y leaves the inverse factor 1/y, and the remaining Q term carries a factor 1/(1+y).
+
+**Theorem 1.2 (The full-strip power and logarithm estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope`
 
@@ -30,7 +42,7 @@ If an actual nontrivial zero rho had beta=Re(rho)>1-alpha, put b=1-beta. Then 0<
 
 The argument uses the classical integrated explicit formula and Abel summation. The Mertens suppliers retain the PrimeNumberTheoremAnd contributors' Apache-2.0 notice, the IEANTN/Mertens.lean source at commit 6a380f0c4658c04a420a9eb00b1ed62a1e3fde01, and the attribution to Leo Goldmakher, A quick proof of Mertens' theorem; the supplying notice and license are preserved at Library/notes/pntplus2026mertens.md. No literature-priority claim is made.
 
-**Theorem 1.2 (Signed arithmetic asymptotic at the critical strip exponent).**
+**Theorem 1.3 (Signed arithmetic asymptotic at the critical strip exponent).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_signed_asymptotic`
 
@@ -44,7 +56,7 @@ Let 0<α<1/2 and assume every actual nontrivial zero ρ has Re(ρ)≤1−α. As 
 
 The transport identity with R(y)=1/y+1/y² and the decreasing W kernel bounds Jpsi(exp(y))−Q(exp(y))/y in absolute value by (C+3C/α) exp(−αy)/y² for large y. The primitive-tail identity Q(exp(y))=−U(exp(y))/exp(y) and the integrated explicit formula replace U(exp(y)) by Re(actualH(y)) up to a bounded error. The prime-power tail S and the finite cancellation vanish after scaling because α<1/2. For the nonlinear remainder, the Chebyshev rate with δ=3α/4 gives a bound with decay exponent 2δ>α.
 
-**Theorem 1.3 (Transfer a power estimate from psi to theta).**
+**Theorem 1.4 (Transfer a power estimate from psi to theta).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound`
 
@@ -56,7 +68,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_p
 
 For all real beta,C,X with beta>1/2, suppose that abs(psi(x)-x)<=C*x^beta for every real x>=X. There are real K,R with K>=0 and R>=2 such that abs(theta(x)-x)<=K*x^beta for every real x>=R. The unconditional estimate 0<=psi(x)-theta(x)<=H*sqrt(x) supplies the transfer with K=abs(C)+abs(H) and R=max(2,X). This result also supplies the theta power estimate for the unconditional actual-zero-abscissa lower envelope.
 
-**Theorem 1.4 (The actual quadratic log-log remainder).**
+**Theorem 1.5 (The actual quadratic log-log remainder).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
 
@@ -72,6 +84,7 @@ For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original nonlin
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_signed_asymptotic`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_terminal_defect_exp_bound`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound`
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability](LogLogGlobalCurvatureStability.md)
@@ -79,4 +92,5 @@ For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original nonlin
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula](../../../Weil/Mertens/IntegratedExplicit/WholeFormula.md)
+- Dependency: [D5/S3/Weil/Mertens/WeightedTailInverse](../../../Weil/Mertens/WeightedTailInverse.md)
 - Dependency: [D5/S3/Weil/Mertens/ZeroAbscissaPower](../../../Weil/Mertens/ZeroAbscissaPower.md)
