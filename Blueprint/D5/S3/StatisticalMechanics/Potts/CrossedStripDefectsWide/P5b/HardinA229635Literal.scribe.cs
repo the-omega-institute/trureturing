@@ -18,9 +18,9 @@ internal sealed class HardinA229635LiteralDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Both bond sets join adjacent columns across two consecutive rows, with both orientations included."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("six-labellings"),
                 DeclarationHandle.Create(Prefix + "six_labellings"), H("Six labelled arrays per canonical array"),
-                StatementSource.FromAuthor(Disp(All("m", Call("Nat"), Equal(Call("DefectTransfer.literalCount", D(3), Call("horizontal"), Call("between"), D(2), Add(V("m"), D(1))), Mul(D(6), Call("HardinA229637RowColumn.T", Add(V("m"), D(1)), D(6))))))),
+                StatementSource.FromAuthor(Disp(All("m", Call("Nat"), Equal(App(new Formula.Subscript(Call("DefectTransfer.literalCount"), D(3)), Call("HardinA229584StripData.horizontal"), Call("HardinA229532StripData.between"), D(2), Add(V("m"), D(1))), Mul(D(6), Call("HardinA229637RowColumn.T", Add(V("m"), D(1)), D(6))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The two literal bond sets agree with the transfer bond sets. A constant array already has more than two horizontal bonds in one row. A nonconstant array has six distinct relabellings, including when only two colours are used."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The literalCount subscript gives the palette size. The two literal bond sets agree with the transfer bond sets. A constant array already has more than two horizontal bonds in one row. A nonconstant array has six distinct relabellings, including when only two colours are used."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Word(string name) => Seq(Operatorname, Grp(V(name)));
