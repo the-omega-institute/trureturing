@@ -61,7 +61,7 @@ noncomputable def ofFunction (f : V → V) (C : Set V) (ha : a ∈ C)
   have eq (x : V) (hx : x ∉ C) : g x = f x := ite_eq_right hx
   exact ⟨C,ha,g,fun x hx => ite_eq_left hx,fun x => (enters_congr eq x).mpr (h x)⟩
 
-@[simp] theorem ofFunction_outside (f : V → V) (C : Set V) (ha : a ∈ C)
+@[simp] private theorem ofFunction_outside (f : V → V) (C : Set V) (ha : a ∈ C)
     (h : ∀ x, ∃ n : Nat, (f^[n]) x ∈ C) {x : V} (hx : x ∉ C) :
     (ofFunction f C ha h).outside x = f x := by
   classical
@@ -71,12 +71,12 @@ noncomputable def patch (F : Frame a) (g : F.core → F.core) (x : V) : V := by
   classical
   exact if hx : x ∈ F.core then (g ⟨x,hx⟩).val else F.outside x
 
-@[simp] theorem patch_in (F : Frame a) (g : F.core → F.core) (x : F.core) :
+@[simp] private theorem patch_in (F : Frame a) (g : F.core → F.core) (x : F.core) :
     F.patch g x.val = (g x).val := by
   classical
   simp [patch, x.prop]
 
-@[simp] theorem patch_out (F : Frame a) (g : F.core → F.core) {x : V} (hx : x ∉ F.core) :
+@[simp] private theorem patch_out (F : Frame a) (g : F.core → F.core) {x : V} (hx : x ∉ F.core) :
     F.patch g x = F.outside x := by
   classical
   simp [patch, hx]
@@ -286,7 +286,7 @@ private theorem successor_iterate (m n : Nat) (i : Fin (m + 1)) :
     rw [ih]
     omega
 
-@[simp] theorem successor_last (m : Nat) : successor m (Fin.last m) = Fin.last m := by
+@[simp] private theorem successor_last (m : Nat) : successor m (Fin.last m) = Fin.last m := by
   apply Fin.ext
   change min (m+1) m = m
   omega

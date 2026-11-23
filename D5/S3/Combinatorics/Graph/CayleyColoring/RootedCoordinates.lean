@@ -90,7 +90,7 @@ noncomputable def reconstruct (T : CayleyProbe.Tree V) (r : V) (base : A)
 termination_by T.val.dist r v
 decreasing_by exact (parent_spec T r ⟨v, hv⟩).2
 
-@[simp] theorem reconstruct_root (T : CayleyProbe.Tree V) (r : V) (base : A) (diff : Away r → A) :
+@[simp] private theorem reconstruct_root (T : CayleyProbe.Tree V) (r : V) (base : A) (diff : Away r → A) :
     reconstruct T r base diff r = base := by
   rw [reconstruct]
   simp
@@ -178,7 +178,7 @@ noncomputable def fromTree (T : CayleyProbe.Tree V) (r : V) : V → V := by
   classical
   exact fun v => if hv : v = r then r else CayleyColors.parent T r ⟨v,hv⟩
 
-@[simp] theorem fromTree_root (T : CayleyProbe.Tree V) (r : V) : fromTree T r r = r := by
+@[simp] private theorem fromTree_root (T : CayleyProbe.Tree V) (r : V) : fromTree T r r = r := by
   classical
   simp [fromTree]
 

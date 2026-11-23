@@ -112,9 +112,9 @@ def phase (s : ℝ) : ℂ := Complex.exp ((s : ℂ) * Complex.I)
 private theorem phase_add (x y : ℝ) : phase (x + y) = phase x * phase y := by
   simp [phase, add_mul, Complex.exp_add]
 
-@[simp] theorem phase_zero : phase 0 = 1 := by simp [phase]
+@[simp] private theorem phase_zero : phase 0 = 1 := by simp [phase]
 
-@[simp] theorem phase_norm (x : ℝ) : ‖phase x‖ = 1 :=
+@[simp] private theorem phase_norm (x : ℝ) : ‖phase x‖ = 1 :=
   Complex.norm_exp_ofReal_mul_I x
 
 theorem charFun_standardizedLaw {n : ℕ} (hn : 0 < n) {p : ℝ}

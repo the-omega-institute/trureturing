@@ -101,7 +101,7 @@ inductive Prefix {ι : Type*} [LT ι] (G : SimpleGraph V) (rank : V → ι) :
 def remaining (live : Set V) (history : List V) : Set V :=
   {v | v ∈ live ∧ v ∉ history}
 
-@[simp] theorem remaining_nil (live : Set V) : remaining live [] = live := by
+@[simp] private theorem remaining_nil (live : Set V) : remaining live [] = live := by
   ext v
   simp [remaining]
 
@@ -562,7 +562,7 @@ inductive PolicyRun [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K 
         (Function.update color v (policy past color v enabled).val) tail final) :
       PolicyRun G policy past color (v :: tail) final
 
-private theorem PolicyRun.legal [DecidableEq V] {G : SimpleGraph V} {policy : FreePolicy (K := K) G}
+private theorem PolicyRun.toLegalRun [DecidableEq V] {G : SimpleGraph V} {policy : FreePolicy (K := K) G}
     {past history : List V} {init final : V → K}
     (run : PolicyRun G policy past init history final) : LegalRun G init history final := by
   induction run with
@@ -616,7 +616,7 @@ theorem proper_policyRun [DecidableEq V] (G : SimpleGraph V) (policy : FreePolic
     obtain ⟨final,run,hf⟩ := (policyRun_iff G policy _ history _ init hc []).mp hl
     exact ⟨final,run,fun v w h => hs v ⟨w,hf ▸ h⟩⟩
   · rintro ⟨final,run,hproper⟩
-    have hf := legalRun_conflicts G run.legal
+    have hf := legalRun_conflicts G run.toLegalRun
     have he : conflict G final = active (conflict G init) (remaining Set.univ history) := by
       rw [hf]
       congr 1

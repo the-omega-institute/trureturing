@@ -264,7 +264,7 @@ noncomputable def depth (T : F.Branches) (x : V) : Nat := by
     (T (F.partAt h)).val.dist (F.root (F.partAt h)) ⟨x, F.mem_partAt h⟩ + 1
   else 0
 
-@[simp] theorem depth_pivot : depth T p = 0 := by
+@[simp] private theorem depth_pivot : depth T p = 0 := by
   simp [depth]
 
 private theorem depth_in {s : F.parts} (x : s.val) :
