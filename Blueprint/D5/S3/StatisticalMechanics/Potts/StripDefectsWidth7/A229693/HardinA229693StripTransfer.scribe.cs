@@ -12,11 +12,6 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact two-defect strip transfer.", H("Exact two-defect strip transfer"),
         Blocks(
-            Describe.Lean(DescribeId.Create("valid"),
-                DeclarationHandle.Create(Prefix + "Valid"), H("Admissible residual budgets"),
-                StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), Iff(Call("HardinA229693StripTransfer.Valid", V("p"), V("d")), Call("HardinA229635State.Valid", V("p"), V("d"))))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The number of adjacent equalities in the six-cell boundary is at most the number of defects already used."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("exhausted-class"),
                 DeclarationHandle.Create(Prefix + "exhaustedClass"), H("Classes at budget zero"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.exhaustedClass"), Arrow(Call("HardinA229585StripData.Boundary"), Call("Fin", Num("96")))))),
@@ -49,7 +44,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("A completed strip is accepted when its remaining budget is zero."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("transition-counts"),
                 DeclarationHandle.Create(Prefix + "transition_counts"), H("Multiplicity of a successor class"),
-                StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), All("s", Call("Fin", Num("168")), Imp(Or(Call("HardinA229693StripTransfer.Valid", V("p"), V("d")),
+                StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), All("s", Call("Fin", Num("168")), Imp(Or(Call("HardinA229635State.Valid", V("p"), V("d")),
                     Or(And(Eq(V("d"), Num("0")), Lt(Call("Fin.val", V("s")), Num("72"))),
                         And(Eq(V("d"), Num("1")), Lt(Call("Fin.val", V("s")), Num("16"))))), Eq(SumOver("r", Call("HardinA229585StripData.Row"), Conditional(And(Leq(Add(Call("HardinA229585StripData.cross", V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.horizontal"), V("r"), V("r"))), V("d")), Eq(Call("HardinA229693StripTransfer.cl", Call("HardinA229585StripData.boundary", V("r")), Sub(V("d"), Add(Call("HardinA229585StripData.cross", V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.horizontal"), V("r"), V("r"))))), V("s"))), CastInt(Num("1")), CastInt(Num("0")))), App(Call("HardinA229693StripTransfer.T"), Call("HardinA229693StripTransfer.cl", V("p"), V("d")), V("s"))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),

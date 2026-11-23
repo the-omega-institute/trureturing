@@ -11,6 +11,7 @@ open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA2
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
   (Boundary Row horizontal antidiagonal boundary cross)
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects literalCount)
+open _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State (Valid)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
@@ -34,7 +35,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let p : Boundary := ![0, 1, 0, 1, 0, 1]
   have hp : Valid p 2 := by
-    unfold Valid D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State.Valid
+    unfold Valid
     decide +kernel
   have hh := h p 2 0 (Or.inl hp)
   have ha := transition_counts p 2 0 (Or.inl hp)

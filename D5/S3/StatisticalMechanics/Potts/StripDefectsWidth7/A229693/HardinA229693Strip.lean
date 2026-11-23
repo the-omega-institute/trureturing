@@ -9,13 +9,13 @@
 /-
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
-a: proof_shape=content; consumers=result, scale_count
-leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
+a: proof_shape=bind-only; consumers=result, scale_count
+leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
 columnRepresentative: proof_shape=bind-only; consumers=representative_data, exhaustedRank, checkColumn, exhausted_step
-representative_data: proof_shape=content; consumers=w_representative, exhausted_step
+representative_data: proof_shape=bind-only; consumers=w_representative, exhausted_step
 w_representative: proof_shape=bind-only; consumers=exhausted_step
 exhaustedRank: proof_shape=bind-only; consumers=exhaustedRow
 exhaustedRow: proof_shape=content; consumers=w, w_leading
@@ -26,9 +26,9 @@ w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, fo
 w_leading: proof_shape=bind-only; consumers=forward_step
 leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
-leadingCoordinates: proof_shape=content; consumers=leading_rec
-leading_rec: proof_shape=content; consumers=leading_step
-leading_step: proof_shape=content; consumers=forward_step
+leadingCoordinates: proof_shape=bind-only; consumers=leading_rec
+leading_rec: proof_shape=bind-only; consumers=leading_step
+leading_step: proof_shape=bind-only; consumers=forward_step
 checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
@@ -71,53 +71,22 @@ def a (n : ℕ) : ℕ :=
     defects horizontal antidiagonal (List.ofFn fun i j => f (i, j)) = 2 ∧
       HardinA229585Strip.Normal f).card
 
+private def leadingCoefficient : Fin 8 → ℤ := by
+  refine (fun (c : Fin 8 → ℤ)
+    (_ : HardinA229585StripData.W 10 = ∑ k : Fin 8,
+      c k • HardinA229585StripData.W ⟨2 + k.val, by omega⟩) => c) ?coef ?law
+  case law => exact HardinA229585Strip.finite_certificate.2.2.2.2.2.2
+
+-- Extend the signed vector recurrence beyond the frozen eleven rows.
 private def leading : Fin 15 → Fin 72 → ℤ :=
-  let read : Array (Fin 32) := #[0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0,
-     14, 14, 15, 15, 16, 16, 1, 2, 17, 17, 18, 3, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23,
-     24, 24, 25, 4, 25, 26, 26, 5, 6, 27, 27, 28, 28, 29, 29, 7, 30, 30, 31, 31]
-  let values : Array (Array ℤ) := #[
-      #[544627114792793532, 440132357393834004, 501105665233547568, 353089458275342076,
-      193888391277278484, 318185741714406876, 402877906075197540, 422680499113366404,
-      263479432115302812, 219957982556056848, 180352796479719120, 243676839077133948,
-      248594700876382548, 292116150435628512, 16078628283905947842, 328253157395542512,
-      13478812528021245090, 14820312181744019016, 11092744672375125330, 284731707836296548,
-      218724692157078048, 162785092156869420, 268919136822245148, 271791714489765912,
-      170691377663895120, 6941473732303613226, 10136481298968674754, 12298403660677739802,
-      275186135062854648, 12971688399254177334, 278580555638069148, 174085798239109620],
-      #[17394301584320634612, 14056947854725849092, 16004313471301108272, 11276971628686796412,
-      6192407672032513932, 10162216621575330732, 12867115131222084972, 13499570351170116252,
-      8415006394515833772, 7025018281496307432, 5760107841600244872, 7782551174567802492,
-      7939617899092010892, 9329606012111537232, 559689079759822832958, 10483749813015494568,
-      467797797092507807826, 515811522304666467576, 384212646521253656082, 9093761699995968228,
-      6985629487703815776, 5199030466845449868, 8588739771281638188, 8680484139921909936,
-      5451541431202614888, 238133352228519155670, 350712602489231039466, 426939714837536171238,
-      8788895160797400408, 450121814388131725530, 8897306181679268172, 5559952452084482652],
-      #[555539228627036526108, 448950820398629398596, 511145786340375658992,
-      360163935825307664364, 197773124716696175316, 324560888515136877804,
-      410949941173510430340, 431149296743544005316, 268758485634932516268,
-      224365043348271649152, 183966332208204499200, 248559130064898941292,
-      253575527596900536852, 297968969883561403968, 19349922611405143736514,
-      334830016341888641568, 16132180274574156090954, 17830727268641647600968,
-      13226969915907146421210, 290436574055227774452, 223107044200115198112,
-      166046642171735253660, 274307182910809579692, 277237314569652361128,
-      174111337743944351040, 8130454043529481041258, 12062544021333970611930,
-      14726388762849954312666, 280699745972351478552, 15520393993336817938902,
-      284162177375069727852, 177573769146662600340],
-      #[17742812666717526800148, 14338591934037071302548, 16324974844603402263408,
-      11502916289808822229068, 6316478334340254712908, 10365826112904409380828,
-      13124919799701165708108, 13770046845584864878428, 8583608890116297362268,
-      7165771068002172825528, 5875516976234774484888, 7938481844232598191948,
-      8098695557128366731468, 9516533379242491268208, 665092737995560183589310,
-      10693801533584866034232, 553288629770346486605130, 612809297302462333885944,
-      452975261850493160808618, 9275963711470741497492, 7125593090564210907744,
-      5303197890338079575772, 8760823193983791253212, 8854405742387066746464,
-      5560768149081554697912, 276436329081843280581846, 412767638886053822357682,
-      505168999323229394546022, 8964988881762010195512, 532240305105767562586170,
-      9075572021137011040188, 5671351288456555542588]]
-  Fin.append HardinA229585StripData.W (fun (i : Fin 4) (j : Fin 72) =>
-    let row := values[i.val]!
-    let k := read[j.val]!
-    row[k.val]!)
+  let values : Array (Array ℤ) := eval% (
+    let seed := Array.ofFn fun i : Fin 11 => Array.ofFn (HardinA229585StripData.W i)
+    (List.range 4).foldl (fun rows i =>
+      rows.push (Array.ofFn fun j : Fin 72 =>
+        (List.ofFn fun k : Fin 8 =>
+          leadingCoefficient k * rows[3 + i + k.val]![j.val]!).sum)) seed)
+  Fin.append HardinA229585StripData.W
+    (fun (i : Fin 4) (j : Fin 72) => values[i.val + 11]![j.val]!)
 
 private def coefficients : Fin 12 → ℤ := ![-531441000, 1913187600, -2986698420, 2659094568, -1494608922, 554666940, -138045627, 22918302, -2474469, 165456, -6345, 126]
 
@@ -317,9 +286,6 @@ private theorem w_leading (i : Fin 15) (j : Fin 72) : w i (j.castAdd 96) = leadi
     exact congrFun HardinA229585Strip.finite_certificate.2.2.2.2.2.1.1.symm j
   | succ i =>
     simp only [w, Fin.val_succ, Nat.succ_ne_zero, dite_false, Fin.addCases_left]
-
-private def leadingCoefficient : Fin 8 → ℤ :=
-  ![-656100, 1574640, -1513404, 750384, -206469, 31428, -2466, 84]
 
 private def leadingIndex (i : Fin 5) (k : Fin 8) : Fin 15 :=
   ⟨2 + i.val + k.val, by omega⟩

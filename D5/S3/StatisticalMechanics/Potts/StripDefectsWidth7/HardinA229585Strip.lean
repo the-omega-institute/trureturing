@@ -88,7 +88,7 @@ private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
   simpa only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
     Nat.add_zero] using DefectTransfer.relabel_defects horizontal antidiagonal e [r]
 
-theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
+private theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
     cross (e ∘ p) (e ∘ r) = cross p r := by
   have h := DefectTransfer.relabel_defects horizontal antidiagonal e [Fin.cons 0 p, r]
   simp only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,

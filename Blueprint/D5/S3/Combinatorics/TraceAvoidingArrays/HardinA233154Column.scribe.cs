@@ -13,6 +13,8 @@ internal sealed class HardinA233154ColumnDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal 7-column count obeys a recurrence determined by its finite row quotient.",
         H("OEIS A233154"), Blocks(
+            Node("codes_table",Eq(C("HardinA233155RowTransfer.legalCodes",N(7)),C("HardinA233154Rows.codes")),
+                "The list enumerates the 192 seven-cell rows whose consecutive colours never sum to two.",theorem:true),
             Node("finite_certificate",CertificateFormula(),"The three finite identities give the successor counts, initial class multiplicities and a polynomial relation among quotient powers.",theorem:true),
             Node("result",ResultFormula(),"The finite relation extends through all further matrix powers. The initial instance supplies the exact starting index.",theorem:true)), []));
     private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("quotient"),n),Cast(N(1),Arr(FinF(N(16)),IntF())));

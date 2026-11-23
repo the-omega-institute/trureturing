@@ -40,7 +40,7 @@ open scoped BigOperators
 set_option maxRecDepth 100000
 
 set_option maxHeartbeats 10000000 in
-private theorem codes_table : legalCodes 7 = codes := by decide +kernel
+theorem codes_table : legalCodes 7 = codes := by decide +kernel
 
 private theorem row_counts_code : ∀ a : Fin 2187, rowLegal (decode 7 a) →
     ∀ s : Fin 16, classCount (decode 7 a) s = quotient (classify (decode 7 a)) s := by
