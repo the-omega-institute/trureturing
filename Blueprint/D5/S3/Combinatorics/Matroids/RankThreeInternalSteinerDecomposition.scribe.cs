@@ -40,7 +40,7 @@ internal sealed class RankThreeInternalSteinerDecompositionDocument : IScribeDoc
                 H("Independent square and packing data give an extension"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Choose an enumeration for each three-element block in a partial system and transport its labels back into the residue class. Pair uniqueness holds within each component because the pairs used by mixed triples, Latin triples, and same-residue triples are disjoint. Adding the latter triples preserves the dimension criterion."))),
+                Blocks(Paragraph(Text("Choose an enumeration for each three-element block in a partial system and transport its labels back into the residue class. The fixed mixed family, the Latin squares, and the partial Steiner systems each give pair uniqueness within their own component. Their three kinds of pairs are disjoint, so pair uniqueness also holds across components. Adding the latter triples preserves the dimension criterion."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("decomposition-unique"),

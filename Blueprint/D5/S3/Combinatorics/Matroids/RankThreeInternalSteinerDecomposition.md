@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeInternalSteinerDecomposit
 
 *Commentary.*
 
-Choose an enumeration for each three-element block in a partial system and transport its labels back into the residue class. Pair uniqueness holds within each component because the pairs used by mixed triples, Latin triples, and same-residue triples are disjoint. Adding the latter triples preserves the dimension criterion.
+Choose an enumeration for each three-element block in a partial system and transport its labels back into the residue class. The fixed mixed family, the Latin squares, and the partial Steiner systems each give pair uniqueness within their own component. Their three kinds of pairs are disjoint, so pair uniqueness also holds across components. Adding the latter triples preserves the dimension criterion.
 
 **Theorem 1.5 (The unordered extension determines all of its data).**
 
