@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.FourVertexPortPulses
 import Reg.Support.DependentFamily
 
-/-! The age-cardinality readout for exact raw-port preparation. -/
+/-! The age-cardinality readout for exact preparation and uniform separation. -/
 
 open LeanInformationAudit Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -91,6 +91,75 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "fn", "arg", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def uniformDistanceLaw (F : Realization signature) : Prop :=
+  ∀ (M γ q : ℝ) (_hM : 0 < M) (_hγ : 0 < γ)
+    (_hcap : γ ≤ M / 256) (_hq : 0 < q) (_hqle : q ≤ γ ^ 2 / M),
+    ∃ ε : ℝ, 0 < ε ∧ ∀ (r : Bool) (S : Finset ℝ) (w : ℝ → ℝ), F.readout () () S ≤ 3 →
+      ((∑ t ∈ S, w t) = 0 ∨ ∀ t ∈ S, 0 ≤ t) →
+      ε ≤ ‖endpoint (laplacian M γ q r) S w - target‖
+
+def uniformDistanceArena : Arena where
+  signature := signature
+  Law := uniformDistanceLaw
+
+private theorem rejected_uniformDistanceLaw : ¬ uniformDistanceArena.Law rejected := by
+  intro H
+  have hM : (0 : ℝ) < 256 := by norm_num
+  have hγ : (0 : ℝ) < 1 := by norm_num
+  have hcap : (1 : ℝ) ≤ 256 / 256 := by norm_num
+  have hq : (0 : ℝ) < 1 / 256 := by norm_num
+  have hqle : (1 : ℝ) / 256 ≤ 1 ^ 2 / 256 := by norm_num
+  obtain ⟨ε, hε, hbound⟩ := H 256 1 (1 / 256) hM hγ hcap hq hqle
+  obtain ⟨S, w, _, _, hnet, he⟩ :=
+    (exact_four_ages 256 1 (1 / 256) hM hγ hcap hq hqle).2.2.2 1 (by norm_num)
+  have h := hbound false S w (by change 0 ≤ 3; decide) (Or.inl hnet)
+  rw [he false, sub_self, norm_zero] at h
+  exact hε.not_ge h
+
+def uniformDistanceFamily : Registration uniformDistanceArena
+    (type_of% @three_age_uniform_distance) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨three_age_uniform_distance, rejected, rejected_uniformDistanceLaw⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j hj => (hj (@Subsingleton.elim Unit inferInstance j i)).elim, rfl,
+      rejected_uniformDistanceLaw⟩, fun e => nomatch e⟩
+  dependence := family.dependence
+
+def uniformDistanceRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@three_age_uniform_distance)
+    (type_of% (realize signature (fun _ _ S => S.card) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Observer.Linear.FourVertexPortPulses.three_age_uniform_distance.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.FourVertexPortPulses.uniformDistanceFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨uniformDistanceArena⟩
+  objectArena := .source ⟨uniformDistanceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source uniformDistanceArena ⟨uniformDistanceFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ S => S.card) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.FourVertexPortPulses
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

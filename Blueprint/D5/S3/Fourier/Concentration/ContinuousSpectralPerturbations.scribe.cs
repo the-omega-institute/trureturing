@@ -55,6 +55,25 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
                         "The result constructs a comparison spectrum. A prescribed counting law would "
                         + "also need estimates on threshold crossings, and the fixed zeta ordinates "
                         + "require arithmetic control of their own weighted near-collisions."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "More generally, let q(k,m,n) be any extended nonnegative upper bound for the "
+                + "probability that the distinct ordered degree pair m,n hits the closed band under the product "
+                + "of the normalized intervals on test k's support. Define Cq by replacing the "
+                + "single-coordinate factor in A(k) with q(k,m,n) and summing the new A(k)/b(k).")),
+            Describe.Lean(
+                DescribeId.Create("exists-continuous-common-nearby-bounds-of-pair-probabilities"),
+                DeclarationHandle.Create(Owner + ".exists_continuous_common_nearby_bounds_of_pair_probabilities"),
+                H("Pair probabilities suffice for a common perturbation"),
+                StatementSource.FromAuthor(Bound("Cq")),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Divide the expected off-diagonal mass in each finite marginal by its "
+                        + "positive budget. The two finite sums integrate term by term and each "
+                        + "probability is bounded by q(k,m,n). Integrate the countable sum on "
+                        + "the joint product of the original interval measures. An assignment "
+                        + "within the intervals attains a normalized total at most Cq."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -66,7 +85,7 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
     private static Formula AtMost(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
 
-    private static Formula Bound()
+    private static Formula Bound(string total = "C")
     {
         var j = F.Id("j");
         var k = F.Id("k");
@@ -74,7 +93,7 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
         var index = F.Id("J");
         var tests = F.Id("K");
         var reals = Seq(Mathbb, Grp(F.Id("R")));
-        var budget = F.Id("C");
+        var budget = F.Id(total);
         var normalizedExcess = new Formula.Fraction(
             Seq(Call("E", k, spectrum), Minus, Call("D", k)), Call("b", k));
         var aggregate = AtMost(Seq(new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, tests)),
