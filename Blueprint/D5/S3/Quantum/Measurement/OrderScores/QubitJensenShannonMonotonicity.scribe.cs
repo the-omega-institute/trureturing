@@ -28,12 +28,15 @@ internal sealed class QubitJensenShannonMonotonicityDocument : IScribeDocumentDe
                         FormulaRelationOperator.LessThanOrEqual, Sub(Score(F.Id("u")), Score(F.Id("t")))))))),
             Theorem("result", "Strict monotonicity on the closed interval",
                 "The optimized score from Section II.C increases strictly on the full closed interval. The quantitative gain is positive for every strictly ordered pair, including the endpoints.",
-                Apply(Op("StrictMonoOn"), F.Id("psi"), Domain))), []));
+                Apply(Op("StrictMonoOn"), F.Id("psi"), Domain),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-2026-qubit-order-score-monotonicity"), ResolutionKind.Proved))), []));
 
-    private static DocumentBlock Theorem(string name, string title, string prose, Formula statement) =>
+    private static DocumentBlock Theorem(string name, string title, string prose, Formula statement,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
-            AssessedProvenance.FromRepo(Wu), Blocks(Paragraph(DefinitionDsl.Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(Wu), Blocks(Paragraph(DefinitionDsl.Text(prose))), DescribeRole.Theorem, resolution);
 
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
