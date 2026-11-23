@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.claim; result=D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.result; claim=D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.claim
    digest: The coordinate-zero Boolean factor at budget 640 attains the two-jump lower bound. -/
 
+import D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency
 import D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate
 import D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionFourteenJumps
 
@@ -91,13 +92,13 @@ private def charge (row : ℕ → List ℕ) (v : ℕ) : ℕ :=
 private theorem block_sum (f : ℕ → ℕ) :
     (∑ v : Fin limit, f v.val) =
       ((List.range 128).map fun b => ((List.range 64).map fun i => f (64 * b + i)).sum).sum := by
-  change (∑ v : Fin (128 * 64), f v.val) = _
-  rw [ListBridge.sum_blocks]
-  simp only [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
-  rw [Fin.sum_univ_eq_sum_range (fun b => ∑ i : Fin 64, f (64 * b + i.val))]
+  simp only [Fin.sum_univ_eq_sum_range, ← List.sum_toFinset _ List.nodup_range,
+    List.toFinset_range]
+  change (∑ v ∈ range (128 * 64), f v) = _
+  rw [D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sum_blocks]
   apply sum_congr rfl
   intro b _
-  exact Fin.sum_univ_eq_sum_range (fun i => f (64 * b + i)) 64
+  rw [Nat.mul_comm b 64]
 
 private theorem of_checked_blocks (row col : ℕ → List ℕ) (budget : ℕ)
     (checked : (List.finRange 128).all (blockPass row col) = true)
@@ -186,13 +187,16 @@ private def chunkCharge (row : Nat → List Nat) (c : Fin 16) : Nat :=
 
 private theorem assemble_cost (row : Nat → List Nat) :
     ((List.range 128).map (blockCharge row)).sum = ∑ c : Fin 16, chunkCharge row c := by
+  have chunks : (∑ c : Fin 16, chunkCharge row c) =
+      ∑ c ∈ range 16, ((List.range 8).map fun i => blockCharge row (8 * c + i)).sum :=
+    Fin.sum_univ_eq_sum_range (fun c => ((List.range 8).map fun i =>
+      blockCharge row (8 * c + i)).sum) 16
   rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range,
-    ← Fin.sum_univ_eq_sum_range (blockCharge row) 128]
-  rw [show (128 : Nat) = 16 * 8 by decide, ListBridge.sum_blocks]
-  refine sum_congr rfl fun c _ => ?_
-  unfold chunkCharge
-  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
-  exact Fin.sum_univ_eq_sum_range (fun i => blockCharge row (8 * c.val + i)) 8
+    show (128 : Nat) = 16 * 8 by decide,
+    D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sum_blocks, chunks]
+  apply sum_congr rfl
+  intro c _
+  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range, Nat.mul_comm c 8]
 
 private theorem checked_chunk_0 : chunkPass blockPass 0 = true := by decide +kernel
 private theorem charged_chunk_0 : chunkCharge row 0 = 34 := by decide +kernel

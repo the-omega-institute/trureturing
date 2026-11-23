@@ -45,5 +45,6 @@ The claimed absence of an attaining factor is false. The packed row and column l
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.AttainsTwoJumpsAt640`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.claim`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenAttainment.result`
+- Dependency: [D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency](../../../../S1/Words/TwoBlockSubstitution/ThueMorseFrequency.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate](AxisListCertificate.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionFourteenJumps](DimensionFourteenJumps.md)

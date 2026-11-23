@@ -13,6 +13,7 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers
+import D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency
 import D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate
 
 set_option autoImplicit false
@@ -101,13 +102,13 @@ private def charge (row : ℕ → List ℕ) (v : ℕ) : ℕ :=
 private theorem block_sum (f : ℕ → ℕ) :
     (∑ v : Fin limit, f v.val) =
       ((List.range 512).map fun b => ((List.range 64).map fun i => f (64 * b + i)).sum).sum := by
-  change (∑ v : Fin (512 * 64), f v.val) = _
-  rw [ListBridge.sum_blocks]
-  simp only [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
-  rw [Fin.sum_univ_eq_sum_range (fun b => ∑ i : Fin 64, f (64 * b + i.val))]
+  simp only [Fin.sum_univ_eq_sum_range, ← List.sum_toFinset _ List.nodup_range,
+    List.toFinset_range]
+  change (∑ v ∈ range (512 * 64), f v) = _
+  rw [D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sum_blocks]
   apply sum_congr rfl
   intro b _
-  exact Fin.sum_univ_eq_sum_range (fun i => f (64 * b + i)) 64
+  rw [Nat.mul_comm b 64]
 
 private theorem of_checked_blocks (row col : ℕ → List ℕ) (budget : ℕ)
     (checked : (List.finRange 512).all (blockPass row col) = true)
@@ -338,13 +339,16 @@ private def chunkCharge (row : Nat → List Nat) (c : Fin 64) : Nat :=
 
 private theorem assemble_cost (row : Nat → List Nat) :
     ((List.range 512).map (blockCharge row)).sum = ∑ c : Fin 64, chunkCharge row c := by
+  have chunks : (∑ c : Fin 64, chunkCharge row c) =
+      ∑ c ∈ range 64, ((List.range 8).map fun i => blockCharge row (8 * c + i)).sum :=
+    Fin.sum_univ_eq_sum_range (fun c => ((List.range 8).map fun i =>
+      blockCharge row (8 * c + i)).sum) 64
   rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range,
-    ← Fin.sum_univ_eq_sum_range (blockCharge row) 512]
-  rw [show (512 : Nat) = 64 * 8 by decide, ListBridge.sum_blocks]
-  refine sum_congr rfl fun c _ => ?_
-  unfold chunkCharge
-  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
-  exact Fin.sum_univ_eq_sum_range (fun i => blockCharge row (8 * c.val + i)) 8
+    show (512 : Nat) = 64 * 8 by decide,
+    D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sum_blocks, chunks]
+  apply sum_congr rfl
+  intro c _
+  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range, Nat.mul_comm c 8]
 
 private def chunkCosts : Fin 64 → Nat := ![
   44, 17, 20, 5, 19, 4, 3, 3, 17, 7, 3, 3, 3, 2, 3, 11,

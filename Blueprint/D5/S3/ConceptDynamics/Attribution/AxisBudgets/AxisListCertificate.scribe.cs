@@ -32,11 +32,6 @@ internal sealed class AxisListCertificateDocument : IScribeDocumentDefinition
             Entry("mask-top", "mask_top", "The all-ones mask is the full subset",
                 "The mask with value two to the n minus one represents the full subset of free coordinates.",
                 DescribeRole.Theorem),
-            Entry("sum-blocks", "sum_blocks", "Equal-sized blocks partition a finite sum",
-                "Sum a natural-valued function over the indices below the product of two natural "
-                + "numbers. Equivalently sum over each block of the second size and each position "
-                + "within it. The index equals the block number times the block size plus the position.",
-                DescribeRole.Theorem),
             Entry("list-certificate", "list_axis_factor", "Bounded lists certify an exact factor table",
                 "For n free coordinates, take two families of row and column lists indexed by masks "
                 + "below two to the n and a natural budget. Choose the top index with value two to the n "
