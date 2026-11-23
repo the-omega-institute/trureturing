@@ -19,3 +19,5 @@ For each positive exponent, a bound on the summand count works for every natural
 ## References
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringTheorem2.waringTheorem`
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringIndStep2](WaringIndStep2.md)
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringLinnik](WaringLinnik.md)
