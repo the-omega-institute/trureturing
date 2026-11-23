@@ -804,7 +804,7 @@ private theorem inherited_active_spec (i : Fin 96) (d : Fin 2) (k : Fin 16) :
           HardinA229585StripData.cl p 1 = k.castAdd 56 := by
   intro p hp hk
   have h := inheritedActiveCheck_all i d
-  unfold inheritedActiveCheck at h
+  dsimp only [inheritedActiveCheck] at h
   change inheritedSource (HardinA229585StripData.cl (HardinA229635State.rep i) d.val) = some k at hk
   change Valid (HardinA229635State.rep i) (d.val + 1) at hp
   rw [hk] at h
