@@ -7,7 +7,7 @@ internal sealed class RankThreeOmissionPairCountDocument : IScribeDocumentDefini
     private const string Module = "D5/S3/Combinatorics/Matroids/RankThreeOmissionPairCount";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The common size of the ternary potential fibers determines how many pairs require coverage by listed triples.",
+        "For finite triple families with at most one triple per pair, the sizes of the ternary potential fibers determine how many pairs require coverage.",
         H("The Minimum Number of Rank-Three Omissions"),
         Blocks(
             Describe.Lean(
@@ -19,7 +19,7 @@ internal sealed class RankThreeOmissionPairCountDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text(
                     "Let the normalized ternary potential space of a pair-unique family have dimension d. "
                     + "For any evaluation basis, write q for three to the power d and s for the size of its zero fiber. "
-                    + "There are q times q minus one ordered pairs of distinct fiber labels, with s squared point pairs per label pair. "
+                    + "There are q times (q minus one) ordered pairs of distinct fiber labels, with s squared point pairs per label pair. "
                     + "Every such pair lies in a listed triple, and each triple offers six ordered pairs of positions."))),
                 DescribeRole.Theorem),
             Describe.Lean(
