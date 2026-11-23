@@ -116,7 +116,11 @@ theorem logarithmic_series_bound :
       tendsto_antideriv_log_div_sq
     have hanti : AntitoneOn f (Ici (1 : ℝ)) :=
       antitoneOn_log_div_sq.mono (by intro x hx; simp only [mem_Ici] at *; linarith)
-    have htbound := AntitoneOn.tsum_comp_add_le_integral (f := f) 1 hanti hi hn
+    have htbound := AntitoneOn.tsum_comp_add_le_integral (f := f) 1
+      (by simpa only [Nat.cast_one] using hanti)
+      (by simpa only [Nat.cast_one] using hi)
+      (by simpa only [Nat.cast_one] using hn)
+    simp only [Nat.cast_one] at htbound
     have hh : (∫ x : ℝ in Ioi 1, f x) = (Real.log 3 + 1) / 3 := by
       convert he using 1 <;> norm_num <;> ring
     rw [hh] at htbound

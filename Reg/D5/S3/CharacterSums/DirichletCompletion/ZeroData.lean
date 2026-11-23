@@ -331,7 +331,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have he := (completion_vertical_resolvent hp hn 2 0 (by norm_num)).unique (h hp hn 2 0 (by norm_num))
+  have he := (completion_vertical_resolvent hp hn 2 0 (by norm_num)).unique
+    (h hp hn 2 0 (by norm_num))
   change (logDeriv (completion χ) (2 + (0 : ℂ) * I)).re =
     (logDeriv (completion χ) (2 + (0 : ℂ) * I)).re + 1 at he
   linarith
