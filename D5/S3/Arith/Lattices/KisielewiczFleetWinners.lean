@@ -13,15 +13,10 @@ escape_witness: prefix_at_endpoint, fleet_stabilizer, witness_no_period
 Direct frozen dependencies: none. The proof uses pinned Mathlib.
 -/
 
+import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Data.Int.CardIntervalMod
-import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Fin.Basic
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! Two nonperiodic fleets with alternating strict winners along a subsequence of window sizes. -/
 
@@ -36,7 +31,7 @@ abbrev Shift := Bool × Bool × Bool
 def bit (b : Bool) : ℤ := if b then 1 else 0
 
 /-- The phase condition is imposed only on slabs meeting a nonnegative window. -/
-def Layered (F : Set Origin) (q : ℤ → Bool) : Prop :=
+private def Layered (F : Set Origin) (q : ℤ → Bool) : Prop :=
   ∀ x y z : ℤ, 0 ≤ z →
     ((x, y, z) ∈ F ↔ z % 2 = 0 ∧ x % 2 = bit (q (z / 2)) ∧
       y % 2 = bit (q (z / 2)))
@@ -51,15 +46,15 @@ open Classical in
 noncomputable def score (F : Set Origin) (a : ℕ) (s : Shift) : ℕ :=
   ((box a s).filter (· ∈ F)).card
 
-def prefixZero (q : ℤ → Bool) (n : ℕ) : ℕ :=
+private def prefixZero (q : ℤ → Bool) (n : ℕ) : ℕ :=
   ((Ioc (0 : ℤ) (n : ℤ)).filter (fun j => q j = false)).card
 
 private def slabs (n : ℕ) (v : Bool) : Finset ℤ :=
   if v then Ioc 0 (n : ℤ) else insert 0 (Ioc 0 (n : ℤ))
 
-def totalSlabs (n : ℕ) (v : Bool) : ℕ := if v then n else n + 1
+private def totalSlabs (n : ℕ) (v : Bool) : ℕ := if v then n else n + 1
 
-def zeroSlabs (q : ℤ → Bool) (n : ℕ) (v : Bool) : ℕ :=
+private def zeroSlabs (q : ℤ → Bool) (n : ℕ) (v : Bool) : ℕ :=
   if v then prefixZero q n else prefixZero q n + 1
 
 private theorem vertical_axis (n : ℕ) (v : Bool) (j : ℤ) :
@@ -361,8 +356,17 @@ private theorem fleet_layered (q : ℤ → Bool) : Layered (fleet q) q := by
 
 private theorem axis_cover (p r : ℤ) (hr₀ : 0 ≤ r) (hr₂ : r < 2) :
     ∃! a : ℤ, a % 2 = r ∧ (a ≤ p ∧ p < a + 2) := by
-  refine ⟨2 * ((p - r) / 2) + r, ⟨by omega, by omega, by omega⟩, ?_⟩
+  obtain ⟨k, hk, huniq⟩ := existsUnique_sub_zsmul_mem_Ico
+    (show 0 < (2 : ℤ) by decide) (p - r) 0
+  change 0 ≤ p - r - k * 2 ∧ p - r - k * 2 < 0 + 2 at hk
+  refine ⟨r + k * 2, ⟨by omega, by omega, by omega⟩, ?_⟩
   intro a ha
+  let n := (a - r) / 2
+  have hn : a = r + n * 2 := by dsimp [n]; omega
+  have hs : n = k := by
+    apply huniq
+    change 0 ≤ p - r - n * 2 ∧ p - r - n * 2 < 0 + 2
+    omega
   omega
 
 private theorem slab_cover (q : ℤ → Bool) (j px py : ℤ) :
@@ -463,11 +467,14 @@ private theorem scale_growth (k : ℕ) : 16 * scale k ≤ scale (k + 1) := by
       ring
 
 private theorem scale_lower (k : ℕ) : k + 2 ≤ scale k := by
-  induction k with
-  | zero => decide
-  | succ k ih =>
-    have hg := scale_growth k
-    omega
+  have hp : (8 : ℕ) ≤ 8 ^ (k + 1) := by
+    calc
+      8 = (8 : ℕ) ^ 1 := by decide
+      _ ≤ 8 ^ (k + 1) := pow_le_pow_right' (by decide) (by omega)
+  calc
+    k + 2 ≤ 8 * (k + 1) := by omega
+    _ ≤ 8 * (k + 1).factorial := Nat.mul_le_mul_left 8 (Nat.self_le_factorial _)
+    _ ≤ scale k := Nat.mul_le_mul_right _ hp
 
 private def endpoint : ℕ → ℕ
   | 0 => 0
