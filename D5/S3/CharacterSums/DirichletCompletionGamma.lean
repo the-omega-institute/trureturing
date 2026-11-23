@@ -106,7 +106,8 @@ theorem logarithmic_series_bound :
     simpa only [Nat.cast_add, Nat.cast_ofNat] using htail
   have hb : (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
       Real.log 2 / 4 + Real.log 3 / 9 + (Real.log 3 + 1) / 3 := by
-    have hd (x : ℝ) (hx : 1 ≤ x) := log_div_sq_is_deriv x (by linarith)
+    have hd (x : ℝ) (hx : 1 ≤ x) :=
+      log_div_sq_is_deriv x (show x ∈ Ici (0 : ℝ) from by change 0 ≤ x; linarith)
     have hn (x : ℝ) (hx : 1 < x) : 0 ≤ f x :=
       div_nonneg (Real.log_nonneg (by linarith)) (sq_nonneg _)
     have hi := integrableOn_Ioi_deriv_of_nonneg' hd hn
@@ -115,7 +116,7 @@ theorem logarithmic_series_bound :
       tendsto_antideriv_log_div_sq
     have hanti : AntitoneOn f (Ici (1 : ℝ)) :=
       antitoneOn_log_div_sq.mono (by intro x hx; simp only [mem_Ici] at *; linarith)
-    have htbound := hanti.tsum_comp_add_le_integral 1 hi hn
+    have htbound := AntitoneOn.tsum_comp_add_le_integral (f := f) 1 hanti hi hn
     have hh : (∫ x : ℝ in Ioi 1, f x) = (Real.log 3 + 1) / 3 := by
       convert he using 1 <;> norm_num <;> ring
     rw [hh] at htbound
