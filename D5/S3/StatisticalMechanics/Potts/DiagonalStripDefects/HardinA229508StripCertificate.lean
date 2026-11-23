@@ -14,7 +14,7 @@ one_counts: proof_shape=bind-only; consumers=HardinA229683StripCertificate.trans
 transition_counts: proof_shape=bind-only; consumers=HardinA229508Strip.counting_bridge, HardinA229683StripCertificate.transition_counts
 block_projection: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_inherited, forward_zeroth
 forward_zeroth: proof_shape=bind-only; consumers=finite_certificate
-W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_one, forward_one._proof_1
+W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_one
 coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
 squareMonicCoeff: proof_shape=bind-only; consumers=coeff, HardinA229683StripCertificate.coeff
 coeff_values: proof_shape=bind-only; consumers=finite_certificate, inherited_relation, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
