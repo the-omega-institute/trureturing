@@ -56,7 +56,10 @@ internal sealed class AlexanderssonLeiteFundamentalLengthRefutationDocument : IS
                         + "Their contribution is t²(272 + 1904t + 4913t²). Removing the two linear "
                         + "factors at zero leaves a quadratic with discriminant −1720128. A real root "
                         + "would make this discriminant a real square."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alexandersson-leite-2026-fundamental-length-real-rootedness"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
