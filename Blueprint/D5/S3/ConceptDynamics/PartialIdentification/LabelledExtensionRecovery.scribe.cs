@@ -18,7 +18,8 @@ internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A complete label history identifies its event order exactly when every label fiber " +
-        "is a chain in the finite induced partial order.",
+        "is a chain, for finite induced supports and for complete histories of countably " +
+        "infinite past-finite partial orders.",
         H("Recovering Event Order from Labels"),
         Blocks(
             Paragraph(Text(
@@ -60,12 +61,103 @@ internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinit
                         "condition between subtype lists and ambient lists.")),
                     Paragraph(Text(
                         "This is a repository-derived classification with classical nice-labelling " +
-                        "context; it makes no originality claim. Nice labels in finite conflict-free " +
+                        "context. Nice labels in finite conflict-free " +
                         "event structures separate incomparable events, equivalently giving chain " +
                         "fibers. See Santocanale, https://arxiv.org/html/0903.3462v1, Definition 2.3, Lemma 2.11, " +
                         "and Proposition 2.12. The present statement concerns complete extensions " +
                         "of arbitrary finite induced subsets and an arbitrary alphabet."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "For the infinite statement, E is a countably infinite partially ordered type, " +
+                "and every strict past Iio x is finite. The alphabet A lies in an independent " +
+                "universe and is arbitrary. A History E is a bijection e from the natural numbers " +
+                "onto E satisfying, for every i < j, not (e j <= e i). Thus every event occurs " +
+                "exactly once, and each predecessor occurs before its successor. No total order " +
+                "on E or history is supplied as an additional premise.")),
+            Describe.Lean(
+                DescribeId.Create("infinite-labelled-extension-recovery"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/PartialIdentification/LabelledExtensionRecovery.infinite_result"),
+                H("Complete natural histories and exact label recovery"),
+                StatementSource.FromAuthor(InfiniteResultFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "There exists a complete natural history. On all such histories, the " +
+                        "complete infinite label word determines the history exactly when all " +
+                        "equal-label events are comparable. Countability and finite strict pasts " +
+                        "apply to the original partial order; the statement imposes no bound on " +
+                        "its width or on the alphabet.")),
+                    Paragraph(Text(
+                        "For existence, choose an injective natural-number code c for E. The " +
+                        "closed past of x is finite, so define its rank r(x) as the sum of " +
+                        "c(y)+1 over y <= x. This rank bounds c(x) and increases strictly when " +
+                        "x < y. Pair r(x) with c(x) using Nat.pair. Pairing is injective, and " +
+                        "the square bounds for Nat.pair show that this key increases along " +
+                        "strict comparisons: the key for x is less than (r(x)+1)^2, while the " +
+                        "key for y is at least r(y)^2. Its range is an infinite subset of the " +
+                        "natural numbers. Mathlib's Nat.Subtype.orderIsoOfNat enumerates this " +
+                        "range in increasing order, and Equiv.ofInjective transports that " +
+                        "enumeration back to E. The resulting bijection is compatible with " +
+                        "the original partial order.")),
+                    Paragraph(Text(
+                        "For recovery, use strong induction on the index. Suppose two histories " +
+                        "agree before n and have the same label at n. If their current events " +
+                        "differ, surjectivity places each event somewhere in the other history. " +
+                        "Injectivity and equality at all earlier indices force both positions " +
+                        "to be strictly after n. The two history conditions then forbid both " +
+                        "order comparisons between those events, contradicting the chain-fiber " +
+                        "hypothesis. This argument uses complete histories and does not assume " +
+                        "that arbitrary prefixes of equal length have the same support.")),
+                    Paragraph(Text(
+                        "For necessity, let a and b be incomparable events with the same label. " +
+                        "The union of their closed pasts is a finite lower support F. The " +
+                        "existing private incomparable_collision construction on the subtype F " +
+                        "gives complete finite extensions with a shared prefix and suffix and " +
+                        "with a,b in the two adjacent orders. The complement of F remains " +
+                        "countably infinite and past-finite. Choose one complete history of " +
+                        "that complement. The history_append construction joins each finite " +
+                        "extension to this same actual continuation, proving bijectivity and " +
+                        "order compatibility across the join. The two resulting complete " +
+                        "histories differ at the swap position and have identical infinite " +
+                        "label words.")),
+                    Paragraph(Text(
+                        "Brightwell and Luczak, Order-invariant measures on fixed causal sets, " +
+                        "https://arxiv.org/abs/0901.0242v2, abstract and Introduction, identify " +
+                        "countably infinite past-finite posets precisely with posets admitting " +
+                        "natural extensions. Their natural extension is the History object " +
+                        "used here. The Lean construction combines countability, finite sums, " +
+                        "natural-number pairing and Mathlib's exact infinite-subset enumeration " +
+                        "API with the finite extension and collision machinery in this owner."))),
                 DescribeRole.Theorem))));
+
+    private static Formula InfiniteResultFormula()
+    {
+        var e = V("E");
+        var alphabet = V("A");
+        var label = V("label");
+        var a = V("a");
+        var b = V("b");
+        var x = V("x");
+        var history = Call("History", e);
+        var natural = Seq(Mathbb, Grp(V("N")));
+        var chains = All(a, e, All(b, e,
+            Imp(Equal(new Formula.Apply(label, [a]), new Formula.Apply(label, [b])),
+                Seq(Par(Seq(a, Sp, Le, Sp, b)), Sp, Lor, Sp,
+                    Par(Seq(b, Sp, Le, Sp, a))))));
+        var word = Seq(LambdaLower, Sp, Par(Seq(V("h"), Colon, Sp, history)), Sp, Mapsto, Sp,
+            LambdaLower, Sp, Par(Seq(V("n"), Colon, Sp, natural)), Sp, Mapsto, Sp,
+            new Formula.Apply(label, [new Formula.Apply(V("h"), [V("n")])]));
+        var classification = Seq(Par(chains), Sp, Iff, Sp, Call("Injective", Par(word)));
+        var conclusion = Seq(Call("Nonempty", history), Sp, Land, Sp, Par(classification));
+        var past = All(x, e, Call("Finite", Call("Iio", x)));
+        return All(e, Seq(V("Type"), Underscore, Grp(V("u"))),
+            All(alphabet, Seq(V("Type"), Underscore, Grp(V("v"))),
+            Seq(OpenBracket, Call("PartialOrder", e), CloseBracket, Sp,
+                OpenBracket, Call("Countable", e), CloseBracket, Sp,
+                OpenBracket, Call("Infinite", e), CloseBracket, Sp,
+                Imp(past, All(label, Seq(e, Sp, To, Sp, alphabet), conclusion)))));
+    }
 
     private static Formula ResultFormula()
     {
