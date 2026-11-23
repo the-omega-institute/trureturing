@@ -48,7 +48,7 @@ internal sealed class LabelledExtensionRecoveryDocument : IScribeDocumentDefinit
                         "This is a repository-derived classification with classical nice-labelling " +
                         "context; it makes no originality claim. Nice labels in finite conflict-free " +
                         "event structures separate incomparable events, equivalently giving chain " +
-                        "fibers. See Santocanale, arXiv:0903.3462v1, Definition 2.3, Lemma 2.11, " +
+                        "fibers. See Santocanale, https://arxiv.org/html/0903.3462v1, Definition 2.3, Lemma 2.11, " +
                         "and Proposition 2.12. The present statement concerns complete extensions " +
                         "of arbitrary finite induced subsets and an arbitrary alphabet."))),
                 DescribeRole.Theorem))));

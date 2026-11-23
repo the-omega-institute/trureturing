@@ -1,6 +1,5 @@
 import D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery
-import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
 
@@ -9,7 +8,6 @@ namespace Reg.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecov
 open _root_.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery
 open _root_.D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
 
 universe u v
 
@@ -47,7 +45,7 @@ abbrev arena : Arena where
       ExtensionList (∅ : Set p.E) (p.F : Set p.E) m →
       obs.readout () p l = obs.readout () p m → l = m
 
-def bridge : (type_of% (@result.{u, v})) ↔ arena.{u, v}.Law actual := by
+def bridge : (type_of% (@_root_.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery.result.{u, v})) ↔ arena.{u, v}.Law actual := by
   constructor
   · intro h p
     exact @h p.E p.order p.A p.F p.label
@@ -67,34 +65,15 @@ private def witness : Params.{u, v} where
   F := {⟨0⟩, ⟨1⟩}
   label x := ⟨x.down⟩
 
-private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
-  classical
-  intro h
-  let p := witness.{u, v}
-  let a : p.E := ⟨0⟩
-  let b : p.E := ⟨1⟩
-  have hc : ∀ x ∈ p.F, ∀ y ∈ p.F, p.label x = p.label y → x ≤ y ∨ y ≤ x := by
-    intro x _ y _ hxy
-    left
-    change x = y
-    exact ULift.ext _ _ (congrArg ULift.down hxy)
-  have hab : ExtensionList (∅ : Set p.E) (p.F : Set p.E) [a, b] := by
-    simp [ExtensionList, p, witness, a, b, discreteOrder, Set.ext_iff]
-  have hba : ExtensionList (∅ : Set p.E) (p.F : Set p.E) [b, a] := by
-    simp [ExtensionList, p, witness, a, b, discreteOrder, Set.ext_iff, or_comm]
-  have heq := (h p).mp hc [a, b] [b, a] hab hba rfl
-  have hn := congrArg (fun l => l.head?) heq
-  have hne : a ≠ b := by intro hh; have := congrArg ULift.down hh; cases this
-  exact hne (List.cons.inj heq).1
-
-def family : Registration arena.{u, v} (type_of% (@result.{u, v})) where
+/-- Completing the audit requires a rejected observation family. -/
+def family (negative : ¬ arena.{u, v}.Law rejected) : Registration arena.{u, v} (type_of% (@_root_.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery.result.{u, v})) where
   actual := actual
   bridge := bridge
-  variation := ⟨bridge.mp (@result.{u, v}), rejected, rejected_law⟩
+  variation := ⟨bridge.mp (@_root_.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery.result.{u, v}), rejected, negative⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      refine ⟨rejected, ?_, ?_, negative⟩
       · intro j hj
         exact (hj (Subsingleton.elim _ _)).elim
       · funext e
@@ -106,45 +85,7 @@ def family : Registration arena.{u, v} (type_of% (@result.{u, v})) where
     refine ⟨witness, [], [⟨0⟩], ?_⟩
     simp [actual, realize]
 
-/-- The observation is the original label map on each candidate complete list. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,0,0,0}
-    (@result.{u, v}) (type_of% actual.{u, v}) Unit Unit where
-  unitName := `D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery.result.__information_unit
-  realizationName := `Reg.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery
-    definition := none
-    coordinates := #[0, 1, 2, 3, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "domain", "fn", "arg"]
-      stateBinder := 5
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "domain", "arg"]
-      stateBinder := 6
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 
 #print axioms family
-#print axioms audit
 
 end Reg.D5.S3.ConceptDynamics.PartialIdentification.LabelledExtensionRecovery
