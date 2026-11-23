@@ -315,4 +315,88 @@ theorem monochromatic_partial_steiner {d r : ℕ} {U : Type*}
     subst v
     rfl
 
+/-- An extension with the extra dimension consists of the Latin part and a
+partial Steiner system in every actual row and residue class. -/
+theorem forward_decomposition {d r : ℕ} {T U : Type*} [NeZero (3 * r)] [Fintype U]
+    (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
+    (he : ∀ x a, (e x a).1 = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a)
+    (hd : 0 < d) (mixed : T → Fin 3 → Row d × ZMod (3 * r))
+    (internal : U → Fin 3 → Row d × ZMod (3 * r))
+    (family : LiftedLineFamily mixed)
+    (crosses : ∀ t, Function.Injective (fun i => (mixed t i).1))
+    (sameRow : ∀ u i, (internal u i).1 = (internal u 0).1)
+    (injective : ∀ u, Function.Injective (internal u))
+    (pairUnique : ∀ t u x y, x ≠ y → covers (Sum.elim mixed internal t) x y →
+      covers (Sum.elim mixed internal u) x y → t = u)
+    (dim : Module.finrank (ZMod 3) (potentialSpace (Sum.elim mixed internal) 0) = d + 1) :
+    ∃ (L : Row d → Fin r → Fin r → Fin r) (P : Row d → ZMod 3 → Set (Set (Fin r))),
+      (∀ x, IsLatin r (L x)) ∧ (∀ x c, IsPartialSteiner (P x c)) ∧
+      Set.range (fun u => Set.range (internal u)) =
+        Set.range (fun u => Set.range (latinPoint e L u)) ∪
+          {t | ∃ x c s, s ∈ P x c ∧ t = (fun a => (x, (e x).symm (c, a))) '' s} := by
+  classical
+  let reduce := cyclicReduction (3 * r)
+  let point (x : Row d) (c : ZMod 3) (a : Fin r) := (x, (e x).symm (c,a))
+  let label (x : Row d) (u : U) (i : Fin 3) := (e x (internal u i).2).2
+  let blocks (x : Row d) (c : ZMod 3) : Set (Set (Fin r)) :=
+    {s | ∃ u, (internal u 0).1 = x ∧ (∀ i, (e x (internal u i).2).1 = c) ∧
+      s = Set.range (label x u)}
+  obtain ⟨L, hLatin, hL⟩ :=
+    transversal_part_latin e he hd mixed internal family crosses sameRow pairUnique dim
+  have internalUnique : ∀ t u x y, x ≠ y → covers (internal t) x y →
+      covers (internal u) x y → t = u :=
+    fun t u x y ne ht hu => Sum.inr.inj (pairUnique (Sum.inr t) (Sum.inr u) x y ne ht hu)
+  have hblocks (x : Row d) (c : ZMod 3) : IsPartialSteiner (blocks x c) :=
+    monochromatic_partial_steiner e internal sameRow injective internalUnique x c
+  have combined : LiftedLineFamily (Sum.elim mixed internal) := by
+    constructor
+    · intro x y a b different
+      obtain ⟨t,i,j,k,hij,hki,hkj,hi,hj,hk⟩ := family.1 x y a b different
+      exact ⟨Sum.inl t,i,j,k,hij,hki,hkj,hi,hj,hk⟩
+    · intro t
+      cases t with
+      | inl t => exact family.2 t
+      | inr u => exact Or.inl (sameRow u)
+  obtain ⟨shape, _⟩ := residue_dichotomy hd mixed internal combined crosses sameRow dim
+  have red_eq : ∀ a, reduce a = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a := by
+    intro a
+    dsimp only [reduce, cyclicReduction]
+    rw [dite_eq_left (dvd_mul_right 3 r)]
+    rfl
+  have recover (u : U) (x : Row d) (c : ZMod 3) (hx : (internal u 0).1 = x)
+      (hc : ∀ i, (e x (internal u i).2).1 = c) :
+      Set.range (internal u) = point x c '' Set.range (label x u) := by
+    have pair (i : Fin 3) : internal u i = point x c (label x u i) := by
+      refine Prod.ext ((sameRow u i).trans hx) ?_
+      change (internal u i).2 = (e x).symm (c, label x u i)
+      apply (e x).injective
+      rw [Equiv.apply_symm_apply]
+      exact Prod.ext (hc i) rfl
+    ext y
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact ⟨label x u i, ⟨i, rfl⟩, (pair i).symm⟩
+    · rintro ⟨_, ⟨i, rfl⟩, rfl⟩
+      exact ⟨i, pair i⟩
+  refine ⟨L, blocks, hLatin, hblocks, ?_⟩
+  ext t
+  constructor
+  · rintro ⟨u,rfl⟩
+    rcases shape u with trans | same
+    · apply Or.inl
+      rw [← hL]
+      exact ⟨⟨u,trans⟩,rfl⟩
+    · apply Or.inr
+      let x := (internal u 0).1
+      let c := reduce (internal u 0).2
+      have hc (i : Fin 3) : (e x (internal u i).2).1 = c := by
+        rw [he x, ← red_eq]
+        exact same i
+      exact ⟨x,c,Set.range (label x u),⟨u,rfl,hc,rfl⟩,recover u x c rfl hc⟩
+  · rintro (h | ⟨x,c,s,⟨u,hx,hc,rfl⟩,eq⟩)
+    · rw [← hL] at h
+      obtain ⟨u,hu⟩ := h
+      exact ⟨u.val,hu⟩
+    · exact ⟨u,(recover u x c hx hc).trans eq.symm⟩
+
 end D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition
