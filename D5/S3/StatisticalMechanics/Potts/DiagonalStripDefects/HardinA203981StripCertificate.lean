@@ -173,23 +173,18 @@ private theorem allocation_indicator (u v d : ℕ) (P : Prop) [Decidable P] :
 
 /-- Each full-strip transition is the sum of products for the exact-cost allocations. -/
 theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) ℤ)
-    (i j : Fin 15)
+    (p : Row 3 6) (j : Fin 15)
     (h : ∀ (k : Fin (d + 1)) (a : Col) (c : Fin 5),
-      (a = (parityRows (HardinA203981StripData.representatives i)).1 ∨
-        a = (parityRows (HardinA203981StripData.representatives i)).2) →
+      (a = (parityRows p).1 ∨
+        a = (parityRows p).2) →
       (c = (classPair j).1 ∨ c = (classPair j).2) →
       (∑ b : Col, if halfCost a b = k.val ∧ cls b = c then (1 : ℤ) else 0) = K k (cls a) c) :
-    (∑ r : Row 3 6, if bondDefects (betw 6) (HardinA203981StripData.representatives i) r = d ∧
+    (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧
       boundary r = j then (1 : ℤ) else 0) =
-      ∑ k : Fin (d + 1), classProduct (K k) (K k.rev) i j := by
-  let p := HardinA203981StripData.representatives i
+      ∑ k : Fin (d + 1), unordered (K k (cls (parityRows p).1))
+        (K k.rev (cls (parityRows p).2)) j := by
   let a := (parityRows p).1
   let b := (parityRows p).2
-  have hcls : ∀ i : Fin 15,
-      cls (parityRows (HardinA203981StripData.representatives i)).1 = (classPair i).1 ∧
-      cls (parityRows (HardinA203981StripData.representatives i)).2 = (classPair i).2 := by
-    simp only [HardinA203981StripData.representatives, Equiv.apply_symm_apply]
-    decide +kernel
   calc
     _ = ∑ t : Col × Col, if bondDefects (betw 6) p (parityRows.symm t) = d ∧
         boundary (parityRows.symm t) = j then (1 : ℤ) else 0 :=
@@ -206,8 +201,6 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
       apply Finset.sum_congr rfl
       intro k _
       rw [pair_sum (fun y => halfCost a y = k.val) (fun x => halfCost b x = d - k.val)]
-      have ha : cls a = (classPair i).1 := (hcls i).1
-      have hb : cls b = (classPair i).2 := (hcls i).2
       have first (c : Fin 5) (hc : c = (classPair j).1 ∨ c = (classPair j).2) :
           (∑ y : Col, if halfCost a y = k.val ∧ cls y = c then (1 : ℤ) else 0) = K k (cls a) c :=
         h k a c (Or.inl rfl) hc
@@ -215,8 +208,8 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
           (∑ x : Col, if halfCost b x = d - k.val ∧ cls x = c then (1 : ℤ) else 0) =
             K k.rev (cls b) c := by
         simpa only [Fin.val_rev, Nat.succ_sub_succ_eq_sub] using h k.rev b c (Or.inr rfl) hc
-      simp only [classProduct, unordered, first _ (Or.inl rfl), first _ (Or.inr rfl),
-        second _ (Or.inl rfl), second _ (Or.inr rfl), ha, hb]
+      simp only [unordered, first _ (Or.inl rfl), first _ (Or.inr rfl),
+        second _ (Or.inl rfl), second _ (Or.inr rfl)]
 
 /-- Reverse the target before applying a half-strip class count. -/
 theorem reversed_count (n : ℕ) (a : Col) (j : Fin 5) :
@@ -255,17 +248,26 @@ theorem zero_exact (a : Col) (j : Fin 5) :
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (HardinA203981StripData.representatives i) r = 0 ∧
       boundary r = j then (1 : ℤ) else 0) = T i j := by
-  have h := allocated_counts 0 (fun _ => halfZero) i j (fun k a c _ _ => by
+  have h := allocated_counts 0 (fun _ => halfZero) (HardinA203981StripData.representatives i) j (fun k a c _ _ => by
     fin_cases k
     exact zero_exact a c)
   rw [Fin.sum_univ_one] at h
-  exact h
+  have cls_at_rep : ∀ i : Fin 15,
+      cls (parityRows (HardinA203981StripData.representatives i)).1 = (classPair i).1 ∧
+      cls (parityRows (HardinA203981StripData.representatives i)).2 = (classPair i).2 := by
+    simp only [HardinA203981StripData.representatives, Equiv.apply_symm_apply]
+    decide +kernel
+  simpa only [(cls_at_rep i).1, (cls_at_rep i).2] using h
 
 /-- The exact zero-cost class counts. -/
 theorem counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 0 ∧ boundary r = j
       then (1 : ℤ) else 0) = T (boundary p) j :=
-  (HardinA203981StripSymmetry.lift_counts 0 p j).trans (representative_counts (boundary p) j)
+  by
+  have boundary_at_rep : ∀ i : Fin 15, boundary (HardinA203981StripData.representatives i) = i := by
+    decide +kernel
+  exact (HardinA203981StripSymmetry.lift_counts 0 p (HardinA203981StripData.representatives (boundary p)) j
+    (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
 
 /-- The distribution of labelled single rows. -/
 theorem initial_counts (j : Fin 15) :

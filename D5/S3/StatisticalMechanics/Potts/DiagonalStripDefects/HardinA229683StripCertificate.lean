@@ -132,19 +132,28 @@ private theorem two_exact (a : Col) (j : Fin 5) :
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 2 ∧ boundary r = j
       then (1 : ℤ) else 0) = costTwo i j := by
-  have h := allocated_counts 2 ![halfZero, halfOne, halfTwo] i j (fun k a c _ _ => by
+  have h := allocated_counts 2 ![halfZero, halfOne, halfTwo] (representatives i) j (fun k a c _ _ => by
       fin_cases k
       · exact zero_exact a c
       · exact one_exact a c
       · exact two_exact a c
     )
   rw [Fin.sum_univ_three] at h
-  exact h
+  have cls_at_rep : ∀ i : Fin 15,
+      cls (parityRows (representatives i)).1 = (classPair i).1 ∧
+      cls (parityRows (representatives i)).2 = (classPair i).2 := by
+    simp only [representatives, Equiv.apply_symm_apply]
+    decide +kernel
+  simpa only [(cls_at_rep i).1, (cls_at_rep i).2] using h
 
 theorem two_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 2 ∧ boundary r = j
       then (1 : ℤ) else 0) = costTwo (boundary p) j :=
-  (HardinA203981StripSymmetry.lift_counts 2 p j).trans (representative_counts (boundary p) j)
+  by
+  have boundary_at_rep : ∀ i : Fin 15, boundary (representatives i) = i := by
+    decide +kernel
+  exact (HardinA203981StripSymmetry.lift_counts 2 p (representatives (boundary p)) j
+    (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
 
 private theorem cut_inherited (p r : Row 3 6) (d : ℕ) (s : Fin 15 ⊕ Fin 15) :
     (bondDefects (betw 6) p r ≤ d + 1 ∧

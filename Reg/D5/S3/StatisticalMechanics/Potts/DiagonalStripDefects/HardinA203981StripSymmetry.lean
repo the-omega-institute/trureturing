@@ -19,25 +19,23 @@ open scoped BigOperators
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature
-  (Σ _ : ℕ, Fin 15) (fun _ => Fin 15) (fun _ => ℤ)
+  (Σ _ : ℕ, Fin 15) (fun _ => Row 3 6) (fun _ => ℤ)
 def readout : Realization signature := realize signature
-  (fun _ x i => ∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = x.1 ∧
+  (fun _ x q => ∑ r : Row 3 6, if bondDefects (betw 6) q r = x.1 ∧
     boundary r = x.2 then (1 : ℤ) else 0) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
-  (fun _ x i => readout.readout () x i + 1) (fun e => nomatch e)
+  (fun _ x q => readout.readout () x q + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law a := ∀ (d : ℕ) (p : Row 3 6) (j : Fin 15),
+  Law a := ∀ (d : ℕ) (p q : Row 3 6) (j : Fin 15), boundary p = boundary q →
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
-      then (1 : ℤ) else 0) = a.readout () ⟨d, j⟩ (boundary p)
+      then (1 : ℤ) else 0) = a.readout () ⟨d, j⟩ q
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h 0 (representatives 0) 0
-  have ha := lift_counts 0 (representatives 0) 0
+  have hb := h 0 (representatives 0) (representatives 0) 0 rfl
   change _ = (∑ r : Row 3 6, if bondDefects (betw 6)
-    (representatives (boundary (representatives 0))) r = 0 ∧ boundary r = 0
-    then (1 : ℤ) else 0) + 1 at hb
-  linarith [ha, hb]
+    (representatives 0) r = 0 ∧ boundary r = 0 then (1 : ℤ) else 0) + 1 at hb
+  linarith
 
 def family : Registration arena (type_of% @lift_counts) where
   actual := readout
@@ -47,7 +45,7 @@ def family : Registration arena (type_of% @lift_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨0, 0⟩, 0, 1, ?_⟩
+    refine ⟨⟨0, 0⟩, representatives 0, representatives 1, ?_⟩
     have rep : ∀ i : Fin 15, boundary (representatives i) = i := by decide +kernel
     change (∑ r : Row 3 6, if bondDefects (betw 6) (representatives 0) r = 0 ∧
         boundary r = 0 then (1 : ℤ) else 0) ≠
@@ -77,12 +75,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripSymmetry
     definition := none
-    coordinates := #[0, 2]
+    coordinates := #[0, 3]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "arg"]
+      stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

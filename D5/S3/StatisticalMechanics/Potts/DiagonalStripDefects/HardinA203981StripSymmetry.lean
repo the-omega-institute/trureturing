@@ -122,36 +122,42 @@ private theorem recolor_match (p r : Row 3 6)
   refine ⟨e, f, parityRows.injective ?_⟩
   exact Prod.ext he hf
 
-/-- Every exact-cost class count is determined at the representative of the source row. -/
-theorem lift_counts (d : ℕ) (p : Row 3 6) (j : Fin 15) :
+/-- Exact-cost transition counts agree for source rows of the same boundary class. -/
+theorem lift_counts (d : ℕ) (p q : Row 3 6) (j : Fin 15) (h : boundary p = boundary q) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
       then (1 : ℤ) else 0) =
-    (fun i => ∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = d ∧
-      boundary r = j then (1 : ℤ) else 0) (boundary p) := by
-  have transport (q : Row 3 6)
-      (heq : ∃ e f : Equiv.Perm (Fin 3), recolor e f q = representatives (boundary p)) :
-      (∑ r : Row 3 6, if bondDefects (betw 6) q r = d ∧ boundary r = j
+    ∑ r : Row 3 6, if bondDefects (betw 6) q r = d ∧ boundary r = j
+      then (1 : ℤ) else 0 := by
+  have at_rep (p : Row 3 6) :
+      (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
         then (1 : ℤ) else 0) =
       ∑ r : Row 3 6, if bondDefects (betw 6) (representatives (boundary p)) r = d ∧
         boundary r = j then (1 : ℤ) else 0 := by
-    obtain ⟨e, f, hr⟩ := heq
-    calc
-      _ = ∑ r : Row 3 6, if bondDefects (betw 6) (recolor e f q) (recolor f e r) = d ∧
-          boundary (recolor f e r) = j then (1 : ℤ) else 0 := by
-            simp only [cost_recolor, boundary_recolor]
-      _ = _ := by
-        rw [hr]
-        exact (recolor f e).sum_comp (fun r =>
-          if bondDefects (betw 6) (representatives (boundary p)) r = d ∧ boundary r = j
-            then (1 : ℤ) else 0)
-  rcases pair_match (cls (parityRows p).1) (cls (parityRows p).2) with
-    ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩
-  · exact transport p (recolor_match _ _ h₀ h₁)
-  · calc
-      _ = ∑ r : Row 3 6, if bondDefects (betw 6) (reflect p) (reflect r) = d ∧
-          boundary (reflect r) = j then (1 : ℤ) else 0 := by
-            simp only [cost_reflect, boundary_reflect]
-      _ = _ := reflect.sum_comp _ |>.trans
-        (transport (reflect p) (recolor_match _ _ h₀ h₁))
+    have transport (q : Row 3 6)
+        (heq : ∃ e f : Equiv.Perm (Fin 3), recolor e f q = representatives (boundary p)) :
+        (∑ r : Row 3 6, if bondDefects (betw 6) q r = d ∧ boundary r = j
+          then (1 : ℤ) else 0) =
+        ∑ r : Row 3 6, if bondDefects (betw 6) (representatives (boundary p)) r = d ∧
+          boundary r = j then (1 : ℤ) else 0 := by
+      obtain ⟨e, f, hr⟩ := heq
+      calc
+        _ = ∑ r : Row 3 6, if bondDefects (betw 6) (recolor e f q) (recolor f e r) = d ∧
+            boundary (recolor f e r) = j then (1 : ℤ) else 0 := by
+              simp only [cost_recolor, boundary_recolor]
+        _ = _ := by
+          rw [hr]
+          exact (recolor f e).sum_comp (fun r =>
+            if bondDefects (betw 6) (representatives (boundary p)) r = d ∧ boundary r = j
+              then (1 : ℤ) else 0)
+    rcases pair_match (cls (parityRows p).1) (cls (parityRows p).2) with
+      ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩
+    · exact transport p (recolor_match _ _ h₀ h₁)
+    · calc
+        _ = ∑ r : Row 3 6, if bondDefects (betw 6) (reflect p) (reflect r) = d ∧
+            boundary (reflect r) = j then (1 : ℤ) else 0 := by
+              simp only [cost_reflect, boundary_reflect]
+        _ = _ := reflect.sum_comp _ |>.trans
+          (transport (reflect p) (recolor_match _ _ h₀ h₁))
+  exact (at_rep p).trans (h.symm ▸ (at_rep q).symm)
 
 end D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripSymmetry

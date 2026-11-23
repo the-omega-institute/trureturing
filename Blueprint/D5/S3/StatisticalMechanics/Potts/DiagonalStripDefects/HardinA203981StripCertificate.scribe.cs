@@ -107,11 +107,10 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
     private static Formula AllocatedCountsFormula()
     {
         var d = V("d"); var m = V("m"); var k = V("k"); var a = V("a"); var c = V("c");
-        var i = V("i"); var j = V("j"); var r = V("r");
+        var p = V("p"); var j = V("j"); var r = V("r");
         var allocations = Call("Fin", Add(d, N("1")));
         var matrix = Call("Matrix", Fin("5"), Fin("5"), V("Int"));
-        var representative = Call("HardinA203981StripData.representatives", i);
-        var source = Call("HardinA203981StripData.parityRows", representative);
+        var source = Call("HardinA203981StripData.parityRows", p);
         var target = Call("HardinA203981StripData.classPair", j);
         Formula MemberOfPair(Formula value, Formula pair) => Seq(
             Parenthesized(Eq(value, Call("Prod.fst", pair))), Sp, Lor, Sp,
@@ -121,13 +120,15 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
                 Parenthesized(MemberOfPair(c, target)), Sp, To, Sp,
                 Parenthesized(Eq(HalfCount(a, Call("Fin.val", k), c), App(m, k, Class(a), c)))))));
         var boundary = Call("HardinA203981StripData.boundary", r);
-        var cost = Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), representative, r);
+        var cost = Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), p, r);
         var full = SumOver("r", Row("6"), If(And(Eq(cost, d), Eq(boundary, j)), CastInt(N("1")), CastInt(N("0"))));
         var residual = Call("Fin.rev", k);
         var sum = SumOver("k", allocations,
-            Call("HardinA203981StripData.classProduct", App(m, k), App(m, residual), i, j));
+            Call("HardinA203981StripData.unordered",
+                App(m, k, Class(Call("Prod.fst", source))),
+                App(m, residual, Class(Call("Prod.snd", source))), j));
         return All("d", V("Nat"), All("m", Arr(allocations, matrix),
-            All("i", Fin("15"), All("j", Fin("15"), Seq(Parenthesized(half), Sp, To, Sp, Parenthesized(Eq(full, sum)))))));
+            All("p", Row("6"), All("j", Fin("15"), Seq(Parenthesized(half), Sp, To, Sp, Parenthesized(Eq(full, sum)))))));
     }
 
     private static Formula ForwardTableOfStepsFormula()

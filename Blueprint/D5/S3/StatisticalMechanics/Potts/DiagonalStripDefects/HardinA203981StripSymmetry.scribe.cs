@@ -18,7 +18,7 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create("lift-counts"), DeclarationHandle.Create(Prefix + "lift_counts"),
             H("Transfer counts are constant on a boundary class"), StatementSource.FromAuthor(Disp(LiftCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum to its representative."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum through a common representative."))), DescribeRole.Theorem))));
     private static Formula CostFormula()
     {
         var p = V("p");
@@ -40,9 +40,10 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
         Formula Count(Formula source) => SumOver("r", Row("6"), If(And(
             Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), source, r), d),
             Eq(Call("HardinA203981StripData.boundary", r), j)), CastInt(N("1")), CastInt(N("0"))));
-        var representative = Call("HardinA203981StripData.representatives",
-            Call("HardinA203981StripData.boundary", p));
-        return All("d", V("Nat"), All("p", Row("6"), All("j", Fin("15"), Eq(Count(p), Count(representative)))));
+        var q = V("q");
+        var same = Eq(Call("HardinA203981StripData.boundary", p), Call("HardinA203981StripData.boundary", q));
+        return All("d", V("Nat"), All("p", Row("6"), All("q", Row("6"), All("j", Fin("15"),
+            Seq(Parenthesized(same), Sp, Implies, Sp, Parenthesized(Eq(Count(p), Count(q)))))));
     }
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Neg, Sp, N(digits)) :
