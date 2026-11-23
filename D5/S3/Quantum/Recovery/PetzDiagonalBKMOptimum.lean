@@ -19,7 +19,7 @@ set_option autoImplicit false
 namespace D5.S3.Quantum.Recovery.PetzDiagonalBKMOptimum
 
 open Matrix MeasureTheory
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
 open D5.S3.Divergence.LogDerivTrace (logDeriv logDeriv_integrable)
 open D5.S3.Divergence.MeanKernels.LogarithmicMeanSandwich (logMean_kernel_sandwich)
 open D5.S3.Quantum.Divergence.UmegakiRareFlagBKM (pair_kernel_eval)
@@ -34,7 +34,7 @@ def diagonalWeights (β : Slot → ℝ) : Weights := fun i j =>
 private theorem weights_pos_le (β : Slot → ℝ) (hβ : ∀ i, 0 < β i) (i j : Slot) :
     0 < diagonalWeights β i j ∧ diagonalWeights β i j ≤ (β i + β j) / 2 := by
   by_cases h : β i = β j
-  · simp only [diagonalWeights, ite_eq_left h, one_div, inv_inv, ← h]
+  · simp only [diagonalWeights, ← h, ite_true, one_div, inv_inv]
     exact ⟨hβ i, by linarith⟩
   · rw [diagonalWeights, ite_eq_right h]
     have hlow : 0 < 2 / (β i + β j) := div_pos (by norm_num) (add_pos (hβ i) (hβ j))
@@ -47,7 +47,7 @@ private theorem weights_symm (β : Slot → ℝ) (i j : Slot) :
     diagonalWeights β i j = diagonalWeights β j i := by
   by_cases h : β i = β j
   · simp [diagonalWeights, h]
-  · simp only [diagonalWeights, ite_eq_right h, ite_eq_right h.symm]
+  · simp only [diagonalWeights, ite_eq_right h, ite_eq_right (Ne.symm h)]
     rw [show Real.log (β j) - Real.log (β i) = -(Real.log (β i) - Real.log (β j)) by ring,
       show β j - β i = -(β i - β j) by ring, neg_div_neg_eq]
 
@@ -57,29 +57,42 @@ private theorem logDeriv_entry (β : Slot → ℝ) (hβ : ∀ i, 0 < β i) (Z : 
       ((diagonalWeights β i j)⁻¹ : ℝ) * Z i j := by
   let ρ : Joint := Matrix.diagonal fun k => (β k : ℂ)
   have hρ : ρ.PosDef := Matrix.PosDef.diagonal fun k => by exact_mod_cast hβ k
+  let A : Joint := Matrix.single j i 1
   let L : Joint →L[ℂ] ℂ :=
-    (ContinuousLinearMap.proj j).comp (ContinuousLinearMap.proj i)
+    (Matrix.traceLinearMap Slot ℂ ℂ).toContinuousLinearMap.comp
+      (mulLeftLinearMap Slot ℂ A).toContinuousLinearMap
+  have hL (X : Joint) : L X = X i j := by
+    change (A * X).trace = X i j
+    simp [A, Matrix.trace_single_mul]
   have hinter := L.integral_comp_comm (logDeriv_integrable ρ Z hρ)
-  change (∫ t in Set.Ioi (0 : ℝ), ((ρ + t • 1)⁻¹ * Z * (ρ + t • 1)⁻¹) i j) =
-    logDeriv ρ Z i j at hinter
+  change (∫ t in Set.Ioi (0 : ℝ), L ((ρ + t • 1)⁻¹ * Z * (ρ + t • 1)⁻¹)) =
+    L (logDeriv ρ Z) at hinter
+  simp only [hL] at hinter
   rw [← hinter]
-  have hres (t : ℝ) : (ρ + t • 1)⁻¹ =
+  have hres (t : ℝ) (ht : 0 < t) : (ρ + t • 1)⁻¹ =
       Matrix.diagonal fun k => (((β k + t : ℝ) : ℂ)⁻¹) := by
     have hd : ρ + t • 1 = Matrix.diagonal fun k => ((β k + t : ℝ) : ℂ) := by
       ext k l
-      by_cases h : k = l <;> simp [ρ, Matrix.diagonal_apply, Matrix.one_apply, h]
-    rw [hd, Matrix.inv_diagonal]
-    rfl
-  simp only [hres, Matrix.mul_diagonal, Matrix.diagonal_mul]
+      by_cases h : k = l <;> simp [ρ, h]
+    rw [hd]
+    apply Matrix.inv_eq_right_inv
+    rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
+    congr 1
+    funext k
+    exact mul_inv_cancel₀ (by exact_mod_cast (add_pos (hβ k) ht).ne')
   have heq (t : ℝ) :
       ((β i + t : ℝ) : ℂ)⁻¹ * Z i j * ((β j + t : ℝ) : ℂ)⁻¹ =
         ((1 / ((β i + t) * (β j + t)) : ℝ) : ℂ) * Z i j := by
     push_cast
-    rw [one_div, mul_inv_rev]
+    rw [one_div, _root_.mul_inv_rev]
     ac_rfl
-  simp_rw [heq]
-  rw [MeasureTheory.integral_mul_const, MeasureTheory.integral_complex_ofReal,
-    pair_kernel_eval _ _ (hβ i) (hβ j)]
+  have hint :
+      (∫ t in Set.Ioi (0 : ℝ), ((ρ + t • 1)⁻¹ * Z * (ρ + t • 1)⁻¹) i j) =
+        ∫ t in Set.Ioi (0 : ℝ), ((1 / ((β i + t) * (β j + t)) : ℝ) : ℂ) * Z i j := by
+    apply integral_congr_ae
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [hres t ht, Matrix.mul_diagonal, Matrix.diagonal_mul, heq]
+  rw [hint, integral_mul_const, integral_complex_ofReal, pair_kernel_eval _ _ (hβ i) (hβ j)]
   simp only [diagonalWeights, inv_inv]
 
 private theorem diagonal_energy (β : Slot → ℝ) (hβ : ∀ i, 0 < β i) (Z : Joint)
