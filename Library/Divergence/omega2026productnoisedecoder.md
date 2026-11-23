@@ -1,5 +1,5 @@
 ---
-bibkey: productnoisedecoder
+bibkey: omega2026productnoisedecoder
 authors: The Omega Institute
 year: 2026
 title: Exact first-order reconstruction under dominant product noise

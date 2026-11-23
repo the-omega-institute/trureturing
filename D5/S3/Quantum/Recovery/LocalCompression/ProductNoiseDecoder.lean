@@ -110,6 +110,19 @@ private lemma traceNorm_real_smul {n : Type*} [Fintype n]
   classical
   convert traceNorm_smul_nonneg X c hc using 2
 
+/-- The exact scaled joint residual expansion and its half trace-norm estimate. -/
+def JointErrorExpansion (T Tε : QuantumChannel B B) (τ : DensityState B)
+    (K : Matrix B B ℂ) (ε L : ℝ) : Prop :=
+  ∀ (ω : DensityState R) (ρ : DensityState (R × B)),
+    let ρR : DensityState R := marginalRight ρ
+    let X := (1 - ε) • (raw ω ⊗ₖ raw τ) + ε • raw ρ
+    let H := raw ρ - amp T (raw ρ) + raw ω ⊗ₖ K
+    let Hε := ε⁻¹ • (X - amp Tε X)
+    Hε = H + (ε * L) • (amp T (raw ρ) - raw ρR ⊗ₖ raw τ) +
+        ε • ((raw ρR - raw ω) ⊗ₖ K) ∧
+    traceNorm (Hε - H) / 2 ≤
+      ε * (L + traceDistance ρR ω * traceNorm K)
+
 /-- A decoder perturbation through the same memory realizes the prescribed
 signed marginal direction and controls the full joint reconstruction error. -/
 theorem faithful_decoder_marginal_shift
@@ -125,15 +138,7 @@ theorem faithful_decoder_marginal_shift
           (reset σ) identity).comp D
         let Tε := Dε.comp E
         act Tε (CStarMatrix.ofMatrix.symm τ.1) = CStarMatrix.ofMatrix.symm τ.1 - ε • K ∧
-        ∀ (ω : DensityState R) (ρ : DensityState (R × B)),
-          let ρR : DensityState R := marginalRight ρ
-          let X := (1 - ε) • (raw ω ⊗ₖ raw τ) + ε • raw ρ
-          let H := raw ρ - amp T (raw ρ) + raw ω ⊗ₖ K
-          let Hε := ε⁻¹ • (X - amp Tε X)
-          Hε = H + (ε * L) • (amp T (raw ρ) - raw ρR ⊗ₖ raw τ) +
-              ε • ((raw ρR - raw ω) ⊗ₖ K) ∧
-          traceNorm (Hε - H) / 2 ≤
-            ε * (L + traceDistance ρR ω * traceNorm K) := by
+        JointErrorExpansion (R := R) T Tε τ K ε L := by
   obtain ⟨L, hL, σ, hσ⟩ := exists_shifted_density τ hτ K hK htr
   refine ⟨L, hL, σ, hσ, ?_⟩
   intro ε hε _ hp T Dε Tε
@@ -144,6 +149,7 @@ theorem faithful_decoder_marginal_shift
     rw [hcomp, act_mixed_reset, ht, show (raw τ).trace = 1 from τ.2.2, one_smul, hσ,
       smul_sub, smul_smul, hre, ← add_sub_assoc, ← add_smul, sub_add_cancel, one_smul]
   refine ⟨hshift, ?_⟩
+  unfold JointErrorExpansion
   intro ω ρ ρR X H Hε
   have hraw : partialTraceRight (raw ρ) = raw ρR := rfl
   have hY : amp Tε (raw ρ) =
