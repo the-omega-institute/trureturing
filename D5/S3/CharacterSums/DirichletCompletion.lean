@@ -541,7 +541,7 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
 theorem norm_logDeriv_LFunction_two {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (t : ℝ) :
     ‖logDeriv χ.LFunction (2 + t * I)‖ ≤
-      Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 := by
+      (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) := by
   let s : ℂ := 2 + t * I
   have hs : 1 < s.re := by simp [s]
   have he : logDeriv χ.LFunction s = -LSeries ((fun n : ℕ => χ n) *
@@ -564,9 +564,8 @@ theorem norm_logDeriv_LFunction_two {q : ℕ} [NeZero q]
   rw [he, norm_neg]
   exact (norm_tsum_le_tsum_norm
     (χ.LSeriesSummable_twist_vonMangoldt hs).norm).trans
-    (((χ.LSeriesSummable_twist_vonMangoldt hs).norm.tsum_le_tsum hterm
-      DirichletCompletionGamma.logarithmic_series_bound.1).trans
-      DirichletCompletionGamma.logarithmic_series_bound.2.1)
+    ((χ.LSeriesSummable_twist_vonMangoldt hs).norm.tsum_le_tsum hterm
+      DirichletCompletionGamma.logarithmic_series_bound.1)
 
 /-- The completed logarithmic derivative separates conductor, Gamma and Dirichlet factors. -/
 theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
@@ -619,50 +618,53 @@ theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
     push_cast
     ring
 
-/-- At the real point two the Gamma real-axis estimate gives a sharper bound. -/
+/-- At two, the exact digamma values retain both parity and the logarithmic series. -/
 theorem completion_center_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
     2 * (logDeriv (completion χ) 2).re ≤
       Real.log (q : ℝ) - Real.log Real.pi +
-        Real.log ((2 + if χ.Even then 0 else 1 : ℝ) / 2) +
-        2 * (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3) := by
-  let x : ℝ := (2 + if χ.Even then 0 else 1) / 2
-  have hx : 1 ≤ x ∧ x ≤ 3 / 2 := by dsimp [x]; split_ifs <;> norm_num
-  have harg : ((2 : ℂ) + (if χ.Even then 0 else 1)) / 2 = (x : ℂ) := by
-    dsimp [x]; split_ifs <;> norm_num
-  have hp := (digamma_ofReal_re_sandwich (by linarith : 0 < x)).2
+        (if χ.Even then -Real.eulerMascheroniConstant
+          else 2 - 2 * Real.log 2 - Real.eulerMascheroniConstant) +
+        2 * (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) := by
+  have hhalf : Complex.digamma (3 / 2) =
+      2 - 2 * Complex.log 2 - Real.eulerMascheroniConstant := by
+    have hh := Complex.digamma_apply_add_one (1 / 2) (by
+      intro m h
+      have he := congrArg Complex.re h
+      norm_num at he
+      linarith [Nat.cast_nonneg (α := ℝ) m])
+    rw [Complex.digamma_one_half] at hh
+    norm_num at hh ⊢
+    linear_combination hh
   have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ 0)
   have he := congrArg Complex.re (completion_logDeriv χ (s := 2) (by norm_num)
     (χ.LFunction_ne_zero_of_one_le_re (.inr (by norm_num)) (by norm_num))
     (.inl (by norm_num)))
-  rw [harg] at he
-  norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
-  change _ ≤ Real.log (q : ℝ) - Real.log Real.pi + Real.log x + _
-  linarith
+  split_ifs with hc
+  · simp only [if_pos hc] at he
+    norm_num [Complex.digamma_one, Complex.add_re, Complex.mul_re] at he hL
+    linarith
+  · simp only [if_neg hc] at he
+    norm_num [hhalf, Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
+    linarith
 
 /-- Every character has the upper bound; primitive nonprincipal characters have positivity. -/
 theorem completion_vertical_bound {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (t : ℝ) :
-    (logDeriv (completion χ) (2 + t * I)).re <
-        (Real.log (q : ℝ) - Real.log Real.pi + Real.log (|t| + 3)) / 2 +
-          (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3) ∧
+    (logDeriv (completion χ) (2 + t * I)).re ≤
+        (Real.log (q : ℝ) - Real.log Real.pi + Real.log (|t| + 3) - Real.log 2 + 1 / 2 -
+          (1 / ((2 + t * I) + (if χ.Even then 0 else 1))).re) / 2 +
+          (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ∧
       (χ.IsPrimitive → χ ≠ 1 → 0 ≤ (logDeriv (completion χ) (2 + t * I)).re) := by
   constructor
-  · by_cases ht : t = 0
-    · subst t
-      have hb := completion_center_bound χ
-      have hx : 0 < ((2 + if χ.Even then 0 else 1 : ℝ) / 2) ∧
-          ((2 + if χ.Even then 0 else 1 : ℝ) / 2) < 3 := by
-        split_ifs <;> norm_num
-      have hl := Real.log_lt_log hx.1 hx.2
-      norm_num at *
-      linarith
-    let z : ℂ := ((2 + t * I) + (if χ.Even then 0 else 1)) / 2
+  · let z : ℂ := ((2 + t * I) + (if χ.Even then 0 else 1)) / 2
     have hz : 1 ≤ z.re ∧ z.re ≤ 3 / 2 := by
       dsimp [z]; split_ifs <;> norm_num
     have him : 2 * |z.im| = |t| := by
       dsimp [z]; split_ifs <;> simp [abs_div] <;> ring
     have hp := DirichletCompletionGamma.digamma_re_lt_log_height hz.1 hz.2
-    rw [him] at hp
+    have hinv : 2 * z = (2 + t * I) + (if χ.Even then 0 else 1) := by
+      dsimp [z]; ring
+    rw [him, hinv] at hp
     have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ t)
     have he := congrArg Complex.re
       (completion_logDeriv χ (s := 2 + t * I) (by simp)

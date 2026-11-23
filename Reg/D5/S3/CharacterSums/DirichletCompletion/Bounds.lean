@@ -180,7 +180,7 @@ def arena : Arena where
   Law M := ∀ {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (t : ℝ),
     M.readout () () ‖logDeriv χ.LFunction (2 + t * I)‖
-      (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3)
+      (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h (1 : DirichletCharacter ℂ 1) 0
@@ -319,8 +319,9 @@ def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q),
     M.readout () () (2 * (logDeriv (completion χ) 2).re)
-      (Real.log (q : ℝ) - Real.log Real.pi + Real.log ((2 + if χ.Even then 0 else 1) / 2 : ℝ) +
-        2 * (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3))
+      (Real.log (q : ℝ) - Real.log Real.pi + (if χ.Even then -Real.eulerMascheroniConstant
+          else 2 - 2 * Real.log 2 - Real.eulerMascheroniConstant) +
+        2 * (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h (1 : DirichletCharacter ℂ 1)
@@ -379,15 +380,16 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
     (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => fun y => x < y) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (t : ℝ),
     M.readout () () (logDeriv (completion χ) (2 + t * I)).re
-      ((Real.log (q : ℝ) - Real.log Real.pi + Real.log (|t| + 3)) / 2 +
-        (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3)) ∧
+      ((Real.log (q : ℝ) - Real.log Real.pi + Real.log (|t| + 3) - Real.log 2 + 1 / 2 -
+          (1 / ((2 + t * I) + (if χ.Even then 0 else 1))).re) / 2 +
+        (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2)) ∧
       (χ.IsPrimitive → χ ≠ 1 → 0 ≤ (logDeriv (completion χ) (2 + t * I)).re)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -396,7 +398,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro h
-  have hh := congrFun h 1
+  have hh := congrFun h 0
   norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @completion_vertical_bound) where
   actual := actual
@@ -422,7 +424,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => fun y => x < y) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

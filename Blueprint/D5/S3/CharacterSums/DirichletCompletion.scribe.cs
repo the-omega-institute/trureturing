@@ -243,8 +243,8 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every positive modulus, every complex character and every real t, the "
-                    + "norm of the logarithmic derivative of Lchi at 2+it is at most A = log(2)/4 "
-                    + "+ 4 log(3)/9 + 1/3, which is less than one. No primitivity or "
+                    + "norm of the logarithmic derivative of Lchi at 2+it is at most S, the sum of "
+                    + "log(n)/n squared. S is at most A = log(2)/4+4 log(3)/9+1/3 < 1. No primitivity or "
                     + "nonprincipality hypothesis is imposed. The von Mangoldt Dirichlet series "
                     + "and character norm bound reduce the estimate to the logarithmic series at "
                     + "exponent two. Its first terms and an integral tail give A."))),
@@ -273,12 +273,11 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every positive modulus q and every complex character chi, twice "
-                    + "Re(Hchi(2)) is at most log(q)-log(pi)+log((2+a)/2)+2A, where a is zero "
-                    + "for even chi and one otherwise, and A = log(2)/4+4 log(3)/9+1/3. "
-                    + "No primitivity or nonprincipality is required. At this real Gamma "
-                    + "argument, the inequality psi(x) at most log(x) retains the exact parity "
-                    + "dependence. The logarithmic term is zero for even chi and log(3/2) "
-                    + "for odd chi. Combining it with the Dirichlet bound gives the result."))),
+                    + "Re(Hchi(2)) is at most log(q)-log(pi)+c+2S, where S is the sum of "
+                    + "log(n)/n squared. The exact digamma constant c is minus Euler's constant "
+                    + "for even chi and 2-2 log(2) minus Euler's constant for odd chi. "
+                    + "The values at one and one half, with the digamma recurrence, give these "
+                    + "constants. No primitivity or nonprincipality is required."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("explicit-vertical-bound"),
                 DeclarationHandle.Create(
@@ -288,16 +287,13 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every positive modulus q, complex character chi and real t, "
-                    + "Re(Hchi(2+it)) is strictly below "
-                    + "(log(q)-log(pi)+log(abs(t)+3))/2+A, with "
-                    + "A = log(2)/4+4 log(3)/9+1/3. If chi is primitive and nonprincipal, "
-                    + "the same real part is nonnegative. The upper estimate requires "
-                    + "neither assumption: separate the three logarithmic derivative "
-                    + "factors, apply Binet's bound on the Gamma strip, and use the "
-                    + "Dirichlet-series estimate A. The lower estimate follows from the "
-                    + "nonnegative multiplicity-weighted vertical resolvent. Since A < 1 "
-                    + "and log(pi) > 1, the upper estimate implies "
-                    + "Re(Hchi(2+it)) <= log(q(abs(t)+3))/2+1/2. At t = 0 the sharper "
-                    + "real-center estimate implies twice Re(Hchi(2)) <= log(q)+2."))),
+                    + "Re(Hchi(2+it)) is at most "
+                    + "(log(q)-log(pi)+log(abs(t)+3)-log(2)+1/2-Re(1/(2+it+a)))/2+S. "
+                    + "Here a is zero for even chi and one otherwise, and S is the sum of "
+                    + "log(n)/n squared, at most A = log(2)/4+4 log(3)/9+1/3 < 1. "
+                    + "The bound retains the Binet correction and the tighter arithmetic sum. "
+                    + "The same real part is nonnegative for primitive nonprincipal chi by "
+                    + "the multiplicity-weighted vertical resolvent. The proof of the upper "
+                    + "estimate applies uniformly, including height zero."))),
                 DescribeRole.Theorem))));
 }
