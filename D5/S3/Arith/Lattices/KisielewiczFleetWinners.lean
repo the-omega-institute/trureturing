@@ -228,7 +228,7 @@ private theorem orderedScore_strict (t : ℤ) (ht : 2 ≤ t) : StrictMono (order
   apply Fin.strictMono_iff_lt_succ.mpr
   intro i
   fin_cases i <;> norm_num [orderedScore, Fin.castSucc, Fin.succ] <;>
-    nlinarith only [ht, hquad]
+    linarith only [ht, hquad]
 
 private def rankF : Shift → Fin 9
   | (false, false, true) => 1
@@ -531,13 +531,12 @@ private theorem slabPhase_block (weight : ℕ → ℕ) (k : ℕ) (j : ℤ)
   have hj : 0 < j := by omega
   have hu := endpoint_unbounded j.toNat
   have he : Nat.find hu = k := by
-    apply le_antisymm
-    · apply Nat.find_min'
-      omega
-    · by_contra! h
-      have he := endpoint_strict.monotone (show Nat.find hu + 1 ≤ k by omega)
-      have hs := Nat.find_spec hu
-      omega
+    apply (Nat.find_eq_iff hu).mpr
+    refine ⟨by omega, ?_⟩
+    intro m hm hle
+    have hnext := endpoint_strict.monotone (Nat.succ_le_of_lt hm)
+    change endpoint (m + 1) ≤ endpoint k at hnext
+    omega
   simp only [slabPhase, ite_eq_left hj, he, decide_eq_false_iff_not, not_lt]
 
 private theorem prefix_at_endpoint (weight : ℕ → ℕ)
