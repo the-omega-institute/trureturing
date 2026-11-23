@@ -24,8 +24,8 @@ inputs:
     default: '0'
 outputs:
   cache-prepared:
-    description: A completed checkpoint slice prepared the project cache
-    value: ${{ steps.cold_build.outcome == 'success' && steps.cold_build.outputs.checkpoint != 'true' }}
+    description: The recovered layers or completed checkpoint cover the compiler targets
+    value: ${{ steps.layers.outcome == 'success' || (steps.cold_build.outcome == 'success' && steps.cold_build.outputs.checkpoint != 'true') }}
 runs:
   using: composite
   steps:
@@ -171,16 +171,11 @@ runs:
       uses: ./.github/actions/lean-recover-layer
       with:
         stage: '3'
-    - name: Check all recovered compile targets without rebuilding
+    - id: layers
+      name: Check all recovered compile targets without rebuilding
       if: inputs.mode == 'parallel'
       shell: bash
       run: python3 tools/scripts/worktree/lean_compile_layers.py verify --artifacts "$RUNNER_TEMP/lean-compile"
-    - name: Complete missing project artifacts with Lake
-      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && env.LEAN_CACHE_SPARSE_PLAN == '' && inputs.checkpoint-seconds == '0'
-      env:
-        STRATALINT_ACCEPT_COLD_BUILD: '1'
-      shell: bash
-      run: make lean FULL_BUILD=1
     - id: cold_build
       name: Build and validate a slice of the cold Release
       if: inputs.checkpoint-seconds != '0'
@@ -190,10 +185,8 @@ runs:
       shell: bash
       run: |
         result=0
-        bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- bash -e -c '
-          make lean FULL_BUILD=1
-          make lean-cache-prepare FULL_BUILD=1
-        ' || result=$?
+        bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- \
+          bash .github/actions/lean-compile-layer/measure.sh --compile env FULL_BUILD=1 bash tools/scripts/worktree/lean-cache-run.sh --build-release || result=$?
         if [[ "$result" == 124 ]]; then
           echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
         else

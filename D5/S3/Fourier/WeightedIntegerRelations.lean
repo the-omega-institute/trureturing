@@ -97,10 +97,10 @@ theorem weighted_character_chord {J A : Type*} (columns : Finset J) (rows : Fins
   intro j hj
   rw [mul_pow, ← mul_assoc, div_mul_cancel₀ _ (hw j hj).ne']
 
-private def quarter : Circle :=
+def quarter : Circle :=
   ⟨Complex.I, mem_sphere_zero_iff_norm.mpr Complex.norm_I⟩
 
-private theorem orbit_character {J : Type*} (columns : Finset J)
+theorem orbit_character {J : Type*} (columns : Finset J)
     (gamma : J → ℝ) (k : J → ℤ) (hrel : ∑ j ∈ columns, (k j : ℝ) * gamma j = 0)
     (v : ℝ) : (∏ j ∈ columns, (Circle.exp (gamma j * v)) ^ k j) = 1 := by
   have h := congrArg Additive.toMul
@@ -111,7 +111,7 @@ private theorem orbit_character {J : Type*} (columns : Finset J)
   change Circle.exp 0 = ∏ j ∈ columns, Circle.exp ((k j : ℝ) * (gamma j * v)) at h
   simpa only [Circle.exp_zero, Circle.exp_intCast_mul] using h.symm
 
-private theorem quarter_character {J : Type*} (columns : Finset J) (k : J → ℤ) :
+theorem quarter_character {J : Type*} (columns : Finset J) (k : J → ℤ) :
     ((∏ j ∈ columns, quarter ^ k j : Circle) : ℂ) = Complex.I ^ (∑ j ∈ columns, k j) := by
   have h := congrArg Additive.toMul
     (map_sum (zmultiplesHom (Additive Circle) (Additive.ofMul quarter)) k columns)
@@ -120,7 +120,7 @@ private theorem quarter_character {J : Type*} (columns : Finset J) (k : J → �
   rw [← h, Circle.coe_zpow]
   rfl
 
-private theorem quarter_chord_sq (t : ℝ) :
+theorem quarter_chord_sq (t : ℝ) :
     ‖(Circle.exp t : ℂ) - (quarter : ℂ)‖ ^ 2 = 2 * (1 - Real.sin t) := by
   have hnorm := Circle.normSq_coe (Circle.exp t)
   rw [Complex.normSq_apply] at hnorm

@@ -231,22 +231,20 @@ jobs:
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
           checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
-      - id: prepare_cache
-        name: Prepare module reports for the named volume snapshot
-        if: >-
-          steps.entry.outputs.hit == 'true' && env.LEAN_CACHE_VOLUME_TEST_ID != '' &&
-          env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.cache-prepared != 'true'
+      - name: Compile missing Release artifacts
+        if: steps.entry.outputs.hit == 'true' && steps.release_seed.outputs.cache-prepared != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: >-
-          bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-prepare FULL_BUILD=1
+          LEAN_CACHE_INDEXED: '1'
+          LEAN_CACHE_MODE: verification
+        run: bash .github/actions/lean-cache-release-seed/prepare-compiler.sh
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
-          LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.prepare_cache.outcome == 'success' || steps.release_seed.outputs.cache-prepared == 'true') && '1' || '0' }}
+          LEAN_CACHE_PUBLISH_ONLY: '1'
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
@@ -352,9 +350,9 @@ jobs:
             make lean-cache-from-github-without-mathlib
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
           test ! -e .lake/build/stratalint/raw-lean-report.json
-          if [[ "$RESTORE" == full ]]; then
-            test -s .lake/build/lean-inspector/modules/D5.S0.Tower.GoldenGapWord.zip
-          fi
+          shopt -s nullglob dotglob
+          reports=(.lake/build/lean-inspector/modules/*)
+          (( ${#reports[@]} == 0 ))
 
   cache-shards:
     name: Verify Lean cache continuation transport
