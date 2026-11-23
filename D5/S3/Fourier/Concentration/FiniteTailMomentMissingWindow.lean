@@ -80,13 +80,13 @@ private theorem character_sum {J : Type*} (s : Finset J) (f : J → ℝ) (t : �
   push_cast
   simp only [Finset.sum_mul, Complex.exp_sum]
 
-private def complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) : ℂ :=
+def complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) : ℂ :=
   ∑ j, (w j : ℂ) * phase (g j) t
 
-private def monomialWeight {J : Type*} [Fintype J] (w : J → ℝ) (m : J → ℕ) : ℝ :=
+def monomialWeight {J : Type*} [Fintype J] (w : J → ℝ) (m : J → ℕ) : ℝ :=
   (Nat.multinomial univ m : ℝ) * ∏ j, w j ^ m j
 
-private def monomialFrequency {J : Type*} [Fintype J] (g : J → ℝ) (m : J → ℕ) : ℝ :=
+def monomialFrequency {J : Type*} [Fintype J] (g : J → ℝ) (m : J → ℕ) : ℝ :=
   ∑ j, (m j : ℝ) * g j
 
 private theorem score_pow {J : Type*} [Fintype J] [DecidableEq J]
@@ -141,7 +141,7 @@ private theorem mode_zero_iff {J : Type*} [Fintype J] [DecidableEq J] (g : J →
 private def diagonal {J : Type*} [Fintype J] [DecidableEq J] (w : J → ℝ) (p : ℕ) : ℝ :=
   ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
 
-private theorem score_even_expansion {J : Type*} [Fintype J] [DecidableEq J]
+theorem score_even_expansion {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (t : ℝ) (p : ℕ) :
     (↑(‖complexScore g w t‖ ^ (2 * p)) : ℂ) =
       ∑ m ∈ piAntidiag univ p, ∑ n ∈ piAntidiag univ p,
@@ -311,7 +311,7 @@ private theorem exists_grid_lt {J K : Type*} [Fintype J] [DecidableEq J] [Fintyp
 
 open D5.S3.Fourier.Concentration.FiniteSineMissingWindow (floor_grid_cover sine_score_change)
 
-private theorem im_complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) :
+theorem im_complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) :
     (complexScore g w t).im = ∑ j, w j * Real.sin (g j * t) := by
   unfold complexScore
   rw [Complex.im_sum]
