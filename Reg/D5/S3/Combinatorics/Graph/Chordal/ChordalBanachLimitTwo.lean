@@ -125,7 +125,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change 1 ≤ ‖g i j - (φ j - φ i)‖ at hR
   have hu := hφ i j hij
   norm_num at hu
-  linarith
+  norm_num [hu] at hR
 
 def family : Registration arena (type_of% (@pathPower_banach_lower_bound)) where
   actual := actual
@@ -194,8 +194,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := tendsto_nhds_unique (pathPower_banach_limit_tendsto 1 le_rfl) (h 1 le_rfl)
-  change (2 : ℝ) - 2 / 1 = -1 at he
-  norm_num at he
+  norm_num [rejected, realize] at he
 
 def family : Registration arena (type_of% (@pathPower_banach_limit_tendsto)) where
   actual := actual

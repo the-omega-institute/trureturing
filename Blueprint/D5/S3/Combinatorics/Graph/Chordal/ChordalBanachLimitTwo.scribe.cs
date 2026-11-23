@@ -12,16 +12,14 @@ internal sealed class ChordalBanachLimitTwoDocument : IScribeDocumentDefinition
         "The real Banach reconstruction coefficient of a path power tends to two minus two over its width.",
         H("The Banach reconstruction limit for path powers"),
         Blocks(
-            Paragraph(Text("Write P(n,k) for the graph on Fin(n) joining distinct indices at distance at most k. Write R(V,g) for skew symmetry on every ordered pair in V. Write T(G,g,e) for triangle defect at most e in the target norm on every ordered triangle of G. For a potential p the edge residual is the gain from i to j minus the potential difference p(j) minus p(i). Its norm is denoted by error(g,p,i,j). The assertion F(G,g,p,e) bounds this norm by e on every ordered edge.")),
+            Paragraph(Text("Write P(n,k) for the graph on Fin(n) joining distinct indices at distance at most k. Write R(V,g) for skew symmetry on every ordered pair in V. Write T(G,g,e) for triangle defect at most e in the target norm on every ordered triangle of G. For a potential p the edge residual is the gain from i to j minus the potential difference (p(j) minus p(i)). Its norm is denoted by error(g,p,i,j). The assertion F(G,g,p,e) bounds this norm by e on every ordered edge.")),
             Result("averaged-block-upper-bound", "pathPower_banach_upper_bound",
                 "The averaged block upper bound",
-                Width(All("n", Naturals, All("E", Type,
-                    WithInstances(V("E"), false, Uniform(Graph(V("n"), V("k")), Vertices(V("n")),
-                        V("E"), Coefficient(V("k"))))))),
+                UpperBound(),
                 "For each offset integrate the gains along the clamped block heads and along the spokes. A cross-block edge is compared through the later head. The two triangle comparisons vanish respectively when the earlier and later endpoints are heads. Same-block comparisons cost at most one triangle, with zero error when the earlier endpoint is the head. Each endpoint is marked as a head by one offset. The norm of the mean residual is bounded by the mean of the norms."),
             Result("periodic-trace-lower-bound", "pathPower_banach_lower_bound",
                 "The finite path lower bound", LowerBound(),
-                "Use centered indicators of residues modulo the width and put the periodic gains in consecutive-edge gauge. Take the finite max norm over the individual samples and the sums in consecutive-edge windows. A triangle defect is a centered indicator or a difference of two indicators, so it has absolute sum at most one on every partial period. Sum the diagonal residuals of all width-length edges and subtract the residual sums of the consecutive edges. The full windows cancel and at most twice the width minus two boundary windows remain."),
+                "The displayed existence assertion includes all four indicated target structures. Use centered indicators of residues modulo the width and put the periodic gains in consecutive-edge gauge. Take the finite max norm over the individual samples and the sums in consecutive-edge windows. A triangle defect is a centered indicator or a difference of two indicators, so it has absolute sum at most one on every partial period. Sum the diagonal residuals of all width-length edges and subtract the residual sums of the consecutive edges. The full windows cancel and at most twice the width minus two boundary windows remain."),
             Result("path-power-banach-limit", "pathPower_banach_limit_tendsto", "The exact limit",
                 Width(Call("Tendsto", MapVariable("n", Naturals, Call("CBan", V("n"), V("k"))),
                     Call("atTop", Naturals), Call("nhds", Coefficient(V("k"))))),
@@ -81,6 +79,17 @@ internal sealed class ChordalBanachLimitTwoDocument : IScribeDocumentDefinition
                     Call("F", graph, gain, V("p"), Mul(Par(c), defect))))))));
     }
 
+    private static Formula UpperBound()
+    {
+        var n = V("n");
+        var k = V("k");
+        var target = V("E");
+        return All("E", Type, WithInstances(target, false,
+            All("n", Naturals, All("k", Naturals,
+                Imp(Seq(D(0), Sp, F.Lt, Sp, k),
+                    Uniform(Graph(n, k), Vertices(n), target, Coefficient(k)))))));
+    }
+
     private static Formula LowerBound()
     {
         var n = V("n");
@@ -95,7 +104,7 @@ internal sealed class ChordalBanachLimitTwoDocument : IScribeDocumentDefinition
                 Le(threshold, Call("error", gain, V("p"), V("i"), V("j")))))));
         var formula = Some("g", Arrow(vertices, Arrow(vertices, target)),
             And(Call("R", vertices, gain), And(Call("T", graph, gain, D(1)), existsEdge)));
-        return Width(All("n", Naturals, Imp(Le(Add(k, D(1)), n), Some("E", Type,
+        return All("n", Naturals, Width(Imp(Le(Add(k, D(1)), n), Some("E", Type,
             WithInstances(target, true, Seq(Instance("FiniteDimensional", Reals, target), formula))))));
     }
 
