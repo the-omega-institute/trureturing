@@ -36,7 +36,7 @@ private def negative : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (p : ℕ → ℝ), (∀ k, 0 ≤ p k ∧ p k ≤ 1) →
+  Law R := ∀ (p : ℕ → ℝ), (∀ k, 0 ≤ p k) →
     (∀ k, p k + p (k + 1) ≤ 1) → ∀ start : ℕ,
     let q := flipProb p
     (∀ B, HardCoreProfile p B → ∀ k ≥ start,

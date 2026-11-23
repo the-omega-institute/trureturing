@@ -14,7 +14,8 @@ internal sealed class FIBPathPairBoundsDocument : IScribeDocumentDefinition
                 "Starting at the chosen site, add the positive part of each successive decrease in the "
                 + "transformed profile up to the target site.", DescribeRole.Definition),
             Entry("hard-core-bound", "sharp_hard_core_difference", "The sharp event difference",
-                "Prescribe occupancies between zero and one with adjacent sums at most one. Consider "
+                "Prescribe nonnegative occupancies with adjacent sums at most one, which also bounds "
+                + "each occupancy by one. Consider "
                 + "measurable events in the half-open unit interval with the prescribed occupancies "
                 + "and pointwise disjoint adjacent events. Complement the odd-indexed events within "
                 + "that interval and complement their marginals. For any target at or after a fixed source, "
@@ -29,7 +30,8 @@ internal sealed class FIBPathPairBoundsDocument : IScribeDocumentDefinition
                 + "change, giving nested transformed events and disjoint adjacent occupied events.",
                 DescribeRole.Theorem),
             Entry("finite-word", "word_attainment", "One law on admissible finite words",
-                "For any finite profile satisfying the same bounds, the indicator of each occupied "
+                "For a finite profile whose occupancies lie between zero and one and whose adjacent "
+                + "sums are at most one, the indicator of each occupied "
                 + "event yields a word with no adjacent ones. The site measures are the prescribed "
                 + "occupancies, and each occupancy event is measurable and contained in the "
                 + "half-open unit interval. The oriented differences within the interval after "

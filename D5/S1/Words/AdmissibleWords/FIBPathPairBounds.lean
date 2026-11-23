@@ -337,7 +337,7 @@ private theorem event_hard_core (p : ℕ → ℝ) (bounds : ∀ k, 0 ≤ p k ∧
     simp only [flipEvent, even, next, ite_true, ite_false]
     exact fun _ hx hy => hx.2 ((event_nested q hq start k).2 le hy)
 
-theorem sharp_hard_core_difference (p : ℕ → ℝ) (bounds : ∀ k, 0 ≤ p k ∧ p k ≤ 1)
+theorem sharp_hard_core_difference (p : ℕ → ℝ) (nonneg : ∀ k, 0 ≤ p k)
     (adjacent : ∀ k, p k + p (k + 1) ≤ 1) (start : ℕ) :
     let q := flipProb p
     (∀ B, HardCoreProfile p B → ∀ k ≥ start,
@@ -347,6 +347,8 @@ theorem sharp_hard_core_difference (p : ℕ → ℝ) (bounds : ∀ k, 0 ≤ p k 
       volume.real (flipEvent B start \ flipEvent B k) =
         min (q start) (min (1 - q k) (downwardVariation q start k)) := by
   intro q
+  have bounds (k : ℕ) : 0 ≤ p k ∧ p k ≤ 1 :=
+    ⟨nonneg k, by linarith [nonneg (k + 1), adjacent k]⟩
   have hq (k : ℕ) : 0 ≤ q k ∧ q k ≤ 1 := by
     simp only [q, flipProb]
     split
@@ -391,7 +393,8 @@ theorem word_attainment {n : ℕ} (p : Fin n → ℝ) (bounds : ∀ k, 0 ≤ p k
     · have hk : k < n := by omega
       simpa [extendProfile, h, hk] using adjacent ⟨k, hk⟩ ⟨k + 1, h⟩ rfl
     · simpa [extendProfile, h] using (pb k).2
-  obtain ⟨B, hB, attain⟩ := (sharp_hard_core_difference (extendProfile p) pb pa start).2
+  obtain ⟨B, hB, attain⟩ :=
+    (sharp_hard_core_difference (extendProfile p) (fun k => (pb k).1) pa start).2
   let w (u : ℝ) (k : Fin n) : Bool := decide (u ∈ B k)
   have event_eq (k : Fin n) : wordEvent w k = B k := by
     ext u
