@@ -27,7 +27,8 @@ variable {V : Type u} {G : SimpleGraph V} {o : V}
 variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
 
 open private Component componentOf parent Shadow exists_predecessor componentOf_adj
-  mem_shadow_of_adj shadow_parent shadow_clique exists_shadow_anchor four_cycle_diagonal from
+  mem_shadow_of_adj shadow_parent shadow_clique exists_shadow_anchor four_cycle_diagonal
+  gain gain_triangle two_triangle_comparisons anchorGain from
   D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
 
 private noncomputable def mean (s : Finset V) (f : V → E) : E :=
@@ -86,44 +87,9 @@ private theorem diagonal_zero {g : V → V → E} (hrev : ∀ i j, g j i = -g i 
   rw [two_smul]
   exact (add_eq_zero_iff_neg_eq.mpr (hrev x x).symm)
 
-private theorem triangle_le {g : V → V → E} {ε : ℝ} (hε : 0 ≤ ε)
-    (hrev : ∀ i j, g j i = -g i j)
-    (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
-      ‖g i j + g j l - g i l‖ ≤ ε)
-    {a b c : V} (hab : a = b ∨ G.Adj a b) (hbc : b = c ∨ G.Adj b c)
-    (hac : a = c ∨ G.Adj a c) : Dist.dist (g a b + g b c) (g a c) ≤ ε := by
-  rcases hab with rfl | hab
-  · simpa [diagonal_zero hrev] using hε
-  rcases hbc with rfl | hbc
-  · simpa [diagonal_zero hrev] using hε
-  rcases hac with rfl | hac
-  · simpa [diagonal_zero hrev, hrev a b] using hε
-  simpa only [dist_eq_norm] using htri _ _ _ hab hbc hac
-
-omit [NormedSpace ℝ E] in
-private theorem two_triangles (g : V → V → E) {a b c d : V} {ε : ℝ}
-    (habc : Dist.dist (g a b + g b c) (g a c) ≤ ε)
-    (hbcd : Dist.dist (g b c + g c d) (g b d) ≤ ε) :
-    Dist.dist (g a b + g b d) (g a c + g c d) ≤ 2 * ε := by
-  calc
-    _ ≤ Dist.dist (g a b + g b d) (g a b + (g b c + g c d)) +
-        Dist.dist (g a b + (g b c + g c d)) (g a c + g c d) := dist_triangle _ _ _
-    _ ≤ ε + ε := by
-      apply add_le_add
-      · rw [dist_add_left, _root_.dist_comm]
-        exact hbcd
-      · rwa [← add_assoc, dist_add_right]
-    _ = 2 * ε := by ring
-
 private def predecessors (G : SimpleGraph V) (o : V) (x : V) [Fintype V]
     [DecidablePred fun b : V => G.Adj b x ∧ G.dist o b + 1 = G.dist o x] : Finset V :=
   Finset.univ.filter fun b => G.Adj b x ∧ G.dist o b + 1 = G.dist o x
-
-private noncomputable def anchorSum (g : V → V → E)
-    (a : (i : ℕ) → Component G o (i + 1) → V) :
-    (i : ℕ) → Component G o (i + 1) → E
-  | 0, _ => 0
-  | i + 1, C => anchorSum g a i (parent G o C) + g (a i (parent G o C)) (a (i + 1) C)
 
 set_option maxHeartbeats 800000 in
 -- Dependent component indices are transported in both edge comparisons.
@@ -196,10 +162,30 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     cases i with
     | zero => exact Or.inl (hconn.dist_eq_zero_iff.mp hb.1)
     | succ i => exact Or.inr (anchor_adj i C b hb)
+  let tagged (b c : V) := Multiplicative.ofAdd (g b c)
+  have gain_eq (b c : V) : gain tagged b c = tagged b c := by
+    by_cases h : b = c
+    · subst c
+      change (if b = b then 1 else tagged b b) = tagged b b
+      rw [ite_eq_left rfl]
+      change (0 : E) = g b b
+      exact (diagonal_zero hrev b).symm
+    · exact ite_eq_right h
   have tri {b c d : V} (hbc : b = c ∨ G.Adj b c) (hcd : c = d ∨ G.Adj c d)
-      (hbd : b = d ∨ G.Adj b d) : Dist.dist (g b c + g c d) (g b d) ≤ ε :=
-    triangle_le hε hrev htri hbc hcd hbd
-  let Q := anchorSum g a
+      (hbd : b = d ∨ G.Adj b d) : Dist.dist (g b c + g c d) (g b d) ≤ ε := by
+    have h := gain_triangle (G := G) (g := tagged) hε (fun i j _ => hrev i j)
+      (fun i j l hij hjl hil => by
+        change Dist.dist (g i j + g j l) (g i l) ≤ ε
+        rw [dist_eq_norm]
+        exact htri i j l hij hjl hil) hbc hcd hbd
+    simp only [gain_eq] at h
+    change Dist.dist (g b c + g c d) (g b d) ≤ ε at h
+    exact h
+  have two_triangles {b c d e : V} (hbcd : Dist.dist (g b c + g c d) (g b d) ≤ ε)
+      (hcde : Dist.dist (g c d + g d e) (g c e) ≤ ε) :
+      Dist.dist (g b c + g c e) (g b d + g d e) ≤ 2 * ε :=
+    two_triangle_comparisons tagged (a := b) (b := c) (c := d) (d := e) hbcd hcde
+  let Q (i : ℕ) (C : Component G o (i + 1)) := (anchorGain tagged a i C).toAdd
   let path (c x b : V) := g c b + g b x
   let atLevel (x : V) : (i : ℕ) → G.dist o x = i → E
     | 0, _ => 0
@@ -242,7 +228,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have he := hconn.dist_eq_zero_iff.mp hx
       subst x
       rw [eval o 0 (by simp), atSucc hy, firstPred hy]
-      simpa [atLevel, Q, anchorSum, a, mean, path, diagonal_zero hrev] using nonnegBound
+      simpa [atLevel, Q, anchorGain, a, mean, path, diagonal_zero hrev] using nonnegBound
     | succ i =>
       let C := componentOf G o (i + 2) y hy.ge
       let D := parent G o C
@@ -265,7 +251,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         intro b hb
         have hb' := (Finset.mem_erase.mp hb).2
         have bs : b ∈ Shadow G o D := hD ▸ inShadow hx hb'
-        exact two_triangles g (tri (anchorNear bs) (near bs cs) (anchorNear cs))
+        exact two_triangles (tri (anchorNear bs) (near bs cs) (anchorNear cs))
           (tri (near bs cs) (Or.inr hcx) (Or.inr (memP.mp hb').1))
       have later : Dist.dist (mean (P y) (path c y)) (path c y x) ≤ crossError := by
         have h := mean_bound_at (f := path c y) (z := path c y x) xp (cardP hy)
@@ -274,7 +260,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         intro b hb
         have hb' := (Finset.mem_erase.mp hb).2
         have bs := inShadow hy hb'
-        exact two_triangles g (tri (anchorNear bs) (near bs xs) (Or.inr hcx))
+        exact two_triangles (tri (anchorNear bs) (near bs xs) (Or.inr hcx))
           (tri (near bs xs) (Or.inr hxy) (Or.inr (memP.mp hb').1))
       have h₁ : Dist.dist (φ x) m ≤ crossError := by
         rw [atSucc hx, ← hD]
@@ -332,7 +318,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have hd' := (Finset.mem_erase.mp hd).2
         have ds : d ∈ Shadow G o C := hC.symm ▸ inShadow hy hd'
         have two : Dist.dist (path c y d) (path c y b) ≤ 2 * ε :=
-          two_triangles g (tri (anchorNear ds) (near ds bs) (anchorNear bs))
+          two_triangles (tri (anchorNear ds) (near ds bs) (anchorNear bs))
             (tri (near ds bs) (Or.inr (memP.mp hb').1) (Or.inr (memP.mp hd').1))
         exact (dist_triangle _ (path c y b) _).trans
           (by linarith [add_le_add two (by rwa [_root_.dist_comm] : Dist.dist (path c y b) _ ≤ ε)])
