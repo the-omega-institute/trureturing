@@ -61,6 +61,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
+import Init.Classical
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
