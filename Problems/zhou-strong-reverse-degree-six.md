@@ -2,10 +2,10 @@
 slug: zhou-strong-reverse-degree-six
 bibkey: zhou2026deltay
 doi: 10.48550/arXiv.2609.08963
-url: https://arxiv.org/html/2609.08963v1#S2.p8.1
+url: https://arxiv.org/html/2609.08963v1
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/Graph/DeltaY/SharpThreshold.zhou_sharp_threshold
+  - D5/S3/Combinatorics/Graph/LeaflessDynamics/TripleEdgeSubdivision.leafless_iff
 ---
 
 # Zhou’s sharp degree-six threshold for strong reverse moves
@@ -17,6 +17,8 @@ Zhichen Zhou asks immediately after Lemma 10, “We conjecture that the tight co
 ## Motivation
 
 The minimum degree of the starting graph controls when imposing independence at each reverse site leaves the reachable family unchanged.
+
+The library's three-segment subdivision theorem identifies when replacing each edge of a multigraph by a path preserves the absence of degree-one vertices. Zhou's question asks for a different degree condition on local graph replacements, one that controls the entire reachable family. [Three-segment subdivision](../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/TripleEdgeSubdivision.md)
 
 ## Gap
 
