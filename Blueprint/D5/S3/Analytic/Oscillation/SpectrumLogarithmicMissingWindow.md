@@ -26,6 +26,8 @@ $$\forall S \in Spectrum,\; \forall w \in \operatorname{index}\left(S\right) \to
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Siegfred Alan C. Baluyot; Daniel Alan Goldston; Ade Irma Suriajaya; Caroline L. Turnage-Butterbaugh (2024). *An unconditional Montgomery theorem for pair correlation of zeros of the Riemann zeta-function*. DOI: [10.4064/aa230612-20-3](https://doi.org/10.4064/aa230612-20-3). URL: <https://arxiv.org/abs/2306.04799>.
+
 *Commentary.*
 
 Use the shifted cutoff X = exp(−K)T^β and write L = log T. The same head estimate gives β²W(T) − W(X) > 3L, and the mesh 1/T² costs less than L because the slope is at most TW(T). Nonnegative head mass gives W(T) > 0 eventually.
@@ -38,7 +40,7 @@ The head, threshold and mesh allowance fit below β²W(T) − L. Rational linear
 
 For positive zeta ordinates, assume RH and rational linear independence of the distinct ordinates. The weight is mγ γ/(1/4+γ²), with analytic multiplicity mγ and inclusive cutoff γ ≤ T. The harmonic mass estimate gives coefficient 1/(4π). `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootWeightedSine`
 
-The analytic input is the bounded average of the normalized Montgomery sum against 2(1−α) on 0 ≤ α ≤ 1. Baluyot, Goldston, Suriajaya and Turnage-Butterbaugh (arXiv:2306.04799, Theorem 1) give this by integrating their uniform formula. Under RH, each ordinate difference contributes a nonnegative multiple of the triangular cosine transform. This transform is 1 at zero and 2(1−cos z)/z² elsewhere. The equal-ordinate terms contribute exactly the sum of squared multiplicities. `D5/S3/Analytic/Oscillation/MontgomeryWindow`
+The analytic input is the bounded average of the normalized Montgomery sum against 2(1−α) on 0 ≤ α ≤ 1. Baluyot, Goldston, Suriajaya and Turnage-Butterbaugh (arXiv:2306.04799, Theorem 1) give this by integrating their uniform formula. Under RH, each ordinate difference contributes a nonnegative multiple of the triangular cosine transform. This transform is 1 at zero and 2(1−cos z)/z² elsewhere. The raw diagonal is the sum of squared multiplicities. In the normalized average the same sum is multiplied by 2π/(Y log Y). The other terms are nonnegative. `D5/S3/Analytic/Oscillation/MontgomeryWindow`
 
 Thus the cumulative sum of squared multiplicities is O(Y log Y). On each band (2^k X, 2^(k+1) X], the squared harmonic weights are bounded by the squared multiplicities divided by (2^k X)². Summing the resulting geometric series with a linear factor in k gives O(log X/X) uniformly in T ≥ X. The application uses the analytic pair-correlation average as a literature input.
 

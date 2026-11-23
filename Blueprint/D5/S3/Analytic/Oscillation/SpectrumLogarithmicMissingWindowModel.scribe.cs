@@ -24,7 +24,8 @@ internal sealed class SpectrumLogarithmicMissingWindowModelDocument : IScribeDoc
                     + "fixed B > 0 whenever X ≥ 1. Once log X ≥ 1, this is at most "
                     + "B log X/X uniformly in T ≥ X. "),
                     Ref("D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindowModel"
-                        + ".exists_infinite_critical_model"),
+                        + ".model_square_tail_bound"),
+                    Text(" supplies the uniform estimate. The resulting window bound is "),
                     Ref("D5/S3/Analytic/Oscillation/SpectrumLogarithmicMissingWindow"
                         + ".eventual_logarithmic_missing_window"))),
                 DescribeRole.Theorem))));

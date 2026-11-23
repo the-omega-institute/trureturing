@@ -8,6 +8,9 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
 {
     private const string Owner = "D5/S3/Analytic/Oscillation/SpectrumLogarithmicMissingWindow";
 
+    private static readonly LibraryNoteRef PairCorrelationSource =
+        LibraryNoteRef.Create("D5/L/Weil/baluyotgoldstonsuriajayaturnagebutterbaugh2024paircorrelation");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A logarithmic square tail gives longer critical missing windows.",
         H("A Logarithmic Gain in Critical Missing Windows"),
@@ -32,7 +35,7 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
                 DeclarationHandle.Create(Owner + ".eventual_logarithmic_missing_window"),
                 H("A logarithmic gain in the waiting exponent"),
                 StatementSource.FromAuthor(Window()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(PairCorrelationSource),
                 Blocks(
                     Paragraph(Text(
                         "Use the shifted cutoff X = exp(−K)T^β and write L = log T. "
@@ -69,8 +72,9 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
                         + "Turnage-Butterbaugh (arXiv:2306.04799, Theorem 1) give this by "
                         + "integrating their uniform formula. Under RH, each ordinate difference "
                         + "contributes a nonnegative multiple of the triangular cosine transform. "
-                        + "This transform is 1 at zero and 2(1−cos z)/z² elsewhere. The equal-ordinate "
-                        + "terms contribute exactly the sum of squared multiplicities. "),
+                        + "This transform is 1 at zero and 2(1−cos z)/z² elsewhere. The raw diagonal "
+                        + "is the sum of squared multiplicities. In the normalized average the "
+                        + "same sum is multiplied by 2π/(Y log Y). The other terms are nonnegative. "),
                         Ref("D5/S3/Analytic/Oscillation/MontgomeryWindow")),
                     Paragraph(Text(
                         "Thus the cumulative sum of squared multiplicities is O(Y log Y). "
