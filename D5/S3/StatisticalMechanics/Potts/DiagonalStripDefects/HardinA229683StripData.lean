@@ -23,6 +23,8 @@ import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripD
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Matrix.Defs
+import Init.Data.Int.Basic
 
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripData
 
