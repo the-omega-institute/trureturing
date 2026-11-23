@@ -12,6 +12,8 @@ strata_touched:
   - D5/S3/Quantum/Recovery/LocalCompression/JointMarginalRank
   - D5/S3/Quantum/Measurements/FiniteLabelRecordDilation
   - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalReset
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetDistortion
 license: citation-only
 triage: anchor
 ---
@@ -90,3 +92,12 @@ reference, and measures half the joint trace norm of the reconstruction error.
 For output in a fixed two-dimensional subspace the minimum is 2/3. Projection
 with reset attains it. A fixed encoder and decoder through a qubit attain at
 most 10189/15750 using a decoder with two Kraus operators. [Primary text, §VII](https://arxiv.org/abs/2309.07434v2)
+
+For plane-preserving encoders with diagonal reset, the companion
+*Exact Bell-source distortion with a reversible encoder on a hyperplane*
+manuscript gives a matched-coordinate comparison for arbitrary CPTP decoders.
+In dimension three, the lower block uses the square root of the weaker matched
+probability. Its entries follow from the decoder's Choi positivity and trace
+preservation, and the pure reset with a two-Kraus attenuating decoder realizes
+that block. The local manuscript is the source of this comparison. Kato
+Section VII supplies the approximate-compression setting.

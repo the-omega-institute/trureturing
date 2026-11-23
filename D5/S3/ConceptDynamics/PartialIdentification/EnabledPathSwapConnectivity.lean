@@ -9,7 +9,6 @@
 import Mathlib.Data.Finset.Sort
 import Mathlib.Order.Extension.Linear
 import Mathlib.Order.UpperLower.Basic
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
