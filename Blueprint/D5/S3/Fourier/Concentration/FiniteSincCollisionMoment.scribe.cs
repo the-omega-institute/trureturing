@@ -116,7 +116,7 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
             TailParameters(),
             Seq(length, Comma, horizon, Comma, h, Comma, DeltaLower, Comma, a, Colon, Sp, Reals, Comma),
             Seq(NonnegativeWeights(), Quad, Sp, Land, Sp, length, Gt, D(0),
-                Quad, Sp, Land, Sp, h, Gt, D(0), Quad, Sp, Land, Sp, DeltaLower, Gt, D(0), Quad, Sp, Land),
+                Quad, Sp, Land, Sp, h, Gt, D(0), Quad, Sp, Land, Sp, DeltaLower, Ge, D(0), Quad, Sp, Land),
             Seq(budget, Lt, new Formula.Power(DeltaLower, Multiply(D(2), F.Id("p"))),
                 Quad, Sp, Longrightarrow),
             Seq(Exists, Sp, b, Colon, Sp, Reals, Comma, Sp, a, Lt, b, Lt, Add(a, Multiply(D(2), length)),

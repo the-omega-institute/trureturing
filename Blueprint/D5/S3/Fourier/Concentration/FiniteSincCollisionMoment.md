@@ -20,7 +20,7 @@ The power expansion reduces the moment to an ordered pair sum. Each pair contrib
 
 **Theorem 1.2 (The near-collision budget confines the window start).**
 
-$$\begin{aligned}\forall J: \operatorname{FiniteType},\quad g,w: J\to\mathbb{R},\quad p: \mathbb{N},\\L,H,h,\delta,A: \mathbb{R},\\(\forall j \in J, \operatorname{w}\left(j\right)\ge0)\quad \land L>0\quad \land h>0\quad \land \delta>0\quad \land\\7 \cdot (\left\lfloor\frac{H}{h}\right\rfloor_{+} + 1) \cdot \operatorname{E}\left(p, \frac{2}{L}\right)<\delta^{2 \cdot p}\quad \longrightarrow\\\exists b: \mathbb{R}, A<b<A + 2 \cdot L\quad \land \forall t \in [b,b + H],\\\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \operatorname{sin}\left(\operatorname{g}\left(j\right) \cdot t\right)<\delta + h \cdot (\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \left|\operatorname{g}\left(j\right)\right|)\end{aligned}$$
+$$\begin{aligned}\forall J: \operatorname{FiniteType},\quad g,w: J\to\mathbb{R},\quad p: \mathbb{N},\\L,H,h,\delta,A: \mathbb{R},\\(\forall j \in J, \operatorname{w}\left(j\right)\ge0)\quad \land L>0\quad \land h>0\quad \land \delta\ge0\quad \land\\7 \cdot (\left\lfloor\frac{H}{h}\right\rfloor_{+} + 1) \cdot \operatorname{E}\left(p, \frac{2}{L}\right)<\delta^{2 \cdot p}\quad \longrightarrow\\\exists b: \mathbb{R}, A<b<A + 2 \cdot L\quad \land \forall t \in [b,b + H],\\\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \operatorname{sin}\left(\operatorname{g}\left(j\right) \cdot t\right)<\delta + h \cdot (\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \left|\operatorname{g}\left(j\right)\right|)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/FiniteSincCollisionMoment.exists_bounded_tail_window` (`✓ std3`). ∎
 

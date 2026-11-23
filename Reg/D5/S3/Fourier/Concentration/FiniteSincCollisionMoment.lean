@@ -22,7 +22,7 @@ abbrev boundedArena : Arena where
   signature := tailSignature.{u}
   Law V := ∀ {J : Type u} [i : Fintype J] [DecidableEq J] (g w : J → ℝ)
     (_ : ∀ j, 0 ≤ w j) (p : ℕ) {L H h δ : ℝ}
-    (_ : 0 < L) (_ : 0 < h) (_ : 0 < δ)
+    (_ : 0 < L) (_ : 0 < h) (_ : 0 ≤ δ)
     (_ : 7 * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ), ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
       V.readout () ⟨J, i, g, w⟩ t < δ + h * ∑ j, w j * |g j|
@@ -40,7 +40,7 @@ private theorem rejected_law : ¬ boundedArena.{u}.Law rejected := by
     change (7 : ℝ) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) * 0 < 1 ^ (2 * (1 : ℕ))
     norm_num
   obtain ⟨b, _, hb⟩ := law (J := PEmpty.{u + 1}) 0 0 (by simp) 1
-    (L := 1) (H := 1) (h := 1) (δ := 1) zero_lt_one zero_lt_one zero_lt_one hbudget 0
+    (L := 1) (H := 1) (h := 1) (δ := 1) zero_lt_one zero_lt_one zero_le_one hbudget 0
   have h := hb b ⟨le_rfl, by linarith⟩
   simp [rejected, realize] at h
 

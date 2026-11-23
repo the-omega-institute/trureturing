@@ -502,7 +502,7 @@ theorem tail_moment_comparison {J : Type*} [Fintype J] [DecidableEq J]
 /-- The near-collision budget guarantees a closed window with a start in a bounded open interval. -/
 theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ)
-    {L H h δ : ℝ} (hL : 0 < L) (hh : 0 < h) (hδ : 0 < δ)
+    {L H h δ : ℝ} (hL : 0 < L) (hh : 0 < h) (hδ : 0 ≤ δ)
     (hbudget : 7 * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ) :
     ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
@@ -519,7 +519,7 @@ theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
   simp_rw [← moment_eq_pair g w p] at hsmall
   have hgrid (k : K) : ‖complexScore g w (b + grid k)‖ < δ := by
     by_contra! h
-    have hterm := pow_le_pow_left₀ hδ.le h (2 * p)
+    have hterm := pow_le_pow_left₀ hδ h (2 * p)
     have hsum := single_le_sum (s := (univ : Finset K))
       (fun j _ => pow_nonneg (norm_nonneg (complexScore g w (b + grid j))) (2 * p)) (mem_univ k)
     exact (not_lt_of_ge (hterm.trans hsum)) hsmall
