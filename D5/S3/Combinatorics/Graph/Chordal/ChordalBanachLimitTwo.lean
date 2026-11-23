@@ -123,7 +123,7 @@ private def blockHead {n : ℕ} (k s : ℕ) (v : Fin n) : Fin n :=
     omega⟩
 
 /-- Integrate on the clamped block heads, then along each block star. -/
-def offsetPotential {n : ℕ} (k s : ℕ) (g : Fin n → Fin n → E) (v : Fin n) : E :=
+private def offsetPotential {n : ℕ} (k s : ℕ) (g : Fin n → Fin n → E) (v : Fin n) : E :=
   spine n k s g ((v.val + s) / k) + g (blockHead k s v) v
 
 private theorem diagonal {n : ℕ} (g : Fin n → Fin n → E)
@@ -153,7 +153,7 @@ private theorem triangle {n k : ℕ} (g : Fin n → Fin n → E) (ε : ℝ) (hε
 
 /-- Each endpoint pays one triangle unless its shifted residue is zero.
 The first block head is clamped to zero, so clamping can only remove a payment. -/
-theorem offset_potential_error {n k : ℕ} (hk : 0 < k) (s : ℕ) (hs : s < k)
+private theorem offset_potential_error {n k : ℕ} (hk : 0 < k) (s : ℕ) (hs : s < k)
     (g : Fin n → Fin n → E) (ε : ℝ) (hε : 0 ≤ ε)
     (hskew : ∀ i j, g j i = -g i j)
     (htri : ∀ i j l, (pathPower n k).Adj i j → (pathPower n k).Adj j l →
