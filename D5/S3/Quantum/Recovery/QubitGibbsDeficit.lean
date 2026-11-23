@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
+import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
@@ -608,5 +609,309 @@ theorem reducing_qubit_gibbs_argmax (B : Fin 2 → CStarMatrix E E ℂ)
     exact (htrial ρ).1
 
 #print axioms reducing_qubit_gibbs_argmax
+
+private theorem basis_marginal_pure (i : Fin 2) :
+    ∃ v : EuclideanSpace ℂ (Fin 2), ‖v‖ = 1 ∧
+      Matrix.single i i (1 : ℂ) = Matrix.vecMulVec v.ofLp (star v.ofLp) := by
+  refine ⟨EuclideanSpace.single i 1, by simp, ?_⟩
+  ext j k
+  by_cases hij : j = i <;> by_cases hik : k = i <;>
+    simp [Matrix.single, Matrix.vecMulVec_apply, EuclideanSpace.single, hij, hik] <;> aesop
+
+omit [Nonempty E] in
+private theorem endpoint_sum (γ : Fin 2 → DensityState E) (p : Fin 2 → ℝ) :
+    retainedBlock (fun i => p i • mat (γ i).1) =
+      ∑ i, p i • retainedBlock (fun j => endpointWeight i j • mat (γ j).1) := by
+  ext ⟨j, e⟩ ⟨k, f⟩
+  by_cases hjk : j = k
+  · subst k
+    fin_cases j <;> simp [block_apply, endpointWeight, Matrix.sum_apply, Matrix.smul_apply]
+  · simp [Matrix.sum_apply, Matrix.smul_apply, block_apply, hjk]
+
+omit [DecidableEq E] [Nonempty E] in
+private theorem trace_score_sum {ι : Type*} [Fintype ι] (p : ι → ℝ)
+    (X : ι → Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (Z : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
+    ((∑ i, p i • X i) * Z).trace.re = ∑ i, p i * (X i * Z).trace.re := by
+  simp only [Matrix.sum_mul, Matrix.smul_mul, Matrix.trace_sum, Matrix.trace_smul,
+    Complex.re_sum, Complex.smul_re, smul_eq_mul]
+
+private theorem score_le_weighted_max (p a : Fin 2 → ℝ) (m : ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1) (ha : ∀ i, p i = 0 ∨ a i ≤ m) :
+    ∑ i, p i * a i ≤ m := by
+  calc
+    _ ≤ ∑ i, p i * m := Finset.sum_le_sum fun i _ => by
+      rcases ha i with h | h
+      · simp [h]
+      · exact mul_le_mul_of_nonneg_left h (hp i)
+    _ = _ := by rw [← Finset.sum_mul, hp1, one_mul]
+
+private theorem product_score_max (γ : DensityState E) (Z : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
+    ∃ P : DensityState (Fin 2),
+      (∃ v : EuclideanSpace ℂ (Fin 2), ‖v‖ = 1 ∧
+        mat P.1 = Matrix.vecMulVec v.ofLp (star v.ofLp)) ∧
+      ∀ R : DensityState (Fin 2),
+        (((mat R.1) ⊗ₖ mat γ.1) * Z).trace.re ≤ (((mat P.1) ⊗ₖ mat γ.1) * Z).trace.re := by
+  let ray (v : EuclideanSpace ℂ (Fin 2)) := Matrix.vecMulVec v.ofLp (star v.ofLp)
+  let f (v : EuclideanSpace ℂ (Fin 2)) := ((ray v ⊗ₖ mat γ.1) * Z).trace.re
+  have hcont : Continuous f := by
+    unfold f ray
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.kroneckerMap_apply,
+      Matrix.vecMulVec_apply, Pi.star_apply]
+    fun_prop
+  obtain ⟨v, hv, hmax⟩ := (isCompact_sphere (0 : EuclideanSpace ℂ (Fin 2)) 1).exists_isMaxOn
+    ⟨EuclideanSpace.single 0 1, by simp⟩ hcont.continuousOn
+  have hvnorm : ‖v‖ = 1 := by simpa using hv
+  let P : DensityState (Fin 2) := ⟨CStarMatrix.ofMatrix (ray v),
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+      (Matrix.posSemidef_vecMulVec_self_star v.ofLp).nonneg, by
+      change (ray v).trace = 1
+      unfold ray
+      rw [D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.pure_trace, hvnorm]
+      norm_num⟩
+  refine ⟨P, ⟨v, hvnorm, rfl⟩, ?_⟩
+  intro R
+  let D := mat R.1
+  have hD := mat_psd R
+  let p := hD.isHermitian.eigenvalues
+  let u : Fin 2 → EuclideanSpace ℂ (Fin 2) := hD.isHermitian.eigenvectorBasis
+  have hsum : D = ∑ i, p i • ray (u i) :=
+    D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum D hD.isHermitian
+  have hp1 : ∑ i, p i = 1 :=
+    D5.S3.Quantum.Matrix.CartesianVariance.density_eigenvalues_sum D ⟨hD, R.2.2⟩
+  let lift : Matrix (Fin 2) (Fin 2) ℂ →ₗ[ℝ] Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
+    (Matrix.kroneckerBilinear (R := ℝ) (α := ℂ)).flip (mat γ.1)
+  have hprod : D ⊗ₖ mat γ.1 = ∑ i, p i • (ray (u i) ⊗ₖ mat γ.1) := by
+    change lift D = ∑ i, p i • lift (ray (u i))
+    rw [hsum, map_sum]
+    simp only [map_smul]
+  change ((D ⊗ₖ mat γ.1) * Z).trace.re ≤ f v
+  rw [hprod, trace_score_sum]
+  exact score_le_weighted_max p (fun i => f (u i)) (f v) hD.eigenvalues_nonneg hp1
+    (fun i => Or.inr (hmax (show u i ∈ Metric.sphere 0 1 from by
+      simpa [u] using hD.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i)))
+
+private theorem maximal_gibbs_slope (B : Fin 2 → CStarMatrix E E ℂ)
+    (hB : ∀ i, IsSelfAdjoint (B i)) (Z : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
+    let m := max (Real.log (partitionFunction (B 0))) (Real.log (partitionFunction (B 1)))
+    ∃ ρ : DensityState (Fin 2 × E),
+      (∃ v : EuclideanSpace ℂ (Fin 2), ‖v‖ = 1 ∧
+        mat (retainedMarginal ρ).1 = Matrix.vecMulVec v.ofLp (star v.ofLp)) ∧
+      gibbsValue B ρ = m ∧
+      ∀ τ, gibbsValue B τ = m → (mat τ.1 * Z).trace.re ≤ (mat ρ.1 * Z).trace.re := by
+  dsimp only
+  classical
+  let γ := blockGibbs B hB
+  let g := fun i => Real.log (partitionFunction (B i))
+  let m := max (g 0) (g 1)
+  let S := fun ρ : DensityState (Fin 2 × E) => (mat ρ.1 * Z).trace.re
+  obtain ⟨_, hend, hface⟩ := reducing_qubit_gibbs_argmax B hB
+  have hwin : ∃ i, g i = m := by
+    rcases le_total (g 0) (g 1) with h | h
+    · exact ⟨1, (max_eq_right h).symm⟩
+    · exact ⟨0, (max_eq_left h).symm⟩
+  by_cases hcommon : γ 0 = γ 1 ∧ g 0 = g 1
+  · obtain ⟨P, hpure, hscore⟩ := product_score_max (γ 0) Z
+    let ρ := fromLegacyDensityState
+      (productState (toLegacyDensityState P) (toLegacyDensityState (γ 0)))
+    have hP : retainedMarginal ρ = P := by
+      simp [ρ, retainedMarginal, marginalRight_productState]
+    have hρ : mat ρ.1 = mat P.1 ⊗ₖ mat (γ 0).1 := rfl
+    have hg (i : Fin 2) : g i = m := by
+      fin_cases i <;> simp [m, hcommon.2]
+    refine ⟨ρ, by rw [hP]; exact hpure, (hface ρ).2 ⟨fun i => Or.inr (hg i),
+      Or.inr ⟨hcommon.1, by rw [hP]; exact hρ⟩⟩, ?_⟩
+    intro τ hτ
+    have ht : mat τ.1 = mat (retainedMarginal τ).1 ⊗ₖ mat (γ 0).1 := by
+      rcases ((hface τ).1 hτ).2 with ht | ht
+      · let R := mat (retainedMarginal τ).1
+        have hγ (i : Fin 2) : γ i = γ 0 := by
+          fin_cases i
+          · rfl
+          · exact hcommon.1.symm
+        change mat τ.1 = retainedBlock (fun i => (R i i).re • mat (γ i).1) at ht
+        apply Matrix.ext
+        rintro ⟨i, e⟩ ⟨j, f⟩
+        rw [ht, block_apply]
+        change _ = R i j * mat (γ 0).1 e f
+        by_cases hij : i = j
+        · subst j
+          rw [ite_eq_left rfl, hγ, Matrix.smul_apply, Complex.real_smul,
+            real_diagonal (retainedMarginal τ)]
+        · have hzero : R i j = 0 := by
+            change (∑ a : E, mat τ.1 (i, a) (j, a)) = 0
+            rw [ht]
+            simp [block_apply, hij]
+          rw [ite_eq_right hij, hzero, zero_mul]
+      · exact ht.2
+    rw [ht, hρ]
+    exact hscore _
+  · let W := Finset.univ.filter (fun i => g i = m)
+    have hW : W.Nonempty := hwin.imp (fun i hi => Finset.mem_filter.mpr ⟨Finset.mem_univ _, hi⟩)
+    obtain ⟨i, hi, hscore⟩ := Finset.exists_max_image W (fun j => S (gibbsEndpoint B hB j)) hW
+    have hi' := (Finset.mem_filter.mp hi).2
+    let ρ := gibbsEndpoint B hB i
+    refine ⟨ρ, by rw [(hend i hi').2]; exact basis_marginal_pure i, (hend i hi').1, ?_⟩
+    intro τ hτ
+    let P := mat (retainedMarginal τ).1
+    let p := fun j => (P j j).re
+    obtain ⟨hw, ht⟩ := (hface τ).1 hτ
+    have hdiag : mat τ.1 = retainedBlock (fun j => p j • mat (γ j).1) := by
+      rcases ht with ht | ⟨hγ, ht⟩
+      · exact ht
+      · have hne : g 0 ≠ g 1 := fun hg => hcommon ⟨hγ, hg⟩
+        have hz : p 0 = 0 ∨ p 1 = 0 := by
+          rcases hw 0 with h | h
+          · exact Or.inl h
+          rcases hw 1 with q | q
+          · exact Or.inr q
+          exact (hne (h.trans q.symm)).elim
+        have hzero (j k : Fin 2) (hjk : j ≠ k) : P j k = 0 := by
+          have hbound := D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound
+            (mat_psd (retainedMarginal τ)) j k
+          have hprod : p j * p k = 0 := by
+            fin_cases j <;> fin_cases k
+            · exact (hjk rfl).elim
+            · rcases hz with h | h <;> simp [h]
+            · rcases hz with h | h <;> simp [h]
+            · exact (hjk rfl).elim
+          change Complex.normSq (P j k) ≤ p j * p k at hbound
+          rw [hprod] at hbound
+          exact Complex.normSq_eq_zero.mp (le_antisymm hbound (Complex.normSq_nonneg _))
+        change mat τ.1 = P ⊗ₖ mat (γ 0).1 at ht
+        have hγall (j : Fin 2) : γ j = γ 0 := by
+          fin_cases j
+          · rfl
+          · exact hγ.symm
+        apply Matrix.ext
+        rintro ⟨j, e⟩ ⟨k, f⟩
+        rw [ht, block_apply]
+        change P j k * mat (γ 0).1 e f = _
+        by_cases hjk : j = k
+        · subst k
+          rw [ite_eq_left rfl, hγall j, Matrix.smul_apply, Complex.real_smul]
+          exact congrArg (fun x => x * mat (γ 0).1 e f) (real_diagonal (retainedMarginal τ) j).symm
+        · rw [ite_eq_right hjk, hzero j k hjk, zero_mul]
+    change (mat τ.1 * Z).trace.re ≤ S ρ
+    rw [hdiag, endpoint_sum, trace_score_sum]
+    exact score_le_weighted_max p (fun j => S (gibbsEndpoint B hB j)) (S ρ)
+      (fun j => (Complex.nonneg_iff.mp ((mat_psd (retainedMarginal τ)).diag_nonneg (i := j))).1)
+      (populations_sum τ) (fun j => (hw j).imp_right (fun hj =>
+        hscore j (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hj⟩)))
+
+/-- The ordinary Petz recovery matrix for the partial trace and reference `σ`.
+On a faithful retained reference the spectral inverse square root is the ordinary inverse. -/
+def ordinaryPetzRecovery (σ : DensityState (Fin 2 × E)) (P : Matrix (Fin 2) (Fin 2) ℂ) :
+    Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
+  let S := cfc Real.sqrt (mat σ.1)
+  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
+  S * ((W * P * W) ⊗ₖ (1 : Matrix E E ℂ)) * S
+
+/-- The joint observable whose expectation is the ordinary Petz residual score. -/
+def ordinaryPetzResidual (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
+    Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
+  let S := cfc Real.sqrt (mat σ.1)
+  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
+  Y - ((W * partialTraceRight (S * Y * S) * W) ⊗ₖ (1 : Matrix E E ℂ))
+
+/-- The score of a physical trial against its ordinary Petz recovery. -/
+def ordinaryPetzScore (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
+    (ρ : DensityState (Fin 2 × E)) : ℝ :=
+  ((mat ρ.1 - ordinaryPetzRecovery σ (mat (retainedMarginal ρ).1)) * Y).trace.re
+
+/-- The log-reference pencil for the ordinary Petz score, Hermitian when `Y` is Hermitian. -/
+def ordinaryPetzField (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
+    (s : ℝ) : Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
+  CFC.log (mat σ.1) - (CFC.log (mat (retainedMarginal σ).1) ⊗ₖ (1 : Matrix E E ℂ)) +
+    s • ordinaryPetzResidual σ Y
+
+private theorem ordinaryPetzScore_eq_trace (σ : DensityState (Fin 2 × E))
+    (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (ρ : DensityState (Fin 2 × E)) :
+    ordinaryPetzScore σ Y ρ = (mat ρ.1 * ordinaryPetzResidual σ Y).trace.re := by
+  let S := cfc Real.sqrt (mat σ.1)
+  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
+  let P := mat (retainedMarginal ρ).1
+  let T := (W * P * W) ⊗ₖ (1 : Matrix E E ℂ)
+  have hadj : (S * T * S * Y).trace =
+      (mat ρ.1 * ((W * partialTraceRight (S * Y * S) * W) ⊗ₖ (1 : Matrix E E ℂ))).trace := by
+    calc
+      _ = ((S * T) * (S * Y)).trace := by rw [Matrix.mul_assoc (S * T)]
+      _ = (T * (S * Y * S)).trace := by
+        rw [Matrix.mul_assoc S, Matrix.trace_mul_comm S, Matrix.mul_assoc T]
+      _ = ((S * Y * S) * T).trace := Matrix.trace_mul_comm _ _
+      _ = (partialTraceRight (S * Y * S) * (W * P * W)).trace :=
+        trace_tensor_identity _ _
+      _ = (P * (W * partialTraceRight (S * Y * S) * W)).trace := by
+        let L := partialTraceRight (S * Y * S)
+        change (L * (W * P * W)).trace = (P * (W * L * W)).trace
+        calc
+          _ = (W * (L * W * P)).trace := by
+            rw [← Matrix.mul_assoc L, Matrix.trace_mul_comm _ W,
+              Matrix.mul_assoc L W P]
+          _ = ((W * L * W) * P).trace := by simp only [Matrix.mul_assoc]
+          _ = _ := Matrix.trace_mul_comm _ _
+      _ = _ := (trace_tensor_identity _ _).symm
+  unfold ordinaryPetzScore ordinaryPetzResidual ordinaryPetzRecovery
+  simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re]
+  exact congrArg (fun x => (mat ρ.1 * Y).trace.re - x.re) hadj
+
+private theorem ordinaryPetzValue_eq_gibbs (σ : DensityState (Fin 2 × E))
+    (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (r : ℝ)
+    (B : Fin 2 → CStarMatrix E E ℂ)
+    (hred : ordinaryPetzField σ Y r = retainedBlock (fun i => mat (B i)))
+    (ρ : DensityState (Fin 2 × E)) :
+    r * ordinaryPetzScore σ Y ρ - conditionalLoss ρ σ = gibbsValue B ρ := by
+  rw [ordinaryPetzScore_eq_trace]
+  unfold gibbsValue conditionalLoss
+  rw [entropy_cross, entropy_cross, ← hred]
+  unfold ordinaryPetzField
+  rw [Matrix.mul_add, Matrix.mul_sub, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_sub,
+    Matrix.trace_smul, Complex.add_re, Complex.sub_re, trace_tensor_identity]
+  rw [show partialTraceRight (mat ρ.1) = mat (retainedMarginal ρ).1 from rfl]
+  simp only [Complex.smul_re, smul_eq_mul]
+  ring
+
+/-- In a basis reducing the ordinary Petz field at `r`, a physical state with a pure retained
+marginal attains the full value and the largest score among all optimizers. Its affine
+supporting line obeys the quadratic bound furnished by a score-loss inequality on that
+trial. The loss has its Umegaki interpretation under the support conditions in
+`conditionalLoss`, in particular on a faithful joint and retained reference. -/
+theorem ordinary_petz_reducing_supporting_line
+    (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (r : ℝ)
+    (B : Fin 2 → CStarMatrix E E ℂ) (hB : ∀ i, IsSelfAdjoint (B i))
+    (hred : ordinaryPetzField σ Y r = retainedBlock (fun i => mat (B i))) :
+    let m := max (Real.log (partitionFunction (B 0))) (Real.log (partitionFunction (B 1)))
+    let z := ordinaryPetzScore σ Y
+    let F := fun t ρ => t * z ρ - conditionalLoss ρ σ
+    ∃ ρ : DensityState (Fin 2 × E),
+      (∃ v : EuclideanSpace ℂ (Fin 2), ‖v‖ = 1 ∧
+        mat (retainedMarginal ρ).1 = Matrix.vecMulVec v.ofLp (star v.ofLp)) ∧
+      F r ρ = m ∧ (∀ τ, F r τ ≤ m) ∧
+      (∀ τ, F r τ = m → z τ ≤ z ρ) ∧
+      (∀ s, F s ρ = m + (s - r) * z ρ) ∧
+      ∀ C : ℝ, 0 < C → z ρ ^ 2 ≤ C * conditionalLoss ρ σ →
+        ∀ s, m + (s - r) * z ρ ≤ C * s ^ 2 / 4 := by
+  dsimp only
+  let g := fun i => Real.log (partitionFunction (B i))
+  let m := max (g 0) (g 1)
+  obtain ⟨ρ, hpure, hvalue, hslope⟩ := maximal_gibbs_slope B hB (ordinaryPetzResidual σ Y)
+  have hmax := (reducing_qubit_gibbs_argmax B hB).1
+  have hopt : r * ordinaryPetzScore σ Y ρ - conditionalLoss ρ σ = m :=
+    (ordinaryPetzValue_eq_gibbs σ Y r B hred ρ).trans hvalue
+  have hline (s : ℝ) : s * ordinaryPetzScore σ Y ρ - conditionalLoss ρ σ =
+      m + (s - r) * ordinaryPetzScore σ Y ρ := by rw [← hopt]; ring
+  refine ⟨ρ, hpure, hopt, ?_, ?_, hline, ?_⟩
+  · intro τ
+    rw [ordinaryPetzValue_eq_gibbs σ Y r B hred]
+    exact hmax.2 ⟨τ, rfl⟩
+  · intro τ hτ
+    simp only [ordinaryPetzScore_eq_trace]
+    exact hslope τ ((ordinaryPetzValue_eq_gibbs σ Y r B hred τ).symm.trans hτ)
+  · intro C hC hscore s
+    rw [← hline]
+    have hsq := sq_nonneg (ordinaryPetzScore σ Y ρ - C * s / 2)
+    apply le_of_mul_le_mul_left _ hC
+    nlinarith only [hsq, hscore]
+
+#print axioms ordinary_petz_reducing_supporting_line
 
 end D5.S3.Quantum.Recovery.QubitGibbsDeficit
