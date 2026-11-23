@@ -24,7 +24,7 @@ Continuation counts are resolved by the number of remaining monochromatic bonds.
 
 **Definition 1.2 (twoDefect).**
 
-$$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229641Strip}.\operatorname{twoDefect}\left(p, q\right): \operatorname{Int}) = (\operatorname{if} (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 2) \operatorname{then} 1 \operatorname{else} 0)))$$
+$$\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\operatorname{One}\left(R\right)] \forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229641Strip}.\operatorname{twoDefect}\left(p, q\right): R) = (\operatorname{if} (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 2) \operatorname{then} 1 \operatorname{else} 0))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.twoDefect` (`✓ std3`).
 
