@@ -28,7 +28,8 @@ internal sealed class RankedBipartiteCapacityDocument : IScribeDocumentDefinitio
                         + "the exceptional row's actual inflow to the columns at or below r from the "
                         + "number of those columns. The upper deficit uses the ordinary rows at or above "
                         + "r, the number of ordinary columns strictly above r multiplied by k, and the "
-                        + "actual outflow to the exceptional column. Both differences are truncated at "
+                        + "actual outflow from ordinary rows of rank at least r to the exceptional column. "
+                        + "Both differences are truncated at "
                         + "zero. Their maximum is CapacityDeficit(r), and DiagonalMultiplicity(r) sums "
                         + "the diagonal at rank r."))),
                 DescribeRole.Theorem),

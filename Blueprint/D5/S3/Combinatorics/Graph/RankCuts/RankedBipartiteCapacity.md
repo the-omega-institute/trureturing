@@ -16,7 +16,7 @@ $$\operatorname{CapacityDeficit}\left(r\right) \le \operatorname{DiagonalMultipl
 
 Use two copies of a finite vertex set ranked by natural numbers and natural-valued edge multiplicities. Fix an exceptional vertex t of rank above r. Ordinary positive rows are diagonal or go up in rank. Each ordinary row and column has total multiplicity between one and k.
 
-The lower deficit subtracts k times the number of rows below r and the exceptional row's actual inflow to the columns at or below r from the number of those columns. The upper deficit uses the ordinary rows at or above r, the number of ordinary columns strictly above r multiplied by k, and the actual outflow to the exceptional column. Both differences are truncated at zero. Their maximum is CapacityDeficit(r), and DiagonalMultiplicity(r) sums the diagonal at rank r.
+The lower deficit subtracts k times the number of rows below r and the exceptional row's actual inflow to the columns at or below r from the number of those columns. The upper deficit uses the ordinary rows at or above r, the number of ordinary columns strictly above r multiplied by k, and the actual outflow from ordinary rows of rank at least r to the exceptional column. Both differences are truncated at zero. Their maximum is CapacityDeficit(r), and DiagonalMultiplicity(r) sums the diagonal at rank r.
 
 **Theorem 1.2 (Summed capacity deficits bound the odd-rank edge charge).**
 

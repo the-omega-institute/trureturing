@@ -29,12 +29,7 @@ internal sealed class DimensionFourteenJumpsDocument : IScribeDocumentDefinition
                 DescribeId.Create("fourteen-budget-needs-two-jumps"),
                 DeclarationHandle.Create(Prefix + "two_jumps_at_640"),
                 H("At least two ordinary jumps in dimension fourteen within budget 640"),
-                StatementSource.FromAuthor(Disp(new Formula.Logic(
-                    new Formula.Relation(Call("AxisCost", F.Id("f")),
-                        FormulaRelationOperator.LessThanOrEqual, D(6,4,0)),
-                    FormulaLogicOperator.Implies,
-                    new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual,
-                        Call("JumpCount", F.Id("f")))))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Fix any marked coordinate among fourteen, and a Boolean table "
@@ -42,8 +37,10 @@ internal sealed class DimensionFourteenJumpsDocument : IScribeDocumentDefinition
                         + "Outside the full-set row, a true entry requires inclusion. At multiplier "
                         + "three each ordinary row and column has odd degree at most three. The full "
                         + "row and column both use the same degree mode: even degree at most two "
-                        + "when selected, odd degree at most one otherwise. AxisCost is four times "
-                        + "one plus the count of entries from ordinary odd rows to odd columns.")),
+                        + "when selected, odd degree at most one otherwise. The cost is four times "
+                        + "the sum of one and the number of true entries from ordinary odd rows to odd columns. "
+                        + "If the cost is at most 640, there are at least two true entries from "
+                        + "ordinary rows whose target rank exceeds the source rank by at least two.")),
                     Paragraph(Text("The deficits at ranks one, three and eleven force at least "
                         + "9, 100 and 50 chargeable diagonals. A budget of 640 leaves 159 chargeable "
                         + "ordinary entries, so those deficits exhaust the charge. The exceptional "
