@@ -6,7 +6,7 @@
    utility: none
    digest: Compact native occupations of assigned modes in the actual charts. -/
 
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMFixedChargeWick
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAssignedOverlap
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMNativeOccurrenceReadout
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCurrentRegression
 
@@ -26,7 +26,8 @@ open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitDomain ball_subset_slitD
 open OriginalFourMSlitMean (slitCovarianceEntry_analyticOnNhd)
 open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit)
 open OriginalFourMOccupationTransport (flags)
-open OriginalFourMFixedChargeWick (Mode nativeModeCovariance nativeModeMean)
+open OriginalFourMFixedChargeWick (Mode nativeModeCovariance nativeModeMean modeMatrix)
+open AffineWickAssignments (assign)
 open OriginalGaussianSourceRestriction (CompactExternal compactExternal externalOccupation)
 open OriginalFourMSectorContinuation (slitMatrix slitLinear)
 open AffineOccurrenceWick (wick affineMoment_eq_wick)
@@ -103,6 +104,22 @@ theorem mode_array_pullback (D : LatticeData) (q : Charge D) (c : Chart) (x : �
     cases c <;> simp only [nativeModeMean, compactMean, Function.comp_apply, slitLinear, dLinear,
       hl, hd, he, external]
 
+/-- Evaluate the literal compact affine coefficient with the four factorial
+weights obtained from the assigned occurrence word. -/
+def compactWordReadout (D : LatticeData) (q : Charge D) (c : Chart) (x : ℝ)
+    (slot : X → Puncture) (colour : X → Fin D.rank) (F : Finset (Index D))
+    (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) (l : List (Mode n)) : ℂ :=
+  let labels := l.map (compactMode D c slot colour F hF)
+  let left := labels.filterMap Sum.getLeft?
+  let right := labels.filterMap Sum.getRight?
+  let b := slotOccupation D F (left.filterMap Sum.getLeft?)
+  let g := slotOccupation D F (left.filterMap Sum.getRight?)
+  let d := slotOccupation D F (right.filterMap Sum.getLeft?)
+  let e := slotOccupation D F (right.filterMap Sum.getRight?)
+  (weight b : ℂ) * (weight g : ℂ) * ((weight d : ℂ) * (weight e : ℂ)) *
+    affineCoefficient (compactCovariance D c x F) (compactMean D q c x F)
+      (externalOccupation D F b g d e)
+
 /-- Each native assigned word evaluates to the ordinary compact affine
 coefficient multiplied by the four literal Fock factorials. -/
 theorem assigned_word_affine [Finite X] (D : LatticeData) (q : Charge D) (c : Chart) (x : ℝ)
@@ -110,19 +127,10 @@ theorem assigned_word_affine [Finite X] (D : LatticeData) (q : Charge D) (c : Ch
     (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F)
     (hs : ∀ a b, compactCovariance D c x F a b = compactCovariance D c x F b a)
     (l : List (Mode n)) :
-    let labels := l.map (compactMode D c slot colour F hF)
-    let left := labels.filterMap Sum.getLeft?
-    let right := labels.filterMap Sum.getRight?
-    let b := slotOccupation D F (left.filterMap Sum.getLeft?)
-    let g := slotOccupation D F (left.filterMap Sum.getRight?)
-    let d := slotOccupation D F (right.filterMap Sum.getLeft?)
-    let e := slotOccupation D F (right.filterMap Sum.getRight?)
     wick (nativeModeCovariance D c x slot colour n) (nativeModeMean D q c x slot colour n) l =
-      (weight b : ℂ) * (weight g : ℂ) * ((weight d : ℂ) * (weight e : ℂ)) *
-        affineCoefficient (compactCovariance D c x F) (compactMean D q c x F)
-          (externalOccupation D F b g d e) := by
+    compactWordReadout D q c x slot colour F hF l := by
   let := Fintype.ofFinite X
-  dsimp only
+  unfold compactWordReadout
   let f := compactMode D c slot colour F hF
   let K := compactCovariance D c x F
   let μ := compactMean D q c x F
@@ -182,5 +190,22 @@ theorem compactCovariance_d_symm (D : LatticeData) {x : ℝ} (hx : 0 < x) (hx₁
   exact tendsto_nhds_unique_of_eventuallyEq
     ((ha a b).continuousAt.tendsto.mono_left nhdsWithin_le_nhds)
     ((ha b a).continuousAt.tendsto.mono_left nhdsWithin_le_nhds) hEq
+
+/-- The surviving part of each physical Wick partition is the weighted
+compact occupation sum in the actual A, B or true-D chart. -/
+theorem assigned_native_part [Fintype X] [DecidableEq X] (D : LatticeData)
+    (q : Charge D) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hc : (c = .A ∨ c = .B) ∧ ‖parameter c (x : ℂ)‖ < 1 ∨ c = .D)
+    (slot : X → Puncture) (colour : X → Fin D.rank) (F : Finset (Index D))
+    (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) (l : List X) :
+    assign (modeMatrix c x slot n) l
+      (wick (nativeModeCovariance D c x slot colour n) (nativeModeMean D q c x slot colour n)) =
+      assign (modeMatrix c x slot n) l (compactWordReadout D q c x slot colour F hF) := by
+  congr 1
+  funext w
+  apply assigned_word_affine
+  rcases hc with ⟨hc, hr⟩ | rfl
+  · exact compactCovariance_ab_symm D c x F hc hr
+  · exact compactCovariance_d_symm D hx hx₁ F
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMAssignedOccupation
