@@ -331,7 +331,7 @@ private theorem row_sum {I A : Type*} [Fintype I] [AddCommGroup A]
 
 /-- A linear relation among the non-root triangle edge rows that is a potential
 difference on those edges has a unique normalized potential on the whole ground
-set. Its values are killed by three. -/
+set. Both the potential values and the relation coefficients are killed by three. -/
 theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
     [AddCommGroup A] (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
     (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
@@ -339,6 +339,7 @@ theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
     (c : T → A) :
     let e (i j : I) := ∑ t, row (points t) (c t) i j
     (∀ i j, i ≠ root → j ≠ root → e i j = e anchor j - e anchor i) →
+      (∀ t, 3 • c t = 0) ∧
       ∃! u : I → A, u anchor = 0 ∧ (∑ j, u j) = 0 ∧
         (∀ i, 3 • u i = 0) ∧ (∀ i j, e i j = u j - u i) := by
   classical
@@ -357,6 +358,20 @@ theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
     ⟨c, fun i j _ => (hu.2.2 i j).symm⟩
   have ht := ((edge_rows_iff points hinj hdis u anchor).mp hex).1
   have kill (i : I) : 3 • u i = 0 := by simpa [hu.1] using ht i
-  exact ⟨u, ⟨hu.1, hu.2.1, kill, hu.2.2⟩, fun v hv => unique v ⟨hv.1, hv.2.1, hv.2.2.2⟩⟩
+  refine ⟨?_, u, ⟨hu.1, hu.2.1, kill, hu.2.2⟩, fun v hv => unique v ⟨hv.1, hv.2.1, hv.2.2.2⟩⟩
+  intro t
+  let i := points t 0
+  let j := points t 1
+  have hne' : i ≠ j := (hinj t).ne (by decide : (0 : Fin 3) ≠ 1)
+  have ht' : covers (points t) i j := ⟨0, 1, rfl, rfl⟩
+  have hsum' : e i j = row (points t) (c t) i j := by
+    apply Finset.sum_eq_single_of_mem t (Finset.mem_univ _)
+    intro s _ hst
+    exact row_eq_zero _ _ hne' fun hs => hst (hdis s t i j hne' hs ht')
+  have hfor : forward (points t) i j := Or.inl ⟨rfl, rfl⟩
+  rw [row, ite_eq_left hfor, hu.2.2] at hsum'
+  rw [← hsum']
+  have he : (3 : ℕ) • (u j - u i) = (3 : ℕ) • u j - (3 : ℕ) • u i := by abel
+  rw [he, kill, kill, sub_self]
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
