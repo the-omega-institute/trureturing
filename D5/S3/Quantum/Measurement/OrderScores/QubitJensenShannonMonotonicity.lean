@@ -10,8 +10,8 @@
 admission_basis: open-problem-resolution
 quantitative_increase: proof_shape: content. escape_witness: restricted_transport supplies one circle point at the larger parameter with every coefficient weakly larger.
 result: proof_shape: content. escape_witness: circle_score_increment keeps the positive quadratic gain while the higher coefficients are nonnegative.
-psi_half: proof_shape: content. escape_witness: maximizing_circle attains the native maximum with s ≤ w ≤ 1/2, forcing w = 1/2 at the endpoint.
-Direct frozen dependencies: none. QubitJensenShannon is the score and series substrate.
+Direct frozen dependency: FiniteStateChannel.DensityState (in quantitative_increase).
+QubitJensenShannon supplies the native score and entropy series.
 -/
 
 import D5.S3.Quantum.Measurement.OrderScores.QubitJensenShannon
@@ -790,13 +790,5 @@ theorem result : StrictMonoOn psi (Set.Icc (0 : ℝ) (1 / 2)) := by
   have hpos : 0 < (t' ^ 2 - t ^ 2) / (2 * Real.log 2) :=
     div_pos (sub_pos.mpr (pow_lt_pow_left₀ htt' ht.1 (by decide))) (by positivity)
   exact sub_pos.mp (hpos.trans_le (quantitative_increase ht.1 htt' ht'.2))
-
-theorem psi_half :
-    psi (1 / 2) = Real.binEntropy (3 / 4) / Real.log 2 - 1 / 2 := by
-  obtain ⟨w, hw, hm⟩ := maximizing_circle (t := 1/2) (by constructor <;> norm_num)
-  have hs : sOfT (1/2) = 1/2 := by norm_num [sOfT]
-  have hw' : w = 1/2 := le_antisymm hw.2 (hs ▸ hw.1)
-  rw [hs, hw', disk_score_half] at hm
-  exact hm.symm
 
 end D5.S3.Quantum.Measurement.OrderScores.QubitJensenShannonMonotonicity

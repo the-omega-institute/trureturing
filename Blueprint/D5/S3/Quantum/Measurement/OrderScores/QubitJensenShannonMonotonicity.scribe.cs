@@ -28,12 +28,7 @@ internal sealed class QubitJensenShannonMonotonicityDocument : IScribeDocumentDe
                         FormulaRelationOperator.LessThanOrEqual, Sub(Score(F.Id("u")), Score(F.Id("t")))))))),
             Theorem("result", "Strict monotonicity on the closed interval",
                 "The optimized score from Section II.C increases strictly on the full closed interval. The quantitative gain is positive for every strictly ordered pair, including the endpoints.",
-                Apply(Op("StrictMonoOn"), F.Id("psi"), Domain)),
-            Theorem("psi_half", "Orthogonal axes",
-                "At the upper endpoint the maximizing circle interval collapses to one point. The optimal value is the binary entropy at 3/4 in bits minus 1/2.",
-                new Formula.Relation(Score(Half), FormulaRelationOperator.Equal,
-                    Sub(new Formula.Fraction(Apply(Op("binEntropy"), new Formula.Fraction(D(3), D(4))),
-                        Seq(Op("ln"), Sp, D(2))), Half)))), []));
+                Apply(Op("StrictMonoOn"), F.Id("psi"), Domain))), []));
 
     private static DocumentBlock Theorem(string name, string title, string prose, Formula statement) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),

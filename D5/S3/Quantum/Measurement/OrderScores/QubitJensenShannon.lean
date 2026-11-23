@@ -8,20 +8,14 @@
 
 /-
 admission_basis: escape-witness
-parameter_calibration: proof_shape: bind-only. Consumers: orientation_calibration and native_score_on_coordinates.
-orientation_calibration: proof_shape: content. escape_witness: the acute arccos branch recovers sin θ = 2t.
-source_records_probability: proof_shape: content. escape_witness: sharp_joint_record establishes positivity and total mass one for both orders.
-source_score_range_rotate: proof_shape: content. escape_witness: rotate_density realizes the transported state, and the inverse realizes the reverse inclusion.
+parameter_calibration: proof_shape: bind-only. Consumers: native_score_on_coordinates, maximizing_circle and quantitative_increase.
 native_maximum: proof_shape: content. escape_witness: native_score_range identifies exactly the entire native range with the closed disk image.
-psi_zero: proof_shape: content. escape_witness: the native-to-disk range equality applies also to the zero-parity branch, where disk scores vanish.
-disk_score_half: proof_shape: bind-only. Consumer: QubitJensenShannonMonotonicity.psi_half.
-series_weight_pos: proof_shape: bind-only. Consumers: bias_term_bound and disk_score_le_of_coeff_le.
+series_weight_pos: proof_shape: bind-only. Consumers: bias_term_bound, summable_series_weight, disk_score_le_of_coeff_le and circle_score_increment.
 coeff_zero: proof_shape: bind-only. Consumer: QubitJensenShannonMonotonicity.first_circle_coeff.
 disk_series: proof_shape: content. escape_witness: bias_series extends the real-log expansion to both extreme biases by summable domination.
 disk_score_le_of_coeff_le: proof_shape: content. escape_witness: disk_series supplies actual sums for both scores and their shared positive weights.
 Direct frozen dependencies: MaxEntropy.shannonEntropy, QubitNormalFormState.qubitMatrix and qubitState,
-ActualPureQubitGeometry.densityBridge, blochMatrix and its Bloch geometry, FiniteStateChannel.DensityState,
-and RankTrace.trace_mul_nonneg_of_posSemidef in the supporting proofs.
+ActualPureQubitGeometry.densityBridge, blochMatrix and its Bloch geometry, and FiniteStateChannel.DensityState.
 -/
 
 import D5.S3.Entropy.MaxEntropy
@@ -40,7 +34,6 @@ open D5.S3.Entropy.MaxEntropy (shannonEntropy)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 open D5.S3.Quantum.Information.QubitNormalFormState (qubitMatrix qubitState)
 open D5.S3.Quantum.Foundation.FiniteStateChannel
-open D5.S3.Quantum.FiniteDimensional
 open scoped MatrixOrder ComplexOrder
 
 def outcomeSign (outcome : Bool) : ℝ := if outcome then 1 else -1
@@ -48,32 +41,6 @@ def outcomeSign (outcome : Bool) : ℝ := if outcome then 1 else -1
 /-- The signed Pauli projector for the axis with components (k, 0, m). -/
 def projector (m k : ℝ) (outcome : Bool) : Matrix (Fin 2) (Fin 2) ℂ :=
   qubitMatrix (outcomeSign outcome * k) (outcomeSign outcome * m)
-
-private theorem projector_self_adjoint (m k : ℝ) (a : Bool) :
-    (projector m k a).conjTranspose = projector m k a := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [projector, qubitMatrix]
-
-private theorem projector_idempotent (m k : ℝ) (a : Bool) (h : m^2+k^2=1) :
-    projector m k a * projector m k a = projector m k a := by
-  ext i j
-  have hc : ((m : ℂ)^2 + (k : ℂ)^2) = 1 := by exact_mod_cast h
-  cases a <;> fin_cases i <;> fin_cases j <;>
-    simp [projector, qubitMatrix, outcomeSign, Matrix.mul_apply, Fin.sum_univ_two] <;>
-    first | linear_combination hc / 4 | ring
-
-private theorem projector_complementary (m k : ℝ) :
-    projector m k false + projector m k true = 1 := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [projector, qubitMatrix, outcomeSign] <;> ring
-
-/-- The two signs of a unit Bloch axis give a sharp binary measurement. -/
-private theorem projector_measurement (m k : ℝ) (h : m ^ 2 + k ^ 2 = 1) :
-    (∀ a, (projector m k a).conjTranspose = projector m k a ∧
-      projector m k a * projector m k a = projector m k a) ∧
-    projector m k false + projector m k true = 1 :=
-  ⟨fun a => ⟨projector_self_adjoint m k a, projector_idempotent m k a h⟩,
-    projector_complementary m k⟩
 
 set_option maxHeartbeats 1000000 in
 private theorem trace_record_ab (m k : ℝ) (hunit : m ^ 2 + k ^ 2 = 1)
@@ -146,78 +113,10 @@ theorem parameter_calibration {t : ℝ} (ht : t ∈ Set.Icc 0 (1 / 2 : ℝ)) :
   unfold sOfT
   exact ⟨⟨by linarith, by linarith⟩, by nlinarith⟩
 
-theorem orientation_calibration {t : ℝ} (ht : t ∈ Icc 0 (1 / 2 : ℝ)) :
-    let s := sOfT t
-    let θ := Real.arccos (1 - 2 * s)
-    θ ∈ Icc 0 (Real.pi / 2) ∧
-      Real.cos θ = (Real.sqrt (1 - s))^2 - (Real.sqrt s)^2 ∧
-      Real.sin θ / 2 = t := by
-  dsimp only
-  obtain ⟨hs, hprod⟩ := parameter_calibration ht
-  let s := sOfT t
-  have hs0 : 0 ≤ 1 - 2 * s := by have := hs.2; change s ≤ 1/2 at this; linarith
-  have hs1 : 1 - 2 * s ≤ 1 := by have := hs.1; change 0 ≤ s at this; linarith
-  refine ⟨⟨Real.arccos_nonneg _, ?_⟩, ?_, ?_⟩
-  · rw [← Real.arccos_zero]
-    exact Real.arccos_le_arccos hs0
-  · rw [Real.cos_arccos (by linarith : -1 ≤ 1-2*s) hs1,
-      Real.sq_sqrt (by linarith : 0 ≤ 1-s), Real.sq_sqrt hs.1]
-    ring
-  · rw [Real.sin_arccos]
-    have hrad : 1 - (1-2*s)^2 = (2*t)^2 := by
-      change s * (1-s) = t^2 at hprod
-      nlinarith only [hprod]
-    rw [hrad, Real.sqrt_sq (by linarith [ht.1] : 0 ≤ 2*t)]
-    ring
-
 /-- The record puts the outcome of the first measurement in its first coordinate. -/
 def jointRecord (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ) (rho : DensityState (Fin 2))
     (o : Bool × Bool) : ℝ :=
   (Matrix.trace (nativeMatrix rho * (A o.1 * B o.2 * A o.1))).re
-
-private theorem sharp_joint_record (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ)
-    (rho : DensityState (Fin 2))
-    (hA : ∀ a, (A a).conjTranspose = A a ∧ A a * A a = A a)
-    (hB : ∀ b, (B b).conjTranspose = B b ∧ B b * B b = B b)
-    (hAs : A false + A true = 1) (hBs : B false + B true = 1) :
-    (∀ o, 0 ≤ jointRecord A B rho o) ∧ ∑ o, jointRecord A B rho o = 1 := by
-  constructor
-  · rintro ⟨a, b⟩
-    have hb : (B b).PosSemidef := by
-      simpa only [(hB b).1, (hB b).2] using Matrix.posSemidef_conjTranspose_mul_self (B b)
-    have hab : (A a * B b * A a).PosSemidef := by
-      simpa only [(hA a).1] using hb.mul_mul_conjTranspose_same (A a)
-    exact RHLinalg.trace_mul_nonneg_of_posSemidef (native_matrix_psd rho) hab
-  · have hs (a : Bool) :
-        jointRecord A B rho (a, false) + jointRecord A B rho (a, true) =
-          (Matrix.trace (nativeMatrix rho * A a)).re := by
-      simp only [jointRecord, ← Complex.add_re, ← Matrix.trace_add, ← mul_add]
-      rw [← add_mul, ← mul_add, hBs, mul_one, (hA a).2]
-    simp only [Fintype.sum_prod_type, Fintype.sum_bool]
-    rw [add_comm (jointRecord A B rho (true, true)), add_comm (jointRecord A B rho (false, true)),
-      hs, hs, ← Complex.add_re, ← Matrix.trace_add, ← mul_add, add_comm (A true), hAs, mul_one,
-      show Matrix.trace (nativeMatrix rho) = 1 from rho.trace_eq_one, Complex.one_re]
-
-/-- Each order gives a probability law. The reverse law becomes measurement-labelled by swapping coordinates. -/
-theorem source_records_probability {t : ℝ} (ht : t ∈ Icc 0 (1 / 2 : ℝ)) (rho : DensityState (Fin 2)) :
-    let s := sOfT t
-    let A := projector (Real.sqrt (1 - s)) (Real.sqrt s)
-    let B := projector (Real.sqrt (1 - s)) (-Real.sqrt s)
-    ((∀ o, 0 ≤ jointRecord A B rho o) ∧ ∑ o, jointRecord A B rho o = 1) ∧
-    ((∀ o, 0 ≤ jointRecord B A rho o) ∧ ∑ o, jointRecord B A rho o = 1) := by
-  dsimp only
-  have hs := (parameter_calibration ht).1
-  have hunit : (Real.sqrt (1 - sOfT t)) ^ 2 + (Real.sqrt (sOfT t)) ^ 2 = 1 := by
-    rw [Real.sq_sqrt (by linarith [hs.2]), Real.sq_sqrt hs.1]
-    ring
-  obtain ⟨hA, hAs⟩ := projector_measurement _ _ hunit
-  obtain ⟨hB, hBs⟩ := projector_measurement _ (-Real.sqrt (sOfT t)) (by simpa only [neg_sq] using hunit)
-  exact ⟨sharp_joint_record _ _ rho hA hB hAs hBs, sharp_joint_record _ _ rho hB hA hBs hAs⟩
-
-private theorem entropy_flip_b (p : Bool × Bool → ℝ) :
-    shannonEntropy (fun o : Bool × Bool => p (o.1, !o.2)) = shannonEntropy p := by
-  exact (Equiv.prodCongr (Equiv.refl Bool) Equiv.boolNot).sum_comp
-    (fun o => Real.negMulLog (p o))
 
 /-- Jensen–Shannon score in bits for two measurement-labelled Lüders records. -/
 def orderScore (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ) (rho : DensityState (Fin 2)) : ℝ :=
@@ -225,116 +124,12 @@ def orderScore (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ) (rho : DensityState (
   let q := fun o : Bool × Bool => jointRecord B A rho o.swap
   (shannonEntropy (fun o => (p o + q o) / 2) - (shannonEntropy p + shannonEntropy q) / 2) / Real.log 2
 
-private theorem order_score_flip_b (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ) (rho : DensityState (Fin 2)) :
-    orderScore A (fun b => B (!b)) rho = orderScore A B rho := by
-  unfold orderScore jointRecord
-  dsimp only [Prod.swap]
-  rw [← entropy_flip_b (fun o => ((Matrix.trace (nativeMatrix rho * (A o.1 * B o.2 * A o.1))).re +
-    (Matrix.trace (nativeMatrix rho * (B o.2 * A o.1 * B o.2))).re) / 2)]
-  rw [← entropy_flip_b (fun o => (Matrix.trace (nativeMatrix rho * (A o.1 * B o.2 * A o.1))).re)]
-  rw [← entropy_flip_b (fun o => (Matrix.trace (nativeMatrix rho * (B o.2 * A o.1 * B o.2))).re)]
-
-private abbrev QubitMatrix := Matrix (Fin 2) (Fin 2) ℂ
-
-private def rotate (U M : QubitMatrix) : QubitMatrix := U * M * Uᴴ
-
-private theorem rotate_mul {U : QubitMatrix} (hU : Uᴴ * U = 1) (A B : QubitMatrix) :
-    rotate U A * rotate U B = rotate U (A * B) := by
-  unfold rotate
-  calc
-    _ = U * A * (Uᴴ * U) * B * Uᴴ := by simp only [mul_assoc]
-    _ = _ := by rw [hU, mul_one, mul_assoc U A B]
-
-private theorem rotate_trace {U : QubitMatrix} (hU : Uᴴ * U = 1) (M : QubitMatrix) :
-    (rotate U M).trace = M.trace := by
-  rw [rotate, Matrix.trace_mul_comm (U * M) Uᴴ, ← mul_assoc, hU, one_mul]
-
-private theorem rotate_inverse {U : QubitMatrix} (hU : Uᴴ * U = 1) (M : QubitMatrix) :
-    rotate Uᴴ (rotate U M) = M := by
-  unfold rotate
-  rw [conjTranspose_conjTranspose]
-  calc
-    _ = (Uᴴ * U) * M * (Uᴴ * U) := by simp only [mul_assoc]
-    _ = _ := by rw [hU, one_mul, mul_one]
-
-private theorem rotate_density {U : QubitMatrix} (hU : Uᴴ * U = 1) (rho : DensityState (Fin 2)) :
-    ∃ rho' : DensityState (Fin 2), nativeMatrix rho' = rotate U (nativeMatrix rho) := by
-  have hpsd := native_matrix_psd rho
-  exact ⟨(densityBridge _ (hpsd.mul_mul_conjTranspose_same U)
-      ((rotate_trace hU _).trans rho.trace_eq_one)).val,
-    (densityBridge _ (hpsd.mul_mul_conjTranspose_same U)
-      ((rotate_trace hU _).trans rho.trace_eq_one)).property⟩
-
-private theorem order_score_rotate {U : QubitMatrix} (hU : Uᴴ * U = 1)
-    (A B : Bool → QubitMatrix) {rho rho' : DensityState (Fin 2)}
-    (hrho : nativeMatrix rho' = rotate U (nativeMatrix rho)) :
-    orderScore (fun a => rotate U (A a)) (fun b => rotate U (B b)) rho' =
-      orderScore A B rho := by
-  have hrecord (C D : Bool → QubitMatrix) :
-      jointRecord (fun a => rotate U (C a)) (fun b => rotate U (D b)) rho' =
-        jointRecord C D rho := by
-    funext o
-    simp only [jointRecord, hrho, rotate_mul hU, rotate_trace hU]
-  simp only [orderScore, hrecord]
-
-/-- Simultaneous unitary conjugation preserves the native range of scores. -/
-private theorem order_score_range_rotate {U : Matrix (Fin 2) (Fin 2) ℂ} (hU : Uᴴ * U = 1) (hUU : U * Uᴴ = 1)
-    (A B : Bool → Matrix (Fin 2) (Fin 2) ℂ) :
-    Set.range (orderScore (fun a => U * A a * Uᴴ) (fun b => U * B b * Uᴴ)) =
-      Set.range (orderScore A B) := by
-  change Set.range (orderScore (fun a => rotate U (A a)) (fun b => rotate U (B b))) = _
-  ext x
-  constructor
-  · rintro ⟨rho', rfl⟩
-    have hU' : Uᴴᴴ * Uᴴ = 1 := by simpa only [conjTranspose_conjTranspose] using hUU
-    obtain ⟨rho, hrho⟩ := rotate_density hU' rho'
-    exact ⟨rho, by
-      simpa only [rotate_inverse hU] using
-        order_score_rotate hU' (fun a => rotate U (A a)) (fun b => rotate U (B b)) hrho⟩
-  · rintro ⟨rho, rfl⟩
-    obtain ⟨rho', hrho⟩ := rotate_density hU rho
-    exact ⟨rho', order_score_rotate hU A B hrho⟩
-
 /-- Wu's four-outcome Jensen–Shannon order score in bits for the canonical acute qubit pair. -/
 def sourceScore (t : ℝ) (rho : DensityState (Fin 2)) : ℝ :=
   let s := sOfT t
   let m := Real.sqrt (1 - s)
   let k := Real.sqrt s
   orderScore (projector m k) (projector m (-k)) rho
-
-private theorem outcome_flip (m k : ℝ) (a : Bool) :
-    projector (-m) (-k) a = projector m k (!a) := by
-  cases a <;> simp [projector, outcomeSign, qubitMatrix]
-
-private theorem source_score_antipodal {t : ℝ} (rho : DensityState (Fin 2)) :
-    let s := sOfT t
-    orderScore (projector (Real.sqrt (1-s)) (Real.sqrt s))
-      (projector (-Real.sqrt (1-s)) (Real.sqrt s)) rho = sourceScore t rho := by
-  dsimp only
-  have h : projector (-Real.sqrt (1-sOfT t)) (Real.sqrt (sOfT t)) =
-      fun b => projector (Real.sqrt (1-sOfT t)) (-Real.sqrt (sOfT t)) (!b) := by
-    funext b
-    simpa using outcome_flip (Real.sqrt (1-sOfT t)) (-Real.sqrt (sOfT t)) b
-  rw [h, order_score_flip_b]
-  rfl
-
-/-- A common unitary and either orientation of the second axis give the same score range. -/
-theorem source_score_range_rotate (t : ℝ) (flip : Bool) {U : Matrix (Fin 2) (Fin 2) ℂ}
-    (hU : Uᴴ * U = 1) (hUU : U * Uᴴ = 1) :
-    let s := sOfT t
-    let m := Real.sqrt (1 - s)
-    let k := Real.sqrt s
-    let A := projector m k
-    let B := if flip then projector (-m) k else projector m (-k)
-    Set.range (orderScore (fun a => U * A a * Uᴴ) (fun b => U * B b * Uᴴ)) =
-      Set.range (sourceScore t) := by
-  dsimp only
-  rw [order_score_range_rotate hU hUU]
-  cases flip
-  · rfl
-  · apply congrArg Set.range
-    funext rho
-    exact source_score_antipodal rho
 
 /-- The optimized score. Its supremum is attained throughout the closed interval. -/
 def psi (t : ℝ) : ℝ := sSup (Set.range (sourceScore t))
@@ -474,28 +269,7 @@ theorem native_maximum {t : ℝ} (ht : t ∈ Icc 0 (1 / 2 : ℝ)) :
     fun d' hd' => (hmax hd').trans_eq he.symm,
     fun rho' => (hn.2 (mem_range_self rho')).trans_eq he.symm⟩
 
-theorem psi_zero : psi 0 = 0 := by
-  obtain ⟨⟨x,z⟩, _, _, _, hx, _, _⟩ :=
-    native_maximum (t := 0) (by constructor <;> norm_num)
-  have hs : sOfT 0 = 0 := by norm_num [sOfT]
-  rw [hs] at hx
-  simpa [diskScore, reducedNats] using hx.symm
-
 def circlePoint (w : ℝ) : ℝ × ℝ := (Real.sqrt w, Real.sqrt (1 - w))
-
-theorem disk_score_half :
-    diskScore (1 / 2) (circlePoint (1 / 2)) =
-      Real.binEntropy (3 / 4) / Real.log 2 - 1 / 2 := by
-  have hsq : Real.sqrt ((1 : ℝ) / 2) * Real.sqrt (1 / 2) = 1 / 2 :=
-    Real.mul_self_sqrt (by norm_num)
-  unfold diskScore circlePoint
-  norm_num only [Prod.fst, Prod.snd, show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num, hsq]
-  unfold reducedNats deficit biasEntropy
-  norm_num
-  rw [show (1 : ℝ) / 2 = 2⁻¹ by norm_num, Real.binEntropy_two_inv]
-  have hl : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num)).ne'
-  field_simp
-  ring
 
 /-! The entropy deficit has a uniformly convergent series on the closed bias interval. -/
 

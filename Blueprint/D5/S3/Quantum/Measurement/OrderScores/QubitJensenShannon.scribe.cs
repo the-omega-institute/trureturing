@@ -27,6 +27,7 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
         "The Jensen–Shannon order score for two sharp qubit measurements.",
         H("Qubit Jensen–Shannon order score"),
         Blocks(
+            Paragraph(DefinitionDsl.Text("Every square root uses Lean’s total real convention. It is the nonnegative square root of the maximum of zero and its argument, so a negative argument gives zero.")),
             Definition("outcomeSign", "Outcome signs", "The two Boolean outcomes represent the signs −1 and +1.",
                 All("a", Bool, Equal(Call("outcomeSign", X("a")), Call("ite", X("a"), One, Negate(One))))),
             Definition("projector", "Pauli effects", "In the bisector frame the Bloch axis has coordinates (k, 0, m).",
@@ -44,21 +45,12 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
                 All("t", R, Imp(InHalf(X("t")),
                     Both(InHalf(Call("sOfT", X("t"))),
                         Equal(Mul(Call("sOfT", X("t")), Sub(One, Call("sOfT", X("t")))), Sq(X("t"))))))),
-            Theorem("orientation_calibration", "Acute angle calibration",
-                "The acute Bloch angle, including its two endpoints, is recovered from the axes’ dot product.",
-                AngleCalibration(), AssessedProvenance.FromRepo(Wu)),
             Definition("jointRecord", "Forward Lüders record",
                 "The first coordinate belongs to the measurement performed first.",
                 All("A", Measurement, All("B", Measurement, All("r", State, All("o", Outcomes,
                     Equal(Call("jointRecord", X("A"), X("B"), X("r"), X("o")),
                         TraceEffect(Call("A", Fst(X("o"))), Call("B", Snd(X("o"))))))))),
                 AssessedProvenance.FromLiterature(Wu)),
-            Theorem("source_records_probability", "Normalized joint records",
-                "The two signs of a unit axis give complementary self-adjoint projections. The positive sandwiched effects sum to the identity for each order. Swapping the two reverse-record coordinates preserves its normalization.",
-                All("t", R, All("r", State, Imp(InHalf(X("t")), Let("s", Call("sOfT", X("t")),
-                    Let("A", Call("projector", Root(Sub(One, X("s"))), Root(X("s"))),
-                        Let("B", Call("projector", Root(Sub(One, X("s"))), Negate(Root(X("s")))),
-                            Both(Probability("A", "B"), Probability("B", "A"))))))))),
             Definition("orderScore", "Lüders order score",
                 "Definition 1 uses Shannon entropy in bits. The two records use the same density state and label entries by the outcome of each measurement. H denotes finite Shannon entropy in nats and division by ln 2 converts the divergence to bits.",
                 OrderScore(), AssessedProvenance.FromLiterature(Wu)),
@@ -67,9 +59,6 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
                     Let("m", Root(Sub(One, X("s"))), Let("k", Root(X("s")),
                         Equal(Call("sourceScore", X("t"), X("r")),
                             Call("orderScore", P("m", "k"), Call("projector", X("m"), Negate(X("k"))), X("r"))))))))),
-            Theorem("source_score_range_rotate", "Common unitary and antipodal relabeling",
-                "A common unitary bijectively transports the native density states. Reversing the second Bloch axis swaps its labels in both records. The score range is preserved in either orientation.",
-                Rotation(), AssessedProvenance.FromRepo(Wu)),
             Definition("psi", "Optimized score",
                 "Section II.C maximizes over all common native qubit inputs. The equality of the supremum with an attained maximum is proved below.",
                 All("t", R, Equal(Call("psi", X("t")), Call("sSup", Call("range", Call("sourceScore", X("t")))))),
@@ -85,15 +74,9 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
             Theorem("native_maximum", "Attainment on the disk and in the native states",
                 "Every disk point has a native realization, and a compactness argument attains the common largest score. The existential state and disk point use the same value of the optimization parameter.",
                 NativeMaximum()),
-            Theorem("psi_zero", "Coincident axes",
-                "The two records agree at zero separation and the maximum divergence is zero.",
-                Equal(Call("psi", Zero), Zero)),
             Definition("circlePoint", "First-quadrant circle",
                 "The squared X coordinate is the parameter w. On the unit interval the squared Z coordinate is 1−w.",
                 All("w", R, Equal(Call("circlePoint", X("w")), Tuple(Root(X("w")), Root(Sub(One, X("w"))))))),
-            Theorem("disk_score_half", "Orthogonal-axis value on the circle",
-                "At equal parity weights the specified circle point gives the entropy expression for the orthogonal-axis optimum.",
-                Equal(Call("diskScore", Half, Call("circlePoint", Half)), HalfValue()), AssessedProvenance.FromRepo(Wu)),
             Definition("seriesWeight", "Entropy series weight",
                 "The even entropy series starts with degree two. The index is a natural number and its appearances in the weight are real casts.",
                 All("n", N, Equal(Call("seriesWeight", X("n")),
@@ -134,20 +117,6 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
 
-    private static Formula Probability(string a, string b)
-    {
-        var joint = Call("jointRecord", X(a), X(b), X("r"), X("o"));
-        return Both(All("o", Outcomes, Le(Zero, joint)),
-            Equal(Seq(Sum, Underscore, Grp(X("o"), Sp, InMacro, Sp, Outcomes), Sp, joint), One));
-    }
-
-    private static Formula AngleCalibration() =>
-        All("t", R, Imp(InHalf(X("t")), Let("s", Call("sOfT", X("t")),
-            Let("q", Call("arccos", Sub(One, Mul(Two, X("s")))),
-                Both(Member(X("q"), Closed(Zero, Fr(Pi, Two))),
-                    Both(Equal(Call("cos", X("q")), Sub(Sq(Root(Sub(One, X("s")))), Sq(Root(X("s"))))),
-                        Equal(Fr(Call("sin", X("q")), Two), X("t"))))))));
-
     private static Formula OrderScore()
     {
         var ab = TraceEffect(Call("A", X("a")), Call("B", X("b")));
@@ -163,20 +132,6 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
 
     private static Formula TraceEffect(Formula first, Formula second) =>
         Call("Re", Call("Tr", Mul(Call("nativeMatrix", X("r")), Mul(Mul(first, second), first))));
-
-    private static Formula Rotation()
-    {
-        Formula Rotate(string f, string a) =>
-            Lam(a, Bool, Mul(Mul(X("U"), Call(f, X(a))), Adj(X("U"))));
-        var scoreRange = Call("range", Call("orderScore", Rotate("A", "a"), Rotate("B", "b")));
-        var equality = Equal(scoreRange, Call("range", Call("sourceScore", X("t"))));
-        return All("t", R, All("f", Bool, All("U", Matrix,
-            Imp(Both(Equal(Mul(Adj(X("U")), X("U")), One), Equal(Mul(X("U"), Adj(X("U"))), One)),
-                Let("s", Call("sOfT", X("t")), Let("m", Root(Sub(One, X("s"))), Let("k", Root(X("s")),
-                    Let("A", P("m", "k"),
-                        Let("B", Call("ite", X("f"), Call("projector", Negate(X("m")), X("k")),
-                            Call("projector", X("m"), Negate(X("k")))), equality)))))))));
-    }
 
     private static Formula NativeMaximum()
     {
@@ -213,7 +168,6 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
     private static Formula BiasU(string s, string d) => Mul(Root(Sub(One, X(s))), Snd(X(d)));
     private static Formula BiasV(string s, string d) => Mul(Root(X(s)), Fst(X(d)));
     private static Formula SqNorm(Formula d) => Add(Sq(Fst(d)), Sq(Snd(d)));
-    private static Formula HalfValue() => Sub(Fr(Call("binEntropy", Fr(D(3), D(4))), LogTwo), Half);
     private static Formula P(string m, string k, params Formula[] outcomes) => Call("projector", [X(m), X(k), .. outcomes]);
     private static Formula X(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
@@ -225,11 +179,10 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
     private static Formula Fst(Formula a) => Seq(a, Dot, D(1));
     private static Formula Snd(Formula a) => Seq(a, Dot, D(2));
     private static Formula Fr(Formula a, Formula b) => new Formula.Fraction(a, b);
-    private static Formula Root(Formula a) => Seq(Sqrt, Grp(a));
+    private static Formula Root(Formula a) => Seq(Sqrt, Grp(Call("max", Zero, a)));
     private static Formula Pow(Formula a, Formula exponent) => Seq(Group(a), Caret, Grp(exponent));
     private static Formula Sq(Formula a) => Pow(a, Two);
     private static Formula Negate(Formula a) => Seq(Minus, Group(a));
-    private static Formula Adj(Formula a) => Seq(Group(a), Caret, Grp(Star));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
