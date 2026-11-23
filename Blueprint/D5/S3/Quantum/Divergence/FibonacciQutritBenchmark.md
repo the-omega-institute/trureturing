@@ -43,4 +43,5 @@ At or above the benchmark the null-class log loss is at most 1/114. Strict spect
 - Dependency: [D5/S3/Quantum/Divergence/CanonicalChannelDPI](CanonicalChannelDPI.md)
 - Dependency: [D5/S3/Quantum/Divergence/FibonacciQutritSpectralTransport](FibonacciQutritSpectralTransport.md)
 - Dependency: [D5/S3/Quantum/Foundation/FinitePreparationChannel](../Foundation/FinitePreparationChannel.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation](../Subentropy/StrongSubadditivityRefutation.md)
