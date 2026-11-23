@@ -873,9 +873,6 @@ namespace D5.S3.Analytic.MembraneSignatures.AmendolaRiffoSchmitzRefutation
 
 noncomputable def witness : Array ℝ 2 4 := fun l w τ => (rationalWitness l w τ : ℝ)
 
-private theorem witnessUnit (w : Word 2 0) (τ : Rank 0) : witness 0 w τ = 1 := by
-  simp [witness, rationalUnit]
-
 private theorem witnessPrinted : Printed witness := printed_cast rationalWitness rationalPrinted
 
 private theorem witnessProduct :
@@ -898,16 +895,10 @@ private theorem witnessUnrealizable : ¬ Realizes witness := by
   rw [hsig, witnessProduct, witnessGenuineSum] at h
   norm_num at h
 
-private theorem refute_normalized_conjecture_6_10_v1 :
-    ¬ (∀ (d k : ℕ), 2 ≤ d → ∀ s : Array ℝ d k,
-      (∀ (w : Word d 0) (τ : Rank 0), s 0 w τ = 1) → Printed s → Realizes s) := by
-  intro h
-  exact witnessUnrealizable (h 2 4 (by decide) witness witnessUnit witnessPrinted)
-
 /-- The printed shuffle equations admit a normalized array that no membrane realizes. -/
 theorem refute_conjecture_6_10_v1 : ¬ claim := by
   intro h
-  exact refute_normalized_conjecture_6_10_v1 (fun d k hd s _ hs => h d k hd s hs)
+  exact witnessUnrealizable (h 2 4 (by decide) witness witnessPrinted)
 
 end D5.S3.Analytic.MembraneSignatures.AmendolaRiffoSchmitzRefutation
 
