@@ -81,17 +81,17 @@ private theorem character_add (x y t : ℝ) :
 
 private theorem character_nat_mul (n : ℕ) (x t : ℝ) :
     character ((n : ℝ) * x) t = character x t ^ n := by
-  induction n with
-  | zero => simp [character]
-  | succ n ih =>
-    rw [Nat.cast_succ, add_mul, one_mul, character_add, ih, pow_succ]
+  unfold character
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
 
 private theorem character_sum {J : Type*} (s : Finset J) (f : J → ℝ) (t : ℝ) :
     character (∑ j ∈ s, f j) t = ∏ j ∈ s, character (f j) t := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp [character]
-  | @insert j s hj ih => rw [sum_insert hj, prod_insert hj, character_add, ih]
+  unfold character
+  push_cast
+  simp only [Finset.mul_sum, Finset.sum_mul, Complex.exp_sum]
 
 private def complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) : ℂ :=
   ∑ j, (w j : ℂ) * character (g j) t
