@@ -19,6 +19,24 @@ internal sealed class FiniteSpectralPerturbationDocument : IScribeDocumentDefini
                 + "The quantity E(h,p,η) sums c(m)c(n) over ordered pairs whose h frequency sums "
                 + "are at distance at most η. The positive perturbation radius is ε. "
                 + "A value of f in Fin(M+2) is read as its integer index from 0 through M+1.")),
+            Paragraph(Text(
+                "For the mean estimate, allow M(j) and the positive radius ε(j) to vary with j. "
+                + "The set A consists of assignments f(j) in Fin(M(j)+2), and "
+                + "g_f(j) = g(j) + ε(j)(2f(j)/(M(j)+1) − 1). The real number ρ bounds "
+                + "min(M(j)+2, 1+floor(η(M(j)+1)/ε(j)))/(M(j)+2) for every j in J. "
+                + "Take a natural degree p, a nonnegative resolution η and nonnegative weights.")),
+            Describe.Lean(
+                DescribeId.Create("sum-grid-collision-mass-le"),
+                DeclarationHandle.Create(Owner + ".sum_grid_collisionMass_le"),
+                H("Mean collision mass on a product of finite grids"),
+                StatementSource.FromAuthor(GridMeanBound()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every off-diagonal pair has a coordinate where the integer coefficient difference is nonzero. "
+                    + "The closed affine fiber estimate in that coordinate bounds the proportion "
+                    + "of hits by ρ. Summing the nonnegative weighted indicators and keeping the "
+                    + "full diagonal contribution gives the estimate."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("exists-nearby-collision-bound"),
                 DeclarationHandle.Create(Owner + ".exists_nearby_collision_bound"),
@@ -63,6 +81,19 @@ internal sealed class FiniteSpectralPerturbationDocument : IScribeDocumentDefini
 
     private static Formula AtMost(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula GridMeanBound()
+    {
+        var f = F.Id("f");
+        var a = F.Id("A");
+        var p = F.Id("p");
+        var d = F.Id("D");
+        var offDiagonal = Seq(Open, new Formula.Power(F.Id("W"), Multiply(D(2), p)), Minus, d, Close);
+        var sum = Seq(new Formula.Subscript(Sum, Seq(f, Sp, InMacro, Sp, a)),
+            Call("E", new Formula.Subscript(F.Id("g"), f), p, F.Id("eta")));
+        var bound = Add(d, Multiply(F.Id("rho"), offDiagonal));
+        return Disp(AtMost(sum, Multiply(new Formula.Absolute(a), Seq(Open, bound, Close))));
+    }
 
     private static Formula Bound()
     {
