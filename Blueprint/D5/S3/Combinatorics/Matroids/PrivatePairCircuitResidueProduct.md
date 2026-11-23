@@ -19,7 +19,5 @@ Fix a finite ordered ground set of size K and a rank r with 3 <= r < K. Take a f
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/PrivatePairCircuitResidueProduct.private_pair_residue_product`
-- Dependency: [D5/S3/Combinatorics/Matroids/CircuitDifferenceBasis](CircuitDifferenceBasis.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitResidueProduct](MembershipCircuitResidueProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/PrivatePairOmissionFamily](PrivatePairOmissionFamily.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates](SparsePavingCircuitCoordinates.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/SupportedPivotProduct](SupportedPivotProduct.md)
