@@ -30,7 +30,7 @@ A common optimizer attains the target maximum within the source-optimal set. Eac
 
 **Definition 1.3 (Exact optimizer).**
 
-$$\begin{aligned}\forall \{V : \mathrm{Type}\} [\mathrm{Fintype} V] (\mathrm{score} : \mathrm{Finset} V \Rightarrow \mathbb{N}) (b : \mathbb{N}) (D : \mathrm{Finset} V), \mathrm{ExactOptimizer} \mathrm{score} b D \iff\\D.\mathrm{card} = b \land \mathrm{score} D = \mathrm{damageMaximum} \mathrm{score} b\end{aligned}$$
+$$\begin{aligned}\forall \{V : \mathrm{Type}\} [\mathrm{DecidableEq} V] [\mathrm{Fintype} V] (\mathrm{score} : \mathrm{Finset} V \Rightarrow \mathbb{N}) (b : \mathbb{N}) (D : \mathrm{Finset} V), \mathrm{ExactOptimizer} \mathrm{score} b D \iff\\D.\mathrm{card} = b \land \mathrm{score} D = \mathrm{damageMaximum} \mathrm{score} b\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/VertexDeletion/Classification.ExactOptimizer` (`✓ std3`).
 

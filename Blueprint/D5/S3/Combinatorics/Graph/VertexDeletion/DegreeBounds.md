@@ -162,4 +162,5 @@ The maximal feasible number of runs and sizes differing by at most one simultane
 - Truth anchor: `D5/S3/Combinatorics/Graph/VertexDeletion/DegreeBounds.subcubic_tree_out_of_nc_arbitrarily_small`
 - Truth anchor: `D5/S3/Combinatorics/Graph/VertexDeletion/DegreeBounds.survivor_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/VertexDeletion/DegreeBounds.uniform_tree_simultaneous_epsilon`
+- Dependency: [D5/S3/Combinatorics/Graph/Brooks/Coloring](../Brooks/Coloring.md)
 - Dependency: [D5/S3/Combinatorics/Graph/VertexDeletion/TreeTransfer](TreeTransfer.md)

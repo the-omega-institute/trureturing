@@ -6,6 +6,7 @@
    utility: none
    digest: Degree bounds and positive-target optimistic ratios for exact cuts. -/
 
+import D5.S3.Combinatorics.Graph.Brooks.Coloring
 import D5.S3.Combinatorics.Graph.VertexDeletion.TreeTransfer
 
 /-! Degree bounds and positive-target optimistic ratios for exact cuts. -/
@@ -23,18 +24,6 @@ section DegreeBound
 variable {V : Type*} [DecidableEq V] [Fintype V]
 variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
-omit [DecidableEq V] [Fintype V] [DecidableRel G.Adj] in
-private theorem closer_neighbor (hG : G.Connected) {v root : V} (hne : v ≠ root) :
-    ∃ w, G.Adj v w ∧ G.dist w root < G.dist v root := by
-  obtain ⟨p, hp⟩ := hG.exists_walk_length_eq_dist v root
-  cases p with
-  | nil => exact (hne rfl).elim
-  | @cons _ w _ edge tail =>
-    refine ⟨w, edge, ?_⟩
-    have h := G.dist_le tail
-    rw [← hp, Walk.length_cons]
-    omega
-
 theorem survivor_card (D : Finset V) :
     Fintype.card (survivors D) = Fintype.card V - D.card := by
   rw [← Finset.card_compl]
@@ -46,7 +35,8 @@ theorem component_card_eq (D : Finset V) :
 
 /-- Charge each survivor component other than the root's to an edge from a
 deleted vertex, directed away from the surviving root. Every deleted vertex
-has a closer neighbor, so at most its degree minus one charges are possible. -/
+has a closer neighbor by `BrooksSubcubic.exists_closer_neighbor`, so at most
+its degree minus one charges are possible. -/
 theorem nc_le_budget_mul_degree_sub_one (hG : G.Connected) (Δ : ℕ)
     (hΔ : G.maxDegree ≤ Δ) (b : ℕ) (D : Finset V) (hD : D.card = b) :
     ncDamage G D ≤ b * (Δ - 1) := by
@@ -57,8 +47,11 @@ theorem nc_le_budget_mul_degree_sub_one (hG : G.Connected) (Δ : ℕ)
     let A (x : V) := (G.neighborFinset x).filter (fun y =>
       G.dist x root.val < G.dist y root.val)
     have hA (x : V) (hx : x ∈ D) : (A x).card ≤ Δ - 1 := by
-      obtain ⟨w, hw, hd⟩ := closer_neighbor G hG
+      obtain ⟨w, hw, hdRoot⟩ := BrooksSubcubic.exists_closer_neighbor G hG root.val x
         (show x ≠ root.val from fun e => root.property (e ▸ hx))
+      have hd : G.dist w root.val < G.dist x root.val := by
+        rw [G.dist_comm (u := w) (v := root.val), G.dist_comm (u := x) (v := root.val)]
+        exact hdRoot
       have hmem : w ∈ G.neighborFinset x := by simpa only [mem_neighborFinset] using hw
       calc
         (A x).card ≤ ((G.neighborFinset x).erase w).card := by
@@ -79,7 +72,11 @@ theorem nc_le_budget_mul_degree_sub_one (hG : G.Connected) (Δ : ℕ)
       have hyRoot : y.val ≠ root.val := by
         intro e
         exact hC (hyC.symm.trans (congrArg H.connectedComponentMk (Subtype.ext e)))
-      obtain ⟨x, hx, hdist⟩ := closer_neighbor G hG hyRoot
+      obtain ⟨x, hx, hdistRoot⟩ :=
+        BrooksSubcubic.exists_closer_neighbor G hG root.val y.val hyRoot
+      have hdist : G.dist x root.val < G.dist y.val root.val := by
+        rw [G.dist_comm (u := x) (v := root.val), G.dist_comm (u := y.val) (v := root.val)]
+        exact hdistRoot
       have hxD : x ∈ D := by
         by_contra hn
         let z : survivors D := ⟨x, hn⟩
