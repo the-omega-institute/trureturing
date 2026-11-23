@@ -25,10 +25,10 @@ open scoped ENNReal NNReal
 
 namespace D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
 
-private def intervalNoise (radius : ℝ) : Measure ℝ :=
+def intervalNoise (radius : ℝ) : Measure ℝ :=
   (ENNReal.ofReal (2 * radius))⁻¹ • volume.restrict (Icc (-radius) radius)
 
-private theorem intervalNoise_probability {radius : ℝ} (hradius : 0 < radius) :
+theorem intervalNoise_probability {radius : ℝ} (hradius : 0 < radius) :
     IsProbabilityMeasure (intervalNoise radius) := by
   constructor
   have hlen : radius - -radius = 2 * radius := by ring
@@ -99,7 +99,7 @@ private theorem intervalNoise_fin_affine {n : ℕ} (radius a : Fin (n + 1) → �
       exact intervalNoise_affine_local (b := rest y) (η := η) (hradius i) ha
     _ = _ := by simp [ν]
 
-private theorem intervalNoise_pi_affine {J : Type*} [Fintype J] (radius a : J → ℝ)
+theorem intervalNoise_pi_affine {J : Type*} [Fintype J] (radius a : J → ℝ)
     (b η : ℝ) (hradius : ∀ j, 0 < radius j) (i : J) (ha : a i ≠ 0) :
     (Measure.pi fun j => intervalNoise (radius j))
       {x | |(∑ j, a j * x j) + b| ≤ η} ≤ ENNReal.ofReal (η / (|a i| * radius i)) := by
