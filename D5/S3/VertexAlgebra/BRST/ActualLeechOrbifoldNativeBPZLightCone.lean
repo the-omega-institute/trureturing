@@ -54,8 +54,8 @@ open private K_inverse from D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbatio
 open private planeWick_one tensor_pairing_tmul from
   D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldNativeBPZ
 
-local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
-local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
+private local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
+private local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
   Submodule.addCommGroup (relativeShell p)
 
 variable (F : NullFrame hyperbolicPlane) (B : Module.Basis (Fin 0) ℂ F.K)
