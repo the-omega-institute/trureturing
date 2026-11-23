@@ -48,10 +48,8 @@ private theorem ring_card : Nat.card R = 8 := by
   change Nat.card (K × (K × K)) = 8
   simp [Nat.card_eq_fintype_card, ZMod.card]
 
-private theorem scalar_cases (t : K) : t = 0 ∨ t = 1 := by
-  change Fin 2 at t
-  change t = (0 : Fin 2) ∨ t = 1
-  fin_cases t <;> decide
+private theorem scalar_cases (t : K) : t = 0 ∨ t = 1 :=
+  (Fin.forall_fin_two (p := fun x => x = 0 ∨ x = 1)).mpr ⟨Or.inl rfl, Or.inr rfl⟩ t
 
 private theorem vector_cases (v : V) : v = 0 ∨ v = a ∨ v = b ∨ v = c := by
   obtain ⟨x, y⟩ := v
@@ -63,18 +61,7 @@ private theorem vector_cases (v : V) : v = 0 ∨ v = a ∨ v = b ∨ v = c := by
   · exact Or.inr (Or.inr (Or.inr rfl))
 
 @[simp] private theorem emb_mem_radical (v : V) : emb v ∈ radical :=
-  (mem_kerIdeal_iff_inr K V _).mpr (by rw [snd_inr])
-
-private theorem one_not_mem_radical : (1 : R) ∉ radical := by
-  intro h
-  have h' := congrArg TrivSqZeroExt.fst ((mem_kerIdeal_iff_inr K V _).mp h)
-  exact one_ne_zero (by simpa only [fst_one, fst_inr] using h')
-
-private theorem radical_proper : radical ≠ ⊤ := by
-  intro h
-  have h1 : (1 : R) ∈ (⊤ : Ideal R) := by simp
-  rw [← h] at h1
-  exact one_not_mem_radical h1
+  RingHom.mem_ker.mpr (fst_inr K v)
 
 private theorem proper_le_radical (I : Ideal R) (hI : I ≠ ⊤) : I ≤ radical := by
   intro x hx
@@ -83,9 +70,7 @@ private theorem proper_le_radical (I : Ideal R) (hI : I ≠ ⊤) : I ≤ radical
     have h1 : x.fst = 1 := (scalar_cases x.fst).resolve_left h
     have hu : IsUnit x.fst := h1.symm ▸ isUnit_one
     exact hI (I.eq_top_of_isUnit_mem hx (isUnit_iff_isUnit_fst.mpr hu))
-  exact (mem_kerIdeal_iff_inr K V x).mpr (by
-    rw [← x.inl_fst_add_inr_snd_eq, hx0, inl_zero, zero_add]
-    simp)
+  exact RingHom.mem_ker.mpr hx0
 
 private abbrev line (v : V) : Ideal R := Ideal.span {emb v}
 
@@ -111,9 +96,8 @@ private theorem mem_line (v : V) (x : R) : x ∈ line v ↔ x = 0 ∨ x = emb v 
     · exact (line v).zero_mem
     · exact Ideal.mem_span_singleton_self _
 
-@[simp] private theorem emb_eq_zero (v : V) : emb v = 0 ↔ v = 0 := by
-  rw [← inr_zero (R := K) (M := V)]
-  exact (inr_injective (R := K)).eq_iff
+@[simp] private theorem emb_eq_zero (v : V) : emb v = 0 ↔ v = 0 :=
+  (inrHom K V).map_eq_zero_iff (inr_injective (R := K))
 
 @[simp] private theorem emb_mem_line (u v : V) : emb u ∈ line v ↔ u = 0 ∨ u = v := by
   rw [mem_line, emb_eq_zero, (inr_injective (R := K)).eq_iff]
@@ -181,7 +165,8 @@ private theorem ideal_at_le_radical (i : Fin 6) (hi : i ≠ 5) : idealAt i ≤ r
 
 private theorem top_ne_ideal_at {i : Fin 6} (hi : i ≠ 5) : (⊤ : Ideal R) ≠ idealAt i := by
   intro h
-  exact radical_proper (top_le_iff.mp (h ▸ ideal_at_le_radical i hi))
+  exact RingHom.ker_ne_top (TrivSqZeroExt.fstHom K K V)
+    (top_le_iff.mp (h ▸ ideal_at_le_radical i hi))
 
 private theorem ideal_at_injective : Function.Injective idealAt := by
   intro i j h

@@ -29,9 +29,10 @@ internal sealed class ChakrabortyPatraIdealZeroProductRefutationDocument : IScri
                 StatementSource.FromAuthor(Disp(ProbabilityFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "The numerator counts ordered tuples of actual ideals whose ideal product is the "
-                    + "zero ideal. Repetitions, the zero ideal, and the unit ideal are included. "
-                    + "For a finite carrier the ideals form a finite type because they inject into its "
+                    "For a finite commutative ring with identity and an integer k at least two, "
+                    + "the numerator counts ordered tuples of actual ideals whose ideal product is "
+                    + "the zero ideal. Repetitions, the zero ideal, and the unit ideal are included. "
+                    + "The ideals form a finite type because they inject into the carrier's "
                     + "power set. The zero ideal makes the denominator positive. The ratio is rational."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("field-criterion"),
@@ -74,7 +75,11 @@ internal sealed class ChakrabortyPatraIdealZeroProductRefutationDocument : IScri
             Seq(Index, InMacro, Apply("Fin", K))), Sp, new Formula.Apply(I, [Index]));
         var zeroTuples = Seq(OpenBrace, I, Colon, Sp, tupleType, Sp, Mid, Sp,
             Equal(product, Num(0)), CloseBrace);
-        return Seq(Open, Probability, Colon, Sp, Rat, Close, Sp, Eq, Sp,
+        return Seq(Forall, Sp, Open, Ring, Colon, Sp, Name("Type"), Close, Sp,
+            Instance("CommRing"), Sp, Instance("Finite"), Sp,
+            Open, K, Colon, Sp, Nat, Close, Comma, Sp,
+            Num(2), Sp, Le, Sp, K, Sp, To, Sp,
+            Open, Probability, Colon, Sp, Rat, Close, Sp, Eq, Sp,
             new Formula.Fraction(Card(zeroTuples), new Formula.Power(Card(Ideals), K)));
     }
 

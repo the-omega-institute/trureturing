@@ -6,7 +6,7 @@ A binary square-zero extension refutes Chakraborty–Patra Conjecture 4.2.
 
 **Definition 1.1 (Ordered ideal zero-product probability).**
 
-$$(\zeta_{k}(R): \mathbb{Q}) = \frac{\lvert\{I: \operatorname{Fin}\left(k\right) \to \operatorname{Ideal}\left(R\right) \mid \prod_{i\in\operatorname{Fin}\left(k\right)} I\left(i\right) = 0\}\rvert}{\lvert\operatorname{Ideal}\left(R\right)\rvert^{k}}$$
+$$\forall (R: \operatorname{Type}) [\operatorname{CommRing}\left(R\right)] [\operatorname{Finite}\left(R\right)] (k: \mathbb{N}), 2 \le k \to (\zeta_{k}(R): \mathbb{Q}) = \frac{\lvert\{I: \operatorname{Fin}\left(k\right) \to \operatorname{Ideal}\left(R\right) \mid \prod_{i\in\operatorname{Fin}\left(k\right)} I\left(i\right) = 0\}\rvert}{\lvert\operatorname{Ideal}\left(R\right)\rvert^{k}}$$
 
 *Formalization.* `D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.zeta` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$(\zeta_{k}(R): \mathbb{Q}) = \frac{\lvert\{I: \operatorname{Fin}\left(k\right)
 
 *Commentary.*
 
-The numerator counts ordered tuples of actual ideals whose ideal product is the zero ideal. Repetitions, the zero ideal, and the unit ideal are included. For a finite carrier the ideals form a finite type because they inject into its power set. The zero ideal makes the denominator positive. The ratio is rational.
+For a finite commutative ring with identity and an integer k at least two, the numerator counts ordered tuples of actual ideals whose ideal product is the zero ideal. Repetitions, the zero ideal, and the unit ideal are included. The ideals form a finite type because they inject into the carrier's power set. The zero ideal makes the denominator positive. The ratio is rational.
 
 **Definition 1.2 (Chakraborty–Patra Conjecture 4.2).**
 
