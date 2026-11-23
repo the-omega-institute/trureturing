@@ -97,27 +97,26 @@ private theorem noTriple_iff_admissible {k : ℕ} (w : Fin (k + 2) → Bool) :
   · intro h
     apply admissible_of_tripleFree
     intro i hi hall
-    obtain ⟨j, hj, hz⟩ := h _ ⟨⟨i, by omega⟩, rfl⟩
-    change j.val = i ∨ j.val = i + 1 ∨ j.val = i + 2 at hj
-    rcases hj with hj | hj | hj
-    · have he : j = ⟨i, by omega⟩ := Fin.ext hj
-      exact Bool.false_ne_true (hz.symm.trans (he.symm ▸ hall.1))
-    · have he : j = ⟨i + 1, by omega⟩ := Fin.ext hj
-      exact Bool.false_ne_true (hz.symm.trans (he.symm ▸ hall.2.1))
-    · have he : j = ⟨i + 2, by omega⟩ := Fin.ext hj
-      exact Bool.false_ne_true (hz.symm.trans (he.symm ▸ hall.2.2))
+    let start : Fin k := ⟨i, by omega⟩
+    have hz := (exists_triple_edge (P := fun j => w j = false) start).mp
+      (h _ ⟨start, rfl⟩)
+    rcases hz with first | second | third
+    · exact Bool.false_ne_true (first.symm.trans hall.1)
+    · exact Bool.false_ne_true (second.symm.trans hall.2.1)
+    · exact Bool.false_ne_true (third.symm.trans hall.2.2)
   · intro h
     rintro edge ⟨i, rfl⟩
+    apply (exists_triple_edge (P := fun j => w j = false) i).mpr
     let a : Fin (k + 2) := ⟨i.val, by omega⟩
     let b : Fin (k + 2) := ⟨i.val + 1, by omega⟩
     let c : Fin (k + 2) := ⟨i.val + 2, by omega⟩
     have hf : ¬ (w a ∧ w b ∧ w c) := admissible_no_three_at _ i.val w h (by omega)
     by_cases ha : w a = false
-    · exact ⟨a, Or.inl rfl, ha⟩
+    · exact Or.inl ha
     by_cases hb : w b = false
-    · exact ⟨b, Or.inr (Or.inl rfl), hb⟩
+    · exact Or.inr (Or.inl hb)
     by_cases hc : w c = false
-    · exact ⟨c, Or.inr (Or.inr rfl), hc⟩
+    · exact Or.inr (Or.inr hc)
     exact (hf ⟨Bool.eq_true_of_not_eq_false ha, Bool.eq_true_of_not_eq_false hb,
       Bool.eq_true_of_not_eq_false hc⟩).elim
 

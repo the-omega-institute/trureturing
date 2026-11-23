@@ -348,7 +348,7 @@ open TripleCount
 private def tripleEdge {k : ℕ} (i : Fin k) : Set (Fin (k + 2)) :=
   {j | j.val = i.val ∨ j.val = i.val + 1 ∨ j.val = i.val + 2}
 
-private theorem exists_triple_edge {k : ℕ} (i : Fin k) {P : Fin (k + 2) → Prop} :
+theorem exists_triple_edge {k : ℕ} (i : Fin k) {P : Fin (k + 2) → Prop} :
     (∃ j ∈ tripleEdge i, P j) ↔
       P ⟨i, by omega⟩ ∨ P ⟨i.val + 1, by omega⟩ ∨ P ⟨i.val + 2, by omega⟩ := by
   constructor
