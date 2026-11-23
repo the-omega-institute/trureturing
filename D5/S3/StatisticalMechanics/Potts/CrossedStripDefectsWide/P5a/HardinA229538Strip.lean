@@ -118,6 +118,7 @@ import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
+import Mathlib.Logic.Function.Basic
 import Mathlib.Order.Basic
 import Mathlib.Order.Defs.LinearOrder
 import Mathlib.Order.Defs.PartialOrder
@@ -167,7 +168,7 @@ theorem small_budget_ne_cut_total (D m : ℕ) (hD : 0 < D) (hsmall : D < edges.c
     D ≠ m * edges.card := by
   apply (cut_total_exclusion D).mpr _ m
   rw [edges_card] at hsmall
-  exact fun h => (Nat.not_le_of_lt hsmall) (Nat.le_of_dvd hD h)
+  exact Nat.not_dvd_of_pos_of_lt hD hsmall
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
@@ -962,8 +963,8 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
       (fun A => P A ∧ NC A) invariant (fun _ h => h.2)
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at h
     simpa only [s, t, K, Finset.filter_filter, and_right_comm] using h
-  let const : Fin 3 ↪ (C → Fin 3) :=
-    ⟨fun c _ => c, fun _ _ h => congrFun h (0, 0)⟩
+  letI : Nonempty C := ⟨(0, 0)⟩
+  let const : Fin 3 ↪ (C → Fin 3) := ⟨Function.const C, Function.const_injective⟩
   have constant_array (A : C → Fin 3) (h : ¬ NC A) : A = const (A (0, 0)) :=
     funext fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
   have constant_budget (c : Fin 3) : P (const c) ↔ D = H.card + m * (V.card + H.card) := by
@@ -993,13 +994,12 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
     · rintro rfl i b hb
       exact (Fin.not_lt_zero b hb).elim
   have hcanonical_constants : (Finset.univ.map const).filter K = {const 0} := by
-    ext A
-    simp only [Finset.mem_filter, Finset.mem_map, Finset.mem_univ, true_and, Finset.mem_singleton]
-    constructor
-    · rintro ⟨⟨c, rfl⟩, hc⟩
-      rw [(hzero c).mp hc]
-    · rintro rfl
-      exact ⟨⟨0, rfl⟩, (hzero 0).mpr rfl⟩
+    rw [Finset.filter_map]
+    have h : Finset.univ.filter (K ∘ const) = ({0} : Finset (Fin 3)) := by
+      ext c
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton, Function.comp_apply]
+      exact hzero c
+    rw [h, Finset.map_singleton]
   have ssplit := Finset.card_filter_add_card_filter_not (s := s) NC
   have tsplit := Finset.card_filter_add_card_filter_not (s := t) NC
   have hT : t.filter (fun A => ¬ NC A) = (s.filter fun A => ¬ NC A).filter K :=
