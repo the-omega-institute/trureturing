@@ -36,7 +36,6 @@ weight_eq: proof_shape=bind-only; consumers=HardinA229538Strip.zero_values, Hard
 zero_values: proof_shape=content; consumers=HardinA229641Strip.old_values
 classIndex: proof_shape=bind-only; consumers=HardinA229641Strip.topSeed
 oneAtWidthOne: proof_shape=bind-only; consumers=HardinA229538Strip.tableOne
-chromatic_coordinate: proof_shape=content; consumers=HardinA229538Strip.zero_values
 tableOne: proof_shape=bind-only; consumers=HardinA229538Strip.table_base
 seedImage: proof_shape=bind-only; consumers=HardinA229538Strip.seed_image
 seed_image: proof_shape=content; consumers=HardinA229538Strip.weighted_image
@@ -62,6 +61,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Classical
@@ -550,15 +550,6 @@ theorem weight_eq (i : Fin 23) :
     simp
   · rfl
 
-private theorem chromatic_coordinate (p : Column) (n : ℕ) :
-    ((T ^ (n + 1 + 10)).mulVec (1 : Column → ℤ)) p =
-      ∑ k : Fin 10, HardinA233178Chromatic.coefficients k *
-        ((T ^ (n + 1 + k.val)).mulVec (1 : Column → ℤ)) p := by
-  have h := HardinA233178Chromatic.result (Pi.single p 1) n
-  norm_num [HardinA233178Chromatic.v, single_one_dotProduct, HardinA233178Chromatic.coefficients,
-    Fin.sum_univ_succ, Nat.add_assoc] at h ⊢
-  linear_combination h
-
 theorem zero_values (n : Fin 23) :
     zeroValues n = (T ^ n.val).mulVec (1 : Column → ℤ) := by
   have reconstruct (m : ℕ) (hm : m < 23) :
@@ -575,13 +566,12 @@ theorem zero_values (n : Fin 23) :
         have relation : (T ^ m).mulVec (1 : Column → ℤ) =
             ∑ k : Fin 10, HardinA233178Chromatic.coefficients k •
               (T ^ (m - 10 + k.val)).mulVec (1 : Column → ℤ) := by
-          funext p
           have hbound : 11 ≤ m := (Nat.le_succ 11).trans large
           have h₁ : m - 11 + 1 + 10 = m := Nat.sub_add_cancel hbound
           have h₂ (k : Fin 10) : m - 11 + 1 + k.val = m - 10 + k.val :=
             congrArg (· + k.val) (Nat.sub_add_sub_cancel hbound (Nat.le_succ 10))
-          simpa only [h₁, h₂, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using
-            chromatic_coordinate p (m - 11)
+          simpa only [h₁, h₂] using TransferMatrix.vector_relation_shift T 10 1
+            HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (m - 11)
         rw [relation]
         have prior (k : Fin 10) : m - 10 + k.val < m := by
           simpa only [Fin.val_natAdd, Nat.sub_add_cancel ((Nat.le_add_right 10 2).trans large)]
@@ -725,7 +715,12 @@ private theorem inherited_polynomial (p : Column) :
   rw [factor]
   apply Finset.sum_eq_zero
   intro j _
-  rw [sub_eq_zero.mpr (chromatic_coordinate p (1 + j.val)), mul_zero]
+  have shifted := congrFun (TransferMatrix.vector_relation_shift T 10 1
+    HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (1 + j.val)) p
+  have coordinate : f (1 + j.val + 11) =
+      ∑ k : Fin 10, HardinA233178Chromatic.coefficients k * f (1 + j.val + 1 + k.val) := by
+    simpa only [f, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using shifted
+  rw [sub_eq_zero.mpr coordinate, mul_zero]
 
 theorem vector_polynomial :
     (transfer ^ 22).mulVec terminal =

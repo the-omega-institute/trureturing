@@ -26,7 +26,7 @@ table_steps_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_st
 table_steps: proof_shape=content; consumers=HardinA233178Chromatic.powers_table
 powers_table: proof_shape=content; consumers=HardinA233178Chromatic.vector_certificate
 table_certificate: proof_shape=content; consumers=HardinA233178Chromatic.vector_certificate
-vector_certificate: proof_shape=content; consumers=HardinA233178Chromatic.result
+vector_certificate: proof_shape=content; consumers=HardinA233178Chromatic.result, HardinA229538Strip.zero_values, HardinA229538Strip.inherited_polynomial
 v: proof_shape=bind-only; consumers=HardinA233178Chromatic.result
 result: proof_shape=content; consumers=HardinA229538Strip.chromatic_coordinate, HardinA233178Recurrence.chromatic_recurrence
 -/
@@ -396,7 +396,7 @@ private theorem table_certificate : ∀ p : Column,
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 9) (n := 27)).surjective p
   exact checked block offset
 
-private theorem vector_certificate :
+theorem vector_certificate :
     (T ^ (1+10)).mulVec (1 : Column → ℤ) =
       ∑ j : Fin 10, coefficients j • (T ^ (1+j.val)).mulVec (1 : Column → ℤ) := by
   change (T ^ 11).mulVec (1 : Column → ℤ) = _

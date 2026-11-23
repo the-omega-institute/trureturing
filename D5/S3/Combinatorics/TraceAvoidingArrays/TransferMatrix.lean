@@ -31,7 +31,7 @@ arrayOK | bind-only | arrayOKIffGood
 arrayOKIffGood | content | HardinA185761Recurrence.source_card
 card_good | bind-only | cardMatrix
 cardMatrix | content | HardinA185761Recurrence.count_transfer
-vector_relation_shift | bind-only | scalarRelationShift
+vector_relation_shift | bind-only | scalarRelationShift, HardinA229538Strip.zero_values, HardinA229538Strip.inherited_polynomial
 scalarRelationShift | bind-only | HardinA185761Recurrence.recurrence
 tabulatedPowers | bind-only | HardinA185761Recurrence.powers_table
 -/
@@ -259,7 +259,7 @@ theorem cardMatrix (P : R → R → Prop) (Q : R → R → R → Prop)
  · simp [hab,cont_matrix P Q cl T hT n a b hab]
  · simp [hab]
 
-private theorem vector_relation_shift (T : Matrix S S ℤ) (d b : ℕ) (c : Fin d → ℤ)
+theorem vector_relation_shift (T : Matrix S S ℤ) (d b : ℕ) (c : Fin d → ℤ)
     (h : (T ^ (b+d)).mulVec (1 : S → ℤ) =
       ∑ j : Fin d, c j • (T ^ (b+j.val)).mulVec (1 : S → ℤ)) (n : ℕ) :
     (T ^ (n+b+d)).mulVec (1 : S → ℤ) =

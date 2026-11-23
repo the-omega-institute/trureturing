@@ -28,6 +28,7 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             FormulaNode("instDecidableBond", BondInstance(), false, "The legal-bond predicate is decidable by checking the finitely many row pairs."),
             FormulaNode("T", TransferEntry(), false, "Rows index the current column and columns index its successor."),
             FormulaNode("v", Continuations(), false, "Each coordinate counts continuations of the specified length from its boundary column."),
+            FormulaNode("vector_certificate", VectorCertificate(), true, "At exponent eleven the continuation vector is the given linear combination of the vectors at exponents one through ten."),
             FormulaNode("result", Recurrence(), true, "The finite vector relation propagates to all subsequent exponents by TransferMatrix.scalarRelationShift."))));
 
     private static DocumentBlock FormulaNode(string name, Formula statement, bool theorem, string prose) =>
@@ -108,6 +109,13 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
         VectorLiteral([-36,72,192,-514,93,417,-163,-97,31,6]));
     private static Formula One() => Typed(N(1),Arrow(Column(),Q("Int")));
     private static Formula Power(Formula exponent) => Call("Matrix.mulVec",Pow(C("T"),exponent),One());
+    private static Formula VectorCertificate()
+    {
+        var j = V("j");
+        var term = Call("SMul.smul", C("coefficients", j), Power(Add(N(1), Val(j))));
+        return Eq(Power(Add(N(1), N(10))), Seq(F.Sum, Underscore, Grp(Typed(j, Fin(10))), Sp,
+            Parenthesized(term)));
+    }
     private static Formula TransferEntry()
     {
         var p = V("p");
