@@ -266,17 +266,22 @@ private def leading : Fin 15 → Fin 72 → ℤ :=
   let continuation : Array (Array ℤ) := by
     run_tac
       let coefficients ← Lean.Meta.withTransparency .all <|
-        (List.finRange 8).mapM fun k =>
-          Lean.Meta.reduceEval (α := Int)
-            (Lean.mkApp (Lean.mkConst ``leadingCoefficient) (Lean.toExpr k))
+        (List.finRange 8).mapM fun k => do
+          let entry := Lean.mkApp (Lean.mkConst ``leadingCoefficient) (Lean.toExpr k)
+          let positive : Nat ← Lean.Meta.reduceEval (Lean.mkApp (Lean.mkConst ``Int.toNat) entry)
+          let negative : Nat ← Lean.Meta.reduceEval
+            (Lean.mkApp (Lean.mkConst ``Int.toNat) (Lean.mkApp (Lean.mkConst ``Int.neg) entry))
+          pure ((positive : Int) - (negative : Int))
       let coefficients := coefficients.toArray
       let mut columns : Array (Array Int) := #[]
       for j in List.finRange 72 do
         let column ← Lean.Meta.savingCache do
           let values ← Lean.Meta.withTransparency .all <|
-            (List.finRange 11).mapM fun i =>
-              Lean.Meta.reduceEval (α := Int) (Lean.mkApp2 (Lean.mkConst ``HardinA229585StripData.W)
-                (Lean.toExpr i) (Lean.toExpr j))
+            (List.finRange 11).mapM fun i => do
+              let entry := Lean.mkApp2 (Lean.mkConst ``HardinA229585StripData.W)
+                (Lean.toExpr i) (Lean.toExpr j)
+              let value : Nat ← Lean.Meta.reduceEval (Lean.mkApp (Lean.mkConst ``Int.toNat) entry)
+              pure (value : Int)
           let mut values := values.toArray
           for i in [11:15] do
             let mut next := 0
@@ -286,7 +291,7 @@ private def leading : Fin 15 → Fin 72 → ℤ :=
           pure (values.extract 11 15)
         columns := columns.push column
       (← Lean.Elab.Tactic.getMainGoal).assign (Lean.toExpr columns)
-  Fin.append HardinA229585StripData.W (fun i j => continuation[j.val]![i.val]!)
+  Fin.append HardinA229585StripData.W (fun (i : Fin 4) j => (continuation[j.val]!)[i.val]!)
 
 private def coefficients : Fin 12 → ℤ := ![-531441000, 1913187600, -2986698420, 2659094568, -1494608922, 554666940, -138045627, 22918302, -2474469, 165456, -6345, 126]
 

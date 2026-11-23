@@ -102,6 +102,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.Tuple.Basic
@@ -340,7 +341,6 @@ private theorem oldDestination (p : Boundary) (d : Fin 2)
   have h := HardinA229585Strip.finite_certificate.1 p d hp
   rw [oldTerminal] at h
   split_ifs at h with hi hd hd <;> simp_all
-
 private theorem old_exhausted_row (p : Boundary) (d : Fin 2)
     (hp : HardinA229585StripData.Valid p d.val) (j : Fin 96) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r = d.val ∧
@@ -432,7 +432,6 @@ def completionRows : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3)
   | _k + 1, p, prev, d => (List.finRange 3).flatMap fun x =>
     let c := matchCost prev x + matchCost (p 0) x
     if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x) else []
-
 theorem completionRows_count {k : ℕ} (p : Fin k → Option (Fin 3))
     (prev : Option (Fin 3)) (d : ℕ) (f : (Fin (k + 1) → Fin 3) → Bool) :
     (completionRows p prev d).countP f =
@@ -517,15 +516,19 @@ theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
     · rfl
 private theorem completionCost_row (p : Boundary) (r : Row) :
     completionCost (some ∘ p) none r = cross p r + bondDefects horizontal r r := by
-  simp only [cross, bondDefects, antidiagonal, horizontal, Finset.filter_image, Fin.cons_succ]
-  rw [Finset.card_image_of_injective _ (fun i j h =>
-      Fin.castSucc_injective 6 (congrArg Prod.snd h)),
-    Finset.card_image_of_injective _ (fun i j h =>
-      Fin.castSucc_injective 6 (congrArg Prod.fst h))]
-  simp only [← Finset.sum_boole (R := ℕ), ← List.sum_ofFn, completionCost, matchCost,
-    Fin.tail, Function.comp_apply, zero_add, Fin.castSucc_zero, Fin.castSucc_succ,
-    List.ofFn_succ, List.ofFn_zero, List.sum_cons, List.sum_nil]
-  ac_rfl
+  calc
+    _ = (List.ofFn fun j : Fin 6 => if p j = r j.castSucc then 1 else 0).sum +
+        (List.ofFn fun j : Fin 6 => if r j.castSucc = r j.succ then 1 else 0).sum := by
+      simp only [completionCost, matchCost, Fin.tail, Function.comp_apply, zero_add,
+        Fin.castSucc_zero, Fin.castSucc_succ, List.ofFn_succ, List.ofFn_zero,
+        List.sum_cons, List.sum_nil]
+      ac_rfl
+    _ = _ := by
+      simp only [List.sum_ofFn, Finset.sum_boole, cross, bondDefects, antidiagonal,
+        horizontal, Finset.filter_image, Fin.cons_succ]
+      rw [Finset.card_image_of_injective _ (fun i j h => Fin.castSucc_injective 6 (congrArg Prod.snd h)),
+        Finset.card_image_of_injective _ (fun i j h => Fin.castSucc_injective 6 (congrArg Prod.fst h))]
+      simp only [Nat.cast_id]
 private theorem rowCode_tail (r : Row) :
     (finFunctionFinEquiv (boundary r)).val = (finFunctionFinEquiv r).val / 3 := by
   have h := rowCode_cons (r 0) (boundary r)
@@ -560,7 +563,6 @@ private theorem exitCodes_eq (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
   intro r _
   change packedClass ((finFunctionFinEquiv r).val / 3) = exhaustedClass (boundary r)
   rw [← rowCode_tail r, packedClass_eq]
-
 private theorem completionRows_length_le (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
     (completionRows p none d).length ≤ 2187 := by
   rw [← List.countP_true]
@@ -625,7 +627,6 @@ private def properRows : List Row :=
   HardinA233154Rows.codes.map (alternating ∘ HardinA233155RowTransfer.decode 7)
 private def zeroExitCodes (p : Boundary) : List (Fin 96) :=
   ((properRows.filter fun r => cross p r == 0).map fun r => exhaustedClass (boundary r))
-
 private theorem zeroExitCodes_count (p : Boundary) (j : Fin 96) :
     ((zeroExitCodes p).count j : ℤ) =
       ∑ r : Row, if cross p r + bondDefects horizontal r r = 0 ∧
@@ -657,13 +658,15 @@ private theorem zeroExitCodes_count (p : Boundary) (j : Fin 96) :
     simp only [zeroExitCodes, List.count_eq_countP, List.countP_map, List.countP_filter]
     congr 1
     funext r
-    simp [accepted, Bool.and_comm]
+    rw [Bool.eq_iff_iff]
+    simp [accepted, Bool.and_eq_true, beq_iff_eq, and_comm]
   rw [hcount, Finset.sum_list_map_count]
-  simp only [show ∀ r : Row, (if cross p r = 0 ∧ exhaustedClass (boundary r) = j then (1 : ℤ)
-      else 0) = (if accepted r then 1 else 0) from fun _ => rfl, smul_ite, nsmul_eq_mul,
-    mul_one, mul_zero]
-  rw [← Finset.sum_filter]
-  exact_mod_cast (Finset.sum_filter_count_eq_countP accepted properRows).symm
+  change _ = ∑ m ∈ properRows.toFinset, properRows.count m •
+    (if accepted m then (1 : ℤ) else 0)
+  simp only [nsmul_eq_mul, mul_ite, mul_one, mul_zero]
+  rw [← Finset.sum_filter, ← Nat.cast_sum]
+  exact congrArg (fun n : ℕ => (n : ℤ))
+    (Finset.sum_filter_count_eq_countP accepted properRows).symm
 private theorem rep_partition (i : Fin 96) :
     HardinA229635State.h (HardinA229635State.rep i) ≤ 1 ↔ 40 ≤ i.val := by
   revert i
@@ -700,7 +703,6 @@ private theorem exhaustedMultiplicities :
       checkHistogram (zeroExitCodes p)
         (exhaustedWeight (Fin.ofNat 40 (HardinA229635State.fresh p).val))) = true := by
   decide +kernel
-
 private theorem exactExits_active (p : Boundary) (d : Fin 2)
     (hp : HardinA229635State.Valid p (d.val + 1)) (hn : Canonical p)
     (hd : inheritedSource (HardinA229585StripData.cl p d.val) = none) (j : Fin 96) :
@@ -747,7 +749,6 @@ private theorem inherited_active_spec (i : Fin 96) (d : Fin 2) (k : Fin 16) :
   rw [hk] at h
   simp only [decide_eq_true hp, Bool.not_true, Bool.false_or, decide_eq_true_eq] at h
   exact ⟨(valid_shift p 2 (by decide)).mp h.1, h.2⟩
-
 private theorem exactExits_new (p : Boundary)
     (hp : HardinA229635State.Valid p 0) (hn : Canonical p) (hnv : ¬ HardinA229635State.Valid p 1) (j : Fin 96) :
     (zeroExitCodes p).count j =
@@ -864,8 +865,9 @@ private theorem cost_bound (p : Boundary) (r : Row) :
   omega
 private theorem tail_bound (r : Row) : HardinA229635State.h (boundary r) ≤
     bondDefects horizontal r r := by
-  simpa only [Fin.cons_self_tail r] using
-    (Nat.le_add_left _ _).trans_eq (horizontal_cons (r 0) (boundary r)).symm
+  have h := horizontal_cons (r 0) (boundary r)
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at h
+  omega
 
 set_option maxRecDepth 12000 in
 set_option maxHeartbeats 6000000 in
@@ -957,9 +959,10 @@ private theorem zero_coordinates (p : Boundary) (d : ℕ) (s : Fin 168)
       exact hs k hk
     · exact hmatrix (Or.inl rfl) (Or.inl ⟨hl, hs⟩)
     · exact hmatrix (hd.imp_right (by omega)) (Or.inr hs)
-    · exact hmatrix (Or.inr (by omega)) (Or.inl ⟨by omega, fun k hk =>
-        (not_lt_of_ge (show ∀ k : Fin 16,
-          16 ≤ (HardinA229585StripData.zeroBudgetClass k).val by decide +kernel) k) (hk ▸ hs)⟩)
+    · have hclass : ∀ k : Fin 16, 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val := by
+        decide +kernel
+      exact hmatrix (Or.inr (by omega)) (Or.inl ⟨by omega, fun k hk =>
+        (not_lt_of_ge (hclass k)) (hk ▸ hs)⟩)
 
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
@@ -976,12 +979,12 @@ theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
   · induction s using Fin.addCases (m := 72) (n := 96) with
     | left j =>
       by_cases hd : d = 0
-      · obtain ⟨hl, hr⟩ := zero_coordinates p d _ (Or.inl ⟨hd, fun k h => by
+      · obtain ⟨hl, hr⟩ := zero_coordinates p d (j.castAdd 96) (Or.inl ⟨hd, fun k h => by
           have hk : 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val :=
             (show ∀ k : Fin 16, 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val by
               decide +kernel) k
           have hj := j.isLt
-          simp only [Fin.val_castAdd] at h
+          change j.val = 56 + (HardinA229585StripData.zeroBudgetClass k).val at h
           omega⟩)
         exact hl.trans hr.symm
       · exact leading_counts p d j hv (Nat.pos_of_ne_zero hd)
