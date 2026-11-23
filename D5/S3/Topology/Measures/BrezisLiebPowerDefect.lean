@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Almost-everywhere convergence and bounded positive-power mass give full L1 power splitting. -/
+   digest: Bounded positive-power mass and a.e. convergence give full L1 power splitting. -/
 
 module
 
@@ -12,6 +12,13 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.Analysis.Complex.Norm
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
+
+/-! # Brézis–Lieb power splitting
+
+On an arbitrary measure space, bounded positive-power mass and almost-everywhere
+convergence of complex functions imply convergence of the full absolute defect
+in L1, with integrability of every energy and the corresponding signed splitting.
+-/
 
 public section
 
