@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Algebra.TrivSqZeroExt.Ideal, mathlib/module/Mathlib.SetTheory.Cardinal.Finite]
+   anchors: [mathlib/module/Mathlib.Algebra.TrivSqZeroExt.Ideal]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.claim; result=D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.result; claim=D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.claim
    digest: A binary square-zero extension refutes Chakraborty-Patra Conjecture 4.2. -/
 
@@ -14,6 +14,8 @@ import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
+
+/-! The ideal zero-product probability of a binary square-zero extension. -/
 
 set_option autoImplicit false
 
@@ -261,6 +263,7 @@ private theorem zero_product_card : Nat.card {I : Fin 2 → Ideal R // (∏ i, I
 
 private theorem ordered_pair_card : Nat.card (Fin 2 → Ideal R) = 36 := by
   rw [Nat.card_fun, Nat.card_fin, ideal_card]
+  decide
 
 private theorem zeta_two : zeta R 2 = 1 - (1 : ℚ) / (2 : ℚ) ^ (2 : ℕ) := by
   have denominator : Nat.card (Ideal R) ^ 2 = 36 := by
