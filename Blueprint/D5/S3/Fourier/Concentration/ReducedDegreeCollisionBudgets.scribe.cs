@@ -32,12 +32,13 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
                         + "vectors. The signed frequency difference is preserved. The "
                         + "residuals have disjoint supports, so their coordinate sum equals "
                         + "the original absolute differences and gives the same drift bound. "
-                        + "A reachable distinct pair therefore has reduced degree at least k "
+                        + "For positive resolution, the separation premise forces every reachable distinct pair "
+                        + "to have reduced degree at least k "
                         + "and Euclidean scale at least ρ√(2k). The multinomial theorem gives "
                         + "the distinct-pair mass W^(2p)−D(p).")),
                     Paragraph(Text(
-                        "When e≤0 the localized budget vanishes. At k=1 the separation hypothesis is vacuous. When k>p, every "
-                        + "distinct pair is excluded. The premise is a positive-resolution "
+                        "When e≤0 the localized budget vanishes. At k=1 the separation hypothesis "
+                        + "is vacuous. When k>p, every distinct pair contributes zero. The premise is a positive-resolution "
                         + "arithmetic condition on the base spectrum. Its validity for the "
                         + "fixed zeta ordinates at the missing-window parameters is open."))),
                 DescribeRole.Theorem))));

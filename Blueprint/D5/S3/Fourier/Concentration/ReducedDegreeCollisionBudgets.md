@@ -16,9 +16,9 @@ $$((e \le 0 \lor p < k) \Rightarrow \operatorname{B}\left(p\right) = 0) \land \o
 
 *Commentary.*
 
-For a pair m,n, subtract their coordinatewise minimum from both vectors. The signed frequency difference is preserved. The residuals have disjoint supports, so their coordinate sum equals the original absolute differences and gives the same drift bound. A reachable distinct pair therefore has reduced degree at least k and Euclidean scale at least ρ√(2k). The multinomial theorem gives the distinct-pair mass W^(2p)−D(p).
+For a pair m,n, subtract their coordinatewise minimum from both vectors. The signed frequency difference is preserved. The residuals have disjoint supports, so their coordinate sum equals the original absolute differences and gives the same drift bound. For positive resolution, the separation premise forces every reachable distinct pair to have reduced degree at least k and Euclidean scale at least ρ√(2k). The multinomial theorem gives the distinct-pair mass W^(2p)−D(p).
 
-When e≤0 the localized budget vanishes. At k=1 the separation hypothesis is vacuous. When k>p, every distinct pair is excluded. The premise is a positive-resolution arithmetic condition on the base spectrum. Its validity for the fixed zeta ordinates at the missing-window parameters is open.
+When e≤0 the localized budget vanishes. At k=1 the separation hypothesis is vacuous. When k>p, every distinct pair contributes zero. The premise is a positive-resolution arithmetic condition on the base spectrum. Its validity for the fixed zeta ordinates at the missing-window parameters is open.
 
 ## References
 
