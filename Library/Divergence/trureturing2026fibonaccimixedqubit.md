@@ -15,7 +15,7 @@ triage: anchor
 
 # Supported joint convexity and the Fibonacci mixed-qubit margin
 
-## Verified locators
+## Verified locator
 
 The normalized finite matrix log-sum inequality is
 `FannesRootFidelityHolevo.matrix_log_sum` at its original private declaration.
@@ -23,7 +23,7 @@ It uses `CanonicalChannelDPI.extended_quantum_relative_entropy_channel_dpi`
 with the channel that erases a finite block label. The logarithm scaling
 identity is `Matrix.IsHermitian.log_smul_of_ne_zero` in the vendored
 Physlib `HermitianMat/LogExp.lean`.
-[Normalized log-sum and flag erasure](https://github.com/the-omega-institute/trureturing/blob/1be4a25323ffaad591f683bd3cb9dd77fb33342c/D5/S3/Quantum/Divergence/FannesRootFidelityHolevo.lean#L617)
+[trureturing](https://github.com/the-omega-institute/trureturing) · [Normalized log-sum and flag erasure](https://github.com/the-omega-institute/trureturing/blob/1be4a25323ffaad591f683bd3cb9dd77fb33342c/D5/S3/Quantum/Divergence/FannesRootFidelityHolevo.lean#L617)
 
 The pure margin is `FibonacciClippedProfile.traceLog_le_benchmark_sub_margin`.
 Its forward-profile input uses Hirche and Tomamichel, Corollary 2.3.
