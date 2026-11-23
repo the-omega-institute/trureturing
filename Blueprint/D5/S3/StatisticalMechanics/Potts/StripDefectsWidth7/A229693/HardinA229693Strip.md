@@ -1,0 +1,41 @@
+# The width-seven two-defect recurrence
+
+## Abstract
+
+The width-seven two-defect recurrence.
+
+**Definition 1.1 (Literal array count).**
+
+$$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(n\right) = \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda f: ((\operatorname{\mathit{Fin}}\left(n\right)) \times (\operatorname{\mathit{Fin}}\left(7\right))) \to (\operatorname{\mathit{Fin}}\left(3\right)) \mapsto ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{defects}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{horizontal}}, \operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{antidiagonal}}, \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(n\right) \mapsto (\lambda j: \operatorname{\mathit{Fin}}\left(7\right) \mapsto (f\left((i, j)\right)))\right)\right) = 2) \land (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{\mathit{Normal}}\left(f\right))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.a` (`✓ std3`).
+
+*Citation.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229693: two-defect three-colour width-7 sheared strips*. URL: <https://oeis.org/A229693>.
+
+*Commentary.*
+
+The finite filter ranges over all three-colour arrays. The condition inherited from A229585 orders colour introductions by row and then by column.
+
+**Theorem 1.2 (Integer recurrence).**
+
+$$\forall t: \mathit{Nat}, ((\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 15\right): \mathit{Int}) = 126 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 14\right): \mathit{Int}) - 6345 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 13\right): \mathit{Int}) + 165456 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 12\right): \mathit{Int}) - 2474469 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 11\right): \mathit{Int}) + 22918302 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 10\right): \mathit{Int}) - 138045627 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 9\right): \mathit{Int}) + 554666940 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 8\right): \mathit{Int}) - 1494608922 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 7\right): \mathit{Int}) + 2659094568 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 6\right): \mathit{Int}) - 2986698420 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 5\right): \mathit{Int}) + 1913187600 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 4\right): \mathit{Int}) - 531441000 \cdot (\operatorname{\mathit{HardinA229693Strip}}.\operatorname{a}\left(t + 3\right): \mathit{Int}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229693: two-defect three-colour width-7 sheared strips*. URL: <https://oeis.org/A229693>.
+
+*Commentary.*
+
+All array counts in this equality are cast to integers. At least two colours occur in a nonempty array with two monochromatic bonds. Relabelling gives six labelled arrays per canonical array. The vector identity for the transfer at fourteen steps propagates to later steps by right multiplication.
+
+## References
+
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.a`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer](HardinA229693StripTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip](../HardinA229585Strip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585StripData](../HardinA229585StripData.md)
