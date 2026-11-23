@@ -17,7 +17,8 @@ internal sealed class OverlapPerturbationBudgetDocument : IScribeDocumentDefinit
                 + "weights and c(m) for the weighted multinomial coefficient of m. For a natural "
                 + "degree p, write I(p) for the sum of c(m)c(n)/√S(m,n) over distinct "
                 + "ordered pairs of degree p, where S(m,n)=Σ((m(j)−n(j))r(j))². Define "
-                + "D(k) as the sum of c(l)² over degree k and A(k)=choose(p,k)² W^(2(p−k))D(k).")),
+                + "D(k) as the sum of c(l)² over degree k and A(k)=choose(p,k)² W^(2(p−k))D(k). "
+                + "Put T=W^(2p), L=ρ√(2(p−k+1)), and U=ρ√2.")),
             Describe.Lean(
                 DescribeId.Create("weighted-inverse-scale-le-of-overlap"),
                 DeclarationHandle.Create(Owner + ".weighted_inverse_scale_le_of_overlap"),
@@ -28,9 +29,11 @@ internal sealed class OverlapPerturbationBudgetDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "Distinct equal-degree vectors have common count H<p, so the "
                         + "Euclidean scale is at least ρ√2. When H<k, it is at least "
-                        + "ρ√(2(p−k+1)). Bound the weight of pairs below the threshold "
-                        + "by W^(2p) and the weight of pairs at or above it by A(k). Both "
-                        + "bounds refer to the same weighted ordered pairs.")),
+                        + "L. Charge 1/L to every distinct pair and add 1/U−1/L only "
+                        + "for pairs with H≥k. Their total weight is bounded by both A(k) "
+                        + "and T before removing the diagonal of mass D(p). At k=0 the "
+                        + "correction applies to every distinct pair, and at k=p the two "
+                        + "scale bounds agree.")),
                     Paragraph(Text(
                         "For the finite product of independent uniform interval perturbations, "
                         + "the Euclidean-scale affine bound multiplies each inverse scale by "
@@ -50,12 +53,15 @@ internal sealed class OverlapPerturbationBudgetDocument : IScribeDocumentDefinit
     {
         var p = F.Id("p");
         var k = F.Id("k");
-        var remaining = Add(new Formula.Binary(p, FormulaBinaryOperator.Subtract, k), D(1));
-        var highScale = Multiply(Rho, Call("sqrt", D(2)));
-        var lowScale = Multiply(Rho, Call("sqrt", Multiply(D(2), remaining)));
-        var totalWeight = new Formula.Power(F.Id("W"), Multiply(D(2), p));
-        var result = Add(new Formula.Fraction(totalWeight, lowScale),
-            new Formula.Fraction(Call("A", k), highScale));
+        var baselineScale = F.Id("L");
+        var minimumScale = F.Id("U");
+        var total = F.Id("T");
+        var diagonal = Call("D", p);
+        var baseline = new Formula.Fraction(Seq(total, Minus, diagonal), baselineScale);
+        var highWeight = Seq(Call("min", Call("A", k), total), Minus, diagonal);
+        var extraCharge = Seq(new Formula.Fraction(D(1), minimumScale), Minus,
+            new Formula.Fraction(D(1), baselineScale));
+        var result = Add(baseline, Multiply(Seq(Open, highWeight, Close), Seq(Open, extraCharge, Close)));
         return Disp(new Formula.Logic(AtMost(k, p), FormulaLogicOperator.Implies,
             AtMost(Call("I", p), result)));
     }

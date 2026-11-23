@@ -28,9 +28,11 @@ abbrev radiusArena : Arena where
     (∑ m ∈ piAntidiag univ p, ∑ n ∈ (piAntidiag univ p).erase m,
       monomialWeight w m * monomialWeight w n /
         Real.sqrt (∑ j, (((m j : ℝ) - n j) * A.readout () ⟨J, radius⟩ j) ^ 2)) ≤
-      (∑ j, w j) ^ (2 * p) / (ρ * Real.sqrt (2 * ((p - k + 1 : ℕ) : ℝ))) +
-        ((Nat.choose p k : ℝ) ^ 2 * (∑ j, w j) ^ (2 * (p - k)) * diagonal w k) /
-          (ρ * Real.sqrt 2)
+      ((∑ j, w j) ^ (2 * p) - diagonal w p) /
+          (ρ * Real.sqrt (2 * ((p - k + 1 : ℕ) : ℝ))) +
+        (min ((Nat.choose p k : ℝ) ^ 2 * (∑ j, w j) ^ (2 * (p - k)) * diagonal w k)
+          ((∑ j, w j) ^ (2 * p)) - diagonal w p) *
+          ((ρ * Real.sqrt 2)⁻¹ - (ρ * Real.sqrt (2 * ((p - k + 1 : ℕ) : ℝ)))⁻¹)
 
 private theorem sum_liftBool {A : Type*} [AddCommMonoid A] (f : ULift.{u} Bool → A) :
     (∑ j, f j) = f (ULift.up false) + f (ULift.up true) := by
@@ -79,8 +81,9 @@ private theorem smallRadius_fails : ¬ radiusArena.{u}.Law smallRadiusReadout :=
   change (∑ a ∈ s, ∑ b ∈ s.erase a, term a b) ≤ _ at h
   have hbad := hsel.trans h
   have hW : (∑ j, w j) = 2 := by rw [sum_liftBool]; norm_num [w]
-  have hD : diagonal w 0 = 1 := by simp [diagonal, monomialWeight, Nat.multinomial]
-  rw [hW, hD] at hbad
+  have hD0 : diagonal w 0 = 1 := by simp [diagonal, monomialWeight, Nat.multinomial]
+  have hD1 : 0 ≤ diagonal w 1 := sum_nonneg fun _ _ => sq_nonneg _
+  rw [hW, hD0] at hbad
   have hwM : monomialWeight w m = 1 := unit_weight_of_degree_one m hm
   have hwN : monomialWeight w n = 1 := unit_weight_of_degree_one n hn
   have hsum : (∑ j, (((m j : ℝ) - n j) * (1 / 100 : ℝ)) ^ 2) = 2 / 100 ^ 2 := by
@@ -92,12 +95,12 @@ private theorem smallRadius_fails : ¬ radiusArena.{u}.Law smallRadiusReadout :=
   norm_num [show (2 * 2 : ℝ) = 2 ^ 2 by norm_num,
     Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)] at hbad
   have hS : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
-  have hS2 : Real.sqrt 2 ^ 2 = (2 : ℝ) := Real.sq_sqrt (by norm_num)
-  have hle := (div_le_iff₀ hS).mp hbad
-  have hrearrange : (2 + 4 / Real.sqrt 2) * Real.sqrt 2 = 2 * Real.sqrt 2 + 4 := by
-    rw [add_mul, div_mul_cancel₀ _ hS.ne']
-  rw [hrearrange] at hle
-  nlinarith
+  have hle : 100 / √2 ≤ (4 - diagonal w 1) / √2 := by
+    refine hbad.trans_eq ?_
+    change (4 - diagonal w 1) / 2 + (4 - diagonal w 1) * ((√2)⁻¹ - 1 / 2) = _
+    ring
+  have := (div_le_div_iff_of_pos_right hS).mp hle
+  linarith
 
 def radiusEvidence :
     Registration radiusArena.{u} (type_of% @weighted_inverse_scale_le_of_overlap.{u}) where
