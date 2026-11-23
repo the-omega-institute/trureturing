@@ -8,7 +8,7 @@ A column is encoded in base three, with row r stored in digit r. Bond tests prec
 
 **Definition 1.1 (moves).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves`
+$$(\operatorname{HardinA233178Chromatic}.\operatorname{moves}: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{List}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves` (`✓ std3`).
 
@@ -32,7 +32,7 @@ Filtering the ordered column codes by the bond condition gives the stored succes
 
 **Definition 1.3 (table).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table`
+$$(\operatorname{HardinA233178Chromatic}.\operatorname{table}: \operatorname{Fin}\left(12\right) \to \left(\operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \mathbb{Z}\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table` (`✓ std3`).
 
@@ -150,7 +150,19 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA233178Chromatic}.\oper
 
 Each coordinate counts continuations of the specified length from its boundary column.
 
-**Theorem 1.13 (result).**
+**Theorem 1.13 (vector_certificate).**
+
+$$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{1 + 10}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right) = \sum_{(j: \operatorname{Fin}\left(10\right))} (\operatorname{SMul}.\operatorname{smul}\left(\operatorname{HardinA233178Chromatic}.\operatorname{coefficients}\left(j\right), \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{1 + \operatorname{Fin}.\operatorname{val}\left(j\right)}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.vector_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At exponent eleven the continuation vector is the given linear combination of the vectors at exponents one through ten.
+
+**Theorem 1.14 (result).**
 
 $$\forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int}), (\forall (n: \operatorname{Nat}), (\operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 11\right)\right) = 6 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 10\right)\right) + 31 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 9\right)\right) - 97 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 8\right)\right) - 163 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 7\right)\right) + 417 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 6\right)\right) + 93 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 5\right)\right) - 514 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 4\right)\right) + 192 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 3\right)\right) + 72 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 2\right)\right) - 36 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 1\right)\right)))$$
 
@@ -177,4 +189,5 @@ The finite vector relation propagates to all subsequent exponents by TransferMat
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.step_fast`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.vector_certificate`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](../TransferMatrix.md)
