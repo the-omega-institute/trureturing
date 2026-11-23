@@ -28,6 +28,10 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
         H("Qubit Jensen–Shannon order score"),
         Blocks(
             Paragraph(DefinitionDsl.Text("Every square root uses Lean’s total real convention. It is the nonnegative square root of the maximum of zero and its argument, so a negative argument gives zero.")),
+            Paragraph(DefinitionDsl.Text("The score formulas use the total real entropy functions in nats. The logarithm is applied to the absolute value of each nonzero entry, and a zero entry contributes zero.")),
+            new DocumentBlock.DisplayFormula(EntropyTerm()),
+            new DocumentBlock.DisplayFormula(FiniteEntropy()),
+            new DocumentBlock.DisplayFormula(BinaryEntropy()),
             Definition("outcomeSign", "Outcome signs", "The two Boolean outcomes represent the signs −1 and +1.",
                 All("a", Bool, Equal(Call("outcomeSign", X("a")), Call("ite", X("a"), One, Negate(One))))),
             Definition("projector", "Pauli effects", "In the bisector frame the Bloch axis has coordinates (k, 0, m).",
@@ -52,7 +56,7 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
                         TraceEffect(Call("A", Fst(X("o"))), Call("B", Snd(X("o"))))))))),
                 AssessedProvenance.FromLiterature(Wu)),
             Definition("orderScore", "Lüders order score",
-                "Definition 1 uses Shannon entropy in bits. The two records use the same density state and label entries by the outcome of each measurement. H denotes finite Shannon entropy in nats and division by ln 2 converts the divergence to bits.",
+                "The two records use the same density state and label entries by the outcome of each measurement. The formula uses the total finite entropy H for arbitrary Boolean-indexed matrices. For the two sharp measurements in Wu’s Definition 1, the records are probability laws and division by ln 2 gives the Jensen–Shannon divergence in bits.",
                 OrderScore(), AssessedProvenance.FromLiterature(Wu)),
             Definition("sourceScore", "Bisector-frame score", "In X, Y, Z order the two sharp Bloch axes are (k, 0, m) and (−k, 0, m).",
                 All("t", R, All("r", State, Let("s", Call("sOfT", X("t")),
@@ -68,15 +72,16 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
                 Equal(X("disk"), Seq(OpenBrace, X("d"), Colon, Sp, Pair, Sp, Mid, Sp,
                     Le(SqNorm(X("d")), One), CloseBrace))),
             Definition("diskScore", "Score in Bloch coordinates",
-                "The deficit g(y) is ln 2 minus the binary entropy in nats at (1+y)/2. The parity masses are 1−s and s. Grouping by parity cancels the common parity entropy, including when a parity has zero mass.",
+                "The deficit g uses the total binary entropy h. For s in [0,1] and d in the closed Bloch disk, the parity masses are 1−s and s. Grouping by parity cancels the common parity entropy, including when a parity has zero mass.",
                 All("s", R, All("d", Pair, Let("u", BiasU("s", "d"), Let("v", BiasV("s", "d"),
                     Equal(Call("diskScore", X("s"), X("d")), Fr(DeficitCombination(), LogTwo))))))),
             Theorem("native_maximum", "Attainment on the disk and in the native states",
                 "Every disk point has a native realization, and a compactness argument attains the common largest score. The existential state and disk point use the same value of the optimization parameter.",
                 NativeMaximum()),
             Definition("circlePoint", "First-quadrant circle",
-                "The squared X coordinate is the parameter w. On the unit interval the squared Z coordinate is 1−w.",
+                "On the closed unit interval the point lies on the first-quadrant unit circle, with squared X and Z coordinates w and 1−w, respectively. For every real w the squared coordinates use the maxima below.",
                 All("w", R, Equal(Call("circlePoint", X("w")), Tuple(Root(X("w")), Root(Sub(One, X("w"))))))),
+            new DocumentBlock.DisplayFormula(CircleSquares()),
             Definition("seriesWeight", "Entropy series weight",
                 "The even entropy series starts with degree two. The index is a natural number and its appearances in the weight are real casts.",
                 All("n", N, Equal(Call("seriesWeight", X("n")),
@@ -116,6 +121,43 @@ internal sealed class QubitJensenShannonDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
+
+    private static Formula EntropyTerm()
+    {
+        var x = X("x");
+        var logAbs = Call("ln", Seq(Bar, x, Bar));
+        return Both(Equal(EntropyAt(Zero), Zero),
+            All("x", R, Imp(NotEqual(x, Zero), Equal(EntropyAt(x), Mul(Negate(x), logAbs)))));
+    }
+
+    private static Formula FiniteEntropy()
+    {
+        var sum = new Formula.Subscript(Sum, Member(X("o"), Outcomes));
+        return All("p", new Formula.TypeArrow(Outcomes, R),
+            Equal(Call("H", X("p")), Seq(sum, Sp, EntropyAt(Call("p", X("o"))))));
+    }
+
+    private static Formula BinaryEntropy()
+    {
+        var x = X("x");
+        var y = X("y");
+        return Both(All("x", R, Equal(Call("h", x), Add(EntropyAt(x), EntropyAt(Sub(One, x))))),
+            All("y", R, Equal(Call("g", y), Sub(LogTwo, Call("h", Fr(Add(One, y), Two))))));
+    }
+
+    private static Formula EntropyAt(Formula x) => new Formula.Apply(Varphi, [x]);
+
+    private static Formula CircleSquares()
+    {
+        var w = X("w");
+        var point = Call("circlePoint", w);
+        var complement = Sub(One, w);
+        var xSquared = Sq(Fst(point));
+        var zSquared = Sq(Snd(point));
+        return All("w", R, Both(
+            Both(Equal(xSquared, Call("max", Zero, w)), Equal(zSquared, Call("max", Zero, complement))),
+            Imp(Member(w, Closed(Zero, One)), Both(Equal(xSquared, w), Equal(zSquared, complement)))));
+    }
 
     private static Formula OrderScore()
     {

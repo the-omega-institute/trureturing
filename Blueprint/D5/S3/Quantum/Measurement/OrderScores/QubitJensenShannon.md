@@ -6,6 +6,20 @@ The Jensen–Shannon order score for two sharp qubit measurements.
 
 Every square root uses Lean’s total real convention. It is the nonnegative square root of the maximum of zero and its argument, so a negative argument gives zero.
 
+The score formulas use the total real entropy functions in nats. The logarithm is applied to the absolute value of each nonzero entry, and a zero entry contributes zero.
+
+$$
+\varphi\left(0\right) = 0 \land \left(\forall x \in \mathbb{R},\; x \ne 0 \Rightarrow \varphi\left(x\right) = -(x) \cdot \operatorname{ln}\left(|x|\right)\right)
+$$
+
+$$
+\forall p \in Bool \times Bool \to \mathbb{R},\; \operatorname{H}\left(p\right) = \sum_{o \in Bool \times Bool} \varphi\left(\operatorname{p}\left(o\right)\right)
+$$
+
+$$
+\left(\forall x \in \mathbb{R},\; \operatorname{h}\left(x\right) = \varphi\left(x\right) + \varphi\left(1 - x\right)\right) \land \left(\forall y \in \mathbb{R},\; \operatorname{g}\left(y\right) = \operatorname{ln}\left(2\right) - \operatorname{h}\left(\frac{1 + y}{2}\right)\right)
+$$
+
 **Definition 1.1 (Outcome signs).**
 
 $$\forall a \in Bool,\; \operatorname{outcomeSign}\left(a\right) = \operatorname{ite}\left(a, 1, -(1)\right)$$
@@ -88,7 +102,7 @@ $$\forall A \in Bool \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\ri
 
 *Commentary.*
 
-Definition 1 uses Shannon entropy in bits. The two records use the same density state and label entries by the outcome of each measurement. H denotes finite Shannon entropy in nats and division by ln 2 converts the divergence to bits.
+The two records use the same density state and label entries by the outcome of each measurement. The formula uses the total finite entropy H for arbitrary Boolean-indexed matrices. For the two sharp measurements in Wu’s Definition 1, the records are probability laws and division by ln 2 gives the Jensen–Shannon divergence in bits.
 
 **Definition 1.8 (Bisector-frame score).**
 
@@ -136,7 +150,7 @@ $$\forall s \in \mathbb{R},\; \forall d \in \mathbb{R} \times \mathbb{R},\; \mat
 
 *Commentary.*
 
-The deficit g(y) is ln 2 minus the binary entropy in nats at (1+y)/2. The parity masses are 1−s and s. Grouping by parity cancels the common parity entropy, including when a parity has zero mass.
+The deficit g uses the total binary entropy h. For s in [0,1] and d in the closed Bloch disk, the parity masses are 1−s and s. Grouping by parity cancels the common parity entropy, including when a parity has zero mass.
 
 **Theorem 1.12 (Attainment on the disk and in the native states).**
 
@@ -160,7 +174,11 @@ $$\forall w \in \mathbb{R},\; \operatorname{circlePoint}\left(w\right) = (\sqrt{
 
 *Commentary.*
 
-The squared X coordinate is the parameter w. On the unit interval the squared Z coordinate is 1−w.
+On the closed unit interval the point lies on the first-quadrant unit circle, with squared X and Z coordinates w and 1−w, respectively. For every real w the squared coordinates use the maxima below.
+
+$$
+\forall w \in \mathbb{R},\; \left((\operatorname{circlePoint}\left(w\right).1)^{2} = \operatorname{max}\left(0, w\right) \land (\operatorname{circlePoint}\left(w\right).2)^{2} = \operatorname{max}\left(0, 1 - w\right)\right) \land \left(w \in [0, 1] \Rightarrow \left((\operatorname{circlePoint}\left(w\right).1)^{2} = w \land (\operatorname{circlePoint}\left(w\right).2)^{2} = 1 - w\right)\right)
+$$
 
 **Definition 1.14 (Entropy series weight).**
 
