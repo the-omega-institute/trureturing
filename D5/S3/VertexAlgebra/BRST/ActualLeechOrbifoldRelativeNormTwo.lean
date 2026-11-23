@@ -403,7 +403,8 @@ private theorem fixedCoord_supported {x : ComplexState} (hx : x ∈ absoluteShel
   have hO := fixedWeight_nonneg i
   have hU : 0 ≤ (oscillatorEnergy d : ℝ) := Nat.cast_nonneg _
   have hG : 0 ≤ (relativeEnergy S : ℝ) := by exact_mod_cast relativeEnergy_nonneg S
-  have hd : oscillatorEnergy d = 0 := by exact_mod_cast (show (oscillatorEnergy d : ℝ) = 0 by linarith)
+  have hd : oscillatorEnergy d = 0 := by
+    exact_mod_cast (show (oscillatorEnergy d : ℝ) = 0 by linarith)
   have hS : relativeEnergy S = 0 := by exact_mod_cast (show (relativeEnergy S : ℝ) = 0 by linarith)
   exact ⟨(fixedWeight_eq_zero i).mp (by linarith),
     Prod.ext rfl ((oscillatorEnergy_eq_zero_iff hyperbolicPlane d).mp hd),
@@ -471,8 +472,8 @@ private theorem groundState_mem_absoluteShell (T : Finset ℕ) (hT : relativeEne
             rw [add_assoc, plane_weight_at_momentum, hT]
             simp [fixedWeight, (energy_eq_zero_iff leechData leechPosDef _).mpr rfl]
           · simp [ket, Finsupp.single_apply, Ne.symm hs]
-        · simp [Finsupp.single_apply, Ne.symm hl]
-      · simp [Finsupp.single_apply, Ne.symm hi]
+        · simp [Ne.symm hl]
+      · simp [Ne.symm hi]
     · intro i l S
       rw [twistedCoord_energy, twistedCoord_groundState, mul_zero]
 
@@ -506,15 +507,60 @@ theorem mem_absoluteShell_iff (x : ComplexState) :
         by_cases hi : i = (0, 0)
         · by_cases hl : l = (momentum, 0)
           · have hS : S ≠ {1} ∧ S ≠ {1, 3} := by simpa [hi, hl] using hs
-            simp [ket, Finsupp.single_apply, Ne.symm hS.1, Ne.symm hS.2]
-          · simp [Finsupp.single_apply, Ne.symm hl]
-        · simp [Finsupp.single_apply, Ne.symm hi]
+            simp [ket, Ne.symm hS.1, Ne.symm hS.2]
+          · simp [Ne.symm hl]
+        · simp [Ne.symm hi]
     · intro i l S
       simp only [map_sub, map_add, map_smul, psi_eq, ψ₁₃, twistedCoord_groundState,
         twistedCoord_vanishes hx, smul_zero, add_zero, sub_zero]
   · intro hx
     exact hx ▸ absoluteShell.add_mem (absoluteShell.smul_mem (ρ x) psi_mem_absoluteShell)
       (absoluteShell.smul_mem (σ x) psi13_mem_absoluteShell)
+
+private theorem ground_coordinates_momentum (x : ComplexState) :
+    ρ (momentumProjection x) = ρ x ∧ σ (momentumProjection x) = σ x := by
+  constructor <;>
+    simpa only [ρ, σ, Prod.fst, ite_true, one_mul] using
+      coordinates_momentum (carrierBasis leechData) fixedProjection (0, 0) (momentum, 0) _ x
+
+private theorem ground_coordinates_energy (x : ComplexState) : ρ (E x) = 0 ∧ σ (E x) = 0 := by
+  have h (S : Finset ℕ) (hs : relativeEnergy S = 0) : fixedCoord (0, 0) (momentum, 0) S (E x) = 0 := by
+    rw [fixedCoord_energy, add_assoc, plane_weight_at_momentum, hs]
+    simp [fixedWeight, (energy_eq_zero_iff leechData leechPosDef _).mpr rfl]
+  exact ⟨h _ ((relativeEnergy_zero_iff _).mpr (Or.inl rfl)),
+    h _ ((relativeEnergy_zero_iff _).mpr (Or.inr rfl))⟩
+
+/-- The absolute-shell projection takes the two surviving occupation coefficients. -/
+def absoluteProjection : Module.End ℂ ComplexState where
+  toFun x := ρ x • ψ + σ x • ψ₁₃
+  map_add' x y := by
+    simp only [map_add, add_smul]
+    exact add_add_add_comm (ρ x • ψ) (ρ y • ψ) (σ x • ψ₁₃) (σ y • ψ₁₃)
+  map_smul' a x := by
+    simp only [map_smul, smul_add, smul_smul, smul_eq_mul, RingHom.id_apply]
+
+/-- The absolute-shell projection preserves the selected momentum and is killed by total L₀. -/
+theorem absoluteProjection_eq (x : ComplexState) :
+    absoluteProjection x = x ↔ x ∈ absoluteShell :=
+  ⟨fun h => (mem_absoluteShell_iff x).mpr h.symm,
+    fun h => ((mem_absoluteShell_iff x).mp h).symm⟩
+
+/-- The two-coordinate projection is idempotent and total L₀ annihilates it on either side. -/
+theorem absoluteProjection_actions (x : ComplexState) :
+    absoluteProjection (absoluteProjection x) = absoluteProjection x ∧
+      E (absoluteProjection x) = 0 ∧ absoluteProjection (E x) = 0 ∧
+      absoluteProjection (momentumProjection x) = absoluteProjection x := by
+  have h : absoluteProjection x ∈ absoluteShell :=
+    absoluteShell.add_mem (absoluteShell.smul_mem (ρ x) psi_mem_absoluteShell)
+      (absoluteShell.smul_mem (σ x) psi13_mem_absoluteShell)
+  refine ⟨(absoluteProjection_eq _).mpr h, ((mem_absoluteShell _).mp h).2, ?_, ?_⟩
+  · change ρ (E x) • ψ + σ (E x) • ψ₁₃ = 0
+    obtain ⟨hr, hs⟩ := ground_coordinates_energy x
+    rw [hr, hs, zero_smul, zero_smul, add_zero]
+  · change ρ (momentumProjection x) • ψ + σ (momentumProjection x) • ψ₁₃ =
+      ρ x • ψ + σ x • ψ₁₃
+    obtain ⟨hr, hs⟩ := ground_coordinates_momentum x
+    rw [hr, hs]
 
 private theorem rho_psi : ρ ψ = 1 := by
   rw [ψ, BcGhostFock.ghost_vacuum.2.2.1, ρ, fixedCoord_groundState]
@@ -525,31 +571,61 @@ private theorem b0_psi : b0 ψ = 0 := by
   change _ ⊗ₜ[ℂ] BcGhostFock.b 0 (ket {1}) = _
   rw [BcGhostRelativeEnergy.b_zero_down, TensorProduct.tmul_zero]
 
-private theorem b0_psi13 : b0 ψ₁₃ = -ψ := by
-  rw [psi_eq]
-  change _ ⊗ₜ[ℂ] BcGhostFock.b 0 (ket {1, 3}) = -groundState (ket {1})
-  have hb : BcGhostFock.b 0 (ket {1, 3}) = -ket {1} := by
-    change CountableOccupationFock.annihilate 3 (ket {1, 3}) = _
-    have hc : CountableOccupationFock.lowerCount 3 {1, 3} = 1 := by decide
-    have he : ({1, 3} : Finset ℕ).erase 3 = {1} := by decide
-    rw [CountableOccupationFock.annihilate_ket]
-    simp [CountableOccupationFock.phase, hc, he]
-  rw [hb, TensorProduct.tmul_neg]
-  rfl
+private theorem ghost_b0_up : BcGhostFock.b 0 (ket {1, 3}) = -ket {1} := by
+  change CountableOccupationFock.annihilate 3 (ket {1, 3}) = _
+  have hc : CountableOccupationFock.lowerCount 3 {1, 3} = 1 := by decide
+  have he : ({1, 3} : Finset ℕ).erase 3 = {1} := by decide
+  rw [CountableOccupationFock.annihilate_ket]
+  simp [CountableOccupationFock.phase, hc, he]
+
+private theorem ghost_b0_coefficient (g : Fock) :
+    (BcGhostFock.b 0 g) {1} = -g {1, 3} := by
+  classical
+  induction g using Finsupp.induction_linear with
+  | zero => simp
+  | add f g hf hg => simp only [map_add, Finsupp.add_apply, hf, hg, neg_add]
+  | single T a =>
+    have h (T : Finset ℕ) : (BcGhostFock.b 0 (ket T)) {1} = -(ket T) {1, 3} := by
+      by_cases hT : T = {1, 3}
+      · subst T
+        rw [ghost_b0_up]
+        simp [ket]
+      · change (CountableOccupationFock.annihilate 3 (ket T)) {1} = _
+        rw [CountableOccupationFock.annihilate_ket]
+        by_cases h3 : 3 ∈ T
+        · have he : T.erase 3 ≠ {1} := by
+            intro he
+            apply hT
+            rw [← Finset.insert_erase h3, he]
+            decide
+          simp [h3, ket, he, hT]
+        · simp [h3, ket, hT]
+    have ha : Finsupp.single T a = a • ket T := by simp [ket]
+    rw [ha, map_smul, Finsupp.smul_apply, Finsupp.smul_apply, h]
+    simp [smul_eq_mul]
+
+/-- Applying the actual b₀ feeds the second absolute coefficient into the first with sign −1. -/
+theorem rho_b0 (x : ComplexState) : ρ (b0 x) = -σ x := by
+  induction x using TensorProduct.inductionOn with
+  | tmul m g =>
+    induction m using TensorProduct.inductionOn with
+    | tmul v u =>
+      change ρ ((v ⊗ₜ[ℂ] u) ⊗ₜ[ℂ] BcGhostFock.b 0 g) = -σ ((v ⊗ₜ[ℂ] u) ⊗ₜ[ℂ] g)
+      simp only [ρ, σ, coordinates_tmul, ghost_b0_coefficient, mul_neg]
+    | add y z hy hz =>
+      simp only [TensorProduct.add_tmul, map_add, hy, hz, neg_add]
+  | add y z hy hz =>
+    simp only [map_add, hy, hz, neg_add]
 
 private theorem psi_mem_C : ψ ∈ C := ⟨psi_mem_absoluteShell, b0_psi⟩
 
 private theorem relative_coordinates {x : ComplexState} (hx : x ∈ C) : x = ρ x • ψ := by
   have habs := (mem_absoluteShell_iff x).mp hx.1
   have hb : b0 x = 0 := hx.2
-  rw [habs, map_add, map_smul, map_smul, b0_psi, b0_psi13, smul_zero, zero_add] at hb
-  have hneg : ρ (-ψ) = -1 := by
-    calc
-      ρ (-ψ) = -(ρ ψ) := ρ.map_neg ψ
-      _ = -1 := by rw [rho_psi]
-  have hcoef := congrArg (fun y : ComplexState => ρ y) hb
   have hs : σ x = 0 := by
-    simpa only [map_smul, map_zero, hneg, smul_eq_mul, mul_neg, mul_one, neg_eq_zero] using hcoef
+    have hc := rho_b0 x
+    rw [hb, map_zero] at hc
+    exact neg_eq_zero.mp hc.symm
   calc
     x = ρ x • ψ + σ x • ψ₁₃ := habs
     _ = ρ x • ψ := by simp [hs]
@@ -561,19 +637,23 @@ private theorem relative_span : C = Submodule.span ℂ ({ψ} : Set ComplexState)
   · exact (Submodule.span_singleton_le_iff_mem ψ C).mpr psi_mem_C
 
 #print axioms mem_absoluteShell_iff
+#print axioms absoluteProjection_actions
+#print axioms rho_b0
 
 
 /-- Ghost number on the same three-factor carrier. -/
 abbrev N : Module.End ℂ ComplexState := VirasoroBRST.N matter
 
-private theorem chargeProjection_single (a : Charge hyperbolicPlane) (u : Oscillator hyperbolicPlane) :
+private theorem chargeProjection_single (a : Charge hyperbolicPlane)
+    (u : Oscillator hyperbolicPlane) :
     chargeProjection (Finsupp.single a u) =
       if a = momentum then Finsupp.single a u else 0 := by
   classical
   by_cases h : a = momentum <;> simp [chargeProjection, h]
 
 private theorem plane_mode_commutes_momentum (n : ℤ) (u : Plane) :
-    chargeProjection (hyperbolicMatter.mode n u) = hyperbolicMatter.mode n (chargeProjection u) := by
+    chargeProjection (hyperbolicMatter.mode n u) =
+      hyperbolicMatter.mode n (chargeProjection u) := by
   have h : chargeProjection.comp (hyperbolicMatter.mode n) =
       (hyperbolicMatter.mode n).comp chargeProjection := by
     apply Finsupp.lhom_ext
@@ -582,7 +662,8 @@ private theorem plane_mode_commutes_momentum (n : ℤ) (u : Plane) :
       hyperbolicMatter.mode n (chargeProjection (Finsupp.single a v))
     have action (w : Oscillator hyperbolicPlane) :
         hyperbolicMatter.mode n (Finsupp.single a w) =
-          Finsupp.single a (sectorSugawaraMode hyperbolicPlane (gramComplex hyperbolicPlane) a n w) :=
+          Finsupp.single a
+            (sectorSugawaraMode hyperbolicPlane (gramComplex hyperbolicPlane) a n w) :=
       sugawaraMode_single_sector hyperbolicPlane _ a n w
     rw [action, chargeProjection_single, chargeProjection_single]
     split_ifs <;> simp only [action, map_zero]
