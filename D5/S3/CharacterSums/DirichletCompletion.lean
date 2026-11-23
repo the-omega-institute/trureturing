@@ -641,7 +641,7 @@ theorem completion_center_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter �
     (.inl (by norm_num)))
   split_ifs with hc
   · simp only [if_pos hc] at he
-    norm_num [Complex.digamma_one, Complex.add_re, Complex.mul_re] at he hL
+    norm_num [Complex.digamma_one, Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
     linarith
   · simp only [if_neg hc] at he
     norm_num [hhalf, Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
@@ -676,6 +676,7 @@ theorem completion_vertical_bound {q : ℕ} [NeZero q]
     linarith
   · intro hχ hne
     have hs := completion_vertical_resolvent hχ hne 2 t (by norm_num)
+    norm_num at hs
     rw [← hs.tsum_eq]
     apply tsum_nonneg
     intro ρ
