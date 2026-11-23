@@ -25,7 +25,7 @@ internal sealed class RankThreeInternalSizeSpectrumDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Fix positive row dimension and class size, the lifted pair-unique family of zero-sum triples on distinct rows covering every cross-row pair, and labellings preserving the actual residue modulo three. Add unordered triples of three distinct points within rows, preserving pair uniqueness and normalized potential dimension one more than the row dimension.")),
+                    Paragraph(Text("Fix positive row dimension and class size, the lifted pair-unique family of zero-sum triples on distinct rows covering every cross-row pair. Label each actual residue class by Fin r using the uniform residue indexing. Add unordered triples of three distinct points within rows, preserving pair uniqueness and normalized potential dimension one more than the row dimension.")),
                     Paragraph(Text("The lower endpoint is the number of Latin cells across all rows. The upper endpoint adds the packing number times the number of row and residue-class pairs. Every integer between the endpoints occurs.")),
                     Paragraph(Text("The unordered blocks split into the Latin cells and disjoint transported packing families. For the upper bound, each class contributes at most the packing number. For attainability, put a maximum pack in each class and choose an arbitrary subset of the union of these packing blocks. Each class remains a valid partial Steiner system, so the realization theorem preserves the required dimension."))),
                 DescribeRole.Theorem))));

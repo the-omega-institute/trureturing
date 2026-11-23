@@ -7,6 +7,7 @@
    digest: The attainable internal extension sizes form a sharp integer interval. -/
 
 import D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition
+import D5.S3.Combinatorics.Matroids.RankThreeMinimumInternalAdditions
 import Mathlib.Data.Set.Card.Arithmetic
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Fintype.Powerset
@@ -244,8 +245,6 @@ private theorem latin_exists (r : ℕ) [NeZero r] :
 /-- The attainable sizes of pair-unique internal extensions form the whole integer
 interval from the Latin minimum to the independent packing maximum. -/
 theorem exact_size_spectrum {d r : ℕ} [NeZero (3 * r)] {T : Type*}
-    (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
-    (he : ∀ x a, (e x a).1 = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a)
     (hd : 0 < d)
     (mixed : T → Fin 3 → Row d × ZMod (3 * r))
     (family : LiftedLineFamily mixed)
@@ -261,6 +260,10 @@ theorem exact_size_spectrum {d r : ℕ} [NeZero (3 * r)] {T : Type*}
       (Set.range (fun u => Set.range (internal u))).ncard = N) ↔
     3 ^ d * r ^ 2 ≤ N ∧ N ≤ 3 ^ d * r ^ 2 + 3 ^ (d + 1) * packingNumber r := by
   classical
+  obtain ⟨labels, hlabels⟩ := RankThreeMinimumInternalAdditions.residue_indexing r
+  let e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r) := fun _ => labels
+  have he (x : Row d) (a : ZMod (3 * r)) :
+      (e x a).1 = ZMod.castHom (dvd_mul_right 3 r) (ZMod 3) a := hlabels a
   let Q := Classical.choose (largest_packing r)
   have hQ := Classical.choose_spec (largest_packing r)
   have observedClasses : Nat.card (Row d × ZMod 3) = 3 ^ (d + 1) := by

@@ -11,6 +11,15 @@ internal sealed class RankThreeMinimumInternalAdditionsDocument : IScribeDocumen
         H("The Least Internal Additions for an Extra Ternary Dimension"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("residue-indexing"),
+                DeclarationHandle.Create(Module + ".residue_indexing"),
+                H("Uniform indexing of the actual residue classes"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive r there is an equivalence from ZMod (3r) to ZMod 3 × Fin r whose first coordinate is reduction modulo three."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("minimum-internal-additions-lower-bound"),
                 DeclarationHandle.Create(Module + ".internal_additions_lower_bound"),
                 H("The extra dimension forces a minimum number of additions"),
