@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
 recolor: proof_shape=bind-only; consumers=boundary_recolor, cost_recolor, lift_counts, recolor.eq_1, recolor_match
 reflect: proof_shape=bind-only; consumers=boundary_reflect, cost_reflect, lift_counts, reflect.eq_1
-cost_formula: proof_shape=bind-only; consumers=cost_recolor, cost_reflect, HardinA203981StripCertificate.exact_cost_split
+cost_formula: proof_shape=bind-only; consumers=HardinA203981StripCertificate.exact_cost_split, cost_recolor, cost_reflect
 cost_recolor: proof_shape=bind-only; consumers=lift_counts
 cost_reflect: proof_shape=bind-only; consumers=lift_counts
 boundary_recolor: proof_shape=bind-only; consumers=lift_counts

@@ -14,17 +14,17 @@ one_counts: proof_shape=bind-only; consumers=HardinA229683StripCertificate.trans
 transition_counts: proof_shape=bind-only; consumers=HardinA229508Strip.counting_bridge, HardinA229683StripCertificate.transition_counts
 block_projection: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_inherited, forward_zeroth
 forward_zeroth: proof_shape=bind-only; consumers=finite_certificate
-W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_one
-coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
-squareMonicCoeff: proof_shape=bind-only; consumers=coeff, HardinA229683StripCertificate.coeff
-coeff_values: proof_shape=bind-only; consumers=finite_certificate, inherited_relation, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
+W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, HardinA229683StripCertificate.forward_two._proof_10, HardinA229683StripCertificate.forward_two._proof_11, HardinA229683StripCertificate.forward_two._proof_12, HardinA229683StripCertificate.forward_two._proof_13, HardinA229683StripCertificate.forward_two._proof_14, HardinA229683StripCertificate.forward_two._proof_15, HardinA229683StripCertificate.forward_two._proof_16, HardinA229683StripCertificate.forward_two._proof_17, HardinA229683StripCertificate.forward_two._proof_18, HardinA229683StripCertificate.forward_two._proof_19, HardinA229683StripCertificate.forward_two._proof_2, HardinA229683StripCertificate.forward_two._proof_20, HardinA229683StripCertificate.forward_two._proof_3, HardinA229683StripCertificate.forward_two._proof_4, HardinA229683StripCertificate.forward_two._proof_5, HardinA229683StripCertificate.forward_two._proof_6, HardinA229683StripCertificate.forward_two._proof_7, HardinA229683StripCertificate.forward_two._proof_8, HardinA229683StripCertificate.forward_two._proof_9, finite_certificate, finite_certificate._proof_1, forward_one, forward_step, forward_step._proof_1, forward_step._proof_10, forward_step._proof_11, forward_step._proof_12, forward_step._proof_13, forward_step._proof_14, forward_step._proof_15, forward_step._proof_16, forward_step._proof_17, forward_step._proof_18, forward_step._proof_19, forward_step._proof_2, forward_step._proof_20, forward_step._proof_3, forward_step._proof_4, forward_step._proof_5, forward_step._proof_6, forward_step._proof_7, forward_step._proof_8, forward_step._proof_9
+coeff: proof_shape=bind-only; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation, coeff_values, coeff_values._proof_1, coeff_values._proof_10, coeff_values._proof_11, coeff_values._proof_12, coeff_values._proof_2, coeff_values._proof_3, coeff_values._proof_4, coeff_values._proof_5, coeff_values._proof_6, coeff_values._proof_7, coeff_values._proof_8, coeff_values._proof_9, finite_certificate, inherited_relation
+squareMonicCoeff: proof_shape=bind-only; consumers=HardinA229683StripCertificate.coeff, coeff
+coeff_values: proof_shape=bind-only; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation, finite_certificate, inherited_relation
 forward_step: proof_shape=content; consumers=HardinA229683StripCertificate.forward_two, forward_one
 forward_one: proof_shape=content; consumers=finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
-one_exact: proof_shape=bind-only; consumers=representative_counts
-halfForwardOne: proof_shape=bind-only; consumers=W
+one_exact: proof_shape=bind-only; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
+halfForwardOne: proof_shape=bind-only; consumers=HardinA229683StripCertificate.W, W
 -/
 
 import Mathlib.Algebra.Ring.Defs

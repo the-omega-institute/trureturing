@@ -15,9 +15,9 @@ cut_inherited: proof_shape=bind-only; consumers=transition_counts
 cut_terminal: proof_shape=bind-only; consumers=transition_counts._simp_1
 transition_counts: proof_shape=bind-only; consumers=HardinA229683Strip.counting_bridge
 forward_inherited: proof_shape=bind-only; consumers=finite_certificate
-W: proof_shape=bind-only; consumers=finite_certificate, finite_certificate._proof_1, forward_two, forward_two._proof_1
-coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229683Strip.result
-coeff_values: proof_shape=bind-only; consumers=finite_certificate, inherited_relation, HardinA229683Strip.result
+W: proof_shape=bind-only; consumers=finite_certificate, finite_certificate._proof_1, forward_two, forward_two._proof_1, forward_two._proof_10, forward_two._proof_11, forward_two._proof_12, forward_two._proof_13, forward_two._proof_14, forward_two._proof_15, forward_two._proof_16, forward_two._proof_17, forward_two._proof_18, forward_two._proof_19, forward_two._proof_2, forward_two._proof_20, forward_two._proof_3, forward_two._proof_4, forward_two._proof_5, forward_two._proof_6, forward_two._proof_7, forward_two._proof_8, forward_two._proof_9
+coeff: proof_shape=bind-only; consumers=HardinA229683Strip.result, coeff_values, coeff_values._proof_1, coeff_values._proof_10, coeff_values._proof_11, coeff_values._proof_12, coeff_values._proof_13, coeff_values._proof_14, coeff_values._proof_15, coeff_values._proof_16, coeff_values._proof_17, coeff_values._proof_18, coeff_values._proof_2, coeff_values._proof_3, coeff_values._proof_4, coeff_values._proof_5, coeff_values._proof_6, coeff_values._proof_7, coeff_values._proof_8, coeff_values._proof_9, finite_certificate, inherited_relation
+coeff_values: proof_shape=bind-only; consumers=HardinA229683Strip.result, finite_certificate, inherited_relation
 forward_two: proof_shape=content; consumers=finite_certificate
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229683Strip.result
