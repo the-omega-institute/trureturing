@@ -46,6 +46,10 @@ $$\begin{aligned}\forall (b : \mathbb{N}),\\2 \leq b \Rightarrow\\(\forall (\var
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/VertexDeletion/Classification.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ugurlu-2026-fixed-budget-nc-transfers` (proved) by `D5/S3/Combinatorics/Graph/VertexDeletion/Classification.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ugurlu-2026-fixed-budget-nc-transfers","declaration_gid":"D5/S3/Combinatorics/Graph/VertexDeletion/Classification.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

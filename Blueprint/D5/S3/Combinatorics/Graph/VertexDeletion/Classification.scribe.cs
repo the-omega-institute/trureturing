@@ -99,7 +99,9 @@ internal sealed class ClassificationDocument : IScribeDocumentDefinition
                 Seq(Word("target"), Sp, Eq, Sp, Word("pcDamage"), Sp, Id("G"), Sp, Lor, Sp, Word("target"), Sp, Eq, Sp, Word("lccDamage"), Sp, Id("G"), Sp, Rightarrow),
                 Seq(D(0), Sp, FormulaDsl.Lt, Sp, Word("damageMaximum"), Sp, Word("target"), Sp, Id("b"), Sp, Rightarrow, Sp, Word("optimisticDamageRatio"), Sp, Word("source"), Sp, Word("target"), Sp, Id("b"), Sp, Eq, Sp, D(1))
             ]))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(DefinitionDsl.Text("Section 9 asks “whether the constants improve on trees or on bounded-degree graphs, or whether the NC directions remain vanishing there.” The theorem settles the registered fixed-budget NC clause. One tree witnesses all four comparisons at once. At fixed degree bound at least three, inbound ratios have the stated pointwise lower bound, while both optimistic outgoing ratios have infimum zero on subcubic trees. Degree at most two gives a common exact optimizer and ratio one for every positive-target optimistic transfer. Sharp positive constants and proportional budgets remain open."))), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(DefinitionDsl.Text("Section 9 asks “whether the constants improve on trees or on bounded-degree graphs, or whether the NC directions remain vanishing there.” The theorem settles the registered fixed-budget NC clause. One tree witnesses all four comparisons at once. At fixed degree bound at least three, inbound ratios have the stated pointwise lower bound, while both optimistic outgoing ratios have infimum zero on subcubic trees. Degree at most two gives a common exact optimizer and ratio one for every positive-target optimistic transfer. Sharp positive constants and proportional budgets remain open."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ugurlu-2026-fixed-budget-nc-transfers"), ResolutionKind.Proved))),
         []));
 
     private static Formula Id(string name) => FormulaDsl.Id(name);
