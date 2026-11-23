@@ -11,10 +11,10 @@ internal sealed class HardinA229635IntegerCertificateDocument : IScribeDocumentD
         "The checked initial vector and sparse steps imply a zero scalar residual at every offset.", H("Signed residual certificate"),
         Blocks(
             Describe.Lean(DescribeId.Create("forward-table"),
-                DeclarationHandle.Create(Prefix + "forward_table"), H("Forward iteration from a table"),
-                StatementSource.FromAuthor(Disp(Equal(Call("DefectTransfer.forward", V("M"), V("v"), Call("Fin.val", V("i"))), App(V("p"), V("i"))))),
+                DeclarationHandle.Create(Prefix + "forward_table_iff"), H("Forward iteration from a table"),
+                StatementSource.FromAuthor(Disp(ForwardTableStatement())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("Let M be a square integer matrix on Fin d, v an integer row vector, and i an index of Fin 31. Let p assign a row vector to each index of Fin 31. Assume next maps each row vector w to Matrix.vecMul(w,M), p at zero equals v, and p at the successor of each j in Fin 30 equals next applied to p at j cast to Fin 31. Then the displayed equality gives the forward iterate at i."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The indexed rows agree with forward matrix iteration exactly when the first row agrees with the seed and each adjacent pair satisfies the matrix action. The index n counts the steps, so the table has n plus one rows."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("residual-all-offsets"),
                 DeclarationHandle.Create(Prefix + "residual_all_offsets"), H("Vanishing scalar residual at every offset"),
                 StatementSource.FromAuthor(Disp(All("t", Call("Nat"), Equal(Call("residual", Call("T"), Call("initial"), Call("terminal"), V("t")), D(0))))),
@@ -33,4 +33,22 @@ internal sealed class HardinA229635IntegerCertificateDocument : IScribeDocumentD
     private static Formula Paren(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Paren(body));
+    private static Formula ForwardTableStatement()
+    {
+        var states = Call("Fin", V("d"));
+        var integers = V("Int");
+        var row = Arrow(states, integers);
+        var table = Call("Fin", Parenthesized(new Formula.Binary(V("n"), FormulaBinaryOperator.Add, D(1))));
+        var equality = All("i", table, Equal(Call("DefectTransfer.forward", V("m"), V("v"),
+            Call("Fin.val", V("i"))), App(V("p"), V("i"))));
+        var step = All("j", Call("Fin", V("n")), Equal(App(V("p"), Call("Fin.succ", V("j"))),
+            Call("Matrix.vecMul", App(V("p"), Call("Fin.castSucc", V("j"))), V("m"))));
+        return All("d", V("Nat"), All("n", V("Nat"), All("m", Call("Matrix", states, states, integers),
+            All("v", row, All("p", Arrow(table, row),
+                Seq(Parenthesized(equality), Sp, Iff, Sp, Parenthesized(
+                    Seq(Parenthesized(Equal(App(V("p"), D(0)), V("v"))), Sp, Land, Sp, Parenthesized(step)))))))));
+    }
+
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
 }

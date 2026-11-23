@@ -444,31 +444,9 @@ private theorem forward_step (i : Fin 14) :
   | right j =>
     exact exhausted_step i j
 
-private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
-  -- The inherited table has 31 rows. Extend the verified prefix by iteration.
-  let q : Fin 31 → Fin 168 → ℤ := fun j =>
-    if h : j.val < 15 then w ⟨j.val, h⟩ else forward T (w (Fin.last 14)) (j.val - 14)
-  have step (j : Fin 30) : q j.succ = Matrix.vecMul (q j.castSucc) T := by
-    by_cases h : j.val < 14
-    · have h₁ : j.val + 1 < 15 := by omega
-      have h₀ : j.val < 15 := by omega
-      simp only [q, Fin.val_succ, Fin.val_castSucc, h₁, h₀, dite_true]
-      exact forward_step ⟨j.val, h⟩
-    · have h₁ : ¬ j.val + 1 < 15 := by omega
-      have hq : q j.castSucc = forward T (w (Fin.last 14)) (j.val - 14) := by
-        by_cases hh : j.val < 15
-        · have hj : j.val = 14 := by omega
-          simp only [q, Fin.val_castSucc, hh, dite_true, hj, Nat.sub_self]
-          rfl
-        · simp only [q, Fin.val_castSucc, hh, dite_false]
-      rw [hq]
-      simp only [q, Fin.val_succ, h₁, dite_false]
-      rw [show j.val + 1 - 14 = (j.val - 14) + 1 by omega, forward,
-        Function.iterate_succ_apply']
-      rfl
-  have h := HardinA229635IntegerCertificate.forward_table T initial
-    (fun v => Matrix.vecMul v T) q (fun _ => rfl) (by rfl) step (i.castAdd 16)
-  simpa only [Fin.val_castAdd, q, i.isLt, dite_true] using h
+private theorem forward_table (i : Fin 15) : forward T initial i.val = w i :=
+  (HardinA229635IntegerCertificate.forward_table_iff T initial w).mpr
+    ⟨rfl, forward_step⟩ i
 
 -- The twelve scalar products are evaluated coordinate by coordinate.
 set_option maxRecDepth 14000 in
