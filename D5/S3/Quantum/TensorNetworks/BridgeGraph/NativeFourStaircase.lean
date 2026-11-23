@@ -149,7 +149,7 @@ private theorem rectangles_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
         then 1 else 0 := by
     dsimp only [X, Y, Rectangle.image, Rectangle.covers]
     simp only [Prod.mk.injEq]
-    split_ifs <;> simp_all [eq_comm] <;> tauto
+    split_ifs <;> simp_all [eq_comm]
   have hroute : tensorSum X Y = coordinateMatrix e := by
     ext i p
     change (∑ r : Fin 4, X r i.1 p.1 * Y r i.2 p.2) = if e p = i then 1 else 0
@@ -437,7 +437,7 @@ private theorem cut_dependent_left {a b c d : ℕ}
   apply Finset.sum_congr rfl
   intro j _
   change _ - _ = _ + (Matrix.kroneckerBilinear (R := ℂ)) (A j) (Y (i.succAbove j))
-  simp only [neg_smul, map_neg, LinearMap.neg_apply, map_smul, LinearMap.smul_apply]
+  simp only [neg_smul, LinearMap.neg_apply, LinearMap.smul_apply]
   abel
 
 private theorem cut_dependent_right {a b c d : ℕ}
@@ -533,6 +533,7 @@ private theorem mixed_right_block {c d k : ℕ}
     ext i
     rw [Finset.sum_comm]
   conv_lhs => rw [Finset.sum_comm]
+  conv_rhs => rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro j _
   apply Finset.sum_congr rfl
