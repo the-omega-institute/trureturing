@@ -161,18 +161,18 @@ theorem overlapping_mask_signed_xor
     (ha : a ∉ I) (hb : b ∉ I) (p q : Bool) (f g : Vec)
     (hf : maskOperator I f + gamma a f = (2 : ℝ) • f)
     (hg : maskOperator I g + gamma b g = (2 : ℝ) • g) :
+    let pair := fun fg => signedXorPair a b fg
     let B := maskOperator I
     let f₀ := cellPart a b p q f
     let g₀ := cellPart a b p q g
     let f₁ := cellPart a b (!p) q f
     let g₁ := cellPart a b p (!q) g
-    let pair := signedXorPair a b (f₁, g₁)
     let S := fun t => parityPart t f₀ ⬝ᵥ parityPart t g₀
-    let D := fun t => signedXorPair a b (parityPart t f₁, parityPart t g₁)
+    let D := fun t => pair (parityPart t f₁, parityPart t g₁)
     let L := f₀ ⬝ᵥ B g₀
     f₁ = gamma a ((2 : ℝ) • f₀ - B f₀) ∧
     g₁ = gamma b ((2 : ℝ) • g₀ - B g₀) ∧
-    pair = f₀ ⬝ᵥ ((7 : ℝ) • g₀ - (4 : ℝ) • B g₀) ∧
+    pair (f₁, g₁) = f₀ ⬝ᵥ ((7 : ℝ) • g₀ - (4 : ℝ) • B g₀) ∧
     (∀ t, D t = 3 * S t + 4 * S (!t) - 2 * L) ∧
     D false - D true = S true - S false := by
   dsimp only
