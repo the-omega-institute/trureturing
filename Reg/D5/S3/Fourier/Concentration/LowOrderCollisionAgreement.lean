@@ -31,10 +31,10 @@ abbrev lastFrequencyArena : Arena where
       tailCollisionMass g w p t = tailCollisionMass g' w p t) ∧
     (∀ t : ℝ, 0 ≤ t → t < 1 → tailCollisionMass g w k t =
       tailCollisionMass g' w k t + 2 * (k : ℝ) * (1/4 : ℝ)^(k-1) * (1/4 : ℝ)^k * (1/2)) ∧
-    (∀ p : ℕ, 0 < p →
-      let t := 1 / (2 * ((k : ℝ) + 3) * (p : ℝ))
-      1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t ∧
-        tailCollisionMass g' w p t ≤ 4 / (p : ℝ))
+    (∀ p : ℕ, 0 < p → ∀ t : ℝ, 0 ≤ t → t < 1 →
+      1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t) ∧
+    (∀ p : ℕ, 0 < p → ∀ t : ℝ, 0 ≤ t → t < 1 / (((k : ℝ) + 1 + √2) * (p : ℝ)) →
+      tailCollisionMass g' w p t ≤ 2 / (p : ℝ))
 
 private theorem shifted_law : ¬ lastFrequencyArena.Law shifted := by
   intro law

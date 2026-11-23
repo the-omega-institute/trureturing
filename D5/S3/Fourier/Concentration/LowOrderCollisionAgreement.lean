@@ -8,7 +8,7 @@
 
 import D5.S3.Fourier.Concentration.FiniteCollisionVariance
 import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.Data.Nat.Choose.Central
+import D5.S3.Arith.AbsoluteValues.Heights.Gelfond
 import Mathlib.Data.Nat.Choose.Sum
 
 /-! Low-order collision measurements can agree while higher moments separate. -/
@@ -338,41 +338,10 @@ private theorem growing_order_lower {k p : ℕ} (hk : 2 ≤ k) (hp : 0 < p) {t :
   apply (div_le_iff₀ (by positivity)).mpr
   nlinarith only [hstrong]
 
-private noncomputable def centralMass (n : ℕ) : ℝ := (Nat.centralBinom n : ℝ) / 4 ^ n
-
-private theorem central_mass_sq (n : ℕ) : (n + 1 : ℝ) * centralMass n ^ 2 ≤ 1 := by
-  induction n with
-  | zero => norm_num [centralMass, Nat.centralBinom]
-  | succ n ih =>
-    have hrec : ((n : ℝ) + 1) * (Nat.centralBinom (n+1) : ℝ) =
-        2 * (2 * n + 1) * Nat.centralBinom n := by
-      exact_mod_cast Nat.succ_mul_centralBinom_succ n
-    have hratio : centralMass (n+1) =
-        ((2*(n : ℝ)+1) / (2*(n+1))) * centralMass n := by
-      unfold centralMass
-      rw [pow_succ]
-      field_simp
-      nlinarith only [hrec]
-    have hpos : 0 < 2 * ((n : ℝ) + 1) := by positivity
-    have hcoe : ((2*(n : ℝ)+1)/(2*(n+1)))^2 * (n + 2 : ℝ) ≤ n+1 := by
-      rw [div_pow, mul_comm]
-      rw [← mul_div_assoc]
-      apply (div_le_iff₀ (sq_pos_of_pos hpos)).mpr
-      have hn : 0 ≤ (n : ℝ) := Nat.cast_nonneg _
-      nlinarith only [hn]
-    rw [Nat.cast_succ, hratio, mul_pow]
-    calc
-      _ = (((2*(n : ℝ)+1)/(2*(n+1)))^2 * (n + 2 : ℝ)) * centralMass n ^ 2 := by ring
-      _ ≤ (n+1 : ℝ) * centralMass n^2 := mul_le_mul_of_nonneg_right hcoe (sq_nonneg _)
-      _ ≤ 1 := ih
-
-private noncomputable def comparisonResolution (k p : ℕ) : ℝ :=
-  1 / (2 * ((k : ℝ) + 3) * (p : ℝ))
-
 private theorem irrational_at_resolution {k p : ℕ} (hp : 0 < p) {m n : Count}
-    (hm : ∑ j, m j = p) (hn : ∑ j, n j = p) :
-    |tripleFrequency ((k : ℝ) + √2) m - tripleFrequency ((k : ℝ) + √2) n| ≤
-      comparisonResolution k p ↔ m = n := by
+    (hm : ∑ j, m j = p) (hn : ∑ j, n j = p) {t : ℝ} (ht : 0 ≤ t)
+    (htcap : t < 1 / (((k : ℝ) + 1 + √2) * (p : ℝ))) :
+    |tripleFrequency ((k : ℝ) + √2) m - tripleFrequency ((k : ℝ) + √2) n| ≤ t ↔ m = n := by
   constructor
   · intro h
     by_contra hne
@@ -425,60 +394,22 @@ private theorem irrational_at_resolution {k p : ℕ} (hp : 0 < p) {m n : Count}
           rw [abs_mul, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) k), add_mul, one_mul]
           exact add_le_add hmid (mul_le_mul_of_nonneg_left hsz (Nat.cast_nonneg _))
     have hnon : 0 ≤ |(r : ℝ)| + |(s : ℝ)| * √2 := by positivity
-    have hcap : |(r : ℝ)| + |(s : ℝ)| * √2 ≤ ((k : ℝ) + 3) * p := by
-      have h₂ : √(2 : ℝ) ≤ 2 := by
-        have hS := Real.sqrt_le_sqrt (by norm_num : (2 : ℝ) ≤ 4)
-        norm_num at hS ⊢
-      have htail := mul_le_mul hsz h₂ (Real.sqrt_nonneg _) (Nat.cast_nonneg _)
-      linarith [mul_nonneg (Nat.cast_nonneg (α := ℝ) k) (Nat.cast_nonneg (α := ℝ) p)]
+    have hcap : |(r : ℝ)| + |(s : ℝ)| * √2 ≤ ((k : ℝ) + 1 + √2) * p := by
+      have htail := mul_le_mul_of_nonneg_right hsz (Real.sqrt_nonneg (2 : ℝ))
+      linarith
     have hh := quadratic_separation r s hpair
     have hprod := hh.trans ((mul_le_mul_of_nonneg_right h hnon).trans
-      (mul_le_mul_of_nonneg_left hcap (by unfold comparisonResolution; positivity)))
-    have hHalf : comparisonResolution k p * (((k : ℝ)+3)*p) = 1/2 := by
-      unfold comparisonResolution
-      field_simp
-    rw [hHalf] at hprod
-    norm_num at hprod
+      (mul_le_mul_of_nonneg_left hcap ht))
+    have hsmall := (lt_div_iff₀ (by positivity)).mp htcap
+    linarith only [hprod, hsmall]
   · rintro rfl
-    simp only [sub_self, abs_zero]
-    unfold comparisonResolution
-    positivity
+    simpa using ht
 
 private noncomputable def fairMass (n a : ℕ) : ℝ := (n.choose a : ℝ) / 2^n
 
 private theorem fair_nonneg (n a : ℕ) : 0 ≤ fairMass n a := by
   unfold fairMass
   positivity
-
-private theorem fair_peak (n a : ℕ) : fairMass n a ≤ centralMass (n/2) := by
-  have heven (m a : ℕ) : fairMass (2*m) a ≤ centralMass m := by
-    unfold fairMass centralMass
-    rw [pow_mul]
-    norm_num
-    exact div_le_div_of_nonneg_right (by exact_mod_cast Nat.choose_le_centralBinom a m)
-      (by positivity)
-  let m := n/2
-  change fairMass n a ≤ centralMass m
-  have hh : n = 2*m ∨ n = 2*m+1 := by dsimp [m]; omega
-  rcases hh with h | h
-  · rw [h]
-    exact heven m a
-  · rw [h]
-    cases a with
-    | zero =>
-      have hz : fairMass (2*m+1) 0 ≤ fairMass (2*m) 0 := by
-        unfold fairMass
-        simp only [Nat.choose_zero_right, Nat.cast_one, pow_succ]
-        apply div_le_div_of_nonneg_left zero_le_one (by positivity)
-        linarith [show (0 : ℝ) ≤ 2 ^ (2*m) by positivity]
-      exact hz.trans (heven m 0)
-    | succ a =>
-      have hf : fairMass (2*m+1) (a+1) = (fairMass (2*m) a + fairMass (2*m) (a+1))/2 := by
-        unfold fairMass
-        rw [Nat.choose_succ_succ, Nat.cast_add, pow_succ, add_div]
-        ring
-      rw [hf]
-      linarith [heven m a, heven m (a+1)]
 
 private theorem fair_sum (n : ℕ) : ∑ a ∈ range (n+1), fairMass n a = 1 := by
   unfold fairMass
@@ -493,8 +424,8 @@ private theorem fair_le_one (n a : ℕ) (ha : a ≤ n) : fairMass n a ≤ 1 := b
 
 private theorem fair_tail_pointwise {n a : ℕ} (ha : a ≤ n) (hn : 0 < n)
     (hhigh : 3 * (n : ℝ) / 4 < a) :
-    fairMass n a ≤ 4/(n : ℝ) := by
-  let I := Icc (n - n/2) a
+    fairMass n a ≤ 2 / (n : ℝ) := by
+  let I := Icc (n - a) a
   have hI : I ⊆ range (n+1) := by
     intro b hb
     exact mem_range_succ_iff.mpr ((mem_Icc.mp hb).2.trans ha)
@@ -503,14 +434,17 @@ private theorem fair_tail_pointwise {n a : ℕ} (ha : a ≤ n) (hn : 0 < n)
     have hab := (mem_Icc.mp hb).2
     have hbmax := hab.trans ha
     have hleft : n-a ≤ n-b := by omega
-    have hright : n-b ≤ n/2 := by have := (mem_Icc.mp hb).1; omega
     have hchain (u v : ℕ) (huv : u ≤ v) (hv : v ≤ n/2) : n.choose u ≤ n.choose v := by
       induction v, huv using Nat.le_induction with
       | base => exact le_rfl
       | succ v huv ih =>
         exact (ih (by omega)).trans (Nat.choose_le_succ_of_lt_half_left (by omega))
-    have hchoose := hchain (n-a) (n-b) hleft hright
-    rw [Nat.choose_symm ha, Nat.choose_symm hbmax] at hchoose
+    have hchoose : n.choose a ≤ n.choose b := by
+      by_cases hbhalf : b ≤ n/2
+      · have h := hchain (n-a) b (mem_Icc.mp hb).1 hbhalf
+        rwa [Nat.choose_symm ha] at h
+      · have h := hchain (n-a) (n-b) hleft (by omega)
+        rwa [Nat.choose_symm ha, Nat.choose_symm hbmax] at h
     exact div_le_div_of_nonneg_right (by exact_mod_cast hchoose)
       (by positivity)
   have hsum : (I.card : ℝ) * fairMass n a ≤ 1 := by
@@ -520,35 +454,31 @@ private theorem fair_tail_pointwise {n a : ℕ} (ha : a ≤ n) (hn : 0 < n)
       _ ≤ ∑ b ∈ range (n+1), fairMass n b := sum_le_sum_of_subset_of_nonneg hI
         (fun b _ _ => fair_nonneg n b)
       _ = _ := fair_sum n
-  have hcard : (n : ℝ)/4 ≤ I.card := by
-    have hnmid : (n : ℝ) ≤ 2 * ((n/2 : ℕ) : ℝ) + 1 := by
-      exact_mod_cast (show n ≤ 2*(n/2)+1 by omega)
-    have hl : n - n/2 ≤ a + 1 := by
-      have hnR : (n : ℝ) < 2*(a : ℝ) := by
-        linarith [Nat.cast_nonneg (α:=ℝ) n]
-      have hnZ : n < 2*a := by exact_mod_cast hnR
-      omega
+  have hcard : (n : ℝ)/2 ≤ I.card := by
+    have hlt : (n : ℝ) < 2 * (a : ℝ) := by linarith [Nat.cast_nonneg (α := ℝ) n]
+    have hltNat : n < 2 * a := by exact_mod_cast hlt
+    have hl : n - a ≤ a + 1 := by omega
     dsimp [I]
-    rw [Nat.card_Icc, Nat.cast_sub hl, Nat.cast_sub (by omega : n/2 ≤ n)]
+    rw [Nat.card_Icc, Nat.cast_sub hl, Nat.cast_sub ha]
     push_cast
     linarith
   have hh := (mul_le_mul_of_nonneg_right hcard (fair_nonneg n a)).trans hsum
   apply (le_div_iff₀ (by exact_mod_cast hn)).mpr
   nlinarith only [hh]
 
-private theorem fair_peak_sq (n a : ℕ) : ((n : ℝ)+1) * fairMass n a^2 ≤ 2 := by
-  have hsq : fairMass n a^2 ≤ centralMass (n/2)^2 :=
-    pow_le_pow_left₀ (fair_nonneg _ _) (fair_peak n a) 2
-  have hhalf : ((n : ℝ)+1) ≤ 2*(((n/2 : ℕ) : ℝ)+1) := by
-    exact_mod_cast (show n+1 ≤ 2*(n/2+1) by omega)
-  calc
-    _ ≤ ((n : ℝ)+1) * centralMass (n/2)^2 := mul_le_mul_of_nonneg_left hsq (by positivity)
-    _ ≤ (2*(((n/2 : ℕ) : ℝ)+1)) * centralMass (n/2)^2 :=
-      mul_le_mul_of_nonneg_right hhalf (sq_nonneg _)
-    _ ≤ 2 := by linarith only [central_mass_sq (n/2)]
+private theorem fair_peak_sq (n a : ℕ) : ((n : ℝ) + 1) * fairMass n a ^ 2 ≤ 1 := by
+  have hchoose := Nat.mul_le_mul_right (n + 1)
+    (Nat.pow_le_pow_left (Nat.choose_le_middle a n) 2)
+  have h := hchoose.trans (Nat.choose_middle_sq_mul_le n)
+  have hreal : (n.choose a : ℝ)^2 * ((n : ℝ) + 1) ≤ (4 : ℝ)^n := by exact_mod_cast h
+  have hpow : ((2 : ℝ)^n)^2 = 4^n := by
+    rw [← pow_mul, mul_comm n 2, pow_mul]
+    norm_num
+  rw [fairMass, div_pow, ← mul_div_assoc, div_le_iff₀ (by positivity), hpow, one_mul]
+  linarith only [hreal]
 
 private theorem fair_product_le {p a b : ℕ} (hp : 0 < p) (ha : a ≤ p) (hb : b ≤ p-a) :
-    fairMass p a * fairMass (p-a) b ≤ 4/(p : ℝ) := by
+    fairMass p a * fairMass (p-a) b ≤ 2 / (p : ℝ) := by
   have hpR : 0 < (p : ℝ) := Nat.cast_pos.mpr hp
   by_cases h : 3 * (p : ℝ) / 4 < a
   · calc
@@ -558,16 +488,16 @@ private theorem fair_product_le {p a b : ℕ} (hp : 0 < p) (ha : a ≤ p) (hb : 
       rw [Nat.cast_sub ha]
       linarith [not_lt.mp h]
     have hpden : 0 ≤ (p : ℝ)/4 := by positivity
-    have hx : (p : ℝ) * fairMass p a^2 ≤ 2 := by
+    have hx : (p : ℝ) * fairMass p a^2 ≤ 1 := by
       linarith only [fair_peak_sq p a, sq_nonneg (fairMass p a)]
-    have hy : ((p : ℝ)/4) * fairMass (p-a) b^2 ≤ 2 :=
+    have hy : ((p : ℝ)/4) * fairMass (p-a) b^2 ≤ 1 :=
       (mul_le_mul_of_nonneg_right hn (sq_nonneg _)).trans (fair_peak_sq _ _)
     have hh := mul_le_mul hx hy
-      (mul_nonneg hpden (sq_nonneg _)) (show (0 : ℝ) ≤ 2 by norm_num)
-    have hs : ((p : ℝ)*(fairMass p a * fairMass (p-a) b))^2 ≤ 16 := by nlinarith only [hh]
+      (mul_nonneg hpden (sq_nonneg _)) (show (0 : ℝ) ≤ 1 by norm_num)
+    have hs : ((p : ℝ)*(fairMass p a * fairMass (p-a) b))^2 ≤ 4 := by nlinarith only [hh]
     apply (le_div_iff₀ hpR).mpr
-    have hc : (p : ℝ)*(fairMass p a * fairMass (p-a) b) ≤ 4 := by
-      nlinarith [sq_nonneg ((p : ℝ)*(fairMass p a * fairMass (p-a) b) - 4)]
+    have hc : (p : ℝ)*(fairMass p a * fairMass (p-a) b) ≤ 2 := by
+      nlinarith [sq_nonneg ((p : ℝ)*(fairMass p a * fairMass (p-a) b) - 2)]
     simpa [mul_comm] using hc
 
 private theorem comparison_weight_factor {m : Count} {p : ℕ} (hm : ∑ j, m j = p) :
@@ -596,13 +526,12 @@ private theorem comparison_weight_factor {m : Count} {p : ℕ} (hm : ∑ j, m j 
   simp only [div_pow, one_pow]
   ring
 
-private theorem growing_order_upper {k p : ℕ} (hp : 0 < p) :
-    tailCollisionMass (triple ((k : ℝ) + √2)) comparisonWeights p (comparisonResolution k p) ≤
-      4 / (p : ℝ) := by
+private theorem growing_order_upper {k p : ℕ} {t : ℝ}
+    (hp : 0 < p) (ht : 0 ≤ t) (htcap : t < 1 / (((k : ℝ) + 1 + √2) * (p : ℝ))) :
+    tailCollisionMass (triple ((k : ℝ) + √2)) comparisonWeights p t ≤ 2 / (p : ℝ) := by
   classical
   let S := piAntidiag (univ : Finset (Fin 3)) p
   let w := monomialWeight comparisonWeights
-  let t := comparisonResolution k p
   unfold tailCollisionMass nearCollisionMass
   change (∑ m ∈ S, ∑ n ∈ S,
       if |monomialFrequency (triple ((k : ℝ) + √2)) m -
@@ -616,8 +545,8 @@ private theorem growing_order_upper {k p : ℕ} (hp : 0 < p) :
         calc
           _ = ∑ n ∈ S, if m = n then w m * w n else 0 := by
             refine sum_congr rfl fun n hn => ?_
-            simp only [t, tripleFrequency_eq, irrational_at_resolution hp
-              (mem_piAntidiag.mp hm).1 (mem_piAntidiag.mp hn).1]
+            simp only [tripleFrequency_eq, irrational_at_resolution hp
+              (mem_piAntidiag.mp hm).1 (mem_piAntidiag.mp hn).1 ht htcap]
           _ = _ := by simp [sum_ite_eq, hm]
   rw [h]
   have hw : ∀ j, 0 ≤ comparisonWeights j := by
@@ -629,16 +558,16 @@ private theorem growing_order_upper {k p : ℕ} (hp : 0 < p) :
       (sum_pow_eq_sum_piAntidiag univ comparisonWeights p).symm
     simp [hwSum, hW]
   calc
-    _ ≤ ∑ m ∈ S, (4/(p : ℝ)) * w m := by
+    _ ≤ ∑ m ∈ S, (2 / (p : ℝ)) * w m := by
       refine sum_le_sum fun m hm => ?_
       have hd := (mem_piAntidiag.mp hm).1
       have hd' := degree_coordinates hd
-      have hwbound : w m ≤ 4/(p : ℝ) := by
+      have hwbound : w m ≤ 2 / (p : ℝ) := by
         rw [show w m = monomialWeight comparisonWeights m by rfl, comparison_weight_factor hd]
         exact fair_product_le hp (by omega) (by omega)
       exact mul_le_mul_of_nonneg_right hwbound
         (D5.S3.Fourier.Concentration.FiniteSincCollisionMoment.monomialWeight_nonneg _ hw m)
-    _ = 4/(p : ℝ) := by rw [← mul_sum, hsum, mul_one]
+    _ = 2 / (p : ℝ) := by rw [← mul_sum, hsum, mul_one]
 
 /-- Agreement of all collision masses below degree k permits an exact difference
 at degree k and a growing disparity at a common positive resolution. -/
@@ -650,23 +579,15 @@ theorem low_order_agreement_and_high_order_disparity (k : ℕ) (hk : 2 ≤ k) :
       tailCollisionMass g w p t = tailCollisionMass g' w p t) ∧
     (∀ t : ℝ, 0 ≤ t → t < 1 → tailCollisionMass g w k t =
       tailCollisionMass g' w k t + 2 * (k : ℝ) * (1/4 : ℝ)^(k-1) * (1/4 : ℝ)^k * (1/2)) ∧
-    (∀ p : ℕ, 0 < p →
-      let t := comparisonResolution k p
-      1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t ∧
-        tailCollisionMass g' w p t ≤ 4 / (p : ℝ)) := by
-  refine ⟨fun p hp t ht htone => low_order_equality hp comparisonWeights ht htone, ?_, ?_⟩
+    (∀ p : ℕ, 0 < p → ∀ t : ℝ, 0 ≤ t → t < 1 →
+      1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t) ∧
+    (∀ p : ℕ, 0 < p → ∀ t : ℝ, 0 ≤ t → t < 1 / (((k : ℝ) + 1 + √2) * (p : ℝ)) →
+      tailCollisionMass g' w p t ≤ 2 / (p : ℝ)) := by
+  refine ⟨fun p hp t ht htone => low_order_equality hp comparisonWeights ht htone, ?_, ?_, ?_⟩
   · intro t ht htone
     simpa [comparisonWeights] using exact_critical_difference hk comparisonWeights ht htone
-  · intro p hp
-    let t := comparisonResolution k p
-    have hpR : (1 : ℝ) ≤ p := by exact_mod_cast hp
-    have hkR : (0 : ℝ) ≤ k := Nat.cast_nonneg _
-    have ht : 0 ≤ t := by dsimp [t, comparisonResolution]; positivity
-    have htone : t < 1 := by
-      dsimp [t, comparisonResolution]
-      apply (div_lt_iff₀ (by positivity)).mpr
-      nlinarith [mul_nonneg hkR (show 0 ≤ (p : ℝ) by positivity)]
-    exact ⟨growing_order_lower hk hp ht htone, growing_order_upper hp⟩
+  · exact fun _ hp _ ht htone => growing_order_lower hk hp ht htone
+  · exact fun _ hp _ ht htcap => growing_order_upper hp ht htcap
 
 #print axioms low_order_agreement_and_high_order_disparity
 
