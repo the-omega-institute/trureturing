@@ -21,7 +21,7 @@ triage: anchor
 - Versioned source [arXiv:2611.16153v1](https://arxiv.org/abs/2611.16153v1)
 - [Section 5.3 item 4](https://arxiv.org/html/2611.16153v1#S5.Ex4)
 - [Definitions 1.1–1.3](https://arxiv.org/html/2611.16153v1#S1) give stable positions, visible chips, and the recursive option bijection.
-- [Section 2.2](https://arxiv.org/html/2611.16153v1#S2.Thmthm2) identifies the Catalan population via Dyck words. [Lemma 3.1](https://arxiv.org/html/2611.16153v1#S3.Lemthm1) describes the removal cascade.
+- [Section 2.2](https://arxiv.org/html/2611.16153v1#S2.Thmthm2) identifies the Catalan population via Dyck words. [Lemma 3.1](https://arxiv.org/html/2611.16153v1#S3.Thmthm1) describes the removal cascade.
 
 ## Scope
 

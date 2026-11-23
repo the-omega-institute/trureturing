@@ -295,73 +295,16 @@ section
 
 variable {n m : ℕ}
 
-/-- The largest ideal contained in a set after chips have been removed. -/
-def stabilize (s : Set (Interval n)) : Stable n :=
-  ⟨{b | ∀ a ≤ b, a ∈ s}, fun _ _ hab hb a ha => hb a (ha.trans hab)⟩
-
 /-- Lemma 3.1 computes the full cascade, including the selected chip. -/
 def removeChip (I : Stable n) (c : Interval n) : Stable n :=
   ⟨{b | b ∈ I.val ∧ ¬ c ≤ b}, fun _ _ hab hb =>
     ⟨I.property hab hb.1, fun ha => hb.2 (ha.trans hab)⟩⟩
-
-theorem removeChip_eq_stabilize (I : Stable n) (c : Interval n) :
-    removeChip I c = stabilize (I.val \ {c}) := by
-  apply Subtype.ext
-  ext b
-  change (b ∈ I.val ∧ ¬ c ≤ b) ↔ ∀ a ≤ b, a ∈ I.val \ {c}
-  constructor
-  · rintro ⟨hb, hc⟩ a hab
-    exact ⟨I.property hab hb, fun heq => hc ((Set.mem_singleton_iff.mp heq) ▸ hab)⟩
-  · intro h
-    exact ⟨(h b le_rfl).1, fun hc => (h c hc).2 (Set.mem_singleton c)⟩
 
 def LeftAbove (c u : Interval n) : Prop :=
   u.left + 1 = c.left ∧ u.right = c.right
 
 def RightAbove (c u : Interval n) : Prop :=
   u.left = c.left ∧ c.right + 1 = u.right
-
-/-- One step of the immediate support relation, directed toward larger chips. -/
-def ImmediateAbove (c u : Interval n) : Prop :=
-  LeftAbove c u ∨ RightAbove c u
-
-private theorem immediatePath_of_le (c u : Interval n) (h : c ≤ u) :
-    Relation.ReflTransGen ImmediateAbove c u := by
-  have hl : u.left ≤ c.left := h.1
-  have hr : c.right ≤ u.right := h.2
-  by_cases hleft : u.left < c.left
-  · let v : Interval n := ⟨c.left - 1, c.right, by have := u.left_pos; omega,
-      (Nat.sub_le _ _).trans c.left_le_right, c.right_le_width⟩
-    have hcv : ImmediateAbove c v := Or.inl ⟨by dsimp [v]; omega, rfl⟩
-    have hvu : v ≤ u := ⟨by dsimp [v]; omega, hr⟩
-    exact (immediatePath_of_le v u hvu).head hcv
-  · by_cases hright : c.right < u.right
-    · let v : Interval n := ⟨c.left, c.right + 1, c.left_pos,
-        c.left_le_right.trans (Nat.le_succ _), (Nat.succ_le_of_lt hright).trans u.right_le_width⟩
-      have hcv : ImmediateAbove c v := Or.inr ⟨rfl, rfl⟩
-      have hvu : v ≤ u := ⟨hl, Nat.succ_le_of_lt hright⟩
-      exact (immediatePath_of_le v u hvu).head hcv
-    · have heq : c = u := Interval.ext (by omega) (by omega)
-      subst u
-      exact Relation.ReflTransGen.refl
-termination_by c.left + u.right - (u.left + c.right)
-decreasing_by all_goals omega
-
-private theorem containment_iff_immediatePath (c u : Interval n) :
-    c ≤ u ↔ Relation.ReflTransGen ImmediateAbove c u := by
-  refine ⟨immediatePath_of_le c u, ?_⟩
-  intro h
-  induction h with
-  | refl => exact le_rfl
-  | tail _ hstep ih =>
-    apply ih.trans
-    rcases hstep with h | h
-    · exact ⟨by have := h.1; omega, h.2.symm.le⟩
-    · exact ⟨h.1.le, by have := h.2; omega⟩
-
-theorem cascade_iff (I : Stable n) (c u : Interval n) :
-    u ∈ (removeChip I c).val ↔ u ∈ I.val ∧ ¬ Relation.ReflTransGen ImmediateAbove c u :=
-  and_congr_right (fun _ => not_congr (containment_iff_immediatePath c u))
 
 def Visible (I : Stable n) (c : Interval n) : Prop :=
   c ∈ I.val ∧ ¬ ((∃ u ∈ I.val, LeftAbove c u) ∧ (∃ u ∈ I.val, RightAbove c u))

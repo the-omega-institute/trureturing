@@ -472,17 +472,6 @@ private theorem collisionProbability_upper_of_rankBlocks (n L : ℕ) :
   dsimp [N] at hN ⊢
   field_simp [hN.ne']
 
-private theorem central_catalan_majorant (s : ℕ) :
-    4 ^ s ≤ (2 * s + 1) * (s + 1) * catalan s := by
-  calc
-    4 ^ s = 2 ^ (2 * s) := by rw [pow_mul]; rfl
-    _ = ∑ j ∈ Finset.range (2 * s + 1), (2 * s).choose j := (Nat.sum_range_choose _).symm
-    _ ≤ ∑ _j ∈ Finset.range (2 * s + 1), s.centralBinom :=
-      Finset.sum_le_sum fun j _ => Nat.choose_le_centralBinom j s
-    _ = _ := by
-      simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, Nat.cast_id,
-        ← succ_mul_catalan_eq_centralBinom, mul_assoc]
-
 private theorem rankSlots_tendsto (L : ℕ) : Tendsto (fun n : ℕ => rankSlots n L) atTop atTop := by
   refine tendsto_atTop.2 (fun J => ?_)
   filter_upwards [eventually_ge_atTop (J * rankBlockWidth L)] with n hn
@@ -536,8 +525,9 @@ private theorem tendsto_unmarkedBound_fraction (L : ℕ) :
       have hc : (2 : ℝ) ^ (2 * (n + 1)) ≤
           (2 * ((n : ℝ) + 1) + 1) * ((n : ℝ) + 2) * N := by
         rw [show N = (catalan (n + 1) : ℝ) by dsimp [N]; exact_mod_cast stableCard n, pow_mul]
-        have he := central_catalan_majorant (n + 1)
-        exact_mod_cast he
+        have hcentral := Nat.four_pow_le_two_mul_add_one_mul_centralBinom (n + 1)
+        rw [← succ_mul_catalan_eq_centralBinom, ← mul_assoc] at hcentral
+        exact_mod_cast hcentral
       refine hc.trans ?_
       rw [pow_two]
       gcongr

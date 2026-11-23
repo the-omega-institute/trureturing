@@ -616,22 +616,6 @@ private theorem catalan_le_four_pow (k : ℕ) : catalan k ≤ 4 ^ k :=
   (Nat.le_mul_of_pos_left _ (Nat.succ_pos k)).trans
     ((succ_mul_catalan_eq_centralBinom k).le.trans (Nat.centralBinom_le_four_pow k))
 
-private theorem four_pow_le_catalan_mul (k : ℕ) : 4 ^ k ≤ (k + 1) ^ 3 * catalan k := by
-  calc
-    4 ^ k = 2 ^ (2 * k) := by rw [pow_mul]; rfl
-    _ = ∑ j ∈ Finset.range (2 * k + 1), (2 * k).choose j := (Nat.sum_range_choose _).symm
-    _ ≤ ∑ _j ∈ Finset.range (2 * k + 1), k.centralBinom :=
-      Finset.sum_le_sum fun j _ => Nat.choose_le_centralBinom j k
-    _ = (2 * k + 1) * (k + 1) * catalan k := by
-      simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, Nat.cast_id,
-        ← succ_mul_catalan_eq_centralBinom, mul_assoc]
-    _ ≤ _ := by
-      apply Nat.mul_le_mul_right
-      have h : 2 * k + 1 ≤ (k + 1) ^ 2 := by nlinarith
-      calc
-        (2 * k + 1) * (k + 1) ≤ (k + 1) ^ 2 * (k + 1) := Nat.mul_le_mul_right _ h
-        _ = (k + 1) ^ 3 := (pow_succ (k + 1) 2).symm
-
 private theorem catalan_one_le (b : ℕ) : (1 : ℝ) ≤ (catalan (b + 1) : ℝ) := by
   exact_mod_cast (show 0 < catalan (b + 1) by rw [← stableCard]; exact stable_card_pos b)
 
@@ -763,8 +747,15 @@ private theorem tendsto_catalan_block_root :
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le hl hu
   · intro b
     have h : (4 : ℝ) ^ (b + 1) ≤ ((b : ℝ) + 2) ^ 3 * (catalan (b + 1) : ℝ) := by
-      exact_mod_cast (by simpa only [Nat.add_assoc] using four_pow_le_catalan_mul (b + 1) :
-        (4 : ℕ) ^ (b + 1) ≤ (b + 2) ^ 3 * catalan (b + 1))
+      have hcentral := Nat.four_pow_le_two_mul_add_one_mul_centralBinom (b + 1)
+      rw [← succ_mul_catalan_eq_centralBinom] at hcentral
+      have hpoly : 2 * (b + 1) + 1 ≤ (b + 2) ^ 2 := by nlinarith
+      have hnat : (4 : ℕ) ^ (b + 1) ≤ (b + 2) ^ 3 * catalan (b + 1) := by
+        calc
+          _ ≤ (2 * (b + 1) + 1) * ((b + 2) * catalan (b + 1)) := hcentral
+          _ ≤ (b + 2) ^ 2 * ((b + 2) * catalan (b + 1)) := Nat.mul_le_mul_right _ hpoly
+          _ = _ := by rw [← mul_assoc, ← pow_succ]
+      exact_mod_cast hnat
     have hh := Real.rpow_le_rpow (by positivity) h (by positivity : 0 ≤ 1 / ((b : ℝ) + 2))
     rw [Real.mul_rpow (by positivity) (by positivity), ← Real.rpow_natCast_mul (by norm_num),
       ← Real.rpow_natCast_mul (by positivity)] at hh
