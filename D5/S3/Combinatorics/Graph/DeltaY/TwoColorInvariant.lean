@@ -105,8 +105,9 @@ private theorem reverse_triple_mono {G : State} {C : ℕ → Bool} {T : Triple} 
 
 private theorem forward_center_neighbors {G : State} {T : Triple} {o : ℕ}
     (hG : G.Valid) (h : ForwardOK G T o) : (G.forward T o).neighbors o = T.verts := by
+  have hf : (G.forward T o).Valid := (forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩
   ext y
-  rw [State.mem_neighbors ((forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩), forward_center_adj hG h]
+  rw [State.mem_neighbors hf, forward_center_adj hG h]
 
 private theorem forward_center_weighted {G : State} {T : Triple} {o : ℕ} {C : ℕ → Bool}
     (hG : G.Valid) (h : ForwardOK G T o) (same : ∀ x ∈ T.verts, C x = C T.a) :
@@ -125,7 +126,7 @@ private theorem forward_weighted_old {G : State} {T : Triple} {o x : ℕ} {C : �
     (hx : x ∈ G.active) :
     weighted (G.forward T o) (paint C o T.a) x = weighted G C x := by
   have hxo : x ≠ o := fun he => h.2.1 (he ▸ hx)
-  have hf := (forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩
+  have hf := (forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩
   have hneigh : ∀ ⦃y⦄, y ∈ G.neighbors x → y ≠ o :=
     fun {y} hy he => h.2.1 (he ▸ (hG ((G.mem_neighbors hG).mp hy)).2.1)
   have hwold : ∀ ⦃y⦄, y ≠ o → Weight (paint C o T.a) x y = Weight C x y := by
@@ -243,7 +244,7 @@ private theorem forward_no_center_triangle {G : State} {T : Triple} {o x y : ℕ
     (hG : G.Valid) (h : ForwardOK G T o)
     (hox : (G.forward T o).Adj o x) (hxy : (G.forward T o).Adj x y)
     (hyo : (G.forward T o).Adj y o) : False := by
-  have hf := (forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩
+  have hf := (forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩
   have hx : x ≠ o := (hf hox).2.2.symm
   have hy : y ≠ o := (hf hyo).2.2
   exact ((forward_old_adj hx hy).mp hxy).2
@@ -274,7 +275,7 @@ private theorem forward_no_center_square {G : State} {T : Triple} {o x y z : ℕ
     (hoy : Cross (G.forward T o) (paint C o T.a) o y)
     (hxz : Cross (G.forward T o) (paint C o T.a) x z)
     (hyz : Cross (G.forward T o) (paint C o T.a) y z) : False := by
-  have hf := (forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩
+  have hf := (forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩
   have hx : x ≠ o := (hf hox.1).2.2.symm
   have hy : y ≠ o := (hf hoy.1).2.2.symm
   have hxT := (forward_center_adj hG h).mp hox.1

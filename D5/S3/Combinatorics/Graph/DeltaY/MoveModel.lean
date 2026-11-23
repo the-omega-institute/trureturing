@@ -197,7 +197,7 @@ inductive Move (strong : Bool) : State → State → Prop
 theorem Move.valid {strong : Bool} {G H : State} (m : Move strong G H)
     (hG : G.Valid) : H.Valid := by
   cases m with
-  | forward T o h => exact (forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩
+  | forward T o h => exact (forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩
   | reverse T o h _ => exact reverse_valid hG h
 
 abbrev Reach (strong : Bool) := ReflTransGen (Move strong)
@@ -495,7 +495,7 @@ private def Triple.restrict (T : Triple) {S : Finset ℕ} (h : T.verts ⊆ S) : 
 private theorem realize_forward {G : State} {T : Triple} {o : ℕ} {strong : Bool}
     (hG : G.Valid) (h : ForwardOK G T o) :
     GraphMove strong (G.graph hG) ((G.forward T o).graph
-      ((forward_valid hG).mpr ⟨h.1, h.2.1 ∘ h.1⟩)) := by
+      ((forward_valid hG).mpr ⟨h.1, fun ho => h.2.1 (h.1 ho)⟩)) := by
   left
   refine ⟨⟨T.restrict h.1, forwardLabels h.2.1, ?_, ?_, ?_⟩⟩
   · intro x y hx hy hne
@@ -551,7 +551,7 @@ private theorem lift_forward {G : State} {B : Type*} {H : SimpleGraph B}
     (hG : G.Valid) (m : ForwardSpec (G.graph hG) H) {o : ℕ} (ho : o ∉ G.active) :
     ∃ ok : ForwardOK G (m.T.labels G.vertexEmbedding) o,
       Nonempty (H ≃g (G.forward (m.T.labels G.vertexEmbedding) o).graph
-        ((forward_valid hG).mpr ⟨ok.1, ok.2.1 ∘ ok.1⟩)) := by
+        ((forward_valid hG).mpr ⟨ok.1, fun ht => ok.2.1 (ok.1 ht)⟩)) := by
   let T := m.T.labels G.vertexEmbedding
   have ht : T.verts ⊆ G.active := by
     intro x hx
@@ -579,8 +579,9 @@ private theorem lift_forward {G : State} {B : Type*} {H : SimpleGraph B}
     cases y with
     | none =>
       change (G.forward T o).Adj o o ↔ H.Adj (m.place none) (m.place none)
-      exact iff_of_false (fun h => (((forward_valid hG).mpr ⟨ok.1, ok.2.1 ∘ ok.1⟩) h).2.2 rfl)
-        (fun h => H.irrefl h)
+      have hForward : (G.forward T o).Valid :=
+        (forward_valid hG).mpr ⟨ok.1, fun ht => ho (ok.1 ht)⟩
+      exact iff_of_false (fun h => (hForward h).2.2 rfl) (fun h => H.irrefl h)
     | some y =>
       change (G.forward T o).Adj o y.val ↔ H.Adj (m.place none) (m.place (some y))
       rw [forward_center_adj hG ok, m.center]
