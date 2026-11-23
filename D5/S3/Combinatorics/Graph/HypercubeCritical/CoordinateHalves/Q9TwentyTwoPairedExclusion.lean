@@ -35,7 +35,8 @@ open private coordinate_slice_low_independent coordinate_slice_degree_cases bala
 open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open HuangBalancedSymmetry (cube_action_regular_balanced)
-open private adjacent adjacent_iff hasTwoSetBits moves toggle from
+open CubeBitMoves (toggle)
+open private adjacent adjacent_iff hasTwoSetBits moves from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private labels middleOptions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
