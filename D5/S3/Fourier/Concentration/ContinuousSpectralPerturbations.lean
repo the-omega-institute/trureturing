@@ -18,7 +18,8 @@ noncomputable section
 
 open MeasureTheory Set
 open Finset
-open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialFrequency)
+open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialFrequency monomialWeight)
+open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
 open scoped ENNReal NNReal
 
 namespace D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
@@ -192,5 +193,150 @@ private theorem exists_within_expected_budget {Ω K : Type*} [MeasurableSpace Ω
   have h := lintegral_strict_mono (f := fun _ : Ω => 1) (NeZero.ne μ)
     htotal.aemeasurable (by simp) hlt
   exact (not_lt_of_ge hmean) (by simpa using h)
+
+/-- The sum of the pairwise small-interval bounds with their multinomial weights. -/
+def excessBound {J : Type*} [Fintype J] [DecidableEq J] (w radius : J → ℝ)
+    (p : ℕ) (η : ℝ) : ℝ≥0∞ :=
+  let s := piAntidiag univ p
+  ∑ m ∈ s, ∑ n ∈ s.erase m,
+    ENNReal.ofReal (monomialWeight w m * monomialWeight w n) *
+      min 1 (ENNReal.ofReal (η / pairRadius radius m n))
+
+private theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
+    let s := piAntidiag univ p
+    tailCollisionMass g w p η - (∑ m ∈ s, monomialWeight w m ^ 2) =
+      ∑ m ∈ s, ∑ n ∈ s.erase m,
+        if |monomialFrequency g m - monomialFrequency g n| ≤ η
+          then monomialWeight w m * monomialWeight w n else 0 := by
+  intro s
+  let term (m n : J → ℕ) := if |monomialFrequency g m - monomialFrequency g n| ≤ η
+    then monomialWeight w m * monomialWeight w n else 0
+  change (∑ m ∈ s, ∑ n ∈ s, term m n) - (∑ m ∈ s, monomialWeight w m ^ 2) =
+    ∑ m ∈ s, ∑ n ∈ s.erase m, term m n
+  rw [← sum_sub_distrib]
+  refine sum_congr rfl (fun m hm => ?_)
+  rw [← sum_erase_add _ _ hm]
+  simp [term, hη, pow_two]
+
+private theorem expected_excess_le {J : Type*} [Fintype J] [DecidableEq J]
+    (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j) (hradius : ∀ j, 0 < radius j)
+    (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
+    let μ := Measure.pi fun j => intervalNoise (radius j)
+    let D := ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
+    (∫⁻ x, ENNReal.ofReal (tailCollisionMass (fun j => g j + x j) w p η - D) ∂μ) ≤
+      excessBound w radius p η := by
+  intro μ D
+  let s := piAntidiag (univ : Finset J) p
+  let c := monomialWeight w
+  let hit (m n : J → ℕ) := {x : J → ℝ |
+    |monomialFrequency (fun j => g j + x j) m -
+      monomialFrequency (fun j => g j + x j) n| ≤ η}
+  have hmeas (m n : J → ℕ) : MeasurableSet (hit m n) := by
+    apply measurableSet_le _ measurable_const
+    dsimp [monomialFrequency]
+    fun_prop
+  let term (m n : J → ℕ) := (hit m n).indicator (fun _ => ENNReal.ofReal (c m * c n))
+  have hterm (m n : J → ℕ) : Measurable (term m n) := measurable_const.indicator (hmeas m n)
+  have hc (m n : J → ℕ) : 0 ≤ c m * c n :=
+    mul_nonneg (monomialWeight_nonneg w hw m) (monomialWeight_nonneg w hw n)
+  have hsplit (x : J → ℝ) :
+      ENNReal.ofReal (tailCollisionMass (fun j => g j + x j) w p η - D) =
+        ∑ m ∈ s, ∑ n ∈ s.erase m, term m n x := by
+    rw [show tailCollisionMass (fun j => g j + x j) w p η - D = _ from
+      collision_excess_eq (fun j => g j + x j) w p hη]
+    rw [ENNReal.ofReal_sum_of_nonneg (fun m _ => sum_nonneg (fun n _ =>
+      by split_ifs <;> first | exact hc m n | exact le_rfl))]
+    refine sum_congr rfl (fun m _ => ?_)
+    rw [ENNReal.ofReal_sum_of_nonneg (fun n _ =>
+      by split_ifs <;> first | exact hc m n | exact le_rfl)]
+    refine sum_congr rfl (fun n _ => ?_)
+    by_cases hh : x ∈ hit m n
+    · rw [show term m n x = _ from Set.indicator_of_mem hh _]
+      simp only [hit, Set.mem_ofPred_eq] at hh
+      rw [ite_eq_left hh]
+    · rw [show term m n x = _ from Set.indicator_of_notMem hh _]
+      simp only [hit, Set.mem_ofPred_eq] at hh
+      rw [ite_eq_right hh, ENNReal.ofReal_zero]
+  simp_rw [hsplit]
+  have hsum (m : J → ℕ) : Measurable (fun x => ∑ n ∈ s.erase m, term m n x) :=
+    Finset.measurable_sum _ (fun n _ => hterm m n)
+  rw [lintegral_finsetSum _ (fun m _ => hsum m)]
+  unfold excessBound
+  refine sum_le_sum (fun m _ => ?_)
+  rw [lintegral_finsetSum _ (fun n _ => hterm m n)]
+  refine sum_le_sum (fun n hn => ?_)
+  rw [show term m n = _ from rfl, lintegral_indicator_const (hmeas m n)]
+  exact mul_le_mul_right
+    (pair_event_measure_le g radius hradius (ne_of_mem_erase hn).symm (η := η)) _
+
+private theorem measurable_collision_of_offsets {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (p : ℕ) (η : ℝ) :
+    Measurable (fun x : J → ℝ => tailCollisionMass (fun j => g j + x j) w p η) := by
+  unfold tailCollisionMass nearCollisionMass
+  refine Finset.measurable_sum _ (fun m _ => Finset.measurable_sum _ (fun n _ => ?_))
+  apply Measurable.ite _ measurable_const measurable_const
+  apply measurableSet_le _ measurable_const
+  unfold monomialFrequency
+  fun_prop
+
+/-- A countable family of collision budgets is satisfied by one spectrum close to the original. -/
+theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
+    [Countable J] [Countable K] (g radius : J → ℝ) (hradius : ∀ j, 0 < radius j)
+    (support : K → Finset J) (w : ∀ k, support k → ℝ) (hw : ∀ k j, 0 ≤ w k j)
+    (p : K → ℕ) (η budget : K → ℝ) (hη : ∀ k, 0 ≤ η k) (hbudget : ∀ k, 0 < budget k)
+    (htotal : (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+      ENNReal.ofReal (budget k)) ≤ 1) :
+    ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ radius j) ∧
+      ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
+        (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k := by
+  let ν (j : J) := intervalNoise (radius j)
+  have (j : J) : IsProbabilityMeasure (ν j) := intervalNoise_probability (hradius j)
+  let μ := Measure.infinitePi ν
+  let inside (x : J → ℝ) := ∀ j, x j ∈ Icc (-radius j) (radius j)
+  have hinside : ∀ᵐ x ∂μ, inside x := by
+    apply ae_all_iff.mpr
+    intro j
+    have hmeas : Measurable (fun x : J → ℝ => x j) := measurable_pi_apply j
+    apply (ae_map_iff hmeas.aemeasurable measurableSet_Icc).mp
+    rw [show μ.map (fun x => x j) = ν j from Measure.infinitePi_map_eval ν j]
+    exact Measure.ae_smul_measure (ae_restrict_mem measurableSet_Icc) _
+  let D (k : K) := ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2
+  let excess (k : K) (y : support k → ℝ) := ENNReal.ofReal
+    (tailCollisionMass (fun j : support k => g j + y j) (w k) (p k) (η k) - D k)
+  have hexcess (k : K) : Measurable (excess k) :=
+    (measurable_collision_of_offsets (fun j : support k => g j) (w k) (p k) (η k)).sub_const
+      (D k) |>.ennreal_ofReal
+  let loss (k : K) (x : J → ℝ) := excess k ((support k).restrict x) / ENNReal.ofReal (budget k)
+  have hmeas (k : K) : Measurable (loss k) :=
+    ((hexcess k).comp (Finset.measurable_restrict (support k))).div_const _
+  have hlocal (k : K) :
+      (∫⁻ x, loss k x ∂μ) ≤
+        excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+          ENNReal.ofReal (budget k) := by
+    have hmarginal : μ.map (support k).restrict = Measure.pi (fun j : support k => ν j) :=
+      Measure.infinitePi_map_restrict ν
+    rw [show loss k = fun x => excess k ((support k).restrict x) / ENNReal.ofReal (budget k) from rfl,
+      ← lintegral_map ((hexcess k).div_const _) (Finset.measurable_restrict (support k)), hmarginal]
+    simp only [div_eq_mul_inv]
+    rw [lintegral_mul_const _ (hexcess k)]
+    exact mul_le_mul_left
+      (expected_excess_le (fun j : support k => g j) (w k) (fun j : support k => radius j)
+        (hw k) (fun j => hradius j) (p k) (hη k)) _
+  obtain ⟨x, hx, hbound⟩ :=
+    exists_within_expected_budget μ loss hmeas inside hinside
+      ((ENNReal.tsum_le_tsum hlocal).trans htotal)
+  refine ⟨fun j => g j + x j, ?_, ?_⟩
+  · intro j
+    rw [add_sub_cancel_left]
+    exact abs_le.mpr (hx j)
+  · intro k
+    have hk := hbound k
+    dsimp only [loss, excess] at hk
+    rw [← ENNReal.ofReal_div_of_pos (hbudget k), ← ENNReal.ofReal_one,
+      ENNReal.ofReal_le_ofReal_iff zero_le_one, div_le_iff₀ (hbudget k), one_mul] at hk
+    exact (sub_le_iff_le_add.mp hk).trans_eq (add_comm _ _)
+
+#print axioms exists_continuous_common_nearby_bounds
 
 end D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
