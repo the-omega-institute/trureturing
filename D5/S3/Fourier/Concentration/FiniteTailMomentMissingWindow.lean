@@ -6,6 +6,7 @@
    utility: none
    digest: Short integer relations control the tail moment and the closed-window grid. -/
 
+import D5.S3.Analytic.Asymptotics.DirichletPolynomialMeanSquare
 import D5.S3.Fourier.Concentration.FiniteSineMissingWindow
 import Mathlib.Data.Nat.Choose.Multinomial
 
@@ -20,41 +21,27 @@ open scoped Topology NNReal
 
 namespace D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 
-private def character (rate time : ℝ) : ℂ :=
-  Complex.exp (Complex.I * (rate : ℂ) * (time : ℂ))
-
-private theorem norm_character (rate time : ℝ) : ‖character rate time‖ = 1 := by
-  unfold character
-  rw [show Complex.I * (rate : ℂ) * (time : ℂ) = ((rate * time : ℝ) : ℂ) * Complex.I by
-    push_cast
-    ring, Complex.norm_exp_ofReal_mul_I]
+open D5.S3.Weil.DirichletPolynomialMeanSquare (phase phaseIntegral norm_phaseIntegral_le)
 
 private theorem average_character (rate start : ℝ) :
     Tendsto (fun length : ℝ =>
-      (length⁻¹ : ℂ) * ∫ t in start..start + length, character rate t)
+      (length⁻¹ : ℂ) * ∫ t in start..start + length, phase rate t)
       atTop (𝓝 (if rate = 0 then 1 else 0)) := by
   by_cases hrate : rate = 0
   · subst rate
     simp only [ite_true]
     refine tendsto_const_nhds.congr' ?_
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with length hlength
-    simp [character, hlength.ne']
+    simp [phase, hlength.ne']
   · simp only [hrate, ite_false]
-    let c : ℂ := Complex.I * (rate : ℂ)
-    have hc : c ≠ 0 := mul_ne_zero Complex.I_ne_zero (by exact_mod_cast hrate)
-    have hd : 0 < ‖c‖ := norm_pos_iff.mpr hc
     have hlimit :
-        Tendsto (fun length : ℝ => (2 / ‖c‖) * length⁻¹) atTop (𝓝 0) := by
-      simpa only [mul_zero] using tendsto_inv_atTop_zero.const_mul (2 / ‖c‖)
+        Tendsto (fun length : ℝ => (2 / |rate|) * length⁻¹) atTop (𝓝 0) := by
+      simpa only [mul_zero] using tendsto_inv_atTop_zero.const_mul (2 / |rate|)
     refine squeeze_zero_norm' ?_ hlimit
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with length hlength
-    change ‖(length⁻¹ : ℂ) * (∫ t in start..start + length, Complex.exp (c * ↑t))‖ ≤ _
-    rw [integral_exp_mul_complex hc, norm_mul, norm_div, norm_inv, Complex.norm_real,
-      Real.norm_eq_abs, abs_of_pos hlength, mul_comm]
-    refine mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_right ?_ hd.le) (inv_nonneg.mpr hlength.le)
-    calc
-      _ ≤ ‖character rate (start + length)‖ + ‖character rate start‖ := norm_sub_le _ _
-      _ = 2 := by rw [norm_character, norm_character]; norm_num
+    rw [norm_mul, norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hlength, mul_comm]
+    exact mul_le_mul_of_nonneg_right (norm_phaseIntegral_le start (start + length) hrate)
+      (inv_nonneg.mpr hlength.le)
 
 private theorem short_difference {J : Type*} [Fintype J] [DecidableEq J] {p : ℕ}
     {m n : J → ℕ} (hm : m ∈ piAntidiag univ p) (hn : n ∈ piAntidiag univ p) :
@@ -72,29 +59,29 @@ private theorem short_difference {J : Type*} [Fintype J] [DecidableEq J] {p : �
       ring
 
 private theorem character_add (x y t : ℝ) :
-    character (x + y) t = character x t * character y t := by
-  unfold character
+    phase (x + y) t = phase x t * phase y t := by
+  unfold phase
   rw [← Complex.exp_add]
   congr 1
   push_cast
   ring
 
 private theorem character_nat_mul (n : ℕ) (x t : ℝ) :
-    character ((n : ℝ) * x) t = character x t ^ n := by
-  unfold character
+    phase ((n : ℝ) * x) t = phase x t ^ n := by
+  unfold phase
   rw [← Complex.exp_nat_mul]
   congr 1
   push_cast
   ring
 
 private theorem character_sum {J : Type*} (s : Finset J) (f : J → ℝ) (t : ℝ) :
-    character (∑ j ∈ s, f j) t = ∏ j ∈ s, character (f j) t := by
-  unfold character
+    phase (∑ j ∈ s, f j) t = ∏ j ∈ s, phase (f j) t := by
+  unfold phase
   push_cast
-  simp only [Finset.mul_sum, Finset.sum_mul, Complex.exp_sum]
+  simp only [Finset.sum_mul, Complex.exp_sum]
 
 private def complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) : ℂ :=
-  ∑ j, (w j : ℂ) * character (g j) t
+  ∑ j, (w j : ℂ) * phase (g j) t
 
 private def monomialWeight {J : Type*} [Fintype J] (w : J → ℝ) (m : J → ℕ) : ℝ :=
   (Nat.multinomial univ m : ℝ) * ∏ j, w j ^ m j
@@ -105,7 +92,7 @@ private def monomialFrequency {J : Type*} [Fintype J] (g : J → ℝ) (m : J →
 private theorem score_pow {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (t : ℝ) (p : ℕ) :
     complexScore g w t ^ p =
-      ∑ m ∈ piAntidiag univ p, (monomialWeight w m : ℂ) * character (monomialFrequency g m) t := by
+      ∑ m ∈ piAntidiag univ p, (monomialWeight w m : ℂ) * phase (monomialFrequency g m) t := by
   rw [complexScore, sum_pow_eq_sum_piAntidiag]
   apply sum_congr rfl
   intro m _
@@ -117,13 +104,13 @@ private theorem score_pow {J : Type*} [Fintype J] [DecidableEq J]
 private theorem score_conj {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) :
     star (complexScore g w t) = complexScore (fun j => -g j) w t := by
   unfold complexScore
-  change starRingEnd ℂ (∑ j, (w j : ℂ) * character (g j) t) = _
+  change starRingEnd ℂ (∑ j, (w j : ℂ) * phase (g j) t) = _
   rw [map_sum]
   apply sum_congr rfl
   intro j _
   rw [map_mul, Complex.conj_ofReal]
   congr 1
-  unfold character
+  unfold phase
   rw [← Complex.exp_conj]
   congr 1
   simp
@@ -159,7 +146,7 @@ private theorem score_even_expansion {J : Type*} [Fintype J] [DecidableEq J]
     (↑(‖complexScore g w t‖ ^ (2 * p)) : ℂ) =
       ∑ m ∈ piAntidiag univ p, ∑ n ∈ piAntidiag univ p,
         ((monomialWeight w m * monomialWeight w n : ℝ) : ℂ) *
-          character (monomialFrequency g m + monomialFrequency (fun j => -g j) n) t := by
+          phase (monomialFrequency g m + monomialFrequency (fun j => -g j) n) t := by
   rw [pow_mul, Complex.ofReal_pow, Complex.ofReal_pow, ← Complex.mul_conj', mul_pow]
   change complexScore g w t ^ p * (starRingEnd ℂ (complexScore g w t)) ^ p = _
   rw [← map_pow]
@@ -186,29 +173,29 @@ private theorem score_average_complex {J : Type*} [Fintype J] [DecidableEq J]
   let S : Finset (J → ℕ) := piAntidiag univ p
   let rate (m n : J → ℕ) := monomialFrequency g m + monomialFrequency (fun j => -g j) n
   let c (m n : J → ℕ) : ℂ := (monomialWeight w m * monomialWeight w n : ℝ)
-  let f (m n : J → ℕ) (t : ℝ) := c m n * character (rate m n) (t + shift)
+  let f (m n : J → ℕ) (t : ℝ) := c m n * phase (rate m n) (t + shift)
   have integrate (m n : J → ℕ) (L : ℝ) : IntervalIntegrable (f m n) volume start (start + L) := by
     apply Continuous.intervalIntegrable
-    change Continuous (fun t : ℝ => c m n * Complex.exp (Complex.I * ↑(rate m n) * ↑(t + shift)))
+    change Continuous (fun t : ℝ => c m n * Complex.exp (↑(rate m n) * Complex.I * ↑(t + shift)))
     fun_prop
   have average (m n : J → ℕ) :
       Tendsto (fun L : ℝ => (L⁻¹ : ℂ) * ∫ t in start..start + L, f m n t)
         atTop (𝓝 (if rate m n = 0 then c m n else 0)) := by
-    have hfun (t : ℝ) : f m n t = (c m n * character (rate m n) shift) * character (rate m n) t := by
-      unfold f character
+    have hfun (t : ℝ) : f m n t = (c m n * phase (rate m n) shift) * phase (rate m n) t := by
+      unfold f phase
       rw [mul_assoc (c m n), ← Complex.exp_add]
       congr 2
       push_cast
       ring
     have he (L : ℝ) : (L⁻¹ : ℂ) * (∫ t in start..start + L, f m n t) =
-        (c m n * character (rate m n) shift) *
-          ((L⁻¹ : ℂ) * ∫ t in start..start + L, character (rate m n) t) := by
+        (c m n * phase (rate m n) shift) *
+          ((L⁻¹ : ℂ) * ∫ t in start..start + L, phase (rate m n) t) := by
       simp_rw [hfun, intervalIntegral.integral_const_mul]
       ring
     simp_rw [he]
-    convert (average_character (rate m n) start).const_mul (c m n * character (rate m n) shift) using 2
+    convert (average_character (rate m n) start).const_mul (c m n * phase (rate m n) shift) using 2
     split_ifs with h
-    · simp [h, character]
+    · simp [h, phase]
     · simp
   have hlim := tendsto_finsetSum S (fun m _ =>
     tendsto_finsetSum S (fun n _ => average m n))
@@ -232,7 +219,7 @@ private theorem score_average_complex {J : Type*} [Fintype J] [DecidableEq J]
     apply Continuous.intervalIntegrable
     apply continuous_finsetSum
     intro n _
-    change Continuous (fun t : ℝ => c m n * Complex.exp (Complex.I * ↑(rate m n) * ↑(t + shift)))
+    change Continuous (fun t : ℝ => c m n * Complex.exp (↑(rate m n) * Complex.I * ↑(t + shift)))
     fun_prop
 
 private theorem diagonal_bound {J : Type*} [Fintype J] [DecidableEq J]
@@ -276,7 +263,7 @@ private theorem complexScore_continuous {J : Type*} [Fintype J] (g w : J → ℝ
   unfold complexScore
   apply continuous_finsetSum
   intro j _
-  unfold character
+  unfold phase
   fun_prop
 
 private theorem exists_grid_lt {J K : Type*} [Fintype J] [DecidableEq J] [Fintype K]
@@ -331,8 +318,8 @@ private theorem im_complexScore {J : Type*} [Fintype J] (g w : J → ℝ) (t : �
   apply sum_congr rfl
   intro j _
   rw [Complex.im_ofReal_mul]
-  unfold character
-  rw [show Complex.I * (g j : ℂ) * (t : ℂ) = ((g j * t : ℝ) : ℂ) * Complex.I by
+  unfold phase
+  rw [show (g j : ℂ) * Complex.I * (t : ℂ) = ((g j * t : ℝ) : ℂ) * Complex.I by
     push_cast
     ring, Complex.exp_ofReal_mul_I_im]
 

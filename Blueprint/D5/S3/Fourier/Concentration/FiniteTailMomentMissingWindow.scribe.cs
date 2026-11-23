@@ -29,7 +29,7 @@ internal sealed class FiniteTailMomentMissingWindowDocument : IScribeDocumentDef
                     + "Expand the pth powers of Z and its conjugate by the multinomial theorem. "
                     + "Two degree-p count vectors produce an integer difference with length at most "
                     + "2p. The normalized long-time integral of each nonzero character tends "
-                    + "to zero by its explicit antiderivative. Thus only equal count vectors "
+                    + "to zero by the finite-interval character integral bound. Thus only equal count vectors "
                     + "survive in the average of |Z|^(2p). A fixed offset of the averaging variable "
                     + "has the same limit. This is the real-time, finite-degree counterpart of "
                     + "the Fourier coefficient extraction in ExpSumCoeffEqZeroOfVanishing.lean "
@@ -69,6 +69,9 @@ internal sealed class FiniteTailMomentMissingWindowDocument : IScribeDocumentDef
         var t = F.Id("t");
         var v = F.Id("V");
         var b = F.Id("B");
+        var indices = F.Id("J");
+        var reals = Seq(Mathbb, Grp(F.Id("R")));
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
         var g = Call("g", j);
         var w = Call("w", j);
         var k = Call("k", j);
@@ -78,14 +81,21 @@ internal sealed class FiniteTailMomentMissingWindowDocument : IScribeDocumentDef
         var tailScore = Terms(Multiply(w, Call("sin", Multiply(g, t))));
         var interval = Seq(OpenBracket, a, Comma, Add(a, length), CloseBracket);
         return Disp(new Formula.Aligned([
-            Seq(v, Eq, Terms(Power(w, D(2))), Comma, Quad, Sp,
-                b, Eq, Terms(Multiply(w, new Formula.Absolute(g))), Comma, Quad, Sp,
-                F.Id("N"), Eq, floor, Plus, D(1)),
-            Seq(Forall, Sp, j, Sp, InMacro, Sp, F.Id("J"), Comma, Sp, w, Ge, D(0), Comma, Quad, Sp,
-                p, Gt, D(0), Comma, Quad, Sp, h, Gt, D(0), Comma, Quad, Sp, DeltaLower, Gt, D(0)),
-            Seq(Forall, Sp, F.Id("k"), Colon, Sp, F.Id("J"), To, Mathbb, Grp(F.Id("Z")),
+            Seq(Forall, Sp, indices, Colon, Sp, Operatorname, Grp(F.Id("FiniteType")), Comma, Quad, Sp,
+                F.Id("g"), Comma, F.Id("w"), Colon, Sp, indices, To, reals, Comma, Quad, Sp,
+                p, Colon, Sp, naturals, Comma, Quad, Sp,
+                length, Comma, h, Comma, DeltaLower, Colon, Sp, reals, Comma),
+            Seq(Operatorname, Grp(F.Id("let")), Sp,
+                v, Colon, Eq, Terms(Power(w, D(2))), Comma, Quad, Sp,
+                b, Colon, Eq, Terms(Multiply(w, new Formula.Absolute(g))), Comma, Quad, Sp,
+                F.Id("N"), Colon, Eq, floor, Plus, D(1), Quad, Sp, Operatorname, Grp(F.Id("in"))),
+            Seq(Open, Forall, Sp, j, Sp, InMacro, Sp, indices, Comma, Sp, w, Ge, D(0), Close,
+                Quad, Sp, Land, Sp, p, Gt, D(0), Quad, Sp, Land, Sp, h, Gt, D(0),
+                Quad, Sp, Land, Sp, DeltaLower, Gt, D(0), Quad, Sp, Land, Sp),
+            Seq(Open, Forall, Sp, F.Id("k"), Colon, Sp, indices, To, Mathbb, Grp(F.Id("Z")),
                 Comma, Quad, Sp, Terms(new Formula.Absolute(k)), Le, twoP, Quad, Sp, Land, Quad, Sp,
-                Terms(Multiply(k, g)), Eq, D(0), Quad, Sp, Longrightarrow, Quad, Sp, F.Id("k"), Eq, D(0)),
+                Terms(Multiply(k, g)), Eq, D(0), Quad, Sp, Longrightarrow, Quad, Sp, F.Id("k"),
+                Eq, D(0), Close, Quad, Sp, Land, Sp),
             Seq(Open, v, Eq, D(0), Quad, Sp, Lor, Quad, Sp,
                 Multiply(F.Id("N"), Power(Seq(Open, ratio, Close), p)), Lt, D(1), Close),
             Seq(Longrightarrow, Quad, Sp, Forall, Sp, F.Id("A"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")),
