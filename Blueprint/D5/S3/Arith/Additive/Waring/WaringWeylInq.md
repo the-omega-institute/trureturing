@@ -19,4 +19,3 @@ Group the pairs by their signed displacement and bound the squared norm by the s
 ## References
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringWeylInq.normSq_expSum_le`
-- Dependency: [D5/S3/Arith/Additive/Waring/WaringWeylDiff](WaringWeylDiff.md)
