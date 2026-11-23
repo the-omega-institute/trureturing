@@ -17,7 +17,10 @@ internal sealed class CayleyTreeNormalLimitDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Statement1())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("Section 6 of de Panafieu, Mathieu, Potop-Butucaru and Tixeuil asks for this limit. The palette of initial colors is fixed at size k, and each row N has N plus one vertices. The ambient palette and valid policy may depend on the row. The count records actual updates from sequential uniform enabled choices. The expectation and variance are those under the independent uniform native source inputs and the conditional scheduler law. Exact equality of count distributions transports both moments and the standardized law to the occupancy model."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("de-panafieu-et-al-2026-colored-cayley-tree-clt"),
+                    ResolutionKind.Proved)),
             Describe.Lean(
                 DescribeId.Create("cayley-tree-probability-source-standardized"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/NormalLimit.sourceStandardized"),

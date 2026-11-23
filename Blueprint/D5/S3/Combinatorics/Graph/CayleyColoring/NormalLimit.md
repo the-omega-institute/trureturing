@@ -10,6 +10,10 @@ $$\forall (k: \mathbb{N}), 2 \leq k \implies \forall (K: \mathbb{N} \to Type), \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CayleyColoring/NormalLimit.colored_cayley_tree_clt` (`✓ std3`). ∎
 
+*Resolves.* `Problems/de-panafieu-et-al-2026-colored-cayley-tree-clt` (proved) by `D5/S3/Combinatorics/Graph/CayleyColoring/NormalLimit.colored_cayley_tree_clt`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"de-panafieu-et-al-2026-colored-cayley-tree-clt","declaration_gid":"D5/S3/Combinatorics/Graph/CayleyColoring/NormalLimit.colored_cayley_tree_clt","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Élie de Panafieu, Fabien Mathieu, Maria Potop-Butucaru, and Sébastien Tixeuil (2026). *The Exact Stabilization Time of Self-Stabilizing Coloring: Mean, Variance, and Distribution*. DOI: [10.48550/arXiv.2611.17989](https://doi.org/10.48550/arXiv.2611.17989). URL: <https://arxiv.org/abs/2611.17989v1>.
