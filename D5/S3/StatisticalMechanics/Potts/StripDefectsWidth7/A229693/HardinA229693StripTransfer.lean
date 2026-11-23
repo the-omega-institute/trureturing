@@ -73,7 +73,7 @@ checkHistogram: proof_shape=content; consumers=activeProfileCheck, activeProfile
 checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new, initialExits_count
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
 inheritedSource: proof_shape=bind-only; consumers=T
-newSources: proof_shape=bind-only; consumers=activeWeight
+sourceCode: proof_shape=bind-only; consumers=activeWeight, inheritedSource
 activeGroups: proof_shape=content; consumers=activeMultiplicities
 activeMultiplicities: proof_shape=content; consumers=exactExits_active
 inheritedActiveCheck: proof_shape=bind-only; consumers=inheritedActiveCheck_all
@@ -170,11 +170,17 @@ def exitRead (i : Fin 96) : Fin 108 :=
     20, 22, 101, 101, 102, 102, 24, 26, 31, 42, 103, 103, 44, 46, 104, 104, 105, 105, 48, 50,
     106, 106, 52, 63, 68, 70, 107, 107] : Array (Fin 108))[i.val]
 
-private def inheritedSource (i : Fin 72) : Option (Fin 16) :=
-  (List.finRange 16).find? fun k => HardinA229585StripData.zeroBudgetClass k == i
+-- Precompute indices for the inherited row slice and the 56 stored rows.
+private def sourceCode (i : Fin 72) : ℕ :=
+  let packed : ℕ := eval% (
+    let old := List.ofFn HardinA229585StripData.zeroBudgetClass
+    let new := (List.finRange 72).filter fun i => !old.contains i
+    Nat.ofDigits 128 (List.ofFn fun i : Fin 72 =>
+      if old.contains i then old.idxOf i else 16 + new.idxOf i))
+  (packed >>> (7 * i.val)) % 128
 
-private def newSources : List (Fin 72) :=
-  (List.finRange 72).filter fun i => (inheritedSource i).isNone
+private def inheritedSource (i : Fin 72) : Option (Fin 16) :=
+  if h : sourceCode i < 16 then some ⟨sourceCode i, h⟩ else none
 
 private def activeExits (i : ℕ) (j : Fin 36) : ℕ :=
   let table : Array (Array ℕ) := #[
@@ -290,7 +296,7 @@ private def oldExits (i : Fin 72) (j : Fin 96) : ℤ :=
 
 private def activeWeight (i : Fin 72) : Fin 96 → ℕ :=
   fun j => Fin.append (fun k => (HardinA229585StripData.T i k).toNat)
-    (activeExits (newSources.idxOf i)) (exitRead j)
+    (activeExits (sourceCode i - 16)) (exitRead j)
 
 private def exhaustedWeight (i : Fin 40) : Fin 96 → ℕ :=
   fun j => Fin.append (0 : Fin 72 → ℕ) (exhaustedExits i) (exitRead j)
