@@ -470,6 +470,8 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格式）或 `truth-release-scheduled`（定时发布）标识，恰含五个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export 和 Blueprint index。source snapshot 以 schema 标签 `source-snapshot` 标识，闭键恰为来源仓库、commit、tree、Lean toolchain、mathlib rev、producer package commit，以及 truth graph、raw Lean report、DAG Markdown、truth export 四个摘要；它不承载消化账目、残余工件或冻结事件字段。冻结成员资格由 `source_tree` 绑定的 `Golden/Frozen/state/**` 状态片决定，bundle 不另设账本头、事件计数或状态表摘要。manifest、source snapshot 与 publication 坐标的 transport 文件名为 `release-manifest.v1.json`、`source-snapshot.v1.json` 与 `truth-release-publication.v1.json`。reader 只接受上述标签与闭键：其他 manifest 或 source snapshot 标签、manifest 的 `frozen_ledger_head` 槽位及 source snapshot 的账本字段均被拒绝。已发布的 release 不改动。
 
+Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理。消费方按来源快照、模块陈述 pin、声明名称键和种类对齐证据。DAG 与发布数据的「仅 Omega · 零公理」标记属于单条声明，判据为实测库根集合非空且包含于 `{OmegaInit, OmegaMath}`，同时 `axioms` 显式等于 `[]`。缺省字段保留其 A14.2 含义；同模块声明可得到不同结果。
+
 独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
