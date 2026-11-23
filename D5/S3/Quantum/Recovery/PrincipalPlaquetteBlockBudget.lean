@@ -41,32 +41,6 @@ open NativeDiamond (matrixAction)
 
 variable {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
-private theorem reference_block (channel : QuantumChannel a b)
-    (X : Matrix (Fin 2 × a) (Fin 2 × a) ℂ) :
-    CStarMatrix.ofMatrix.symm (referenceAction channel (CStarMatrix.ofMatrix X)) =
-      RTDiamond.amplify (matrixAction channel) X := by
-  ext ⟨r, p⟩ ⟨s, q⟩
-  rfl
-
-private theorem referenceError_le_two (first second : QuantumChannel a b)
-    (n : ℕ) (X : DensityState (Fin n × a)) :
-    referenceError first second X ≤ 2 := by
-  have h := traceDistance_le_one (referenceState first X) (referenceState second X)
-  change referenceError first second X / 2 ≤ 1 at h
-  linarith
-
-private theorem referenceError_le_diamond (first second : QuantumChannel a b)
-    (n : ℕ) (X : DensityState (Fin n × a)) :
-    referenceError first second X ≤ diamondDistance first second := by
-  unfold diamondDistance
-  apply le_csSup
-  · refine ⟨2, ?_⟩
-    intro z hz
-    rcases hz with hz | ⟨k, Y, rfl⟩
-    · rw [Set.mem_singleton_iff.mp hz]; norm_num
-    · exact referenceError_le_two first second k Y
-  · exact Or.inr ⟨n, X, rfl⟩
-
 /-- The stabilized density-state distance bounds a single tested
 rank-one coefficient with no loss from the two reference tags. -/
 theorem vectorCoefficient_le_diamondDistance (first second : QuantumChannel a b)
@@ -113,7 +87,8 @@ theorem vectorCoefficient_le_diamondDistance (first second : QuantumChannel a b)
         (referenceAction first (CStarMatrix.ofMatrix (T))) -
       CStarMatrix.ofMatrix.symm
         (referenceAction second (CStarMatrix.ofMatrix (T)))) (0,p) (1,q) = _
-    rw [reference_block, reference_block, ← RTDiamond.amplify_sub]
+    rw [NativeDiamond.reference_block, NativeDiamond.reference_block,
+      ← RTDiamond.amplify_sub]
     have hc : T.submatrix (fun a => (0,a)) (fun b => (1,b)) =
         (1/2 : ℂ) • Matrix.vecMulVec u (star v) := by
       ext i j
@@ -126,7 +101,7 @@ theorem vectorCoefficient_le_diamondDistance (first second : QuantumChannel a b)
   rw [he, Complex.norm_mul, hn] at hu
   have hentry : ‖((matrixAction first - matrixAction second) (Matrix.vecMulVec u (star v))) p q‖ ≤
       traceNorm Y := by linarith
-  exact hentry.trans (referenceError_le_diamond first second 2 X)
+  exact hentry.trans (NativeDiamond.referenceError_le_diamond first second 2 X)
 
 end RTMultiFibre
 

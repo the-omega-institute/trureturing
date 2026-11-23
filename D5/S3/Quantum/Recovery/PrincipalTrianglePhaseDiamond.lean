@@ -406,7 +406,7 @@ def matrixAction (channel : QuantumChannel a b) : Matrix a a ℂ →ₗ[ℂ] Mat
     (channel.toCompletelyPositiveMap.toLinearMap.comp
       (CStarMatrix.ofMatrixStarAlgEquiv (n := a)).toAlgEquiv.toLinearMap)
 
-private theorem reference_block (channel : QuantumChannel a b)
+theorem reference_block (channel : QuantumChannel a b)
     (X : Matrix (Fin 2 × a) (Fin 2 × a) ℂ) :
     CStarMatrix.ofMatrix.symm (referenceAction channel (CStarMatrix.ofMatrix X)) =
       RTDiamond.amplify (matrixAction channel) X := by
@@ -420,7 +420,7 @@ private theorem referenceError_le_two (first second : QuantumChannel a b)
   change referenceError first second X / 2 ≤ 1 at h
   linarith
 
-private theorem referenceError_le_diamond (first second : QuantumChannel a b)
+theorem referenceError_le_diamond (first second : QuantumChannel a b)
     (n : ℕ) (X : DensityState (Fin n × a)) :
     referenceError first second X ≤ diamondDistance first second := by
   unfold diamondDistance
