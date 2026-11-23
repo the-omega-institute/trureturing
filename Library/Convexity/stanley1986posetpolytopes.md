@@ -14,6 +14,15 @@ triage: anchor
 
 # Fence chain polytopes and the three-position occupancy pyramid
 
+## Verified locator
+
+- DOI [10.1007/BF02187680](https://doi.org/10.1007/BF02187680)
+- [Author's PDF](https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf)
+
+Corollary 1.3 on p. 10 identifies order-polytope vertices with filter
+indicators. Example 4.3 on pp. 15–16 gives the alternating fence and its
+chain-polytope inequalities.
+
 Richard P. Stanley, *Two Poset Polytopes*, Discrete & Computational Geometry
 1, 9–23. The author's PDF supplies the following precise clauses.
 
