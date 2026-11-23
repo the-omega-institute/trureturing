@@ -211,7 +211,7 @@ private theorem middleTail_gap_profile {h u d : ℝ}
 /-- A proof of the Bernstein coefficient signs discharges the original mixed
 kernel inequality on the central upper gap band. -/
 theorem logKernel_mixed_neg_of_middleTail_polynomials {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
-    (hu₀ : 1 / 2 ≤ u) (hu₁ : u ≤ 4) (hd₀ : 13 / 4 ≤ v - u) (hd₁ : v - u ≤ 7 / 2)
+    (hu₀ : 1 / 2 ≤ u) (hu₁ : u ≤ 4) (hd₀ : 13 / 4 ≤ v - u) (hd₁ : v - u ≤ 4)
     (hcheck :
       let h : ℝ := 3 / (p : ℝ)
       let B := middleTailGapPolynomials h u (upperTailSlope h (v - u))

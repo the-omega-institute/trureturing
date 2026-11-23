@@ -51,7 +51,7 @@ private theorem exp_neg_thirteen_fourths_ge : (31 / 800 : ℝ) ≤ Real.exp (-(1
 /-- On the central upper gap band both the slope cutoff and the exponential
 decay can be expressed in terms of the gap slope. -/
 theorem middleTail_gap_bounds {h d : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
-    (hd₀ : 13 / 4 ≤ d) (hd₁ : d ≤ 7 / 2) :
+    (hd₀ : 13 / 4 ≤ d) (hd₁ : d ≤ 4) :
     let q := upperTailSlope h d
     let Q := (4 : ℝ) / 13 - h / 2 + 13 * h ^ 2 / 48
     0 < q ∧ q ≤ Q ∧ Q ≤ 4 / 13 ∧
@@ -87,7 +87,7 @@ theorem middleTail_gap_bounds {h d : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
     refine (((hasDerivAt_id' t).pow 4).mul (hasDerivAt_id' t).neg.exp).congr_deriv ?_
     simp only [Pi.neg_apply, Pi.pow_apply, Nat.reduceSub, Nat.cast_ofNat]
     ring
-  have hmono : MonotoneOn F (Icc (13 / 4 : ℝ) (7 / 2)) := by
+  have hmono : MonotoneOn F (Icc (13 / 4 : ℝ) 4) := by
     apply monotoneOn_of_deriv_nonneg (convex_Icc _ _)
       (fun t _ ↦ (hDeriv t).continuousAt.continuousWithinAt)
       (fun t _ ↦ (hDeriv t).differentiableAt.differentiableWithinAt)
@@ -97,8 +97,8 @@ theorem middleTail_gap_bounds {h d : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
     have h₁ : 0 ≤ t := by linarith only [hlo]
     have h₂ : 0 ≤ 4 - t := by linarith only [hhi]
     positivity
-  have hF := hmono (show (13 / 4 : ℝ) ∈ Icc (13 / 4 : ℝ) (7 / 2) from ⟨le_rfl, by norm_num⟩)
-    (show d ∈ Icc (13 / 4 : ℝ) (7 / 2) from ⟨hd₀, hd₁⟩) hd₀
+  have hF := hmono (show (13 / 4 : ℝ) ∈ Icc (13 / 4 : ℝ) 4 from ⟨le_rfl, by norm_num⟩)
+    (show d ∈ Icc (13 / 4 : ℝ) 4 from ⟨hd₀, hd₁⟩) hd₀
   have hq' : q * d ≤ 1 := by
     simpa only [one_div] using (le_div_iff₀ hd).mp hqle
   have hqpow : q ^ 4 * d ^ 4 ≤ 1 := by
