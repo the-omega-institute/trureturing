@@ -52,7 +52,7 @@ The left summand has budget two. The inherited right summand has budgets one and
 
 **Definition 1.4 (terminal).**
 
-$$(\operatorname{HardinA229641Strip}.\operatorname{terminal}: \operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}\right)\right) \to \operatorname{Int}) = \operatorname{Sum}.\operatorname{elim}\left((0: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int}), \operatorname{HardinA229538Strip}.\operatorname{terminal}\right)$$
+$$\forall (C: \operatorname{Type}*), (\forall (D: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), ((\operatorname{HardinA229641Strip}.\operatorname{terminal}: \operatorname{Sum}\left(C, \operatorname{Sum}\left(D, Z\right)\right) \to \operatorname{Int}) = \operatorname{Sum}.\operatorname{elim}\left((0: C \to \operatorname{Int}), \operatorname{HardinA229538Strip}.\operatorname{terminal}\right))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.terminal` (`✓ std3`).
 
