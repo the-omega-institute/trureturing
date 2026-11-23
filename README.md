@@ -294,6 +294,15 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 [Read the explanation](Blueprint/D5/S0/Conventions/WDigits.md).
 `make help` lists the repository's command entry points.
 
+## Strict Omega mathematics
+
+The `trureturing` Lake package also provides `OmegaInit` and `OmegaMath` under
+`src/`. A strict Lean file starts with `prelude` and imports the module it uses.
+For the chapter 39 projective overlap, import `OmegaMath.Projective.Basic` to
+compute the reading or `OmegaMath.Projective` to use the scaling theorem.
+The audit replays each strict import closure in the Lean kernel and checks every
+declaration for axiom dependencies. [Module diagram, audit and rebuild measurements](src/README.md)
+
 ## Take part
 
 Start with one of the examples above. Reproduce it, improve its explanation,
