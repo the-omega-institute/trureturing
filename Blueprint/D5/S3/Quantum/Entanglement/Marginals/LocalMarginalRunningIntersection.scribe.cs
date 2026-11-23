@@ -19,8 +19,8 @@ internal sealed class LocalMarginalRunningIntersectionDocument : IScribeDocument
                     + "For any region, count the ordered legal pairs whose occupied union lies "
                     + "entirely within it. The rank over a field of the collected partial traces "
                     + "plus these counts on adjacent intersections equals the sum of the counts "
-                    + "on the individual regions exactly when each site with a legal singleton "
-                    + "word occurs in a consecutive block of regions.")),
+                    + "on the individual regions exactly when every region between two regions "
+                    + "containing a site with a legal singleton word also contains that site.")),
                     Paragraph(Text(
                     "By the covered-pair rank formula, it suffices to count the union of the "
                     + "sets of pairs supported on each region. When the first region meets the "
