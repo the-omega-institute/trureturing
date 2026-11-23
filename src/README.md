@@ -41,6 +41,12 @@ OmegaChecks.Audit --> Lean, Lean.Replay
 - 证明同比例放大坐标保持读数时，导入 `OmegaMath.Projective`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](OmegaMath/Projective.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
 - 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下表的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
 
+## 主仓 CI
+
+`OmegaInit` 和 `OmegaMath` 是 trureturing 的内部库。主仓的 `current` 检查从改动的 Lean 文件沿 `import` 找出受影响的模块，按根包的模块名构建 `src/` 下的代码，并为引用它的 D5 模块选择常规报告。缓存按同一模块名复用。`src/**/*.lean` 也适用主仓的文件行数检查。
+
+严格库的额外条件由根包的 Lake 测试驱动检查。CI 将受影响的内部模块传给驱动，驱动在空内核中重放严格模块的传递声明，并拒绝公理和严格库范围以外的导入。在仓库根目录运行 `lake test` 可检查完整的严格库，包括尚未被总入口引用的专题。驱动本身依赖官方 Lean API。[Lake 配置](../lakefile.toml) · [驱动](OmegaChecks/Audit.lean)
+
 ## 严格边界
 
 | 审计入口 | 传递闭包的模块数 | 声明数 | 传递公理数 |

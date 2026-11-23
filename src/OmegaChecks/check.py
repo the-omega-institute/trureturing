@@ -26,7 +26,7 @@ def build():
 
 
 def audit(name, modules, paths, error=None):
-    args = ["lean", "--run", "src/OmegaChecks/Audit.lean", name,
+    args = ["lean", "--run", "src/OmegaChecks/Audit.lean", "--exact", name,
             os.pathsep.join(map(str, paths)), *modules]
     result = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
     output = result.stdout + result.stderr
