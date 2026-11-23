@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalTrianglePhaseBoundDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalTrianglePhaseBoundDocument : IScribeDocumentDefin
             Describe.Lean(
                 DescribeId.Create("rt-principal-cross-dominance-phase"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance"),
                 H("Phase obstruction from cross-entry dominance"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -25,7 +25,7 @@ internal sealed class PrincipalTrianglePhaseBoundDocument : IScribeDocumentDefin
             Describe.Lean(
                 DescribeId.Create("rt-principal-near-real-quadratic"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance"),
                 H("Quadratic penalty for near-real triangles"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

@@ -6,9 +6,9 @@ One party's plaquette phase bounds the native diamond error without a common quo
 
 **Theorem 1.1 (Native one-party plaquette bound).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ The opposite diagonal gauges preserve the tested entry products. Only the first 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond`
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond.paired_one_party_native_diamond`
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)

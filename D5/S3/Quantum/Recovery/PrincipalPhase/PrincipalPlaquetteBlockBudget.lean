@@ -1,14 +1,14 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget
    mirror-E: none(waiver:principal-plaquette-block-budget)
    anchors: []
    utility: none
    digest: Coherent rows strengthen the one-party plaquette obstruction for native paired channels. -/
 
 
-import D5.S3.Quantum.Recovery.PrincipalPlaquetteGaugeBudget
-import D5.S3.Quantum.Recovery.PrincipalTrianglePhaseDiamond
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalPlaquetteGaugeBudget
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalTrianglePhaseDiamond
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic

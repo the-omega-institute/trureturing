@@ -6,9 +6,9 @@ A tagged pure input realizes a lossless matrix-unit test for the unhalved native
 
 **Theorem 1.1 (Lossless matrix-unit test).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The two reference tags yield half of the tested matrix-unit coefficient in the o
 
 **Theorem 1.2 (Native diamond-distance phase lower bound).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ For the specified channel coefficient correspondence and cross-entry dominance o
 
 **Theorem 1.3 (Paired-dilation application).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,8 +42,8 @@ The Gram of the actual correct-output dilation coordinates is positive. For an i
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower`
-- Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Foundation/FiniteDiamondDistance.md)
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound](PrincipalTrianglePhaseBound.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../../Foundation/FiniteDiamondDistance.md)
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound](PrincipalTrianglePhaseBound.md)

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-coherent-matrix-unit-row"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget."
                     + "matrixUnit_row_square_le"),
                 H("One squared diamond budget per coefficient row"),
                 StatementSource.WithoutFormula(),
@@ -24,7 +24,7 @@ internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-coherent-plaquette-budget"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget."
                     + "paired_improved_one_party_native_diamond"),
                 H("Improved one-party phase bound from coherent rows"),
                 StatementSource.WithoutFormula(),
@@ -44,7 +44,7 @@ internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-zero-plaquette-coherent-floor"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget."
                     + "paired_sharp_zero_plaquette_native_diamond"),
                 H("Zero-phase obstruction from the coherent sum and both row budgets"),
                 StatementSource.WithoutFormula(),
@@ -82,7 +82,7 @@ internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-signed-plaquette-quarter-sector"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget."
                     + "paired_quarter_plaquette_native_diamond"),
                 H("A strict quarter obstruction on a first-party phase sector"),
                 StatementSource.WithoutFormula(),

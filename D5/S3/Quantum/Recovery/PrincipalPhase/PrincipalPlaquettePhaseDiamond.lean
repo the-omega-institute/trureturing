@@ -1,12 +1,12 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond
    mirror-E: none(waiver:principal-plaquette-phase-diamond)
    anchors: []
    utility: none
    digest: A single party's plaquette phase controls the native diamond error by a paired opposite-gauge test. -/
 
-import D5.S3.Quantum.Recovery.PrincipalTrianglePhaseDiamond
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalTrianglePhaseDiamond
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalTrianglePhaseGeometryDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalTrianglePhaseGeometryDocument : IScribeDocumentDe
             Describe.Lean(
                 DescribeId.Create("rt-principal-three-fibre-phase"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase"),
                 H("Quantitative complex phase obstruction"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

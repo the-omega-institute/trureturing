@@ -1,12 +1,12 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalTrianglePhaseBound
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound
    mirror-E: none(waiver:principal-triangle-phase-geometry)
    anchors: []
    utility: none
    digest: The principal same-quotient Gram model has a quantitative near-real error lower bound. -/
 
-import D5.S3.Quantum.Recovery.PrincipalTrianglePhaseGeometry
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalTrianglePhaseGeometry
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic.FinCases

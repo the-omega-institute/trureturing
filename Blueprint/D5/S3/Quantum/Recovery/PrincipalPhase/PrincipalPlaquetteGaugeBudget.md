@@ -6,9 +6,9 @@ Checkerboard gauge and coherent error budgets for two contracting blocks.
 
 **Theorem 1.1 (Coherent block tests exclude a closed quarter sublevel).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ The checkerboard gauge projects the entry errors onto four real lines. Separate 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent`
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond](PrincipalPlaquettePhaseDiamond.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget.quarter_plaquette_of_signed_coherent`
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond](PrincipalPlaquettePhaseDiamond.md)

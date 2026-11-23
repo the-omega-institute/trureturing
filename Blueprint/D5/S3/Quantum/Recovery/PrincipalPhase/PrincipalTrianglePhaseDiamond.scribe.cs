@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalTrianglePhaseDiamondDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalTrianglePhaseDiamondDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-lossless-entry-witness"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.matrixUnit_le_diamondDistance"),
                 H("Lossless matrix-unit test"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -24,7 +24,7 @@ internal sealed class PrincipalTrianglePhaseDiamondDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-near-real-diamond"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.near_real_diamond_lower_of_dominance"),
                 H("Native diamond-distance phase lower bound"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -37,7 +37,7 @@ internal sealed class PrincipalTrianglePhaseDiamondDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-native-paired-dilation-phase"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower"),
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond.paired_near_real_diamond_lower"),
                 H("Paired-dilation application"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

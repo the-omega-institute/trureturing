@@ -6,9 +6,9 @@ Principal Gram data and cross-overlap dominance give a quadratic error penalty.
 
 **Theorem 1.1 (Phase obstruction from cross-entry dominance).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The positive Gram completion fills defects only inside each two-dimensional fibr
 
 **Theorem 1.2 (Quadratic penalty for near-real triangles).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,6 +30,6 @@ If all eight absolute triangle imaginary parts are at most eta, the matrix-unit 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance`
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry](PrincipalTrianglePhaseGeometry.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.near_real_error_lower_of_cross_dominance`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseBound.triangle_imag_of_cross_dominance`
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry](PrincipalTrianglePhaseGeometry.md)

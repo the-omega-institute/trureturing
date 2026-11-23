@@ -6,9 +6,9 @@ Three orthonormal pairs with all cross magnitudes above one half force a robust 
 
 **Theorem 1.1 (Quantitative complex phase obstruction).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ For three orthonormal pairs with each cross overlap at least m, where m is above
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry.three_fibre_complex_phase`

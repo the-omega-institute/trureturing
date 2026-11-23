@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalPlaquettePhaseDiamondDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalPlaquettePhaseDiamondDocument : IScribeDocumentDe
             Describe.Lean(
                 DescribeId.Create("rt-native-one-party-plaquette"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquettePhaseDiamond."
                     + "paired_one_party_native_diamond"),
                 H("Native one-party plaquette bound"),
                 StatementSource.WithoutFormula(),

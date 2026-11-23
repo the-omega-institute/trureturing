@@ -1,13 +1,13 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget
    mirror-E: none(waiver:principal-plaquette-gauge-budget)
    anchors: []
    utility: none
    digest: Checkerboard gauge and coherent error budgets for two contracting blocks. -/
 
 
-import D5.S3.Quantum.Recovery.PrincipalPlaquettePhaseDiamond
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalPlaquettePhaseDiamond
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic

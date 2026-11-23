@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalTrianglePhaseGeometry
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseGeometry
    mirror-E: none(waiver:principal-triangle-phase-geometry)
    anchors: []
    utility: none

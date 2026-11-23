@@ -1,13 +1,13 @@
-/- GID: D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond
+/- GID: D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond
+   mirror-B: D5/B/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A tagged pure input turns the phase bound into a native diamond-distance bound. -/
 
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
-import D5.S3.Quantum.Recovery.PrincipalTrianglePhaseBound
+import D5.S3.Quantum.Recovery.PrincipalPhase.PrincipalTrianglePhaseBound
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose

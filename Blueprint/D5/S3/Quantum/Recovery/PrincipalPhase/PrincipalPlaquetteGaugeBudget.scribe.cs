@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.PrincipalPhase;
 
 internal sealed class PrincipalPlaquetteGaugeBudgetDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class PrincipalPlaquetteGaugeBudgetDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("rt-signed-coherent-two-block-quarter"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget."
+                    "D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget."
                     + "quarter_plaquette_of_signed_coherent"),
                 H("Coherent block tests exclude a closed quarter sublevel"),
                 StatementSource.WithoutFormula(),

@@ -6,9 +6,9 @@ Coherent rows strengthen the one-party plaquette obstruction for native paired c
 
 **Theorem 1.1 (One squared diamond budget per coefficient row).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ A tagged rank-one test chooses the column amplitude vector proportional to all t
 
 **Theorem 1.2 (Improved one-party phase bound from coherent rows).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ Only the first party's phase is used. The native paired-channel identity, labell
 
 **Theorem 1.3 (Zero-phase obstruction from the coherent sum and both row budgets).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,9 +50,9 @@ In the per-fibre symmetric and antisymmetric bases, the Hermitian coefficient er
 
 **Theorem 1.4 (A strict quarter obstruction on a first-party phase sector).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ The flat input gives the lower bound 1/4 for this example. The complete calibrat
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
-- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget](PrincipalPlaquetteGaugeBudget.md)
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalPlaquetteGaugeBudget](PrincipalPlaquetteGaugeBudget.md)
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPhase/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)
