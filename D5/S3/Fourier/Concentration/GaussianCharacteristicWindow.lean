@@ -7,6 +7,7 @@
    digest: A Gaussian-weighted characteristic function controls mass in a translated real window. -/
 
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
 
 /-! Passing from a Fourier bound to the measure of a short interval. -/
@@ -138,5 +139,45 @@ theorem measureReal_closedWindow_le_gaussian_charFun
       mul_le_mul_of_nonneg_left hmass (Real.sqrt_nonneg _)
     _ = Real.exp 1 * (Real.sqrt Real.pi * ∫ x, K x ∂μ) := by ring
     _ ≤ _ := mul_le_mul_of_nonneg_left hbound (Real.exp_nonneg _)
+
+/-- A reciprocal quadratic envelope for a characteristic function bounds the
+mass of a closed window by a constant times its radius. -/
+theorem measureReal_closedWindow_le_of_quadratic_charFun
+    (μ : Measure ℝ) [IsFiniteMeasure μ] (b : ℝ) {r k : ℝ} (hr : 0 < r) (hk : 0 < k)
+    (henvelope : ∀ t : ℝ, ‖charFun μ t‖ ≤ (1 + k * t ^ 2)⁻¹) :
+    μ.real {x | |x - b| ≤ r} ≤ Real.exp 1 * Real.sqrt Real.pi * r / (2 * Real.sqrt k) := by
+  let a := 2 * Real.sqrt k / r
+  have ha : 0 < a := div_pos (mul_pos (by norm_num) (Real.sqrt_pos.2 hk)) hr
+  have hscale (t : ℝ) : k * (2 * t / r) ^ 2 = (a * t) ^ 2 := by
+    dsimp [a]
+    field_simp
+    nlinarith [Real.sq_sqrt hk.le]
+  have hdom : Integrable (fun t : ℝ => (1 + (a * t) ^ 2)⁻¹) :=
+    integrable_inv_one_add_mul_sq ha.ne'
+  have hle (t : ℝ) :
+      Real.exp (-t ^ 2) * ‖charFun μ (2 * t / r)‖ ≤ (1 + (a * t) ^ 2)⁻¹ := by
+    have hGauss : Real.exp (-t ^ 2) ≤ 1 :=
+      Real.exp_le_one_iff.2 (neg_nonpos.mpr (sq_nonneg _))
+    calc
+      _ ≤ 1 * ‖charFun μ (2 * t / r)‖ := mul_le_mul_of_nonneg_right hGauss (norm_nonneg _)
+      _ ≤ _ := by rw [one_mul, ← hscale]; exact henvelope _
+  have hIntegrable : Integrable (fun t : ℝ => Real.exp (-t ^ 2) * ‖charFun μ (2 * t / r)‖) :=
+    hdom.mono' (by fun_prop) (ae_of_all _ fun t => by
+      rw [Real.norm_of_nonneg (mul_nonneg (Real.exp_nonneg _) (norm_nonneg _))]
+      exact hle t)
+  have h := (measureReal_closedWindow_le_gaussian_charFun μ b hr).trans
+    (mul_le_mul_of_nonneg_left (integral_mono hIntegrable hdom hle) (Real.exp_nonneg _))
+  rw [integral_univ_inv_one_add_mul_sq, abs_of_pos ha] at h
+  apply (le_div_iff₀ (mul_pos (by norm_num) (Real.sqrt_pos.2 hk))).2
+  have hp : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 Real.pi_pos
+  apply le_of_mul_le_mul_left _ hp
+  calc
+    _ ≤ (Real.exp 1 * (Real.pi / a)) * (2 * Real.sqrt k) := by
+      rw [← mul_assoc]
+      exact mul_le_mul_of_nonneg_right h (by positivity)
+    _ = _ := by
+      dsimp [a]
+      field_simp
+      nlinarith [Real.sq_sqrt Real.pi_nonneg]
 
 end D5.S3.Fourier.Concentration.GaussianCharacteristicWindow
