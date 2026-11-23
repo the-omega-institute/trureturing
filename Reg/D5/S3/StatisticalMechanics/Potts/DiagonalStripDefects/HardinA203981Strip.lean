@@ -52,26 +52,25 @@ private theorem rejected_at (h : arena.Law rejected) (n : ℕ) : False := by
   linarith
 private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 0
 private theorem count_distinct : a 1 ≠ a 2 := by
-  let t := HardinA203981StripData.T
-  let v := HardinA203981StripData.initial
   let e : Fin 15 → ℤ := 1
-  have evaluate (i : Fin 21) :
-      dotProduct v ((t ^ i.val).mulVec e) =
-        dotProduct (HardinA203981StripCertificate.W i) e :=
+  have evaluate (n : ℕ) (hn : n < 21) :
+      dotProduct HardinA203981StripData.initial ((HardinA203981StripData.T ^ n).mulVec 1) =
+        dotProduct (HardinA203981StripCertificate.W ⟨n, hn⟩) e :=
     (Matrix.dotProduct_mulVec _ _ _).trans
       (congrArg (fun w => dotProduct w e)
-        ((forward_eq t v i.val).symm.trans (HardinA203981StripCertificate.forward_table i)))
+        ((forward_eq HardinA203981StripData.T HardinA203981StripData.initial n).symm.trans
+          (HardinA203981StripCertificate.forward_table ⟨n, hn⟩)))
   have different : dotProduct (HardinA203981StripCertificate.W 1) e ≠
       dotProduct (HardinA203981StripCertificate.W 2) e := by
     decide +kernel
+  have first : dotProduct HardinA203981StripData.initial ((HardinA203981StripData.T ^ (1 : ℕ)).mulVec 1) = 6 * (a 1 : ℤ) := by
+    simpa only [Nat.one_ne_zero, ite_false, add_zero] using counting_bridge 1
+  have second : dotProduct HardinA203981StripData.initial ((HardinA203981StripData.T ^ (2 : ℕ)).mulVec 1) = 6 * (a 2 : ℤ) := by
+    simpa only [Nat.succ_ne_zero 1, ite_false, add_zero] using counting_bridge 2
   intro equal
-  apply different
-  have first := counting_bridge 1
-  have second := counting_bridge 2
-  rw [evaluate 1, equal] at first
-  rw [evaluate 2] at second
-  simp only [Nat.one_ne_zero, show (2 : ℕ) ≠ 0 by decide, if_false, add_zero] at first second
-  exact first.trans second.symm
+  exact different ((evaluate 1 (by decide)).symm.trans
+    (first.trans ((congrArg (fun k : ℕ => (6 : ℤ) * (k : ℤ)) equal).trans
+      (second.symm.trans (evaluate 2 (by decide))))))
 
 def family : Registration arena (type_of% @result) where
   actual := readout
@@ -129,10 +128,12 @@ abbrev arena : Arena where
         (if m = 0 then 3 else 0) = 6 * (r.readout () () m : ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h 1
-  have ha := counting_bridge 1
-  simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
-  linarith
+  have rejectAt (m : ℕ) : False := by
+    have hb := h m
+    simp only [rejected, realize, Nat.cast_add, Nat.cast_one, mul_add, mul_one] at hb
+    have equal := (counting_bridge m).symm.trans hb
+    exact (by decide : (0 : ℤ) ≠ 6) (add_left_cancel ((add_zero _).trans equal))
+  exact rejectAt 1
 
 def family : Registration arena (type_of% @counting_bridge) where
   actual := readout
@@ -204,11 +205,14 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hx := h 1 0
-  change literalCount (q := 3) ∅ (betw 6) 0 (1 + 1) + 1 +
-    (if (0 : ℕ) = 1 * 10 then 3 else 0) = _ at hx
-  have ha := scale_count 1 0
-  omega
+  have rejectAt (m d : ℕ) : False := by
+    have hx := h m d
+    change literalCount (q := 3) ∅ (betw 6) d (m + 1) + 1 +
+      (if d = m * 10 then 3 else 0) = _ at hx
+    have reordered := Nat.add_right_comm
+      (literalCount (q := 3) ∅ (betw 6) d (m + 1)) (if d = m * 10 then 3 else 0) 1
+    exact Nat.succ_ne_self _ (reordered.trans (hx.trans (scale_count m d).symm))
+  exact rejectAt 1 0
 
 private theorem literal_ne_of_count_ne (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
     (different : a m ≠ a n) :
