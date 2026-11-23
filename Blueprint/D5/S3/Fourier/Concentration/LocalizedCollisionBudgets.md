@@ -25,3 +25,4 @@ Use the common perturbation theorem for these pair probabilities. Finite margina
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/LocalizedCollisionBudgets.exists_continuous_common_nearby_localized_bounds`
+- Dependency: [D5/S3/Fourier/Concentration/UniformPerturbationEuclidean](UniformPerturbationEuclidean.md)
