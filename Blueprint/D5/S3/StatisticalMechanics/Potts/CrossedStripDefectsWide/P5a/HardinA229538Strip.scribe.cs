@@ -171,8 +171,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var cost=Own("cost",p,q);
         var left=If(And(Le(cost,d),Eq(Own("residual",q,Sub(d,cost)),s)),N(1),N(0));
         var rhs=If(Eq(Call("Sum.elim",Q("id"),Q("id"),s),q),Own("transfer",Own("residual",p,d),s),N(0));
-        var mismatch = And(Lt(N(1), d), And(Lt(N(0), cost), And(Le(cost, d),
-            Or(Eq(s, Own("residual", q, Sub(d, cost))), And(Eq(cost, N(1)), Eq(s, Call("Sum.inr", q))))));
+        var affordable = And(Lt(N(1), d), And(Lt(N(0), cost), Le(cost, d)));
+        var exceptional = Or(Eq(s, Own("residual", q, Sub(d, cost))),
+            And(Eq(cost, N(1)), Eq(s, Call("Sum.inr", q))));
+        var mismatch = And(affordable, exceptional);
         return All("p", Column(), All("q", Column(), All("d", Q("Nat"), All("s", Columns(),
             Iff(Ne(AsInt(left), rhs), mismatch)))));
     }
@@ -288,8 +290,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Eq(App(Call("Matrix.mulVec", Own("oneDefect"), V("w")), V("p")),
                 Call("List.sum", Call("List.map", V("w"), Own("movesOne", V("p")))))));
         return All("R", Seq(Q("Type"), Star), Seq(
-            OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
-            OpenBracket, Call("MulZeroOneClass", scalar), CloseBracket, Sp, equation));
+            OpenBracket, Call("NonAssocSemiring", scalar), CloseBracket, Sp, equation));
     }
     private static Formula WeightsStep()
     {

@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
-edges: proof_shape=bind-only; consumers=HardinA229538Strip.canonicalCount
+edges: proof_shape=bind-only; consumers=HardinA229538Strip.a
 mem_edges: proof_shape=bind-only; consumers=HardinA229641Strip.result._simp_1_6
 edges_eq: proof_shape=content; consumers=HardinA229538Strip.edges_card, HardinA229538Strip.cost_countCut
 edges_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion, HardinA229538Strip.small_budget_ne_cut_total, HardinA229538Strip.result, HardinA229641Strip.result
@@ -90,12 +90,16 @@ import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.GroupWithZero.Action.Defs
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Ring.Defs
+import Mathlib.Basic.IsEmpty.Defs
+import Mathlib.Basic.Logic.Basic
+import Mathlib.Basic.Unique
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Dedup
@@ -114,6 +118,7 @@ import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Nat.Init
 import Mathlib.LinearAlgebra.Matrix.Defs
+import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -496,7 +501,7 @@ private theorem moves_one_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-theorem step_one {R : Type*} [AddCommMonoid R] [MulZeroOneClass R]
+theorem step_one {R : Type*} [NonAssocSemiring R]
     (w : Column → R) (p : Column) :
     oneDefect.mulVec w p = ((movesOne p).map w).sum := by
   classical
@@ -582,12 +587,11 @@ theorem zero_values (n : Fin 23) :
                   DefectTransfer.forward T.transpose (1 : Column → ℤ) (1 + k.val) := by
             simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose]
               using HardinA233178Chromatic.vector_certificate
-          have shifted := fun v => DefectTransfer.forward_shift T.transpose
+          refine dotProduct_eq _ _ fun v => ?_
+          have shifted := DefectTransfer.forward_shift T.transpose
             (1 : Column → ℤ) v 10 1 HardinA233178Chromatic.coefficients forwardCertificate (m - 11)
-          funext p
-          simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec, h₁, h₂,
-            single_one_dotProduct, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-            using shifted (Pi.single p 1)
+          simpa only [dotProduct_comm _ v, dotProduct_sum, dotProduct_smul, smul_eq_mul,
+            ← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec, h₁, h₂] using shifted
         rw [relation]
         have prior (k : Fin 10) : m - 10 + k.val < m := by
           simpa only [Fin.val_natAdd, Nat.sub_add_cancel ((Nat.le_add_right 10 2).trans large)]
@@ -926,7 +930,7 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
   by_cases hempty : k = 0 ∨ n = 0
   · letI : IsEmpty C := ⟨fun (i, j) => hempty.elim
       (fun hk => Fin.elim0 (hk ▸ i)) (fun hn => Fin.elim0 (hn ▸ j))⟩
-    letI : Unique (C → Fin 3) := ⟨⟨fun _ => 0⟩, fun _ => funext isEmptyElim⟩
+    let : Unique (C → Fin 3) := ⟨⟨fun _ => 0⟩, fun _ => funext isEmptyElim⟩
     have hK (A : C → Fin 3) : K A := fun x => isEmptyElim x
     have ht : t = s := Finset.filter_true_of_mem fun A _ => hK A
     have hP (A : C → Fin 3) : P A ↔ D = 0 := by
@@ -936,13 +940,16 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
       · simp [P, defects, eq_comm]
       · have hk : k = 0 := hempty.resolve_right (Nat.succ_ne_zero _)
         subst k
+        change defects H V (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin 0 => (0 : Fin 3)) = D ↔ D = 0
         rw [Finset.eq_empty_of_isEmpty H, Finset.eq_empty_of_isEmpty V]
-        simp [P, List.ofFn_const, DefectTransfer.constant_defects, eq_comm]
+        rw [List.ofFn_const, DefectTransfer.constant_defects]
+        simp only [Finset.card_empty, Nat.add_zero, Nat.mul_zero, eq_comm]
     have hs : s = (Finset.univ : Finset (C → Fin 3)).filter (fun _ => D = 0) := by
       ext A
       simp only [s, Finset.mem_filter, hP]
     rw [ht, hs, Finset.filter_const]
-    by_cases hD : D = 0 <;> simp [hempty, hD, Fintype.card_unique]
+    have hcard : (Finset.univ : Finset (C → Fin 3)).card = 1 := Fintype.card_unique
+    by_cases hD : D = 0 <;> simp [hempty, hD, hcard]
   have hk : k ≠ 0 := fun h => hempty (Or.inl h)
   have hn : n ≠ 0 := fun h => hempty (Or.inr h)
   rw [ite_eq_right hempty]
@@ -963,14 +970,13 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
       (fun A => P A ∧ NC A) invariant (fun _ h => h.2)
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at h
     simpa only [s, t, K, Finset.filter_filter, and_right_comm] using h
-  letI : Nonempty C := ⟨(0, 0)⟩
+  let : Nonempty C := ⟨(0, 0)⟩
   let const : Fin 3 ↪ (C → Fin 3) := ⟨Function.const C, Function.const_injective⟩
   have constant_array (A : C → Fin 3) (h : ¬ NC A) : A = const (A (0, 0)) :=
     funext fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
   have constant_budget (c : Fin 3) : P (const c) ↔ D = H.card + m * (V.card + H.card) := by
     change defects H V (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin (k + 1) => c) = D ↔ _
-    simp only [List.ofFn_const, DefectTransfer.constant_defects, Finset.card_empty,
-      Nat.zero_add, Nat.add_zero, eq_comm]
+    simp only [List.ofFn_const, DefectTransfer.constant_defects, eq_comm]
   have hS : s.filter (fun A => ¬ NC A) =
       if D = H.card + m * (V.card + H.card) then Finset.univ.map const else ∅ := by
     ext A

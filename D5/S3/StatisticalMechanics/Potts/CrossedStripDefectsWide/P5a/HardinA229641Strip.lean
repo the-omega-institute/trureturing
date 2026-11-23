@@ -78,12 +78,12 @@ import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Action.Defs
-import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Order.SuccPred
+import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Fin.SuccPred
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
@@ -391,7 +391,7 @@ private theorem moves_two_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-private theorem step_two {R : Type*} [AddCommMonoid R] [MulZeroOneClass R]
+private theorem step_two {R : Type*} [NonAssocSemiring R]
     (w : Column → R) (p : Column) :
     twoDefect.mulVec w p = ((movesTwo p).map w).sum := by
   classical
