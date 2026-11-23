@@ -66,7 +66,10 @@ internal sealed class ChakrabortyPatraIdealZeroProductRefutationDocument : IScri
                         + "complete annihilating-ideal graphs. Adjacency accounts for products of "
                         + "distinct nonzero proper ideals. The ordered count here also uses the "
                         + "diagonal and the products involving zero and the unit ideal."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chakraborty-patra-2026-ideal-zero-product-conjecture-4-2"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ProbabilityFormula()
     {

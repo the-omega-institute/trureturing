@@ -34,6 +34,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chakraborty-patra-2026-ideal-zero-product-conjecture-4-2` (refuted) by `D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chakraborty-patra-2026-ideal-zero-product-conjecture-4-2","declaration_gid":"D5/S0/Certificates/Algebra/ChakrabortyPatraIdealZeroProductRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sukrit Chakraborty and Sourav Kanti Patra (2026). *Ideal Zero-Product Probability in Finite Commutative Rings*. DOI: [10.48550/arXiv.2608.14618](https://doi.org/10.48550/arXiv.2608.14618). URL: <https://arxiv.org/html/2608.14618v1#S4.Thmtheorem2>.
