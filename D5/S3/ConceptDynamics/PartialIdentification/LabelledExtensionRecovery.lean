@@ -4,9 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Complete label histories recover finite induced-poset extensions exactly for chain fibers. -/
+   digest: Complete label histories recover finite induced-poset extensions for chain fibers. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
+
+/-! Label recovery for complete extensions of a finite induced partial order. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -43,7 +45,7 @@ private theorem recover (label : E → A) (l m : List E)
       subst b
       congr 1
       exact ih s (List.pairwise_cons.mp hl).2 (List.pairwise_cons.mp hm).2
-        (List.perm_cons.mp hp)
+        (List.Perm.cons_inv hp)
         (fun x hx y hy => hc x (List.mem_cons_of_mem _ hx) y (List.mem_cons_of_mem _ hy))
         (List.cons.inj hw).2
 
@@ -65,7 +67,7 @@ private theorem extension_map_iff (F : Finset E) (l : List {e // e ∈ F}) :
         exact List.mem_map.mpr ⟨⟨e, h⟩, he _, rfl⟩
     · exact List.pairwise_map.mpr hp
   · rintro ⟨hn, he, hp⟩
-    refine ⟨List.Nodup.of_map hn, ?_, List.pairwise_map.mp hp⟩
+    refine ⟨List.Nodup.of_map Subtype.val hn, ?_, List.pairwise_map.mp hp⟩
     intro e
     obtain ⟨x, hx, hxe⟩ := List.mem_map.mp ((he e.val).mpr e.property)
     exact (Subtype.ext hxe) ▸ hx
@@ -83,7 +85,9 @@ private theorem extension_append {I K J : Set E} (hK : IsLowerSet K)
     (hp : ExtensionList I K p) (hq : ExtensionList K J q) :
     ExtensionList I J (p ++ q) := by
   refine ⟨List.nodup_append.mpr ⟨hp.1, hq.1, ?_⟩, ?_, ?_⟩
-  · exact List.disjoint_left.mpr fun x hx hy => ((hq.2.1 x).mp hy).2 ((hp.2.1 x).mp hx).1
+  · intro x hx y hy hxy
+    subst y
+    exact ((hq.2.1 x).mp hy).2 ((hp.2.1 x).mp hx).1
   · intro x
     constructor
     · intro hx
@@ -120,8 +124,9 @@ private theorem incomparable_collision [Finite E] (a b : E)
     · exact lt_irrefl _ h
   have insert_lower : ∀ x ∈ ({a, b} : Set E), IsLowerSet (insert x K) := by
     intro x hx y z hzy hy
-    rcases hy with rfl | hy
-    · by_cases hzx : z = x
+    rcases hy with hy | hy
+    · subst y
+      by_cases hzx : z = x
       · exact Or.inl hzx
       · right
         rcases hx with rfl | hx
@@ -132,8 +137,9 @@ private theorem incomparable_collision [Finite E] (a b : E)
     · exact Or.inr (hK hzy hy)
   have hKab : IsLowerSet (insert a (insert b K)) := by
     intro x y hyx hx
-    rcases hx with rfl | hx
-    · by_cases hya : y = a
+    rcases hx with hx | hx
+    · subst x
+      by_cases hya : y = a
       · exact Or.inl hya
       · exact Or.inr (Or.inr (Or.inl (lt_of_le_of_ne hyx hya)))
     · exact Or.inr (insert_lower b (by simp) hyx hx)
@@ -157,9 +163,9 @@ private theorem incomparable_collision [Finite E] (a b : E)
     · rintro ⟨hx, hxK⟩
       exact hx.elim Or.inl (fun h => h.elim Or.inr (fun h => (hxK h).elim))
   have pair_ba : ExtensionList K (insert a (insert b K)) [b, a] := by
-    refine ⟨by simp [habne], ?_, by simp [hab]⟩
+    refine ⟨by simp [Ne.symm habne], ?_, by simp [hab]⟩
     intro x
-    simpa only [List.mem_cons, List.not_mem_nil, or_false, or_comm] using pair_ab.2.1 x
+    simpa only [List.mem_cons, List.not_mem_nil, or_false, false_or, or_comm] using pair_ab.2.1 x
   have hsub : K ⊆ insert a (insert b K) := fun _ h => Or.inr (Or.inr h)
   have left := extension_append hK (Set.empty_subset _) hsub hpe pair_ab
   have right := extension_append hK (Set.empty_subset _) hsub hpe pair_ba
@@ -186,7 +192,7 @@ theorem result (F : Finset E) (label : E → A) :
       (fun e => (ht.2.1 e).trans (hs.2.1 e).symm)
     have hts : t = s := recover (fun e => label e.val) t s ht.2.2 hs.2.2 hp
       (fun a _ b _ => hc a.val a.property b.val b.property)
-      (by simpa only [← htl, ← hsm, List.map_map] using hw)
+      (by simpa only [← htl, ← hsm, List.map_map, Function.comp_def] using hw)
     exact htl.symm.trans ((congrArg (List.map Subtype.val) hts).trans hsm)
   · intro hi a ha b hb hablabel
     by_contra hc
@@ -196,7 +202,7 @@ theorem result (F : Finset E) (label : E → A) :
     let y : {e // e ∈ F} := ⟨b, hb⟩
     obtain ⟨p, s, hl, hm⟩ := incomparable_collision x y hab hba
     have heq := hi _ _ ((extension_map_iff F _).mp hl)
-      ((extension_map_iff F _).mp hm) (by simp [List.map_map, hablabel, x, y])
+      ((extension_map_iff F _).mp hm) (by simp [hablabel, x, y])
     have eqsub : p ++ x :: y :: s = p ++ y :: x :: s :=
       (List.map_injective_iff.mpr Subtype.val_injective) heq
     have hxy : x = y := (List.cons.inj (List.append_cancel_left eqsub)).1
