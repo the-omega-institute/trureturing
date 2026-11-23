@@ -13,12 +13,14 @@ import Mathlib.Data.Finset.Sort
 namespace Rossi
 open Finset D5.S3.Combinatorics.Graph.PrefixHamming
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 structure CutChain (n : ℕ) where
   cuts : Finset (Finset (Fin n))
   proper : ∀ c ∈ cuts, 0 < c.card ∧ c.card < n
   comparable : ∀ c ∈ cuts, ∀ d ∈ cuts, c ⊆ d ∨ d ⊆ c
 
-@[ext] theorem CutChain.ext_cuts {n : ℕ} {c d : CutChain n}
+@[ext (iff := false)] theorem CutChain.ext_cuts {n : ℕ} {c d : CutChain n}
     (h : c.cuts = d.cuts) : c = d := by cases c; cases d; cases h; rfl
 
 instance {n : ℕ} : PartialOrder (CutChain n) where
@@ -91,14 +93,15 @@ theorem faceInf_glb {n : ℕ} (x y : Face n) : IsGLB {x, y} (faceInf x y) := by
   let v : Face n := if h : compatible x y then ↑(unionChain x y h) else ⊥
   change (v ≤ (x : Face n) ∧ v ≤ (y : Face n)) ∧
     (∀ z : Face n, z ≤ (x : Face n) ∧ z ≤ (y : Face n) → z ≤ v)
-  dsimp only [v]
-  split
-  · exact ⟨⟨coe_le_coe.2 subset_union_left, coe_le_coe.2 subset_union_right⟩,
+  unfold v
+  by_cases h : compatible x y
+  · rw [dite_eq_left h]
+    exact ⟨⟨coe_le_coe.2 subset_union_left, coe_le_coe.2 subset_union_right⟩,
       fun z ⟨hx, hy⟩ => by
         cases z using WithBot.recBotCoe
         · exact bot_le
         exact coe_le_coe.2 (union_subset (coe_le_coe.1 hx) (coe_le_coe.1 hy))⟩
-  · rename_i h
+  · rw [dite_eq_right h]
     refine ⟨⟨bot_le, bot_le⟩, ?_⟩
     rintro z ⟨hx, hy⟩
     cases z using WithBot.recBotCoe

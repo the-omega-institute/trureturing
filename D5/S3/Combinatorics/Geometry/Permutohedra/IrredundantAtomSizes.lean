@@ -13,34 +13,21 @@ import D5.S3.Combinatorics.Geometry.Permutohedra.PrefixExchanges
 namespace Rossi
 open Finset D5.S3.Combinatorics.Graph.PrefixHamming
 
-private theorem exists_surjection {α : Type*} [Fintype α] {k : ℕ}
-    (hk : 0 < k) (h : k ≤ Fintype.card α) : ∃ f : α → Fin k, Function.Surjective f := by
-  classical
-  let e := Fintype.equivFin α
-  let f (a : α) : Fin k := if h' : (e a).val < k then ⟨(e a).val, h'⟩ else ⟨0, hk⟩
-  refine ⟨f, fun i => ⟨e.symm (Fin.castLE h i), ?_⟩⟩
-  apply Fin.ext
-  simp [f, i.isLt]
-
-private theorem not_fixed_for_different_labels {k : ℕ} (hk : 2 ≤ k) (i : Fin k) :
-    ∃ j : Fin k, j ≠ i := by
-  let a : Fin k := ⟨0, by omega⟩
-  let b : Fin k := ⟨1, by omega⟩
-  by_cases h : a = i
-  · exact ⟨b, h ▸ (fun h' => by have := congrArg Fin.val h'; simp [a, b] at this)⟩
-  · exact ⟨a, h⟩
-
 private theorem spectrum_construct {n k : ℕ} (hn : 3 ≤ n) (x : CutChain n)
     (hk : 2 ≤ k) (hkr : (k : ℤ) ≤ rank (x : Face n)) :
     ∃ A : Finset (Face n), A.card = k ∧ (∀ a ∈ A, IsAtom a) ∧
       A.sup id = (x : Face n) ∧ ∀ B : Finset (Face n), B ⊂ A → B.sup id < (x : Face n) := by
   classical
+  letI : Nontrivial (Fin k) := Fin.nontrivial_iff_two_le.mpr hk
   obtain ⟨p, hp⟩ := exists_flag_extension x
   have hcount : k ≤ Fintype.card ↥(free x) := by
     rw [Fintype.card_coe]
     have := card_free (by omega) x
     omega
-  obtain ⟨label, hlabel⟩ := exists_surjection (by omega) hcount
+  obtain ⟨embed⟩ : Nonempty (Fin k ↪ ↥(free x)) :=
+    Function.Embedding.nonempty_of_card_le (by simpa only [Fintype.card_fin] using hcount)
+  let label : ↥(free x) → Fin k := Function.invFun embed
+  have hlabel : Function.Surjective label := Function.invFun_surjective embed.injective
   let ds (i : Fin k) : List (Rank n) :=
     ((free x).attach.filter fun t => label t = i).toList.map Subtype.val
   have nodup (i : Fin k) : (ds i).Nodup :=
@@ -109,7 +96,7 @@ private theorem spectrum_construct {n k : ℕ} (hn : 3 ≤ n) (x : CutChain n)
       let d : Rank n := ⟨⟨c.card, hlt⟩, hpos⟩
       by_cases hf : d ∈ free x
       · let t : ↥(free x) := ⟨d, hf⟩
-        obtain ⟨j, hj⟩ := not_fixed_for_different_labels hk (label t)
+        obtain ⟨j, hj⟩ := exists_ne (label t)
         have hi := (changed (label t) d).2 ⟨hf, rfl⟩
         have he (l : Fin k) : prefixSet (q l) c.card = c :=
           (mem_flag (q l) hlt hpos).1 (h _ ((hA _).2 ⟨l, rfl⟩))

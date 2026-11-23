@@ -12,6 +12,8 @@ import D5.S3.Combinatorics.Geometry.Permutohedra.FaceFlags
 namespace Rossi
 open Finset D5.S3.Combinatorics.Graph.PrefixHamming
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 /-- The fibers of a surjective labeling are the nonempty blocks in their given order. -/
 structure OrderedPartition (n : ℕ) where
   separators : ℕ
