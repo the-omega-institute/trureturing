@@ -14,6 +14,20 @@ triage: anchor
 
 # Laplacian eigenvectors of generically weighted graphs have pairwise distinct coordinates
 
+## Verified locator
+
+The source record is identified by [DOI 10.48550/arXiv.2611.21979](https://doi.org/10.48550/arXiv.2611.21979).
+The locators below refer to arXiv v1. <https://arxiv.org/abs/2611.21979v1>
+
+- Section 7, printed page 14, asks about analogues of Theorem 1.2 for
+  normalized Laplacians, fixed-support adjacency matrices, and directed
+  graphs with a spanning diverging tree. [Question 7.5 (Other operators)](https://arxiv.org/html/2611.21979v1#S7.Thmtheorem5)
+- Section 1.2, printed page 2, defines separating weights and states the
+  polynomial criterion for the combinatorial Laplacian of a connected
+  simple graph on at least two vertices. [Definition 1.1](https://arxiv.org/html/2611.21979v1#S1.Thmtheorem1) · [Theorem 1.2](https://arxiv.org/html/2611.21979v1#S1.Thmtheorem2)
+
+## Source scope
+
 [Definition 1.1](https://arxiv.org/html/2611.21979v1#S1.Thmtheorem1) requires
 simple spectrum, nonvanishing of every coordinate of every eigenvector,
 and pairwise distinct coordinates for each eigenvector orthogonal to the
