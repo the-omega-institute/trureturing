@@ -4,12 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The six ordered gap factors for maximum-letter insertion and their bivariate specialization. -/
+   digest: Ordered gap factors for maximum-letter insertion. -/
 
 import D5.S1.Words.UnaryGapWords
 import D5.S3.Combinatorics.ShankarWords.ActualWordExtremal
+import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.Tactic.Ring
+
+/-! The boundary gaps, interior comparisons and old peaks determine the insertion weight. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,16 +21,17 @@ namespace D5.S3.Combinatorics.Parking.DescentRefinement
 
 open D5.S1.Words.UnaryGapWords
 open PowerSeries
+open Finset (antidiagonal)
 open scoped BigOperators
 
 inductive Edge where
   | up | tie | down
   deriving DecidableEq, Repr
 
-def edge (a b : Nat) : Edge :=
+private def edge (a b : Nat) : Edge :=
   if a < b then .up else if b < a then .down else .tie
 
-def edgesFrom (a : Nat) : List Nat → List Edge
+private def edgesFrom (a : Nat) : List Nat → List Edge
   | [] => []
   | b :: bs => edge a b :: edgesFrom b bs
 
@@ -44,7 +48,7 @@ def ties (w : List Nat) : Nat :=
 
 open D5.S3.Combinatorics.ShankarWords.ActualWordExtremal (descents)
 
-def peakEdges (wasUp : Bool) : List Edge → Nat
+private def peakEdges (wasUp : Bool) : List Edge → Nat
   | [] => 0
   | e :: es => (if wasUp && decide (e = .down) then 1 else 0) +
       peakEdges (decide (e = .up)) es
@@ -59,7 +63,7 @@ def peakEdges (wasUp : Bool) : List Edge → Nat
   · simp [edge]
   · simp [edge, h, Nat.not_lt_of_ge (Nat.le_of_lt h)]
 
-theorem peakEdges_eq (w : List Nat) : peakEdges false (edges w) = peaks w := by
+private theorem peakEdges_eq (w : List Nat) : peakEdges false (edges w) = peaks w := by
   induction w using peaks.induct with
   | case1 a b c cs ih =>
     simp only [edges, edgesFrom, peakEdges] at ih ⊢
@@ -100,15 +104,15 @@ variable {R : Type*} [CommSemiring R]
 def wordWeight (t u v : R) (w : List Nat) : R :=
   t ^ peaks w * u ^ ties w * v ^ descents w
 
-def edgeWeight (u v : R) : Edge → R
+private def edgeWeight (u v : R) : Edge → R
   | .up => 1
   | .tie => u
   | .down => v
 
-def peakFactor (t : R) (wasUp : Bool) (e : Edge) : R :=
+private def peakFactor (t : R) (wasUp : Bool) (e : Edge) : R :=
   if wasUp && decide (e = .down) then t else 1
 
-def weightFrom (t u v : R) (wasUp : Bool) : List Edge → R
+private def weightFrom (t u v : R) (wasUp : Bool) : List Edge → R
   | [] => 1
   | e :: es => (peakFactor t wasUp e * edgeWeight u v e) *
       weightFrom t u v (decide (e = .up)) es
@@ -123,23 +127,23 @@ private theorem weightFrom_eq (t u v : R) (wasUp : Bool) (es : List Edge) :
       simp [weightFrom, peakEdges, peakFactor, edgeWeight, ih, pow_succ, pow_add,
         mul_assoc, mul_comm, mul_left_comm]
 
-theorem wordWeight_eq (t u v : R) (w : List Nat) :
+private theorem wordWeight_eq (t u v : R) (w : List Nat) :
     wordWeight t u v w = weightFrom t u v false (edges w) := by
   rw [weightFrom_eq, peakEdges_eq, (count_edges w).1, (count_edges w).2, wordWeight]
 
-def leftExpansion : Nat → List Edge
+private def leftExpansion : Nat → List Edge
   | 0 => []
   | j + 1 => List.replicate j .tie ++ [.down]
 
-def rightExpansion : Nat → List Edge
+private def rightExpansion : Nat → List Edge
   | 0 => []
   | j + 1 => .up :: List.replicate j .tie
 
-def expansion (e : Edge) : Nat → List Edge
+private def expansion (e : Edge) : Nat → List Edge
   | 0 => [e]
   | j + 1 => .up :: List.replicate j .tie ++ [.down]
 
-def expandedTail : List Edge → List Nat → List Edge
+private def expandedTail : List Edge → List Nat → List Edge
   | [], hs => rightExpansion (hs.headD 0)
   | e :: es, hs => expansion e (hs.headD 0) ++ expandedTail es hs.tail
 
@@ -197,26 +201,26 @@ private theorem edges_gap (m a : Nat) (cs : List Nat) (j : Nat) (hs : List Nat)
     rw [he]
     simp
 
-def boundaryWeight (u : R) : Nat → R
+private def boundaryWeight (u : R) : Nat → R
   | 0 => 1
   | j + 1 => u ^ j
 
-def leftWeight (u v : R) : Nat → R
+private def leftWeight (u v : R) : Nat → R
   | 0 => 1
   | j + 1 => u ^ j * v
 
-def rightWeight (u : R) : Nat → R := boundaryWeight u
+private def rightWeight (u : R) : Nat → R := boundaryWeight u
 
-def occupied (t u : R) : Nat → R
+private def occupied (t u : R) : Nat → R
   | 0 => 0
   | 1 => t
   | j + 2 => u ^ (j + 1)
 
-def singleWeight (t u v : R) (e : Edge) : Nat → R
+private def singleWeight (t u v : R) (e : Edge) : Nat → R
   | 0 => edgeWeight u v e
   | j + 1 => v * occupied t u (j + 1)
 
-def pairWeight (t u v : R) (i j : Nat) : R :=
+private def pairWeight (t u v : R) (i j : Nat) : R :=
   if i = 0 ∧ j = 0 then t * v
   else singleWeight t u v .up i * singleWeight t u v .down j
 
@@ -249,10 +253,10 @@ private theorem right_gap_weight (t u v : R) (b : Bool) (j : Nat) :
     rw [he, mul_one] at h
     simpa [rightExpansion, rightWeight, boundaryWeight, weightFrom, peakFactor, edgeWeight] using h
 
-def endsUp (e : Edge) (j : Nat) : Bool :=
+private def endsUp (e : Edge) (j : Nat) : Bool :=
   decide (e = .up) && decide (j = 0)
 
-def entryFactor (t : R) (b : Bool) (e : Edge) (j : Nat) : R :=
+private def entryFactor (t : R) (b : Bool) (e : Edge) (j : Nat) : R :=
   if j = 0 then peakFactor t b e else 1
 
 private theorem interior_gap_weight (t u v : R) (b : Bool) (e : Edge) (j : Nat) (es : List Edge) :
@@ -271,18 +275,18 @@ private theorem interior_gap_weight (t u v : R) (b : Bool) (e : Edge) (j : Nat) 
         edgeWeight, List.replicate_succ, weight_repeat_ties, pow_succ', mul_assoc, mul_comm,
         mul_left_comm]
 
-inductive Block where
+private inductive Block where
   | single (e : Edge)
   | peak
   deriving DecidableEq, Repr
 
 /-- The scan consumes both edges of each old strict peak before scanning the suffix. -/
-def blocks : List Edge → List Block
+private def blocks : List Edge → List Block
   | .up :: .down :: es => .peak :: blocks es
   | e :: es => .single e :: blocks es
   | [] => []
 
-def blockWeights (t u v : R) : List Block → List Nat → R
+private def blockWeights (t u v : R) : List Block → List Nat → R
   | [], hs => rightWeight u (hs.headD 0)
   | .single e :: bs, hs =>
       singleWeight t u v e (hs.headD 0) * blockWeights t u v bs hs.tail
@@ -290,7 +294,7 @@ def blockWeights (t u v : R) : List Block → List Nat → R
       pairWeight t u v (hs.headD 0) (hs.tail.headD 0) *
         blockWeights t u v bs hs.tail.tail
 
-def initialFactor (t : R) (b : Bool) (es : List Edge) (hs : List Nat) : R :=
+private def initialFactor (t : R) (b : Bool) (es : List Edge) (hs : List Nat) : R :=
   match es with
   | [] => 1
   | e :: _ => entryFactor t b e (hs.headD 0)
@@ -356,10 +360,29 @@ private theorem labelled_kernel (t u v : R) (m a : Nat) (cs : List Nat) (j : Nat
   rw [wordWeight_eq, edges_gap m a cs j hs ha hcs hh, left_gap_weight, expanded_weight]
   simp only [edges, initialFactor_false, one_mul]
 
-/-- The empty spine has one gap and hence one run of equal letters. -/
-noncomputable section
+private theorem edgesFrom_replicate_self (a n : Nat) :
+    edgesFrom a (List.replicate n a) = List.replicate n .tie := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [List.replicate_succ, edgesFrom, edge, ih]
 
-variable {R : Type*} [CommSemiring R]
+private theorem peaks_replicate_ties (n : Nat) :
+    peakEdges false (List.replicate n .tie) = 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [List.replicate_succ, peakEdges, ih]
+
+/-- A constant word of length n has exactly n − 1 ties. -/
+theorem wordWeight_replicate (t u v : R) (n : Nat) :
+    wordWeight t u v (List.replicate n 1) = u ^ (n - 1) := by
+  rw [wordWeight_eq]
+  cases n with
+  | zero => simp [edges, weightFrom]
+  | succ n =>
+    simp [List.replicate_succ, edges, edgesFrom_replicate_self, weightFrom_eq,
+      List.count_replicate, peaks_replicate_ties]
+
+noncomputable section
 
 def consEmbedding (i : Nat) : List Nat ↪ List Nat :=
   ⟨(i :: ·), fun _ _ h => (List.cons.inj h).2⟩
@@ -517,12 +540,12 @@ private theorem coeff_pair_gap (t u v : R) (k r : Nat) (s : R⟦X⟧) (w : List 
   simp only [add_mul, map_add, coeff_two_gaps _ _ _ _ _ _ hs, pairWeight_cases,
     Finset.sum_add_distrib]
 
-def blockGaps : List Block → Nat
+private def blockGaps : List Block → Nat
   | [] => 1
   | .single _ :: bs => blockGaps bs + 1
   | .peak :: bs => blockGaps bs + 2
 
-def blockSeries (t u v : R) : List Block → R⟦X⟧
+private def blockSeries (t u v : R) : List Block → R⟦X⟧
   | [] => rightSeries u
   | .single e :: bs => singleSeries t u v e * blockSeries t u v bs
   | .peak :: bs => peakSeries t u v * blockSeries t u v bs
@@ -713,9 +736,13 @@ theorem bivariateFactors_eq10 (t u : S) :
     bivarE u = 1 + X * inverse ∧ bivarA t u = A ∧
       bivarC t u = C u + C t * X + C u * X ^ 2 * inverse ∧
       bivarB t u = A ^ 2 + C t - 1 := by
-  dsimp [bivarE, bivarA, bivarB, bivarC, boundarySeries, occupiedSeries, geometricDenominator]
-  rw [mul_comm (mk (fun j => u ^ j)) X, ← add_assoc, ← add_assoc]
-  exact ⟨rfl, rfl, rfl, rfl⟩
+  dsimp only
+  have hE : boundarySeries u = X * (↑((geometricDenominator u)⁻¹) : S⟦X⟧) := by
+    change mk (fun j => u ^ j) * X = X * mk (fun j => u ^ j)
+    exact mul_comm _ _
+  have hS : occupiedSeries t u =
+      C t * X + C u * X ^ 2 * (↑((geometricDenominator u)⁻¹) : S⟦X⟧) := rfl
+  simp only [bivarE, bivarA, bivarB, bivarC, hE, hS, add_assoc, and_self]
 
 private theorem closedKernel_one (t u : S) (ℓ p k d : Nat) (h₁ : p ≤ d)
     (h₂ : d + k + p ≤ ℓ - 1) :

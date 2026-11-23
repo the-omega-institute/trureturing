@@ -9,8 +9,10 @@
 import D5.S3.Combinatorics.Parking.MaximumLetterGaps
 import D5.S3.Combinatorics.Parking.DescentGapKernel
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.RingTheory.MvPolynomial.Basic
+import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.Algebra.MonoidAlgebra.Lift
+
+/-! Counting words by maximum-letter multiplicity gives a recurrence on trivariate polynomials. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,7 +28,7 @@ local notation "sorted" => List.insertionSort (· ≤ ·)
 
 noncomputable section
 
-def alphabetWords (m : Nat) : Nat → Finset (List Nat)
+private def alphabetWords (m : Nat) : Nat → Finset (List Nat)
   | 0 => {[]}
   | n + 1 => (Finset.Icc 1 m).biUnion fun x =>
       (alphabetWords m n).map (consEmbedding x)
@@ -79,31 +81,6 @@ private theorem count_zero_parking {n m : Nat} (hm : 1 ≤ m) (w : List Nat) :
       have h := (hcap m hx).2
       omega
 
-/-- The first occurrence of m in the sorted word gives the literal multiplicity cutoff. -/
-theorem max_count_cut {n m : Nat} (hmn : m ≤ n) (w : List Nat) (hw : BoundedParking n m w) :
-    w.count m ≤ n - m + 1 := by
-  by_cases hzero : w.count m = 0
-  · omega
-  obtain ⟨cs, hs, hne, hshape, he⟩ := gap_exists m w
-  have hbound : ∀ x ∈ cs, x ≤ m := by
-    intro x hx
-    by_contra! h
-    have hcount := (List.count_pos_iff.mpr hx : 0 < cs.count x)
-    have hg := gap_counts m cs hs hshape x
-    rw [← he] at hg
-    have hwmem : x ∈ w := List.count_pos_iff.mp (by omega)
-    exact (Nat.not_lt_of_ge (hw.2.1 x hwmem).2) h
-  have hsum : hs.sum = w.count m := by
-    rw [he, gap_counts m cs hs hshape m, List.count_eq_zero_of_not_mem (fun h => hne m h rfl)]
-    simp
-  have hsort : sorted w = sorted cs ++ List.replicate hs.sum m := by
-    rw [he, sorted_gap_reconstruction m cs hs hshape hbound]
-  have hlen : (sorted w).length = n := (List.length_insertionSort _ _).trans hw.1
-  rw [hsort, List.length_append, List.length_replicate] at hlen
-  have hrank := hw.2.2
-  rw [hsort, rank_append_replicate _ _ _ (by omega)] at hrank
-  omega
-
 variable {R : Type*} [CommSemiring R]
 
 def G (t u v : R) (n m : Nat) : R :=
@@ -116,7 +93,7 @@ private theorem mem_topFiber (n m r : Nat) (w : List Nat) :
     w ∈ topFiber n m r ↔ BoundedParking n m w ∧ w.count m = r := by
   simp [topFiber, mem_literalParking]
 
-def retainedProfiles (n m r : Nat) : Finset (List Nat × List Nat) :=
+private def retainedProfiles (n m r : Nat) : Finset (List Nat × List Nat) :=
   (literalParking (n - r) (m - 1)) ×ˢ profiles (n - r + 1) r
 
 private theorem mem_retainedProfiles (n m r : Nat) (p : List Nat × List Nat) :
@@ -183,18 +160,6 @@ private theorem parking_recurrence (t u v : R) {n m : Nat} (hm : 2 ≤ m) (hmn :
       intro r hr
       exact coefficient_fiber t u v hm hmn (Finset.mem_Icc.mp hr).1 (Finset.mem_Icc.mp hr).2
 
-private theorem edgesFrom_replicate_self (a n : Nat) :
-    edgesFrom a (List.replicate n a) = List.replicate n .tie := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp [List.replicate_succ, edgesFrom, edge, ih]
-
-private theorem peaks_replicate_ties (n : Nat) :
-    peakEdges false (List.replicate n .tie) = 0 := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp [List.replicate_succ, peakEdges, ih]
-
 /-- The initial polynomial, including the singleton and empty word cases. -/
 theorem parking_base (t u v : R) (n : Nat) : G t u v n 1 = u ^ (n - 1) := by
   have h : literalParking n 1 = {List.replicate n 1} := by
@@ -215,12 +180,7 @@ theorem parking_base (t u v : R) (n : Nat) : G t u v n 1 = u ^ (n - 1) := by
         rw [hs]
         intro i hi
         simp
-  rw [G, h, Finset.sum_singleton, wordWeight_eq]
-  cases n with
-  | zero => simp [edges, weightFrom]
-  | succ n =>
-    simp [List.replicate_succ, edges, edgesFrom_replicate_self, weightFrom_eq,
-      List.count_replicate, peaks_replicate_ties]
+  rw [G, h, Finset.sum_singleton, wordWeight_replicate]
 
 /-- A literal multivariate polynomial enumerator, with separate variables for all statistics. -/
 def parkingPolynomial (n m : Nat) : MvPolynomial (Fin 3) ℕ :=
@@ -270,18 +230,34 @@ section Bivariate
 
 variable {S : Type*} [CommRing S]
 
-/-- The insertion operator in equation (11) applied to the literal bivariate
-enumerator at length ℓ. The substitution takes place in the series ring. -/
-def insertEq11 (t u : S) (ℓ m r : Nat) : S :=
+/-- Equation (11) on an arbitrary bivariate polynomial over the coefficient ring. -/
+def bivariateInsertionOperator (t u : S) (ℓ r : Nat) (F : MvPolynomial (Fin 2) S) : S :=
   let A := ascentUnit t u
-  coeff r (bivarE u ^ 2 * (A : S⟦X⟧) ^ (ℓ - 1) *
-    G (bivarB t u * (↑(A⁻¹) : S⟦X⟧) ^ 2) (bivarC t u * (↑(A⁻¹) : S⟦X⟧)) 1 ℓ m)
+  let substitution := MvPolynomial.eval₂Hom C ![
+    bivarB t u * (↑(A⁻¹) : S⟦X⟧) ^ 2, bivarC t u * (↑(A⁻¹) : S⟦X⟧)]
+  coeff r (bivarE u ^ 2 * (A : S⟦X⟧) ^ (ℓ - 1) * substitution F)
 
-private theorem insertEq11_coeff (t u : S) {ℓ m : Nat} (hl : 0 < ℓ) (r : Nat) :
+/-- The literal bivariate enumerator is obtained by setting the descent marker to one. -/
+def bivariateParkingPolynomial (ℓ m : Nat) : MvPolynomial (Fin 2) S :=
+  G (MvPolynomial.X 0) (MvPolynomial.X 1) 1 ℓ m
+
+/-- The specialization is coefficientwise polynomial substitution. -/
+theorem specialize_descent (ℓ m : Nat) :
+    MvPolynomial.eval₂Hom (Nat.castRingHom (MvPolynomial (Fin 2) S))
+      ![MvPolynomial.X 0, MvPolynomial.X 1, 1] (parkingPolynomial ℓ m) =
+      (bivariateParkingPolynomial ℓ m : MvPolynomial (Fin 2) S) := by
+  simp [parkingPolynomial, bivariateParkingPolynomial, G, wordWeight, map_sum]
+
+/-- Equation (11) applied to the literal bivariate enumerator. -/
+def insertEq11 (t u : S) (ℓ m r : Nat) : S :=
+  bivariateInsertionOperator t u ℓ r (bivariateParkingPolynomial ℓ m)
+
+theorem insertEq11_coeff (t u : S) {ℓ m : Nat} (hl : 0 < ℓ) (r : Nat) :
     insertEq11 t u ℓ m r =
       ∑ w ∈ literalParking ℓ m, coeff r (closedKernel t u 1 ℓ (peaks w) (ties w) (descents w)) := by
-  unfold insertEq11 G
+  unfold insertEq11 bivariateInsertionOperator bivariateParkingPolynomial G
   dsimp only
+  rw [map_sum]
   rw [Finset.mul_sum, map_sum]
   apply Finset.sum_congr rfl
   intro w hw
@@ -291,8 +267,8 @@ private theorem insertEq11_coeff (t u : S) {ℓ m : Nat} (hl : 0 < ℓ) (r : Nat
   | cons a cs =>
     have h := insertionSeries_eq11 t u a cs
     dsimp only at h
-    rw [← he, ← insertionSeries_closed, h, wordWeight, one_pow, mul_one]
-    simp only [mul_assoc]
+    rw [← he, ← insertionSeries_closed, h, wordWeight]
+    simp [mul_assoc]
 
 /-- Theorem 1.2 at v = 1, with its equation (11) operator and literal domain. -/
 theorem parking_recurrence_eq11 (t u : S) {n m : Nat} (hm : 2 ≤ m) (hmn : m ≤ n) :
@@ -304,6 +280,32 @@ theorem parking_recurrence_eq11 (t u : S) {n m : Nat} (hm : 2 ≤ m) (hmn : m �
   intro r hr
   have hcut := (Finset.mem_Icc.mp hr).2
   exact (insertEq11_coeff t u (by omega) r).symm
+
+/-- The bound-one initial value, the trivariate recurrence, and its recovery of Theorem 1.2. -/
+theorem result :
+    (∀ n, parkingPolynomial n 1 = (MvPolynomial.X (1 : Fin 3)) ^ (n - 1)) ∧
+    (∀ n m, 2 ≤ m → m ≤ n →
+      parkingPolynomial n m = parkingPolynomial n (m - 1) +
+        ∑ r ∈ Finset.Icc 1 (n - m + 1),
+          insertionOperator (n - r) r (parkingPolynomial (n - r) (m - 1))) ∧
+    (∀ n m, MvPolynomial.eval₂Hom (Nat.castRingHom (MvPolynomial (Fin 2) S))
+      ![MvPolynomial.X 0, MvPolynomial.X 1, 1] (parkingPolynomial n m) =
+        (bivariateParkingPolynomial n m : MvPolynomial (Fin 2) S)) ∧
+    (∀ (t u : S),
+      let inverse := (↑((geometricDenominator u)⁻¹) : S⟦X⟧)
+      let A := 1 + C t * X + C u * X ^ 2 * inverse
+      bivarE u = 1 + X * inverse ∧ bivarA t u = A ∧
+        bivarC t u = C u + C t * X + C u * X ^ 2 * inverse ∧
+        bivarB t u = A ^ 2 + C t - 1) ∧
+    (∀ (t u : S) n, G t u 1 n 1 = u ^ (n - 1)) ∧
+    (∀ (t u : S) n m, 2 ≤ m → m ≤ n →
+      G t u 1 n m = G t u 1 n (m - 1) +
+        ∑ r ∈ Finset.Icc 1 (n - m + 1), insertEq11 t u (n - r) (m - 1) r) :=
+  ⟨fun n => parking_base _ _ _ n,
+    fun _ _ hm hmn => parkingPolynomial_operator_recurrence hm hmn,
+    specialize_descent, bivariateFactors_eq10,
+    fun t u n => parking_base t u 1 n,
+    fun t u _ _ hm hmn => parking_recurrence_eq11 t u hm hmn⟩
 
 end Bivariate
 

@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Ordered gap profiles for bounded parking words with a fixed maximum-letter multiplicity. -/
+   digest: Ordered gap profiles for fixed maximum-letter multiplicity. -/
 
 import D5.S1.Words.UnaryGapWords
 import Mathlib.Data.List.Sort
+
+/-! Deleting the largest letter preserves the literal parking test on the shorter word. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -58,12 +60,12 @@ private theorem gap_perm (m : Nat) (cs : List Nat) (h : List Nat)
         (List.perm_append_comm (l₁ := List.replicate j m) (l₂ := c :: cs)).append_right
           (List.replicate hs.sum m)
 
-theorem gap_counts (m : Nat) (cs h : List Nat)
+private theorem gap_counts (m : Nat) (cs h : List Nat)
     (hh : h.length = cs.length + 1) (x : Nat) :
     (gap m cs h).count x = cs.count x + (List.replicate h.sum m).count x := by
   rw [(gap_perm m cs h hh).count_eq x, List.count_append]
 
-theorem sorted_gap_reconstruction (m : Nat) (cs h : List Nat)
+private theorem sorted_gap_reconstruction (m : Nat) (cs h : List Nat)
     (hh : h.length = cs.length + 1) (hmax : ∀ x ∈ cs, x ≤ m) :
     sorted (gap m cs h) = sorted cs ++ List.replicate h.sum m := by
   have hp : (sorted (gap m cs h)).Perm (sorted cs ++ List.replicate h.sum m) :=
@@ -77,7 +79,7 @@ theorem sorted_gap_reconstruction (m : Nat) (cs h : List Nat)
   rw [he]
   exact hmax x ((List.perm_insertionSort _ cs).mem_iff.mp hx)
 
-theorem rank_append_replicate (s : List Nat) (m r : Nat) (hr : 0 < r) :
+private theorem rank_append_replicate (s : List Nat) (m r : Nat) (hr : 0 < r) :
     RankBound (s ++ List.replicate r m) ↔ RankBound s ∧ m ≤ s.length + 1 := by
   constructor
   · intro hb
@@ -132,6 +134,31 @@ theorem sorted_prefix_membership {n m r : Nat} (hm : 2 ≤ m) (hmn : m ≤ n)
     · have he : x = m := List.eq_of_mem_replicate hc
       subst x
       exact ⟨by omega, le_rfl⟩
+
+/-- The first occurrence of m in the sorted word gives the literal multiplicity cutoff. -/
+theorem max_count_cut {n m : Nat} (hmn : m ≤ n) (w : List Nat) (hw : BoundedParking n m w) :
+    w.count m ≤ n - m + 1 := by
+  by_cases hzero : w.count m = 0
+  · omega
+  obtain ⟨cs, hs, hne, hshape, he⟩ := gap_exists m w
+  have hbound : ∀ x ∈ cs, x ≤ m := by
+    intro x hx
+    by_contra! h
+    have hcount := (List.count_pos_iff.mpr hx : 0 < cs.count x)
+    have hg := gap_counts m cs hs hshape x
+    rw [← he] at hg
+    have hwmem : x ∈ w := List.count_pos_iff.mp (by omega)
+    exact (Nat.not_lt_of_ge (hw.2.1 x hwmem).2) h
+  have hsum : hs.sum = w.count m := by
+    rw [he, gap_counts m cs hs hshape m, List.count_eq_zero_of_not_mem (fun h => hne m h rfl)]
+    simp
+  have hsort : sorted w = sorted cs ++ List.replicate hs.sum m := by
+    rw [he, sorted_gap_reconstruction m cs hs hshape hbound]
+  have hlen : (sorted w).length = n := (List.length_insertionSort _ _).trans hw.1
+  rw [hsort, List.length_append, List.length_replicate] at hlen
+  have hrank := hw.2.2
+  rw [hsort, rank_append_replicate _ _ _ (by omega)] at hrank
+  omega
 
 private theorem count_gap_max (m : Nat) (cs h : List Nat)
     (hh : h.length = cs.length + 1) (hne : ∀ x ∈ cs, x ≠ m) :
