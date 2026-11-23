@@ -49,7 +49,7 @@ private theorem binKernel_succ (n : ℕ) :
     simp [Nat.cast_succ]
 
 private theorem binKernel_sum :
-    Summable binKernel ∧ (∑' d : ℤ, binKernel d) ≤ 7 := by
+    Summable binKernel ∧ (∑' d : ℤ, binKernel d) = 3 + Real.pi ^ 2 / 3 := by
   have hsingle : Summable (fun n : ℕ => if n = 0 then (1 : ℝ) else 0) :=
     summable_of_ne_finset_zero (s := {0}) (by simp)
   have hnat : Summable (fun n : ℕ => binKernel (n : ℤ)) := by
@@ -68,16 +68,7 @@ private theorem binKernel_sum :
     rw [hsingle.tsum_add hasSum_zeta_two.summable, tsum_ite_eq, hasSum_zeta_two.tsum_eq]
   rw [hsum, show binKernel 0 = 1 by norm_num [binKernel]]
   simp only [nsmul_eq_mul, Nat.cast_ofNat]
-  have hpi : Real.pi ^ 2 ≤ (3.15 : ℝ) ^ 2 :=
-    pow_le_pow_left₀ Real.pi_pos.le Real.pi_lt_d2.le 2
   linarith
-
-private theorem row_le (bins : Finset ℤ) (k : ℤ) :
-    ∑ l ∈ bins, binKernel (k - l) ≤ 7 := by
-  let e : ℤ ≃ ℤ := Equiv.subLeft k
-  change (∑ l ∈ bins, binKernel (e.toEmbedding l)) ≤ 7
-  rw [← sum_map bins e.toEmbedding]
-  exact (binKernel_sum.1.sum_le_tsum _ (fun d _ => binKernel_nonneg d)).trans binKernel_sum.2
 
 private theorem sinc_sq_le_binKernel (x y : ℝ) :
     Real.sinc (x - y) ^ 2 ≤ binKernel (frequencyBin x - frequencyBin y) := by
@@ -117,101 +108,56 @@ private theorem sinc_sq_le_binKernel (x y : ℝ) :
           |>.trans' (div_le_div_of_nonneg_right (Real.abs_sin_le_one _) (abs_nonneg _))
       _ = _ := by rw [div_pow, one_pow]
 
-private theorem bin_quadratic_le (bins : Finset ℤ) (mass : ℤ → ℝ) :
-    (∑ k ∈ bins, ∑ l ∈ bins, mass k * mass l * binKernel (k - l)) ≤
-      7 * ∑ k ∈ bins, mass k ^ 2 := by
-  have hswap :
-      (∑ k ∈ bins, ∑ l ∈ bins, mass l ^ 2 * binKernel (k - l)) =
-        ∑ k ∈ bins, ∑ l ∈ bins, mass k ^ 2 * binKernel (k - l) := by
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro k _
-    apply Finset.sum_congr rfl
-    intro l _
-    rw [show l - k = -(k - l) by omega, binKernel_even]
-  calc
-    _ ≤ ∑ k ∈ bins, ∑ l ∈ bins, (mass k ^ 2 + mass l ^ 2) / 2 * binKernel (k - l) := by
-      apply Finset.sum_le_sum
-      intro k _
-      apply Finset.sum_le_sum
-      intro l _
-      refine mul_le_mul_of_nonneg_right ?_ (binKernel_nonneg _)
-      nlinarith only [sq_nonneg (mass k - mass l)]
-    _ = ∑ k ∈ bins, ∑ l ∈ bins, mass k ^ 2 * binKernel (k - l) := by
-      simp only [div_mul_eq_mul_div, ← Finset.sum_div, add_mul, Finset.sum_add_distrib]
-      rw [hswap]
-      ring
-    _ ≤ _ := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_le_sum
-      intro k _
-      rw [← Finset.mul_sum, mul_comm 7]
-      exact mul_le_mul_of_nonneg_left (row_le bins k) (sq_nonneg _)
-
-private theorem regroup {I : Type*} (s : Finset I) (b : I → ℤ) (c : I → ℝ)
-    (K : ℤ → ℤ → ℝ) :
-    let mass := fun k => ∑ i ∈ s with b i = k, c i
-    (∑ i ∈ s, ∑ j ∈ s, c i * c j * K (b i) (b j)) =
-      ∑ k ∈ s.image b, ∑ l ∈ s.image b, mass k * mass l * K k l := by
-  intro mass
-  let bins := s.image b
-  have hb : ∀ i ∈ s, b i ∈ bins := fun i hi => mem_image_of_mem b hi
-  calc
-    _ = ∑ k ∈ bins, ∑ i ∈ s with b i = k, ∑ l ∈ bins, ∑ j ∈ s with b j = l,
-        c i * c j * K (b i) (b j) := by
-      rw [sum_fiberwise_of_maps_to hb]
-      refine sum_congr rfl fun i hi => ?_
-      exact (sum_fiberwise_of_maps_to hb _).symm
-    _ = _ := by
-      refine sum_congr rfl fun k hk => ?_
-      rw [sum_comm]
-      refine sum_congr rfl fun l hl => ?_
-      dsimp only [mass]
-      simp only [sum_mul]
-      refine sum_congr rfl fun i hi => ?_
-      rw [mul_sum, sum_mul]
-      refine sum_congr rfl fun j hj => ?_
-      rw [(mem_filter.mp hi).2, (mem_filter.mp hj).2]
-
 /-- The mass of pairs of sampled frequencies whose difference has magnitude at most `r`. -/
 private def nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) : ℝ :=
   ∑ i ∈ s, ∑ j ∈ s, if |x i - x j| ≤ r then c i * c j else 0
 
-private theorem sinc_sq_ge_quarter {x : ℝ} (hx : |x| ≤ 1) :
-    (1 : ℝ) / 4 ≤ Real.sinc x ^ 2 := by
-  have hcos := (Real.one_sub_sq_div_two_le_cos (x := x))
-  have hsinc : Real.cos x ≤ Real.sinc x :=
-    Real.cos_le_sinc (hx.trans_lt (by linarith [Real.pi_gt_three]))
-  have hx' : |x| ≤ |(1 : ℝ)| := by simpa only [abs_one] using hx
-  have hsq : x ^ 2 ≤ 1 := by simpa only [one_pow] using sq_le_sq.mpr hx'
-  have hhalf : (1 : ℝ) / 2 ≤ Real.sinc x := by linarith
-  nlinarith only [sq_nonneg (Real.sinc x - 1 / 2), hhalf]
+private theorem sin_one_sq_le_sinc_sq {x : ℝ} (hx : |x| ≤ 1) :
+    Real.sin 1 ^ 2 ≤ Real.sinc x ^ 2 := by
+  have hpi : (1 : ℝ) < Real.pi := by linarith [Real.pi_gt_three]
+  have hsin : 0 ≤ Real.sin 1 := Real.sin_nonneg_of_nonneg_of_le_pi (by norm_num) hpi.le
+  apply pow_le_pow_left₀ hsin _ 2
+  have hsymm : Real.sinc |x| = Real.sinc x := by
+    rcases le_total 0 x with h | h
+    · rw [abs_of_nonneg h]
+    · rw [abs_of_nonpos h, Real.sinc_neg]
+  rw [← hsymm]
+  by_cases hzero : |x| = 0
+  · rw [hzero, Real.sinc_zero]
+    exact Real.sin_le_one 1
+  · have hpos : 0 < |x| := lt_of_le_of_ne (abs_nonneg x) (Ne.symm hzero)
+    rw [Real.sinc_of_ne_zero hzero, le_div_iff₀ hpos]
+    have hconc := strictConcaveOn_sin_Icc.concaveOn.2
+      (show (0 : ℝ) ∈ Icc 0 Real.pi from ⟨le_rfl, Real.pi_pos.le⟩)
+      (show (1 : ℝ) ∈ Icc 0 Real.pi from ⟨by norm_num, hpi.le⟩)
+      (sub_nonneg.mpr hx) (abs_nonneg x) (by ring : (1 - |x|) + |x| = 1)
+    simpa only [smul_eq_mul, mul_zero, mul_one, zero_add, zero_mul, Real.sin_zero, mul_comm]
+      using hconc
 
 /-- A sinc-squared pair sum is comparable to the weighted collision mass at its frequency scale. -/
 private theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ)
     (hc : ∀ i ∈ s, 0 ≤ c i) {r : ℝ} (hr : 0 < r) :
-    nearCollisionMass s x c r / 4 ≤
+    nearCollisionMass s x c r * Real.sin 1 ^ 2 ≤
       (∑ i ∈ s, ∑ j ∈ s, c i * c j * Real.sinc ((x i - x j) / r) ^ 2) ∧
     (∑ i ∈ s, ∑ j ∈ s, c i * c j * Real.sinc ((x i - x j) / r) ^ 2) ≤
-      7 * nearCollisionMass s x c r := by
+      (3 + Real.pi ^ 2 / 3) * nearCollisionMass s x c r := by
   classical
   constructor
-  · simp only [nearCollisionMass, sum_div]
+  · simp only [nearCollisionMass, Finset.sum_mul]
     refine sum_le_sum fun i hi => sum_le_sum fun j hj => ?_
     have hnonneg := mul_nonneg (hc i hi) (hc j hj)
     split_ifs with h
-    · rw [div_eq_mul_inv, show (4 : ℝ)⁻¹ = 1 / 4 by norm_num]
-      apply mul_le_mul_of_nonneg_left _ hnonneg
-      apply sinc_sq_ge_quarter
+    · apply mul_le_mul_of_nonneg_left _ hnonneg
+      apply sin_one_sq_le_sinc_sq
       rw [abs_div, abs_of_pos hr, div_le_iff₀ hr, one_mul]
       exact h
-    · rw [zero_div]
+    · rw [zero_mul]
       positivity
   · let b (i : I) := frequencyBin (x i / r)
     let bins := s.image b
     let mass (k : ℤ) := ∑ i ∈ s with b i = k, c i
     have hdiag : (∑ k ∈ bins, mass k ^ 2) ≤ nearCollisionMass s x c r := by
-      have hregroup := regroup s b c (fun k l => if k = l then 1 else 0)
+      have hregroup := regroup_binEnergy s b c (fun k l => if k = l then 1 else 0)
       simp only [mul_ite, mul_one, mul_zero] at hregroup
       have heq : (∑ i ∈ s, ∑ j ∈ s, if b i = b j then c i * c j else 0) =
           ∑ k ∈ bins, mass k ^ 2 := by
@@ -247,9 +193,11 @@ private theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ
         rw [sub_div]
         exact sinc_sq_le_binKernel (x i / r) (x j / r)
       _ = ∑ k ∈ bins, ∑ l ∈ bins, mass k * mass l * binKernel (k - l) :=
-        regroup s b c (fun k l => binKernel (k - l))
-      _ ≤ 7 * ∑ k ∈ bins, mass k ^ 2 := bin_quadratic_le bins mass
-      _ ≤ _ := mul_le_mul_of_nonneg_left hdiag (by norm_num)
+        regroup_binEnergy s b c (fun k l => binKernel (k - l))
+      _ ≤ (3 + Real.pi ^ 2 / 3) * ∑ k ∈ bins, mass k ^ 2 := by
+        rw [← binKernel_sum.2]
+        exact binEnergy_le binKernel binKernel_nonneg binKernel_even binKernel_sum.1 bins mass
+      _ ≤ _ := mul_le_mul_of_nonneg_left hdiag (by positivity)
 
 private def intervalMean {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (a : ℝ) (f : ℝ → E) : E :=
@@ -369,14 +317,16 @@ private theorem doubleMean_pairCosineScore {I : Type*} (s : Finset I) (x c : I �
 
 private theorem doubleMean_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ)
     (hc : ∀ i ∈ s, 0 ≤ c i) {a : ℝ} (ha : 0 < a) (center : ℝ) :
-    nearCollisionMass s x c a⁻¹ / 4 ≤ doubleMean a (pairCosineScore s x c) 0 ∧
-      doubleMean a (pairCosineScore s x c) center ≤ 7 * nearCollisionMass s x c a⁻¹ := by
+    nearCollisionMass s x c a⁻¹ * Real.sin 1 ^ 2 ≤ doubleMean a (pairCosineScore s x c) 0 ∧
+      doubleMean a (pairCosineScore s x c) center ≤ doubleMean a (pairCosineScore s x c) 0 ∧
+    doubleMean a (pairCosineScore s x c) 0 ≤ (3 + Real.pi ^ 2 / 3) * nearCollisionMass s x c a⁻¹ := by
   have h := sinc_pair_comparison s x c hc (inv_pos.mpr ha)
   simp only [div_inv_eq_mul, mul_comm _ a] at h
   rw [doubleMean_pairCosineScore s x c ha 0, doubleMean_pairCosineScore s x c ha center]
   constructor
   · simpa only [mul_zero, Real.cos_zero, one_mul] using h.1
-  · refine le_trans ?_ h.2
+  · refine ⟨?_, by simpa only [mul_zero, Real.cos_zero, one_mul] using h.2⟩
+    simp only [mul_zero, Real.cos_zero, one_mul]
     refine sum_le_sum fun i hi => sum_le_sum fun j hj => ?_
     apply mul_le_mul_of_nonneg_left _ (mul_nonneg (hc i hi) (hc j hj))
     exact mul_le_of_le_one_left (sq_nonneg _) (Real.cos_le_one _)
@@ -418,7 +368,7 @@ private theorem const_le_intervalMean {a q : ℝ} (ha : 0 < a) {f : ℝ → ℝ}
 
 private theorem exists_small_grid {I K : Type*} [Fintype K] (s : Finset I) (x c : I → ℝ)
     (hc : ∀ i ∈ s, 0 ≤ c i) {a : ℝ} (ha : 0 < a) (center q : ℝ) (grid : K → ℝ)
-    (hbudget : 7 * (Fintype.card K : ℝ) * nearCollisionMass s x c a⁻¹ < q) :
+    (hbudget : (3 + Real.pi ^ 2 / 3) * (Fintype.card K : ℝ) * nearCollisionMass s x c a⁻¹ < q) :
     ∃ b ∈ Ioo (center - 2 * a) (center + 2 * a),
       ∑ k, pairCosineScore s x c (b + grid k) < q := by
   let F (b : ℝ) : ℝ := ∑ k, pairCosineScore s x c (b + grid k)
@@ -446,7 +396,8 @@ private theorem exists_small_grid {I K : Type*} [Fintype K] (s : Finset I) (x c 
     rw [intervalMean_sum a univ _ (fun k _ => continuous_mean_pair s x c ha (center + grid k))]
     change (∑ k, doubleMean a (pairCosineScore s x c) (center + grid k)) < q
     have hpoint := sum_le_sum (s := (univ : Finset K)) (fun k _ =>
-      (doubleMean_pair_comparison s x c hc ha (center + grid k)).2)
+      let h := doubleMean_pair_comparison s x c hc ha (center + grid k)
+      h.2.1.trans h.2.2)
     simp only [sum_const, card_univ, nsmul_eq_mul] at hpoint
     exact hpoint.trans_lt (by convert hbudget using 1; ring)
   by_contra! h
@@ -489,10 +440,12 @@ private theorem moment_eq_pair {J : Type*} [Fintype J] [DecidableEq J]
 /-- The two uniform averages at scale `L` are controlled by degree-`p` near-collisions. -/
 theorem tail_moment_comparison {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ) {L : ℝ} (hL : 0 < L) (center : ℝ) :
-    tailCollisionMass g w p (2 / L) / 4 ≤
+    tailCollisionMass g w p (2 / L) * Real.sin 1 ^ 2 ≤
       doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) 0 ∧
     doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) center ≤
-      7 * tailCollisionMass g w p (2 / L) := by
+      doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) 0 ∧
+    doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) 0 ≤
+      (3 + Real.pi ^ 2 / 3) * tailCollisionMass g w p (2 / L) := by
   simp_rw [moment_eq_pair, tailCollisionMass]
   have hscale : (L / 2)⁻¹ = 2 / L := by rw [inv_div]
   rw [← hscale]
@@ -503,15 +456,16 @@ theorem tail_moment_comparison {J : Type*} [Fintype J] [DecidableEq J]
 theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ)
     {L H h δ : ℝ} (hL : 0 < L) (hh : 0 < h) (hδ : 0 ≤ δ)
-    (hbudget : 7 * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
+    (hbudget : (3 + Real.pi ^ 2 / 3) * ((⌊H / h⌋₊ : ℝ) + 1) *
+      tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ) :
     ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
-      ∑ j, w j * Real.sin (g j * t) < δ + h * ∑ j, w j * |g j| := by
+      |∑ j, w j * Real.sin (g j * t)| < δ + h * ∑ j, w j * |g j| := by
   let K := Fin (⌊H / h⌋₊ + 1)
   let grid (k : K) : ℝ := (k : ℕ) * h
   have hcard : (Fintype.card K : ℝ) = (⌊H / h⌋₊ : ℝ) + 1 := by simp [K]
   have hscale : (L / 2)⁻¹ = 2 / L := by rw [inv_div]
-  have hgridBudget : 7 * (Fintype.card K : ℝ) *
+  have hgridBudget : (3 + Real.pi ^ 2 / 3) * (Fintype.card K : ℝ) *
       nearCollisionMass (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) (L / 2)⁻¹ <
         δ ^ (2 * p) := by simpa only [hcard, hscale, tailCollisionMass] using hbudget
   obtain ⟨b, hb, hsmall⟩ := exists_small_grid _ _ _ (fun m _ => monomialWeight_nonneg w hw m)
@@ -534,12 +488,25 @@ theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
   change (∑ j, w j * Real.sin (g j * t)) -
       (∑ j, w j * Real.sin (g j * (b + grid k))) ≤
         (∑ j, w j * |g j|) * |t - (b + grid k)| at hchange
-  have hstep := hchange.trans (mul_le_mul_of_nonneg_left hk'
+  have hreverse := sine_score_change univ g (fun _ : J => 0) weight (b + grid k) t
+  simp only [zero_add, abs_sub_comm (b + grid k) t] at hreverse
+  change (∑ j, w j * Real.sin (g j * (b + grid k))) -
+      (∑ j, w j * Real.sin (g j * t)) ≤
+        (∑ j, w j * |g j|) * |t - (b + grid k)| at hreverse
+  have habs : |(∑ j, w j * Real.sin (g j * t)) -
+      (∑ j, w j * Real.sin (g j * (b + grid k)))| ≤
+        (∑ j, w j * |g j|) * |t - (b + grid k)| := by
+    rw [abs_sub_le_iff]
+    exact ⟨hchange, hreverse⟩
+  have hstep := habs.trans (mul_le_mul_of_nonneg_left hk'
     (sum_nonneg (fun j _ => mul_nonneg (hw j) (abs_nonneg _))))
-  have hnode : (∑ j, w j * Real.sin (g j * (b + grid k))) < δ := by
+  have hnode : |∑ j, w j * Real.sin (g j * (b + grid k))| < δ := by
     rw [← im_complexScore]
-    exact (Complex.im_le_norm _).trans_lt (hgrid k)
-  linarith only [hstep, hnode, mul_comm h (∑ j, w j * |g j|)]
+    exact (Complex.abs_im_le_norm _).trans_lt (hgrid k)
+  have htriangle := abs_add_le ((∑ j, w j * Real.sin (g j * t)) -
+    (∑ j, w j * Real.sin (g j * (b + grid k)))) (∑ j, w j * Real.sin (g j * (b + grid k)))
+  rw [sub_add_cancel] at htriangle
+  linarith only [htriangle, hstep, hnode, mul_comm h (∑ j, w j * |g j|)]
 
 #print axioms tail_moment_comparison
 #print axioms exists_bounded_tail_window

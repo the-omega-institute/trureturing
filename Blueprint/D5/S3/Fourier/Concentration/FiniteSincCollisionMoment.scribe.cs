@@ -29,13 +29,13 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text(
                     "The power expansion reduces the moment to an ordered pair sum. "
                     + "Each pair contributes a squared sinc at its scaled frequency difference. "
-                    + "At center zero each term is nonnegative, and pairs within distance 2/L "
-                    + "retain at least one quarter of their weight. For the upper bound, "
-                    + "group frequencies into bins of width 2/L. The reciprocal-square "
-                    + "bound gives each row of the bin majorant total at most seven. "
-                    + "The inequality 2uv ≤ u²+v² bounds the resulting quadratic form by "
-                    + "seven times the sum of squared bin masses. Each same-bin pair lies "
-                    + "within the collision radius, even if some frequencies coincide."))),
+                    + "The cosine factor is at most one, so the moment is maximal at center zero. "
+                    + "At that center concavity of sine on [0,1] gives a squared factor of at "
+                    + "least sin²(1) for pairs within distance 2/L. For the upper bound, group "
+                    + "frequencies into bins of width 2/L. The reciprocal-square majorant has "
+                    + "full row sum 3 + π²/3. The shared bin energy estimate bounds the quadratic "
+                    + "form by this constant times the sum of squared bin masses. Each same-bin "
+                    + "pair lies within the collision radius, including coincident frequencies."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("bounded-tail-window"),
@@ -50,7 +50,7 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
                         + "grid offset. If each start in the open interval had a bad grid node, "
                         + "the averaged sum would be at least the power of the threshold. "
                         + "The strict budget therefore gives a common good start in that interval. "
-                        + "The imaginary part gives the signed bound at grid nodes. The mesh "
+                        + "The complex modulus bounds the absolute imaginary part at grid nodes. The mesh "
                         + "amends it by at most hB throughout the closed window, including its "
                         + "right endpoint.")),
                     Paragraph(Text(
@@ -78,18 +78,23 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
 
     private static Formula Collision(Formula radius) => Call("E", F.Id("p"), radius);
 
+    private static Formula RowSum() =>
+        Seq(Open, Add(D(3), new Formula.Fraction(new Formula.Power(Pi, D(2)), D(3))), Close);
+
     private static Formula Comparison()
     {
         var length = F.Id("L");
         var center = F.Id("s");
         var collision = Collision(new Formula.Fraction(D(2), length));
+        var centeredMoment = Call("M", F.Id("p"), length, D(0));
+        var sineSquare = new Formula.Power(Call("sin", D(1)), D(2));
         return Disp(new Formula.Aligned([
             TailParameters(),
             Seq(length, Comma, center, Colon, Sp, Reals, Comma),
             Seq(NonnegativeWeights(), Quad, Sp, Land, Sp, length, Gt, D(0), Quad, Sp, Longrightarrow),
-            Seq(new Formula.Fraction(collision, D(4)), Le, Call("M", F.Id("p"), length, D(0)),
-                Quad, Sp, Land, Quad, Sp, Call("M", F.Id("p"), length, center),
-                Le, Multiply(D(7), collision)),
+            Seq(Multiply(collision, sineSquare), Le, centeredMoment, Quad, Sp, Land),
+            Seq(Call("M", F.Id("p"), length, center), Le, centeredMoment,
+                Quad, Sp, Land, Quad, Sp, centeredMoment, Le, Multiply(RowSum(), collision)),
         ]));
     }
 
@@ -110,7 +115,7 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
             Multiply(w, Call("sin", Multiply(g, t))));
         var floor = Seq(new Formula.Floor(new Formula.Fraction(horizon, h)), Underscore, Grp(Plus));
         var window = Seq(OpenBracket, b, Comma, Add(b, horizon), CloseBracket);
-        var budget = Multiply(Multiply(D(7), Seq(Open, Add(floor, D(1)), Close)),
+        var budget = Multiply(Multiply(RowSum(), Seq(Open, Add(floor, D(1)), Close)),
             Collision(new Formula.Fraction(D(2), length)));
         return Disp(new Formula.Aligned([
             TailParameters(),
@@ -121,7 +126,7 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
                 Quad, Sp, Longrightarrow),
             Seq(Exists, Sp, b, Colon, Sp, Reals, Comma, Sp, a, Lt, b, Lt, Add(a, Multiply(D(2), length)),
                 Quad, Sp, Land, Sp, Forall, Sp, t, Sp, InMacro, Sp, window, Comma),
-            Seq(score, Lt, Add(DeltaLower, Multiply(h, Seq(Open, slope, Close)))),
+            Seq(new Formula.Absolute(score), Lt, Add(DeltaLower, Multiply(h, Seq(Open, slope, Close)))),
         ]));
     }
 }

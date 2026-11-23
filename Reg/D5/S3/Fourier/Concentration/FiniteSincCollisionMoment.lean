@@ -23,13 +23,13 @@ abbrev boundedArena : Arena where
   Law V := ∀ {J : Type u} [i : Fintype J] [DecidableEq J] (g w : J → ℝ)
     (_ : ∀ j, 0 ≤ w j) (p : ℕ) {L H h δ : ℝ}
     (_ : 0 < L) (_ : 0 < h) (_ : 0 ≤ δ)
-    (_ : 7 * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
+    (_ : (3 + Real.pi ^ 2 / 3) * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ), ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
-      V.readout () ⟨J, i, g, w⟩ t < δ + h * ∑ j, w j * |g j|
+      |V.readout () ⟨J, i, g, w⟩ t| < δ + h * ∑ j, w j * |g j|
 
 private theorem rejected_law : ¬ boundedArena.{u}.Law rejected := by
   intro law
-  have hbudget : (7 : ℝ) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) *
+  have hbudget : (3 + Real.pi ^ 2 / 3) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) *
       tailCollisionMass (J := PEmpty.{u + 1}) 0 0 1 (2 / 1) < 1 ^ (2 * (1 : ℕ)) := by
     have hempty : Finset.piAntidiag (Finset.univ : Finset PEmpty.{u + 1}) 1 = ∅ := by
       apply Finset.eq_empty_iff_forall_notMem.mpr
@@ -37,7 +37,7 @@ private theorem rejected_law : ¬ boundedArena.{u}.Law rejected := by
       simpa using (Finset.mem_piAntidiag.mp hm).1
     unfold tailCollisionMass
     rw [hempty]
-    change (7 : ℝ) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) * 0 < 1 ^ (2 * (1 : ℕ))
+    change (3 + Real.pi ^ 2 / 3) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) * 0 < 1 ^ (2 * (1 : ℕ))
     norm_num
   obtain ⟨b, _, hb⟩ := law (J := PEmpty.{u + 1}) 0 0 (by simp) 1
     (L := 1) (H := 1) (h := 1) (δ := 1) zero_lt_one zero_lt_one zero_le_one hbudget 0
@@ -86,7 +86,7 @@ def boundedRegistration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "arg",
-        "body", "arg", "body", "body", "fn", "arg"]
+        "body", "arg", "body", "body", "fn", "arg", "arg"]
       stateBinder := 17
       functionOperand := false
       stateOperand := none
