@@ -532,6 +532,120 @@ private theorem root_sound {u : Coordinates} {P Q : Model} {x : ℝ}
       (div_le_div_of_nonneg_left ((abs_nonneg _).trans he) hp hcmp)
   · cases hQ
 
+/-- Rational bounds for the defect of a product of nonnegative square roots. -/
+private theorem rootDefect_bounds {x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) (hs : 0 < x+y) :
+    let s := x+y
+    let L := 1-s/2 + (x-y)^2/(4*s)
+    L ≤ 1-Real.sqrt x*Real.sqrt y ∧
+      1-Real.sqrt x*Real.sqrt y ≤ L + (x-y)^4/(4*s^3) := by
+  let s := x+y
+  let t := 2*(Real.sqrt x*Real.sqrt y)/s
+  let z := (x-y)^2/s^2
+  have ht : 0 ≤ t :=
+    div_nonneg (mul_nonneg (by norm_num)
+      (mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))) hs.le
+  have ht₂ : t^2 = 1-z := by
+    dsimp only [t, z]
+    rw [div_pow, mul_pow, mul_pow, Real.sq_sqrt hx, Real.sq_sqrt hy]
+    field_simp [show s ≠ 0 from hs.ne']
+    dsimp [s]
+    ring
+  have hupper : t ≤ 1-z/2 := by nlinarith only [ht₂, sq_nonneg (t-1)]
+  have hlower : (1-z)*(1+z/2) ≤ t := by
+    have hz : z = 1-t^2 := by linarith
+    rw [hz]
+    nlinarith only [show 0 ≤ t*(t-1)^2*(t+2) by positivity]
+  have hJ : s*t/2 = Real.sqrt x*Real.sqrt y := by
+    dsimp only [t]
+    field_simp [show s ≠ 0 from hs.ne']
+  have he₁ : s*(1-z/2)/2 = s/2 - (x-y)^2/(4*s) := by
+    dsimp only [z]
+    field_simp [show s ≠ 0 from hs.ne'] <;> ring
+  have he₂ : s*((1-z)*(1+z/2))/2 =
+      s/2 - (x-y)^2/(4*s) - (x-y)^4/(4*s^3) := by
+    dsimp only [z]
+    field_simp [show s ≠ 0 from hs.ne'] <;> ring
+  have h₁ := (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hupper hs.le)
+    (by norm_num : (0 : ℝ) ≤ 2))
+  have h₂ := (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hlower hs.le)
+    (by norm_num : (0 : ℝ) ≤ 2))
+  rw [hJ, he₁] at h₁
+  rw [hJ, he₂] at h₂
+  dsimp only
+  exact ⟨by linarith, by linarith⟩
+
+private def rootDefect (X Y : Model) : Option Model := do
+  if 0 ≤ (range X).lower ∧ 0 ≤ (range Y).lower then
+    let S := add X Y
+    let I ← inverse S
+    let D := sub X Y
+    let D₂ := mul D D
+    let C := scale (1/4) (mul D₂ I)
+    let L := add (sub (const 1) (scale (1/2) S)) C
+    let E := mul C (mul D₂ (mul I I))
+    some (add L (ofInterval (interval 0 (range E).upper)))
+  else none
+
+private theorem rootDefect_sound {u : Coordinates} {X Y Q : Model} {x y : ℝ}
+    (hu : unitBox u) (hx : Models u X x) (hy : Models u Y y)
+    (hQ : rootDefect X Y = some Q) :
+    Models u Q (1-Real.sqrt x*Real.sqrt y) := by
+  unfold rootDefect at hQ
+  split at hQ
+  · rename_i h
+    have hx₀ := (show (0 : ℝ) ≤ (range X).lower by exact_mod_cast h.1).trans
+      (range_sound hu hx).1
+    have hy₀ := (show (0 : ℝ) ≤ (range Y).lower by exact_mod_cast h.2).trans
+      (range_sound hu hy).1
+    cases hI : inverse (add X Y) with
+    | none => simp [hI] at hQ
+    | some I =>
+      have hS := add_sound hx hy
+      have hs : 0 < x+y := by
+        have hs₀ : 0 < (range (add X Y)).lower := by
+          by_contra hn
+          simp [inverse, hn] at hI
+        exact (show (0 : ℝ) < (range (add X Y)).lower by exact_mod_cast hs₀).trans_le
+          (range_sound hu hS).1
+      have hi := inverse_sound hu hS hI
+      have hD := sub_sound hu hx hy
+      have hD₂ := mul_sound hu hD hD
+      have hC := scale_sound hu (1/4) (mul_sound hu hD₂ hi)
+      have hL := add_sound (sub_sound hu (const_sound 1) (scale_sound hu (1/2) hS)) hC
+      have hE := mul_sound hu hC (mul_sound hu hD₂ (mul_sound hu hi hi))
+      have ha := rootDefect_bounds hx₀ hy₀ hs
+      let J := 1-Real.sqrt x*Real.sqrt y
+      let L := 1-(x+y)/2 + (x-y)^2/(4*(x+y))
+      let E := (x-y)^4/(4*(x+y)^3)
+      have hL' : Models u
+          (add (sub (const 1) (scale (1/2) (add X Y)))
+            (scale (1/4) (mul (mul (sub X Y) (sub X Y)) I))) L := by
+        convert hL using 1
+        dsimp [L]
+        push_cast
+        field_simp [hs.ne'] <;> ring
+      have hE' : Models u
+          (mul (scale (1/4) (mul (mul (sub X Y) (sub X Y)) I))
+            (mul (mul (sub X Y) (sub X Y)) (mul I I))) E := by
+        convert hE using 1
+        dsimp [E]
+        push_cast
+        field_simp [hs.ne'] <;> ring
+      have hErrLo : (0 : ℝ) ≤ J-L := by
+        exact sub_nonneg.mpr ha.1
+      have hErrHi : J-L ≤ E := by
+        have he : J ≤ L+E := ha.2
+        linarith
+      have hErr := encloses_interval (lo := 0)
+        (by simpa only [Rat.cast_zero] using hErrLo)
+        (hErrHi.trans (range_sound hu hE').2)
+      dsimp only at hQ
+      rw [hI] at hQ
+      injection hQ with heq
+      rw [← heq]
+      simpa only [add_sub_cancel, RoundedInterval.upper, J] using add_sound hL' (ofInterval_sound hErr)
+  · contradiction
+
 private structure Enclosure (u : Coordinates) where
   value : ℝ
   model : Option Model
@@ -588,6 +702,21 @@ private def Enclosure.phi {u : Coordinates} (hu : unitBox u) : Enclosure u → E
 private def Enclosure.root {u : Coordinates} (hu : unitBox u) : Enclosure u → Enclosure u :=
   Enclosure.liftUnary Real.sqrt LocalTaylor.root (fun h₁ h₂ ↦ root_sound hu h₁ h₂)
 
+private def Enclosure.rootDefect {u : Coordinates} (hu : unitBox u)
+    (a b : Enclosure u) : Enclosure u where
+  value := 1-Real.sqrt a.value*Real.sqrt b.value
+  model := a.model.bind fun A ↦ b.model.bind (LocalTaylor.rootDefect A)
+  sound := by
+    intro P hP
+    cases ha : a.model with
+    | none => simp [ha] at hP
+    | some A =>
+      cases hb : b.model with
+      | none => simp [ha, hb] at hP
+      | some B =>
+        exact rootDefect_sound hu (a.sound A ha) (b.sound B hb)
+          (by simpa [ha, hb] using hP)
+
 private def Enclosure.inverse {u : Coordinates} (hu : unitBox u) : Enclosure u → Enclosure u :=
   Enclosure.liftUnary (fun x ↦ 1/x) LocalTaylor.inverse (fun h₁ h₂ ↦ inverse_sound hu h₁ h₂)
 
@@ -599,20 +728,23 @@ private structure Arithmetic (R : Type) where
   exp : R → R
   phi : R → R
   root : R → R
+  defect : R → R → R
   inverse : R → R
 
 private def realArithmetic : Arithmetic ℝ :=
-  ⟨(↑), (·+·), (·-·), (·*·), Real.exp, phi, Real.sqrt, fun x ↦ 1/x⟩
+  ⟨(↑), (·+·), (·-·), (·*·), Real.exp, phi, Real.sqrt,
+    (fun x y ↦ 1 - Real.sqrt x * Real.sqrt y), fun x ↦ 1/x⟩
 
 private def enclosureArithmetic {u : Coordinates} (hu : unitBox u) :
     Arithmetic (Enclosure u) :=
   ⟨Enclosure.num u, (·+·), Enclosure.sub hu, Enclosure.mul hu, Enclosure.exp hu,
-    Enclosure.phi hu, Enclosure.root hu, Enclosure.inverse hu⟩
+    Enclosure.phi hu, Enclosure.root hu, Enclosure.rootDefect hu, Enclosure.inverse hu⟩
 
 private def modelArithmetic : Arithmetic (Option Model) :=
   let binary (f : Model → Model → Model) (P Q : Option Model) := P.bind fun p ↦ Q.map (f p)
   ⟨fun q ↦ some (const q), binary add, binary sub, binary mul, (·.bind exp), (·.bind phiModel),
-    (·.bind root), (·.bind inverse)⟩
+    (·.bind root), (fun X Y ↦ X.bind fun x ↦ Y.bind (rootDefect x)),
+    (·.bind inverse)⟩
 
 private def Arithmetic.sq {R : Type} (o : Arithmetic R) (a : R) : R := o.mul a a
 
@@ -677,7 +809,7 @@ private def Arithmetic.scalar {R : Type} (o : Arithmetic R) (h a d : R) : R :=
   let P₃ := o.sub (o.add (o.cube α) (o.mul (o.mul (o.num 3) α) q)) q₁
   let Q₂ := o.add (o.sq β) q
   let Q₃ := o.sub (o.add (o.cube β) (o.mul (o.mul (o.num 3) β) q)) q₁
-  let D := o.div (o.sub (o.add Ld Lv) (o.mul Ld Lv)) (o.add (o.num 1) (o.mul bd bv))
+  let D := o.defect (o.sub (o.num 1) Ld) (o.sub (o.num 1) Lv)
   let q₂ := o.add (o.mul (o.mul (o.num 2) α) bd₁) bd₂
   let q₃ := o.add (o.add (o.mul (o.mul (o.num 3) P₂) bd₁)
     (o.mul (o.mul (o.num 3) α) bd₂)) bd₃
@@ -767,6 +899,8 @@ private theorem real_add (x y : ℝ) : realArithmetic.add x y = x+y := rfl
 private theorem real_sub (x y : ℝ) : realArithmetic.sub x y = x-y := rfl
 private theorem real_mul (x y : ℝ) : realArithmetic.mul x y = x*y := rfl
 private theorem real_exp (x : ℝ) : realArithmetic.exp x = Real.exp x := rfl
+private theorem real_defect (x y : ℝ) :
+    realArithmetic.defect x y = 1-Real.sqrt x*Real.sqrt y := rfl
 private theorem real_inv (x : ℝ) : realArithmetic.inverse x = 1/x := rfl
 
 set_option maxRecDepth 4000 in
@@ -779,12 +913,16 @@ private theorem realScalar_eq {p : ℕ} (hp : 0 < p) {a d : ℝ}
   have hh : 0 < h := by dsimp [h]; positivity
   change realArithmetic.scalar h a d = leftStripGeometricScalar h a d
   rw [leftStrip_geometric_scalar_rationalized (radicand_nonneg hp hd) (radicand_nonneg hp hv)]
+  have hD := radical_product_defect (radicand_nonneg hp hd) (radicand_nonneg hp hv)
+  change 1-Real.sqrt (1-upperTailLambda h d)*Real.sqrt (1-upperTailLambda h (d+a)) =
+    (upperTailLambda h d+upperTailLambda h (d+a)-upperTailLambda h d*upperTailLambda h (d+a)) /
+      (1+positiveRadical h d*positiveRadical h (d+a)) at hD
   have hc : (3+h)*(3+2*h)*(1/(2 : ℝ)) = geometricScale h := by
     rw [geometricScale, mul_one_div]
   simp only [Arithmetic.scalar, Arithmetic.sq, Arithmetic.cube, Arithmetic.div, Arithmetic.neg,
-    decay_eq, real_num, real_add, real_sub, real_mul, real_exp, real_inv,
+    decay_eq, real_num, real_add, real_sub, real_mul, real_exp, real_inv, real_defect,
     Rat.cast_ofNat, Rat.cast_one, Rat.cast_zero, zero_sub, hc, gap_eq hh hd, gap_eq hh hv,
-    radicalJet_eq, slope_eq hh hd]
+    radicalJet_eq, slope_eq hh hd, hD]
   simp only [profileSecond, profileThird, profileCurvature, profileSlope, sub_zero, pow_two,
     pow_succ, pow_one, negativeMarginalFactor, marginalFactorFirst, geometricGEndpoint,
     mul_one_div, div_eq_mul_inv, one_mul, pow_zero]
