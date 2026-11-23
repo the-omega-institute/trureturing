@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/SingleCoordinateSchur
   - D5/S3/Quantum/Divergence/SingleCoordinatePinchingEntropy
   - D5/S3/Quantum/Divergence/PositiveReferenceReplacement
+  - D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination
 license: "Apache-2.0 for mathlib source"
 triage: "anchor"
 ---
@@ -42,3 +43,12 @@ weighted logarithm remainder (a\operatorname{Re}\operatorname{Tr}
 τ[\log F-\log(uC_P)]). Their nonnegativity recovers the manuscript
 bound at trace one. The spectral-ceiling strong Klein inequality gives
 the additional Hilbert–Schmidt term with ceiling (t=\operatorname{Re}\operatorname{Tr}F+a).
+
+## Strict domination in qubit-plus-ray coordinates
+
+For the block data of §20, lines 1259–1270, the strict comparison applies
+when (0<λ<1/500), (c≥11/19), and (e≥c/3). The actual relocated pair
+is (F'⊕0,C'⊕e). Its divergence gain keeps the coefficient (12/55)
+with the full trace ratio (c/(c-λ)) and the quadratic Klein contribution.
+The Lean statement takes the small eigenvalue and block coordinates
+as hypotheses.
