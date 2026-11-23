@@ -90,8 +90,8 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
 
     private static Formula PairClassLookupFormula() => All("x", Fin("5"), All("y", Fin("5"),
         Eq(Call("Fin.val", Own("pairClass", V("x"), V("y"))),
-            Call("List.idxOf", Call("List.ofFn", Own("classPair")),
-                Pair(Call("min", V("x"), V("y")), Call("max", V("x"), V("y")))))));
+            Call("List.idxOf", Pair(Call("min", V("x"), V("y")), Call("max", V("x"), V("y"))),
+                Call("List.ofFn", Own("classPair"))))));
 
     private static Formula BetweenSixFormula()
     {
