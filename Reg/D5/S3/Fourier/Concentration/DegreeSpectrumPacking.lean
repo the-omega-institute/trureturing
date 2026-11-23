@@ -25,10 +25,9 @@ abbrev frequencyArena : Arena where
     (_ : ∀ j, g j ∈ Set.Icc a b)
     (_ : 2 ≤ Nat.multichoose (Fintype.card J) p),
     ∃ m n : J → ℕ, m ≠ n ∧ (∑ j, m j) = p ∧ (∑ j, n j) = p ∧
-      let gap := |monomialFrequency (V.readout () ⟨J, g⟩) m - monomialFrequency g n|
-      gap ≤ (p : ℝ) * (b - a) / ((Nat.multichoose (Fintype.card J) p : ℝ) - 1) ∧
-        (3 ≤ Fintype.card J ∧ 2 ≤ p →
-          gap ≤ (p : ℝ) * (b - a) / (Nat.multichoose (Fintype.card J) p : ℝ))
+      |monomialFrequency (V.readout () ⟨J, g⟩) m -
+        monomialFrequency g n| ≤
+        (p : ℝ) * (b - a) / ((Nat.multichoose (Fintype.card J) p : ℝ) - 1)
 
 private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
   intro law
@@ -47,7 +46,7 @@ private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
     cases b <;> norm_num [g]
   have hc : Nat.multichoose (Fintype.card (ULift.{u} Bool)) 1 = 2 := by
     simp
-  obtain ⟨m, n, _, hm, hn, hgap, _⟩ := law g 1 (a := 0) (b := 1) hg hc.ge
+  obtain ⟨m, n, _, hm, hn, hgap⟩ := law g 1 (a := 0) (b := 1) hg hc.ge
   rw [hsum m] at hm
   rw [hsum n] at hn
   have hmR : (m i : ℝ) + m j = 1 := by exact_mod_cast hm
@@ -94,8 +93,8 @@ def frequencyRegistration :
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "arg", "arg", "value",
-        "arg", "fn", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "arg", "arg",
+        "fn", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
