@@ -10,7 +10,10 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.canonicalCount
-mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.small_budget_ne_cut_total, HardinA229641Strip.result._simp_1_6
+mem_edges: proof_shape=bind-only; consumers=HardinA229641Strip.result._simp_1_6
+edges_eq: proof_shape=bind-only; consumers=HardinA229538Strip.edges_card, HardinA229538Strip.cost_countCut
+edges_card: proof_shape=bind-only; consumers=HardinA229538Strip.cut_total_exclusion, HardinA229538Strip.small_budget_ne_cut_total, HardinA229538Strip.result, HardinA229641Strip.result
+cut_total_exclusion: proof_shape=bind-only; consumers=HardinA229538Strip.small_budget_ne_cut_total
 small_budget_ne_cut_total: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
@@ -83,6 +86,7 @@ import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
+import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.BigOperators
@@ -141,22 +145,24 @@ theorem mem_edges (e : Fin 5 × Fin 5) :
   rw [Finset.mem_filter]
   exact ⟨fun h => h.2.2, fun h => ⟨Finset.mem_univ _, rfl, h⟩⟩
 
-theorem small_budget_ne_cut_total (D m : ℕ) (hD : 0 < D) (hsmall : D < 5) :
+private theorem edges_eq :
+    edges = {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),
+      (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)} := by
+  decide +kernel
+
+theorem edges_card : edges.card = 13 := by
+  rw [edges_eq]
+  decide +kernel
+
+theorem cut_total_exclusion (D : ℕ) :
+    (∀ m : ℕ, D ≠ m * edges.card) ↔ ¬ 13 ∣ D := by
+  simp only [edges_card, dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
+
+theorem small_budget_ne_cut_total (D m : ℕ) (hD : 0 < D) (hsmall : D < edges.card) :
     D ≠ m * edges.card := by
-  have diagonal : (Finset.univ : Finset (Fin 5)).diag ⊆ edges := by
-    intro e he
-    have eq := (Finset.mem_diag.mp he).2
-    rw [mem_edges, eq]
-    exact ⟨Nat.le_succ _, Nat.le_succ _⟩
-  have cut : 5 ≤ edges.card := by
-    simpa only [Finset.diag_card, Finset.card_univ, Fintype.card_fin] using
-      Finset.card_le_card diagonal
-  cases m with
-  | zero => simpa using Nat.ne_of_gt hD
-  | succ m =>
-    have total : 5 ≤ (m + 1) * edges.card := by
-      simpa only [Nat.one_mul] using Nat.mul_le_mul (Nat.succ_pos m) cut
-    exact Nat.ne_of_lt (hsmall.trans_le total)
+  apply (cut_total_exclusion D).mpr _ m
+  rw [edges_card] at hsmall
+  exact fun h => (Nat.not_le_of_lt hsmall) (Nat.le_of_dvd hD h)
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
@@ -222,8 +228,8 @@ def countCut (p q : Column) : ℕ :=
     + (if colour p 4 = colour q 4 then 1 else 0)
 
 theorem cost_countCut (p q : Column) : cost p q = countCut p q := by
-  have h : edges = {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2), (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)} := by decide +kernel
-  simp only [cost, D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.bondDefects, h, Finset.card_filter]
+  simp only [cost, D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.bondDefects,
+    edges_eq, Finset.card_filter]
   repeat' rw [Finset.sum_insert (by decide)]
   simp only [Finset.sum_singleton, countCut, Nat.add_assoc]
   try rfl
@@ -971,7 +977,7 @@ theorem result (n : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
-    have hD := small_budget_ne_cut_total 1 m (by decide) (by decide)
+    have hD := small_budget_ne_cut_total 1 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
       simpa only [a] using (labelled_scale 1 m).mpr hD
     rw [hscale]

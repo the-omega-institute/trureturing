@@ -19,7 +19,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
-            Node("small_budget_ne_cut_total", SmallBudget(), true, "The five equal-row pairs lie in the cut. With zero cuts the product is zero, and with at least one cut the product is at least five."),
+            Node("edges_card", Eq(Call("Finset.card", Own("edges")), N(13)), true, "The cut contains five equal-row pairs and four pairs in each diagonal direction."),
+            Node("cut_total_exclusion", CutTotalExclusion(), true, "The possible budgets for constant arrays are precisely the multiples of thirteen, including zero."),
+            Node("small_budget_ne_cut_total", SmallBudget(), true, "A positive budget below the cut cardinality cannot be a multiple of thirteen. At the upper endpoint, one cut realizes the budget."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
@@ -188,8 +190,18 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     {
         var d = V("D");
         var m = V("m");
+        var cutCard = Call("Finset.card", Own("edges"));
         return All("D", Q("Nat"), All("m", Q("Nat"),
-            Imp(Lt(N(0), d), Imp(Lt(d, N(5)), Ne(d, Mul(m, Call("Finset.card", Own("edges"))))))));
+            Imp(Lt(N(0), d), Imp(Lt(d, cutCard), Ne(d, Mul(m, cutCard))))));
+    }
+
+    private static Formula CutTotalExclusion()
+    {
+        var d = V("D");
+        var cutCard = Call("Finset.card", Own("edges"));
+        var divisible = new Formula.Relation(N(13), FormulaRelationOperator.Divides, d);
+        return All("D", Q("Nat"), Iff(All("m", Q("Nat"), Ne(d, Mul(V("m"), cutCard))),
+            Seq(Neg, Sp, Parenthesized(divisible))));
     }
 
     private static Formula SumOver(string n,Formula t,Formula body) =>

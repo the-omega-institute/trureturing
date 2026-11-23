@@ -757,7 +757,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect transfer_readout
-  canonicalCount transition_entry labelled_scale small_budget_ne_cut_total mem_edges)
+  canonicalCount transition_entry labelled_scale edges_card small_budget_ne_cut_total mem_edges)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)
 open DefectTransfer (bondDefects defects literalCount lumped_count)
@@ -933,7 +933,7 @@ theorem result (n : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
-    have hD := small_budget_ne_cut_total 2 m (by decide) (by decide)
+    have hD := small_budget_ne_cut_total 2 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
       simpa only [table_count] using (labelled_scale 2 m).mpr hD
     rw [hscale]
