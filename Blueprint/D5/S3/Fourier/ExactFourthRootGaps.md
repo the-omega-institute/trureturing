@@ -20,7 +20,7 @@ The relation has positive length and its threshold lies in (0, 2]. Choose a supp
 
 **Theorem 1.2 (Attainment on each exact support).**
 
-$$\forall v \in \operatorname{Finset}\left(J\right),\; \left(\operatorname{M}\left(v\right) = 0 \land \neg {\exists k \in \mathbb{Z}^{J},\; \operatorname{R}\left(k\right) \land \operatorname{V}\left(k\right) = v}\right) \lor \left(\exists k \in \mathbb{Z}^{J},\; \left(\operatorname{R}\left(k\right) \land \operatorname{V}\left(k\right) = v\right) \land \operatorname{M}\left(v\right) = \tau (k)\right)$$
+$$\forall v \in \operatorname{Finset}\left(J\right),\; \left(\operatorname{M}\left(v\right) = 0 \land \neg {\exists k \in \mathbb{Z}^{J},\; \operatorname{R}\left(k\right) \land \operatorname{V}\left(k\right) = v}\right) \lor \left(\exists k \in \mathbb{Z}^{J},\; \left(\operatorname{R}\left(k\right) \land \operatorname{V}\left(k\right) = v\right) \land \left(\operatorname{M}\left(v\right) = \tau (k) \land \left(0 < \operatorname{M}\left(v\right) \land \left(\forall r \in \mathbb{Z}^{J},\; \operatorname{R}\left(r\right) \Rightarrow \left(\operatorname{V}\left(r\right) = v \Rightarrow \tau (r) \le \operatorname{M}\left(v\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/ExactFourthRootGaps.supportMaximum_zero_or_attained` (`✓ std3`). ∎
 
@@ -100,7 +100,7 @@ $$\forall n \in \mathbb{N},\; \sum_{h = 1}^{n} \operatorname{T}\left(h\right) + 
 
 *Commentary.*
 
-At length h, a relation of length at most h has threshold at least 1/h². Throughout the inverse-square interval ending at 1/h², the exact threshold cost bounds the minimum omission fraction at length h. Integrate the inequality over the adjacent intervals. The interval from 0 to the next threshold supplies the single-scale residual. Write P(h) for the omitted fraction at length h and T(h) for (h⁻² − (h+1)⁻²)P(h). The full series L sums T(h) over positive integer lengths.
+An incompatible relation of length at most h has threshold at least 1/h². Throughout the inverse-square interval ending at 1/h², the exact threshold cost bounds the minimum omission fraction at length h. Integrate the inequality over the adjacent intervals. The interval from 0 to the next threshold supplies the single-scale residual. Write P(h) for the omitted fraction for incompatible relations of length at most h and T(h) for (h⁻² − (h+1)⁻²)P(h). The full series L sums T(h) over positive integer lengths.
 
 **Theorem 1.9 (Comparison with the length series).**
 

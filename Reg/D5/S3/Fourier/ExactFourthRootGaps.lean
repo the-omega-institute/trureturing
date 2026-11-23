@@ -390,7 +390,8 @@ abbrev supportArena : Arena where
   Law r := ∀ {J : Type u} (s : Finset J) (g : J → ℝ) (v : Finset J),
     let maximum := r.readout () ⟨J, s, g⟩ v
     (maximum = 0 ∧ ¬ ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v) ∨
-      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ maximum = tau s k
+      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ maximum = tau s k ∧
+        0 < maximum ∧ ∀ r, IncompatibleRelation s g r → relationSupport s r = v → tau s r ≤ maximum
 
 private theorem emptySupport (s : Finset One.{u}) (k : One.{u} → ℤ)
     (hk : IncompatibleRelation s zeroFrequency k) : relationSupport s k ≠ ∅ := by
@@ -407,10 +408,10 @@ private theorem supportDependence : ObservationalDependence supportSignature.{u}
     rcases supportMaximum_zero_or_attained singleton.{u} zeroFrequency ∅ with h | ⟨k, hk, hs, _⟩
     · exact h.1
     · exact (emptySupport singleton k hk hs).elim
-  rcases supportMaximum_zero_or_attained singleton.{u} zeroFrequency singleton with h | ⟨k, hk, _, he⟩
+  rcases supportMaximum_zero_or_attained singleton.{u} zeroFrequency singleton with h | ⟨_, _, _, _, hp, _⟩
   · exact (h.2 ⟨unitRelation, singletonRelation, singletonSupport⟩).elim
-  rw [h0, he]
-  exact (coordinate_loss_same_time _ _ k hk 0).2.1.1.ne
+  rw [h0]
+  exact hp.ne
 
 private theorem supportRejected : ¬ supportArena.{u}.Law supportBad := by
   intro h

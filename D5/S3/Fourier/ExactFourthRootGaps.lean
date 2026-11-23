@@ -274,7 +274,7 @@ private theorem Q_isLeast (s : Finset J) (g w : J → ℝ) (x : ℝ) :
 theorem least_hitting_weight (s : Finset J) (g w : J → ℝ) (x : ℝ) :
     let P := Q s g w x
     IsLeast {p | ∃ u ⊆ s, (∀ k, IncompatibleRelation s g k → x ≤ tau s k → ∃ j ∈ s \ u, k j ≠ 0) ∧
-      p = (∑ j ∈ s \ u, w j) / ∑ j ∈ s, w j} (Q s g w x) := by
+      p = (∑ j ∈ s \ u, w j) / ∑ j ∈ s, w j} P := by
   simpa only [costs, admissible_iff_hits, cost, mass] using Q_isLeast s g w x
 
 private lemma Q_nonneg (s : Finset J) (g w : J → ℝ) (x : ℝ)
@@ -294,7 +294,8 @@ omit [DecidableEq J] in
 theorem supportMaximum_zero_or_attained (s : Finset J) (g : J → ℝ) (v : Finset J) :
     let maximum := supportMaximum s g v
     (maximum = 0 ∧ ¬ ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v) ∨
-      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ maximum = tau s k := by
+      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ maximum = tau s k ∧
+        0 < maximum ∧ ∀ r, IncompatibleRelation s g r → relationSupport s r = v → tau s r ≤ maximum := by
   dsimp only
   by_cases h : ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v
   · obtain ⟨k, hk, hs, hmax⟩ := attained_support s g v h
@@ -308,7 +309,10 @@ theorem supportMaximum_zero_or_attained (s : Finset J) (g : J → ℝ) (v : Fins
       · rw [h0]
         exact (tau_pos hk).le
       · exact hmax k' hk' hs'
-    exact hg.csSup_eq
+    have he : supportMaximum s g v = tau s k := hg.csSup_eq
+    refine ⟨he, ?_⟩
+    rw [he]
+    exact ⟨tau_pos hk, hmax⟩
   · left
     refine ⟨?_, h⟩
     have he : {x | ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ x = tau s k} = ∅ := by
@@ -320,7 +324,7 @@ theorem supportMaximum_zero_or_attained (s : Finset J) (g : J → ℝ) (v : Fins
 omit [DecidableEq J] in
 private lemma supportMaximum_bounds (s : Finset J) (g : J → ℝ) (v : Finset J) :
     supportMaximum s g v ∈ Icc (0 : ℝ) 2 := by
-  rcases supportMaximum_zero_or_attained s g v with ⟨h, _⟩ | ⟨_, hk, _, h⟩
+  rcases supportMaximum_zero_or_attained s g v with ⟨h, _⟩ | ⟨_, hk, _, h, _, _⟩
   · rw [h]
     norm_num
   · rw [h]
@@ -331,23 +335,15 @@ private theorem admissible_iff_support_maxima (s : Finset J) (g : J → ℝ) (u 
     (hx : 0 < x) : admissible s g u x ↔ ∀ v ⊆ u, supportMaximum s g v < x := by
   constructor
   · intro h v hv
-    rcases supportMaximum_zero_or_attained s g v with ⟨hz, _⟩ | ⟨k, hk, hs, he⟩
+    rcases supportMaximum_zero_or_attained s g v with ⟨hz, _⟩ | ⟨k, hk, hs, he, _, _⟩
     · rwa [hz]
     · rw [he]
       exact h k hk (hs ▸ hv)
   · intro h k hk hs
     have hxv := h (relationSupport s k) hs
-    rcases supportMaximum_zero_or_attained s g (relationSupport s k) with ⟨_, hnone⟩ | ⟨k', hk', hs', he⟩
+    rcases supportMaximum_zero_or_attained s g (relationSupport s k) with ⟨_, hnone⟩ | ⟨_, _, _, _, _, hmax⟩
     · exact (hnone ⟨k, hk, rfl⟩).elim
-    · rw [he] at hxv
-      have hb : BddAbove (insert 0 {x | ∃ k', IncompatibleRelation s g k' ∧
-          relationSupport s k' = relationSupport s k ∧ x = tau s k'}) := by
-        refine ⟨2, ?_⟩
-        rintro _ (rfl | ⟨k', hk', _, rfl⟩)
-        · norm_num
-        · exact tau_le_two hk'
-      exact (show tau s k ≤ supportMaximum s g (relationSupport s k) from
-        le_csSup hb (Or.inr ⟨k, hk, rfl, rfl⟩)).trans_lt (he.symm ▸ hxv)
+    · exact (hmax k hk rfl).trans_lt hxv
 
 /-- The support maxima and the two endpoints of the integration interval. -/
 def breakpoints (s : Finset J) (g : J → ℝ) : Finset ℝ :=

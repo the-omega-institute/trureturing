@@ -67,12 +67,12 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
                 + "sine average. For empty T the deficit is 1 and the same-time bound at zero applies."),
             Result("partial_length_le_integral", "Comparison with partial length sums",
                 PartialComparison(),
-                "At length h, a relation of length at most h has threshold at least 1/h². "
+                "An incompatible relation of length at most h has threshold at least 1/h². "
                 + "Throughout the inverse-square interval ending at 1/h², the exact threshold "
                 + "cost bounds the minimum omission fraction at length h. Integrate the "
                 + "inequality over the adjacent intervals. The interval from 0 to the next "
                 + "threshold supplies the single-scale residual. Write P(h) for the omitted fraction "
-                + "at length h and T(h) for (h⁻² − (h+1)⁻²)P(h). The full series L sums T(h) over "
+                + "for incompatible relations of length at most h and T(h) for (h⁻² − (h+1)⁻²)P(h). The full series L sums T(h) over "
                 + "positive integer lengths."),
             Result("length_series_le_integral", "Comparison with the length series",
                 Le(F.Id("L"), Integral()),
@@ -139,10 +139,14 @@ internal sealed class ExactFourthRootGapsDocument : IScribeDocumentDefinition
     {
         var v = F.Id("v");
         var k = F.Id("k");
+        var r = F.Id("r");
         var support = And(Call("R", k), Equal(V(k), v));
+        var upperBound = All("r", Coefficients,
+            Imp(Call("R", r), Imp(Equal(V(r), v), Le(Threshold(r), M(v)))));
         return All("v", Call("Finset", F.Id("J")),
             Or(And(Equal(M(v), D(0)), Seq(Neg, Sp, Grp(Some("k", Coefficients, support)))),
-                Some("k", Coefficients, And(support, Equal(M(v), Threshold(k))))));
+                Some("k", Coefficients, And(support,
+                    And(Equal(M(v), Threshold(k)), And(Lt(D(0), M(v)), upperBound))))));
     }
 
     private static Formula Partition()
