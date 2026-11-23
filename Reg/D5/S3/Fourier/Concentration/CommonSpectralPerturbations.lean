@@ -8,6 +8,7 @@ namespace Reg.D5.S3.Fourier.Concentration.CommonSpectralPerturbations
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Fourier.Concentration.CommonSpectralPerturbations
 open _root_.D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
+open _root_.D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (diagonal)
 open FiniteSpectralPerturbation (actual frequencySignature)
 open FiniteSineMissingWindow (sensitivity)
 open LeanInformationAudit Finset
@@ -25,17 +26,18 @@ abbrev frequencyArena : Arena where
     (M : J → ℕ) (g ε : J → ℝ) (_ : ∀ j, 0 < ε j)
     (support : K → Finset J) (w : ∀ k, support k → ℝ)
     (_ : ∀ k j, 0 ≤ w k j) (p : K → ℕ) (η ρ b : K → ℝ)
-    (_ : ∀ k, 0 ≤ η k) (_ : ∀ k, 0 < b k)
-    (_ : ∀ k (j : support k),
+    (_ : ∀ k, 0 ≤ η k)
+    (_ : ∀ k, 0 < offDiagonalMass (w k) (p k) → 0 < b k)
+    (_ : ∀ k, 0 < offDiagonalMass (w k) (p k) → b k < 1 → ∀ j : support k,
       ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
         (M j + 2) ≤ ρ k)
     (_ : ∀ tests : Finset K, ∑ k ∈ tests,
-      (if 0 < offDiagonalMass (w k) (p k) then ρ k / b k else 0) ≤ 1),
+      (if 0 < offDiagonalMass (w k) (p k) ∧ b k < 1 then ρ k / b k else 0) ≤ 1),
     ∃ g' : J → ℝ, (∀ j, |V.readout () ⟨J, g'⟩ j - g j| ≤ ε j) ∧
       (∃ f : (j : J) → Fin (M j + 2), ∀ j,
         g' j = g j + ε j * (2 * ((f j).val : ℝ) / ((M j : ℝ) + 1) - 1)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
-        diagonalMass (w k) (p k) + b k * offDiagonalMass (w k) (p k)
+        diagonal (w k) (p k) + b k * offDiagonalMass (w k) (p k)
 
 private theorem rejected_law : ¬ frequencyArena.{u, v}.Law rejected := by
   intro law

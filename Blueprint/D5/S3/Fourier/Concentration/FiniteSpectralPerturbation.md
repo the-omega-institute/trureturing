@@ -6,21 +6,7 @@ Small finite perturbations can bound weighted near-collisions at positive resolu
 
 Let J be a finite type with decidable equality. The real functions g and w give frequencies and weights with total W. For degree p, the multinomial coefficient including weights is c(m), and D is the sum of c(m)² over degree-p vectors m. The quantity E(h,p,η) sums c(m)c(n) over ordered pairs whose h frequency sums are at distance at most η. The positive perturbation radius is ε. A value of f in Fin(M+2) is read as its integer index from 0 through M+1.
 
-For the mean estimate, allow M(j) and the positive radius ε(j) to vary with j. The set A consists of assignments f(j) in Fin(M(j)+2), and g_f(j) = g(j) + ε(j)(2f(j)/(M(j)+1) − 1). The real number ρ bounds min(M(j)+2, 1+floor(η(M(j)+1)/ε(j)))/(M(j)+2) for every j in J. Take a natural degree p, a nonnegative resolution η and nonnegative weights.
-
-**Theorem 1.1 (Mean collision mass on a product of finite grids).**
-
-$$\sum_{f \in A}\operatorname{E}\left(g_{f}, p, eta\right) \le \left|A\right| \cdot (D + rho \cdot (W^{2 \cdot p}-D))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/FiniteSpectralPerturbation.sum_grid_collisionMass_le` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every off-diagonal pair has a coordinate where the integer coefficient difference is nonzero. The closed affine fiber estimate in that coordinate bounds the proportion of hits by ρ. Summing the nonnegative weighted indicators and keeping the full diagonal contribution gives the estimate.
-
-**Theorem 1.2 (One perturbation with a controlled off-diagonal mass).**
+**Theorem 1.1 (One perturbation with a controlled off-diagonal mass).**
 
 $$(\forall j \in J,\; 0 \le \operatorname{w}\left(j\right))\quad p\in \mathbb{N}, M\in \mathbb{N}, 0<\varepsilon, 0\leq eta \Rightarrow \left(\exists h \in J \to \mathbb{R},\; \left(\forall j \in J,\; \left|\operatorname{h}\left(j\right)-\operatorname{g}\left(j\right)\right| \le \varepsilon\right) \land \left((\exists f \in J \to \operatorname{Fin}(M + 2),\; \forall j \in J,\; \operatorname{h}\left(j\right) = \operatorname{g}\left(j\right) + \varepsilon \cdot (\frac{2 \cdot \operatorname{f}\left(j\right)}{M + 1}-1)) \land \operatorname{E}\left(h, p, eta\right) \le D + \frac{\min(M + 2, 1 + \left\lfloor\frac{eta \cdot (M + 1)}{\varepsilon}\right\rfloor)}{M + 2} \cdot (W^{2 \cdot p}-D)\right)\right)$$
 
@@ -42,5 +28,4 @@ The weighted mass is the same one used in `D5/S3/Fourier/Concentration/FiniteSin
 
 - Truth anchor: `D5/S3/Fourier/Concentration/FiniteSincCollisionMoment.tail_moment_comparison`
 - Truth anchor: `D5/S3/Fourier/Concentration/FiniteSpectralPerturbation.exists_nearby_collision_bound`
-- Truth anchor: `D5/S3/Fourier/Concentration/FiniteSpectralPerturbation.sum_grid_collisionMass_le`
 - Dependency: [D5/S3/Fourier/Concentration/FiniteSincCollisionMoment](FiniteSincCollisionMoment.md)

@@ -14,17 +14,19 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
         Blocks(
             Paragraph(Text(
                 "Let J have decidable equality and let K index the tests. Each j in J has a frequency "
-                + "g(j), a positive radius ε(j) and M(j)+2 allowed offsets, indexed by Fin(M(j)+2). "
+                + "g(j), a positive radius ε(j) and M(j)+2 allowed offsets for a natural M(j). "
+                + "The offsets are indexed by Fin(M(j)+2). "
                 + "An index f(j) defines H(f,j) = g(j) + ε(j)(2f(j)/(M(j)+1) − 1). "
                 + "Each k in K uses a finite support J(k), nonnegative weights on that support, "
                 + "a natural degree p(k) and a nonnegative resolution η(k).")),
             Paragraph(Text(
                 "For test k, let E(k,h) be its weighted near-collision mass for the restriction of "
-                + "h to J(k). Write D(k) for the diagonal mass and B(k) for the full off-diagonal "
-                + "weight W(k) raised to 2p(k), minus D(k). Choose b(k)>0. Take ρ(k) to be any "
+                + "h to J(k). Write W(k) for the weight sum, D(k) for the diagonal mass and "
+                + "B(k) for the full off-diagonal weight W(k) raised to 2p(k), minus D(k). "
+                + "Choose b(k)>0 whenever B(k)>0. For tests with B(k)>0 and b(k)<1, take ρ(k) to be any "
                 + "upper bound on the fraction min(M(j)+2, 1+floor(η(k)(M(j)+1)/ε(j)))/(M(j)+2) "
-                + "for every j in J(k). The budget term A(k) equals ρ(k)/b(k) when B(k)>0, "
-                + "and is zero when B(k)=0.")),
+                + "for every j in J(k). The budget term A(k) equals ρ(k)/b(k) for those tests "
+                + "and is zero for tests with B(k)=0 or b(k)≥1.")),
             Describe.Lean(
                 DescribeId.Create("exists-common-nearby-collision-bounds"),
                 DeclarationHandle.Create(Owner + ".exists_common_nearby_collision_bounds"),
@@ -37,9 +39,9 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
                         + "supports. Each restricted assignment occurs the same number of times. "
                         + "The affine fiber count on the support bounds the mean of the excess "
                         + "E(k,h)−D(k) by ρ(k)B(k). Every such excess is nonnegative and at most B(k), "
-                        + "so tests with B(k)=0 hold for every assignment.")),
+                        + "so tests with B(k)=0 or b(k)≥1 hold for every assignment.")),
                     Paragraph(Text(
-                        "Divide each positive-mass excess by b(k)B(k). If every assignment violates "
+                        "For the tests charged to the budget, divide the excess by b(k)B(k). If every assignment violates "
                         + "a test, the sum of these normalized excesses exceeds one at every point "
                         + "of the finite product. Its mean is at most the total budget, which also "
                         + "gives the result at budget one. Each test defines a closed cylinder set "

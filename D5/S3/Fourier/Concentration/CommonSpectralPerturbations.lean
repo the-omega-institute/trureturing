@@ -21,6 +21,210 @@ open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
 
 namespace D5.S3.Fourier.Concentration.CommonSpectralPerturbations
 
+private theorem axis_affine {J : Type*} [Fintype J] [DecidableEq J]
+    (M : J → ℕ) (g c ε : J → ℝ) (i : J)
+    (other : (j : {j // j ≠ i}) → Fin (M j + 2)) :
+    ∃ b : ℝ, ∀ k : Fin (M i + 2),
+      (∑ j, c j * (g j + offset (ε j) ((Equiv.piSplitAt i (fun j => Fin (M j + 2))).symm (k, other) j))) =
+        (c i * (2 * ε i / ((M i : ℝ) + 1))) * (k.val : ℝ) + b := by
+  let s : Finset J := univ.erase i
+  let f (k : Fin (M i + 2)) (j : J) := (Equiv.piSplitAt i (fun j => Fin (M j + 2))).symm (k, other) j
+  let b := c i * (g i - ε i) + ∑ j ∈ s, c j * (g j + offset (ε j) (f 0 j))
+  refine ⟨b, fun k => ?_⟩
+  have heq : f k i = k := by simp [f, Equiv.piSplitAt]
+  have hrest (j : J) (hj : j ∈ s) : f k j = f 0 j := by
+    have hne := (mem_erase.mp hj).1
+    simp [f, Equiv.piSplitAt, hne]
+  have hsum :
+      (∑ j, c j * (g j + offset (ε j) (f k j))) =
+        (∑ j ∈ s, c j * (g j + offset (ε j) (f k j))) + c i * (g i + offset (ε i) k) := by
+    simpa only [s, heq] using
+      (sum_erase_add univ (fun j => c j * (g j + offset (ε j) (f k j))) (mem_univ i)).symm
+  have hreplace : (∑ j ∈ s, c j * (g j + offset (ε j) (f k j))) =
+      ∑ j ∈ s, c j * (g j + offset (ε j) (f 0 j)) := by
+    exact sum_congr rfl fun j hj => by rw [hrest j hj]
+  change (∑ j, c j * (g j + offset (ε j) (f k j))) = _
+  rw [hsum, hreplace]
+  dsimp [b, offset]
+  ring
+
+private theorem sum_hit_le {J : Type*} [Fintype J] [DecidableEq J]
+    (M : J → ℕ) (g ε : J → ℝ) (c : J → ℤ) {η : ℝ} (hη : 0 ≤ η)
+    (i : J) (hi : c i ≠ 0) (hε : 0 < ε i) :
+    (∑ f : (j : J) → Fin (M j + 2),
+      if |∑ j, (c j : ℝ) * (g j + offset (ε j) (f j))| ≤ η then (1 : ℝ) else 0) ≤
+      (Fintype.card ((j : J) → Fin (M j + 2)) : ℝ) *
+        (((min (M i + 2) (1 + ⌊η * ((M i : ℝ) + 1) / ε i⌋₊) : ℕ) : ℝ) / (M i + 2)) := by
+  let e := Equiv.piSplitAt i (fun j => Fin (M j + 2))
+  let A := ((j : {j // j ≠ i}) → Fin (M j + 2))
+  let t : ℝ := 2 * ε i / ((M i : ℝ) + 1)
+  let α : ℝ := (min (M i + 2) (1 + ⌊η * ((M i : ℝ) + 1) / ε i⌋₊) : ℕ)
+  have hd : 0 < (M i : ℝ) + 1 := by positivity
+  have ht : 0 < t := by dsimp [t]; positivity
+  have hcast : (c i : ℝ) ≠ 0 := by exact_mod_cast hi
+  have hmin : 1 ≤ |(c i : ℝ)| := by
+    exact_mod_cast (Int.one_le_abs hi)
+  let I (f : (j : J) → Fin (M j + 2)) : ℝ :=
+    if |∑ j, (c j : ℝ) * (g j + offset (ε j) (f j))| ≤ η then 1 else 0
+  have hsplit : (∑ f, I f) = ∑ other : A, ∑ k : Fin (M i + 2), I (e.symm (k, other)) := by
+    calc
+      _ = ∑ z : Fin (M i + 2) × A, I (e.symm z) :=
+        Fintype.sum_equiv e _ _ fun f => by simp
+      _ = _ := Fintype.sum_prod_type_right' (fun k other => I (e.symm (k, other)))
+  have hfiber (other : A) : (∑ k : Fin (M i + 2), I (e.symm (k, other))) ≤ α := by
+    obtain ⟨b, hb⟩ := axis_affine M g (fun j => (c j : ℝ)) ε i other
+    let a : ℝ := (c i : ℝ) * t
+    have ha : a ≠ 0 := mul_ne_zero hcast ht.ne'
+    have habs : t ≤ |a| := by
+      dsimp [a]
+      rw [abs_mul, abs_of_pos ht]
+      simpa only [one_mul] using mul_le_mul_of_nonneg_right hmin ht.le
+    have hη' : 2 * η / t = η * ((M i : ℝ) + 1) / ε i := by
+      dsimp [t]
+      field_simp
+    unfold I
+    dsimp only [e]
+    simp only [hb]
+    change (∑ k : Fin (M i + 2), if |a * (k.val : ℝ) + b| ≤ η then (1 : ℝ) else 0) ≤ α
+    rw [← sum_filter]
+    simp only [sum_const, nsmul_eq_mul, mul_one]
+    let hits := (univ : Finset (Fin (M i + 2))).filter (fun k => |a * (k.val : ℝ) + b| ≤ η)
+    have hreal : (hits.card : ℝ) ≤ 1 + η * ((M i : ℝ) + 1) / ε i := by
+      rw [← hη']
+      have hh := div_le_div_of_nonneg_left (show 0 ≤ 2 * η by positivity) ht habs
+      have hcount := affine_fin_hit_count a b ha hη (M := M i + 2)
+      change (hits.card : ℝ) ≤ _ at hcount
+      linarith only [hcount, hh]
+    have hfloor : hits.card ≤ 1 + ⌊η * ((M i : ℝ) + 1) / ε i⌋₊ := by
+      have hnonneg : 0 ≤ η * ((M i : ℝ) + 1) / ε i := by positivity
+      calc
+        _ ≤ ⌊1 + η * ((M i : ℝ) + 1) / ε i⌋₊ := Nat.le_floor hreal
+        _ = _ := by rw [add_comm (1 : ℝ), Nat.floor_add_one hnonneg, add_comm]
+    have hgrid : hits.card ≤ M i + 2 := by
+      simpa using (card_filter_le (univ : Finset (Fin (M i + 2))) _)
+    change (hits.card : ℝ) ≤
+      ((min (M i + 2) (1 + ⌊η * ((M i : ℝ) + 1) / ε i⌋₊) : ℕ) : ℝ)
+    exact Nat.cast_le.mpr (le_min hgrid hfloor)
+  have hcard : Fintype.card ((j : J) → Fin (M j + 2)) = (M i + 2) * Fintype.card A := by
+    simpa only [Fintype.card_prod, Fintype.card_fin] using Fintype.card_congr e
+  change (∑ f, I f) ≤ _
+  rw [hsplit, hcard]
+  calc
+    _ ≤ ∑ _ : A, α := sum_le_sum fun other _ => hfiber other
+    _ = (↑((M i + 2) * Fintype.card A) : ℝ) * (α / (M i + 2)) := by
+      simp only [sum_const, card_univ, nsmul_eq_mul, Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat]
+      have hM : (M i : ℝ) + 2 ≠ 0 := by positivity
+      field_simp
+
+private theorem sum_pair_le {J : Type*} [Fintype J] [DecidableEq J]
+    (M : J → ℕ) (g ε : J → ℝ) (m n : J → ℕ) (hmn : m ≠ n)
+    {η ρ : ℝ} (hε : ∀ i, 0 < ε i) (hη : 0 ≤ η)
+    (hρ : ∀ i, (((min (M i + 2) (1 + ⌊η * ((M i : ℝ) + 1) / ε i⌋₊) : ℕ) : ℝ) / (M i + 2)) ≤ ρ) :
+    (∑ f : (j : J) → Fin (M j + 2), if
+        |monomialFrequency (fun j => g j + offset (ε j) (f j)) m -
+         monomialFrequency (fun j => g j + offset (ε j) (f j)) n| ≤ η
+        then (1 : ℝ) else 0) ≤
+      (Fintype.card ((j : J) → Fin (M j + 2)) : ℝ) *
+        ρ := by
+  have hcoord : ∃ i, m i ≠ n i := by
+    by_contra! h
+    exact hmn (funext h)
+  obtain ⟨i, hi⟩ := hcoord
+  let c : J → ℤ := fun j => (m j : ℤ) - (n j : ℤ)
+  have hci : c i ≠ 0 := by
+    apply sub_ne_zero.mpr
+    exact_mod_cast hi
+  have hid (f : (j : J) → Fin (M j + 2)) :
+      monomialFrequency (fun j => g j + offset (ε j) (f j)) m -
+        monomialFrequency (fun j => g j + offset (ε j) (f j)) n =
+        ∑ j, (c j : ℝ) * (g j + offset (ε j) (f j)) := by
+    unfold monomialFrequency
+    rw [← sum_sub_distrib]
+    apply sum_congr rfl
+    intro j _
+    dsimp [c]
+    push_cast
+    ring
+  simp_rw [hid]
+  exact (sum_hit_le M g ε c hη i hci (hε i)).trans
+    (mul_le_mul_of_nonneg_left (hρ i) (Nat.cast_nonneg _))
+
+/-- A uniform fiber bound controls the mean collision mass on heterogeneous finite grids. -/
+private theorem sum_grid_collisionMass_le {J : Type*} [Fintype J] [DecidableEq J]
+    (M : J → ℕ) (g w ε : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ)
+    {η ρ : ℝ} (hε : ∀ j, 0 < ε j) (hη : 0 ≤ η)
+    (hρ : ∀ j, (((min (M j + 2) (1 + ⌊η * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
+      (M j + 2)) ≤ ρ) :
+    let W := ∑ j, w j
+    let D := ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
+    (∑ f : (j : J) → Fin (M j + 2),
+      tailCollisionMass (fun j => g j + offset (ε j) (f j)) w p η) ≤
+      (Fintype.card ((j : J) → Fin (M j + 2)) : ℝ) * (D + ρ * (W ^ (2 * p) - D)) := by
+  classical
+  intro W D
+  let A := (j : J) → Fin (M j + 2)
+  let S := piAntidiag (univ : Finset J) p
+  let c := monomialWeight w
+  let Q : ℝ := Fintype.card A
+  let α := ρ
+  let x (f : A) (m : J → ℕ) : ℝ := monomialFrequency (fun j => g j + offset (ε j) (f j)) m
+  let E (f : A) := tailCollisionMass (fun j => g j + offset (ε j) (f j)) w p η
+  let Mpair (m n : J → ℕ) : ℝ := ∑ f : A, if |x f m - x f n| ≤ η then 1 else 0
+  have hc (m : J → ℕ) : 0 ≤ c m := monomialWeight_nonneg w hw m
+  have hmass : (∑ m ∈ S, c m) = W ^ p := by
+    symm
+    exact sum_pow_eq_sum_piAntidiag univ w p
+  have hpair (m n : J → ℕ) : Mpair m n ≤ α * Q + if m = n then Q - α * Q else 0 := by
+    by_cases hmn : m = n
+    · subst n
+      simp [Mpair, hη, Q]
+    · simp only [hmn, ite_false, add_zero]
+      rw [mul_comm]
+      exact sum_pair_le M g ε m n hmn hε hη hρ
+  have hreorder : (∑ f : A, E f) = ∑ m ∈ S, ∑ n ∈ S, c m * c n * Mpair m n := by
+    change (∑ f : A, ∑ m ∈ S, ∑ n ∈ S, if |x f m - x f n| ≤ η then c m * c n else 0) = _
+    rw [sum_comm]
+    refine sum_congr rfl fun m _ => ?_
+    rw [sum_comm]
+    refine sum_congr rfl fun n _ => ?_
+    unfold Mpair
+    rw [mul_sum]
+    refine sum_congr rfl fun f _ => ?_
+    split_ifs <;> simp
+  have hmain :
+      (∑ m ∈ S, ∑ n ∈ S, c m * c n * (α * Q)) = α * Q * W ^ (2 * p) := by
+    rw [mul_comm 2 p, pow_mul, ← hmass]
+    simp only [pow_two, sum_mul, mul_sum, mul_assoc]
+    apply sum_congr rfl
+    intro m _
+    apply sum_congr rfl
+    intro n _
+    ring
+  have hdiag :
+      (∑ m ∈ S, ∑ n ∈ S, if m = n then c m * c n * (Q - α * Q) else 0) =
+        D * (Q - α * Q) := by
+    change _ = (∑ m ∈ S, c m ^ 2) * (Q - α * Q)
+    rw [sum_mul]
+    refine sum_congr rfl fun m hm => ?_
+    rw [sum_eq_single m]
+    · simp [pow_two]
+    · intro n _ hne
+      simp [Ne.symm hne]
+    · intro hbad
+      exact (hbad hm).elim
+  change (∑ f : A, E f) ≤ Q * (D + α * (W ^ (2 * p) - D))
+  rw [hreorder]
+  calc
+    _ ≤ ∑ m ∈ S, ∑ n ∈ S,
+        (c m * c n * (α * Q) + if m = n then c m * c n * (Q - α * Q) else 0) := by
+      refine sum_le_sum fun m _ => sum_le_sum fun n _ => ?_
+      have h := mul_le_mul_of_nonneg_left (hpair m n) (mul_nonneg (hc m) (hc n))
+      simpa only [mul_add, mul_ite, mul_zero] using h
+    _ = _ := by
+      simp only [sum_add_distrib]
+      rw [hmain, hdiag]
+      ring
+
 private theorem finite_common_choice {A K : Type*} [Fintype A] [Nonempty A]
     (tests : Finset K) (loss : K → A → ℝ) (meanBound threshold : K → ℝ)
     (hnonneg : ∀ k ∈ tests, ∀ a, 0 ≤ loss k a)
@@ -143,19 +347,14 @@ private theorem exists_for_all_finite_support_tests {J K : Type*} [DecidableEq J
   obtain ⟨x, hx⟩ := CompactSpace.iInter_nonempty hclosed hfinite
   exact ⟨x, fun k => Set.mem_iInter.mp hx k⟩
 
-/-- The weighted degree-`p` mass contributed by equal degree vectors. -/
-def diagonalMass {J : Type*} [Fintype J] [DecidableEq J]
-    (w : J → ℝ) (p : ℕ) : ℝ :=
-  ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
-
 /-- The total weight available to distinct ordered pairs of degree vectors. -/
 def offDiagonalMass {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (p : ℕ) : ℝ :=
-  (∑ j, w j) ^ (2 * p) - diagonalMass w p
+  (∑ j, w j) ^ (2 * p) - diagonal w p
 
 private theorem collision_between {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
-    diagonalMass w p ≤ tailCollisionMass g w p η ∧
+    diagonal w p ≤ tailCollisionMass g w p η ∧
     tailCollisionMass g w p η ≤ (∑ j, w j) ^ (2 * p) := by
   let s := piAntidiag (univ : Finset J) p
   let c := monomialWeight w
@@ -195,25 +394,28 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
     (M : J → ℕ) (g ε : J → ℝ) (hε : ∀ j, 0 < ε j)
     (support : K → Finset J) (w : ∀ k, support k → ℝ)
     (hw : ∀ k j, 0 ≤ w k j) (p : K → ℕ) (η ρ b : K → ℝ)
-    (hη : ∀ k, 0 ≤ η k) (hb : ∀ k, 0 < b k)
-    (hρ : ∀ k (j : support k),
+    (hη : ∀ k, 0 ≤ η k)
+    (hb : ∀ k, 0 < offDiagonalMass (w k) (p k) → 0 < b k)
+    (hρ : ∀ k, 0 < offDiagonalMass (w k) (p k) → b k < 1 → ∀ j : support k,
       ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
         (M j + 2) ≤ ρ k)
     (hbudget : ∀ tests : Finset K, ∑ k ∈ tests,
-      (if 0 < offDiagonalMass (w k) (p k) then ρ k / b k else 0) ≤ 1) :
+      (if 0 < offDiagonalMass (w k) (p k) ∧ b k < 1 then ρ k / b k else 0) ≤ 1) :
     ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ ε j) ∧
       (∃ f : (j : J) → Fin (M j + 2), ∀ j,
         g' j = g j + ε j * (2 * ((f j).val : ℝ) / ((M j : ℝ) + 1) - 1)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
-        diagonalMass (w k) (p k) + b k * offDiagonalMass (w k) (p k) := by
+        diagonal (w k) (p k) + b k * offDiagonalMass (w k) (p k) := by
   classical
-  let D (k : K) := diagonalMass (w k) (p k)
+  let D (k : K) := diagonal (w k) (p k)
   let B (k : K) := offDiagonalMass (w k) (p k)
+  let active (k : K) := 0 < B k ∧ b k < 1
   let E (k : K) (x : (j : support k) → Fin (M j + 2)) :=
     tailCollisionMass (fun j : support k => g j + offset (ε j) (x j)) (w k) (p k) (η k)
   let loss (k : K) (x : (j : support k) → Fin (M j + 2)) :=
-    if 0 < B k then (E k x - D k) / B k else 0
-  let rate (k : K) := if 0 < B k then ρ k else 0
+    if active k then (E k x - D k) / B k else 0
+  let rate (k : K) := if active k then ρ k else 0
+  let threshold (k : K) := if active k then b k else 1
   have hbetween (k : K) (x : (j : support k) → Fin (M j + 2)) :
       D k ≤ E k x ∧ E k x ≤ D k + B k := by
     have h := collision_between (fun j : support k => g j + offset (ε j) (x j))
@@ -224,42 +426,51 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
   have hnonneg (k : K) (x : (j : support k) → Fin (M j + 2)) : 0 ≤ loss k x := by
     dsimp only [loss]
     split_ifs with hk
-    · exact div_nonneg (sub_nonneg.mpr (hbetween k x).1) hk.le
+    · exact div_nonneg (sub_nonneg.mpr (hbetween k x).1) hk.1.le
     · exact le_rfl
+  have hthreshold (k : K) : 0 < threshold k := by
+    dsimp only [threshold]
+    split_ifs with hk
+    · exact hb k hk.1
+    · exact zero_lt_one
   have hmean (k : K) :
       (∑ x, loss k x) ≤ (Fintype.card ((j : support k) → Fin (M j + 2)) : ℝ) * rate k := by
-    by_cases hk : 0 < B k
+    by_cases hk : active k
     · have hbound : (∑ x, E k x) ≤
           (Fintype.card ((j : support k) → Fin (M j + 2)) : ℝ) *
             (D k + ρ k * B k) :=
         sum_grid_collisionMass_le (fun j : support k => M j)
           (fun j => g j) (w k) (fun j => ε j) (hw k) (p k)
-          (fun j => hε j) (hη k) (hρ k)
+          (fun j => hε j) (hη k) (hρ k hk.1 hk.2)
       simp only [loss, rate, ite_eq_left hk, ← sum_div, sum_sub_distrib, sum_const, card_univ,
         nsmul_eq_mul]
-      apply (div_le_iff₀ hk).mpr
+      apply (div_le_iff₀ hk.1).mpr
       linarith only [hbound]
     · simp [loss, rate, hk]
-  have hbudget' (tests : Finset K) : ∑ k ∈ tests, rate k / b k ≤ 1 := by
+  have hbudget' (tests : Finset K) : ∑ k ∈ tests, rate k / threshold k ≤ 1 := by
     refine le_of_eq_of_le (sum_congr rfl ?_) (hbudget tests)
     intro k _
-    by_cases hk : 0 < B k <;> simp [rate, B, hk] at *
-  obtain ⟨x, hx⟩ := exists_for_all_finite_support_tests M support loss rate b
-    hnonneg hb hmean hbudget'
+    change rate k / threshold k = (if active k then ρ k / b k else 0)
+    by_cases hk : active k <;> simp [rate, threshold, hk]
+  obtain ⟨x, hx⟩ := exists_for_all_finite_support_tests M support loss rate threshold
+    hnonneg hthreshold hmean hbudget'
   refine ⟨fun j => g j + offset (ε j) (x j), ?_, ⟨x, fun _ => rfl⟩, ?_⟩
   · intro j
     rw [add_sub_cancel_left]
     exact offset_abs_le (hε j).le (x j)
   · intro k
     change E k (fun j => x j) ≤ D k + b k * B k
-    by_cases hk : 0 < B k
+    by_cases hk : active k
     · have hz := hx k
-      dsimp only [loss] at hz
-      rw [ite_eq_left hk, div_le_iff₀ hk] at hz
+      simp only [loss, threshold, if_pos hk] at hz
+      rw [div_le_iff₀ hk.1] at hz
       linarith only [hz]
     · have hpair := hbetween k (fun j => x j)
-      have hzero : B k = 0 := le_antisymm (le_of_not_gt hk) (by linarith only [hpair.1, hpair.2])
-      simpa [hzero] using hpair.2
+      by_cases hpos : 0 < B k
+      · have ht : 1 ≤ b k := le_of_not_gt fun hlt => hk ⟨hpos, hlt⟩
+        exact hpair.2.trans (by nlinarith only [mul_le_mul_of_nonneg_right ht hpos.le])
+      · have hzero : B k = 0 := le_antisymm (le_of_not_gt hpos) (by linarith only [hpair.1, hpair.2])
+        simpa [hzero] using hpair.2
 
 #print axioms exists_common_nearby_collision_bounds
 
