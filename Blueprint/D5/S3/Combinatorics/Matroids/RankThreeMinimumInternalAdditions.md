@@ -4,7 +4,19 @@
 
 Fix the mixed lifted-line triples of a ternary row space with cyclic row size three times r.
 
-**Theorem 1.1 (The extra dimension forces a minimum number of additions).**
+**Theorem 1.1 (Uniform indexing of the actual residue classes).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.residue_indexing`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.residue_indexing` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive r there is an equivalence from ZMod (3r) to ZMod 3 × Fin r whose first coordinate is reduction modulo three.
+
+**Theorem 1.2 (The extra dimension forces a minimum number of additions).**
 
 Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.internal_additions_lower_bound`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.
 
 When the internal residue test permits the extra dimension, every ordered pair in a row with distinct residues must occur in an internal triple. Each row supplies six ordered pairs of distinct residue labels and r squared choices of points for each label pair. Selecting a containing triple and two ordered slots gives an injection, and each triple supplies six slots. This gives at least r squared additions for each row on average.
 
-**Theorem 1.2 (Transversals on the residue fibers meet the bound).**
+**Theorem 1.3 (Transversals on the residue fibers meet the bound).**
 
 Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.exists_internal_additions_attaining`
 
@@ -32,4 +44,5 @@ Index each of the three residue classes by a cyclic coordinate of size r. In eac
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.exists_internal_additions_attaining`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.internal_additions_lower_bound`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions.residue_indexing`
 - Dependency: [D5/S3/Combinatorics/Matroids/RankThreeInternalTriplePotentials](RankThreeInternalTriplePotentials.md)
