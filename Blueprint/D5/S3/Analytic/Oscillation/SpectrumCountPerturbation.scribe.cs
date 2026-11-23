@@ -20,9 +20,10 @@ internal sealed class SpectrumCountPerturbationDocument : IScribeDocumentDefinit
                 "Separated(r) means γ(i)+r(i)<γ(j)−r(j) whenever γ(i)<γ(j). "
                 + "Relocation(h,r) gives a spectrum S' and a bijection e from J to its index type. "
                 + "The ordinate and multiplicity at e(j) are h(j) and m(j), respectively. "
-                + "The order h(i)<h(j) is equivalent to γ(i)<γ(j). At each real T either "
-                + "N'(T)=N(T), or some j satisfies γ(j)−r(j)≤T<γ(j)+r(j) and "
-                + "N'(T)+m(j)=N(T) or N(T)+m(j)=N'(T).")),
+                + "The order h(i)<h(j) is equivalent to γ(i)<γ(j). At each real T either all cutoff "
+                + "memberships and the two counts agree, or precisely one j changes membership. "
+                + "That coordinate satisfies γ(j)−r(j)≤T<γ(j)+r(j). If h(j)≤T<γ(j), then "
+                + "N'(T)=N(T)+m(j). If γ(j)≤T<h(j), then N(T)=N'(T)+m(j).")),
             Describe.Lean(
                 DescribeId.Create("exists-ordered-count-perturbations"),
                 DeclarationHandle.Create(Owner + ".exists_ordered_count_perturbations"),
@@ -48,7 +49,12 @@ internal sealed class SpectrumCountPerturbationDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "The counting functions both use a closed cutoff. At the left endpoint "
                         + "one choice may enter it, and at the right endpoint all choices are "
-                        + "already counted. Different cutoffs can have different crossing coordinates."))),
+                        + "already counted. Different cutoffs can have different crossing coordinates.")),
+                    Paragraph(Text(
+                        "The original ordinates themselves are an admissible choice. Preserving "
+                        + "that choice as a spectrum requires positive and distinct ordinates, "
+                        + "finite sublevel sets, and positive multiplicities. At a changed "
+                        + "coordinate positive multiplicity also forces a nonzero count discrepancy."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>

@@ -58,8 +58,11 @@ private theorem counts_differ_at_crossing (S S' : Spectrum) (r : S.index → ℝ
     (hclose : ∀ j, |S'.gamma (e j) - S.gamma j| ≤ r j)
     (hsep : ∀ i j, S.gamma i < S.gamma j →
       S.gamma i + r i < S.gamma j - r j) (T : ℝ) :
-    S'.N T = S.N T ∨ ∃ j, T ∈ Ico (S.gamma j - r j) (S.gamma j + r j) ∧
-      (S'.N T + S.mult j = S.N T ∨ S.N T + S.mult j = S'.N T) := by
+    ((∀ j, S'.gamma (e j) ≤ T ↔ S.gamma j ≤ T) ∧ S'.N T = S.N T) ∨
+      ∃ j, T ∈ Ico (S.gamma j - r j) (S.gamma j + r j) ∧
+        (∀ i, i ≠ j → (S'.gamma (e i) ≤ T ↔ S.gamma i ≤ T)) ∧
+        ((S'.gamma (e j) ≤ T ∧ T < S.gamma j ∧ S'.N T = S.N T + S.mult j) ∨
+          (S.gamma j ≤ T ∧ T < S'.gamma (e j) ∧ S.N T = S'.N T + S.mult j)) := by
   classical
   let A := (S'.cut T).map e.symm.toEmbedding
   let B := S.cut T
@@ -71,9 +74,12 @@ private theorem counts_differ_at_crossing (S S' : Spectrum) (r : S.index → ℝ
     unfold A Spectrum.N
     rw [sum_map]
     exact sum_congr rfl (fun i _ => by simpa using (hweight (e.symm i)).symm)
-  change S'.N T = (∑ j ∈ B, S.mult j) ∨ _
   by_cases hAB : A = B
-  · exact Or.inl (hsum.symm.trans (congrArg (fun t => ∑ j ∈ t, S.mult j) hAB))
+  · left
+    refine ⟨fun j => ?_, ?_⟩
+    · rw [← hA j, hAB, hB j]
+    · rw [Spectrum.N]
+      exact hsum.symm.trans (congrArg (fun t => ∑ j ∈ t, S.mult j) hAB)
   obtain ⟨j, hj⟩ : ∃ j, ¬ (j ∈ A ↔ j ∈ B) := by
     by_contra! h
     exact hAB (Finset.ext h)
@@ -99,15 +105,17 @@ private theorem counts_differ_at_crossing (S S' : Spectrum) (r : S.index → ℝ
     simp only [mem_erase]
     exact and_congr_right (hsame i)
   right
-  refine ⟨j, hjT, ?_⟩
+  refine ⟨j, hjT, fun i hi => (hA i).symm.trans ((hsame i hi).trans (hB i)), ?_⟩
   by_cases ha : j ∈ A
   · have hb : j ∉ B := fun hb => hj (iff_of_true ha hb)
-    right
+    left
+    refine ⟨(hA j).mp ha, lt_of_not_ge (fun h => hb ((hB j).mpr h)), Eq.symm ?_⟩
     change (∑ i ∈ B, S.mult i) + S.mult j = S'.N T
     rw [← erase_eq_of_notMem hb, ← herase, sum_erase_add _ _ ha]
     exact hsum
   · have hb : j ∈ B := by by_contra h; exact hj (iff_of_false ha h)
-    left
+    right
+    refine ⟨(hB j).mp hb, lt_of_not_ge (fun h => ha ((hA j).mpr h)), Eq.symm ?_⟩
     change S'.N T + S.mult j = ∑ i ∈ B, S.mult i
     rw [← hsum, ← erase_eq_of_notMem ha, herase, sum_erase_add _ _ hb]
 
@@ -119,8 +127,11 @@ theorem exists_ordered_count_perturbations (S : Spectrum) :
         ∃ (S' : Spectrum) (e : S.index ≃ S'.index),
           (∀ j, S'.gamma (e j) = g' j ∧ S'.mult (e j) = S.mult j) ∧
           (∀ i j, g' i < g' j ↔ S.gamma i < S.gamma j) ∧
-          ∀ T, S'.N T = S.N T ∨ ∃ j, T ∈ Ico (S.gamma j - r j) (S.gamma j + r j) ∧
-            (S'.N T + S.mult j = S.N T ∨ S.N T + S.mult j = S'.N T) := by
+          ∀ T, ((∀ j, g' j ≤ T ↔ S.gamma j ≤ T) ∧ S'.N T = S.N T) ∨
+            ∃ j, T ∈ Ico (S.gamma j - r j) (S.gamma j + r j) ∧
+              (∀ i, i ≠ j → (g' i ≤ T ↔ S.gamma i ≤ T)) ∧
+              ((g' j ≤ T ∧ T < S.gamma j ∧ S'.N T = S.N T + S.mult j) ∨
+                (S.gamma j ≤ T ∧ T < g' j ∧ S.N T = S'.N T + S.mult j)) := by
   classical
   choose r hr using exists_radius S
   have hsep (i j : S.index) (h : S.gamma i < S.gamma j) :

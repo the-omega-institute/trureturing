@@ -31,9 +31,11 @@ abbrev frequencyArena : Arena where
         ∃ (S' : Spectrum) (e : S.index ≃ S'.index),
           (∀ j, S'.gamma (e j) = V.readout () ⟨S, g'⟩ j ∧ S'.mult (e j) = S.mult j) ∧
           (∀ i j, g' i < g' j ↔ S.gamma i < S.gamma j) ∧
-          ∀ T, S'.N T = S.N T ∨
+          ∀ T, ((∀ j, g' j ≤ T ↔ S.gamma j ≤ T) ∧ S'.N T = S.N T) ∨
             ∃ j, T ∈ Set.Ico (S.gamma j - r j) (S.gamma j + r j) ∧
-              (S'.N T + S.mult j = S.N T ∨ S.N T + S.mult j = S'.N T)
+              (∀ i, i ≠ j → (g' i ≤ T ↔ S.gamma i ≤ T)) ∧
+              ((g' j ≤ T ∧ T < S.gamma j ∧ S'.N T = S.N T + S.mult j) ∨
+                (S.gamma j ≤ T ∧ T < g' j ∧ S.N T = S'.N T + S.mult j))
 
 private def twoPoints : Spectrum where
   index := Fin 2

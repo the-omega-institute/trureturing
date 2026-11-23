@@ -6,7 +6,7 @@ Separated intervals preserve the order and bound threshold crossings of a spectr
 
 A spectrum S has positive distinct ordinates γ(j), positive integer multiplicities m(j), and finitely many ordinates at or below each real threshold. The function N(T) sums the multiplicities at ordinates at most T. Write J for the index type.
 
-Separated(r) means γ(i)+r(i)<γ(j)−r(j) whenever γ(i)<γ(j). Relocation(h,r) gives a spectrum S' and a bijection e from J to its index type. The ordinate and multiplicity at e(j) are h(j) and m(j), respectively. The order h(i)<h(j) is equivalent to γ(i)<γ(j). At each real T either N'(T)=N(T), or some j satisfies γ(j)−r(j)≤T<γ(j)+r(j) and N'(T)+m(j)=N(T) or N(T)+m(j)=N'(T).
+Separated(r) means γ(i)+r(i)<γ(j)−r(j) whenever γ(i)<γ(j). Relocation(h,r) gives a spectrum S' and a bijection e from J to its index type. The ordinate and multiplicity at e(j) are h(j) and m(j), respectively. The order h(i)<h(j) is equivalent to γ(i)<γ(j). At each real T either all cutoff memberships and the two counts agree, or precisely one j changes membership. That coordinate satisfies γ(j)−r(j)≤T<γ(j)+r(j). If h(j)≤T<γ(j), then N'(T)=N(T)+m(j). If γ(j)≤T<h(j), then N(T)=N'(T)+m(j).
 
 **Theorem 1.1 (Order preservation and a single possible crossing per threshold).**
 
@@ -23,6 +23,8 @@ For each coordinate take the minimum of one, its positive ordinate, and the posi
 At a fixed threshold T, membership can change only at a coordinate whose closed interval contains T strictly below its right endpoint. These intervals are pairwise disjoint. A change thus adds or removes exactly that coordinate's multiplicity. For unit multiplicities the absolute counting difference is at most one, so a bounded error in a two-term counting law stays bounded.
 
 The counting functions both use a closed cutoff. At the left endpoint one choice may enter it, and at the right endpoint all choices are already counted. Different cutoffs can have different crossing coordinates.
+
+The original ordinates themselves are an admissible choice. Preserving that choice as a spectrum requires positive and distinct ordinates, finite sublevel sets, and positive multiplicities. At a changed coordinate positive multiplicity also forces a nonzero count discrepancy.
 
 ## References
 
