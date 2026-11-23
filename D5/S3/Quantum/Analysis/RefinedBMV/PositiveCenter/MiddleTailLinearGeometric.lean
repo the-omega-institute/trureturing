@@ -10,6 +10,7 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTails
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedGapRadical
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailLinearCoefficients
+import Mathlib.Analysis.Convex.Slope
 
 /-! Separate the common exponential factor before comparing the linear coefficients. -/
 
@@ -68,11 +69,14 @@ private theorem exp_sum_difference (h u : ℝ) {i n : ℕ} (hi : i < n) :
       apply Finset.sum_congr rfl
       intro j hj
       have hijn : i + 1 + j ≤ n := by have := Finset.mem_range.mp hj; omega
-      rw [← pow_add, hx (i + 1 + j), hx n, mul_comm (Real.exp (-(h * (n : ℝ) * u))) (1 - x),
-        mul_assoc, ← Real.exp_add, mul_comm (1 - x)]
-      congr 1
-      congr 1
-      push_cast [Nat.cast_sub hijn]
+      rw [← pow_add, hx (i + 1 + j), hx n]
+      have he : Real.exp (-(h * ((i + 1 + j : ℕ) : ℝ) * u)) =
+          Real.exp (-(h * (n : ℝ) * u)) * Real.exp (h * ((n - (i + 1 + j) : ℕ) : ℝ) * u) := by
+        rw [← Real.exp_add]
+        congr 1
+        push_cast [Nat.cast_sub hijn]
+        ring
+      rw [he]
       ring
 
 /-- The two coefficient derivatives share a positive elementary factor. -/
@@ -112,7 +116,7 @@ theorem middleTailLinearWeight_mono (n : ℕ) {h : ℝ} (hh : 0 ≤ h) :
 
 theorem hasDerivAt_middleTailLinearLoss (n : ℕ) (h u : ℝ) :
     HasDerivAt (middleTailLinearLoss n h)
-      ((h * (Real.exp (-(h * (n : ℝ) * u)) * (1 - Real.exp (-(h * u)))) *
+      (h * (Real.exp (-(h * (n : ℝ) * u)) * (1 - Real.exp (-(h * u)))) *
         ((n : ℝ) * ((n : ℝ) + 1) / 2)) u := by
   have h₁ := (hasDerivAt_upperTailLinearDecay (h * (n : ℝ)) u).const_mul ((n : ℝ) + 1)
   have h₂ := (hasDerivAt_upperTailLinearDecay (h * ((n : ℝ) + 1)) u).const_mul (n : ℝ)
@@ -201,18 +205,20 @@ theorem middleTailLinear_geom_ge_and_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : �
       rw [interior_Ici] at ht
       rw [(hL t).deriv]
       exact mul_pos (hF t ht) hN
-  have hLpos : 0 < L u := by rw [← hL₀]; exact hLmono le_rfl hu.le hu
+  have hLpos : 0 < L u := by rw [← hL₀]; exact hLmono self_mem_Ici hu.le hu
   obtain ⟨hlo, hhi⟩ := middleTailLinear_ratio_comparison n hh hu.le
   change W 0 * L u ≤ N * D u at hlo
   change N * D u ≤ W u * L u at hhi
   have hW : W 0 = N * (((n : ℝ) + 2) / 3) := by
+    dsimp only [W]
     rw [middleTailLinearWeight_zero]
     dsimp only [N]
     ring
   refine ⟨hLpos, (mul_le_mul_iff_left₀ hN).mp ?_, ?_⟩
-  · rw [← mul_assoc, ← hW]
-    exact hlo
-  · rw [(hL u).deriv, (hD u).deriv, mul_assoc, mul_assoc]
+  · change N * (((n : ℝ) + 2) / 3 * L u) ≤ N * D u
+    rwa [← mul_assoc, ← hW]
+  · change deriv L u * D u ≤ deriv D u * L u
+    rw [(hL u).deriv, (hD u).deriv, mul_assoc, mul_assoc]
     exact mul_le_mul_of_nonneg_left hhi (hF u hu).le
 
 /-- The loss keeps a logarithmic slope of at least `2/u - 2h(n+1)/3`. -/
@@ -226,7 +232,8 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
   let w := r * u
   let a := h * N * (Real.exp (h * u) - 1) / u
   let F (s : ℝ) := (a / r ^ 2) * (1 - (1 + r * s) * Real.exp (-(r * s)))
-  have hN : 0 < N := by have : (0 : ℝ) < n := by exact_mod_cast hn; positivity
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hN : 0 < N := by dsimp only [N]; positivity
   have hr : 0 < r := by dsimp only [r]; positivity
   have hw : 0 < w := mul_pos hr hu
   have ha : 0 ≤ a := by
@@ -270,7 +277,7 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
         rw [div_mul_eq_mul_div]
         apply (le_div_iff₀ hu).mpr
         apply (mul_le_mul_iff_left₀ hh).mp
-        nlinarith only [H'])
+        nlinarith only [H']
     have H := mul_le_mul_of_nonneg_left hc (show 0 ≤ h * N * Real.exp (-(r * t)) by positivity)
     dsimp only [a]
     nlinarith only [H])
@@ -338,8 +345,7 @@ theorem middleTailLinear_coefficients {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 <
   have hG : 3 + h = (n : ℝ) * h := by
     dsimp only [h, n]
     push_cast
-    field_simp [hp'.ne']
-    ring
+    field_simp [hp'.ne'] <;> ring
   have hK : 3 + 2 * h = ((n : ℝ) + 1) * h := by linarith only [hG]
   have hx (i : ℕ) : x ^ i = Real.exp (-(h * (i : ℝ) * u)) := by
     dsimp only [x]
@@ -347,10 +353,11 @@ theorem middleTailLinear_coefficients {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 <
     congr 1
     ring
   have hgn : Real.exp (-((3 + h) * u)) = x ^ n := by rw [hG, hx]; congr 1; ring
+  have hnext : Real.exp (-(h * ((n : ℝ) + 1) * u)) = x ^ (n + 1) := by
+    simpa only [Nat.cast_add, Nat.cast_one] using (hx (n + 1)).symm
   have hkn : Real.exp (-((3 + 2 * h) * u)) = x ^ (n + 1) := by
-    rw [hK, hx, Nat.cast_add, Nat.cast_one]
-    congr 1
-    ring
+    rw [hK, mul_comm ((n : ℝ) + 1) h]
+    exact hnext
   have hgap : upperTailGap h u = (1 - x) / h := rfl
   have hgeom : (1 - x ^ (n + 1)) / upperTailGap h u =
       h * ∑ i ∈ Finset.range (n + 1), x ^ i := by
@@ -366,13 +373,11 @@ theorem middleTailLinear_coefficients {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 <
   constructor
   · unfold upperTailLinearA1 middleTailLinearGeom
     rw [hkn, hG, hK, hgeom, hshift, Finset.sum_range_succ', pow_zero]
-    rw [show Real.exp (-(h * ((n : ℝ) + 1) * u)) = x ^ (n + 1) by
-      rw [hx, Nat.cast_add, Nat.cast_one]]
+    rw [hnext]
     ring
   · unfold upperTailLinearA middleTailLinearLoss
     rw [hgn, hG, hgap, ← hx n]
-    rw [show Real.exp (-(h * ((n : ℝ) + 1) * u)) = x ^ (n + 1) by
-      rw [hx, Nat.cast_add, Nat.cast_one], pow_succ]
+    rw [hnext, pow_succ]
     field_simp [hh.ne']
     ring
 
@@ -407,7 +412,7 @@ theorem middleTailLinear_mixed_scalar_neg {L D L' D' y z j eta w c : ℝ}
     (hy : 1 ≤ y) (hj₀ : 0 ≤ j) (hj : j ≤ 1 / 3) (heta : eta ≤ 1 / 9)
     (hs : 1 / 2 ≤ z + L' / L) (hc : 5 / 2 < c * w) :
     let s := z + L' / L
-    -y * (z * D + D') + L * ((y + j) * (s + j) + eta) / w < 0 := by
+    (-y * (z * D + D') + L * ((y + j) * (s + j) + eta) / w < 0) := by
   let s := z + L' / L
   have hy₀ : 0 < y := by linarith
   have hs₀ : 0 < s := by change (1 / 2 : ℝ) ≤ s at hs; linarith

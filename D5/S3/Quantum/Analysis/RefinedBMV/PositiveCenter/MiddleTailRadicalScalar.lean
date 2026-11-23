@@ -70,7 +70,8 @@ private theorem middleTail_quadratic_pos {u z : ℝ} (hu : 1 / 2 ≤ u) (hu₄ :
   have hmargin : (61 / 2500 : ℝ) ≤ F w := by
     rw [hFw]
     linarith only [hinv₂]
-  have hdiff := mul_nonneg (sub_nonneg.mpr hz)
+  have hwz : w ≤ z := hz
+  have hdiff := mul_nonneg (sub_nonneg.mpr hwz)
     (show 0 ≤ 2 * (2 * w - (A + b)) + 7 / 50 by linarith only [hw])
   have he : F z - F w =
       2 * (z - w) ^ 2 + (z - w) * (2 * (2 * w - (A + b))) := by
