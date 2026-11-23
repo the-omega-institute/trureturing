@@ -129,7 +129,11 @@ def edges : Finset (Fin 5 × Fin 5) :=
 
 theorem mem_edges (e : Fin 5 × Fin 5) :
     e ∈ edges ↔ e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
-  unfold edges
+  letI : DecidablePred (fun a : Fin 5 × Fin 5 =>
+      @HardinA233178Literal.Edges 2 (a.1, 0) (a.2, 1)) :=
+    fun _ => by unfold HardinA233178Literal.Edges; infer_instance
+  change e ∈ Finset.univ.filter (fun a : Fin 5 × Fin 5 =>
+    @HardinA233178Literal.Edges 2 (a.1, 0) (a.2, 1)) ↔ _
   rw [Finset.mem_filter]
   exact ⟨fun h => h.2.2, fun h => ⟨Finset.mem_univ _, rfl, h⟩⟩
 

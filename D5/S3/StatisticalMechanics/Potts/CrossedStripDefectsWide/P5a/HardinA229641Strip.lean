@@ -882,7 +882,8 @@ theorem result (n : ℕ) :
       have cuts : edges = Finset.univ.diag ∪
           (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
         rw [← diagonals 4]
-        ext ⟨x, y⟩
+        ext e
+        obtain ⟨x, y⟩ := e
         simp only [mem_edges, Finset.mem_union, betw, Finset.mem_diag, Finset.mem_filter,
           Finset.mem_univ, true_and]
         rw [← Fin.val_inj]
