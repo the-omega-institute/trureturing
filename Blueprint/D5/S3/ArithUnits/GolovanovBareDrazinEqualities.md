@@ -34,6 +34,10 @@ $$\forall (R: \operatorname{Type}) [\operatorname{Ring}\left(R\right)] (a,c,u,v,
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/GolovanovBareDrazinEqualities.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/golovanov-2026-bare-drazin-equalities-problem-10-1` (proved) by `D5/S3/ArithUnits/GolovanovBareDrazinEqualities.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"golovanov-2026-bare-drazin-equalities-problem-10-1","declaration_gid":"D5/S3/ArithUnits/GolovanovBareDrazinEqualities.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yaashaa Golovanov (2026). *Spectral coincidence and generalized Hua inversion in rings and Banach algebras*. DOI: [10.48550/arXiv.2611.19664](https://doi.org/10.48550/arXiv.2611.19664). URL: <https://arxiv.org/pdf/2611.19664v1#page=29>.
@@ -42,7 +46,7 @@ $$\forall (R: \operatorname{Type}) [\operatorname{Ring}\left(R\right)] (a,c,u,v,
 
 The two unit equations identify b as the inverse of a + c. The input witnesses u and v are the finite Drazin inverses of a and c. The equivalence applies to every unital associative ring, including the zero ring, and allows different input core idempotents.
 
-Put s = u + v. The ordered products a b c and c b a give ts = p + a b z and st = p + z b a, respectively.
+Put s = u + v and use t = a b c = c b a. Expand ts as tu + tv, using c b a for t in tu and a b c for t in tv, to get ts = p + a b z. Expand st as ut + vt, using a b c for t in ut and c b a for t in vt, to get st = p + z b a.
 
 The outer inverse defect sts − s equals the negative of zbz. The remainder t − (ts)t equals P by multiplying the two complementary core terms of 1 − ts by the appropriate ordered expression for t. These identities translate commutation, the outer inverse equation, and nilpotence into the three tests.
 

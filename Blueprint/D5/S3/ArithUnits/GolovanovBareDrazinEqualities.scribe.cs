@@ -64,15 +64,20 @@ internal sealed class GolovanovBareDrazinEqualitiesDocument : IScribeDocumentDef
                         + "equivalence applies to every unital associative ring, including "
                         + "the zero ring, and allows different input core idempotents.")),
                     Paragraph(Text(
-                        "Put s = u + v. The ordered products a b c "
-                        + "and c b a give ts = p + a b z and st = p + z b a, respectively.")),
+                        "Put s = u + v and use t = a b c = c b a. Expand ts as tu + tv, "
+                        + "using c b a for t in tu and a b c for t in tv, to get ts = p + a b z. "
+                        + "Expand st as ut + vt, using a b c for t in ut and c b a for t in vt, "
+                        + "to get st = p + z b a.")),
                     Paragraph(Text(
                         "The outer inverse defect sts − s equals the negative of zbz. The "
                         + "remainder t − (ts)t equals P by multiplying the two complementary "
                         + "core terms of 1 − ts by the appropriate ordered expression for t. "
                         + "These identities translate commutation, the outer inverse equation, "
                         + "and nilpotence into the three tests."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("golovanov-2026-bare-drazin-equalities-problem-10-1"),
+                    ResolutionKind.Proved)))));
 
     private static Formula FiniteDrazinFormula() =>
         Seq(Forall, Sp, Ring(), Sp, Binder(Seq(X, Comma, Y), R), Comma, Sp,

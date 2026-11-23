@@ -36,7 +36,8 @@ outer inverse, its remainder, and the nilpotence condition for a finite
 Drazin inverse. They cite Drazin's Theorem 1 for uniqueness and
 bicommutation. Lemma 2.4 gives the two ordered parallel products.
 Theorem 5.2(c) gives the nilpotent-residue test under coincident cores.
-[Definitions and ordered products](https://arxiv.org/pdf/2611.19664v1#page=3) ·
+[Definition 2.1 and Lemma 2.2](https://arxiv.org/pdf/2611.19664v1#page=3) ·
+[Lemma 2.4](https://arxiv.org/pdf/2611.19664v1#page=4) ·
 [Theorem 5.2](https://arxiv.org/pdf/2611.19664v1#page=14) ·
 [Drazin, Theorem 1](https://doi.org/10.1080/00029890.1958.11991949)
 
