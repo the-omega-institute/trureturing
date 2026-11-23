@@ -102,15 +102,6 @@ theorem certificate_face {caps : List Cap} {faces : List Facet}
   simp only [certificate, Bool.and_eq_true] at h
   simpa only [Bool.and_eq_true, and_assoc] using List.all_eq_true.mp h.2 f hf
 
-theorem certificate_adjacent {caps : List Cap} {faces : List Facet}
-    (h : certificate caps faces = true) (f : Facet) (hf : f ∈ faces)
-    (r : List Nat) (hr : r ∈ f.idx.ridges) :
-    ∃ g ∈ faces, g.idx.nodes ≠ f.idx.nodes ∧ r ∈ g.idx.ridges := by
-  have he := List.all_eq_true.mp (certificate_face h f hf).2.2.1 r hr
-  obtain ⟨g, hg, he'⟩ := List.any_eq_true.mp he
-  simp only [Bool.and_eq_true, bne_iff_ne, List.contains_iff_mem] at he'
-  exact ⟨g, hg, he'⟩
-
 theorem facet_values {caps : List Cap} {f : Facet} (h : validFacet caps f = true) :
     0 < f.den ∧ dot f.num f.num ≤ f.den*f.den ∧
     ∃ a b c d : Cap,
@@ -511,11 +502,6 @@ private theorem dot4_reconstruct (q : V → Vec4 R) (faces : I → Fin 4 → V)
     dot4 (reconstruct q faces coeff i) y := by
   unfold weighted dot4 reconstruct sum4
   simp only [List.foldr_cons, List.foldr_nil]
-  grind
-
-omit [LE R] [LT R] [IsLinearOrder R] [LawfulOrderLT R] [OrderedRing R] in
-theorem dot4_comm (x y : Vec4 R) : dot4 x y = dot4 y x := by
-  unfold dot4 sum4
   grind
 
 private theorem four_mem (j : Fin 4) : j ∈ ([0,1,2,3] : List (Fin 4)) := by
