@@ -920,7 +920,7 @@ theorem result (n : ℕ) :
       simpa only [Nat.one_mul] using Nat.mul_le_mul hm hcut
     have hD : 2 ≠ m * edges.card := Nat.ne_of_lt ((Nat.lt_succ_self 2).trans_le htotal)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
-      simpa only [table_count] using labelled_scale 2 m hD
+      simpa only [table_count] using (labelled_scale 2 m).mpr hD
     rw [hscale]
     push_cast
     rfl
