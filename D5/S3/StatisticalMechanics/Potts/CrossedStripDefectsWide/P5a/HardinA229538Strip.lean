@@ -21,7 +21,7 @@ cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._
 zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_1
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
-transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.zero_values, HardinA229538Strip.result
+transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result
 countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
@@ -574,12 +574,18 @@ theorem zero_values (n : Fin 23) :
           have h₁ : m - 11 + 1 + 10 = m := Nat.sub_add_cancel hbound
           have h₂ (k : Fin 10) : m - 11 + 1 + k.val = m - 10 + k.val :=
             congrArg (· + k.val) (Nat.sub_add_sub_cancel hbound (Nat.le_succ 10))
+          have forwardCertificate :
+              DefectTransfer.forward T.transpose (1 : Column → ℤ) (1 + 10) =
+                ∑ k : Fin 10, HardinA233178Chromatic.coefficients k •
+                  DefectTransfer.forward T.transpose (1 : Column → ℤ) (1 + k.val) := by
+            simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose]
+              using HardinA233178Chromatic.vector_certificate
+          have shifted := fun v => DefectTransfer.forward_shift T.transpose
+            (1 : Column → ℤ) v 10 1 HardinA233178Chromatic.coefficients forwardCertificate (m - 11)
           funext p
-          have shifted := (transfer_readout T (1 : Column → ℤ) 10 1
-            HardinA233178Chromatic.coefficients).mp HardinA233178Chromatic.vector_certificate
-              (Pi.single p 1) (m - 11)
-          simpa only [h₁, h₂, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
-            smul_eq_mul] using shifted
+          simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec, h₁, h₂,
+            single_one_dotProduct, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+            using shifted (Pi.single p 1)
         rw [relation]
         have prior (k : Fin 10) : m - 10 + k.val < m := by
           simpa only [Fin.val_natAdd, Nat.sub_add_cancel ((Nat.le_add_right 10 2).trans large)]
