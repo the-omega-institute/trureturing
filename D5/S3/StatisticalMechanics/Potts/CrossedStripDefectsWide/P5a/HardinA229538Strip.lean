@@ -142,18 +142,24 @@ def transfer : Matrix (Column ⊕ Column) (Column ⊕ Column) ℤ :=
 
 def terminal {C : Type*} {Z : Type*} : C ⊕ Z → ℤ := Sum.elim 0 1
 
-/-- A column-vector relation gives the same shifted recurrence for each readout. -/
+/-- The vector recurrence is equivalent to every shifted scalar readout recurrence. -/
 theorem transfer_readout {S : Type*} [Fintype S] [DecidableEq S]
-    (M : Matrix S S ℤ) (u v : S → ℤ) (d b : ℕ) (c : Fin d → ℤ)
-    (h : (M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u)
-    (n : ℕ) :
-    dotProduct v ((M ^ (n + b + d)).mulVec u) =
-      ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
-  have relation : DefectTransfer.forward M.transpose u (b + d) =
-      ∑ j : Fin d, c j • DefectTransfer.forward M.transpose u (b + j.val) := by
-    simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using h
-  simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] using
-    DefectTransfer.forward_shift M.transpose u v d b c relation n
+    (M : Matrix S S ℤ) (u : S → ℤ) (d b : ℕ) (c : Fin d → ℤ) :
+    ((M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) ↔
+      ∀ (v : S → ℤ) (n : ℕ),
+        dotProduct v ((M ^ (n + b + d)).mulVec u) =
+          ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
+  constructor
+  · intro h v n
+    have relation : DefectTransfer.forward M.transpose u (b + d) =
+        ∑ j : Fin d, c j • DefectTransfer.forward M.transpose u (b + j.val) := by
+      simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using h
+    simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] using
+      DefectTransfer.forward_shift M.transpose u v d b c relation n
+  · intro h
+    funext p
+    simpa only [Nat.zero_add, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
+      smul_eq_mul] using h (Pi.single p 1) 0
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
@@ -935,8 +941,8 @@ theorem result (n : ℕ) :
     rw [hscale]
     push_cast
     rfl
-  have h := transfer_readout transfer terminal (Sum.elim (1 : Column → ℤ) 0)
-    20 2 _ vector_polynomial n
+  have h := (transfer_readout transfer terminal 20 2 _).mp
+    vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
   have mge (k : Fin 20) : 1 ≤ n + 2 + k.val :=
     Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 1))
   have hn : 1 ≤ n + 2 + 20 := Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 1))
