@@ -9,51 +9,99 @@
 /-
 admission_basis: escape-witness
 escape_witness: exactExits_active and exactExits_new compute the multiplicities of transitions reaching budget zero
-Valid: proof_shape=bind-only; consumers=decidableValid, exhaustedClass, valid_shift, cl_relabel, next_valid, initial_valid, leading_counts, old_exhausted_counts, exactExits_active, exactExits_new, class_counts_canonical, class_counts, transition_counts, count_transfer
-decidableValid: proof_shape=bind-only; consumers=exhaustedClass, exactExits_active, exactExits_new
-patternCode: proof_shape=content; consumers=pattern_relabel, exhaustedClass, exactExits_new
+Valid: proof_shape=bind-only; consumers=activeCover, activeCover._proof_1_1, cl_relabel, class_counts, class_counts_canonical, count_transfer, decidableValid, decidableValid._proof_1, exactExits_active, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedCover, exhaustedCover._proof_1_1, initial_valid, leading_counts, next_valid, old_exhausted_counts, old_valid, transition_counts, valid_shift
+decidableValid: proof_shape=bind-only; consumers=activeCover, activeCover._proof_1_1, cl_relabel, class_counts_canonical, exactExits_active, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedCover, exhaustedCover._proof_1_1, old_exhausted_counts
+patternCode: proof_shape=content; consumers=cl_relabel, class_counts_canonical, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, old_exhausted_counts, pattern_relabel
 pattern_relabel: proof_shape=content; consumers=cl_relabel
-newPatterns: proof_shape=content; consumers=exhaustedClass, exactExits_new
-oldZeroImage: proof_shape=bind-only; consumers=exhaustedClass, initialExhausted, old_exhausted_counts
-exhaustedClass: proof_shape=content; consumers=cl, cl_relabel, exhausted_relabel, exhausted_cut, old_exhausted_counts, exactExits, exactExits_count, class_counts_canonical, class_counts, initialExits, initial_counts
-cl: proof_shape=content; consumers=cl_relabel, exhausted_relabel, active_cut, exhausted_cut, terminal_eq, leading_counts, old_exhausted_counts, class_counts_canonical, class_counts, transition_counts, count_transfer
-exitRead: proof_shape=content; consumers=activeWeight, exhaustedWeight
-activeExits: proof_shape=content; consumers=activeWeight
+newPatterns: proof_shape=content; consumers=cl_relabel, class_counts_canonical, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedCover, exhaustedCover._proof_1_1, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, old_exhausted_counts
+oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, initialExhausted.eq_1, initialExits_count, old_exhausted_counts
+exhaustedClass: proof_shape=content; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, leading_counts, old_exhausted_counts, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, terminal_eq, transition_counts, transition_counts._simp_1_1
+cl: proof_shape=content; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, count_transfer, exhausted_cut, initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, terminal_eq, transition_counts, transition_counts._simp_1_1
+exitRead: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, activeWeight, activeWeight.eq_1, exhaustedWeight
+activeExits: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, activeWeight, activeWeight.eq_1
 exhaustedExits: proof_shape=content; consumers=exhaustedWeight
-activeWeight: proof_shape=content; consumers=T, exactExits_active
-exhaustedWeight: proof_shape=content; consumers=T, exactExits_new
-exitsFromWeights: proof_shape=bind-only; consumers=exitsFromWeights_count, exactExits_active, exactExits_new
-exitsFromWeights_count: proof_shape=bind-only; consumers=class_counts_canonical
-pushOld: proof_shape=bind-only; consumers=T
-T: proof_shape=content; consumers=leading_counts, old_exhausted_counts, class_counts_canonical, class_counts, transition_counts, count_transfer, HardinA229693Strip.leading_action
-initialExhausted: proof_shape=content; consumers=initial, initialExits_eq, initialExits_count
-initial: proof_shape=content; consumers=initial_counts, count_transfer, HardinA229693Strip.forward_table
-terminal: proof_shape=bind-only; consumers=terminal_eq, count_transfer, HardinA229693Strip.result
-valid_shift: proof_shape=bind-only; consumers=old_valid, leading_counts
+activeWeight: proof_shape=content; consumers=T, T.eq_1, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
+exhaustedWeight: proof_shape=content; consumers=T, T.eq_1, class_counts_canonical, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, leading_counts, old_exhausted_counts
+weightPack: proof_shape=bind-only; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
+weightPack_sum: proof_shape=bind-only; consumers=classPack_count
+weightPack_injective: proof_shape=bind-only; consumers=checkHistogram_count
+classPack: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
+classPack_count: proof_shape=content; consumers=checkHistogram_count
+pushOld: proof_shape=bind-only; consumers=T, T.eq_1, class_counts_canonical, leading_counts, old_exhausted_counts
+T: proof_shape=content; consumers=class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
+initialExhausted: proof_shape=content; consumers=initial, initial.eq_1, initialExits_count, initialHistogram, initialHistogram._proof_1_1, initial_counts
+initial: proof_shape=content; consumers=count_transfer, initial_counts
+terminal: proof_shape=bind-only; consumers=count_transfer, terminal_eq
+valid_shift: proof_shape=bind-only; consumers=leading_counts, old_valid
 old_valid: proof_shape=bind-only; consumers=old_exhausted_counts
-cl_relabel: proof_shape=content; consumers=exhausted_relabel, class_counts
+cl_relabel: proof_shape=content; consumers=class_counts, exhausted_relabel
 exhausted_relabel: proof_shape=content; consumers=class_counts
 blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_counts
-active_cut: proof_shape=bind-only; consumers=leading_counts, initial_counts
-exhausted_cut: proof_shape=bind-only; consumers=transition_counts, initial_counts
+active_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_1, leading_counts._simp_1_1
+exhausted_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_3, transition_counts._simp_1_1
 next_valid: proof_shape=bind-only; consumers=count_transfer
 initial_valid: proof_shape=bind-only; consumers=count_transfer
 terminal_eq: proof_shape=bind-only; consumers=count_transfer
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
-horizontalCost: proof_shape=bind-only; consumers=horizontalCost_eq, rowCost, initialExits, initial_counts
-horizontalCost_eq: proof_shape=bind-only; consumers=rowCost_eq, initial_counts
-rowCost: proof_shape=bind-only; consumers=rowCost_eq, exactExits, exactExits_count
+horizontalCost: proof_shape=bind-only; consumers=completionCost_initial, completionCost_row, horizontalCost_eq, initial_counts, initial_counts._simp_1_4, rowCost, rowCost.eq_1, rowCost_eq
+horizontalCost_eq: proof_shape=bind-only; consumers=initial_counts._simp_1_4, rowCost_eq
+rowCost: proof_shape=bind-only; consumers=completionCost_row, exactExits_count, rowCost_eq
 rowCost_eq: proof_shape=bind-only; consumers=exactExits_count
-exactExits: proof_shape=content; consumers=exactExits_count, exactExits_active, exactExits_new
+matchCost: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+completionCost: proof_shape=content; consumers=completionCost_initial, completionCost_row, completionRows_count, completionRows_length_le, exactExits_count, initial_counts
+completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq, initial_counts
+completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count, initial_counts
+completionCost_row: proof_shape=content; consumers=exactExits_count
+completionCost_initial: proof_shape=content; consumers=initial_counts
+completionCodes: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
+rowCode_cons: proof_shape=content; consumers=completionCodes_eq, rowCode_tail
+completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
+rowCode_tail: proof_shape=content; consumers=exitCodes_eq
+packedClass: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
+packedClass_all: proof_shape=content; consumers=packedClass_eq
+packedClass_eq: proof_shape=content; consumers=exitCodes_eq
+exitCodes: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
+exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound, initial_counts
+completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
+exitCodes_bound: proof_shape=content; consumers=checkHistogram_count
+checkHistogram: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
+checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new, initialExits_count
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
+activeGroups: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfiles, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3
+activeProfiles: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeCheck, activeCover, activeCover._proof_1_1, exactExits_active
+activeCover: proof_shape=content; consumers=exactExits_active
+activeProfileCheck: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeCheck, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, exactExits_active
+activeCheck: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeMultiplicities
+activeOneGroup0: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup1: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup2: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup3: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup4: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup5: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup6: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup7: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup8: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup9: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup10: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup11: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup12: proof_shape=content; consumers=activeBudgetOne
+activeOneGroup13: proof_shape=content; consumers=activeBudgetOne
+activeBudgetOne: proof_shape=content; consumers=activeMultiplicities
+activeTwoGroup0: proof_shape=content; consumers=activeBudgetTwo
+activeTwoGroup1: proof_shape=content; consumers=activeBudgetTwo
+activeTwoGroup2: proof_shape=content; consumers=activeBudgetTwo
+activeTwoGroup3: proof_shape=content; consumers=activeBudgetTwo
+activeBudgetTwo: proof_shape=content; consumers=activeMultiplicities
+activeMultiplicities: proof_shape=bind-only; consumers=exactExits_active
+exhaustedCover: proof_shape=content; consumers=exactExits_new
+exhaustedMultiplicities: proof_shape=content; consumers=exactExits_new
 exactExits_active: proof_shape=content; consumers=class_counts_canonical
 exactExits_new: proof_shape=content; consumers=class_counts_canonical
 class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=count_transfer
-initialExits: proof_shape=content; consumers=initialExits_eq, initialExits_count
-initialExits_eq: proof_shape=content; consumers=initialExits_count
+initialHistogram: proof_shape=content; consumers=initialExits_count
 initialExits_count: proof_shape=content; consumers=initial_counts
 initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=HardinA229693Strip.result
@@ -63,9 +111,11 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Data.Matrix.Block
+import Mathlib.Data.List.FinRange
+import Mathlib.Data.List.OfFn
+import Mathlib.Data.List.Sort
 
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
@@ -73,10 +123,6 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
   (Canonical canonical_exists_unique)
 open HardinA229585StripData (Boundary Row horizontal antidiagonal boundary cross)
-set_option maxRecDepth 100000
-set_option maxHeartbeats 0
-set_option Elab.async false
-set_option profiler true
 
 def Valid (p : Boundary) (d : ℕ) : Prop :=
   d ≤ 2 ∧ (Finset.univ.filter fun j : Fin 5 => p j.castSucc = p j.succ).card ≤ 2 - d
@@ -112,279 +158,190 @@ def cl (p : Boundary) (d : ℕ) : Fin 168 :=
   if d = 0 then (exhaustedClass p).natAdd 72 else
     (HardinA229585StripData.cl p (d - 1)).castAdd 96
 
-private def exitRead : Fin 96 → Fin 108 :=
-  ![72, 72, 73, 73, 74, 74, 75, 75, 76, 76, 77, 77, 29, 78, 78, 79, 79, 80, 80, 33, 37, 81, 81,
+private def exitRead (i : Fin 96) : Fin 108 :=
+  (#[72, 72, 73, 73, 74, 74, 75, 75, 76, 76, 77, 77, 29, 78, 78, 79, 79, 80, 80, 33, 37, 81, 81,
     82, 39, 82, 83, 83, 84, 84, 85, 85, 86, 86, 87, 87, 88, 88, 89, 54, 89, 90, 90, 57, 61, 91,
     91, 92, 92, 93, 93, 65, 94, 94, 95, 95, 96, 96, 97, 97, 98, 98, 16, 18, 99, 99, 100, 100,
     20, 22, 101, 101, 102, 102, 24, 26, 31, 42, 103, 103, 44, 46, 104, 104, 105, 105, 48, 50,
-    106, 106, 52, 63, 68, 70, 107, 107]
+    106, 106, 52, 63, 68, 70, 107, 107] : Array (Fin 108))[i.val]
 
-private def activeExits : Fin 72 → List (Fin 36) :=
-  ![
-    [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7,
-     8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 13, 14, 14, 14, 15,
-     16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 20, 20, 20, 20,
-     20, 20, 21, 21, 21, 21, 21, 22, 22, 22, 23, 23, 23, 23, 24, 25, 26, 30, 32, 32, 35, 35],
-    [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7,
-     7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 13, 13, 13, 13,
-     13, 14, 14, 15, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 19,
-     19, 19, 19, 19, 20, 20, 21, 21, 22, 22, 23, 25, 29, 32, 32, 33, 33, 34, 34],
-    [0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9,
-     9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 13, 13, 14, 14, 14, 14, 14, 15, 15, 16,
-     16, 16, 16, 17, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 20, 20, 21, 21, 21, 21, 21, 21,
-     21, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 24, 24, 25, 27, 28, 29, 34, 34],
-    [0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7,
-     8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 13, 13, 13,
-     13, 13, 14, 14, 15, 15, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19,
-     19, 19, 20, 20, 20, 21, 21, 21, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 24, 24, 25, 27, 30,
-     30, 30, 30, 31, 31, 35],
-    [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7,
-     8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14,
-     15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18,
-     19, 19, 19, 20, 20, 21, 21, 22, 22, 22, 22, 23, 26, 26, 27, 28, 31, 32, 32, 32, 33, 33, 33,
-     34, 34],
-    [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6,
-     7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13,
-     14, 14, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19,
-     19, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 22, 22, 23, 23, 23, 23, 23, 23, 28, 29,
-     32, 32, 33, 35, 35],
-    [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8,
-     8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14,
-     14, 14, 14, 15, 15, 16, 16, 16, 16, 16, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19,
-     19, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 26, 26, 27,
-     28, 31, 34, 34],
-    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7,
-     7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11,
-     11, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 14, 15, 15, 16, 16, 16, 17, 17, 18, 18, 18, 18,
-     18, 18, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22,
-     22, 22, 22, 23, 23, 23, 23, 28, 29, 30, 30, 30, 30, 31, 31, 34, 35],
-    [0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8,
-     8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13,
-     14, 14, 14, 14, 15, 15, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 19, 19,
-     19, 19, 19, 20, 20, 20, 20, 20, 21, 21, 22, 22, 22, 22, 22, 23, 28, 28, 29, 29, 30, 30, 31,
-     34, 34, 35, 35],
-    [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7,
-     7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13,
-     13, 13, 13, 13, 13, 14, 15, 15, 16, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 19, 19, 19, 19,
-     20, 20, 20, 20, 20, 21, 21, 21, 21, 22, 23, 23, 23, 26, 26, 26, 26, 27, 27, 28, 28, 31, 31,
-     34],
-    [0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9,
-     10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15, 15,
-     15, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 21, 21, 21,
-     21, 21, 21, 22, 22, 22, 23, 23, 23, 23, 23, 23, 28, 28, 29, 29, 32, 33, 33, 35],
-    [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10,
-     10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15,
-     15, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 20, 20,
-     20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 26, 26,
-     26, 26, 27, 27, 28, 28, 31, 31, 32, 32, 32, 33, 33, 33, 34],
-    [0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8,
-     8, 8, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15,
-     15, 15, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19,
-     19, 20, 20, 20, 21, 21, 21, 22, 22, 23, 23, 23, 23, 24, 24, 24, 24, 25, 25, 27, 27, 30, 30,
-     31, 35, 35],
-    [0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7,
-     7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12,
-     13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 18,
-     18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 20, 20, 21, 21, 21, 21, 22, 23, 23, 23, 24,
-     24, 24, 24, 25, 25, 27, 27, 28, 28, 29, 29, 34],
-    [0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 5, 5, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9,
-     10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 15,
-     15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 19, 19,
-     19, 19, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 23, 23, 23, 23, 25, 25, 29, 29, 32,
-     33, 34],
-    [0, 0, 1, 1, 1, 1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 10,
-     10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 14, 14, 14, 14, 14, 15, 15, 15,
-     15, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20,
-     20, 21, 21, 21, 21, 22, 22, 22, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 30, 30, 32, 35],
-    [0, 2, 3, 5, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 14,
-     15, 16, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 21, 21, 21, 21, 21, 21, 22],
-    [0, 1, 3, 4, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 14,
-     17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 20, 20, 21, 21, 21, 21, 21, 21, 22, 23],
-    [2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 12, 14, 15,
-     16, 17, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 21, 21, 21, 21, 22],
-    [2, 4, 4, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 12, 13,
-     15, 17, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 19, 20, 20, 21, 21, 21, 22, 23],
-    [0, 1, 2, 3, 4, 4, 5, 5, 6, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 12, 12,
-     13, 14, 15, 15, 16, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 20, 21, 21,
-     21, 22, 23],
-    [0, 0, 1, 1, 3, 4, 5, 6, 6, 6, 6, 6, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 12, 12, 13, 14,
-     15, 15, 16, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 21, 21, 21, 21, 21, 21,
-     23],
-    [0, 1, 2, 3, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 13, 14, 16, 17,
-     17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 20, 21, 21, 21, 21, 21, 21, 22, 23],
-    [0, 0, 1, 1, 3, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 12, 13,
-     14, 15, 17, 17, 17, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 20, 21, 21, 21, 21, 21,
-     21, 22],
-    [0, 2, 3, 4, 6, 6, 6, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 12, 12, 12, 12, 12, 13, 13, 13,
-     13, 14, 15, 15, 15, 17, 18, 19, 19, 19, 20, 20, 21, 21, 21, 23, 23],
-    [0, 1, 3, 4, 5, 6, 6, 6, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 12, 12, 12, 13, 13,
-     13, 14, 14, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 21, 22, 22,
-     23, 23],
-    [2, 3, 6, 6, 6, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 12, 12, 12, 12, 13, 13, 13,
-     13, 14, 15, 15, 15, 19, 19, 19, 19, 20, 20, 21, 21, 21, 23, 23],
-    [2, 6, 6, 6, 6, 6, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 12, 12, 13, 13, 14, 14,
-     14, 15, 15, 16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 19, 19, 21, 22, 22, 23, 23],
-    [1, 2, 4, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 9, 10, 11, 11, 11, 11, 15, 15,
-     16, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 19, 19, 19, 20, 20, 20, 21, 21, 21, 23, 23],
-    [0, 2, 3, 5, 6, 6, 7, 7, 8, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 14, 14, 15, 15, 16, 17, 17,
-     18, 18, 18, 18, 18, 19, 19, 19, 19, 21, 21, 21, 22, 22],
-    [0, 1, 3, 4, 5, 6, 7, 7, 7, 8, 8, 8, 8, 10, 10, 10, 10, 11, 11, 14, 14, 17, 17, 17, 17, 18,
-     18, 18, 19, 19, 19, 19, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 23, 23],
-    [1, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11,
-     12, 12, 13, 13, 16, 17, 17, 17, 17, 18, 18, 18, 19, 19, 21, 21, 21, 21, 22, 23, 23, 23],
-    [0, 1, 4, 4, 4, 5, 5, 5, 6, 6, 8, 8, 9, 9, 9, 10, 10, 11, 13, 13, 16, 16, 17, 17, 18, 18, 18,
-     18, 18, 18, 19, 19, 19, 19, 19, 21, 21, 21, 21, 22, 22, 23, 23, 23],
-    [2, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10,
-     10, 11, 11, 12, 12, 13, 13, 15, 15, 17, 17, 17, 17, 18, 18, 19, 19, 19, 19, 20, 20, 20, 21,
-     22, 23],
-    [2, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 8, 8, 9, 9, 9, 9, 9, 10, 10, 11, 12, 12, 14, 14, 15, 15,
-     16, 16, 17, 17, 17, 17, 17, 18, 18, 19, 19, 21, 21, 22],
-    [3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10,
-     11, 11, 11, 13, 13, 14, 14, 16, 16, 17, 18, 18, 18, 18, 18, 18, 19, 20, 20, 20, 21, 21, 21,
-     21, 23],
-    [0, 1, 2, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 9, 9, 9, 9, 11, 11, 11, 11, 12, 15, 15, 16, 17, 17,
-     17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 20, 20, 20, 21, 21, 21, 23, 23],
-    [0, 1, 2, 3, 6, 7, 7, 8, 8, 8, 8, 10, 10, 11, 11, 13, 14, 14, 16, 17, 17, 17, 17, 17, 18, 18,
-     18, 19, 19, 19, 19, 20, 20, 21, 21, 21, 21, 21, 21, 21, 22, 22, 23, 23],
-    [0, 0, 1, 1, 3, 6, 7, 7, 8, 8, 8, 8, 10, 10, 11, 11, 12, 13, 14, 14, 15, 15, 17, 17, 17, 18,
-     18, 18, 18, 18, 18, 19, 19, 19, 19, 20, 21, 21, 21, 22, 22],
-    [0, 1, 2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11,
-     12, 12, 12, 13, 13, 14, 15, 15, 15, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19,
-     20, 20, 21, 22, 23],
-    [0, 1, 2, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 13, 13,
-     13, 14, 14, 14, 16, 16, 16, 17, 17, 18, 18, 18, 18, 18, 18, 19, 19, 20, 20, 21, 21, 21, 21,
-     22],
-    [0, 0, 1, 1, 3, 4, 4, 5, 5, 6, 6, 6, 8, 9, 9, 9, 10, 12, 12, 12, 13, 14, 14, 15, 15, 15, 16,
-     16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 19, 21, 21, 21, 23],
-    [2, 2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11,
-     12, 12, 13, 13, 14, 15, 17, 17, 17, 17, 18, 18, 19, 19, 19, 20, 21, 21, 21, 21, 21, 21, 22,
-     23, 23, 23],
-    [2, 2, 3, 4, 4, 5, 5, 6, 6, 6, 8, 9, 9, 9, 10, 13, 13, 14, 16, 16, 17, 18, 18, 18, 18, 18,
-     18, 19, 19, 19, 19, 19, 19, 19, 21, 21, 21, 21, 22, 22, 22, 23, 23],
-    [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 3, 3, 5, 6, 6, 6, 6, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 12,
-     12, 13, 13, 16, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 20, 20, 21, 21, 21],
-    [0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10,
-     13, 13, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 19, 19, 20, 21, 21],
-    [0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 3, 3, 6, 6, 6, 6, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11,
-     12, 12, 13, 13, 15, 15, 17, 17, 18, 18, 18, 18, 19, 19, 19, 21, 21, 21, 21, 21, 21, 21, 22,
-     23, 23],
-    [0, 0, 1, 1, 2, 2, 2, 3, 3, 6, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 12, 12,
-     14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 20, 21, 21, 21,
-     21, 22, 22, 22, 23, 23, 23],
-    [0, 1, 2, 2, 2, 3, 6, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 12, 14, 15, 16, 17, 17, 17,
-     17, 17, 18, 18, 18, 19, 19, 20, 20, 21, 21, 21, 21, 22, 22, 22, 23, 23, 23],
-    [0, 0, 1, 1, 2, 2, 3, 3, 3, 6, 6, 6, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 12, 13, 15,
-     17, 17, 17, 18, 18, 18, 18, 18, 18, 19, 21, 21, 21, 22, 22, 23],
-    [0, 0, 0, 1, 1, 1, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 10, 10,
-     10, 13, 16, 17, 17, 18, 18, 19, 19, 19, 19, 19, 20, 20, 21, 21],
-    [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 5, 5, 6, 6, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 12, 13, 16,
-     16, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 20, 21, 21, 21],
-    [2, 2, 2, 2, 3, 3, 4, 5, 6, 6, 6, 6, 6, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 13, 14, 14,
-     16, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 21, 22, 22, 22, 23],
-    [2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11,
-     12, 13, 14, 14, 15, 15, 17, 17, 17, 17, 17, 17, 18, 18, 18, 19, 19, 20, 20, 21, 21, 21, 21,
-     21, 21, 22, 22, 23, 23, 23],
-    [0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 4, 5, 6, 6, 6, 6, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 12, 12,
-     12, 13, 13, 14, 15, 15, 15, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 21, 21, 21, 21,
-     21, 21, 21, 23, 23],
-    [0, 0, 1, 1, 2, 2, 4, 5, 6, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 11, 13, 13, 13, 14,
-     14, 14, 16, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 19, 19, 19, 19, 19, 19, 20, 21, 21, 21,
-     21, 22, 22],
-    [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10,
-     11, 12, 12, 12, 13, 14, 14, 15, 15, 15, 16, 16, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 19,
-     19, 19, 19, 19, 19, 20, 21, 21, 21, 21, 22, 22, 23, 23],
-    [0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10,
-     11, 12, 12, 13, 13, 14, 15, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 20, 20, 21, 21,
-     21, 22],
-    [0, 0, 1, 1, 2, 2, 3, 3, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11,
-     13, 13, 14, 16, 16, 17, 17, 17, 17, 17, 17, 18, 19, 19, 19, 20, 21, 21, 21, 22, 23],
-    [0, 0, 1, 1, 2, 2, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 11, 11, 12, 12, 15,
-     16, 16, 17, 17, 18, 18, 18, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21, 21, 21, 23],
-    [3, 3, 4, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11,
-     13, 14, 16, 17, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 21, 23, 23],
-    [2, 2, 3, 3, 4, 5, 6, 6, 6, 6, 6, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 12,
-     14, 15, 16, 17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 21, 21, 22, 22],
-    [2, 2, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 12, 13,
-     15, 17, 17, 17, 17, 17, 17, 18, 18, 18, 19, 20, 20, 20, 21, 21, 21, 21, 22, 22, 23, 23],
-    [0, 0, 1, 1, 4, 4, 4, 5, 5, 5, 6, 6, 6, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 11, 11, 13,
-     16, 17, 17, 18, 18, 19, 19, 19, 21, 21, 21, 21, 22, 23, 23, 23],
-    [1, 1, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 9, 10, 10, 10, 11, 12, 13, 16, 16,
-     17, 17, 17, 18, 18, 18, 18, 18, 19, 19, 19, 21, 21, 22, 22, 23, 23, 23],
-    [0, 0, 1, 1, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10,
-     10, 10, 10, 10, 11, 14, 17, 18, 19, 19, 19, 19, 19, 19, 20, 20, 20, 21, 21, 21, 22, 23],
-    [0, 0, 2, 2, 3, 3, 5, 5, 6, 6, 6, 6, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10,
-     11, 14, 15, 16, 16, 17, 17, 17, 18, 18, 19, 19, 19, 21, 21, 21, 22],
-    [1, 1, 2, 2, 4, 4, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10,
-     10, 11, 11, 15, 16, 16, 17, 17, 18, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21, 21, 21, 23],
-    [2, 2, 6, 6, 6, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 12, 13, 14, 14, 14, 15, 16, 16,
-     17, 17, 17, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 21, 21, 21, 21, 22, 23],
-    [2, 2, 3, 3, 6, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 12, 12, 13, 13, 14, 14, 15, 15, 15,
-     17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 20, 21, 21, 21, 21, 21, 23],
-    [0, 0, 1, 1, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 11, 11, 12, 12, 12,
-     13, 13, 13, 14, 15, 15, 15, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18,
-     19, 19, 19, 21, 21, 21, 21, 22, 23],
-    [0, 0, 2, 2, 3, 3, 4, 4, 6, 6, 6, 6, 6, 8, 8, 8, 9, 10, 10, 12, 12, 12, 12, 13, 13, 14, 14,
-     15, 15, 15, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 19, 19, 19, 20, 21, 21, 21, 21,
-     21, 23]]
+private def activeExits (i : Fin 72) (j : Fin 36) : ℕ :=
+  let table : Array (Array ℕ) := #[
+    #[4, 4, 4, 5, 4, 4, 3, 3, 2, 6, 4, 3, 4, 2, 3, 1, 4, 10, 3, 2, 6, 5, 3, 4, 1, 1, 1, 0, 0, 0, 1, 0, 2, 0, 0, 2],
+    #[4, 4, 4, 3, 5, 5, 5, 4, 3, 4, 5, 4, 2, 5, 2, 5, 4, 3, 7, 5, 2, 2, 2, 1, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 0],
+    #[3, 4, 4, 5, 1, 0, 4, 4, 5, 5, 3, 4, 3, 2, 5, 2, 4, 5, 4, 3, 2, 7, 3, 7, 2, 1, 0, 1, 1, 1, 0, 0, 0, 0, 2, 0],
+    #[5, 2, 5, 5, 2, 3, 3, 6, 4, 3, 8, 6, 1, 5, 2, 2, 3, 4, 8, 4, 3, 3, 6, 4, 2, 1, 0, 1, 0, 0, 4, 2, 0, 0, 0, 1],
+    #[4, 4, 5, 3, 3, 4, 5, 3, 5, 4, 4, 2, 2, 4, 4, 5, 5, 6, 7, 3, 2, 2, 4, 1, 0, 0, 2, 1, 1, 0, 0, 1, 3, 3, 2, 0],
+    #[5, 4, 4, 6, 3, 4, 5, 3, 5, 4, 4, 2, 5, 3, 2, 2, 4, 7, 4, 5, 6, 6, 2, 6, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1, 0, 2],
+    #[5, 5, 4, 4, 1, 0, 7, 3, 4, 7, 5, 2, 4, 4, 4, 2, 5, 3, 5, 6, 2, 7, 3, 7, 0, 0, 2, 1, 1, 0, 0, 1, 0, 0, 2, 0],
+    #[6, 4, 4, 6, 3, 3, 4, 4, 7, 5, 7, 6, 3, 7, 1, 2, 3, 2, 6, 7, 4, 7, 6, 4, 0, 0, 0, 0, 1, 1, 4, 2, 0, 0, 1, 1],
+    #[1, 0, 4, 4, 5, 5, 5, 2, 7, 7, 3, 5, 4, 4, 4, 2, 5, 5, 3, 7, 5, 2, 5, 1, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0, 2, 2],
+    #[3, 3, 3, 1, 6, 4, 10, 4, 6, 6, 4, 3, 3, 7, 1, 2, 3, 6, 2, 4, 5, 4, 1, 3, 0, 0, 4, 2, 2, 0, 0, 2, 0, 0, 1, 0],
+    #[1, 0, 4, 4, 3, 4, 4, 5, 4, 2, 7, 3, 3, 2, 3, 6, 4, 4, 5, 4, 2, 6, 3, 6, 0, 0, 0, 0, 2, 2, 0, 0, 1, 2, 0, 1],
+    #[3, 3, 3, 1, 2, 4, 1, 4, 4, 4, 6, 3, 4, 1, 7, 4, 3, 4, 7, 6, 5, 7, 7, 4, 0, 0, 4, 2, 2, 0, 0, 2, 3, 3, 1, 0],
+    #[5, 2, 3, 2, 3, 5, 3, 6, 4, 3, 2, 2, 3, 3, 6, 5, 5, 9, 4, 4, 3, 3, 2, 4, 4, 2, 0, 2, 0, 0, 2, 1, 0, 0, 0, 2],
+    #[2, 4, 3, 6, 6, 4, 4, 3, 2, 5, 6, 7, 4, 3, 6, 5, 4, 4, 6, 7, 2, 4, 1, 3, 4, 2, 0, 2, 2, 2, 0, 0, 0, 0, 1, 0],
+    #[3, 3, 4, 1, 3, 3, 1, 3, 6, 4, 2, 7, 4, 6, 3, 4, 4, 7, 7, 4, 2, 7, 3, 4, 0, 2, 0, 0, 0, 2, 0, 0, 1, 1, 1, 0],
+    #[2, 6, 1, 2, 5, 1, 3, 5, 4, 0, 4, 5, 4, 3, 5, 4, 1, 7, 6, 4, 5, 4, 5, 2, 2, 2, 2, 0, 0, 0, 2, 0, 1, 0, 0, 1],
+    #[1, 0, 1, 1, 0, 1, 6, 1, 5, 6, 4, 1, 0, 0, 1, 1, 1, 3, 5, 5, 0, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 0, 1, 1, 1, 5, 2, 5, 4, 5, 1, 0, 0, 1, 0, 0, 3, 4, 6, 2, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 1, 1, 1, 6, 0, 4, 6, 4, 1, 1, 0, 1, 1, 1, 4, 5, 4, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 0, 2, 2, 4, 2, 5, 4, 5, 1, 1, 1, 0, 1, 0, 6, 3, 3, 2, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 1, 2, 2, 3, 1, 3, 4, 6, 1, 2, 1, 1, 2, 1, 5, 5, 5, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 1, 1, 1, 5, 0, 4, 5, 3, 0, 2, 1, 1, 2, 1, 5, 5, 4, 0, 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 1, 0, 0, 5, 1, 6, 4, 3, 1, 0, 1, 1, 0, 1, 5, 4, 5, 1, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 1, 0, 0, 6, 1, 6, 4, 3, 1, 1, 1, 1, 1, 0, 3, 6, 6, 1, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 0, 1, 1, 1, 0, 3, 0, 3, 3, 5, 0, 5, 4, 1, 3, 0, 1, 1, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 0, 1, 1, 1, 3, 0, 5, 4, 4, 1, 3, 3, 2, 3, 4, 4, 4, 2, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 1, 0, 0, 3, 1, 4, 4, 5, 0, 4, 4, 1, 3, 0, 0, 0, 4, 2, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 0, 0, 0, 5, 0, 4, 5, 5, 1, 2, 2, 3, 2, 4, 2, 2, 4, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 1, 1, 0, 1, 0, 6, 5, 1, 6, 1, 4, 0, 0, 0, 2, 1, 5, 3, 5, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 0, 1, 1, 0, 1, 2, 2, 4, 2, 3, 2, 0, 0, 2, 2, 1, 2, 5, 4, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 0, 1, 1, 1, 1, 3, 4, 0, 4, 2, 0, 0, 2, 0, 0, 4, 3, 4, 3, 7, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 1, 0, 0, 5, 4, 4, 2, 3, 4, 4, 2, 2, 2, 0, 0, 1, 4, 3, 2, 0, 4, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 0, 0, 3, 3, 2, 0, 2, 3, 2, 1, 0, 2, 0, 0, 2, 2, 6, 5, 0, 4, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 0, 4, 4, 5, 3, 4, 5, 4, 2, 2, 2, 0, 2, 0, 4, 2, 4, 3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 1, 1, 2, 2, 5, 0, 2, 5, 2, 1, 2, 0, 2, 2, 2, 5, 2, 2, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 1, 2, 2, 3, 3, 7, 3, 7, 3, 0, 2, 2, 0, 2, 1, 6, 1, 3, 4, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 0, 0, 0, 6, 4, 0, 4, 0, 4, 1, 0, 0, 2, 1, 5, 4, 5, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 1, 0, 0, 1, 2, 4, 0, 2, 2, 0, 1, 2, 0, 1, 5, 3, 4, 2, 7, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 1, 0, 0, 1, 2, 4, 0, 2, 2, 1, 1, 2, 2, 0, 3, 6, 4, 1, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 1, 4, 4, 3, 2, 2, 4, 4, 2, 3, 2, 1, 3, 1, 4, 4, 5, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 1, 0, 2, 2, 2, 2, 5, 3, 5, 2, 0, 3, 3, 0, 3, 2, 6, 2, 2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 1, 2, 2, 3, 0, 1, 3, 1, 0, 3, 1, 2, 3, 2, 7, 3, 1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 1, 4, 4, 3, 2, 2, 4, 4, 2, 2, 2, 1, 1, 0, 4, 2, 3, 1, 6, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 1, 2, 2, 3, 0, 1, 3, 1, 0, 0, 2, 1, 0, 2, 1, 6, 7, 0, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[5, 4, 1, 3, 0, 1, 4, 0, 5, 4, 2, 0, 2, 2, 0, 0, 1, 3, 4, 5, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[3, 3, 2, 3, 1, 1, 5, 1, 5, 2, 3, 0, 0, 2, 0, 0, 2, 6, 2, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[4, 4, 1, 3, 0, 0, 4, 0, 3, 4, 5, 1, 2, 2, 0, 2, 0, 2, 4, 3, 0, 7, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 3, 2, 0, 0, 3, 1, 3, 5, 5, 0, 2, 0, 2, 2, 2, 2, 5, 6, 1, 4, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[1, 1, 3, 1, 0, 0, 2, 2, 5, 3, 2, 0, 1, 0, 1, 1, 1, 5, 3, 2, 2, 4, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 2, 3, 0, 0, 3, 0, 1, 3, 6, 2, 1, 1, 0, 1, 0, 3, 6, 1, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[3, 3, 1, 3, 2, 2, 5, 2, 2, 2, 5, 0, 0, 1, 0, 0, 1, 2, 2, 5, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[4, 2, 2, 3, 0, 2, 2, 0, 2, 6, 3, 0, 1, 1, 0, 0, 2, 5, 3, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 4, 2, 1, 1, 5, 0, 4, 5, 3, 0, 0, 1, 2, 0, 1, 3, 5, 4, 0, 1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 4, 2, 2, 2, 3, 1, 3, 4, 6, 1, 1, 1, 2, 2, 0, 6, 3, 2, 2, 6, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[4, 4, 0, 2, 1, 1, 4, 0, 3, 4, 4, 0, 3, 2, 1, 3, 1, 4, 4, 3, 0, 7, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 2, 0, 1, 1, 3, 1, 3, 5, 3, 1, 0, 3, 3, 0, 3, 6, 2, 6, 1, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 2, 2, 2, 2, 2, 1, 3, 4, 6, 1, 3, 1, 2, 3, 2, 3, 7, 6, 1, 4, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[4, 4, 0, 2, 0, 0, 5, 1, 6, 4, 3, 1, 2, 2, 1, 1, 0, 2, 4, 6, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 2, 2, 0, 0, 6, 1, 6, 4, 3, 1, 0, 2, 1, 0, 2, 6, 1, 3, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 2, 0, 0, 0, 5, 2, 4, 2, 4, 2, 2, 0, 0, 1, 2, 2, 5, 2, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 2, 1, 1, 5, 3, 4, 5, 4, 3, 0, 1, 1, 0, 1, 4, 5, 4, 3, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 2, 1, 1, 5, 0, 2, 5, 6, 2, 1, 0, 1, 1, 1, 3, 5, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 0, 2, 2, 3, 3, 7, 3, 3, 1, 1, 1, 0, 1, 0, 6, 3, 1, 3, 4, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 0, 3, 3, 3, 0, 6, 5, 2, 2, 0, 1, 0, 0, 1, 2, 2, 3, 0, 4, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 2, 0, 0, 4, 2, 5, 1, 5, 1, 3, 1, 1, 1, 0, 0, 2, 3, 5, 3, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 2, 2, 2, 6, 3, 3, 4, 7, 1, 0, 0, 1, 0, 0, 1, 1, 6, 3, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 0, 2, 2, 0, 2, 4, 1, 3, 8, 5, 1, 0, 0, 1, 1, 2, 3, 2, 3, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 2, 2, 0, 2, 0, 2, 4, 6, 6, 6, 2, 0, 0, 0, 1, 2, 2, 3, 2, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 0, 0, 0, 3, 0, 1, 3, 6, 2, 1, 1, 3, 1, 2, 3, 3, 7, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 2, 2, 0, 0, 2, 2, 5, 3, 2, 0, 2, 2, 2, 3, 0, 4, 4, 5, 1, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 2, 0, 2, 2, 2, 2, 0, 6, 4, 1, 2, 3, 3, 1, 3, 2, 7, 7, 3, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[2, 0, 2, 2, 2, 0, 5, 0, 3, 1, 2, 0, 4, 2, 2, 3, 0, 6, 6, 3, 1, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+  let row := table[i.val]!
+  row[j.val]!
 
-private def exhaustedExits : Fin 40 → List (Fin 36) :=
-  ![
-    [6, 8, 17, 18, 18, 19, 21, 21],
-    [8, 17, 18, 18, 19, 21, 21],
-    [6, 9, 10, 17, 19],
-    [6, 8, 9, 17, 18, 19, 21],
-    [8, 9, 10, 10, 17, 17, 18],
-    [6, 8, 9, 10, 10, 17, 17, 18],
-    [6, 8, 8, 10, 10, 17, 19, 21],
-    [6, 8, 9, 10, 17, 19, 21],
-    [9, 10, 17, 17, 18, 18, 21],
-    [10, 17, 18, 19, 21],
-    [6, 8, 9, 17, 18, 19, 21],
-    [6, 9, 10, 17, 17, 18, 18, 21],
-    [6, 9, 17, 18, 19],
-    [8, 8, 10, 10, 17, 19, 21],
-    [6, 8, 9, 10, 17, 19, 21],
-    [8, 10, 17, 18, 19],
-    [6, 8, 19, 19, 19, 19, 21, 21],
-    [8, 19, 19, 19, 19, 21, 21],
-    [9, 17, 17, 18, 18, 19, 19],
-    [8, 10, 17, 17, 18, 18, 19, 19],
-    [6, 6, 9, 9, 9, 18, 18, 18],
-    [6, 6, 9, 9, 18, 18, 21],
-    [9, 10, 17, 19, 19],
-    [10, 17, 18, 19, 19, 21, 21],
-    [6, 17, 17, 17, 19, 19, 19],
-    [8, 10, 18, 18, 21],
-    [6, 6, 9, 9, 9, 10, 10, 10],
-    [6, 6, 8, 8, 9, 9, 10],
-    [6, 8, 9, 10, 10],
-    [6, 9, 9, 9, 10, 10, 10],
-    [8, 8, 10, 10, 18, 21, 21],
-    [6, 6, 17, 17, 17, 19, 19, 19],
-    [10, 10, 17, 17, 18, 18, 19, 21],
-    [9, 9, 10, 10, 17, 17, 19],
-    [6, 9, 18, 21, 21],
-    [6, 9, 9, 9, 18, 18, 18],
-    [8, 8, 10, 10, 17, 18, 19],
-    [9, 9, 17, 18, 19],
-    [8, 8, 19, 19, 21],
-    [6, 6, 8, 8, 19, 19, 21]]
+
+private def exhaustedExits (i : Fin 40) (j : Fin 36) : ℕ :=
+  let table : Array (Array ℕ) := #[
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    #[0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+  let row := table[i.val]!
+  row[j.val]!
+
 
 private def activeWeight (i : Fin 72) : Fin 96 → ℕ :=
   fun j => Fin.append (fun k => (HardinA229585StripData.T i k).toNat)
-    (fun k => (activeExits i).count k) (exitRead j)
+    (activeExits i) (exitRead j)
 
 private def exhaustedWeight (i : Fin 40) : Fin 96 → ℕ :=
-  fun j => Fin.append (0 : Fin 72 → ℕ) (fun k => (exhaustedExits i).count k) (exitRead j)
+  fun j => Fin.append (0 : Fin 72 → ℕ) (exhaustedExits i) (exitRead j)
 
-private def exitsFromWeights (v : Fin 96 → ℕ) : List (Fin 96) :=
-  (List.ofFn (fun j : Fin 96 => j)).flatMap fun j => List.replicate (v j) j
+private def weightPack {n : ℕ} (f : Fin n → ℕ) : ℕ :=
+  (List.ofFn f).foldr (fun a b => a + 4096 * b) 0
 
-private theorem exitsFromWeights_count (v : Fin 96 → ℕ) (j : Fin 96) :
-    (exitsFromWeights v).count j = v j := by
-  rw [exitsFromWeights, List.count_flatMap, List.map_ofFn, List.sum_ofFn]
-  simp only [Function.comp_apply, List.count_replicate, beq_iff_eq]
-  simp
+private theorem weightPack_sum {n : ℕ} (f : Fin n → ℕ) :
+    weightPack f = ∑ i, f i * 4096 ^ i.val := by
+  induction n with
+  | zero => simp [weightPack]
+  | succ n ih =>
+    rw [weightPack, List.ofFn_succ, List.foldr_cons, ← weightPack, ih,
+      Fin.sum_univ_succ]
+    simp only [Fin.val_zero, pow_zero, mul_one, Fin.val_succ, pow_succ', Finset.mul_sum]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro i _
+    ac_rfl
+
+private theorem weightPack_injective {n : ℕ} (f g : Fin n → ℕ)
+    (hf : ∀ j, f j < 4096) (hg : ∀ j, g j < 4096) (h : weightPack f = weightPack g) :
+    f = g := by
+  induction n with
+  | zero => exact funext fun j => j.elim0
+  | succ n ih =>
+    simp only [weightPack, List.ofFn_succ, List.foldr_cons] at h
+    change f 0 + 4096 * weightPack (Fin.tail f) =
+      g 0 + 4096 * weightPack (Fin.tail g) at h
+    have h0 := congrArg (· % 4096) h
+    simp only [Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt (hf 0),
+      Nat.mod_eq_of_lt (hg 0)] at h0
+    have ht := ih (Fin.tail f) (Fin.tail g) (fun j => hf j.succ) (fun j => hg j.succ)
+      (by omega)
+    funext j
+    refine Fin.cases h0 (fun k => congrFun ht k) j
+
+private def classPack {n : ℕ} (xs : List (Fin n)) : ℕ :=
+  (xs.map fun j => 4096 ^ j.val).sum
+
+private theorem classPack_count {n : ℕ} (xs : List (Fin n)) :
+    classPack xs = weightPack (fun j => xs.count j) := by
+  induction xs with
+  | nil => simp [classPack, weightPack_sum]
+  | cons x xs ih =>
+    change 4096 ^ x.val + classPack xs = _
+    rw [ih]
+    simp only [weightPack_sum, List.count_cons, beq_iff_eq, Nat.add_mul,
+      Finset.sum_add_distrib, ite_mul, one_mul, zero_mul]
+    simp [eq_comm, Nat.add_comm]
 
 private def pushOld (i : Fin 56) (j : Fin 96) : ℤ :=
   Fin.append (fun k : Fin 56 => HardinA229585StripData.T (i.natAdd 16) (k.natAdd 16))
@@ -584,39 +541,457 @@ private theorem rowCost_eq (p : Boundary) (r : Row) :
   exact (Finset.card_image_of_injective _ fun i j h =>
     Fin.castSucc_injective 6 (congrArg Prod.snd h)).symm
 
-private def exactExits (p : Boundary) (d : ℕ) : List (Fin 96) :=
-  List.insertionSort (· ≤ ·)
-    ((List.ofFn fun i : Fin 2187 => (finFunctionFinEquiv.symm i : Row)).filterMap
-      fun r => if rowCost p r = d then some (exhaustedClass (boundary r)) else none)
+private def matchCost : Option (Fin 3) → Fin 3 → ℕ
+  | none, _ => 0
+  | some p, x => if p = x then 1 else 0
+
+private def completionCost : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
+    (Fin (k + 1) → Fin 3) → ℕ
+  | 0, _, prev, r => matchCost prev (r 0)
+  | _k + 1, p, prev, r =>
+    matchCost prev (r 0) + matchCost (p 0) (r 0) +
+      completionCost (Fin.tail p) (some (r 0)) (Fin.tail r)
+
+private def completionRows : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
+    ℕ → List (Fin (k + 1) → Fin 3)
+  | 0, _, prev, d =>
+    ((List.finRange 3).filter fun x => matchCost prev x == d).map fun x _ => x
+  | _k + 1, p, prev, d => (List.finRange 3).flatMap fun x =>
+    let c := matchCost prev x + matchCost (p 0) x
+    if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x) else []
+
+private theorem completionRows_count {k : ℕ} (p : Fin k → Option (Fin 3))
+    (prev : Option (Fin 3)) (d : ℕ) (f : (Fin (k + 1) → Fin 3) → Bool) :
+    (completionRows p prev d).countP f =
+      ∑ r, if completionCost p prev r = d ∧ f r = true then 1 else 0 := by
+  induction k generalizing prev d with
+  | zero =>
+    rw [← (Equiv.funUnique (Fin 1) (Fin 3)).symm.sum_comp]
+    simp only [completionCost, completionRows, List.countP_map, List.countP_filter,
+      Equiv.funUnique_symm_apply, uniqueElim_const, Function.comp_apply, Fin.sum_univ_three]
+    change ([(0 : Fin 3), 1, 2].countP
+      (fun x => f (fun _ => x) && (matchCost prev x == d))) =
+      (if matchCost prev 0 = d ∧ f (fun _ => 0) = true then 1 else 0) +
+      (if matchCost prev 1 = d ∧ f (fun _ => 1) = true then 1 else 0) +
+      (if matchCost prev 2 = d ∧ f (fun _ => 2) = true then 1 else 0)
+    simp only [List.countP_cons, List.countP_nil, Bool.and_eq_true, beq_iff_eq, and_comm]
+    omega
+  | succ k ih =>
+    rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => Fin 3)).sum_comp, Fintype.sum_prod_type]
+    simp only [completionRows, List.countP_flatMap, ← List.ofFn_id,
+      List.map_ofFn, List.sum_ofFn, Function.comp_apply, id_eq]
+    apply Finset.sum_congr rfl
+    intro x _
+    let c := matchCost prev x + matchCost (p 0) x
+    change (if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x)
+      else []).countP f = _
+    split_ifs with hc
+    · rw [List.countP_map, ih]
+      apply Finset.sum_congr rfl
+      intro r _
+      change (if completionCost (Fin.tail p) (some x) r = d - c ∧ f (Fin.cons x r) = true
+        then 1 else 0) = (if c + completionCost (Fin.tail p) (some x) r = d ∧
+        f (Fin.cons x r) = true then 1 else 0)
+      have he : completionCost (Fin.tail p) (some x) r = d - c ↔
+          c + completionCost (Fin.tail p) (some x) r = d :=
+        eq_comm.trans ((Nat.sub_eq_iff_eq_add' hc).trans eq_comm)
+      simp only [he]
+    · simp only [List.countP_nil]
+      symm
+      apply Finset.sum_eq_zero
+      intro r _
+      change (if c + completionCost (Fin.tail p) (some x) r = d ∧ f (Fin.cons x r) = true
+        then 1 else 0) = 0
+      apply ite_eq_right
+      intro h
+      exact hc (h.1 ▸ Nat.le_add_right c _)
+
+private theorem completionCost_row (p : Boundary) (r : Row) :
+    completionCost (some ∘ p) none r = rowCost p r := by
+  simp only [completionCost, matchCost, Fin.tail, Function.comp_apply, zero_add, Fin.castSucc_zero, Fin.castSucc_succ, rowCost, horizontalCost, List.ofFn_succ, List.ofFn_zero,
+    List.sum_cons, List.sum_nil]
+  ac_rfl
+
+private theorem completionCost_initial (r : Row) :
+    completionCost (fun _ : Fin 6 => none) none r = horizontalCost r := by
+  simp only [completionCost, matchCost, Fin.tail, add_zero, zero_add, Fin.castSucc_zero, Fin.castSucc_succ,
+    horizontalCost, List.ofFn_succ, List.ofFn_zero, List.sum_cons, List.sum_nil]
+  rfl
+
+private def completionCodes : List (Option (Fin 3)) → Option (Fin 3) → ℕ → List ℕ
+  | [], prev, d =>
+    ((List.finRange 3).filter fun x => matchCost prev x == d).map Fin.val
+  | a :: as, prev, d => (List.finRange 3).flatMap fun x =>
+    let c := matchCost prev x + matchCost a x
+    if c ≤ d then (completionCodes as (some x) (d - c)).map (fun r => x.val + 3 * r)
+    else []
+
+private theorem rowCode_cons {k : ℕ} (x : Fin 3) (r : Fin k → Fin 3) :
+    (finFunctionFinEquiv (Fin.cons x r)).val = x.val + 3 * (finFunctionFinEquiv r).val := by
+  simp only [finFunctionFinEquiv_apply, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ,
+    Fin.val_zero, Fin.val_succ, pow_zero, mul_one, pow_succ', Finset.mul_sum]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  ac_rfl
+
+private theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
+    (prev : Option (Fin 3)) (d : ℕ) :
+    completionCodes (List.ofFn p) prev d =
+      (completionRows p prev d).map (fun r => (finFunctionFinEquiv r).val) := by
+  induction k generalizing prev d with
+  | zero =>
+    simp only [List.ofFn_zero, completionCodes, completionRows, List.map_map]
+    apply List.map_congr_left
+    intro x _
+    change x.val = (finFunctionFinEquiv (fun _ : Fin 1 => x)).val
+    simp only [finFunctionFinEquiv_apply, Fin.sum_univ_one, Fin.val_zero, pow_zero, mul_one]
+  | succ k ih =>
+    simp only [List.ofFn_succ, completionCodes, completionRows, List.map_flatMap]
+    apply List.flatMap_congr
+    intro x _
+    split_ifs
+    · simp only [show (fun i => p i.succ) = Fin.tail p from rfl, ih, List.map_map]
+      apply List.map_congr_left
+      intro r _
+      exact (rowCode_cons x r).symm
+    · rfl
+
+private theorem rowCode_tail (r : Row) :
+    (finFunctionFinEquiv (boundary r)).val = (finFunctionFinEquiv r).val / 3 := by
+  have h := rowCode_cons (r 0) (boundary r)
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at h
+  have hb := (r 0).isLt
+  omega
+
+private def packedClass (i : ℕ) : Fin 96 :=
+  Fin.ofNat 96 ((631614627661551089507037924218425714181766582700302798335294774353035012103669334343882498299797517482778717833240785354081841445867758355654705238740956489384272353271925295040101201519626782324308261045702564636867222402643809756911723775426193733058666040802422222883400075404366663632442620079012971170961285382545873962737476626297879390944083601786736677734027780386166316420955515047640886042463979085669706615501372613396788312422325379924603492404172148376952083974087938285673937238627488927937971419895343525287584306247862132598410739904614597120703652442692949138388165144657052550217565074527064894897706351856002807565685973836632258139348908379307605636465526259608721022366832792165479652712969423720395860924969949797959571905273079510397410289147760792853287994033429179151168731035746442502610220164877666819421544299336998862895946880122242076871683973281681379347106525709827939713289232160210887407831946516103156420731249239151304833073813004719029008720575744857113722837226419707976404869235531456443785022671936056343393190662211330799582932738636512871880281000226456190879720927118747493412034056543193234357534181099348594802434827546508548940164773917712386255123898264309585209278611823616361638142422055803311502805331264790481728463137283432021167833288760992048882347322060907904523686844769641993174873016262741733720910168515464793360097529033560099291578211344211954648872547568265373137702578720632703059280249225823855484263234905503166072969885683406834163968560745262221749469043350066281978936 >>> (7 * i)) % 128)
+
+-- Check the packed readout at every boundary code.
+set_option maxRecDepth 12000 in
+set_option maxHeartbeats 3000000 in
+private theorem packedClass_all :
+    (List.finRange 729).all (fun i =>
+      packedClass i.val == exhaustedClass ((finFunctionFinEquiv (m := 3) (n := 6)).symm i)) = true := by
+  decide +kernel
+
+private theorem packedClass_eq (p : Boundary) :
+    packedClass (finFunctionFinEquiv p).val = exhaustedClass p := by
+  have h := List.all_eq_true.mp packedClass_all (finFunctionFinEquiv p) (List.mem_finRange _)
+  simpa only [beq_iff_eq, Equiv.symm_apply_apply] using h
+
+private def exitCodes {k : ℕ} (p : Fin k → Option (Fin 3)) (d : ℕ) :
+    List (Fin 96) :=
+  ((completionCodes (List.ofFn p) none d).map fun r => packedClass (r / 3))
+
+private theorem exitCodes_eq (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
+    exitCodes p d =
+      (completionRows p none d).map (fun r => exhaustedClass (boundary r)) := by
+  rw [exitCodes, completionCodes_eq, List.map_map]
+  apply List.map_congr_left
+  intro r _
+  change packedClass ((finFunctionFinEquiv r).val / 3) = exhaustedClass (boundary r)
+  rw [← rowCode_tail r, packedClass_eq]
+
+private theorem completionRows_length_le (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
+    (completionRows p none d).length ≤ 2187 := by
+  rw [← List.countP_true]
+  have h := completionRows_count p none d (fun _ => true)
+  rw [h]
+  calc
+    _ ≤ ∑ _ : Row, (1 : ℕ) := Finset.sum_le_sum fun i _ => by split_ifs <;> decide
+    _ = 2187 := by simp [Row, Fintype.card_fun]
+
+private theorem exitCodes_bound (p : Fin 6 → Option (Fin 3)) (d : ℕ)
+    (j : Fin 96) : (exitCodes p d).count j < 4096 := by
+  apply lt_of_le_of_lt List.count_le_length
+  rw [exitCodes_eq, List.length_map]
+  exact (completionRows_length_le p d).trans_lt (by decide)
+
+private def checkHistogram (p : Fin 6 → Option (Fin 3)) (d : ℕ)
+    (weights : Fin 96 → ℕ) : Bool :=
+  (classPack (exitCodes p d) == weightPack weights) &&
+    (List.finRange 96).all (fun i => weights i < 4096)
+
+private theorem checkHistogram_count (p : Fin 6 → Option (Fin 3)) (d : ℕ)
+    (weights : Fin 96 → ℕ) (h : checkHistogram p d weights = true) (j : Fin 96) :
+    (exitCodes p d).count j = weights j := by
+  simp only [checkHistogram, Bool.and_eq_true, beq_iff_eq, classPack_count] at h
+  exact congrFun (weightPack_injective _ _ (exitCodes_bound p d) (fun i =>
+    of_decide_eq_true (List.all_eq_true.mp h.2 i (List.mem_finRange i))) h.1) j
 
 private theorem exactExits_count (p : Boundary) (d : ℕ) (j : Fin 96) :
-    ((exactExits p d).count j : ℤ) =
+    ((exitCodes (some ∘ p) d).count j : ℤ) =
       ∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
         exhaustedClass (boundary r) = j then 1 else 0 := by
-  calc
-    _ = ∑ r : Row, if rowCost p r = d ∧ exhaustedClass (boundary r) = j
-        then (1 : ℤ) else 0 := by
-      have h := D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge.count_successors
-        (fun r : Row => rowCost p r = d) (fun r => exhaustedClass (boundary r)) j
-      unfold exactExits
-      exact_mod_cast h
-    _ = _ := by simp_rw [rowCost_eq]
+  rw [exitCodes_eq, List.count_eq_countP, List.countP_map]
+  change ((completionRows (some ∘ p) none d).countP
+    (fun r => exhaustedClass (boundary r) == j) : ℤ) = _
+  exact_mod_cast (by
+    simpa only [completionCost_row, rowCost_eq, beq_iff_eq] using
+      completionRows_count (some ∘ p) none d (fun r => exhaustedClass (boundary r) == j) :
+    _ = ∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
+      exhaustedClass (boundary r) = j then (1 : ℕ) else 0)
+
+private def activeGroups : Fin 3 → List (List (Fin 729 × Fin 72)) :=
+  ![[],
+    [[(90, 16), (576, 17), (171, 18), (414, 19)],
+      [(306, 20), (549, 21), (144, 22), (630, 23)],
+      [(84, 24), (570, 25), (165, 26), (408, 27)],
+      [(30, 28), (273, 29), (516, 30), (111, 31)],
+      [(597, 32), (192, 33), (435, 34), (678, 35)],
+      [(57, 36), (300, 37), (543, 38), (138, 39)],
+      [(381, 40), (624, 41), (219, 42), (462, 43)],
+      [(93, 44), (579, 45), (174, 46), (417, 47)],
+      [(309, 48), (552, 49), (147, 50), (633, 51)],
+      [(264, 52), (507, 53), (102, 54), (345, 55)],
+      [(588, 56), (183, 57), (426, 58), (669, 59)],
+      [(48, 60), (291, 61), (534, 62), (129, 63)],
+      [(615, 64), (210, 65), (453, 66), (696, 67)],
+      [(318, 68), (561, 69), (156, 70), (642, 71)]],
+    [[(273, 0), (516, 1), (192, 2), (435, 3)],
+      [(300, 4), (543, 5), (138, 6), (624, 7)],
+      [(102, 8), (588, 9), (183, 10), (426, 11)],
+      [(291, 12), (534, 13), (210, 14), (453, 15)]]]
+
+private def activeProfiles (d : Fin 3) : List (Fin 729 × Fin 72) :=
+  (activeGroups d).flatten
+
+-- Cover every valid canonical input by its boundary code and its inherited class.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private theorem activeCover :
+    (List.finRange 3).all (fun d => (List.finRange 729).all fun i =>
+      let p : Boundary := (finFunctionFinEquiv (m := 3) (n := 6)).symm i
+      letI : Decidable (Canonical p) := by unfold Canonical; infer_instance
+      if Valid p d.val ∧ Canonical p ∧ d ≠ 0 then
+        (activeProfiles d).contains (i, HardinA229585StripData.cl p (d.val - 1))
+      else true) = true := by
+  decide +kernel
+
+private def activeProfileCheck (d : Fin 3) (entry : Fin 729 × Fin 72) : Bool :=
+  checkHistogram (some ∘ (finFunctionFinEquiv (m := 3) (n := 6)).symm entry.1)
+    d.val (activeWeight entry.2)
+
+private def activeCheck (d : Fin 3) : Bool :=
+  (activeProfiles d).all (activeProfileCheck d)
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup0 :
+    ((activeGroups 1)[0]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup1 :
+    ((activeGroups 1)[1]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup2 :
+    ((activeGroups 1)[2]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup3 :
+    ((activeGroups 1)[3]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup4 :
+    ((activeGroups 1)[4]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup5 :
+    ((activeGroups 1)[5]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup6 :
+    ((activeGroups 1)[6]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup7 :
+    ((activeGroups 1)[7]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup8 :
+    ((activeGroups 1)[8]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup9 :
+    ((activeGroups 1)[9]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup10 :
+    ((activeGroups 1)[10]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup11 :
+    ((activeGroups 1)[11]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup12 :
+    ((activeGroups 1)[12]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeOneGroup13 :
+    ((activeGroups 1)[13]!).all (activeProfileCheck 1) = true := by
+  decide_cbv
+
+private theorem activeBudgetOne : activeCheck 1 = true := by
+  unfold activeCheck activeProfiles
+  rw [List.all_flatten]
+  have h : ∀ i : Fin 14,
+      (((activeGroups 1)[i.val]!).all (activeProfileCheck 1)) = true := by
+    intro i
+    fin_cases i
+    exacts [activeOneGroup0, activeOneGroup1, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13]
+  apply List.all_eq_true.mpr
+  intro g hg
+  obtain ⟨i, hi, rfl⟩ := List.mem_iff_getElem.mp hg
+  have hlt : i < 14 := hi
+  simpa only [getElem!_pos (activeGroups 1) i hi] using h ⟨i, hlt⟩
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeTwoGroup0 :
+    ((activeGroups 2)[0]!).all (activeProfileCheck 2) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeTwoGroup1 :
+    ((activeGroups 2)[1]!).all (activeProfileCheck 2) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeTwoGroup2 :
+    ((activeGroups 2)[2]!).all (activeProfileCheck 2) = true := by
+  decide_cbv
+
+-- Normalize one group of at most four histogram comparisons at a time.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 1500000 in
+private theorem activeTwoGroup3 :
+    ((activeGroups 2)[3]!).all (activeProfileCheck 2) = true := by
+  decide_cbv
+
+private theorem activeBudgetTwo : activeCheck 2 = true := by
+  unfold activeCheck activeProfiles
+  rw [List.all_flatten]
+  have h : ∀ i : Fin 4,
+      (((activeGroups 2)[i.val]!).all (activeProfileCheck 2)) = true := by
+    intro i
+    fin_cases i
+    exacts [activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3]
+  apply List.all_eq_true.mpr
+  intro g hg
+  obtain ⟨i, hi, rfl⟩ := List.mem_iff_getElem.mp hg
+  have hlt : i < 4 := hi
+  simpa only [getElem!_pos (activeGroups 2) i hi] using h ⟨i, hlt⟩
+
+private theorem activeMultiplicities (d : Fin 3) : activeCheck d = true := by
+  fin_cases d
+  · rfl
+  · exact activeBudgetOne
+  · exact activeBudgetTwo
+
+-- Exhausted sources outside the inherited sectors have one of the new codes.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private theorem exhaustedCover :
+    (List.finRange 729).all (fun i =>
+      let p : Boundary := (finFunctionFinEquiv (m := 3) (n := 6)).symm i
+      letI : Decidable (Canonical p) := by unfold Canonical; infer_instance
+      if Valid p 0 ∧ Canonical p ∧ ¬ Valid p 1 then
+        newPatterns.contains i
+      else true) = true := by
+  decide +kernel
+
+-- The finite calculation generates exactly the zero-cost successors of each new code.
+set_option maxRecDepth 12000 in
+set_option maxHeartbeats 3000000 in
+private theorem exhaustedMultiplicities :
+    newPatterns.all (fun i =>
+      let p : Boundary := (finFunctionFinEquiv (m := 3) (n := 6)).symm i
+      checkHistogram (some ∘ p) 0
+        (exhaustedWeight (Fin.ofNat 40 (newPatterns.idxOf (patternCode p))))) =
+        true := by
+  decide +kernel
 
 private theorem exactExits_active (p : Boundary) (d : Fin 3)
-    (hp : Valid p d.val) (hn : Canonical p) (hd : d ≠ 0) :
-    exactExits p d.val = exitsFromWeights
-      (activeWeight (HardinA229585StripData.cl p (d.val - 1))) := by
-  revert p d
-  unfold Canonical
-  decide +kernel
+    (hp : Valid p d.val) (hn : Canonical p) (hd : d ≠ 0) (j : Fin 96) :
+    (exitCodes (some ∘ p) d.val).count j =
+      activeWeight (HardinA229585StripData.cl p (d.val - 1)) j := by
+  let i : Fin 729 := finFunctionFinEquiv p
+  have h := List.all_eq_true.mp
+    (List.all_eq_true.mp activeCover d (List.mem_finRange d)) i (List.mem_finRange i)
+  have he : (finFunctionFinEquiv (m := 3) (n := 6)).symm i = p := finFunctionFinEquiv.symm_apply_apply p
+  have hv : Valid ((finFunctionFinEquiv (m := 3) (n := 6)).symm i) d.val ∧
+      Canonical ((finFunctionFinEquiv (m := 3) (n := 6)).symm i) ∧ d ≠ 0 := by rw [he]; exact ⟨hp, hn, hd⟩
+  dsimp only at h
+  rw [ite_eq_left hv] at h
+  have hm : (i, HardinA229585StripData.cl p (d.val - 1)) ∈ activeProfiles d := by
+    simpa only [List.contains_iff_mem, he] using h
+  have hs := List.all_eq_true.mp
+    (activeMultiplicities d) _ hm
+  exact checkHistogram_count _ _ _ (by simpa only [activeProfileCheck, Prod.fst, Prod.snd, he] using hs) j
 
 private theorem exactExits_new (p : Boundary)
-    (hp : Valid p 0) (hn : Canonical p) (hnv : ¬ Valid p 1) :
-    exactExits p 0 = exitsFromWeights
-      (exhaustedWeight (Fin.ofNat 40 (newPatterns.idxOf (patternCode p)))) := by
-  revert p
-  unfold Canonical
-  decide +kernel
+    (hp : Valid p 0) (hn : Canonical p) (hnv : ¬ Valid p 1) (j : Fin 96) :
+    (exitCodes (some ∘ p) 0).count j =
+      exhaustedWeight (Fin.ofNat 40 (newPatterns.idxOf (patternCode p))) j := by
+  let i : Fin 729 := finFunctionFinEquiv p
+  have h := List.all_eq_true.mp exhaustedCover i (List.mem_finRange i)
+  have he : (finFunctionFinEquiv (m := 3) (n := 6)).symm i = p := finFunctionFinEquiv.symm_apply_apply p
+  have hv : Valid ((finFunctionFinEquiv (m := 3) (n := 6)).symm i) 0 ∧
+      Canonical ((finFunctionFinEquiv (m := 3) (n := 6)).symm i) ∧ ¬ Valid ((finFunctionFinEquiv (m := 3) (n := 6)).symm i) 1 :=
+    by rw [he]; exact ⟨hp, hn, hnv⟩
+  dsimp only at h
+  rw [ite_eq_left hv] at h
+  have hm : i ∈ newPatterns := List.contains_iff_mem.mp h
+  have hs := List.all_eq_true.mp exhaustedMultiplicities i hm
+  exact checkHistogram_count _ _ _ (by simpa only [he] using hs) j
 
 private theorem class_counts_canonical (p : Boundary) (d : ℕ) (hp : Valid p d)
     (hn : Canonical p) (j : Fin 96) :
@@ -627,14 +1002,14 @@ private theorem class_counts_canonical (p : Boundary) (d : ℕ) (hp : Valid p d)
   · subst d
     by_cases h : Valid p 1
     · exact old_exhausted_counts p h j
-    · rw [← exactExits_count, exactExits_new p hp hn h, exitsFromWeights_count]
+    · rw [← exactExits_count, exactExits_new p hp hn h j]
       simp only [T, cl, ↓reduceIte, exhaustedClass, ite_eq_right h,
         Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₂, Matrix.of_apply,
         Fin.append_right]
   · rw [← exactExits_count]
     have he := exactExits_active p ⟨d, Nat.lt_succ_of_le hp.1⟩ hp hn
-      (fun h => hd (congrArg Fin.val h))
-    rw [he, exitsFromWeights_count]
+      (fun h => hd (congrArg Fin.val h)) j
+    rw [he]
     simp only [T, cl, ite_eq_right hd, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
       finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₁₂, Matrix.of_apply]
 
@@ -666,21 +1041,19 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 168
     simp_rw [exhausted_cut]
     exact class_counts p d hp j
 
-private def initialExits : List (Fin 96) :=
-  List.insertionSort (· ≤ ·)
-    ((List.ofFn fun i : Fin 2187 => (finFunctionFinEquiv.symm i : Row)).filterMap
-      fun r => if horizontalCost r = 2 then some (exhaustedClass (boundary r)) else none)
-
-private theorem initialExits_eq :
-    initialExits = (List.finRange 96).flatMap fun j =>
-      List.replicate (initialExhausted j).toNat j := by
+-- The histogram compares the first rows with exactly two horizontal defects.
+set_option maxRecDepth 12000 in
+set_option maxHeartbeats 3000000 in
+private theorem initialHistogram :
+    checkHistogram (fun _ : Fin 6 => none) 2 (fun j => (initialExhausted j).toNat) = true := by
   decide +kernel
 
 private theorem initialExits_count (j : Fin 96) :
-    (initialExits.count j : ℤ) = initialExhausted j := by
-  rw [initialExits_eq]
-  revert j
-  decide +kernel
+    ((exitCodes (fun _ : Fin 6 => none) 2).count j : ℤ) = initialExhausted j := by
+  rw [checkHistogram_count _ _ _ initialHistogram, Int.toNat_of_nonneg]
+  induction j using Fin.addCases (m := 56) (n := 40) with
+  | left j => simp only [initialExhausted, Fin.addCases_left]; split_ifs <;> norm_num
+  | right j => simp [initialExhausted]
 
 private theorem initial_counts (s : Fin 168) :
     (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
@@ -694,10 +1067,15 @@ private theorem initial_counts (s : Fin 168) :
   | right j =>
     simp_rw [exhausted_cut]
     simp only [← horizontalCost_eq, initial, Fin.append_right, ← initialExits_count j]
-    have h := D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge.count_successors
-      (fun r : Row => horizontalCost r = 2) (fun r => exhaustedClass (boundary r)) j
-    unfold initialExits
-    exact_mod_cast h.symm
+    symm
+    rw [exitCodes_eq, List.count_eq_countP, List.countP_map]
+    simp only [Function.comp_def]
+    exact_mod_cast (by
+      simpa only [completionCost_initial, Function.comp_apply, beq_iff_eq] using
+        completionRows_count (fun _ : Fin 6 => none) none 2
+          (fun r => exhaustedClass (boundary r) == j) :
+      _ = ∑ r : Row, if horizontalCost r = 2 ∧ exhaustedClass (boundary r) = j
+        then (1 : ℕ) else 0)
 
 /-- The exact two-defect labelled count as a matrix coefficient. -/
 theorem count_transfer (n : ℕ) :
