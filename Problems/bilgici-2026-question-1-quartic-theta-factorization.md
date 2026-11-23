@@ -60,7 +60,7 @@ A coefficient discrepancy disproves the polynomial certificate. Changing the fir
 
 `D5/S3/Arith/Partitions/BilgiciThetaQuartic.result` is the settling declaration. Its proof uses the two quartic seeds, the thirteen theta seeds, the interpretation of sparse calculations as Mathlib polynomials, and the independent specialization proof. The versioned source archive SHA-256 is `98134dab40f151dcbefeb269206139da46e2feef2571d5ff5cf2c6dde6169f06`. The successful probe envelope SHA-256 is `d1061c19b86e5c332690f9c91eb32592164c4a7580137de9f99bb562f7354d72`. [Versioned arXiv source](https://arxiv.org/src/2611.24516v1)
 
-The structural derivation is `D5/S3/Arith/Partitions/BilgiciThetaStructural.structural_factorization`. It applies `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.joint_kernel` to the two tests of the literal component.
+The structural derivation is `D5/S3/Arith/Partitions/BilgiciThetaStructural.structural_factorization`. It applies `D5.S3.Arith.Partitions.BilgiciThetaStructural.joint_kernel` to the two tests of the literal component.
 
 ## Triage
 
