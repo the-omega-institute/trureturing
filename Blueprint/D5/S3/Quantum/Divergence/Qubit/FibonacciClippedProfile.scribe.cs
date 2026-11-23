@@ -9,7 +9,7 @@ internal sealed class FibonacciClippedProfileDocument : IScribeDocumentDefinitio
         LibraryNoteRef.Create("D5/L/Divergence/trureturing2026fibonacciclippedprofile");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The six-interval clipped Fibonacci qubit profile bound.",
+        "The clipped Fibonacci qubit profile and trace-log divergence bounds.",
         H("Fibonacci qubit profile"),
         Blocks(
             Node("weights", "Contrast weights", DescribeRole.Definition,
@@ -31,7 +31,31 @@ internal sealed class FibonacciClippedProfileDocument : IScribeDocumentDefinitio
                 + "The first interval uses the trace–determinant quadratic, with positive benchmark trace "
                 + "and b ≤ d. For later intervals, each candidate bounds the clipped branch and dominates "
                 + "the square-root branch by a squared inequality. The proof assumes unit normalization "
-                + "and applies also when the preparations are linearly dependent."))));
+                + "and applies also when the preparations are linearly dependent."),
+            EntropyTheorem())));
+
+    private static DocumentBlock EntropyTheorem() =>
+        Describe.Lean(
+            DescribeId.Create("fibonacci-qubit-benchmark-margin"),
+            DeclarationHandle.Create(Prefix + "traceLog_le_benchmark_sub_margin"),
+            H("Quantitative bound below the benchmark"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(
+                Certificate,
+                LibraryNoteRef.Create("D5/L/Divergence/hirchetomamichel2024quantum")),
+            Blocks(Paragraph(Text(
+                "For every triple of unit complex qubit preparations, form A with weights (88, 25, 28)/141 "
+                + "and C with weights (66, 15, 12)/141. Set X to one minus the squared overlap of the first "
+                + "two preparations and Y to the squared overlap of the first and third. The trace-log "
+                + "divergence is at most (113/141) log(113/81) + (28/141) log(7/3) − (3X + 11Y)/63360.")),
+                Paragraph(Text(
+                    "For positive definite C the forward hockey-stick difference identity of "
+                    + "Hirche and Tomamichel reduces the comparison to the six clipped profile integrals. "
+                    + "The affine logarithmic primitives and five-term rational logarithm bounds certify "
+                    + "the coefficients. Orthogonal decomposition of the second vector along the first "
+                    + "controls the third squared overlap. For singular C the positive weights force all "
+                    + "three preparations onto the same ray and the divergence is log(47/31)."))),
+            DescribeRole.Theorem);
 
     private static DocumentBlock Node(string name, string title, DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create("fibonacci-clipped-profile-" + name.Replace("_", "-").ToLowerInvariant()),
