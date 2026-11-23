@@ -7,7 +7,7 @@ internal sealed class PointDeletedSteinerSwitchDocument : IScribeDocumentDefinit
     private const string Module = "D5/S3/Combinatorics/Matroids/PointDeletedSteinerSwitch";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Deleting a point from a complete Steiner system leaves a matching. A path replacement controls the first deficit.",
+        "Deleting a point from a finite complete Steiner system leaves a matching. A path replacement controls the first deficit.",
         H("Switches in Point-Deleted Steiner Systems"),
         Blocks(
             Describe.Lean(
@@ -41,9 +41,9 @@ internal sealed class PointDeletedSteinerSwitchDocument : IScribeDocumentDefinit
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For any complete Steiner triple system and any distinguished point, the leave of the retained packing is exactly the perfect matching defined by a fixed-point-free involution m. For any a and v with v distinct from a and m(a), put c=m(a). The retained pairs av and cv have completions b and d. The five vertices a,b,v,d,c are pairwise distinct.")),
+                    Paragraph(Text("For any finite complete Steiner triple system and any distinguished point, the leave of the retained packing is exactly the perfect matching defined by a fixed-point-free involution m. For any a and v with v distinct from a and m(a), put c=m(a). The retained pairs av and cv have completions b and d. The five vertices a,b,v,d,c are pairwise distinct.")),
                     Paragraph(Text("Remove the blocks abv and vdc and insert avc. The switched family keeps pair uniqueness and has one fewer block. Its leave keeps every other matching edge and replaces ac by the path a,b,v,d,c. The remaining matching has at most one edge between any vertex and the rest. A triangle must therefore use two successive path edges. The only possible leave triangle is b,v,d, since the other two-edge subpaths have a or c as an endpoint and ac was removed from the matching. This triangle occurs exactly when d = m(b). An additional block can be inserted exactly when the leave contains a triangle, so the switch is maximal exactly when d is not m(b).")),
-                    Paragraph(Text("从任意完备 Steiner 三元系中删去指定点后，保留区组的未覆盖点对恰好构成一个完美匹配，由无不动点对合 m 表示。任取 a 和不同于 a 与 m(a) 的 v，令 c=m(a)。点对 av 和 cv 在保留区组中的补全点分别为 b 和 d。五个顶点 a,b,v,d,c 两两不同。")),
+                    Paragraph(Text("从任意有限完备 Steiner 三元系中删去指定点后，保留区组的未覆盖点对恰好构成一个完美匹配，由无不动点对合 m 表示。任取 a 和不同于 a 与 m(a) 的 v，令 c=m(a)。点对 av 和 cv 在保留区组中的补全点分别为 b 和 d。五个顶点 a,b,v,d,c 两两不同。")),
                     Paragraph(Text("删去区组 abv 和 vdc，加入 avc。切换后，每个点对仍至多出现在一个区组中，区组总数减少一。余图保留其余匹配边，并将 ac 换成路径 a,b,v,d,c。每个顶点至多关联一条剩余匹配边，因此三角形必须使用两条连续的路径边。另外两段长度为二的子路径分别以 a 和 c 为端点，而 ac 已从匹配中删去，所以余图中唯一可能的三角形是 b,v,d，且恰在 d = m(b) 时出现。恰在余图含有三角形时可以再加入一个区组，因此切换后的填充恰在 d ≠ m(b) 时极大。"))),
                 DescribeRole.Theorem),
             Describe.Lean(
