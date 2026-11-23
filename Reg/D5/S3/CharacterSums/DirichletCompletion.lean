@@ -130,7 +130,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hh := h (χ := (1 : DirichletCharacter ℂ 1))
     DirichletCharacter.isPrimitive_one_level_one (-1)
   have hn := completion_ne_zero_of_one_le_re (1 : DirichletCharacter ℂ 1)
-    (s := 2) (.inr (by norm_num)) (by norm_num)
+    (s := 2) (.inr (.inl (by norm_num))) (by norm_num)
   apply hn
   simpa [rejected, realize, map_ofNat, show (1 : ℂ) + 1 = 2 by norm_num] using hh
 private theorem dependence : ObservationalDependence signature actual := by
@@ -194,12 +194,12 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M :=
-    ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1) (hs : 1 ≤ s.re),
+    ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1 ∨ q = 1) (hs : 1 ≤ s.re),
     M.readout () () (completion χ s) 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   simpa [rejected, realize] using h (1 : DirichletCharacter ℂ 1)
-    (s := 2) (.inr (by norm_num)) (by norm_num)
+    (s := 2) (.inr (.inl (by norm_num))) (by norm_num)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
@@ -329,13 +329,13 @@ def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q]
-      {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {s : ℂ} (hs : s.re ≤ 0),
+      {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) {s : ℂ} (hs : s.re ≤ 0),
     M.readout () () (completion χ s) 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  simpa [rejected, realize] using h hp hn (s := 0) (by norm_num)
+  simpa [rejected, realize] using h hp (s := 0) (by norm_num)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
@@ -376,7 +376,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -396,12 +396,12 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) (s : ℂ),
+  Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ),
     completion χ⁻¹ (conj s) = M.readout () () (completion χ s)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨χ, hn⟩ := nonprincipal_example
-  have hh := h χ hn 2
+  have hh := h χ 2
   have hni : χ⁻¹ ≠ 1 := inv_ne_one.mpr hn
   have hz := completion_ne_zero_of_one_le_re χ⁻¹ (s := 2) (.inl hni) (by norm_num)
   apply hz
@@ -444,7 +444,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

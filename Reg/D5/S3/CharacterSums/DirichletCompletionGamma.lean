@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.CharacterSums.DirichletCompletionGamma
 import Reg.Support.SingleDependentReadout
-import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 
 /-! Typed observations at the original mathematical statements. -/
 
@@ -9,7 +8,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open scoped Classical
-open Complex
+open Complex Filter Topology
 open _root_.D5.S3.CharacterSums.DirichletCompletionGamma
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -90,7 +89,7 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M := ∀ {u : ℝ} (hu : 1 / 4 ≤ u),
-    Real.Gamma u ≤ M.readout () () (Real.Gamma (1 / 4)) (Nat.factorial ⌈u⌉₊ : ℝ)
+    Real.Gamma u ≤ M.readout () () (Real.Gamma (1 / 4)) (Nat.factorial (⌈u⌉₊ - 1) : ℝ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (u := 1) (by norm_num)
@@ -148,27 +147,26 @@ end Convex
 namespace Exponential
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
-    (fun _ => ℝ)
+    (fun _ => ℝ → ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => max x y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => -1) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M := ∀ {u : ℝ} (hu : 1 / 4 ≤ u),
-    Real.Gamma u ≤ max 1 (Real.Gamma (1 / 4)) *
-      M.readout () () ((u + 1) * Real.log (u + 1))
+    Real.Gamma u ≤ M.readout () () (Real.Gamma (1 / 4))
+      (Real.exp ((u + 1) * Real.log (u + 1)))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (u := 1) (by norm_num)
-  have hm : 1 ≤ max 1 (Real.Gamma (1 / 4)) := le_max_left _ _
-  norm_num only [Real.Gamma_one, rejected, realize, mul_neg, mul_one] at hh
-  linarith
+  norm_num [rejected, realize] at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  change Real.exp 0 ≠ Real.exp 1
-  exact Real.exp_injective.ne (by norm_num)
+  intro h
+  have hh := congrFun h 0
+  norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @Gamma_le_exp_bound) where
   actual := actual
   bridge := Iff.rfl
@@ -193,7 +191,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => max x y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -203,7 +201,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "arg", "fn"]
+      path := #["body", "body", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

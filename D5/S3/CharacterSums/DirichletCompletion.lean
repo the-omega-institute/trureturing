@@ -386,13 +386,14 @@ theorem completion_zero_order {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ 
       (completion χ ρ = 0 ↔ 0 < analyticOrderNatAt (completion χ) ρ) := by
   have ha := (differentiable_completion χ hne).analyticAt
   have hn := completion_ne_zero_of_one_le_re χ (s := 2) (.inl hne) (by norm_num)
+  have han : AnalyticOnNhd ℂ (completion χ) Set.univ := fun z _ => ha z
   have hf : analyticOrderAt (completion χ) ρ ≠ ⊤ :=
-    (fun z (_ : z ∈ (Set.univ : Set ℂ)) => ha z).analyticOrderAt_ne_top_of_isPreconnected
+    han.analyticOrderAt_ne_top_of_isPreconnected
       isPreconnected_univ (mem_univ 2) (mem_univ ρ)
       (by rw [(ha 2).analyticOrderAt_eq_zero.mpr hn]; simp)
   refine ⟨hf, ?_⟩
-  rw [← Nat.pos_iff_ne_zero, analyticOrderNatAt, ENat.toNat_eq_zero]
-  simp only [not_or, hf, and_true]
+  rw [Nat.pos_iff_ne_zero, analyticOrderNatAt, ne_eq, ENat.toNat_eq_zero]
+  simp only [not_or, hf, not_false_eq_true, and_true]
   exact (ha ρ).analyticOrderAt_ne_zero.symm
 
 /-- Every zero of a primitive nonprincipal completion lies in the open critical strip. -/
@@ -429,8 +430,8 @@ private theorem iteratedDeriv_inv_conj {q : ℕ} [NeZero q]
 theorem completion_reflect_order {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
     (completion χ (1 - conj s) = 0 ↔ completion χ s = 0) ∧
-    analyticOrderNatAt (completion χ) (1 - conj s) =
-      analyticOrderNatAt (completion χ) s := by
+    analyticOrderAt (completion χ) (1 - conj s) =
+      analyticOrderAt (completion χ) s := by
   have hF := differentiable_completion χ hne
   have hFi := differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)
   have hf := (completion_zero_order χ hne s).1
@@ -439,23 +440,24 @@ theorem completion_reflect_order {q : ℕ} [NeZero q] {χ : DirichletCharacter �
     let n := analyticOrderNatAt (completion χ) s
     have he : analyticOrderAt (completion χ) s = n :=
       (ENat.natCast_toNat hf).symm
-    have hh := ((hF.analyticAt s).analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero).mp he
+    have hh := (analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero (hF.analyticAt s)).mp he
     have he' : analyticOrderAt (completion χ⁻¹) (conj s) = n := by
-      apply ((hFi.analyticAt _).analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero).mpr
-      simpa only [iteratedDeriv_inv_conj, map_eq_zero] using hh
+      apply (analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero (hFi.analyticAt _)).mpr
+      simpa only [iteratedDeriv_inv_conj, ne_eq, map_eq_zero] using hh
     exact he'.trans he.symm
   have heq : (fun z : ℂ => completion χ (1 - z)) =
       fun z => χ.rootNumber * completion χ⁻¹ z := funext (completion_one_sub hχ)
   have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := completion χ)
     (g := fun z : ℂ => 1 - z) (z₀ := conj s) (by fun_prop) (by simp)
-  have hm := analyticOrderAt_mul analyticAt_const (hFi.analyticAt (conj s))
+  have hm := analyticOrderAt_mul (f := fun _ : ℂ => χ.rootNumber) analyticAt_const (hFi.analyticAt (conj s))
+  change analyticOrderAt (fun z => χ.rootNumber * completion χ⁻¹ z) (conj s) = _ at hm
   have hr : analyticOrderAt (fun _ : ℂ => χ.rootNumber) (conj s) = 0 :=
     analyticAt_const.analyticOrderAt_eq_zero.mpr (rootNumber_ne_zero hχ)
   have ho : analyticOrderAt (completion χ) (1 - conj s) =
       analyticOrderAt (completion χ) s := by
     rw [Function.comp_def, heq, hm, hr, zero_add] at hc
     exact hc.symm.trans hi
-  refine ⟨?_, congrArg ENat.toNat ho⟩
+  refine ⟨?_, ho⟩
   rw [completion_reflect hχ, mul_eq_zero]
   simp [rootNumber_ne_zero hχ]
 
@@ -479,5 +481,59 @@ private theorem logDeriv_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter �
   have hh' : conj (logDeriv (completion χ) s) =
       logDeriv (completion χ) (1 - conj s) * (-1) := by simpa using hh
   linear_combination hh'
+
+/-- The positive vertical resolvent, summed with the actual zero multiplicities. -/
+theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (t : ℝ) :
+    HasSum (fun ρ : {z : ℂ // completion χ z = 0} =>
+      (analyticOrderNatAt (completion χ) ρ.1 : ℝ) * (2 - ρ.1.re) /
+        ((2 - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2))
+      (logDeriv (completion χ) (2 + t * I)).re := by
+  let F := completion χ
+  let s : ℂ := 2 + t * I
+  let a : ℂ := 1 - conj s
+  let k := fun ρ : {z : ℂ // F z = 0} =>
+    (analyticOrderNatAt F ρ.1 : ℝ) * (2 - ρ.1.re) /
+      ((2 - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2)
+  let e : {z : ℂ // F z = 0} ≃ {z : ℂ // F z = 0} :=
+    { toFun := fun ρ => ⟨1 - conj ρ.1, (completion_reflect_order hχ hne ρ.1).1.mpr ρ.2⟩
+      invFun := fun ρ => ⟨1 - conj ρ.1, (completion_reflect_order hχ hne ρ.1).1.mpr ρ.2⟩
+      left_inv := by intro ρ; apply Subtype.ext; simp
+      right_inv := by intro ρ; apply Subtype.ext; simp }
+  have ho (ρ : {z : ℂ // F z = 0}) :
+      analyticOrderNatAt F (e ρ).1 = analyticOrderNatAt F ρ.1 :=
+    congrArg ENat.toNat (completion_reflect_order hχ hne ρ.1).2
+  have hk (ρ : {z : ℂ // F z = 0}) : 0 ≤ k ρ := by
+    have hr := (completion_zero_strip hχ hne ρ.2).2
+    exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (by linarith))
+      (add_nonneg (sq_nonneg _) (sq_nonneg _))
+  have hs : F s ≠ 0 := completion_ne_zero_of_one_le_re χ (.inl hne) (by simp [s])
+  have ha : F a ≠ 0 := completion_ne_zero_of_re_le_zero hχ (by simp [a, s])
+  have hh := Complex.hasSum_re
+    (D5.S3.Analytic.Resolvent.EntireLogDerivDifference.entire_logDeriv_difference_hasSum
+      (differentiable_completion χ hne) (by norm_num : (3 / 2 : ℝ) < 2)
+      (completion_power_growth hχ hne) ha hs)
+  have hv : (logDeriv F s - logDeriv F a).re = 2 * (logDeriv F s).re := by
+    rw [show logDeriv F a = -conj (logDeriv F s) from logDeriv_reflect hχ hne s]
+    simp
+    <;> ring
+  have hp (ρ : {z : ℂ // F z = 0}) :
+      ((analyticOrderNatAt F ρ.1 : ℂ) * ((s - ρ.1)⁻¹ - (a - ρ.1)⁻¹)).re =
+        k ρ + k (e ρ) := by
+    dsimp only [k]
+    rw [ho]
+    simp [e, a, s, Complex.inv_re, Complex.normSq_apply]
+    ring_nf
+  change HasSum (fun ρ : {z : ℂ // F z = 0} =>
+    ((analyticOrderNatAt F ρ.1 : ℂ) * ((s - ρ.1)⁻¹ - (a - ρ.1)⁻¹)).re)
+    (logDeriv F s - logDeriv F a).re at hh
+  have hh' : HasSum (fun ρ => k ρ + k (e ρ)) (2 * (logDeriv F s).re) := by
+    simpa only [hp, hv] using hh
+  have hks : Summable k := Summable.of_nonneg_of_le hk
+    (fun ρ => le_add_of_nonneg_right (hk (e ρ))) hh'.summable
+  have he : HasSum (fun ρ => k (e ρ)) (∑' ρ, k ρ) := e.hasSum_iff.mpr hks.hasSum
+  have heq := (hks.hasSum.add he).unique hh'
+  have hval : (∑' ρ, k ρ) = (logDeriv F s).re := by linarith
+  exact hval ▸ hks.hasSum
 
 end D5.S3.CharacterSums.DirichletCompletion
