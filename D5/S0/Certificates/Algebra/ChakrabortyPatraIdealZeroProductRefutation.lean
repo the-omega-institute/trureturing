@@ -118,9 +118,6 @@ private theorem mem_line (v : V) (x : R) : x ∈ line v ↔ x = 0 ∨ x = emb v 
 @[simp] private theorem emb_mem_line (u v : V) : emb u ∈ line v ↔ u = 0 ∨ u = v := by
   rw [mem_line, emb_eq_zero, (inr_injective (R := K)).eq_iff]
 
-@[simp] private theorem emb_mem_bot (u : V) : emb u ∈ (⊥ : Ideal R) ↔ u = 0 := by
-  rw [Ideal.mem_bot, emb_eq_zero]
-
 private theorem proper_ext {I J : Ideal R} (hI : I ≤ radical) (hJ : J ≤ radical)
     (ha : emb a ∈ I ↔ emb a ∈ J) (hb : emb b ∈ I ↔ emb b ∈ J)
     (hc : emb c ∈ I ↔ emb c ∈ J) : I = J := by
@@ -147,20 +144,6 @@ private theorem add_ac : a + c = b := by decide
 private theorem add_bc : b + c = a := by decide
 
 private theorem not_a0 : a ≠ 0 := by decide
-private theorem not_b0 : b ≠ 0 := by decide
-private theorem not_c0 : c ≠ 0 := by decide
-private theorem not_ab : a ≠ b := by decide
-private theorem not_ac : a ≠ c := by decide
-private theorem not_bc : b ≠ c := by decide
-
-attribute [local simp] not_a0 not_b0 not_c0 not_ab not_ac not_bc
-
-private theorem not_ba : b ≠ a := Ne.symm not_ab
-private theorem not_ca : c ≠ a := Ne.symm not_ac
-private theorem not_cb : c ≠ b := Ne.symm not_bc
-
-attribute [local simp] not_ba not_ca not_cb
-
 private def idealAt : Fin 6 → Ideal R := ![⊥, line a, line b, line c, radical, ⊤]
 
 private theorem ideal_at_surjective : Function.Surjective idealAt := by

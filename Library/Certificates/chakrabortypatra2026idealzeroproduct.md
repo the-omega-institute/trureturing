@@ -19,6 +19,8 @@ triage: anchor
 Sukrit Chakraborty and Sourav Kanti Patra, arXiv:2608.14618v1 (2026).
 DOI: https://doi.org/10.48550/arXiv.2608.14618
 
+[Versioned Conjecture 4.2](https://arxiv.org/html/2608.14618v1#S4.Thmtheorem2)
+
 Definition 2.1 in §2 counts ordered tuples from the full ideal type, including the
 zero and unit ideals, and divides the number having zero ideal product by the
 total number of tuples. The formula applies for each integer k at least two.
