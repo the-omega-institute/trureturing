@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
+      actions: read
       contents: read
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
@@ -32,7 +33,6 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          path: truth-release-source
           persist-credentials: false
       - name: Check out the fixed truth release tools
         uses: actions/checkout@v5
@@ -42,19 +42,38 @@ jobs:
           path: truth-tools
           persist-credentials: false
       - name: Install the tools pinned by the source
-        working-directory: truth-release-source
         run: make install-tools
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: truth-release-source/global.json
+          global-json-file: global.json
       - name: Install the pinned Lean toolchain
-        working-directory: truth-release-source
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Select the Lean dependency cache
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean dependencies
+        id: dependencies
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+      - name: Prepare the restored dependencies
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependencies.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
+            --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - name: Restore existing Lean modules and reports
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
       - name: Prepare the source's Lean module reports
-        working-directory: truth-release-source
         run: make lean-cache-prepare FULL_BUILD=1
       - name: Generate and package the DAG and truth release
-        working-directory: truth-release-source
         run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
       - id: upload
         uses: actions/upload-artifact@v6
