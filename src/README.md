@@ -1,4 +1,4 @@
-# 同一 Lake 包中的 Omega 模块实验
+# Omega 数学模块的架构与验证
 
 本实验以 trureturing 的 `ff5118d67b7e`、官方 Lean 4.35.0 和 OmegaMath v0.1.2（`ab30975b2029`）为基线。仓库根目录的 `lakefile.toml` 用 `srcDir = "src"` 登记三个库目标，共用 trureturing 的工具链、Mathlib 依赖和锁文件。`OmegaInit` 可以由 Lake 单独构建。文件路径中的 `src/` 由 Lake 解析，Lean 导入仍然写模块名。
 
@@ -15,7 +15,41 @@ trureturing/
     OmegaChecks/                consumers, audit and experiment
 ```
 
-根配置沿用原默认目标 `Trureturing`。只计算读数的文件导入 `OmegaMath.Projective.Basic`，严格证明示例直接写 `prelude`、`import OmegaMath.Projective`，证明任意正整数对角坐标的读数为 1/2。混合示例在同一模块使用官方素数定理和 Omega 读数。根目录 D5 里的一个已有定理作为独立编译对照；脚本另外通过 Lean 的标准输入在内存中给同一份 D5 源码加入射影模块导入和证明，检验原路径能消费新库。[严格消费示例](OmegaChecks/ProjectiveOverlap.lean) · [混合示例](OmegaChecks/Mixed.lean)
+## 依赖与入口
+
+`OmegaInit`、`OmegaMath` 和 `OmegaChecks` 是同一 Lake 包中的三个库目标。前两个公开严格数学声明，第三个容纳消费示例和宿主审计程序。现有 D5 证明位于仓库根目录的 `D5/`，可以直接导入 `src/` 中的模块。定义与消费它的证明可以在同一提交中更新。日常源文件改动使用根包现有的依赖锁定。[Lake 配置](../lakefile.toml)
+
+图中每个箭头表示左侧模块直接导入右侧模块。
+
+```text
+OmegaChecks.Mixed --> Mathlib.Data.Nat.Prime.Basic
+                 +--> OmegaChecks.ProjectiveOverlap --> OmegaMath.Projective
+
+OmegaMath --------------------------------------------> OmegaMath.Projective
+OmegaMath.Projective ---------------------------------> OmegaMath.Projective.Basic
+OmegaChecks.Examples ---------------------------------> OmegaMath.Projective.Basic
+OmegaMath.Projective.Basic ---------------------------> OmegaInit.Data.Ratio
+
+OmegaInit --> OmegaInit.Data.Ratio --> OmegaInit.Data.Nat --> OmegaInit.Prelude
+
+OmegaChecks.Audit --> Lean, Lean.Replay
+```
+
+对于整数齐次坐标 `[P:Q]`，第 39 章的重叠度是 `Q²/(P²+Q²)`。两坐标均为零时读数未定义。比如 `[1:1]` 和 `[2:2]` 的读数都等价于 1/2。
+
+- 计算读数时，导入 `OmegaMath.Projective.Basic`。这个模块定义 `Omega.Projective.kappa`，输入是坐标的绝对值。[定义](OmegaMath/Projective/Basic.lean) · [边界算例](OmegaChecks/Examples.lean)
+- 证明同比例放大坐标保持读数时，导入 `OmegaMath.Projective`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](OmegaMath/Projective.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
+- 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下表的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
+
+## 严格边界
+
+| 审计入口 | 传递闭包的模块数 | 声明数 | 传递公理数 |
+| --- | ---: | ---: | ---: |
+| `OmegaInit` | 4 | 47 | 0 |
+| `OmegaMath` | 6 | 49 | 0 |
+| `OmegaChecks.ProjectiveOverlap` | 6 | 50 | 0 |
+
+审计从编译产物读取完整导入集合，逐条检查声明，再把整个闭包交给空的 Lean 4.35.0 内核环境重放。三个入口的闭包均无官方 Init 或 Mathlib 模块。两个反例分别检验审计会拒绝未被使用的公理和遗漏 `prelude` 产生的隐式官方导入。信任基础包括官方内核的归纳类型、宇宙与定义相等规则。[审计实现](OmegaChecks/Audit.lean)
 
 ## 复现
 
@@ -37,7 +71,3 @@ python3 src/OmegaChecks/check.py --incremental
 | 基础 Prelude 增加公开定理 | 10 个，包括 4 个基础模块、读数定义、射影与数学入口及 3 个消费模块 |
 
 四次实验中，原有 D5 定理和所观察的 `Mathlib.Data.Nat.Prime.Basic` 都复用产物。锁文件 SHA-256 为 `8550e44937f85a9be196a2917a075eeb8c22bf6c15baa83e72017c6fc4437a8e`，与分支起点相同。另在同一 worktree 的临时目录里，以两个互相通过本地路径引用的 Lake 包对照：基础包里添加未导入的文件时观测到 0 个模块重编；修改基础 Prelude 时 6 个模块重编，跨包的射影模块在其中，独立模块复用。实验范围是固定工具链、有缓存的定向本地构建。
-
-## 严格边界
-
-从新生成的编译产物加载并在空内核环境中重放。`OmegaInit` 共 4 个模块、47 条声明，`OmegaMath` 共 6 个模块、49 条声明，直接引用射影模块的严格消费示例共 6 个模块、50 条声明。三个入口的传递闭包均无官方 Init、Mathlib 或公理。专门注入的未使用公理和隐式官方 Init 导入均被拒绝。CLI、正式登记冻结和生产 CI 的耗时不在本次目录布局实验范围内。[审计实现](OmegaChecks/Audit.lean)
