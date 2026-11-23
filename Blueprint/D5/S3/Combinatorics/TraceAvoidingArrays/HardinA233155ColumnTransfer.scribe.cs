@@ -13,6 +13,8 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         H("Three-state column transfer"), Blocks(
             Node("columnCompatible",CompatibleFormula(),"Every horizontal and antidiagonal bond between the two columns excludes sum two."),
             Node("relabel",RelabelFormula(),"A color permutation acts pointwise on a column."),
+            Node("alternatingEquiv",AlternatingEquivFormula(),"The permutation in column j is the jth power of the colour-reversing permutation."),
+            Node("alternating_legal",ProperEquivFormula(true),"After alternating the colours, every bond satisfies inequality exactly when the original labels exclude sum two.",true),
             Node("properEquiv",ProperEquivFormula(),"Let c be Fin.revPerm on Fin 3, with values [2,1,0]. Applying c to the power j at every cell in column j gives an equivalence from all labelled sum-exclusion arrays to proper colourings. Injectivity cancels the common power at the ends of each bond; x differs from c(y) exactly when the two natural values have sum different from two. The inverse applies the inverse permutation separately at every cell. Empty dimensions are included."),
             Node("successorClasses",SuccessorsFormula(),"The list records each compatible successor class in base-three code order."),
             Node("quotient_rows",QuotientFormula(),"Permutation-invariant equality classes and their representative successor lists determine all quotient entries.",true),
@@ -21,7 +23,16 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         var body=Eq(C("relabel",V("e")),C("Equiv.arrowCongr",C("Equiv.refl",FinF(V("k"))),V("e")));
         return All("k",NatF(),All("e",PermF(),body));
     }
-    private static Formula ProperEquivFormula() {
+    private static Formula AlternatingEquivFormula() {
+        var k=V("k"); var n=V("n"); var f=V("f"); var p=V("p");
+        var cell=P(Seq(FinF(k),Sp,Times,Sp,FinF(n)));
+        var grid=Arr(cell,FinF(N(3)));
+        var column=C("Prod.snd",p);
+        var image=A(Pow(C("Fin.revPerm"),Val(column)),A(f,p));
+        return All("k",NatF(),All("n",NatF(),Seq(Cast(C("alternatingEquiv",k,n),C("Equiv",grid,grid)),
+            Comma,Sp,All("f",grid,All("p",cell,Eq(A(C("alternatingEquiv",k,n),f,p),image))))));
+    }
+    private static Formula ProperEquivFormula(bool law = false) {
         var k=V("k"); var n=V("n"); var p=V("P"); var j=V("j"); var r=V("r"); var ss=V("s");
         Formula PairF(Formula a, Formula b) => P(Seq(a,Comma,Sp,b));
         var grid=Arr(P(Seq(FinF(k),Sp,Times,Sp,FinF(n))),FinF(N(3)));
@@ -29,6 +40,10 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         var adjacent=new Formula.Logic(P(Eq(r,ss)),FormulaLogicOperator.Or,P(Eq(Val(r),PlusF(Val(ss),N(1)))));
         var proper=All("j",FinF(n),All("h",LtF(PlusF(Val(j),N(1)),n),
             All("r",FinF(k),All("s",FinF(k),Imp(adjacent,Ne(A(p,PairF(r,j)),A(p,PairF(ss,next))))))));
+        if (law)
+            return All("k",NatF(),All("n",NatF(),All("f",grid,
+                new Formula.Logic(C("Legal",V("f")),FormulaLogicOperator.Iff,
+                    A(Lam("P",grid,proper),A(C("alternatingEquiv",k,n),V("f")))))));
         var source=C("Subtype",Lam("f",grid,C("Legal",V("f"))));
         var target=C("Subtype",Lam("P",grid,proper));
         return All("k",NatF(),All("n",NatF(),Cast(C("properEquiv",k,n),C("Equiv",source,target))));
