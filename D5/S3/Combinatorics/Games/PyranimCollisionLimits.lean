@@ -15,6 +15,7 @@ import D5.S3.Combinatorics.Games.PyranimCollisionRoot
 import Mathlib.Data.Finset.SDiff
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Data.Fin.Embedding
+import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 
@@ -274,15 +275,6 @@ section
 
 open DyckStep
 
-private abbrev WordAt (m : ℕ) := {w : List DyckStep // w.length = m}
-
-private noncomputable def wordAtEquiv (m : ℕ) : (Fin m → DyckStep) ≃ WordAt m :=
-  Equiv.ofBijective (fun f => ⟨List.ofFn f, List.length_ofFn⟩)
-    ⟨fun _ _ h => List.ofFn_injective (congrArg Subtype.val h), by
-      rintro ⟨w, hw⟩
-      subst m
-      exact ⟨w.get, Subtype.ext (List.ofFn_get w)⟩⟩
-
 private def stepEquivBool : DyckStep ≃ Bool where
   toFun | U => false | D => true
   invFun | false => U | true => D
@@ -292,51 +284,50 @@ private def stepEquivBool : DyckStep ≃ Bool where
 private instance : Finite DyckStep :=
   Finite.of_injective stepEquivBool stepEquivBool.injective
 
-instance (m : ℕ) : Finite (WordAt m) :=
-  Finite.of_injective (wordAtEquiv m).symm (wordAtEquiv m).symm.injective
+private theorem wordAt_card (m : ℕ) : Nat.card (List.Vector DyckStep m) = 2 ^ m := by
+  let letters : (Fin m → DyckStep) ≃ (Fin m → Bool) :=
+    Equiv.piCongrRight fun _ => stepEquivBool
+  rw [Nat.card_congr ((Equiv.vectorEquivFin DyckStep m).trans
+      (letters.trans (Equiv.vectorEquivFin Bool m).symm)),
+    Nat.card_eq_fintype_card, card_vector, Fintype.card_bool]
 
-private theorem wordAt_card (m : ℕ) : Nat.card (WordAt m) = 2 ^ m := by
-  rw [← Nat.card_congr (wordAtEquiv m), Nat.card_fun, Nat.card_fin, Nat.card_congr stepEquivBool]
-  have hb : Nat.card Bool = 2 := by rw [Nat.card_eq_fintype_card]; decide
-  rw [hb]
-
-private theorem wordAt_card_ne_pivot {M : ℕ} (pivot : WordAt M) :
-    Nat.card {w : WordAt M // w ≠ pivot} = 2 ^ M - 1 := by
+private theorem wordAt_card_ne_pivot {M : ℕ} (pivot : List.Vector DyckStep M) :
+    Nat.card {w : List.Vector DyckStep M // w ≠ pivot} = 2 ^ M - 1 := by
   classical
-  let eqType := {w : WordAt M // ¬ w ≠ pivot}
+  let eqType := {w : List.Vector DyckStep M // ¬ w ≠ pivot}
   let singleton : eqType ≃ Unit :=
     Equiv.ofBijective (fun _ => ()) ⟨fun a b _ =>
       Subtype.ext ((not_not.mp a.property).trans (not_not.mp b.property).symm),
       by intro _; exact ⟨⟨pivot, not_not.mpr rfl⟩, rfl⟩⟩
-  have h := Nat.card_congr (Equiv.sumCompl (fun w : WordAt M => w ≠ pivot))
-  change Nat.card ({w : WordAt M // w ≠ pivot} ⊕ eqType) = _ at h
+  have h := Nat.card_congr (Equiv.sumCompl (fun w : List.Vector DyckStep M => w ≠ pivot))
+  change Nat.card ({w : List.Vector DyckStep M // w ≠ pivot} ⊕ eqType) = _ at h
   rw [Nat.card_sum, wordAt_card, Nat.card_congr singleton] at h
   have hon : Nat.card Unit = 1 := by rw [Nat.card_eq_fintype_card]; decide
   rw [hon] at h
   omega
 
-private abbrev AvoidingWords {M : ℕ} (pivot : WordAt M) (q r : ℕ) :=
-  {w : WordAt (q * M + r) // ∀ k < q, wordBlock M k w.val ≠ pivot.val}
+private abbrev AvoidingWords {M : ℕ} (pivot : List.Vector DyckStep M) (q r : ℕ) :=
+  {w : List.Vector DyckStep (q * M + r) // ∀ k < q, wordBlock M k w.val ≠ pivot.val}
 
-private theorem avoidingWords_card_le {M : ℕ} (pivot : WordAt M) (q r : ℕ) :
+private theorem avoidingWords_card_le {M : ℕ} (pivot : List.Vector DyckStep M) (q r : ℕ) :
     Nat.card (AvoidingWords pivot q r) ≤ (2 ^ M - 1) ^ q * 2 ^ r := by
   induction q with
   | zero =>
     simp only [pow_zero, one_mul]
     have h := Nat.card_le_card_of_injective
-      (fun w : AvoidingWords pivot 0 r => (⟨w.val.val, by simpa using w.val.property⟩ : WordAt r))
+      (fun w : AvoidingWords pivot 0 r => (⟨w.val.val, by simpa using w.val.property⟩ : List.Vector DyckStep r))
       (by intro a b h; exact Subtype.ext (Subtype.ext (congrArg
-        (fun w : WordAt r => w.val) h)))
+        (fun w : List.Vector DyckStep r => w.val) h)))
     exact h.trans_eq (wordAt_card r)
   | succ q ih =>
-    let pre (w : AvoidingWords pivot (q + 1) r) : WordAt M :=
+    let pre (w : AvoidingWords pivot (q + 1) r) : List.Vector DyckStep M :=
       ⟨w.val.val.take M, List.length_take_of_le (by
         rw [w.val.property, Nat.succ_mul]
         omega)⟩
-    let suffix (w : AvoidingWords pivot (q + 1) r) : WordAt (q * M + r) :=
+    let suffix (w : AvoidingWords pivot (q + 1) r) : List.Vector DyckStep (q * M + r) :=
       ⟨w.val.val.drop M, by rw [List.length_drop, w.val.property, Nat.succ_mul]; omega⟩
     let f (w : AvoidingWords pivot (q + 1) r) :
-        {u : WordAt M // u ≠ pivot} × AvoidingWords pivot q r :=
+        {u : List.Vector DyckStep M // u ≠ pivot} × AvoidingWords pivot q r :=
       (⟨pre w, fun h => w.property 0 (Nat.succ_pos q)
         (by simpa [wordBlock, pre] using congrArg Subtype.val h)⟩,
        ⟨suffix w, by
@@ -345,16 +336,16 @@ private theorem avoidingWords_card_le {M : ℕ} (pivot : WordAt M) (q r : ℕ) :
         simpa [wordBlock, suffix, List.drop_drop, Nat.succ_mul, Nat.add_comm] using he⟩)
     have hf : Function.Injective f := by
       intro w z he
-      have h₁ := congrArg (fun p : {u : WordAt M // u ≠ pivot} × AvoidingWords pivot q r =>
+      have h₁ := congrArg (fun p : {u : List.Vector DyckStep M // u ≠ pivot} × AvoidingWords pivot q r =>
         p.1.val.val) he
-      have h₂ := congrArg (fun p : {u : WordAt M // u ≠ pivot} × AvoidingWords pivot q r =>
+      have h₂ := congrArg (fun p : {u : List.Vector DyckStep M // u ≠ pivot} × AvoidingWords pivot q r =>
         p.2.val.val) he
       change w.val.val.take M = z.val.val.take M at h₁
       change w.val.val.drop M = z.val.val.drop M at h₂
       exact Subtype.ext (Subtype.ext (by
         rw [← List.take_append_drop M w.val.val, h₁, h₂, List.take_append_drop]))
     calc
-      _ ≤ Nat.card ({u : WordAt M // u ≠ pivot} × AvoidingWords pivot q r) :=
+      _ ≤ Nat.card ({u : List.Vector DyckStep M // u ≠ pivot} × AvoidingWords pivot q r) :=
         Nat.card_le_card_of_injective f hf
       _ = (2 ^ M - 1) * Nat.card (AvoidingWords pivot q r) := by rw [Nat.card_prod, wordAt_card_ne_pivot]
       _ ≤ (2 ^ M - 1) * ((2 ^ M - 1) ^ q * 2 ^ r) := Nat.mul_le_mul_left _ ih
@@ -373,7 +364,7 @@ private theorem rankSlots_width (n L : ℕ) :
 private theorem noRankMark_card_le (n L : ℕ) :
     Nat.card {I : Stable n // ¬ HasRankMark L (rankSlots n L) (stableEquivDyck n I).val.toList} ≤
       (2 ^ rankBlockWidth L - 1) ^ rankSlots n L * 2 ^ rankTail n L := by
-  let pivot : WordAt (rankBlockWidth L) := ⟨(rankBlock L 0).toList, rankBlock_length L 0⟩
+  let pivot : List.Vector DyckStep (rankBlockWidth L) := ⟨(rankBlock L 0).toList, rankBlock_length L 0⟩
   let f (I : {I : Stable n // ¬ HasRankMark L (rankSlots n L)
       (stableEquivDyck n I).val.toList}) : AvoidingWords pivot (rankSlots n L) (rankTail n L) :=
     ⟨⟨(stableEquivDyck n I.val).val.toList, by

@@ -16,7 +16,7 @@ internal sealed class PyranimCollisionLimitsDocument : IScribeDocumentDefinition
         Blocks(
             Node("unmarkedBound", "Bound for words avoiding a prescribed block",
                 UnmarkedBody(),
-                "At each width-n encoding there are q complete slots of length M and a tail of length r. M is 2(L+1), q is the floor of 2(n+1)/M and r is its remainder. A slot has 2^M−1 words once a specific pattern is excluded.",
+                "At each width-n encoding there are q complete slots of length M and a tail of length r. M is 2(L+1), q is the floor of 2(n+1)/M and r is its remainder. The letter equivalence with Bool and Mathlib’s fixed-length vector count give 2^M words in a slot and 2^r words in the tail. Excluding one word leaves 2^M−1 slot choices. Splitting off the first slot gives an injection into a nonpivot block and a shorter avoiding word.",
                 DescribeRole.Definition),
             Node("gameIso_class_card_upper", "Uniform collision-class bound",
                 ClassBound(),
