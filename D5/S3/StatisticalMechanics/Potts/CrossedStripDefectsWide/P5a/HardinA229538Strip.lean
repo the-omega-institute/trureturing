@@ -918,13 +918,13 @@ theorem labelled_scale (D m : ℕ) :
     constructor
     · rintro ⟨hP, hN⟩
       have h := constant_array A hN
-      rw [if_pos ((constant_budget _).mp (h ▸ hP)), h]
+      rw [ite_eq_left ((constant_budget _).mp (h ▸ hP)), h]
       exact Finset.mem_map.mpr ⟨A (0, 0), Finset.mem_univ _, rfl⟩
     · by_cases hD : D = m * edges.card
-      · rw [if_pos hD, Finset.mem_map]
+      · rw [ite_eq_left hD, Finset.mem_map]
         rintro ⟨c, _, rfl⟩
         exact ⟨(constant_budget c).mpr hD, fun ⟨_, _, h⟩ => h rfl⟩
-      · simp only [if_neg hD, Finset.notMem_empty, false_implies]
+      · simp only [ite_eq_right hD, Finset.notMem_empty, false_implies]
   have hzero (c : Fin 3) : K (const c) ↔ c = 0 := by
     constructor
     · intro h
@@ -947,10 +947,10 @@ theorem labelled_scale (D m : ℕ) :
     Finset.filter_comm s
   rw [hlabel, hcanon, ← ssplit, ← tsplit, horbit, hT, hS]
   by_cases hD : D = m * edges.card
-  · simp only [if_pos hD, Finset.card_map, Finset.card_univ, Fintype.card_fin,
+  · simp only [ite_eq_left hD, Finset.card_map, Finset.card_univ, Fintype.card_fin,
       hcanonical_constants, Finset.card_singleton]
     omega
-  · simp only [if_neg hD, Finset.filter_empty, Finset.card_empty, Nat.add_zero]
+  · simp only [ite_eq_right hD, Finset.filter_empty, Finset.card_empty, Nat.add_zero]
 
 attribute [local irreducible] a
 
@@ -969,7 +969,7 @@ theorem result (n : ℕ) :
     rw [← transfer_count]
     have hD := small_budget_ne_cut_total 1 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
-      simpa only [if_neg hD, Nat.add_zero, a] using labelled_scale 1 m
+      simpa only [ite_eq_right hD, Nat.add_zero, a] using labelled_scale 1 m
     rw [hscale]
     push_cast
     rfl
