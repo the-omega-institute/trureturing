@@ -23,7 +23,6 @@ internal sealed class HardinA229585StripCertificateDocument : IScribeDocumentDef
     private static Formula App(Formula g, params Formula[] a) => new Formula.Apply(g, [.. a]);
     private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
-    private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));

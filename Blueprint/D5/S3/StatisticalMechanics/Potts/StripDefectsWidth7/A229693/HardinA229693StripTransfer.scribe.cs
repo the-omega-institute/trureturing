@@ -80,5 +80,4 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
 
     private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
     private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
-    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
 }
