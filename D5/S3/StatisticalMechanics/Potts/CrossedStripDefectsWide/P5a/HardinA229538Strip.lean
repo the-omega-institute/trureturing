@@ -10,6 +10,8 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.canonicalCount
+mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.small_budget_ne_cut_total
+small_budget_ne_cut_total: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
 cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._simp_1_1
@@ -87,6 +89,7 @@ import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Dedup
 import Mathlib.Data.Finset.Filter
+import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
@@ -118,6 +121,29 @@ def edges : Finset (Fin 5 × Fin 5) :=
       @HardinA233178Literal.Edges 2 (e.1, 0) (e.2, 1)) :=
     fun _ => by unfold HardinA233178Literal.Edges; infer_instance
   Finset.univ.filter fun e => @HardinA233178Literal.Edges 2 (e.1, 0) (e.2, 1)
+
+theorem mem_edges (e : Fin 5 × Fin 5) :
+    e ∈ edges ↔ e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
+  unfold edges
+  rw [Finset.mem_filter]
+  exact ⟨fun h => h.2.2, fun h => ⟨Finset.mem_univ _, rfl, h⟩⟩
+
+theorem small_budget_ne_cut_total (D m : ℕ) (hD : 0 < D) (hsmall : D < 5) :
+    D ≠ m * edges.card := by
+  have diagonal : (Finset.univ : Finset (Fin 5)).diag ⊆ edges := by
+    intro e he
+    have eq := (Finset.mem_diag.mp he).2
+    rw [mem_edges, eq]
+    exact ⟨Nat.le_succ _, Nat.le_succ _⟩
+  have cut : 5 ≤ edges.card := by
+    simpa only [Finset.diag_card, Finset.card_univ, Fintype.card_fin] using
+      Finset.card_le_card diagonal
+  cases m with
+  | zero => simpa using Nat.ne_of_gt hD
+  | succ m =>
+    have total : 5 ≤ (m + 1) * edges.card := by
+      simpa only [Nat.one_mul] using Nat.mul_le_mul (Nat.succ_pos m) cut
+    exact Nat.ne_of_lt (hsmall.trans_le total)
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
@@ -928,15 +954,11 @@ theorem result (n : ℕ) :
       48036 * (a (n + 10) : ℤ) - 371692 * (a (n + 9) : ℤ) + 214008 * (a (n + 8) : ℤ) +
       43848 * (a (n + 7) : ℤ) - 64656 * (a (n + 6) : ℤ) + 8640 * (a (n + 5) : ℤ) +
       5184 * (a (n + 4) : ℤ) - 1296 * (a (n + 3) : ℤ) := by
-  have bridge (m : ℕ) (hm : 1 ≤ m) :
+  have bridge (m : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
-    have hcut : 3 ≤ edges.card := by decide +kernel
-    have htotal : 3 ≤ m * edges.card := by
-      simpa only [Nat.one_mul] using Nat.mul_le_mul hm hcut
-    have hD : 1 ≠ m * edges.card :=
-      Nat.ne_of_lt ((Nat.lt_succ_of_le (Nat.le_succ 1)).trans_le htotal)
+    have hD := small_budget_ne_cut_total 1 m (by decide) (by decide)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
       simpa only [a] using (labelled_scale 1 m).mpr hD
     rw [hscale]
@@ -944,11 +966,8 @@ theorem result (n : ℕ) :
     rfl
   have h := (transfer_readout transfer terminal 20 2 _).mp
     vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
-  have mge (k : Fin 20) : 1 ≤ n + 2 + k.val :=
-    Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 1))
-  have hn : 1 ≤ n + 2 + 20 := Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 1))
-  rw [bridge _ hn] at h
-  simp_rw [fun k : Fin 20 => bridge (n + 2 + k.val) (mge k)] at h
+  rw [bridge (n + 2 + 20)] at h
+  simp_rw [fun k : Fin 20 => bridge (n + 2 + k.val)] at h
   norm_num [coefficients538, Fin.sum_univ_succ, Nat.add_assoc] at h
   linarith
 

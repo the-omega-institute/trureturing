@@ -744,7 +744,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect transfer_readout
-  canonicalCount transition_entry labelled_scale)
+  canonicalCount transition_entry labelled_scale small_budget_ne_cut_total)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)
 open DefectTransfer (bondDefects defects literalCount lumped_count)
@@ -911,14 +911,11 @@ theorem result (n : ℕ) :
     apply congrArg Finset.card
     ext A
     simp only [Finset.mem_filter, Finset.mem_univ, true_and, sweep]
-  have bridge (m : ℕ) (hm : 1 ≤ m) :
+  have bridge (m : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
-    have hcut : 3 ≤ edges.card := by decide +kernel
-    have htotal : 3 ≤ m * edges.card := by
-      simpa only [Nat.one_mul] using Nat.mul_le_mul hm hcut
-    have hD : 2 ≠ m * edges.card := Nat.ne_of_lt ((Nat.lt_succ_self 2).trans_le htotal)
+    have hD := small_budget_ne_cut_total 2 m (by decide) (by decide)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
       simpa only [table_count] using (labelled_scale 2 m).mpr hD
     rw [hscale]
@@ -926,11 +923,8 @@ theorem result (n : ℕ) :
     rfl
   have h := (transfer_readout transfer terminal 30 3 _).mp
     vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
-  have mge (k : Fin 30) : 1 ≤ n + 3 + k.val :=
-    Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 2))
-  have hn : 1 ≤ n + 3 + 30 := Nat.le_add_right_of_le (Nat.le_add_left 1 (n + 2))
-  rw [bridge _ hn] at h
-  simp_rw [fun k : Fin 30 => bridge (n + 3 + k.val) (mge k)] at h
+  rw [bridge (n + 3 + 30)] at h
+  simp_rw [fun k : Fin 30 => bridge (n + 3 + k.val)] at h
   norm_num [coefficients641, Fin.sum_univ_succ, Nat.add_assoc] at h
   linarith
 
