@@ -11,6 +11,8 @@ import Mathlib.NumberTheory.LSeries.Nonvanishing
 import D5.S3.CharacterSums.DirichletCompletionGamma
 import Mathlib.Analysis.Calculus.Deriv.Star
 import Mathlib.Analysis.Real.Pi.Bounds
+import D5.S3.Weil.ZetaExplicit.GammaRBracket
+import D5.S3.Weil.ZetaExplicit.XiLogDeriv
 import D5.S3.Analytic.Resolvent.EntireLogDerivDifference
 
 /-! # Modulus-normalized Dirichlet completions -/
@@ -19,7 +21,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Complex Set Filter Topology MeasureTheory
-open scoped ComplexConjugate
+open scoped ComplexConjugate Classical
+open ConjectureMachines.Semantics.Riemann.DigammaBinet
 
 namespace D5.S3.CharacterSums.DirichletCompletion
 
@@ -297,23 +300,31 @@ theorem right_growth_radius {q : ℕ} [NeZero q]
           (by linarith [hs.trans ((Complex.re_le_norm s).trans hn)]))
     _ = _ := by rw [Real.exp_add]; ring
 
+/-- A free-radius bound; primitivity is needed only when reflection is used. -/
+theorem completion_growth_radius {q : ℕ} [NeZero q]
+    (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) (s : ℂ) (R : ℝ)
+    (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) (hn : ‖s‖ ≤ R)
+    (href : s.re < 1 / 2 → ‖1 - s‖ ≤ R) :
+    ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * R *
+      Real.exp (Real.log (q : ℝ) / 2 * R +
+        ((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
+  by_cases hs : 1 / 2 ≤ s.re
+  · exact right_growth_radius χ hne hs hn
+  · have hχ := hside.resolve_left hs
+    have ht : 1 / 2 ≤ (1 - s).re := by simp only [sub_re, one_re]; linarith
+    have hb := right_growth_radius χ⁻¹ (inv_ne_one.mpr hne) ht (href (lt_of_not_ge hs))
+    have he := congrArg norm (completion_one_sub hχ (1 - s))
+    rw [sub_sub_cancel, norm_mul, norm_rootNumber hχ, one_mul] at he
+    rwa [he]
+
 /-- A global bound retaining the radial Gamma argument and its multiplicative constant. -/
 theorem completion_growth_explicit {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * (1 + ‖s‖) *
       Real.exp (Real.log (q : ℝ) / 2 * (1 + ‖s‖) +
         ((‖s‖ + 4) / 2) * Real.log ((‖s‖ + 4) / 2)) := by
-  have hR : 1 ≤ 1 + ‖s‖ := by linarith [norm_nonneg s]
-  by_cases hs : 1 / 2 ≤ s.re
-  · convert right_growth_radius χ hne hs
-      (show ‖s‖ ≤ 1 + ‖s‖ by linarith) using 1 <;> ring_nf
-  · have ht : 1 / 2 ≤ (1 - s).re := by simp only [sub_re, one_re]; linarith
-    have hn : ‖1 - s‖ ≤ 1 + ‖s‖ := by simpa using norm_sub_le (1 : ℂ) s
-    have hb := right_growth_radius χ⁻¹ (inv_ne_one.mpr hne) ht hn
-    have he := congrArg norm (completion_one_sub hχ (1 - s))
-    rw [sub_sub_cancel, norm_mul, norm_rootNumber hχ, one_mul] at he
-    rw [he]
-    convert hb using 1 <;> ring_nf
+  convert completion_growth_radius χ hne s (1 + ‖s‖) (.inr hχ)
+    (by linarith) (fun _ => by simpa using norm_sub_le (1 : ℂ) s) using 1 <;> ring_nf
 
 /-- The completion has an explicit global bound of size exp(C R (1 + log R)). -/
 theorem completion_growth_log {q : ℕ} [NeZero q]
@@ -449,7 +460,8 @@ theorem completion_reflect_order {q : ℕ} [NeZero q] {χ : DirichletCharacter �
       fun z => χ.rootNumber * completion χ⁻¹ z := funext (completion_one_sub hχ)
   have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := completion χ)
     (g := fun z : ℂ => 1 - z) (z₀ := conj s) (by fun_prop) (by simp)
-  have hm := analyticOrderAt_mul (f := fun _ : ℂ => χ.rootNumber) analyticAt_const (hFi.analyticAt (conj s))
+  have hm := analyticOrderAt_mul (f := fun _ : ℂ => χ.rootNumber)
+    analyticAt_const (hFi.analyticAt (conj s))
   change analyticOrderAt (fun z => χ.rootNumber * completion χ⁻¹ z) (conj s) = _ at hm
   have hr : analyticOrderAt (fun _ : ℂ => χ.rootNumber) (conj s) = 0 :=
     analyticAt_const.analyticOrderAt_eq_zero.mpr (rootNumber_ne_zero hχ)
@@ -535,5 +547,143 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
   have heq := (hks.hasSum.add he).unique hh'
   have hval : (∑' ρ, k ρ) = (logDeriv F s).re := by linarith
   exact hval ▸ hks.hasSum
+
+/-- The Dirichlet logarithmic derivative on the line two has norm strictly below one. -/
+theorem norm_logDeriv_LFunction_two {q : ℕ} [NeZero q]
+    (χ : DirichletCharacter ℂ q) (t : ℝ) :
+    ‖logDeriv χ.LFunction (2 + t * I)‖ ≤
+      Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 := by
+  let s : ℂ := 2 + t * I
+  have hs : 1 < s.re := by simp [s]
+  have he : logDeriv χ.LFunction s = -LSeries ((fun n : ℕ => χ n) *
+      (fun n => (ArithmeticFunction.vonMangoldt n : ℂ))) s := by
+    rw [logDeriv_apply, χ.deriv_LFunction_eq_deriv_LSeries hs, χ.LFunction_eq_LSeries hs,
+      χ.LSeries_twist_vonMangoldt_eq hs]
+    ring
+  have hterm (n : ℕ) : ‖LSeries.term ((fun n : ℕ => χ n) *
+      (fun n => (ArithmeticFunction.vonMangoldt n : ℂ))) s n‖ ≤ Real.log n / (n : ℝ) ^ 2 := by
+    by_cases hn : n = 0
+    · simp [hn]
+    rw [LSeries.norm_term_eq, if_neg hn]
+    simp only [Pi.mul_apply, norm_mul, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_nonneg ArithmeticFunction.vonMangoldt_nonneg]
+    have hb : ‖χ n‖ * ArithmeticFunction.vonMangoldt n ≤ Real.log n :=
+      (mul_le_of_le_one_left ArithmeticFunction.vonMangoldt_nonneg (χ.norm_le_one _)).trans
+        ArithmeticFunction.vonMangoldt_le_log
+    simpa [s, Real.rpow_two] using
+      div_le_div_of_nonneg_right hb (sq_nonneg (n : ℝ))
+  rw [he, norm_neg]
+  exact (norm_tsum_le_tsum_norm
+    (χ.LSeriesSummable_twist_vonMangoldt hs).norm).trans
+    (((χ.LSeriesSummable_twist_vonMangoldt hs).norm.tsum_le_tsum hterm
+      DirichletCompletionGamma.logarithmic_series_bound.1).trans
+      DirichletCompletionGamma.logarithmic_series_bound.2.1)
+
+/-- The completed logarithmic derivative separates conductor, Gamma and Dirichlet factors. -/
+theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
+    {s : ℂ} (hs : 1 < s.re) :
+    logDeriv (completion χ) s = ((Real.log (q : ℝ) - Real.log Real.pi) / 2 : ℝ) +
+      (1 / 2 : ℂ) * Complex.digamma ((s + (if χ.Even then 0 else 1)) / 2) +
+      logDeriv χ.LFunction s := by
+  classical
+  let b : ℂ := (Real.log (q : ℝ) / 2 : ℝ)
+  have hpos : 0 < s.re := by linarith
+  have hs1 : s ≠ 1 := by intro h; simp [h] at hs
+  have hL := χ.LFunction_ne_zero_of_one_le_re (.inr hs1) hs.le
+  have hdG : DifferentiableAt ℂ χ.gammaFactor s := by
+    unfold DirichletCharacter.gammaFactor
+    split_ifs
+    · exact Zeta23.WeilEF.differentiableAt_Gammaℝ hpos
+    · exact (Zeta23.WeilEF.differentiableAt_Gammaℝ
+        (by simp only [add_re, one_re]; linarith)).comp s (by fun_prop)
+  have hlocal : completion χ =ᶠ[𝓝 s] fun z => Complex.exp (b * z) *
+      (χ.gammaFactor z * χ.LFunction z) := by
+    filter_upwards [(isOpen_lt continuous_const continuous_re).mem_nhds hpos] with z hz
+    exact congrArg (fun w => Complex.exp (b * z) * w) (completed_eq_mul χ hz)
+  rw [(logDeriv_congr_nhds hlocal).eq_of_nhds,
+    logDeriv_fun_mul (f := fun z : ℂ => Complex.exp (b * z))
+      (g := fun z => χ.gammaFactor z * χ.LFunction z) s
+      (Complex.exp_ne_zero _) (mul_ne_zero (gammaFactor_ne_zero χ hpos) hL)
+      (by fun_prop) (hdG.mul (χ.differentiableAt_LFunction s (.inl hs1))),
+    logDeriv_fun_mul (f := χ.gammaFactor) (g := χ.LFunction) s
+      (gammaFactor_ne_zero χ hpos) hL hdG
+      (χ.differentiableAt_LFunction s (.inl hs1))]
+  have hexp : logDeriv (fun z : ℂ => Complex.exp (b * z)) s = b := by
+    have hd : HasDerivAt (fun z : ℂ => Complex.exp (b * z))
+        (Complex.exp (b * s) * b) s := by
+      simpa using ((hasDerivAt_id s).const_mul b).cexp
+    rw [logDeriv_apply, hd.deriv]
+    exact mul_div_cancel_left₀ b (Complex.exp_ne_zero _)
+  rw [hexp]
+  unfold DirichletCharacter.gammaFactor
+  split_ifs with heven
+  · rw [Zeta23.WeilEF.logDeriv_Gammaℝ hpos]
+    simp only [add_zero]
+    dsimp [b]
+    push_cast
+    ring
+  · have hc := logDeriv_comp (x := s) (f := Complex.Gammaℝ)
+      (g := fun z : ℂ => z + 1)
+      (Zeta23.WeilEF.differentiableAt_Gammaℝ (by simp only [add_re, one_re]; linarith))
+      (by fun_prop)
+    simp only [Function.comp_def, deriv_add_const, deriv_id'', mul_one] at hc
+    rw [hc, Zeta23.WeilEF.logDeriv_Gammaℝ (by simp only [add_re, one_re]; linarith)]
+    dsimp [b]
+    push_cast
+    ring
+
+/-- At the real point two the Gamma real-axis estimate gives a sharper bound. -/
+theorem completion_center_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
+    2 * (logDeriv (completion χ) 2).re ≤
+      Real.log (q : ℝ) - Real.log Real.pi + Real.log (3 / 2) +
+        2 * (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3) := by
+  let x : ℝ := (2 + if χ.Even then 0 else 1) / 2
+  have hx : 1 ≤ x ∧ x ≤ 3 / 2 := by dsimp [x]; split_ifs <;> norm_num
+  have harg : ((2 : ℂ) + (if χ.Even then 0 else 1)) / 2 = (x : ℂ) := by
+    dsimp [x]; split_ifs <;> norm_num
+  have hp := (digamma_ofReal_re_sandwich (by linarith : 0 < x)).2
+  have hl := Real.log_le_log (by linarith : 0 < x) hx.2
+  have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ 0)
+  have he := congrArg Complex.re (completion_logDeriv χ (s := 2) (by norm_num))
+  rw [harg] at he
+  norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
+  linarith
+
+/-- Every character has the upper bound; primitive nonprincipal characters have positivity. -/
+theorem completion_vertical_bound {q : ℕ} [NeZero q]
+    (χ : DirichletCharacter ℂ q) (t : ℝ) :
+    (logDeriv (completion χ) (2 + t * I)).re <
+        (Real.log (q : ℝ) - Real.log Real.pi + Real.log (|t| + 3)) / 2 +
+          (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3) ∧
+      (χ.IsPrimitive → χ ≠ 1 → 0 ≤ (logDeriv (completion χ) (2 + t * I)).re) := by
+  constructor
+  · by_cases ht : t = 0
+    · subst t
+      have hb := completion_center_bound χ
+      have hl : Real.log (3 / 2) < Real.log (3 : ℝ) :=
+        Real.log_lt_log (by norm_num) (by norm_num)
+      norm_num at *
+      linarith
+    let z : ℂ := ((2 + t * I) + (if χ.Even then 0 else 1)) / 2
+    have hz : 1 ≤ z.re ∧ z.re ≤ 3 / 2 := by
+      dsimp [z]; split_ifs <;> norm_num
+    have him : 2 * |z.im| = |t| := by
+      dsimp [z]; split_ifs <;> simp [abs_div] <;> ring
+    have hp := DirichletCompletionGamma.digamma_re_lt_log_height hz.1 hz.2
+    rw [him] at hp
+    have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ t)
+    have he := congrArg Complex.re
+      (completion_logDeriv χ (s := 2 + t * I) (by simp))
+    change _ = _ + ((1 / 2 : ℂ) * Complex.digamma z).re + _ at he
+    norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he
+    linarith
+  · intro hχ hne
+    have hs := completion_vertical_resolvent hχ hne t
+    rw [← hs.tsum_eq]
+    apply tsum_nonneg
+    intro ρ
+    have hr := (completion_zero_strip hχ hne ρ.2).2
+    exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (by linarith))
+      (add_nonneg (sq_nonneg _) (sq_nonneg _))
 
 end D5.S3.CharacterSums.DirichletCompletion

@@ -1,5 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.CharacterSums.DirichletCompletion
+import Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData
+import Reg.D5.S3.CharacterSums.DirichletCompletion.Bounds
 import Reg.Support.SingleDependentReadout
 import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 
@@ -194,7 +196,8 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M :=
-    ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1 ∨ q = 1) (hs : 1 ≤ s.re),
+    ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ}
+      (hχs : χ ≠ 1 ∨ s ≠ 1 ∨ q = 1) (hs : 1 ≤ s.re),
     M.readout () () (completion χ s) 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

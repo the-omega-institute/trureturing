@@ -88,6 +88,7 @@ theorem norm_GammaReal_le {s : ℂ} (hs : 0 < s.re) :
 
 /-- An explicit integral-test bound for the logarithmic Dirichlet series at two. -/
 theorem logarithmic_series_bound :
+    Summable (fun n : ℕ => Real.log n / (n : ℝ) ^ 2) ∧
     (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
       Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 ∧
     Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 < 1 := by
@@ -154,7 +155,7 @@ theorem logarithmic_series_bound :
     dsimp [f] at htbound ⊢
     norm_num [Nat.cast_add, add_assoc] at htbound ⊢
     linarith
-  constructor
+  refine ⟨hall, ?_, ?_⟩
   · convert hb using 1 <;> dsimp [f] <;> ring
   · have h2 : Real.log 2 < 7 / 10 := by linarith [Real.log_two_lt_d9]
     have h3 : Real.log 3 < 11 / 10 := by linarith [Real.log_three_lt_d9]
