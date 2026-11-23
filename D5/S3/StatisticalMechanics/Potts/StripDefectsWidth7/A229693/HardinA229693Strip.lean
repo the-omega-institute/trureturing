@@ -83,9 +83,9 @@ private def leading : Fin 15 → Fin 72 → ℤ :=
         (List.ofFn fun k : Fin 8 =>
           let t := 3 + i + k.val
           let x := if h : t < 11 then HardinA229585StripData.W ⟨t, h⟩ j
-            else rows[t - 11]![j.val]!
+            else (rows[t - 11]!)[j.val]!
           leadingCoefficient k * x).sum)) #[])
-  Fin.append HardinA229585StripData.W (fun (i : Fin 4) (j : Fin 72) => rows[i.val]![j.val]!)
+  Fin.append HardinA229585StripData.W (fun (i : Fin 4) (j : Fin 72) => (rows[i.val]!)[j.val]!)
 
 private def coefficients : Fin 12 → ℤ := ![-531441000, 1913187600, -2986698420, 2659094568, -1494608922, 554666940, -138045627, 22918302, -2474469, 165456, -6345, 126]
 
