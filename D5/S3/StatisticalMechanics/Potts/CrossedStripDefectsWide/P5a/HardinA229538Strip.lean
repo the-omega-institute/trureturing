@@ -68,6 +68,7 @@ import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
+import Init.Data.Nat.Lemmas
 import Init.Data.Sum.Basic
 import Init.Prelude
 import Init.SimpLemmas
@@ -84,11 +85,13 @@ import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Algebra.Notation.Defs
+import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Dedup
 import Mathlib.Data.Finset.Filter
+import Mathlib.Data.Finset.Image
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
@@ -99,8 +102,10 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.Defs
+import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Logic.Equiv.Prod
 import Mathlib.Order.Basic
 import Mathlib.Order.Defs.PartialOrder
 import Mathlib.SetTheory.Cardinal.Finite

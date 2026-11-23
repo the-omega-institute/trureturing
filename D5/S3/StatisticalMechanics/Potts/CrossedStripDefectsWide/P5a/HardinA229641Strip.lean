@@ -61,6 +61,7 @@ import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
+import Init.Data.Nat.Lemmas
 import Init.Data.Prod
 import Init.Data.Sum.Basic
 import Init.Ext
@@ -100,10 +101,13 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Nat.Init
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Prod
+import Mathlib.Logic.Function.Conjugate
 import Mathlib.Logic.Function.Defs
+import Mathlib.Logic.Function.Iterate
 import Mathlib.Order.Basic
 import Mathlib.Order.Disjoint
 
