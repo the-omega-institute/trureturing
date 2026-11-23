@@ -29,8 +29,8 @@ internal sealed class BinaryDeletionSupportDocument : IScribeDocumentDefinition
                     + "Deleting a differing bit gives zero in both summands. Deleting a "
                     + "common bit cancels the opposite signs.")),
                     Paragraph(Text(
-                    "Finiteness is necessary for unrestricted matrix entries. On an infinite "
-                    + "site set, allow just the words with finitely many occupied sites. "
+                    "The following prose counterexample shows why the finite-site hypothesis matters. "
+                    + "On an infinite site set, allow just the words with finitely many occupied sites. "
                     + "Take the diagonal matrix whose permitted entries are one for even "
                     + "occupation and minus one for odd occupation. All deletion sums cancel. "
                     + "The all-zero entry survives, although the all-one word has the same "

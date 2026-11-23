@@ -18,7 +18,7 @@ Work on a finite set of sites. Preserve the two ordered bits wherever the select
 
 The deletion equation gives opposite entries when the common bit changes. Inducting over changed coordinates propagates a nonzero entry to all choices of the common bits. Conversely assign a sign according to the parity of the occupied common bits and set the other entries to zero. Deleting a differing bit gives zero in both summands. Deleting a common bit cancels the opposite signs.
 
-Finiteness is necessary for unrestricted matrix entries. On an infinite site set, allow just the words with finitely many occupied sites. Take the diagonal matrix whose permitted entries are one for even occupation and minus one for odd occupation. All deletion sums cancel. The all-zero entry survives, although the all-one word has the same differing-coordinate pattern and is forbidden.
+The following prose counterexample shows why the finite-site hypothesis matters. On an infinite site set, allow just the words with finitely many occupied sites. Take the diagonal matrix whose permitted entries are one for even occupation and minus one for odd occupation. All deletion sums cancel. The all-zero entry survives, although the all-one word has the same differing-coordinate pattern and is forbidden.
 
 ## References
 
