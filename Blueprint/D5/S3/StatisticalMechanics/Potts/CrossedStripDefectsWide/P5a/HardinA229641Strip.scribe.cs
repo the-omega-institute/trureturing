@@ -133,6 +133,14 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
     private static Formula Transfer() => Eq(Typed(Own("transfer"),M(Budgets012())),
         Call("Matrix.fromBlocks",C("T"),Call("Matrix.fromCols",D("oneDefect"),Own("twoDefect")),
             Typed(N(0),Call("Matrix",Budgets01(),Column(),Q("Int"))),D("transfer")));
-    private static Formula Terminal() => Eq(Typed(Own("terminal"),Arrow(Budgets012(),Q("Int"))),
-        Call("Sum.elim",Typed(N(0),Arrow(Column(),Q("Int"))),D("terminal")));
+    private static Formula Terminal()
+    {
+        var first = V("C");
+        var rest = Call("Sum", V("D"), V("Z"));
+        var integers = Q("Int");
+        var type = Seq(Q("Type"), Star);
+        return All("C", type, All("D", type, All("Z", type,
+            Eq(Typed(Own("terminal"), Arrow(Call("Sum", first, rest), integers)),
+                Call("Sum.elim", Typed(N(0), Arrow(first, integers)), D("terminal"))))));
+    }
 }

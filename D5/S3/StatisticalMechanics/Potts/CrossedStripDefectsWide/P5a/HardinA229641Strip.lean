@@ -127,7 +127,7 @@ def twoDefect : Matrix Column Column ℤ :=
 def transfer : Matrix (Column ⊕ (Column ⊕ Column)) (Column ⊕ (Column ⊕ Column)) ℤ :=
   Matrix.fromBlocks T (Matrix.fromCols oneDefect twoDefect) 0 HardinA229538Strip.transfer
 
-def terminal : Column ⊕ (Column ⊕ Column) → ℤ :=
+def terminal {C : Type*} {D : Type*} {Z : Type*} : C ⊕ (D ⊕ Z) → ℤ :=
   Sum.elim 0 HardinA229538Strip.terminal
 
 private def movesTwo : Column → List Column := ![

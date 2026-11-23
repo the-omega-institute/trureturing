@@ -140,7 +140,7 @@ def oneDefect : Matrix Column Column ℤ :=
 def transfer : Matrix (Column ⊕ Column) (Column ⊕ Column) ℤ :=
   Matrix.fromBlocks T oneDefect 0 T
 
-def terminal : Column ⊕ Column → ℤ := Sum.elim 0 1
+def terminal {C : Type*} {Z : Type*} : C ⊕ Z → ℤ := Sum.elim 0 1
 
 /-- A column-vector relation gives the same shifted recurrence for each readout. -/
 theorem transfer_readout {S : Type*} [Fintype S] [DecidableEq S]
@@ -714,7 +714,7 @@ def canonicalCount (D n : ℕ) : ℕ :=
 
 def a (n : ℕ) : ℕ := canonicalCount 1 n
 
-def residual (p : Column) (d : ℕ) : Column ⊕ Column :=
+def residual {C : Type*} (p : C) (d : ℕ) : C ⊕ C :=
     if d = 0 then Sum.inr p else Sum.inl p
 
 theorem transition_entry (p q : Column) (d : ℕ) (hd : d ≤ 1) (s : Column ⊕ Column) :

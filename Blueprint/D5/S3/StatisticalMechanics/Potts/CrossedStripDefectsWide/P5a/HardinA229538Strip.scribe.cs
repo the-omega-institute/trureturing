@@ -123,9 +123,15 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
 
     private static Formula Le(Formula x,Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
-    private static Formula Residual() => All("p",Column(),All("d",Q("Nat"),
-        Eq(Typed(Own("residual",V("p"),V("d")),Call("Sum",Column(),Column())),
-            If(Eq(V("d"),N(0)),Call("Sum.inr",V("p")),Call("Sum.inl",V("p"))))));
+    private static Formula Residual()
+    {
+        var label = V("C");
+        var p = V("p");
+        var d = V("d");
+        return All("C", Seq(Q("Type"), Star), All("p", label, All("d", Q("Nat"),
+            Eq(Typed(Own("residual", p, d), Call("Sum", label, label)),
+                If(Eq(d, N(0)), Call("Sum.inr", p), Call("Sum.inl", p))))));
+    }
     private static Formula TransitionEntry() {
         var p=V("p");var q=V("q");var d=V("d");var s=V("s");
         var cost=Own("cost",p,q);
@@ -263,8 +269,16 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         Eq(AsInt(Own("oneDefect",V("p"),V("q"))),If(Eq(Own("cost",V("p"),V("q")),N(1)),N(1),N(0)))));
     private static Formula Transfer() => Eq(Typed(Own("transfer"),M(Columns())),
         Call("Matrix.fromBlocks",C("T"),Own("oneDefect"),Typed(N(0),M(Column())),C("T")));
-    private static Formula Terminal() => Eq(Typed(Own("terminal"),Arrow(Columns(),Q("Int"))),
-        Call("Sum.elim",Typed(N(0),Arrow(Column(),Q("Int"))),Typed(N(1),Arrow(Column(),Q("Int")))));
+    private static Formula Terminal()
+    {
+        var left = V("C");
+        var right = V("Z");
+        var integers = Q("Int");
+        var type = Seq(Q("Type"), Star);
+        return All("C", type, All("Z", type,
+            Eq(Typed(Own("terminal"), Arrow(Call("Sum", left, right), integers)),
+                Call("Sum.elim", Typed(N(0), Arrow(left, integers)), Typed(N(1), Arrow(right, integers))))));
+    }
 
     private static Formula TransferReadout() {
         var state=V("S");var matrix=V("M");var u=V("u");var v=V("v");
