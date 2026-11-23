@@ -15,7 +15,7 @@ internal sealed class WaringCountDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("The sum of the reciprocals of the divisors larger than one, over all integers from 1 through x, is at most 2x."))),
+                Blocks(Paragraph(Text("The sum of the reciprocals of all positive divisors, over all integers from 1 through x, is at most 2x."))),
                 DescribeRole.Theorem)
         )));
 }

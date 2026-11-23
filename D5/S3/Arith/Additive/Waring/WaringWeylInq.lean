@@ -18,7 +18,6 @@ Authors: The Waring formalization authors
 -/
 import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import D5.S3.Arith.Additive.Waring.WaringWeylDiff
 
 open Finset intervalIntegral
 

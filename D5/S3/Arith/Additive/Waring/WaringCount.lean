@@ -17,6 +17,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.Order.Interval.Finset.SuccPred
 
 open Finset
 
@@ -135,35 +137,11 @@ theorem sum_inv_sq_le_two (x : ℕ) :
     linarith
 
 /-- `[1,x]` 中 `d` 的倍数恰有 `x / d` 个。 -/
-theorem card_multiples (x d : ℕ) (hd : 0 < d) :
+theorem card_multiples (x d : ℕ) :
     ((Finset.Icc 1 x).filter (fun n => d ∣ n)).card = x / d := by
-  classical
-  set S := (Finset.Icc 1 x).filter (fun n => d ∣ n) with hS
-  have hinj : Set.InjOn (fun n => n / d) (S : Set ℕ) := by
-    intro n₁ hn₁ n₂ hn₂ heq
-    change n₁ / d = n₂ / d at heq
-    rw [hS, Finset.mem_coe, Finset.mem_filter] at hn₁ hn₂
-    obtain ⟨-, hd₁⟩ := hn₁
-    obtain ⟨-, hd₂⟩ := hn₂
-    rw [← Nat.div_mul_cancel hd₁, ← Nat.div_mul_cancel hd₂, heq]
-  have himg : S.image (fun n => n / d) = Finset.Icc 1 (x / d) := by
-    ext m
-    rw [Finset.mem_image]
-    simp only [hS, Finset.mem_filter, Finset.mem_Icc]
-    constructor
-    · rintro ⟨n, ⟨⟨hn1, hnx⟩, hdvd⟩, rfl⟩
-      refine ⟨?_, ?_⟩
-      · exact Nat.div_pos (Nat.le_of_dvd (by omega) hdvd) hd
-      · exact Nat.div_le_div_right hnx
-    · rintro ⟨hm1, hmx⟩
-      refine ⟨d * m, ⟨⟨?_, ?_⟩, ⟨m, rfl⟩⟩, ?_⟩
-      · calc 1 ≤ d := hd
-          _ ≤ d * m := Nat.le_mul_of_pos_right d (by omega : 0 < m)
-      · calc d * m ≤ d * (x / d) := Nat.mul_le_mul_left d hmx
-          _ ≤ x := Nat.mul_div_le x d
-      · exact Nat.mul_div_cancel_left m hd
-  rw [← Finset.card_image_of_injOn hinj, himg, Nat.card_Icc]
-  exact Nat.add_sub_cancel _ _
+  have hIcc : Finset.Icc 1 x = Finset.Ioc 0 x := Finset.Icc_succ_left_eq_Ioc 0 x
+  rw [hIcc]
+  exact Nat.Ioc_filter_dvd_card_eq_div x d
 
 /-- **交换求和**：`Σ_{n≤x} σ₋₁(n) = Σ_{d≤x} (1/d)·#{n≤x : d∣n}`。 -/
 theorem sum_sigmaMinusOne_eq (x : ℕ) :
@@ -205,9 +183,8 @@ theorem sum_sigmaMinusOne_le (x : ℕ) :
   have h1 : ∀ d ∈ Finset.Icc 1 x,
       (1 : ℚ) / (d : ℚ) * (((Finset.Icc 1 x).filter (fun n => d ∣ n)).card : ℚ)
         ≤ (1 : ℚ) / (d : ℚ) * ((x : ℚ) / (d : ℚ)) := by
-    intro d hd
-    have hd0 : 0 < d := (Finset.mem_Icc.mp hd).1
-    rw [card_multiples x d hd0]
+    intro d _
+    rw [card_multiples x d]
     have hle : (((x / d : ℕ) : ℚ)) ≤ (x : ℚ) / (d : ℚ) := Nat.cast_div_le
     have hnonneg : (0 : ℚ) ≤ 1 / (d : ℚ) := by positivity
     exact mul_le_mul_of_nonneg_left hle hnonneg
@@ -236,7 +213,7 @@ theorem sigmaMinusOne_sq_eq (n : ℕ) :
   field_simp
 
 /-- `[1,x]` 中同时被 `a` 与 `b` 整除的数恰有 `x / lcm(a,b)` 个。 -/
-theorem card_multiples_two (x a b : ℕ) (ha : 0 < a) (hb : 0 < b) :
+theorem card_multiples_two (x a b : ℕ) :
     ((Finset.Icc 1 x).filter (fun n => a ∣ n ∧ b ∣ n)).card = x / Nat.lcm a b := by
   have hcongr : (Finset.Icc 1 x).filter (fun n => a ∣ n ∧ b ∣ n)
       = (Finset.Icc 1 x).filter (fun n => Nat.lcm a b ∣ n) := by
@@ -248,7 +225,7 @@ theorem card_multiples_two (x a b : ℕ) (ha : 0 < a) (hb : 0 < b) :
     · intro h
       exact ⟨Nat.dvd_trans (Nat.dvd_lcm_left a b) h, Nat.dvd_trans (Nat.dvd_lcm_right a b) h⟩
   rw [hcongr]
-  exact card_multiples x (Nat.lcm a b) (Nat.lcm_pos ha hb)
+  exact card_multiples x (Nat.lcm a b)
 
 /-- `max a b ≤ lcm a b`（`a, b ≥ 1`）——用于把 `1/lcm` 换成 `1/max`。 -/
 theorem max_le_lcm {a b : ℕ} (ha : 0 < a) (hb : 0 < b) : max a b ≤ Nat.lcm a b := by

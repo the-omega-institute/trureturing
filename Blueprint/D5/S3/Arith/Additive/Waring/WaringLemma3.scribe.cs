@@ -15,7 +15,7 @@ internal sealed class WaringLemma3Document : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("The count in a box for a nonzero bilinear target n is bounded by a size term and a term involving the reciprocals of the nontrivial divisors of |n|."))),
+                Blocks(Paragraph(Text("The count in a box for a nonzero bilinear target n is bounded by a size term and a term involving the reciprocals of all positive divisors of |n|."))),
                 DescribeRole.Theorem)
         )));
 }

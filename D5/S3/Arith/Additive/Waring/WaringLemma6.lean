@@ -330,7 +330,7 @@ theorem sum_sigmaMinusOne_sq_le (x : ℕ) :
     intro a ha b hb
     have ha0 : 0 < a := (Finset.mem_Icc.mp ha).1
     have hb0 : 0 < b := (Finset.mem_Icc.mp hb).1
-    rw [card_multiples_two x a b ha0 hb0]
+    rw [card_multiples_two x a b]
     have h1 : (0 : ℚ) < (a : ℚ) := by exact_mod_cast ha0
     have h2 : (0 : ℚ) < (b : ℚ) := by exact_mod_cast hb0
     have hl : (0 : ℚ) < (Nat.lcm a b : ℚ) := by exact_mod_cast Nat.lcm_pos ha0 hb0

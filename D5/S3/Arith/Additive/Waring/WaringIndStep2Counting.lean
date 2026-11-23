@@ -23,6 +23,15 @@ open Finset intervalIntegral
 
 namespace Waring
 
+/- Adapted from https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringQuadSum.lean#L1-L239 -/
+
+/-- **桥接**：多项式情形 `Qsum` 整体提出 `h` 因子。 -/
+theorem Qsum_polyEval (a : ℕ → ℤ) (d : ℕ) (h : ℤ) {s : ℕ} (u : Fin s → ℕ) :
+    Qsum (polyEval a d) h u = h * ∑ i : Fin s, polyEval (diffCoeff a d h) d (u i : ℤ) := by
+  unfold Qsum
+  rw [Finset.mul_sum]
+  exact Finset.sum_congr rfl (fun i _ => dshift_polyEval a d h (u i))
+
 /-- `n ∈ TS M h ⇒ n ≤ M`。 -/
 theorem mem_TS_le {M : ℕ} {h : ℤ} {n : ℕ} (hn : n ∈ TS M h) : n ≤ M := by
   rw [TS, Finset.mem_filter, Finset.mem_range] at hn

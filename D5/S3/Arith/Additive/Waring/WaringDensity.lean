@@ -160,11 +160,6 @@ noncomputable def gapLen (A : Set ℕ) (n p : ℕ) : ℕ := by
   exact Nat.findGreatest
     (fun d => 1 ≤ d ∧ p + d ≤ n ∧ p + d ∉ A ∧ ∀ e, p < e → e < p + d → e ∉ A) (n - p)
 
-theorem gapLen_le (A : Set ℕ) (n p : ℕ) : gapLen A n p ≤ n - p := by
-  classical
-  unfold gapLen
-  exact Nat.findGreatest_le (n - p)
-
 theorem gapLen_spec {A : Set ℕ} {n p : ℕ} (h : 1 ≤ gapLen A n p) :
     p + gapLen A n p ≤ n ∧ p + gapLen A n p ∉ A ∧
       ∀ e, p < e → e < p + gapLen A n p → e ∉ A := by
@@ -216,7 +211,7 @@ theorem gapLen_prop {A : Set ℕ} {n p d : ℕ} (hd1 : 1 ≤ d) (hdG : d ≤ gap
   obtain ⟨hnot, hno⟩ := key (G - d) hk
   have heq : G - (G - d) = d := by omega
   rw [heq] at hnot hno
-  exact ⟨by have := gapLen_le A n p; omega, hnot, hno⟩
+  exact ⟨by omega, hnot, hno⟩
 
 /-! ## 单射性 -/
 

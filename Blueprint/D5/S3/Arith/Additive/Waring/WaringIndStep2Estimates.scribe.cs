@@ -16,6 +16,15 @@ internal sealed class WaringIndStep2EstimatesDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
                 Blocks(Paragraph(Text("For polynomials of degree d ≥ 3 and bounded coefficients, a mean-value estimate at degree d−1 bounds the unit-interval norm integral of every nonzero shift in the prescribed box."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("quadsum"),
+                DeclarationHandle.Create("D5/S3/Arith/Additive/Waring/WaringIndStep2Estimates.integral_sum_pow_four"),
+                H("Fourth moment of the displacement sums"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
+                Blocks(Paragraph(Text("Integration over the unit interval retains the four phase fibers whose integer phases sum to zero, weighted by the product of their cardinalities."))),
                 DescribeRole.Theorem)
         )));
 }
