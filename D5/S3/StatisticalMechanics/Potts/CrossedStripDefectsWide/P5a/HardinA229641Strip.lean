@@ -88,6 +88,7 @@ import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Order.SuccPred
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Basic.Logic.Basic
+import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Fin.SuccPred
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
@@ -853,7 +854,8 @@ theorem result (n : ℕ) :
         defects (horiz (m + 1)) (betw (m + 1)) (List.ofFn fun i j => A (i, j)) =
           defects ∅ edges (List.ofFn fun j i => A (i, j)) := by
       let forward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
-        ⟨fun i => (i.castSucc, i.succ), fun _ _ h => Fin.castSucc_injective _ (congrArg Prod.fst h)⟩
+        (⟨Function.diag, Function.diag_injective⟩ : Fin k ↪ Fin k × Fin k).trans
+          (Fin.castSuccEmb.prodMap (Fin.succEmb k))
       let backward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
         (forward k).trans (Equiv.prodComm _ _).toEmbedding
       have mem_forward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
