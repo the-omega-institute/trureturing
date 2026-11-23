@@ -65,7 +65,7 @@ private def bracket (coeff : ℕ → ℚ) (degree : ℕ) (x : I) : I :=
   ⟨(l.endpoints.1, u.endpoints.2)⟩
 
 private def expBracket (x : I) : I :=
-  let b := bracket expTerm 18 (x * RoundedInterval.point (1 / 4))
+  let b := bracket expTerm 8 (x * RoundedInterval.point (1 / 4))
   let b₂ := b * b
   b₂ * b₂
 
@@ -87,8 +87,8 @@ private def Box.split (b : Box) : Box × Box :=
     (⟨b.h₀, b.h₁, b.d₀, b.dm⟩, ⟨b.h₀, b.h₁, b.dm, b.d₁⟩)
 
 private def Box.moment (b : Box) (j : ℕ) : I :=
-  let lo := RoundedInterval.point (b.d₀ ^ (j + 1)) * bracket (momentTerm j) 14 (RoundedInterval.point (b.h₁ * b.d₀))
-  let hi := RoundedInterval.point (b.d₁ ^ (j + 1)) * bracket (momentTerm j) 14 (RoundedInterval.point (b.h₀ * b.d₁))
+  let lo := RoundedInterval.point (b.d₀ ^ (j + 1)) * bracket (momentTerm j) 8 (RoundedInterval.point (b.h₁ * b.d₀))
+  let hi := RoundedInterval.point (b.d₁ ^ (j + 1)) * bracket (momentTerm j) 8 (RoundedInterval.point (b.h₀ * b.d₁))
   ⟨(lo.endpoints.1, hi.endpoints.2)⟩
 
 private def inputJets (b : Box) : J × J × J × J :=
@@ -289,7 +289,7 @@ private theorem expBracket_scaled_encloses {w : I} {x : ℝ} (hx : w.encloses x)
   have hquarter : (RoundedInterval.point (1 / 4)).encloses (1 / 4) := by
     simpa only [Rat.cast_div, Rat.cast_one, Rat.cast_ofNat] using
       RoundedInterval.encloses_point (1 / 4)
-  have he := expBracket_encloses (n := 18) (by decide)
+  have he := expBracket_encloses (n := 8) (by decide)
     (RoundedInterval.encloses_mul hx hquarter) (by positivity : 0 ≤ x * (1 / 4))
   have hb := RoundedInterval.encloses_mul he he
   have hbb := RoundedInterval.encloses_mul hb hb
@@ -306,7 +306,7 @@ private def Box.contains (b : Box) (h d : ℝ) : Prop :=
 
 private theorem momentEndpoint_encloses {j : ℕ} {h d : ℚ} (hh : 0 ≤ h) (hd : 0 ≤ d) :
     (RoundedInterval.point (d ^ (j + 1)) *
-      bracket (momentTerm j) 14 (RoundedInterval.point (h * d))).encloses
+      bracket (momentTerm j) 8 (RoundedInterval.point (h * d))).encloses
         (gapDecayMoment j (h : ℝ) (d : ℝ)) := by
   rw [gapDecayMoment_eq_scaled]
   apply RoundedInterval.encloses_mul
@@ -604,5 +604,35 @@ private theorem verify_children {b : Box} {n : ℕ}
     verify b (n + 1) = true := by
   change (b.check || (verify b.split.1 n && verify b.split.2 n)) = true
   rw [left, right, Bool.and_true, Bool.or_true]
+
+/-- A finite subdivision with one scalar check at each terminal box. -/
+inductive Cover where
+  | leaf
+  | split (left right : Cover)
+
+-- The supplied cover visits only boxes on which an interval check is needed.
+private def verifyCover (b : Box) (n : ℕ) : Cover → Bool
+  | .leaf => b.check
+  | .split left right =>
+    match n with
+    | 0 => false
+    | n + 1 => verifyCover b.split.1 n left && verifyCover b.split.2 n right
+
+private theorem verify_of_cover {b : Box} {n : ℕ} (cover : Cover)
+    (checked : verifyCover b n cover = true) : verify b n = true := by
+  induction cover generalizing b n with
+  | leaf =>
+    cases n with
+    | zero => simpa only [verify, verifyCover] using checked
+    | succ n =>
+      have h : b.check = true := by simpa only [verifyCover] using checked
+      simp [verify, h]
+  | split left right ihLeft ihRight =>
+    cases n with
+    | zero => simp [verifyCover] at checked
+    | succ n =>
+      have h : verifyCover b.split.1 n left = true ∧ verifyCover b.split.2 n right = true :=
+        Bool.and_eq_true_iff.mp checked
+      exact verify_children (ihLeft h.1) (ihRight h.2)
 
 end RefinedBMV.PositiveCenter.MiddleGapReplay
