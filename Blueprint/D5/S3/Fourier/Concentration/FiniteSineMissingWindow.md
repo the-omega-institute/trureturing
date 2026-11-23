@@ -74,6 +74,12 @@ Rational linear independence rules out nonzero integer relations. `D5/S3/Fourier
 
 Let M denote head mass plus the grid threshold and slope allowance, and let W be the total weight. For any target B > M, the chord tolerance (B − M)/(W + 1) spends at most the available margin. For W > 0 and B = (1 − ε)W, the normalized sine deficit throughout the translated window is strictly greater than ε.
 
+For the zeta application, assume RH and rational linear independence of the distinct positive ordinates γ. Use the inclusive cutoff γ ≤ T, weights wγ = mγ γ/(1/4 + γ²) with analytic multiplicities mγ, and rates γ/r for fixed r > 0. Write W(T) for the sum of these weights and S(T,v) for their sine score at v. For fixed 0 < β < 1 and 0 < ε < 1 − β², choose β < κ < α < √(1 − ε). Take the head cutoff X = T^α and window length R = exp(T^β).
+
+The harmonic mass asymptotic W(T) ∼ log²(T)/(4π) gives W(T) ≥ 1 eventually and W(X)/W(T) → α². Choose c > 0 such that α² < 1 − ε − 3c. The head mass is then at most (1 − ε − 3c)W(T) for all sufficiently large T. The multiplicity in (γ − 1, γ] bounds mγ by O(log(γ + 2)). Consequently the largest weight on X < γ ≤ T is O(log(T + 2)/T^α) = O(T^(−κ)). Multiplying this cap by the tail mass gives V ≤ C T^(−κ) W(T) for some C > 0.
+
+Set δ = cW(T) and h = cr/T. The mesh has at most exp(2T^β) nodes eventually, since its count is bounded above by T exp(T^β)/(cr) + 1. If V > 0, then δ²/(2V) ≥ c²T^κ W(T)/(2C) > 2T^β eventually. The tail slope allowance is at most h(T/r)W(T) = cW(T). These inequalities give M ≤ (1 − ε − c)W(T) < (1 − ε)W(T). The orbit theorem applies with B = (1 − ε)W(T), since restricting the ordinates and dividing by r preserves independence over ℚ. For every sufficiently large T and every A there is an a > A with 1 − S(T,u/r)/W(T) > ε for all u in [a,a + exp(T^β)]. The equality ε = 1 − β² is outside this estimate.
+
 For a singleton frequency and weight both equal to one, take R = 1/16, h = 1/8, and δ = 1/4. The sole grid node gives budget exp(−1/32) < 1, and the upper bound 3/8 leaves a strict margin below B = 1/2. Thus sin(u) stays below 1/2 on intervals of length 1/16 beginning arbitrarily late.
 
 ## References
