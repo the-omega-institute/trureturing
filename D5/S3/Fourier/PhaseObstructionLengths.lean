@@ -107,6 +107,10 @@ def perScale (s : Finset J) (g w : J → ℝ) (h : ℕ) : ℝ :=
 private abbrev single (s : Finset J) (g w : J → ℝ) (n : ℕ) : ℝ :=
   perScale s g w (n + 1)
 
+private theorem single_eq_mul (s : Finset J) (g w : J → ℝ) (n : ℕ) :
+    perScale s g w (n + 1) = a n * omissionFraction s g w (n + 1) := by
+  simp only [scale, perScale, div_mul_eq_mul_div, one_mul]
+
 private theorem a_nonneg (n : ℕ) : 0 ≤ a n := by
   change 0 ≤ scale (n + 1)
   unfold scale
@@ -126,7 +130,8 @@ private theorem term_nonneg (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 
     (n : ℕ) : 0 ≤ term s g w n := mul_nonneg (c_nonneg n) (p_nonneg s g w _ hw)
 
 private theorem finite_layer (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
-    (∑ n ∈ Finset.range N, if a n ≤ x then c n else 0) ≤ x := by
+    (∑ n ∈ Finset.range N, if a n ≤ x then c n else 0) +
+      (if a N ≤ x then a N else 0) ≤ x := by
   have aux (N : ℕ) :
       (∑ n ∈ Finset.range N, if a n ≤ x then c n else 0) ≤
         if a N ≤ x then x - a N else 0 := by
@@ -149,10 +154,10 @@ private theorem finite_layer (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
         split_ifs with hnext
         · exact sub_nonneg.mpr hnext
         · exact le_rfl
-  apply (aux N).trans
-  split_ifs
-  · exact sub_le_self _ (a_nonneg N)
-  · exact hx
+  have h := aux N
+  split_ifs at h ⊢
+  · linarith only [h]
+  · simpa only [add_zero] using h.trans hx
 
 private theorem partial_eq (s : Finset J) (g w : J → ℝ) (N : ℕ) :
     (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) =
@@ -164,7 +169,8 @@ private theorem partial_eq (s : Finset J) (g w : J → ℝ) (N : ℕ) :
 theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) (t : ℝ) (N : ℕ) :
     let A := average s g w t
-    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) ≤ 1 - A := by
+    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) +
+      perScale s g w (N + 1) ≤ 1 - A := by
   dsimp only
   rw [partial_eq]
   by_cases hzero : mass s w = 0
@@ -172,7 +178,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
       refine le_antisymm ((p_le_of_good hw (Finset.empty_subset s) (empty_good g h)).trans ?_)
         (p_nonneg s g w h hw)
       simp [hzero]
-    simp [summand, average, hzero, hP]
+    simp [summand, perScale, average, hzero, hP]
   have hW : 0 < mass s w := lt_of_le_of_ne (Finset.sum_nonneg hw) (Ne.symm hzero)
   classical
   let loss (j : J) := 1 - Real.sin (g j * t)
@@ -180,7 +186,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
   have hcut (n : ℕ) : Good (cut n) g (n + 1) := by
     intro k hr hlen
     by_contra hb
-    have hH : (1 : ℝ) ≤ (n : ℝ) + 1 := by linarith only [Nat.cast_nonneg (α := ℝ) n]
+    have hH : (0 : ℝ) < (n : ℝ) + 1 := by positivity
     obtain ⟨j, hj, _, hjloss⟩ :=
       large_loss_of_short_relation (cut n) g k
         ((n : ℝ) + 1) t hH hr hb (by simpa only [Nat.cast_add, Nat.cast_one] using hlen)
@@ -193,15 +199,14 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     congr 1
     ext j
     by_cases hj : j ∈ s <;> simp [cut, hj, not_lt]
-  have hpoint (n : ℕ) : term s g w n * mass s w ≤
-      ∑ j ∈ s, w j * (if a n ≤ loss j then c n else 0) := by
+  have hpoint (n : ℕ) (b : ℝ) (hb : 0 ≤ b) :
+      (b * omissionFraction s g w (n + 1)) * mass s w ≤
+        ∑ j ∈ s, w j * (if a n ≤ loss j then b else 0) := by
     have hp := p_le_of_good hw (Finset.filter_subset _ _) (hcut n)
-    have hp' := (le_div_iff₀ hW).1 hp
     calc
-      _ ≤ c n * mass (s \ cut n) w := by
-        change c n * omissionFraction s g w (n + 1) * mass s w ≤ _
+      _ ≤ b * mass (s \ cut n) w := by
         rw [mul_assoc]
-        exact mul_le_mul_of_nonneg_left hp' (c_nonneg n)
+        exact mul_le_mul_of_nonneg_left ((le_div_iff₀ hW).mp hp) hb
       _ = _ := by
         rw [hmass, Finset.mul_sum]
         apply Finset.sum_congr rfl
@@ -214,34 +219,29 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     dsimp [loss]
     ring
   apply le_of_mul_le_mul_right _ hW
-  rw [hloss, Finset.sum_mul]
+  rw [hloss, add_mul, Finset.sum_mul, single_eq_mul]
   calc
-    _ ≤ ∑ n ∈ Finset.range N, ∑ j ∈ s, w j * (if a n ≤ loss j then c n else 0) :=
-      Finset.sum_le_sum fun n _ => hpoint n
-    _ = ∑ j ∈ s, w j * (∑ n ∈ Finset.range N, if a n ≤ loss j then c n else 0) := by
-      rw [Finset.sum_comm]
-      simp only [Finset.mul_sum]
+    _ ≤ (∑ n ∈ Finset.range N, ∑ j ∈ s, w j * (if a n ≤ loss j then c n else 0)) +
+        ∑ j ∈ s, w j * (if a N ≤ loss j then a N else 0) :=
+      add_le_add (Finset.sum_le_sum fun n _ => hpoint n (c n) (c_nonneg n))
+        (hpoint N (a N) (a_nonneg N))
+    _ = ∑ j ∈ s, w j * ((∑ n ∈ Finset.range N, if a n ≤ loss j then c n else 0) +
+        (if a N ≤ loss j then a N else 0)) := by
+      rw [Finset.sum_comm, ← Finset.sum_add_distrib]
+      simp only [mul_add, Finset.mul_sum]
     _ ≤ _ := Finset.sum_le_sum fun j hj =>
       mul_le_mul_of_nonneg_left (finite_layer (loss j) (sub_nonneg.mpr (Real.sin_le_one _)) N)
         (hw j hj)
 
-private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
-    (hw : ∀ j ∈ s, 0 ≤ w j) (hT : T.Nonempty) (N : ℕ) :
-    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) ≤ deficit s g w T := by
-  rw [deficit, le_sub_comm]
-  apply csSup_le (hT.image _)
-  rintro _ ⟨t, _, rfl⟩
-  exact le_sub_comm.mp (simultaneous_bound s g w hw t N)
-
-private theorem p_attained (s : Finset J) (g w : J → ℝ) (h : ℕ)
-    (hw : ∀ j ∈ s, 0 ≤ w j) : IsLeast (costs s g w h) (omissionFraction s g w h) := by
+private theorem p_attained (s : Finset J) (g w : J → ℝ) (h : ℕ) :
+    IsLeast (costs s g w h) (omissionFraction s g w h) := by
   have hfin : (costs s g w h).Finite := by
     refine ((Finset.finite_toSet s.powerset).image
       (fun u => mass (s \ u) w / mass s w)).subset ?_
     rintro _ ⟨u, hu, _, rfl⟩
     exact ⟨u, Finset.mem_powerset.mpr hu, rfl⟩
   have hn := costs_nonempty s g w h
-  have hb : BddBelow (costs s g w h) := ⟨0, costs_nonneg s g w h hw⟩
+  have hb := hfin.bddBelow
   exact ⟨hfin.isClosed.csInf_mem hn hb, (isGLB_csInf hn hb).1⟩
 
 omit [DecidableEq J] in
@@ -285,15 +285,14 @@ private theorem good_iff_supported {s u : Finset J} (hu : u ⊆ s) (g : J → �
       exact_mod_cast hl'
 
 /-- The infimum is attained for relations supported in the retained set. -/
-theorem omissionFraction_isLeast (s : Finset J) (g w : J → ℝ) (h : ℕ)
-    (hw : ∀ j ∈ s, 0 ≤ w j) :
+theorem omissionFraction_isLeast (s : Finset J) (g w : J → ℝ) (h : ℕ) :
     let P := omissionFraction s g w h
     IsLeast {p | ∃ u ⊆ s, (∀ k : J → ℤ, (∀ j ∉ u, k j = 0) →
       (∑ j ∈ s, (k j : ℝ) * g j) = 0 →
       (∑ j ∈ s, |k j|) ≤ (h : ℤ) → (4 : ℤ) ∣ ∑ j ∈ s, k j) ∧
       p = mass (s \ u) w / mass s w} P := by
   dsimp only
-  convert p_attained s g w h hw using 1
+  convert p_attained s g w h using 1
   ext p
   constructor
   · rintro ⟨u, hu, hg, rfl⟩
@@ -303,54 +302,99 @@ theorem omissionFraction_isLeast (s : Finset J) (g w : J → ℝ) (h : ℕ)
 
 private theorem a_tendsto : Tendsto a atTop (𝓝 0) := by
   change Tendsto (fun n : ℕ => 1 / ((↑(n + 1) : ℝ) ^ 2)) atTop (𝓝 0)
-  simpa only [Nat.cast_add, Nat.cast_one, div_pow, one_pow, zero_pow (by decide : (2 : ℕ) ≠ 0)] using
-    (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).pow 2
+  simpa only [Nat.cast_add, Nat.cast_one, div_pow, one_pow,
+    zero_pow (by decide : (2 : ℕ) ≠ 0)] using
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).pow 2
 
-private theorem tail_c (m N : ℕ) :
-    (∑ n ∈ Finset.Ico m (m + N), c n) = a m - a (m + N) := by
-  rw [Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel_left]
-  have h := Finset.sum_range_sub (fun n => -a (m + n)) N
-  simpa only [c, Nat.add_assoc, Nat.add_zero, neg_sub_neg] using h
+private theorem sum_c (m N : ℕ) :
+    (∑ n ∈ Finset.range N, c (n + m)) = a m - a (m + N) := by
+  have h := Finset.sum_range_sub (fun n => -a (n + m)) N
+  simpa only [c, Nat.add_comm m N, Nat.zero_add, Nat.add_right_comm, neg_sub_neg] using h
 
-/-- The aggregate converges, bounds every single length, and is bounded by the deficit. -/
+private theorem c_hasSum (m : ℕ) : HasSum (fun n => c (n + m)) (a m) := by
+  apply (hasSum_iff_tendsto_nat_of_nonneg (fun n => c_nonneg (n + m)) _).mpr
+  simp_rw [sum_c, Nat.add_comm m]
+  simpa only [Function.comp_def, sub_zero] using
+    tendsto_const_nhds.sub (a_tendsto.comp (tendsto_add_atTop_nat m))
+
+private theorem term_le_c (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 0 ≤ w j) (n : ℕ) :
+    term s g w n ≤ c n := by
+  change c n * omissionFraction s g w (n + 1) ≤ c n
+  exact mul_le_of_le_one_right (c_nonneg n) (p_le_one s g w _ hw)
+
+private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
+    (hw : ∀ j ∈ s, 0 ≤ w j) (N : ℕ) :
+    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) + perScale s g w (N + 1) ≤
+      deficit s g w T := by
+  rcases T.eq_empty_or_nonempty with rfl | hT
+  · rw [deficit, Set.image_empty, Real.sSup_empty, sub_zero, partial_eq, single_eq_mul]
+    calc
+      _ ≤ (∑ n ∈ Finset.range N, c n) + a N :=
+        add_le_add (Finset.sum_le_sum fun n _ => term_le_c s g w hw n)
+          (mul_le_of_le_one_right (a_nonneg N) (p_le_one s g w _ hw))
+      _ = 1 := by
+        have h := sum_c 0 N
+        simp only [Nat.add_zero, Nat.zero_add] at h
+        rw [h, sub_add_cancel]
+        norm_num [scale]
+  · rw [deficit, le_sub_comm]
+    apply csSup_le (hT.image _)
+    rintro _ ⟨t, _, rfl⟩
+    exact le_sub_comm.mp (simultaneous_bound s g w hw t N)
+
+private theorem term_tail_summable (s : Finset J) (g w : J → ℝ)
+    (hw : ∀ j ∈ s, 0 ≤ w j) (m : ℕ) : Summable (fun n => term s g w (n + m)) :=
+  Summable.of_nonneg_of_le (fun n => term_nonneg s g w hw (n + m))
+    (fun n => term_le_c s g w hw (n + m)) (c_hasSum m).summable
+
+private theorem series_split (s : Finset J) (g w : J → ℝ) (m : ℕ)
+    (hsum : Summable (fun n => term s g w (n + m))) :
+    (∑ h ∈ Finset.Ico 1 (m + 1), summand s g w h) + (∑' n, term s g w (n + m)) =
+      ∑' n, term s g w n := by
+  rw [partial_eq]
+  exact hsum.hasSum.sum_range_add.tsum_eq.symm
+
+/-- The aggregate converges and its remainder is bounded at every cutoff. -/
 theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
-    (hw : ∀ j ∈ s, 0 ≤ w j) (hT : T.Nonempty) :
+    (hw : ∀ j ∈ s, 0 ≤ w j) :
     let D := deficit s g w T
     let L := ∑' n, summand s g w (n + 1)
-    (∀ N : ℕ, (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) ≤ D) ∧
+    (∀ N : ℕ, (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) +
+      perScale s g w (N + 1) ≤ D) ∧
       HasSum (fun n => summand s g w (n + 1)) L ∧
-      sSup (perScale s g w '' Set.Ici 1) ≤ L ∧ L ≤ D := by
-  have hnonneg := term_nonneg s g w hw
-  have hfinite := finite_bound s g w T hw hT
+      sSup (perScale s g w '' Set.Ici 1) ≤ L ∧ L ≤ D ∧
+      (∀ N : ℕ, let S := ∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h
+        perScale s g w (N + 1) ≤ L - S ∧ L - S ≤ 1 / ((N + 1 : ℕ) : ℝ) ^ 2) := by
+  dsimp only
+  have hsum : Summable (term s g w) := by simpa using term_tail_summable s g w hw 0
+  have hsingle (m : ℕ) : 0 ≤ perScale s g w (m + 1) := by
+    rw [single_eq_mul s g w m]
+    exact mul_nonneg (a_nonneg m) (p_nonneg s g w _ hw)
+  have hfinite := finite_bound s g w T hw
   have hpartial (N : ℕ) :
       (∑ n ∈ Finset.range N, term s g w n) ≤ deficit s g w T := by
     rw [← partial_eq]
-    exact hfinite N
-  have hsum : Summable (term s g w) := summable_of_sum_range_le hnonneg hpartial
-  refine ⟨hfinite, hsum.hasSum, ?_, hsum.tsum_le_of_sum_range_le hpartial⟩
-  apply csSup_le (Set.nonempty_Ici.image _)
-  rintro _ ⟨h, hh, rfl⟩
-  obtain ⟨m, rfl⟩ : ∃ m, h = m + 1 := ⟨h - 1, (Nat.sub_add_cancel hh).symm⟩
-  have hshift : Tendsto (fun n : ℕ => m + n) atTop atTop := by
-    apply tendsto_atTop.2
-    intro b
-    exact eventually_atTop.2 ⟨b, fun n hn => by omega⟩
-  have hlim : Tendsto (fun N => (a m - a (m + N)) * omissionFraction s g w (m + 1))
-      atTop (𝓝 (single s g w m)) := by
-    have hconst : Tendsto (fun _ : ℕ => a m) atTop (𝓝 (a m)) := tendsto_const_nhds
-    have hl := (hconst.sub (a_tendsto.comp hshift)).mul_const (omissionFraction s g w (m + 1))
-    have heq : a m * omissionFraction s g w (m + 1) = single s g w m := by
-      simp only [scale, perScale, div_mul_eq_mul_div, one_mul]
-    simpa only [Function.comp_apply, sub_zero, heq] using hl
-  apply le_of_tendsto hlim (Eventually.of_forall ?_)
-  intro N
-  calc
-    _ = ∑ n ∈ Finset.Ico m (m + N), c n * omissionFraction s g w (m + 1) := by
-      rw [← Finset.sum_mul, tail_c]
-    _ ≤ ∑ n ∈ Finset.Ico m (m + N), term s g w n := by
-      refine Finset.sum_le_sum fun n hn => mul_le_mul_of_nonneg_left ?_ (c_nonneg n)
-      exact p_mono s g w hw (Nat.succ_le_succ (Finset.mem_Ico.mp hn).1)
-    _ ≤ _ := hsum.sum_le_tsum _ fun n _ => hnonneg n
+    exact (le_add_of_nonneg_right (hsingle N)).trans (hfinite N)
+  have htail (m : ℕ) :
+      perScale s g w (m + 1) ≤ (∑' n, term s g w (n + m)) ∧
+        (∑' n, term s g w (n + m)) ≤ a m := by
+    have ht := (term_tail_summable s g w hw m).hasSum
+    refine ⟨?_, hasSum_le (fun n => term_le_c s g w hw (n + m)) ht (c_hasSum m)⟩
+    rw [single_eq_mul s g w m]
+    refine hasSum_le (fun n => mul_le_mul_of_nonneg_left ?_ (c_nonneg (n + m)))
+      ((c_hasSum m).mul_right _) ht
+    exact p_mono s g w hw (by omega)
+  refine ⟨hfinite, hsum.hasSum, ?_, hsum.tsum_le_of_sum_range_le hpartial, ?_⟩
+  · apply csSup_le (Set.nonempty_Ici.image _)
+    rintro _ ⟨h, hh, rfl⟩
+    obtain ⟨m, rfl⟩ : ∃ m, h = m + 1 := ⟨h - 1, (Nat.sub_add_cancel hh).symm⟩
+    rw [← series_split s g w m (term_tail_summable s g w hw m)]
+    rw [partial_eq]
+    exact (htail m).1.trans
+      (le_add_of_nonneg_left (Finset.sum_nonneg fun n _ => term_nonneg s g w hw n))
+  · intro N
+    rw [← series_split s g w N (term_tail_summable s g w hw N), add_sub_cancel_left]
+    exact htail N
 
 def exampleFreq (j : Fin 3) : ℝ := j.val
 
@@ -487,16 +531,35 @@ private theorem example_sup :
   apply le_antisymm (csSup_le (Set.nonempty_Ici.image _) hupper)
   exact le_csSup ⟨_, hupper⟩ ⟨1, Set.self_mem_Ici, hsingle0⟩
 
-private theorem example_partial_five :
-    (∑ n ∈ Finset.range 5, term Finset.univ exampleFreq exampleWeight n) = 73 / 144 := by
+private theorem example_partial_two :
+    (∑ n ∈ Finset.range 2, term Finset.univ exampleFreq exampleWeight n) = 4 / 9 := by
   have h1 := example_p_small 1 (by decide) (by decide)
   have h2 := example_p_small 2 (by decide) (by decide)
-  have h3 := example_p_large 3 (by decide)
-  have h4 := example_p_large 4 (by decide)
-  have h5 := example_p_large 5 (by decide)
-  norm_num [Finset.sum_range_succ, summand, scale, h1, h2, h3, h4, h5]
+  norm_num [Finset.sum_range_succ, summand, scale, h1, h2]
 
-/-- The frequencies 0, 1 and 2 give strict improvement at the fifth partial sum. -/
+private theorem example_term_tail (n : ℕ) :
+    term Finset.univ exampleFreq exampleWeight (n + 2) = c (n + 2) * (3 / 4) := by
+  change c (n + 2) * omissionFraction Finset.univ exampleFreq exampleWeight (n + 2 + 1) = _
+  rw [example_p_large _ (by omega)]
+
+private theorem example_partial (N : ℕ) (hN : 2 ≤ N) :
+    (∑ h ∈ Finset.Ico 1 (N + 1), summand Finset.univ exampleFreq exampleWeight h) =
+      19 / 36 - 3 / (4 * ((N + 1 : ℕ) : ℝ) ^ 2) := by
+  obtain ⟨n, rfl⟩ : ∃ n, N = 2 + n := ⟨N - 2, by omega⟩
+  rw [partial_eq, Finset.sum_range_add, example_partial_two]
+  simp_rw [Nat.add_comm 2, example_term_tail, ← Finset.sum_mul, sum_c]
+  norm_num [scale, div_mul_eq_div_div]
+  ring
+
+private theorem example_series :
+    (∑' n, summand Finset.univ exampleFreq exampleWeight (n + 1)) = 19 / 36 := by
+  have ht : HasSum (fun n => term Finset.univ exampleFreq exampleWeight (n + 2))
+      (a 2 * (3 / 4)) := by
+    simpa only [example_term_tail] using (c_hasSum 2).mul_right (3 / 4)
+  rw [← series_split _ _ _ 2 ht.summable, ht.tsum_eq, partial_eq, example_partial_two]
+  norm_num [scale]
+
+/-- The three frequencies have an exact series and first improve at the fifth partial sum. -/
 theorem strict_three_frequency_example :
     let g := exampleFreq
     (omissionFraction Finset.univ g exampleWeight 1 = 1 / 2 ∧
@@ -504,14 +567,33 @@ theorem strict_three_frequency_example :
       (∀ h : ℕ, 3 ≤ h →
         omissionFraction Finset.univ g exampleWeight h = 3 / 4)) ∧
     let B := sSup (perScale Finset.univ g exampleWeight '' Set.Ici 1)
-    let S := ∑ h ∈ Finset.Ico 1 (5 + 1), summand Finset.univ g exampleWeight h
-    B = 1 / 2 ∧ S = 73 / 144 ∧ B < S := by
+    let S (N : ℕ) := ∑ h ∈ Finset.Ico 1 (N + 1), summand Finset.univ g exampleWeight h
+    B = 1 / 2 ∧ S 5 = 73 / 144 ∧ B < S 5 ∧
+      (∑' n, summand Finset.univ g exampleWeight (n + 1)) = 19 / 36 ∧
+      (∀ N : ℕ, 2 ≤ N → S N = 19 / 36 - 3 / (4 * ((N + 1 : ℕ) : ℝ) ^ 2)) ∧
+      IsLeast {N : ℕ | B < S N} 5 := by
   refine ⟨⟨example_p_small 1 (by decide) (by decide),
     example_p_small 2 (by decide) (by decide), example_p_large⟩, ?_⟩
-  have hpartial : (∑ h ∈ Finset.Ico 1 (5 + 1),
-      summand Finset.univ exampleFreq exampleWeight h) = 73 / 144 := by
-    rw [partial_eq, example_partial_five]
-  exact ⟨example_sup, hpartial, by rw [example_sup, hpartial]; norm_num⟩
+  have hfive := example_partial 5 (by decide)
+  norm_num at hfive
+  have himproves : sSup (perScale Finset.univ exampleFreq exampleWeight '' Set.Ici 1) <
+      ∑ h ∈ Finset.Ico 1 (5 + 1), summand Finset.univ exampleFreq exampleWeight h := by
+    rw [example_sup, hfive]
+    norm_num
+  refine ⟨example_sup, hfive, himproves, example_series, example_partial, himproves, ?_⟩
+  intro N hN
+  change sSup (perScale Finset.univ exampleFreq exampleWeight '' Set.Ici 1) <
+    ∑ h ∈ Finset.Ico 1 (N + 1), summand Finset.univ exampleFreq exampleWeight h at hN
+  rw [example_sup, partial_eq] at hN
+  by_contra! hlt
+  have hle : (∑ n ∈ Finset.range N, term Finset.univ exampleFreq exampleWeight n) ≤
+      ∑ n ∈ Finset.range 4, term Finset.univ exampleFreq exampleWeight n :=
+    Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (by omega)) fun n _ _ =>
+      term_nonneg _ _ _ (fun j _ => (exampleWeights_pos j).le) n
+  have hfour := example_partial 4 (by decide)
+  rw [partial_eq] at hfour
+  norm_num at hfour
+  linarith only [hN, hle, hfour]
 
 end
 

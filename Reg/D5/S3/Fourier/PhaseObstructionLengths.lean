@@ -53,15 +53,23 @@ abbrev timeArena : Arena where
   Law r := ∀ {J : Type u} [DecidableEq J] (s : Finset J) (g w : J → ℝ)
     (_hw : ∀ j ∈ s, 0 ≤ w j) (t : ℝ) (N : ℕ),
     let A := r.readout () ⟨J, s, g, w⟩ t
-    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) ≤ 1 - A
+    (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) + perScale s g w (N + 1) ≤ 1 - A
+
+private theorem emptyOmission (J : Type u) [DecidableEq J] (h : ℕ) :
+    omissionFraction (∅ : Finset J) (fun _ => 0) (fun _ => 0) h = 0 := by
+  obtain ⟨v, _, _, heq⟩ :=
+    (omissionFraction_isLeast (∅ : Finset J) (fun _ => 0) (fun _ => 0) h).1
+  change _ = (∑ j ∈ (∅ : Finset J) \ v, (0 : ℝ)) / ∑ j ∈ (∅ : Finset J), 0 at heq
+  simpa using heq
 
 private theorem timeRejectedLaw : ¬ timeArena.{u}.Law timeRejected := by
   intro law
   let J := ULift.{u} Unit
   have h := law (∅ : Finset J) (fun _ => 0) (fun _ => 0) (by simp) 0 0
   change (∑ n ∈ Finset.Ico 1 (0 + 1),
-    summand (∅ : Finset J) (fun _ => 0) (fun _ => 0) n) ≤ 1 - (2 : ℝ) at h
-  norm_num at h
+    summand (∅ : Finset J) (fun _ => 0) (fun _ => 0) n) +
+    perScale (∅ : Finset J) (fun _ => 0) (fun _ => 0) 1 ≤ 1 - (2 : ℝ) at h
+  norm_num [perScale, emptyOmission J 1] at h
 
 private theorem singletonAverage (t : ℝ) :
     average ({(⟨()⟩ : ULift.{u} Unit)} : Finset (ULift.{u} Unit))
@@ -131,20 +139,25 @@ def deficitRejected : Realization deficitSignature.{u} :=
 abbrev deficitArena : Arena where
   signature := deficitSignature.{u}
   Law r := ∀ {J : Type u} [DecidableEq J] (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
-    (_hw : ∀ j ∈ s, 0 ≤ w j) (_hT : T.Nonempty),
+    (_hw : ∀ j ∈ s, 0 ≤ w j),
     let D := r.readout () ⟨J, s, g, w⟩ T
     let L := ∑' n, summand s g w (n + 1)
-    (∀ N : ℕ, (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) ≤ D) ∧
+    (∀ N : ℕ, (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) +
+      perScale s g w (N + 1) ≤ D) ∧
       HasSum (fun n => summand s g w (n + 1)) L ∧
-      sSup (perScale s g w '' Set.Ici 1) ≤ L ∧ L ≤ D
+      sSup (perScale s g w '' Set.Ici 1) ≤ L ∧ L ≤ D ∧
+      (∀ N : ℕ, let S := ∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h
+        perScale s g w (N + 1) ≤ L - S ∧ L - S ≤ 1 / ((N + 1 : ℕ) : ℝ) ^ 2)
 
 private theorem deficitRejectedLaw : ¬ deficitArena.{u}.Law deficitRejected := by
   intro law
   let J := ULift.{u} Unit
-  have h := (law (∅ : Finset J) (fun _ => 0) (fun _ => 0) univ (by simp) univ_nonempty).1 0
-  change (∑ n ∈ Finset.Ico 1 (0 + 1),
-    summand (∅ : Finset J) (fun _ => 0) (fun _ => 0) n) ≤ (-1 : ℝ) at h
-  norm_num at h
+  have h := (law (∅ : Finset J) (fun _ => 0) (fun _ => 0) ∅ (by simp)).2.2.2.1
+  have hz : ∀ n : ℕ, summand (∅ : Finset J) (fun _ => 0) (fun _ => 0) (n + 1) = 0 := by
+    intro n
+    simp [summand, emptyOmission J (n + 1)]
+  change (∑' n, summand (∅ : Finset J) (fun _ => 0) (fun _ => 0) (n + 1)) ≤ -1 at h
+  norm_num [hz] at h
 
 private theorem deficitDependence :
     ObservationalDependence deficitSignature.{u} deficitActual := by
@@ -189,7 +202,7 @@ def deficitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     definition := none
     coordinates := #[0, 2, 3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
@@ -218,8 +231,7 @@ def omissionRejected : Realization omissionSignature.{u} :=
 
 abbrev omissionArena : Arena where
   signature := omissionSignature.{u}
-  Law r := ∀ {J : Type u} [inst : DecidableEq J] (s : Finset J) (g w : J → ℝ) (h : ℕ)
-    (_hw : ∀ j ∈ s, 0 ≤ w j),
+  Law r := ∀ {J : Type u} [inst : DecidableEq J] (s : Finset J) (g w : J → ℝ) (h : ℕ),
     let P := r.readout () ⟨J, inst, s, g, w⟩ h
     IsLeast {p | ∃ u ⊆ s, (∀ k : J → ℤ, (∀ j ∉ u, k j = 0) →
       (∑ j ∈ s, (k j : ℝ) * g j) = 0 →
@@ -229,7 +241,7 @@ abbrev omissionArena : Arena where
 private theorem omissionRejectedLaw : ¬ omissionArena.{u}.Law omissionRejected := by
   intro law
   let J := ULift.{u} Unit
-  obtain ⟨v, hv, _, heq⟩ := (law (∅ : Finset J) (fun _ => 0) (fun _ => 0) 1 (by simp)).1
+  obtain ⟨v, hv, _, heq⟩ := (law (∅ : Finset J) (fun _ => 0) (fun _ => 0) 1).1
   change (-1 : ℝ) = (∑ j ∈ (∅ : Finset J) \ v, (0 : ℝ)) / ∑ j ∈ (∅ : Finset J), 0 at heq
   norm_num at heq
 
@@ -243,9 +255,9 @@ private theorem omissionDependence :
   refine ⟨⟨J, inferInstance, s, g, w⟩, 0, 1, ?_⟩
   change omissionFraction s g w 0 ≠ omissionFraction s g w 1
   have h₀ : IsLeast _ (omissionFraction s g w 0) :=
-    omissionFraction_isLeast s g w 0 (fun _ _ => zero_le_one)
+    omissionFraction_isLeast s g w 0
   have h₁ : IsLeast _ (omissionFraction s g w 1) :=
-    omissionFraction_isLeast s g w 1 (fun _ _ => zero_le_one)
+    omissionFraction_isLeast s g w 1
   have hp₀ := h₀.2 (show (0 : ℝ) ∈ _ from
     ⟨s, Subset.rfl, by
       intro k _ _ hn
@@ -301,7 +313,7 @@ def omissionAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0
     definition := none
     coordinates := #[0, 2, 3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
@@ -326,13 +338,15 @@ abbrev exampleArena : Arena where
       omissionFraction Finset.univ g exampleWeight 2 = 1 / 2 ∧
       (∀ h : ℕ, 3 ≤ h → omissionFraction Finset.univ g exampleWeight h = 3 / 4)) ∧
     let B := sSup (perScale Finset.univ g exampleWeight '' Set.Ici 1)
-    let S := ∑ h ∈ Finset.Ico 1 (5 + 1), summand Finset.univ g exampleWeight h
-    B = 1 / 2 ∧ S = 73 / 144 ∧ B < S
+    let S (N : ℕ) := ∑ h ∈ Finset.Ico 1 (N + 1), summand Finset.univ g exampleWeight h
+    B = 1 / 2 ∧ S 5 = 73 / 144 ∧ B < S 5 ∧
+      (∑' n, summand Finset.univ g exampleWeight (n + 1)) = 19 / 36 ∧
+      (∀ N : ℕ, 2 ≤ N → S N = 19 / 36 - 3 / (4 * ((N + 1 : ℕ) : ℝ) ^ 2)) ∧
+      IsLeast {N : ℕ | B < S N} 5
 
 private theorem exampleRejectedLaw : ¬ exampleArena.Law exampleRejected := by
   intro law
   have h := omissionFraction_isLeast Finset.univ (fun _ => 1) exampleWeight 1
-    (fun j _ => by unfold exampleWeight; split_ifs <;> norm_num)
   have hP := h.2 (show (0 : ℝ) ∈ _ from
     ⟨Finset.univ, Subset.rfl, by
       intro k _ hk _
