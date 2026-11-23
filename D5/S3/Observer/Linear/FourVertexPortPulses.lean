@@ -305,14 +305,14 @@ private theorem matrix_heat_coordinates {R L : Mat} {d : Vec}
       diagonal (fun i => Real.exp (-t * d i)) * R := by
   have hdet := (Matrix.isUnit_iff_isUnit_det R).mp
     (Matrix.mulVec_injective_iff_isUnit.mp hinj)
-  have hInv := Matrix.nonsing_inv_mul hdet
+  have hInv := Matrix.nonsing_inv_mul R hdet
   have hL : L = R⁻¹ * diagonal d * R := by
     rw [mul_assoc, ← hRL, ← mul_assoc, hInv, one_mul]
   have heq : (-t) • L = R⁻¹ * diagonal (fun i => -t * d i) * R := by
     change (-t) • L = R⁻¹ * diagonal ((-t) • d) * R
     rw [Matrix.diagonal_smul, Matrix.mul_smul, Matrix.smul_mul, ← hL]
   rw [heq, exp_similarity _ _ _ hInv, Matrix.exp_diagonal, Pi.exp_def]
-  simp only [← Real.exp_eq_exp_ℝ, ← mul_assoc, Matrix.mul_nonsing_inv hdet, one_mul]
+  simp only [← Real.exp_eq_exp_ℝ, ← mul_assoc, Matrix.mul_nonsing_inv R hdet, one_mul]
 
 private theorem reflection_facts :
     reflectionᵀ = reflection ∧ reflection * reflection = 1 ∧

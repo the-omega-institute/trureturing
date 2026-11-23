@@ -13,7 +13,7 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
         L = F.Id("L"), X = F.Id("x"), B = F.Id("b"), U = F.Id("U"),
         Rho = F.Id("r"), S = F.Id("S"), W = F.Id("w"), T = F.Id("T"),
         Age = F.Id("t"), I = F.Id("i"), J = F.Id("j"),
-        Bool = F.Id("Bool"), FinsetR = Call(F.Id("Finset"), R),
+        Bool = F.Id("Bool"), Matrix = Seq(R, Caret, Grp(D(4), Times, D(4))), FinsetR = Call(F.Id("Finset"), R),
         Weights = new Formula.TypeArrow(R, R);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -30,7 +30,7 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
             Node("laplacian", "Labelled graph pair", GraphFormula(),
                 "Let P project off the constant vector. The vector h is (0,−1,0,1) in vertex order. The signed star E adds the rank-one edge Laplacian for edge (0,i) with coefficient gamma times v_i divided by two. The false label gives the uniform generator (M/8)P plus E and the hidden coupling. The true label gives its conjugate by the reflection.",
                 DescribeRole.Definition),
-            Node("endpoint", "Raw signed endpoint", Disp(Seq(Forall, Sp, L, Comma, Sp, S, Colon, FinsetR,
+            Node("endpoint", "Raw signed endpoint", Disp(Seq(Forall, Sp, L, Colon, Matrix, Comma, Sp, S, Colon, FinsetR,
                 Comma, Sp, W, Colon, Weights, Comma, Sp,
                 Call(F.Id("endpoint"), L, S, W), Eq, Sum, Underscore, Grp(Age, InMacro, Sp, S),
                 Call(W, Age), Sp, Exp, Open, Minus, Age, L, Close, Sp, B)),
@@ -62,14 +62,14 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
         return Seq([.. parts]);
     }
 
-    private static Formula Lap(Formula r) => Call(L, r, M, G, Q);
+    private static Formula Lap(Formula r) => Call(L, M, G, Q, r);
 
     private static Formula GraphFormula()
     {
         Formula f = F.Id("false"), t = F.Id("true"), p = F.Id("P"), e = F.Id("E");
         Formula v = F.Id("v"), h = F.Id("h"), transpose = Caret;
         return Disp(Seq(Forall, Sp, M, Comma, G, Comma, Q, Colon, Sp, R, Comma, Sp,
-            Lap(f), Eq, Frac, Grp(M), Grp(D(8)), p, Plus, e, Plus,
+            Lap(f), Eq, Frac, Grp(M), Grp(D(8)), p, Plus, Call(e, G), Plus,
             Frac, Grp(Q), Grp(D(2), Sqrt, Grp(D(3))),
             Open, v, h, transpose, Grp(F.Id("T")), Plus, h, v, transpose, Grp(F.Id("T")), Close,
             Sp, Land, Sp, Lap(t), Eq, U, Lap(f), U, transpose, Grp(F.Id("T"))));
@@ -89,7 +89,7 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
             Land, Sp, D(0), Lt, Q, Le, Frac, Grp(G, Caret, Grp(D(2))), Grp(M), Sp,
             Longrightarrow, Sp, RowBreak, Grp(),
             Open, Forall, Sp, Rho, Colon, Bool, Comma,
-            Lap(Rho), Ge, D(0), Land, Sp,
+            Call(F.Id("PosSemidef"), Lap(Rho)), Land, Sp,
             Open, Forall, Sp, I, Comma, Sum, Underscore, Grp(J),
             Call(Lap(Rho), I, J), Eq, D(0), Close, Land, Sp,
             Open, Forall, Sp, I, Comma, J, Comma, I, Neq, Sp, J, Rightarrow, Sp,
@@ -101,12 +101,12 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
             Land, Sp, RowBreak, Grp(),
             Open, Forall, Sp, T, Colon, R, Comma, D(0), Lt, T, Rightarrow, Sp,
             Exists, Sp, bindAges, Comma, bindWeights, Comma, card, Eq, D(4), Land, Sp,
-            Open, Forall, Sp, Age, InMacro, Sp, S, Comma, D(0), Lt, Age, Land, Sp, Age, Le, T,
+            Open, Forall, Sp, Age, InMacro, Sp, S, Comma, D(0), Lt, Age, Land, Sp, Age, Le, Sp, T,
             Close, Land, Sp, net, Land, Sp, Open, both, Close, Close,
             End, Grp(F.Id("gathered"))));
     }
 
-    private static Describe Node(string name, string title, Formula statement, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula statement, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("four-vertex-" + name), DeclarationHandle.Create(Gid + name),
             H(title), StatementSource.FromAuthor(statement), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.FourVertexPortPulses
 import Reg.Support.DependentFamily
 
+/-! The age-cardinality readout for exact raw-port preparation. -/
+
 open LeanInformationAudit Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Observer.Linear.FourVertexPortPulses
@@ -56,11 +58,12 @@ def family : Registration arena (type_of% @exact_four_ages) where
   bridge := Iff.rfl
   variation := ⟨exact_four_ages, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
-    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩, fun e => nomatch e⟩
+    fun j hj => (hj (@Subsingleton.elim Unit inferInstance j i)).elim, rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro role
-    refine ⟨(), ∅, {0}, ?_⟩
+    refine ⟨(), (∅ : Finset ℝ), ({0} : Finset ℝ), ?_⟩
     simp [actual, realize]
+    exact Nat.zero_ne_one
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@exact_four_ages)
