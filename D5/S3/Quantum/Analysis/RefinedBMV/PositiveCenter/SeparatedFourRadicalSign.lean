@@ -9,6 +9,8 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedFourRadicalAverage
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripMarginal
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactHalfLogBounds
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleTailRadicalScalar
 
 /-! # The separated radical sign at gap four -/
 
@@ -87,7 +89,7 @@ private theorem shortGap_root_lower {h v : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 
   norm_num at hΛbound ⊢
   linarith only [hΛbound]
 
-private theorem radical_rate_slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 4 ≤ t) :
+private theorem radical_rate_slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 1 < t) :
     0 < radicalRateFactor h t ∧
       0 ≤ radicalRateFactorDeriv h t / radicalRateFactor h t ∧
       radicalRateFactorDeriv h t / radicalRateFactor h t ≤ 1 / (t - 1) := by
@@ -130,6 +132,83 @@ private theorem radical_rate_slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 4 ≤ t
   refine ⟨hH, div_nonneg (by rw [hK]; exact mul_nonneg hA.le (he t ht₀)) hH.le, ?_⟩
   apply (div_le_div_iff₀ hH ht₁).mpr
   simpa only [one_mul] using (mul_le_mul_of_nonneg_right hKt ht₁.le).trans hHt
+
+/-- From gap seven halves the positive radical density decays at rate at least `46/35`. -/
+theorem middleTail_radical_logDeriv_le {h t : ℝ} (hh : 0 < h) (ht : 7 / 2 ≤ t) :
+    let T := deriv (upperTailRadicalRoot h)
+    0 < T t ∧ DifferentiableAt ℝ T t ∧ deriv T t / T t ≤ -(46 / 35 : ℝ) := by
+  let z := upperTailRadicalRoot h
+  let T := deriv z
+  have ht₀ : 0 < t := by linarith
+  obtain ⟨hH, _, hK⟩ := radical_rate_slope_bounds hh (by linarith : 1 < t)
+  have hZ : 0 < z t := upperTailRadicalRoot_pos hh ht₀
+  have hT : 0 < T t := by
+    change 0 < deriv (upperTailRadicalRoot h) t
+    rw [(hasDerivAt_upperTailRadicalRoot hh ht₀).deriv]
+    exact div_pos (mul_pos (mul_pos (mul_pos (by positivity) (Real.exp_pos _))
+      (tail_gap_pos hh ht₀)) hH) hZ
+  have hTd := hasDerivAt_radicalRootDeriv hh ht₀ hH
+  have hLmax := (upperTailSlope_bounds hh ht₀).2.1.trans
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 7 / 2) ht)
+  have hKmax := hK.trans
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 5 / 2) (by linarith : 5 / 2 ≤ t - 1))
+  refine ⟨hT, hTd.differentiableAt, ?_⟩
+  change deriv T t / T t ≤ -(46 / 35 : ℝ)
+  rw [hTd.deriv, mul_div_cancel_left₀ _ hT.ne']
+  linarith only [hLmax, hKmax, div_nonneg hT.le hZ.le]
+
+/-- Lower divided-difference bounds obtained by integrating the radical decay. -/
+theorem middleTail_radical_dividedDifference {h d v : ℝ}
+    (hh : 0 < h) (hd : 7 / 2 ≤ d) (hdv : d < v) :
+    let z := upperTailRadicalRoot h
+    let T := deriv z
+    let D := z v - z d
+    0 < D ∧ (46 / 35 : ℝ) ≤ (T d - T v) / D ∧
+      (T d - T v) / D ≤ T d / D ∧
+      (46 / 35 : ℝ) / (1 - Real.exp (-((46 / 35) * (v - d)))) ≤ T d / D := by
+  let z := upperTailRadicalRoot h
+  let T := deriv z
+  let D := z v - z d
+  let k : ℝ := 46 / 35
+  have hk : 0 < k := by norm_num [k]
+  have hzd (s : ℝ) (hs : 7 / 2 ≤ s) : HasDerivAt z (T s) s :=
+    (hasDerivAt_upperTailRadicalRoot hh (by linarith : 0 < s)).differentiableAt.hasDerivAt
+  have hlower (s : ℝ) (hs : 7 / 2 ≤ s) := middleTail_radical_logDeriv_le hh hs
+  have hzmono : StrictMonoOn z (Ici (7 / 2)) := by
+    apply strictMonoOn_of_deriv_pos (convex_Ici _)
+    · exact fun s hs ↦ (hzd s hs).continuousAt.continuousWithinAt
+    · intro s hs
+      rw [(hzd s (interior_subset hs)).deriv]
+      exact (hlower s (interior_subset hs)).1
+  have hD : 0 < D := sub_pos.mpr (hzmono hd (hd.trans hdv.le) hdv)
+  have hsec (s : ℝ) (hs : s ∈ Icc d v) : T s - T d ≤ -k * (z s - z d) := by
+    have H := sub_le_sub_of_derivatives hs.1
+      (fun t ht ↦ (hlower t (hd.trans ht.1)).2.1.hasDerivAt)
+      (fun t ht ↦ (hzd t (hd.trans ht.1)).const_mul (-k))
+      (fun t ht ↦ (div_le_iff₀ (hlower t (hd.trans ht.1)).1).mp (hlower t (hd.trans ht.1)).2.2)
+    exact H.trans_eq (by ring)
+  have hf (s : ℝ) (hs : s ∈ Icc d v) :
+      HasDerivAt (fun t ↦ Real.exp (k * (t - d)) * (k * (z t - z d) - T d))
+        (Real.exp (k * (s - d)) * k * (T s - T d + k * (z s - z d))) s := by
+    have he : HasDerivAt (fun t ↦ Real.exp (k * (t - d))) (Real.exp (k * (s - d)) * k) s := by
+      simpa only [mul_one] using (((hasDerivAt_id' s).sub_const d).const_mul k).exp
+    have hg := (((hzd s (hd.trans hs.1)).sub_const (z d)).const_mul k).sub_const (T d)
+    exact (he.mul hg).congr_deriv (by ring)
+  have hdecrease := sub_le_sub_of_derivatives hdv.le hf
+    (fun s _ ↦ hasDerivAt_const s (0 : ℝ))
+    (fun s hs ↦ mul_nonpos_of_nonneg_of_nonpos (mul_nonneg (Real.exp_pos _).le hk.le)
+      (by linarith only [hsec s hs]))
+  simp only [sub_self, mul_zero, Real.exp_zero, one_mul, zero_sub] at hdecrease
+  have hscaled := mul_le_mul_of_nonneg_left (sub_nonpos.mp hdecrease)
+    (Real.exp_pos (-(k * (v - d)))).le
+  rw [← mul_assoc, ← Real.exp_add, neg_add_cancel, Real.exp_zero, one_mul] at hscaled
+  have hden : 0 < 1 - Real.exp (-(k * (v - d))) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_lt_zero.mpr (mul_pos hk (sub_pos.mpr hdv))))
+  have hTv := (hlower v (hd.trans hdv.le)).1
+  refine ⟨hD, (le_div_iff₀ hD).mpr ?_, div_le_div_of_nonneg_right (by linarith) hD.le,
+    (div_le_div_iff₀ hden hD).mpr ?_⟩
+  · linarith only [hsec v ⟨hdv.le, le_rfl⟩]
+  · linarith only [hscaled]
 
 private theorem radical_root_relative_slope_le {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
     (ht : 4 ≤ t) : deriv (upperTailRadicalRoot h) t / upperTailRadicalRoot h t ≤ 1 / 20 := by
@@ -190,7 +269,7 @@ theorem separatedFour_radical_logDeriv_bounds {h t : ℝ}
   let z := upperTailRadicalRoot h
   let T := deriv z
   have ht₀ : 0 < t := by linarith
-  obtain ⟨hH, hK₀, hK⟩ := radical_rate_slope_bounds hh ht
+  obtain ⟨hH, hK₀, hK⟩ := radical_rate_slope_bounds hh (by linarith : 1 < t)
   have hT : 0 < T t := by
     change 0 < deriv (upperTailRadicalRoot h) t
     rw [(hasDerivAt_upperTailRadicalRoot hh ht₀).deriv]
@@ -298,10 +377,9 @@ private theorem radical_dividedDifference_bounds {h d v : ℝ}
     linarith only [hw]
   exact ⟨hD, hM, hmean, hRlower, hRupper⟩
 
-/-- The actual radical contribution has strictly negative mixed derivative in the
-independent coordinates on the central strip at gap four. -/
-theorem separatedFour_radical_mixed_neg {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
-    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hd : 4 ≤ v - u) :
+/-- The actual radical contribution has strictly negative mixed derivative from gap seven halves. -/
+theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
+    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hd : 7 / 2 ≤ v - u) :
     deriv (fun y ↦ deriv (fun x ↦ separatedGapRadicalContribution p x y) u) v < 0 := by
   let h : ℝ := 3 / (p : ℝ)
   let c := (3 + h) * (3 + 2 * h) / 2
@@ -320,14 +398,10 @@ theorem separatedFour_radical_mixed_neg {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
   let q := L d * (h + L d)
   let C (s : ℝ) := compositionMoment p 0 (-s)
   let α := 1 / 2 - (deriv C u / C u) / 2
-  let b := 1 + 2 / (Real.exp u - 1) - (deriv C u / C u) / 2
   have hu₀ : 0 < u := by linarith only [hu]
-  have hp₀ : 0 < p := by omega
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
-  have hp₁ : (11 : ℝ) ≤ p := by exact_mod_cast hp
   have hh : 0 < h := by dsimp [h]; positivity
-  have hhmax : h ≤ 3 / 11 := div_le_div_of_nonneg_left (by norm_num) (by norm_num) hp₁
-  change 4 ≤ d at hd
+  change 7 / 2 ≤ d at hd
   have hvdu : v = d + u := by dsimp [d]; ring
   have hvd : v - d = u := by dsimp [d]; ring
   have hdv : d < v := by linarith only [hvdu, hu₀]
@@ -347,60 +421,42 @@ theorem separatedFour_radical_mixed_neg {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
   change HasDerivAt P (P u * α) u at hPd
   change HasDerivAt Q (Q v * β) v at hQd
   change HasDerivAt J (J d * j d) d at hJd
-  obtain ⟨hT, hTd, _, _⟩ := separatedFour_radical_logDeriv_bounds hh hhmax hd
-  obtain ⟨hD, hM, hmid, hRlower, hRupper⟩ := radical_dividedDifference_bounds hh hhmax hd hdv
+  obtain ⟨hT, hTd, hρ⟩ := middleTail_radical_logDeriv_le hh hd
+  obtain ⟨hD, hy, hyR, hR⟩ := middleTail_radical_dividedDifference hh hd hdv
   let R := T d / D v
+  let Y := (T d - T v) / D v
   let U := α - j d + 2 * R
   let V := β + j d + 2 * (M / D v)
   change 0 < D v at hD
-  change M / D v ≤ -(17 / 12 : ℝ) at hM
-  change rho d - M / D v ≤ 3 * (v - d) / (d * (d + v)) at hmid
-  change (17 / 12) / (1 - Real.exp (-((17 / 12) * (v - d)))) ≤ R at hRlower
-  change R ≤ 1 / (v - d) + 41 / 20 at hRupper
-  rw [hvd] at hmid hRlower hRupper
+  change (46 / 35 : ℝ) ≤ Y at hy
+  change Y ≤ R at hyR
+  change (46 / 35 : ℝ) / (1 - Real.exp (-((46 / 35) * (v - d)))) ≤ R at hR
+  rw [hvd] at hR
+  obtain ⟨hR₀, hR₁⟩ := middleTail_dividedDifference_lower hu₀ hR
   have hL := (upperTailSlope_bounds hh hd₀).1
-  have hj : j d ≤ 3 / 2 := by dsimp only [j]; linarith only [hL]
   have hq : 0 ≤ q := mul_nonneg hL.le (add_nonneg hh.le hL.le)
-  have hb : 12 / 25 ≤ b := (separatedGap_lowerSlope_bounds hp₀ hu₀ hu₄).1
-  have hbdef : b = α + 1 / 2 + 2 / (Real.exp u - 1) := by dsimp only [b, α]; ring
-  have hU : 269 / 300 ≤ U := by
-    have hratio :=
-      (scaled_exponential_ratio_lower hu₀ (by norm_num : (1 : ℝ) ≤ 17 / 12)).trans hRlower
-    have he₀ := (Real.exp_pos u).ne'
-    have he₁ := (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos hu₀))).ne'
-    have he₂ := (sub_pos.mpr (Real.one_lt_exp_iff.mpr hu₀)).ne'
-    have he : 1 / (1 - Real.exp (-u)) = 1 + 1 / (Real.exp u - 1) := by
-      rw [Real.exp_neg] at he₁ ⊢
-      field_simp [he₀, he₁, he₂]
-      ring
-    rw [he] at hratio
-    simp only [div_eq_mul_inv] at hratio hbdef
-    dsimp only [U]
-    linarith only [hratio, hj, hb, hbdef]
-  have hV : V ≤ -(4 / 3 : ℝ) := by dsimp only [V]; linarith only [hβ, hj, hM]
-  have hUV : U * V ≤ (269 / 300) * (-(4 / 3 : ℝ)) := calc
-    _ ≤ U * (-(4 / 3 : ℝ)) :=
-      mul_le_mul_of_nonneg_left hV (by linarith only [hU])
-    _ ≤ _ := mul_le_mul_of_nonpos_right hU (by norm_num)
-  have herror : 2 * R * (rho d - M / D v) ≤ 23 / 20 := by
-    have hR : 0 ≤ R := div_nonneg hT.le hD.le
-    have hden : 0 < d * (d + v) := mul_pos hd₀ (add_pos hd₀ hv₀)
-    have hRu := mul_le_mul_of_nonneg_right hRupper hu₀.le
-    rw [add_mul, one_div_mul_cancel hu₀.ne'] at hRu
-    have hdv' : 4 * (8 + u) ≤ d * (d + v) :=
-      mul_le_mul hd (by linarith only [hvdu, hd]) (by linarith only [hu₀]) hd₀.le
-    have hcap : 6 * (1 + (41 / 20) * u) ≤ (23 / 20) * (d * (d + v)) := calc
-      _ ≤ (23 / 20) * (4 * (8 + u)) := by linarith only [hu₄]
-      _ ≤ _ := mul_le_mul_of_nonneg_left hdv' (by norm_num)
-    calc
-      _ ≤ (2 * R) * (3 * u / (d * (d + v))) := mul_le_mul_of_nonneg_left hmid (by positivity)
-      _ = 6 * (R * u) / (d * (d + v)) := by ring
-      _ ≤ _ := (div_le_iff₀ hden).mpr
-        ((mul_le_mul_of_nonneg_left hRu (by norm_num : (0 : ℝ) ≤ 6)).trans hcap)
+  have hA : j d - α ≤ 1 / u + 3 / 2 := by
+    have ha := reflectedHalfLogSlope_le_inv_add_three_tenths hp₀ hu₀ hu₄
+    change deriv C u / C u / 2 ≤ 1 / u + 3 / 10 at ha
+    dsimp only [j, α]
+    linarith only [ha, hL]
+  have hH : β + j d ≤ 3 / 2 := by
+    dsimp only [j]
+    linarith only [hβ, hL]
+  have hκ : (46 / 35 : ℝ) ≤ -rho d := by
+    change rho d ≤ -(46 / 35 : ℝ) at hρ
+    linarith only [hρ]
+  have hscalar := middleTail_radicalScalar_neg hu hu₄ hy hyR hR₀ hR₁ hA hH hκ hq
+  have hmY : M / D v = -Y := by
+    dsimp only [M, Y]
+    ring
   have hsign : U * V - q + 2 * R * (rho d - M / D v) < 0 := by
-    have hmargin : U * V - q + 2 * R * (rho d - M / D v) ≤ -(41 / 900 : ℝ) := by
-      linarith only [hUV, hq, herror]
-    exact hmargin.trans_lt (by norm_num)
+    dsimp only [U, V]
+    rw [hmY]
+    linarith only [show (α - j d + 2 * R) * (β + j d + 2 * -Y) - q +
+        2 * R * (rho d - -Y) =
+        (2 * R - (j d - α)) * (β + j d) + 2 * (j d - α - R) * Y -
+          2 * -rho d * R - q by ring, hscalar]
   have hformula (y : ℝ) (hy : 0 < y-u) :
       deriv (fun x ↦ separatedGapRadicalContribution p x y) u =
         scale*(P u*Q y*J (y-u)*
@@ -468,5 +524,13 @@ theorem separatedFour_radical_mixed_neg {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
       ring
     _ < 0 := mul_neg_of_pos_of_neg (mul_pos hscale
       (mul_pos (mul_pos (mul_pos hP hQ) hJ) (sq_pos_of_pos hD))) hsign
+
+
+/-- The central-strip radical sign in the gap-four normalization. -/
+theorem separatedFour_radical_mixed_neg {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 1 / 2 ≤ u) (hu₄ : u ≤ 4) (hd : 4 ≤ v - u) :
+    deriv (fun y ↦ deriv (fun x ↦ separatedGapRadicalContribution p x y) u) v < 0 :=
+  middleTail_radical_mixed_neg (by omega) hu hu₄ (by linarith)
+
 
 end RefinedBMV.PositiveCenter
