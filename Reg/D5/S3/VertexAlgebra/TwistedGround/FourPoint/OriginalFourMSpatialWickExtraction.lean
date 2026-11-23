@@ -135,7 +135,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -191,7 +191,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -250,7 +250,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -305,7 +305,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -362,7 +362,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -419,7 +419,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -477,7 +477,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -539,7 +539,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSpatialWickExtraction
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickExtraction
     definition := none
     coordinates := #[]
     readouts := #[{
