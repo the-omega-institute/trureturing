@@ -670,7 +670,8 @@ private theorem inherited_powers (n : ℕ) :
   calc
     (transfer ^ n).mulVec terminal ∘ Sum.inr =
         (transfer.mulVec^[n] terminal) ∘ Sum.inr :=
-      congrArg (fun v => v ∘ Sum.inr) (smul_iterate_apply transfer n terminal).symm
+      congrArg (fun v => v ∘ Sum.inr)
+        (smul_iterate_apply transfer n (terminal : Column ⊕ (Column ⊕ Column) → ℤ)).symm
     _ = HardinA229538Strip.transfer.mulVec^[n] (terminal ∘ Sum.inr) :=
       (step.iterate_right n).eq terminal
     _ = _ := by
