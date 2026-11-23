@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripWideSign
 import Reg.Support.SingleDependentReadout
 
+/-! Register the short left-strip sign through the outer derivative readout. -/
+
 noncomputable section
 
 namespace Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripWideSign
@@ -46,7 +48,7 @@ def source_registration : Registration arena (type_of% @leftStrip_logKernel_mixe
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@leftStrip_logKernel_mixed_lt_gap_one) (Realization signature) Unit Unit where
+      (@leftStrip_logKernel_mixed_lt_gap_one) (Realization signature) Type Unit where
   unitName := `RefinedBMV.PositiveCenter.leftStrip_logKernel_mixed_lt_gap_one.__information_unit
   realizationName :=
     `Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripWideSign.source_registration
