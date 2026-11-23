@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Quantum/Divergence/FibonacciQutritBlockDomination
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
