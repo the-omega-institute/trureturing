@@ -36,10 +36,11 @@ def cutoffScore {J : Type*} (s : Finset J) (g w : J → ℝ) (Z v : ℝ) : ℝ :
 private theorem le_sine_mean_of_le_on {g r b h c : ℝ} (hh : 0 < h)
     (hc : ∀ u ∈ Icc b (b + h), c ≤ Real.sin (g * (u / r))) :
     c ≤ (1 / h) * (∫ u in b..b + h, Real.sin (g * (u / r))) := by
-  have hmono := intervalIntegral.integral_mono_on
+  have hmono := intervalIntegral.integral_mono_on (μ := volume)
     (show b ≤ b + h by linarith)
-    (continuous_const (c := c)).intervalIntegrable
-    (show Continuous (fun u : ℝ => Real.sin (g * (u / r))) by fun_prop).intervalIntegrable hc
+    ((continuous_const (y := c)).intervalIntegrable b (b + h))
+    ((show Continuous (fun u : ℝ => Real.sin (g * (u / r))) by
+      fun_prop).intervalIntegrable b (b + h)) hc
   rw [intervalIntegral.integral_const, smul_eq_mul, add_sub_cancel_left] at hmono
   rw [one_div, ← div_eq_inv_mul, le_div_iff₀ hh]
   simpa only [mul_comm c h] using hmono
@@ -58,9 +59,7 @@ private theorem tail_sine_mean_lower {g Y r b h : ℝ} (hY : 0 < Y) (hg : Y < g)
     _ ≤ -(2 * r / (h * g)) := by
       have hden : h * Y ≤ h * g := mul_le_mul_of_nonneg_left hg.le hh.le
       exact neg_le_neg (div_le_div_of_nonneg_left (by positivity) (mul_pos hh hY) hden)
-    _ = (1 / h) * (g / r)⁻¹ * (-2) := by
-      field_simp
-      <;> ring
+    _ = (1 / h) * (g / r)⁻¹ * (-2) := by field_simp
     _ ≤ _ := mul_le_mul_of_nonneg_left hcos hcoeff
 
 /-- The average full score over the window has a lower bound from the score at its left
@@ -95,13 +94,16 @@ theorem cutoffScore_average_lower {J : Type*} (s : Finset J) (g w : J → ℝ)
     intro u hu
     have hshift : 0 ≤ u - b := sub_nonneg.mpr hu.1
     have hangle : g j * (u / r) - g j * (b / r) = g j * (u - b) / r := by ring
+    have hjpos := hg j hjs
+    have hangle_nonneg : 0 ≤ g j * (u - b) / r := by positivity
     have habs := Real.abs_sin_sub_sin_le (g j * (b / r)) (g j * (u / r))
-    rw [abs_sub_comm (g j * (b / r)), hangle, abs_of_nonneg (by positivity)] at habs
+    rw [abs_sub_comm (g j * (b / r)), hangle, abs_of_nonneg hangle_nonneg] at habs
     have hcost : g j * (u - b) / r ≤ h * X / r := by
       apply div_le_div_of_nonneg_right _ hr.le
       exact (mul_le_mul_of_nonneg_right hjX hshift).trans
-        (by simpa only [mul_comm X h] using mul_le_mul_of_nonneg_left
-          (show u - b ≤ h by linarith [hu.2]) hX.le)
+        (by
+          have hlen : u - b ≤ h := by linarith [hu.2]
+          simpa only [mul_comm X h] using mul_le_mul_of_nonneg_left hlen hX.le)
     linarith [(le_abs_self _).trans (habs.trans hcost)]
   have hmiddleMean : -(∑ j ∈ middle, w j) ≤ ∑ j ∈ middle, w j * mean j := by
     rw [← Finset.sum_neg_distrib]
@@ -159,15 +161,16 @@ theorem exists_cutoffScore_ge {J : Type*} (s : Finset J) (g w : J → ℝ)
   have hf : Continuous f := by
     unfold f cutoffScore
     fun_prop
-  obtain ⟨u, hu, heq⟩ := intervalIntegral.exists_eq_const_mul_intervalIntegral_of_nonneg
+  obtain ⟨u, hu, heq⟩ := exists_eq_const_mul_intervalIntegral_of_nonneg
     (μ := volume) (a := b) (b := b + h) hf.continuousOn
-    (continuous_const (c := (1 : ℝ))).intervalIntegrable (fun _ _ => zero_le_one)
+    ((continuous_const (y := (1 : ℝ))).intervalIntegrable b (b + h)) (fun _ _ => zero_le_one)
   have hab : b ≤ b + h := by linarith
   rw [uIcc_of_le hab] at hu
   simp only [mul_one, intervalIntegral.integral_const, smul_eq_mul,
     add_sub_cancel_left] at heq
   have havg : (1 / h) * (∫ v in b..b + h, f v) = f u := by
-    rw [heq, ← mul_assoc, mul_comm (1 / h), mul_assoc, mul_one_div_cancel hh.ne', mul_one]
+    rw [heq]
+    field_simp
   exact ⟨u, hu, (cutoffScore_average_lower s g w hX hXY hYT hr hh hg hw).trans_eq havg⟩
 
 end
