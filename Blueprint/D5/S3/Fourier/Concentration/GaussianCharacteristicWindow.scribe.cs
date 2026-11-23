@@ -14,9 +14,9 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
         Blocks(
             Paragraph(Text(
                 "Let μ be a finite measure on the real line and write χ for its characteristic function. "
-                + "For a center b and positive radius r, write M(b,r) for the mass of the closed interval "
-                + "with endpoints b−r and b+r. The Gaussian average G(r) is the integral of "
-                + "exp(−t²)|χ(2t/r)| on the real line.")),
+                + "Write M(b,r) for the measure of |x−b|≤r. At any smoothing scale s>0, "
+                + "let G(b,s) be the integral of exp(−t²)exp(−2itb/s)χ(2t/s) on the real line. "
+                + "Write A(s) for the integral of exp(−t²)|χ(2t/s)|.")),
             Describe.Lean(
                 DescribeId.Create("measure-real-closed-window-le-gaussian-char-fun"),
                 DeclarationHandle.Create(Owner + ".measureReal_closedWindow_le_gaussian_charFun"),
@@ -25,18 +25,18 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Inside the window, exp(−((x−b)/r)²) is at least exp(−1). It is "
-                        + "positive everywhere. Thus e times this Gaussian majorizes the "
-                        + "closed-window indicator, including both endpoints.")),
+                        "Inside the window, exp(−((x−b)/s)²) is at least exp(−(r/s)²). "
+                        + "The Gaussian is positive everywhere. Multiplying by exp((r/s)²) "
+                        + "majorizes the closed-window indicator, including both endpoints.")),
                     Paragraph(Text(
-                        "The Fourier transform of exp(−t²) at frequency 2(x−b)/r is "
-                        + "√π exp(−((x−b)/r)²). The modulus of the product integrand "
+                        "With the factor exp(itξ), the Gaussian transform at ξ=2(x−b)/s is "
+                        + "√π exp(−((x−b)/s)²). The modulus of the product integrand "
                         + "is exp(−t²), which is integrable against Lebesgue measure times μ. "
-                        + "Fubini and the definition of χ give an average of χ(2t/r) with "
-                        + "the Gaussian weight and the phase from b. Taking the modulus "
-                        + "removes the phase and gives the bound."))), DescribeRole.Theorem),
+                        + "Fubini and the definition of χ give the phase-sensitive integral G(b,s). "
+                        + "The triangle inequality bounds its modulus by A(s). The first inequality "
+                        + "is an equality for a unit atom on the boundary |x−b|=r."))), DescribeRole.Theorem),
             Paragraph(Text(
-                "For k>0, define Q(k,r)=e√π r/(2√k). A reciprocal quadratic envelope "
+                "For k>0 and r>0, define Q(k,r)=exp(1/2)√π r/(√2√k). A reciprocal quadratic envelope "
                 + "means |χ(t)|≤1/(1+kt²) for every real t.")),
             Describe.Lean(
                 DescribeId.Create("measure-real-closed-window-le-of-quadratic-char-fun"),
@@ -46,12 +46,11 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Under the envelope, G(r) is at most the integral of "
-                        + "1/(1+(2√k t/r)²), since the Gaussian weight is at most one. "
-                        + "The latter integral is π r/(2√k). Dividing the Gaussian "
-                        + "mass estimate by √π yields Q(k,r). The reciprocal quadratic "
-                        + "estimate requires positive k, and the Gaussian rescaling "
-                        + "requires positive r."))), DescribeRole.Theorem))));
+                        "Under the envelope, A(s) is at most the integral of "
+                        + "1/(1+(2√k t/s)²), since the Gaussian weight is at most one. "
+                        + "The latter integral is π s/(2√k). Choose s=√2 r. Then the "
+                        + "indicator multiplier is exp(1/2), and dividing the mass estimate "
+                        + "by √π yields Q(k,r)."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
@@ -61,8 +60,14 @@ internal sealed class GaussianCharacteristicWindowDocument : IScribeDocumentDefi
         var radius = F.Id("r");
         var mass = Call("M", F.Id("b"), radius);
         var normalizedMass = Multiply(Call("sqrt", Pi), mass);
-        return Disp(new Formula.Relation(normalizedMass, FormulaRelationOperator.LessThanOrEqual,
-            Multiply(F.Id("e"), Call("G", radius))));
+        var scale = F.Id("s");
+        var amplitude = new Formula.Absolute(Call("G", F.Id("b"), scale));
+        var multiplier = Call("exp", new Formula.Power(new Formula.Fraction(radius, scale), D(2)));
+        var massBound = new Formula.Relation(normalizedMass, FormulaRelationOperator.LessThanOrEqual,
+            Multiply(multiplier, amplitude));
+        var amplitudeBound = new Formula.Relation(amplitude, FormulaRelationOperator.LessThanOrEqual,
+            Call("A", scale));
+        return Disp(new Formula.Logic(massBound, FormulaLogicOperator.And, amplitudeBound));
     }
 
     private static Formula QuadraticBound()
