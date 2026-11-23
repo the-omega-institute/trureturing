@@ -59,8 +59,8 @@ rowCost_eq: proof_shape=bind-only; consumers=exactExits_count
 completionCost_row: proof_shape=bind-only; consumers=exactExits_count
 rowCode_tail: proof_shape=bind-only; consumers=exitCodes_eq
 packedClass: proof_shape=bind-only; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
-packedClass_all: proof_shape=content; consumers=packedClass_eq
-packedClass_eq: proof_shape=content; consumers=exitCodes_eq
+packedClass_all: proof_shape=bind-only; consumers=packedClass_eq
+packedClass_eq: proof_shape=bind-only; consumers=exitCodes_eq
 exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq
 exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
