@@ -17,16 +17,17 @@ noncomputable section
 
 namespace Transition
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Fin 168) (fun _ => Fin 168) (fun _ => ℤ)
-def readout : Realization signature := realize signature (fun _ i j => T i j) (fun e => nomatch e)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 168)
+    (fun _ => Fin 168 → ℤ)
+def readout : Realization signature := realize signature (fun _ _ i => T i) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ i j => T i j + 1) (fun e => nomatch e)
+  realize signature (fun _ _ i j => T i j + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (p : Boundary) (d : ℕ), Valid p d → ∀ s : Fin 168,
     (∑ q : Row, if cross p q + bondDefects horizontal q q ≤ d ∧
       cl (boundary q) (d - (cross p q + bondDefects horizontal q q)) = s
-      then (1 : ℤ) else 0) = r.readout () (cl p d) s
+      then (1 : ℤ) else 0) = r.readout () () (cl p d) s
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -45,9 +46,10 @@ def family : Registration arena (type_of% @transition_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨0, 0, 2, ?_⟩
-    change T 0 0 ≠ T 0 2
-    decide +kernel
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    have h₀ : T 0 0 ≠ T 1 0 := by decide +kernel
+    exact h₀ (congrFun h 0)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@transition_counts) (Realization signature) Type Unit where
@@ -62,7 +64,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ i j => T i j) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ i => T i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -72,7 +74,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
