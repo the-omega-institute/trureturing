@@ -973,7 +973,6 @@ theorem rank_three_lifting_obstruction_equiv_kernel {I T : Type*}
     (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
     (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
       (fun H J => (H ∩ J).card + 2 ≤ 3))
-    (hground : M.E = Set.univ)
     (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
       B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val) :
     Nonempty ((JointSaturatedImage (M.comap (id : I → I)) ⧸
@@ -995,6 +994,7 @@ theorem rank_three_lifting_obstruction_equiv_kernel {I T : Type*}
     refine ⟨by simp, fun h => ?_⟩
     have := hsize _ h
     simp at this
+  have hground : M.E = Set.univ := Set.eq_univ_of_forall fun i => (hnonloop i).mem_ground
   obtain ⟨comparison, _⟩ := parallel_lifting_obstruction (M := M) Function.surjective_id
     (fun {_ _} h => h) hnonloop
   let standard := Pi.basisFun ℤ I
@@ -1401,10 +1401,9 @@ killed by any divisor of the ground-set size. -/
 theorem rank_three_lifting_obstruction_torsion_card {I T : Type*}
     [Fintype I] [LinearOrder I] [Fintype T]
     (M : Matroid I) (triangles : T → Fin 3 ↪o I) (ht : Injective triangles)
-    (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
+    (anchor : I) (hn : 3 < Fintype.card I)
     (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
       (fun H J => (H ∩ J).card + 2 ≤ 3))
-    (hground : M.E = Set.univ)
     (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
       B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val)
     (q : ℕ) [NeZero q] (hqn : q ∣ Fintype.card I) :
@@ -1415,9 +1414,11 @@ theorem rank_three_lifting_obstruction_torsion_card {I T : Type*}
         Nat.card {u : I → ZMod (q.gcd 3) //
           IsOmissionPotential (fun t => triangles t) anchor u} := by
   intro G
+  obtain ⟨root, hne⟩ := Fintype.exists_ne_of_one_lt_card (by omega) anchor
+  have hne := hne.symm
   let points (t : T) : Fin 3 → I := triangles t
   obtain ⟨equiv⟩ := rank_three_lifting_obstruction_equiv_kernel M triangles root anchor
-    hne hn hsparse hground hbase
+    hne hn hsparse hbase
   have transform := equiv.toEquiv.subtypeEquiv
     (p := fun x : G => q • x = 0) (q := fun y => q • y = 0) (fun x => by
       change q • x = 0 ↔ q • equiv x = 0
@@ -1639,10 +1640,9 @@ and a ternary vector space of the same size as the normalized point potentials. 
 theorem rank_three_lifting_obstruction_cyclic_factors {I T : Type*}
     [Fintype I] [LinearOrder I] [Fintype T]
     (M : Matroid I) (triangles : T → Fin 3 ↪o I) (ht : Injective triangles)
-    (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
+    (anchor : I) (hn : 3 < Fintype.card I)
     (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
       (fun H J => (H ∩ J).card + 2 ≤ 3))
-    (hground : M.E = Set.univ)
     (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
       B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val) :
     let n := Fintype.card I
@@ -1654,6 +1654,8 @@ theorem rank_three_lifting_obstruction_cyclic_factors {I T : Type*}
       Nonempty (G ≃ₗ[ℤ] (Fin r → ZMod n) × (Fin d → ZMod 3)) := by
   classical
   intro n r G
+  obtain ⟨root, hrne⟩ := Fintype.exists_ne_of_one_lt_card (by omega) anchor
+  have hne := hrne.symm
   let b := (n - 2).choose 2
   let m := Fintype.card T
   let g := n.gcd 3
@@ -1689,13 +1691,13 @@ theorem rank_three_lifting_obstruction_cyclic_factors {I T : Type*}
   rw [castA, remainingPair_card root anchor hne] at split
   let D := (i : Fin m) → Submodule.torsionBy ℤ (ZMod n) (coeff i)
   obtain ⟨kernel⟩ := rank_three_lifting_obstruction_equiv_kernel M triangles root anchor
-    hne hn hsparse hground hbase
+    hne hn hsparse hbase
   let e : G ≃ₗ[ℤ] (Fin r → ZMod n) × D := kernel.trans split
   let N := Nat.card {u : I → ZMod g // IsOmissionPotential points anchor u}
   have residual (q : ℕ) [NeZero q] (hq : q ∣ n) (hg : q.gcd 3 = g) :
       Nat.card {y : D // q • y = 0} = N := by
-    have h := rank_three_lifting_obstruction_torsion_card M triangles ht root anchor hne hn
-      hsparse hground hbase q hq
+    have h := rank_three_lifting_obstruction_torsion_card M triangles ht anchor hn
+      hsparse hbase q hq
     change Nat.card {x : G // q • x = 0} * q ^ m =
       q ^ b * Nat.card {u : I → ZMod (q.gcd 3) // IsOmissionPotential points anchor u} at h
     rw [hg, free_prod_torsion_card n r q hnpos hq e.toAddEquiv, mul_right_comm] at h
@@ -1730,7 +1732,6 @@ theorem rank_three_lifting_obstruction_cyclic_factors {I T : Type*}
 /-- The actual integral lifting obstruction on the affine plane has nine
 cyclic factors of order nine and two of order three. -/
 theorem affine_plane_lifting_obstruction_cyclic_factors (M : Matroid (Fin 9))
-    (hground : M.E = Set.univ)
     (hbase : ∀ B : Finset (Fin 9), M.IsBase (B : Set (Fin 9)) ↔
       B.card = 3 ∧ B ∉ affineOmissions) :
     Nonempty ((JointSaturatedImage (M.comap (id : Fin 9 → Fin 9)) ⧸
@@ -1760,7 +1761,7 @@ theorem affine_plane_lifting_obstruction_cyclic_factors (M : Matroid (Fin 9))
       ((affine_triangle_injective t).ne (by decide)) ⟨0, 1, rfl, rfl⟩
       ⟨0, 1, h₀.symm, h₁.symm⟩
   obtain ⟨d, hd, E⟩ := rank_three_lifting_obstruction_cyclic_factors M affineTriangle ht
-    8 0 (by decide) (by decide) sparse hground hbase
+    0 (by decide) sparse hbase
   change Nat.card {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} = 3 ^ d at hd
   rw [Nat.card_congr (Equiv.subtypeEquivRight affine_compatible_iff),
     affine_plane_potential_card] at hd

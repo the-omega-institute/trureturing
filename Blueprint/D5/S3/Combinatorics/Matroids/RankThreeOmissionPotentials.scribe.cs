@@ -41,8 +41,8 @@ internal sealed class RankThreeOmissionPotentialsDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Under the same hypotheses, index the omitted triples without repetition and let m be their number. "
-                    + "Put b equal to the number of pairs avoiding the root and anchor. For each positive divisor q of n, "
+                    "Index the omitted triples without repetition, let m be their number, and choose any anchor. "
+                    + "Put b equal to the binomial coefficient counting pairs from n minus two points. For each positive divisor q of n, "
                     + "the number of elements killed by q, multiplied by q to the power m, equals q to the power b times "
                     + "the number of normalized potentials with values modulo the greatest common divisor of q and three. "
                     + "The signed rows identify the transpose kernel with point-potential differences, and the finite character "
@@ -55,8 +55,8 @@ internal sealed class RankThreeOmissionPotentialsDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For m distinct omitted triples under the intersection bound, put b equal to the binomial coefficient "
-                    + "counting pairs of the n minus two points outside the root and anchor. The integral lifting obstruction "
+                    "For m distinct omitted triples under the intersection bound, choose any anchor for the potentials. "
+                    + "Put b equal to the binomial coefficient counting pairs from n minus two points. The integral lifting obstruction "
                     + "is linearly equivalent over the integers to b minus m cyclic factors of order n and d cyclic factors "
                     + "of order three. The normalized potentials with values modulo the greatest common divisor of n and three "
                     + "number exactly three to the power d. "
