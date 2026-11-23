@@ -369,6 +369,24 @@ Commit and push each logical change; local checks provide early feedback alongsi
 remote CI. Report actual commands and exit codes. Local success does not replace
 required checks on the PR.
 
+### Refresh frozen declaration evidence
+
+`make deposit GID=…` records declaration evidence for a new frozen module. To
+remeasure all existing frozen members, run `make frozen-refresh` from the checkout
+root with the paired tools release pinned. It checks each member's statement pin
+and declaration identities against current compiler evidence before updating the
+optional fields. The fields describe the last measurement. A proof edit can
+change dependencies while preserving the statement pin. Review the resulting
+state-file diff before committing. [Frozen state specification, A14](develop/spec/golden-ledger-repo-spec.md)
+
+A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
+a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
+claim applies to the compiled declaration at measurement time. For the library itself, the strict
+audit checks every declaration in the selected Omega module and its imports for
+an empty axiom set and replays the closure in a fresh Lean kernel environment.
+`lake test -- OmegaMath.Projective` checks the projective topic.
+[Strict library audit](../src/OmegaChecks/Audit.lean)
+
 ## Open a pull request
 
 Push the branch to your fork with `git push -u origin lane/governance/first-docs`
