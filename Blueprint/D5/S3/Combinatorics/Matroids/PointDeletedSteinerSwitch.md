@@ -66,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/PointDeletedSteinerSwitch.matching
 
 Fix a positive row dimension, and fix the lifted cross-row family with distinct rows, pair uniqueness and zero-sum completion of every cross-row pair. As in the classwise decomposition, normalize at zero and preserve dimension one more than the row dimension. Suppose the residue labels have a packing whose leave is a perfect matching, together with two blocks giving a successful switch of the described shape.
 
-In that packing each label has exactly one unused partner and every block through a label uses two partners. Thus the label count r is even. Every other packing has at least one unused partner at every label, so the matching packing attains the upper bound r(r−2)/6. The largest number of internal triples is this count times the number of actual residue classes, plus the rowwise Latin cells. A successful switch in one class realizes one fewer.
+In that packing each label has exactly one unused partner and every block through a label uses two partners. Thus the label count r is even. Every other packing has at least one unused partner at every label, so the matching packing attains the upper bound r(r−2)/6. This count times the number of actual residue classes, plus the rowwise Latin cells, bounds every compatible extension. A saturated extension attains that bound. A successful switch in one class realizes one fewer.
 
 For the classical local spectrum see Colbourn, Rosa and Znám (https://doi.org/10.1007/BF01388482). The criterion here concerns the specified local switch on the input system and its effect on the dimension-preserving extension.
 
