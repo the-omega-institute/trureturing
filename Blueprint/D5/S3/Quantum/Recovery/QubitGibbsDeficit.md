@@ -57,11 +57,11 @@ The same trial gives F_s = m + (s - r) z at every s. Whenever that trial satisfi
 - Truth anchor: `D5/S3/Quantum/Recovery/QubitGibbsDeficit.ordinary_petz_reducing_supporting_line`
 - Truth anchor: `D5/S3/Quantum/Recovery/QubitGibbsDeficit.reducing_qubit_gibbs_argmax`
 - Truth anchor: `D5/S3/Quantum/Recovery/QubitGibbsDeficit.reducing_qubit_gibbs_deficit`
-- Dependency: [D5/S3/Quantum/Divergence/FannesRootFidelityHolevo](../Divergence/FannesRootFidelityHolevo.md)
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Divergence/GibbsVariationalIdentity](../Divergence/GibbsVariationalIdentity.md)
 - Dependency: [D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary](../Divergence/LegacyRelativeEntropyBoundary.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
-- Dependency: [D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral](../Measurement/OccupationPartialTransposeSpectral.md)
+- Dependency: [D5/S3/Quantum/ProcessReconstruction/ReconstructionChannels](../ProcessReconstruction/ReconstructionChannels.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinement](BKMFlagRefinement.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinementPetz](BKMFlagRefinementPetz.md)
 - Dependency: [D5/S3/Quantum/Recovery/CanonicalPetzEquality](CanonicalPetzEquality.md)

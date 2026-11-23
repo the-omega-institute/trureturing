@@ -6,14 +6,14 @@
    utility: none
    digest: The exact reducing qubit Gibbs deficit splits into conditional relative entropy loss and weighted block gaps. -/
 
-import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
 import D5.S3.Quantum.Matrix.CartesianVariance
+import D5.S3.Quantum.ProcessReconstruction.ReconstructionChannels
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
 import D5.S3.Quantum.Recovery.BKMFlagRefinementPetz
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
-import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 
 /-! The Gibbs deficit and its equality conditions on a finite qubit-environment system. -/
 
@@ -74,8 +74,10 @@ private def blockState (γ : Fin 2 → DensityState E) (w : Fin 2 → ℝ)
   ⟨CStarMatrix.ofMatrix (retainedBlock (fun i => w i • mat (γ i).1)), by
     apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
     apply Matrix.PosSemidef.nonneg
-    exact (D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.MatrixBlocks.blockDiagonal_psd
-      _ (fun i => (mat_psd (γ i)).smul (hw i))).submatrix (Equiv.prodComm (Fin 2) E), by
+    rw [retainedBlock, joint, ← Matrix.blockDiagonal'_submatrix_eq_blockDiagonal]
+    exact ((D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.posSemidef_blockDiagonal
+      _ (fun i => (mat_psd (γ i)).smul (hw i))).submatrix
+        (Prod.toSigma ∘ Prod.swap)).submatrix (Equiv.prodComm (Fin 2) E), by
     change (retainedBlock (fun i => w i • mat (γ i).1)).trace = 1
     rw [trace_block]
     simp only [Matrix.trace_smul]
@@ -240,12 +242,20 @@ open D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 private theorem exists_partialTraceChannel :
     ∃ Φ : QuantumChannel (Fin 2 × E) (Fin 2), ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
       mat (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = partialTraceRight X := by
-  obtain ⟨Φ, hΦ⟩ :=
-    D5.S3.Quantum.Divergence.FannesRootFidelityHolevo.exists_eraseChannel (n := Fin 2) (ι := E)
-  refine ⟨Φ, fun X => ?_⟩
-  rw [hΦ]
-  ext i j
-  simp only [partialTraceRight, Matrix.sum_apply, Matrix.submatrix_apply]
+  let lower : ULift.{u_1} (Fin 2) ≃ Fin 2 := Equiv.ulift
+  let basis := (Equiv.prodComm (Fin 2) E).trans (Equiv.prodCongr (Equiv.refl E) lower.symm)
+  let output : QuantumChannel (ULift.{u_1} (Fin 2)) (Fin 2) :=
+    { toCompletelyPositiveMap :=
+        CompletelyPositiveMapClass.toCompletelyPositiveLinearMap (CStarMatrix.reindexₐ ℂ ℂ lower)
+      trace_preserving := fun X => lower.symm.sum_comp (fun i => X i i) }
+  refine ⟨output.comp (UnitaryReconstruction.discard basis), fun X => ?_⟩
+  rw [QuantumChannel.comp_apply]
+  apply Matrix.ext
+  intro i j
+  change mat ((UnitaryReconstruction.discard basis).toCompletelyPositiveMap
+    (CStarMatrix.ofMatrix X)) (lower.symm i) (lower.symm j) = partialTraceRight X i j
+  rw [UnitaryReconstruction.discard_apply]
+  rfl
 
 private theorem mapState_partialTrace
     {Φ : QuantumChannel (Fin 2 × E) (Fin 2)}
