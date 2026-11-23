@@ -68,6 +68,7 @@ import Init.Classical
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
+import Init.Data.Function
 import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
@@ -102,6 +103,7 @@ import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Empty
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Finset.Image
+import Mathlib.Data.Finset.Insert
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
