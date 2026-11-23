@@ -420,4 +420,128 @@ theorem chartA_same_puncture_modes_one_zero_fixed_charge
   field_simp [ht1]
   ring
 
+
+open OriginalFourMChargeCoset (oscillatorLower)
+open HalfFock.OriginalHalfCurrentTransport
+  (normalOrder creationPart contraction lowering_normal_order_word)
+open private vacuum vacuumProjection vacuumProjection_apply from
+  D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The actual lowering flow on the repeated-colour word of modes one and zero
+has one shorter creation term and one vacuum contraction. -/
+theorem lowering_modes_one_zero (D : LatticeData) (hu : IsUnit D.G.det)
+    (i : Fin D.rank) (n : ℕ) :
+    (n.factorial : ℂ)⁻¹ • (oscillatorLower D ^ n)
+      (MvPolynomial.X (i, 1) * MvPolynomial.X (i, 0)) =
+    if n = 0 then MvPolynomial.X (i, 1) * MvPolynomial.X (i, 0)
+    else if n = 1 then (3 / 2 : ℂ) • (MvPolynomial.X (i, 0) ^ 2)
+    else if n = 2 then ((3 / 16 : ℂ) * (D.G i i : ℂ)) • 1
+    else 0 := by
+  let V (j : ℕ) : Module.End ℂ (Oscillator D) := LinearMap.mulLeft ℂ (MvPolynomial.X (i, j) : Oscillator D)
+  let Q : Module.End ℂ (Oscillator D) := vacuumProjection D
+  have hz : creationPart D (i, 0) = PowerSeries.C (V 0) := by
+    apply PowerSeries.ext
+    intro k
+    rw [creationPart, PowerSeries.coeff_mk, PowerSeries.coeff_C]
+    cases k with
+    | zero => simpa using (current_negative D i 0 : current D i (-(0 : ℕ) - 1) = V 0)
+    | succ k => simp
+  have ho : creationPart D (i, 1) =
+      PowerSeries.C (V 1) + PowerSeries.monomial 1 ((3 / 2 : ℂ) • V 0) := by
+    apply PowerSeries.ext
+    intro k
+    rw [creationPart, PowerSeries.coeff_mk, map_add, PowerSeries.coeff_C,
+      PowerSeries.coeff_monomial]
+    rcases k with _ | _ | k
+    · norm_num [Ring.choose_zero_right, show current D i (-2) = V 1 from current_negative D i 1]
+    · norm_num [Ring.choose_one_right, show current D i (-1) = V 0 from current_negative D i 0]
+    · simp
+  have hnil : normalOrder D [] = PowerSeries.C Q := by rw [normalOrder, vacuum]
+  have hshort : normalOrder D [(i, 0)] = PowerSeries.C (V 0 * Q) := by
+    rw [normalOrder, hz, hnil, map_mul]
+    simp
+  have hpair : normalOrder D [(i, 1), (i, 0)] =
+      (PowerSeries.C (V 1) + PowerSeries.monomial 1 ((3 / 2 : ℂ) • V 0)) *
+        PowerSeries.C (V 0 * Q) +
+        PowerSeries.monomial 2 (((3 / 16 : ℂ) * (D.G i i : ℂ)) • (1 : Module.End ℂ (Oscillator D))) *
+          PowerSeries.C Q := by
+    rw [normalOrder, ho, hshort]
+    simp [contraction, contraction_one_zero, hnil, mul_comm (D.G i i : ℂ) (3 / 16)]
+  have h := lowering_normal_order_word D hu [(i, 1), (i, 0)] n
+  simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one] at h
+  rw [h, hpair]
+  rw [map_add, PowerSeries.coeff_mul_C, map_add, PowerSeries.coeff_mul_C,
+    PowerSeries.coeff_C, PowerSeries.coeff_monomial, PowerSeries.coeff_monomial]
+  rcases n with _ | _ | _ | n <;>
+    simp [V, Q, Module.End.mul_apply, LinearMap.mulLeft_apply,
+      vacuumProjection_apply, LinearMap.smul_apply, pow_two]
+
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The two higher-current marks read the finite inverse lowering flow through
+the original compact occupations and factorial Fock metric. -/
+theorem chartA_same_puncture_modes_one_zero_lowering
+    (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (q : Charge D)
+    (hq : 0 ≤ chargeEnergy D q) (upperA : Bool) {x : ℝ} (hx : 1 / 2 < x) (hx1 : x < 1) :
+    let t := parameter .A (x : ℂ)
+    let lam := scale .A x .P
+    let P : Oscillator D := MvPolynomial.X (i, 1) * MvPolynomial.X (i, 0)
+    let T := ∑ k ∈ Finset.range 4, ((-1 : ℂ) ^ k / (k.factorial : ℂ)) •
+      (oscillatorLower D ^ k) P
+    (chartPeriod upperA .A x ^ (12 : ℕ))⁻¹ *
+      spatialCoefficient (Sum.elim ![1, 0] (fun _ => 1))
+        ([Sum.inr 0, Sum.inr 1, Sum.inl 0, Sum.inl 1] : List (Fin 2 ⊕ Fin 2))
+        (physicalChargeSummand D (fun _ => .P) (fun _ => i) upperA .A x q) 0 =
+      ((1 - t) ^ (3 : ℕ) / lam ^ (2 : ℕ)) *
+        ∑ d ∈ T.support, T.coeff d * (weight d : ℂ) * slitChargeTerm D d 0 0 0 q t := by
+  intro t lam P T
+  let b := MvPolynomial.basisMonomials (Index D) ℂ
+  let F (d : Exponent D) := slitChargeTerm D d 0 0 0 q t
+  let L : Oscillator D →ₗ[ℂ] ℂ := b.constr ℂ (fun d => (weight d : ℂ) * F d)
+  have hcoeff : (∑ d ∈ T.support, T.coeff d * (weight d : ℂ) * F d) = L T := by
+    rw [show L T = _ from b.constr_apply ℂ _ T]
+    change _ = ∑ d ∈ T.support, T.coeff d • ((weight d : ℂ) * F d)
+    simp only [smul_eq_mul, mul_assoc]
+  have hT : T = P - (3 / 2 : ℂ) • (MvPolynomial.X (i, 0) ^ 2) +
+      ((3 / 16 : ℂ) * (D.G i i : ℂ)) • 1 := by
+    unfold T
+    simp_rw [div_eq_mul_inv, mul_smul]
+    simp_rw [show ∀ k, (↑k.factorial : ℂ)⁻¹ • (oscillatorLower D ^ k) P = _ from
+      lowering_modes_one_zero D hu i]
+    norm_num [Finset.sum_range_succ, sub_eq_add_neg, neg_smul]
+    simp only [← Nat.cast_smul_eq_nsmul ℂ, smul_smul]
+    dsimp only [P]
+    module
+  let a : Exponent D := Finsupp.single (i, 1) 1
+  let d : Exponent D := Finsupp.single (i, 0) 1
+  have ha : P = b (a + d) := by
+    change MvPolynomial.monomial a (1 : ℂ) * MvPolynomial.monomial d 1 =
+      MvPolynomial.monomial (a + d) 1
+    rw [MvPolynomial.monomial_mul_monomial, mul_one]
+  have hd : (MvPolynomial.X (i, 0) ^ 2 : Oscillator D) = b (d + d) := by
+    rw [pow_two]
+    change MvPolynomial.monomial d (1 : ℂ) * MvPolynomial.monomial d 1 =
+      MvPolynomial.monomial (d + d) 1
+    rw [MvPolynomial.monomial_mul_monomial, mul_one]
+  have hw : weight (a + d) = 1 := by
+    rw [show a + d = a + Finsupp.single (i, 0) 1 by rfl, FactorialFockMetric.weight_add_single]
+    simp [a, weight, Finsupp.prod_single_index]
+  have hw' : weight (d + d) = 2 := by
+    rw [show d + d = d + Finsupp.single (i, 0) 1 by rfl, FactorialFockMetric.weight_add_single]
+    simp [d, weight, Finsupp.prod_single_index]
+  have hL (e : Exponent D) : L (b e) = (weight e : ℂ) * F e :=
+    b.constr_basis ℂ _ e
+  change _ = _ * ∑ d ∈ T.support, T.coeff d * (weight d : ℂ) * F d
+  rw [hcoeff, hT, map_add, map_sub, map_smul, map_smul, ha, hd, show (1 : Oscillator D) = b 0 by rfl,
+    hL, hL, hL, hw, hw']
+  have h := chartA_same_puncture_modes_one_zero_fixed_charge D i q hq upperA hx hx1
+  change _ = _ * (F (a + d) - 3 * F (Finsupp.single (i, 0) 2) +
+    (3 / 16 : ℂ) * (D.G i i : ℂ) * F 0) at h
+  rw [h, show d + d = Finsupp.single (i, 0) 2 by
+    dsimp only [d]
+    rw [← Finsupp.single_add]]
+  simp [weight, smul_eq_mul]
+  ring
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCurrentRegression
