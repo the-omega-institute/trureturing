@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/SingleCoordinatePinchingEntropy
   - D5/S3/Quantum/Divergence/PositiveReferenceReplacement
   - D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination
+  - D5/S3/Quantum/Divergence/FibonacciQutritSpectralTransport
 license: "Apache-2.0 for mathlib source"
 triage: "anchor"
 ---
@@ -52,3 +53,13 @@ is (F'⊕0,C'⊕e). Its divergence gain keeps the coefficient (12/55)
 with the full trace ratio (c/(c-λ)) and the quadratic Klein contribution.
 The Lean statement takes the small eigenvalue and block coordinates
 as hypotheses.
+
+## Smallest-eigenvalue transport
+
+Section 20, lines 1256–1275, gives the null-loss threshold and the strict
+improvement after taking the smallest reference eigendirection as the ray.
+The floor exclusion uses the general logarithm increment at λ = 1/500
+directly, with 1 + 500e > 64 and log 2 ≥ 2/3. The coordinate change uses
+[Mathlib's matrix spectral theorem](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Matrix/Spectrum.lean#L127-L146).
+The matrix logarithm and trace carry the strict block estimate back to
+the original divergence.
