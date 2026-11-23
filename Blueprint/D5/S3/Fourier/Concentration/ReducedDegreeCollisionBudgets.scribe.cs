@@ -14,7 +14,7 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
         Blocks(
             Paragraph(Text(
                 "Let J be finite. Use nonnegative weights w(j), radii r(j)≥ρ>0, "
-                + "a base spectrum g, and a closed window of radius η≥0. Write B(p) for "
+                + "a base spectrum g, and a closed window of radius e≥0. Write B(p) for "
                 + "the localized excess budget over ordered distinct degree-p pairs, W for "
                 + "the sum of the weights, and D(p) for the degree-p diagonal mass. Set "
                 + "C=exp(1/2)√(15π/2).")),
@@ -28,7 +28,7 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
                     Paragraph(Text(
                         "Fix a positive integer k. For every pair u,v of common degree "
                         + "0<d<k with disjoint supports, require the absolute gap between "
-                        + "their base frequencies to exceed η+Σ(u(j)+v(j))r(j). The strict "
+                        + "their base frequencies to exceed e+Σ(u(j)+v(j))r(j). The strict "
                         + "inequality excludes reach even at the endpoints of the closed band.")),
                     Paragraph(Text(
                         "For a pair m,n, subtract their coordinatewise minimum from both "
@@ -59,7 +59,7 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
         var offDiagonal = Seq(Open, new Formula.Power(F.Id("W"), Multiply(D(2), p)),
             Minus, Call("D", p), Close);
         var probability = Call("min", D(1),
-            new Formula.Fraction(Multiply(F.Id("C"), Eta), Multiply(Rho, Call("sqrt", Multiply(D(2), k)))));
+            new Formula.Fraction(Multiply(F.Id("C"), F.Id("e")), Multiply(Rho, Call("sqrt", Multiply(D(2), k)))));
         var outside = new Formula.Relation(p, FormulaRelationOperator.LessThan, k);
         var zero = new Formula.Relation(budget, FormulaRelationOperator.Equal, D(0));
         var exact = new Formula.Logic(outside, FormulaLogicOperator.Implies, zero);
