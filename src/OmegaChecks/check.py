@@ -115,7 +115,7 @@ def check_incremental():
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean", None,
-         "\npublic theorem Omega.congrFun {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k => k a) h\n",
+         "\npublic theorem Omega.congrFun' {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k : α → β => k a) h\n",
          {*INIT, *DATA, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
     ]
     for filename, replace, text, expected in probes:
