@@ -874,94 +874,87 @@ private theorem transfer_count (n : ℕ) :
     | inr s => simp [residual]
 
 theorem labelled_scale (D m : ℕ) :
-    literalCount (q := 3) ∅ edges D (m + 1) = 6 * canonicalCount D (m + 1) ↔
-      D ≠ m * edges.card := by
-  have relabel (e : Equiv.Perm (Fin 3)) (A : Fin (m + 1) → Fin 5 → Fin 3) :
-      defects ∅ edges (List.ofFn fun i j => e (A i j)) =
-        defects ∅ edges (List.ofFn A) := by
-    rw [show (List.ofFn fun i j => e (A i j)) =
-      (List.ofFn A).map (fun r => e ∘ r) by rw [List.map_ofFn]; rfl,
-      DefectTransfer.relabel_defects]
-  constructor
-  · rintro he rfl
-    classical
-    let C := Fin (m + 1) × Fin 5
-    let P : (C → Fin 3) → Prop := fun A =>
-      defects ∅ edges (List.ofFn fun i j => A (i, j)) = m * edges.card
-    let NC : (C → Fin 3) → Prop := fun A => ∃ x y, A x ≠ A y
-    let s : Finset (C → Fin 3) := Finset.univ.filter P
-    change s.card = _ at he
-    have split := Finset.card_filter_add_card_filter_not (s := s) NC
-    have ncinv (e : Equiv.Perm (Fin 3)) (A : C → Fin 3) :
-        (P (e ∘ A) ∧ NC (e ∘ A)) ↔ P A ∧ NC A := by
-      have hP : P (e ∘ A) ↔ P A := by
-        change defects ∅ edges (List.ofFn fun i j => e (A (i, j))) = _ ↔ _
-        rw [relabel e (fun i j => A (i, j))]
-      have hNC : NC (e ∘ A) ↔ NC A := by
-        constructor
-        · rintro ⟨x, y, h⟩
-          exact ⟨x, y, fun heq => h (congrArg e heq)⟩
-        · rintro ⟨x, y, h⟩
-          exact ⟨x, y, fun heq => h (e.injective heq)⟩
-      exact and_congr hP hNC
-    let lo : LinearOrder C := LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
-    have orbit := @canonical_pattern_card C inferInstance lo
-      (fun A : C → Fin 3 => P A ∧ NC A) ncinv (fun _ h => h.2)
-    simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit
-    have hNC : (s.filter NC).card =
-        6 * (Finset.univ.filter (fun A : C → Fin 3 =>
-          (P A ∧ NC A) ∧ @Canonical C lo.toLT 3 A)).card := by
-      simpa only [s, Finset.filter_filter] using orbit
-    let const : Fin 3 ↪ (C → Fin 3) :=
-      ⟨fun c _ => c, fun _ _ h => congrFun h (0, 0)⟩
-    have hC : s.filter (fun A => ¬ NC A) = Finset.univ.map const := by
-      ext A
-      simp only [s, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_map]
-      constructor
-      · rintro ⟨_, h⟩
-        exact ⟨A (0, 0), funext fun i => Classical.byContradiction
-          (fun hi => h ⟨(0, 0), i, hi⟩)⟩
-      · rintro ⟨c, rfl⟩
-        constructor
-        · change defects ∅ edges (List.ofFn fun _ : Fin (m + 1) =>
-            fun _ : Fin 5 => c) = m * edges.card
-          simp only [List.ofFn_const, DefectTransfer.constant_defects, Finset.card_empty,
-            Nat.zero_add, Nat.add_zero]
-        · rintro ⟨x, y, h⟩
-          exact h rfl
-    rw [hNC, hC, Finset.card_map, Finset.card_univ, Fintype.card_fin, he] at split
-    omega
-  · intro hD
-    classical
-    let S : (Fin 5 × Fin (m + 1) → Fin 3) → Prop := fun A =>
-      defects ∅ edges (List.ofFn fun j i => A (i, j)) = D
-    have invariant : ∀ e : Equiv.Perm (Fin 3), ∀ A, S (e ∘ A) ↔ S A := by
-      intro e A
-      change defects ∅ edges (List.ofFn fun j i => e (A (i, j))) = D ↔ S A
-      rw [relabel e (fun j i => A (i, j))]
-    have nonconstant : ∀ A, S A → ∃ x y, A x ≠ A y := by
-      intro A h
-      by_contra! he
-      have const : A = fun _ => A (0, 0) := funext fun x => he x (0, 0)
-      change defects ∅ edges _ = D at h
-      rw [const] at h
-      simp only [List.ofFn_const] at h
-      rw [DefectTransfer.constant_defects] at h
-      simp only [Finset.card_empty, Nat.add_zero, Nat.zero_add] at h
-      exact hD h.symm
-    have orbit := @canonical_pattern_card (Fin 5 × Fin (m + 1)) inferInstance
-      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
-    let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 5)) (Equiv.refl (Fin 3))
-    have card := Fintype.card_congr (e.subtypeEquiv (p := fun A =>
-      defects ∅ edges (List.ofFn fun i j => A (i, j)) = D) (q := S) (fun _ => Iff.rfl))
-    simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit card
-    unfold literalCount
-    convert card.trans orbit using 1
-    apply congrArg (fun x : ℕ => 6 * x)
+    literalCount (q := 3) ∅ edges D (m + 1) + (if D = m * edges.card then 3 else 0) =
+      6 * canonicalCount D (m + 1) := by
+  classical
+  let C := Fin 5 × Fin (m + 1)
+  let lo : LinearOrder C := LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
+  let P : (C → Fin 3) → Prop := fun A => defects ∅ edges (List.ofFn fun i j => A (j, i)) = D
+  let NC : (C → Fin 3) → Prop := fun A => ∃ x y, A x ≠ A y
+  let K : (C → Fin 3) → Prop := fun A => @Canonical C lo.toLT 3 A
+  let s := Finset.univ.filter P
+  let t := s.filter K
+  let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 5)) (Equiv.refl (Fin 3))
+  have hlabel : literalCount (q := 3) ∅ edges D (m + 1) = s.card := by
+    have h := Fintype.card_congr (e.subtypeEquiv (p := fun A =>
+      defects ∅ edges (List.ofFn fun i j => A (i, j)) = D) (q := P) (fun _ => Iff.rfl))
+    simpa only [literalCount, s, Fintype.card_subtype] using h
+  have hcanon : canonicalCount D (m + 1) = t.card := by
     unfold canonicalCount
     apply congrArg Finset.card
     ext A
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, S]
+    simp only [t, s, P, K, Finset.mem_filter, Finset.mem_univ, true_and]
+  have invariant (perm : Equiv.Perm (Fin 3)) (A : C → Fin 3) :
+      (P (perm ∘ A) ∧ NC (perm ∘ A)) ↔ P A ∧ NC A := by
+    have hP : P (perm ∘ A) ↔ P A := by
+      dsimp [P, Function.comp_apply]
+      rw [show (List.ofFn fun i j => perm (A (j, i))) =
+        (List.ofFn fun i j => A (j, i)).map (fun r => perm ∘ r) by rw [List.map_ofFn]; rfl,
+        DefectTransfer.relabel_defects]
+    exact and_congr hP (by simp only [NC, Function.comp_apply, ne_eq, perm.injective.eq_iff])
+  have horbit : (s.filter NC).card = 6 * (t.filter NC).card := by
+    have h := @canonical_pattern_card C inferInstance lo
+      (fun A => P A ∧ NC A) invariant (fun _ h => h.2)
+    simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at h
+    simpa only [s, t, K, Finset.filter_filter, and_right_comm] using h
+  let const : Fin 3 ↪ (C → Fin 3) :=
+    ⟨fun c _ => c, fun _ _ h => congrFun h (0, 0)⟩
+  have constant_array (A : C → Fin 3) (h : ¬ NC A) : A = const (A (0, 0)) :=
+    funext fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
+  have constant_budget (c : Fin 3) : P (const c) ↔ D = m * edges.card := by
+    change defects ∅ edges (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin 5 => c) = D ↔ _
+    simp only [List.ofFn_const, DefectTransfer.constant_defects, Finset.card_empty,
+      Nat.zero_add, Nat.add_zero, eq_comm]
+  have hS : s.filter (fun A => ¬ NC A) =
+      if D = m * edges.card then Finset.univ.map const else ∅ := by
+    ext A
+    simp only [s, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨hP, hN⟩
+      have h := constant_array A hN
+      rw [if_pos ((constant_budget _).mp (h ▸ hP)), h]
+      exact Finset.mem_map.mpr ⟨A (0, 0), Finset.mem_univ _, rfl⟩
+    · by_cases hD : D = m * edges.card
+      · rw [if_pos hD, Finset.mem_map]
+        rintro ⟨c, _, rfl⟩
+        exact ⟨(constant_budget c).mpr hD, fun ⟨_, _, h⟩ => h rfl⟩
+      · simp only [if_neg hD, Finset.notMem_empty, false_implies]
+  have hzero (c : Fin 3) : K (const c) ↔ c = 0 := by
+    constructor
+    · intro h
+      by_contra hn
+      obtain ⟨_, _, he⟩ := h (0, 0) 0 (Fin.pos_iff_ne_zero.mpr hn)
+      exact hn he
+    · rintro rfl i b hb
+      exact (Fin.not_lt_zero b hb).elim
+  have hcanonical_constants : (Finset.univ.map const).filter K = {const 0} := by
+    ext A
+    simp only [Finset.mem_filter, Finset.mem_map, Finset.mem_univ, true_and, Finset.mem_singleton]
+    constructor
+    · rintro ⟨⟨c, rfl⟩, hc⟩
+      rw [(hzero c).mp hc]
+    · rintro rfl
+      exact ⟨⟨0, rfl⟩, (hzero 0).mpr rfl⟩
+  have ssplit := Finset.card_filter_add_card_filter_not (s := s) NC
+  have tsplit := Finset.card_filter_add_card_filter_not (s := t) NC
+  have hT : t.filter (fun A => ¬ NC A) = (s.filter fun A => ¬ NC A).filter K :=
+    Finset.filter_comm s
+  rw [hlabel, hcanon, ← ssplit, ← tsplit, horbit, hT, hS]
+  by_cases hD : D = m * edges.card
+  · simp only [if_pos hD, Finset.card_map, Finset.card_univ, Fintype.card_fin,
+      hcanonical_constants, Finset.card_singleton]
+    omega
+  · simp only [if_neg hD, Finset.filter_empty, Finset.card_empty, Nat.add_zero]
 
 attribute [local irreducible] a
 
@@ -980,7 +973,7 @@ theorem result (n : ℕ) :
     rw [← transfer_count]
     have hD := small_budget_ne_cut_total 1 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
-      simpa only [a] using (labelled_scale 1 m).mpr hD
+      simpa only [if_neg hD, Nat.add_zero, a] using labelled_scale 1 m
     rw [hscale]
     push_cast
     rfl

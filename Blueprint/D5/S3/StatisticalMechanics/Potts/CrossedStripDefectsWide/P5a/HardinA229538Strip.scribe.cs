@@ -15,7 +15,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
             Node("transition_entry",TransitionEntry(),true,"The equality holds for all successors when the budget is at most one, the cut has zero cost, or the cost exceeds the budget. In the other cases take the successor at q with residual budget d minus the cost. The left indicator is one. The right side tests for zero cost if the residual is positive and for cost one if it is zero. Both tests fail in their respective cases."),
-            Node("labelled_scale",LabelledScale(),true,"At width m + 1 a constant array has m times the number of edges in one cut as its defect count. At every other defect count, each canonical array has six distinct labelled representatives. At the constant-array defect count, the nonconstant part is still a multiple of six and the three constant arrays leave remainder three. The subscript on literalCount gives the palette size."),
+            Node("labelled_scale",LabelledScale(),true,"The nonconstant arrays contribute six labelled representatives per canonical array. At width m + 1 every constant array has m times the cut cardinality as its defect count. At that budget the three labelled constant arrays form a single canonical class represented by the all-zero array. Adding three to the labelled count makes its constant contribution six. The subscript on literalCount gives the palette size."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
@@ -171,9 +171,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var empty=Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
         var cut=Own("edges");
         var labelled=App(new Formula.Subscript(Q("DefectTransfer.literalCount"),N(3)),empty,cut,d,n);
-        var distinct = Ne(d, Mul(m, Call("Finset.card", cut)));
+        var correction = If(Eq(d, Mul(m, Call("Finset.card", cut))), N(3), N(0));
         return All("D", Q("Nat"), All("m", Q("Nat"),
-            Iff(Eq(labelled, Mul(N(6), Own("canonicalCount", d, n))), distinct)));
+            Eq(Add(labelled, correction), Mul(N(6), Own("canonicalCount", d, n)))));
     }
 
     private static Formula MemEdges()

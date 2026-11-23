@@ -935,7 +935,7 @@ theorem result (n : ℕ) :
     rw [← transfer_count]
     have hD := small_budget_ne_cut_total 2 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
-      simpa only [table_count] using (labelled_scale 2 m).mpr hD
+      simpa only [if_neg hD, Nat.add_zero, table_count] using labelled_scale 2 m
     rw [hscale]
     push_cast
     rfl
