@@ -19,8 +19,12 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
             "The inverse reads a triple of entries from the three positions.", "columnRows"),
         Define("parity-rows", "Parity triples", ParityRowsFormula(),
             "The two triples read the even columns from the left and the odd columns from the right. The inverse interleaves the triples in column order.", "parityRows"),
-        Define("pair-class", "Pair of triple patterns", PairClassFormula(),
-            "The label is the zero-based position of the sorted pair in the representative list.", "pairClass"),
+        Define("pair-class", "Pair of triple patterns", PairClassLookupFormula(),
+            "The table stores the positions computed by the indexed lookup in the next statement.", "pairClass"),
+        Describe.Lean(DescribeId.Create("pair-class-lookup"), DeclarationHandle.Create(Prefix + "pairClass_eq_lookup"),
+            H("Position of the sorted pair"), StatementSource.FromAuthor(Disp(PairClassLookupFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("The label is the zero-based position of the sorted pair in the representative list."))), DescribeRole.Theorem),
         Define("boundary", "Boundary class", All("p", Row("6"),
             Eq(Own("boundary", V("p")), Own("pairClass",
                 Owner("cls", Fst(Own("parityRows", V("p")))), Owner("cls", Snd(Own("parityRows", V("p"))))))),
@@ -79,7 +83,7 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
         return Seq(Parenthesized(forward), Sp, Land, Sp, Parenthesized(inverse));
     }
 
-    private static Formula PairClassFormula() => All("x", Fin("5"), All("y", Fin("5"),
+    private static Formula PairClassLookupFormula() => All("x", Fin("5"), All("y", Fin("5"),
         Eq(Call("Fin.val", Own("pairClass", V("x"), V("y"))),
             Call("List.idxOf", Call("List.ofFn", Own("classPair")),
                 Pair(Call("min", V("x"), V("y")), Call("max", V("x"), V("y")))))));

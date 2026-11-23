@@ -94,7 +94,7 @@ private theorem boundary_recolor (e f : Equiv.Perm (Fin 3)) (p : Row 3 6) :
 private theorem boundary_reflect (p : Row 3 6) : boundary (reflect p) = boundary p := by
   have exchange (i j : Fin 5) : pairClass i j = pairClass j i := by
     apply Fin.ext
-    simp only [pairClass, min_comm i j, max_comm i j]
+    simp only [pairClass_eq_lookup, min_comm i j, max_comm i j]
   exact exchange _ _
 
 private theorem triple_match (p r : Col) (h : cls p = cls r) :

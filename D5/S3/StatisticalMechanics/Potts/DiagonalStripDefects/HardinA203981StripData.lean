@@ -11,9 +11,11 @@ admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
 between_six: proof_shape=bind-only; consumers=HardinA203981Strip.scale_count, HardinA203981StripSymmetry.cost_formula
 parityRows: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.recolor_match, boundary, representatives
-sorted_pair_mem: proof_shape=bind-only; consumers=pairClass
-classPair: proof_shape=bind-only; consumers=pairClass, sorted_pair_mem, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
-pairClass: proof_shape=bind-only; consumers=HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.boundary_reflect._proof_1, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, boundary
+sorted_pair_mem: proof_shape=bind-only; consumers=pairClassLookup
+pairClassLookup: proof_shape=bind-only; consumers=pairClass_eq_lookup._proof_1
+pairClass_eq_lookup: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_reflect
+classPair: proof_shape=bind-only; consumers=pairClassLookup, pairClass_eq_lookup, sorted_pair_mem, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
+pairClass: proof_shape=bind-only; consumers=pairClass_eq_lookup, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.boundary_reflect._proof_1, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, boundary
 boundary: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981StripCertificate.counts, HardinA203981StripCertificate.initial_counts, HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA229508Strip.counting_bridge, HardinA229508StripCertificate.one_counts, HardinA229508StripCertificate.representative_counts, HardinA229508StripCertificate.transition_counts, HardinA229508StripData.cl, HardinA229508StripData.cl.eq_1, HardinA229683Strip.counting_bridge, HardinA229683StripCertificate.cut_inherited, HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.representative_counts, HardinA229683StripCertificate.transition_counts, HardinA229683StripCertificate.transition_counts._simp_1, HardinA229683StripCertificate.two_counts, HardinA229683StripData.cl, HardinA229683StripData.cl.eq_1
 representatives: proof_shape=bind-only; consumers=HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA229508StripCertificate.representative_counts, HardinA229683StripCertificate.representative_counts
 T: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981Strip.result, HardinA203981StripCertificate.counts, HardinA203981StripCertificate.finite_certificate, HardinA203981StripCertificate.forward_table, HardinA203981StripCertificate.forward_table._proof_1, HardinA203981StripCertificate.representative_counts, HardinA229508StripCertificate.finite_certificate, HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_one._proof_1, HardinA229508StripCertificate.forward_zeroth, HardinA229508StripCertificate.inherited_relation, HardinA229508StripCertificate.transition_counts, HardinA229508StripData.T, HardinA229508StripData.T.eq_1, HardinA229683StripCertificate.forward_inherited, HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, HardinA229683StripData.T
@@ -86,10 +88,23 @@ private theorem sorted_pair_mem : ∀ x y : Fin 5,
     (min x y, max x y) ∈ List.ofFn classPair := by
   decide +kernel
 
-/-- A class index for two triple patterns, invariant under their exchange. -/
-def pairClass (x y : Fin 5) : Fin 15 :=
+private def pairClassLookup (x y : Fin 5) : Fin 15 :=
   ⟨(List.ofFn classPair).idxOf (min x y, max x y),
     by simpa only [List.length_ofFn] using List.idxOf_lt_length_of_mem (sorted_pair_mem x y)⟩
+
+/-- The materialized indexed lookup for two triple patterns. -/
+def pairClass : Fin 5 → Fin 5 → Fin 15 :=
+  ![![0, 1, 2, 3, 4],
+    ![1, 5, 6, 7, 8],
+    ![2, 6, 9, 10, 11],
+    ![3, 7, 10, 12, 13],
+    ![4, 8, 11, 13, 14]]
+
+/-- The table gives the position of the sorted pair in the representative enumeration. -/
+theorem pairClass_eq_lookup (x y : Fin 5) :
+    (pairClass x y).val = (List.ofFn classPair).idxOf (min x y, max x y) := by
+  have eq : ∀ a b : Fin 5, pairClass a b = pairClassLookup a b := by decide +kernel
+  exact congrArg Fin.val (eq x y)
 
 /-- Classify the even columns from the left and the odd columns from the right. -/
 def boundary (p : Row 3 6) : Fin 15 :=
