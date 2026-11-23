@@ -24,6 +24,7 @@ universe ur up uq um
 
 local notation:max "raw" => CStarMatrix.ofMatrix.symm
 
+set_option linter.checkUnivs false in
 private abbrev signature : Signature where
   Params := Σ _ : Type up, Type uq
   State dims := Matrix (dims.1 ⊕ dims.2) (dims.1 ⊕ dims.2) ℂ
@@ -40,18 +41,18 @@ private def actual : Realization signature.{up, uq} :=
 private def rejected : Realization signature.{up, uq} :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
-private abbrev arena : Arena where
+set_option linter.checkUnivs false in
+private def arena : Arena where
   signature := signature
   Law F := ∀ {R : Type ur} {P : Type up} {Q : Type uq} {M : Type um}
     [Fintype R] [DecidableEq R] [Fintype P] [DecidableEq P] [Fintype Q] [DecidableEq Q]
     [Fintype M] [DecidableEq M],
     ∀ (E : QuantumChannel (P ⊕ Q) M) (D : QuantumChannel M (P ⊕ Q))
-    (τ : DensityState (P ⊕ Q)) (_hτ : raw τ.1 = fromBlocks (raw τ.1).toBlocks₁₁ 0 0 0)
-    (m : ℝ) (_hm : 0 < m) (_hfloor : m • (1 : Matrix P P ℂ) ≤ (raw τ.1).toBlocks₁₁)
-    (_hfix : (D.comp E).mapState τ = τ)
-    (K : Matrix (P ⊕ Q) (P ⊕ Q) ℂ) (_hK : K.IsHermitian) (_htr : K.trace = 0)
-    (_hQQ : K.toBlocks₂₂ ≤ 0)
-    (C : ℝ) (_hC : 1 + 2 * ‖K.toBlocks₁₂‖ ^ 2 / m ≤ C),
+    (τ : DensityState (P ⊕ Q)) (m C : ℝ) (K : Matrix (P ⊕ Q) (P ⊕ Q) ℂ)
+    (_hτ : raw τ.1 = fromBlocks (raw τ.1).toBlocks₁₁ 0 0 0 ∧
+      0 < m ∧ m • (1 : Matrix P P ℂ) ≤ (raw τ.1).toBlocks₁₁ ∧ (D.comp E).mapState τ = τ)
+    (_hK : K.IsHermitian ∧ K.trace = 0 ∧ K.toBlocks₂₂ ≤ 0 ∧
+      1 + 2 * ‖K.toBlocks₁₂‖ ^ 2 / m ≤ C),
     let Z := fromBlocks (0 : Matrix P P ℂ) 0 0 (1 : Matrix Q Q ℂ) -
       (Fintype.card Q : ℝ) • raw τ.1
     ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1 ∧
@@ -72,8 +73,8 @@ private instance : Subsingleton (One.{up} ⊕ Zero.{uq}) where
     rcases a with a | ⟨a⟩
     · rcases b with b | ⟨b⟩
       · exact congrArg Sum.inl (Subsingleton.elim a b)
-      · exact b.elim
-    · exact a.elim
+      · exact b.down.elim
+    · exact a.down.elim
 
 private def singletonDensity : DensityState One.{um} :=
   ⟨CStarMatrix.ofMatrix 1, map_nonneg CStarMatrix.ofMatrixStarAlgEquiv zero_le_one, by
@@ -83,7 +84,7 @@ private def singletonDensity : DensityState One.{um} :=
 private def supportedDensity : DensityState (One.{up} ⊕ Zero.{uq}) :=
   ⟨CStarMatrix.ofMatrix 1, map_nonneg CStarMatrix.ofMatrixStarAlgEquiv zero_le_one, by
     change (1 : Matrix (One ⊕ Zero) (One ⊕ Zero) ℂ).trace = 1
-    simp [Matrix.trace, Fintype.sum_sum_type]⟩
+    simp [Matrix.trace]⟩
 
 private theorem supported_density_unique (τ : DensityState (One.{up} ⊕ Zero.{uq})) :
     τ = supportedDensity := by
@@ -93,7 +94,7 @@ private theorem supported_density_unique (τ : DensityState (One.{up} ⊕ Zero.{
   have hji : j = i := Subsingleton.elim _ _
   subst j
   have ht := τ.trace_eq_one
-  letI : Unique (One.{up} ⊕ Zero.{uq}) := uniqueOfSubsingleton (Sum.inl default)
+  let : Unique (One.{up} ⊕ Zero.{uq}) := uniqueOfSubsingleton (Sum.inl default)
   change (∑ i : One ⊕ Zero, τ.1 i i) = 1 at ht
   have hi : i = default := Subsingleton.elim _ _
   rw [hi]
@@ -110,16 +111,22 @@ private theorem rejected_law : ¬ arena.{ur, up, uq, um}.Law rejected := by
     rw [one_smul]
     apply le_of_eq
     ext i j
-    simp [τ, supportedDensity, Matrix.toBlocks₁₁]
+    simp [τ, supportedDensity, Matrix.toBlocks₁₁, Matrix.one_apply]
   obtain ⟨E, _⟩ := finite_preparation_quantum_channel (fun _ : One.{up} ⊕ Zero.{uq} =>
     singletonDensity.{um})
   obtain ⟨D, _⟩ := finite_preparation_quantum_channel (fun _ : One.{um} => τ)
   obtain ⟨δ, hδ, hδ₁, hbound⟩ :=
-    @h One.{ur} One.{up} Zero.{uq} One.{um} _ _ _ _ _ _ _ _ E D τ hs 1 zero_lt_one hf
-      (supported_density_unique _) 0 Matrix.isHermitian_zero (by simp) (by rfl) 1
-      (by simp [Matrix.toBlocks₁₂])
-  obtain ⟨_, _, hf, _⟩ := hbound δ hδ hδ₁ le_rfl
-  exact hf
+    @h One.{ur} One.{up} Zero.{uq} One.{um} _ _ _ _ _ _ _ _ E D τ 1 1 0
+      ⟨hs, zero_lt_one, hf, supported_density_unique _⟩
+      ⟨Matrix.isHermitian_zero, by simp, by rfl, by
+        have hz : (0 : Matrix (One.{up} ⊕ Zero.{uq}) (One.{up} ⊕ Zero.{uq}) ℂ).toBlocks₁₂ =
+            0 := by
+          ext i j
+          exact j.down.elim
+        rw [hz]
+        norm_num⟩
+  obtain ⟨_, _, hfalsity, _⟩ := hbound δ hδ hδ₁ le_rfl
+  exact hfalsity
 
 private theorem dependence : ObservationalDependence signature.{up, uq} actual := by
   intro i
@@ -129,8 +136,9 @@ private theorem dependence : ObservationalDependence signature.{up, uq} actual :
     Iff.of_eq (congrFun h 0)
   exact one_ne_zero (he.mp rfl)
 
-def decoderShiftFamily : Registration arena.{ur, up, uq, um}
-    (type_of% @singular_decoder_marginal_shift) where
+private def shiftStatement : Prop := type_of% @singular_decoder_marginal_shift.{ur, up, uq, um}
+
+def decoderShiftFamily : Registration arena.{ur, up, uq, um} shiftStatement.{ur, up, uq, um} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@singular_decoder_marginal_shift, rejected, rejected_law⟩
@@ -139,7 +147,7 @@ def decoderShiftFamily : Registration arena.{ur, up, uq, um}
     · intro i
       refine ⟨rejected, ?_, ?_, rejected_law⟩
       · intro j h
-        exact (h (Subsingleton.elim _ _)).elim
+        exact (h (Subsingleton.elim (α := Unit) j i)).elim
       · funext e
         exact nomatch e
     · intro e
@@ -174,7 +182,7 @@ def decoderShiftAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 
       path := #[
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body",
         "arg", "body", "arg", "arg", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0

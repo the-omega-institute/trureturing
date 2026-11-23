@@ -23,7 +23,8 @@ open scoped CStarAlgebra ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Opera
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance (referenceLinear referenceState)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
-  (traceNorm traceNorm_add_le traceNorm_of_posSemidef traceDistance_le_one)
+  (traceNorm traceNorm_add_le traceNorm_neg traceNorm_nonneg traceNorm_of_posSemidef
+    traceDistance_le_one)
 open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
   (act amp amp_entry amp_smul)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_kronecker)
@@ -182,6 +183,7 @@ def SingularJointErrorExpansion (T Tη : QuantumChannel (P ⊕ Q) (P ⊕ Q))
     traceNorm (Hη - H) / 2 ≤ η * (1 + (traceNorm K + C * traceNorm Z) / 2)
 
 set_option maxHeartbeats 600000 in
+-- Entrywise normalization of the scaled residual includes both amplified channel actions.
 private lemma joint_expansion
     (T Tη : QuantumChannel (P ⊕ Q) (P ⊕ Q)) (τ σ : DensityState (P ⊕ Q))
     (K Z : Matrix (P ⊕ Q) (P ⊕ Q) ℂ) (C η : ℝ)
@@ -230,11 +232,12 @@ private lemma joint_expansion
     dsimp [c]
     calc
       (1 - η ^ 2) * C * η ≤ 1 * C * η :=
-        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (sub_le_self _ (sq_nonneg η)) hC₀) hη.le
+        mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_right (sub_le_self _ (sq_nonneg η)) hC₀) hη.le
       _ = η * C := by ring
   have hsub (A B : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) :
       traceNorm (A - B) ≤ traceNorm A + traceNorm B := by
-    simpa only [sub_eq_add_neg, Foundation.FiniteTraceDistance.traceNorm_neg] using
+    simpa only [sub_eq_add_neg, traceNorm_neg] using
       traceNorm_add_le A (-B)
   have hnorm : traceNorm (η • Y - η ^ 2 • W - c • V) ≤
       traceNorm (η • Y) + traceNorm (η ^ 2 • W) + traceNorm (c • V) := by
@@ -258,20 +261,19 @@ private lemma joint_expansion
       ring
     _ ≤ η * 1 + (η * traceNorm K + (η * C) * traceNorm Z) / 2 := by
       exact add_le_add (mul_le_mul_of_nonneg_left hYn hη.le) (div_le_div_of_nonneg_right
-        (add_le_add (mul_le_mul_of_nonneg_right hη₂ (Foundation.FiniteTraceDistance.traceNorm_nonneg K))
-          (mul_le_mul_of_nonneg_right hc' (Foundation.FiniteTraceDistance.traceNorm_nonneg Z))) (by norm_num))
+        (add_le_add (mul_le_mul_of_nonneg_right hη₂ (traceNorm_nonneg K))
+          (mul_le_mul_of_nonneg_right hc' (traceNorm_nonneg Z))) (by norm_num))
     _ = _ := by ring
 
 /-- A quadratic replacement correction realizes an admissible marginal direction with a
 physical decoder through the original memory, uniformly over joint probes. -/
 theorem singular_decoder_marginal_shift
     (E : QuantumChannel (P ⊕ Q) M) (D : QuantumChannel M (P ⊕ Q))
-    (τ : DensityState (P ⊕ Q)) (hτ : raw τ.1 = fromBlocks (raw τ.1).toBlocks₁₁ 0 0 0)
-    (m : ℝ) (hm : 0 < m) (hfloor : m • (1 : Matrix P P ℂ) ≤ (raw τ.1).toBlocks₁₁)
-    (hfix : (D.comp E).mapState τ = τ)
-    (K : Matrix (P ⊕ Q) (P ⊕ Q) ℂ) (hK : K.IsHermitian) (htr : K.trace = 0)
-    (hQQ : K.toBlocks₂₂ ≤ 0)
-    (C : ℝ) (hC : 1 + 2 * ‖K.toBlocks₁₂‖ ^ 2 / m ≤ C) :
+    (τ : DensityState (P ⊕ Q)) (m C : ℝ) (K : Matrix (P ⊕ Q) (P ⊕ Q) ℂ)
+    (hτ : raw τ.1 = fromBlocks (raw τ.1).toBlocks₁₁ 0 0 0 ∧
+      0 < m ∧ m • (1 : Matrix P P ℂ) ≤ (raw τ.1).toBlocks₁₁ ∧ (D.comp E).mapState τ = τ)
+    (hK : K.IsHermitian ∧ K.trace = 0 ∧ K.toBlocks₂₂ ≤ 0 ∧
+      1 + 2 * ‖K.toBlocks₁₂‖ ^ 2 / m ≤ C) :
     let Z := fromBlocks (0 : Matrix P P ℂ) 0 0 (1 : Matrix Q Q ℂ) -
       (Fintype.card Q : ℝ) • raw τ.1
     ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1 ∧
@@ -283,6 +285,8 @@ theorem singular_decoder_marginal_shift
           let Tη := Dη.comp E
           raw τ.1 - act Tη (raw τ.1) = η ^ 2 • K - (C * η ^ 3) • Z ∧
           SingularJointErrorExpansion (R := R) T Tη τ σ K Z C η := by
+  obtain ⟨hτ, hm, hfloor, hfix⟩ := hτ
+  obtain ⟨hK, htr, hQQ, hC⟩ := hK
   intro Z
   obtain ⟨δ, hδ, hδ₁, hprepare⟩ := replacement_density τ hτ m hm hfloor K hK htr hQQ C hC
   refine ⟨δ, hδ, hδ₁, fun η hη hη₁ hηδ => ?_⟩
