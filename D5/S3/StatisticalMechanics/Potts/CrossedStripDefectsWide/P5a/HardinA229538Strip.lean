@@ -768,10 +768,12 @@ def residual {C : Type*} (p : C) (d : ℕ) : C ⊕ C :=
     if d = 0 then Sum.inr p else Sum.inl p
 
 theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
-    ((if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) ≠
-      (if Sum.elim id id s = q then transfer (residual p d) s else 0)) ↔
-      1 < d ∧ 0 < cost p q ∧ cost p q ≤ d ∧
-        (s = residual q (d - cost p q) ∨ (cost p q = 1 ∧ s = Sum.inr q)) := by
+    (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) -
+      (if Sum.elim id id s = q then transfer (residual p d) s else 0) =
+    if 1 < d ∧ 0 < cost p q ∧ cost p q ≤ d then
+      (if s = residual q (d - cost p q) then 1 else 0) -
+        (if cost p q = 1 ∧ s = Sum.inr q then 1 else 0)
+    else 0 := by
   have pending (hd : d ≤ 1) (s : Column ⊕ Column) :
       (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
         (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
@@ -798,11 +800,9 @@ theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
         simp [residual, transfer, ← zero_cost_entry, oneDefect, hd0, hc0, hc1,
           Nat.not_le_of_lt ht, hq]
   by_cases allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q
-  · have equality := agree allowed s
-    constructor
-    · exact fun h => (h equality).elim
-    · rintro ⟨hd, hc, hle, _⟩
+  · have noDiscrepancy : ¬ (1 < d ∧ 0 < cost p q ∧ cost p q ≤ d) := by
       rcases allowed with hsmall | hzero | hlarge <;> omega
+    rw [agree allowed s, sub_self, if_neg noDiscrepancy]
   · have hd : 1 < d := by omega
     have hd0 : d ≠ 0 := by omega
     have hc : 0 < cost p q := by omega
@@ -833,7 +833,8 @@ private theorem transfer_count (n : ℕ) :
   · intro p d hd s
     rw [← columnEquiv.sum_comp]
     simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply,
-      fun q => not_ne_iff.mp (fun h => Nat.not_lt_of_ge hd ((transition_entry p q d s).mp h).1)]
+      fun q => sub_eq_zero.mp
+        (by simpa only [Nat.not_lt_of_ge hd, false_and, if_false] using transition_entry p q d s)]
     simp [Finset.sum_ite_eq']
   · intro r _; exact Nat.sub_le _ _
   · intro s

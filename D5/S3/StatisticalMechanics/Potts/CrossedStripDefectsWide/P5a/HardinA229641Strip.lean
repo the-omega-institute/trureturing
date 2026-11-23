@@ -792,8 +792,8 @@ private theorem transfer_count (n : ℕ) :
       cases x with
       | inl x => simp [col, cl, transfer, Matrix.fromBlocks, hd', bound]
       | inr x =>
-        have entry := not_ne_iff.mp
-          (fun h => Nat.not_lt_of_ge hd' ((transition_entry p q d x).mp h).1)
+        have entry := sub_eq_zero.mp
+          (by simpa only [Nat.not_lt_of_ge hd', false_and, if_false] using transition_entry p q d x)
         simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using entry
     · have hd₂ : d = 2 := Nat.le_antisymm hd (Nat.lt_of_not_ge hd')
       subst d
