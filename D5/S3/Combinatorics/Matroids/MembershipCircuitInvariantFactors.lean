@@ -43,10 +43,13 @@ theorem membership_lifting_obstruction_invariant_factors {V : Type*} [Fintype V]
     Nonempty ((JointSaturatedImage (S.comap p) ⧸ JointImageInSaturation (S.comap p)) ≃ₗ[ℤ]
       (((Fin (k.choose d - family.card) → ZMod g) × (Fin (k.choose (d + 1) - family.card) → ZMod n)) ×
         (∀ T : family, ZMod (q T.val)))) := by
-  refine D5.S3.Combinatorics.Matroids.CommonPivotCircuitInvariantFactors.common_pivot_lifting_obstruction_invariant_factors hd hr root family hsize hroot ?_ hbases p hp horder
-  intro T hT U hU hne
-  have bound := hseparated.inter_card_add_two_le hT hU hne
-    ((hsize T hT).trans (hsize U hU).symm)
-  exact bound.trans (hsize T hT).le
+  have hbound : ∀ T ∈ family, ∀ U ∈ family, T ≠ U →
+      (T ∩ U).card + 2 ≤ d + 2 := by
+    intro T hT U hU hne
+    have bound := hseparated.inter_card_add_two_le hT hU hne
+      ((hsize T hT).trans (hsize U hU).symm)
+    exact bound.trans (hsize T hT).le
+  exact (D5.S3.Combinatorics.Matroids.CommonPivotCircuitInvariantFactors.common_pivot_lifting_obstruction_invariant_factors hd hr root family hsize hroot
+      hbound hbases p hp horder).2.2
 
 end D5.S3.Combinatorics.Matroids.MembershipCircuitInvariantFactors

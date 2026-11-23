@@ -89,7 +89,7 @@ private def insertPetal {I : Type*} [DecidableEq I] (q : Finset I → ℕ)
     ((LinearEquiv.sumPiEquivProdPi ℤ old singleton (fun T => ξ (index T))).symm.trans
       (LinearEquiv.piCongrLeft ℤ ξ index))
 
-/-- For omissions with a common element and separated membership, each petal removes one
+/-- For omissions with a common element and the sparse intersection bound, each petal removes one
 copy of each uniform cyclic order and adds its own gcd factor. -/
 theorem common_pivot_lifting_obstruction_invariant_factors {V : Type*} [Fintype V] [LinearOrder V]
     {k d : ℕ} {S : Matroid (Fin (k + 2))} (hd : 1 ≤ d) (hr : d < k)
@@ -103,7 +103,8 @@ theorem common_pivot_lifting_obstruction_invariant_factors {V : Type*} [Fintype 
     let weight (i : Fin (k + 2)) := (univ.filter fun v => p v = i).card
     let g := univ.gcd weight
     let q (H : Finset (Fin (k + 2))) := n.gcd ((univ \ H).gcd weight)
-    Nonempty ((JointSaturatedImage (S.comap p) ⧸ JointImageInSaturation (S.comap p)) ≃ₗ[ℤ]
+    family.card ≤ k.choose d ∧ family.card ≤ k.choose (d + 1) ∧
+      Nonempty ((JointSaturatedImage (S.comap p) ⧸ JointImageInSaturation (S.comap p)) ≃ₗ[ℤ]
       (((Fin (k.choose d - family.card) → ZMod g) × (Fin (k.choose (d + 1) - family.card) → ZMod n)) ×
         (∀ T : family, ZMod (q T.val)))) := by
   classical
@@ -213,7 +214,7 @@ theorem common_pivot_lifting_obstruction_invariant_factors {V : Type*} [Fintype 
           (∀ T : ↥(insert H old), ZMod (q T.val))))
       rw [card_insert_of_notMem fresh, Nat.sub_add_eq, Nat.sub_add_eq]
       exact ⟨e'⟩
-  exact calcFactors family Subset.rfl S hbases
+  exact ⟨ha, hb, calcFactors family Subset.rfl S hbases⟩
 
 
 
