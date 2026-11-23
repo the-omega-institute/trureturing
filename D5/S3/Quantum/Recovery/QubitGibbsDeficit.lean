@@ -8,16 +8,20 @@
 
 import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
+import D5.S3.Quantum.Recovery.CanonicalPetzEquality
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 
+/-! The Gibbs deficit and its equality conditions on a finite qubit-environment system. -/
+
 set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 noncomputable section
 
 namespace D5.S3.Quantum.Recovery.QubitGibbsDeficit
 
-open Matrix
 open scoped BigOperators CStarAlgebra ComplexOrder Kronecker MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Divergence.GibbsVariationalIdentity
@@ -223,5 +227,397 @@ theorem reducing_qubit_gibbs_deficit (B : Fin 2 → CStarMatrix E E ℂ)
   ring
 
 #print axioms reducing_qubit_gibbs_deficit
+
+open D5.S3.Quantum.Divergence.CanonicalChannelDPI
+open D5.S3.Quantum.Recovery.CanonicalPetzEquality
+open D5.S3.Quantum.Recovery.SpectralTransposeRecovery
+
+private theorem exists_partialTraceChannel :
+    ∃ Φ : QuantumChannel (Fin 2 × E) (Fin 2), ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
+      mat (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = partialTraceRight X := by
+  let K (e : E) : Matrix (Fin 2) (Fin 2 × E) ℂ :=
+    (1 : Matrix (Fin 2 × E) (Fin 2 × E) ℂ).submatrix (fun i => (i, e)) (Equiv.refl _)
+  have hcomplete : ∑ e, Matrix.conjTranspose (K e) * K e = 1 := by
+    ext ⟨i,e⟩ ⟨j,f⟩
+    simp [K, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.submatrix_apply, Matrix.one_apply, Prod.mk.injEq, apply_ite, ite_and, eq_comm]
+    split_ifs <;> simp_all
+  obtain ⟨Φ, hΦ⟩ := D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
+    K hcomplete
+  refine ⟨Φ, fun X => ?_⟩
+  rw [hΦ]
+  have hcompression (e : E) :
+      K e * X * Matrix.conjTranspose (K e) = X.submatrix (fun i => (i,e)) (fun i => (i,e)) := by
+    dsimp only [K]
+    rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one,
+      Matrix.one_submatrix_mul _ (Equiv.refl _) X, Matrix.mul_submatrix_one (Equiv.refl _)]
+    rfl
+  ext i j
+  simp [partialTraceRight, Matrix.sum_apply, hcompression]
+
+private theorem mapState_partialTrace
+    {Φ : QuantumChannel (Fin 2 × E) (Fin 2)}
+    (hΦ : ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
+      mat (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = partialTraceRight X)
+    (ρ : DensityState (Fin 2 × E)) : Φ.mapState ρ = retainedMarginal ρ := by
+  apply Subtype.ext
+  exact congrArg CStarMatrix.ofMatrix (hΦ (mat ρ.1))
+
+private theorem reference_support (γ : Fin 2 → DensityState E)
+    (hγ : ∀ i, (mat (γ i).1).PosDef) (ρ : DensityState (Fin 2 × E)) :
+    SupportContained ρ (qubitBlockReference γ) ∧
+      SupportContained (retainedMarginal ρ) (retainedMarginal (qubitBlockReference γ)) := by
+  refine ⟨support_of_posDef _ _ (reference_posDef γ hγ), support_of_posDef _ _ ?_⟩
+  rw [marginal_reference]
+  exact Matrix.PosDef.one.smul (by norm_num)
+
+private theorem conditionalLoss_nonneg (γ : Fin 2 → DensityState E)
+    (hγ : ∀ i, (mat (γ i).1).PosDef) (ρ : DensityState (Fin 2 × E)) :
+    0 ≤ conditionalLoss ρ (qubitBlockReference γ) := by
+  obtain ⟨Φ, hΦ⟩ := exists_partialTraceChannel (E := E)
+  have h := extended_quantum_relative_entropy_channel_dpi Φ ρ (qubitBlockReference γ)
+  rw [mapState_partialTrace hΦ, mapState_partialTrace hΦ] at h
+  obtain ⟨hJoint, hMarginal⟩ := reference_support γ hγ ρ
+  rw [extendedQuantumRelativeEntropy_eq_coe_of_support hJoint,
+    extendedQuantumRelativeEntropy_eq_coe_of_support hMarginal] at h
+  exact sub_nonneg.mpr (WithTop.coe_le_coe.mp h)
+
+private theorem trace_tensor_identity (X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
+    (Y : Matrix (Fin 2) (Fin 2) ℂ) :
+    (X * (Y ⊗ₖ (1 : Matrix E E ℂ))).trace = (partialTraceRight X * Y).trace := by
+  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+    Matrix.kronecker_apply, Matrix.one_apply, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_eq', Finset.mem_univ, if_true, partialTraceRight, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [Finset.sum_comm]
+
+private theorem partialTrace_adjoint
+    {Φ : QuantumChannel (Fin 2 × E) (Fin 2)}
+    (hΦ : ∀ X : Matrix (Fin 2 × E) (Fin 2 × E) ℂ,
+      mat (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = partialTraceRight X)
+    (Y : Matrix (Fin 2) (Fin 2) ℂ) :
+    krausAdjoint (actual_kraus_representation Φ).kraus Y = Y ⊗ₖ (1 : Matrix E E ℂ) := by
+  apply Matrix.ext_iff_trace_mul_left.mpr
+  intro X
+  rw [actual_kraus_trace_pair, hΦ, trace_tensor_identity]
+
+private abbrev root (A : Matrix E E ℂ) : Matrix E E ℂ := cfc Real.sqrt A
+
+private theorem root_eq_sqrt (A : Matrix E E ℂ) (hA : A.PosSemidef) :
+    root A = CFC.sqrt A := by
+  rw [CFC.sqrt_eq_real_sqrt _ hA.nonneg,
+    cfcₙ_eq_cfc (hf := Real.continuous_sqrt.continuousOn) (hf0 := Real.sqrt_zero)]
+
+private theorem root_nonneg (A : Matrix E E ℂ) (hA : A.PosSemidef) : 0 ≤ root A := by
+  rw [root_eq_sqrt _ hA]
+  exact CFC.sqrt_nonneg A
+
+private theorem root_square (A : Matrix E E ℂ) (hA : A.PosSemidef) : root A * root A = A := by
+  rw [root_eq_sqrt _ hA]
+  exact CFC.sqrt_mul_sqrt_self A hA.nonneg
+
+private theorem root_half (A : Matrix E E ℂ) (hA : A.PosSemidef) :
+    root ((1 / 2 : ℝ) • A) = (√(1 / 2 : ℝ)) • root A := by
+  have hhalf : (0 : ℝ) ≤ 1 / 2 := by norm_num
+  have hcoeff : (√(1 / 2 : ℝ)) * √(1 / 2 : ℝ) = 1 / 2 := Real.mul_self_sqrt hhalf
+  rw [root_eq_sqrt _ (hA.smul hhalf)]
+  apply CFC.sqrt_unique _ (smul_nonneg (Real.sqrt_nonneg _) (root_nonneg A hA))
+  rw [smul_mul_assoc, mul_smul_comm, smul_smul, hcoeff, root_square A hA]
+
+private theorem root_reference (γ : Fin 2 → DensityState E) :
+    cfc Real.sqrt (mat (qubitBlockReference γ).1) =
+      retainedBlock (fun i => (√(1 / 2 : ℝ)) • root (mat (γ i).1)) := by
+  change cfc Real.sqrt (retainedBlock (fun i => (1 / 2 : ℝ) • mat (γ i).1)) = _
+  rw [cfc_block _ _ (fun i => ((mat_psd (γ i)).smul
+    (show (0 : ℝ) ≤ 1 / 2 by norm_num)).isHermitian)]
+  congr 1
+  funext i
+  exact root_half _ (mat_psd (γ i))
+
+private theorem cfc_scalar_qubit (f : ℝ → ℝ) (a : ℝ) :
+    cfc f (a • (1 : Matrix (Fin 2) (Fin 2) ℂ)) =
+      f a • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  simp only [← Algebra.algebraMap_eq_smul_one, cfc_algebraMap]
+
+private theorem sandwiched_block_apply (T : Fin 2 → Matrix E E ℂ)
+    (P : Matrix (Fin 2) (Fin 2) ℂ) (i j : Fin 2) (e f : E) :
+    (retainedBlock T * (P ⊗ₖ (1 : Matrix E E ℂ)) * retainedBlock T) (i,e) (j,f) =
+      P i j * (T i * T j) e f := by
+  have hleft (k : Fin 2) (g : E) :
+      (retainedBlock T * (P ⊗ₖ (1 : Matrix E E ℂ))) (i,e) (k,g) =
+        T i e g * P i k := by
+    simp only [Matrix.mul_apply, Fintype.sum_prod_type, block_apply, Matrix.kronecker_apply,
+      Matrix.one_apply, ite_mul, zero_mul, mul_ite, mul_one, mul_zero,
+      Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  rw [Matrix.mul_apply, Fintype.sum_prod_type]
+  change (∑ k : Fin 2, ∑ g : E,
+    (retainedBlock T * (P ⊗ₖ (1 : Matrix E E ℂ))) (i,e) (k,g) *
+      retainedBlock T (k,g) (j,f)) = _
+  simp only [hleft, block_apply, mul_ite, mul_zero, Finset.sum_ite_irrel,
+    Finset.sum_const_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true, Matrix.mul_apply, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun g _ => by ring
+
+private theorem conditionalLoss_eq_zero_iff_entries (γ : Fin 2 → DensityState E)
+    (hγ : ∀ i, (mat (γ i).1).PosDef) (ρ : DensityState (Fin 2 × E)) :
+    conditionalLoss ρ (qubitBlockReference γ) = 0 ↔
+      ∀ (i j : Fin 2) (e f : E), mat ρ.1 (i,e) (j,f) =
+        mat (retainedMarginal ρ).1 i j * (root (mat (γ i).1) * root (mat (γ j).1)) e f := by
+  obtain ⟨Φ, hΦ⟩ := exists_partialTraceChannel (E := E)
+  let τ := qubitBlockReference γ
+  let P := mat (retainedMarginal ρ).1
+  let T := fun i => root (mat (γ i).1)
+  obtain ⟨R, hR, _, hEq⟩ := supported_entropy_equality_iff_fixed_petz_recovery Φ τ
+  have hQ : mat (Φ.mapState τ).1 = (1 / 2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    rw [mapState_partialTrace hΦ, marginal_reference]
+  have hW : spectralInverseSqrt (mat (Φ.mapState τ).1) =
+      (√(1 / 2 : ℝ))⁻¹ • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    rw [hQ, spectralInverseSqrt, cfc_scalar_qubit]
+  have hS : spectralSupport (mat (Φ.mapState τ).1) = 1 := by
+    rw [hQ, spectralSupport, cfc_scalar_qubit]
+    norm_num
+  have hRec : ∀ (i j : Fin 2) (e f : E),
+      mat (R.mapState (Φ.mapState ρ)).1 (i,e) (j,f) = P i j * (T i * T j) e f := by
+    intro i j e f
+    have h := hR P
+    -- The channel input is precisely the actual reduced density matrix.
+    have hInput : (Φ.mapState ρ).1 = CStarMatrix.ofMatrix P :=
+      congrArg Subtype.val (mapState_partialTrace hΦ ρ)
+    change mat (R.toCompletelyPositiveMap (Φ.mapState ρ).1) (i,e) (j,f) = _
+    rw [hInput, h, hS, sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero]
+    let W := spectralInverseSqrt (mat (Φ.mapState τ).1)
+    let S := cfc Real.sqrt (mat τ.1)
+    have hsum :
+        (∑ c, S * Matrix.conjTranspose ((actual_kraus_representation Φ).kraus c) * W * P * W *
+            (actual_kraus_representation Φ).kraus c * S) =
+          S * krausAdjoint (actual_kraus_representation Φ).kraus (W * P * W) * S := by
+      simp only [krausAdjoint, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+    rw [hsum, partialTrace_adjoint hΦ]
+    change (S * ((W * P * W) ⊗ₖ (1 : Matrix E E ℂ)) * S) (i,e) (j,f) = _
+    let r := √(1 / 2 : ℝ)
+    have hscale : r ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by norm_num))
+    have hr : ((r⁻¹ : ℝ) : ℂ) * (r : ℂ) = 1 := by
+      exact_mod_cast inv_mul_cancel₀ hscale
+    change (cfc Real.sqrt (mat (qubitBlockReference γ).1) *
+      ((spectralInverseSqrt (mat (Φ.mapState τ).1) * P *
+        spectralInverseSqrt (mat (Φ.mapState τ).1)) ⊗ₖ (1 : Matrix E E ℂ)) *
+      cfc Real.sqrt (mat (qubitBlockReference γ).1)) (i,e) (j,f) = _
+    rw [hW, root_reference, sandwiched_block_apply]
+    simp only [smul_mul_assoc, mul_smul_comm, Matrix.one_mul, Matrix.mul_one,
+      smul_smul, Matrix.smul_apply, Complex.real_smul]
+    have hcancel (x y : ℂ) :
+        (((r⁻¹ : ℝ) : ℂ) * (((r⁻¹ : ℝ) : ℂ) * x)) *
+          ((r : ℂ) * ((r : ℂ) * y)) = x * y := by
+      calc
+        _ = (((r⁻¹ : ℝ) : ℂ) * (r : ℂ)) ^ 2 * (x * y) := by ring
+        _ = _ := by rw [hr, one_pow, one_mul]
+    simpa only [Complex.ofReal_inv] using hcancel (P i j) ((T i * T j) e f)
+
+  have h := hEq ρ (reference_support γ hγ ρ).1
+  rw [mapState_partialTrace hΦ ρ, mapState_partialTrace hΦ τ] at h
+  rw [conditionalLoss, sub_eq_zero]
+  constructor
+  · intro hz
+    have he := h.mp hz
+    rw [← mapState_partialTrace hΦ ρ] at he
+    intro i j e f
+    exact (congrArg (fun σ : DensityState (Fin 2 × E) => mat σ.1 (i,e) (j,f)) he).symm.trans
+      (hRec i j e f)
+  · intro he
+    apply h.mpr
+    rw [← mapState_partialTrace hΦ ρ]
+    apply Subtype.ext
+    apply CStarMatrix.ofMatrix.symm.injective
+    ext ⟨i,e⟩ ⟨j,f⟩
+    exact (hRec i j e f).trans (he i j e f).symm
+
+private theorem root_trace_rigidity (γ δ : DensityState E)
+    (h : (root (mat γ.1) * root (mat δ.1)).trace = 1) : γ = δ := by
+  let A := root (mat γ.1)
+  let B := root (mat δ.1)
+  have hA : Matrix.conjTranspose A = A := (Matrix.nonneg_iff_posSemidef.mp (root_nonneg _ (mat_psd γ))).isHermitian
+  have hB : Matrix.conjTranspose B = B := (Matrix.nonneg_iff_posSemidef.mp (root_nonneg _ (mat_psd δ))).isHermitian
+  have hAA : A * A = mat γ.1 := root_square _ (mat_psd γ)
+  have hBB : B * B = mat δ.1 := root_square _ (mat_psd δ)
+  change (A * B).trace = 1 at h
+  have hBA : (B * A).trace = 1 := (Matrix.trace_mul_comm B A).trans h
+  have hz : (Matrix.conjTranspose (A - B) * (A - B)).trace = 0 := by
+    rw [Matrix.conjTranspose_sub, hA, hB, sub_mul, mul_sub, mul_sub,
+      Matrix.trace_sub, Matrix.trace_sub, Matrix.trace_sub, hAA, hBB, h, hBA]
+    change Matrix.trace γ.1 - 1 - (1 - Matrix.trace δ.1) = 0
+    simp
+  have hab := sub_eq_zero.mp (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp hz)
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  rw [← hAA, ← hBB, hab]
+
+private theorem real_diagonal (ρ : DensityState (Fin 2)) (i : Fin 2) :
+    ((mat ρ.1 i i).re : ℂ) = mat ρ.1 i i := by
+  apply Complex.ext
+  · simp
+  · exact (Complex.nonneg_iff.mp ((mat_psd ρ).diag_nonneg (i := i))).2
+
+private theorem conditionalLoss_eq_zero_iff (γ : Fin 2 → DensityState E)
+    (hγ : ∀ i, (mat (γ i).1).PosDef) (ρ : DensityState (Fin 2 × E)) :
+    let P := mat (retainedMarginal ρ).1
+    conditionalLoss ρ (qubitBlockReference γ) = 0 ↔
+      mat ρ.1 = retainedBlock (fun i => (P i i).re • mat (γ i).1) ∨
+        (γ 0 = γ 1 ∧ mat ρ.1 = P ⊗ₖ mat (γ 0).1) := by
+  dsimp only
+  let P := mat (retainedMarginal ρ).1
+  change _ ↔ mat ρ.1 = retainedBlock (fun i => (P i i).re • mat (γ i).1) ∨
+    (γ 0 = γ 1 ∧ mat ρ.1 = P ⊗ₖ mat (γ 0).1)
+  rw [conditionalLoss_eq_zero_iff_entries γ hγ]
+  have hSQ (i : Fin 2) : root (mat (γ i).1) * root (mat (γ i).1) = mat (γ i).1 :=
+    root_square _ (mat_psd (γ i))
+  have hdiag (i : Fin 2) : ((P i i).re : ℂ) = P i i :=
+    real_diagonal (retainedMarginal ρ) i
+  have hγsame (h : γ 0 = γ 1) (i : Fin 2) : γ i = γ 0 := by
+    fin_cases i
+    · rfl
+    · exact h.symm
+  constructor
+  · intro h
+    by_cases h01 : P 0 1 = 0
+    · left
+      have h10 : P 1 0 = 0 := by
+        have hHerm := (mat_psd (retainedMarginal ρ)).isHermitian
+        change P.IsHermitian at hHerm
+        simpa [h01, Matrix.conjTranspose_apply] using congrFun (congrFun hHerm 1) 0 |>.symm
+      ext ⟨i,e⟩ ⟨j,f⟩
+      rw [h, block_apply]
+      by_cases hij : i = j
+      · subst j
+        rw [ite_eq_left rfl, hSQ]
+        simp only [Matrix.smul_apply, Complex.real_smul, hdiag]
+        rfl
+      · rw [ite_eq_right hij]
+        have hpij : P i j = 0 := by
+          fin_cases i <;> fin_cases j
+          · exact (hij rfl).elim
+          · exact h01
+          · exact h10
+          · exact (hij rfl).elim
+        change P i j * _ = 0
+        rw [hpij, zero_mul]
+    · right
+      have hsum : P 0 1 = P 0 1 * (root (mat (γ 0).1) * root (mat (γ 1).1)).trace := by
+        change (∑ e : E, mat ρ.1 (0,e) (1,e)) = _
+        simp only [h, Matrix.trace, Matrix.diag_apply, Finset.mul_sum]
+        rfl
+      have hγ01 := root_trace_rigidity (γ 0) (γ 1)
+        (mul_left_cancel₀ h01 (by simpa only [mul_one] using hsum.symm))
+      refine ⟨hγ01, ?_⟩
+      ext ⟨i,e⟩ ⟨j,f⟩
+      rw [h, hγsame hγ01 i, hγsame hγ01 j, hSQ, Matrix.kronecker_apply]
+  · rintro (h | ⟨h01, h⟩) i j e f
+    · rw [h, block_apply]
+      by_cases hij : i = j
+      · subst j
+        rw [ite_eq_left rfl, hSQ]
+        simp only [Matrix.smul_apply, Complex.real_smul, hdiag]
+        rfl
+      · have hpij : P i j = 0 := by
+          change (∑ e : E, mat ρ.1 (i,e) (j,e)) = _
+          rw [h]
+          simp [block_apply, hij]
+        rw [ite_eq_right hij]
+        change 0 = P i j * _
+        rw [hpij, zero_mul]
+    · rw [h, hγsame h01 i, hγsame h01 j, hSQ, Matrix.kronecker_apply]
+
+private def endpointWeight (i j : Fin 2) : ℝ := if i = j then 1 else 0
+
+/-- The block Gibbs density with a pure retained basis state at the given label. -/
+def gibbsEndpoint (B : Fin 2 → CStarMatrix E E ℂ) (hB : ∀ i, IsSelfAdjoint (B i))
+    (i : Fin 2) : DensityState (Fin 2 × E) :=
+  blockState (blockGibbs B hB) (endpointWeight i) (fun j => by
+    by_cases hij : i = j <;> simp [endpointWeight, hij]) (by
+      simp [endpointWeight, Finset.sum_ite_eq, Finset.sum_ite_eq'])
+
+/-- The largest block Gibbs value is attained at every winning pure retained basis state.
+An arbitrary density maximizes exactly when it puts weight only on winning blocks and
+is their block Gibbs mixture, or is a product with the common Gibbs density. -/
+theorem reducing_qubit_gibbs_argmax (B : Fin 2 → CStarMatrix E E ℂ)
+    (hB : ∀ i, IsSelfAdjoint (B i)) :
+    let γ := blockGibbs B hB
+    let g := fun i => Real.log (partitionFunction (B i))
+    let m := max (g 0) (g 1)
+    IsGreatest (Set.range (gibbsValue B)) m ∧
+      (∀ i, g i = m →
+        gibbsValue B (gibbsEndpoint B hB i) = m ∧
+          mat (retainedMarginal (gibbsEndpoint B hB i)).1 = Matrix.single i i 1) ∧
+      ∀ ρ, let P := mat (retainedMarginal ρ).1
+        gibbsValue B ρ = m ↔
+          (∀ i, (P i i).re = 0 ∨ g i = m) ∧
+          (mat ρ.1 = retainedBlock (fun i => (P i i).re • mat (γ i).1) ∨
+            (γ 0 = γ 1 ∧ mat ρ.1 = P ⊗ₖ mat (γ 0).1)) := by
+  dsimp only
+  let γ := blockGibbs B hB
+  let g := fun i => Real.log (partitionFunction (B i))
+  let m := max (g 0) (g 1)
+  have hg (i : Fin 2) : g i ≤ m := by
+    fin_cases i
+    · exact le_max_left _ _
+    · exact le_max_right _ _
+  have hγ := blockGibbs_posDef B hB
+  have htrial (ρ : DensityState (Fin 2 × E)) :
+      gibbsValue B ρ ≤ m ∧
+        (gibbsValue B ρ = m ↔
+          (∀ i, (mat (retainedMarginal ρ).1 i i).re = 0 ∨ g i = m) ∧
+            (mat ρ.1 = retainedBlock (fun i => (mat (retainedMarginal ρ).1 i i).re • mat (γ i).1) ∨
+              (γ 0 = γ 1 ∧ mat ρ.1 = mat (retainedMarginal ρ).1 ⊗ₖ mat (γ 0).1))) := by
+    let p := fun i => (mat (retainedMarginal ρ).1 i i).re
+    have hd : m - gibbsValue B ρ = conditionalLoss ρ (qubitBlockReference γ) +
+        ∑ i, p i * (m - g i) := reducing_qubit_gibbs_deficit B hB ρ
+    have hp (i : Fin 2) : 0 ≤ p i :=
+      (Complex.nonneg_iff.mp ((mat_psd (retainedMarginal ρ)).diag_nonneg (i := i))).1
+    have hn (i : Fin 2) (_ : i ∈ Finset.univ) : 0 ≤ p i * (m - g i) :=
+      mul_nonneg (hp i) (sub_nonneg.mpr (hg i))
+    have hsum := Finset.sum_nonneg hn
+    have hLoss := conditionalLoss_nonneg γ hγ ρ
+    have hsumzero : (∑ i, p i * (m - g i)) = 0 ↔ ∀ i, p i = 0 ∨ g i = m := by
+      rw [Finset.sum_eq_zero_iff_of_nonneg hn]
+      simp only [Finset.mem_univ, true_implies, mul_eq_zero, sub_eq_zero, eq_comm (a := m)]
+    refine ⟨by linarith, ?_⟩
+    have hzero := conditionalLoss_eq_zero_iff γ hγ ρ
+    dsimp only at hzero
+    change _ ↔ (∀ i, p i = 0 ∨ g i = m) ∧ _
+    rw [← hsumzero, ← hzero]
+    constructor
+    · intro h
+      constructor <;> linarith
+    · rintro ⟨hs, hl⟩
+      linarith
+  have he (i : Fin 2) (hi : g i = m) :
+      gibbsValue B (gibbsEndpoint B hB i) = m ∧
+        mat (retainedMarginal (gibbsEndpoint B hB i)).1 = Matrix.single i i 1 := by
+    let ρ := gibbsEndpoint B hB i
+    have hp : mat (retainedMarginal ρ).1 = Matrix.diagonal (fun j => (endpointWeight i j : ℂ)) :=
+      marginal_blockState _ _ _ _
+    refine ⟨(htrial ρ).2.mpr ⟨?_, Or.inl ?_⟩, ?_⟩
+    · intro j
+      by_cases hij : i = j
+      · exact Or.inr (hij ▸ hi)
+      · left
+        change (mat (retainedMarginal ρ).1 j j).re = 0
+        rw [hp, Matrix.diagonal_apply_eq]
+        simp [endpointWeight, hij]
+    · change retainedBlock (fun j => endpointWeight i j • mat (γ j).1) =
+        retainedBlock (fun j => (mat (retainedMarginal ρ).1 j j).re • mat (γ j).1)
+      rw [hp]
+      simp only [Matrix.diagonal_apply_eq, Complex.ofReal_re]
+    · rw [hp]
+      ext j k
+      by_cases hij : i = j <;> by_cases hik : i = k <;>
+        simp_all [Matrix.diagonal_apply, Matrix.single, endpointWeight, eq_comm]
+  refine ⟨⟨?_, ?_⟩, he, fun ρ => (htrial ρ).2⟩
+  · rcases le_total (g 0) (g 1) with h | h
+    · exact ⟨gibbsEndpoint B hB 1, (he 1 (max_eq_right h).symm).1⟩
+    · exact ⟨gibbsEndpoint B hB 0, (he 0 (max_eq_left h).symm).1⟩
+  · rintro _ ⟨ρ, rfl⟩
+    exact (htrial ρ).1
+
+#print axioms reducing_qubit_gibbs_argmax
 
 end D5.S3.Quantum.Recovery.QubitGibbsDeficit

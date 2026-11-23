@@ -35,5 +35,30 @@ internal sealed class QubitGibbsDeficitDocument : IScribeDocumentDefinition
                         + "(g_i + log 2) I. Expanding the two relative entropies cancels the scalar "
                         + "log(2) shifts. The trace pairing with the remaining scalar blocks reads the "
                         + "actual populations p_i, whose sum is one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("reducing-qubit-gibbs-argmax"),
+                DeclarationHandle.Create(Owner + "reducing_qubit_gibbs_argmax"),
+                H("Pure marginals and all maximizing densities"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The maximum of V over all joint densities is m. Each winning label i achieves "
+                        + "m at the density supported on that retained basis vector with environment "
+                        + "density gamma_i. Its retained marginal is the rank-one diagonal matrix unit.")),
+                    Paragraph(Text(
+                        "For an arbitrary rho, equality V(rho) = m requires every positive p_i to have "
+                        + "g_i = m. It also requires rho to be either the block mixture with blocks "
+                        + "p_i gamma_i, or the product P tensor gamma_0 when gamma_0 = gamma_1. These "
+                        + "conditions together suffice. In particular, at a tie with distinct Gibbs "
+                        + "densities the optimizer set is the segment between the two pure-marginal states.")),
+                    Paragraph(Text(
+                        "Data processing gives nonnegative conditional loss for the two faithful "
+                        + "references. At zero loss the fixed ordinary Petz map of the partial trace "
+                        + "recovers rho. Its (i,j) block is P_ij sqrt(gamma_i) sqrt(gamma_j). Taking "
+                        + "the partial trace forces either zero off-diagonal marginal or unit trace "
+                        + "overlap of the two roots. That overlap forces equal roots by the squared "
+                        + "Hilbert-Schmidt norm of their difference. The explicit recovery formula "
+                        + "also verifies the converse in both cases."))),
                 DescribeRole.Theorem))));
 }
