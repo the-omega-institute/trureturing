@@ -504,13 +504,6 @@ private theorem dot4_reconstruct (q : V → Vec4 R) (faces : I → Fin 4 → V)
   simp only [List.foldr_cons, List.foldr_nil]
   grind
 
-private theorem four_mem (j : Fin 4) : j ∈ ([0,1,2,3] : List (Fin 4)) := by
-  match j with
-  | ⟨0,_⟩ => simp
-  | ⟨1,_⟩ => simp
-  | ⟨2,_⟩ => simp
-  | ⟨3,_⟩ => simp
-
 /-- Algebraic support-to-cap theorem for a fixed unit direction. The coefficients
 are the basis-expansion coordinates; an inverse matrix computes them. -/
 theorem vec4_cap_of_directed_ridges
