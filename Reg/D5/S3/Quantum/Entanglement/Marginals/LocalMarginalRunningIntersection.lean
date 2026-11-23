@@ -21,16 +21,16 @@ noncomputable section
 
 private abbrev signature : Signature where
   Params := Unit
-  State _ := ℕ
+  State _ := Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℕ → Prop
+  Output _ _ := Prop → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 private def actual : Realization signature :=
-  realize signature (fun _ _ x y => x = y) (fun anchor => nomatch anchor)
+  realize signature (fun _ _ x y => x ↔ y) (fun anchor => nomatch anchor)
 
 private def rejected : Realization signature :=
   realize signature (fun _ _ _ _ => False) (fun anchor => nomatch anchor)
@@ -38,12 +38,12 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {V : Type u} [Fintype V] [DecidableEq V] {K : Type v} [Field K]
-    {allowed : Finset V → Prop} (_closed : DownwardClosed allowed) (regions : List (Finset V))
-    (_h : RunningIntersection regions),
+    {allowed : Finset V → Prop} (_closed : DownwardClosed allowed) (regions : List (Finset V)),
     R.readout () ()
       (Module.finrank K (marginalMap (allowed := allowed) (K := K) {s | s ∈ regions}).range +
-        (regions.zipWith (fun s t => regionPairCount allowed (s ∩ t)) regions.tail).sum)
-      (regions.map (regionPairCount allowed)).sum
+        (regions.zipWith (fun s t => regionPairCount allowed (s ∩ t)) regions.tail).sum =
+        (regions.map (regionPairCount allowed)).sum)
+      (RunningIntersection (regions.map (fun s => s ∩ admittedSites allowed)))
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
@@ -51,23 +51,24 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     unfold DownwardClosed
     intros
     exact True.intro
-  exact @h (ULift.{u} Unit) _ _ (ULift.{v} ℚ) _ (fun _ => True) closed [] trivial
+  exact @h (ULift.{u} Unit) _ _ (ULift.{v} ℚ) _ (fun _ => True) closed []
 
-def family : Registration arena.{u,v} (type_of% @finrank_add_adjacentOverlap.{u,v}) where
+def family : Registration arena.{u,v} (type_of% @finrank_add_adjacentOverlap_iff.{u,v}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@finrank_add_adjacentOverlap, rejected, rejected_law⟩
+  variation := ⟨@finrank_add_adjacentOverlap_iff, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun anchor => nomatch anchor⟩
   dependence := by
     intro role
-    refine ⟨(), 0, 1, ?_⟩
+    refine ⟨(), True, False, ?_⟩
     intro h
-    exact Nat.one_ne_zero (Eq.mp (congrFun h 0) rfl)
+    have impossible : False ↔ True := Eq.mp (congrFun h True) Iff.rfl
+    exact impossible.mpr trivial
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finrank_add_adjacentOverlap.{u,v}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Entanglement.Marginals.LocalMarginalRunningIntersection.finrank_add_adjacentOverlap.audit
+    (@finrank_add_adjacentOverlap_iff.{u,v}) (Realization signature) Type Unit where
+  unitName := `D5.S3.Quantum.Entanglement.Marginals.LocalMarginalRunningIntersection.finrank_add_adjacentOverlap_iff.audit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.Marginals.LocalMarginalRunningIntersection.family
   realizationSource := none
   generated := false
@@ -78,7 +79,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u,v} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x y => x = y) (fun anchor => nomatch anchor))
+  readout := some (realize signature (fun _ _ x y => x ↔ y) (fun anchor => nomatch anchor))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -88,7 +89,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

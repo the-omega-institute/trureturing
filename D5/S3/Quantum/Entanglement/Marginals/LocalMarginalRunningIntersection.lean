@@ -50,17 +50,40 @@ private theorem adjacent_intersection {A : Type*} [DecidableEq A]
     exact ⟨hx, Or.inl hy⟩
 
 private theorem card_listUnion_add_overlap {A : Type*} [DecidableEq A] :
-    ∀ regions : List (Finset A), RunningIntersection regions →
-      (listUnion regions).card + (regions.zipWith (fun s t => (s ∩ t).card) regions.tail).sum =
-        (regions.map Finset.card).sum
-  | [], _ => by simp [listUnion]
-  | [x], _ => by simp [listUnion]
-  | x :: y :: tail, h => by
-    have ha := Finset.card_union_add_card_inter x (listUnion (y :: tail))
-    rw [adjacent_intersection x y tail h.1] at ha
-    have hr := card_listUnion_add_overlap (y :: tail) h.2
-    simp only [listUnion, List.tail_cons, List.zipWith_cons_cons, List.map_cons, List.sum_cons] at *
-    omega
+    ∀ regions : List (Finset A),
+      let count := (listUnion regions).card +
+        (regions.zipWith (fun s t => (s ∩ t).card) regions.tail).sum
+      let total := (regions.map Finset.card).sum
+      count ≤ total ∧ (count = total ↔ RunningIntersection regions)
+  | [] => by simp [listUnion, RunningIntersection]
+  | [_] => by simp [listUnion, RunningIntersection]
+  | x :: y :: tail => by
+    have unionCount := Finset.card_union_add_card_inter x (listUnion (y :: tail))
+    have sub : x ∩ y ⊆ x ∩ listUnion (y :: tail) := by
+      intro i hi
+      obtain ⟨hx, hy⟩ := Finset.mem_inter.mp hi
+      exact Finset.mem_inter.mpr ⟨hx, (mem_listUnion _ _).mpr ⟨y, by simp, hy⟩⟩
+    have overlapLe := Finset.card_le_card sub
+    obtain ⟨tailLe, tailEq⟩ := card_listUnion_add_overlap (y :: tail)
+    dsimp only
+    simp only [List.tail_cons, List.zipWith_cons_cons, List.map_cons, List.sum_cons]
+      at tailLe tailEq ⊢
+    change ((x ∪ listUnion (y :: tail)).card + _) ≤ _ ∧
+      (((x ∪ listUnion (y :: tail)).card + _) = _ ↔ _)
+    refine ⟨by omega, ?_⟩
+    constructor
+    · intro h
+      refine ⟨?_, tailEq.mp (by omega)⟩
+      have overlapEq := Finset.eq_of_subset_of_card_le sub (by omega)
+      intro z hz i hi
+      obtain ⟨hx, hz'⟩ := Finset.mem_inter.mp hi
+      have hu := (mem_listUnion (y :: tail) i).mpr ⟨z, List.mem_cons_of_mem y hz, hz'⟩
+      exact (Finset.mem_inter.mp
+        (overlapEq ▸ Finset.mem_inter.mpr ⟨hx, hu⟩ : i ∈ x ∩ y)).2
+    · rintro ⟨head, rest⟩
+      rw [adjacent_intersection x y tail head] at unionCount
+      have he := tailEq.mpr rest
+      omega
 
 private noncomputable def localPairs (allowed : Finset V → Prop) (s : Finset V) :
     Finset (LegalPair allowed) := by
@@ -73,24 +96,65 @@ private theorem localPairs_inter (allowed : Finset V → Prop) (s t : Finset V) 
   ext p
   simp [localPairs, Finset.subset_inter_iff]
 
-private theorem localPairs_mono {allowed : Finset V → Prop} {s t : Finset V}
-    (h : s ⊆ t) : localPairs allowed s ⊆ localPairs allowed t := by
-  intro i hi
-  have hu : occupied i.1 ⊆ s := by simpa [localPairs] using hi
-  simpa [localPairs] using hu.trans h
+private theorem mem_localPairs {allowed : Finset V → Prop} {s : Finset V}
+    {p : LegalPair allowed} : p ∈ localPairs allowed s ↔ occupied p.1 ⊆ s := by
+  simp [localPairs]
 
-private theorem chain_localPairs {allowed : Finset V → Prop} :
-    ∀ regions : List (Finset V), RunningIntersection regions →
-      RunningIntersection (regions.map (localPairs allowed))
-  | [], _ => trivial
-  | [_], _ => trivial
-  | x :: y :: tail, h => by
+/-- Sites whose singleton word is legal. -/
+noncomputable def admittedSites (allowed : Finset V → Prop) : Finset V := by
+  classical
+  exact Finset.univ.filter (fun i => allowed {i})
+
+omit [DecidableEq V] in
+private theorem mem_admittedSites {allowed : Finset V → Prop} {i : V} :
+    i ∈ admittedSites allowed ↔ allowed {i} := by
+  simp [admittedSites]
+
+private theorem occupied_admitted {allowed : Finset V → Prop} (closed : DownwardClosed allowed)
+    (p : LegalPair allowed) : occupied p.1 ⊆ admittedSites allowed := by
+  intro i hi
+  apply mem_admittedSites.mpr
+  rcases Finset.mem_union.mp hi with hx | hy
+  · exact closed (Finset.singleton_subset_iff.mpr hx) p.2.1
+  · exact closed (Finset.singleton_subset_iff.mpr hy) p.2.2
+
+private theorem running_localPairs_iff {allowed : Finset V → Prop} (h : DownwardClosed allowed) :
+    ∀ regions : List (Finset V),
+      RunningIntersection (regions.map (localPairs allowed)) ↔
+        RunningIntersection (regions.map (fun s => s ∩ admittedSites allowed))
+  | [] => Iff.rfl
+  | [_] => Iff.rfl
+  | x :: y :: tail => by
     constructor
-    · intro region hregion
-      obtain ⟨z, hz, rfl⟩ := List.mem_map.mp hregion
-      rw [localPairs_inter]
-      exact localPairs_mono (h.1 z hz)
-    · exact chain_localPairs (y :: tail) h.2
+    · rintro ⟨head, rest⟩
+      refine ⟨?_, (running_localPairs_iff h (y :: tail)).mp rest⟩
+      intro region hr i hi
+      obtain ⟨z, hz, rfl⟩ := List.mem_map.mp hr
+      obtain ⟨hx, hz'⟩ := Finset.mem_inter.mp hi
+      obtain ⟨hix, ha⟩ := Finset.mem_inter.mp hx
+      have hiz := (Finset.mem_inter.mp hz').1
+      have valid := mem_admittedSites.mp ha
+      let p : LegalPair allowed := ⟨({i}, {i}), valid, valid⟩
+      have hp : occupied p.1 = {i} := Finset.union_self _
+      have hxPair : p ∈ localPairs allowed x := mem_localPairs.mpr
+        (hp ▸ Finset.singleton_subset_iff.mpr hix)
+      have hzPair : p ∈ localPairs allowed z := mem_localPairs.mpr
+        (hp ▸ Finset.singleton_subset_iff.mpr hiz)
+      have hyPair := head _ (List.mem_map.mpr ⟨z, hz, rfl⟩)
+        (Finset.mem_inter.mpr ⟨hxPair, hzPair⟩)
+      exact Finset.mem_inter.mpr ⟨mem_localPairs.mp hyPair (by simp [hp]), ha⟩
+    · rintro ⟨head, rest⟩
+      refine ⟨?_, (running_localPairs_iff h (y :: tail)).mpr rest⟩
+      intro region hr p hp
+      obtain ⟨z, hz, rfl⟩ := List.mem_map.mp hr
+      obtain ⟨hx, hz'⟩ := Finset.mem_inter.mp hp
+      apply mem_localPairs.mpr
+      intro i hi
+      have ha := occupied_admitted h p hi
+      have hiy := head _ (List.mem_map.mpr ⟨z, hz, rfl⟩) (Finset.mem_inter.mpr
+        ⟨Finset.mem_inter.mpr ⟨mem_localPairs.mp hx hi, ha⟩,
+          Finset.mem_inter.mpr ⟨mem_localPairs.mp hz' hi, ha⟩⟩)
+      exact (Finset.mem_inter.mp hiy).1
 
 private theorem count_cover (allowed : Finset V → Prop) (regions : List (Finset V)) :
     (listUnion (regions.map (localPairs allowed))).card =
@@ -126,18 +190,18 @@ private theorem localPairs_zipWith (allowed : Finset V → Prop) :
 noncomputable def regionPairCount (allowed : Finset V → Prop) (region : Finset V) : ℕ :=
   (localPairs allowed region).card
 
-/-- For regions with running intersection, the collected rank plus the adjacent overlap counts
-equals the sum of individual region counts. -/
-theorem finrank_add_adjacentOverlap {allowed : Finset V → Prop}
-    (closed : DownwardClosed allowed) (regions : List (Finset V))
-    (h : RunningIntersection regions) :
+/-- Adjacent overlaps account for all repeated coordinates exactly when the regions have
+running intersection on the sites with legal singleton words. -/
+theorem finrank_add_adjacentOverlap_iff {allowed : Finset V → Prop}
+    (closed : DownwardClosed allowed) (regions : List (Finset V)) :
     Module.finrank K (marginalMap (K := K) (allowed := allowed) {s | s ∈ regions}).range +
       (regions.zipWith (fun s t => regionPairCount allowed (s ∩ t)) regions.tail).sum =
-      (regions.map (regionPairCount allowed)).sum := by
+      (regions.map (regionPairCount allowed)).sum ↔
+      RunningIntersection (regions.map (fun s => s ∩ admittedSites allowed)) := by
   rw [finrank_marginalMap closed, ← count_cover allowed regions]
-  have hc := card_listUnion_add_overlap _ (chain_localPairs (allowed := allowed) regions h)
+  have hc := (card_listUnion_add_overlap (regions.map (localPairs allowed))).2
   rw [localPairs_zipWith] at hc
   simp only [List.map_map, Function.comp_def] at hc
-  exact hc
+  exact hc.trans (running_localPairs_iff closed regions)
 
 end D5.S3.Quantum.Entanglement.Marginals.LocalMarginalRunningIntersection
