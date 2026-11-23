@@ -19,10 +19,8 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Translation.Q9ParityOverla
 open scoped BigOperators Matrix
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q flip_adj IsBalanced switchingVector switching_sq)
-open ComponentBoundary.Q9IsotropicHuang (parity weightedAction)
+open ComponentBoundary.Q9IsotropicHuang (parity weightedAction weightedLinear_apply)
 open ComponentBoundary.Q9WeightedBoundaryGram (signed signed_transpose signed_mulVec)
-open private weightedLinear_apply from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 open private huangMatrix cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private translate translate_translate translate_flip diagonalSign diagonalSign_sq
