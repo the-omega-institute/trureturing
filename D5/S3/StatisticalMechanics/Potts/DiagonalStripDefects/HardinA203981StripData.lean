@@ -34,6 +34,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.Rev
+import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -106,7 +107,7 @@ def unordered (u v : Fin 5 → ℤ) (j : Fin 15) : ℤ :=
 
 /-- The half-strip zero-cost matrix with the target triple reversed. -/
 def halfZero : Matrix (Fin 5) (Fin 5) ℤ :=
-  fun i j => Q i (Equiv.swap 1 3 j)
+  Q.submatrix id (Equiv.swap 1 3)
 
 /-- Transfer one class of each parity, then read the unordered target. -/
 def classProduct (A B : Matrix (Fin 5) (Fin 5) ℤ) (i j : Fin 15) : ℤ :=
