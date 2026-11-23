@@ -22,8 +22,7 @@ open private normalize_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 open private normalize_center from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
-open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
+open CubeBitMoves (toggle)
 open private firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 local notation "flip" => BalancedCriticalSpectrum.flip

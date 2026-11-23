@@ -33,8 +33,9 @@ open private coordinate_slice_low_independent coordinate_slice_degree_cases bala
   paritySide parity_bipartite from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open HuangBalancedSymmetry (cube_action_regular_balanced)
+open CubeBitMoves (toggle)
 open private adjacent adjacent_iff hasTwoSetBits hasTwoSetBits_of_two_toggles
-  moves toggle two_toggles_mem_moves from
+  moves two_toggles_mem_moves from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private attachment solid hollow labels hollowEdges middleOptions valid root firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
