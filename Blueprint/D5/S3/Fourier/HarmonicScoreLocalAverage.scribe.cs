@@ -22,7 +22,8 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(Disp(Equal(W(F.Id("Z")),
                     Seq(Summation(F.Id("j")), Weight(F.Id("j")))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(),
+                Blocks(Paragraph(Text(
+                    "The cutoff includes frequencies equal to Z. An empty cutoff has mass zero."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cutoff-score"),
@@ -32,7 +33,9 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
                     Seq(Summation(F.Id("j")), Weight(F.Id("j")),
                         Call("sin", Seq(Frequency(F.Id("j")), F.Id("v"))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(),
+                Blocks(Paragraph(Text(
+                    "The argument v is the time in the score. The estimates evaluate the score "
+                    + "at v = u/r as u runs through the window."))),
                 DescribeRole.Definition),
             Paragraph(Text(
                 "For the following estimates assume γⱼ > 0 and wⱼ ≥ 0 for every j in s. "
@@ -69,7 +72,7 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
                 H("A score at least the bound in the same window"),
                 StatementSource.FromAuthor(Disp(Seq(Exists, Sp, F.Id("u"), InMacro,
                     OpenBracket, F.Id("b"), Comma, Add(F.Id("b"), F.Id("h")), CloseBracket,
-                    Comma, Quad, LowerBound(), Le, S(F.Id("T"), Div(F.Id("u"), F.Id("r")))))),
+                    Comma, Quad, Sp, LowerBound(), Le, Sp, S(F.Id("T"), Div(F.Id("u"), F.Id("r")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The finite score is continuous. The first integral mean value theorem "
@@ -84,7 +87,8 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
     private static Formula Frequency(Formula j) => Subscript(GammaLower, j);
 
     private static Formula Summation(Formula j) =>
-        Seq(Subscript(Sum, Seq(j, InMacro, Sp, F.Id("s"), Comma, Frequency(j), Le, F.Id("Z"))), Thin);
+        Seq(Subscript(Sum, Seq(j, InMacro, Sp, F.Id("s"), Comma,
+            Frequency(j), Le, Sp, F.Id("Z"))), Thin);
 
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula W(Formula z) => Subscript(F.Id("W"), z);
@@ -107,7 +111,7 @@ internal sealed class HarmonicScoreLocalAverageDocument : IScribeDocumentDefinit
         var b = F.Id("b");
         var h = F.Id("h");
         var u = F.Id("u");
-        return Seq(Div(D(1), h), new Formula.Power(Subscript(Int, b), Add(b, h)),
+        return Seq(Div(D(1), h), Int, Underscore, Grp(b), Caret, Grp(Add(b, h)),
             Sp, S(F.Id("T"), Div(u, F.Id("r"))), Thin, F.Id("d"), u);
     }
 }

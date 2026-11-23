@@ -77,7 +77,8 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   intro i
   let j : ULift.{u} Unit := ⟨()⟩
   refine ⟨⟨ULift.{u} Unit, {j}, fun _ => 1, fun _ => 1, 1⟩, 0, Real.pi / 2, ?_⟩
-  norm_num [actual, realize, cutoffScore, cutoff, Real.sin_pi_div_two]
+  norm_num [actual, realize, cutoffScore, cutoff]
+  simp [Real.sin_pi_div_two]
 
 private theorem rejection_sensitivity (law : Realization signature.{u} → Prop)
     (hbad : ¬ law rejected.{u}) :
