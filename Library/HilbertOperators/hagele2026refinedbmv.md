@@ -23,6 +23,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortGapTenThirds
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
@@ -224,6 +225,12 @@ coordinates with lower coordinate at least four. Short gaps through two
 and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
+
+For first degrees at least eleven, the short-gap result extends to lower
+coordinate at least ten thirds and all positive gaps through two. The
+proof combines the certified curvature and slope of the short-gap profile
+with an analytic bound for the radical derivative. The fourth moment
+improves the marginal slope bound for gaps at least one.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

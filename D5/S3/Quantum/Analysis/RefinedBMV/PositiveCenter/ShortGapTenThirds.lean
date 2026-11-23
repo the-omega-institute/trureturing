@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortGapTenThirds
    generality: G
-   mirror-B: none(waiver:internal-proof-component)
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortGapTenThirds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -105,6 +105,12 @@ theorem logKernel_shortGap_mixed_from_ten_thirds {p : ℕ} (hp : 11 ≤ p) {u v 
     (mul_nonneg (mul_nonneg (div_nonneg (gap_pos hp₀ hu₀).le (Real.sqrt_nonneg _))
       (one_div_nonneg.mpr (Real.sqrt_nonneg _))) (by norm_num)))
 
+/--
+info: 'RefinedBMV.PositiveCenter.CompactGap.logKernel_shortGap_mixed_from_ten_thirds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in
 #print axioms logKernel_shortGap_mixed_from_ten_thirds
 
 end RefinedBMV.PositiveCenter.CompactGap
