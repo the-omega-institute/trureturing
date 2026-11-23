@@ -15,11 +15,11 @@ namespace D5.S3.Arith.MakowskiSchinzel
 
 open Finset
 
-private theorem abundancy_mul {a b : ℕ} (h : a.Coprime b) :
+theorem abundancy_mul {a b : ℕ} (h : a.Coprime b) :
     (a * b).abundancyIndex = a.abundancyIndex * b.abundancyIndex := by
   simp only [Nat.abundancyIndex, h.sum_divisors_mul, Nat.cast_mul, mul_div_mul_comm]
 
-private theorem abundancy_prime_pow {r : ℕ} (hr : r.Prime) (k : ℕ) :
+theorem abundancy_prime_pow {r : ℕ} (hr : r.Prime) (k : ℕ) :
     (r ^ k).abundancyIndex = geom r k := by
   have hrq : (r : ℚ) ≠ 0 := by exact_mod_cast hr.ne_zero
   rw [Nat.abundancyIndex, Nat.sum_divisors_prime_pow hr, Nat.cast_sum, sum_div]
@@ -153,6 +153,5 @@ theorem prime_deletion_necessary {m r : ℕ} (hm : m ≠ 0) (hr : r.Prime)
   rw [mul_assoc, hcancel, mul_one, one_mul] at hh
   exact hh
 
-#print axioms prime_deletion_necessary
 
 end D5.S3.Arith.MakowskiSchinzel
