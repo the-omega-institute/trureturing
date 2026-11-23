@@ -83,9 +83,8 @@ noncomputable def patch (F : Frame a) (g : F.core → F.core) (x : V) : V := by
 
 private theorem patch_iter (F : Frame a) (g : F.core → F.core) (n : Nat) (x : F.core) :
     ((F.patch g)^[n]) x.val = ((g^[n]) x).val := by
-  induction n generalizing x with
-  | zero => rfl
-  | succ n ih => rw [iterate_succ_apply, iterate_succ_apply, patch_in, ih]
+  have h : Function.Semiconj Subtype.val g (F.patch g) := fun y => (F.patch_in g y).symm
+  exact (h.iterate_right n x).symm
 
 private theorem patch_enters (F : Frame a) (g : F.core → F.core) (x : V) :
     ∃ n : Nat, ((F.patch g)^[n]) x ∈ F.core :=

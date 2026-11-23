@@ -141,7 +141,9 @@ noncomputable def edgeColorEquiv [AddGroup A] (T : CayleyProbe.Tree V) (r : V) :
 theorem zero_pattern_iff [AddGroup A] (T : CayleyProbe.Tree V) (r : V) (c : V → A)
     (v : Away r) :
     ((edgeColorEquiv (A := A) T r) c).2 (edgeEquiv T r v) = 0 ↔ c v.val = c (parent T r v) := by
-  simp [edgeColorEquiv, colorEquiv, Equiv.arrowCongr, sub_eq_zero]
+  change (let u := (edgeEquiv T r).symm (edgeEquiv T r v)
+    c u.val - c (parent T r u)) = 0 ↔ c v.val = c (parent T r v)
+  rw [(edgeEquiv T r).symm_apply_apply, sub_eq_zero]
 
 end CayleyColors
 
