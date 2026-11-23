@@ -26,6 +26,10 @@ $$\neg(\forall (n: \mathbb{N}), (0 < n) \Rightarrow \forall (h: \operatorname{Fi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrincipalSpecialization/AlexanderssonLeiteFundamentalLengthRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alexandersson-leite-2026-fundamental-length-real-rootedness` (refuted) by `D5/S3/Combinatorics/Graph/PrincipalSpecialization/AlexanderssonLeiteFundamentalLengthRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alexandersson-leite-2026-fundamental-length-real-rootedness","declaration_gid":"D5/S3/Combinatorics/Graph/PrincipalSpecialization/AlexanderssonLeiteFundamentalLengthRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Per Alexandersson and Leonardo Saud Maia Leite (2026). *Sink polynomials of line graphs and weighted matching polynomials*. DOI: [10.48550/arXiv.2610.41502](https://doi.org/10.48550/arXiv.2610.41502). URL: <https://arxiv.org/html/2610.41502v1#S6.Thmtheorem7>.
