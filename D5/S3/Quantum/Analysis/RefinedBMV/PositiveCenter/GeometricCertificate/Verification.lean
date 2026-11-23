@@ -116,46 +116,31 @@ open Lean Elab Tactic Meta in
     replaceMainGoal (g :: rw.mvarIds)
 
 
-private theorem coverLeaf {n : ℕ} {B : Box} (h : check B = true) :
+theorem coverLeaf {n : ℕ} {B : Box} (h : check B = true) :
     checkCover n B = true := by
   cases n <;> simp only [checkCover, h, Bool.true_or]
 
-private theorem coverSplit {n : ℕ} {B : Box}
+theorem coverSplit {n : ℕ} {B : Box}
     (h₁ : checkCover n (splitBox B).1 = true)
     (h₂ : checkCover n (splitBox B).2 = true) :
     checkCover (n+1) B = true := by
   simp only [checkCover, h₁, h₂, Bool.and_true, Bool.or_true]
 
-open Lean Elab Tactic in
-private def verifyCover (paths : List (List Char)) : TacticM Unit := do
-  let rec prove (depth : Nat) (paths : List (List Char)) : TacticM Unit := do
-    if paths == [[]] then
-      evalTactic (← `(tactic|
-        (apply coverLeaf
-         unfold check
-         rw [← eval_scalar]
-         check_expression
-         decide +kernel)))
-    else
-      let depth+1 := depth | throwError "cover paths exceed the certified subdivision depth"
-      let left := paths.filterMap fun
-        | '0' :: path => some path
-        | _ => none
-      let right := paths.filterMap fun
-        | '1' :: path => some path
-        | _ => none
-      unless !left.isEmpty && !right.isEmpty && left.length + right.length = paths.length do
-        throwError "invalid binary subdivision"
-      evalTactic (← `(tactic| apply coverSplit))
-      let [g₁, g₂] ← getGoals | throwError "expected two cover subgoals"
-      setGoals [g₁]
-      prove depth left
-      setGoals [g₂]
-      prove depth right
-  prove 5 paths
+open Lean in
+macro "left_strip_box " b:term:max p:str : term => do
+  let mut box := b
+  for bit in p.getString.toList do
+    box ← match bit with
+    | '0' => `(term| (splitBox $box).1)
+    | '1' => `(term| (splitBox $box).2)
+    | _ => Macro.throwError "left-strip box paths contain only 0 and 1"
+  return box
 
-open Lean Elab Tactic in
-elab "verify_cover " paths:str : tactic =>
-  verifyCover ((paths.getString.splitOn " ").map String.toList)
+macro "verify_left_strip_leaf" : tactic =>
+  `(tactic|
+    (unfold check
+     rw [← eval_scalar]
+     check_expression
+     decide +kernel))
 
 end RefinedBMV.PositiveCenter.LocalTaylor
