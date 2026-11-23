@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Scope report observations to this invocation's preparation streams.
-report_tmp=
-if [[ ${1:-} == --report ]]; then
+compile=0
+if [[ ${1:-} == --compile ]]; then
+  compile=1
   shift
-  report_tmp="$(mktemp -d "${RUNNER_TEMP:?}/lean-report-progress.XXXXXXXX")"
-  export TMPDIR="$report_tmp"
 fi
 
 # Print live readings so a runner shutdown retains the last available sample.
-python3 -u - "$report_tmp" <<'PY' &
+python3 -u - "$compile" <<'PY' &
 from pathlib import Path
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -69,46 +66,13 @@ def largest_processes():
         return None
 
 
-lake_progress = re.compile(
-    rb"\[([0-9]{1,9}/[0-9]{1,9})\] (?:\(Optional\) )?(Built|Building) ([A-Za-z0-9_][A-Za-z0-9_.:/-]{0,255})(?=\s|$)")
-inspector_phase = re.compile(
-    rb"^LEAN_INSPECTOR_(?:PHASE|INTERRUPTED|FAILED) phase=([a-z][a-z0-9-]{0,63})(?: status=(started|completed))?(?=\s|$)")
-
-
-def report_progress(root):
-    progress = {}
-    # prepare() writes both streams in one TemporaryDirectory. The files can
-    # disappear between samples when inspection finishes normally.
-    for directory in root.glob("lean-programs.*"):
-        progress["preparation"] = "returned" if (directory / "programs.exit.log").is_file() else "entered"
-        for stream in ("stdout", "stderr"):
-            path = directory / f"programs.{stream}.log"
-            try:
-                with path.open("rb") as log:
-                    log.seek(max(0, os.fstat(log.fileno()).st_size - 16384))
-                    tail = log.read(16384)
-            except OSError:
-                continue
-            for line in reversed(tail.splitlines()):
-                lake = lake_progress.search(line)
-                if lake and stream not in progress:
-                    progress[stream] = b" ".join(lake.groups()).decode("ascii")
-                if stream == "stderr" and "inspector_phase" not in progress:
-                    phase = inspector_phase.match(line)
-                    if phase:
-                        progress["inspector_phase"] = b" ".join(phase.groups(default=b"")).decode("ascii").strip()
-    return progress
-
-
-report_tmp = Path(sys.argv[1]) if sys.argv[1] else None
+compiling = sys.argv[1] == "1"
 cgroup = Path("/sys/fs/cgroup")
 while True:
     disk = shutil.disk_usage(".")
     cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else os.cpu_count()
     reading = {"unix_seconds": int(time.time()), "disk_available_bytes": disk.free,
                "disk_total_bytes": disk.total, "cpus": cpus}
-    if report_tmp:
-        reading["report_progress"] = report_progress(report_tmp)
     for line in read(Path("/proc/meminfo")).splitlines():
         field, _, value = line.partition(":")
         if field in {"MemTotal", "MemAvailable"} and value.split() and value.split()[0].isdigit():
@@ -131,7 +95,7 @@ while True:
     limit, current = reading.get("memory.max", ""), reading.get("memory.current", "")
     if limit.isdigit() and current.isdigit() and int(limit) - int(current) <= headroom:
         tight = True
-    if tight:
+    if compiling or tight:
         processes = largest_processes()
         if processes is not None:
             reading["largest_processes"] = processes
@@ -143,7 +107,6 @@ sampler=$!
 finish() {
   kill "$sampler" 2>/dev/null || true
   wait "$sampler" 2>/dev/null || true
-  if [[ -n "$report_tmp" ]]; then rm -rf -- "$report_tmp"; fi
 }
 trap finish EXIT
 "$@"
