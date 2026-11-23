@@ -26,6 +26,10 @@ $$\forall k \in \mathbb{N}, e \in \mathbb{N},\; 0 < k \Rightarrow \left(\left(\f
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/DesignatedSummandCongruence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/yaqubi-mirzavaziri-2026-designated-summands-conjecture-6-1` (proved) by `D5/S3/Arith/ModularForms/DesignatedSummandCongruence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"yaqubi-mirzavaziri-2026-designated-summands-conjecture-6-1","declaration_gid":"D5/S3/Arith/ModularForms/DesignatedSummandCongruence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daniel Yaqubi and Madjid Mirzavaziri (2026). *Partitions with designated summands: k-tuples and their congruences*. DOI: [10.48550/arXiv.2611.05623](https://doi.org/10.48550/arXiv.2611.05623). URL: <https://arxiv.org/abs/2611.05623v1>.

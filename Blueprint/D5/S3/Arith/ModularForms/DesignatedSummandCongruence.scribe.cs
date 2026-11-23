@@ -23,7 +23,10 @@ internal sealed class DesignatedSummandCongruenceDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "result"), H("Common dyadic exponent"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every positive k, the largest power of 2 dividing all Aₖ(4n+3) is 2 to the valuation of Aₖ(3) when k is not congruent to 2 modulo 16, and exactly 2³ when k is congruent to 2 modulo 16. Degree three attains the first bound and degree seven attains the second."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yaqubi-mirzavaziri-2026-designated-summands-conjecture-6-1"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula ResultFormula()
