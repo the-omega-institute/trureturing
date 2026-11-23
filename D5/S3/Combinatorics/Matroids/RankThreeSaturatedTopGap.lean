@@ -15,16 +15,19 @@ namespace D5.S3.Combinatorics.Matroids.RankThreeSaturatedTopGap
 open Set
 open RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 
-private def Covered {r : ℕ} (P : Set (Set (Fin r))) (a b : Fin r) : Prop :=
+/-- A selected block contains both labels. -/
+def Covered {r : ℕ} (P : Set (Set (Fin r))) (a b : Fin r) : Prop :=
   ∃ s ∈ P, a ∈ s ∧ b ∈ s
 
 private def Complete {r : ℕ} (P : Set (Set (Fin r))) : Prop :=
   ∀ a b, a ≠ b → Covered P a b
 
-private def Maximal {r : ℕ} (P : Set (Set (Fin r))) : Prop :=
+/-- A packing has no proper enlargement preserving pair uniqueness. -/
+def Maximal {r : ℕ} (P : Set (Set (Fin r))) : Prop :=
   ∀ Q, IsPartialSteiner Q → P ⊆ Q → Q = P
 
-private theorem pair_completion {r : ℕ} {P : Set (Set (Fin r))}
+/-- A covered pair in a partial Steiner system has a distinct third label. -/
+theorem pair_completion {r : ℕ} {P : Set (Set (Fin r))}
     (valid : IsPartialSteiner P) {a b : Fin r} (ne : a ≠ b) (covered : Covered P a b) :
     ∃ x, x ≠ a ∧ x ≠ b ∧ ({a, b, x} : Set (Fin r)) ∈ P := by
   obtain ⟨s, hs, ha, hb⟩ := covered
@@ -42,7 +45,8 @@ private theorem pair_completion {r : ℕ} {P : Set (Set (Fin r))}
   have eq := Set.eq_of_subset_of_ncard_le sub (by rw [valid.1 s hs, card])
   exact ⟨x, hne.1, hne.2, eq.symm ▸ hs⟩
 
-private theorem maximal_of_no_uncovered_triple {r : ℕ} {P : Set (Set (Fin r))}
+/-- If every triple uses an already covered pair, the packing is maximal. -/
+theorem maximal_of_no_uncovered_triple {r : ℕ} {P : Set (Set (Fin r))}
     (test : ∀ a b c, a ≠ b → b ≠ c → c ≠ a →
       Covered P a b ∨ Covered P b c ∨ Covered P c a) :
     Maximal P := by
@@ -290,17 +294,20 @@ private theorem offDiag_ncard {α : Type*} [Finite α] (s : Set α) :
   rw [← coe, ← Finset.coe_offDiag, Set.ncard_coe_finset, Finset.offDiag_card]
   simp
 
-private def Uncovered {r : ℕ} (P : Set (Set (Fin r))) (a b : Fin r) : Prop :=
+/-- An unordered pair of distinct labels is free in the packing. -/
+def Uncovered {r : ℕ} (P : Set (Set (Fin r))) (a b : Fin r) : Prop :=
   a ≠ b ∧ ¬ Covered P a b
 
-private def leaveNeighbors {r : ℕ} (P : Set (Set (Fin r))) (a : Fin r) : Set (Fin r) :=
+/-- The labels forming uncovered pairs with a given label. -/
+def leaveNeighbors {r : ℕ} (P : Set (Set (Fin r))) (a : Fin r) : Set (Fin r) :=
   {b | Uncovered P a b}
 
 private theorem uncovered_symm {r : ℕ} {P : Set (Set (Fin r))} {a b : Fin r}
     (h : Uncovered P a b) : Uncovered P b a :=
   ⟨h.1.symm, fun ⟨s,hs,hb,ha⟩ => h.2 ⟨s,hs,ha,hb⟩⟩
 
-private theorem packing_leave_count {r : ℕ} {P : Set (Set (Fin r))}
+/-- The count of ordered uncovered pairs plus six per block is the total pair count. -/
+theorem packing_leave_count {r : ℕ} {P : Set (Set (Fin r))}
     (valid : IsPartialSteiner P) :
     ({p : Fin r × Fin r | Uncovered P p.1 p.2} : Set _).ncard + 6 * P.ncard =
       r * r - r := by
@@ -331,7 +338,8 @@ private theorem packing_leave_count {r : ℕ} {P : Set (Set (Fin r))}
   rw [leave, usedCard, offDiag_ncard] at count
   simpa [Nat.mul_comm] using count
 
-private theorem vertex_leave_count {r : ℕ} {P : Set (Set (Fin r))}
+/-- Every block at a label uses two of its possible partners. -/
+theorem vertex_leave_count {r : ℕ} {P : Set (Set (Fin r))}
     (valid : IsPartialSteiner P) (a : Fin r) :
     (leaveNeighbors P a).ncard + 2 * ({s ∈ P | a ∈ s} : Set _).ncard + 1 = r := by
   let incidence : Set (Set (Fin r)) := {s ∈ P | a ∈ s}
@@ -429,7 +437,8 @@ private theorem triangle_in_three_edges {r : ℕ} {P : Set (Set (Fin r))}
     simpa [Finset.mem_insert, Finset.mem_singleton, hda, hbd.1.symm] using hd
   exact ⟨a,b,c,hab,eq ▸ hbd,uncovered_symm hac⟩
 
-private theorem insert_uncovered_triangle {r : ℕ} {P : Set (Set (Fin r))}
+/-- Three pairwise uncovered labels can be inserted as a block. -/
+theorem insert_uncovered_triangle {r : ℕ} {P : Set (Set (Fin r))}
     (valid : IsPartialSteiner P) {a b c : Fin r}
     (ab : Uncovered P a b) (bc : Uncovered P b c) (ca : Uncovered P c a) :
     IsPartialSteiner (insert ({a,b,c} : Set (Fin r)) P) := by
