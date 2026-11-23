@@ -291,22 +291,28 @@ theorem forward_one (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
   exact congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
     ((HardinA203981StripCertificate.forward_table_of_steps (fun w => Matrix.vecMul w T) initial table).2 ⟨zero, forward_step⟩ i)
 
-/-- Shift a forward relation and read it at a single coordinate. -/
+/-- A base forward relation is equivalent to its coordinate equations at all shifts. -/
 theorem shifted_coordinate {s : Type*} [Fintype s] (t : Matrix s s ℤ)
-    (v : s → ℤ) (d b : ℕ) (c : Fin d → ℤ)
-    (h : forward t v (b + d) = ∑ i : Fin d, c i • forward t v (b + i.val)) (n : ℕ) (j : s) :
-    forward t v (n + b + d) j = ∑ i : Fin d, c i * forward t v (n + b + i.val) j := by
-  classical
-  have coordinate (k : ℕ) :
-      dotProduct v ((t ^ k).mulVec (Pi.single j 1)) = forward t v k j := by
-    rw [Matrix.dotProduct_mulVec, forward_eq, dotProduct_single_one]
-  simpa only [coordinate] using forward_shift t v (Pi.single j 1) d b c h n
+    (v : s → ℤ) (d b : ℕ) (c : Fin d → ℤ) :
+    (forward t v (b + d) = ∑ i : Fin d, c i • forward t v (b + i.val)) ↔
+      ∀ (n : ℕ) (j : s), forward t v (n + b + d) j =
+        ∑ i : Fin d, c i * forward t v (n + b + i.val) j := by
+  constructor
+  · intro h n j
+    classical
+    have coordinate (k : ℕ) :
+        dotProduct v ((t ^ k).mulVec (Pi.single j 1)) = forward t v k j := by
+      rw [Matrix.dotProduct_mulVec, forward_eq, dotProduct_single_one]
+    simpa only [coordinate] using forward_shift t v (Pi.single j 1) d b c h n
+  · intro h
+    funext j
+    simpa only [Nat.zero_add, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using h 0 j
 
 private theorem inherited_relation (j : Fin 15) :
     forward HardinA203981StripData.T HardinA203981StripData.initial (1 + 12) j =
       ∑ k : Fin 12, coeff k * forward HardinA203981StripData.T HardinA203981StripData.initial (1 + k.val) j := by
-  have rel (n : ℕ) := shifted_coordinate HardinA203981StripData.T HardinA203981StripData.initial
-    6 1 HardinA203981StripCertificate.coeff HardinA203981StripCertificate.finite_certificate n j
+  have rel (n : ℕ) := (shifted_coordinate HardinA203981StripData.T HardinA203981StripData.initial
+    6 1 HardinA203981StripCertificate.coeff).1 HardinA203981StripCertificate.finite_certificate n j
   have h0 := rel 0
   have h1 := rel 1
   have h2 := rel 2
