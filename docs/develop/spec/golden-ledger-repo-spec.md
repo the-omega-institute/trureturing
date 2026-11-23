@@ -535,7 +535,7 @@ GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev pu
 
 普通 PR 和 push 的 `check-source` 执行 SL-003 容量检查、SL-015 路径策略和适用的基线诊断。命中定向准入时，`check-current` 和适用的 `check-delta` 共用变更路径与经验证的局部报告。Lean 规则检查选中模块及其依赖闭包，delta 按本次变更执行适用规则，包括测试拓扑及 SL-030/031/032。选中范围没有 Lean 目标时，可以使用零份报告。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
-**状态与决策。** Actions 项目缓存包含编译工件与模块报告。新 Release 提供编译种子，独立 Actions producer 恢复后由 Lake 核对 trace 并补齐模块报告。
+**状态与决策。** Actions 项目缓存包含编译工件与模块报告。Release 编译 Trureturing、Reg 及其导入的 LeanInformationAuditInterface 模块。全量编译、分层冷编、稀疏增量和快照打包均按这些库的导入闭包工作。独立 Actions producer 恢复后由 Lake 核对 trace 并补齐模块报告。
 
 | 已观测状态 | 后续动作 |
 | --- | --- |

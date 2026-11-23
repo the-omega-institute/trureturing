@@ -186,7 +186,7 @@ runs:
       run: |
         result=0
         bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- \
-          bash .github/actions/lean-compile-layer/measure.sh --compile make lean FULL_BUILD=1 || result=$?
+          bash .github/actions/lean-compile-layer/measure.sh --compile env FULL_BUILD=1 bash tools/scripts/worktree/lean-cache-run.sh --build-release || result=$?
         if [[ "$result" == 124 ]]; then
           echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
         else
