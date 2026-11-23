@@ -313,12 +313,10 @@ private theorem avoidingWords_card_le {M : ℕ} (pivot : List.Vector DyckStep M)
     Nat.card (AvoidingWords pivot q r) ≤ (2 ^ M - 1) ^ q * 2 ^ r := by
   induction q with
   | zero =>
-    simp only [pow_zero, one_mul]
-    have h := Nat.card_le_card_of_injective
-      (fun w : AvoidingWords pivot 0 r => (⟨w.val.val, by simpa using w.val.property⟩ : List.Vector DyckStep r))
-      (by intro a b h; exact Subtype.ext (Subtype.ext (congrArg
-        (fun w : List.Vector DyckStep r => w.val) h)))
-    exact h.trans_eq (wordAt_card r)
+    have h : Nat.card (AvoidingWords pivot 0 r) ≤
+        Nat.card (List.Vector DyckStep (0 * M + r)) :=
+      Nat.card_le_card_of_injective Subtype.val Subtype.val_injective
+    simpa only [pow_zero, one_mul, Nat.zero_mul, Nat.zero_add, wordAt_card] using h
   | succ q ih =>
     let pre (w : AvoidingWords pivot (q + 1) r) : List.Vector DyckStep M :=
       ⟨w.val.val.take M, List.length_take_of_le (by
@@ -364,7 +362,8 @@ private theorem rankSlots_width (n L : ℕ) :
 private theorem noRankMark_card_le (n L : ℕ) :
     Nat.card {I : Stable n // ¬ HasRankMark L (rankSlots n L) (stableEquivDyck n I).val.toList} ≤
       (2 ^ rankBlockWidth L - 1) ^ rankSlots n L * 2 ^ rankTail n L := by
-  let pivot : List.Vector DyckStep (rankBlockWidth L) := ⟨(rankBlock L 0).toList, rankBlock_length L 0⟩
+  let pivot : List.Vector DyckStep (rankBlockWidth L) :=
+    ⟨(rankBlock L 0).toList, rankBlock_length L 0⟩
   let f (I : {I : Stable n // ¬ HasRankMark L (rankSlots n L)
       (stableEquivDyck n I).val.toList}) : AvoidingWords pivot (rankSlots n L) (rankTail n L) :=
     ⟨⟨(stableEquivDyck n I.val).val.toList, by
