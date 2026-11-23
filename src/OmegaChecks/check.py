@@ -85,21 +85,28 @@ def versions():
 
 def check_incremental():
     probes = [
-        ("src/OmegaMath/SeparateTopicProbe.lean", "module\nprelude\npublic import OmegaInit\n", set()),
-        ("src/OmegaMath/Projective.lean",
+        ("src/OmegaMath/SeparateTopicProbe.lean", None,
+         "module\nprelude\npublic import OmegaInit\n", set()),
+        ("src/OmegaMath/Projective.lean", "he.symm\n", "he.symm.symm.symm\n", {TOPIC}),
+        ("src/OmegaMath/Projective.lean", None,
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
-        ("src/OmegaInit/Prelude.lean",
+        ("src/OmegaInit/Prelude.lean", None,
          "\npublic theorem Omega.baseProbe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
          {*INIT, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
     ]
-    for filename, extra, expected in probes:
+    for filename, replace, text, expected in probes:
         path = ROOT / filename
         run("git", "diff", "--quiet", "HEAD", "--", filename)
         before = versions()
         new_file = not expected
         original = b"" if new_file else path.read_bytes()
-        modified = original + extra.encode()
+        if replace is None:
+            modified = original + text.encode()
+        else:
+            if original.count(replace.encode()) != 1:
+                raise RuntimeError(f"Expected one proof fragment in {filename}")
+            modified = original.replace(replace.encode(), text.encode())
         with path.open("xb" if new_file else "wb") as out:
             out.write(modified)
         try:
