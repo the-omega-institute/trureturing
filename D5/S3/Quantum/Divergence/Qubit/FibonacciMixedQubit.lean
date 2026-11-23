@@ -9,10 +9,6 @@
 import D5.S3.Quantum.Divergence.SupportedTraceLog
 import D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
 import D5.S3.Quantum.Recovery.PetzSpectralCoordinates
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! The mixed Fibonacci qubit bound by independent spectral averaging. -/
 
@@ -127,8 +123,8 @@ private theorem average_trace_pair (a b : Fin 2 → ℝ) (P Q : Fin 2 → Qubit)
 
 private theorem rankOne_trace_overlap (v : Fin 3 → Fin 2 → ℂ) (i j : Fin 3) :
     (Matrix.vecMulVec (v i) (star (v i)) * Matrix.vecMulVec (v j) (star (v j))).trace.re =
-      overlap v i j :=
-  trace_pair (v i) (v j)
+      overlap v i j := by
+  simpa only [overlap, Complex.ofReal_re] using congrArg Complex.re (trace_pair (v i) (v j))
 
 /-- The exact Fibonacci benchmark gap for arbitrary mixed qubit preparations. -/
 theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)

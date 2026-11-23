@@ -8,8 +8,6 @@
 
 import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.LogExp
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
 
 /-! Finite joint convexity for supported trace-log pairings with arbitrary masses. -/
 
@@ -67,12 +65,14 @@ private theorem mul_supportProjection {S T : Matrix n n ℂ} (hT : T.IsHermitian
     simpa only [K, Matrix.mul_sub, Matrix.mul_one] using hSK
   exact (sub_eq_zero.mp hsub).symm
 
+omit [DecidableEq n] in
 private theorem HasSupportIn.smul {S T : Matrix n n ℂ} (hST : HasSupportIn S T)
     (a : ℝ) {b : ℝ} (hb : b ≠ 0) : HasSupportIn (a • S) (b • T) := by
   intro x hx
   rw [Matrix.smul_mulVec] at hx ⊢
   rw [hST x ((smul_eq_zero.mp hx).resolve_left hb), smul_zero]
 
+omit [DecidableEq n] in
 private theorem HasSupportIn.smul_same {S T : Matrix n n ℂ}
     (hST : HasSupportIn S T) (a : ℝ) : HasSupportIn (a • S) (a • T) := by
   rcases eq_or_ne a 0 with rfl | ha
@@ -81,6 +81,7 @@ private theorem HasSupportIn.smul_same {S T : Matrix n n ℂ}
   · exact hST.smul a ha
 
 /-- Finite PSD sums preserve pointwise support inclusion. -/
+omit [DecidableEq n] in
 private theorem hasSupportIn_sum {ι : Type*} [Fintype ι] (S T : ι → Matrix n n ℂ)
     (hT : ∀ i, (T i).PosSemidef) (hST : ∀ i, HasSupportIn (S i) (T i)) :
     HasSupportIn (∑ i, S i) (∑ i, T i) := by
@@ -124,8 +125,9 @@ end Support
 section JointConvexity
 
 variable {n ι : Type*} [Fintype n] [DecidableEq n] [Nonempty n]
-  [Fintype ι] [DecidableEq ι] [Nonempty ι]
+  [Fintype ι] [Nonempty ι]
 
+omit [DecidableEq n] [Nonempty n] [Nonempty ι] in
 private theorem trace_sum_inverse_smul (S : ι → Matrix n n ℂ) {m : ℝ}
     (hm : m ≠ 0) (ht : (∑ i, S i).trace = (m : ℂ)) :
     (∑ i, (m⁻¹ • S i).trace) = 1 := by
@@ -138,6 +140,7 @@ private theorem traceLog_log_sum_of_trace (S T : ι → Matrix n n ℂ)
     {s t : ℝ} (hs : 0 < s) (ht : 0 < t)
     (hsumS : (∑ i, S i).trace = (s : ℂ)) (hsumT : (∑ i, T i).trace = (t : ℂ)) :
     relativeEntropy (∑ i, S i) (∑ i, T i) ≤ ∑ i, relativeEntropy (S i) (T i) := by
+  classical
   have hs' : s⁻¹ ≠ 0 := (inv_pos.mpr hs).ne'
   have ht' : t⁻¹ ≠ 0 := (inv_pos.mpr ht).ne'
   have hposS : (∑ i, S i).PosSemidef := Matrix.posSemidef_sum _ fun i _ => hS i
@@ -167,7 +170,7 @@ private theorem traceLog_log_sum_of_trace (S T : ι → Matrix n n ℂ)
   apply le_of_not_gt
   intro hgt
   exact (not_lt_of_ge hscaled)
-    (add_lt_add_right (mul_lt_mul_of_pos_left hgt (inv_pos.mpr hs)) _)
+    (add_lt_add_left (mul_lt_mul_of_pos_left hgt (inv_pos.mpr hs)) _)
 
 private theorem traceLog_log_sum (S T : ι → Matrix n n ℂ)
     (hS : ∀ i, (S i).PosSemidef) (hT : ∀ i, (T i).PosSemidef)
@@ -180,7 +183,7 @@ private theorem traceLog_log_sum (S T : ι → Matrix n n ℂ)
         Finset.single_le_sum (fun j _ => (hS j).nonneg) (Finset.mem_univ i)
       rw [hSzero] at hle
       exact le_antisymm hle (hS i).nonneg
-    simp [hSzero, hzero, relativeEntropy]
+    simp [hzero, relativeEntropy]
   · have hTzero : (∑ i, T i) ≠ 0 := by
       intro hzero
       apply hSzero
@@ -216,13 +219,13 @@ theorem traceLog_jointConvex (w : ι → ℝ) (S T : ι → Matrix n n ℂ)
     let A := ∑ i, w i • S i
     let C := ∑ i, w i • T i
     (A * (CFC.log A - CFC.log C)).trace.re ≤
-      ∑ i, w i * ((S i) * (CFC.log (S i) - CFC.log (T i))).trace.re := by
+      ∑ i, w i * (S i * (CFC.log (S i) - CFC.log (T i))).trace.re := by
   have h := traceLog_log_sum (fun i => w i • S i) (fun i => w i • T i)
     (fun i => (smul_nonneg (hw i) (hS i).nonneg).posSemidef)
     (fun i => (smul_nonneg (hw i) (hT i).nonneg).posSemidef)
     (fun i => HasSupportIn.smul_same (hST i) (w i))
   have hpoint (i : ι) := traceLog_scale_same (hS i).isHermitian (hT i).isHermitian (hST i) (w i)
-  simpa only [hpoint] using h
+  simpa only [hpoint, relativeEntropy] using h
 
 end JointConvexity
 
