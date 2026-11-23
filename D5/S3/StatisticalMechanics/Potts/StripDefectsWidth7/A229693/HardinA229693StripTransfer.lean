@@ -9,13 +9,13 @@
 /-
 admission_basis: escape-witness
 escape_witness: exactExits_active and exactExits_new compute the multiplicities of transitions reaching budget zero
-tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, initial_valid, next_valid, valid_shift
+tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, valid_shift
 decidableBudget: proof_shape=bind-only; consumers=activeProfileCheck, exhaustedClass, inheritedActiveCheck
 valid_parts: proof_shape=bind-only; consumers=class_counts_canonical, exactExits_active, exactExits_new, next_valid, valid_shift
 valid_relabel: proof_shape=bind-only; consumers=class_counts
 fresh_relabel: proof_shape=bind-only; consumers=cl_relabel, rep_weight
 alternating: proof_shape=bind-only; consumers=properRows, proper_iff, zeroExitCodes_count
-proper_iff: proof_shape=bind-only; consumers=zeroExitCodes_count
+proper_iff: proof_shape=bind-only; consumers=zeroExitCodes_count._simp_1_2
 properRows: proof_shape=bind-only; consumers=zeroExitCodes, zeroExitCodes_count, exactExits_new
 zeroExitCodes: proof_shape=bind-only; consumers=zeroExitCodes_count, exhaustedMultiplicities, exactExits_new
 zeroExitCodes_count: proof_shape=bind-only; consumers=class_counts_canonical
@@ -62,7 +62,7 @@ rowCode_tail: proof_shape=bind-only; consumers=exitCodes_eq
 packedClass: proof_shape=bind-only; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
 packedClass_all: proof_shape=bind-only; consumers=packedClass_eq
 packedClass_eq: proof_shape=bind-only; consumers=exitCodes_eq
-exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq
+exitCodes: proof_shape=content; consumers=class_counts_canonical, exactExits_active, exactExits_count, exitCodes_bound, exitCodes_eq, activeProfileCheck
 exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
 exitCodes_bound: proof_shape=content; consumers=checkHistogram_count

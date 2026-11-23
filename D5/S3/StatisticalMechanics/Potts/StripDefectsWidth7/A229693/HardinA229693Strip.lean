@@ -14,7 +14,7 @@ leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leadin
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
-columnRepresentative: proof_shape=bind-only; consumers=representative_data, exhaustedRank, checkColumn, exhausted_step
+columnRepresentative: proof_shape=bind-only; consumers=representative_data, checkColumn, exhausted_step, rightColumn
 representative_data: proof_shape=bind-only; consumers=w_representative, exhausted_step
 w_representative: proof_shape=bind-only; consumers=exhausted_step
 exhaustedRank: proof_shape=bind-only; consumers=exhaustedRow
