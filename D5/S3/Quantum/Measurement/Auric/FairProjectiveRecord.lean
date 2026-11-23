@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Measurement/Auric/FairProjectiveRecord
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lake/module/D5.S3.Quantum.Measurement.Auric.OriginalInstrument, lake/module/D5.S3.Entropy.Forgetting.PushforwardComposition, mathlib/module/Mathlib.NumberTheory.Real.GoldenRatio, mathlib/module/Mathlib.RingTheory.AdjoinRoot, mathlib/module/Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse]
+   anchors: []
    utility: none
    digest: The actual fixed-horizon AURIC record and its real projective endpoint law. -/
 
@@ -13,10 +13,12 @@ import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective
 import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.RingTheory.AdjoinRoot
 
-namespace D5.S3.Quantum.Measurement.Auric.FairProjectiveRecord
+/-! # The actual AURIC record and its fair projective law -/
 
 open Matrix Polynomial
 open scoped Matrix MatrixGroups Kronecker
+
+namespace D5.S3.Quantum.Measurement.Auric.FairProjectiveRecord
 open D5.S3.Entropy.Forgetting.CapacityMonotone
 open D5.S3.Entropy.Forgetting.PushforwardComposition
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
@@ -24,26 +26,26 @@ open OriginalInstrument SimulatorUpper ProjectiveTree
 
 noncomputable section
 
-private noncomputable def sine : ℝ := (Real.sqrt 5 - 1) / 2
-noncomputable def angle : ℝ := Real.arcsin sine
-private noncomputable def cosine : ℝ := Real.cos angle
-private noncomputable def parameter : ℂ := Complex.I * (Real.tan angle : ℂ)
+private def sine : ℝ := (Real.sqrt 5 - 1) / 2
+def angle : ℝ := Real.arcsin sine
+private def cosine : ℝ := Real.cos angle
+private def parameter : ℂ := Complex.I * (Real.tan angle : ℂ)
 
-private theorem sqrt_five_sq : (Real.sqrt 5) ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+private theorem sine_eq_neg_goldenConj : sine = -Real.goldenConj := by
+  unfold sine
+  ring
 
 private theorem sine_pos : 0 < sine := by
-  have := Real.sqrt_nonneg 5
-  unfold sine
-  nlinarith only [sqrt_five_sq, this, sq_nonneg (Real.sqrt 5 - 1)]
+  rw [sine_eq_neg_goldenConj]
+  exact neg_pos.mpr Real.goldenConj_neg
 
 private theorem sine_lt_one : sine < 1 := by
-  have := Real.sqrt_nonneg 5
-  unfold sine
-  nlinarith only [sqrt_five_sq, this, sq_nonneg (Real.sqrt 5 - 3)]
+  rw [sine_eq_neg_goldenConj]
+  linarith only [Real.neg_one_lt_goldenConj]
 
 private theorem sine_sq : sine ^ 2 = 1 - sine := by
-  unfold sine
-  nlinarith only [sqrt_five_sq]
+  rw [sine_eq_neg_goldenConj, neg_sq, Real.goldenConj_sq]
+  ring
 
 private theorem sin_angle : Real.sin angle = sine :=
   Real.sin_arcsin (by linarith [sine_pos]) sine_lt_one.le
@@ -78,10 +80,8 @@ private theorem parameter_four : parameter ^ 4 = parameter ^ 2 + 1 := by
   ring
 
 private theorem sine_irrational : Irrational sine := by
-  have h : Irrational (Real.sqrt 5) := by
-    simpa using (show Nat.Prime 5 by norm_num).irrational_sqrt
-  convert (h.sub_ratCast (1 : ℚ)).div_ratCast (show (2 : ℚ) ≠ 0 by norm_num) using 1
-  norm_num [sine]
+  rw [sine_eq_neg_goldenConj]
+  exact Real.goldenConj_irrational.neg
 
 /-- The coefficient basis evaluated at the distinguished parameter. -/
 private structure QuarticCoefficients where
@@ -89,7 +89,6 @@ private structure QuarticCoefficients where
   linear : ℤ
   quadratic : ℤ
   cubic : ℤ
-  
 
 namespace QuarticCoefficients
 
@@ -103,7 +102,7 @@ private def add (x y : QuarticCoefficients) : QuarticCoefficients :=
 private def shift (x : QuarticCoefficients) : QuarticCoefficients :=
   ⟨x.cubic, x.constant, x.linear + x.cubic, x.quadratic⟩
 
-private noncomputable def eval (x : QuarticCoefficients) : ℂ :=
+private def eval (x : QuarticCoefficients) : ℂ :=
   x.constant + x.linear * parameter + x.quadratic * parameter ^ 2 + x.cubic * parameter ^ 3
 
 @[simp] private theorem eval_zero : eval zero = 0 := by simp [eval, zero]
@@ -167,11 +166,11 @@ private def U₀ : Qutrit := of fun i j => if row₀ i = j then 1 else 0
 private def U₁ : Qutrit := of fun i j => if row₁ i = j then 1 else 0
 
 /-- The actual normalized qutrit branches of Record Memory Theorem 2.2. -/
-noncomputable def letter (b : Bool) : Qutrit :=
+def letter (b : Bool) : Qutrit :=
   (cosine : ℂ) • (if b then U₁ else U₀) +
     (Complex.I * (sine : ℂ)) • (if b then U₀ else U₁)
 
-private noncomputable def unscaledLetter (b : Bool) : Qutrit :=
+private def unscaledLetter (b : Bool) : Qutrit :=
   (if b then U₁ else U₀) + parameter • (if b then U₀ else U₁)
 
 private theorem letter_eq_scale (b : Bool) : letter b = (cosine : ℂ) • unscaledLetter b := by
@@ -181,7 +180,7 @@ private theorem letter_eq_scale (b : Bool) : letter b = (cosine : ℂ) • unsca
   rw [letter, unscaledLetter, smul_add, smul_smul, h]
 
 /-- Products are indexed latest outcome first as in the source's chronological convention. -/
-noncomputable def word : List Bool → Qutrit
+def word : List Bool → Qutrit
   | [] => 1
   | b :: w => letter b * word w
 
@@ -221,7 +220,7 @@ private theorem word_eq_iff_recurrence_eq {v w : List Bool} (h : v.length = w.le
   · intro he
     rw [he]
 
-private noncomputable def commonEigenvalue : ℂ := (cosine : ℂ) + Complex.I * (sine : ℂ)
+private def commonEigenvalue : ℂ := (cosine : ℂ) + Complex.I * (sine : ℂ)
 
 private theorem commonEigenvalue_ne : commonEigenvalue ≠ 0 := by
   intro h
@@ -314,29 +313,21 @@ private theorem specializedWord_eq_of_projective {t : R} (ht : t ^ 4 = t ^ 2 + 1
 
 end Specialization
 
-private noncomputable def realRoot : ℝ := -Real.sqrt (1 + sine)
-
-private theorem realRoot_sq : realRoot ^ 2 = 1 + sine := by
-  rw [realRoot, neg_sq, Real.sq_sqrt (by linarith only [sine_pos])]
-
-private theorem realRoot_quartic : realRoot ^ 4 = realRoot ^ 2 + 1 := by
-  rw [show (4 : ℕ) = 2 * 2 by decide, pow_mul, realRoot_sq]
-  nlinarith only [sine_sq]
-
 private abbrev RealPlaneMatrix := Matrix (Fin 2) (Fin 2) ℝ
 
-
-
 /-- The positive square root of the golden ratio. The qutrit specialization uses its negative. -/
-def d : ℝ := Real.sqrt (1 + sine)
+def d : ℝ := Real.sqrt Real.goldenRatio
 
-private theorem d_ne_zero : d ≠ 0 :=
-  ne_of_gt (Real.sqrt_pos.2 (by linarith [sine_pos]))
+private theorem d_ne_zero : d ≠ 0 := ne_of_gt (Real.sqrt_pos.2 Real.goldenRatio_pos)
 
 private theorem d_quartic : d ^ 4 = d ^ 2 + 1 := by
-  simpa only [show realRoot = -d from rfl, (show Even (4 : ℕ) by decide).neg_pow, even_two.neg_pow] using
-    realRoot_quartic
+  rw [show (4 : ℕ) = 2 * 2 by decide, pow_mul, d, Real.sq_sqrt Real.goldenRatio_pos.le,
+    Real.goldenRatio_sq]
 
+private abbrev realRoot : ℝ := -d
+
+private theorem realRoot_quartic : realRoot ^ 4 = realRoot ^ 2 + 1 := by
+  simpa only [realRoot, (show Even (4 : ℕ) by decide).neg_pow, even_two.neg_pow] using d_quartic
 
 /-- The common modulus of the integral, rational and characteristic-three coordinates. -/
 private def quartic (R : Type*) [CommRing R] : R[X] := X ^ 4 - X ^ 2 - 1
@@ -439,7 +430,7 @@ private theorem root_quartic (R : Type*) [CommRing R] :
   rw [quartic_eval₂] at h
   exact sub_eq_zero.mp (by linear_combination h)
 
-private noncomputable def realEvaluation (t : ℝ) (ht : t ^ 4 = t ^ 2 + 1) :
+private def realEvaluation (t : ℝ) (ht : t ^ 4 = t ^ 2 + 1) :
     IntegralQuartic →+* ℝ :=
   AdjoinRoot.lift (Int.castRingHom ℝ) t (by rw [quartic_eval₂, ht]; ring)
 
@@ -558,12 +549,13 @@ private theorem modThree_letter_line (b : Bool) :
   have hw : swap *ᵥ (fun _ => (1 : ModThreeQuartic)) = fun _ => 1 := by
     funext i
     fin_cases i <;> simp [swap, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+  have h₂ : (2 : ModThreeQuartic) = -1 := by linear_combination modThree_three
   cases b <;> simp only [directLetter, Bool.false_eq_true, ↓reduceIte,
     ← Matrix.mulVec_mulVec, Matrix.one_mulVec, hw]
   all_goals
     funext i
-    fin_cases i <;> simp [directRotation, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
-    linear_combination (modRoot ^ 2 - modRoot) * modThree_three
+    fin_cases i <;> simp [directRotation, Matrix.mulVec, dotProduct, Fin.sum_univ_two, ← two_mul] <;>
+      first | (ring; done) | (rw [h₂]; ring)
 
 private theorem modThree_word_line (w : List Bool) :
     directWord modRoot w *ᵥ (fun _ => 1) = modEigenvalue ^ w.length • (fun _ => 1) := by
@@ -613,9 +605,8 @@ private def directBasis : Matrix (Fin 3) (Fin 2) ℝ := !![1, 0; 0, 1; -1, -1]
 
 private theorem scaledLetter_mul_directBasis (b : Bool) :
     d • (specializedLetter realRoot b * directBasis) = directBasis * directLetter d b := by
-  have he : realRoot = -d := by simp [d]
   cases b <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [he, specializedLetter, directBasis, directLetter, directRotation, swap, Matrix.vecMul, dotProduct, row₀,
+    norm_num [realRoot, specializedLetter, directBasis, directLetter, directRotation, swap, Matrix.vecMul, dotProduct, row₀,
       row₁, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply] <;> ring
 
 private theorem scaledWord_mul_directBasis (w : List Bool) :
@@ -717,11 +708,11 @@ private theorem qutrit_projective_iff_directWord_eq {v w : List Bool} (hlen : v.
 private theorem directWord_det_ne_zero (w : List Bool) : (directWord d w).det ≠ 0 := by
   rcases directWord_det d_quartic w with h | h <;> rw [h] <;> norm_num
 
-private noncomputable def directGL (w : List Bool) : GL (Fin 2) ℝ :=
+private def directGL (w : List Bool) : GL (Fin 2) ℝ :=
   GeneralLinearGroup.mkOfDetNeZero _ (directWord_det_ne_zero w)
 
 /-- The projective group value of a history in the direct plane coordinates. -/
-noncomputable def projectiveWord (w : List Bool) : PGL(2, ℝ) :=
+def projectiveWord (w : List Bool) : PGL(2, ℝ) :=
   ProjGenLinGroup.mk (directGL w)
 
 private theorem mul_scalar_matrix (M : RealPlaneMatrix) (r : ℝ) :
@@ -750,25 +741,25 @@ private theorem projectiveWord_eq_iff {v w : List Bool} (hlen : v.length = w.len
     projectiveWord v = projectiveWord w ↔ ∃ s : ℂ, word v = s • word w := by
   exact (pgl_eq_iff_directWord_eq hlen).trans (qutrit_projective_iff_directWord_eq hlen).symm
 
+private def q : ℂ := (Real.sqrt 2 / 2 : ℝ)
+
 /-- The code columns are the symmetric pairs of source levels and the middle level. -/
 def code : Matrix Level (Fin 3) ℂ :=
-  let q : ℂ := (Real.sqrt 2 / 2 : ℝ)
   !![q, 0, 0; 0, q, 0; 0, 0, 1; q, 0, 0; 0, q, 0]
-
-private def q : ℂ := (Real.sqrt 2 / 2 : ℝ)
 
 private theorem q_sq : q * q = 1 / 2 := by
   have h : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  exact_mod_cast (show (Real.sqrt 2 / 2) * (Real.sqrt 2 / 2) = (1 / 2 : ℝ) by nlinarith)
+  have hr : Real.sqrt 2 / 2 * (Real.sqrt 2 / 2) = 1 / 2 := by nlinarith
+  rw [q, ← Complex.ofReal_mul, hr]
+  norm_num
 
-private theorem star_q : star q = q := Complex.conj_ofReal _
+private theorem star_q : (starRingEnd ℂ) q = q := Complex.conj_ofReal _
 
 private theorem code_isometry : codeᴴ * code = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [code, ← show ((Real.sqrt 2 / 2 : ℝ) : ℂ) = q from rfl, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Matrix.one_apply, Fin.sum_univ_succ]
-  all_goals change star q * q + (star q * q + 0) = 1 <;> rw [star_q, q_sq] <;> norm_num
+    norm_num [code, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
+      Fin.sum_univ_succ, star_q, q_sq]
 
 private def flagOf (b : Bool) : Flag := if b then 1 else 0
 
@@ -778,10 +769,15 @@ private def kraus (b : Bool) : Matrix Level Level ℂ :=
 
 private theorem base_on_code (b : Bool) :
     baseKraus (flagOf b) * code = q • (code * (if b then U₁ else U₀)) := by
-  have hq : ((Real.sqrt 2 / 2 : ℝ) : ℂ) = q := rfl
+  have h₀ : U₀ = !![1, 0, 0; 0, 0, 1; 0, 1, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  have h₁ : U₁ = !![0, 1, 0; 0, 0, 1; 1, 0, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
   cases b <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [baseKraus, flagOf, code, U₀, U₁, row₀, row₁, Matrix.mul_apply, Fin.sum_univ_succ,
-      hq, q_sq] <;> first | rfl | exact q_sq.symm
+    norm_num [baseKraus, flagOf, code, h₀, h₁, Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    first | rfl | exact Or.inl rfl | exact q_sq.symm
 
 private theorem kraus_on_code (b : Bool) : kraus b * code = q • (code * letter b) := by
   have hc : flagOf (!b) = 1 - flagOf b := by cases b <;> decide
@@ -798,7 +794,7 @@ private theorem letter_isometry (b : Bool) : (letter b)ᴴ * letter b = 1 := by
   cases b <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     norm_num [letter, U₀, U₁, row₀, row₁, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.one_apply, Fin.sum_univ_succ, star_add, star_mul, Complex.conj_I, Complex.conj_ofReal] <;>
-    first | ring | linear_combination hc + hs - (sine : ℂ) ^ 2 * hi
+    first | (ring; done) | linear_combination hc + hs - (sine : ℂ) ^ 2 * hi
 
 private theorem original_block (b : Bool) (X : Matrix Level Level ℂ) (i j : Level) :
     originalInstrument angle X (flagOf b, i) (flagOf b, j) =
@@ -822,18 +818,21 @@ def measuredStep (b : Bool) (X : Matrix (Level × s) (Level × s) ℂ) :
 private theorem measuredStep_eq (b : Bool) (X : Matrix (Level × s) (Level × s) ℂ) :
     measuredStep b X = (kraus b ⊗ₖ (1 : Matrix s s ℂ)) * X *
       (kraus b ⊗ₖ (1 : Matrix s s ℂ))ᴴ := by
+  classical
   ext ⟨i, r⟩ ⟨j, t⟩
-  simp only [measuredStep, Matrix.submatrix_apply, MatrixMap.kron_def, original_block,
-    LinearMap.id_apply]
-  simp only [Matrix.mul_assoc (kraus b), Matrix.mul_apply, Matrix.single,
-    Matrix.conjTranspose_apply, Matrix.of_apply, ite_mul, zero_mul, one_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  simp only [Matrix.one_apply, Matrix.kronecker_apply, mul_ite, mul_zero, mul_one,
-    Fintype.sum_prod_type, ite_mul, zero_mul, map_ite, map_zero, Finset.sum_ite_eq',
-    Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_mul]
-  rw [Finset.sum_comm]
-  congr! 4
-  ring
+  let Y : Matrix Level Level ℂ := Matrix.of fun u v => X (u, r) (v, t)
+  have hblock :
+      measuredStep b X (i, r) (j, t) = originalInstrument angle Y (flagOf b, i) (flagOf b, j) := by
+    simp only [measuredStep, Matrix.submatrix_apply, MatrixMap.kron_def]
+    calc
+      _ = ∑ u, ∑ v, Y u v * originalInstrument angle (Matrix.single u v 1)
+            (flagOf b, i) (flagOf b, j) := by
+        congr! 2 with u v
+        simp [Y, Matrix.single, ite_and, Finset.sum_ite_irrel, mul_comm]
+      _ = _ := congrArg (fun A : RecordedMap => A Y (flagOf b, i) (flagOf b, j))
+        (MatrixMap.choi_map_inv (originalInstrument angle))
+  rw [hblock, original_block, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one]
+  simp [Y, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.one_apply, mul_ite, ite_mul]
 
 /-- Apply fresh measured branches, with the most recent outcome at the head of the list. -/
 def measuredHistory : List Bool → Matrix (Level × s) (Level × s) ℂ →
@@ -843,7 +842,7 @@ def measuredHistory : List Bool → Matrix (Level × s) (Level × s) ℂ →
 
 private theorem code_word_effect (w : List Bool) :
     (code * word w)ᴴ * (code * word w) = 1 := by
-  simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc codeᴴ,
+  rw [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc codeᴴ,
     code_isometry, one_mul]
   induction w with
   | nil => simp [word]
@@ -871,10 +870,10 @@ private theorem measuredHistory_eq (w : List Bool) (ρ : Matrix (Fin 3 × s) (Fi
       (1 / 2 : ℂ) ^ (w.length + 1) • (G * ρ * Gᴴ)
     rw [Matrix.mul_smul, Matrix.smul_mul, ← Matrix.mul_assoc K, ← Matrix.mul_assoc K,
       Matrix.mul_assoc (K * F * ρ), ← Matrix.conjTranspose_mul, hKF]
-    simp only [Matrix.conjTranspose_smul, star_q, Matrix.smul_mul, Matrix.mul_smul,
+    simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
       smul_smul, pow_succ]
     congr 1
-    rw [← mul_assoc q q, q_sq]
+    rw [show star q = q from star_q, q_sq]
 
 /-- Every measured history has fair trace weight on the code, even with a finite spectator. -/
 theorem measuredHistory_trace (w : List Bool) (ρ : Matrix (Fin 3 × s) (Fin 3 × s) ℂ)
@@ -883,8 +882,8 @@ theorem measuredHistory_trace (w : List Bool) (ρ : Matrix (Fin 3 × s) (Fin 3 �
     (measuredHistory w (embed * ρ * embedᴴ)).trace = (1 / 2 : ℂ) ^ w.length := by
   dsimp only
   rw [measuredHistory_eq, Matrix.trace_smul, Matrix.trace_mul_cycle]
-  simp [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, code_word_effect,
-    Matrix.one_kronecker_one, hρ]
+  rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul,
+    code_word_effect, one_mul, Matrix.one_kronecker_one, one_mul, hρ, smul_eq_mul, mul_one]
 
 /-- Time is read from the first coordinate of a tuple to the last. -/
 abbrev History (n : ℕ) := Fin n → Bool
@@ -896,32 +895,45 @@ def chronologicalWord {n : ℕ} (w : History n) : Qutrit := word (List.ofFn w).r
 def RecordClass (n : ℕ) := Set.range (@chronologicalWord n)
 
 noncomputable instance (n : ℕ) : Fintype (RecordClass n) :=
-  Fintype.ofFinite _
+  (Set.finite_range (@chronologicalWord n)).fintype
 
 noncomputable instance (n : ℕ) : DecidableEq (RecordClass n) := Classical.decEq _
 
 def classOf {n : ℕ} (w : History n) : RecordClass n :=
   ⟨chronologicalWord w, ⟨w, rfl⟩⟩
 
-/-- The physical projective relation and the real endpoint have exactly the same fibers. -/
+/-- The physical projective relation, the finite classes and the real endpoints have the
+same fibers at a fixed horizon. -/
 theorem chronological_fibers {n : ℕ} (v w : History n) :
-    (∃ z : ℂ, chronologicalWord v = z • chronologicalWord w) ↔
-      projectiveWord (List.ofFn v).reverse = projectiveWord (List.ofFn w).reverse :=
-  (projectiveWord_eq_iff (by simp)).symm
+    ((∃ z : ℂ, ‖z‖ = 1 ∧ chronologicalWord v = z • chronologicalWord w) ↔
+      projectiveWord (List.ofFn v).reverse = projectiveWord (List.ofFn w).reverse) ∧
+    (classOf v = classOf w ↔
+      projectiveWord (List.ofFn v).reverse = projectiveWord (List.ofFn w).reverse) := by
+  have hproj := projectiveWord_eq_iff (v := (List.ofFn v).reverse)
+    (w := (List.ofFn w).reverse) (by simp)
+  have hphase := projective_iff_word_eq (v := (List.ofFn v).reverse)
+    (w := (List.ofFn w).reverse) (by simp)
+  constructor
+  · constructor
+    · rintro ⟨z, _, hz⟩
+      exact hproj.mpr ⟨z, hz⟩
+    · intro he
+      exact ⟨1, norm_one, by simpa only [one_smul, chronologicalWord] using hphase.mp (hproj.mp he)⟩
+  · exact Subtype.ext_iff.trans (hphase.symm.trans hproj.symm)
 
 /-- Embed each actual finite record class as a real projective endpoint. -/
 def classProjective (n : ℕ) : RecordClass n ↪ PGL(2, ℝ) where
   toFun k := projectiveWord (List.ofFn k.property.choose).reverse
   inj' := by
     intro k l he
-    apply Subtype.ext
-    rw [← k.property.choose_spec, ← l.property.choose_spec]
-    exact (projective_iff_word_eq (by simp)).mp ((chronological_fibers _ _).mpr he)
+    have hk : classOf k.property.choose = k := Subtype.ext k.property.choose_spec
+    have hl : classOf l.property.choose = l := Subtype.ext l.property.choose_spec
+    rw [← hk, ← hl]
+    exact (chronological_fibers _ _).2.mpr he
 
 private theorem classProjective_classOf {n : ℕ} (w : History n) :
-    classProjective n (classOf w) = projectiveWord (List.ofFn w).reverse := by
-  apply (chronological_fibers _ _).mp
-  exact ⟨1, by simpa [classOf] using (classOf w).property.choose_spec⟩
+    classProjective n (classOf w) = projectiveWord (List.ofFn w).reverse :=
+  (chronological_fibers _ w).2.mp (Subtype.ext (classOf w).property.choose_spec)
 
 /-- The measured mass uses the trace of the actual five-level output of each history. -/
 def measuredLaw {n : ℕ} (ρ : Matrix (Fin 3 × s) (Fin 3 × s) ℂ) : RecordClass n → ℝ :=
@@ -944,7 +956,12 @@ private theorem ofFn_reverseHistory {n : ℕ} (w : History n) :
   apply List.ext_getElem
   · simp
   · intro i hi hj
-    simp [List.getElem_reverse hj, reverseHistory, Fin.rev, Fin.revPerm]
+    simp only [List.getElem_reverse hj, List.getElem_ofFn, List.length_ofFn]
+    change w (Fin.rev ⟨i, _⟩) = w _
+    apply congrArg w
+    apply Fin.ext
+    simp
+    omega
 
 /-- The measured class law is the counted projective law on its finite support. -/
 theorem fair_projective_record (n : ℕ) (ρ : Matrix (Fin 3 × s) (Fin 3 × s) ℂ) (hρ : ρ.trace = 1) :
@@ -958,13 +975,11 @@ theorem fair_projective_record (n : ℕ) (ρ : Matrix (Fin 3 × s) (Fin 3 × s) 
         ((2 : ℝ) ^ n)⁻¹ := by
     dsimp only
     rw [measuredHistory_trace _ _ hρ, List.length_reverse, List.length_ofFn]
-    norm_cast
-    rw [one_div, inv_pow]
-  have hl : measuredLaw (n := n) ρ = pushforward classOf (fun _ : History n => ((2 : ℝ) ^ n)⁻¹) := by
-    unfold measuredLaw
-    congr 1
-    funext w
-    exact hw w
+    have hh : (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) := by norm_num
+    rw [hh, ← Complex.ofReal_pow, Complex.ofReal_re, one_div, inv_pow]
+  have hl : measuredLaw (n := n) ρ =
+      pushforward classOf (fun _ : History n => ((2 : ℝ) ^ n)⁻¹) :=
+    congrArg (pushforward (@classOf n)) (funext hw)
   have he : pushforward (classProjective n) (measuredLaw (n := n) ρ) = projectiveLaw n := by
     rw [hl, pushforward_comp]
     funext g
@@ -975,7 +990,7 @@ theorem fair_projective_record (n : ℕ) (ρ : Matrix (Fin 3 × s) (Fin 3 × s) 
   refine ⟨he, fun k => ?_⟩
   rw [← he, hl]
   simp only [pushforward, (classProjective n).injective.eq_iff, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, ← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, div_eq_mul_inv]
+    Finset.mem_univ, ite_true, ← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, div_eq_mul_inv]
 
 end
 
