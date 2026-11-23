@@ -338,7 +338,8 @@ a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
 claim applies to the compiled declaration at measurement time. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
-For example, `lake test -- OmegaMath.Projective` checks the projective topic.
+In a checkout that contains the Omega libraries and audit target,
+`lake test -- OmegaMath.Projective` checks the projective topic.
 [Strict library audit](https://github.com/the-omega-institute/trureturing/blob/1b091b743e5eed04d4eab893c547f1785dede9d2/src/OmegaChecks/Audit.lean)
 
 ## Open a pull request

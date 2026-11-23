@@ -283,7 +283,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
-首次 deposit 从当前编译证据写出逐声明注记。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+首次 deposit 从当前编译证据写出逐声明注记。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
