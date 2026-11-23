@@ -168,4 +168,73 @@ theorem coefficient_rawLocal_pow_div_halfJacobian
     have hjn : j ≠ n := fun he => h (Nat.lt_succ_iff.mp (he ▸ Finset.mem_range.mp hj))
     simp [hjn]
 
+/-- A physical mark of mode `m` depends only on native Taylor modes through `m`. -/
+theorem coefficient_comp_rawLocal_div_halfJacobian
+    {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
+    (c : Chart) (i : Puncture) (m : ℕ) :
+    coefficient m (fun u => f (rawLocal c x i u) /
+      halfJacobian c x i (inverseRoot c x i u)) =
+      ∑ n ∈ Finset.range (m + 1),
+        coefficient n f * ((scaleRoot c x i)⁻¹ * ((scale c x i)⁻¹) ^ m *
+          (-loweringParameter c i) ^ (m - n) * Ring.choose ((m : ℂ) + 1 / 2) (m - n)) := by
+  obtain ⟨R, hR, hTaylor⟩ := hf.exists_eventuallyEq_sum_add_pow_mul (m + 1)
+  let v := rawLocal c x i
+  let J := fun u => halfJacobian c x i (inverseRoot c x i u)
+  let g : ℂ → ℂ := fun u => (scale c x i + loweringParameter c i * u)⁻¹
+  have hv : AnalyticAt ℂ v 0 := rawLocal_analytic hx hx1 c i
+  have hv₀ : v 0 = 0 := by simp [v, rawLocal]
+  have hg : AnalyticAt ℂ g 0 :=
+    (analyticAt_const.add (analyticAt_const.mul analyticAt_id)).inv
+      (by simpa using scale_ne hx hx1 c i)
+  have hJ : AnalyticAt ℂ J 0 :=
+    analyticAt_const.div ((inverseRoot_analytic hx hx1 c i).pow 3) (by simp [inverseRoot_zero])
+  have hJ₀ : J 0 ≠ 0 := by simpa [J, halfJacobian, inverseRoot_zero] using root_ne hx hx1 c i
+  have hrest : AnalyticAt ℂ (fun u => g u ^ (m + 1) * R (v u) / J u) 0 :=
+    ((hg.pow _).mul (hR.fun_comp_of_eq hv hv₀)).div hJ hJ₀
+  have hech : (fun u => f (v u) / J u) =ᶠ[𝓝 0] fun u =>
+      (∑ n ∈ Finset.range (m + 1), coefficient n f * (v u ^ n / J u)) +
+        u ^ (m + 1) * (g u ^ (m + 1) * R (v u) / J u) := by
+    have hvmap : Tendsto v (𝓝 0) (𝓝 0) := by
+      have hc : Tendsto v (𝓝 0) (𝓝 (v 0)) := hv.continuousAt
+      rwa [hv₀] at hc
+    filter_upwards [hvmap.eventually hTaylor] with u hu
+    simp only [hu, add_div, Finset.sum_div, coefficient, smul_eq_mul]
+    congr 1
+    · apply Finset.sum_congr rfl
+      intro n _
+      ring
+    · have hvg : v u = u * g u := rfl
+      rw [show v u ^ (m + 1) = u ^ (m + 1) * g u ^ (m + 1) by rw [hvg, mul_pow]]
+      ring
+  rw [coefficient_congr hech]
+  have hterm (n : ℕ) : AnalyticAt ℂ (fun u => coefficient n f * (v u ^ n / J u)) 0 :=
+    analyticAt_const.mul ((hv.pow n).div hJ hJ₀)
+  have hsum : AnalyticAt ℂ
+      (fun u => ∑ n ∈ Finset.range (m + 1), coefficient n f * (v u ^ n / J u)) 0 :=
+    Finset.analyticAt_fun_sum _ fun n _ => hterm n
+  have hpow : AnalyticAt ℂ (fun u : ℂ => u ^ (m + 1)) 0 := analyticAt_id.pow _
+  have hz : coefficient m (fun u => u ^ (m + 1) * (g u ^ (m + 1) * R (v u) / J u)) = 0 := by
+    change coeff _ m = _
+    rw [coeff_mul hpow hrest]
+    apply Finset.sum_eq_zero
+    intro j hj
+    simp [monomial_coeff, show j ≠ m + 1 by have := Finset.mem_range.mp hj; omega]
+  have hadd : coefficient m (fun u =>
+        (∑ n ∈ Finset.range (m + 1), coefficient n f * (v u ^ n / J u)) +
+          u ^ (m + 1) * (g u ^ (m + 1) * R (v u) / J u)) =
+      ∑ n ∈ Finset.range (m + 1), coefficient n f * coefficient m (fun u => v u ^ n / J u) := by
+    have htotal : AnalyticAt ℂ
+        (fun u => u ^ (m + 1) * (g u ^ (m + 1) * R (v u) / J u)) 0 :=
+      hpow.mul hrest
+    simp only [coefficient] at hsum hterm hz ⊢
+    rw [iteratedDeriv_fun_add hsum.contDiffAt htotal.contDiffAt, add_div, hz, add_zero,
+      iteratedDeriv_fun_sum (fun n _ => (hterm n).contDiffAt), Finset.sum_div]
+    simp only [iteratedDeriv_const_mul_field, mul_div_assoc]
+  rw [hadd]
+  apply Finset.sum_congr rfl
+  intro n hn
+  rw [show coefficient m (fun u => v u ^ n / J u) =
+        _ from coefficient_rawLocal_pow_div_halfJacobian hx hx1 c i m n,
+    ite_eq_left (Nat.lt_succ_iff.mp (Finset.mem_range.mp hn))]
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMInverseJets
