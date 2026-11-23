@@ -45,4 +45,5 @@ Modulo 128 the cube-role factor is 43 times the tenth power of the square-role f
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicFactorRoleDigits.cube_role_mod128_coupling`
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicFactorRoleDigits.native_square_role_digits`
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicFactorRoleDigits.square_role_pred_valuation`
+- Dependency: [D5/S3/Arith/GoldenCubicScaledTernaryUnit](../GoldenCubicScaledTernaryUnit.md)
 - Dependency: [D5/S3/Arith/Primes/GoldenCubicBlockRanks](GoldenCubicBlockRanks.md)
