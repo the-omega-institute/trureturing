@@ -51,7 +51,8 @@ def weightedDeficit (s : Finset J) (g w : J → ℝ) (T : Set ℝ) : ℝ :=
 def deletionFraction (s : Finset J) (g w : J → ℝ) : ℝ :=
   sInf {p | ∃ u ⊆ s, Compatible u g ∧ p = mass (s \ u) w / mass s w}
 
-private theorem fourth_root_gap_sq {k : ℤ} (h : ¬ (4 : ℤ) ∣ k) :
+/-- The smaller nonzero squared chord gap among fourth roots of unity. -/
+theorem fourth_root_gap_sq {k : ℤ} (h : ¬ (4 : ℤ) ∣ k) :
     2 ≤ ‖(1 : ℂ) - Complex.I ^ k‖ ^ 2 := by
   have hpos : 0 < k % 4 := by omega
   have hlt : k % 4 < 4 := by omega

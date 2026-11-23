@@ -21,6 +21,6 @@ internal sealed class MembershipCircuitResidueProductDocument : IScribeDocumentD
                     + " All omissions have the same size and contain a common pivot."
                     + " Suppose each pair differs on a membership class of size at least two."
                     + " In the associated parallel expansions, the product of the uniform and joint residue modules is integrally linearly equivalent to the product of the previous and single-omission residue modules."
-                    + " The basis concentrates weights within classes and separates the coefficient of the new petal from those of the previous petals."))),
+                    + " The membership condition gives the pairwise intersection bound for the common-pivot residue product theorem."))),
                 DescribeRole.Theorem))));
 }
