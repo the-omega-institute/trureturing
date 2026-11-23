@@ -146,26 +146,26 @@ end Convex
 
 namespace Exponential
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
-    (fun _ => ℝ → ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Prop)
+    (fun _ => Prop → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => fun y => max x y) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ∨ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => fun _ => -1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M := ∀ {u : ℝ} (hu : 1 / 4 ≤ u),
-    Real.Gamma u ≤ M.readout () () (Real.Gamma (1 / 4))
-      (Real.exp ((u + 1) * Real.log (u + 1)))
+    M.readout () () (Real.Gamma u ≤ Real.Gamma (1 / 4))
+      (Real.Gamma u < Real.exp ((u + 1) * Real.log (u + 1)))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (u := 1) (by norm_num)
-  norm_num [rejected, realize] at hh
+  exact hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 1, ?_⟩
+  refine ⟨(), True, False, ?_⟩
   intro h
-  have hh := congrFun h 0
+  have hh := congrFun h False
   norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @Gamma_le_exp_bound) where
   actual := actual
@@ -191,7 +191,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => fun y => max x y) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x ∨ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -201,7 +201,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "fn"]
+      path := #["body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -364,11 +364,13 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M := ∀ {z : ℂ} (hz : 1 ≤ z.re) (hz' : z.re ≤ 3 / 2),
-    (Complex.digamma z).re < M.readout () () (2 * |z.im| + 3)
+    (Complex.digamma z).re ≤ M.readout () () (2 * |z.im| + 3) - Real.log 2 + 1 / 2 -
+      (1 / (2 * z)).re
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (z := 1) (by norm_num) (by norm_num)
   norm_num [rejected, realize, Complex.digamma_one] at hh
+  have hl : 0 ≤ Real.log 2 := Real.log_nonneg (by norm_num)
   linarith [Real.eulerMascheroniConstant_lt_two_thirds]
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

@@ -242,7 +242,9 @@ private theorem gamma_bound {q : ℕ} (χ : DirichletCharacter ℂ q)
       (u := t.re / 2) (by linarith)
     have hg' : Real.Gamma (t.re / 2) ≤ gammaConstant *
         Real.exp ((t.re / 2 + 1) * Real.log (t.re / 2 + 1)) := by
-      refine hg.trans (max_le ?_ ?_)
+      have hmax := hg.elim (fun h => h.trans (le_max_left _ _))
+        (fun h => h.le.trans (le_max_right _ _))
+      refine hmax.trans (max_le ?_ ?_)
       · exact (le_max_right 1 _).trans (le_mul_of_one_le_right
           (show 0 ≤ gammaConstant from hB) (Real.one_le_exp
             (mul_nonneg (by linarith) (Real.log_nonneg hx))))

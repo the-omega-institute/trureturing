@@ -59,8 +59,8 @@ theorem Gamma_le_max_factorial {u : ℝ} (hu : 1 / 4 ≤ u) :
 
 /-- The factorial contribution is strictly below an elementary exponential. -/
 theorem Gamma_le_exp_bound {u : ℝ} (hu : 1 / 4 ≤ u) :
-    Real.Gamma u ≤ max (Real.Gamma (1 / 4))
-      (Real.exp ((u + 1) * Real.log (u + 1))) := by
+    Real.Gamma u ≤ Real.Gamma (1 / 4) ∨
+      Real.Gamma u < Real.exp ((u + 1) * Real.log (u + 1)) := by
   have hu0 : 0 ≤ u := by linarith
   have hup : 0 < u + 1 := by linarith
   have hn : (⌈u⌉₊ : ℝ) < u + 1 := Nat.ceil_lt_add_one hu0
@@ -75,7 +75,9 @@ theorem Gamma_le_exp_bound {u : ℝ} (hu : 1 / 4 ≤ u) :
       _ = Real.exp (Real.log (u + 1) * (⌈u⌉₊ : ℝ)) := by
         rw [← Real.rpow_natCast, Real.rpow_def_of_pos hup]
       _ < _ := Real.exp_lt_exp.mpr (by nlinarith)
-  exact (Gamma_le_max_factorial hu).trans (max_le_max le_rfl hfac.le)
+  rcases le_max_iff.mp (Gamma_le_max_factorial hu) with h | h
+  · exact .inl h
+  · exact .inr (h.trans_lt hfac)
 
 /-- The real-part bound for Deligne's real archimedean factor. -/
 theorem norm_GammaReal_le {s : ℂ} (hs : 0 < s.re) :
@@ -87,6 +89,9 @@ theorem norm_GammaReal_le {s : ℂ} (hs : 0 < s.re) :
   simpa only [div_ofNat_re] using mul_le_mul_of_nonneg_left hg
     (Real.rpow_nonneg Real.pi_pos.le _)
 
+open private antitoneOn_log_div_sq log_div_sq_is_deriv
+  tendsto_antideriv_log_div_sq summable_log_div_sq from D5.S3.Weil.Mertens.Estimates
+
 /-- An explicit integral-test bound for the logarithmic Dirichlet series at two. -/
 theorem logarithmic_series_bound :
     Summable (fun n : ℕ => Real.log n / (n : ℝ) ^ 2) ∧
@@ -94,15 +99,11 @@ theorem logarithmic_series_bound :
       Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 ∧
     Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 < 1 := by
   let f : ℝ → ℝ := fun x => Real.log (x + 2) / (x + 2) ^ 2
-  open private antitoneOn_log_div_sq log_div_sq_is_deriv
-    tendsto_antideriv_log_div_sq summable_log_div_sq from D5.S3.Weil.Mertens.Estimates in
   have htail : Summable (fun n : ℕ => Real.log (n + 3) / (n + 3) ^ 2) :=
     Mertens.summable_log_div_sq
   have hall : Summable (fun n : ℕ => Real.log n / (n : ℝ) ^ 2) := by
     apply (summable_nat_add_iff 3).mp
     simpa only [Nat.cast_add, Nat.cast_ofNat] using htail
-  open private antitoneOn_log_div_sq log_div_sq_is_deriv
-    tendsto_antideriv_log_div_sq from D5.S3.Weil.Mertens.Estimates in
   have hb : (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
       Real.log 2 / 4 + Real.log 3 / 9 + (Real.log 3 + 1) / 3 := by
     have hd (x : ℝ) (hx : 1 ≤ x) := Mertens.log_div_sq_is_deriv x (by linarith)
@@ -131,13 +132,11 @@ theorem logarithmic_series_bound :
 
 /-- Binet's remainder gives a uniform logarithmic bound on a Gamma strip. -/
 theorem digamma_re_lt_log_height {z : ℂ} (hz : 1 ≤ z.re) (hz' : z.re ≤ 3 / 2) :
-    (Complex.digamma z).re < Real.log (2 * |z.im| + 3) := by
+    (Complex.digamma z).re ≤ Real.log (2 * |z.im| + 3) - Real.log 2 + 1 / 2 -
+      (1 / (2 * z)).re := by
   have hp : 0 < z.re := by linarith
   have hb := norm_digamma_sub_log_add_half_inv_le_re hp
   have hrep := (Complex.re_le_norm _).trans hb
-  have hi : 0 ≤ (1 / (2 * z)).re := by
-    rw [one_div, Complex.inv_re]
-    exact div_nonneg (by simpa using hp.le) (Complex.normSq_nonneg _)
   have hn : 0 < ‖z‖ := norm_pos_iff.mpr (by intro h; simp [h] at hp)
   have hhalf : 1 / (2 * z.re) ≤ 1 / 2 := by
     apply (div_le_div_iff₀ (by positivity) (by norm_num)).mpr
@@ -149,6 +148,6 @@ theorem digamma_re_lt_log_height {z : ℂ} (hz : 1 ≤ z.re) (hz' : z.re ≤ 3 /
   have hlog := Real.log_le_log (by positivity : 0 < 2 * ‖z‖) hnorm
   rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) hn.ne'] at hlog
   simp only [add_re, sub_re, Complex.log_re] at hrep
-  linarith [Real.log_two_gt_d9]
+  linarith
 
 end D5.S3.CharacterSums.DirichletCompletionGamma

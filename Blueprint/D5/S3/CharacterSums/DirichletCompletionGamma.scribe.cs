@@ -42,11 +42,11 @@ internal sealed class DirichletCompletionGammaDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For every real u at least one quarter, Gamma(u) is at most the maximum "
-                    + "of Gamma(1/4) and exp((u+1) log(u+1)). The factorial contribution is "
+                      "For every real u at least one quarter, Gamma(u) is at most "
+                    + "Gamma(1/4) or strictly below exp((u+1) log(u+1)). The factorial contribution is "
                     + "strictly below the exponential because ceiling(u) < u+1 and "
                     + "log(u+1) is positive. The fixed endpoint contribution remains in the "
-                    + "maximum, while the factorial comparison retains its strict inequality. "
+                    + "first branch, while the second branch retains its strict inequality. "
                     + "This combines the classical convexity and factorial estimates."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("real-gamma-factor"),
@@ -88,11 +88,11 @@ internal sealed class DirichletCompletionGammaDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every complex z with 1 <= Re(z) <= 3/2, the real part of "
-                    + "digamma(z) is strictly less than log(2 abs(Im(z))+3). Binet's "
+                    + "digamma(z) is at most log(2 abs(Im(z))+3)-log(2)+1/2-Re(1/(2z)). Binet's "
                     + "formula bounds the remainder after log(z)-1/(2z) by 1/(2 Re(z)). "
                     + "The real part of 1/(2z) is nonnegative and 1/(2 Re(z)) <= 1/2. "
                     + "The estimate 2 norm(z) <= 2 abs(Im(z))+3 and log(2)>1/2 absorb "
-                    + "the remainder. This is an explicit consequence of the classical "
+                    + "the remainder while retaining both correction terms. This is a consequence of the classical "
                     + "Binet formula for the logarithmic derivative of Gamma."))),
                 DescribeRole.Theorem))));
 }
