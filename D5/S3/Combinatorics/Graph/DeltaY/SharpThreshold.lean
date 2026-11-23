@@ -56,11 +56,11 @@ private theorem P_six : P.{u} 6 := by
 
 private theorem P_below_six (d : ℕ) (hd : d < 6) : ¬ P.{u} d := by
   intro hp
+  -- Certify the seven-vertex seed and its degree.
   have seed_exact :
       seed.active = range 7 ∧
         seed.edges = ((range 7).sym2.filter fun e => ¬ e.IsDiag) \ {s(0, 6), s(1, 4)} := by
     decide
-
   have seed_valid : seed.Valid := by
     intro x y h
     unfold State.Adj at h
@@ -68,21 +68,18 @@ private theorem P_below_six (d : ℕ) (hd : d < 6) : ¬ P.{u} d := by
     obtain ⟨hm, hn⟩ := mem_filter.mp (mem_sdiff.mp h).1
     obtain ⟨hx, hy⟩ := mk_mem_sym2_iff.mp hm
     exact ⟨seed_exact.1 ▸ hx, seed_exact.1 ▸ hy, fun he => hn (by simp [he])⟩
-
   have seed_minimum_deg : seed.MinDegree 5 ∧ seed.degree 0 = 5 := by
     change (∀ x ∈ seed.active, 5 ≤ seed.degree x) ∧ seed.degree 0 = 5
     decide
-
+  -- The first four moves are strong, including the reverse at 0.
   have witness_step1 : Move true seed after1 := by
     apply Move.forward
     change triple012.verts ⊆ seed.active ∧ 7 ∉ seed.active ∧ triple012.pairs ⊆ seed.edges
     decide
-
   have witness_step2 : Move true after1 after2 := by
     apply Move.forward
     change triple034.verts ⊆ after1.active ∧ 8 ∉ after1.active ∧ triple034.pairs ⊆ after1.edges
     decide
-
   have witness_step3 : Move true after2 after3 := by
     apply Move.reverse
     · change 0 ∈ after2.active ∧ after2.neighbors 0 = triple578.verts
@@ -90,32 +87,28 @@ private theorem P_below_six (d : ℕ) (hd : d < 6) : ¬ P.{u} d := by
     · intro _
       change Disjoint after2.edges triple578.pairs
       decide
-
   have witness_step4 : Move true after3 after4 := by
     apply Move.forward
     change triple157.verts ⊆ after3.active ∧ 9 ∉ after3.active ∧ triple157.pairs ⊆ after3.edges
     decide
-
+  -- The reverse at 1 has exactly one preexisting neighbor pair.
   have witness_last_pair_overlap :
       after4.neighbors 1 = triple369.verts ∧
         after4.Adj 3 6 ∧ ¬ after4.Adj 3 9 ∧ ¬ after4.Adj 6 9 := by
     decide
-
   have witness_step5 : Move false after4 after5 := by
     apply Move.reverse
     · exact ⟨by decide, witness_last_pair_overlap.1⟩
     · intro he
       contradiction
-
   have witness_counts :
       [seed.edges.card, after1.edges.card, after2.edges.card, after3.edges.card,
         after4.edges.card, after5.edges.card] = [19, 19, 19, 19, 19, 18] := by
     decide
-
   have witness_history : Reach false seed after5 :=
     (strong_to_ordinary ((((ReflTransGen.single witness_step1).tail witness_step2).tail
       witness_step3).tail witness_step4)).tail witness_step5
-
+  -- An isomorphic endpoint of a strong history would preserve the count.
   let S := seed.asFiniteGraph.{u} seed_valid
   have hE := reach_valid witness_history seed_valid
   let E := after5.asFiniteGraph.{u} hE
