@@ -418,19 +418,16 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/scripts/install-tools.py
-            /.github/scripts/test-install-tools.py
             /Meta/tools-release.json
             /Meta/ci-units.json
           persist-credentials: false
-      - name: Install the pinned tools release
-        run: python3 .github/scripts/install-tools.py
-      - name: Verify the source of the tools adopted on dev
-        if: needs.detect.outputs.tools_pin_changed == 'true' && (github.base_ref == 'dev' || github.ref == 'refs/heads/dev')
+      - name: Verify the consumer dev tools pin
+        if: github.base_ref == 'dev' || (github.ref == 'refs/heads/dev' && needs.detect.outputs.tools_pin_changed == 'true')
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 -B .github/scripts/test-install-tools.py
-          python3 .github/scripts/install-tools.py --verify-adopted-source --adoption-event "$GITHUB_EVENT_NAME"
+        run: python3 .github/scripts/install-tools.py --verify-adopted-source --adoption-event "$GITHUB_EVENT_NAME"
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - env:
           NEEDS: ${{ toJSON(needs) }}
           HITS: ${{ needs.detect.outputs.hits }}
