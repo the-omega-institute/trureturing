@@ -598,7 +598,7 @@ private theorem comparison_weight_factor {m : Count} {p : ℕ} (hm : ∑ j, m j 
 
 private theorem growing_order_upper {k p : ℕ} (hp : 0 < p) :
     tailCollisionMass (triple ((k : ℝ) + √2)) comparisonWeights p (comparisonResolution k p) ≤
-      6/(p : ℝ) := by
+      4 / (p : ℝ) := by
   classical
   let S := piAntidiag (univ : Finset (Fin 3)) p
   let w := monomialWeight comparisonWeights
@@ -639,7 +639,6 @@ private theorem growing_order_upper {k p : ℕ} (hp : 0 < p) :
       exact mul_le_mul_of_nonneg_right hwbound
         (D5.S3.Fourier.Concentration.FiniteSincCollisionMoment.monomialWeight_nonneg _ hw m)
     _ = 4/(p : ℝ) := by rw [← mul_sum, hsum, mul_one]
-    _ ≤ 6/(p : ℝ) := div_le_div_of_nonneg_right (by norm_num) (Nat.cast_nonneg _)
 
 /-- Agreement of all collision masses below degree k permits an exact difference
 at degree k and a growing disparity at a common positive resolution. -/
@@ -654,7 +653,7 @@ theorem low_order_agreement_and_high_order_disparity (k : ℕ) (hk : 2 ≤ k) :
     (∀ p : ℕ, 0 < p →
       let t := comparisonResolution k p
       1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t ∧
-        tailCollisionMass g' w p t ≤ 6/(p : ℝ)) := by
+        tailCollisionMass g' w p t ≤ 4 / (p : ℝ)) := by
   refine ⟨fun p hp t ht htone => low_order_equality hp comparisonWeights ht htone, ?_, ?_⟩
   · intro t ht htone
     simpa [comparisonWeights] using exact_critical_difference hk comparisonWeights ht htone

@@ -52,7 +52,7 @@ internal sealed class LowOrderCollisionAgreementDocument : IScribeDocumentDefini
             Multiply(new Formula.Power(Grp(quarter), Seq(k, Minus, D(1))),
                 Multiply(new Formula.Power(Grp(quarter), k), half)));
         var lower = new Formula.Fraction(D(1), Multiply(Multiply(D(1, 6), k), Seq(F.Sqrt, Grp(p))));
-        var upper = new Formula.Fraction(D(6), p);
+        var upper = new Formula.Fraction(D(4), p);
         return Disp(new Formula.Aligned([
             Seq(Call("E", p, t), Sp, Eq, Sp, Call("F", p, t)),
             Seq(Call("E", k, t), Sp, Eq, Sp, Add(Call("F", k, t), gap)),

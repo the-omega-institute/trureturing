@@ -34,7 +34,7 @@ abbrev lastFrequencyArena : Arena where
     (∀ p : ℕ, 0 < p →
       let t := 1 / (2 * ((k : ℝ) + 3) * (p : ℝ))
       1 / (16 * (k : ℝ) * √(p : ℝ)) ≤ tailCollisionMass g w p t ∧
-        tailCollisionMass g' w p t ≤ 6/(p : ℝ))
+        tailCollisionMass g' w p t ≤ 4 / (p : ℝ))
 
 private theorem shifted_law : ¬ lastFrequencyArena.Law shifted := by
   intro law
