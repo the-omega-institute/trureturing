@@ -6,7 +6,7 @@
    utility: none
    digest: An explicit harmonic-weight majorant on each permitted perturbation interval. -/
 
-import D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
+import D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
 
 /-! Weight envelopes for comparing collision tests before and after spectral perturbations. -/
 
@@ -17,6 +17,7 @@ noncomputable section
 open Finset
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
+open D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations (collision_excess_eq)
 
 namespace D5.S3.Fourier.Concentration.PerturbedHarmonicWeights
 
@@ -102,18 +103,6 @@ private def pairContribution {J : Type*} [Fintype J]
   if |monomialFrequency g m - monomialFrequency g n| ≤ η
     then monomialWeight w m * monomialWeight w n else 0
 
-private theorem collision_sub_diagonal {J : Type*} [Fintype J] [DecidableEq J]
-    (g w : J → ℝ) (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
-    tailCollisionMass g w p η - diagonal w p =
-      ∑ m ∈ piAntidiag univ p, ∑ n ∈ (piAntidiag univ p).erase m,
-        pairContribution g w η m n := by
-  change (∑ m ∈ piAntidiag univ p, ∑ n ∈ piAntidiag univ p,
-    pairContribution g w η m n) - (∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2) = _
-  rw [← sum_sub_distrib]
-  refine sum_congr rfl (fun m hm => ?_)
-  rw [← sum_erase_add _ _ hm]
-  simp [pairContribution, hη, pow_two]
-
 /-- Restricting the support and decreasing its nonnegative weights can only decrease
 the contribution from distinct near-colliding degree vectors. -/
 private theorem collision_excess_le_of_support_and_weights {J : Type*}
@@ -123,7 +112,13 @@ private theorem collision_excess_le_of_support_and_weights {J : Type*}
     tailCollisionMass (fun j : s => g j) u p η - diagonal u p ≤
       tailCollisionMass g v p η - diagonal v p := by
   classical
-  rw [collision_sub_diagonal _ _ _ hη, collision_sub_diagonal _ _ _ hη]
+  change tailCollisionMass _ _ _ _ - (∑ m ∈ piAntidiag univ p, monomialWeight u m ^ 2) ≤
+    tailCollisionMass _ _ _ _ - (∑ m ∈ piAntidiag univ p, monomialWeight v m ^ 2)
+  rw [collision_excess_eq _ _ _ hη, collision_excess_eq _ _ _ hη]
+  change (∑ m ∈ piAntidiag univ p, ∑ n ∈ (piAntidiag univ p).erase m,
+    pairContribution (fun j : s => g j) u η m n) ≤
+      ∑ m ∈ piAntidiag univ p, ∑ n ∈ (piAntidiag univ p).erase m,
+        pairContribution g v η m n
   let e := extendDegree s
   have hdegree (m : s → ℕ) (hm : m ∈ piAntidiag univ p) :
       e m ∈ piAntidiag (univ : Finset J) p := by

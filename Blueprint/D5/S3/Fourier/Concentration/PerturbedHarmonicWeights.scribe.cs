@@ -58,7 +58,7 @@ internal sealed class PerturbedHarmonicWeightsDocument : IScribeDocumentDefiniti
         var u = F.Id("U");
         var v = F.Id("V");
         var ordinate = new Formula.FunctionCall(FormulaIdentifier.Create("h"), [j]);
-        var cutoff = Seq(F.Id("X"), Lt, ordinate, Leq, F.Id("T"));
+        var cutoff = Seq(F.Id("X"), Lt, ordinate, Leq, Sp, F.Id("T"));
         var membership = Seq(j, Sp, InMacro, Sp, v);
         var covered = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("j"), F.Id("J"),
             new Formula.Logic(cutoff, FormulaLogicOperator.Implies, membership));
