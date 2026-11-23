@@ -56,7 +56,6 @@ Weyl 归纳（Jameson Theorem 1 的一般 `k`）的第一步是把指数和
 Theorem 1 归纳步的代数前提。
 -/
 
-
 /-- 整系数多项式 `∑_{j=0}^{d} a_j n^j` 的求值。 -/
 def polyEval (a : ℕ → ℤ) (d : ℕ) (n : ℤ) : ℤ :=
   ∑ j ∈ Finset.range (d + 1), a j * n ^ j

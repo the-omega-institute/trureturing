@@ -50,7 +50,6 @@ namespace Waring
 从而 `Q = h·M`、条件变成 `h₁M₁ + h₂M₂ + h₃M₃ + h₄M₄ = 0`。
 -/
 
-
 /-- **四重展开**：四个和之积展开成四层嵌套和（右结合形状）。 -/
 theorem mul_four_finset (s1 s2 s3 s4 : Finset ℤ) (f1 f2 f3 f4 : ℤ → ℂ) :
     (∑ x ∈ s1, f1 x) * ((∑ x ∈ s2, f2 x) * ((∑ x ∈ s3, f3 x) * (∑ x ∈ s4, f4 x)))

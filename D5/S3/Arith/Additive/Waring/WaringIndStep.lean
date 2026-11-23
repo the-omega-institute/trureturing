@@ -31,14 +31,7 @@ namespace Waring
 /-!
 # `|b_h|^{2s}` 的按频率展开（一般 `s`）
 
-`WaringWeylInq.normSq_T_fiber` 给出了 `s = 1` 的情形：
-
-```text
-|b_h|² = Σ_Q A(Q,h) · e(Q·α),   A(Q,h) = #{(n,m) ∈ TS²  |  q m − q n = Q}
-```
-
-本文件把它推广到任意 `s ≥ 1`（`s = 0` 时结论也成立，`1 ≤ s` 只是与 Weyl
-归纳的用法对齐）：
+对任意自然数 `s`，差分和的偶次幂具有如下相位展开：
 
 ```text
 |b_h|^{2s} = Σ_Q BCount(f,N,h,s,Q) · e(Q·α),
@@ -52,14 +45,10 @@ namespace Waring
 * `T_pow_expand`：`b^s = Σ_{u : Fin s → TS} e(α · Qsum u)`（`Finset.sum_pow'` + 乘性 `e_sum_finset`）；
 * `conjT_pow_expand`：`(conj b)^s = Σ_v e(−α · Qsum v)`；
 * `sum_diff_fiber_pi`：把 `(Fin s → ℕ)` 上的双和按 `Qsum u − Qsum v` 的值分组
-  （`Finset.sum_product` + `Finset.sum_fiberwise_of_maps_to`，与 `sum_diff_fiber` 同构）。
+  （`Finset.sum_product` + `Finset.sum_fiberwise_of_maps_to'`）。
 
 最后 `↑(normSq b) = conj b · b`，配合 `mul_pow` 组装。
-
-**命名注意**：本文件的 `e_sum_finset` 是 `Finset` 版本；`WaringQuadratic.e_sum` 是
-`Fintype` 版本，两者曾同名冲突，故此处改名为 `e_sum_finset`。
 -/
-
 
 /-- `q n = f(n+h) − f(n)`（`b_h` 的相位差分）。 -/
 noncomputable def dshift (f : ℤ → ℤ) (h : ℤ) (n : ℕ) : ℤ := f ((n : ℤ) + h) - f (n : ℤ)
@@ -158,20 +147,8 @@ theorem sum_diff_fiber_pi {M : Type*} [AddCommMonoid M] {ι : Type*} [Fintype ι
     obtain ⟨hu, hv⟩ := Finset.mem_product.mp hp
     refine Finset.mem_biUnion.mpr ⟨q v, Finset.mem_image_of_mem q hv, ?_⟩
     exact Finset.mem_image_of_mem (fun b => b - q v) (Finset.mem_image_of_mem q hu)
-  rw [← Finset.sum_fiberwise_of_maps_to
-    (t := ((Fintype.piFinset (fun _ : ι => s)).image q).biUnion
-      (fun a => ((Fintype.piFinset (fun _ : ι => s)).image q).image (fun b => b - a)))
-    (g := fun p : (ι → ℕ) × (ι → ℕ) => q p.1 - q p.2)
-    hmaps (f := fun p => F (q p.1 - q p.2))]
-  refine Finset.sum_congr rfl (fun Q _ => ?_)
-  have hstep : ∀ p ∈ ((Fintype.piFinset (fun _ : ι => s)).product
-      (Fintype.piFinset (fun _ : ι => s))).filter
-      (fun p : (ι → ℕ) × (ι → ℕ) => q p.1 - q p.2 = Q),
-      F (q p.1 - q p.2) = F Q := by
-    intro p hp
-    rw [Finset.mem_filter] at hp
-    rw [hp.2]
-  rw [Finset.sum_congr rfl hstep, Finset.sum_const]
+  rw [← Finset.sum_fiberwise_of_maps_to' hmaps F]
+  exact Finset.sum_congr rfl (fun Q _ => Finset.sum_const _)
 
 /-- **`|b_h|^{2s}` 的按频率展开**（一般 `s`）：
 `|b_h|^{2s} = Σ_Q BCount(Q) · e(Q·α)`。 -/
@@ -200,7 +177,6 @@ theorem normSq_pow_T_fiber (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (α : ℝ) (s :
   -- 5) `ℕ`-倍转成复数乘法
   refine Finset.sum_congr rfl (fun Q _ => ?_)
   rw [nsmul_eq_mul]
-
 
 /- Adapted from https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringQuadSum.lean#L1-L239 -/
 

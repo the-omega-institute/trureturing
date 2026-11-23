@@ -24,7 +24,7 @@ internal sealed class WaringIndStepDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("A positive integer power of the squared norm of a displacement sum expands over phase fibers, weighted by their cardinalities."))),
+                Blocks(Paragraph(Text("For every natural number s, the s-th power of the squared norm of a displacement sum expands over phase fibers weighted by their cardinalities."))),
                 DescribeRole.Theorem)
         )));
 }
