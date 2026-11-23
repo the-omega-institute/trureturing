@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#29204; Proved)
 escape_witness: none
 Finite row tables normalize the row quotient; their helpers are bind-only.
-codes_table: proof_shape=bind-only; consumers=row_counts, initial_weights
+codes_table: proof_shape=bind-only; consumers=row_counts, initial_weights, HardinA229693StripTransfer.zeroExitCodes_count
 row_counts_code: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_weights: proof_shape=bind-only; consumers=finite_certificate

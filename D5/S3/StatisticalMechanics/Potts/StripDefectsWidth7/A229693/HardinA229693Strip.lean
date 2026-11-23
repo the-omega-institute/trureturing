@@ -24,7 +24,7 @@ initial_exhausted_count: proof_shape=content; consumers=initial_counts
 initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
-leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
+leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
@@ -37,12 +37,12 @@ rightColumn: proof_shape=bind-only; consumers=checkColumn, exhausted_step, right
 rightColumn_eq: proof_shape=bind-only; consumers=exhausted_step._simp_4
 arithmeticRow: proof_shape=bind-only; consumers=checkColumn, exhausted_step
 w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, forward_step, forward_table, polynomialCoordinates, polynomial_relation, w_leading
-w_leading: proof_shape=content; consumers=forward_step
+w_leading: proof_shape=bind-only; consumers=forward_step
 leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
-leadingCoordinates: proof_shape=content; consumers=leading_rec
-leading_rec: proof_shape=content; consumers=leading_step
-leading_step: proof_shape=content; consumers=forward_step
+leadingCoordinates: proof_shape=bind-only; consumers=leading_rec
+leading_rec: proof_shape=bind-only; consumers=leading_step
+leading_step: proof_shape=bind-only; consumers=forward_step
 checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
