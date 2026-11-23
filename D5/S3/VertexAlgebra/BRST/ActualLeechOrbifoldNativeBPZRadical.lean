@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native relative BPZ detects the ghost-one boundaries at nonzero momentum. -/
+   digest: Native relative BPZ detects the ghost-one boundaries at every momentum. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldAllWeightDimension
@@ -14,7 +14,8 @@ import D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation
 import D5.S3.VertexAlgebra.TwistedGround.ActualOddGradeOrthogonality
 
 /-! The radical on the actual ghost-one cycles is tested against the cycles
-at the opposite plane momentum. -/
+at the opposite plane momentum. At zero momentum the two original plane
+currents give the pairing in the degree-one shell coordinates. -/
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -60,6 +61,8 @@ open private mem_orbifoldWeight_iff untwistedWeight_eq_grade
 open private nativeShellEquiv assocQ_reassoc
   from D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeCohomology
 open private degree_shell from D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeBracket
+open private representative_one planeCurrent from
+  D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeZeroMomentum
 open private opposite_plus_ne_zero from
   D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldNativeBPZLightCone
 
@@ -346,5 +349,111 @@ theorem relativePairing_radical_iff_boundary (p : Charge hyperbolicPlane) (hp : 
   · rintro ⟨a, _, ha⟩ y _ hy
     rw [← ha]
     exact relativePairing_boundary_cycle a y hy
+
+private theorem zeroMomentum_degreeOne_expansion (x : GhostSpace 0 1) :
+    reassoc.symm x.val.val =
+      RelativeZeroMomentum.degreeOneEquiv x 0 • RelativeZeroMomentum.u 0 +
+      RelativeZeroMomentum.degreeOneEquiv x 1 • RelativeZeroMomentum.u 1 := by
+  have h : RelativeZeroMomentum.representative
+      (0, (RelativeZeroMomentum.degreeOneEquiv x, 0)) = reassoc.symm x.val.val :=
+    congrArg (fun y : GhostSpace 0 1 => reassoc.symm y.val.val)
+      (RelativeZeroMomentum.degreeOneEquiv.symm_apply_apply x)
+  rw [← h, representative_one,
+    Fin.sum_univ_two (fun i : Fin 2 => RelativeZeroMomentum.degreeOneEquiv x i • planeCurrent i)]
+  simp only [RelativeZeroMomentum.u, TensorProduct.tmul_add, TensorProduct.add_tmul,
+    TensorProduct.tmul_smul, TensorProduct.smul_tmul']
+
+/-- The native pairing of actual degree-one zero-momentum states in their two
+current coordinates. -/
+theorem relativePairing_zeroMomentum_coordinates (x y : GhostSpace 0 1) :
+    relativePairing (reassoc.symm x.val.val) (reassoc.symm y.val.val) =
+      -(RelativeZeroMomentum.degreeOneEquiv x 0 * RelativeZeroMomentum.degreeOneEquiv y 1 +
+        RelativeZeroMomentum.degreeOneEquiv x 1 * RelativeZeroMomentum.degreeOneEquiv y 0) := by
+  rw [zeroMomentum_degreeOne_expansion x, zeroMomentum_degreeOne_expansion y]
+  have h00 : hyperbolicPlane.G (0 : Fin 2) (0 : Fin 2) = 0 :=
+    OrderedHyperbolicExtension.U_zero_zero
+  have h01 : hyperbolicPlane.G (0 : Fin 2) (1 : Fin 2) = 1 :=
+    OrderedHyperbolicExtension.U_zero_one
+  have h10 : hyperbolicPlane.G (1 : Fin 2) (0 : Fin 2) = 1 :=
+    OrderedHyperbolicExtension.U_one_zero
+  have h11 : hyperbolicPlane.G (1 : Fin 2) (1 : Fin 2) = 0 :=
+    OrderedHyperbolicExtension.U_one_one
+  simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, smul_eq_mul,
+    relativePairing_cartan, h00, h01, h10, h11, Int.cast_zero, Int.cast_one, neg_zero,
+    mul_zero, zero_add, add_zero, mul_neg, mul_one, neg_add]
+  ring
+
+private theorem nativeQ_zeroMomentum (x : NativeShell 0) : nativeQ 0 x = 0 := by
+  obtain ⟨z, rfl⟩ := (nativeShellEquiv 0).symm.surjective x
+  calc
+    _ = (nativeShellEquiv 0).symm (relativeQ planeFrame planeBasis 0 z) :=
+      nativeQ_reassoc_symm planeFrame planeBasis 0 z
+    _ = (nativeShellEquiv 0).symm 0 :=
+      congrArg (nativeShellEquiv 0).symm
+        (DFunLike.congr_fun RelativeZeroMomentum.relativeQ_eq_zero z)
+    _ = 0 := (nativeShellEquiv 0).symm.map_zero
+
+set_option maxHeartbeats 2500000 in
+-- The degree tests elaborate through both associations of the native shell.
+/-- In the native ghost-one shell at zero momentum the radical consists of
+boundaries. The original differential vanishes on this shell. -/
+theorem relativePairing_radical_iff_boundary_zeroMomentum
+    (x : NativeShell 0) (hg : RelativeBracket.Degree 1 x.val) :
+    (∀ y : NativeShell 0, RelativeBracket.Degree 1 y.val →
+      nativeQ 0 y = 0 → relativePairing x.val y.val = 0) ↔
+      ∃ a : NativeShell 0, RelativeBracket.Degree 0 a.val ∧ nativeQ 0 a = x := by
+  constructor
+  · intro hrad
+    let z : GhostSpace 0 1 := ⟨nativeShellEquiv 0 x, (degree_shell 0 1 _).mpr (by
+      change RelativeBracket.Degree 1 (reassoc.symm (reassoc x.val))
+      rwa [reassoc.symm_apply_apply])⟩
+    have test (y : GhostSpace 0 1) :
+        relativePairing (reassoc.symm z.val.val) (reassoc.symm y.val.val) = 0 := by
+      let t := (nativeShellEquiv 0).symm y.val
+      have ht : RelativeBracket.Degree 1 t.val :=
+        (degree_shell 0 1 y.val).mp y.property
+      change relativePairing (reassoc.symm (reassoc x.val)) t.val = 0
+      rw [reassoc.symm_apply_apply]
+      exact hrad t ht (nativeQ_zeroMomentum t)
+    have h0 : RelativeZeroMomentum.degreeOneEquiv z 0 = 0 := by
+      simpa only [relativePairing_zeroMomentum_coordinates, LinearEquiv.apply_symm_apply,
+        Pi.single_eq_same, Pi.single_eq_of_ne (show (0 : Fin 2) ≠ 1 by decide),
+        mul_one, mul_zero, add_zero, neg_eq_zero] using
+        test (RelativeZeroMomentum.degreeOneEquiv.symm (Pi.single (1 : Fin 2) 1))
+    have h1 : RelativeZeroMomentum.degreeOneEquiv z 1 = 0 := by
+      simpa only [relativePairing_zeroMomentum_coordinates, LinearEquiv.apply_symm_apply,
+        Pi.single_eq_same, Pi.single_eq_of_ne (show (1 : Fin 2) ≠ 0 by decide),
+        mul_one, mul_zero, zero_add, neg_eq_zero] using
+        test (RelativeZeroMomentum.degreeOneEquiv.symm (Pi.single (0 : Fin 2) 1))
+    have hz : z = 0 := by
+      apply RelativeZeroMomentum.degreeOneEquiv.injective
+      rw [RelativeZeroMomentum.degreeOneEquiv.map_zero]
+      funext i
+      fin_cases i
+      · exact h0
+      · exact h1
+    have hx : x = 0 := (nativeShellEquiv 0).map_eq_zero_iff.mp
+      (congrArg (fun y : GhostSpace 0 1 => y.val) hz)
+    refine ⟨0, ?_, (nativeQ_zeroMomentum 0).trans hx.symm⟩
+    change RelativeBracket.N (0 : ComplexState) = ((0 : ℤ) : ℂ) • (0 : ComplexState)
+    rw [RelativeBracket.N.map_zero, smul_zero]
+  · rintro ⟨a, _, ha⟩ y _ hy
+    rw [← ha]
+    exact relativePairing_boundary_cycle a y hy
+
+/-- In every original momentum sector, native relative BPZ against the opposite
+sector detects exactly the ghost-one boundaries. The native shell has the
+original momentum, antighost, and energy constraints of
+`RelativeBracket.relative_iff`. -/
+theorem relativePairing_radical_iff_boundary_all_momenta (p : Charge hyperbolicPlane)
+    (x : NativeShell p) (hg : RelativeBracket.Degree 1 x.val) (hx : nativeQ p x = 0) :
+    (∀ y : NativeShell (-p), RelativeBracket.Degree 1 y.val →
+      nativeQ (-p) y = 0 → relativePairing x.val y.val = 0) ↔
+      ∃ a : NativeShell p, RelativeBracket.Degree 0 a.val ∧ nativeQ p a = x := by
+  by_cases hp : p = 0
+  · subst p
+    rw [show -(0 : Charge hyperbolicPlane) = 0 from neg_zero]
+    exact relativePairing_radical_iff_boundary_zeroMomentum x hg
+  · exact relativePairing_radical_iff_boundary p hp x hg hx
 
 end D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.NativeBPZ
