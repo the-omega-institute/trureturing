@@ -212,6 +212,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Set the transfer budget for named volume verification
@@ -356,7 +357,7 @@ jobs:
 
   cache-shards:
     name: Verify Lean cache continuation transport
-    if: github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+    if: github.event_name == 'push' && github.ref_protected && !github.event.deleted && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
@@ -393,6 +394,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - if: steps.entry.outputs.hit == 'true'
@@ -401,7 +403,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
       - if: steps.entry.outputs.hit == 'true'
         name: Prepare Lean dependencies and build the scoped checkpoint
         env:
