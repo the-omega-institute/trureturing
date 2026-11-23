@@ -9,32 +9,35 @@
 /-
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
-a: proof_shape=content; consumers=scale_count, result
-leading: proof_shape=content; consumers=w, leading_step
-exhaustedForward: proof_shape=content; consumers=w
-exhaustedRead: proof_shape=content; consumers=w
-w: proof_shape=content; consumers=forward_table, polynomial_relation
-coefficients: proof_shape=content; consumers=polynomial_relation, result
+a: proof_shape=content; consumers=result, scale_count
+leading: proof_shape=content; consumers=forward_table, leadingCheck, leading_rec, leading_step, w_leading
+coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, result
+sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
+rightColumn: proof_shape=content; consumers=checkColumn, columnGroup, exhausted_step, exhausted_step._simp_1_3, rightColumn_eq
+arithmeticRow: proof_shape=content; consumers=arithmeticRow_eq, arithmeticRow_length, arithmeticRow_length._proof_1_1, checkColumn, exhausted_step, exhausted_step._simp_1_2, w
+w: proof_shape=content; consumers=arithmeticRow_eq, checkColumn, exhausted_step, exhausted_step._simp_1_2, forward_table, forward_table._proof_1_1, leadingCheck, leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, w_leading
+arithmeticRow_length: proof_shape=content; consumers=arithmeticRow_eq
+arithmeticRow_eq: proof_shape=content; consumers=exhausted_step._simp_1_2
+leadingCheck: proof_shape=content; consumers=w_leading, w_leading._proof_1_1, w_leading._proof_1_10, w_leading._proof_1_11, w_leading._proof_1_12, w_leading._proof_1_13, w_leading._proof_1_14, w_leading._proof_1_15, w_leading._proof_1_2, w_leading._proof_1_3, w_leading._proof_1_4, w_leading._proof_1_5, w_leading._proof_1_6, w_leading._proof_1_7, w_leading._proof_1_8, w_leading._proof_1_9
+w_leading: proof_shape=content; consumers=forward_table, leading_rec
+columnGroup: proof_shape=content; consumers=columnGroup_check, columnGroup_check._proof_1_1, columnGroup_check._proof_1_10, columnGroup_check._proof_1_11, columnGroup_check._proof_1_12, columnGroup_check._proof_1_13, columnGroup_check._proof_1_14, columnGroup_check._proof_1_15, columnGroup_check._proof_1_16, columnGroup_check._proof_1_17, columnGroup_check._proof_1_18, columnGroup_check._proof_1_19, columnGroup_check._proof_1_2, columnGroup_check._proof_1_20, columnGroup_check._proof_1_21, columnGroup_check._proof_1_22, columnGroup_check._proof_1_23, columnGroup_check._proof_1_24, columnGroup_check._proof_1_3, columnGroup_check._proof_1_4, columnGroup_check._proof_1_5, columnGroup_check._proof_1_6, columnGroup_check._proof_1_7, columnGroup_check._proof_1_8, columnGroup_check._proof_1_9
+columnGroup_check: proof_shape=bind-only; consumers=rightColumn_eq
+rightColumn_eq: proof_shape=content; consumers=exhausted_step._simp_1_3
+leadingCoefficient: proof_shape=content; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step
+leadingIndex: proof_shape=content; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step, leading_step._proof_1_8
+leadingCoordinates: proof_shape=content; consumers=leading_rec
+leading_rec: proof_shape=content; consumers=leading_step
 leading_step: proof_shape=content; consumers=forward_table
+checkColumn: proof_shape=content; consumers=exhaustedSteps, exhaustedSteps._proof_1_1, exhausted_step
+stepGroup: proof_shape=content; consumers=exhaustedSteps, exhausted_step
+exhaustedSteps: proof_shape=content; consumers=exhausted_step
+exhausted_step: proof_shape=content; consumers=forward_table
 leading_action: proof_shape=bind-only; consumers=forward_table
-exhausted_step0: proof_shape=content; consumers=forward_table
-exhausted_step1: proof_shape=content; consumers=forward_table
-exhausted_step2: proof_shape=content; consumers=forward_table
-exhausted_step3: proof_shape=content; consumers=forward_table
-exhausted_step4: proof_shape=content; consumers=forward_table
-exhausted_step5: proof_shape=content; consumers=forward_table
-exhausted_step6: proof_shape=content; consumers=forward_table
-exhausted_step7: proof_shape=content; consumers=forward_table
-exhausted_step8: proof_shape=content; consumers=forward_table
-exhausted_step9: proof_shape=content; consumers=forward_table
-exhausted_step10: proof_shape=content; consumers=forward_table
-exhausted_step11: proof_shape=content; consumers=forward_table
-exhausted_step12: proof_shape=content; consumers=forward_table
-exhausted_step13: proof_shape=content; consumers=forward_table
 forward_table: proof_shape=content; consumers=polynomial_relation
+polynomialCoordinates: proof_shape=content; consumers=polynomial_relation
 polynomial_relation: proof_shape=content; consumers=result
 scale_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=external sequence A229693 and Reg.HardinA229693Strip.Recurrence.family
+result: proof_shape=content; consumers=Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.family, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.audit
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
@@ -781,16 +784,26 @@ private def checkColumn (j : Fin 96) : Bool :=
     w i.succ (j.natAdd 72) ==
       (List.zipWith (· * ·) (arithmeticRow i.castSucc) column).sum
 
--- Compare the checked forward vectors with the products against each exhausted column.
-set_option maxRecDepth 14000 in
-set_option maxHeartbeats 4000000 in
-private theorem exhaustedSteps : (List.finRange 96).all checkColumn = true := by
-  decide +kernel
+private def stepGroup (g : Fin 12) : Bool :=
+  (((List.finRange 96).drop (8 * g.val)).take 8).all checkColumn
+
+-- Each case checks the forward products of eight columns independently.
+set_option maxRecDepth 8000 in
+set_option maxHeartbeats 6000000 in
+private theorem exhaustedSteps (g : Fin 12) : stepGroup g = true := by
+  fin_cases g <;> decide +kernel
 
 private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
     w i.succ (j.natAdd 72) = Matrix.vecMul (w i.castSucc) T (j.natAdd 72) := by
+  let g : Fin 12 := ⟨j.val / 8, by omega⟩
+  have hm : j ∈ ((List.finRange 96).drop (8 * g.val)).take 8 := by
+    rw [List.mem_iff_getElem]
+    refine ⟨j.val % 8, by simp [g]; omega, ?_⟩
+    apply Fin.ext
+    simp [List.getElem_take, List.getElem_drop, g]
+    omega
   have h := List.all_eq_true.mp
-    (List.all_eq_true.mp exhaustedSteps j (List.mem_finRange j)) i (List.mem_finRange i)
+    (List.all_eq_true.mp (exhaustedSteps g) j hm) i (List.mem_finRange i)
   simpa only [beq_iff_eq, ← arithmeticRow_eq, ← rightColumn_eq, sum_zip_mul,
     Matrix.vecMul] using h
 

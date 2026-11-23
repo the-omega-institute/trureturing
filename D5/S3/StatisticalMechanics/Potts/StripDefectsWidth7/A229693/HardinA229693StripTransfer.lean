@@ -765,7 +765,7 @@ set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
 private theorem activeOneGroups (i : Fin 14) :
     ((activeGroups 1)[i.val]!).all (activeProfileCheck 1) = true := by
-  fin_cases i <;> decide_cbv
+  fin_cases i <;> decide +kernel
 
 private theorem activeBudgetOne : activeCheck 1 = true := by
   unfold activeCheck activeProfiles
@@ -781,7 +781,7 @@ set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
 private theorem activeTwoGroups (i : Fin 4) :
     ((activeGroups 2)[i.val]!).all (activeProfileCheck 2) = true := by
-  fin_cases i <;> decide_cbv
+  fin_cases i <;> decide +kernel
 
 private theorem activeBudgetTwo : activeCheck 2 = true := by
   unfold activeCheck activeProfiles
