@@ -16,6 +16,8 @@ triage: anchor
 
 ## Verified locator
 
+DOI https://doi.org/10.48550/arXiv.2610.41502
+
 The source is arXiv:2610.41502v1, submitted 30 October 2026. Question 6.7 is on
 page 29. Section 5.2 defines the natural unit interval graph from its Hessenberg
 function. Section 5.3 defines the weighted coloring sum. Section 6.1 gives the
