@@ -8,6 +8,8 @@ url: "https://arxiv.org/abs/2609.12547"
 claim: "Corollary 4.2, equations (36)–(38), gives the finite PSD affine-pencil and forward hockey-stick formulas with the affine correction and support containment."
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
+  - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
+  - D5/S3/Quantum/Divergence/ForwardHockeyStickIntegral
 license: "citation-only"
 triage: "anchor"
 ---
@@ -23,3 +25,5 @@ triage: "anchor"
 Corollary 4.2, equations (36)–(38), gives the finite PSD affine-pencil and forward hockey-stick formulas with the affine correction and support containment.
 
 The argument applies scalar identities to a tracial joint spectral measure and uses Fubini–Tonelli. It establishes both unnormalized formulas.
+
+The forward-profile formula with a positive definite reference uses the same fractional linear involution on both tails. Under common Loewner bounds and equal respective trace masses, subtraction gives the real integral of the signed profile difference.

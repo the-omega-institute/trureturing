@@ -109,7 +109,7 @@ private theorem prefix_capacity_with_actual_inflow (rank : V → ℕ) (top : V) 
 
 /-- Capacities on the two sides of a rank force diagonal multiplicity even when
     ordinary edges skip arbitrarily many ranks. -/
-private theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k : ℕ)
+theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k : ℕ)
     (e : V → V → ℕ)
     (topAbove : r < rank top)
     (ordinary : ∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b)

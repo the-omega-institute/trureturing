@@ -239,12 +239,86 @@ def etaAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
-#print axioms etaEvidence
-#print axioms etaAudit
-#print axioms evidence
-#print axioms audit
-#print axioms oddEvidence
-#print axioms oddAudit
+
+namespace lifting
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (P : ℕ → Prop),
+    (∀ n : ℕ, n ≠ 0 → P n → ∀ m : ℕ, Odd m →
+      UniqueFactorizationMonoid.radical n = m ∨
+        UniqueFactorizationMonoid.radical n = 2 * m → P m) →
+    ((∀ m : ℕ, Odd m → Squarefree m → P m → 1 ≤ alpha m) ↔
+      ∀ n : ℕ, P n → n ≤ 2 * R.readout () () n ∧
+        (Odd n → n ≤ ArithmeticFunction.sigma 1 n.totient))
+
+private theorem rejected_law : ¬arena.Law rejected := by
+  intro h
+  have hc : ∀ n : ℕ, n ≠ 0 → n = 1 → ∀ m : ℕ, Odd m →
+      UniqueFactorizationMonoid.radical n = m ∨
+        UniqueFactorizationMonoid.radical n = 2 * m → m = 1 := by
+    intro n _ hn m _ hm
+    subst n
+    simp only [UniqueFactorizationMonoid.radical_one] at hm
+    rcases hm with hm | hm <;> omega
+  have ho : ∀ m : ℕ, Odd m → Squarefree m → m = 1 → 1 ≤ alpha m := by
+    intro m _ _ hm
+    subst m
+    norm_num [alpha]
+  have hh := ((h (fun n => n = 1) hc).mp ho 1 rfl).1
+  norm_num [rejected, realize] at hh
+
+def evidence : Registration arena (type_of% @lift_odd_squarefree_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨lift_odd_squarefree_iff, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@lift_odd_squarefree_iff) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.MakowskiSchinzel.lift_odd_squarefree_iff.__information_unit
+  realizationName := `Reg.D5.S3.Arith.Divisors.MakowskiSchinzel.Main.lifting.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ n => ArithmeticFunction.sigma 1 n.totient) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Divisors.MakowskiSchinzel.Main
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end lifting
 
 end
 end Reg.D5.S3.Arith.Divisors.MakowskiSchinzel.Main

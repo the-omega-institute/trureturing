@@ -23,4 +23,5 @@ Write G(r,L) for L/(8s) times log(1/L)+log(2r)−2c+1/2, with c=(Euler's constan
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusEvenCutoffMidpoint.signed_window_even_cutoff_midpoint_limsup`
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMidpointWindowTransfer](RHMidpointWindowTransfer.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootMidpointAverage](RHRootMidpointAverage.md)

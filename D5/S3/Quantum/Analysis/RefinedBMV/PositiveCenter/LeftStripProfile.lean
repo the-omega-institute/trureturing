@@ -27,14 +27,14 @@ def profileSlope (h t : ℝ) : ℝ := 1 - upperTailSlope h t
 def profileCurvature (h t : ℝ) : ℝ :=
   upperTailSlope h t * (h + upperTailSlope h t)
 
-private def geometricAngle (h a v : ℝ) : ℝ :=
+def geometricAngle (h a v : ℝ) : ℝ :=
   logReciprocalGap h v - logReciprocalGap h (v - a)
 
 /-- The arithmetic-geometric mean contribution of the leading geometric factors. -/
 def leftStripGeometricTerm (h a v : ℝ) : ℝ :=
   Real.cosh (geometricAngle h a v) - 1
 
-private theorem hasDerivAt_logReciprocalGap {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+theorem hasDerivAt_logReciprocalGap {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     HasDerivAt (logReciprocalGap h) (profileSlope h t) t := by
   have hexp : Real.exp (-(h*t)) < 1 := by
     rw [← Real.exp_zero]
@@ -68,7 +68,7 @@ private theorem hasDerivAt_geometricAngle_left {h a v : ℝ} (hh : 0 < h) (hav :
   change HasDerivAt (fun x ↦ geometricAngle h x v) _ a at hd
   simpa only [mul_neg, mul_one, zero_sub, neg_neg] using hd
 
-private theorem hasDerivAt_geometricAngle_right {h a v : ℝ} (hh : 0 < h) (hv : 0 < v)
+theorem hasDerivAt_geometricAngle_right {h a v : ℝ} (hh : 0 < h) (hv : 0 < v)
     (hav : a < v) :
     HasDerivAt (geometricAngle h a) (profileSlope h v - profileSlope h (v-a)) v := by
   have hs := (hasDerivAt_logReciprocalGap hh (sub_pos.mpr hav)).comp v
@@ -77,7 +77,7 @@ private theorem hasDerivAt_geometricAngle_right {h a v : ℝ} (hh : 0 < h) (hv :
   change HasDerivAt (geometricAngle h a) _ v at hd
   simpa only [mul_one] using hd
 
-private theorem geometricTerm_left_second {h a v : ℝ} (hh : 0 < h) (hav : a < v) :
+theorem geometricTerm_left_second {h a v : ℝ} (hh : 0 < h) (hav : a < v) :
     deriv (fun x ↦ deriv (fun t ↦ leftStripGeometricTerm h t v) x) a =
       Real.cosh (geometricAngle h a v) * profileSlope h (v-a)^2 -
         Real.sinh (geometricAngle h a v) * profileCurvature h (v-a) := by
@@ -373,10 +373,10 @@ theorem separated_marginal_correction_lt {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t)
   change A < B/3400
   exact ((div_lt_iff₀ hB).mp hRatio).trans_eq (by ring)
 
-private def separatedSquare (h t : ℝ) : ℝ :=
+def separatedSquare (h t : ℝ) : ℝ :=
   ((3 + h) * (3 + 2 * h) / 2) * (upperTailGap h t)^2 * Real.exp (-(2 * t))
 
-private theorem hasDerivAt_separatedSquare {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+theorem hasDerivAt_separatedSquare {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     HasDerivAt (separatedSquare h) (-2 * profileSlope h t * separatedSquare h t) t := by
   have ha : 0 < upperTailGap h t := div_pos
     (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht)))) hh
@@ -847,8 +847,9 @@ def leftStripRadicalTerm (h a v : ℝ) : ℝ :=
 
 /-- The weighted third derivative of the root-difference term. The two
 translated differences remain factored in the formula. -/
-theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
-    (hh : 0 < h) (hhmax : h ≤ 3/11) (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+theorem leftStrip_radical_mixed_formula_of_pos {h a v γ : ℝ}
+    (hh : 0 < h) (hv : 0 < v) (hgap : 0 < v-a)
+    (hxs : 0 < 1 - upperTailLambda h (v-a)) (hxv : 0 < 1 - upperTailLambda h v) :
     let s := v-a
     let b : ℝ → ℝ := fun x ↦ Real.sqrt (1 - upperTailLambda h x)
     let Δ := b v - b s
@@ -920,14 +921,8 @@ theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
     rw [heq.deriv_eq, hd.deriv]
     dsimp [M, L, q]
     ring
-  have hs : 0 < v-a := by linarith
-  have hv : 0 < v := by linarith
+  have hs := hgap
   have hsv : a < v := sub_pos.mp hs
-  have hpos (x : ℝ) (hx : 6 ≤ x) : 0 < S x :=
-    Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
-      (separated_radical_lower hh hhmax hx).2)
-  have hxs := hpos (v-a) hgap
-  have hxv := hpos v (by linarith)
   have hnear : ∀ᶠ y in 𝓝 v, 0 < S (y-a) :=
     (hS.continuous.comp (continuous_id.sub continuous_const)).continuousAt.eventually
       (eventually_gt_nhds hxs)
@@ -951,6 +946,30 @@ theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
   rw [heq.deriv_eq, hd.deriv, hsecond a v hsv hxs]
   dsimp [W, M, L, q, b, S, δ, leftStripWeight]
   ring
+
+theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3/11) (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+    let s := v-a
+    let b : ℝ → ℝ := fun x ↦ Real.sqrt (1 - upperTailLambda h x)
+    let Δ := b v - b s
+    let Δ₁ := deriv b v - deriv b s
+    let L := profileSlope h s
+    let q := profileCurvature h s
+    let q₁ := -q*(h+2*upperTailSlope h s)
+    let b₁ := deriv b s
+    let b₂ := deriv (deriv b) s
+    let b₃ := deriv (deriv (deriv b)) s
+    let M := b₁^2 - Δ*b₂ - 2*L*Δ*b₁ + (L^2+q)*Δ^2/2
+    let M₁ := 2*b₁*b₂ - Δ₁*b₂ - Δ*b₃ - 2*q*Δ*b₁ -
+      2*L*(Δ₁*b₁+Δ*b₂) + (2*L*q+q₁)*Δ^2/2 + (L^2+q)*Δ*Δ₁
+    deriv (fun y ↦ deriv (fun x ↦ deriv (fun t ↦ leftStripRadicalTerm h t y) x) a) v -
+      γ * deriv (fun x ↦ deriv (fun t ↦ leftStripRadicalTerm h t v) x) a =
+      leftStripWeight h a v * ((profileSlope h v + L - γ)*M + M₁) := by
+  have hpos (t : ℝ) (ht : 6 ≤ t) : 0 < 1 - upperTailLambda h t :=
+    Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
+      (separated_radical_lower hh hhmax ht).2)
+  exact leftStrip_radical_mixed_formula_of_pos hh (by linarith) (by linarith)
+    (hpos _ hgap) (hpos _ (by linarith))
 
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower

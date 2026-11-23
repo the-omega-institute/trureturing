@@ -18,6 +18,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
@@ -199,8 +202,18 @@ For first degrees at least eleven, the mixed derivative is strictly negative
 when the lower logarithmic coordinate lies in (0, 4] and the gap is at least
 six. The leading square controls the potentially adverse linear term before
 upper normalization. The positive decreasing upper factor and the separately
-controlled radical term preserve the strict sign. When the gap is greater
-than eleven, the sign holds for all positive lower coordinates.
+controlled radical term preserve the strict sign. On the central interval
+from one half to four, the same mixed sign holds from gap four. A sharper
+bound couples the linear correction to the leading square, and a
+divided-difference average bounds the radical contribution. When the gap
+is greater than eleven, the sign holds for all positive lower coordinates.
+
+For first degrees at least eleven, the original logarithmic kernel also
+has strictly negative mixed derivative when the lower coordinate and
+the positive gap are each at most one half. Factoring the marginal zeros
+gives a continued integrand. Exact interval bounds on the marginal
+Taylor polynomials and the tilted joint moments give its strict sign
+throughout the range needed by the kernel derivative identity.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

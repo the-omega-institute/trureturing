@@ -6,7 +6,10 @@
    utility: none
    digest: Reversible apex-tag encoding of all actual labelled minimal connected dominating subsets. -/
 
+import D5.S3.Combinatorics.Graph.DominatingSetAverage
 import D5.S3.Combinatorics.Graph.Domination.TrapezohedralApexClassification
+import D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
+import D5.S3.ConceptDynamics.GraphColoring.GraphCoverDomination
 import Mathlib.SetTheory.Cardinal.Finite
 
 /-! The two apex branches are related by an actual graph automorphism. The map
