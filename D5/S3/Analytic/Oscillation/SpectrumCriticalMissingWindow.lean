@@ -40,7 +40,20 @@ def HasSmallSquareTail (S : Spectrum) (w : S.index → ℝ) : Prop := by
   exact ∀ η : ℝ, 0 < η → ∀ᶠ X : ℝ in atTop, ∀ T : ℝ, X ≤ T →
     ∑ j ∈ S.cut T \ S.cut X, w j ^ 2 ≤ η * Real.log X ^ 2 / X
 
-private theorem eventual_mass_margin {S : Spectrum} {w : S.index → ℝ}
+theorem log_shifted_cutoff {T : ℝ} (hT : 0 < T) (K β : ℝ) :
+    Real.log (Real.exp (-K) * T ^ β) = β * Real.log T - K := by
+  rw [Real.log_mul (Real.exp_pos _).ne' (Real.rpow_pos_of_pos hT _).ne',
+    Real.log_exp, Real.log_rpow hT]
+  ring
+
+theorem shifted_cutoff_le {K T β : ℝ} (hK : 0 ≤ K) (hT : 1 ≤ T)
+    (hβ : β ≤ 1) : Real.exp (-K) * T ^ β ≤ T := calc
+  _ ≤ T ^ β := mul_le_of_le_one_left (by positivity)
+    (Real.exp_le_one_iff.mpr (neg_nonpos.mpr hK))
+  _ ≤ T := by
+    simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le hT hβ
+
+theorem eventual_mass_margin {S : Spectrum} {w : S.index → ℝ}
     {a C β : ℝ} (ha : 0 < a) (hC : 0 ≤ C) (hβ : 0 < β)
     (hmass : ∀ᶠ Y : ℝ in atTop,
       |mass S w Y - a * Real.log Y ^ 2| ≤ C * (1 + Real.log Y)) :
@@ -56,17 +69,14 @@ private theorem eventual_mass_margin {S : Spectrum} {w : S.index → ℝ}
   filter_upwards [hmass, hX.eventually hmass, eventually_gt_atTop (0 : ℝ),
     Real.tendsto_log_atTop.eventually_gt_atTop (a * K ^ 2 + C * (1 + β ^ 2))]
     with T hTmass hXmass hT hlog
-  have hlogX : Real.log (Real.exp (-K) * T ^ β) = β * Real.log T - K := by
-    rw [Real.log_mul (Real.exp_pos _).ne' (Real.rpow_pos_of_pos hT _).ne',
-      Real.log_exp, Real.log_rpow hT]
-    ring
+  have hlogX := log_shifted_cutoff hT K β
   have hlow := mul_le_mul_of_nonneg_left (abs_le.mp hTmass).1 (sq_nonneg β)
   have hupp := (abs_le.mp hXmass).2
   rw [hlogX] at hupp
   nlinarith only [hlow, hupp, hlog, mul_nonneg hC hK.le,
     congrArg (fun x : ℝ => x * Real.log T) hKexact]
 
-private theorem eventual_mesh_cost {S : Spectrum} {w : S.index → ℝ}
+theorem eventual_mesh_cost {S : Spectrum} {w : S.index → ℝ}
     {a C : ℝ} (ha : 0 < a) (hC : 0 ≤ C)
     (hmass : ∀ᶠ Y : ℝ in atTop,
       |mass S w Y - a * Real.log Y ^ 2| ≤ C * (1 + Real.log Y)) :
@@ -91,6 +101,15 @@ private theorem eventual_mesh_cost {S : Spectrum} {w : S.index → ℝ}
   exact hW.trans_le (by simpa only [pow_two, mul_comm (Real.log T) T, mul_assoc]
     using mul_le_mul_of_nonneg_right hDT hLpos.le)
 
+theorem grid_count_le {H T r : ℝ} (hH : 1 ≤ H) (hr : 0 < r) :
+    (⌊(H / r) / (1 / T ^ 2)⌋₊ : ℝ) + 1 ≤ H * (T ^ 2 / r + 1) := by
+  have hfloor : (⌊(H / r) / (1 / T ^ 2)⌋₊ : ℝ) ≤ (H / r) / (1 / T ^ 2) :=
+    Nat.floor_le (div_nonneg (div_nonneg (zero_le_one.trans hH) hr.le) (by positivity))
+  calc
+    _ ≤ (H / r) / (1 / T ^ 2) + 1 := add_le_add_left hfloor 1
+    _ = H * (T ^ 2 / r) + 1 := by rw [div_div_eq_mul_div, div_one]; ring
+    _ ≤ _ := by rw [mul_add, mul_one]; exact add_le_add_right hH _
+
 private theorem eventual_grid_bound {r β : ℝ} (hr : 0 < r) (hβ : 0 < β) :
     ∀ᶠ T : ℝ in atTop,
       (⌊(Real.exp (T ^ β) / r) / (1 / T ^ 2)⌋₊ : ℝ) + 1 ≤ Real.exp (2 * T ^ β) := by
@@ -106,20 +125,11 @@ private theorem eventual_grid_bound {r β : ℝ} (hr : 0 < r) (hβ : 0 < β) :
   change 2 / r ≤ Real.exp (T ^ β) / (T ^ β) ^ (2 / β) at hratioT
   rw [heq] at hratioT
   have hratio' := (le_div_iff₀ (sq_pos_of_pos hT)).mp hratioT
-  have hfloor : (⌊(Real.exp (T ^ β) / r) / (1 / T ^ 2)⌋₊ : ℝ) ≤
-      (Real.exp (T ^ β) / r) / (1 / T ^ 2) :=
-    Nat.floor_le (by positivity)
   have hgrid : T ^ 2 / r + 1 ≤ Real.exp (T ^ β) := by
     rw [show 2 / r * T ^ 2 = 2 * (T ^ 2 / r) by ring] at hratio'
     linarith only [hratio', hexpT]
   calc
-    _ ≤ (Real.exp (T ^ β) / r) / (1 / T ^ 2) + 1 := add_le_add_left hfloor 1
-    _ ≤ Real.exp (T ^ β) * (T ^ 2 / r + 1) := by
-      rw [div_div_eq_mul_div, div_one]
-      rw [mul_add, mul_one, show Real.exp (T ^ β) / r * T ^ 2 =
-        Real.exp (T ^ β) * (T ^ 2 / r) by ring]
-      gcongr
-      linarith only [hexpT]
+    _ ≤ Real.exp (T ^ β) * (T ^ 2 / r + 1) := grid_count_le (by linarith) hr
     _ ≤ Real.exp (T ^ β) * Real.exp (T ^ β) :=
       mul_le_mul_of_nonneg_left hgrid (Real.exp_pos _).le
     _ = _ := by rw [← Real.exp_add, two_mul]
@@ -159,6 +169,63 @@ private theorem tail_sums {S : Spectrum} {X T : ℝ} (f : S.index → ℝ) :
   · intros
     rfl
 
+theorem missing_window_of_cutoff {S : Spectrum} {w : S.index → ℝ}
+    {X T r β H : ℝ} (hw : ∀ j, 0 ≤ w j) (hli : LinearIndependent ℚ S.gamma)
+    (hT : 1 < T) (hr : 0 < r) (hXT : X ≤ T)
+    (hmarginT : mass S w X + 3 * Real.log T < β ^ 2 * mass S w T)
+    (hmeshT : mass S w T / T < Real.log T) :
+    let V := ∑ j ∈ S.cut T \ S.cut X, w j ^ 2
+    (V = 0 ∨ ((⌊(H / r) / (1 / T ^ 2)⌋₊ : ℝ) + 1) *
+        Real.exp (-Real.log T ^ 2 / (2 * V)) < 1) →
+    0 < mass S w T ∧
+      ∀ A : ℝ, ∃ a > A, ∀ u ∈ Icc a (a + H),
+        sine S w T (u / r) < β ^ 2 * mass S w T - Real.log T := by
+  intro V hbudget
+  have hL := Real.log_pos hT
+  have hmassX : 0 ≤ mass S w X := Finset.sum_nonneg fun j _ => hw j
+  have hWT : 0 < mass S w T := by
+    by_contra! hn
+    exact (not_lt_of_ge (mul_nonpos_of_nonneg_of_nonpos (sq_nonneg β) hn))
+      ((by linarith only [hmassX, hL] : 0 ≤ mass S w X + 3 * Real.log T).trans_lt hmarginT)
+  let J := S.cut T
+  let head : Finset J := Finset.univ.filter (fun j => S.gamma j.val ≤ X)
+  let f (j : J) := S.gamma j.val
+  let p (j : J) : ℝ≥0 := ⟨w j.val, hw j.val⟩
+  have htail : (∑ j ∈ headᶜ, (p j : ℝ) ^ 2) = V := tail_sums (fun j => w j ^ 2)
+  rw [← htail] at hbudget
+  have hslope : ∑ j ∈ headᶜ, (p j : ℝ) * |f j| ≤ T * mass S w T := by
+    calc
+      _ ≤ ∑ j : J, (p j : ℝ) * |f j| :=
+        Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+          (fun j _ _ => by positivity)
+      _ ≤ ∑ j : J, T * w j.val := by
+        apply Finset.sum_le_sum
+        intro j _
+        rw [mul_comm T, show (p j : ℝ) = w j.val from rfl,
+          show f j = S.gamma j.val from rfl, abs_of_pos (S.gamma_pos _)]
+        exact mul_le_mul_of_nonneg_left (mem_cut.mp j.property) (hw _)
+      _ = _ := by rw [← Finset.mul_sum, Finset.sum_coe_sort]; rfl
+  have hcost : (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < Real.log T := calc
+    _ ≤ (1 / T ^ 2) * (T * mass S w T) := mul_le_mul_of_nonneg_left hslope (by positivity)
+    _ = mass S w T / T := by field_simp
+    _ < _ := hmeshT
+  have hfiniteMargin : (∑ j ∈ head, (p j : ℝ)) + Real.log T +
+      (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < β ^ 2 * mass S w T - Real.log T := by
+    have hhead : (∑ j ∈ head, (p j : ℝ)) = mass S w X := cutoff_sums hXT w
+    linarith only [hcost, hhead, hmarginT, hL]
+  refine ⟨hWT, fun A => ?_⟩
+  obtain ⟨b, hb, hbound⟩ := exists_arbitrarily_late_missing_window head f p
+    (hli.comp Subtype.val Subtype.val_injective) (by positivity) hL hbudget hfiniteMargin (A / r)
+  refine ⟨b * r, (div_lt_iff₀ hr).mp hb, fun u hu => ?_⟩
+  have hu' : u / r ∈ Icc b (b + H / r) := by
+    refine ⟨(le_div_iff₀ hr).mpr hu.1, (div_le_iff₀ hr).mpr ?_⟩
+    rw [add_mul, div_mul_cancel₀ _ hr.ne']
+    exact hu.2
+  have h := hbound (u / r) hu'
+  simp only [sineScore, Pi.zero_apply, zero_add] at h
+  change (∑ j : S.cut T, w j.val * Real.sin (S.gamma j.val * (u / r))) < _ at h
+  rwa [Finset.sum_coe_sort (S.cut T) (fun j => w j * Real.sin (S.gamma j * (u / r)))] at h
+
 /-- At the critical mass fraction, there are arbitrarily late closed windows of length
 `exp (T ^ β)` on which the sine score stays strictly below `β ^ 2 * mass S w T - Real.log T`. -/
 theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
@@ -179,31 +246,12 @@ theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
     hX.eventually (htail η hη), hX.eventually (eventually_ge_atTop (1 : ℝ)),
     eventually_gt_atTop (1 : ℝ)] with T hmarginT hmeshT hgridT htailT hX₁ hT
   have hTpos := zero_lt_one.trans hT
-  have hL := Real.log_pos hT
-  have hXT : X T ≤ T := calc
-    X T ≤ T ^ β := mul_le_of_le_one_left (by positivity)
-      (Real.exp_le_one_iff.mpr (neg_nonpos.mpr hK.le))
-    _ ≤ T := by
-      simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le hT.le hβ₁.le
-  have hlogX : Real.log (X T) = β * Real.log T - K := by
-    change Real.log (Real.exp (-K) * T ^ β) = _
-    rw [Real.log_mul (Real.exp_pos _).ne' (Real.rpow_pos_of_pos hTpos _).ne',
-      Real.log_exp, Real.log_rpow hTpos]
-    ring
-  have hmassX : 0 ≤ mass S w (X T) := Finset.sum_nonneg fun j _ => hw j
-  have hWT : 0 < mass S w T := by
-    by_contra! hn
-    exact (not_lt_of_ge (mul_nonpos_of_nonneg_of_nonpos (sq_nonneg β) hn))
-      ((by linarith only [hmassX, hL] : 0 ≤ mass S w (X T) + 3 * Real.log T).trans_lt hmarginT)
-  let J := S.cut T
-  let head : Finset J := Finset.univ.filter (fun j => S.gamma j.val ≤ X T)
-  let f (j : J) := S.gamma j.val
-  let p (j : J) : ℝ≥0 := ⟨w j.val, hw j.val⟩
-  let V := ∑ j ∈ headᶜ, (p j : ℝ) ^ 2
+  have hXT : X T ≤ T := shifted_cutoff_le hK.le hT.le hβ₁.le
+  have hlogX : Real.log (X T) = β * Real.log T - K := log_shifted_cutoff hTpos K β
+  let V := ∑ j ∈ S.cut T \ S.cut (X T), w j ^ 2
   have hV : V ≤ Real.log T ^ 2 / (8 * T ^ β) := by
     calc
-      V = ∑ j ∈ S.cut T \ S.cut (X T), w j ^ 2 := tail_sums (fun j => w j ^ 2)
-      _ ≤ η * Real.log (X T) ^ 2 / X T := htailT T hXT
+      V ≤ η * Real.log (X T) ^ 2 / X T := htailT T hXT
       _ ≤ η * (β * Real.log T) ^ 2 / X T := by
         gcongr
         · exact Real.log_nonneg hX₁
@@ -218,7 +266,7 @@ theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
     · exact Or.inl hz
     · right
       have hVpos : 0 < V :=
-        lt_of_le_of_ne (Finset.sum_nonneg fun j _ => sq_nonneg (p j : ℝ)) (Ne.symm hz)
+        lt_of_le_of_ne (Finset.sum_nonneg fun j _ => sq_nonneg (w j)) (Ne.symm hz)
       have hpowpos := Real.rpow_pos_of_pos hTpos β
       have hrate : 4 * T ^ β ≤ Real.log T ^ 2 / (2 * V) := by
         apply (le_div_iff₀ (by positivity : 0 < 2 * V)).mpr
@@ -235,38 +283,7 @@ theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
         _ < 1 := by
           rw [← Real.exp_add, Real.exp_lt_one_iff]
           linarith only [hpowpos]
-  have hslope : ∑ j ∈ headᶜ, (p j : ℝ) * |f j| ≤ T * mass S w T := by
-    calc
-      _ ≤ ∑ j : J, (p j : ℝ) * |f j| :=
-        Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
-          (fun j _ _ => by positivity)
-      _ ≤ ∑ j : J, T * w j.val := by
-        apply Finset.sum_le_sum
-        intro j _
-        rw [mul_comm T, show (p j : ℝ) = w j.val from rfl,
-          show f j = S.gamma j.val from rfl, abs_of_pos (S.gamma_pos _)]
-        exact mul_le_mul_of_nonneg_left (mem_cut.mp j.property) (hw _)
-      _ = _ := by rw [← Finset.mul_sum, Finset.sum_coe_sort]; rfl
-  have hcost : (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < Real.log T := calc
-    _ ≤ (1 / T ^ 2) * (T * mass S w T) := mul_le_mul_of_nonneg_left hslope (by positivity)
-    _ = mass S w T / T := by field_simp
-    _ < _ := hmeshT
-  have hfiniteMargin : (∑ j ∈ head, (p j : ℝ)) + Real.log T +
-      (1 / T ^ 2) * ∑ j ∈ headᶜ, (p j : ℝ) * |f j| < β ^ 2 * mass S w T - Real.log T := by
-    have hhead : (∑ j ∈ head, (p j : ℝ)) = mass S w (X T) := cutoff_sums hXT w
-    linarith only [hcost, hhead, hmarginT, hL]
-  refine ⟨hWT, fun A => ?_⟩
-  obtain ⟨b, hb, hbound⟩ := exists_arbitrarily_late_missing_window head f p
-    (hli.comp Subtype.val Subtype.val_injective) (by positivity) hL hbudget hfiniteMargin (A / r)
-  refine ⟨b * r, (div_lt_iff₀ hr).mp hb, fun u hu => ?_⟩
-  have hu' : u / r ∈ Icc b (b + Real.exp (T ^ β) / r) := by
-    refine ⟨(le_div_iff₀ hr).mpr hu.1, (div_le_iff₀ hr).mpr ?_⟩
-    rw [add_mul, div_mul_cancel₀ _ hr.ne']
-    exact hu.2
-  have h := hbound (u / r) hu'
-  simp only [sineScore, Pi.zero_apply, zero_add] at h
-  change (∑ j : S.cut T, w j.val * Real.sin (S.gamma j.val * (u / r))) < _ at h
-  rwa [Finset.sum_coe_sort (S.cut T) (fun j => w j * Real.sin (S.gamma j * (u / r)))] at h
+  exact missing_window_of_cutoff hw hli hT hr hXT hmarginT hmeshT hbudget
 
 #print axioms eventual_critical_missing_window
 
