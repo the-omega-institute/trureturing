@@ -29,7 +29,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("transfer_readout",TransferReadout(),true,"The state type belongs to an arbitrary universe. A vector recurrence gives the shifted scalar relation for every readout vector. At shift zero the readout supported at a single coordinate recovers that component of the vector recurrence."),
+            Node("transfer_readout",TransferReadout(),true,"The state and scalar types have independent universes, and the scalars form a commutative semiring. Matrix action and the dot product give every shifted scalar relation. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
@@ -361,7 +361,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var state=V("S");var matrix=V("M");var u=V("u");var v=V("v");
         var d=V("d");var b=V("b");var n=V("n");var j=V("j");
         var index=Call("Fin",d);
-        var vectors=Arrow(state,Q("Int"));
+        var scalar=V("R");
+        var type=Seq(Q("Type"),Star);
+        var vectors=Arrow(state,scalar);
         Formula power(Formula k)=>Call("Matrix.mulVec",Pow(matrix,k),u);
         Formula coefficient()=>new Formula.Apply(V("c"),[j]);
         Formula read(Formula k)=>Call("dotProduct",v,power(k));
@@ -371,9 +373,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var conclusion=Eq(read(Add(shifted,d)),SumOver("j",index,
             Mul(coefficient(),read(Add(shifted,Call("Fin.val",j))))));
         var equivalence = Iff(premise, All("v", vectors, All("n", Q("Nat"), conclusion)));
-        var parameters = All("M", M(state), All("u", vectors, All("d", Q("Nat"),
-            All("b", Q("Nat"), All("c", Arrow(index, Q("Int")), equivalence)))));
-        return All("S",Seq(Q("Type"),Star),Seq(OpenBracket,Call("Fintype",state),CloseBracket,Sp,
-            OpenBracket,Call("DecidableEq",state),CloseBracket,Sp,parameters));
+        var parameters = All("M", Call("Matrix", state, state, scalar), All("u", vectors, All("d", Q("Nat"),
+            All("b", Q("Nat"), All("c", Arrow(index, scalar), equivalence)))));
+        return All("S",type,All("R",type,Seq(OpenBracket,Call("Fintype",state),CloseBracket,Sp,
+            OpenBracket,Call("DecidableEq",state),CloseBracket,Sp,
+            OpenBracket,Call("CommSemiring",scalar),CloseBracket,Sp,parameters)));
     }
 }

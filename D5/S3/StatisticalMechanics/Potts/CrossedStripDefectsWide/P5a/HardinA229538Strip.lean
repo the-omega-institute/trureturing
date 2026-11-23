@@ -93,6 +93,7 @@ import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
+import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Dedup
@@ -189,19 +190,19 @@ def terminal {C : Type*} {Z : Type*} {R : Type*} [Zero R] [One R] : C ⊕ Z → 
   Sum.elim 0 1
 
 /-- The vector recurrence is equivalent to every shifted scalar readout recurrence. -/
-theorem transfer_readout {S : Type*} [Fintype S] [DecidableEq S]
-    (M : Matrix S S ℤ) (u : S → ℤ) (d b : ℕ) (c : Fin d → ℤ) :
+theorem transfer_readout {S R : Type*} [Fintype S] [DecidableEq S] [CommSemiring R]
+    (M : Matrix S S R) (u : S → R) (d b : ℕ) (c : Fin d → R) :
     ((M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) ↔
-      ∀ (v : S → ℤ) (n : ℕ),
+      ∀ (v : S → R) (n : ℕ),
         dotProduct v ((M ^ (n + b + d)).mulVec u) =
           ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
   constructor
   · intro h v n
-    have relation : DefectTransfer.forward M.transpose u (b + d) =
-        ∑ j : Fin d, c j • DefectTransfer.forward M.transpose u (b + j.val) := by
-      simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using h
-    simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] using
-      DefectTransfer.forward_shift M.transpose u v d b c relation n
+    have shifted := congrArg ((M ^ n).mulVec) h
+    simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.mulVec_mulVec, ← pow_add,
+      ← Nat.add_assoc] at shifted
+    rw [shifted, dotProduct_sum]
+    simp_rw [dotProduct_smul, smul_eq_mul]
   · intro h
     funext p
     simpa only [Nat.zero_add, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
