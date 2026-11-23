@@ -62,7 +62,10 @@ internal sealed class KisielewiczFleetWinnersDocument : IScribeDocumentDefinitio
                         + "to that assignment. For every positive P, sufficiently late consecutive "
                         + "selected sides are both 3 modulo P. Their opposite outcomes force a "
                         + "change in some step of length P between them."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kisielewicz-2026-nonperiodic-fleet-winners"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock.Describe Definition(string id, string name, string title,
         Formula formula, string prose) =>

@@ -144,6 +144,10 @@ $$\exists F,G \subseteq \mathbb{Z}^{3}, \operatorname{UniqueCover}(F) \land \ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/KisielewiczFleetWinners.exists_nonperiodic_fleets` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kisielewicz-2026-nonperiodic-fleet-winners` (proved) by `D5/S3/Arith/Lattices/KisielewiczFleetWinners.exists_nonperiodic_fleets`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kisielewicz-2026-nonperiodic-fleet-winners","declaration_gid":"D5/S3/Arith/Lattices/KisielewiczFleetWinners.exists_nonperiodic_fleets","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrzej P. Kisielewicz (2026). *Local fluctuations, majorization, and nontransitivity in cube tilings of ℤᵈ*. DOI: [10.48550/arXiv.2611.09844](https://doi.org/10.48550/arXiv.2611.09844). URL: <https://arxiv.org/html/2611.09844v1#Thmproblem4.p3.1>.
