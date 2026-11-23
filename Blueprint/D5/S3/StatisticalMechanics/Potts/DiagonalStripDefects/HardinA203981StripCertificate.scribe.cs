@@ -55,11 +55,11 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("Below degree six, the polynomial coefficients are the negatives of the recurrence weights. The leading coefficient is one and all higher coefficients vanish."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("forward-table-of-steps"), DeclarationHandle.Create(Prefix + "forward_table_of_steps"),
-            H("Forward vectors from adjacent updates"), StatementSource.FromLean(),
+            H("Forward vectors from adjacent updates"), StatementSource.FromAuthor(Disp(ForwardTableOfStepsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The list of table rows starts at the initial vector. Its adjacent update equations determine the forward vector at each index."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-step"), DeclarationHandle.Create(Prefix + "forward_step"),
-            H("Zero-degree table update"), StatementSource.FromLean(),
+            H("Zero-degree table update"), StatementSource.FromAuthor(Disp(ForwardStepFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The finite calculation checks the transfer on each adjacent pair of rows."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-table"), DeclarationHandle.Create(Prefix + "forward_table"),
@@ -121,6 +121,35 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             Call("HardinA203981StripData.classProduct", App(m, k), App(m, residual), i, j));
         return All("d", V("Nat"), All("m", Arr(allocations, matrix),
             Seq(Parenthesized(half), Sp, To, Sp, Parenthesized(All("i", Fin("15"), All("j", Fin("15"), Eq(full, sum)))))));
+    }
+
+    private static Formula ForwardTableOfStepsFormula()
+    {
+        var s = V("s"); var n = V("n"); var t = V("t"); var v = V("v"); var w = V("w");
+        var k = V("k"); var i = V("i");
+        var index = Call("Fin", Add(n, N("1")));
+        var vector = Arr(s, V("Int"));
+        var zero = Eq(App(w, Typed(N("0"), index)), v);
+        var update = All("k", Call("Fin", n), Eq(
+            Call("Matrix.vecMul", App(w, Call("Fin.castSucc", k)), t),
+            App(w, Call("Fin.succ", k))));
+        var value = All("i", index, Eq(Call("DefectTransfer.forward", t, v, Call("Fin.val", i)), App(w, i)));
+        var body = All("n", V("Nat"), All("t", Call("Matrix", s, s, V("Int")),
+            All("v", vector, All("w", Arr(index, vector),
+                Seq(Parenthesized(zero), Sp, To, Sp,
+                    Parenthesized(Seq(Parenthesized(update), Sp, To, Sp, Parenthesized(value))))))));
+        return Seq(Forall, Sp, Typed(s, V("Type")), Sp,
+            OpenBracket, Call("Fintype", s), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", s), CloseBracket, Comma, Sp, Parenthesized(body));
+    }
+
+    private static Formula ForwardStepFormula()
+    {
+        var k = V("k");
+        Formula RowAt(Formula i) => Call("HardinA203981StripCertificate.W", i);
+        return All("k", Fin("20"), Eq(
+            Call("Matrix.vecMul", RowAt(Call("Fin.castSucc", k)), Call("HardinA203981StripData.T")),
+            RowAt(Call("Fin.succ", k))));
     }
 
     private static Formula ForwardWeightsFormula()

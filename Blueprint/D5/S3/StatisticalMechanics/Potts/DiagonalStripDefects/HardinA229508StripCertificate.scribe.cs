@@ -57,7 +57,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The coefficients are listed in increasing order of input index."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-step"), DeclarationHandle.Create(Prefix + "forward_step"),
-            H("Update on both sectors"), StatementSource.FromLean(),
+            H("Update on both sectors"), StatementSource.FromAuthor(Disp(ForwardStepFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The left component uses the zero-degree update. The right component adds the incoming degree-one transitions to the degree-zero transfers within that sector."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-one"), DeclarationHandle.Create(Prefix + "forward_one"),
@@ -133,6 +133,16 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
             Seq(p, Sp, InMacro, Sp, Call("Finset.HasAntidiagonal.antidiagonal", n))),
             Sp, Parenthesized(product));
         return All("n", V("Nat"), Eq(Call("HardinA229508StripCertificate.squareMonicCoeff", n), sum));
+    }
+
+    private static Formula ForwardStepFormula()
+    {
+        var k = V("k");
+        Formula RowAt(Formula i) => Call("Sum.elim",
+            Call("HardinA203981StripCertificate.W", i), Call("HardinA229508StripCertificate.W", i));
+        return All("k", Fin("20"), Eq(
+            Call("Matrix.vecMul", RowAt(Call("Fin.castSucc", k)), Call("HardinA229508StripData.T")),
+            RowAt(Call("Fin.succ", k))));
     }
 
     private static Formula ForwardWeightsFormula()
