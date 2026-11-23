@@ -6,11 +6,11 @@
    utility: none
    digest: Finite sinc-squared moments are controlled by weighted near-collisions. -/
 
-import D5.S3.Fourier.InfiniteSincProduct
 import D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.SpectralSampling
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
 
 /-! Control of a finite weighted sinc matrix at the scale of its near-collisions. -/
@@ -21,7 +21,6 @@ noncomputable section
 
 open Finset MeasureTheory Set
 open scoped NNReal
-open D5.S3.Fourier.InfiniteSincProduct
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 open D5.S3.Fourier.Concentration.FiniteSineMissingWindow (floor_grid_cover sine_score_change)
 open D5.S3.Weil.DirichletPolynomialMeanSquare (phase)
@@ -215,30 +214,28 @@ private theorem intervalMean_sum {I E : Type*} [NormedAddCommGroup E] [NormedSpa
   rw [intervalIntegral.integral_finsetSum (fun i hi => (hf i hi).intervalIntegrable _ _),
     smul_sum]
 
-private theorem complexSinc_real (x : ℝ) : complexSinc (x : ℂ) = (Real.sinc x : ℂ) := by
-  by_cases hx : x = 0
-  · simp [hx]
-  · rw [complexSinc_of_ne_zero (Complex.ofReal_ne_zero.mpr hx), Real.sinc_of_ne_zero hx]
-    push_cast
-    rfl
-
 private theorem intervalMean_mode {a : ℝ} (ha : 0 < a) (v : ℝ) :
     intervalMean a (fun t : ℝ => Complex.exp (Complex.I * (v : ℂ) * (t : ℂ))) =
       (Real.sinc (a * v) : ℂ) := by
-  calc
-    _ = uniformIntervalFourierLaplace a (v : ℂ) := by
-      have hfun : (fun x : ℝ => (uniformIntervalDensity a x : ℂ) *
-        Complex.exp (Complex.I * (v : ℂ) * (x : ℂ))) =
-          (Icc (-a) a).indicator (fun x : ℝ =>
-            ((2 * a : ℝ)⁻¹ : ℂ) * Complex.exp (Complex.I * (v : ℂ) * (x : ℂ))) := by
-        funext x
-        by_cases hx : x ∈ Icc (-a) a <;> simp [uniformIntervalDensity, hx]
-      rw [uniformIntervalFourierLaplace, hfun, integral_indicator measurableSet_Icc,
-        integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le (by linarith),
-        intervalIntegral.integral_const_mul, intervalMean, Complex.real_smul, Complex.ofReal_inv]
-    _ = _ := by
-      rw [uniformIntervalFourierLaplace_eq_complexSinc ha, ← Complex.ofReal_mul,
-        complexSinc_real]
+  have hac : (a : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr ha.ne'
+  by_cases hv : v = 0
+  · subst v
+    simp [intervalMean, intervalIntegral.integral_const, show a - -a = 2 * a by ring]
+    field_simp
+  · have hphase : (fun t : ℝ => Complex.exp (Complex.I * (v : ℂ) * (t : ℂ))) =
+        fun t : ℝ => Complex.exp (↑(v * t) * Complex.I) := by
+      funext t
+      push_cast
+      congr 1
+      ring
+    rw [hphase, intervalMean, intervalIntegral.integral_comp_mul_left
+      (fun t : ℝ => Complex.exp ((t : ℂ) * Complex.I)) hv, mul_neg,
+      integral_exp_mul_I_eq_sinc]
+    simp only [Complex.real_smul, Complex.ofReal_inv]
+    have hvc : (v : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hv
+    rw [mul_comm v a]
+    push_cast
+    field_simp
 
 private theorem intervalMean_shifted_mode {a : ℝ} (ha : 0 < a) (v s : ℝ) :
     intervalMean a (fun t : ℝ => Complex.exp (Complex.I * (v : ℂ) * ((s + t : ℝ) : ℂ))) =

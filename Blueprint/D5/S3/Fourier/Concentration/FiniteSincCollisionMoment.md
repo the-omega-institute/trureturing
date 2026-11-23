@@ -39,6 +39,5 @@ This result gives a finite search interval when an estimate of the weighted coll
 - Truth anchor: `D5/S3/Fourier/Concentration/FiniteSincCollisionMoment.exists_bounded_tail_window`
 - Truth anchor: `D5/S3/Fourier/Concentration/FiniteSincCollisionMoment.tail_moment_comparison`
 - Dependency: [D5/S3/Fourier/Concentration/FiniteTailMomentMissingWindow](FiniteTailMomentMissingWindow.md)
-- Dependency: [D5/S3/Fourier/InfiniteSincProduct](../InfiniteSincProduct.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/SpectralSampling](../../Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/SpectralSampling.md)
 - Narrative reference: [D5/S3/Fourier/Concentration/FiniteTailMomentMissingWindow](FiniteTailMomentMissingWindow.md)
