@@ -39,6 +39,9 @@ import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Nat.Cast.Defs
 import Mathlib.Order.Basic
+import Init.Data.Int.Basic
+import Mathlib.Algebra.Group.Monoid
+import Mathlib.Data.Matrix.Mul
 
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508Strip
 
