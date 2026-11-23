@@ -6,6 +6,10 @@
    utility: none
    digest: Stable Pyranim positions, recursive legal options and their Dyck encoding. -/
 
+/-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/33619
+-/
+
 import D5.S3.Combinatorics.InversionSeq.InversionSeq152Dyck
 import Mathlib.Data.List.OfFn
 import Mathlib.Data.Finset.Max
@@ -18,7 +22,6 @@ import Mathlib.Data.List.GetD
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.haveILetI false
-
 
 namespace D5.S3.Combinatorics.Games.Pyranim
 

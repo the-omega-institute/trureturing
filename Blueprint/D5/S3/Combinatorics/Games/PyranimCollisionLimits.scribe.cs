@@ -43,6 +43,8 @@ internal sealed class PyranimCollisionLimitsDocument : IScribeDocumentDefinition
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);
 
+    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
+
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
 
     private static Formula V(string name) => F.Id(name);
@@ -58,9 +60,9 @@ internal sealed class PyranimCollisionLimitsDocument : IScribeDocumentDefinition
     private static Formula All(string x, Formula type, Formula f) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, f);
 
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
 
-    private static Formula In(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
 
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
 
@@ -89,6 +91,16 @@ internal sealed class PyranimCollisionLimitsDocument : IScribeDocumentDefinition
     private static Formula Root(string prob) => Tends(Lambda(Pow(Par(P(prob)), Div(D(1), Cast(V("n"))))), D(1));
 
     private static Formula Decay(string prob) => Tends(Named(prob), D(0));
+
+    private static Formula UnmarkedBody()
+    {
+        var width = Multiply(D(2), Par(Add(V("L"), D(1))));
+        var length = Multiply(D(2), Par(Add(V("n"), D(1))));
+        var slots = Call("floor", Div(length, width));
+        var remainder = Call("mod", length, width);
+        return All("n", Nat, All("L", Nat, Eq(Call("unmarkedBound", V("n"), V("L")),
+            Multiply(Pow(Par(Subtract(Pow(D(2), width), D(1))), slots), Pow(D(2), remainder)))));
+    }
 
     private static Formula ClassBound()
     {

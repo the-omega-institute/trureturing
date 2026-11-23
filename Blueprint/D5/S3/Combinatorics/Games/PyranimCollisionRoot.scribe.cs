@@ -63,6 +63,8 @@ internal sealed class PyranimCollisionRootDocument : IScribeDocumentDefinition
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);
 
+    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
+
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
 
     private static Formula V(string name) => F.Id(name);
@@ -121,4 +123,11 @@ internal sealed class PyranimCollisionRootDocument : IScribeDocumentDefinition
     private static Formula First(Formula p) => Seq(p, Dot, D(1));
 
     private static Formula Second(Formula p) => Seq(p, Dot, D(2));
+
+    private static Formula DistinctIdentity()
+    {
+        var count = Card(Stable(V("n")));
+        return All("n", Nat, Imp(Lt(D(1), count), Eq(P("distinctCollisionProbability"),
+            Div(Subtract(Multiply(Cast(count), P("collisionProbability")), D(1)), Subtract(Cast(count), D(1))))));
+    }
 }

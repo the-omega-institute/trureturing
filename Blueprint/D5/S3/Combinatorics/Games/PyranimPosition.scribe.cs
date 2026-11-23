@@ -43,11 +43,11 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
                 "The width and the right endpoint increase by one.",
                 DescribeRole.Definition),
             Node("lowerRight", "Shortening a nonsingleton",
-                All("n", Nat, All("c", Call("Interval", Add(V("n"), D(1))), All("h", Lt(Left(V("c")), Right(V("c"))), EndpointPair(Call("lowerRight", V("c"), V("h")), Left(V("c")), Subtract(Right(V("c")), D(1)))))),
+                All("n", Nat, All("c", Call("Interval", Add(V("n"), D(1))), TypedAll("h", Lt(Left(V("c")), Right(V("c"))), EndpointPair(Call("lowerRight", V("c"), V("h")), Left(V("c")), Subtract(Right(V("c")), D(1)))))),
                 "The width and the right endpoint decrease by one. The strict endpoint inequality supplies the proof h that shortening leaves a nonempty interval.",
                 DescribeRole.Definition),
             Node("raiseRight_lowerRight", "Recovering a nonsingleton",
-                All("n", Nat, All("c", Call("Interval", Add(V("n"), D(1))), All("h", Lt(Left(V("c")), Right(V("c"))), Eq(Call("raiseRight", Call("lowerRight", V("c"), V("h"))), V("c"))))),
+                All("n", Nat, All("c", Call("Interval", Add(V("n"), D(1))), TypedAll("h", Lt(Left(V("c")), Right(V("c"))), Eq(Call("raiseRight", Call("lowerRight", V("c"), V("h"))), V("c"))))),
                 "Lengthening recovers the original nonsingleton.",
                 DescribeRole.Lemma),
             Node("removeBottom", "Removing the full bottom row",
@@ -111,7 +111,7 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
                 "The chip selected by a legal move witnesses strict inclusion of the surviving set.",
                 DescribeRole.Lemma),
             Node("chipCount", "Surviving chips",
-                All("n", Nat, All("I", Stable(V("n")), Eq(Call("chipCount", V("I")), Card(Val(V("I")))))),
+                All("n", Nat, All("I", Stable(V("n")), Eq(Call("chipCount", V("I")), App(Seq(Named("Finset"), Dot, Named("card")), Call("toFinset", Val(V("I"))))))),
                 "The cardinality is finite because each chip has two bounded endpoints.",
                 DescribeRole.Definition),
             Node("chipCount_lt_of_option", "Legal options lower chip count",
@@ -175,6 +175,8 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);
 
+    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
+
     private static Formula V(string name) => F.Id(name);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
@@ -227,6 +229,12 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
 
     private static Formula Iso(Formula a, Formula b) => Call("GameIso", a, b);
 
+    private static Formula First(Formula p) => Seq(p, Dot, D(1));
+
+    private static Formula Second(Formula p) => Seq(p, Dot, D(2));
+
+    private static Formula Chip => Call("Interval", V("n"));
+
     private static Formula Left(Formula c) => Field(c, "left");
 
     private static Formula Right(Formula c) => Field(c, "right");
@@ -235,15 +243,23 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
 
     private static Formula Chips(Formula f) => All("c", Chip, All("u", Chip, f));
 
+    private static Formula TypedAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Par(Seq(V(name), Colon, type)), Comma, Sp, body);
+
     private static Formula Above(string name, Formula condition) =>
         All("n", Nat, Chips(Iff(Call(name, V("c"), V("u")), condition)));
 
     private static Formula AboveIn(string name) =>
         Ex("u", Chip, And(In(V("u"), Val(V("I"))), Call(name, V("c"), V("u"))));
 
-    private static Formula IntervalBody() =>
-        All("n", Nat, All("c", Chip, And(Le(D(1), Left(V("c"))),
-            And(Le(Left(V("c")), Right(V("c"))), Le(Right(V("c")), V("n"))))));
+    private static Formula IntervalBody()
+    {
+        var p = V("p"); var c = V("c"); var u = V("u");
+        var endpoints = SetOf("p", Seq(Nat, Times, Sp, Nat), And(Le(D(1), First(p)),
+            And(Le(First(p), Second(p)), Le(Second(p), V("n")))));
+        var order = Chips(Iff(Le(c, u), And(Le(Left(u), Left(c)), Le(Right(c), Right(u)))));
+        return All("n", Nat, And(Equiv(Chip, endpoints), order));
+    }
 
     private static Formula StableBody() =>
         All("n", Nat, Eq(Stable(V("n")), SetOf("S", Call("Set", Chip),
@@ -310,8 +326,8 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
         var sameSemilength = Eq(Field(u, "semilength"), Field(v, "semilength"));
         var result = Split(Call("exchangeDyck", w, V("pre"), V("post"), u, v, V("h"), V("s")), v);
         return All("n", Nat, All("w", FixedWidthPaths, All("pre", ListSteps, All("post", ListSteps,
-            All("u", V("DyckWord"), All("v", V("DyckWord"), All("h", Split(w, u),
-                All("s", sameSemilength, result))))))));
+            All("u", V("DyckWord"), All("v", V("DyckWord"), TypedAll("h", Split(w, u),
+                TypedAll("s", sameSemilength, result))))))));
     }
 
     private static Formula RankStrictBody()

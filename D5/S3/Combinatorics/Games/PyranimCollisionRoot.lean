@@ -6,6 +6,10 @@
    utility: none
    digest: Block multiplicity bounds and the all-width root limits for Pyranim collisions. -/
 
+/-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/33619
+-/
+
 import D5.S3.Combinatorics.Games.PyranimPosition
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Basic.Real.Basic
@@ -22,7 +26,6 @@ import Mathlib.Tactic.FieldSimp
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.haveILetI false
-
 
 open Filter Topology
 

@@ -6,6 +6,11 @@
    utility: none
    digest: Rank-block estimates and the root and zero limits for Pyranim collisions. -/
 
+/-
+admission_basis: open-problem-resolution (#33556; Proved)
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/33619
+-/
+
 import D5.S3.Combinatorics.Games.PyranimCollisionRoot
 import Mathlib.Data.Finset.SDiff
 import Mathlib.Analysis.SpecificLimits.Normed
@@ -18,7 +23,6 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.haveILetI false
-
 
 open Filter Topology
 
