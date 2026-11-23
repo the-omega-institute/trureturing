@@ -162,6 +162,20 @@ private theorem basisState_matrix (b : B) :
   · rw [diagonal_apply_ne _ hij, Matrix.single_apply]
     exact (ite_eq_right (fun h => (hij (h.1.symm.trans h.2)).elim)).symm
 
+private theorem basisDecomposition (w : B → ℝ) :
+    CStarMatrix.ofMatrix (diagonal fun b => (w b : ℂ)) =
+      ∑ b, (w b : ℂ) • (basisState b).1 := by
+  apply CStarMatrix.ofMatrixL.symm.injective
+  change diagonal (fun b => (w b : ℂ)) =
+    CStarMatrix.ofMatrixL.symm (∑ b, (w b : ℂ) • (basisState b).1)
+  rw [map_sum, ← Matrix.sum_single_eq_diagonal]
+  apply Finset.sum_congr rfl
+  intro b _
+  rw [map_smul]
+  change Matrix.single b b (w b : ℂ) =
+    (w b : ℂ) • CStarMatrix.ofMatrix.symm (basisState b).1
+  rw [basisState_matrix, Matrix.smul_single, smul_eq_mul, mul_one]
+
 private theorem state_posSemidef {A : Type*} [Fintype A] [DecidableEq A]
     (ρ : DensityState A) :
     (CStarMatrix.ofMatrix.symm ρ.1).PosSemidef :=
@@ -187,17 +201,8 @@ private theorem transition_rows (T : QuantumChannel B B) (b : B) :
 private theorem transition_diagonal (T : QuantumChannel B B)
     (w : B → ℝ) (hw : ∀ b, 0 ≤ w b) (hs : ∑ b, w b = 1) (c : B) :
     ((T.mapState (diagonalState w hw hs)).1 c c).re = ∑ b, w b * transition T b c := by
-  have hdecomp : (diagonalState w hw hs).1 = ∑ b, (w b : ℂ) • (basisState b).1 := by
-    apply CStarMatrix.ofMatrixL.symm.injective
-    change diagonal (fun b => (w b : ℂ)) =
-      CStarMatrix.ofMatrixL.symm (∑ b, (w b : ℂ) • (basisState b).1)
-    rw [map_sum, ← Matrix.sum_single_eq_diagonal]
-    apply Finset.sum_congr rfl
-    intro b _
-    rw [map_smul]
-    change Matrix.single b b (w b : ℂ) =
-      (w b : ℂ) • CStarMatrix.ofMatrix.symm (basisState b).1
-    rw [basisState_matrix, Matrix.smul_single, smul_eq_mul, mul_one]
+  have hdecomp : (diagonalState w hw hs).1 = ∑ b, (w b : ℂ) • (basisState b).1 :=
+    basisDecomposition w
   let L := CStarMatrix.ofMatrixL.symm.toLinearMap.comp T.toCompletelyPositiveMap.toLinearMap
   change (L (diagonalState w hw hs).1 c c).re = _
   rw [hdecomp, map_sum]
@@ -532,7 +537,7 @@ end DiagonalExperiment
 namespace Basis
 
 export _root_.D5.S3.Quantum.Recovery.DiagonalRecordCapacity.DiagonalExperiment
-  (basisState basisState_matrix)
+  (basisState basisDecomposition)
 
 end Basis
 

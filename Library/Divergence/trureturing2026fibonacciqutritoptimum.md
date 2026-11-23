@@ -29,13 +29,15 @@ John N. Tsitsiklis, *Extremal Properties of Likelihood-Ratio Quantizers*
 [DOI 10.1109/26.223779](https://doi.org/10.1109/26.223779)
 
 Mario Berta, Omar Fawzi and Marco Tomamichel, *On Variational Expressions for
-Quantum Relative Entropies*, Theorem 2, gives a variational characterization
-of measured relative entropy and its projective-measurement formulation.
+Quantum Relative Entropies*, give the variational expression for rank-one
+projective relative entropy in Lemma 1 and prove its equality with POVM
+relative entropy in Theorem 2.
 [arXiv:1512.02615](https://arxiv.org/abs/1512.02615)
 
 Péter E. Frenkel and Mihály Weiner, *Classical Information Storage in an
-(n)-Level Quantum System*, Theorem 3, concerns the classical stochastic
-matrices obtained by encoding and measurement.
+(n)-Level Quantum System*, Theorem 3, identifies the convex hull of the
+classical stochastic matrices obtained by encoding and measurement with
+that for classical storage of the same dimension.
 [arXiv:1304.5723](https://arxiv.org/abs/1304.5723)
 
 ## Formalization scope

@@ -28,6 +28,8 @@ On diagonal inputs a channel acts by mixing its density-state preparations of th
 
 For attainment, use orthogonal qutrit rays P, Q and R. Prepare P on classes 4/3 and 5/3, Q on class 7/3 and R on class 0. The commuting outputs have weights (113, 28, 0)/141 and (81, 12, 48)/141. The finite preparation construction makes this a CPTP encoder on the entire input matrix algebra.
 
+For this pair the measured relative entropy maximum has the same value. Berta, Fawzi and Tomamichel give the variational expression for rank-one projective relative entropy in Lemma 1 and its equality with POVM relative entropy in Theorem 2. A rank-one projective measurement on the qutrit induces a stochastic map from the four classes to three outcomes. Its score is bounded by the classical maximum, which the commuting preparations attain.
+
 **Theorem 1.2 (Necessary equality conditions on the preparations).**
 
 Lean statement: `D5/S3/Quantum/Divergence/FibonacciQutritOptimum.channel_equality_conditions`

@@ -20,7 +20,6 @@ import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 import D5.S3.Quantum.Recovery.DiagonalRecordCapacity
 import D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation
-import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-! Exact Fibonacci Umegaki optimum for qutrit encoding of a diagonal pair. -/
 
@@ -42,7 +41,7 @@ namespace D5.S3.Quantum.Divergence.FibonacciQutritOptimum
 open ConditionalHockeyStickOrthogonalReduction (trace_reindex)
 open FannesRootFidelityHolevo (supported_of_le)
 open D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity (zero_trace_mul_eq_zero)
-open D5.S3.Quantum.Recovery.DiagonalRecordCapacity.Basis (basisState basisState_matrix)
+open D5.S3.Quantum.Recovery.DiagonalRecordCapacity.Basis (basisState basisDecomposition)
 
 /-- The exact optimum in nats. -/
 abbrev C3 : ℝ := (113 / 141) * Real.log (113 / 81) + (28 / 141) * Real.log (7 / 3)
@@ -109,8 +108,14 @@ private theorem classicalFormula_eq : classicalFormula = C3 := by
   norm_num [classicalFormula, C3]
 
 private theorem overlap_nonneg {n : Type*} [Fintype n] [DecidableEq n]
-    (X Y : DensityState n) : 0 ≤ (matrix X * matrix Y).trace.re :=
-  RHLinalg.trace_mul_nonneg_of_posSemidef (density_posSemidef X) (density_posSemidef Y)
+    (X Y : DensityState n) : 0 ≤ (matrix X * matrix Y).trace.re := by
+  let A : HermitianMat n ℂ := ⟨matrix X, (density_posSemidef X).isHermitian⟩
+  let B : HermitianMat n ℂ := ⟨matrix Y, (density_posSemidef Y).isHermitian⟩
+  have h := HermitianMat.inner_ge_zero (A := A) (B := B)
+    (HermitianMat.zero_le_iff.mpr (density_posSemidef X))
+    (HermitianMat.zero_le_iff.mpr (density_posSemidef Y))
+  rw [HermitianMat.inner_eq_re_trace] at h
+  exact h
 
 private theorem overlap_le_one {n : Type*} [Fintype n] [DecidableEq n]
     (X Y : DensityState n) : (matrix X * matrix Y).trace.re ≤ 1 := by
@@ -385,17 +390,8 @@ def diagonalReference : DensityState (Fin 4) :=
 
 private theorem diagonal_decomposition (r : Fin 4 → ℝ) :
     CStarMatrix.ofMatrix (Matrix.diagonal fun i => (r i : ℂ)) =
-      ∑ i, (r i : ℂ) • (basisState i).1 := by
-  apply CStarMatrix.ofMatrixL.symm.injective
-  change Matrix.diagonal (fun i => (r i : ℂ)) =
-    CStarMatrix.ofMatrixL.symm (∑ i, (r i : ℂ) • (basisState i).1)
-  rw [map_sum, ← Matrix.sum_single_eq_diagonal]
-  apply Finset.sum_congr rfl
-  intro i _
-  rw [map_smul]
-  change Matrix.single i i (r i : ℂ) = (r i : ℂ) • matrix (basisState i)
-  rw [show matrix (basisState i) = Matrix.single i i 1 from basisState_matrix i,
-    Matrix.smul_single, smul_eq_mul, mul_one]
+      ∑ i, (r i : ℂ) • (basisState i).1 :=
+  basisDecomposition r
 
 private theorem map_diagonal (Φ : QuantumChannel (Fin 4) (Fin 3)) (r : Fin 4 → ℝ)
     (hr : ∀ i, 0 ≤ r i) (hr₁ : ∑ i, r i = 1) :
