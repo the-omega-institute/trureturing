@@ -94,7 +94,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
     definition := none
@@ -159,7 +159,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
     definition := none
@@ -223,7 +223,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
     definition := none
@@ -288,7 +288,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
     definition := none
@@ -344,8 +344,7 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨⟨leechData, sampleColours⟩, fun _ => True, fun _ => False, ?_⟩
-  change decide True ≠ decide False
-  simp
+  simp [actual, realize]
 
 def family : Registration arena (type_of% (@four_current_identityK)) where
   actual := actual
