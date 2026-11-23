@@ -152,8 +152,8 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
     {
         var r = F.Id("R");
         return Disp(Seq(r, Gt, D(0), Comma, Quad, Margin(), Gt, D(0),
-            Quad, Longrightarrow, Quad, WindowTime(),
-            AtMost(Loss(), Subtract(Varepsilon, new Formula.Fraction(Margin(), Multiply(r, BoxScale()))))));
+            Quad, Longrightarrow, Quad, WindowTime(), Loss(), Le,
+            Subtract(Varepsilon, new Formula.Fraction(Margin(), Multiply(r, BoxScale())))));
     }
 
     private static Formula WindowStatement()
