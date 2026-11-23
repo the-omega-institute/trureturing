@@ -16,6 +16,12 @@ triage: anchor
 
 # Alexandersson, parking functions and Chow polynomials
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2609.05131
+
+URL: https://arxiv.org/html/2609.05131v2
+
 Section 1 defines parking words by their sorted letters and counts strict
 interior peaks and adjacent ties. Theorem 1.2 gives the recurrence and
 bound-one initial condition in equations (2) and (3). Section 5 gives the
