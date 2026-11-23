@@ -472,8 +472,8 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 | 角色 | 责任与边界 |
 | --- | --- |
 | PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），FILEMAP 作业默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
-| 独立长 Actions producer | 受保护 dev 的非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
-| Actions producer 并发 | dev 的 Actions producer 与定时、手动 dev Release 发布共用 `lean-cache-producer` 并发组。从受保护集成 ref 手动构建 Actions 缓存时，共用独立的 `lean-cache-integration-producer` 组。两个组各允许一个写作业，缓存写入当前 ref。集成分支使用 `lean-cache-publication-verification` 排队验证 Release。带 `volume_test_id` 的跨版物理卷验证写入独立标签空间，按 ref 和 `volume_test_id` 进入 `lean-cache-volume-verification:{ref}:{volume_test_id}`，使同一组物理卷的发布与回收串行。各组使用 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
+| 独立长 Actions producer | 受保护的 dev、integration-* 非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
+| Actions producer 并发 | dev 的 push 和手动 build 共用 `lean-cache-producer`。集成分支的 push 和手动 build 共用 `lean-cache-integration-producer`，写入各自的 ref。dev 的定时和手动 Release 发布共用 `lean-cache-release-publisher`。集成分支使用 `lean-cache-publication-verification` 排队验证 Release。带 `volume_test_id` 的跨版物理卷验证写入独立标签空间，按 ref 和 `volume_test_id` 进入 `lean-cache-volume-verification:{ref}:{volume_test_id}`，使同一组物理卷的发布与回收串行。各组使用 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
 
@@ -481,9 +481,10 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 PR (M, base M^1) or push (event.after, verified event range)
   -> source checks -> selected Lean programs/modules and Scribe inputs
   selected units + current -> required
-  Actions Cache -> read-only restore
+  Actions Cache -> restore by base (PR) or branch (push)
+  accepted source on a protected push -> save missing branch judge
 
-protected dev push or pinned manual build
+protected dev/integration push or validated pinned manual build
   -> serialized full producer -> validate bundle -> publish Actions cache
 
   .lake/build --Release publication entry--> GitHub Release cache
@@ -518,8 +519,8 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | 计算预算 / 平台 job 上限 |
 | --- | --- | --- | --- |
 | PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| 受保护 dev 非删除 push | 在固定事件提交上准备编译工件和原生模块报告 | dev 的 Actions cache | 360m |
+| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | 受保护非删除 push 在源码检查通过后可保存本分支精确键缺失的 judge | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
+| 受保护 dev 或 integration-* 非删除 push | 在固定事件提交上准备编译工件和原生模块报告 | 该分支的 Actions cache | 360m |
 | `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
 | `workflow_dispatch`，`operation=release` | 原始 `actor` 与当前 `triggering_actor` 均须为 `loning`；runtime 为受保护 dev/integration ref；`source_ref` 固定为 `refs/heads/dev`，非零完整 `source_sha` 须属于受保护 dev 的固定快照，检出该 SHA | 只读授权 job 先验证；独立发布 job 在任何发布操作前再次检查两个账号，单 job 重跑不复用身份授权；沿固定提交的 Release 发布程序打包已准备的编译产物 | 授权 5m，发布 360m |
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口，运输项目编译工件 | 单 job 360m |
@@ -529,7 +530,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同指定一份已经公开的候选或生产 Release。受保护分支的手动完整 producer 可从正式分片 Release 重建本分支的 Actions 缓存；普通 PR 只读 Actions 种子。显式播种的续建缓存绑定本次 dispatch、目标提交、Release tag 和 producer SHA。同一 run 重试时，以已验证的原生续建包或原 Release 为起点。只有分片索引的 attempt 晚于该起点且早于本次尝试时才叠加分片；原 Release 的起点记为 0。首次切换先发布并验证正式分片 Release，再由独立 producer 核实完整项目索引及条目在 dev 可见，随后开启 dev 的普通 CI 分片读取。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建与模块报告准备；准备成功后可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
-GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev push 和手动 Actions build 共用仓库级串行 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。producer 使用固定候选 SHA，独立于普通 CI 对 push 范围的核验。集成测试的 Release 验证保留独立构建与发布命名空间，改动范围不可读时仍执行验证。集成验证使用独立的并发组。
+GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护分支的 push 和已验证的手动 Actions build 共用完整 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。producer 使用固定候选 SHA，独立于普通 CI 对 push 范围的核验。集成测试的 Release 验证保留独立构建与发布命名空间，改动范围不可读时仍执行验证。集成验证使用独立的并发组。
 
 手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
@@ -546,11 +547,11 @@ GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev pu
 | 工作量缺失、畸形、陈旧或未知 | `build-work-unknown` 拒绝 project 快照。 |
 | Release 发布 | 构建/内容校验失败保持硬失败；可选传输失败可返回 0 并给出 `failed`/`skipped`，清理失败记录 `prune_error`。新发布成功须 `published` 且远端 published 状态、manifest/资产清单已验证；exit 0 本身不足，`exists` 只表示已核对既存快照。 |
 
-**普通 CI 只读。** NuGet、judge、elan、dependency 与 project 只可恢复，构建输出留在 job 内。PR 事件使用 opened、reopened、synchronize。
+**普通 CI 的缓存权限。** PR 的 opened、reopened、synchronize 事件只读 NuGet、judge、elan、dependency 和 project。PR 按 base 选键。目标为集成分支时可按层回退到兼容的 dev 种子。judge 只接受与全部编译输入精确匹配的目标分支键或 dev 回退键。来自另一个集成分支的 PR 只恢复能确定归属的种子。缺失的工件由 Lake 按本次选中的目标补编。
 
 独立 producer 的 project 缓存按来源分支与 run/attempt 保存在不可变 key。producer 在准备命令成功后保存工件，并向 Actions API 按 ref 和 key 确认新快照。
 
-启用索引的分支从钉版 dev 历史生成按导入与历史共变分组的项目布局。普通 PR 和 push 共用受影响目标计划选取分片，Lake 补齐其余所需工件。独立的受保护缓存生产作业校验完整报告、确认全部所需数据后，写本次 run/attempt 的完整索引。内容未变的分片沿用已有条目，完整索引仍按本次事件发布。索引及数据必须能在其保护 ref 确认。
+`LEAN_CACHE_SHARDS_REF=dev` 为 dev 与集成分支启用分片。指定单个集成分支时仅该分支启用。producer 从钉版 dev 历史生成按导入与历史共变分组的项目布局。普通 PR 和 push 共用受影响目标计划选取分片，Lake 补齐其余所需工件。独立的受保护缓存生产作业校验完整报告、确认全部所需数据后，写本次 run/attempt 的完整索引。内容未变的分片沿用已有条目，完整索引仍按本次事件发布。索引及数据必须能在其保护 ref 确认。
 
 Release 独立验证源码身份与项目编译产物。生产发布在 dev 同时启用索引与物理卷时，优先选择兼容的物理卷快照。具名集成验证可启用相同的稀疏恢复。没有命中时，自动发布优先使用已具备完整载荷的 Actions 种子，再查找同一发布范围内兼容的祖先 Release。各 Release 按 tag、producer SHA 和清单摘要安装。Lake 对当前固定提交补编。新快照省略聚合报告、逐模块报告及其 trace，也从旧卷中剔除这类成员。没有兼容种子时，普通 ARM64 runner 先编译共享 import，再由四个作业编译独占模块，汇合后以 `lake --no-build` 检查。集成分支可以指定 `release` 检验严格较早提交的播种，或指定 `parallel` 检验冷编。启用索引 Release 时，完整快照按压缩字节分卷，模块、导入闭包、资产区间及摘要登记在索引中。完整恢复核验整份快照，定向恢复按目标闭包和已登记资产区间取回。在已启用索引的发布端，将 `LEAN_CACHE_RELEASE_VOLUMES_REF` 设为 `dev` 可启用跨版物理卷复用。新标签发布完整逻辑清单与索引，索引记录成员所在的不可变物理卷和字节区间。新旧标签可直接引用同一卷。只有所有存活快照均已解除引用的卷可被回收。受保护的集成发布可用同一 `volume_test_id` 验证一对快照，并在恢复前退役本对测试的旧标签。受保护集成分支的冷验证使用不可变检查点。同一提交、分支、仓库与模式的后续 run 可以显式接续，归档和各分片在安装之前分别校验。
 
@@ -558,8 +559,8 @@ Release 独立验证源码身份与项目编译产物。生产发布在 dev 同�
 
 | 标识 | 归属与复用边界 |
 | --- | --- |
-| `lean-project-push-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>` | Actions project 地址；`lean_actions.actions_keys` 单源生成，ref 另由 Actions scope 限定，只恢复此 project 前缀。 |
-| `lean-dependency-v4-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>`、`elan-pinned-<OS>-<arch>-<pin-sha256>` | 既有 dependency 和钉版 elan 运输键；elan miss 由 `install-lean-toolchain.sh` 安装，保存前列出工具链，不删恢复的工具链。 |
+| `lean-project-push-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>` | 历史 Actions project 地址。当前生产键另含分支命名空间，project 的键与回退顺序由 `lean_actions.actions_keys` 生成。 |
+| `lean-dependency-v4-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>`、`elan-pinned-<OS>-<arch>-<pin-sha256>` | 历史 dependency 和钉版 elan 地址。当前生产键按分支隔离。elan 缺失时由 `install-lean-toolchain.sh` 安装，保存前列出工具链，不删恢复的工具链。 |
 | `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-<execution12>-<publication-id>` | Release buildDir 容器地址；前缀选候选后，manifest 必须匹配完整 `cache_key` 的报告格式和完整 execution SHA256 才下载构建归档。 |
 | `stratalint-raw-lean-report-v3` | `lean-report-selection.py:REPORT_FORMAT` 单源报告线格式。 |
 | Release manifest `lean-release-seed-v4`、build-work `schema_version=1` | 前者管理运输资产与来源，后者是当前调用在恢复树之外的工作量控制证据。 |
@@ -572,7 +573,7 @@ Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、�
 
 [普通 CI](../../../.github/workflows/ci-current.yml) · [独立缓存生产](../../../.github/actions/lean-cache-produce/action.yml) · [手动与定时入口](../../../.github/workflows/lean-cache-publish.yml)
 
-project 恢复在 current 与 Lean build 单元中先查读者可见的种子：pull_request 优先取自身 `refs/pull/<number>/merge`，该 ref 无合格种子时再取 `refs/heads/$GITHUB_BASE_REF`；push 取 `$GITHUB_REF`。`lean_actions.py keys` 使用可选的 `GH_TOKEN`、`GITHUB_REPOSITORY` 与 `GITHUB_API_URL`（默认 `https://api.github.com`），通过标准库 HTTP 请求完整分页的 Actions cache 列表，显式按 `created_at` 降序分页；每行的 cache `id` 须为互异正整数，重复、缺失或无效 id，或不同 id 的总数与 `total_count` 不符，均走具名不完整列表 fallback。只接纳 ref 精确相同、key 为当前 project restore prefix 加正十进制 run id 与 attempt 的条目，按数值 `(run id, attempt)` 取最大值，不使用列表顺序或时间字段。`project_restore_key` 是独立的恢复输出，`project_key` 仍是本次发布 key。查找未配置、请求失败、HTTP 错误、列表畸形或不完整、无合格条目时具名报告原因并请求本次 key，保留现有 prefix restore；偏好 key 被淘汰或不兼容时也经同一 prefix fallback 与既有恢复入口补齐。每次请求保留固定网络 timeout；整个可选查找由单个固定 10 秒 transport hang guard 限定，涵盖名称解析、连接、headers、body 及全部分页。查找在 daemon thread 中执行；guard 到期即放弃等待，以 `lookup-transport-hang-guard` 原因输出既有 fallback 收据并继续本次 key，不重试或轮询。daemon thread 不输出收据或 key。restore 收据同时给出 requested key 与实际 matched key。此偏好仅是性能启发式；run id 大小不证明 push 顺序、构建材料包含关系或有效性，查找与缓存命中均不承载检查成功或判词。
+project 恢复在 current 与 Lean build 单元中先查读者可见的种子：PR 先在 `refs/heads/$GITHUB_BASE_REF` 查本分支的原生 project 键，push 取 `$GITHUB_REF`。普通 feature PR 在目标分支缺少新键时，可在同一查找预算内按目标或 dev 的 ref 清单选取历史 project、dependency 的精确 run/attempt 键。来自其它集成分支的 PR 仅使用目标或 dev 的分支键。PR 恢复 elan 也使用分支键。`lean_actions.py keys` 使用可选的 `GH_TOKEN`、`GITHUB_REPOSITORY` 与 `GITHUB_API_URL`（默认 `https://api.github.com`），通过标准库 HTTP 请求完整分页的 Actions cache 列表，显式按 `created_at` 降序分页；每行的 cache `id` 须为互异正整数，重复、缺失或无效 id，或不同 id 的总数与 `total_count` 不符，均走具名不完整列表 fallback。只接纳 ref 精确相同、key 为当前 project restore prefix 加正十进制 run id 与 attempt 的条目，按数值 `(run id, attempt)` 取最大值，不使用列表顺序或时间字段。`project_restore_key` 是独立的恢复输出，`project_key` 仍是本次发布 key。查找未配置、请求失败、HTTP 错误、列表畸形或不完整、无合格条目时具名报告原因并请求本次 key，保留现有 prefix restore；偏好 key 被淘汰或不兼容时也经同一 prefix fallback 与既有恢复入口补齐。每次请求保留固定网络 timeout；整个可选查找由单个固定 10 秒 transport hang guard 限定，涵盖名称解析、连接、headers、body 及全部分页。查找在 daemon thread 中执行；guard 到期即放弃等待，以 `lookup-transport-hang-guard` 原因输出既有 fallback 收据并继续本次 key，不重试或轮询。daemon thread 不输出收据或 key。restore 收据同时给出 requested key 与实际 matched key。此偏好仅是性能启发式；run id 大小不证明 push 顺序、构建材料包含关系或有效性，查找与缓存命中均不承载检查成功或判词。
 
 编译依赖 trace、utility 输入与报告格式标识决定报告复用，Lake traces 决定实际模块重建；复用行保留原 producer 来源。正常报告入口仍执行原生报告提取与严格 publication 校验，不借恢复绕过 Lean kernel、utility/audit 或报告验证。定时 Release 缓存发布与 integration 的 cache publication 验证独立保留；验证事件、来源、run/attempt、归档材料与空目标恢复按其既有程序核对，不外推为 truth 发布成功。
 
