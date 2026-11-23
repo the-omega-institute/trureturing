@@ -65,6 +65,7 @@ import Mathlib.Basic.Logic.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Matrix.Block
+import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Logic.Function.Iterate
 import Init.Data.Int.Basic
@@ -270,18 +271,17 @@ theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
     fin_cases k <;> decide +kernel
   have step (k : Fin 20) : Matrix.vecMul (table k.castSucc) T = table k.succ := by
     have incoming :
-        Matrix.vecMul (previous k.castSucc) (Sum.elim costTwo HardinA229508StripData.costOne) =
+        Matrix.vecMul (previous k.castSucc) (Matrix.fromRows costTwo HardinA229508StripData.costOne) =
           Matrix.vecMul (HardinA203981StripCertificate.W k.castSucc) costTwo +
             Matrix.vecMul (HardinA229508StripCertificate.W k.castSucc) HardinA229508StripData.costOne :=
-      congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
-        (Matrix.vecMul_fromBlocks (0 : Matrix (Fin 15) (Fin 15) ℤ)
-          costTwo 0 HardinA229508StripData.costOne (previous k.castSucc))
+      Matrix.sumElim_vecMul_fromRows costTwo HardinA229508StripData.costOne
+        (HardinA203981StripCertificate.W k.castSucc) (HardinA229508StripCertificate.W k.castSucc)
     rw [show Matrix.vecMul (table k.castSucc) T = _ from
       Matrix.vecMul_fromBlocks HardinA229508StripData.T
-        (Sum.elim costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T _]
+        (Matrix.fromRows costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T _]
     change Sum.elim
       (Matrix.vecMul (previous k.castSucc) HardinA229508StripData.T + Matrix.vecMul (W k.castSucc) 0)
-      (Matrix.vecMul (previous k.castSucc) (Sum.elim costTwo HardinA229508StripData.costOne) +
+      (Matrix.vecMul (previous k.castSucc) (Matrix.fromRows costTwo HardinA229508StripData.costOne) +
         Matrix.vecMul (W k.castSucc) HardinA203981StripData.T) = table k.succ
     have left_step : Matrix.vecMul (previous k.castSucc) HardinA229508StripData.T =
         previous k.succ :=

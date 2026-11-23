@@ -22,6 +22,7 @@ import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripD
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Data.Matrix.Block
+import Mathlib.Data.Matrix.ColumnRowPartitioned
 
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripData
 
@@ -45,7 +46,7 @@ def costTwo : Matrix (Fin 15) (Fin 15) ℤ :=
 
 /-- The inherited block plus a sector for a spent budget of two defects. -/
 def T : Matrix ((Fin 15 ⊕ Fin 15) ⊕ Fin 15) ((Fin 15 ⊕ Fin 15) ⊕ Fin 15) ℤ :=
-  Matrix.fromBlocks HardinA229508StripData.T (Sum.elim costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T
+  Matrix.fromBlocks HardinA229508StripData.T (Matrix.fromRows costTwo HardinA229508StripData.costOne) 0 HardinA203981StripData.T
 
 def initial : ((Fin 15 ⊕ Fin 15) ⊕ Fin 15) → ℤ := Sum.elim HardinA229508StripData.initial 0
 
