@@ -6,11 +6,15 @@
    utility: none
    digest: Configuration ideal completion, finite-endpoint edge composition and graph transport. -/
 
-import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
-import Mathlib.Order.Ideal
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Data.Real.Basic
-import Lean.Elab.Tactic.Omega
+module
+
+public import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
+public import Mathlib.Order.Ideal
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Data.Real.Basic
+public import Lean.Elab.Tactic.Omega
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,7 +41,7 @@ def FiniteDirected (F : Set (Set E)) : Prop :=
   ∀ s : Finset (Set E), (∀ C ∈ s, C ∈ F) →
     ∃ K ∈ F, ∀ C ∈ s, C ⊆ K
 
-private theorem finite_upper_of_pairwise_directed
+theorem finite_upper_of_pairwise_directed
     {F : Set (Set E)} (hF : F.Nonempty)
     (hd : ∀ ⦃C D : Set E⦄, C ∈ F → D ∈ F →
       ∃ K ∈ F, C ⊆ K ∧ D ⊆ K) : FiniteDirected F := by
@@ -58,7 +62,7 @@ private theorem finite_upper_of_pairwise_directed
       · exact hCL
       · exact (hLs D hD).trans hLK
 
-private theorem configuration_union
+theorem configuration_union
     {compatible : Finset E → Prop} {F : Set (Set E)}
     (hcfg : ∀ C ∈ F, Configuration compatible C)
     (hdir : FiniteDirected F) :
@@ -115,11 +119,11 @@ noncomputable def finiteIdeal {compatible : Finset E → Prop}
     exact ⟨K.2.2.1.union L.2.2.1,
       fun s hs => C.2.2 s (hs.trans (Set.union_subset hK hL))⟩
 
-private theorem mem_finiteIdeal {compatible : Finset E → Prop}
+theorem mem_finiteIdeal {compatible : Finset E → Prop}
     (hempty : compatible ∅) (C : Configurations compatible) (K : FiniteConfigurations compatible) :
     K ∈ finiteIdeal hempty C ↔ K.1 ⊆ C.1 := Iff.rfl
 
-private theorem ideal_union_configuration {compatible : Finset E → Prop}
+theorem ideal_union_configuration {compatible : Finset E → Prop}
     (I : Order.Ideal (FiniteConfigurations compatible)) :
     Configuration compatible (⋃₀ (Subtype.val '' (I : Set (FiniteConfigurations compatible)))) := by
   apply configuration_union
@@ -132,7 +136,7 @@ private theorem ideal_union_configuration {compatible : Finset E → Prop}
       obtain ⟨k, hk, hck, hdk⟩ := I.directed c hc d hd
       exact ⟨k.1, ⟨k, hk, rfl⟩, hck, hdk⟩
 
-private theorem finite_subset_ideal_union {compatible : Finset E → Prop}
+theorem finite_subset_ideal_union {compatible : Finset E → Prop}
     (I : Order.Ideal (FiniteConfigurations compatible))
     (K : FiniteConfigurations compatible)
     (hK : K.1 ⊆ ⋃₀ (Subtype.val '' (I : Set (FiniteConfigurations compatible)))) : K ∈ I := by
@@ -205,7 +209,7 @@ noncomputable def configurationIdealIso {compatible : Finset E → Prop}
 
 /-! ## Finite endpoints in an arbitrary ambient poset -/
 
-private theorem exec_data {I J : Set E} {l : List E} (hl : Exec I l J) :
+theorem exec_data {I J : Set E} {l : List E} (hl : Exec I l J) :
     I ⊆ J ∧ l.Nodup ∧ (∀ e, e ∈ l ↔ e ∈ J ∧ e ∉ I) := by
   induction l generalizing I with
   | nil => cases hl; exact ⟨Set.Subset.rfl, by simp, by simp⟩
@@ -226,7 +230,7 @@ private theorem exec_data {I J : Set E} {l : List E} (hl : Exec I l J) :
       · exact Or.inl hx
       · exact Or.inr ((hm x).mpr ⟨hxJ, by simpa using And.intro hx hxI⟩)
 
-private theorem exec_subtype {J : Set E} (hJ : IsLowerSet J)
+theorem exec_subtype {J : Set E} (hJ : IsLowerSet J)
     (I K : Set E) (hI : I ⊆ J) (hK : K ⊆ J) (l : List J) :
     Exec (Subtype.val ⁻¹' I) l (Subtype.val ⁻¹' K) ↔ Exec I (l.map Subtype.val) K := by
   induction l generalizing I with
@@ -254,7 +258,7 @@ private theorem exec_subtype {J : Set E} (hJ : IsLowerSet J)
     simp only [List.map_cons, Exec]
     rw [hen, ← eqinsert, ih _ hi]
 
-private theorem finite_exec_connectivity {I J : Set E} (hI : IsLowerSet I)
+theorem finite_exec_connectivity {I J : Set E} (hI : IsLowerSet I)
     (hJ : IsLowerSet J) (hIJ : I ⊆ J) (hfin : J.Finite) :
     (∃ l, Exec I l J) ∧
     (∀ l m, Exec I l J → Exec I m J →
@@ -316,7 +320,7 @@ noncomputable def gapCard (I J : Finset E) : Nat := by
   classical
   exact (J \ I).card
 
-private theorem exec_length_eq_gapCard {I J : Finset E} {l : List E}
+theorem exec_length_eq_gapCard {I J : Finset E} {l : List E}
     (hl : Exec (I : Set E) l J) : l.length = gapCard I J := by
   classical
   obtain ⟨_, hn, hm⟩ := exec_data hl
@@ -327,7 +331,7 @@ def pathWeight {R : Type v} [AddMonoid R] (weight : E → R) : List E → R
   | [] => 0
   | e :: l => weight e + pathWeight weight l
 
-private theorem pathWeight_append {R : Type v} [AddMonoid R]
+theorem pathWeight_append {R : Type v} [AddMonoid R]
     (weight : E → R) (l m : List E) :
     pathWeight weight (l ++ m) = pathWeight weight l + pathWeight weight m := by
   induction l with
@@ -339,13 +343,13 @@ noncomputable def clockFinite (observed : E → Prop) (weight : E → ℝ) (C : 
   exact (C.filter observed).sum weight
 
 /-- Subdivision preserves duration precisely when the piece weights sum to the original weight. -/
-private theorem subdivision_iff (weight : E → ℝ) (e : E) (pieces tail : List E) :
+theorem subdivision_iff (weight : E → ℝ) (e : E) (pieces tail : List E) :
     pathWeight weight (e :: tail) = pathWeight weight (pieces ++ tail) ↔
       weight e = pathWeight weight pieces := by
   simp [pathWeight, pathWeight_append]
 
 /-- Strict observer-clock growth for finite configurations over an arbitrary carrier. -/
-private theorem clockFinite_strict_of_new_observed {observed : E → Prop} {weight : E → ℝ}
+theorem clockFinite_strict_of_new_observed {observed : E → Prop} {weight : E → ℝ}
     (hpos : ∀ e, observed e → 0 < weight e) {C D : Finset E}
     (hCD : C ⊆ D) {e : E} (heD : e ∈ D) (heC : e ∉ C) (heo : observed e) :
     clockFinite observed weight C < clockFinite observed weight D := by
@@ -536,7 +540,7 @@ def edgeWalk {V : Type u} {G : BiGraph V} {F : V → Type v}
   | _, _, .nil _ => Equiv.refl _
   | _, _, .cons h p => (edge h).trans (edgeWalk edge p)
 
-private theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
+theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
     (edge : ∀ {v w}, G.Adj v w → F v ≃ F w)
     {a b c : V} (p : Walk G a b) (q : Walk G b c) :
     edgeWalk edge (p.append q) = (edgeWalk edge p).trans (edgeWalk edge q) := by
@@ -544,7 +548,7 @@ private theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
   | nil => rfl
   | cons h p ih => simp only [Walk.append, edgeWalk, ih, Equiv.trans_assoc]
 
-private theorem edgeWalk_reverse {V : Type u} {G : BiGraph V} {F : V → Type v}
+theorem edgeWalk_reverse {V : Type u} {G : BiGraph V} {F : V → Type v}
     (edge : ∀ {v w}, G.Adj v w → F v ≃ F w)
     (rev : ∀ {v w} (h : G.Adj v w), edge (G.symm h) = (edge h).symm)
     {a b : V} (p : Walk G a b) : edgeWalk edge p.reverse = (edgeWalk edge p).symm := by
@@ -584,7 +588,7 @@ noncomputable def rootSection
     (x : F r) : ∀ v, F v :=
   fun v => T.walk (Classical.choice (hc v)) x
 
-private theorem rootSection_parallel
+theorem rootSection_parallel
     {V : Type u} {G : BiGraph V} {F : V → Type v}
     (T : EdgeTransport G F) (r : V) (hc : GraphConnectedFrom G r)
     {x : F r} (hfix : RootFixed T r x) {v w : V} (h : G.Adj v w) :
@@ -650,7 +654,7 @@ def simpleEdgeWalk {V : Type u} {G : SimpleGraph V} {F : V → Type v}
   | _, _, .nil => Equiv.refl _
   | _, _, .cons h p => (edge h).trans (simpleEdgeWalk edge p)
 
-private theorem simpleEdgeWalk_concat {V : Type u} {G : SimpleGraph V} {F : V → Type v}
+theorem simpleEdgeWalk_concat {V : Type u} {G : SimpleGraph V} {F : V → Type v}
     (edge : ∀ {v w}, G.Adj v w → F v ≃ F w)
     {r v w : V} (p : G.Walk r v) (h : G.Adj v w) :
     simpleEdgeWalk edge (p.concat h) = (simpleEdgeWalk edge p).trans (edge h) := by
