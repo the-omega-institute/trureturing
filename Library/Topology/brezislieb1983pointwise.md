@@ -83,7 +83,10 @@ The primary article at https://arxiv.org/html/2611.26428v1 uses the
 Brézis–Lieb lemma immediately after formula (2.25) to split the nonlinear
 mass of a convergent minimizing sequence into limit and residual masses.
 The displayed relation is sigma^(p+1) + tau^(p+1) = 1. Its use with (2.25)
-also needs the separate quadratic kinetic estimate and the nonvanishing
-condition cited there as (2.20). Nonlinear power splitting alone proves
+also needs the separate quadratic kinetic estimate, the power inequality
+(2.20), and nonvanishing sigma > 0 obtained from (2.10). Formula (2.20)
+states that (a+b)^((p+1)/2) >= a^((p+1)/2) + b^((p+1)/2) for a,b >= 0,
+with equality exactly when a = 0 or b = 0 in the article's range p > 1.
+Nonlinear power splitting alone proves
 neither a kinetic decomposition nor nonvanishing, compactness, existence
 of a minimizer or a PDE solution.
