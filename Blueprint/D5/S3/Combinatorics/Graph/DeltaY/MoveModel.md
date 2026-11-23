@@ -42,7 +42,7 @@ Every forward move is allowed in both relations. A strong reverse move requires 
 
 **Theorem 1.4 (Validity of the forward update).**
 
-$$\forall G \in State,\; \forall T \in Triple,\; \forall o \in Nat,\; \operatorname{Valid}\left(G\right) \Rightarrow \left(\operatorname{verts}\left(T\right) \subseteq \operatorname{active}\left(G\right) \Rightarrow \left(\left(\neg o \in \operatorname{active}\left(G\right)\right) \Rightarrow \operatorname{Valid}\left(\operatorname{forward}\left(G, T, o\right)\right)\right)\right)$$
+$$\forall G \in State,\; \forall T \in Triple,\; \forall o \in Nat,\; \operatorname{Valid}\left(G\right) \Rightarrow \left(\operatorname{Valid}\left(\operatorname{forward}\left(G, T, o\right)\right) \Leftrightarrow \left(\operatorname{verts}\left(T\right) \subseteq \operatorname{active}\left(G\right) \land \left(\neg o \in \operatorname{verts}\left(T\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DeltaY/MoveModel.forward_valid` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall G \in State,\; \forall T \in Triple,\; \forall o \in Nat,\; \operatorn
 
 *Commentary.*
 
-Retained edges inherit validity from the starting state. Each new spoke joins an active triple vertex to the fresh center. The legal forward move requires all three triangle edges to exist.
+Retained edges inherit validity from the starting state. Each inserted spoke forces its triple vertex to belong to the old active set and to differ from the center. These conditions also make every spoke valid. For example, an already active vertex outside the triple can serve as the center of a valid update. Starting validity excludes defects that could survive the update, such as a loop outside the triple. A legal forward move requires a fresh center and all three triangle edges.
 
 **Theorem 1.5 (Invariance under relabeling).**
 
