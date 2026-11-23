@@ -32,7 +32,6 @@ namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Ze
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
-open private choices from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
 set_option maxRecDepth 100000
 
@@ -139,12 +138,12 @@ private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0)
     rcases shape a b c d hp with ⟨hc, hn, hv, he⟩ | ⟨hc, hn, hv, he⟩ | hz
     · left
       refine ⟨hc, ?_⟩
-      change (choices (steps ![0, a, b, c, d])).card = 1
-      simpa only [if_neg he] using choices_card (steps ![0, a, b, c, d]) hn hv
+      simpa only [offsetChoices, steps, if_neg he] using
+        choices_card (steps ![0, a, b, c, d]) hn hv
     · right; left
       refine ⟨hc, ?_⟩
-      change (choices (steps ![0, a, b, c, d])).card = 2
-      simpa only [if_pos he] using choices_card (steps ![0, a, b, c, d]) hn hv
+      simpa only [offsetChoices, steps, if_pos he] using
+        choices_card (steps ![0, a, b, c, d]) hn hv
     · exact Or.inr (Or.inr hz)
   let q : Row := fun j => p 0 ^^^ p j
   have heq : q = ![0, q 1, q 2, q 3, q 4] := by

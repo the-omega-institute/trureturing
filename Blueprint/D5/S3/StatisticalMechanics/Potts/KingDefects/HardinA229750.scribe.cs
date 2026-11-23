@@ -26,7 +26,8 @@ internal sealed class HardinA229750Document : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role,
-            name == "result" ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229750"), ResolutionKind.Proved) : null);
+            name == "result" ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229750"),
+                ResolutionKind.Proved, [DeclarationHandle.Create(Prefix + "closed_form")]) : null);
 
     private static Formula Formula0()
     {
