@@ -54,7 +54,8 @@ private theorem exists_largest_family {B : Type*} [Finite B] (valid : Set B → 
     fun s hs => hmax s (by simp [options, hs])⟩
 
 
-private theorem fibers_card_eq [Fintype I] (family : I → Set B) :
+/-- The size of a finite family of fibers is the sum of their sizes. -/
+theorem fibers_card_eq [Fintype I] (family : I → Set B) :
     ({p : I × B | p.2 ∈ family p.1} : Set (I × B)).ncard = ∑ i : I, (family i).ncard := by
   classical
   let pieces (i : I) : Set (I × B) := {(i, b) | b ∈ family i}
@@ -137,10 +138,12 @@ private theorem latin_blocks_inj :
   simp [latinPoint] at zero one
   exact Prod.ext row (Prod.ext zero one)
 
-private def packingEntries : Set ((Row d × ZMod 3) × Set (Fin r)) :=
+/-- Each local packing block tagged with its row and residue class. -/
+def packingEntries : Set ((Row d × ZMod 3) × Set (Fin r)) :=
   {p | p.2 ∈ P p.1.1 p.1.2}
 
-private theorem counting_decomposition [NeZero (3 * r)]
+/-- Count the Latin cells and the local packing entries separately. -/
+theorem counting_decomposition [NeZero (3 * r)]
     (valid : ∀ x c, IsPartialSteiner (P x c)) :
     (extendedFamily e L P).ncard = 3 ^ d * r ^ 2 + (packingEntries P).ncard := by
   classical
@@ -239,7 +242,8 @@ private theorem potential_reindex {X A B : Type*} [Fintype X]
     intro t
     simpa only [reindex] using hl (equiv t)
 
-private theorem latin_exists (r : ℕ) [NeZero r] :
+/-- The addition table of the cyclic group realizes a Latin square. -/
+theorem latin_exists (r : ℕ) [NeZero r] :
     ∃ L : Fin r → Fin r → Fin r, IsLatin r L := by
   let E := (ZMod.finEquiv r).toEquiv
   let L (a b : Fin r) := E.symm (E a + E b)

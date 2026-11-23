@@ -17,7 +17,7 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
         Weights = new Formula.TypeArrow(R, R);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact four-age preparation", H("Exact four-age preparation at a reflected graph port"), Blocks(
+        "Four-vertex port preparation", H("Exact preparation and uniform separation at a reflected graph port"), Blocks(
             Node("port", "Raw port", Disp(Seq(B, Eq, Tuple(D(1), D(0), D(0), D(0)), Caret, Grp(F.Id("T")))),
                 "The actuator injects at vertex zero of the labelled graph.", DescribeRole.Definition),
             Node("target", "Centered target", Disp(Seq(X, Eq, Frac, Grp(D(1)), Grp(Sqrt, Grp(D(1, 4))),
@@ -43,6 +43,15 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
                     Paragraph(Text("The determinant equation for the centered Jacobi block gives one root in each of the intervals (−2 gamma,−gamma), (0,gamma/2) and (gamma,2 gamma). After shifting by M/8 the three roots give positive rates with nonzero port coordinates. Dividing the corresponding target coordinates by the port coordinates gives signs negative, positive, negative in increasing order of rate.")),
                     Paragraph(Text("The scalar pulse response vanishes at rate zero by mass conservation. The three centered values give two further distinct zeros by continuity. The exponential zero bound prohibits this response with fewer than four distinct ages, including when age zero or arbitrary real pulse weights are allowed.")),
                     Paragraph(Text("At any four distinct ages the exponential interpolation system is invertible by the same zero bound. Prescribing the zero mass mode and the three centered ratios gives the exact endpoint. Ages T/4, T/2, 3T/4 and T provide one choice in every positive horizon.")),
+                    Paragraph(Ref("D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound"))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("three-age-uniform-distance"),
+                DeclarationHandle.Create(Gid + "three_age_uniform_distance"),
+                H("At most three ages leave a uniform positive distance"),
+                StatementSource.FromAuthor(UniformDistanceFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The same positive radius applies to both graph labels, every finite design with at most three distinct ages, and arbitrary real weights at nonnegative ages. For zero total input the ages may be any real numbers. The norm is the largest absolute error over the four physical vertices.")),
+                    Paragraph(Text("Normalize each spectral row by its port coordinate and compose the rows for the reflected label with the reflection. The constant row reads total input and the other three read the exponential response at the positive rates. Let C be one plus the sum of the absolute entries of both normalized row matrices. An admissible radius is the smallest absolute target coordinate among the three positive rates divided by 2C.")),
+                    Paragraph(Text("Inside that radius the row-sum estimate controls all four coordinate errors. Subtract the conserved mass from one existing weight. At a nonnegative age the resulting change at each positive rate is bounded in absolute value by that mass error. With zero total input the correction vanishes. The corrected response has a zero at rate zero and keeps the three strict target signs. Two further distinct zeros violate the exponential zero bound.")),
                     Paragraph(Ref("D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound"))),
                 DescribeRole.Theorem))));
 
@@ -103,6 +112,26 @@ internal sealed class FourVertexPortPulsesDocument : IScribeDocumentDefinition
             Exists, Sp, bindAges, Comma, bindWeights, Comma, card, Eq, D(4), Land, Sp,
             Open, Forall, Sp, Age, InMacro, Sp, S, Comma, D(0), Lt, Age, Land, Sp, Age, Le, Sp, T,
             Close, Land, Sp, net, Land, Sp, Open, both, Close, Close,
+            End, Grp(F.Id("gathered"))));
+    }
+
+    private static Formula UniformDistanceFormula()
+    {
+        Formula radius = Varepsilon;
+        Formula card = Seq(Lvert, Sp, S, Rvert);
+        Formula net = Seq(Sum, Underscore, Grp(Age, InMacro, Sp, S), Call(W, Age), Eq, D(0));
+        Formula ages = Seq(Forall, Sp, Age, InMacro, Sp, S, Comma, D(0), Le, Sp, Age);
+        Formula error = Seq(Call(F.Id("endpoint"), Lap(Rho), S, W), Minus, X);
+        return Disp(Seq(Begin, Grp(F.Id("gathered")),
+            Forall, Sp, M, Comma, G, Comma, Q, Colon, Sp, R, Comma, Sp,
+            D(0), Lt, M, Land, Sp, D(0), Lt, G, Le, Frac, Grp(M), Grp(D(2, 5, 6)),
+            Land, Sp, D(0), Lt, Q, Le, Frac, Grp(G, Caret, Grp(D(2))), Grp(M), Sp,
+            Longrightarrow, Sp, RowBreak, Grp(),
+            Exists, Sp, radius, Colon, Sp, R, Comma, D(0), Lt, radius, Land, Sp,
+            Open, Forall, Sp, Rho, Colon, Bool, Comma, S, Colon, FinsetR, Comma,
+            W, Colon, Weights, Comma, Sp, RowBreak, Grp(),
+            card, Le, D(3), Rightarrow, Sp, Open, net, Lor, Sp, Open, ages, Close, Close,
+            Rightarrow, Sp, radius, Le, Sp, Call(F.Id("maxnorm"), error), Close,
             End, Grp(F.Id("gathered"))));
     }
 

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [lake/module/D5.S3.Analytic.ExponentialSum.DescartesRule, mathlib/module/Mathlib.Analysis.Normed.Algebra.MatrixExponential, mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef, mathlib/module/Mathlib.LinearAlgebra.Eigenspace.Basic, mathlib/module/Mathlib.Data.Finset.Sort, mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Exact four-age signed preparation at a physical port of a reflected weighted graph pair. -/
+   digest: Exact four-age preparation and uniform three-age separation at a reflected graph port. -/
 
 import D5.S3.Analytic.ExponentialSum.DescartesRule
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
@@ -13,7 +13,7 @@ import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic
 
-/-! # Exact preparation at the raw port of a reflected four-vertex pair -/
+/-! # Exact preparation and robust separation at the raw port of a reflected four-vertex pair -/
 
 open Matrix Finset
 open scoped Matrix BigOperators
@@ -453,13 +453,13 @@ private theorem response_minimum (S : Finset ℝ) (w : ℝ → ℝ)
     · exact eb)
   omega
 
-private theorem exact_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 256)
+private theorem spectral_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 256)
     (hq : 0 < q) (hqγ : q ≤ γ / 16) :
-    ∃ d y : Vec, Function.Injective d ∧ d 0 = 0 ∧
+    ∃ (d y : Vec) (A : Bool → Mat), Function.Injective d ∧ d 0 = 0 ∧
       0 < d 1 ∧ d 1 < d 2 ∧ d 2 < d 3 ∧
       y 0 = 0 ∧ y 1 < 0 ∧ 0 < y 2 ∧ y 3 < 0 ∧
-      ∀ r S w, endpoint (laplacian M γ q r) S w = target ↔
-        ∀ i, response S w (d i) = y i := by
+      (∀ r, Function.Injective (A r).mulVec) ∧ (∀ r, A r *ᵥ target = y) ∧
+      ∀ r S w i, (A r *ᵥ endpoint (laplacian M γ q r) S w) i = response S w (d i) := by
   obtain ⟨hρ, hρle, hqρ⟩ := coupling_bounds hq hqγ
   obtain ⟨l, m, u, hl₀, hl₁, hm₀, hm₁, hu₀, hu₁, el, em, eu⟩ := brackets hγ hq hqγ
   let R := spectralRows γ (coupling q) l m u
@@ -481,6 +481,27 @@ private theorem exact_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 
     have hp : 0 < 6 * γ * coupling q := by positivity
     fin_cases i <;> first | exact one_ne_zero | exact hp.ne'
   let y : Vec := fun i => (R *ᵥ target) i / (R *ᵥ port) i
+  let B : Mat := diagonal (fun i => ((R *ᵥ port) i)⁻¹) * R
+  let A : Bool → Mat := fun r => if r then B * reflection else B
+  have hB (x : Vec) (i : Vertex) : (B *ᵥ x) i = (R *ᵥ x) i / (R *ᵥ port) i := by
+    simp [B, ← Matrix.mulVec_mulVec, Matrix.mulVec_diagonal, div_eq_mul_inv, mul_comm]
+  have hR := spectralRows_injective hd hRL hport
+  have hBinj : Function.Injective B.mulVec := by
+    intro x y hxy
+    apply hR
+    funext i
+    have hh := congrFun hxy i
+    change (B *ᵥ x) i = (B *ᵥ y) i at hh
+    rwa [hB, hB, div_left_inj' (hport i)] at hh
+  obtain ⟨_, hU, _, hx⟩ := reflection_facts
+  have hAinj (r : Bool) : Function.Injective (A r).mulVec := by
+    cases r
+    · exact hBinj
+    · intro x y hxy
+      change (B * reflection) *ᵥ x = (B * reflection) *ᵥ y at hxy
+      simp only [← Matrix.mulVec_mulVec _ B reflection] at hxy
+      have hr := congrArg (fun a => reflection *ᵥ a) (hBinj hxy)
+      simpa only [Matrix.mulVec_mulVec, hU, Matrix.one_mulVec] using hr
   obtain ⟨hneg₁, hpos, hneg₂⟩ := ratio_signs hγ hq hρ hρle hl₁ hm₀ hm₁ hu₀ el eu
   have hcoord₁ : targetCoordinate γ (coupling q) l < 0 := by
     unfold targetCoordinate
@@ -491,7 +512,7 @@ private theorem exact_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 
   have hcoord₃ : targetCoordinate γ (coupling q) u < 0 := by
     unfold targetCoordinate
     exact div_neg_of_neg_of_pos (by linarith) (by positivity)
-  refine ⟨d, y, hd, rfl, hd₁, hd₁₂, hd₂₃, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨d, y, A, hd, rfl, hd₁, hd₁₂, hd₂₃, ?_, ?_, ?_, ?_, hAinj, ?_, ?_⟩
   · change ((spectralRows γ (coupling q) l m u *ᵥ target) 0) /
         ((spectralRows γ (coupling q) l m u *ᵥ port) 0) = 0
     rw [spectralRows_target, spectralRows_port]
@@ -502,23 +523,34 @@ private theorem exact_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 
       div_pos hcoord₂ (show 0 < 6 * γ * coupling q by positivity)
   · simpa [y, R, spectralRows_target, spectralRows_port] using
       div_neg_of_neg_of_pos hcoord₃ (show 0 < 6 * γ * coupling q by positivity)
-  · intro r S w
-    have heq : endpoint (laplacian M γ q r) S w = target ↔
-        endpoint (laplacian M γ q false) S w = target := by
-      cases r
-      · rfl
-      · rw [endpoint_reflection]
-        obtain ⟨_, hU, _, hx⟩ := reflection_facts
-        constructor
-        · intro h
-          have hh := congrArg (fun a => reflection *ᵥ a) h
-          simpa only [Matrix.mulVec_mulVec, hU, Matrix.one_mulVec, hx] using hh
-        · intro h
-          rw [h, hx]
-    rw [heq]
-    have hR := spectralRows_injective hd hRL hport
-    rw [← hR.eq_iff, funext_iff]
-    exact forall_congr' fun i => by rw [endpoint_coordinates hR hRL]; exact (eq_div_iff (hport i)).symm
+  · intro r
+    have ht : B *ᵥ target = y := funext fun i => hB target i
+    cases r
+    · exact ht
+    · change (B * reflection) *ᵥ target = y
+      rw [← Matrix.mulVec_mulVec, hx, ht]
+  · intro r S w i
+    have he : (B *ᵥ endpoint (laplacian M γ q false) S w) i = response S w (d i) := by
+      rw [hB, endpoint_coordinates hR hRL]
+      exact (div_eq_iff (hport i)).mpr rfl
+    cases r
+    · exact he
+    · change ((B * reflection) *ᵥ endpoint (laplacian M γ q true) S w) i = _
+      rw [endpoint_reflection, ← Matrix.mulVec_mulVec _ B reflection,
+        Matrix.mulVec_mulVec _ reflection reflection, hU, Matrix.one_mulVec, he]
+
+private theorem exact_response (M γ q : ℝ) (hγ : 0 < γ) (hcap : γ ≤ M / 256)
+    (hq : 0 < q) (hqγ : q ≤ γ / 16) :
+    ∃ d y : Vec, Function.Injective d ∧ d 0 = 0 ∧
+      0 < d 1 ∧ d 1 < d 2 ∧ d 2 < d 3 ∧
+      y 0 = 0 ∧ y 1 < 0 ∧ 0 < y 2 ∧ y 3 < 0 ∧
+      ∀ r S w, endpoint (laplacian M γ q r) S w = target ↔
+        ∀ i, response S w (d i) = y i := by
+  obtain ⟨d, y, A, hd, hd0, hd1, hd12, hd23, hy0, hy1, hy2, hy3, hinj, ht, he⟩ :=
+    spectral_response M γ q hγ hcap hq hqγ
+  refine ⟨d, y, hd, hd0, hd1, hd12, hd23, hy0, hy1, hy2, hy3, fun r S w => ?_⟩
+  rw [← (hinj r).eq_iff, funext_iff]
+  exact forall_congr' fun i => by rw [he, ht]
 
 /-- On the reflected pair, exactly four distinct raw ages are needed to prepare
 the target. Any four ages admit a common recipe of zero total input. -/
@@ -567,6 +599,94 @@ theorem exact_four_ages (M γ q : ℝ) (hM : 0 < M) (hγ : 0 < γ)
   obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hs
   have hi : (i.val : ℝ) ≤ 3 := by exact_mod_cast (show i.val ≤ 3 by omega)
   exact ⟨by dsimp [t]; positivity, by dsimp [t]; nlinarith [mul_nonneg hT.le (sub_nonneg.mpr hi)]⟩
+
+/-- A common positive vertex max-norm distance from the target holds for every
+signed recipe with at most three ages. Nonnegative ages allow arbitrary total
+input, and zero total input allows arbitrary real ages. -/
+theorem three_age_uniform_distance (M γ q : ℝ) (hM : 0 < M) (hγ : 0 < γ)
+    (hcap : γ ≤ M / 256) (hq : 0 < q) (hqle : q ≤ γ ^ 2 / M) :
+    ∃ ε : ℝ, 0 < ε ∧ ∀ (r : Bool) (S : Finset ℝ) (w : ℝ → ℝ), S.card ≤ 3 →
+      ((∑ t ∈ S, w t) = 0 ∨ ∀ t ∈ S, 0 ≤ t) →
+      ε ≤ ‖endpoint (laplacian M γ q r) S w - target‖ := by
+  obtain ⟨d, y, A, _, hd0, hd1, hd12, hd23, hy0, hy1, hy2, hy3, _, ht, he⟩ :=
+    spectral_response M γ q hγ hcap hq (coupling_le hM hγ hcap hqle)
+  let margin := min (-(y 1)) (min (y 2) (-(y 3)))
+  have hmargin : 0 < margin :=
+    lt_min (neg_pos.mpr hy1) (lt_min hy2 (neg_pos.mpr hy3))
+  have hm₁ : margin ≤ -(y 1) := min_le_left ..
+  have hm₂ : margin ≤ y 2 := (min_le_right ..).trans (min_le_left ..)
+  have hm₃ : margin ≤ -(y 3) := (min_le_right ..).trans (min_le_right ..)
+  let C := 1 + ∑ r : Bool, ∑ i : Vertex, ∑ j : Vertex, |A r i j|
+  have hC : 0 < C := by dsimp [C]; positivity
+  have hrow (r : Bool) (i : Vertex) : ∑ j : Vertex, |A r i j| ≤ C := by
+    have h₁ : ∑ j : Vertex, |A r i j| ≤ ∑ k : Vertex, ∑ j : Vertex, |A r k j| :=
+      Finset.single_le_sum (f := fun k => ∑ j : Vertex, |A r k j|)
+        (fun _ _ => by positivity) (Finset.mem_univ i)
+    have h₂ : ∑ k : Vertex, ∑ j : Vertex, |A r k j| ≤
+        ∑ b : Bool, ∑ k : Vertex, ∑ j : Vertex, |A b k j| :=
+      Finset.single_le_sum (f := fun b => ∑ k : Vertex, ∑ j : Vertex, |A b k j|)
+        (fun _ _ => by positivity) (Finset.mem_univ r)
+    exact (h₁.trans h₂).trans (le_add_of_nonneg_left zero_le_one)
+  refine ⟨margin / (2 * C), by positivity, fun r S w hS hages => ?_⟩
+  let error := endpoint (laplacian M γ q r) S w - target
+  change margin / (2 * C) ≤ ‖error‖
+  by_contra! hclose
+  have hsmall : 2 * (C * ‖error‖) < margin := by
+    have hh := (lt_div_iff₀ (show 0 < 2 * C by positivity)).mp hclose
+    linarith only [show ‖error‖ * (2 * C) = 2 * (C * ‖error‖) by ring, hh]
+  have hnear (i : Vertex) : |response S w (d i) - y i| ≤ C * ‖error‖ := by
+    calc
+      |response S w (d i) - y i| = |(A r *ᵥ error) i| := by
+        dsimp only [error]
+        rw [Matrix.mulVec_sub, Pi.sub_apply, he, ht]
+      _ ≤ ∑ j : Vertex, |A r i j * error j| :=
+        Finset.abs_sum_le_sum_abs (fun j => A r i j * error j) Finset.univ
+      _ ≤ ∑ j : Vertex, |A r i j| * ‖error‖ := by
+        apply Finset.sum_le_sum
+        intro j _
+        rw [abs_mul]
+        have hj : |error j| ≤ ‖error‖ := by
+          simpa only [Real.norm_eq_abs] using (norm_le_pi_norm error j)
+        exact mul_le_mul_of_nonneg_left hj (abs_nonneg _)
+      _ ≤ C * ‖error‖ := by
+        rw [← Finset.sum_mul]
+        exact mul_le_mul_of_nonneg_right (hrow r i) (norm_nonneg _)
+  have hmass : |response S w 0| ≤ C * ‖error‖ := by
+    simpa only [hd0, hy0, sub_zero] using hnear 0
+  have hnonempty : S.Nonempty := by
+    by_contra! h
+    have hh := neg_le_of_abs_le (hnear 2)
+    simp [h, response] at hh
+    linarith [show 0 ≤ C * ‖error‖ by positivity]
+  obtain ⟨t₀, ht₀⟩ := hnonempty
+  let corrected : ℝ → ℝ := fun t => w t - if t = t₀ then response S w 0 else 0
+  have hcorrect (s : ℝ) :
+      response S corrected s = response S w s - response S w 0 * Real.exp (-t₀ * s) := by
+    simp [response, corrected, sub_mul, Finset.sum_sub_distrib, ite_mul, ht₀]
+  have hcorrection (s : ℝ) (hs : 0 ≤ s) :
+      |response S w 0 * Real.exp (-t₀ * s)| ≤ C * ‖error‖ := by
+    rcases hages with hzero | hn
+    · have hz : response S w 0 = 0 := by simpa [response] using hzero
+      simpa [hz] using (show 0 ≤ C * ‖error‖ by positivity)
+    · rw [abs_mul, abs_of_pos (Real.exp_pos _)]
+      have hdecay : Real.exp (-t₀ * s) ≤ 1 :=
+        Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (hn t₀ ht₀)) hs)
+      exact (mul_le_of_le_one_right (abs_nonneg _) hdecay).trans hmass
+  have hsign (i : Vertex) (hi : 0 ≤ d i) : |response S corrected (d i) - y i| < margin := by
+    rw [hcorrect, sub_right_comm]
+    have htriangle (a b : ℝ) : |a - b| ≤ |a| + |b| := by
+      simpa only [sub_eq_add_neg, abs_neg] using abs_add_le a (-b)
+    exact (htriangle _ _).trans_lt
+      ((add_le_add (hnear i) (hcorrection (d i) hi)).trans_lt (by linarith))
+  have hs₁ := le_abs_self (response S corrected (d 1) - y 1)
+  have hs₂ := neg_le_abs (response S corrected (d 2) - y 2)
+  have hs₃ := le_abs_self (response S corrected (d 3) - y 3)
+  have hzeros := response_minimum S corrected hd1 hd12 hd23
+    (by simp [hcorrect])
+    (by linarith [hs₁.trans_lt (hsign 1 hd1.le)])
+    (by linarith [hs₂.trans_lt (hsign 2 (hd1.trans hd12).le)])
+    (by linarith [hs₃.trans_lt (hsign 3 ((hd1.trans hd12).trans hd23).le)])
+  omega
 
 end
 end D5.S3.Observer.Linear.FourVertexPortPulses

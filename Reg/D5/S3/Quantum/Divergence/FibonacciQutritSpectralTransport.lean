@@ -13,8 +13,8 @@ open Matrix LeanInformationAudit
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
-open private M₃ Ray coordinates compress nullRay divergence
-  from D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
+open _root_.D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport.Transport
+  (M₃ Ray coordinates compress nullRay divergence)
 
 namespace Reg.D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
 

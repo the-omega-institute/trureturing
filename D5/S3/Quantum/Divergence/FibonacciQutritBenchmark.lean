@@ -29,8 +29,8 @@ open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity (cfc_log_diagonal)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (density_posSemidef)
 open D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation (diagonalState)
-open private coordinates compress nullRay
-  from D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
+open D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport.Transport
+  (coordinates compress nullRay)
 
 namespace D5.S3.Quantum.Divergence.FibonacciQutritBenchmark
 
