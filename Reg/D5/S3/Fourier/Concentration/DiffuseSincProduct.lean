@@ -26,19 +26,18 @@ private def rejected : Realization timeSignature :=
 abbrev timeArena : Arena where
   signature := timeSignature
   Law A := ∀ {J : Type u} (s : Finset J) (c : J → ℝ)
-    (_ : ∀ j ∈ s, c j ^ 2 ≤ (∑ i ∈ s, c i ^ 2) / 2) (t : ℝ),
+    (_ : (∑ j ∈ s, c j ^ 4) ≤ (∑ i ∈ s, c i ^ 2) ^ 2 / 2) (t : ℝ),
     (∏ j ∈ s, |Real.sinc (c j * t)|) ≤
-      (1 + (∑ j ∈ s, c j ^ 2) * (A.readout () () t) ^ 2 / 24)⁻¹
+      (1 + (∑ j ∈ s, c j ^ 2) * (A.readout () () t) ^ 2 / 15)⁻¹
 
 private theorem rejected_law : ¬ timeArena.{u}.Law rejected := by
   intro law
   let s : Finset (ULift.{u} (Fin 2)) := univ
-  have hc (j : ULift.{u} (Fin 2)) (_ : j ∈ s) :
-      (1 : ℝ) ^ 2 ≤ (∑ _ ∈ s, (1 : ℝ) ^ 2) / 2 := by
-    simp [s]
+  have hc : (∑ _ ∈ s, (1 : ℝ) ^ 4) ≤ (∑ _ ∈ s, (1 : ℝ) ^ 2) ^ 2 / 2 := by
+    norm_num [s]
   have h := law s (fun _ => 1) hc 0
   change (∏ _ ∈ s, |Real.sinc ((1 : ℝ) * 0)|) ≤
-    (1 + (∑ _ ∈ s, (1 : ℝ) ^ 2) * 1 ^ 2 / 24)⁻¹ at h
+    (1 + (∑ _ ∈ s, (1 : ℝ) ^ 2) * 1 ^ 2 / 15)⁻¹ at h
   norm_num [s] at h
 
 private theorem dependence : ObservationalDependence timeSignature actual := by
