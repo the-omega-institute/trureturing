@@ -7,7 +7,7 @@ import Reg.Support.SingleDependentReadout
 namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourStaircase
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourStaircase
-open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph (NativeRectangularBound)
+open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeRectangularBound (stackK)
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel (compression)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Matrix
@@ -76,14 +76,13 @@ private theorem probeIndependent : LinearIndependent ℂ probeLeft := by
 
 private theorem probeLeftGram : (∑ i, (probeLeft i)ᴴ * probeLeft i) = 1 := by
   ext i j
-  by_cases h : i = j <;>
-    simp [probeLeft, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Matrix.one_apply, h] <;> aesop
+  by_cases h : i = j <;> simp [probeLeft, Matrix.sum_apply, Matrix.mul_apply,
+    Matrix.conjTranspose_apply, Matrix.one_apply, h] <;> aesop
 
 private theorem probeCompression (T : Matrix (Fin 4) (Fin 4) ℂ) :
     compression probeLeft T = T := by
   ext i j
-  simp [compression, NativeRectangularBound.stackK, probeLeft, Matrix.mul_apply,
+  simp [compression, stackK, probeLeft, Matrix.mul_apply,
     Matrix.conjTranspose_apply, Matrix.kronecker, Matrix.kroneckerMap_apply,
     Matrix.one_apply, Fintype.sum_prod_type, mul_ite, ite_mul]
 
@@ -266,7 +265,7 @@ private theorem leftRejected : ¬ leftArena.Law natFalse := by
   have hbad := (h 2 5 2 5 1 (by norm_num) (by decide) (by decide)).mp hw
   change (4 < 5 ∧ False ∧ 10 ≤ 10) ∨ (10 < 10 ∧ 5 ≤ 6 ∧ 6 ≤ 5) ∨
     (6 < 5 ∧ 5 ≤ 8 ∧ 8 ≤ 5) at hbad
-  omega
+  norm_num at hbad
 
 def leftFamily : Registration leftArena (type_of% @native_four_scalar_gram_iff) where
   actual := natLe
@@ -325,7 +324,7 @@ private theorem rightRejected : ¬ rightArena.Law natFalse := by
   have hbad := (h 5 2 5 2 1 (by norm_num) (by decide) (by decide)).mp hw
   change (4 < 5 ∧ False ∧ 10 ≤ 10) ∨ (10 < 10 ∧ 5 ≤ 6 ∧ 6 ≤ 5) ∨
     (6 < 5 ∧ 5 ≤ 8 ∧ 8 ≤ 5) at hbad
-  omega
+  norm_num at hbad
 
 def rightFamily : Registration rightArena (type_of% @native_four_scalar_gram_swap_iff) where
   actual := natLe

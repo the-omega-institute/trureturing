@@ -11,7 +11,7 @@ open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeRectangularBound (sta
 open _root_.D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation (gram_identity_injective)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Matrix
-open scoped BigOperators
+open scoped BigOperators ComplexOrder
 
 noncomputable section
 
