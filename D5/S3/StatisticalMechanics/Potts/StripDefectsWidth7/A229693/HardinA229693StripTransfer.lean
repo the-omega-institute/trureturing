@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: exactExits_active and exactExits_new compute the multiplicities of transitions reaching budget zero
 tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, initial_valid, next_valid, valid_shift
+decidableBudget: proof_shape=bind-only; consumers=activeProfileCheck, exhaustedClass, inheritedActiveCheck
 valid_parts: proof_shape=bind-only; consumers=class_counts_canonical, exactExits_active, exactExits_new, next_valid, valid_shift
 valid_relabel: proof_shape=bind-only; consumers=class_counts
 fresh_relabel: proof_shape=bind-only; consumers=cl_relabel, rep_weight
@@ -126,6 +127,10 @@ open HardinA229693StripCompletion
 open HardinA229585StripData (Boundary Row horizontal antidiagonal boundary cross)
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (relabel_defects defects tailDefects)
+
+private instance decidableBudget (p : Boundary) (d : ℕ) :
+    Decidable (HardinA229635State.Valid p d) :=
+  inferInstanceAs (Decidable (HardinA229635State.h p + d ≤ 2))
 
 private theorem valid_parts (p : Boundary) (d : ℕ) :
     HardinA229635State.Valid p d ↔ d ≤ 2 ∧ HardinA229635State.h p ≤ 2 - d := by
@@ -342,14 +347,14 @@ private theorem next_valid (p : Boundary) (d : ℕ) (hp : HardinA229635State.Val
     HardinA229635State.Valid (boundary r) (d - (cross p r + bondDefects horizontal r r)) := by
   have hd := ((valid_parts p d).mp hp).1
   have ht := horizontal_cons (r 0) (boundary r)
-  rw [Fin.cons_self_tail r] at ht
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
   change HardinA229635State.h (boundary r) + (d - (cross p r + bondDefects horizontal r r)) ≤ 2
   omega
 
 private theorem initial_valid (r : Row) (hr : bondDefects horizontal r r ≤ 2) :
     HardinA229635State.Valid (boundary r) (2 - bondDefects horizontal r r) := by
   have ht := horizontal_cons (r 0) (boundary r)
-  rw [Fin.cons_self_tail r] at ht
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
   change HardinA229635State.h (boundary r) + (2 - bondDefects horizontal r r) ≤ 2
   omega
 
@@ -594,11 +599,16 @@ private theorem zeroExitCodes_count (p : Boundary) (j : Fin 96) :
       ∑ r : Row, if cross p r + bondDefects horizontal r r = 0 ∧
         exhaustedClass (boundary r) = j then 1 else 0 := by
   rw [← alternating.sum_comp]
-  simp_rw [Function.comp_apply, Nat.add_eq_zero, ← proper_iff]
+  simp only [Nat.add_eq_zero]
+  simp_rw [← proper_iff]
   have h := HardinA233155RowTransfer.row_sum 7 (fun r =>
     if cross p (alternating r) = 0 ∧ exhaustedClass (boundary (alternating r)) = j
       then 1 else 0)
-  rw [HardinA233154Column.codes_table, ← List.map_map] at h
+  rw [HardinA233154Column.codes_table] at h
+  change _ = (HardinA233154Rows.codes.map
+    ((fun r : Row => if cross p r = 0 ∧ exhaustedClass (boundary r) = j
+        then (1 : ℤ) else 0) ∘ (alternating ∘ HardinA233155RowTransfer.decode 7))).sum at h
+  rw [← List.map_map] at h
   simp_rw [show ∀ r : Row, ((if
       (cross p (alternating r) = 0 ∧ HardinA233155RowTransfer.rowLegal r) ∧
         exhaustedClass (boundary (alternating r)) = j then 1 else 0) : ℤ) =
@@ -615,8 +625,8 @@ private theorem zeroExitCodes_count (p : Boundary) (j : Fin 96) :
   | nil => rfl
   | cons r rs ih =>
     simp only [List.countP_cons, List.map_cons, List.sum_cons, Nat.cast_add, ih,
-      Bool.and_eq_true, beq_iff_eq, and_comm]
-    split_ifs <;> simp
+      Function.comp_apply, Bool.and_eq_true, beq_iff_eq, and_comm]
+    split_ifs <;> simp_all [add_comm]
 
 private theorem rep_partition (i : Fin 96) :
     HardinA229635State.h (HardinA229635State.rep i) ≤ 1 ↔ 40 ≤ i.val := by
@@ -788,8 +798,9 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
   have cross_eq (r : Row) : cross (e ∘ p) (e ∘ r) = cross p r := by
     have hc := relabel_defects ∅ antidiagonal e [Fin.cons 0 p, r]
     have hempty (x : Row) : bondDefects ∅ x x = 0 := by simp [bondDefects]
-    simpa only [List.map_cons, List.map_nil, defects, tailDefects, hempty, Nat.zero_add,
-      Nat.add_zero, HardinA229585Strip.edge] using hc
+    simp only [List.map_cons, List.map_nil, defects, tailDefects, hempty, Nat.zero_add,
+      Nat.add_zero, HardinA229585Strip.edge] at hc
+    exact hc
   simpa only [cross_eq, horizontal_eq,
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
