@@ -17,7 +17,7 @@ import Mathlib.Tactic.Positivity
 noncomputable section
 
 open Matrix Set
-open D5.S3.Observer.Fluctuation.ThermalCoefficientFloor (coth)
+open D5.S3.Observer.Fluctuation.ThermalCoefficientFloor (coth inv_le_coth)
 open D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic (sinh_cosh_sub_pos)
 
 namespace D5.S3.Quantum.Semigroups.WuCriticalQuartic
@@ -68,25 +68,6 @@ private theorem sinh_pos {x : ℝ} (hx : 0 < x) : 0 < Real.sinh x :=
 private theorem cschSq_pos {x : ℝ} (hx : 0 < x) : 0 < cschSq x := by
   exact one_div_pos.mpr (sq_pos_of_pos (sinh_pos hx))
 
-private theorem inv_lt_coth {t : ℝ} (ht : 0 < t) : 1 / t < coth t := by
-  have hderiv (x : ℝ) : HasDerivAt (fun s : ℝ => s * Real.cosh s - Real.sinh s)
-      (x * Real.sinh x) x := by
-    have h := ((hasDerivAt_id x).mul (Real.hasDerivAt_cosh x)).sub (Real.hasDerivAt_sinh x)
-    convert h using 1
-    · rfl
-    · simp
-  have hmono := strictMonoOn_of_deriv_pos (convex_Ici (0 : ℝ))
-    (f := fun s => s * Real.cosh s - Real.sinh s)
-    (fun x _ => (hderiv x).continuousAt.continuousWithinAt) (by
-      intro x hx
-      rw [interior_Ici] at hx
-      rw [(hderiv x).deriv]
-      exact mul_pos hx (sinh_pos hx))
-  have h := hmono (Set.mem_Ici.mpr le_rfl : (0 : ℝ) ∈ Ici 0) ht.le ht
-  simp only [zero_mul, Real.sinh_zero, sub_zero] at h
-  rw [coth, div_lt_div_iff₀ ht (sinh_pos ht)]
-  linarith
-
 private theorem coth_hasDerivAt {x : ℝ} (hx : 0 < x) :
     HasDerivAt coth (-cschSq x) x := by
   have h := (Real.hasDerivAt_cosh x).div (Real.hasDerivAt_sinh x) (sinh_pos hx).ne'
@@ -121,28 +102,32 @@ private def determinantFactor (x y : ℝ) : ℝ :=
     (Real.sinh x * Real.cosh x + Real.sinh y * Real.cosh y) - (x + y) ^ 2
 
 private theorem leading_pos {x y : ℝ} (hx : 0 < x) (hy : 0 < y) : 0 < leading x y := by
-  have hsum := add_lt_add (inv_lt_coth hx) (inv_lt_coth hy)
+  have hsum := add_le_add (inv_le_coth hx) (inv_le_coth hy)
   have hi : 0 < 1 / x + 1 / y := by positivity
-  have hrate : 0 < rate x y := by unfold rate; linarith
+  have hrate : 0 < rate x y := by
+    unfold rate
+    rw [one_div, one_div] at hi ⊢
+    linarith
   have hscale : 0 < scale x y :=
     mul_pos (div_pos hy hx) (div_pos (sq_pos_of_pos (sinh_pos hx)) (sq_pos_of_pos (sinh_pos hy)))
   exact mul_pos hscale hrate
 
 private theorem determinantFactor_pos {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     0 < determinantFactor x y := by
-  have hs := add_lt_add (inv_lt_coth hx) (inv_lt_coth hy)
-  have hm := mul_lt_mul_of_pos_left hs (show 0 < 2 * x * y by positivity)
+  have hs := add_le_add (inv_le_coth hx) (inv_le_coth hy)
+  have hm := mul_le_mul_of_nonneg_left hs (show 0 ≤ 2 * x * y by positivity)
   have hid : 2 * x * y * (1 / x + 1 / y) = 2 * (x + y) := by
     field_simp [hx.ne', hy.ne']
     ring
-  rw [hid] at hm
-  have hfirst : x + y < 2 * x * y * (coth x + coth y) - (x + y) := by linarith
+  rw [← one_div, ← one_div, hid] at hm
+  have hfirst : x + y ≤ 2 * x * y * (coth x + coth y) - (x + y) := by linarith
   have hsecond : x + y < Real.sinh x * Real.cosh x + Real.sinh y * Real.cosh y := by
     linarith [sinh_cosh_sub_pos hx, sinh_cosh_sub_pos hy]
   unfold determinantFactor
   exact sub_pos.mpr (by
     rw [pow_two]
-    exact mul_lt_mul'' hfirst hsecond (add_nonneg hx.le hy.le) (add_nonneg hx.le hy.le))
+    exact (mul_lt_mul_of_pos_left hsecond (add_pos hx hy)).trans_le
+      (mul_le_mul_of_nonneg_right hfirst (le_of_lt ((add_pos hx hy).trans hsecond))))
 
 private theorem determinant_eq {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     leading x y * trailing x y - mixed x y ^ 2 =
@@ -269,17 +254,34 @@ theorem endpoint_schur_pos {β p r : ℝ} (hβ : 0 < β) (hp : 1 < p) (hpr : p <
   field_simp [ha.ne']
   ring
 
-/-- The same matrix in the real-exponent Gibbs coordinates of the reduced quartic. -/
-def exponentK (β q : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+/-- The squared population coefficient in the exponential Gibbs coordinates. -/
+def exponentA (β q : ℝ) : ℝ :=
+  let z := Real.exp (-β)
+  let k := z ^ (1 / q)
+  let g := 1 - z / k
+  let h := 1 - k
+  (q - 1) * (z / k ^ 2) * h ^ 2 / (2 * g ^ 2)
+
+/-- The mixed coefficient in the exponential Gibbs coordinates. -/
+def exponentE (β q : ℝ) : ℝ :=
   let z := Real.exp (-β)
   let k := z ^ (1 / q)
   let u := z / k
   let g := 1 - u
   let h := 1 - k
-  let a := (q - 1) * (z / k ^ 2) * h ^ 2 / (2 * g ^ 2)
-  let e := 2 / g - 1 - 2 * (q - 1) * u * h / g ^ 2
-  let d := 2 / g - 3 / 2 - (1 + z) / (g * h) + 2 * (q - 1) * z / g ^ 2
-  !![a, e / 2; e / 2, d]
+  2 / g - 1 - 2 * (q - 1) * u * h / g ^ 2
+
+/-- The squared coherence coefficient in the exponential Gibbs coordinates. -/
+def exponentD (β q : ℝ) : ℝ :=
+  let z := Real.exp (-β)
+  let k := z ^ (1 / q)
+  let g := 1 - z / k
+  let h := 1 - k
+  2 / g - 3 / 2 - (1 + z) / (g * h) + 2 * (q - 1) * z / g ^ 2
+
+/-- The normalized reduced-quartic matrix in the exponential Gibbs coordinates. -/
+def exponentK (β q : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  !![exponentA β q, exponentE β q / 2; exponentE β q / 2, exponentD β q]
 
 private theorem hyperbolic_exp {t : ℝ} (ht : 0 < t) :
     let w := Real.exp (-t)
@@ -301,7 +303,7 @@ private theorem hyperbolic_exp {t : ℝ} (ht : 0 < t) :
   exact ⟨hs, by rw [coth, hs, hc]; field_simp [hk.ne', hw]⟩
 
 /-- The normalized hyperbolic coefficients agree with the exponential Gibbs coefficients. -/
-theorem K_eq_exponentK {β q : ℝ} (hβ : 0 < β) (hq : 1 < q) :
+private theorem K_eq_exponentK {β q : ℝ} (hβ : 0 < β) (hq : 1 < q) :
     K β q = exponentK β q := by
   let x := xAt β q
   let y := yAt β q
@@ -348,7 +350,7 @@ theorem K_eq_exponentK {β q : ℝ} (hβ : 0 < β) (hq : 1 < q) :
     field_simp [hk₀, hu.ne', (Real.exp_pos (-2 * y)).ne']
   change coth x = (1 + k) / (1 - k) at hcx
   change coth y = (1 + u) / (1 - u) at hcy
-  dsimp only [K, exponentK]
+  dsimp only [K, exponentK, exponentA, exponentE, exponentD]
   rw [show Real.exp (-β) = z from rfl, hk_def, hu_def, hz]
   have ha : a β q = (q - 1) * (k * u / k ^ 2) * (1 - k) ^ 2 / (2 * (1 - u) ^ 2) := by
     change scale x y / 2 = _
@@ -366,5 +368,45 @@ theorem K_eq_exponentK {β q : ℝ} (hβ : 0 < β) (hq : 1 < q) :
     field_simp [hk₀, hk.ne', hu.ne']
     ring
   rw [ha, he, hd]
+
+/-- The exponential Gibbs endpoint drop has a positive leading coefficient and attains its
+positive Schur complement as the minimum over the shifted population coordinate. -/
+theorem exponent_endpoint_schur_pos {β p r : ℝ} (hβ : 0 < β) (hp : 1 < p) (hpr : p < r) :
+    0 < exponentA β p - exponentA β r ∧
+    0 < exponentD β p - exponentD β r -
+      (exponentE β p - exponentE β r) ^ 2 / (4 * (exponentA β p - exponentA β r)) ∧
+    let A := exponentA β p - exponentA β r
+    let E := exponentE β p - exponentE β r
+    let D := exponentD β p - exponentD β r
+    IsLeast (range (fun s : ℝ => A * s ^ 2 + E * s + D)) (D - E ^ 2 / (4 * A)) := by
+  have coefficients (q : ℝ) (hq : 1 < q) :
+      a β q = exponentA β q ∧ e β q = exponentE β q ∧ d β q = exponentD β q := by
+    have h := K_eq_exponentK hβ hq
+    refine ⟨congrArg (fun M => M 0 0) h, ?_, congrArg (fun M => M 1 1) h⟩
+    have he : e β q / 2 = exponentE β q / 2 := congrArg (fun M => M 0 1) h
+    linarith
+  obtain ⟨hap, hep, hdp⟩ := coefficients p hp
+  obtain ⟨har, her, hdr⟩ := coefficients r (hp.trans hpr)
+  have h := endpoint_schur_pos hβ hp hpr
+  rw [hap, har, hep, her, hdp, hdr] at h
+  obtain ⟨hA, hSchur⟩ := h
+  refine ⟨hA, hSchur, ?_⟩
+  dsimp only
+  let A := exponentA β p - exponentA β r
+  let E := exponentE β p - exponentE β r
+  let D := exponentD β p - exponentD β r
+  change IsLeast (range (fun s : ℝ => A * s ^ 2 + E * s + D)) (D - E ^ 2 / (4 * A))
+  have square (s : ℝ) :
+      A * s ^ 2 + E * s + D = D - E ^ 2 / (4 * A) + A * (s + E / (2 * A)) ^ 2 := by
+    field_simp [show A ≠ 0 from hA.ne']
+    ring
+  constructor
+  · refine ⟨-(E / (2 * A)), ?_⟩
+    dsimp only
+    rw [square, neg_add_cancel, zero_pow (by decide : (2 : ℕ) ≠ 0), mul_zero, add_zero]
+  · rintro _ ⟨s, rfl⟩
+    dsimp only
+    rw [square]
+    exact le_add_of_nonneg_right (mul_nonneg hA.le (sq_nonneg _))
 
 end D5.S3.Quantum.Semigroups.WuCriticalQuartic
