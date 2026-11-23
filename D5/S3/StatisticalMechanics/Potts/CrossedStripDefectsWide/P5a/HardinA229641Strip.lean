@@ -86,6 +86,7 @@ import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Order.SuccPred
 import Mathlib.Algebra.Ring.Defs
+import Mathlib.Basic.Logic.Basic
 import Mathlib.Data.Fin.SuccPred
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
@@ -789,7 +790,9 @@ private theorem transfer_count (n : ℕ) :
       cases x with
       | inl x => simp [col, cl, transfer, Matrix.fromBlocks, hd', bound]
       | inr x =>
-        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using (transition_entry p q d).mpr (Or.inl hd') x
+        have entry := not_ne_iff.mp
+          (fun h => Nat.not_lt_of_ge hd' ((transition_entry p q d x).mp h).1)
+        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using entry
     · have hd₂ : d = 2 := Nat.le_antisymm hd (Nat.lt_of_not_ge hd')
       subst d
       rcases x with x | x
