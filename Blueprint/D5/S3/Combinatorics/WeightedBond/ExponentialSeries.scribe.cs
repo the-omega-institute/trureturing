@@ -40,8 +40,6 @@ internal sealed class WeightedBondExponentialSeriesDocument : IScribeDocumentDef
                 "The exponential generating function of the one-block extension coefficients, with zero constant term.", DescribeRole.Definition),
             Node("inverseEGF_subst_oneBlockEGF",
                 "For positive r, substituting the one-block Möbius series into the extension-count series gives X.", DescribeRole.Theorem),
-            Node("oneBlockEGF_subst_inverseEGF",
-                "For positive r, the composition in the opposite order also gives X.", DescribeRole.Theorem),
             Node("markedBlockEGF",
                 "The one-block exponential generating function with a size-m block marked by X to the power m minus one in the polynomial coefficient ring.", DescribeRole.Definition),
             Node("psiComplete_exponential",

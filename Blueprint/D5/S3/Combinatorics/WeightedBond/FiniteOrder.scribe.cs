@@ -48,8 +48,6 @@ internal sealed class WeightedBondFiniteOrderDocument : IScribeDocumentDefinitio
                 "Recombining all restrictions recovers the original partition and all its weights.", DescribeRole.Theorem),
             Node("lowerIntervalOrderIso",
                 "The lower interval of an upper weighted partition is order-isomorphic to the dependent product of the lower intervals below its one-block restrictions in the induced graphs.", DescribeRole.Definition),
-            Node("rank_eq_sum_block_ranks",
-                "For each finer element in the lower interval, the ambient rank is the sum of the local ranks of its restrictions.", DescribeRole.Theorem),
             Node("mu_bot_iic",
                 "Restricting to a lower interval leaves every Möbius coefficient from the bottom unchanged.", DescribeRole.Theorem),
             Node("mu_bot_orderIso",

@@ -86,7 +86,7 @@ $$\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{sourceSp
 
 *Commentary.*
 
-Here n+1 is the vertex count and q+2 is the number of colors. The formal variable of coefficient extraction is distinct from the polynomial indeterminate X. The two extractions give the source specialization and the printed rank-reversed polynomial. The last two equalities specify the reflection and its value at zero.
+Question 7.1 in arXiv:2608.08692v2 is at https://arxiv.org/html/2608.08692v2#S7.Thmtheorem1. Here n+1 is the vertex count and q+2 is the number of colors. The formal variable of coefficient extraction is distinct from the polynomial indeterminate X. The two extractions give the source specialization and the printed rank-reversed polynomial. The last two equalities specify the reflection and its value at zero.
 
 ## References
 

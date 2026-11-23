@@ -617,44 +617,6 @@ def lowerIntervalOrderIso (π : MultiweightedBond r G) :
     exact (refines_iff_restrictBlock (show Refines P.val π from P.property).1
       (show Refines Q.val π from Q.property).1).symm
 
-
-/-- The ambient exponent `|V| - number of blocks` is the sum of the block exponents. -/
-theorem rank_eq_sum_block_ranks (π : MultiweightedBond r G) (P : Set.Iic π) :
-    Fintype.card V - P.val.partition.parts.card =
-      ∑ B : π.partition.parts,
-        (Fintype.card (B.val : Set V) -
-          ((lowerIntervalOrderIso π P B).val.partition.parts.card)) := by
-  classical
-  let h := (show Refines P.val π from P.property).1
-  let f := restrictBlock P.val h
-  have hparts : P.val.partition.parts.card =
-      ∑ B : π.partition.parts, (f B).partition.parts.card := by
-    calc
-      _ = (combinePartition π f).parts.card :=
-        congrArg (fun x : MultiweightedBond r G => x.partition.parts.card)
-          (recombineBlocks_restrictBlock P.val h).symm
-      _ = ∑ B ∈ π.partition.parts.attach, (pushPartition B.val (f B).partition).parts.card :=
-        Finpartition.card_bind _
-      _ = _ := by
-        simp only [Finset.attach_eq_univ]
-        apply Finset.sum_congr rfl
-        intro B _
-        change ((f B).partition.parts.image (ambient B.val)).card = _
-        exact Finset.card_image_of_injective _ (ambient_injective B.val)
-  have hcards : (∑ B : π.partition.parts, Fintype.card (B.val : Set V)) = Fintype.card V := by
-    calc
-      _ = ∑ B : π.partition.parts, B.val.card := by
-        exact Finset.sum_congr rfl fun B _ => Fintype.card_coe B.val
-      _ = ∑ B ∈ π.partition.parts, B.card := by
-        rw [← Finset.attach_eq_univ, Finset.sum_attach]
-      _ = _ := by simpa only [Finset.card_univ] using π.partition.sum_card_parts
-  change _ = ∑ B : π.partition.parts, (Fintype.card (B.val : Set V) - (f B).partition.parts.card)
-  symm
-  apply Nat.eq_sub_of_add_eq
-  rw [hparts, ← Finset.sum_add_distrib, ← hcards]
-  exact Finset.sum_congr rfl fun B _ => Nat.sub_add_cancel (by
-    simpa only [Finset.card_univ] using (f B).partition.card_parts_le_card)
-
 open IncidenceAlgebra (mu sum_Icc_mu_right)
 open scoped Classical
 

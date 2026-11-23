@@ -344,9 +344,6 @@ def inverseEGF (r : ℕ) : PowerSeries ℚ :=
 @[simp] theorem inverseEGF_zero (r : ℕ) : constantCoeff (inverseEGF r) = 0 := by
   simp [inverseEGF, assemblyKernel, inverseCoefficient]
 
-@[simp] theorem inverseEGF_linear (r : ℕ) : coeff 1 (inverseEGF r) = 1 := by
-  simp [inverseEGF, assemblyKernel, inverseCoefficient]
-
 theorem inverseEGF_subst_oneBlockEGF (r : ℕ) (hr : 0 < r) :
     (inverseEGF r).subst (oneBlockEGF r) = X := by
   ext n
@@ -386,12 +383,6 @@ theorem inverseEGF_subst_oneBlockEGF (r : ℕ) (hr : 0 < r) :
     · have hh : n+1 ≠ 1 := by omega
       simp only [ite_eq_right hh] at h ⊢
       exact ((mul_eq_zero.mp h.symm).resolve_left (by positivity))
-
-theorem oneBlockEGF_subst_inverseEGF (r : ℕ) (hr : 0 < r) :
-    (oneBlockEGF r).subst (inverseEGF r) = X :=
-  (inverseEGF r).subst_eq_X_of_subst_eq_X (inverseEGF_zero r)
-    (inverseEGF_linear r ▸ isUnit_one) (.of_constantCoeff_zero (blockSeries_zero _))
-    (inverseEGF_subst_oneBlockEGF r hr)
 
 def markedBlockEGF (r : ℕ) : PowerSeries (Polynomial ℚ) :=
   blockSeries fun n => Polynomial.C (muComplete r n : ℚ) * Polynomial.X ^ (n-1)

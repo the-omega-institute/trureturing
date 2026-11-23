@@ -24,7 +24,7 @@ internal sealed class WeightedBondCompleteGraphSpecializationDocument : IScribeD
             Node("reversePsi_at_zero",
                 "For positive n and any r, the reversed polynomial at zero equals the degree-(n minus one) coefficient of the rank polynomial.", DescribeRole.Theorem),
             Node("result",
-                "Here n+1 is the vertex count and q+2 is the number of colors. The formal variable of coefficient extraction is distinct from the polynomial indeterminate X. The two extractions give the source specialization and the printed rank-reversed polynomial. The last two equalities specify the reflection and its value at zero.", DescribeRole.Theorem, Evaluation())),
+                "Question 7.1 in arXiv:2608.08692v2 is at https://arxiv.org/html/2608.08692v2#S7.Thmtheorem1. Here n+1 is the vertex count and q+2 is the number of colors. The formal variable of coefficient extraction is distinct from the polynomial indeterminate X. The two extractions give the source specialization and the printed rank-reversed polynomial. The last two equalities specify the reflection and its value at zero.", DescribeRole.Theorem, Evaluation())),
         []));
 
     private static DocumentBlock Node(string name, string prose, DescribeRole role, Formula? formula = null,

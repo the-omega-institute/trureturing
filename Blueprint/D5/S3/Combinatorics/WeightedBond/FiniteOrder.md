@@ -256,21 +256,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.lowerIntervalOrder
 
 The lower interval of an upper weighted partition is order-isomorphic to the dependent product of the lower intervals below its one-block restrictions in the induced graphs.
 
-**Theorem 1.19 (rank_eq_sum_block_ranks).**
-
-Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.rank_eq_sum_block_ranks`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/WeightedBond/FiniteOrder.rank_eq_sum_block_ranks` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and a new chromatic symmetric function*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
-
-*Commentary.*
-
-For each finer element in the lower interval, the ambient rank is the sum of the local ranks of its restrictions.
-
-**Theorem 1.20 (mu_bot_iic).**
+**Theorem 1.19 (mu_bot_iic).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.mu_bot_iic`
 
@@ -284,7 +270,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.mu_bot_iic`
 
 Restricting to a lower interval leaves every Möbius coefficient from the bottom unchanged.
 
-**Theorem 1.21 (mu_bot_orderIso).**
+**Theorem 1.20 (mu_bot_orderIso).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.mu_bot_orderIso`
 
@@ -298,7 +284,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.mu_bot_orderIso`
 
 An order isomorphism of locally finite orders with bottoms preserves the bottom Möbius function.
 
-**Theorem 1.22 (mu_bot_eq_prod_blocks).**
+**Theorem 1.21 (mu_bot_eq_prod_blocks).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.mu_bot_eq_prod_blocks`
 
@@ -328,7 +314,6 @@ The Möbius value from bottom to an upper weighted partition is the product of t
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.oneBlock_parts`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.oneBlock_weight`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.psiComplete`
-- Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.rank_eq_sum_block_ranks`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.recombineBlocks`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.recombineBlocks_restrictBlock`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/FiniteOrder.restrictBlock`

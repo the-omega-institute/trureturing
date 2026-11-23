@@ -200,21 +200,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.inverseEGF_s
 
 For positive r, substituting the one-block Möbius series into the extension-count series gives X.
 
-**Theorem 1.15 (oneBlockEGF_subst_inverseEGF).**
-
-Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.oneBlockEGF_subst_inverseEGF`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.oneBlockEGF_subst_inverseEGF` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and a new chromatic symmetric function*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
-
-*Commentary.*
-
-For positive r, the composition in the opposite order also gives X.
-
-**Definition 1.16 (markedBlockEGF).**
+**Definition 1.15 (markedBlockEGF).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.markedBlockEGF`
 
@@ -228,7 +214,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.markedBlockE
 
 The one-block exponential generating function with a size-m block marked by X to the power m minus one in the polynomial coefficient ring.
 
-**Theorem 1.17 (psiComplete_exponential).**
+**Theorem 1.16 (psiComplete_exponential).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.psiComplete_exponential`
 
@@ -242,7 +228,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.psiComplete_
 
 For every n and r, the rank polynomial is n factorial times the degree-n coefficient of the exponential composed with the marked block series.
 
-**Definition 1.18 (inverseFactor).**
+**Definition 1.17 (inverseFactor).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.inverseFactor`
 
@@ -256,7 +242,7 @@ Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.inverseFacto
 
 The finite series whose coefficient in degree i at most q is the binomial coefficient choosing i from q divided by (i+1) factorial, and zero beyond q.
 
-**Theorem 1.19 (inverseEGF_factor).**
+**Theorem 1.18 (inverseEGF_factor).**
 
 Lean statement: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.inverseEGF_factor`
 
@@ -288,7 +274,6 @@ For r equal to q plus two, the inverse series is the product of the formal varia
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.labeled_subst`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.markedBlockEGF`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.oneBlockEGF`
-- Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.oneBlockEGF_subst_inverseEGF`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.psiComplete_exponential`
 - Truth anchor: `D5/S3/Combinatorics/WeightedBond/ExponentialSeries.scale`
 - Dependency: [D5/S3/Combinatorics/WeightedBond/PartitionExpansion](PartitionExpansion.md)
