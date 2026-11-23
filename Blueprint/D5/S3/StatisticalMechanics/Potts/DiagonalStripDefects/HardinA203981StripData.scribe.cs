@@ -19,7 +19,7 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
             "The inverse reads a triple of entries from the three positions.", "columnRows"),
         Define("parity-rows", "Parity triples", ParityRowsFormula(),
             "The two triples read the even columns from the left and the odd columns from the right. The inverse interleaves the triples in column order.", "parityRows"),
-        Define("pair-class", "Pair of triple patterns", PairClassLookupFormula(),
+        Define("pair-class", "Pair of triple patterns", PairClassFormula(),
             "The table stores the positions computed by the indexed lookup in the next statement.", "pairClass"),
         Describe.Lean(DescribeId.Create("pair-class-lookup"), DeclarationHandle.Create(Prefix + "pairClass_eq_lookup"),
             H("Position of the sorted pair"), StatementSource.FromAuthor(Disp(PairClassLookupFormula())),
@@ -82,6 +82,11 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
                     Snd(Snd(Fst(t))), Fst(Snd(t)))));
         return Seq(Parenthesized(forward), Sp, Land, Sp, Parenthesized(inverse));
     }
+
+    private static Formula PairClassFormula() => Eq(Typed(Own("pairClass"), Arr(Fin("5"), Arr(Fin("5"), Fin("15")))),
+        Vec(Vec(N("0"), N("1"), N("2"), N("3"), N("4")), Vec(N("1"), N("5"), N("6"), N("7"), N("8")),
+            Vec(N("2"), N("6"), N("9"), N("10"), N("11")), Vec(N("3"), N("7"), N("10"), N("12"), N("13")),
+            Vec(N("4"), N("8"), N("11"), N("13"), N("14"))));
 
     private static Formula PairClassLookupFormula() => All("x", Fin("5"), All("y", Fin("5"),
         Eq(Call("Fin.val", Own("pairClass", V("x"), V("y"))),
