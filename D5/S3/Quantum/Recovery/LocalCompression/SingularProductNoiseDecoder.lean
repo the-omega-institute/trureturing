@@ -28,7 +28,7 @@ open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
   (act amp amp_entry amp_smul)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_kronecker)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
-  (density_posSemidef marginalRight partialTraceRight productState)
+  (density_posSemidef marginalRight productState)
 open D5.S3.Quantum.Recovery.QubitResidualRounding (traceNorm_tensor)
 open D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability (traceNorm_smul_nonneg)
 open UnitaryReconstruction.GibbsHiddenProcess (mix mix_entry identity reset reset_act)
@@ -54,18 +54,15 @@ private lemma schur_of_floor
   have hfloor : IsStrictlyPositive (a • (1 : Matrix P P ℂ)) :=
     IsStrictlyPositive.smul ha isStrictlyPositive_one
   have hpos : A.PosDef := (hfloor.of_le hA).posDef
-  letI := hpos.isUnit.invertible
-  apply (PosSemidef.fromBlocks₁₁ B D hpos).mpr
+  let := hpos.isUnit.invertible
+  apply (PosDef.fromBlocks₁₁ B D hpos).mpr
   have hinv : A⁻¹ ≤ a⁻¹ • (1 : Matrix P P ℂ) := by
     have h := CStarAlgebra.ringInverse_le_ringInverse hA hfloor
     rw [← Matrix.nonsing_inv_eq_ringInverse, ← Matrix.nonsing_inv_eq_ringInverse] at h
     have hscalar : (a • (1 : Matrix P P ℂ))⁻¹ = a⁻¹ • (1 : Matrix P P ℂ) := by
-      letI : Invertible (a : ℂ) := invertibleOfNonzero (Complex.ofReal_ne_zero.mpr ha.ne')
-      simp [show a • (1 : Matrix P P ℂ) = (a : ℂ) • (1 : Matrix P P ℂ) by
-        ext i j
-        simp [Complex.real_smul, smul_eq_mul],
-        Matrix.inv_smul, invOf_eq_inv, Matrix.inv_one, ← Complex.ofReal_inv,
-        Complex.coe_smul]
+      apply Matrix.inv_eq_left_inv
+      rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, smul_smul,
+        inv_mul_cancel₀ ha.ne', one_smul]
     exact h.trans_eq hscalar
   have hcongr : Bᴴ * A⁻¹ * B ≤ a⁻¹ • (Bᴴ * B) := by
     have h := (Matrix.le_iff.mp hinv).conjTranspose_mul_mul_same B
@@ -140,8 +137,8 @@ private lemma replacement_density
     ext (i | i) (j | j)
     all_goals
       simp [A, B, D, S, Z, k, Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₂,
-        hτ, Matrix.conjTranspose_apply, Complex.real_smul, ← Complex.star_def, hK.apply]
-      <;> ring
+        hτ, Matrix.conjTranspose_apply, Complex.real_smul, hK.apply]
+    all_goals ring
   have hZtr : Z.trace = 0 := by
     have hproj : (fromBlocks (0 : Matrix P P ℂ) 0 0 (1 : Matrix Q Q ℂ)).trace =
         (Fintype.card Q : ℂ) := by
@@ -184,6 +181,87 @@ def SingularJointErrorExpansion (T Tη : QuantumChannel (P ⊕ Q) (P ⊕ Q))
         η ^ 2 • (raw ω.1 ⊗ₖ K) - ((1 - η ^ 2) * C * η) • (raw ω.1 ⊗ₖ Z) ∧
     traceNorm (Hη - H) / 2 ≤ η * (1 + (traceNorm K + C * traceNorm Z) / 2)
 
+set_option maxHeartbeats 600000 in
+private lemma joint_expansion
+    (T Tη : QuantumChannel (P ⊕ Q) (P ⊕ Q)) (τ σ : DensityState (P ⊕ Q))
+    (K Z : Matrix (P ⊕ Q) (P ⊕ Q) ℂ) (C η : ℝ)
+    (hη : 0 < η) (hη₁ : η ≤ 1) (hC₀ : 0 ≤ C)
+    (hshift : raw τ.1 - act Tη (raw τ.1) = η ^ 2 • K - (C * η ^ 3) • Z)
+    (happly : ∀ ρ : DensityState (R × (P ⊕ Q)), amp Tη (raw ρ.1) =
+      (1 - η) • amp T (raw ρ.1) + η • (raw (marginalRight ρ).1 ⊗ₖ raw σ.1)) :
+    SingularJointErrorExpansion (R := R) T Tη τ σ K Z C η := by
+  intro ω ρ X H Hη
+  let Y := amp T (raw ρ.1) - raw (marginalRight ρ).1 ⊗ₖ raw σ.1
+  let W := raw ω.1 ⊗ₖ K
+  let V := raw ω.1 ⊗ₖ Z
+  let c := (1 - η ^ 2) * C * η
+  have hshift' : act Tη (raw τ.1) = raw τ.1 - (η ^ 2 • K - (C * η ^ 3) • Z) := by
+    rw [← hshift]
+    abel
+  have hadd (A B : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) :
+      amp Tη (A + B) = amp Tη A + amp Tη B :=
+    (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+      ((referenceLinear Tη).comp CStarMatrix.ofMatrixₗ.toLinearMap)).map_add A B
+  have hdiff : Hη - H = η • Y - η ^ 2 • W - c • V := by
+    dsimp only [Hη, X, H, Y, W, V, c]
+    rw [hadd, amp_smul, amp_smul, amp_kronecker, hshift', happly ρ]
+    ext i j
+    simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
+      Matrix.kroneckerMap_apply, Complex.real_smul, Complex.ofReal_sub,
+      Complex.ofReal_mul, Complex.ofReal_one, Complex.ofReal_inv, Complex.ofReal_pow]
+    have hηc := Complex.ofReal_ne_zero.mpr hη.ne'
+    field_simp [hηc]
+    ring
+  refine ⟨hdiff, ?_⟩
+  have hYn : traceNorm Y / 2 ≤ 1 :=
+    traceDistance_le_one (referenceState T ρ) (productState (marginalRight ρ) σ)
+  have hω : traceNorm (raw ω.1) = 1 := by
+    apply Complex.ofReal_injective
+    exact (traceNorm_of_posSemidef (density_posSemidef ω)).trans ω.2.2
+  have hW : traceNorm W = traceNorm K := by
+    dsimp only [W]
+    rw [traceNorm_tensor, hω, one_mul]
+  have hV : traceNorm V = traceNorm Z := by
+    dsimp only [V]
+    rw [traceNorm_tensor, hω, one_mul]
+  have hη₂ : η ^ 2 ≤ η := by nlinarith [mul_nonneg hη.le (sub_nonneg.mpr hη₁)]
+  have hc : 0 ≤ c := mul_nonneg (mul_nonneg (sub_nonneg.mpr (hη₂.trans hη₁)) hC₀) hη.le
+  have hc' : c ≤ η * C := by
+    dsimp [c]
+    calc
+      (1 - η ^ 2) * C * η ≤ 1 * C * η :=
+        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (sub_le_self _ (sq_nonneg η)) hC₀) hη.le
+      _ = η * C := by ring
+  have hsub (A B : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) :
+      traceNorm (A - B) ≤ traceNorm A + traceNorm B := by
+    simpa only [sub_eq_add_neg, Foundation.FiniteTraceDistance.traceNorm_neg] using
+      traceNorm_add_le A (-B)
+  have hnorm : traceNorm (η • Y - η ^ 2 • W - c • V) ≤
+      traceNorm (η • Y) + traceNorm (η ^ 2 • W) + traceNorm (c • V) := by
+    calc
+      _ ≤ traceNorm (η • Y - η ^ 2 • W) + traceNorm (c • V) := hsub _ _
+      _ ≤ _ := add_le_add (hsub (η • Y) (η ^ 2 • W)) le_rfl
+  change traceNorm (Hη - H) / 2 ≤ η * (1 + (traceNorm K + C * traceNorm Z) / 2)
+  calc
+    traceNorm (Hη - H) / 2 = traceNorm (η • Y - η ^ 2 • W - c • V) / 2 :=
+      congrArg (fun A : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ => traceNorm A / 2) hdiff
+    _ ≤ (traceNorm (η • Y) + traceNorm (η ^ 2 • W) + traceNorm (c • V)) / 2 :=
+      div_le_div_of_nonneg_right hnorm (by norm_num)
+    _ = η * (traceNorm Y / 2) + (η ^ 2 * traceNorm K + c * traceNorm Z) / 2 := by
+      have hsmul (X : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) (d : ℝ) (hd : 0 ≤ d) :
+          traceNorm (d • X) = d * traceNorm X := by
+        have hs : d • X = (d : ℂ) • X := by
+          ext i j
+          simp only [Matrix.smul_apply, Complex.real_smul, smul_eq_mul]
+        rw [hs, traceNorm_smul_nonneg X d hd]
+      rw [hsmul _ _ hη.le, hsmul _ _ (sq_nonneg η), hsmul _ _ hc, hW, hV]
+      ring
+    _ ≤ η * 1 + (η * traceNorm K + (η * C) * traceNorm Z) / 2 := by
+      exact add_le_add (mul_le_mul_of_nonneg_left hYn hη.le) (div_le_div_of_nonneg_right
+        (add_le_add (mul_le_mul_of_nonneg_right hη₂ (Foundation.FiniteTraceDistance.traceNorm_nonneg K))
+          (mul_le_mul_of_nonneg_right hc' (Foundation.FiniteTraceDistance.traceNorm_nonneg Z))) (by norm_num))
+    _ = _ := by ring
+
 /-- A quadratic replacement correction realizes an admissible marginal direction with a
 physical decoder through the original memory, uniformly over joint probes. -/
 theorem singular_decoder_marginal_shift
@@ -221,13 +299,8 @@ theorem singular_decoder_marginal_shift
     simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Complex.real_smul,
       Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_mul, Complex.ofReal_pow]
     ring
-  refine ⟨hshift, ?_⟩
-  intro ω ρ X H Hη
-  let Y := amp T (raw ρ.1) - raw (marginalRight ρ).1 ⊗ₖ raw σ.1
-  let W := raw ω.1 ⊗ₖ K
-  let V := raw ω.1 ⊗ₖ Z
-  let c := (1 - η ^ 2) * C * η
-  have hY : amp Tη (raw ρ.1) = (1 - η) • amp T (raw ρ.1) +
+  have hCp : 0 ≤ C := le_trans (by positivity) hC
+  have happly (ρ : DensityState (R × (P ⊕ Q))) : amp Tη (raw ρ.1) = (1 - η) • amp T (raw ρ.1) +
       η • (raw (marginalRight ρ).1 ⊗ₖ raw σ.1) := by
     ext ⟨r, i⟩ ⟨s, j⟩
     let block : Matrix (P ⊕ Q) (P ⊕ Q) ℂ := fun a b => (raw ρ.1) (r, a) (s, b)
@@ -237,67 +310,7 @@ theorem singular_decoder_marginal_shift
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.kroneckerMap_apply,
       amp_entry T (raw ρ.1) r s i j]
     rfl
-  have hshift' : act Tη (raw τ.1) = raw τ.1 - (η ^ 2 • K - (C * η ^ 3) • Z) := by
-    rw [← hshift]
-    abel
-  have hadd (A B : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) :
-      amp Tη (A + B) = amp Tη A + amp Tη B :=
-    (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
-      ((referenceLinear Tη).comp CStarMatrix.ofMatrixₗ.toLinearMap)).map_add A B
-  have hdiff : Hη - H = η • Y - η ^ 2 • W - c • V := by
-    dsimp only [Hη, X, H, Y, W, V, c]
-    rw [hadd, amp_smul, amp_smul, amp_kronecker, hshift', hY]
-    ext i j
-    simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
-      Matrix.kroneckerMap_apply, Complex.real_smul, Complex.ofReal_sub,
-      Complex.ofReal_mul, Complex.ofReal_one, Complex.ofReal_inv, Complex.ofReal_pow]
-    have hηc := Complex.ofReal_ne_zero.mpr hη.ne'
-    field_simp [hηc]
-    ring
-  refine ⟨hdiff, ?_⟩
-  have hYn : traceNorm Y / 2 ≤ 1 :=
-    traceDistance_le_one (referenceState T ρ) (productState (marginalRight ρ) σ)
-  have hω : traceNorm (raw ω.1) = 1 := by
-    have h := congrArg Complex.re (traceNorm_of_posSemidef (density_posSemidef ω))
-    rw [show (raw ω.1).trace = 1 from ω.2.2] at h
-    simpa only [Complex.ofReal_re, Complex.one_re] using h
-  have hW : traceNorm W = traceNorm K := by
-    dsimp only [W]
-    rw [traceNorm_tensor, hω, one_mul]
-  have hV : traceNorm V = traceNorm Z := by
-    dsimp only [V]
-    rw [traceNorm_tensor, hω, one_mul]
-  have hη₂ : η ^ 2 ≤ η := by nlinarith [mul_nonneg hη.le (sub_nonneg.mpr hη₁)]
-  have hC₀ : 0 ≤ C := le_trans (by positivity) hC
-  have hc : 0 ≤ c := mul_nonneg (mul_nonneg (sub_nonneg.mpr (hη₂.trans hη₁)) hC₀) hη.le
-  have hc' : c ≤ η * C := by
-    dsimp [c]
-    calc
-      (1 - η ^ 2) * C * η ≤ 1 * C * η :=
-        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (sub_le_self _ (sq_nonneg η)) hC₀) hη.le
-      _ = η * C := by ring
-  have hsub {n : Type*} [Fintype n] [DecidableEq n] (A B : Matrix n n ℂ) :
-      traceNorm (A - B) ≤ traceNorm A + traceNorm B := by
-    simpa only [sub_eq_add_neg, Foundation.FiniteTraceDistance.traceNorm_neg] using
-      traceNorm_add_le A (-B)
-  rw [hdiff]
-  calc
-    traceNorm (η • Y - η ^ 2 • W - c • V) / 2 ≤
-        (traceNorm (η • Y) + traceNorm (η ^ 2 • W) + traceNorm (c • V)) / 2 :=
-      div_le_div_of_nonneg_right
-        ((hsub (η • Y - η ^ 2 • W) (c • V)).trans
-          (add_le_add_right (hsub (η • Y) (η ^ 2 • W)) _)) (by norm_num)
-    _ = η * (traceNorm Y / 2) + (η ^ 2 * traceNorm K + c * traceNorm Z) / 2 := by
-      have hsmul (X : Matrix (R × (P ⊕ Q)) (R × (P ⊕ Q)) ℂ) (d : ℝ) (hd : 0 ≤ d) :
-          traceNorm (d • X) = d * traceNorm X := by
-        convert traceNorm_smul_nonneg X d hd using 2
-      rw [hsmul _ _ hη.le, hsmul _ _ (sq_nonneg η), hsmul _ _ hc, hW, hV]
-      ring
-    _ ≤ η * 1 + (η * traceNorm K + (η * C) * traceNorm Z) / 2 := by
-      exact add_le_add (mul_le_mul_of_nonneg_left hYn hη.le) (div_le_div_of_nonneg_right
-        (add_le_add (mul_le_mul_of_nonneg_right hη₂ (Foundation.FiniteTraceDistance.traceNorm_nonneg K))
-          (mul_le_mul_of_nonneg_right hc' (Foundation.FiniteTraceDistance.traceNorm_nonneg Z))) (by norm_num))
-    _ = _ := by ring
+  exact ⟨hshift, joint_expansion T Tη τ σ K Z C η hη hη₁ hCp hshift happly⟩
 
 #print axioms singular_decoder_marginal_shift
 

@@ -90,11 +90,12 @@ private theorem supported_density_unique (τ : DensityState (One.{up} ⊕ Zero.{
   apply Subtype.ext
   apply CStarMatrix.ext
   intro i j
+  have hji : j = i := Subsingleton.elim _ _
   subst j
   have ht := τ.trace_eq_one
   letI : Unique (One.{up} ⊕ Zero.{uq}) := uniqueOfSubsingleton (Sum.inl default)
   change (∑ i : One ⊕ Zero, τ.1 i i) = 1 at ht
-  have hi : i = default := Unique.eq_default i
+  have hi : i = default := Subsingleton.elim _ _
   rw [hi]
   simpa [supportedDensity] using ht
 
