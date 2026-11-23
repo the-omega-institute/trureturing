@@ -472,8 +472,8 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 | 角色 | 责任与边界 |
 | --- | --- |
 | PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），FILEMAP 作业默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
-| 独立长 Actions producer | 受保护 dev 的非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
-| Actions producer 并发 | dev 的 Actions producer 与定时、手动 dev Release 发布共用 `lean-cache-producer` 并发组。从受保护集成 ref 手动构建 Actions 缓存时，共用独立的 `lean-cache-integration-producer` 组。两个组各允许一个写作业，缓存写入当前 ref。集成分支使用 `lean-cache-publication-verification` 排队验证 Release。带 `volume_test_id` 的跨版物理卷验证写入独立标签空间，按 ref 和 `volume_test_id` 进入 `lean-cache-volume-verification:{ref}:{volume_test_id}`，使同一组物理卷的发布与回收串行。各组使用 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
+| 独立长 Actions producer | 受保护 dev 的非删除 push 使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
+| Actions producer 并发 | dev 的 Actions producer 与手动 dev build 共用 `lean-cache-producer`。受保护集成 ref 的手动 build 使用 `lean-cache-integration-producer`。定时和手动 dev Release 发布共用 `lean-cache-release-publisher`。集成分支使用 `lean-cache-publication-verification` 排队验证 Release。带 `volume_test_id` 的跨版物理卷验证写入独立标签空间，按 ref 和 `volume_test_id` 进入 `lean-cache-volume-verification:{ref}:{volume_test_id}`，使同一组物理卷的发布与回收串行。各组使用 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
 
@@ -483,7 +483,11 @@ PR (M, base M^1) or push (event.after, verified event range)
   selected units + current -> required
   Actions Cache -> read-only restore
 
-protected dev push or pinned manual build
+protected non-deletion push -> accepted source + cold judge -> publish judge
+
+pinned manual build -> restore visible seeds -> compile on runner
+
+protected dev push
   -> serialized full producer -> validate bundle -> publish Actions cache
 
   .lake/build --Release publication entry--> GitHub Release cache
@@ -518,16 +522,16 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | 计算预算 / 平台 job 上限 |
 | --- | --- | --- | --- |
 | PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
+| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | 受保护非删除 push 在源码检查通过且 judge 精确键未命中时可保存本次编译的 judge | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
 | 受保护 dev 非删除 push | 在固定事件提交上准备编译工件和原生模块报告 | dev 的 Actions cache | 360m |
-| `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
+| `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | Actions 缓存只读，在本次 runner 准备编译工件和报告 | 360m |
 | `workflow_dispatch`，`operation=release` | 原始 `actor` 与当前 `triggering_actor` 均须为 `loning`；runtime 为受保护 dev/integration ref；`source_ref` 固定为 `refs/heads/dev`，非零完整 `source_sha` 须属于受保护 dev 的固定快照，检出该 SHA | 只读授权 job 先验证；独立发布 job 在任何发布操作前再次检查两个账号，单 job 重跑不复用身份授权；沿固定提交的 Release 发布程序打包已准备的编译产物 | 授权 5m，发布 360m |
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口，运输项目编译工件 | 单 job 360m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
 本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式核对干净且已存在于本仓 GitHub 的固定提交、项目编译产物布局。候选使用独立的验证命名空间。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
 
-长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同指定一份已经公开的候选或生产 Release。受保护分支的手动完整 producer 可从正式分片 Release 重建本分支的 Actions 缓存；普通 PR 只读 Actions 种子。显式播种的续建缓存绑定本次 dispatch、目标提交、Release tag 和 producer SHA。同一 run 重试时，以已验证的原生续建包或原 Release 为起点。只有分片索引的 attempt 晚于该起点且早于本次尝试时才叠加分片；原 Release 的起点记为 0。首次切换先发布并验证正式分片 Release，再由独立 producer 核实完整项目索引及条目在 dev 可见，随后开启 dev 的普通 CI 分片读取。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建与模块报告准备；准备成功后可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
+手动 build 的 `release_seed_tag` 与 `release_seed_producer` 共同指定一份已发布的候选或生产 Release。恢复核对完整 producer SHA、兼容分区、资产摘要和归档成员，再按固定源码补编并准备模块报告。未指定 Release 时，只读恢复可见的 Actions 种子，缺失或不兼容的工件在 runner 上补编。手动重试沿用相同读写边界，编译失败直接返回失败。仅受保护 dev push 的长 producer 可保存共享的整库种子及其续建进度。
 
 GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev push 和手动 Actions build 共用仓库级串行 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。producer 使用固定候选 SHA，独立于普通 CI 对 push 范围的核验。集成测试的 Release 验证保留独立构建与发布命名空间，改动范围不可读时仍执行验证。集成验证使用独立的并发组。
 
@@ -546,7 +550,7 @@ GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev pu
 | 工作量缺失、畸形、陈旧或未知 | `build-work-unknown` 拒绝 project 快照。 |
 | Release 发布 | 构建/内容校验失败保持硬失败；可选传输失败可返回 0 并给出 `failed`/`skipped`，清理失败记录 `prune_error`。新发布成功须 `published` 且远端 published 状态、manifest/资产清单已验证；exit 0 本身不足，`exists` 只表示已核对既存快照。 |
 
-**普通 CI 只读。** NuGet、judge、elan、dependency 与 project 只可恢复，构建输出留在 job 内。PR 事件使用 opened、reopened、synchronize。
+**普通 CI 缓存权限。** PR 的 opened、reopened、synchronize 事件只读 NuGet、judge、elan、dependency 与 project。缓存缺失时在当前 job 补编。受保护分支的非删除 push 可在源码检查通过后保存精确键缺失的 judge，缓存发布失败不影响检查判词。
 
 独立 producer 的 project 缓存按来源分支与 run/attempt 保存在不可变 key。producer 在准备命令成功后保存工件，并向 Actions API 按 ref 和 key 确认新快照。
 

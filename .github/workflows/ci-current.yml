@@ -141,6 +141,15 @@ jobs:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
+      - name: Publish the compiled judge on protected pushes
+        if: github.event_name == 'push' && github.ref_protected && !github.event.deleted && steps.prefix.outputs.source_status == 'accepted' && steps.judge.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
       - id: remainder
         name: Carry the remaining current compute allowance
         if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
