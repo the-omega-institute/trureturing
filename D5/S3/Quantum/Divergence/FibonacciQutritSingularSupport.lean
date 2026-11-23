@@ -10,6 +10,8 @@ import D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Divergence.SingularWeightedLogIncrement
 
+/-! Common qubit compression of a singular weighted qutrit comparison. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -51,7 +53,7 @@ private lemma block_of_zero_diagonal {M : Block} (hM : M.PosSemidef)
     M = fromBlocks M.toBlocks₁₁ 0 0 (0 : Mat Unit) := by
   classical
   have hk : M *ᵥ Pi.single (Sum.inr ()) 1 = 0 := hM.dotProduct_mulVec_zero_iff.mp (by
-    simp [Pi.star_single, Matrix.mulVec_single_one, single_dotProduct, hz])
+    simp [Pi.star_single, single_dotProduct, hz])
   have hcol (i : Fin 2 ⊕ Unit) : M i (Sum.inr ()) = 0 := by
     simpa only [Matrix.mulVec_single_one, Matrix.col_apply, Pi.zero_apply] using congrFun hk i
   have hrow (j : Fin 2 ⊕ Unit) : M (Sum.inr ()) j = 0 := by
@@ -121,7 +123,7 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
       Matrix.submatrix_diagonal_equiv]
     rfl
   have hzC : E C (Sum.inr ()) (Sum.inr ()) = 0 := by
-    simp [hdiag, d, hfk, h, hk]
+    simp [hdiag, d, hfk, hk]
 
   let M (i : ι) := E (matrix (X i))
   have hM (i : ι) : (M i).PosSemidef :=
@@ -135,10 +137,12 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
     have hnonneg := Complex.nonneg_iff.mp ((hM i).diag_nonneg (i := Sum.inr ()))
     have hdom := (Complex.nonneg_iff.mp ((Matrix.le_iff.mp hEle).diag_nonneg
       (i := Sum.inr ()))).1
-    simp only [Matrix.sub_apply, Matrix.smul_apply, hzC, Complex.sub_re, Complex.zero_re,
-      Complex.real_smul, Complex.re_ofReal_mul, zero_sub, neg_nonneg] at hdom
+    change 0 ≤ (E C (Sum.inr ()) (Sum.inr ()) - q i • M i (Sum.inr ()) (Sum.inr ())).re
+      at hdom
+    rw [hzC, zero_sub, Complex.neg_re, neg_nonneg, Complex.real_smul, Complex.re_ofReal_mul]
+      at hdom
     exact Complex.ext (le_antisymm (nonpos_of_mul_nonpos_right hdom (hq i)) hnonneg.1)
-      (by simpa using hnonneg.2)
+      (by simpa using hnonneg.2.symm)
 
   let N (i : ι) : Qubit := (M i).toBlocks₁₁
   have hblocks (i : ι) : M i = fromBlocks (N i) 0 0 (0 : Mat Unit) :=
@@ -158,7 +162,9 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
     change E (∑ i, w i • matrix (X i)) = J (∑ i, w i • N i)
     rw [map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => by
-      simpa only [map_smul] using congrArg (fun Z : Block => w i • Z) (hblocks i)
+      rw [map_smul, map_smul]
+      change w i • M i = w i • fromBlocks (N i) 0 0 (0 : Mat Unit)
+      rw [hblocks i]
   have hAC : (A * (CFC.log A - CFC.log C)).trace.re =
       (A₂ * (CFC.log A₂ - CFC.log C₂)).trace.re := by
     have hA₂ := ((coordinates_posSemidef U f A).mpr hA).submatrix
@@ -180,7 +186,7 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
           fromBlocks (CFC.log A₂ - CFC.log C₂) 0 0 (0 : Mat Unit) := by
       ext (i | i) (j | j) <;> simp
     rw [hsub, fromBlocks_multiply, trace_blocks]
-    simp [Matrix.toBlocks₁₁]
+    simp [Matrix.toBlocks₁₁] <;> rfl
   refine ⟨Y, ?_, hgap.1, hgap.2, ?_⟩
   · change (A * (CFC.log A - CFC.log B)).trace.re =
       (A₂ * (CFC.log A₂ - CFC.log C₂)).trace.re - Δ
@@ -193,7 +199,9 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
     rw [map_mul] at ht
     change (M i * M j).trace = _ at ht
     rw [hblocks i, hblocks j, fromBlocks_multiply, trace_blocks] at ht
-    simpa [Matrix.toBlocks₁₁] using congrArg Complex.re ht
+    simp [Matrix.toBlocks₁₁] at ht
+    change (N i * N j).trace = _ at ht
+    exact congrArg Complex.re ht
 
 #print axioms singular_support_reduction
 
