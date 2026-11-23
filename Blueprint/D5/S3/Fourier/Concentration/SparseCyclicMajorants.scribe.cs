@@ -48,7 +48,10 @@ internal sealed class SparseCyclicMajorantsDocument : IScribeDocumentDefinition
                     + "one. Inversion makes K constant on that subgroup. Every frequency in its "
                     + "annihilator has the same positive coefficient M and thus belongs to S. "
                     + "Conversely the phase terms vanish for a scaled subgroup indicator with "
-                    + "its annihilator as the frequency set."))),
+                    + "its annihilator as the frequency set.")),
+                Paragraph(Text(
+                    "Positive height is needed for the equality criterion. For q=2 and K=0, "
+                    + "equality holds with S={1}. Every annihilator contains the zero frequency."))),
                 DescribeRole.Theorem))));
 
     private static Formula Gap()

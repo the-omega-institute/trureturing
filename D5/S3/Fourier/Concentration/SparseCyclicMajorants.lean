@@ -69,12 +69,9 @@ theorem sparse_dft_majorant_gap (q : ℕ) [NeZero q]
 
 private theorem phase_eq_one_of_re_eq_one (q : ℕ) [NeZero q] (x : ZMod q)
     (h : (ZMod.stdAddChar x).re = 1) : ZMod.stdAddChar x = 1 := by
-  have hn := (ZMod.stdAddChar (N := q)).norm_apply x
-  have hs := Complex.sq_norm (ZMod.stdAddChar x)
-  rw [hn, Complex.normSq_apply, h] at hs
-  apply Complex.ext h
-  change (ZMod.stdAddChar x).im = 0
-  nlinarith [sq_nonneg (ZMod.stdAddChar x).im]
+  have hnorm : |(ZMod.stdAddChar x).re| = ‖ZMod.stdAddChar x‖ := by
+    rw [h, abs_one, (ZMod.stdAddChar (N := q)).norm_apply]
+  exact Complex.ext h (Complex.abs_re_eq_norm.mp hnorm)
 
 private theorem sparse_dft_floor_eq (q : ℕ) [NeZero q]
     (K : ZMod q → ℝ) (hK : ∀ x, 0 ≤ K x) (S : Finset (ZMod q))
