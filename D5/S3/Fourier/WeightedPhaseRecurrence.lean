@@ -21,7 +21,8 @@ open scoped BigOperators
 
 namespace D5.S3.Fourier.WeightedPhaseRecurrence
 
-open D5.S3.Zeros.Repulsion.FejerNearCollisionBound (fejerKernel fejer_square)
+open D5.S3.Zeros.Repulsion.FejerNearCollisionBound
+  (fejerKernel fejer_square fejer_nonnegative fejer_zero)
 
 noncomputable section
 
@@ -217,11 +218,7 @@ private theorem weighted_fejer_expansion {J : Type*} [Fintype J] [DecidableEq J]
 private theorem weights_mass {J : Type*} [Fintype J] [DecidableEq J]
     {N : ℕ} (hN : 0 < N) (ε : ℝ) (p : J → ℝ) (hp : ∑ j, p j = 1) :
     ∑ k ∈ frequencyBox N, weights N ε p k = ε * (N : ℝ) ^ Fintype.card J := by
-  have hN' : (N : ℝ) ≠ 0 := by positivity
-  have hpeak : fejerKernel N 0 = (N : ℝ) := by
-    rw [fejer_square hN]
-    simp [Complex.normSq_natCast, hN']
-  simpa [hpeak] using weighted_fejer_expansion hN ε p (fun _ => 0) hp
+  simpa [fejer_zero hN] using weighted_fejer_expansion hN ε p (fun _ => 0) hp
 
 private theorem mem_frequencyBox {J : Type*} [Fintype J] [DecidableEq J]
     {N : ℕ} {k : J → ℤ} : k ∈ frequencyBox N ↔ ∀ j, |k j| ≤ (N : ℤ) := by
@@ -320,17 +317,16 @@ private theorem cosine_sum_integral_lower {K : Type*} (s : Finset K) (c ξ φ : 
 
 private theorem fejer_bounds {N : ℕ} (hN : 0 < N) (x : ℝ) :
     0 ≤ fejerKernel N x ∧ fejerKernel N x ≤ N := by
+  refine ⟨fejer_nonnegative hN x, ?_⟩
   let S := ∑ r ∈ Finset.range N, expI ((r : ℝ) * x)
   rw [fejer_square hN]
-  change 0 ≤ (1 / (N : ℝ)) * Complex.normSq S ∧
-    (1 / (N : ℝ)) * Complex.normSq S ≤ N
+  change (1 / (N : ℝ)) * Complex.normSq S ≤ N
   have hnorm : ‖S‖ ≤ (N : ℝ) := by
     calc
       ‖S‖ ≤ ∑ r ∈ Finset.range N, ‖expI ((r : ℝ) * x)‖ := norm_sum_le _ _
       _ = N := by
         simp only [expI, Complex.norm_exp_ofReal_mul_I, Finset.sum_const, Finset.card_range,
           nsmul_eq_mul, mul_one]
-  refine ⟨mul_nonneg (by positivity) (Complex.normSq_nonneg _), ?_⟩
   rw [Complex.normSq_eq_norm_sq, one_div_mul_eq_div, div_le_iff₀ (by positivity)]
   simpa only [pow_two] using (sq_le_sq₀ (norm_nonneg _) (Nat.cast_nonneg N)).mpr hnorm
 
