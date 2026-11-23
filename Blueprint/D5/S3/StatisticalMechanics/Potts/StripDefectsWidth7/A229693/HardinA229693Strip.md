@@ -30,12 +30,13 @@ $$\forall t: \mathit{Nat}, ((\operatorname{\mathit{HardinA229693Strip}}.\operato
 
 All array counts in this equality are cast to integers. At least two colours occur in a nonempty array with two monochromatic bonds. Relabelling gives six labelled arrays per canonical array. The vector identity for the transfer at fourteen steps propagates to later steps by right multiplication.
 
+For every table p of fifteen integer row vectors indexed by Fin 168, assume that p at zero is the initial vector and that for every j in Fin 14, the row at j.succ is the product of the row at j.castSucc with T. Induction then identifies the row at every i in Fin 15 with forward iteration from the initial vector for i.val steps.
+
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate](../../CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer](HardinA229693StripTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip](../HardinA229585Strip.md)
