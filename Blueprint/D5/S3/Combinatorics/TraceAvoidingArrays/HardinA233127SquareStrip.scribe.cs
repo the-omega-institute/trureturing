@@ -15,6 +15,26 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
         "Hardin’s recurrence for normalized six-column complementary-pair square strips.",
         H("The finite certificate and the all-height recurrence"),
         Blocks(
+            Describe.Lean(DescribeId.Create("distribution"),
+                DeclarationHandle.Create(Gid + "distribution"), H("Forward boundary distributions"),
+                StatementSource.FromAuthor(Disp(Typed(Name(Root + "distribution"),
+                    new Formula.TypeArrow(Fin(9), new Formula.TypeArrow(Fin(11), Name("Int")))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("This 9 by 11 integer matrix has type Fin 9 → Fin 11 → Int. "
+                    + "Its first row is the initial scanner distribution; each subsequent row "
+                    + "is the preceding row multiplied by the boundary transfer."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("w"), DeclarationHandle.Create(Gid + "w"),
+                H("Boundary continuation powers"), StatementSource.FromAuthor(Disp(And(
+                    All("i", Fin(11), Eq(Call(Root + "w", D(0), V("i")), D(1))),
+                    All("n", Name("Nat"), All("i", Fin(11),
+                        Eq(Call(Root + "w", Add(V("n"), D(1)), V("i")),
+                            Seq(Sum, Underscore, Grp(V("k"), Colon, Sp, Fin(11)), Sp,
+                                Parenthesized(Mul(Call(Root + "transfer", V("i"), V("k")),
+                                    Call(Root + "w", V("n"), V("k"))))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The integer-valued function w has type Nat → Fin 11 → Int. "
+                    + "It starts at the constant one vector and applies the boundary transfer once per row."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("certificate"),
                 DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
                 StatementSource.FromAuthor(Disp(Certificate())),

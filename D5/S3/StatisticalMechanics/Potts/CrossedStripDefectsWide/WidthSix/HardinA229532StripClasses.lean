@@ -9,9 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229532Strip.result)
-class_relabel: proof_shape=bind-only; consumers=transition_counts
-bond_relabel: proof_shape=bind-only; consumers=transition_counts
-transition_counts: proof_shape=bind-only; consumers=HardinA229532Strip.result
+class_relabel: proof_shape=bind-only; consumers=HardinA229532StripClasses.transition_counts, HardinA229457StripClasses.class_relabel
+bond_relabel: proof_shape=bind-only; consumers=HardinA229532StripClasses.transition_counts, HardinA229457StripClasses.class_relabel, HardinA229457StripClasses.transition_counts, HardinA229604StripClasses.transition_counts
+transition_counts: proof_shape=bind-only; consumers=HardinA229532Strip.finite_certificate
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripTop
@@ -41,6 +41,10 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClass29
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClass30
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Logic.Equiv.Defs
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Filter
 
 /-! Exact width-six HDA residual-budget transfer. -/
 open scoped BigOperators
@@ -55,15 +59,17 @@ set_option Elab.async false
 set_option synthInstance.maxSize 100000
 open HardinA229532StripData
 open HardinA233177Canonical (canonical_exists_unique)
-private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
+theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, HardinA233172DiagonalStrip.boundaryClass,
     bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
-private theorem bond_relabel (e : Equiv.Perm (Fin 3))
+theorem bond_relabel (e : Equiv.Perm (Fin 3))
     (E : Finset (Fin 6 × Fin 6)) (p r : Row) :
     bondDefects E (e ∘ p) (e ∘ r) = bondDefects E p r := by
-  simp only [bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
+  simpa only [List.map_cons, List.map_nil, DefectTransfer.defects, DefectTransfer.tailDefects,
+    bondDefects, Finset.filter_empty, Finset.card_empty, Nat.zero_add, Nat.add_zero] using
+    DefectTransfer.relabel_defects ∅ E e [p, r]
 
 theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 31,
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧

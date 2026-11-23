@@ -20,11 +20,11 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 first_fibres: proof_shape=bind-only; consumers=initial_counts
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w
-w: proof_shape=bind-only; consumers=shifted_count
+w: proof_shape=bind-only; consumers=shifted_count, a_eq_w, v_eq_w, result, HardinA229457StripData.W, HardinA229457StripData.terminal, HardinA229457StripPowers.leading_steps, HardinA229457StripPowers.weighted_step, HardinA229457StripPowers.zero_image
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=shifted_count
-distribution: proof_shape=bind-only; consumers=distribution_step
-distribution_step: proof_shape=bind-only; consumers=shifted_count
+distribution: proof_shape=bind-only; consumers=distribution_step, distribution_step._proof_1, shifted_count, distribution_relation, result, HardinA229457StripData.initial
+distribution_step: proof_shape=bind-only; consumers=shifted_count._simp_5
 shifted_count: proof_shape=bind-only; consumers=result
 distribution_relation: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result (#28649)
@@ -177,7 +177,7 @@ theorem finite_certificate :
     (∀ k, firstCount k = ![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8] k) :=
   ⟨row_counts, initial_counts⟩
 
-private def w : ℕ → Fin 11 → ℤ
+def w : ℕ → Fin 11 → ℤ
   | 0, _ => 1
   | n + 1, i => ∑ k : Fin 11, transfer i k * w n k
 
@@ -224,7 +224,7 @@ private theorem a_eq_w (n : ℕ) :
   change (∑ k : Fin 11, firstCount k * w n k) = _
   simp_rw [finite_certificate.2]
 
-private def distribution (r : Fin 9) (k : Fin 11) : ℤ :=
+def distribution (r : Fin 9) (k : Fin 11) : ℤ :=
   ![![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8],
     ![1024, 10240, 18432, 14336, 19456, 17408, 11264, 8192, 3584, 13312, 7680],
     ![65536, 11894784, 19922944, 13697024, 20905984, 19136512, 9764864, 8257536, 2588672,

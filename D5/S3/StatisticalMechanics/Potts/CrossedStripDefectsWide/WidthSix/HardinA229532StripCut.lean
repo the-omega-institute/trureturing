@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229532Strip.result)
 zero_cost: proof_shape=bind-only; consumers=class_cut
-numeric_cut: proof_shape=bind-only; consumers=class_cut
+numeric_cut: proof_shape=bind-only; consumers=class_cut, HardinA229457StripCut.numeric_cut
 class_cut: proof_shape=bind-only; consumers=HardinA229532StripTop.transition_counts and HardinA229532StripClass10.transition_counts through HardinA229532StripClass19.transition_counts
 -/
 
@@ -42,7 +42,7 @@ private theorem zero_cost (p r : Row) :
     Bool.true_eq, ↓reduceIte, forall_and]
   tauto
 
-private theorem numeric_cut : ∀ (r : Row) (c d : Fin 2) (s : Fin 20),
+theorem numeric_cut : ∀ (r : Row) (c d : Fin 2) (s : Fin 20),
     ((d.val = 1 ∧ s.val < 10) ∨ (d.val = 0 ∧ 10 ≤ s.val)) →
     ((c.val ≤ d.val ∧ cl r (d.val - c.val) = s.castAdd 11) ↔
       c.val = 0 ∧ HardinThinGraphTransport.proper r ∧

@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229532Strip.result)
-finite_certificate: proof_shape=bind-only; consumers=result
+finite_certificate: proof_shape=bind-only; consumers=result, P5b.HardinA229635State.closed, P5b.HardinA229635Transfer.old_counts, P5b.HardinA229635Transfer.terminal_correct, SquareStripDefects.HardinA229457Strip.finite_certificate
 base_certificate: proof_shape=bind-only; consumers=result
 a: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31328)
