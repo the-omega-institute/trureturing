@@ -38,6 +38,8 @@ import Init.Prelude
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Order.Defs.LinearOrder
+import Init.Data.Fin.Lemmas
 
 /-! Parity recolouring and simultaneous reflection of rows preserve diagonal defect counts. -/
 
@@ -90,7 +92,9 @@ private theorem boundary_recolor (e f : Equiv.Perm (Fin 3)) (p : Row 3 6) :
     (class_relabel f (parityRows p).2)
 
 private theorem boundary_reflect (p : Row 3 6) : boundary (reflect p) = boundary p := by
-  have exchange : ∀ i j : Fin 5, pairClass i j = pairClass j i := by decide +kernel
+  have exchange (i j : Fin 5) : pairClass i j = pairClass j i := by
+    apply Fin.ext
+    simp only [pairClass, min_comm i j, max_comm i j]
   exact exchange _ _
 
 private theorem triple_match (p r : Col) (h : cls p = cls r) :
