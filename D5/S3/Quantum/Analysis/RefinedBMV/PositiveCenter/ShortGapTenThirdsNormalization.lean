@@ -64,7 +64,7 @@ private theorem sinh_le_at_tenThirds_radius {x : ℝ} (hx : 0 ≤ x) (hxmax : x 
   calc
     _ ≤ x ^ 1 / ((1 : ℕ).factorial : ℝ) / (1 - (5 / 11 : ℝ) ^ 2 / 6) := by
       have h := stride_tail_bound 1 hx hxmax (by norm_num) hs
-      simpa only [Nat.add_comm 1] using h
+      simpa [Nat.add_comm 1] using h
     _ = _ := by norm_num [Nat.factorial] <;> ring
 
 private theorem tenThirds_correction_bound {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
@@ -223,8 +223,9 @@ private theorem tenThirds_normalization_of_rate {h t : ℝ} (hh : 0 < h) (hhmax 
       b + k * a = 1 + g * a := by
         dsimp only [k, g]
         linear_combination hgap
-      _ ≤ 1 + g * t :=
-        add_le_add_left (mul_le_mul_of_nonneg_left (upperTailGap_le hh) hg.le) 1
+      _ ≤ 1 + g * t := by
+        gcongr
+        exact upperTailGap_le hh
       _ ≤ _ := by simpa only [add_comm (g * t) 1] using Real.add_one_le_exp (g * t)
     apply sub_nonneg.mpr
     calc

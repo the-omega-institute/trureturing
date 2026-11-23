@@ -213,13 +213,19 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
   have hv : 4 ≤ v := hu.trans huv.le
   have hn₁ := shortGapNormalization_bounds hh hhp hu
   have hn₂ := shortGapNormalization_bounds hh hhp hv
-  have hβ : -(1 / 4 : ℝ) ≤
-      deriv (fun t ↦ 1 / Real.sqrt (W (rate p) t)) v /
-        (1 / Real.sqrt (W (rate p) v)) := by
+  let P : ℝ → ℝ := fun t ↦ upperTailGap (rate p) t / Real.sqrt (W (rate p) t)
+  let V : ℝ → ℝ := fun t ↦ 1 / Real.sqrt (W (rate p) t)
+  let α := deriv P u / P u
+  let β := deriv V v / V v
+  have hα₀ : 0 ≤ α := hn₁.1
+  have hα₁ : α < 1 / 7 := hn₁.2.1
+  have hβ₀ : β < 0 := hn₂.2.2.2
+  have hβv : -(1 / v) ≤ β := hn₂.2.2.1
+  have hβ : -(1 / 4 : ℝ) ≤ β := by
     have H := one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 4) hv
-    linarith only [H, hn₂.2.2.1]
-  exact logKernel_gap_mixed_of_profile_margin_of_slopes hp (by linarith) huv
-    hn₁.1 hn₂.2.2.2.le (by linarith only [hn₁.2.1, hβ])
+    linarith only [H, hβv]
+  have hdiff : α - β ≤ 1 / 2 := by linarith only [hα₁, hβ]
+  exact logKernel_gap_mixed_of_profile_margin_of_slopes hp (by linarith) huv hα₀ hβ₀.le hdiff
 
 /-- Ordinary curvature and slope estimates give the short-gap mixed sign. -/
 theorem logKernel_shortGap_mixed_of_scalar_bounds {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}

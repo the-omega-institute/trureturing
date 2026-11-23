@@ -70,14 +70,15 @@ private theorem middleTail_quadratic_pos {u z : ℝ} (hu : 1 / 2 ≤ u) (hu₄ :
   have hmargin : (61 / 2500 : ℝ) ≤ F w := by
     rw [hFw]
     linarith only [hinv₂]
-  have hwz : w ≤ z := hz
-  have hdiff := mul_nonneg (sub_nonneg.mpr hwz)
-    (show 0 ≤ 2 * (2 * w - (A + b)) + 7 / 50 by linarith only [hw])
-  have he : F z - F w =
-      2 * (z - w) ^ 2 + (z - w) * (2 * (2 * w - (A + b))) := by
+  have hdiff : 0 ≤ (z - w) * (2 * (2 * w - (A + b)) + 7 / 50) :=
+    mul_nonneg (sub_nonneg.mpr (show w ≤ z from hz)) (by linarith only [hw])
+  have hsquare := sq_nonneg (z - w - 7 / 200)
+  have he : F z = F w + 2 * (z - w - 7 / 200) ^ 2 +
+      (z - w) * (2 * (2 * w - (A + b)) + 7 / 50) - 49 / 20000 := by
     dsimp only [F]
     ring
-  nlinarith only [hmargin, he, hdiff, sq_nonneg (z - w - 7 / 200)]
+  rw [he]
+  linarith only [hmargin, hdiff, hsquare]
 
 /-- A decay rate of `31/25` and the lower divided-difference bounds imply the radical sign. -/
 theorem middleTail_radicalScalar_neg {u z y A H kappa eta : ℝ}

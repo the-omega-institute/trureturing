@@ -53,7 +53,7 @@ private theorem slope_moment_le {p : ℕ} (hp : 11 ≤ p) (n : ℕ) :
   let v := compositionMarginalVariance p
   have hv : 0 ≤ v := (compositionMarginalVariance_pos p).le
   match n with
-  | 0 => norm_num [slopeRatio, h₂] <;> ring
+  | 0 => norm_num [slopeRatio, h₂] <;> exact le_of_eq (by ring)
   | 1 =>
     have h := mul_le_mul_of_nonneg_left hq (compositionMarginalVariance_pos p).le
     norm_num [slopeRatio, h₃] <;> nlinarith only [h]

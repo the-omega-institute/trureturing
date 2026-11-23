@@ -44,9 +44,10 @@ private theorem linear_mul_exp_neg_le {u a : ℝ} (hu : 10 / 3 ≤ u) (ha : 0 �
       rw [mul_assoc, ← Real.exp_add]
       congr 2
       ring
-    _ ≤ _ := by
-      rw [div_eq_mul_one_div]
-      exact mul_le_mul_of_nonneg_left exp_neg_ten_thirds_lt.le (by linarith only [ha])
+    _ ≤ _ := calc
+      _ ≤ (10 / 3 + a) * (1 / 28) :=
+        mul_le_mul_of_nonneg_left exp_neg_ten_thirds_lt.le (by linarith only [ha])
+      _ = _ := by ring
 
 /-- The normalization margin dominates the combined derivative bound on the enlarged strip. -/
 theorem shortGapTenThirds_absorption_scalar {u v μG z : ℝ}
@@ -72,9 +73,8 @@ theorem shortGapTenThirds_absorption_scalar {u v μG z : ℝ}
   · have hGu := hGsmall hv₄
     have htop : ρ * μG * Real.exp (-u) ≤ (1 : ℝ) * ((120 / 113) * (157 / 52)) * (1 / 28) :=
       mul_le_mul (mul_le_mul hρ₁ hGu hG₀ (by norm_num)) heu (Real.exp_pos _).le (by norm_num)
-    have hiu : 1 / u ≤ (3 / 10 : ℝ) := by
-      norm_num at hu ⊢
-      exact (div_le_iff₀ hu₀).mpr (by linarith)
+    have hiu : 1 / u ≤ (3 / 10 : ℝ) :=
+      (div_le_iff₀ hu₀).mpr (by linarith only [hu])
     have hiv : 1 / v ≤ (3 / 10 : ℝ) :=
       (one_div_le_one_div_of_le hu₀ huv.le).trans hiu
     have hbottom : ((24 / 25 : ℝ) * ((7 / 10) * (7 / 10) / 4)) ≤
