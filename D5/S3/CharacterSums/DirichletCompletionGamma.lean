@@ -100,21 +100,21 @@ theorem logarithmic_series_bound :
     Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 < 1 := by
   let f : ℝ → ℝ := fun x => Real.log (x + 2) / (x + 2) ^ 2
   have htail : Summable (fun n : ℕ => Real.log (n + 3) / (n + 3) ^ 2) :=
-    Mertens.summable_log_div_sq
+    summable_log_div_sq
   have hall : Summable (fun n : ℕ => Real.log n / (n : ℝ) ^ 2) := by
     apply (summable_nat_add_iff 3).mp
     simpa only [Nat.cast_add, Nat.cast_ofNat] using htail
   have hb : (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
       Real.log 2 / 4 + Real.log 3 / 9 + (Real.log 3 + 1) / 3 := by
-    have hd (x : ℝ) (hx : 1 ≤ x) := Mertens.log_div_sq_is_deriv x (by linarith)
+    have hd (x : ℝ) (hx : 1 ≤ x) := log_div_sq_is_deriv x (by linarith)
     have hn (x : ℝ) (hx : 1 < x) : 0 ≤ f x :=
       div_nonneg (Real.log_nonneg (by linarith)) (sq_nonneg _)
     have hi := integrableOn_Ioi_deriv_of_nonneg' hd hn
-      Mertens.tendsto_antideriv_log_div_sq
+      tendsto_antideriv_log_div_sq
     have he := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn
-      Mertens.tendsto_antideriv_log_div_sq
+      tendsto_antideriv_log_div_sq
     have hanti : AntitoneOn f (Ici (1 : ℝ)) :=
-      Mertens.antitoneOn_log_div_sq.mono (by intro x hx; simp only [mem_Ici] at *; linarith)
+      antitoneOn_log_div_sq.mono (by intro x hx; simp only [mem_Ici] at *; linarith)
     have htbound := hanti.tsum_comp_add_le_integral 1 hi hn
     have hh : (∫ x : ℝ in Ioi 1, f x) = (Real.log 3 + 1) / 3 := by
       convert he using 1 <;> norm_num <;> ring
