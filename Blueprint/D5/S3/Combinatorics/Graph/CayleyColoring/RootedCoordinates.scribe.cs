@@ -40,7 +40,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
                 H("Edge Equiv"),
                 StatementSource.FromAuthor(Disp(CayleyColorsEdgeequiv())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The equivalence sends a vertex away from the root to its unordered edge to its parent."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cayley-colors-edge-orientation"),
@@ -104,7 +104,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
                 H("Depth"),
                 StatementSource.FromAuthor(Disp(CayleyParentDepth())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("Depth counts the least number of parent steps needed to reach the root."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cayley-parent-depth-hits"),
@@ -261,14 +261,11 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         Forall, Sp, Open, F.Id("V"), Colon, Sp, DefinitionDsl.Id("Type"), Close, Comma, Sp, Forall, Sp,
         Open, F.Id("T"), Colon, Sp, DefinitionDsl.Id("CayleyProbe"), Dot, DefinitionDsl.Id("Tree"), Sp,
         F.Id("V"), Close, Comma, Sp, Forall, Sp, Open, F.Id("r"), Colon, Sp, F.Id("V"), Close, Comma, Sp,
-        Open, DefinitionDsl.Id("edgeEquiv"), Sp, F.Id("V"), Sp, F.Id("T"), Sp, F.Id("r"), Sp, Colon, Sp,
-        DefinitionDsl.Id("CayleyColors"), Dot, DefinitionDsl.Id("Away"), Sp, F.Id("r"), Sp, Equiv, Sp,
-        DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Dot,
-        DefinitionDsl.Id("edgeSet"), Close, Sp, Eq, Sp, DefinitionDsl.Id("Equiv"), Dot,
-        DefinitionDsl.Id("ofBijective"), Sp, Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp, Colon,
-        Sp, DefinitionDsl.Id("Away"), Sp, F.Id("r"), Close, Sp, Eq, Gt, Sp,
-        DefinitionDsl.Id("edgeFromPair"), Sp, F.Id("T"), Sp, F.Id("v"), Dot, DefinitionDsl.Id("val"), Sp,
-        Open, DefinitionDsl.Id("parent"), Sp, F.Id("T"), Sp, F.Id("r"), Sp, F.Id("v"), Close, Close);
+        Forall, Sp, Open, F.Id("v"), Sp, Colon, Sp, DefinitionDsl.Id("Away"), Sp, F.Id("r"), Close, Comma,
+        Sp, DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("edgeEquiv"), Sp, F.Id("T"), Sp, F.Id("r"),
+        Sp, F.Id("v"), Close, Sp, Eq, Sp, DefinitionDsl.Id("Sym2"), Dot, DefinitionDsl.Id("mk"), Sp, Open,
+        F.Id("v"), Dot, DefinitionDsl.Id("val"), Comma, Sp, DefinitionDsl.Id("parent"), Sp, F.Id("T"), Sp,
+        F.Id("r"), Sp, F.Id("v"), Close);
 
     private static Formula CayleyColorsEdgeOrientation() =>
         Seq(
@@ -294,7 +291,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         DefinitionDsl.Id("Away"), Sp, F.Id("r"), Close, Comma, Sp, Open, DefinitionDsl.Id("parent"), Sp,
         F.Id("V"), Sp, F.Id("T"), Sp, F.Id("r"), Sp, F.Id("v"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Sp,
         DefinitionDsl.Id("choose"), Sp, Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        F.Id("V"), Close, Sp, Eq, Gt, Sp, F.Id("T"), Dot, DefinitionDsl.Id("val"), Dot,
+        F.Id("V"), Close, Sp, Mapsto, Sp, F.Id("T"), Dot, DefinitionDsl.Id("val"), Dot,
         DefinitionDsl.Id("Adj"), Sp, F.Id("v"), Dot, DefinitionDsl.Id("val"), Sp, F.Id("x"), Sp, Land, Sp,
         F.Id("T"), Dot, DefinitionDsl.Id("val"), Dot, DefinitionDsl.Id("dist"), Sp, F.Id("r"), Sp,
         F.Id("x"), Sp, Lt, Sp, F.Id("T"), Dot, DefinitionDsl.Id("val"), Dot, DefinitionDsl.Id("dist"), Sp,
@@ -344,16 +341,16 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         F.Id("V"), Sp, F.Id("A"), Sp, F.Id("T"), Sp, F.Id("r"), Sp, DefinitionDsl.Id("base"), Sp,
         DefinitionDsl.Id("diff"), Sp, F.Id("v"), Sp, Colon, Sp, F.Id("A"), Close, Sp, Eq, Sp,
         DefinitionDsl.Id("WellFounded"), Dot, DefinitionDsl.Id("Nat"), Dot, DefinitionDsl.Id("fix"), Sp,
-        Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp,
+        Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp,
         Open, DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Dot, DefinitionDsl.Id("dist"), Sp, F.Id("r"),
         Sp, F.Id("x"), Close, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp, Colon, Sp, F.Id("V"),
         Close, Sp, Open, F.Id("a"), Sp, Colon, Sp, Open, F.Id("y"), Sp, Colon, Sp, F.Id("V"), Close, Sp, To,
         Sp, DefinitionDsl.Id("InvImage"), Sp, Open, DefinitionDsl.Id("fun"), Sp, Open,
         DefinitionDsl.Id("x1"), Sp, DefinitionDsl.Id("x2"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))),
-        Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("x1"), Sp, Lt, Sp, DefinitionDsl.Id("x2"), Close, Sp, Open,
-        DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, Open,
+        Close, Sp, Mapsto, Sp, DefinitionDsl.Id("x1"), Sp, Lt, Sp, DefinitionDsl.Id("x2"), Close, Sp, Open,
+        DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, Open,
         DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Dot, DefinitionDsl.Id("dist"), Sp, F.Id("r"), Sp,
-        F.Id("x"), Close, Sp, F.Id("y"), Sp, F.Id("v"), Sp, To, Sp, F.Id("A"), Close, Sp, Eq, Gt, Sp,
+        F.Id("x"), Close, Sp, F.Id("y"), Sp, F.Id("v"), Sp, To, Sp, F.Id("A"), Close, Sp, Mapsto, Sp,
         DefinitionDsl.Id("if"), Sp, DefinitionDsl.Id("hv"), Sp, Colon, Sp, F.Id("v"), Sp, Eq, Sp, F.Id("r"),
         Sp, DefinitionDsl.Id("then"), Sp, DefinitionDsl.Id("base"), Sp, DefinitionDsl.Id("else"), Sp,
         DefinitionDsl.Id("diff"), Sp, Langle, Sp, F.Id("v"), Comma, Sp, DefinitionDsl.Id("hv"), Rangle, Sp,
@@ -386,11 +383,11 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         Forall, Sp, Open, F.Id("V"), Colon, Sp, DefinitionDsl.Id("Type"), Close, Comma, Sp, Forall, Sp,
         Open, F.Id("r"), Colon, Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open, F.Id("f"), Colon, Sp,
         DefinitionDsl.Id("CayleyParent"), Dot, DefinitionDsl.Id("RootMap"), Sp, F.Id("r"), Close, Comma, Sp,
-        Forall, Sp, Open, F.Id("v"), Colon, Sp, F.Id("V"), Close, Comma, Sp, Open,
-        DefinitionDsl.Id("depth"), Sp, F.Id("V"), Sp, F.Id("r"), Sp, F.Id("f"), Sp, F.Id("v"), Sp, Colon,
-        Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Eq, Sp, DefinitionDsl.Id("min"), Sp, Open,
-        DefinitionDsl.Id("fun"), Sp, Open, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, DefinitionDsl.Id("Hits"), Sp, F.Id("f"), Sp, F.Id("a"), Sp, F.Id("n"), Close);
+        Forall, Sp, Open, F.Id("v"), Colon, Sp, F.Id("V"), Close, Comma, Sp, DefinitionDsl.Id("depth"), Sp,
+        F.Id("r"), Sp, F.Id("f"), Sp, F.Id("v"), Sp, Eq, Sp, DefinitionDsl.Id("min"), Sp, OpenBrace,
+        F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Sp, Bar, Sp, Sp, Open, F.Id("f"), Dot,
+        DefinitionDsl.Id("val"), Caret, OpenBracket, F.Id("m"), CloseBracket, Close, Sp, F.Id("v"), Sp, Eq,
+        Sp, F.Id("r"), CloseBrace);
 
     private static Formula CayleyParentDepthHits() =>
         Seq(
@@ -490,7 +487,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         DefinitionDsl.Id("RootMap"), Sp, F.Id("r"), Close, Sp, Eq, Sp, OpenBrace, Sp,
         DefinitionDsl.Id("toFun"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("T"), Sp,
         Colon, Sp, DefinitionDsl.Id("CayleyProbe"), Dot, DefinitionDsl.Id("Tree"), Sp, F.Id("V"), Close, Sp,
-        Eq, Gt, Sp, Langle, Sp, DefinitionDsl.Id("fromTree"), Sp, F.Id("T"), Sp, F.Id("r"), Rangle, Sp,
+        Mapsto, Sp, Langle, Sp, DefinitionDsl.Id("fromTree"), Sp, F.Id("T"), Sp, F.Id("r"), Rangle, Sp,
         Comma, Sp, DefinitionDsl.Id("invFun"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("toTree"), Sp, F.Id("r"),
         Sp, CloseBrace);
 
@@ -502,7 +499,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
         Open, DefinitionDsl.Id("toGraph"), Sp, F.Id("V"), Sp, F.Id("r"), Sp, F.Id("f"), Sp, Colon, Sp,
         DefinitionDsl.Id("SimpleGraph"), Sp, F.Id("V"), Close, Sp, Eq, Sp, OpenBrace, Sp,
         DefinitionDsl.Id("Adj"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp,
-        F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, F.Id("v"), Sp, Neq, Sp, F.Id("r"), Sp,
+        F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, F.Id("v"), Sp, Neq, Sp, F.Id("r"), Sp,
         Land, Sp, DefinitionDsl.Id("val"), Sp, F.Id("f"), Sp, F.Id("v"), Sp, Eq, Sp, F.Id("w"), Sp, Lor, Sp,
         F.Id("w"), Sp, Neq, Sp, F.Id("r"), Sp, Land, Sp, DefinitionDsl.Id("val"), Sp, F.Id("f"), Sp,
         F.Id("w"), Sp, Eq, Sp, F.Id("v"), Sp, CloseBrace);

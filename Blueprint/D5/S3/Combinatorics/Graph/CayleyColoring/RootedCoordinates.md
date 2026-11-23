@@ -44,7 +44,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.4 (Edge Equiv).**
 
-$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), (\mathit{edgeEquiv} V T r : \mathit{CayleyColors}.\mathit{Away} r \equiv \mathit{val} (\mathit{val} T).\mathit{edgeSet}) = \mathit{Equiv}.\mathit{ofBijective} (\mathit{fun} (v : \mathit{Away} r) => \mathit{edgeFromPair} T v.\mathit{val} (\mathit{parent} T r v))$$
+$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (v : \mathit{Away} r), \mathit{val} (\mathit{edgeEquiv} T r v) = \mathit{Sym2}.\mathit{mk} (v.\mathit{val}, \mathit{parent} T r v)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.edgeEquiv` (`✓ std3`).
 
@@ -52,7 +52,7 @@ $$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V),
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+The equivalence sends a vertex away from the root to its unordered edge to its parent.
 
 **Theorem 1.5 (Edge orientation).**
 
@@ -68,7 +68,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.6 (Parent).**
 
-$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (v: \mathit{CayleyColors}.\mathit{Away} r), (\mathit{parent} V T r v : V) = \mathit{choose} (\mathit{fun} (x : V) => T.\mathit{val}.\mathit{Adj} v.\mathit{val} x \land T.\mathit{val}.\mathit{dist} r x < T.\mathit{val}.\mathit{dist} r v.\mathit{val})$$
+$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (v: \mathit{CayleyColors}.\mathit{Away} r), (\mathit{parent} V T r v : V) = \mathit{choose} (\mathit{fun} (x : V) \mapsto T.\mathit{val}.\mathit{Adj} v.\mathit{val} x \land T.\mathit{val}.\mathit{dist} r x < T.\mathit{val}.\mathit{dist} r v.\mathit{val})$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.parent` (`✓ std3`).
 
@@ -104,7 +104,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.9 (Reconstruct).**
 
-$$\forall (V: \mathit{Type}), \forall (A: \mathit{Type}), [\mathit{AddGroup} A] \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (\mathit{base}: A), \forall (\mathit{diff}: \mathit{CayleyColors}.\mathit{Away} r \to A), \forall (v: V), (\mathit{reconstruct} V A T r \mathit{base} \mathit{diff} v : A) = \mathit{WellFounded}.\mathit{Nat}.\mathit{fix} (\mathit{fun} (x : V) => (\mathit{val} T).\mathit{dist} r x) \mathit{fun} (v : V) (a : (y : V) \to \mathit{InvImage} (\mathit{fun} (\mathit{x1} \mathit{x2} : \mathbb{N}) => \mathit{x1} < \mathit{x2}) (\mathit{fun} (x : V) => (\mathit{val} T).\mathit{dist} r x) y v \to A) => \mathit{if} \mathit{hv} : v = r \mathit{then} \mathit{base} \mathit{else} \mathit{diff} \langle v, \mathit{hv}\rangle + a (\mathit{parent} T r \langle v, \mathit{hv}\rangle )$$
+$$\forall (V: \mathit{Type}), \forall (A: \mathit{Type}), [\mathit{AddGroup} A] \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (\mathit{base}: A), \forall (\mathit{diff}: \mathit{CayleyColors}.\mathit{Away} r \to A), \forall (v: V), (\mathit{reconstruct} V A T r \mathit{base} \mathit{diff} v : A) = \mathit{WellFounded}.\mathit{Nat}.\mathit{fix} (\mathit{fun} (x : V) \mapsto (\mathit{val} T).\mathit{dist} r x) \mathit{fun} (v : V) (a : (y : V) \to \mathit{InvImage} (\mathit{fun} (\mathit{x1} \mathit{x2} : \mathbb{N}) \mapsto \mathit{x1} < \mathit{x2}) (\mathit{fun} (x : V) \mapsto (\mathit{val} T).\mathit{dist} r x) y v \to A) \mapsto \mathit{if} \mathit{hv} : v = r \mathit{then} \mathit{base} \mathit{else} \mathit{diff} \langle v, \mathit{hv}\rangle + a (\mathit{parent} T r \langle v, \mathit{hv}\rangle )$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.reconstruct` (`✓ std3`).
 
@@ -140,7 +140,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.12 (Depth).**
 
-$$\forall (V: \mathit{Type}), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), \forall (v: V), (\mathit{depth} V r f v : \mathbb{N}) = \mathit{min} (\mathit{fun} (n : \mathbb{N}) => \mathit{Hits} f a n)$$
+$$\forall (V: \mathit{Type}), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), \forall (v: V), \mathit{depth} r f v = \mathit{min} \{m : \mathbb{N}  |  (f.\mathit{val}^[m]) v = r\}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.depth` (`✓ std3`).
 
@@ -148,7 +148,7 @@ $$\forall (V: \mathit{Type}), \forall (r: V), \forall (f: \mathit{CayleyParent}.
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+Depth counts the least number of parent steps needed to reach the root.
 
 **Theorem 1.13 (Depth hits).**
 
@@ -260,7 +260,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.22 (Root Map Equiv).**
 
-$$\forall (V: \mathit{Type}), \forall (r: V), (\mathit{rootMapEquiv} V r : \mathit{CayleyProbe}.\mathit{Tree} V \equiv \mathit{CayleyParent}.\mathit{RootMap} r) = \{ \mathit{toFun} := \mathit{fun} (T : \mathit{CayleyProbe}.\mathit{Tree} V) => \langle \mathit{fromTree} T r\rangle , \mathit{invFun} := \mathit{toTree} r \}$$
+$$\forall (V: \mathit{Type}), \forall (r: V), (\mathit{rootMapEquiv} V r : \mathit{CayleyProbe}.\mathit{Tree} V \equiv \mathit{CayleyParent}.\mathit{RootMap} r) = \{ \mathit{toFun} := \mathit{fun} (T : \mathit{CayleyProbe}.\mathit{Tree} V) \mapsto \langle \mathit{fromTree} T r\rangle , \mathit{invFun} := \mathit{toTree} r \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.rootMapEquiv` (`✓ std3`).
 
@@ -272,7 +272,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.23 (To Graph).**
 
-$$\forall (V: \mathit{Type}), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), (\mathit{toGraph} V r f : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) => v \neq r \land \mathit{val} f v = w \lor w \neq r \land \mathit{val} f w = v \}$$
+$$\forall (V: \mathit{Type}), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), (\mathit{toGraph} V r f : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) \mapsto v \neq r \land \mathit{val} f v = w \lor w \neq r \land \mathit{val} f w = v \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.toGraph` (`✓ std3`).
 

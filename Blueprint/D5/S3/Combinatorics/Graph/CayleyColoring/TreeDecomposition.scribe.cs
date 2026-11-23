@@ -286,7 +286,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
         Sp, Open, DefinitionDsl.Id("glue"), Sp, F.Id("V"), Sp, F.Id("p"), Sp, F.Id("F"), Sp, F.Id("T"), Sp,
         Colon, Sp, DefinitionDsl.Id("SimpleGraph"), Sp, F.Id("V"), Close, Sp, Eq, Sp, OpenBrace, Sp,
         DefinitionDsl.Id("Adj"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp,
-        F.Id("y"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, Open, F.Id("x"), Sp, Eq, Sp, F.Id("p"),
+        F.Id("y"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, Open, F.Id("x"), Sp, Eq, Sp, F.Id("p"),
         Sp, Land, Sp, Exists, Sp, Open, F.Id("s"), Sp, Colon, Sp, DefinitionDsl.Id("val"), Sp, F.Id("F"),
         Dot, DefinitionDsl.Id("parts"), Close, Comma, Sp, F.Id("y"), Sp, Eq, Sp, DefinitionDsl.Id("val"),
         Sp, Open, F.Id("F"), Dot, DefinitionDsl.Id("root"), Sp, F.Id("s"), Close, Close, Sp, Lor, Sp, Open,
@@ -318,13 +318,11 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
         Open, F.Id("p"), Colon, Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open, F.Id("F"), Colon, Sp,
         DefinitionDsl.Id("CayleyProbe"), Dot, DefinitionDsl.Id("Frame"), Sp, F.Id("p"), Close, Comma, Sp,
         Forall, Sp, Open, F.Id("x"), Colon, Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open,
-        DefinitionDsl.Id("hx"), Colon, Sp, F.Id("x"), Sp, Neq, Sp, F.Id("p"), Close, Comma, Sp, Open,
-        DefinitionDsl.Id("partAt"), Sp, F.Id("V"), Sp, F.Id("p"), Sp, F.Id("F"), Sp, F.Id("x"), Sp,
-        DefinitionDsl.Id("hx"), Sp, Colon, Sp, DefinitionDsl.Id("val"), Sp, F.Id("F"), Dot,
-        DefinitionDsl.Id("parts"), Close, Sp, Eq, Sp, DefinitionDsl.Id("choose"), Sp, Open,
-        DefinitionDsl.Id("fun"), Sp, Open, F.Id("s"), Sp, Colon, Sp, F.Id("F"), Dot,
-        DefinitionDsl.Id("parts"), Close, Sp, Eq, Gt, Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("s"), Dot,
-        DefinitionDsl.Id("val"), Close);
+        DefinitionDsl.Id("hx"), Colon, Sp, F.Id("x"), Sp, Neq, Sp, F.Id("p"), Close, Comma, Sp,
+        DefinitionDsl.Id("partAt"), Sp, F.Id("F"), Sp, F.Id("x"), Sp, DefinitionDsl.Id("hx"), Sp, Eq, Sp,
+        DefinitionDsl.Id("choose"), Sp, Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("s"), Sp, Colon, Sp,
+        F.Id("F"), Dot, DefinitionDsl.Id("parts"), Close, Sp, Mapsto, Sp, F.Id("x"), Sp, InMacro, Sp,
+        F.Id("s"), Dot, DefinitionDsl.Id("val"), Close);
 
     private static Formula CayleyProbePeak() =>
         Seq(
@@ -364,7 +362,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
         Sp, F.Id("V"), Sp, F.Id("G"), Sp, F.Id("p"), Sp, Colon, Sp, DefinitionDsl.Id("SimpleGraph"), Sp,
         F.Id("V"), Close, Sp, Eq, Sp, OpenBrace, Sp, DefinitionDsl.Id("Adj"), Sp, Colon, Eq, Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp, F.Id("V"), Close, Sp,
-        Eq, Gt, Sp, F.Id("x"), Sp, Neq, Sp, F.Id("p"), Sp, Land, Sp, F.Id("y"), Sp, Neq, Sp, F.Id("p"), Sp,
+        Mapsto, Sp, F.Id("x"), Sp, Neq, Sp, F.Id("p"), Sp, Land, Sp, F.Id("y"), Sp, Neq, Sp, F.Id("p"), Sp,
         Land, Sp, F.Id("G"), Dot, DefinitionDsl.Id("Adj"), Sp, F.Id("x"), Sp, F.Id("y"), Sp, CloseBrace);
 
     private static Formula CayleyProbeCutparts() =>
@@ -403,7 +401,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
         Sp, DefinitionDsl.Id("invFun"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("a"), Sp,
         Colon, Sp, Open, F.Id("F"), Sp, Colon, Sp, DefinitionDsl.Id("CayleyProbe"), Dot,
         DefinitionDsl.Id("Frame"), Sp, F.Id("p"), Close, Sp, Times, Sp, F.Id("F"), Dot,
-        DefinitionDsl.Id("Branches"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("CayleyProbe"), Dot,
+        DefinitionDsl.Id("Branches"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("CayleyProbe"), Dot,
         DefinitionDsl.Id("Frame"), Dot, DefinitionDsl.Id("assemble"), Sp, F.Id("a"), Dot,
         DefinitionDsl.Id("snd"), Sp, CloseBrace);
 
@@ -419,7 +417,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
         DefinitionDsl.Id("cover"), Sp, Colon, Eq, Comma, Sp, DefinitionDsl.Id("separate"), Sp, Colon, Eq,
         Comma, Sp, DefinitionDsl.Id("root"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open,
         F.Id("s"), Sp, Colon, Sp, DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("cutParts"), Sp, Open,
-        DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Sp, F.Id("p"), Close, Close, Sp, Eq, Gt, Sp, Langle,
+        DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Sp, F.Id("p"), Close, Close, Sp, Mapsto, Sp, Langle,
         Sp, F.Id("h"), Dot, DefinitionDsl.Id("choose"), Rangle, Sp, CloseBrace);
 
     private static Formula CayleyProbeFiltercard() =>

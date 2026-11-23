@@ -78,7 +78,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.7 (Legal Prefix).**
 
-$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), \forall (l: \mathit{List} V), (\mathit{LegalPrefix} V G \mathit{live} l : \mathit{Prop}) = \mathit{List}.\mathit{recOn} (\mathit{motive} := \mathit{fun} (x : \mathit{List} V) => \mathit{Set} V \to \mathit{Prop}) l (\mathit{fun} (x : \mathit{Set} V) => \mathit{True}) (\mathit{fun} (v : V) (x : \mathit{List} V) (\mathit{rec} : \mathit{Set} V \to \mathit{Prop}) (\mathit{alive} : \mathit{Set} V) => \mathit{CayleyScheduler}.\mathit{Enabled} G \mathit{alive} v \land \mathit{rec} (\mathit{alive} \setminus \{v\})) \mathit{live}$$
+$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), \forall (l: \mathit{List} V), (\mathit{LegalPrefix} V G \mathit{live} l : \mathit{Prop}) = \mathit{List}.\mathit{recOn} (\mathit{motive} := \mathit{fun} (x : \mathit{List} V) \mapsto \mathit{Set} V \to \mathit{Prop}) l (\mathit{fun} (x : \mathit{Set} V) \mapsto \mathit{True}) (\mathit{fun} (v : V) (x : \mathit{List} V) (\mathit{rec} : \mathit{Set} V \to \mathit{Prop}) (\mathit{alive} : \mathit{Set} V) => \mathit{CayleyScheduler}.\mathit{Enabled} G \mathit{alive} v \land \mathit{rec} (\mathit{alive} \setminus \{v\})) \mathit{live}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.LegalPrefix` (`✓ std3`).
 
@@ -192,7 +192,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.15 (Active).**
 
-$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), (\mathit{active} V G \mathit{live} : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) => v \in \mathit{live} \land w \in \mathit{live} \land G.\mathit{Adj} v w \}$$
+$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), (\mathit{active} V G \mathit{live} : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) \mapsto v \in \mathit{live} \land w \in \mathit{live} \land G.\mathit{Adj} v w \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.active` (`✓ std3`).
 
@@ -204,7 +204,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.16 (Choice Product).**
 
-$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), \forall (l: \mathit{List} V), (\mathit{choiceProduct} V G \mathit{live} l : \mathbb{N}) = \mathit{List}.\mathit{recOn} (\mathit{motive} := \mathit{fun} (x : \mathit{List} V) => \mathit{Set} V \to \mathbb{N}) l (\mathit{fun} (x : \mathit{Set} V) => 1) (\mathit{fun} (v : V) (x : \mathit{List} V) (\mathit{rec} : \mathit{Set} V \to \mathbb{N}) (\mathit{alive} : \mathit{Set} V) => \mathit{Nat}.\mathit{card} \{ w : V  |  \mathit{CayleyScheduler}.\mathit{Enabled} G \mathit{alive} w \} \cdot \mathit{rec} (\mathit{alive} \setminus \{v\})) \mathit{live}$$
+$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{live}: \mathit{Set} V), \forall (l: \mathit{List} V), (\mathit{choiceProduct} V G \mathit{live} l : \mathbb{N}) = \mathit{List}.\mathit{recOn} (\mathit{motive} := \mathit{fun} (x : \mathit{List} V) \mapsto \mathit{Set} V \to \mathbb{N}) l (\mathit{fun} (x : \mathit{Set} V) \mapsto 1) (\mathit{fun} (v : V) (x : \mathit{List} V) (\mathit{rec} : \mathit{Set} V \to \mathbb{N}) (\mathit{alive} : \mathit{Set} V) \mapsto \mathit{Nat}.\mathit{card} \{ w : V  |  \mathit{CayleyScheduler}.\mathit{Enabled} G \mathit{alive} w \} \cdot \mathit{rec} (\mathit{alive} \setminus \{v\})) \mathit{live}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.choiceProduct` (`✓ std3`).
 
@@ -216,7 +216,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.17 (Conflict).**
 
-$$\forall (V: \mathit{Type}), \forall (K: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{color}: V \to K), (\mathit{conflict} V K G \mathit{color} : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) => G.\mathit{Adj} v w \land \mathit{color} v = \mathit{color} w \}$$
+$$\forall (V: \mathit{Type}), \forall (K: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{color}: V \to K), (\mathit{conflict} V K G \mathit{color} : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (v w : V) \mapsto G.\mathit{Adj} v w \land \mathit{color} v = \mathit{color} w \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.conflict` (`✓ std3`).
 
@@ -240,7 +240,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.19 (Ranked History).**
 
-$$\forall (V: \mathit{Type}), [\mathit{Fintype} V] [\mathit{LinearOrder} V] \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{rank}: \mathit{Equiv}.\mathit{Perm} V), \forall (\mathit{live}: \mathit{Set} V), (\mathit{rankedHistory} V G \mathit{rank} \mathit{live} : \mathit{List} V) = \mathit{choose} (\mathit{fun} (l : \mathit{List} V) => \mathit{Complete} G \mathit{rank} \mathit{live} l)$$
+$$\forall (V: \mathit{Type}), [\mathit{Fintype} V] [\mathit{LinearOrder} V] \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{rank}: \mathit{Equiv}.\mathit{Perm} V), \forall (\mathit{live}: \mathit{Set} V), (\mathit{rankedHistory} V G \mathit{rank} \mathit{live} : \mathit{List} V) = \mathit{choose} (\mathit{fun} (l : \mathit{List} V) \mapsto \mathit{Complete} G \mathit{rank} \mathit{live} l)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.rankedHistory` (`✓ std3`).
 
@@ -264,7 +264,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.21 (Ranked moves complement).**
 
-$$\forall (V: \mathit{Type}), [\mathit{Fintype} V] [\mathit{LinearOrder} V] \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{rank}: \mathit{Equiv}.\mathit{Perm} V), (\mathit{rankedHistory} G \mathit{rank} \mathit{Set}.\mathit{univ}).\mathit{length} = \mathit{Fintype}.\mathit{card} V - \mathit{filterCard} \mathit{fun} (v : V) => \forall (w : V), G.\mathit{Adj} v w \to \mathit{rank} w < \mathit{rank} v$$
+$$\forall (V: \mathit{Type}), [\mathit{Fintype} V] [\mathit{LinearOrder} V] \forall (G: \mathit{SimpleGraph} V), \forall (\mathit{rank}: \mathit{Equiv}.\mathit{Perm} V), (\mathit{rankedHistory} G \mathit{rank} \mathit{Set}.\mathit{univ}).\mathit{length} = \mathit{Fintype}.\mathit{card} V - \mathit{filterCard} \mathit{fun} (v : V) \mapsto \forall (w : V), G.\mathit{Adj} v w \to \mathit{rank} w < \mathit{rank} v$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.ranked_moves_complement` (`✓ std3`). ∎
 

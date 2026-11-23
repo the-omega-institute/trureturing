@@ -68,7 +68,7 @@ $$
 
 **Definition 1.6 (Anchor).**
 
-$$\forall (V: \mathit{Type}), \forall (a: V), \forall (F: \mathit{CayleyCore}.\mathit{Frame} a), (\mathit{anchor} V a F : \mathit{val} F.\mathit{core}) = a \mathit{asSubtype} F.\mathit{core}$$
+$$\forall (V: \mathit{Type}), \forall (a: V), \forall (F: \mathit{CayleyCore}.\mathit{Frame} a), \mathit{val} (\mathit{anchor} F) = a$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CayleyCode.anchor` (`✓ std3`).
 
@@ -76,11 +76,11 @@ $$\forall (V: \mathit{Type}), \forall (a: V), \forall (F: \mathit{CayleyCore}.\m
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+The frame regards the distinguished vertex as an element of its core.
 
 **Definition 1.7 (Of Function).**
 
-$$\forall (V: \mathit{Type}), \forall (a: V), \forall (f: V \to V), \forall (C: \mathit{Set} V), \forall (\mathit{ha}: a \in C), \forall (h: \forall (x : V), \exists (n : \mathbb{N}), f^[n] x \in C), (\mathit{ofFunction} V a f C \mathit{ha} h : \mathit{CayleyCore}.\mathit{Frame} a) = \mathit{let} g := \mathit{fun} (x : V) => \mathit{if} x \in C \mathit{then} x \mathit{else} f x; \{ \mathit{core} := C, \mathit{anchor}\mathrm{anonymous}\mathit{mem} := \mathit{ha}, \mathit{outside} := g \}$$
+$$\forall (V: \mathit{Type}), \forall (a: V), \forall (f: V \to V), \forall (C: \mathit{Set} V), \forall (\mathit{ha}: a \in C), \forall (h: \forall (x : V), \exists (n : \mathbb{N}), f^[n] x \in C), (\mathit{ofFunction} V a f C \mathit{ha} h : \mathit{CayleyCore}.\mathit{Frame} a) = \mathit{let} g := \mathit{fun} (x : V) \mapsto \mathit{if} x \in C \mathit{then} x \mathit{else} f x; \{ \mathit{core} := C, \mathit{anchor}\mathrm{anonymous}\mathit{mem} := \mathit{ha}, \mathit{outside} := g \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CayleyCode.ofFunction` (`✓ std3`).
 
@@ -176,7 +176,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.15 (Index Before Last).**
 
-$$\forall (m: \mathbb{N}), (\mathit{indexBeforeLast} m : \mathit{Fin} m \equiv \{ i : \mathit{Fin} (m + 1)  |  i \neq \mathit{Fin}.\mathit{last} m \}) = \mathit{let} f := \mathit{fun} (i : \mathit{Fin} m) => \langle i.\mathit{castSucc}\rangle ; \mathit{Equiv}.\mathit{ofBijective} f$$
+$$\forall (m: \mathbb{N}), (\mathit{indexBeforeLast} m : \mathit{Fin} m \equiv \{ i : \mathit{Fin} (m + 1)  |  i \neq \mathit{Fin}.\mathit{last} m \}) = \mathit{let} f := \mathit{fun} (i : \mathit{Fin} m) \mapsto \langle i.\mathit{castSucc}\rangle ; \mathit{Equiv}.\mathit{ofBijective} f$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CayleyCode.indexBeforeLast` (`✓ std3`).
 
@@ -200,7 +200,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.17 (Orbit Equiv).**
 
-$$\forall (V: \mathit{Type}), \forall (a: V), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), (\mathit{orbitEquiv} V a r f : \mathit{Fin} (\mathit{depth} r f a + 1) \equiv \mathit{val} (\mathit{orbitCore} a f)) = \mathit{Equiv}.\mathit{ofBijective} (\mathit{fun} (i : \mathit{Fin} (\mathit{depth} r f a + 1)) => \langle (\mathit{val} f)^[\mathit{val} i] a\rangle )$$
+$$\forall (V: \mathit{Type}), \forall (a: V), \forall (r: V), \forall (f: \mathit{CayleyParent}.\mathit{RootMap} r), (\mathit{orbitEquiv} V a r f : \mathit{Fin} (\mathit{depth} r f a + 1) \equiv \mathit{val} (\mathit{orbitCore} a f)) = \mathit{Equiv}.\mathit{ofBijective} (\mathit{fun} (i : \mathit{Fin} (\mathit{depth} r f a + 1)) \mapsto \langle (\mathit{val} f)^[\mathit{val} i] a\rangle )$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/CayleyCode.orbitEquiv` (`✓ std3`).
 

@@ -30,7 +30,7 @@ The displayed formula specifies the construction.
 
 **Theorem 1.3 (Char Fun standardized Law).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \forall (t: \mathbb{R}), \mathit{MeasureTheory}.\mathit{charFun} (\mathit{val} (\mathit{standardizedLaw} \mathit{hn} \mathit{hp} \mathit{hpUpper} j)) t = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => \mathit{phase} (t \cdot \mathit{standardized} n p j x)$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \forall (t: \mathbb{R}), \mathit{MeasureTheory}.\mathit{charFun} (\mathit{val} (\mathit{standardizedLaw} \mathit{hn} \mathit{hp} \mathit{hpUpper} j)) t = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto \mathit{phase} (t \cdot \mathit{standardized} n p j x)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.charFun_standardizedLaw` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.5 (Expect sub).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommGroup} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \forall (g: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => f x - g x) = \mathit{expect} n p j f - \mathit{expect} n p j g$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommGroup} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \forall (g: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto f x - g x) = \mathit{expect} n p j f - \mathit{expect} n p j g$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.expect_sub` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.12 (Norm expect le).**
 
-$$\forall (E: \mathit{Type}), [\mathit{NormedAddCommGroup} E] [\mathit{NormedSpace} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (j: \mathbb{N}), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (f: \mathbb{N} \to E), \Vert \mathit{expect} n p j f\Vert \leq \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => \Vert f x\Vert$$
+$$\forall (E: \mathit{Type}), [\mathit{NormedAddCommGroup} E] [\mathit{NormedSpace} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (j: \mathbb{N}), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (f: \mathbb{N} \to E), \Vert \mathit{expect} n p j f\Vert \leq \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto \Vert f x\Vert$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.norm_expect_le` (`✓ std3`). ∎
 
@@ -222,7 +222,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.19 (Row Law).**
 
-$$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{N}), (\mathit{rowLaw} k \mathit{hk} N : \mathit{MeasureTheory}.\mathit{ProbabilityMeasure} \mathbb{R}) = \mathit{standardizedLaw} (N + 1) (\mathit{paletteP} k) N$$
+$$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{N}), \mathit{rowLaw} k \mathit{hk} N = \mathit{standardizedLaw} (N + 1) (\mathit{paletteP} k) N$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.rowLaw` (`✓ std3`).
 
@@ -230,11 +230,11 @@ $$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+The row with index N uses N throws and N plus one ordinary bins with retention probability one over k.
 
 **Definition 1.20 (Row Phase).**
 
-$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (s: \mathbb{R}), (\mathit{rowPhase} n p j s : \mathbb{C}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => \mathit{phase} (s \cdot (\mathit{val} x - \mathit{mean} n p j))$$
+$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (s: \mathbb{R}), (\mathit{rowPhase} n p j s : \mathbb{C}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto \mathit{phase} (s \cdot (\mathit{val} x - \mathit{mean} n p j))$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.rowPhase` (`✓ std3`).
 
@@ -270,7 +270,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.23 (Standardized Law).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), (\mathit{standardizedLaw} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} j : \mathit{MeasureTheory}.\mathit{ProbabilityMeasure} \mathbb{R}) = \langle \mathit{MeasureTheory}.\mathit{Measure}.\mathit{map} (\mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) => \mathit{standardized} n p j (\mathit{count} n j \omega)) (\mathit{wordPMF} \mathit{hn} \mathit{hp} \mathit{hpUpper} j).\mathit{toMeasure}\rangle$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), (\mathit{standardizedLaw} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} j : \mathit{MeasureTheory}.\mathit{ProbabilityMeasure} \mathbb{R}) = \langle \mathit{MeasureTheory}.\mathit{Measure}.\mathit{map} (\mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) \mapsto \mathit{standardized} n p j (\mathit{count} n j \omega)) (\mathit{wordPMF} \mathit{hn} \mathit{hp} \mathit{hpUpper} j).\mathit{toMeasure}\rangle$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.standardizedLaw` (`✓ std3`).
 
@@ -282,7 +282,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.24 (Throw PMF).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), (\mathit{throwPMF} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} : \mathit{PMF} (\mathit{Option} (\mathit{Fin} n))) = \mathit{PMF}.\mathit{ofFintype} (\mathit{fun} (b : \mathit{Option} (\mathit{Fin} n)) => \mathit{ENNReal}.\mathit{ofReal} (\mathit{throwMass} n p b))$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), (\mathit{throwPMF} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} : \mathit{PMF} (\mathit{Option} (\mathit{Fin} n))) = \mathit{PMF}.\mathit{ofFintype} (\mathit{fun} (b : \mathit{Option} (\mathit{Fin} n)) \mapsto \mathit{ENNReal}.\mathit{ofReal} (\mathit{throwMass} n p b))$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.throwPMF` (`✓ std3`).
 
@@ -294,7 +294,7 @@ The displayed formula specifies the construction.
 
 **Theorem 1.25 (Variance count).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \mathit{ProbabilityTheory}.\mathit{variance} (\mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) => \mathit{val} (\mathit{count} n j \omega)) (\mathit{wordPMF} \mathit{hn} \mathit{hp} \mathit{hpUpper} j).\mathit{toMeasure} = \mathit{variance} n p j$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \mathit{ProbabilityTheory}.\mathit{variance} (\mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) \mapsto \mathit{val} (\mathit{count} n j \omega)) (\mathit{wordPMF} \mathit{hn} \mathit{hp} \mathit{hpUpper} j).\mathit{toMeasure} = \mathit{variance} n p j$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.variance_count` (`✓ std3`). ∎
 
@@ -306,7 +306,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.26 (Variance fluctuation).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \forall (\mathit{hj}: j \leq n), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => |v n p \mathit{val} x - \mathit{predictableVariance} n p j|) \leq \mathit{fluctuationBound} n p$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), \forall (\mathit{hj}: j \leq n), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto |v n p \mathit{val} x - \mathit{predictableVariance} n p j|) \leq \mathit{fluctuationBound} n p$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.variance_fluctuation` (`✓ std3`). ∎
 
@@ -330,7 +330,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.28 (Word PMF).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), (\mathit{wordPMF} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} j : \mathit{PMF} (\mathit{DiscardedOccupancy}.\mathit{History} n j)) = \mathit{PMF}.\mathit{ofFintype} (\mathit{fun} (w : \mathit{History} n j) => \mathit{ENNReal}.\mathit{ofReal} (\mathit{wordMass} n p w))$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (\mathit{hp}: 0 \leq p), \forall (\mathit{hpUpper}: p \leq 1), \forall (j: \mathbb{N}), (\mathit{wordPMF} n \mathit{hn} p \mathit{hp} \mathit{hpUpper} j : \mathit{PMF} (\mathit{DiscardedOccupancy}.\mathit{History} n j)) = \mathit{PMF}.\mathit{ofFintype} (\mathit{fun} (w : \mathit{History} n j) \mapsto \mathit{ENNReal}.\mathit{ofReal} (\mathit{wordMass} n p w))$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Characteristic.wordPMF` (`✓ std3`).
 

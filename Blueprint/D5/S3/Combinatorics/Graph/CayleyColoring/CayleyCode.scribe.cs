@@ -56,7 +56,7 @@ internal sealed class CayleyTreeCayleyCodeDocument : IScribeDocumentDefinition
                 H("Anchor"),
                 StatementSource.FromAuthor(Disp(CayleyCoreFrameAnchor())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The frame regards the distinguished vertex as an element of its core."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cayley-core-frame-of-function"),
@@ -278,9 +278,8 @@ internal sealed class CayleyTreeCayleyCodeDocument : IScribeDocumentDefinition
         Forall, Sp, Open, F.Id("V"), Colon, Sp, DefinitionDsl.Id("Type"), Close, Comma, Sp, Forall, Sp,
         Open, F.Id("a"), Colon, Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open, F.Id("F"), Colon, Sp,
         DefinitionDsl.Id("CayleyCore"), Dot, DefinitionDsl.Id("Frame"), Sp, F.Id("a"), Close, Comma, Sp,
-        Open, DefinitionDsl.Id("anchor"), Sp, F.Id("V"), Sp, F.Id("a"), Sp, F.Id("F"), Sp, Colon, Sp,
-        DefinitionDsl.Id("val"), Sp, F.Id("F"), Dot, DefinitionDsl.Id("core"), Close, Sp, Eq, Sp, F.Id("a"),
-        Sp, DefinitionDsl.Id("asSubtype"), Sp, F.Id("F"), Dot, DefinitionDsl.Id("core"));
+        DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("anchor"), Sp, F.Id("F"), Close, Sp, Eq, Sp,
+        F.Id("a"));
 
     private static Formula CayleyCoreFrameOffunction() =>
         Seq(
@@ -296,7 +295,7 @@ internal sealed class CayleyTreeCayleyCodeDocument : IScribeDocumentDefinition
         Sp, DefinitionDsl.Id("ha"), Sp, F.Id("h"), Sp, Colon, Sp, DefinitionDsl.Id("CayleyCore"), Dot,
         DefinitionDsl.Id("Frame"), Sp, F.Id("a"), Close, Sp, Eq, Sp, DefinitionDsl.Id("let"), Sp, F.Id("g"),
         Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("V"), Close,
-        Sp, Eq, Gt, Sp, DefinitionDsl.Id("if"), Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("C"), Sp,
+        Sp, Mapsto, Sp, DefinitionDsl.Id("if"), Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("C"), Sp,
         DefinitionDsl.Id("then"), Sp, F.Id("x"), Sp, DefinitionDsl.Id("else"), Sp, F.Id("f"), Sp, F.Id("x"),
         Semi, Sp, OpenBrace, Sp, DefinitionDsl.Id("core"), Sp, Colon, Eq, Sp, F.Id("C"), Comma, Sp,
         DefinitionDsl.Id("anchor"), Mathrm, Grp(F.Id("anonymous")), DefinitionDsl.Id("mem"), Sp, Colon, Eq,
@@ -405,7 +404,7 @@ internal sealed class CayleyTreeCayleyCodeDocument : IScribeDocumentDefinition
         Open, F.Id("m"), Sp, Plus, Sp, D(1), Close, Sp, Sp, Bar, Sp, Sp, F.Id("i"), Sp, Neq, Sp,
         DefinitionDsl.Id("Fin"), Dot, DefinitionDsl.Id("last"), Sp, F.Id("m"), Sp, CloseBrace, Close, Sp,
         Eq, Sp, DefinitionDsl.Id("let"), Sp, F.Id("f"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp,
-        Open, F.Id("i"), Sp, Colon, Sp, DefinitionDsl.Id("Fin"), Sp, F.Id("m"), Close, Sp, Eq, Gt, Sp,
+        Open, F.Id("i"), Sp, Colon, Sp, DefinitionDsl.Id("Fin"), Sp, F.Id("m"), Close, Sp, Mapsto, Sp,
         Langle, Sp, F.Id("i"), Dot, DefinitionDsl.Id("castSucc"), Rangle, Sp, Semi, Sp,
         DefinitionDsl.Id("Equiv"), Dot, DefinitionDsl.Id("ofBijective"), Sp, F.Id("f"));
 
@@ -432,7 +431,7 @@ internal sealed class CayleyTreeCayleyCodeDocument : IScribeDocumentDefinition
         Open, DefinitionDsl.Id("orbitCore"), Sp, F.Id("a"), Sp, F.Id("f"), Close, Close, Sp, Eq, Sp,
         DefinitionDsl.Id("Equiv"), Dot, DefinitionDsl.Id("ofBijective"), Sp, Open, DefinitionDsl.Id("fun"),
         Sp, Open, F.Id("i"), Sp, Colon, Sp, DefinitionDsl.Id("Fin"), Sp, Open, DefinitionDsl.Id("depth"),
-        Sp, F.Id("r"), Sp, F.Id("f"), Sp, F.Id("a"), Sp, Plus, Sp, D(1), Close, Close, Sp, Eq, Gt, Sp,
+        Sp, F.Id("r"), Sp, F.Id("f"), Sp, F.Id("a"), Sp, Plus, Sp, D(1), Close, Close, Sp, Mapsto, Sp,
         Langle, Sp, Open, DefinitionDsl.Id("val"), Sp, F.Id("f"), Close, Caret, OpenBracket,
         DefinitionDsl.Id("val"), Sp, F.Id("i"), CloseBracket, Sp, F.Id("a"), Rangle, Sp, Close);
 

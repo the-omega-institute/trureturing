@@ -56,7 +56,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
                 H("Entry"),
                 StatementSource.FromAuthor(Disp(CayleyForestEntry())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The entry is an element of the retained component that minimizes its distance from the original root."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The minimum is taken over the finite component with distance measured in the original tree."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cayley-forest-forest-equiv"),
@@ -72,7 +72,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
                 H("Local Tree"),
                 StatementSource.FromAuthor(Disp(CayleyForestLocaltree())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The underlying graph is the induced retained graph on the component. Acyclicity of the original tree and connectivity of the component supply its tree certificate."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cayley-forest-parts"),
@@ -270,7 +270,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         DefinitionDsl.Id("SimpleGraph"), Dot, DefinitionDsl.Id("map"), Sp, DefinitionDsl.Id("coe"), Sp,
         Open, DefinitionDsl.Id("Function"), Dot, DefinitionDsl.Id("Embedding"), Dot,
         DefinitionDsl.Id("subtype"), Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        F.Id("V"), Close, Sp, Eq, Gt, Sp, F.Id("x"), Sp, InMacro, Sp, DefinitionDsl.Id("val"), Sp,
+        F.Id("V"), Close, Sp, Mapsto, Sp, F.Id("x"), Sp, InMacro, Sp, DefinitionDsl.Id("val"), Sp,
         F.Id("s"), Close, Sp, DefinitionDsl.Id("val"), Sp, Open, F.Id("U"), Sp, F.Id("s"), Close);
 
     private static Formula CayleyForestEntry() =>
@@ -282,10 +282,9 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         Colon, Sp, DefinitionDsl.Id("SimpleGraph"), Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open,
         F.Id("s"), Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"), Close, Comma, Sp, Forall, Sp, Open,
         DefinitionDsl.Id("hs"), Colon, Sp, F.Id("s"), Sp, InMacro, Sp, DefinitionDsl.Id("parts"), Sp,
-        F.Id("H"), Close, Comma, Sp, Open, DefinitionDsl.Id("entry"), Sp, F.Id("V"), Sp, F.Id("T"), Sp,
-        F.Id("r"), Sp, F.Id("H"), Sp, F.Id("s"), Sp, DefinitionDsl.Id("hs"), Sp, Colon, Sp,
-        DefinitionDsl.Id("val"), Sp, F.Id("s"), Close, Sp, Eq, Sp, DefinitionDsl.Id("argmin"), Sp, Open,
-        DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp, Colon, Sp, F.Id("s"), Close, Sp, Eq, Gt, Sp,
+        F.Id("H"), Close, Comma, Sp, DefinitionDsl.Id("entry"), Sp, F.Id("T"), Sp, F.Id("r"), Sp, F.Id("H"),
+        Sp, F.Id("s"), Sp, DefinitionDsl.Id("hs"), Sp, Eq, Sp, DefinitionDsl.Id("argmin"), Sp, Open,
+        DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp, Colon, Sp, F.Id("s"), Close, Sp, Mapsto, Sp,
         F.Id("T"), Dot, DefinitionDsl.Id("val"), Dot, DefinitionDsl.Id("dist"), Sp, F.Id("r"), Sp,
         F.Id("v"), Dot, DefinitionDsl.Id("val"), Close);
 
@@ -299,7 +298,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         F.Id("V"), Sp, Equiv, Sp, DefinitionDsl.Id("CayleyForest"), Dot, DefinitionDsl.Id("Sample"), Sp,
         F.Id("V"), Close, Sp, Eq, Sp, OpenBrace, Sp, DefinitionDsl.Id("toFun"), Sp, Colon, Eq, Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("S"), Sp, Colon, Sp, DefinitionDsl.Id("CayleyForest"), Dot,
-        DefinitionDsl.Id("Sample"), Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("transform"), Sp,
+        DefinitionDsl.Id("Sample"), Sp, F.Id("V"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("transform"), Sp,
         F.Id("r"), Sp, F.Id("S"), Sp, DefinitionDsl.Id("false"), Comma, Sp, DefinitionDsl.Id("invFun"), Sp,
         Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("S"), Sp, Colon, Sp,
         DefinitionDsl.Id("CayleyForest"), Dot, DefinitionDsl.Id("Sample"), Sp, F.Id("V"), Close, Sp, Eq, Gt,
@@ -315,11 +314,10 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         Colon, Sp, F.Id("H"), Sp, Leq, Sp, DefinitionDsl.Id("val"), Sp, F.Id("T"), Close, Comma, Sp, Forall,
         Sp, Open, F.Id("s"), Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"), Close, Comma, Sp, Forall,
         Sp, Open, DefinitionDsl.Id("hs"), Colon, Sp, F.Id("s"), Sp, InMacro, Sp, DefinitionDsl.Id("parts"),
-        Sp, F.Id("H"), Close, Comma, Sp, Open, DefinitionDsl.Id("localTree"), Sp, F.Id("V"), Sp, F.Id("T"),
-        Sp, F.Id("H"), Sp, F.Id("h"), Sp, F.Id("s"), Sp, DefinitionDsl.Id("hs"), Sp, Colon, Sp,
-        DefinitionDsl.Id("CayleyProbe"), Dot, DefinitionDsl.Id("Tree"), Sp, DefinitionDsl.Id("val"), Sp,
-        F.Id("s"), Close, Sp, Eq, Sp, DefinitionDsl.Id("restrictTree"), Sp, F.Id("T"), Sp, F.Id("H"), Sp,
-        F.Id("s"));
+        Sp, F.Id("H"), Close, Comma, Sp, DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("localTree"),
+        Sp, F.Id("T"), Sp, F.Id("H"), Sp, F.Id("h"), Sp, F.Id("s"), Sp, DefinitionDsl.Id("hs"), Close, Sp,
+        Eq, Sp, DefinitionDsl.Id("SimpleGraph"), Dot, DefinitionDsl.Id("induce"), Sp, F.Id("s"), Sp,
+        F.Id("H"));
 
     private static Formula CayleyForestParts() =>
         Seq(
@@ -328,7 +326,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         DefinitionDsl.Id("parts"), Sp, F.Id("V"), Sp, F.Id("H"), Sp, Colon, Sp, DefinitionDsl.Id("Set"), Sp,
         Open, DefinitionDsl.Id("Set"), Sp, F.Id("V"), Close, Close, Sp, Eq, Sp, DefinitionDsl.Id("Set"),
         Dot, DefinitionDsl.Id("range"), Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("c"), Sp, Colon, Sp,
-        F.Id("H"), Dot, DefinitionDsl.Id("ConnectedComponent"), Close, Sp, Eq, Gt, Sp, F.Id("c"), Dot,
+        F.Id("H"), Dot, DefinitionDsl.Id("ConnectedComponent"), Close, Sp, Mapsto, Sp, F.Id("c"), Dot,
         DefinitionDsl.Id("supp"));
 
     private static Formula CayleyForestReplace() =>
@@ -551,7 +549,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
         DefinitionDsl.Id("fst"), Comma, Sp, F.Id("H"), Close, Rangle, Sp, Comma, Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("e"), Sp, Colon, Sp, DefinitionDsl.Id("CayleyMarks"), Dot,
         DefinitionDsl.Id("Deleted"), Sp, Langle, Sp, Open, F.Id("x"), Dot, DefinitionDsl.Id("fst"), Comma,
-        Sp, F.Id("H"), Close, Rangle, Sp, Close, Sp, Eq, Gt, Sp, Langle, Sp, F.Id("x"), Dot,
+        Sp, F.Id("H"), Close, Rangle, Sp, Close, Sp, Mapsto, Sp, Langle, Sp, F.Id("x"), Dot,
         DefinitionDsl.Id("snd"), Sp, Langle, Sp, DefinitionDsl.Id("val"), Sp, F.Id("e"), Comma, Sp,
         DefinitionDsl.Id("he"), Rangle, Sp, Rangle, Sp, Rangle);
 }

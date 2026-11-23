@@ -56,7 +56,7 @@ internal sealed class DiscardedOccupancyNormalLimitDocument : IScribeDocumentDef
                 H("Literal Law"),
                 StatementSource.FromAuthor(Disp(DiscardedOccupancyLiterallaw())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The standardized occupancy law is the pushforward of the independent throw product measure."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("discarded-occupancy-literal-measure"),
@@ -64,7 +64,7 @@ internal sealed class DiscardedOccupancyNormalLimitDocument : IScribeDocumentDef
                 H("Literal Measure"),
                 StatementSource.FromAuthor(Disp(DiscardedOccupancyLiteralmeasure())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("Each coordinate has the same one-throw measure. The row measure is the product of these coordinates."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("discarded-occupancy-literal-standardized"),
@@ -172,11 +172,10 @@ internal sealed class DiscardedOccupancyNormalLimitDocument : IScribeDocumentDef
         Seq(
         Forall, Sp, Open, F.Id("k"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Forall, Sp,
         Open, DefinitionDsl.Id("hk"), Colon, Sp, D(2), Sp, Leq, Sp, F.Id("k"), Close, Comma, Sp, Forall, Sp,
-        Open, F.Id("N"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Open,
-        DefinitionDsl.Id("literalLaw"), Sp, F.Id("k"), Sp, DefinitionDsl.Id("hk"), Sp, F.Id("N"), Sp, Colon,
-        Sp, DefinitionDsl.Id("MeasureTheory"), Dot, DefinitionDsl.Id("ProbabilityMeasure"), Sp, Seq(Mathbb,
-        Grp(F.Id("R"))), Close, Sp, Eq, Sp, DefinitionDsl.Id("Measure"), Dot, DefinitionDsl.Id("map"), Sp,
-        Open, DefinitionDsl.Id("literalStandardized"), Sp, Open, F.Id("N"), Sp, Plus, Sp, D(1), Close, Sp,
+        Open, F.Id("N"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, DefinitionDsl.Id("val"),
+        Sp, Open, DefinitionDsl.Id("literalLaw"), Sp, F.Id("k"), Sp, DefinitionDsl.Id("hk"), Sp, F.Id("N"),
+        Close, Sp, Eq, Sp, DefinitionDsl.Id("Measure"), Dot, DefinitionDsl.Id("map"), Sp, Open,
+        DefinitionDsl.Id("literalStandardized"), Sp, Open, F.Id("N"), Sp, Plus, Sp, D(1), Close, Sp,
         F.Id("k"), Sp, F.Id("N"), Close, Sp, Open, DefinitionDsl.Id("literalMeasure"), Sp, Open, F.Id("N"),
         Sp, Plus, Sp, D(1), Close, Sp, F.Id("k"), Sp, F.Id("N"), Close);
 
@@ -186,14 +185,11 @@ internal sealed class DiscardedOccupancyNormalLimitDocument : IScribeDocumentDef
         Open, DefinitionDsl.Id("hn"), Colon, Sp, D(0), Sp, Lt, Sp, F.Id("n"), Close, Comma, Sp, Forall, Sp,
         Open, F.Id("k"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Forall, Sp, Open,
         DefinitionDsl.Id("hk"), Colon, Sp, D(2), Sp, Leq, Sp, F.Id("k"), Close, Comma, Sp, Forall, Sp, Open,
-        F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Open,
-        DefinitionDsl.Id("literalMeasure"), Sp, F.Id("n"), Sp, DefinitionDsl.Id("hn"), Sp, F.Id("k"), Sp,
-        DefinitionDsl.Id("hk"), Sp, F.Id("m"), Sp, Colon, Sp, DefinitionDsl.Id("MeasureTheory"), Dot,
-        DefinitionDsl.Id("Measure"), Sp, Open, DefinitionDsl.Id("Fin"), Sp, F.Id("m"), Sp, To, Sp,
-        DefinitionDsl.Id("Option"), Sp, Open, DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close, Close,
-        Sp, Eq, Sp, DefinitionDsl.Id("Measure"), Dot, DefinitionDsl.Id("pi"), Sp, Open,
+        F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp,
+        DefinitionDsl.Id("literalMeasure"), Sp, DefinitionDsl.Id("hn"), Sp, DefinitionDsl.Id("hk"), Sp,
+        F.Id("m"), Sp, Eq, Sp, DefinitionDsl.Id("Measure"), Dot, DefinitionDsl.Id("pi"), Sp, Open,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("i"), Sp, Colon, Sp, DefinitionDsl.Id("Fin"), Sp, F.Id("m"),
-        Close, Sp, Eq, Gt, Sp, Open, DefinitionDsl.Id("throwPMF"), Sp, F.Id("n"), Sp, Open,
+        Close, Sp, Mapsto, Sp, Open, DefinitionDsl.Id("throwPMF"), Sp, F.Id("n"), Sp, Open,
         DefinitionDsl.Id("paletteP"), Sp, F.Id("k"), Close, Close, Dot, DefinitionDsl.Id("toMeasure"), Close);
 
     private static Formula DiscardedOccupancyLiteralstandardized() =>

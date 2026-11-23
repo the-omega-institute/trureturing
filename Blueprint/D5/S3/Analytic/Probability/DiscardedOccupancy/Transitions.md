@@ -78,7 +78,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.7 (Expect).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), (\mathit{expect} E n p j f : E) = \mathit{average} n p j \mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) => f (\mathit{count} n j \omega)$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), (\mathit{expect} E n p j f : E) = \mathit{average} n p j \mathit{fun} (\omega : \mathit{DiscardedOccupancy}.\mathit{History} n j) \mapsto f (\mathit{count} n j \omega)$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.expect` (`✓ std3`).
 
@@ -90,7 +90,7 @@ The displayed formula specifies the construction.
 
 **Theorem 1.8 (Expect add).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \forall (g: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => f x + g x) = \mathit{expect} n p j f + \mathit{expect} n p j g$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \forall (g: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto f x + g x) = \mathit{expect} n p j f + \mathit{expect} n p j g$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.expect_add` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.10 (Expect const).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (c: E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => c) = c$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (c: E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto c) = c$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.expect_const` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.12 (Expect smul).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (c: \mathbb{R}), \forall (f: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => c \cdot f x) = c \cdot \mathit{expect} n p j f$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (c: \mathbb{R}), \forall (f: \mathbb{N} \to E), (\mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto c \cdot f x) = c \cdot \mathit{expect} n p j f$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.expect_smul` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.13 (Expect succ).**
 
-$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \mathit{expect} n p (j + 1) f = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => (1 - q n p \mathit{val} x) \cdot f x + q n p \mathit{val} x \cdot f (x + 1)$$
+$$\forall (E: \mathit{Type}), [\mathit{AddCommMonoid} E] [\mathrm{anonymous}\mathit{root}\mathrm{anonymous}.\mathit{Module} \mathbb{R} E] \forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), \forall (f: \mathbb{N} \to E), \mathit{expect} n p (j + 1) f = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto (1 - q n p \mathit{val} x) \cdot f x + q n p \mathit{val} x \cdot f (x + 1)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.expect_succ` (`✓ std3`). ∎
 
@@ -174,7 +174,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.15 (Insert Throw).**
 
-$$\forall (n: \mathbb{N}), \forall (s: \mathit{Finset} (\mathit{Fin} n)), \forall (a: \mathit{Option} (\mathit{Fin} n)), (\mathit{insertThrow} n s a : \mathit{Finset} (\mathit{Fin} n)) = \mathit{match} x \mathit{with} | \mathit{none} => s | \mathit{some} x => \mathit{insert} x s$$
+$$\forall (n: \mathbb{N}), \forall (s: \mathit{Finset} (\mathit{Fin} n)), \forall (a: \mathit{Option} (\mathit{Fin} n)), (\mathit{insertThrow} n s a : \mathit{Finset} (\mathit{Fin} n)) = \mathit{match} x \mathit{with} | \mathit{none} \mapsto s | \mathit{some} x \mapsto \mathit{insert} x s$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.insertThrow` (`✓ std3`).
 
@@ -186,7 +186,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.16 (Mean).**
 
-$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), (\mathit{mean} n p j : \mathbb{R}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => \mathit{val} x$$
+$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), (\mathit{mean} n p j : \mathbb{R}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto \mathit{val} x$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.mean` (`✓ std3`).
 
@@ -222,7 +222,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.19 (Occupied).**
 
-$$\forall (n: \mathbb{N}), \forall (j: \mathbb{N}), \forall (a: \mathit{DiscardedOccupancy}.\mathit{History} n j), (\mathit{occupied} n j a : \mathit{Finset} (\mathit{Fin} n)) = \mathit{Nat}.\mathit{brecOn} (\mathit{motive} := \mathit{fun} (x : \mathbb{N}) => \mathit{DiscardedOccupancy}.\mathit{History} n x \to \mathit{Finset} (\mathit{Fin} n)) \mathit{xOne} (\mathit{occupied}.\mathrm{anonymous}f n) x$$
+$$\forall (n: \mathbb{N}), \forall (j: \mathbb{N}), \forall (a: \mathit{DiscardedOccupancy}.\mathit{History} n j), (\mathit{occupied} n j a : \mathit{Finset} (\mathit{Fin} n)) = \mathit{Nat}.\mathit{brecOn} (\mathit{motive} := \mathit{fun} (x : \mathbb{N}) \mapsto \mathit{DiscardedOccupancy}.\mathit{History} n x \to \mathit{Finset} (\mathit{Fin} n)) \mathit{xOne} (\mathit{occupied}.\mathrm{anonymous}f n) x$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.occupied` (`✓ std3`).
 
@@ -258,7 +258,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.22 (Throw Mass).**
 
-$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (a: \mathit{Option} (\mathit{Fin} n)), (\mathit{throwMass} n p a : \mathbb{R}) = \mathit{match} x \mathit{with} | \mathit{none} => 1 - p | \mathit{some} \mathit{val} => p / \mathit{val} n$$
+$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (a: \mathit{Option} (\mathit{Fin} n)), (\mathit{throwMass} n p a : \mathbb{R}) = \mathit{match} x \mathit{with} | \mathit{none} \mapsto 1 - p | \mathit{some} \mathit{val} \mapsto p / \mathit{val} n$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.throwMass` (`✓ std3`).
 
@@ -294,7 +294,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.25 (Variance).**
 
-$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), (\mathit{variance} n p j : \mathbb{R}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => (\mathit{val} x - \mathit{mean} n p j) ^ 2$$
+$$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (j: \mathbb{N}), (\mathit{variance} n p j : \mathbb{R}) = \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto (\mathit{val} x - \mathit{mean} n p j) ^ 2$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.variance` (`✓ std3`).
 
@@ -330,7 +330,7 @@ The displayed equality or implication states the law.
 
 **Theorem 1.28 (Weighted variance).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (m: \mathbb{N}), \mathit{variance} n p m = \sum j \in \mathit{Finset}.\mathit{range} m, (a n p ^ (m - (j + 1))) ^ 2 \cdot \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) => v n p \mathit{val} x$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (p: \mathbb{R}), \forall (m: \mathbb{N}), \mathit{variance} n p m = \sum j \in \mathit{Finset}.\mathit{range} m, (a n p ^ (m - (j + 1))) ^ 2 \cdot \mathit{expect} n p j \mathit{fun} (x : \mathbb{N}) \mapsto v n p \mathit{val} x$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/DiscardedOccupancy/Transitions.weighted_variance` (`✓ std3`). ∎
 

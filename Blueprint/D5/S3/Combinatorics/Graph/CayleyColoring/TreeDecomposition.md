@@ -68,7 +68,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.6 (Glue).**
 
-$$\forall (V: \mathit{Type}), \forall (p: V), \forall (F: \mathit{CayleyProbe}.\mathit{Frame} p), \forall (T: F.\mathit{Branches}), (\mathit{glue} V p F T : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (x y : V) => (x = p \land \exists (s : \mathit{val} F.\mathit{parts}), y = \mathit{val} (F.\mathit{root} s)) \lor (y = p \land \exists (s : \mathit{val} F.\mathit{parts}), x = \mathit{val} (F.\mathit{root} s)) \lor \exists (s : \mathit{val} F.\mathit{parts}) (\mathit{hx} : x \in \mathit{val} s) (\mathit{hy} : y \in \mathit{val} s), (\mathit{val} (T s)).\mathit{Adj} \langle x, \mathit{hx}\rangle \langle y, \mathit{hy}\rangle \}$$
+$$\forall (V: \mathit{Type}), \forall (p: V), \forall (F: \mathit{CayleyProbe}.\mathit{Frame} p), \forall (T: F.\mathit{Branches}), (\mathit{glue} V p F T : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (x y : V) \mapsto (x = p \land \exists (s : \mathit{val} F.\mathit{parts}), y = \mathit{val} (F.\mathit{root} s)) \lor (y = p \land \exists (s : \mathit{val} F.\mathit{parts}), x = \mathit{val} (F.\mathit{root} s)) \lor \exists (s : \mathit{val} F.\mathit{parts}) (\mathit{hx} : x \in \mathit{val} s) (\mathit{hy} : y \in \mathit{val} s), (\mathit{val} (T s)).\mathit{Adj} \langle x, \mathit{hx}\rangle \langle y, \mathit{hy}\rangle \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.glue` (`✓ std3`).
 
@@ -92,7 +92,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.8 (Part At).**
 
-$$\forall (V: \mathit{Type}), \forall (p: V), \forall (F: \mathit{CayleyProbe}.\mathit{Frame} p), \forall (x: V), \forall (\mathit{hx}: x \neq p), (\mathit{partAt} V p F x \mathit{hx} : \mathit{val} F.\mathit{parts}) = \mathit{choose} (\mathit{fun} (s : F.\mathit{parts}) => x \in s.\mathit{val})$$
+$$\forall (V: \mathit{Type}), \forall (p: V), \forall (F: \mathit{CayleyProbe}.\mathit{Frame} p), \forall (x: V), \forall (\mathit{hx}: x \neq p), \mathit{partAt} F x \mathit{hx} = \mathit{choose} (\mathit{fun} (s : F.\mathit{parts}) \mapsto x \in s.\mathit{val})$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.partAt` (`✓ std3`).
 
@@ -140,7 +140,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.12 (Cut).**
 
-$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (p: V), (\mathit{cut} V G p : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (x y : V) => x \neq p \land y \neq p \land G.\mathit{Adj} x y \}$$
+$$\forall (V: \mathit{Type}), \forall (G: \mathit{SimpleGraph} V), \forall (p: V), (\mathit{cut} V G p : \mathit{SimpleGraph} V) = \{ \mathit{Adj} := \mathit{fun} (x y : V) \mapsto x \neq p \land y \neq p \land G.\mathit{Adj} x y \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.cut` (`✓ std3`).
 
@@ -176,7 +176,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.15 (Decompose Equiv).**
 
-$$\forall (V: \mathit{Type}), \forall (p: V), (\mathit{decomposeEquiv} V p : \mathit{CayleyProbe}.\mathit{Tree} V \equiv (F : \mathit{CayleyProbe}.\mathit{Frame} p) \times F.\mathit{Branches}) = \{ \mathit{toFun} := \mathit{decompose} p, \mathit{invFun} := \mathit{fun} (a : (F : \mathit{CayleyProbe}.\mathit{Frame} p) \times F.\mathit{Branches}) => \mathit{CayleyProbe}.\mathit{Frame}.\mathit{assemble} a.\mathit{snd} \}$$
+$$\forall (V: \mathit{Type}), \forall (p: V), (\mathit{decomposeEquiv} V p : \mathit{CayleyProbe}.\mathit{Tree} V \equiv (F : \mathit{CayleyProbe}.\mathit{Frame} p) \times F.\mathit{Branches}) = \{ \mathit{toFun} := \mathit{decompose} p, \mathit{invFun} := \mathit{fun} (a : (F : \mathit{CayleyProbe}.\mathit{Frame} p) \times F.\mathit{Branches}) \mapsto \mathit{CayleyProbe}.\mathit{Frame}.\mathit{assemble} a.\mathit{snd} \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.decomposeEquiv` (`✓ std3`).
 
@@ -188,7 +188,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.16 (Decompose Frame).**
 
-$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (p: V), (\mathit{decomposeFrame} V T p : \mathit{CayleyProbe}.\mathit{Frame} p) = \{ \mathit{parts} := \mathit{cutParts} (\mathit{val} T) p, \mathit{cover} :=, \mathit{separate} :=, \mathit{root} := \mathit{fun} (s : \mathit{val} (\mathit{cutParts} (\mathit{val} T) p)) => \langle h.\mathit{choose}\rangle \}$$
+$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (p: V), (\mathit{decomposeFrame} V T p : \mathit{CayleyProbe}.\mathit{Frame} p) = \{ \mathit{parts} := \mathit{cutParts} (\mathit{val} T) p, \mathit{cover} :=, \mathit{separate} :=, \mathit{root} := \mathit{fun} (s : \mathit{val} (\mathit{cutParts} (\mathit{val} T) p)) \mapsto \langle h.\mathit{choose}\rangle \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.decomposeFrame` (`✓ std3`).
 

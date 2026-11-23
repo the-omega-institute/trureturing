@@ -56,7 +56,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.5 (Block).**
 
-$$\forall (V: \mathit{Type}), \forall (P: \mathit{Set} (\mathit{Set} V)), \forall (U: \mathit{CayleyForest}.\mathit{Family} P), \forall (s: \mathit{val} P), (\mathit{block} V P U s : \mathit{SimpleGraph} V) = \mathit{SimpleGraph}.\mathit{map} \mathit{coe} (\mathit{Function}.\mathit{Embedding}.\mathit{subtype} \mathit{fun} (x : V) => x \in \mathit{val} s) \mathit{val} (U s)$$
+$$\forall (V: \mathit{Type}), \forall (P: \mathit{Set} (\mathit{Set} V)), \forall (U: \mathit{CayleyForest}.\mathit{Family} P), \forall (s: \mathit{val} P), (\mathit{block} V P U s : \mathit{SimpleGraph} V) = \mathit{SimpleGraph}.\mathit{map} \mathit{coe} (\mathit{Function}.\mathit{Embedding}.\mathit{subtype} \mathit{fun} (x : V) \mapsto x \in \mathit{val} s) \mathit{val} (U s)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.block` (`✓ std3`).
 
@@ -68,7 +68,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.6 (Entry).**
 
-$$\forall (V: \mathit{Type}), [\mathit{Finite} V] \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (H: \mathit{SimpleGraph} V), \forall (s: \mathit{Set} V), \forall (\mathit{hs}: s \in \mathit{parts} H), (\mathit{entry} V T r H s \mathit{hs} : \mathit{val} s) = \mathit{argmin} (\mathit{fun} (v : s) => T.\mathit{val}.\mathit{dist} r v.\mathit{val})$$
+$$\forall (V: \mathit{Type}), [\mathit{Finite} V] \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (r: V), \forall (H: \mathit{SimpleGraph} V), \forall (s: \mathit{Set} V), \forall (\mathit{hs}: s \in \mathit{parts} H), \mathit{entry} T r H s \mathit{hs} = \mathit{argmin} (\mathit{fun} (v : s) \mapsto T.\mathit{val}.\mathit{dist} r v.\mathit{val})$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.entry` (`✓ std3`).
 
@@ -76,11 +76,11 @@ $$\forall (V: \mathit{Type}), [\mathit{Finite} V] \forall (T: \mathit{CayleyProb
 
 *Commentary.*
 
-The entry is an element of the retained component that minimizes its distance from the original root.
+The minimum is taken over the finite component with distance measured in the original tree.
 
 **Definition 1.7 (Forest Equiv).**
 
-$$\forall (V: \mathit{Type}), [\mathit{Finite} V] [\mathit{LinearOrder} V] \forall (r: V), (\mathit{forestEquiv} V r : \mathit{CayleyForest}.\mathit{Sample} V \equiv \mathit{CayleyForest}.\mathit{Sample} V) = \{ \mathit{toFun} := \mathit{fun} (S : \mathit{CayleyForest}.\mathit{Sample} V) => \mathit{transform} r S \mathit{false}, \mathit{invFun} := \mathit{fun} (S : \mathit{CayleyForest}.\mathit{Sample} V) => \mathit{transform} r S \mathit{true} \}$$
+$$\forall (V: \mathit{Type}), [\mathit{Finite} V] [\mathit{LinearOrder} V] \forall (r: V), (\mathit{forestEquiv} V r : \mathit{CayleyForest}.\mathit{Sample} V \equiv \mathit{CayleyForest}.\mathit{Sample} V) = \{ \mathit{toFun} := \mathit{fun} (S : \mathit{CayleyForest}.\mathit{Sample} V) \mapsto \mathit{transform} r S \mathit{false}, \mathit{invFun} := \mathit{fun} (S : \mathit{CayleyForest}.\mathit{Sample} V) => \mathit{transform} r S \mathit{true} \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.forestEquiv` (`✓ std3`).
 
@@ -92,7 +92,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.8 (Local Tree).**
 
-$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (H: \mathit{SimpleGraph} V), \forall (h: H \leq \mathit{val} T), \forall (s: \mathit{Set} V), \forall (\mathit{hs}: s \in \mathit{parts} H), (\mathit{localTree} V T H h s \mathit{hs} : \mathit{CayleyProbe}.\mathit{Tree} \mathit{val} s) = \mathit{restrictTree} T H s$$
+$$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V), \forall (H: \mathit{SimpleGraph} V), \forall (h: H \leq \mathit{val} T), \forall (s: \mathit{Set} V), \forall (\mathit{hs}: s \in \mathit{parts} H), \mathit{val} (\mathit{localTree} T H h s \mathit{hs}) = \mathit{SimpleGraph}.\mathit{induce} s H$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.localTree` (`✓ std3`).
 
@@ -100,11 +100,11 @@ $$\forall (V: \mathit{Type}), \forall (T: \mathit{CayleyProbe}.\mathit{Tree} V),
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+The underlying graph is the induced retained graph on the component. Acyclicity of the original tree and connectivity of the component supply its tree certificate.
 
 **Definition 1.9 (Parts).**
 
-$$\forall (V: \mathit{Type}), \forall (H: \mathit{SimpleGraph} V), (\mathit{parts} V H : \mathit{Set} (\mathit{Set} V)) = \mathit{Set}.\mathit{range} \mathit{fun} (c : H.\mathit{ConnectedComponent}) => c.\mathit{supp}$$
+$$\forall (V: \mathit{Type}), \forall (H: \mathit{SimpleGraph} V), (\mathit{parts} V H : \mathit{Set} (\mathit{Set} V)) = \mathit{Set}.\mathit{range} \mathit{fun} (c : H.\mathit{ConnectedComponent}) \mapsto c.\mathit{supp}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.parts` (`✓ std3`).
 
@@ -284,7 +284,7 @@ The displayed equality or implication states the law.
 
 **Definition 1.24 (Split).**
 
-$$\forall (V: \mathit{Type}), \forall (A: \mathit{Type}), [\mathit{Zero} A] \forall (x: (T : \mathit{CayleyProbe}.\mathit{Tree} V) \times (\mathit{val} (\mathit{val} T).\mathit{edgeSet} \to A)), (\mathit{split} V A x : \mathit{CayleyMarks}.\mathit{Marked} V A) = \mathit{let} H := \mathit{retained} x.\mathit{fst} x.\mathit{snd}; \langle \langle (x.\mathit{fst}, H)\rangle , \mathit{fun} (e : \mathit{CayleyMarks}.\mathit{Deleted} \langle (x.\mathit{fst}, H)\rangle ) => \langle x.\mathit{snd} \langle \mathit{val} e, \mathit{he}\rangle \rangle \rangle$$
+$$\forall (V: \mathit{Type}), \forall (A: \mathit{Type}), [\mathit{Zero} A] \forall (x: (T : \mathit{CayleyProbe}.\mathit{Tree} V) \times (\mathit{val} (\mathit{val} T).\mathit{edgeSet} \to A)), (\mathit{split} V A x : \mathit{CayleyMarks}.\mathit{Marked} V A) = \mathit{let} H := \mathit{retained} x.\mathit{fst} x.\mathit{snd}; \langle \langle (x.\mathit{fst}, H)\rangle , \mathit{fun} (e : \mathit{CayleyMarks}.\mathit{Deleted} \langle (x.\mathit{fst}, H)\rangle ) \mapsto \langle x.\mathit{snd} \langle \mathit{val} e, \mathit{he}\rangle \rangle \rangle$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.split` (`✓ std3`).
 

@@ -308,10 +308,10 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         DefinitionDsl.Id("live"), Sp, F.Id("l"), Sp, Colon, Sp, DefinitionDsl.Id("Prop"), Close, Sp, Eq, Sp,
         DefinitionDsl.Id("List"), Dot, DefinitionDsl.Id("recOn"), Sp, Open, DefinitionDsl.Id("motive"), Sp,
         Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("Set"), Sp,
+        DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("Set"), Sp,
         F.Id("V"), Sp, To, Sp, DefinitionDsl.Id("Prop"), Close, Sp, F.Id("l"), Sp, Open,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"),
-        Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("True"), Close, Sp, Open, DefinitionDsl.Id("fun"), Sp, Open,
+        Close, Sp, Mapsto, Sp, DefinitionDsl.Id("True"), Close, Sp, Open, DefinitionDsl.Id("fun"), Sp, Open,
         F.Id("v"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Open, F.Id("x"), Sp, Colon, Sp,
         DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Open, DefinitionDsl.Id("rec"), Sp, Colon, Sp,
         DefinitionDsl.Id("Set"), Sp, F.Id("V"), Sp, To, Sp, DefinitionDsl.Id("Prop"), Close, Sp, Open,
@@ -534,7 +534,7 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         Close, Comma, Sp, Open, DefinitionDsl.Id("active"), Sp, F.Id("V"), Sp, F.Id("G"), Sp,
         DefinitionDsl.Id("live"), Sp, Colon, Sp, DefinitionDsl.Id("SimpleGraph"), Sp, F.Id("V"), Close, Sp,
         Eq, Sp, OpenBrace, Sp, DefinitionDsl.Id("Adj"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp,
-        Open, F.Id("v"), Sp, F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, F.Id("v"), Sp,
+        Open, F.Id("v"), Sp, F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, F.Id("v"), Sp,
         InMacro, Sp, DefinitionDsl.Id("live"), Sp, Land, Sp, F.Id("w"), Sp, InMacro, Sp,
         DefinitionDsl.Id("live"), Sp, Land, Sp, F.Id("G"), Dot, DefinitionDsl.Id("Adj"), Sp, F.Id("v"), Sp,
         F.Id("w"), Sp, CloseBrace);
@@ -549,14 +549,14 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         DefinitionDsl.Id("live"), Sp, F.Id("l"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Eq,
         Sp, DefinitionDsl.Id("List"), Dot, DefinitionDsl.Id("recOn"), Sp, Open, DefinitionDsl.Id("motive"),
         Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("Set"), Sp,
+        DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("Set"), Sp,
         F.Id("V"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, F.Id("l"), Sp, Open,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"),
-        Close, Sp, Eq, Gt, Sp, D(1), Close, Sp, Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp,
+        Close, Sp, Mapsto, Sp, D(1), Close, Sp, Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("v"), Sp,
         Colon, Sp, F.Id("V"), Close, Sp, Open, F.Id("x"), Sp, Colon, Sp, DefinitionDsl.Id("List"), Sp,
         F.Id("V"), Close, Sp, Open, DefinitionDsl.Id("rec"), Sp, Colon, Sp, DefinitionDsl.Id("Set"), Sp,
         F.Id("V"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Open, DefinitionDsl.Id("alive"), Sp,
-        Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("Nat"),
+        Colon, Sp, DefinitionDsl.Id("Set"), Sp, F.Id("V"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("Nat"),
         Dot, DefinitionDsl.Id("card"), Sp, OpenBrace, Sp, F.Id("w"), Sp, Colon, Sp, F.Id("V"), Sp, Sp, Bar,
         Sp, Sp, DefinitionDsl.Id("CayleyScheduler"), Dot, DefinitionDsl.Id("Enabled"), Sp, F.Id("G"), Sp,
         DefinitionDsl.Id("alive"), Sp, F.Id("w"), Sp, CloseBrace, Sp, Cdot, Sp, DefinitionDsl.Id("rec"), Sp,
@@ -572,7 +572,7 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         DefinitionDsl.Id("conflict"), Sp, F.Id("V"), Sp, F.Id("K"), Sp, F.Id("G"), Sp,
         DefinitionDsl.Id("color"), Sp, Colon, Sp, DefinitionDsl.Id("SimpleGraph"), Sp, F.Id("V"), Close, Sp,
         Eq, Sp, OpenBrace, Sp, DefinitionDsl.Id("Adj"), Sp, Colon, Eq, Sp, DefinitionDsl.Id("fun"), Sp,
-        Open, F.Id("v"), Sp, F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, F.Id("G"), Dot,
+        Open, F.Id("v"), Sp, F.Id("w"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, F.Id("G"), Dot,
         DefinitionDsl.Id("Adj"), Sp, F.Id("v"), Sp, F.Id("w"), Sp, Land, Sp, DefinitionDsl.Id("color"), Sp,
         F.Id("v"), Sp, Eq, Sp, DefinitionDsl.Id("color"), Sp, F.Id("w"), Sp, CloseBrace);
 
@@ -612,7 +612,7 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         Sp, F.Id("V"), Sp, F.Id("G"), Sp, DefinitionDsl.Id("rank"), Sp, DefinitionDsl.Id("live"), Sp, Colon,
         Sp, DefinitionDsl.Id("List"), Sp, F.Id("V"), Close, Sp, Eq, Sp, DefinitionDsl.Id("choose"), Sp,
         Open, DefinitionDsl.Id("fun"), Sp, Open, F.Id("l"), Sp, Colon, Sp, DefinitionDsl.Id("List"), Sp,
-        F.Id("V"), Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("Complete"), Sp, F.Id("G"), Sp,
+        F.Id("V"), Close, Sp, Mapsto, Sp, DefinitionDsl.Id("Complete"), Sp, F.Id("G"), Sp,
         DefinitionDsl.Id("rank"), Sp, DefinitionDsl.Id("live"), Sp, F.Id("l"), Close);
 
     private static Formula CayleySchedulerRankedhistorySpec() =>
@@ -639,7 +639,7 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
         DefinitionDsl.Id("rank"), Sp, DefinitionDsl.Id("Set"), Dot, DefinitionDsl.Id("univ"), Close, Dot,
         DefinitionDsl.Id("length"), Sp, Eq, Sp, DefinitionDsl.Id("Fintype"), Dot, DefinitionDsl.Id("card"),
         Sp, F.Id("V"), Sp, Minus, Sp, DefinitionDsl.Id("filterCard"), Sp, DefinitionDsl.Id("fun"), Sp, Open,
-        F.Id("v"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Eq, Gt, Sp, Forall, Sp, Open, F.Id("w"), Sp, Colon,
+        F.Id("v"), Sp, Colon, Sp, F.Id("V"), Close, Sp, Mapsto, Sp, Forall, Sp, Open, F.Id("w"), Sp, Colon,
         Sp, F.Id("V"), Close, Comma, Sp, F.Id("G"), Dot, DefinitionDsl.Id("Adj"), Sp, F.Id("v"), Sp,
         F.Id("w"), Sp, To, Sp, DefinitionDsl.Id("rank"), Sp, F.Id("w"), Sp, Lt, Sp,
         DefinitionDsl.Id("rank"), Sp, F.Id("v"));

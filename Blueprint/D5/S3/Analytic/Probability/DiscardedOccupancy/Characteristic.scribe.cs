@@ -160,7 +160,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
                 H("Row Law"),
                 StatementSource.FromAuthor(Disp(DiscardedOccupancyRowlaw())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(DefinitionDsl.Text("The displayed formula specifies the construction."))),
+                Blocks(Paragraph(DefinitionDsl.Text("The row with index N uses N throws and N plus one ordinary bins with retention probability one over k."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("discarded-occupancy-row-phase"),
@@ -280,7 +280,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Sp, DefinitionDsl.Id("hp"), Sp, DefinitionDsl.Id("hpUpper"), Sp, F.Id("j"), Close, Close, Sp,
         F.Id("t"), Sp, Eq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, DefinitionDsl.Id("phase"), Sp, Open, F.Id("t"), Sp, Cdot, Sp,
+        Mapsto, Sp, DefinitionDsl.Id("phase"), Sp, Open, F.Id("t"), Sp, Cdot, Sp,
         DefinitionDsl.Id("standardized"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("x"), Close);
 
     private static Formula DiscardedOccupancyConditionalComparison() =>
@@ -317,7 +317,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         F.Id("g"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, To, Sp, F.Id("E"), Close, Comma, Sp, Open,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, F.Id("f"), Sp, F.Id("x"), Sp, Minus, Sp, F.Id("g"), Sp, F.Id("x"), Close, Sp, Eq, Sp,
+        Mapsto, Sp, F.Id("f"), Sp, F.Id("x"), Sp, Minus, Sp, F.Id("g"), Sp, F.Id("x"), Close, Sp, Eq, Sp,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("f"), Sp, Minus,
         Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("g"));
 
@@ -392,7 +392,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Vert, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("f"),
         Vert, Sp, Leq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, Vert, Sp, F.Id("f"), Sp, F.Id("x"), Vert);
+        Mapsto, Sp, Vert, Sp, F.Id("f"), Sp, F.Id("x"), Vert);
 
     private static Formula DiscardedOccupancyNormGaussianfactorLe() =>
         Seq(
@@ -452,11 +452,10 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Seq(
         Forall, Sp, Open, F.Id("k"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Forall, Sp,
         Open, DefinitionDsl.Id("hk"), Colon, Sp, D(2), Sp, Leq, Sp, F.Id("k"), Close, Comma, Sp, Forall, Sp,
-        Open, F.Id("N"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Open,
-        DefinitionDsl.Id("rowLaw"), Sp, F.Id("k"), Sp, DefinitionDsl.Id("hk"), Sp, F.Id("N"), Sp, Colon, Sp,
-        DefinitionDsl.Id("MeasureTheory"), Dot, DefinitionDsl.Id("ProbabilityMeasure"), Sp, Seq(Mathbb,
-        Grp(F.Id("R"))), Close, Sp, Eq, Sp, DefinitionDsl.Id("standardizedLaw"), Sp, Open, F.Id("N"), Sp,
-        Plus, Sp, D(1), Close, Sp, Open, DefinitionDsl.Id("paletteP"), Sp, F.Id("k"), Close, Sp, F.Id("N"));
+        Open, F.Id("N"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp,
+        DefinitionDsl.Id("rowLaw"), Sp, F.Id("k"), Sp, DefinitionDsl.Id("hk"), Sp, F.Id("N"), Sp, Eq, Sp,
+        DefinitionDsl.Id("standardizedLaw"), Sp, Open, F.Id("N"), Sp, Plus, Sp, D(1), Close, Sp, Open,
+        DefinitionDsl.Id("paletteP"), Sp, F.Id("k"), Close, Sp, F.Id("N"));
 
     private static Formula DiscardedOccupancyRowphase() =>
         Seq(
@@ -467,7 +466,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("s"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("C"))),
         Close, Sp, Eq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, DefinitionDsl.Id("phase"), Sp, Open, F.Id("s"), Sp, Cdot, Sp, Open,
+        Mapsto, Sp, DefinitionDsl.Id("phase"), Sp, Open, F.Id("s"), Sp, Cdot, Sp, Open,
         DefinitionDsl.Id("val"), Sp, F.Id("x"), Sp, Minus, Sp, DefinitionDsl.Id("mean"), Sp, F.Id("n"), Sp,
         F.Id("p"), Sp, F.Id("j"), Close, Close);
 
@@ -504,7 +503,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Grp(F.Id("R"))), Close, Sp, Eq, Sp, Langle, Sp, DefinitionDsl.Id("MeasureTheory"), Dot,
         DefinitionDsl.Id("Measure"), Dot, DefinitionDsl.Id("map"), Sp, Open, DefinitionDsl.Id("fun"), Sp,
         Open, Omega, Sp, Colon, Sp, DefinitionDsl.Id("DiscardedOccupancy"), Dot,
-        DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close, Sp, Eq, Gt, Sp,
+        DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close, Sp, Mapsto, Sp,
         DefinitionDsl.Id("standardized"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, Open,
         DefinitionDsl.Id("count"), Sp, F.Id("n"), Sp, F.Id("j"), Sp, Omega, Close, Close, Sp, Open,
         DefinitionDsl.Id("wordPMF"), Sp, DefinitionDsl.Id("hn"), Sp, DefinitionDsl.Id("hp"), Sp,
@@ -522,7 +521,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Open, DefinitionDsl.Id("Option"), Sp, Open, DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close,
         Close, Sp, Eq, Sp, DefinitionDsl.Id("PMF"), Dot, DefinitionDsl.Id("ofFintype"), Sp, Open,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("b"), Sp, Colon, Sp, DefinitionDsl.Id("Option"), Sp, Open,
-        DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close, Sp, Eq, Gt, Sp, DefinitionDsl.Id("ENNReal"),
+        DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close, Sp, Mapsto, Sp, DefinitionDsl.Id("ENNReal"),
         Dot, DefinitionDsl.Id("ofReal"), Sp, Open, DefinitionDsl.Id("throwMass"), Sp, F.Id("n"), Sp,
         F.Id("p"), Sp, F.Id("b"), Close, Close);
 
@@ -536,7 +535,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         Open, F.Id("j"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp,
         DefinitionDsl.Id("ProbabilityTheory"), Dot, DefinitionDsl.Id("variance"), Sp, Open,
         DefinitionDsl.Id("fun"), Sp, Open, Omega, Sp, Colon, Sp, DefinitionDsl.Id("DiscardedOccupancy"),
-        Dot, DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close, Sp, Eq, Gt, Sp,
+        Dot, DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close, Sp, Mapsto, Sp,
         DefinitionDsl.Id("val"), Sp, Open, DefinitionDsl.Id("count"), Sp, F.Id("n"), Sp, F.Id("j"), Sp,
         Omega, Close, Close, Sp, Open, DefinitionDsl.Id("wordPMF"), Sp, DefinitionDsl.Id("hn"), Sp,
         DefinitionDsl.Id("hp"), Sp, DefinitionDsl.Id("hpUpper"), Sp, F.Id("j"), Close, Dot,
@@ -554,7 +553,7 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         DefinitionDsl.Id("hj"), Colon, Sp, F.Id("j"), Sp, Leq, Sp, F.Id("n"), Close, Comma, Sp, Open,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, Bar, F.Id("v"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp,
+        Mapsto, Sp, Bar, F.Id("v"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp,
         F.Id("x"), Sp, Minus, Sp, DefinitionDsl.Id("predictableVariance"), Sp, F.Id("n"), Sp, F.Id("p"), Sp,
         F.Id("j"), Bar, Close, Sp, Leq, Sp, DefinitionDsl.Id("fluctuationBound"), Sp, F.Id("n"), Sp,
         F.Id("p"));
@@ -583,6 +582,6 @@ internal sealed class DiscardedOccupancyCharacteristicDocument : IScribeDocument
         DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close, Close, Sp, Eq, Sp,
         DefinitionDsl.Id("PMF"), Dot, DefinitionDsl.Id("ofFintype"), Sp, Open, DefinitionDsl.Id("fun"), Sp,
         Open, F.Id("w"), Sp, Colon, Sp, DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp, F.Id("j"), Close,
-        Sp, Eq, Gt, Sp, DefinitionDsl.Id("ENNReal"), Dot, DefinitionDsl.Id("ofReal"), Sp, Open,
+        Sp, Mapsto, Sp, DefinitionDsl.Id("ENNReal"), Dot, DefinitionDsl.Id("ofReal"), Sp, Open,
         DefinitionDsl.Id("wordMass"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("w"), Close, Close);
 }

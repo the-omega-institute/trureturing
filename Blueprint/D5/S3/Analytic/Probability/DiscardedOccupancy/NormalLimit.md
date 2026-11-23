@@ -66,7 +66,7 @@ The displayed formula specifies the construction.
 
 **Definition 1.6 (Literal Law).**
 
-$$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{N}), (\mathit{literalLaw} k \mathit{hk} N : \mathit{MeasureTheory}.\mathit{ProbabilityMeasure} \mathbb{R}) = \mathit{Measure}.\mathit{map} (\mathit{literalStandardized} (N + 1) k N) (\mathit{literalMeasure} (N + 1) k N)$$
+$$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{N}), \mathit{val} (\mathit{literalLaw} k \mathit{hk} N) = \mathit{Measure}.\mathit{map} (\mathit{literalStandardized} (N + 1) k N) (\mathit{literalMeasure} (N + 1) k N)$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/NormalLimit.literalLaw` (`✓ std3`).
 
@@ -74,11 +74,11 @@ $$\forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (N: \mathbb{
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+The standardized occupancy law is the pushforward of the independent throw product measure.
 
 **Definition 1.7 (Literal Measure).**
 
-$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (m: \mathbb{N}), (\mathit{literalMeasure} n \mathit{hn} k \mathit{hk} m : \mathit{MeasureTheory}.\mathit{Measure} (\mathit{Fin} m \to \mathit{Option} (\mathit{Fin} n))) = \mathit{Measure}.\mathit{pi} (\mathit{fun} (i : \mathit{Fin} m) => (\mathit{throwPMF} n (\mathit{paletteP} k)).\mathit{toMeasure})$$
+$$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (k: \mathbb{N}), \forall (\mathit{hk}: 2 \leq k), \forall (m: \mathbb{N}), \mathit{literalMeasure} \mathit{hn} \mathit{hk} m = \mathit{Measure}.\mathit{pi} (\mathit{fun} (i : \mathit{Fin} m) \mapsto (\mathit{throwPMF} n (\mathit{paletteP} k)).\mathit{toMeasure})$$
 
 *Formalization.* `D5/S3/Analytic/Probability/DiscardedOccupancy/NormalLimit.literalMeasure` (`✓ std3`).
 
@@ -86,7 +86,7 @@ $$\forall (n: \mathbb{N}), \forall (\mathit{hn}: 0 < n), \forall (k: \mathbb{N})
 
 *Commentary.*
 
-The displayed formula specifies the construction.
+Each coordinate has the same one-throw measure. The row measure is the product of these coordinates.
 
 **Definition 1.8 (Literal Standardized).**
 

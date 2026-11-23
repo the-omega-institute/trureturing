@@ -339,7 +339,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         F.Id("f"), Sp, Colon, Sp, F.Id("E"), Close, Sp, Eq, Sp, DefinitionDsl.Id("average"), Sp, F.Id("n"),
         Sp, F.Id("p"), Sp, F.Id("j"), Sp, DefinitionDsl.Id("fun"), Sp, Open, Omega, Sp, Colon, Sp,
         DefinitionDsl.Id("DiscardedOccupancy"), Dot, DefinitionDsl.Id("History"), Sp, F.Id("n"), Sp,
-        F.Id("j"), Close, Sp, Eq, Gt, Sp, F.Id("f"), Sp, Open, DefinitionDsl.Id("count"), Sp, F.Id("n"), Sp,
+        F.Id("j"), Close, Sp, Mapsto, Sp, F.Id("f"), Sp, Open, DefinitionDsl.Id("count"), Sp, F.Id("n"), Sp,
         F.Id("j"), Sp, Omega, Close);
 
     private static Formula DiscardedOccupancyExpectAdd() =>
@@ -355,7 +355,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         F.Id("g"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, To, Sp, F.Id("E"), Close, Comma, Sp, Open,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, F.Id("f"), Sp, F.Id("x"), Sp, Plus, Sp, F.Id("g"), Sp, F.Id("x"), Close, Sp, Eq, Sp,
+        Mapsto, Sp, F.Id("f"), Sp, F.Id("x"), Sp, Plus, Sp, F.Id("g"), Sp, F.Id("x"), Close, Sp, Eq, Sp,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("f"), Sp, Plus,
         Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("g"));
 
@@ -388,7 +388,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         F.Id("j"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, Forall, Sp, Open, F.Id("c"),
         Colon, Sp, F.Id("E"), Close, Comma, Sp, Open, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp,
         F.Id("p"), Sp, F.Id("j"), Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Eq, Gt, Sp, F.Id("c"), Close, Sp, Eq, Sp, F.Id("c"));
+        Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Mapsto, Sp, F.Id("c"), Close, Sp, Eq, Sp, F.Id("c"));
 
     private static Formula DiscardedOccupancyExpectMono() =>
         Seq(
@@ -418,7 +418,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         Seq(Mathbb, Grp(F.Id("N"))), Sp, To, Sp, F.Id("E"), Close, Comma, Sp, Open,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, F.Id("c"), Sp, Cdot, Sp, F.Id("f"), Sp, F.Id("x"), Close, Sp, Eq, Sp, F.Id("c"), Sp,
+        Mapsto, Sp, F.Id("c"), Sp, Cdot, Sp, F.Id("f"), Sp, F.Id("x"), Close, Sp, Eq, Sp, F.Id("c"), Sp,
         Cdot, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, F.Id("f"));
 
     private static Formula DiscardedOccupancyExpectSucc() =>
@@ -435,7 +435,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, Open, F.Id("j"), Sp, Plus, Sp, D(1),
         Close, Sp, F.Id("f"), Sp, Eq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp,
         F.Id("j"), Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb,
-        Grp(F.Id("N"))), Close, Sp, Eq, Gt, Sp, Open, D(1), Sp, Minus, Sp, F.Id("q"), Sp, F.Id("n"), Sp,
+        Grp(F.Id("N"))), Close, Sp, Mapsto, Sp, Open, D(1), Sp, Minus, Sp, F.Id("q"), Sp, F.Id("n"), Sp,
         F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp, F.Id("x"), Close, Sp, Cdot, Sp, F.Id("f"), Sp,
         F.Id("x"), Sp, Plus, Sp, F.Id("q"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp,
         F.Id("x"), Sp, Cdot, Sp, F.Id("f"), Sp, Open, F.Id("x"), Sp, Plus, Sp, D(1), Close);
@@ -461,8 +461,8 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         Sp, Open, DefinitionDsl.Id("insertThrow"), Sp, F.Id("n"), Sp, F.Id("s"), Sp, F.Id("a"), Sp, Colon,
         Sp, DefinitionDsl.Id("Finset"), Sp, Open, DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close, Sp,
         Eq, Sp, DefinitionDsl.Id("match"), Sp, F.Id("x"), Sp, DefinitionDsl.Id("with"), Sp, Bar, Sp,
-        DefinitionDsl.Id("none"), Sp, Eq, Gt, Sp, F.Id("s"), Sp, Bar, Sp, DefinitionDsl.Id("some"), Sp,
-        F.Id("x"), Sp, Eq, Gt, Sp, DefinitionDsl.Id("insert"), Sp, F.Id("x"), Sp, F.Id("s"));
+        DefinitionDsl.Id("none"), Sp, Mapsto, Sp, F.Id("s"), Sp, Bar, Sp, DefinitionDsl.Id("some"), Sp,
+        F.Id("x"), Sp, Mapsto, Sp, DefinitionDsl.Id("insert"), Sp, F.Id("x"), Sp, F.Id("s"));
 
     private static Formula DiscardedOccupancyMean() =>
         Seq(
@@ -472,7 +472,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Sp,
         Eq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, DefinitionDsl.Id("val"), Sp, F.Id("x"));
+        Mapsto, Sp, DefinitionDsl.Id("val"), Sp, F.Id("x"));
 
     private static Formula DiscardedOccupancyMeanBounds() =>
         Seq(
@@ -506,7 +506,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         DefinitionDsl.Id("Fin"), Sp, F.Id("n"), Close, Close, Sp, Eq, Sp, DefinitionDsl.Id("Nat"), Dot,
         DefinitionDsl.Id("brecOn"), Sp, Open, DefinitionDsl.Id("motive"), Sp, Colon, Eq, Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, DefinitionDsl.Id("DiscardedOccupancy"), Dot, DefinitionDsl.Id("History"), Sp, F.Id("n"),
+        Mapsto, Sp, DefinitionDsl.Id("DiscardedOccupancy"), Dot, DefinitionDsl.Id("History"), Sp, F.Id("n"),
         Sp, F.Id("x"), Sp, To, Sp, DefinitionDsl.Id("Finset"), Sp, Open, DefinitionDsl.Id("Fin"), Sp,
         F.Id("n"), Close, Close, Sp, DefinitionDsl.Id("xOne"), Sp, Open, DefinitionDsl.Id("occupied"), Dot,
         Mathrm, Grp(F.Id("anonymous")), F.Id("f"), Sp, F.Id("n"), Close, Sp, F.Id("x"));
@@ -539,9 +539,9 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         F.Id("a"), Colon, Sp, DefinitionDsl.Id("Option"), Sp, Open, DefinitionDsl.Id("Fin"), Sp, F.Id("n"),
         Close, Close, Comma, Sp, Open, DefinitionDsl.Id("throwMass"), Sp, F.Id("n"), Sp, F.Id("p"), Sp,
         F.Id("a"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Sp, Eq, Sp, DefinitionDsl.Id("match"),
-        Sp, F.Id("x"), Sp, DefinitionDsl.Id("with"), Sp, Bar, Sp, DefinitionDsl.Id("none"), Sp, Eq, Gt, Sp,
+        Sp, F.Id("x"), Sp, DefinitionDsl.Id("with"), Sp, Bar, Sp, DefinitionDsl.Id("none"), Sp, Mapsto, Sp,
         D(1), Sp, Minus, Sp, F.Id("p"), Sp, Bar, Sp, DefinitionDsl.Id("some"), Sp, DefinitionDsl.Id("val"),
-        Sp, Eq, Gt, Sp, F.Id("p"), Sp, Slash, Sp, DefinitionDsl.Id("val"), Sp, F.Id("n"));
+        Sp, Mapsto, Sp, F.Id("p"), Sp, Slash, Sp, DefinitionDsl.Id("val"), Sp, F.Id("n"));
 
     private static Formula DiscardedOccupancyV() =>
         Seq(
@@ -572,7 +572,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         DefinitionDsl.Id("variance"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp, Colon, Sp,
         Seq(Mathbb, Grp(F.Id("R"))), Close, Sp, Eq, Sp, DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp,
         F.Id("p"), Sp, F.Id("j"), Sp, DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp,
-        Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Eq, Gt, Sp, Open, DefinitionDsl.Id("val"), Sp, F.Id("x"),
+        Seq(Mathbb, Grp(F.Id("N"))), Close, Sp, Mapsto, Sp, Open, DefinitionDsl.Id("val"), Sp, F.Id("x"),
         Sp, Minus, Sp, DefinitionDsl.Id("mean"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Close, Sp,
         Caret, Sp, D(2));
 
@@ -609,7 +609,7 @@ internal sealed class DiscardedOccupancyTransitionsDocument : IScribeDocumentDef
         F.Id("j"), Sp, Plus, Sp, D(1), Close, Close, Close, Sp, Caret, Sp, D(2), Sp, Cdot, Sp,
         DefinitionDsl.Id("expect"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, F.Id("j"), Sp,
         DefinitionDsl.Id("fun"), Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Sp,
-        Eq, Gt, Sp, F.Id("v"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp, F.Id("x"));
+        Mapsto, Sp, F.Id("v"), Sp, F.Id("n"), Sp, F.Id("p"), Sp, DefinitionDsl.Id("val"), Sp, F.Id("x"));
 
     private static Formula DiscardedOccupancyWordmass() =>
         Seq(
