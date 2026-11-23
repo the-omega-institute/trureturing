@@ -180,18 +180,17 @@ private theorem pair_event_measure_le {J : Type*} [Fintype J] (g radius : J → 
 private theorem exists_within_expected_budget {Ω K : Type*} [MeasurableSpace Ω] [Countable K]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (loss : K → Ω → ℝ≥0∞)
     (hloss : ∀ k, Measurable (loss k)) (good : Ω → Prop) (hgood : ∀ᵐ x ∂μ, good x)
-    (hbudget : (∑' k, ∫⁻ x, loss k x ∂μ) ≤ 1) :
-    ∃ x, good x ∧ ∀ k, loss k x ≤ 1 := by
+    {bound : ℝ≥0∞} (hfinite : bound ≠ ∞)
+    (hbudget : (∑' k, ∫⁻ x, loss k x ∂μ) ≤ bound) :
+    ∃ x, good x ∧ (∑' k, loss k x) ≤ bound := by
   let total (x : Ω) := ∑' k, loss k x
   have htotal : Measurable total := Measurable.tsum hloss
-  have hmean : (∫⁻ x, total x ∂μ) ≤ 1 := by
+  have hmean : (∫⁻ x, total x ∂μ) ≤ bound := by
     exact (lintegral_tsum (fun k => (hloss k).aemeasurable)).trans_le hbudget
   by_contra! hbad
-  have hlt : ∀ᵐ x ∂μ, 1 < total x := hgood.mono fun x hx => by
-    obtain ⟨k, hk⟩ := hbad x hx
-    exact hk.trans_le (ENNReal.le_tsum (f := fun j => loss j x) k)
-  have h := lintegral_strict_mono (f := fun _ : Ω => 1) (NeZero.ne μ)
-    htotal.aemeasurable (by simp) hlt
+  have hlt : ∀ᵐ x ∂μ, bound < total x := hgood.mono hbad
+  have h := lintegral_strict_mono (f := fun _ : Ω => bound) (NeZero.ne μ)
+    htotal.aemeasurable (by simpa using hfinite) hlt
   exact (not_lt_of_ge hmean) (by simpa using h)
 
 /-- The sum of the pairwise small-interval bounds with their multinomial weights. -/
@@ -288,6 +287,10 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     (htotal : (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
       ENNReal.ofReal (budget k)) ≤ 1) :
     ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ radius j) ∧
+      (∑' k, ENNReal.ofReal (tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) -
+        ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) / ENNReal.ofReal (budget k)) ≤
+        (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+          ENNReal.ofReal (budget k)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
         (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k := by
   let ν (j : J) := intervalNoise (radius j)
@@ -325,13 +328,14 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
         (hw k) (fun j => hradius j) (p k) (hη k)) _
   obtain ⟨x, hx, hbound⟩ :=
     exists_within_expected_budget μ loss hmeas inside hinside
-      ((ENNReal.tsum_le_tsum hlocal).trans htotal)
-  refine ⟨fun j => g j + x j, ?_, ?_⟩
+      (ne_of_lt (htotal.trans_lt ENNReal.one_lt_top)) (ENNReal.tsum_le_tsum hlocal)
+  refine ⟨fun j => g j + x j, ?_, hbound, ?_⟩
   · intro j
     rw [add_sub_cancel_left]
     exact abs_le.mpr (hx j)
   · intro k
-    have hk := hbound k
+    have hk : loss k x ≤ 1 :=
+      (ENNReal.le_tsum (f := fun l => loss l x) k).trans (hbound.trans htotal)
     dsimp only [loss, excess] at hk
     rw [← ENNReal.ofReal_div_of_pos (hbudget k), ← ENNReal.ofReal_one,
       ENNReal.ofReal_le_ofReal_iff zero_le_one, div_le_iff₀ (hbudget k), one_mul] at hk

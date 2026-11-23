@@ -21,7 +21,7 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
                 "For distinct degree vectors m and n, let L(m,n) be the maximum of "
                 + "|m(j)−n(j)| ε(j) over the support. The quantity A(k) sums the products of the "
                 + "weighted multinomial coefficients times min(1,η(k)/L(m,n)) over distinct "
-                + "ordered pairs. The budget sum is taken in the extended nonnegative reals.")),
+                + "ordered pairs. Write C for the sum of A(k)/b(k) in the extended nonnegative reals.")),
             Describe.Lean(
                 DescribeId.Create("exists-continuous-common-nearby-bounds"),
                 DeclarationHandle.Create(Owner + ".exists_continuous_common_nearby_bounds"),
@@ -38,10 +38,10 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
                     Paragraph(Text(
                         "Finite marginals give the same distribution on the support of each test. "
                         + "Summing the weighted indicators gives A(k) as an upper bound on expected "
-                        + "excess. The expected sum of the excesses divided by b(k) is at most one. "
-                        + "An assignment violating any test has total normalized excess strictly "
-                        + "above one. The product measure gives full measure to the simultaneous radius "
-                        + "constraint, so there is an allowed assignment satisfying all tests.")),
+                        + "excess. The expected normalized sum is at most C. If it exceeded C at "
+                        + "every allowed assignment, its integral would be strictly greater than C, "
+                        + "since the radius constraint holds almost surely. At a selected assignment "
+                        + "every summand is nonnegative and at most the total, which is at most one.")),
                     Paragraph(Text(
                         "The result constructs a comparison spectrum. A prescribed counting law would "
                         + "also need estimates on threshold crossings, and the fixed zeta ordinates "
@@ -65,15 +65,19 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
         var index = F.Id("J");
         var tests = F.Id("K");
         var reals = Seq(Mathbb, Grp(F.Id("R")));
-        var budget = Seq(new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, tests)),
-            new Formula.Fraction(Call("A", k), Call("b", k)));
+        var budget = F.Id("C");
+        var normalizedExcess = new Formula.Fraction(
+            Seq(Call("E", k, spectrum), Minus, Call("D", k)), Call("b", k));
+        var aggregate = AtMost(Seq(new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, tests)),
+            normalizedExcess), budget);
         var radius = Seq(Varepsilon, Open, j, Close);
         var distance = new Formula.Absolute(Seq(Call("h", j), Minus, Call("g", j)));
         var proximity = Bind(FormulaQuantifier.ForAll, "j", index, AtMost(distance, radius));
         var collision = Bind(FormulaQuantifier.ForAll, "k", tests,
             AtMost(Call("E", k, spectrum), Add(Call("D", k), Call("b", k))));
         var conclusion = Bind(FormulaQuantifier.Exists, "h", Seq(index, Sp, To, Sp, reals),
-            new Formula.Logic(proximity, FormulaLogicOperator.And, collision));
+            new Formula.Logic(proximity, FormulaLogicOperator.And,
+                new Formula.Logic(aggregate, FormulaLogicOperator.And, collision)));
         return Disp(new Formula.Logic(AtMost(budget, D(1)), FormulaLogicOperator.Implies, conclusion));
     }
 }

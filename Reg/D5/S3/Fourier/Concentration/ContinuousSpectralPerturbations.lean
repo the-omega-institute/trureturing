@@ -30,6 +30,10 @@ abbrev frequencyArena : Arena where
     (_ : (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
       ENNReal.ofReal (budget k)) ≤ 1),
     ∃ g' : J → ℝ, (∀ j, |V.readout () ⟨J, g'⟩ j - g j| ≤ radius j) ∧
+      (∑' k, ENNReal.ofReal (tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) -
+        ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) / ENNReal.ofReal (budget k)) ≤
+        (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+          ENNReal.ofReal (budget k)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
         (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k
 
