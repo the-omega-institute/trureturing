@@ -16,8 +16,8 @@ transition_counts: proof_shape=bind-only; consumers=Certificate.transition_count
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.SignedFibres
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip

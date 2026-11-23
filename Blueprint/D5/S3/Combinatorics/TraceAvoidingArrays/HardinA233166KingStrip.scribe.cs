@@ -30,6 +30,11 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 "Let h be five nonzero xor increments, and suppose a nonzero shift is absent from them. The allowed shift set has two elements when all increments agree and one element otherwise. The set consists of the nonzero colours v such that h(j) differs from v for every j.", DescribeRole.Theorem),
             Node("colour-equiv-eight", "Pair colours and Boolean signs", "colourEquiv8",
                 "Each of the eight colours is uniquely determined by its complementary pair and a Boolean sign. The pair coordinate is beta, and the sign is true exactly for colours at least four.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sum-beta"), DeclarationHandle.Create(Prefix + "sum_beta"),
+                H("Weighted sum over signed lifts"), StatementSource.FromAuthor(Disp(SumBetaFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229750")),
+                Blocks(Paragraph(Text("The complementary-colour equivalence identifies a lifted row with a pair (r,b), where r maps Fin k to Fin 4 and b maps Fin k to Bool. Its first coordinate is pointwise beta. Reindexing the sum by this equivalence makes the weight independent of b. There are 2^k Boolean rows, so summing over b gives the stated factor. In particular the factors are eight at width three and sixteen at width four. No row-legality assumption is needed."))),
+                DescribeRole.Theorem),
             Node("zones-iff", "Zone data through offset choices", "zones_iff",
                 "A zone is equivalent to an admissible offset word whose adjacent first-column increments lie in its allowed shift set.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("legal"), DeclarationHandle.Create(Prefix + "Legal"),
@@ -114,6 +119,24 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var pred=Seq(LambdaLower,Sp,f,Colon,Sp,Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
             Sp,Mapsto,Sp,Call("Legal",f));
         return All("n",V("Nat"),Eq(Call("a",n),Call("Finset.card",Call("Finset.filter",pred,Call("Finset.univ")))));
+    }
+
+    private static Formula SumBetaFormula()
+    {
+        var width = V("k");
+        var pairRow = Arrow(Call("Fin", width), Fin(4));
+        var signedRow = Arrow(Call("Fin", width), Fin(8));
+        var weight = V("w");
+        var integer = Call("Int");
+        Formula SumOver(string name, Formula type, Formula value) =>
+            Seq(Sum, Underscore, Grp(Parenthesized(Seq(V(name), Colon, Sp, type))),
+                Sp, Parenthesized(value));
+        var pairProjection = Parenthesized(Seq(Call("HardinA233196Strip.beta"), Sp, Circ, Sp, V("c")));
+        var signedSum = SumOver("c", signedRow, App(weight, pairProjection));
+        var pairSum = SumOver("r", pairRow, App(weight, V("r")));
+        var multiplicity = Pow(Seq(D(2), Colon, Sp, integer), width);
+        return All("k", Call("Nat"), All("w", Arrow(pairRow, integer),
+            Eq(signedSum, Mul(multiplicity, Parenthesized(pairSum)))));
     }
 
     private static Formula CanonicalPatternCardFormula()
