@@ -42,12 +42,12 @@ private abbrev arena : Arena where
     [Fintype R] [DecidableEq R] [Fintype B] [DecidableEq B] [Fintype M] [DecidableEq M],
     ∀
     (E : QuantumChannel B M) (D : QuantumChannel M B)
-    (τ : DensityState B) (hτ : (CStarMatrix.ofMatrix.symm τ.1).PosDef)
-    (hfix : (D.comp E).mapState τ = τ)
-    (K : Matrix B B ℂ) (hK : K.IsHermitian) (htr : K.trace = 0) :
+    (τ : DensityState B) (_hτ : (CStarMatrix.ofMatrix.symm τ.1).PosDef)
+    (_hfix : (D.comp E).mapState τ = τ)
+    (K : Matrix B B ℂ) (_hK : K.IsHermitian) (_htr : K.trace = 0),
     ∃ (L : ℝ) (hL : 0 < L) (σ : DensityState B),
       CStarMatrix.ofMatrix.symm σ.1 = CStarMatrix.ofMatrix.symm τ.1 - L⁻¹ • K ∧
-      ∀ (ε : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1) (hp : ε * L ≤ 1),
+      ∀ (ε : ℝ) (hε : 0 < ε) (_hε' : ε ≤ 1) (hp : ε * L ≤ 1),
         let T := D.comp E
         let Dε := (mix (ε * L) (mul_nonneg hε.le hL.le) hp
           (reset σ) identity).comp D
@@ -77,7 +77,11 @@ private lemma singletonDensity_unique (τ : DensityState Q.{ub}) : τ = singleto
   have hij : j = i := Subsingleton.elim _ _
   subst j
   have ht := τ.trace_eq_one
-  simpa [Matrix.trace, singletonDensity] using ht
+  have hi : i = default := Subsingleton.elim _ _
+  subst i
+  change τ.1 default default = 1
+  change (∑ i : Q, τ.1 i i) = 1 at ht
+  simpa using ht
 
 private theorem rejected_law : ¬ arena.{ur, ub, um}.Law rejected := by
   intro h
@@ -111,6 +115,7 @@ def decoderShiftFamily : Registration arena.{ur, ub, um}
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
   dependence := dependence
 
+set_option linter.style.longLine false in
 def decoderShiftAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@faithful_decoder_marginal_shift.{ur, ub, um}) (Realization signature) Unit Unit where
   unitName :=

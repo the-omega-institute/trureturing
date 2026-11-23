@@ -19,13 +19,14 @@ noncomputable section
 
 namespace D5.S3.Quantum.Recovery.LocalCompression.ProductNoiseDecoder
 
-open Matrix
+open _root_.Matrix
 open scoped CStarAlgebra ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance (referenceState)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
   (traceNorm traceNorm_add_le traceDistance traceDistance_le_one)
-open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (act amp amp_entry amp_smul state_nonempty)
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+  (act amp amp_entry amp_smul state_nonempty)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_kronecker)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (density_posSemidef marginalRight partialTraceRight productState)
@@ -44,7 +45,7 @@ private abbrev raw {n : Type*} [Fintype n] [DecidableEq n] (ρ : DensityState n)
 private lemma exists_shifted_density (τ : DensityState B) (hτ : (raw τ).PosDef)
     (K : Matrix B B ℂ) (hK : K.IsHermitian) (htr : K.trace = 0) :
     ∃ L : ℝ, 0 < L ∧ ∃ σ : DensityState B, raw σ = raw τ - L⁻¹ • K := by
-  letI : Nonempty B := state_nonempty ⟨hτ.posSemidef, τ.trace_eq_one⟩
+  let : Nonempty B := state_nonempty ⟨hτ.posSemidef, τ.trace_eq_one⟩
   obtain ⟨m, hm, hfloor⟩ := (CFC.exists_pos_algebraMap_le_iff (raw τ)).mpr
     (fun x hx => hτ.isStrictlyPositive.spectrum_pos hx)
   let L : ℝ := (‖K‖ + 1) / m
@@ -109,7 +110,6 @@ private lemma traceNorm_real_smul {n : Type*} [Fintype n]
   classical
   convert traceNorm_smul_nonneg X c hc using 2
 
-set_option maxHeartbeats 1000000 in
 /-- A decoder perturbation through the same memory realizes the prescribed
 signed marginal direction and controls the full joint reconstruction error. -/
 theorem faithful_decoder_marginal_shift
@@ -119,7 +119,7 @@ theorem faithful_decoder_marginal_shift
     (K : Matrix B B ℂ) (hK : K.IsHermitian) (htr : K.trace = 0) :
     ∃ (L : ℝ) (hL : 0 < L) (σ : DensityState B),
       CStarMatrix.ofMatrix.symm σ.1 = CStarMatrix.ofMatrix.symm τ.1 - L⁻¹ • K ∧
-      ∀ (ε : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1) (hp : ε * L ≤ 1),
+      ∀ (ε : ℝ) (hε : 0 < ε) (_hε' : ε ≤ 1) (hp : ε * L ≤ 1),
         let T := D.comp E
         let Dε := (mix (ε * L) (mul_nonneg hε.le hL.le) hp
           (reset σ) identity).comp D
@@ -136,7 +136,7 @@ theorem faithful_decoder_marginal_shift
             ε * (L + traceDistance ρR ω * traceNorm K) := by
   obtain ⟨L, hL, σ, hσ⟩ := exists_shifted_density τ hτ K hK htr
   refine ⟨L, hL, σ, hσ, ?_⟩
-  intro ε hε hε' hp T Dε Tε
+  intro ε hε _ hp T Dε Tε
   have ht : act T (raw τ) = raw τ := congrArg raw hfix
   have hcomp : Tε = (mix (ε * L) (mul_nonneg hε.le hL.le) hp (reset σ) identity).comp T := rfl
   have hre : (ε * L) * L⁻¹ = ε := by rw [mul_assoc, mul_inv_cancel₀ hL.ne', mul_one]
@@ -161,7 +161,8 @@ theorem faithful_decoder_marginal_shift
       Complex.ofReal_mul, Complex.ofReal_one, Complex.ofReal_inv]
     have hεc : (ε : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hε.ne'
     have hLc : (L : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hL.ne'
-    field_simp [hεc, hLc] <;> ring
+    field_simp [hεc, hLc]
+    ring
   refine ⟨hidentity, ?_⟩
   let Y := amp T (raw ρ) - raw ρR ⊗ₖ raw τ
   let Z := (raw ρR - raw ω) ⊗ₖ K
