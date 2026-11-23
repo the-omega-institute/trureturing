@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.canonicalCount
-mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.small_budget_ne_cut_total, HardinA229641Strip.result
+mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.small_budget_ne_cut_total, HardinA229641Strip.result._simp_1_6
 small_budget_ne_cut_total: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
