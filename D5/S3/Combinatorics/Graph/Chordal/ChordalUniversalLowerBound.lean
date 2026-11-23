@@ -187,9 +187,9 @@ namespace SimpleGraph.PathPower
 
 open scoped BigOperators
 
-open private edgeAt triangle treeEdge offTreeEdge incidence edgeBoundary boundary edgeWeight
+open private edgeAt treeEdge offTreeEdge incidence edgeBoundary boundary edgeWeight
   triangleWeight combinedWeight basisFilling cut edge_span edgeAt_complete edge_injective
-  triangle_complete edge_partition boundary_closed cut_incidence basis_filling boundary_unit
+  edge_partition boundary_closed cut_incidence basis_filling boundary_unit
   weight_sum weight_combination column_bound objective_value from
   D5.S3.Combinatorics.Graph.Chordal.ChordalUniversalLowerBoundCertificate
 
@@ -232,6 +232,17 @@ private theorem fill_surjective {R : Type*} [CommRing R] :
         simp only [← Int.cast_mul, ← Int.cast_sum, basis_filling]
         split <;> simp
       simp [h, mul_ite]
+
+private def increasingEdgeIndex :
+    Fin 30 ≃ {uv : Fin 12 × Fin 12 //
+      uv.1.val < uv.2.val ∧ (pathPower 12 3).Adj uv.1 uv.2} :=
+  Equiv.ofBijective (fun e =>
+    let hs := edge_span e
+    ⟨edgeAt e, hs.1, adj_iff.mpr ⟨fun he => by rw [he] at hs; omega, by omega, hs.2⟩⟩)
+    ⟨fun _ _ h => edge_injective (congrArg Subtype.val h), by
+      rintro ⟨⟨a, b⟩, hab, hadj⟩
+      obtain ⟨e, he⟩ := edgeAt_complete a b ⟨hab, (adj_iff.mp hadj).2.2⟩
+      exact ⟨e, Subtype.ext he⟩⟩
 
 /-- The vertex-edge incidence operator for the oriented width-three path on twelve vertices. -/
 def incidenceMap (R : Type*) [CommRing R] : (Fin 30 → R) →ₗ[R] (Fin 12 → R) where
@@ -306,25 +317,24 @@ def cycleCoordinates (R : Type*) [CommRing R] : (incidenceMap R).ker ≃ₗ[R] (
 
 private def integralLength (x : Fin 28 → ℤ) : ℕ := ∑ t, (x t).natAbs
 
-private theorem integral_fill_exists (z : Fin 19 → ℤ) :
-    ∃ m, ∃ x, fill x = z ∧ integralLength x = m := by
+private def integralLengths (z : Fin 19 → ℤ) : Set ℕ :=
+  {m | ∃ x, fill x = z ∧ integralLength x = m}
+
+private theorem integralLengths_nonempty (z : Fin 19 → ℤ) :
+    (integralLengths z).Nonempty := by
   obtain ⟨x, rfl⟩ := fill_surjective z
   exact ⟨integralLength x, x, rfl, rfl⟩
 
 /-- The least number of signed triangular faces in an integral filling. -/
-def integralNorm (z : Fin 19 → ℤ) : ℕ := by
-  classical
-  exact Nat.find (integral_fill_exists z)
+def integralNorm (z : Fin 19 → ℤ) : ℕ := sInf (integralLengths z)
 
 private theorem integralNorm_spec (z : Fin 19 → ℤ) :
-    ∃ x, fill x = z ∧ integralLength x = integralNorm z := by
-  classical
-  exact Nat.find_spec (integral_fill_exists z)
+    ∃ x, fill x = z ∧ integralLength x = integralNorm z :=
+  Nat.sInf_mem (integralLengths_nonempty z)
 
 private theorem integralNorm_le {x : Fin 28 → ℤ} {z : Fin 19 → ℤ} (h : fill x = z) :
-    integralNorm z ≤ integralLength x := by
-  classical
-  exact Nat.find_min' (integral_fill_exists z) ⟨x, h, rfl⟩
+    integralNorm z ≤ integralLength x :=
+  Nat.sInf_le (show integralLength x ∈ integralLengths z from ⟨x, h, rfl⟩)
 
 private theorem integralNorm_zero : integralNorm 0 = 0 := by
   apply Nat.eq_zero_of_le_zero
@@ -694,9 +704,17 @@ private theorem score_residual_sum (φ : Fin 12 → Fin 19 → ℝ) :
       (∑ e : Fin 30, (edgeBoundary t e : ℝ) *
         (realGainCoords (edgeAt e).1 (edgeAt e).2 - (φ (edgeAt e).2 - φ (edgeAt e).1)) j) =
           (boundary t j : ℝ) := by
-    simp only [Pi.sub_apply, mul_sub, Finset.sum_sub_distrib, gradient_closed t (fun v => φ v j),
-      sub_zero, realGainCoords, castCoordinates]
-    exact_mod_cast boundary_reads_gain t j
+    simp only [Pi.sub_apply]
+    calc
+      _ = ∑ e : Fin 30, ((edgeBoundary t e : ℝ) * realGainCoords (edgeAt e).1 (edgeAt e).2 j -
+          (edgeBoundary t e : ℝ) * (φ (edgeAt e).2 j - φ (edgeAt e).1 j)) := by
+        apply Finset.sum_congr rfl
+        intro e _
+        rw [mul_sub]
+      _ = _ := by
+        rw [Finset.sum_sub_distrib, gradient_closed t (fun v => φ v j), sub_zero]
+        simp only [realGainCoords, castCoordinates]
+        exact_mod_cast boundary_reads_gain t j
   simp only [h, ← Int.cast_mul, ← Int.cast_sum, objective_value]
   norm_num
 
@@ -706,12 +724,9 @@ private theorem exists_large_real_error (φ : Fin 12 → Fin 19 → ℝ) :
   by_contra! h
   let r (e : Fin 30) := realGainCoords (edgeAt e).1 (edgeAt e).2 - (φ (edgeAt e).2 - φ (edgeAt e).1)
   have hsmall (e : Fin 30) : realNorm (r e) < 49 / 48 := by
-    have hs := edge_span e
-    have hne : (edgeAt e).1 ≠ (edgeAt e).2 := by
-      intro he
-      rw [he] at hs
-      omega
-    exact h _ _ (adj_iff.mpr ⟨hne, by omega, hs.2⟩)
+    have hAdj : (pathPower 12 3).Adj (edgeAt e).1 (edgeAt e).2 :=
+      (increasingEdgeIndex e).property.2
+    exact h _ _ hAdj
   have hle (e : Fin 30) : score e (r e) ≤ (edgeWeight e : ℝ) * (49 / 48) :=
     (score_bound e (r e)).trans (mul_le_mul_of_nonneg_left (hsmall e).le (Nat.cast_nonneg _))
   have hlt (e : Fin 30) (he : 0 < edgeWeight e) :
@@ -840,9 +855,9 @@ example : (pathPower 0 3).IsChordal := pathPower_isChordal 0 3
 
 example : ∃ φ : Fin 12 → IntegralCycles, ∀ i j, (pathPower 12 3).Adj i j →
     Dist.dist (1 : IntegralCycles) ((φ i)⁻¹ * φ j) ≤ 0 := by
-  exact ⟨fun _ => 1, by simp⟩
+  simpa only [mul_zero] using pathPower_exists_two_approximate_gain_potential
+    12 3 (by decide) (fun _ _ => (1 : IntegralCycles)) 0 le_rfl (by simp) (by simp)
 
 end
 
 end SimpleGraph.PathPower
-

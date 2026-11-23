@@ -220,12 +220,6 @@ private theorem edge_injective : Function.Injective edgeAt := by
   intro e
   fin_cases e <;> decide +kernel
 
-private theorem triangle_complete (a b c : Fin 12) :
-    a.val < b.val ∧ b.val < c.val ∧ c.val ≤ a.val + 3 →
-      ∃ t, triangle t = (a, b, c) := by
-  revert b c
-  fin_cases a <;> decide +kernel
-
 private theorem edge_partition (e : Fin 30) :
     (∃ d, treeEdge d = e) ∨ ∃ j, offTreeEdge j = e := by
   fin_cases e <;> decide +kernel
