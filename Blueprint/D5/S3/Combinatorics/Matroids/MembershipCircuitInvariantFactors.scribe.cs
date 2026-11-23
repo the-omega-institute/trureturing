@@ -24,7 +24,7 @@ internal sealed class MembershipCircuitInvariantFactorsDocument : IScribeDocumen
                     + " In a finite block-ordered parallel expansion, let n be the total size, g the gcd of all class sizes, and q(T) the gcd of n and the class sizes outside T."
                     + " Both binom(K - 2, r - 2) and binom(K - 2, r - 1) are at least t."
                     + " The integral joint lifting obstruction is the direct sum of binom(K - 2, r - 2) - t cyclic factors of order g, binom(K - 2, r - 1) - t of order n, and one factor of order q(T) per omission."
-                    + " Weight concentration within each membership class separates the omitted coefficients."
+                    + " A distinguishing membership class gives the pairwise intersection bound. The common-pivot cyclic-factor theorem then gives the decomposition."
                     + " Deletion and complement injections give the multiplicity bounds."))),
                 DescribeRole.Theorem))));
 }
