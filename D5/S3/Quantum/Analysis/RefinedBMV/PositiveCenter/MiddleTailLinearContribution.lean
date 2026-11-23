@@ -7,7 +7,7 @@
    digest: Mixed derivative of the normalized linear contribution from gap three. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleTailLinearGeometric
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapNormalization
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleTailLeading
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailJet
 
 /-! The linear summand of the separated positive-center kernel. -/
@@ -19,8 +19,10 @@ namespace RefinedBMV.PositiveCenter
 
 open private hasDerivAt_tailBeta from
   D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailJet
-open private compositionMoment_marginal_smooth reflectedHalfLogSlope_nonneg from
+open private reflectedHalfLogSlope_nonneg from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapNormalization
+open private hasDerivAt_middleTail_invMarginal from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleTailLeading
 
 /-- The linear summand in the exact normalized kernel decomposition. -/
 noncomputable def middleTailLinearContribution (p : ℕ) (u v : ℝ) : ℝ :=
@@ -57,42 +59,6 @@ private theorem middleTailLinearContribution_eq {p : ℕ} (hp : 0 < p) {u v : �
   have hβd : β d = h * g := by
     change β d = h * (β d / h)
     field_simp [hh.ne'] <;> ring
-  have hN : 0 < N := by
-    have hchoose : 0 < ((p + 2).choose 2 : ℝ) := by
-      exact_mod_cast (Nat.choose_pos (show 2 ≤ p + 2 by omega))
-    dsimp only [N]
-    positivity
-  have hCv : 0 < C v := compositionMoment_marginal_pos hp (neg_ne_zero.mpr hv.ne')
-  have hA : A v = N * (Real.exp (-v) * (β v * C v)) := by
-    have hlo := upperTail_lower_weight hp v 0
-    dsimp only at hlo
-    simp only [zero_add, neg_zero, zero_div, Real.exp_zero, mul_zero] at hlo
-    have hup := upperTail_upper_weight hp hv
-    change (1 - (Real.exp (-v / (p : ℝ))) ^ 3) *
-      DimThree.defect p (Real.exp (-v / (p : ℝ))) 1 1 = (p + 1 : ℝ) * A v at hup
-    rw [hlo, (tail_cube_pow hp v).1] at hup
-    have hn : (p + 1 : ℝ) ≠ 0 := by positivity
-    apply mul_left_cancel₀ hn
-    change (p + 1 : ℝ) * A v =
-      (p + 1 : ℝ) * (((p + 2).choose 2 : ℝ) / (p + 1) * (Real.exp (-v) * (β v * C v)))
-    rw [← hup]
-    change β v * (((p + 2).choose 2 : ℝ) * Real.exp (-v) * C v) = _
-    field_simp [hn] <;> ring
-  have hexpRoot : Real.sqrt (Real.exp (-v)) = Real.exp (-v / 2) := by
-    rw [show Real.exp (-v) = (Real.exp (-v / 2)) ^ 2 by
-      rw [pow_two, ← Real.exp_add]
-      congr 1
-      ring, Real.sqrt_sq (Real.exp_pos _).le]
-  have hroot : Real.sqrt (A v) =
-      Real.sqrt N * (Real.exp (-v / 2) * (Real.sqrt (β v) * Real.sqrt (C v))) := by
-    rw [hA, Real.sqrt_mul hN.le, Real.sqrt_mul (Real.exp_pos _).le,
-      Real.sqrt_mul (hβ v hv).le, hexpRoot]
-  have he : Real.exp (-d / 2) * Real.exp (u / 2) =
-      Real.exp u * Real.exp (-v / 2) := by
-    rw [← Real.exp_add, ← Real.exp_add]
-    congr 1
-    dsimp only [d]
-    ring
   have he' : Real.exp ((2 + h) * u) * Real.exp (-((1 + h) * v)) =
       Real.exp u * Real.exp (-((1 + h) * d)) := by
     rw [← Real.exp_add, ← Real.exp_add]
@@ -108,31 +74,16 @@ private theorem middleTailLinearContribution_eq {p : ℕ} (hp : 0 < p) {u v : �
     linarith only [hL], hD] at hE
   let S := Real.sqrt (C u) * Real.sqrt (C v) * β v
   have hsu := Real.sqrt_pos.mpr (compositionMoment_marginal_pos hp (neg_ne_zero.mpr hu.ne'))
-  have hsv := Real.sqrt_pos.mpr hCv
-  have hb := Real.sqrt_pos.mpr (hβ v hv)
-  have hsβ : (β v)⁻¹ = (Real.sqrt (β v))⁻¹ ^ 2 := by
-    rw [inv_pow, Real.sq_sqrt (hβ v hv).le]
+  have hsv := Real.sqrt_pos.mpr (compositionMoment_marginal_pos hp (neg_ne_zero.mpr hv.ne'))
   have hBase : upperTailBaseFactor p u d / Real.sqrt (A v) =
-      Real.exp u * (h * g * ell ^ 2 / (2 * S)) := by
-    unfold upperTailBaseFactor
-    change Real.sqrt N / 2 * Real.exp (-d / 2) *
-      (β d / Real.sqrt (β (d + u))) *
-      (Real.exp (u / 2) * ell ^ 2 / Real.sqrt (C u)) / Real.sqrt (A v) = _
-    rw [show d + u = v by exact sub_add_cancel v u, hroot, hβd]
-    calc
-      _ = (Real.exp (-d / 2) * Real.exp (u / 2)) *
-          (h * g * ell ^ 2 / (2 * S * Real.exp (-v / 2))) := by
-        dsimp only [S]
-        simp only [div_eq_mul_inv, mul_inv_rev, hsβ]
-        field_simp [hsu.ne', hsv.ne', hb.ne', (Real.sqrt_pos.mpr hN).ne',
-          (Real.exp_pos (-v / 2)).ne'] <;> ring
-      _ = _ := by
-        rw [he]
-        field_simp [(Real.exp_pos (-v / 2)).ne'] <;> ring
+      Real.exp u * (h * g * ell ^ 2 / (2 * S)) :=
+    middleTail_normalizedBase_eq hp hu huv
   have hc : 0 < c := by dsimp only [c]; positivity
   have hk : k = h ^ 2 / c := rfl
   let D := middleTailLinearGeom (p + 1) h u
   let L := middleTailLinearLoss (p + 1) h u
+  change upperTailLinearError h u d =
+    Real.exp (-((1 + h) * d)) * (-2 * L + g * (2 * h * D)) / (c * g ^ 2 * ell ^ 2) at hE
   have hright :
       k * (Real.exp ((2 + h) * u) * (Real.sqrt (C u))⁻¹) *
         (Real.exp (-((1 + h) * v)) * (Real.sqrt (C v))⁻¹ * (β v)⁻¹) *
@@ -144,7 +95,8 @@ private theorem middleTailLinearContribution_eq {p : ℕ} (hp : 0 < p) {u v : �
   change upperTailBaseFactor p u d * upperTailLinearError h u d / Real.sqrt (A v) = _
   rw [mul_div_right_comm, hBase, hE, hright, hk, hβd]
   have hS : 0 < S := mul_pos (mul_pos hsu hsv) (hβ v hv)
-  field_simp [hh.ne', hg.ne', hc.ne', hS.ne', (upperTailLinear_ell_pos hu).ne'] <;> ring
+  have hell : ell ≠ 0 := (upperTailLinear_ell_pos hu).ne'
+  field_simp [hh.ne', hg.ne', hc.ne', hS.ne', hell] <;> ring
 
 private theorem hasDerivAt_middleTail_invBeta {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     let β : ℝ → ℝ := fun x ↦ 1 - Real.exp (-(h * x))
@@ -156,22 +108,94 @@ private theorem hasDerivAt_middleTail_invBeta {h t : ℝ} (hh : 0 < h) (ht : 0 <
   refine (hβ.inv hb.ne').congr_deriv ?_
   field_simp [hb.ne'] <;> ring
 
-private theorem hasDerivAt_middleTail_invMarginal {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
-    let C : ℝ → ℝ := fun x ↦ compositionMoment p 0 (-x)
-    HasDerivAt (fun x ↦ (Real.sqrt (C x))⁻¹)
-      (-reflectedHalfLogSlope (compositionMoment p 0) t * (Real.sqrt (C t))⁻¹) t := by
-  intro C
-  have hC : 0 < C t := compositionMoment_marginal_pos hp (neg_ne_zero.mpr ht.ne')
-  have hs := Real.sqrt_pos.mpr hC
-  have hd : DifferentiableAt ℝ C t :=
-    ((compositionMoment_marginal_smooth p).differentiable (by norm_num) (-t)).comp t
-      differentiableAt_id.neg
-  refine ((hd.hasDerivAt.sqrt hC.ne').inv hs.ne').congr_deriv ?_
-  change -(deriv C t / (2 * Real.sqrt (C t))) / Real.sqrt (C t) ^ 2 =
-    -(deriv C t / C t / 2) * (Real.sqrt (C t))⁻¹
-  rw [show deriv C t / C t = deriv C t / Real.sqrt (C t) ^ 2 by
-    rw [Real.sq_sqrt hC.le]]
-  field_simp [hs.ne'] <;> ring
+/-- Exact mixed derivative with the common positive factor retained. -/
+theorem middleTailLinear_mixed_eq {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v) :
+    let h : ℝ := 3 / (p : ℝ)
+    let d := v - u
+    let a := reflectedHalfLogSlope (compositionMoment p 0)
+    let j := upperTailSlope h
+    let η := j d * (h + j d)
+    let β : ℝ → ℝ := fun t ↦ 1 - Real.exp (-(h * t))
+    let D := middleTailLinearGeom (p + 1) h
+    let L := middleTailLinearLoss (p + 1) h
+    let z := 2 + h - a u
+    let y := 1 + h + j v + a v
+    let k := h ^ 2 / ((3 + h) * (3 + 2 * h) / 2)
+    let P : ℝ := Real.exp ((2 + h) * u) * (Real.sqrt (compositionMoment p 0 (-u)))⁻¹
+    let R : ℝ := Real.exp (-((1 + h) * v)) *
+      (Real.sqrt (compositionMoment p 0 (-v)))⁻¹ * (β v)⁻¹
+    deriv (fun t ↦ deriv (fun x ↦ middleTailLinearContribution p x t) u) v =
+      (k * P * R) * (-y * (z * D u + deriv D u) +
+        ((y + j d) * (z * L u + deriv L u + L u * j d) + L u * η) / β d) := by
+  intro h d a j η β D L z y k P₀ R₀
+  let s := z + deriv L u / L u
+  let W : ℝ → ℝ := fun t ↦ (β t)⁻¹
+  let P : ℝ → ℝ := fun t ↦ Real.exp ((2 + h) * t) * (Real.sqrt (compositionMoment p 0 (-t)))⁻¹
+  let R : ℝ → ℝ := fun t ↦ Real.exp (-((1 + h) * t)) *
+    (Real.sqrt (compositionMoment p 0 (-t)))⁻¹ * W t
+  have hp₀ := hp
+  have hh : 0 < h := by dsimp only [h]; positivity
+  have hd : 0 < d := sub_pos.mpr huv
+  have hv := hu.trans huv
+  have hβ (t : ℝ) (ht : 0 < t) : 0 < β t :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht)))
+  have hj := hasDerivAt_upperTailSlope hh hd
+  have hLder := hasDerivAt_middleTailLinearLoss (p + 1) h u
+  have hDder := hasDerivAt_middleTailLinearGeom (p + 1) h u
+  have hL : 0 < L u :=
+    (middleTailLinear_geom_ge_and_logDeriv_ge (n := p + 1) (Nat.succ_pos p) hh hu).1
+  change deriv (fun t ↦ deriv (fun x ↦ middleTailLinearContribution p x t) u) v =
+    (k * P u * R v) * (-y * (z * D u + deriv D u) +
+      ((y + j d) * (z * L u + deriv L u + L u * j d) + L u * η) / β d)
+  have hP : HasDerivAt P (z * P u) u := by
+    have he := ((hasDerivAt_id' u).const_mul (2 + h)).exp
+    refine (he.mul (hasDerivAt_middleTail_invMarginal hp₀ hu)).congr_deriv ?_
+    simp only [P, z, a, mul_one, Pi.mul_apply]
+    ring
+  have hR : HasDerivAt R (-y * R v) v := by
+    refine (((hasDerivAt_upperTailLinearDecay (1 + h) v).mul
+      (hasDerivAt_middleTail_invMarginal hp₀ hv)).mul
+      (hasDerivAt_middleTail_invBeta hh hv)).congr_deriv ?_
+    simp only [R, y, a, j, W, Pi.mul_apply]
+    ring
+  let B := z * D u + deriv D u
+  let F : ℝ → ℝ := fun t ↦ k * P u * R t *
+    (B - W (t - u) * (L u * (s + j (t - u))))
+  have hfirst : (fun t ↦ deriv (fun x ↦ middleTailLinearContribution p x t) u) =ᶠ[𝓝 v] F := by
+    filter_upwards [eventually_gt_nhds huv] with t ht
+    have hW : HasDerivAt (fun x ↦ W (t - x)) (j (t - u) * W (t - u)) u := by
+      have H := (hasDerivAt_middleTail_invBeta hh (sub_pos.mpr ht)).comp u
+        ((hasDerivAt_const u t).fun_sub (hasDerivAt_id' u))
+      simpa only [Function.comp_def, zero_sub, mul_neg, mul_one, neg_mul, neg_neg] using H
+    have hmodel : (fun x ↦ middleTailLinearContribution p x t) =ᶠ[𝓝 u]
+        fun x ↦ k * P x * R t * (D x - L x * W (t - x)) := by
+      filter_upwards [eventually_gt_nhds hu, eventually_lt_nhds ht] with x hx hxt
+      exact middleTailLinearContribution_eq hp₀ hx hxt
+    rw [hmodel.deriv_eq]
+    have hD' : HasDerivAt D (deriv D u) u := hDder.differentiableAt.hasDerivAt
+    have hL' : HasDerivAt L (deriv L u) u := hLder.differentiableAt.hasDerivAt
+    have H := ((hP.const_mul k).mul_const (R t)).mul (hD'.sub (hL'.mul hW))
+    change HasDerivAt (fun x ↦ k * P x * R t * (D x - L x * W (t - x))) _ u at H
+    rw [H.deriv]
+    simp only [F, B, s, Pi.mul_apply, Pi.sub_apply]
+    field_simp [show L u ≠ 0 from hL.ne'] <;> ring
+  rw [hfirst.deriv_eq]
+  have hW : HasDerivAt (fun t ↦ W (t - u)) (-j d * W d) v := by
+    simpa only [Function.comp_def, mul_one] using
+      (hasDerivAt_middleTail_invBeta hh hd).comp v ((hasDerivAt_id' v).sub_const u)
+  have hJ : HasDerivAt (fun t ↦ j (t - u)) (-η) v := by
+    simpa only [Function.comp_def, mul_one] using
+      hj.comp v ((hasDerivAt_id' v).sub_const u)
+  have hbracket := (hW.mul ((hJ.const_add s).const_mul (L u))).const_sub B
+  have hF : HasDerivAt F
+      ((k * P u * R v) * (-y * B + L u * ((y + j d) * (s + j d) + η) / β d)) v := by
+    refine ((hR.const_mul (k * P u)).mul hbracket).congr_deriv ?_
+    simp only [d, W, Pi.mul_apply, div_eq_mul_inv]
+    ring
+  rw [hF.deriv]
+  dsimp only [B, s]
+  field_simp [hL.ne', (hβ d hd).ne'] <;> ring
 
 /-- The normalized linear summand has strictly negative mixed derivative from gap three. -/
 theorem middleTailLinearContribution_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
@@ -228,7 +252,6 @@ theorem middleTailLinearContribution_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : �
     dsimp only [y, j, a]
     linarith only [hh, (upperTailSlope_bounds hh hv).1, reflectedHalfLogSlope_nonneg hp₀ hv]
   have hLder := hasDerivAt_middleTailLinearLoss (p + 1) h u
-  have hDder := hasDerivAt_middleTailLinearGeom (p + 1) h u
   have hLogL : 0 ≤ deriv L u / L u := by
     rw [show deriv L u = _ from hLder.deriv]
     exact div_nonneg
@@ -261,52 +284,15 @@ theorem middleTailLinearContribution_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : �
       L u * ((y + j d) * (s + j d) + η) / β d < 0 :=
     middleTailLinear_mixed_scalar_neg hL (hβ d hd) (by rw [hc]; exact hD) hDL
       hy hjd.1.le hjupper heta hs hcw
-  have hP : HasDerivAt P (z * P u) u := by
-    have he := ((hasDerivAt_id' u).const_mul (2 + h)).exp
-    refine (he.mul (hasDerivAt_middleTail_invMarginal hp₀ hu)).congr_deriv ?_
-    simp only [P, z, a, mul_one, Pi.mul_apply]
-    ring
-  have hR : HasDerivAt R (-y * R v) v := by
-    refine (((hasDerivAt_upperTailLinearDecay (1 + h) v).mul
-      (hasDerivAt_middleTail_invMarginal hp₀ hv)).mul
-      (hasDerivAt_middleTail_invBeta hh hv)).congr_deriv ?_
-    simp only [R, y, a, j, W, Pi.mul_apply]
-    ring
-  let B := z * D u + deriv D u
-  let F : ℝ → ℝ := fun t ↦ k * P u * R t *
-    (B - W (t - u) * (L u * (s + j (t - u))))
-  have hfirst : (fun t ↦ deriv (fun x ↦ middleTailLinearContribution p x t) u) =ᶠ[𝓝 v] F := by
-    filter_upwards [eventually_gt_nhds huv] with t ht
-    have hW : HasDerivAt (fun x ↦ W (t - x)) (j (t - u) * W (t - u)) u := by
-      have H := (hasDerivAt_middleTail_invBeta hh (sub_pos.mpr ht)).comp u
-        ((hasDerivAt_const u t).fun_sub (hasDerivAt_id' u))
-      simpa only [Function.comp_def, zero_sub, mul_neg, mul_one, neg_mul, neg_neg] using H
-    have hmodel : (fun x ↦ middleTailLinearContribution p x t) =ᶠ[𝓝 u]
-        fun x ↦ k * P x * R t * (D x - L x * W (t - x)) := by
-      filter_upwards [eventually_gt_nhds hu, eventually_lt_nhds ht] with x hx hxt
-      exact middleTailLinearContribution_eq hp₀ hx hxt
-    rw [hmodel.deriv_eq]
-    have hD' : HasDerivAt D (deriv D u) u := hDder.differentiableAt.hasDerivAt
-    have hL' : HasDerivAt L (deriv L u) u := hLder.differentiableAt.hasDerivAt
-    have H := ((hP.const_mul k).mul_const (R t)).mul (hD'.sub (hL'.mul hW))
-    change HasDerivAt (fun x ↦ k * P x * R t * (D x - L x * W (t - x))) _ u at H
-    rw [H.deriv]
-    simp only [F, B, s, Pi.mul_apply, Pi.sub_apply]
-    field_simp [show L u ≠ 0 from hL.ne'] <;> ring
-  rw [hfirst.deriv_eq]
-  have hW : HasDerivAt (fun t ↦ W (t - u)) (-j d * W d) v := by
-    simpa only [Function.comp_def, mul_one] using
-      (hasDerivAt_middleTail_invBeta hh hd).comp v ((hasDerivAt_id' v).sub_const u)
-  have hJ : HasDerivAt (fun t ↦ j (t - u)) (-η) v := by
-    simpa only [Function.comp_def, mul_one] using
-      hj.comp v ((hasDerivAt_id' v).sub_const u)
-  have hbracket := (hW.mul ((hJ.const_add s).const_mul (L u))).const_sub B
-  have hF : HasDerivAt F
-      ((k * P u * R v) * (-y * B + L u * ((y + j d) * (s + j d) + η) / β d)) v := by
-    refine ((hR.const_mul (k * P u)).mul hbracket).congr_deriv ?_
-    simp only [d, W, Pi.mul_apply, div_eq_mul_inv]
-    ring
-  rw [hF.deriv]
+  rw [middleTailLinear_mixed_eq hp₀ hu huv]
+  change (k * P u * R v) * (-y * (z * D u + deriv D u) +
+    ((y + j d) * (z * L u + deriv L u + L u * j d) + L u * η) / β d) < 0
+  have hcore : ((y + j d) * (z * L u + deriv L u + L u * j d) + L u * η) =
+      L u * ((y + j d) * (s + j d) + η) := by
+    dsimp only [s]
+    have hLu : L u ≠ 0 := hL.ne'
+    field_simp [hLu] <;> ring
+  rw [hcore]
   have hPpos : 0 < P u :=
     mul_pos (Real.exp_pos _) (inv_pos.mpr (Real.sqrt_pos.mpr
       (compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr hu.ne'))))
