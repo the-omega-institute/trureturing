@@ -49,7 +49,7 @@ private theorem change_common_bit {R : Matrix (V → Bool) (V → Bool) ℂ}
       have h2 : update v i true = v := by rw [← hv, Function.update_eq_self]
       first | simpa only [h1, h2] using hz | simpa only [h1, h2] using htrace
 
-private theorem nonzero_on_pattern {R : Matrix (V → Bool) (V → Bool) ℂ}
+theorem nonzero_on_pattern {R : Matrix (V → Bool) (V → Bool) ℂ}
     [Finite V] (hR : InDeletionKernel R) {x y u v : V → Bool} (hnz : R x y ≠ 0)
     (hmatch : SamePattern x y u v) : R u v ≠ 0 := by
   letI := Fintype.ofFinite V
