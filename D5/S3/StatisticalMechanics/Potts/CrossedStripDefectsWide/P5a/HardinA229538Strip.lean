@@ -164,8 +164,7 @@ private theorem edges_eq :
   decide +kernel
 
 theorem edges_card : edges.card = 13 := by
-  rw [edges_eq]
-  decide +kernel
+  rw [edges_eq]; decide +kernel
 
 theorem cut_total_exclusion (D : ℕ) :
     (∀ m : ℕ, D ≠ m * edges.card) ↔ ¬ 13 ∣ D := by
@@ -214,10 +213,8 @@ theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
     have shifted := congrArg ((M ^ n).mulVec) h
     simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.mulVec_mulVec, ← pow_add,
       ← Nat.add_assoc] at shifted
-    rw [shifted, dotProduct_sum]
-    simp_rw [dotProduct_smul]
-  · intro h
-    funext p
+    rw [shifted, dotProduct_sum]; simp_rw [dotProduct_smul]
+  · intro h; funext p
     simpa only [Nat.zero_add, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply] using h (Pi.single p 1) 0
 
 set_option backward.isDefEq.respectTransparency false
@@ -244,8 +241,7 @@ theorem cost_countCut (p q : Column) : cost p q = countCut p q := by
   simp only [cost, D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.bondDefects,
     edges_eq, Finset.card_filter]
   repeat' rw [Finset.sum_insert (by decide)]
-  simp only [Finset.sum_singleton, countCut, Nat.add_assoc]
-  try rfl
+  simp only [Finset.sum_singleton, countCut, Nat.add_assoc] <;> rfl
 
 def movesOne : Column → List Column := ![
   [],
@@ -497,8 +493,7 @@ private theorem moves_one_filter (p : Column) :
   have checked : ∀ (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       movesOne col = (List.finRange 243).filter (fun q => decide (cost col q = 1)) := by
-    intro block
-    simp only [cost_countCut]
+    intro block; simp only [cost_countCut]
     fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
@@ -508,11 +503,8 @@ theorem step_one {R : Type*} [NonAssocSemiring R]
     oneDefect.mulVec w p = ((movesOne p).map w).sum := by
   classical
   have nodup : (movesOne p).Nodup := by
-    rw [moves_one_filter]
-    exact (List.nodup_finRange _).filter _
-  have mem (q : Column) : q ∈ movesOne p ↔ cost p q = 1 := by
-    rw [moves_one_filter]
-    simp
+    rw [moves_one_filter]; exact (List.nodup_finRange _).filter _
+  have mem (q : Column) : q ∈ movesOne p ↔ cost p q = 1 := by rw [moves_one_filter]; simp
   simp only [Matrix.mulVec, dotProduct, oneDefect, ite_mul, one_mul, zero_mul]
   simp_rw [← mem, ← List.mem_toFinset]
   rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
@@ -554,13 +546,11 @@ theorem weight_eq (i : Fin 23) :
     zeroValues i = ∑ j : Fin 12, weights i j • table j := by
   funext p
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  unfold zeroValues
-  split_ifs with hi
+  unfold zeroValues; split_ifs with hi
   · have hi' (j : Fin 12) : weights i j =
         if i.castLT hi = j then 1 else 0 := by
       simpa only [Fin.castAdd_castLT] using weights_initial (i.castLT hi) j
-    simp_rw [hi', ite_mul, one_mul, zero_mul]
-    simp
+    simp_rw [hi', ite_mul, one_mul, zero_mul]; simp
   · rfl
 
 theorem zero_values (n : Fin 23) :
@@ -600,9 +590,7 @@ theorem zero_values (n : Fin 23) :
             using (Fin.natAdd (m - 10) k).isLt
         have earlier (k : Fin 10) := (ih _ (prior k) ((prior k).trans hm)).symm
         simp_rw [earlier, weight_eq, weights_step ⟨m, hm⟩ large, Finset.sum_smul, Finset.smul_sum]
-        rw [Finset.sum_comm]
-        simp only [mul_smul]
-        rfl
+        rw [Finset.sum_comm]; simp only [mul_smul]; rfl
   exact reconstruct n.val n.isLt
 
 def classIndex (p : Column) : Fin 25 :=
@@ -663,8 +651,7 @@ private theorem seed_image (k : Fin 12) (p : Column) :
   have checked : ∀ (i : Fin 12) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesOne col).map (table i)).sum = seedImage i col := by
-    intro i block
-    fin_cases i <;> fin_cases block <;> decide +kernel
+    intro i block; fin_cases i <;> fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked k block offset
 
@@ -684,8 +671,7 @@ private theorem table_step (k : Fin 22) (p : Column) :
       let col := finProdFinEquiv (block, offset)
       tableOne n.succ col = ((moves col).map (tableOne n.castSucc)).sum +
         (∑ j : Fin 12, weights n.castSucc j * seedImage j col) := by
-    intro n block
-    fin_cases n <;> fin_cases block <;> decide +kernel
+    intro n block; fin_cases n <;> fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked k block offset
 
@@ -696,8 +682,7 @@ theorem table_powers (n : Fin 23) :
     (transfer ^ n.val).mulVec terminal =
       Sum.elim (tableOne n) ((T ^ n.val).mulVec (1 : Column → ℤ))) _ _ n
   · simp only [Fin.val_zero, pow_zero, Matrix.one_mulVec]
-    funext p
-    cases p with
+    funext p; cases p with
     | inl p => exact (table_base p).symm
     | inr p => rfl
   · intro k ih
@@ -705,8 +690,7 @@ theorem table_powers (n : Fin 23) :
     rw [ih]
     simp only [transfer, Matrix.fromBlocks_mulVec, Function.comp_def, Sum.elim_inl, Sum.elim_inr,
       Matrix.zero_mulVec, zero_add]
-    funext p
-    cases p with
+    funext p; cases p with
     | inl p =>
       exact ((congrArg (fun z => T.mulVec (tableOne k.castSucc) p + oneDefect.mulVec z p)
         (zero_values k.castSucc)).symm.trans (table_step k p).symm)
@@ -730,13 +714,11 @@ private theorem inherited_polynomial (p : Column) :
             ∑ k : Fin 10, HardinA233178Chromatic.coefficients k * f (1 + j.val + 1 + k.val)) := by
     conv_rhs => rw [Fin.sum_univ_castSucc]
     simp only [Fin.snoc_castSucc, Fin.snoc_last, Fin.val_castSucc, Fin.val_last]
-    norm_num [Fin.sum_univ_succ, coefficients538, HardinA233178Chromatic.coefficients]
-    ring
+    norm_num [Fin.sum_univ_succ, coefficients538, HardinA233178Chromatic.coefficients]; ring
   apply sub_eq_zero.mp
   change f 22 - ∑ k : Fin 20, coefficients538 k * f (2 + k.val) = 0
   rw [factor]
-  apply Finset.sum_eq_zero
-  intro j _
+  apply Finset.sum_eq_zero; intro j _
   have shifted := TransferMatrix.scalarRelationShift T (Pi.single p 1) 10 1
     HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (1 + j.val)
   have coordinate : f (1 + j.val + 11) =
@@ -752,8 +734,7 @@ theorem vector_polynomial :
     Sum.elim (tableOne ((Fin.natAdd 2 k).castSucc))
       ((T ^ (2 + k.val)).mulVec (1 : Column → ℤ)) from
       fun k => table_powers ((Fin.natAdd 2 k).castSucc)]
-  funext p
-  cases p with
+  funext p; cases p with
   | inl p => simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Sum.elim_inl] using new_polynomial p
   | inr p => simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Sum.elim_inr,
       Fin.val_last] using inherited_polynomial p
@@ -772,7 +753,6 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects d
 
 set_option maxHeartbeats 0
 set_option maxRecDepth 100000
-
 
 /-- Exact-defect arrays for two cuts with canonical row-major colour names. -/
 def canonicalCount {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) : ℕ :=
@@ -799,53 +779,24 @@ theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
     have cutoff : cost p q ≤ 1 ↔ cost p q = 0 ∨ cost p q = 1 :=
       Nat.le_one_iff_eq_zero_or_eq_one
     have hd' : d = 0 ∨ d = 1 := Nat.le_one_iff_eq_zero_or_eq_one.mp hd
-    rcases hd' with rfl | rfl <;> cases s with
-    | inl s =>
-      all_goals
-        by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
-        all_goals
-          have hz := zero
-          simp only [h₀, ite_true, ite_false] at hz
-          by_cases hq : s = q
-          · subst s
-            simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz]
-          · simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz, hq, Ne.symm hq]
-    | inr s =>
-      all_goals
-        by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
-        all_goals
-          by_cases hq : s = q
-          · subst s
-            simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁]
-          · simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, Ne.symm hq]
+    rcases hd' with rfl | rfl <;> rcases s with x | x <;>
+      by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1 <;> by_cases hq : x = q <;>
+      simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, @eq_comm _ q x]
   have agree (allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q) (s : Column ⊕ Column) :
       (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
         (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
     rcases allowed with hd | hz | ht
     · exact pending hd s
-    · rcases s with x | x <;> by_cases hq : x = q
-      all_goals
-        first
-        | subst x
-          by_cases hd : d = 0 <;>
-            simp [residual, transfer,
-              ← zero_cost_entry, oneDefect, hz, hd]
-        | by_cases hd : d = 0 <;>
-            simp [residual, transfer,
-              ← zero_cost_entry, oneDefect, hz, hd, hq, Ne.symm hq]
+    · rcases s with x | x <;> by_cases hq : x = q <;> by_cases hd : d = 0 <;>
+        simp [residual, transfer, ← zero_cost_entry, oneDefect, hz, hd, hq, @eq_comm _ q x]
     · by_cases hd : d ≤ 1
       · exact pending hd s
       have hd0 : d ≠ 0 := by omega
       have hc0 : cost p q ≠ 0 := by omega
       have hc1 : cost p q ≠ 1 := by omega
-      rcases s with x | x <;> by_cases hq : x = q
-      all_goals
-        first
-        | subst x
-          simp [residual, transfer,
-            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht]
-        | simp [residual, transfer,
-            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht, hq]
+      rcases s with x | x <;> by_cases hq : x = q <;>
+        simp [residual, transfer, ← zero_cost_entry, oneDefect, hd0, hc0, hc1,
+          Nat.not_le_of_lt ht, hq]
   by_cases allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q
   · have equality := agree allowed s
     constructor
@@ -860,23 +811,13 @@ theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
     by_cases h1 : cost p q = 1
     · have hres : d - 1 ≠ 0 := by omega
       have hd1 : 1 ≤ d := by omega
-      rcases s with x | x <;> by_cases hq : x = q
-      all_goals
-        first
-        | subst x
-          simp [residual, transfer, oneDefect, ← zero_cost_entry,
-            hd, hd0, hc, hcz, hle, h1, hres, hd1]
-        | simp [residual, transfer, oneDefect, ← zero_cost_entry,
-            hd, hd0, hc, hcz, hle, h1, hres, hq, Ne.symm hq, hd1]
+      rcases s with x | x <;> by_cases hq : x = q <;>
+        simp [residual, transfer, oneDefect, ← zero_cost_entry,
+          hd, hd0, hc, hcz, hle, h1, hres, hq, @eq_comm _ q x, hd1]
     · by_cases hres : d - cost p q = 0 <;>
-        rcases s with x | x <;> by_cases hq : x = q
-      all_goals
-        first
-        | subst x
-          simp [residual, transfer, oneDefect, ← zero_cost_entry,
-            hd, hd0, hc, hcz, hle, h1, hres]
-        | simp [residual, transfer, oneDefect, ← zero_cost_entry,
-            hd, hd0, hc, hcz, hle, h1, hres, hq, Ne.symm hq]
+        rcases s with x | x <;> by_cases hq : x = q <;>
+        simp [residual, transfer, oneDefect, ← zero_cost_entry,
+          hd, hd0, hc, hcz, hle, h1, hres, hq, @eq_comm _ q x]
 
 private theorem transfer_count (n : ℕ) :
     (literalCount (q := 3) ∅ edges 1 (n + 1) : ℤ) =
@@ -885,25 +826,21 @@ private theorem transfer_count (n : ℕ) :
   have ctr (p q : Column) : C p (columnEquiv q) = cost p q := rfl
   apply lumped_count ∅ edges columnEquiv.symm C (fun _ d => d ≤ 1) residual transfer
     (Sum.elim (1 : Column → ℤ) 0) terminal 1
-  · intro r t
-    simp [C]
+  · intro r t; simp [C]
   · intro p d _
     by_cases hd : d = 0 <;> simp [residual, terminal, hd]
-  · intro p d hd r _
-    exact (Nat.sub_le _ _).trans hd
+  · intro p d hd r _; exact (Nat.sub_le _ _).trans hd
   · intro p d hd s
     rw [← columnEquiv.sum_comp]
     simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply,
       fun q => not_ne_iff.mp (fun h => Nat.not_lt_of_ge hd ((transition_entry p q d s).mp h).1)]
     simp [Finset.sum_ite_eq']
-  · intro r _
-    exact Nat.sub_le _ _
+  · intro r _; exact Nat.sub_le _ _
   · intro s
     rw [← columnEquiv.sum_comp]
     simp_rw [bondDefects_empty, Nat.zero_le, Nat.sub_zero, true_and, columnEquiv.symm_apply_apply]
     cases s with
-    | inl s =>
-      simp [residual, Finset.sum_ite_eq', Finset.sum_ite_eq]
+    | inl s => simp [residual, Finset.sum_ite_eq', Finset.sum_ite_eq]
     | inr s => simp [residual]
 
 theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
