@@ -21,7 +21,7 @@ cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._
 zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_1
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
-transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result
+transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.zero_values, HardinA229538Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result
 countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
@@ -574,8 +574,12 @@ theorem zero_values (n : Fin 23) :
           have h₁ : m - 11 + 1 + 10 = m := Nat.sub_add_cancel hbound
           have h₂ (k : Fin 10) : m - 11 + 1 + k.val = m - 10 + k.val :=
             congrArg (· + k.val) (Nat.sub_add_sub_cancel hbound (Nat.le_succ 10))
-          simpa only [h₁, h₂] using TransferMatrix.vector_relation_shift T 10 1
-            HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (m - 11)
+          funext p
+          have shifted := (transfer_readout T (1 : Column → ℤ) 10 1
+            HardinA233178Chromatic.coefficients).mp HardinA233178Chromatic.vector_certificate
+              (Pi.single p 1) (m - 11)
+          simpa only [h₁, h₂, single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
+            smul_eq_mul] using shifted
         rw [relation]
         have prior (k : Fin 10) : m - 10 + k.val < m := by
           simpa only [Fin.val_natAdd, Nat.sub_add_cancel ((Nat.le_add_right 10 2).trans large)]
@@ -719,11 +723,11 @@ private theorem inherited_polynomial (p : Column) :
   rw [factor]
   apply Finset.sum_eq_zero
   intro j _
-  have shifted := congrFun (TransferMatrix.vector_relation_shift T 10 1
-    HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (1 + j.val)) p
+  have shifted := TransferMatrix.scalarRelationShift T (Pi.single p 1) 10 1
+    HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (1 + j.val)
   have coordinate : f (1 + j.val + 11) =
       ∑ k : Fin 10, HardinA233178Chromatic.coefficients k * f (1 + j.val + 1 + k.val) := by
-    simpa only [f, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using shifted
+    simpa only [f, single_one_dotProduct] using shifted
   rw [sub_eq_zero.mpr coordinate, mul_zero]
 
 theorem vector_polynomial :
