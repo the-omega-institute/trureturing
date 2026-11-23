@@ -363,12 +363,21 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-search this repository, pinned Mathlib and admissible upstream libraries before
-proving anything locally. Reuse an existing result directly when it fits.
+check the D5 frozen ledger for the result and prefer OmegaMath when constructing
+the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
+For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
+root and prefix the original declaration name with `Omega.`. Place original
+results near their mathematical topic and mark the module `Omega original.`.
+D5 imports the specific module for its book-facing theorem. For example,
+`Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
+See the [module placement examples](../src/README.md).
 Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
-defined external open-problem exception.
+defined external open-problem exception. A book that needs a frozen GID for
+an existing OmegaMath theorem may use one direct D5 citation entry when the
+ledger has no matching item. Identify the book location and original proof
+in the PR and classify the entry as bind-only.
 
 Frozen results stay fixed. Changes involving assumptions, new axioms,
 `Hearts.lean` or protected policy must follow their existing authorization
