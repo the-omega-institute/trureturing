@@ -19,7 +19,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
-            Node("bondDefects_empty",BondDefectsEmpty(),true,"The number of monochromatic bonds of a row against itself over the empty edge set is zero."),
+            Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
             Node("zero_cost_entry",ZeroCostEntry(),true,"The proper-colouring transfer entry is the indicator of a cut without monochromatic bonds."),
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
@@ -256,9 +256,11 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Call("DefectTransfer.bondDefects",Own("edges"),Decode("p"),Decode("q")))));
     }
     private static Formula BondDefectsEmpty() {
-        var row = V("r");
-        var empty = Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
-        return All("r",Arrow(Fin(5),Fin(3)),Eq(Call("DefectTransfer.bondDefects",empty,row,row),N(0)));
+        var k = V("k");
+        var row = Arrow(Fin(k), Fin(V("q")));
+        var empty = Typed(Q("Finset.empty"), Call("Finset", Product(Fin(k), Fin(k))));
+        return All("q", Q("Nat"), All("k", Q("Nat"), All("r", row, All("t", row,
+            Eq(Call("DefectTransfer.bondDefects", empty, V("r"), V("t")), N(0))))));
     }
     private static Formula ZeroCost() => All("p",Column(),All("q",Column(),
         new Formula.Logic(Parenthesized(Eq(Own("cost",V("p"),V("q")),N(0))),

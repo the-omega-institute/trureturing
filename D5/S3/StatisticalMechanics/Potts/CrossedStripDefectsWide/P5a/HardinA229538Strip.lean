@@ -122,7 +122,7 @@ def edges : Finset (Fin 5 × Fin 5) :=
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
 
-theorem bondDefects_empty (r : Fin 5 → Fin 3) : bondDefects ∅ r r = 0 := by
+theorem bondDefects_empty {q k : ℕ} (r t : Fin k → Fin q) : bondDefects ∅ r t = 0 := by
   rw [bondDefects, Finset.filter_empty, Finset.card_empty]
 
 theorem cost_zero (p q : Column) : cost p q = 0 ↔ Bond p q := by
