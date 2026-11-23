@@ -29,6 +29,7 @@ A singleton spectrum at frequency one with weight one has q(p) = 1. Its sine rea
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumThreeBandRecurrence.eventual_sine_three_band_recurrence`
+- Dependency: [D5/S3/Analytic/Oscillation/SpectrumPhaseCutoff](SpectrumPhaseCutoff.md)
 - Dependency: [D5/S3/Fourier/HarmonicScoreLocalAverage](../../Fourier/HarmonicScoreLocalAverage.md)
 - Narrative reference: [D5/S3/Analytic/Oscillation/OrdinateCounting](OrdinateCounting.md)
 - Narrative reference: [D5/S3/Fourier/HarmonicScoreLocalAverage](../../Fourier/HarmonicScoreLocalAverage.md)
