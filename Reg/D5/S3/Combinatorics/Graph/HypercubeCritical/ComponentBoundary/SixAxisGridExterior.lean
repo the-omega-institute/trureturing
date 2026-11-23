@@ -9,7 +9,6 @@ set_option linter.style.longLine false
 
 namespace Reg.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SixAxisGridExterior
 
-open _root_.D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
   (Q IsBalanced)
 
@@ -18,9 +17,9 @@ local notation "cubeFlip" =>
 local notation "cubeFlipFlip" =>
   _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum.flip_flip
 open _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
-  (directions directions_card mem_directions)
+  (directions mem_directions)
 open _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.CubicalSubdivisionRigidity
-  (gridHigh gridMiddle gridSupport)
+  (gridMiddle gridSupport)
 open _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SixAxisGridExterior
   (selectedLiftLabels exterior_lift_direction_exclusion)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -36,7 +35,6 @@ private abbrev arena : Arena where
   Law R := ∀ {n : Nat} (D : Finset (Q n)) (X : Q n) (d : Bool × Fin 3 → Fin n),
     Function.Injective d → IsBalanced D →
     R.readout () ⟨n, D⟩ (gridSupport X d) = true →
-    (∀ s k, (directions D (gridHigh X d (s, k))).card ≤ 3) →
     ∀ (e : Fin n), e ∉ Set.range d → ∀ i j : Fin 3,
     cubeFlip (gridMiddle X d (i, j)) e ∈ D →
     let labels := selectedLiftLabels D X d e i j
@@ -77,15 +75,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · simpa only [mul_one] using matrix_flip_zero y
     · simpa only [cubeFlipFlip, mul_one] using matrix_flip_zero (cubeFlip y 0)
     · exact (huv.ne rfl).elim
-  have hdegree (s : Bool) (k : Fin 3) :
-      (directions D (gridHigh X witnessAxes (s, k))).card ≤ 3 := by
-    classical
-    rw [directions_card]
-    have hcard : D.card ≤ 2 := by
-      simpa only [D, Finset.card_singleton] using
-        (Finset.card_insert_le y {cubeFlip y 0})
-    exact (Finset.card_filter_le _ _).trans (hcard.trans (by decide))
-  have hdis := (law D X witnessAxes haxes hbal rfl hdegree e he 0 0 hy).1
+  have hdis := (law D X witnessAxes haxes hbal rfl e he 0 0 hy).1
   have hlabel : (false, 0) ∈ selectedLiftLabels D X witnessAxes e 0 0 :=
     Finset.mem_filter.mpr ⟨Finset.mem_univ _, hy⟩
   have haxis : (0 : Fin 7) ∈ (selectedLiftLabels D X witnessAxes e 0 0).image witnessAxes :=
@@ -96,8 +86,8 @@ def sourceEvidence : Registration arena (type_of% @exterior_lift_direction_exclu
   actual := actual
   bridge := by simp only [actual, realize, decide_eq_true_eq]
   variation := ⟨by
-    intro n D X d hd hb hg hdegree e he i j hy
-    exact exterior_lift_direction_exclusion D X d hd hb (of_decide_eq_true hg) hdegree e he i j hy,
+    intro n D X d hd hb hg e he i j hy
+    exact exterior_lift_direction_exclusion D X d hd hb (of_decide_eq_true hg) e he i j hy,
     rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by

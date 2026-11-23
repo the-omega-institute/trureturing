@@ -32,18 +32,17 @@ internal sealed class SixAxisGridExteriorDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let an injectively labelled six-axis grid lie in a balanced cube support "
-                        + "whose branch degrees are at most three. Fix a selected middle lift "
+                        "Let an injectively labelled six-axis grid lie in a balanced cube support. "
+                        + "Fix a selected middle lift "
                         + "along an axis e outside the six grid axes. Its selected-neighbor "
                         + "directions are disjoint from the image of the selected lift labels. "
                         + "On its column this excludes the false axis of each selected lift, "
                         + "and on its row it excludes the true axis of each selected lift.")),
                     Paragraph(Text(
-                        "The three grid neighbors use three distinct directions at every branch. "
-                        + "They exhaust the branch's degree bound. At the central lift, either "
-                        + "incident flip commutes past e and cancels the corresponding flip from "
-                        + "the branch to the middle. This would give a forbidden exterior neighbor "
-                        + "of that branch.")),
+                        "At the central lift, either incident flip commutes past e and cancels "
+                        + "the corresponding flip from the branch to the middle. The branch, "
+                        + "the middle, and their two e-lifts would form a selected coordinate "
+                        + "square, which balance forbids.")),
                     Paragraph(Text(
                         "Two distinct middles in a common column have a common branch p. Their "
                         + "directions a and b from p are distinct. With both e-lifts selected, "

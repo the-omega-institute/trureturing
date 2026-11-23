@@ -19,10 +19,8 @@ open BalancedCriticalSpectrum (Q IsBalanced)
 
 local notation "cubeFlip" =>
   _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum.flip
-local notation "cubeFlipFlip" =>
-  _root_.D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum.flip_flip
 open BalancedCubeComponentBoundary (directions mem_directions)
-open BalancedCubeGirth (flip_comm three_step_first_direction_eq)
+open BalancedCubeGirth (flip_comm no_selected_square three_step_first_direction_eq)
 open CubicalSubdivisionRigidity (gridHigh gridMiddle gridSupport)
 
 /-- The labels of the selected lifts in the column of `(i,j)` (false labels) and in
@@ -39,25 +37,6 @@ private theorem incident_middle {n : Nat} (X : Q n) (d : Bool × Fin 3 → Fin n
   cases s
   · exact flip_comm _ _ _
   · rfl
-
-private theorem saturated_branch {n : Nat} {D : Finset (Q n)} {p : Q n}
-    (axes : Fin 3 → Fin n) (hinj : Function.Injective axes)
-    (hall : ∀ k, cubeFlip p (axes k) ∈ D) (hdegree : (directions D p).card ≤ 3)
-    {e : Fin n} (he : ∀ k, e ≠ axes k) : cubeFlip p e ∉ D := by
-  let internal := Finset.univ.image axes
-  have hsub : internal ⊆ directions D p := by
-    intro a ha
-    obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp ha
-    exact (mem_directions _ _ _).mpr (hall k)
-  have hcard : internal.card = 3 := by
-    rw [Finset.card_image_of_injective _ hinj]
-    decide
-  have heq : internal = directions D p :=
-    Finset.eq_of_subset_of_card_le hsub (by simpa only [hcard] using hdegree)
-  intro hlift
-  have hemem : e ∈ internal := heq.symm ▸ (mem_directions _ _ _).mpr hlift
-  obtain ⟨k, _, hk⟩ := Finset.mem_image.mp hemem
-  exact he k hk.symm
 
 private theorem no_partner_continuation {n : Nat} {D : Finset (Q n)}
     (hb : IsBalanced D) {p : Q n} {a b e : Fin n}
@@ -80,7 +59,6 @@ direction. The count is four minus the number of those other lifts. -/
 theorem exterior_lift_direction_exclusion {n : Nat} (D : Finset (Q n)) (X : Q n)
     (d : Bool × Fin 3 → Fin n) (hd : Function.Injective d) (hb : IsBalanced D)
     (hgrid : gridSupport X d ⊆ D)
-    (hdegree : ∀ s k, (directions D (gridHigh X d (s, k))).card ≤ 3)
     (e : Fin n) (he : e ∉ Set.range d) (i j : Fin 3)
     (hy : cubeFlip (gridMiddle X d (i, j)) e ∈ D) :
     let labels := selectedLiftLabels D X d e i j
@@ -115,9 +93,8 @@ theorem exterior_lift_direction_exclusion {n : Nat} (D : Finset (Q n)) (X : Q n)
     rw [← hbase] at hy hz
     by_cases hk : k = base
     · subst k
-      rw [flip_comm (cubeFlip p (axes base)) e (axes base), cubeFlipFlip] at hz
-      exact saturated_branch axes (fun _ _ h => congrArg Prod.snd (hd h)) hm
-        (hdegree (!s) fixed) hne hz
+      rw [flip_comm (cubeFlip p (axes base)) e (axes base), BalancedCriticalSpectrum.flip_flip] at hz
+      exact no_selected_square hb (hne base).symm hp (hm base) hz hy
     · have hneq : axes base ≠ axes k := fun h => hk (congrArg Prod.snd (hd h)).symm
       have hpartner : cubeFlip (cubeFlip p (axes k)) e ∈ D := by
         rw [hmiddle]
