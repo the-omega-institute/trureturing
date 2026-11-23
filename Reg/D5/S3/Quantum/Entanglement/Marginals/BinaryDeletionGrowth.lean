@@ -137,6 +137,79 @@ def ratioAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+private abbrev recurrenceSignature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def recurrenceActual : Realization recurrenceSignature :=
+  realize recurrenceSignature (fun _ _ x y => x = y) (fun a => nomatch a)
+
+private def recurrenceRejected : Realization recurrenceSignature :=
+  realize recurrenceSignature (fun _ _ _ _ => False) (fun a => nomatch a)
+
+private abbrev recurrenceArena : Arena where
+  signature := recurrenceSignature
+  Law R := ∀ k : ℕ,
+    let d := fun i : ℕ => Module.finrank ℂ (SupportedKernel (NoRun (n := i + 4) 4))
+    R.readout () k (d (k + 6) + d (k + 1) + d k)
+      (d (k + 5) + 2 * d (k + 4) + 2 * d (k + 3) + 2 * d (k + 2))
+
+private theorem recurrenceRejected_law : ¬ recurrenceArena.Law recurrenceRejected :=
+  fun h => h 0
+
+def recurrenceFamily :
+    Registration recurrenceArena (type_of% @kernelDimension_four_recurrence) where
+  actual := recurrenceActual
+  bridge := Iff.rfl
+  variation := ⟨@kernelDimension_four_recurrence, recurrenceRejected, recurrenceRejected_law⟩
+  sensitivity := ⟨fun i => ⟨recurrenceRejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, recurrenceRejected_law⟩, fun a => nomatch a⟩
+  dependence := by
+    intro role
+    refine ⟨0, 0, 1, ?_⟩
+    intro h
+    exact Nat.one_ne_zero (Eq.mp (congrFun h 0) rfl)
+
+def recurrenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@kernelDimension_four_recurrence) (Realization recurrenceSignature) Unit Unit where
+  unitName :=
+    `D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionGrowth.kernelDimension_four_recurrence.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionGrowth.recurrenceFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨recurrenceArena⟩
+  objectArena := .source ⟨recurrenceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source recurrenceArena ⟨recurrenceFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize recurrenceSignature (fun _ _ x y => x = y) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionGrowth
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 
 end Reg.D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionGrowth

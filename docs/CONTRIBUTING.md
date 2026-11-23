@@ -17,7 +17,15 @@ documentation defaults to English.
 
 ## Adopting a tools release
 
-Trial tools PR or feature releases on a consumer branch. When adopting a new pin on `dev`, the required check verifies the published archive digest and that the release commit is in the tools repository's `dev` history. Stable releases use the tools `main` history. A maintainer can run the same check with `python3 .github/scripts/install-tools.py --verify-adopted-source`. The tools repository documents source review, development releases and pinning. [Tools release workflow](https://github.com/the-omega-institute/trureturing-tools#package-and-release)
+To adopt an open tools PR, prepare its head against the current consumer `dev` pin, pass tools CI at that head, and publish the `pr/NUMBER` preview from tools `dev`. Use `tools/consumer/pin.py` from the tools checkout to record its tag, SHA-256 and full source commit in this checkout. Submit the resulting lock to consumer `dev`. The tools workflow picks up the merged consumer PR and merges the exact tools PR head after its normal checks.
+
+Every changed lock records the Git blob ID of the current consumer `dev` lock as `previous_pin`. Use `git rev-parse origin/dev:Meta/tools-release.json` after fetching `dev`. This also applies to stable releases and rollbacks. CI compares the field with the first parent's lock in the tested merge. The `-merge` attribute in `.gitattributes` makes competing changes to that file conflict as a whole.
+
+If a concurrent consumer PR changes the pin, integrate that pin's tools source into the original tools PR, prepare the new head, pass tools CI, and publish a new preview. Then update the consumer lock against current `dev` and rerun consumer checks. Consumer branches can inherit historical pins from their parents when they merge `dev`. Each new pin introduced within the PR must be its baseline or its proposed lock. Rebase or condense intermediate pin edits when they leave an obsolete lock in that history. A consumer merge that leaves the pin unchanged keeps the preview eligible.
+
+Stable releases and tools previews whose source has already merged still use the regular pin command. Their release commits must be in tools `main` and `dev` history, respectively. [Tools commands and delivery workflow](https://github.com/the-omega-institute/trureturing-tools#pair-a-tools-pr-with-a-consumer-pr)
+
+Run the consumer pin regression tests with `python3 -B .github/scripts/test-install-tools.py`.
 
 ## Choose a starting point
 
