@@ -69,6 +69,6 @@ internal sealed class RankThreeInternalSizeSpectrumDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Fix positive row dimension d, cyclic size eighteen, and a pair-unique lifted mixed family with distinct rows in each triple and zero-sum completion of every cross-row pair. The saturated numbers of unordered internal triples are 36 times 3 to the power d, plus 2 times 3 to the power d+1, plus 2k, for k between zero and 3 to the power d+1.")),
-                    Paragraph(Text("An exhaustive finite certificate checks that the maximal packings on six labels have either two or four blocks. Both sizes occur. Each residue class contributes two blocks and can independently contribute two more. The Latin squares contribute 36 blocks per row."))),
+                    Paragraph(Text("The local sizes two and four follow from the classical maximal-packing results surveyed by Colbourn in sections 2.3.1 through 2.3.3 (https://ajc.maths.uq.edu.au/pdf/4/ocr-ajc-v4-p143.pdf). The Lean proof checks the six-label classification with an exhaustive finite certificate. Both sizes occur. Each residue class contributes two blocks and can independently contribute two more. The Latin squares contribute 36 blocks per row."))),
                 DescribeRole.Theorem))));
 }
