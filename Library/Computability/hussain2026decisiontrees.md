@@ -14,6 +14,10 @@ triage: anchor
 
 ## Verified locator
 
+DOI: https://doi.org/10.48550/arXiv.2611.27454
+
+Source version: https://arxiv.org/abs/2611.27454v1
+
 Section 6, Question 3 asks:
 
 > In case (c), is $h^{\mathrm{rd}}_L(n)$ eventually constant?
