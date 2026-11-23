@@ -18,7 +18,8 @@ triage: anchor
 
 Sections 1–3 of the research derivation `fibonacci-positive-triple-analytic-answer.txt`
 (SHA-256 `61113fa360deaca6e5ea22f87dba889236c55c1dba3da64e08666bff1240580a`)
-give the clipped profile and six sign certificates. The Lean proof is repository-derived.
+give the clipped profile and six sign certificates. Sections 4–5 integrate the
+envelopes and derive the quantitative margin. The Lean proof is repository-derived.
 [trureturing](https://github.com/the-omega-institute/trureturing)
 
 ## Formalization scope
@@ -48,3 +49,20 @@ and determinant quadratic bounds the negative spectral contribution using
 \(w+2L\ge|d-b-c|\) and \((w+2L)^2\ge w^2+4N\). The six polynomial
 sign checks follow from factorizations, endpoint values, and endpoint
 derivatives.
+
+Dividing each envelope by \(t\) gives a primitive that is linear in \(t\),
+\(\log t\), and the log of one affine function of \(t\). The endpoint log
+ratios use the first five terms of the series in \(z=(q-1)/(q+1)\) with
+Mathlib's remainder bound. Each integral coefficient is enclosed by exact
+rational arithmetic. The overlap estimate
+\(Z\le 420(X/330+Y/90)\) follows by orthogonal decomposition and the square
+of the difference of the two weighted norms.
+
+For a positive definite reference, the forward profile difference gives
+the difference of trace-log divergences. Its normalization is \(1/141\).
+The comparison is with
+\(C_3=(113/141)\log(113/81)+(28/141)\log(7/3)\). The resulting bound is
+\(C_3-(3X+11Y)/63360\). For a singular reference, the three positively
+weighted rays coincide and the trace-log value is \(\log(47/31)\).
+The forward integral is credited to Hirche and Tomamichel, Corollary 2.3.
+[Quantum Rényi and f-divergences from integral representations](https://arxiv.org/abs/2306.12343)
