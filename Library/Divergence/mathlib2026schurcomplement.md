@@ -9,6 +9,8 @@ claim: "The block determinant factors through the Schur complement. Two Schur te
 strata_touched:
   - D5/S3/Quantum/Divergence/SingleCoordinateSchur
   - D5/S3/Quantum/Divergence/SingleCoordinatePinchingEntropy
+  - D5/S3/Quantum/Divergence/PositiveReferenceReplacement
+  - D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination
 license: "Apache-2.0 for mathlib source"
 triage: "anchor"
 ---
@@ -31,3 +33,22 @@ deficit with the equal-trace identity. The generic coefficient is
 `[u d²/(u² − d²)] λ [c/(c − λ)]` multiplying `log(c/λ)`. Section 20,
 lines 1259–1275, uses the specialization `(18/55) λ log(c/λ)`
 for the ladder's full-rank exclusion, with `c ≥ 3λ`.
+
+## Positive reference replacement
+
+In the same manuscript, §18, lines 1122–1136 give the compression
+(F' = F+aτ), (C' = cτ), where (τ=C_P/(c-λ)). The exact trace-log
+loss identity retains the Klein remainder (D(F'\Vert F)-a) and the
+weighted logarithm remainder (a\operatorname{Re}\operatorname{Tr}
+τ[\log F-\log(uC_P)]). Their nonnegativity recovers the manuscript
+bound at trace one. The spectral-ceiling strong Klein inequality gives
+the additional Hilbert–Schmidt term with ceiling (t=\operatorname{Re}\operatorname{Tr}F+a).
+
+## Strict domination in qubit-plus-ray coordinates
+
+For the block data of §20, lines 1259–1270, the strict comparison applies
+when (0<λ<1/500), (c≥11/19), and (e≥c/3). The actual relocated pair
+is (F'⊕0,C'⊕e). Its divergence gain keeps the coefficient (12/55)
+with the full trace ratio (c/(c-λ)) and the quadratic Klein contribution.
+The Lean statement takes the small eigenvalue and block coordinates
+as hypotheses.
