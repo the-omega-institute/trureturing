@@ -744,7 +744,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect transfer_readout
-  canonicalCount transition_entry labelled_scale small_budget_ne_cut_total)
+  canonicalCount transition_entry labelled_scale small_budget_ne_cut_total mem_edges)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)
 open DefectTransfer (bondDefects defects literalCount lumped_count)
@@ -870,7 +870,11 @@ theorem result (n : ℕ) :
       have cuts : edges = Finset.univ.diag ∪
           (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
         rw [← diagonals 4]
-        decide +kernel
+        ext ⟨x, y⟩
+        simp only [mem_edges, Finset.mem_union, betw, Finset.mem_diag, Finset.mem_filter,
+          Finset.mem_univ, true_and]
+        rw [← Fin.val_inj]
+        omega
       have count_union {k : ℕ} {E F : Finset (Fin k × Fin k)} (h : Disjoint E F)
           (r t : Fin k → Fin 3) :
           bondDefects (E ∪ F) r t = bondDefects E r t + bondDefects F r t := by
