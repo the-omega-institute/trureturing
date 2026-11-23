@@ -19,11 +19,15 @@ open scoped BigOperators
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCompactLowering
 
 open LatticeGeneratingFieldLocality LatticeHalfFock
+open LatticeDiscriminantTheta (gramReal)
+open LatticeTwistedGroundRealization.SignQuotient (ModTwoCharge reduceCharge)
+open OriginalFourMChargeCoset (fourierSign quadraticSign oscillatorLower)
+open OriginalFourMAssignedOverlap (assignedChargeTerm assignedSector assigned_fourier_overlap)
 open FourPoint.OriginalFourMActualChart
 open OriginalFourMOccupationTransport (flags)
 open OriginalFourMPhysicalCovariance (relative)
 open OriginalFourMPhysicalProduct (physicalChargeSummand)
-open OriginalFourMChartProduct (chartTau)
+open OriginalFourMChartProduct (chartTau chartPeriod)
 open OriginalFourMSpatialWick (spatialCoefficient)
 open OriginalFourMFixedChargeWick (Mode modeMatrix physical_marked_coefficient_assign)
 open OriginalFourMInverseJets (inverseJetWeight)
@@ -34,7 +38,7 @@ open OriginalFourMAssignmentPolynomial (assignmentPolynomial affineReadout nativ
 open OriginalFourMPartitionProduct (filterParts partition_products)
 open OriginalGaussianSourceRestriction (CompactExternal)
 open OriginalFourMWickLowering (pairWeight eval_word_partition)
-open HalfFock.OriginalHalfCurrentWickPolynomial (word creator)
+open HalfFock.OriginalHalfCurrentWickPolynomial (word creator eval_word_eq_lowering)
 open AffineOccurrenceWick (wick)
 open AffineWickConvolution (partitions)
 
@@ -229,5 +233,81 @@ theorem physical_marked_compact_lowering (D : LatticeData) (hu : IsUnit D.G.det)
       (l.filter fun a => decide (slot a = i)))
   simpa only [map_list_sum, List.map_map, Function.comp_def, map_mul, map_list_prod,
     MvPolynomial.C_eq_algebraMap, AlgHom.commutes, G, B, C] using h.symm
+
+/-- The finite inverse lowering of the actual oscillator product at a
+puncture. The cutoff is one past the degree of its finite Wick word. -/
+def punctureLowering (D : LatticeData) (c : Chart) (i : Puncture)
+    (modes : List (Index D)) : Oscillator D :=
+  ∑ k ∈ Finset.range ((word D modes).natDegree + 1),
+    ((-loweringParameter c i) ^ k / (k.factorial : ℂ)) •
+      (oscillatorLower D ^ k) ((modes.map MvPolynomial.X).prod)
+
+private theorem punctureLowering_eq (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) (i : Puncture) (modes : List (Index D)) :
+    punctureLowering D c i modes =
+      (word D modes).eval (MvPolynomial.C (-loweringParameter c i)) :=
+  (eval_word_eq_lowering D hu modes _ _ (Nat.lt_succ_self _)).symm
+
+open Classical in
+/-- The normalized charge summand evaluated on the product of the four
+actual finite inverse lowerings. -/
+def loweredChargeTerm (D : LatticeData) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (upperA : Bool) (c : Chart) (x : ℝ) (q : Charge D) (n : X → ℕ) (l : List X)
+    (F : Finset (Index D)) : ℂ :=
+  (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+    (Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x * (bilinear D q q : ℂ) / 2) *
+      ((l.map fun a => liftedScale c x (slot a) (n a)).prod *
+        affineReadout (compactCovariance D c x F) (compactMean D q c x F)
+          (∏ i ∈ ({.P, .Q, .R, .S} : Finset Puncture),
+            tagOscillators D c i F (punctureLowering D c i
+              ((l.filter fun a => decide (slot a = i)).map fun a => (colour a, n a))))))
+
+/-- The normalized physical marked coefficient at fixed charge transports
+to the native affine array on the four simultaneous inverse lowerings. -/
+theorem assigned_eq_lowered (D : LatticeData) (hu : IsUnit D.G.det)
+    (slot : X → Puncture) (colour : X → Fin D.rank) (upperA : Bool) (c : Chart)
+    {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hc : (c = .A ∨ c = .B) ∧ ‖parameter c (x : ℂ)‖ < 1 ∨ c = .D ∧ upperA = true)
+    (q : Charge D) (n : X → ℕ) (l : List X) (hl : l.Nodup)
+    (F : Finset (Index D)) (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) :
+    assignedChargeTerm D slot colour upperA c x q n l =
+      loweredChargeTerm D slot colour upperA c x q n l F := by
+  classical
+  unfold assignedChargeTerm loweredChargeTerm
+  simp only [punctureLowering_eq D hu]
+  rw [← physical_marked_coefficient_assign D hu slot colour upperA c hx hx₁ hc q n l hl,
+    physical_marked_compact_lowering D hu slot colour upperA c hx hx₁ hc q n l hl F hF]
+
+/-- The actual four-lowering compact readout inherits both rank-24 Fourier
+crossings on the real overlap for arbitrary occurrence modes. -/
+theorem lowered_fourier_overlap (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (hr : D.rank = 24)
+    (slot : X → Puncture) (colour : X → Fin D.rank)
+    {x : ℝ} (hx : 0 < x) (hx₁ : x < 1) {w : ℂ}
+    (hwA : w ^ 2 = parameter .A x) (hw : ‖w‖ < 1)
+    (a : ModTwoCharge D) (n : X → ℕ) (l : List X) (hl : l.Nodup)
+    (F : Finset (Index D)) (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) :
+    let V := fun c b => ∑' q : {q : Charge D // reduceCharge D q = b},
+      loweredChargeTerm D slot colour true c x q.val n l F
+    V .D a = ((2 : ℂ) ^ (12 : ℕ))⁻¹ * (∑ b, fourierSign D a b * V .A b) ∧
+    V .B a = (periodRoot .A x ^ (12 : ℕ))⁻¹ *
+      (((2 : ℂ) ^ (12 : ℕ))⁻¹ * ∑ b, fourierSign D a b * quadraticSign D b * V .A b) := by
+  classical
+  have hA : ‖parameter .A (x : ℂ)‖ < 1 := by
+    rw [← hwA, norm_pow]
+    nlinarith [norm_nonneg w]
+  have hB : ‖parameter .B (x : ℂ)‖ < 1 := by
+    simpa [parameter, Complex.norm_real, abs_of_pos hx] using hx₁
+  have he (c : Chart) (hc : (c = .A ∨ c = .B) ∧ ‖parameter c (x : ℂ)‖ < 1 ∨
+      c = .D ∧ true = true) (b : ModTwoCharge D) :
+      assignedSector D slot colour true c x b n l =
+        ∑' q : {q : Charge D // reduceCharge D q = b},
+          loweredChargeTerm D slot colour true c x q.val n l F := by
+    unfold assignedSector
+    exact tsum_congr fun q => assigned_eq_lowered D hu slot colour true c hx hx₁ hc q.val n l hl F hF
+  have h := assigned_fourier_overlap D hu hD hr slot colour hx hx₁ hwA hw a n l hl
+  dsimp only at h ⊢
+  simpa only [he .A (Or.inl ⟨Or.inl rfl, hA⟩), he .B (Or.inl ⟨Or.inr rfl, hB⟩),
+    he .D (Or.inr ⟨rfl, rfl⟩)] using h
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCompactLowering
