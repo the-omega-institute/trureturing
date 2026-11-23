@@ -28,13 +28,13 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transfer_readout",TransferReadout(),true,"The state type belongs to an arbitrary universe. A vector recurrence for a matrix and terminal vector gives a shifted scalar recurrence for every readout vector."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
-            Node("movesOne",Typed(Own("movesOne"), Arrow(Column(), Call("List", Column()))),false,"A literal lookup with 243 entries indexed by the current column code. The lists have variable lengths. The theorem moves_one_filter pins each list."),
+            LiteralNode("movesOne", "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
             Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
             Node("step_one",StepOne(),true,"The action of the exact-one-cut matrix is a sum over its successors."),
-            Node("weights",Typed(Own("weights"), Arrow(Fin(23), Arrow(Fin(12), Q("Int")))),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, a literal ten-by-twelve integer lookup supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
+            Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
             Node("weights_step",WeightsStep(),true,"Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
-            Node("tableOne",Typed(Own("tableOne"), Arrow(Fin(23), Arrow(Column(), Q("Int")))),false,"The definition reads a literal 23-by-25 integer lookup at row n and column classIndex(p). The theorem table_powers pins this lookup through the first summand of the continuation vector."),
+            Node("tableOne",TableOne(),false,"The local literal values in the Lean definition has 23 rows and 25 columns. The indices are the exponent n and the class of p. The theorem table_powers pins this lookup through the first summand of the continuation vector."),
             Node("zeroValues",ZeroValues(),false,"For larger exponents the zero-defect values are linear combinations of the twelve proper-colouring vectors."),
             Node("weight_eq",WeightEquality(),true,"The same coefficient formula also holds at the tabulated exponents."),
             Node("zero_values",PowerZero(),true,"The reconstructed value is the proper-colouring continuation vector at each exponent."),
@@ -48,6 +48,12 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix+name), H(name), StatementSource.FromAuthor(Disp(statement)),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229538")),
             Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+
+    private static DocumentBlock LiteralNode(string name, string prose) =>
+        Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            H(name), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229538")),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
@@ -192,6 +198,28 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
     private static Formula CutEquality() => All("p",Column(),All("q",Column(),Eq(Own("cost",V("p"),V("q")),
         Own("countCut",V("p"),V("q")))));
+    private static Formula Weights()
+    {
+        var n = V("n");
+        var h = V("h");
+        var bound = Call("Nat.lt_of_le_of_ne", Call("Nat.le_of_not_gt", h),
+            Call("Ne.symm", V("hn")));
+        var identityRow = App(Typed(N(1), M(Fin(12))), Call("Fin.castLT", n, h));
+        var exceptionalRow = Call("Fin.append", Typed(N(0), Arrow(Fin(2), Q("Int"))), C("coefficients"));
+        var laterRow = App(V("later"), Call("Fin.subNat", N(13), n, bound));
+        return All("n", Fin(23), Eq(Own("weights", n),
+            If(Typed(h, Lt(Val(n), N(12))), identityRow,
+                If(Typed(V("hn"), Eq(Val(n), N(12))), exceptionalRow, laterRow))));
+    }
+
+    private static Formula TableOne()
+    {
+        var n = V("n");
+        var p = V("p");
+        return All("n", Fin(23), All("p", Column(),
+            Eq(AsInt(Own("tableOne", n, p)), App(V("values"), n, Own("classIndex", p)))));
+    }
+
     private static Formula MovesFilter()
     {
         var p = V("p");
