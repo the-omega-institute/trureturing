@@ -65,7 +65,7 @@ packedClass_eq: proof_shape=bind-only; consumers=exitCodes_eq
 exitCodes: proof_shape=content; consumers=class_counts_canonical, exactExits_active, exactExits_count, exitCodes_bound, exitCodes_eq, activeProfileCheck
 exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
-exitCodes_bound: proof_shape=content; consumers=checkHistogram_count
+exitCodes_bound: proof_shape=content; consumers=exactExits_active
 checkHistogram: proof_shape=content; consumers=activeProfileCheck, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1
 checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
