@@ -62,7 +62,7 @@ completionCodes: proof_shape=content; consumers=completionCodes_eq, exitCodes, e
 rowCode_cons: proof_shape=bind-only; consumers=completionCodes_eq, rowCode_tail
 completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
 rowCode_tail: proof_shape=bind-only; consumers=exitCodes_eq
-packedClass: proof_shape=content; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
+packedClass: proof_shape=bind-only; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
 packedClass_all: proof_shape=content; consumers=packedClass_eq
 packedClass_eq: proof_shape=content; consumers=exitCodes_eq
 exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq
@@ -91,8 +91,8 @@ headWeight: proof_shape=bind-only; consumers=head_weight_eq, initial_exhausted_c
 head_weight_eq: proof_shape=bind-only; consumers=initial_exhausted_count
 fresh_start_count: proof_shape=bind-only; consumers=initial_exhausted_count
 rep_weight: proof_shape=bind-only; consumers=initial_exhausted_count
-initial_from_starts: proof_shape=bind-only; consumers=initial_exhausted_count
-initial_exhausted_count: proof_shape=bind-only; consumers=initial_counts
+initial_from_starts: proof_shape=content; consumers=initial_exhausted_count
+initial_exhausted_count: proof_shape=content; consumers=initial_counts
 initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=HardinA229693Strip.result
 -/

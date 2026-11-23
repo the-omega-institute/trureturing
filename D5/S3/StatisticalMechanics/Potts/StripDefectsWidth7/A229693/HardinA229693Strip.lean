@@ -17,7 +17,7 @@ exhaustedRank: proof_shape=bind-only; consumers=exhaustedRow
 exhaustedRow: proof_shape=content; consumers=w, w_leading
 rightColumn: proof_shape=bind-only; consumers=checkColumn, exhausted_step, rightColumn_eq
 rightColumn_eq: proof_shape=content; consumers=exhausted_step._simp_4
-arithmeticRow: proof_shape=content; consumers=checkColumn, exhausted_step
+arithmeticRow: proof_shape=bind-only; consumers=checkColumn, exhausted_step
 w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, forward_step, forward_table, polynomialCoordinates, polynomial_relation, w_leading
 w_leading: proof_shape=bind-only; consumers=forward_step
 leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
@@ -31,7 +31,7 @@ exhaustedSteps: proof_shape=content; consumers=exhausted_step
 exhausted_step: proof_shape=content; consumers=forward_step
 leading_action: proof_shape=bind-only; consumers=forward_step
 forward_step: proof_shape=content; consumers=forward_table
-forward_table: proof_shape=bind-only; consumers=polynomial_relation
+forward_table: proof_shape=content; consumers=polynomial_relation
 polynomialCoordinates: proof_shape=content; consumers=polynomial_relation
 polynomial_relation: proof_shape=content; consumers=result
 scale_count: proof_shape=bind-only; consumers=result
