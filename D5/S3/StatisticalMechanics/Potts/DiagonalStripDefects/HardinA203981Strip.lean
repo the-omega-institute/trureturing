@@ -22,6 +22,8 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Init.Core
 import Init.Data.Fin.Lemmas
+import Init.Data.Function
+import Init.Data.Int.Basic
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Lemmas
@@ -42,9 +44,14 @@ import Mathlib.Data.Finset.Image
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.OfFn
+import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Nat.Cast.Defs
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Order.Basic
+import Mathlib.Order.Defs.LinearOrder
+import Mathlib.Order.Defs.PartialOrder
 import Mathlib.SetTheory.Cardinal.Finite
 
 /-! Literal canonical counts and the six-column diagonal-strip recurrence. -/
