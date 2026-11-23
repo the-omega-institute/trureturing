@@ -18,7 +18,7 @@ small_budget_ne_cut_total: proof_shape=bind-only; consumers=HardinA229538Strip.r
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
 cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._simp_1_1
-zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_1
+zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_2
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
 transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.old_coordinate, HardinA229641Strip.result
