@@ -320,16 +320,16 @@ theorem completion_growth_radius {q : ℕ} [NeZero q]
 
 /-- A global bound retaining the radial Gamma argument and its multiplicative constant. -/
 theorem completion_growth_explicit {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    {χ : DirichletCharacter ℂ q} (hne : χ ≠ 1) (s : ℂ) (hχ : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) :
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * (1 + ‖s‖) *
       Real.exp (Real.log (q : ℝ) / 2 * (1 + ‖s‖) +
         ((‖s‖ + 4) / 2) * Real.log ((‖s‖ + 4) / 2)) := by
-  convert completion_growth_radius χ hne s (1 + ‖s‖) (.inr hχ)
+  convert completion_growth_radius χ hne s (1 + ‖s‖) hχ
     (fun _ => by linarith) (fun _ => by simpa using norm_sub_le (1 : ℂ) s) using 1 <;> ring_nf
 
 /-- The completion has an explicit global bound of size exp(C R (1 + log R)). -/
 theorem completion_growth_log {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    {χ : DirichletCharacter ℂ q} (hne : χ ≠ 1) (s : ℂ) (hχ : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) :
     ‖completion χ s‖ < Real.exp
       (growthConstant q * (1 + ‖s‖) * (1 + Real.log (1 + ‖s‖))) := by
   let R := 1 + ‖s‖
@@ -365,7 +365,7 @@ theorem completion_growth_log {q : ℕ} [NeZero q]
         add_le_add (mul_le_mul_of_nonneg_right hC hRp.le)
           (mul_le_mul_of_nonneg_right hC3 (mul_nonneg hRp.le hlR))
       _ = _ := by ring
-  refine (completion_growth_explicit hχ hne s).trans_le ?_
+  refine (completion_growth_explicit hne s hχ).trans_le ?_
   change A * R * Real.exp (b * R + U * Real.log U) ≤ _
   calc
     _ = Real.exp (Real.log A + Real.log R + (b * R + U * Real.log U)) := by
@@ -383,7 +383,7 @@ private theorem completion_power_growth {q : ℕ} [NeZero q]
     have hh := Real.log_le_rpow_div hp.le (by norm_num : (0 : ℝ) < 1 / 2)
     linarith
   have hC : 0 ≤ growthConstant q := (by norm_num : (0 : ℝ) ≤ 3).trans (le_max_right _ _)
-  refine (completion_growth_log hχ hne s).trans_le (Real.exp_le_exp.mpr ?_)
+  refine (completion_growth_log hne s (.inr hχ)).trans_le (Real.exp_le_exp.mpr ?_)
   change growthConstant q * R * (1 + Real.log R) ≤ _
   have he : R ^ (3 / 2 : ℝ) = R * R ^ (1 / 2 : ℝ) := by
     rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, Real.rpow_add hp, Real.rpow_one]
@@ -483,17 +483,17 @@ private theorem logDeriv_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter �
 
 /-- The positive vertical resolvent, summed with the actual zero multiplicities. -/
 theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (t : ℝ) :
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (σ t : ℝ) (hσ : 1 ≤ σ) :
     HasSum (fun ρ : {z : ℂ // completion χ z = 0} =>
-      (analyticOrderNatAt (completion χ) ρ.1 : ℝ) * (2 - ρ.1.re) /
-        ((2 - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2))
-      (logDeriv (completion χ) (2 + t * I)).re := by
+      (analyticOrderNatAt (completion χ) ρ.1 : ℝ) * (σ - ρ.1.re) /
+        ((σ - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2))
+      (logDeriv (completion χ) ((σ : ℂ) + t * I)).re := by
   let F := completion χ
-  let s : ℂ := 2 + t * I
+  let s : ℂ := σ + t * I
   let a : ℂ := 1 - conj s
   let k := fun ρ : {z : ℂ // F z = 0} =>
-    (analyticOrderNatAt F ρ.1 : ℝ) * (2 - ρ.1.re) /
-      ((2 - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2)
+    (analyticOrderNatAt F ρ.1 : ℝ) * (σ - ρ.1.re) /
+      ((σ - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2)
   let e : {z : ℂ // F z = 0} ≃ {z : ℂ // F z = 0} :=
     { toFun := fun ρ => ⟨1 - conj ρ.1, (completion_reflect_order hχ hne ρ.1).1.mpr ρ.2⟩
       invFun := fun ρ => ⟨1 - conj ρ.1, (completion_reflect_order hχ hne ρ.1).1.mpr ρ.2⟩
@@ -506,8 +506,8 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
     have hr := (completion_zero_strip hχ ρ.2).2
     exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (by linarith))
       (add_nonneg (sq_nonneg _) (sq_nonneg _))
-  have hs : F s ≠ 0 := completion_ne_zero_of_one_le_re χ (.inl hne) (by simp [s])
-  have ha : F a ≠ 0 := completion_ne_zero_of_re_le_zero hχ (by simp [a, s])
+  have hs : F s ≠ 0 := completion_ne_zero_of_one_le_re χ (.inl hne) (by simpa [s] using hσ)
+  have ha : F a ≠ 0 := completion_ne_zero_of_re_le_zero hχ (by simp [a, s]; linarith)
   have hh := Complex.hasSum_re
     (D5.S3.Analytic.Resolvent.EntireLogDerivDifference.entire_logDeriv_difference_hasSum
       (differentiable_completion χ hne) (by norm_num : (3 / 2 : ℝ) < 2)
@@ -671,7 +671,7 @@ theorem completion_vertical_bound {q : ℕ} [NeZero q]
     norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he
     linarith
   · intro hχ hne
-    have hs := completion_vertical_resolvent hχ hne t
+    have hs := completion_vertical_resolvent hχ hne 2 t (by norm_num)
     rw [← hs.tsum_eq]
     apply tsum_nonneg
     intro ρ

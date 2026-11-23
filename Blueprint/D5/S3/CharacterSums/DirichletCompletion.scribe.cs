@@ -146,7 +146,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For positive q and primitive nonprincipal chi, set B = max(1,Gamma(1/4)), R "
+                      "For positive q and nonprincipal chi with Re(s) >= 1/2 or chi primitive, set B = max(1,Gamma(1/4)), R "
                     + "= 1 + norm(s), and U = (R+3)/2. At every complex s, norm(Fchi(s)) is "
                     + "strictly below B phi(q) R exp((log(q)/2)R + U log(U)). This follows from "
                     + "the free-radius estimate, since R bounds both norm(s) and norm(1-s)."))),
@@ -159,7 +159,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "Set B = max(1,Gamma(1/4)) and C = max(log(B phi(q)) + log(q)/2 + 2 log(2), "
-                    + "3). For positive q and primitive nonprincipal chi, with R = 1 + norm(s), "
+                    + "3). For positive q and nonprincipal chi with Re(s) >= 1/2 or chi primitive, with R = 1 + norm(s), "
                     + "norm(Fchi(s)) is strictly below exp(C R (1+log(R))). The comparison U at "
                     + "most 2R absorbs the radial Gamma argument. Since 1+log(R) is at most 3 "
                     + "sqrt(R) for R at least one, a strict bound exp(3 C R to the power 3/2) follows. It "
@@ -214,8 +214,8 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                       "For primitive nonprincipal chi, reflection rho to 1-conjugate(rho) "
                     + "preserves the zero set and the full extended-natural analytic order at "
-                    + "every point. Conjugating both sides of the function conjugates every "
-                    + "iterated derivative, while affine reflection has nonzero derivative and "
+                    + "every point. The shared conjugate-order theorem preserves analytic order; "
+                    + "affine reflection has nonzero derivative and "
                     + "multiplication by the nonzero root number does not change analytic order."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("vertical-resolvent"),
@@ -225,11 +225,11 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For primitive nonprincipal chi and every real t, the zero-indexed series "
-                    + "with term m(rho)(2-Re(rho))/((2-Re(rho)) squared + (t-Im(rho)) squared) has "
-                    + "sum Re(Hchi(2+it)), where m(rho) is the natural analytic order and Hchi is "
+                      "For primitive nonprincipal chi, real sigma >= 1 and every real t, the series "
+                    + "with term m(rho)(sigma-Re(rho))/((sigma-Re(rho)) squared + (t-Im(rho)) squared) has "
+                    + "sum Re(Hchi(sigma+it)), where m(rho) is the natural analytic order and Hchi is "
                     + "the logarithmic derivative of Fchi. Apply the entire two-point difference "
-                    + "formula at 2+it and -1+it. Conjugate reflection makes the difference of "
+                    + "formula at sigma+it and 1-sigma+it. Conjugate reflection makes the difference of "
                     + "logarithmic derivatives equal twice the real part. Taking real parts gives "
                     + "the sum of a positive kernel and its multiplicity-preserving reflected "
                     + "kernel. Reindex this summable real expression to obtain the formula without "

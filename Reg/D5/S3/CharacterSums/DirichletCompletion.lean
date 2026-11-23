@@ -518,7 +518,7 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M :=
-    ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ),
+    ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hne : χ ≠ 1) (s : ℂ) (hχ : 1 / 2 ≤ s.re ∨ χ.IsPrimitive),
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * (1 + ‖s‖) *
       M.readout () () (Real.log (q : ℝ) / 2 * (1 + ‖s‖) +
         ((‖s‖ + 4) / 2) * Real.log ((‖s‖ + 4) / 2))
@@ -526,7 +526,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have hh := h hp hn 0
+  have hh := h hn 0 (.inr hp)
   have hg : 0 < gammaConstant := lt_of_lt_of_le zero_lt_one (le_max_left _ _)
   have ht : 0 < (q.totient : ℝ) := by exact_mod_cast Nat.totient_pos.mpr (NeZero.pos q)
   norm_num only [norm_zero, add_zero, mul_one, rejected, realize] at hh
@@ -592,14 +592,14 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M :=
-    ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ),
+    ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hne : χ ≠ 1) (s : ℂ) (hχ : 1 / 2 ≤ s.re ∨ χ.IsPrimitive),
     ‖completion χ s‖ < M.readout () ()
       (growthConstant q * (1 + ‖s‖) * (1 + Real.log (1 + ‖s‖)))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have hh := h hp hn 0
+  have hh := h hn 0 (.inr hp)
   change ‖completion χ 0‖ < -1 at hh
   linarith [norm_nonneg (completion χ 0)]
 private theorem dependence : ObservationalDependence signature actual := by

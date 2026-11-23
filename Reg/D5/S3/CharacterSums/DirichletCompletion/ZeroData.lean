@@ -322,16 +322,16 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
-    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (t : ℝ),
+    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (σ t : ℝ) (hσ : 1 ≤ σ),
     HasSum (fun ρ : {z : ℂ // completion χ z = 0} =>
-      (analyticOrderNatAt (completion χ) ρ.1 : ℝ) * (2 - ρ.1.re) /
-        ((2 - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2))
-      (M.readout () () (logDeriv (completion χ) (2 + t * I)))
+      (analyticOrderNatAt (completion χ) ρ.1 : ℝ) * (σ - ρ.1.re) /
+        ((σ - ρ.1.re) ^ 2 + (t - ρ.1.im) ^ 2))
+      (M.readout () () (logDeriv (completion χ) ((σ : ℂ) + t * I)))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have he := (completion_vertical_resolvent hp hn 0).unique (h hp hn 0)
+  have he := (completion_vertical_resolvent hp hn 2 0 (by norm_num)).unique (h hp hn 2 0 (by norm_num))
   change (logDeriv (completion χ) (2 + (0 : ℂ) * I)).re =
     (logDeriv (completion χ) (2 + (0 : ℂ) * I)).re + 1 at he
   linarith
