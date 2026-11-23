@@ -19,6 +19,7 @@ Let the ordered core have K elements and suppose 3 <= r < K. Its bases are all r
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/MembershipCircuitInvariantFactors.membership_lifting_obstruction_invariant_factors`
+- Dependency: [D5/S3/Combinatorics/Matroids/CommonPivotCircuitInvariantFactors](CommonPivotCircuitInvariantFactors.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitResidueProduct](MembershipCircuitResidueProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions](MembershipSeparatedOmissions.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitInvariantFactors](PuncturedCircuitInvariantFactors.md)

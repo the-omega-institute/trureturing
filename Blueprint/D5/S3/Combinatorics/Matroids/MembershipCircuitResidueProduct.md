@@ -20,6 +20,7 @@ Let an omitted family consist of a previous family and one new member. All omiss
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/MembershipCircuitResidueProduct.membership_residue_product`
 - Dependency: [D5/S3/Combinatorics/Matroids/CircuitDifferenceBasis](CircuitDifferenceBasis.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/CommonPivotCircuitResidueProduct](CommonPivotCircuitResidueProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitWeightBasis](MembershipCircuitWeightBasis.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions](MembershipSeparatedOmissions.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates](SparsePavingCircuitCoordinates.md)
