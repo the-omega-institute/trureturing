@@ -20,6 +20,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
@@ -209,11 +210,12 @@ divided-difference average bounds the radical contribution. When the gap
 is greater than eleven, the sign holds for all positive lower coordinates.
 
 For first degrees at least eleven, the original logarithmic kernel also
-has strictly negative mixed derivative when the lower coordinate and
-the positive gap are each at most one half. Factoring the marginal zeros
-gives a continued integrand. Exact interval bounds on the marginal
-Taylor polynomials and the tilted joint moments give its strict sign
-throughout the range needed by the kernel derivative identity.
+has strictly negative mixed derivative when the lower coordinate is in
+(0, 1/2] and the log gap is in (0, 1]. Factoring the marginal zeros gives
+a continued integrand. For upper coordinates up to one, the low-strip
+enclosure gives its strict sign. From one to three halves, exact interval
+bounds on the marginal Taylor polynomials and the tilted joint moments
+give strict positivity at every integration point in the derivative identity.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

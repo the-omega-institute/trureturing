@@ -9,6 +9,8 @@
 import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
 import Mathlib.Order.Ideal
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Data.Real.Basic
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -360,7 +362,8 @@ private theorem clockFinite_strict_of_new_observed {observed : E → Prop} {weig
     · exact ⟨e, by simp [Finset.mem_sdiff, heB, heA], hpos e heo⟩
   have hsum := Finset.sum_sdiff hAB (f := weight)
   change Finset.sum A weight < Finset.sum B weight
-  linarith
+  rw [← hsum]
+  simpa only [add_zero, add_comm] using add_lt_add_right hdiff (Finset.sum A weight)
 
 /-- Nested finite configurations have positive append-only histories with additive lengths,
 monotone observer clocks, strict advance on each new counted event, and exact subdivision. -/

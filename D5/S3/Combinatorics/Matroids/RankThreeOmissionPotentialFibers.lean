@@ -137,7 +137,7 @@ private theorem third_unique {I T : Type*}
   subst v
   exact hc.symm.trans ((congrArg _ (third_index_unique hab hca hcb hwu hwv)).trans hw)
 
-private theorem third_value {I T V : Type*} [AddCommGroup V]
+theorem third_value {I T V : Type*} [AddCommGroup V]
     (points : T → Fin 3 → I) (value : I → V)
     (hline : ∀ t, ∑ j, value (points t j) = 0)
     {i j k : I} (hk : IsThird points i j k) :
