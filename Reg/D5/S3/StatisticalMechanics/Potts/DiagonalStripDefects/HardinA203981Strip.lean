@@ -11,6 +11,8 @@ import Init.Data.Int.Basic
 import Init.Data.Nat.Basic
 import Init.Prelude
 import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.Group.Semigroup
+import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Fintype.Defs
