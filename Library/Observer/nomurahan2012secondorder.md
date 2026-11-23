@@ -19,4 +19,5 @@ triage: anchor
 Section VII, Lemmas 7.1 and 7.2, bounds classical fixed-length source coding by source information thresholds. The classical encoder maps source words to code indices. The finite quantum result uses the separate weighted record supplier in pull request #33375 to account for an isometry on the complete basis and a prescribed environment dimension. Exact external priority for the combined constraint is open.
 
 - https://arxiv.org/abs/1106.1879v4
+- https://doi.org/10.1109/TIT.2012.2215836
 - https://github.com/the-omega-institute/trureturing/pull/33375
