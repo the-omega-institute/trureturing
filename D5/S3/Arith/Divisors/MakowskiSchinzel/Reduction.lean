@@ -63,6 +63,12 @@ theorem alpha_radical_le {n : ℕ} (hn : n ≠ 0) : alpha (radical n) ≤ alpha 
 
 #print axioms alpha_radical_le
 
+/-- At an odd integer, adjoining the prime two halves the ratio exactly. -/
+theorem alpha_two_mul {m : ℕ} (hm : Odd m) : alpha (2 * m) = alpha m / 2 := by
+  simp only [alpha, Nat.totient_two_mul_of_odd hm, Nat.cast_mul, Nat.cast_ofNat]
+  ring
+
+
 /-- A minimal odd counterexample in any divisor-closed class is squarefree. -/
 theorem exists_minimal_odd_counterexample (P : ℕ → Prop)
     (hclosed : ∀ {a b : ℕ}, Odd b → a ∣ b → P b → P a)
