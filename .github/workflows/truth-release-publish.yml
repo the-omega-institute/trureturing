@@ -19,7 +19,7 @@ concurrency:
 jobs:
   build:
     if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
-    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
       contents: read
@@ -33,7 +33,6 @@ jobs:
         with:
           ref: ${{ github.sha }}
           path: truth-release-source
-          clean: false
           persist-credentials: false
       - name: Check out the fixed truth release tools
         uses: actions/checkout@v5
@@ -42,27 +41,10 @@ jobs:
           ref: ${{ env.TRUTH_TOOLS_COMMIT }}
           path: truth-tools
           persist-credentials: false
-      - name: Keep the runner's Lake build between releases
-        working-directory: truth-release-source
-        run: git clean -ffdx -e /.lake/
-      - name: Select the runner toolchain
-        working-directory: truth-release-source
-        run: |
-          printf '%s\n' "$HOME/.local/bin" /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin /opt/homebrew/opt/gnu-tar/libexec/gnubin >> "$GITHUB_PATH"
-      - name: Install Python for the release tools
-        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
-        with:
-          version: '0.10.12'
-          python-version: '3.12'
-          activate-environment: true
-          working-directory: ${{ runner.temp }}
-          enable-cache: false
       - name: Install the tools pinned by the source
         working-directory: truth-release-source
         run: make install-tools
       - uses: actions/setup-dotnet@v5
-        env:
-          DOTNET_INSTALL_DIR: ${{ runner.temp }}/truth-dotnet
         with:
           global-json-file: truth-release-source/global.json
       - name: Install the pinned Lean toolchain
@@ -85,7 +67,7 @@ jobs:
 
   publish:
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     permissions:
       actions: read
