@@ -26,7 +26,8 @@ noncomputable section
 
 variable {J : Type*} [DecidableEq J]
 
-private def mass (s : Finset J) (w : J → ℝ) : ℝ := ∑ j ∈ s, w j
+/-- The total weight of a finite index set. -/
+def mass (s : Finset J) (w : J → ℝ) : ℝ := ∑ j ∈ s, w j
 
 /-- The normalized weighted sine score at one real time. -/
 def average (s : Finset J) (g w : J → ℝ) (t : ℝ) : ℝ :=
@@ -62,7 +63,8 @@ private theorem costs_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
   exact div_nonneg (Finset.sum_nonneg fun j hj => hw j (Finset.mem_sdiff.mp hj).1)
     (Finset.sum_nonneg hw)
 
-private theorem p_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
+/-- The least omitted weight fraction is nonnegative for nonnegative weights. -/
+theorem omissionFraction_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
     (hw : ∀ j ∈ s, 0 ≤ w j) : 0 ≤ omissionFraction s g w h :=
   le_csInf (costs_nonempty s g w h) (costs_nonneg s g w h hw)
 
@@ -86,12 +88,13 @@ private theorem p_mono (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 0 ≤
   intro r hr hlen
   exact hg r hr (hlen.trans (by exact_mod_cast hhk))
 
--- Index n represents scale h = n+1.
 private def scale (h : ℕ) : ℝ := 1 / (h : ℝ) ^ 2
 
-private abbrev a (n : ℕ) : ℝ := scale (n + 1)
+/-- The inverse-square scale at length `n + 1`. -/
+abbrev shiftedScale (n : ℕ) : ℝ := scale (n + 1)
 
-private def c (n : ℕ) : ℝ := a n - a (n + 1)
+/-- The difference between successive inverse-square scales. -/
+def scaleDifference (n : ℕ) : ℝ := shiftedScale n - shiftedScale (n + 1)
 
 /-- The length-`h` contribution to the simultaneous bound. -/
 def summand (s : Finset J) (g w : J → ℝ) (h : ℕ) : ℝ :=
@@ -107,34 +110,37 @@ def perScale (s : Finset J) (g w : J → ℝ) (h : ℕ) : ℝ :=
 private abbrev single (s : Finset J) (g w : J → ℝ) (n : ℕ) : ℝ :=
   perScale s g w (n + 1)
 
-private theorem single_eq_mul (s : Finset J) (g w : J → ℝ) (n : ℕ) :
-    perScale s g w (n + 1) = a n * omissionFraction s g w (n + 1) := by
+/-- The single-length bound is the omission fraction times its inverse-square scale. -/
+theorem perScale_eq_mul (s : Finset J) (g w : J → ℝ) (n : ℕ) :
+    perScale s g w (n + 1) = shiftedScale n * omissionFraction s g w (n + 1) := by
   simp only [scale, perScale, div_mul_eq_mul_div, one_mul]
 
-private theorem a_nonneg (n : ℕ) : 0 ≤ a n := by
+/-- Each inverse-square scale is nonnegative. -/
+theorem shiftedScale_nonneg (n : ℕ) : 0 ≤ shiftedScale n := by
   change 0 ≤ scale (n + 1)
   unfold scale
   positivity
 
-private theorem a_antitone : Antitone a := by
+/-- The inverse-square scales decrease with the length index. -/
+theorem shiftedScale_antitone : Antitone shiftedScale := by
   intro n m h
   simp only [scale, Nat.cast_add, Nat.cast_one]
   apply one_div_le_one_div_of_le (by positivity)
   apply pow_le_pow_left₀ (by positivity)
   exact add_le_add_left (by exact_mod_cast h) 1
 
-private theorem c_nonneg (n : ℕ) : 0 ≤ c n :=
-  sub_nonneg.mpr (a_antitone (Nat.le_succ n))
+private theorem c_nonneg (n : ℕ) : 0 ≤ scaleDifference n :=
+  sub_nonneg.mpr (shiftedScale_antitone (Nat.le_succ n))
 
 private theorem term_nonneg (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 0 ≤ w j)
-    (n : ℕ) : 0 ≤ term s g w n := mul_nonneg (c_nonneg n) (p_nonneg s g w _ hw)
+    (n : ℕ) : 0 ≤ term s g w n := mul_nonneg (c_nonneg n) (omissionFraction_nonneg s g w _ hw)
 
 private theorem finite_layer (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
-    (∑ n ∈ Finset.range N, if a n ≤ x then c n else 0) +
-      (if a N ≤ x then a N else 0) ≤ x := by
+    (∑ n ∈ Finset.range N, if shiftedScale n ≤ x then scaleDifference n else 0) +
+      (if shiftedScale N ≤ x then shiftedScale N else 0) ≤ x := by
   have aux (N : ℕ) :
-      (∑ n ∈ Finset.range N, if a n ≤ x then c n else 0) ≤
-        if a N ≤ x then x - a N else 0 := by
+      (∑ n ∈ Finset.range N, if shiftedScale n ≤ x then scaleDifference n else 0) ≤
+        if shiftedScale N ≤ x then x - shiftedScale N else 0 := by
     induction N with
     | zero =>
       rw [Finset.sum_range_zero]
@@ -143,10 +149,10 @@ private theorem finite_layer (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
       · exact le_rfl
     | succ n ih =>
       rw [Finset.sum_range_succ]
-      by_cases h : a n ≤ x
-      · have hnext := (a_antitone (Nat.le_succ n)).trans h
+      by_cases h : shiftedScale n ≤ x
+      · have hnext := (shiftedScale_antitone (Nat.le_succ n)).trans h
         rw [ite_eq_left h] at ih
-        rw [ite_eq_left h, ite_eq_left hnext, c]
+        rw [ite_eq_left h, ite_eq_left hnext, scaleDifference]
         linarith only [ih]
       · rw [ite_eq_right h] at ih
         rw [ite_eq_right h, add_zero]
@@ -176,13 +182,13 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
   by_cases hzero : mass s w = 0
   · have hP (h : ℕ) : omissionFraction s g w h = 0 := by
       refine le_antisymm ((p_le_of_good hw (Finset.empty_subset s) (empty_good g h)).trans ?_)
-        (p_nonneg s g w h hw)
+        (omissionFraction_nonneg s g w h hw)
       simp [hzero]
     simp [summand, perScale, average, hzero, hP]
   have hW : 0 < mass s w := lt_of_le_of_ne (Finset.sum_nonneg hw) (Ne.symm hzero)
   classical
   let loss (j : J) := 1 - Real.sin (g j * t)
-  let cut (n : ℕ) := s.filter fun j => loss j < a n
+  let cut (n : ℕ) := s.filter fun j => loss j < shiftedScale n
   have hcut (n : ℕ) : Good (cut n) g (n + 1) := by
     intro k hr hlen
     by_contra hb
@@ -193,7 +199,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     exact (not_lt_of_ge hjloss)
       (by simpa only [scale, Nat.cast_add, Nat.cast_one] using (Finset.mem_filter.mp hj).2)
   have hmass (n : ℕ) :
-      mass (s \ cut n) w = ∑ j ∈ s, if a n ≤ loss j then w j else 0 := by
+      mass (s \ cut n) w = ∑ j ∈ s, if shiftedScale n ≤ loss j then w j else 0 := by
     unfold mass
     rw [← Finset.sum_filter]
     congr 1
@@ -201,7 +207,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     by_cases hj : j ∈ s <;> simp [cut, hj, not_lt]
   have hpoint (n : ℕ) (b : ℝ) (hb : 0 ≤ b) :
       (b * omissionFraction s g w (n + 1)) * mass s w ≤
-        ∑ j ∈ s, w j * (if a n ≤ loss j then b else 0) := by
+        ∑ j ∈ s, w j * (if shiftedScale n ≤ loss j then b else 0) := by
     have hp := p_le_of_good hw (Finset.filter_subset _ _) (hcut n)
     calc
       _ ≤ b * mass (s \ cut n) w := by
@@ -219,14 +225,14 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     dsimp [loss]
     ring
   apply le_of_mul_le_mul_right _ hW
-  rw [hloss, add_mul, Finset.sum_mul, single_eq_mul]
+  rw [hloss, add_mul, Finset.sum_mul, perScale_eq_mul]
   calc
-    _ ≤ (∑ n ∈ Finset.range N, ∑ j ∈ s, w j * (if a n ≤ loss j then c n else 0)) +
-        ∑ j ∈ s, w j * (if a N ≤ loss j then a N else 0) :=
-      add_le_add (Finset.sum_le_sum fun n _ => hpoint n (c n) (c_nonneg n))
-        (hpoint N (a N) (a_nonneg N))
-    _ = ∑ j ∈ s, w j * ((∑ n ∈ Finset.range N, if a n ≤ loss j then c n else 0) +
-        (if a N ≤ loss j then a N else 0)) := by
+    _ ≤ (∑ n ∈ Finset.range N, ∑ j ∈ s, w j * (if shiftedScale n ≤ loss j then scaleDifference n else 0)) +
+        ∑ j ∈ s, w j * (if shiftedScale N ≤ loss j then shiftedScale N else 0) :=
+      add_le_add (Finset.sum_le_sum fun n _ => hpoint n (scaleDifference n) (c_nonneg n))
+        (hpoint N (shiftedScale N) (shiftedScale_nonneg N))
+    _ = ∑ j ∈ s, w j * ((∑ n ∈ Finset.range N, if shiftedScale n ≤ loss j then scaleDifference n else 0) +
+        (if shiftedScale N ≤ loss j then shiftedScale N else 0)) := by
       rw [Finset.sum_comm, ← Finset.sum_add_distrib]
       simp only [mul_add, Finset.mul_sum]
     _ ≤ _ := Finset.sum_le_sum fun j hj =>
@@ -300,26 +306,27 @@ theorem omissionFraction_isLeast (s : Finset J) (g w : J → ℝ) (h : ℕ) :
   · rintro ⟨u, hu, hg, rfl⟩
     exact ⟨u, hu, (good_iff_supported hu g h).mp hg, rfl⟩
 
-private theorem a_tendsto : Tendsto a atTop (𝓝 0) := by
+private theorem shiftedScale_tendsto : Tendsto shiftedScale atTop (𝓝 0) := by
   change Tendsto (fun n : ℕ => 1 / ((↑(n + 1) : ℝ) ^ 2)) atTop (𝓝 0)
   simpa only [Nat.cast_add, Nat.cast_one, div_pow, one_pow,
     zero_pow (by decide : (2 : ℕ) ≠ 0)] using
       (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).pow 2
 
 private theorem sum_c (m N : ℕ) :
-    (∑ n ∈ Finset.range N, c (n + m)) = a m - a (m + N) := by
-  have h := Finset.sum_range_sub (fun n => -a (n + m)) N
-  simpa only [c, Nat.add_comm m N, Nat.zero_add, Nat.add_right_comm, neg_sub_neg] using h
+    (∑ n ∈ Finset.range N, scaleDifference (n + m)) = shiftedScale m - shiftedScale (m + N) := by
+  have h := Finset.sum_range_sub (fun n => -shiftedScale (n + m)) N
+  simpa only [scaleDifference, Nat.add_comm m N, Nat.zero_add, Nat.add_right_comm, neg_sub_neg] using h
 
-private theorem c_hasSum (m : ℕ) : HasSum (fun n => c (n + m)) (a m) := by
+/-- The weights from a shifted length index sum to its scale. -/
+theorem scaleDifference_hasSum (m : ℕ) : HasSum (fun n => scaleDifference (n + m)) (shiftedScale m) := by
   apply (hasSum_iff_tendsto_nat_of_nonneg (fun n => c_nonneg (n + m)) _).mpr
   simp_rw [sum_c, Nat.add_comm m]
   simpa only [Function.comp_def, sub_zero] using
-    tendsto_const_nhds.sub (a_tendsto.comp (tendsto_add_atTop_nat m))
+    tendsto_const_nhds.sub (shiftedScale_tendsto.comp (tendsto_add_atTop_nat m))
 
 private theorem term_le_c (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 0 ≤ w j) (n : ℕ) :
-    term s g w n ≤ c n := by
-  change c n * omissionFraction s g w (n + 1) ≤ c n
+    term s g w n ≤ scaleDifference n := by
+  change scaleDifference n * omissionFraction s g w (n + 1) ≤ scaleDifference n
   exact mul_le_of_le_one_right (c_nonneg n) (p_le_one s g w _ hw)
 
 private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
@@ -327,11 +334,11 @@ private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
     (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) + perScale s g w (N + 1) ≤
       deficit s g w T := by
   rcases T.eq_empty_or_nonempty with rfl | hT
-  · rw [deficit, Set.image_empty, Real.sSup_empty, sub_zero, partial_eq, single_eq_mul]
+  · rw [deficit, Set.image_empty, Real.sSup_empty, sub_zero, partial_eq, perScale_eq_mul]
     calc
-      _ ≤ (∑ n ∈ Finset.range N, c n) + a N :=
+      _ ≤ (∑ n ∈ Finset.range N, scaleDifference n) + shiftedScale N :=
         add_le_add (Finset.sum_le_sum fun n _ => term_le_c s g w hw n)
-          (mul_le_of_le_one_right (a_nonneg N) (p_le_one s g w _ hw))
+          (mul_le_of_le_one_right (shiftedScale_nonneg N) (p_le_one s g w _ hw))
       _ = 1 := by
         have h := sum_c 0 N
         simp only [Nat.add_zero, Nat.zero_add] at h
@@ -345,7 +352,7 @@ private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
 private theorem term_tail_summable (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) (m : ℕ) : Summable (fun n => term s g w (n + m)) :=
   Summable.of_nonneg_of_le (fun n => term_nonneg s g w hw (n + m))
-    (fun n => term_le_c s g w hw (n + m)) (c_hasSum m).summable
+    (fun n => term_le_c s g w hw (n + m)) (scaleDifference_hasSum m).summable
 
 private theorem series_split (s : Finset J) (g w : J → ℝ) (m : ℕ)
     (hsum : Summable (fun n => term s g w (n + m))) :
@@ -368,8 +375,8 @@ theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
   dsimp only
   have hsum : Summable (term s g w) := by simpa using term_tail_summable s g w hw 0
   have hsingle (m : ℕ) : 0 ≤ perScale s g w (m + 1) := by
-    rw [single_eq_mul s g w m]
-    exact mul_nonneg (a_nonneg m) (p_nonneg s g w _ hw)
+    rw [perScale_eq_mul s g w m]
+    exact mul_nonneg (shiftedScale_nonneg m) (omissionFraction_nonneg s g w _ hw)
   have hfinite := finite_bound s g w T hw
   have hpartial (N : ℕ) :
       (∑ n ∈ Finset.range N, term s g w n) ≤ deficit s g w T := by
@@ -377,12 +384,12 @@ theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
     exact (le_add_of_nonneg_right (hsingle N)).trans (hfinite N)
   have htail (m : ℕ) :
       perScale s g w (m + 1) ≤ (∑' n, term s g w (n + m)) ∧
-        (∑' n, term s g w (n + m)) ≤ a m := by
+        (∑' n, term s g w (n + m)) ≤ shiftedScale m := by
     have ht := (term_tail_summable s g w hw m).hasSum
-    refine ⟨?_, hasSum_le (fun n => term_le_c s g w hw (n + m)) ht (c_hasSum m)⟩
-    rw [single_eq_mul s g w m]
+    refine ⟨?_, hasSum_le (fun n => term_le_c s g w hw (n + m)) ht (scaleDifference_hasSum m)⟩
+    rw [perScale_eq_mul s g w m]
     refine hasSum_le (fun n => mul_le_mul_of_nonneg_left ?_ (c_nonneg (n + m)))
-      ((c_hasSum m).mul_right _) ht
+      ((scaleDifference_hasSum m).mul_right _) ht
     exact p_mono s g w hw (by omega)
   refine ⟨hfinite, hsum.hasSum, ?_, hsum.tsum_le_of_sum_range_le hpartial, ?_⟩
   · apply csSup_le (Set.nonempty_Ici.image _)
@@ -538,8 +545,8 @@ private theorem example_partial_two :
   norm_num [Finset.sum_range_succ, summand, scale, h1, h2]
 
 private theorem example_term_tail (n : ℕ) :
-    term Finset.univ exampleFreq exampleWeight (n + 2) = c (n + 2) * (3 / 4) := by
-  change c (n + 2) * omissionFraction Finset.univ exampleFreq exampleWeight (n + 2 + 1) = _
+    term Finset.univ exampleFreq exampleWeight (n + 2) = scaleDifference (n + 2) * (3 / 4) := by
+  change scaleDifference (n + 2) * omissionFraction Finset.univ exampleFreq exampleWeight (n + 2 + 1) = _
   rw [example_p_large _ (by omega)]
 
 private theorem example_partial (N : ℕ) (hN : 2 ≤ N) :
@@ -554,8 +561,8 @@ private theorem example_partial (N : ℕ) (hN : 2 ≤ N) :
 private theorem example_series :
     (∑' n, summand Finset.univ exampleFreq exampleWeight (n + 1)) = 19 / 36 := by
   have ht : HasSum (fun n => term Finset.univ exampleFreq exampleWeight (n + 2))
-      (a 2 * (3 / 4)) := by
-    simpa only [example_term_tail] using (c_hasSum 2).mul_right (3 / 4)
+      (shiftedScale 2 * (3 / 4)) := by
+    simpa only [example_term_tail] using (scaleDifference_hasSum 2).mul_right (3 / 4)
   rw [← series_split _ _ _ 2 ht.summable, ht.tsum_eq, partial_eq, example_partial_two]
   norm_num [scale]
 
