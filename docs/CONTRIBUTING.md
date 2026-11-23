@@ -12,6 +12,7 @@ documentation defaults to English.
 
 [Project entrance](../README.md) ·
 [Choose a starting point](#choose-a-starting-point) ·
+[Branch, PR and Issue format](#branch-pr-and-issue-format) ·
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
 
@@ -48,13 +49,58 @@ Run the consumer pin regression tests with `python3 -B .github/scripts/test-inst
   [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
   search for existing results before writing a proof.
 
-To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
-with the source path or declaration, the commit from `git rev-parse HEAD`, your
-OS and relevant tool versions, the smallest input and command that reproduce
-it, the expected outcome and the actual output or exit code. For a mathematical
-mismatch, quote the statement and identify the missing hypothesis or give the
-counterexample. Include necessary diagnostics; omit credentials and session
-transcripts. A precise explanation question is welcome too.
+Use the [Issue template](https://github.com/the-omega-institute/trureturing/issues/new/choose)
+to report a problem, propose a change or ask a question.
+
+## Branch, PR and Issue format
+
+### Branch names
+
+Use `lane/<kind>/<task-slug>` for new implementation branches. Write the slug
+as short, descriptive, lowercase words joined by hyphens. An existing Issue
+number can go at the end, as in `lane/governance/fix-cache-diagnostics-123`.
+Use the kind that matches the primary change.
+
+| Kind | Primary change | Example |
+| --- | --- | --- |
+| `math` | Lean proofs, Blueprint or escape registration | `lane/math/petz-hessian-bound` |
+| `theory` | Theory material maintained in this repository | `lane/theory/observer-ledger-notation` |
+| `governance` | Documentation, tooling, CI or repository policy | `lane/governance/github-contribution-format` |
+
+### Pull requests
+
+Write the title as `type(scope): action and result`, for example
+`docs(contributing): standardize GitHub contribution formats`. Use an imperative
+verb and a short lowercase scope that names the affected area. PR types are
+`math`, `theory`, `docs`, `feat`, `fix`, `perf`, `refactor`, `test`, `ci` and
+`chore`. Ordinary contributions target `dev`. Release PRs follow the `main`
+release workflow.
+
+Start with the provenance fields in the [PR template](../.github/PULL_REQUEST_TEMPLATE.md).
+State what changed and why, and report the verification scope, commands and exit
+codes. Fill in the applicable mathematical or freeze details. Put Issue links
+in the body. Use `Closes #123` if the PR resolves that Issue and `Refs #123`
+for a related or partial change. For CLI submissions with `make pr`, put the
+title on the first line of `MESSAGE` and the Markdown body below it.
+
+### Issues
+
+Write ordinary Issue titles as `type(scope): concrete symptom, proposal or question`.
+Use `bug`, `proposal` or `question`, for example
+`bug(ci): FILEMAP misses a newly added template`. Research tracking uses the
+existing `Preregister: <exact target>` and `Research unit: <exact target>` titles
+and the relevant research workflow's body fields.
+
+Start with provenance and identify the affected path, declaration or workflow.
+For a bug, include the commit, environment, smallest reproducing command or input,
+expected behavior and observed output or exit code. For a mathematical mismatch,
+quote the statement and identify a missing hypothesis or give a counterexample.
+For a proposal, state the desired outcome and how to verify it. For a question,
+state the exact point that needs an answer. Include necessary diagnostics and
+source links. Keep Issue and PR bodies focused on current results and evidence.
+
+Follow the repository's provenance requirements for skills, producers, review
+scope and agent session recovery in [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露).
 
 ## Use Claude Code or Codex
 
@@ -348,12 +394,7 @@ Push the branch to your fork with `git push -u origin lane/governance/first-docs
 (substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
 `main` is the release branch.
 
-Describe the problem, resulting behavior or explanation, source evidence and
-verification. At the top, include [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露)
-provenance: skills used (or none), producers and reviewers, and the actual
-review method and scope. For agent work, include the host session ID and
-resume command. Disclose AI assistance. Keep useful results and necessary
-diagnostics; omit process transcripts.
+Use the [PR title and body format](#pull-requests).
 
 Arrange independent review. The repository's documented merge checks are
 one required check per independent CI workflow; inspect the actual check

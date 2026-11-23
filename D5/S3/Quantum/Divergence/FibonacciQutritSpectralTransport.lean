@@ -328,4 +328,12 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
 
 #print axioms strict_spectral_transport
 
+namespace Transport
+
+export _root_.D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
+  (coordinates coordinates_posSemidef coordinates_le coordinates_trace coordinates_divergence
+    divergence trace_blocks compress nullRay M₃ Ray)
+
+end Transport
+
 end D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
