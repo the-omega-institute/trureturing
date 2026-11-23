@@ -125,8 +125,8 @@ source links. Keep Issue and PR bodies focused on current results and evidence.
 Before implementing or delegating the work, record your claim on the matching
 Issue with the current facts and proposed action. A comment is enough. Correct
 invalidated premises promptly. Update the Issue when new evidence changes the
-diagnosis or the chosen action. Comments should add evidence or a decision, so
-skip routine status updates.
+diagnosis or the chosen action, and before changing frozen or protected state.
+Comments should add evidence or a decision, so skip routine status updates.
 
 Close a question with the actual answer. If a PR merged into `dev` resolves
 only part of an Issue, link the PR, record the remaining scope and keep the
@@ -454,16 +454,24 @@ access pushes a new head while auto-merge is enabled, GitHub disables it. A
 maintainer can enable it again after the new head is reviewed.
 
 Arrange the applicable independent review and address failures in GitHub's
-required checks on the current PR head. Reuse the watcher for that PR and head,
-including the one started by `make pr`. Replace `123` with your PR number and
-look up its current head, including after pushing a revision. Run the final
-line only if the lookup succeeded and no watcher is active for that PR and SHA.
+required checks on the current PR head. Replace `123` with your PR number and
+look up its head on GitHub.
 
 ```sh
 pr_number=123
 head_sha="$(gh pr view "$pr_number" --repo the-omega-institute/trureturing \
-  --json headRefOid --jq .headRefOid)"
-printf '%s\n' "$head_sha"
+  --json headRefOid --jq .headRefOid)" && printf '%s\n' "$head_sha"
+```
+
+When pushing a revision, record the full SHA of the exact source ref or commit
+used in that push. Continue only once GitHub's `headRefOid` matches the SHA you
+pushed. If you're observing the PR, use the current SHA GitHub reports.
+
+Once you have the confirmed SHA, reuse the running wait handle or the completed
+result for that PR and SHA, including any result already returned by `make pr`.
+If neither exists, start a single watcher.
+
+```sh
 make pr-watch PR="$pr_number" HEAD_SHA="$head_sha"
 ```
 
