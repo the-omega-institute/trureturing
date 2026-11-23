@@ -248,6 +248,10 @@ Lean statement: `D5/S3/Combinatorics/Parking/PeakTieDescentRecurrence.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Parking/PeakTieDescentRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alexandersson-2026-parking-descent-refinement` (proved) by `D5/S3/Combinatorics/Parking/PeakTieDescentRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alexandersson-2026-parking-descent-refinement","declaration_gid":"D5/S3/Combinatorics/Parking/PeakTieDescentRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Per Alexandersson (2026). *Real-rootedness and interlacing for parking functions and Chow polynomials*. DOI: [10.48550/arXiv.2609.05131](https://doi.org/10.48550/arXiv.2609.05131). URL: <https://arxiv.org/html/2609.05131v2>.

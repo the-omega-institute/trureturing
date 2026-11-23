@@ -46,7 +46,10 @@ internal sealed class PeakTieDescentRecurrenceDocument : IScribeDocumentDefiniti
             Node("parking_recurrence_eq11", "Recover equation (2)", DescribeRole.Theorem,
                 "Apply the specialized operator in each positive maximum-letter fiber. The insertion range and the zero-multiplicity term are precisely those of equation (2)."),
             Node("result", "Problem 10.3", DescribeRole.Theorem,
-                "The bound-one initial values, arbitrary-length trivariate recurrence, descent-marker substitution, equation (10) factors and equation (2) with its equation (11) operator hold on the bounded parking-word enumerators.")),
+                "The bound-one initial values, arbitrary-length trivariate recurrence, descent-marker substitution, equation (10) factors and equation (2) with its equation (11) operator hold on the bounded parking-word enumerators.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alexandersson-2026-parking-descent-refinement"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
