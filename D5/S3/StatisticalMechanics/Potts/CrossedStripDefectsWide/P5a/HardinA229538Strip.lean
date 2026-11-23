@@ -140,7 +140,8 @@ def oneDefect : Matrix Column Column ℤ :=
 def transfer : Matrix (Column ⊕ Column) (Column ⊕ Column) ℤ :=
   Matrix.fromBlocks T oneDefect 0 T
 
-def terminal {C : Type*} {Z : Type*} : C ⊕ Z → ℤ := Sum.elim 0 1
+def terminal {C Z R : Type*} [Zero R] [One R] : C ⊕ Z → R :=
+  Sum.elim 0 1
 
 /-- The vector recurrence is equivalent to every shifted scalar readout recurrence. -/
 theorem transfer_readout {S : Type*} [Fintype S] [DecidableEq S]
