@@ -67,7 +67,36 @@ internal sealed class SpectrumCriticalMissingWindowDocument : IScribeDocumentDef
                         + "The head mass, threshold and mesh allowance fit strictly below β²W(T), "
                         + "so the finite orbit theorem gives a closed score-time window starting "
                         + "above A/r. Multiplying the endpoints by r gives the asserted "
-                        + "window starting above A."))),
+                        + "window starting above A.")),
+                    Paragraph(Text(
+                        "For actual ζ, assume RH and rational linear independence of the distinct "
+                        + "positive ordinates. Use the analytic-multiplicity weight "
+                        + "wγ = mγ γ/(1/4 + γ²) at each ordinate γ ≤ T. The squared-logarithmic "
+                        + "mass error in "), Ref("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/"
+                        + "SublinearOrder/RHRootWeightedSine"),
+                        Text(" gives a = 1/(4π) in the mass hypothesis.")),
+                    Paragraph(Text(
+                        "The required small square tail follows from mγ = o(log γ). To see "
+                        + "this bound in the existing zeta estimates, fix ε > 0 and put "
+                        + "s = exp(−4/ε)/2. For a zero ρ = 1/2 + iγ, center a radius-1/4 "
+                        + "disk at c = ρ + s/4 and use g(z) = ζ(c + z/4)/ζ(c). The same "
+                        + "multiplicity occurs at z = −s. On |z| ≤ 1/2, linear ζ growth "
+                        + "and the reciprocal estimate at c give |g(z)| ≤ Cγ², with C "
+                        + "independent of γ. The finite-disk Jensen bound gives "
+                        + "mγ ≤ log(Cγ²)/log((1/2)/s) ≤ ε log γ for all sufficiently "
+                        + "large γ, since the denominator is 4/ε. Goldston and Gonek, "
+                        + "Corollary 1 (9), DOI 10.1112/blms/bdm032, give the stronger "
+                        + "order log γ/log log γ.")),
+                    Paragraph(Text(
+                        "The count bound N(Y) = O(Y log Y) gives a bound O(log² X/X) "
+                        + "for the sum of mγ log γ/γ² over γ > X. On each (2^k X, 2^(k+1) X] "
+                        + "bound the count and logarithm by the upper endpoint and the square "
+                        + "denominator by the lower endpoint. The resulting geometric series "
+                        + "with a quadratic factor in k converges. Since wγ² ≤ mγ²/γ² and "
+                        + "mγ/log γ tends to zero, the squared-weight tail is o(log² X/X) "
+                        + "uniformly over every finite upper cutoff. The theorem therefore gives "
+                        + "actual ζ windows with deficit strictly greater than 1 − β² at every point. "
+                        + "The proof uses rational independence for the finite orbit step."))),
                 DescribeRole.Theorem))));
 
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
