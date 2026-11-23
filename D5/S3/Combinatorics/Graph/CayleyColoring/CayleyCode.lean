@@ -91,16 +91,6 @@ theorem patch_enters (F : Frame a) (g : F.core → F.core) (x : V) :
     ∃ n : Nat, ((F.patch g)^[n]) x ∈ F.core :=
   (enters_congr (fun _ hx => F.patch_out g hx) x).mpr (F.enters x)
 
-theorem ofFunction_patch (F : Frame a) (g : F.core → F.core)
-    (h : ∀ x, ∃ n : Nat, ((F.patch g)^[n]) x ∈ F.core) :
-    ofFunction (F.patch g) F.core F.anchor_mem h = F := by
-  refine ext_frame ?_ ?_
-  · rfl
-  funext x
-  by_cases hx : x ∈ F.core
-  · exact ((ofFunction _ _ _ _).fixedInside x hx).trans (F.fixedInside x hx).symm
-  · rw [ofFunction_outside _ _ _ _ hx, patch_out _ _ hx]
-
 theorem patch_recover (f : V → V) (C : Set V) (ha : a ∈ C)
     (enters : ∀ x, ∃ n : Nat, (f^[n]) x ∈ C) (closed : Set.MapsTo f C C) :
     (ofFunction f C ha enters).patch (fun x => ⟨f x.val, closed x.prop⟩) = f := by
@@ -223,7 +213,6 @@ noncomputable def cyclicEquiv [Finite V] (a : V) :
   left_inv := cyclic_join_split a
   right_inv := cyclic_split_join
 
-
 end CayleyCore
 
 end
@@ -280,9 +269,6 @@ noncomputable def orbitEquiv (a : V) {r : V} (f : RootMap r) :
     · have hz : depth r f ((f.val^[n]) a) = 0 := by rw [depth_iterate]; omega
       exact ⟨Fin.last _, Subtype.ext ((depth_hits r f a).trans
         (((depth_zero r f _).mp hz).symm.trans hn))⟩
-
-theorem orbitEquiv_apply (a : V) {r : V} (f : RootMap r) (i : Fin (depth r f a + 1)) :
-    (orbitEquiv a f i).val = (f.val^[i.val]) a := rfl
 
 def successor (m : Nat) (i : Fin (m + 1)) : Fin (m + 1) :=
   ⟨min (i.val+1) m, by omega⟩
@@ -483,7 +469,6 @@ noncomputable def pathEquiv (a : V) :
   invFun := pathJoin
   left_inv := pathJoin_split a
   right_inv := pathSplit_join
-
 
 end CayleyCore
 

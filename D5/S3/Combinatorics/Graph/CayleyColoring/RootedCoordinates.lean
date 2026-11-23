@@ -114,7 +114,7 @@ noncomputable def colorEquiv (T : CayleyProbe.Tree V) (r : V) :
     | h n ih =>
       by_cases hv : v = r
       · subst v
-        exact reconstruct_root .. 
+        exact reconstruct_root ..
       · have hp := (parent_spec T r ⟨v, hv⟩).2
         change T.val.dist r (parent T r ⟨v, hv⟩) < T.val.dist r v at hp
         rw [n] at hp
@@ -130,10 +130,6 @@ noncomputable def colorEquiv (T : CayleyProbe.Tree V) (r : V) :
       change reconstruct T r p.1 p.2 v.val - reconstruct T r p.1 p.2 (parent T r v) = p.2 v
       rw [reconstruct_child, add_sub_cancel_right]
 
-theorem conflict_iff_zero (T : CayleyProbe.Tree V) (r : V) (c : V → A) (v : Away r) :
-    c v.val = c (parent T r v) ↔ ((colorEquiv T r) c).2 v = 0 :=
-  sub_eq_zero.symm
-
 end AddGroup
 
 /-- Reindex the coloring differences by the actual native tree edges. -/
@@ -146,7 +142,6 @@ theorem zero_pattern_iff [AddGroup A] (T : CayleyProbe.Tree V) (r : V) (c : V �
     (v : Away r) :
     ((edgeColorEquiv (A := A) T r) c).2 (edgeEquiv T r v) = 0 ↔ c v.val = c (parent T r v) := by
   simp [edgeColorEquiv, colorEquiv, Equiv.arrowCongr, sub_eq_zero]
-
 
 end CayleyColors
 
@@ -308,7 +303,6 @@ noncomputable def rootMapEquiv (r : V) : CayleyProbe.Tree V ≃ RootMap r where
     · subst v
       exact (fromTree_root _ _).trans f.prop.1.symm
     · exact (fromTree_child _ _ ⟨v,hv⟩).trans (toTree_parent r f ⟨v,hv⟩)
-
 
 end CayleyParent
 

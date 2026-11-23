@@ -31,9 +31,6 @@ noncomputable def parentDrawEquiv : EdgeDraw V A ≃ ParentDraw V A :=
   Equiv.sigmaCongrRight fun p =>
     Equiv.prodCongr (Equiv.refl A) (Equiv.arrowCongr (edgeEquiv p.2 p.1).symm (Equiv.refl A))
 
-theorem parentDraw_values (s : EdgeDraw V A) :
-    (parentDrawEquiv s).2.2 = s.2.2 ∘ edgeEquiv s.1.2 s.1.1 := rfl
-
 def relabelColored (e : Equiv.Perm V) : Colored V A ≃ Colored V A :=
   Equiv.prodCongr (Equiv.prodCongr e (relabelEquiv e)) (Equiv.arrowCongr e (Equiv.refl A))
 
@@ -134,15 +131,6 @@ theorem rankedTransport_count [AddGroup A] [Fintype V] [LinearOrder V]
     recolorCount s = retainedTargetCount (rankedTransport s).2 := by
   rw [recolorCount, ranked_moves_complement, filterCard_eq_natCard, ranked_peaks_card s.1 s.2]
   exact fromColored_count (relabelColored s.1 s.2)
-
-/-- The original sample and the independent uniform edge-label sample give equal probability
-to each count. Equal numerator and denominator are witnessed by the same sample equivalence. -/
-theorem recolor_retained_target_fibers [AddGroup A] [Fintype V] [LinearOrder V] (j : Nat) :
-    Nat.card {s : Equiv.Perm V × Colored V A // recolorCount s = j} =
-      Nat.card {s : Equiv.Perm V × ParentDraw V A // retainedTargetCount s.2 = j} :=
-  Nat.card_congr ((rankedTransport (V := V) (A := A)).subtypeEquiv
-    fun s => congrArg (· = j) (rankedTransport_count s) |>.to_iff)
-
 
 end CayleyReduction
 
@@ -349,7 +337,6 @@ theorem fin_exact_law (n k : Nat) (hk : 2 ≤ k) (j : Nat) :
   rw [bin_none_card, cardinality_nonzero]
   exact congrArg (· * (k - 1)) (Nat.card_fin (n+1))
 
-
 end CayleyFiniteLaw
 
 end
@@ -456,8 +443,6 @@ theorem all_n_distribution (n k : Nat) (hn : 0 < n) (hk : 2 ≤ k) (embed : ZMod
     have hc := fin_exact_law n k hk j
     exact ⟨source_count_law hk embed a j, hs.1, hs.2, hc.2.1, hc.2.2⟩
 
-
-
 end CayleyExactAudit
 
 end
@@ -554,7 +539,6 @@ theorem native_daemon_occupancy (n k : Nat) (hn : 0 < n) (hk : 2 ≤ k) (embed :
   dsimp only at h ⊢
   rw [Nat.card_congr (totalEquiv embed policy j)]
   exact h
-
 
 end CayleyNativeLaw
 

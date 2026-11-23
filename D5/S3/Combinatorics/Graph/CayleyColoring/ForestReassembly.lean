@@ -239,16 +239,9 @@ theorem replace_cross [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
       ((S.val.1.val \ S.val.2).mem_edgeSet.mpr h) ((unionGraph U).mem_edgeSet.mpr h')
   exact ⟨fun h => h.1.resolve_right h.2, fun h => ⟨Or.inl h, fun h' => hd h h'⟩⟩
 
-theorem replace_card [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
-    Nat.card (replace S U).val.2.edgeSet = Nat.card S.val.2.edgeSet := by
-  change Nat.card (unionGraph U).edgeSet = Nat.card S.val.2.edgeSet
-  conv_rhs => rw [← reconstruct_inside S.prop]
-  exact retained_card U _
-
 theorem replace_reachable [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
     (replace S U).val.2.Reachable = S.val.2.Reachable :=
   reachable_replace U
-
 
 end CayleyForest
 
@@ -502,10 +495,6 @@ noncomputable def forestEquiv (r : V) : Sample V ≃ Sample V where
   left_inv S := transform_inverse r S false
   right_inv S := transform_inverse r S true
 
-theorem forestEquiv_retained (r : V) (S : Sample V) :
-    Nat.card ((forestEquiv r) S).val.2.edgeSet = Nat.card S.val.2.edgeSet :=
-  replace_card _ _
-
 def NoRetainedChild (T : CayleyProbe.Tree V) (H : SimpleGraph V) (r v : V) : Prop :=
   ¬ ∃ w, H.Adj v w ∧ T.val.dist r v < T.val.dist r w
 
@@ -585,7 +574,6 @@ theorem forestEquiv_peaks (r : V) (S : Sample V) :
   let : Fintype s.val := Fintype.ofFinite _
   rw [← CayleyProbe.filterCard_eq_natCard, ← CayleyProbe.filterCard_eq_natCard]
   exact CayleyProbe.fixedRootEquiv_filterCard _ _
-
 
 end CayleyForest
 
@@ -728,9 +716,6 @@ noncomputable def markedForestEquiv (r : V) : Marked V A ≃ Marked V A :=
     let e := Set.equivOfEq (congrArg SimpleGraph.edgeSet (replace_cross S _).symm)
     Equiv.arrowCongr ((deletedEquiv S).trans (e.trans (deletedEquiv (forestEquiv r S)).symm)) (Equiv.refl _)
 
-theorem markedForest_base (r : V) (s : Marked V A) :
-    (markedForestEquiv r s).1 = forestEquiv r s.1 := rfl
-
 /-- The occupied ordinary targets after retaining the zero-difference parent coordinates. -/
 def HasTarget (T : CayleyProbe.Tree V) (r : V) (d : Away r → A) (w : V) : Prop :=
   ∃ v : Away r, parent T r v = w ∧ d v = 0
@@ -751,7 +736,6 @@ theorem retained_child_iff (T : CayleyProbe.Tree V) (r : V) (d : T.val.edgeSet �
   · rintro ⟨v,hw,hz⟩
     have hp := parent_spec T r v
     exact ⟨v.val, hw ▸ ((retained_parent T r d v).mpr hz).symm, hw ▸ hp.2⟩
-
 
 end CayleyMarks
 

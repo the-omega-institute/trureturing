@@ -301,11 +301,6 @@ theorem occupancy_normal_limit (k : ℕ) (hk : 2 ≤ k) :
     Tendsto (rowLaw k hk) atTop (𝓝 standardGaussian) :=
   native_row_normal_limit (palette_bounds hk).1 (palette_bounds hk).2
 
-theorem occupancy_variance_eventually_positive (k : ℕ) (hk : 2 ≤ k) :
-    ∀ᶠ N : ℕ in atTop, 0 < variance N.succ (paletteP k) N := by
-  filter_upwards [eventually_ge_atTop (1 : ℕ)] with N hN
-  exact variance_pos (show 2 ≤ N.succ by omega) (palette_bounds hk).1 (palette_bounds hk).2
-
 end
 end DiscardedOccupancy
 

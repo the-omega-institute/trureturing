@@ -339,7 +339,6 @@ theorem uniform_next_fibers (G : SimpleGraph V) (live : Set V) (history : List V
 
 end FiniteRanking
 
-
 end CayleyScheduler
 
 end
@@ -428,46 +427,6 @@ external tape can be fixed as a parameter of such a policy. -/
 def FreePolicy (G : SimpleGraph V) :=
   (past : List V) → (color : V → K) → (v : V) → (∃ w, (conflict G color).Adj v w) →
     {new : K // ∀ w, G.Adj v w → new ≠ color w}
-
-omit [Fintype V] [LinearOrder V] in
-theorem active_active (G : SimpleGraph V) (A B : Set V) :
-    active (active G A) B = active G (A ∩ B) := by
-  ext x y
-  change (x ∈ B ∧ y ∈ B ∧ x ∈ A ∧ y ∈ A ∧ G.Adj x y) ↔
-    ((x ∈ A ∧ x ∈ B) ∧ (y ∈ A ∧ y ∈ B) ∧ G.Adj x y)
-  tauto
-
-omit [Fintype V] in
-theorem run_prefix [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
-    (rank : Equiv.Perm V) {live : Set V} {history : List V}
-    (H : SimpleGraph V) (p : Prefix H rank live history) :
-    ∀ (_past : List V) (color : V → K), conflict G color = active H live →
-      ∃ final, LegalRun G color history final ∧
-        conflict G final = active H (remaining live history) := by
-  induction p with
-  | nil live =>
-    intro past color h
-    exact ⟨color, .nil _, by rwa [remaining_nil]⟩
-  | @cons live v tail hv _ ih =>
-    intro past color hc
-    have he : ∃ w, (conflict G color).Adj v w := hc.symm ▸ hv.1
-    let new := policy past color v he
-    have hnew : conflict G (Function.update color v new.val) = active H (live \ {v}) := by
-      rw [recolor_conflict G color v new.val new.prop, hc, active_delete]
-    obtain ⟨final, hrun, hf⟩ := ih (past ++ [v]) _ hnew
-    exact ⟨final, .cons he new.prop hrun, by rwa [remaining_cons]⟩
-
-theorem ranked_recolor [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
-    (color : V → K) (rank : Equiv.Perm V) :
-    let H := conflict G color
-    let history := rankedHistory H rank Set.univ
-    ∃ final, LegalRun G color history final ∧ ∀ v w, ¬ (conflict G final).Adj v w := by
-  obtain ⟨p, stop⟩ := rankedHistory_spec (conflict G color) rank Set.univ
-  have ha : conflict G color = active (conflict G color) Set.univ := by
-    ext v w
-    simp [active]
-  obtain ⟨final, run, hf⟩ := run_prefix G policy rank _ p [] color ha
-  exact ⟨final, run, fun v w hadj => stop v ⟨w, hf ▸ hadj⟩⟩
 
 /-- The consecutive choices that have positive probability for the random central daemon. -/
 def LegalPrefix (G : SimpleGraph V) (live : Set V) (l : List V) : Prop :=
@@ -590,7 +549,6 @@ theorem initially_proper (G : SimpleGraph V) (color : V → K)
     exact hproper v w ha he
   · exact rankedHistory_spec _ _ _
 
-
 end CayleyScheduler
 
 end
@@ -655,16 +613,6 @@ theorem policyRun_iff [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (
           rw [recolor_conflict G init v _ (policy past init v he).prop, hc, active_delete]
         exact (ih _ _ hn _).mpr ⟨final,rest,hfinal⟩
 
-theorem policyRun_unique [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
-    {past history : List V} {init final final' : V → K}
-    (run : PolicyRun G policy past init history final)
-    (run' : PolicyRun G policy past init history final') : final = final' := by
-  induction run generalizing final' with
-  | nil past color => cases run'; rfl
-  | cons he _ ih =>
-    cases run' with
-    | cons _ h => exact ih h
-
 theorem proper_policyRun [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
     (init : V → K) (history : List V) :
     (LegalPrefix (conflict G init) Set.univ history ∧
@@ -704,13 +652,6 @@ theorem policy_terminal_law (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
   have h := complete_history_law (conflict G init) Set.univ history
   rw [proper_policyRun G policy init history] at h
   exact h
-
-theorem singleton_ranked_count [Subsingleton V] (G : SimpleGraph V) (init : V → K)
-    (rank : Equiv.Perm V) :
-    (rankedHistory (conflict G init) rank Set.univ).length = 0 := by
-  rw [initially_proper G init (fun v w ha => (ha.ne (Subsingleton.elim v w)).elim)]
-  rfl
-
 
 end CayleyScheduler
 

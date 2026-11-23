@@ -157,7 +157,6 @@ theorem tree_of_depth {G : SimpleGraph V} {r : V} (d : V → Nat)
       rw [(zero r).mpr rfl, Nat.zero_add, ht] at hb
       exact hb
 
-
 /-- The blocks and their attachment vertices after deleting the pivot. -/
 structure Frame (p : V) where
   parts : Set (Set V)
@@ -344,7 +343,6 @@ theorem leaf_assemble (T : F.Branches) {s : F.parts} (x : s.val) :
 
 end Frame
 
-
 def cutParts (G : SimpleGraph V) (p : V) : Set (Set V) :=
   {s | ∃ x, x ≠ p ∧ s = ((cut G p).connectedComponentMk x).supp}
 
@@ -498,8 +496,6 @@ noncomputable def decomposeEquiv (p : V) : Tree V ≃ (Σ F : Frame p, F.Branche
   invFun := fun a ↦ Frame.assemble a.2
   left_inv := assemble_decompose p
   right_inv := fun a ↦ Frame.decompose_assemble a.2
-
-
 
 namespace Frame
 
@@ -696,6 +692,5 @@ theorem fixedRoot_peak_to_leaf [Fintype V] [LinearOrder V] (r : V) :
       filterCard (fun v ↦ ∀ w, T.val.Adj v w → w < v) =
         filterCard (fun v ↦ ¬ ∃ w, (e T).val.Adj v w ∧ (e T).val.dist r v < (e T).val.dist r w) :=
   ⟨fixedRootEquiv r, fixedRootEquiv_filterCard r⟩
-
 
 end CayleyProbe
