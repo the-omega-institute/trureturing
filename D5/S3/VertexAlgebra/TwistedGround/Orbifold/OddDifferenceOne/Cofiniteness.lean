@@ -7,7 +7,6 @@
    digest: Bounded strict mode words give C2-cofiniteness of the Leech extension. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.OddDifferenceOne.ActualLeech
-import D5.S3.VertexAlgebra.TwistedGround.Orbifold.ActualLeechRelativeOddAction
 
 /-! C₂-cofiniteness of the relative odd quotient and of the assembled Leech extension. -/
 
@@ -20,6 +19,8 @@ namespace D5.S3.VertexAlgebra.TwistedGround.Orbifold.ActualLeechExtensionC2
 
 open ActualLeechHyperbolic (leechData leech_spec)
 open HalfFock.LatticeHalfFockParityField (paritySpace)
+open LatticeHalfFockCorrectedField (correctedField)
+open LatticeInvolution (FixedCarrier fixedTranslation)
 open OddDifferenceOne (leech_odd_difference_one)
 open OddDifferenceOneSpanning (Homogeneous Word strictSpan wordMap)
 open private act lettersIn increasing wordMap_cons sorted_truncate tail_cutoff from
@@ -28,6 +29,46 @@ open private act lettersIn increasing wordMap_cons sorted_truncate tail_cutoff f
 local notation "uΛ" => And.left (And.right leech_spec)
 local notation "Odd" => paritySpace leechData uΛ (-1)
 local notation "C₂" => relativeOddC2 leechData uΛ
+
+-- The descent specializes ActualLeechRelativeOddAction's higher_mode_mem and
+-- fixed_odd_mode_mem_relativeOddC2. The parity restriction follows
+-- OriginalOrbifoldTranslation.vm_translation using its physical coefficient theorem.
+set_option maxHeartbeats 600000 in
+private theorem leech_fixed_odd_mode_mem_relativeOddC2
+    (a : FixedCarrier leechData) (t : Odd) {n : ℤ} (hn : n ≤ -2) :
+    act (hu := uΛ) a n t ∈ C₂ := by
+  have translate (b : FixedCarrier leechData) (k : ℤ) :
+      act (hu := uΛ) (fixedTranslation leechData b) k t =
+        -(k : ℂ) • act (hu := uΛ) b (k - 1) t := by
+    apply Subtype.ext
+    change (correctedField leechData uΛ
+      (LatticeSugawaraConformal.translation leechData b.val)).coeff (2 * (-k - 1)) t.val =
+        -(k : ℂ) • (correctedField leechData uΛ b.val).coeff (2 * (-(k - 1) - 1)) t.val
+    have hexponent : 2 * (-k - 1) + 2 = 2 * (-(k - 1) - 1) := by ring
+    have hscalar : (((2 * (-k - 1) + 2 : ℤ) : ℂ) / 2) = -(k : ℂ) := by
+      push_cast
+      ring
+    have h := LatticeHalfFockOriginalTranslation.correctedField_translation_physical
+      leechData uΛ b.val (2 * (-k - 1)) t.val
+    rw [hscalar, hexponent] at h
+    exact h
+  have hmode (r : ℕ) (b : FixedCarrier leechData) :
+      act (hu := uΛ) b (-((r : ℤ) + 2)) t ∈ C₂ := by
+    induction r generalizing b with
+    | zero => exact Submodule.subset_span ⟨b, t, rfl⟩
+    | succ r ih =>
+      let k : ℤ := -((r : ℤ) + 2)
+      have h : act (hu := uΛ) (fixedTranslation leechData b) k t ∈ C₂ :=
+        ih (fixedTranslation leechData b)
+      rw [translate b k] at h
+      have hk : -(k : ℂ) ≠ 0 :=
+        neg_ne_zero.mpr (Int.cast_ne_zero.mpr (show k ≠ 0 by dsimp [k]; omega))
+      have hnext := (C₂).smul_mem (-(k : ℂ))⁻¹ h
+      simpa only [smul_smul, inv_mul_cancel₀ hk, one_smul,
+        show k - 1 = -(((r + 1 : ℕ) : ℤ) + 2) by dsimp [k]; omega] using hnext
+  have h := hmode (-n - 2).toNat a
+  rwa [Int.toNat_of_nonneg (show 0 ≤ -n - 2 by omega),
+    show -(-n - 2 + 2) = n by omega] at h
 
 set_option maxHeartbeats 600000 in
 -- Elaborating the finite word enumeration through the actual quotient maps needs extra heartbeats.
@@ -75,7 +116,7 @@ theorem leech_c2_cofinite :
           have hz : q (wordMap (b :: t) u) = 0 := by
             rw [wordMap_cons]
             exact (Submodule.Quotient.mk_eq_zero C₂).mpr
-              (fixed_odd_mode_mem_relativeOddC2 leechData uΛ b.1.state (wordMap t u) hb)
+              (leech_fixed_odd_mode_mem_relativeOddC2 b.1.state (wordMap t u) hb)
           rw [hz]
           exact Set.mem_insert _ _
       have hindex (a : Homogeneous leechData × ℤ) (ha : a ∈ t) : a.2 ∈ I := by
