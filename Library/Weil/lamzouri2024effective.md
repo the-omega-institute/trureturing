@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2311.04860
 url: https://arxiv.org/html/2311.04860v2
 claim: Conjecture 1.1 gives a uniform lower bound for nonzero bounded integer combinations of distinct positive zeta ordinates. Theorem 1.5 gives conditional extreme values for a class of weighted sums over zeta zeros.
 strata_touched:
-  - D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHWeightedSineCutoff
+  - D5/S3/Analytic/Oscillation/SpectrumPhaseCutoff
 license: citation-only
 triage: anchor
 ---

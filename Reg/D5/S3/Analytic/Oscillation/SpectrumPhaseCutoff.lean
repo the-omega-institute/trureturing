@@ -58,7 +58,7 @@ private theorem singleton_gap : HasBoxGap unitSpectrum := by
     exact (by norm_num : (0 : ℝ) ≤ 1).trans hjX) _))).trans hone
 
 abbrev signature : Signature where
-  Params := Σ S : Spectrum, (S.index → ℝ) × ℝ
+  Params := Σ S : Spectrum, Σ _ : S.index → ℝ, ℝ
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
