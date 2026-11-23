@@ -1,3 +1,4 @@
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -32,7 +33,9 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let p : Boundary := ![0, 1, 0, 1, 0, 1]
-  have hp : Valid p 2 := by unfold Valid; decide +kernel
+  have hp : Valid p 2 := by
+    unfold Valid D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State.Valid
+    decide +kernel
   have hh := h p 2 0 (Or.inl hp)
   have ha := transition_counts p 2 0 (Or.inl hp)
   change _ = T (cl p 2) 0 + 1 at hh
