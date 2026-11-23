@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1304.5935v2
 claim: "Theorem 14 bounds Holevo information by mixing entropy times the largest pairwise trace distance; the equiprobable binary case gives J₂(ρ,σ) ≤ ‖ρ−σ‖tr/2."
 strata_touched:
   - D5/S3/Divergence/AudenaertBinaryHolevoBound
+  - D5/S3/Quantum/Divergence/SingularWeightedLogIncrement
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
   - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
@@ -39,6 +40,12 @@ dimension, including singular states. Its analytic route uses the resolvent
 representation of the matrix logarithm, the differential estimate underlying
 Theorem 8, integration to the skew-divergence estimate of Theorem 9, and a
 trace-preserving regularization with continuity of x log x at zero.
+
+`SingularWeightedLogIncrement` uses the matrix logarithm resolvent
+representation to compare two positively shifted semidefinite references.
+The integral over shifts greater than one controls strict positivity
+uniformly as the common shift tends to zero. The resulting overlap equality
+criterion uses the supported fixed-weight limit in `UmegakiSupportedNoise`.
 
 The repository also contains `D5/S3/Quantum/Divergence/UmegakiRareFlagBKM`,
 which proves the rectangular finite-dimensional rare-flag asymptotic for the

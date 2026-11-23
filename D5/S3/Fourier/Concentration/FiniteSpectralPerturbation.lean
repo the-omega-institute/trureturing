@@ -55,7 +55,7 @@ private theorem affine_hit_count {M : ℕ} (a b : ℝ) {η : ℝ}
     rw [hz, card_empty, Nat.cast_zero]
     positivity
 
-private theorem affine_fin_hit_count {M : ℕ} (a b : ℝ) {η : ℝ}
+theorem affine_fin_hit_count {M : ℕ} (a b : ℝ) {η : ℝ}
     (ha : a ≠ 0) (hη : 0 ≤ η) :
     (((univ : Finset (Fin M)).filter (fun k => |a * (k.val : ℝ) + b| ≤ η)).card : ℝ) ≤
       1 + 2 * η / |a| := by
@@ -77,10 +77,10 @@ private theorem affine_fin_hit_count {M : ℕ} (a b : ℝ) {η : ℝ}
   rw [hc]
   exact affine_hit_count a b ha hη
 
-private def offset {M : ℕ} (ε : ℝ) (k : Fin (M + 2)) : ℝ :=
+def offset {M : ℕ} (ε : ℝ) (k : Fin (M + 2)) : ℝ :=
   ε * (2 * (k.val : ℝ) / ((M : ℝ) + 1) - 1)
 
-private theorem offset_abs_le {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (k : Fin (M + 2)) :
+theorem offset_abs_le {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (k : Fin (M + 2)) :
     |offset ε k| ≤ ε := by
   have hd : 0 < (M : ℝ) + 1 := by positivity
   have hk : (k.val : ℝ) ≤ (M : ℝ) + 1 := by

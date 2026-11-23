@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Four-site windows give exponential lower bounds for the deletion kernel dimension. -/
+   digest: Four-site windows give an exact kernel-dimension recurrence and exponential lower bounds. -/
 
 import D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionDimension
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -371,6 +371,269 @@ private theorem all_windows_contain_orientations {n : ℕ} (w : Fin n → Letter
   refine ⟨⟨i + s, hindex⟩, by change i ≤ i + s; omega, by change i + s < i + 4; omega, ?_⟩
   simpa [List.getElem_take, List.getElem_drop, Nat.add_comm] using read
 
+private theorem translate_translate (recent : Bool) (move : Letter) :
+    translate recent (translate recent move) = move := by
+  cases move with
+  | none => rfl
+  | some bit => cases recent <;> cases bit <;> rfl
+
+private theorem accepted_from_window (state : AgePair) (recent : Bool) (history : List Letter)
+    (move : Letter) (h : represents state recent history)
+    (window : ∀ bit : Bool, some bit ∈ (translate recent move :: history).take 4) :
+    ∃ t, nextState state move = some t := by
+  obtain ⟨hr, ho, hra, hoa⟩ := h
+  have indexRecent :=
+    (List.mem_take_iff_idxOf_lt (List.mem_cons_of_mem (translate recent move) hr)).mp
+      (window recent)
+  have indexOlder :=
+    (List.mem_take_iff_idxOf_lt (List.mem_cons_of_mem (translate recent move) ho)).mp
+      (window (!recent))
+  cases state <;> cases recent <;> cases move <;>
+    simp_all [nextState, agree, ages, translate, List.idxOf_cons]
+  all_goals
+    rename_i choice
+    cases choice <;> simp_all [repeatRecent, emitOlder]
+
+
+private def decodeMoves (recent : Bool) : List Letter → List Letter
+  | [] => []
+  | symbol :: suffix =>
+    let move := translate recent symbol
+    move :: decodeMoves (nextOrientation recent move) suffix
+
+private theorem run_decode (recent : Bool) (word : List Letter) :
+    runWord recent (decodeMoves recent word) = word := by
+  induction word generalizing recent with
+  | nil => rfl
+  | cons s w ih => simp [decodeMoves, runWord, translate_translate, ih]
+
+private theorem validWindows_suffix (preludeWord tail : List Letter)
+    (valid : validWindows (preludeWord ++ tail)) : validWindows tail := by
+  induction preludeWord with
+  | nil => exact valid
+  | cons p pre ih => exact ih valid.2
+
+private theorem follows_decode (word : List Letter) {state : AgePair} {recent : Bool}
+    {history : List Letter} (h : represents state recent history) (hlen : 4 ≤ history.length)
+    (valid : validWindows (word.reverse ++ history)) :
+    follows state (decodeMoves recent word) := by
+  induction word generalizing state recent history with
+  | nil => exact trivial
+  | cons symbol tail ih =>
+    have newestValid : validWindows (tail.reverse ++ symbol :: history) := by
+      simpa only [List.reverse_cons, List.append_assoc, List.singleton_append] using valid
+    have current := validWindows_suffix _ _ newestValid
+    have window := current.1 (by simp; omega)
+    have echo := translate_translate recent symbol
+    let move := translate recent symbol
+    obtain ⟨t, ht⟩ := accepted_from_window state recent history move h
+      (by simpa only [move, echo] using window)
+    have hrep := represents_step state t recent history move h ht
+    change represents t (nextOrientation recent move)
+      (translate recent (translate recent symbol) :: history) at hrep
+    rw [echo] at hrep
+    exact ⟨t, ht, ih hrep (by simp; omega) newestValid⟩
+
+private theorem legalMoves_of_follows {k : ℕ} (state : AgePair) (w : Fin k → Letter)
+    (run : follows state (List.ofFn w)) : legalMoves state w := by
+  induction k generalizing state with
+  | zero => exact trivial
+  | succ k ih =>
+    rw [List.ofFn_succ, follows] at run
+    obtain ⟨t, ht, run⟩ := run
+    simpa only [legalMoves, ht] using ih t (Fin.tail w) run
+
+private theorem length_decode (recent : Bool) (word : List Letter) :
+    (decodeMoves recent word).length = word.length := by
+  induction word generalizing recent with
+  | nil => rfl
+  | cons a w ih => simp [decodeMoves, ih]
+
+private def validExtensionsEquiv (state : AgePair) (recent : Bool) (history : List Letter)
+    (h : represents state recent history) (hlen : 4 ≤ history.length)
+    (hvalid : validWindows history) (k : ℕ) :
+    {w : Fin k → Letter // legalMoves state w} ≃
+      {w : Fin k → Letter // validWindows (List.ofFn w ++ history)} where
+  toFun w := by
+    have len : (runWord recent (List.ofFn w.1)).reverse.length = k := by
+      simp [runWord_length]
+    refine ⟨listWord len, ?_⟩
+    rw [ofFn_listWord]
+    exact valid_after_run (List.ofFn w.1) h hvalid (follows_of_legalMoves state w.1 w.2)
+  invFun w := by
+    have len : (decodeMoves recent (List.ofFn w.1).reverse).length = k := by
+      simp [length_decode]
+    refine ⟨listWord len, legalMoves_of_follows state _ ?_⟩
+    rw [ofFn_listWord]
+    exact follows_decode (List.ofFn w.1).reverse h hlen (by simpa only [List.reverse_reverse] using w.2)
+  left_inv w := by
+    apply Subtype.ext
+    apply List.ofFn_injective
+    rw [ofFn_listWord, ofFn_listWord, List.reverse_reverse]
+    apply runWord_inj recent
+    exact run_decode recent _
+  right_inv w := by
+    apply Subtype.ext
+    apply List.ofFn_injective
+    rw [ofFn_listWord, ofFn_listWord, run_decode, List.reverse_reverse]
+
+private theorem validWindows_of_at {word : List Letter}
+    (h : ∀ i, i + 4 ≤ word.length → ∀ bit : Bool,
+      some bit ∈ (word.drop i).take 4) : validWindows word := by
+  induction word with
+  | nil => exact trivial
+  | cons head rest ih =>
+    refine ⟨fun bound bit => h 0 bound bit, ih ?_⟩
+    intro i hi bit
+    have lifted := h (i + 1) (by simp; omega) bit
+    simpa only [List.drop_succ_cons] using lifted
+
+private theorem validWindows_ofFn_iff {n : ℕ} (w : Fin n → Letter) :
+    validWindows (List.ofFn w) ↔
+      ∀ i, i + 4 ≤ n → ∀ bit : Bool,
+        ∃ j : Fin n, i ≤ j.val ∧ j.val < i + 4 ∧ w j = some bit := by
+  constructor
+  · intro h i hi bit
+    exact all_windows_contain_orientations w h hi bit
+  · intro h
+    apply validWindows_of_at
+    intro i hi bit
+    have hin : i + 4 ≤ n := by simpa using hi
+    obtain ⟨j, hj₁, hj₂, read⟩ := h i hin bit
+    let k := j.val - i
+    have hidx : i + k = j.val := Nat.add_sub_of_le hj₁
+    have klt : k < ((List.ofFn w).drop i |>.take 4).length := by
+      simp only [List.length_take, List.length_drop, List.length_ofFn, Nat.lt_min]
+      omega
+    rw [List.mem_iff_getElem]
+    refine ⟨k, klt, ?_⟩
+    simpa only [List.getElem_take, List.getElem_drop, List.getElem_ofFn, hidx] using read
+
+
+private abbrev Seed := {w : Fin 4 → Letter // ∀ bit : Bool, some bit ∈ List.ofFn w}
+
+private def seedOrientation (w : Fin 4 → Letter) : Bool :=
+  decide ((List.ofFn w).idxOf (some true) < (List.ofFn w).idxOf (some false))
+
+private def seedState (w : Fin 4 → Letter) : AgePair :=
+  let history := List.ofFn w
+  let t := history.idxOf (some true)
+  let f := history.idxOf (some false)
+  match (min t f, max t f) with
+  | (0, 1) => age01
+  | (0, 2) => age02
+  | (0, 3) => age03
+  | (1, 2) => age12
+  | (1, 3) => age13
+  | _ => age23
+
+private theorem seed_represents : ∀ w : Seed,
+    represents (seedState w.1) (seedOrientation w.1) (List.ofFn w.1) := by
+  intro w
+  obtain ⟨w, hw⟩ := w
+  let target (w : Fin 4 → Letter) :=
+    represents (seedState w) (seedOrientation w) (List.ofFn w)
+  have h : ∀ w : Fin 4 → Letter, (∀ bit : Bool, some bit ∈ List.ofFn w) → target w := by
+    dsimp [target, represents]
+    decide
+  exact h w hw
+
+private theorem seed_valid (w : Seed) : validWindows (List.ofFn w.1) := by
+  rw [validWindows_ofFn_iff]
+  intro i hi bit
+  have hz : i = 0 := by omega
+  subst i
+  obtain ⟨j, hj, read⟩ := List.mem_iff_getElem.mp (w.2 bit)
+  have hj4 : j < 4 := by simpa using hj
+  exact ⟨⟨j, hj4⟩, Nat.zero_le _, hj4, by simpa only [List.getElem_ofFn] using read⟩
+
+private def splitSeeds (k : ℕ) :
+    {w : Fin (k + 4) → Letter // validWindows (List.ofFn w)} ≃
+      Σ seed : Seed,
+        {w : Fin k → Letter // validWindows (List.ofFn w ++ List.ofFn seed.1)} where
+  toFun w := by
+    let left i := w.1 (Fin.castAdd 4 i)
+    let right i := w.1 (Fin.natAdd k i)
+    have full : List.ofFn w.1 = List.ofFn left ++ List.ofFn right := by
+      rw [List.ofFn_add]
+      rfl
+    have ok : validWindows (List.ofFn left ++ List.ofFn right) := full ▸ w.2
+    have rightValid := validWindows_suffix (List.ofFn left) (List.ofFn right) ok
+    have seen (bit : Bool) : some bit ∈ List.ofFn right := by
+      simpa using validWindows_at rightValid 0 (by simp) bit
+    exact ⟨⟨right, seen⟩, ⟨left, ok⟩⟩
+  invFun w :=
+    ⟨Fin.append w.2.1 w.1.1, by
+      rw [List.ofFn_fin_append]
+      exact w.2.2⟩
+  left_inv w := by
+    apply Subtype.ext
+    apply List.ofFn_injective
+    rw [List.ofFn_fin_append, List.ofFn_add]
+    rfl
+  right_inv w := by
+    have extensionality (a b : Σ seed : Seed,
+        {w : Fin k → Letter // validWindows (List.ofFn w ++ List.ofFn seed.1)})
+        (seeds : a.1.1 = b.1.1) (words : a.2.1 = b.2.1) : a = b := by
+      rcases a with ⟨⟨seed₁, h₁⟩, word₁, hword₁⟩
+      rcases b with ⟨⟨seed₂, h₂⟩, word₂, hword₂⟩
+      cases seeds
+      cases words
+      rfl
+    apply extensionality
+    · funext i
+      exact Fin.append_right _ _ i
+    · funext i
+      exact Fin.append_left _ _ i
+
+private theorem validFour_count (k : ℕ) :
+    (Fintype.card {w : Fin (k + 4) → Letter // validWindows (List.ofFn w)} : ℚ) =
+      ∑ seed : Seed, extensions k (seedState seed.1) := by
+  rw [Fintype.card_congr (splitSeeds k), Fintype.card_sigma, Nat.cast_sum]
+  apply Finset.sum_congr rfl
+  intro seed _
+  let eqv := validExtensionsEquiv (seedState seed.1) (seedOrientation seed.1)
+    (List.ofFn seed.1) (seed_represents seed) (by simp) (seed_valid seed) k
+  rw [← Fintype.card_congr eqv]
+  exact card_legalMoves (seedState seed.1) k
+
+
+private def evolve (initial : AgePair → ℚ) : ℕ → AgePair → ℚ
+  | 0 => initial
+  | k + 1 => fun state => ((successors state).map (evolve initial k)).sum
+
+private theorem evolve_extensions (k j : ℕ) (state : AgePair) :
+    evolve (extensions k) j state = extensions (k + j) state := by
+  induction j generalizing state with
+  | zero => rfl
+  | succ j ih =>
+    have h : evolve (extensions k) j = extensions (k + j) := funext ih
+    simp only [evolve, extensions, h]
+    rfl
+
+private theorem recurrenceSix (initial : AgePair → ℚ) (state : AgePair) :
+    evolve initial 6 state + evolve initial 1 state + initial state =
+      evolve initial 5 state + 2 * evolve initial 4 state +
+        2 * evolve initial 3 state + 2 * evolve initial 2 state := by
+  cases state <;> simp only [evolve, successors, List.map_cons, List.map_nil,
+    List.sum_cons, List.sum_nil, add_zero] <;> ring
+
+private theorem extensions_recurrence (k : ℕ) (state : AgePair) :
+    extensions (k + 6) state + extensions (k + 1) state + extensions k state =
+      extensions (k + 5) state + 2 * extensions (k + 4) state +
+        2 * extensions (k + 3) state + 2 * extensions (k + 2) state := by
+  simpa only [evolve_extensions] using recurrenceSix (extensions k) state
+
+private noncomputable def validFourCount (k : ℕ) : ℚ :=
+  (Fintype.card {w : Fin (k + 4) → Letter // validWindows (List.ofFn w)} : ℚ)
+
+private theorem validFour_recurrence (k : ℕ) :
+    validFourCount (k + 6) + validFourCount (k + 1) + validFourCount k =
+      validFourCount (k + 5) + 2 * validFourCount (k + 4) +
+        2 * validFourCount (k + 3) + 2 * validFourCount (k + 2) := by
+  simp only [validFourCount, validFour_count, Finset.mul_sum, ← Finset.sum_add_distrib]
+  exact Finset.sum_congr rfl fun seed _ => extensions_recurrence k (seedState seed.1)
+
 end FourWindowGrowth
 
 open BinaryDeletionDimension FourWindowGrowth
@@ -381,6 +644,46 @@ def windowEdge {n length : ℕ} (start : {i : ℕ // i + length ≤ n}) : Set (F
 
 def NoRun {n : ℕ} (length : ℕ) (w : Fin n → Bool) : Prop :=
   ∀ edge ∈ Set.range (windowEdge (n := n) (length := length)), ∃ j ∈ edge, w j = false
+
+
+private theorem kernelDimension_four_eq_count (k : ℕ) :
+    (Module.finrank ℂ (SupportedKernel (NoRun (n := k + 4) 4)) : ℚ) =
+      validFourCount k := by
+  rw [supportedKernel_finrank, Nat.card_eq_fintype_card, validFourCount]
+  congr 1
+  apply Fintype.card_congr
+  refine Equiv.subtypeEquivRight fun w => ?_
+  rw [validWindows_ofFn_iff]
+  unfold NoRun
+  rw [allowed_pattern_hyperedges]
+  constructor
+  · intro h i hi bit
+    obtain ⟨hf, ht⟩ := h (windowEdge ⟨i, hi⟩) ⟨⟨i, hi⟩, rfl⟩
+    cases bit
+    · obtain ⟨j, hj, read⟩ := hf
+      exact ⟨j, hj.1, hj.2, read⟩
+    · obtain ⟨j, hj, read⟩ := ht
+      exact ⟨j, hj.1, hj.2, read⟩
+  · rintro h edge ⟨⟨i, hi⟩, rfl⟩
+    constructor
+    · obtain ⟨j, hj₁, hj₂, read⟩ := h i hi false
+      exact ⟨j, ⟨hj₁, hj₂⟩, read⟩
+    · obtain ⟨j, hj₁, hj₂, read⟩ := h i hi true
+      exact ⟨j, ⟨hj₁, hj₂⟩, read⟩
+
+
+/-- The four-site automaton counts every surviving pattern and gives a six-step recurrence. -/
+theorem kernelDimension_four_recurrence (k : ℕ) :
+    let d := fun i : ℕ => Module.finrank ℂ (SupportedKernel (NoRun (n := i + 4) 4))
+    d (k + 6) + d (k + 1) + d k =
+      d (k + 5) + 2 * d (k + 4) + 2 * d (k + 3) + 2 * d (k + 2) := by
+  let d := fun i : ℕ => Module.finrank ℂ (SupportedKernel (NoRun (n := i + 4) 4))
+  change d (k + 6) + d (k + 1) + d k =
+    d (k + 5) + 2 * d (k + 4) + 2 * d (k + 3) + 2 * d (k + 2)
+  have eq (i : ℕ) : (d i : ℚ) = validFourCount i := kernelDimension_four_eq_count i
+  exact_mod_cast (show (d (k + 6) : ℚ) + d (k + 1) + d k =
+      d (k + 5) + 2 * d (k + 4) + 2 * d (k + 3) + 2 * d (k + 2) by
+    simpa only [eq] using validFour_recurrence k)
 
 theorem kernelDimension_lower (k length : ℕ) (hlen : 4 ≤ length) :
     (100 / 43 : ℚ) ^ k ≤
