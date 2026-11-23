@@ -253,7 +253,7 @@ private theorem noEdge_fails : ¬ arena.Law noEdge := by
   have rowDegree := rows (E 0)
   simp [residualDegree, hOrdinary, off] at rowDegree
 
-private def family : Registration arena (type_of% @list_axis_factor) where
+def family : Registration arena (type_of% @list_axis_factor) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@list_axis_factor, noEdge, noEdge_fails⟩
