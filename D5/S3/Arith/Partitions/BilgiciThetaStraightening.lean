@@ -87,8 +87,13 @@ private theorem stepR3 {M : Submodule K A} (hs : smaller M rootR3) : evalWord ro
   · smaller_mem hs wordF
   · smaller_mem hs baseD
 
+private theorem evalWord_to (m : Word) (j : ℕ) (n : Word) (c : K)
+    (hp : (scaleWord (2^j) m).Perm n) (hc : scaleCoeff j m = c) :
+    evalWord m = c • evalWord n := by
+  rw [evalWord_power j, hc, evalWord_perm hp]
+
 private theorem stepB7 {M : Submodule K A} (hs : smaller M wordB7) : evalWord wordB7 ∈ M := by
-  rw [scaleB7, relK]
+  rw [evalWord_to wordB7 6 wordK 7 (by decide) (by decide), relK]
   apply M.smul_mem
   apply M.add_mem <;> apply M.smul_mem
   · smaller_mem hs baseD
@@ -119,7 +124,7 @@ private theorem stepM {M : Submodule K A} (hs : smaller M wordM) : evalWord word
   · smaller_mem hs baseD
 
 private theorem stepN {M : Submodule K A} (hs : smaller M wordN) : evalWord wordN ∈ M := by
-  rw [scaleN, relJ]
+  rw [evalWord_to wordN 2 wordJ 6 (by decide) (by decide), relJ]
   apply M.smul_mem
   apply M.add_mem <;> apply M.smul_mem
   · smaller_mem hs baseB
@@ -263,10 +268,10 @@ private theorem bases_of_requested {M : Submodule K A}
     (h1 : evalWord paper1 ∈ M) (h2 : evalWord paper2 ∈ M)
     (h3 : evalWord paper3 ∈ M) (h4 : evalWord paper4 ∈ M) :
     evalWord baseA ∈ M ∧ evalWord baseB ∈ M ∧ evalWord baseC ∈ M ∧ evalWord baseD ∈ M := by
-  rw [scalePaper1] at h1
-  rw [scalePaper2] at h2
-  rw [scalePaper3] at h3
-  rw [scalePaper4, relR4, smul_smul] at h4
+  rw [evalWord_to paper1 1 rootR1 5 (by decide) (by decide)] at h1
+  rw [evalWord_to paper2 3 rootR2 8 (by decide) (by decide)] at h2
+  rw [evalWord_to paper3 1 rootR3 14 (by decide) (by decide)] at h3
+  rw [evalWord_to paper4 1 rootR4 5 (by decide) (by decide), relR4, smul_smul] at h4
   have hr1 := cancel_smul_mem (by decide) h1
   have hr2 := cancel_smul_mem (by decide) h2
   have hr3 := cancel_smul_mem (by decide) h3

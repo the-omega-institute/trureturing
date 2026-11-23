@@ -43,12 +43,8 @@ theorem spProject_denote (digits : List ℤ) :
     denote_orbitWordSparse, ← MvPolynomial.smul_eq_C_mul, smul_smul]
   let F : ℕ → R := fun j => ((17 : K) * 5^j) • Tpow j (monomialWord digits)
   change (List.map F (List.range 9)).sum = ∑ j ∈ Finset.range 9, F j
-  have h (n : ℕ) : (List.map F (List.range n)).sum = ∑ j ∈ Finset.range n, F j := by
-    induction n with
-    | zero => simp
-    | succ n ih => rw [List.range_succ, List.map_append, List.sum_append, ih,
-        Finset.sum_range_succ]; simp
-  exact h 9
+  rw [← List.sum_toFinset F (List.nodup_range (n := 9)),
+    List.toFinset, Multiset.coe_range, Multiset.toFinset_range]
 
 theorem mon_index (m : Word) :
     monomialWord (m.map index) = term (m, 1) := by
@@ -327,6 +323,10 @@ theorem eigengrade_mem {d : ℕ} {n : K} {x : A} :
     x ∈ eigengrade d n ↔ (∃ f ∈ grade d n, q f = x) ∧ Tbar x = (4 : K) • x := by
   simp [eigengrade, sub_eq_zero]
 
+theorem eigengrade_of_projected (m : List ℤ) {d : ℕ} {n : K} (h : P (monomialWord m) ∈ grade d n) :
+    q (P (monomialWord m)) ∈ eigengrade d n :=
+  eigengrade_mem.mpr ⟨⟨_, h, rfl⟩, by rw [Tbar_q, T_P, map_smul]⟩
+
 theorem eigengrade_exact {d : ℕ} {n : K} (hn : 2*n = 14*(d : K)) :
     eigengrade d n = (grade d n).map (q.toLinearMap.comp P) := by
   ext x
@@ -386,8 +386,31 @@ theorem T_x (r : K) : T (x r) = -x (2 * r) := by
   rw [x_int, map_mul, T_Z, hC, ← mul_assoc, ← map_mul,
     ← sign_add, hs, map_neg, neg_mul, ← show (((2*n : ℤ) : K)) = 2*(n : K) by push_cast; rfl, ← x_int]
 
+private theorem digit_val (i : Fin 9) : (digit i).val = i.val + 1 :=
+  ZMod.val_natCast_of_lt (by have := i.isLt; omega)
+
+private theorem absIndex_digit_val (r : K) (hr : r ≠ 0) :
+    (digit (absIndex r)).val = min r.val (19 - r.val) := by
+  have hv : r.val < 19 := ZMod.val_lt r
+  have hp : 0 < r.val := ZMod.val_pos.mpr hr
+  have hm : min r.val (19 - r.val) - 1 < 9 := by omega
+  rw [digit_val, absIndex, Fin.val_ofNat, Nat.mod_eq_of_lt hm]
+  omega
+
 theorem epsilon_abs (r : K) : r = epsilon r * digit (absIndex r) := by
-  decide +revert
+  by_cases hr : r = 0
+  · simp [hr, epsilon]
+  have hv := absIndex_digit_val r hr
+  have hlt : r.val < 19 := ZMod.val_lt r
+  by_cases h : r.val ≤ 9
+  · rw [epsilon, if_neg hr, if_pos h, one_mul]
+    apply ZMod.val_injective
+    rw [hv, min_eq_left (by omega)]
+  · rw [epsilon, if_neg hr, if_neg h, neg_one_mul, eq_neg_iff_add_eq_zero]
+    have hd : -r = digit (absIndex r) := by
+      apply ZMod.val_injective
+      rw [ZMod.neg_val, if_neg hr, hv, min_eq_right (by omega)]
+    rw [← hd, add_neg_cancel]
 
 private theorem epsilon_cases (r : K) : epsilon r = 0 ∨ epsilon r = 1 ∨ epsilon r = -1 := by
   unfold epsilon
@@ -411,14 +434,32 @@ theorem x_abs (r : K) : x r = epsilon r • x (digit (absIndex r)) := by
       _ = _ := by rw [x_odd, he, neg_one_smul]
 
 theorem abs_square (r : K) (hr : r ≠ 0) : digit (absIndex r) ^ 2 = r ^ 2 := by
-  decide +revert
-
-theorem digit_square_injective : Function.Injective (fun i : Fin 9 => digit i ^ 2) := by
-  intro i j
-  decide +revert
+  have h := epsilon_abs r
+  rcases epsilon_cases r with he | he | he
+  · rw [he, zero_mul] at h
+    exact (hr h).elim
+  · rw [he, one_mul] at h
+    rw [← h]
+  · rw [he, neg_one_mul] at h
+    exact (congrArg (fun z : K => z ^ 2) h).symm.trans (neg_sq _)
 
 theorem digit_nonzero (i : Fin 9) : digit i ≠ 0 := by
-  decide +revert
+  intro h
+  have hv := congrArg ZMod.val h
+  rw [digit_val, ZMod.val_zero] at hv
+  omega
+
+theorem digit_square_injective : Function.Injective (fun i : Fin 9 => digit i ^ 2) := by
+  intro i j h
+  rcases eq_or_eq_neg_of_sq_eq_sq (digit i) (digit j) h with h' | h'
+  · have hv := congrArg ZMod.val h'
+    rw [digit_val, digit_val] at hv
+    exact Fin.ext (by omega)
+  · have hv := congrArg ZMod.val h'
+    rw [digit_val, ZMod.neg_val, if_neg (digit_nonzero j), digit_val] at hv
+    have hi := i.isLt
+    have hj := j.isLt
+    omega
 
 theorem x_digit (i : Fin 9) : x (digit i) = sign (index i) • X i := by
   have h : digit i = ((index i : ℤ) : K) := by

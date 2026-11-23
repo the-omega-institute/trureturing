@@ -39,29 +39,38 @@ private theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
 private noncomputable def erased : DependentFamily.Realization signature :=
   DependentFamily.realize signature (fun _ _ _ => (0 : K × K)) (fun e => nomatch e)
 
-private theorem erased_fails : ¬ arena.Law erased := by
-  intro h
-  obtain ⟨y, hy, hmul⟩ := (h (x := q u) u_mem).mp rfl
-  exact u_not_in_range ⟨⟨y, hy⟩, Subtype.ext hmul⟩
-
-noncomputable def family : DependentFamily.Registration arena sourceScope where
-  actual := actual
-  bridge := source_bridge
-  variation := ⟨source_bridge.mp (@joint_kernel_membership), erased, erased_fails⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨erased, ?_, rfl, erased_fails⟩
-      intro j hj
-      exact (hj (@Subsingleton.elim Unit _ j i)).elim
-    · intro e
-      exact nomatch e
-  dependence := by
-    rintro ⟨⟩
-    refine ⟨(), q u, (0 : A), ?_⟩
-    change tests (q u) ≠ tests 0
-    rw [quotient_u_tests, map_zero]
-    decide
+noncomputable def family : DependentFamily.Registration arena sourceScope := by
+  have detector_nonzero : tests (q u) ≠ 0 := by
+    intro h
+    have h' : tests ((1 : K) • q u + (0 : K) • q v) = 0 := by simpa using h
+    exact one_ne_zero (detector_coordinates_zero 1 0 h').1
+  have erased_fails : ¬ arena.Law erased := by
+    intro h
+    have hu : q u ∈ eigengrade 7 11 := by
+      apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (_root_.D5.S3.Arith.Partitions.BilgiciThetaQuartic.denote_grades
+        _ _ _ (by decide))
+    obtain ⟨y, _, hmul⟩ := (h (x := q u) hu).mp rfl
+    exact detector_nonzero (hmul ▸ tests_mul_S_Z y)
+  exact {
+    actual := actual
+    bridge := source_bridge
+    variation := ⟨source_bridge.mp (@joint_kernel_membership), erased, erased_fails⟩
+    sensitivity := by
+      constructor
+      · intro i
+        refine ⟨erased, ?_, rfl, erased_fails⟩
+        intro j hj
+        exact (hj (@Subsingleton.elim Unit _ j i)).elim
+      · intro e
+        exact nomatch e
+    dependence := by
+      rintro ⟨⟩
+      refine ⟨(), q u, (0 : A), ?_⟩
+      change tests (q u) ≠ tests 0
+      rw [map_zero]
+      exact detector_nonzero }
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}

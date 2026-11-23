@@ -716,7 +716,7 @@ private theorem denote_traceF11 :
     denote_fullC, pow_succ', pow_zero, mul_one]
   ring
 
-private theorem literalF11_trace_low (n : ℕ) (hn : n < 30) : ellR n F11 = 0 := by
+theorem literalF11_trace_low (n : ℕ) (hn : n < 30) : ellR n F11 = 0 := by
   rw [← denote_traceF11, ellR_sparse, traceCoeff_head]
   have hB : traceAtLeast 30 fullB := by
     unfold traceAtLeast
@@ -751,10 +751,6 @@ theorem literalF11_trace_thirty : ellR 30 F11 = 1 := by
     decide
   rw [hcomm, hhead]
   decide
-
-theorem literalF11_trace_test_zero : ell 11 (by decide) (q F11) = 0 := by
-  rw [ell_q]
-  exact literalF11_trace_low 11 (by decide)
 
 theorem literalF11_class_nonzero : q F11 ≠ 0 := by
   intro hz

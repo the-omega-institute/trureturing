@@ -20,10 +20,10 @@ internal sealed class BilgiciThetaJointKernelDocument : IScribeDocumentDefinitio
                     + "nine of the same character. Two projected words give independent detector columns, and "
                     + "two cubic multiples are independent by their trace coefficients. The four-word upper "
                     + "bound then makes these four classes a basis."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("bilgici-u-not-in-range"),
-                DeclarationHandle.Create(Prefix + "u_not_in_range"), H("A character-four class outside the range"),
+            Describe.Lean(DescribeId.Create("bilgici-detector-coordinates"),
+                DeclarationHandle.Create(Prefix + "kernel_coordinates"), H("Coordinates after the detector tests"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The projected word 5899999 has the same degree, weight, and character as the target "
-                    + "component. Its first detector is 17, which excludes it from the cubic multiplication "
-                    + "range."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The two tests take the values (17, 13) and (0, 1) on the projected words "
+                    + "5899999 and 1234699. Their vanishing forces both projected-word coefficients to vanish, "
+                    + "leaving only the two cubic multiples."))), DescribeRole.Theorem))));
 }

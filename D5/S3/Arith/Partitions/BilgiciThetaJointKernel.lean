@@ -38,15 +38,6 @@ private theorem TS : T S_Z = S_Z := by
       rw [hs, map_add, map_sub]
     _ = S_Z := hp.symm
 
-private theorem eigengrade_of_projected (m : List ℤ) {d : ℕ} {n : K} (h : P (monomialWord m) ∈ grade d n) :
-    q (P (monomialWord m)) ∈ eigengrade d n :=
-  eigengrade_mem.mpr ⟨⟨_, h, rfl⟩, by rw [Tbar_q, T_P, map_smul]⟩
-
-theorem u_mem : q u ∈ eigengrade 7 11 := eigengrade_of_projected _ (grade_mem.mpr u_grades)
-private theorem v_mem : q v ∈ eigengrade 7 11 := eigengrade_of_projected _ (grade_mem.mpr v_grades)
-private theorem h₁_mem : q h₁ ∈ eigengrade 4 9 := eigengrade_of_projected _ (grade_mem.mpr h₁_grades)
-private theorem h₂_mem : q h₂ ∈ eigengrade 4 9 := eigengrade_of_projected _ (grade_mem.mpr h₂_grades)
-
 noncomputable def mulS : A →ₗ[K] A := LinearMap.mul K A (q S_Z)
 
 private theorem mulS_mem {p : A} (hp : p ∈ eigengrade 4 9) : mulS p ∈ eigengrade 7 11 := by
@@ -54,7 +45,10 @@ private theorem mulS_mem {p : A} (hp : p ∈ eigengrade 4 9) : mulS p ∈ eigeng
   obtain ⟨hd, hw⟩ := grade_mem.mp hf
   change q S_Z * q f ∈ eigengrade 7 11
   apply eigengrade_mem.mpr
-  refine ⟨⟨S_Z * f, grade_mem.mpr ⟨S_grades.1.mul hd, S_grades.2.mul hw⟩, map_mul q _ _⟩, ?_⟩
+  have hS : S_Z.IsHomogeneous 3 ∧ S_Z.IsWeightedHomogeneous w 2 := by
+    rw [← denote_sSparse]
+    exact denote_grades _ _ _ (by decide)
+  refine ⟨⟨S_Z * f, grade_mem.mpr ⟨hS.1.mul hd, hS.2.mul hw⟩, map_mul q _ _⟩, ?_⟩
   rw [map_mul, Tbar_q, TS, he, mul_smul_comm]
 
 private noncomputable def comparison : Fin 4 → A := ![q u, q v, mulS (q h₁), mulS (q h₂)]
@@ -92,14 +86,8 @@ private theorem test_columns_zero (a b c d : K)
     a = 0 ∧ b = 0 := by
   have h₁zero : tests (mulS (q h₁)) = 0 := tests_mul_S_Z _
   have h₂zero : tests (mulS (q h₂)) = 0 := tests_mul_S_Z _
-  simp only [map_add, map_smul, quotient_u_tests, quotient_v_tests,
-    h₁zero, h₂zero, smul_zero, add_zero] at h
-  have hfirst := congrArg Prod.fst h
-  change a * (17 : K) + b * 0 = 0 at hfirst
-  rw [mul_zero, add_zero] at hfirst
-  have ha : a = 0 := (mul_eq_zero.mp hfirst).resolve_right (by decide)
-  rw [ha, zero_smul, zero_add] at h
-  exact ⟨ha, by simpa using congrArg Prod.snd h⟩
+  apply detector_coordinates_zero a b
+  simpa only [map_add, map_smul, h₁zero, h₂zero, smul_zero, add_zero] using h
 
 private theorem comparison_independent : LinearIndependent K comparison := by
   rw [Fintype.linearIndependent_iff]
@@ -123,18 +111,9 @@ private noncomputable def rootFamily : Fin 4 → A :=
     q (P (word paper3)), q (P (word paper4))]
 
 private theorem requestedSpan_family : requestedSpan = Submodule.span K (Set.range rootFamily) := by
-  unfold requestedSpan
-  apply congrArg (Submodule.span K)
-  ext x
-  simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_range]
-  constructor
-  · rintro (rfl | rfl | rfl | rfl)
-    · exact ⟨0, rfl⟩
-    · exact ⟨1, rfl⟩
-    · exact ⟨2, rfl⟩
-    · exact ⟨3, rfl⟩
-  · rintro ⟨i, rfl⟩
-    fin_cases i <;> simp [rootFamily]
+  simp only [requestedSpan, rootFamily, Matrix.range_cons_empty, Matrix.range_cons,
+    Set.singleton_union]
+
 
 private theorem eigengrade_le_requestedSpan : eigengrade 7 11 ≤ requestedSpan := by
   rw [eigengrade_exact (by decide : (2 : K)*11=14*(7 : ℕ))]
@@ -153,10 +132,20 @@ private theorem comparison_span : Submodule.span K (Set.range comparison) = eige
     apply Submodule.span_le.mpr
     rintro _ ⟨i, rfl⟩
     fin_cases i
-    · exact u_mem
-    · exact v_mem
-    · exact mulS_mem h₁_mem
-    · exact mulS_mem h₂_mem
+    · apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
+    · apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
+    · apply mulS_mem
+      apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
+    · apply mulS_mem
+      apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
   have hupper : eigengrade 7 11 ≤ Submodule.span K (Set.range rootFamily) :=
     requestedSpan_family ▸ eigengrade_le_requestedSpan
   let : FiniteDimensional K (Submodule.span K (Set.range rootFamily)) :=
@@ -188,8 +177,16 @@ theorem joint_kernel_membership {x : A} (hx : x ∈ eigengrade 7 11) :
   constructor
   · intro ht
     obtain ⟨a, b, hab⟩ := kernel_coordinates hx ht
+    have h₁mem : q h₁ ∈ eigengrade 4 9 := by
+      apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
+    have h₂mem : q h₂ ∈ eigengrade 4 9 := by
+      apply eigengrade_of_projected
+      rw [← spProject_denote]
+      exact grade_mem.mpr (denote_grades _ _ _ (by decide))
     refine ⟨a • q h₁ + b • q h₂, (eigengrade 4 9).add_mem
-      ((eigengrade 4 9).smul_mem _ h₁_mem) ((eigengrade 4 9).smul_mem _ h₂_mem), ?_⟩
+      ((eigengrade 4 9).smul_mem _ h₁mem) ((eigengrade 4 9).smul_mem _ h₂mem), ?_⟩
     change mulS (a • q h₁ + b • q h₂) = x
     simpa only [map_add, map_smul] using hab
   · rintro ⟨y, _, rfl⟩
@@ -208,14 +205,5 @@ theorem joint_kernel :
     exact ⟨⟨y,hy⟩, Subtype.ext he⟩
   · rintro ⟨y, he⟩
     exact ⟨y.val, y.property, congrArg Subtype.val he⟩
-
-theorem u_not_in_range :
-    (⟨q u, u_mem⟩ : eigengrade 7 11) ∉ LinearMap.range mulSZComponent := by
-  rw [← joint_kernel]
-  intro h
-  have hu : tests (q u) = 0 := h
-  have h17 := congrArg Prod.fst (quotient_u_tests.symm.trans hu)
-  exact (show (17 : K) ≠ 0 by decide) h17
-
 
 end D5.S3.Arith.Partitions.BilgiciThetaStructural

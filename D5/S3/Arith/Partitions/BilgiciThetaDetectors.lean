@@ -65,10 +65,6 @@ private theorem epsR_sparse (p : Sparse) : epsR (denote p) = (epsEval p).snd := 
   change (eta (denote p)).snd = _
   rw [epsEval_denote]
 
-theorem S_grades : S_Z.IsHomogeneous 3 ∧ S_Z.IsWeightedHomogeneous w 2 := by
-  rw [← denote_sSparse]
-  exact denote_grades _ _ _ (by decide)
-
 private theorem S_eta_zero : eta S_Z = 0 := by
   rw [← denote_sSparse, epsEval_denote]
   exact TrivSqZeroExt.ext (by decide) (by decide)
@@ -500,31 +496,23 @@ noncomputable def v : R := P (monomialWord [1,2,3,4,6,9,9])
 noncomputable def h₁ : R := P (monomialWord [6,7,9,9])
 noncomputable def h₂ : R := P (monomialWord [3,6,8,9])
 
-theorem u_grades : u.IsHomogeneous 7 ∧ u.IsWeightedHomogeneous w 11 := by
-  rw [u, ← spProject_denote]
-  exact denote_grades _ _ _ (by decide)
-
-theorem v_grades : v.IsHomogeneous 7 ∧ v.IsWeightedHomogeneous w 11 := by
-  rw [v, ← spProject_denote]
-  exact denote_grades _ _ _ (by decide)
-
-theorem h₁_grades : h₁.IsHomogeneous 4 ∧ h₁.IsWeightedHomogeneous w 9 := by
-  rw [h₁, ← spProject_denote]
-  exact denote_grades _ _ _ (by decide)
-
-theorem h₂_grades : h₂.IsHomogeneous 4 ∧ h₂.IsWeightedHomogeneous w 9 := by
-  rw [h₂, ← spProject_denote]
-  exact denote_grades _ _ _ (by decide)
-
-theorem quotient_u_tests : tests (q u) = (17, 13) := by
-  change (ellR 11 u, epsR u) = (17, 13)
-  rw [u, ← spProject_denote, ellR_sparse, epsR_sparse]
-  exact Prod.ext (by decide) (by decide)
-
-theorem quotient_v_tests : tests (q v) = (0, 1) := by
-  change (ellR 11 v, epsR v) = (0, 1)
-  rw [v, ← spProject_denote, ellR_sparse, epsR_sparse]
-  exact Prod.ext (by decide) (by decide)
-
+/-- The descended tests recover both coefficients of the projected detector words at zero. -/
+theorem detector_coordinates_zero (a b : K) (h : tests (a • q u + b • q v) = 0) :
+    a = 0 ∧ b = 0 := by
+  have hu : tests (q u) = (17, 13) := by
+    change (ellR 11 u, epsR u) = (17, 13)
+    rw [u, ← spProject_denote, ellR_sparse, epsR_sparse]
+    exact Prod.ext (by decide) (by decide)
+  have hv : tests (q v) = (0, 1) := by
+    change (ellR 11 v, epsR v) = (0, 1)
+    rw [v, ← spProject_denote, ellR_sparse, epsR_sparse]
+    exact Prod.ext (by decide) (by decide)
+  simp only [map_add, map_smul, hu, hv] at h
+  have hfirst := congrArg Prod.fst h
+  change a * (17 : K) + b * 0 = 0 at hfirst
+  rw [mul_zero, add_zero] at hfirst
+  have ha : a = 0 := (mul_eq_zero.mp hfirst).resolve_right (by decide)
+  rw [ha, zero_smul, zero_add] at h
+  exact ⟨ha, by simpa using congrArg Prod.snd h⟩
 
 end D5.S3.Arith.Partitions.BilgiciThetaStructural

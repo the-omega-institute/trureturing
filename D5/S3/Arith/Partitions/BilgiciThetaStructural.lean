@@ -17,7 +17,8 @@ open scoped BigOperators
 namespace D5.S3.Arith.Partitions.BilgiciThetaStructural
 
 private theorem literalF11_joint_tests : tests (q F11) = 0 :=
-  Prod.ext literalF11_trace_test_zero literalF11_epsilon_zero
+  Prod.ext ((ell_q 11 (by decide) F11).trans (literalF11_trace_low 11 (by decide)))
+    literalF11_epsilon_zero
 
 private theorem literalF11_in_range :
     (⟨q F11, literalF11_eigengrade⟩ : eigengrade 7 11) ∈
@@ -55,9 +56,14 @@ theorem structural_factorization :
       Q.IsHomogeneous 4 ∧ Q.IsWeightedHomogeneous w (9 : ZMod 19) ∧
       (weightedHomogeneousComponent w (11 : ZMod 19) (paperB * paperC ^ 3) - S_Z * Q
         ∈ Ideal.span (Set.range theta)) ∧ Ideal.Quotient.mk ITheta Q ≠ 0 := by
+  have h₁grade : h₁ ∈ grade 4 9 := by
+    rw [h₁, ← spProject_denote]
+    exact grade_mem.mpr (denote_grades _ _ _ (by decide))
+  have h₂grade : h₂ ∈ grade 4 9 := by
+    rw [h₂, ← spProject_denote]
+    exact grade_mem.mpr (denote_grades _ _ _ (by decide))
   have hgrade : structuralQuartic ∈ grade 4 9 :=
-    (grade 4 9).add_mem ((grade 4 9).smul_mem _ (grade_mem.mpr h₁_grades))
-      ((grade 4 9).smul_mem _ (grade_mem.mpr h₂_grades))
+    (grade 4 9).add_mem ((grade 4 9).smul_mem _ h₁grade) ((grade 4 9).smul_mem _ h₂grade)
   have hclass : q structuralQuartic ≠ 0 := by
     intro h
     exact literalF11_class_nonzero (by rw [structuralQuartic_quotient, h, mul_zero])

@@ -21,11 +21,6 @@ private theorem evalRaw_to (m : List K) (j : ℕ) (n : Word) (c : K)
     evalRaw m = c • evalWord n := by
   rw [evalRaw_abs, evalWord_power j, smul_smul, hc, evalWord_perm hp]
 
-private theorem evalWord_to (m : Word) (j : ℕ) (n : Word) (c : K)
-    (hp : (scaleWord (2^j) m).Perm n) (hc : scaleCoeff j m = c) :
-    evalWord m = c • evalWord n := by
-  rw [evalWord_power j, hc, evalWord_perm hp]
-
 def baseA : Word := paperWord [1, 1, 1, 3, 3, 5, 7]
 def baseB : Word := paperWord [1, 1, 2, 2, 5, 6, 9]
 def baseC : Word := paperWord [1, 1, 2, 3, 7, 8, 9]
@@ -35,40 +30,22 @@ def wordF : Word := paperWord [1, 1, 2, 4, 6, 7, 8]
 def wordG : Word := paperWord [1, 1, 2, 3, 3, 4, 6]
 def wordH : Word := paperWord [1, 1, 3, 3, 5, 8, 9]
 def wordI : Word := paperWord [1, 1, 2, 2, 4, 8, 9]
-private def wordJ : Word := paperWord [1, 1, 2, 2, 4, 5, 5]
+def wordJ : Word := paperWord [1, 1, 2, 2, 4, 5, 5]
 private def wordU : Word := paperWord [1, 1, 1, 2, 4, 6, 6]
 private def wordV : Word := paperWord [1, 1, 1, 5, 7, 7, 8]
-private def wordK : Word := paperWord [1, 1, 3, 6, 7, 7, 8]
+def wordK : Word := paperWord [1, 1, 3, 6, 7, 7, 8]
 def wordL : Word := paperWord [1, 4, 4, 8, 8, 9, 9]
 def wordM : Word := paperWord [1, 2, 2, 6, 6, 8, 8]
 def wordN : Word := paperWord [1, 5, 5, 6, 6, 9, 9]
 def rootR1 : Word := paperWord [1, 1, 1, 1, 1, 3, 9]
 def rootR2 : Word := paperWord [1, 1, 1, 4, 4, 4, 5]
 def rootR3 : Word := paperWord [1, 1, 2, 3, 5, 5, 7]
-private def rootR4 : Word := paperWord [1, 1, 1, 2, 3, 4, 5]
+def rootR4 : Word := paperWord [1, 1, 1, 2, 3, 4, 5]
 def paper1 : Word := paperWord [5, 8, 9, 9, 9, 9, 9]
 def paper2 : Word := paperWord [3, 7, 7, 7, 9, 9, 9]
 def paper3 : Word := paperWord [1, 6, 7, 7, 8, 9, 9]
 def paper4 : Word := paperWord [1, 2, 7, 8, 9, 9, 9]
 def wordB7 : Word := paperWord [1, 1, 5, 7, 8, 8, 9]
-
-theorem scalePaper1 : evalWord paper1 = (5 : K) • evalWord rootR1 := by
-  exact evalWord_to paper1 1 rootR1 5 (by decide) (by decide)
-
-theorem scalePaper2 : evalWord paper2 = (8 : K) • evalWord rootR2 := by
-  exact evalWord_to paper2 3 rootR2 8 (by decide) (by decide)
-
-theorem scalePaper3 : evalWord paper3 = (14 : K) • evalWord rootR3 := by
-  exact evalWord_to paper3 1 rootR3 14 (by decide) (by decide)
-
-theorem scalePaper4 : evalWord paper4 = (5 : K) • evalWord rootR4 := by
-  exact evalWord_to paper4 1 rootR4 5 (by decide) (by decide)
-
-theorem scaleB7 : evalWord wordB7 = (7 : K) • evalWord wordK := by
-  exact evalWord_to wordB7 6 wordK 7 (by decide) (by decide)
-
-theorem scaleN : evalWord wordN = (6 : K) • evalWord wordJ := by
-  exact evalWord_to wordN 2 wordJ 6 (by decide) (by decide)
 
 theorem relF : evalWord wordF = (10 : K) • evalWord baseC := by
   have h0 : evalRaw (row 1 6 3 5 (paperWord [1, 6, 7])) = (8 : K) • evalWord baseC :=
