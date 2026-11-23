@@ -22,7 +22,7 @@ open private Model.center from
 open private shortRootMultiplierReal from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
 
-private def box := CompactMiddleBox.ofIntervals (1 / 2) (5 / 8) 0 (1 / 8)
+private def box := CompactMiddleBox.ofIntervals (1 / 2) 1 0 (1 / 4)
 private def U := box.U
 private def D := box.D
 private def H := box.H
@@ -30,8 +30,8 @@ private def V := U.add D
 private def neg (M : Model) := Model.zero.sub M
 private def half := Model.ofRat (1 / 2)
 private def halfGap := D.mul half
-private def offset := (U.add halfGap).sub (Model.ofRat (19 / 32))
-private def marginal (k : ℕ) (X : Model) := marginalMoment k 19 1 X H
+private def offset := (U.add halfGap).sub (Model.ofRat (13 / 16))
+private def marginal (k : ℕ) (X : Model) := marginalMoment k 19 (5 / 4) X H
 
 private def inverse (X : Model) : Model :=
   let c := Model.center X
@@ -54,8 +54,8 @@ private def skew := (B.sub A).mul half
 private def skewRadius : ℚ := ((skew.absUpper : ℚ) / scale) / 2
 private def maxSkew := (Model.ofRat skewRadius).widen skewRadius
 private def moment (j : Fin 4) (k : Fin 3) :=
-  shiftedShortMidpointMomentModel j k 21 6 (19 / 32) (3 / 32) 9 offset H
-private def joint := shortMidpointJointModel A B halfGap maxSkew (3 / 16) moment
+  shiftedShortMidpointMomentModel j k 21 6 (13 / 16) (5 / 16) 64 offset H
+private def joint := shortMidpointJointModel A B halfGap maxSkew (3 / 8) moment
 private def kappa := ((Model.ofRat 1).add H).mul (Model.ofRat (1 / 4))
 private def tangent := ((ZV.mul ZD).add (Model.ofRat 1)).mul half
 private def negScore := neg ((joint.sub (A.mul B)).add
@@ -68,27 +68,27 @@ private theorem inverse_sound {X : Model} {s t z x : ℝ} (hb : InBox s t z)
 
 private theorem marginal_sound {p : ℕ} (hp : 0 < p) (k : ℕ) {s t z x : ℝ} {X : Model}
     (hb : InBox s t z) (hh : H.Encloses s t z (3 / (p : ℝ)))
-    (hx : X.Encloses s t z x) (hr : |x| ≤ 1) :
+    (hx : X.Encloses s t z x) (hr : |x| ≤ 5 / 4) :
     (marginal k X).Encloses s t z (iteratedDeriv k (compactZ p) x) := by
-  simpa [marginal] using marginalMoment_sound (k := k) (terms := 19) (r := 1)
+  simpa [marginal] using marginalMoment_sound (k := k) (terms := 19) (r := 5 / 4)
     hp (by decide) hb hh hx (by simpa using hr) (by norm_num)
 
 private theorem marginal_zero_sound {p : ℕ} (hp : 0 < p) {s t z x : ℝ} {X : Model}
     (hb : InBox s t z) (hh : H.Encloses s t z (3 / (p : ℝ)))
-    (hx : X.Encloses s t z x) (hr : |x| ≤ 1) :
+    (hx : X.Encloses s t z x) (hr : |x| ≤ 5 / 4) :
     (marginal 0 X).Encloses s t z (compactZ p x) := by
   simpa using marginal_sound hp 0 hb hh hx hr
 
 private theorem slope_sound {p : ℕ} (hp : 0 < p) {s t z x : ℝ} {X : Model}
     (hb : InBox s t z) (hh : H.Encloses s t z (3 / (p : ℝ)))
-    (hx : X.Encloses s t z x) (hr : |x| ≤ 1) (hpos : 0 < (marginal 0 X).lower) :
+    (hx : X.Encloses s t z x) (hr : |x| ≤ 5 / 4) (hpos : 0 < (marginal 0 X).lower) :
     (slope X).Encloses s t z (compactZSlope p x) := by
   have h := Model.mul_sound hb (marginal_sound hp 1 hb hh hx hr)
     (inverse_sound hb (marginal_zero_sound hp hb hh hx hr) hpos)
   simpa [slope, compactZSlope, marginalLogSlope, div_eq_mul_inv] using h
 
 private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
-    (hu₀ : 1 / 2 ≤ u) (hu₁ : u ≤ 5 / 8) (huv : u < v) (hd₁ : v - u ≤ 1 / 8)
+    (hu₀ : 1 / 2 ≤ u) (hu₁ : u ≤ 1) (huv : u < v) (hd₁ : v - u ≤ 1 / 4)
     (hiu : 0 < U.lower) (hiv : 0 < V.lower) (hzv : 0 < ZV.lower) (hzd : 0 < ZD.lower)
     (hzu : 0 < (marginal 0 (neg U)).lower) (hzvneg : 0 < (marginal 0 (neg V)).lower)
     (hmultiplier : 0 ≤ multiplier.lower) (hscore : 0 < negScore.lower) :
@@ -98,7 +98,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hv := hu.trans huv
   have hd : 0 < v - u := sub_pos.mpr huv
   obtain ⟨s,t,z,hb,hU,hD,hH⟩ := CompactMiddleBox.boxCoordinates hp
-    (u₀ := 1 / 2) (u₁ := 5 / 8) (d₀ := 0) (d₁ := 1 / 8)
+    (u₀ := 1 / 2) (u₁ := 1) (d₀ := 0) (d₁ := 1 / 4)
     (by norm_num) (by norm_num) (by simpa using hu₀) (by simpa using hu₁)
     (by simpa using hd.le) (by simpa using hd₁)
   have hU : U.Encloses s t z u := hU
@@ -109,9 +109,9 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hneg {X : Model} {x : ℝ} (hx : X.Encloses s t z x) :
       (neg X).Encloses s t z (-x) := by
     simpa only [neg, zero_sub] using Model.sub_sound (Model.zero_sound s t z) hx
-  have bU : |u| ≤ 1 := by rw [abs_of_pos hu]; linarith
-  have bV : |v| ≤ 1 := by rw [abs_of_pos hv]; linarith
-  have bD : |v-u| ≤ 1 := by rw [abs_of_pos hd]; linarith
+  have bU : |u| ≤ 5 / 4 := by rw [abs_of_pos hu]; linarith
+  have bV : |v| ≤ 5 / 4 := by rw [abs_of_pos hv]; linarith
+  have bD : |v-u| ≤ 5 / 4 := by rw [abs_of_pos hd]; linarith
   have hZV := marginal_zero_sound hp₀ hb hH hV bV
   have hZD := marginal_zero_sound hp₀ hb hH hD bD
   have hSV := slope_sound hp₀ hb hH hV bV hzv
@@ -139,26 +139,26 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
       Model.sub_sound hInvV (Model.mul_sound hb hSVneg hHalf)
   have hHalfGap : halfGap.Encloses s t z ((v - u) / 2) := by
     simpa [halfGap, div_eq_mul_inv] using Model.mul_sound hb hD hHalf
-  have hOffset : offset.Encloses s t z ((u + v) / 2 - 19 / 32) := by
-    have hconst : (Model.ofRat (19 / 32)).Encloses s t z (19 / 32 : ℝ) := by
-      simpa using Model.ofRat_sound (19 / 32) s t z
+  have hOffset : offset.Encloses s t z ((u + v) / 2 - 13 / 16) := by
+    have hconst : (Model.ofRat (13 / 16)).Encloses s t z (13 / 16 : ℝ) := by
+      simpa using Model.ofRat_sound (13 / 16) s t z
     have he : u + (v - u) / 2 = (u + v) / 2 := by ring
     simpa only [offset, he] using Model.sub_sound (Model.add_sound hU hHalfGap) hconst
   have hMoment (j : Fin 4) (k : Fin 3) :
       (moment j k).Encloses s t z (shortMidpointMoment p j k ((u + v) / 2)) := by
-    have hbound : Real.exp (2 * |(19 / 32 : ℝ)|) ≤ 9 := by
-      have hupper := compactExp_sub_truncation_geometric_le (z := (19 / 16 : ℝ))
-        (R := (19 / 16 : ℝ)) (m := 8) (by decide) (by norm_num) (by norm_num)
+    have hbound : Real.exp (2 * |(13 / 16 : ℝ)|) ≤ 64 := by
+      have hupper := compactExp_sub_truncation_geometric_le (z := (13 / 8 : ℝ))
+        (R := (13 / 8 : ℝ)) (m := 8) (by decide) (by norm_num) (by norm_num)
       have hupper' := (le_abs_self _).trans hupper
       norm_num [Finset.sum_range_succ, Nat.factorial] at hupper' ⊢
       linarith
-    have hroff : |(u + v) / 2 - 19 / 32| ≤ (3 / 32 : ℝ) := abs_le.mpr
+    have hroff : |(u + v) / 2 - 13 / 16| ≤ (5 / 16 : ℝ) := abs_le.mpr
       ⟨by linarith, by linarith⟩
     have hh := shiftedShortMidpointMomentModel_sound (k := (k : ℕ)) (centerTerms := 21)
       (offsetTerms := 6) hp (by decide) (by decide) j hb hH hOffset
-      (r := 3 / 32) (center := 19 / 32) (bound := 9)
+      (r := 5 / 16) (center := 13 / 16) (bound := 64)
       (by simpa using hroff) (by norm_num) (by norm_num) (by simpa using hbound)
-    have he : (19 / 32 : ℝ) + ((u + v) / 2 - 19 / 32) = (u + v) / 2 := by ring
+    have he : (13 / 16 : ℝ) + ((u + v) / 2 - 13 / 16) = (u + v) / 2 := by ring
     simpa only [moment, Rat.cast_div, Rat.cast_ofNat, he] using hh
   let a := reflectedHalfLogSlope (compositionMoment p 0) u
   let b := reflectedHalfLogSlope (compositionMoment p 0) v
@@ -177,7 +177,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
       max_le hcap ((le_abs_self _).trans hc)
     have hmax_ge : 0 ≤ max 0 ((b-a)/2) := le_max_left _ _
     exact ⟨by linarith, by linarith⟩
-  have hJoint := shortMidpointJointModel_sound (radius := 3 / 16) hb hA hB hHalfGap hMax hMoment
+  have hJoint := shortMidpointJointModel_sound (radius := 3 / 8) hb hA hB hHalfGap hMax hMoment
   have hκ : kappa.Encloses s t z (compactKappa p) := by
     have hquarter : (Model.ofRat (1 / 4)).Encloses s t z (1 / 4 : ℝ) := by
       simpa using Model.ofRat_sound (1 / 4) s t z
@@ -187,7 +187,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hbound := hneg (Model.add_sound (Model.sub_sound hJoint (Model.mul_sound hb hA hB))
     (Model.mul_sound hb (Model.mul_sound hb (Model.mul_sound hb hκ hV) hTangent) hMul))
   rw [shortJointMajorant_eq_moments] at hbound
-  have hNet : negScore.Encloses s t z (-shortMidpointTangentScore p u v (3 / 16) 1) := by
+  have hNet : negScore.Encloses s t z (-shortMidpointTangentScore p u v (3 / 8) 1) := by
     simp only [Rat.cast_div, Rat.cast_ofNat] at hbound
     simp only [shortMidpointTangentScore, div_one]
     convert hbound using 1 <;> first | rfl | ring
@@ -197,5 +197,14 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
     (Model.lower_sound hb hMul)
   exact logKernel_mixed_neg_of_shortMidpointTangent hp₀ hu huv (by norm_num)
     (by linarith) (by norm_num) hMPositive (neg_pos.mp hPositive)
+
+set_option maxHeartbeats 0 in
+set_option maxRecDepth 20000 in
+/-- The midpoint tangent certifies the mixed derivative sign on the first short-gap box. -/
+theorem logKernel_mixed_neg_short_tangent_first {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
+    (hu₀ : 1 / 2 ≤ u) (hu₁ : u ≤ 1) (huv : u < v) (hd₁ : v - u ≤ 1 / 4) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  apply first_tangent_of_checks hp hu₀ hu₁ huv hd₁
+  all_goals decide +kernel
 
 end RefinedBMV.PositiveCenter.CompactTaylorModel
