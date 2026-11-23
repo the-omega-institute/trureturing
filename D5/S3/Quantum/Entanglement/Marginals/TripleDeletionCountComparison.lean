@@ -1,0 +1,151 @@
+/- GID: D5/S3/Quantum/Entanglement/Marginals/TripleDeletionCountComparison
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/Marginals/TripleDeletionCountComparison
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: []
+   utility: none
+   digest: The no-111 deletion kernel has dimension four times a shifted Tribonacci sum. -/
+
+import D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionDimension
+import D5.S0.Tower.Tribonacci.Representation
+import D5.S0.Tower.Tribonacci.Values
+import Mathlib.Algebra.LinearRecurrence
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Quantum.Entanglement.Marginals.TripleDeletionCountComparison
+
+open D5.S0.Tower.Tribonacci.Names
+open D5.S0.Tower.Tribonacci.Representation
+open D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionDimension
+open scoped Classical
+
+local notation "dim₃" => fun k => Module.finrank ℂ
+  (SupportedKernel (NoTriple k))
+
+private abbrev shiftedWordCount (k : ℕ) : ℕ :=
+  4 * (tribonacci (k + 3) + tribonacci (k + 2))
+
+private theorem shiftedWordCount_recurrence (k : ℕ) :
+    shiftedWordCount (k + 3) =
+      shiftedWordCount (k + 2) + shiftedWordCount (k + 1) + shiftedWordCount k := by
+  have a : tribonacci (k + 6) = tribonacci (k + 5) + tribonacci (k + 4) +
+      tribonacci (k + 3) := tribonacci_add_three (k + 3)
+  have b : tribonacci (k + 5) = tribonacci (k + 4) + tribonacci (k + 3) +
+      tribonacci (k + 2) := tribonacci_add_three (k + 2)
+  simp only [shiftedWordCount]
+  change 4 * (tribonacci (k + 6) + tribonacci (k + 5)) =
+    4 * (tribonacci (k + 5) + tribonacci (k + 4)) +
+    4 * (tribonacci (k + 4) + tribonacci (k + 3)) +
+    4 * (tribonacci (k + 3) + tribonacci (k + 2))
+  omega
+
+private theorem dimension_exact (k : ℕ) : dim₃ (k + 1) = shiftedWordCount k := by
+  let orderThree : LinearRecurrence ℕ := ⟨3, fun _ => 1⟩
+  let kernelCount : ℕ → ℕ := fun n => dim₃ (n + 1)
+  have kernelSolution : orderThree.IsSolution kernelCount := by
+    intro n
+    change kernelCount (n + 3) = ∑ i : Fin 3, 1 * kernelCount (n + i)
+    rw [Fin.sum_univ_three]
+    change kernelCount (n + 3) =
+      1 * kernelCount n + 1 * kernelCount (n + 1) + 1 * kernelCount (n + 2)
+    have h : kernelCount (n + 3) =
+        kernelCount (n + 2) + kernelCount (n + 1) + kernelCount n :=
+      (noTriple_finrank n).2.2.2
+    omega
+  have wordSolution : orderThree.IsSolution shiftedWordCount := by
+    intro n
+    change shiftedWordCount (n + 3) = ∑ i : Fin 3, 1 * shiftedWordCount (n + i)
+    rw [Fin.sum_univ_three]
+    change shiftedWordCount (n + 3) =
+      1 * shiftedWordCount n + 1 * shiftedWordCount (n + 1) + 1 * shiftedWordCount (n + 2)
+    have h := shiftedWordCount_recurrence n
+    omega
+  have same : kernelCount = shiftedWordCount := by
+    apply (orderThree.eq_iff_eqOn_range_order _ _ kernelSolution wordSolution).2
+    intro j hj
+    have hj' : j < 3 := Finset.mem_range.mp hj
+    have initial := noTriple_finrank 0
+    interval_cases j
+    · exact initial.1
+    · exact initial.2.1
+    · exact initial.2.2.1
+  exact congrFun same k
+
+private def TripleFree {n : ℕ} (w : Fin n → Bool) : Prop :=
+  ∀ (i : ℕ) (hi : i + 2 < n),
+    ¬ (w ⟨i, by omega⟩ ∧ w ⟨i + 1, by omega⟩ ∧ w ⟨i + 2, hi⟩)
+
+private theorem admissible_of_tripleFree {n : ℕ} (w : Fin n → Bool)
+    (h : TripleFree w) : TribonacciAdmissible n w := by
+  induction n with
+  | zero => trivial
+  | succ n ih =>
+      match n with
+      | 0 => trivial
+      | 1 => trivial
+      | n + 2 =>
+          apply (admissible_add_three_iff n w).2
+          refine ⟨h 0 (by omega), ih (Fin.tail w) ?_⟩
+          intro i hi
+          exact h (i + 1) (by omega)
+
+private theorem noTriple_iff_admissible {k : ℕ} (w : Fin (k + 2) → Bool) :
+    NoTriple k w ↔ TribonacciAdmissible (k + 2) w := by
+  constructor
+  · intro h
+    apply admissible_of_tripleFree
+    intro i hi hall
+    let start : Fin k := ⟨i, by omega⟩
+    have hz := (exists_triple_edge (P := fun j => w j = false) start).mp
+      (h _ ⟨start, rfl⟩)
+    rcases hz with first | second | third
+    · exact Bool.false_ne_true (first.symm.trans hall.1)
+    · exact Bool.false_ne_true (second.symm.trans hall.2.1)
+    · exact Bool.false_ne_true (third.symm.trans hall.2.2)
+  · intro h
+    rintro edge ⟨i, rfl⟩
+    apply (exists_triple_edge (P := fun j => w j = false) i).mpr
+    let a : Fin (k + 2) := ⟨i.val, by omega⟩
+    let b : Fin (k + 2) := ⟨i.val + 1, by omega⟩
+    let c : Fin (k + 2) := ⟨i.val + 2, by omega⟩
+    have hf : ¬ (w a ∧ w b ∧ w c) := admissible_no_three_at _ i.val w h (by omega)
+    by_cases ha : w a = false
+    · exact Or.inl ha
+    by_cases hb : w b = false
+    · exact Or.inr (Or.inl hb)
+    by_cases hc : w c = false
+    · exact Or.inr (Or.inr hc)
+    exact (hf ⟨Bool.eq_true_of_not_eq_false ha, Bool.eq_true_of_not_eq_false hb,
+      Bool.eq_true_of_not_eq_false hc⟩).elim
+
+private theorem legal_count (k : ℕ) :
+    Nat.card {w // NoTriple k w} = tribonacci (k + 4) := by
+  let e : {w // NoTriple k w} ≃ TribonacciName (k + 2) :=
+    Equiv.subtypeEquivRight noTriple_iff_admissible
+  rw [Nat.card_congr e, Nat.card_eq_fintype_card, tribonacci_name_card]
+
+private theorem tribonacci_pos_succ (k : ℕ) : 0 < tribonacci (k + 1) := by
+  cases k with
+  | zero => decide
+  | succ k => exact D5.S0.Tower.Tribonacci.Values.tribonacci_level_pos k
+
+/-- For the no-111 chain, the common single-site deletion kernel has dimension strictly less
+than twice the Tribonacci word count. -/
+theorem triple_kernel_exact (k : ℕ) :
+    dim₃ (k + 1) = 4 * (tribonacci (k + 3) + tribonacci (k + 2)) ∧
+    Nat.card {w // NoTriple (k + 1) w} = tribonacci (k + 5) ∧
+    dim₃ (k + 1) < 2 * Nat.card {w // NoTriple (k + 1) w} := by
+  refine ⟨dimension_exact k, legal_count (k + 1), ?_⟩
+  rw [dimension_exact, legal_count]
+  have h₄ : tribonacci (k + 4) = tribonacci (k + 3) + tribonacci (k + 2) +
+      tribonacci (k + 1) := tribonacci_add_three (k + 1)
+  have h₅ : tribonacci (k + 5) = tribonacci (k + 4) + tribonacci (k + 3) +
+      tribonacci (k + 2) := tribonacci_add_three (k + 2)
+  have hpos := tribonacci_pos_succ k
+  simp only [shiftedWordCount]
+  change 4 * (tribonacci (k + 3) + tribonacci (k + 2)) < 2 * tribonacci (k + 5)
+  omega
+
+end D5.S3.Quantum.Entanglement.Marginals.TripleDeletionCountComparison
