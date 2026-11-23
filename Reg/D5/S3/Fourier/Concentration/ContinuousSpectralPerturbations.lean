@@ -8,10 +8,10 @@ namespace Reg.D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
 open _root_.D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
-open _root_.D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialWeight)
+open _root_.D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialFrequency monomialWeight)
 open FiniteSpectralPerturbation (actual frequencySignature)
 open FiniteSineMissingWindow (sensitivity)
-open LeanInformationAudit Finset
+open LeanInformationAudit Finset MeasureTheory
 open scoped ENNReal
 
 noncomputable section
@@ -83,6 +83,81 @@ def frequencyRegistration :
         "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 18
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev pairProbabilityArena : Arena where
+  signature := frequencySignature.{u}
+  Law V := ∀ {J : Type u} {K : Type v} [DecidableEq J]
+    [Countable J] [Countable K] (g radius : J → ℝ) (_ : ∀ j, 0 < radius j)
+    (support : K → Finset J) (w : ∀ k, support k → ℝ) (_ : ∀ k j, 0 ≤ w k j)
+    (p : K → ℕ) (η budget : K → ℝ) (_ : ∀ k, 0 ≤ η k) (_ : ∀ k, 0 < budget k)
+    (bound : ∀ k, (support k → ℕ) → (support k → ℕ) → ℝ≥0∞)
+    (_ : ∀ k m n, m ≠ n →
+      (Measure.pi fun j : support k => intervalNoise (radius j))
+        {x | |monomialFrequency (fun j : support k => g j + x j) m -
+          monomialFrequency (fun j : support k => g j + x j) n| ≤ η k} ≤ bound k m n)
+    (_ : (∑' k, weightedPairBudget (w k) (p k) (bound k) /
+      ENNReal.ofReal (budget k)) ≤ 1),
+    ∃ g' : J → ℝ, (∀ j, |V.readout () ⟨J, g'⟩ j - g j| ≤ radius j) ∧
+      (∑' k, ENNReal.ofReal (tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) -
+        ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) / ENNReal.ofReal (budget k)) ≤
+        (∑' k, weightedPairBudget (w k) (p k) (bound k) /
+          ENNReal.ofReal (budget k)) ∧
+      ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
+        (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k
+
+private theorem pairProbability_rejected_law : ¬ pairProbabilityArena.{u, v}.Law rejected := by
+  intro law
+  obtain ⟨_, hnear, _⟩ := law (J := ULift.{u} Unit) (K := ULift.{v} Empty)
+    (fun _ => 2) (fun _ => 1) (by simp) (fun k => nomatch k.down)
+    (fun k => nomatch k.down) (fun k => nomatch k.down)
+    0 0 0 (fun k => nomatch k.down) (fun k => nomatch k.down)
+    (fun k => nomatch k.down) (fun k => nomatch k.down) (by simp)
+  have h : |(0 : ℝ) - 2| ≤ 1 := hnear (ULift.up ())
+  norm_num at h
+
+def pairProbabilityEvidence :
+    Registration pairProbabilityArena.{u, v} (type_of% @exists_continuous_common_nearby_bounds_of_pair_probabilities.{u, v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_continuous_common_nearby_bounds_of_pair_probabilities.{u, v}, rejected, pairProbability_rejected_law⟩
+  sensitivity := sensitivity pairProbabilityArena.Law actual rejected pairProbability_rejected_law
+  dependence := (FiniteSpectralPerturbation.frequencyEvidence.{u}).dependence
+
+def pairProbabilityRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@exists_continuous_common_nearby_bounds_of_pair_probabilities.{u, v}) (Realization frequencySignature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations.pairProbabilityUnit
+  realizationName :=
+    `Reg.D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations.pairProbabilityEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pairProbabilityArena.{u, v}⟩
+  objectArena := .source ⟨pairProbabilityArena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pairProbabilityArena.{u, v} ⟨pairProbabilityEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize frequencySignature (fun _ q j => q.2 j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Concentration.ContinuousSpectralPerturbations
+    definition := none
+    coordinates := #[0, 19]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "fn", "arg"]
+      stateBinder := 20
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
