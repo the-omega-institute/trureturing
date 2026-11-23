@@ -14,7 +14,7 @@ leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leadin
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
-columnRepresentative: proof_shape=bind-only; consumers=representative_data, checkColumn, exhausted_step, rightColumn
+columnRepresentative: proof_shape=bind-only; consumers=representative_data, checkColumn, exhausted_step
 representative_data: proof_shape=bind-only; consumers=w_representative, exhausted_step
 w_representative: proof_shape=bind-only; consumers=exhausted_step
 exhaustedRank: proof_shape=bind-only; consumers=exhaustedRow
@@ -51,6 +51,8 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic.Eval
+import Lean.Elab.Tactic.ElabTerm
+import Lean.Meta.ReduceEval
 
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip
@@ -141,9 +143,30 @@ private def columnRepresentative (k : Fin 60) : Fin 96 :=
   (eval% (List.ofFn fun k : Fin 60 => Fin.ofNat 96
     ((List.ofFn columnRank).idxOf k)) : List (Fin 96))[k.val]!
 
--- Use the existing transfer column at the checked representative.
+-- Pack the existing transfer columns into radix-32 words at their representatives.
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 30000000 in
 private def rightColumn (j : Fin 96) : List ℤ :=
-  List.ofFn (fun i : Fin 168 => T i ((columnRepresentative (columnRank j)).natAdd 72))
+  let columns : Array ℕ := by
+    run_tac
+      let mut columns : Array Lean.Expr := #[]
+      for k in List.finRange 60 do
+        let j := (columnRepresentative k).natAdd 72
+        let word ← Lean.Meta.savingCache do
+          let mut word := 0
+          for i in List.finRange 168 do
+            let entry := Lean.mkApp2 (Lean.mkConst ``T) (Lean.toExpr i) (Lean.toExpr j)
+            let digit : Nat ← Lean.Meta.withTransparency .all <|
+              Lean.Meta.reduceEval (Lean.mkApp (Lean.mkConst ``Int.toNat) entry)
+            unless digit < 32 do
+              throwError "column {j.val}, row {i.val} exceeds one radix-32 digit"
+            word := word + (digit <<< (5 * i.val))
+          pure word
+        columns := columns.push (Lean.mkRawNatLit word)
+      (← Lean.Elab.Tactic.getMainGoal).assign
+        (← Lean.Meta.mkArrayLit (Lean.mkConst ``Nat) columns.toList)
+  let word := columns[(columnRank j).val]!
+  List.ofFn fun i : Fin 168 => (((word >>> (5 * i.val)) % 32 : ℕ) : ℤ)
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
