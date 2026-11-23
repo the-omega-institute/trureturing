@@ -10,6 +10,8 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMiddleBox
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
 
+/-! The short-gap midpoint tangent on the first compact interval. -/
+
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel
 
 open scoped BigOperators
@@ -32,7 +34,7 @@ private def offset := (U.add halfGap).sub (Model.ofRat (19 / 32))
 private def marginal (k : ℕ) (X : Model) := marginalMoment k 19 1 X H
 
 private def inverse (X : Model) : Model :=
-  let c := X.center
+  let c := Model.center X
   let displacement := (X.sub (Model.ofRat c)).mul (Model.ofRat c⁻¹)
   let candidate := Model.series 9 (fun n ↦ Model.ofRat ((-1 : ℚ) ^ n / c)) displacement
   reciprocalFrom X candidate.polynomial X.lower.toNat
@@ -103,7 +105,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hD : D.Encloses s t z (v - u) := hD
   have hH : H.Encloses s t z (3 / (p : ℝ)) := hH
   have hV : V.Encloses s t z v := by
-    simpa only [add_sub_cancel] using Model.add_sound hU hD
+    simpa only [V, add_sub_cancel] using Model.add_sound hU hD
   have hneg {X : Model} {x : ℝ} (hx : X.Encloses s t z x) :
       (neg X).Encloses s t z (-x) := by
     simpa only [neg, zero_sub] using Model.sub_sound (Model.zero_sound s t z) hx
@@ -120,7 +122,7 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hInvV := inverse_sound hb hV hiv
   have hcurvature : curvature.Encloses s t z (deriv (compactZSlope p) (v - u)) := by
     rw [deriv_compactZSlope hp₀, ← iteratedDeriv_compactZ_eq_integral hp₀]
-    simpa [curvature, div_eq_mul_inv] using Model.sub_sound
+    simpa only [curvature, ZD, SD, div_eq_mul_inv] using Model.sub_sound
       (Model.mul_sound hb (marginal_sound hp₀ 2 hb hH hD bD) (inverse_sound hb hZD hzd))
       (Model.pow_sound hb hSD 2)
   have hMul := shortRootMultiplier_sound hb hD hSUneg hSVneg hSV hSD hcurvature hInvU
@@ -129,16 +131,19 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
   have hOne : (Model.ofRat 1).Encloses s t z 1 := by simpa using Model.ofRat_sound 1 s t z
   have hA : A.Encloses s t z (reflectedHalfLogSlope (compositionMoment p 0) u) := by
     rw [reflectedHalfLogSlope_eq_compactZSlope hp₀ hu.ne']
-    simpa [A, div_eq_mul_inv] using Model.sub_sound hInvU (Model.mul_sound hb hSUneg hHalf)
+    simpa only [A, SUneg, div_eq_mul_inv] using
+      Model.sub_sound hInvU (Model.mul_sound hb hSUneg hHalf)
   have hB : B.Encloses s t z (reflectedHalfLogSlope (compositionMoment p 0) v) := by
     rw [reflectedHalfLogSlope_eq_compactZSlope hp₀ hv.ne']
-    simpa [B, div_eq_mul_inv] using Model.sub_sound hInvV (Model.mul_sound hb hSVneg hHalf)
+    simpa only [B, SVneg, div_eq_mul_inv] using
+      Model.sub_sound hInvV (Model.mul_sound hb hSVneg hHalf)
   have hHalfGap : halfGap.Encloses s t z ((v - u) / 2) := by
     simpa [halfGap, div_eq_mul_inv] using Model.mul_sound hb hD hHalf
   have hOffset : offset.Encloses s t z ((u + v) / 2 - 19 / 32) := by
     have hconst : (Model.ofRat (19 / 32)).Encloses s t z (19 / 32 : ℝ) := by
       simpa using Model.ofRat_sound (19 / 32) s t z
-    convert Model.sub_sound (Model.add_sound hU hHalfGap) hconst using 1 <;> ring
+    have he : u + (v - u) / 2 = (u + v) / 2 := by ring
+    simpa only [offset, he] using Model.sub_sound (Model.add_sound hU hHalfGap) hconst
   have hMoment (j : Fin 4) (k : Fin 3) :
       (moment j k).Encloses s t z (shortMidpointMoment p j k ((u + v) / 2)) := by
     have hbound : Real.exp (2 * |(19 / 32 : ℝ)|) ≤ 9 := by
@@ -183,8 +188,9 @@ private theorem first_tangent_of_checks {p : ℕ} {u v : ℝ} (hp : 11 ≤ p)
     (Model.mul_sound hb (Model.mul_sound hb (Model.mul_sound hb hκ hV) hTangent) hMul))
   rw [shortJointMajorant_eq_moments] at hbound
   have hNet : negScore.Encloses s t z (-shortMidpointTangentScore p u v (3 / 16) 1) := by
-    unfold shortMidpointTangentScore
-    convert hbound using 1 <;> first | rfl | (norm_num <;> ring)
+    simp only [Rat.cast_div, Rat.cast_ofNat] at hbound
+    simp only [shortMidpointTangentScore, div_one]
+    convert hbound using 1 <;> first | rfl | ring
   have hPositive := (div_pos (by exact_mod_cast hscore) scale_real_pos).trans_le
     (Model.lower_sound hb hNet)
   have hMPositive := (div_nonneg (by exact_mod_cast hmultiplier) scale_real_pos.le).trans
