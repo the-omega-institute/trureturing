@@ -18,8 +18,10 @@ triage: anchor
 Shengjun Wu, *Measurement-order dependence bounds uncertainty, contextuality,
 steering, and Bell nonlocality*, arXiv:2611.24604v1 (2026).
 
-## Verified locators
+## Verified locator
 
+- DOI [10.48550/arXiv.2611.24604](https://doi.org/10.48550/arXiv.2611.24604)
+- [Versioned arXiv record](https://arxiv.org/abs/2611.24604v1)
 - Section II.A, printed p. 3, defines the two measurement-labelled joint
   records with the same input state. Lüders effects are
   $\sqrt{E_a}F_b\sqrt{E_a}$ and $\sqrt{F_b}E_a\sqrt{F_b}$. For projections
