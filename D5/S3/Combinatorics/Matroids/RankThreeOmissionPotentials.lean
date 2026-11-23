@@ -6,7 +6,8 @@
    utility: none
    digest: Rank-three omitted triangle gaps identify normalized three-torsion potentials. -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FinCases
@@ -223,5 +224,139 @@ theorem edge_rows_iff {I T A : Type*} [Fintype T] [AddCommGroup A]
       apply Finset.sum_eq_zero
       intro t _
       exact row_eq_zero _ _ hne (fun ht => h ⟨t, ht⟩)
+
+/-- Zero row sums determine the edges at an omitted vertex. When the point
+count kills the coefficients, restoring those edges gives a zero-sum potential. -/
+theorem restore_potential {I A : Type*} [Fintype I] [AddCommGroup A]
+    (edge : I → I → A) (root anchor : I) (hne : anchor ≠ root)
+    (hdiag : ∀ i, edge i i = 0) (hflip : ∀ i j, edge i j = -edge j i)
+    (hsum : ∀ i, ∑ j, edge i j = 0) (hann : ∀ x : A, Fintype.card I • x = 0)
+    (hrest : ∀ i j, i ≠ root → j ≠ root → edge i j = edge anchor j - edge anchor i) :
+    ∃! u : I → A, u anchor = 0 ∧ (∑ j, u j) = 0 ∧ ∀ i j, edge i j = u j - u i := by
+  classical
+  let partialSum : A := ∑ j ∈ Finset.univ.erase root, edge anchor j
+  let u : I → A := fun j => if j = root then -partialSum else edge anchor j
+  have hu (j : I) (hj : j ≠ root) : u j = edge anchor j := by simp [u, hj]
+  have hanchor : u anchor = 0 := (hu anchor hne).trans (hdiag anchor)
+  have htotal : (∑ j, u j) = 0 := by
+    rw [← Finset.sum_erase_add _ _ (Finset.mem_univ root)]
+    have hpart : (∑ j ∈ Finset.univ.erase root, u j) = partialSum := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact hu j (Finset.ne_of_mem_erase hj)
+    rw [hpart]
+    simp [u]
+  have hdiffsum (i : I) : (∑ j, (u j - u i)) = 0 := by
+    rw [Finset.sum_sub_distrib, htotal, Finset.sum_const, Finset.card_univ, hann, sub_zero]
+  have hnonroot (i j : I) (hi : i ≠ root) (hj : j ≠ root) :
+      edge i j = u j - u i := by rw [hu i hi, hu j hj, hrest i j hi hj]
+  have hroot (i : I) (hi : i ≠ root) : edge i root = u root - u i := by
+    have hpart : (∑ j ∈ Finset.univ.erase root, edge i j) =
+        ∑ j ∈ Finset.univ.erase root, (u j - u i) := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact hnonroot i j hi (Finset.ne_of_mem_erase hj)
+    have left := hsum i
+    have right := hdiffsum i
+    rw [← Finset.sum_erase_add _ _ (Finset.mem_univ root), hpart] at left
+    rw [← Finset.sum_erase_add _ _ (Finset.mem_univ root)] at right
+    exact add_left_cancel (left.trans right.symm)
+  refine ⟨u, ⟨hanchor, htotal, ?_⟩, ?_⟩
+  · intro i j
+    by_cases hi : i = root
+    · subst i
+      by_cases hj : j = root
+      · subst j
+        rw [hdiag, sub_self]
+      · rw [hflip root j, hroot j hj, neg_sub]
+    · by_cases hj : j = root
+      · subst j
+        exact hroot i hi
+      · exact hnonroot i j hi hj
+  · intro w hw
+    funext j
+    have he := hw.2.2 anchor j
+    rw [hw.1, sub_zero] at he
+    by_cases hj : j = root
+    · subst j
+      exact he.symm.trans (by simpa [hanchor] using hroot anchor hne)
+    · exact he.symm.trans (hu j hj).symm
+
+private theorem row_flip {I A : Type*} [AddCommGroup A]
+    {triangle : Fin 3 → I} (hinj : Function.Injective triangle) (value : A) (i j : I) :
+    row triangle value i j = -row triangle value j i := by
+  classical
+  by_cases hf : forward triangle i j
+  · simp [row, hf, not_reverse hinj hf]
+  · by_cases hr : forward triangle j i <;> simp [row, hf, hr]
+
+private theorem row_diag {I A : Type*} [AddCommGroup A]
+    {triangle : Fin 3 → I} (hinj : Function.Injective triangle) (value : A) (i : I) :
+    row triangle value i i = 0 := by
+  classical
+  have hf : ¬ forward triangle i i := fun h => not_reverse hinj h h
+  simp [row, hf]
+
+private theorem row_sum {I A : Type*} [Fintype I] [AddCommGroup A]
+    {triangle : Fin 3 → I} (hinj : Function.Injective triangle) (value : A) (i : I) :
+    (∑ j, row triangle value i j) = 0 := by
+  classical
+  have h01 := hinj.ne (by decide : (0 : Fin 3) ≠ 1)
+  have h12 := hinj.ne (by decide : (1 : Fin 3) ≠ 2)
+  have h20 := hinj.ne (by decide : (2 : Fin 3) ≠ 0)
+  have indicator (a b : I) (hab : a ≠ b) :
+      (∑ j : I, if j = a then value else if j = b then -value else 0) = 0 := by
+    have split (j : I) :
+        (if j = a then value else if j = b then -value else 0) =
+          (if j = a then value else 0) + (if j = b then -value else 0) := by
+      by_cases ha : j = a
+      · subst j
+        simp [hab]
+      · simp [ha]
+    simp only [split, Finset.sum_add_distrib]
+    simp
+  by_cases h0 : triangle 0 = i
+  · subst i
+    simpa [row, forward, h01, h01.symm, h12, h12.symm, h20, h20.symm, eq_comm] using
+      indicator (triangle 1) (triangle 2) h12
+  by_cases h1 : triangle 1 = i
+  · subst i
+    simpa [row, forward, h01, h01.symm, h12, h12.symm, h20, h20.symm, eq_comm] using
+      indicator (triangle 2) (triangle 0) h20
+  by_cases h2 : triangle 2 = i
+  · subst i
+    simpa [row, forward, h01, h01.symm, h12, h12.symm, h20, h20.symm, eq_comm] using
+      indicator (triangle 0) (triangle 1) h01
+  simp [row, forward, h0, h1, h2]
+
+/-- A linear relation among the non-root triangle edge rows that is a potential
+difference on those edges has a unique normalized potential on the whole ground
+set. Its values are killed by three. -/
+theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
+    [AddCommGroup A] (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
+    (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
+    (root anchor : I) (hne : anchor ≠ root) (hann : ∀ x : A, Fintype.card I • x = 0)
+    (c : T → A) :
+    let e (i j : I) := ∑ t, row (points t) (c t) i j
+    (∀ i j, i ≠ root → j ≠ root → e i j = e anchor j - e anchor i) →
+      ∃! u : I → A, u anchor = 0 ∧ (∑ j, u j) = 0 ∧
+        (∀ i, 3 • u i = 0) ∧ (∀ i j, e i j = u j - u i) := by
+  classical
+  intro e hrest
+  have hdiag (i : I) : e i i = 0 := Finset.sum_eq_zero fun t _ => row_diag (hinj t) (c t) i
+  have hflip (i j : I) : e i j = -e j i := by
+    dsimp [e]
+    rw [← Finset.sum_neg_distrib]
+    exact Finset.sum_congr rfl (fun t _ => row_flip (hinj t) (c t) i j)
+  have hsum (i : I) : (∑ j, e i j) = 0 := by
+    dsimp [e]
+    rw [Finset.sum_comm]
+    exact Finset.sum_eq_zero fun t _ => row_sum (hinj t) (c t) i
+  obtain ⟨u, hu, unique⟩ := restore_potential e root anchor hne hdiag hflip hsum hann hrest
+  have hex : ∃ d : T → A, ∀ i j, i ≠ j → u j - u i = ∑ t, row (points t) (d t) i j :=
+    ⟨c, fun i j _ => (hu.2.2 i j).symm⟩
+  have ht := ((edge_rows_iff points hinj hdis u anchor).mp hex).1
+  have kill (i : I) : 3 • u i = 0 := by simpa [hu.1] using ht i
+  exact ⟨u, ⟨hu.1, hu.2.1, kill, hu.2.2⟩, fun v hv => unique v ⟨hv.1, hv.2.1, hv.2.2.2⟩⟩
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
