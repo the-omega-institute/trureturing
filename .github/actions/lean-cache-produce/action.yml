@@ -24,7 +24,9 @@ runs:
     - name: Reserve time to save producer progress
       shell: bash
       run: |
-        [[ "$GITHUB_EVENT_NAME" == push && "$GITHUB_REF_PROTECTED" == true && "$GITHUB_REF" == refs/heads/dev ]]
+        [[ "$GITHUB_EVENT_NAME" == push && "$GITHUB_REF_PROTECTED" == true ]]
+        [[ "$GITHUB_REF" == refs/heads/dev || "$GITHUB_REF" == refs/heads/integration-* ]]
+        jq -e --arg ref "$GITHUB_REF" '.deleted == false and .ref == $ref' "$GITHUB_EVENT_PATH" >/dev/null
         echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
     - name: Install the pinned tools release
       if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
@@ -52,6 +54,7 @@ runs:
       with:
         path: ~/.elan
         key: ${{ steps.keys.outputs.elan_key }}
+        restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
     - shell: bash
       run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
     - id: dependency
@@ -61,7 +64,7 @@ runs:
       with:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
-        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
     - id: sharded_seed
       name: Restore available project shards
       if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != ''
@@ -78,7 +81,7 @@ runs:
       with:
         path: ${{ steps.keys.outputs.project_archive_path }}
         key: ${{ steps.keys.outputs.project_restore_key }}
-        restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+        restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
     - name: Restore optional validated seeds
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}

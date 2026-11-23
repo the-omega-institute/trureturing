@@ -1,6 +1,7 @@
 name: Lean build cache publication
 
-# Protected dev pushes refresh the Actions cache. Pinned manual builds consume it.
+# Protected dev and integration pushes refresh their branch's Actions cache.
+# Pinned manual builds consume it.
 # Scheduled runs publish the protected-dev Release.
 # Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
 # allow up to the GitHub-hosted 360-minute job limit.  Example:
@@ -8,7 +9,7 @@ name: Lean build cache publication
 #   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
   push:
-    branches: [dev]
+    branches: [dev, 'integration-**']
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -63,7 +64,7 @@ jobs:
       pull-requests: read
     if: >-
       (github.event_name == 'push' && github.event.deleted == false && github.ref_protected &&
-        github.ref == 'refs/heads/dev') ||
+        (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) ||
       (github.event_name == 'workflow_dispatch' && inputs.operation == 'build')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
@@ -73,6 +74,11 @@ jobs:
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
+      SHARD_HISTORY_ANCHOR: >-
+        ${{ inputs.shard_history_anchor ||
+            ((vars.LEAN_CACHE_SHARDS_REF == github.ref_name ||
+              (vars.LEAN_CACHE_SHARDS_REF == 'dev' && startsWith(github.ref, 'refs/heads/integration-'))) &&
+             vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -126,13 +132,11 @@ jobs:
         if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
         run: python3 .github/scripts/install-tools.py
       - name: Fetch the fixed dev history for the shard layout
-        if: inputs.shard_history_anchor != '' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')
-        env:
-          ANCHOR: ${{ inputs.shard_history_anchor || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
+        if: env.SHARD_HISTORY_ANCHOR != ''
         run: |
-          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
-          git fetch --no-tags --depth=2002 origin "$ANCHOR"
-          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
+          [[ "$SHARD_HISTORY_ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$SHARD_HISTORY_ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$SHARD_HISTORY_ANCHOR" ]]
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
@@ -157,7 +161,7 @@ jobs:
         env:
           STRATALINT_CACHE_WRITES: 'true'
         with:
-          shard-history-anchor: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+          shard-history-anchor: ${{ env.SHARD_HISTORY_ANCHOR }}
       # A manual pin can predate the push-only writer. Run only restore/build
       # operations against that checkout, including on retries and failures.
       - if: github.event_name == 'workflow_dispatch'
@@ -174,6 +178,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - if: github.event_name == 'workflow_dispatch'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
@@ -183,9 +188,9 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
       - id: shards
-        if: github.event_name == 'workflow_dispatch' && inputs.release_seed_tag == '' && inputs.release_seed_producer == '' && (inputs.shard_history_anchor != '' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')) && hashFiles('.github/actions/lean-cache-shards/action.yml') != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.release_seed_tag == '' && inputs.release_seed_producer == '' && env.SHARD_HISTORY_ANCHOR != '' && hashFiles('.github/actions/lean-cache-shards/action.yml') != ''
         uses: ./.github/actions/lean-cache-shards
         continue-on-error: true
         env:
@@ -199,7 +204,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_restore_key || steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
       - if: github.event_name == 'workflow_dispatch'
         name: Validate the restored build inputs
         env:
@@ -321,6 +326,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: release_seed
         name: Restore Release seeds and compiled layers
@@ -478,6 +484,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: release_seed
         name: Restore Release seeds and compiled layers
@@ -497,7 +504,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
       - id: project
         if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') == '' && steps.keys.outputs.project_key != ''
         continue-on-error: true
@@ -505,7 +512,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
       - name: Restore the pinned source's legacy seeds
         if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') == ''
         env:
