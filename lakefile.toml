@@ -1,7 +1,7 @@
 name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
-defaultTargets = ["Trureturing", "OmegaMath", "OmegaD5"]
+defaultTargets = ["Trureturing", "OmegaMath"]
 
 # Keep canonical Lean compiler processes single-threaded. Lake documents
 # weakLeanArgs as execution-only arguments excluded from build traces; -j1 is
@@ -31,13 +31,6 @@ srcDir = "src"
 [[lean_lib]]
 name = "OmegaMath"
 srcDir = "src"
-
-# The narrower D5.Omega prefix is resolved before the earlier D5 library.
-[[lean_lib]]
-name = "OmegaD5"
-srcDir = "src"
-roots = ["D5.Omega"]
-globs = ["D5.Omega.+"]
 
 [[lean_lib]]
 name = "OmegaChecks"

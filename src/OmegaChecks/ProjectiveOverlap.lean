@@ -7,7 +7,7 @@ public section
 open Omega
 open Omega.Projective
 
-namespace D5.Omega.ProjectiveOverlap
+namespace OmegaChecks.ProjectiveOverlap
 
 /-- For every positive coordinate magnitude, a diagonal ray has overlap one half. -/
 theorem diagonal_half (k : Nat) :
@@ -16,4 +16,4 @@ theorem diagonal_half (k : Nat) :
   Eq.subst (fun r => Ratio.Equivalent r (Ratio.value Nat.one Nat.one.succ)) h
     (kappa_scale Nat.one Nat.one k)
 
-end D5.Omega.ProjectiveOverlap
+end OmegaChecks.ProjectiveOverlap
