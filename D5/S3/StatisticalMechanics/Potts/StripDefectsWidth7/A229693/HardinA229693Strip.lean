@@ -9,6 +9,17 @@
 /-
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
+next_valid: proof_shape=bind-only; consumers=count_transfer
+initial_valid: proof_shape=bind-only; consumers=count_transfer
+terminal_eq: proof_shape=bind-only; consumers=count_transfer
+headWeight: proof_shape=bind-only; consumers=head_weight_eq, initial_exhausted_count, initial_from_starts, rep_weight
+head_weight_eq: proof_shape=bind-only; consumers=initial_exhausted_count
+fresh_start_count: proof_shape=bind-only; consumers=initial_exhausted_count
+rep_weight: proof_shape=bind-only; consumers=initial_exhausted_count
+initial_from_starts: proof_shape=content; consumers=initial_exhausted_count
+initial_exhausted_count: proof_shape=content; consumers=initial_counts
+initial_counts: proof_shape=content; consumers=count_transfer
+count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
 leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
@@ -47,6 +58,9 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Starts
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.OfFn
@@ -59,10 +73,158 @@ namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229
 set_option Elab.async false
 
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-  (defects literalCount constant_defects relabel_defects forward forward_eq forward_shift)
-open HardinA229585StripData (horizontal antidiagonal)
-open HardinA229693StripTransfer (T initial terminal count_transfer exitRead)
+  (bondDefects defects literalCount constant_defects relabel_defects forward forward_eq forward_shift)
+open HardinA229585StripData (Boundary Row horizontal antidiagonal boundary cross)
+open HardinA229693StripTransfer
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_exists_unique)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_pattern_card)
+
+private theorem next_valid (p : Boundary) (d : ℕ) (hp : HardinA229635State.Valid p d) (r : Row)
+    (hr : cross p r + bondDefects horizontal r r ≤ d) :
+    HardinA229635State.Valid (boundary r) (d - (cross p r + bondDefects horizontal r r)) := by
+  have hd := ((valid_parts p d).mp hp).1
+  have ht := horizontal_cons (r 0) (boundary r)
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
+  change HardinA229635State.h (boundary r) + (d - (cross p r + bondDefects horizontal r r)) ≤ 2
+  omega
+
+private theorem initial_valid (r : Row) (hr : bondDefects horizontal r r ≤ 2) :
+    HardinA229635State.Valid (boundary r) (2 - bondDefects horizontal r r) := by
+  have ht := horizontal_cons (r 0) (boundary r)
+  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
+  change HardinA229635State.h (boundary r) + (2 - bondDefects horizontal r r) ≤ 2
+  omega
+
+private theorem terminal_eq (p : Boundary) (d : ℕ) :
+    terminal (cl p d) = if d = 0 then 1 else 0 := by
+  by_cases hd : d = 0 <;> simp [cl, terminal, hd]
+
+private def headWeight (p : Boundary) : ℤ :=
+  if HardinA229635State.h p = 1 then 1 else
+  if HardinA229635State.h p = 2 then 2 else 0
+
+private theorem head_weight_eq (p : Boundary) :
+    (∑ x : Fin 3, if bondDefects horizontal (Fin.cons x p) (Fin.cons x p) = 2
+      then (1 : ℤ) else 0) = headWeight p := by
+  simp_rw [horizontal_cons]
+  unfold headWeight
+  by_cases h₁ : HardinA229635State.h p = 1
+  · simp only [h₁, ite_true]
+    have h (x : Fin 3) :
+        ((if x = p 0 then (1 : ℕ) else 0) + 1 = 2) ↔ x = p 0 := by
+      split_ifs <;> simp_all
+    simp [h, Finset.sum_ite_eq']
+  · by_cases h₂ : HardinA229635State.h p = 2
+    · simp only [h₁, h₂, ite_false, ite_true]
+      have h (x : Fin 3) :
+          ((if x = p 0 then (1 : ℕ) else 0) + 2 = 2) ↔ x ≠ p 0 := by
+        split_ifs <;> simp_all
+      simp_rw [h]
+      rw [show (fun x : Fin 3 => if x ≠ p 0 then (1 : ℤ) else 0) =
+          fun x => 1 - (if x = p 0 then 1 else 0) by
+        funext x
+        by_cases hx : x = p 0 <;> simp [hx], Finset.sum_sub_distrib]
+      simp
+    · simp only [h₁, h₂, ite_false]
+      apply Finset.sum_eq_zero
+      intro x _
+      split_ifs with hx <;> omega
+
+private theorem fresh_start_count (i : Fin 96) :
+    (∑ p : Boundary, if HardinA229635State.h p ≤ 2 ∧ HardinA229635State.fresh p = i
+      then (1 : ℤ) else 0) = 6 := by
+  have h := HardinA229635State.start_count (i.natAdd 31)
+  rw [HardinA229635Starts.checked_starts, HardinA229635Starts.start_tallies] at h
+  simp only [Fin.val_natAdd, show ¬ 31 + i.val < 31 by omega, ite_false] at h
+  rw [h]
+  apply Finset.sum_congr rfl
+  intro p _
+  by_cases hp : HardinA229635State.h p ≤ 2
+  · have hn : ¬ HardinA229635State.h p + (2 - HardinA229635State.h p) ≤ 1 := by omega
+    simp only [hp, true_and, HardinA229635State.cl, hn, ite_false]
+    by_cases he : HardinA229635State.fresh p = i
+    · simp only [he, ite_true]
+    · simp only [he, (Fin.natAdd_injective 96 31).ne he, ite_false]
+  · simp [hp]
+
+private theorem rep_weight (p : Boundary) (hp : HardinA229635State.h p ≤ 2)
+    (j : Fin 96) :
+    (if exhaustedClass p = j then headWeight p else 0) =
+      (let q := HardinA229635State.rep (HardinA229635State.fresh p)
+       if exhaustedClass q = j then headWeight q else 0) := by
+  obtain ⟨q, ⟨hn, e, rfl⟩, _⟩ := canonical_exists_unique p
+  have hp' := (HardinA229635State.h_relabel e p).symm ▸ hp
+  have h := HardinA229635Laws.representatives_complete (e ∘ p) hn hp'
+  rw [fresh_relabel] at h
+  rw [h]
+  simp only [headWeight, HardinA229635State.h_relabel, exhausted_relabel]
+
+-- Only the reindexing and head weights are checked here. The 96 fibre sizes
+-- come from the frozen start certificate.
+set_option maxRecDepth 14000 in
+set_option maxHeartbeats 4000000 in
+private theorem initial_from_starts (j : Fin 96) :
+    (∑ i : Fin 96, if exhaustedClass (HardinA229635State.rep i) = j
+      then headWeight (HardinA229635State.rep i) * 6 else 0) = initialExhausted j := by
+  revert j
+  decide +kernel
+
+private theorem initial_exhausted_count (j : Fin 96) :
+    (∑ r : Row, if bondDefects horizontal r r = 2 ∧ exhaustedClass (boundary r) = j
+      then (1 : ℤ) else 0) = initialExhausted j := by
+  rw [← (Fin.consEquiv (fun _ : Fin 7 => Fin 3)).sum_comp, Fintype.sum_prod_type_right]
+  change (∑ p : Boundary, ∑ x : Fin 3,
+    if bondDefects horizontal (Fin.cons x p) (Fin.cons x p) = 2 ∧ exhaustedClass p = j
+    then (1 : ℤ) else 0) = _
+  calc
+    _ = ∑ p : Boundary, if exhaustedClass p = j then headWeight p else 0 := by
+      apply Finset.sum_congr rfl
+      intro p _
+      by_cases hp : exhaustedClass p = j
+      · simp only [hp, and_true, ite_true, head_weight_eq]
+      · simp only [hp, and_false, ite_false, Finset.sum_const_zero]
+    _ = ∑ p : Boundary, ∑ i : Fin 96,
+        (if exhaustedClass (HardinA229635State.rep i) = j
+          then headWeight (HardinA229635State.rep i) else 0) *
+        (if HardinA229635State.h p ≤ 2 ∧ HardinA229635State.fresh p = i then (1 : ℤ) else 0) := by
+      apply Finset.sum_congr rfl
+      intro p _
+      by_cases hp : HardinA229635State.h p ≤ 2
+      · simp only [hp, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+        exact rep_weight p hp j
+      · have h₁ : HardinA229635State.h p ≠ 1 := by omega
+        have h₂ : HardinA229635State.h p ≠ 2 := by omega
+        simp [headWeight, hp, h₁, h₂]
+    _ = _ := by
+      rw [Finset.sum_comm, ← initial_from_starts j]
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [← Finset.mul_sum, fresh_start_count]
+      split_ifs <;> simp
+
+private theorem initial_counts (s : Fin 168) :
+    (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
+      cl (boundary r) (2 - bondDefects horizontal r r) = s
+      then (1 : ℤ) else 0) = initial s := by
+  induction s using Fin.addCases (m := 72) (n := 96) with
+  | left j =>
+    simp_rw [active_cut]
+    simpa only [show 0 < (2 : ℕ) by decide, true_and, Nat.reduceSub, initial,
+      Fin.append_left] using HardinA229585Strip.finite_certificate.2.2.2.2.1 j
+  | right j =>
+    simp_rw [exhausted_cut]
+    simpa only [initial, Fin.append_right] using initial_exhausted_count j
+
+/-- The exact two-defect labelled count as a matrix coefficient. -/
+theorem count_transfer (n : ℕ) :
+    (D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.literalCount
+      (q := 3) horizontal antidiagonal 2 (n + 1) : ℤ) =
+      dotProduct initial ((T ^ n).mulVec terminal) := by
+  exact D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.lumped_count
+    horizontal antidiagonal boundary cross HardinA229635State.Valid cl T initial terminal 2
+    HardinA229585Strip.edge (fun p d _ => terminal_eq p d) next_valid
+    (fun p d hp s => transition_counts p d s (Or.inl hp)) initial_valid initial_counts n
 
 /-- Canonical arrays with exactly two monochromatic bonds. -/
 def a (n : ℕ) : ℕ :=

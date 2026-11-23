@@ -50,11 +50,37 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Each admissible next row contributes one to the multiplicity of its class after spending its horizontal and antidiagonal defects.")),
                     Paragraph(Text("At budget zero, both entries vanish below destination 72 for every boundary. At budget one, both entries vanish below destination 16 because the old zero-budget block has no transitions to those destinations. A constant boundary supplies an example of an inadmissible budget in each case."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("count-transfer"),
-                DeclarationHandle.Create(Prefix + "count_transfer"), H("The labelled strip count"),
-                StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("DefectTransfer.literalCount", Parenthesized(Seq(V("q"), Sp, Colon, F.Eq, Sp, Num("3"))), Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Num("2"), Add(V("n"), Num("1")))), Call("dotProduct", Call("HardinA229693StripTransfer.initial"), Call("Matrix.mulVec", Power(Call("HardinA229693StripTransfer.T"), V("n")), Call("HardinA229693StripTransfer.terminal"))))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The first row contributes the initial weight. Each later row multiplies by the transfer matrix, and terminal weights require exact exhaustion. The empty strip has zero colourings with exactly two defects, whereas the zero-power matrix coefficient counts the positive number of qualifying one-row strips."))), DescribeRole.Theorem))));
+            Node("matchCost", "Cost of a colour match",
+                Arrow(Call("Option", Fin3), Arrow(Fin3, V("Nat"))),
+                "An absent colour costs zero. A present colour costs one exactly when it agrees with the current colour.", DescribeRole.Definition),
+            Node("completionCost", "Cost of a completion",
+                All("k", V("Nat"), Arrow(Boundary, Arrow(Call("Option", Fin3), Arrow(Row, V("Nat"))))),
+                "Sum the initial match, when a previous colour is supplied, the matches between neighbours, and the matches against the optional boundary colours.", DescribeRole.Definition),
+            Node("completionRows", "Pruned completion list",
+                All("k", V("Nat"), Arrow(Boundary, Arrow(Call("Option", Fin3), Arrow(V("Nat"), Call("List", Row))))),
+                "Try the three available colours in order, keep each head whose cost fits the budget, and prepend it to the completions at the remaining budget. The last cell must spend the entire remaining budget.", DescribeRole.Definition),
+            Node("completionRows_count", "Multiplicity of qualifying rows",
+                All("k", V("Nat"), All("p", Boundary, All("b", Call("Option", Fin3),
+                    All("d", V("Nat"), All("f", Arrow(Row, V("Bool")),
+                        Eq(Call("List.countP", V("f"), Call("completionRows", V("p"), V("b"), V("d"))),
+                            Seq(Sum, Underscore, Grp(V("r"), Colon, Sp, Row), Sp, Parenthesized(Seq(
+                                V("if"), Sp, Parenthesized(Eq(Call("completionCost", V("p"), V("b"), V("r")), V("d"))),
+                                Sp, Land, Sp, Parenthesized(Eq(Call("f", V("r")), V("true"))),
+                                Sp, V("then"), Sp, D(1), Sp, V("else"), Sp, D(0)))))))))),
+                "The sum counts each qualifying row once.", DescribeRole.Theorem),
+            Node("completionCodes", "Pruned list in base three",
+                Arrow(Call("List", Call("Option", Fin3)), Arrow(Call("Option", Fin3), Arrow(V("Nat"), Call("List", V("Nat"))))),
+                "Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with x plus three times c.", DescribeRole.Definition),
+            Node("rowCode_cons", "Code of a row with a new head",
+                All("k", V("Nat"), All("x", Fin3, All("r", Arrow(Call("Fin", V("k")), Fin3),
+                    Eq(Code(Call("Fin.cons", V("x"), V("r"))), Add(Call("Fin.val", V("x")), new Formula.Binary(D(3), FormulaBinaryOperator.Multiply, Code(V("r")))))))),
+                "The leading cell is the least significant digit of the code.", DescribeRole.Theorem),
+            Node("completionCodes_eq", "Agreement of the two lists",
+                All("k", V("Nat"), All("p", Boundary, All("b", Call("Option", Fin3), All("d", V("Nat"),
+                    Eq(Call("completionCodes", Call("List.ofFn", V("p")), V("b"), V("d")),
+                        Call("List.map", Seq(LambdaLower, Sp, V("r"), Sp, Mapsto, Sp, Code(V("r"))),
+                            Call("completionRows", V("p"), V("b"), V("d")))))))),
+                "The numeric enumerator returns the codes of the pruned completion list in the same order.", DescribeRole.Theorem))));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
@@ -79,5 +105,13 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula Conditional(Formula c, Formula y, Formula n) => Parenthesized(Seq(Q("if"), Sp, Parenthesized(c), Sp, Q("then"), Sp, y, Sp, Q("else"), Sp, n));
 
     private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
-    private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
+    private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(declaration.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.FromAuthor(Disp(role == DescribeRole.Definition ? Seq(V(declaration), Colon, Sp, formula) : formula)),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Fin3 => Call("Fin", D(3));
+    private static Formula Boundary => Arrow(Call("Fin", V("k")), Call("Option", Fin3));
+    private static Formula Row => Arrow(Call("Fin", Add(V("k"), D(1))), Fin3);
+    private static Formula Code(Formula row) => Call("Fin.val", Call("finFunctionFinEquiv", row));
 }

@@ -12,6 +12,11 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The width-seven two-defect recurrence.", H("The width-seven two-defect recurrence"),
         Blocks(
+            Describe.Lean(DescribeId.Create("count-transfer"),
+                DeclarationHandle.Create("D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.count_transfer"), H("The labelled strip count"),
+                StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("DefectTransfer.literalCount", Parenthesized(Seq(V("q"), Sp, Colon, F.Eq, Sp, Num("3"))), Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Num("2"), Add(V("n"), Num("1")))), Call("dotProduct", Call("HardinA229693StripTransfer.initial"), Call("Matrix.mulVec", Power(Call("HardinA229693StripTransfer.T"), V("n")), Call("HardinA229693StripTransfer.terminal"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The first row contributes the initial weight. Each later row multiplies by the transfer matrix, and terminal weights require exact exhaustion. The empty strip has zero colourings with exactly two defects, whereas the zero-power matrix coefficient counts the positive number of qualifying one-row strips."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a"),
                 DeclarationHandle.Create(Prefix + "a"), H("Literal array count"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("HardinA229693Strip.a", V("n")), Call("Finset.card", Call("Finset.filter", Fn("f", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("7"))), Call("Fin", Num("3"))), And(Eq(Call("DefectTransfer.defects", Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Call("List.ofFn", Fn("i", Call("Fin", V("n")), Fn("j", Call("Fin", Num("7")), App(V("f"), Pair(V("i"), V("j"))))))), Num("2")), Call("HardinA229585Strip.Normal", V("f")))), Call("Finset.univ"))))))),
@@ -40,6 +45,7 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
     private static Formula CastInt(Formula a) => Parenthesized(Seq(a, Colon, Sp, V("Int")));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
     private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));

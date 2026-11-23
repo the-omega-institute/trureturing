@@ -3,17 +3,24 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.result; premises=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.transition_counts,D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.initial_counts
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.result; premises=D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.transition_counts,D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.initial_counts
    digest: Exact successor multiplicities into the exhausted budget. -/
 
 /-
 admission_basis: escape-witness
 escape_witness: exactExits_active and exactExits_new compute the multiplicities of transitions reaching budget zero
+completionCodes: proof_shape=content; consumers=completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
+completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
+completionCost: proof_shape=content; consumers=completionCost_row, completionRows_count, completionRows_length_le, exactExits_count
+completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq
+completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count
+matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+rowCode_cons: proof_shape=bind-only; consumers=completionCodes_eq, rowCode_tail
 tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, valid_shift
 decidableBudget: proof_shape=bind-only; consumers=activeProfileCheck, exhaustedClass, inheritedActiveCheck
-valid_parts: proof_shape=bind-only; consumers=class_counts_canonical, exactExits_active, exactExits_new, next_valid, valid_shift
+valid_parts: proof_shape=bind-only; consumers=class_counts_canonical, exactExits_active, exactExits_new, HardinA229693Strip.next_valid, valid_shift
 valid_relabel: proof_shape=bind-only; consumers=class_counts
-fresh_relabel: proof_shape=bind-only; consumers=cl_relabel, rep_weight
+fresh_relabel: proof_shape=bind-only; consumers=cl_relabel, HardinA229693Strip.rep_weight
 alternating: proof_shape=bind-only; consumers=properRows, proper_iff, zeroExitCodes_count
 proper_iff: proof_shape=bind-only; consumers=zeroExitCodes_count._simp_1_2
 properRows: proof_shape=bind-only; consumers=zeroExitCodes, zeroExitCodes_count, exactExits_new
@@ -21,8 +28,8 @@ zeroExitCodes: proof_shape=bind-only; consumers=zeroExitCodes_count, exhaustedMu
 zeroExitCodes_count: proof_shape=bind-only; consumers=class_counts_canonical
 rep_partition: proof_shape=bind-only; consumers=exactExits_active, exactExits_new
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, old_exhausted_counts, old_exhausted_row
-exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, initial_exhausted_count, initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, rep_weight, terminal_eq, transition_counts, transition_counts._simp_1_1
-cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, count_transfer, exhausted_cut, initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, terminal_eq, transition_counts, transition_counts._simp_1_1
+exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, initial_counts._simp_1_3, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_1
+cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_1
 exitRead: proof_shape=content; consumers=HardinA229693Strip.w, HardinA229693Strip.w_leading, activeWeight, exhaustedWeight
 oldExits: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, class_counts_canonical, leading_counts, old_exhausted_counts, old_exhausted_row
 oldTerminal: proof_shape=bind-only; consumers=oldDestination
@@ -37,20 +44,17 @@ weightPack_sum: proof_shape=bind-only; consumers=classPack_count
 weightPack_injective: proof_shape=bind-only; consumers=checkHistogram_count
 classPack: proof_shape=bind-only; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
 classPack_count: proof_shape=bind-only; consumers=checkHistogram_count
-T: proof_shape=content; consumers=HardinA229693Strip.exhausted_step, HardinA229693Strip.forward_step, HardinA229693Strip.forward_table, HardinA229693Strip.leading_action, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.rightColumn_eq, class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
-initialExhausted: proof_shape=content; consumers=HardinA229693Strip.w_leading, initial, initial.eq_1, initial_counts, initial_exhausted_count, initial_from_starts
-initial: proof_shape=content; consumers=HardinA229693Strip.forward_table, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.w, HardinA229693Strip.w_leading, count_transfer, initial_counts
-terminal: proof_shape=bind-only; consumers=HardinA229693Strip.result, count_transfer, terminal_eq
+T: proof_shape=content; consumers=HardinA229693Strip.exhausted_step, HardinA229693Strip.forward_step, HardinA229693Strip.forward_table, HardinA229693Strip.leading_action, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.rightColumn_eq, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, leading_counts, old_exhausted_counts, transition_counts
+initialExhausted: proof_shape=content; consumers=HardinA229693Strip.w_leading, initial, initial.eq_1, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts
+initial: proof_shape=content; consumers=HardinA229693Strip.forward_table, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.w, HardinA229693Strip.w_leading, HardinA229693Strip.count_transfer, HardinA229693Strip.initial_counts
+terminal: proof_shape=bind-only; consumers=HardinA229693Strip.result, HardinA229693Strip.count_transfer, HardinA229693Strip.terminal_eq
 valid_shift: proof_shape=bind-only; consumers=class_counts_canonical, inherited_active_spec, leading_counts, old_valid
 old_valid: proof_shape=bind-only; consumers=old_exhausted_counts, old_exhausted_row
 cl_relabel: proof_shape=bind-only; consumers=class_counts, exhausted_relabel
-exhausted_relabel: proof_shape=bind-only; consumers=class_counts, rep_weight
+exhausted_relabel: proof_shape=bind-only; consumers=class_counts, HardinA229693Strip.rep_weight
 blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_row
-active_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_1, leading_counts._simp_1_1
-exhausted_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_3, transition_counts._simp_1_1
-next_valid: proof_shape=bind-only; consumers=count_transfer
-initial_valid: proof_shape=bind-only; consumers=count_transfer
-terminal_eq: proof_shape=bind-only; consumers=count_transfer
+active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1_1, leading_counts._simp_1_1
+exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1_3, transition_counts._simp_1_1
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
 horizontalCost: proof_shape=bind-only; consumers=completionCost_row, horizontalCost_eq, rowCost, rowCost.eq_1, rowCost_eq
@@ -85,16 +89,8 @@ class_counts: proof_shape=content; consumers=transition_counts
 old_exhausted_index: proof_shape=bind-only; consumers=budget_one_leading
 old_lower_left: proof_shape=bind-only; consumers=budget_one_leading
 budget_one_leading: proof_shape=bind-only; consumers=transition_counts
-transition_counts: proof_shape=content; consumers=count_transfer
-horizontal_cons: proof_shape=bind-only; consumers=head_weight_eq, next_valid, initial_valid
-headWeight: proof_shape=bind-only; consumers=head_weight_eq, initial_exhausted_count, initial_from_starts, rep_weight
-head_weight_eq: proof_shape=bind-only; consumers=initial_exhausted_count
-fresh_start_count: proof_shape=bind-only; consumers=initial_exhausted_count
-rep_weight: proof_shape=bind-only; consumers=initial_exhausted_count
-initial_from_starts: proof_shape=content; consumers=initial_exhausted_count
-initial_exhausted_count: proof_shape=content; consumers=initial_counts
-initial_counts: proof_shape=content; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=HardinA229693Strip.result
+transition_counts: proof_shape=content; consumers=HardinA229693Strip.count_transfer, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.Transition.family._proof_2
+horizontal_cons: proof_shape=bind-only; consumers=HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
@@ -104,11 +100,15 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Starts
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
-import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripCompletion
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Fin
+import Mathlib.Logic.Equiv.Fin.Basic
+import Lean.Elab.Tactic.Omega
 import Mathlib.Data.Fin.Rev
 import Mathlib.Tactic.Eval
 import Mathlib.Data.Matrix.Block
@@ -123,7 +123,6 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
   (Canonical canonical_exists_unique)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA229693StripCompletion
 open HardinA229585StripData (Boundary Row horizontal antidiagonal boundary cross)
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (relabel_defects defects tailDefects)
@@ -132,7 +131,7 @@ private instance decidableBudget (p : Boundary) (d : ℕ) :
     Decidable (HardinA229635State.Valid p d) :=
   inferInstanceAs (Decidable (HardinA229635State.h p + d ≤ 2))
 
-private theorem valid_parts (p : Boundary) (d : ℕ) :
+theorem valid_parts (p : Boundary) (d : ℕ) :
     HardinA229635State.Valid p d ↔ d ≤ 2 ∧ HardinA229635State.h p ≤ 2 - d := by
   change HardinA229635State.h p + d ≤ 2 ↔ _
   omega
@@ -150,7 +149,7 @@ private theorem valid_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) 
     HardinA229635State.Valid (e ∘ p) d ↔ HardinA229635State.Valid p d := by
   simp only [HardinA229635State.Valid, HardinA229635State.h_relabel]
 
-private theorem fresh_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
+theorem fresh_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
     HardinA229635State.fresh (e ∘ p) = HardinA229635State.fresh p := by
   apply Fin.natAdd_injective 96 31
   simpa only [HardinA229635State.cl, show ∀ n : ℕ, ¬ n + 3 ≤ 1 from fun _ => by omega,
@@ -267,7 +266,7 @@ def T : Matrix (Fin 168) (Fin 168) ℤ :=
         | none => (activeWeight i j : ℤ)) 0
       (Matrix.of (Fin.append (fun i : Fin 56 => oldExits (i.natAdd 16)) fun i j => (exhaustedWeight i j : ℤ))))
 
-private def initialExhausted (i : Fin 96) : ℤ :=
+def initialExhausted (i : Fin 96) : ℤ :=
   Fin.addCases (fun j : Fin 56 =>
     if j.castAdd 40 ∈ Finset.univ.image (oldZeroImage ∘ HardinA229585StripData.zeroBudgetClass)
       then 0 else 6)
@@ -294,7 +293,7 @@ private theorem cl_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, exhaustedClass, valid_relabel, fresh_relabel, HardinA229585Strip.class_relabel]
 
-private theorem exhausted_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
+theorem exhausted_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
     exhaustedClass (e ∘ p) = exhaustedClass p :=
   Fin.natAdd_injective 96 72 (cl_relabel e p 0)
 
@@ -302,7 +301,7 @@ private theorem blocks_disjoint {m n : ℕ} (i : Fin m) (j : Fin n) :
     i.castAdd n ≠ j.natAdd m :=
   finSumFinEquiv.injective.ne Sum.inl_ne_inr
 
-private theorem active_cut (p : Boundary) (d c : ℕ) (j : Fin 72) :
+theorem active_cut (p : Boundary) (d c : ℕ) (j : Fin 72) :
     (c ≤ d ∧ cl p (d - c) = j.castAdd 96) ↔
       (0 < d ∧ c ≤ d - 1 ∧ HardinA229585StripData.cl p (d - 1 - c) = j) := by
   by_cases h : c < d
@@ -317,7 +316,7 @@ private theorem active_cut (p : Boundary) (d c : ℕ) (j : Fin 72) :
     simp only [cl, he, ↓reduceIte, hb, and_false, false_iff, not_and]
     omega
 
-private theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
+theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
     (c ≤ d ∧ cl p (d - c) = j.natAdd 72) ↔ (c = d ∧ exhaustedClass p = j) := by
   by_cases h : c < d
   · have hn : d - c ≠ 0 := Nat.ne_of_gt (Nat.sub_pos_of_lt h)
@@ -326,7 +325,7 @@ private theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
     rw [Fin.natAdd_inj 72]
     exact and_congr_left (fun _ => ⟨fun hc => hc.antisymm (Nat.le_of_not_gt h), Eq.le⟩)
 
-private theorem horizontal_cons (x : Fin 3) (p : Boundary) :
+theorem horizontal_cons (x : Fin 3) (p : Boundary) :
     bondDefects horizontal (Fin.cons x p) (Fin.cons x p) =
       (if x = p 0 then 1 else 0) + HardinA229635State.h p := by
   rw [tailCost_eq]
@@ -341,26 +340,6 @@ private theorem horizontal_cons (x : Fin 3) (p : Boundary) :
   rw [← h, Fin.sum_univ_succ]
   simp only [r, Fin.castSucc_zero, Fin.castSucc_succ, Fin.cons_zero, Fin.cons_succ,
     Finset.sum_boole, Nat.cast_id]
-
-private theorem next_valid (p : Boundary) (d : ℕ) (hp : HardinA229635State.Valid p d) (r : Row)
-    (hr : cross p r + bondDefects horizontal r r ≤ d) :
-    HardinA229635State.Valid (boundary r) (d - (cross p r + bondDefects horizontal r r)) := by
-  have hd := ((valid_parts p d).mp hp).1
-  have ht := horizontal_cons (r 0) (boundary r)
-  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
-  change HardinA229635State.h (boundary r) + (d - (cross p r + bondDefects horizontal r r)) ≤ 2
-  omega
-
-private theorem initial_valid (r : Row) (hr : bondDefects horizontal r r ≤ 2) :
-    HardinA229635State.Valid (boundary r) (2 - bondDefects horizontal r r) := by
-  have ht := horizontal_cons (r 0) (boundary r)
-  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at ht
-  change HardinA229635State.h (boundary r) + (2 - bondDefects horizontal r r) ≤ 2
-  omega
-
-private theorem terminal_eq (p : Boundary) (d : ℕ) :
-    terminal (cl p d) = if d = 0 then 1 else 0 := by
-  by_cases hd : d = 0 <;> simp [cl, terminal, hd]
 
 private theorem leading_counts (p : Boundary) (d : ℕ) (j : Fin 72)
     (hp : HardinA229635State.Valid p d ∨ d = 0) :
@@ -468,6 +447,110 @@ private theorem old_exhausted_counts (p : Boundary) (hp : HardinA229635State.Val
       HardinA229585StripData.cl p 0 := Fin.ext (Nat.add_sub_of_le hh)
   rw [h]
   exact old_exhausted_row p 0 hv j
+
+def matchCost : Option (Fin 3) → Fin 3 → ℕ
+  | none, _ => 0
+  | some p, x => if p = x then 1 else 0
+
+def completionCost : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
+    (Fin (k + 1) → Fin 3) → ℕ
+  | 0, _, prev, r => matchCost prev (r 0)
+  | _k + 1, p, prev, r =>
+    matchCost prev (r 0) + matchCost (p 0) (r 0) +
+      completionCost (Fin.tail p) (some (r 0)) (Fin.tail r)
+
+def completionRows : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
+    ℕ → List (Fin (k + 1) → Fin 3)
+  | 0, _, prev, d =>
+    ((List.finRange 3).filter fun x => matchCost prev x == d).map fun x _ => x
+  | _k + 1, p, prev, d => (List.finRange 3).flatMap fun x =>
+    let c := matchCost prev x + matchCost (p 0) x
+    if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x) else []
+
+theorem completionRows_count {k : ℕ} (p : Fin k → Option (Fin 3))
+    (prev : Option (Fin 3)) (d : ℕ) (f : (Fin (k + 1) → Fin 3) → Bool) :
+    (completionRows p prev d).countP f =
+      ∑ r, if completionCost p prev r = d ∧ f r = true then 1 else 0 := by
+  induction k generalizing prev d with
+  | zero =>
+    rw [← (Equiv.funUnique (Fin 1) (Fin 3)).symm.sum_comp]
+    simp only [completionCost, completionRows, List.countP_map, List.countP_filter,
+      Equiv.funUnique_symm_apply, uniqueElim_const, Function.comp_apply, Fin.sum_univ_three]
+    change ([(0 : Fin 3), 1, 2].countP
+      (fun x => f (fun _ => x) && (matchCost prev x == d))) =
+      (if matchCost prev 0 = d ∧ f (fun _ => 0) = true then 1 else 0) +
+      (if matchCost prev 1 = d ∧ f (fun _ => 1) = true then 1 else 0) +
+      (if matchCost prev 2 = d ∧ f (fun _ => 2) = true then 1 else 0)
+    simp only [List.countP_cons, List.countP_nil, Bool.and_eq_true, beq_iff_eq, and_comm]
+    omega
+  | succ k ih =>
+    rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => Fin 3)).sum_comp, Fintype.sum_prod_type]
+    simp only [completionRows, List.countP_flatMap, ← List.ofFn_id,
+      List.map_ofFn, List.sum_ofFn, Function.comp_apply, id_eq]
+    apply Finset.sum_congr rfl
+    intro x _
+    let c := matchCost prev x + matchCost (p 0) x
+    change (if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x)
+      else []).countP f = _
+    split_ifs with hc
+    · rw [List.countP_map, ih]
+      apply Finset.sum_congr rfl
+      intro r _
+      change (if completionCost (Fin.tail p) (some x) r = d - c ∧ f (Fin.cons x r) = true
+        then 1 else 0) = (if c + completionCost (Fin.tail p) (some x) r = d ∧
+        f (Fin.cons x r) = true then 1 else 0)
+      have he : completionCost (Fin.tail p) (some x) r = d - c ↔
+          c + completionCost (Fin.tail p) (some x) r = d :=
+        eq_comm.trans ((Nat.sub_eq_iff_eq_add' hc).trans eq_comm)
+      simp only [he]
+    · simp only [List.countP_nil]
+      symm
+      apply Finset.sum_eq_zero
+      intro r _
+      change (if c + completionCost (Fin.tail p) (some x) r = d ∧ f (Fin.cons x r) = true
+        then 1 else 0) = 0
+      apply ite_eq_right
+      intro h
+      exact hc (h.1 ▸ Nat.le_add_right c _)
+
+def completionCodes : List (Option (Fin 3)) → Option (Fin 3) → ℕ → List ℕ
+  | [], prev, d =>
+    ((List.finRange 3).filter fun x => matchCost prev x == d).map Fin.val
+  | a :: as, prev, d => (List.finRange 3).flatMap fun x =>
+    let c := matchCost prev x + matchCost a x
+    if c ≤ d then (completionCodes as (some x) (d - c)).map (fun r => x.val + 3 * r)
+    else []
+
+theorem rowCode_cons {k : ℕ} (x : Fin 3) (r : Fin k → Fin 3) :
+    (finFunctionFinEquiv (Fin.cons x r)).val = x.val + 3 * (finFunctionFinEquiv r).val := by
+  simp only [finFunctionFinEquiv_apply, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ,
+    Fin.val_zero, Fin.val_succ, pow_zero, mul_one, pow_succ', Finset.mul_sum]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  ac_rfl
+
+theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
+    (prev : Option (Fin 3)) (d : ℕ) :
+    completionCodes (List.ofFn p) prev d =
+      (completionRows p prev d).map (fun r => (finFunctionFinEquiv r).val) := by
+  induction k generalizing prev d with
+  | zero =>
+    simp only [List.ofFn_zero, completionCodes, completionRows, List.map_map]
+    apply List.map_congr_left
+    intro x _
+    change x.val = (finFunctionFinEquiv (fun _ : Fin 1 => x)).val
+    simp only [finFunctionFinEquiv_apply, Fin.sum_univ_one, Fin.val_zero, pow_zero, mul_one]
+  | succ k ih =>
+    simp only [List.ofFn_succ, completionCodes, completionRows, List.map_flatMap]
+    apply List.flatMap_congr
+    intro x _
+    split_ifs
+    · simp only [show (fun i => p i.succ) = Fin.tail p from rfl, ih, List.map_map]
+      apply List.map_congr_left
+      intro r _
+      exact (rowCode_cons x r).symm
+    · rfl
 
 private def horizontalCost (r : Row) : ℕ :=
   (List.ofFn fun j : Fin 6 => if r j.castSucc = r j.succ then 1 else 0).sum
@@ -868,130 +951,5 @@ theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
   · obtain ⟨rfl, hs⟩ := ho
     exact budget_one_leading p s hs
 
-private def headWeight (p : Boundary) : ℤ :=
-  if HardinA229635State.h p = 1 then 1 else
-  if HardinA229635State.h p = 2 then 2 else 0
-
-private theorem head_weight_eq (p : Boundary) :
-    (∑ x : Fin 3, if bondDefects horizontal (Fin.cons x p) (Fin.cons x p) = 2
-      then (1 : ℤ) else 0) = headWeight p := by
-  simp_rw [horizontal_cons]
-  unfold headWeight
-  by_cases h₁ : HardinA229635State.h p = 1
-  · simp only [h₁, ite_true]
-    have h (x : Fin 3) :
-        ((if x = p 0 then (1 : ℕ) else 0) + 1 = 2) ↔ x = p 0 := by
-      split_ifs <;> simp_all
-    simp [h, Finset.sum_ite_eq']
-  · by_cases h₂ : HardinA229635State.h p = 2
-    · simp only [h₁, h₂, ite_false, ite_true]
-      have h (x : Fin 3) :
-          ((if x = p 0 then (1 : ℕ) else 0) + 2 = 2) ↔ x ≠ p 0 := by
-        split_ifs <;> simp_all
-      simp_rw [h]
-      rw [show (fun x : Fin 3 => if x ≠ p 0 then (1 : ℤ) else 0) =
-          fun x => 1 - (if x = p 0 then 1 else 0) by
-        funext x
-        by_cases hx : x = p 0 <;> simp [hx], Finset.sum_sub_distrib]
-      simp
-    · simp only [h₁, h₂, ite_false]
-      apply Finset.sum_eq_zero
-      intro x _
-      split_ifs with hx <;> omega
-
-private theorem fresh_start_count (i : Fin 96) :
-    (∑ p : Boundary, if HardinA229635State.h p ≤ 2 ∧ HardinA229635State.fresh p = i
-      then (1 : ℤ) else 0) = 6 := by
-  have h := HardinA229635State.start_count (i.natAdd 31)
-  rw [HardinA229635Starts.checked_starts, HardinA229635Starts.start_tallies] at h
-  simp only [Fin.val_natAdd, show ¬ 31 + i.val < 31 by omega, ite_false] at h
-  rw [h]
-  apply Finset.sum_congr rfl
-  intro p _
-  by_cases hp : HardinA229635State.h p ≤ 2
-  · have hn : ¬ HardinA229635State.h p + (2 - HardinA229635State.h p) ≤ 1 := by omega
-    simp only [hp, true_and, HardinA229635State.cl, hn, ite_false]
-    by_cases he : HardinA229635State.fresh p = i
-    · simp only [he, ite_true]
-    · simp only [he, (Fin.natAdd_injective 96 31).ne he, ite_false]
-  · simp [hp]
-
-private theorem rep_weight (p : Boundary) (hp : HardinA229635State.h p ≤ 2)
-    (j : Fin 96) :
-    (if exhaustedClass p = j then headWeight p else 0) =
-      (let q := HardinA229635State.rep (HardinA229635State.fresh p)
-       if exhaustedClass q = j then headWeight q else 0) := by
-  obtain ⟨q, ⟨hn, e, rfl⟩, _⟩ := canonical_exists_unique p
-  have hp' := (HardinA229635State.h_relabel e p).symm ▸ hp
-  have h := HardinA229635Laws.representatives_complete (e ∘ p) hn hp'
-  rw [fresh_relabel] at h
-  rw [h]
-  simp only [headWeight, HardinA229635State.h_relabel, exhausted_relabel]
-
--- Only the reindexing and head weights are checked here. The 96 fibre sizes
--- come from the frozen start certificate.
-set_option maxRecDepth 14000 in
-set_option maxHeartbeats 4000000 in
-private theorem initial_from_starts (j : Fin 96) :
-    (∑ i : Fin 96, if exhaustedClass (HardinA229635State.rep i) = j
-      then headWeight (HardinA229635State.rep i) * 6 else 0) = initialExhausted j := by
-  revert j
-  decide +kernel
-
-private theorem initial_exhausted_count (j : Fin 96) :
-    (∑ r : Row, if bondDefects horizontal r r = 2 ∧ exhaustedClass (boundary r) = j
-      then (1 : ℤ) else 0) = initialExhausted j := by
-  rw [← (Fin.consEquiv (fun _ : Fin 7 => Fin 3)).sum_comp, Fintype.sum_prod_type_right]
-  change (∑ p : Boundary, ∑ x : Fin 3,
-    if bondDefects horizontal (Fin.cons x p) (Fin.cons x p) = 2 ∧ exhaustedClass p = j
-    then (1 : ℤ) else 0) = _
-  calc
-    _ = ∑ p : Boundary, if exhaustedClass p = j then headWeight p else 0 := by
-      apply Finset.sum_congr rfl
-      intro p _
-      by_cases hp : exhaustedClass p = j
-      · simp only [hp, and_true, ite_true, head_weight_eq]
-      · simp only [hp, and_false, ite_false, Finset.sum_const_zero]
-    _ = ∑ p : Boundary, ∑ i : Fin 96,
-        (if exhaustedClass (HardinA229635State.rep i) = j
-          then headWeight (HardinA229635State.rep i) else 0) *
-        (if HardinA229635State.h p ≤ 2 ∧ HardinA229635State.fresh p = i then (1 : ℤ) else 0) := by
-      apply Finset.sum_congr rfl
-      intro p _
-      by_cases hp : HardinA229635State.h p ≤ 2
-      · simp only [hp, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
-        exact rep_weight p hp j
-      · have h₁ : HardinA229635State.h p ≠ 1 := by omega
-        have h₂ : HardinA229635State.h p ≠ 2 := by omega
-        simp [headWeight, hp, h₁, h₂]
-    _ = _ := by
-      rw [Finset.sum_comm, ← initial_from_starts j]
-      apply Finset.sum_congr rfl
-      intro i _
-      rw [← Finset.mul_sum, fresh_start_count]
-      split_ifs <;> simp
-
-private theorem initial_counts (s : Fin 168) :
-    (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
-      cl (boundary r) (2 - bondDefects horizontal r r) = s
-      then (1 : ℤ) else 0) = initial s := by
-  induction s using Fin.addCases (m := 72) (n := 96) with
-  | left j =>
-    simp_rw [active_cut]
-    simpa only [show 0 < (2 : ℕ) by decide, true_and, Nat.reduceSub, initial,
-      Fin.append_left] using HardinA229585Strip.finite_certificate.2.2.2.2.1 j
-  | right j =>
-    simp_rw [exhausted_cut]
-    simpa only [initial, Fin.append_right] using initial_exhausted_count j
-
-/-- The exact two-defect labelled count as a matrix coefficient. -/
-theorem count_transfer (n : ℕ) :
-    (D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.literalCount
-      (q := 3) horizontal antidiagonal 2 (n + 1) : ℤ) =
-      dotProduct initial ((T ^ n).mulVec terminal) := by
-  exact D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.lumped_count
-    horizontal antidiagonal boundary cross HardinA229635State.Valid cl T initial terminal 2
-    HardinA229585Strip.edge (fun p d _ => terminal_eq p d) next_valid
-    (fun p d hp s => transition_counts p d s (Or.inl hp)) initial_valid initial_counts n
 
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
