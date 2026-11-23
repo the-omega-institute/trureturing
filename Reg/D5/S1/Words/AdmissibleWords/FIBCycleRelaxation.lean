@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 private abbrev signature : Signature where
-  Params := ℝ × ℝ × ℝ
+  Params := Σ _ : ℝ, Σ _ : ℝ, ℝ
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -34,7 +34,7 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {q c a b : ℝ}, 0 ≤ q → 0 ≤ c → q + c ≤ 1 →
-    (HasCycleCompletion (R.readout () (q, c, a) b) ↔
+    (HasCycleCompletion (R.readout () ⟨q, c, a⟩ b) ↔
       (0 ≤ a ∧ a ≤ q ∧ a ≤ c) ∧ (0 ≤ b ∧ b ≤ q ∧ b ≤ c ∧ b ≤ 1 - (q + c)))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -57,7 +57,7 @@ def familyRegistration : Registration arena (type_of% (@cycle_completion_iff)) w
     rfl, rejected_law⟩, fun a => nomatch a⟩
   dependence := by
     rintro ⟨⟩
-    refine ⟨(0, 0, 0), 0, 1, ?_⟩
+    refine ⟨⟨0, 0, 0⟩, 0, 1, ?_⟩
     intro equal
     have read := congrFun (congrFun equal 4) 2
     change (0 : ℝ) + 2 * 0 = 0 + 2 * 1 at read
