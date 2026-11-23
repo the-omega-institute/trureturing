@@ -334,7 +334,10 @@ See the [module placement examples](../src/README.md).
 Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
-defined external open-problem exception.
+defined external open-problem exception. A book that needs a frozen GID for
+an existing OmegaMath theorem may use one direct D5 citation entry when the
+ledger has no matching item. Identify the book location and original proof
+in the PR and classify the entry as bind-only.
 
 Frozen results stay fixed. Changes involving assumptions, new axioms,
 `Hearts.lean` or protected policy must follow their existing authorization
