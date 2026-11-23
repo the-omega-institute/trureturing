@@ -46,4 +46,5 @@ Let Q be R of the qubit identity. The Kraus left-inverse relations give Q times 
 
 - Truth anchor: `D5/S3/Quantum/Recovery/NoncommutingQubit/FixedPair.cptp_eq_id_of_noncommuting_fixed_pair`
 - Truth anchor: `D5/S3/Quantum/Recovery/NoncommutingQubit/FixedPair.tensor_form_of_noncommuting_qubit_recovery`
+- Dependency: [D5/S3/Quantum/FixedPointProjection](../../FixedPointProjection.md)
 - Dependency: [D5/S3/Quantum/Recovery/ActualChannelAlgebra](../ActualChannelAlgebra.md)
