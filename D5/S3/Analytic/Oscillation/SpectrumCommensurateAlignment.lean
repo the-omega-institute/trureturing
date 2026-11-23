@@ -26,38 +26,38 @@ open SpectrumCriticalMissingWindow (HasLogSquaredMass)
 open SpectrumLogarithmicMissingWindow (HasLogarithmicSquareTail)
 
 private def exponent (n : ℕ) : ℕ := Nat.log 5 (n + 1)
-private def denominator (n : ℕ) : ℕ := 5 ^ exponent n
-private def blockSize (n : ℕ) : ℕ := denominator n * 2 ^ n
-private def Index := Σ n : ℕ, Fin (blockSize n)
+def denominator (n : ℕ) : ℕ := 5 ^ exponent n
+def blockSize (n : ℕ) : ℕ := denominator n * 2 ^ n
+abbrev Index := Σ n : ℕ, Fin (blockSize n)
 
-private theorem denominator_pos (n : ℕ) : 0 < denominator n := by
+theorem denominator_pos (n : ℕ) : 0 < denominator n := by
   unfold denominator
   positivity
 
-private theorem blockSize_pos (n : ℕ) : 0 < blockSize n :=
+theorem blockSize_pos (n : ℕ) : 0 < blockSize n :=
   Nat.mul_pos (denominator_pos n) (by positivity)
 
-private theorem denominator_bounds (n : ℕ) :
+theorem denominator_bounds (n : ℕ) :
     denominator n ≤ n + 1 ∧ n + 1 < 5 * denominator n := by
   exact ⟨Nat.pow_log_le_self 5 (Nat.succ_ne_zero n), by
     simpa [denominator, exponent, pow_succ'] using
       (Nat.lt_pow_succ_log_self (b := 5) (by decide) (n + 1))⟩
 
-private def boundary (n : ℕ) : ℝ := 4 * 2 ^ n
+def boundary (n : ℕ) : ℝ := 4 * 2 ^ n
 
-private theorem boundary_succ (n : ℕ) : boundary (n + 1) = 2 * boundary n := by
+theorem boundary_succ (n : ℕ) : boundary (n + 1) = 2 * boundary n := by
   unfold boundary
   rw [pow_succ]
   ring
 
-private theorem boundary_strictMono : StrictMono boundary := by
+theorem boundary_strictMono : StrictMono boundary := by
   apply strictMono_nat_of_lt_succ
   intro n
   rw [boundary_succ]
   have : 0 < boundary n := by unfold boundary; positivity
   linarith
 
-private def rate (j : Index) : ℝ :=
+def rate (j : Index) : ℝ :=
   boundary j.1 + (4 * (j.2.val : ℝ) + 1) / (denominator j.1 : ℝ)
 
 private def weight (j : Index) : ℝ := (2 * (j.1 : ℝ) + 1) / (blockSize j.1 : ℝ)
@@ -65,7 +65,7 @@ private def weight (j : Index) : ℝ := (2 * (j.1 : ℝ) + 1) / (blockSize j.1 :
 private theorem weight_pos (j : Index) : 0 < weight j :=
   div_pos (by positivity) (by exact_mod_cast blockSize_pos j.1)
 
-private theorem rate_in_block (j : Index) :
+theorem rate_in_block (j : Index) :
     boundary j.1 < rate j ∧ rate j < boundary (j.1 + 1) := by
   have hq : (0 : ℝ) < (denominator j.1 : ℝ) := by exact_mod_cast denominator_pos j.1
   refine ⟨lt_add_of_pos_right _ (div_pos (by positivity) hq), ?_⟩
@@ -104,10 +104,10 @@ private theorem rate_injective : Function.Injective rate := by
   have : (i.val : ℝ) = j.val := by linarith
   exact_mod_cast this
 
-private def blocks (s : Finset ℕ) : Finset Index :=
+def blocks (s : Finset ℕ) : Finset Index :=
   s.sigma (fun _ => Finset.univ)
 
-private theorem mem_blocks {s : Finset ℕ} {j : Index} : j ∈ blocks s ↔ j.1 ∈ s := by
+theorem mem_blocks {s : Finset ℕ} {j : Index} : j ∈ blocks s ↔ j.1 ∈ s := by
   change j ∈ s.sigma (fun _ => Finset.univ) ↔ j.1 ∈ s
   exact Finset.mem_sigma.trans (and_iff_left (Finset.mem_univ j.2))
 
@@ -131,7 +131,7 @@ private theorem spectrum_finite (T : ℝ) : {j : Index | rate j ≤ T}.Finite :=
   rw [mem_blocks, Finset.mem_range]
   exact_mod_cast hn.trans_lt ((rate_in_block j).1.trans_le (hj'.trans hN.le))
 
-private def spectrum : Spectrum where
+def spectrum : Spectrum where
   index := Index
   gamma := rate
   mult := fun _ => 1
@@ -147,7 +147,7 @@ private theorem index_infinite : Infinite spectrum.index := by
   intro a b h
   exact congrArg Sigma.fst h
 
-private theorem cutoff_block {T : ℝ} (hT : 4 ≤ T) :
+theorem cutoff_block {T : ℝ} (hT : 4 ≤ T) :
     ∃ n : ℕ, boundary n ≤ T ∧ T < boundary (n + 1) := by
   let m := ⌊T / 4⌋₊
   have hT' : 0 ≤ T / 4 := by linarith
@@ -164,20 +164,20 @@ private theorem cutoff_block {T : ℝ} (hT : 4 ≤ T) :
     unfold boundary
     linarith
 
-private theorem lower_blocks {T : ℝ} {n : ℕ} (hT : boundary n ≤ T) :
+theorem lower_blocks {T : ℝ} {n : ℕ} (hT : boundary n ≤ T) :
     blocks (Finset.range n) ⊆ spectrum.cut T := by
   intro j hj
   rw [mem_blocks, Finset.mem_range] at hj
   exact mem_cut.2 ((rate_in_block j).2.le.trans
     ((boundary_strictMono.monotone (Nat.succ_le_of_lt hj)).trans hT))
 
-private theorem block_le_of_mem_cut {T : ℝ} {n : ℕ} (hT : T < boundary (n + 1))
+theorem block_le_of_mem_cut {T : ℝ} {n : ℕ} (hT : T < boundary (n + 1))
     {j : Index} (hj : j ∈ spectrum.cut T) : j.1 ≤ n := by
   by_contra! hn
   exact (hT.trans_le (boundary_strictMono.monotone hn)).not_ge
     ((rate_in_block j).1.le.trans (mem_cut.1 hj))
 
-private theorem log_bounds {T : ℝ} {n : ℕ}
+theorem log_bounds {T : ℝ} {n : ℕ}
     (hlo : boundary n ≤ T) (hhi : T < boundary (n + 1)) :
     (n : ℝ) + 2 ≤ Real.log T / Real.log 2 ∧
       Real.log T / Real.log 2 < (n : ℝ) + 3 := by
@@ -193,7 +193,7 @@ private theorem log_bounds {T : ℝ} {n : ℕ}
   rw [hvalue] at hl hu
   exact ⟨(le_div_iff₀ hlog).2 hl, (div_lt_iff₀ hlog).2 (by push_cast at hu; linarith)⟩
 
-private theorem sum_blocks (s : Finset ℕ) (f : Index → ℝ) :
+theorem sum_blocks (s : Finset ℕ) (f : Index → ℝ) :
     ∑ j ∈ blocks s, f j = ∑ n ∈ s, ∑ k : Fin (blockSize n), f ⟨n, k⟩ :=
   Finset.sum_sigma _ _ _
 
@@ -350,7 +350,7 @@ private theorem pow_five_quarter (d : ℕ) : ∃ b : ℕ, 5 ^ d = 4 * b + 1 := b
     rw [pow_succ, hb]
     ring
 
-private theorem quarter_phase {j : Index} {N : ℕ} (h : j.1 ≤ N) :
+theorem quarter_phase {j : Index} {N : ℕ} (h : j.1 ≤ N) :
     ∃ b : ℕ, rate j * (denominator N : ℝ) = 4 * (b : ℝ) + 1 := by
   have he : exponent j.1 ≤ exponent N := Nat.log_mono_right (Nat.succ_le_succ h)
   obtain ⟨c, hc⟩ := pow_five_quarter (exponent N - exponent j.1)
@@ -396,7 +396,7 @@ private theorem mass_pos {T : ℝ} (hT : 5 ≤ T) : 0 < mass spectrum weight T :
   exact lt_of_lt_of_le (weight_pos j)
     (Finset.single_le_sum (fun k _ => (weight_pos k).le) hj)
 
-private theorem progression_visits {T : ℝ} {q : ℕ} (hq : 0 < q)
+theorem progression_visits {T : ℝ} {q : ℕ} (hq : 0 < q)
     (hbound : (q : ℝ) + 1 ≤ Real.log T / Real.log 2) (A : ℝ) :
     ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * q) ∈
       Ioo A (A + (2 * Real.pi / Real.log 2) * Real.log T) := by
