@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Semigroups;
 internal sealed class WuQuarticGraphDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Quantum/Semigroups/WuQuarticGraph.";
+    private static readonly LibraryNoteRef MotzkinStraus =
+        LibraryNoteRef.Create("D5/L/QuadraticForms/motzkinstraus1965maxima");
     private static readonly LibraryNoteRef Wu = LibraryNoteRef.Create("D5/L/SpinModels/wu2026sharp");
     private static readonly Formula Real = Seq(Mathbb, Grp(F.Id("R")));
     private static readonly Formula Vertices = F.Id("V");
@@ -33,8 +35,10 @@ internal sealed class WuQuarticGraphDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "unpenalized_minimum"),
                 H("The sharp unpenalized minimum"),
                 StatementSource.FromAuthor(Disp(Unpenalized())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("With zero penalties, the objective on independent support is kappa times the sum of squares. Cauchy–Schwarz bounds this sum below by the reciprocal of the support size, which is at most the independence number. Equal weights on a maximum independent set attain the bound. This is the Motzkin–Straus minimum in complementary-graph form."))),
+                AssessedProvenance.FromLiterature(MotzkinStraus),
+                Blocks(
+                    Paragraph(Text("On the simplex, the zero-penalty objective divided by kappa is one minus twice the sum of weight products over unordered edges of the complement. Motzkin–Straus, Section 1, Theorem 1, gives the maximum of that sum, attained at equal weights on a maximum clique of the complement. This clique is a maximum independent set of G.")),
+                    Paragraph(Text("The Lean proof uses the independent-support improvement above. On independent support the objective is kappa times the sum of squared weights. Cauchy–Schwarz bounds that sum below by the reciprocal of the support size, and the support size is at most the independence number. Equal weights on a maximum independent set attain the bound."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("wu-unpenalized-minimum"),
                 DeclarationHandle.Create(Owner + "wu_unpenalized_minimum"),

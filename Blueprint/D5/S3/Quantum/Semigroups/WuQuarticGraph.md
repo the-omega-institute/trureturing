@@ -24,11 +24,13 @@ $$\forall V \in \operatorname{Type}\left(u\right),\; [\operatorname{Fintype}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Semigroups/WuQuarticGraph.unpenalized_minimum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* T. S. Motzkin and E. G. Straus (1965). *Maxima for Graphs and a New Proof of a Theorem of Turán*. DOI: [10.4153/CJM-1965-053-6](https://doi.org/10.4153/CJM-1965-053-6).
 
 *Commentary.*
 
-With zero penalties, the objective on independent support is kappa times the sum of squares. Cauchy–Schwarz bounds this sum below by the reciprocal of the support size, which is at most the independence number. Equal weights on a maximum independent set attain the bound. This is the Motzkin–Straus minimum in complementary-graph form.
+On the simplex, the zero-penalty objective divided by kappa is one minus twice the sum of weight products over unordered edges of the complement. Motzkin–Straus, Section 1, Theorem 1, gives the maximum of that sum, attained at equal weights on a maximum clique of the complement. This clique is a maximum independent set of G.
+
+The Lean proof uses the independent-support improvement above. On independent support the objective is kappa times the sum of squared weights. Cauchy–Schwarz bounds that sum below by the reciprocal of the support size, and the support size is at most the independence number. Equal weights on a maximum independent set attain the bound.
 
 **Theorem 1.3 (The positive-temperature Wu coefficient and sharp graph minimum).**
 
