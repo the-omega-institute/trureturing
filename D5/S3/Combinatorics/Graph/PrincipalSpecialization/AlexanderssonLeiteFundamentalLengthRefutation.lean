@@ -318,9 +318,11 @@ private noncomputable def sourceColorings {n : ℕ} (h : Fin n → Fin n) (w : F
 
 private theorem sourceColorings_spec {n : ℕ} (h : Fin n → Fin n)
     (w c : Fin n → ℕ+) :
-    ((∃ k : (graph h).Coloring ℕ+, ∀ i, k i = c i) ∧ SameMonomial c w) ↔
+    ((∃ k : (graph h).Coloring ℕ+, ∀ i, k i = c i) ∧
+      ∀ a, (List.ofFn c).count a = (List.ofFn w).count a) ↔
     ∃! d : Fin n → palette w, d ∈ sourceColorings h w ∧ Subtype.val ∘ d = c := by
   classical
+  rw [← List.perm_iff_count]
   constructor
   · rintro ⟨hp, hm⟩
     have hs (i : Fin n) : c i ∈ palette w := by
@@ -349,7 +351,9 @@ private theorem sourceCoefficient_eq_coefficient {n : ℕ} (h : Fin n → Fin n)
     let c' : Fin n → ℕ+ := Subtype.val ∘ c
     have hspec : c ∈ sourceColorings h w ↔
         (∃ k : (graph h).Coloring ℕ+, ∀ i, k i = c' i) ∧ SameMonomial c' w := by
-      rw [sourceColorings_spec]
+      have h := sourceColorings_spec h w c'
+      rw [← List.perm_iff_count] at h
+      rw [h]
       constructor
       · intro hc
         refine ⟨c, ⟨hc, rfl⟩, ?_⟩
@@ -440,9 +444,282 @@ private theorem chromaticCoordinates_eq_cutWord {m : ℕ} (h : Fin (m + 1) → F
   rw [← strictCuts_alphabetWord T, chromaticCoordinates_apply_word h q _ (alphabetWord_mono T),
     sourceCoefficient_eq_cutWord h q _ (alphabetWord_mono T)]
 
+private theorem fundamental_eq_sum {m : ℕ} (S : Cuts m) :
+    fundamental S =
+      ∑ T ∈ (univ : Finset (Cuts m)).filter (S ⊆ ·), Pi.single T (1 : ℝ) := by
+  classical
+  funext U
+  have hf := fundamental_apply_word S (alphabetWord U)
+  rw [strictCuts_alphabetWord] at hf
+  have hcuts : (∀ i ∈ S, alphabetWord U i.castSucc < alphabetWord U i.succ) ↔ S ⊆ U := by
+    calc
+      _ ↔ S ⊆ strictCuts (alphabetWord U) := by simp [strictCuts, Finset.subset_iff]
+      _ ↔ S ⊆ U := by rw [strictCuts_alphabetWord]
+  rw [hf]
+  simp only [hcuts, sum_apply]
+  by_cases hSU : S ⊆ U
+  · rw [ite_eq_left hSU, sum_eq_single_of_mem U (by simp [hSU])]
+    · simp
+    · intro T _ hTU
+      simp [Ne.symm hTU]
+  · rw [ite_eq_right hSU]
+    symm
+    apply sum_eq_zero
+    intro T hT
+    have hTU : T ≠ U := fun he => hSU (he ▸ (mem_filter.1 hT).2)
+    simp [Ne.symm hTU]
+
+/-- The source prescription determines a unique linear map. Descending by cut
+inclusion, each fundamental element determines the value at its own monomial. -/
+private theorem psi_unique (m : ℕ) (L : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ)
+    (hL : ∀ S, L (fundamental S) = X ^ (S.card + 1)) : L = psi m := by
+  classical
+  have hpoint : ∀ k (S : Cuts m), m - S.card = k →
+      L (Pi.single S 1) = psi m (Pi.single S 1) := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro S hS
+      let supers := (univ : Finset (Cuts m)).filter (S ⊆ ·)
+      have hmem : S ∈ supers := by simp [supers]
+      have hsum := (hL S).trans (psi_fundamental S).symm
+      rw [fundamental_eq_sum, map_sum, map_sum] at hsum
+      change (∑ T ∈ supers, L (Pi.single T 1)) =
+        ∑ T ∈ supers, psi m (Pi.single T 1) at hsum
+      rw [← add_sum_erase _ _ hmem, ← add_sum_erase supers (fun T => psi m (Pi.single T 1))
+        hmem] at hsum
+      have htail : (∑ T ∈ supers.erase S, L (Pi.single T 1)) =
+          ∑ T ∈ supers.erase S, psi m (Pi.single T 1) := by
+        apply sum_congr rfl
+        intro T hT
+        have hST := (mem_filter.1 (mem_of_mem_erase hT)).2
+        have hne := ne_of_mem_erase hT
+        have hcard := card_lt_card (ssubset_of_subset_of_ne hST (Ne.symm hne))
+        have hbound : T.card ≤ m := by simpa using card_le_univ T
+        exact ih _ (by omega) T rfl
+      rw [htail] at hsum
+      exact add_right_cancel hsum
+  apply LinearMap.ext
+  intro f
+  have hf : (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) = f := by
+    funext U
+    rw [sum_apply, sum_eq_single_of_mem U (mem_univ _)]
+    · simp
+    · intro T _ hne
+      simp [Ne.symm hne]
+  have hsingle (T : Cuts m) := hpoint (m - T.card) T rfl
+  calc
+    L f = L (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) := congrArg L hf.symm
+    _ = psi m (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) := by
+      simp only [map_sum, LinearMap.map_smul, hsingle]
+    _ = psi m f := congrArg (psi m) hf
+
+/-- In positive degree the source defines Ψ by its values on the fundamental
+basis. The computed monomial formula is a realization of this prescription. -/
+private noncomputable def sourcePsi (m : ℕ) : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ :=
+  Classical.choose (show ∃ L : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ,
+    ∀ S, L (fundamental S) = X ^ (S.card + 1) from ⟨psi m, psi_fundamental⟩)
+
+private theorem sourcePsi_eq (m : ℕ) : sourcePsi m = psi m :=
+  psi_unique m _ (Classical.choose_spec (show ∃ L : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ,
+    ∀ S, L (fundamental S) = X ^ (S.card + 1) from ⟨psi m, psi_fundamental⟩))
+
 private noncomputable def sourceImage {n : ℕ} (h : Fin n → Fin n) (q : ℝ) : Polynomial ℝ :=
   match n with
   | 0 => 1
-  | m + 1 => psi m (chromaticCoordinates h q)
+  | m + 1 => sourcePsi m (chromaticCoordinates h q)
+
+/-- The candidate maps here are computable so the witness can be enumerated by
+the kernel. The surjectivity filter enforces the use of every palette color. -/
+private def packed {n : ℕ} (h : Fin n → Fin n) (r : ℕ) : Finset (Fin n → Fin r) :=
+  univ.filter (fun c => Proper h c ∧ ∀ a, ∃ i, c i = a)
+
+private theorem mem_packed {n r : ℕ} (h : Fin n → Fin n) (c : Fin n → Fin r) :
+    c ∈ packed h r ↔ Proper h c ∧ Function.Surjective c := by
+  simp [packed, Function.Surjective]
+
+private noncomputable def sortedColors {n r : ℕ} (c : Fin n → Fin r) : Fin n → Fin r :=
+  c ∘ Tuple.sort c
+
+private noncomputable def colorCuts {m r : ℕ} (c : Fin (m + 1) → Fin r) : Cuts m :=
+  strictCuts (sortedColors c)
+
+private theorem colorCuts_card {m r : ℕ} (c : Fin (m + 1) → Fin r)
+    (hc : Function.Surjective c) : (colorCuts c).card + 1 = r :=
+  strictCuts_card _ (Tuple.monotone_sort c) (hc.comp (Tuple.sort c).surjective)
+
+private theorem sortedColors_eq_of_sameMonomial {n r : ℕ} {c w : Fin n → Fin r}
+    (hc : SameMonomial c w) (hw : Monotone w) : sortedColors c = w := by
+  apply List.ofFn_injective
+  exact ((Tuple.sort c).ofFn_comp_perm c |>.trans hc).eq_of_sortedLE
+    (List.sortedLE_ofFn_iff.2 (Tuple.monotone_sort c)) (List.sortedLE_ofFn_iff.2 hw)
+
+private theorem packed_filter_sum {m r : ℕ} (h : Fin (m + 1) → Fin (m + 1))
+    (q : ℝ) (T : Cuts m) (hT : T.card + 1 = r) :
+    (∑ c ∈ (packed h r).filter (fun c => colorCuts c = T), q ^ ascents h c) =
+      coefficient h q (cutWord T) := by
+  classical
+  let e := Fin.castOrderIso hT
+  let w := e ∘ cutWord T
+  rw [← coefficient_orderIso h q e]
+  change _ = coefficient h q w
+  unfold coefficient
+  have hw : Monotone w := e.monotone.comp (cutWord_mono T)
+  have hws : Function.Surjective w := e.surjective.comp (cutWord_surjective T)
+  have hwCuts : strictCuts w = T := by
+    refine Eq.trans ?_ (strictCuts_cutWord T)
+    ext i
+    simp only [strictCuts, mem_filter, mem_univ, true_and, w, Function.comp_apply,
+      OrderIso.lt_iff_lt]
+  apply sum_congr _ (fun _ _ => rfl)
+  ext c
+  simp only [mem_filter, mem_packed, mem_univ, true_and]
+  constructor
+  · rintro ⟨⟨hp, hs⟩, hcuts⟩
+    refine ⟨hp, ?_⟩
+    have heq : sortedColors c = w := by
+      funext i
+      apply Fin.ext
+      change (sortedColors c i).val = rankAt T i
+      rw [← rankAt_strictCuts (sortedColors c) (Tuple.monotone_sort c)
+        (hs.comp (Tuple.sort c).surjective), ← colorCuts, hcuts]
+    rw [← heq]
+    exact ((Tuple.sort c).ofFn_comp_perm c).symm
+  · rintro ⟨hp, hm⟩
+    exact ⟨⟨hp, sameMonomial_surjective hm hws⟩,
+      (congrArg strictCuts (sortedColors_eq_of_sameMonomial hm hw)).trans hwCuts⟩
+
+private theorem packed_by_cuts {m : ℕ} (h : Fin (m + 1) → Fin (m + 1))
+    (q : ℝ) (r : ℕ) :
+    (∑ c ∈ packed h r, q ^ ascents h c) =
+    ∑ T ∈ (univ : Finset (Cuts m)).filter (fun T => T.card + 1 = r),
+      coefficient h q (cutWord T) := by
+  classical
+  rw [← sum_fiberwise_of_maps_to (g := colorCuts)
+    (t := (univ : Finset (Cuts m)).filter (fun T => T.card + 1 = r))
+    (fun c hc => mem_filter.2 ⟨mem_univ _, colorCuts_card c ((mem_packed h c).1 hc).2⟩)]
+  exact sum_congr rfl fun T hT => packed_filter_sum h q T (mem_filter.1 hT).2
+
+private theorem sourceImage_eq_packed {m : ℕ} (h : Fin (m + 1) → Fin (m + 1)) (q : ℝ) :
+    sourceImage h q =
+    ∑ r ∈ range (m + 2), (∑ c ∈ packed h r, q ^ ascents h c) •
+      (X ^ r * (1 - X) ^ (m + 1 - r)) := by
+  classical
+  change sourcePsi m (chromaticCoordinates h q) = _
+  rw [sourcePsi_eq]
+  change (∑ T : Cuts m, chromaticCoordinates h q T • monomialImage T) = _
+  have hr (T : Cuts m) : T.card + 1 ∈ range (m + 2) := by
+    have hcard : T.card ≤ m := by simpa using card_le_univ T
+    exact mem_range.2 (by omega)
+  rw [← sum_fiberwise_of_maps_to (fun T _ => hr T)]
+  apply sum_congr rfl
+  intro r _
+  rw [packed_by_cuts, sum_smul]
+  apply sum_congr rfl
+  intro T hT
+  have hTr : T.card + 1 = r := (mem_filter.1 hT).2
+  rw [chromaticCoordinates_eq_cutWord, monomialImage, ← hTr]
+  have : m + 1 - (T.card + 1) = m - T.card := by omega
+  rw [this]
+
+/-- The last yes/no clause of Question 6.7, with real-rootedness expressed
+by splitting over ℝ. The positive-degree hypothesis is explicit. -/
+public def claim : Prop :=
+  ∀ (n : ℕ), 0 < n → ∀ (h : Fin n → Fin n), Monotone h →
+    (∀ i, i ≤ h i) → ∀ (q : ℝ), 0 ≤ q → (sourceImage h q).Splits
+
+private def pathH : Fin 4 → Fin 4 := ![1, 2, 3, 3]
+
+private theorem pathH_mono : Monotone pathH := by
+  apply Fin.monotone_iff_le_succ.2
+  decide
+
+private theorem pathH_le : ∀ i, i ≤ pathH i := by decide
+
+private theorem pathH_edges :
+    ∀ i j : Fin 4, OrderedEdge pathH i j ↔ j.val = i.val + 1 := by decide
+
+private theorem path_ascents_le {r : ℕ} (c : Fin 4 → Fin r) : ascents pathH c ≤ 3 := by
+  have hEdges : ((univ : Finset (Fin 4 × Fin 4)).filter
+      (fun ij => ij.2.val = ij.1.val + 1)).card = 3 := by decide
+  rw [← hEdges]
+  apply card_le_card
+  intro ij hij
+  exact mem_filter.2 ⟨mem_univ _, (pathH_edges ij.1 ij.2).1 (mem_filter.1 hij).2.1⟩
+
+private def histogram (r a : ℕ) : ℕ :=
+  ((packed pathH r).filter (fun c => ascents pathH c = a)).card
+
+private def pathCounts : Fin 5 → Fin 4 → ℕ :=
+  ![![0, 0, 0, 0], ![0, 0, 0, 0], ![0, 1, 1, 0], ![0, 9, 9, 0], ![1, 11, 11, 1]]
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 2000000 in
+-- Kernel reduction enumerates the functions on each of the five palettes.
+private theorem histogram_eq_pathCounts :
+    ∀ (r : Fin 5) (a : Fin 4), histogram r.val a.val = pathCounts r a := by
+  decide +kernel
+
+private theorem path_weight_eq_histogram (r : ℕ) :
+    (∑ c ∈ packed pathH r, (16 : ℝ) ^ ascents pathH c) =
+      ∑ a ∈ range 4, (histogram r a : ℝ) * 16 ^ a := by
+  rw [← sum_fiberwise_of_maps_to (g := ascents pathH) (t := range 4)
+    (fun c _ => mem_range.2 (Nat.lt_succ_of_le (path_ascents_le c)))]
+  apply sum_congr rfl
+  intro a _
+  rw [← nsmul_eq_mul]
+  unfold histogram
+  rw [← sum_const]
+  apply sum_congr rfl
+  intro c hc
+  rw [(mem_filter.1 hc).2]
+
+private theorem path_weight (r : Fin 5) :
+    (∑ c ∈ packed pathH r.val, (16 : ℝ) ^ ascents pathH c) =
+      (![0, 0, 272, 2448, 7089] : Fin 5 → ℝ) r := by
+  rw [path_weight_eq_histogram]
+  have hh (a : Fin 4) := histogram_eq_pathCounts r a
+  rw [sum_range]
+  simp_rw [hh]
+  fin_cases r <;> norm_num [pathCounts, Fin.sum_univ_succ]
+
+private theorem path_image :
+    sourceImage pathH 16 =
+      X ^ 2 * (C (4913 : ℝ) * X ^ 2 + C 1904 * X + C 272) := by
+  classical
+  rw [sourceImage_eq_packed]
+  change (∑ r ∈ range 5, _) = _
+  rw [sum_range]
+  calc
+    _ = ∑ r : Fin 5, (![0, 0, 272, 2448, 7089] : Fin 5 → ℝ) r •
+        ((X : Polynomial ℝ) ^ r.val * (1 - X) ^ (4 - r.val)) := by
+      apply sum_congr rfl
+      intro r _
+      rw [path_weight r]
+    _ = _ := by
+      norm_num [Fin.sum_univ_succ, smul_eq_C_mul, C_ofNat] <;> ring
+
+private theorem path_image_not_splits : ¬ (sourceImage pathH 16).Splits := by
+  let p : Polynomial ℝ := C (4913 : ℝ) * X ^ 2 + C 1904 * X + C 272
+  have hform : sourceImage pathH 16 = (X - C 0) * ((X - C 0) * p) := by
+    rw [path_image]
+    simp only [map_zero, sub_zero, p, pow_two, mul_assoc]
+  intro hs
+  rw [hform, splits_X_sub_C_mul_iff, splits_X_sub_C_mul_iff] at hs
+  have hd : p.degree = 2 := degree_quadratic (by norm_num : (4913 : ℝ) ≠ 0)
+  obtain ⟨a, ha⟩ := hs.exists_eval_eq_zero (by rw [hd]; norm_num)
+  have he : (4913 : ℝ) * (a * a) + 1904 * a + 272 = 0 := by
+    simpa [p, eval_add, eval_mul, eval_pow, pow_two] using ha
+  have hsq := discrim_eq_sq_of_quadratic_eq_zero he
+  norm_num [discrim] at hsq
+  nlinarith only [hsq, sq_nonneg (2 * 4913 * a + 1904)]
+
+/-- The ordered path on four vertices at q = 16 refutes the source claim. -/
+public theorem result : ¬ claim := by
+  intro hc
+  exact path_image_not_splits (hc 4 (by decide) pathH pathH_mono pathH_le 16 (by norm_num))
+
+#print axioms claim
+#print axioms result
 
 end AlexanderssonLeiteFundamentalLengthRefutation
