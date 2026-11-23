@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
 import D5.S3.Quantum.Foundation.FinitePreparationChannel
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
@@ -26,6 +27,7 @@ open D5.S3.Quantum.Foundation.FinitePreparationChannel (finite_preparation_quant
 open D5.S3.Quantum.Divergence.CanonicalChannelDPI (extended_quantum_relative_entropy_channel_dpi)
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity (cfc_log_diagonal)
+open D5.S3.Quantum.Information.PartialTraceMutualInformation (density_posSemidef)
 open D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation (diagonalState)
 open private coordinates compress nullRay
   from D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
@@ -220,10 +222,6 @@ private theorem prepared_traceLog_le {n : Type*} {ι : Type} [Fintype n] [Decida
       _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, hp₁, one_mul]
   rw [houtput, hinput] at hreal
   exact sub_le_sub_iff_right _ |>.mp hreal
-
-private theorem density_posSemidef {n : Type*} [Fintype n] [DecidableEq n]
-    (X : DensityState n) : (matrix X).PosSemidef :=
-  Matrix.nonneg_iff_posSemidef.mp (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm X.2.1)
 
 /-- Positive-reference DPI and the classical merge deficit give a (1/114) cap.
 Every full-rank preparation reaching the benchmark has a strict improvement with
