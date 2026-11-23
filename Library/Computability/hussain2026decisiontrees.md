@@ -32,4 +32,4 @@ promise is empty. [Definitions 3–8](https://arxiv.org/html/2611.27454v1#S2)
 The two exponent sets use the patterns $a^e b a^e$ and $a^e b^e$,
 respectively, with $a\ne b$. The finite-dimension hypotheses are
 equivalent to finiteness of those sets, with the empty-set dimension
-convention included. [Definitions 1–2](https://arxiv.org/html/2611.27454v1#Thmdefinition1)
+convention included. [§3, Definition 9 (Hom)](https://arxiv.org/html/2611.27454v1#Thmdefinition9) · [§3, Definition 10 (Het)](https://arxiv.org/html/2611.27454v1#Thmdefinition10)
