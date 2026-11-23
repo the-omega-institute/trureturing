@@ -33,6 +33,12 @@ internal sealed class FibonacciQutritSpectralTransportDocument : IScribeDocument
                     + "are positive semidefinite, retain their respective traces, and have rank "
                     + "at most two. Adding e times the freed ray projection to the compressed C "
                     + "gives a positive definite reference and a strictly larger Umegaki "
-                    + "divergence than the original pair."))),
+                    + "divergence than the original pair.")),
+                Paragraph(Text(
+                    "The same real-linear compression sends each positive source preparation "
+                    + "to a trace-one positive semidefinite matrix supported on the retained "
+                    + "qubit. It distributes over each finite weighted sum with its original "
+                    + "weights. The null preparation becomes the trace-one projection onto "
+                    + "the freed ray."))),
             DescribeRole.Theorem))));
 }

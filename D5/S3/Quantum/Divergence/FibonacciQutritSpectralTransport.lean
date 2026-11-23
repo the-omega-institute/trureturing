@@ -37,10 +37,16 @@ private lemma coordinates_posSemidef (U : unitaryGroup (Fin 3) ℂ)
     (f : Fin 3 ≃ Fin 2 ⊕ Unit) (X : M₃) :
     (coordinates U f X).PosSemidef ↔ X.PosSemidef := by
   change ((U.val * X * (star U : M₃)).submatrix f.symm f.symm).PosSemidef ↔ X.PosSemidef
-  rw [← (Unitary.isUnit_coe U).posSemidef_star_right_conjugate_iff (x := X)]
+  have hU : IsUnit (U : M₃) := Unitary.isUnit_coe
+  rw [← Matrix.IsUnit.posSemidef_star_right_conjugate_iff (x := X) hU]
   constructor
   · intro h
-    simpa [Matrix.submatrix_submatrix, Function.comp_def] using h.submatrix f
+    have hback := h.submatrix f
+    have heq : (((U : M₃) * X * (star U : M₃)).submatrix f.symm f.symm).submatrix f f =
+        (U : M₃) * X * (star U : M₃) := by
+      ext i j
+      simp [Matrix.submatrix_apply]
+    rwa [heq] at hback
   · exact fun h => h.submatrix f.symm
 
 private lemma coordinates_le (U : unitaryGroup (Fin 3) ℂ)
@@ -52,15 +58,16 @@ private lemma coordinates_trace (U : unitaryGroup (Fin 3) ℂ)
     (f : Fin 3 ≃ Fin 2 ⊕ Unit) (X : M₃) : (coordinates U f X).trace = X.trace := by
   change (Matrix.reindex f f (U.val * X * (star U : M₃))).trace = X.trace
   rw [ConditionalHockeyStickOrthogonalReduction.trace_reindex,
-    Matrix.trace_mul_cycle, ← Matrix.mul_assoc, ← Unitary.coe_star, Unitary.coe_star_mul_self,
-    Matrix.one_mul]
+    Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, Matrix.one_mul]
 
 private lemma coordinates_log (U : unitaryGroup (Fin 3) ℂ)
     (f : Fin 3 ≃ Fin 2 ⊕ Unit) (X : M₃) :
     CFC.log (coordinates U f X) = coordinates U f (CFC.log X) := by
   change cfc Real.log (Matrix.reindex f f (U.val * X * (star U : M₃))) =
     Matrix.reindex f f (U.val * cfc Real.log X * (star U : M₃))
-  rw [Matrix.cfc_reindex, ← Unitary.star_eq_inv, Matrix.cfc_conj_unitary]
+  rw [Matrix.cfc_reindex]
+  congr 1
+  exact Matrix.cfc_conj_unitary Real.log U
 
 private lemma coordinates_divergence (U : unitaryGroup (Fin 3) ℂ)
     (f : Fin 3 ≃ Fin 2 ⊕ Unit) (X Y : M₃) :
@@ -90,19 +97,18 @@ private lemma ray_from_real {X : Block} (hX : X.IsHermitian) :
   ext ⟨⟩ ⟨⟩
   have h := congrFun (congrFun hX.eq (Sum.inr ())) (Sum.inr ())
   simp only [Matrix.conjTranspose_apply] at h
-  have him := congrArg Complex.im h
-  have hz : (X (Sum.inr ()) (Sum.inr ())).im = 0 := by
-    simp only [Complex.conj_im] at him
-    linarith
-  apply Complex.ext <;> simp [Matrix.toBlocks₂₂, Complex.real_smul, hz]
+  change star (X (Sum.inr ()) (Sum.inr ())) = _ at h
+  simpa [Matrix.toBlocks₂₂, Complex.real_smul] using (Complex.conj_eq_iff_re.mp h).symm
 
 private lemma embed_posSemidef {X : Qubit} (hX : X.PosSemidef) :
     (fromBlocks X 0 0 (0 : Ray)).PosSemidef := by
   let J : Matrix (Fin 2) (Fin 2 ⊕ Unit) ℂ :=
-    fromRows (1 : Qubit) (0 : Matrix (Fin 2) Unit ℂ)
+    fromCols (1 : Qubit) (0 : Matrix (Fin 2) Unit ℂ)
   have hJ : Jᴴ * X * J = fromBlocks X 0 0 (0 : Ray) := by
-    simp [J, Matrix.fromRows, Matrix.fromCols, ← fromBlocks_conjTranspose,
-      Matrix.fromBlocks_multiply, Matrix.mul_apply, Fintype.sum_sum_type]
+    dsimp only [J]
+    rw [Matrix.conjTranspose_fromCols_eq_fromRows_conjTranspose, Matrix.fromRows_mul,
+      Matrix.fromRows_mul_fromCols]
+    simp
   rw [← hJ]
   exact hX.conjTranspose_mul_mul_same J
 
@@ -115,8 +121,14 @@ private lemma embed_rank (X : Qubit) : (fromBlocks X 0 0 (0 : Ray)).rank ≤ 2 :
     | inr i => exact False.elim (hi (by ext j; cases j <;> rfl)))
   simpa [s] using h
 
-private def compress (τ : Qubit) (X : Block) : Block :=
-  fromBlocks (X.toBlocks₁₁ + (X (Sum.inr ()) (Sum.inr ())).re • τ) 0 0 (0 : Ray)
+private def compress (τ : Qubit) : Block →ₗ[ℝ] Block where
+  toFun X := fromBlocks (X.toBlocks₁₁ + (X (Sum.inr ()) (Sum.inr ())).re • τ) 0 0 (0 : Ray)
+  map_add' X Y := by
+    ext (i | i) (j | j) <;>
+      simp [Matrix.toBlocks₁₁, add_smul, add_add_add_comm]
+  map_smul' r X := by
+    ext (i | i) (j | j) <;>
+      simp [Matrix.toBlocks₁₁, smul_add, mul_assoc]
 
 private def nullRay : Block := fromBlocks (0 : Qubit) 0 0 (1 : Ray)
 
@@ -128,9 +140,12 @@ private lemma compress_posSemidef {τ : Qubit} (hτ : τ.PosSemidef)
 private lemma compress_trace {τ : Qubit} (hτ : τ.trace = 1) {X : Block}
     (hX : X.PosSemidef) : (compress τ X).trace = X.trace := by
   rw [trace_blocks (compress τ X), trace_blocks X]
+  change (X.toBlocks₁₁ + (X (Sum.inr ()) (Sum.inr ())).re • τ).trace + 0 =
+    X.toBlocks₁₁.trace + X (Sum.inr ()) (Sum.inr ())
   have h := congrFun (congrFun (ray_from_real hX.isHermitian) ()) ()
-  change X (Sum.inr ()) (Sum.inr ()) = _ at h
-  simp [compress, Matrix.trace_add, Matrix.trace_smul, hτ, h, Complex.real_smul]
+  rw [Matrix.trace_add, Matrix.trace_smul, hτ, add_zero]
+  congr 1
+  exact h.symm
 
 private lemma nullRay_trace : nullRay.trace = 1 := by
   rw [trace_blocks]
@@ -138,7 +153,7 @@ private lemma nullRay_trace : nullRay.trace = 1 := by
 
 private lemma nullRay_posSemidef : nullRay.PosSemidef := by
   have h : nullRay = diagonal (Sum.elim (fun _ : Fin 2 => 0) (fun _ : Unit => 1)) := by
-    ext (i | ⟨⟩) (j | ⟨⟩) <;> simp [nullRay]
+    ext (i | ⟨⟩) (j | ⟨⟩) <;> simp [nullRay, Matrix.diagonal_apply]
   rw [h, Matrix.posSemidef_diagonal_iff]
   intro i
   cases i <;> simp
@@ -155,13 +170,18 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
       let E := coordinates U f
       let Cₚ := (E C).toBlocks₁₁
       let τ := (Cₚ.trace.re)⁻¹ • Cₚ
-      let A' := compress τ (E A)
-      let C' := compress τ (E C)
+      let T := (compress τ).comp E.toLinearMap
+      let A' := T A
+      let C' := T C
       0 < lam ∧ lam < 1 / 500 ∧ lam • (1 : M₃) ≤ C ∧
         E C = fromBlocks Cₚ 0 0 (lam • (1 : Ray)) ∧
         τ.PosDef ∧ τ.trace = 1 ∧ A'.PosSemidef ∧ A'.trace = 1 ∧
         C'.PosSemidef ∧ C'.trace = C.trace ∧ A'.rank ≤ 2 ∧ C'.rank ≤ 2 ∧
-        (C' + e • nullRay).PosDef ∧
+        nullRay.PosSemidef ∧ nullRay.trace = 1 ∧ (C' + e • nullRay).PosDef ∧
+        (∀ X, X.PosSemidef → (T X).PosSemidef ∧ (T X).trace = X.trace ∧ (T X).rank ≤ 2) ∧
+        (∀ (ι : Type) [Fintype ι] (X : ι → M₃) (p γ : ι → ℝ),
+          A = ∑ i, p i • X i → C = ∑ i, γ i • X i →
+          A' = ∑ i, p i • T (X i) ∧ C' + e • nullRay = (∑ i, γ i • T (X i)) + e • nullRay) ∧
         divergence A (C + e • ρ) < divergence A' (C' + e • nullRay) := by
   classical
   let h := hC.isHermitian
@@ -177,21 +197,21 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
   have hdiag : E C = diagonal (fun j => (d j : ℂ)) := by
     change Matrix.reindex f f (Unitary.conjStarAlgAut ℂ M₃ U C) = _
     rw [h.conjStarAlgAut_star_eigenvectorUnitary]
-    ext j k
-    by_cases hjk : j = k
-    · subst k
-      simp [d, RCLike.ofReal_apply, Matrix.reindex_apply]
-    · have hf : f.symm j ≠ f.symm k := fun e => hjk (f.symm.injective e)
-      simp [d, Matrix.reindex_apply, Matrix.diagonal_apply_ne hjk, Matrix.diagonal_apply_ne hf]
+    rw [Matrix.reindex_apply, Matrix.submatrix_diagonal_equiv]
+    rfl
   have hfloor : lam • (1 : M₃) ≤ C := by
     apply (coordinates_le U f _ _).mp
     change E (lam • (1 : M₃)) ≤ E C
     rw [map_smul, map_one, hdiag, Matrix.le_iff, ← diagonal_one,
-      ← diagonal_smul, ← diagonal_sub, Matrix.posSemidef_diagonal_iff]
+      ← diagonal_smul]
+    have hconst : lam • (fun _ : Fin 2 ⊕ Unit => (1 : ℂ)) = fun _ => (lam : ℂ) := by
+      funext j
+      simp [Complex.real_smul]
+    rw [hconst]
+    rw [diagonal_sub, Matrix.posSemidef_diagonal_iff]
     intro j
     have hm : lam ≤ d j := hmin _ (Finset.mem_univ _)
-    simpa [Pi.sub_apply, Complex.real_smul, ← Complex.ofReal_sub] using
-      (Complex.ofReal_nonneg.mpr (sub_nonneg.mpr hm))
+    exact Complex.nonneg_iff.mpr ⟨by simpa using sub_nonneg.mpr hm, by simp⟩
   have hsmall : lam < 1 / 500 := by
     by_contra! hlarge
     exact not_floor A C ρ e he hc hlo hρ hρtr hloss
@@ -200,15 +220,16 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
   have hCₚ : Cₚ.PosDef := by
     change (E C).toBlocks₁₁.PosDef
     rw [hdiag, Matrix.toBlocks₁₁_diagonal, Matrix.posDef_diagonal_iff]
-    exact fun j => Complex.ofReal_pos.mpr (hC.eigenvalues_pos _)
+    exact fun j => Complex.pos_iff.mpr ⟨hC.eigenvalues_pos _, rfl⟩
   have hCblocks : E C = fromBlocks Cₚ 0 0 (lam • (1 : Ray)) := by
     have hlast : d (Sum.inr ()) = lam := by simp [d, hfi, lam]
-    rw [← Matrix.fromBlocks_toBlocks (E C)]
-    conv_lhs => rw [hdiag, Matrix.toBlocks₁₂_diagonal, Matrix.toBlocks₂₁_diagonal,
-      Matrix.toBlocks₂₂_diagonal]
-    congr 1
-    · exact congrArg Matrix.toBlocks₁₁ hdiag.symm
-    · ext ⟨⟩ ⟨⟩
+    nth_rewrite 1 [← Matrix.fromBlocks_toBlocks (E C)]
+    apply Matrix.fromBlocks_inj.mpr
+    refine ⟨rfl, ?_, ?_, ?_⟩
+    · rw [hdiag, Matrix.toBlocks₁₂_diagonal]
+    · rw [hdiag, Matrix.toBlocks₂₁_diagonal]
+    · rw [hdiag, Matrix.toBlocks₂₂_diagonal]
+      ext ⟨⟩ ⟨⟩
       simp [hlast, Complex.real_smul]
   have hCtrace : Cₚ.trace.re + lam = C.trace.re := by
     have htr := congrArg Complex.re ((trace_blocks (E C)).symm.trans (coordinates_trace U f C))
@@ -235,8 +256,11 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
     have hE := (coordinates_le U f _ _).mpr hfloor
     change E (lam • (1 : M₃)) ≤ E C at hE
     rw [map_smul, map_one] at hE
-    exact Matrix.le_iff.mpr ((Matrix.le_iff.mp hE).submatrix
-      (Sum.inl : Fin 2 → Fin 2 ⊕ Unit))
+    apply Matrix.le_iff.mpr
+    have hh := (Matrix.le_iff.mp hE).submatrix (Sum.inl : Fin 2 → Fin 2 ⊕ Unit)
+    rw [Matrix.submatrix_sub, Matrix.submatrix_smul] at hh
+    change (Cₚ - lam • (1 : Block).submatrix Sum.inl Sum.inl).PosSemidef at hh
+    rwa [Matrix.submatrix_one _ Sum.inl_injective] at hh
   have hlo' : (4 / 3 : ℝ) • E C ≤ E A := by
     simpa only [map_smul] using (coordinates_le U f _ _).mpr hlo
   have hhi' : E A ≤ (7 / 3 : ℝ) • E C := by
@@ -252,18 +276,20 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
   have hτ : τ.PosDef := hCₚ.smul (inv_pos.mpr hb)
   have hτtrace : τ.trace = 1 := by
     have hreal : (b : ℂ) = Cₚ.trace := by
-      exact Complex.conj_eq_iff_re.mp (by
-        rw [← Matrix.trace_conjTranspose, hCₚ.isHermitian.eq])
+      apply Complex.conj_eq_iff_re.mp
+      change star Cₚ.trace = Cₚ.trace
+      rw [← Matrix.trace_conjTranspose, hCₚ.isHermitian.eq]
     change (b⁻¹ • Cₚ).trace = 1
-    rw [Matrix.trace_smul, ← hreal, Complex.real_smul, smul_eq_mul,
-      Complex.ofReal_inv, inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hb.ne')]
+    rw [Matrix.trace_smul, ← hreal, Complex.real_smul, Complex.ofReal_inv,
+      inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hb.ne')]
   have hcompressC : compress τ (E C) =
       fromBlocks ((Cₚ.trace.re + lam) • τ) 0 0 (0 : Ray) := by
     have hbτ : b • τ = Cₚ := by rw [show τ = b⁻¹ • Cₚ from rfl, smul_smul, mul_inv_cancel₀ hb.ne', one_smul]
     have hd : (E C (Sum.inr ()) (Sum.inr ())).re = lam := by
       simp [hdiag, d, hfi, lam]
-    simp only [compress, hd, ← show b = Cₚ.trace.re from rfl, add_smul]
-    change fromBlocks (Cₚ + lam • τ) 0 0 (0 : Ray) = _
+    change fromBlocks (Cₚ + (E C (Sum.inr ()) (Sum.inr ())).re • τ) 0 0 (0 : Ray) = _
+    rw [hd, add_smul]
+    change fromBlocks (Cₚ + lam • τ) 0 0 (0 : Ray) = fromBlocks (b • τ + lam • τ) 0 0 0
     rw [hbτ]
   have hB' : compress τ (E C) + e • nullRay =
       fromBlocks ((Cₚ.trace.re + lam) • τ) 0 0 (e • (1 : Ray)) := by
@@ -273,13 +299,31 @@ theorem strict_spectral_transport (A C ρ : M₃) (e : ℝ) (hC : C.PosDef)
     compress_posSemidef hτ.posSemidef hEApos, (compress_trace hτtrace hEApos).trans
       ((coordinates_trace U f A).trans hA),
     compress_posSemidef hτ.posSemidef hECpos, (compress_trace hτtrace hECpos).trans
-      (coordinates_trace U f C), embed_rank _, embed_rank _, ?_, ?_⟩
-  · rw [hB']
+      (coordinates_trace U f C), embed_rank _, embed_rank _, nullRay_posSemidef,
+    nullRay_trace, ?_, ?_, ?_, ?_⟩
+  · change (compress τ (E C) + e • nullRay).PosDef
+    rw [hB']
     exact UmegakiRareFlagBKM.block_diag_posDef _ 1 (hτ.smul (by rw [hCtrace]; linarith))
       Matrix.PosDef.one (by linarith)
+  · intro X hX
+    have hEX := (coordinates_posSemidef U f X).mpr hX
+    exact ⟨compress_posSemidef hτ.posSemidef hEX,
+      (compress_trace hτtrace hEX).trans (coordinates_trace U f X), embed_rank _⟩
+  · intro ι _ X p γ hAp hCγ
+    let T := (compress τ).comp E.toLinearMap
+    change T A = (∑ i, p i • T (X i)) ∧
+      T C + e • nullRay = (∑ i, γ i • T (X i)) + e • nullRay
+    constructor
+    · rw [hAp, map_sum]
+      simp only [map_smul]
+    · rw [hCγ, map_sum]
+      simp only [map_smul]
   · apply lt_of_sub_pos
+    change 0 < divergence (compress τ (E A)) (compress τ (E C) + e • nullRay) -
+      divergence A (C + e • ρ)
+    have hcompressA : compress τ (E A) = fromBlocks (F + a • τ) 0 0 (0 : Ray) := rfl
     rw [hB', ← coordinates_divergence U f A (C + e • ρ), map_add, map_smul, hCblocks]
-    rw [hAblocks]
+    rw [hcompressA, hAblocks]
     exact hbetter
 
 #print axioms strict_spectral_transport
