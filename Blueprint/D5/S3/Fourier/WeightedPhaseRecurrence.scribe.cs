@@ -13,10 +13,8 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
             Paragraph(Text(
                 "Let J be a finite index type, and let g, θ, and p be real-valued families on J. "
                 + "The entries of p are nonnegative and sum to one. Let N be a positive integer "
-                + "and let ε, δ, a, and R be real with ε > 1/N, δ > 0, and R > 0. "
-                + "For integer vectors k set ξ(k) = Σⱼ kⱼgⱼ and φ(k) = Σⱼ kⱼθⱼ. "
-                + "For every k with |kⱼ| ≤ N in every coordinate, assume cos φ(k) = 1 "
-                + "if ξ(k) = 0 and |ξ(k)| ≥ δ if ξ(k) ≠ 0.")),
+                + "and let ε > 1/N. For each integer vector k in the box |kⱼ| ≤ N set "
+                + "ξ(k) = Σⱼ kⱼgⱼ and φ(k) = Σⱼ kⱼθⱼ.")),
             Describe.Lean(
                 DescribeId.Create("normalized-phase-loss"),
                 DeclarationHandle.Create("D5/S3/Fourier/WeightedPhaseRecurrence.phaseLoss"),
@@ -26,14 +24,15 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
                     Equal(Call("phaseLoss", F.Id("g"), Theta, F.Id("p"), F.Id("t")), Loss())))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The definition applies to arbitrary real weights. The recurrence theorem "
-                    + "uses nonnegativity and normalization."))),
+                    "The definition applies to arbitrary real weights. The recurrence "
+                    + "theorems use nonnegativity and normalization."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("weighted-phase-recurrence"),
-                DeclarationHandle.Create("D5/S3/Fourier/WeightedPhaseRecurrence.weighted_phase_recurrence"),
-                H("A window uniform in its starting time"),
-                StatementSource.FromAuthor(WindowStatement()),
+                DescribeId.Create("recurrence-margin"),
+                DeclarationHandle.Create("D5/S3/Fourier/WeightedPhaseRecurrence.recurrenceMargin"),
+                H("Signed Fejér margin"),
+                StatementSource.FromAuthor(Disp(Equal(Margin(),
+                    Subtract(Multiply(F.Id("R"), F.Id("A")), Call("B", F.Id("R")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -50,17 +49,48 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
                         + "the triangular coefficients in coordinate j. The cosine adds the "
                         + "two modes at ±N with coefficient 1/2 each. Multiplying the complex "
                         + "characters and taking real parts gives "
-                        + "a cosine expansion on the integer box. All coefficients are nonnegative. "
-                        + "The coefficient at the zero index is ε − 1/N, and evaluating with all "
-                        + "offsets zero gives total coefficient mass εN^|J|.")),
+                        + "a cosine expansion on the integer box with coefficients cₖ. "
+                        + "All coefficients are nonnegative under the stated hypotheses.")),
                     Paragraph(Text(
-                        "The zero index contributes R(ε − 1/N) to the integral. Other exact "
-                        + "resonances contribute nonnegatively by phase compatibility. For a nonzero "
-                        + "frequency ξ, the affine cosine integral is a difference of two sines "
-                        + "divided by ξ and has absolute value at most 2/|ξ| ≤ 2/δ. "
-                        + "The length inequality gives a strictly positive integral. At a time "
-                        + "where the integrand is positive, P is nonnegative and the loss is "
-                        + "strictly below ε.")),
+                        "The signed sum A adds cₖ cos φ(k) over the indices with ξ(k) = 0. "
+                        + "The penalty B(R) adds 2cₖ |sin(Rξ(k)/2)|/|ξ(k)| over the "
+                        + "remaining indices. The definition is a finite sum for arbitrary "
+                        + "real inputs and natural N."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("weighted-phase-recurrence-of-margin"),
+                DeclarationHandle.Create(
+                    "D5/S3/Fourier/WeightedPhaseRecurrence.weighted_phase_recurrence_of_margin"),
+                H("Quantitative loss in every window"),
+                StatementSource.FromAuthor(MarginStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At zero frequency the integral of the cosine is R cos φ(k). "
+                    + "At nonzero frequency the sine difference identity gives the integral "
+                    + "as 2 sin(Rξ(k)/2) cos(ξ(k)(a+R/2) − φ(k))/ξ(k). "
+                    + "Nonnegative coefficients then bound the integral of (ε − phaseLoss)P "
+                    + "below by the margin. The maximum on the closed interval is at least "
+                    + "the margin divided by R. Each Fejér factor lies between zero and N, "
+                    + "so at that maximum, ε − phaseLoss is at least the margin divided by RN^|J|. "
+                    + "A positive margin gives strict loss below ε."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-phase-recurrence"),
+                DeclarationHandle.Create("D5/S3/Fourier/WeightedPhaseRecurrence.weighted_phase_recurrence"),
+                H("A window from a common frequency gap"),
+                StatementSource.FromAuthor(WindowStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let δ > 0. For each index in the box, assume cos φ(k) = 1 "
+                        + "if ξ(k) = 0 and |ξ(k)| ≥ δ if ξ(k) ≠ 0. "
+                        + "The zero coefficient is ε − 1/N, and evaluating at zero offsets "
+                        + "gives total coefficient mass εN^|J|. The length inequality forces "
+                        + "R > 0 since the total mass is at least the zero coefficient. "
+                        + "Compatibility gives A ≥ ε − 1/N. The nonzero-frequency indices exclude "
+                        + "the zero index and each incurs at most 2cₖ/δ, so "
+                        + "B(R) ≤ 2(εN^|J| − (ε − 1/N))/δ. The margin is positive by the length "
+                        + "inequality, and the quantitative loss bound gives the strict conclusion.")),
                     Paragraph(Text(
                         "This uses the Fejér product of Bohr and Jessen and the finite averaging "
                         + "mechanism discussed by Sourmelidis (arXiv:2411.14221, §4). The "
@@ -109,17 +139,31 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
             Subscript(F.Id("p"), j), Seq(Open, Subtract(D(1), Call("cos", angle)), Close));
     }
 
+    private static Formula Margin() =>
+        Call("recurrenceMargin", F.Id("g"), Theta, F.Id("p"), F.Id("N"), Varepsilon, F.Id("R"));
+
+    private static Formula BoxScale() => new Formula.Power(F.Id("N"), Seq(Bar, F.Id("J"), Bar));
+
+    private static Formula WindowTime() =>
+        Seq(Exists, Sp, F.Id("t"), InMacro, OpenBracket, F.Id("a"), Comma,
+            Add(F.Id("a"), F.Id("R")), CloseBracket, Comma, Quad);
+
+    private static Formula MarginStatement()
+    {
+        var r = F.Id("R");
+        return Disp(Seq(r, Gt, D(0), Comma, Quad, Margin(), Gt, D(0),
+            Quad, Longrightarrow, Quad, WindowTime(),
+            AtMost(Loss(), Subtract(Varepsilon, new Formula.Fraction(Margin(), Multiply(r, BoxScale()))))));
+    }
+
     private static Formula WindowStatement()
     {
         var n = F.Id("N");
-        var a = F.Id("a");
         var r = F.Id("R");
-        var t = F.Id("t");
         var origin = Subtract(Varepsilon, new Formula.Fraction(D(1), n));
-        var mass = Multiply(Varepsilon, new Formula.Power(n, Seq(Bar, F.Id("J"), Bar)));
+        var mass = Multiply(Varepsilon, BoxScale());
         return Disp(Seq(r, DeltaLower, Open, origin, Close, Gt,
             D(2), Open, Subtract(mass, Seq(Open, origin, Close)), Close,
-            Quad, Longrightarrow, Quad, Exists, Sp, t, InMacro,
-            OpenBracket, a, Comma, Add(a, r), CloseBracket, Comma, Quad, Loss(), Lt, Varepsilon));
+            Quad, Longrightarrow, Quad, WindowTime(), Loss(), Lt, Varepsilon));
     }
 }

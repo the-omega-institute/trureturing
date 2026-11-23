@@ -223,78 +223,171 @@ private theorem weights_mass {J : Type*} [Fintype J] [DecidableEq J]
     simp [Complex.normSq_natCast, hN']
   simpa [hpeak] using weighted_fejer_expansion hN ε p (fun _ => 0) hp
 
-private theorem cosine_integral_lower (a R δ ξ φ : ℝ) (hδ : 0 < δ) (hξ : δ ≤ |ξ|) :
-    -(2 / δ) ≤ ∫ t in a..a + R, Real.cos (ξ * t - φ) := by
-  have hξ' : ξ ≠ 0 := abs_pos.mp (hδ.trans_le hξ)
+private theorem mem_frequencyBox {J : Type*} [Fintype J] [DecidableEq J]
+    {N : ℕ} {k : J → ℤ} : k ∈ frequencyBox N ↔ ∀ j, |k j| ≤ (N : ℤ) := by
+  simp only [frequencyBox, Fintype.mem_piFinset, mem_modes]
+
+private theorem weights_nonneg {J : Type*} [Fintype J] [DecidableEq J]
+    {N : ℕ} {ε : ℝ} {p : J → ℝ} {k : J → ℤ}
+    (hN : 0 < N) (hp : ∀ j, 0 ≤ p j) (hε : 1 / (N : ℝ) < ε)
+    (hb : ∀ j, |k j| ≤ (N : ℤ)) : 0 ≤ weights N ε p k := by
+  have htriangle (j : J) : 0 ≤ triangle N (k j) := by
+    apply sub_nonneg.mpr
+    have hN' : (0 : ℝ) < N := by positivity
+    rw [div_le_iff₀ hN', one_mul]
+    exact_mod_cast hb j
+  have hcorrection (j : J) : 0 ≤ correction N (k j) := by
+    unfold correction
+    apply add_nonneg
+    · by_cases h : k j = 0
+      · simp [h, triangle]
+      · simpa only [ite_eq_right h, sub_zero] using htriangle j
+    · unfold edge
+      apply add_nonneg <;> split <;> norm_num
+  exact add_nonneg (mul_nonneg (sub_nonneg.mpr hε.le) (Finset.prod_nonneg fun j _ =>
+    htriangle j)) (Finset.sum_nonneg fun i _ =>
+      mul_nonneg (div_nonneg (hp i) (Nat.cast_nonneg N))
+        (Finset.prod_nonneg fun j _ => by
+          by_cases h : j = i
+          · simpa only [ite_eq_left h] using hcorrection j
+          · simpa only [ite_eq_right h] using htriangle j))
+
+private def modeFrequency {J : Type*} [Fintype J] (g : J → ℝ) (k : J → ℤ) : ℝ :=
+  ∑ j, (k j : ℝ) * g j
+
+private def sincBound (R ξ : ℝ) : ℝ :=
+  2 * |Real.sin (R * ξ / 2)| / |ξ|
+
+private theorem sincBound_le_reciprocal (R ξ : ℝ) : sincBound R ξ ≤ 2 / |ξ| := by
+  unfold sincBound
+  apply div_le_div_of_nonneg_right _ (abs_nonneg _)
+  simpa only [mul_one] using
+    mul_le_mul_of_nonneg_left (Real.abs_sin_le_one (R * ξ / 2)) (by norm_num : 0 ≤ (2 : ℝ))
+
+private def resonantMass {K : Type*} (s : Finset K) (c ξ φ : K → ℝ) : ℝ := by
+  classical
+  exact ∑ k ∈ s.filter (fun k => ξ k = 0), c k * Real.cos (φ k)
+
+private def sincPenalty {K : Type*} (s : Finset K) (c ξ : K → ℝ) (R : ℝ) : ℝ := by
+  classical
+  exact ∑ k ∈ s.filter (fun k => ξ k ≠ 0), c k * sincBound R (ξ k)
+
+/-- Window length times the signed resonant coefficient sum, minus the sum of
+the coefficient-weighted absolute interval cosine bounds at nonzero frequencies. -/
+def recurrenceMargin {J : Type*} [Fintype J] (g θ p : J → ℝ) (N : ℕ) (ε R : ℝ) : ℝ := by
+  classical
+  exact R * resonantMass (frequencyBox N) (weights N ε p) (modeFrequency g) (modeFrequency θ) -
+    sincPenalty (frequencyBox N) (weights N ε p) (modeFrequency g) R
+
+private theorem cosine_integral_lower (a R ξ φ : ℝ) (hξ : ξ ≠ 0) :
+    -sincBound R ξ ≤ ∫ t in a..a + R, Real.cos (ξ * t - φ) := by
   have heq : (∫ t in a..a + R, Real.cos (ξ * t - φ)) =
       (Real.sin (ξ * (a + R) - φ) - Real.sin (ξ * a - φ)) / ξ := by
     simpa only [sub_eq_add_neg, smul_eq_mul, div_eq_mul_inv, mul_comm ξ⁻¹] using
-      (intervalIntegral.integral_comp_mul_add Real.cos (a := a) (b := a + R) hξ' (-φ)).trans
+      (intervalIntegral.integral_comp_mul_add Real.cos (a := a) (b := a + R) hξ (-φ)).trans
         (congrArg (ξ⁻¹ • ·) integral_cos)
-  have habs : |Real.sin (ξ * (a + R) - φ) - Real.sin (ξ * a - φ)| ≤ 2 := by
-    exact (abs_sub _ _).trans ((add_le_add (Real.abs_sin_le_one _)
-      (Real.abs_sin_le_one _)).trans_eq (by norm_num))
-  have hbound : |∫ t in a..a + R, Real.cos (ξ * t - φ)| ≤ 2 / δ := by
-    rw [heq, abs_div]
-    exact (div_le_div_of_nonneg_right habs (abs_nonneg _)).trans
-      (div_le_div_of_nonneg_left (by norm_num) hδ hξ)
+  have hbound : |∫ t in a..a + R, Real.cos (ξ * t - φ)| ≤ sincBound R ξ := by
+    rw [heq, Real.sin_sub_sin, abs_div, abs_mul, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 2)]
+    rw [show (ξ * (a + R) - φ - (ξ * a - φ)) / 2 = R * ξ / 2 by ring]
+    unfold sincBound
+    apply div_le_div_of_nonneg_right _ (abs_nonneg _)
+    exact (mul_le_mul_of_nonneg_left (Real.abs_cos_le_one _) (by positivity)).trans_eq
+      (mul_one _)
   exact (abs_le.mp hbound).1
 
-private theorem window_from_cosine_certificate {K : Type*} [Fintype K]
-    (o : K) (c ξ φ : K → ℝ) (a R δ : ℝ)
-    (hR : 0 < R) (hδ : 0 < δ)
-    (hc : ∀ k, 0 ≤ c k) (hξo : ξ o = 0)
-    (hzero : ∀ k, ξ k = 0 → Real.cos (φ k) = 1)
-    (hgap : ∀ k, ξ k ≠ 0 → δ ≤ |ξ k|)
-    (hbudget : R * δ * c o > 2 * ((∑ k, c k) - c o)) :
-    ∃ t ∈ Icc a (a + R), 0 < ∑ k, c k * Real.cos (ξ k * t - φ k) := by
+private theorem cosine_sum_integral_lower {K : Type*} (s : Finset K) (c ξ φ : K → ℝ)
+    (a R : ℝ) (hc : ∀ k ∈ s, 0 ≤ c k) :
+    R * resonantMass s c ξ φ - sincPenalty s c ξ R ≤
+      ∫ t in a..a + R, ∑ k ∈ s, c k * Real.cos (ξ k * t - φ k) := by
   classical
-  let f (k : K) (t : ℝ) : ℝ := c k * Real.cos (ξ k * t - φ k)
-  have hcont (k : K) : Continuous (f k) := by dsimp [f]; fun_prop
-  have hR' : a ≤ a + R := by linarith
-  have hterm (k : K) : -(2 / δ) * c k ≤ ∫ t in a..a + R, f k t := by
-    by_cases hξ : ξ k = 0
-    · have hnon : -(2 / δ) * c k ≤ R * c k :=
-        le_trans (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) (hc k))
-          (mul_nonneg hR.le (hc k))
-      simpa [f, hξ, Real.cos_neg, hzero k hξ] using hnon
-    · unfold f
-      rw [intervalIntegral.integral_const_mul, mul_comm (-(2 / δ))]
-      exact mul_le_mul_of_nonneg_left (cosine_integral_lower a R δ _ _ hδ (hgap k hξ)) (hc k)
-  have horigin : (∫ t in a..a + R, f o t) = R * c o := by
-    simp [f, hξo, Real.cos_neg, hzero o hξo]
-  have herase : (∑ k ∈ Finset.univ.erase o, c k) = (∑ k, c k) - c o := by
-    rw [← Finset.sum_erase_add Finset.univ c (Finset.mem_univ o)]
-    ring
-  have htotal : 0 < ∫ t in a..a + R, ∑ k, f k t := by
-    rw [intervalIntegral.integral_finsetSum (fun k _ => (hcont k).intervalIntegrable _ _)]
-    rw [← Finset.sum_erase_add Finset.univ (fun k => ∫ t in a..a + R, f k t)
-      (Finset.mem_univ o), horigin]
-    have hsum := Finset.sum_le_sum (s := Finset.univ.erase o) (fun k _ => hterm k)
-    rw [← Finset.mul_sum, herase] at hsum
-    have hbudget' : 2 * ((∑ k, c k) - c o) / δ < R * c o := by
-      apply (div_lt_iff₀ hδ).2
-      calc
-        _ < R * δ * c o := hbudget
-        _ = R * c o * δ := by ring
-    have hnormalize : -(2 / δ) * ((∑ k, c k) - c o) =
-        -(2 * ((∑ k, c k) - c o) / δ) := by ring
-    rw [hnormalize] at hsum
-    linarith
-  by_contra! h
-  have hnonpos : (∫ t in a..a + R, ∑ k, f k t) ≤ 0 := by
-    rw [← intervalIntegral.integral_zero (a := a) (b := a + R) (μ := volume)]
-    exact intervalIntegral.integral_mono_on hR'
-      ((continuous_finsetSum _ fun k _ => hcont k).intervalIntegrable _ _)
-      (by simp) h
-  linarith
+  rw [intervalIntegral.integral_finsetSum (fun k _ => by
+    apply Continuous.intervalIntegrable
+    fun_prop)]
+  rw [← Finset.sum_filter_add_sum_filter_not s (fun k => ξ k = 0)]
+  unfold resonantMass sincPenalty
+  rw [Finset.mul_sum, sub_eq_add_neg, ← Finset.sum_neg_distrib]
+  apply add_le_add
+  · apply Finset.sum_le_sum
+    intro k hk
+    simp only [(Finset.mem_filter.mp hk).2, zero_mul, zero_sub, Real.cos_neg,
+      intervalIntegral.integral_const, smul_eq_mul]
+    rw [show a + R - a = R by ring]
+  · apply Finset.sum_le_sum
+    intro k hk
+    rw [intervalIntegral.integral_const_mul, ← mul_neg]
+    exact mul_le_mul_of_nonneg_left (cosine_integral_lower a R _ _ (Finset.mem_filter.mp hk).2)
+      (hc k (Finset.mem_filter.mp hk).1)
+
+private theorem fejer_bounds {N : ℕ} (hN : 0 < N) (x : ℝ) :
+    0 ≤ fejerKernel N x ∧ fejerKernel N x ≤ N := by
+  let S := ∑ r ∈ Finset.range N, expI ((r : ℝ) * x)
+  rw [fejer_square hN]
+  change 0 ≤ (1 / (N : ℝ)) * Complex.normSq S ∧
+    (1 / (N : ℝ)) * Complex.normSq S ≤ N
+  have hnorm : ‖S‖ ≤ (N : ℝ) := by
+    calc
+      ‖S‖ ≤ ∑ r ∈ Finset.range N, ‖expI ((r : ℝ) * x)‖ := norm_sum_le _ _
+      _ = N := by
+        simp only [expI, Complex.norm_exp_ofReal_mul_I, Finset.sum_const, Finset.card_range,
+          nsmul_eq_mul, mul_one]
+  refine ⟨mul_nonneg (by positivity) (Complex.normSq_nonneg _), ?_⟩
+  rw [Complex.normSq_eq_norm_sq, one_div_mul_eq_div, div_le_iff₀ (by positivity)]
+  simpa only [pow_two] using (sq_le_sq₀ (norm_nonneg _) (Nat.cast_nonneg N)).mpr hnorm
+
+/-- Positive signed Fejér margin gives a quantitative loss guarantee on every closed
+interval of length `R`. -/
+theorem weighted_phase_recurrence_of_margin {J : Type*} [Fintype J]
+    (g θ p : J → ℝ) (N : ℕ) (ε a R : ℝ)
+    (hN : 0 < N) (hp : ∀ j, 0 ≤ p j) (hpsum : ∑ j, p j = 1)
+    (hε : 1 / (N : ℝ) < ε) (hR : 0 < R)
+    (hmargin : 0 < recurrenceMargin g θ p N ε R) :
+    ∃ t ∈ Icc a (a + R),
+      phaseLoss g θ p t ≤ ε - recurrenceMargin g θ p N ε R / (R * (N : ℝ) ^ Fintype.card J) := by
+  classical
+  let f (t : ℝ) := ∑ k ∈ frequencyBox N,
+    weights N ε p k * Real.cos (modeFrequency g k * t - modeFrequency θ k)
+  have hcont : Continuous f := by
+    unfold f
+    fun_prop
+  have ha : a ≤ a + R := by linarith
+  have hIntegral : recurrenceMargin g θ p N ε R ≤ ∫ t in a..a + R, f t :=
+    cosine_sum_integral_lower (frequencyBox N) (weights N ε p) (modeFrequency g)
+      (modeFrequency θ) a R (fun _ hk => weights_nonneg hN hp hε (mem_frequencyBox.mp hk))
+  obtain ⟨t, ht, htmax⟩ := isCompact_Icc.exists_isMaxOn ⟨a, left_mem_Icc.mpr ha⟩ hcont.continuousOn
+  have haverage : recurrenceMargin g θ p N ε R ≤ R * f t := by
+    refine hIntegral.trans ?_
+    have h := intervalIntegral.integral_mono_on (μ := volume) ha (hcont.intervalIntegrable _ _)
+      (intervalIntegrable_const (c := f t)) (fun s hs => htmax hs)
+    simpa only [intervalIntegral.integral_const, smul_eq_mul, add_sub_cancel_left] using h
+  have hx (k : J → ℤ) :
+      modeFrequency g k * t - modeFrequency θ k = ∑ j, (k j : ℝ) * (g j * t - θ j) := by
+    simp only [modeFrequency, mul_sub, ← mul_assoc, Finset.sum_sub_distrib, Finset.sum_mul]
+  let P := ∏ j, fejerKernel N (g j * t - θ j)
+  have hexpansion : f t = (ε - phaseLoss g θ p t) * P := by
+    simpa only [f, hx, phaseLoss, P] using
+      weighted_fejer_expansion hN ε p (fun j => g j * t - θ j) hpsum
+  rw [hexpansion, ← mul_assoc, mul_comm R, mul_assoc] at haverage
+  have hP : 0 ≤ P := Finset.prod_nonneg fun j _ => (fejer_bounds hN _).1
+  have hPmax : P ≤ (N : ℝ) ^ Fintype.card J := by
+    change P ≤ (N : ℝ) ^ (Finset.univ : Finset J).card
+    rw [← Finset.prod_const]
+    exact Finset.prod_le_prod₀ (fun _ _ => (fejer_bounds hN _).1)
+      (fun _ _ => (fejer_bounds hN _).2)
+  have hdefect : 0 < ε - phaseLoss g θ p t :=
+    pos_of_mul_pos_left (hmargin.trans_le haverage) (mul_nonneg hR.le hP)
+  have hscale : 0 < R * (N : ℝ) ^ Fintype.card J := by positivity
+  have hquant : recurrenceMargin g θ p N ε R / (R * (N : ℝ) ^ Fintype.card J) ≤
+      ε - phaseLoss g θ p t :=
+    (div_le_iff₀ hscale).2 (haverage.trans
+      (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hPmax hR.le) hdefect.le))
+  exact ⟨t, ht, by linarith⟩
 
 /-- A finite band of compatible exact resonances and a lower bound for the other
 frequencies give a uniform time window for normalized weighted phase loss. -/
 theorem weighted_phase_recurrence {J : Type*} [Fintype J]
     (g θ p : J → ℝ) (N : ℕ) (ε δ a R : ℝ)
     (hN : 0 < N) (hp : ∀ j, 0 ≤ p j) (hpsum : ∑ j, p j = 1)
-    (hε : 1 / (N : ℝ) < ε) (hδ : 0 < δ) (hR : 0 < R)
+    (hε : 1 / (N : ℝ) < ε) (hδ : 0 < δ)
     (hzero : ∀ k : J → ℤ, (∀ j, |k j| ≤ (N : ℤ)) →
       (∑ j, (k j : ℝ) * g j) = 0 → Real.cos (∑ j, (k j : ℝ) * θ j) = 1)
     (hgap : ∀ k : J → ℤ, (∀ j, |k j| ≤ (N : ℤ)) →
@@ -303,63 +396,66 @@ theorem weighted_phase_recurrence {J : Type*} [Fintype J]
       2 * (ε * (N : ℝ) ^ Fintype.card J - (ε - 1 / (N : ℝ)))) :
     ∃ t ∈ Icc a (a + R), phaseLoss g θ p t < ε := by
   classical
-  let B := frequencyBox (J := J) N
-  let c (k : B) := weights N ε p k.val
-  let o : B := ⟨0, by
-    apply Fintype.mem_piFinset.mpr
-    intro j
-    exact mem_modes.mpr (by simp)⟩
-  have hb (k : B) (j : J) : |k.val j| ≤ (N : ℤ) :=
-    mem_modes.mp (Fintype.mem_piFinset.mp k.property j)
-  have hc (k : B) : 0 ≤ c k := by
-    have htriangle (j : J) : 0 ≤ triangle N (k.val j) := by
-      apply sub_nonneg.mpr
-      have hN' : (0 : ℝ) < N := by positivity
-      rw [div_le_iff₀ hN', one_mul]
-      exact_mod_cast hb k j
-    have hcorrection (j : J) : 0 ≤ correction N (k.val j) := by
-      unfold correction
-      apply add_nonneg
-      · by_cases h : k.val j = 0
-        · simp [h, triangle]
-        · simpa only [ite_eq_right h, sub_zero] using htriangle j
-      · unfold edge
-        apply add_nonneg <;> split <;> norm_num
-    exact add_nonneg (mul_nonneg (sub_nonneg.mpr hε.le) (Finset.prod_nonneg fun j _ =>
-      htriangle j)) (Finset.sum_nonneg fun i _ =>
-        mul_nonneg (div_nonneg (hp i) (Nat.cast_nonneg N))
-          (Finset.prod_nonneg fun j _ => by
-            by_cases h : j = i
-            · simpa only [ite_eq_left h] using hcorrection j
-            · simpa only [ite_eq_right h] using htriangle j))
-  have hc0 : c o = ε - 1 / (N : ℝ) := by
-    change weights N ε p 0 = _
+  let s := frequencyBox (J := J) N
+  let c := weights N ε p
+  let ξ := modeFrequency g
+  let φ := modeFrequency θ
+  have hc (k : J → ℤ) (hk : k ∈ s) : 0 ≤ c k :=
+    weights_nonneg hN hp hε (mem_frequencyBox.mp hk)
+  have ho : (0 : J → ℤ) ∈ s := mem_frequencyBox.mpr (by simp)
+  have hξo : ξ 0 = 0 := by simp [ξ, modeFrequency]
+  have hc0 : c 0 = ε - 1 / (N : ℝ) := by
     have hcast : (N : ℤ) ≠ 0 := by positivity
-    simp [weights, triangle, correction, edge, hN.ne', Ne.symm hcast]
-  have hmass : (∑ k : B, c k) = ε * (N : ℝ) ^ Fintype.card J := by
-    simpa only [c, Finset.sum_coe_sort, B] using weights_mass hN ε p hpsum
-  obtain ⟨t, ht, hs⟩ := window_from_cosine_certificate o c
-    (fun k => ∑ j, (k.val j : ℝ) * g j) (fun k => ∑ j, (k.val j : ℝ) * θ j)
-    a R δ hR hδ hc (by simp [o])
-    (fun k => hzero k.val (hb k)) (fun k => hgap k.val (hb k))
-    (by simpa only [hc0, hmass] using hbudget)
-  have hx (k : J → ℤ) :
-      (∑ j, (k j : ℝ) * g j) * t - (∑ j, (k j : ℝ) * θ j) =
-        ∑ j, (k j : ℝ) * (g j * t - θ j) := by
-    simp only [mul_sub, ← mul_assoc, Finset.sum_sub_distrib, Finset.sum_mul]
-  simp_rw [hx] at hs
-  rw [show (∑ k : B, c k * Real.cos (∑ j, (k.val j : ℝ) * (g j * t - θ j))) =
-      (ε - phaseLoss g θ p t) * ∏ j, fejerKernel N (g j * t - θ j) by
-    unfold phaseLoss
-    exact (Finset.sum_coe_sort B (fun k : J → ℤ => weights N ε p k *
-      Real.cos (∑ j, (k j : ℝ) * (g j * t - θ j)))).trans
-      (weighted_fejer_expansion hN ε p (fun j => g j * t - θ j) hpsum)] at hs
-  have hK : 0 ≤ ∏ j, fejerKernel N (g j * t - θ j) := by
-    apply Finset.prod_nonneg
-    intro j _
-    rw [fejer_square hN]
-    exact mul_nonneg (by positivity) (Complex.normSq_nonneg _)
-  exact ⟨t, ht, sub_pos.mp (pos_of_mul_pos_left hs hK)⟩
+    simp [c, weights, triangle, correction, edge, hN.ne', Ne.symm hcast]
+  have hmass : ∑ k ∈ s, c k = ε * (N : ℝ) ^ Fintype.card J := weights_mass hN ε p hpsum
+  have hmass0 : c 0 ≤ ∑ k ∈ s, c k := Finset.single_le_sum hc ho
+  have hbudget0 : 0 < R * δ * (ε - 1 / (N : ℝ)) := by linarith
+  have hR : 0 < R := pos_of_mul_pos_left
+    (pos_of_mul_pos_left hbudget0 (sub_nonneg.mpr hε.le)) hδ.le
+  have hres : ε - 1 / (N : ℝ) ≤ resonantMass s c ξ φ := by
+    unfold resonantMass
+    rw [← hc0]
+    have hcompat (k : J → ℤ) (hk : k ∈ s.filter (fun k => ξ k = 0)) :
+        0 ≤ c k * Real.cos (φ k) := by
+      obtain ⟨hks, hξk⟩ := Finset.mem_filter.mp hk
+      have hcos : Real.cos (φ k) = 1 := hzero k (mem_frequencyBox.mp hks) hξk
+      rw [hcos, mul_one]
+      exact hc k hks
+    calc
+      c 0 = c 0 * Real.cos (φ 0) := by simp [φ, modeFrequency]
+      _ ≤ _ := Finset.single_le_sum hcompat (Finset.mem_filter.mpr ⟨ho, hξo⟩)
+  have hpenalty : sincPenalty s c ξ R ≤
+      2 * (ε * (N : ℝ) ^ Fintype.card J - (ε - 1 / (N : ℝ))) / δ := by
+    unfold sincPenalty
+    calc
+      _ ≤ ∑ k ∈ s.filter (fun k => ξ k ≠ 0), c k * (2 / δ) := by
+        apply Finset.sum_le_sum
+        intro k hk
+        obtain ⟨hks, hξk⟩ := Finset.mem_filter.mp hk
+        apply mul_le_mul_of_nonneg_left _ (hc k hks)
+        exact (sincBound_le_reciprocal R (ξ k)).trans
+          (div_le_div_of_nonneg_left (by norm_num) hδ (hgap k (mem_frequencyBox.mp hks) hξk))
+      _ ≤ ∑ k ∈ s.erase 0, c k * (2 / δ) := by
+        apply Finset.sum_le_sum_of_subset_of_nonneg
+        · intro k hk
+          obtain ⟨hks, hξk⟩ := Finset.mem_filter.mp hk
+          exact Finset.mem_erase.mpr ⟨fun h => hξk (h ▸ hξo), hks⟩
+        · intro k hk _
+          exact mul_nonneg (hc k (Finset.mem_of_mem_erase hk)) (by positivity)
+      _ = _ := by
+        rw [← Finset.sum_mul, ← hmass, ← hc0, ← Finset.sum_erase_add s c ho]
+        ring
+  have hmargin : 0 < recurrenceMargin g θ p N ε R := by
+    change 0 < R * resonantMass s c ξ φ - sincPenalty s c ξ R
+    have hbudget' : 2 * (ε * (N : ℝ) ^ Fintype.card J - (ε - 1 / (N : ℝ))) / δ <
+        R * (ε - 1 / (N : ℝ)) := (div_lt_iff₀ hδ).2 (by
+      calc
+        _ < R * δ * (ε - 1 / (N : ℝ)) := hbudget
+        _ = _ := by ring)
+    exact sub_pos.mpr (hpenalty.trans_lt (hbudget'.trans_le (mul_le_mul_of_nonneg_left hres hR.le)))
+  obtain ⟨t, ht, hloss⟩ :=
+    weighted_phase_recurrence_of_margin g θ p N ε a R hN hp hpsum hε hR hmargin
+  exact ⟨t, ht, hloss.trans_lt (sub_lt_self _ (by positivity))⟩
 
 end
 
