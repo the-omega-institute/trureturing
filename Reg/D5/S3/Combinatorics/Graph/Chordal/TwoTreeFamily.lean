@@ -8,6 +8,8 @@ import Mathlib.Algebra.Module.ULift
 namespace Reg.D5.S3.Combinatorics.Graph.Chordal.TwoTreeFamily
 
 open SimpleGraph
+
+local instance : DecidableRel (twoTree 0).Adj := Top.adjDecidable (Fin 3)
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -52,8 +54,9 @@ abbrev coordinateArena : Arena where
 private theorem coordinate_zero_rejected : ¬ coordinateArena.{u}.Law coordinateZero.{u} := by
   intro h
   have h0 := congrFun (h (ULift.{u} ℤ) 0 ()) ()
-  have h1 : (0 : ULift.{u} ℤ) = 1 := by simpa using h0
-  exact zero_ne_one h1
+  change (0 : ULift.{u} ℤ) = (Pi.single () 1 : Unit → ULift.{u} ℤ) () at h0
+  rw [Pi.single_eq_same] at h0
+  exact zero_ne_one h0
 
 def coordinateEvidence : Registration coordinateArena.{u}
     (type_of% twoTree_triangle_chain_coordinate.{u}) where
@@ -104,7 +107,7 @@ abbrev fillingArena : Arena where
 private theorem unit_core_norm :
     ‖WithLp.toLp 1 (twoTreeCirculationCoordinates ℝ 0 (twoTreeTriangleChain ℝ 0 ()))‖ = 1 := by
   rw [twoTree_triangle_chain_coordinate]
-  change ‖PiLp.single 1 () (1 : ℝ)‖ = 1
+  change ‖(PiLp.single 1 () (1 : ℝ) : PiLp 1 (fun _ : Unit => ℝ))‖ = 1
   simp
 
 private theorem filling_zero_rejected : ¬ fillingArena.Law fillingZero := by
@@ -198,7 +201,7 @@ abbrev pairingSignature : Signature where
   State p := by
     rcases p with ⟨R, E, ring, addGroup, inst, d, τ⟩
     letI : CommRing R := ring
-    exact TwoTreeCirculation R d
+    exact ↥(TwoTreeCirculation R d)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -241,10 +244,11 @@ private theorem pairing_zero_rejected : ¬ pairingArena.{u, v}.Law pairingZero.{
   have h0 := @h (ULift.{u} ℤ) (ULift.{v} ℤ) _ _ _ 0 (fun _ => 1)
     (twoTreeTriangleChain (ULift.{u} ℤ) 0 ())
   rw [twoTree_triangle_gain_pairing] at h0
-  change pairingReader _ (twoTreeTriangleChain (ULift.{u} ℤ) 0 ()) = 0 at h0
+  change pairingReader ⟨ULift.{u} ℤ, ULift.{v} ℤ, inferInstance, inferInstance, inferInstance,
+    0, fun _ => 1⟩ (twoTreeTriangleChain (ULift.{u} ℤ) 0 ()) = 0 at h0
   exact one_ne_zero (unit_pairing.{u,v}.symm.trans h0)
 
-def pairingEvidence : Registration pairingArena.{u,v} (type_of% twoTree_triangle_gain_pairing.{u,v}) where
+def pairingEvidence : Registration pairingArena.{u,v} (type_of% (@twoTree_triangle_gain_pairing.{u,v})) where
   actual := pairingActual
   bridge := Iff.rfl
   variation := ⟨twoTree_triangle_gain_pairing.{u,v}, pairingZero, pairing_zero_rejected⟩
@@ -267,7 +271,7 @@ def pairingEvidence : Registration pairingArena.{u,v} (type_of% twoTree_triangle
     simp
 
 
-def coordinateRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,0,0,0}
+def coordinateRegistration : Contract.Registration.{_,_,_,0,0,0,u+1,0,0,u,0,0}
     (@SimpleGraph.twoTree_triangle_chain_coordinate.{u}) (Realization coordinateSignature.{u}) Unit Unit where
   unitName := `SimpleGraph.twoTree_triangle_chain_coordinate.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.TwoTreeFamily.coordinateEvidence
@@ -363,7 +367,7 @@ def triangleRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,0,0,0}
   familyRecord := none
   options := #[]
 
-def pairingRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,0,0,0}
+def pairingRegistration : Contract.Registration.{_,_,_,0,0,0,_,u,0,v,0,0}
     (@SimpleGraph.twoTree_triangle_gain_pairing.{u, v}) (Realization pairingSignature.{u, v}) Unit Unit where
   unitName := `SimpleGraph.twoTree_triangle_gain_pairing.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.TwoTreeFamily.pairingEvidence

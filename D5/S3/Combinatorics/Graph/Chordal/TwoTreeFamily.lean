@@ -19,6 +19,8 @@ open scoped BigOperators ENNReal
 
 namespace SimpleGraph
 
+noncomputable section
+
 /-- Indices of the oriented edges created in generation `d`. -/
 abbrev TwoTreeFrontier : ℕ → Type
   | 0 => Fin 3
@@ -85,19 +87,20 @@ instance (d : ℕ) : Fintype (TwoTreeTriangles d) := by
   | zero => exact inferInstanceAs (Fintype Unit)
   | succ d ih => exact @instFintypeSum _ _ ih inferInstance
 
+instance (d : ℕ) : DecidableEq (TwoTreeFrontier d) := by
+  induction d with
+  | zero => exact inferInstanceAs (DecidableEq (Fin 3))
+  | succ d ih => exact @instDecidableEqProd _ _ ih inferInstance
+
+instance (d : ℕ) : DecidableEq (TwoTreeV d) := by
+  induction d with
+  | zero => exact inferInstanceAs (DecidableEq (Fin 3))
+  | succ d ih => exact @instDecidableEqSum _ _ ih inferInstance
+
 instance (d : ℕ) : DecidableEq (TwoTreeTriangles d) := by
   induction d with
   | zero => exact inferInstanceAs (DecidableEq Unit)
-  | succ d ih =>
-    letI := ih
-    have ht : DecidableEq (TwoTreeFrontier d) := by
-      induction d with
-      | zero => exact inferInstanceAs (DecidableEq (Fin 3))
-      | succ d ih =>
-        letI := ih
-        exact inferInstanceAs (DecidableEq (TwoTreeFrontier d × Bool))
-    letI := ht
-    exact inferInstanceAs (DecidableEq (TwoTreeTriangles d ⊕ TwoTreeFrontier d))
+  | succ d ih => exact @instDecidableEqSum _ _ ih inferInstance
 
 /-- Indices of all edges, retaining the orientation in which each edge was created. -/
 abbrev TwoTreeEdges : ℕ → Type
@@ -132,9 +135,17 @@ noncomputable def twoTreeBoundary {R : Type*} [CommRing R] (d : ℕ) :
   toFun := signedBoundary (twoTreeEdgeSource d) (twoTreeEdgeTarget d)
   map_add' x y := by
     classical
+    letI : DecidableEq (TwoTreeV d) := Classical.decEq _
     funext v
     simp only [signedBoundary, Pi.add_apply]
-    simp_rw [ite_add, add_ite, add_zero, zero_add, Finset.sum_add_distrib]
+    have separate (f : TwoTreeEdges d → TwoTreeV d) :
+        (∑ e, if f e = v then x e + y e else 0) =
+          (∑ e, if f e = v then x e else 0) + ∑ e, if f e = v then y e else 0 := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro e _
+      by_cases h : f e = v <;> simp [h]
+    rw [separate (twoTreeEdgeTarget d), separate (twoTreeEdgeSource d)]
     abel
   map_smul' a x := by
     classical
@@ -151,15 +162,22 @@ private def extendFrontier {R : Type*} [Zero R] :
   | 0, x => x
   | _ + 1, x => Sum.elim (fun _ => 0) x
 
+private theorem signedBoundary_extend {R V A B : Type*} [AddCommGroup R]
+    [Fintype A] [Fintype B] (s t : A ⊕ B → V) (x : B → R) (v : V) :
+    signedBoundary s t (Sum.elim (fun _ => 0) x) v =
+      signedBoundary (s ∘ Sum.inr) (t ∘ Sum.inr) x v := by
+  classical
+  simp [signedBoundary, Fintype.sum_sum_type]
+
 private theorem boundary_extendFrontier {R : Type*} [CommRing R] (d : ℕ)
     (x : TwoTreeFrontier d → R) (v : TwoTreeV d) :
     twoTreeBoundary d (extendFrontier d x) v =
       signedBoundary (twoTreeSource d) (twoTreeTarget d) x v := by
-  classical
   cases d with
   | zero => rfl
-  | succ d => simp [twoTreeBoundary, signedBoundary, twoTreeEdgeSource, twoTreeEdgeTarget,
-      extendFrontier, Fintype.sum_sum_type]
+  | succ d =>
+    exact signedBoundary_extend (A := TwoTreeEdges d) (B := TwoTreeFrontier (d + 1))
+      (twoTreeEdgeSource (d + 1)) (twoTreeEdgeTarget (d + 1)) x v
 
 private theorem boundary_fresh {R : Type*} [CommRing R] (d : ℕ)
     (x : TwoTreeEdges (d + 1) → R) (e : TwoTreeFrontier d) :
@@ -253,8 +271,8 @@ private noncomputable def splitCirculation {R : Type*} [CommRing R] (d : ℕ) :
       funext e
       change reduceChain d (a • x.val) e = (a • reduceChain d x.val) e
       cases d with
-      | zero => simp [reduceChain, extendFrontier, smul_add]
-      | succ d => cases e <;> simp [reduceChain, extendFrontier, smul_add]
+      | zero => simp [reduceChain, extendFrontier, mul_add]
+      | succ d => cases e <;> simp [reduceChain, extendFrontier, mul_add]
     · rfl
 
 private theorem core_coefficients {R : Type*} [CommRing R] (x : TwoTreeCirculation R 0)
@@ -510,8 +528,8 @@ private theorem image_triangle (d : ℕ) (i : TwoTreeTriangles d) :
     twoTreeTriangleVertices (d + 1) (.inl i) =
       Sum.inl '' twoTreeTriangleVertices d i := by
   unfold twoTreeTriangleVertices
-  cases twoTreeOrientedTriangle d i
-  simp [twoTreeOrientedTriangle, Set.image_insert_eq]
+  cases h : twoTreeOrientedTriangle d i
+  simp [twoTreeOrientedTriangle, h, Set.image_insert_eq]
 
 /-- Every triangle in the graph is a core or insertion triangle. -/
 private theorem triangles_classify (d : ℕ) (a b c : TwoTreeV d)
@@ -539,14 +557,14 @@ private theorem triangles_classify (d : ℕ) (a b c : TwoTreeV d)
       simp
     · refine ⟨.inr k, ?_⟩
       rcases parents k hac hbc (show G.Adj a b from hab).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      all_goals ext x; simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t]; tauto
+      all_goals ext x <;> simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t] <;> tauto
     · refine ⟨.inr j, ?_⟩
       rcases parents j hab hbc (show G.Adj a c from hac).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      all_goals ext x; simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t]; tauto
+      all_goals ext x <;> simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t] <;> tauto
     · exact hbc.elim
     · refine ⟨.inr e, ?_⟩
       rcases parents e hab hac (show G.Adj b c from hbc).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      all_goals ext x; simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t]; tauto
+      all_goals ext x <;> simp [twoTreeTriangleVertices, twoTreeOrientedTriangle, s, t] <;> tauto
     · exact hac.elim
     · exact hab.elim
     · exact hab.elim
@@ -616,7 +634,7 @@ theorem twoTree_triangle_gain_pairing {R E : Type*} [CommRing R] [AddCommGroup E
       (twoTreeFrontierDart d e).snd_ne_fst
     rw [Fintype.sum_sum_type, Fintype.sum_sum_type, Fintype.sum_prod_type]
     simp only [twoTreeEdgeSource, twoTreeEdgeTarget, twoTreeSource, twoTreeTarget,
-      twoTreeTriangleGain, twoTreeInsertionGain, if_pos rfl, if_neg (distinct _), Fintype.sum_bool,
+      twoTreeTriangleGain, twoTreeInsertionGain, ite_true, ite_eq_right (distinct _), Fintype.sum_bool,
       old, leftChild, rightChild, smul_zero, add_zero, sub_smul, smul_add,
       Finset.sum_add_distrib, Finset.sum_sub_distrib]
     change ((∑ e, previous.val e • g (twoTreeEdgeSource d e) (twoTreeEdgeTarget d e)) -
@@ -624,6 +642,8 @@ theorem twoTree_triangle_gain_pairing {R E : Type*} [CommRing R] [AddCommGroup E
       ((∑ e, c e • g (twoTreeSource d e) (twoTreeTarget d e)) + ∑ e, c e • τ (.inr e)) =
       (∑ i, twoTreeCirculationCoordinates R d previous i • τ (.inl i)) + ∑ e, c e • τ (.inr e)
     rw [frontier_pairing, ih (τ ∘ Sum.inl) previous]
+    simp only [Function.comp_apply]
     abel
 
+end
 end SimpleGraph

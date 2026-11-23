@@ -9,6 +9,8 @@ open scoped BigOperators
 namespace Reg.D5.S3.Combinatorics.Graph.Chordal.TwoTreeStretchSeparation
 
 open SimpleGraph
+
+local instance : DecidableRel (twoTree 0).Adj := Top.adjDecidable (Fin 3)
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -262,6 +264,7 @@ def integralEvidence : Registration integralArena (type_of% twoTree_integer_lowe
     intro i
     let g (_ : TwoTreeV 0) (v : TwoTreeV 0) : ℤ := if (v : Fin 3) = 0 then 0 else 1
     refine ⟨⟨0, g, fun _ => 0, 0⟩, 0, 1, ?_⟩
+    change (0 : ℤ) ≠ 1
     decide
 
 
@@ -370,7 +373,8 @@ abbrev banachArena : Arena where
         twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u))) ∧
     (∃ φ : TwoTreeV d → TwoTreeCirculation ℝ d, ∀ u v, (twoTree d).Adj u v →
       twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u)) ≤
-        twoTreeBanachConstant d)
+        twoTreeBanachConstant d) ∧
+    (∀ i : TwoTreeTriangles d, twoTreeTriangleSum d (twoTreeCanonicalGain d) i = PiLp.single 1 i 1)
 
 private theorem no_banach_two : ¬ banachArena.{u}.Law banachTwo := by
   intro h
@@ -482,6 +486,14 @@ private theorem swap_ne_one : swap.{u} ≠ 1 := by
   have h' := congrArg (fun s : Equiv.Perm (ULift.{u} (Fin 2)) => (s ⟨0⟩).down) h
   simpa [swap] using h'
 
+private theorem gauge_reverse {K : Type*} [Group K] (a b : K) :
+    b⁻¹ * a = (a⁻¹ * b)⁻¹ := by
+  rw [mul_inv_rev, inv_inv]
+
+private theorem gauge_triangle {K : Type*} [Group K] (a b c : K) :
+    (a⁻¹ * b) * (b⁻¹ * c) = a⁻¹ * c := by
+  rw [mul_assoc, mul_inv_cancel_left]
+
 private theorem no_gain_one : ¬ gainArena.{u}.Law gainOne.{u} := by
   classical
   intro h
@@ -496,8 +508,11 @@ private theorem no_gain_one : ¬ gainArena.{u}.Law gainOne.{u} := by
   let θ (a : TwoTreeV 0) : H := if (a : Fin 3) = 0 then 1 else swap
   let g : TwoTreeV 0 → TwoTreeV 0 → H := fun a b => (θ a)⁻¹ * θ b
   obtain ⟨φ, hφ⟩ := h 0 g 0 le_rfl
-    (by intro a b _; simp [g])
-    (by intro a b c _ _ _; simp [g, mul_assoc])
+    (fun a b _ => gauge_reverse (θ a) (θ b))
+    (by
+      intro a b c _ _ _
+      change Dist.dist (((θ a)⁻¹ * θ b) * ((θ b)⁻¹ * θ c)) ((θ a)⁻¹ * θ c) ≤ 0
+      rw [gauge_triangle, _root_.dist_self])
   have hv := hφ 0 1 (by decide)
   change dist (g 0 1) (1 : H) ≤ 0 at hv
   have he := dist_le_zero.mp hv
@@ -523,7 +538,7 @@ def gainEvidence : Registration gainArena.{u}
     change (θ 0)⁻¹ * θ 1 ≠ (θ 0)⁻¹ * θ 0
     simpa [θ] using swap_ne_one.{u}
 
-def gainRegistration : Contract.Registration.{_, _, _, 0, 0, 0, u+1, 0, u, 0, 0, 0}
+def gainRegistration : Contract.Registration.{_, _, _, 0, 0, 0, u+1, 0, 0, u, 0, 0}
     (@SimpleGraph.twoTree_exists_one_approximate_gain_potential.{u})
     (Realization gainSignature.{u}) Unit Unit where
   unitName := `SimpleGraph.twoTree_exists_one_approximate_gain_potential.__information_unit

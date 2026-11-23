@@ -190,7 +190,11 @@ internal sealed class TwoTreeStretchSeparationDocument : IScribeDocumentDefiniti
             Some("u", Vertices, Some("v", Vertices, And(Adj(u, v), Le(Bound, filling(u, v))))));
         var fillingUpper = Some("phi", Pair(Vertices, circulation),
             AllEdges((a, b) => Le(filling(a, b), Bound)));
+        var i = F.Id("i");
+        var triangleSum = All("i", Call("TwoTreeTriangles", d), Eqn(
+            Call("twoTreeTriangleSum", d, Call("twoTreeCanonicalGain", d), i),
+            Call("single", D(1), i, D(1))));
         return All("ell", Call("Universe"), Depth(And(reverse, And(flat, And(lower, And(upper,
-            And(evaluation, And(fillingLower, fillingUpper))))))));
+            And(evaluation, And(fillingLower, And(fillingUpper, triangleSum)))))))));
     }
 }

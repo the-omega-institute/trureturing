@@ -32,6 +32,10 @@ open scoped BigOperators ENNReal
 
 namespace SimpleGraph
 
+noncomputable section
+
+local instance : DecidableRel (twoTree 0).Adj := Top.adjDecidable (Fin 3)
+
 private theorem source_ne_target (d : ℕ) (e : TwoTreeFrontier d) :
     twoTreeSource d e ≠ twoTreeTarget d e := (twoTreeFrontierDart d e).fst_ne_snd
 private theorem frontier_adj (d : ℕ) (e : TwoTreeFrontier d) :
@@ -166,10 +170,10 @@ private theorem fresh_chord {V I : Type*} {G : SimpleGraph V} {s t : I → V}
     omega
   have hchord : A.Adj a b := by
     cases ha' : a with
-    | inr j => exact False.elim (ha' ▸ ha)
+    | inr j => exfalso; simpa only [ha', A, twoTreeAttach] using ha
     | inl x =>
       cases hb' : b with
-      | inr j => exact False.elim (hb' ▸ hb)
+      | inr j => exfalso; simpa only [hb', A, twoTreeAttach] using hb
       | inl y =>
         simp only [ha'] at ha
         simp only [hb'] at hb
@@ -226,10 +230,12 @@ private theorem attach_chordal {V I : Type*} {G : SimpleGraph V} {s t : I → V}
           simp only [Equiv.symm_apply_apply]
           rfl }
     let c := p.induce S hs
-    have hm : c.map (Embedding.induce S).toHom = p := p.map_induce hs
+    have hm : c.map (Embedding.induce (G := A) S).toHom = p := p.map_induce hs
     have hc : c.IsCycle := (Walk.isCycle_map_iff_of_injective
-      (Embedding.induce S).injective).1 (hm.symm ▸ hp)
-    have hlen : c.length = p.length := by rw [← c.length_map (Embedding.induce S).toHom, hm]
+      (Embedding.induce (G := A) S).injective).1 (hm.symm ▸ hp)
+    have hlen : c.length = p.length := by
+      exact (c.length_map (Embedding.induce (G := A) S).toHom).symm.trans
+        (congrArg Walk.length hm)
     let b := c.map iso.toHom
     obtain ⟨x, y, hx, hy, hadj, hne⟩ := hG b (hc.map iso.injective)
       (by simpa [b, hlen] using hn)
@@ -237,16 +243,25 @@ private theorem attach_chordal {V I : Type*} {G : SimpleGraph V} {s t : I → V}
       obtain ⟨u, hu, h⟩ := List.mem_map.mp (by simpa only [b, Walk.support_map] using hz)
       have heq : f.symm u = z := h
       exact (f.symm_apply_eq.mp heq) ▸ hu
+    let inc : A.induce S →g A := (Embedding.induce (G := A) S).toHom
+    have supports : p.support = c.support.map inc := by
+      calc
+        p.support = (c.map inc).support := congrArg Walk.support hm.symm
+        _ = _ := c.support_map inc
+    have edges : p.edges = c.edges.map (Sym2.map inc) := by
+      calc
+        p.edges = (c.map inc).edges := congrArg Walk.edges hm.symm
+        _ = _ := c.edges_map inc
     refine ⟨.inl x, .inl y, ?_, ?_, hadj, ?_⟩
-    · rw [← hm, Walk.support_map]
+    · rw [supports]
       exact List.mem_map.mpr ⟨f x, lift_mem x hx, rfl⟩
-    · rw [← hm, Walk.support_map]
+    · rw [supports]
       exact List.mem_map.mpr ⟨f y, lift_mem y hy, rfl⟩
     · intro h
       apply hne
-      rw [← hm, Walk.edges_map] at h
+      rw [edges] at h
       obtain ⟨z, hz, heq⟩ := List.mem_map.mp h
-      have hz' : z = s(f x, f y) := Sym2.map.injective (Embedding.induce S).injective heq
+      have hz' : z = s(f x, f y) := Sym2.map.injective (Embedding.induce (G := A) S).injective heq
       change s(x, y) ∈ (c.map iso.toHom).edges
       rw [Walk.edges_map]
       exact List.mem_map.mpr ⟨z, hz, by simp [hz', iso]⟩
@@ -282,15 +297,17 @@ private theorem quotient_isTree {V W : Type*} {T : SimpleGraph V} (hT : T.IsTree
     (hf : ∀ x, x = old (f x) ∨ T.Adj x (old (f x))) : (T.map f).IsTree := by
   classical
   refine isTree_iff_minimal_connected.mpr ⟨?_, ?_⟩
-  · exact ⟨fun u v => by
-      obtain ⟨p⟩ := hT.connected (old u) (old v)
-      exact ⟨(quotientWalk f p).copy (hold u) (hold v)⟩, hT.connected.nonempty.map f⟩
+  · rw [connected_iff]
+    refine ⟨?_, hT.connected.nonempty.map f⟩
+    intro u v
+    obtain ⟨p⟩ := hT.connected (old u) (old v)
+    exact ⟨(quotientWalk f p).copy (hold u) (hold v)⟩
   · intro S hS hle
-    let R : SimpleGraph V where
-      Adj u v := T.Adj u v ∧ (f u = f v ∨ S.Adj (f u) (f v))
-      symm.symm _ _ h := ⟨h.1.symm, h.2.elim (fun he => Or.inl he.symm)
-        (fun he => Or.inr he.symm)⟩
-      loopless := ⟨fun _ h => h.1.ne rfl⟩
+    let R : SimpleGraph V :=
+      { Adj := fun u v => T.Adj u v ∧ (f u = f v ∨ S.Adj (f u) (f v))
+        symm.symm _ _ h := ⟨h.1.symm, h.2.elim (fun he => Or.inl he.symm)
+          (fun he => Or.inr he.symm)⟩
+        loopless := ⟨fun _ h => h.1.ne rfl⟩ }
     have return_to_old (u : V) : R.Reachable u (old (f u)) := by
       rcases hf u with he | hadj
       · rw [← he]
@@ -303,10 +320,12 @@ private theorem quotient_isTree {V W : Type*} {T : SimpleGraph V} (hT : T.IsTree
       induction p with
       | nil => exact Reachable.rfl
       | cons h _ ih => exact (liftEdge h).trans ih
-    have hR : R.Connected := ⟨fun u v => by
+    have hR : R.Connected := by
+      rw [connected_iff]
+      refine ⟨?_, hT.connected.nonempty⟩
+      intro u v
       obtain ⟨p⟩ := hS (f u) (f v)
-      exact (return_to_old u).trans ((liftWalk p).trans (return_to_old v).symm),
-      hT.connected.nonempty⟩
+      exact (return_to_old u).trans ((liftWalk p).trans (return_to_old v).symm)
     have hRT : R ≤ T := fun _ _ h => h.1
     have hTR := (isTree_iff_minimal_connected.mp hT).2 hR hRT
     intro a b h
@@ -430,42 +449,32 @@ private theorem frontier_stretch_lower (d : ℕ) (T : SimpleGraph (TwoTreeV d))
         from Sum.inr_ne_inl) only
       change d + 1 + 2 ≤ T.dist (.inl (s e)) (.inr e)
       have : choice e = t e := if_neg hc
-      rw [this, dist_comm T (.inl (t e))] at h
+      rw [this, dist_comm (G := T) (u := .inl (t e))] at h
       rw [dist_comm]
       omega
 
-private theorem attach_card {V I : Type*} [Fintype V] [Fintype I]
-    (G : SimpleGraph V) (s t : I → V) (h : ∀ e, s e ≠ t e) :
-    Nat.card (twoTreeAttach G s t).edgeSet = Nat.card G.edgeSet + 2 * Fintype.card I := by
-  rw [← Nat.card_congr (twoTreeAttachEdges G s t), Nat.card_sum]
-  let e : (I × Bool) ≃ (Σ i : I, {u : V // u = s i ∨ u = t i}) :=
-    (Equiv.sigmaEquivProd I Bool).symm.trans
-      (Equiv.sigmaCongrRight fun i => twoTreeParents (h i))
-  rw [← Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_prod, Fintype.card_bool, mul_comm 2]
 private theorem attach_leaf_card {V I : Type*} [Fintype V] [Fintype I]
     (G : SimpleGraph V) (s : I → V) :
     Nat.card (twoTreeAttach G s s).edgeSet = Nat.card G.edgeSet + Fintype.card I := by
   rw [← Nat.card_congr (twoTreeAttachEdges G s s), Nat.card_sum]
-  let e : I ≃ (Σ i : I, {u : V // u = s i ∨ u = s i}) where
-    toFun i := ⟨i, s i, Or.inl rfl⟩
-    invFun := Sigma.fst
-    right_inv := by rintro ⟨i, _, rfl | rfl⟩ <;> rfl
-  rw [← Nat.card_congr e, Nat.card_eq_fintype_card]
+  let e : I ≃ (Σ i : I, {u : V // u = s i ∨ u = s i}) :=
+    { toFun := fun i => ⟨i, s i, Or.inl rfl⟩
+      invFun := Sigma.fst
+      left_inv := fun _ => rfl
+      right_inv := by rintro ⟨i, _, rfl | rfl⟩ <;> rfl }
+  rw [← Nat.card_congr e, Nat.card_eq_fintype_card (α := I)]
 
 /-- The three initial edges persist, and each insertion contributes two more edges. -/
 theorem twoTree_edge_count (d : ℕ) :
     Nat.card (twoTree d).edgeSet = 3 * (2 ^ (d + 1) - 1) := by
+  rw [← Nat.card_congr (twoTreeEdgeIdentification d).equiv]
   induction d with
-  | zero =>
-    classical
-    rw [Nat.card_eq_fintype_card, card_edgeSet]
-    change (⊤ : SimpleGraph (Fin 3)).edgeFinset.card = _
-    rw [card_edgeFinset_top_eq_card_choose_two]
-    decide
+  | zero => rw [Nat.card_eq_fintype_card]; decide
   | succ d ih =>
-    change Nat.card (twoTreeAttach (twoTree d) _ _).edgeSet = _
-    rw [attach_card _ _ _ (source_ne_target d), ih, frontier_card, pow_succ 2 (d + 1),
-      pow_succ 2 d]
+    change Nat.card (TwoTreeEdges d ⊕ (TwoTreeFrontier d × Bool)) = _
+    rw [Nat.card_sum, Nat.card_prod, ih, Nat.card_eq_fintype_card (α := TwoTreeFrontier d),
+      frontier_card, Nat.card_eq_fintype_card (α := Bool), Fintype.card_bool,
+      pow_succ 2 (d + 1), pow_succ 2 d]
     have : 0 < 2 ^ d := Nat.two_pow_pos d
     omega
 private theorem exists_stretch_upper (d : ℕ) :
@@ -484,8 +493,11 @@ private theorem exists_stretch_upper (d : ℕ) :
       · exact by simp
       · exact le_of_eq (edist_eq_one_iff_adj.mpr h12.symm)
     have h := T.edist_triangle (u := u) (v := (1 : Fin 3)) (w := v)
-    rw [edist_comm T 1 v] at h
-    exact h.trans (by simpa using add_le_add (B u) (B v))
+    rw [edist_comm (G := T) (u := (1 : Fin 3)) (v := v)] at h
+    apply h.trans
+    have htwo : (1 : ℕ∞) + 1 = 2 := by norm_num
+    change _ ≤ (2 : ℕ∞)
+    simpa only [htwo] using add_le_add (B u) (B v)
   | succ d ih =>
     obtain ⟨T, hTG, hT, hbound⟩ := ih
     let s := twoTreeSource d
@@ -493,9 +505,8 @@ private theorem exists_stretch_upper (d : ℕ) :
     let S := twoTreeAttach T s s
     have hS : S.IsTree := by
       refine isTree_iff_connected_and_card.mpr ⟨attach_connected hT.connected, ?_⟩
-      rw [attach_leaf_card, Nat.card_eq_fintype_card, Fintype.card_sum,
-        ← Nat.card_eq_fintype_card (α := TwoTreeV d), ←
-          (isTree_iff_connected_and_card.mp hT).2]
+      rw [attach_leaf_card, Nat.card_sum, Nat.card_eq_fintype_card (α := TwoTreeFrontier d),
+        ← (isTree_iff_connected_and_card.mp hT).2]
       omega
     refine ⟨S, ?_, hS, ?_⟩
     · rintro (u | e) (v | j) h
@@ -516,9 +527,8 @@ private theorem exists_stretch_upper (d : ℕ) :
       · apply (S.edist_triangle (v := .inl (s e))).trans
         rw [edist_eq_one_iff_adj.mpr ha]
         have hb := (old (t e) (s e)).trans (hbound _ _ (frontier_adj d e).symm)
-        refine (add_le_add_right hb _).trans_eq ?_
+        refine (add_le_add_left hb (1 : ℕ∞)).trans_eq ?_
         norm_cast
-        omega
     rintro (u | e) (v | j) h
     · exact ((old u v).trans (hbound _ _ h)).trans (by exact_mod_cast (show d + 2 ≤ d + 1 + 2 by omega))
     · exact fresh j u h
@@ -562,6 +572,26 @@ private theorem triangleGain_reverse {E : Type*} [AddCommGroup E] (d : ℕ)
     · simp [twoTreeTriangleGain, twoTreeInsertionGain]; split <;> simp
     · simp [twoTreeTriangleGain, twoTreeInsertionGain]; split <;> simp
     · simp [twoTreeTriangleGain, twoTreeInsertionGain]
+private theorem triangleGain_sum {E : Type*} [AddCommGroup E] (d : ℕ)
+    (τ : TwoTreeTriangles d → E) (i : TwoTreeTriangles d) :
+    twoTreeTriangleSum d (twoTreeTriangleGain d τ) i = τ i := by
+  classical
+  induction d with
+  | zero =>
+    cases i
+    simp [twoTreeTriangleSum, twoTreeOrientedTriangle, twoTreeTriangleGain]
+  | succ d ih =>
+    rcases i with i | e
+    · have h := ih (τ ∘ Sum.inl) i
+      cases twoTreeOrientedTriangle d i with
+      | mk a bc =>
+        cases bc
+        simpa [twoTreeOrientedTriangle, twoTreeTriangleSum, twoTreeTriangleGain,
+          twoTreeInsertionGain] using h
+    · simp [twoTreeTriangleSum, twoTreeOrientedTriangle, twoTreeTriangleGain,
+        twoTreeInsertionGain, (source_ne_target d e).symm,
+        triangleGain_reverse d (τ ∘ Sum.inl) (twoTreeSource d e) (twoTreeTarget d e)] <;> abel
+
 private theorem triangleGain_flat {E : Type*} [SeminormedAddCommGroup E] (d : ℕ)
     (τ : TwoTreeTriangles d → E) {ε : ℝ} (hτ : ∀ i, ‖τ i‖ ≤ ε) :
     ∀ u v w, (twoTree d).Adj u v → (twoTree d).Adj v w → (twoTree d).Adj u w →
@@ -600,20 +630,20 @@ private theorem triangleGain_flat {E : Type*} [SeminormedAddCommGroup E] (d : �
     have distinct (e : TwoTreeFrontier d) : t e ≠ s e := (source_ne_target d e).symm
     rintro (u | a) (v | b) (w | c) huv hvw huw
     · exact ih (τ ∘ Sum.inl) (fun i => hτ (.inl i)) _ _ _ huv hvw huw
-    · rcases parents c huw hvw huv.ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    · rcases parents c huw hvw (show (twoTree d).Adj u v from huv).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
       · simpa [twoTreeTriangleGain, twoTreeInsertionGain, g, s, t, distinct] using calcTri c
       · rw [show twoTreeTriangleGain (d + 1) τ (.inl (t c)) (.inl (s c)) =
           -g (s c) (t c) from reverse c]
         simp [twoTreeTriangleGain, twoTreeInsertionGain, g, s, t, distinct]
         simpa [g, s, t, add_comm] using hτ (.inr c)
-    · rcases parents b huv hvw huw.ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    · rcases parents b huv hvw (show (twoTree d).Adj u w from huw).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
       · simpa [twoTreeTriangleGain, twoTreeInsertionGain, g, s, t, distinct] using hτ (.inr b)
       · rw [show twoTreeTriangleGain (d + 1) τ (.inl (t b)) (.inl (s b)) =
           -g (s b) (t b) from reverse b]
         simp [twoTreeTriangleGain, twoTreeInsertionGain, g, s, t, distinct]
         simpa [add_comm] using hτ (.inr b)
     · exact hvw.elim
-    · rcases parents a huv huw hvw.ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    · rcases parents a huv huw (show (twoTree d).Adj v w from hvw).ne with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
       · simpa [twoTreeTriangleGain, twoTreeInsertionGain, g, s, t, distinct] using calcTri a
       · rw [show twoTreeTriangleGain (d + 1) τ (.inl (t a)) (.inl (s a)) =
           -g (s a) (t a) from reverse a]
@@ -633,8 +663,7 @@ private theorem residual_frontier_sum {E : Type*} [AddCommGroup E] (d : ℕ)
     change ∑ e : Fin 3, _ = ∑ i : Unit, τ i
     rw [Fin.sum_univ_three]
     simp [twoTreeSource, twoTreeTarget, twoTreeTriangleGain,
-      show (1 : Fin 3) + 1 = 2 by decide, show (2 : Fin 3) + 1 = 0 by decide]
-    abel
+      show (1 : Fin 3) + 1 = 2 by decide, show (2 : Fin 3) + 1 = 0 by decide] <;> abel
   | succ d ih =>
     change ∑ e : TwoTreeFrontier d × Bool, _ = ∑ i : TwoTreeTriangles d ⊕ TwoTreeFrontier d, τ i
     rw [Fintype.sum_prod_type, Fintype.sum_sum_type]
@@ -649,8 +678,10 @@ private theorem residual_frontier_sum {E : Type*} [AddCommGroup E] (d : ℕ)
         (source_ne_target d e).symm]
       abel
     simp_rw [pointwise]
-    rw [Finset.sum_add_distrib, ih (τ ∘ Sum.inl) (φ ∘ Sum.inl)]
-    rfl
+    rw [Finset.sum_add_distrib]
+    have hold := ih (τ ∘ Sum.inl) (φ ∘ Sum.inl)
+    simp only [Function.comp_apply] at hold
+    rw [hold]
 
 /-- Integral gains with triangle defects at most one can force an edge error of at least one. -/
 theorem twoTree_integer_lower_bound_one (d : ℕ) :
@@ -706,14 +737,16 @@ private theorem map_triangle_gain {E F : Type*} [AddCommGroup E] [AddCommGroup F
   induction d with
   | zero =>
     simp only [twoTreeTriangleGain]
-    split <;> try split <;> simp
+    split
+    · rfl
+    · split <;> simp [Function.comp_apply]
   | succ d ih =>
     rcases u with u | e <;> rcases v with v | j
     · exact ih (τ ∘ Sum.inl) u v
     · simp only [twoTreeTriangleGain, twoTreeInsertionGain]
-      split <;> simp [ih]
+      split <;> simp [ih] <;> rfl
     · simp only [twoTreeTriangleGain, twoTreeInsertionGain]
-      split <;> simp [ih]
+      split <;> simp [ih] <;> rfl
     · simp [twoTreeTriangleGain, twoTreeInsertionGain]
 
 private theorem canonical_circulation_pairing (d : ℕ) (z : TwoTreeCirculation ℝ d) :
@@ -779,8 +812,7 @@ private theorem banach_upper {E : Type*} [SeminormedAddCommGroup E] [NormedSpace
     have hr : ‖r‖ ≤ twoTreeBanachConstant 0 * ε := by
       simp only [r, norm_smul, Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 3)]
       norm_num [twoTreeBanachConstant]
-      exact mul_le_mul_of_nonneg_left (htri 0 1 2 (by decide) (by decide) (by decide))
-        (by norm_num)
+      exact htri 0 1 2 (by decide) (by decide) (by decide)
     have h01 : ‖g 0 1 - (φ 1 - φ 0)‖ ≤ twoTreeBanachConstant 0 * ε := by
       simpa [φ] using hr
     have h12 : ‖g 1 2 - (φ 2 - φ 1)‖ ≤ twoTreeBanachConstant 0 * ε := by
@@ -824,7 +856,9 @@ private theorem banach_upper {E : Type*} [SeminormedAddCommGroup E] [NormedSpace
         dsimp [fromSource, fromTarget, a, b]
         abel
       rw [he]
-      exact (norm_add_le _ _).trans (add_le_add (by simpa using ho) ht)
+      refine (norm_add_le _ _).trans (add_le_add ?_ ht)
+      rw [norm_neg]
+      exact ho
     have half (e : TwoTreeFrontier d) :
         ‖(1 / 2 : ℝ) • (fromTarget e - fromSource e)‖ ≤ twoTreeBanachConstant (d + 1) * ε := by
       rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2), constant_succ]
@@ -865,13 +899,24 @@ private theorem banach_coordinate_lower (d : ℕ) :
   have hsum : ∑ e, r e = ∑ i, τ i := residual_frontier_sum d τ φ
   have hnorm : ‖∑ i, τ i‖ = Fintype.card (TwoTreeTriangles d) := by
     rw [PiLp.norm_eq_sum (by simp : 0 < (1 : ℝ≥0∞).toReal)]
-    simp [τ, PiLp.single, Pi.single_apply]
+    let L := (WithLp.linearEquiv 1 ℝ (TwoTreeTriangles d → ℝ)).toLinearMap
+    have coordinate (k : TwoTreeTriangles d) : (∑ i, τ i) k = 1 := by
+      change L (∑ i, τ i) k = 1
+      rw [map_sum, Finset.sum_apply]
+      have eval (i : TwoTreeTriangles d) :
+          L (τ i) k = (Pi.single i (1 : ℝ) : TwoTreeTriangles d → ℝ) k := rfl
+      simp only [eval, Pi.single_apply]
+      simp
+    simp only [ENNReal.toReal_one, div_one, Real.rpow_one, coordinate, norm_one,
+      Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one]
   by_contra! h
   have hlt : ∑ e, ‖r e‖ < (Fintype.card (TwoTreeFrontier d) : ℝ) * twoTreeBanachConstant d := by
     have he : Nonempty (TwoTreeFrontier d) := Fintype.card_pos_iff.mp (by rw [frontier_card]; positivity)
+    have pointwise (e : TwoTreeFrontier d) : ‖r e‖ < twoTreeBanachConstant d :=
+      h _ _ (frontier_adj d e)
     simpa [Finset.sum_const, nsmul_eq_mul] using
       (Finset.sum_lt_sum_of_nonempty (s := Finset.univ) Finset.univ_nonempty
-        (fun e _ => h _ _ (frontier_adj d e)))
+        (fun e _ => pointwise e))
   have hn := norm_sum_le (Finset.univ : Finset (TwoTreeFrontier d)) r
   rw [hsum, hnorm] at hn
   have hc := congrArg (fun n : ℕ => (n : ℝ)) (triangle_count d)
@@ -880,6 +925,7 @@ private theorem banach_coordinate_lower (d : ℕ) :
   have hp : (3 * (2 : ℝ) ^ d) ≠ 0 := by positivity
   have he : 3 * (2 : ℝ) ^ d * (1 - 2 / (3 * 2 ^ d)) = 3 * 2 ^ d - 2 := by
     field_simp
+  norm_num only [Nat.cast_ofNat] at hlt
   rw [he] at hlt
   linarith
 
@@ -906,7 +952,8 @@ theorem twoTree_banach_exact_constant (d : ℕ) :
         twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u))) ∧
     (∃ φ : TwoTreeV d → TwoTreeCirculation ℝ d, ∀ u v, (twoTree d).Adj u v →
       twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u)) ≤
-        twoTreeBanachConstant d) := by
+        twoTreeBanachConstant d) ∧
+    (∀ i : TwoTreeTriangles d, twoTreeTriangleSum d (twoTreeCanonicalGain d) i = PiLp.single 1 i 1) := by
   classical
   let τ : TwoTreeTriangles d → TwoTreeCycles d := fun i => PiLp.single 1 i 1
   have hrev (u v : TwoTreeV d) (_ : (twoTree d).Adj u v) :
@@ -914,7 +961,7 @@ theorem twoTree_banach_exact_constant (d : ℕ) :
     triangleGain_reverse d τ u v
   have hflat := triangleGain_flat d τ (by simp [τ] : ∀ i, ‖τ i‖ ≤ 1)
   refine ⟨hrev, hflat, banach_coordinate_lower d, banach_upper d,
-    canonical_circulation_pairing d, ?_, ?_⟩
+    canonical_circulation_pairing d, ?_, ?_, triangleGain_sum d τ⟩
   · intro φ
     obtain ⟨u, v, huv, h⟩ := banach_coordinate_lower d
       (fun a => WithLp.toLp 1 (twoTreeCirculationCoordinates ℝ d (φ a)))
@@ -925,4 +972,5 @@ theorem twoTree_banach_exact_constant (d : ℕ) :
     rw [filling_residual]
     simpa [φ] using hψ u v h
 
+end
 end SimpleGraph
