@@ -94,8 +94,8 @@ def frequencyRegistration :
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "value", "arg",
-        "fn", "arg", "arg", "fn", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "arg", "arg", "value",
+        "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
