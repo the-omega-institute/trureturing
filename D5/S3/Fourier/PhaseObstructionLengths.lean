@@ -109,7 +109,8 @@ def perScale (s : Finset J) (g w : J → ℝ) (h : ℕ) : ℝ :=
 private abbrev single (s : Finset J) (g w : J → ℝ) (n : ℕ) : ℝ :=
   perScale s g w (n + 1)
 
-private theorem single_eq_mul (s : Finset J) (g w : J → ℝ) (n : ℕ) :
+/-- The single-length bound is the omission fraction times its inverse-square scale. -/
+theorem perScale_eq_mul (s : Finset J) (g w : J → ℝ) (n : ℕ) :
     perScale s g w (n + 1) = shiftedScale n * omissionFraction s g w (n + 1) := by
   simp only [scale, perScale, div_mul_eq_mul_div, one_mul]
 
@@ -223,7 +224,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
     dsimp [loss]
     ring
   apply le_of_mul_le_mul_right _ hW
-  rw [hloss, add_mul, Finset.sum_mul, single_eq_mul]
+  rw [hloss, add_mul, Finset.sum_mul, perScale_eq_mul]
   calc
     _ ≤ (∑ n ∈ Finset.range N, ∑ j ∈ s, w j * (if shiftedScale n ≤ loss j then scaleDifference n else 0)) +
         ∑ j ∈ s, w j * (if shiftedScale N ≤ loss j then shiftedScale N else 0) :=
@@ -332,7 +333,7 @@ private theorem finite_bound (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
     (∑ h ∈ Finset.Ico 1 (N + 1), summand s g w h) + perScale s g w (N + 1) ≤
       deficit s g w T := by
   rcases T.eq_empty_or_nonempty with rfl | hT
-  · rw [deficit, Set.image_empty, Real.sSup_empty, sub_zero, partial_eq, single_eq_mul]
+  · rw [deficit, Set.image_empty, Real.sSup_empty, sub_zero, partial_eq, perScale_eq_mul]
     calc
       _ ≤ (∑ n ∈ Finset.range N, scaleDifference n) + shiftedScale N :=
         add_le_add (Finset.sum_le_sum fun n _ => term_le_c s g w hw n)
@@ -373,7 +374,7 @@ theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
   dsimp only
   have hsum : Summable (term s g w) := by simpa using term_tail_summable s g w hw 0
   have hsingle (m : ℕ) : 0 ≤ perScale s g w (m + 1) := by
-    rw [single_eq_mul s g w m]
+    rw [perScale_eq_mul s g w m]
     exact mul_nonneg (shiftedScale_nonneg m) (p_nonneg s g w _ hw)
   have hfinite := finite_bound s g w T hw
   have hpartial (N : ℕ) :
@@ -385,7 +386,7 @@ theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
         (∑' n, term s g w (n + m)) ≤ shiftedScale m := by
     have ht := (term_tail_summable s g w hw m).hasSum
     refine ⟨?_, hasSum_le (fun n => term_le_c s g w hw (n + m)) ht (scaleDifference_hasSum m)⟩
-    rw [single_eq_mul s g w m]
+    rw [perScale_eq_mul s g w m]
     refine hasSum_le (fun n => mul_le_mul_of_nonneg_left ?_ (c_nonneg (n + m)))
       ((scaleDifference_hasSum m).mul_right _) ht
     exact p_mono s g w hw (by omega)

@@ -21,7 +21,7 @@ open scoped BigOperators Topology
 namespace D5.S3.Fourier.ExactFourthRootGaps
 
 open PhaseObstructionLengths (mass average deficit omissionFraction omissionFraction_isLeast
-  summand aggregate_bounds shiftedScale shiftedScale_antitone shiftedScale_nonneg
+  summand perScale perScale_eq_mul aggregate_bounds shiftedScale shiftedScale_antitone shiftedScale_nonneg
   scaleDifference scaleDifference_hasSum)
 open ShortPhaseRelations (fourth_root_gap_sq)
 open WeightedIntegerRelations (chord_prod_zpow quarter quarter_chord_sq quarter_character
@@ -29,7 +29,7 @@ open WeightedIntegerRelations (chord_prod_zpow quarter quarter_chord_sq quarter_
 
 noncomputable section
 
-variable {J : Type*} [DecidableEq J]
+variable {J : Type*}
 
 /-- The coordinate sine deficit at one common time. -/
 def loss (g : J → ℝ) (t : ℝ) (j : J) : ℝ := 1 - Real.sin (g j * t)
@@ -117,8 +117,10 @@ private lemma invSq_le_tau {s : Finset J} {g : J → ℝ} {k : J → ℤ} (hk : 
 /-- An incompatible character forces a coordinate loss at least its exact threshold. -/
 theorem coordinate_loss_same_time (s : Finset J) (g : J → ℝ) (k : J → ℤ)
     (hk : IncompatibleRelation s g k) (t : ℝ) :
-    0 < relationLength s k ∧ tau s k ∈ Ioc (0 : ℝ) 2 ∧
-      ∃ j ∈ relationSupport s k, tau s k ≤ loss g t j := by
+    let threshold := tau s k
+    0 < relationLength s k ∧ threshold ∈ Ioc (0 : ℝ) 2 ∧
+      ∃ j ∈ relationSupport s k, threshold ≤ loss g t j := by
+  dsimp only
   refine ⟨relationLength_pos hk, ⟨tau_pos hk, tau_le_two hk⟩, ?_⟩
   obtain ⟨j, hj, hjmax⟩ := Finset.exists_max_image (relationSupport s k) (loss g t) (relationSupport_nonempty hk)
   refine ⟨j, hj, ?_⟩
@@ -218,6 +220,8 @@ private theorem attained_support (s : Finset J) (g : J → ℝ) (v : Finset J)
 private def admissible (s : Finset J) (g : J → ℝ) (u : Finset J) (x : ℝ) : Prop :=
   ∀ k, IncompatibleRelation s g k → relationSupport s k ⊆ u → tau s k < x
 
+variable [DecidableEq J]
+
 private def cost (s : Finset J) (w : J → ℝ) (u : Finset J) : ℝ := mass (s \ u) w / mass s w
 
 private def costs (s : Finset J) (g w : J → ℝ) (x : ℝ) : Set ℝ :=
@@ -245,6 +249,7 @@ private theorem admissible_iff_hits (s : Finset J) (g : J → ℝ) (u : Finset J
     obtain ⟨j, hj, hkj⟩ := h k hk hx
     exact (Finset.mem_sdiff.mp hj).2 (hs (mem_relationSupport.mpr ⟨(Finset.mem_sdiff.mp hj).1, hkj⟩))
 
+omit [DecidableEq J] in
 private lemma admissible_empty (s : Finset J) (g : J → ℝ) (x : ℝ) :
     admissible s g ∅ x := by
   intro k hk hs
@@ -267,6 +272,7 @@ private theorem Q_isLeast (s : Finset J) (g w : J → ℝ) (x : ℝ) :
 
 /-- The threshold cost is attained by a set hitting every active support. -/
 theorem least_hitting_weight (s : Finset J) (g w : J → ℝ) (x : ℝ) :
+    let P := Q s g w x
     IsLeast {p | ∃ u ⊆ s, (∀ k, IncompatibleRelation s g k → x ≤ tau s k → ∃ j ∈ s \ u, k j ≠ 0) ∧
       p = (∑ j ∈ s \ u, w j) / ∑ j ∈ s, w j} (Q s g w x) := by
   simpa only [costs, admissible_iff_hits, cost, mass] using Q_isLeast s g w x
@@ -283,10 +289,13 @@ private lemma Q_antitone (s : Finset J) (g w : J → ℝ) : Antitone (Q s g w) :
   obtain ⟨u, hu, ha, huQ⟩ := (Q_isLeast s g w x).1
   exact (Q_isLeast s g w y).2 ⟨u, hu, fun k hk hs => (ha k hk hs).trans_le hxy, huQ⟩
 
+omit [DecidableEq J] in
 /-- Every nonempty support family attains its positive maximum. -/
 theorem supportMaximum_zero_or_attained (s : Finset J) (g : J → ℝ) (v : Finset J) :
-    (supportMaximum s g v = 0 ∧ ¬ ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v) ∨
-      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ supportMaximum s g v = tau s k := by
+    let maximum := supportMaximum s g v
+    (maximum = 0 ∧ ¬ ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v) ∨
+      ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v ∧ maximum = tau s k := by
+  dsimp only
   by_cases h : ∃ k, IncompatibleRelation s g k ∧ relationSupport s k = v
   · obtain ⟨k, hk, hs, hmax⟩ := attained_support s g v h
     right
@@ -308,6 +317,7 @@ theorem supportMaximum_zero_or_attained (s : Finset J) (g : J → ℝ) (v : Fins
       exact h ⟨k, hk, hs⟩
     simp [supportMaximum, he]
 
+omit [DecidableEq J] in
 private lemma supportMaximum_bounds (s : Finset J) (g : J → ℝ) (v : Finset J) :
     supportMaximum s g v ∈ Icc (0 : ℝ) 2 := by
   rcases supportMaximum_zero_or_attained s g v with ⟨h, _⟩ | ⟨_, hk, _, h⟩
@@ -316,6 +326,7 @@ private lemma supportMaximum_bounds (s : Finset J) (g : J → ℝ) (v : Finset J
   · rw [h]
     exact ⟨(tau_pos hk).le, tau_le_two hk⟩
 
+omit [DecidableEq J] in
 private theorem admissible_iff_support_maxima (s : Finset J) (g : J → ℝ) (u : Finset J) {x : ℝ}
     (hx : 0 < x) : admissible s g u x ↔ ∀ v ⊆ u, supportMaximum s g v < x := by
   constructor
@@ -342,6 +353,7 @@ private theorem admissible_iff_support_maxima (s : Finset J) (g : J → ℝ) (u 
 def breakpoints (s : Finset J) (g : J → ℝ) : Finset ℝ :=
   insert 0 (insert 2 (s.powerset.image (supportMaximum s g)))
 
+omit [DecidableEq J] in
 private lemma breakpoints_bounds (s : Finset J) (g : J → ℝ) {x : ℝ}
     (hx : x ∈ breakpoints s g) : x ∈ Icc (0 : ℝ) 2 := by
   rcases Finset.mem_insert.mp hx with rfl | hx
@@ -408,6 +420,7 @@ private theorem antitone_indicator {a c : ℝ} (hc : 0 ≤ c) :
   · rw [Set.indicator_of_notMem (show y ∉ Iic a from hy)]
     exact Set.indicator_nonneg (fun _ _ => hc) _
 
+omit [DecidableEq J] in
 private theorem tail_integral_same_time (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) (hW : 0 < mass s w) (t : ℝ) :
     (∫ x in (0 : ℝ)..2, tail s g w t x) = 1 - average s g w t := by
@@ -437,12 +450,15 @@ private theorem tail_integral_same_time (s : Finset J) (g w : J → ℝ)
 /-- The integrated omission bound holds at each common time. -/
 theorem integrated_Q_same_time (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) (t : ℝ) :
-    (∫ x in (0 : ℝ)..2, Q s g w x) ≤ 1 - average s g w t := by
+    let A := average s g w t
+    (∫ x in (0 : ℝ)..2, Q s g w x) ≤ 1 - A := by
+  dsimp only
   rcases (Finset.sum_nonneg hw : 0 ≤ mass s w).eq_or_lt with hm | hW
-  · have hQ (x : ℝ) : Q s g w x = 0 := by
+  · change 0 = mass s w at hm
+    have hQ (x : ℝ) : Q s g w x = 0 := by
       obtain ⟨u, _, _, hu⟩ := (Q_isLeast s g w x).1
       rw [hu, cost, ← hm, div_zero]
-    simp [hQ, average, ← hm]
+    simp [hQ, PhaseObstructionLengths.average, ← hm]
   rw [← tail_integral_same_time s g w hw hW t]
   have htail : Antitone (tail s g w t) := by
     intro x y hxy
@@ -460,9 +476,11 @@ theorem integrated_Q_same_time (s : Finset J) (g w : J → ℝ)
 /-- The integrated omission bound holds for every set of allowed times. -/
 theorem integrated_Q_le_deficit (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) :
-    (∫ x in (0 : ℝ)..2, Q s g w x) ≤ deficit s g w T := by
+    let D := deficit s g w T
+    (∫ x in (0 : ℝ)..2, Q s g w x) ≤ D := by
+  dsimp only
   rcases T.eq_empty_or_nonempty with rfl | hT
-  · simpa [deficit, average, Real.sSup_empty] using integrated_Q_same_time s g w hw 0
+  · simpa [deficit, PhaseObstructionLengths.average, Real.sSup_empty] using integrated_Q_same_time s g w hw 0
   rw [deficit, le_sub_comm]
   apply csSup_le (hT.image _)
   rintro _ ⟨t, _, rfl⟩
@@ -488,9 +506,10 @@ theorem breakpoint_partition (s : Finset J) (g w : J → ℝ) :
     let cuts := breakpoints s g
     let rights := cuts.erase 0
     let cell := fun b => Ioc (predecessor cuts b) b
+    let q := Q s g w
     ((rights : Set ℝ).PairwiseDisjoint cell) ∧
       (⋃ b ∈ rights, cell b) = Ioc 0 2 ∧
-      ∀ b ∈ rights, ∀ x ∈ cell b, Q s g w x = Q s g w b := by
+      ∀ b ∈ rights, ∀ x ∈ cell b, q x = q b := by
   dsimp only
   let cuts := breakpoints s g
   let rights := cuts.erase 0
@@ -540,9 +559,10 @@ theorem breakpoint_partition (s : Finset J) (g w : J → ℝ) :
 
 /-- The integrated threshold cost is a finite sum of rectangle areas. -/
 theorem finite_step_integral (s : Finset J) (g w : J → ℝ) :
+    let q := Q s g w
     let cuts := breakpoints s g
-    (∫ x in (0 : ℝ)..2, Q s g w x) =
-      ∑ b ∈ cuts.erase 0, (b - predecessor cuts b) * Q s g w b := by
+    (∫ x in (0 : ℝ)..2, q x) =
+      ∑ b ∈ cuts.erase 0, (b - predecessor cuts b) * q b := by
   dsimp only
   let cuts := breakpoints s g
   let rights := cuts.erase 0
@@ -602,11 +622,13 @@ private lemma Q_integral_nonneg (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈
   intro u _
   exact Q_nonneg s g w u hw
 
-/-- The threshold integral dominates each partial length sum. -/
+/-- The threshold integral dominates each partial length sum with its residual bound. -/
 theorem partial_length_le_integral (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) (N : ℕ) :
-    (∑ n ∈ Finset.range N, summand s g w (n + 1)) ≤
-      ∫ x in (0 : ℝ)..2, Q s g w x := by
+    let q := Q s g w
+    (∑ n ∈ Finset.range N, summand s g w (n + 1)) + perScale s g w (N + 1) ≤
+      ∫ x in (0 : ℝ)..2, q x := by
+  dsimp only
   have hi (x y : ℝ) : IntervalIntegrable (Q s g w) volume x y :=
     (Q_antitone s g w).intervalIntegrable
   have hslice (n : ℕ) :
@@ -627,18 +649,35 @@ theorem partial_length_le_integral (s : Finset J) (g w : J → ℝ)
       rw [Finset.sum_range_succ, ← intervalIntegral.integral_add_adjacent_intervals
         (hi (shiftedScale (n + 1)) (shiftedScale n)) (hi (shiftedScale n) 2), add_comm]
       exact add_le_add (hslice n) ih
+  have hresidual : perScale s g w (N + 1) ≤
+      ∫ x in (0 : ℝ)..shiftedScale N, Q s g w x := by
+    have h := intervalIntegral.integral_mono_on (shiftedScale_nonneg N)
+      (intervalIntegrable_const (c := omissionFraction s g w (N + 1)))
+      (hi 0 (shiftedScale N)) (fun x hx => length_omission_le_Q s g w hx.2)
+    rw [intervalIntegral.integral_const, sub_zero, smul_eq_mul] at h
+    rwa [perScale_eq_mul]
   calc
-    _ ≤ ∫ x in shiftedScale N..2, Q s g w x := hpartial N
-    _ ≤ (∫ x in (0 : ℝ)..shiftedScale N, Q s g w x) + ∫ x in shiftedScale N..2, Q s g w x :=
-      le_add_of_nonneg_left (Q_integral_nonneg s g w hw (shiftedScale_nonneg N))
-    _ = _ := intervalIntegral.integral_add_adjacent_intervals (hi 0 (shiftedScale N)) (hi (shiftedScale N) 2)
+    _ ≤ (∫ x in (0 : ℝ)..shiftedScale N, Q s g w x) +
+          ∫ x in shiftedScale N..2, Q s g w x := by
+      exact (add_le_add (hpartial N) hresidual).trans_eq (add_comm _ _)
+    _ = _ := intervalIntegral.integral_add_adjacent_intervals
+      (hi 0 (shiftedScale N)) (hi (shiftedScale N) 2)
 
 /-- The threshold integral dominates the coefficient-length series. -/
 theorem length_series_le_integral (s : Finset J) (g w : J → ℝ)
     (hw : ∀ j ∈ s, 0 ≤ w j) :
-    (∑' n, summand s g w (n + 1)) ≤ ∫ x in (0 : ℝ)..2, Q s g w x := by
+    let q := Q s g w
+    (∑' n, summand s g w (n + 1)) ≤ ∫ x in (0 : ℝ)..2, q x := by
+  dsimp only
   have hsum := (aggregate_bounds s g w Set.univ hw).2.1.summable
-  exact hsum.tsum_le_of_sum_range_le (partial_length_le_integral s g w hw)
+  apply hsum.tsum_le_of_sum_range_le
+  intro N
+  refine (le_add_of_nonneg_right ?_).trans (partial_length_le_integral s g w hw N)
+  apply div_nonneg _ (sq_nonneg _)
+  obtain ⟨u, hu, _, heq⟩ := (omissionFraction_isLeast s g w (N + 1)).1
+  rw [heq]
+  exact div_nonneg (Finset.sum_nonneg fun j hj => hw j (Finset.mem_sdiff.mp hj).1)
+    (Finset.sum_nonneg hw)
 
 abbrev pairIndices : Finset (Fin 2) := Finset.univ
 /-- The frequency pair with a shortest relation of length four and chord gap squared four. -/
@@ -696,7 +735,7 @@ private lemma pair_cost_of_ne (w : ℝ) (hw : 0 < w) (u : Finset (Fin 2)) (hu : 
     exact hu (Finset.eq_univ_of_forall fun j => hs (Finset.mem_univ j))
   obtain ⟨j, hj⟩ := hn
   have hle : w ≤ mass (pairIndices \ u) (fun _ => w) :=
-    Finset.single_le_sum (f := pairW w) (fun _ _ => hw.le) hj
+    Finset.single_le_sum (f := fun _ => w) (fun _ _ => hw.le) hj
   have hmass : mass pairIndices (fun _ => w) = w + w := by simp [mass, two_mul]
   rw [cost, hmass, le_div_iff₀ (by positivity : 0 < w + w)]
   linarith only [hle]
@@ -715,7 +754,9 @@ private lemma pairRelation_tau : tau pairIndices pairRelation = 1 / 8 := by
 
 /-- The equal-weight pair has one positive threshold and a cost of one half below it. -/
 theorem pair_exact_Q (w : ℝ) (hw : 0 < w) (x : ℝ) :
-    Q pairIndices pairFrequency (fun _ => w) x = if x ≤ (1 : ℝ) / 8 then 1 / 2 else 0 := by
+    let q := Q pairIndices pairFrequency (fun _ => w) x
+    q = if x ≤ (1 : ℝ) / 8 then 1 / 2 else 0 := by
+  dsimp only
   split_ifs with hx
   · apply le_antisymm
     · rw [← pair_cost_single w hw]
@@ -827,10 +868,11 @@ private theorem pair_exact_length_series (w : ℝ) (hw : 0 < w) :
 
 /-- The exact threshold integral is twice the length series for the equal-weight pair. -/
 theorem pair_strict (w : ℝ) (hw : 0 < w) :
-    (∑' n, summand pairIndices pairFrequency (fun _ => w) (n + 1)) = 1 / 32 ∧
-    (∫ x in (0 : ℝ)..2, Q pairIndices pairFrequency (fun _ => w) x) = 1 / 16 ∧
-    (∑' n, summand pairIndices pairFrequency (fun _ => w) (n + 1)) <
-      ∫ x in (0 : ℝ)..2, Q pairIndices pairFrequency (fun _ => w) x := by
+    let q := Q pairIndices pairFrequency (fun _ => w)
+    let lengthSeries := ∑' n, summand pairIndices pairFrequency (fun _ => w) (n + 1)
+    let exactIntegral := ∫ x in (0 : ℝ)..2, q x
+    lengthSeries = 1 / 32 ∧ exactIntegral = 1 / 16 ∧ lengthSeries < exactIntegral := by
+  dsimp only
   rw [pair_exact_length_series w hw, pair_exact_integral w hw]
   norm_num
 
