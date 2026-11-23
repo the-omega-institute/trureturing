@@ -9,6 +9,7 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Data.Fintype.Fin
+import Mathlib.Data.Set.Function
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FinCases
 
@@ -373,5 +374,88 @@ theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
   rw [← hsum']
   have he : (3 : ℕ) • (u j - u i) = (3 : ℕ) • u j - (3 : ℕ) • u i := by abel
   rw [he, kill, kill, sub_self]
+
+/-- The signed sum of triangle rows with the given coefficients. -/
+noncomputable def sumRows {I T A : Type*} [Fintype T] [AddCommGroup A]
+    (points : T → Fin 3 → I) (c : T → A) (i j : I) : A :=
+  ∑ t, row (points t) (c t) i j
+
+private theorem sumRows_eval {I T A : Type*} [Fintype T] [AddCommGroup A]
+    (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
+    (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
+    (c : T → A) (t : T) : sumRows points c (points t 0) (points t 1) = c t := by
+  classical
+  let i := points t 0
+  let j := points t 1
+  have hne : i ≠ j := (hinj t).ne (by decide : (0 : Fin 3) ≠ 1)
+  have ht : covers (points t) i j := ⟨0, 1, rfl, rfl⟩
+  calc
+    sumRows points c i j = row (points t) (c t) i j := by
+      apply Finset.sum_eq_single_of_mem t (Finset.mem_univ _)
+      intro s _ hst
+      exact row_eq_zero _ _ hne fun hs => hst (hdis s t i j hne hs ht)
+    _ = c t := by
+      have hfor : forward (points t) i j := Or.inl ⟨rfl, rfl⟩
+      rw [row, ite_eq_left hfor]
+
+/-- The reduced equations express whether a signed sum of triangle rows
+is a potential difference after the root coordinate is omitted. -/
+def IsReducedRelation {I T A : Type*} [Fintype T] [AddCommGroup A]
+    (points : T → Fin 3 → I) (root anchor : I) (c : T → A) : Prop :=
+  ∀ i j, i ≠ root → j ≠ root →
+    sumRows points c i j = sumRows points c anchor j - sumRows points c anchor i
+
+/-- A normalized point potential compatible with the omitted triangles. -/
+def IsOmissionPotential {I T A : Type*} [Fintype I] [AddCommGroup A]
+    (points : T → Fin 3 → I) (anchor : I) (u : I → A) : Prop :=
+  u anchor = 0 ∧ (∑ i, u i) = 0 ∧
+  (∀ i, 3 • u i = 0) ∧
+  (∀ i j, (¬ ∃ t a b, points t a = i ∧ points t b = j) → u i = u j) ∧
+  (∀ t, u (points t 0) + u (points t 1) + u (points t 2) = 0)
+
+/-- Evaluation on each first oriented edge gives a bijection from normalized
+point potentials to relations among the reduced omitted-triangle rows. -/
+theorem potential_to_relations_bijective {I T A : Type*} [Fintype I] [Fintype T]
+    [AddCommGroup A] (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
+    (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
+    (root anchor : I) (hne : anchor ≠ root) (hann : ∀ x : A, Fintype.card I • x = 0) :
+    let eval (u : I → A) (t : T) := u (points t 1) - u (points t 0)
+    Set.BijOn eval (Set.ofPred (IsOmissionPotential points anchor))
+      (Set.ofPred (IsReducedRelation points root anchor)) := by
+  classical
+  intro eval
+  have realizable (u : I → A) (hu : IsOmissionPotential points anchor u) :
+      ∀ i j, sumRows points (eval u) i j = u j - u i := by
+    obtain ⟨c, hc⟩ := (edge_rows_iff points hinj hdis u anchor).mpr
+      (by simpa [hu.1] using hu.2.2)
+    have he (t : T) : eval u t = c t := by
+      exact (hc _ _ ((hinj t).ne (by decide : (0 : Fin 3) ≠ 1))).trans
+        (sumRows_eval points hinj hdis c t)
+    intro i j
+    by_cases hij : i = j
+    · subst j
+      rw [sub_self]
+      exact Finset.sum_eq_zero fun t _ => row_diag (hinj t) (eval u t) i
+    · rw [show eval u = c from funext he]
+      exact (hc i j hij).symm
+  refine ⟨?_, ?_, ?_⟩
+  · intro u hu i j _ _
+    simp only [realizable u hu]
+    abel
+  · intro u hu v hv hev
+    funext i
+    have h := (realizable u hu anchor i).symm.trans
+      ((congrArg (fun c => sumRows points c anchor i) hev).trans (realizable v hv anchor i))
+    have hu0 : u anchor = 0 := hu.1
+    have hv0 : v anchor = 0 := hv.1
+    rwa [hu0, hv0, sub_zero, sub_zero] at h
+  · intro c hc
+    obtain ⟨_, u, hu, _⟩ := triangle_relation_potential points hinj hdis root anchor hne hann c hc
+    have he (t : T) : eval u t = c t :=
+      (hu.2.2.2 (points t 0) (points t 1)).symm.trans (sumRows_eval points hinj hdis c t)
+    have hrest := (edge_rows_iff points hinj hdis u anchor).mp
+      ⟨c, fun i j _ => (hu.2.2.2 i j).symm⟩
+    refine ⟨u, ⟨hu.1, hu.2.1, ?_⟩, funext he⟩
+    simpa [hu.1] using hrest
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
