@@ -14,10 +14,10 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
         Blocks(
             Paragraph(Text(
                 "Let J be finite. Use nonnegative weights w(j), radii r(j)≥ρ>0, "
-                + "a base spectrum g, and a closed window of radius e≥0. Write B(p) for "
+                + "a base spectrum g, and a closed window at resolution e. Write B(p) for "
                 + "the localized excess budget over ordered distinct degree-p pairs, W for "
                 + "the sum of the weights, and D(p) for the degree-p diagonal mass. Set "
-                + "C=exp(1/2)√(15π/2). Fix a positive integer k. For each pair u,v of "
+                + "C=exp(1/2)√(15π/2). The function ofReal maps a real value to its nonnegative part. Fix a positive integer k. When e>0, for each pair u,v of "
                 + "disjoint supports and common degree 0<d<k with d≤p, require the absolute "
                 + "gap between their base frequencies to exceed e+Σ(u(j)+v(j))r(j).")),
             Describe.Lean(
@@ -36,7 +36,7 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
                         + "and Euclidean scale at least ρ√(2k). The multinomial theorem gives "
                         + "the distinct-pair mass W^(2p)−D(p).")),
                     Paragraph(Text(
-                        "When k=1 the separation hypothesis is vacuous. When k>p, every "
+                        "When e≤0 the localized budget vanishes. At k=1 the separation hypothesis is vacuous. When k>p, every "
                         + "distinct pair is excluded. The premise is a positive-resolution "
                         + "arithmetic condition on the base spectrum. Its validity for the "
                         + "fixed zeta ordinates at the missing-window parameters is open."))),
@@ -57,10 +57,12 @@ internal sealed class ReducedDegreeCollisionBudgetsDocument : IScribeDocumentDef
             Minus, Call("D", p), Close);
         var probability = Call("min", Call("min", D(1), new Formula.Fraction(F.Id("e"), Rho)),
             new Formula.Fraction(Multiply(F.Id("C"), F.Id("e")), Multiply(Rho, Call("sqrt", Multiply(D(2), k)))));
-        var outside = new Formula.Relation(p, FormulaRelationOperator.LessThan, k);
+        var nonpositive = AtMost(F.Id("e"), D(0));
+        var beyondDegree = new Formula.Relation(p, FormulaRelationOperator.LessThan, k);
+        var outside = Seq(Open, new Formula.Logic(nonpositive, FormulaLogicOperator.Or, beyondDegree), Close);
         var zero = new Formula.Relation(budget, FormulaRelationOperator.Equal, D(0));
         var exact = new Formula.Logic(outside, FormulaLogicOperator.Implies, zero);
         return Disp(new Formula.Logic(Seq(Open, exact, Close), FormulaLogicOperator.And,
-            AtMost(budget, Multiply(offDiagonal, probability))));
+            AtMost(budget, Call("ofReal", Multiply(offDiagonal, probability)))));
     }
 }

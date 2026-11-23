@@ -79,16 +79,31 @@ private theorem reducedDegree_ge_of_reachable {J : Type*} [Fintype J]
 /-- Reject pairs below the separation threshold and bound the remaining weighted budget. -/
 theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [DecidableEq J]
     (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j) {ρ η : ℝ} (hρ : 0 < ρ)
-    (hr : ∀ j, ρ ≤ radius j) (hη : 0 ≤ η) (p k : ℕ) (hk : 0 < k)
-    (hsep : ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k → d ≤ p →
+    (hr : ∀ j, ρ ≤ radius j) (p k : ℕ) (hk : 0 < k)
+    (hsep : 0 < η → ∀ (d : ℕ) (u v : J → ℕ), 0 < d → d < k → d ≤ p →
       (∑ j, u j) = d → (∑ j, v j) = d → (∀ j, min (u j) (v j) = 0) →
       η + ∑ j, ((u j : ℝ) + v j) * radius j <
         |monomialFrequency g u - monomialFrequency g v|) :
-    (p < k → localizedExcessBound g w radius p η = 0) ∧
+    (η ≤ 0 ∨ p < k → localizedExcessBound g w radius p η = 0) ∧
       localizedExcessBound g w radius p η ≤
         ENNReal.ofReal (((∑ j, w j) ^ (2 * p) - diagonal w p) *
           min (min 1 (η / ρ)) (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
             (ρ * Real.sqrt (2 * (k : ℝ))))) := by
+  by_cases hηpos : 0 < η
+  swap
+  · have hη := le_of_not_gt hηpos
+    have hzero : localizedExcessBound g w radius p η = 0 := by
+      unfold localizedExcessBound weightedPairBudget
+      refine sum_eq_zero fun m _ => sum_eq_zero fun n _ => ?_
+      suffices hp : localizedPairBound g radius η m n = 0 by rw [hp, mul_zero]
+      unfold localizedPairBound
+      split_ifs
+      · have hr' : 0 ≤ pairRadius radius m n := NNReal.coe_nonneg _
+        rw [ENNReal.ofReal_eq_zero.mpr (div_nonpos_of_nonpos_of_nonneg hη hr')]
+        simp
+      · rfl
+    exact ⟨fun _ => hzero, hzero ▸ zero_le⟩
+  have hη := hηpos.le
   let s := piAntidiag (univ : Finset J) p
   let c := monomialWeight w
   let C := Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η
@@ -111,7 +126,7 @@ theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [Decid
     unfold localizedPairBound
     split_ifs with hreach
     · have hdegree :=
-        reducedDegree_ge_of_reachable g radius η p k hsep m n hmp hnp
+        reducedDegree_ge_of_reachable g radius η p k (hsep hηpos) m n hmp hnp
           hne hreach
       refine ⟨fun h => False.elim ((not_lt_of_ge (hdegree.trans (Nat.sub_le _ _))) h), ?_⟩
       have hl : (∑ j, min (m j) (n j)) ≤ p := by
@@ -157,7 +172,8 @@ theorem localized_excess_le_of_reduced_separation {J : Type*} [Fintype J] [Decid
           (div_le_div_of_nonneg_left hC hL hscale))
     · exact ⟨fun _ => rfl, zero_le⟩
   constructor
-  · intro hpk
+  · intro hwindow
+    have hpk := hwindow.resolve_left hηpos.not_ge
     unfold localizedExcessBound weightedPairBudget
     exact sum_eq_zero fun m hm => sum_eq_zero fun n hn => by
       rw [(hpair m n hm hn).1 hpk, mul_zero]

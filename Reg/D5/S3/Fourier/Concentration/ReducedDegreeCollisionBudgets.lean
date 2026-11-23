@@ -28,12 +28,12 @@ abbrev frequencyArena : Arena where
   signature := frequencySignature.{u}
   Law V := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     (g w radius : J → ℝ) (_ : ∀ j, 0 ≤ w j) {ρ η : ℝ} (_ : 0 < ρ)
-    (_ : ∀ j, ρ ≤ radius j) (_ : 0 ≤ η) (p k : ℕ) (_ : 0 < k)
-    (_ : ∀ (d : ℕ) (a b : J → ℕ), 0 < d → d < k → d ≤ p →
+    (_ : ∀ j, ρ ≤ radius j) (p k : ℕ) (_ : 0 < k)
+    (_ : 0 < η → ∀ (d : ℕ) (a b : J → ℕ), 0 < d → d < k → d ≤ p →
       (∑ j, a j) = d → (∑ j, b j) = d → (∀ j, min (a j) (b j) = 0) →
       η + ∑ j, ((a j : ℝ) + b j) * radius j <
         |monomialFrequency g a - monomialFrequency g b|),
-    (p < k → localizedExcessBound (V.readout () ⟨J, g⟩) w radius p η = 0) ∧
+    (η ≤ 0 ∨ p < k → localizedExcessBound (V.readout () ⟨J, g⟩) w radius p η = 0) ∧
       localizedExcessBound g w radius p η ≤
         ENNReal.ofReal (((∑ j, w j) ^ (2 * p) - diagonal w p) *
           min (min 1 (η / ρ)) (Real.exp (1 / 2) * Real.sqrt (15 * Real.pi / 2) * η /
@@ -75,7 +75,7 @@ private theorem rejected_law : ¬ frequencyArena.{u}.Law rejected := by
       norm_num [hai, haj, hbi, hbj, w, g, i, j]
   have hzero : localizedExcessBound (fun _ : ULift.{u} Bool => 0) w w 1 1 = 0 :=
     (law g w w (fun _ => zero_le_one) (ρ := 1) (η := 1) zero_lt_one
-      (fun _ => le_rfl) zero_le_one 1 2 (by decide) hsep).1 (by decide)
+      (fun _ => le_rfl) 1 2 (by decide) (fun _ => hsep)).1 (Or.inr (by decide))
   let a : ULift.{u} Bool → ℕ := fun x => if x.down then 0 else 1
   let b : ULift.{u} Bool → ℕ := fun x => if x.down then 1 else 0
   let s := piAntidiag (univ : Finset (ULift.{u} Bool)) 1
@@ -160,7 +160,7 @@ def frequencyRegistration :
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "body", "fn", "arg", "fn", "fn", "fn",
         "fn", "arg"]
       stateBinder := 0
