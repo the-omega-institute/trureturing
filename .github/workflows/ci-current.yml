@@ -115,11 +115,6 @@ jobs:
           cache: false
       - id: judge_key
         run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.judge_key.outputs.packages_path }}
-          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge
         continue-on-error: true
         uses: actions/cache/restore@v5
@@ -128,6 +123,12 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - name: Restore the NuGet packages for a cold judge build
+        if: steps.judge.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.judge_key.outputs.packages_path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: compute_budget
         name: Initialize the cumulative current compute allowance
         run: |
@@ -313,13 +314,7 @@ jobs:
         env:
           LEAN_NUM_THREADS: '1'
           CI_BASE: ${{ steps.entry.outputs.base }}
-          NEEDS_LEAN: ${{ steps.lean_plan.outputs.needs_lean }}
-        run: |
-          if [[ "$NEEDS_LEAN" == true ]]; then
-            STRATALINT_LEAN_PRODUCER_DLL="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
-            export STRATALINT_LEAN_PRODUCER_DLL
-          fi
-          python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
