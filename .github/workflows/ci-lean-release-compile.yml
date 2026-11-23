@@ -130,7 +130,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
           lookup-only: true
       - id: previous
         if: inputs.strategy != 'parallel' && steps.sparse.outputs.found != 'true' && steps.support.outputs.supported == 'true' && steps.indexed.outputs.complete != 'true' && steps.native.outputs.cache-matched-key == '' && hashFiles('.github/actions/lean-release-base/action.yml') != ''
