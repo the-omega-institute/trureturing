@@ -23,11 +23,6 @@ namespace D5.S3.Arith.MakowskiSchinzel
 
 open Finset UniqueFactorizationMonoid
 
-/-- At an odd integer, adjoining the prime two halves the ratio exactly. -/
-theorem alpha_two_mul {m : ℕ} (hm : Odd m) : alpha (2 * m) = alpha m / 2 := by
-  simp only [alpha, Nat.totient_two_mul_of_odd hm, Nat.cast_mul, Nat.cast_ofNat]
-  ring
-
 /-- The non-Fermat count is unchanged on passing to the radical. -/
 theorem eta_radical (n : ℕ) : eta (radical n) = eta n := by
   classical

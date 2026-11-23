@@ -31,29 +31,6 @@ namespace D5.S3.Arith.MakowskiSchinzel.SmoothPredecessor
 
 open Finset UniqueFactorizationMonoid
 
-/-- The abundancy of a product of distinct prime powers is its product of geometric factors. -/
-private theorem abundancy_prime_power_product (s : Finset ℕ) (e : ℕ → ℕ)
-    (hs : ∀ p ∈ s, e p ≠ 0 → p.Prime) :
-    (∏ p ∈ s, p ^ e p).abundancyIndex = ∏ p ∈ s, geom p (e p) := by
-  classical
-  let f : ArithmeticFunction ℚ := ⟨Nat.abundancyIndex, by simp [Nat.abundancyIndex]⟩
-  have hf : f.IsMultiplicative :=
-    ⟨by simp [f, Nat.abundancyIndex], fun h => abundancy_mul h⟩
-  have hcop : (s : Set ℕ).Pairwise (fun p r => Nat.Coprime (p ^ e p) (r ^ e r)) := by
-    intro p hp r hr hne
-    by_cases hep : e p = 0
-    · simp [hep]
-    by_cases her : e r = 0
-    · simp [her]
-    exact ((Nat.coprime_primes (hs p hp hep) (hs r hr her)).mpr hne).pow _ _
-  change f (∏ p ∈ s, p ^ e p) = _
-  rw [ArithmeticFunction.IsMultiplicative.map_prod (fun p => p ^ e p) hf s hcop]
-  apply prod_congr rfl
-  intro p hp
-  by_cases he : e p = 0
-  · simp [f, he, geom, Nat.abundancyIndex]
-  · exact abundancy_prime_pow (hs p hp he) (e p)
-
 /-- Any finite collection of full valuation components divides the original integer. -/
 private theorem prime_power_components_dvd (n : ℕ) (s : Finset ℕ) :
     (∏ p ∈ s, p ^ n.factorization p) ∣ n := by
