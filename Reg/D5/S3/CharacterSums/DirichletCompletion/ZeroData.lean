@@ -111,13 +111,13 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
-    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {ρ : ℂ}
+    (hχ : χ.IsPrimitive) {ρ : ℂ}
     (hρ : M.readout () () (completion χ ρ) 0), 0 < ρ.re ∧ ρ.re < 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have hh := (h hp hn (ρ := 2) True.intro).2
+  have hh := (h hp (ρ := 2) True.intro).2
   norm_num at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -159,7 +159,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "domain", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "domain", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

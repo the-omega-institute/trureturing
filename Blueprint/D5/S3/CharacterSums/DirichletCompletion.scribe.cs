@@ -133,11 +133,11 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For positive q and nonprincipal chi, the same strict bound B phi(q) R "
-                    + "exp((log(q)/2)R + U log(U)) holds at s provided norm(s) is at most R, "
-                    + "either Re(s) is at least one half or chi is primitive, and whenever Re(s) "
-                    + "is below one half the reflected point 1-s also has norm at most R. Here U = "
-                    + "(R+3)/2. Primitivity is used only in the reflected branch, through the "
-                    + "functional equation and unit root-number norm."))),
+                    + "exp((log(q)/2)R + U log(U)) holds at s under these conditions: either "
+                    + "Re(s) is at least one half or chi is primitive; in the right branch "
+                    + "norm(s) is at most R; and in the left branch norm(1-s) is at most R. "
+                    + "Here U = (R+3)/2. Primitivity is used only in the reflected branch, "
+                    + "through the functional equation and unit root-number norm."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("explicit-global-bound"),
                 DeclarationHandle.Create(
@@ -162,7 +162,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                     + "3). For positive q and primitive nonprincipal chi, with R = 1 + norm(s), "
                     + "norm(Fchi(s)) is strictly below exp(C R (1+log(R))). The comparison U at "
                     + "most 2R absorbs the radial Gamma argument. Since 1+log(R) is at most 3 "
-                    + "sqrt(R) for R at least one, a bound exp(3 C R to the power 3/2) follows. It "
+                    + "sqrt(R) for R at least one, a strict bound exp(3 C R to the power 3/2) follows. It "
                     + "supplies the growth exponent below two for the two-point logarithmic "
                     + "derivative formula; exact order one is not asserted."))),
                 DescribeRole.Theorem),
@@ -186,10 +186,12 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For primitive nonprincipal chi of positive modulus, every zero rho of Fchi "
-                    + "satisfies 0 < Re(rho) < 1. The closed right half-plane is zero free; the "
-                    + "functional equation and nonzero root number give the same conclusion on the "
-                    + "closed left half-plane."))),
+                      "For every primitive character chi of positive modulus, every zero rho "
+                    + "of Fchi satisfies 0 < Re(rho) < 1. Nonprincipality is unnecessary. "
+                    + "The closed left half-plane is zero free by reflection. On the right, "
+                    + "a nonprincipal character is covered by classical L-function "
+                    + "nonvanishing; a primitive principal character has modulus one, where "
+                    + "nonvanishing also includes the totalized value at one."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("critical-reflection"),
                 DeclarationHandle.Create(
@@ -254,12 +256,14 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For every positive q, every complex character chi and every s with Re(s) > "
-                    + "1, Hchi(s) = (log(q)-log(pi))/2 + psi((s+a)/2)/2 + hchi(s), where hchi is "
-                    + "the logarithmic derivative of Lchi and a is zero for even chi and one "
-                    + "otherwise. All factors are holomorphic and nonzero in this region. The "
-                    + "product rule, the real Gamma-factor identity and its digamma logarithmic "
-                    + "derivative yield the equality."))),
+                      "For every positive q, every complex character chi and every s with "
+                    + "positive real part, assume Lchi(s) is nonzero and either s is not one "
+                    + "or chi is nonprincipal. Then Hchi(s) = (log(q)-log(pi))/2 + "
+                    + "psi((s+a)/2)/2 + hchi(s), where hchi is the logarithmic derivative of "
+                    + "Lchi and a is zero for even chi and one otherwise. The pole condition "
+                    + "ensures that the L-function is differentiable at the evaluation point. "
+                    + "The product rule, the real Gamma-factor identity and its digamma "
+                    + "logarithmic derivative yield the equality."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("real-center-bound"),
                 DeclarationHandle.Create(
@@ -269,12 +273,12 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every positive modulus q and every complex character chi, twice "
-                    + "Re(Hchi(2)) is at most log(q)-log(pi)+log(3/2)+2A, where A is "
-                    + "log(2)/4+4 log(3)/9+1/3. No primitivity or nonprincipality is required. "
-                    + "At the real Gamma argument, which lies between one and three halves, "
-                    + "the real digamma bound psi(x) at most log(x) gives the sharper "
-                    + "archimedean contribution. Combining this with the Dirichlet bound "
-                    + "gives the stated estimate."))),
+                    + "Re(Hchi(2)) is at most log(q)-log(pi)+log((2+a)/2)+2A, where a is zero "
+                    + "for even chi and one otherwise, and A = log(2)/4+4 log(3)/9+1/3. "
+                    + "No primitivity or nonprincipality is required. At this real Gamma "
+                    + "argument, the inequality psi(x) at most log(x) retains the exact parity "
+                    + "dependence. The logarithmic term is zero for even chi and log(3/2) "
+                    + "for odd chi. Combining it with the Dirichlet bound gives the result."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("explicit-vertical-bound"),
                 DeclarationHandle.Create(

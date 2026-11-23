@@ -303,13 +303,13 @@ theorem right_growth_radius {q : ℕ} [NeZero q]
 /-- A free-radius bound; primitivity is needed only when reflection is used. -/
 theorem completion_growth_radius {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) (s : ℂ) (R : ℝ)
-    (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) (hn : ‖s‖ ≤ R)
+    (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) (hn : 1 / 2 ≤ s.re → ‖s‖ ≤ R)
     (href : s.re < 1 / 2 → ‖1 - s‖ ≤ R) :
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * R *
       Real.exp (Real.log (q : ℝ) / 2 * R +
         ((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
   by_cases hs : 1 / 2 ≤ s.re
-  · exact right_growth_radius χ hne hs hn
+  · exact right_growth_radius χ hne hs (hn hs)
   · have hχ := hside.resolve_left hs
     have ht : 1 / 2 ≤ (1 - s).re := by simp only [sub_re, one_re]; linarith
     have hb := right_growth_radius χ⁻¹ (inv_ne_one.mpr hne) ht (href (lt_of_not_ge hs))
@@ -324,7 +324,7 @@ theorem completion_growth_explicit {q : ℕ} [NeZero q]
       Real.exp (Real.log (q : ℝ) / 2 * (1 + ‖s‖) +
         ((‖s‖ + 4) / 2) * Real.log ((‖s‖ + 4) / 2)) := by
   convert completion_growth_radius χ hne s (1 + ‖s‖) (.inr hχ)
-    (by linarith) (fun _ => by simpa using norm_sub_le (1 : ℂ) s) using 1 <;> ring_nf
+    (fun _ => by linarith) (fun _ => by simpa using norm_sub_le (1 : ℂ) s) using 1 <;> ring_nf
 
 /-- The completion has an explicit global bound of size exp(C R (1 + log R)). -/
 theorem completion_growth_log {q : ℕ} [NeZero q]
@@ -373,7 +373,7 @@ theorem completion_growth_log {q : ℕ} [NeZero q]
 
 private theorem completion_power_growth {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
-    ‖completion χ s‖ ≤ Real.exp (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ)) := by
+    ‖completion χ s‖ < Real.exp (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ)) := by
   let R := 1 + ‖s‖
   have hR : 1 ≤ R := by dsimp [R]; linarith [norm_nonneg s]
   have hp : 0 < R := by linarith
@@ -382,7 +382,7 @@ private theorem completion_power_growth {q : ℕ} [NeZero q]
     have hh := Real.log_le_rpow_div hp.le (by norm_num : (0 : ℝ) < 1 / 2)
     linarith
   have hC : 0 ≤ growthConstant q := (by norm_num : (0 : ℝ) ≤ 3).trans (le_max_right _ _)
-  refine (completion_growth_log hχ hne s).le.trans (Real.exp_le_exp.mpr ?_)
+  refine (completion_growth_log hχ hne s).trans_le (Real.exp_le_exp.mpr ?_)
   change growthConstant q * R * (1 + Real.log R) ≤ _
   have he : R ^ (3 / 2 : ℝ) = R * R ^ (1 / 2 : ℝ) := by
     rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, Real.rpow_add hp, Real.rpow_one]
@@ -409,13 +409,19 @@ theorem completion_zero_order {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ 
 
 /-- Every zero of a primitive nonprincipal completion lies in the open critical strip. -/
 theorem completion_zero_strip {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
-    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {ρ : ℂ} (hρ : completion χ ρ = 0) :
+    (hχ : χ.IsPrimitive) {ρ : ℂ} (hρ : completion χ ρ = 0) :
     0 < ρ.re ∧ ρ.re < 1 := by
   constructor
   · by_contra! h
     exact completion_ne_zero_of_re_le_zero hχ h hρ
   · by_contra! h
-    exact completion_ne_zero_of_one_le_re χ (.inl hne) h hρ
+    have hn : χ ≠ 1 ∨ ρ ≠ 1 ∨ q = 1 := by
+      by_cases hc : χ = 1
+      · right; right
+        simpa only [DirichletCharacter.IsPrimitive, hc,
+          DirichletCharacter.conductor_one] using hχ.symm
+      · exact .inl hc
+    exact completion_ne_zero_of_one_le_re χ hn h hρ
 
 /-- Reflection in the critical line is conjugate covariance with the root number. -/
 theorem completion_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
@@ -516,7 +522,7 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
       analyticOrderNatAt F (e ρ).1 = analyticOrderNatAt F ρ.1 :=
     congrArg ENat.toNat (completion_reflect_order hχ hne ρ.1).2
   have hk (ρ : {z : ℂ // F z = 0}) : 0 ≤ k ρ := by
-    have hr := (completion_zero_strip hχ hne ρ.2).2
+    have hr := (completion_zero_strip hχ ρ.2).2
     exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (by linarith))
       (add_nonneg (sq_nonneg _) (sq_nonneg _))
   have hs : F s ≠ 0 := completion_ne_zero_of_one_le_re χ (.inl hne) (by simp [s])
@@ -524,7 +530,7 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
   have hh := Complex.hasSum_re
     (D5.S3.Analytic.Resolvent.EntireLogDerivDifference.entire_logDeriv_difference_hasSum
       (differentiable_completion χ hne) (by norm_num : (3 / 2 : ℝ) < 2)
-      (completion_power_growth hχ hne) ha hs)
+      (fun z => (completion_power_growth hχ hne z).le) ha hs)
   have hv : (logDeriv F s - logDeriv F a).re = 2 * (logDeriv F s).re := by
     rw [show logDeriv F a = -conj (logDeriv F s) from logDeriv_reflect hχ hne s]
     simp
@@ -581,15 +587,13 @@ theorem norm_logDeriv_LFunction_two {q : ℕ} [NeZero q]
 
 /-- The completed logarithmic derivative separates conductor, Gamma and Dirichlet factors. -/
 theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
-    {s : ℂ} (hs : 1 < s.re) :
+    {s : ℂ} (hs : 0 < s.re) (hL : χ.LFunction s ≠ 0) (hpole : s ≠ 1 ∨ χ ≠ 1) :
     logDeriv (completion χ) s = ((Real.log (q : ℝ) - Real.log Real.pi) / 2 : ℝ) +
       (1 / 2 : ℂ) * Complex.digamma ((s + (if χ.Even then 0 else 1)) / 2) +
       logDeriv χ.LFunction s := by
   classical
   let b : ℂ := (Real.log (q : ℝ) / 2 : ℝ)
-  have hpos : 0 < s.re := by linarith
-  have hs1 : s ≠ 1 := by intro h; simp [h] at hs
-  have hL := χ.LFunction_ne_zero_of_one_le_re (.inr hs1) hs.le
+  have hpos : 0 < s.re := hs
   have hdG : DifferentiableAt ℂ χ.gammaFactor s := by
     unfold DirichletCharacter.gammaFactor
     split_ifs
@@ -604,10 +608,10 @@ theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
     logDeriv_fun_mul (f := fun z : ℂ => Complex.exp (b * z))
       (g := fun z => χ.gammaFactor z * χ.LFunction z) s
       (Complex.exp_ne_zero _) (mul_ne_zero (gammaFactor_ne_zero χ hpos) hL)
-      (by fun_prop) (hdG.mul (χ.differentiableAt_LFunction s (.inl hs1))),
+      (by fun_prop) (hdG.mul (χ.differentiableAt_LFunction s hpole)),
     logDeriv_fun_mul (f := χ.gammaFactor) (g := χ.LFunction) s
       (gammaFactor_ne_zero χ hpos) hL hdG
-      (χ.differentiableAt_LFunction s (.inl hs1))]
+      (χ.differentiableAt_LFunction s hpole)]
   have hexp : logDeriv (fun z : ℂ => Complex.exp (b * z)) s = b := by
     have hd : HasDerivAt (fun z : ℂ => Complex.exp (b * z))
         (Complex.exp (b * s) * b) s := by
@@ -635,18 +639,21 @@ theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
 /-- At the real point two the Gamma real-axis estimate gives a sharper bound. -/
 theorem completion_center_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
     2 * (logDeriv (completion χ) 2).re ≤
-      Real.log (q : ℝ) - Real.log Real.pi + Real.log (3 / 2) +
+      Real.log (q : ℝ) - Real.log Real.pi +
+        Real.log ((2 + if χ.Even then 0 else 1 : ℝ) / 2) +
         2 * (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3) := by
   let x : ℝ := (2 + if χ.Even then 0 else 1) / 2
   have hx : 1 ≤ x ∧ x ≤ 3 / 2 := by dsimp [x]; split_ifs <;> norm_num
   have harg : ((2 : ℂ) + (if χ.Even then 0 else 1)) / 2 = (x : ℂ) := by
     dsimp [x]; split_ifs <;> norm_num
   have hp := (digamma_ofReal_re_sandwich (by linarith : 0 < x)).2
-  have hl := Real.log_le_log (by linarith : 0 < x) hx.2
   have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ 0)
-  have he := congrArg Complex.re (completion_logDeriv χ (s := 2) (by norm_num))
+  have he := congrArg Complex.re (completion_logDeriv χ (s := 2) (by norm_num)
+    (χ.LFunction_ne_zero_of_one_le_re (.inr (by norm_num)) (by norm_num))
+    (.inl (by norm_num)))
   rw [harg] at he
   norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
+  change _ ≤ Real.log (q : ℝ) - Real.log Real.pi + Real.log x + _
   linarith
 
 /-- Every character has the upper bound; primitive nonprincipal characters have positivity. -/
@@ -660,8 +667,10 @@ theorem completion_vertical_bound {q : ℕ} [NeZero q]
   · by_cases ht : t = 0
     · subst t
       have hb := completion_center_bound χ
-      have hl : Real.log (3 / 2) < Real.log (3 : ℝ) :=
-        Real.log_lt_log (by norm_num) (by norm_num)
+      have hx : 0 < ((2 + if χ.Even then 0 else 1 : ℝ) / 2) ∧
+          ((2 + if χ.Even then 0 else 1 : ℝ) / 2) < 3 := by
+        split_ifs <;> norm_num
+      have hl := Real.log_lt_log hx.1 hx.2
       norm_num at *
       linarith
     let z : ℂ := ((2 + t * I) + (if χ.Even then 0 else 1)) / 2
@@ -673,7 +682,10 @@ theorem completion_vertical_bound {q : ℕ} [NeZero q]
     rw [him] at hp
     have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ t)
     have he := congrArg Complex.re
-      (completion_logDeriv χ (s := 2 + t * I) (by simp))
+      (completion_logDeriv χ (s := 2 + t * I) (by simp)
+        (χ.LFunction_ne_zero_of_one_le_re (.inr (by
+          intro h; have := congrArg Complex.re h; norm_num at this)) (by simp))
+        (.inl (by intro h; have := congrArg Complex.re h; norm_num at this)))
     change _ = _ + ((1 / 2 : ℂ) * Complex.digamma z).re + _ at he
     norm_num [Complex.add_re, Complex.mul_re, Complex.log_re] at he
     linarith
@@ -682,7 +694,7 @@ theorem completion_vertical_bound {q : ℕ} [NeZero q]
     rw [← hs.tsum_eq]
     apply tsum_nonneg
     intro ρ
-    have hr := (completion_zero_strip hχ hne ρ.2).2
+    have hr := (completion_zero_strip hχ ρ.2).2
     exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (by linarith))
       (add_nonneg (sq_nonneg _) (sq_nonneg _))
 

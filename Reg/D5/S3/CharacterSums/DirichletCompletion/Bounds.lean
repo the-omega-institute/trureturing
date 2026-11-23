@@ -102,7 +102,7 @@ def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) (s : ℂ) (R : ℝ)
-    (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) (hn : ‖s‖ ≤ R)
+    (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) (hn : 1 / 2 ≤ s.re → ‖s‖ ≤ R)
     (href : s.re < 1 / 2 → ‖1 - s‖ ≤ R),
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * R *
       M.readout () () (Real.log (q : ℝ) / 2 * R +
@@ -111,7 +111,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have hh := h χ hn 2 2 (.inl (by norm_num)) (by norm_num)
+  have hh := h χ hn 2 2 (.inl (by norm_num)) (fun _ => by norm_num)
     (fun h => by norm_num at h)
   have hg : 0 < gammaConstant := lt_of_lt_of_le zero_lt_one (le_max_left _ _)
   have ht : 0 < (q.totient : ℝ) := by
@@ -246,14 +246,17 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 1 < s.re),
+    (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 0 < s.re)
+    (hL : χ.LFunction s ≠ 0) (hpole : s ≠ 1 ∨ χ ≠ 1),
     M.readout () () (logDeriv (completion χ) s)
       (((Real.log (q : ℝ) - Real.log Real.pi) / 2 : ℝ) +
         (1 / 2 : ℂ) * Complex.digamma ((s + (if χ.Even then 0 else 1)) / 2) +
         logDeriv χ.LFunction s)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (1 : DirichletCharacter ℂ 1) (s := 2) (by norm_num)
+  have hL := (1 : DirichletCharacter ℂ 1).LFunction_ne_zero_of_one_le_re
+    (s := 2) (.inr (by norm_num)) (by norm_num)
+  exact h (1 : DirichletCharacter ℂ 1) (s := 2) (by norm_num) hL (.inl (by norm_num))
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
@@ -294,7 +297,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -317,7 +320,7 @@ def arena : Arena where
   signature := signature
   Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q),
     M.readout () () (2 * (logDeriv (completion χ) 2).re)
-      (Real.log (q : ℝ) - Real.log Real.pi + Real.log (3 / 2) +
+      (Real.log (q : ℝ) - Real.log Real.pi + Real.log ((2 + if χ.Even then 0 else 1) / 2 : ℝ) +
         2 * (Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -394,7 +397,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro h
-  have hh := congrFun h 0
+  have hh := congrFun h 1
   norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @completion_vertical_bound) where
   actual := actual

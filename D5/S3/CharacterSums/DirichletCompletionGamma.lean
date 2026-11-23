@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Euler's integral and convexity bound Gamma on a right half-plane. -/
+   digest: Gamma products, convexity and integral tests bound completion factors. -/
 
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
@@ -16,7 +16,7 @@ import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Tactic
 
-/-! # Gamma bounds for Dirichlet completions -/
+/-! # Gamma and Dirichlet-series bounds for completions -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
