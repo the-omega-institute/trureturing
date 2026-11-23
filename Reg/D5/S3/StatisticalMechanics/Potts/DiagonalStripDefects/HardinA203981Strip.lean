@@ -58,9 +58,11 @@ private theorem count_distinct : a 1 ≠ a 2 := by
     decide +kernel
   intro equal
   exact different ((evaluate 1).symm.trans
-    ((counting_bridge 1 le_rfl).trans
+    ((show dotProduct v ((t ^ 1).mulVec e) = 6 * (a 1 : ℤ) from by
+      simpa only [Nat.one_ne_zero, if_false, add_zero] using counting_bridge 1).trans
       ((congrArg (fun k : ℕ => (6 : ℤ) * (k : ℤ)) equal).trans
-        ((counting_bridge 2 (by decide)).symm.trans (evaluate 2)))))
+        ((show dotProduct v ((t ^ 2).mulVec e) = 6 * (a 2 : ℤ) from by
+          simpa only [show (2 : ℕ) ≠ 0 by decide, if_false, add_zero] using counting_bridge 2).symm.trans (evaluate 2)))))
 
 def family : Registration arena (type_of% @result) where
   actual := readout
@@ -112,16 +114,16 @@ def readout : Realization signature := realize signature (fun _ _ n => a n) (fun
 def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ m : ℕ, 1 ≤ m →
+  Law r := ∀ m : ℕ,
     dotProduct _root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData.initial
-      ((_root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData.T ^ m).mulVec (1 : Fin 15 → ℤ)) =
-        6 * (r.readout () () m : ℤ)
-private theorem rejected_at (h : arena.Law rejected) (m : ℕ) (hm : 1 ≤ m) : False := by
-  have hb := h m hm
-  have ha := counting_bridge m hm
+      ((_root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData.T ^ m).mulVec (1 : Fin 15 → ℤ)) +
+        (if m = 0 then 3 else 0) = 6 * (r.readout () () m : ℤ)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h 1
+  have ha := counting_bridge 1
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
   linarith
-private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 1 (by decide)
 
 def family : Registration arena (type_of% @counting_bridge) where
   actual := readout
@@ -155,7 +157,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "arg", "arg"]
+      path := #["body", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -184,21 +186,20 @@ def rejected : Realization signature := realize signature
 
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ (m d : ℕ), d ≠ m * 10 →
-    r.readout () d m =
+  Law r := ∀ (m d : ℕ),
+    r.readout () d m + (if d = m * 10 then 3 else 0) =
       6 * (Finset.univ.filter fun f : Fin (m + 1) × Fin 6 → Fin 3 =>
         defects ∅ (betw 6) (List.ofFn fun i j => f (i, j)) = d ∧
         (@Canonical (Fin (m + 1) × Fin 6)
           (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f)).card
 
-private theorem rejected_at (m d : ℕ) (hd : d ≠ m * 10)
-    (h : arena.Law rejected) : False := by
-  have hx := h m d hd
-  change literalCount (q := 3) ∅ (betw 6) d (m + 1) + 1 = _ at hx
-  exact Nat.succ_ne_self _ (hx.trans (scale_count m d hd).symm)
-
-private theorem rejected_law : ¬ arena.Law rejected :=
-  rejected_at 1 0 (by decide)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hx := h 1 0
+  change literalCount (q := 3) ∅ (betw 6) 0 (1 + 1) + 1 +
+    (if (0 : ℕ) = 1 * 10 then 3 else 0) = _ at hx
+  have ha := scale_count 1 0
+  omega
 
 private theorem literal_ne_of_count_ne (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
     (different : a m ≠ a n) :
@@ -207,7 +208,7 @@ private theorem literal_ne_of_count_ne (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
   have scale (k : ℕ) (hk : 1 ≤ k) :
       literalCount (q := 3) ∅ (betw 6) 0 (k + 1) = 6 * a k := by
     unfold a
-    exact scale_count k 0 (by omega)
+    simpa only [if_neg (show (0 : ℕ) ≠ k * 10 by omega), add_zero] using scale_count k 0
   intro equal
   exact different (Nat.eq_of_mul_eq_mul_left (by decide)
     ((scale m hm).symm.trans (equal.trans (scale n hn))))
@@ -247,7 +248,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg", "fn", "arg"]

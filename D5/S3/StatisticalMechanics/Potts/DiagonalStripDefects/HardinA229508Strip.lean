@@ -86,7 +86,8 @@ theorem counting_bridge (m : ℕ) :
           Sum.elim_inr, Pi.zero_apply, Finset.sum_const_zero]
   have h : literalCount (q := 3) ∅ (betw 6) 1 (m + 1) = 6 * a (m + 1) := by
     unfold a
-    exact HardinA203981Strip.scale_count m 1 (by omega)
+    simpa only [if_neg (show (1 : ℕ) ≠ m * 10 by omega), add_zero] using
+      HardinA203981Strip.scale_count m 1
   rw [← labelled, h]
   simp only [Nat.cast_mul, Nat.cast_ofNat]
 
