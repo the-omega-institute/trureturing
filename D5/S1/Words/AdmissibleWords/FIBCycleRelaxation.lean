@@ -4,131 +4,62 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: A real family passes all cycle inequalities but has no joint cut law. -/
+   digest: The cycle relaxation of two oriented event differences is exactly a rectangle. -/
 
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Fintype.Fin
 import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
+
+/-! The exact cycle region for the pair queries on the five-vertex FIB graph. -/
 
 set_option autoImplicit false
 
 namespace D5.S1.Words.AdmissibleWords.FIBCycleRelaxation
 
-open scoped BigOperators
+/-- The rows are the reference, S, H, K, T, W. The unobserved entries use m and 2b. -/
+def completion (q c a b m : ℝ) : Fin 6 → Fin 6 → ℝ :=
+  ![![0, q, q+c, q+c, q, q],
+    ![q, 0, c, c, m, 2*a],
+    ![q+c, c, 0, 2*b, c+2*b, c],
+    ![q+c, c, 2*b, 0, c, c],
+    ![q, m, c+2*b, c, 0, m],
+    ![q, 2*a, c, c, m, 0]]
 
-private def cut (x y : Bool) : ℕ := (x != y).toNat
-
-/-- A linear inequality satisfied by each cut, with the reference vertex on the false side. -/
-private theorem cutSeparates : ∀ s h k t w : Bool,
-    cut w s + cut t h + h.toNat + k.toNat ≤
-      cut s h + cut s k + cut w h + cut w k + cut t k + s.toNat + w.toNat := by
-  decide
-
-private def event (x : Fin 5 → Bool) (v : Fin 6) : Bool :=
-  if h : v.val = 0 then false else x ⟨v.val - 1, by omega⟩
-
-private theorem allCuts (x : Fin 5 → Bool) :
-    cut (event x 5) (event x 1) + cut (event x 4) (event x 2) +
-        cut (event x 0) (event x 2) + cut (event x 0) (event x 3) ≤
-      cut (event x 1) (event x 2) + cut (event x 1) (event x 3) +
-        cut (event x 5) (event x 2) + cut (event x 5) (event x 3) +
-        cut (event x 4) (event x 3) + cut (event x 0) (event x 1) +
-        cut (event x 0) (event x 5) := by
-  have hfalse (b : Bool) : cut false b = b.toNat := by cases b <;> rfl
-  simpa only [show event x 0 = false from rfl, hfalse] using
-    cutSeparates (event x 1) (event x 2) (event x 3) (event x 4) (event x 5)
-
-private def mixture {I : Type*} [Fintype I] (x : I → Fin 5 → Bool) (weight : I → ℝ)
-    (u v : Fin 6) : ℝ := ∑ j, weight j * cut (event (x j) u) (event (x j) v)
-
-private theorem mixtureBound {I : Type*} [Fintype I]
-    (x : I → Fin 5 → Bool) (weight : I → ℝ) (nonneg : ∀ j, 0 ≤ weight j) :
-    mixture x weight 5 1 + mixture x weight 4 2 + mixture x weight 0 2 +
-        mixture x weight 0 3 ≤
-      mixture x weight 1 2 + mixture x weight 1 3 + mixture x weight 5 2 +
-        mixture x weight 5 3 + mixture x weight 4 3 + mixture x weight 0 1 +
-        mixture x weight 0 5 := by
-  let d (j : I) (u v : Fin 6) : ℝ := cut (event (x j) u) (event (x j) v)
-  have termwise (j : I) : d j 5 1 + d j 4 2 + d j 0 2 + d j 0 3 ≤
-      d j 1 2 + d j 1 3 + d j 5 2 + d j 5 3 + d j 4 3 + d j 0 1 + d j 0 5 := by
-    dsimp only [d]
-    exact_mod_cast allCuts (x j)
-  have weighted := Finset.sum_le_sum (s := Finset.univ)
-    (fun j _ => mul_le_mul_of_nonneg_left (termwise j) (nonneg j))
-  simpa only [d, mul_add, Finset.sum_add_distrib, mixture] using weighted
-
-private def star (u v : Fin 6) : ℕ := cut (u == 0) (v == 0)
-
-private def corner : Fin 6 → Fin 6 → ℕ :=
-  ![![0, 1, 2, 2, 1, 1],
-    ![1, 0, 1, 1, 2, 2],
-    ![2, 1, 0, 2, 3, 1],
-    ![2, 1, 2, 0, 1, 1],
-    ![1, 2, 3, 1, 0, 2],
-    ![1, 2, 1, 1, 2, 0]]
-
-private theorem starTriangle : ∀ u v w : Fin 6, star u w ≤ star u v + star v w := by decide
-private theorem cornerTriangle : ∀ u v w : Fin 6,
-    corner u w ≤ corner u v + corner v w := by decide
-private theorem starPerimeter : ∀ u v w : Fin 6,
-    star u v + star v w + star w u ≤ 2 := by decide
-private theorem cornerPerimeter : ∀ u v w : Fin 6,
-    corner u v + corner v w + corner w u ≤ 6 := by decide
-
-def family (q c : ℝ) (u v : Fin 6) : ℝ :=
-  (q - c) * star u v + c * corner u v
-
-private theorem familyTriangles {q c : ℝ} (hc : 0 ≤ c) (hqc : c ≤ q) (hunit : q + 2 * c ≤ 1) :
-    (∀ u v w, family q c u w ≤ family q c u v + family q c v w) ∧
-    (∀ u v w, family q c u v + family q c v w + family q c w u ≤ 2) := by
-  have hdiff : 0 ≤ q - c := sub_nonneg.mpr hqc
+set_option maxHeartbeats 2000000 in
+private theorem completion_laws_of_bounds {q c a b m : ℝ}
+    (hc : 0 ≤ c) (hq : 0 ≤ q) (hu : q + c ≤ 1)
+    (ha : 0 ≤ a) (haq : a ≤ q) (hac : a ≤ c)
+    (hb : 0 ≤ b) (hbq : b ≤ q) (hbc : b ≤ c) (hbu : b ≤ 1 - (q + c))
+    (hm0 : 0 ≤ m) (hma : a ≤ m) (hmb : 2*b ≤ m) (hmc : m ≤ 2*c)
+    (hmq : m ≤ 2*q) (ham : a + m ≤ 1) :
+    let d := completion q c a b m
+    (∀ u v w, d u w ≤ d u v + d v w) ∧
+      (∀ u v w, d u v + d v w + d w u ≤ 2) := by
   constructor
   · intro u v w
-    have hs : (star u w : ℝ) ≤ star u v + star v w := by exact_mod_cast starTriangle u v w
-    have hp : (corner u w : ℝ) ≤ corner u v + corner v w := by
-      exact_mod_cast cornerTriangle u v w
-    calc
-      family q c u w ≤ (q - c) * (star u v + star v w) + c * (corner u v + corner v w) :=
-        add_le_add (mul_le_mul_of_nonneg_left hs hdiff) (mul_le_mul_of_nonneg_left hp hc)
-      _ = _ := by unfold family; ring
+    fin_cases u <;> fin_cases v <;> fin_cases w <;> norm_num [completion] <;> linarith
   · intro u v w
-    have hs : (star u v : ℝ) + star v w + star w u ≤ 2 := by exact_mod_cast starPerimeter u v w
-    have hp : (corner u v : ℝ) + corner v w + corner w u ≤ 6 := by
-      exact_mod_cast cornerPerimeter u v w
-    calc
-      _ = (q - c) * (star u v + star v w + star w u) +
-          c * (corner u v + corner v w + corner w u) := by unfold family; ring
-      _ ≤ (q - c) * 2 + c * 6 :=
-        add_le_add (mul_le_mul_of_nonneg_left hs hdiff) (mul_le_mul_of_nonneg_left hp hc)
-      _ ≤ _ := by linarith
+    fin_cases u <;> fin_cases v <;> fin_cases w <;> norm_num [completion] <;> linarith
 
-private theorem familyOutside {q c : ℝ} (hc : 0 < c) :
-    ¬ (family q c 5 1 + family q c 4 2 + family q c 0 2 + family q c 0 3 ≤
-      family q c 1 2 + family q c 1 3 + family q c 5 2 + family q c 5 3 +
-        family q c 4 3 + family q c 0 1 + family q c 0 5) := by
-  norm_num [family, star, corner, cut]
-  linarith
-
-/-- In vertex order reference, S, H, K, T, W, retain the marginal, edge and query pairs. -/
-def observed : Finset (Fin 6 × Fin 6) :=
-  {(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 2), (1, 3), (5, 2), (5, 3), (4, 3),
-    (5, 1), (4, 2)}
-
-private theorem familyUnrealizable {q c : ℝ} (hc : 0 < c) (I : Type*) [Fintype I] :
-    ¬ ∃ (outcome : I → Fin 5 → Bool) (weight : I → ℝ), (∀ i, 0 ≤ weight i) ∧
-      ∀ p ∈ observed, mixture outcome weight p.1 p.2 = family q c p.1 p.2 := by
-  rintro ⟨outcome, weight, nonneg, fit⟩
-  have law := mixtureBound outcome weight nonneg
-  have edgeReadout (a b : Fin 6) (h : (a, b) ∈ observed) :
-      mixture outcome weight a b = family q c a b := fit (a, b) h
-  rw [edgeReadout 5 1 (by decide), edgeReadout 4 2 (by decide), edgeReadout 0 2 (by decide),
-    edgeReadout 0 3 (by decide), edgeReadout 1 2 (by decide), edgeReadout 1 3 (by decide),
-    edgeReadout 5 2 (by decide), edgeReadout 5 3 (by decide), edgeReadout 4 3 (by decide),
-    edgeReadout 0 1 (by decide), edgeReadout 0 5 (by decide)] at law
-  exact familyOutside hc law
+private theorem completion_laws {q c a b : ℝ}
+    (hc : 0 ≤ c) (hq : 0 ≤ q) (hu : q + c ≤ 1)
+    (ha : 0 ≤ a) (haq : a ≤ q) (hac : a ≤ c)
+    (hb : 0 ≤ b) (hbq : b ≤ q) (hbc : b ≤ c) (hbu : b ≤ 1 - (q + c)) :
+    let d := completion q c a b (max a (2*b))
+    (∀ u v w, d u w ≤ d u v + d v w) ∧
+      (∀ u v w, d u v + d v w + d w u ≤ 2) := by
+  have hm0 : 0 ≤ max a (2*b) := ha.trans (le_max_left _ _)
+  have hma : a ≤ max a (2*b) := le_max_left _ _
+  have hmb : 2*b ≤ max a (2*b) := le_max_right _ _
+  have hmc : max a (2*b) ≤ 2*c := max_le (by linarith) (by linarith)
+  have hmq : max a (2*b) ≤ 2*q := max_le (by linarith) (by linarith)
+  have ham : a + max a (2*b) ≤ 1 := by
+    rw [add_max]
+    exact max_le (by linarith) (by linarith)
+  exact completion_laws_of_bounds hc hq hu ha haq hac hb hbq hbc hbu hm0 hma hmb hmc hmq ham
 
 private def signedDistance {V : Type*} (d : V → V → ℝ) (u v : V × Bool) : ℝ :=
   if u.2 = v.2 then d u.1 v.1 else 1 - d u.1 v.1
@@ -165,39 +96,81 @@ private theorem direct_le_walk {V : Type*} (d : V → V → ℝ)
   | cons x rest ih =>
     exact (triangle u x v).trans (add_le_add_right (ih x) (d u x))
 
-private theorem starSymmetric : ∀ u v : Fin 6, star u v = star v u := by decide
-private theorem cornerSymmetric : ∀ u v : Fin 6, corner u v = corner v u := by decide
-private theorem starDiagonal : ∀ u : Fin 6, star u u = 0 := by decide
-private theorem cornerDiagonal : ∀ u : Fin 6, corner u u = 0 := by decide
 
-private theorem familyCycle {q c : ℝ} (hc : 0 ≤ c) (hqc : c ≤ q) (hunit : q + 2 * c ≤ 1)
-    (u : Fin 6) (middle : List (Fin 6 × Bool)) :
-    1 ≤ walkCost (signedDistance (family q c)) (u, false) middle (u, true) := by
-  have symmetric (u v : Fin 6) : family q c u v = family q c v u := by
-    simp only [family, starSymmetric u v, cornerSymmetric u v]
-  obtain ⟨triangle, perimeter⟩ := familyTriangles hc hqc hunit
-  have bound := direct_le_walk (signedDistance (family q c))
-    (signedTriangle (family q c) symmetric triangle perimeter) (u, false) middle (u, true)
-  simpa [signedDistance, family, starDiagonal, cornerDiagonal] using bound
+/-- The marginal, graph-edge, and queried pairs. -/
+def observed : Finset (Fin 6 × Fin 6) :=
+  {(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 2), (1, 3), (5, 2), (5, 3), (4, 3),
+    (5, 1), (4, 2)}
 
-/-- On a walk returning to the same vertex with the opposite side, pay each
-unchanged-side edge its distance and each changed-side edge its complement.
-The unit lower bound is the corresponding odd-subset cycle inequality. -/
+/-- Every odd set of marked steps on a closed walk yields a unit lower bound. -/
 def CycleConsistent (d : Fin 6 → Fin 6 → ℝ) : Prop :=
   ∀ u middle, 1 ≤ walkCost (signedDistance d) (u, false) middle (u, true)
 
-/-- The observations come from a common normalized law on the five binary events. -/
-def HasJointLaw (d : Fin 6 → Fin 6 → ℝ) : Prop :=
-  ∃ weight : (Fin 5 → Bool) → ℝ, (∀ x, 0 ≤ weight x) ∧ (∑ x, weight x) = 1 ∧
-    ∀ p ∈ observed, mixture id weight p.1 p.2 = d p.1 p.2
+/-- The prescribed pairs extend to symmetric distances that satisfy all cycle inequalities. -/
+def HasCycleCompletion (specified : Fin 6 → Fin 6 → ℝ) : Prop :=
+  ∃ d : Fin 6 → Fin 6 → ℝ, (∀ u v, d u v = d v u) ∧ CycleConsistent d ∧
+    ∀ p ∈ observed, d p.1 p.2 = specified p.1 p.2
 
-/-- At positive slack, every odd-subset cycle check accepts the displayed family,
-although the observed pairs admit no common law. -/
-theorem cycle_consistent_without_joint_law {q c : ℝ}
-    (hc : 0 < c) (hqc : c ≤ q) (hunit : q + 2 * c ≤ 1) :
-    CycleConsistent (family q c) ∧ ¬ HasJointLaw (family q c) := by
-  refine ⟨familyCycle hc.le hqc hunit, ?_⟩
-  rintro ⟨weight, nonneg, _, fit⟩
-  exact familyUnrealizable hc (Fin 5 → Bool) ⟨id, weight, nonneg, fit⟩
+private theorem necessary_bounds {q c a b m : ℝ}
+    (h : HasCycleCompletion (completion q c a b m)) :
+    (0 ≤ a ∧ a ≤ q ∧ a ≤ c) ∧ (0 ≤ b ∧ b ≤ q ∧ b ≤ c ∧ b ≤ 1 - (q + c)) := by
+  rcases h with ⟨d, symmetric, valid, agrees⟩
+  have edge (u v : Fin 6) (hp : (u, v) ∈ observed) :
+      d u v = completion q c a b m u v := agrees (u, v) hp
+  have os : d 0 1 = q := edge 0 1 (by decide)
+  have oh : d 0 2 = q + c := edge 0 2 (by decide)
+  have ot : d 0 4 = q := edge 0 4 (by decide)
+  have ow : d 0 5 = q := edge 0 5 (by decide)
+  have sh : d 1 2 = c := edge 1 2 (by decide)
+  have sk : d 1 3 = c := edge 1 3 (by decide)
+  have wh : d 5 2 = c := edge 5 2 (by decide)
+  have tk : d 4 3 = c := edge 4 3 (by decide)
+  have ws : d 5 1 = 2 * a := edge 5 1 (by decide)
+  have th : d 4 2 = c + 2 * b := edge 4 2 (by decide)
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
+  · have bound := valid 0 [(5, false), (1, false)]
+    norm_num [walkCost, signedDistance, ow, ws, symmetric 1 0, os] at bound
+    linarith
+  · have bound := valid 0 [(5, false), (1, true)]
+    norm_num [walkCost, signedDistance, ow, ws, symmetric 1 0, os] at bound
+    linarith
+  · have bound := valid 5 [(2, false), (1, false)]
+    norm_num [walkCost, signedDistance, wh, symmetric 2 1, sh, symmetric 1 5, ws] at bound
+    linarith
+  · have bound := valid 0 [(4, false), (2, false)]
+    norm_num [walkCost, signedDistance, ot, th, symmetric 2 0, oh] at bound
+    linarith
+  · have bound := valid 0 [(4, false), (2, true)]
+    norm_num [walkCost, signedDistance, ot, th, symmetric 2 0, oh] at bound
+    linarith
+  · have bound := valid 4 [(3, false), (1, false), (2, false)]
+    norm_num [walkCost, signedDistance, tk, symmetric 3 1, sk, sh, symmetric 2 4, th] at bound
+    linarith
+  · have bound := valid 0 [(4, true), (2, false)]
+    norm_num [walkCost, signedDistance, ot, th, symmetric 2 0, oh] at bound
+    linarith
+
+private theorem completion_symmetric (q c a b m : ℝ) (u v : Fin 6) :
+    completion q c a b m u v = completion q c a b m v u := by
+  fin_cases u <;> fin_cases v <;> rfl
+
+private theorem completion_diagonal (q c a b m : ℝ) (u : Fin 6) :
+    completion q c a b m u u = 0 := by
+  fin_cases u <;> rfl
+
+/-- The cycle inequalities impose the two individual capacities on the queried differences. -/
+theorem cycle_completion_iff {q c a b : ℝ} (hq : 0 ≤ q) (hc : 0 ≤ c) (hu : q + c ≤ 1) :
+    HasCycleCompletion (completion q c a b (max a (2 * b))) ↔
+      (0 ≤ a ∧ a ≤ q ∧ a ≤ c) ∧ (0 ≤ b ∧ b ≤ q ∧ b ≤ c ∧ b ≤ 1 - (q + c)) := by
+  refine ⟨necessary_bounds, ?_⟩
+  rintro ⟨⟨ha, haq, hac⟩, ⟨hb, hbq, hbc, hbu⟩⟩
+  let d := completion q c a b (max a (2 * b))
+  have symmetric := completion_symmetric q c a b (max a (2 * b))
+  obtain ⟨triangle, perimeter⟩ := completion_laws hc hq hu ha haq hac hb hbq hbc hbu
+  refine ⟨d, symmetric, ?_, fun _ _ => rfl⟩
+  intro u middle
+  have bound := direct_le_walk (signedDistance d) (signedTriangle d symmetric triangle perimeter)
+    (u, false) middle (u, true)
+  simpa [signedDistance, d, completion_diagonal] using bound
 
 end D5.S1.Words.AdmissibleWords.FIBCycleRelaxation
