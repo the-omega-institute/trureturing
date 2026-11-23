@@ -8,8 +8,9 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / ".lake/build/lib/lean"
-DATA = ["OmegaInit.Prelude", "OmegaInit.Data.Nat", "OmegaInit.Data.Ratio"]
-INIT = [*DATA, "OmegaInit"]
+FOUNDATION = ["OmegaInit.Prelude", "OmegaInit.Core", "OmegaInit.Data.Nat.Basic", "OmegaInit.Data.Nat.Lemmas"]
+INIT = [*FOUNDATION, "OmegaInit.Data.Nat", "OmegaInit"]
+DATA = [*FOUNDATION, "OmegaMath.Data.Nat", "OmegaMath.Data.Ratio"]
 BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
@@ -57,6 +58,28 @@ def check_audits():
             audit(name, [*math, name], [tmp, LIB], reason)
 
 
+    # Compile the same mirrored module with each error in isolation; the real artifacts stay intact.
+    name = "OmegaInit.Data.Nat.Basic"
+    with tempfile.TemporaryDirectory(prefix="omega-name-") as tmp:
+        tmp = Path(tmp)
+        source = tmp / "OmegaInit/Data/Nat/Basic.lean"
+        source.parent.mkdir(parents=True)
+        for declaration, error in [
+            ("Omega.Nat.add", "official owner of Nat.add is Init.Prelude"),
+            ("OutsideOmega", "public foundation name outside Omega"),
+            ("Omega.Nat.unknownOfficialName", "missing official declaration Nat.unknownOfficialName"),
+        ]:
+            source.write_text(f"module\nprelude\npublic def {declaration} : Prop := ∀ p : Prop, p → p\n")
+            run("lake", "env", "lean", "-R", tmp, "-o", source.with_suffix(".olean"), source)
+            audit(name, [name], [tmp], error)
+    example = """prelude
+import OmegaInit.Data.Nat.Basic
+open Omega
+example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
+"""
+    subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, input=example, text=True, check=True)
+
+
 def check_root_d5_import():
     # Give the elaborator the existing file name and a source overlay in memory.
     filename = Path(LEGACY.replace(".", "/") + ".lean")
@@ -76,7 +99,7 @@ example (p q k : Omega.Nat) :
 
 
 def versions():
-    modules = [*INIT, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+    modules = [*INIT, *DATA, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
     files["Mathlib.Data.Nat.Prime.Basic"] = (
         ROOT / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime/Basic.olean")
@@ -92,8 +115,8 @@ def check_incremental():
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean", None,
-         "\npublic theorem Omega.baseProbe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
-         {*INIT, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         "\npublic theorem Omega.congrFun {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k => k a) h\n",
+         {*INIT, *DATA, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
     ]
     for filename, replace, text, expected in probes:
         path = ROOT / filename

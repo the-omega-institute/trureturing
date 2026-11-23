@@ -6,6 +6,37 @@ open Lean
 private def isStrict (name : String) : Bool :=
   name.toName.getRoot == `OmegaMath || name.toName.getRoot == `OmegaInit
 
+/-- Compare names and declaring modules against a separate environment of installed Lean artifacts. -/
+private def checkFoundationNames (strict : Environment) : IO Unit := do
+  let lib ← getLibDir (← findSysroot)
+  let foundation := strict.allImportedModuleNames.filter (·.getRoot == `OmegaInit)
+  for owner in foundation do
+    let official := owner.replacePrefix `OmegaInit `Init
+    unless ← (modToFilePath lib official "olean").pathExists do
+      throw <| IO.userError s!"no official module {official} for {owner}"
+  let mut bindings := #[]
+  let mut owners := #[]
+  for (name, _) in strict.constants.toList do
+    let some idx := strict.getModuleIdxFor? name | continue
+    let owner := strict.header.moduleNames[idx]!
+    if owner.getRoot != `OmegaInit || isPrivateName name || name.isInternal then continue
+    unless name.getRoot == `Omega do
+      throw <| IO.userError s!"public foundation name outside Omega: {name} in {owner}"
+    let official := owner.replacePrefix `OmegaInit `Init
+    bindings := bindings.push (name, official)
+    if !owners.contains official then owners := owners.push official
+  if owners.isEmpty then return
+  searchPathRef.set [lib]
+  let reference ← importModules (owners.map fun moduleName => {module := moduleName}) {}
+  for (name, owner) in bindings do
+    let counterpart := name.replacePrefix `Omega Name.anonymous
+    let some idx := reference.getModuleIdxFor? counterpart
+      | throw <| IO.userError s!"missing official declaration {counterpart} in {owner} for {name}"
+    let actual := reference.header.moduleNames[idx]!
+    unless actual == owner do
+      throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
+  IO.println s!"Official Init names and owning modules matched for {bindings.size} declarations."
+
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String) (expected : Option (List String)) : IO Unit := do
   searchPathRef.set (System.SearchPath.parse path)
@@ -30,6 +61,7 @@ private def audit (roots : List String) (path label : String) (expected : Option
     return count
   let count ← check.toIO' {fileName := "<audit>", fileMap := default} {env}
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
+  checkFoundationNames env
   IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
 
 private def testLibrary (selected : List String) : IO Unit := do

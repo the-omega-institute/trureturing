@@ -4,4 +4,5 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
-public import OmegaInit.Data.Ratio
+
+public import OmegaInit.Data.Nat

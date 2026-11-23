@@ -4,11 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
-public import OmegaInit.Data.Nat
+public import OmegaMath.Data.Nat
 
 @[expose] public section
 
 namespace Omega
+
+namespace Eq
+theorem map₂ (f : α → β → γ) {a b : α} {c d : β} (h : Eq a b) (g : Eq c d) :
+    Eq (f a c) (f b d) :=
+  (congrArg (fun x => f x c) h).trans (congrArg (f b) g)
+end Eq
 
 /-- A finite nonnegative ratio, or an undefined result for a zero denominator.
 The second field of a fraction encodes a strictly positive denominator as its predecessor. -/
@@ -35,7 +41,7 @@ theorem scale (n d k : Nat) :
     Equivalent (value (Nat.mul n (Nat.succ k)) (Nat.mul d (Nat.succ k))) (value n d))
     (Eq.subst (fun x => Equivalent (value (Nat.mul n (Nat.succ k)) x) undefined)
       (Nat.zero_mul (Nat.succ k)).symm True.intro)
-    (fun p _ => (Nat.mul_swap n (Nat.succ k) (Nat.succ p)).trans
+    (fun p _ => (Nat.mul_right_comm n (Nat.succ k) (Nat.succ p)).trans
       (Nat.mul_assoc n (Nat.succ p) (Nat.succ k))) d
 
 end Ratio
