@@ -19,6 +19,7 @@
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+import D5.S3.Weil.Mertens.WeightedTailInverse
 import D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 import D5.S3.Arith.Robin.EulerLayerRootCorrection
@@ -256,6 +257,56 @@ private lemma Jpsi_exp_sub_Q_div_bound {alpha C y : ℝ} (ha : 0 < alpha) (hC : 
         C * (3 / y ^ 2) * (Real.exp (-alpha * y) / alpha) :=
       add_le_add le_rfl (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hW hC)
         (by positivity))
+    _ = _ := by ring
+
+/-- The actual zero strip controls the terminal defect of logarithmic inverse
+transport. Subtracting the leading weighted term retains a factor 1/y. -/
+theorem actual_terminal_defect_exp_bound {alpha : ℝ} (ha : 0 < alpha)
+    (hhalf : alpha ≤ 1 / 2)
+    (hstrip : ∀ rho : ℂ, IsNontrivialZero rho → rho.re ≤ 1 - alpha) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ y : ℝ, 1 ≤ y →
+      |Q (Real.exp y) - D5.S3.Weil.Mertens.WeightedTailInverse.a (Real.exp y) *
+        Jpsi (Real.exp y)| ≤ C * Real.exp (-alpha * y) / y := by
+  obtain ⟨C₀, hC₀, hQ⟩ := Q_exp_bound hhalf hstrip
+  refine ⟨C₀ + (C₀ + 3 * C₀ / alpha), by positivity, ?_⟩
+  intro y hy
+  have hyl : Real.log 2 ≤ y := by
+    have hlog := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith only [hlog, hy]
+  have hy0 : 0 < y := zero_lt_one.trans_le hy
+  have hden : 0 < 1 + y := by positivity
+  let A : ℝ := y ^ 2 / (1 + y)
+  have hA0 : 0 ≤ A := div_nonneg (sq_nonneg _) hden.le
+  have hA : A ≤ y := (div_le_iff₀ hden).2 (by nlinarith only [hy0])
+  have hdecomp :
+      Q (Real.exp y) - A * Jpsi (Real.exp y) =
+        Q (Real.exp y) / (1 + y) - A * (Jpsi (Real.exp y) - Q (Real.exp y) / y) := by
+    dsimp only [A]
+    field_simp [hy0.ne', hden.ne'] <;> ring
+  have hfirst : |Q (Real.exp y)| / (1 + y) ≤ C₀ * Real.exp (-alpha * y) / y := by
+    calc
+      _ ≤ C₀ * Real.exp (-alpha * y) / (1 + y) :=
+        div_le_div_of_nonneg_right (hQ y hyl) hden.le
+      _ ≤ _ := div_le_div_of_nonneg_left
+        (mul_nonneg hC₀ (Real.exp_nonneg _)) hy0 (by linarith)
+  have hsecond : A * |Jpsi (Real.exp y) - Q (Real.exp y) / y| ≤
+      (C₀ + 3 * C₀ / alpha) * Real.exp (-alpha * y) / y := by
+    calc
+      _ ≤ y * |Jpsi (Real.exp y) - Q (Real.exp y) / y| :=
+        mul_le_mul_of_nonneg_right hA (abs_nonneg _)
+      _ ≤ y * ((C₀ + 3 * C₀ / alpha) * Real.exp (-alpha * y) / y ^ 2) :=
+        mul_le_mul_of_nonneg_left (Jpsi_exp_sub_Q_div_bound ha hC₀ hQ hyl hy) hy0.le
+      _ = _ := by field_simp [hy0.ne', ha.ne'] <;> ring
+  rw [D5.S3.Weil.Mertens.WeightedTailInverse.a, Real.log_exp]
+  change |Q (Real.exp y) - A * Jpsi (Real.exp y)| ≤ _
+  rw [hdecomp]
+  calc
+    _ ≤ |Q (Real.exp y) / (1 + y)| + |A * (Jpsi (Real.exp y) - Q (Real.exp y) / y)| :=
+      abs_sub _ _
+    _ = |Q (Real.exp y)| / (1 + y) + A * |Jpsi (Real.exp y) - Q (Real.exp y) / y| := by
+      rw [abs_div, abs_of_pos hden, abs_mul, abs_of_nonneg hA0]
+    _ ≤ C₀ * Real.exp (-alpha * y) / y +
+        (C₀ + 3 * C₀ / alpha) * Real.exp (-alpha * y) / y := add_le_add hfirst hsecond
     _ = _ := by ring
 
 private lemma Jpsi_bound {alpha C x : ℝ} (ha : 0 < alpha) (hC : 0 ≤ C)

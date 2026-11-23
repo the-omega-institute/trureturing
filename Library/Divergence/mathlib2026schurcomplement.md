@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/PositiveReferenceReplacement
   - D5/S3/Quantum/Divergence/FibonacciQutritBlockDomination
   - D5/S3/Quantum/Divergence/FibonacciQutritSpectralTransport
+  - D5/S3/Quantum/Divergence/FibonacciQutritBenchmark
 license: "Apache-2.0 for mathlib source"
 triage: "anchor"
 ---
@@ -63,3 +64,18 @@ directly, with 1 + 500e > 64 and log 2 ≥ 2/3. The coordinate change uses
 [Mathlib's matrix spectral theorem](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Matrix/Spectrum.lean#L127-L146).
 The matrix logarithm and trace carry the strict block estimate back to
 the original divergence.
+
+## Classical benchmark and normalized comparison
+
+The same manuscript uses positive-class data processing in §18 and identifies
+the three-ray classical preparation in §§21 and 23. The first two positive
+likelihood classes share one ray, the last positive class has its own ray, and
+the null class occupies the orthogonal remaining ray. Dividing the positive
+reference by the sum of its weights gives a probability law on three classes.
+The canonical finite preparation channel gives the output data processing
+bound after cancellation of the common trace-one logarithmic shift.
+
+The tangent bound at \(4/3\) for \(x\log x\) bounds the merge deficit by
+\(b[(5/3)\log(5/4)-1/3]\). The rational cap uses the one-term logarithm
+series upper bound at \(1/9\) from
+[Mathlib, `Real.log_div_le_sum_range_add`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean#L344-L349).
