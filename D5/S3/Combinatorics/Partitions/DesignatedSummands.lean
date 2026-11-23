@@ -6,10 +6,24 @@
    utility: none
    digest: Ordered tuples of partitions with designated summands have an Euler product. -/
 
+/-
+admission_basis: escape-witness through marked_count_coeff and the weighted finite-product comparison
+F_const proof_shape: bind-only
+  escape_witness: none
+  Consumers: coeff_seven_period, coefficient_formula_three
+marked_count_coeff proof_shape: content
+  escape_witness: the cardinalities of dependent marking choices and the weighted Euler-product comparison
+Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
+
+Direct frozen dependencies:
+  none
+-/
+
 import D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 import Mathlib.Combinatorics.Enumerative.Partition.GenFun
+import Mathlib.RingTheory.PowerSeries.WellKnown
 
-/-! Definition 2.1 and Proposition 2.2 of Yaqubi and Mirzavaziri (arXiv:2611.05623v1). For each positive multiplicity, a finite index records the chosen occurrence. -/
+/-! Section 2 and Definition 2.1 of Yaqubi and Mirzavaziri (arXiv:2611.05623v1). For each positive multiplicity, a finite index records the chosen occurrence. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,7 +32,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Combinatorics.Partitions.DesignatedSummands
 
-open Filter Finset PowerSeries D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
+open Filter Finset _root_.PowerSeries D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 open scoped PowerSeries.WithPiTopology
 
 /-- A partition with a designated occurrence for each distinct part size. -/
@@ -69,48 +83,37 @@ private theorem marked_count_coeff_nat (k n : ℕ) : markedCount k n = coeff n (
   simp only [Fintype.card_pi, marked_partition_count]
   exact Finset.prod_coe_sort (Finset.range k) (fun i => coeff (l.1 i) markedSeries)
 
-private noncomputable def geom {R : Type*} [Semiring R] : PowerSeries R :=
-  PowerSeries.mk fun _ => 1
-
-private theorem geom_mul {R : Type*} [CommRing R] :
-    (1 - PowerSeries.X : PowerSeries R) * geom = 1 := by
-  ext n
-  cases n with
-  | zero => simp [coeff_zero_eq_constantCoeff, geom]
-  | succ n =>
-    rw [sub_mul, one_mul, map_sub]
-    rw [show (PowerSeries.X : PowerSeries R) * geom = PowerSeries.X ^ 1 * geom by rw [pow_one]]
-    rw [coeff_X_pow_mul]
-    simp [geom]
-
 private theorem coeff_geom_sq {R : Type*} [CommRing R] (n : ℕ) :
-    coeff n ((geom : PowerSeries R) ^ 2) = (n : R) + 1 := by
+    coeff n (invUnitsSub (1 : Rˣ) ^ 2) = (n : R) + 1 := by
   rw [pow_two, coeff_mul]
-  simp [geom, Nat.card_antidiagonal, Nat.cast_succ]
+  simp [Nat.card_antidiagonal, Nat.cast_succ]
 
 private noncomputable def markedFactor {R : Type*} [CommRing R] :
-    PowerSeries R := 1 + PowerSeries.X * geom ^ 2
+    PowerSeries R := 1 + PowerSeries.X * invUnitsSub (1 : Rˣ) ^ 2
 
 private theorem markedFactor_identity {R : Type*} [CommRing R] :
     (markedFactor : PowerSeries R) * ((1 - PowerSeries.X) * (1 - PowerSeries.X ^ 2) *
       (1 - PowerSeries.X ^ 3)) = 1 - PowerSeries.X ^ 6 := by
+  have hgeom : (1 - PowerSeries.X : PowerSeries R) * invUnitsSub (1 : Rˣ) = 1 := by
+    simpa only [Units.val_one, map_one, mul_comm] using
+      invUnitsSub_mul_sub (1 : Rˣ)
   have h : (markedFactor : PowerSeries R) * (1 - PowerSeries.X) ^ 2 =
       1 - PowerSeries.X + PowerSeries.X ^ 2 := by
     unfold markedFactor
     calc
       _ = (1 - PowerSeries.X) ^ 2 +
-          (PowerSeries.X : PowerSeries R) * (((1 - PowerSeries.X) * geom) ^ 2) := by ring
-      _ = _ := by rw [geom_mul]; ring
+          (PowerSeries.X : PowerSeries R) * (((1 - PowerSeries.X) * invUnitsSub (1 : Rˣ)) ^ 2) := by ring
+      _ = _ := by rw [hgeom]; ring
   calc
     _ = ((markedFactor : PowerSeries R) * (1 - PowerSeries.X) ^ 2) *
         ((1 + PowerSeries.X) * (1 - PowerSeries.X ^ 3)) := by ring
     _ = _ := by rw [h]; ring
 
 noncomputable def F {R : Type*} [CommRing R] : PowerSeries R :=
-  euler 6 (by decide) * invOne (euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide))
+  euler 6 (by decide) * invOfUnit (euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide)) 1
 
 theorem F_const {R : Type*} [CommRing R] : constantCoeff (F : PowerSeries R) = 1 := by
-  simp [F, invOne, constantCoeff_invOfUnit, euler_const]
+  simp [F, constantCoeff_invOfUnit, euler_const]
 
 private local instance : TopologicalSpace ℤ := ⊥
 private local instance : DiscreteTopology ℤ := ⟨rfl⟩
@@ -120,7 +123,7 @@ private local instance : DiscreteTopology ℕ := ⟨rfl⟩
 private theorem markedFactor_hasSum (d : ℕ) (hd : d ≠ 0) :
     HasSum (fun j : ℕ => ((j : ℤ) + 1) • (PowerSeries.X : PowerSeries ℤ) ^ (d * (j + 1)))
       (expand d hd ((markedFactor : PowerSeries ℤ) - 1)) := by
-  have h := ((geom : PowerSeries ℤ)^2).hasSum_of_monomials_self
+  have h := (invUnitsSub (1 : ℤˣ) ^ 2).hasSum_of_monomials_self
   have hc : Continuous (fun p : PowerSeries ℤ => PowerSeries.X * p) :=
     continuous_const.mul continuous_id
   have hx := h.map
@@ -180,9 +183,9 @@ private theorem marked_series_eq_F :
   simp_rw [hN] at hp
   have he := tendsto_nhds_unique hp (euler_tendsto 6 (by decide))
   let D : PowerSeries ℤ := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide)
-  have hu : D * invOne D = 1 := mul_invOne (by simp [D, euler_const])
+  have hu : D * invOfUnit D 1 = 1 := mul_invOfUnit D 1 (by simp [D, euler_const])
   have hGD : G * D = euler 6 (by decide) := by simpa [D, mul_assoc] using he
-  change G = euler 6 (by decide) * invOne D
+  change G = euler 6 (by decide) * invOfUnit D 1
   rw [← hGD, mul_assoc, hu, mul_one]
 
 theorem marked_count_coeff (k n : ℕ) :

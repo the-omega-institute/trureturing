@@ -6,11 +6,30 @@
    utility: none
    digest: Powers of integral series lift to dilated powers modulo every dyadic modulus. -/
 
+/-
+admission_basis: escape-witness through reduce_lift and its fixed-modulus induction
+coeff_reduce_eq_zero proof_shape: bind-only
+  escape_witness: none
+  Consumers: W_support, lower_four_divides_k, lower_from_square, lower_odd_k, result
+map_mod_eq_iff proof_shape: bind-only
+  escape_witness: none
+  Consumers: reduce_lift, reduce_power_after_even_multiple, square_mod_two
+dyadic_lift proof_shape: bind-only
+  escape_witness: none
+  Consumers: reduce_lift
+reduce_lift proof_shape: content
+  escape_witness: the fixed-modulus induction on dilation depth
+reduce_lift_mul proof_shape: content
+  escape_witness: the same fixed-modulus induction before taking further powers
+Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
+
+Direct frozen dependencies:
+  D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
+-/
+
 import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.NumberTheory.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic
 
 /-! The characteristic-two Frobenius compares squaring with doubling degrees. Divisibility of differences of powers raises the modulus, and iterating gives higher dilations. -/
 
@@ -21,7 +40,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Combinatorics.PowerSeries.DyadicDilation
 
-open PowerSeries
+open _root_.PowerSeries
 open D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators (C_dvd_iff_coeff)
 
 noncomputable def reduce (m : ℕ) : PowerSeries ℤ →+* PowerSeries (ZMod m) :=
@@ -32,7 +51,7 @@ theorem coeff_reduce_eq_zero (m n : ℕ) (p : PowerSeries ℤ) :
   rw [reduce, coeff_map]
   exact ZMod.intCast_zmod_eq_zero_iff_dvd _ _
 
-private theorem map_mod_eq_iff (m : ℕ) (p q : PowerSeries ℤ) :
+theorem map_mod_eq_iff (m : ℕ) (p q : PowerSeries ℤ) :
     p.map (Int.castRingHom (ZMod m)) = q.map (Int.castRingHom (ZMod m)) ↔
       C (m : ℤ) ∣ p - q := by
   rw [C_dvd_iff_coeff]

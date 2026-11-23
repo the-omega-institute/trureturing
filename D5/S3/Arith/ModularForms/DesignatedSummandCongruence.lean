@@ -6,6 +6,24 @@
    utility: none
    digest: The exact common dyadic divisor of all designated-summand counts in degree 3 mod 4. -/
 
+/-
+admission_basis: open-problem-resolution of the exact Conjecture 6.1 from #33469
+exceptional_sharp proof_shape: content
+  escape_witness: the modulo-64 period of the degree-seven coefficient
+result proof_shape: content
+  escape_witness: the three uniform support arguments and sharpness at degrees three and seven
+Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
+
+Direct frozen dependencies:
+  D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
+  D5.S3.Arith.ModularForms.CubicThetaJacobi
+  D5.S3.Arith.ModularForms.CubicThetaJacobiCube
+  D5.S3.Arith.ModularForms.CubicThetaProductTwist
+  D5.S3.Arith.ModularForms.CubicThetaTwistedColumns
+  D5.S3.Arith.ModularForms.WeightedJacobiSpecialization
+  D5.S3.Combinatorics.PowerSeries.LaurentSpecialization
+-/
+
 import D5.S3.Arith.ModularForms.DesignatedSummandEtaDissection
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
@@ -19,7 +37,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Arith.ModularForms.DesignatedSummandCongruence
 
-open PowerSeries Finset
+open _root_.PowerSeries Finset
 open D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct D5.S3.Combinatorics.Partitions.DesignatedSummands D5.S3.Combinatorics.PowerSeries.DyadicDilation D5.S3.Arith.ModularForms.DesignatedSummandEtaDissection
 
 section InitialCoefficients
@@ -27,38 +45,35 @@ section InitialCoefficients
 private def prefixEq {R : Type*} [CommRing R] (d : ℕ) (p q : PowerSeries R) : Prop :=
   ∀ n ≤ d, coeff n p = coeff n q
 
+private theorem prefix_eq_trunc {R : Type*} [CommRing R] (d : ℕ) (p q : PowerSeries R) :
+    prefixEq d p q ↔ trunc (d + 1) p = trunc (d + 1) q := by
+  unfold prefixEq
+  constructor
+  · intro h
+    ext n
+    by_cases hn : n < d + 1
+    · simpa only [coeff_trunc, if_pos hn] using h n (Nat.lt_succ_iff.mp hn)
+    · simp only [coeff_trunc, if_neg hn]
+  · intro h n hn
+    simpa only [coeff_trunc, if_pos (Nat.lt_succ_of_le hn)] using
+      congrArg (fun f => Polynomial.coeff f n) h
+
 private theorem prefix_mul {R : Type*} [CommRing R] {d : ℕ} {p q u v : PowerSeries R}
-    (hp : prefixEq d p q) (hu : prefixEq d u v) : prefixEq d (p*u) (q*v) := by
-  intro n hn
-  simp only [coeff_mul]
-  apply sum_congr rfl
-  rintro ⟨i,j⟩ hij
-  have hh := mem_antidiagonal.mp hij
-  rw [hp _ (by omega), hu _ (by omega)]
+    (hp : prefixEq d p q) (hu : prefixEq d u v) : prefixEq d (p * u) (q * v) := by
+  apply (prefix_eq_trunc _ _ _).2
+  rw [← trunc_trunc_mul_trunc p u, ← trunc_trunc_mul_trunc q v,
+    (prefix_eq_trunc _ _ _).1 hp, (prefix_eq_trunc _ _ _).1 hu]
 
 private theorem prefix_pow {R : Type*} [CommRing R] {d : ℕ} {p q : PowerSeries R}
-    (h : prefixEq d p q) (k : ℕ) : prefixEq d (p^k) (q^k) := by
-  induction k with
-  | zero => intro n _; simp
-  | succ k ih => simpa only [pow_succ] using prefix_mul ih h
+    (h : prefixEq d p q) (k : ℕ) : prefixEq d (p ^ k) (q ^ k) := by
+  apply (prefix_eq_trunc _ _ _).2
+  rw [← trunc_trunc_pow p (d + 1) k, ← trunc_trunc_pow q (d + 1) k,
+    (prefix_eq_trunc _ _ _).1 h]
 
 private theorem prefix_cancel {R : Type*} [CommRing R] {d : ℕ} {p q u : PowerSeries R}
-    (hu : constantCoeff u = 1) (h : prefixEq d (p*u) (q*u)) : prefixEq d p q := by
-  intro n
-  induction n using Nat.strong_induction_on with
-  | h n ih =>
-    intro hn
-    have hh := h n hn
-    simp only [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
-      sum_range_succ, Nat.sub_self, coeff_zero_eq_constantCoeff, hu, mul_one] at hh
-    have hs : ∑ i ∈ range n, coeff i p * coeff (n-i) u =
-        ∑ i ∈ range n, coeff i q * coeff (n-i) u := by
-      apply sum_congr rfl
-      intro i hi
-      have hlt := mem_range.mp hi
-      rw [ih i hlt (by omega)]
-    rw [hs, add_right_inj] at hh
-    exact hh
+    (hu : constantCoeff u = 1) (h : prefixEq d (p * u) (q * u)) : prefixEq d p q := by
+  have hInv : prefixEq d (invOfUnit u 1) (invOfUnit u 1) := fun _ _ => rfl
+  simpa only [mul_assoc, mul_invOfUnit u 1 hu, mul_one] using prefix_mul h hInv
 
 private def convolution {R : Type*} [CommRing R] (p q : ℕ → R) (n : ℕ) : R :=
   ∑ j ∈ range (n+1), p j * q (n-j)
@@ -127,9 +142,9 @@ private theorem F_mul_den :
     (F : PowerSeries ℤ) * (euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide)) =
       euler 6 (by decide) := by
   let D : PowerSeries ℤ := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide)
-  have hu : D * invOne D = 1 := mul_invOne (by simp [D, euler_const])
-  change (euler 6 (by decide) * invOne D) * D = _
-  rw [mul_assoc, mul_comm (invOne D), hu, mul_one]
+  have hu : D * invOfUnit D 1 = 1 := mul_invOfUnit D 1 (by simp [D, euler_const])
+  change (euler 6 (by decide) * invOfUnit D 1) * D = _
+  rw [mul_assoc, mul_comm (invOfUnit D 1), hu, mul_one]
 
 private theorem F_prefix : prefixEq 7 (F : PowerSeries ℤ) (PowerSeries.mk fPrefix) := by
   apply prefix_cancel (u := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide))

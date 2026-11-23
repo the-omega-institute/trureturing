@@ -6,6 +6,27 @@
    utility: none
    digest: The full signed Jacobi sum splits through a degree-preserving parity bijection. -/
 
+/-
+admission_basis: escape-witness through U_dissection and the parity lattice reindexing
+U_product proof_shape: content
+  escape_witness: the finite weighted-sum factor identification before the full limit
+phi_product proof_shape: content
+  escape_witness: the sign-twisted Laurent cone specialization on the full product
+psi_product proof_shape: content
+  escape_witness: the constant-unit Jacobi product and triangular pairing
+U_dissection proof_shape: content
+  escape_witness: the signed parity bijection and finite degree fibers
+Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
+
+Direct frozen dependencies:
+  D5.S3.Arith.ModularForms.CubicThetaJacobi
+  D5.S3.Arith.ModularForms.CubicThetaJacobiCube
+  D5.S3.Arith.ModularForms.CubicThetaProductTwist
+  D5.S3.Arith.ModularForms.CubicThetaTwistedColumns
+  D5.S3.Arith.ModularForms.WeightedJacobiSpecialization
+  D5.S3.Combinatorics.PowerSeries.LaurentSpecialization
+-/
+
 import D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 import D5.S3.Arith.ModularForms.WeightedJacobiSpecialization
 import D5.S3.Arith.ModularForms.CubicThetaTwistedColumns
@@ -20,7 +41,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Arith.ModularForms.DesignatedSummandThetaDissection
 
-open Filter Finset PowerSeries
+open Filter Finset _root_.PowerSeries
 open scoped PowerSeries.WithPiTopology MvPowerSeries.WithPiTopology
 open D5.S3.Arith.ModularForms
 open D5.S3.Arith.ModularForms.CubicThetaJacobi
@@ -145,16 +166,11 @@ private theorem oddFactors_pair (d N : ℕ) :
   rw [show (2*d) * (2*i+1) = d*(2*i+1)*2 by ring, pow_mul]
   ring
 
-private theorem tendsto_scale (c : ℕ) (hc : 0 < c) :
-    Tendsto (fun n : ℕ => c*n) atTop atTop := by
-  refine tendsto_atTop.2 fun n => eventually_atTop.2 ⟨n, fun m hm => ?_⟩
-  exact hm.trans (by simpa using Nat.mul_le_mul_right m (show 1 ≤ c by omega))
-
 theorem U_product : U * f[2] = f[4] * f[1] := by
   have hU := WeightedJacobiSpecialization.tendsto_finiteProduct 2 1
-  have h2 := (euler_tendsto (R := ℚ) 2 (by decide)).comp (tendsto_scale 2 (by decide))
+  have h2 := (euler_tendsto (R := ℚ) 2 (by decide)).comp (tendsto_atTop_mono (fun n : ℕ => Nat.le_mul_of_pos_left n (by decide : 0 < 2)) tendsto_id)
   have h4 := euler_tendsto (R := ℚ) 4 (by decide)
-  have h1 := (euler_tendsto (R := ℚ) 1 (by decide)).comp (tendsto_scale 4 (by decide))
+  have h1 := (euler_tendsto (R := ℚ) 1 (by decide)).comp (tendsto_atTop_mono (fun n : ℕ => Nat.le_mul_of_pos_left n (by decide : 0 < 4)) tendsto_id)
   change Tendsto (fun N => finiteE 2 (2*N)) atTop (nhds (f[2])) at h2
   change Tendsto (finiteE 4) atTop (nhds (f[4])) at h4
   change Tendsto (fun N => finiteE 1 (4*N)) atTop (nhds (f[1])) at h1
@@ -278,9 +294,9 @@ theorem phi_product : phi * (f[1] ^ 2 * f[4] ^ 2) = f[2] ^ 5 := by
     atTop (nhds phi) at hh
   simp only [phi_finite] at hh
   change Tendsto (fun N => finiteE 2 N * oddFactors 1 N (-1)^2) atTop (nhds phi) at hh
-  have h1 := (euler_tendsto (R := ℚ) 1 (by decide)).comp (tendsto_scale 2 (by decide))
+  have h1 := (euler_tendsto (R := ℚ) 1 (by decide)).comp (tendsto_atTop_mono (fun n : ℕ => Nat.le_mul_of_pos_left n (by decide : 0 < 2)) tendsto_id)
   have h2 := euler_tendsto (R := ℚ) 2 (by decide)
-  have h2' := h2.comp (tendsto_scale 2 (by decide))
+  have h2' := h2.comp (tendsto_atTop_mono (fun n : ℕ => Nat.le_mul_of_pos_left n (by decide : 0 < 2)) tendsto_id)
   have h4 := euler_tendsto (R := ℚ) 4 (by decide)
   have hl := hh.mul ((h1.pow 2).mul (h4.pow 2))
   have hr := (h2.pow 3).mul (h2'.pow 2)
@@ -493,11 +509,11 @@ private theorem hasSum_dilate {ι : Type*} {s : ι → ℕ} {a : ι → ℚ} {p 
   change HasSum (fun i => expand d hd (C (a i)*x^(s i))) (expand d hd p) at hh
   simpa only [map_mul, map_pow, expand_C, expand_X, ← pow_mul] using hh
 
-private theorem finite_weighted (n : ℕ) : {k | weightedExponent 2 1 k ≤ n}.Finite := by
+private theorem finite_weighted (n : ℕ) : {k | WeightedJacobiSpecialization.weightedExponent 2 1 k ≤ n}.Finite := by
   apply (Finset.Icc (-(2*(n : ℤ)+2)) (2*(n : ℤ)+2)).finite_toSet.subset
   intro k hk
   apply triangular_bound
-  unfold weightedExponent at hk
+  unfold WeightedJacobiSpecialization.weightedExponent at hk
   change (2+1)*triangularExponent k + 1*((triangularExponent k : ℤ)+k).toNat ≤ n at hk
   omega
 
@@ -525,10 +541,10 @@ private theorem finite_mul_degree {ι : Type*} {s : ι → ℕ}
   exact (by simpa only [one_mul] using Nat.mul_le_mul_right (s i) (show 1 ≤ c by omega) : s i ≤ c*s i).trans hi
 
 private noncomputable def uterm (k : ℤ) : Q :=
-  C ((-1 : ℚ)^k.natAbs) * x^weightedExponent 2 1 k
+  C ((-1 : ℚ)^k.natAbs) * x^WeightedJacobiSpecialization.weightedExponent 2 1 k
 
 private noncomputable def vterm (k : ℤ) : Q :=
-  C ((-1 : ℚ)^k.natAbs) * x^(3*weightedExponent 2 1 k)
+  C ((-1 : ℚ)^k.natAbs) * x^(3*WeightedJacobiSpecialization.weightedExponent 2 1 k)
 
 private def paritySign : (ℕ×ℤ) ⊕ (ℤ×ℕ) → ℚ
   | .inl _ => 1
@@ -546,7 +562,7 @@ private theorem reindexed_sum : HasSum parityTerm (U * expand 3 (by decide) U) :
   have hu : HasSum uterm U := hasSum_U
   have hv : HasSum vterm (expand 3 (by decide) U) := hasSum_dilate hasSum_U 3 (by decide)
   have hsum' : Summable (fun p : ℤ × ℤ => uterm p.1 * vterm p.2) :=
-    summable_pair (weightedExponent 2 1) (fun k => 3*weightedExponent 2 1 k)
+    summable_pair (WeightedJacobiSpecialization.weightedExponent 2 1) (fun k => 3*WeightedJacobiSpecialization.weightedExponent 2 1 k)
       finite_weighted (finite_mul_degree finite_weighted 3 (by decide))
       (fun k => (-1 : ℚ)^k.natAbs) (fun k => (-1 : ℚ)^k.natAbs)
   have hh := hu.mul hv hsum'

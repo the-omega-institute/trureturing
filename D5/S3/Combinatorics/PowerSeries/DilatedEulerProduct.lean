@@ -6,10 +6,32 @@
    utility: none
    digest: Dilated Euler products preserve their coefficients under change of scalars. -/
 
+/-
+admission_basis: escape-witness through euler_tendsto and prod_split_two
+tendsto_expand_discrete proof_shape: content
+  escape_witness: coefficientwise continuity on both dilation support cases
+euler_tendsto proof_shape: content
+  escape_witness: the coefficientwise dilation of the full finite-product limit
+euler_const proof_shape: bind-only
+  escape_witness: none
+  Consumers: F_const, F_eq_unit, F_mul_den, F_prefix, _proof_1, _proof_2, marked_series_eq_F
+map_eta proof_shape: bind-only
+  escape_witness: none
+  Consumers: H_dissection
+expand_eta proof_shape: bind-only
+  escape_witness: none
+  Consumers: H_dissection_rat, H_norm, W_factor
+prod_split_two proof_shape: content
+  escape_witness: the induction splitting both new factors at every cutoff
+Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
+
+Direct frozen dependencies:
+  none
+-/
+
 import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.Tactic
 
 /-! The dilated Euler product and its unit are defined over any commutative ring. Coefficientwise transport lets the same product identities be used over the rationals, integers and residue rings. -/
 
@@ -20,7 +42,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Combinatorics.PowerSeries.DilatedEulerProduct
 
-open Filter Finset PowerSeries
+open Filter Finset _root_.PowerSeries
 open scoped PowerSeries.WithPiTopology
 
 theorem tendsto_expand_discrete {R : Type*} [CommRing R] [TopologicalSpace R]
@@ -54,21 +76,14 @@ theorem euler_const {R : Type*} [CommRing R] (d : ℕ) (hd : d ≠ 0) :
   rw [coeff_pentagonalSeries_pentagonal]
   simp
 
-noncomputable def invOne {R : Type*} [CommRing R] (p : PowerSeries R) :=
-  p.invOfUnit 1
-
-theorem mul_invOne {R : Type*} [CommRing R] {p : PowerSeries R}
-    (hp : constantCoeff p = 1) : p * invOne p = 1 :=
-  mul_invOfUnit p 1 hp
-
 noncomputable def etaUnit {R : Type*} [CommRing R] (d : ℕ) (hd : d ≠ 0) :
     (PowerSeries R)ˣ where
   val := euler d hd
-  inv := invOne (euler d hd)
-  val_inv := mul_invOne (euler_const _ _)
-  inv_val := by rw [mul_comm]; exact mul_invOne (euler_const _ _)
+  inv := invOfUnit (euler d hd) 1
+  val_inv := mul_invOfUnit _ 1 (euler_const _ _)
+  inv_val := by rw [mul_comm]; exact mul_invOfUnit _ 1 (euler_const _ _)
 
-theorem map_euler {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
+private theorem map_euler {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
     (d : ℕ) (hd : d ≠ 0) : (euler d hd).map g = euler d hd := by
   rw [euler, euler, map_expand]
   congr 1
@@ -79,13 +94,13 @@ theorem map_euler {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
   · simp only [Int.coe_negOnePow, map_pow, map_neg, map_one]
   · simp
 
-@[simp] theorem map_eta {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
+theorem map_eta {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S)
     (d : ℕ) (hd : d ≠ 0) :
     Units.map (PowerSeries.map g).toMonoidHom (etaUnit d hd) = etaUnit d hd := by
   apply Units.ext
   exact map_euler g d hd
 
-@[simp] theorem expand_eta {R : Type*} [CommRing R] (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
+theorem expand_eta {R : Type*} [CommRing R] (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
     Units.map (expand a ha (R := R)).toMonoidHom (etaUnit b hb) =
       etaUnit (a*b) (Nat.mul_ne_zero ha hb) := by
   apply Units.ext
