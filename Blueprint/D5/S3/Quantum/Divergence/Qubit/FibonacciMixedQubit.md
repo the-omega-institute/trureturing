@@ -25,6 +25,8 @@ Independently sample one rank-one spectral projection from each preparation with
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/Qubit/FibonacciMixedQubit.traceLog_le_benchmark_sub_margin`
+- Dependency: [D5/S3/Quantum/Divergence/FannesRootFidelityHolevo](../FannesRootFidelityHolevo.md)
 - Dependency: [D5/S3/Quantum/Divergence/Qubit/FibonacciClippedProfile](FibonacciClippedProfile.md)
+- Dependency: [D5/S3/Quantum/Divergence/Qubit/SignedProfile](SignedProfile.md)
 - Dependency: [D5/S3/Quantum/Divergence/SupportedTraceLog](../SupportedTraceLog.md)
 - Dependency: [D5/S3/Quantum/Recovery/PetzSpectralCoordinates](../../Recovery/PetzSpectralCoordinates.md)
