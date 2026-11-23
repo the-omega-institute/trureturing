@@ -31,6 +31,7 @@ zero_exact: proof_shape=bind-only; consumers=representative_counts
 halfForwardZero: proof_shape=bind-only; consumers=W
 -/
 
+import Batteries.Data.List.Basic
 import Init.Data.List.OfFn
 import Mathlib.Data.List.Chain
 import Mathlib.Data.List.ChainOfFn

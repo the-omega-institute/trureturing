@@ -25,6 +25,7 @@ unordered: proof_shape=bind-only; consumers=classProduct
 halfInitial: proof_shape=bind-only; consumers=initial
 -/
 
+import Init.Data.List.Basic
 import Init.Data.List.Find
 import Init.Data.List.OfFn
 import Init.Tactics
