@@ -11,6 +11,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Set.Function
+import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Fin.VecNotation
@@ -610,5 +611,96 @@ theorem affine_plane_reduced_relation_card_nine :
       {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} :=
     Equiv.subtypeEquivRight affine_compatible_iff
   rw [Nat.card_congr (e.symm.trans (mapEquiv.symm.trans modThree)), affine_plane_potential_card]
+
+/-- Ordered representatives of the unordered pairs remaining after two
+coordinates have been eliminated. -/
+def RemainingPair {I : Type*} [LinearOrder I] (root anchor : I) :=
+  {ij : I × I // ij.1 < ij.2 ∧ ij.1 ≠ root ∧ ij.2 ≠ root ∧ ij.1 ≠ anchor ∧ ij.2 ≠ anchor}
+
+/-- The omitted-triangle rows in the pair coordinates after eliminating a
+root and a second coordinate. -/
+noncomputable def reducedMatrix {I T R : Type*} [LinearOrder I] [CommRing R]
+    (points : T → Fin 3 → I) (root anchor : I) : Matrix T (RemainingPair root anchor) R :=
+  fun t ij =>
+    let (i, j) := ij.val
+    row (points t) 1 i j - row (points t) 1 anchor j + row (points t) 1 anchor i
+
+private theorem row_mul {I R : Type*} [CommRing R] (triangle : Fin 3 → I)
+    (c : R) (i j : I) : row triangle c i j = row triangle 1 i j * c := by
+  classical
+  by_cases h : forward triangle i j
+  · simp [row, h]
+  · by_cases h' : forward triangle j i <;> simp [row, h, h']
+
+/-- The kernel of the transposed reduced matrix is precisely the space of
+triangle coefficients satisfying the potential-difference equations. -/
+theorem reduced_transpose_kernel_iff {I T R : Type*} [LinearOrder I] [Fintype T] [CommRing R]
+    (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
+    (root anchor : I) (c : T → R) :
+    (reducedMatrix points root anchor).transpose.mulVec c = 0 ↔
+      IsReducedRelation points root anchor c := by
+  classical
+  let e := sumRows points c
+  have coord (ij : RemainingPair root anchor) :
+      ((reducedMatrix points root anchor).transpose.mulVec c) ij =
+        e ij.val.1 ij.val.2 - e anchor ij.val.2 + e anchor ij.val.1 := by
+    change (∑ t, (row (points t) (1 : R) ij.val.1 ij.val.2 -
+        row (points t) 1 anchor ij.val.2 + row (points t) 1 anchor ij.val.1) * c t) = _
+    simp only [add_mul, sub_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← row_mul,
+      e, sumRows]
+  have diag (i : I) : e i i = 0 := Finset.sum_eq_zero fun t _ => row_diag (hinj t) (c t) i
+  have flip (i j : I) : e i j = -e j i := by
+    dsimp [e, sumRows]
+    rw [← Finset.sum_neg_distrib]
+    exact Finset.sum_congr rfl (fun t _ => row_flip (hinj t) (c t) i j)
+  constructor
+  · intro h i j hi hj
+    change e i j = e anchor j - e anchor i
+    by_cases hia : i = anchor
+    · subst i
+      rw [diag, sub_zero]
+    by_cases hja : j = anchor
+    · subst j
+      rw [diag, zero_sub, flip i anchor]
+    have read (x y : I) (hlt : x < y) (hx : x ≠ root) (hy : y ≠ root)
+        (hxa : x ≠ anchor) (hya : y ≠ anchor) : e x y = e anchor y - e anchor x := by
+      let ij : RemainingPair root anchor := ⟨(x,y), hlt, hx, hy, hxa, hya⟩
+      have hg := congrFun h ij
+      rw [coord] at hg
+      change e x y - e anchor y + e anchor x = 0 at hg
+      calc
+        e x y = (e x y - e anchor y + e anchor x) + (e anchor y - e anchor x) := by abel
+        _ = _ := by rw [hg, zero_add]
+    rcases lt_trichotomy i j with hij | hij | hij
+    · exact read i j hij hi hj hia hja
+    · subst j
+      rw [diag, sub_self]
+    · rw [flip i j, read j i hij hj hi hja hia, neg_sub]
+  · intro h
+    funext ij
+    rw [coord]
+    have he := h ij.val.1 ij.val.2 ij.prop.2.1 ij.prop.2.2.1
+    change e ij.val.1 ij.val.2 = e anchor ij.val.2 - e anchor ij.val.1 at he
+    rw [he]
+    change e anchor ij.val.2 - e anchor ij.val.1 - e anchor ij.val.2 + e anchor ij.val.1 = 0
+    abel
+
+private theorem affine_transpose_kernel_card_three :
+    Nat.card {c : Fin 12 → ZMod 3 //
+      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} = 9 := by
+  let e : {c : Fin 12 → ZMod 3 //
+      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} ≃
+      {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} :=
+    Equiv.subtypeEquivRight (reduced_transpose_kernel_iff affineLines affine_triangle_injective 8 0)
+  rw [Nat.card_congr e, affine_plane_reduced_relation_card]
+
+private theorem affine_transpose_kernel_card_nine :
+    Nat.card {c : Fin 12 → ZMod 9 //
+      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} = 9 := by
+  let e : {c : Fin 12 → ZMod 9 //
+      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} ≃
+      {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} :=
+    Equiv.subtypeEquivRight (reduced_transpose_kernel_iff affineLines affine_triangle_injective 8 0)
+  rw [Nat.card_congr e, affine_plane_reduced_relation_card_nine]
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
