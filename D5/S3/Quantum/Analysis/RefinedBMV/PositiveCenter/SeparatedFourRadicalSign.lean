@@ -432,10 +432,10 @@ theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
   change Y ≤ R at hyR
   change (46 / 35 : ℝ) / (1 - Real.exp (-((46 / 35) * (v - d)))) ≤ R at hR
   rw [hvd] at hR
-  obtain ⟨hR₀, hR₁⟩ := middleTail_dividedDifference_lower hu₀ hR
+  have hR₀ := middleTail_dividedDifference_lower hu₀ hR
   have hL := (upperTailSlope_bounds hh hd₀).1
   have hq : 0 ≤ q := mul_nonneg hL.le (add_nonneg hh.le hL.le)
-  have hA : j d - α ≤ 1 / u + 3 / 2 := by
+  have hA : j d - α ≤ 1 / u + 13 / 10 := by
     have ha := reflectedHalfLogSlope_le_inv_add_three_tenths hp₀ hu₀ hu₄
     change deriv C u / C u / 2 ≤ 1 / u + 3 / 10 at ha
     dsimp only [j, α]
@@ -446,7 +446,7 @@ theorem middleTail_radical_mixed_neg {p : ℕ} (hp₀ : 0 < p) {u v : ℝ}
   have hκ : (46 / 35 : ℝ) ≤ -rho d := by
     change rho d ≤ -(46 / 35 : ℝ) at hρ
     linarith only [hρ]
-  have hscalar := middleTail_radicalScalar_neg hu hu₄ hy hyR hR₀ hR₁ hA hH hκ hq
+  have hscalar := middleTail_radicalScalar_neg hu hu₄ hy hyR hR₀ hA hH hκ hq
   have hmY : M / D v = -Y := by
     dsimp only [M, Y]
     ring
