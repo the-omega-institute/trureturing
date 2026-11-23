@@ -65,17 +65,26 @@ internal sealed class ShortPhaseRelationsDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Take the frequencies (n,n + 1) with n a natural number and any equal "
-                    + "positive weights. The time set T contains an upper ray. The relation "
+                    + "positive weights w. The relation "
                     + "(n + 1,−n) has coefficient sum one and length H = 2n + 1. "
                     + "The full pair is incompatible, and the singleton {n + 1} is compatible, "
                     + "so the deleted fraction is 1/2. For n > 0 both singletons are "
                     + "compatible. At n = 0 the singleton {0} has a length-one incompatible "
-                    + "relation. Thus the short relation condition holds at H for all n. "
-                    + "At time π/H the phases are "
+                    + "relation. Thus the short relation condition holds at H for all n.")),
+                    Paragraph(Text(
+                    "The weighted single-row character bound uses squared chord distance 2 "
+                    + "from 1 to the quarter character i of this relation. Its weighted squared "
+                    + "coefficient norm is ((n + 1)² + n²)/w, and the total weight is 2w. "
+                    + "This gives D ≥ 1/(H² + 1) over all real times. Restricting the supremum "
+                    + "to any nonempty T preserves the bound.")),
+                    Paragraph(Text(
+                    "At time π/H the phases are "
                     + "π/2 ± π/(2H). Adding nonnegative integral multiples of 2π puts "
                     + "this time in any upper ray while preserving the score. The pointwise "
-                    + "deficit there is 1 − cos(π/(2H)), at most π²/(8H²). The weighted "
-                    + "lower bound gives 1/(2H²)."))),
+                    + "deficit there is 1 − cos(π/(2H)), at most π²/(8H²). "
+                    + "At n = 0 the first frequency contributes zero. A translate of π/2 "
+                    + "by a multiple of 2π in the ray makes the second sine equal one, "
+                    + "giving D ≤ 1/2. The lower bound at H = 1 gives D = 1/2."))),
                 DescribeRole.Theorem))));
 
     private static Formula P => F.Id("P");
@@ -111,9 +120,15 @@ internal sealed class ShortPhaseRelationsDocument : IScribeDocumentDefinition
 
     private static Formula PairFormula()
     {
-        var lower = AtMost(Frac(D(1), Mul(D(2), H2)), Deficit);
+        var nonempty = new Formula.Relation(Time, FormulaRelationOperator.NotEqual, Emptyset);
+        var denominator = new Formula.Binary(H2, FormulaBinaryOperator.Add, D(1));
+        var lower = Imp(nonempty, AtMost(Frac(D(1), denominator), Deficit));
+        var ray = new Formula.Relation(Seq(OpenBracket, F.Id("a"), Comma, Infty, Close),
+            FormulaRelationOperator.SubsetOf, Time);
         var quadraticBound = Frac(new Formula.Power(Pi, D(2)), Mul(D(8), H2));
-        var upper = And(AtMost(Deficit, CosineBound), AtMost(CosineBound, quadraticBound));
-        return Disp(And(Equal(P, Frac(D(1), D(2))), And(Short, And(lower, upper))));
+        var zeroCase = Imp(Equal(F.Id("n"), D(0)), Equal(Deficit, Frac(D(1), D(2))));
+        var upper = Imp(Parens(Quantify(FormulaQuantifier.Exists, "a", ray)),
+            Parens(And(AtMost(Deficit, CosineBound), And(AtMost(CosineBound, quadraticBound), Parens(zeroCase)))));
+        return Disp(And(Equal(P, Frac(D(1), D(2))), And(Short, And(Parens(lower), Parens(upper)))));
     }
 }

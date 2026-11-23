@@ -162,21 +162,22 @@ def pairRejected : Realization pairSignature :=
 
 abbrev pairArena : Arena where
   signature := pairSignature
-  Law r := ∀ (n : ℕ) (w : ℝ) (_hw : 0 < w) (T : Set ℝ)
-    (_htail : ∃ a, Ici a ⊆ T),
+  Law r := ∀ (n : ℕ) (w : ℝ) (_hw : 0 < w) (T : Set ℝ),
     let H := 2 * (n : ℝ) + 1
     let g := pairFreq n
     let D := r.readout () ⟨n, w⟩ T
     deletionFraction Finset.univ g (fun _ => w) = 1 / 2 ∧
       HasShortIncompatibleRelations Finset.univ g H ∧
-      1 / (2 * H ^ 2) ≤ D ∧
-      D ≤ 1 - Real.cos (Real.pi / (2 * H)) ∧
-      1 - Real.cos (Real.pi / (2 * H)) ≤ (Real.pi ^ 2 / 8) / H ^ 2
+      (T.Nonempty → 1 / (H ^ 2 + 1) ≤ D) ∧
+      ((∃ a, Ici a ⊆ T) →
+        D ≤ 1 - Real.cos (Real.pi / (2 * H)) ∧
+        1 - Real.cos (Real.pi / (2 * H)) ≤ (Real.pi ^ 2 / 8) / H ^ 2 ∧
+        (n = 0 → D = 1 / 2))
 
 private theorem pairRejectedLaw : ¬ pairArena.Law pairRejected := by
   intro law
-  have hpair := law 0 1 zero_lt_one univ ⟨0, subset_univ _⟩
-  have h := hpair.2.2.2.1.trans hpair.2.2.2.2
+  have hpair := (law 0 1 zero_lt_one univ).2.2.2 ⟨0, subset_univ _⟩
+  have h := hpair.1.trans hpair.2.1
   change Real.pi ^ 2 + 1 ≤ (Real.pi ^ 2 / 8) / (2 * ((0 : ℕ) : ℝ) + 1) ^ 2 at h
   norm_num at h
   nlinarith only [h, sq_nonneg Real.pi]
@@ -226,7 +227,7 @@ def pairAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
