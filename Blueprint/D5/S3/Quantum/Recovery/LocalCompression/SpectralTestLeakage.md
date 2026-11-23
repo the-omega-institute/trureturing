@@ -22,7 +22,9 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.spe
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.spectral_test_leakage_asymmetric` (`✓ std3`). ∎
 
-*Citation.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
 
 *Commentary.*
 
@@ -34,7 +36,9 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.spe
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.spectral_test_leakage` (`✓ std3`). ∎
 
-*Citation.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
 
 *Commentary.*
 
@@ -46,7 +50,9 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.fin
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/LocalCompression/SpectralTestLeakage.finite_test_commutator_bound` (`✓ std3`). ∎
 
-*Citation.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kohdai Kuroiwa (2021). *Quantum Blind Data Compression and Structure of Quantum Operations Approximately Preserving Quantum States*. URL: <https://hdl.handle.net/10012/17174>.
 
 *Commentary.*
 
