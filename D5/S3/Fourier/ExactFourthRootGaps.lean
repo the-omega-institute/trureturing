@@ -20,7 +20,7 @@ open scoped BigOperators Topology
 
 namespace D5.S3.Fourier.ExactFourthRootGaps
 
-open PhaseObstructionLengths (mass average deficit omissionFraction omissionFraction_isLeast
+open PhaseObstructionLengths (mass average deficit omissionFraction omissionFraction_isLeast omissionFraction_nonneg
   summand perScale perScale_eq_mul aggregate_bounds shiftedScale shiftedScale_antitone shiftedScale_nonneg
   scaleDifference scaleDifference_hasSum)
 open ShortPhaseRelations (fourth_root_gap_sq)
@@ -669,11 +669,7 @@ theorem length_series_le_integral (s : Finset J) (g w : J → ℝ)
   apply hsum.tsum_le_of_sum_range_le
   intro N
   refine (le_add_of_nonneg_right ?_).trans (partial_length_le_integral s g w hw N)
-  apply div_nonneg _ (sq_nonneg _)
-  obtain ⟨u, hu, _, heq⟩ := (omissionFraction_isLeast s g w (N + 1)).1
-  rw [heq]
-  exact div_nonneg (Finset.sum_nonneg fun j hj => hw j (Finset.mem_sdiff.mp hj).1)
-    (Finset.sum_nonneg hw)
+  exact div_nonneg (omissionFraction_nonneg s g w (N + 1) hw) (sq_nonneg _)
 
 abbrev pairIndices : Finset (Fin 2) := Finset.univ
 /-- The frequency pair with a shortest relation of length four and chord gap squared four. -/
@@ -833,12 +829,7 @@ private lemma pair_length_omission (w : ℝ) (hw : 0 < w) (h : ℕ) :
         simp only [relationLength, Nat.cast_sum, Int.natCast_natAbs]
       have hle : relationLength pairIndices k ≤ h := by exact_mod_cast he.trans_le hlen
       exact hh ((pair_len k ⟨hrel, hb⟩).trans hle)
-    · obtain ⟨u, _, _, hcost⟩ := hleast.1
-      refine (le_trans ?_ hcost.symm.le : (0 : ℝ) ≤ _)
-      apply div_nonneg
-      · exact Finset.sum_nonneg fun j _ => hw.le
-      · exact Finset.sum_nonneg fun j _ => hw.le
-
+    · exact omissionFraction_nonneg pairIndices pairFrequency (fun _ => w) h (fun _ _ => hw.le)
 
 private theorem pair_exact_length_series (w : ℝ) (hw : 0 < w) :
     (∑' n, summand pairIndices pairFrequency (fun _ => w) (n + 1)) = 1 / 32 := by

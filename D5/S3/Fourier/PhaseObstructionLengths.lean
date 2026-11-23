@@ -63,7 +63,8 @@ private theorem costs_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
   exact div_nonneg (Finset.sum_nonneg fun j hj => hw j (Finset.mem_sdiff.mp hj).1)
     (Finset.sum_nonneg hw)
 
-private theorem p_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
+/-- The least omitted weight fraction is nonnegative for nonnegative weights. -/
+theorem omissionFraction_nonneg (s : Finset J) (g w : J → ℝ) (h : ℕ)
     (hw : ∀ j ∈ s, 0 ≤ w j) : 0 ≤ omissionFraction s g w h :=
   le_csInf (costs_nonempty s g w h) (costs_nonneg s g w h hw)
 
@@ -132,7 +133,7 @@ private theorem c_nonneg (n : ℕ) : 0 ≤ scaleDifference n :=
   sub_nonneg.mpr (shiftedScale_antitone (Nat.le_succ n))
 
 private theorem term_nonneg (s : Finset J) (g w : J → ℝ) (hw : ∀ j ∈ s, 0 ≤ w j)
-    (n : ℕ) : 0 ≤ term s g w n := mul_nonneg (c_nonneg n) (p_nonneg s g w _ hw)
+    (n : ℕ) : 0 ≤ term s g w n := mul_nonneg (c_nonneg n) (omissionFraction_nonneg s g w _ hw)
 
 private theorem finite_layer (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
     (∑ n ∈ Finset.range N, if shiftedScale n ≤ x then scaleDifference n else 0) +
@@ -181,7 +182,7 @@ theorem simultaneous_bound (s : Finset J) (g w : J → ℝ)
   by_cases hzero : mass s w = 0
   · have hP (h : ℕ) : omissionFraction s g w h = 0 := by
       refine le_antisymm ((p_le_of_good hw (Finset.empty_subset s) (empty_good g h)).trans ?_)
-        (p_nonneg s g w h hw)
+        (omissionFraction_nonneg s g w h hw)
       simp [hzero]
     simp [summand, perScale, average, hzero, hP]
   have hW : 0 < mass s w := lt_of_le_of_ne (Finset.sum_nonneg hw) (Ne.symm hzero)
@@ -375,7 +376,7 @@ theorem aggregate_bounds (s : Finset J) (g w : J → ℝ) (T : Set ℝ)
   have hsum : Summable (term s g w) := by simpa using term_tail_summable s g w hw 0
   have hsingle (m : ℕ) : 0 ≤ perScale s g w (m + 1) := by
     rw [perScale_eq_mul s g w m]
-    exact mul_nonneg (shiftedScale_nonneg m) (p_nonneg s g w _ hw)
+    exact mul_nonneg (shiftedScale_nonneg m) (omissionFraction_nonneg s g w _ hw)
   have hfinite := finite_bound s g w T hw
   have hpartial (N : ℕ) :
       (∑ n ∈ Finset.range N, term s g w n) ≤ deficit s g w T := by
