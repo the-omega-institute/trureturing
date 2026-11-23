@@ -52,7 +52,7 @@ abbrev Rank (n : ℕ) := {k : Fin n // 0 < k.val}
 @[expose] def prefixDistance {n : ℕ} (p q : Equiv.Perm (Fin n)) : ℕ :=
   2 * (univ.filter fun k : Rank n => prefixSet p k.val.val ≠ prefixSet q k.val.val).card
 
-private theorem mem_prefix {n k : ℕ} (p : Equiv.Perm (Fin n)) (x : Fin n) :
+theorem mem_prefix {n k : ℕ} (p : Equiv.Perm (Fin n)) (x : Fin n) :
     x ∈ prefixSet p k ↔ (p.symm x).val < k := by
   constructor
   · intro hx
@@ -87,7 +87,7 @@ private theorem placement {n k : ℕ} (A : Finset (Fin n)) (hA : A.card = k) :
     have hc := ((Aᶜ.equivFinOfCardEq hC).symm b).property
     exact iff_of_false (mem_compl.mp hc) (by omega)
 
-private theorem swap_mem {α : Type*} [DecidableEq α] (A : Finset α) {a b : α}
+theorem swap_mem {α : Type*} [DecidableEq α] (A : Finset α) {a b : α}
     (hab : a ∈ A ↔ b ∈ A) (x : α) : Equiv.swap a b x ∈ A ↔ x ∈ A := by
   by_cases ha : x = a
   · subst x
@@ -229,7 +229,7 @@ private theorem list_pairing {α ι κ : Type*} [Fintype ι] [Fintype κ]
     simp only [endpointSum, List.map_cons, List.sum_cons, add_dotProduct] at ht ih ⊢
     rw [ht, ih]
 
-private theorem prefix_card {n k : ℕ} (p : Equiv.Perm (Fin n)) (hk : k < n) :
+theorem prefix_card {n k : ℕ} (p : Equiv.Perm (Fin n)) (hk : k < n) :
     (prefixSet p k).card = k := by
   rw [prefixSet, card_image_of_injective _ p.injective]
   have h : (univ.filter fun i : Fin n => i.val < k) = Iio (⟨k, hk⟩ : Fin n) := by
