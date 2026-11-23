@@ -12,9 +12,11 @@ $$\forall (n: \operatorname{Nat}), ((9 \le n) \Rightarrow (\operatorname{Int}.\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin229750` (proved) by `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result`.
+*Resolves.* `Problems/hardin229750` (proved) by `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result` and `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.closed_form`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229750","declaration_gid":"D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229750","declaration_gid":"D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.closed_form","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
