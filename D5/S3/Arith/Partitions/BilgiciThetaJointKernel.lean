@@ -113,6 +113,7 @@ private noncomputable def rootFamily : Fin 4 → A :=
 private theorem requestedSpan_family : requestedSpan = Submodule.span K (Set.range rootFamily) := by
   rw [requestedSpan, rootFamily, Matrix.range_cons, Matrix.range_cons, Matrix.range_cons,
     Matrix.range_cons_empty]
+  simp only [Set.singleton_union]
 
 private theorem eigengrade_le_requestedSpan : eigengrade 7 11 ≤ requestedSpan := by
   rw [eigengrade_exact (by decide : (2 : K)*11=14*(7 : ℕ))]

@@ -18,11 +18,11 @@ Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.joint_kernel`
 
 On the character-four subspace of degree seven and weight eleven, the joint kernel is exactly the image of multiplication by the invariant cubic from degree four and weight nine of the same character. Two projected words give independent detector columns, and two cubic multiples are independent by their trace coefficients. The four-word upper bound then makes these four classes a basis.
 
-**Theorem 1.2 (A character-four class outside the range).**
+**Theorem 1.2 (Coordinates after the detector tests).**
 
-Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.u_not_in_range`
+Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.kernel_coordinates`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.u_not_in_range` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.kernel_coordinates` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,11 +30,11 @@ Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.u_not_in_range`
 
 *Commentary.*
 
-The projected word 5899999 has the same degree, weight, and character as the target component. Its first detector is 17, which excludes it from the cubic multiplication range.
+If the tests vanish on a class in the component, both projected-word coefficients are zero. The class is then a linear combination of the two cubic multiples.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.joint_kernel`
-- Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.u_not_in_range`
+- Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaJointKernel.kernel_coordinates`
 - Dependency: [D5/S3/Arith/Partitions/BilgiciThetaDetectors](BilgiciThetaDetectors.md)
 - Dependency: [D5/S3/Arith/Partitions/BilgiciThetaStraightening](BilgiciThetaStraightening.md)

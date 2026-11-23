@@ -46,8 +46,23 @@ Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.tests_mul_S_Z`
 
 The degree-eleven trace coefficient and the dual-number coefficient both vanish on every quotient multiple of the cubic.
 
+**Theorem 1.4 (Independent detector columns).**
+
+Lean statement: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.detector_coordinates_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Partitions/BilgiciThetaDetectors.detector_coordinates_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Göksal Bilgici (2026). *Nine-Colored Partition Components Modulo 19*. DOI: [10.48550/arXiv.2611.24516](https://doi.org/10.48550/arXiv.2611.24516). URL: <https://arxiv.org/html/2611.24516v1#S8.I1.i1>.
+
+*Commentary.*
+
+The tests take the values (17, 13) and (0, 1) on the projected words 5899999 and 1234699, respectively. If the tests vanish on a linear combination of these two projected words, both coefficients are zero.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.detector_coordinates_zero`
 - Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.eta_theta_zero`
 - Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.tests_mul_S_Z`
 - Truth anchor: `D5/S3/Arith/Partitions/BilgiciThetaDetectors.trace_ITheta_map`
