@@ -20,7 +20,7 @@ open D5.S3.Analytic.Oscillation.OrdinateCounting
 namespace D5.S3.Analytic.Oscillation.SpectrumCountPerturbation
 
 private theorem exists_radius (S : Spectrum) (j : S.index) :
-    ∃ r : ℝ, 0 < r ∧ r ≤ 1 ∧ r < S.gamma j ∧
+    ∃ r : ℝ, 0 < r ∧ r ≤ 1 / 3 ∧ r < S.gamma j ∧
       ∀ i, i ≠ j → 3 * r ≤ |S.gamma i - S.gamma j| := by
   classical
   let shifts := (S.cut (S.gamma j + 1)).erase j
@@ -113,7 +113,8 @@ private theorem counts_differ_at_crossing (S S' : Spectrum) (r : S.index → ℝ
 
 /-- One radius family protects all positive ordinates, their order, and their counts. -/
 theorem exists_ordered_count_perturbations (S : Spectrum) :
-    ∃ r : S.index → ℝ, (∀ j, 0 < r j ∧ r j ≤ 1) ∧
+    ∃ r : S.index → ℝ, (∀ j, 0 < r j ∧ r j ≤ 1 / 3 ∧ r j < S.gamma j) ∧
+      (∀ i j, S.gamma i < S.gamma j → S.gamma i + r i < S.gamma j - r j) ∧
       ∀ g' : S.index → ℝ, (∀ j, |g' j - S.gamma j| ≤ r j) →
         ∃ (S' : Spectrum) (e : S.index ≃ S'.index),
           (∀ j, S'.gamma (e j) = g' j ∧ S'.mult (e j) = S.mult j) ∧
@@ -122,8 +123,6 @@ theorem exists_ordered_count_perturbations (S : Spectrum) :
             (S'.N T + S.mult j = S.N T ∨ S.N T + S.mult j = S'.N T) := by
   classical
   choose r hr using exists_radius S
-  refine ⟨r, fun j => ⟨(hr j).1, (hr j).2.1⟩, fun g' hnear => ?_⟩
-  have hbox (j : S.index) := abs_le.mp (hnear j)
   have hsep (i j : S.index) (h : S.gamma i < S.gamma j) :
       S.gamma i + r i < S.gamma j - r j := by
     have hn : i ≠ j := fun he => h.ne (congrArg S.gamma he)
@@ -132,6 +131,8 @@ theorem exists_ordered_count_perturbations (S : Spectrum) :
     rw [abs_of_pos (sub_pos.mpr h)] at hi
     rw [abs_of_neg (sub_neg.mpr h)] at hj
     linarith
+  refine ⟨r, fun j => ⟨(hr j).1, (hr j).2.1, (hr j).2.2.1⟩, hsep, fun g' hnear => ?_⟩
+  have hbox (j : S.index) := abs_le.mp (hnear j)
   have hforward (i j : S.index) (h : S.gamma i < S.gamma j) : g' i < g' j := by
     linarith [(hbox i).2, (hbox j).1, hsep i j h]
   have horder (i j : S.index) : g' i < g' j ↔ S.gamma i < S.gamma j := by
