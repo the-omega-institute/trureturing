@@ -540,30 +540,17 @@ private theorem denote_rightSparse (first : K) :
   simp only [rightSparse, denote_append, denote_spMul, denote_sSparse, denote_qSparse,
     denote_relationSparse]
 
-set_option maxHeartbeats 0 in
-set_option maxRecDepth 100000 in
-private theorem certificate_identity : F11 = S_Z * Q + orbitRelations 3 := by
-  -- Compare the complete normalized degree-seven polynomials.
-  have h : normalize leftSparse = normalize (rightSparse 3) := by decide
-  simpa only [denote_normalize, denote_leftSparse, denote_rightSparse] using congrArg denote h
-
-private theorem Q_grades : Q.IsHomogeneous 4 ∧ Q.IsWeightedHomogeneous w (9 : K) := by
-  have grades (p : Sparse)
-      (h : ∀ t ∈ p, t.1.length = 4 ∧ wordWeight t.1 = (9 : K)) :
-      (denote p).IsHomogeneous 4 ∧ (denote p).IsWeightedHomogeneous w (9 : K) := by
-    induction p with
-    | nil => exact ⟨isHomogeneous_zero _ _ _, isWeightedHomogeneous_zero _ _ _⟩
-    | cons t p ih =>
-      have ht := h t (by simp)
-      have hp := ih (fun u hu => h u (by simp [hu]))
-      exact ⟨
-        (isHomogeneous_monomial t.2 ((exponent_degree t.1).trans ht.1)).add hp.1,
-        (isWeightedHomogeneous_monomial w _ _ ((exponent_weight t.1).trans ht.2)).add hp.2⟩
-  rw [← denote_qSparse]
-  apply grades
-  have h : qSparse.all (fun t => decide (t.1.length = 4 ∧ wordWeight t.1 = (9 : K))) := by
-    decide
-  simpa only [List.all_eq_true, decide_eq_true_eq] using h
+private theorem denote_grades (p : Sparse) (d : ℕ) (n : K)
+    (h : ∀ t ∈ p, t.1.length = d ∧ wordWeight t.1 = n) :
+    (denote p).IsHomogeneous d ∧ (denote p).IsWeightedHomogeneous w n := by
+  induction p with
+  | nil => exact ⟨isHomogeneous_zero _ _ _, isWeightedHomogeneous_zero _ _ _⟩
+  | cons t p ih =>
+    have ht := h t (by simp)
+    have hp := ih (fun u hu => h u (by simp [hu]))
+    exact ⟨
+      (isHomogeneous_monomial t.2 ((exponent_degree t.1).trans ht.1)).add hp.1,
+      (isWeightedHomogeneous_monomial w _ _ ((exponent_weight t.1).trans ht.2)).add hp.2⟩
 
 private theorem relations_mem (first : K) : orbitRelations first ∈ ITheta := by
   unfold orbitRelations
@@ -734,19 +721,16 @@ private theorem theta_le_traceIdeal : ITheta ≤ Ideal.comap trace.toRingHom tra
   rw [traceIdeal, Ideal.mem_span_singleton, Polynomial.X_pow_dvd_iff]
   exact theta_trace_low x
 
-private theorem Q_class_ne_zero : Ideal.Quotient.mk ITheta Q ≠ 0 := by
+private theorem quotient_ne_zero_of_trace_coeff (p : R) (n : ℕ) (hn : n < 10)
+    (hcoeff : (trace p).coeff n ≠ 0) : Ideal.Quotient.mk ITheta p ≠ 0 := by
   intro he
-  rw [← map_zero (Ideal.Quotient.mk ITheta), Ideal.Quotient.mk_eq_mk_iff_sub_mem, sub_zero] at he
-  have hm := theta_le_traceIdeal he
-  change trace Q ∈ traceIdeal at hm
+  have hm := theta_le_traceIdeal (Ideal.Quotient.eq_zero_iff_mem.mp he)
+  change trace p ∈ traceIdeal at hm
   rw [traceIdeal, Ideal.mem_span_singleton, Polynomial.X_pow_dvd_iff] at hm
-  have h := hm 9 (by decide)
-  have hcoeff : (trace Q).coeff 9 = 1 := by
-    rw [← denote_qSparse, trace_coeff]
-    decide
-  rw [hcoeff] at h
-  exact (show (1 : K) ≠ 0 by decide) h
+  exact hcoeff (hm n hn)
 
+set_option maxHeartbeats 0 in
+set_option maxRecDepth 100000 in
 /-- The algebraic existence clause of Bilgici's Question 1, with a cofactor whose class
 is nonzero in the same theta quotient. -/
 theorem result :
@@ -754,10 +738,23 @@ theorem result :
       q ≠ 0 ∧ q.IsHomogeneous 4 ∧ q.IsWeightedHomogeneous w (9 : ZMod 19) ∧
       (weightedHomogeneousComponent w (11 : ZMod 19) (paperB * paperC ^ 3) - S_Z * q
         ∈ Ideal.span (Set.range theta)) ∧ Ideal.Quotient.mk ITheta q ≠ 0 := by
-  refine ⟨Q, ?_, Q_grades.1, Q_grades.2, ?_, Q_class_ne_zero⟩
-  · exact fun h => Q_class_ne_zero (by rw [h, map_zero])
-  · change F11 - S_Z * Q ∈ ITheta
-    rw [certificate_identity, add_comm, add_sub_cancel_right]
-    exact relations_mem 3
+  have hgrades : Q.IsHomogeneous 4 ∧ Q.IsWeightedHomogeneous w (9 : K) := by
+    rw [← denote_qSparse]
+    apply denote_grades
+    have h : qSparse.all (fun t => decide (t.1.length = 4 ∧ wordWeight t.1 = (9 : K))) := by
+      decide
+    simpa only [List.all_eq_true, decide_eq_true_eq] using h
+  have hclass : Ideal.Quotient.mk ITheta Q ≠ 0 := by
+    apply quotient_ne_zero_of_trace_coeff Q 9 (by decide)
+    rw [← denote_qSparse, trace_coeff]
+    decide
+  refine ⟨Q, fun h => hclass (by rw [h, map_zero]), hgrades.1, hgrades.2, ?_, hclass⟩
+  change F11 - S_Z * Q ∈ ITheta
+  -- Compare the complete normalized degree-seven polynomials.
+  have hsparse : normalize leftSparse = normalize (rightSparse 3) := by decide
+  have hpoly : F11 = S_Z * Q + orbitRelations 3 := by
+    simpa only [denote_normalize, denote_leftSparse, denote_rightSparse] using congrArg denote hsparse
+  rw [hpoly, add_comm, add_sub_cancel_right]
+  exact relations_mem 3
 
 end D5.S3.Arith.Partitions.BilgiciThetaQuartic
