@@ -106,7 +106,7 @@ theorem shortGapRadical_weighted_factor_le {h t : ℝ}
     have hf' := mul_le_mul_of_nonneg_left hf (show 0 ≤ a by dsimp only [a]; norm_num)
     nlinarith only [hH', hpoly, hf']
   have hcompare : (1 + a * h) * ((1 + h) * (t / b) - f) ≤ t - f := by
-    rw [← mul_le_mul_iff_right₀ hb]
+    rw [← mul_le_mul_iff_left₀ hb]
     have he :
         (t - f) * b - (1 + a * h) * ((1 + h) * (t / b) - f) * b =
           h * (t * (t / 2 - 1 - a) + a * f - a * h * t * (1 - f / 2)) := by
@@ -186,7 +186,7 @@ private theorem radical_root_of_cutoff {h t T b : ℝ}
     (hcap : (1 + 3 * T) * Real.exp (-(3 * T)) + (9 / 2) * T ^ 2 * Real.exp (-(2 * T)) ≤
       1 - b ^ 2) : b ≤ Real.sqrt (1 - upperTailLambda h t) := by
   have hΛ := marginalLambda_antitone hh
-    (show T ∈ Ici 0 from by linarith) (show t ∈ Ici 0 from by linarith) ht
+    (show 0 ≤ T by linarith) (show 0 ≤ t by linarith) ht
   have h := (hΛ.trans (shortGapRadical_lambda_upper hh hT)).trans hcap
   exact Real.le_sqrt_of_sq_le (by linarith only [h])
 
@@ -307,5 +307,6 @@ theorem shortGap_correction_lt_from_ten_thirds {h u v jd αu αv : ℝ}
     _ < ξ * ((1 - 1 / u) * (1 - 1 / v) / 4) :=
       mul_lt_mul_of_pos_left ((div_lt_iff₀ hz).mpr (by simpa only [mul_comm] using hscore)) hξ
     _ ≤ ξ * ((1 / 2 - αu) * (1 / 2 - αv)) := mul_le_mul_of_nonneg_left hlast hξ.le
+    _ = _ := by ring
 
 end RefinedBMV.PositiveCenter

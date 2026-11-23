@@ -11,6 +11,7 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTai
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedGapRadical
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailLinearCoefficients
 import Mathlib.Analysis.Convex.Slope
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 
 /-! Separate the common exponential factor before comparing the linear coefficients. -/
 
@@ -214,12 +215,14 @@ theorem middleTailLinear_geom_ge_and_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : �
     rw [middleTailLinearWeight_zero]
     dsimp only [N]
     ring
-  refine ⟨hLpos, (mul_le_mul_iff_left₀ hN).mp ?_, ?_⟩
+  refine ⟨hLpos, (mul_le_mul_iff_right₀ hN).mp ?_, ?_⟩
   · change N * (((n : ℝ) + 2) / 3 * L u) ≤ N * D u
     rwa [← mul_assoc, ← hW]
   · change deriv L u * D u ≤ deriv D u * L u
-    rw [(hL u).deriv, (hD u).deriv, mul_assoc, mul_assoc]
-    exact mul_le_mul_of_nonneg_left hhi (hF u hu).le
+    calc
+      _ = F u * (N * D u) := by rw [(hL u).deriv]; ring
+      _ ≤ F u * (W u * L u) := mul_le_mul_of_nonneg_left hhi (hF u hu).le
+      _ = _ := by rw [(hD u).deriv]; ring
 
 /-- The loss keeps a logarithmic slope of at least `2/u - 2h(n+1)/3`. -/
 theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
@@ -269,7 +272,7 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
       rcases eq_or_lt_of_le ht.1 with ht₀ | ht₀
       · subst t
         simp
-      · have H := Real.convexOn_exp.secant_mono (Set.mem_univ (0 : ℝ))
+      · have H := ConvexOn.secant_mono convexOn_exp (Set.mem_univ (0 : ℝ))
           (Set.mem_univ (h * t)) (Set.mem_univ (h * u)) (mul_pos hh ht₀).ne'
           (mul_pos hh hu).ne' (mul_le_mul_of_nonneg_left ht.2 hh.le)
         simp only [Real.exp_zero, sub_zero] at H
@@ -278,9 +281,10 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
         apply (le_div_iff₀ hu).mpr
         apply (mul_le_mul_iff_left₀ hh).mp
         nlinarith only [H']
-    have H := mul_le_mul_of_nonneg_left hc (show 0 ≤ h * N * Real.exp (-(r * t)) by positivity)
-    dsimp only [a]
-    nlinarith only [H])
+    calc
+      _ ≤ h * N * Real.exp (-(r * t)) * ((Real.exp (h * u) - 1) / u * t) :=
+        mul_le_mul_of_nonneg_left hc (by positivity)
+      _ = _ := by dsimp only [a]; ring)
   have hL₀ : L 0 = 0 := by simp [L, middleTailLinearLoss] <;> ring
   have hF₀ : F 0 = 0 := by simp [F]
   rw [hL₀, hF₀, sub_zero, sub_zero] at hdom
@@ -289,12 +293,14 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
   apply (le_div_iff₀ hLpos).mpr
   change (2 / u - (2 / 3) * r) * L u ≤ deriv L u
   rw [(hL u).deriv]
+  have hscale : u * (2 / u - (2 / 3) * r) = 2 - (2 / 3) * w := by
+    dsimp only [w]
+    field_simp [hu.ne'] <;> ring
   by_cases hbig : 3 ≤ w
   · have H : 2 / u - (2 / 3) * r ≤ 0 := by
       apply nonpos_of_mul_nonpos_right _ hu
-      rw [sub_mul, div_mul_cancel₀ _ hu.ne']
-      dsimp only [w] at hbig
-      nlinarith only [hbig]
+      rw [hscale]
+      linarith only [hbig]
     exact (mul_nonpos_of_nonpos_of_nonneg H hLpos.le).trans (by
       exact mul_nonneg (by positivity) (sub_nonneg.mpr (Real.one_le_exp_iff.mpr (by positivity))))
   · have hsmall : w / 3 < 1 := by linarith only [lt_of_not_ge hbig]
@@ -305,9 +311,8 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
       linarith only [(le_abs_self _).trans hremain]
     have hfactor : 0 ≤ 2 / u - (2 / 3) * r := by
       apply nonneg_of_mul_nonneg_right _ hu
-      rw [sub_mul, div_mul_cancel₀ _ hu.ne']
-      dsimp only [w] at hsmall
-      nlinarith only [hsmall]
+      rw [hscale]
+      linarith only [hsmall]
     calc
       _ ≤ (2 / u - (2 / 3) * r) * F u := mul_le_mul_of_nonneg_left hdom hfactor
       _ = ((2 / u - (2 / 3) * r) * (a / r ^ 2) * Real.exp (-w)) *
@@ -324,10 +329,13 @@ theorem middleTailLinear_loss_logDeriv_ge {n : ℕ} (hn : 0 < n) {h u : ℝ}
           (w ^ 2 / 2 / (1 - w / 3)) := mul_le_mul_of_nonneg_left hge (by positivity)
       _ = _ := by
         have hw' : 1 - w / 3 ≠ 0 := (sub_pos.mpr hsmall).ne'
+        have hw'' : 3 - u * r ≠ 0 := by
+          apply ne_of_gt
+          dsimp only [w] at hsmall
+          nlinarith only [hsmall]
         dsimp only [w] at hw'
         dsimp only [w, a]
-        field_simp [hr.ne', hu.ne', hw']
-        ring
+        field_simp [hr.ne', hu.ne', hw', hw''] <;> ring
 
 /-- The physical coefficients in the separated kernel equal the geometric profiles. -/
 theorem middleTailLinear_coefficients {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 < u) :
@@ -421,10 +429,11 @@ theorem middleTailLinear_mixed_scalar_neg {L D L' D' y z j eta w c : ℝ}
     exact (div_le_iff₀ hL).mpr hderiv
   have hmain : y * s * (c * L) ≤ y * (z * D + D') := calc
     _ ≤ y * s * D := mul_le_mul_of_nonneg_left hD (mul_nonneg hy₀.le hs₀.le)
+    _ = y * (s * D) := by ring
     _ ≤ _ := mul_le_mul_of_nonneg_left (by
       change (z + L' / L) * D ≤ z * D + D'
       rw [add_mul]
-      exact add_le_add_left hlow _) hy₀.le
+      exact add_le_add (le_refl _) hlow) hy₀.le
   have hpair : (y + j) * (s + j) ≤ ((4 / 3) * y) * ((5 / 3) * s) := by
     have hyj : y + j ≤ (4 / 3) * y := by linarith only [hy, hj]
     have hsj : s + j ≤ (5 / 3) * s := by linarith only [hs, hj]
