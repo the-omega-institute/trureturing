@@ -413,32 +413,7 @@ private theorem cut_dependent_left {a b c d : ℕ}
       tensorSum A B = tensorSum X Y := by
   classical
   obtain ⟨g, hg, i, hi⟩ := (Fintype.not_linearIndependent_iff.mp hX)
-  let A : Fin 3 → Matrix (Fin a) (Fin b) ℂ := fun j => X (i.succAbove j)
-  let B : Fin 3 → Matrix (Fin d) (Fin c) ℂ := fun j =>
-    Y (i.succAbove j) - (g (i.succAbove j) / g i) • Y i
-  have hsplit : (∑ j : Fin 4, g j • X j) =
-      g i • X i + ∑ j : Fin 3, g (i.succAbove j) • X (i.succAbove j) := by
-    rw [Fin.univ_succAbove 3 i]
-    simp [Finset.sum_map]
-  have hXi : X i = ∑ j, (-(g (i.succAbove j) / g i)) • A j := by
-    rw [hsplit, add_eq_zero_iff_eq_neg] at hg
-    rw [(eq_inv_smul_iff₀ hi).mpr hg, smul_neg, Finset.smul_sum,
-      ← Finset.sum_neg_distrib]
-    simp [A, div_eq_mul_inv, smul_smul, neg_smul, mul_comm]
-  have hsum : tensorSum X Y =
-      kronecker (X i) (Y i) + ∑ j : Fin 3, kronecker (A j) (Y (i.succAbove j)) := by
-    rw [tensorSum, Fin.univ_succAbove 3 i]
-    simp [A, Finset.sum_map]
-  refine ⟨A, B, ?_⟩
-  rw [hsum, hXi]
-  change (∑ j, (Matrix.kroneckerBilinear (R := ℂ)) _ _) =
-    (Matrix.kroneckerBilinear (R := ℂ)) (∑ j, _) _ + ∑ j, _
-  simp only [B, map_sum, LinearMap.sum_apply, map_sub, map_smul, ← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro j _
-  change _ - _ = _ + (Matrix.kroneckerBilinear (R := ℂ)) (A j) (Y (i.succAbove j))
-  simp only [neg_smul, LinearMap.neg_apply, LinearMap.smul_apply]
-  abel
+  exact NativeRectangularBound.reduce_left (n := 3) X Y g i hi hg
 
 private theorem cut_dependent_right {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
