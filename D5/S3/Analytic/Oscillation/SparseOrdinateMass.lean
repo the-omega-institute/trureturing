@@ -142,7 +142,7 @@ theorem cutoffMass_tendsto_zero {ι : Type*} (γ : ι → ℝ) (m w : ι → ℝ
     _ < ε := by dsimp [c] at *; linarith
 
 /-- The per-ordinate kernel is dominated by the reciprocal for positive ordinates. -/
-private theorem harmonicWeight_le {x a : ℝ} (hx : 0 < x) (ha : 0 ≤ a) :
+theorem harmonicWeight_le {x a : ℝ} (hx : 0 < x) (ha : 0 ≤ a) :
     a * x / (1 / 4 + x ^ 2) ≤ a / x := by
   apply (div_le_div_iff₀ (by positivity) hx).mpr
   nlinarith [mul_nonneg ha (show (0 : ℝ) ≤ 1 / 4 by norm_num)]

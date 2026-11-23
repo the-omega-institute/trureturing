@@ -30,4 +30,5 @@ The comparison spectrum matches the two-term count with a uniformly bounded erro
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCommensurateAlignment.exists_logarithmic_full_alignment`
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumTwoTermCountAlignment.exists_two_term_count_alignment`
+- Dependency: [D5/S3/Analytic/Oscillation/SparseOrdinateMass](SparseOrdinateMass.md)
 - Dependency: [D5/S3/Analytic/Oscillation/SpectrumCommensurateAlignment](SpectrumCommensurateAlignment.md)

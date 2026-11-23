@@ -6,6 +6,7 @@
    utility: none
    digest: Thinning a commensurate spectrum gives bounded two-term count discrepancy. -/
 
+import D5.S3.Analytic.Oscillation.SparseOrdinateMass
 import D5.S3.Analytic.Oscillation.SpectrumCommensurateAlignment
 import Mathlib.Analysis.Real.Pi.Bounds
 
@@ -551,9 +552,8 @@ private theorem harmonicWeight_pos (j : spectrum.index) : 0 < harmonicWeight j :
 
 private theorem harmonicWeight_le_inv (j : spectrum.index) :
     harmonicWeight j ≤ 1 / spectrum.gamma j := by
-  unfold harmonicWeight
-  apply (div_le_div_iff₀ (by positivity) (spectrum.gamma_pos j)).2
-  nlinarith
+  simpa only [harmonicWeight, one_mul] using
+    SparseOrdinateMass.harmonicWeight_le (spectrum.gamma_pos j) (zero_le_one : (0 : ℝ) ≤ 1)
 
 private theorem square_tail :
     SpectrumLogarithmicMissingWindow.HasLogarithmicSquareTail spectrum harmonicWeight := by
