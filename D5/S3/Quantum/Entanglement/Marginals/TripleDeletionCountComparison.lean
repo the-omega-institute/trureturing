@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Entanglement.Marginals.BinaryDeletionDimension
 import D5.S0.Tower.Tribonacci.Representation
 import D5.S0.Tower.Tribonacci.Values
+import Mathlib.Algebra.LinearRecurrence
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -27,7 +28,8 @@ private abbrev shiftedWordCount (k : ℕ) : ℕ :=
   4 * (tribonacci (k + 3) + tribonacci (k + 2))
 
 private theorem shiftedWordCount_recurrence (k : ℕ) :
-    shiftedWordCount (k + 3) = shiftedWordCount (k + 2) + shiftedWordCount (k + 1) + shiftedWordCount k := by
+    shiftedWordCount (k + 3) =
+      shiftedWordCount (k + 2) + shiftedWordCount (k + 1) + shiftedWordCount k := by
   have a : tribonacci (k + 6) = tribonacci (k + 5) + tribonacci (k + 4) +
       tribonacci (k + 3) := tribonacci_add_three (k + 3)
   have b : tribonacci (k + 5) = tribonacci (k + 4) + tribonacci (k + 3) +
@@ -40,18 +42,36 @@ private theorem shiftedWordCount_recurrence (k : ℕ) :
   omega
 
 private theorem dimension_exact (k : ℕ) : dim₃ (k + 1) = shiftedWordCount k := by
-  suffices h : ∀ n, dim₃ (n + 1) = shiftedWordCount n ∧ dim₃ (n + 2) = shiftedWordCount (n + 1) ∧
-      dim₃ (n + 3) = shiftedWordCount (n + 2) from (h k).1
-  intro n
-  induction n with
-  | zero =>
-      have t := noTriple_finrank 0
-      exact ⟨t.1, t.2.1, t.2.2.1⟩
-  | succ n ih =>
-      refine ⟨ih.2.1, ih.2.2, ?_⟩
-      change dim₃ (n + 4) = shiftedWordCount (n + 3)
-      dsimp only at ih ⊢
-      rw [(noTriple_finrank n).2.2.2, ih.2.2, ih.2.1, ih.1, shiftedWordCount_recurrence]
+  let orderThree : LinearRecurrence ℕ := ⟨3, fun _ => 1⟩
+  let kernelCount : ℕ → ℕ := fun n => dim₃ (n + 1)
+  have kernelSolution : orderThree.IsSolution kernelCount := by
+    intro n
+    change kernelCount (n + 3) = ∑ i : Fin 3, 1 * kernelCount (n + i)
+    rw [Fin.sum_univ_three]
+    change kernelCount (n + 3) =
+      1 * kernelCount n + 1 * kernelCount (n + 1) + 1 * kernelCount (n + 2)
+    have h : kernelCount (n + 3) =
+        kernelCount (n + 2) + kernelCount (n + 1) + kernelCount n :=
+      (noTriple_finrank n).2.2.2
+    omega
+  have wordSolution : orderThree.IsSolution shiftedWordCount := by
+    intro n
+    change shiftedWordCount (n + 3) = ∑ i : Fin 3, 1 * shiftedWordCount (n + i)
+    rw [Fin.sum_univ_three]
+    change shiftedWordCount (n + 3) =
+      1 * shiftedWordCount n + 1 * shiftedWordCount (n + 1) + 1 * shiftedWordCount (n + 2)
+    have h := shiftedWordCount_recurrence n
+    omega
+  have same : kernelCount = shiftedWordCount := by
+    apply (orderThree.eq_iff_eqOn_range_order _ _ kernelSolution wordSolution).2
+    intro j hj
+    have hj' : j < 3 := Finset.mem_range.mp hj
+    have initial := noTriple_finrank 0
+    interval_cases j
+    · exact initial.1
+    · exact initial.2.1
+    · exact initial.2.2.1
+  exact congrFun same k
 
 private def TripleFree {n : ℕ} (w : Fin n → Bool) : Prop :=
   ∀ (i : ℕ) (hi : i + 2 < n),
@@ -110,13 +130,10 @@ private theorem legal_count (k : ℕ) :
 private theorem tribonacci_pos_succ (k : ℕ) : 0 < tribonacci (k + 1) := by
   cases k with
   | zero => decide
-  | succ k =>
-      rw [← tribonacci_name_card k]
-      exact Fintype.card_pos_iff.mpr ⟨⟨fun _ => false,
-        D5.S0.Tower.Tribonacci.Values.admissible_all_false k⟩⟩
+  | succ k => exact D5.S0.Tower.Tribonacci.Values.tribonacci_level_pos k
 
-/-- The no-111 chain has a Tribonacci word count and a strictly smaller than twice as large
-common single-site deletion kernel. -/
+/-- For the no-111 chain, the common single-site deletion kernel has dimension strictly less
+than twice the Tribonacci word count. -/
 theorem triple_kernel_exact (k : ℕ) :
     dim₃ (k + 1) = 4 * (tribonacci (k + 3) + tribonacci (k + 2)) ∧
     Nat.card {w // NoTriple (k + 1) w} = tribonacci (k + 5) ∧

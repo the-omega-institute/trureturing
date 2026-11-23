@@ -27,7 +27,8 @@ internal sealed class TripleDeletionCountComparisonDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "Each triple window must have a zero. This condition is preserved by "
                     + "taking the tail, and with the first window checked it implies "
-                    + "Tribonacci admissibility by induction. The known count of Tribonacci "
+                    + "Tribonacci admissibility by induction. Conversely, every Tribonacci-admissible "
+                    + "word has a zero in each triple window. The known count of Tribonacci "
                     + "names therefore gives the word count. The shifted Tribonacci sum "
                     + "satisfies the kernel recurrence and agrees at the first three lengths. "
                     + "The two recurrences at indices k+4 and k+5 and the positivity of "
