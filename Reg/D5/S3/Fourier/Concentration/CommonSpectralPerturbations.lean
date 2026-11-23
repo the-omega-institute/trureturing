@@ -23,13 +23,13 @@ private def rejected : Realization frequencySignature.{u} :=
 abbrev frequencyArena : Arena where
   signature := frequencySignature.{u}
   Law V := ∀ {J : Type u} {K : Type v} [DecidableEq J]
-    (M : J → ℕ) (g ε : J → ℝ) (_ : ∀ j, 0 < ε j)
+    (M : J → ℕ) (g ε : J → ℝ) (_ : ∀ j, 0 ≤ ε j)
     (support : K → Finset J) (w : ∀ k, support k → ℝ)
     (_ : ∀ k j, 0 ≤ w k j) (p : K → ℕ) (η ρ b : K → ℝ)
     (_ : ∀ k, 0 ≤ η k)
     (_ : ∀ k, 0 < offDiagonalMass (w k) (p k) → 0 < b k)
     (_ : ∀ k, 0 < offDiagonalMass (w k) (p k) → b k < 1 → ∀ j : support k,
-      ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
+      0 < ε j ∧ ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
         (M j + 2) ≤ ρ k)
     (_ : ∀ tests : Finset K, ∑ k ∈ tests,
       (if 0 < offDiagonalMass (w k) (p k) ∧ b k < 1 then ρ k / b k else 0) ≤ 1),

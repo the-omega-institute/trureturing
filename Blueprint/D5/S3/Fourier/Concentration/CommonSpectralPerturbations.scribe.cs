@@ -14,7 +14,7 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
         Blocks(
             Paragraph(Text(
                 "Let J have decidable equality and let K index the tests. Each j in J has a frequency "
-                + "g(j), a positive radius ε(j) and M(j)+2 allowed offsets for a natural M(j). "
+                + "g(j), a nonnegative radius ε(j) and M(j)+2 indexed offsets for a natural M(j). "
                 + "The offsets are indexed by Fin(M(j)+2). "
                 + "An index f(j) defines H(f,j) = g(j) + ε(j)(2f(j)/(M(j)+1) − 1). "
                 + "Each k in K uses a finite support J(k), nonnegative weights on that support, "
@@ -23,7 +23,8 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
                 "For test k, let E(k,h) be its weighted near-collision mass for the restriction of "
                 + "h to J(k). Write W(k) for the weight sum, D(k) for the diagonal mass and "
                 + "B(k) for the full off-diagonal weight W(k) raised to 2p(k), minus D(k). "
-                + "Choose b(k)>0 whenever B(k)>0. For tests with B(k)>0 and b(k)<1, take ρ(k) to be any "
+                + "Choose b(k)>0 whenever B(k)>0. For tests with B(k)>0 and b(k)<1, require positive "
+                + "radii on their support and take ρ(k) to be any "
                 + "upper bound on the fraction min(M(j)+2, 1+floor(η(k)(M(j)+1)/ε(j)))/(M(j)+2) "
                 + "for every j in J(k). The budget term A(k) equals ρ(k)/b(k) for those tests "
                 + "and is zero for tests with B(k)=0 or b(k)≥1.")),
@@ -37,7 +38,7 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "Take a finite subfamily and average over the grids of the union of their "
                         + "supports. Each restricted assignment occurs the same number of times. "
-                        + "The affine fiber count on the support bounds the mean of the excess "
+                        + "For each test charged to the budget, the affine fiber count bounds the mean of the excess "
                         + "E(k,h)−D(k) by ρ(k)B(k). Every such excess is nonnegative and at most B(k), "
                         + "so tests with B(k)=0 or b(k)≥1 hold for every assignment.")),
                     Paragraph(Text(
@@ -48,7 +49,8 @@ internal sealed class CommonSpectralPerturbationsDocument : IScribeDocumentDefin
                         + "in the compact product of finite discrete grids. The finite-intersection "
                         + "property gives one assignment for the whole family.")),
                     Paragraph(Text(
-                        "The positive radius gives nonzero grid spacing. The positive tolerance "
+                        "Positive radii give nonzero grid spacing on the supports of charged tests. "
+                        + "A coordinate with radius zero stays fixed. The positive tolerance "
                         + "permits the normalization used in the bound at budget one. The nonnegative "
                         + "weights give nonnegative ordered-pair masses. A zero resolution includes "
                         + "the diagonal, and a negative resolution gives zero collision mass. "

@@ -391,13 +391,13 @@ private theorem collision_between {J : Type*} [Fintype J] [DecidableEq J]
 
 /-- A single perturbation meets all the finite-resolution budgets in the family. -/
 theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
-    (M : J → ℕ) (g ε : J → ℝ) (hε : ∀ j, 0 < ε j)
+    (M : J → ℕ) (g ε : J → ℝ) (hε : ∀ j, 0 ≤ ε j)
     (support : K → Finset J) (w : ∀ k, support k → ℝ)
     (hw : ∀ k j, 0 ≤ w k j) (p : K → ℕ) (η ρ b : K → ℝ)
     (hη : ∀ k, 0 ≤ η k)
     (hb : ∀ k, 0 < offDiagonalMass (w k) (p k) → 0 < b k)
-    (hρ : ∀ k, 0 < offDiagonalMass (w k) (p k) → b k < 1 → ∀ j : support k,
-      ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
+    (hgrid : ∀ k, 0 < offDiagonalMass (w k) (p k) → b k < 1 → ∀ j : support k,
+      0 < ε j ∧ ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
         (M j + 2) ≤ ρ k)
     (hbudget : ∀ tests : Finset K, ∑ k ∈ tests,
       (if 0 < offDiagonalMass (w k) (p k) ∧ b k < 1 then ρ k / b k else 0) ≤ 1) :
@@ -441,7 +441,7 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
             (D k + ρ k * B k) :=
         sum_grid_collisionMass_le (fun j : support k => M j)
           (fun j => g j) (w k) (fun j => ε j) (hw k) (p k)
-          (fun j => hε j) (hη k) (hρ k hk.1 hk.2)
+          (fun j => (hgrid k hk.1 hk.2 j).1) (hη k) (fun j => (hgrid k hk.1 hk.2 j).2)
       simp only [loss, rate, ite_eq_left hk, ← sum_div, sum_sub_distrib, sum_const, card_univ,
         nsmul_eq_mul]
       apply (div_le_iff₀ hk.1).mpr
@@ -457,12 +457,12 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
   refine ⟨fun j => g j + offset (ε j) (x j), ?_, ⟨x, fun _ => rfl⟩, ?_⟩
   · intro j
     rw [add_sub_cancel_left]
-    exact offset_abs_le (hε j).le (x j)
+    exact offset_abs_le (hε j) (x j)
   · intro k
     change E k (fun j => x j) ≤ D k + b k * B k
     by_cases hk : active k
     · have hz := hx k
-      simp only [loss, threshold, if_pos hk] at hz
+      simp only [loss, threshold, ite_eq_left hk] at hz
       rw [div_le_iff₀ hk.1] at hz
       linarith only [hz]
     · have hpair := hbetween k (fun j => x j)
