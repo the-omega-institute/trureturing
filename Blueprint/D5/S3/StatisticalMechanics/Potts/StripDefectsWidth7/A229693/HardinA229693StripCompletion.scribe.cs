@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.StripDefe
 
 internal sealed class HardinA229693StripCompletionDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripCompletion.";
+    private const string Prefix = "D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripCompletion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Enumerate row completions that spend exactly a given budget.",
