@@ -11,11 +11,11 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Canonical one-defect colourings of five-row HDA arrays", H("Canonical one-defect colourings of five-row HDA arrays"), Blocks(
             Paragraph(Text("Colours are introduced in row-major order. At the widths used in the recurrence, the exact defect count excludes constant arrays. Each counted array has six distinct labelled representatives.")),
-            Node("canonicalCount",CanonicalCount(),false,"The filter counts five-by-n arrays with exactly D monochromatic bonds and row-major canonical colour introduction."),
+            Node("canonicalCount",CanonicalCount(),false,"The filter counts arrays of height k and width n with exactly D monochromatic bonds for the cuts H and V and row-major canonical colour introduction."),
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
             Node("transition_entry",TransitionEntry(),true,"Disagreement requires a budget above one and a positive cost within that budget. The affordable residual successor then has left entry one and right entry zero. At cost one the exhausted successor also disagrees, with left entry zero and right entry one."),
-            Node("labelled_scale",LabelledScale(),true,"The nonconstant arrays contribute six labelled representatives per canonical array. At width m + 1 every constant array has m times the cut cardinality as its defect count. At that budget the three labelled constant arrays form a single canonical class represented by the all-zero array. Adding three to the labelled count makes its constant contribution six. The subscript on literalCount gives the palette size."),
+            Node("labelled_scale",LabelledScale(),true,"The nonconstant arrays contribute six labelled representatives per canonical array. At positive height and width, the three constant arrays contribute one canonical class at budget H.card plus (n − 1) times the sum of the cut cardinalities. At height or width zero, the unique empty array contributes one labelled and one canonical representative at budget zero. The correction is three in the former case and five in the latter."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
@@ -108,10 +108,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula Count()
     {
         var n = V("n");
-        var count = Own("canonicalCount", N(1), n);
+        var count = Own("canonicalCount", EmptyCut(Fin(5)), Own("edges"), N(1), n);
         return All("n", Q("Nat"), And(
             Eq(Typed(Own("a", n), Q("Nat")), count),
-            Eq(count, FilteredCount(n, N(1)))));
+            Eq(count, FilteredCount(Fin(5), EmptyCut(Fin(5)), CutEdges(), n, N(1)))));
     }
 
     private static Formula CutEdges() {
@@ -125,20 +125,26 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return Call("Finset.filter",filter,Typed(Q("Finset.univ"),Call("Finset",pairs)));
     }
 
-    private static Formula FilteredCount(Formula n, Formula budget) {
-        var a=V("A");var cells=Product(Fin(5),Fin(n));
+    private static Formula Cuts(Formula index) => Call("Finset", Product(index, index));
+    private static Formula EmptyCut(Formula index) => Typed(Q("Finset.empty"), Cuts(index));
+
+    private static Formula FilteredCount(Formula rows, Formula h, Formula v, Formula n, Formula budget) {
+        var a=V("A");var cells=Product(rows,Fin(n));
         Formula idx(Formula p)=>Add(Mul(Val(Call("Prod.fst",p)),n),Val(Call("Prod.snd",p)));
         var canonical=All("p",cells,All("c",Fin(3),Imp(Lt(V("c"),App(a,V("p"))),Ex("q",cells,And(Lt(idx(V("q")),idx(V("p"))),Eq(App(a,V("q")),V("c")))))));
-        var cols=Call("List.ofFn",Fn("j",Fin(n),Fn("i",Fin(5),App(a,Pair(V("i"),V("j"))))));
-        var empty=Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
+        var cols=Call("List.ofFn",Fn("j",Fin(n),Fn("i",rows,App(a,Pair(V("i"),V("j"))))));
         var arrays=Arrow(cells,Fin(3));
-        var cut=CutEdges();
-        var predicate=Fn("A",arrays,And(Eq(Call("DefectTransfer.defects",empty,cut,cols),budget),canonical));
+        var predicate=Fn("A",arrays,And(Eq(Call("DefectTransfer.defects",h,v,cols),budget),canonical));
         return Call("Finset.card",Call("Finset.filter",predicate,Typed(Q("Finset.univ"),Call("Finset",arrays))));
     }
 
-    private static Formula CanonicalCount() => All("D",Q("Nat"),All("n",Q("Nat"),
-        Eq(Own("canonicalCount",V("D"),V("n")),FilteredCount(V("n"),V("D")))));
+    private static Formula CutParameters(Formula body) => All("k", Q("Nat"),
+        All("H", Cuts(Fin(V("k"))), All("V", Cuts(Fin(V("k"))),
+        All("D", Q("Nat"), All("n", Q("Nat"), body)))));
+
+    private static Formula CanonicalCount() => CutParameters(
+        Eq(Own("canonicalCount", V("H"), V("V"), V("D"), V("n")),
+            FilteredCount(Fin(V("k")), V("H"), V("V"), V("n"), V("D"))));
 
     private static Formula Recurrence() {
         Formula a(int j)=>AsInt(Own("a",Add(V("n"),N(j))));
@@ -172,13 +178,13 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
 
     private static Formula LabelledScale() {
-        var m=V("m");var d=V("D");var n=Add(m,N(1));
-        var empty=Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
-        var cut=Own("edges");
-        var labelled=App(new Formula.Subscript(Q("DefectTransfer.literalCount"),N(3)),empty,cut,d,n);
-        var correction = If(Eq(d, Mul(m, Call("Finset.card", cut))), N(3), N(0));
-        return All("D", Q("Nat"), All("m", Q("Nat"),
-            Eq(Add(labelled, correction), Mul(N(6), Own("canonicalCount", d, n)))));
+        var k = V("k"); var n = V("n"); var d = V("D"); var h = V("H"); var v = V("V");
+        var labelled = App(new Formula.Subscript(Q("DefectTransfer.literalCount"), N(3)), h, v, d, n);
+        var hCard = Call("Finset.card", h);
+        var constantBudget = Add(hCard, Mul(Call("Nat.pred", n), Add(Call("Finset.card", v), hCard)));
+        var correction = If(Or(Eq(k, N(0)), Eq(n, N(0))), If(Eq(d, N(0)), N(5), N(0)),
+            If(Eq(d, constantBudget), N(3), N(0)));
+        return CutParameters(Eq(Add(labelled, correction), Mul(N(6), Own("canonicalCount", h, v, d, n))));
     }
 
     private static Formula MemEdges()

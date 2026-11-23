@@ -839,7 +839,7 @@ theorem result (n : ℕ) :
       227616084 * (a (n + 12) : ℤ) + 9610272 * (a (n + 11) : ℤ) - 73617984 * (a (n + 10) : ℤ) +
       21460464 * (a (n + 9) : ℤ) + 7359984 * (a (n + 8) : ℤ) - 4611168 * (a (n + 7) : ℤ) +
       186624 * (a (n + 6) : ℤ) + 279936 * (a (n + 5) : ℤ) - 46656 * (a (n + 4) : ℤ) := by
-  have table_count (m : ℕ) : a (m + 1) = canonicalCount 2 (m + 1) := by
+  have table_count (m : ℕ) : a (m + 1) = canonicalCount ∅ edges 2 (m + 1) := by
     have sweep (A : Fin 5 × Fin (m + 1) → Fin 3) :
         defects (horiz (m + 1)) (betw (m + 1)) (List.ofFn fun i j => A (i, j)) =
           defects ∅ edges (List.ofFn fun j i => A (i, j)) := by
@@ -935,7 +935,8 @@ theorem result (n : ℕ) :
     rw [← transfer_count]
     have hD := small_budget_ne_cut_total 2 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
-      simpa only [ite_eq_right hD, Nat.add_zero, table_count] using labelled_scale 2 m
+      simpa only [Finset.card_empty, Nat.zero_add, Nat.add_zero, Nat.pred_succ, Nat.succ_ne_zero,
+        or_self, ite_false, ite_eq_right hD, table_count] using labelled_scale ∅ edges 2 (m + 1)
     rw [hscale]
     push_cast
     rfl

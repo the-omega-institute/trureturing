@@ -766,15 +766,15 @@ set_option maxHeartbeats 0
 set_option maxRecDepth 100000
 
 
-/-- Exact-defect five-row HDA arrays with canonical row-major colour names. -/
-def canonicalCount (D n : ℕ) : ℕ :=
-  letI := HardinA229637RowColumn.arrayCanonicalDecidable (n := 5) (k := n)
-  (Finset.univ.filter fun A : Fin 5 × Fin n → Fin 3 =>
-    defects ∅ edges (List.ofFn fun j i => A (i, j)) = D ∧
-    (@Canonical (Fin 5 × Fin n)
+/-- Exact-defect arrays for two cuts with canonical row-major colour names. -/
+def canonicalCount {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) : ℕ :=
+  letI := HardinA229637RowColumn.arrayCanonicalDecidable (n := k) (k := n)
+  (Finset.univ.filter fun A : Fin k × Fin n → Fin 3 =>
+    defects H V (List.ofFn fun j i => A (i, j)) = D ∧
+    (@Canonical (Fin k × Fin n)
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
-def a (n : ℕ) : ℕ := canonicalCount 1 n
+def a (n : ℕ) : ℕ := canonicalCount ∅ edges 1 n
 
 def residual {C : Type*} (p : C) (d : ℕ) : C ⊕ C :=
     if d = 0 then Sum.inr p else Sum.inl p
@@ -813,32 +813,31 @@ theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
   have agree (allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q) (s : Column ⊕ Column) :
       (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
         (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
-    revert s
-    rintro (hd | hz | ht) s
-      · exact pending hd s
-      · rcases s with x | x <;> by_cases hq : x = q
-        all_goals
-          first
-          | subst x
-            by_cases hd : d = 0 <;>
-              simp [residual, transfer,
-                ← zero_cost_entry, oneDefect, hz, hd]
-          | by_cases hd : d = 0 <;>
-              simp [residual, transfer,
-                ← zero_cost_entry, oneDefect, hz, hd, hq, Ne.symm hq]
-      · by_cases hd : d ≤ 1
-        · exact pending hd s
-        have hd0 : d ≠ 0 := by omega
-        have hc0 : cost p q ≠ 0 := by omega
-        have hc1 : cost p q ≠ 1 := by omega
-        rcases s with x | x <;> by_cases hq : x = q
-        all_goals
-          first
-          | subst x
+    rcases allowed with hd | hz | ht
+    · exact pending hd s
+    · rcases s with x | x <;> by_cases hq : x = q
+      all_goals
+        first
+        | subst x
+          by_cases hd : d = 0 <;>
             simp [residual, transfer,
-              ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht]
-          | simp [residual, transfer,
-              ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht, hq]
+              ← zero_cost_entry, oneDefect, hz, hd]
+        | by_cases hd : d = 0 <;>
+            simp [residual, transfer,
+              ← zero_cost_entry, oneDefect, hz, hd, hq, Ne.symm hq]
+    · by_cases hd : d ≤ 1
+      · exact pending hd s
+      have hd0 : d ≠ 0 := by omega
+      have hc0 : cost p q ≠ 0 := by omega
+      have hc1 : cost p q ≠ 1 := by omega
+      rcases s with x | x <;> by_cases hq : x = q
+      all_goals
+        first
+        | subst x
+          simp [residual, transfer,
+            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht]
+        | simp [residual, transfer,
+            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht, hq]
   by_cases allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q
   · have equality := agree allowed s
     constructor
@@ -899,27 +898,56 @@ private theorem transfer_count (n : ℕ) :
       simp [residual, Finset.sum_ite_eq', Finset.sum_ite_eq]
     | inr s => simp [residual]
 
-theorem labelled_scale (D m : ℕ) :
-    literalCount (q := 3) ∅ edges D (m + 1) + (if D = m * edges.card then 3 else 0) =
-      6 * canonicalCount D (m + 1) := by
+theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
+    literalCount (q := 3) H V D n +
+      (if k = 0 ∨ n = 0 then (if D = 0 then 5 else 0)
+       else if D = H.card + n.pred * (V.card + H.card) then 3 else 0) =
+      6 * canonicalCount H V D n := by
   classical
-  let C := Fin 5 × Fin (m + 1)
+  let C := Fin k × Fin n
   let lo : LinearOrder C := LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
-  let P : (C → Fin 3) → Prop := fun A => defects ∅ edges (List.ofFn fun i j => A (j, i)) = D
-  let NC : (C → Fin 3) → Prop := fun A => ∃ x y, A x ≠ A y
+  let P : (C → Fin 3) → Prop := fun A => defects H V (List.ofFn fun i j => A (j, i)) = D
   let K : (C → Fin 3) → Prop := fun A => @Canonical C lo.toLT 3 A
   let s := Finset.univ.filter P
   let t := s.filter K
-  let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 5)) (Equiv.refl (Fin 3))
-  have hlabel : literalCount (q := 3) ∅ edges D (m + 1) = s.card := by
+  let e := Equiv.arrowCongr (Equiv.prodComm (Fin n) (Fin k)) (Equiv.refl (Fin 3))
+  have hlabel : literalCount (q := 3) H V D n = s.card := by
     have h := Fintype.card_congr (e.subtypeEquiv (p := fun A =>
-      defects ∅ edges (List.ofFn fun i j => A (i, j)) = D) (q := P) (fun _ => Iff.rfl))
+      defects H V (List.ofFn fun i j => A (i, j)) = D) (q := P) (fun _ => Iff.rfl))
     simpa only [literalCount, s, Fintype.card_subtype] using h
-  have hcanon : canonicalCount D (m + 1) = t.card := by
+  have hcanon : canonicalCount H V D n = t.card := by
     unfold canonicalCount
     apply congrArg Finset.card
     ext A
     simp only [t, s, P, K, Finset.mem_filter, Finset.mem_univ, true_and]
+  rw [hlabel, hcanon]
+  by_cases hempty : k = 0 ∨ n = 0
+  · letI : IsEmpty C := ⟨fun (i, j) => hempty.elim
+      (fun hk => Fin.elim0 (hk ▸ i)) (fun hn => Fin.elim0 (hn ▸ j))⟩
+    letI : Unique (C → Fin 3) := ⟨⟨fun _ => 0⟩, fun _ => funext isEmptyElim⟩
+    have hK (A : C → Fin 3) : K A := fun x => isEmptyElim x
+    have ht : t = s := Finset.filter_true_of_mem fun A _ => hK A
+    have hP (A : C → Fin 3) : P A ↔ D = 0 := by
+      have hA : A = fun _ => 0 := funext isEmptyElim
+      rw [hA]
+      rcases n with _ | m
+      · simp [P, defects, eq_comm]
+      · have hk : k = 0 := hempty.resolve_right (Nat.succ_ne_zero _)
+        subst k
+        rw [Finset.eq_empty_of_isEmpty H, Finset.eq_empty_of_isEmpty V]
+        simp [P, List.ofFn_const, DefectTransfer.constant_defects, eq_comm]
+    have hs : s = (Finset.univ : Finset (C → Fin 3)).filter (fun _ => D = 0) := by
+      ext A
+      simp only [s, Finset.mem_filter, hP]
+    rw [ht, hs, Finset.filter_const]
+    by_cases hD : D = 0 <;> simp [hempty, hD, Fintype.card_unique]
+  have hk : k ≠ 0 := fun h => hempty (Or.inl h)
+  have hn : n ≠ 0 := fun h => hempty (Or.inr h)
+  rw [ite_eq_right hempty]
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn
+  rw [Nat.pred_succ]
+  let NC : (C → Fin 3) → Prop := fun A => ∃ x y, A x ≠ A y
   have invariant (perm : Equiv.Perm (Fin 3)) (A : C → Fin 3) :
       (P (perm ∘ A) ∧ NC (perm ∘ A)) ↔ P A ∧ NC A := by
     have hP : P (perm ∘ A) ↔ P A := by
@@ -937,12 +965,12 @@ theorem labelled_scale (D m : ℕ) :
     ⟨fun c _ => c, fun _ _ h => congrFun h (0, 0)⟩
   have constant_array (A : C → Fin 3) (h : ¬ NC A) : A = const (A (0, 0)) :=
     funext fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
-  have constant_budget (c : Fin 3) : P (const c) ↔ D = m * edges.card := by
-    change defects ∅ edges (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin 5 => c) = D ↔ _
+  have constant_budget (c : Fin 3) : P (const c) ↔ D = H.card + m * (V.card + H.card) := by
+    change defects H V (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin (k + 1) => c) = D ↔ _
     simp only [List.ofFn_const, DefectTransfer.constant_defects, Finset.card_empty,
       Nat.zero_add, Nat.add_zero, eq_comm]
   have hS : s.filter (fun A => ¬ NC A) =
-      if D = m * edges.card then Finset.univ.map const else ∅ := by
+      if D = H.card + m * (V.card + H.card) then Finset.univ.map const else ∅ := by
     ext A
     simp only [s, Finset.mem_filter, Finset.mem_univ, true_and]
     constructor
@@ -950,7 +978,7 @@ theorem labelled_scale (D m : ℕ) :
       have h := constant_array A hN
       rw [ite_eq_left ((constant_budget _).mp (h ▸ hP)), h]
       exact Finset.mem_map.mpr ⟨A (0, 0), Finset.mem_univ _, rfl⟩
-    · by_cases hD : D = m * edges.card
+    · by_cases hD : D = H.card + m * (V.card + H.card)
       · rw [ite_eq_left hD, Finset.mem_map]
         rintro ⟨c, _, rfl⟩
         exact ⟨(constant_budget c).mpr hD, fun ⟨_, _, h⟩ => h rfl⟩
@@ -975,8 +1003,8 @@ theorem labelled_scale (D m : ℕ) :
   have tsplit := Finset.card_filter_add_card_filter_not (s := t) NC
   have hT : t.filter (fun A => ¬ NC A) = (s.filter fun A => ¬ NC A).filter K :=
     Finset.filter_comm K (fun A => ¬ NC A) s
-  rw [hlabel, hcanon, ← ssplit, ← tsplit, horbit, hT, hS]
-  by_cases hD : D = m * edges.card
+  rw [← ssplit, ← tsplit, horbit, hT, hS]
+  by_cases hD : D = H.card + m * (V.card + H.card)
   · simp only [ite_eq_left hD, Finset.card_map, Finset.card_univ, Fintype.card_fin,
       hcanonical_constants, Finset.card_singleton]
     omega
@@ -999,7 +1027,8 @@ theorem result (n : ℕ) :
     rw [← transfer_count]
     have hD := small_budget_ne_cut_total 1 m (by decide) (by rw [edges_card]; decide)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
-      simpa only [ite_eq_right hD, Nat.add_zero, a] using labelled_scale 1 m
+      simpa only [Finset.card_empty, Nat.zero_add, Nat.add_zero, Nat.pred_succ, Nat.succ_ne_zero,
+        or_self, ite_false, ite_eq_right hD, a] using labelled_scale ∅ edges 1 (m + 1)
     rw [hscale]
     push_cast
     rfl
