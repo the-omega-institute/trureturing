@@ -34,7 +34,7 @@ $$\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\oper
 
 *Commentary.*
 
-This entry is one exactly when a cut contains two monochromatic bonds.
+The definition returns 1 for a cut of cost two and 0 for every other cut.
 
 **Definition 1.3 (transfer).**
 
