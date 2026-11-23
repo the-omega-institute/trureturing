@@ -51,6 +51,5 @@ The nine-row forward table satisfies W(8)=-8W(2)+36W(3)-66W(4)+63W(5)-33W(6)+9W(
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/GridBridge](TwoDefectStrips/GridBridge.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Certificate](TwoDefectStrips/Width3/Certificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data](TwoDefectStrips/Width3/Data.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Forward](TwoDefectStrips/Width3/Forward.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/Topology/QuandleMarkovColoring](../../../Topology/QuandleMarkovColoring.md)
