@@ -272,24 +272,31 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。删除状态片与改 pin 同为合法的成员变更:该模块退出冻结成员,其已验证陈述的数学真值不变,历史由 git 查证;删除不产生判词,合法性与模块源码是否仍在无关。此后 SL-008 不再检查该模块,重新登记按首次冻结判定。
 
-**A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`,状态片路径恰为 `Golden/Frozen/state/M.lean.json`,移除固定前缀和 `.json` 后缀即可反解模块路径,两者双射。文件为单行规范 JSON 加恰一个 LF;对象闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明,每项闭键恰为 `{declaration_name_key,kind}`,按名称键、种类的 Ordinal 顺序排列且唯一,不得省略、增加或重复声明。
+**A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`，状态片路径恰为 `Golden/Frozen/state/M.lean.json`，移除固定前缀和 `.json` 后缀即可反解模块路径，两者双射。文件为单行规范 JSON 加恰一个 LF，顶层闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明。每项必填 `declaration_name_key` 与 `kind`，另可独立包含 `libraries` 与 `axioms`。声明按名称键、种类的 Ordinal 顺序排列且唯一，须完整对应报告中的声明身份。
 
-`statement_id` 是 `sha256:<64 lowercase hex>` 形的现行模块陈述摘要。其算法沿用 `FrozenContentAddress.ComputeModuleStatementId` 与 `CanonicalStatementWriter.WriteModule`:对 `module-statement-v1` 的规范前像作现行域分离哈希,前像含模块路径与全部参与陈述声明的名称、种类、逐声明陈述摘要。逐声明摘要用于计算模块 pin,不写入状态片;状态片也不存任何形式的前置依赖、事件字段、时间或动作历史。
+- `libraries` 是该声明最近一次测量得到的完整库根名称数组。缺省表示库来源未知，`[]` 表示测量所得的库根集合为空。测量从编译后的声明类型与定义值或证明项出发，递归遍历实际引用的声明及其编译依赖，涵盖私有、隐藏和其他未进入状态片的辅助声明，也涵盖仅在类型中出现的引用。库根取自所达声明的编译模块归属。测量穿过仓内 `D5`、`Reg`、`Trureturing` 和 `OmegaChecks` 根下的声明，将其依赖归入实际使用的数学库。`OmegaInit` 与 `OmegaMath` 虽与 D5 共用 Lake package，仍各以自身库根报告；来自其他库的可达声明也计入，包括官方 Lean 库和其他外部库。实际声明依赖决定库集合，源码 import 清单、声明命名空间和同一模块中的其他行均不提供库归属证据。
+- `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。规范 writer 在测得真子集时写出其完整名称数组，包括代表已核验零公理的 `[]`。缺省只提供这三个标准公理的许可上界，覆盖历史上未记录测量的行以及测得全许可集合的行。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
+
+可选字段记录写入时的测量。证明项、依赖或工具链变化后，陈述 pin 仍可相同，此时旧注记仍可读取。对当前编译结果的依赖断言须取当前证据。只有 `libraries` 明示非空且其全部成员属于 `{OmegaInit, OmegaMath}`，并且 `axioms` 明示为 `[]` 时，才可将该行描述为「仅依赖 Omega 库、零公理」（截至该次测量）。`libraries: []` 可支持空库依赖的读数，无 Omega 归属。严格模块审计的范围是整个编译导入闭包，包括未被该声明引用的模块和声明；其零公理及严格导入边界由独立的空内核重放与模块校验建立。
+
+`statement_id` 是 `sha256:<64 lowercase hex>` 形的模块陈述摘要。`FrozenContentAddress.ComputeModuleStatementId` 与 `CanonicalStatementWriter.WriteModule` 对 `module-statement-v1` 的规范前像作域分离哈希。前像含模块路径与全部参与陈述声明的名称、种类、逐声明陈述摘要。`libraries` 与 `axioms` 均在摘要输入之外。状态片省略逐声明摘要、依赖边、事件字段、时间和动作历史。
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
+首次 deposit 从当前编译证据写出逐声明注记。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
-**A14.4 依赖与读取。** 模块依赖由 Lean 源码 import 关系承担,通过 `LeanImportAdjacency.BuildFromSources` 一类源码读取现算,不在冻结记录中持久化。deposit、重新钉定、cover/消化评估、冻结声明索引与 SL-008 只读取状态表及所需的当前 report/源码,不读取事件身份或事件图。cover 核对既有覆盖目标时,要求其模块 pin 等于当前 report 重算的模块陈述摘要;声明解析仍使用当前 report。Mathlib 升级后的模块证据由常规定向检查取得，进入冻结范围的模块使用当前证据更新自己的状态片。
+**A14.4 依赖与读取。** 模块依赖边由 Lean 源码 import 关系承担,通过 `LeanImportAdjacency.BuildFromSources` 一类源码读取现算,不在冻结记录中持久化。deposit、重新钉定、cover/消化评估、冻结声明索引与 SL-008 只读取状态表及所需的当前 report/源码,不读取事件身份或事件图。cover 核对既有覆盖目标时,要求其模块 pin 等于当前 report 重算的模块陈述摘要;声明解析仍使用当前 report。Mathlib 升级后的模块证据由常规定向检查取得，重新钉定的模块按 A14.3 写入。
 
 
 **A14.5 准入。** `Golden/Frozen/accepted/` 不是 FILEMAP 登记路径;任何被跟踪文件出现在该目录下,均由 required 检查中的现有 FILEMAP 未分类路径判词拒绝,不另设路径禁令规则。严格状态 loader 只接受 A14.2 的闭键形,拒绝只含 `statement_id` 的记录及其他非闭键形;旧工具写出的不合规形不得与当前状态片并存。事件与状态片配对、改动事件 pin 核对两项过渡检查不存在。
 
-SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明清单与当前 report 一致。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除不产生判词(A14.1)。
+SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明身份清单与当前 report 一致。可选注记按 A14.2 验证结构，允许保留上次测量。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除不产生判词(A14.1)。
 
 **A14.6 并发合并。** 同一模块的两份不同规范记录位于同一路径的同一行,Git 三方合并报冲突;内容相同的并发写入正常合流。不同模块的记录更新写集合不相交,一个模块的重新钉定不写其他模块的记录。路径双射与严格 schema 保证每个冻结模块只有一份记录;记录不含前置记录地址,不存在悬空的前置记录引用。这些性质只约束冻结状态片,不承诺 PR 中其他源码改动之间无冲突。
 
-**A14.7 冻结状态的消费者。** 理论源仓读取目标模块的冻结状态片及声明名，记录实际来源提交。Mathlib 升级后的冻结状态由选中模块的常规定向核验和冻结入口维护。
+**A14.7 冻结状态的消费者。** 独立读取器须接受 A14.2 的历史与带注记记录。展示依赖信息的消费者依 A14.2 区分字段缺省与 `[]`。冻结读写器往返序列化历史规范文件时须逐字节相同。理论源仓按模块 pin 和声明身份核对覆盖目标并记录实际来源提交，须在发布带注记记录前具备读取兼容性。
 
 **A14.8 TOWER 引导边界。** TOWER 不保存或验证 `genesis_event` 的事件存在性见证。bootstrap 保留其 commit/PR 外部信任根边界及 `ASSUMED-UNVERIFIED` 状态,不以状态摘要替代事件见证。
 

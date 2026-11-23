@@ -6,6 +6,7 @@
    utility: none
    digest: Bound the actual prime-pole-Gamma boundary symbol and its exterior coupling remainder. -/
 
+import D5.S3.Analytic.Resolvent.PoissonKernelTail
 import D5.S3.Weil.ZetaCore.ExplicitFormula
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Analysis.SumIntegralComparisons
@@ -316,8 +317,6 @@ theorem arithmetic_coupling_first_jet_error {c : ℕ} (hc : 2 ≤ c)
       exact mul_le_mul_of_nonneg_right (hab n hn) (norm_nonneg _))
     _ = _ := by rw [Finset.mul_sum]
 
-#print axioms arithmetic_boundary_symbol_bound
-#print axioms arithmetic_coupling_first_jet_error
 
 end
 end D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
@@ -376,64 +375,56 @@ private theorem gamma_positive_nonneg {c : ℕ} (hc : 2 ≤ c) (m j : ℕ) :
 
 section GammaIntegralComparison
 open MeasureTheory intervalIntegral
+open D5.S3.Analytic.Resolvent.PoissonKernelTail
 open scoped Interval
 
-/-- Continuous positive Cauchy kernel, only used to sharpen the new envelope. -/
-private def gammaKernel (w x : ℝ) : ℝ := w / (w ^ 2 + x ^ 2)
-
-private theorem gammaKernel_continuous {w : ℝ} (hw : 0 < w) :
-    Continuous (gammaKernel w) := by
-  unfold gammaKernel
-  exact continuous_const.div (continuous_const.add (continuous_id.pow 2))
-    (fun x => ne_of_gt (add_pos_of_pos_of_nonneg (sq_pos_of_pos hw) (sq_nonneg x)))
-
-private theorem gammaKernel_antitone {w : ℝ} (hw : 0 < w) :
-    AntitoneOn (gammaKernel w) (Set.Ici 0) := by
+private theorem cauchyKernel_antitone {w : ℝ} (hw : 0 < w) :
+    AntitoneOn (cauchyKernel w) (Set.Ici 0) := by
   intro x hx y hy hxy
-  unfold gammaKernel
+  unfold cauchyKernel
   exact div_le_div_of_nonneg_left hw.le
     (add_pos_of_pos_of_nonneg (sq_pos_of_pos hw) (sq_nonneg x))
     (add_le_add le_rfl (pow_le_pow_left₀ hx hxy 2))
 
 /-- The missing quarter correction is the area on [0,1/2], not a
 monotonicity assertion about the actual Gamma mass. -/
-private theorem gammaKernel_initial_area {w : ℝ} (hw : 0 < w) :
-    (1 / 2 : ℝ) * gammaKernel w (1 / 2) ≤ Real.arctan ((1 / 2) / w) := by
-  have hfi : IntervalIntegrable (gammaKernel w) MeasureTheory.volume 0 (1 / 2) :=
-    (gammaKernel_continuous hw).continuousOn.intervalIntegrable
+private theorem cauchyKernel_initial_area {w : ℝ} (hw : 0 < w) :
+    (1 / 2 : ℝ) * cauchyKernel w (1 / 2) ≤ Real.arctan ((1 / 2) / w) := by
+  have hfi : IntervalIntegrable (cauchyKernel w) MeasureTheory.volume 0 (1 / 2) :=
+    (cauchyKernel_continuous w).continuousOn.intervalIntegrable
   calc
-    _ = ∫ _ : ℝ in (0 : ℝ)..(1 / 2 : ℝ), gammaKernel w (1 / 2) := by
+    _ = ∫ _ : ℝ in (0 : ℝ)..(1 / 2 : ℝ), cauchyKernel w (1 / 2) := by
       simp only [intervalIntegral.integral_const, sub_zero, smul_eq_mul]
-    _ ≤ ∫ x : ℝ in (0 : ℝ)..(1 / 2 : ℝ), gammaKernel w x := by
+    _ ≤ ∫ x : ℝ in (0 : ℝ)..(1 / 2 : ℝ), cauchyKernel w x := by
       apply intervalIntegral.integral_mono_on_of_le_Ioo (by norm_num) (by simp) hfi
       intro x hx
-      exact gammaKernel_antitone hw (le_of_lt hx.1) (by norm_num) (le_of_lt hx.2)
+      exact cauchyKernel_antitone hw (le_of_lt hx.1) (by norm_num) (le_of_lt hx.2)
     _ = _ := by
-      simp only [gammaKernel, _root_.integral_div_sq_add_sq,
+      simp only [cauchyKernel, _root_.integral_div_sq_add_sq,
         zero_div, Real.arctan_zero, sub_zero]
 
 /-- Finite integral comparison on the genuine half-shifted Gamma lattice.
 The intermediate correction 3*f(1/2)/4 is consumed by the exact target below. -/
 private theorem majorant_partial_quarter {w : ℝ} (hw : 0 < w) (M : ℕ) :
     (∑ j ∈ Finset.range M, gammaMajorant w j) ≤
-      Real.pi / 4 + (3 / 4 : ℝ) * gammaKernel w (1 / 2) := by
+      Real.pi / 4 + (3 / 4 : ℝ) * cauchyKernel w (1 / 2) := by
   cases M with
   | zero =>
       simp only [Finset.range_zero, Finset.sum_empty]
-      unfold gammaKernel
+      unfold cauchyKernel
       positivity
   | succ M =>
-      let g : ℝ → ℝ := fun x => gammaKernel w (2 * x + 1 / 2)
+      let g : ℝ → ℝ := fun x => cauchyKernel w (2 * x + 1 / 2)
       have hg : AntitoneOn g (Set.Icc (0 : ℝ) (0 + (M : ℝ))) := by
         intro x hx y hy hxy
-        apply gammaKernel_antitone hw
+        apply cauchyKernel_antitone hw
         · change 0 ≤ 2 * x + 1 / 2
           linarith [hx.1]
         · change 0 ≤ 2 * y + 1 / 2
           linarith [hy.1]
         · linarith
       have he (j : ℕ) : gammaMajorant w j = g (j : ℝ) := by
-        dsimp [gammaMajorant, gammaRate, g, gammaKernel]
+        dsimp [gammaMajorant, gammaRate, g, cauchyKernel]
         rw [add_comm (w ^ 2)]
       have htail : (∑ j ∈ Finset.range M, gammaMajorant w (j + 1)) ≤
           ∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x := by
@@ -444,28 +435,28 @@ private theorem majorant_partial_quarter {w : ℝ} (hw : 0 < w) (M : ℕ) :
             simpa only [zero_add] using he (j + 1)
           _ ≤ _ := by simpa only [zero_add] using hg.sum_le_integral
       have hsubst := intervalIntegral.mul_integral_comp_mul_add
-        (f := gammaKernel w) (a := (0 : ℝ)) (b := (M : ℝ)) (2 : ℝ) (1 / 2 : ℝ)
+        (f := cauchyKernel w) (a := (0 : ℝ)) (b := (M : ℝ)) (2 : ℝ) (1 / 2 : ℝ)
       have hint : 2 * (∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x) =
           Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
             Real.arctan ((1 / 2) / w) := by
-        simpa only [g, mul_zero, zero_add, gammaKernel,
+        simpa only [g, mul_zero, zero_add, cauchyKernel,
           _root_.integral_div_sq_add_sq] using hsubst
-      have hlow := gammaKernel_initial_area hw
+      have hlow := cauchyKernel_initial_area hw
       have hhigh := (Real.arctan_lt_pi_div_two ((2 * (M : ℝ) + 1 / 2) / w)).le
-      have hz : gammaMajorant w 0 = gammaKernel w (1 / 2) := by
-        simp only [gammaMajorant, gammaRate, gammaKernel, Nat.cast_zero,
+      have hz : gammaMajorant w 0 = cauchyKernel w (1 / 2) := by
+        simp only [gammaMajorant, gammaRate, cauchyKernel, Nat.cast_zero,
           mul_zero, zero_add, add_comm]
       rw [Finset.sum_range_succ', hz]
       linarith
 
 private theorem majorant_partial_refined {w : ℝ} (hw : 0 < w) (M : ℕ) :
     (∑ j ∈ Finset.range M, gammaMajorant w j) ≤ Real.pi / 4 + 3 / (4 * w) := by
-  have hz : gammaKernel w (1 / 2) ≤ 1 / w := by
-    unfold gammaKernel
+  have hz : cauchyKernel w (1 / 2) ≤ 1 / w := by
+    unfold cauchyKernel
     apply (div_le_div_iff₀ (by positivity) hw).mpr
     nlinarith
   calc
-    _ ≤ Real.pi / 4 + (3 / 4 : ℝ) * gammaKernel w (1 / 2) :=
+    _ ≤ Real.pi / 4 + (3 / 4 : ℝ) * cauchyKernel w (1 / 2) :=
       majorant_partial_quarter hw M
     _ ≤ Real.pi / 4 + (3 / 4 : ℝ) * (1 / w) :=
       add_le_add le_rfl (mul_le_mul_of_nonneg_left hz (by norm_num))
@@ -497,20 +488,20 @@ The arctan endpoint tends to pi/2; summability permits passage to the actual
 majorant sum. The omitted initial half-interval costs at most 1/(4*w). -/
 private theorem majorant_tsum_lower {w : ℝ} (hw : 0 < w) :
     Real.pi / 4 - 1 / (4 * w) ≤ ∑' j : ℕ, gammaMajorant w j := by
-  let g : ℝ → ℝ := fun x => gammaKernel w (2 * x + 1 / 2)
+  let g : ℝ → ℝ := fun x => cauchyKernel w (2 * x + 1 / 2)
   have hfinite (M : ℕ) :
       (Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
         Real.arctan ((1 / 2) / w)) / 2 ≤ ∑' j : ℕ, gammaMajorant w j := by
     have hg : AntitoneOn g (Set.Icc (0 : ℝ) (0 + (M : ℝ))) := by
       intro x hx y hy hxy
-      apply gammaKernel_antitone hw
+      apply cauchyKernel_antitone hw
       · change 0 ≤ 2 * x + 1 / 2
         linarith [hx.1]
       · change 0 ≤ 2 * y + 1 / 2
         linarith [hy.1]
       · linarith
     have he (j : ℕ) : gammaMajorant w j = g (j : ℝ) := by
-      dsimp [gammaMajorant, gammaRate, g, gammaKernel]
+      dsimp [gammaMajorant, gammaRate, g, cauchyKernel]
       rw [add_comm (w ^ 2)]
     have hint_le : (∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x) ≤
         ∑ j ∈ Finset.range M, gammaMajorant w j := by
@@ -522,11 +513,11 @@ private theorem majorant_tsum_lower {w : ℝ} (hw : 0 < w) :
           intro j _
           simpa only [zero_add] using (he j).symm
     have hsubst := intervalIntegral.mul_integral_comp_mul_add
-      (f := gammaKernel w) (a := (0 : ℝ)) (b := (M : ℝ)) (2 : ℝ) (1 / 2 : ℝ)
+      (f := cauchyKernel w) (a := (0 : ℝ)) (b := (M : ℝ)) (2 : ℝ) (1 / 2 : ℝ)
     have hint : 2 * (∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x) =
         Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
           Real.arctan ((1 / 2) / w) := by
-      simpa only [g, mul_zero, zero_add, gammaKernel,
+      simpa only [g, mul_zero, zero_add, cauchyKernel,
         _root_.integral_div_sq_add_sq] using hsubst
     have hsum : (∑ j ∈ Finset.range M, gammaMajorant w j) ≤
         ∑' j : ℕ, gammaMajorant w j :=
