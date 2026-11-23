@@ -9,7 +9,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open scoped Classical ComplexConjugate
-open Complex
+open Complex Filter
+open scoped Topology
 open _root_.D5.S3.CharacterSums.DirichletCompletion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -36,31 +37,40 @@ private theorem primitive_example : ∃ q : ℕ, q ≠ 0 ∧
 
 namespace Entire
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ → ℂ)
-    (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun q => DirichletCharacter ℂ q) (fun q => DirichletCharacter ℂ q → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => decide (Differentiable ℂ x)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => True) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M :=
-    ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1),
-      M.readout () () (completion χ) = true
+  Law M := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q),
+    M.readout () q χ 1 → Differentiable ℂ (completion χ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨χ, hχ⟩ := nonprincipal_example
-  simpa [rejected, realize] using h χ hχ
+  have hh := h (1 : DirichletCharacter ℂ 1) True.intro
+  have he : completion (1 : DirichletCharacter ℂ 1) = completedRiemannZeta := by
+    funext z
+    simp [completion, DirichletCharacter.completedLFunction_modOne_eq]
+  rw [he] at hh
+  have ht : Tendsto (fun s : ℂ => (s - 1) * completedRiemannZeta s)
+      (𝓝[≠] 1) (𝓝 0) := by
+    have hc : ContinuousAt (fun s : ℂ => (s - 1) * completedRiemannZeta s) 1 :=
+      (continuousAt_id.sub continuousAt_const).mul (hh 1).continuousAt
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hn := tendsto_nhds_unique ht completedRiemannZeta_residue_one
+  norm_num at hn
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  have hn : ¬ Differentiable ℂ (fun z : ℂ => z⁻¹) := by
-    intro h
-    exact (differentiableAt_inv_iff.mp (h 0)) rfl
-  refine ⟨(), (fun _ : ℂ => (0 : ℂ)), (fun z : ℂ => z⁻¹), ?_⟩
-  simp [actual, realize, hn, differentiable_const]
+  obtain ⟨χ, hn⟩ := nonprincipal_example
+  refine ⟨3, χ, 1, ?_⟩
+  intro h
+  have hh := congrFun h χ
+  simpa [actual, realize, Ne.symm hn] using hh
 def family : Registration arena (type_of% @differentiable_completion) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := Iff.rfl
   variation := ⟨by
     simpa only [arena, actual, realize, decide_eq_true_eq] using @differentiable_completion,
     rejected, rejected_law⟩
@@ -83,7 +93,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ x => decide (Differentiable ℂ x)) (fun e => nomatch e))
+    (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -91,13 +101,13 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.CharacterSums.DirichletCompletion
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
+      path := #["body", "body", "body", "domain", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -176,16 +186,16 @@ end Equation
 namespace Right
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ)
-    (fun _ => Bool)
+    (fun _ => ℂ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 1) (hs : 1 ≤ s.re),
-    M.readout () () (completion χ s) = true
+    M.readout () () (completion χ s) 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   simpa [rejected, realize] using h (1 : DirichletCharacter ℂ 1)
@@ -193,10 +203,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro h
+  have hh := congrFun h 0
+  norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @completion_ne_zero_of_one_le_re) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := Iff.rfl
   variation := ⟨by
     simpa only [arena, actual, realize, decide_eq_true_eq] using @completion_ne_zero_of_one_le_re,
     rejected, rejected_law⟩
@@ -218,7 +230,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -228,11 +240,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -241,16 +253,16 @@ end Right
 namespace Root
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ)
-    (fun _ => Bool)
+    (fun _ => ℂ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive),
-      M.readout () () χ.rootNumber = true
+      M.readout () () χ.rootNumber 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   simpa [rejected, realize] using
@@ -258,10 +270,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro h
+  have hh := congrFun h 0
+  norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @rootNumber_ne_zero) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := Iff.rfl
   variation := ⟨by
     simpa only [arena, actual, realize, decide_eq_true_eq] using @rootNumber_ne_zero,
     rejected, rejected_law⟩
@@ -283,7 +297,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -293,11 +307,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -306,17 +320,17 @@ end Root
 namespace Left
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ)
-    (fun _ => Bool)
+    (fun _ => ℂ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q]
       {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {s : ℂ} (hs : s.re ≤ 0),
-    M.readout () () (completion χ s) = true
+    M.readout () () (completion χ s) 0
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
@@ -325,10 +339,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro h
+  have hh := congrFun h 0
+  norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @completion_ne_zero_of_re_le_zero) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := Iff.rfl
   variation := ⟨by
     simpa only [arena, actual, realize, decide_eq_true_eq] using @completion_ne_zero_of_re_le_zero,
     rejected, rejected_law⟩
@@ -350,7 +366,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => decide (x ≠ 0)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x ≠ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -360,11 +376,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -428,10 +444,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -441,16 +457,16 @@ end Conjugation
 namespace RootNorm
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
-    (fun _ => Bool)
+    (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => decide (x = 1)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y => x = y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ => False) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive),
-      M.readout () () ‖χ.rootNumber‖ = true
+      M.readout () () ‖χ.rootNumber‖ 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   simpa [rejected, realize] using
@@ -458,10 +474,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro h
+  have hh := congrFun h 0
+  norm_num [actual, realize] at hh
 def family : Registration arena (type_of% @norm_rootNumber) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := Iff.rfl
   variation := ⟨by
     simpa only [arena, actual, realize, decide_eq_true_eq] using @norm_rootNumber,
     rejected, rejected_law⟩
@@ -483,7 +501,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => decide (x = 1)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -493,11 +511,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
