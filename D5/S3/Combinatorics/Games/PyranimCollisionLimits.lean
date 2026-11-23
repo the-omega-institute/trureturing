@@ -18,6 +18,7 @@ import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.SetTheory.Cardinal.NatCard
 
 /-! Rank-block estimates and the root and zero limits for Pyranim collisions. -/
 
@@ -293,18 +294,14 @@ private theorem wordAt_card (m : ℕ) : Nat.card (List.Vector DyckStep m) = 2 ^ 
 
 private theorem wordAt_card_ne_pivot {M : ℕ} (pivot : List.Vector DyckStep M) :
     Nat.card {w : List.Vector DyckStep M // w ≠ pivot} = 2 ^ M - 1 := by
-  classical
-  let eqType := {w : List.Vector DyckStep M // ¬ w ≠ pivot}
-  let singleton : eqType ≃ Unit :=
-    Equiv.ofBijective (fun _ => ()) ⟨fun a b _ =>
-      Subtype.ext ((not_not.mp a.property).trans (not_not.mp b.property).symm),
-      by intro _; exact ⟨⟨pivot, not_not.mpr rfl⟩, rfl⟩⟩
-  have h := Nat.card_congr (Equiv.sumCompl (fun w : List.Vector DyckStep M => w ≠ pivot))
-  change Nat.card ({w : List.Vector DyckStep M // w ≠ pivot} ⊕ eqType) = _ at h
-  rw [Nat.card_sum, wordAt_card, Nat.card_congr singleton] at h
-  have hon : Nat.card Unit = 1 := by rw [Nat.card_eq_fintype_card]; decide
-  rw [hon] at h
-  omega
+  letI : Fintype (List.Vector DyckStep M) := Fintype.ofFinite _
+  letI nonpivotFintype : Fintype {w : List.Vector DyckStep M // w ≠ pivot} := Fintype.ofFinite _
+  calc
+    _ = Fintype.card {w : List.Vector DyckStep M // w ≠ pivot} :=
+      Nat.card_eq_fintype_card
+    _ = Fintype.card (List.Vector DyckStep M) - 1 :=
+      @Set.card_ne_eq _ inferInstance pivot nonpivotFintype
+    _ = 2 ^ M - 1 := by rw [← Nat.card_eq_fintype_card, wordAt_card]
 
 private abbrev AvoidingWords {M : ℕ} (pivot : List.Vector DyckStep M) (q r : ℕ) :=
   {w : List.Vector DyckStep (q * M + r) // ∀ k < q, wordBlock M k w.val ≠ pivot.val}
@@ -315,7 +312,7 @@ private theorem avoidingWords_card_le {M : ℕ} (pivot : List.Vector DyckStep M)
   | zero =>
     have h : Nat.card (AvoidingWords pivot 0 r) ≤
         Nat.card (List.Vector DyckStep (0 * M + r)) :=
-      Nat.card_le_card_of_injective Subtype.val Subtype.val_injective
+      Finite.card_subtype_le _
     simpa only [pow_zero, one_mul, Nat.zero_mul, Nat.zero_add, wordAt_card] using h
   | succ q ih =>
     let pre (w : AvoidingWords pivot (q + 1) r) : List.Vector DyckStep M :=
@@ -387,9 +384,8 @@ open Filter Topology
 private theorem collisionPairsEquivFibers_card (n : ℕ) [Fintype (Stable n)] :
     Nat.card (CollisionPairs n) =
       ∑ I : Stable n, Nat.card {J : Stable n // GameIso I J} := by
-  let e : CollisionPairs n ≃ (Σ I : Stable n, {J : Stable n // GameIso I J}) :=
-    ⟨fun ⟨⟨I,J⟩,h⟩ => ⟨I,J,h⟩, fun ⟨I,J,h⟩ => ⟨⟨I,J⟩,h⟩, fun _ => rfl, fun _ => rfl⟩
-  rw [Nat.card_congr e, Nat.card_sigma]
+  rw [Nat.card_congr (Equiv.subtypeProdEquivSigmaSubtype (GameIso (n := n) (m := n))),
+    Nat.card_sigma]
 
 end
 
@@ -411,7 +407,7 @@ theorem gameIso_class_card_upper (n L : ℕ) (I : Stable n) :
   let Good := {J : Class // mark J.val}
   let Bad := {J : Class // ¬ mark J.val}
   have he : Nat.card Class = Nat.card Good + Nat.card Bad := by
-    rw [← Nat.card_congr (Equiv.sumCompl (fun J : Class => mark J.val)), Nat.card_sum]
+    exact (Set.ncard_add_ncard_compl {J : Class | mark J.val}).symm
   have hg : (L + 1) * Nat.card Good ≤ Nat.card (Stable n) := by
     have hi := Nat.card_le_card_of_injective
       (fun J : Good => (⟨J.val.val, (chipCount_eq_of_gameIso J.val.property).symm, J.property⟩ :
