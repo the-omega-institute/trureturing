@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.Graph.Chordal.TwoTreeStretchSeparation
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+open scoped BigOperators
+
 /-! Source-bound cardinality observations for recursive two-trees. -/
 
 namespace Reg.D5.S3.Combinatorics.Graph.Chordal.TwoTreeStretchSeparation
@@ -359,12 +361,21 @@ abbrev banachArena : Arena where
       (∀ u v w, (twoTree d).Adj u v → (twoTree d).Adj v w → (twoTree d).Adj u w →
         ‖g u v + g v w - g u w‖ ≤ ε) →
       ∃ φ : TwoTreeV d → E, ∀ u v, (twoTree d).Adj u v →
-        ‖g u v - (φ v - φ u)‖ ≤ twoTreeBanachConstant d * ε)
+        ‖g u v - (φ v - φ u)‖ ≤ twoTreeBanachConstant d * ε) ∧
+    (∀ z : TwoTreeCirculation ℝ d,
+      (∑ e, z.val e • twoTreeCanonicalCirculationGain d (twoTreeEdgeSource d e)
+        (twoTreeEdgeTarget d e)) = z) ∧
+    (∀ φ : TwoTreeV d → TwoTreeCirculation ℝ d, ∃ u v, (twoTree d).Adj u v ∧
+      twoTreeBanachConstant d ≤
+        twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u))) ∧
+    (∃ φ : TwoTreeV d → TwoTreeCirculation ℝ d, ∀ u v, (twoTree d).Adj u v →
+      twoTreeFillingNorm d (twoTreeCanonicalCirculationGain d u v - (φ v - φ u)) ≤
+        twoTreeBanachConstant d)
 
 private theorem no_banach_two : ¬ banachArena.{u}.Law banachTwo := by
   intro h
   have h0 := twoTree_banach_exact_constant.{0} 0
-  obtain ⟨φ, hφ⟩ := h0.2.2.2 (twoTreeCanonicalGain 0) 1 (by norm_num) h0.1 h0.2.1
+  obtain ⟨φ, hφ⟩ := h0.2.2.2.1 (twoTreeCanonicalGain 0) 1 (by norm_num) h0.1 h0.2.1
   obtain ⟨a, b, hab, hr⟩ := (h 0).2.2.1 φ
   have hu := hφ a b hab
   change (2 : ℝ) ≤ _ at hr

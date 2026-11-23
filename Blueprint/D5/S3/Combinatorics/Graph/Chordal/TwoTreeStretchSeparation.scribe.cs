@@ -35,7 +35,7 @@ internal sealed class TwoTreeStretchSeparationDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("The value at depth zero is one third. A new round takes the average of the previous value and one."))),
                 DescribeRole.Definition),
             Entry("two-tree-banach-constant", "twoTree_banach_exact_constant", "Exact real Banach constant",
-                Banach(), "The sum of the frontier residuals equals the sum of the oriented triangle coordinates. In the sum norm this gives a lower bound on a single frontier edge. The upper bound divides the core defect into thirds and assigns each fresh potential the midpoint of its two proposed values."))));
+                Banach(), "The sum of the frontier residuals equals the sum of the oriented triangle coordinates. In the sum norm this gives a lower bound on a single frontier edge. The upper bound divides the core defect into thirds and assigns each fresh potential the midpoint of its two proposed values. The signed circulation coordinates identify this sum norm with the graph filling norm, and evaluation of the canonical gain on any circulation returns that circulation."))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula statement, string proof) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
@@ -175,6 +175,22 @@ internal sealed class TwoTreeStretchSeparationDocument : IScribeDocumentDefiniti
                     Imp(Reverse(false), Imp(Triangle(false, epsilon),
                         Some("phi", Pair(Vertices, e), AllEdges((a, b) =>
                             Le(Error(a, b), Mul(Bound, epsilon)))))))))));
-        return All("ell", Call("Universe"), Depth(And(reverse, And(flat, And(lower, upper)))));
+        var z = F.Id("z");
+        var index = F.Id("j");
+        var circulation = Call("TwoTreeCirculation", real, d);
+        var chainGain = Call("twoTreeCanonicalCirculationGain", d,
+            Call("twoTreeEdgeSource", d, index), Call("twoTreeEdgeTarget", d, index));
+        var sum = Seq(new Formula.Subscript(Sum,
+            Seq(index, Sp, Colon, Sp, Call("TwoTreeEdges", d))), Sp,
+            P(Call("smul", Call("val", z, index), chainGain)));
+        var evaluation = All("z", circulation, Eqn(sum, z));
+        Formula filling(Formula a, Formula b) => Call("twoTreeFillingNorm", d,
+            Sub(Call("twoTreeCanonicalCirculationGain", d, a, b), Sub(Phi(b), Phi(a))));
+        var fillingLower = All("phi", Pair(Vertices, circulation),
+            Some("u", Vertices, Some("v", Vertices, And(Adj(u, v), Le(Bound, filling(u, v))))));
+        var fillingUpper = Some("phi", Pair(Vertices, circulation),
+            AllEdges((a, b) => Le(filling(a, b), Bound)));
+        return All("ell", Call("Universe"), Depth(And(reverse, And(flat, And(lower, And(upper,
+            And(evaluation, And(fillingLower, fillingUpper))))))));
     }
 }
