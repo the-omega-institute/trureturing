@@ -22,7 +22,7 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/Fourier/WeightedPhaseRecurrence.phaseLoss"),
                 H("Weighted phase loss"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Forall, F.Id("t"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Quad,
+                    Forall, Sp, F.Id("t"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Quad,
                     Equal(Call("phaseLoss", F.Id("g"), Theta, F.Id("p"), F.Id("t")), Loss())))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
@@ -105,7 +105,7 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
     {
         var j = F.Id("j");
         var angle = Subtract(Seq(Subscript(F.Id("g"), j), F.Id("t")), Subscript(Theta, j));
-        return Seq(Subscript(Sum, Seq(j, InMacro, F.Id("J"))), Thin,
+        return Seq(Subscript(Sum, Seq(j, InMacro, Sp, F.Id("J"))), Thin,
             Subscript(F.Id("p"), j), Seq(Open, Subtract(D(1), Call("cos", angle)), Close));
     }
 
@@ -116,10 +116,10 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
         var r = F.Id("R");
         var t = F.Id("t");
         var origin = Subtract(Varepsilon, new Formula.Fraction(D(1), n));
-        var mass = Seq(Varepsilon, new Formula.Power(n, Seq(Vert, F.Id("J"), Vert)));
+        var mass = Multiply(Varepsilon, new Formula.Power(n, Seq(Bar, F.Id("J"), Bar)));
         return Disp(Seq(r, DeltaLower, Open, origin, Close, Gt,
             D(2), Open, Subtract(mass, Seq(Open, origin, Close)), Close,
-            Quad, Longrightarrow, Quad, Exists, t, InMacro,
+            Quad, Longrightarrow, Quad, Exists, Sp, t, InMacro,
             OpenBracket, a, Comma, Add(a, r), CloseBracket, Comma, Quad, Loss(), Lt, Varepsilon));
     }
 }

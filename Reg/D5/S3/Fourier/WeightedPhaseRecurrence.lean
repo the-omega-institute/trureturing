@@ -18,7 +18,7 @@ noncomputable section
 universe u
 
 abbrev signature : Signature where
-  Params := Σ J : Type u, Σ _ : Fintype J, (J → ℝ) × (J → ℝ) × (J → ℝ)
+  Params := Σ J : Type u, Σ _ : Fintype J, Σ _ : J → ℝ, Σ _ : J → ℝ, J → ℝ
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -112,7 +112,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Fourier.WeightedPhaseRecurrence
     definition := none
-    coordinates := #[0, 1, 2, 3, 4]
+    coordinates := #[0, 2, 3, 4]
     readouts := #[{
       -- The source telescope, the witness binder, then the left operand of loss < ε.
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
