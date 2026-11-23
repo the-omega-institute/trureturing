@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/RankThreeInternalSizeSpectrum.exac
 
 *Commentary.*
 
-Fix positive row dimension and class size, the lifted pair-unique family of zero-sum triples on distinct rows covering every cross-row pair, and labellings preserving the actual residue modulo three. Add unordered triples of three distinct points within rows, preserving pair uniqueness and normalized potential dimension one more than the row dimension.
+Fix positive row dimension and class size, the lifted pair-unique family of zero-sum triples on distinct rows covering every cross-row pair. Label each actual residue class by Fin r using the uniform residue indexing. Add unordered triples of three distinct points within rows, preserving pair uniqueness and normalized potential dimension one more than the row dimension.
 
 The lower endpoint is the number of Latin cells across all rows. The upper endpoint adds the packing number times the number of row and residue-class pairs. Every integer between the endpoints occurs.
 
@@ -37,3 +37,4 @@ The unordered blocks split into the Latin cells and disjoint transported packing
 - Truth anchor: `D5/S3/Combinatorics/Matroids/RankThreeInternalSizeSpectrum.exact_size_spectrum`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/RankThreeInternalSizeSpectrum.packingNumber`
 - Dependency: [D5/S3/Combinatorics/Matroids/RankThreeInternalSteinerDecomposition](RankThreeInternalSteinerDecomposition.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/RankThreeMinimumInternalAdditions](RankThreeMinimumInternalAdditions.md)
