@@ -63,12 +63,99 @@ internal sealed class WeightedLabelRecordDilationDocument : IScribeDocumentDefin
                     + "packs the chosen blocks into one isometry on the original basis. Kato, "
                     + "Koashi and Imoto, and Jencova and Petz provide the exact compression and "
                     + "sufficiency context of the perfect-readout criterion."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("uniform-optimal-success"),
+                DeclarationHandle.Create(Prefix + "uniform_optimalSuccess_eq"),
+                H("Exact uniform success from full blocks and remainders"),
+                StatementSource.FromAuthor(UniformFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Observer/elroneldar2007optimalencoding"),
+                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2013secondorder")),
+                Blocks(
+                    Paragraph(Text(
+                        "Let B be a nonempty finite input basis and J a finite set of labels, "
+                        + "with c from B to J. Write N for the basis cardinality and m_j for the "
+                        + "size of the fibre over j, which may be zero. The prior u assigns 1/N "
+                        + "to every basis word. Take positive e and N at most d times e. "
+                        + "The optimum O is the same common-isometry, arbitrary-POVM optimum above.")),
+                    Paragraph(Text(
+                        "Write K for the sum of the integer quotients m_j divided by e. R(c,e,k) "
+                        + "sums the largest k residues m_j modulo e, padding with zeros. "
+                        + "The positive uniform weights form a prefix of each sorted padded list. "
+                        + "Every full block strictly outweighs each remainder and K is at most d. "
+                        + "After the full blocks, at most one positive block from each class competes "
+                        + "for the remaining slots.")),
+                    Paragraph(Text(
+                        "The weighted supplier is the repository result in pull request #33375. "
+                        + "Elron and Eldar Theorem 2 treats separately prepared code states. "
+                        + "Nomura and Han Section VII gives classical fixed-length information-spectrum "
+                        + "bounds. Publication priority for the combination of full-input isometry, "
+                        + "fixed environment, and classwise remainder allocation is open."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("uniform-record-memory-bounds"),
+                DeclarationHandle.Create(Prefix + "uniform_record_memory_bounds"),
+                H("Necessary and sufficient memory bounds from a minimum class cover"),
+                StatementSource.FromAuthor(MemoryFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Observer/nomurahan2013secondorder")),
+                Blocks(
+                    Paragraph(Text(
+                        "Use the same finite model and feasibility assumptions. Class mass is "
+                        + "the sum of the fibre sizes divided by N. Suppose M is the least cardinality "
+                        + "of a label set with class mass at least alpha. Put C equal to the ceiling "
+                        + "of N/e and J_full equal to the number of fibres of size at least e. "
+                        + "Reaches(alpha,d,e,c) means there exist a full-input isometric encoder "
+                        + "and a memory POVM with average success at least alpha under u.")),
+                    Paragraph(Text(
+                        "The K full blocks represent J_full classes and the remaining d minus K "
+                        + "slots can represent at most that many additional classes. Conversely, "
+                        + "a minimum cover fits using at most K full blocks and M remainder blocks. "
+                        + "For alpha strictly between zero and one, the least feasible d reaching "
+                        + "alpha therefore lies between the two displayed dimensions."))),
+                DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
 
     private static Formula Call(string name, params Formula[] args) =>
         Apply(Seq(Operatorname, Grp(F.Id(name))), args);
+
+    private static Formula UniformFormula()
+    {
+        Formula c = F.Id("c"), d = F.Id("d"), e = F.Id("e"), n = F.Id("N");
+        Formula k = Call("K", c, e);
+        return Disp(new Formula.Aligned([
+            UniformHypotheses(),
+            Seq(n, Sp, Cdot, Sp, Call("O", c, F.Id("u"), d, e), Sp, Eq, Sp,
+                e, Sp, Cdot, Sp, k, Sp, Plus, Sp, Call("R", c, e, Seq(d, Sp, Minus, Sp, k))),
+        ]));
+    }
+
+    private static Formula MemoryFormula()
+    {
+        Formula c = F.Id("c"), d = F.Id("d"), e = F.Id("e"), n = F.Id("N");
+        Formula a = Alpha, m = F.Id("M"), k = Call("K", c, e);
+        Formula ceil = Call("ceil", Seq(n, Slash, e));
+        Formula full = Call("FullLabels", c, e), reaches = Call("Reaches", a, d, e, c);
+        return Disp(new Formula.Aligned([
+            UniformHypotheses(),
+            Seq(Call("MinimumCover", c, a, m), Sp, Rightarrow),
+            Seq(Open, reaches, Sp, Rightarrow, Sp,
+                Apply(Max, ceil, Seq(k, Sp, Plus, Sp, m, Sp, Minus, Sp, full)), Sp, Leq, Sp, d, Close),
+            Seq(Land, Sp, Open, Apply(Max, ceil, Seq(k, Sp, Plus, Sp, m)), Sp, Leq, Sp, d,
+                Sp, Rightarrow, Sp, reaches, Close),
+        ]));
+    }
+
+    private static Formula UniformHypotheses()
+    {
+        Formula b = F.Id("B"), j = F.Id("J"), c = F.Id("c");
+        Formula d = F.Id("d"), e = F.Id("e"), n = F.Id("N");
+        return Seq(Call("FiniteTypes", b, j), Sp, Land, Sp, Call("Nonempty", b), Sp, Land, Sp,
+            c, Sp, InMacro, Sp, Call("Map", b, j), Sp, Land, Sp, D(0), Sp, Lt, Sp, e, Sp, Land, Sp,
+            n, Sp, Leq, Sp, d, Sp, Cdot, Sp, e, Sp, Rightarrow);
+    }
 
     private static Formula TheoremFormula()
     {
