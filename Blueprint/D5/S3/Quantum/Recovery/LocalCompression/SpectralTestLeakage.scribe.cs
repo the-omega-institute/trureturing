@@ -29,7 +29,7 @@ internal sealed class SpectralTestLeakageDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".spectral_test_leakage_asymmetric"),
                 H("Separate spectral floors for the two leakage directions"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Let T(X) = ∑ₐ Kₐ X Kₐ* be trace preserving for a finite family of square Kraus "
                     + "matrices. Let H be Hermitian and suppose every eigenvalue is at least g₊ "
@@ -45,7 +45,7 @@ internal sealed class SpectralTestLeakageDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".spectral_test_leakage"),
                 H("Commutator bound for a common spectral floor"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For a trace-preserving finite square Kraus action and a Hermitian H with "
                     + "all eigenvalues at least g or at most −g for g > 0, the positive "
@@ -58,7 +58,7 @@ internal sealed class SpectralTestLeakageDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".finite_test_commutator_bound"),
                 H("Total commutator for finitely many signed tests"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For a finite family of Hermitian tests Hⱼ = ρⱼ − tⱼσ, take tⱼ and wⱼ "
                     + "nonnegative and assume every eigenvalue of Hⱼ is at least gⱼ or at most "
