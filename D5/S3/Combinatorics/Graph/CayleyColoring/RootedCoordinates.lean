@@ -32,7 +32,7 @@ theorem parent_unique (T : CayleyProbe.Tree V) (r : V) (v : Away r) {w : V}
     w = parent T r v :=
   (CayleyProbe.shorterNeighbor T.prop v.prop).unique ⟨hadj, hlt⟩ (parent_spec T r v)
 
-theorem depth_parent (T : CayleyProbe.Tree V) (r : V) (v : Away r) :
+private theorem depth_parent (T : CayleyProbe.Tree V) (r : V) (v : Away r) :
     T.val.dist r v.val = T.val.dist r (parent T r v) + 1 := by
   have h := parent_spec T r v
   have hh := T.prop.dist_eq_dist_add_one_of_adj r h.1
@@ -95,7 +95,7 @@ decreasing_by exact (parent_spec T r ⟨v, hv⟩).2
   rw [reconstruct]
   simp
 
-theorem reconstruct_child (T : CayleyProbe.Tree V) (r : V) (base : A) (diff : Away r → A)
+private theorem reconstruct_child (T : CayleyProbe.Tree V) (r : V) (base : A) (diff : Away r → A)
     (v : Away r) :
     reconstruct T r base diff v.val = diff v + reconstruct T r base diff (parent T r v) := by
   rw [reconstruct]
@@ -103,7 +103,7 @@ theorem reconstruct_child (T : CayleyProbe.Tree V) (r : V) (base : A) (diff : Aw
 
 /-- The root color and all cyclic edge differences are independent uniform coordinates when
 the input coloring is uniform. The equivalence itself works over any additive group. -/
-noncomputable def colorEquiv (T : CayleyProbe.Tree V) (r : V) :
+private noncomputable def colorEquiv (T : CayleyProbe.Tree V) (r : V) :
     (V → A) ≃ A × (Away r → A) where
   toFun c := ⟨c r, fun v => c v.val - c (parent T r v)⟩
   invFun p := reconstruct T r p.1 p.2
@@ -187,12 +187,12 @@ theorem fromTree_child (T : CayleyProbe.Tree V) (r : V) (v : CayleyColors.Away r
   classical
   simp [fromTree, v.prop]
 
-theorem fromTree_depth (T : CayleyProbe.Tree V) (r : V) {v : V} (hv : v ≠ r) :
+private theorem fromTree_depth (T : CayleyProbe.Tree V) (r : V) {v : V} (hv : v ≠ r) :
     T.val.dist r v = T.val.dist r (fromTree T r v) + 1 := by
   rw [fromTree_child T r ⟨v,hv⟩]
   exact CayleyColors.depth_parent T r ⟨v,hv⟩
 
-theorem fromTree_hits (T : CayleyProbe.Tree V) (r v : V) :
+private theorem fromTree_hits (T : CayleyProbe.Tree V) (r v : V) :
     Hits (fromTree T r) v r := by
   induction n : T.val.dist r v using Nat.strong_induction_on generalizing v with
   | h n ih =>
@@ -237,7 +237,7 @@ theorem depth_step (r : V) (f : RootMap r) {v : V} (hv : v ≠ r) :
     exact ht
   omega
 
-theorem parent_not_self (r : V) (f : RootMap r) {v : V} (hv : v ≠ r) : f.val v ≠ v := by
+private theorem parent_not_self (r : V) (f : RootMap r) {v : V} (hv : v ≠ r) : f.val v ≠ v := by
   intro h
   have hs := depth_step r f hv
   rw [h] at hs
@@ -249,7 +249,7 @@ def toGraph (r : V) (f : RootMap r) : SimpleGraph V where
   loopless := ⟨fun _ h => h.elim (fun he => parent_not_self r f he.1 he.2)
     (fun he => parent_not_self r f he.1 he.2)⟩
 
-theorem toGraph_spec (r : V) (f : RootMap r) :
+private theorem toGraph_spec (r : V) (f : RootMap r) :
     (toGraph r f).IsTree ∧ ∀ v, (toGraph r f).dist r v = depth r f v := by
   apply CayleyProbe.tree_of_depth (depth r f) (depth_zero r f)
   · intro v w h
@@ -270,7 +270,7 @@ theorem toGraph_spec (r : V) (f : RootMap r) :
 def toTree (r : V) (f : RootMap r) : CayleyProbe.Tree V :=
   ⟨toGraph r f, (toGraph_spec r f).1⟩
 
-theorem toTree_parent (r : V) (f : RootMap r) (v : CayleyColors.Away r) :
+private theorem toTree_parent (r : V) (f : RootMap r) (v : CayleyColors.Away r) :
     CayleyColors.parent (toTree r f) r v = f.val v.val := by
   symm
   apply CayleyColors.parent_unique

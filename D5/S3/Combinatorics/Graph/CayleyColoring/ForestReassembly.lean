@@ -23,29 +23,29 @@ abbrev Sample (V : Type u) := {s : CayleyProbe.Tree V × SimpleGraph V // s.2 �
 def parts (H : SimpleGraph V) : Set (Set V) :=
   Set.range (fun c : H.ConnectedComponent => c.supp)
 
-theorem mem_parts (H : SimpleGraph V) (v : V) : (H.connectedComponentMk v).supp ∈ parts H :=
+private theorem mem_parts (H : SimpleGraph V) (v : V) : (H.connectedComponentMk v).supp ∈ parts H :=
   ⟨H.connectedComponentMk v, rfl⟩
 
-theorem mem_own_part (H : SimpleGraph V) (v : V) : v ∈ (H.connectedComponentMk v).supp :=
+private theorem mem_own_part (H : SimpleGraph V) (v : V) : v ∈ (H.connectedComponentMk v).supp :=
   (ConnectedComponent.mem_supp_iff _ _).mpr rfl
 
-theorem part_eq {H : SimpleGraph V} {s t : Set V} (hs : s ∈ parts H)
+private theorem part_eq {H : SimpleGraph V} {s t : Set V} (hs : s ∈ parts H)
     (ht : t ∈ parts H) {v : V} (hvs : v ∈ s) (hvt : v ∈ t) : s = t := by
   obtain ⟨a, rfl⟩ := hs
   obtain ⟨b, rfl⟩ := ht
   rw [ConnectedComponent.eq_of_common_vertex hvs hvt]
 
-theorem nonempty_part {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H) :
+private theorem nonempty_part {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H) :
     s.Nonempty := by
   obtain ⟨a, rfl⟩ := hs
   exact a.nonempty_supp
 
-theorem reachable_part {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H)
+private theorem reachable_part {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H)
     {x y : V} (hx : x ∈ s) (hy : y ∈ s) : H.Reachable x y := by
   obtain ⟨a, rfl⟩ := hs
   exact a.reachable_of_mem_supp hx hy
 
-theorem mem_part_of_reachable {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H)
+private theorem mem_part_of_reachable {H : SimpleGraph V} {s : Set V} (hs : s ∈ parts H)
     {x y : V} (hx : x ∈ s) (hr : H.Reachable x y) : y ∈ s := by
   obtain ⟨a, rfl⟩ := hs
   rw [ConnectedComponent.mem_supp_iff] at hx ⊢
@@ -58,7 +58,7 @@ def localTree (T : CayleyProbe.Tree V) {H : SimpleGraph V} (h : H ≤ T.val)
   exact (T.prop.isAcyclic.anti h).isTree_connectedComponent a
 
 /-- A tree edge with endpoints in a retained component is itself retained. -/
-theorem adj_of_reachable {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val)
+private theorem adj_of_reachable {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val)
     {x y : V} (ha : T.val.Adj x y) (hr : H.Reachable x y) : H.Adj x y := by
   by_contra nh
   have hbridge := isAcyclic_iff_forall_adj_isBridge.mp T.prop.isAcyclic ha
@@ -79,7 +79,7 @@ def block {P : Set (Set V)} (U : Family P) (s : P) : SimpleGraph V :=
 def unionGraph {P : Set (Set V)} (U : Family P) : SimpleGraph V :=
   ⨆ s, block U s
 
-theorem block_adj {P : Set (Set V)} {U : Family P} {s : P} {x y : V} :
+private theorem block_adj {P : Set (Set V)} {U : Family P} {s : P} {x y : V} :
     (block U s).Adj x y ↔
       ∃ (hx : x ∈ s.val) (hy : y ∈ s.val), (U s).val.Adj ⟨x,hx⟩ ⟨y,hy⟩ := by
   rw [block, SimpleGraph.map_adj]
@@ -89,7 +89,7 @@ theorem block_adj {P : Set (Set V)} {U : Family P} {s : P} {x y : V} :
   · rintro ⟨hx, hy, ha⟩
     exact ⟨⟨x,hx⟩, ⟨y,hy⟩, ha, rfl, rfl⟩
 
-theorem local_adj {H : SimpleGraph V} (U : Family (parts H)) (s : parts H)
+private theorem local_adj {H : SimpleGraph V} (U : Family (parts H)) (s : parts H)
     (x y : s.val) : (unionGraph U).Adj x.val y.val ↔ (U s).val.Adj x y := by
   rw [unionGraph, iSup_adj]
   constructor
@@ -101,7 +101,7 @@ theorem local_adj {H : SimpleGraph V} (U : Family (parts H)) (s : parts H)
   · intro h
     exact ⟨s, block_adj.mpr ⟨x.prop,y.prop,h⟩⟩
 
-theorem local_reachable {P : Set (Set V)} (U : Family P) (s : P)
+private theorem local_reachable {P : Set (Set V)} (U : Family P) (s : P)
     {x y : V} (hx : x ∈ s.val) (hy : y ∈ s.val) : (unionGraph U).Reachable x y := by
   let hmap : (U s).val →g unionGraph U :=
     ⟨Subtype.val, fun {a b} hab => iSup_adj.mpr ⟨s, block_adj.mpr ⟨a.prop,b.prop,hab⟩⟩⟩
@@ -109,13 +109,13 @@ theorem local_reachable {P : Set (Set V)} (U : Family P) (s : P)
   change (unionGraph U).Reachable (hmap ⟨x,hx⟩) (hmap ⟨y,hy⟩)
   exact (p.map hmap).reachable
 
-theorem adjacent_same_part {H : SimpleGraph V} (U : Family (parts H)) {x y : V}
+private theorem adjacent_same_part {H : SimpleGraph V} (U : Family (parts H)) {x y : V}
     (ha : (unionGraph U).Adj x y) : H.Reachable x y := by
   obtain ⟨s, hs⟩ := iSup_adj.mp ha
   obtain ⟨hx, hy, _⟩ := block_adj.mp hs
   exact reachable_part s.prop hx hy
 
-theorem reachable_replace {H : SimpleGraph V} (U : Family (parts H)) :
+private theorem reachable_replace {H : SimpleGraph V} (U : Family (parts H)) :
     (unionGraph U).Reachable = H.Reachable := by
   funext x y
   apply propext
@@ -128,7 +128,7 @@ theorem reachable_replace {H : SimpleGraph V} (U : Family (parts H)) :
     exact local_reachable U ⟨_, mem_parts H x⟩ (mem_own_part H x)
       (mem_part_of_reachable (mem_parts H x) (mem_own_part H x) hr)
 
-theorem parts_congr {H H' : SimpleGraph V} (h : H.Reachable = H'.Reachable) :
+private theorem parts_congr {H H' : SimpleGraph V} (h : H.Reachable = H'.Reachable) :
     parts H = parts H' := by
   have aux {A B : SimpleGraph V} (e : A.Reachable = B.Reachable) :
       parts A ⊆ parts B := by
@@ -141,7 +141,7 @@ theorem parts_congr {H H' : SimpleGraph V} (h : H.Reachable = H'.Reachable) :
     exact (congrFun (congrFun e w) v).symm.to_iff
   exact Set.Subset.antisymm (aux h) (aux h.symm)
 
-theorem reconstruct_inside {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val) :
+private theorem reconstruct_inside {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val) :
     unionGraph (fun s : parts H => localTree T h s.val s.prop) = H := by
   ext x y
   constructor
@@ -153,7 +153,7 @@ theorem reconstruct_inside {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H �
     exact iSup_adj.mpr ⟨⟨_, mem_parts H x⟩, block_adj.mpr
       ⟨mem_own_part H x, mem_part_of_reachable (mem_parts H x) (mem_own_part H x) ha.reachable, ha⟩⟩
 
-theorem block_edge_disjoint {H : SimpleGraph V} (U : Family (parts H)) :
+private theorem block_edge_disjoint {H : SimpleGraph V} (U : Family (parts H)) :
     Pairwise (fun s t : parts H => Disjoint (block U s).edgeSet (block U t).edgeSet) := by
   intro s t hst
   rw [Set.disjoint_left]
@@ -164,14 +164,14 @@ theorem block_edge_disjoint {H : SimpleGraph V} (U : Family (parts H)) :
     obtain ⟨hx', _, _⟩ := block_adj.mp ((block U t).mem_edgeSet.mp ht)
     exact hst (Subtype.ext (part_eq s.prop t.prop hx hx'))
 
-theorem block_card [Finite V] {P : Set (Set V)} (U : Family P) (s : P) :
+private theorem block_card [Finite V] {P : Set (Set V)} (U : Family P) (s : P) :
     Nat.card (block U s).edgeSet + 1 = Nat.card s.val := by
   let e := (Function.Embedding.subtype (· ∈ s.val)).sym2Map
   have he : (block U s).edgeSet = e '' (U s).val.edgeSet := edgeSet_map _ _
   rw [he, ← Nat.card_congr (Equiv.Set.image e (U s).val.edgeSet e.injective)]
   exact (isTree_iff_connected_and_card.mp (U s).prop).2
 
-theorem retained_card [Finite V] {H : SimpleGraph V} (U W : Family (parts H)) :
+private theorem retained_card [Finite V] {H : SimpleGraph V} (U W : Family (parts H)) :
     Nat.card (unionGraph U).edgeSet = Nat.card (unionGraph W).edgeSet := by
   classical
   let : Fintype (parts H) := Fintype.ofFinite _
@@ -183,7 +183,7 @@ theorem retained_card [Finite V] {H : SimpleGraph V} (U W : Family (parts H)) :
   intro s _
   exact Nat.add_right_cancel ((block_card U s).trans (block_card W s).symm)
 
-theorem cross_disjoint {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val)
+private theorem cross_disjoint {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T.val)
     (U : Family (parts H)) : Disjoint (T.val \ H).edgeSet (unionGraph U).edgeSet := by
   rw [Set.disjoint_left]
   intro e hc hu
@@ -192,7 +192,7 @@ theorem cross_disjoint {T : CayleyProbe.Tree V} {H : SimpleGraph V} (h : H ≤ T
     have ha := (T.val \ H).mem_edgeSet.mp hc
     exact ha.2 (adj_of_reachable h ha.1 (adjacent_same_part U ((unionGraph U).mem_edgeSet.mp hu)))
 
-theorem replaced_connected {T : CayleyProbe.Tree V} {H : SimpleGraph V}
+private theorem replaced_connected {T : CayleyProbe.Tree V} {H : SimpleGraph V}
     (U : Family (parts H)) : ((T.val \ H) ⊔ unionGraph U).Connected := by
   classical
   have := T.prop.connected.nonempty
@@ -229,7 +229,7 @@ noncomputable def replace [Finite V] (S : Sample V) (U : Family (parts S.val.2))
     ⟨replaced_connected U, hcard ▸ (isTree_iff_connected_and_card.mp T.prop).2⟩
   exact ⟨⟨⟨C ⊔ H', ht⟩, H'⟩, le_sup_right⟩
 
-theorem replace_cross [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
+private theorem replace_cross [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
     (replace S U).val.1.val \ (replace S U).val.2 = S.val.1.val \ S.val.2 := by
   ext x y
   change (((S.val.1.val \ S.val.2).Adj x y ∨ (unionGraph U).Adj x y) ∧
@@ -239,7 +239,7 @@ theorem replace_cross [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
       ((S.val.1.val \ S.val.2).mem_edgeSet.mpr h) ((unionGraph U).mem_edgeSet.mpr h')
   exact ⟨fun h => h.1.resolve_right h.2, fun h => ⟨Or.inl h, fun h' => hd h h'⟩⟩
 
-theorem replace_reachable [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
+private theorem replace_reachable [Finite V] (S : Sample V) (U : Family (parts S.val.2)) :
     (replace S U).val.2.Reachable = S.val.2.Reachable :=
   reachable_replace U
 
@@ -257,13 +257,13 @@ universe u
 variable {V : Type u} [Finite V]
 
 omit [Finite V] in
-theorem dist_of_mem_support {G : SimpleGraph V} {r x z : V}
+private theorem dist_of_mem_support {G : SimpleGraph V} {r x z : V}
     (p : G.Walk r x) (hz : z ∈ p.support) : G.dist r z ≤ p.length := by
   classical
   exact (G.dist_le (p.takeUntil z hz)).trans (p.length_takeUntil_le_length hz)
 
 omit [Finite V] in
-theorem dist_lt_of_mem_dropLast {G : SimpleGraph V} {r x z : V}
+private theorem dist_lt_of_mem_dropLast {G : SimpleGraph V} {r x z : V}
     (p : G.Walk r x) (hp : p.IsPath) (hz : z ∈ p.support.dropLast) :
     G.dist r z < p.length := by
   classical
@@ -279,7 +279,7 @@ theorem dist_lt_of_mem_dropLast {G : SimpleGraph V} {r x z : V}
   exact (G.dist_le (p.takeUntil z hm)).trans_lt (p.length_takeUntil_lt_length hm hne)
 
 omit [Finite V] in
-theorem length_of_path {G : SimpleGraph V} (ha : G.IsAcyclic) {v w : V}
+private theorem length_of_path {G : SimpleGraph V} (ha : G.IsAcyclic) {v w : V}
     {p : G.Walk v w} (hp : p.IsPath) : p.length = G.dist v w := by
   obtain ⟨q, hq, hd⟩ := p.reachable.exists_path_of_dist
   have he : p = q := congrArg Subtype.val
@@ -296,7 +296,7 @@ noncomputable def entry (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
     exact ⟨⟨v,hv⟩, Finset.mem_univ _⟩
   exact (Finset.exists_min_image Finset.univ (fun v : s => T.val.dist r v.val) hu).choose
 
-theorem entry_min (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
+private theorem entry_min (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
     (s : Set V) (hs : s ∈ parts H) (v : s) :
     T.val.dist r (entry T r s hs).val ≤ T.val.dist r v.val := by
   classical
@@ -305,7 +305,7 @@ theorem entry_min (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
   exact (Finset.exists_min_image (Finset.univ : Finset s)
     (fun v : s => T.val.dist r v.val) ⟨v,Finset.mem_univ v⟩).choose_spec.2 v (Finset.mem_univ _)
 
-theorem entry_eq_of_root_mem (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
+private theorem entry_eq_of_root_mem (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
     (s : Set V) (hs : s ∈ parts H) (hr : r ∈ s) : (entry T r s hs).val = r := by
   have h := entry_min T r s hs ⟨r,hr⟩
   change T.val.dist r (entry T r s hs).val ≤ T.val.dist r r at h
@@ -313,7 +313,7 @@ theorem entry_eq_of_root_mem (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V
   exact ((T.prop.connected.dist_eq_zero_iff).mp h).symm
 
 /-- Within each retained component, global depth differs from local depth by a constant. -/
-theorem local_depth (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V} (h : H ≤ T.val)
+private theorem local_depth (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V} (h : H ≤ T.val)
     (s : Set V) (hs : s ∈ parts H) (x : s) :
     T.val.dist r x.val = T.val.dist r (entry T r s hs).val +
       (localTree T h s hs).val.dist (entry T r s hs) x := by
@@ -339,7 +339,7 @@ theorem local_depth (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V} (h : H 
   exact hlen.symm
 
 omit [Finite V] in
-theorem root_side_of_edge (T : CayleyProbe.Tree V) (r : V) {x y : V}
+private theorem root_side_of_edge (T : CayleyProbe.Tree V) (r : V) {x y : V}
     (hxy : T.val.Adj x y) :
     (T.val.deleteEdges {s(x,y)}).Reachable r x ↔ T.val.dist r x < T.val.dist r y := by
   classical
@@ -358,7 +358,7 @@ theorem root_side_of_edge (T : CayleyProbe.Tree V) (r : V) {x y : V}
     (hr.symm.trans hs)
 
 omit [Finite V] in
-theorem sup_reachable_congr (C : SimpleGraph V) {H H' : SimpleGraph V}
+private theorem sup_reachable_congr (C : SimpleGraph V) {H H' : SimpleGraph V}
     (he : H.Reachable = H'.Reachable) :
     (C ⊔ H).Reachable = (C ⊔ H').Reachable := by
   have aux {A B : SimpleGraph V} (e : A.Reachable = B.Reachable) :
@@ -374,7 +374,7 @@ theorem sup_reachable_congr (C : SimpleGraph V) {H H' : SimpleGraph V}
   exact le_antisymm (aux he) (aux he.symm)
 
 /-- Across each deleted edge, replacing the retained components preserves the rootward direction. -/
-theorem cross_orientation (S : Sample V) (U : Family (parts S.val.2)) (r : V) {x y : V}
+private theorem cross_orientation (S : Sample V) (U : Family (parts S.val.2)) (r : V) {x y : V}
     (hc : (S.val.1.val \ S.val.2).Adj x y) :
     (replace S U).val.1.val.dist r x < (replace S U).val.1.val.dist r y ↔
       S.val.1.val.dist r x < S.val.1.val.dist r y := by
@@ -396,7 +396,7 @@ theorem cross_orientation (S : Sample V) (U : Family (parts S.val.2)) (r : V) {x
     sup_reachable_congr _ (reachable_replace U)]
 
 /-- Any non-entry vertex in a retained component has a closer retained neighbor. -/
-theorem internal_parent (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
+private theorem internal_parent (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
     (h : H ≤ T.val) (s : Set V) (hs : s ∈ parts H) (x : s)
     (hx : x ≠ entry T r s hs) :
     ∃ y : s, H.Adj x.val y.val ∧ T.val.dist r y.val < T.val.dist r x.val := by
@@ -405,7 +405,7 @@ theorem internal_parent (T : CayleyProbe.Tree V) (r : V) {H : SimpleGraph V}
   rw [local_depth T r h s hs x, local_depth T r h s hs y]
   exact Nat.add_lt_add_left hy.2 _
 
-theorem entry_replace (S : Sample V) (U : Family (parts S.val.2)) (r : V)
+private theorem entry_replace (S : Sample V) (U : Family (parts S.val.2)) (r : V)
     (s : Set V) (hs : s ∈ parts S.val.2)
     (ht : s ∈ parts (replace S U).val.2) :
     entry (replace S U).val.1 r s ht = entry S.val.1 r s hs := by
@@ -433,7 +433,7 @@ theorem entry_replace (S : Sample V) (U : Family (parts S.val.2)) (r : V)
     exact (not_lt_of_ge (entry_min _ _ _ hs ⟨y.val,hmem⟩))
       (by simpa only [eq] using hp.2)
 
-theorem local_after (S : Sample V) (U : Family (parts S.val.2)) (s : Set V)
+private theorem local_after (S : Sample V) (U : Family (parts S.val.2)) (s : Set V)
     (hs : s ∈ parts S.val.2) (ht : s ∈ parts (replace S U).val.2) :
     localTree (replace S U).val.1 (replace S U).prop s ht = U ⟨s, hs⟩ := by
   apply Subtype.ext
@@ -443,12 +443,12 @@ theorem local_after (S : Sample V) (U : Family (parts S.val.2)) (s : Set V)
 variable [LinearOrder V]
 
 /-- Apply the fixed-entry peak-to-leaf map to each retained component. -/
-noncomputable def transform (r : V) (S : Sample V) (backward : Bool) : Sample V :=
+private noncomputable def transform (r : V) (S : Sample V) (backward : Bool) : Sample V :=
   replace S fun s =>
     let e := CayleyProbe.fixedRootEquiv (entry S.val.1 r s.val s.prop)
     (if backward then e.symm else e) (localTree S.val.1 S.prop s.val s.prop)
 
-theorem transform_inverse (r : V) (S : Sample V) (b : Bool) :
+private theorem transform_inverse (r : V) (S : Sample V) (b : Bool) :
     transform r (transform r S b) (!b) = S := by
   classical
   let U : Family (parts S.val.2) := fun s =>
@@ -499,7 +499,7 @@ def NoRetainedChild (T : CayleyProbe.Tree V) (H : SimpleGraph V) (r v : V) : Pro
   ¬ ∃ w, H.Adj v w ∧ T.val.dist r v < T.val.dist r w
 
 omit [LinearOrder V] in
-theorem leaf_local (S : Sample V) (r : V) (s : Set V) (hs : s ∈ parts S.val.2)
+private theorem leaf_local (S : Sample V) (r : V) (s : Set V) (hs : s ∈ parts S.val.2)
     (x : s) :
     NoRetainedChild S.val.1 S.val.2 r x.val ↔
       CayleyProbe.RootedLeaf (localTree S.val.1 S.prop s hs).val
@@ -520,7 +520,7 @@ theorem leaf_local (S : Sample V) (r : V) (s : Set V) (hs : s ∈ parts S.val.2)
     exact Nat.add_lt_add_left hlt _
 
 omit [Finite V] in
-theorem peak_local (S : Sample V) (s : Set V) (hs : s ∈ parts S.val.2) (x : s) :
+private theorem peak_local (S : Sample V) (s : Set V) (hs : s ∈ parts S.val.2) (x : s) :
     CayleyProbe.Peak S.val.2 x.val ↔ CayleyProbe.Peak (localTree S.val.1 S.prop s hs).val x := by
   constructor
   · intro h y ha
@@ -528,7 +528,7 @@ theorem peak_local (S : Sample V) (s : Set V) (hs : s ∈ parts S.val.2) (x : s)
   · intro h y ha
     exact h ⟨y, mem_part_of_reachable hs x.prop ha.reachable⟩ ha
 
-noncomputable def splitByParts (H : SimpleGraph V) (P : V → Prop) :
+private noncomputable def splitByParts (H : SimpleGraph V) (P : V → Prop) :
     {x : V // P x} ≃ Σ s : parts H, {x : s.val // P x.val} := by
   let f : (Σ s : parts H, {x : s.val // P x.val}) → {x : V // P x} :=
     fun a => ⟨a.2.val.val, a.2.prop⟩
@@ -544,7 +544,7 @@ noncomputable def splitByParts (H : SimpleGraph V) (P : V → Prop) :
     exact ⟨⟨⟨_, mem_parts H x.val⟩, ⟨⟨x.val, mem_own_part H x.val⟩, x.prop⟩⟩, rfl⟩
 
 omit [LinearOrder V] in
-theorem by_parts_card (H : SimpleGraph V) (P : V → Prop) (hF : Fintype (parts H)) :
+private theorem by_parts_card (H : SimpleGraph V) (P : V → Prop) (hF : Fintype (parts H)) :
     Nat.card {x : V // P x} = ∑ s : parts H, Nat.card {x : s.val // P x.val} := by
   let := hF
   rw [Nat.card_congr (splitByParts H P), Nat.card_sigma]
@@ -595,7 +595,7 @@ variable [Zero A]
 def retained (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) : SimpleGraph V :=
   fromEdgeSet {e | ∃ h : e ∈ T.val.edgeSet, d ⟨e,h⟩ = 0}
 
-theorem retained_edges (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) (e : Sym2 V) :
+private theorem retained_edges (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) (e : Sym2 V) :
     e ∈ (retained T d).edgeSet ↔ ∃ h : e ∈ T.val.edgeSet, d ⟨e,h⟩ = 0 := by
   rw [retained, edgeSet_fromEdgeSet]
   constructor
@@ -608,12 +608,12 @@ theorem retained_le (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) : retaine
   intro e he
   exact ((retained_edges T d e).mp he).choose
 
-theorem retained_iff (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) (e : T.val.edgeSet) :
+private theorem retained_iff (T : CayleyProbe.Tree V) (d : T.val.edgeSet → A) (e : T.val.edgeSet) :
     e.val ∈ (retained T d).edgeSet ↔ d e = 0 := by
   rw [retained_edges]
   exact ⟨fun ⟨_,h⟩ => h, fun h => ⟨e.prop,h⟩⟩
 
-theorem retained_parent (T : CayleyProbe.Tree V) (r : V) (d : T.val.edgeSet → A)
+private theorem retained_parent (T : CayleyProbe.Tree V) (r : V) (d : T.val.edgeSet → A)
     (v : Away r) :
     (retained T d).Adj v.val (parent T r v) ↔ d (edgeEquiv T r v) = 0 :=
   (mem_edgeSet _).symm.trans (retained_iff T d (edgeEquiv T r v))
@@ -621,7 +621,7 @@ theorem retained_parent (T : CayleyProbe.Tree V) (r : V) (d : T.val.edgeSet → 
 abbrev Deleted (S : Sample V) :=
   {e : Sym2 V // e ∈ S.val.1.val.edgeSet ∧ e ∉ S.val.2.edgeSet}
 
-def deletedEquiv (S : Sample V) : Deleted S ≃ (S.val.1.val \ S.val.2).edgeSet :=
+private def deletedEquiv (S : Sample V) : Deleted S ≃ (S.val.1.val \ S.val.2).edgeSet :=
   Set.equivOfEq (edgeSet_sdiff _ _).symm
 
 abbrev Marked (V : Type u) (A : Type w) [Zero A] :=
@@ -640,14 +640,14 @@ noncomputable def fill (x : Marked V A) (e : x.1.val.1.val.edgeSet) : A := by
 noncomputable def join (x : Marked V A) : Σ T : CayleyProbe.Tree V, T.val.edgeSet → A :=
   ⟨x.1.val.1, fill x⟩
 
-theorem fill_zero (x : Marked V A) (e : x.1.val.1.val.edgeSet) :
+private theorem fill_zero (x : Marked V A) (e : x.1.val.1.val.edgeSet) :
     fill x e = 0 ↔ e.val ∈ x.1.val.2.edgeSet := by
   classical
   by_cases h : e.val ∈ x.1.val.2.edgeSet
   · simp [fill, h]
   · simp [fill, h, (x.2 ⟨e.val,e.prop,h⟩).prop]
 
-theorem fill_deleted (x : Marked V A) (e : Deleted x.1) :
+private theorem fill_deleted (x : Marked V A) (e : Deleted x.1) :
     fill x ⟨e.val,e.prop.1⟩ = (x.2 e).val := by
   classical
   simp [fill, e.prop.2]

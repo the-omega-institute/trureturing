@@ -17,12 +17,12 @@ namespace DiscardedOccupancy
 
 noncomputable section
 
-theorem weight_bounds {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem weight_bounds {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     (m j : ℕ) : 0 ≤ weight n p m j ∧ weight n p m j ≤ 1 := by
   have ha := a_bounds hn hp hp'
   exact ⟨pow_nonneg ha.1 _, pow_le_one₀ ha.1 ha.2⟩
 
-theorem weight_succ (n : ℕ) (p : ℝ) {m j : ℕ} (hj : j < m) :
+private theorem weight_succ (n : ℕ) (p : ℝ) {m j : ℕ} (hj : j < m) :
     weight n p m j = a n p * weight n p m (j + 1) := by
   have h : m - j = m - (j + 1) + 1 := by omega
   rw [weight, weight, h, pow_succ, mul_comm]
@@ -30,10 +30,10 @@ theorem weight_succ (n : ℕ) (p : ℝ) {m j : ℕ} (hj : j < m) :
 def gaussianProduct (n : ℕ) (p : ℝ) (m : ℕ) (τ : ℝ) (j : ℕ) : ℂ :=
   ∏ i ∈ range j, gaussianFactor (weight n p m (i+1) * τ) (predictableVariance n p i)
 
-def stepBound (n : ℕ) (p τ : ℝ) : ℝ :=
+private def stepBound (n : ℕ) (p τ : ℝ) : ℝ :=
   (Real.exp 1 + 1) * |τ|^3 + (τ^2 / 2) * fluctuationBound n p
 
-theorem telescoping_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem telescoping_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     {m : ℕ} (hm : m ≤ n) {τ : ℝ} (hτ : |τ| ≤ 1) {j : ℕ} (hj : j ≤ m) :
     ‖rowPhase n p j (weight n p m j * τ) - gaussianProduct n p m τ j‖ ≤
       (j : ℝ) * stepBound n p τ := by
@@ -75,7 +75,7 @@ theorem telescoping_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (
         add_le_add hstep' ((mul_le_of_le_one_right (norm_nonneg _) hg).trans hprod)
       _ = _ := by push_cast; ring
 
-theorem terminal_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem terminal_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     {m : ℕ} (hm : m ≤ n) {τ : ℝ} (hτ : |τ| ≤ 1) :
     ‖rowPhase n p m τ - gaussianProduct n p m τ m‖ ≤ (m : ℝ) * stepBound n p τ := by
   simpa [weight] using telescoping_comparison hn hp hp' hm hτ (le_refl m)
@@ -83,7 +83,7 @@ theorem terminal_comparison {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp'
 def deterministicVariance (n : ℕ) (p : ℝ) (m : ℕ) : ℝ :=
   ∑ j ∈ range m, (weight n p m (j+1))^2 * predictableVariance n p j
 
-theorem gaussianProduct_eq_exp (n : ℕ) (p : ℝ) (m : ℕ) (τ : ℝ) :
+private theorem gaussianProduct_eq_exp (n : ℕ) (p : ℝ) (m : ℕ) (τ : ℝ) :
     gaussianProduct n p m τ m =
       (↑(Real.exp (-(τ^2 / 2) * deterministicVariance n p m)) : ℂ) := by
   rw [gaussianProduct, deterministicVariance, Finset.mul_sum, Real.exp_sum]
@@ -94,7 +94,7 @@ theorem gaussianProduct_eq_exp (n : ℕ) (p : ℝ) (m : ℕ) (τ : ℝ) :
   congr 2
   ring
 
-theorem deterministic_variance_error {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem deterministic_variance_error {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     {m : ℕ} (hm : m ≤ n) :
     |deterministicVariance n p m - variance n p m| ≤ (m : ℝ) * fluctuationBound n p := by
   rw [deterministicVariance, weighted_variance hn, ← Finset.sum_sub_distrib]
@@ -121,14 +121,14 @@ theorem deterministic_variance_error {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 �
       exact (mul_le_of_le_one_left (abs_nonneg _) (pow_le_one₀ hw.1 hw.2)).trans he
     _ = _ := by simp [nsmul_eq_mul]
 
-def linearCoefficient (p : ℝ) : ℝ := p * (1 - p)^3 / 6
+private def linearCoefficient (p : ℝ) : ℝ := p * (1 - p)^3 / 6
 
-theorem linearCoefficient_pos {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
+private theorem linearCoefficient_pos {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
     0 < linearCoefficient p := by
   unfold linearCoefficient
   positivity
 
-theorem linear_variance {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1) :
+private theorem linear_variance {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1) :
     linearCoefficient p * n ≤ variance n p (n - 1) := by
   have h : n ≤ 3 * (n / 2) := by omega
   have hr : (n : ℝ) ≤ 3 * ((n / 2 : ℕ) : ℝ) := by exact_mod_cast h
@@ -139,7 +139,7 @@ theorem linear_variance {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 ≤ p) (hp' :
     _ = (n / 2 : ℕ) * (p * (1 - p)^3 / 2) := by unfold linearCoefficient; ring
     _ ≤ _ := variance_lower (by omega) hp hp'
 
-theorem variance_pos {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
+private theorem variance_pos {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
     0 < variance n p (n - 1) := by
   have hn' : 0 < (n : ℝ) := by exact_mod_cast (show 0 < n by omega)
   exact (mul_pos (linearCoefficient_pos hp hp') hn').trans_le (linear_variance hn hp.le hp'.le)
@@ -148,14 +148,14 @@ private theorem tendsto_succ_cast : Tendsto (fun N : ℕ => (N.succ : ℝ)) atTo
   refine tendsto_atTop_mono (fun N => ?_) tendsto_natCast_atTop_atTop
   exact_mod_cast Nat.le_succ N
 
-theorem variance_tendsto_atTop {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
+private theorem variance_tendsto_atTop {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
     Tendsto (fun N : ℕ => variance N.succ p N) atTop atTop := by
   refine tendsto_atTop_mono' atTop ?_
     (tendsto_succ_cast.const_mul_atTop (linearCoefficient_pos hp hp'))
   filter_upwards [eventually_ge_atTop (1 : ℕ)] with N hN
   exact linear_variance (show 2 ≤ N.succ by omega) hp.le hp'.le
 
-theorem fluctuation_tendsto (p : ℝ) :
+private theorem fluctuation_tendsto (p : ℝ) :
     Tendsto (fun N : ℕ => fluctuationBound N.succ p) atTop (𝓝 0) := by
   have ht := ((Real.tendsto_sqrt_atTop.comp tendsto_succ_cast).inv_tendsto_atTop).const_mul p
   rw [mul_zero] at ht
@@ -172,7 +172,7 @@ private theorem div_variance_bound {n : ℕ} (hn : 2 ≤ n) {p : ℝ} (hp : 0 < 
   apply (div_le_div_iff₀ (variance_pos hn hp hp') (linearCoefficient_pos hp hp')).2
   simpa [mul_comm] using linear_variance hn hp.le hp'.le
 
-theorem standardized_predictor_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
+private theorem standardized_predictor_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
     Tendsto (fun N : ℕ => deterministicVariance N.succ p N / variance N.succ p N)
       atTop (𝓝 1) := by
   apply tendsto_iff_norm_sub_tendsto_zero.2
@@ -200,7 +200,7 @@ theorem standardized_predictor_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
       _ = ((N.succ : ℝ) / V) * F := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_right (div_variance_bound hn hp hp') hF
 
-theorem gaussianProduct_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
+private theorem gaussianProduct_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
     Tendsto (fun N : ℕ => gaussianProduct N.succ p N (t / Real.sqrt (variance N.succ p N)) N)
       atTop (𝓝 (↑(Real.exp (-(t^2/2))) : ℂ)) := by
   have hratio := (standardized_predictor_tendsto hp hp').const_mul (-(t^2/2))
@@ -216,7 +216,7 @@ theorem gaussianProduct_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
   rw [gaussianProduct_eq_exp]
   exact congrArg (fun x : ℝ => (Real.exp x : ℂ)) he
 
-theorem phase_product_difference_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
+private theorem phase_product_difference_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
     Tendsto (fun N : ℕ =>
       ‖rowPhase N.succ p N (t / Real.sqrt (variance N.succ p N)) -
         gaussianProduct N.succ p N (t / Real.sqrt (variance N.succ p N)) N‖)
@@ -258,7 +258,7 @@ theorem phase_product_difference_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t
       rw [hV]
       exact mul_le_mul_of_nonneg_right (div_variance_bound hn hp hp') hRN
 
-theorem native_row_charFun_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
+private theorem native_row_charFun_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ) :
     Tendsto (fun N : ℕ =>
       charFun (standardizedLaw (Nat.succ_pos N) hp.le hp'.le N).toMeasure t)
       atTop (𝓝 (↑(Real.exp (-(t^2/2))) : ℂ)) := by
@@ -280,9 +280,9 @@ theorem native_row_charFun_tendsto {p : ℝ} (hp : 0 < p) (hp' : p < 1) (t : ℝ
   congr 1
   ring
 
-def standardGaussian : ProbabilityMeasure ℝ := ⟨gaussianReal 0 1, inferInstance⟩
+private def standardGaussian : ProbabilityMeasure ℝ := ⟨gaussianReal 0 1, inferInstance⟩
 
-theorem native_row_normal_limit {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
+private theorem native_row_normal_limit {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
     Tendsto (fun N : ℕ => standardizedLaw (Nat.succ_pos N) hp.le hp'.le N)
       atTop (𝓝 standardGaussian) := by
   refine ProbabilityMeasure.tendsto_iff_tendsto_charFun.2 (fun t => ?_)
@@ -297,7 +297,7 @@ theorem native_row_normal_limit {p : ℝ} (hp : 0 < p) (hp' : p < 1) :
   exact native_row_charFun_tendsto hp hp' t
 
 /-- Row index `N` represents `N + 1` ordinary bins and `N` independent throws. -/
-theorem occupancy_normal_limit (k : ℕ) (hk : 2 ≤ k) :
+private theorem occupancy_normal_limit (k : ℕ) (hk : 2 ≤ k) :
     Tendsto (rowLaw k hk) atTop (𝓝 standardGaussian) :=
   native_row_normal_limit (palette_bounds hk).1 (palette_bounds hk).2
 
@@ -319,7 +319,7 @@ noncomputable section
 def literalCount (n m : ℕ) (ω : Fin m → Option (Fin n)) : ℝ :=
   ((univ.filter fun i : Fin n => ∃ t : Fin m, ω t = some i).card : ℝ)
 
-theorem literalCount_eq_count (n m : ℕ) (ω : Fin m → Option (Fin n)) :
+private theorem literalCount_eq_count (n m : ℕ) (ω : Fin m → Option (Fin n)) :
     literalCount n m ω = count n m ω := by
   have h : (univ.filter fun i : Fin n => ∃ t : Fin m, ω t = some i) = occupied n m ω := by
     ext i
@@ -330,30 +330,10 @@ def literalMeasure {n : ℕ} (hn : 0 < n) {k : ℕ} (hk : 2 ≤ k) (m : ℕ) :
     Measure (Fin m → Option (Fin n)) :=
   Measure.pi fun _ : Fin m => (throwPMF hn (palette_bounds hk).1.le (palette_bounds hk).2.le).toMeasure
 
-instance {n : ℕ} (hn : 0 < n) {k : ℕ} (hk : 2 ≤ k) (m : ℕ) :
+instance instIsProbabilityMeasureForallFinOptionLiteralMeasure {n : ℕ} (hn : 0 < n) {k : ℕ} (hk : 2 ≤ k) (m : ℕ) :
     IsProbabilityMeasure (literalMeasure hn hk m) := by
   unfold literalMeasure
   infer_instance
-
-theorem literal_independent_throw_law {n : ℕ} (hn : 0 < n) {k : ℕ} (hk : 2 ≤ k) (m : ℕ) :
-    iIndepFun (fun t (ω : Fin m → Option (Fin n)) => ω t) (literalMeasure hn hk m) ∧
-    (∀ t : Fin m,
-      ((literalMeasure hn hk m).map (fun ω => ω t)) {none} =
-        ENNReal.ofReal (1 - 1 / (k : ℝ))) ∧
-    (∀ (t : Fin m) (i : Fin n),
-      ((literalMeasure hn hk m).map (fun ω => ω t)) {some i} =
-        ENNReal.ofReal (1 / ((k : ℝ) * n))) := by
-  have hp := palette_bounds hk
-  have he : literalMeasure hn hk m = (wordPMF hn hp.1.le hp.2.le m).toMeasure :=
-    (wordMeasure_eq_pi hn hp.1.le hp.2.le m).symm
-  rw [he]
-  refine ⟨independent_throws hn hp.1.le hp.2.le m, ?_, ?_⟩
-  · intro t
-    rw [throw_marginal hn hp.1.le hp.2.le t]
-    exact (palette_throw_mass hn hk).1
-  · intro t i
-    rw [throw_marginal hn hp.1.le hp.2.le t]
-    exact (palette_throw_mass hn hk).2 i
 
 theorem literal_moments {n : ℕ} (hn : 0 < n) {k : ℕ} (hk : 2 ≤ k) (m : ℕ) :
     (∫ ω, literalCount n m ω ∂literalMeasure hn hk m) = mean n (paletteP k) m ∧
@@ -377,7 +357,7 @@ def literalLaw (k : ℕ) (hk : 2 ≤ k) (N : ℕ) : ProbabilityMeasure ℝ :=
     (Measure.isProbabilityMeasure_map_iff (measurable_of_countable _).aemeasurable).2
       inferInstance⟩
 
-theorem literalLaw_eq_rowLaw (k : ℕ) (hk : 2 ≤ k) (N : ℕ) :
+private theorem literalLaw_eq_rowLaw (k : ℕ) (hk : 2 ≤ k) (N : ℕ) :
     literalLaw k hk N = rowLaw k hk N := by
   have hn := Nat.succ_pos N
   have hp := palette_bounds hk
@@ -410,12 +390,6 @@ theorem literal_variance_eventually_positive (k : ℕ) (hk : 2 ≤ k) :
       0 < Var[literalCount (N+1) N; literalMeasure (Nat.succ_pos N) hk N] := by
   filter_upwards [eventually_ge_atTop (1 : ℕ)] with N hN
   exact literal_variance_positive (show 2 ≤ N+1 by omega) hk
-
-theorem literal_linear_variance {n : ℕ} (hn : 2 ≤ n) {k : ℕ} (hk : 2 ≤ k) :
-    linearCoefficient (paletteP k) * n ≤
-      Var[literalCount n (n-1); literalMeasure (show 0 < n by omega) hk (n-1)] := by
-  rw [(literal_moments (show 0 < n by omega) hk (n-1)).2]
-  exact linear_variance hn (palette_bounds hk).1.le (palette_bounds hk).2.le
 
 end
 end DiscardedOccupancy

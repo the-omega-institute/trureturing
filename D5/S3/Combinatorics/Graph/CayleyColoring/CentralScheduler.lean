@@ -32,7 +32,7 @@ def active (G : SimpleGraph V) (live : Set V) : SimpleGraph V where
 def Enabled (G : SimpleGraph V) (live : Set V) (v : V) : Prop :=
   ∃ w, (active G live).Adj v w
 
-theorem recolor_conflict [DecidableEq V] (G : SimpleGraph V) (color : V → K)
+private theorem recolor_conflict [DecidableEq V] (G : SimpleGraph V) (color : V → K)
     (v : V) (new : K) (free : ∀ w, G.Adj v w → new ≠ color w) :
     conflict G (Function.update color v new) =
       active (conflict G color) ({v}ᶜ : Set V) := by
@@ -55,7 +55,7 @@ theorem recolor_conflict [DecidableEq V] (G : SimpleGraph V) (color : V → K)
       · simp
     · simp [hx, hy, Function.update_of_ne]
 
-theorem active_delete (G : SimpleGraph V) (live : Set V) (v : V) :
+private theorem active_delete (G : SimpleGraph V) (live : Set V) (v : V) :
     active (active G live) ({v}ᶜ : Set V) = active G (live \ {v}) := by
   ext x y
   change (x ≠ v ∧ y ≠ v ∧ x ∈ live ∧ y ∈ live ∧ G.Adj x y) ↔
@@ -72,7 +72,7 @@ inductive LegalRun [DecidableEq V] (G : SimpleGraph V) :
       (rest : LegalRun G (Function.update color v new) tail final) :
       LegalRun G color (v :: tail) final
 
-theorem legalRun_conflicts [DecidableEq V] (G : SimpleGraph V) {color final : V → K}
+private theorem legalRun_conflicts [DecidableEq V] (G : SimpleGraph V) {color final : V → K}
     {history : List V} (run : LegalRun G color history final) :
     conflict G final = active (conflict G color) {v | v ∉ history} := by
   induction run with
@@ -105,25 +105,25 @@ def remaining (live : Set V) (history : List V) : Set V :=
   ext v
   simp [remaining]
 
-theorem remaining_cons (live : Set V) (v : V) (tail : List V) :
+private theorem remaining_cons (live : Set V) (v : V) (tail : List V) :
     remaining live (v :: tail) = remaining (live \ {v}) tail := by
   ext w
   simp [remaining, and_assoc, ← not_or]
 
-theorem remaining_subset (live : Set V) (history : List V) :
+private theorem remaining_subset (live : Set V) (history : List V) :
     remaining live history ⊆ live :=
   fun _ h => h.1
 
-theorem remaining_not_head (live : Set V) (v : V) (tail : List V) :
+private theorem remaining_not_head (live : Set V) (v : V) (tail : List V) :
     v ∉ remaining live (v :: tail) := by
   simp [remaining]
 
-theorem enabled_mono {G : SimpleGraph V} {A B : Set V} (h : A ⊆ B) {v : V}
+private theorem enabled_mono {G : SimpleGraph V} {A B : Set V} (h : A ⊆ B) {v : V}
     (hv : Enabled G A v) : Enabled G B v := by
   obtain ⟨w, hv, hw, he⟩ := hv
   exact ⟨w, h hv, h hw, he⟩
 
-theorem prefix_snoc_iff {ι : Type*} [LT ι] (G : SimpleGraph V) (rank : V → ι)
+private theorem prefix_snoc_iff {ι : Type*} [LT ι] (G : SimpleGraph V) (rank : V → ι)
     (live : Set V) (history : List V) (v : V) :
     Prefix G rank live (history ++ [v]) ↔
       Prefix G rank live history ∧ First G rank (remaining live history) v := by
@@ -152,7 +152,7 @@ def Moves {ι : Type*} [LT ι] (G : SimpleGraph V) (rank : V → ι)
     (live : Set V) (v : V) : Prop :=
   ∃ w, (active G live).Adj v w ∧ rank v < rank w
 
-theorem moves_delete_first {ι : Type*} [LinearOrder ι] (G : SimpleGraph V) (rank : V → ι)
+private theorem moves_delete_first {ι : Type*} [LinearOrder ι] (G : SimpleGraph V) (rank : V → ι)
     {live : Set V} {v x : V} (first : First G rank live x) :
     Moves G rank live v ↔ v = x ∨ Moves G rank (live \ {x}) v := by
   have hxx : Moves G rank live x := by
@@ -171,7 +171,7 @@ theorem moves_delete_first {ι : Type*} [LinearOrder ι] (G : SimpleGraph V) (ra
     · exact hxx
     · exact ⟨w, ⟨hw.1.1, hw.2.1.1, hw.2.2⟩, hlt⟩
 
-theorem prefix_pathwise {ι : Type*} [LinearOrder ι] {G : SimpleGraph V} {rank : V → ι}
+private theorem prefix_pathwise {ι : Type*} [LinearOrder ι] {G : SimpleGraph V} {rank : V → ι}
     {live : Set V} {history : List V} (h : Prefix G rank live history)
     (stop : ∀ v, ¬ Enabled G (remaining live history) v) :
     history.Nodup ∧ ∀ v, v ∈ history ↔ Moves G rank live v := by
@@ -189,7 +189,7 @@ theorem prefix_pathwise {ι : Type*} [LinearOrder ι] {G : SimpleGraph V} {rank 
       exact hw.1.2 rfl
     · rw [List.mem_cons, hm, moves_delete_first G rank first]
 
-theorem pathwise_count [Fintype V] {ι : Type*} [LinearOrder ι]
+private theorem pathwise_count [Fintype V] {ι : Type*} [LinearOrder ι]
     {G : SimpleGraph V} {rank : V → ι} {history : List V}
     (h : Prefix G rank Set.univ history)
     (stop : ∀ v, ¬ Enabled G (remaining Set.univ history) v) :
@@ -203,7 +203,7 @@ theorem pathwise_count [Fintype V] {ι : Type*} [LinearOrder ι]
   rw [← he, List.toFinset_card_of_nodup hn]
 
 /-- Swapping two vertices still enabled after a prefix does not affect that prefix. -/
-theorem prefix_swap {ι : Type*} [LinearOrder ι] [DecidableEq V]
+private theorem prefix_swap {ι : Type*} [LinearOrder ι] [DecidableEq V]
     {G : SimpleGraph V} {rank : V → ι} {live : Set V} {history : List V} {a b : V}
     (ha : Enabled G (remaining live history) a)
     (hb : Enabled G (remaining live history) b)
@@ -240,7 +240,7 @@ theorem prefix_swap {ι : Type*} [LinearOrder ι] [DecidableEq V]
         · rwa [Equiv.swap_apply_of_ne_of_ne hwa hwb]
     · exact fun he => hwx ((Equiv.swap a b).injective (he.trans hfix.symm))
 
-theorem first_swap {ι : Type*} [LinearOrder ι] [DecidableEq V]
+private theorem first_swap {ι : Type*} [LinearOrder ι] [DecidableEq V]
     {G : SimpleGraph V} {rank : V → ι} {live : Set V} {a b : V}
     (ha : First G rank live a) (hb : Enabled G live b) :
     First G (rank ∘ Equiv.swap a b) live b := by
@@ -258,7 +258,7 @@ section FiniteRanking
 
 variable [Fintype V] [LinearOrder V]
 
-theorem existsUnique_first (G : SimpleGraph V) (rank : V ≃ V) (live : Set V)
+private theorem existsUnique_first (G : SimpleGraph V) (rank : V ≃ V) (live : Set V)
     (hne : ∃ v, Enabled G live v) : ∃! v, First G rank live v := by
   classical
   let S := Finset.univ.filter (Enabled G live)
@@ -282,7 +282,7 @@ abbrev NextRank (G : SimpleGraph V) (live : Set V) (history : List V) (v : V) :=
   {rank : Equiv.Perm V // Prefix G rank live history ∧
     First G rank (remaining live history) v}
 
-noncomputable def swapNextRank (G : SimpleGraph V) (live : Set V) (history : List V)
+private noncomputable def swapNextRank (G : SimpleGraph V) (live : Set V) (history : List V)
     {a b : V} (ha : Enabled G (remaining live history) a)
     (hb : Enabled G (remaining live history) b) :
     NextRank G live history a ≃ NextRank G live history b where
@@ -301,7 +301,7 @@ noncomputable def swapNextRank (G : SimpleGraph V) (live : Set V) (history : Lis
     change rank.val (Equiv.swap b a (Equiv.swap a b v)) = rank.val v
     rw [Equiv.swap_comm a b, Equiv.swap_apply_self]
 
-noncomputable def historyRankDecomp (G : SimpleGraph V) (live : Set V) (history : List V)
+private noncomputable def historyRankDecomp (G : SimpleGraph V) (live : Set V) (history : List V)
     (hne : ∃ v, Enabled G (remaining live history) v) :
     HistoryRank G live history ≃
       Σ v : {v // Enabled G (remaining live history) v}, NextRank G live history v.val := by
@@ -322,7 +322,7 @@ noncomputable def historyRankDecomp (G : SimpleGraph V) (live : Set V) (history 
 /-- For a uniform ranking, every enabled next vertex has conditional mass one over the
 size of the enabled set, whenever the prefix has positive mass. This integer identity also
 covers zero-mass prefixes. -/
-theorem uniform_next_fibers (G : SimpleGraph V) (live : Set V) (history : List V)
+private theorem uniform_next_fibers (G : SimpleGraph V) (live : Set V) (history : List V)
     {v : V} (hv : Enabled G (remaining live history) v) :
     Nat.card (HistoryRank G live (history ++ [v])) *
       Nat.card {w // Enabled G (remaining live history) w} =
@@ -359,12 +359,12 @@ def Complete (G : SimpleGraph V) (rank : Equiv.Perm V) (live : Set V) (history :
   Prefix G rank live history ∧ Stop G (remaining live history)
 
 omit [Fintype V] in
-theorem first_unique {G : SimpleGraph V} {rank : Equiv.Perm V} {live : Set V} {a b : V}
+private theorem first_unique {G : SimpleGraph V} {rank : Equiv.Perm V} {live : Set V} {a b : V}
     (ha : First G rank live a) (hb : First G rank live b) : a = b := by
   by_contra hn
   exact (not_lt_of_gt (ha.2 b hb.1 (Ne.symm hn))) (hb.2 a ha.1 hn)
 
-theorem exists_complete (G : SimpleGraph V) (rank : Equiv.Perm V) (live : Set V) :
+private theorem exists_complete (G : SimpleGraph V) (rank : Equiv.Perm V) (live : Set V) :
     ∃ history, Complete G rank live history := by
   classical
   let size (s : Set V) := Nat.card s
@@ -392,7 +392,7 @@ theorem exists_complete (G : SimpleGraph V) (rank : Equiv.Perm V) (live : Set V)
       exact ⟨v :: tail, .cons hv hp, by rwa [remaining_cons]⟩
 
 omit [Fintype V] in
-theorem complete_unique {G : SimpleGraph V} {rank : Equiv.Perm V} {live : Set V}
+private theorem complete_unique {G : SimpleGraph V} {rank : Equiv.Perm V} {live : Set V}
     {l l' : List V} (h : Complete G rank live l) (h' : Complete G rank live l') :
     l = l' := by
   obtain ⟨pr, stop⟩ := h
@@ -439,7 +439,7 @@ noncomputable def choiceProduct (G : SimpleGraph V) (live : Set V) (l : List V) 
     (fun v _ rec alive => Nat.card {w // Enabled G alive w} * rec (alive \ {v})) live
 
 omit [Fintype V] [LinearOrder V] in
-theorem legalPrefix_snoc (G : SimpleGraph V) (live : Set V) (l : List V) (v : V) :
+private theorem legalPrefix_snoc (G : SimpleGraph V) (live : Set V) (l : List V) (v : V) :
     LegalPrefix G live (l ++ [v]) ↔ LegalPrefix G live l ∧ Enabled G (remaining live l) v := by
   induction l generalizing live with
   | nil => simp [LegalPrefix]
@@ -450,7 +450,7 @@ theorem legalPrefix_snoc (G : SimpleGraph V) (live : Set V) (l : List V) (v : V)
     exact and_assoc.symm
 
 omit [Fintype V] [LinearOrder V] in
-theorem choiceProduct_snoc (G : SimpleGraph V) (live : Set V) (l : List V) (v : V) :
+private theorem choiceProduct_snoc (G : SimpleGraph V) (live : Set V) (l : List V) (v : V) :
     choiceProduct G live (l ++ [v]) =
       choiceProduct G live l * Nat.card {w // Enabled G (remaining live l) w} := by
   induction l generalizing live with
@@ -468,7 +468,7 @@ theorem Prefix.legal {G : SimpleGraph V} {rank : Equiv.Perm V} {live : Set V} {l
   | nil => trivial
   | cons hf _ ih => exact ⟨hf.1, ih⟩
 
-theorem uniform_prefix_product (G : SimpleGraph V) (live : Set V) (history : List V)
+private theorem uniform_prefix_product (G : SimpleGraph V) (live : Set V) (history : List V)
     (h : LegalPrefix G live history) :
     Nat.card (HistoryRank G live history) * choiceProduct G live history =
       Nat.card (Equiv.Perm V) := by
@@ -487,7 +487,7 @@ theorem uniform_prefix_product (G : SimpleGraph V) (live : Set V) (history : Lis
 /-- Exact terminal-history law, expressed in natural counts. For each legal terminal history,
 the uniform-ranking fiber fraction equals the product of reciprocal enabled-set sizes.
 Every other history has an empty fiber. -/
-theorem complete_history_law (G : SimpleGraph V) (live : Set V) (history : List V) :
+private theorem complete_history_law (G : SimpleGraph V) (live : Set V) (history : List V) :
     (LegalPrefix G live history ∧ Stop G (remaining live history) →
       Nat.card {rank : Equiv.Perm V // rankedHistory G rank live = history} *
         choiceProduct G live history = Nat.card (Equiv.Perm V)) ∧
@@ -511,7 +511,7 @@ theorem complete_history_law (G : SimpleGraph V) (live : Set V) (history : List 
     exact h ⟨hc.1.legal, hc.2⟩
 
 omit [Fintype V] in
-theorem moves_iff_not_peak (G : SimpleGraph V) (rank : Equiv.Perm V) (v : V) :
+private theorem moves_iff_not_peak (G : SimpleGraph V) (rank : Equiv.Perm V) (v : V) :
     Moves G rank Set.univ v ↔ ¬ (∀ w, G.Adj v w → rank w < rank v) := by
   classical
   constructor
@@ -539,16 +539,6 @@ theorem ranked_moves_complement (G : SimpleGraph V) (rank : Equiv.Perm V) :
   ext v
   simp [P]
 
-theorem initially_proper (G : SimpleGraph V) (color : V → K)
-    (hproper : ∀ v w, G.Adj v w → color v ≠ color w) (rank : Equiv.Perm V) :
-    rankedHistory (conflict G color) rank Set.univ = [] := by
-  symm
-  apply complete_unique (G := conflict G color) (rank := rank) (live := Set.univ) (l := [])
-  · refine ⟨.nil _, fun v h => ?_⟩
-    obtain ⟨w, _, _, ha, he⟩ := h
-    exact hproper v w ha he
-  · exact rankedHistory_spec _ _ _
-
 end CayleyScheduler
 
 end
@@ -572,14 +562,14 @@ inductive PolicyRun [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K 
         (Function.update color v (policy past color v enabled).val) tail final) :
       PolicyRun G policy past color (v :: tail) final
 
-theorem PolicyRun.legal [DecidableEq V] {G : SimpleGraph V} {policy : FreePolicy (K := K) G}
+private theorem PolicyRun.legal [DecidableEq V] {G : SimpleGraph V} {policy : FreePolicy (K := K) G}
     {past history : List V} {init final : V → K}
     (run : PolicyRun G policy past init history final) : LegalRun G init history final := by
   induction run with
   | nil past color => exact .nil color
   | cons he _ ih => exact .cons he (policy _ _ _ he).prop ih
 
-theorem policyRun_iff [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
+private theorem policyRun_iff [DecidableEq V] (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
     (H : SimpleGraph V) (history : List V) (alive : Set V)
     (init : V → K) (hc : conflict G init = active H alive) (past : List V) :
     LegalPrefix H alive history ↔

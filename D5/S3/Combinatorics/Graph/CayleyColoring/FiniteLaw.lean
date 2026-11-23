@@ -23,25 +23,25 @@ abbrev Colored (V : Type u) (A : Type w) := (V × Tree V) × (V → A)
 abbrev EdgeDraw (V : Type u) (A : Type w) := Σ p : V × Tree V, A × (p.2.val.edgeSet → A)
 abbrev ParentDraw (V : Type u) (A : Type w) := Σ p : V × Tree V, A × (Away p.1 → A)
 
-noncomputable def edgeDrawEquiv [AddGroup A] : Colored V A ≃ EdgeDraw V A :=
+private noncomputable def edgeDrawEquiv [AddGroup A] : Colored V A ≃ EdgeDraw V A :=
   (Equiv.sigmaEquivProd (V × Tree V) (V → A)).symm.trans
     (Equiv.sigmaCongrRight fun p => edgeColorEquiv p.2 p.1)
 
-noncomputable def parentDrawEquiv : EdgeDraw V A ≃ ParentDraw V A :=
+private noncomputable def parentDrawEquiv : EdgeDraw V A ≃ ParentDraw V A :=
   Equiv.sigmaCongrRight fun p =>
     Equiv.prodCongr (Equiv.refl A) (Equiv.arrowCongr (edgeEquiv p.2 p.1).symm (Equiv.refl A))
 
-def relabelColored (e : Equiv.Perm V) : Colored V A ≃ Colored V A :=
+private def relabelColored (e : Equiv.Perm V) : Colored V A ≃ Colored V A :=
   Equiv.prodCongr (Equiv.prodCongr e (relabelEquiv e)) (Equiv.arrowCongr e (Equiv.refl A))
 
-theorem relabel_conflict_iff (rank : Equiv.Perm V) (x : Colored V A) (v w : V) :
+private theorem relabel_conflict_iff (rank : Equiv.Perm V) (x : Colored V A) (v w : V) :
     (conflict ((relabelColored rank x).1.2).val (relabelColored rank x).2).Adj (rank v) (rank w)
       ↔ (conflict x.1.2.val x.2).Adj v w := by
   change (x.1.2.val.Adj (rank.symm (rank v)) (rank.symm (rank w)) ∧
     x.2 (rank.symm (rank v)) = x.2 (rank.symm (rank w))) ↔ _
   simp [conflict]
 
-theorem ranked_peaks_card [Fintype V] [LinearOrder V] (rank : Equiv.Perm V)
+private theorem ranked_peaks_card [Fintype V] [LinearOrder V] (rank : Equiv.Perm V)
     (s : Colored V A) :
     Nat.card {v // ∀ w, (conflict s.1.2.val s.2).Adj v w → rank w < rank v} =
       Nat.card {v // Peak (conflict (relabelColored rank s).1.2.val (relabelColored rank s).2) v} := by
@@ -58,7 +58,7 @@ theorem ranked_peaks_card [Fintype V] [LinearOrder V] (rank : Equiv.Perm V)
 noncomputable def markedAt (V : Type u) (A : Type w) [Zero A] :=
   V × A × Marked V A
 
-noncomputable def edgeMarked [Zero A] : EdgeDraw V A ≃ markedAt V A where
+private noncomputable def edgeMarked [Zero A] : EdgeDraw V A ≃ markedAt V A where
   toFun := fun s => (s.1.1, s.2.1, markedEquiv ⟨s.1.2,s.2.2⟩)
   invFun := fun s =>
     let x := markedEquiv.symm s.2.2
@@ -71,17 +71,17 @@ noncomputable def edgeMarked [Zero A] : EdgeDraw V A ≃ markedAt V A where
     rintro ⟨r,a,s⟩
     exact congrArg (fun x => (r,a,x)) ((markedEquiv (V := V) (A := A)).apply_symm_apply s)
 
-noncomputable def markedAtTransport [Zero A] [Finite V] [LinearOrder V] :
+private noncomputable def markedAtTransport [Zero A] [Finite V] [LinearOrder V] :
     markedAt V A ≃ markedAt V A :=
   (Equiv.sigmaEquivProd V (A × Marked V A)).symm.trans <|
     (Equiv.sigmaCongrRight fun r => Equiv.prodCongr (Equiv.refl A) (markedForestEquiv r)).trans
       (Equiv.sigmaEquivProd V (A × Marked V A))
 
-noncomputable def fromColored [AddGroup A] [Finite V] [LinearOrder V] :
+private noncomputable def fromColored [AddGroup A] [Finite V] [LinearOrder V] :
     Colored V A ≃ ParentDraw V A :=
   edgeDrawEquiv.trans (edgeMarked.trans (markedAtTransport.trans (edgeMarked.symm.trans parentDrawEquiv)))
 
-theorem card_complement [Fintype V] (P : V → Prop) :
+private theorem card_complement [Fintype V] (P : V → Prop) :
     CayleyProbe.filterCard (fun v => ¬ P v) = Fintype.card V - Nat.card {v // P v} := by
   classical
   rw [filterCard_eq_natCard]
@@ -90,7 +90,7 @@ theorem card_complement [Fintype V] (P : V → Prop) :
   omega
 
 /-- An exact transport from the fixed-order monochrome peak count to the retained parent-target count. -/
-theorem fromColored_count [AddGroup A] [Fintype V] [LinearOrder V] (s : Colored V A) :
+private theorem fromColored_count [AddGroup A] [Fintype V] [LinearOrder V] (s : Colored V A) :
     Fintype.card V - Nat.card {v // Peak (conflict s.1.2.val s.2) v} =
       filterCard (HasTarget (fromColored s).1.2 (fromColored s).1.1 (fromColored s).2.2) := by
   let x : EdgeDraw V A := edgeDrawEquiv s
@@ -114,7 +114,7 @@ theorem fromColored_count [AddGroup A] [Fintype V] [LinearOrder V] (s : Colored 
   rw [filterCard_eq_natCard, filterCard_eq_natCard]
   exact Nat.card_congr (Equiv.subtypeEquivRight hp)
 
-noncomputable def rankedTransport [AddGroup A] [Fintype V] [LinearOrder V] :
+private noncomputable def rankedTransport [AddGroup A] [Fintype V] [LinearOrder V] :
     (Equiv.Perm V × Colored V A) ≃ (Equiv.Perm V × ParentDraw V A) :=
   (Equiv.sigmaEquivProd (Equiv.Perm V) (Colored V A)).symm.trans <|
     (Equiv.sigmaCongrRight fun rank => (relabelColored rank).trans fromColored).trans
@@ -123,10 +123,10 @@ noncomputable def rankedTransport [AddGroup A] [Fintype V] [LinearOrder V] :
 noncomputable def recolorCount [Fintype V] [LinearOrder V] (s : Equiv.Perm V × Colored V A) : Nat :=
   (rankedHistory (conflict s.2.1.2.val s.2.2) s.1 Set.univ).length
 
-noncomputable def retainedTargetCount [Fintype V] [Zero A] (s : ParentDraw V A) : Nat :=
+private noncomputable def retainedTargetCount [Fintype V] [Zero A] (s : ParentDraw V A) : Nat :=
   filterCard (HasTarget s.1.2 s.1.1 s.2.2)
 
-theorem rankedTransport_count [AddGroup A] [Fintype V] [LinearOrder V]
+private theorem rankedTransport_count [AddGroup A] [Fintype V] [LinearOrder V]
     (s : Equiv.Perm V × Colored V A) :
     recolorCount s = retainedTargetCount (rankedTransport s).2 := by
   rw [recolorCount, ranked_moves_complement, filterCard_eq_natCard, ranked_peaks_card s.1 s.2]
@@ -165,13 +165,13 @@ theorem bin_none_iff [Zero A] (x : Throw V A) : bin x = none ↔ x.2 ≠ 0 := by
 noncomputable def occupied [Fintype V] [Zero A] {a : V} (t : Throws a A) : Nat :=
   filterCard (fun v : V => ∃ i, bin (t i) = some v)
 
-noncomputable def codedDraw [Finite V] (a : V) (t : Throws a A) :
+private noncomputable def codedDraw [Finite V] (a : V) (t : Throws a A) :
     (Σ p : V × Tree V, Away p.1 → A) :=
   let f : Away a → V := Prod.fst ∘ t
   let p := rootedCode a f
   ⟨(p.1,p.2), Prod.snd ∘ t ∘ (codeCoordinates a f).symm⟩
 
-def prodFunctions (I : Type*) (X : Type*) (Y : Type*) :
+private def prodFunctions (I : Type*) (X : Type*) (Y : Type*) :
     (I → X × Y) ≃ (I → X) × (I → Y) where
   toFun f := (Prod.fst ∘ f, Prod.snd ∘ f)
   invFun p i := (p.1 i,p.2 i)
@@ -185,10 +185,10 @@ noncomputable def codedDrawEquiv [Finite V] (a : V) :
     Equiv.sigmaCongr ((rootedCode a).trans (Equiv.sigmaEquivProd V (Tree V))) (fun f =>
       Equiv.arrowCongr (codeCoordinates a f) (Equiv.refl A))
 
-theorem codedDraw_eq [Finite V] (a : V) (t : Throws a A) :
+private theorem codedDraw_eq [Finite V] (a : V) (t : Throws a A) :
     codedDrawEquiv a t = codedDraw a t := rfl
 
-theorem coded_target_iff [Fintype V] [Zero A] {a : V} (t : Throws a A) (v : V) :
+private theorem coded_target_iff [Fintype V] [Zero A] {a : V} (t : Throws a A) (v : V) :
     HasTarget (codedDraw a t).1.2 (codedDraw a t).1.1 (codedDraw a t).2 v ↔
       ∃ i, bin (t i) = some v := by
   let f := Prod.fst ∘ t
@@ -208,7 +208,7 @@ theorem coded_target_iff [Fintype V] [Zero A] {a : V} (t : Throws a A) (v : V) :
     refine ⟨e j,(rootedCode_targets a f j).trans ht,?_⟩
     simpa only [Equiv.symm_apply_apply] using hc
 
-noncomputable def rootedDrawEquiv [Finite V] (a : V) : A × Throws a A ≃ ParentDraw V A where
+private noncomputable def rootedDrawEquiv [Finite V] (a : V) : A × Throws a A ≃ ParentDraw V A where
   toFun t := let d := codedDrawEquiv a t.2; ⟨d.1,t.1,d.2⟩
   invFun t := (t.2.1, (codedDrawEquiv a).symm ⟨t.1,t.2.2⟩)
   left_inv t := by simp
@@ -217,19 +217,19 @@ noncomputable def rootedDrawEquiv [Finite V] (a : V) : A × Throws a A ≃ Paren
     let f (x : Σ p : V × Tree V, Away p.1 → A) : ParentDraw V A := ⟨x.1,c,x.2⟩
     exact congrArg f ((codedDrawEquiv a).apply_symm_apply ⟨p,d⟩)
 
-theorem rootedDraw_count [Fintype V] [Zero A] (a : V) (t : A × Throws a A) :
+private theorem rootedDraw_count [Fintype V] [Zero A] (a : V) (t : A × Throws a A) :
     retainedTargetCount (rootedDrawEquiv a t) = occupied t.2 := by
   change filterCard (HasTarget (codedDrawEquiv a t.2).1.2 (codedDrawEquiv a t.2).1.1
     (codedDrawEquiv a t.2).2) = _
   rw [codedDraw_eq, occupied, filterCard_eq_natCard, filterCard_eq_natCard]
   exact Nat.card_congr (Equiv.subtypeEquivRight (coded_target_iff t.2))
 
-noncomputable def countEquiv [Fintype V] [LinearOrder V] [AddGroup A] (a : V) :
+private noncomputable def countEquiv [Fintype V] [LinearOrder V] [AddGroup A] (a : V) :
     (Equiv.Perm V × Colored V A) ≃ (Equiv.Perm V × A) × Throws a A :=
   rankedTransport.trans ((Equiv.prodCongr (Equiv.refl _) (rootedDrawEquiv a).symm).trans
     (Equiv.prodAssoc _ _ _).symm)
 
-theorem countEquiv_stat [Fintype V] [LinearOrder V] [AddGroup A] (a : V)
+private theorem countEquiv_stat [Fintype V] [LinearOrder V] [AddGroup A] (a : V)
     (s : Equiv.Perm V × Colored V A) : recolorCount s = occupied ((countEquiv a) s).2 := by
   rw [rankedTransport_count]
   change retainedTargetCount (rankedTransport s).2 =
@@ -239,7 +239,7 @@ theorem countEquiv_stat [Fintype V] [LinearOrder V] [AddGroup A] (a : V)
 noncomputable def frequency (X : Type*) (f : X → Nat) (j : Nat) : Nat :=
   Nat.card {x : X // f x = j}
 
-theorem frequency_prod (B X : Type*) (f : X → Nat) (j : Nat) :
+private theorem frequency_prod (B X : Type*) (f : X → Nat) (j : Nat) :
     frequency (B × X) (f ∘ Prod.snd) j = Nat.card B * frequency X f j := by
   let e : {x : B × X // f x.2 = j} ≃ B × {x : X // f x = j} :=
     ⟨fun x => (x.val.1,⟨x.val.2,x.prop⟩),
@@ -248,7 +248,7 @@ theorem frequency_prod (B X : Type*) (f : X → Nat) (j : Nat) :
 
 /-- The exact equality of all finite pushforward probabilities, expressed by cross multiplying
 the cardinalities of fibers and sample spaces. -/
-theorem exact_count_law [Fintype V] [LinearOrder V] [AddGroup A] [Finite A]
+private theorem exact_count_law [Fintype V] [LinearOrder V] [AddGroup A] [Finite A]
     (anchor : V) (j : Nat) :
     frequency (Equiv.Perm V × Colored V A) recolorCount j * Nat.card (Throws anchor A) =
       frequency (Throws anchor A) occupied j * Nat.card (Equiv.Perm V × Colored V A) := by
@@ -287,28 +287,14 @@ theorem cardinality_nonzero {k : Nat} [NeZero k] :
   change 1 + Nat.card {c : ZMod k // c ≠ 0} = k at h
   omega
 
-theorem throw_fiber_product [Finite V] [Finite A] [Zero A] {I : Type*} [Fintype I]
-    (outcome : I → Option V) :
-    Nat.card {draw : I → Throw V A // ∀ i, bin (draw i) = outcome i} =
-      ∏ i, Nat.card {x : Throw V A // bin x = outcome i} := by
-  classical
-  let e : {draw : I → Throw V A // ∀ i, bin (draw i) = outcome i} ≃
-      ∀ i, {x : Throw V A // bin x = outcome i} :=
-    ⟨fun draw i => ⟨draw.val i,draw.prop i⟩,
-      fun draws => ⟨fun i => (draws i).val, fun i => (draws i).prop⟩,fun _ => rfl,fun _ => rfl⟩
-  rw [Nat.card_congr e]
-  let : ∀ i, Fintype {x : Throw V A // bin x = outcome i} := fun _ => Fintype.ofFinite _
-  rw [Nat.card_eq_fintype_card, Fintype.card_pi]
-  simp only [Nat.card_eq_fintype_card]
-
-theorem embedded_conflict (G : SimpleGraph V) (embed : A ↪ K) (init : V → A) :
+private theorem embedded_conflict (G : SimpleGraph V) (embed : A ↪ K) (init : V → A) :
     conflict G (embed ∘ init) = conflict G init := by
   ext v w
   exact and_congr_right fun _ => embed.injective.eq_iff
 
 /-- The sample over `Fin (n+1)` has exactly `n` throws. The bin fibers are one ordinary
 microstate per label and `(n+1)*(k-1)` discard microstates out of `(n+1)*k`. -/
-theorem fin_exact_law (n k : Nat) (hk : 2 ≤ k) (j : Nat) :
+private theorem fin_exact_law (n k : Nat) (hk : 2 ≤ k) (j : Nat) :
     let V := Fin (n + 1)
     let a : V := 0
     (frequency (Equiv.Perm V × Colored V (ZMod k)) recolorCount j *
@@ -357,28 +343,13 @@ noncomputable def sourceCount {k : Nat} (embed : ZMod k ↪ K)
     (s : Equiv.Perm V × Colored V (ZMod k)) : Nat :=
   (rankedHistory (conflict s.2.1.2.val (embed ∘ s.2.2)) s.1 Set.univ).length
 
-theorem sourceCount_eq {k : Nat} (embed : ZMod k ↪ K)
+private theorem sourceCount_eq {k : Nat} (embed : ZMod k ↪ K)
     (s : Equiv.Perm V × Colored V (ZMod k)) :
     sourceCount embed s = recolorCount s := by
   unfold sourceCount recolorCount
   rw [embedded_conflict]
 
-/-- Every valid free-color policy has the terminal-history law used by the source sampler.
-This holds for each original rooted tree, initial coloring and fixed policy tape. -/
-theorem all_policy_histories {k : Nat} (embed : ZMod k ↪ K)
-    (s : Colored V (ZMod k)) (policy : FreePolicy (K := K) s.1.2.val) (history : List V) :
-    let color := embed ∘ s.2
-    let G := s.1.2.val
-    let accept := ∃ final, PolicyRun G policy [] color history final ∧
-      ∀ v w, ¬ (conflict G final).Adj v w
-    let chosen := {rank : Equiv.Perm V //
-      rankedHistory (conflict G color) rank Set.univ = history}
-    (accept → Nat.card chosen * choiceProduct (conflict G color) Set.univ history =
-      Nat.card (Equiv.Perm V)) ∧
-    (¬ accept → IsEmpty chosen) :=
-  policy_terminal_law s.1.2.val policy (embed ∘ s.2) history
-
-theorem source_count_law {k : Nat} (hk : 2 ≤ k) (embed : ZMod k ↪ K) (anchor : V) (j : Nat) :
+private theorem source_count_law {k : Nat} (hk : 2 ≤ k) (embed : ZMod k ↪ K) (anchor : V) (j : Nat) :
     frequency (Equiv.Perm V × Colored V (ZMod k)) (sourceCount embed) j *
       Nat.card (Throws anchor (ZMod k)) =
       frequency (Throws anchor (ZMod k)) occupied j *
@@ -398,30 +369,10 @@ theorem sample_spaces_positive {k : Nat} (hk : 2 ≤ k) (anchor : V) :
     exact Nat.card_pos
   · exact Nat.card_pos
 
-theorem source_initially_proper {k : Nat} (embed : ZMod k ↪ K)
-    (s : Equiv.Perm V × Colored V (ZMod k))
-    (hproper : ∀ v w, s.2.1.2.val.Adj v w → s.2.2 v ≠ s.2.2 w) :
-    sourceCount embed s = 0 := by
-  rw [sourceCount_eq, recolorCount, initially_proper s.2.1.2.val s.2.2 hproper s.1]
-  rfl
-
-theorem singleton_samples {k : Nat} (embed : ZMod k ↪ K)
-    (s : Equiv.Perm (Fin 1) × Colored (Fin 1) (ZMod k))
-    (draw : Throws (0 : Fin 1) (ZMod k)) :
-    sourceCount embed s = 0 ∧ occupied draw = 0 := by
-  refine ⟨source_initially_proper embed s (fun a b h => (h.ne (Subsingleton.elim a b)).elim), ?_⟩
-  rw [occupied, filterCard_eq_natCard]
-  have h : IsEmpty {v : Fin 1 // ∃ i, bin (draw i) = some v} :=
-    ⟨fun s => by
-      obtain ⟨i,_⟩ := s.prop
-      exact i.prop (Subsingleton.elim _ _)⟩
-  let := h
-  simp
-
 /-- The exact all-size finite law for native labeled trees. The natural counts are the numerator
 and denominator of each uniform sample probability. A throw is one independent uniform pair
 of an ordinary label and a mark in `ZMod k`; its bin is the label precisely for mark zero. -/
-theorem all_n_distribution (n k : Nat) (hn : 0 < n) (hk : 2 ≤ k) (embed : ZMod k ↪ K)
+private theorem all_n_distribution (n k : Nat) (hn : 0 < n) (hk : 2 ≤ k) (embed : ZMod k ↪ K)
     (j : Nat) :
     let V := Fin n
     let a : V := ⟨0,hn⟩
@@ -463,11 +414,11 @@ def Terminal (G : SimpleGraph V) (policy : FreePolicy (K := K) G) (c : V → K) 
 /-- A common-denominator representation of the sequential process's probability at length `j`.
 Each accepted mover history contributes the reciprocal product of its enabled-set sizes.
 Multiplying that weight by the ranking-space cardinal gives its exact integer numerator. -/
-abbrev NativeNumerator (G : SimpleGraph V) (policy : FreePolicy (K := K) G) (c : V → K) (j : Nat) :=
+private abbrev NativeNumerator (G : SimpleGraph V) (policy : FreePolicy (K := K) G) (c : V → K) (j : Nat) :=
   Σ l : {l : List V // Terminal G policy c l ∧ l.length = j},
     Fin (Nat.card (Equiv.Perm V) / choiceProduct (conflict G c) Set.univ l.val)
 
-noncomputable def conditionalEquiv (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
+private noncomputable def conditionalEquiv (G : SimpleGraph V) (policy : FreePolicy (K := K) G)
     (c : V → K) (j : Nat) :
     NativeNumerator G policy c j ≃
       {rank : Equiv.Perm V // (rankedHistory (conflict G c) rank Set.univ).length = j} := by

@@ -51,7 +51,7 @@ def a (n : ℕ) (p : ℝ) : ℝ := 1 - p / n
 
 def v (n : ℕ) (p x : ℝ) : ℝ := q n p x * (1 - q n p x)
 
-theorem count_le_time (n j : ℕ) (ω : History n j) : count n j ω ≤ j := by
+private theorem count_le_time (n j : ℕ) (ω : History n j) : count n j ω ≤ j := by
   induction j with
   | zero => simp [count, occupied]
   | succ j ih =>
@@ -62,7 +62,7 @@ theorem count_le_time (n j : ℕ) (ω : History n j) : count n j ω ≤ j := by
     | none => exact h.trans (Nat.le_succ _)
     | some i => exact (Finset.card_insert_le _ _).trans (Nat.succ_le_succ h)
 
-theorem count_le_bins (n j : ℕ) (ω : History n j) : count n j ω ≤ n := by
+private theorem count_le_bins (n j : ℕ) (ω : History n j) : count n j ω ≤ n := by
   simpa [count] using (occupied n j ω).card_le_univ
 
 theorem wordMass_nonneg {n : ℕ} {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
@@ -72,7 +72,7 @@ theorem wordMass_nonneg {n : ℕ} {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
   cases ω i <;> simp [throwMass, sub_nonneg.mpr hp']
   exact div_nonneg hp (Nat.cast_nonneg n)
 
-theorem average_succ {E : Type*} [AddCommMonoid E] [Module ℝ E] (n : ℕ) (p : ℝ)
+private theorem average_succ {E : Type*} [AddCommMonoid E] [Module ℝ E] (n : ℕ) (p : ℝ)
     (j : ℕ) (f : History n (j + 1) → E) :
     average n p (j + 1) f =
       average n p j (fun ω => ∑ b, throwMass n p b • f (Fin.snoc ω b)) := by
@@ -215,7 +215,7 @@ theorem mean_succ {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
   simp_rw [h]
   rw [expect_add, expect_smul, expect_const hn, smul_eq_mul]
 
-theorem variance_succ {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
+private theorem variance_succ {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
     variance n p (j + 1) =
       a n p ^ 2 * variance n p j + expect n p j (fun x => v n p x) := by
   unfold variance
@@ -273,7 +273,7 @@ theorem weighted_variance {n : ℕ} (hn : 0 < n) (p : ℝ) (m : ℕ) :
     rw [hj', pow_succ]
     ring
 
-theorem weight_lower {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem weight_lower {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     {j : ℕ} (hj : j ≤ n) : 1 - p ≤ a n p ^ j := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   have h0 := (a_bounds hn hp hp').1
@@ -287,7 +287,7 @@ theorem weight_lower {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p �
   rw [hd] at hm
   linarith
 
-theorem early_q_bounds {n j x : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p)
+private theorem early_q_bounds {n j x : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p)
     (hj : j < n / 2) (hx : x ≤ j) : p / 2 ≤ q n p x ∧ q n p x ≤ p := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   have h2 : 2 * x ≤ n := by omega

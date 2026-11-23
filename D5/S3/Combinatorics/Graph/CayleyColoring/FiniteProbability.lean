@@ -25,7 +25,7 @@ def uniform (X : Type*) [Finite X] [MeasurableSpace X] : Measure X :=
   let := Fintype.ofFinite X
   Measure.uniformOfFinset Finset.univ
 
-theorem uniform_apply {X : Type*} [Finite X] [MeasurableSpace X]
+private theorem uniform_apply {X : Type*} [Finite X] [MeasurableSpace X]
     [MeasurableSingletonClass X] (s : Set X) :
     uniform X s = (Nat.card s : ℝ≥0∞) / Nat.card X := by
   classical
@@ -35,20 +35,20 @@ theorem uniform_apply {X : Type*} [Finite X] [MeasurableSpace X]
   congr 2
   exact (Fintype.card_subtype (fun x => x ∈ s)).symm
 
-instance {X : Type*} [Finite X] [Nonempty X] [MeasurableSpace X]
+instance instIsProbabilityMeasureUniformOfNonemptyOfMeasurableSingletonClass {X : Type*} [Finite X] [Nonempty X] [MeasurableSpace X]
     [MeasurableSingletonClass X] : IsProbabilityMeasure (uniform X) := by
   constructor
   rw [uniform_apply, Nat.card_congr (Equiv.Set.univ X)]
   exact ENNReal.div_self (by exact_mod_cast Nat.card_pos.ne') (by simp)
 
-theorem uniform_map_atom {X Y : Type*} [Finite X] [MeasurableSpace X]
+private theorem uniform_map_atom {X Y : Type*} [Finite X] [MeasurableSpace X]
     [MeasurableSingletonClass X] [MeasurableSpace Y] [MeasurableSingletonClass Y]
     (f : X → Y) (y : Y) :
     (uniform X).map f {y} = (Nat.card {x : X // f x = y} : ℝ≥0∞) / Nat.card X := by
   rw [Measure.map_apply (measurable_of_countable f) (measurableSet_singleton y), uniform_apply]
   rfl
 
-theorem uniform_map_equiv {X Y : Type*} [Finite X] [Finite Y] [MeasurableSpace X]
+private theorem uniform_map_equiv {X Y : Type*} [Finite X] [Finite Y] [MeasurableSpace X]
     [MeasurableSingletonClass X] [MeasurableSpace Y] [MeasurableSingletonClass Y] (e : X ≃ Y) :
     (uniform X).map e = uniform Y := by
   apply Measure.ext_of_singleton
@@ -59,23 +59,13 @@ theorem uniform_map_equiv {X Y : Type*} [Finite X] [Finite Y] [MeasurableSpace X
     Nat.card_of_subsingleton (⟨e.symm y, e.apply_symm_apply y⟩ : {x // e x = y}),
     Nat.card_of_subsingleton (⟨y, rfl⟩ : ({y} : Set Y))]
 
-theorem uniform_singleton {X : Type*} [Finite X] [MeasurableSpace X]
+private theorem uniform_singleton {X : Type*} [Finite X] [MeasurableSpace X]
     [MeasurableSingletonClass X] (x : X) :
     uniform X {x} = (Nat.card X : ℝ≥0∞)⁻¹ := by
   rw [uniform_apply, Nat.card_of_subsingleton (⟨x, rfl⟩ : ({x} : Set X))]
   simp
 
-theorem uniform_prod (X Y : Type*) [Finite X] [Finite Y] [Nonempty X] [Nonempty Y]
-    [MeasurableSpace X] [MeasurableSingletonClass X] [MeasurableSpace Y] [MeasurableSingletonClass Y] :
-    uniform (X × Y) = (uniform X).prod (uniform Y) := by
-  apply Measure.ext_of_singleton
-  rintro ⟨x, y⟩
-  rw [← Set.singleton_prod_singleton, Measure.prod_prod, Set.singleton_prod_singleton,
-    uniform_singleton, uniform_singleton, uniform_singleton, Nat.card_prod, Nat.cast_mul]
-  exact ENNReal.mul_inv (Or.inl (by exact_mod_cast (Nat.card_pos (α := X)).ne'))
-    (Or.inl (by simp))
-
-theorem uniform_words (I X : Type*) [Fintype I] [Finite X] [Nonempty X]
+private theorem uniform_words (I X : Type*) [Fintype I] [Finite X] [Nonempty X]
     [MeasurableSpace X] [MeasurableSingletonClass X] :
     uniform (I → X) = Measure.pi (fun _ : I => uniform X) := by
   classical
@@ -88,7 +78,7 @@ theorem uniform_words (I X : Type*) [Fintype I] [Finite X] [Nonempty X]
 
 open CayleyFiniteLaw DiscardedOccupancy
 
-theorem microstate_bin_law {n k : ℕ} (hn : 0 < n) (hk : 2 ≤ k)
+private theorem microstate_bin_law {n k : ℕ} (hn : 0 < n) (hk : 2 ≤ k)
     [NeZero k] :
     (uniform (Fin n × ZMod k)).map bin =
       (throwPMF hn (palette_bounds hk).1.le (palette_bounds hk).2.le).toMeasure := by
@@ -153,67 +143,20 @@ scoped instance treeMeasurableSpace (n : ℕ) : MeasurableSpace (CayleyProbe.Tre
 scoped instance treeMeasurableSingleton (n : ℕ) :
     MeasurableSingletonClass (CayleyProbe.Tree (Fin n)) := ⟨fun _ => trivial⟩
 
-scoped instance historyMeasurableSpace (n : ℕ) : MeasurableSpace (List (Fin n)) := ⊤
-scoped instance historyMeasurableSingleton (n : ℕ) :
-    MeasurableSingletonClass (List (Fin n)) := ⟨fun _ => trivial⟩
-
 /-- The discrete sampling law for the uniform ranking, rooted labeled tree and initial colors. -/
 def sourceMeasure (n k : ℕ) [NeZero k] : Measure (SourceSample n k) :=
   uniform _
 
-theorem sourceMeasure_product {n k : ℕ} (hn : 0 < n) (hk : 2 ≤ k) [NeZero k] :
-    sourceMeasure n k =
-      (uniform (Equiv.Perm (Fin n))).prod
-        (((uniform (Fin n)).prod (uniform (CayleyProbe.Tree (Fin n)))).prod
-          (Measure.pi fun _ : Fin n => uniform (ZMod k))) := by
-  let : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
-  obtain ⟨s⟩ := (Nat.card_ne_zero.mp (sample_spaces_positive hk (⟨0, hn⟩ : Fin n)).1.ne').1
-  let : Nonempty (CayleyProbe.Tree (Fin n)) := ⟨s.2.1.2⟩
-  change uniform (Equiv.Perm (Fin n) × ((Fin n × CayleyProbe.Tree (Fin n)) × (Fin n → ZMod k))) = _
-  rw [uniform_prod, uniform_prod, uniform_prod, uniform_words]
-
-open scoped Classical in
-/-- Conditional on the input, each legal terminal trace has the product of reciprocal
-enabled-set sizes. The ranking supplies a probability space for precisely that process. -/
-theorem source_history_atom {n k : ℕ} [NeZero k] {K : Type u} (embed : ZMod k ↪ K)
-    (s : Colored (Fin n) (ZMod k)) (policy : FreePolicy (K := K) s.1.2.val)
-    (l : List (Fin n)) :
-    let G := s.1.2.val
-    let c := embed ∘ s.2
-    (uniform (Equiv.Perm (Fin n))).map
-        (fun rank => rankedHistory (conflict G c) rank Set.univ) {l} =
-      if Terminal G policy c l then
-        ((choiceProduct (conflict G c) Set.univ l : ℕ) : ℝ≥0∞)⁻¹
-      else 0 := by
-  classical
-  dsimp only
-  rw [uniform_map_atom]
-  have h := all_policy_histories embed s policy l
-  by_cases ha : Terminal s.1.2.val policy (embed ∘ s.2) l
-  · rw [ite_eq_left ha]
-    have hprod := h.1 ha
-    have hc : (Nat.card (Equiv.Perm (Fin n)) : ℝ≥0∞) ≠ 0 := by
-      exact_mod_cast (Nat.card_pos (α := Equiv.Perm (Fin n))).ne'
-    have ht : (choiceProduct (conflict s.1.2.val (embed ∘ s.2)) Set.univ l : ℝ≥0∞) ≠ 0 := by
-      exact_mod_cast show choiceProduct (conflict s.1.2.val (embed ∘ s.2)) Set.univ l ≠ 0 from
-        fun hzero => (Nat.card_pos (α := Equiv.Perm (Fin n))).ne'
-          (by simpa [hzero] using hprod.symm)
-    rw [← one_div, ENNReal.div_eq_div_iff ht (by simp) hc (by simp), mul_one, mul_comm]
-    exact_mod_cast hprod
-  · rw [ite_eq_right ha]
-    let := h.2 ha
-    simp
-
 /-- The mass of an actual move count is the total sequential-history numerator divided by
 the number of equally likely input and ranking draws. -/
-theorem source_count_atom {n k : ℕ} [NeZero k] {K : Type u} (embed : ZMod k ↪ K)
+private theorem source_count_atom {n k : ℕ} [NeZero k] {K : Type u} (embed : ZMod k ↪ K)
     (policy : (s : Colored (Fin n) (ZMod k)) → FreePolicy (K := K) s.1.2.val) (j : ℕ) :
     (sourceMeasure n k).map (sourceCount embed) {j} =
       (Nat.card (TotalNumerator embed policy j) : ℝ≥0∞) / Nat.card (SourceSample n k) := by
   rw [sourceMeasure, uniform_map_atom, Nat.card_congr (totalEquiv embed policy j)]
 
 /-- Reindexing the non-anchor coordinates to times preserves each visited ordinary bin. -/
-theorem reindexed_count {n k : ℕ} {a : Fin n} (e : Fin (n - 1) ≃ Away a)
+private theorem reindexed_count {n k : ℕ} {a : Fin n} (e : Fin (n - 1) ≃ Away a)
     (t : Throws a (ZMod k)) :
     (occupied t : ℝ) =
       literalCount n (n - 1) (fun i => bin (t (e i))) := by

@@ -18,7 +18,7 @@ open Function CayleyParent
 universe u
 variable {V : Type u}
 
-theorem enters_congr {C : Set V} {f g : V → V}
+private theorem enters_congr {C : Set V} {f g : V → V}
     (he : ∀ x ∉ C, f x = g x) (x : V) :
     (∃ n : Nat, (f^[n]) x ∈ C) ↔ ∃ n : Nat, (g^[n]) x ∈ C := by
   classical
@@ -47,7 +47,7 @@ variable {a : V}
 
 def anchor (F : Frame a) : F.core := ⟨a,F.anchor_mem⟩
 
-theorem ext_frame {F G : Frame a} (hc : F.core = G.core) (ho : F.outside = G.outside) : F = G := by
+private theorem ext_frame {F G : Frame a} (hc : F.core = G.core) (ho : F.outside = G.outside) : F = G := by
   cases F
   cases G
   cases hc
@@ -81,17 +81,17 @@ noncomputable def patch (F : Frame a) (g : F.core → F.core) (x : V) : V := by
   classical
   simp [patch, hx]
 
-theorem patch_iter (F : Frame a) (g : F.core → F.core) (n : Nat) (x : F.core) :
+private theorem patch_iter (F : Frame a) (g : F.core → F.core) (n : Nat) (x : F.core) :
     ((F.patch g)^[n]) x.val = ((g^[n]) x).val := by
   induction n generalizing x with
   | zero => rfl
   | succ n ih => rw [iterate_succ_apply, iterate_succ_apply, patch_in, ih]
 
-theorem patch_enters (F : Frame a) (g : F.core → F.core) (x : V) :
+private theorem patch_enters (F : Frame a) (g : F.core → F.core) (x : V) :
     ∃ n : Nat, ((F.patch g)^[n]) x ∈ F.core :=
   (enters_congr (fun _ hx => F.patch_out g hx) x).mpr (F.enters x)
 
-theorem patch_recover (f : V → V) (C : Set V) (ha : a ∈ C)
+private theorem patch_recover (f : V → V) (C : Set V) (ha : a ∈ C)
     (enters : ∀ x, ∃ n : Nat, (f^[n]) x ∈ C) (closed : Set.MapsTo f C C) :
     (ofFunction f C ha enters).patch (fun x => ⟨f x.val, closed x.prop⟩) = f := by
   funext x
@@ -101,7 +101,7 @@ theorem patch_recover (f : V → V) (C : Set V) (ha : a ∈ C)
 
 end Frame
 
-theorem eventually_periodic [Finite V] (f : V → V) (x : V) :
+private theorem eventually_periodic [Finite V] (f : V → V) (x : V) :
     ∃ n : Nat, (f^[n]) x ∈ periodicPts f := by
   have hn := not_injective_infinite_finite (fun n : Nat => (f^[n]) x)
   obtain ⟨m, n, he, hne⟩ : ∃ m n : Nat, (f^[m]) x = (f^[n]) x ∧ m ≠ n := by
@@ -115,14 +115,14 @@ theorem eventually_periodic [Finite V] (f : V → V) (x : V) :
   · exact ⟨m, aux h he⟩
   · exact ⟨n, aux h he.symm⟩
 
-theorem periodic_closed (f : V → V) : Set.MapsTo f (periodicPts f) (periodicPts f) := by
+private theorem periodic_closed (f : V → V) : Set.MapsTo f (periodicPts f) (periodicPts f) := by
   intro x hx
   obtain ⟨n,hn,hp⟩ := mem_periodicPts.mp hx
   apply mk_mem_periodicPts hn
   change (f^[n]) (f x) = f x
   rw [← iterate_succ_apply, iterate_succ_apply', show (f^[n]) x = x from hp]
 
-theorem periodic_restrict [Finite V] (f : V → V) : Bijective
+private theorem periodic_restrict [Finite V] (f : V → V) : Bijective
     (fun x : periodicPts f => (⟨f x.val, periodic_closed f x.prop⟩ : periodicPts f)) := by
   let g : periodicPts f → periodicPts f := fun x => ⟨f x.val, periodic_closed f x.prop⟩
   have hi (n : Nat) (x : periodicPts f) : ((g^[n]) x).val = (f^[n]) x.val := by
@@ -137,7 +137,7 @@ theorem periodic_restrict [Finite V] (f : V → V) : Bijective
   exact (Finite.injective_iff_bijective).mp ((injective_iff_periodicPts_eq_univ).mpr hg)
 
 /-- A patched permutation makes precisely the vertices of its core periodic. -/
-theorem periodic_patch [Finite V] {a : V} (F : Frame a) (e : Equiv.Perm F.core) :
+private theorem periodic_patch [Finite V] {a : V} (F : Frame a) (e : Equiv.Perm F.core) :
     periodicPts (F.patch e) = F.core := by
   ext x
   constructor
@@ -165,23 +165,23 @@ theorem periodic_patch [Finite V] {a : V} (F : Frame a) (e : Equiv.Perm F.core) 
 abbrev Anchored (a : V) := {f : V → V // f a = a}
 abbrev FixedPerm {a : V} (F : Frame a) := {e : Equiv.Perm F.core // e F.anchor = F.anchor}
 
-noncomputable def cyclicSplit [Finite V] (a : V) (f : Anchored a) :
+private noncomputable def cyclicSplit [Finite V] (a : V) (f : Anchored a) :
     Σ F : Frame a, FixedPerm F := by
   let F := Frame.ofFunction f.val (periodicPts f.val)
     (mk_mem_periodicPts Nat.one_pos f.prop) (eventually_periodic f.val)
   let e : Equiv.Perm F.core := Equiv.ofBijective _ (periodic_restrict f.val)
   exact ⟨F, ⟨e, Subtype.ext f.prop⟩⟩
 
-noncomputable def cyclicJoin {a : V} (d : Σ F : Frame a, FixedPerm F) : Anchored a :=
+private noncomputable def cyclicJoin {a : V} (d : Σ F : Frame a, FixedPerm F) : Anchored a :=
   ⟨d.1.patch d.2.val, (d.1.patch_in d.2.val d.1.anchor).trans (congrArg Subtype.val d.2.prop)⟩
 
-theorem cyclic_join_split [Finite V] (a : V) (f : Anchored a) :
+private theorem cyclic_join_split [Finite V] (a : V) (f : Anchored a) :
     cyclicJoin (cyclicSplit a f) = f := by
   apply Subtype.ext
   exact Frame.patch_recover f.val (periodicPts f.val)
     (mk_mem_periodicPts Nat.one_pos f.prop) (eventually_periodic f.val) (periodic_closed f.val)
 
-theorem cyclic_split_join [Finite V] {a : V} (d : Σ F : Frame a, FixedPerm F) :
+private theorem cyclic_split_join [Finite V] {a : V} (d : Σ F : Frame a, FixedPerm F) :
     cyclicSplit a (cyclicJoin d) = d := by
   rcases d with ⟨F,e⟩
   have hc : (cyclicSplit a (cyclicJoin ⟨F,e⟩)).1.core = F.core := periodic_patch F e.val
@@ -206,7 +206,7 @@ theorem cyclic_split_join [Finite V] {a : V} (d : Σ F : Frame a, FixedPerm F) :
   ext x
   exact (spec x).trans (F'.patch_in e.val x)
 
-noncomputable def cyclicEquiv [Finite V] (a : V) :
+private noncomputable def cyclicEquiv [Finite V] (a : V) :
     Anchored a ≃ Σ F : Frame a, FixedPerm F where
   toFun := cyclicSplit a
   invFun := cyclicJoin
@@ -226,7 +226,7 @@ open Function CayleyParent
 universe u
 variable {V : Type u} {a : V}
 
-theorem depth_iterate {r : V} (f : RootMap r) (x : V) (n : Nat) :
+private theorem depth_iterate {r : V} (f : RootMap r) (x : V) (n : Nat) :
     depth r f ((f.val^[n]) x) = depth r f x - n := by
   induction n generalizing x with
   | zero => simp
@@ -241,14 +241,14 @@ theorem depth_iterate {r : V} (f : RootMap r) (x : V) (n : Nat) :
 
 def orbitCore (a : V) {r : V} (f : RootMap r) : Set V := {x | Hits f.val a x}
 
-theorem orbit_mem_root (a : V) {r : V} (f : RootMap r) :
+private theorem orbit_mem_root (a : V) {r : V} (f : RootMap r) :
     r ∈ orbitCore a f := f.prop.2 a
 
-theorem orbit_closed (a : V) {r : V} (f : RootMap r) :
+private theorem orbit_closed (a : V) {r : V} (f : RootMap r) :
     Set.MapsTo f.val (orbitCore a f) (orbitCore a f) :=
   fun x hx => hits_trans hx (hits_step f.val x)
 
-theorem enters_orbit (a : V) {r : V} (f : RootMap r) (x : V) :
+private theorem enters_orbit (a : V) {r : V} (f : RootMap r) (x : V) :
     ∃ n, (f.val^[n]) x ∈ orbitCore a f := by
   obtain ⟨n,hn⟩ := f.prop.2 x
   exact ⟨n, hn.symm ▸ orbit_mem_root a f⟩
@@ -273,7 +273,7 @@ noncomputable def orbitEquiv (a : V) {r : V} (f : RootMap r) :
 def successor (m : Nat) (i : Fin (m + 1)) : Fin (m + 1) :=
   ⟨min (i.val+1) m, by omega⟩
 
-theorem successor_iterate (m n : Nat) (i : Fin (m + 1)) :
+private theorem successor_iterate (m n : Nat) (i : Fin (m + 1)) :
     ((successor m)^[n] i).val = min (i.val + n) m := by
   induction n with
   | zero =>
@@ -299,18 +299,18 @@ def pathSelf {F : Frame a} (p : PathData F) (x : F.core) : F.core :=
 
 def pathRoot {F : Frame a} (p : PathData F) : F.core := p.2.val (Fin.last _)
 
-theorem pathSelf_equivariant {F : Frame a} (p : PathData F) (i : Fin (p.1 + 1)) :
+private theorem pathSelf_equivariant {F : Frame a} (p : PathData F) (i : Fin (p.1 + 1)) :
     pathSelf p (p.2.val i) = p.2.val (successor p.1 i) := by
   simp [pathSelf]
 
-theorem pathSelf_iterate {F : Frame a} (p : PathData F) (n : Nat) (i : Fin (p.1 + 1)) :
+private theorem pathSelf_iterate {F : Frame a} (p : PathData F) (n : Nat) (i : Fin (p.1 + 1)) :
     ((pathSelf p)^[n]) (p.2.val i) = p.2.val ((successor p.1)^[n] i) := by
   induction n with
   | zero => rfl
   | succ n ih =>
     rw [iterate_succ_apply', iterate_succ_apply', ih, pathSelf_equivariant]
 
-theorem pathSelf_hits {F : Frame a} (p : PathData F) (x : F.core) :
+private theorem pathSelf_hits {F : Frame a} (p : PathData F) (x : F.core) :
     Hits (pathSelf p) x (pathRoot p) := by
   let i := p.2.val.symm x
   refine ⟨p.1, ?_⟩
@@ -343,13 +343,13 @@ noncomputable def pathSplit (a : V) (d : Σ r : V, RootMap r) :
   let F := Frame.ofFunction d.2.val (orbitCore a d.2) (hits_refl _ _) (enters_orbit a d.2)
   exact ⟨F, depth d.1 d.2 a, orbitEquiv a d.2, rfl⟩
 
-theorem pathJoin_root (F : Frame a) (p : PathData F) :
+private theorem pathJoin_root (F : Frame a) (p : PathData F) :
     (pathJoin ⟨F,p⟩).1 = (pathRoot p).val := rfl
 
-theorem pathJoin_function (F : Frame a) (p : PathData F) :
+private theorem pathJoin_function (F : Frame a) (p : PathData F) :
     (pathJoin ⟨F,p⟩).2.val = F.patch (pathSelf p) := rfl
 
-theorem pathJoin_iterate (F : Frame a) (p : PathData F) (n : Nat) :
+private theorem pathJoin_iterate (F : Frame a) (p : PathData F) (n : Nat) :
     (((pathJoin ⟨F,p⟩).2.val)^[n]) a =
       (p.2.val ⟨min n p.1, by omega⟩).val := by
   rw [pathJoin_function]
@@ -363,7 +363,7 @@ theorem pathJoin_iterate (F : Frame a) (p : PathData F) (n : Nat) :
       rw [successor_iterate]
       simp
 
-theorem pathJoin_depth (F : Frame a) (p : PathData F) :
+private theorem pathJoin_depth (F : Frame a) (p : PathData F) :
     depth (pathJoin ⟨F,p⟩).1 (pathJoin ⟨F,p⟩).2 a = p.1 := by
   apply Nat.le_antisymm
   · apply depth_min
@@ -379,7 +379,7 @@ theorem pathJoin_depth (F : Frame a) (p : PathData F) :
     change min (depth (pathJoin ⟨F,p⟩).1 (pathJoin ⟨F,p⟩).2 a) p.1 = p.1 at hv
     omega
 
-theorem pathJoin_core (F : Frame a) (p : PathData F) :
+private theorem pathJoin_core (F : Frame a) (p : PathData F) :
     orbitCore a (pathJoin ⟨F,p⟩).2 = F.core := by
   ext x
   constructor
@@ -396,7 +396,7 @@ theorem pathJoin_core (F : Frame a) (p : PathData F) :
       simp [Nat.min_eq_left (by omega : i.val ≤ p.1)]
     rw [eq, Equiv.apply_symm_apply]
 
-theorem pathSplit_join (d : Σ F : Frame a, PathData F) :
+private theorem pathSplit_join (d : Σ F : Frame a, PathData F) :
     pathSplit a (pathJoin d) = d := by
   rcases d with ⟨F,p⟩
   let d := pathSplit a (pathJoin ⟨F,p⟩)
@@ -432,7 +432,7 @@ theorem pathSplit_join (d : Σ F : Frame a, PathData F) :
   ext i
   exact he i
 
-theorem pathJoin_split (a : V) (d : Σ r : V, RootMap r) :
+private theorem pathJoin_split (a : V) (d : Σ r : V, RootMap r) :
     pathJoin (pathSplit a d) = d := by
   rcases d with ⟨r,f⟩
   let F := (pathSplit a ⟨r,f⟩).1
@@ -463,7 +463,7 @@ theorem pathJoin_split (a : V) (d : Σ r : V, RootMap r) :
   apply congrArg (Sigma.mk r')
   exact Subtype.ext hfun
 
-noncomputable def pathEquiv (a : V) :
+private noncomputable def pathEquiv (a : V) :
     (Σ r : V, RootMap r) ≃ Σ F : Frame a, PathData F where
   toFun := pathSplit a
   invFun := pathJoin
@@ -483,11 +483,11 @@ open Function CayleyParent CayleyColors
 universe u
 variable {V : Type u} {a : V}
 
-theorem card_core_pos [Finite V] (F : Frame a) : 0 < Nat.card F.core := by
+private theorem card_core_pos [Finite V] (F : Frame a) : 0 < Nat.card F.core := by
   let : Nonempty F.core := ⟨F.anchor⟩
   exact Nat.card_pos
 
-noncomputable def baseOrder [Finite V] (F : Frame a) : PathData F := by
+private noncomputable def baseOrder [Finite V] (F : Frame a) : PathData F := by
   classical
   let m := Nat.card F.core - 1
   have h : m + 1 = Nat.card F.core := Nat.sub_add_cancel (card_core_pos F)
@@ -496,7 +496,7 @@ noncomputable def baseOrder [Finite V] (F : Frame a) : PathData F := by
   let e' := (Equiv.swap 0 (e.symm F.anchor)).trans e
   exact ⟨m, e', by simp [e']⟩
 
-theorem path_length_unique {F : Frame a} (p q : PathData F) : p.1 = q.1 := by
+private theorem path_length_unique {F : Frame a} (p q : PathData F) : p.1 = q.1 := by
   have hp := Nat.card_congr p.2.val
   have hq := Nat.card_congr q.2.val
   simp only [Nat.card_fin] at hp hq
@@ -505,7 +505,7 @@ theorem path_length_unique {F : Frame a} (p q : PathData F) : p.1 = q.1 := by
 abbrev OrdersOfLength (F : Frame a) (m : Nat) :=
   {e : Fin (m+1) ≃ F.core // e 0 = F.anchor}
 
-noncomputable def pathAtLength {F : Frame a} (m : Nat) (h : ∀ p : PathData F, p.1 = m) :
+private noncomputable def pathAtLength {F : Frame a} (m : Nat) (h : ∀ p : PathData F, p.1 = m) :
     PathData F ≃ OrdersOfLength F m where
   toFun p :=
     ⟨(Fin.castOrderIso (congrArg (·+1) (h p).symm)).toEquiv.trans p.2.val, p.2.prop⟩
@@ -527,7 +527,7 @@ noncomputable def pathAtLength {F : Frame a} (m : Nat) (h : ∀ p : PathData F, 
     change e.val (Fin.cast (congrArg (·+1) (h ⟨m,e⟩).symm) x) = e.val x
     simp
 
-noncomputable def orderByPerm {F : Frame a} {m : Nat} (base : OrdersOfLength F m) :
+private noncomputable def orderByPerm {F : Frame a} {m : Nat} (base : OrdersOfLength F m) :
     FixedPerm F ≃ OrdersOfLength F m where
   toFun e := ⟨base.val.trans e.val, by simpa only [Equiv.trans_apply, base.prop] using e.prop⟩
   invFun e := ⟨base.val.symm.trans e.val, by
@@ -551,7 +551,7 @@ noncomputable def orderByPerm {F : Frame a} {m : Nat} (base : OrdersOfLength F m
 
 /-- A cycle permutation and a linear traversal on the same core carry the same information.
 The choice of the anchor-first enumeration fixes the equivalence once for that core. -/
-noncomputable def permPathEquiv [Finite V] (F : Frame a) : FixedPerm F ≃ PathData F :=
+private noncomputable def permPathEquiv [Finite V] (F : Frame a) : FixedPerm F ≃ PathData F :=
   let base := baseOrder F
   (orderByPerm base.2).trans (pathAtLength base.1 (fun p => path_length_unique p base)).symm
 
@@ -564,7 +564,7 @@ def fromOutside {F : Frame a} (p : F.core) (x : Outside F) : Away p.val :=
 def fromInside {F : Frame a} (p : F.core) (x : CoreAway p) : Away p.val :=
   ⟨x.val.val, fun he => x.prop (Subtype.ext he)⟩
 
-noncomputable def splitAway (F : Frame a) (p : F.core) :
+private noncomputable def splitAway (F : Frame a) (p : F.core) :
     Outside F ⊕ CoreAway p ≃ Away p.val := by
   classical
   let f : Outside F ⊕ CoreAway p → Away p.val := Sum.elim (fromOutside p) (fromInside p)
@@ -581,7 +581,7 @@ noncomputable def splitAway (F : Frame a) (p : F.core) :
     · exact ⟨Sum.inr ⟨⟨x.val,hx⟩,fun he => x.prop (congrArg Subtype.val he)⟩, rfl⟩
     · exact ⟨Sum.inl ⟨x.val,hx⟩,rfl⟩
 
-noncomputable def cycleTarget {F : Frame a} (e : FixedPerm F) :
+private noncomputable def cycleTarget {F : Frame a} (e : FixedPerm F) :
     CoreAway F.anchor ≃ CoreAway F.anchor :=
   e.val.subtypeEquiv fun x => ⟨fun hn h => hn (e.val.injective (h.trans e.prop.symm)),
     fun hn h => hn (h ▸ e.prop)⟩
@@ -598,7 +598,7 @@ noncomputable def indexBeforeLast (m : Nat) : Fin m ≃ {i : Fin (m+1) // i ≠ 
     have hi := i.val.isLt
     exact ⟨⟨i.val.val, by omega⟩, rfl⟩
 
-noncomputable def indexAfterFirst (m : Nat) : Fin m ≃ {i : Fin (m+1) // i ≠ 0} := by
+private noncomputable def indexAfterFirst (m : Nat) : Fin m ≃ {i : Fin (m+1) // i ≠ 0} := by
   let f (i : Fin m) : {i : Fin (m+1) // i ≠ 0} :=
     ⟨i.succ, Fin.succ_ne_zero _⟩
   apply Equiv.ofBijective f
@@ -610,7 +610,7 @@ noncomputable def indexAfterFirst (m : Nat) : Fin m ≃ {i : Fin (m+1) // i ≠ 
     | zero => exact (hi rfl).elim
     | succ j => exact ⟨j,rfl⟩
 
-theorem index_successor (m : Nat) (i : {i : Fin (m+1) // i ≠ Fin.last m}) :
+private theorem index_successor (m : Nat) (i : {i : Fin (m+1) // i ≠ Fin.last m}) :
     (indexAfterFirst m ((indexBeforeLast m).symm i)).val = successor m i.val := by
   let j := (indexBeforeLast m).symm i
   have hj : j.castSucc = i.val := congrArg Subtype.val ((indexBeforeLast m).apply_symm_apply i)
@@ -621,7 +621,7 @@ theorem index_successor (m : Nat) (i : {i : Fin (m+1) // i ≠ Fin.last m}) :
   have := j.isLt
   omega
 
-noncomputable def chainTarget {F : Frame a} (p : PathData F) :
+private noncomputable def chainTarget {F : Frame a} (p : PathData F) :
     CoreAway (pathRoot p) ≃ CoreAway F.anchor :=
   (p.2.val.symm.subtypeEquiv fun x => by
     change x ≠ p.2.val (Fin.last p.1) ↔ p.2.val.symm x ≠ Fin.last p.1
@@ -631,21 +631,21 @@ noncomputable def chainTarget {F : Frame a} (p : PathData F) :
         exact ⟨fun hn he => hn (p.2.val.injective (he.trans p.2.prop.symm)),
           fun hn he => hn ((congrArg p.2.val he).trans p.2.prop)⟩
 
-theorem chainTarget_value {F : Frame a} (p : PathData F) (x : CoreAway (pathRoot p)) :
+private theorem chainTarget_value {F : Frame a} (p : PathData F) (x : CoreAway (pathRoot p)) :
     (chainTarget p x).val = pathSelf p x.val := by
   change p.2.val _ = p.2.val _
   apply congrArg p.2.val
   exact index_successor p.1 ⟨p.2.val.symm x.val,
     fun h => x.prop (by simpa [pathRoot] using congrArg p.2.val h)⟩
 
-noncomputable def matchedCoordinates {F : Frame a} (e : FixedPerm F) (p : PathData F) :
+private noncomputable def matchedCoordinates {F : Frame a} (e : FixedPerm F) (p : PathData F) :
     Away a ≃ Away (pathRoot p).val :=
   (splitAway F F.anchor).symm.trans
     ((Equiv.sumCongr (Equiv.refl _) ((cycleTarget e).trans (chainTarget p).symm)).trans
       (splitAway F (pathRoot p)))
 
 /-- A coordinate bijection preserves every individual target, including multiplicities. -/
-theorem matchedTargets {F : Frame a} (e : FixedPerm F) (p : PathData F) (x : Away a) :
+private theorem matchedTargets {F : Frame a} (e : FixedPerm F) (p : PathData F) (x : Away a) :
     (F.patch (pathSelf p)) (matchedCoordinates e p x).val = (F.patch e.val) x.val := by
   obtain ⟨s,rfl⟩ := (splitAway F F.anchor).surjective x
   rcases s with s | s
@@ -665,7 +665,7 @@ theorem matchedTargets {F : Frame a} (e : FixedPerm F) (p : PathData F) (x : Awa
     exact congrArg (fun x : CoreAway F.anchor => x.val.val)
       ((chainTarget p).apply_symm_apply (cycleTarget e s))
 
-noncomputable def extendAnchor (a : V) : (Away a → V) ≃ Anchored a := by
+private noncomputable def extendAnchor (a : V) : (Away a → V) ≃ Anchored a := by
   classical
   refine ⟨fun f => ⟨fun v => if h : v = a then a else f ⟨v,h⟩, by simp⟩,
     fun f v => f.val v.val, ?_, ?_⟩
@@ -680,7 +680,7 @@ noncomputable def extendAnchor (a : V) : (Away a → V) ≃ Anchored a := by
       simpa using f.prop.symm
     · simp [h]
 
-noncomputable def nativeRootedEquiv : (Σ _ : V, CayleyProbe.Tree V) ≃
+private noncomputable def nativeRootedEquiv : (Σ _ : V, CayleyProbe.Tree V) ≃
     (Σ r : V, RootMap r) :=
   Equiv.sigmaCongrRight rootMapEquiv
 

@@ -44,7 +44,7 @@ theorem source_moments {n k : ℕ} (hn : 0 < n) (hk : 2 ≤ k) [NeZero k]
   have h := source_occupancy_law hn hk embed policy
   exact ⟨h.integral_eq, h.variance_eq⟩
 
-theorem source_standardized_law {k N : ℕ} (hk : 2 ≤ k) [NeZero k] {K : Type u}
+private theorem source_standardized_law {k N : ℕ} (hk : 2 ≤ k) [NeZero k] {K : Type u}
     (embed : ZMod k ↪ K)
     (policy : (s : Colored (Fin (N + 1)) (ZMod k)) → FreePolicy (K := K) s.1.2.val) :
     sourceStandardizedLaw (Nat.succ_pos N) hk embed = literalLaw k hk N := by

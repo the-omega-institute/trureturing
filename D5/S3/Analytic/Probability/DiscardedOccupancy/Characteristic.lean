@@ -19,9 +19,9 @@ namespace DiscardedOccupancy
 
 noncomputable section
 
-instance (n : ℕ) : MeasurableSpace (Option (Fin n)) := ⊤
+instance instMeasurableSpaceOptionFin_d5 (n : ℕ) : MeasurableSpace (Option (Fin n)) := ⊤
 
-instance (n : ℕ) : MeasurableSingletonClass (Option (Fin n)) := ⟨fun _ => trivial⟩
+instance instMeasurableSingletonClassOptionFin_d5 (n : ℕ) : MeasurableSingletonClass (Option (Fin n)) := ⟨fun _ => trivial⟩
 
 theorem mem_occupied_iff {n : ℕ} (i : Fin n) {j : ℕ} (ω : History n j) :
     i ∈ occupied n j ω ↔ ∃ t : Fin j, ω t = some i := by
@@ -41,18 +41,18 @@ theorem mem_occupied_iff {n : ℕ} (i : Fin n) {j : ℕ} (ω : History n j) :
       | last => exact Or.inl ht
       | cast t => exact Or.inr ⟨t, ht⟩
 
-theorem throwMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) :
+private theorem throwMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) :
     ∑ b, throwMass n p b = 1 := by
   classical
   have hn' : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
   rw [Fintype.sum_option]
   simp [throwMass, nsmul_eq_mul, mul_div_cancel₀ _ hn']
 
-theorem wordMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
+private theorem wordMass_sum {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) :
     ∑ ω : History n j, wordMass n p ω = 1 := by
   simpa [expect, average, smul_eq_mul] using expect_const hn p j (1 : ℝ)
 
-theorem throwMass_nonneg (n : ℕ) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem throwMass_nonneg (n : ℕ) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     (b : Option (Fin n)) : 0 ≤ throwMass n p b := by
   cases b with
   | none => exact sub_nonneg.mpr hp'
@@ -81,20 +81,7 @@ theorem wordMeasure_eq_pi {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' :
     PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), wordMass]
   exact ENNReal.ofReal_prod_of_nonneg (fun b _ => throwMass_nonneg n hp hp' (ω b))
 
-theorem independent_throws {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
-    (j : ℕ) :
-    iIndepFun (fun i (ω : History n j) => ω i) (wordPMF hn hp hp' j).toMeasure := by
-  rw [wordMeasure_eq_pi]
-  exact iIndepFun_pi (X := fun _ => id) (fun _ => measurable_id.aemeasurable)
-
-theorem throw_marginal {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
-    {j : ℕ} (i : Fin j) :
-    ((wordPMF hn hp hp' j).toMeasure).map (fun ω => ω i) =
-      (throwPMF hn hp hp').toMeasure := by
-  rw [wordMeasure_eq_pi]
-  simpa [Function.eval] using Measure.pi_map_eval (fun _ : Fin j => (throwPMF hn hp hp').toMeasure) i
-
-theorem integral_expect {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+private theorem integral_expect {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
     {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1) (j : ℕ) (f : ℕ → E) :
     (∫ ω, f (count n j ω) ∂(wordPMF hn hp hp' j).toMeasure) = expect n p j f := by
   rw [PMF.integral_eq_sum]
@@ -122,7 +109,7 @@ def standardizedLaw {n : ℕ} (hn : 0 < n) {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤
 
 def phase (s : ℝ) : ℂ := Complex.exp ((s : ℂ) * Complex.I)
 
-theorem phase_add (x y : ℝ) : phase (x + y) = phase x * phase y := by
+private theorem phase_add (x y : ℝ) : phase (x + y) = phase x * phase y := by
   simp [phase, add_mul, Complex.exp_add]
 
 @[simp] theorem phase_zero : phase 0 = 1 := by simp [phase]
@@ -198,7 +185,7 @@ private theorem phase_taylor_bound {y : ℝ} (hy : |y| ≤ 1) :
 def centeredBernoulli (r s : ℝ) : ℂ :=
   (1 - r) • phase (s * (-r)) + r • phase (s * (1 - r))
 
-theorem bernoulli_taylor {r s : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 1) (hs : |s| ≤ 1) :
+private theorem bernoulli_taylor {r s : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 1) (hs : |s| ≤ 1) :
     ‖centeredBernoulli r s - Complex.ofReal (1 - s^2 * (r * (1 - r)) / 2)‖ ≤
       Real.exp 1 * |s|^3 := by
   have hu : |s * (-r)| ≤ |s| := by
@@ -244,7 +231,7 @@ private theorem gaussian_taylor {s u : ℝ} (hu : 0 ≤ u) (hu' : u ≤ 1) (hs :
     _ = |s|^3 * |s| := by ring
     _ ≤ |s|^3 := mul_le_of_le_one_right (by positivity) hs
 
-theorem bernoulli_gaussian_comparison {r s u : ℝ}
+private theorem bernoulli_gaussian_comparison {r s u : ℝ}
     (hr : 0 ≤ r) (hr' : r ≤ 1) (hu : 0 ≤ u) (hu' : u ≤ 1) (hs : |s| ≤ 1) :
     ‖centeredBernoulli r s - (↑(Real.exp (-s^2 * u / 2)) : ℂ)‖ ≤
       (Real.exp 1 + 1) * |s|^3 + (s^2 / 2) * |r * (1 - r) - u| := by
@@ -280,7 +267,7 @@ theorem expect_sub {E : Type*} [AddCommGroup E] [Module ℝ E] (n : ℕ) (p : �
     expect n p j (fun x => f x - g x) = expect n p j f - expect n p j g := by
   simp only [expect, average, smul_sub, Finset.sum_sub_distrib]
 
-theorem expect_mul_complex (n : ℕ) (p : ℝ) (j : ℕ) (f : ℕ → ℂ) (c : ℂ) :
+private theorem expect_mul_complex (n : ℕ) (p : ℝ) (j : ℕ) (f : ℕ → ℂ) (c : ℂ) :
     expect n p j (fun x => f x * c) = expect n p j f * c := by
   simp only [expect, average, Complex.real_smul, Finset.sum_mul, mul_assoc]
 
@@ -293,7 +280,7 @@ theorem norm_expect_le {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   intro ω _
   rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (wordMass_nonneg hp hp' ω), smul_eq_mul]
 
-theorem v_lipschitz {n : ℕ} {p x y : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
+private theorem v_lipschitz {n : ℕ} {p x y : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
     (hx : 0 ≤ x) (hx' : x ≤ n) (hy : 0 ≤ y) (hy' : y ≤ n) :
     |v n p x - v n p y| ≤ (p / n) * |x - y| := by
   have hq := q_bounds hp hx hx'
@@ -306,7 +293,7 @@ theorem v_lipschitz {n : ℕ} {p x y : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1)
   rw [he, abs_mul, abs_mul, abs_neg, abs_of_nonneg (div_nonneg hp (Nat.cast_nonneg n))]
   exact mul_le_of_le_one_right (by positivity) hb
 
-theorem centered_abs_bound {n : ℕ} (hn : 0 < n) {p : ℝ}
+private theorem centered_abs_bound {n : ℕ} (hn : 0 < n) {p : ℝ}
     (hp : 0 ≤ p) (hp' : p ≤ 1) {j : ℕ} (hj : j ≤ n) :
     expect n p j (fun x => |(x : ℝ) - mean n p j|) ≤ Real.sqrt n := by
   let r := Real.sqrt (n : ℝ)
@@ -366,7 +353,7 @@ theorem norm_gaussianFactor_le (s : ℝ) {u : ℝ} (hu : 0 ≤ u) :
 theorem rowPhase_zero (n : ℕ) (p s : ℝ) : rowPhase n p 0 s = 1 := by
   simp [rowPhase, mean, expect_zero_time]
 
-theorem rowPhase_succ {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) (s : ℝ) :
+private theorem rowPhase_succ {n : ℕ} (hn : 0 < n) (p : ℝ) (j : ℕ) (s : ℝ) :
     rowPhase n p (j+1) s = expect n p j (fun x =>
       phase ((a n p * s) * ((x : ℝ) - mean n p j)) * centeredBernoulli (q n p x) s) := by
   unfold rowPhase

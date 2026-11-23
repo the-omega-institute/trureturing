@@ -35,24 +35,24 @@ def cut (G : SimpleGraph V) (p : V) : SimpleGraph V where
   symm := ⟨fun _ _ h ↦ ⟨h.2.1, h.1, h.2.2.symm⟩⟩
   loopless := ⟨fun _ h ↦ h.2.2.ne rfl⟩
 
-theorem cut_le (G : SimpleGraph V) (p : V) : cut G p ≤ G :=
+private theorem cut_le (G : SimpleGraph V) (p : V) : cut G p ≤ G :=
   fun _ _ h ↦ h.2.2
 
-def cutWalk {G : SimpleGraph V} {p x y : V} (w : G.Walk x y)
+private def cutWalk {G : SimpleGraph V} {p x y : V} (w : G.Walk x y)
     (h : p ∉ w.support) : (cut G p).Walk x y :=
   w.transfer _ fun e he ↦ by
     obtain ⟨a, b⟩ := e
     exact ⟨fun ha ↦ h (ha ▸ w.fst_mem_support_of_mem_edges he),
       fun hb ↦ h (hb ▸ w.snd_mem_support_of_mem_edges he), w.edges_subset_edgeSet he⟩
 
-theorem cut_reachable_ne {G : SimpleGraph V} {p x y : V} (hx : x ≠ p)
+private theorem cut_reachable_ne {G : SimpleGraph V} {p x y : V} (hx : x ≠ p)
     (h : (cut G p).Reachable x y) : y ≠ p := by
   obtain ⟨w⟩ := h
   induction w with
   | nil => exact hx
   | cons ha w ih => exact ih ha.2.1
 
-theorem existsUnique_attachment {G : SimpleGraph V} (hG : G.IsTree)
+private theorem existsUnique_attachment {G : SimpleGraph V} (hG : G.IsTree)
     {p x : V} (hx : x ≠ p) :
     ∃! y, G.Adj p y ∧ (cut G p).Reachable y x := by
   classical
@@ -74,7 +74,7 @@ theorem existsUnique_attachment {G : SimpleGraph V} (hG : G.IsTree)
     have he := (hG.existsUnique_path p x).unique hq' hw
     simpa using congrArg Walk.snd he
 
-theorem card_branch_lt [Fintype V] (p : V) (s : Set V) [Fintype s]
+private theorem card_branch_lt [Fintype V] (p : V) (s : Set V) [Fintype s]
     (hp : p ∉ s) : Fintype.card s < Fintype.card V :=
   Fintype.card_subtype_lt hp
 
@@ -170,10 +170,10 @@ variable {p : V} (F : Frame p)
 
 abbrev Branches := ∀ s : F.parts, Tree s.val
 
-theorem ne_pivot (s : F.parts) {x : V} (hx : x ∈ s.val) : x ≠ p :=
+private theorem ne_pivot (s : F.parts) {x : V} (hx : x ∈ s.val) : x ≠ p :=
   (F.cover x).mpr ⟨s.val, s.prop, hx⟩
 
-theorem part_eq {s t : F.parts} {x : V} (hs : x ∈ s.val) (ht : x ∈ t.val) : s = t :=
+private theorem part_eq {s t : F.parts} {x : V} (hs : x ∈ s.val) (ht : x ∈ t.val) : s = t :=
   Subtype.ext (F.separate s.prop t.prop hs ht)
 
 noncomputable def partAt {x : V} (hx : x ≠ p) : F.parts :=
@@ -182,7 +182,7 @@ noncomputable def partAt {x : V} (hx : x ≠ p) : F.parts :=
 theorem mem_partAt {x : V} (hx : x ≠ p) : x ∈ (F.partAt hx).val :=
   ((F.cover x).mp hx).choose_spec.2
 
-theorem ext_frame {H : Frame p} (hparts : F.parts = H.parts)
+private theorem ext_frame {H : Frame p} (hparts : F.parts = H.parts)
     (hroot : ∀ s hs ht, (F.root ⟨s, hs⟩).val = (H.root ⟨s, ht⟩).val) : F = H := by
   cases F with
   | mk parts cover separate root =>
@@ -214,7 +214,7 @@ def glue (T : F.Branches) : SimpleGraph V where
 
 variable {F} {T : F.Branches}
 
-theorem glue_pivot_iff {x : V} :
+private theorem glue_pivot_iff {x : V} :
     (F.glue T).Adj p x ↔ ∃ s : F.parts, x = (F.root s).val := by
   constructor
   · rintro (⟨_, h⟩ | ⟨_, s, hs⟩ | ⟨s, hp, _, _⟩)
@@ -224,7 +224,7 @@ theorem glue_pivot_iff {x : V} :
   · intro h
     exact Or.inl ⟨rfl,h⟩
 
-theorem glue_adj_iff_of_mem {s : F.parts} {x y : s.val} :
+private theorem glue_adj_iff_of_mem {s : F.parts} {x y : s.val} :
     (F.glue T).Adj x.val y.val ↔ (T s).val.Adj x y := by
   constructor
   · rintro (⟨h,_⟩ | ⟨h,_⟩ | ⟨t,hx,hy,ha⟩)
@@ -236,7 +236,7 @@ theorem glue_adj_iff_of_mem {s : F.parts} {x y : s.val} :
   · intro h
     exact Or.inr (Or.inr ⟨s, x.prop, y.prop, h⟩)
 
-theorem glue_adj_cases {s : F.parts} {x : s.val} {y : V}
+private theorem glue_adj_cases {s : F.parts} {x : s.val} {y : V}
     (h : (F.glue T).Adj x.val y) :
     (y = p ∧ x = F.root s) ∨ ∃ hy : y ∈ s.val, (T s).val.Adj x ⟨y,hy⟩ := by
   rcases h with ⟨h,_⟩ | ⟨hp,t,he⟩ | ⟨t,hx,hy,ha⟩
@@ -248,7 +248,7 @@ theorem glue_adj_cases {s : F.parts} {x : s.val} {y : V}
     subst t
     exact Or.inr ⟨hy,ha⟩
 
-theorem pivot_adj_of_mem {s : F.parts} {x : s.val} :
+private theorem pivot_adj_of_mem {s : F.parts} {x : s.val} :
     (F.glue T).Adj p x.val ↔ x = F.root s := by
   constructor
   · intro h
@@ -267,7 +267,7 @@ noncomputable def depth (T : F.Branches) (x : V) : Nat := by
 @[simp] theorem depth_pivot : depth T p = 0 := by
   simp [depth]
 
-theorem depth_in {s : F.parts} (x : s.val) :
+private theorem depth_in {s : F.parts} (x : s.val) :
     depth T x.val = (T s).val.dist (F.root s) x + 1 := by
   rw [depth, dite_eq_left (F.ne_pivot s x.prop)]
   suffices aux : ∀ (t : F.parts) (hx : x.val ∈ t.val), t = s →
@@ -276,7 +276,7 @@ theorem depth_in {s : F.parts} (x : s.val) :
   rintro t hx rfl
   rfl
 
-theorem glue_tree_and_dist (T : F.Branches) :
+private theorem glue_tree_and_dist (T : F.Branches) :
     (F.glue T).IsTree ∧ ∀ v, (F.glue T).dist p v = depth T v := by
   apply tree_of_depth (depth T)
   · intro v
@@ -320,11 +320,11 @@ theorem glue_tree_and_dist (T : F.Branches) :
 noncomputable def assemble (T : F.Branches) : Tree V :=
   ⟨F.glue T, (glue_tree_and_dist T).1⟩
 
-theorem dist_assemble (T : F.Branches) {s : F.parts} (x : s.val) :
+private theorem dist_assemble (T : F.Branches) {s : F.parts} (x : s.val) :
     (assemble T).val.dist p x.val = (T s).val.dist (F.root s) x + 1 :=
   ((glue_tree_and_dist T).2 _).trans (depth_in x)
 
-theorem leaf_assemble (T : F.Branches) {s : F.parts} (x : s.val) :
+private theorem leaf_assemble (T : F.Branches) {s : F.parts} (x : s.val) :
     RootedLeaf (assemble T).val p x.val ↔ RootedLeaf (T s).val (F.root s) x := by
   unfold RootedLeaf
   constructor
@@ -346,13 +346,13 @@ end Frame
 def cutParts (G : SimpleGraph V) (p : V) : Set (Set V) :=
   {s | ∃ x, x ≠ p ∧ s = ((cut G p).connectedComponentMk x).supp}
 
-theorem cutParts_ne_pivot {G : SimpleGraph V} {p : V} {s : Set V}
+private theorem cutParts_ne_pivot {G : SimpleGraph V} {p : V} {s : Set V}
     (hs : s ∈ cutParts G p) {y : V} (hy : y ∈ s) : y ≠ p := by
   obtain ⟨x,hx,rfl⟩ := hs
   exact cut_reachable_ne hx (((cut G p).connectedComponentMk x).reachable_of_mem_supp
     ConnectedComponent.connectedComponentMk_mem hy)
 
-theorem cutParts_attachment {G : SimpleGraph V} (hG : G.IsTree) {p : V}
+private theorem cutParts_attachment {G : SimpleGraph V} (hG : G.IsTree) {p : V}
     {s : Set V} (hs : s ∈ cutParts G p) :
     ∃! y, G.Adj p y ∧ y ∈ s := by
   obtain ⟨x,hx,rfl⟩ := hs
@@ -375,18 +375,18 @@ noncomputable def decomposeFrame (T : Tree V) (p : V) : Frame p where
     let h := (cutParts_attachment T.prop s.prop).exists
     ⟨h.choose,h.choose_spec.2⟩
 
-theorem decompose_root_adj (T : Tree V) (p : V) (s : (decomposeFrame T p).parts) :
+private theorem decompose_root_adj (T : Tree V) (p : V) (s : (decomposeFrame T p).parts) :
     T.val.Adj p ((decomposeFrame T p).root s).val :=
   (cutParts_attachment T.prop s.prop).exists.choose_spec.1
 
-theorem cut_induce_eq {G : SimpleGraph V} {p : V} {s : Set V} (hp : p ∉ s) :
+private theorem cut_induce_eq {G : SimpleGraph V} {p : V} {s : Set V} (hp : p ∉ s) :
     (cut G p).induce s = G.induce s := by
   ext x y
   change (_ ∧ _ ∧ G.Adj x.val y.val) ↔ G.Adj x.val y.val
   simp [show x.val ≠ p from fun h ↦ hp (h ▸ x.prop),
     show y.val ≠ p from fun h ↦ hp (h ▸ y.prop)]
 
-noncomputable def decomposeBranches (T : Tree V) (p : V) :
+private noncomputable def decomposeBranches (T : Tree V) (p : V) :
     (decomposeFrame T p).Branches := by
   intro s
   refine ⟨T.val.induce s.val, ?_⟩
@@ -398,7 +398,7 @@ noncomputable def decomposeBranches (T : Tree V) (p : V) :
 noncomputable def decompose (p : V) (T : Tree V) : Σ F : Frame p, F.Branches :=
   ⟨decomposeFrame T p, decomposeBranches T p⟩
 
-theorem assemble_decompose (p : V) (T : Tree V) :
+private theorem assemble_decompose (p : V) (T : Tree V) :
     Frame.assemble (decomposeBranches T p) = T := by
   apply Subtype.ext
   ext x y
@@ -434,7 +434,7 @@ namespace Frame
 
 variable {p : V} {F : Frame p} (T : F.Branches)
 
-theorem reachable_cut_glue {s : F.parts} {x y : V} (hx : x ∈ s.val) :
+private theorem reachable_cut_glue {s : F.parts} {x y : V} (hx : x ∈ s.val) :
     (cut (F.glue T) p).Reachable x y ↔ y ∈ s.val := by
   constructor
   · rintro ⟨q⟩
@@ -450,14 +450,14 @@ theorem reachable_cut_glue {s : F.parts} {x y : V} (hx : x ∈ s.val) :
         glue_adj_iff_of_mem.mpr ha⟩⟩
     exact Reachable.map f ((T s).prop.connected ⟨x,hx⟩ ⟨y,hy⟩)
 
-theorem cut_glue_component {s : F.parts} {x : V} (hx : x ∈ s.val) :
+private theorem cut_glue_component {s : F.parts} {x : V} (hx : x ∈ s.val) :
     ((cut (F.glue T) p).connectedComponentMk x).supp = s.val := by
   ext y
   rw [ConnectedComponent.mem_supp_iff, ConnectedComponent.eq]
   exact ⟨fun h ↦ (reachable_cut_glue T hx).mp h.symm,
     fun h ↦ ((reachable_cut_glue T hx).mpr h).symm⟩
 
-theorem decomposeFrame_assemble :
+private theorem decomposeFrame_assemble :
     decomposeFrame (assemble T) p = F := by
   apply (decomposeFrame (assemble T) p).ext_frame
   · ext s
@@ -475,14 +475,14 @@ theorem decomposeFrame_assemble :
     exact congrArg Subtype.val
       ((pivot_adj_of_mem (T := T) (s := ⟨s,ht⟩) (x := x)).mp ha)
 
-theorem branches_heq {H : Frame p} (e : F = H) (U : H.Branches)
+private theorem branches_heq {H : Frame p} (e : F = H) (U : H.Branches)
     (h : ∀ s hs ht, (T ⟨s,hs⟩).val = (U ⟨s,ht⟩).val) : HEq T U := by
   subst H
   apply heq_of_eq
   funext s
   exact Subtype.ext (h s.val s.prop s.prop)
 
-theorem decompose_assemble : decompose p (assemble T) = ⟨F,T⟩ := by
+private theorem decompose_assemble : decompose p (assemble T) = ⟨F,T⟩ := by
   refine Sigma.ext (decomposeFrame_assemble T) ?_
   apply branches_heq _ (decomposeFrame_assemble T)
   intro s hs ht
@@ -502,7 +502,7 @@ namespace Frame
 variable {p : V} {F : Frame p}
 
 /-- A predicate that excludes the pivot splits across the branch label sets. -/
-noncomputable def splitPredicate (P : V → Prop) (hp : ¬ P p) :
+private noncomputable def splitPredicate (P : V → Prop) (hp : ¬ P p) :
     {x : V // P x} ≃ (Σ s : F.parts, {x : s.val // P x.val}) where
   toFun x :=
     let hx : x.val ≠ p := fun he ↦ hp (he ▸ x.prop)
@@ -520,7 +520,7 @@ noncomputable def splitPredicate (P : V → Prop) (hp : ¬ P p) :
     rintro t ht rfl
     rfl
 
-theorem natCard_branch_lt [Finite V] (s : F.parts) :
+private theorem natCard_branch_lt [Finite V] (s : F.parts) :
     Nat.card s.val < Nat.card V := by
   let := Fintype.ofFinite V
   let := Fintype.ofFinite s.val
@@ -529,7 +529,7 @@ theorem natCard_branch_lt [Finite V] (s : F.parts) :
 
 end Frame
 
-theorem peak_decompose [LinearOrder V] (p : V) (hmin : ∀ w, p ≤ w)
+private theorem peak_decompose [LinearOrder V] (p : V) (hmin : ∀ w, p ≤ w)
     (T : Tree V) {s : (decomposeFrame T p).parts} (x : s.val) :
     Peak T.val x.val ↔ Peak (decomposeBranches T p s).val x := by
   constructor
@@ -544,7 +544,7 @@ theorem peak_decompose [LinearOrder V] (p : V) (hmin : ∀ w, p ≤ w)
       exact lt_of_le_of_ne (hmin x.val) (((decomposeFrame T p).ne_pivot s x.prop).symm)
     · exact h ⟨y,hy⟩ ha'
 
-theorem iso_dist {G H : SimpleGraph V} (e : G ≃g H) (hG : G.Connected)
+private theorem iso_dist {G H : SimpleGraph V} (e : G ≃g H) (hG : G.Connected)
     (hH : H.Connected) (x y : V) :
     H.dist (e x) (e y) = G.dist x y := by
   apply Nat.le_antisymm
@@ -553,7 +553,7 @@ theorem iso_dist {G H : SimpleGraph V} (e : G ≃g H) (hG : G.Connected)
   · obtain ⟨q,h⟩ := hH.exists_walk_length_eq_dist (e x) (e y)
     simpa [h] using G.dist_le (q.map e.symm.toHom)
 
-theorem iso_leaf_iff {G H : SimpleGraph V} (e : G ≃g H) (hG : G.Connected)
+private theorem iso_leaf_iff {G H : SimpleGraph V} (e : G ≃g H) (hG : G.Connected)
     (hH : H.Connected) (r x : V) :
     RootedLeaf H (e r) (e x) ↔ RootedLeaf G r x := by
   unfold RootedLeaf
@@ -587,7 +587,7 @@ def relabelEquiv (e : V ≃ V) : Tree V ≃ Tree V where
     change T.val.Adj (e (e.symm x)) (e (e.symm y)) ↔ T.val.Adj x y
     simp
 
-theorem relabel_leaf_card (e : V ≃ V) (T : Tree V) (r : V) :
+private theorem relabel_leaf_card (e : V ≃ V) (T : Tree V) (r : V) :
     Nat.card {x // RootedLeaf T.val r x} =
     Nat.card {x // RootedLeaf (relabelTree e T).val (e r) x} := by
   let i := (Iso.comap e.symm T.val).symm
@@ -598,7 +598,7 @@ theorem relabel_leaf_card (e : V ≃ V) (T : Tree V) (r : V) :
   change RootedLeaf T.val r x ↔ RootedLeaf (T.val.comap e.symm) (e r) (e x)
   simpa only [he] using h
 
-theorem not_leaf_pivot [Nontrivial V] (T : Tree V) (p : V) : ¬ RootedLeaf T.val p p := by
+private theorem not_leaf_pivot [Nontrivial V] (T : Tree V) (p : V) : ¬ RootedLeaf T.val p p := by
   obtain ⟨y,hy⟩ := T.prop.connected.preconnected.exists_adj_of_nontrivial p
   intro h
   apply h
@@ -606,12 +606,12 @@ theorem not_leaf_pivot [Nontrivial V] (T : Tree V) (p : V) : ¬ RootedLeaf T.val
   rw [dist_self, dist_eq_one_iff_adj.mpr hy]
   omega
 
-theorem not_peak_min [Nontrivial V] [LinearOrder V] (T : Tree V) (p : V)
+private theorem not_peak_min [Nontrivial V] [LinearOrder V] (T : Tree V) (p : V)
     (hmin : ∀ w, p ≤ w) : ¬ Peak T.val p := by
   obtain ⟨y,hy⟩ := T.prop.connected.preconnected.exists_adj_of_nontrivial p
   exact fun h ↦ (not_lt_of_ge (hmin y)) (h y hy)
 
-theorem count_step [Finite V] [Nontrivial V] [LinearOrder V] (p : V) (hmin : ∀ w, p ≤ w)
+private theorem count_step [Finite V] [Nontrivial V] [LinearOrder V] (p : V) (hmin : ∀ w, p ≤ w)
     (T : Tree V) (U : (decomposeFrame T p).Branches)
     (hbranch : ∀ s : (decomposeFrame T p).parts,
       Nat.card {x // Peak (decomposeBranches T p s).val x} =
@@ -635,7 +635,7 @@ theorem count_step [Finite V] [Nontrivial V] [LinearOrder V] (p : V) (hmin : ∀
   exact Nat.card_congr (e₁.trans ((Equiv.sigmaCongrRight equivalence).trans e₂.symm))
 
 /-- The recursion acts over all finite label types in one universe. -/
-noncomputable def fixedRootEquivSized (n : Nat) :
+private noncomputable def fixedRootEquivSized (n : Nat) :
     ∀ (W : Type u) [Finite W] [LinearOrder W] (r : W), Nat.card W = n →
       {e : Tree W ≃ Tree W //
         ∀ T, Nat.card {x // Peak T.val x} = Nat.card {x // RootedLeaf (e T).val r x}} := by
@@ -686,11 +686,5 @@ theorem fixedRootEquiv_filterCard [Fintype V] [LinearOrder V] (r : V) (T : Tree 
         (fixedRootEquiv r T).val.dist r v < (fixedRootEquiv r T).val.dist r w) := by
   rw [filterCard_eq_natCard, filterCard_eq_natCard]
   exact (fixedRootEquivSized (Nat.card V) V r rfl).prop T
-
-theorem fixedRoot_peak_to_leaf [Fintype V] [LinearOrder V] (r : V) :
-    ∃ e : Tree V ≃ Tree V, ∀ T,
-      filterCard (fun v ↦ ∀ w, T.val.Adj v w → w < v) =
-        filterCard (fun v ↦ ¬ ∃ w, (e T).val.Adj v w ∧ (e T).val.dist r v < (e T).val.dist r w) :=
-  ⟨fixedRootEquiv r, fixedRootEquiv_filterCard r⟩
 
 end CayleyProbe
