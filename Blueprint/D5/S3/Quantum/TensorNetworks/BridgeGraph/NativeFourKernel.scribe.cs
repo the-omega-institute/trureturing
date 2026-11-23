@@ -103,10 +103,12 @@ internal sealed class NativeFourKernelDocument : IScribeDocumentDefinition
     {
         Formula k = V("k"), T = V("T"), a = V("a"), b = V("b");
         Formula injective = Call("Injective", Call("mulVecLin", Call("stackK", V("X"))));
-        return ThroughStack(Imp(injective, All("T", Square(),
-            Imp(Call("IsHermitian", T), Imp(Eq(Compressed(T), D(0)), All("k", V("Nat"),
-                Imp(Le(k, D(3)), Imp(Lt(Mul(k, a), b),
-                    Lt(Call("rank", T), Sub(Mul(D(2), Sub(D(4), k)), D(1))))))))));
+        Formula bound = Lt(Call("rank", T), Sub(Mul(D(2), Sub(D(4), k)), D(1)));
+        Formula forThreshold = All("k", V("Nat"),
+            Imp(Le(k, D(3)), Imp(Lt(Mul(k, a), b), bound)));
+        Formula forForm = All("T", Square(),
+            Imp(Call("IsHermitian", T), Imp(Eq(Compressed(T), D(0)), forThreshold)));
+        return ThroughStack(Imp(injective, forForm));
     }
 
     private static Formula Geometry()
