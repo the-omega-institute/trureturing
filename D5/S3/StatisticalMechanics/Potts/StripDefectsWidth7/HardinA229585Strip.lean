@@ -47,7 +47,7 @@ abbrev cellOrder (n : ℕ) : LinearOrder (Fin n × Fin 7) :=
   LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
 def Normal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Prop :=
   @Canonical (Fin n × Fin 7) (cellOrder n).toLT 3 A
-instance decidableNormal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Decidable (Normal A) := by
+private instance decidableNormal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Decidable (Normal A) := by
   unfold Normal Canonical
   change Decidable (∀ (i : Fin n × Fin 7) (b : Fin 3), b < A i →
     ∃ j : Fin n × Fin 7, finProdFinEquiv j < finProdFinEquiv i ∧ A j = b)

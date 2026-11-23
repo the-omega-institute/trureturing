@@ -80,7 +80,6 @@ exactExits_new: proof_shape=content; consumers=class_counts_canonical
 class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
 old_exhausted_index: proof_shape=bind-only; consumers=zero_coordinates
-old_zero_budget: proof_shape=bind-only; consumers=zero_coordinates
 proper_destination: proof_shape=bind-only; consumers=zero_coordinates
 cost_bound: proof_shape=bind-only; consumers=zero_coordinates
 tail_bound: proof_shape=bind-only; consumers=zero_coordinates
@@ -102,6 +101,7 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA22963
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.Tuple.Basic
@@ -109,7 +109,7 @@ import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Logic.Equiv.Fin.Basic
 import Lean.Elab.Tactic.Omega
-import Mathlib.Data.Fin.Rev
+import Mathlib.Logic.Equiv.Prod
 import Mathlib.Tactic.Eval
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Nat.Digits.Lemmas
@@ -261,7 +261,6 @@ def T : Matrix (Fin 168) (Fin 168) ℤ :=
         | some k => oldExits (k.castAdd 56) j
         | none => (activeWeight i j : ℤ)) 0
       (Matrix.of (Fin.append (fun i : Fin 56 => oldExits (i.natAdd 16)) fun i j => (exhaustedWeight i j : ℤ))))
-
 private theorem valid_shift (p : Boundary) (d : ℕ) (h : 0 < d) :
     HardinA229635State.Valid p d ↔ HardinA229585StripData.Valid p (d - 1) := by
   rw [valid_parts]
@@ -304,7 +303,6 @@ theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
   · simp only [cl, Nat.sub_eq_zero_of_le (Nat.le_of_not_gt h), ↓reduceIte]
     rw [Fin.natAdd_inj 72]
     exact and_congr_left (fun _ => ⟨fun hc => hc.antisymm (Nat.le_of_not_gt h), Eq.le⟩)
-
 theorem horizontal_cons (x : Fin 3) (p : Boundary) :
     bondDefects horizontal (Fin.cons x p) (Fin.cons x p) =
       (if x = p 0 then 1 else 0) + HardinA229635State.h p := by
@@ -488,16 +486,14 @@ def completionCodes : List (Option (Fin 3)) → Option (Fin 3) → ℕ → List 
     let c := matchCost prev x + matchCost a x
     if c ≤ d then (completionCodes as (some x) (d - c)).map (fun r => x.val + 3 * r)
     else []
-
-theorem rowCode_cons {k : ℕ} (x : Fin 3) (r : Fin k → Fin 3) :
-    (finFunctionFinEquiv (Fin.cons x r)).val = x.val + 3 * (finFunctionFinEquiv r).val := by
+theorem rowCode_cons {k m : ℕ} (x : Fin m) (r : Fin k → Fin m) :
+    (finFunctionFinEquiv (Fin.cons x r)).val = x.val + m * (finFunctionFinEquiv r).val := by
   simp only [finFunctionFinEquiv_apply, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ,
     Fin.val_zero, Fin.val_succ, pow_zero, mul_one, pow_succ', Finset.mul_sum]
   congr 1
   apply Finset.sum_congr rfl
   intro j _
   ac_rfl
-
 theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
     (prev : Option (Fin 3)) (d : ℕ) :
     completionCodes (List.ofFn p) prev d =
@@ -519,7 +515,6 @@ theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
       intro r _
       exact (rowCode_cons x r).symm
     · rfl
-
 private theorem completionCost_row (p : Boundary) (r : Row) :
     completionCost (some ∘ p) none r = cross p r + bondDefects horizontal r r := by
   simp only [cross, bondDefects, antidiagonal, horizontal, Finset.filter_image, Fin.cons_succ]
@@ -554,7 +549,6 @@ private theorem packedClass_eq (p : Boundary) :
     packedClass (finFunctionFinEquiv p).val = exhaustedClass p := by
   have h := List.all_eq_true.mp packedClass_all (finFunctionFinEquiv p) (List.mem_finRange _)
   simpa only [beq_iff_eq, Equiv.symm_apply_apply] using h
-
 private def exitCodes {k : ℕ} (p : Fin k → Option (Fin 3)) (d : ℕ) :
     List (Fin 96) :=
   ((completionCodes (List.ofFn p) none d).map fun r => packedClass (r / 3))
@@ -604,21 +598,29 @@ private theorem exactExits_count (p : Boundary) (d : ℕ) (j : Fin 96) :
       exhaustedClass (boundary r) = j then (1 : ℕ) else 0)
 
 private def alternating : Row ≃ Row :=
-  Equiv.piCongrRight (fun i : Fin 7 => (Fin.revPerm (n := 3)) ^ i.val)
-
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 6000000 in
+  let e := (Equiv.curry (Fin 1) (Fin 7) (Fin 3)).trans (Equiv.funUnique (Fin 1) Row)
+  e.symm.trans ((HardinA233155ColumnTransfer.alternatingEquiv 1 7).trans e)
 private theorem proper_iff (r : Row) :
     HardinA233155RowTransfer.rowLegal r ↔
       bondDefects horizontal (alternating r) (alternating r) = 0 := by
-  have h : ∀ c : Fin 2187,
-      HardinA233155RowTransfer.rowLegal (HardinA233155RowTransfer.decode 7 c) ↔
-      bondDefects horizontal (alternating (HardinA233155RowTransfer.decode 7 c))
-        (alternating (HardinA233155RowTransfer.decode 7 c)) = 0 := by
-    decide +kernel
-  simpa only [HardinA233155RowTransfer.decode, Equiv.symm_apply_apply] using
-    h (finFunctionFinEquiv r)
-
+  have h := HardinA233155ColumnTransfer.alternating_legal 1 7 (fun p => r p.2)
+  have hl : HardinA233155RowTransfer.Legal (fun p : Fin 1 × Fin 7 => r p.2) ↔
+      HardinA233155RowTransfer.rowLegal r := by
+    constructor
+    · exact fun h => h.1 0
+    · exact fun h => ⟨fun _ => h, fun i hi => by omega⟩
+  rw [← hl, h, bondDefects, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  constructor
+  · intro hp e he
+    obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp he
+    exact hp j.castSucc j.succ.isLt 0 0 (Or.inl rfl)
+  · intro hp j hj a b _
+    have ha : a = 0 := Subsingleton.elim _ _
+    have hb : b = 0 := Subsingleton.elim _ _
+    subst a
+    subst b
+    exact hp (Finset.mem_image.mpr
+      ⟨⟨j.val, by omega⟩, Finset.mem_univ _, rfl⟩)
 private def properRows : List Row :=
   HardinA233154Rows.codes.map (alternating ∘ HardinA233155RowTransfer.decode 7)
 private def zeroExitCodes (p : Boundary) : List (Fin 96) :=
@@ -656,7 +658,11 @@ private theorem zeroExitCodes_count (p : Boundary) (j : Fin 96) :
     congr 1
     funext r
     simp [accepted, Bool.and_comm]
-  rw [hcount, Finset.sum_list_map_count, ← Finset.sum_filter]
+  rw [hcount, Finset.sum_list_map_count]
+  simp only [show ∀ r : Row, (if cross p r = 0 ∧ exhaustedClass (boundary r) = j then (1 : ℤ)
+      else 0) = (if accepted r then 1 else 0) from fun _ => rfl, smul_ite, nsmul_eq_mul,
+    mul_one, mul_zero]
+  rw [← Finset.sum_filter]
   exact_mod_cast (Finset.sum_filter_count_eq_countP accepted properRows).symm
 private theorem rep_partition (i : Fin 96) :
     HardinA229635State.h (HardinA229635State.rep i) ≤ 1 ↔ 40 ≤ i.val := by
@@ -727,7 +733,6 @@ private theorem inheritedActiveCheck_all (i : Fin 96) (d : Fin 2) :
     inheritedActiveCheck i d = true := by
   revert i d
   decide +kernel
-
 private theorem inherited_active_spec (i : Fin 96) (d : Fin 2) (k : Fin 16) :
     let p := HardinA229635State.rep i
     HardinA229635State.Valid p (d.val + 1) →
@@ -839,10 +844,6 @@ set_option maxHeartbeats 3000000 in
 private theorem old_exhausted_index : ∀ p : Boundary, 16 ≤ (HardinA229585StripData.cl p 0).val := by
   decide +kernel
 
-private theorem old_zero_budget (p : Boundary) (d : ℕ) (hd : d ≠ 1) :
-    HardinA229585StripData.cl p d = HardinA229585StripData.cl p 0 := by
-  simp only [HardinA229585StripData.cl, hd, Nat.zero_ne_one, ite_false]
-
 private theorem proper_destination (p : Boundary) (hp : HardinA229635State.h p = 0) :
     ∃ k : Fin 16, HardinA229585StripData.cl p 0 = HardinA229585StripData.zeroBudgetClass k := by
   rw [tailCost_eq, Finset.card_eq_zero] at hp
@@ -881,7 +882,6 @@ private theorem old_source_support (s : Fin 168)
     T ((i.natAdd 16).castAdd 96) s = 0 := by
   revert i hs
   fin_cases s <;> decide +kernel
-
 private theorem zero_coordinates (p : Boundary) (d : ℕ) (s : Fin 168)
     (hs : (d = 0 ∧ ∀ k : Fin 16, s.val ≠
         56 + (HardinA229585StripData.zeroBudgetClass k).val) ∨
@@ -895,7 +895,7 @@ private theorem zero_coordinates (p : Boundary) (d : ℕ) (s : Fin 168)
   have hbudget (q : Boundary) (b : ℕ) (h : b = 1 ∨ 3 ≤ b) :
       cl q b = (HardinA229585StripData.cl q 0).castAdd 96 := by
     have hn : b - 1 ≠ 1 := by omega
-    simp only [cl, show b ≠ 0 by omega, ite_false, old_zero_budget q _ hn]
+    simp only [cl, HardinA229585StripData.cl, show b ≠ 0 by omega, hn, Nat.zero_ne_one, ite_false]
   have hmatrix (h : d = 1 ∨ 3 ≤ d) (h' : (s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
       (HardinA229585StripData.zeroBudgetClass k).val) ∨ 128 ≤ s.val) :
       T (cl p d) s = 0 := by

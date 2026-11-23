@@ -60,6 +60,9 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
+import Mathlib.Data.List.Chain
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
@@ -199,23 +202,24 @@ private theorem initial_exhausted_count (j : Fin 96) :
       by_cases hp : exhaustedClass p = j
       · simp only [hp, and_true, ite_true, head_weight_eq]
       · simp only [hp, and_false, ite_false, Finset.sum_const_zero]
-    _ = ∑ p : Boundary, ∑ i : Fin 96,
-        (if exhaustedClass (HardinA229635State.rep i) = j
-          then headWeight (HardinA229635State.rep i) else 0) *
-        (if HardinA229635State.h p ≤ 2 ∧ HardinA229635State.fresh p = i then (1 : ℤ) else 0) := by
+    _ = ∑ p ∈ Finset.univ.filter (fun p => HardinA229635State.h p ≤ 2),
+        (if exhaustedClass (HardinA229635State.rep (HardinA229635State.fresh p)) = j
+          then headWeight (HardinA229635State.rep (HardinA229635State.fresh p)) else 0) := by
+      rw [Finset.sum_filter]
       apply Finset.sum_congr rfl
       intro p _
       by_cases hp : HardinA229635State.h p ≤ 2
-      · simp only [hp, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
-        exact rep_weight p hp j
-      · have h₁ : HardinA229635State.h p ≠ 1 := by omega
-        have h₂ : HardinA229635State.h p ≠ 2 := by omega
-        simp [headWeight, hp, h₁, h₂]
+      · simpa only [hp, ite_true] using rep_weight p hp j
+      · simp [headWeight, hp, show HardinA229635State.h p ≠ 1 by omega,
+          show HardinA229635State.h p ≠ 2 by omega]
     _ = _ := by
-      rw [Finset.sum_comm, ← initial_from_starts j]
+      rw [← Finset.sum_fiberwise' _ HardinA229635State.fresh, ← initial_from_starts j]
       apply Finset.sum_congr rfl
       intro i _
-      rw [← Finset.mul_sum, fresh_start_count]
+      rw [Finset.filter_filter, Finset.sum_const, nsmul_eq_mul]
+      have hf := fresh_start_count i
+      rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, mul_one] at hf
+      rw [hf, mul_comm]
       split_ifs <;> simp
 
 private theorem initial_counts (s : Fin 168) :
@@ -243,6 +247,8 @@ theorem count_transfer (n : ℕ) :
 
 /-- Canonical arrays with exactly two monochromatic bonds. -/
 def a (n : ℕ) : ℕ :=
+  letI : DecidablePred (fun f : Fin n × Fin 7 → Fin 3 => HardinA229585Strip.Normal f) :=
+    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn.arrayCanonicalDecidable
   (Finset.univ.filter fun f : Fin n × Fin 7 → Fin 3 =>
     defects horizontal antidiagonal (List.ofFn fun i j => f (i, j)) = 2 ∧
       HardinA229585Strip.Normal f).card
@@ -619,16 +625,16 @@ private theorem forward_step (i : Fin 14) :
     exact exhausted_step i j
 
 private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
-  induction i using Fin.induction with
-  | zero => rfl
-  | succ i ih =>
-    change (fun v => Matrix.vecMul v T)^[i.val + 1] initial = w i.succ
-    rw [Function.iterate_succ_apply']
-    change Matrix.vecMul (forward T initial i.castSucc.val) T = _
-    rw [ih]
-    exact (forward_step i).symm
+  let rows := List.ofFn w
+  have hchain : rows.IsChain (fun u v => Matrix.vecMul u T = v) := by
+    rw [List.isChain_iff_getElem]
+    intro k hk
+    have hk' : k < 14 := by simpa [rows, List.length_ofFn] using hk
+    simpa [rows, List.getElem_ofFn] using (forward_step ⟨k, hk'⟩).symm
+  have hi : i.val < rows.length := by simpa [rows] using i.isLt
+  have he := hchain.iterate_eq_of_apply_eq i.val hi
+  simpa [rows, List.getElem_ofFn, forward] using he
 
--- The twelve scalar products are evaluated coordinate by coordinate.
 set_option maxRecDepth 14000 in
 set_option maxHeartbeats 3000000 in
 private theorem polynomialCoordinates :

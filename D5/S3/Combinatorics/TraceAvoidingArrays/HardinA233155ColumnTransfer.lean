@@ -16,8 +16,8 @@ columnCompatible: proof_shape=bind-only; consumers=successorClasses, count_trans
 instDecidableColumnCompatible: proof_shape=bind-only; consumers=successorClasses
 relabel: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
 complement_bond: proof_shape=bind-only; consumers=alternating_legal
-alternatingEquiv: proof_shape=bind-only; consumers=alternating_legal, properEquiv
-alternating_legal: proof_shape=bind-only; consumers=properEquiv
+alternatingEquiv: proof_shape=bind-only; consumers=alternating_legal, properEquiv, HardinA229693StripTransfer.alternating
+alternating_legal: proof_shape=bind-only; consumers=properEquiv, HardinA229693StripTransfer.proper_iff
 properEquiv: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge, HardinA233157Row.counting_bridge, HardinA233158Row.counting_bridge
 twist: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
 bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
@@ -52,11 +52,11 @@ private theorem complement_bond : ∀ x y : Fin 3,
     x ≠ (Fin.revPerm (n := 3)) y ↔ x.val + y.val ≠ 2 := by decide +kernel
 
 /-- Complement labels in each odd column, preserving every labelled array. -/
-private def alternatingEquiv (k n : ℕ) :
+def alternatingEquiv (k n : ℕ) :
     (Fin k × Fin n → Fin 3) ≃ (Fin k × Fin n → Fin 3) :=
   Equiv.piCongrRight (fun p => (Fin.revPerm (n := 3)) ^ p.2.val)
 
-private theorem alternating_legal (k n : ℕ) (f : Fin k × Fin n → Fin 3) :
+theorem alternating_legal (k n : ℕ) (f : Fin k × Fin n → Fin 3) :
     Legal f ↔ ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
       (r = s ∨ r.val = s.val + 1) →
       alternatingEquiv k n f (r, j) ≠
