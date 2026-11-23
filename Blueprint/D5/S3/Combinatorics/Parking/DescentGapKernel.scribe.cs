@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Parking;
 internal sealed class DescentGapKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Parking/DescentGapKernel.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/alexandersson2026parking");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Parking/alexandersson2026parking");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two ordered boundary gaps, three single comparisons and the paired comparisons at each old strict peak determine the insertion weight.",

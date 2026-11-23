@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Parking;
 internal sealed class MaximumLetterGapsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Parking/MaximumLetterGaps.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/alexandersson2026parking");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Parking/alexandersson2026parking");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Deletion of the maximum letter gives an ordered gap profile and a shorter bounded parking word.",
