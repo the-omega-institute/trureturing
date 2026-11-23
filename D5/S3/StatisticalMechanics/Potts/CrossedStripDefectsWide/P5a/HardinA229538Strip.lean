@@ -184,7 +184,7 @@ theorem cost_zero (p q : Column) : cost p q = 0 ↔ Bond p q := by
 theorem zero_cost_entry (p q : Column) : (if cost p q = 0 then (1 : ℤ) else 0) = T p q := by
   simp only [T, cost_zero]
 
-def oneDefect : Matrix Column Column ℤ :=
+def oneDefect {R : Type*} [Zero R] [One R] : Matrix Column Column R :=
   fun p q => if cost p q = 1 then 1 else 0
 
 def transfer : Matrix (Column ⊕ Column) (Column ⊕ Column) ℤ :=
@@ -495,7 +495,8 @@ private theorem moves_one_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-theorem step_one (w : Column → ℤ) (p : Column) :
+theorem step_one {R : Type*} [AddCommMonoid R] [MulZeroOneClass R]
+    (w : Column → R) (p : Column) :
     oneDefect.mulVec w p = ((movesOne p).map w).sum := by
   classical
   have nodup : (movesOne p).Nodup := by

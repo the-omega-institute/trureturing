@@ -282,9 +282,15 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return All("p", Column(), Eq(Typed(Own("movesOne", p), Call("List", Column())),
             Call("List.filter", predicate, Call("List.finRange", N(243)))));
     }
-    private static Formula StepOne() => All("w",Arrow(Column(),Q("Int")),All("p",Column(),
-        Eq(App(Call("Matrix.mulVec",Own("oneDefect"),V("w")),V("p")),
-            Call("List.sum",Call("List.map",V("w"),Own("movesOne",V("p")))))));
+    private static Formula StepOne() {
+        var scalar = V("R");
+        var equation = All("w", Arrow(Column(), scalar), All("p", Column(),
+            Eq(App(Call("Matrix.mulVec", Own("oneDefect"), V("w")), V("p")),
+                Call("List.sum", Call("List.map", V("w"), Own("movesOne", V("p")))))));
+        return All("R", Seq(Q("Type"), Star), Seq(
+            OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
+            OpenBracket, Call("MulZeroOneClass", scalar), CloseBracket, Sp, equation));
+    }
     private static Formula WeightsStep()
     {
         var n = V("n");
@@ -355,8 +361,15 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             FormulaLogicOperator.Iff,Parenthesized(C("Bond",V("p"),V("q"))))));
     private static Formula ZeroCostEntry() => All("p",Column(),All("q",Column(),
         Eq(If(Eq(Own("cost",V("p"),V("q")),N(0)),AsInt(N(1)),N(0)),C("T",V("p"),V("q")))));
-    private static Formula OneDefect() => All("p",Column(),All("q",Column(),
-        Eq(AsInt(Own("oneDefect",V("p"),V("q"))),If(Eq(Own("cost",V("p"),V("q")),N(1)),N(1),N(0)))));
+    private static Formula OneDefect() {
+        var scalar = V("R");
+        var entry = All("p", Column(), All("q", Column(),
+            Eq(Typed(Own("oneDefect", V("p"), V("q")), scalar),
+                If(Eq(Own("cost", V("p"), V("q")), N(1)), N(1), N(0)))));
+        return All("R", Seq(Q("Type"), Star), Seq(
+            OpenBracket, Call("Zero", scalar), CloseBracket, Sp,
+            OpenBracket, Call("One", scalar), CloseBracket, Sp, entry));
+    }
     private static Formula Transfer() => Eq(Typed(Own("transfer"),M(Columns())),
         Call("Matrix.fromBlocks",C("T"),Own("oneDefect"),Typed(N(0),M(Column())),C("T")));
     private static Formula Terminal()

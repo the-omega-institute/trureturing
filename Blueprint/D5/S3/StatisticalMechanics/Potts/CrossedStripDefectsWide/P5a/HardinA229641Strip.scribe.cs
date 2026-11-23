@@ -128,8 +128,15 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
 
     private static Formula Budgets01() => Call("Sum",Column(),Column());
     private static Formula Budgets012() => Call("Sum",Column(),Budgets01());
-    private static Formula TwoDefect() => All("p",Column(),All("q",Column(),
-        Eq(AsInt(Own("twoDefect",V("p"),V("q"))),If(Eq(D("cost",V("p"),V("q")),N(2)),N(1),N(0)))));
+    private static Formula TwoDefect() {
+        var scalar = V("R");
+        var entry = All("p", Column(), All("q", Column(),
+            Eq(Typed(Own("twoDefect", V("p"), V("q")), scalar),
+                If(Eq(D("cost", V("p"), V("q")), N(2)), N(1), N(0)))));
+        return All("R", Seq(Q("Type"), Star), Seq(
+            OpenBracket, Call("Zero", scalar), CloseBracket, Sp,
+            OpenBracket, Call("One", scalar), CloseBracket, Sp, entry));
+    }
     private static Formula Transfer() => Eq(Typed(Own("transfer"),M(Budgets012())),
         Call("Matrix.fromBlocks",C("T"),Call("Matrix.fromCols",D("oneDefect"),Own("twoDefect")),
             Typed(N(0),Call("Matrix",Budgets01(),Column(),Q("Int"))),D("transfer")));

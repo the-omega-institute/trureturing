@@ -126,7 +126,7 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 
-def twoDefect : Matrix Column Column ℤ :=
+def twoDefect {R : Type*} [Zero R] [One R] : Matrix Column Column R :=
   fun p q => if cost p q = 2 then 1 else 0
 
 def transfer : Matrix (Column ⊕ (Column ⊕ Column)) (Column ⊕ (Column ⊕ Column)) ℤ :=
@@ -391,7 +391,8 @@ private theorem moves_two_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-private theorem step_two (w : Column → ℤ) (p : Column) :
+private theorem step_two {R : Type*} [AddCommMonoid R] [MulZeroOneClass R]
+    (w : Column → R) (p : Column) :
     twoDefect.mulVec w p = ((movesTwo p).map w).sum := by
   classical
   have nodup : (movesTwo p).Nodup := by
