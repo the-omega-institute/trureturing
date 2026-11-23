@@ -25,7 +25,7 @@ open OrdinateCounting (Spectrum)
 open SpectrumPhaseCutoff (mass sine mem_cut)
 open SpectrumCommensurateAlignment (Index boundary blockSize rate denominator denominator_pos
   blockSize_pos denominator_bounds boundary_succ boundary_strictMono rate_in_block cutoff_block
-  lower_blocks blocks mem_blocks sum_blocks log_bounds block_le_of_mem_cut quarter_phase progression_visits)
+  blocks mem_blocks log_bounds block_le_of_mem_cut quarter_phase progression_visits)
 
 private abbrev raw := SpectrumCommensurateAlignment.spectrum
 
@@ -398,5 +398,452 @@ private theorem inclusive_count {T : ℝ} {n : ℕ} (hn : 6 ≤ n)
       exact ⟨hk', (grid_le_iff hlo hk').2 hk⟩
   rw [hcomplete, hpartial, sum_complete_blocks hn, sum_increments]
   ring
+
+private theorem cutoff_bracket {T : ℝ} {n : ℕ} (hn : 6 ≤ n)
+    (hlo : base n ≤ T) (hhi : T < base (n + 1)) :
+    let r := prefixLength n T
+    8 ≤ predecessor n r ∧ predecessor n r ≤ T ∧
+      ∃ y : ℝ, T < y ∧ countMain y - countMain (predecessor n r) < 1 := by
+  let r := prefixLength n T
+  have hr : r ≤ blockSize n := prefix_le n T
+  have hprev_le : predecessor n r ≤ T := by
+    cases h : r with
+    | zero =>
+      rw [predecessor, ite_eq_left rfl]
+      split_ifs with hseed
+      · exact (base_strictMono.monotone hn).trans hlo
+      · rw [grid_last, show n - 1 + 1 = n by omega]
+        exact (sub_le_self _ (div_nonneg (by norm_num) (meshDenominator_pos _).le)).trans hlo
+    | succ k =>
+      rw [predecessor_succ]
+      exact (grid_le_iff hlo (by omega)).2 (by omega)
+  by_cases hfull : r = blockSize n
+  · have hn' : 6 ≤ n + 1 := by omega
+    obtain ⟨hprev, _, _, _⟩ := grid_gap hn' (blockSize_pos (n + 1))
+    have hp := (step_countMain hn' (blockSize_pos (n + 1))).2
+    rw [← predecessor_seam hn, ← hfull] at hprev hp
+    exact ⟨hprev, hprev_le, gridRate (n + 1) 0,
+      hhi.trans ((grid_in_block (⟨n + 1, ⟨0, blockSize_pos (n + 1)⟩⟩ : Index)).1), hp⟩
+  · have hlt := lt_of_le_of_ne hr hfull
+    obtain ⟨hprev, _, _, _⟩ := grid_gap hn hlt
+    have hnext : T < gridRate n r := by
+      by_contra! h
+      exact (lt_irrefl r) ((grid_le_iff hlo hlt).1 h)
+    exact ⟨hprev, hprev_le, gridRate n r, hnext, (step_countMain hn hlt).2⟩
+
+private theorem count_error {T : ℝ} (hT : base 6 ≤ T) :
+    |(spectrum.N T : ℝ) - countMain T| ≤
+      |(↑(⌊countMain (base 6)⌋ : ℤ) : ℝ)| + 2 := by
+  obtain ⟨n, hn, hlo, hhi⟩ := cutoff_block_scaled hT
+  obtain ⟨hp, hpT, y, hy, hgap⟩ := cutoff_bracket hn hlo hhi
+  have hT8 := hp.trans hpT
+  have hlow := countMain_strictMonoOn.monotoneOn hp hT8 hpT
+  have hhigh := countMain_strictMonoOn.monotoneOn hT8 (hT8.trans hy.le) hy.le
+  have heq := congrArg (fun k : ℤ => (k : ℝ)) (inclusive_count hn hlo hhi)
+  push_cast at heq
+  rw [heq]
+  have hflo := Int.floor_le (countMain (predecessor n (prefixLength n T)))
+  have hfhi := Int.lt_floor_add_one (countMain (predecessor n (prefixLength n T)))
+  have htest : |(⌊countMain (predecessor n (prefixLength n T))⌋ : ℤ) -
+      countMain T| ≤ 2 := by
+    apply abs_le.2
+    constructor <;> linarith
+  have htri := abs_add_le
+    ((⌊countMain (predecessor n (prefixLength n T))⌋ : ℤ) - countMain T)
+    (-(↑(⌊countMain (base 6)⌋ : ℤ) : ℝ))
+  rw [abs_neg] at htri
+  calc
+    _ = |((⌊countMain (predecessor n (prefixLength n T))⌋ : ℤ) - countMain T) +
+          (-(↑(⌊countMain (base 6)⌋ : ℤ) : ℝ))| := by congr 1; ring
+    _ ≤ _ := htri.trans (by linarith)
+
+private abbrev leadingCoefficient : ℝ := 1 / (2 * Real.pi)
+
+private theorem coarse_count :
+    ∃ D : ℝ, 0 ≤ D ∧ ∀ T : ℝ, base 6 ≤ T →
+      |(spectrum.N T : ℝ) - leadingCoefficient * T * Real.log T| ≤ D * T := by
+  let D := |(↑(⌊countMain (base 6)⌋ : ℤ) : ℝ)| + 2
+  let C := |leadingCoefficient * (Real.log (2 * Real.pi) + 1)|
+  have hD : 0 ≤ D := by dsimp [D]; positivity
+  have hC : 0 ≤ C := abs_nonneg _
+  refine ⟨D + C, add_nonneg hD hC, fun T hT => ?_⟩
+  have hT8 := seed_base.trans hT
+  have hT0 : 0 < T := by linarith
+  have hdiff :
+      countMain T - leadingCoefficient * T * Real.log T =
+        -(leadingCoefficient * (Real.log (2 * Real.pi) + 1)) * T := by
+    unfold countMain
+    rw [Real.log_div hT0.ne' (by positivity)]
+    ring
+  have hterm :
+      |countMain T - leadingCoefficient * T * Real.log T| = C * T := by
+    rw [hdiff, abs_mul, abs_neg, abs_of_pos hT0]
+  calc
+    _ ≤ |(spectrum.N T : ℝ) - countMain T| +
+        |countMain T - leadingCoefficient * T * Real.log T| := abs_sub_le _ _ _
+    _ ≤ D + C * T := by rw [hterm]; exact add_le_add_left (count_error hT) _
+    _ ≤ (D + C) * T := by
+      rw [add_mul]
+      have hT1 : 1 ≤ T := by linarith
+      exact add_le_add_left (le_mul_of_one_le_right hD hT1) (C * T)
+
+private theorem count_asymptotic : OrdinateCounting.CountAsymptotic spectrum := by
+  obtain ⟨D, hD, hcount⟩ := coarse_count
+  have hzero : Tendsto (fun T : ℝ => D / Real.log T) atTop (nhds 0) := by
+    simpa [div_eq_mul_inv, Function.comp_def] using
+      (tendsto_inv_atTop_zero.comp Real.tendsto_log_atTop).const_mul D
+  have herr : Tendsto
+      (fun T : ℝ => (spectrum.N T : ℝ) / (T * Real.log T) - leadingCoefficient)
+      atTop (nhds 0) := by
+    apply squeeze_zero_norm' _ hzero
+    filter_upwards [eventually_ge_atTop (base 6)] with T hT
+    have hT8 := seed_base.trans hT
+    have hTpos : 0 < T := by linarith
+    have hlog : 0 < Real.log T := Real.log_pos (by linarith)
+    have hquot : (spectrum.N T : ℝ) / (T * Real.log T) - leadingCoefficient =
+        ((spectrum.N T : ℝ) - leadingCoefficient * T * Real.log T) / (T * Real.log T) := by
+      field_simp
+    rw [Real.norm_eq_abs, hquot, abs_div, abs_of_pos (mul_pos hTpos hlog)]
+    calc
+      _ ≤ D * T / (T * Real.log T) :=
+        div_le_div_of_nonneg_right (hcount T hT) (mul_nonneg hTpos.le hlog.le)
+      _ = D / Real.log T := by field_simp
+  simpa [OrdinateCounting.CountAsymptotic] using herr.add_const leadingCoefficient
+
+private theorem eventually_positive_count : ∀ᶠ T : ℝ in atTop, 0 < spectrum.N T := by
+  have hc : 0 < leadingCoefficient := by positivity
+  have hc' : leadingCoefficient / 2 < leadingCoefficient := by linarith
+  have hr := count_asymptotic.eventually (lt_mem_nhds hc')
+  filter_upwards [hr, eventually_gt_atTop (1 : ℝ)] with T hratio hT
+  have hratio' : 0 < (spectrum.N T : ℝ) / (T * Real.log T) :=
+    (half_pos hc).trans hratio
+  have hN : (0 : ℝ) < spectrum.N T :=
+    by simpa only [zero_mul] using
+      (lt_div_iff₀ (mul_pos (by linarith) (Real.log_pos hT))).1 hratio'
+  exact_mod_cast hN
+
+private theorem infinite_index : Infinite spectrum.index := by
+  by_contra! hf
+  let _ : Fintype spectrum.index := Fintype.ofFinite spectrum.index
+  let K := Fintype.card spectrum.index
+  have hbound (T : ℝ) : spectrum.N T ≤ K := by
+    have hsum : spectrum.N T = ∑ _ ∈ spectrum.cut T, (1 : ℕ) := rfl
+    rw [hsum, Finset.sum_const, nsmul_eq_mul, mul_one]
+    exact Finset.card_le_univ _
+  obtain ⟨D, hD, hcount⟩ := coarse_count
+  have hc : 0 < leadingCoefficient := by positivity
+  have hbig : ∀ᶠ T : ℝ in atTop, (K : ℝ) < T ∧ base 6 ≤ T ∧
+      (D + 1) / leadingCoefficient ≤ Real.log T :=
+    (eventually_gt_atTop (K : ℝ)).and ((eventually_ge_atTop (base 6)).and
+      (Real.tendsto_log_atTop.eventually_ge_atTop _))
+  obtain ⟨T, hTK, hTb, hlog⟩ := hbig.exists
+  have hTc : 0 < T := by linarith [seed_base.trans hTb]
+  have hprod := mul_le_mul_of_nonneg_right ((div_le_iff₀ hc).1 hlog) hTc.le
+  have hcount' := (abs_le.1 (hcount T hTb)).1
+  have hcard : (spectrum.N T : ℝ) ≤ K := by exact_mod_cast hbound T
+  nlinarith only [hprod, hcount', hcard, hTK]
+
+private def harmonicWeight (j : spectrum.index) : ℝ :=
+  spectrum.gamma j / (1 / 4 + spectrum.gamma j ^ 2)
+
+private theorem harmonicWeight_pos (j : spectrum.index) : 0 < harmonicWeight j :=
+  div_pos (spectrum.gamma_pos j) (by positivity)
+
+private theorem harmonicWeight_le_inv (j : spectrum.index) :
+    harmonicWeight j ≤ 1 / spectrum.gamma j := by
+  unfold harmonicWeight
+  apply (div_le_div_iff₀ (by positivity) (spectrum.gamma_pos j)).2
+  nlinarith
+
+private theorem square_tail :
+    SpectrumLogarithmicMissingWindow.HasLogarithmicSquareTail spectrum harmonicWeight := by
+  classical
+  obtain ⟨C, hC, htail⟩ := OrdinateCounting.inverse_square_tail spectrum count_asymptotic
+  refine ⟨C + 1, by linarith, ?_⟩
+  filter_upwards [eventually_ge_atTop (4 : ℝ)] with X hX
+  intro T _
+  letI : DecidableEq spectrum.index := fun a b => Classical.propDecidable (a = b)
+  let S := spectrum.cut T \ spectrum.cut X
+  have hXγ (j : spectrum.index) (hj : j ∈ S) : X < spectrum.gamma j :=
+    lt_of_not_ge (fun h => (Finset.mem_sdiff.1 hj).2 (mem_cut.2 h))
+  let embed : {j // j ∈ S} ↪ {j : spectrum.index // X < spectrum.gamma j} :=
+    ⟨fun j => ⟨j.1, hXγ j.1 j.2⟩, by
+      intro a b h
+      exact Subtype.ext (congrArg (fun j : {j : spectrum.index // X < spectrum.gamma j} => j.1) h)⟩
+  obtain ⟨hSum, hBound⟩ := htail X hX
+  have hnonneg (j : {j : spectrum.index // X < spectrum.gamma j}) :
+      0 ≤ (spectrum.mult j.val : ℝ) / spectrum.gamma j.val ^ 2 := by positivity
+  have hfinite := hSum.sum_le_tsum (S.attach.map embed) (fun j _ => hnonneg j)
+  rw [Finset.sum_map] at hfinite
+  simp only [Nat.cast_one] at hfinite hBound
+  change (∑ j ∈ S.attach, 1 / spectrum.gamma j.val ^ 2) ≤ _ at hfinite
+  have hattach := Finset.sum_attach S (fun j => 1 / spectrum.gamma j ^ 2)
+  rw [hattach] at hfinite
+  calc
+    _ ≤ ∑ j ∈ S, 1 / spectrum.gamma j ^ 2 := by
+      change (∑ j ∈ S, harmonicWeight j ^ 2) ≤ _
+      apply Finset.sum_le_sum
+      intro j _
+      rw [← one_pow 2, ← div_pow]
+      exact pow_le_pow_left₀ (harmonicWeight_pos j).le (harmonicWeight_le_inv j) 2
+    _ ≤ C * Real.log X / X := hfinite.trans hBound
+    _ ≤ (C + 1) * Real.log X / X :=
+      div_le_div_of_nonneg_right
+        (mul_le_mul_of_nonneg_right (by linarith) (Real.log_nonneg (by linarith))) (by linarith)
+
+private theorem retained_alignment {T : ℝ} {n : ℕ} (hi : T < base (n + 1)) (m : ℤ)
+    {X : ℝ} (hXT : X ≤ T) :
+    let q := 21 * denominator n
+    sine spectrum harmonicWeight X
+      (Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * (q : ℝ))) =
+      mass spectrum harmonicWeight X := by
+  dsimp
+  unfold sine mass
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hjX : gridRate j.1.1 j.1.2.val ≤ X := mem_cut.1 hj
+  have hjT : j.1 ∈ raw.cut (21 * T) := mem_cut.2 (by
+    change rate j.1 ≤ 21 * T
+    linarith only [gridRate_eq j.1, hjX, hXT])
+  have hbase : 21 * T < boundary (n + 1) := by
+    linarith only [(lt_div_iff₀ (by norm_num : (0 : ℝ) < 21)).1 hi]
+  obtain ⟨b, hb⟩ := quarter_phase (j := j.1) (block_le_of_mem_cut hbase hjT)
+  have hq :
+      spectrum.gamma j * ((21 * denominator n : ℕ) : ℝ) = 4 * (b : ℝ) + 1 := by
+    change gridRate j.1.1 j.1.2.val * _ = _
+    rw [gridRate_eq j.1]
+    push_cast
+    linear_combination hb
+  let k := (b : ℤ) + m * (4 * (b : ℤ) + 1)
+  have harg :
+      spectrum.gamma j *
+        (Real.pi * ((21 * denominator n : ℕ) : ℝ) / 2 +
+          (m : ℝ) * (2 * Real.pi * ((21 * denominator n : ℕ) : ℝ))) =
+      Real.pi / 2 + (k : ℝ) * (2 * Real.pi) := by
+    calc
+      _ = (spectrum.gamma j * ((21 * denominator n : ℕ) : ℝ)) *
+          (Real.pi / 2 + (m : ℝ) * (2 * Real.pi)) := by ring
+      _ = _ := by rw [hq]; simp [k]; ring
+  rw [harg, Real.sin_add_int_mul_two_pi, Real.sin_pi_div_two, mul_one]
+
+private theorem progression_bound {T : ℝ} {n : ℕ}
+    (lo : base n ≤ T) (hi : T < base (n + 1)) :
+    ((21 * denominator n : ℕ) : ℝ) + 1 ≤
+      21 * (Real.log (21 * T) / Real.log 2) := by
+  have hlo : boundary n ≤ 21 * T := by
+    linarith only [(div_le_iff₀ (by norm_num : (0 : ℝ) < 21)).1 lo]
+  have hhi : 21 * T < boundary (n + 1) := by
+    linarith only [(lt_div_iff₀ (by norm_num : (0 : ℝ) < 21)).1 hi]
+  have hl := (log_bounds hlo hhi).1
+  have hsize : ((21 * denominator n : ℕ) : ℝ) ≤ 21 * ((n : ℝ) + 1) := by
+    exact_mod_cast Nat.mul_le_mul_left 21 (denominator_bounds n).1
+  linarith only [hl, hsize]
+
+private theorem visits {T : ℝ} {n : ℕ}
+    (hbound : ((21 * denominator n : ℕ) : ℝ) + 1 ≤
+      21 * (Real.log (21 * T) / Real.log 2)) (A : ℝ) :
+    let q := 21 * denominator n
+    ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * (q : ℝ)) ∈
+      Ioo A (A + (42 * Real.pi / Real.log 2) * Real.log (21 * T)) := by
+  let q := 21 * denominator n
+  have hq : 0 < q := Nat.mul_pos (by decide) (denominator_pos n)
+  have hbound' : (q : ℝ) + 1 ≤ Real.log ((21 * T) ^ (21 : ℕ)) / Real.log 2 := by
+    rw [Real.log_pow]
+    push_cast
+    convert hbound using 1
+    ring
+  obtain ⟨m, hm⟩ := progression_visits hq hbound' A
+  refine ⟨m, ?_⟩
+  have hlength : (2 * Real.pi / Real.log 2) * Real.log ((21 * T) ^ (21 : ℕ)) =
+      (42 * Real.pi / Real.log 2) * Real.log (21 * T) := by
+    rw [Real.log_pow]
+    push_cast
+    ring
+  rw [hlength] at hm
+  exact hm
+
+open D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness
+  (realCutoff strictCount phaseMoment phaseWeight phaseCost momentErrorBound logarithmic_phase_stiffness)
+
+private theorem finite_lt (T : ℝ) : {j : spectrum.index | spectrum.gamma j < T}.Finite :=
+  (spectrum.finite_le T).subset (fun j hj =>
+    show spectrum.gamma j ≤ T from (show spectrum.gamma j < T from hj).le)
+
+private theorem mem_realCutoff {T : ℝ} {j : spectrum.index} :
+    j ∈ realCutoff spectrum.gamma finite_lt T ↔ spectrum.gamma j < T :=
+  (finite_lt T).mem_toFinset
+
+private theorem strict_subset (T : ℝ) :
+    realCutoff spectrum.gamma finite_lt T ⊆ spectrum.cut T :=
+  fun _ hj => mem_cut.2 (mem_realCutoff.1 hj).le
+
+private theorem boundary_card_le_one (T : ℝ) :
+    ((spectrum.cut T) \ realCutoff spectrum.gamma finite_lt T).card ≤ 1 := by
+  classical
+  apply Finset.card_le_one_iff.2
+  intro i j hi hj
+  apply spectrum.gamma_injective
+  have endpoint (k : spectrum.index) (hk : k ∈ spectrum.cut T \
+      realCutoff spectrum.gamma finite_lt T) : spectrum.gamma k = T := by
+    obtain ⟨hcut, hncut⟩ := Finset.mem_sdiff.1 hk
+    exact (mem_cut.1 hcut).antisymm (le_of_not_gt (fun h => hncut (mem_realCutoff.2 h)))
+  rw [endpoint i hi, endpoint j hj]
+
+private theorem strict_count_error {T : ℝ} :
+    |strictCount spectrum.gamma 1 finite_lt T - (spectrum.N T : ℝ)| ≤ 1 := by
+  classical
+  let s := realCutoff spectrum.gamma finite_lt T
+  let u := spectrum.cut T
+  have hN : spectrum.N T = u.card := by
+    change (∑ _ ∈ u, (1 : ℕ)) = u.card
+    simp
+  have hS : strictCount spectrum.gamma 1 finite_lt T = s.card := by
+    change (∑ _ ∈ s, (1 : ℝ)) = s.card
+    simp
+  have hsub := strict_subset T
+  have hle : s.card ≤ u.card := Finset.card_le_card hsub
+  have hdiff := (Finset.card_sdiff_of_subset hsub)
+  have hh := boundary_card_le_one T
+  change (u \ s).card ≤ 1 at hh
+  rw [hdiff] at hh
+  rw [hS, hN, abs_of_nonpos (sub_nonpos.mpr (by exact_mod_cast hle))]
+  have hz : (u.card : ℝ) - s.card ≤ 1 := by
+    rw [← Nat.cast_sub hle]
+    exact_mod_cast hh
+  linarith
+
+private theorem harmonicMoment_error {T : ℝ} (hT : base 6 ≤ T) :
+    |mass spectrum harmonicWeight T - phaseMoment spectrum.gamma 1 finite_lt T| ≤ 1 := by
+  classical
+  let s := realCutoff spectrum.gamma finite_lt T
+  let u := spectrum.cut T
+  have hsub := strict_subset T
+  have hident : phaseMoment spectrum.gamma 1 finite_lt T = ∑ j ∈ s, harmonicWeight j := by
+    unfold phaseMoment
+    apply Finset.sum_congr rfl
+    intro j _
+    have hγ := (spectrum.gamma_pos j).ne'
+    simp only [phaseWeight, Pi.one_apply, harmonicWeight]
+    field_simp
+  have hsplit : mass spectrum harmonicWeight T - phaseMoment spectrum.gamma 1 finite_lt T =
+      ∑ j ∈ u \ s, harmonicWeight j := by
+    rw [hident]
+    unfold mass
+    have h := Finset.sum_sdiff (f := harmonicWeight) hsub
+    linarith only [h]
+  rw [hsplit, abs_of_nonneg (Finset.sum_nonneg (fun j _ => (harmonicWeight_pos j).le))]
+  have hper (j : spectrum.index) (hj : j ∈ u \ s) : harmonicWeight j ≤ 1 := by
+    have hjn := (Finset.mem_sdiff.1 hj).2
+    have hjT : T ≤ spectrum.gamma j := le_of_not_gt (fun h => hjn (mem_realCutoff.2 h))
+    exact (harmonicWeight_le_inv j).trans
+      ((div_le_one₀ (spectrum.gamma_pos j)).2 (by linarith [seed_base.trans hT]))
+  calc
+    _ ≤ ∑ _ ∈ u \ s, (1 : ℝ) := Finset.sum_le_sum hper
+    _ ≤ 1 := by
+      simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
+      exact_mod_cast boundary_card_le_one T
+
+private theorem log_squared_mass :
+    SpectrumCriticalMissingWindow.HasLogSquaredMass spectrum harmonicWeight := by
+  obtain ⟨D, hD, hDcount⟩ := coarse_count
+  let c := leadingCoefficient
+  let C := D + 1
+  let L := base 6
+  have hc : 0 < c := by dsimp [c]; positivity
+  have hC : 0 ≤ C := by dsimp [C]; linarith
+  have hL8 : 8 ≤ L := seed_base
+  have hL : 1 < L := by linarith
+  have hγ (j : spectrum.index) : L ≤ spectrum.gamma j :=
+    (base_strictMono.monotone j.2.1).trans
+      (grid_in_block j.1).1.le
+  have hcount (u : ℝ) (hu : L ≤ u) :
+      |strictCount spectrum.gamma 1 finite_lt u - c * u * Real.log u| ≤ C * u := by
+    exact (abs_sub_le _ (spectrum.N u : ℝ) _).trans (by
+      have h₁ := strict_count_error (T := u)
+      have h₂ := hDcount u hu
+      dsimp [c, C]
+      nlinarith only [h₁, h₂, show 1 ≤ u by linarith [hL8.trans hu]])
+  have ha := logarithmic_phase_stiffness spectrum.gamma (fun _ => 1) finite_lt hL hγ
+    (fun _ => zero_le_one) hc.le hcount
+  let M := ∑' j, phaseWeight spectrum.gamma 1 j
+  let E := 16 * c + 19 * C + c / 2 * (Real.log L) ^ 2 - C * Real.log L + M / 4
+  let slope := 19 * c + C
+  have hslope : 0 ≤ slope := by dsimp [slope]; positivity
+  refine ⟨c / 2, 1 + |E| + slope, by positivity, by positivity, ?_⟩
+  filter_upwards [eventually_ge_atTop L] with T hT
+  have hT8 := hL8.trans hT
+  have hTpos : 0 < T := by linarith
+  have hlogT : 0 ≤ Real.log T := Real.log_nonneg (by linarith)
+  let t := T⁻¹
+  have ht : 0 < t := inv_pos.mpr hTpos
+  have htL : L * |t| ≤ 1 := by
+    rw [abs_of_pos ht]
+    change L * T⁻¹ ≤ 1
+    rw [← div_eq_mul_inv, div_le_one₀ hTpos]
+    exact hT
+  have htinv : |t|⁻¹ = T := by rw [abs_of_pos ht]; simp [t]
+  have hA := ha.2.2.2.2 t (abs_pos.mpr ht.ne') htL
+  have h₁ := hA.1
+  have h₂ := hA.2.2.1
+  dsimp only at h₁ h₂
+  rw [htinv] at h₁ h₂
+  let P := phaseMoment spectrum.gamma 1 finite_lt T
+  let Q := c / 2 * (Real.log T) ^ 2
+  let V := phaseCost spectrum.gamma (phaseWeight spectrum.gamma 1) t
+  have hterm : c / 2 * t ^ 2 * (Real.log T) ^ 2 = t ^ 2 * Q := by dsimp [Q]; ring
+  have h₂' : |V - t ^ 2 * Q| ≤ t ^ 2 *
+      (9 * c * Real.log T + 8 * c + 9 * C + momentErrorBound L T c C M) := by
+    rw [← hterm]
+    exact h₂
+  have h₁' : |t ^ 2 * P - V| ≤ t ^ 2 * (9 * c * Real.log T + 8 * c + 9 * C) := by
+    rw [abs_sub_comm]
+    exact h₁
+  have htri := (abs_sub_le (t ^ 2 * P) V (t ^ 2 * Q)).trans (add_le_add h₁' h₂')
+  rw [← mul_sub, abs_mul, abs_of_nonneg (sq_nonneg t), ← mul_add] at htri
+  have hmoment := le_of_mul_le_mul_left htri (sq_pos_of_pos ht)
+  have hbnd : |P - Q| ≤ slope * Real.log T + E := by
+    refine hmoment.trans_eq ?_
+    unfold momentErrorBound slope E
+    ring
+  calc
+    _ ≤ |mass spectrum harmonicWeight T - P| + |P - Q| := abs_sub_le _ _ _
+    _ ≤ 1 + (slope * Real.log T + E) := add_le_add (harmonicMoment_error hT) hbnd
+    _ ≤ _ := by
+      have hE := le_abs_self E
+      nlinarith [mul_nonneg (add_nonneg (show 0 ≤ (1 : ℝ) by norm_num) (abs_nonneg E)) hlogT]
+
+/-- The two-term count can coexist with harmonic weights and frequent simultaneous alignment. -/
+theorem exists_two_term_count_alignment :
+    ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
+      (∀ j, S.mult j = 1 ∧ w j = S.gamma j / (1 / 4 + S.gamma j ^ 2)) ∧
+      (∃ D : ℝ, 0 ≤ D ∧ ∀ᶠ T : ℝ in atTop,
+        |(S.N T : ℝ) -
+          T / (2 * Real.pi) * (Real.log (T / (2 * Real.pi)) - 1)| ≤ D) ∧
+      SpectrumCriticalMissingWindow.HasLogSquaredMass S w ∧
+      SpectrumLogarithmicMissingWindow.HasLogarithmicSquareTail S w ∧
+      ∀ᶠ T : ℝ in atTop, 0 < mass S w T ∧
+        ∃ q : ℕ, 0 < q ∧ (q : ℝ) + 1 ≤ 21 * (Real.log (21 * T) / Real.log 2) ∧
+          (∀ (m : ℤ) (X : ℝ), X ≤ T →
+            sine S w X (Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * (q : ℝ))) =
+              mass S w X) ∧
+          ∀ A : ℝ, ∃ m : ℤ, Real.pi * (q : ℝ) / 2 + (m : ℝ) * (2 * Real.pi * (q : ℝ)) ∈
+            Ioo A (A + (42 * Real.pi / Real.log 2) * Real.log (21 * T)) := by
+  refine ⟨spectrum, harmonicWeight, infinite_index, fun _ => ⟨rfl, rfl⟩,
+    ?_, log_squared_mass, square_tail, ?_⟩
+  · refine ⟨|(↑(⌊countMain (base 6)⌋ : ℤ) : ℝ)| + 2, by positivity, ?_⟩
+    filter_upwards [eventually_ge_atTop (base 6)] with T hT
+    exact count_error hT
+  · filter_upwards [eventually_positive_count, eventually_ge_atTop (base 6)] with T hN hT
+    obtain ⟨n, _, hlo, hhi⟩ := cutoff_block_scaled hT
+    have hnonempty : (spectrum.cut T).Nonempty := by
+      by_contra! h
+      simp [Spectrum.N, h] at hN
+    have hmass : 0 < mass spectrum harmonicWeight T :=
+      Finset.sum_pos (fun j _ => harmonicWeight_pos j) hnonempty
+    have hbound := progression_bound hlo hhi
+    exact ⟨hmass, 21 * denominator n, Nat.mul_pos (by decide) (denominator_pos n),
+      hbound, fun m X hXT => retained_alignment hhi m hXT, visits hbound⟩
+
+#print axioms exists_two_term_count_alignment
 
 end D5.S3.Analytic.Oscillation.SpectrumTwoTermCountAlignment

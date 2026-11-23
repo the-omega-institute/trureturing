@@ -164,7 +164,7 @@ theorem cutoff_block {T : ℝ} (hT : 4 ≤ T) :
     unfold boundary
     linarith
 
-theorem lower_blocks {T : ℝ} {n : ℕ} (hT : boundary n ≤ T) :
+private theorem lower_blocks {T : ℝ} {n : ℕ} (hT : boundary n ≤ T) :
     blocks (Finset.range n) ⊆ spectrum.cut T := by
   intro j hj
   rw [mem_blocks, Finset.mem_range] at hj
@@ -193,7 +193,7 @@ theorem log_bounds {T : ℝ} {n : ℕ}
   rw [hvalue] at hl hu
   exact ⟨(le_div_iff₀ hlog).2 hl, (div_lt_iff₀ hlog).2 (by push_cast at hu; linarith)⟩
 
-theorem sum_blocks (s : Finset ℕ) (f : Index → ℝ) :
+private theorem sum_blocks (s : Finset ℕ) (f : Index → ℝ) :
     ∑ j ∈ blocks s, f j = ∑ n ∈ s, ∑ k : Fin (blockSize n), f ⟨n, k⟩ :=
   Finset.sum_sigma _ _ _
 
