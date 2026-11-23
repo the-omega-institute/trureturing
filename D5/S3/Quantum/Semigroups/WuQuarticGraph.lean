@@ -10,6 +10,9 @@ import D5.S3.Quantum.Semigroups.WuCriticalQuartic
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.Combinatorics.SimpleGraph.Clique
 
+/-! Graph optimization for the reduced finite signed Wu quartic. The unpenalized graph
+formula is the Motzkin–Straus theorem applied to the complementary graph. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -147,9 +150,9 @@ private theorem shift_drop {w : V → ℝ} {i j : V} (hij : i ≠ j)
   · intro heq
     rcases ht with rfl | rfl
     · have h : i ∈ positiveSupport (shift w i j (-w i)) := heq.symm ▸ mem_positiveSupport.mpr hi
-      simpa [mem_positiveSupport, shift, hij] using h
+      simp [mem_positiveSupport, shift, hij] at h
     · have h : j ∈ positiveSupport (shift w i j (w j)) := heq.symm ▸ mem_positiveSupport.mpr hj
-      simpa [mem_positiveSupport, shift, hij.symm] using h
+      simp [mem_positiveSupport, shift, hij.symm] at h
 
 private theorem edge_transfer {G : SimpleGraph V} (η : V → ℝ) (κ : ℝ)
     {w : V → ℝ} (hw : w ∈ simplex V) {i j : V} (hij : G.Adj i j)
@@ -164,7 +167,9 @@ private theorem edge_transfer {G : SimpleGraph V} (η : V → ℝ) (κ : ℝ)
         positiveSupport (shift w i j t) ⊂ positiveSupport w ∧
         objective G η κ (shift w i j t) ≤ objective G η κ w := by
     have hinterval : -w i ≤ t ∧ t ≤ w j := by
-      rcases ht with rfl | rfl <;> exact ⟨by first | rfl | exact hbounds, by first | rfl | exact hbounds⟩
+      rcases ht with rfl | rfl
+      · exact ⟨le_rfl, hbounds⟩
+      · exact ⟨hbounds, le_rfl⟩
     exact ⟨ht, shift_mem hw hij.ne hinterval.1 hinterval.2, shift_drop hij.ne hi hj ht,
       ha t ▸ add_le_of_nonpos_right hs⟩
   rcases le_total (0 : ℝ) slope with h | h
@@ -204,11 +209,10 @@ theorem independent_support_minimum [Nonempty V] (G : SimpleGraph V) (η : V →
   classical
   refine ⟨fun _ hw => independent_no_worse G η κ hw, ?_⟩
   have hc : Continuous (objective G η κ) := by
-    unfold objective
+    rw [funext (objective_eq G η κ)]
+    unfold dot
     fun_prop
-  obtain ⟨i⟩ := ‹Nonempty V›
-  obtain ⟨w, hw, hmin⟩ := (isCompact_simplex V).exists_isMinOn
-    ⟨_, single_mem_stdSimplex ℝ i⟩ hc.continuousOn
+  obtain ⟨w, hw, hmin⟩ := (simplex_compact V).exists_isMinOn simplex_nonempty hc.continuousOn
   obtain ⟨u, hu, hind, _, hle⟩ := independent_no_worse G η κ hw
   exact ⟨u, hu, hind, fun _ hx => hle.trans (hmin hx)⟩
 

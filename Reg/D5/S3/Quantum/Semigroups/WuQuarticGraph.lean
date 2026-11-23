@@ -28,7 +28,9 @@ private def rejected : Realization signature := comparison fun _ _ => False
 private theorem dependence (rel : ℝ → ℝ → Prop) {x y z : ℝ}
     (hx : rel x z) (hy : ¬ rel y z) : ObservationalDependence signature (comparison rel) := by
   intro role
-  exact ⟨(), x, y, fun h => hy (congrFun h z ▸ hx)⟩
+  refine ⟨(), x, y, fun h => ?_⟩
+  have he : rel x z = rel y z := congrFun h z
+  exact hy (Eq.mp he hx)
 
 namespace IndependentSupport
 
@@ -36,7 +38,8 @@ private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {V : Type u} [Fintype V] [Nonempty V] (G : SimpleGraph V) (η : V → ℝ) (κ : ℝ),
     (∀ w ∈ simplex V, ∃ v ∈ simplex V, G.IsIndepSet (positiveSupport v : Set V) ∧
-      positiveSupport v ⊆ positiveSupport w ∧ R.readout () () (objective G η κ v) (objective G η κ w)) ∧
+      positiveSupport v ⊆ positiveSupport w ∧
+      R.readout () () (objective G η κ v) (objective G η κ w)) ∧
     ∃ v ∈ simplex V, G.IsIndepSet (positiveSupport v : Set V) ∧
       ∀ w ∈ simplex V, objective G η κ v ≤ objective G η κ w
 
@@ -50,10 +53,11 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact hfalse
 
 def family : Registration arena.{u} (type_of% @independent_support_minimum.{u}) where
-  actual := comparison (· ≤ ·)
+  actual := realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@independent_support_minimum.{u}, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
+  sensitivity :=
+    _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
   dependence := dependence (· ≤ ·) (by norm_num : (0 : ℝ) ≤ 0) (by norm_num : ¬ (1 : ℝ) ≤ 0)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -69,7 +73,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (comparison (· ≤ ·))
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -78,8 +82,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Semigroups.WuQuarticGraph
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg",
-      "body", "body", "arg", "body", "arg", "arg", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg",
+        "body", "body", "arg", "body", "arg", "arg", "arg", "fn", "fn"]
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -102,10 +107,11 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact hfalse
 
 def family : Registration arena.{u} (type_of% @unpenalized_minimum.{u}) where
-  actual := comparison Eq
+  actual := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@unpenalized_minimum.{u}, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
+  sensitivity :=
+    _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
   dependence := dependence Eq (rfl : (0 : ℝ) = 0) (by norm_num : (1 : ℝ) ≠ 0)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -121,7 +127,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (comparison Eq)
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -130,8 +136,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Semigroups.WuQuarticGraph
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body",
-      "arg", "arg", "fn", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
+        "arg", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -163,10 +170,11 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact ((hall _).mp hleast).1
 
 def family : Registration arena.{u} (type_of% @wu_unpenalized_minimum.{u}) where
-  actual := comparison Eq
+  actual := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@wu_unpenalized_minimum.{u}, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
+  sensitivity :=
+    _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
   dependence := dependence Eq (rfl : (0 : ℝ) = 0) (by norm_num : (1 : ℝ) ≠ 0)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -182,7 +190,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (comparison Eq)
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -191,8 +199,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Semigroups.WuQuarticGraph
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body",
-      "body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "arg", "fn", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
