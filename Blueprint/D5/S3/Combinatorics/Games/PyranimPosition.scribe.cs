@@ -191,7 +191,6 @@ internal sealed class PyranimPositionDocument : IScribeDocumentDefinition
 
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
 
-    private static Formula Or(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Or, b);
 
     private static Formula Iff(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Iff, b);
 
