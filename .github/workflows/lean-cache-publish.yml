@@ -243,7 +243,7 @@ jobs:
           [[ "$STRATALINT_NATIVE_BATCH_MODULES" =~ ^([1-9]|[1-9][0-9]|100)$ ]]
           export STRATALINT_LEAN_PRODUCER_DLL="$GITHUB_WORKSPACE/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll"
           if [[ -f tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean ]]; then
-            STRATALINT_LEAN_BUILD_TARGETS="$(jq -c '. + ["regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/auricFibAnalysis"]' <<< "$STRATALINT_LEAN_BUILD_TARGETS")"
+            STRATALINT_LEAN_BUILD_TARGETS="$(jq -c '. + ["regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/auricFibAnalysis"] | sort' <<< "$STRATALINT_LEAN_BUILD_TARGETS")"
           fi
           target=lean-report
           for entry in lean-cache-prepare check-lean-report; do
