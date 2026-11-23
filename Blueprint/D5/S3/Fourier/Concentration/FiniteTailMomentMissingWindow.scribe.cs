@@ -78,19 +78,19 @@ internal sealed class FiniteTailMomentMissingWindowDocument : IScribeDocumentDef
         var tailScore = Terms(Multiply(w, Call("sin", Multiply(g, t))));
         var interval = Seq(OpenBracket, a, Comma, Add(a, length), CloseBracket);
         return Disp(new Formula.Aligned([
-            Seq(v, Eq, Terms(Power(w, D(2))), Comma, Quad,
-                b, Eq, Terms(Multiply(w, new Formula.Absolute(g))), Comma, Quad,
+            Seq(v, Eq, Terms(Power(w, D(2))), Comma, Quad, Sp,
+                b, Eq, Terms(Multiply(w, new Formula.Absolute(g))), Comma, Quad, Sp,
                 F.Id("N"), Eq, floor, Plus, D(1)),
-            Seq(Forall, Sp, j, Sp, InMacro, Sp, F.Id("J"), Comma, Sp, w, Ge, D(0), Comma, Quad,
-                p, Gt, D(0), Comma, Quad, h, Gt, D(0), Comma, Quad, DeltaLower, Gt, D(0)),
+            Seq(Forall, Sp, j, Sp, InMacro, Sp, F.Id("J"), Comma, Sp, w, Ge, D(0), Comma, Quad, Sp,
+                p, Gt, D(0), Comma, Quad, Sp, h, Gt, D(0), Comma, Quad, Sp, DeltaLower, Gt, D(0)),
             Seq(Forall, Sp, F.Id("k"), Colon, Sp, F.Id("J"), To, Mathbb, Grp(F.Id("Z")),
-                Comma, Quad, Terms(new Formula.Absolute(k)), Le, twoP, Quad, Land, Quad,
-                Terms(Multiply(k, g)), Eq, D(0), Quad, Longrightarrow, Quad, F.Id("k"), Eq, D(0)),
-            Seq(Open, v, Eq, D(0), Quad, Lor, Quad,
+                Comma, Quad, Sp, Terms(new Formula.Absolute(k)), Le, twoP, Quad, Sp, Land, Quad, Sp,
+                Terms(Multiply(k, g)), Eq, D(0), Quad, Sp, Longrightarrow, Quad, Sp, F.Id("k"), Eq, D(0)),
+            Seq(Open, v, Eq, D(0), Quad, Sp, Lor, Quad, Sp,
                 Multiply(F.Id("N"), Power(Seq(Open, ratio, Close), p)), Lt, D(1), Close),
-            Seq(Longrightarrow, Quad, Forall, Sp, F.Id("A"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")),
-                Comma, Quad, Exists, Sp, a, Gt, F.Id("A"), Comma, Quad,
-                Forall, Sp, t, Sp, InMacro, Sp, interval, Comma, Quad, tailScore,
+            Seq(Longrightarrow, Quad, Sp, Forall, Sp, F.Id("A"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")),
+                Comma, Quad, Sp, Exists, Sp, a, Gt, F.Id("A"), Comma, Quad, Sp,
+                Forall, Sp, t, Sp, InMacro, Sp, interval, Comma, Quad, Sp, tailScore,
                 Lt, Add(DeltaLower, Multiply(h, b)))
         ]));
     }

@@ -15,7 +15,7 @@ noncomputable section
 universe u
 
 abbrev tailSignature : Signature :=
-  oneRole (Σ J : Type u, Σ _ : Fintype J, (J → ℝ) × (J → ℝ)) (fun _ => ℝ)
+  oneRole (Σ J : Type u, Σ _ : Fintype J, Σ _ : J → ℝ, J → ℝ) (fun _ => ℝ)
 
 def tailActual : Realization tailSignature.{u} :=
   realize tailSignature
