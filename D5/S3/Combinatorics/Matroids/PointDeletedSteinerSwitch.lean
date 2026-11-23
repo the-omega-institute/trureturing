@@ -409,7 +409,7 @@ private theorem deleted_leaves_matching {r : ℕ} {S : Set (Set (Fin (r + 1)))}
     rw [hb]
     exact hc
   choose m mates using partner
-  have equal_of_pair {a b : Fin r} (ne : a ≠ b)
+  have equal_of_pair {a b : Fin r}
       (h : ({q,embed a,embed b} : Set (Fin (r+1))) ∈ S) : m a = b := by
     have eq := valid.2 _ (mates a).2 _ h q (embed a) (outside a).symm
       (by simp) (by simp) (by simp) (by simp)
@@ -419,7 +419,7 @@ private theorem deleted_leaves_matching {r : ℕ} {S : Set (Set (Fin (r + 1)))}
       false_or] using mem
   have inv : Function.Involutive m := by
     intro a
-    apply equal_of_pair (mates a).1
+    apply equal_of_pair
     have reverse : ({q,embed (m a),embed a} : Set (Fin (r+1))) = {q,embed a,embed (m a)} := by
       ext i
       simp only [mem_insert_iff, mem_singleton_iff]
@@ -438,7 +438,7 @@ private theorem deleted_leaves_matching {r : ℕ} {S : Set (Set (Fin (r + 1)))}
         Set.ncard_eq_three.mpr ⟨q,embed a,embed b,(outside a).symm,(outside b).symm,
           fun h => leave.1 (inj h),rfl⟩
       have eq := Set.eq_of_subset_of_ncard_le sub (by rw [valid.1 s hs, card])
-      exact equal_of_pair leave.1 (eq.symm ▸ hs)
+      exact equal_of_pair (eq.symm ▸ hs)
     · let t := embed ⁻¹' s
       have before : embed '' t = s := by
         apply Set.image_preimage_eq_of_subset
@@ -461,6 +461,57 @@ private theorem deleted_leaves_matching {r : ℕ} {S : Set (Set (Fin (r + 1)))}
     exact outside x eq
 
 
+
+private theorem block_distinct {r : ℕ} {P : Set (Set (Fin r))}
+    (valid : IsPartialSteiner P) {a b c : Fin r} (block : ({a,b,c} : Set (Fin r)) ∈ P) :
+    a ≠ b ∧ a ≠ c ∧ b ≠ c := by
+  have card := valid.1 _ block
+  have at_most_two (x y : Fin r) : ({x,y} : Set (Fin r)).ncard ≤ 2 := by
+    simpa using Set.ncard_insert_le x ({y} : Set (Fin r))
+  refine ⟨?_,?_,?_⟩
+  · intro eq
+    subst b
+    have upper := at_most_two a c
+    simp only [insert_idem] at card
+    omega
+  · intro eq
+    subst c
+    have same : ({a,b,a} : Set (Fin r)) = {a,b} := by
+      ext x
+      simp only [mem_insert_iff, mem_singleton_iff]
+      tauto
+    rw [same] at card
+    have upper := at_most_two a b
+    omega
+  · intro eq
+    subst c
+    have upper := at_most_two a b
+    rw [show ({a,b,b} : Set (Fin r)) = {a,b} by ext x; simp] at card
+    omega
+
+private theorem switch_vertices {r : ℕ} {P : Set (Set (Fin r))}
+    (valid : IsPartialSteiner P) {a b v d c : Fin r}
+    (left : ({a,b,v} : Set (Fin r)) ∈ P) (right : ({v,d,c} : Set (Fin r)) ∈ P)
+    (free : Uncovered P a c) : Function.Injective ([a,b,v,d,c].get : Fin 5 → Fin r) := by
+  obtain ⟨ab,av,bv⟩ := block_distinct valid left
+  obtain ⟨vd,vc,dc⟩ := block_distinct valid right
+  have bc : b ≠ c := by
+    intro eq
+    exact free.2 ⟨{a,b,v},left,by simp,by simp [eq]⟩
+  have ad : a ≠ d := by
+    intro eq
+    exact free.2 ⟨{v,d,c},right,by simp [eq],by simp⟩
+  have bd : b ≠ d := by
+    intro eq
+    have same := valid.2 _ left _ right b v bv (by simp) (by simp)
+      (by simp [eq]) (by simp)
+    have mem : a ∈ ({v,d,c} : Set (Fin r)) :=
+      same ▸ (show a ∈ ({a,b,v} : Set (Fin r)) by simp)
+    simp [av,ad,free.1] at mem
+  have nodup : [a,b,v,d,c].Nodup := by
+    simp [List.nodup_cons,ab,av,ad,free.1,bv,bd,bc,vd,vc,dc]
+  exact nodup.injective_get
+
 private theorem switch_for_pair {r : ℕ} {P : Set (Set (Fin r))}
     (valid : IsPartialSteiner P) {m : Fin r → Fin r} (involutive : Function.Involutive m)
     (noFixed : ∀ a, m a ≠ a) (oldLeave : ∀ a b, Uncovered P a b ↔ m a = b)
@@ -473,7 +524,6 @@ private theorem switch_for_pair {r : ℕ} {P : Set (Set (Fin r))}
         (Maximal (switchedPacking P p) ↔ d ≠ m b) := by
   classical
   let c := m a
-  have ca : c ≠ a := noFixed _
   have av : Covered P a v := by
     by_contra h
     exact notMate (((oldLeave _ _).mp ⟨ne.symm,h⟩).symm)
@@ -484,23 +534,7 @@ private theorem switch_for_pair {r : ℕ} {P : Set (Set (Fin r))}
   obtain ⟨b,ba,bv,hb⟩ := pair_completion valid ne.symm av
   obtain ⟨d,dc,dv,hd⟩ := pair_completion valid notMate.symm cv
   have ac_free : Uncovered P a c := (oldLeave _ _).mpr rfl
-  have bc : b ≠ c := by
-    intro eq
-    exact ac_free.2 ⟨{a,v,b},hb,by simp,by simp [eq]⟩
-  have da : d ≠ a := by
-    intro eq
-    exact ac_free.2 ⟨{c,v,d},hd,by simp [eq],by simp⟩
-  have bd : b ≠ d := by
-    intro eq
-    have blocks := valid.2 _ hb _ hd v b bv.symm (by simp) (by simp) (by simp) (by simp [eq])
-    have mem : a ∈ ({c,v,d} : Set (Fin r)) := blocks ▸ (show a ∈ ({a,v,b} : Set (Fin r)) by simp)
-    simp [ca.symm,ne.symm,da.symm] at mem
   let p : Fin 5 → Fin r := [a,b,v,d,c].get
-  have distinct : [a,b,v,d,c].Nodup := by
-    have vc : v ≠ c := notMate
-    have dc' : d ≠ c := dc
-    simp [List.nodup_cons,ba.symm,ne.symm,da.symm,ca.symm,bv,bd,bc,dv.symm,vc,dc']
-  have inj : Function.Injective p := distinct.injective_get
   have left : ({p 0,p 1,p 2} : Set (Fin r)) ∈ P := by
     change ({a,b,v} : Set (Fin r)) ∈ P
     convert hb using 1
@@ -513,6 +547,7 @@ private theorem switch_for_pair {r : ℕ} {P : Set (Set (Fin r))}
     ext x
     simp only [mem_insert_iff, mem_singleton_iff]
     tauto
+  have inj : Function.Injective p := switch_vertices valid left right ac_free
   obtain ⟨hQ,count,leave⟩ := replace_two_blocks valid inj involutive oldLeave
     (show m (p 0) = p 4 from rfl) left right
   have max := switched_maximal_iff hQ inj involutive noFixed leave
@@ -583,7 +618,7 @@ private theorem optimal_size_of_matching_leave {r : ℕ} {P : Set (Set (Fin r))}
 
 open RankThreeInternalTriplePotentials (Row LiftedLineFamily)
 open RankThreeOmissionPotentials (covers)
-open RankThreeInternalSteinerDecomposition (extendedFamily)
+open RankThreeInternalSteinerDecomposition (extendedFamily forward_decomposition)
 open RankThreeInternalSizeSpectrum
 open D5.S3.Combinatorics.LatinEulerianMultiples (IsLatin)
 
@@ -595,13 +630,13 @@ theorem matching_switch_first_deficit {d r : ℕ} [NeZero (3 * r)] {T : Type*}
     (mixedUnique : ∀ t u x y, x ≠ y → covers (mixed t) x y → covers (mixed u) x y → t = u)
     (P : Set (Set (Fin r))) (valid : IsPartialSteiner P) (m : Fin r → Fin r)
     (leave : ∀ a b, Uncovered P a b ↔ m a = b)
-    (p : Fin 5 → Fin r) (inj : Function.Injective p) (endpoints : m (p 0) = p 4)
+    (p : Fin 5 → Fin r) (endpoints : m (p 0) = p 4)
     (first : ({p 0,p 1,p 2} : Set (Fin r)) ∈ P)
     (second : ({p 2,p 3,p 4} : Set (Fin r)) ∈ P) (success : m (p 1) ≠ p 3) :
     let N := 3 ^ d * r ^ 2 + 3 ^ (d + 1) * (r * (r - 2) / 6)
     (∃ G, IsSaturatedInternalExtension mixed G ∧ G.ncard = N) ∧
     (∃ G, IsSaturatedInternalExtension mixed G ∧ G.ncard + 1 = N) ∧
-    (∀ G, IsSaturatedInternalExtension mixed G → G.ncard ≤ N) := by
+    (∀ G, IsInternalExtension mixed G → G.ncard ≤ N) := by
   classical
   intro N
   let I := Row d × ZMod 3
@@ -626,8 +661,15 @@ theorem matching_switch_first_deficit {d r : ℕ} [NeZero (3 * r)] {T : Type*}
     have hbc := (leave b c).mp ⟨bc,h.2.1⟩
     rw [← hab,involutive] at hbc
     exact ca hbc.symm
+  have inj : Function.Injective p := by
+    have repr : p = ([p 0,p 1,p 2,p 3,p 4].get : Fin 5 → Fin r) := by
+      funext i
+      fin_cases i <;> rfl
+    rw [repr]
+    exact switch_vertices valid first second ((leave _ _).mpr endpoints)
   let Q := switchedPacking P p
-  obtain ⟨validQ,countQ,leaveQ⟩ := replace_two_blocks valid inj involutive leave endpoints first second
+  obtain ⟨validQ,countQ,leaveQ⟩ :=
+    replace_two_blocks valid inj involutive leave endpoints first second
   have maxQ : Maximal Q := (switched_maximal_iff validQ inj involutive noFixed leaveQ).mpr success
   let : NeZero r := ⟨positive.ne'⟩
   obtain ⟨labels,hlabels⟩ := RankThreeMinimumInternalAdditions.residue_indexing r
@@ -651,8 +693,8 @@ theorem matching_switch_first_deficit {d r : ℕ} [NeZero (3 * r)] {T : Type*}
   let F₁ (x : Row d) (c : ZMod 3) := if (x,c) = i₀ then Q else P
   have valid₁ (x : Row d) (c : ZMod 3) : IsPartialSteiner (F₁ x c) := by
     by_cases h : (x,c) = i₀
-    · simpa only [F₁, if_pos h] using (show IsPartialSteiner Q from validQ)
-    · simpa only [F₁, if_neg h] using valid
+    · simpa only [F₁, ite_eq_left h] using (show IsPartialSteiner Q from validQ)
+    · simpa only [F₁, ite_eq_right h] using valid
   have max₁ (x : Row d) (c : ZMod 3) : Maximal (F₁ x c) := by
     by_cases h : (x,c) = i₀ <;> simp [F₁,h,maximal,maxQ]
   have small : IsSaturatedInternalExtension mixed (extendedFamily e L F₁) :=
@@ -670,9 +712,10 @@ theorem matching_switch_first_deficit {d r : ℕ} [NeZero (3 * r)] {T : Type*}
     change Q.ncard + 1 = P.ncard at countQ
     omega
   refine ⟨⟨_,full,full_size⟩,⟨_,small,small_size⟩,?_⟩
-  intro G hG
-  obtain ⟨K,F,_,validF,_,rfl⟩ := (bridge G).mp hG
-  rw [count K F validF, N_eq]
+  rintro G ⟨U,internal,same,distinct,unique,dim,rfl⟩
+  obtain ⟨K,F,_,validF,split⟩ :=
+    forward_decomposition e he hd mixed internal family crosses same distinct unique dim
+  rw [split, count K F validF, N_eq]
   apply Nat.add_le_add_left
   calc
     (∑ i : I, (F i.1 i.2).ncard) ≤ ∑ _i : I, M :=
