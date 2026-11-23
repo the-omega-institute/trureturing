@@ -211,7 +211,8 @@ private theorem gamma_bound {q : ℕ} (χ : DirichletCharacter ℂ q)
         Real.exp (((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
     have ht0 : 0 < t.re := by linarith
     have hp : Real.pi ^ (-t.re / 2) ≤ 1 :=
-      Real.rpow_le_one_of_one_le_of_nonpos (by linarith [Real.pi_gt_three] : 1 ≤ Real.pi) (by linarith)
+      Real.rpow_le_one_of_one_le_of_nonpos
+        (by linarith [Real.pi_gt_three] : 1 ≤ Real.pi) (by linarith)
     have hx : 1 ≤ t.re / 2 + 1 := by linarith
     have hU : t.re / 2 + 1 ≤ (R + 3) / 2 := by linarith
     have hl := Real.log_le_log (by linarith : 0 < t.re / 2 + 1) hU
