@@ -528,4 +528,12 @@ theorem sharp_entropy_dimension :
 #print axioms sharp_entropy_dimension
 
 end DiagonalExperiment
+
+namespace Basis
+
+export _root_.D5.S3.Quantum.Recovery.DiagonalRecordCapacity.DiagonalExperiment
+  (basisState basisState_matrix)
+
+end Basis
+
 end D5.S3.Quantum.Recovery.DiagonalRecordCapacity

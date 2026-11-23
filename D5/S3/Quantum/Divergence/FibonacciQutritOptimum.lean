@@ -4,23 +4,25 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exact attained Umegaki divergence maximum for the four Fibonacci likelihood classes under CPTP qutrit encoding. -/
+   digest: Exact attained Umegaki maximum under CPTP qutrit encoding. -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Divergence.FibonacciQutritBenchmark
 import D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport
 import D5.S3.Quantum.Divergence.Qubit.FibonacciMixedQubit
-import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 import D5.S3.Quantum.Foundation.FinitePreparationChannel
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
+import D5.S3.Quantum.Recovery.DiagonalRecordCapacity
 import D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation
+import D5.S3.Weil.ZetaLinear.RankTrace
 
-/-! Exact Fibonacci Umegaki optimum for qutrit preparations and diagonal-input channels.
-
--/
+/-! Exact Fibonacci Umegaki optimum for qutrit encoding of a diagonal pair. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -40,6 +42,7 @@ namespace D5.S3.Quantum.Divergence.FibonacciQutritOptimum
 open ConditionalHockeyStickOrthogonalReduction (trace_reindex)
 open FannesRootFidelityHolevo (supported_of_le)
 open D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity (zero_trace_mul_eq_zero)
+open D5.S3.Quantum.Recovery.DiagonalRecordCapacity.Basis (basisState basisState_matrix)
 
 /-- The exact optimum in nats. -/
 abbrev C3 : ℝ := (113 / 141) * Real.log (113 / 81) + (28 / 141) * Real.log (7 / 3)
@@ -87,13 +90,15 @@ private theorem sum_inputWeights {n : Type*} [Fintype n] [DecidableEq n]
     (∑ i, inputWeights i • matrix (X i)) = inputOutput X := by
   simp only [inputWeights, inputOutput, Fin.sum_univ_succ, Fin.sum_univ_zero,
     Matrix.cons_val_zero, Matrix.cons_val_succ, add_zero, ← add_assoc,
-    first_weight, second_weight, third_weight] <;> rfl
+    first_weight, second_weight, third_weight]
+  rfl
 
 private theorem sum_referenceWeights {n : Type*} [Fintype n] [DecidableEq n]
     (X : Fin 3 → DensityState n) :
     (∑ i, referenceWeights i • matrix (X i)) = positiveReference X := by
   simp only [referenceWeights, positiveReference, Fin.sum_univ_succ, Fin.sum_univ_zero,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, add_zero, ← add_assoc] <;> rfl
+    Matrix.cons_val_zero, Matrix.cons_val_succ, add_zero, ← add_assoc]
+  rfl
 
 private abbrev classicalFormula : ℝ :=
   (4 / 3 * (66 / 141) + 5 / 3 * (15 / 141)) *
@@ -147,7 +152,6 @@ private theorem singular_bound (X : Fin 3 → DensityState (Fin 3))
     FibonacciQutritSingularSupport.singular_support_reduction
       X X₀ inputWeights referenceWeights (48 / 141) hq hp (by norm_num)
       (by simpa only [sum_referenceWeights] using h)
-  dsimp only at hdiv hLoss hZero
   simp only [sum_inputWeights, sum_referenceWeights] at hdiv hLoss hZero
   have hqubit :
       traceLog (∑ i, inputWeights i • matrix (Y i)) (∑ i, referenceWeights i • matrix (Y i)) ≤
@@ -241,7 +245,61 @@ private theorem reverse_mul_zero {n : Type*} [Fintype n] [DecidableEq n]
     (density_posSemidef Y).isHermitian.eq, Matrix.conjTranspose_zero] using
     congrArg Matrix.conjTranspose h
 
-/private theorem trace_eq_of_re_trace_eq {A B : Mat (Fin 3)}
+/-- The optimal commuting outputs put the first two preparations on a common ray
+and place the third and zero-likelihood preparations on separate orthogonal rays. -/
+private theorem commuting_attainment :
+    ∃ P Q R : DensityState (Fin 3),
+      matrix P * matrix Q = 0 ∧ matrix P * matrix R = 0 ∧ matrix Q * matrix R = 0 ∧
+      let X : Fin 3 → DensityState (Fin 3) := ![P, P, Q]
+      inputOutput X = (113 / 141 : ℝ) • matrix P + (28 / 141 : ℝ) • matrix Q ∧
+      referenceOutput X R =
+        (81 / 141 : ℝ) • matrix P + (12 / 141 : ℝ) • matrix Q + (48 / 141 : ℝ) • matrix R ∧
+      Commute (inputOutput X) (referenceOutput X R) ∧
+        (referenceOutput X R).PosDef ∧ divergence X R = C3 := by
+  obtain ⟨P, Q, R, hPQ, hPR, hQR, hPos, hValue⟩ :=
+    FibonacciQutritBenchmark.classical_benchmark_attained
+      (66 / 141) (15 / 141) (12 / 141) (48 / 141)
+      (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  change matrix P * matrix Q = 0 at hPQ
+  change matrix P * matrix R = 0 at hPR
+  change matrix Q * matrix R = 0 at hQR
+  let X : Fin 3 → DensityState (Fin 3) := ![P, P, Q]
+  let A := ((4 / 3 : ℝ) * (66 / 141) + (5 / 3) * (15 / 141)) • matrix P +
+    ((7 / 3 : ℝ) * (12 / 141)) • matrix Q
+  let B := (66 / 141 + 15 / 141 : ℝ) • matrix P + (12 / 141 : ℝ) • matrix Q +
+    (48 / 141 : ℝ) • matrix R
+  have hA : inputOutput X = A := by
+    simp only [inputOutput, X, A, add_smul]
+    rfl
+  have hB : referenceOutput X R = B := by
+    simp only [referenceOutput, positiveReference, X, B, add_smul]
+    rfl
+  have hQP := reverse_mul_zero (X := P) (Y := Q) hPQ
+  have hRP := reverse_mul_zero (X := P) (Y := R) hPR
+  have hRQ := reverse_mul_zero (X := Q) (Y := R) hQR
+  refine ⟨P, Q, R, hPQ, hPR, hQR, ?_, ?_, ?_, ?_, ?_⟩
+  · change inputOutput X = _
+    rw [hA]
+    have hMerged : (4 / 3 : ℝ) * (66 / 141) + (5 / 3) * (15 / 141) = 113 / 141 := by
+      norm_num
+    simp only [A, hMerged, third_weight]
+  · change referenceOutput X R = _
+    rw [hB]
+    have hMerged : (66 / 141 : ℝ) + 15 / 141 = 81 / 141 := by norm_num
+    simp only [B, hMerged]
+  · change Commute (inputOutput X) (referenceOutput X R)
+    rw [hA, hB, commute_iff_eq]
+    simp only [A, B, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
+      hPQ, hPR, hQR, hQP, hRP, hRQ, smul_zero, add_zero, zero_add, smul_smul]
+    rw [mul_comm (66 / 141 + 15 / 141 : ℝ), mul_comm (12 / 141 : ℝ)]
+  · change (referenceOutput X R).PosDef
+    rw [hB]
+    exact hPos
+  · change divergence X R = C3
+    rw [divergence, hA, hB, ← classicalFormula_eq]
+    exact hValue
+
+private theorem trace_eq_of_re_trace_eq {A B : Mat (Fin 3)}
     (hA : A.IsHermitian) (hB : B.IsHermitian) {r : ℝ} (h : (A * B).trace.re = r) :
     (A * B).trace = (r : ℂ) := by
   let U : HermitianMat (Fin 3) ℂ := ⟨A, hA⟩
@@ -325,29 +383,31 @@ def diagonalInput : DensityState (Fin 4) :=
 def diagonalReference : DensityState (Fin 4) :=
   diagonalState q (fun i => (q_pos i).le) q_sum
 
-def basisState (i : Fin 4) : DensityState (Fin 4) :=
-  diagonalState (fun j => if j = i then 1 else 0)
-    (fun j => by split <;> norm_num) (by simp)
-
 private theorem diagonal_decomposition (r : Fin 4 → ℝ) :
     CStarMatrix.ofMatrix (Matrix.diagonal fun i => (r i : ℂ)) =
       ∑ i, (r i : ℂ) • (basisState i).1 := by
-  change (Matrix.diagonal (fun i => (r i : ℂ)) : Mat (Fin 4)) =
-    ∑ i, (r i : ℂ) • Matrix.diagonal (fun j => ((if j = i then (1 : ℝ) else 0) : ℂ))
-  ext j k
-  by_cases hjk : j = k
-  · subst k
-    simp [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, apply_ite, mul_ite]
-  · simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.diagonal_apply_ne _ hjk]
+  apply CStarMatrix.ofMatrixL.symm.injective
+  change Matrix.diagonal (fun i => (r i : ℂ)) =
+    CStarMatrix.ofMatrixL.symm (∑ i, (r i : ℂ) • (basisState i).1)
+  rw [map_sum, ← Matrix.sum_single_eq_diagonal]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [map_smul]
+  change Matrix.single i i (r i : ℂ) = (r i : ℂ) • matrix (basisState i)
+  rw [show matrix (basisState i) = Matrix.single i i 1 from basisState_matrix i,
+    Matrix.smul_single, smul_eq_mul, mul_one]
 
 private theorem map_diagonal (Φ : QuantumChannel (Fin 4) (Fin 3)) (r : Fin 4 → ℝ)
     (hr : ∀ i, 0 ≤ r i) (hr₁ : ∑ i, r i = 1) :
     matrix (Φ.mapState (diagonalState r hr hr₁)) =
       ∑ i, r i • matrix (Φ.mapState (basisState i)) := by
-  change CStarMatrix.ofMatrixStarAlgEquiv.symm
-      (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix (Matrix.diagonal fun i => (r i : ℂ)))) = _
-  rw [diagonal_decomposition, map_sum, map_sum]
-  simp only [map_smul, Complex.coe_smul] <;> rfl
+  let L := CStarMatrix.ofMatrixL.symm.toLinearMap.comp Φ.toCompletelyPositiveMap.toLinearMap
+  change L (CStarMatrix.ofMatrix (Matrix.diagonal fun i => (r i : ℂ))) =
+    ∑ i, r i • L (basisState i).1
+  rw [diagonal_decomposition, map_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  exact (L.restrictScalars ℝ).map_smul (r i) (basisState i).1
 
 private theorem preparation_diagonal (X : Fin 4 → DensityState (Fin 3)) :
     ∃ Φ : QuantumChannel (Fin 4) (Fin 3),
@@ -371,15 +431,18 @@ private theorem sum_p (W : Fin 4 → DensityState (Fin 3)) :
     (∑ i, p i • matrix (W i)) = inputOutput (positiveClasses W) := by
   simp only [p, inputOutput, positiveClasses, Fin.sum_univ_succ, Fin.sum_univ_zero,
     Matrix.cons_val_zero, Matrix.cons_val_succ, zero_smul, add_zero, ← add_assoc,
-    first_weight, second_weight, third_weight] <;> rfl
+    first_weight, second_weight, third_weight]
+  rfl
 
 private theorem sum_q (W : Fin 4 → DensityState (Fin 3)) :
     (∑ i, q i • matrix (W i)) = referenceOutput (positiveClasses W) (W 3) := by
   simp only [q, referenceOutput, positiveReference, positiveClasses, Fin.sum_univ_succ,
-    Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, add_zero, ← add_assoc] <;> rfl
+    Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, add_zero, ← add_assoc]
+  rfl
 
 /-- Every preparation tuple is realized by a CPTP channel on the diagonal pair. -/
-private theorem preparations_realized (X : Fin 3 → DensityState (Fin 3)) (X₀ : DensityState (Fin 3)) :
+private theorem preparations_realized (X : Fin 3 → DensityState (Fin 3))
+    (X₀ : DensityState (Fin 3)) :
     ∃ Φ : QuantumChannel (Fin 4) (Fin 3),
       matrix (Φ.mapState diagonalInput) = inputOutput X ∧
       matrix (Φ.mapState diagonalReference) = referenceOutput X X₀ := by
@@ -388,7 +451,8 @@ private theorem preparations_realized (X : Fin 3 → DensityState (Fin 3)) (X₀
     funext i
     fin_cases i <;> rfl
   obtain ⟨Φ, hp, hq⟩ := preparation_diagonal W
-  exact ⟨Φ, by simpa only [sum_p, hX] using hp, by simpa only [sum_q, hX] using hq⟩
+  have hW : W 3 = X₀ := rfl
+  exact ⟨Φ, by simpa only [sum_p, hX] using hp, by simpa only [sum_q, hX, hW] using hq⟩
 
 private theorem channel_score (Φ : QuantumChannel (Fin 4) (Fin 3)) :
     extendedQuantumRelativeEntropy (Φ.mapState diagonalInput) (Φ.mapState diagonalReference) =
@@ -442,9 +506,12 @@ theorem isGreatest_channel :
   · rintro _ ⟨Φ, rfl⟩
     let W (i : Fin 4) := Φ.mapState (basisState i)
     have hp : matrix (Φ.mapState diagonalInput) = inputOutput (positiveClasses W) := by
-      simpa only [sum_p] using map_diagonal Φ p p_nonneg p_sum
-    have hq : matrix (Φ.mapState diagonalReference) = referenceOutput (positiveClasses W) (W 3) := by
-      simpa only [sum_q] using map_diagonal Φ q (fun i => (q_pos i).le) q_sum
+      simpa only [sum_p, diagonalInput, W] using map_diagonal Φ p p_nonneg p_sum
+    have hq : matrix (Φ.mapState diagonalReference) =
+        referenceOutput (positiveClasses W) (W 3) := by
+      simpa only [sum_q, diagonalReference, W] using map_diagonal Φ q (fun i => (q_pos i).le) q_sum
+    change extendedQuantumRelativeEntropy (Φ.mapState diagonalInput)
+      (Φ.mapState diagonalReference) ≤ (C3 : WithTop ℝ)
     rw [channel_score, WithTop.coe_le_coe]
     change traceLog (matrix (Φ.mapState diagonalInput)) (matrix (Φ.mapState diagonalReference)) ≤ C3
     rw [hp, hq]
@@ -465,9 +532,9 @@ theorem channel_equality_conditions (Φ : QuantumChannel (Fin 4) (Fin 3))
   let W (i : Fin 4) := Φ.mapState (basisState i)
   let X := positiveClasses W
   have hp : matrix (Φ.mapState diagonalInput) = inputOutput X := by
-    simpa only [sum_p] using map_diagonal Φ p p_nonneg p_sum
+    simpa only [sum_p, diagonalInput, W, X] using map_diagonal Φ p p_nonneg p_sum
   have hq : matrix (Φ.mapState diagonalReference) = referenceOutput X (W 3) := by
-    simpa only [sum_q] using map_diagonal Φ q (fun i => (q_pos i).le) q_sum
+    simpa only [sum_q, diagonalReference, W, X] using map_diagonal Φ q (fun i => (q_pos i).le) q_sum
   rw [channel_score, WithTop.coe_eq_coe] at hEq
   change traceLog (matrix (Φ.mapState diagonalInput)) (matrix (Φ.mapState diagonalReference)) =
     C3 at hEq
@@ -482,17 +549,18 @@ theorem channel_equality_conditions (Φ : QuantumChannel (Fin 4) (Fin 3))
           fin_cases j <;> norm_num [referenceWeights])).nonneg) (Finset.mem_univ i)
     ext a b
     have hz := congrArg (fun M : Mat (Fin 3) => M *ᵥ Pi.single b (1 : ℂ)) hNull
-    rw [Matrix.mulVec_mulVec, Matrix.zero_mulVec] at hz
+    rw [← Matrix.mulVec_mulVec, Matrix.zero_mulVec] at hz
     have hz' := supported_of_le ((density_posSemidef (X i)).smul hqi.le)
       hWeighted (matrix (W 3) *ᵥ Pi.single b (1 : ℂ)) hz
-    rw [Matrix.smul_mulVec, ← Matrix.mulVec_mulVec] at hz'
+    rw [Matrix.smul_mulVec, Matrix.mulVec_mulVec] at hz'
     have hCol := (smul_eq_zero.mp hz').resolve_left hqi.ne'
     rw [Matrix.mulVec_single_one] at hCol
     exact congrFun hCol a
-  exact ⟨hSing, matrix_eq_of_overlap_one (W 0) (W 1) h01,
-    zero_trace_mul_eq_zero _ _ (density_posSemidef (W 0)) (density_posSemidef (W 2))
-      (by simpa using trace_eq_of_re_trace_eq (density_posSemidef (W 0)).isHermitian
-        (density_posSemidef (W 2)).isHermitian h02),
+  have ht := trace_eq_of_re_trace_eq (density_posSemidef (W 0)).isHermitian
+    (density_posSemidef (W 2)).isHermitian h02
+  have hOrth := zero_trace_mul_eq_zero _ _ (density_posSemidef (W 0)) (density_posSemidef (W 2))
+    (by simpa only [Complex.ofReal_zero] using ht)
+  exact ⟨hSing, matrix_eq_of_overlap_one (W 0) (W 1) h01, hOrth,
     hAnnihilates 0, hAnnihilates 2⟩
 
 #print axioms isGreatest_channel
