@@ -18,9 +18,15 @@ from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 PIN = "Meta/tools-release.json"
-RELEASES = "https://github.com/the-omega-institute/trureturing-tools/releases/download"
+CONSUMER = "the-omega-institute/trureturing"
+TOOLS = "the-omega-institute/trureturing-tools"
+RELEASES = f"https://github.com/{TOOLS}/releases/download"
 CACHE = ROOT / "build/tools-releases"
 STAMP = ".release-sha256"
+SHA = r"[0-9a-f]{40}"
+PR_PREVIEW = re.compile(r"v[0-9]+\.[0-9]+\.[0-9]+-pr\.([1-9][0-9]*)\.[1-9][0-9]*\.g([0-9a-f]{12})")
+BASE_TRAILER = "consumer-tools-base"
+ACTIONS_BOT = 41898282
 
 
 def git(*args):
@@ -35,35 +41,97 @@ def read_pin(revision):
         if not git("ls-tree", tree, "--", PIN):
             return None
         data = git("show", f"{tree}:{PIN}")
+    return parse_pin(data)
+
+
+def parse_pin(data):
     pin = json.loads(data)
-    if (set(pin) not in ({"version", "sha256"}, {"version", "sha256", "workflow_sha"})
-            or ("workflow_sha" in pin and not re.fullmatch(r"[0-9a-f]{40}", pin["workflow_sha"]))
+    if (not isinstance(pin, dict)
+            or not {"version", "sha256"} <= pin.keys() <= {"version", "sha256", "workflow_sha", "source_sha"}
+            or ("workflow_sha" in pin and not re.fullmatch(SHA, pin["workflow_sha"]))
             or not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?", pin["version"])
             or not re.fullmatch(r"[0-9a-f]{64}", pin["sha256"])):
         raise ValueError(f"invalid tools release pin in {PIN}")
+    if "source_sha" in pin:
+        preview = PR_PREVIEW.fullmatch(pin["version"])
+        if not preview or not re.fullmatch(SHA, pin["source_sha"]) or not pin["source_sha"].startswith(preview[2]):
+            raise ValueError(f"source_sha must be the full source of the PR preview in {PIN}")
     return pin
 
 
-def verify_adopted_source(pin):
-    repo = "the-omega-institute/trureturing-tools"
+def api(repo, endpoint):
+    return json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/{endpoint}"]))
+
+
+def tag_source(version, *, lightweight=False):
+    ref = api(TOOLS, f"git/ref/tags/{version}")["object"]
+    if not lightweight and ref["type"] == "tag":
+        ref = api(TOOLS, f"git/tags/{ref['sha']}")["object"]
+    if ref["type"] != "commit" or not re.fullmatch(SHA, ref["sha"]):
+        raise ValueError(f"{version} must point to a tools commit")
+    suffix = re.search(r"\.g([0-9a-f]{12}|[0-9a-f]{40})$", version)
+    if suffix and not ref["sha"].startswith(suffix[1]):
+        raise ValueError(f"{version} points to a different tools commit")
+    return ref["sha"]
+
+
+def contains(source, tip):
+    return source == tip or api(TOOLS, f"compare/{source}...{tip}?per_page=1")["merge_base_commit"]["sha"] == source
+
+
+def base_trailers(source):
+    message = api(TOOLS, f"git/commits/{source}")["message"]
+    trailers = subprocess.check_output(["git", "interpret-trailers", "--parse"], input=message, text=True)
+    return [value.strip() for line in trailers.splitlines()
+            for key, _, value in [line.partition(":")] if key.lower() == BASE_TRAILER]
+
+
+def verify_paired(preview, source, baseline, previous, event):
+    if baseline is None or previous is None:
+        raise ValueError("verify a paired tools pin against the consumer commit's first-parent pin")
+    trailers = base_trailers(source)
+    if trailers != [baseline]:
+        raise ValueError("tools pin conflict: integrate the current consumer pin source into the same tools PR, "
+                         "prepare its new head, pass tools CI and publish a new preview")
+    previous_source = tag_source(previous["version"])
+    if previous.get("source_sha", previous_source) != previous_source or not contains(previous_source, source):
+        raise ValueError("the tested tools PR head must contain the previous consumer pin source")
+    pull = api(TOOLS, f"pulls/{preview[1]}")
+    if (pull["base"]["ref"] != "dev" or pull["base"]["repo"]["full_name"] != TOOLS
+            or (pull["head"]["repo"] or {}).get("full_name") != TOOLS or pull["head"]["sha"] != source
+            or pull["draft"] or not (pull["state"] == "open" or (event == "push" and pull["merged"]))):
+        raise ValueError(f"tools PR #{preview[1]} must target {TOOLS}/dev at the exact published head {source}")
+    if event == "pull_request":
+        dev = api(CONSUMER, "git/ref/heads/dev")["object"]["sha"]
+        if api(CONSUMER, f"contents/{PIN}?ref={dev}")["sha"] != baseline:
+            raise ValueError("tools pin conflict: consumer dev changed its pin, prepare and publish a new tools PR head")
+
+
+def verify_adopted_source(pin, baseline=None, previous=None, event=None, *, inherited=False):
     version = pin["version"]
     preview = "-" in version
     branch = "dev" if preview else "main"
-    metadata = json.loads(subprocess.check_output([
-        "gh", "api", f"repos/{repo}/releases/tags/{version}",
-        "--jq", "{tag_name, draft, prerelease, assets: [.assets[] | select(.name == \"trureturing-tools.tar.gz\") | {state,digest}]}",
-    ]))
+    metadata = api(TOOLS, f"releases/tags/{version}")
+    assets = [asset for asset in metadata["assets"] if asset["name"] == "trureturing-tools.tar.gz"]
     if (metadata["tag_name"] != version or metadata["draft"] or metadata["prerelease"] != preview
-            or metadata["assets"] != [{"state": "uploaded", "digest": "sha256:" + pin["sha256"]}]):
+            or len(assets) != 1 or assets[0]["state"] != "uploaded" or assets[0]["digest"] != "sha256:" + pin["sha256"]):
         raise ValueError(f"{version} does not match the published tools archive and checksum")
-    commits = json.loads(subprocess.check_output([
-        "gh", "api", f"repos/{repo}/compare/{version}...{branch}?per_page=1",
-        "--jq", "{source: .base_commit.sha, ancestor: .merge_base_commit.sha}",
-    ]))
-    source = commits["source"]
-    if not isinstance(source, str) or not re.fullmatch(r"[0-9a-f]{40}", source) or commits["ancestor"] != source:
-        raise ValueError(f"merge the source of {version} into trureturing-tools/{branch} before adopting it on dev")
-    print(f"Verified tools {version} at {source} on trureturing-tools/{branch}")
+    pr_preview = PR_PREVIEW.fullmatch(version)
+    source = tag_source(version, lightweight="source_sha" in pin)
+    if "source_sha" in pin:
+        if (source != pin["source_sha"] or metadata["author"]["id"] != ACTIONS_BOT
+                or assets[0]["uploader"]["id"] != ACTIONS_BOT):
+            raise ValueError(f"{version} must be an Actions publication at the pinned full source SHA")
+        if inherited:
+            return  # A push batch ends after the transition. Delivery verifies the actual merge.
+        verify_paired(pr_preview, source, baseline, previous, event)
+        print(f"Verified paired tools PR #{pr_preview[1]} at {source}")
+        return
+    if pr_preview and base_trailers(source):
+        raise ValueError(f"pin the full source_sha of paired preview {version}")
+    if not contains(source, branch):
+        raise ValueError(f"merge the source of {version} into trureturing-tools/{branch} or pin a paired preview")
+    print(f"Verified tools {version} at {source} on {TOOLS}/{branch}")
 
 
 def digest(path):
@@ -214,12 +282,21 @@ def main():
     parser.add_argument("--cache-from", type=Path, help="reuse a matching release cached in this checkout")
     parser.add_argument("--cache-revision", help="cache this revision's tools without installing them")
     parser.add_argument("--verify-adopted-source", action="store_true", help="verify the published pin and upstream source for downstream dev")
+    parser.add_argument("--adoption-event", choices=("pull_request", "push"), help="verify the checked-out GitHub merge or push snapshot")
     args = parser.parse_args()
     pin = read_pin(args.cache_revision)
     if pin is None:
         return
     if args.verify_adopted_source:
-        verify_adopted_source(pin)
+        baseline = previous = None
+        inherited = False
+        if args.adoption_event:
+            previous = read_pin("HEAD^1")
+            if previous is not None:
+                baseline = git("rev-parse", f"HEAD^1:{PIN}").decode().strip()
+                inherited = baseline == git("rev-parse", f"HEAD:{PIN}").decode().strip()
+        if not inherited or args.adoption_event == "push":
+            verify_adopted_source(pin, baseline, previous, args.adoption_event, inherited=inherited)
         return
     CACHE.mkdir(parents=True, exist_ok=True)
     with (CACHE / "install.lock").open("a") as lock:

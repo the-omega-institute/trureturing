@@ -17,7 +17,11 @@ documentation defaults to English.
 
 ## Adopting a tools release
 
-Trial tools PR or feature releases on a consumer branch. When adopting a new pin on `dev`, the required check verifies the published archive digest and that the release commit is in the tools repository's `dev` history. Stable releases use the tools `main` history. A maintainer can run the same check with `python3 .github/scripts/install-tools.py --verify-adopted-source`. The tools repository documents source review, development releases and pinning. [Tools release workflow](https://github.com/the-omega-institute/trureturing-tools#package-and-release)
+To adopt an open tools PR, prepare its head against the current consumer `dev` pin, pass tools CI, and publish the `pr/NUMBER` preview from tools `dev`. Use `tools/consumer/pin.py` from the tools checkout to record its tag, SHA-256 and full source commit in this checkout. Submit the resulting lock to consumer `dev` and use a merge commit or squash merge so the landed commit contains the pin change. The tools workflow picks up the merged consumer PR and merges the exact tools PR head after its normal checks.
+
+If a concurrent consumer PR changes the pin, integrate that pin's tools source into the original tools PR, prepare the new head, pass tools CI, and publish a new preview. Then update the lock against current consumer `dev` and rerun consumer checks. A consumer merge that leaves the pin unchanged does not invalidate a preview.
+
+Stable releases and tools previews whose source has already merged still use the regular pin command. Their release commits must be in tools `main` and `dev` history, respectively. [Tools commands and delivery workflow](https://github.com/the-omega-institute/trureturing-tools#pair-a-tools-pr-with-a-consumer-pr)
 
 ## Choose a starting point
 
