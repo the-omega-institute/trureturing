@@ -99,7 +99,7 @@ private theorem pivot_residue_equiv {I V : Type*} [Fintype I] [LinearOrder I] [F
 /-- An omitted family with a common pivot and the uniform core have the same
 product as the residue modules for a subfamily and its one omitted petal. -/
 theorem common_pivot_residue_product {I V : Type*} [Fintype I] [LinearOrder I] [Fintype V]
-    (p : V → I) (hp : Function.Surjective p) {d : ℕ} (hd : 1 ≤ d)
+    (p : V → I) (hp : Function.Surjective p) {d : ℕ}
     (hr : d + 2 < Fintype.card I) (root : I)
     (H : Finset I) (previous : Finset (Finset I)) (hnew : H ∉ previous)
     (hsize : ∀ T ∈ insert H previous, T.card = d + 2)
@@ -145,6 +145,7 @@ theorem common_pivot_residue_product {I V : Type*} [Fintype I] [LinearOrder I] [
     have hHT : H ≠ T.val := fun h => hnew (h.symm ▸ T.prop)
     change ((H.erase root) ∩ (T.val.erase root)).card + 2 ≤ _
     have hx : root ∈ H ∩ T.val := mem_inter.mpr ⟨hroot H H₀.prop, hroot T.val ht⟩
+    have hpositive : 0 < (H ∩ T.val).card := card_pos.mpr ⟨root, hx⟩
     have heq : H.erase root ∩ T.val.erase root = (H ∩ T.val).erase root := by
       ext i
       simp only [mem_erase, mem_inter]

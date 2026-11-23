@@ -195,7 +195,7 @@ theorem common_pivot_lifting_obstruction_invariant_factors {V : Type*} [Fintype 
           B.card = d + 2 ∧ (i = true → B ∉ old) ∧ (j = true → B ≠ H) := by
         cases i <;> cases j <;>
           simp [M, hbaseUniform, hbasePrior, hbaseOne, hBase, and_comm]
-      obtain ⟨square⟩ := common_pivot_residue_product p hp hd hr' root H old fresh
+      obtain ⟨square⟩ := common_pivot_residue_product p hp hr' root H old fresh
         (fun T hT => hsize T (hA hT)) (fun T hT => hroot T (hA hT)) (fun T hT U hU hne => hinter T (hA hT) U (hA hU) hne) M hBM
       obtain ⟨liftPrior⟩ := lift old hold hbasePrior
       obtain ⟨liftSingle⟩ := lift {H} hs hbaseSingle

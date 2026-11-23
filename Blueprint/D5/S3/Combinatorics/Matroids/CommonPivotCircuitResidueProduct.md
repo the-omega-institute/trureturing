@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/CommonPivotCircuitResidueProduct.c
 
 *Commentary.*
 
-Consider rank r with 3 <= r < K and a previous finite family of omitted bases together with one new omission. All omissions have size r, share a pivot, and meet pairwise in at most r minus two indices. For the same surjective parallel expansion, the product of the uniform and joint weighted residue modules is integrally linearly equivalent to the product of the previous and single-omission weighted residue modules.
+Consider rank r with 2 <= r < K and a previous finite family of omitted bases together with one new omission. All omissions have size r, share a pivot, and meet pairwise in at most r minus two indices. For the same surjective parallel expansion, the product of the uniform and joint weighted residue modules is integrally linearly equivalent to the product of the previous and single-omission weighted residue modules.
 
 ## References
 

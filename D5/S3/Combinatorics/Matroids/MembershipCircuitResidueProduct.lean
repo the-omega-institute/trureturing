@@ -44,7 +44,8 @@ theorem membership_residue_product {I V : Type*} [Fintype I] [LinearOrder I] [Fi
       B.card = d + 2 ∧ (i = true → B ∉ previous) ∧ (j = true → B ≠ H)) :
     Nonempty ((weightedCircuitResidues (M false false) p × weightedCircuitResidues (M true true) p) ≃ₗ[ℤ]
       (weightedCircuitResidues (M true false) p × weightedCircuitResidues (M false true) p)) := by
-  refine D5.S3.Combinatorics.Matroids.CommonPivotCircuitResidueProduct.common_pivot_residue_product p hp hd hr root H previous hnew hsize hroot ?_ M hbases
+  clear hd
+  refine D5.S3.Combinatorics.Matroids.CommonPivotCircuitResidueProduct.common_pivot_residue_product p hp hr root H previous hnew hsize hroot ?_ M hbases
   intro T hT U hU hne
   have bound := hseparated.inter_card_add_two_le hT hU hne
     ((hsize T hT).trans (hsize U hU).symm)
