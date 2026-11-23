@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Marginals/BinaryDeletionSignTensor.d
 
 *Commentary.*
 
-The pattern at a site records agreement or one of the two ordered differences. An agreement contributes +1 at 00 and −1 at 11. A difference contributes +1 at its indicated pair. All other local coefficients are zero. The coefficient of two equal-length Boolean words is the product of their local coefficients.
+The pattern at a site records agreement or one of the two ordered differences. An agreement contributes +1 at 00 and −1 at 11. A difference contributes +1 at its indicated pair. All other local coefficients are zero. When both Boolean words have the pattern’s length, the coefficient is the product of their local coefficients.
 
 Split a pattern at the site to be deleted. In the two remaining words, the prefixes before that site have the corresponding prefix length. Reinsert zero in both words and then reinsert one. The two integer coefficients sum to zero. At the deleted site, the local diagonal coefficients are opposites. Reinstating each earlier site multiplies both by the same sign.
 

@@ -18,7 +18,7 @@ internal sealed class BinaryDeletionSignTensorDocument : IScribeDocumentDefiniti
                     "The pattern at a site records agreement or one of the two ordered differences. "
                     + "An agreement contributes +1 at 00 and −1 at 11. A difference contributes "
                     + "+1 at its indicated pair. All other local coefficients are zero. "
-                    + "The coefficient of two equal-length Boolean words is the product "
+                    + "When both Boolean words have the pattern’s length, the coefficient is the product "
                     + "of their local coefficients.")),
                     Paragraph(Text(
                     "Split a pattern at the site to be deleted. In the two remaining words, "
