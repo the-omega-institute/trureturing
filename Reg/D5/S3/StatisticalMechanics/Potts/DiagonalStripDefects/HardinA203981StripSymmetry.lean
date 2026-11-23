@@ -19,7 +19,7 @@ open scoped BigOperators
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature
-  (ℕ × Fin 15) (fun _ => Fin 15) (fun _ => ℤ)
+  (Σ _ : ℕ, Fin 15) (fun _ => Fin 15) (fun _ => ℤ)
 def readout : Realization signature := realize signature
   (fun _ x i => ∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = x.1 ∧
     boundary r = x.2 then (1 : ℤ) else 0) (fun e => nomatch e)
@@ -29,7 +29,7 @@ abbrev arena : Arena where
   signature := signature
   Law a := ∀ (d : ℕ) (p : Row 3 6) (j : Fin 15),
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
-      then (1 : ℤ) else 0) = a.readout () (d, j) (boundary p)
+      then (1 : ℤ) else 0) = a.readout () ⟨d, j⟩ (boundary p)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 (representatives 0) 0
@@ -47,7 +47,7 @@ def family : Registration arena (type_of% @lift_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(0, 0), 0, 1, ?_⟩
+    refine ⟨⟨0, 0⟩, 0, 1, ?_⟩
     have rep : ∀ i : Fin 15, boundary (representatives i) = i := by decide +kernel
     change (∑ r : Row 3 6, if bondDefects (betw 6) (representatives 0) r = 0 ∧
         boundary r = 0 then (1 : ℤ) else 0) ≠
