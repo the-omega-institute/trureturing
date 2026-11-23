@@ -60,37 +60,14 @@ theorem pathPower_isChordal (n k : ℕ) : (pathPower n k).IsChordal := by
 
 section Gains
 
+open private gain gain_adj gain_triangle two_triangle_comparisons from
+  D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
+
 variable {n k : ℕ} {H : Type*} [Group H] [PseudoMetricSpace H]
   [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H]
 
 private def blockHead (k : ℕ) (i : Fin n) : Fin n :=
   ⟨k * (i.val / k), (Nat.mul_div_le i.val k).trans_lt i.isLt⟩
-
-private def diagonalOne (g : Fin n → Fin n → H) (i j : Fin n) : H :=
-  if i = j then 1 else g i j
-
-omit [PseudoMetricSpace H] [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H] in
-private theorem diagonalOne_adj {g : Fin n → Fin n → H} {i j : Fin n}
-    (h : (pathPower n k).Adj i j) : diagonalOne g i j = g i j :=
-  ite_eq_right h.ne
-
-omit [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H] in
-private theorem triangle_with_diagonal {g : Fin n → Fin n → H} {ε : ℝ} (hε : 0 ≤ ε)
-    (hrev : ∀ i j, (pathPower n k).Adj i j → g j i = (g i j)⁻¹)
-    (htri : ∀ i j l, (pathPower n k).Adj i j → (pathPower n k).Adj j l →
-      (pathPower n k).Adj i l → Dist.dist (g i j * g j l) (g i l) ≤ ε)
-    {a b c : Fin n}
-    (hab : a = b ∨ (pathPower n k).Adj a b) (hbc : b = c ∨ (pathPower n k).Adj b c)
-    (hac : a = c ∨ (pathPower n k).Adj a c) :
-    Dist.dist (diagonalOne g a b * diagonalOne g b c) (diagonalOne g a c) ≤ ε := by
-  rcases hab with rfl | hab
-  · simpa [diagonalOne] using hε
-  rcases hbc with rfl | hbc
-  · simpa [diagonalOne] using hε
-  rcases hac with rfl | hac
-  · simpa [diagonalOne, hab.ne, hab.ne.symm, hrev _ _ hab] using hε
-  simpa only [diagonalOne_adj hab, diagonalOne_adj hbc, diagonalOne_adj hac] using
-    htri _ _ _ hab hbc hac
 
 private def headGain (n k : ℕ) (g : Fin n → Fin n → H) (a b : ℕ) : H :=
   if ha : k * a < n then
@@ -111,10 +88,10 @@ theorem pathPower_exists_two_approximate_gain_potential
       (pathPower n k).Adj i l → Dist.dist (g i j * g j l) (g i l) ≤ ε) :
     ∃ φ : Fin n → H, ∀ i j, (pathPower n k).Adj i j →
       Dist.dist (g i j) ((φ i)⁻¹ * φ j) ≤ 2 * ε := by
-  let γ := diagonalOne g
+  let γ := gain g
   let Q := headPotential n k γ
   let φ := fun i : Fin n => Q (i.val / k) * γ (blockHead k i) i
-  have tri := @triangle_with_diagonal n k H _ _ g ε hε hrev htri
+  have tri := @gain_triangle (Fin n) (pathPower n k) H _ _ _ g ε hε hrev htri
   have hpos : 0 < k := by omega
   have hhead (i : Fin n) : (blockHead k i) = i ∨ (pathPower n k).Adj (blockHead k i) i := by
     apply eq_or_adj_of_between
@@ -131,7 +108,7 @@ theorem pathPower_exists_two_approximate_gain_potential
     have hmono : i.val / k ≤ j.val / k := Nat.div_le_div_right h
     have hnext : j.val / k ≤ i.val / k + 1 := by
       simpa only [Nat.add_div_right _ hpos] using (Nat.div_le_div_right (c := k) hab)
-    rw [← dist_mul_left (φ i), ← mul_assoc, mul_inv_cancel, one_mul, ← diagonalOne_adj (g := g) hij]
+    rw [← dist_mul_left (φ i), ← mul_assoc, mul_inv_cancel, one_mul, ← gain_adj g hij]
     change Dist.dist ((Q (i.val / k) * γ b i) * γ i j) (Q (j.val / k) * γ c j) ≤ 2 * ε
     by_cases hs : i.val / k = j.val / k
     · have hbc : b = c := Fin.ext (congrArg (k * ·) hs)
@@ -163,13 +140,8 @@ theorem pathPower_exists_two_approximate_gain_potential
         congr 1
         exact Fin.ext (congrArg (k * ·) hsucc.symm)
       rw [hQ, mul_assoc (Q (i.val / k)), mul_assoc (Q (i.val / k)), dist_mul_left]
-      have h₁ : Dist.dist (γ b i * γ i j) (γ b i * (γ i c * γ c j)) ≤ ε := by
-        rw [dist_mul_left, _root_.dist_comm]
-        exact tri hic (hhead j) (Or.inr hij)
-      have h₂ : Dist.dist (γ b i * (γ i c * γ c j)) (γ b c * γ c j) ≤ ε := by
-        rw [← mul_assoc, dist_mul_right]
-        exact tri (hhead i) hic hbc
-      linarith [dist_triangle (γ b i * γ i j) (γ b i * (γ i c * γ c j)) (γ b c * γ c j)]
+      exact two_triangle_comparisons γ (tri (hhead i) hic hbc)
+        (tri hic (hhead j) (Or.inr hij))
   refine ⟨φ, fun i j hij => ?_⟩
   rcases le_total i.val j.val with h | h
   · exact forward hij h
