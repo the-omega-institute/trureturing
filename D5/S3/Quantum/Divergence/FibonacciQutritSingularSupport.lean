@@ -6,6 +6,7 @@
    utility: none
    digest: Exact qubit reduction with ambient null-reference loss and preserved trace pairings. -/
 
+import D5.S3.Quantum.Divergence.FibonacciQutritBlockDomination
 import D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Divergence.SingularWeightedLogIncrement
@@ -21,10 +22,10 @@ open Matrix
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (density_posSemidef)
-open private coordinates coordinates_posSemidef coordinates_le coordinates_trace
-  coordinates_divergence divergence trace_blocks
-  from D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport
-open private log_block blockHom from D5.S3.Quantum.Divergence.FibonacciQutritBlockDomination
+open D5.S3.Quantum.Divergence.FibonacciQutritBlockDomination.Block (blockHom log_block)
+open D5.S3.Quantum.Divergence.FibonacciQutritSpectralTransport.Transport
+  (coordinates coordinates_posSemidef coordinates_le coordinates_trace
+    coordinates_divergence divergence trace_blocks)
 
 namespace D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport
 
@@ -204,5 +205,11 @@ theorem singular_support_reduction {ι : Type*} [Fintype ι]
     exact congrArg Complex.re ht
 
 #print axioms singular_support_reduction
+
+namespace Preparation
+
+export _root_.D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport (matrix)
+
+end Preparation
 
 end D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport

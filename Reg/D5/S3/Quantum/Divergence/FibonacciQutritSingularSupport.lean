@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open _root_.D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport (singular_support_reduction)
 open _root_.D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation (diagonalState)
-open private matrix from D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport
+open _root_.D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport.Preparation (matrix)
 
 namespace Reg.D5.S3.Quantum.Divergence.FibonacciQutritSingularSupport
 
