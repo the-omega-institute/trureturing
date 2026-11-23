@@ -52,7 +52,7 @@ word. Increasing relabeling to the ranks of its colors preserves each
 multiplicity, properness, and ascents. For any $S$, the basis element
 $F_{n,S}$ contains precisely the monomial coordinates with $S\subseteq T$.
 The monomial weight $t^{|T|+1}(1-t)^{n-|T|-1}$ sums over these supersets
-to $t^{|S|+1}$. Descending by cut inclusion gives uniqueness.
+to $t^{|S|+1}$. Möbius inversion on the lattice of cut sets gives uniqueness.
 
 Grouping the coloring sum by the number $r$ of colors turns each weight
 into $t^r(1-t)^{4-r}$ times the ascent-weighted sum over proper surjections

@@ -37,7 +37,8 @@ internal sealed class AlexanderssonLeiteFundamentalLengthRefutationDocument : IS
                         + "each cut set T containing S. The map Ψ sends F to t to the power |S| + 1. "
                         + "The corresponding weight of cut set T is t to the power |T| + 1 times "
                         + "(1 − t) to the power n − |T| − 1. Summing over the optional cuts gives the "
-                        + "prescribed value, and descending through the supersets of S gives uniqueness. "
+                        + "prescribed value. Möbius inversion on the lattice of cut sets recovers "
+                        + "the monomial values and gives uniqueness. "
                         + "The symbol X in the formula is the source alphabet, and t is the polynomial "
                         + "indeterminate. In degree zero Ψ sends 1 to 1."))),
                 DescribeRole.Definition),
