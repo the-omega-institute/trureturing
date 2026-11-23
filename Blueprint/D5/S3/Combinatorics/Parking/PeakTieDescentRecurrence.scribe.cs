@@ -53,7 +53,9 @@ internal sealed class PeakTieDescentRecurrenceDocument : IScribeDocumentDefiniti
         string declaration, string title, DescribeRole role, string prose,
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
-            DescribeId.Create("peaktiedescentrecurrence-" + declaration.ToLowerInvariant().Replace('_', '-')),
+            DescribeId.Create("peaktiedescentrecurrence-" +
+                (declaration == "ParkingPolynomial" ? "polynomial-type" :
+                    declaration.ToLowerInvariant().Replace('_', '-'))),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.WithoutFormula(),
