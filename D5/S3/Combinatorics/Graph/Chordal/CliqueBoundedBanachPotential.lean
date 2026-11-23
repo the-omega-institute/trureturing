@@ -40,40 +40,37 @@ private theorem mean_add (s : Finset V) (hs : s.Nonempty) (f : V → E) (z : E) 
     smul_smul, inv_mul_cancel₀ hn]
 
 private theorem dist_mean_le (s : Finset V) (hs : s.Nonempty) (f : V → E) (z : E) :
-    dist (mean s f) z ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, dist (f b) z := by
-  rw [dist_eq_norm, ← mean_add s hs f (-z)]
-  simp only [mean, norm_smul, Real.norm_eq_abs,
-    abs_of_nonneg (inv_nonneg.mpr (Nat.cast_nonneg _))]
-  exact mul_le_mul_of_nonneg_left
-    (by simpa only [dist_eq_norm, sub_eq_add_neg] using
-      (norm_sum_le s fun b => f b + -z))
-    (inv_nonneg.mpr (Nat.cast_nonneg _))
+    Dist.dist (mean s f) z ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, Dist.dist (f b) z := by
+  rw [dist_eq_norm, sub_eq_add_neg, ← mean_add s hs f (-z)]
+  have hn : 0 ≤ (s.card : ℝ)⁻¹ := inv_nonneg.mpr (Nat.cast_nonneg _)
+  simp only [mean, norm_smul, Real.norm_eq_abs, abs_of_nonneg hn, dist_eq_norm, sub_eq_add_neg]
+  exact mul_le_mul_of_nonneg_left (norm_sum_le s fun b => f b + -z) hn
 
 private theorem mean_bound {s : Finset V} (hs : s.Nonempty) {f : V → E} {z : E} {B : ℝ}
-    (h : ∀ b ∈ s, dist (f b) z ≤ B) : dist (mean s f) z ≤ B := by
+    (h : ∀ b ∈ s, Dist.dist (f b) z ≤ B) : Dist.dist (mean s f) z ≤ B := by
   have hn : (s.card : ℝ) ≠ 0 := by exact_mod_cast hs.card_ne_zero
   calc
-    _ ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, dist (f b) z := dist_mean_le s hs f z
+    _ ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, Dist.dist (f b) z := dist_mean_le s hs f z
     _ ≤ (s.card : ℝ)⁻¹ * ∑ _b ∈ s, B :=
       mul_le_mul_of_nonneg_left (Finset.sum_le_sum h) (inv_nonneg.mpr (Nat.cast_nonneg _))
     _ = B := by simp [← mul_assoc, inv_mul_cancel₀ hn]
 
 /-- One distinguished term saves at least a `1/k` share of its improvement. -/
-private theorem mean_bound_at {s : Finset V} {f : V → E} {z : E} {a : V}
+private theorem mean_bound_at [DecidableEq V] {s : Finset V} {f : V → E} {z : E} {a : V}
     {k : ℕ} {A B : ℝ} (ha : a ∈ s) (hk : s.card ≤ k) (hAB : A ≤ B)
-    (hsmall : dist (f a) z ≤ A) (hlarge : ∀ b ∈ s.erase a, dist (f b) z ≤ B) :
-    dist (mean s f) z ≤ B - (B - A) / (k : ℝ) := by
+    (hsmall : Dist.dist (f a) z ≤ A) (hlarge : ∀ b ∈ s.erase a, Dist.dist (f b) z ≤ B) :
+    Dist.dist (mean s f) z ≤ B - (B - A) / (k : ℝ) := by
   classical
   have hs : s.Nonempty := ⟨a, ha⟩
   have hn : (0 : ℝ) < s.card := by exact_mod_cast hs.card_pos
   have hnk : (s.card : ℝ) ≤ k := by exact_mod_cast hk
   have hc : ((s.erase a).card : ℝ) + 1 = s.card := by
     exact_mod_cast Finset.card_erase_add_one ha
-  have hsum : ∑ b ∈ s, dist (f b) z ≤ (s.erase a).card * B + A := by
-    rw [← s.sum_erase_add (fun b => dist (f b) z) ha]
+  have hsum : ∑ b ∈ s, Dist.dist (f b) z ≤ (s.erase a).card * B + A := by
+    rw [← s.sum_erase_add (fun b => Dist.dist (f b) z) ha]
     exact add_le_add ((Finset.sum_le_sum hlarge).trans_eq (by simp)) hsmall
   calc
-    _ ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, dist (f b) z := dist_mean_le s hs f z
+    _ ≤ (s.card : ℝ)⁻¹ * ∑ b ∈ s, Dist.dist (f b) z := dist_mean_le s hs f z
     _ ≤ (s.card : ℝ)⁻¹ * (((s.erase a).card : ℝ) * B + A) :=
       mul_le_mul_of_nonneg_left hsum (inv_nonneg.mpr hn.le)
     _ = B - (B - A) / (s.card : ℝ) := by
@@ -94,7 +91,7 @@ private theorem triangle_le {g : V → V → E} {ε : ℝ} (hε : 0 ≤ ε)
     (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
       ‖g i j + g j l - g i l‖ ≤ ε)
     {a b c : V} (hab : a = b ∨ G.Adj a b) (hbc : b = c ∨ G.Adj b c)
-    (hac : a = c ∨ G.Adj a c) : dist (g a b + g b c) (g a c) ≤ ε := by
+    (hac : a = c ∨ G.Adj a c) : Dist.dist (g a b + g b c) (g a c) ≤ ε := by
   rcases hab with rfl | hab
   · simpa [diagonal_zero hrev] using hε
   rcases hbc with rfl | hbc
@@ -103,13 +100,14 @@ private theorem triangle_le {g : V → V → E} {ε : ℝ} (hε : 0 ≤ ε)
   · simpa [diagonal_zero hrev, hrev a b] using hε
   simpa only [dist_eq_norm] using htri _ _ _ hab hbc hac
 
+omit [NormedSpace ℝ E] in
 private theorem two_triangles (g : V → V → E) {a b c d : V} {ε : ℝ}
-    (habc : dist (g a b + g b c) (g a c) ≤ ε)
-    (hbcd : dist (g b c + g c d) (g b d) ≤ ε) :
-    dist (g a b + g b d) (g a c + g c d) ≤ 2 * ε := by
+    (habc : Dist.dist (g a b + g b c) (g a c) ≤ ε)
+    (hbcd : Dist.dist (g b c + g c d) (g b d) ≤ ε) :
+    Dist.dist (g a b + g b d) (g a c + g c d) ≤ 2 * ε := by
   calc
-    _ ≤ dist (g a b + g b d) (g a b + (g b c + g c d)) +
-        dist (g a b + (g b c + g c d)) (g a c + g c d) := dist_triangle _ _ _
+    _ ≤ Dist.dist (g a b + g b d) (g a b + (g b c + g c d)) +
+        Dist.dist (g a b + (g b c + g c d)) (g a c + g c d) := dist_triangle _ _ _
     _ ≤ ε + ε := by
       apply add_le_add
       · rw [dist_add_left, _root_.dist_comm]
@@ -127,6 +125,8 @@ private noncomputable def anchorSum (g : V → V → E)
   | 0, _ => 0
   | i + 1, C => anchorSum g a i (parent G o C) + g (a i (parent G o C)) (a (i + 1) C)
 
+set_option maxHeartbeats 800000 in
+-- Dependent component indices are transported in both edge comparisons.
 private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connected) (o : V)
     (k : ℕ) (hk : 2 ≤ k)
     (hclique : ∀ s : Finset V, G.IsClique (s : Set V) → s.card ≤ k + 1)
@@ -137,8 +137,8 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     ∃ φ : V → E, ∀ x y, G.Adj x y →
       ‖g x y - (φ y - φ x)‖ ≤ (4 - 4 / (k : ℝ)) * ε := by
   classical
-  letI := Fintype.ofFinite V
-  let P := predecessors G o
+  let := Fintype.ofFinite V
+  let P (x : V) := predecessors G o x
   have memP {b x : V} : b ∈ P x ↔ G.Adj b x ∧ G.dist o b + 1 = G.dist o x := by
     simp [P, predecessors]
   have inhabitedP {x : V} {i : ℕ} (hx : G.dist o x = i + 1) : (P x).Nonempty := by
@@ -147,14 +147,17 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
   have inShadow {b x : V} {i : ℕ} (hx : G.dist o x = i + 1) (hb : b ∈ P x) :
       b ∈ Shadow G o (componentOf G o (i + 1) x hx.ge) :=
     mem_shadow_of_adj (by have := (memP.mp hb).2; omega) hx.ge (memP.mp hb).1
-  choose anchor anchor_parent anchor_adj using
+  choose anchor hAnchor using
     (fun (i : ℕ) (C : Component G o (i + 2)) => exists_shadow_anchor hG hconn C)
+  have anchor_parent (i : ℕ) (C : Component G o (i + 2)) := (hAnchor i C).1
+  have anchor_adj (i : ℕ) (C : Component G o (i + 2)) := (hAnchor i C).2
   let a : (i : ℕ) → Component G o (i + 1) → V
     | 0, _ => o
     | i + 1, C => anchor i C
   have firstPred {x : V} (hx : G.dist o x = 1) : P x = {o} := by
     obtain ⟨b, hb⟩ := inhabitedP hx
     have root {b : V} (hb : b ∈ P x) : b = o := by
+      symm
       apply hconn.dist_eq_zero_iff.mp
       have := (memP.mp hb).2
       omega
@@ -172,6 +175,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have h₁ := (anchor_parent i C).1
         have h₂ := (inShadow hx h).1
         change G.dist o c = i at h₁
+        change G.dist o c = i + 1 at h₂
         omega
       have hcl : G.IsClique (↑(insert c (P x)) : Set V) := by
         intro b hb d hd hbd
@@ -193,7 +197,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     | zero => exact Or.inl (hconn.dist_eq_zero_iff.mp hb.1)
     | succ i => exact Or.inr (anchor_adj i C b hb)
   have tri {b c d : V} (hbc : b = c ∨ G.Adj b c) (hcd : c = d ∨ G.Adj c d)
-      (hbd : b = d ∨ G.Adj b d) : dist (g b c + g c d) (g b d) ≤ ε :=
+      (hbd : b = d ∨ G.Adj b d) : Dist.dist (g b c + g c d) (g b d) ≤ ε :=
     triangle_le hε hrev htri hbc hcd hbd
   let Q := anchorSum g a
   let path (c x b : V) := g c b + g b x
@@ -232,7 +236,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     dsimp [crossError]
     linarith
   have across {x y : V} {i : ℕ} (hx : G.dist o x = i) (hy : G.dist o y = i + 1)
-      (hxy : G.Adj x y) : dist (φ x + g x y) (φ y) ≤ bound := by
+      (hxy : G.Adj x y) : Dist.dist (φ x + g x y) (φ y) ≤ bound := by
     cases i with
     | zero =>
       have he := hconn.dist_eq_zero_iff.mp hx
@@ -248,11 +252,13 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have hD : D = componentOf G o (i + 1) x hx.ge := shadow_parent xs
       have cs : c ∈ Shadow G o D := anchor_parent i C
       have hcx : G.Adj c x := anchor_adj i C x xs
-      have cp : c ∈ P x := memP.mpr ⟨hcx, by have := cs.1; omega⟩
+      have cp : c ∈ P x := memP.mpr ⟨hcx, by
+        have hc : G.dist o c = i := cs.1
+        omega⟩
       have xp : x ∈ P y := memP.mpr ⟨hxy, by omega⟩
       have Qstep : Q (i + 1) C = Q i D + g d c := rfl
       let m := Q (i + 1) C + g c x
-      have earlier : dist (mean (P x) (path d x)) (path d x c) ≤ crossError := by
+      have earlier : Dist.dist (mean (P x) (path d x)) (path d x c) ≤ crossError := by
         have h := mean_bound_at (f := path d x) (z := path d x c) cp (cardP hx)
           (show (0 : ℝ) ≤ 2 * ε by linarith) (by simp)
         apply (h ?_).trans_eq (by simp [crossError])
@@ -261,7 +267,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have bs : b ∈ Shadow G o D := hD ▸ inShadow hx hb'
         exact two_triangles g (tri (anchorNear bs) (near bs cs) (anchorNear cs))
           (tri (near bs cs) (Or.inr hcx) (Or.inr (memP.mp hb').1))
-      have later : dist (mean (P y) (path c y)) (path c y x) ≤ crossError := by
+      have later : Dist.dist (mean (P y) (path c y)) (path c y x) ≤ crossError := by
         have h := mean_bound_at (f := path c y) (z := path c y x) xp (cardP hy)
           (show (0 : ℝ) ≤ 2 * ε by linarith) (by simp)
         apply (h ?_).trans_eq (by simp [crossError])
@@ -270,25 +276,25 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have bs := inShadow hy hb'
         exact two_triangles g (tri (anchorNear bs) (near bs xs) (Or.inr hcx))
           (tri (near bs xs) (Or.inr hxy) (Or.inr (memP.mp hb').1))
-      have h₁ : dist (φ x) m ≤ crossError := by
+      have h₁ : Dist.dist (φ x) m ≤ crossError := by
         rw [atSucc hx, ← hD]
-        change dist (Q i D + mean (P x) (path d x)) (Q (i + 1) C + g c x) ≤ _
+        change Dist.dist (Q i D + mean (P x) (path d x)) (Q (i + 1) C + g c x) ≤ _
         rw [Qstep, add_assoc, dist_add_left]
         exact earlier
-      have h₂ : dist (m + g x y) (φ y) ≤ crossError := by
+      have h₂ : Dist.dist (m + g x y) (φ y) ≤ crossError := by
         rw [atSucc hy]
-        change dist ((Q (i + 1) C + g c x) + g x y)
+        change Dist.dist ((Q (i + 1) C + g c x) + g x y)
           (Q (i + 1) C + mean (P y) (path c y)) ≤ _
         rwa [add_assoc, dist_add_left, _root_.dist_comm]
       rw [← crossTotal]
       exact (dist_triangle _ (m + g x y) _).trans
         (add_le_add (by rwa [dist_add_right]) h₂)
   have symmError (x y : V) :
-      dist (φ y + g y x) (φ x) = dist (φ x + g x y) (φ y) := by
-    rw [hrev x y, ← dist_add_right _ _ (g x y)]
-    simp [add_assoc, _root_.dist_comm]
+      Dist.dist (φ y + g y x) (φ x) = Dist.dist (φ x + g x y) (φ y) := by
+    rw [hrev x y, ← dist_add_right _ _ (g x y), add_assoc, neg_add_cancel, add_zero]
+    exact _root_.dist_comm _ _
   have within {x y : V} {i : ℕ} (hx : G.dist o x = i + 1) (hy : G.dist o y = i + 1)
-      (hxy : G.Adj x y) : dist (φ x + g x y) (φ y) ≤ bound := by
+      (hxy : G.Adj x y) : Dist.dist (φ x + g x y) (φ y) ≤ bound := by
     have nested : P x ⊆ P y ∨ P y ⊆ P x := by
       by_contra h
       obtain ⟨b, hb, hby⟩ := Finset.not_subset.mp (fun hs => h (Or.inl hs))
@@ -306,15 +312,15 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       · exact hby (memP.mpr ⟨h, by omega⟩)
       · exact hdx (memP.mpr ⟨h.symm, by omega⟩)
     have oriented {x y : V} (hx : G.dist o x = i + 1) (hy : G.dist o y = i + 1)
-        (hxy : G.Adj x y) (hsub : P x ⊆ P y) : dist (φ x + g x y) (φ y) ≤ layerError := by
+        (hxy : G.Adj x y) (hsub : P x ⊆ P y) : Dist.dist (φ x + g x y) (φ y) ≤ layerError := by
       let C := componentOf G o (i + 1) x hx.ge
       let c := a i C
       have hC : C = componentOf G o (i + 1) y hy.ge := componentOf_adj hx.ge hy.ge hxy
       have perPred (b : V) (hb : b ∈ P x) :
-          dist (path c x b + g x y) (mean (P y) (path c y)) ≤ layerError := by
+          Dist.dist (path c x b + g x y) (mean (P y) (path c y)) ≤ layerError := by
         have hb' := hsub hb
         have bs : b ∈ Shadow G o C := inShadow hx hb
-        have diag : dist (path c x b + g x y) (path c y b) ≤ ε := by
+        have diag : Dist.dist (path c x b + g x y) (path c y b) ≤ ε := by
           dsimp only [path]
           rw [add_assoc, dist_add_left]
           exact tri (Or.inr (memP.mp hb).1) (Or.inr hxy) (Or.inr (memP.mp hb').1)
@@ -325,13 +331,13 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         intro d hd
         have hd' := (Finset.mem_erase.mp hd).2
         have ds : d ∈ Shadow G o C := hC.symm ▸ inShadow hy hd'
-        have two : dist (path c y d) (path c y b) ≤ 2 * ε :=
+        have two : Dist.dist (path c y d) (path c y b) ≤ 2 * ε :=
           two_triangles g (tri (anchorNear ds) (near ds bs) (anchorNear bs))
             (tri (near ds bs) (Or.inr (memP.mp hb').1) (Or.inr (memP.mp hd').1))
         exact (dist_triangle _ (path c y b) _).trans
-          (by linarith [add_le_add two (by rwa [_root_.dist_comm] : dist (path c y b) _ ≤ ε)])
+          (by linarith [add_le_add two (by rwa [_root_.dist_comm] : Dist.dist (path c y b) _ ≤ ε)])
       rw [atSucc hx, atSucc hy, ← hC]
-      change dist ((Q i C + mean (P x) (path c x)) + g x y)
+      change Dist.dist ((Q i C + mean (P x) (path c x)) + g x y)
         (Q i C + mean (P y) (path c y)) ≤ _
       rw [add_assoc, dist_add_left, ← mean_add _ (inhabitedP hx)]
       exact mean_bound (inhabitedP hx) perPred
@@ -340,18 +346,18 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     · rw [← symmError]
       exact (oriented hy hx hxy.symm h).trans layerTotal
   have forward {x y : V} (hxy : G.Adj x y) (h : G.dist o x ≤ G.dist o y) :
-      dist (φ x + g x y) (φ y) ≤ bound := by
+      Dist.dist (φ x + g x y) (φ y) ≤ bound := by
     by_cases he : G.dist o x = G.dist o y
     · cases hi : G.dist o x with
       | zero =>
-        exact (hxy.ne ((hconn.dist_eq_zero_iff.mp hi).trans
-          (hconn.dist_eq_zero_iff.mp (he.symm.trans hi)).symm)).elim
+        exact (hxy.ne ((hconn.dist_eq_zero_iff.mp hi).symm.trans
+          (hconn.dist_eq_zero_iff.mp (he.symm.trans hi)))).elim
       | succ i => exact within hi (he.symm.trans hi) hxy
     · have hd := hxy.diff_dist_adj (u := o)
       exact across rfl (by omega) hxy
   refine ⟨φ, fun x y hxy => ?_⟩
   calc
-    _ = dist (φ x + g x y) (φ y) := by
+    _ = Dist.dist (φ x + g x y) (φ y) := by
       rw [dist_eq_norm]
       congr 1
       abel
