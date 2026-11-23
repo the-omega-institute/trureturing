@@ -8,7 +8,9 @@
 
 module
 
+import Mathlib.Combinatorics.Enumerative.IncidenceAlgebra
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+import Mathlib.Data.Finset.Interval
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Sort
 import Mathlib.Data.Fin.Tuple.Sort
@@ -18,6 +20,8 @@ import Mathlib.Algebra.Polynomial.Splits
 import Mathlib.Algebra.Polynomial.Degree.SmallDegree
 import Mathlib.Algebra.QuadraticDiscriminant
 import Mathlib.Basic.Real.Basic
+import Mathlib.LinearAlgebra.Pi
+import Mathlib.Order.Interval.Set.SurjOn
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -84,36 +88,12 @@ private def cutWord {m : ℕ} (T : Cuts m) (i : Fin (m + 1)) : Fin (T.card + 1) 
 private theorem rankAt_step {m : ℕ} (T : Cuts m) (i : Fin m) :
     rankAt T i.succ = rankAt T i.castSucc + if i ∈ T then 1 else 0 := by
   classical
+  unfold rankAt
+  simp only [Fin.val_succ, Fin.val_castSucc, Nat.lt_succ_iff_lt_or_eq, Fin.val_inj,
+    Finset.filter_or, Finset.filter_eq']
   by_cases hi : i ∈ T
-  · have hs : T.filter (fun j => j.val < i.succ.val) =
-        insert i (T.filter (fun j => j.val < i.castSucc.val)) := by
-      ext j
-      simp only [mem_filter, mem_insert, Fin.val_succ, Fin.val_castSucc]
-      constructor
-      · rintro ⟨hj, hji⟩
-        by_cases he : j.val = i.val
-        · exact Or.inl (Fin.ext he)
-        · exact Or.inr ⟨hj, by omega⟩
-      · rintro (rfl | ⟨hj, hji⟩)
-        · exact ⟨hi, by omega⟩
-        · exact ⟨hj, by omega⟩
-    unfold rankAt
-    rw [hs, card_insert_of_notMem (by simp)]
-    simp [hi]
-  · have hs : T.filter (fun j => j.val < i.succ.val) =
-        T.filter (fun j => j.val < i.castSucc.val) := by
-      ext j
-      simp only [mem_filter, Fin.val_succ, Fin.val_castSucc]
-      constructor
-      · rintro ⟨hj, hji⟩
-        refine ⟨hj, ?_⟩
-        by_contra hn
-        exact hi (Fin.ext (show j.val = i.val by omega) ▸ hj)
-      · rintro ⟨hj, hji⟩
-        exact ⟨hj, by omega⟩
-    unfold rankAt
-    rw [hs]
-    simp [hi]
+  · rw [if_pos hi, if_pos hi, union_singleton, card_insert_of_notMem (by simp)]
+  · simp [hi]
 
 private theorem rankAt_first {m : ℕ} (T : Cuts m) : rankAt T 0 = 0 := by
   simp [rankAt]
@@ -167,21 +147,13 @@ private theorem rankAt_strictCuts {m r : ℕ} (w : Fin (m + 1) → Fin r)
     omega
   have hstep (i : Fin m) : (w i.succ).val ≤ (w i.castSucc).val + 1 := by
     by_contra! h
-    obtain ⟨j, hj⟩ := hs ⟨(w i.castSucc).val + 1, by have := (w i.succ).isLt; omega⟩
-    have hjval := congrArg Fin.val hj
-    by_cases hji : j ≤ i.castSucc
-    · have hc := hm hji
-      change (w j).val ≤ (w i.castSucc).val at hc
-      dsimp at hjval
-      omega
-    · have hji' : i.succ ≤ j := by
-        change i.val + 1 ≤ j.val
-        change ¬ j.val ≤ i.val at hji
-        omega
-      have hc := hm hji'
-      change (w i.succ).val ≤ (w j).val at hc
-      dsimp at hjval
-      omega
+    let next : Fin r := ⟨(w i.castSucc).val + 1, h.trans (w i.succ).isLt⟩
+    have hnext : next ∈ Set.Ioo (w i.castSucc) (w i.succ) :=
+      ⟨Nat.lt_succ_self _, h⟩
+    obtain ⟨j, hj, _⟩ := surjOn_Ioo_of_monotone_surjective hm hs i.castSucc i.succ hnext
+    have hlo : i.val < j.val := hj.1
+    have hhi : j.val < i.val + 1 := hj.2
+    omega
   intro i
   induction i using Fin.induction with
   | zero => rw [rankAt_first, hzero]
@@ -230,29 +202,20 @@ private theorem psi_fundamental {m : ℕ} (S : Cuts m) :
       (∑ T ∈ (univ : Finset (Cuts m)).filter (S ⊆ ·), monomialImage T) =
       ∑ U ∈ available.powerset,
         X ^ (S.card + 1) * (X ^ U.card * (1 - X) ^ (available.card - U.card)) := by
-    refine sum_nbij' (· \ S) (· ∪ S) ?_ ?_ ?_ ?_ ?_
-    · intro T hT
-      exact mem_powerset.2 (fun i hi => mem_sdiff.2 ⟨mem_univ i, (mem_sdiff.1 hi).2⟩)
-    · intro U _
-      exact mem_filter.2 ⟨mem_univ _, subset_union_right⟩
-    · intro T hT
-      exact sdiff_union_of_subset (mem_filter.1 hT).2
-    · intro U hU
-      ext i
-      have hsub := mem_powerset.1 hU
-      simp only [mem_sdiff, mem_union]
-      constructor
-      · rintro ⟨hi | hi, hn⟩
-        · exact hi
-        · exact (hn hi).elim
-      · intro hi
-        exact ⟨Or.inl hi, (mem_sdiff.1 (hsub hi)).2⟩
-    · intro T hT
-      have hST := (mem_filter.1 hT).2
-      have hcard := card_sdiff_add_card_eq_card hST
-      have hpow : T.card + 1 = (S.card + 1) + (T \ S).card := by omega
-      have hexp : m - T.card = available.card - (T \ S).card := by omega
+    rw [← powerset_univ (α := Fin m), ← Icc_eq_filter_powerset,
+      Icc_eq_image_powerset (subset_univ S), sum_image]
+    · refine sum_congr rfl fun U hU => ?_
+      have hdis : Disjoint S U :=
+        disjoint_sdiff_self_right.mono_right (mem_powerset.1 hU)
+      have hcard := card_union_of_disjoint hdis
+      have hpow : (S ∪ U).card + 1 = (S.card + 1) + U.card := by omega
+      have hexp : m - (S ∪ U).card = available.card - U.card := by omega
       rw [monomialImage, hpow, hexp, pow_add, mul_assoc]
+    · intro U hU V hV hUV
+      exact disjoint_injOn_union_left S
+        (disjoint_sdiff_self_right.mono_right (mem_powerset.1 hU))
+        (disjoint_sdiff_self_right.mono_right (mem_powerset.1 hV))
+        (by simpa only [Finset.union_comm S] using hUV)
   change (∑ T : Cuts m, (if S ⊆ T then (1 : ℝ) else 0) • monomialImage T) = _
   simp only [ite_smul, one_smul, zero_smul, ← sum_filter]
   rw [hreindex, ← mul_sum, sum_pow_mul_eq_add_pow]
@@ -469,50 +432,28 @@ private theorem fundamental_eq_sum {m : ℕ} (S : Cuts m) :
     have hTU : T ≠ U := fun he => hSU (he ▸ (mem_filter.1 hT).2)
     simp [Ne.symm hTU]
 
-/-- The source prescription determines a unique linear map. Descending by cut
-inclusion, each fundamental element determines the value at its own monomial. -/
+/-- Möbius inversion on the lattice of cuts recovers the monomial values
+from the fundamental values, which determine the linear map. -/
 private theorem psi_unique (m : ℕ) (L : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ)
     (hL : ∀ S, L (fundamental S) = X ^ (S.card + 1)) : L = psi m := by
   classical
-  have hpoint : ∀ k (S : Cuts m), m - S.card = k →
-      L (Pi.single S 1) = psi m (Pi.single S 1) := by
-    intro k
-    induction k using Nat.strong_induction_on with
-    | h k ih =>
-      intro S hS
-      let supers := (univ : Finset (Cuts m)).filter (S ⊆ ·)
-      have hmem : S ∈ supers := by simp [supers]
-      have hsum := (hL S).trans (psi_fundamental S).symm
-      rw [fundamental_eq_sum, map_sum, map_sum] at hsum
-      change (∑ T ∈ supers, L (Pi.single T 1)) =
-        ∑ T ∈ supers, psi m (Pi.single T 1) at hsum
-      rw [← add_sum_erase _ _ hmem, ← add_sum_erase supers (fun T => psi m (Pi.single T 1))
-        hmem] at hsum
-      have htail : (∑ T ∈ supers.erase S, L (Pi.single T 1)) =
-          ∑ T ∈ supers.erase S, psi m (Pi.single T 1) := by
-        apply sum_congr rfl
-        intro T hT
-        have hST := (mem_filter.1 (mem_of_mem_erase hT)).2
-        have hne := ne_of_mem_erase hT
-        have hcard := card_lt_card (ssubset_of_subset_of_ne hST (Ne.symm hne))
-        have hbound : T.card ≤ m := by simpa using card_le_univ T
-        exact ih _ (by omega) T rfl
-      rw [htail] at hsum
-      exact add_right_cancel hsum
-  apply LinearMap.ext
-  intro f
-  have hf : (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) = f := by
-    funext U
-    rw [sum_apply, sum_eq_single_of_mem U (mem_univ _)]
-    · simp
-    · intro T _ hne
-      simp [Ne.symm hne]
-  have hsingle (T : Cuts m) := hpoint (m - T.card) T rfl
-  calc
-    L f = L (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) := congrArg L hf.symm
-    _ = psi m (∑ T : Cuts m, f T • Pi.single T (1 : ℝ)) := by
-      simp only [map_sum, LinearMap.map_smul, hsingle]
-    _ = psi m f := congrArg (psi m) hf
+  let g (S : Cuts m) : Polynomial ℝ := X ^ (S.card + 1)
+  have invert (A : (Cuts m → ℝ) →ₗ[ℝ] Polynomial ℝ)
+      (hA : ∀ S, A (fundamental S) = g S) (S : Cuts m) :
+      A (Pi.single S 1) = ∑ T ∈ Ici S, IncidenceAlgebra.mu (Polynomial ℝ) S T * g T := by
+    apply IncidenceAlgebra.moebius_inversion_top (fun T => A (Pi.single T 1)) g _ S
+    intro T
+    rw [← filter_le_eq_Ici, ← map_sum]
+    exact (hA T).symm.trans (congrArg A (fundamental_eq_sum T))
+  have hsingle (S : Cuts m) :
+      L (Pi.single S 1) = psi m (Pi.single S 1) :=
+    (invert L hL S).trans (invert (psi m) psi_fundamental S).symm
+  apply LinearMap.pi_ext
+  intro S a
+  have ha : Pi.single S a = a • Pi.single S (1 : ℝ) := by
+    ext T
+    by_cases hTS : T = S <;> simp [Pi.single_apply, hTS]
+  rw [ha, LinearMap.map_smul, LinearMap.map_smul, hsingle]
 
 /-- In positive degree the source defines Ψ by its values on the fundamental
 basis. The computed monomial formula is a realization of this prescription. -/
