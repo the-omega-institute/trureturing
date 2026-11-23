@@ -61,7 +61,7 @@ def family : Registration arena (type_of% (@reconstruction_bound)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@reconstruction_bound) (Realization signature) Unit Unit where
-  unitName := `_root_.RoundQuaternionK4Bounds.reconstruction_bound.__information_unit
+  unitName := `RoundQuaternionK4Bounds.reconstruction_bound.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionK4Bounds.Upper.family
   realizationSource := none
   generated := false
@@ -96,7 +96,7 @@ end Upper
 
 namespace Lower
 
-abbrev Params := (Fin 4 → U) × Fin 4
+abbrev Params := Σ _ : (Fin 4 → U), Fin 4
 abbrev signature := _root_.Reg.Support.SingleDependentReadout.signature Params
   (fun _ => Fin 4) (fun _ => U)
 
@@ -113,7 +113,7 @@ def arena : Arena where
     (∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧
       roundDist (quarterGains i j * quarterGains j k) (quarterGains i k) = π/2) ∧
     (∀ φ : Fin 4 → U, ∃ i j : Fin 4, i ≠ j ∧
-      quarterError ≤ roundDist (quarterGains i j) (R.readout () (φ, i) j)) ∧
+      quarterError ≤ roundDist (quarterGains i j) (R.readout () ⟨φ, i⟩ j)) ∧
     (∃ φ : Fin 4 → U, ∀ i j : Fin 4, i ≠ j →
       roundDist (quarterGains i j) ((φ i)⁻¹ * φ j) = quarterError) ∧
     3/5 < 2*quarterError/π
@@ -130,10 +130,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   let φ : Fin 4 → U := ![1, -1, 1, 1]
-  refine ⟨(φ, 0), 0, 1, ?_⟩
+  refine ⟨⟨φ, 0⟩, 0, 1, ?_⟩
   have h : (1 : U) ≠ -1 := by
     intro h
     have hh := congrArg (fun q : U => (q : ℍ[ℝ]).re) h
+    change (1 : ℝ) = -1 at hh
     norm_num at hh
   simpa [actual, realize, φ] using h
 
@@ -148,7 +149,7 @@ def family : Registration arena (type_of% (@quarter_turn_sharp)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@quarter_turn_sharp) (Realization signature) Unit Unit where
-  unitName := `_root_.RoundQuaternionK4Bounds.quarter_turn_sharp.__information_unit
+  unitName := `RoundQuaternionK4Bounds.quarter_turn_sharp.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionK4Bounds.Lower.family
   realizationSource := none
   generated := false
