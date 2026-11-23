@@ -14,10 +14,12 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("canonicalCount",CanonicalCount(),false,"The filter counts five-by-n arrays with exactly D monochromatic bonds and row-major canonical colour introduction."),
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
-            Node("transition_entry",TransitionEntry(),true,"A successor entry has the value one only for the column and residual budget produced by the cut."),
-            Node("labelled_scale",LabelledScale(),true,"At width m + 1 a constant array has m times the number of edges in one cut as its defect count. At every other defect count, each canonical array has six distinct labelled representatives. A constant array has only three. The subscript on literalCount gives the palette size."),
+            Node("transition_entry",TransitionEntry(),true,"The equality holds for all successors when the budget is at most one, the cut has zero cost, or the cost exceeds the budget. In the other cases take the successor at q with residual budget d minus the cost. The left indicator is one. The right side tests for zero cost if the residual is positive and for cost one if it is zero. Both tests fail in their respective cases."),
+            Node("labelled_scale",LabelledScale(),true,"At width m + 1 a constant array has m times the number of edges in one cut as its defect count. At every other defect count, each canonical array has six distinct labelled representatives. At the constant-array defect count, the nonconstant part is still a multiple of six and the three constant arrays leave remainder three. The subscript on literalCount gives the palette size."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
+            Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
+            Node("small_budget_ne_cut_total", SmallBudget(), true, "The five equal-row pairs lie in the cut. With zero cuts the product is zero, and with at least one cut the product is at least five."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
@@ -25,7 +27,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("transfer_readout",TransferReadout(),true,"The state type belongs to an arbitrary universe. A vector recurrence for a matrix and terminal vector gives a shifted scalar recurrence for every readout vector."),
+            Node("transfer_readout",TransferReadout(),true,"The state type belongs to an arbitrary universe. A vector recurrence gives the shifted scalar relation for every readout vector. At shift zero the readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
@@ -81,6 +83,11 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula And(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
     private static Formula Imp(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Add(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Add,Parenthesized(b));
     private static Formula Sub(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Subtract,Parenthesized(b));
     private static Formula Mul(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Multiply,Parenthesized(b));
@@ -152,18 +159,37 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var cost=Own("cost",p,q);
         var left=If(And(Le(cost,d),Eq(Own("residual",q,Sub(d,cost)),s)),N(1),N(0));
         var rhs=If(Eq(Call("Sum.elim",Q("id"),Q("id"),s),q),Own("transfer",Own("residual",p,d),s),N(0));
-        return All("p",Column(),All("q",Column(),All("d",Q("Nat"),Imp(Le(d,N(1)),
-            All("s",Call("Sum",Column(),Column()),Eq(AsInt(left),rhs))))));
+        var allowed = Or(Le(d, N(1)), Or(Eq(cost, N(0)), Lt(d, cost)));
+        return All("p", Column(), All("q", Column(), All("d", Q("Nat"),
+            Iff(All("s", Columns(), Eq(AsInt(left), rhs)), allowed))));
     }
+
     private static Formula LabelledScale() {
         var m=V("m");var d=V("D");var n=Add(m,N(1));
         var empty=Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
-        var cut=CutEdges();
+        var cut=Own("edges");
         var labelled=App(new Formula.Subscript(Q("DefectTransfer.literalCount"),N(3)),empty,cut,d,n);
-        var distinct = new Formula.Relation(d, FormulaRelationOperator.NotEqual,
-            Mul(m, Call("Finset.card", cut)));
+        var distinct = Ne(d, Mul(m, Call("Finset.card", cut)));
         return All("D", Q("Nat"), All("m", Q("Nat"),
-            Imp(distinct, Eq(labelled, Mul(N(6), Own("canonicalCount", d, n))))));
+            Iff(Eq(labelled, Mul(N(6), Own("canonicalCount", d, n))), distinct)));
+    }
+
+    private static Formula MemEdges()
+    {
+        var e = V("e");
+        var x = Val(Call("Prod.fst", e));
+        var y = Val(Call("Prod.snd", e));
+        return All("e", Product(Fin(5), Fin(5)),
+            Iff(new Formula.Relation(e, FormulaRelationOperator.MemberOf, Own("edges")),
+                And(Le(x, Add(y, N(1))), Le(y, Add(x, N(1))))));
+    }
+
+    private static Formula SmallBudget()
+    {
+        var d = V("D");
+        var m = V("m");
+        return All("D", Q("Nat"), All("m", Q("Nat"),
+            Imp(Lt(N(0), d), Imp(Lt(d, N(5)), Ne(d, Mul(m, Call("Finset.card", Own("edges"))))))));
     }
 
     private static Formula SumOver(string n,Formula t,Formula body) =>
@@ -310,11 +336,13 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     {
         var left = V("C");
         var right = V("Z");
-        var integers = Q("Int");
+        var result = V("R");
         var type = Seq(Q("Type"), Star);
-        return All("C", type, All("Z", type,
-            Eq(Typed(Own("terminal"), Arrow(Call("Sum", left, right), integers)),
-                Call("Sum.elim", Typed(N(0), Arrow(left, integers)), Typed(N(1), Arrow(right, integers))))));
+        var definition = Eq(Typed(Own("terminal"), Arrow(Call("Sum", left, right), result)),
+            Call("Sum.elim", Typed(N(0), Arrow(left, result)), Typed(N(1), Arrow(right, result))));
+        var instances = Seq(OpenBracket, Call("Zero", result), CloseBracket, Sp,
+            OpenBracket, Call("One", result), CloseBracket, Sp, definition);
+        return All("C", type, All("Z", type, All("R", type, instances)));
     }
 
     private static Formula TransferReadout() {
@@ -330,10 +358,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var shifted=Add(n,b);
         var conclusion=Eq(read(Add(shifted,d)),SumOver("j",index,
             Mul(coefficient(),read(Add(shifted,Call("Fin.val",j))))));
-        var implication=new Formula.Logic(Parenthesized(premise),FormulaLogicOperator.Implies,
-            Parenthesized(All("n",Q("Nat"),conclusion)));
-        var parameters=All("M",M(state),All("u",vectors,All("v",vectors,All("d",Q("Nat"),
-            All("b",Q("Nat"),All("c",Arrow(index,Q("Int")),implication))))));
+        var equivalence = Iff(premise, All("v", vectors, All("n", Q("Nat"), conclusion)));
+        var parameters = All("M", M(state), All("u", vectors, All("d", Q("Nat"),
+            All("b", Q("Nat"), All("c", Arrow(index, Q("Int")), equivalence)))));
         return All("S",Seq(Q("Type"),Star),Seq(OpenBracket,Call("Fintype",state),CloseBracket,Sp,
             OpenBracket,Call("DecidableEq",state),CloseBracket,Sp,parameters));
     }

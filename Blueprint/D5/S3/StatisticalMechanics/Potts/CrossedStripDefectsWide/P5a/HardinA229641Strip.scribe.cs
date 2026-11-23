@@ -137,10 +137,12 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
     {
         var first = V("C");
         var rest = Call("Sum", V("D"), V("Z"));
-        var integers = Q("Int");
+        var result = V("R");
         var type = Seq(Q("Type"), Star);
-        return All("C", type, All("D", type, All("Z", type,
-            Eq(Typed(Own("terminal"), Arrow(Call("Sum", first, rest), integers)),
-                Call("Sum.elim", Typed(N(0), Arrow(first, integers)), D("terminal"))))));
+        var definition = Eq(Typed(Own("terminal"), Arrow(Call("Sum", first, rest), result)),
+            Call("Sum.elim", Typed(N(0), Arrow(first, result)), D("terminal")));
+        var instances = Seq(OpenBracket, Call("Zero", result), CloseBracket, Sp,
+            OpenBracket, Call("One", result), CloseBracket, Sp, definition);
+        return All("C", type, All("D", type, All("Z", type, All("R", type, instances))));
     }
 }
