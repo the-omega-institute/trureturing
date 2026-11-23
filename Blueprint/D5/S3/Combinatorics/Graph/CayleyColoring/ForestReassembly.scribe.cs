@@ -15,7 +15,7 @@ internal sealed class CayleyTreeForestReassemblyDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/ForestReassembly.forestEquiv_peaks"),
                 H("Count transport for marked trees"),
                 StatementSource.FromAuthor(Disp(Statement1())),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/depanafieu2026stabilization")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("The sample consists of a tree and a spanning subgraph obtained by retaining some edges. Each component is rooted at its entry vertex on paths from the ambient root. Replace its tree by the fixed-root image and leave all intercomponent edges in place. This relates its original peak count to the number of vertices with no retained child in the new rooted tree."))),
                 DescribeRole.Theorem)),
         []));

@@ -23,7 +23,7 @@ internal sealed class CayleyTreeFiniteProbabilityDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/FiniteProbability.source_occupancy_law"),
                 H("Equality of source and occupancy distributions"),
                 StatementSource.FromAuthor(Disp(Statement2())),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/depanafieu2026stabilization")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("The source samples a root, a native labeled tree, and each initial color independently and uniformly. A uniform ranking supplies the conditional law of the legal sequential histories for any valid free-color policy. The native all-size count law is converted to equal singleton masses, and reindexing the non-anchor coordinates preserves exactly which ordinary bins appear."))),
                 DescribeRole.Theorem)),
         []));

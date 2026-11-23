@@ -15,7 +15,7 @@ internal sealed class CayleyTreeFiniteLawDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/FiniteLaw.native_daemon_occupancy"),
                 H("Count law at every positive size"),
                 StatementSource.FromAuthor(Disp(Statement1())),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/depanafieu2026stabilization")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("The source numerator sums the weights of legal terminal histories at a given length over every rooted tree and initial coloring. The denominator is the number of uniform ranking and colored-tree samples. On the other side the numerator counts words with the given occupancy, and the denominator counts all marked words. The anchor is zero, and a bin survives a throw exactly when its mark in the additive color group is zero."))),
                 DescribeRole.Theorem)),
         []));

@@ -15,7 +15,7 @@ internal sealed class CayleyTreeCentralSchedulerDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/CentralScheduler.policy_terminal_law"),
                 H("Exact terminal-history law"),
                 StatementSource.FromAuthor(Disp(Statement1())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Combinatorics/depanafieu2026stabilization")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("A history is accepted when following the free-color policy produces a proper final coloring. Its ranking fiber consists of permutations yielding that ordered mover list. The enabled sets shrink after each actual recoloring, and permuting the ranks of currently enabled vertices preserves the prefix constraints. The product counts the successive enabled choices from the initial conflict graph. An invalid or nonterminal history has an empty fiber."))),
                 DescribeRole.Theorem)),
         []));

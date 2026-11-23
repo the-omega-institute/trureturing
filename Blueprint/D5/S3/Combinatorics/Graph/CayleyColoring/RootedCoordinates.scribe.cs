@@ -15,7 +15,7 @@ internal sealed class CayleyTreeRootedCoordinatesDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/RootedCoordinates.zero_pattern_iff"),
                 H("Zero marks and equal colors"),
                 StatementSource.FromAuthor(Disp(Statement1())),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/depanafieu2026stabilization")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/depanafieu2026stabilization")),
                 Blocks(Paragraph(Text("Each non-root vertex indexes its edge to its parent. The color equivalence stores the root color and the differences on these edges. Evaluation at the indexed edge gives zero exactly when the endpoints started with the same color. This is the edge-coordinate version of the independent conflicts used in Theorem 10."))),
                 DescribeRole.Theorem)),
         []));

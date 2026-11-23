@@ -15,7 +15,7 @@ internal sealed class CayleyTreeTreeDecompositionDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CayleyColoring/TreeDecomposition.fixedRootEquiv_filterCard"),
                 H("Peak and rooted-leaf counts"),
                 StatementSource.FromAuthor(Disp(Statement1())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Combinatorics/seitz2011labelledtrees")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/seitz2011labelledtrees")),
                 Blocks(Paragraph(Text("A peak has no greater-labeled neighbor. A rooted leaf has no adjacent vertex farther from the root. The equivalence removes the least label, recursively replaces the attached branches, and relabels the pivot to the specified root. Seitz gives the peak-to-leaf bijection in Corollary 5.2.2 and §5.3.1.2, and de Panafieu et al. use its distributional consequence in Proposition 5."))),
                 DescribeRole.Theorem)),
         []));
