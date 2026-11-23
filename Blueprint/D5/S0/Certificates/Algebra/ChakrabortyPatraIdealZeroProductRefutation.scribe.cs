@@ -74,7 +74,7 @@ internal sealed class ChakrabortyPatraIdealZeroProductRefutationDocument : IScri
             Seq(Index, InMacro, Apply("Fin", K))), Sp, new Formula.Apply(I, [Index]));
         var zeroTuples = Seq(OpenBrace, I, Colon, Sp, tupleType, Sp, Mid, Sp,
             Equal(product, Num(0)), CloseBrace);
-        return Seq(Probability, Colon, Sp, Rat, Sp, Eq, Sp,
+        return Seq(Open, Probability, Colon, Sp, Rat, Close, Sp, Eq, Sp,
             new Formula.Fraction(Card(zeroTuples), new Formula.Power(Card(Ideals), K)));
     }
 
