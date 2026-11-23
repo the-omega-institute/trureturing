@@ -177,7 +177,8 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.1 先库后证与宿主搜索能力
 
 **先库后证**:任何 Lean 形式化前默认可出网查第三方库(loogle/leansearch/Reservoir/GitHub/arXiv 等非封闭示例),判卷门永远离线(第 3.7 条、spec A12/A17)。本款仅管本仓派出的形式化 worker;codex-cli worker 搜索是宿主默认能力,仓库无法强制,禁止改宿主 `~/.codex` 全局配置。
-检索唯一顺序:本仓 D5 声明 → 钉版 mathlib → spec A17 可准入第三方 Lean 生态 → 本地证明 → 仍无则 `AxiomDebt`/`open`+upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证,也不新增无消费者的 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
+先查 D5 是否已有对应冻结声明。构造证明优先检索本仓 `src/OmegaMath/` 及其 `OmegaInit` 基础，再查钉版 Mathlib 和 spec A17 可准入的第三方 Lean 生态。已有结果用尽后才本地证明，仍无法证明则记 `AxiomDebt`/`open` 并开 upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证,也不新增无消费者的 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
+OmegaMath 缺少可复用结果时，在 `src/OmegaMath/` 补通用声明。移植钉版 Mathlib 的结果时保留定义模块的目录与文件名，将模块根换为 `OmegaMath`，在原声明全名前加 `Omega.`。原创结果就近放在数学专题目录，模块文档首行写 `Omega original.`。D5 只导入所需模块并承接具体结论的冻结引用。模块归位和定向审计见 [Omega 数学模块指南](src/README.md)。
 检索须覆盖已有的私有定义、引理与定理;仓内命中因 `private` 无法跨模块复用时,按第 4.3 条公开原声明并直接引用,不得视为缺失而重证。
 派发时实测搜索可用性并报结果;能力缺失记具名 `open(wait-for-capability)`,不得报 search-complete。恢复后完成第三方检索,该检索与本地证明均失败才记 `AxiomDebt`/`open`。
 

@@ -98,7 +98,9 @@ Postcondition: every source clause has one intended Lean counterpart or is recor
 
 ### 3. Search the library before proving
 
-Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
+Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and prefer `src/OmegaMath/` for a constructive proof. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
+
+When OmegaMath lacks a reusable definition or theorem, add it to the library and import its narrowest module from D5. For a Mathlib port, replace the module root `Mathlib` with `OmegaMath`, preserve the rest of the defining path, and prefix the upstream declaration name with `Omega.`. Place original mathematics beside the relevant topic with `Omega original.` as the first line of the module documentation. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
