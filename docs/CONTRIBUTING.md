@@ -122,14 +122,17 @@ For a proposal, state the desired outcome and how to verify it. For a question,
 state the exact point that needs an answer. Include necessary diagnostics and
 source links. Keep Issue and PR bodies focused on current results and evidence.
 
-When taking on an Issue, claim it before implementation and record the current
-facts and concrete direction. Correct invalidated premises promptly. Update the
-Issue when new evidence changes the diagnosis or the chosen action. Comments
-should add evidence or a decision, so skip routine status updates.
+Before implementing or delegating the work, record your claim on the matching
+Issue with the current facts and proposed action. A comment is enough. Correct
+invalidated premises promptly. Update the Issue when new evidence changes the
+diagnosis or the chosen action. Comments should add evidence or a decision, so
+skip routine status updates.
 
-Close a question with the actual answer. For an implementation, close with the
-PR merged into `dev`, the merge SHA, and the first applicable `dev` push result.
-If GitHub closes the Issue at merge, add that result once it is verified.
+Close a question with the actual answer. If a PR merged into `dev` resolves
+only part of an Issue, link the PR, record the remaining scope and keep the
+Issue open. For a full implementation, record the PR merged into `dev`, its
+merge SHA and the verified result of the first applicable `dev` push, then
+close the Issue. If GitHub closes it at merge, add the push result once verified.
 [Open a pull request](#open-a-pull-request)
 
 Follow the repository's provenance requirements for skills, producers, review
@@ -440,15 +443,29 @@ upstream repository, use the bare branch name. [PR title and body](#pull-request
 make pr HEAD=YOUR-USERNAME:lane/governance/first-docs MESSAGE=pr.md DRAFT=1
 ```
 
-`DRAFT=1` returns after opening the draft. Use **Ready for review** on the same
-PR when it is ready. For a non-draft PR, `make pr` arms auto-merge by default
-and waits for required checks. Use `AUTO_MERGE=0` to wait without arming it.
+If review is pending, use `DRAFT=1` or `AUTO_MERGE=0`. `DRAFT=1` returns after
+opening the draft. Mark the existing draft **Ready for review** when it is ready.
+For a non-draft PR, `make pr` attempts to enable auto-merge by default before
+waiting for required checks. Enabling auto-merge requires write access to the
+base repository. Fork contributors without that access use `AUTO_MERGE=0` for
+non-draft PRs. A maintainer can merge the existing PR after review and required
+checks pass, or enable auto-merge after review. If a contributor without write
+access pushes a new head while auto-merge is enabled, GitHub disables it. A
+maintainer can enable it again after the new head is reviewed.
 
 Arrange the applicable independent review and address failures in GitHub's
 required checks on the current PR head. Reuse the watcher for that PR and head,
-including the one started by `make pr`. If you need a watcher, run
-`make pr-watch PR=123 HEAD_SHA="$head_sha"` once for the current head, using your
-PR number and its full current head SHA. After pushing a revision, use the new SHA.
+including the one started by `make pr`. Replace `123` with your PR number and
+look up its current head, including after pushing a revision. Run the final
+line only if the lookup succeeded and no watcher is active for that PR and SHA.
+
+```sh
+pr_number=123
+head_sha="$(gh pr view "$pr_number" --repo the-omega-institute/trureturing \
+  --json headRefOid --jq .headRefOid)"
+printf '%s\n' "$head_sha"
+make pr-watch PR="$pr_number" HEAD_SHA="$head_sha"
+```
 
 Verify that GitHub reports **MERGED** into `dev` and record the merge SHA.
 Check Actions for the first applicable `dev` push for that SHA and verify the
