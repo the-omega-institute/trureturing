@@ -323,6 +323,44 @@ Commit and push each logical change; local checks provide early feedback alongsi
 remote CI. Report actual commands and exit codes. Local success does not replace
 required checks on the PR.
 
+### Refresh frozen declaration evidence
+
+`make deposit GID=…` records declaration evidence for a new frozen module. To
+remeasure all existing frozen members, run `make frozen-refresh` from the checkout
+root with the paired tools release pinned. It checks each member's statement pin
+and declaration identities against current compiler evidence before updating the
+optional fields. The fields describe the last measurement. A proof edit can
+change dependencies while preserving the statement pin. Review the resulting
+state-file diff before committing. [Frozen state specification, A14](develop/spec/golden-ledger-repo-spec.md)
+
+A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
+a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
+claim applies to the compiled declaration at measurement time. The strict Omega
+audit checks the entire compiled module import closure, including unused
+declarations, and replays that closure in a fresh Lean kernel environment.
+[Strict audit](https://github.com/the-omega-institute/trureturing/blob/1b091b743e5eed04d4eab893c547f1785dede9d2/src/OmegaChecks/Audit.lean)
+
+When validating a change to this format or its writer, exercise these cases.
+
+- Compile the two proofs in the mixed Omega and Mathlib consumer as named fixture
+  declarations. The `Nat.prime_two` row must include `Mathlib`. Check that the
+  `diagonal_half` row meets the Omega-only, zero-axiom condition. Exercise a
+  foreign reference reachable only through a local private helper and one
+  reachable only in a type.
+  Both must retain their compiled library ownership. [Mixed consumer](https://github.com/the-omega-institute/trureturing/blob/1b091b743e5eed04d4eab893c547f1785dede9d2/src/OmegaChecks/Mixed.lean)
+- Round-trip a canonical historical file byte for byte. Check that both the
+  main and theory-source readers accept historical and enriched records, including
+  omitted fields and measured empty arrays. Ship the compatible reader before
+  publishing enriched records. Pin adoption itself should yield an empty
+  `git diff` for `Golden/Frozen/state/`.
+- Exercise a first deposit and two manual refreshes on a disposable checkout.
+  Use matched and mismatched statement pins and a Closed module without a state
+  file. The refresh must update eligible existing members, reject the mismatch
+  without writing its file, and leave the unregistered module outside the state
+  table. Compare bytes across two successful refreshes of the same compiled inputs.
+  A proof-only change with the same statement pin must allow the earlier snapshot
+  to be read before refresh. Run the paired release through the usual required CI.
+
 ## Open a pull request
 
 Push the branch to your fork with `git push -u origin lane/governance/first-docs`

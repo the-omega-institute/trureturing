@@ -224,7 +224,11 @@ describes a wider design whose implementation remains incomplete.
 
 Mathematical reuse rests on the statements, checked proof terms and axiom
 dependencies in the [Lean source](D5/). The
-[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities. A declaration
+row can also show the libraries and axioms measured from its compiled statement
+and proof. An omitted library field leaves provenance unknown. An omitted axiom
+field gives the standard three-axiom upper bound, and an empty array records
+a measurement of zero axioms. [Reading and refreshing frozen evidence](docs/CONTRIBUTING.md#refresh-frozen-declaration-evidence)
 [Theory prose](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev/docs/develop/theory/) supplies research input, and
 [experiments](Evidence/) supply observations within their declared scope;
 neither substitutes for a Lean proof. The C# harness checks repository rules,
