@@ -28,11 +28,13 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transfer_readout",TransferReadout(),true,"The state type belongs to an arbitrary universe. A vector recurrence for a matrix and terminal vector gives a shifted scalar recurrence for every readout vector."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
-            Node("movesOne",Moves(),false,"The list consists of the successor columns with cut cost one, in increasing column-code order."),
+            Node("movesOne",Typed(Own("movesOne"), Arrow(Column(), Call("List", Column()))),false,"A literal lookup with 243 entries indexed by the current column code. The lists have variable lengths. The theorem moves_one_filter pins each list."),
+            Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
             Node("step_one",StepOne(),true,"The action of the exact-one-cut matrix is a sum over its successors."),
-            Node("weights",Weights(),false,"The identity selects the first twelve rows. The row at exponent twelve appends the proper-colouring coefficients to two zeros. The remaining rows are stored in a lookup of shape Fin 10 × Fin 12 and satisfy the displayed recurrence. Each recursive exponent is strictly below the current exponent and below 23."),
+            Node("weights",Typed(Own("weights"), Arrow(Fin(23), Arrow(Fin(12), Q("Int")))),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, a literal ten-by-twelve integer lookup supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
+            Node("weights_step",WeightsStep(),true,"Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
-            Node("tableOne",TableOne(),false,"The stored lookup has shape Fin 23 × Fin 25, with row n and column classIndex(p). The displayed entry is the left-summand projection of the continuation vector at exponent n."),
+            Node("tableOne",Typed(Own("tableOne"), Arrow(Fin(23), Arrow(Column(), Q("Int")))),false,"The definition reads a literal 23-by-25 integer lookup at row n and column classIndex(p). The theorem table_powers pins this lookup through the first summand of the continuation vector."),
             Node("zeroValues",ZeroValues(),false,"For larger exponents the zero-defect values are linear combinations of the twelve proper-colouring vectors."),
             Node("weight_eq",WeightEquality(),true,"The same coefficient formula also holds at the tabulated exponents."),
             Node("zero_values",PowerZero(),true,"The reconstructed value is the proper-colouring continuation vector at each exponent."),
@@ -173,7 +175,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
     private static Formula CutEquality() => All("p",Column(),All("q",Column(),Eq(Own("cost",V("p"),V("q")),
         Own("countCut",V("p"),V("q")))));
-    private static Formula Moves()
+    private static Formula MovesFilter()
     {
         var p = V("p");
         var q = V("q");
@@ -185,23 +187,20 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula StepOne() => All("w",Arrow(Column(),Q("Int")),All("p",Column(),
         Eq(App(Call("Matrix.mulVec",Own("oneDefect"),V("w")),V("p")),
             Call("List.sum",Call("List.map",V("w"),Own("movesOne",V("p")))))));
-    private static Formula Weights()
+    private static Formula WeightsStep()
     {
         var n = V("n");
         var j = V("j");
         var h = V("h");
         var k = V("k");
         var exponent = Val(n);
-        var identity = Typed(N(1), M(Fin(12)));
-        var initial = App(identity, Call("Fin.castLT", n, h), j);
-        var atTwelve = App(Call("Fin.append", Typed(N(0), Arrow(Fin(2), Q("Int"))),
-            C("coefficients")), j);
-        var previousExponent = Add(new Formula.Binary(exponent, FormulaBinaryOperator.Subtract, N(10)), Val(k));
-        var later = SumOver("k", Fin(10), Mul(C("coefficients", k),
-            Own("weights", Call("Fin.ofNat", N(23), previousExponent), j)));
-        var value = If(Typed(h, Lt(exponent, N(12))), initial,
-            If(Eq(exponent, N(12)), atTwelve, later));
-        return All("n", Fin(23), All("j", Fin(12), Eq(AsInt(Own("weights", n, j)), value)));
+        var lower = Call("LE.le.trans", Call("Nat.le_add_right", N(10), N(2)), h);
+        var bound = Call("Eq.trans_le", Call("Nat.sub_add_cancel", lower),
+            Call("Nat.le_of_lt", Call("Fin.isLt", n)));
+        var index = Call("Fin.castLE", bound, Call("Fin.natAdd", Sub(exponent, N(10)), k));
+        return All("n", Fin(23), All("h", Le(N(12), exponent), All("j", Fin(12),
+            Eq(AsInt(Own("weights", n, j)), SumOver("k", Fin(10),
+                Mul(C("coefficients", k), Own("weights", index, j)))))));
     }
 
     private static Formula ClassIndex()
@@ -214,15 +213,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var reversalClass = Typed(VectorLiteral([0, 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 12, 2, 13, 14, 15, 6, 16, 17, 18, 11, 8, 13, 19, 20, 1, 21, 22, 14, 9, 10, 23, 18, 24, 7, 16, 22, 19, 4]),
             Arrow(Fin(41), Fin(25)));
         return All("p", Column(), Eq(Typed(Own("classIndex", p), Fin(25)), App(reversalClass, colorClass)));
-    }
-
-    private static Formula TableOne()
-    {
-        var n = V("n");
-        var p = V("p");
-        var continuation = Call("Matrix.mulVec", Pow(Own("transfer"), Val(n)), Own("terminal"));
-        return All("n", Fin(23), All("p", Column(),
-            Eq(AsInt(Own("tableOne", n, p)), App(continuation, Call("Sum.inl", p)))));
     }
 
     private static Formula Expansion() => SumOver("j",Fin(12),

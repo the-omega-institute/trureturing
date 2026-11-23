@@ -16,8 +16,9 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             Paragraph(Text("A column is encoded in base three, with row r stored in digit r. "
                 + "Bond tests precisely the pairs of rows at distance at most one across consecutive "
                 + "columns. The strip has free boundaries and has no within-column bonds.")),
-            FormulaNode("moves", Moves(), false, "Each entry lists the codes of all legal successor columns."),
-            FormulaNode("table", Table(), false, "Rows are indexed by the number of extra columns and columns by the boundary code."),
+            FormulaNode("moves", Typed(C("moves"), Arrow(Column(), Call("List", Column()))), false, "A literal lookup with 243 entries indexed by the current column code. The lists have variable lengths. The theorem moves_eq_filter pins each list."),
+            FormulaNode("moves_eq_filter", MovesFilter(), true, "Filtering the ordered column codes by the bond condition gives the stored successor list."),
+            FormulaNode("table", Typed(C("table"), Arrow(Fin(12), Arrow(Column(), Q("Int")))), false, "A literal 12-by-243 integer lookup indexed by the number of extra columns and the boundary code. The theorem powers_table pins the rows."),
             FormulaNode("coefficients", Coefficients(), false, "The coefficients are listed in order of increasing power."),
             FormulaNode("step_fast", Step(), true, "Matrix action at a boundary is the sum over its legal successors."),
             FormulaNode("powers_table", Powers(), true, "The tabulated row is the continuation vector at the specified exponent."),
@@ -89,7 +90,7 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
     private static Formula BondInstance() => All("p", Column(), All("q", Column(),
         Typed(C("instDecidableBond", V("p"), V("q")), Call("Decidable", C("Bond", V("p"), V("q"))))));
 
-    private static Formula Moves()
+    private static Formula MovesFilter()
     {
         var p = V("p");
         var q = V("q");
@@ -98,8 +99,6 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
         return All("p", Column(), Eq(Typed(C("moves", p), Call("List", Column())),
             Call("List.filter", predicate, Call("List.finRange", N(243)))));
     }
-    private static Formula Table() => All("k", Fin(12),
-        Eq(Typed(C("table", V("k")), Arrow(Column(), Q("Int"))), Power(Val(V("k")))));
     private static Formula Coefficients() => Eq(Typed(C("coefficients"),Arrow(Fin(10),Q("Int"))),
         VectorLiteral([-36,72,192,-514,93,417,-163,-97,31,6]));
     private static Formula One() => Typed(N(1),Arrow(Column(),Q("Int")));
