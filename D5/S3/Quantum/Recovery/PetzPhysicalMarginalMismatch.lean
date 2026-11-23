@@ -40,7 +40,7 @@ private theorem retainedEntry_eq (t ε η : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1
   simp only [Matrix.sum_apply, Fin.sum_univ_two, Complex.add_re]
   change recoveryEntry t ε η + recoveryEntry t (-ε) η = _
   unfold recoveryEntry
-  simp only [sub_neg_eq_add, add_neg_eq_sub, hB]
+  simp only [sub_neg_eq_add, ← sub_eq_add_neg, hB]
   change u * v * (1 - t - t) / 2 + ε * ((1 - t) * u + t * η * v) / (η * u + v) +
       (v * u * (1 - t - t) / 2 + -ε * ((1 - t) * v + t * η * u) / (η * v + u)) =
     u * v * (1 - t - t) - 2 * ε ^ 2 * (1 - t - t * η ^ 2) / (u * v * (η ^ 2 + 1) + 2 * η)
@@ -50,7 +50,7 @@ private theorem retainedEntry_eq (t ε η : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1
     nlinarith only [congrArg (fun w : ℝ => η * w) hu2, congrArg (fun w : ℝ => η * w) hv2]
   have hnum :
       ((1 - t) * u + t * η * v) * (η * v + u) -
-        ((1 - t) * v + t * η * u) * (η * u + v) =
+        (η * u + v) * ((1 - t) * v + t * η * u) =
       (1 - t - t * η ^ 2) * (-2 * ε) := by
     calc
       _ = (1 - t - t * η ^ 2) * (u ^ 2 - v ^ 2) := by ring
@@ -111,7 +111,8 @@ theorem physical_marginal_mismatch {t ε η : ℝ} (ht : 0 < t) (ht' : t ≤ 1 /
     rw [← mul_div_assoc, div_le_iff₀ hBp]
     linarith
   have he := retainedEntry_eq t ε η hε hε' hη
-  change _ = B * _ - _ at he
+  change _ = B * (1 - t - t) -
+    2 * ε ^ 2 * (1 - t - t * η ^ 2) / (B * (η ^ 2 + 1) + 2 * η) at he
   have hf : 1 / 10 ≤ (1 - t - t) / (1 + B) +
       2 * ((1 - t - t * η ^ 2) / (B * (η ^ 2 + 1) + 2 * η)) := by linarith
   have hlow : ε ^ 2 / 10 ≤ 1 - t - t - (partialTraceRight (recoveryVariation t ε η) 0 1).re := by
@@ -119,10 +120,12 @@ theorem physical_marginal_mismatch {t ε η : ℝ} (ht : 0 < t) (ht' : t ≤ 1 /
     calc
       ε ^ 2 / 10 = ε ^ 2 * (1 / 10) := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_left hf (sq_nonneg ε)
-      _ = _ := by
-        rw [← div_mul_eq_mul_div, ← hidentity]
-        ring
-  exact ⟨by simpa [Complex.sub_re] using hdiff, by rw [he]; ring, hlow,
-    (show 0 < ε ^ 2 / 10 by positivity).trans_le hlow⟩
+      _ = ε ^ 2 / (1 + B) * (1 - t - t) +
+          2 * ε ^ 2 * (1 - t - t * η ^ 2) / (B * (η ^ 2 + 1) + 2 * η) := by ring
+      _ = _ := by rw [← hidentity]; ring
+  refine ⟨?_, by rw [he]; ring, hlow, (show 0 < ε ^ 2 / 10 by positivity).trans_le hlow⟩
+  convert hdiff using 1
+  · rfl
+  · simp [Complex.sub_re]
 
 end D5.S3.Quantum.Recovery.PetzPhysicalMarginalMismatch
