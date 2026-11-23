@@ -7,6 +7,7 @@
    digest: Exact ternary and dyadic constraints for a square-times-cube factorization of a native Lucas block. -/
 
 import D5.S3.Arith.Primes.GoldenCubicBlockRanks
+import D5.S3.Arith.GoldenCubicScaledTernaryUnit
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -79,24 +80,18 @@ theorem square_role_ternary_digit (R a b u : ℤ) (hR : R ≠ 0)
 level, including the level-zero base case. -/
 theorem native_block_ternary_unit (j : ℕ) :
     ∃ u : ℤ, nativeBlock j-1 = (3:ℤ)^(j+1)*u ∧ (u : ZMod 3) = (-1)^j := by
-  induction j with
-  | zero =>
-      refine ⟨1,?_,by norm_num⟩
-      open D5.S0.Carrier in norm_num [nativeBlock, goldenLucas, trace, phi]
-  | succ j ih =>
-      obtain ⟨u,hu,hmod⟩ := ih
-      let v : ℤ := 3*((3:ℤ)^j*u)^2-1
-      refine ⟨u*v, ?_, ?_⟩
-      · rw [nativeBlock_fixed_point_step, hu]
-        simp only [pow_succ]
-        dsimp only [v]
-        ring
-      · simp only [Int.cast_mul, hmod, pow_succ]
-        congr 1
-        dsimp [v]
-        push_cast
-        rw [show (3:ZMod 3)=0 by decide]
-        ring
+  by_cases hj : 1 ≤ j
+  · let A : ℤ := goldenLucas (3 ^ j) ^ 2 + 2
+    obtain ⟨hval, hmod⟩ :=
+      D5.S3.Arith.GoldenCubicScaledTernaryUnit.golden_cubic_scaled_ternary_unit j hj
+    have hd := padicValInt_dvd (p := 3) A
+    rw [show padicValInt 3 A = j + 1 from hval] at hd
+    rw [show nativeBlock j - 1 = A by dsimp [nativeBlock, A]; omega]
+    exact ⟨A / (3 : ℤ) ^ (j + 1), (Int.mul_ediv_cancel' hd).symm, hmod⟩
+  · have h0 : j = 0 := by omega
+    subst j
+    refine ⟨1,?_,by norm_num⟩
+    open D5.S0.Carrier in norm_num [nativeBlock, goldenLucas, trace, phi]
 
 private theorem block_prime_ne_two_five (j p : ℕ) (hj : 1 ≤ j)
     (hd : (p:ℤ) ∣ nativeBlock j) : p ≠ 2 ∧ p ≠ 5 := by

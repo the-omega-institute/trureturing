@@ -85,14 +85,6 @@ theorem primary_square_coordinates_two (η π γ : EisensteinOrder)
     decide
   exact htab _ _ _ _ heR heI
 
-private theorem native_lucas_mod (j : ℕ) (hj : 1 ≤ j) :
-    goldenLucas (3^j) % 9 = 4 ∧ goldenLucas (3^j) % 2 = 0 := by
-  let L := goldenLucas (3^j)
-  have h := (golden_cubic_lucas_block j hj).1
-  have hm : L%72=4 := by
-    simpa using (ZMod.intCast_eq_intCast_iff' L 4 72).mp h
-  omega
-
 /-- The primary generator fixed by the native ideal product, rotated
 into its odd-norm square-root-minus-three coordinates, has both
 coordinates prescribed modulo nine. -/
@@ -107,8 +99,10 @@ theorem native_oriented_coordinates (j : ℕ) (hj : 1 ≤ j) (π γ : Eisenstein
   let η := orientedFactor ((L-1).toNat)
   have him : η.im = L-1 := Int.toNat_of_nonneg (by change 1≤L at hL; omega)
   have hre : η.re = -2 := rfl
-  have hmod := native_lucas_mod j hj
-  change L%9=4 ∧ L%2=0 at hmod
+  have hmod72 : L % 72 = 4 := by
+    simpa using (ZMod.intCast_eq_intCast_iff' L 4 72).mp (golden_cubic_lucas_block j hj).1
+  have hmod9 : L % 9 = 4 := by omega
+  have hmod2 : L % 2 = 0 := by omega
   have h9 := primary_square_coordinates_nine η π γ hπ hγ he (by rw [hre]; decide) (by rw [him]; omega)
   have h2 := primary_square_coordinates_two η π γ he (by rw [hre]; decide) (by
     rw [him]
