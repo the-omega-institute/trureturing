@@ -21,7 +21,7 @@ open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 namespace D5.S3.Quantum.Divergence.SupportedTraceLog
 
 open FannesRootFidelityHolevo (supported_of_le)
-open private matrix_log_sum relativeEntropy from D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
+open FannesRootFidelityHolevo.LogSum (matrix_log_sum relativeEntropy)
 
 section Support
 
@@ -210,6 +210,7 @@ private theorem traceLog_log_sum (S T : ι → Matrix n n ℂ)
     obtain ⟨ht, htTr⟩ := htrace (Matrix.posSemidef_sum _ fun i _ => hT i) hTzero
     exact traceLog_log_sum_of_trace S T hS hT hST hs ht hsTr htTr
 
+omit [Nonempty n] [Nonempty ι] in
 /-- Supported trace-log is jointly convex over finite families of PSD pairs.
 The homogeneous form allows any nonnegative common weights. -/
 theorem traceLog_jointConvex (w : ι → ℝ) (S T : ι → Matrix n n ℂ)
@@ -220,6 +221,18 @@ theorem traceLog_jointConvex (w : ι → ℝ) (S T : ι → Matrix n n ℂ)
     let C := ∑ i, w i • T i
     (A * (CFC.log A - CFC.log C)).trace.re ≤
       ∑ i, w i * (S i * (CFC.log (S i) - CFC.log (T i))).trace.re := by
+  rcases isEmpty_or_nonempty n with hn | hn
+  · letI := hn
+    have hzero (M : Matrix n n ℂ) : M = 0 := by
+      apply Matrix.ext
+      intro i _
+      exact isEmptyElim i
+    simp [hzero]
+  letI := hn
+  rcases isEmpty_or_nonempty ι with hi | hi
+  · letI := hi
+    simp
+  letI := hi
   have h := traceLog_log_sum (fun i => w i • S i) (fun i => w i • T i)
     (fun i => (smul_nonneg (hw i) (hS i).nonneg).posSemidef)
     (fun i => (smul_nonneg (hw i) (hT i).nonneg).posSemidef)

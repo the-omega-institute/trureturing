@@ -6,8 +6,10 @@
    utility: none
    digest: The Fibonacci benchmark deficit for arbitrary mixed qubit preparations. -/
 
+import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Divergence.SupportedTraceLog
 import D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
+import D5.S3.Quantum.Divergence.Qubit.SignedProfile
 import D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 
 /-! The mixed Fibonacci qubit bound by independent spectral averaging. -/
@@ -21,11 +23,11 @@ open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Divergence.Qubit.FibonacciMixedQubit
 
-open private trace_pair from D5.S3.Quantum.Divergence.Qubit.SignedProfile
-open private inputWeights referenceWeights C3
-  from D5.S3.Quantum.Divergence.Qubit.FibonacciClippedProfile
+open FannesRootFidelityHolevo.LogSum (relativeEntropy)
 open SignedProfile (contrast overlap)
-open SupportedTraceLog
+open SignedProfile.Pairing (trace_pair)
+open FibonacciClippedProfile.Benchmark (inputWeights referenceWeights C3)
+open SupportedTraceLog (traceLog_jointConvex)
 
 private abbrev Qubit := Matrix (Fin 2) (Fin 2) ℂ
 
@@ -208,13 +210,13 @@ theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) �
       (∑ k, w k * (1 - overlap (ψ k) 0 1)) = 1 - (X 0 * X 1).trace.re := by
     simp only [mul_sub, mul_one, Finset.sum_sub_distrib, hwSum, h01]
   have hpure (k : Choice) :
-      traceLog (A k) (C k) ≤ C3 -
+      relativeEntropy (A k) (C k) ≤ C3 -
         (3 * (1 - overlap (ψ k) 0 1) + 11 * overlap (ψ k) 0 2) / 63360 := by
-    simpa only [traceLog, C3, A, C, Function.comp_apply, inputWeights, referenceWeights]
+    simpa only [relativeEntropy, C3, A, C, Function.comp_apply, inputWeights, referenceWeights]
       using FibonacciClippedProfile.traceLog_le_benchmark_sub_margin (ψ k) (hψ k)
   change traceLog (weightedMix inputWeights X) (weightedMix referenceWeights X) ≤ _
   calc
-    _ ≤ ∑ k, w k * traceLog (A k) (C k) := hj
+    _ ≤ ∑ k, w k * relativeEntropy (A k) (C k) := hj
     _ ≤ ∑ k, w k * (C3 -
         (3 * (1 - overlap (ψ k) 0 1) + 11 * overlap (ψ k) 0 2) / 63360) :=
       Finset.sum_le_sum fun k _ => mul_le_mul_of_nonneg_left (hpure k) (hw k)

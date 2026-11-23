@@ -29,8 +29,7 @@ private def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {n : Type u} {ι : Type v} [Fintype n] [DecidableEq n] [Nonempty n]
-    [Fintype ι] [Nonempty ι]
+  Law R := ∀ {n : Type u} {ι : Type v} [Fintype n] [DecidableEq n] [Fintype ι]
     (w : ι → ℝ) (S T : ι → Matrix n n ℂ)
     (_ : ∀ i, 0 ≤ w i) (_ : ∀ i, (S i).PosSemidef) (_ : ∀ i, (T i).PosSemidef)
     (_ : ∀ i x, T i *ᵥ x = 0 → S i *ᵥ x = 0),
@@ -86,7 +85,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

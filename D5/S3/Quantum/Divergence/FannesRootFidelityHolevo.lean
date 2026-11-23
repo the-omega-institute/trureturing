@@ -970,4 +970,10 @@ theorem result : claim := by
     (blockHolevo_le_entropy_root p hp hs v ρ hq hF)
   simpa only [entropy_owner_eq_trace_log] using h
 
+namespace LogSum
+
+export _root_.D5.S3.Quantum.Divergence.FannesRootFidelityHolevo (matrix_log_sum relativeEntropy)
+
+end LogSum
+
 end D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
