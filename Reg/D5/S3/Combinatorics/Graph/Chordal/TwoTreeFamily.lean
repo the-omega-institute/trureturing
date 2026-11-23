@@ -22,7 +22,7 @@ noncomputable section
 
 universe u v
 
-abbrev coordinateParams := Σ R : Type u, CommRing R × ℕ
+abbrev coordinateParams := Σ R : Type u, Σ _ : CommRing R, ℕ
 
 abbrev coordinateSignature : Signature where
   Params := coordinateParams.{u}
@@ -292,7 +292,7 @@ def coordinateRegistration : Contract.Registration.{_,_,_,0,0,0,u+1,0,0,u,0,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.TwoTreeFamily
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
@@ -388,7 +388,7 @@ def pairingRegistration : Contract.Registration.{_,_,_,0,0,0,_,u,0,v,0,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.TwoTreeFamily
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6]
+    coordinates := #[0, 1, 5, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 7

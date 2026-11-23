@@ -163,7 +163,7 @@ def edgeRegistration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 open scoped ENNReal
 
-abbrev stretchParams := Σ d : ℕ, SimpleGraph (TwoTreeV d) × TwoTreeV d
+abbrev stretchParams := Σ d : ℕ, Σ _ : SimpleGraph (TwoTreeV d), TwoTreeV d
 
 abbrev stretchSignature : Signature where
   Params := stretchParams
@@ -214,7 +214,7 @@ def stretchEvidence : Registration stretchArena (type_of% twoTree_min_spanning_t
     rw [edist_self, edist_top_of_ne (by decide : (0 : Fin 3) ≠ 1)]
     decide
 
-abbrev integralParams := Σ d : ℕ, (TwoTreeV d → TwoTreeV d → ℤ) × (TwoTreeV d → ℤ) × TwoTreeV d
+abbrev integralParams := Σ d : ℕ, Σ _ : TwoTreeV d → TwoTreeV d → ℤ, Σ _ : TwoTreeV d → ℤ, TwoTreeV d
 
 abbrev integralSignature : Signature where
   Params := integralParams
@@ -437,7 +437,7 @@ def banachRegistration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0,
   familyRecord := none
   options := #[]
 
-abbrev gainParams := Σ d : ℕ, Σ H : Type u, Σ _ : Group H, (TwoTreeV d → H) × TwoTreeV d
+abbrev gainParams := Σ d : ℕ, Σ H : Type u, Σ _ : Group H, Σ _ : TwoTreeV d → H, TwoTreeV d
 
 abbrev gainSignature : Signature where
   Params := gainParams.{u}
@@ -560,7 +560,7 @@ def gainRegistration : Contract.Registration.{_, _, _, 0, 0, 0, u+1, 0, 0, u, 0,
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.TwoTreeStretchSeparation
     definition := none
-    coordinates := #[0, 1, 2, 11, 12]
+    coordinates := #[0, 1, 11, 12]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "arg", "body", "body", "body", "body", "fn", "arg", "arg"]
