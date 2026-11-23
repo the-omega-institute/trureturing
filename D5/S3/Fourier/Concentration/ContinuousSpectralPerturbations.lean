@@ -155,7 +155,7 @@ private theorem pairRadius_attained {J : Type*} [Fintype J] (radius : J → ℝ)
   rw [hi]
   exact Real.coe_toNNReal _ (hnonneg i)
 
-private theorem pair_event_measure_le {J : Type*} [Fintype J] (g radius : J → ℝ)
+theorem pair_event_measure_le {J : Type*} [Fintype J] (g radius : J → ℝ)
     (hradius : ∀ j, 0 < radius j) {m n : J → ℕ} (hmn : m ≠ n) {η : ℝ} :
     (Measure.pi fun j => intervalNoise (radius j))
       {x | |monomialFrequency (fun j => g j + x j) m -
@@ -186,6 +186,13 @@ def excessBound {J : Type*} [Fintype J] [DecidableEq J] (w radius : J → ℝ)
     ENNReal.ofReal (monomialWeight w m * monomialWeight w n) *
       min 1 (ENNReal.ofReal (η / pairRadius radius m n))
 
+/-- The weighted sum of pairwise bounds over ordered, distinct degree-vector pairs. -/
+def weightedPairBudget {J : Type*} [Fintype J] [DecidableEq J] (w : J → ℝ) (p : ℕ)
+    (bound : (J → ℕ) → (J → ℕ) → ℝ≥0∞) : ℝ≥0∞ :=
+  let s := piAntidiag univ p
+  ∑ m ∈ s, ∑ n ∈ s.erase m,
+    ENNReal.ofReal (monomialWeight w m * monomialWeight w n) * bound m n
+
 theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
     let s := piAntidiag univ p
@@ -204,12 +211,16 @@ theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
   simp [term, hη, pow_two]
 
 private theorem expected_excess_le {J : Type*} [Fintype J] [DecidableEq J]
-    (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j) (hradius : ∀ j, 0 < radius j)
-    (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
+    (g w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j)
+    (p : ℕ) {η : ℝ} (hη : 0 ≤ η) (bound : (J → ℕ) → (J → ℕ) → ℝ≥0∞)
+    (hpair : ∀ m ∈ piAntidiag univ p, ∀ n ∈ (piAntidiag univ p).erase m,
+      (Measure.pi fun j => intervalNoise (radius j))
+        {x | |monomialFrequency (fun j => g j + x j) m -
+          monomialFrequency (fun j => g j + x j) n| ≤ η} ≤ bound m n) :
     let μ := Measure.pi fun j => intervalNoise (radius j)
     let D := ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
     (∫⁻ x, ENNReal.ofReal (tailCollisionMass (fun j => g j + x j) w p η - D) ∂μ) ≤
-      excessBound w radius p η := by
+      weightedPairBudget w p bound := by
   intro μ D
   let s := piAntidiag (univ : Finset J) p
   let c := monomialWeight w
@@ -246,13 +257,12 @@ private theorem expected_excess_le {J : Type*} [Fintype J] [DecidableEq J]
   have hsum (m : J → ℕ) : Measurable (fun x => ∑ n ∈ s.erase m, term m n x) :=
     Finset.measurable_sum _ (fun n _ => hterm m n)
   rw [lintegral_finsetSum _ (fun m _ => hsum m)]
-  unfold excessBound
-  refine sum_le_sum (fun m _ => ?_)
+  unfold weightedPairBudget
+  refine sum_le_sum (fun m hm => ?_)
   rw [lintegral_finsetSum _ (fun n _ => hterm m n)]
   refine sum_le_sum (fun n hn => ?_)
   rw [show term m n = _ from rfl, lintegral_indicator_const (hmeas m n)]
-  exact mul_le_mul_right
-    (pair_event_measure_le g radius hradius (ne_of_mem_erase hn).symm (η := η)) _
+  exact mul_le_mul_right (hpair m hm n hn) _
 
 private theorem measurable_collision_of_offsets {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) (η : ℝ) :
@@ -264,17 +274,22 @@ private theorem measurable_collision_of_offsets {J : Type*} [Fintype J] [Decidab
   unfold monomialFrequency
   fun_prop
 
-/-- A countable family of collision budgets is satisfied by one spectrum close to the original. -/
-theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
+/-- Pairwise probability bounds yield one nearby spectrum satisfying countably many tests. -/
+theorem exists_continuous_common_nearby_bounds_of_pair_probabilities {J K : Type*} [DecidableEq J]
     [Countable J] [Countable K] (g radius : J → ℝ) (hradius : ∀ j, 0 < radius j)
     (support : K → Finset J) (w : ∀ k, support k → ℝ) (hw : ∀ k j, 0 ≤ w k j)
     (p : K → ℕ) (η budget : K → ℝ) (hη : ∀ k, 0 ≤ η k) (hbudget : ∀ k, 0 < budget k)
-    (htotal : (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+    (bound : ∀ k, (support k → ℕ) → (support k → ℕ) → ℝ≥0∞)
+    (hpair : ∀ k, ∀ m ∈ piAntidiag univ (p k), ∀ n ∈ (piAntidiag univ (p k)).erase m,
+      (Measure.pi fun j : support k => intervalNoise (radius j))
+        {x | |monomialFrequency (fun j : support k => g j + x j) m -
+          monomialFrequency (fun j : support k => g j + x j) n| ≤ η k} ≤ bound k m n)
+    (htotal : (∑' k, weightedPairBudget (w k) (p k) (bound k) /
       ENNReal.ofReal (budget k)) ≤ 1) :
     ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ radius j) ∧
       (∑' k, ENNReal.ofReal (tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) -
         ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) / ENNReal.ofReal (budget k)) ≤
-        (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+        (∑' k, weightedPairBudget (w k) (p k) (bound k) /
           ENNReal.ofReal (budget k)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
         (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k := by
@@ -300,7 +315,7 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     ((hexcess k).comp (Finset.measurable_restrict (support k))).div_const _
   have hlocal (k : K) :
       (∫⁻ x, loss k x ∂μ) ≤
-        excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+        weightedPairBudget (w k) (p k) (bound k) /
           ENNReal.ofReal (budget k) := by
     have hmarginal : μ.map (support k).restrict = Measure.pi (fun j : support k => ν j) :=
       Measure.infinitePi_map_restrict ν
@@ -310,7 +325,7 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     rw [lintegral_mul_const _ (hexcess k)]
     exact mul_le_mul_left
       (expected_excess_le (fun j : support k => g j) (w k) (fun j : support k => radius j)
-        (hw k) (fun j => hradius j) (p k) (hη k)) _
+        (hw k) (p k) (hη k) (bound k) (hpair k)) _
   have houtside : μ {x | ¬ inside x} = 0 := ae_iff.mp hinside
   let total (x : J → ℝ) : ℝ≥0∞ := ∑' k : K, loss k x
   have htotalMeas : Measurable total := Measurable.tsum hmeas
@@ -331,6 +346,28 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     rw [← ENNReal.ofReal_div_of_pos (hbudget k), ← ENNReal.ofReal_one,
       ENNReal.ofReal_le_ofReal_iff zero_le_one, div_le_iff₀ (hbudget k), one_mul] at hk
     exact (sub_le_iff_le_add.mp hk).trans_eq (add_comm _ _)
+
+/-- A countable family of collision budgets is satisfied by one spectrum close to the original. -/
+theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
+    [Countable J] [Countable K] (g radius : J → ℝ) (hradius : ∀ j, 0 < radius j)
+    (support : K → Finset J) (w : ∀ k, support k → ℝ) (hw : ∀ k j, 0 ≤ w k j)
+    (p : K → ℕ) (η budget : K → ℝ) (hη : ∀ k, 0 ≤ η k) (hbudget : ∀ k, 0 < budget k)
+    (htotal : (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+      ENNReal.ofReal (budget k)) ≤ 1) :
+    ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ radius j) ∧
+      (∑' k, ENNReal.ofReal (tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) -
+        ∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) / ENNReal.ofReal (budget k)) ≤
+        (∑' k, excessBound (w k) (fun j : support k => radius j) (p k) (η k) /
+          ENNReal.ofReal (budget k)) ∧
+      ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
+        (∑ m ∈ piAntidiag univ (p k), monomialWeight (w k) m ^ 2) + budget k := by
+  let bound (k : K) (m n : support k → ℕ) :=
+    min 1 (ENNReal.ofReal (η k / pairRadius (fun j : support k => radius j) m n))
+  apply exists_continuous_common_nearby_bounds_of_pair_probabilities
+    g radius hradius support w hw p η budget hη hbudget bound ?_ htotal
+  intro k m _ n hn
+  exact pair_event_measure_le (fun j : support k => g j) (fun j : support k => radius j)
+    (fun j => hradius j) (ne_of_mem_erase hn).symm
 
 #print axioms exists_continuous_common_nearby_bounds
 
