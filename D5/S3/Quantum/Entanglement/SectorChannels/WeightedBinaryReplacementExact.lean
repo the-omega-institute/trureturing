@@ -172,7 +172,7 @@ private theorem replacer_reference_error {A T U : Type} [Fintype A] [DecidableEq
   unfold referenceError
   rw [he, traceNorm_kronecker, hNorm, one_mul]
 
-private theorem replacer_diamond_exact {A T : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+theorem replacer_diamond_exact {A T : Type} [Fintype A] [DecidableEq A] [Nonempty A]
     [Fintype T] [DecidableEq T]
     (C Q : QuantumChannel A T) (M N : Matrix T T ℂ)
     (hC : ∀ X, rawEntry C X = X.trace • M)

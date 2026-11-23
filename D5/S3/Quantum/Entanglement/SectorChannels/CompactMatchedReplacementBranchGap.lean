@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.FiniteSectorChannelModel
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import D5.S3.Quantum.Foundation.TraceNormTensorProduct
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.Real.Sqrt
 
@@ -25,8 +24,7 @@ open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
 open D5.S3.Quantum.Entanglement.SectorSchmidtEncoding
-open D5.S3.Quantum.Classicalization.XuImaiGuhneSimultaneousUnboundedness.Toolkit
-open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Kronecker
+open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder
 
 /-- The overlap estimate uses only the arithmetic-geometric mean of two
 weights. In particular no Hilbert-space or spectral hypothesis is hidden. -/
@@ -634,57 +632,5 @@ theorem result
   have hp := compact_rank_one_product_input source hsource s
   exact physical_shared_branch_gap source s _ _ hp C Q c hc (by simpa using hs)
     (hBorn _ _) w hw hsum left right hQ
-
-private theorem replacer_reference_error {A T U : Type} [Fintype A] [DecidableEq A]
-    [Fintype T] [DecidableEq T] [Fintype U] [DecidableEq U]
-    (C Q : QuantumChannel A T) (M N : Matrix T T ℂ)
-    (hC : ∀ X, rawEntry C X = X.trace • M)
-    (hQ : ∀ X, rawEntry Q X = X.trace • N)
-    (rho : DensityState (U × A)) :
-    referenceError C Q rho = traceNorm (M-N) := by
-  let X := CStarMatrix.ofMatrix.symm rho.val
-  let R : Matrix U U ℂ := ∑ a : A, X.submatrix (fun u => (u,a)) (fun u => (u,a))
-  have hX : X.PosSemidef := (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.prop.1).posSemidef
-  have hR : R.PosSemidef := Matrix.posSemidef_sum (s := Finset.univ)
-    (fun a _ => hX.submatrix (fun u => (u,a)))
-  have ht : R.trace = 1 := by
-    rw [← rho.prop.2]
-    · simp only [R, Matrix.trace, Matrix.diag, Matrix.sum_apply, Matrix.submatrix_apply]
-      change (∑ u : U, ∑ a : A, X (u,a) (u,a)) = ∑ p : U × A, X p p
-      rw [Fintype.sum_prod_type]
-  have hNorm : traceNorm R = 1 := by
-    have h := congrArg Complex.re (traceNorm_of_posSemidef hR)
-    simpa [ht] using h
-  have he :
-      CStarMatrix.ofMatrix.symm (referenceState C rho).val -
-      CStarMatrix.ofMatrix.symm (referenceState Q rho).val =
-        R ⊗ₖ (M-N) := by
-    ext p q
-    rcases p with ⟨u,a⟩
-    rcases q with ⟨v,b⟩
-    change rawEntry C (Matrix.of (fun x y => X (u,x) (v,y))) a b -
-      rawEntry Q (Matrix.of (fun x y => X (u,x) (v,y))) a b = _
-    rw [hC,hQ]
-    simp [R, Matrix.trace, Matrix.diag, Matrix.sum_apply,
-      Matrix.submatrix_apply, smul_eq_mul, mul_sub]
-  unfold referenceError
-  rw [he, traceNorm_kronecker, hNorm, one_mul]
-
-theorem replacer_diamond_exact {A T : Type} [Fintype A] [DecidableEq A] [Nonempty A]
-    [Fintype T] [DecidableEq T]
-    (C Q : QuantumChannel A T) (M N : Matrix T T ℂ)
-    (hC : ∀ X, CStarMatrix.ofMatrix.symm (C.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = X.trace • M)
-    (hQ : ∀ X, CStarMatrix.ofMatrix.symm (Q.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = X.trace • N) :
-    diamondDistance C Q = traceNorm (M-N) := by
-  apply le_antisymm
-  · unfold diamondDistance
-    apply csSup_le (by exact ⟨0, Or.inl (by simp)⟩)
-    rintro y (hy | ⟨n,rho,rfl⟩)
-    · rw [Set.mem_singleton_iff.mp hy]
-      exact traceNorm_nonneg _
-    · exact (replacer_reference_error C Q M N hC hQ rho).le
-  · let rho := basisDensity ((0 : Fin 1), Classical.choice (inferInstance : Nonempty A))
-    rw [← replacer_reference_error C Q M N hC hQ rho]
-    exact referenceError_le_diamond C Q rho
 
 end D5.S3.Quantum.Entanglement.SectorChannels.CompactMatchedReplacementBranchGap
