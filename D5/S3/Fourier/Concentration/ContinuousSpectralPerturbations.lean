@@ -186,7 +186,7 @@ def excessBound {J : Type*} [Fintype J] [DecidableEq J] (w radius : J → ℝ)
     ENNReal.ofReal (monomialWeight w m * monomialWeight w n) *
       min 1 (ENNReal.ofReal (η / pairRadius radius m n))
 
-private theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
+theorem collision_excess_eq {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) {η : ℝ} (hη : 0 ≤ η) :
     let s := piAntidiag univ p
     tailCollisionMass g w p η - (∑ m ∈ s, monomialWeight w m ^ 2) =
