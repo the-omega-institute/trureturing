@@ -82,7 +82,6 @@ jobs:
     outputs:
       source_status: ${{ steps.prefix.outputs.source_status }}
       continuation: ${{ steps.prefix.outputs.continuation }}
-      judge_key: ${{ steps.judge_key.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     steps:
       - uses: actions/checkout@v5
@@ -114,38 +113,8 @@ jobs:
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: false
-      - id: nuget
-        run: |
-          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
-          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.nuget.outputs.path }}
-          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge_key
-        env:
-          JUDGE_INPUTS: |
-            Meta/tools-release.json
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-        run: |
-          sdk="$(dotnet --version)"
-          [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
-          recipe="$(python3 tools/scripts/workflow/ci_checks.py judge-recipe | sha256sum | cut -c1-16)"
-          specs=()
-          while IFS= read -r spec; do [[ -n "$spec" ]] && specs+=(":(glob)$spec"); done <<< "$JUDGE_INPUTS"
-          listing="$RUNNER_TEMP/judge-inputs"
-          git ls-files -s -z -- "${specs[@]}" > "$listing"
-          [[ -s "$listing" ]] || { echo "judge inputs select no tracked file" >&2; exit 2; }
-          inputs="$(sha256sum < "$listing" | cut -c1-64)"
-          echo "key=judge-${{ runner.os }}-${{ runner.arch }}-sdk$sdk-$recipe-$inputs" >> "$GITHUB_OUTPUT"
+        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
       - id: judge
         continue-on-error: true
         uses: actions/cache/restore@v5
@@ -154,6 +123,12 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - name: Restore the NuGet packages for a cold judge build
+        if: steps.judge.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.judge_key.outputs.packages_path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: compute_budget
         name: Initialize the cumulative current compute allowance
         run: |
@@ -166,6 +141,15 @@ jobs:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
+      - name: Publish the compiled judge on protected pushes
+        if: github.event_name == 'push' && github.ref_protected && !github.event.deleted && steps.prefix.outputs.source_status == 'accepted' && steps.judge.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
       - id: remainder
         name: Carry the remaining current compute allowance
         if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
@@ -182,7 +166,10 @@ jobs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
       STRATALINT_ACCEPT_COLD_BUILD: '1'
-      INDEXED_PROJECT: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) && (github.event_name == 'pull_request' || github.ref_protected) }}
+      INDEXED_PROJECT: >-
+        ${{ (github.event_name == 'pull_request' || (github.ref_protected && !github.event.deleted)) &&
+            (vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) ||
+             (vars.LEAN_CACHE_SHARDS_REF == 'dev' && startsWith(github.base_ref || github.ref_name, 'integration-'))) }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -213,14 +200,13 @@ jobs:
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: false
-      - id: nuget
-        run: |
-          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
-          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
+      - id: judge_key
+        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
+      - id: nuget_cache
+        name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
-          path: ${{ steps.nuget.outputs.path }}
+          path: ${{ steps.judge_key.outputs.packages_path }}
           key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge
         if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
@@ -230,7 +216,7 @@ jobs:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
+          key: ${{ steps.judge_key.outputs.key }}
       - id: compute_budget
         name: Resume the cumulative current compute allowance
         env:
@@ -243,7 +229,7 @@ jobs:
         name: Prepare judge dependencies
         if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
         env:
-          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit == 'true' && steps.nuget_cache.outputs.cache-hit == 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current prepare
       - id: build_judge
         name: Build the judge
@@ -277,6 +263,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+          restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
       - id: toolchain
         if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
@@ -287,7 +274,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
       - id: cache_scope
         name: Select cached modules from the Lean build plan
         if: env.INDEXED_PROJECT == 'true' && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
@@ -297,7 +284,8 @@ jobs:
           if [[ -s "$targets" ]]; then
             echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
           fi
-      - name: Restore project shards for the selected modules
+      - id: shards
+        name: Restore project shards for the selected modules
         if: steps.cache_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
@@ -307,13 +295,16 @@ jobs:
           operation: restore
           targets-file: ${{ steps.cache_scope.outputs.targets-file }}
       - id: project
-        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && env.INDEXED_PROJECT != 'true' && steps.keys.outputs.project_key != '' }}
+        if: >-
+          ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' &&
+              steps.keys.outputs.project_key != '' && (env.INDEXED_PROJECT != 'true' ||
+              (steps.shards.outcome == 'success' && (steps.shards.outputs.available || '0') == '0')) }}
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_restore_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
       - id: lean_seeds
         if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
         name: Restore optional Lean build seeds
@@ -324,7 +315,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: |
-          if [[ "$INDEXED_PROJECT" == true ]]; then
+          if [[ "$PROJECT_OUTCOME" == skipped ]]; then
             python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           else
             python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"

@@ -1,21 +1,9 @@
 name: Produce the Lean Actions cache
 description: Resume long builds separately and publish only complete validated Lean seeds.
 inputs:
-  release-seed-tag:
-    description: Exact published Release tag to restore before the long build
-    default: ''
-  release-seed-producer:
-    description: Immutable commit that produced the selected Release
-    default: ''
   shard-history-anchor:
     description: Pinned dev anchor for the sharded project cache, empty selects native cache transport
     default: ''
-  regenerate-report-artifacts:
-    description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
-    default: 'false'
-  native-report-batch-modules:
-    description: 'Maximum modules per native extraction process (integer 1..100); preserves module coverage and cache reuse'
-    default: '100'
 outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
@@ -35,19 +23,19 @@ runs:
   steps:
     - name: Reserve time to save producer progress
       shell: bash
-      run: echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
+      run: |
+        [[ "$GITHUB_EVENT_NAME" == push && "$GITHUB_REF_PROTECTED" == true ]]
+        [[ "$GITHUB_REF" == refs/heads/dev || "$GITHUB_REF" == refs/heads/integration-* ]]
+        jq -e --arg ref "$GITHUB_REF" '.deleted == false and .ref == $ref' "$GITHUB_EVENT_PATH" >/dev/null
+        echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
     - name: Install the pinned tools release
       if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
       shell: bash
       run: python3 .github/scripts/install-tools.py
-    - uses: actions/setup-dotnet@v5
-      with:
-        global-json-file: global.json
     - name: Build the Lean producer for the cache seed
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
     - id: prepared
-      if: inputs.release-seed-tag == '' && inputs.release-seed-producer == ''
       env:
         GH_TOKEN: ${{ github.token }}
       uses: ./.github/actions/lean-cache-shards
@@ -66,6 +54,7 @@ runs:
       with:
         path: ~/.elan
         key: ${{ steps.keys.outputs.elan_key }}
+        restore-keys: ${{ steps.keys.outputs.elan_restore_key }}
     - shell: bash
       run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
     - id: dependency
@@ -75,10 +64,10 @@ runs:
       with:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
-        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_keys || steps.keys.outputs.dependency_restore_prefix }}
     - id: sharded_seed
       name: Restore available project shards
-      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != ''
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
       env:
@@ -86,13 +75,13 @@ runs:
       with:
         operation: restore
     - id: project
-      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && (steps.sharded_seed.outputs.available || '0') == '0'
+      if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' && (steps.sharded_seed.outputs.available || '0') == '0'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
         path: ${{ steps.keys.outputs.project_archive_path }}
         key: ${{ steps.keys.outputs.project_restore_key }}
-        restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+        restore-keys: ${{ steps.keys.outputs.project_restore_keys || steps.keys.outputs.project_restore_prefix }}
     - name: Restore optional validated seeds
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
@@ -114,7 +103,7 @@ runs:
         fi
     - id: sharded_resume
       name: Restore sharded producer progress
-      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != ''
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
       env:
@@ -155,30 +144,7 @@ runs:
         python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
         if [[ -f "$GITHUB_WORKSPACE/build/lean-cache/producer-resume-restored.json" ]]; then
           echo 'restored=true' >> "$GITHUB_OUTPUT"
-          echo "attempt=${RESUME_KEY##*-}" >> "$GITHUB_OUTPUT"
         fi
-    - id: release
-      name: Restore the explicitly selected Release
-      if: steps.native_resume.outputs.restored != 'true' && (inputs.release-seed-tag != '' || inputs.release-seed-producer != '')
-      env:
-        GH_TOKEN: ${{ github.token }}
-        RELEASE_TAG: ${{ inputs.release-seed-tag }}
-        RELEASE_PRODUCER: ${{ inputs.release-seed-producer }}
-      shell: bash
-      run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$RELEASE_TAG" LEAN_CACHE_SOURCE_COMMIT="$RELEASE_PRODUCER"
-    - id: release_resume
-      name: Restore progress from an earlier attempt of this Release rebuild
-      if: >-
-        inputs.release-seed-tag != '' && inputs.shard-history-anchor != '' && fromJSON(github.run_attempt) > 1 &&
-        (steps.release.outputs.restored == 'true' || steps.native_resume.outputs.restored == 'true')
-      continue-on-error: true
-      uses: ./.github/actions/lean-cache-shards
-      env:
-        GH_TOKEN: ${{ github.token }}
-      with:
-        operation: restore
-        state: resume
-        resume-after-attempt: ${{ steps.native_resume.outputs.attempt || '0' }}
     - name: Remove leftover cache download archives
       shell: bash
       run: |
@@ -199,34 +165,24 @@ runs:
         PARTIAL_INDEXED_PROJECT: >-
           ${{ ((steps.sharded_seed.outputs.available || '0') != '0' && steps.sharded_seed.outputs.complete != 'true')
               || (steps.sharded_resume.outputs.available || '0') != '0'
-              || (steps.release_resume.outputs.available || '0') != '0'
               || (inputs.shard-history-anchor != '' && steps.native_resume.outputs.restored == 'true') }}
-        REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
-        STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Compile ordinary audit programs during explicit input preparation.
         STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegTests","regInspector/compiledJudgeTests"]'
       shell: bash
       run: |
-        # Reject untrusted input before Make can expand environment values.
-        python3 tools/lean-inspector/native.py batch-size
         producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
         if [[ -n "$producer" ]]; then
           export STRATALINT_LEAN_PRODUCER_DLL="$producer"
         else
           unset STRATALINT_LEAN_PRODUCER_DLL
         fi
-        case "$REGENERATE_REPORTS" in
-          true) regenerate=1 ;;
-          false) regenerate=0 ;;
-          *) echo "CACHE_SEED_ERROR invalid report regeneration input" >&2; exit 2 ;;
-        esac
         export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
         export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-1}"
         status=0
         python3 tools/scripts/report/runner-diagnostics.py -- \
           bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
-          env -u PREFLIGHT_DEADLINE_AT make lean-cache-prepare FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
+          env -u PREFLIGHT_DEADLINE_AT make lean-cache-prepare FULL_BUILD=1 || status=$?
         echo "exit_code=$status" >> "$GITHUB_OUTPUT"
         exit "$status"
     - id: sharded_progress
@@ -317,29 +273,6 @@ runs:
       with:
         operation: save
         anchor: ${{ inputs.shard-history-anchor }}
-    - id: published_index
-      name: Read back the Actions index rebuilt from the pinned Release
-      if: inputs.release-seed-tag != '' && inputs.shard-history-anchor != '' && steps.sharded_project.outputs.complete == 'true'
-      uses: ./.github/actions/lean-cache-shards
-      env:
-        GH_TOKEN: ${{ github.token }}
-      with:
-        operation: lookup
-    - name: Confirm that the rebuilt index and its material are visible on the protected ref
-      if: inputs.release-seed-tag != '' && inputs.shard-history-anchor != ''
-      shell: bash
-      env:
-        SAVED: ${{ steps.sharded_project.outputs.key }}
-        MATCHED: ${{ steps.published_index.outputs.key }}
-        COMPLETE: ${{ steps.published_index.outputs.complete }}
-        VISIBLE: ${{ steps.published_index.outputs.visible }}
-        TAG: ${{ inputs.release-seed-tag }}
-        PRODUCER: ${{ inputs.release-seed-producer }}
-      run: |
-        [[ -n "$SAVED" && "$MATCHED" == "$SAVED" && "$COMPLETE" == true && "$VISIBLE" =~ ^[1-9][0-9]*$ ]]
-        jq -n -c --arg tag "$TAG" --arg producer "$PRODUCER" --arg ref "$GITHUB_REF" \
-          --arg index "$MATCHED" --argjson visible "$VISIBLE" \
-          '{release_tag:$tag,producer_commit:$producer,ref:$ref,index_key:$index,visible_payloads:$visible}'
     - id: project_snapshot
       if: steps.sharded_project.outputs.complete != 'true'
       name: Prepare the project seed
