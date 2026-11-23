@@ -564,4 +564,51 @@ theorem affine_plane_reduced_relation_card :
     Equiv.subtypeEquivRight affine_compatible_iff
   rw [Nat.card_congr (e.symm.trans potentialEq), affine_plane_potential_card]
 
+private def embedThree : ZMod 3 →+ ZMod 9 where
+  toFun z := 3 * (z.val : ZMod 9)
+  map_zero' := by decide
+  map_add' := by
+    show ∀ a b : ZMod 3, 3 * ((a + b).val : ZMod 9) =
+      3 * (a.val : ZMod 9) + 3 * (b.val : ZMod 9)
+    decide
+
+private theorem embedThree_injective : Function.Injective embedThree := by
+  show ∀ a b : ZMod 3, embedThree a = embedThree b → a = b
+  decide
+
+private theorem embedThree_covers :
+    ∀ x : ZMod 9, 3 • x = 0 → ∃ a : ZMod 3, embedThree a = x := by decide
+
+/-- The reduced affine-line relations modulo nine are all three-torsion
+and again admit exactly two independent ternary parameters. -/
+theorem affine_plane_reduced_relation_card_nine :
+    Nat.card {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} = 9 := by
+  classical
+  let e : {u : Fin 9 → ZMod 9 // IsOmissionPotential affineLines 0 u} ≃
+      {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} :=
+    Equiv.ofBijective _ (potential_to_relations_bijective affineLines affine_triangle_injective
+      affine_pair_unique 8 0 (by decide) (by
+        intro x
+        rw [Fintype.card_fin, nsmul_eq_mul, show ((9 : ℕ) : ZMod 9) = 0 by decide, zero_mul])).bijective
+  let map (u : Fin 9 → ZMod 3) (i : Fin 9) := embedThree (u i)
+  have preserves (u : Fin 9 → ZMod 3) :
+      IsOmissionPotential affineLines 0 (map u) ↔ IsOmissionPotential affineLines 0 u := by
+    simp only [IsOmissionPotential, map, ← map_sum, ← map_nsmul, ← map_add,
+      ← embedThree.map_zero, embedThree_injective.eq_iff]
+  let mapEquiv : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
+      {u : Fin 9 → ZMod 9 // IsOmissionPotential affineLines 0 u} := by
+    refine Equiv.ofBijective (fun u => ⟨map u.val, (preserves _).mpr u.prop⟩) ?_
+    constructor
+    · intro u v h
+      exact Subtype.ext (funext fun i => embedThree_injective (congrFun (congrArg Subtype.val h) i))
+    · intro u
+      choose v hv using fun i => embedThree_covers (u.val i) (u.prop.2.2.1 i)
+      have he : map v = u.val := funext hv
+      have hv' : IsOmissionPotential affineLines 0 (map v) := he.symm ▸ u.prop
+      exact ⟨⟨v, (preserves v).mp hv'⟩, Subtype.ext he⟩
+  let modThree : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
+      {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} :=
+    Equiv.subtypeEquivRight affine_compatible_iff
+  rw [Nat.card_congr (e.symm.trans (mapEquiv.symm.trans modThree)), affine_plane_potential_card]
+
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
