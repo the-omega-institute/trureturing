@@ -45,7 +45,7 @@ def project (f : Q 9 → ℤ) (z : Q 3) : Profiles where
 def exteriorAction (f : Q 3 → ℤ) (z : Q 3) : ℤ :=
   ∑ i, flipSign i z * f (flip z i)
 
-private theorem flip_append_left {m n : ℕ} (a : Q m) (b : Q n) (i : Fin m) :
+theorem flip_append_left {m n : ℕ} (a : Q m) (b : Q n) (i : Fin m) :
     flip (Fin.append a b) (i.castAdd n) = Fin.append (flip a i) b := by
   refine funext (Fin.addCases (fun j => ?_) fun j => ?_)
   · by_cases h : j = i
@@ -61,7 +61,7 @@ private theorem flip_append_left {m n : ℕ} (a : Q m) (b : Q n) (i : Fin m) :
       omega
     simp [BalancedCriticalSpectrum.flip, Function.update_of_ne h]
 
-private theorem flip_append_right {m n : ℕ} (a : Q m) (b : Q n) (i : Fin n) :
+theorem flip_append_right {m n : ℕ} (a : Q m) (b : Q n) (i : Fin n) :
     flip (Fin.append a b) (Fin.natAdd m i) = Fin.append a (flip b i) := by
   refine funext (Fin.addCases (fun j => ?_) fun j => ?_)
   · have h : j.castAdd n ≠ Fin.natAdd m i := by

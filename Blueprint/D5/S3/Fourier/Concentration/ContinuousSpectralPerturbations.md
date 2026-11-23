@@ -26,7 +26,22 @@ Positive radii give interval laws with nonzero length. Countability lets us impo
 
 The result constructs a comparison spectrum. A prescribed counting law would also need estimates on threshold crossings, and the fixed zeta ordinates require arithmetic control of their own weighted near-collisions.
 
+More generally, let q(k,m,n) be any extended nonnegative upper bound for the probability that the distinct ordered degree pair m,n hits the closed band under the product of the normalized intervals on test k's support. Define Cq by replacing the single-coordinate factor in A(k) with q(k,m,n) and summing the new A(k)/b(k).
+
+**Theorem 1.2 (Pair probabilities suffice for a common perturbation).**
+
+$$Cq \le 1 \Rightarrow \left(\exists h \in J \to \mathbb{R},\; \left(\forall j \in J,\; \left|\operatorname{h}\left(j\right)-\operatorname{g}\left(j\right)\right| \le \varepsilon(j)\right) \land \left(\sum_{k \in K}\frac{\operatorname{E}\left(k, h\right)-\operatorname{D}\left(k\right)}{\operatorname{b}\left(k\right)} \le Cq \land \left(\forall k \in K,\; \operatorname{E}\left(k, h\right) \le \operatorname{D}\left(k\right) + \operatorname{b}\left(k\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/ContinuousSpectralPerturbations.exists_continuous_common_nearby_bounds_of_pair_probabilities` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Divide the expected off-diagonal mass in each finite marginal by its positive budget. The two finite sums integrate term by term and each probability is bounded by q(k,m,n). Integrate the countable sum on the joint product of the original interval measures. An assignment within the intervals attains a normalized total at most Cq.
+
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/ContinuousSpectralPerturbations.exists_continuous_common_nearby_bounds`
+- Truth anchor: `D5/S3/Fourier/Concentration/ContinuousSpectralPerturbations.exists_continuous_common_nearby_bounds_of_pair_probabilities`
 - Dependency: [D5/S3/Fourier/Concentration/FiniteSincCollisionMoment](FiniteSincCollisionMoment.md)
