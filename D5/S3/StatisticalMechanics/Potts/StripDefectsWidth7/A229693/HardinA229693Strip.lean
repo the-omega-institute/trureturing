@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
 a: proof_shape=bind-only; consumers=result, scale_count
-leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
+leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
@@ -23,12 +23,12 @@ rightColumn: proof_shape=bind-only; consumers=checkColumn, exhausted_step, right
 rightColumn_eq: proof_shape=bind-only; consumers=exhausted_step._simp_4
 arithmeticRow: proof_shape=bind-only; consumers=checkColumn, exhausted_step
 w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, forward_step, forward_table, polynomialCoordinates, polynomial_relation, w_leading
-w_leading: proof_shape=bind-only; consumers=forward_step
+w_leading: proof_shape=content; consumers=forward_step
 leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
-leadingCoordinates: proof_shape=bind-only; consumers=leading_rec
-leading_rec: proof_shape=bind-only; consumers=leading_step
-leading_step: proof_shape=bind-only; consumers=forward_step
+leadingCoordinates: proof_shape=content; consumers=leading_rec
+leading_rec: proof_shape=content; consumers=leading_step
+leading_step: proof_shape=content; consumers=forward_step
 checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
@@ -50,7 +50,6 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.OfFn
-import Mathlib.Data.Nat.Digits.Defs
 import Mathlib.Tactic.Eval
 
 open scoped BigOperators
@@ -75,17 +74,53 @@ private def leadingCoefficient : Fin 8 → ℤ := by
       c k • HardinA229585StripData.W ⟨2 + k.val, by omega⟩) => c) _
     HardinA229585Strip.finite_certificate.2.2.2.2.2.2
 
--- Generate the continuation rows from the frozen signed recurrence.
 private def leading : Fin 15 → Fin 72 → ℤ :=
-  let rows : Array (Array ℤ) := eval% (
-    (List.range 4).foldl (fun (rows : Array (Array ℤ)) i =>
-      rows.push (Array.ofFn fun j : Fin 72 =>
-        (List.ofFn fun k : Fin 8 =>
-          let t := 3 + i + k.val
-          let x := if h : t < 11 then HardinA229585StripData.W ⟨t, h⟩ j
-            else (rows[t - 11]!)[j.val]!
-          leadingCoefficient k * x).sum)) #[])
-  Fin.append HardinA229585StripData.W (fun (i : Fin 4) (j : Fin 72) => (rows[i.val]!)[j.val]!)
+  let read : Array (Fin 32) := #[0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0,
+     14, 14, 15, 15, 16, 16, 1, 2, 17, 17, 18, 3, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23,
+     24, 24, 25, 4, 25, 26, 26, 5, 6, 27, 27, 28, 28, 29, 29, 7, 30, 30, 31, 31]
+  let values : Array (Array ℤ) := #[
+      #[544627114792793532, 440132357393834004, 501105665233547568, 353089458275342076,
+      193888391277278484, 318185741714406876, 402877906075197540, 422680499113366404,
+      263479432115302812, 219957982556056848, 180352796479719120, 243676839077133948,
+      248594700876382548, 292116150435628512, 16078628283905947842, 328253157395542512,
+      13478812528021245090, 14820312181744019016, 11092744672375125330, 284731707836296548,
+      218724692157078048, 162785092156869420, 268919136822245148, 271791714489765912,
+      170691377663895120, 6941473732303613226, 10136481298968674754, 12298403660677739802,
+      275186135062854648, 12971688399254177334, 278580555638069148, 174085798239109620],
+      #[17394301584320634612, 14056947854725849092, 16004313471301108272, 11276971628686796412,
+      6192407672032513932, 10162216621575330732, 12867115131222084972, 13499570351170116252,
+      8415006394515833772, 7025018281496307432, 5760107841600244872, 7782551174567802492,
+      7939617899092010892, 9329606012111537232, 559689079759822832958, 10483749813015494568,
+      467797797092507807826, 515811522304666467576, 384212646521253656082, 9093761699995968228,
+      6985629487703815776, 5199030466845449868, 8588739771281638188, 8680484139921909936,
+      5451541431202614888, 238133352228519155670, 350712602489231039466, 426939714837536171238,
+      8788895160797400408, 450121814388131725530, 8897306181679268172, 5559952452084482652],
+      #[555539228627036526108, 448950820398629398596, 511145786340375658992,
+      360163935825307664364, 197773124716696175316, 324560888515136877804,
+      410949941173510430340, 431149296743544005316, 268758485634932516268,
+      224365043348271649152, 183966332208204499200, 248559130064898941292,
+      253575527596900536852, 297968969883561403968, 19349922611405143736514,
+      334830016341888641568, 16132180274574156090954, 17830727268641647600968,
+      13226969915907146421210, 290436574055227774452, 223107044200115198112,
+      166046642171735253660, 274307182910809579692, 277237314569652361128,
+      174111337743944351040, 8130454043529481041258, 12062544021333970611930,
+      14726388762849954312666, 280699745972351478552, 15520393993336817938902,
+      284162177375069727852, 177573769146662600340],
+      #[17742812666717526800148, 14338591934037071302548, 16324974844603402263408,
+      11502916289808822229068, 6316478334340254712908, 10365826112904409380828,
+      13124919799701165708108, 13770046845584864878428, 8583608890116297362268,
+      7165771068002172825528, 5875516976234774484888, 7938481844232598191948,
+      8098695557128366731468, 9516533379242491268208, 665092737995560183589310,
+      10693801533584866034232, 553288629770346486605130, 612809297302462333885944,
+      452975261850493160808618, 9275963711470741497492, 7125593090564210907744,
+      5303197890338079575772, 8760823193983791253212, 8854405742387066746464,
+      5560768149081554697912, 276436329081843280581846, 412767638886053822357682,
+      505168999323229394546022, 8964988881762010195512, 532240305105767562586170,
+      9075572021137011040188, 5671351288456555542588]]
+  Fin.append HardinA229585StripData.W (fun (i : Fin 4) (j : Fin 72) =>
+    let row := values[i.val]!
+    let k := read[j.val]!
+    row[k.val]!)
 
 private def coefficients : Fin 12 → ℤ := ![-531441000, 1913187600, -2986698420, 2659094568, -1494608922, 554666940, -138045627, 22918302, -2474469, 165456, -6345, 126]
 
@@ -111,13 +146,9 @@ private def columnRepresentative (k : Fin 60) : Fin 96 :=
   (eval% (List.ofFn fun k : Fin 60 => Fin.ofNat 96
     ((List.ofFn columnRank).idxOf k)) : List (Fin 96))[k.val]!
 
--- The packed arithmetic view is generated from the authoritative transfer blocks.
+-- Use the existing transfer column at the checked representative.
 private def rightColumn (j : Fin 96) : List ℤ :=
-  let columns : Array ℕ := eval% (Array.ofFn fun k : Fin 60 =>
-    Nat.ofDigits 32 (List.ofFn fun i : Fin 168 =>
-      (T i ((columnRepresentative k).natAdd 72)).toNat))
-  let packed := columns[(columnRank j).val]!
-  List.ofFn fun i : Fin 168 => (((packed >>> (5 * i.val)) % 32 : ℕ) : ℤ)
+  List.ofFn (fun i : Fin 168 => T i ((columnRepresentative (columnRank j)).natAdd 72))
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
