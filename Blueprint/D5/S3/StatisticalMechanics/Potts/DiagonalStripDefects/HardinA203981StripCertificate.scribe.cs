@@ -19,7 +19,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("allocated-counts"), DeclarationHandle.Create(Prefix + "allocated_counts"),
             H("Allocate exact cost between the parity classes"), StatementSource.FromAuthor(Disp(AllocatedCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The half-strip class counts give the summands for all ordered allocations of the cost. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k)."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("The count uses only the two source triples of the chosen representative and the two classes in the chosen target pair. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k)."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("reversed-count"), DeclarationHandle.Create(Prefix + "reversed_count"),
             H("Reindex the target triple under reversal"), StatementSource.FromAuthor(Disp(ReversedCountFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -110,9 +110,16 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         var i = V("i"); var j = V("j"); var r = V("r");
         var allocations = Call("Fin", Add(d, N("1")));
         var matrix = Call("Matrix", Fin("5"), Fin("5"), V("Int"));
-        var half = All("k", allocations, All("a", Col(), All("c", Fin("5"),
-            Eq(HalfCount(a, Call("Fin.val", k), c), App(m, k, Class(a), c)))));
         var representative = Call("HardinA203981StripData.representatives", i);
+        var source = Call("HardinA203981StripData.parityRows", representative);
+        var target = Call("HardinA203981StripData.classPair", j);
+        Formula MemberOfPair(Formula value, Formula pair) => Seq(
+            Parenthesized(Eq(value, Call("Prod.fst", pair))), Sp, Lor, Sp,
+            Parenthesized(Eq(value, Call("Prod.snd", pair))));
+        var half = All("k", allocations, All("a", Col(), All("c", Fin("5"),
+            Seq(Parenthesized(MemberOfPair(a, source)), Sp, To, Sp,
+                Parenthesized(MemberOfPair(c, target)), Sp, To, Sp,
+                Parenthesized(Eq(HalfCount(a, Call("Fin.val", k), c), App(m, k, Class(a), c)))))));
         var boundary = Call("HardinA203981StripData.boundary", r);
         var cost = Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), representative, r);
         var full = SumOver("r", Row("6"), If(And(Eq(cost, d), Eq(boundary, j)), CastInt(N("1")), CastInt(N("0"))));
@@ -120,7 +127,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         var sum = SumOver("k", allocations,
             Call("HardinA203981StripData.classProduct", App(m, k), App(m, residual), i, j));
         return All("d", V("Nat"), All("m", Arr(allocations, matrix),
-            Seq(Parenthesized(half), Sp, To, Sp, Parenthesized(All("i", Fin("15"), All("j", Fin("15"), Eq(full, sum)))))));
+            All("i", Fin("15"), All("j", Fin("15"), Seq(Parenthesized(half), Sp, To, Sp, Parenthesized(Eq(full, sum)))))));
     }
 
     private static Formula ForwardTableOfStepsFormula()
@@ -128,19 +135,22 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         var s = V("s"); var n = V("n"); var t = V("t"); var v = V("v"); var w = V("w");
         var k = V("k"); var i = V("i");
         var index = Call("Fin", Add(n, N("1")));
-        var vector = Arr(s, V("Int"));
+        var alpha = V("alpha");
+        var vector = Arr(s, alpha);
         var zero = Eq(App(w, Typed(N("0"), index)), v);
         var update = All("k", Call("Fin", n), Eq(
             Call("Matrix.vecMul", App(w, Call("Fin.castSucc", k)), t),
             App(w, Call("Fin.succ", k))));
-        var value = All("i", index, Eq(Call("DefectTransfer.forward", t, v, Call("Fin.val", i)), App(w, i)));
-        var body = All("n", V("Nat"), All("t", Call("Matrix", s, s, V("Int")),
-            All("v", vector, All("w", Arr(index, vector),
-                Seq(Parenthesized(zero), Sp, To, Sp,
-                    Parenthesized(Seq(Parenthesized(update), Sp, To, Sp, Parenthesized(value))))))));
-        return Seq(Forall, Sp, Typed(s, V("Type")), Sp,
+        var step = Seq(LambdaLower, Sp, V("x"), Colon, Sp, vector, Sp, Mapsto, Sp,
+            Parenthesized(Call("Matrix.vecMul", V("x"), t)));
+        var value = All("i", index, Eq(Call("Nat.iterate", Parenthesized(step), Call("Fin.val", i), v), App(w, i)));
+        var body = All("n", V("Nat"), All("t", Call("Matrix", s, s, alpha),
+            All("v", vector, All("w", Arr(index, vector), Seq(
+                Parenthesized(value), Sp, F.Iff, Sp, Parenthesized(And(zero, update)))))));
+        return Seq(Forall, Sp, Typed(s, V("Type")), Sp, Typed(alpha, V("Type")), Sp,
             OpenBracket, Call("Fintype", s), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", s), CloseBracket, Comma, Sp, Parenthesized(body));
+            OpenBracket, Call("NonUnitalNonAssocSemiring", alpha), CloseBracket,
+            Comma, Sp, Parenthesized(body));
     }
 
     private static Formula ForwardStepFormula()

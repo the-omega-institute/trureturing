@@ -62,7 +62,7 @@ private def reflect : Row 3 6 ≃ Row 3 6 :=
   Equiv.arrowCongr (Fin.revPerm : Equiv.Perm (Fin 6)) (Equiv.refl (Fin 3))
 
 /-- The defect cost is the sum of the ten diagonal-bond indicators. -/
-theorem cost_formula (p r : Row 3 6) :
+theorem cost_formula {q : ℕ} (p r : Row q 6) :
     bondDefects (betw 6) p r =
       (if p 0 = r 1 then 1 else 0) + (if p 1 = r 0 then 1 else 0) +
       (if p 1 = r 2 then 1 else 0) + (if p 2 = r 1 then 1 else 0) +
@@ -122,16 +122,17 @@ private theorem recolor_match (p r : Row 3 6)
   exact Prod.ext he hf
 
 /-- Every exact-cost class count is determined at the representative of the source row. -/
-theorem lift_counts (d : ℕ) (t : Matrix (Fin 15) (Fin 15) ℤ)
-    (h : ∀ i j : Fin 15, (∑ r : Row 3 6,
-      if bondDefects (betw 6) (representatives i) r = d ∧ boundary r = j
-        then (1 : ℤ) else 0) = t i j) (p : Row 3 6) (j : Fin 15) :
+theorem lift_counts (d : ℕ) (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
-      then (1 : ℤ) else 0) = t (boundary p) j := by
+      then (1 : ℤ) else 0) =
+    (fun i => ∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = d ∧
+      boundary r = j then (1 : ℤ) else 0) (boundary p) := by
   have transport (q : Row 3 6)
       (heq : ∃ e f : Equiv.Perm (Fin 3), recolor e f q = representatives (boundary p)) :
       (∑ r : Row 3 6, if bondDefects (betw 6) q r = d ∧ boundary r = j
-        then (1 : ℤ) else 0) = t (boundary p) j := by
+        then (1 : ℤ) else 0) =
+      ∑ r : Row 3 6, if bondDefects (betw 6) (representatives (boundary p)) r = d ∧
+        boundary r = j then (1 : ℤ) else 0 := by
     obtain ⟨e, f, hr⟩ := heq
     calc
       _ = ∑ r : Row 3 6, if bondDefects (betw 6) (recolor e f q) (recolor f e r) = d ∧
@@ -139,7 +140,7 @@ theorem lift_counts (d : ℕ) (t : Matrix (Fin 15) (Fin 15) ℤ)
             simp only [cost_recolor, boundary_recolor]
       _ = _ := by
         rw [hr]
-        exact ((recolor f e).sum_comp _).trans (h _ _)
+        exact (recolor f e).sum_comp _
   rcases pair_match (cls (parityRows p).1) (cls (parityRows p).2) with
     ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩
   · exact transport p (recolor_match _ _ h₀ h₁)

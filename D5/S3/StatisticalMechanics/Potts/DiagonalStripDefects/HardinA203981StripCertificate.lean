@@ -33,6 +33,7 @@ halfForwardZero: proof_shape=bind-only; consumers=W
 
 import Batteries.Data.List.Basic
 import Init.Data.List.OfFn
+import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.List.Chain
 import Mathlib.Data.List.ChainOfFn
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Fin
@@ -171,9 +172,12 @@ private theorem allocation_indicator (u v d : ℕ) (P : Prop) [Decidable P] :
 
 /-- Each full-strip transition is the sum of products for the exact-cost allocations. -/
 theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) ℤ)
-    (h : ∀ (k : Fin (d + 1)) (a : Col) (j : Fin 5),
-      (∑ b : Col, if halfCost a b = k.val ∧ cls b = j then (1 : ℤ) else 0) = K k (cls a) j)
-    (i j : Fin 15) :
+    (i j : Fin 15)
+    (h : ∀ (k : Fin (d + 1)) (a : Col) (c : Fin 5),
+      (a = (parityRows (HardinA203981StripData.representatives i)).1 ∨
+        a = (parityRows (HardinA203981StripData.representatives i)).2) →
+      (c = (classPair j).1 ∨ c = (classPair j).2) →
+      (∑ b : Col, if halfCost a b = k.val ∧ cls b = c then (1 : ℤ) else 0) = K k (cls a) c) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (HardinA203981StripData.representatives i) r = d ∧
       boundary r = j then (1 : ℤ) else 0) =
       ∑ k : Fin (d + 1), classProduct (K k) (K k.rev) i j := by
@@ -203,12 +207,15 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
       rw [pair_sum (fun y => halfCost a y = k.val) (fun x => halfCost b x = d - k.val)]
       have ha : cls a = (classPair i).1 := (hcls i).1
       have hb : cls b = (classPair i).2 := (hcls i).2
-      change _ = unordered (K k (classPair i).1) (K k.rev (classPair i).2) j
-      rw [show (fun c => ∑ y : Col, if halfCost a y = k.val ∧ cls y = c then (1 : ℤ) else 0) =
-        K k (cls a) from funext (h k a)]
-      rw [show (fun c => ∑ x : Col, if halfCost b x = d - k.val ∧ cls x = c then (1 : ℤ) else 0) =
-        K k.rev (cls b) by simpa only [Fin.val_rev, Nat.succ_sub_succ_eq_sub] using funext (h k.rev b)]
-      rw [ha, hb]
+      have first (c : Fin 5) (hc : c = (classPair j).1 ∨ c = (classPair j).2) :
+          (∑ y : Col, if halfCost a y = k.val ∧ cls y = c then (1 : ℤ) else 0) = K k (cls a) c :=
+        h k a c (Or.inl rfl) hc
+      have second (c : Fin 5) (hc : c = (classPair j).1 ∨ c = (classPair j).2) :
+          (∑ x : Col, if halfCost b x = d - k.val ∧ cls x = c then (1 : ℤ) else 0) =
+            K k.rev (cls b) c := by
+        simpa only [Fin.val_rev, Nat.succ_sub_succ_eq_sub] using h k.rev b c (Or.inr rfl) hc
+      simp only [classProduct, unordered, first _ (Or.inl rfl), first _ (Or.inr rfl),
+        second _ (Or.inl rfl), second _ (Or.inr rfl), ha, hb]
 
 /-- Reverse the target before applying a half-strip class count. -/
 theorem reversed_count (n : ℕ) (a : Col) (j : Fin 5) :
@@ -247,9 +254,9 @@ theorem zero_exact (a : Col) (j : Fin 5) :
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (HardinA203981StripData.representatives i) r = 0 ∧
       boundary r = j then (1 : ℤ) else 0) = T i j := by
-  have h := allocated_counts 0 (fun _ => halfZero) (fun k a c => by
+  have h := allocated_counts 0 (fun _ => halfZero) i j (fun k a c _ _ => by
     fin_cases k
-    exact zero_exact a c) i j
+    exact zero_exact a c)
   rw [Fin.sum_univ_one] at h
   exact h
 
@@ -257,7 +264,7 @@ private theorem representative_counts (i j : Fin 15) :
 theorem counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 0 ∧ boundary r = j
       then (1 : ℤ) else 0) = T (boundary p) j :=
-  HardinA203981StripSymmetry.lift_counts 0 T representative_counts p j
+  (HardinA203981StripSymmetry.lift_counts 0 p j).trans (representative_counts (boundary p) j)
 
 /-- The distribution of labelled single rows. -/
 theorem initial_counts (j : Fin 15) :
@@ -323,25 +330,30 @@ def monicCoeff (n : ℕ) : ℤ :=
   if h : n < 6 then -coeff ⟨n, h⟩ else if n = 6 then 1 else 0
 
 /-- A finite table with the prescribed start and each successive update gives the forward vectors. -/
-theorem forward_table_of_steps {s : Type} [Fintype s] [DecidableEq s] {n : ℕ}
-    (t : Matrix s s ℤ) (v : s → ℤ) (table : Fin (n + 1) → s → ℤ)
-    (h0 : table 0 = v)
-    (step : ∀ k : Fin n, Matrix.vecMul (table k.castSucc) t = table k.succ)
-    (i : Fin (n + 1)) : forward t v i.val = table i := by
-  have chain : (List.ofFn table).IsChain (fun x y => Matrix.vecMul x t = y) :=
-    List.isChain_ofFn.mpr fun k hk => step ⟨k, Nat.lt_of_succ_lt_succ hk⟩
-  have h := chain.iterate_eq_of_apply_eq i.val (by simpa only [List.length_ofFn] using i.isLt)
-  simp only [List.getElem_ofFn] at h
-  have zero : (⟨0, Nat.zero_lt_succ n⟩ : Fin (n + 1)) = 0 := Fin.ext rfl
-  change (fun w => Matrix.vecMul w t)^[i.val] (table ⟨0, Nat.zero_lt_succ n⟩) = table i at h
-  simpa only [zero, h0, forward] using h
+theorem forward_table_of_steps {s α : Type*} [Fintype s] [NonUnitalNonAssocSemiring α] {n : ℕ}
+    (t : Matrix s s α) (v : s → α) (table : Fin (n + 1) → s → α) :
+    (∀ i : Fin (n + 1), (fun w => Matrix.vecMul w t)^[i.val] v = table i) ↔
+      table 0 = v ∧ ∀ k : Fin n, Matrix.vecMul (table k.castSucc) t = table k.succ := by
+  constructor
+  · intro h
+    refine ⟨(h 0).symm, fun k => ?_⟩
+    rw [← h k.castSucc, ← h k.succ]
+    exact (Function.iterate_succ_apply' _ _ _).symm
+  · rintro ⟨h0, step⟩ i
+    have chain : (List.ofFn table).IsChain (fun x y => Matrix.vecMul x t = y) :=
+      List.isChain_ofFn.mpr fun k hk => step ⟨k, Nat.lt_of_succ_lt_succ hk⟩
+    have h := chain.iterate_eq_of_apply_eq i.val (by simpa only [List.length_ofFn] using i.isLt)
+    simp only [List.getElem_ofFn] at h
+    have zero : (⟨0, Nat.zero_lt_succ n⟩ : Fin (n + 1)) = 0 := Fin.ext rfl
+    change (fun w => Matrix.vecMul w t)^[i.val] (table ⟨0, Nat.zero_lt_succ n⟩) = table i at h
+    simpa only [zero, h0] using h
 
 /-- Check one zero-degree update for each adjacent pair of rows in the table. -/
 theorem forward_step (k : Fin 20) : Matrix.vecMul (W k.castSucc) T = W k.succ := by
   fin_cases k <;> decide +kernel
 
 theorem forward_table (i : Fin 21) : forward T initial i.val = W i :=
-  forward_table_of_steps T initial W rfl forward_step i
+  (forward_table_of_steps T initial W).2 ⟨rfl, forward_step⟩ i
 
 /-- One forward relation suffices to propagate the recurrence. -/
 theorem finite_certificate :

@@ -117,7 +117,7 @@ def representatives (i : Fin 15) : Row 3 6 :=
      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer.representatives (classPair i).2)
 
 /-- Aggregate a labelled pair into an unordered boundary class. -/
-def unordered (u v : Fin 5 → ℤ) (j : Fin 15) : ℤ :=
+def unordered {α : Type*} [Mul α] [Add α] [Zero α] (u v : Fin 5 → α) (j : Fin 15) : α :=
   let (c, d) := classPair j
   u c * v d + if c = d then 0 else u d * v c
 
@@ -126,7 +126,8 @@ def halfZero : Matrix (Fin 5) (Fin 5) ℤ :=
   Q.submatrix id (Equiv.swap 1 3)
 
 /-- Transfer one class of each parity, then read the unordered target. -/
-def classProduct (A B : Matrix (Fin 5) (Fin 5) ℤ) (i j : Fin 15) : ℤ :=
+def classProduct {α : Type*} [Mul α] [Add α] [Zero α]
+    (A B : Matrix (Fin 5) (Fin 5) α) (i j : Fin 15) : α :=
   unordered (A (classPair i).1) (B (classPair i).2) j
 
 /-- Multiply the two half-strip counts and include both orders of distinct target classes. -/

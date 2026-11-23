@@ -131,19 +131,19 @@ private theorem two_exact (a : Col) (j : Fin 5) :
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 2 ∧ boundary r = j
       then (1 : ℤ) else 0) = costTwo i j := by
-  have h := allocated_counts 2 ![halfZero, halfOne, halfTwo] (fun k a c => by
+  have h := allocated_counts 2 ![halfZero, halfOne, halfTwo] i j (fun k a c _ _ => by
       fin_cases k
       · exact zero_exact a c
       · exact one_exact a c
       · exact two_exact a c
-    ) i j
+    )
   rw [Fin.sum_univ_three] at h
   exact h
 
 theorem two_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 2 ∧ boundary r = j
       then (1 : ℤ) else 0) = costTwo (boundary p) j :=
-  HardinA203981StripSymmetry.lift_counts 2 costTwo representative_counts p j
+  (HardinA203981StripSymmetry.lift_counts 2 p j).trans (representative_counts (boundary p) j)
 
 private theorem cut_inherited (p r : Row 3 6) (d : ℕ) (s : Fin 15 ⊕ Fin 15) :
     (bondDefects (betw 6) p r ≤ d + 1 ∧
@@ -284,7 +284,7 @@ theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
     · fin_cases j <;> rfl
     · fin_cases j <;> rfl
   exact congrArg (· ∘ (Sum.inr : Fin 15 → (Fin 15 ⊕ Fin 15) ⊕ Fin 15))
-    (HardinA203981StripCertificate.forward_table_of_steps T initial table zero step i)
+    ((HardinA203981StripCertificate.forward_table_of_steps T initial table).2 ⟨zero, step⟩ i)
 
 private theorem inherited_relation (j : Fin 15 ⊕ Fin 15) :
     forward HardinA229508StripData.T HardinA229508StripData.initial (2 + 18) j =

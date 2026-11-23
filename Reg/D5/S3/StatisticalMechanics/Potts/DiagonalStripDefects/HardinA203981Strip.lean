@@ -184,21 +184,21 @@ def rejected : Realization signature := realize signature
 
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ (m d : ℕ), 1 ≤ m → d < 10 →
+  Law r := ∀ (m d : ℕ), d ≠ m * 10 →
     r.readout () d m =
       6 * (Finset.univ.filter fun f : Fin (m + 1) × Fin 6 → Fin 3 =>
         defects ∅ (betw 6) (List.ofFn fun i j => f (i, j)) = d ∧
         (@Canonical (Fin (m + 1) × Fin 6)
           (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f)).card
 
-private theorem rejected_at (m d : ℕ) (hm : 1 ≤ m) (hd : d < 10)
+private theorem rejected_at (m d : ℕ) (hd : d ≠ m * 10)
     (h : arena.Law rejected) : False := by
-  have hx := h m d hm hd
+  have hx := h m d hd
   change literalCount (q := 3) ∅ (betw 6) d (m + 1) + 1 = _ at hx
-  exact Nat.succ_ne_self _ (hx.trans (scale_count m d hm hd).symm)
+  exact Nat.succ_ne_self _ (hx.trans (scale_count m d hd).symm)
 
 private theorem rejected_law : ¬ arena.Law rejected :=
-  rejected_at 1 0 le_rfl (by decide)
+  rejected_at 1 0 (by decide)
 
 private theorem literal_ne_of_count_ne (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
     (different : a m ≠ a n) :
@@ -207,7 +207,7 @@ private theorem literal_ne_of_count_ne (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
   have scale (k : ℕ) (hk : 1 ≤ k) :
       literalCount (q := 3) ∅ (betw 6) 0 (k + 1) = 6 * a k := by
     unfold a
-    exact scale_count k 0 hk (by decide)
+    exact scale_count k 0 (by omega)
   intro equal
   exact different (Nat.eq_of_mul_eq_mul_left (by decide)
     ((scale m hm).symm.trans (equal.trans (scale n hn))))
@@ -247,7 +247,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg", "fn", "arg"]

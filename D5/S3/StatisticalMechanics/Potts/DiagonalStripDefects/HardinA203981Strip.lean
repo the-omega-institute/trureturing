@@ -28,6 +28,7 @@ import Init.Data.Nat.Lemmas
 import Init.Prelude
 import Init.Tactics
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
+import Init.Omega
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Data.Fin.VecNotation
@@ -56,9 +57,9 @@ def a (n : ℕ) : ℕ :=
     (@Canonical (Fin (n + 1) × Fin 6)
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f)).card
 
-/-- For budgets below the number of bonds in one step, global colour permutations
-give six labelled arrays per canonical array when there are at least two rows. -/
-theorem scale_count (m d : ℕ) (hm : 1 ≤ m) (hd : d < 10) :
+/-- A budget different from the constant-array cost gives six labelled arrays per
+canonical array under global colour permutations. -/
+theorem scale_count (m d : ℕ) (hd : d ≠ m * 10) :
     literalCount (q := 3) ∅ (betw 6) d (m + 1) =
       6 * (Finset.univ.filter fun f : Fin (m + 1) × Fin 6 → Fin 3 =>
         defects ∅ (betw 6) (List.ofFn fun i j => f (i, j)) = d ∧
@@ -83,7 +84,7 @@ theorem scale_count (m d : ℕ) (hm : 1 ≤ m) (hd : d < 10) :
     simp only [List.ofFn_const] at h
     rw [constant_defects, Finset.card_empty, zero_add,
       show (betw 6).card = 10 by rw [between_six]; decide +kernel] at h
-    exact (Nat.not_lt_of_ge (h ▸ Nat.le_mul_of_pos_left 10 hm)) hd
+    exact hd h.symm
   have h := @canonical_pattern_card (Fin (m + 1) × Fin 6) inferInstance
     (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) s invariant nonconstant
   simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at h
@@ -116,7 +117,7 @@ theorem counting_bridge (m : ℕ) (hm : 1 ≤ m) :
         true_and, id_eq] using HardinA203981StripCertificate.initial_counts j
   have h : literalCount (q := 3) ∅ (betw 6) 0 (m + 1) = 6 * a m := by
     unfold a
-    exact scale_count m 0 hm (by decide)
+    exact scale_count m 0 (by omega)
   rw [← labelled, h]
   simp only [Nat.cast_mul, Nat.cast_ofNat]
 

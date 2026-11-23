@@ -16,9 +16,9 @@ internal sealed class HardinA229508StripDocument : IScribeDocumentDefinition
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The index gives the number of rows. The count selects exactly one monochromatic diagonal or antidiagonal bond and introduces colours in row-major order. The published sequence starts at index one. The literal filter here also defines index zero."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("counting-bridge"), DeclarationHandle.Create(Prefix + "counting_bridge"),
-            H("Labelled transfer and canonical count"), StatementSource.FromAuthor(Disp(All("m", V("Nat"), Imp(Leq(N("1"), V("m")), Eq(Call("dotProduct", Call("HardinA229508StripData.initial"), Call("Matrix.mulVec", Power(Call("HardinA229508StripData.T"), V("m")), Call("HardinA229508StripData.terminal"))), Mul(N("6"), CastInt(Call("HardinA229508Strip.a", Add(V("m"), N("1")))))))))),
+            H("Labelled transfer and canonical count"), StatementSource.FromAuthor(Disp(All("m", V("Nat"), Eq(Call("dotProduct", Call("HardinA229508StripData.initial"), Call("Matrix.mulVec", Power(Call("HardinA229508StripData.T"), V("m")), Call("HardinA229508StripData.terminal"))), Mul(N("6"), CastInt(Call("HardinA229508Strip.a", Add(V("m"), N("1"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The transfer counts labelled arrays at budget one. For at least two rows the global permutation orbit has size six."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("The transfer counts labelled arrays at budget one. Constant arrays have a multiple of ten defects, so each canonical array at budget one has six labelled realizations. For a single row both counts vanish."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
             H("Order-twelve recurrence"), StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("14")))), Sub(Add(Add(Sub(Add(Add(Sub(Sub(Add(Add(Sub(Mul(N("50"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("13"))))), Mul(N("715"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("12")))))), Mul(N("324"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("11")))))), Mul(N("50175"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("10")))))), Mul(N("180630"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("9")))))), Mul(N("940491"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("8")))))), Mul(N("4556250"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("7")))))), Mul(N("2329155"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("6")))))), Mul(N("27398736"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("5")))))), Mul(N("13286025"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("4")))))), Mul(N("47829690"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("3")))))), Mul(N("43046721"), CastInt(Call("HardinA229508Strip.a", Add(V("n"), N("2")))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -37,7 +37,6 @@ internal sealed class HardinA229508StripDocument : IScribeDocumentDefinition
     private static Formula Prod(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));

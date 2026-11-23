@@ -27,6 +27,8 @@ one_exact: proof_shape=bind-only; consumers=representative_counts
 halfForwardOne: proof_shape=bind-only; consumers=W
 -/
 
+import Mathlib.Algebra.Ring.Defs
+import Mathlib.Data.Fintype.Defs
 import Mathlib.Order.Fin.Basic
 import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Data.Finset.NatAntidiagonal
@@ -129,11 +131,11 @@ theorem one_exact (a : Col) (j : Fin 5) :
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 1 ∧ boundary r = j
       then (1 : ℤ) else 0) = costOne i j := by
-  have h := allocated_counts 1 ![halfZero, halfOne] (fun k a c => by
+  have h := allocated_counts 1 ![halfZero, halfOne] i j (fun k a c _ _ => by
       fin_cases k
       · exact zero_exact a c
       · exact one_exact a c
-    ) i j
+    )
   rw [Fin.sum_univ_two] at h
   exact h
 
@@ -141,7 +143,7 @@ private theorem representative_counts (i j : Fin 15) :
 theorem one_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 1 ∧ boundary r = j
       then (1 : ℤ) else 0) = costOne (boundary p) j :=
-  HardinA203981StripSymmetry.lift_counts 1 costOne representative_counts p j
+  (HardinA203981StripSymmetry.lift_counts 1 p j).trans (representative_counts (boundary p) j)
 
 theorem transition_counts (p : Row 3 6) (d : Fin 2) (s : Fin 15 ⊕ Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r ≤ d.val ∧
@@ -192,10 +194,11 @@ theorem transition_counts (p : Row 3 6) (d : Fin 2) (s : Fin 15 ⊕ Fin 15) :
       simpa only [cl, Nat.one_ne_zero, ite_false,
         T, Matrix.fromBlocks_apply₁₂] using one_counts p j
 
-theorem block_projection {l r : Type} [Fintype l] [Fintype r] [DecidableEq l] [DecidableEq r]
-    (a : Matrix l l ℤ) (b : Matrix l r ℤ) (c : Matrix r r ℤ) (v : l ⊕ r → ℤ) (n : ℕ) :
-    forward (Matrix.fromBlocks a b 0 c) v n ∘ Sum.inl = forward a (v ∘ Sum.inl) n := by
-  have h : Function.Semiconj (fun w : l ⊕ r → ℤ => w ∘ Sum.inl)
+theorem block_projection {l r α : Type*} [Fintype l] [Fintype r] [NonUnitalNonAssocSemiring α]
+    (a : Matrix l l α) (b : Matrix l r α) (c : Matrix r r α) (v : l ⊕ r → α) (n : ℕ) :
+    ((fun w => Matrix.vecMul w (Matrix.fromBlocks a b 0 c))^[n] v) ∘ Sum.inl =
+      (fun w => Matrix.vecMul w a)^[n] (v ∘ Sum.inl) := by
+  have h : Function.Semiconj (fun w : l ⊕ r → α => w ∘ Sum.inl)
       (fun w => Matrix.vecMul w (Matrix.fromBlocks a b 0 c)) (fun w => Matrix.vecMul w a) := by
     intro w
     change Matrix.vecMul w (Matrix.fromBlocks a b 0 c) ∘ Sum.inl = Matrix.vecMul (w ∘ Sum.inl) a
@@ -275,10 +278,10 @@ theorem forward_one (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
     | inl j => rfl
     | inr j => fin_cases j <;> rfl
   exact congrArg (· ∘ (Sum.inr : Fin 15 → Fin 15 ⊕ Fin 15))
-    (HardinA203981StripCertificate.forward_table_of_steps T initial table zero forward_step i)
+    ((HardinA203981StripCertificate.forward_table_of_steps T initial table).2 ⟨zero, forward_step⟩ i)
 
 /-- Shift a forward relation and read it at a single coordinate. -/
-theorem shifted_coordinate {s : Type} [Fintype s] [DecidableEq s] (t : Matrix s s ℤ)
+theorem shifted_coordinate {s : Type*} [Fintype s] (t : Matrix s s ℤ)
     (v : s → ℤ) (d b : ℕ) (c : Fin d → ℤ)
     (h : forward t v (b + d) = ∑ i : Fin d, c i • forward t v (b + i.val)) (n : ℕ) (j : s) :
     forward t v (n + b + d) j = ∑ i : Fin d, c i * forward t v (n + b + i.val) j := by

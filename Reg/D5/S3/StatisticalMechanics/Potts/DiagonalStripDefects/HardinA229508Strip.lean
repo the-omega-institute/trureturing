@@ -70,9 +70,9 @@ private theorem count_distinct : a 2 ≠ a 3 := by
     decide +kernel
   intro equal
   exact different ((evaluate 1).symm.trans
-    ((counting_bridge 1 le_rfl).trans
+    ((counting_bridge 1).trans
       ((congrArg (fun k : ℕ => (6 : ℤ) * (k : ℤ)) equal).trans
-        ((counting_bridge 2 (by decide)).symm.trans (evaluate 2)))))
+        ((counting_bridge 2).symm.trans (evaluate 2)))))
 
 def family : Registration arena (type_of% @result) where
   actual := readout
@@ -124,16 +124,16 @@ def readout : Realization signature := realize signature (fun _ _ n => a n) (fun
 def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ m : ℕ, 1 ≤ m →
+  Law r := ∀ m : ℕ,
     dotProduct _root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData.initial
       ((_root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData.T ^ m).mulVec _root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData.terminal) =
         6 * (r.readout () () (m + 1) : ℤ)
-private theorem rejected_at (h : arena.Law rejected) (m : ℕ) (hm : 1 ≤ m) : False := by
-  have hb := h m hm
-  have ha := counting_bridge m hm
+private theorem rejected_at (h : arena.Law rejected) (m : ℕ) : False := by
+  have hb := h m
+  have ha := counting_bridge m
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
   linarith
-private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 1 (by decide)
+private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 1
 
 def family : Registration arena (type_of% @counting_bridge) where
   actual := readout
@@ -167,7 +167,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "arg", "arg"]
+      path := #["body", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

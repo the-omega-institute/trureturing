@@ -118,21 +118,27 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
     {
         var u = V("u"); var v = V("v"); var j = V("j");
         var c = Fst(Own("classPair", j)); var d = Snd(Own("classPair", j));
-        var row = Arr(Fin("5"), V("Int"));
+        var row = Arr(Fin("5"), V("alpha"));
         Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-        return All("u", row, All("v", row, All("j", Fin("15"),
+        return WeightType(All("u", row, All("v", row, All("j", Fin("15"),
             Eq(Own("unordered", u, v, j), new Formula.Binary(Mul(App(u, c), App(v, d)),
-                FormulaBinaryOperator.Add, If(Eq(c, d), N("0"), Mul(App(u, d), App(v, c))))))));
+                FormulaBinaryOperator.Add, If(Eq(c, d), N("0"), Mul(App(u, d), App(v, c)))))))));
     }
 
     private static Formula ClassProductFormula()
     {
         var a = V("A"); var b = V("B"); var i = V("i"); var j = V("j");
-        var matrix = Call("Matrix", Fin("5"), Fin("5"), V("Int"));
-        return All("A", matrix, All("B", matrix, All("i", Fin("15"), All("j", Fin("15"),
+        var matrix = Call("Matrix", Fin("5"), Fin("5"), V("alpha"));
+        return WeightType(All("A", matrix, All("B", matrix, All("i", Fin("15"), All("j", Fin("15"),
             Eq(Own("classProduct", a, b, i, j),
-                Own("unordered", App(a, Fst(Own("classPair", i))), App(b, Snd(Own("classPair", i))), j))))));
+                Own("unordered", App(a, Fst(Own("classPair", i))), App(b, Snd(Own("classPair", i))), j)))))));
     }
+
+    private static Formula WeightType(Formula body) =>
+        Seq(Forall, Sp, Typed(V("alpha"), V("Type")), Sp,
+            OpenBracket, Call("Mul", V("alpha")), CloseBracket, Sp,
+            OpenBracket, Call("Add", V("alpha")), CloseBracket, Sp,
+            OpenBracket, Call("Zero", V("alpha")), CloseBracket, Comma, Sp, Parenthesized(body));
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Neg, Sp, N(digits)) :
         D(digits.Select(c => (byte)(c - '0')).ToArray());

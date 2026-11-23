@@ -16,7 +16,7 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("Each pair of adjacent columns supplies one diagonal bond in each orientation."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("lift-counts"), DeclarationHandle.Create(Prefix + "lift_counts"),
-            H("Transfer counts are constant on a boundary class"), StatementSource.FromAuthor(Disp(All("d", V("Nat"), All("t", Call("Matrix", Fin("15"), Fin("15"), V("Int")), Imp(All("i", Fin("15"), All("j", Fin("15"), Eq(SumOver("r", Row("6"), If(And(Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), Call("HardinA203981StripData.representatives", V("i")), V("r")), V("d")), Eq(Call("HardinA203981StripData.boundary", V("r")), V("j"))), CastInt(N("1")), CastInt(N("0")))), App(V("t"), V("i"), V("j"))))), All("p", Row("6"), All("j", Fin("15"), Eq(SumOver("r", Row("6"), If(And(Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), V("p"), V("r")), V("d")), Eq(Call("HardinA203981StripData.boundary", V("r")), V("j"))), CastInt(N("1")), CastInt(N("0")))), App(V("t"), Call("HardinA203981StripData.boundary", V("p")), V("j")))))))))),
+            H("Transfer counts are constant on a boundary class"), StatementSource.FromAuthor(Disp(LiftCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum to its representative."))), DescribeRole.Theorem))));
     private static Formula CostFormula()
@@ -26,8 +26,23 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
         Formula Bond(int i, int j) => If(Eq(App(p, D((byte)i)), App(r, D((byte)j))), N("1"), N("0"));
         var indicators = Enumerable.Range(0, 5).SelectMany(i => new[] { Bond(i, i + 1), Bond(i + 1, i) });
         var cost = indicators.Aggregate((a, b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b));
-        return All("p", Row("6"), All("r", Row("6"),
-            Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), p, r), cost)));
+        var row = Arr(Fin("6"), Call("Fin", V("q")));
+        return All("q", V("Nat"), All("p", row, All("r", row,
+            Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), p, r), cost))));
+    }
+
+    private static Formula LiftCountsFormula()
+    {
+        var d = V("d");
+        var p = V("p");
+        var j = V("j");
+        var r = V("r");
+        Formula Count(Formula source) => SumOver("r", Row("6"), If(And(
+            Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), source, r), d),
+            Eq(Call("HardinA203981StripData.boundary", r), j)), CastInt(N("1")), CastInt(N("0"))));
+        var representative = Call("HardinA203981StripData.representatives",
+            Call("HardinA203981StripData.boundary", p));
+        return All("d", V("Nat"), All("p", Row("6"), All("j", Fin("15"), Eq(Count(p), Count(representative)))));
     }
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Neg, Sp, N(digits)) :
@@ -43,7 +58,6 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
     private static Formula Arr(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
-    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula CastInt(Formula a) => Typed(a, V("Int"));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
     private static Formula SumOver(string n, Formula t, Formula b) => Seq(Sum, Underscore, Grp(V(n), Colon, Sp, t), Sp, Parenthesized(b));

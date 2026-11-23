@@ -30,7 +30,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("block-projection"), DeclarationHandle.Create(Prefix + "block_projection"),
             H("Forward projection of an upper-block transfer"), StatementSource.FromAuthor(Disp(BlockProjectionFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The index types have finite enumerations and decidable equality. The zero lower-left block makes left projection commute with one step, and iteration preserves that identity."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("The finite enumerations and semiring operations define the matrix-vector sums. The zero lower-left block makes left projection commute with one step, and iteration preserves that identity."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-zeroth"), DeclarationHandle.Create(Prefix + "forward_zeroth"),
             H("Reuse of the zero-cost iteration"), StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("Function.comp", Call("DefectTransfer.forward", Call("HardinA229508StripData.T"), Call("HardinA229508StripData.initial"), V("n")), Call("Sum.inl")), Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), V("n")))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -67,7 +67,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("shifted-coordinate"), DeclarationHandle.Create(Prefix + "shifted_coordinate"),
             H("A shifted forward relation in one coordinate"), StatementSource.FromAuthor(Disp(ShiftedCoordinateFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The index type has a finite enumeration and decidable equality. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("The finite enumeration defines the matrix-vector sums. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("finite-certificate"), DeclarationHandle.Create(Prefix + "finite_certificate"),
             H("Forward relation at exponent thirteen"), StatementSource.FromAuthor(Disp(Eq(Call("DefectTransfer.forward", Call("HardinA229508StripData.T"), Call("HardinA229508StripData.initial"), Add(N("1"), N("12"))), SumOver("k", Fin("12"), Call("SMul.smul", Call("HardinA229508StripCertificate.coeff", V("k")), Call("DefectTransfer.forward", Call("HardinA229508StripData.T"), Call("HardinA229508StripData.initial"), Add(N("1"), Call("Fin.val", V("k"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -76,19 +76,24 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
     {
         var l = V("l"); var r = V("r"); var a = V("a"); var b = V("b"); var c = V("c");
         var v = V("v"); var n = V("n");
+        var alpha = V("alpha");
         var sumType = Call("Sum", l, r);
-        var zero = Typed(N("0"), Matrix(r, l));
-        var matrix = Call("Matrix.fromBlocks", a, b, zero, c);
+        Formula Block(Formula x, Formula y) => Call("Matrix", x, y, alpha);
+        Formula Iteration(Formula t, Formula index, Formula start)
+        {
+            var step = Seq(LambdaLower, Sp, V("w"), Colon, Sp, Arr(index, alpha), Sp, Mapsto, Sp,
+                Parenthesized(Call("Matrix.vecMul", V("w"), t)));
+            return Call("Nat.iterate", Parenthesized(step), n, start);
+        }
+        var matrix = Call("Matrix.fromBlocks", a, b, Typed(N("0"), Block(r, l)), c);
         var projection = Typed(Call("Sum.inl"), Arr(l, sumType));
-        var lhs = Call("Function.comp", Call("DefectTransfer.forward", matrix, v, n), projection);
-        var rhs = Call("DefectTransfer.forward", a, Call("Function.comp", v, projection), n);
-        var body = All("a", Matrix(l, l),
-            All("b", Matrix(l, r), All("c", Matrix(r, r), All("v", Arr(sumType, V("Int")),
-                All("n", V("Nat"), Eq(lhs, rhs))))));
+        var lhs = Call("Function.comp", Iteration(matrix, sumType, v), projection);
+        var rhs = Iteration(a, l, Call("Function.comp", v, projection));
+        var body = All("a", Block(l, l), All("b", Block(l, r), All("c", Block(r, r),
+            All("v", Arr(sumType, alpha), All("n", V("Nat"), Eq(lhs, rhs))))));
         return Seq(Forall, Sp, Typed(l, V("Type")), Sp, Typed(r, V("Type")), Sp,
-            Instance("Fintype", l), Sp, Instance("Fintype", r), Sp,
-            Instance("DecidableEq", l), Sp, Instance("DecidableEq", r),
-            Comma, Sp, Parenthesized(body));
+            Typed(alpha, V("Type")), Sp, Instance("Fintype", l), Sp, Instance("Fintype", r), Sp,
+            Instance("NonUnitalNonAssocSemiring", alpha), Comma, Sp, Parenthesized(body));
     }
 
     private static Formula Matrix(Formula l, Formula r) => Call("Matrix", l, r, V("Int"));
@@ -108,7 +113,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
                 Seq(Parenthesized(relation), Sp, To, Sp,
                     Parenthesized(All("n", V("Nat"), All("j", s, conclusion)))))))));
         return Seq(Forall, Sp, Typed(s, V("Type")), Sp,
-            Instance("Fintype", s), Sp, Instance("DecidableEq", s),
+            Instance("Fintype", s),
             Comma, Sp, Parenthesized(body));
     }
 

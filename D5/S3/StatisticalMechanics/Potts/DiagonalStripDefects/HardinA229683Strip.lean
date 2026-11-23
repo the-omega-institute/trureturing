@@ -30,6 +30,7 @@ import Init.Data.Sum.Lemmas
 import Init.Prelude
 import Init.SimpLemmas
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
+import Init.Omega
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.Notation.Pi.Defs
@@ -58,7 +59,7 @@ def a (n : ℕ) : ℕ :=
 
 attribute [local irreducible] a
 
-theorem counting_bridge (m : ℕ) (hm : 1 ≤ m) :
+theorem counting_bridge (m : ℕ) :
     dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
   have labelled : (literalCount (q := 3) ∅ (betw 6) 2 (m + 1) : ℤ) =
       dotProduct initial ((T ^ m).mulVec terminal) := by
@@ -94,7 +95,7 @@ theorem counting_bridge (m : ℕ) (hm : 1 ≤ m) :
           Sum.elim_inr, Pi.zero_apply, Finset.sum_const_zero]
   have h : literalCount (q := 3) ∅ (betw 6) 2 (m + 1) = 6 * a (m + 1) := by
     unfold a
-    exact HardinA203981Strip.scale_count m 2 hm (by decide)
+    exact HardinA203981Strip.scale_count m 2 (by omega)
   rw [← labelled, h]
   simp only [Nat.cast_mul, Nat.cast_ofNat]
 
@@ -104,25 +105,7 @@ theorem result (n : ℕ) :
   have h := forward_shift T initial terminal 18 2 coeff finite_certificate n
   simp only [Nat.add_assoc, Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ, Fin.val_one,
     coeff_values, Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.reduceAdd, Nat.add_zero] at h
-  rw [counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _),
-    counting_bridge _ (Nat.succ_pos _)] at h
+  simp only [counting_bridge] at h
   linarith
 
 end D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683Strip
