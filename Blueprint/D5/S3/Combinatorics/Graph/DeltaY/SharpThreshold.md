@@ -22,10 +22,6 @@ $$\operatorname{P}\left(6\right) \land (\forall d \in Nat,\; d < 6 \Rightarrow \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DeltaY/SharpThreshold.zhou_sharp_threshold` (`✓ std3`). ∎
 
-*Resolves.* `Problems/zhou-strong-reverse-degree-six` (proved) by `D5/S3/Combinatorics/Graph/DeltaY/SharpThreshold.zhou_sharp_threshold`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhou-strong-reverse-degree-six","declaration_gid":"D5/S3/Combinatorics/Graph/DeltaY/SharpThreshold.zhou_sharp_threshold","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhichen Zhou (2026). *Δ-Y Moves and Partial Steiner Systems*. DOI: [10.48550/arXiv.2609.08963](https://doi.org/10.48550/arXiv.2609.08963). URL: <https://arxiv.org/html/2609.08963v1>.
