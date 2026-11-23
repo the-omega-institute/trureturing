@@ -944,7 +944,7 @@ theorem labelled_scale (D m : ℕ) :
   have ssplit := Finset.card_filter_add_card_filter_not (s := s) NC
   have tsplit := Finset.card_filter_add_card_filter_not (s := t) NC
   have hT : t.filter (fun A => ¬ NC A) = (s.filter fun A => ¬ NC A).filter K :=
-    Finset.filter_comm s
+    Finset.filter_comm K (fun A => ¬ NC A) s
   rw [hlabel, hcanon, ← ssplit, ← tsplit, horbit, hT, hS]
   by_cases hD : D = m * edges.card
   · simp only [ite_eq_left hD, Finset.card_map, Finset.card_univ, Fintype.card_fin,
