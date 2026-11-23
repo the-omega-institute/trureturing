@@ -20,7 +20,7 @@ The power expansion reduces the moment to an ordered pair sum. Each pair contrib
 
 **Theorem 1.2 (The near-collision budget confines the window start).**
 
-$$\begin{aligned}\forall J: \operatorname{FiniteType},\quad g,w: J\to\mathbb{R},\quad p: \mathbb{N},\\L,H,h,\delta,A: \mathbb{R},\\(\forall j \in J, \operatorname{w}\left(j\right)\ge0)\quad \land L>0\quad \land h>0\quad \land \delta\ge0\quad \land\\(3 + \frac{\pi^{2}}{3}) \cdot (\left\lfloor\frac{H}{h}\right\rfloor_{+} + 1) \cdot \operatorname{E}\left(p, \frac{2}{L}\right)<\delta^{2 \cdot p}\quad \longrightarrow\\\exists b: \mathbb{R}, A<b<A + 2 \cdot L\quad \land \forall t \in [b,b + H],\\\left|\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \operatorname{sin}\left(\operatorname{g}\left(j\right) \cdot t\right)\right|<\delta + h \cdot (\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \left|\operatorname{g}\left(j\right)\right|)\end{aligned}$$
+$$\begin{aligned}\forall J: \operatorname{FiniteType},\quad g,w: J\to\mathbb{R},\quad p: \mathbb{N},\\N: \mathbb{N},\quad L,H,\delta,A: \mathbb{R},\\(\forall j \in J, \operatorname{w}\left(j\right)\ge0)\quad \land L>0\quad \land N>0\quad \land \delta\ge0\quad \land\\(3 + \frac{\pi^{2}}{3}) \cdot N \cdot \operatorname{E}\left(p, \frac{2}{L}\right)<\delta^{2 \cdot p}\quad \longrightarrow\\\exists b: \mathbb{R}, A<b<A + 2 \cdot L\quad \land \forall t \in [b,b + H],\\\left|\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \operatorname{sin}\left(\operatorname{g}\left(j\right) \cdot t\right)\right|<\delta + \frac{H}{2 \cdot N} \cdot (\sum_{j \in J} \operatorname{w}\left(j\right) \cdot \left|\operatorname{g}\left(j\right)\right|)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/FiniteSincCollisionMoment.exists_bounded_tail_window` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\begin{aligned}\forall J: \operatorname{FiniteType},\quad g,w: J\to\mathbb{R},
 
 *Commentary.*
 
-Average the sum of the grid moments over candidate starts centered at A+L. The weighted bound is uniform in the center, including every grid offset. If each start in the open interval had a bad grid node, the averaged sum would be at least the power of the threshold. The strict budget therefore gives a common good start in that interval. The complex modulus bounds the absolute imaginary part at grid nodes. The mesh amends it by at most hB throughout the closed window, including its right endpoint.
+Average the sum of the grid moments over candidate starts centered at A+L. The weighted bound is uniform in the center, including every grid offset. If each start in the open interval had a bad grid node, the averaged sum would be at least the power of the threshold. The strict budget therefore gives a common good start in that interval. The complex modulus bounds the absolute imaginary part at grid nodes. For a positive window length, use the midpoints of N equal subintervals. Every point of the closed window is within H/(2N) of one midpoint, including the right endpoint. The slope allowance is H B/(2N). For H equal to zero each node coincides with the start.
 
 This result gives a finite search interval when an estimate of the weighted collision mass is supplied at the corresponding resolution. It applies to repeated frequencies. For a tail of actual zeta ordinates at moment order growing with the cutoff, the necessary arithmetic estimate remains open.
 

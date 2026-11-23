@@ -22,7 +22,7 @@ noncomputable section
 open Finset MeasureTheory Set
 open scoped NNReal
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
-open D5.S3.Fourier.Concentration.FiniteSineMissingWindow (floor_grid_cover sine_score_change)
+open D5.S3.Fourier.Concentration.FiniteSineMissingWindow (sine_score_change)
 open D5.S3.Weil.DirichletPolynomialMeanSquare (phase)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
 
@@ -449,18 +449,56 @@ theorem tail_moment_comparison {J : Type*} [Fintype J] [DecidableEq J]
   exact doubleMean_pair_comparison _ _ _ (fun m _ => monomialWeight_nonneg w hw m)
     (by positivity) center
 
+private theorem midpoint_grid_cover {N : ℕ} (hN : 0 < N) {H u : ℝ}
+    (hu : u ∈ Icc 0 H) :
+    ∃ k : Fin N, |u - ((k : ℕ) + (1 / 2 : ℝ)) * (H / N)| ≤ H / N / 2 := by
+  have hNreal : (0 : ℝ) < N := by exact_mod_cast hN
+  have hH : 0 ≤ H := hu.1.trans hu.2
+  rcases hH.eq_or_lt with hzero | hpos
+  · have hu0 : u = 0 := by linarith [hu.1, hu.2]
+    exact ⟨⟨0, hN⟩, by simp [← hzero, hu0]⟩
+  let e := H / (N : ℝ)
+  have he : 0 < e := div_pos hpos hNreal
+  have hEnd : (N : ℝ) * e = H := by dsimp [e]; field_simp
+  by_cases hlast : u = H
+  · let k : Fin N := ⟨N - 1, by omega⟩
+    have hk : ((k : ℕ) : ℝ) = (N : ℝ) - 1 := by
+      change ((N - 1 : ℕ) : ℝ) = _
+      rw [Nat.cast_sub (by omega : 1 ≤ N), Nat.cast_one]
+    refine ⟨k, ?_⟩
+    change |u - ((k : ℕ) + (1 / 2 : ℝ)) * e| ≤ e / 2
+    rw [hlast, hk, ← hEnd]
+    rw [show (N : ℝ) * e - ((N : ℝ) - 1 + 1 / 2) * e = e / 2 by ring]
+    exact le_of_eq (abs_of_nonneg (by positivity))
+  · have hratio : u / e < (N : ℝ) := (div_lt_iff₀ he).2
+      (by rw [hEnd]; exact lt_of_le_of_ne hu.2 hlast)
+    have hratio0 : 0 ≤ u / e := div_nonneg hu.1 he.le
+    have hkBound : ⌊u / e⌋₊ < N := by
+      by_contra! h
+      exact hratio.not_ge ((Nat.le_floor_iff hratio0).1 h)
+    let k : Fin N := ⟨⌊u / e⌋₊, hkBound⟩
+    have hlow : ((k : ℕ) : ℝ) * e ≤ u :=
+      (le_div_iff₀ he).1 (Nat.floor_le hratio0)
+    have hhigh : u < (((k : ℕ) : ℝ) + 1) * e :=
+      (div_lt_iff₀ he).1 (Nat.lt_floor_add_one _)
+    refine ⟨k, abs_le.2 ⟨?_, ?_⟩⟩
+    · change -(e / 2) ≤ u - ((k : ℕ) + (1 / 2 : ℝ)) * e
+      linarith
+    · change u - ((k : ℕ) + (1 / 2 : ℝ)) * e ≤ e / 2
+      linarith
+
 /-- The near-collision budget guarantees a closed window with a start in a bounded open interval. -/
 theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ)
-    {L H h δ : ℝ} (hL : 0 < L) (hh : 0 < h) (hδ : 0 ≤ δ)
-    (hbudget : (3 + Real.pi ^ 2 / 3) * ((⌊H / h⌋₊ : ℝ) + 1) *
+    {N : ℕ} {L H δ : ℝ} (hL : 0 < L) (hN : 0 < N) (hδ : 0 ≤ δ)
+    (hbudget : (3 + Real.pi ^ 2 / 3) * (N : ℝ) *
       tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ) :
     ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
-      |∑ j, w j * Real.sin (g j * t)| < δ + h * ∑ j, w j * |g j| := by
-  let K := Fin (⌊H / h⌋₊ + 1)
-  let grid (k : K) : ℝ := (k : ℕ) * h
-  have hcard : (Fintype.card K : ℝ) = (⌊H / h⌋₊ : ℝ) + 1 := by simp [K]
+      |∑ j, w j * Real.sin (g j * t)| < δ + (H / N / 2) * ∑ j, w j * |g j| := by
+  let K := Fin N
+  let grid (k : K) : ℝ := ((k : ℕ) + (1 / 2 : ℝ)) * (H / N)
+  have hcard : (Fintype.card K : ℝ) = N := by simp [K]
   have hscale : (L / 2)⁻¹ = 2 / L := by rw [inv_div]
   have hgridBudget : (3 + Real.pi ^ 2 / 3) * (Fintype.card K : ℝ) *
       nearCollisionMass (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) (L / 2)⁻¹ <
@@ -477,8 +515,9 @@ theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
   refine ⟨b, ⟨by linarith [hb.1], by linarith [hb.2]⟩, fun t ht => ?_⟩
   have ht' : t - b ∈ Icc (0 : ℝ) H :=
     ⟨sub_nonneg.mpr ht.1, (sub_le_iff_le_add).mpr (by linarith [ht.2])⟩
-  obtain ⟨k, hk⟩ := floor_grid_cover hh ht'
-  have hk' : |t - (b + grid k)| ≤ h := by simpa only [grid, sub_sub] using hk
+  obtain ⟨k, hk⟩ := midpoint_grid_cover hN ht'
+  have hk' : |t - (b + grid k)| ≤ H / N / 2 := by
+    simpa only [grid, sub_sub] using hk
   let weight (j : J) : ℝ≥0 := ⟨w j, hw j⟩
   have hchange := sine_score_change univ g (fun _ : J => 0) weight t (b + grid k)
   simp only [zero_add] at hchange
@@ -503,7 +542,7 @@ theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
   have htriangle := abs_add_le ((∑ j, w j * Real.sin (g j * t)) -
     (∑ j, w j * Real.sin (g j * (b + grid k)))) (∑ j, w j * Real.sin (g j * (b + grid k)))
   rw [sub_add_cancel] at htriangle
-  linarith only [htriangle, hstep, hnode, mul_comm h (∑ j, w j * |g j|)]
+  linarith only [htriangle, hstep, hnode, mul_comm (H / N / 2) (∑ j, w j * |g j|)]
 
 #print axioms tail_moment_comparison
 #print axioms exists_bounded_tail_window

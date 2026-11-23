@@ -50,9 +50,11 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
                         + "grid offset. If each start in the open interval had a bad grid node, "
                         + "the averaged sum would be at least the power of the threshold. "
                         + "The strict budget therefore gives a common good start in that interval. "
-                        + "The complex modulus bounds the absolute imaginary part at grid nodes. The mesh "
-                        + "amends it by at most hB throughout the closed window, including its "
-                        + "right endpoint.")),
+                        + "The complex modulus bounds the absolute imaginary part at grid nodes. "
+                        + "For a positive window length, use the midpoints of N equal subintervals. "
+                        + "Every point of the closed window is within H/(2N) of one midpoint, "
+                        + "including the right endpoint. The slope allowance is H B/(2N). "
+                        + "For H equal to zero each node coincides with the start.")),
                     Paragraph(Text(
                         "This result gives a finite search interval when an estimate of the "
                         + "weighted collision mass is supplied at the corresponding resolution. "
@@ -102,7 +104,7 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
     {
         var a = F.Id("A");
         var b = F.Id("b");
-        var h = F.Id("h");
+        var nodes = F.Id("N");
         var horizon = F.Id("H");
         var length = F.Id("L");
         var t = F.Id("t");
@@ -113,20 +115,21 @@ internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinit
             Multiply(w, new Formula.Absolute(g)));
         var score = Seq(Sum, Underscore, Grp(j, Sp, InMacro, Sp, F.Id("J")), Sp,
             Multiply(w, Call("sin", Multiply(g, t))));
-        var floor = Seq(new Formula.Floor(new Formula.Fraction(horizon, h)), Underscore, Grp(Plus));
         var window = Seq(OpenBracket, b, Comma, Add(b, horizon), CloseBracket);
-        var budget = Multiply(Multiply(RowSum(), Seq(Open, Add(floor, D(1)), Close)),
+        var budget = Multiply(Multiply(RowSum(), nodes),
             Collision(new Formula.Fraction(D(2), length)));
         return Disp(new Formula.Aligned([
             TailParameters(),
-            Seq(length, Comma, horizon, Comma, h, Comma, DeltaLower, Comma, a, Colon, Sp, Reals, Comma),
+            Seq(nodes, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Quad, Sp,
+                length, Comma, horizon, Comma, DeltaLower, Comma, a, Colon, Sp, Reals, Comma),
             Seq(NonnegativeWeights(), Quad, Sp, Land, Sp, length, Gt, D(0),
-                Quad, Sp, Land, Sp, h, Gt, D(0), Quad, Sp, Land, Sp, DeltaLower, Ge, D(0), Quad, Sp, Land),
+                Quad, Sp, Land, Sp, nodes, Gt, D(0), Quad, Sp, Land, Sp, DeltaLower, Ge, D(0), Quad, Sp, Land),
             Seq(budget, Lt, new Formula.Power(DeltaLower, Multiply(D(2), F.Id("p"))),
                 Quad, Sp, Longrightarrow),
             Seq(Exists, Sp, b, Colon, Sp, Reals, Comma, Sp, a, Lt, b, Lt, Add(a, Multiply(D(2), length)),
                 Quad, Sp, Land, Sp, Forall, Sp, t, Sp, InMacro, Sp, window, Comma),
-            Seq(new Formula.Absolute(score), Lt, Add(DeltaLower, Multiply(h, Seq(Open, slope, Close)))),
+            Seq(new Formula.Absolute(score), Lt, Add(DeltaLower, Multiply(new Formula.Fraction(horizon, Multiply(D(2), nodes)),
+                Seq(Open, slope, Close)))),
         ]));
     }
 }

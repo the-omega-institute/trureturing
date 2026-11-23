@@ -21,15 +21,15 @@ private def rejected : Realization tailSignature.{u} :=
 abbrev boundedArena : Arena where
   signature := tailSignature.{u}
   Law V := ∀ {J : Type u} [i : Fintype J] [DecidableEq J] (g w : J → ℝ)
-    (_ : ∀ j, 0 ≤ w j) (p : ℕ) {L H h δ : ℝ}
-    (_ : 0 < L) (_ : 0 < h) (_ : 0 ≤ δ)
-    (_ : (3 + Real.pi ^ 2 / 3) * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
+    (_ : ∀ j, 0 ≤ w j) (p : ℕ) {N : ℕ} {L H δ : ℝ}
+    (_ : 0 < L) (_ : 0 < N) (_ : 0 ≤ δ)
+    (_ : (3 + Real.pi ^ 2 / 3) * (N : ℝ) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
     (A : ℝ), ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
-      |V.readout () ⟨J, i, g, w⟩ t| < δ + h * ∑ j, w j * |g j|
+      |V.readout () ⟨J, i, g, w⟩ t| < δ + (H / N / 2) * ∑ j, w j * |g j|
 
 private theorem rejected_law : ¬ boundedArena.{u}.Law rejected := by
   intro law
-  have hbudget : (3 + Real.pi ^ 2 / 3) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) *
+  have hbudget : (3 + Real.pi ^ 2 / 3) * 1 *
       tailCollisionMass (J := PEmpty.{u + 1}) 0 0 1 (2 / 1) < 1 ^ (2 * (1 : ℕ)) := by
     have hempty : Finset.piAntidiag (Finset.univ : Finset PEmpty.{u + 1}) 1 = ∅ := by
       apply Finset.eq_empty_iff_forall_notMem.mpr
@@ -37,10 +37,10 @@ private theorem rejected_law : ¬ boundedArena.{u}.Law rejected := by
       simpa using (Finset.mem_piAntidiag.mp hm).1
     unfold tailCollisionMass
     rw [hempty]
-    change (3 + Real.pi ^ 2 / 3) * ((⌊(1 : ℝ) / 1⌋₊ : ℝ) + 1) * 0 < 1 ^ (2 * (1 : ℕ))
+    change (3 + Real.pi ^ 2 / 3) * 1 * 0 < 1 ^ (2 * (1 : ℕ))
     norm_num
   obtain ⟨b, _, hb⟩ := law (J := PEmpty.{u + 1}) 0 0 (by simp) 1
-    (L := 1) (H := 1) (h := 1) (δ := 1) zero_lt_one zero_lt_one zero_le_one hbudget 0
+    (N := 1) (L := 1) (H := 1) (δ := 1) zero_lt_one zero_lt_one zero_le_one (by simpa only [Nat.cast_one] using hbudget) 0
   have h := hb b ⟨le_rfl, by linarith⟩
   simp [rejected, realize] at h
 
