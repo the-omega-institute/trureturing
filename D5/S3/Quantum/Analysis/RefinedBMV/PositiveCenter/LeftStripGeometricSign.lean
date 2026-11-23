@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Strict negativity of the mixed derivative of the left-strip kernel for gaps at least one. -/
+
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.GeometricCertificate.Band1
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.GeometricCertificate.Band2
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.GeometricCertificate.Band3

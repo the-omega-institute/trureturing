@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
@@ -214,6 +215,12 @@ the positive gap are each at most one half. Factoring the marginal zeros
 gives a continued integrand. Exact interval bounds on the marginal
 Taylor polynomials and the tilted joint moments give its strict sign
 throughout the range needed by the kernel derivative identity.
+
+For first degrees at least eleven and lower coordinate at most one half,
+the logarithmic kernel has strictly negative mixed derivative at all
+gaps at least one. Geometric reduction controls the scaled scalar
+through integration gap seven halves with exact Taylor enclosures. The
+analytic tail estimate supplies the sign past that threshold.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
