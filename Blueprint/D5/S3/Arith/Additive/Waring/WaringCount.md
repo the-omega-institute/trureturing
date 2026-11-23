@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringCount.sum_sigmaMinusOne_le`
 
 *Commentary.*
 
-The sum of the reciprocals of the divisors larger than one, over all integers from 1 through x, is at most 2x.
+The sum of the reciprocals of all positive divisors, over all integers from 1 through x, is at most 2x.
 
 ## References
 

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringLemma3.Q_le_sigma`
 
 *Commentary.*
 
-The count in a box for a nonzero bilinear target n is bounded by a size term and a term involving the reciprocals of the nontrivial divisors of |n|.
+The count in a box for a nonzero bilinear target n is bounded by a size term and a term involving the reciprocals of all positive divisors of |n|.
 
 ## References
 
