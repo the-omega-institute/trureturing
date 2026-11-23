@@ -14,7 +14,7 @@ mem_edges: proof_shape=bind-only; consumers=HardinA229641Strip.result._simp_1_6
 edges_eq: proof_shape=content; consumers=HardinA229538Strip.edges_card, HardinA229538Strip.cost_countCut
 edges_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion, HardinA229538Strip.small_budget_ne_cut_total, HardinA229538Strip.result, HardinA229641Strip.result
 cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.small_budget_ne_cut_total
-small_budget_ne_cut_total: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
+small_budget_ne_cut_total: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
 cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._simp_1_1
@@ -166,15 +166,15 @@ private theorem edges_eq :
 theorem edges_card : edges.card = 13 := by
   rw [edges_eq]; decide +kernel
 
-theorem cut_total_exclusion (D : ℕ) :
+private theorem cut_total_exclusion (D : ℕ) :
     (∀ m : ℕ, D ≠ m * edges.card) ↔ ¬ 13 ∣ D := by
   simp only [edges_card, dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
 
 theorem small_budget_ne_cut_total (D m : ℕ) (hD : 0 < D) (hsmall : D < edges.card) :
     D ≠ m * edges.card := by
-  apply (cut_total_exclusion D).mpr _ m
-  rw [edges_card] at hsmall
-  exact Nat.not_dvd_of_pos_of_lt hD hsmall
+  have hn := Nat.not_dvd_of_pos_of_lt hD hsmall
+  rw [edges_card] at hn
+  exact (cut_total_exclusion D).mpr hn m
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
