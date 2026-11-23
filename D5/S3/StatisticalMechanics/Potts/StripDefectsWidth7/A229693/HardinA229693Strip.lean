@@ -47,7 +47,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635IntegerCertificate
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.OfFn
@@ -61,7 +60,6 @@ set_option Elab.async false
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
   (defects literalCount constant_defects relabel_defects forward forward_eq forward_shift)
 open HardinA229585StripData (horizontal antidiagonal)
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open HardinA229693StripTransfer (T initial terminal count_transfer exitRead)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_pattern_card)
 
@@ -72,10 +70,10 @@ def a (n : ℕ) : ℕ :=
       HardinA229585Strip.Normal f).card
 
 private def leadingCoefficient : Fin 8 → ℤ := by
-  refine (fun (c : Fin 8 → ℤ)
+  exact (fun (c : Fin 8 → ℤ)
     (_ : HardinA229585StripData.W 10 = ∑ k : Fin 8,
-      c k • HardinA229585StripData.W ⟨2 + k.val, by omega⟩) => c) ?coef ?law
-  case law => exact HardinA229585Strip.finite_certificate.2.2.2.2.2.2
+      c k • HardinA229585StripData.W ⟨2 + k.val, by omega⟩) => c) _
+    HardinA229585Strip.finite_certificate.2.2.2.2.2.2
 
 -- Extend the signed vector recurrence beyond the frozen eleven rows.
 private def leading : Fin 15 → Fin 72 → ℤ :=
@@ -379,8 +377,8 @@ private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
     omega
   have h := List.all_eq_true.mp
     (List.all_eq_true.mp (exhaustedSteps g) k hm) i (List.mem_finRange i)
-  change w i.succ ((columnRepresentative k).natAdd 72) ==
-    (List.zipWith (· * ·) (arithmeticRow i.castSucc) (rightColumn (columnRepresentative k))).sum
+  change (w i.succ ((columnRepresentative k).natAdd 72) ==
+    (List.zipWith (· * ·) (arithmeticRow i.castSucc) (rightColumn (columnRepresentative k))).sum)
       = true at h
   have hcol : rightColumn (columnRepresentative k) = rightColumn j := by
     unfold rightColumn
@@ -410,9 +408,15 @@ private theorem forward_step (i : Fin 14) :
   | right j =>
     exact exhausted_step i j
 
-private theorem forward_table (i : Fin 15) : forward T initial i.val = w i :=
-  (HardinA229635IntegerCertificate.forward_table_iff T initial w).mpr
-    ⟨rfl, forward_step⟩ i
+private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
+  induction i using Fin.induction with
+  | zero => rfl
+  | succ i ih =>
+    change (fun v => Matrix.vecMul v T)^[i.val + 1] initial = w i.succ
+    rw [Function.iterate_succ_apply']
+    change Matrix.vecMul (forward T initial i.castSucc.val) T = _
+    rw [ih]
+    exact (forward_step i).symm
 
 -- The twelve scalar products are evaluated coordinate by coordinate.
 set_option maxRecDepth 14000 in

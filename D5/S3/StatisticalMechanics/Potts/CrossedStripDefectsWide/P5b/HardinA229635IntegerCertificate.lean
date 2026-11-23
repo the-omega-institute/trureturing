@@ -62,26 +62,6 @@ private theorem forward_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
       _ = next (p i.castSucc) := (hnext _).symm
       _ = p i.succ := (hstep i).symm
 
-/- forward_table_iff: proof_shape=bind-only; consumers=HardinA229693Strip.forward_table -/
-theorem forward_table_iff {d n : ℕ} (m : Matrix (Fin d) (Fin d) ℤ)
-    (v : Fin d → ℤ) (p : Fin (n + 1) → Fin d → ℤ) :
-    (∀ i : Fin (n + 1), forward m v i.val = p i) ↔
-      p 0 = v ∧ ∀ i : Fin n, p i.succ = Matrix.vecMul (p i.castSucc) m := by
-  constructor
-  · intro h
-    refine ⟨(h 0).symm, ?_⟩
-    intro i
-    rw [← h i.succ, ← h i.castSucc]
-    simp only [Fin.val_succ, Fin.val_castSucc, DefectTransfer.forward_eq, pow_succ,
-      Matrix.vecMul_vecMul]
-  · rintro ⟨hz, hs⟩ i
-    induction i using Fin.induction with
-    | zero => exact hz.symm
-    | succ i ih =>
-      have h : forward m v (i.val + 1) = Matrix.vecMul (forward m v i.val) m := by
-        simp only [DefectTransfer.forward_eq, pow_succ, Matrix.vecMul_vecMul]
-      exact h.trans ((congrArg (fun w => Matrix.vecMul w m) ih).trans (hs i).symm)
-
 private def lagIndex (j : Fin 27) : Fin 31 := ⟨29 - j.val, by omega⟩
 
 private theorem residual_vector_of_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)

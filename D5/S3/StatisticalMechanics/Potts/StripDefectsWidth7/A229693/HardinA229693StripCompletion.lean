@@ -18,6 +18,8 @@ matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes.
 rowCode_cons: proof_shape=bind-only; consumers=completionCodes_eq, rowCode_tail
 -/
 
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Logic.Equiv.Fin.Basic
