@@ -22,7 +22,7 @@ A product through 2N consecutive indices is the product through the N even and t
 
 **Definition 1.2 (U).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.U`
+$$U := \operatorname{J}\left(2, 1\right) = \sum_{j \in \mathbb{Z}} (-1)^{\lvert j\rvert}\,q^{2j^{2} - j}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.U` (`✓ std3`).
 
@@ -32,11 +32,11 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.U`
 
 *Commentary.*
 
-The signed weighted Jacobi sum at weight parameters 2 and 1.
+The signed weighted Jacobi sum J at weight parameters 2 and 1, as a rational formal power series.
 
 **Definition 1.3 (phi).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.phi`
+$$\varphi := \operatorname{specialize}\left(0, 1, \operatorname{map}\left(\operatorname{twist}\left(id, -1\right), jacobiSeries\right)\right) = \sum_{j \in \mathbb{Z}} q^{j^{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.phi` (`✓ std3`).
 
@@ -44,11 +44,11 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.phi`
 
 *Commentary.*
 
-The bilateral theta series with square exponents.
+The bilateral theta series with square exponents. The defining specialization at weights 0 and 1 follows the Laurent twist with unit −1 and the identity coefficient map.
 
 **Definition 1.4 (psi).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.psi`
+$$\psi := \frac{1}{2}\,\operatorname{jacobiEvaluation}\left(id, -1\right) = \sum_{j \in \mathbb{N}} q^{\frac{j(j+1)}{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.psi` (`✓ std3`).
 
@@ -56,7 +56,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.psi`
 
 *Commentary.*
 
-The unilateral theta series with triangular exponents.
+The unilateral theta series with triangular exponents. The defining Jacobi evaluation uses the identity coefficient map and the unit −1, with a constant factor of one half.
 
 **Theorem 1.5 (U_product).**
 

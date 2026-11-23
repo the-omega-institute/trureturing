@@ -8,7 +8,7 @@ For each distinct part size of multiplicity m, a marked partition carries a choi
 
 **Definition 1.1 (euler).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.euler`
+$$\operatorname{euler}\left(d\right) := \left(P_{R}\right)\left(q^{d}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.euler` (`✓ std3`).
 
@@ -18,11 +18,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.euler`
 
 *Commentary.*
 
-Dilate the pentagonal series by a positive natural degree.
+Dilate the pentagonal series over a commutative ring R by a positive natural degree d. P denotes PowerSeries.pentagonalSeries.
 
 **Definition 1.2 (etaUnit).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.etaUnit`
+$$\operatorname{etaUnit}\left(d\right) := \langle\operatorname{euler}\left(d\right), \operatorname{invOfUnit}\left(\operatorname{euler}\left(d\right), 1\right)\rangle$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.etaUnit` (`✓ std3`).
 
@@ -106,7 +106,7 @@ Dilating an Euler unit again multiplies its dilation index.
 
 **Definition 1.8 (MarkedPartition).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedPartition`
+$$\operatorname{MarkedPartition}\left(n\right) := \Sigma_{p: \operatorname{Partition}\left(n\right)} \prod_{i: \operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right)} \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedPartition` (`✓ std3`).
 
@@ -114,11 +114,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedPartiti
 
 *Commentary.*
 
-A partition of n together with one choice of actual occurrence for each part size present.
+A partition of n together with one choice of actual occurrence for each part size present. parts is the multiset of parts, toFinset forgets repeated sizes, and Fin m has indices from zero through m − 1.
 
 **Definition 1.9 (MarkedTuple).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedTuple`
+$$\operatorname{MarkedTuple}\left(k, n\right) := \Sigma_{l: \operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right)} \prod_{i: \operatorname{range}\left(k\right)} \operatorname{MarkedPartition}\left(l.1\left(i.1\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedTuple` (`✓ std3`).
 
@@ -126,11 +126,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedTuple`
 
 *Commentary.*
 
-An ordered tuple of k marked partitions with total size n. Each position may have degree zero.
+An ordered tuple of k marked partitions with total size n. Each position may have degree zero. The finsuppAntidiag indexes finitely supported degree assignments on the natural numbers with support contained in range k and total degree n.
 
 **Definition 1.10 (markedCount).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedCount`
+$$\operatorname{markedCount}\left(k, n\right) := \operatorname{card}\left(\operatorname{MarkedTuple}\left(k, n\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedCount` (`✓ std3`).
 
@@ -142,7 +142,7 @@ The cardinality of the type of ordered marked tuples.
 
 **Definition 1.11 (markedPartitionFintype).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedPartitionFintype`
+$$\operatorname{markedPartitionFintype}\left(n\right) := \operatorname{SigmaFintype}\left(\operatorname{Partition}\left(n\right), \lambda p, \operatorname{PiFintype}\left(\operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right), \lambda i, \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedPartitionFintype` (`✓ std3`).
 
@@ -152,11 +152,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedPartiti
 
 *Commentary.*
 
-The type of markings of partitions of a fixed size is finite.
+The type of markings of partitions of a fixed size is finite. SigmaFintype and PiFintype denote the inferred dependent sum and dependent function instances for the indicated finite families.
 
 **Definition 1.12 (markedTupleFintype).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedTupleFintype`
+$$\operatorname{markedTupleFintype}\left(k, n\right) := \operatorname{SigmaFintype}\left(\operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right), \lambda l, \operatorname{PiFintype}\left(\operatorname{range}\left(k\right), \lambda i, \operatorname{markedPartitionFintype}\left(l.1\left(i.1\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedTupleFintype` (`✓ std3`).
 
@@ -170,7 +170,7 @@ There are finitely many ordered marked tuples at fixed component count and total
 
 **Definition 1.13 (F).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.F`
+$$F := f_{6}\,(f_{1}\,f_{2}\,f_{3})^{-1}$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.F` (`✓ std3`).
 
@@ -178,7 +178,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/DesignatedSummands.F`
 
 *Commentary.*
 
-The Euler quotient f6 divided by f1 f2 f3 as a formal power series.
+The Euler quotient f6 divided by f1 f2 f3 as a formal power series. Each f with index d is euler d, and the denominator is inverted as a unit of constant coefficient one.
 
 **Theorem 1.14 (F_const).**
 

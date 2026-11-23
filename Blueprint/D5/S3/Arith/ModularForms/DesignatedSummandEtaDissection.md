@@ -8,9 +8,11 @@ The Jacobi product identities turn the parity dissection into an identity betwee
 
 Lemma 2.2 of Yaqubi and Mirzavaziri gives the prime-power Frobenius congruence. The dyadic lift uses the iterated Frobenius over ZMod 2, then raises the integral congruence to the required modulus.
 
+Write f_d for euler at degree d. Each quotient of Euler factors uses their units of constant coefficient one and is coerced back to a formal series.
+
 **Definition 1.1 (reduce).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.reduce`
+$$\operatorname{reduce}\left(m, \sum_{n\ge0} a_{n}\,q^{n}\right) := \sum_{n\ge0} \overline{a_{n}}_{m}\,q^{n}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.reduce` (`✓ std3`).
 
@@ -80,7 +82,7 @@ For every integral formal series p(q) and natural j, r and t, the coefficientwis
 
 **Definition 1.6 (H).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H`
+$$H := \frac{f_{1}f_{2}f_{3}}{f_{6}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H` (`✓ std3`).
 
@@ -94,7 +96,7 @@ The inverse unit of the generating series F.
 
 **Definition 1.7 (H0).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H0`
+$$H_{0} := \frac{\left(f_{1}\right)^{2}\left(f_{4}\right)^{2}\left(f_{6}\right)^{4}}{\left(f_{2}\right)^{2}\left(f_{3}\right)^{2}\left(f_{12}\right)^{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H0` (`✓ std3`).
 
@@ -108,7 +110,7 @@ The Euler quotient f1^2 f4^2 f6^4 divided by f2^2 f3^2 f12^2, whose degree doubl
 
 **Definition 1.8 (T).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.T`
+$$T := \frac{\left(f_{1}\right)^{4}\left(f_{6}\right)^{2}}{\left(f_{2}\right)^{2}\left(f_{3}\right)^{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.T` (`✓ std3`).
 
@@ -140,11 +142,13 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H_disse
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H_dissection` (`✓ std3`). ∎
 
-*Citation.* James A. Sellers (2023). *New Infinite Families of Congruences Modulo Powers of 2 for 2-Regular Partitions with Designated Summands*. DOI: [10.48550/arXiv.2306.15130](https://doi.org/10.48550/arXiv.2306.15130). URL: <https://arxiv.org/abs/2306.15130v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* James A. Sellers (2023). *New Infinite Families of Congruences Modulo Powers of 2 for 2-Regular Partitions with Designated Summands*. DOI: [10.48550/arXiv.2306.15130](https://doi.org/10.48550/arXiv.2306.15130). URL: <https://arxiv.org/abs/2306.15130v1>.
 
 *Commentary.*
 
-Over the integers, H(q) is H0(q²) minus q T(q⁴).
+Over the integers, H(q) is H0(q²) minus q T(q⁴). Sellers Lemma 2.3 gives the classical two-dissection of f1 f3. Multiplying that identity by the even unit f2/f6 gives the identity for H. The Lean proof derives the product dissection from the Jacobi identities and descends through the injective map from integer to rational coefficients.
 
 **Theorem 1.11 (H_support).**
 
@@ -162,7 +166,7 @@ The integral coefficient of H in degree 4n+3 vanishes for every natural n.
 
 **Definition 1.12 (E).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.E`
+$$\operatorname{E}\left(q\right) := \operatorname{N}\left(q\right)^{2}\,(\left(H_{0}\right)\left(q\right)^{2} + q\,\operatorname{T}\left(q^{2}\right)^{2}),\quad\operatorname{N}\left(q\right) := \frac{f_{2}f_{6}}{\left(f_{1}\right)^{5}f_{3}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.E` (`✓ std3`).
 
@@ -172,11 +176,11 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.E`
 
 *Commentary.*
 
-The integral series such that E(q²) is the even part of F(q) squared.
+The integral series such that E(q²) is the even part of F(q) squared. Here N is the underlying series of the unit quotient f2 f6/(f1^5 f3).
 
 **Definition 1.13 (W).**
 
-Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W`
+$$W := \frac{\left(f_{2}\right)^{4}\left(f_{6}\right)^{4}}{\left(f_{1}\right)^{8}\left(f_{3}\right)^{4}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W` (`✓ std3`).
 
