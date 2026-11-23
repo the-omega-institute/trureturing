@@ -16,9 +16,9 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             Paragraph(Text("A column is encoded in base three, with row r stored in digit r. "
                 + "Bond tests precisely the pairs of rows at distance at most one across consecutive "
                 + "columns. The strip has free boundaries and has no within-column bonds.")),
-            LiteralNode("moves", "The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. The theorem moves_eq_filter identifies each list with the eligible columns in code order."),
+            LiteralNode("moves", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. The theorem moves_eq_filter identifies each list with the eligible columns in code order."),
             FormulaNode("moves_eq_filter", MovesFilter(), true, "Filtering the ordered column codes by the bond condition gives the stored successor list."),
-            LiteralNode("table", "The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors."),
+            LiteralNode("table", Arrow(Fin(12), Arrow(Column(), new Formula.Integers())), "The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors."),
             FormulaNode("coefficients", Coefficients(), false, "The coefficients are listed in order of increasing power."),
             FormulaNode("step_fast", Step(), true, "Matrix action at a boundary is the sum over its legal successors."),
             FormulaNode("powers_table", Powers(), true, "The tabulated row is the continuation vector at the specified exponent."),
@@ -37,9 +37,9 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
-    private static DocumentBlock LiteralNode(string name, string prose) =>
+    private static DocumentBlock LiteralNode(string name, Formula type, string prose) =>
         Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Prefix + name),
-            H(name), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(name), StatementSource.FromAuthor(Disp(Typed(C(name), type))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);

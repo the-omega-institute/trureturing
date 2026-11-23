@@ -32,7 +32,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transfer_readout",TransferReadout(),true,"The state and scalar types have independent universes, and the scalars form a commutative semiring. Matrix action and the dot product give every shifted scalar relation. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
-            LiteralNode("movesOne", "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
+            LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
             Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
             Node("step_one",StepOne(),true,"The action of the exact-one-cut matrix is a sum over its successors."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
@@ -53,9 +53,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229538")),
             Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
-    private static DocumentBlock LiteralNode(string name, string prose) =>
+    private static DocumentBlock LiteralNode(string name, Formula type, string prose) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(name), StatementSource.WithoutFormula(),
+            H(name), StatementSource.FromAuthor(Disp(Typed(Own(name), type))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229538")),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
@@ -98,6 +98,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula Fn(string n,Formula t,Formula b) => Parenthesized(Seq(LambdaLower,Sp,Typed(V(n),t),Mapsto,Sp,Parenthesized(b)));
     private static Formula If(Formula c,Formula a,Formula b) =>
         Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,a,Sp,Q("else"),Sp,b));
+    private static Formula LetLiteral(Formula identifier, Formula type, Formula body) =>
+        Parenthesized(Seq(Q("let"), Sp, Typed(identifier, type), Sp, Colon, F.Eq, Sp,
+            F.Text, Grp(V("stored"), Sp, V("Lean"), Sp, V("literal")), Sp,
+            Q("in"), Sp, Parenthesized(body)));
     private static Formula AsInt(Formula a) => Typed(a,Q("Int"));
     private static Formula Column() => Q("HardinA233178Chromatic.Column");
     private static Formula Own(string n,params Formula[] a) => Call("HardinA229538Strip."+n,a);
@@ -244,7 +248,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Call("Ne.symm", V("hn")));
         var identityRow = App(Typed(N(1), M(Fin(12))), Call("Fin.castLT", n, h));
         var exceptionalRow = Call("Fin.append", Typed(N(0), Arrow(Fin(2), Q("Int"))), C("coefficients"));
-        var laterRow = App(V("later"), Call("Fin.subNat", N(13), n, bound));
+        var later = V("later");
+        var laterRow = LetLiteral(later, Arrow(Fin(10), Arrow(Fin(12), new Formula.Integers())),
+            App(later, Call("Fin.subNat", N(13), n, bound)));
         return All("n", Fin(23), Eq(Own("weights", n),
             If(Typed(h, Lt(Val(n), N(12))), identityRow,
                 If(Typed(V("hn"), Eq(Val(n), N(12))), exceptionalRow, laterRow))));
@@ -254,8 +260,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     {
         var n = V("n");
         var p = V("p");
-        return All("n", Fin(23), All("p", Column(),
-            Eq(AsInt(Own("tableOne", n, p)), App(V("values"), n, Own("classIndex", p)))));
+        var values = V("values");
+        var entry = LetLiteral(values, Arrow(Fin(23), Arrow(Fin(25), new Formula.Integers())),
+            App(values, n, Own("classIndex", p)));
+        return All("n", Fin(23), All("p", Column(), Eq(AsInt(Own("tableOne", n, p)), entry)));
     }
 
     private static Formula MovesFilter()
