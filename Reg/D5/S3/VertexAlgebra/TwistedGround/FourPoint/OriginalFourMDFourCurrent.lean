@@ -15,7 +15,7 @@ open _root_.D5.S3.VertexAlgebra
 open _root_.D5.S3.VertexAlgebra.TwistedGround
 open FourPoint.OriginalFourMActualChart
 open FourPoint.OriginalFourMChargeNormal (projectOccupations)
-open LatticeGeneratingFieldLocality (LatticeData Charge)
+open LatticeGeneratingFieldLocality (LatticeData Charge Oscillator)
 open LatticePositiveEnergy (chargeEnergy)
 open LatticeDiscriminantTheta (gramReal)
 open LatticeTwistedGroundRealization.SignQuotient (ModTwoCharge reduceCharge)
@@ -31,7 +31,7 @@ open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric
   (complexSignature complexEqual complexFalse complexEqualDependence)
 open LeanInformationAudit
 open _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalFourMDFourCurrent (four_current_identityK)
-open scoped BigOperators Topology
+open scoped BigOperators Classical Topology
 
 open private marks slot currentOscillator fourCurrentJet from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAFourCurrent
@@ -306,6 +306,90 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end four_current_slit_ad_overlap
+
+namespace identityKReadout
+
+abbrev Parameters := Σ D : LatticeData, Fin 4 → Fin D.rank
+abbrev Detector (p : Parameters) := Oscillator p.1 → Prop
+abbrev signature := _root_.Reg.Support.SingleDependentReadout.signature
+  Parameters Detector (fun _ => Bool)
+
+def actual : Realization signature :=
+  realize signature (fun _ p test => decide (test (currentOscillator p.1 p.2 3)))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (_hD : (gramReal D).PosDef) (_h24 : D.rank = 24) (colour : Fin 4 → Fin D.rank)
+    (m n r : ℤ) (_hs : m + n + r = 2),
+    let osc := currentOscillator D colour
+    R.readout () ⟨D, colour⟩ (identityK D hu 2 2 2 m n r (osc 0) (osc 1) (osc 2)) = true
+
+private theorem bridge : (type_of% (@four_current_identityK)) ↔ arena.Law actual := by
+  constructor
+  · intro h D hu hD h24 colour m n r hs
+    exact decide_eq_true (h D hu hD h24 colour m n r hs)
+  · intro h D hu hD h24 colour m n r hs
+    exact of_decide_eq_true (h D hu hD h24 colour m n r hs)
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  exact Bool.false_ne_true (h leechData leech_spec.2.1 leech_spec.2.2.1 leech_spec.1 sampleColours
+    0 0 2 (by norm_num))
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨leechData, sampleColours⟩, fun _ => True, fun _ => False, ?_⟩
+  change decide True ≠ decide False
+  simp
+
+def family : Registration arena (type_of% (@four_current_identityK)) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp four_current_identityK, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@four_current_identityK) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent.identityKReadout.unit
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent.identityKReadout.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end identityKReadout
 
 namespace actualLeechIdentityK
 
