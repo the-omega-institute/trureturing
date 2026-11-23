@@ -9,6 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
+initialExhausted: proof_shape=content; consumers=w_leading, initial, initial.eq_1, initial_counts, initial_exhausted_count, initial_from_starts
+initial: proof_shape=content; consumers=forward_table, polynomial_relation, result, w, w_leading, count_transfer, initial_counts
+terminal: proof_shape=bind-only; consumers=result, count_transfer, terminal_eq
 next_valid: proof_shape=bind-only; consumers=count_transfer
 initial_valid: proof_shape=bind-only; consumers=count_transfer
 terminal_eq: proof_shape=bind-only; consumers=count_transfer
@@ -79,6 +82,18 @@ open HardinA229693StripTransfer
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_exists_unique)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_pattern_card)
+
+private def initialExhausted (i : Fin 96) : ℤ :=
+  Fin.addCases (fun j : Fin 56 =>
+    if j.castAdd 40 ∈ Finset.univ.image (oldZeroImage ∘ HardinA229585StripData.zeroBudgetClass)
+      then 0 else 6)
+    (fun _ : Fin 40 => 12) i
+
+def initial : Fin 168 → ℤ :=
+  Fin.append HardinA229585StripData.initial initialExhausted
+
+def terminal : Fin 168 → ℤ :=
+  Fin.append (0 : Fin 72 → ℤ) (1 : Fin 96 → ℤ)
 
 private theorem next_valid (p : Boundary) (d : ℕ) (hp : HardinA229635State.Valid p d) (r : Row)
     (hr : cross p r + bondDefects horizontal r r ≤ d) :
