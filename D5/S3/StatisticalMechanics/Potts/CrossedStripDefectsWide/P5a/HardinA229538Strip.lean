@@ -21,7 +21,7 @@ cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._
 zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_1
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
-transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.result
+transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.old_coordinate, HardinA229641Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result
 countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
@@ -70,6 +70,8 @@ import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Function
 import Init.Data.Int.Basic
+import Init.Data.List.Basic
+import Init.Data.List.FinRange
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic

@@ -58,6 +58,8 @@ import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
+import Init.Data.List.Basic
+import Init.Data.List.FinRange
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
@@ -102,8 +104,10 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Nat.Init
+import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
 import Mathlib.Logic.Function.Conjugate
 import Mathlib.Logic.Function.Defs
