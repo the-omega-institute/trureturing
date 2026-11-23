@@ -38,7 +38,10 @@ internal sealed class PinedaSeparatingWeightsRefutationDocument : IScribeDocumen
                 "DirectedClaim",
                 "The out-path on vertices 0, 1, 2 has arcs 0 to 1 and 1 to 2, of weights p and q. The receiving-degree Laplacian has rows (0,0,0), (−p,p,0), (0,−q,q). Its last coordinate vector is a right eigenvector at q and its first two coordinates vanish."),
             Refutation("result", "Refutation of the three analogues", "result", "claim",
-                "On each of the indicated supports the nonvanishing implication would force the polynomial to vanish on the whole positive orthant. The real polynomial identity theorem on the product of positive intervals and the injective integer coefficient map force the original polynomial to be zero. This argument applies at every degree and uses only the nonzero-coordinate requirement."))));
+                "On each of the indicated supports the nonvanishing implication would force the polynomial to vanish on the whole positive orthant. The real polynomial identity theorem on the product of positive intervals and the injective integer coefficient map force the original polynomial to be zero. This argument applies at every degree and uses only the nonzero-coordinate requirement.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pineda-montoya-et-al-2026-separating-weights-question-7-5"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string title, string name, Formula body, string prose) =>
         Describe.Lean(DescribeId.Create("pineda-" + id), DeclarationHandle.Create(Prefix + name), H(title),

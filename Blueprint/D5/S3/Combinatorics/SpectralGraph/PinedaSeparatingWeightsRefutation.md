@@ -102,6 +102,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/PinedaSeparatingWeightsRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pineda-montoya-et-al-2026-separating-weights-question-7-5` (refuted) by `D5/S3/Combinatorics/SpectralGraph/PinedaSeparatingWeightsRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pineda-montoya-et-al-2026-separating-weights-question-7-5","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/PinedaSeparatingWeightsRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Santiago Pineda Montoya, Edisson Gallego González, Jaiberth Porras Barrera, Johan Heriberto Rúa Muñoz (2026). *Laplacian Eigenvectors of Generically Weighted Graphs Have Pairwise Distinct Coordinates*. DOI: [10.48550/arXiv.2611.21979](https://doi.org/10.48550/arXiv.2611.21979). URL: <https://arxiv.org/abs/2611.21979v1>.
