@@ -4,7 +4,7 @@
 
 Canonical two-defect colourings of five-row HDA arrays
 
-Colours are introduced in row-major order. At the widths used in the recurrence, each canonical array has six distinct label permutations.
+Colours are introduced in row-major order. At the widths used in the recurrence, the exact defect count excludes constant arrays. Each counted array has six distinct labelled representatives.
 
 **Definition 1.1 (a).**
 
@@ -52,7 +52,7 @@ The left summand has budget two. The inherited right summand has budgets one and
 
 **Definition 1.4 (terminal).**
 
-$$\forall (C: \operatorname{Type}*), (\forall (D: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), ((\operatorname{HardinA229641Strip}.\operatorname{terminal}: \operatorname{Sum}\left(C, \operatorname{Sum}\left(D, Z\right)\right) \to \operatorname{Int}) = \operatorname{Sum}.\operatorname{elim}\left((0: C \to \operatorname{Int}), \operatorname{HardinA229538Strip}.\operatorname{terminal}\right))))$$
+$$\forall (C: \operatorname{Type}*), (\forall (D: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\operatorname{One}\left(R\right)] (\operatorname{HardinA229641Strip}.\operatorname{terminal}: \operatorname{Sum}\left(C, \operatorname{Sum}\left(D, Z\right)\right) \to R) = \operatorname{Sum}.\operatorname{elim}\left((0: C \to R), \operatorname{HardinA229538Strip}.\operatorname{terminal}\right)))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.terminal` (`✓ std3`).
 

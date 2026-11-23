@@ -8,7 +8,7 @@ A column is encoded in base three, with row r stored in digit r. Bond tests prec
 
 **Definition 1.1 (moves).**
 
-$$(\operatorname{HardinA233178Chromatic}.\operatorname{moves}: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{List}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}\right))$$
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves`
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$(\operatorname{HardinA233178Chromatic}.\operatorname{moves}: \operatorname{Har
 
 *Commentary.*
 
-A literal lookup with 243 entries indexed by the current column code. The lists have variable lengths. The theorem moves_eq_filter pins each list.
+The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. The theorem moves_eq_filter identifies each list with the eligible columns in code order.
 
 **Theorem 1.2 (moves_eq_filter).**
 
@@ -32,7 +32,7 @@ Filtering the ordered column codes by the bond condition gives the stored succes
 
 **Definition 1.3 (table).**
 
-$$(\operatorname{HardinA233178Chromatic}.\operatorname{table}: \operatorname{Fin}\left(12\right) \to \left(\operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int}\right))$$
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table`
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table` (`✓ std3`).
 
@@ -40,7 +40,7 @@ $$(\operatorname{HardinA233178Chromatic}.\operatorname{table}: \operatorname{Fin
 
 *Commentary.*
 
-A literal 12-by-243 integer lookup indexed by the number of extra columns and the boundary code. The theorem powers_table pins the rows.
+The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors.
 
 **Definition 1.4 (coefficients).**
 
