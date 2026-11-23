@@ -124,28 +124,7 @@ jobs:
           path: ${{ steps.nuget.outputs.path }}
           key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge_key
-        env:
-          JUDGE_INPUTS: |
-            Meta/tools-release.json
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-        run: |
-          sdk="$(dotnet --version)"
-          [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
-          recipe="$(python3 tools/scripts/workflow/ci_checks.py judge-recipe | sha256sum | cut -c1-16)"
-          specs=()
-          while IFS= read -r spec; do [[ -n "$spec" ]] && specs+=(":(glob)$spec"); done <<< "$JUDGE_INPUTS"
-          listing="$RUNNER_TEMP/judge-inputs"
-          git ls-files -s -z -- "${specs[@]}" > "$listing"
-          [[ -s "$listing" ]] || { echo "judge inputs select no tracked file" >&2; exit 2; }
-          inputs="$(sha256sum < "$listing" | cut -c1-64)"
-          echo "key=judge-${{ runner.os }}-${{ runner.arch }}-sdk$sdk-$recipe-$inputs" >> "$GITHUB_OUTPUT"
+        run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
       - id: judge
         continue-on-error: true
         uses: actions/cache/restore@v5

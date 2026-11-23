@@ -43,9 +43,43 @@ runs:
     - uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
-    - name: Build the Lean producer for the cache seed
+    - id: judge_key
       shell: bash
-      run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+      run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
+    - id: judge
+      uses: actions/cache/restore@v5
+      continue-on-error: true
+      with:
+        path: |
+          tools/StrataLint.Cli/bin/Release/net10.0
+          tools/StrataLint.Scribe/bin/Release/net10.0
+        key: ${{ steps.judge_key.outputs.key }}
+    - name: Build the judge and Lean producer
+      if: steps.judge.outputs.cache-hit != 'true'
+      shell: python
+      run: |
+        import shlex
+        import subprocess
+        from pathlib import Path
+
+        recipe = subprocess.check_output(
+            ["python3", "tools/scripts/workflow/ci_checks.py", "judge-recipe"], text=True)
+        args = shlex.split(recipe)
+        subprocess.run(["dotnet", "restore", args[0], "--locked-mode"], check=True)
+        subprocess.run(["dotnet", "build", *args, "--no-restore", "--warnaserror"], check=True)
+        for project, assembly in (("Cli", "StrataLint"), ("Scribe", "StrataLint.Scribe")):
+            output = Path(f"tools/StrataLint.{project}/bin/Release/net10.0")
+            for extension in ("dll", "runtimeconfig.json", "deps.json"):
+                if not (output / f"{assembly}.{extension}").is_file():
+                    raise SystemExit(f"Incomplete judge build in {output}")
+    - name: Publish the compiled judge for CI
+      if: steps.judge.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          tools/StrataLint.Cli/bin/Release/net10.0
+          tools/StrataLint.Scribe/bin/Release/net10.0
+        key: ${{ steps.judge_key.outputs.key }}
     - id: prepared
       if: inputs.release-seed-tag == '' && inputs.release-seed-producer == ''
       env:
