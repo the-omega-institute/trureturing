@@ -13,7 +13,7 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
             Paragraph(Text("Colours are introduced in row-major order. At the widths used in the recurrence, the exact defect count excludes constant arrays. Each counted array has six distinct labelled representatives.")),
             Node("a",Count(),false,"The five-row entry of the A229637 table counts arrays with exactly two monochromatic horizontal, diagonal or antidiagonal bonds and canonical row-major colour introduction."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
-            Node("twoDefect", TwoDefect(), false, "This entry is one exactly when a cut contains two monochromatic bonds."),
+            Node("twoDefect", TwoDefect(), false, "The definition returns 1 for a cut of cost two and 0 for every other cut."),
             Node("transfer", Transfer(), false, "The left summand has budget two. The inherited right summand has budgets one and zero."),
             Node("terminal", Terminal(), false, "An empty continuation requires a remaining budget of zero."),
             Node("coefficients641",Coefficients(),false,"The entries are ordered from the smallest shift of the recurrence to the largest."),
