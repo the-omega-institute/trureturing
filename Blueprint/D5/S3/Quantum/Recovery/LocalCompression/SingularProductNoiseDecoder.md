@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/SingularProductNoiseDec
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* The Omega Institute (2026). *Singular product reference recovery through a finite memory*. URL: <https://github.com/the-omega-institute/trureturing/pull/33561>.
+*Acknowledgement.* The Omega Institute (2026). *Singular product reference recovery through a finite memory*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/SingularProductNoiseDec
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* The Omega Institute (2026). *Singular product reference recovery through a finite memory*. URL: <https://github.com/the-omega-institute/trureturing/pull/33561>.
+*Acknowledgement.* The Omega Institute (2026). *Singular product reference recovery through a finite memory*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
