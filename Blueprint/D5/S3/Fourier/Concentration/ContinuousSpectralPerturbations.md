@@ -22,6 +22,8 @@ For a distinct pair choose a coordinate attaining L(m,n), which is positive. Fix
 
 Finite marginals give the same distribution on the support of each test. Summing the weighted indicators gives A(k) as an upper bound on expected excess. The expected normalized sum is at most C. If it exceeded C at every allowed assignment, its integral would be strictly greater than C, since the radius constraint holds almost surely. At a selected assignment every summand is nonnegative and at most the total, which is at most one.
 
+Positive radii give interval laws with nonzero length. Countability lets us impose all radius constraints almost surely and integrate the sum of test excesses. Nonnegative weights give nonnegative pair contributions. The nonnegative resolution includes the diagonal, and positive test budgets permit normalization. For two equal starting ordinates with unit radii and weights, a degree-one test at resolution two captures both ordered off-diagonal pairs for every allowed assignment. With excess budget one, C is two and the individual test fails. This computation uses direct arithmetic.
+
 The result constructs a comparison spectrum. A prescribed counting law would also need estimates on threshold crossings, and the fixed zeta ordinates require arithmetic control of their own weighted near-collisions.
 
 ## References

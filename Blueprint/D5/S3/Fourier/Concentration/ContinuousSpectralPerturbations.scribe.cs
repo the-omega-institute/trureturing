@@ -43,6 +43,15 @@ internal sealed class ContinuousSpectralPerturbationsDocument : IScribeDocumentD
                         + "since the radius constraint holds almost surely. At a selected assignment "
                         + "every summand is nonnegative and at most the total, which is at most one.")),
                     Paragraph(Text(
+                        "Positive radii give interval laws with nonzero length. Countability lets "
+                        + "us impose all radius constraints almost surely and integrate the sum of "
+                        + "test excesses. Nonnegative weights give nonnegative pair contributions. "
+                        + "The nonnegative resolution includes the diagonal, and positive test budgets "
+                        + "permit normalization. For two equal starting ordinates with unit radii and "
+                        + "weights, a degree-one test at resolution two captures both ordered "
+                        + "off-diagonal pairs for every allowed assignment. With excess budget one, "
+                        + "C is two and the individual test fails. This computation uses direct arithmetic.")),
+                    Paragraph(Text(
                         "The result constructs a comparison spectrum. A prescribed counting law would "
                         + "also need estimates on threshold crossings, and the fixed zeta ordinates "
                         + "require arithmetic control of their own weighted near-collisions."))),

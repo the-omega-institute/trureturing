@@ -6,6 +6,7 @@
    utility: none
    digest: Interval averaging bounds the near-collisions of a perturbed spectrum. -/
 
+import Mathlib.MeasureTheory.Integral.Average
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Probability.ProductMeasure
 import D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
@@ -177,22 +178,6 @@ private theorem pair_event_measure_le {J : Type*} [Fintype J] (g radius : J → 
   rw [hmax]
   exact intervalNoise_pi_affine radius a b η hradius i hi
 
-private theorem exists_within_expected_budget {Ω K : Type*} [MeasurableSpace Ω] [Countable K]
-    (μ : Measure Ω) [IsProbabilityMeasure μ] (loss : K → Ω → ℝ≥0∞)
-    (hloss : ∀ k, Measurable (loss k)) (good : Ω → Prop) (hgood : ∀ᵐ x ∂μ, good x)
-    {bound : ℝ≥0∞} (hfinite : bound ≠ ∞)
-    (hbudget : (∑' k, ∫⁻ x, loss k x ∂μ) ≤ bound) :
-    ∃ x, good x ∧ (∑' k, loss k x) ≤ bound := by
-  let total (x : Ω) := ∑' k, loss k x
-  have htotal : Measurable total := Measurable.tsum hloss
-  have hmean : (∫⁻ x, total x ∂μ) ≤ bound := by
-    exact (lintegral_tsum (fun k => (hloss k).aemeasurable)).trans_le hbudget
-  by_contra! hbad
-  have hlt : ∀ᵐ x ∂μ, bound < total x := hgood.mono hbad
-  have h := lintegral_strict_mono (f := fun _ : Ω => bound) (NeZero.ne μ)
-    htotal.aemeasurable (by simpa using hfinite) hlt
-  exact (not_lt_of_ge hmean) (by simpa using h)
-
 /-- The sum of the pairwise small-interval bounds with their multinomial weights. -/
 def excessBound {J : Type*} [Fintype J] [DecidableEq J] (w radius : J → ℝ)
     (p : ℕ) (η : ℝ) : ℝ≥0∞ :=
@@ -326,9 +311,15 @@ theorem exists_continuous_common_nearby_bounds {J K : Type*} [DecidableEq J]
     exact mul_le_mul_left
       (expected_excess_le (fun j : support k => g j) (w k) (fun j : support k => radius j)
         (hw k) (fun j => hradius j) (p k) (hη k)) _
-  obtain ⟨x, hx, hbound⟩ :=
-    exists_within_expected_budget μ loss hmeas inside hinside
-      (ne_of_lt (htotal.trans_lt ENNReal.one_lt_top)) (ENNReal.tsum_le_tsum hlocal)
+  have houtside : μ {x | ¬ inside x} = 0 := ae_iff.mp hinside
+  let total (x : J → ℝ) : ℝ≥0∞ := ∑' k : K, loss k x
+  have htotalMeas : Measurable total := Measurable.tsum hmeas
+  obtain ⟨x, hx, hle⟩ :=
+    exists_notMem_null_le_lintegral htotalMeas.aemeasurable houtside
+  have hx : inside x := by simpa using hx
+  dsimp only [total] at hle
+  rw [lintegral_tsum (fun k => (hmeas k).aemeasurable)] at hle
+  have hbound := hle.trans (ENNReal.tsum_le_tsum hlocal)
   refine ⟨fun j => g j + x j, ?_, hbound, ?_⟩
   · intro j
     rw [add_sub_cancel_left]
