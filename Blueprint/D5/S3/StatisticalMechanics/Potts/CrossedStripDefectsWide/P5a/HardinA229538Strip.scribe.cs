@@ -15,7 +15,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
             Node("transition_entry",TransitionEntry(),true,"A successor entry has the value one only for the column and residual budget produced by the cut."),
-            Node("labelled_scale",LabelledScale(),true,"At widths at least two and with fewer than three defects, each canonical array has six labelled representatives. The subscript on literalCount gives the palette size."),
+            Node("labelled_scale",LabelledScale(),true,"At width m + 1 a constant array has m times the number of edges in one cut as its defect count. At every other defect count, each canonical array has six distinct labelled representatives. A constant array has only three. The subscript on literalCount gives the palette size."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
@@ -139,8 +139,10 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var empty=Typed(Q("Finset.empty"),Call("Finset",Product(Fin(5),Fin(5))));
         var cut=CutEdges();
         var labelled=App(new Formula.Subscript(Q("DefectTransfer.literalCount"),N(3)),empty,cut,d,n);
-        return All("D",Q("Nat"),All("m",Q("Nat"),Imp(Le(N(1),m),Imp(Lt(d,N(3)),
-            Eq(labelled,Mul(N(6),Own("canonicalCount",d,n)))))));
+        var distinct = new Formula.Relation(d, FormulaRelationOperator.NotEqual,
+            Mul(m, Call("Finset.card", cut)));
+        return All("D", Q("Nat"), All("m", Q("Nat"),
+            Imp(distinct, Eq(labelled, Mul(N(6), Own("canonicalCount", d, n))))));
     }
 
     private static Formula SumOver(string n,Formula t,Formula body) =>

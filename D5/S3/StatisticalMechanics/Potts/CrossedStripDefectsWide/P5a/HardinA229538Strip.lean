@@ -19,7 +19,7 @@ transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
 transfer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result
 countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
-cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter, HardinA229538Strip.labelled_scale
+cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
 movesOne: proof_shape=bind-only; consumers=HardinA229538Strip.step_one
 moves_one_filter: proof_shape=content; consumers=HardinA229538Strip.step_one
 step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image
@@ -772,7 +772,7 @@ private theorem transfer_count (n : ℕ) :
       simp [residual, Finset.sum_ite_eq', Finset.sum_ite_eq]
     | inr s => simp [residual]
 
-theorem labelled_scale (D m : ℕ) (hm : 1 ≤ m) (hD : D < 3) :
+theorem labelled_scale (D m : ℕ) (hD : D ≠ m * edges.card) :
     literalCount (q := 3) ∅ edges D (m + 1) = 6 * canonicalCount D (m + 1) := by
   classical
   let S : (Fin 5 × Fin (m + 1) → Fin 3) → Prop := fun A =>
@@ -791,16 +791,8 @@ theorem labelled_scale (D m : ℕ) (hm : 1 ≤ m) (hD : D < 3) :
     rw [const] at h
     simp only [List.ofFn_const] at h
     rw [DefectTransfer.constant_defects] at h
-    have positive : 3 ≤ edges.card := by
-      have cut_le : cost (0 : Column) (0 : Column) ≤ edges.card := by
-        unfold cost D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.bondDefects
-        exact Finset.card_filter_le _ _
-      rw [cost_countCut] at cut_le
-      exact (show 3 ≤ countCut 0 0 by decide +kernel).trans cut_le
-    simp only [Finset.card_empty, mul_zero, zero_add] at h
-    have hx : m * edges.card = D := by simpa using h
-    have hy : 3 ≤ m * edges.card := by simpa only [Nat.one_mul] using Nat.mul_le_mul hm positive
-    exact (Nat.not_lt_of_ge (hx ▸ hy)) hD
+    simp only [Finset.card_empty, Nat.add_zero, Nat.zero_add] at h
+    exact hD h.symm
   have orbit := @canonical_pattern_card (Fin 5 × Fin (m + 1)) inferInstance
     (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
   let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 5)) (Equiv.refl (Fin 3))
@@ -830,8 +822,13 @@ theorem result (n : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
+    have hcut : 3 ≤ edges.card := by decide +kernel
+    have htotal : 3 ≤ m * edges.card := by
+      simpa only [Nat.one_mul] using Nat.mul_le_mul hm hcut
+    have hD : 1 ≠ m * edges.card :=
+      Nat.ne_of_lt ((Nat.lt_succ_of_le (Nat.le_succ 1)).trans_le htotal)
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
-      simpa only [a] using labelled_scale 1 m hm (Nat.lt_succ_of_le (Nat.le_succ 1))
+      simpa only [a] using labelled_scale 1 m hD
     rw [hscale]
     push_cast
     rfl

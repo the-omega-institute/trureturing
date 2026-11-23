@@ -915,8 +915,12 @@ theorem result (n : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
+    have hcut : 3 ≤ edges.card := by decide +kernel
+    have htotal : 3 ≤ m * edges.card := by
+      simpa only [Nat.one_mul] using Nat.mul_le_mul hm hcut
+    have hD : 2 ≠ m * edges.card := Nat.ne_of_lt ((Nat.lt_succ_self 2).trans_le htotal)
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
-      simpa only [table_count] using labelled_scale 2 m hm (Nat.lt_succ_self 2)
+      simpa only [table_count] using labelled_scale 2 m hD
     rw [hscale]
     push_cast
     rfl
