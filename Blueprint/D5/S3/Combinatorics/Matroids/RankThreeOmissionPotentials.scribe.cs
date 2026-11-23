@@ -7,33 +7,10 @@ internal sealed class RankThreeOmissionPotentialsDocument : IScribeDocumentDefin
     private const string Module = "D5/S3/Combinatorics/Matroids/RankThreeOmissionPotentials";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The integral joint lifting obstruction of a rank-three sparse-paving matroid with singleton parallel classes.",
+        "Take a finite ordered ground set of n greater than three points with singleton parallel classes. "
+        + "The bases are all triples except for m omitted triples, any two of which meet in at most one point.",
         H("Point Potentials and Cyclic Factors"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("rank-three-omission-point-potential"),
-                DeclarationHandle.Create(Module + ".IsOmissionPotential"),
-                H("Normalized point potentials"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A potential vanishes at the chosen anchor, has zero total sum, and is killed by three at every point. "
-                    + "It takes equal values at the ends of every pair in no omitted triple. Its values on each omitted triple sum to zero."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("rank-three-obstruction-matrix-kernel"),
-                DeclarationHandle.Create(Module + ".rank_three_lifting_obstruction_equiv_kernel"),
-                H("Reduced matrix for the integral obstruction"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Suppose the bases on a finite ordered ground set of size n greater than three are all triples "
-                    + "except a specified family whose distinct members meet in at most one point. "
-                    + "For singleton parallel classes and any distinct root and anchor, the integral lifting obstruction "
-                    + "is linearly equivalent over the integers to the kernel of the reduced omitted-triangle matrix modulo n. "
-                    + "Each column is an increasing pair avoiding the root and anchor. "
-                    + "The row of a triple evaluates the alternating form on two differences from the first point of the triple."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("rank-three-obstruction-torsion-count"),
                 DeclarationHandle.Create(Module + ".rank_three_lifting_obstruction_torsion_card"),
