@@ -138,7 +138,7 @@ private theorem mode_zero_iff {J : Type*} [Fintype J] [DecidableEq J] (g : J →
     rw [← hdiff]
     simp
 
-private def diagonal {J : Type*} [Fintype J] [DecidableEq J] (w : J → ℝ) (p : ℕ) : ℝ :=
+def diagonal {J : Type*} [Fintype J] [DecidableEq J] (w : J → ℝ) (p : ℕ) : ℝ :=
   ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
 
 theorem score_even_expansion {J : Type*} [Fintype J] [DecidableEq J]

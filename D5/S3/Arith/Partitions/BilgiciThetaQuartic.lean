@@ -30,11 +30,11 @@ private abbrev R := MvPolynomial (Fin 9) K
 private abbrev Word := List (Fin 9)
 private abbrev Sparse := List (Word × K)
 
-private def index (j : Fin 9) : ℤ := (j.val : ℤ) + 1
+def index (j : Fin 9) : ℤ := (j.val : ℤ) + 1
 
-private def sign (n : ℤ) : K := if n % 2 = 0 then 1 else -1
+def sign (n : ℤ) : K := if n % 2 = 0 then 1 else -1
 
-private theorem sign_add (a b : ℤ) : sign (a+b) = sign a * sign b := by
+theorem sign_add (a b : ℤ) : sign (a+b) = sign a * sign b := by
   unfold sign
   split <;> split <;> split <;> simp_all <;> omega
 
@@ -43,21 +43,21 @@ private theorem sign_succ (a : ℤ) : sign (a+1) = -sign a := by
   have h : sign 1 = -1 := by decide
   rw [h, mul_neg_one]
 
-private def digit (r : ℤ) : Fin 9 := Fin.ofNat 9 (min r (19 - r) - 1).toNat
+def digit (r : ℤ) : Fin 9 := Fin.ofNat 9 (min r (19 - r) - 1).toNat
 
 private def zTerms (x : ℤ) : Sparse :=
   if x % 19 = 0 then [] else [([digit (x % 19)], sign (x / 19))]
 
-private noncomputable def exponent : Word → (Fin 9 →₀ ℕ)
+noncomputable def exponent : Word → (Fin 9 →₀ ℕ)
   | [] => 0
   | i :: is => Finsupp.single i 1 + exponent is
 
-private noncomputable def term (t : Word × K) : R := monomial (exponent t.1) t.2
+noncomputable def term (t : Word × K) : R := monomial (exponent t.1) t.2
 
-private noncomputable def denote (p : Sparse) : R := (p.map term).sum
+noncomputable def denote (p : Sparse) : R := (p.map term).sum
 
 @[simp] private theorem denote_nil : denote [] = 0 := rfl
-@[simp] private theorem denote_cons (t : Word × K) (p : Sparse) :
+@[simp] theorem denote_cons (t : Word × K) (p : Sparse) :
     denote (t :: p) = term t + denote p := rfl
 
 private theorem exponent_append (a b : Word) :
@@ -66,7 +66,7 @@ private theorem exponent_append (a b : Word) :
   | nil => simp [exponent]
   | cons i a ih => simp [exponent, ih, add_assoc]
 
-@[simp] private theorem term_singleton (i : Fin 9) (c : K) :
+@[simp] theorem term_singleton (i : Fin 9) (c : K) :
     term ([i], c) = C c * X i := by
   simp [term, exponent, MvPolynomial.X, C_mul_monomial]
 
@@ -78,7 +78,7 @@ private theorem denote_zTerms (x : ℤ) : denote (zTerms x) = Z x := by
   unfold zTerms Z
   split <;> simp
 
-private theorem Z_mul19 (k : ℤ) : Z (19*k) = 0 := by
+theorem Z_mul19 (k : ℤ) : Z (19*k) = 0 := by
   rw [Z, ite_eq_left (by omega)]
 
 private theorem Z_shift (x : ℤ) : Z (x+19) = -Z x := by
@@ -87,7 +87,7 @@ private theorem Z_shift (x : ℤ) : Z (x+19) = -Z x := by
   rw [Z, Z, hr, hq, sign_succ]
   split <;> simp
 
-private theorem Z_reflect (x : ℤ) : Z (19-x) = Z x := by
+theorem Z_reflect (x : ℤ) : Z (19-x) = Z x := by
   by_cases h : x % 19 = 0
   · have hr : (19-x) % 19 = 0 := by omega
     simp [Z, h, hr]
@@ -101,12 +101,12 @@ private theorem Z_reflect (x : ℤ) : Z (19-x) = Z x := by
       split <;> split <;> simp_all
     rw [Z, Z, ite_eq_right h, ite_eq_right hn, hr, hq, hd, hs]
 
-private theorem Z_neg (x : ℤ) : Z (-x) = -Z x := by
+theorem Z_neg (x : ℤ) : Z (-x) = -Z x := by
   have h := Z_shift (-x)
   rw [show -x+19 = 19-x by omega, Z_reflect] at h
   rw [h, neg_neg]
 
-private theorem Z_base (i : Fin 9) : Z (index i) = X i := by
+theorem Z_base (i : Fin 9) : Z (index i) = X i := by
   have hb : 1 ≤ index i ∧ index i ≤ 9 := by unfold index; omega
   have hr : index i % 19 = index i := by omega
   have hn : index i % 19 ≠ 0 := by omega
@@ -122,16 +122,16 @@ def w (i : Fin 9) : ZMod 19 :=
   (((9 - index i) * (10 - index i) / 2 : ℤ) : K)
 
 -- The sparse computations below are connected to Mathlib by denote.
-private def sortWord (m : Word) : Word := m.insertionSort (fun i j => i ≤ j)
+def sortWord (m : Word) : Word := m.insertionSort (fun i j => i ≤ j)
 
-private theorem exponent_perm {a b : Word} (h : a.Perm b) : exponent a = exponent b := by
+theorem exponent_perm {a b : Word} (h : a.Perm b) : exponent a = exponent b := by
   induction h with
   | nil => rfl
   | cons i h ih => simp only [exponent, ih]
   | swap i j p => simp [exponent, add_left_comm]
   | trans h h' ih ih' => exact ih.trans ih'
 
-private theorem exponent_sort (m : Word) : exponent (sortWord m) = exponent m :=
+theorem exponent_sort (m : Word) : exponent (sortWord m) = exponent m :=
   exponent_perm (List.perm_insertionSort _ _)
 
 private def wordKey (m : Word) : Nat := m.foldl (fun k i => 10*k + i.val + 1) 0
@@ -146,7 +146,7 @@ private def insertTerm (m : Word) (c : K) : Sparse → Sparse
     else if wordKey m ≤ wordKey n then keep m c ((n,d) :: q)
     else (n,d) :: insertTerm m c q
 
-private def normalize (p : Sparse) : Sparse := p.foldr (fun (m,c) q => insertTerm m c q) []
+def normalize (p : Sparse) : Sparse := p.foldr (fun (m,c) q => insertTerm m c q) []
 
 private theorem denote_keep (m : Word) (c : K) (p : Sparse) :
     denote (keep m c p) = term (m,c) + denote p := by
@@ -166,7 +166,7 @@ private theorem denote_insertTerm (m : Word) (c : K) (p : Sparse) :
       · simp [insertTerm, h, hk, denote_keep]
       · simp [insertTerm, h, hk, ih, add_left_comm]
 
-private theorem denote_normalize (p : Sparse) : denote (normalize p) = denote p := by
+theorem denote_normalize (p : Sparse) : denote (normalize p) = denote p := by
   induction p with
   | nil => rfl
   | cons t p ih =>
@@ -174,19 +174,19 @@ private theorem denote_normalize (p : Sparse) : denote (normalize p) = denote p 
     change denote (insertTerm m c (normalize p)) = _
     rw [denote_insertTerm, ih, denote_cons]
 
-private theorem denote_append (p q : Sparse) : denote (p ++ q) = denote p + denote q := by
+theorem denote_append (p q : Sparse) : denote (p ++ q) = denote p + denote q := by
   simp [denote]
 
-private def timesTerm (a b : Word × K) : Word × K :=
+def timesTerm (a b : Word × K) : Word × K :=
   (sortWord (a.1 ++ b.1), a.2 * b.2)
 
-private theorem term_timesTerm (a b : Word × K) : term (timesTerm a b) = term a * term b := by
+theorem term_timesTerm (a b : Word × K) : term (timesTerm a b) = term a * term b := by
   simp [term, timesTerm, exponent_sort, exponent_append]
 
-private def rawMul (p q : Sparse) : Sparse := p.flatMap fun a => q.map (timesTerm a)
+def rawMul (p q : Sparse) : Sparse := p.flatMap fun a => q.map (timesTerm a)
 private def spMul (p q : Sparse) : Sparse := normalize (rawMul p q)
 
-private theorem denote_rawMul (p q : Sparse) : denote (rawMul p q) = denote p * denote q := by
+theorem denote_rawMul (p q : Sparse) : denote (rawMul p q) = denote p * denote q := by
   unfold rawMul
   induction p with
   | nil =>
@@ -204,19 +204,19 @@ private def scalar (c : K) : Sparse := [([], c)]
 @[simp] private theorem denote_scalar (c : K) : denote (scalar c) = C c := by
   simp [scalar, term, exponent]
 
-private def wordWeight (m : Word) : K := (m.map w).sum
+def wordWeight (m : Word) : K := (m.map w).sum
 
-private theorem exponent_weight (m : Word) : Finsupp.weight w (exponent m) = wordWeight m := by
+theorem exponent_weight (m : Word) : Finsupp.weight w (exponent m) = wordWeight m := by
   induction m with
   | nil => simp [wordWeight, exponent]
   | cons i m ih => simp [wordWeight, exponent, Finsupp.weight_single, ih]
 
-private theorem exponent_degree (m : Word) : (exponent m).degree = m.length := by
+theorem exponent_degree (m : Word) : (exponent m).degree = m.length := by
   induction m with
   | nil => simp [exponent]
   | cons i m ih => simp [exponent, ih, add_comm]
 
-private theorem denote_component (n : K) (p : Sparse) :
+theorem denote_component (n : K) (p : Sparse) :
     denote (p.filter fun t => decide (n = wordWeight t.1)) =
       weightedHomogeneousComponent w n (denote p) := by
   induction p with
@@ -236,7 +236,7 @@ private theorem Z_congr_38 {a b : ℤ} (h : a % 38 = b % 38) : Z a = Z b := by
     rw [this]
   rw [Z, Z, hr, hs]
 
-private theorem Z_remainder (x : ℤ) :
+theorem Z_remainder (x : ℤ) :
     Z x = C (sign (x/19)) * Z (x%19) := by
   have hm : (x%19) % 19 = x%19 := by omega
   have hq : (x%19) / 19 = 0 := by omega
@@ -244,10 +244,10 @@ private theorem Z_remainder (x : ℤ) :
   rw [hm, hq, show sign 0 = 1 by decide]
   split <;> simp
 
-private noncomputable def T : R →ₐ[K] R :=
+noncomputable def T : R →ₐ[K] R :=
   aeval fun i => C (sign (index i + 1)) * Z (2 * index i)
 
-private theorem T_Z_base (i : Fin 9) :
+theorem T_Z_base (i : Fin 9) :
     T (Z (index i)) = C (sign (index i + 1)) * Z (2 * index i) := by
   rw [Z_base]
   exact aeval_X _ _
@@ -279,7 +279,7 @@ private theorem T_Z_reduced (r : ℤ) (h0 : 0 ≤ r) (h19 : r < 19) :
     _ = C (sign (19-r+1)) * Z (2*(19-r)) := low _ (by omega) (by omega)
     _ = C (sign (r+1)) * Z (2*r) := by rw [hs, hz, map_neg, neg_mul_neg]
 
-private theorem T_Z (x : ℤ) : T (Z x) = C (sign (x+1)) * Z (2*x) := by
+theorem T_Z (x : ℤ) : T (Z x) = C (sign (x+1)) * Z (2*x) := by
   have hz : Z (2*(x%19)) = Z (2*x) := Z_congr_38 (by omega)
   have hs : sign (x+1) = sign (x/19 + (x%19+1)) := by
     unfold sign
@@ -316,9 +316,9 @@ private theorem T_theta (x : Indices) : T (theta x) = theta (double x) := by
 
 noncomputable def ITheta : Ideal (MvPolynomial (Fin 9) (ZMod 19)) := Ideal.span (Set.range theta)
 
-private def sparseSum {α : Type} (xs : List α) (f : α → Sparse) : Sparse := xs.flatMap f
+def sparseSum {α : Type} (xs : List α) (f : α → Sparse) : Sparse := xs.flatMap f
 
-private theorem denote_sparseSum {α : Type} (xs : List α) (f : α → Sparse) :
+theorem denote_sparseSum {α : Type} (xs : List α) (f : α → Sparse) :
     denote (sparseSum xs f) = (xs.map fun x => denote (f x)).sum := by
   induction xs with
   | nil => rfl
@@ -327,10 +327,10 @@ private theorem denote_sparseSum {α : Type} (xs : List α) (f : α → Sparse) 
     rw [denote_append, ih]
     rfl
 
-private def scale (c : K) (p : Sparse) : Sparse :=
+def scale (c : K) (p : Sparse) : Sparse :=
   p.map fun (m,d) => (m, c*d)
 
-private theorem denote_scale (c : K) (p : Sparse) : denote (scale c p) = C c * denote p := by
+theorem denote_scale (c : K) (p : Sparse) : denote (scale c p) = C c * denote p := by
   induction p with
   | nil => simp [scale]
   | cons t p ih =>
@@ -375,9 +375,9 @@ private theorem mem_paperPairs (a b : ℤ) : (a,b) ∈ paperPairs ↔ 1 ≤ a �
   simp [paperPairs, mem_paperIndices, and_assoc]
   omega
 
-private def cCoefficient (a : ℤ) : K := sign a * 2 * (a : K)
+def cCoefficient (a : ℤ) : K := sign a * 2 * (a : K)
 
-private def bCoefficient (a b : ℤ) : K :=
+def bCoefficient (a b : ℤ) : K :=
   -3 * sign (a+b) * (a : K) * (b : K) * ((b : K)^2 - (a : K)^2)
 
 private theorem paperIndices_toFinset : paperIndices.toFinset = Finset.Icc 1 9 := by
@@ -401,22 +401,22 @@ noncomputable def paperB : MvPolynomial (Fin 9) (ZMod 19) :=
   ∑ p ∈ ((Finset.Icc (1 : ℤ) 9) ×ˢ (Finset.Icc (1 : ℤ) 9)).filter (fun p => p.1 < p.2),
     C (bCoefficient p.1 p.2) * ((Z p.1 * Z p.2) * (Z (p.1 + p.2) * Z (p.2 - p.1)))
 
-private noncomputable def F11 : R :=
+noncomputable def F11 : R :=
   weightedHomogeneousComponent w (11 : K) (paperB * paperC ^ 3)
 
-private def fullC : Sparse :=
+def fullC : Sparse :=
   normalize (sparseSum paperIndices fun a => scale (cCoefficient a) (zTerms a))
 
-private def fullB : Sparse :=
+def fullB : Sparse :=
   normalize (sparseSum paperPairs fun (a,b) => scale (bCoefficient a b)
     (spMul (spMul (zTerms a) (zTerms b)) (spMul (zTerms (a+b)) (zTerms (b-a)))))
 
-private theorem denote_fullC : denote fullC = paperC := by
+theorem denote_fullC : denote fullC = paperC := by
   have h : paperIndices.Nodup := by decide
   rw [paperC, ← paperIndices_toFinset, List.sum_toFinset _ h]
   simp only [fullC, denote_normalize, denote_sparseSum, denote_scale, denote_zTerms]
 
-private theorem denote_fullB : denote fullB = paperB := by
+theorem denote_fullB : denote fullB = paperB := by
   have h : paperPairs.Nodup := by decide
   rw [paperB, ← paperPairs_toFinset, List.sum_toFinset _ h]
   simp only [fullB, denote_normalize, denote_sparseSum, denote_scale, denote_spMul, denote_zTerms]
@@ -432,7 +432,7 @@ private theorem denote_leftSparse : denote leftSparse = F11 := by
 noncomputable def S_Z : MvPolynomial (Fin 9) (ZMod 19) :=
   Z 1 * Z 7 * Z 8 - Z 2 * Z 3 * Z 5 + Z 4 * Z 6 * Z 9
 
-private noncomputable def Tpow : ℕ → R →ₐ[K] R
+noncomputable def Tpow : ℕ → R →ₐ[K] R
   | 0 => AlgHom.id K R
   | j+1 => (Tpow j).comp T
 
@@ -440,7 +440,7 @@ private def doubleIter : ℕ → Indices → Indices
   | 0, x => x
   | j+1, x => doubleIter j (double x)
 
-private theorem Tpow_theta (j : ℕ) (x : Indices) : Tpow j (theta x) = theta (doubleIter j x) := by
+theorem Tpow_theta (j : ℕ) (x : Indices) : Tpow j (theta x) = theta (doubleIter j x) := by
   induction j generalizing x with
   | zero => rfl
   | succ j ih => simpa only [Tpow, doubleIter, AlgHom.comp_apply, T_theta] using ih (double x)
@@ -457,24 +457,24 @@ private theorem denote_zOrbitTerms (j : ℕ) (x : ℤ) :
     have hc : Tpow j (C (sign (x+1))) = C (sign (x+1)) := by simp
     simp only [zOrbitTerms, denote_scale, ih, Tpow, AlgHom.comp_apply, T_Z, map_mul, hc]
 
-private noncomputable def monomialWord (digits : List ℤ) : R := (digits.map Z).prod
+noncomputable def monomialWord (digits : List ℤ) : R := (digits.map Z).prod
 
-private def orbitWordSparse (j : ℕ) : List ℤ → Sparse
+def orbitWordSparse (j : ℕ) : List ℤ → Sparse
   | [] => scalar 1
   | x :: xs => spMul (zOrbitTerms j x) (orbitWordSparse j xs)
 
-private theorem denote_orbitWordSparse (j : ℕ) (digits : List ℤ) :
+theorem denote_orbitWordSparse (j : ℕ) (digits : List ℤ) :
     denote (orbitWordSparse j digits) = Tpow j (monomialWord digits) := by
   induction digits with
   | nil => simp [orbitWordSparse, monomialWord]
   | cons x xs ih =>
     simp [orbitWordSparse, denote_spMul, denote_zOrbitTerms, ih, monomialWord]
 
-private def sSparse : Sparse :=
+def sSparse : Sparse :=
   orbitWordSparse 0 [1,7,8] ++ scale (-1) (orbitWordSparse 0 [2,3,5])
     ++ orbitWordSparse 0 [4,6,9]
 
-private theorem denote_sSparse : denote sSparse = S_Z := by
+theorem denote_sSparse : denote sSparse = S_Z := by
   simp [sSparse, S_Z, denote_append, denote_scale, denote_orbitWordSparse,
     Tpow, monomialWord, sub_eq_add_neg, mul_assoc, add_assoc]
 
@@ -540,7 +540,7 @@ private theorem denote_rightSparse (first : K) :
   simp only [rightSparse, denote_append, denote_spMul, denote_sSparse, denote_qSparse,
     denote_relationSparse]
 
-private theorem denote_grades (p : Sparse) (d : ℕ) (n : K)
+theorem denote_grades (p : Sparse) (d : ℕ) (n : K)
     (h : ∀ t ∈ p, t.1.length = d ∧ wordWeight t.1 = n) :
     (denote p).IsHomogeneous d ∧ (denote p).IsWeightedHomogeneous w n := by
   induction p with
@@ -573,7 +573,7 @@ private theorem Z_shift_multiple (u k : ℤ) :
   rw [Z, Z, hm, hd, sign_add, map_mul]
   split <;> simp [mul_assoc]
 
-private noncomputable def pair (u v : ℤ) : R := Z (u+v) * Z (u-v)
+noncomputable def pair (u v : ℤ) : R := Z (u+v) * Z (u-v)
 
 private theorem pair_shift (u v k l : ℤ) :
     pair (u+19*k) (v+19*l) = pair u v := by
@@ -593,9 +593,9 @@ private theorem pair_neg_left (u v : ℤ) : pair (-u) v = pair u v := by
 private theorem pair_neg_right (u v : ℤ) : pair u (-v) = pair u v := by
   simp [pair, sub_eq_add_neg, mul_comm]
 
-private def representative (x : ℤ) : ℤ := min (x % 19) (19 - x % 19)
+def representative (x : ℤ) : ℤ := min (x % 19) (19 - x % 19)
 
-private theorem representative_bounds (x : ℤ) :
+theorem representative_bounds (x : ℤ) :
     0 ≤ representative x ∧ representative x < 10 := by
   unfold representative
   omega
@@ -624,7 +624,7 @@ private theorem pair_reduce_right (u v : ℤ) : pair u v = pair u (representativ
         show -(v%19)+19*1 = 19-v%19 by ring] using h''
     rw [representative, min_eq_right (le_of_not_ge hl), h, h']
 
-private theorem theta_reduce (a b c d : ℤ) :
+theorem theta_reduce (a b c d : ℤ) :
     theta (a,b,c,d) =
       theta (representative a, representative b, representative c, representative d) := by
   change pair a d * pair b c - pair a c * pair b d + pair a b * pair c d = _
@@ -635,11 +635,11 @@ private theorem theta_reduce (a b c d : ℤ) :
     pair_reduce_right (representative a) b, pair_reduce_right (representative c) d]
   rfl
 
-private def tNatural (i : Fin 9) : ℕ := (9 - index i).toNat * (10 - index i).toNat / 2
+def tNatural (i : Fin 9) : ℕ := (9 - index i).toNat * (10 - index i).toNat / 2
 
-private def traceDegree (m : Word) : ℕ := (m.map tNatural).sum
+def traceDegree (m : Word) : ℕ := (m.map tNatural).sum
 
-private noncomputable def trace : R →ₐ[K] Polynomial K :=
+noncomputable def trace : R →ₐ[K] Polynomial K :=
   aeval fun i => Polynomial.X ^ tNatural i
 
 private theorem trace_term (m : Word) (c : K) :
@@ -655,10 +655,10 @@ private theorem trace_term (m : Word) (c : K) :
     rw [← Polynomial.C_mul_X_pow_eq_monomial, ← Polynomial.C_mul_X_pow_eq_monomial]
     simp [traceDegree, pow_add, mul_left_comm]
 
-private def traceCoeff (n : ℕ) (p : Sparse) : K :=
+def traceCoeff (n : ℕ) (p : Sparse) : K :=
   (p.map fun (m,c) => if traceDegree m = n then c else 0).sum
 
-private theorem trace_coeff (n : ℕ) (p : Sparse) :
+theorem trace_coeff (n : ℕ) (p : Sparse) :
     (trace (denote p)).coeff n = traceCoeff n p := by
   induction p with
   | nil => simp [traceCoeff]

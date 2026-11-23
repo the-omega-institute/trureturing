@@ -28,10 +28,23 @@ Lean statement: `D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul`
 
 For every natural n, all complex matrices m and X on Fin n and every real c, logDeriv(m,c times X) equals c times logDeriv(m,X). Here logDeriv is LogDerivTrace.logDeriv, the actual Bochner integral of the two-resolvent sandwich. The equality uses the totalized Bochner integral and does not assume positive definiteness, integrability, a sign for c or a nonzero dimension. This scaling identity serves the differential skew bound and the local second-order expansion in UmegakiFaithfulLowerRatio. The repository assembly is not a new result attributed to Audenaert's paper.
 
+**Theorem 1.3 (Matrix logarithm as a resolvent integral).**
+
+Lean statement: `D5/S3/Divergence/AudenaertBinaryHolevoBound.matrix_log_resolvent_integral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/AudenaertBinaryHolevoBound.matrix_log_resolvent_integral` (`✓ std3`). ∎
+
+*Citation.* Koenraad M. R. Audenaert (2014). *Quantum Skew Divergence*. DOI: [10.1063/1.4901039](https://doi.org/10.1063/1.4901039). URL: <https://arxiv.org/abs/1304.5935v2>.
+
+*Commentary.*
+
+For a positive definite complex matrix M, the difference of the scalar reference resolvent and the resolvent of M is Bochner integrable on the positive half-line. Its integral is the matrix logarithm of M.
+
 ## References
 
 - Truth anchor: `D5/S3/Divergence/AudenaertBinaryHolevoBound.binaryHolevoBound`
 - Truth anchor: `D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul`
+- Truth anchor: `D5/S3/Divergence/AudenaertBinaryHolevoBound.matrix_log_resolvent_integral`
 - Dependency: [D5/S3/ArithSums/TwoPointSlabSupport](../ArithSums/TwoPointSlabSupport.md)
 - Dependency: [D5/S3/Divergence/LogDerivTrace](LogDerivTrace.md)
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Quantum/Entanglement/ConicalDesignConcurrenceComparability.md)
