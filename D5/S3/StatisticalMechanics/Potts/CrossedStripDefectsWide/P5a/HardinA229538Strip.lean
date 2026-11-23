@@ -65,6 +65,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Classical
+import Init.ByCases
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
@@ -90,6 +91,7 @@ import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
+import Mathlib.Algebra.Group.Defs
 import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Action.Defs
@@ -832,9 +834,9 @@ private theorem transfer_count (n : ℕ) :
   · intro p d hd r _; exact (Nat.sub_le _ _).trans hd
   · intro p d hd s
     rw [← columnEquiv.sum_comp]
-    simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply,
-      fun q => sub_eq_zero.mp
-        (by simpa only [Nat.not_lt_of_ge hd, false_and, if_false] using transition_entry p q d s)]
+    have entry (q : Column) := transition_entry p q d s
+    simp only [Nat.not_lt_of_ge hd, false_and, if_false, sub_eq_zero] at entry
+    simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply, entry]
     simp [Finset.sum_ite_eq']
   · intro r _; exact Nat.sub_le _ _
   · intro s

@@ -54,6 +54,7 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5a.HardinA22953
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
+import Init.ByCases
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
@@ -792,8 +793,8 @@ private theorem transfer_count (n : ℕ) :
       cases x with
       | inl x => simp [col, cl, transfer, Matrix.fromBlocks, hd', bound]
       | inr x =>
-        have entry := sub_eq_zero.mp
-          (by simpa only [Nat.not_lt_of_ge hd', false_and, if_false] using transition_entry p q d x)
+        have entry := transition_entry p q d x
+        simp only [Nat.not_lt_of_ge hd', false_and, if_false, sub_eq_zero] at entry
         simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using entry
     · have hd₂ : d = 2 := Nat.le_antisymm hd (Nat.lt_of_not_ge hd')
       subst d
