@@ -26,7 +26,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓运行 `python3 tools/consumer/pin.py <release-tag>` 锁定版本与 SHA-256。稳定版本从工具仓 `main` 发布。
+工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。配对开发时，工具 PR 以主仓 `dev` 当前的 tools pin 为基准，通过工具 CI 后发布预览。主仓 PR 锁定该预览的 tag、SHA-256 与完整工具提交，通过主仓检查并先合入 `dev`，再合入对应的工具 PR。若另一主仓 PR 先改了 pin，在原工具 PR 纳入新基准、重跑 CI 并重新发布，再更新主仓 PR 的 pin。普通 feature、`dev` 预览及从工具仓 `main` 发布的稳定版本也可按需使用。命令见[贡献指南](docs/CONTRIBUTING.md#adopting-a-tools-release)。
 
 ## 1. 权威、本体与不可逆真值 DAG
 
