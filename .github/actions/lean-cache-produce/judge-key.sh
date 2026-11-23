@@ -16,5 +16,13 @@ listing="$(mktemp)"
 trap 'rm -f "$listing"' EXIT
 git ls-files -s -z -- "${inputs[@]/#/:(glob)}" > "$listing"
 [[ -s "$listing" ]] || { echo 'judge inputs select no tracked file' >&2; exit 2; }
+if [[ ${GITHUB_EVENT_NAME:-} == pull_request ]]; then
+  target="${GITHUB_BASE_REF:?missing pull request base}"
+else
+  target="${GITHUB_REF_NAME:-}"
+fi
+if [[ "$target" == integration-* ]]; then
+  printf '%s\0' "$target" >> "$listing"
+fi
 digest="$(sha256sum < "$listing" | cut -c1-64)"
 echo "key=judge-v2-${RUNNER_OS}-${RUNNER_ARCH}-sdk$sdk-$recipe-$package_location-$digest"
