@@ -244,8 +244,8 @@ def lowerRegistration :
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn",
-        "fn", "fn", "arg"]
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg",
+        "fn", "fn", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
