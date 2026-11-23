@@ -55,6 +55,24 @@ def check_audits():
             audit(name, [*math, name], [tmp, LIB], reason)
 
 
+def check_root_d5_import():
+    # Give the elaborator the existing file name and a source overlay in memory.
+    filename = Path(LEGACY.replace(".", "/") + ".lean")
+    source = (ROOT / filename).read_text()
+    at = source.index("\nimport ")
+    overlay = source[:at] + "\nimport OmegaMath.Projective" + source[at:]
+    overlay += """
+example (p q k : Omega.Nat) :
+    Omega.Ratio.Equivalent
+      (Omega.Projective.kappa (p.mul k.succ) (q.mul k.succ))
+      (Omega.Projective.kappa p q) :=
+  Omega.Projective.kappa_scale p q k
+"""
+    subprocess.run(["lake", "env", "lean", "--stdin", str(filename)], cwd=ROOT,
+                   input=overlay, text=True, check=True)
+    print(f"{LEGACY}: source overlay importing {TOPIC} passed", flush=True)
+
+
 def versions():
     modules = [*INIT, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
@@ -107,6 +125,7 @@ if __name__ == "__main__":
     initial = manifest.read_bytes()
     build()
     check_audits()
+    check_root_d5_import()
     if args.incremental:
         check_incremental()
     if manifest.read_bytes() != initial:
