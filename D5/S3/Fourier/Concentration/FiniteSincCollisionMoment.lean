@@ -7,6 +7,7 @@
    digest: Finite sinc-squared moments are controlled by weighted near-collisions. -/
 
 import D5.S3.Fourier.InfiniteSincProduct
+import D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.SpectralSampling
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Analysis.Real.Pi.Bounds
@@ -19,7 +20,11 @@ set_option autoImplicit false
 noncomputable section
 
 open Finset MeasureTheory Set
+open scoped NNReal
 open D5.S3.Fourier.InfiniteSincProduct
+open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
+open D5.S3.Fourier.Concentration.FiniteSineMissingWindow (floor_grid_cover sine_score_change)
+open D5.S3.Weil.DirichletPolynomialMeanSquare (phase)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
 
 namespace D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
@@ -169,7 +174,7 @@ private theorem regroup {I : Type*} (s : Finset I) (b : I → ℤ) (c : I → �
       rw [(mem_filter.mp hi).2, (mem_filter.mp hj).2]
 
 /-- The mass of pairs of sampled frequencies whose difference has magnitude at most `r`. -/
-def nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) : ℝ :=
+private def nearCollisionMass {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) : ℝ :=
   ∑ i ∈ s, ∑ j ∈ s, if |x i - x j| ≤ r then c i * c j else 0
 
 private theorem sinc_sq_ge_quarter {x : ℝ} (hx : |x| ≤ 1) :
@@ -183,7 +188,7 @@ private theorem sinc_sq_ge_quarter {x : ℝ} (hx : |x| ≤ 1) :
   nlinarith only [sq_nonneg (Real.sinc x - 1 / 2), hhalf]
 
 /-- A sinc-squared pair sum is comparable to the weighted collision mass at its frequency scale. -/
-theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ)
+private theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ)
     (hc : ∀ i ∈ s, 0 ≤ c i) {r : ℝ} (hr : 0 < r) :
     nearCollisionMass s x c r / 4 ≤
       (∑ i ∈ s, ∑ j ∈ s, c i * c j * Real.sinc ((x i - x j) / r) ^ 2) ∧
@@ -443,7 +448,7 @@ private theorem exists_small_grid {I K : Type*} [Fintype K] (s : Finset I) (x c 
     have hpoint := sum_le_sum (s := (univ : Finset K)) (fun k _ =>
       (doubleMean_pair_comparison s x c hc ha (center + grid k)).2)
     simp only [sum_const, card_univ, nsmul_eq_mul] at hpoint
-    exact hpoint.trans_lt (by convert hbudget using 1 <;> ring)
+    exact hpoint.trans_lt (by convert hbudget using 1; ring)
   by_contra! h
   have hlong : q ≤ intervalMean a inner := by
     apply const_le_intervalMean ha hcontinuous
@@ -454,5 +459,89 @@ private theorem exists_small_grid {I K : Type*} [Fintype K] (s : Finset I) (x c 
         continuous_finsetSum _ (fun j _ => by fun_prop)))
     · exact fun t ht => h (center + u + t) ⟨by linarith [hu.1, ht.1], by linarith [hu.2, ht.2]⟩
   exact (not_lt_of_ge hlong) hupper
+
+/-- Weighted near-collisions of degree-`p` sums of the input frequencies. -/
+def tailCollisionMass {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (p : ℕ) (r : ℝ) : ℝ :=
+  nearCollisionMass (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) r
+
+private theorem monomialWeight_nonneg {J : Type*} [Fintype J] (w : J → ℝ)
+    (hw : ∀ j, 0 ≤ w j) (m : J → ℕ) : 0 ≤ monomialWeight w m := by
+  exact mul_nonneg (Nat.cast_nonneg _) (prod_nonneg (fun j _ => pow_nonneg (hw j) _))
+
+private theorem phase_re (g t : ℝ) : (phase g t).re = Real.cos (g * t) := by
+  unfold phase
+  rw [show (g : ℂ) * Complex.I * (t : ℂ) = ((g * t : ℝ) : ℂ) * Complex.I by
+    push_cast
+    ring, Complex.exp_ofReal_mul_I_re]
+
+private theorem moment_eq_pair {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (p : ℕ) (t : ℝ) :
+    ‖complexScore g w t‖ ^ (2 * p) =
+      pairCosineScore (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) t := by
+  have hneg (n : J → ℕ) : monomialFrequency (fun j => -g j) n = -monomialFrequency g n := by
+    simp [monomialFrequency, mul_neg, sum_neg_distrib]
+  have h := congrArg Complex.re (score_even_expansion g w t p)
+  simp only [Complex.ofReal_re, Complex.re_sum, Complex.mul_re, Complex.ofReal_im, zero_mul,
+    sub_zero, phase_re, hneg, ← sub_eq_add_neg] at h
+  exact h
+
+/-- The two uniform averages at scale `L` are controlled by degree-`p` near-collisions. -/
+theorem tail_moment_comparison {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ) {L : ℝ} (hL : 0 < L) (center : ℝ) :
+    tailCollisionMass g w p (2 / L) / 4 ≤
+      doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) 0 ∧
+    doubleMean (L / 2) (fun t => ‖complexScore g w t‖ ^ (2 * p)) center ≤
+      7 * tailCollisionMass g w p (2 / L) := by
+  simp_rw [moment_eq_pair, tailCollisionMass]
+  have hscale : (L / 2)⁻¹ = 2 / L := by rw [inv_div]
+  rw [← hscale]
+  exact doubleMean_pair_comparison _ _ _ (fun m _ => monomialWeight_nonneg w hw m)
+    (by positivity) center
+
+/-- The near-collision budget guarantees a closed window with a start in a bounded open interval. -/
+theorem exists_bounded_tail_window {J : Type*} [Fintype J] [DecidableEq J]
+    (g w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (p : ℕ)
+    {L H h δ : ℝ} (hL : 0 < L) (hh : 0 < h) (hδ : 0 < δ)
+    (hbudget : 7 * ((⌊H / h⌋₊ : ℝ) + 1) * tailCollisionMass g w p (2 / L) < δ ^ (2 * p))
+    (A : ℝ) :
+    ∃ b ∈ Ioo A (A + 2 * L), ∀ t ∈ Icc b (b + H),
+      ∑ j, w j * Real.sin (g j * t) < δ + h * ∑ j, w j * |g j| := by
+  let K := Fin (⌊H / h⌋₊ + 1)
+  let grid (k : K) : ℝ := (k : ℕ) * h
+  have hcard : (Fintype.card K : ℝ) = (⌊H / h⌋₊ : ℝ) + 1 := by simp [K]
+  have hscale : (L / 2)⁻¹ = 2 / L := by rw [inv_div]
+  have hgridBudget : 7 * (Fintype.card K : ℝ) *
+      nearCollisionMass (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) (L / 2)⁻¹ <
+        δ ^ (2 * p) := by simpa only [hcard, hscale, tailCollisionMass] using hbudget
+  obtain ⟨b, hb, hsmall⟩ := exists_small_grid _ _ _ (fun m _ => monomialWeight_nonneg w hw m)
+    (by positivity) (A + L) _ grid hgridBudget
+  simp_rw [← moment_eq_pair g w p] at hsmall
+  have hgrid (k : K) : ‖complexScore g w (b + grid k)‖ < δ := by
+    by_contra! h
+    have hterm := pow_le_pow_left₀ hδ.le h (2 * p)
+    have hsum := single_le_sum (s := (univ : Finset K))
+      (fun j _ => pow_nonneg (norm_nonneg (complexScore g w (b + grid j))) (2 * p)) (mem_univ k)
+    exact (not_lt_of_ge (hterm.trans hsum)) hsmall
+  refine ⟨b, ⟨by linarith [hb.1], by linarith [hb.2]⟩, fun t ht => ?_⟩
+  have ht' : t - b ∈ Icc (0 : ℝ) H :=
+    ⟨sub_nonneg.mpr ht.1, (sub_le_iff_le_add).mpr (by linarith [ht.2])⟩
+  obtain ⟨k, hk⟩ := floor_grid_cover hh ht'
+  have hk' : |t - (b + grid k)| ≤ h := by simpa only [grid, sub_sub] using hk
+  let weight (j : J) : ℝ≥0 := ⟨w j, hw j⟩
+  have hchange := sine_score_change univ g (fun _ : J => 0) weight t (b + grid k)
+  simp only [zero_add] at hchange
+  change (∑ j, w j * Real.sin (g j * t)) -
+      (∑ j, w j * Real.sin (g j * (b + grid k))) ≤
+        (∑ j, w j * |g j|) * |t - (b + grid k)| at hchange
+  have hstep := hchange.trans (mul_le_mul_of_nonneg_left hk'
+    (sum_nonneg (fun j _ => mul_nonneg (hw j) (abs_nonneg _))))
+  have hnode : (∑ j, w j * Real.sin (g j * (b + grid k))) < δ := by
+    rw [← im_complexScore]
+    exact (Complex.im_le_norm _).trans_lt (hgrid k)
+  linarith only [hstep, hnode, mul_comm h (∑ j, w j * |g j|)]
+
+#print axioms tail_moment_comparison
+#print axioms exists_bounded_tail_window
 
 end D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
