@@ -197,6 +197,4 @@ theorem result [TopologicalSpace E] [DiscreteTopology E] :
     intro n
     exact isCompact_iff_finite.mpr (finite_coordinates h n)
 
-#print axioms result
-
 end D5.S3.ConceptDynamics.PartialIdentification.LegalGrowthCompactness
