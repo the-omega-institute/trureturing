@@ -7,6 +7,7 @@
    digest: The original BRST zero-mode product of the two literal norm-two roots. -/
 
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldCartanAction
+import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldEvenCurrent
 import D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
 
 /-!
@@ -20,6 +21,8 @@ admission_basis: escape-witness
 escape_witness: The original convolution is reduced on the two literal tensors.
 The coefficient at Laurent power minus one is evaluated in the native null
 basis, and the relative degree bound and vacuum slices detect the classes.
+The quotient bracket is then computed by comparing the actual cycles at
+opposite momenta with the zero-momentum representatives.
 -/
 
 set_option autoImplicit false
@@ -350,5 +353,140 @@ theorem positive_root_product_class :
     exact hf (congrArg (fun t : RelativeZeroMomentum.Coordinates => t.2.1) hc0)
   · rw [hc]
     exact fun h => hf (RelativeZeroMomentum.ghostOneCohomologyEquiv.symm.map_eq_zero_iff.mp h)
+
+section MomentumSum
+
+open RelativeBracket (MomentumH1 current nativeValue cycleCurrent momentumBracket
+  momentumBracket_incl bracket_mk)
+open private inclCycle inclCycle_congr from
+  D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldEvenCurrent
+open private native_cycleCurrent native_smul from
+  D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeBracket
+open private cyclesEquiv from
+  D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeZeroMomentum
+
+local notation "Momentum" => Charge hyperbolicPlane
+local notation "H" => fun p : Momentum => GradedCohomology planeFrame planeBasis p 1
+local notation "Cycles" => fun p : Momentum => GradedCycles planeFrame planeBasis p 1
+local notation "incl" => DirectSum.lof ℂ Momentum H
+
+/-- The class of the literal positive root representative in the momentum sum. -/
+def positiveRootClass : MomentumH1 := inclCycle positiveRoot (rootCycle positiveRoot root_norms.1)
+
+/-- The class of the literal negative root representative in the momentum sum. -/
+def negativeRootClass : MomentumH1 :=
+  inclCycle (-positiveRoot) (rootCycle (-positiveRoot) root_norms.2)
+
+/-- Cartan coordinates in the actual zero-momentum summand of relative cohomology. -/
+def cartanClass : (Fin 2 → ℂ) →ₗ[ℂ] MomentumH1 :=
+  (incl 0).comp RelativeZeroMomentum.ghostOneCohomologyEquiv.symm.toLinearMap
+
+private def cartanCycle (f : Fin 2 → ℂ) : Cycles 0 :=
+  cyclesEquiv 1 ⟨RelativeZeroMomentum.shellEquiv.symm (0, (f, 0)), one_mem_degree f⟩
+
+private theorem cartanClass_eq (f : Fin 2 → ℂ) :
+    cartanClass f = inclCycle 0 (cartanCycle f) := by
+  exact congrArg (incl 0) (RelativeZeroMomentum.ghostOneCohomologyEquiv_symm f)
+
+private theorem cartanCycle_native (f : Fin 2 → ℂ) :
+    nativeValue (cartanCycle f) =
+      f 0 • RelativeZeroMomentum.u 0 + f 1 • RelativeZeroMomentum.u 1 := by
+  change RelativeZeroMomentum.representative (0, (f, 0)) = _
+  rw [representative_one]
+  simp only [Fin.sum_univ_two, RelativeZeroMomentum.u, TensorProduct.tmul_add,
+    TensorProduct.add_tmul, TensorProduct.tmul_smul, TensorProduct.smul_tmul']
+
+private theorem rootCycle_native (q : Momentum) (hq : q (0 : Fin 2) * q (1 : Fin 2) = 1) :
+    nativeValue (rootCycle q hq) = psi q := reassoc.symm_apply_apply _
+
+private theorem lie_cycles {p q : Momentum} (x : Cycles p) (y : Cycles q) :
+    ⁅inclCycle p x, inclCycle q y⁆ = inclCycle (p + q) (cycleCurrent x y) := by
+  change momentumBracket (incl p (Submodule.Quotient.mk x)) (incl q (Submodule.Quotient.mk y)) =
+    incl (p + q) (Submodule.Quotient.mk (cycleCurrent x y))
+  rw [momentumBracket_incl, bracket_mk]
+
+private theorem incl_injective (q : Momentum) : Function.Injective (incl q) := by
+  classical
+  intro x y h
+  simpa only [DirectSum.component.lof_self] using
+    congrArg (fun z : MomentumH1 => DirectSum.component ℂ Momentum H q z) h
+
+private theorem inclCycle_root_ne_zero (q : Momentum) (hq : q (0 : Fin 2) * q (1 : Fin 2) = 1) :
+    inclCycle q (rootCycle q hq) ≠ 0 := by
+  intro h
+  apply root_class_ne_zero q hq
+  exact incl_injective q (h.trans ((incl q).map_zero).symm)
+
+/-- Both lifted roots and their forward bracket are nonzero. The two orders give
+the Cartan coordinates `(-1,-1)` and `(1,1)` in the original BRST Lie algebra. -/
+theorem opposite_root_lie_brackets :
+    positiveRootClass ≠ 0 ∧ negativeRootClass ≠ 0 ∧
+    ⁅positiveRootClass, negativeRootClass⁆ = cartanClass (fun _ => -1) ∧
+    ⁅negativeRootClass, positiveRootClass⁆ = cartanClass (fun _ => 1) ∧
+    ⁅positiveRootClass, negativeRootClass⁆ ≠ 0 := by
+  have hp : ⁅positiveRootClass, negativeRootClass⁆ = cartanClass (fun _ => -1) := by
+    rw [positiveRootClass, negativeRootClass, lie_cycles, cartanClass_eq]
+    apply inclCycle_congr (add_neg_cancel positiveRoot)
+    rw [native_cycleCurrent, rootCycle_native, rootCycle_native, cartanCycle_native]
+    change originalMode 0 (VirasoroBRST.ghostB matter (-1) (psi positiveRoot))
+      (psi (-positiveRoot)) = (-1 : ℂ) • RelativeZeroMomentum.u 0 +
+        (-1 : ℂ) • RelativeZeroMomentum.u 1
+    simpa only [neg_one_smul, neg_add] using opposite_root_products.1
+  have hn : ⁅negativeRootClass, positiveRootClass⁆ = cartanClass (fun _ => 1) := by
+    rw [positiveRootClass, negativeRootClass, lie_cycles, cartanClass_eq]
+    apply inclCycle_congr (neg_add_cancel positiveRoot)
+    rw [native_cycleCurrent, rootCycle_native, rootCycle_native, cartanCycle_native,
+      one_smul, one_smul]
+    exact opposite_root_products.2
+  refine ⟨inclCycle_root_ne_zero _ _, inclCycle_root_ne_zero _ _, hp, hn, ?_⟩
+  rw [hp]
+  intro hz
+  let c := RelativeZeroMomentum.ghostOneCohomologyEquiv.symm
+  change incl 0 (c (fun _ => -1)) = 0 at hz
+  have h := c.map_eq_zero_iff.mp (incl_injective 0 (hz.trans ((incl 0).map_zero).symm))
+  have h₀ := congrFun h (0 : Fin 2)
+  norm_num at h₀
+
+private theorem cartan_lie_root (f : Fin 2 → ℂ) (q : Momentum)
+    (hq : q (0 : Fin 2) * q (1 : Fin 2) = 1)
+    (c : ℂ) (hc : ∀ i : Fin 2, current (RelativeZeroMomentum.u i) (psi q) = c • psi q) :
+    ⁅cartanClass f, inclCycle q (rootCycle q hq)⁆ =
+      ((f 0 + f 1) * c) • inclCycle q (rootCycle q hq) := by
+  rw [cartanClass_eq, lie_cycles, ← (inclCycle q).map_smul]
+  apply inclCycle_congr (zero_add q)
+  rw [native_cycleCurrent, cartanCycle_native, rootCycle_native, native_smul, rootCycle_native]
+  simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, hc,
+    add_smul, mul_smul]
+
+/-- In the actual BRST Lie algebra, the positive root class, the negative of the
+opposite root class, and the Cartan class of `(1,1)` obey the normalized relations. -/
+theorem normalized_real_root_triple :
+    let e := positiveRootClass
+    let f := -negativeRootClass
+    let h := cartanClass (fun _ => 1)
+    ⁅e, f⁆ = h ∧ ⁅h, e⁆ = (2 : ℂ) • e ∧ ⁅h, f⁆ = (-2 : ℂ) • f := by
+  dsimp only
+  have hp : ⁅cartanClass (fun _ => 1), positiveRootClass⁆ = (2 : ℂ) • positiveRootClass := by
+    have h := cartan_lie_root (fun _ => 1) positiveRoot root_norms.1 1
+      (fun i => by
+        simpa only [current, LinearMap.comp_apply, one_smul] using (cartan_on_real_roots i).1)
+    norm_num at h
+    exact h
+  have hn : ⁅cartanClass (fun _ => 1), negativeRootClass⁆ = (-2 : ℂ) • negativeRootClass := by
+    unfold negativeRootClass
+    have h := cartan_lie_root (fun _ => 1) (-positiveRoot) root_norms.2 (-1)
+      (fun i => by
+        simpa only [current, LinearMap.comp_apply, neg_one_smul] using (cartan_on_real_roots i).2)
+    change _ = ((1 + 1) * (-1) : ℂ) • _ at h
+    rw [show ((1 + 1) * (-1) : ℂ) = -2 by norm_num] at h
+    exact h
+  refine ⟨?_, hp, ?_⟩
+  · rw [lie_neg, opposite_root_lie_brackets.2.2.1, ← map_neg]
+    apply congrArg cartanClass
+    funext i
+    simp
+  · rw [lie_neg, hn, smul_neg]
+
+end MomentumSum
 
 end D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RealRootBracket
