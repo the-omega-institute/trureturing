@@ -24,6 +24,10 @@ $$\operatorname{StrictMonoOn}\left(psi, [0, \frac{1}{2}]\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrderScores/QubitJensenShannonMonotonicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu-2026-qubit-order-score-monotonicity` (proved) by `D5/S3/Quantum/Measurement/OrderScores/QubitJensenShannonMonotonicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu-2026-qubit-order-score-monotonicity","declaration_gid":"D5/S3/Quantum/Measurement/OrderScores/QubitJensenShannonMonotonicity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shengjun Wu (2026). *Measurement-order dependence bounds uncertainty, contextuality, steering, and Bell nonlocality*. DOI: [10.48550/arXiv.2611.24604](https://doi.org/10.48550/arXiv.2611.24604). URL: <https://arxiv.org/abs/2611.24604v1>.
