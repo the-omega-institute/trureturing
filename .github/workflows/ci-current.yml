@@ -115,8 +115,7 @@ jobs:
           cache: false
       - id: judge_key
         run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
-      - id: nuget_cache
-        name: Restore the NuGet packages read-only
+      - name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.judge_key.outputs.packages_path }}
@@ -135,9 +134,6 @@ jobs:
           budget="$RUNNER_TEMP/current-compute-seconds"
           python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
-      - name: Restore missing runtime packages for the cached judge
-        if: steps.judge.outputs.cache-hit == 'true' && steps.nuget_cache.outputs.cache-hit != 'true'
-        run: python3 tools/scripts/workflow/ci_checks.py current prepare
       - id: prefix
         name: Check the selected source prerequisite
         env:
@@ -317,7 +313,13 @@ jobs:
         env:
           LEAN_NUM_THREADS: '1'
           CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+          NEEDS_LEAN: ${{ steps.lean_plan.outputs.needs_lean }}
+        run: |
+          if [[ "$NEEDS_LEAN" == true ]]; then
+            STRATALINT_LEAN_PRODUCER_DLL="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+            export STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
