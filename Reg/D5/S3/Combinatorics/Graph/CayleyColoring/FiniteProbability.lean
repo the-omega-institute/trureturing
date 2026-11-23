@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Graph.CayleyColoring.FiniteProbability
 
+/-! The mark and target jointly determine the ordinary-bin readout. -/
+
 open MeasureTheory ProbabilityTheory
 open CayleyFiniteLaw CayleyTreeProbability DiscardedOccupancy
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -12,13 +14,13 @@ namespace Reg.D5.S3.Combinatorics.Graph.CayleyColoring.FiniteProbability
 noncomputable section
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℕ)
     (fun p => Fin p.1 × ZMod p.2) (fun p => Option (Fin p.1))
 
 def arena : Arena where
   signature := signature
   Law R := ∀ {n k : ℕ} (hn : 0 < n) (hk : 2 ≤ k) [NeZero k] (m : ℕ),
-    (uniform (Fin m → Fin n × ZMod k)).map (fun w i => R.readout () (n, k) (w i)) =
+    (uniform (Fin m → Fin n × ZMod k)).map (fun w i => R.readout () ⟨n, k⟩ (w i)) =
       literalMeasure hn hk m
 
 def actual : Realization signature :=
@@ -42,7 +44,8 @@ private theorem discardAll_rejected : ¬ arena.Law discardAll := by
       ext w
       simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
       intro heq
-      exact Option.noConfusion (congrFun heq 0)
+      have point : (none : Option (Fin 1)) = some 0 := congrFun heq 0
+      cases point
     rw [empty_preimage, measure_empty]
   have hright : literalMeasure (by decide : 0 < 1) (by decide : 2 ≤ 2) 1 {target} ≠ 0 := by
     unfold literalMeasure
@@ -51,7 +54,8 @@ private theorem discardAll_rejected : ¬ arena.Law discardAll := by
     rw [(palette_throw_mass (by decide : 0 < 1) (by decide : 2 ≤ 2)).2 0]
     norm_num
   change _ = literalMeasure (by decide : 0 < 1) (by decide : 2 ≤ 2) 1 at equality
-  exact hright ((congrArg (fun μ : Measure (Fin 1 → Option (Fin 1)) => μ {target}) equality).symm.trans hleft)
+  have hmass := congrArg (fun μ : Measure (Fin 1 → Option (Fin 1)) => μ {target}) equality
+  exact hright (hmass.symm.trans hleft)
 
 def realization : Registration arena (type_of% (@microstate_word_law)) where
   actual := actual
@@ -62,10 +66,10 @@ def realization : Registration arena (type_of% (@microstate_word_law)) where
   dependence := by
     intro i
     cases i
-    refine ⟨(1, 2), (0, 0), (0, 1), ?_⟩
-    change bin (0, 0 : Fin 1 × ZMod 2) ≠ bin (0, 1 : Fin 1 × ZMod 2)
-    rw [(bin_some_iff (0, 0 : Fin 1 × ZMod 2) 0).2 ⟨rfl, rfl⟩,
-      (bin_none_iff (0, 1 : Fin 1 × ZMod 2)).2 (by decide)]
+    refine ⟨⟨1, 2⟩, (0, 0), (0, 1), ?_⟩
+    change bin ((0, 0) : Fin 1 × ZMod 2) ≠ bin ((0, 1) : Fin 1 × ZMod 2)
+    rw [(bin_some_iff ((0, 0) : Fin 1 × ZMod 2) 0).2 ⟨rfl, rfl⟩,
+      (bin_none_iff ((0, 1) : Fin 1 × ZMod 2)).2 (by decide)]
     exact Option.some_ne_none _
 
 def markPushforwardRegistration :
