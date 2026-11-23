@@ -85,6 +85,9 @@ exactExits_active: proof_shape=content; consumers=class_counts_canonical
 exactExits_new: proof_shape=content; consumers=class_counts_canonical
 class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
+old_exhausted_index: proof_shape=bind-only; consumers=budget_one_leading
+old_lower_left: proof_shape=bind-only; consumers=budget_one_leading
+budget_one_leading: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=count_transfer
 horizontal_cons: proof_shape=bind-only; consumers=head_weight_eq
 headWeight: proof_shape=bind-only; consumers=head_weight_eq, initial_exhausted_count, initial_from_starts, rep_weight
@@ -822,19 +825,68 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : Valid p d)
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private theorem old_exhausted_index : ∀ p : Boundary, 16 ≤ (HardinA229585StripData.cl p 0).val := by
+  decide +kernel
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private theorem old_lower_left : ∀ i : Fin 56, ∀ j : Fin 16,
+    HardinA229585StripData.T (i.natAdd 16) (j.castAdd 56) = 0 := by
+  decide +kernel
+
+private theorem budget_one_leading (p : Boundary) (s : Fin 168) (hs : s.val < 16) :
+    (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 1 ∧
+      cl (boundary r) (1 - (cross p r + bondDefects horizontal r r)) = s
+      then (1 : ℤ) else 0) = T (cl p 1) s := by
+  have he (q : Boundary) (k : ℕ) (hk : k ≤ 1) : 16 ≤ (cl q k).val := by
+    have cases : k = 0 ∨ k = 1 := by omega
+    rcases cases with rfl | rfl
+    · simp [cl, Fin.val_natAdd] <;> omega
+    · simpa [cl] using old_exhausted_index q
+  have hsum : (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 1 ∧
+      cl (boundary r) (1 - (cross p r + bondDefects horizontal r r)) = s
+      then (1 : ℤ) else 0) = 0 := by
+    apply Finset.sum_eq_zero
+    intro r _
+    rw [ite_eq_right]
+    rintro ⟨_, hr⟩
+    have h := he (boundary r) (1 - (cross p r + bondDefects horizontal r r)) (by omega)
+    rw [hr] at h
+    omega
+  rw [hsum]
+  let j : Fin 16 := ⟨s.val, hs⟩
+  have hj : ((j.castAdd 56).castAdd 96 : Fin 168) = s := Fin.ext rfl
+  let i := HardinA229585StripData.cl p 0
+  let k : Fin 56 := Fin.subNat 16 i (old_exhausted_index p)
+  have hi : k.natAdd 16 = i := Fin.natAdd_subNat_cast (old_exhausted_index p)
+  have ht : T (cl p 1) ((j.castAdd 56).castAdd 96) =
+      HardinA229585StripData.T i (j.castAdd 56) := by
+    simp only [cl, Nat.one_ne_zero, ite_false, Nat.sub_self, T, Matrix.reindex_apply,
+      Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁, i]
+  rw [← hj, ht, ← hi]
+  exact (old_lower_left k j).symm
+
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
-    (hp : Valid p d ∨ (d = 0 ∧ s.val < 72)) :
+    (hp : Valid p d ∨ (d = 0 ∧ s.val < 72) ∨ (d = 1 ∧ s.val < 16)) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧
       cl (boundary r) (d - (cross p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
-  induction s using Fin.addCases (m := 72) (n := 96) with
-  | left j => exact leading_counts p d j (hp.imp_right And.left)
-  | right j =>
-    simp_rw [exhausted_cut]
-    apply class_counts p d (hp.resolve_right ?_) j
-    simp only [Fin.val_natAdd, not_and]
-    omega
+  rcases hp with hv | hz | ho
+  · induction s using Fin.addCases (m := 72) (n := 96) with
+    | left j => exact leading_counts p d j (Or.inl hv)
+    | right j =>
+      simp_rw [exhausted_cut]
+      exact class_counts p d hv j
+  · obtain ⟨rfl, hs⟩ := hz
+    let j : Fin 72 := ⟨s.val, hs⟩
+    have hj : j.castAdd 96 = s := Fin.ext rfl
+    rw [← hj]
+    exact leading_counts p 0 j (Or.inr rfl)
+  · obtain ⟨rfl, hs⟩ := ho
+    exact budget_one_leading p s hs
 
 private theorem horizontal_cons (x : Fin 3) (p : Boundary) :
     bondDefects horizontal (Fin.cons x p) (Fin.cons x p) =

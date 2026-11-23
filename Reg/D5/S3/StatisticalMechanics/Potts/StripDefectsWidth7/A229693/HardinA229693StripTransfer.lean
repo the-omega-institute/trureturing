@@ -25,7 +25,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ i j => T i j + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ (p : Boundary) (d : ℕ), ∀ s : Fin 168, (Valid p d ∨ (d = 0 ∧ s.val < 72)) →
+  Law r := ∀ (p : Boundary) (d : ℕ), ∀ s : Fin 168, (Valid p d ∨ (d = 0 ∧ s.val < 72) ∨ (d = 1 ∧ s.val < 16)) →
     (∑ q : Row, if cross p q + bondDefects horizontal q q ≤ d ∧
       cl (boundary q) (d - (cross p q + bondDefects horizontal q q)) = s
       then (1 : ℤ) else 0) = r.readout () () (cl p d) s
