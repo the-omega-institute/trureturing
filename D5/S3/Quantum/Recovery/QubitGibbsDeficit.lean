@@ -11,6 +11,7 @@ import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
+import D5.S3.Quantum.Recovery.BKMFlagRefinementPetz
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 
@@ -30,6 +31,7 @@ open D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (joint joint_posDef cfc_joint)
 
 variable {E : Type*} [Fintype E] [DecidableEq E]
@@ -798,25 +800,18 @@ private theorem maximal_gibbs_slope (B : Fin 2 → CStarMatrix E E ℂ)
       (populations_sum τ) (fun j => (hw j).imp_right (fun hj =>
         hscore j (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hj⟩)))
 
-/-- The ordinary Petz recovery matrix for the partial trace and reference `σ`.
-On a faithful retained reference the spectral inverse square root is the ordinary inverse. -/
-def ordinaryPetzRecovery (σ : DensityState (Fin 2 × E)) (P : Matrix (Fin 2) (Fin 2) ℂ) :
-    Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
-  let S := cfc Real.sqrt (mat σ.1)
-  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
-  S * ((W * P * W) ⊗ₖ (1 : Matrix E E ℂ)) * S
-
 /-- The joint observable whose expectation is the ordinary Petz residual score. -/
 def ordinaryPetzResidual (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) :
     Matrix (Fin 2 × E) (Fin 2 × E) ℂ :=
-  let S := cfc Real.sqrt (mat σ.1)
-  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
+  let S := mpow (mat σ.1) (1 / 2)
+  let W := mpow (partialTraceRight (mat σ.1)) (-(1 / 2))
   Y - ((W * partialTraceRight (S * Y * S) * W) ⊗ₖ (1 : Matrix E E ℂ))
 
 /-- The score of a physical trial against its ordinary Petz recovery. -/
 def ordinaryPetzScore (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
     (ρ : DensityState (Fin 2 × E)) : ℝ :=
-  ((mat ρ.1 - ordinaryPetzRecovery σ (mat (retainedMarginal ρ).1)) * Y).trace.re
+  ((mat ρ.1 - BKMFlagRefinement.partialTracePetz (mat σ.1) (mat (retainedMarginal ρ).1)) *
+    Y).trace.re
 
 /-- The log-reference pencil for the ordinary Petz score, Hermitian when `Y` is Hermitian. -/
 def ordinaryPetzField (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ)
@@ -827,8 +822,8 @@ def ordinaryPetzField (σ : DensityState (Fin 2 × E)) (Y : Matrix (Fin 2 × E) 
 private theorem ordinaryPetzScore_eq_trace (σ : DensityState (Fin 2 × E))
     (Y : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (ρ : DensityState (Fin 2 × E)) :
     ordinaryPetzScore σ Y ρ = (mat ρ.1 * ordinaryPetzResidual σ Y).trace.re := by
-  let S := cfc Real.sqrt (mat σ.1)
-  let W := spectralInverseSqrt (mat (retainedMarginal σ).1)
+  let S := mpow (mat σ.1) (1 / 2)
+  let W := mpow (partialTraceRight (mat σ.1)) (-(1 / 2))
   let P := mat (retainedMarginal ρ).1
   let T := (W * P * W) ⊗ₖ (1 : Matrix E E ℂ)
   have hadj : (S * T * S * Y).trace =
@@ -850,7 +845,8 @@ private theorem ordinaryPetzScore_eq_trace (σ : DensityState (Fin 2 × E))
           _ = ((W * L * W) * P).trace := by simp only [Matrix.mul_assoc]
           _ = _ := Matrix.trace_mul_comm _ _
       _ = _ := (trace_tensor_identity _ _).symm
-  unfold ordinaryPetzScore ordinaryPetzResidual ordinaryPetzRecovery
+  unfold ordinaryPetzScore ordinaryPetzResidual BKMFlagRefinement.partialTracePetz
+    BKMFlagRefinement.lift
   simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re]
   exact congrArg (fun x => (mat ρ.1 * Y).trace.re - x.re) hadj
 

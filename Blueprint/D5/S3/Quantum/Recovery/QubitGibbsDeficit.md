@@ -63,4 +63,5 @@ The same trial gives F_s = m + (s - r) z at every s. Whenever that trial satisfi
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
 - Dependency: [D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral](../Measurement/OccupationPartialTransposeSpectral.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinement](BKMFlagRefinement.md)
+- Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinementPetz](BKMFlagRefinementPetz.md)
 - Dependency: [D5/S3/Quantum/Recovery/CanonicalPetzEquality](CanonicalPetzEquality.md)
