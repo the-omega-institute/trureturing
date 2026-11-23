@@ -118,7 +118,8 @@ jobs:
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
+      - id: nuget_cache
+        name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -139,6 +140,9 @@ jobs:
           budget="$RUNNER_TEMP/current-compute-seconds"
           python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - name: Restore missing runtime packages for the cached judge
+        if: steps.judge.outputs.cache-hit == 'true' && steps.nuget_cache.outputs.cache-hit != 'true'
+        run: python3 tools/scripts/workflow/ci_checks.py current prepare
       - id: prefix
         name: Check the selected source prerequisite
         env:
@@ -196,7 +200,8 @@ jobs:
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
+      - id: nuget_cache
+        name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -222,7 +227,7 @@ jobs:
         name: Prepare judge dependencies
         if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
         env:
-          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit == 'true' && steps.nuget_cache.outputs.cache-hit == 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current prepare
       - id: build_judge
         name: Build the judge

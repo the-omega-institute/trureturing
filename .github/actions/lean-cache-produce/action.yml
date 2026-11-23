@@ -40,9 +40,14 @@ runs:
       if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
       shell: bash
       run: python3 .github/scripts/install-tools.py
+    - id: dotnet_sdk
+      shell: bash
+      run: |
+        version="$(jq -er '.sdk.version' global.json)"
+        echo "version=$version" >> "$GITHUB_OUTPUT"
     - uses: actions/setup-dotnet@v5
       with:
-        global-json-file: global.json
+        dotnet-version: ${{ steps.dotnet_sdk.outputs.version }}
     - id: judge_key
       shell: bash
       run: bash .github/actions/lean-cache-produce/judge-key.sh >> "$GITHUB_OUTPUT"
@@ -54,10 +59,12 @@ runs:
           tools/StrataLint.Cli/bin/Release/net10.0
           tools/StrataLint.Scribe/bin/Release/net10.0
         key: ${{ steps.judge_key.outputs.key }}
-    - name: Build the judge and Lean producer
-      if: steps.judge.outputs.cache-hit != 'true'
+    - name: Prepare the judge and Lean producer
+      env:
+        JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
       shell: python
       run: |
+        import os
         import shlex
         import subprocess
         from pathlib import Path
@@ -66,7 +73,8 @@ runs:
             ["python3", "tools/scripts/workflow/ci_checks.py", "judge-recipe"], text=True)
         args = shlex.split(recipe)
         subprocess.run(["dotnet", "restore", args[0], "--locked-mode"], check=True)
-        subprocess.run(["dotnet", "build", *args, "--no-restore", "--warnaserror"], check=True)
+        if os.environ["JUDGE_HIT"] != "true":
+            subprocess.run(["dotnet", "build", *args, "--no-restore", "--warnaserror"], check=True)
         for project, assembly in (("Cli", "StrataLint"), ("Scribe", "StrataLint.Scribe")):
             output = Path(f"tools/StrataLint.{project}/bin/Release/net10.0")
             for extension in ("dll", "runtimeconfig.json", "deps.json"):
