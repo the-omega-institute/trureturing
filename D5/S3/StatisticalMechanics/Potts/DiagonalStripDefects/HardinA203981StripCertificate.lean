@@ -338,7 +338,7 @@ theorem forward_table_of_steps {s α : Type*} [Fintype s] [NonUnitalNonAssocSemi
   · intro h
     refine ⟨(h 0).symm, fun k => ?_⟩
     rw [← h k.castSucc, ← h k.succ]
-    exact (Function.iterate_succ_apply' _ _ _).symm
+    exact (Function.iterate_succ_apply' (fun w => Matrix.vecMul w t) k.val v).symm
   · rintro ⟨h0, step⟩ i
     have chain : (List.ofFn table).IsChain (fun x y => Matrix.vecMul x t = y) :=
       List.isChain_ofFn.mpr fun k hk => step ⟨k, Nat.lt_of_succ_lt_succ hk⟩
