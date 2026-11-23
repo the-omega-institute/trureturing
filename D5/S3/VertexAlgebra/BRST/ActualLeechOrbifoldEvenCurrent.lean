@@ -8,6 +8,8 @@
 
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeBracketIdentities
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.ActualLeechExtensionVertexAlgebra
+import Mathlib.Algebra.Lie.Basic
+import Mathlib.Algebra.DirectSum.Module
 
 /-! The all-state Leech Borcherds law supplies the first leg of the finite tensor shuffle. -/
 
@@ -117,5 +119,161 @@ theorem even_zero_mode (n : ℤ) (a x y : ComplexState) (ha : originalParity a =
 theorem even_current : EvenCurrentLaw := by
   intro u v w hu _
   exact even_zero_mode 0 (B u) (B v) w (even_B_of_degree_one hu)
+
+section MomentumSum
+
+open scoped DirectSum
+open LatticeGeneratingFieldLocality (Charge)
+open RelativeCohomology (GradedCycles GradedBoundaries GradedCohomology)
+open private nativeValue_injective native_add native_cycleCurrent native_degree
+  from D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeBracket
+
+local notation "Momentum" => Charge hyperbolicPlane
+local notation "H" => fun p : Momentum => GradedCohomology planeFrame planeBasis p 1
+local notation "Cycles" => fun p : Momentum => GradedCycles planeFrame planeBasis p 1
+local notation "Boundaries" => fun p : Momentum => GradedBoundaries planeFrame planeBasis p 1
+
+local instance (p : Momentum) : AddCommGroup (relativeShell p) :=
+  Submodule.addCommGroup _
+local instance (p : Momentum) (g : ℤ) :
+    AddCommGroup (GradedCycles planeFrame planeBasis p g) :=
+  Submodule.addCommGroup _
+
+/-- Relative ghost-one BRST cohomology, summed over the plane momenta. -/
+abbrev MomentumH1 := ⨁ p : Momentum, H p
+
+local notation "incl" => DirectSum.lof ℂ Momentum H
+
+/-- Bilinear extension of the native quotient bracket to the momentum direct sum. -/
+def momentumBracket : MomentumH1 →ₗ[ℂ] MomentumH1 →ₗ[ℂ] MomentumH1 :=
+  DirectSum.toModule ℂ Momentum _ fun p =>
+    (DirectSum.toModule ℂ Momentum _ fun q =>
+      ((LinearMap.llcomp ℂ (H q) (H (p + q)) MomentumH1 (incl (p + q))).comp
+        (bracket p q)).flip).flip
+
+@[simp] theorem momentumBracket_incl (p q : Momentum) (x : H p) (y : H q) :
+    momentumBracket (incl p x) (incl q y) = incl (p+q) (bracket p q x y) := by
+  simp only [momentumBracket, DirectSum.toModule_lof, LinearMap.flip_apply,
+    LinearMap.comp_apply, LinearMap.llcomp_apply]
+
+private def inclCycle (p : Momentum) : Cycles p →ₗ[ℂ] MomentumH1 :=
+  (incl p).comp (Boundaries p).mkQ
+
+private theorem inclCycle_congr {p q : Momentum} (h : p = q) (x : Cycles p) (y : Cycles q)
+    (he : nativeValue x = nativeValue y) : inclCycle p x = inclCycle q y := by
+  subst q
+  rw [nativeValue_injective _ he]
+
+private theorem inclCycle_cast {p q : Momentum} (h : p = q) (x : Cycles p) :
+    nativeValue (h ▸ x : Cycles q) = nativeValue x := by
+  subst q
+  rfl
+
+private theorem momentum_skew_incl (p q : Momentum) (x : H p) (y : H q) :
+    momentumBracket (incl p x) (incl q y) + momentumBracket (incl q y) (incl p x) = 0 := by
+  refine Submodule.Quotient.induction_on _ x fun x => ?_
+  refine Submodule.Quotient.induction_on _ y fun y => ?_
+  simp only [momentumBracket_incl, bracket_mk]
+  change inclCycle (p+q) (cycleCurrent x y) + inclCycle (q+p) (cycleCurrent y x) = 0
+  let h : q+p = p+q := add_comm q p
+  let v : Cycles (p+q) := h ▸ cycleCurrent y x
+  have hv : nativeValue v = nativeValue (cycleCurrent y x) := inclCycle_cast h _
+  rw [inclCycle_congr h _ v hv.symm, ← map_add]
+  have hz := skew_defect_class_zero odd_product_skew x y (cycleCurrent x y + v)
+    (by rw [native_add, hv, native_cycleCurrent, native_cycleCurrent])
+  change incl (p+q) (Submodule.Quotient.mk (cycleCurrent x y + v)) = 0
+  rw [hz, map_zero]
+
+private theorem momentum_leibniz_incl (p q r : Momentum) (x : H p) (y : H q) (z : H r) :
+    momentumBracket (incl p x) (momentumBracket (incl q y) (incl r z)) =
+      momentumBracket (momentumBracket (incl p x) (incl q y)) (incl r z) +
+      momentumBracket (incl q y) (momentumBracket (incl p x) (incl r z)) := by
+  refine Submodule.Quotient.induction_on _ x fun x => ?_
+  refine Submodule.Quotient.induction_on _ y fun y => ?_
+  refine Submodule.Quotient.induction_on _ z fun z => ?_
+  simp only [momentumBracket_incl, bracket_mk]
+  change inclCycle (p+(q+r)) (cycleCurrent x (cycleCurrent y z)) =
+    inclCycle ((p+q)+r) (cycleCurrent (cycleCurrent x y) z) +
+      inclCycle (q+(p+r)) (cycleCurrent y (cycleCurrent x z))
+  let h : q+(p+r) = (p+q)+r := by abel
+  let v : Cycles ((p+q)+r) := h ▸ cycleCurrent y (cycleCurrent x z)
+  have hv : nativeValue v = nativeValue (cycleCurrent y (cycleCurrent x z)) :=
+    inclCycle_cast h _
+  rw [inclCycle_congr h _ v hv.symm, ← map_add]
+  apply inclCycle_congr (add_assoc p q r).symm
+  simp only [native_add, hv, native_cycleCurrent]
+  exact current_leftLeibniz even_current _ _ _ (native_degree x) (native_degree y)
+
+private theorem momentumBracket_add_left (x y z : MomentumH1) :
+    momentumBracket (x+y) z = momentumBracket x z + momentumBracket y z :=
+  LinearMap.congr_fun (momentumBracket.map_add x y) z
+
+private theorem momentumBracket_add_right (x y z : MomentumH1) :
+    momentumBracket x (y+z) = momentumBracket x y + momentumBracket x z :=
+  (momentumBracket x).map_add y z
+
+private theorem momentum_skew_sum (x y : MomentumH1) :
+    momentumBracket x y + momentumBracket y x = 0 := by
+  induction x using DirectSum.induction_on with
+  | zero => simp
+  | of p x =>
+    change momentumBracket (incl p x) y + momentumBracket y (incl p x) = 0
+    induction y using DirectSum.induction_on with
+    | zero => simp
+    | of q y => exact momentum_skew_incl p q x y
+    | add y z hy hz =>
+      simp only [momentumBracket_add_left, momentumBracket_add_right]
+      calc
+        _ = (momentumBracket (incl p x) y + momentumBracket y (incl p x)) +
+            (momentumBracket (incl p x) z + momentumBracket z (incl p x)) := by abel
+        _ = 0 := (congrArg₂ (· + ·) hy hz).trans (zero_add 0)
+  | add x z hx hz =>
+    simp only [momentumBracket_add_left, momentumBracket_add_right]
+    calc
+      _ = (momentumBracket x y + momentumBracket y x) +
+          (momentumBracket z y + momentumBracket y z) := by abel
+      _ = 0 := (congrArg₂ (· + ·) hx hz).trans (zero_add 0)
+
+private theorem momentum_leibniz (x y z : MomentumH1) :
+    momentumBracket x (momentumBracket y z) =
+      momentumBracket (momentumBracket x y) z + momentumBracket y (momentumBracket x z) := by
+  induction x using DirectSum.induction_on with
+  | zero => simp
+  | of p x =>
+    change momentumBracket (incl p x) (momentumBracket y z) =
+      momentumBracket (momentumBracket (incl p x) y) z +
+        momentumBracket y (momentumBracket (incl p x) z)
+    induction y using DirectSum.induction_on with
+    | zero => simp
+    | of q y =>
+      change momentumBracket (incl p x) (momentumBracket (incl q y) z) =
+        momentumBracket (momentumBracket (incl p x) (incl q y)) z +
+          momentumBracket (incl q y) (momentumBracket (incl p x) z)
+      induction z using DirectSum.induction_on with
+      | zero => simp
+      | of r z => exact momentum_leibniz_incl p q r x y z
+      | add z w hz hw => simp only [momentumBracket_add_right, hz, hw]; abel
+    | add y w hy hw =>
+      simp only [momentumBracket_add_left, momentumBracket_add_right, hy, hw]
+      abel
+  | add x w hx hw =>
+    simp only [momentumBracket_add_left, momentumBracket_add_right, hx, hw]
+    abel
+
+instance momentumLieRing : LieRing MomentumH1 where
+  bracket x y := momentumBracket x y
+  add_lie := momentumBracket_add_left
+  lie_add x := (momentumBracket x).map_add
+  lie_self x := by
+    change momentumBracket x x = 0
+    calc
+      momentumBracket x x = (2 : ℂ)⁻¹ • (momentumBracket x x + momentumBracket x x) := by module
+      _ = 0 := by rw [momentum_skew_sum, smul_zero]
+  leibniz_lie := momentum_leibniz
+
+instance momentumLieAlgebra : LieAlgebra ℂ MomentumH1 where
+  lie_smul c x y := (momentumBracket x).map_smul c y
+
+end MomentumSum
 
 end D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeBracket
