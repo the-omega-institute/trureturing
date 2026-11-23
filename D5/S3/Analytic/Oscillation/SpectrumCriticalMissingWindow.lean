@@ -24,13 +24,9 @@ attribute [local instance] Classical.propDecidable
 namespace D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindow
 
 open OrdinateCounting (Spectrum)
-open SpectrumPhaseCutoff (mass sine)
+open SpectrumPhaseCutoff (mass sine mem_cut)
 open D5.S3.Fourier.Concentration.FiniteSineMissingWindow
   (exists_arbitrarily_late_missing_window sineScore)
-
-private theorem mem_cut {S : Spectrum} {X : ℝ} {j : S.index} :
-    j ∈ S.cut X ↔ S.gamma j ≤ X :=
-  (S.finite_le X).mem_toFinset
 
 /-- The mass has a positive squared-logarithmic coefficient, with error at most linear
 in the logarithm. -/
@@ -215,7 +211,6 @@ theorem eventual_critical_missing_window (S : Spectrum) (w : S.index → ℝ)
       _ = _ := by
         dsimp only [η, X]
         field_simp [(Real.exp_pos (-K)).ne', hβ.ne', (Real.rpow_pos_of_pos hTpos β).ne']
-        <;> ring
   have hbudget : V = 0 ∨
       ((⌊(Real.exp (T ^ β) / r) / (1 / T ^ 2)⌋₊ : ℝ) + 1) *
         Real.exp (-Real.log T ^ 2 / (2 * V)) < 1 := by

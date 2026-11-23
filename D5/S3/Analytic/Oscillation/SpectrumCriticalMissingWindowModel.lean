@@ -23,7 +23,7 @@ open scoped Topology BigOperators
 namespace D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
 
 open OrdinateCounting (Spectrum)
-open SpectrumPhaseCutoff (mass)
+open SpectrumPhaseCutoff (mass mem_cut)
 open SpectrumCriticalMissingWindow (HasLogSquaredMass HasSmallSquareTail)
 
 private theorem rational_scale_into {v l h : ℝ} (hv : v ≠ 0) (hl : 0 < l) (hlh : l < h) :
@@ -109,12 +109,6 @@ private abbrev modelSpectrum (g : ℕ → ℝ)
         (pow_le_pow_left₀ (hg n).1.le hn _)
     exact Nat.lt_succ_of_le ((Nat.le_floor_iff (by positivity)).mpr h)
 
-private theorem mem_model_cut {g : ℕ → ℝ}
-    {hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2}
-    {hinj : Function.Injective g} {T : ℝ} {n : ℕ} :
-    n ∈ (modelSpectrum g hg hinj).cut T ↔ g n ≤ T :=
-  ((modelSpectrum g hg hinj).finite_le T).mem_toFinset
-
 private theorem eventually_model_mass (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
     (hinj : Function.Injective g) :
@@ -128,7 +122,7 @@ private theorem eventually_model_mass (g : ℕ → ℝ)
     have hpow := ((hg i).2.2.trans_le hij').trans (hg j).2.1
     exact lt_of_not_ge fun h => (not_lt_of_ge (pow_le_pow_left₀ (hg j).1.le h 4)) hpow
   have hcut (T : ℝ) (n : ℕ) : n ∈ S.cut T ↔ g n ≤ T :=
-    mem_model_cut
+    mem_cut
   refine ⟨16, 9, by norm_num, by norm_num, ?_⟩
   filter_upwards [eventually_ge_atTop (max 1 (g 0))] with T hT
   have hT₁ : 1 ≤ T := (le_max_left _ _).trans hT
@@ -250,7 +244,7 @@ private theorem eventually_model_tail (g : ℕ → ℝ)
   have hbound (n : ℕ) (hn : n ∈ tail) : X ^ 2 ≤ 2 * ((n : ℝ) + 1) ^ (1 / 2 : ℝ) := by
     have hXn : X < g n := by
       exact lt_of_not_ge fun h =>
-        ((@Finset.mem_sdiff ℕ decEq _ _ _).mp hn).2 (mem_model_cut.mpr h)
+        ((@Finset.mem_sdiff ℕ decEq _ _ _).mp hn).2 (mem_cut.mpr h)
     have h4 : X ^ 4 ≤ 4 * ((n : ℝ) + 1) := by
       have hh := (pow_lt_pow_left₀ hXn hXpos.le (by omega : (4 : ℕ) ≠ 0)).trans (hg n).2.2
       linarith only [hh, Nat.cast_nonneg (α := ℝ) n]
