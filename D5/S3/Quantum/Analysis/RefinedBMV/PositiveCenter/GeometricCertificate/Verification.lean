@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/GeometricCertificate/Verification
+   generality: G
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact kernel verification infrastructure for the left geometric strip. -/
+
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricCertificate
 
 /-! # Exact finite positivity verification for the geometric left strip -/

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/GeometricCertificate/Band4
+   generality: G
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact kernel checks for band 4 of the left geometric strip. -/
+
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.GeometricCertificate.Verification
 
 /-! # Finite verification for one band of the left strip -/
