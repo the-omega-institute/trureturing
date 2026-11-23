@@ -17,15 +17,15 @@ newPatterns: proof_shape=content; consumers=cl_relabel, class_counts_canonical, 
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, initialExhausted.eq_1, initialExits_count, old_exhausted_counts
 exhaustedClass: proof_shape=content; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, leading_counts, old_exhausted_counts, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, terminal_eq, transition_counts, transition_counts._simp_1_1
 cl: proof_shape=content; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, count_transfer, exhausted_cut, initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, terminal_eq, transition_counts, transition_counts._simp_1_1
-exitRead: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, activeWeight, activeWeight.eq_1, exhaustedWeight
-activeExits: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, activeWeight, activeWeight.eq_1
+exitRead: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, activeWeight, activeWeight.eq_1, exhaustedWeight
+activeExits: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, activeWeight, activeWeight.eq_1
 exhaustedExits: proof_shape=content; consumers=exhaustedWeight
-activeWeight: proof_shape=content; consumers=T, T.eq_1, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
+activeWeight: proof_shape=content; consumers=T, T.eq_1, activeOneGroups, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroups, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
 exhaustedWeight: proof_shape=content; consumers=T, T.eq_1, class_counts_canonical, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, leading_counts, old_exhausted_counts
-weightPack: proof_shape=bind-only; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
+weightPack: proof_shape=bind-only; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
 weightPack_sum: proof_shape=bind-only; consumers=classPack_count
 weightPack_injective: proof_shape=bind-only; consumers=checkHistogram_count
-classPack: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
+classPack: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
 classPack_count: proof_shape=content; consumers=checkHistogram_count
 pushOld: proof_shape=bind-only; consumers=T, T.eq_1, class_counts_canonical, leading_counts, old_exhausted_counts
 T: proof_shape=content; consumers=class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
@@ -48,50 +48,34 @@ horizontalCost: proof_shape=bind-only; consumers=completionCost_initial, complet
 horizontalCost_eq: proof_shape=bind-only; consumers=initial_counts._simp_1_4, rowCost_eq
 rowCost: proof_shape=bind-only; consumers=completionCost_row, exactExits_count, rowCost_eq
 rowCost_eq: proof_shape=bind-only; consumers=exactExits_count
-matchCost: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+matchCost: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
 completionCost: proof_shape=content; consumers=completionCost_initial, completionCost_row, completionRows_count, completionRows_length_le, exactExits_count, initial_counts
 completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq, initial_counts
 completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count, initial_counts
 completionCost_row: proof_shape=content; consumers=exactExits_count
 completionCost_initial: proof_shape=content; consumers=initial_counts
-completionCodes: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
+completionCodes: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
 rowCode_cons: proof_shape=content; consumers=completionCodes_eq, rowCode_tail
 completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
 rowCode_tail: proof_shape=content; consumers=exitCodes_eq
-packedClass: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
+packedClass: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
 packedClass_all: proof_shape=content; consumers=packedClass_eq
 packedClass_eq: proof_shape=content; consumers=exitCodes_eq
-exitCodes: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
+exitCodes: proof_shape=content; consumers=activeOneGroups, activeTwoGroups, checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
 exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound, initial_counts
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
 exitCodes_bound: proof_shape=content; consumers=checkHistogram_count
-checkHistogram: proof_shape=content; consumers=activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
+checkHistogram: proof_shape=content; consumers=activeOneGroups, activeProfileCheck, activeProfileCheck.eq_1, activeTwoGroups, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
 checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new, initialExits_count
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
-activeGroups: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeProfiles, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3
+activeGroups: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeOneGroups, activeProfiles, activeTwoGroups
 activeProfiles: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeCheck, activeCover, activeCover._proof_1_1, exactExits_active
 activeCover: proof_shape=content; consumers=exactExits_active
-activeProfileCheck: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeCheck, activeOneGroup0, activeOneGroup1, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3, exactExits_active
+activeProfileCheck: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeCheck, activeOneGroups, activeTwoGroups, exactExits_active
 activeCheck: proof_shape=content; consumers=activeBudgetOne, activeBudgetTwo, activeMultiplicities
-activeOneGroup0: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup1: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup2: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup3: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup4: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup5: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup6: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup7: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup8: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup9: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup10: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup11: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup12: proof_shape=content; consumers=activeBudgetOne
-activeOneGroup13: proof_shape=content; consumers=activeBudgetOne
+activeOneGroups: proof_shape=content; consumers=activeBudgetOne
 activeBudgetOne: proof_shape=content; consumers=activeMultiplicities
-activeTwoGroup0: proof_shape=content; consumers=activeBudgetTwo
-activeTwoGroup1: proof_shape=content; consumers=activeBudgetTwo
-activeTwoGroup2: proof_shape=content; consumers=activeBudgetTwo
-activeTwoGroup3: proof_shape=content; consumers=activeBudgetTwo
+activeTwoGroups: proof_shape=content; consumers=activeBudgetTwo
 activeBudgetTwo: proof_shape=content; consumers=activeMultiplicities
 activeMultiplicities: proof_shape=bind-only; consumers=exactExits_active
 exhaustedCover: proof_shape=content; consumers=exactExits_new
@@ -776,159 +760,37 @@ private def activeProfileCheck (d : Fin 3) (entry : Fin 729 × Fin 72) : Bool :=
 private def activeCheck (d : Fin 3) : Bool :=
   (activeProfiles d).all (activeProfileCheck d)
 
--- Normalize one group of at most four histogram comparisons at a time.
+-- Each case normalizes at most four profiles with the same finite kernel check.
 set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup0 :
-    ((activeGroups 1)[0]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup1 :
-    ((activeGroups 1)[1]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup2 :
-    ((activeGroups 1)[2]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup3 :
-    ((activeGroups 1)[3]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup4 :
-    ((activeGroups 1)[4]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup5 :
-    ((activeGroups 1)[5]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup6 :
-    ((activeGroups 1)[6]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup7 :
-    ((activeGroups 1)[7]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup8 :
-    ((activeGroups 1)[8]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup9 :
-    ((activeGroups 1)[9]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup10 :
-    ((activeGroups 1)[10]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup11 :
-    ((activeGroups 1)[11]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup12 :
-    ((activeGroups 1)[12]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeOneGroup13 :
-    ((activeGroups 1)[13]!).all (activeProfileCheck 1) = true := by
-  decide_cbv
+set_option maxHeartbeats 6000000 in
+private theorem activeOneGroups (i : Fin 14) :
+    ((activeGroups 1)[i.val]!).all (activeProfileCheck 1) = true := by
+  fin_cases i <;> decide_cbv
 
 private theorem activeBudgetOne : activeCheck 1 = true := by
   unfold activeCheck activeProfiles
   rw [List.all_flatten]
-  have h : ∀ i : Fin 14,
-      (((activeGroups 1)[i.val]!).all (activeProfileCheck 1)) = true := by
-    intro i
-    fin_cases i
-    exacts [activeOneGroup0, activeOneGroup1, activeOneGroup2, activeOneGroup3, activeOneGroup4, activeOneGroup5, activeOneGroup6, activeOneGroup7, activeOneGroup8, activeOneGroup9, activeOneGroup10, activeOneGroup11, activeOneGroup12, activeOneGroup13]
   apply List.all_eq_true.mpr
   intro g hg
   obtain ⟨i, hi, rfl⟩ := List.mem_iff_getElem.mp hg
   have hlt : i < 14 := hi
-  simpa only [getElem!_pos (activeGroups 1) i hi] using h ⟨i, hlt⟩
+  simpa only [getElem!_pos (activeGroups 1) i hi] using activeOneGroups ⟨i, hlt⟩
 
--- Normalize one group of at most four histogram comparisons at a time.
+-- Each case normalizes at most four profiles with the same finite kernel check.
 set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeTwoGroup0 :
-    ((activeGroups 2)[0]!).all (activeProfileCheck 2) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeTwoGroup1 :
-    ((activeGroups 2)[1]!).all (activeProfileCheck 2) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeTwoGroup2 :
-    ((activeGroups 2)[2]!).all (activeProfileCheck 2) = true := by
-  decide_cbv
-
--- Normalize one group of at most four histogram comparisons at a time.
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 1500000 in
-private theorem activeTwoGroup3 :
-    ((activeGroups 2)[3]!).all (activeProfileCheck 2) = true := by
-  decide_cbv
+set_option maxHeartbeats 6000000 in
+private theorem activeTwoGroups (i : Fin 4) :
+    ((activeGroups 2)[i.val]!).all (activeProfileCheck 2) = true := by
+  fin_cases i <;> decide_cbv
 
 private theorem activeBudgetTwo : activeCheck 2 = true := by
   unfold activeCheck activeProfiles
   rw [List.all_flatten]
-  have h : ∀ i : Fin 4,
-      (((activeGroups 2)[i.val]!).all (activeProfileCheck 2)) = true := by
-    intro i
-    fin_cases i
-    exacts [activeTwoGroup0, activeTwoGroup1, activeTwoGroup2, activeTwoGroup3]
   apply List.all_eq_true.mpr
   intro g hg
   obtain ⟨i, hi, rfl⟩ := List.mem_iff_getElem.mp hg
   have hlt : i < 4 := hi
-  simpa only [getElem!_pos (activeGroups 2) i hi] using h ⟨i, hlt⟩
+  simpa only [getElem!_pos (activeGroups 2) i hi] using activeTwoGroups ⟨i, hlt⟩
 
 private theorem activeMultiplicities (d : Fin 3) : activeCheck d = true := by
   fin_cases d
