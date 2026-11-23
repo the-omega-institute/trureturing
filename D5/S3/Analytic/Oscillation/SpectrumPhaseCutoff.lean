@@ -35,7 +35,7 @@ def mass (T : ℝ) : ℝ :=
 def sine (T v : ℝ) : ℝ :=
   ∑ j ∈ S.cut T, w j * Real.sin (S.gamma j * v)
 
-private theorem mem_cut {S : Spectrum} {X : ℝ} {j : S.index} :
+theorem mem_cut {S : Spectrum} {X : ℝ} {j : S.index} :
     j ∈ S.cut X ↔ S.gamma j ≤ X :=
   (S.finite_le X).mem_toFinset
 

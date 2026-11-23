@@ -12,9 +12,9 @@ namespace Reg.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
 
 open _root_.D5.S3.Analytic.Oscillation.OrdinateCounting (Spectrum)
 open _root_.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindow
-  (HasLogSquaredMass HasSmallSquareTail HasLogarithmicSquareTail)
+  (HasLogSquaredMass HasSmallSquareTail)
 open _root_.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
-  (exists_infinite_critical_model exists_infinite_logarithmic_model)
+  (exists_infinite_critical_model)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -31,10 +31,10 @@ abbrev weightSignature : Signature where
 def weightActual : Realization weightSignature :=
   realize weightSignature (fun _ p j => p.2 j) (fun e => nomatch e)
 
-private def weightRejected : Realization weightSignature :=
+def weightRejected : Realization weightSignature :=
   realize weightSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-private abbrev weightArenaWithTail (tail : (S : Spectrum) → (S.index → ℝ) → Prop) : Arena where
+abbrev weightArenaWithTail (tail : (S : Spectrum) → (S.index → ℝ) → Prop) : Arena where
   signature := weightSignature
   Law V := ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
     (∀ j, 0 < V.readout () ⟨S, w⟩ j) ∧ LinearIndependent ℚ S.gamma ∧
@@ -42,7 +42,7 @@ private abbrev weightArenaWithTail (tail : (S : Spectrum) → (S.index → ℝ) 
 
 abbrev weightArena : Arena := weightArenaWithTail HasSmallSquareTail
 
-private theorem weight_rejected (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
+theorem weight_rejected (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
     ¬ (weightArenaWithTail tail).Law weightRejected := by
   rintro ⟨S, _, hInf, hw, _⟩
   obtain ⟨j⟩ : Nonempty S.index := @Infinite.nonempty _ hInf
@@ -60,13 +60,13 @@ private abbrev twoOrdinates : Spectrum where
   mult_pos _ := Nat.one_pos
   finite_le _ := Set.toFinite _
 
-private theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
+theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
   rintro ⟨⟩
   refine ⟨⟨twoOrdinates, twoOrdinates.gamma⟩, (0 : Fin 2), 1, ?_⟩
   change ((0 : ℕ) : ℝ) + 1 ≠ ((1 : ℕ) : ℝ) + 1
   norm_num
 
-private theorem weight_sensitivity (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
+theorem weight_sensitivity (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
     Sensitivity (weightArenaWithTail tail) weightActual := by
   constructor
   · intro i
@@ -118,50 +118,6 @@ def weightAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
-abbrev logarithmicWeightArena : Arena := weightArenaWithTail HasLogarithmicSquareTail
-
-def logarithmicWeightEvidence :
-    Registration logarithmicWeightArena (type_of% @exists_infinite_logarithmic_model) where
-  actual := weightActual
-  bridge := Iff.rfl
-  variation := ⟨@exists_infinite_logarithmic_model, weightRejected, weight_rejected _⟩
-  sensitivity := weight_sensitivity _
-  dependence := weight_dependence
-
-def logarithmicWeightAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@exists_infinite_logarithmic_model) (Realization weightSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel.logarithmicWeightUnit
-  realizationName :=
-    `Reg.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel.logarithmicWeightEvidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨logarithmicWeightArena⟩
-  objectArena := .source ⟨logarithmicWeightArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source logarithmicWeightArena ⟨logarithmicWeightEvidence⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize weightSignature (fun _ p j => p.2 j) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["arg", "body", "arg", "body", "arg", "fn", "arg", "body", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 #print axioms weightAudit
-#print axioms logarithmicWeightAudit
 
 end Reg.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel

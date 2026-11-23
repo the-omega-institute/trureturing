@@ -39,20 +39,6 @@ internal sealed class SpectrumCriticalMissingWindowModelDocument : IScribeDocume
                         + "X² ≤ 2(n+1)^(1/2). The square tail is therefore O(X⁻²), "
                         + "uniformly in the finite upper cutoff. "),
                         Ref("D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow"))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("exists-infinite-logarithmic-model"),
-                DeclarationHandle.Create(Owner + ".exists_infinite_logarithmic_model"),
-                H("An infinite model for the logarithmic waiting gain"),
-                StatementSource.FromAuthor(Model("HasLogarithmicSquareTail")),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Use the same rationally independent fourth-root bins and strictly "
-                    + "positive weights. Their square tail is at most B/X² for a "
-                    + "fixed B > 0 whenever X ≥ 1. Once log X ≥ 1, this is at most "
-                    + "B log X/X uniformly in T ≥ X. "),
-                    Ref("D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow"
-                        + ".eventual_logarithmic_missing_window"))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -64,7 +50,7 @@ internal sealed class SpectrumCriticalMissingWindowModelDocument : IScribeDocume
     private static Formula Bind(FormulaQuantifier quantifier, string name, Formula type, Formula body) =>
         new Formula.Bind(quantifier, FormulaIdentifier.Create(name), type, body);
 
-    private static Formula Model(string tailCondition = "HasSmallSquareTail")
+    private static Formula Model()
     {
         var s = F.Id("S");
         var w = F.Id("w");
@@ -77,6 +63,6 @@ internal sealed class SpectrumCriticalMissingWindowModelDocument : IScribeDocume
             Bind(FormulaQuantifier.Exists, "w", Seq(index, Sp, To, Sp, reals),
                 And(Call("Infinite", index), And(positive,
                     And(Call("LinearIndependent", rats, Call("gamma", s)),
-                        And(Call("HasLogSquaredMass", s, w), Call(tailCondition, s, w))))))));
+                        And(Call("HasLogSquaredMass", s, w), Call("HasSmallSquareTail", s, w))))))));
     }
 }

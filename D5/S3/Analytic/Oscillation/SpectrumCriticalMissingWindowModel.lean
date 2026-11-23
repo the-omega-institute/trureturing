@@ -23,8 +23,8 @@ open scoped Topology BigOperators
 namespace D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel
 
 open OrdinateCounting (Spectrum)
-open SpectrumPhaseCutoff (mass)
-open SpectrumCriticalMissingWindow (HasLogSquaredMass HasSmallSquareTail HasLogarithmicSquareTail)
+open SpectrumPhaseCutoff (mass mem_cut)
+open SpectrumCriticalMissingWindow (HasLogSquaredMass HasSmallSquareTail)
 
 private theorem rational_scale_into {v l h : ℝ} (hv : v ≠ 0) (hl : 0 < l) (hlh : l < h) :
     ∃ q : ℚˣ, l < q • v ∧ q • v < h := by
@@ -46,7 +46,7 @@ private theorem rational_scale_into {v l h : ℝ} (hv : v ≠ 0) (hl : 0 < l) (h
     exact ⟨-c, by simpa only [he, c, Units.val_mk0] using hlo,
       by simpa only [he, c, Units.val_mk0] using hhi⟩
 
-private theorem exists_independent_bins :
+theorem exists_independent_bins :
     ∃ g : ℕ → ℝ, LinearIndependent ℚ g ∧
       ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2 := by
   let b := Module.Free.chooseBasis ℚ ℝ
@@ -74,10 +74,10 @@ private theorem exists_independent_bins :
     rw [Real.rpow_inv_rpow (by positivity) (by norm_num : (4 : ℝ) ≠ 0)] at h
     simpa only [Real.rpow_ofNat] using h
 
-private def modelWeight (n : ℕ) : ℝ :=
+def modelWeight (n : ℕ) : ℝ :=
   Real.log ((n : ℝ) + 2) ^ 2 - Real.log ((n : ℝ) + 1) ^ 2
 
-private theorem modelWeight_pos (n : ℕ) : 0 < modelWeight n := by
+theorem modelWeight_pos (n : ℕ) : 0 < modelWeight n := by
   unfold modelWeight
   have hl := Real.log_lt_log (by positivity : 0 < (n : ℝ) + 1)
     (show (n : ℝ) + 1 < (n : ℝ) + 2 by linarith)
@@ -92,7 +92,7 @@ private theorem sum_modelWeight (n : ℕ) :
   norm_num at h
   simpa only [modelWeight, Finset.sum_sub_distrib] using h
 
-private abbrev modelSpectrum (g : ℕ → ℝ)
+abbrev modelSpectrum (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
     (hinj : Function.Injective g) : Spectrum where
   index := ℕ
@@ -109,13 +109,7 @@ private abbrev modelSpectrum (g : ℕ → ℝ)
         (pow_le_pow_left₀ (hg n).1.le hn _)
     exact Nat.lt_succ_of_le ((Nat.le_floor_iff (by positivity)).mpr h)
 
-private theorem mem_model_cut {g : ℕ → ℝ}
-    {hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2}
-    {hinj : Function.Injective g} {T : ℝ} {n : ℕ} :
-    n ∈ (modelSpectrum g hg hinj).cut T ↔ g n ≤ T :=
-  ((modelSpectrum g hg hinj).finite_le T).mem_toFinset
-
-private theorem eventually_model_mass (g : ℕ → ℝ)
+theorem eventually_model_mass (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
     (hinj : Function.Injective g) :
     HasLogSquaredMass (modelSpectrum g hg hinj) modelWeight := by
@@ -128,7 +122,7 @@ private theorem eventually_model_mass (g : ℕ → ℝ)
     have hpow := ((hg i).2.2.trans_le hij').trans (hg j).2.1
     exact lt_of_not_ge fun h => (not_lt_of_ge (pow_le_pow_left₀ (hg j).1.le h 4)) hpow
   have hcut (T : ℝ) (n : ℕ) : n ∈ S.cut T ↔ g n ≤ T :=
-    mem_model_cut
+    mem_cut
   refine ⟨16, 9, by norm_num, by norm_num, ?_⟩
   filter_upwards [eventually_ge_atTop (max 1 (g 0))] with T hT
   have hT₁ : 1 ≤ T := (le_max_left _ _).trans hT
@@ -230,7 +224,7 @@ private theorem summable_model_square :
         mul_assoc, ← Real.rpow_add hx]
       norm_num
 
-private theorem model_square_tail_bound (g : ℕ → ℝ)
+theorem model_square_tail_bound (g : ℕ → ℝ)
     (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
     (hinj : Function.Injective g) :
     let S := modelSpectrum g hg hinj
@@ -250,7 +244,7 @@ private theorem model_square_tail_bound (g : ℕ → ℝ)
   have hbound (n : ℕ) (hn : n ∈ tail) : X ^ 2 ≤ 2 * ((n : ℝ) + 1) ^ (1 / 2 : ℝ) := by
     have hXn : X < g n := by
       exact lt_of_not_ge fun h =>
-        ((@Finset.mem_sdiff ℕ decEq _ _ _).mp hn).2 (mem_model_cut.mpr h)
+        ((@Finset.mem_sdiff ℕ decEq _ _ _).mp hn).2 (mem_cut.mpr h)
     have h4 : X ^ 4 ≤ 4 * ((n : ℝ) + 1) := by
       have hh := (pow_lt_pow_left₀ hXn hXpos.le (by omega : (4 : ℕ) ≠ 0)).trans (hg n).2.2
       linarith only [hh, Nat.cast_nonneg (α := ℝ) n]
@@ -300,21 +294,6 @@ private theorem eventually_model_tail (g : ℕ → ℝ)
   exact div_le_div_of_nonneg_right
     (hBdiv.trans (le_mul_of_one_le_right hη.le hlog₂)) hXpos.le
 
-private theorem eventually_model_logarithmic_tail (g : ℕ → ℝ)
-    (hg : ∀ n, 0 < g n ∧ (n : ℝ) + 1 < g n ^ 4 ∧ g n ^ 4 < (n : ℝ) + 2)
-    (hinj : Function.Injective g) :
-    HasLogarithmicSquareTail (modelSpectrum g hg hinj) modelWeight := by
-  obtain ⟨B, hB, hbound⟩ := model_square_tail_bound g hg hinj
-  refine ⟨B, hB, ?_⟩
-  filter_upwards [Real.tendsto_log_atTop.eventually_ge_atTop (1 : ℝ),
-    eventually_ge_atTop (1 : ℝ)] with X hlog hX
-  intro T _
-  have hXpos := zero_lt_one.trans_le hX
-  refine (hbound (fun a b => Classical.propDecidable (a = b)) X T hX).trans ?_
-  rw [pow_two, ← div_div]
-  exact div_le_div_of_nonneg_right
-    ((div_le_self hB.le hX).trans (le_mul_of_one_le_right hB.le hlog)) hXpos.le
-
 /-- The endpoint hypotheses hold on an infinite spectrum with every weight strictly positive. -/
 theorem exists_infinite_critical_model :
     ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
@@ -325,18 +304,6 @@ theorem exists_infinite_critical_model :
   exact ⟨S, modelWeight, inferInstanceAs (Infinite ℕ), modelWeight_pos, hli,
     eventually_model_mass g hg hli.injective, eventually_model_tail g hg hli.injective⟩
 
-/-- The same fourth-root-bin weights realize the stronger square-tail hypothesis
-on an infinite independent spectrum. -/
-theorem exists_infinite_logarithmic_model :
-    ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
-      (∀ j, 0 < w j) ∧ LinearIndependent ℚ S.gamma ∧
-      HasLogSquaredMass S w ∧ HasLogarithmicSquareTail S w := by
-  obtain ⟨g, hli, hg⟩ := exists_independent_bins
-  let S := modelSpectrum g hg hli.injective
-  exact ⟨S, modelWeight, inferInstanceAs (Infinite ℕ), modelWeight_pos, hli,
-    eventually_model_mass g hg hli.injective, eventually_model_logarithmic_tail g hg hli.injective⟩
-
 #print axioms exists_infinite_critical_model
-#print axioms exists_infinite_logarithmic_model
 
 end D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindowModel

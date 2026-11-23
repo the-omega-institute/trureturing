@@ -54,43 +54,11 @@ The required small square tail follows from mγ = o(log γ). To see this bound i
 
 The count bound N(Y) = O(Y log Y) gives a bound O(log² X/X) for the sum of mγ log γ/γ² over γ > X. On each (2^k X, 2^(k+1) X] bound the count and logarithm by the upper endpoint and the square denominator by the lower endpoint. The resulting geometric series with a quadratic factor in k converges. Since wγ² ≤ mγ²/γ² and mγ/log γ tends to zero, the squared-weight tail is o(log² X/X) uniformly over every finite upper cutoff. The theorem therefore gives actual ζ windows with deficit strictly greater than 1 − β² + log(T)/W(T) at every point. The proof uses rational independence for the finite orbit step.
 
-**Definition 1.4 (A uniform logarithmic square-tail bound).**
-
-$$\forall S \in Spectrum,\; \forall w \in \operatorname{index}\left(S\right) \to \mathbb{R},\; \operatorname{HasLogarithmicSquareTail}\left(S, w\right) \Leftrightarrow \left(\exists C \in \mathbb{R},\; 0 < C \land \operatorname{Eventually}\left((X \mapsto \forall T \in \mathbb{R},\; X \le T \Rightarrow \sum_{j \in \operatorname{cut}\left(S, T\right) \setminus \operatorname{cut}\left(S, X\right)} \operatorname{w}\left(j\right)^{2} \le \frac{C \cdot \operatorname{log}\left(X\right)}{X}), atTop\right)\right)$$
-
-*Formalization.* `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.HasLogarithmicSquareTail` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-One positive constant bounds the squared weights on (X,T] for every finite upper cutoff T ≥ X once X is sufficiently large.
-
-**Theorem 1.5 (A logarithmic gain in the waiting exponent).**
-
-$$\forall S \in Spectrum,\; \forall w \in \operatorname{index}\left(S\right) \to \mathbb{R},\; \forall r \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \left(\left(\forall j \in \operatorname{index}\left(S\right),\; 0 \le \operatorname{w}\left(j\right)\right) \land \left(\operatorname{LinearIndependent}\left(\mathbb{Q}, \operatorname{gamma}\left(S\right)\right) \land \left(\operatorname{HasLogSquaredMass}\left(S, w\right) \land \left(\operatorname{HasLogarithmicSquareTail}\left(S, w\right) \land \left(0 < r \land \left(0 < beta \land beta < 1\right)\right)\right)\right)\right)\right) \Rightarrow \left(\exists c \in \mathbb{R},\; 0 < c \land \operatorname{Eventually}\left((T \mapsto 0 < \operatorname{mass}\left(S, w, T\right) \land \left(\forall A \in \mathbb{R},\; \exists a \in \mathbb{R},\; A < a \land \left(\forall u \in [a,a + \operatorname{exp}\left(c \cdot T^{beta} \cdot \operatorname{log}\left(T\right)\right)],\; \operatorname{sine}\left(S, w, T, \frac{u}{r}\right) < beta^{2} \cdot \operatorname{mass}\left(S, w, T\right) - \operatorname{log}\left(T\right)\right)\right)), atTop\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.eventual_logarithmic_missing_window` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Use the shifted cutoff X = exp(−K)T^β and write L = log T. The same head estimate gives β²W(T) − W(X) > 3L, and the mesh 1/T² costs less than L because the slope is at most TW(T). Nonnegative head mass gives W(T) > 0 eventually.
-
-For the square-tail constant C, put D = Cβ exp(K). Using log X = βL − K gives V ≤ DL/T^β. When V is positive, the one-node tail bound at threshold L is at most exp(−T^βL/(2D)). Choose c = 1/(4D) and E = cT^βL.
-
-In score time the interval has length exp(E)/r. The grid count is at most exp(E)(1 + 1/r)T² for T ≥ 1. Its logarithm is at most E + 2L + log(1 + 1/r) < 2E eventually. The grid count times the one-node bound is then strictly less than one. The finite theorem also allows zero variance. `D5/S3/Fourier/Concentration/FiniteSineMissingWindow.exists_arbitrarily_late_missing_window`
-
-The head, threshold and mesh allowance fit below β²W(T) − L. Rational linear independence restricts to the finite cutoff. The orbit supplies a closed score-time interval starting above A/r, and scaling by r gives the stated interval.
-
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.HasLogSquaredMass`
-- Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.HasLogarithmicSquareTail`
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.HasSmallSquareTail`
 - Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.eventual_critical_missing_window`
-- Truth anchor: `D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindow.eventual_logarithmic_missing_window`
 - Truth anchor: `D5/S3/Fourier/Concentration/FiniteSineMissingWindow.exists_arbitrarily_late_missing_window`
 - Dependency: [D5/S3/Analytic/Oscillation/SpectrumPhaseCutoff](SpectrumPhaseCutoff.md)
 - Dependency: [D5/S3/Fourier/Concentration/FiniteSineMissingWindow](../../Fourier/Concentration/FiniteSineMissingWindow.md)
