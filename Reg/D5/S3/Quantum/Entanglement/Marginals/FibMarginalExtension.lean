@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
 import Reg.Support.DependentFamily
 
-/-! Source-equivalence registration for the rank formula with adjacent overlap counts. -/
+/-! Source-equivalence registration for the positive extension criterion. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
