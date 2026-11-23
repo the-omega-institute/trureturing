@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentWickPolynomial
 
@@ -11,8 +12,7 @@ noncomputable section
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality (LatticeData)
-open _root_.D5.S3.VertexAlgebra.LatticeHalfFock (Index Oscillator)
+open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality (LatticeData Index Oscillator)
 open _root_.D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport (normalOrder)
 open _root_.D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentWickPolynomial
   (word word_coeff eval_word_eq_lowering)
