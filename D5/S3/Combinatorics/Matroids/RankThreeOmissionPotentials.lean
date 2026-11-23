@@ -12,6 +12,12 @@ import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Set.Function
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FinCases
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Ring
+
+/-! Point potentials for relations among omitted triangle rows. -/
 
 namespace D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
 
@@ -457,5 +463,56 @@ theorem potential_to_relations_bijective {I T A : Type*} [Fintype I] [Fintype T]
       ⟨c, fun i j _ => (hu.2.2.2 i j).symm⟩
     refine ⟨u, ⟨hu.1, hu.2.1, ?_⟩, funext he⟩
     simpa [hu.1] using hrest
+
+private def affineLines : Fin 12 → Fin 3 → Fin 9 :=
+  ![![0,1,2], ![0,3,6], ![0,4,8], ![0,5,7], ![1,3,8], ![1,4,7],
+    ![1,5,6], ![2,3,7], ![2,4,6], ![2,5,8], ![3,4,5], ![6,7,8]]
+
+private def affineFormula (a b : ZMod 3) : Fin 9 → ZMod 3 :=
+  ![0, b, -b, a, a + b, a - b, -a, -a + b, -a - b]
+
+private def lineConstraint (u : Fin 9 → ZMod 3) (i : Fin 12) : Prop :=
+  u (affineLines i 0) + u (affineLines i 1) + u (affineLines i 2) = 0
+
+/-- A zero-at-the-origin potential with zero sums on the twelve affine lines
+is determined by its two coordinate slopes. -/
+theorem affine_plane_potential_coordinates (u : Fin 9 → ZMod 3) :
+    (u 0 = 0 ∧ ∀ i, lineConstraint u i) ↔
+      u = affineFormula (u 3) (u 1) := by
+  have hthree : (3 : ZMod 3) = 0 := by decide
+  constructor
+  · rintro ⟨h0, h⟩
+    have h012 : u 0 + u 1 + u 2 = 0 := h 0
+    have h036 : u 0 + u 3 + u 6 = 0 := h 1
+    have h048 : u 0 + u 4 + u 8 = 0 := h 2
+    have h138 : u 1 + u 3 + u 8 = 0 := h 4
+    have h147 : u 1 + u 4 + u 7 = 0 := h 5
+    have h345 : u 3 + u 4 + u 5 = 0 := h 10
+    have h2 : u 2 = -u 1 := by linear_combination h012 - h0
+    have h6 : u 6 = -u 3 := by linear_combination h036 - h0
+    have h8 : u 8 = -u 3 - u 1 := by linear_combination h138
+    have h4 : u 4 = u 3 + u 1 := by linear_combination h048 - h138 - h0
+    have h5 : u 5 = u 3 - u 1 := by
+      linear_combination h345 - h4 - u 3 * hthree
+    have h7 : u 7 = -u 3 + u 1 := by
+      linear_combination h147 - h4 - u 1 * hthree
+    funext i
+    fin_cases i <;> first | assumption | rfl
+  · intro h
+    rw [h]
+    refine ⟨rfl, fun i => ?_⟩
+    fin_cases i <;> simp [lineConstraint, affineLines, affineFormula] <;> ring_nf <;> simp [hthree]
+
+theorem affine_plane_potential_card :
+    Nat.card {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} = 9 := by
+  classical
+  let e : {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} ≃
+      ZMod 3 × ZMod 3 :=
+    { toFun := fun u => (u.val 3, u.val 1)
+      invFun := fun s => ⟨affineFormula s.1 s.2,
+        (affine_plane_potential_coordinates _).mpr rfl⟩
+      left_inv := fun u => Subtype.ext ((affine_plane_potential_coordinates u.val).mp u.prop).symm
+      right_inv := fun _ => rfl }
+  rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_prod, ZMod.card]
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
