@@ -47,7 +47,10 @@ internal sealed class AmendolaRiffoSchmitzRefutationDocument : IScribeDocumentDe
                     Paragraph(Text(
                         "The same array refutes the printed conjecture with explicit degree-zero normalization. "
                             + "Realizability under the genuine shuffle equations remains open."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("amendola-riffo-schmitz-2026-membrane-chen-chow"),
+                    ResolutionKind.Refuted))
         ])));
 
     private static DocumentBlock[] GridDefinitions() =>

@@ -430,6 +430,10 @@ $$\neg (\forall d \in \mathbb{N}, k \in \mathbb{N},\; 2 \le d \Rightarrow (\fora
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.refute_conjecture_6_10_v1` (`✓ std3`). ∎
 
+*Resolves.* `Problems/amendola-riffo-schmitz-2026-membrane-chen-chow` (refuted) by `D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.refute_conjecture_6_10_v1`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"amendola-riffo-schmitz-2026-membrane-chen-chow","declaration_gid":"D5/S3/Analytic/MembraneSignatures/AmendolaRiffoSchmitzRefutation.refute_conjecture_6_10_v1","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Carlos Améndola; Gabriel Riffo; Leonard Schmitz (2026). *Universal Varieties for Signatures of Membranes*. DOI: [10.48550/arXiv.2610.16724](https://doi.org/10.48550/arXiv.2610.16724). URL: <https://arxiv.org/abs/2610.16724v1>.
