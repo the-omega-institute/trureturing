@@ -98,7 +98,9 @@ Postcondition: every source clause has one intended Lean counterpart or is recor
 
 ### 3. Search the library before proving
 
-Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
+Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and prefer `src/OmegaMath/` for a constructive proof. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
+
+When OmegaMath lacks a reusable definition or theorem, add it to the library and import its narrowest module from D5. For a Mathlib port, replace the module root `Mathlib` with `OmegaMath`, preserve the rest of the defining path, and prefix the upstream declaration name with `Omega.`. Place original mathematics beside the relevant topic with `Omega original.` as the first line of the module documentation. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
@@ -417,7 +419,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
-- Never deposit a first-freeze module without `admission_basis: escape-witness`; `CLAUDE.md` §3.2 owns the rule. A wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
+- Identify the applicable first-freeze admission basis in `CLAUDE.md` §3.2. For a book citation of an existing OmegaMath theorem, apply the publication rule in §3.2 and record the actual book location, the missing D5 GID and the original proof. Otherwise a wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
 
 ## What this skill does not own

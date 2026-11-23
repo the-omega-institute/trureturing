@@ -25,7 +25,7 @@ Before resuming an unsettled unit, reconcile its preregistration and comments wi
 
 Determine whether a unit has ended from its terminal or owning route's settlement evidence, not merely the issue's open/closed flag. An ended unit, including an invalid or unresolved terminal, is not resumed or solved again and receives no second terminal or altered prediction. If the result is settled but its required reporting is incomplete, finish only that reporting without duplicating an existing terminal. Continuing an ended question requires a fresh preregistration citing the old result and preserving its conclusion and boundaries.
 
-Reuse prior results first. Search repository declarations, including private ones, then pinned Mathlib, then admissible third-party Lean libraries in the order of §3.1; check literature and in-flight work for duplicates and stronger results. Compare statements, assumptions, quantifiers and actual consumers, not just names or import counts. Do not assign implementation for an already solved target or create a wrapper to count it as new work.
+Reuse prior results first. Search existing D5 declarations (including private ones) and prefer OmegaMath for reusable constructive mathematics. Place missing general results under its topic and follow the Mathlib correspondence in [the library guide](../../src/README.md). Then check pinned Mathlib, then admissible third-party Lean libraries in the order of §3.1; check literature and in-flight work for duplicates and stronger results. Compare statements, assumptions, quantifiers and actual consumers, not just names or import counts. Do not assign implementation for an already solved target or create a wrapper to count it as new work.
 
 ## 2. Generate and screen candidates
 
