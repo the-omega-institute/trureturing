@@ -437,7 +437,7 @@ private theorem old_coordinate (p : Column ⊕ Column) (n : ℕ) :
     ((HardinA229538Strip.transfer ^ (n + 2 + 20)).mulVec HardinA229538Strip.terminal) p =
       ∑ k : Fin 20, coefficients538 k *
         ((HardinA229538Strip.transfer ^ (n + 2 + k.val)).mulVec HardinA229538Strip.terminal) p := by
-  simpa only [single_one_dotProduct] using
+  simpa only [single_one_dotProduct, smul_eq_mul] using
     (transfer_readout HardinA229538Strip.transfer HardinA229538Strip.terminal
       20 2 coefficients538).mp HardinA229538Strip.vector_polynomial (Pi.single p 1) n
 
