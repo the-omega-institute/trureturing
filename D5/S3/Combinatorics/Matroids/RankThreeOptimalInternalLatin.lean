@@ -6,7 +6,7 @@
    utility: none
    digest: Optimal ternary internal triple families are described by rowwise Latin squares. -/
 
-import D5.S3.Combinatorics.Matroids.RankThreeMinimumInternalAdditions
+import D5.S3.Combinatorics.Matroids.RankThreeInternalTriplePotentials
 import D5.S3.Combinatorics.LatinEulerianDefs
 
 /-! The Latin-square coordinates of optimal internal triple families. -/
