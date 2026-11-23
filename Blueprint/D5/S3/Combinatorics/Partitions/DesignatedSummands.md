@@ -4,11 +4,11 @@
 
 The coefficient of the Euler quotient counts ordered tuples with an actual designated occurrence.
 
-For each distinct part size of multiplicity m, a marked partition carries a choice in Fin m. An ordered tuple uses a degree assignment on the component positions with total degree n. A component of degree zero is the empty partition. The local multiplicity series is 1 plus the sum of m times q to the power im for positive m, where i is the part size. Multiplying its Euler denominators gives the factor in degree 6i. Taking the product over all part sizes yields the quotient F, and coefficient convolution gives the ordered tuple count.
+For each distinct part size of multiplicity m, a marked partition carries a choice in Fin m. An ordered tuple uses a degree assignment on the component positions with total degree n. A component of degree zero is the empty partition. An index typed by a finite set ranges over its member subtype, and .1 extracts its underlying value. The local multiplicity series is 1 plus the sum of m times q to the power im for positive m, where i is the part size. Multiplying its Euler denominators gives the factor in degree 6i. Taking the product over all part sizes yields the quotient F, and coefficient convolution gives the ordered tuple count.
 
 **Definition 1.1 (euler).**
 
-$$\operatorname{euler}\left(d\right) := \left(P_{R}\right)\left(q^{d}\right)$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], \forall (d: \mathbb{N}) (hd: d \neq 0), \operatorname{euler}\left(R, d, hd\right) : \operatorname{PowerSeries}\left(R\right) := \operatorname{expand}\left(d, hd, \operatorname{pentagonalSeries}\left(R\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.euler` (`✓ std3`).
 
@@ -18,11 +18,11 @@ $$\operatorname{euler}\left(d\right) := \left(P_{R}\right)\left(q^{d}\right)$$
 
 *Commentary.*
 
-Dilate the pentagonal series over a commutative ring R by a positive natural degree d. P denotes PowerSeries.pentagonalSeries.
+Dilate the pentagonal series by substituting q to the power d for the formal indeterminate q. The formula displays the implicit ring argument R and the proof hd that d is nonzero.
 
 **Definition 1.2 (etaUnit).**
 
-$$\operatorname{etaUnit}\left(d\right) := \langle\operatorname{euler}\left(d\right), \operatorname{invOfUnit}\left(\operatorname{euler}\left(d\right), 1\right)\rangle$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], \forall (d: \mathbb{N}) (hd: d \neq 0), \operatorname{etaUnit}\left(R, d, hd\right) : \operatorname{Units}\left(\operatorname{PowerSeries}\left(R\right)\right) := \langle\operatorname{euler}\left(R, d, hd\right), \operatorname{invOfUnit}\left(\operatorname{euler}\left(R, d, hd\right), 1\right)\rangle$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.etaUnit` (`✓ std3`).
 
@@ -106,7 +106,7 @@ Dilating an Euler unit again multiplies its dilation index.
 
 **Definition 1.8 (MarkedPartition).**
 
-$$\operatorname{MarkedPartition}\left(n\right) := \Sigma_{p: \operatorname{Partition}\left(n\right)} \prod_{i: \operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right)} \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)$$
+$$\forall (n: \mathbb{N}), \operatorname{MarkedPartition}\left(n\right) : Type := \Sigma_{p: \operatorname{Partition}\left(n\right)} (i: \operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right)) \to \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedPartition` (`✓ std3`).
 
@@ -118,7 +118,7 @@ A partition of n together with one choice of actual occurrence for each part siz
 
 **Definition 1.9 (MarkedTuple).**
 
-$$\operatorname{MarkedTuple}\left(k, n\right) := \Sigma_{l: \operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right)} \prod_{i: \operatorname{range}\left(k\right)} \operatorname{MarkedPartition}\left(l.1\left(i.1\right)\right)$$
+$$\forall (k n: \mathbb{N}), \operatorname{MarkedTuple}\left(k, n\right) : Type := \Sigma_{l: \operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right)} (i: \operatorname{range}\left(k\right)) \to \operatorname{MarkedPartition}\left(l.1\left(i.1\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.MarkedTuple` (`✓ std3`).
 
@@ -130,7 +130,7 @@ An ordered tuple of k marked partitions with total size n. Each position may hav
 
 **Definition 1.10 (markedCount).**
 
-$$\operatorname{markedCount}\left(k, n\right) := \operatorname{card}\left(\operatorname{MarkedTuple}\left(k, n\right)\right)$$
+$$\forall (k n: \mathbb{N}), \operatorname{markedCount}\left(k, n\right) : \mathbb{N} := \operatorname{card}\left(\operatorname{MarkedTuple}\left(k, n\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedCount` (`✓ std3`).
 
@@ -142,7 +142,7 @@ The cardinality of the type of ordered marked tuples.
 
 **Definition 1.11 (markedPartitionFintype).**
 
-$$\operatorname{markedPartitionFintype}\left(n\right) := \operatorname{SigmaFintype}\left(\operatorname{Partition}\left(n\right), \lambda p, \operatorname{PiFintype}\left(\operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right), \lambda i, \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)\right)\right)$$
+$$\forall (n: \mathbb{N}), \operatorname{markedPartitionFintype}\left(n\right) : \operatorname{Fintype}\left(\operatorname{MarkedPartition}\left(n\right)\right) := \operatorname{SigmaFintype}\left(\operatorname{Partition}\left(n\right), \lambda (p: \operatorname{Partition}\left(n\right)), \operatorname{PiFintype}\left(\operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right), \lambda (i: \operatorname{toFinset}\left(\operatorname{parts}\left(p\right)\right)), \operatorname{Fin}\left(\operatorname{count}\left(\operatorname{parts}\left(p\right), i.1\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedPartitionFintype` (`✓ std3`).
 
@@ -156,7 +156,7 @@ The type of markings of partitions of a fixed size is finite. SigmaFintype and P
 
 **Definition 1.12 (markedTupleFintype).**
 
-$$\operatorname{markedTupleFintype}\left(k, n\right) := \operatorname{SigmaFintype}\left(\operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right), \lambda l, \operatorname{PiFintype}\left(\operatorname{range}\left(k\right), \lambda i, \operatorname{markedPartitionFintype}\left(l.1\left(i.1\right)\right)\right)\right)$$
+$$\forall (k n: \mathbb{N}), \operatorname{markedTupleFintype}\left(k, n\right) : \operatorname{Fintype}\left(\operatorname{MarkedTuple}\left(k, n\right)\right) := \operatorname{SigmaFintype}\left(\operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right), \lambda (l: \operatorname{finsuppAntidiag}\left(\operatorname{range}\left(k\right), n\right)), \operatorname{PiFintype}\left(\operatorname{range}\left(k\right), \lambda (i: \operatorname{range}\left(k\right)), \operatorname{markedPartitionFintype}\left(l.1\left(i.1\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.markedTupleFintype` (`✓ std3`).
 
@@ -170,7 +170,7 @@ There are finitely many ordered marked tuples at fixed component count and total
 
 **Definition 1.13 (F).**
 
-$$F := f_{6}\,(f_{1}\,f_{2}\,f_{3})^{-1}$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], \operatorname{F}\left(R\right) : \operatorname{PowerSeries}\left(R\right) := f_{6, R}\,\operatorname{invOfUnit}\left(f_{1, R}\,f_{2, R}\,f_{3, R}, 1\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/DesignatedSummands.F` (`✓ std3`).
 
@@ -178,7 +178,7 @@ $$F := f_{6}\,(f_{1}\,f_{2}\,f_{3})^{-1}$$
 
 *Commentary.*
 
-The Euler quotient f6 divided by f1 f2 f3 as a formal power series. Each f with index d is euler d, and the denominator is inverted as a unit of constant coefficient one.
+The Euler quotient over R. The factor f indexed by d and R is euler at degree d over R with its nonzero degree proof. invOfUnit inverts the denominator with constant coefficient one.
 
 **Theorem 1.14 (F_const).**
 

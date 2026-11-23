@@ -54,10 +54,10 @@ internal sealed class DesignatedSummandEtaDissectionDocument : IScribeDocumentDe
         var modulus = F.Id("m");
         var naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
         var target = Call("ZMod", modulus);
-        var cast = F.Seq(F.Operatorname, F.Grp(F.Id("Int"), F.Dot, F.Id("castRingHom")));
+        var cast = QualifiedCall("Int", "castRingHom", target);
         var ringHom = Call("RingHom", Series(Integers()), Series(target));
         return F.Disp(F.Seq(F.Forall, F.Sp, Typed(modulus, naturals), F.Comma, F.Sp,
-            Define(Call("reduce", modulus), ringHom, Call("map", new Formula.Apply(cast, [target])))));
+            Define(Call("reduce", modulus), ringHom, QualifiedCall("PowerSeries", "map", cast))));
     }
 
     private static Formula EFormula()
@@ -73,13 +73,13 @@ internal sealed class DesignatedSummandEtaDissectionDocument : IScribeDocumentDe
         var series = Series(Integers());
         return F.Disp(F.Seq(Define(F.Id("E"), series,
             F.Seq(Square(norm), F.Thin, F.Open, evenPart, F.Close)),
-            F.Comma, F.Quad, Define(norm, series, normQuotient)));
+            F.Comma, F.Quad, F.Sp, Define(norm, series, normQuotient)));
     }
 
     private static Formula EulerQuotient(Formula name, Formula quotient)
     {
         var ring = F.Id("R");
-        return F.Disp(F.Seq(F.Forall, F.Sp, Typed(ring, F.Id("Type")), F.Sp,
+        return F.Disp(F.Seq(F.Forall, F.Sp, Typed(ring, F.Seq(F.Id("Type"), F.Star)), F.Sp,
             F.OpenBracket, Call("CommRing", ring), F.CloseBracket, F.Comma, F.Sp,
             Define(new Formula.Apply(name, [ring]), Series(ring), quotient)));
     }
@@ -97,6 +97,8 @@ internal sealed class DesignatedSummandEtaDissectionDocument : IScribeDocumentDe
 
     private static Formula Integers() => F.Seq(F.Mathbb, F.Grp(F.Id("Z")));
     private static Formula Series(Formula coefficients) => Call("PowerSeries", coefficients);
+    private static Formula QualifiedCall(string qualifier, string name, Formula argument) =>
+        new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id(qualifier), F.Dot, F.Id(name))), [argument]);
     private static Formula Typed(Formula name, Formula type) =>
         F.Seq(F.Open, name, F.Colon, F.Sp, type, F.Close);
     private static Formula Define(Formula left, Formula type, Formula right) =>

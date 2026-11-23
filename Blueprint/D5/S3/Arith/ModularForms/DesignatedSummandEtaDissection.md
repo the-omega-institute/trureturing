@@ -8,11 +8,11 @@ The Jacobi product identities turn the parity dissection into an identity betwee
 
 Lemma 2.2 of Yaqubi and Mirzavaziri gives the prime-power Frobenius congruence. The dyadic lift uses the iterated Frobenius over ZMod 2, then raises the integral congruence to the required modulus.
 
-Write f_d for euler at degree d. Each quotient of Euler factors uses their units of constant coefficient one and is coerced back to a formal series.
+Write f indexed by d and R for the Euler factor at positive degree d over R. Each quotient uses the corresponding units of constant coefficient one and is coerced back to a formal series. The indeterminate q denotes PowerSeries.X, and substitution of its square is PowerSeries.expand at degree two.
 
 **Definition 1.1 (reduce).**
 
-$$\operatorname{reduce}\left(m, \sum_{n\ge0} a_{n}\,q^{n}\right) := \sum_{n\ge0} \overline{a_{n}}_{m}\,q^{n}$$
+$$\forall (m: \mathbb{N}), \operatorname{reduce}\left(m\right) : \operatorname{RingHom}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{PowerSeries}\left(\operatorname{ZMod}\left(m\right)\right)\right) := \operatorname{PowerSeries.map}\left(\operatorname{Int.castRingHom}\left(\operatorname{ZMod}\left(m\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.reduce` (`✓ std3`).
 
@@ -22,7 +22,7 @@ $$\operatorname{reduce}\left(m, \sum_{n\ge0} a_{n}\,q^{n}\right) := \sum_{n\ge0}
 
 *Commentary.*
 
-Reduce every integer coefficient modulo the given natural modulus.
+For every natural m, apply the canonical integer ring homomorphism into ZMod m to each coefficient of the input integral formal power series. At m = 0, ZMod 0 is the integer ring and the map preserves every coefficient.
 
 **Theorem 1.2 (coeff_reduce_eq_zero).**
 
@@ -82,7 +82,7 @@ For every integral formal series p(q) and natural j, r and t, the coefficientwis
 
 **Definition 1.6 (H).**
 
-$$H := \frac{f_{1}f_{2}f_{3}}{f_{6}}$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], H\left(R\right) : \operatorname{PowerSeries}\left(R\right) := \frac{f_{1, R}f_{2, R}f_{3, R}}{f_{6, R}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H` (`✓ std3`).
 
@@ -96,7 +96,7 @@ The inverse unit of the generating series F.
 
 **Definition 1.7 (H0).**
 
-$$H_{0} := \frac{\left(f_{1}\right)^{2}\left(f_{4}\right)^{2}\left(f_{6}\right)^{4}}{\left(f_{2}\right)^{2}\left(f_{3}\right)^{2}\left(f_{12}\right)^{2}}$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], \left(H_{0}\right)\left(R\right) : \operatorname{PowerSeries}\left(R\right) := \frac{\left(f_{1, R}\right)^{2}\left(f_{4, R}\right)^{2}\left(f_{6, R}\right)^{4}}{\left(f_{2, R}\right)^{2}\left(f_{3, R}\right)^{2}\left(f_{12, R}\right)^{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H0` (`✓ std3`).
 
@@ -110,7 +110,7 @@ The Euler quotient f1^2 f4^2 f6^4 divided by f2^2 f3^2 f12^2, whose degree doubl
 
 **Definition 1.8 (T).**
 
-$$T := \frac{\left(f_{1}\right)^{4}\left(f_{6}\right)^{2}}{\left(f_{2}\right)^{2}\left(f_{3}\right)^{2}}$$
+$$\forall (R: Type*) [\operatorname{CommRing}\left(R\right)], T\left(R\right) : \operatorname{PowerSeries}\left(R\right) := \frac{\left(f_{1, R}\right)^{4}\left(f_{6, R}\right)^{2}}{\left(f_{2, R}\right)^{2}\left(f_{3, R}\right)^{2}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.T` (`✓ std3`).
 
@@ -166,7 +166,7 @@ The integral coefficient of H in degree 4n+3 vanishes for every natural n.
 
 **Definition 1.12 (E).**
 
-$$\operatorname{E}\left(q\right) := \operatorname{N}\left(q\right)^{2}\,(\left(H_{0}\right)\left(q\right)^{2} + q\,\operatorname{T}\left(q^{2}\right)^{2}),\quad\operatorname{N}\left(q\right) := \frac{f_{2}f_{6}}{\left(f_{1}\right)^{5}f_{3}}$$
+$$E : \operatorname{PowerSeries}\left(\mathbb{Z}\right) := N^{2}\,(\left(H_{0}\right)\left(\mathbb{Z}\right)^{2} + q\,\operatorname{T}\left(\mathbb{Z}\right)\left(q^{2}\right)^{2}),\quad N : \operatorname{PowerSeries}\left(\mathbb{Z}\right) := \frac{f_{2, \mathbb{Z}}f_{6, \mathbb{Z}}}{\left(f_{1, \mathbb{Z}}\right)^{5}f_{3, \mathbb{Z}}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.E` (`✓ std3`).
 
@@ -180,7 +180,7 @@ The integral series such that E(q²) is the even part of F(q) squared. Here N is
 
 **Definition 1.13 (W).**
 
-$$W := \frac{\left(f_{2}\right)^{4}\left(f_{6}\right)^{4}}{\left(f_{1}\right)^{8}\left(f_{3}\right)^{4}}$$
+$$W : \operatorname{PowerSeries}\left(\mathbb{Z}\right) := \frac{\left(f_{2, \mathbb{Z}}\right)^{4}\left(f_{6, \mathbb{Z}}\right)^{4}}{\left(f_{1, \mathbb{Z}}\right)^{8}\left(f_{3, \mathbb{Z}}\right)^{4}}$$
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W` (`✓ std3`).
 

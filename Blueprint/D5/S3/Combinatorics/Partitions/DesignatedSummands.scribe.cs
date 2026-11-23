@@ -12,7 +12,7 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
         "The coefficient of the Euler quotient counts ordered tuples with an actual designated occurrence.",
         H("Ordered tuples with designated summands"),
         Blocks(
-            Paragraph(Text("For each distinct part size of multiplicity m, a marked partition carries a choice in Fin m. An ordered tuple uses a degree assignment on the component positions with total degree n. A component of degree zero is the empty partition. The local multiplicity series is 1 plus the sum of m times q to the power im for positive m, where i is the part size. Multiplying its Euler denominators gives the factor in degree 6i. Taking the product over all part sizes yields the quotient F, and coefficient convolution gives the ordered tuple count.")),
+            Paragraph(Text("For each distinct part size of multiplicity m, a marked partition carries a choice in Fin m. An ordered tuple uses a degree assignment on the component positions with total degree n. A component of degree zero is the empty partition. An index typed by a finite set ranges over its member subtype, and .1 extracts its underlying value. The local multiplicity series is 1 plus the sum of m times q to the power im for positive m, where i is the part size. Multiplying its Euler denominators gives the factor in degree 6i. Taking the product over all part sizes yields the quotient F, and coefficient convolution gives the ordered tuple count.")),
             Node("euler", "Dilate the pentagonal series by substituting q to the power d for the formal indeterminate q. The formula displays the implicit ring argument R and the proof hd that d is nonzero.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
                 EulerFormula()),
             Node("etaUnit", "The corresponding unit, with inverse at constant coefficient one.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
@@ -29,7 +29,7 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
             Node("markedCount", "The cardinality of the type of ordered marked tuples.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 F.Disp(TupleParameters(Define(Call("markedCount", F.Id("k"), F.Id("n")), Naturals(),
                     Call("card", Call("MarkedTuple", F.Id("k"), F.Id("n"))))))),
-            Node("markedPartitionFintype", "The type of markings of partitions of a fixed size is finite. SigmaFintype and PiFintype denote the inferred dependent sum and dependent function instances for the indicated finite families. An index typed by a finite set ranges over its member subtype, and .1 extracts its underlying value.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+            Node("markedPartitionFintype", "The type of markings of partitions of a fixed size is finite. SigmaFintype and PiFintype denote the inferred dependent sum and dependent function instances for the indicated finite families.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
                 MarkedPartitionFintypeFormula()),
             Node("markedTupleFintype", "There are finitely many ordered marked tuples at fixed component count and total size.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
                 MarkedTupleFintypeFormula()),
@@ -66,13 +66,13 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
 
     private static Formula MarkedPartitionFormula() => F.Disp(PartitionParameters(
         Define(Call("MarkedPartition", F.Id("n")), F.Id("Type"),
-        Dependent(F.Sigma, F.Id("p"), Call("Partition", F.Id("n")),
-            Dependent(F.Pi, F.Id("i"), PartSizes(), Occurrences())))));
+            DependentSum(F.Id("p"), Call("Partition", F.Id("n")),
+                DependentFunction(F.Id("i"), PartSizes(), Occurrences())))));
 
     private static Formula MarkedTupleFormula() => F.Disp(TupleParameters(
         Define(Call("MarkedTuple", F.Id("k"), F.Id("n")), F.Id("Type"),
-        Dependent(F.Sigma, F.Id("l"), DegreeAssignments(),
-            Dependent(F.Pi, F.Id("i"), Positions(), Component())))));
+            DependentSum(F.Id("l"), DegreeAssignments(),
+                DependentFunction(F.Id("i"), Positions(), Component())))));
 
     private static Formula MarkedPartitionFintypeFormula() =>
         F.Disp(PartitionParameters(Define(Call("markedPartitionFintype", F.Id("n")),
@@ -96,8 +96,11 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
     private static Formula Component() => Call("MarkedPartition", Degree());
     private static Formula Underlying(Formula value) => F.Seq(value, F.Dot, F.D(1));
 
-    private static Formula Dependent(Formula @operator, Formula index, Formula domain, Formula body) =>
-        F.Seq(new Formula.Subscript(@operator, F.Seq(index, F.Colon, F.Sp, domain)), F.Sp, body);
+    private static Formula DependentSum(Formula index, Formula domain, Formula body) =>
+        F.Seq(new Formula.Subscript(F.Sigma, F.Seq(index, F.Colon, F.Sp, domain)), F.Sp, body);
+
+    private static Formula DependentFunction(Formula index, Formula domain, Formula body) =>
+        F.Seq(Typed(index, domain), F.Sp, F.To, F.Sp, body);
 
     private static Formula Family(Formula index, Formula domain, Formula body) =>
         F.Seq(F.LambdaLower, F.Sp, Typed(index, domain), F.Comma, F.Sp, body);
@@ -109,7 +112,7 @@ internal sealed class DesignatedSummandsDocument : IScribeDocumentDefinition
     private static Formula Typed(Formula name, Formula type) =>
         F.Seq(F.Open, name, F.Colon, F.Sp, type, F.Close);
     private static Formula RingParameters(Formula body) =>
-        F.Seq(F.Forall, F.Sp, Typed(F.Id("R"), F.Id("Type")), F.Sp,
+        F.Seq(F.Forall, F.Sp, Typed(F.Id("R"), F.Seq(F.Id("Type"), F.Star)), F.Sp,
             F.OpenBracket, Call("CommRing", F.Id("R")), F.CloseBracket, F.Comma, F.Sp, body);
     private static Formula EulerParameters(Formula body) =>
         RingParameters(F.Seq(F.Forall, F.Sp, Typed(F.Id("d"), Naturals()), F.Sp,
