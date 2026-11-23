@@ -23,6 +23,8 @@ open D5.S3.Quantum.Recovery.BKMFlagRefinement
 open D5.S3.Quantum.Recovery.PetzProjectedHessian (Joint)
 open D5.S3.Quantum.Recovery.PetzPhysicalQubitRoot
 
+open private symmetric_posDef from D5.S3.Quantum.Recovery.PetzPhysicalQubitRoot
+
 namespace D5.S3.Quantum.Recovery.PetzPhysicalFirstVariation
 
 /-- The signed flag biases, in retained-space-first ordering. -/
@@ -238,5 +240,94 @@ theorem physical_firstVariation (t : ℝ) {ε η : ℝ} (hε : 0 < ε) (hε' : �
         hasDerivAt_const (0 : ℝ) (0 : ℂ)
   · filter_upwards [hnear] with c hc
     exact recovery_blocks hη hc (sourceMarginal t c)
+
+/-- The physical source with the retained state in both flags, with flag weights one half. -/
+def duplicatedSource (t c : ℝ) : Joint :=
+  joint fun _ : Fin 2 => (1 / 2 : ℝ) • sourceMarginal t c
+
+private theorem source_marginal_posDef {t c : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 8)
+    (hc : |c| ≤ 1 / 2) : (sourceMarginal t c).PosDef := by
+  have hsq : c ^ 2 ≤ 1 / 4 := by
+    nlinarith [sq_abs c, mul_nonneg (sub_nonneg.mpr hc) (show 0 ≤ 1 / 2 + |c| by positivity)]
+  have hroot : (Real.sqrt (1 - 4 * c ^ 2)) ^ 2 = 1 - 4 * c ^ 2 :=
+    Real.sq_sqrt (by linarith)
+  have hr0 : 0 ≤ profile c := by unfold profile; positivity
+  have hr : profile c * (1 - profile c) = c ^ 2 := by
+    unfold profile
+    nlinarith only [hroot]
+  have hj : 0 < 1 - t - t := by linarith
+  unfold sourceMarginal
+  apply symmetric_posDef (add_pos_of_pos_of_nonneg ht (mul_nonneg hj.le hr0))
+  calc
+    _ = t * (1 - t) + (1 - t - t) ^ 2 * (profile c * (1 - profile c) - c ^ 2) := by ring
+    _ = t * (1 - t) := by rw [hr, sub_self, mul_zero, add_zero]
+    _ > 0 := mul_pos ht (by linarith)
+
+private theorem source_noncommute {t ε η c : ℝ} (ht' : t ≤ 1 / 8)
+    (hε : 0 < ε) (hη : 0 < η) (hc : c ≠ 0) :
+    ¬ Commute (duplicatedSource t c) (reference ε η c) := by
+  let j := 1 - t - t
+  let d := Real.sqrt (1 - 4 * c ^ 2)
+  have hj : 0 < j := by dsimp [j]; linarith
+  have hd : 0 ≤ d := Real.sqrt_nonneg _
+  have hscale : 0 < scale η := by unfold scale; positivity
+  intro h
+  have hblock (s : Fin 2) :
+      ((1 / 2 : ℝ) • sourceMarginal t c) * referenceBlock ε η c s =
+        referenceBlock ε η c s * ((1 / 2 : ℝ) • sourceMarginal t c) := by
+    have he :
+        joint (fun _ : Fin 2 => (1 / 2 : ℝ) • sourceMarginal t c) *
+            joint (referenceBlock ε η c) =
+          joint (referenceBlock ε η c) *
+            joint (fun _ : Fin 2 => (1 / 2 : ℝ) • sourceMarginal t c) := h.eq
+    rw [← Matrix.blockDiagonal_mul, ← Matrix.blockDiagonal_mul] at he
+    exact congrFun (Matrix.blockDiagonal_inj.mp he) s
+  have he (s : Fin 2) :
+      j * c * (scale η / 4) *
+        ((1 - η ^ 2) + flagBias ε s * (1 + η ^ 2 + 2 * η * d)) = 0 := by
+    have hentry := congrArg (fun A : Qubit => (A 0 1).re) (hblock s)
+    simp only [referenceBlock, Matrix.smul_apply, Matrix.mul_apply, Fin.sum_univ_two] at hentry
+    simp [sourceMarginal, profile, unscaledBlock, qubit, Complex.real_smul, pow_two] at hentry
+    dsimp [j, d]
+    simp only [pow_two]
+    linear_combination hentry
+  have hz (s : Fin 2) : (1 - η ^ 2) + flagBias ε s * (1 + η ^ 2 + 2 * η * d) = 0 :=
+    (mul_eq_zero.mp (he s)).resolve_left
+      (mul_ne_zero (mul_ne_zero hj.ne' hc) (div_pos hscale (by norm_num)).ne')
+  have hp := hz 0
+  have hm := hz 1
+  simp only [flagBias, Matrix.cons_val_zero, Matrix.cons_val_one] at hp hm
+  have hpos : 0 < ε * (1 + η ^ 2 + 2 * η * d) := by positivity
+  linarith
+
+/-- A faithful, noncommuting source on the exact physical fibre near the base. -/
+theorem physical_source_on_fibre {t ε η : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 8)
+    (hε : 0 < ε) (hε' : ε ≤ 1 / 16) (hη : 0 < η) :
+    ∀ᶠ c in 𝓝 (0 : ℝ),
+      (duplicatedSource t c).PosDef ∧ (duplicatedSource t c).trace = 1 ∧
+      partialTraceRight (duplicatedSource t c) = sourceMarginal t c ∧
+      (reference ε η c).PosDef ∧ (reference ε η c).trace = 1 ∧
+      partialTraceRight (reference ε η c) = referenceMarginal η ∧
+      (c ≠ 0 → ¬ Commute (duplicatedSource t c) (reference ε η c)) := by
+  have hnear : ∀ᶠ c in 𝓝 (0 : ℝ), |c| ≤ 1 / 2 :=
+    (continuous_abs.continuousAt.eventually (gt_mem_nhds (by norm_num))).mono
+      fun _ h => h.le
+  filter_upwards [hnear, reference_near hε hε' hη] with c hc href
+  have hm : partialTraceRight (duplicatedSource t c) = sourceMarginal t c := by
+    change marginal _ = _
+    rw [marginal_eq_sum, Fin.sum_univ_two, ← add_smul]
+    norm_num
+  refine ⟨joint_posDef _ (fun _ => (source_marginal_posDef ht ht' hc).smul (by norm_num)),
+    ?_, hm, joint_posDef _ href, ?_, reference_marginal ε η c, source_noncommute ht' hε hη⟩
+  · rw [← D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceRight, hm]
+    simp [sourceMarginal, qubit, Matrix.trace_fin_two]
+  · rw [← D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceRight,
+      reference_marginal]
+    simp [referenceMarginal, Matrix.trace_diagonal, Fin.sum_univ_two, scale]
+    push_cast
+    have h : (1 : ℂ) + (η : ℂ) ^ 2 ≠ 0 := by
+      exact_mod_cast (show (1 : ℝ) + η ^ 2 ≠ 0 by positivity)
+    field_simp
+    ring
 
 end D5.S3.Quantum.Recovery.PetzPhysicalFirstVariation
