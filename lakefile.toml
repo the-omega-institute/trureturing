@@ -1,7 +1,7 @@
 name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
-defaultTargets = ["Trureturing", "OmegaMath"]
+defaultTargets = ["Trureturing"]
 
 # Keep canonical Lean compiler processes single-threaded. Lake documents
 # weakLeanArgs as execution-only arguments excluded from build traces; -j1 is

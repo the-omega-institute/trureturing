@@ -8,11 +8,13 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / ".lake/build/lib/lean"
-INIT = ["OmegaInit.Prelude", "OmegaInit.Data.Nat", "OmegaInit.Data.Ratio", "OmegaInit"]
+DATA = ["OmegaInit.Prelude", "OmegaInit.Data.Nat", "OmegaInit.Data.Ratio"]
+INIT = [*DATA, "OmegaInit"]
+BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
 LEGACY = "D5.S1.Digit.Admissibility.SquarePrependOneAppendTwentyFive"
-TARGETS = ["OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
 
 
 def run(*args):
@@ -39,8 +41,8 @@ def audit(name, modules, paths, error=None):
 
 
 def check_audits():
-    math = [*INIT, TOPIC, "OmegaMath"]
-    for root, modules in [("OmegaInit", INIT), ("OmegaMath", math), (CONSUMER, [*INIT, TOPIC, CONSUMER])]:
+    math = [*DATA, BASIC, TOPIC, "OmegaMath"]
+    for root, modules in [("OmegaInit", INIT), ("OmegaMath", math), (CONSUMER, [*DATA, BASIC, TOPIC, CONSUMER])]:
         audit(root, modules, [LIB])
     with tempfile.TemporaryDirectory(prefix="omega-olean-") as tmp:
         tmp = Path(tmp)
@@ -74,7 +76,7 @@ example (p q k : Omega.Nat) :
 
 
 def versions():
-    modules = [*INIT, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+    modules = [*INIT, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
     files["Mathlib.Data.Nat.Prime.Basic"] = (
         ROOT / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime/Basic.olean")
@@ -86,10 +88,10 @@ def check_incremental():
         ("src/OmegaMath/SeparateTopicProbe.lean", "module\nprelude\npublic import OmegaInit\n", set()),
         ("src/OmegaMath/Projective.lean",
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
-         {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean",
          "\npublic theorem Omega.baseProbe (p : Omega.Nat) : Omega.Eq p p := Omega.Eq.refl\n",
-         {*INIT, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         {*INIT, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
     ]
     for filename, extra, expected in probes:
         path = ROOT / filename
