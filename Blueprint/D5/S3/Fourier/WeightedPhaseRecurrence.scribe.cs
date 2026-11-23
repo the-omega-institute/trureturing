@@ -45,9 +45,11 @@ internal sealed class WeightedPhaseRecurrenceDocument : IScribeDocumentDefinitio
                         + "geometric-sum identity.")),
                     Paragraph(Text(
                         "Expand (ε − phaseLoss)P as (ε − 1/N)P plus the sum over j of "
-                        + "(pⱼ/N) cos(Nxⱼ) times the product of F_N over the other coordinates. "
-                        + "In each summand the two modes at ±N have coefficient 1/2 in coordinate j. "
-                        + "Multiplication of the complex characters and taking real parts gives "
+                        + "(pⱼ/N) (F_N(xⱼ) − 1 + cos(Nxⱼ)) times the product of F_N over "
+                        + "the other coordinates. Subtracting 1 removes the constant mode of "
+                        + "the triangular coefficients in coordinate j. The cosine adds the "
+                        + "two modes at ±N with coefficient 1/2 each. Multiplying the complex "
+                        + "characters and taking real parts gives "
                         + "a cosine expansion on the integer box. All coefficients are nonnegative. "
                         + "The coefficient at the zero index is ε − 1/N, and evaluating with all "
                         + "offsets zero gives total coefficient mass εN^|J|.")),

@@ -12,6 +12,8 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Tactic
 
+/-! Finite-time recurrence from the nonnegative Fourier expansion of a weighted Fejér product. -/
+
 set_option autoImplicit false
 
 open MeasureTheory Set
@@ -19,7 +21,7 @@ open scoped BigOperators
 
 namespace D5.S3.Fourier.WeightedPhaseRecurrence
 
-open FejerNearCollisionBound (fejerKernel fejer_square)
+open D5.S3.Zeros.Repulsion.FejerNearCollisionBound (fejerKernel fejer_square)
 
 noncomputable section
 
@@ -56,7 +58,7 @@ private theorem fourier_fejer {N : ℕ} (hN : 0 < N) (x : ℝ) :
     have hle := mem_modes.mp hk
     have hge : ¬ |k| < (N : ℤ) := fun hlt => h (Finset.mem_filter.mpr ⟨hk, hlt⟩)
     have heq : |k| = (N : ℤ) := le_antisymm hle (le_of_not_gt hge)
-    simp [triangle, heq, hN']
+    simp [heq, hN']
   · simp only [Complex.ofReal_im, Complex.im_sum, Complex.mul_im, Complex.ofReal_re,
       zero_mul, add_zero, expI, Complex.exp_ofReal_mul_I_im]
     let f (k : ℤ) := triangle N k * Real.sin ((k : ℝ) * x)
@@ -81,15 +83,33 @@ private theorem fourier_edge (N : ℕ) (x : ℝ) :
   have hneg : -(N : ℤ) ∈ modes N := mem_modes.mpr (by simp)
   simp only [edge, Complex.ofReal_add, add_mul, Finset.sum_add_distrib, apply_ite
     (fun r : ℝ => (r : ℂ)), ite_mul, Complex.ofReal_zero, zero_mul,
-    Finset.sum_ite_eq', hpos, hneg, if_true, Int.cast_natCast, Int.cast_neg,
-    neg_mul, Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_ofNat]
+    Finset.sum_ite_eq', hpos, hneg, ite_true, Int.cast_natCast, Int.cast_neg, neg_mul]
   apply Complex.ext
-  · simp [expI, Complex.add_re, Complex.mul_re, Complex.div_re,
-      Complex.normSq_ofNat, Complex.exp_ofReal_mul_I_re]
+  · simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, sub_zero, expI, Complex.exp_ofReal_mul_I_re, Real.cos_neg]
     ring
-  · simp [expI, Complex.add_im, Complex.mul_im, Complex.div_re, Complex.div_im,
-      Complex.normSq_ofNat, Complex.exp_ofReal_mul_I_im]
+  · simp only [Complex.add_im, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, add_zero, expI, Complex.exp_ofReal_mul_I_im, Real.sin_neg]
     ring
+
+-- The defect removes only the zero coefficient in its replaced coordinate.
+-- The remaining triangular coefficients and the two edge coefficients are retained.
+private def correction (N : ℕ) (k : ℤ) : ℝ :=
+  triangle N k - (if k = 0 then 1 else 0) + edge N k
+
+private theorem fourier_correction {N : ℕ} (hN : 0 < N) (x : ℝ) :
+    (∑ k ∈ modes N, (correction N k : ℂ) * expI ((k : ℝ) * x)) =
+      ((fejerKernel N x + Real.cos ((N : ℝ) * x) - 1 : ℝ) : ℂ) := by
+  have hzero : (0 : ℤ) ∈ modes N := mem_modes.mpr (by simp)
+  have hcenter :
+      (∑ k ∈ modes N, ((if k = 0 then 1 else 0 : ℝ) : ℂ) * expI ((k : ℝ) * x)) = 1 := by
+    simp only [apply_ite (fun r : ℝ => (r : ℂ)), ite_mul,
+      Complex.ofReal_zero, zero_mul, Finset.sum_ite_eq', hzero, ite_true]
+    simp [expI]
+  simp only [correction, Complex.ofReal_add, Complex.ofReal_sub, add_mul, sub_mul,
+    Finset.sum_add_distrib, Finset.sum_sub_distrib, fourier_fejer hN, fourier_edge, hcenter,
+    Complex.ofReal_one]
+  ring
 
 private theorem normSq_expI_sub_one (x : ℝ) :
     Complex.normSq (expI x - 1) = 2 * (1 - Real.cos x) := by
@@ -113,14 +133,14 @@ private theorem fejer_defect {N : ℕ} (hN : 0 < N) (x : ℝ) :
   change (1 - Real.cos x) * (1 / (N : ℝ) *
       Complex.normSq (∑ r ∈ Finset.range N, expI ((r : ℝ) * x))) = _
   simp_rw [hpow]
-  rw [← mul_div_assoc, one_div_mul_eq_div, ← mul_div_assoc]
+  rw [one_div_mul_eq_div, ← mul_div_assoc]
   congr 1
-  linarith only [h]
+  nlinarith only [h]
 
-private def frequencyBox {J : Type*} [Fintype J] (N : ℕ) : Finset (J → ℤ) :=
+private def frequencyBox {J : Type*} [Fintype J] [DecidableEq J] (N : ℕ) : Finset (J → ℤ) :=
   Fintype.piFinset fun _ => modes N
 
-private theorem prod_cosine_expansion {J : Type*} [Fintype J]
+private theorem prod_cosine_expansion {J : Type*} [Fintype J] [DecidableEq J]
     (N : ℕ) (b : J → ℤ → ℝ) (x y : J → ℝ)
     (hy : ∀ j, ∑ k ∈ modes N, (b j k : ℂ) * expI ((k : ℝ) * x j) = (y j : ℂ)) :
     (∑ k ∈ frequencyBox N, (∏ j, b j (k j)) *
@@ -141,34 +161,35 @@ private theorem prod_cosine_expansion {J : Type*} [Fintype J]
 private def weights {J : Type*} [Fintype J] [DecidableEq J]
     (N : ℕ) (ε : ℝ) (p : J → ℝ) (k : J → ℤ) : ℝ :=
   (ε - 1 / (N : ℝ)) * (∏ j, triangle N (k j)) +
-    ∑ i, (p i / (N : ℝ)) * ∏ j, (if j = i then edge N (k j) else triangle N (k j))
+    ∑ i, (p i / (N : ℝ)) * ∏ j, (if j = i then correction N (k j) else triangle N (k j))
 
 private theorem weighted_fejer_expansion {J : Type*} [Fintype J] [DecidableEq J]
     {N : ℕ} (hN : 0 < N) (ε : ℝ) (p x : J → ℝ) (hp : ∑ j, p j = 1) :
     (∑ k ∈ frequencyBox N, weights N ε p k * Real.cos (∑ j, (k j : ℝ) * x j)) =
       (ε - ∑ j, p j * (1 - Real.cos (x j))) * ∏ j, fejerKernel N (x j) := by
   let F (j : J) := fejerKernel N (x j)
-  let C (j : J) := Real.cos ((N : ℝ) * x j)
+  let C (j : J) := F j + Real.cos ((N : ℝ) * x j) - 1
   let K := ∏ j, F j
   let L (i : J) := ∏ j ∈ Finset.univ.erase i, F j
   have hsplit (i : J) : L i * F i = K :=
     Finset.prod_erase_mul _ _ (Finset.mem_univ i)
   have heq (i : J) :
       (∏ j, if j = i then C j else F j) = L i * C i := by
-    rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ i), if_pos rfl]
+    rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ i), ite_eq_left rfl]
     congr 1
     apply Finset.prod_congr rfl
     intro j hj
-    rw [if_neg (Finset.ne_of_mem_erase hj)]
+    rw [ite_eq_right (Finset.ne_of_mem_erase hj)]
   have hbulk := prod_cosine_expansion N (fun _ : J => triangle N) x F
     (fun j => fourier_fejer hN (x j))
   have hedge (i : J) := prod_cosine_expansion N
-    (fun j k => if j = i then edge N k else triangle N k) x
+    (fun j k => if j = i then correction N k else triangle N k) x
     (fun j => if j = i then C j else F j)
     (fun j => by
       by_cases hji : j = i
-      · simpa only [hji, if_pos rfl] using fourier_edge N (x i)
-      · simpa only [hji, if_false] using fourier_fejer hN (x j))
+      · subst j
+        simpa [F, C] using fourier_correction hN (x i)
+      · simpa only [ite_eq_right hji] using fourier_fejer hN (x j))
   calc
     _ = (ε - 1 / (N : ℝ)) * K + ∑ i, (p i / (N : ℝ)) * (L i * C i) := by
       simp only [weights, add_mul, Finset.sum_add_distrib, Finset.sum_mul, mul_assoc]
@@ -184,8 +205,11 @@ private theorem weighted_fejer_expansion {J : Type*} [Fintype J] [DecidableEq J]
         rw [← hsplit i]
         calc
           _ = (p i * L i) * ((1 - Real.cos (x i)) * F i) := by ring
-          _ = _ := by rw [show (1 - Real.cos (x i)) * F i = (1 - C i) / N
-                           from fejer_defect hN (x i)]; ring
+          _ = _ := by
+            rw [show (1 - Real.cos (x i)) * F i =
+              (1 - Real.cos ((N : ℝ) * x i)) / N from fejer_defect hN (x i)]
+            dsimp [C]
+            ring
       simp_rw [hdefect, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_div, hp]
       ring
     _ = _ := by rw [sub_mul, Finset.sum_mul]
@@ -196,7 +220,7 @@ private theorem weights_mass {J : Type*} [Fintype J] [DecidableEq J]
   have hN' : (N : ℝ) ≠ 0 := by positivity
   have hpeak : fejerKernel N 0 = (N : ℝ) := by
     rw [fejer_square hN]
-    simp [Complex.normSq_natCast, hN', pow_two, ← mul_assoc]
+    simp [Complex.normSq_natCast, hN']
   simpa [hpeak] using weighted_fejer_expansion hN ε p (fun _ => 0) hp
 
 private theorem cosine_integral_lower (a R δ ξ φ : ℝ) (hδ : 0 < δ) (hξ : δ ≤ |ξ|) :
@@ -204,9 +228,9 @@ private theorem cosine_integral_lower (a R δ ξ φ : ℝ) (hδ : 0 < δ) (hξ :
   have hξ' : ξ ≠ 0 := abs_pos.mp (hδ.trans_le hξ)
   have heq : (∫ t in a..a + R, Real.cos (ξ * t - φ)) =
       (Real.sin (ξ * (a + R) - φ) - Real.sin (ξ * a - φ)) / ξ := by
-    simp only [sub_eq_add_neg]
-    rw [intervalIntegral.integral_comp_mul_add Real.cos hξ', integral_cos]
-    simp only [smul_eq_mul, div_eq_mul_inv, mul_comm]
+    simpa only [sub_eq_add_neg, smul_eq_mul, div_eq_mul_inv, mul_comm ξ⁻¹] using
+      (intervalIntegral.integral_comp_mul_add Real.cos (a := a) (b := a + R) hξ' (-φ)).trans
+        (congrArg (ξ⁻¹ • ·) integral_cos)
   have habs : |Real.sin (ξ * (a + R) - φ) - Real.sin (ξ * a - φ)| ≤ 2 := by
     exact (abs_sub _ _).trans ((add_le_add (Real.abs_sin_le_one _)
       (Real.abs_sin_le_one _)).trans_eq (by norm_num))
@@ -216,7 +240,7 @@ private theorem cosine_integral_lower (a R δ ξ φ : ℝ) (hδ : 0 < δ) (hξ :
       (div_le_div_of_nonneg_left (by norm_num) hδ hξ)
   exact (abs_le.mp hbound).1
 
-private theorem window_from_cosine_certificate {K : Type*} [Fintype K] [DecidableEq K]
+private theorem window_from_cosine_certificate {K : Type*} [Fintype K]
     (o : K) (c ξ φ : K → ℝ) (a R δ : ℝ)
     (hR : 0 < R) (hδ : 0 < δ)
     (hc : ∀ k, 0 ≤ c k) (hξo : ξ o = 0)
@@ -224,14 +248,16 @@ private theorem window_from_cosine_certificate {K : Type*} [Fintype K] [Decidabl
     (hgap : ∀ k, ξ k ≠ 0 → δ ≤ |ξ k|)
     (hbudget : R * δ * c o > 2 * ((∑ k, c k) - c o)) :
     ∃ t ∈ Icc a (a + R), 0 < ∑ k, c k * Real.cos (ξ k * t - φ k) := by
+  classical
   let f (k : K) (t : ℝ) : ℝ := c k * Real.cos (ξ k * t - φ k)
   have hcont (k : K) : Continuous (f k) := by dsimp [f]; fun_prop
   have hR' : a ≤ a + R := by linarith
   have hterm (k : K) : -(2 / δ) * c k ≤ ∫ t in a..a + R, f k t := by
     by_cases hξ : ξ k = 0
-    · simp [f, hξ, Real.cos_neg, hzero k hξ]
-      exact le_trans (neg_nonpos.mpr (mul_nonneg (by positivity) (hc k)))
-        (mul_nonneg hR.le (hc k))
+    · have hnon : -(2 / δ) * c k ≤ R * c k :=
+        le_trans (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) (hc k))
+          (mul_nonneg hR.le (hc k))
+      simpa [f, hξ, Real.cos_neg, hzero k hξ] using hnon
     · unfold f
       rw [intervalIntegral.integral_const_mul, mul_comm (-(2 / δ))]
       exact mul_le_mul_of_nonneg_left (cosine_integral_lower a R δ _ _ hδ (hgap k hξ)) (hc k)
@@ -279,7 +305,10 @@ theorem weighted_phase_recurrence {J : Type*} [Fintype J]
   classical
   let B := frequencyBox (J := J) N
   let c (k : B) := weights N ε p k.val
-  let o : B := ⟨0, Fintype.mem_piFinset.mpr fun _ => mem_modes.mpr (by simp)⟩
+  let o : B := ⟨0, by
+    apply Fintype.mem_piFinset.mpr
+    intro j
+    exact mem_modes.mpr (by simp)⟩
   have hb (k : B) (j : J) : |k.val j| ≤ (N : ℤ) :=
     mem_modes.mp (Fintype.mem_piFinset.mp k.property j)
   have hc (k : B) : 0 ≤ c k := by
@@ -288,14 +317,25 @@ theorem weighted_phase_recurrence {J : Type*} [Fintype J]
       have hN' : (0 : ℝ) < N := by positivity
       rw [div_le_iff₀ hN', one_mul]
       exact_mod_cast hb k j
-    have hedge (j : J) : 0 ≤ edge N (k.val j) := by unfold edge; positivity
+    have hcorrection (j : J) : 0 ≤ correction N (k.val j) := by
+      unfold correction
+      apply add_nonneg
+      · by_cases h : k.val j = 0
+        · simp [h, triangle]
+        · simpa only [ite_eq_right h, sub_zero] using htriangle j
+      · unfold edge
+        apply add_nonneg <;> split <;> norm_num
     exact add_nonneg (mul_nonneg (sub_nonneg.mpr hε.le) (Finset.prod_nonneg fun j _ =>
-      htriangle j)) (Finset.sum_nonneg fun i _ => mul_nonneg (by positivity : 0 ≤ p i / (N : ℝ))
-        (Finset.prod_nonneg fun j _ => by by_cases h : j = i <;> simp [h, hedge, htriangle]))
-  have hN' : (N : ℤ) ≠ 0 := by positivity
+      htriangle j)) (Finset.sum_nonneg fun i _ =>
+        mul_nonneg (div_nonneg (hp i) (Nat.cast_nonneg N))
+          (Finset.prod_nonneg fun j _ => by
+            by_cases h : j = i
+            · simpa only [ite_eq_left h] using hcorrection j
+            · simpa only [ite_eq_right h] using htriangle j))
   have hc0 : c o = ε - 1 / (N : ℝ) := by
     change weights N ε p 0 = _
-    simp [weights, triangle, edge, hN', Ne.symm hN']
+    have hcast : (N : ℤ) ≠ 0 := by positivity
+    simp [weights, triangle, correction, edge, hN.ne', Ne.symm hcast]
   have hmass : (∑ k : B, c k) = ε * (N : ℝ) ^ Fintype.card J := by
     simpa only [c, Finset.sum_coe_sort, B] using weights_mass hN ε p hpsum
   obtain ⟨t, ht, hs⟩ := window_from_cosine_certificate o c
@@ -310,13 +350,15 @@ theorem weighted_phase_recurrence {J : Type*} [Fintype J]
   simp_rw [hx] at hs
   rw [show (∑ k : B, c k * Real.cos (∑ j, (k.val j : ℝ) * (g j * t - θ j))) =
       (ε - phaseLoss g θ p t) * ∏ j, fejerKernel N (g j * t - θ j) by
-    simpa only [c, Finset.sum_coe_sort, B, phaseLoss] using
-      weighted_fejer_expansion hN ε p (fun j => g j * t - θ j) hpsum] at hs
+    unfold phaseLoss
+    exact (Finset.sum_coe_sort B (fun k : J → ℤ => weights N ε p k *
+      Real.cos (∑ j, (k j : ℝ) * (g j * t - θ j)))).trans
+      (weighted_fejer_expansion hN ε p (fun j => g j * t - θ j) hpsum)] at hs
   have hK : 0 ≤ ∏ j, fejerKernel N (g j * t - θ j) := by
     apply Finset.prod_nonneg
     intro j _
     rw [fejer_square hN]
-    positivity
+    exact mul_nonneg (by positivity) (Complex.normSq_nonneg _)
   exact ⟨t, ht, sub_pos.mp (pos_of_mul_pos_left hs hK)⟩
 
 end
