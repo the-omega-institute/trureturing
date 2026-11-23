@@ -8,7 +8,7 @@
 
 import D5.S3.Arith.Partitions.BilgiciThetaGrading
 import D5.S3.Arith.Partitions.BilgiciThetaDetectors
-import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.FieldTheory.ChevalleyWarning
 
 /-! The full weight-eleven component satisfies the trace and dual-number tests. -/
 
@@ -405,36 +405,6 @@ private theorem eta_signed_word (l : List K) :
         smul_eq_mul]
       ring
 
-private theorem finite_field_moment {p : MvPolynomial (Fin 5) K} (h : p.totalDegree < 90) :
-    ∑ f : Fin 5 → K, eval f p = 0 := by
-  classical
-  rw [← support_sum_monomial_coeff p]
-  simp only [map_sum]
-  rw [Finset.sum_comm]
-  apply Finset.sum_eq_zero
-  intro n hn
-  have hd := le_totalDegree hn
-  have hsmall : ∃ i : Fin 5, n i < 18 := by
-    by_contra! hc
-    have h90 : 90 ≤ ∑ i : Fin 5, n i := by
-      calc
-        90 = ∑ _ : Fin 5, (18 : ℕ) := by simp
-        _ ≤ _ := Finset.sum_le_sum (fun i _ => hc i)
-    have hs : (n.sum fun _ e => e) = ∑ i : Fin 5, n i :=
-      Finsupp.sum_fintype _ _ (fun _ => rfl)
-    omega
-  obtain ⟨i, hi⟩ := hsmall
-  simp only [eval_monomial]
-  have he (f : Fin 5 → K) :
-      n.prod (fun j e => f j ^ e) = ∏ j, f j ^ n j :=
-    Finsupp.prod_fintype _ _ (fun _ => pow_zero _)
-  simp only [he, ← Finset.mul_sum]
-  have hf := Fintype.prod_sum (fun j (a : K) => a ^ n j)
-  rw [← hf]
-  have hz : ∑ a : K, a ^ n i = 0 :=
-    FiniteField.sum_pow_lt_card_sub_one K (n i) (by exact hi)
-  rw [Finset.prod_eq_zero (Finset.mem_univ i) hz, mul_zero]
-
 private theorem totalDegree_sub_le {p q : MvPolynomial (Fin 5) K} :
     (p - q).totalDegree ≤ max p.totalDegree q.totalDegree := by
   rw [sub_eq_add_neg]
@@ -595,7 +565,11 @@ private theorem sum_field_five {M : Type*} [AddCommMonoid M] (f : (Fin 5 → K) 
 theorem literalF11_epsilon_zero : eps (q F11) = 0 := by
   rw [eps_q, literalF11_field_sum]
   simp only [map_sum]
-  have hm := finite_field_moment (p := momentPoly) (by have := moment_degree; omega)
+  have hdegree : momentPoly.totalDegree <
+      (Fintype.card (ZMod 19) - 1) * Fintype.card (Fin 5) := by
+    rw [ZMod.card, Fintype.card_fin]
+    exact lt_of_le_of_lt moment_degree (by decide)
+  have hm := MvPolynomial.sum_eval_eq_zero (σ := Fin 5) (K := ZMod 19) momentPoly hdegree
   rw [sum_field_five] at hm
   refine Eq.trans ?_ hm
   apply Finset.sum_congr rfl
