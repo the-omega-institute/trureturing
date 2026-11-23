@@ -85,4 +85,3 @@ internal sealed class RoundQuaternionK4BoundsDocument : IScribeDocumentDefinitio
             And(lower, And(equality, Lt(FracOf(D(3), D(5)), Ratio)))));
     }
 }
-

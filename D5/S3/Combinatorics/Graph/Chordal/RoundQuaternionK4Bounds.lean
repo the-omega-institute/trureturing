@@ -166,11 +166,6 @@ private theorem orthogonal_fit (g : Fin 4 → Fin 4 → U)
 
 private def omegaForm (x y : ℍ[ℝ]) : ℝ := ⟪x * (unitI : ℍ[ℝ]), y⟫_ℝ
 
-private theorem omega_skew (x y : ℍ[ℝ]) : omegaForm y x = -omegaForm x y := by
-  simp only [omegaForm, inner_eq_components, unitI, Quaternion.re_mul, Quaternion.imI_mul,
-    Quaternion.imJ_mul, Quaternion.imK_mul]
-  ring
-
 private theorem omega_cyclic (x y z : ℍ[ℝ]) :
     omegaForm x y + omegaForm y z + omegaForm z x =
       omegaForm (y - x) (2 • z - x - y) / 2 := by
@@ -961,4 +956,3 @@ theorem not_subcritical_claim : ¬ subcritical_claim := by
   linarith
 
 end RoundQuaternionK4Bounds
-

@@ -182,4 +182,3 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Lower
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionK4Bounds
-
