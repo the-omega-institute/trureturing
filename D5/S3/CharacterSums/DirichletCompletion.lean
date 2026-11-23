@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Conductor-normalized Dirichlet completions satisfy symmetry and global growth bounds. -/
+   digest: Modulus-normalized Dirichlet completions satisfy symmetry and global growth bounds. -/
 
 import D5.S3.CharacterSums.NonprincipalCharacterGrowth
 import Mathlib.NumberTheory.LSeries.Nonvanishing
@@ -12,7 +12,7 @@ import D5.S3.CharacterSums.DirichletCompletionGamma
 import Mathlib.Analysis.Calculus.Deriv.Star
 import Mathlib.Analysis.Real.Pi.Bounds
 
-/-! # Conductor-normalized Dirichlet completions -/
+/-! # Modulus-normalized Dirichlet completions -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -22,7 +22,7 @@ open scoped ComplexConjugate
 
 namespace D5.S3.CharacterSums.DirichletCompletion
 
-/-- The conductor-normalized completion. -/
+/-- The modulus-normalized completion. -/
 def completion {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ) : ℂ :=
   Complex.exp (((Real.log (q : ℝ) / 2 : ℝ) : ℂ) * s) * χ.completedLFunction s
 
@@ -75,10 +75,13 @@ theorem rootNumber_ne_zero {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
 
 /-- Nonprincipal primitive completions are also nonzero on the closed left half-plane. -/
 theorem completion_ne_zero_of_re_le_zero {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1)
-    {s : ℂ} (hs : s.re ≤ 0) : completion χ s ≠ 0 := by
-  have hni : χ⁻¹ ≠ 1 := inv_ne_one.mpr hne
-  have hn := completion_ne_zero_of_one_le_re χ⁻¹ (s := 1 - s) (.inl hni)
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) {s : ℂ} (hχs : χ ≠ 1 ∨ s ≠ 0)
+    (hs : s.re ≤ 0) : completion χ s ≠ 0 := by
+  have hni : χ⁻¹ ≠ 1 ∨ 1 - s ≠ 1 := by
+    rcases hχs with hne | hs0
+    · exact .inl (inv_ne_one.mpr hne)
+    · exact .inr (by intro h; apply hs0; linear_combination -h)
+  have hn := completion_ne_zero_of_one_le_re χ⁻¹ (s := 1 - s) hni
     (by simp only [sub_re, one_re]; linarith)
   have he := completion_one_sub hχ (1 - s)
   rw [sub_sub_cancel] at he
@@ -103,66 +106,68 @@ private theorem completed_eq_mul {q : ℕ} [NeZero q] (χ : DirichletCharacter �
     (χ.LFunction_eq_completed_div_gammaFactor s (.inl hs0)).symm
   exact he.trans (mul_comm _ _)
 
-private theorem gammaFactor_inv_conj {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) (s : ℂ) :
-    χ⁻¹.gammaFactor (conj s) = conj (χ.gammaFactor s) := by
-  classical
-  have hi (x : ZMod q) : χ⁻¹ x = conj (χ x) := (MulChar.star_apply' χ x).symm
-  have he : χ⁻¹.Even ↔ χ.Even := by
-    simp only [DirichletCharacter.Even, hi]
-    constructor
-    · intro h
-      simpa using congrArg conj h
-    · intro h
-      simp [h]
-  simp only [DirichletCharacter.gammaFactor, he]
-  split_ifs
-  · exact Complex.Gammaℝ_conj s
-  · simpa using Complex.Gammaℝ_conj (s + 1)
+private theorem mellin_conj_real (f : ℝ → ℂ) (hf : ∀ t, conj (f t) = f t)
+    (s : ℂ) : mellin f (conj s) = conj (mellin f s) := by
+  rw [mellin, mellin, ← integral_conj]
+  refine setIntegral_congr_fun measurableSet_Ioi fun t ht => ?_
+  simp only [smul_eq_mul, map_mul]
+  rw [hf]
+  have htarg : (t : ℂ).arg ≠ Real.pi := by
+    rw [arg_ofReal_of_nonneg ht.le]
+    exact Real.pi_pos.ne
+  rw [show conj s - 1 = conj (s - 1) by simp,
+    cpow_conj (t : ℂ) (s - 1) htarg]
+  simp
 
-private theorem LFunction_inv_conj_right {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 1 < s.re) :
-    χ⁻¹.LFunction (conj s) = conj (χ.LFunction s) := by
-  rw [χ⁻¹.LFunction_eq_LSeries (by simpa using hs), χ.LFunction_eq_LSeries hs,
-    LSeries, LSeries, Complex.conj_tsum]
-  apply tsum_congr
-  intro n
-  by_cases hn : n = 0
-  · simp [hn]
-  rw [LSeries.term_of_ne_zero hn, LSeries.term_of_ne_zero hn, map_div₀]
-  congr 1
-  · exact (MulChar.star_apply' χ _).symm
-  · have ha : (n : ℂ).arg ≠ Real.pi := by
-      rw [← Complex.ofReal_natCast, Complex.arg_ofReal_of_nonneg (Nat.cast_nonneg n)]
-      exact Real.pi_pos.ne
-    simpa using Complex.cpow_conj (n : ℂ) s ha
+private theorem hurwitz_conj (a : UnitAddCircle) (s : ℂ) :
+    HurwitzZeta.completedHurwitzZetaEven a (conj s) =
+      conj (HurwitzZeta.completedHurwitzZetaEven a s) ∧
+    HurwitzZeta.completedHurwitzZetaOdd a (conj s) =
+      conj (HurwitzZeta.completedHurwitzZetaOdd a s) := by
+  have he (z : ℂ) :
+      (HurwitzZeta.hurwitzEvenFEPair a).Λ₀ (conj z) =
+        conj ((HurwitzZeta.hurwitzEvenFEPair a).Λ₀ z) := by
+    apply mellin_conj_real
+    intro t
+    simp only [WeakFEPair.f_modif, HurwitzZeta.hurwitzEvenFEPair,
+      Function.comp_apply, smul_eq_mul, one_mul]
+    by_cases ht : t ∈ Ioi (1 : ℝ) <;> by_cases hu : t ∈ Ioo (0 : ℝ) 1 <;>
+      by_cases ha : a = 0 <;> simp [ht, hu, ha]
+  have ho (z : ℂ) :
+      (HurwitzZeta.hurwitzOddFEPair a).Λ₀ (conj z) =
+        conj ((HurwitzZeta.hurwitzOddFEPair a).Λ₀ z) := by
+    apply mellin_conj_real
+    intro t
+    simp only [WeakFEPair.f_modif, HurwitzZeta.hurwitzOddFEPair,
+      Function.comp_apply, smul_eq_mul, one_mul, sub_zero, mul_zero]
+    by_cases ht : t ∈ Ioi (1 : ℝ) <;> by_cases hu : t ∈ Ioo (0 : ℝ) 1 <;>
+      simp [ht, hu]
+  constructor
+  · unfold HurwitzZeta.completedHurwitzZetaEven WeakFEPair.Λ
+    rw [show conj s / 2 = conj (s / 2) by simp [map_ofNat], he]
+    by_cases ha : a = 0 <;> simp [map_ofNat, HurwitzZeta.hurwitzEvenFEPair, ha]
+  · unfold HurwitzZeta.completedHurwitzZetaOdd WeakFEPair.Λ
+    rw [show (conj s + 1) / 2 = conj ((s + 1) / 2) by simp [map_ofNat], ho]
+    simp [map_ofNat, HurwitzZeta.hurwitzOddFEPair]
 
-private theorem completion_conj_right {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 1 < s.re) :
-    completion χ⁻¹ (conj s) = conj (completion χ s) := by
-  have hp : 0 < s.re := by linarith
-  dsimp only [completion]
-  rw [completed_eq_mul χ hp, completed_eq_mul χ⁻¹ (by simpa using hp),
-    gammaFactor_inv_conj, LFunction_inv_conj_right χ hs, map_mul, map_mul,
-    ← Complex.exp_conj, map_mul, Complex.conj_ofReal]
-
-/-- Conjugation exchanges a nonprincipal character and its inverse. -/
+/-- Conjugation exchanges any character and its inverse, including totalized pole values. -/
 theorem completion_inv_conj {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
-    (hne : χ ≠ 1) (s : ℂ) :
-    completion χ⁻¹ (conj s) = conj (completion χ s) := by
-  let g : ℂ → ℂ := fun z => conj (completion χ (conj z))
-  have hd : Differentiable ℂ g := by
-    intro z
-    simpa [g, Function.comp_def] using
-      (differentiable_completion χ hne (conj z)).conj_conj
-  have hg : completion χ⁻¹ = g :=
-    ((differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)).differentiableOn.analyticOnNhd
-      isOpen_univ).eq_of_eventuallyEq
-      (hd.differentiableOn.analyticOnNhd isOpen_univ) (by
-        filter_upwards [(isOpen_lt continuous_const continuous_re).mem_nhds
-          (show (1 : ℝ) < (2 : ℂ).re by norm_num)] with z hz
-        simpa [g] using completion_conj_right χ (s := conj z) (by simpa using hz))
-  simpa [g] using congrFun hg (conj s)
+    (s : ℂ) : completion χ⁻¹ (conj s) = conj (completion χ s) := by
+  have hqarg : (q : ℂ).arg ≠ Real.pi := by
+    rw [← Complex.ofReal_natCast, Complex.arg_ofReal_of_nonneg (Nat.cast_nonneg q)]
+    exact Real.pi_pos.ne
+  have hc : (q : ℂ) ^ (-conj s) = conj ((q : ℂ) ^ (-s)) := by
+    simpa using Complex.cpow_conj (q : ℂ) (-s) hqarg
+  unfold completion DirichletCharacter.completedLFunction ZMod.completedLFunction
+  rw [show (((Real.log (q : ℝ) / 2 : ℝ) : ℂ) * conj s) =
+      conj (((Real.log (q : ℝ) / 2 : ℝ) : ℂ) * s) by rw [map_mul, Complex.conj_ofReal],
+    Complex.exp_conj, hc]
+  simp only [map_mul, map_add, map_sum]
+  congr 2 <;> congr 1 <;> apply Finset.sum_congr rfl <;> intro j _
+  · rw [(MulChar.star_apply' χ j).symm, (hurwitz_conj _ s).1]
+    rfl
+  · rw [(MulChar.star_apply' χ j).symm, (hurwitz_conj _ s).2]
+    rfl
 
 /-- Every primitive character has a root number of unit norm. -/
 theorem norm_rootNumber {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
@@ -174,7 +179,7 @@ theorem norm_rootNumber {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     subst q
     rw [DirichletCharacter.rootNumber_modOne, norm_one]
   have hi (t : ℝ) : ‖completion χ⁻¹ t‖ = ‖completion χ t‖ := by
-    have h := congrArg norm (completion_inv_conj χ hne (t : ℂ))
+    have h := congrArg norm (completion_inv_conj χ (t : ℂ))
     simpa using h
   have ha := congrArg norm (completion_one_sub hχ (-1))
   have hb := congrArg norm (completion_one_sub hχ 2)
@@ -185,7 +190,7 @@ theorem norm_rootNumber {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
   rw [him] at ha
   rw [hi2] at hb
   have hp : 0 < ‖completion χ (-1)‖ := norm_pos_iff.mpr
-    (completion_ne_zero_of_re_le_zero hχ hne (by norm_num))
+    (completion_ne_zero_of_re_le_zero hχ (.inl hne) (by norm_num))
   have hsq : ‖χ.rootNumber‖ ^ 2 = 1 := by
     have he : (‖χ.rootNumber‖ ^ 2 - 1) * ‖completion χ (-1)‖ = 0 := by
       rw [ha] at hb
@@ -202,10 +207,12 @@ def growthConstant (q : ℕ) : ℝ :=
     Real.log (q : ℝ) / 2 + 2 * Real.log 2) 3
 
 private theorem gamma_bound {q : ℕ} (χ : DirichletCharacter ℂ q)
-    {s : ℂ} {R : ℝ} (hs : 1 / 2 ≤ s.re) (hR : 1 ≤ R) (hn : ‖s‖ ≤ R) :
+    {s : ℂ} {R : ℝ} (hs : 1 / 2 ≤ s.re) (hn : ‖s‖ ≤ R) :
     ‖χ.gammaFactor s‖ ≤ gammaConstant *
       Real.exp (((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
   classical
+  have hR : 1 / 2 ≤ R := hs.trans ((Complex.re_le_norm s).trans hn)
+  have hB : 0 ≤ gammaConstant := (zero_le_one.trans (le_max_left _ _))
   have hb (t : ℂ) (ht : 1 / 2 ≤ t.re) (htR : t.re ≤ R + 1) :
       ‖Complex.Gammaℝ t‖ ≤ gammaConstant *
         Real.exp (((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
@@ -218,14 +225,21 @@ private theorem gamma_bound {q : ℕ} (χ : DirichletCharacter ℂ q)
     have hl := Real.log_le_log (by linarith : 0 < t.re / 2 + 1) hU
     have hg := DirichletCompletionGamma.Gamma_le_exp_bound
       (u := t.re / 2) (by linarith)
+    have hg' : Real.Gamma (t.re / 2) ≤ gammaConstant *
+        Real.exp ((t.re / 2 + 1) * Real.log (t.re / 2 + 1)) := by
+      refine hg.trans (max_le ?_ ?_)
+      · exact (le_max_right 1 _).trans (le_mul_of_one_le_right
+          (show 0 ≤ gammaConstant from hB) (Real.one_le_exp
+            (mul_nonneg (by linarith) (Real.log_nonneg hx))))
+      · exact le_mul_of_one_le_left (Real.exp_pos _).le (le_max_left _ _)
     calc
       _ ≤ Real.pi ^ (-t.re / 2) * Real.Gamma (t.re / 2) :=
         DirichletCompletionGamma.norm_GammaReal_le ht0
       _ ≤ Real.Gamma (t.re / 2) :=
         mul_le_of_le_one_left (Real.Gamma_pos_of_pos (by linarith)).le hp
-      _ ≤ _ := hg.trans (mul_le_mul_of_nonneg_left
+      _ ≤ _ := hg'.trans (mul_le_mul_of_nonneg_left
         (Real.exp_le_exp.mpr (mul_le_mul hU hl (Real.log_nonneg hx)
-          (by linarith))) (by positivity))
+          (by linarith))) hB)
   unfold DirichletCharacter.gammaFactor
   split_ifs
   · exact hb s hs ((Complex.re_le_norm s).trans (hn.trans (by linarith)))
@@ -233,9 +247,9 @@ private theorem gamma_bound {q : ℕ} (χ : DirichletCharacter ℂ q)
     · simp only [add_re, one_re]; linarith
     · simp only [add_re, one_re]; linarith [Complex.re_le_norm s]
 
-private theorem right_growth_radius {q : ℕ} [NeZero q]
+theorem right_growth_radius {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) {s : ℂ} {R : ℝ}
-    (hs : 1 / 2 ≤ s.re) (hR : 1 ≤ R) (hn : ‖s‖ ≤ R) :
+    (hs : 1 / 2 ≤ s.re) (hn : ‖s‖ ≤ R) :
     ‖completion χ s‖ < gammaConstant * (q.totient : ℝ) * R *
       Real.exp (Real.log (q : ℝ) / 2 * R +
         ((R + 3) / 2) * Real.log ((R + 3) / 2)) := by
@@ -255,7 +269,7 @@ private theorem right_growth_radius {q : ℕ} [NeZero q]
       Real.exp (Real.log (q : ℝ) / 2 * R) :=
     Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_left
       ((Complex.re_le_norm s).trans hn) hq)
-  have hG := gamma_bound χ hs hR hn
+  have hG := gamma_bound χ hs hn
   have hG0 : 0 < ‖χ.gammaFactor s‖ := norm_pos_iff.mpr (gammaFactor_ne_zero χ hp)
   rw [completion, completed_eq_mul χ hp, norm_mul, norm_mul, Complex.norm_exp]
   simp only [mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero]
@@ -268,7 +282,8 @@ private theorem right_growth_radius {q : ℕ} [NeZero q]
         (gammaConstant * Real.exp (((R + 3) / 2) * Real.log ((R + 3) / 2)))) *
         ((q.totient : ℝ) * R) :=
       mul_le_mul_of_nonneg_right (mul_le_mul hE hG (norm_nonneg _)
-        (Real.exp_pos _).le) (by positivity)
+        (Real.exp_pos _).le) (mul_nonneg (Nat.cast_nonneg _)
+          (by linarith [hs.trans ((Complex.re_le_norm s).trans hn)]))
     _ = _ := by rw [Real.exp_add]; ring
 
 /-- A global bound retaining the radial Gamma argument and its multiplicative constant. -/
@@ -279,11 +294,11 @@ theorem completion_growth_explicit {q : ℕ} [NeZero q]
         ((‖s‖ + 4) / 2) * Real.log ((‖s‖ + 4) / 2)) := by
   have hR : 1 ≤ 1 + ‖s‖ := by linarith [norm_nonneg s]
   by_cases hs : 1 / 2 ≤ s.re
-  · convert right_growth_radius χ hne hs hR
+  · convert right_growth_radius χ hne hs
       (show ‖s‖ ≤ 1 + ‖s‖ by linarith) using 1 <;> ring_nf
   · have ht : 1 / 2 ≤ (1 - s).re := by simp only [sub_re, one_re]; linarith
     have hn : ‖1 - s‖ ≤ 1 + ‖s‖ := by simpa using norm_sub_le (1 : ℂ) s
-    have hb := right_growth_radius χ⁻¹ (inv_ne_one.mpr hne) ht hR hn
+    have hb := right_growth_radius χ⁻¹ (inv_ne_one.mpr hne) ht hn
     have he := congrArg norm (completion_one_sub hχ (1 - s))
     rw [sub_sub_cancel, norm_mul, norm_rootNumber hχ, one_mul] at he
     rw [he]
