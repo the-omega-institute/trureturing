@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
-   digest: Rank-three omitted triangle gaps identify normalized three-torsion potentials. -/
+   digest: Point potentials determine the cyclic factors of rank-three lifting obstructions. -/
 
 import D5.S3.Combinatorics.Matroids.CircuitDifferenceBasis
 import D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates
@@ -14,16 +14,17 @@ import D5.S3.Combinatorics.Matroids.UniformCircuitResidueForms
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.Module.ZMod
 import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Set.Function
 import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Dual
 import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.LinearAlgebra.Quotient.Card
 import Mathlib.Order.Hom.PowersetCard
 import Mathlib.Tactic.Abel
@@ -66,7 +67,7 @@ private theorem triangle_gaps_torsion {A : Type*} [AddCommGroup A] (u : Fin 3 �
 
 /-- After fixing one point's potential to zero, constant cyclic gaps on omitted
 triangles and zero gaps on uncovered edges become three-torsion line sums. -/
-theorem normalized_potential_iff {I T A : Type*} [AddCommGroup A]
+private theorem normalized_potential_iff {I T A : Type*} [AddCommGroup A]
     (points : T → Fin 3 → I) (u : I → A) (root : I) :
     let uncovered (i j : I) := ¬ ∃ t a b, points t a = i ∧ points t b = j
     let v (i : I) := u i - u root
@@ -178,7 +179,7 @@ private theorem not_reverse {I : Type*} {triangle : Fin 3 → I}
 /-- For disjoint triangle edge supports, the gap of a point potential is a
 sum of oriented triangle rows exactly for normalized three-torsion potentials
 with zero uncovered gaps and zero sums on each triangle. -/
-theorem edge_rows_iff {I T A : Type*} [Fintype T] [AddCommGroup A]
+private theorem edge_rows_iff {I T A : Type*} [Fintype T] [AddCommGroup A]
     (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
     (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
     (u : I → A) (root : I) :
@@ -248,7 +249,7 @@ theorem edge_rows_iff {I T A : Type*} [Fintype T] [AddCommGroup A]
 
 /-- Zero row sums determine the edges at an omitted vertex. When the point
 count kills the coefficients, restoring those edges gives a zero-sum potential. -/
-theorem restore_potential {I A : Type*} [Fintype I] [AddCommGroup A]
+private theorem restore_potential {I A : Type*} [Fintype I] [AddCommGroup A]
     (edge : I → I → A) (root anchor : I) (hne : anchor ≠ root)
     (hdiag : ∀ i, edge i i = 0) (hflip : ∀ i j, edge i j = -edge j i)
     (hsum : ∀ i, ∑ j, edge i j = 0) (hann : ∀ x : A, Fintype.card I • x = 0)
@@ -353,7 +354,7 @@ private theorem row_sum {I A : Type*} [Fintype I] [AddCommGroup A]
 /-- A linear relation among the non-root triangle edge rows that is a potential
 difference on those edges has a unique normalized potential on the whole ground
 set. Both the potential values and the relation coefficients are killed by three. -/
-theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
+private theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
     [AddCommGroup A] (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
     (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
     (root anchor : I) (hne : anchor ≠ root) (hann : ∀ x : A, Fintype.card I • x = 0)
@@ -396,7 +397,7 @@ theorem triangle_relation_potential {I T A : Type*} [Fintype I] [Fintype T]
   rw [he, kill, kill, sub_self]
 
 /-- The signed sum of triangle rows with the given coefficients. -/
-noncomputable def sumRows {I T A : Type*} [Fintype T] [AddCommGroup A]
+private noncomputable def sumRows {I T A : Type*} [Fintype T] [AddCommGroup A]
     (points : T → Fin 3 → I) (c : T → A) (i j : I) : A :=
   ∑ t, row (points t) (c t) i j
 
@@ -420,7 +421,7 @@ private theorem sumRows_eval {I T A : Type*} [Fintype T] [AddCommGroup A]
 
 /-- The reduced equations express whether a signed sum of triangle rows
 is a potential difference after the root coordinate is omitted. -/
-def IsReducedRelation {I T A : Type*} [Fintype T] [AddCommGroup A]
+private def IsReducedRelation {I T A : Type*} [Fintype T] [AddCommGroup A]
     (points : T → Fin 3 → I) (root anchor : I) (c : T → A) : Prop :=
   ∀ i j, i ≠ root → j ≠ root →
     sumRows points c i j = sumRows points c anchor j - sumRows points c anchor i
@@ -435,7 +436,7 @@ def IsOmissionPotential {I T A : Type*} [Fintype I] [AddCommGroup A]
 
 /-- Evaluation on each first oriented edge gives a bijection from normalized
 point potentials to relations among the reduced omitted-triangle rows. -/
-theorem potential_to_relations_bijective {I T A : Type*} [Fintype I] [Fintype T]
+private theorem potential_to_relations_bijective {I T A : Type*} [Fintype I] [Fintype T]
     [AddCommGroup A] (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
     (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
     (root anchor : I) (hne : anchor ≠ root) (hann : ∀ x : A, Fintype.card I • x = 0) :
@@ -490,7 +491,7 @@ private def lineConstraint (u : Fin 9 → ZMod 3) (i : Fin 12) : Prop :=
 
 /-- A zero-at-the-origin potential with zero sums on the twelve affine lines
 is determined by its two coordinate slopes. -/
-theorem affine_plane_potential_coordinates (u : Fin 9 → ZMod 3) :
+private theorem affine_plane_potential_coordinates (u : Fin 9 → ZMod 3) :
     (u 0 = 0 ∧ ∀ i, lineConstraint u i) ↔
       u = affineFormula (u 3) (u 1) := by
   have hthree : (3 : ZMod 3) = 0 := by decide
@@ -517,7 +518,7 @@ theorem affine_plane_potential_coordinates (u : Fin 9 → ZMod 3) :
     refine ⟨rfl, fun i => ?_⟩
     fin_cases i <;> simp [lineConstraint, affineLines, affineFormula] <;> ring_nf <;> simp [hthree]
 
-theorem affine_plane_potential_card :
+private theorem affine_plane_potential_card :
     Nat.card {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} = 9 := by
   classical
   let e : {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} ≃
@@ -562,68 +563,6 @@ private theorem affine_compatible_iff (u : Fin 9 → ZMod 3) :
       · exact congrArg u h
       · exact (huncovered (affine_pair_covered i j h)).elim
 
-/-- The twelve reduced affine-line rows have a two-dimensional relation space
-over the field of three elements. -/
-theorem affine_plane_reduced_relation_card :
-    Nat.card {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} = 9 := by
-  let e : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
-      {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} :=
-    Equiv.ofBijective _ (potential_to_relations_bijective affineLines affine_triangle_injective
-      affine_pair_unique 8 0 (by decide) (by
-        intro x
-        rw [Fintype.card_fin, nsmul_eq_mul, show ((9 : ℕ) : ZMod 3) = 0 by decide, zero_mul])).bijective
-  let potentialEq : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
-      {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} :=
-    Equiv.subtypeEquivRight affine_compatible_iff
-  rw [Nat.card_congr (e.symm.trans potentialEq), affine_plane_potential_card]
-
-private def embedThree : ZMod 3 →+ ZMod 9 where
-  toFun z := 3 * (z.val : ZMod 9)
-  map_zero' := by decide
-  map_add' := by
-    show ∀ a b : ZMod 3, 3 * ((a + b).val : ZMod 9) =
-      3 * (a.val : ZMod 9) + 3 * (b.val : ZMod 9)
-    decide
-
-private theorem embedThree_injective : Function.Injective embedThree := by
-  show ∀ a b : ZMod 3, embedThree a = embedThree b → a = b
-  decide
-
-private theorem embedThree_covers :
-    ∀ x : ZMod 9, 3 • x = 0 → ∃ a : ZMod 3, embedThree a = x := by decide
-
-/-- The reduced affine-line relations modulo nine are all three-torsion
-and again admit exactly two independent ternary parameters. -/
-theorem affine_plane_reduced_relation_card_nine :
-    Nat.card {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} = 9 := by
-  classical
-  let e : {u : Fin 9 → ZMod 9 // IsOmissionPotential affineLines 0 u} ≃
-      {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} :=
-    Equiv.ofBijective _ (potential_to_relations_bijective affineLines affine_triangle_injective
-      affine_pair_unique 8 0 (by decide) (by
-        intro x
-        rw [Fintype.card_fin, nsmul_eq_mul, show ((9 : ℕ) : ZMod 9) = 0 by decide, zero_mul])).bijective
-  let map (u : Fin 9 → ZMod 3) (i : Fin 9) := embedThree (u i)
-  have preserves (u : Fin 9 → ZMod 3) :
-      IsOmissionPotential affineLines 0 (map u) ↔ IsOmissionPotential affineLines 0 u := by
-    simp only [IsOmissionPotential, map, ← map_sum, ← map_nsmul, ← map_add,
-      ← embedThree.map_zero, embedThree_injective.eq_iff]
-  let mapEquiv : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
-      {u : Fin 9 → ZMod 9 // IsOmissionPotential affineLines 0 u} := by
-    refine Equiv.ofBijective (fun u => ⟨map u.val, (preserves _).mpr u.prop⟩) ?_
-    constructor
-    · intro u v h
-      exact Subtype.ext (funext fun i => embedThree_injective (congrFun (congrArg Subtype.val h) i))
-    · intro u
-      choose v hv using fun i => embedThree_covers (u.val i) (u.prop.2.2.1 i)
-      have he : map v = u.val := funext hv
-      have hv' : IsOmissionPotential affineLines 0 (map v) := he.symm ▸ u.prop
-      exact ⟨⟨v, (preserves v).mp hv'⟩, Subtype.ext he⟩
-  let modThree : {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} ≃
-      {u : Fin 9 → ZMod 3 // u 0 = 0 ∧ ∀ i, lineConstraint u i} :=
-    Equiv.subtypeEquivRight affine_compatible_iff
-  rw [Nat.card_congr (e.symm.trans (mapEquiv.symm.trans modThree)), affine_plane_potential_card]
-
 /-- Ordered representatives of the unordered pairs remaining after two
 coordinates have been eliminated. -/
 def RemainingPair {I : Type*} [LinearOrder I] (root anchor : I) :=
@@ -646,7 +585,7 @@ private theorem row_mul {I R : Type*} [CommRing R] (triangle : Fin 3 → I)
 
 /-- The kernel of the transposed reduced matrix is precisely the space of
 triangle coefficients satisfying the potential-difference equations. -/
-theorem reduced_transpose_kernel_iff {I T R : Type*} [LinearOrder I] [Fintype T] [CommRing R]
+private theorem reduced_transpose_kernel_iff {I T R : Type*} [LinearOrder I] [Fintype T] [CommRing R]
     (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
     (root anchor : I) (c : T → R) :
     (reducedMatrix points root anchor).transpose.mulVec c = 0 ↔
@@ -697,24 +636,6 @@ theorem reduced_transpose_kernel_iff {I T R : Type*} [LinearOrder I] [Fintype T]
     change e anchor ij.val.2 - e anchor ij.val.1 - e anchor ij.val.2 + e anchor ij.val.1 = 0
     abel
 
-private theorem affine_transpose_kernel_card_three :
-    Nat.card {c : Fin 12 → ZMod 3 //
-      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} = 9 := by
-  let e : {c : Fin 12 → ZMod 3 //
-      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} ≃
-      {c : Fin 12 → ZMod 3 // IsReducedRelation affineLines 8 0 c} :=
-    Equiv.subtypeEquivRight (reduced_transpose_kernel_iff affineLines affine_triangle_injective 8 0)
-  rw [Nat.card_congr e, affine_plane_reduced_relation_card]
-
-private theorem affine_transpose_kernel_card_nine :
-    Nat.card {c : Fin 12 → ZMod 9 //
-      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} = 9 := by
-  let e : {c : Fin 12 → ZMod 9 //
-      (reducedMatrix affineLines 8 0).transpose.mulVec c = 0} ≃
-      {c : Fin 12 → ZMod 9 // IsReducedRelation affineLines 8 0 c} :=
-    Equiv.subtypeEquivRight (reduced_transpose_kernel_iff affineLines affine_triangle_injective 8 0)
-  rw [Nat.card_congr e, affine_plane_reduced_relation_card_nine]
-
 private noncomputable def marker {I R : Type*} [Zero R] [One R] (x y : I) : R :=
   open Classical in if x = y then 1 else 0
 
@@ -742,7 +663,7 @@ private theorem row_eq_edge_determinants {I R : Type*} [Ring R] (p : Fin 3 → I
 
 /-- Each reduced row entry is the determinant of the corresponding two
 quotient coordinates of the two differences of the triangle. -/
-theorem reducedMatrix_eq_determinant {I T R : Type*} [LinearOrder I] [CommRing R]
+private theorem reducedMatrix_eq_determinant {I T R : Type*} [LinearOrder I] [CommRing R]
     (points : T → Fin 3 → I) (root anchor : I) (t : T)
     (ht : Function.Injective (points t)) (ij : RemainingPair root anchor) :
     let s (p x : I) : R := marker p x - marker anchor x
@@ -759,7 +680,7 @@ theorem reducedMatrix_eq_determinant {I T R : Type*} [LinearOrder I] [CommRing R
 open Set.powersetCard
 
 /-- The two active indices of a basis coordinate, taken in increasing order. -/
-noncomputable def pairIndexEquiv {I : Type*} [LinearOrder I] (root anchor : I) :
+private noncomputable def pairIndexEquiv {I : Type*} [LinearOrder I] (root anchor : I) :
     RemainingPair root anchor ≃ {s : Set.powersetCard I 2 // root ∉ s.val ∧ anchor ∉ s.val} := by
   classical
   let asEmb : RemainingPair root anchor →
@@ -805,13 +726,13 @@ noncomputable def pairIndexEquiv {I : Type*} [LinearOrder I] (root anchor : I) :
     simp only [mem_ofFinEmbEquiv_iff_mem_range, Set.mem_range, not_exists]
   exact embedded.trans subsets
 
-theorem pairIndexEquiv_first {I : Type*} [LinearOrder I] (root anchor : I)
+private theorem pairIndexEquiv_first {I : Type*} [LinearOrder I] (root anchor : I)
     (ij : RemainingPair root anchor) :
     ofFinEmbEquiv.symm ((pairIndexEquiv root anchor) ij).val 0 = ij.val.1 := by
   simp [pairIndexEquiv]
   rfl
 
-theorem pairIndexEquiv_second {I : Type*} [LinearOrder I] (root anchor : I)
+private theorem pairIndexEquiv_second {I : Type*} [LinearOrder I] (root anchor : I)
     (ij : RemainingPair root anchor) :
     ofFinEmbEquiv.symm ((pairIndexEquiv root anchor) ij).val 1 = ij.val.2 := by
   simp [pairIndexEquiv]
@@ -821,7 +742,7 @@ open Finset CircuitDifferenceBasis
 
 /-- In the unit-weight case the root, total difference vector, and the other
 point differences form an explicit integral basis. -/
-theorem unit_difference_basis {I : Type*} [Fintype I] [DecidableEq I]
+private theorem unit_difference_basis {I : Type*} [Fintype I] [DecidableEq I]
     (root anchor : I) (h : anchor ≠ root) :
     ∃ b : Module.Basis I ℤ (I → ℤ),
       b root = Pi.single root 1 ∧
@@ -856,7 +777,7 @@ theorem unit_difference_basis {I : Type*} [Fintype I] [DecidableEq I]
 
 /-- The active coordinates of each original point difference have a
 unit contribution at that point and a negative contribution at the anchor. -/
-theorem active_difference_coordinate {I : Type*} [Fintype I] [DecidableEq I]
+private theorem active_difference_coordinate {I : Type*} [Fintype I] [DecidableEq I]
     (root anchor k x : I) (hne : anchor ≠ root) (hk : k ≠ root) (hka : k ≠ anchor)
     (b : Module.Basis I ℤ (I → ℤ))
     (ha : b anchor = ∑ i ∈ univ.erase root, (Pi.single i 1 - Pi.single root 1))
@@ -891,7 +812,7 @@ open Finset UniformCircuitResidueForms Set.powersetCard
 
 /-- Expand an alternating form by the determinants of its input coordinates
 in the integral basis. -/
-theorem form_eval_eq_sum_det {I M N : Type*} [Fintype I] [LinearOrder I]
+private theorem form_eval_eq_sum_det {I M N : Type*} [Fintype I] [LinearOrder I]
     [AddCommGroup M] [AddCommGroup N] {k : ℕ} (b : Module.Basis I ℤ M)
     (f : M [⋀^Fin k]→ₗ[ℤ] N) (v : Fin k → M) :
     f v = ∑ s : Set.powersetCard I k,
@@ -917,7 +838,7 @@ open UniformCircuitResidueForms
 
 /-- A two-form vanishing at the two eliminated vectors reads each omitted
 triangle through the corresponding row of the reduced matrix. -/
-theorem reduced_readout {I T N : Type*} [Fintype I] [LinearOrder I] [AddCommGroup N]
+private theorem reduced_readout {I T N : Type*} [Fintype I] [LinearOrder I] [AddCommGroup N]
     (points : T → Fin 3 → I) (t : T) (ht : Function.Injective (points t))
     (root anchor : I) (hne : anchor ≠ root) [Fintype (RemainingPair root anchor)]
     (b : Module.Basis I ℤ (I → ℤ))
@@ -1031,7 +952,7 @@ open Function Matrix
 open scoped Matroid
 open SparsePavingCircuitCoordinates ParallelCircuitObstruction UniformCircuitBasis
 open RationalJointCircuitImage (RationalResidue)
-open RankTwoCircuitInvariantFactors (ResidueTorsion residueTorsion_equiv_zmod)
+open RankTwoCircuitInvariantFactors (ResidueTorsion residueTorsion_equiv_zmod gcd_torsion_iff)
 open JointCircuitLiftingObstruction (JointSaturatedImage JointImageInSaturation)
 
 private theorem reducedMatrix_intCast {I T R : Type*} [LinearOrder I] [CommRing R]
@@ -1197,7 +1118,7 @@ theorem rank_three_lifting_obstruction_equiv_kernel {I T : Type*}
 
 /-- The cokernel of a matrix over a finite residue ring has the same size
 as the kernel of its transpose. This uses the perfect character pairing. -/
-theorem transpose_kernel_card_eq_cokernel {m n : Type*} [Fintype m] [Fintype n]
+private theorem transpose_kernel_card_eq_cokernel {m n : Type*} [Fintype m] [Fintype n]
     (q : ℕ) [NeZero q] (A : Matrix m n (ZMod q)) :
     Nat.card {y : m → ZMod q // A.transpose.mulVec y = 0} =
       Nat.card ((m → ZMod q) ⧸ LinearMap.range A.mulVecLin) := by
@@ -1260,7 +1181,7 @@ theorem transpose_kernel_card_eq_cokernel {m n : Type*} [Fintype m] [Fintype n]
   exact (Nat.card_congr (Equiv.ofBijective forward hforward)).trans hcard
 
 /-- Counting the image in two ways relates the primal and transpose kernels. -/
-theorem primal_kernel_card_mul {m n : Type*} [Fintype m] [Fintype n]
+private theorem primal_kernel_card_mul {m n : Type*} [Fintype m] [Fintype n]
     (q : ℕ) [NeZero q] (A : Matrix m n (ZMod q)) :
     Nat.card {x : n → ZMod q // A.mulVec x = 0} * q ^ Fintype.card m =
       q ^ Fintype.card n * Nat.card {y : m → ZMod q // A.transpose.mulVec y = 0} := by
@@ -1296,157 +1217,6 @@ private theorem map_reducedMatrix_mulVec {I T R S : Type*}
   simpa only [zsmul_eq_mul] using f.map_zsmul
     ((reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) ℤ) t ij) (x ij)
 
-private theorem affine_pair_count : Fintype.card (RemainingPair (8 : Fin 9) 0) = 21 := by
-  let admissible (ij : Fin 9 × Fin 9) :=
-    ij.1 < ij.2 ∧ ij.1 ≠ 8 ∧ ij.2 ≠ 8 ∧ ij.1 ≠ 0 ∧ ij.2 ≠ 0
-  let _ : DecidablePred admissible := fun ij =>
-    inferInstanceAs (Decidable (ij.1 < ij.2 ∧ ij.1 ≠ 8 ∧ ij.2 ≠ 8 ∧ ij.1 ≠ 0 ∧ ij.2 ≠ 0))
-  calc
-    Fintype.card (RemainingPair (8 : Fin 9) 0) =
-        @Fintype.card {ij // admissible ij} (Subtype.fintype admissible) :=
-      @Fintype.card_congr _ _ (instRemainingPairFintype 8 0) (Subtype.fintype admissible)
-        (Equiv.refl _)
-    _ = 21 := by
-      rw [Fintype.card_subtype]
-      decide
-
-private noncomputable abbrev affineKernel (q : ℕ) :=
-  (reducedMatrix affineLines 8 0 :
-    Matrix (Fin 12) (RemainingPair (8 : Fin 9) 0) (ZMod q)).mulVecLin.ker.restrictScalars ℤ
-
-private theorem affine_kernel_card_three : Nat.card ↥(affineKernel 3) = 3 ^ 11 := by
-  have h := primal_kernel_card_mul 3 (reducedMatrix affineLines 8 0)
-  rw [affine_transpose_kernel_card_three, affine_pair_count, Fintype.card_fin] at h
-  change Nat.card ↥(affineKernel 3) * 3 ^ 12 = 3 ^ 21 * 9 at h
-  exact Nat.eq_of_mul_eq_mul_right (by decide : 0 < 3 ^ 12)
-    (h.trans (by decide : 3 ^ 21 * 9 = 3 ^ 11 * 3 ^ 12))
-
-private theorem affine_kernel_card_nine : Nat.card ↥(affineKernel 9) = 3 ^ 20 := by
-  have h := primal_kernel_card_mul 9 (reducedMatrix affineLines 8 0)
-  rw [affine_transpose_kernel_card_nine, affine_pair_count, Fintype.card_fin] at h
-  change Nat.card ↥(affineKernel 9) * 9 ^ 12 = 9 ^ 21 * 9 at h
-  exact Nat.eq_of_mul_eq_mul_right (by decide : 0 < 9 ^ 12)
-    (h.trans (by decide : 9 ^ 21 * 9 = 3 ^ 20 * 9 ^ 12))
-
-private theorem affine_kernel_torsion_three :
-    Nat.card {x : affineKernel 9 // 3 • x = 0} = 3 ^ 11 := by
-  have preserves (x : RemainingPair (8 : Fin 9) 0 → ZMod 3) :
-      (reducedMatrix affineLines 8 0).mulVec (embedThree ∘ x) = 0 ↔
-        (reducedMatrix affineLines 8 0).mulVec x = 0 := by
-    rw [← map_reducedMatrix_mulVec affineLines 8 0 embedThree x]
-    constructor
-    · intro h
-      funext t
-      apply embedThree_injective
-      change embedThree ((reducedMatrix affineLines 8 0).mulVec x t) = embedThree 0
-      rw [map_zero]
-      exact congrFun h t
-    · intro h
-      funext t
-      rw [h]
-      exact embedThree.map_zero
-  have killed : ∀ a : ZMod 3, 3 • embedThree a = 0 := by decide
-  let E : ↥(affineKernel 3) ≃ {x : affineKernel 9 // 3 • x = 0} := by
-    let embed (x : affineKernel 3) : affineKernel 9 :=
-      ⟨embedThree ∘ x.val, (preserves _).2 x.prop⟩
-    refine Equiv.ofBijective (fun x => ⟨embed x, Subtype.ext (funext fun i => killed (x.val i))⟩) ?_
-    constructor
-    · intro x y h
-      apply Subtype.ext
-      funext i
-      exact embedThree_injective (congrArg (fun u : {x : affineKernel 9 // 3 • x = 0} =>
-        u.val.val i) h)
-    · intro y
-      have hy (i : RemainingPair (8 : Fin 9) 0) : 3 • y.val.val i = 0 :=
-        congrArg (fun x : affineKernel 9 => x.val i) y.prop
-      choose x hx using fun i => embedThree_covers (y.val.val i) (hy i)
-      have he : embedThree ∘ x = y.val.val := funext hx
-      have mem : x ∈ affineKernel 3 := (preserves x).1 (he.symm ▸ y.val.prop)
-      exact ⟨⟨x, mem⟩, Subtype.ext (Subtype.ext he)⟩
-  rw [← Nat.card_congr E, affine_kernel_card_three]
-
-private theorem affine_kernel_cyclic_factors :
-    Nonempty (↥(affineKernel 9) ≃ₗ[ℤ] (Fin 9 → ZMod 9) × (Fin 2 → ZMod 3)) := by
-  classical
-  let K := ↥(affineKernel 9)
-  obtain ⟨ι, _, modulus, hgt, ⟨decomp⟩⟩ := AddCommGroup.equiv_directSum_zmod_of_finite' K
-  let E := decomp.trans (DirectSum.addEquivProd (fun i => ZMod (modulus i)))
-  have killed (x : K) : 9 • x = 0 := by
-    apply Subtype.ext
-    funext i
-    change 9 • x.val i = 0
-    rw [nsmul_eq_mul, show ((9 : ℕ) : ZMod 9) = 0 by decide, zero_mul]
-  have order (i : ι) : modulus i = 3 ∨ modulus i = 9 := by
-    have hk := congrArg (fun x : K => E x i) (killed (E.symm (Pi.single i 1)))
-    change E (9 • E.symm (Pi.single i 1)) i = E 0 i at hk
-    simp only [map_nsmul, AddEquiv.apply_symm_apply, Pi.smul_apply, Pi.single_eq_same,
-      map_zero, Pi.zero_apply, nsmul_eq_mul, mul_one] at hk
-    have hdiv : modulus i ∣ 9 := (ZMod.natCast_eq_zero_iff _ _).mp hk
-    have hpow : modulus i ∣ 3 ^ 2 := hdiv
-    obtain ⟨k, hk, hm⟩ := (Nat.dvd_prime_pow (by decide : Nat.Prime 3)).mp hpow
-    interval_cases k
-    · have := hgt i
-      simp [hm] at this
-    · exact Or.inl hm
-    · exact Or.inr hm
-  let U := {i : ι // modulus i = 9}
-  let V := {i : ι // modulus i ≠ 9}
-  let split : ((i : ι) → ZMod (modulus i)) ≃+
-      (((i : U) → ZMod (modulus i)) × ((i : V) → ZMod (modulus i))) :=
-    ⟨Equiv.piEquivPiSubtypeProd (fun i => modulus i = 9) (fun i => ZMod (modulus i)),
-      fun _ _ => rfl⟩
-  let u (i : U) : ZMod (modulus i) ≃+ ZMod 9 := by rw [i.prop]
-  let v (i : V) : ZMod (modulus i) ≃+ ZMod 3 := by
-    rw [(order i).resolve_right i.prop]
-  let f : K ≃+ (U → ZMod 9) × (V → ZMod 3) :=
-    E.trans (split.trans ((AddEquiv.piCongrRight u).prodCongr (AddEquiv.piCongrRight v)))
-  have total : 2 * Nat.card U + Nat.card V = 20 := by
-    have h := (Nat.card_congr f.toEquiv).symm.trans affine_kernel_card_nine
-    rw [Nat.card_prod, Nat.card_fun, Nat.card_fun, Nat.card_zmod, Nat.card_zmod] at h
-    change (3 ^ 2) ^ Nat.card U * 3 ^ Nat.card V = 3 ^ 20 at h
-    rw [← pow_mul, ← pow_add] at h
-    exact Nat.pow_right_injective (by decide : 2 ≤ 3) h
-  let transport : {x : K // 3 • x = 0} ≃
-      {x : (U → ZMod 9) × (V → ZMod 3) // 3 • x = 0} :=
-    f.toEquiv.subtypeEquiv (fun x => by
-      change 3 • x = 0 ↔ 3 • f x = 0
-      rw [← map_nsmul, ← f.map_zero, f.injective.eq_iff])
-  have hsplit (x : (U → ZMod 9) × (V → ZMod 3)) :
-      3 • x = 0 ↔ (∀ i, 3 • x.1 i = 0) ∧ (∀ i, 3 • x.2 i = 0) := by
-    rcases x with ⟨a, b⟩
-    change ((3 • a, 3 • b) : (U → ZMod 9) × (V → ZMod 3)) = (0, 0) ↔ _
-    simp only [Prod.mk.injEq, funext_iff, Pi.smul_apply, Pi.zero_apply]
-  let embed : ZMod 3 ≃ {x : ZMod 9 // 3 • x = 0} :=
-    Equiv.ofBijective (fun a => ⟨embedThree a, by
-      have killedAll : ∀ a : ZMod 3, 3 • embedThree a = 0 := by decide
-      exact killedAll a⟩)
-      ⟨fun _ _ h => embedThree_injective (congrArg Subtype.val h),
-        fun y => by
-          obtain ⟨a, h⟩ := embedThree_covers y.val y.prop
-          exact ⟨a, Subtype.ext h⟩⟩
-  let separate := (Equiv.subtypeEquivRight hsplit).trans
-    (@Equiv.subtypeProdEquivProd _ _ (fun a : U → ZMod 9 => ∀ i, 3 • a i = 0)
-      (fun b : V → ZMod 3 => ∀ i, 3 • b i = 0))
-  let evalU : {u : U → ZMod 9 // ∀ i, 3 • u i = 0} ≃ (U → ZMod 3) :=
-    Equiv.subtypePiEquivPi.trans (Equiv.piCongrRight fun _ => embed.symm)
-  let evalV : {v : V → ZMod 3 // ∀ i, 3 • v i = 0} ≃ (V → ZMod 3) :=
-    Equiv.subtypeUnivEquiv (fun v i => by
-      rw [nsmul_eq_mul, show ((3 : ℕ) : ZMod 3) = 0 by decide, zero_mul])
-  have torsion : Nat.card U + Nat.card V = 11 := by
-    have h := (Nat.card_congr (transport.trans (separate.trans (evalU.prodCongr evalV)))).symm.trans
-      affine_kernel_torsion_three
-    rw [Nat.card_prod, Nat.card_fun, Nat.card_fun, Nat.card_zmod, ← pow_add] at h
-    exact Nat.pow_right_injective (by decide : 2 ≤ 3) h
-  have hU : Fintype.card U = 9 := by
-    rw [← Nat.card_eq_fintype_card]
-    omega
-  have hV : Fintype.card V = 2 := by
-    rw [← Nat.card_eq_fintype_card]
-    omega
-  let first := LinearEquiv.piCongrLeft' ℤ (fun _ : U => ZMod 9) (Fintype.equivFinOfCardEq hU)
-  let second := LinearEquiv.piCongrLeft' ℤ (fun _ : V => ZMod 3) (Fintype.equivFinOfCardEq hV)
-  exact ⟨f.toIntLinearEquiv.trans (first.prodCongr second)⟩
-
 private theorem affine_lines_increasing : ∀ t, StrictMono (affineLines t) := by decide
 
 private def affineTriangle (t : Fin 12) : Fin 3 ↪o Fin 9 :=
@@ -1455,6 +1225,507 @@ private def affineTriangle (t : Fin 12) : Fin 3 ↪o Fin 9 :=
 /-- The twelve affine lines on the nine points, numbered in row-major order. -/
 def affineOmissions : Set (Finset (Fin 9)) :=
   Set.range fun t => (ofFinEmbEquiv (affineTriangle t)).val
+
+private theorem zmod_torsion_embedding (q s : ℕ) (hq : 0 < q) :
+    ∃ f : ZMod (q.gcd s) →+ ZMod q, Injective f ∧
+      ∀ y : ZMod q, s • y = 0 ↔ y ∈ Set.range f := by
+  obtain ⟨eqQ⟩ := residueTorsion_equiv_zmod q hq.ne'
+  obtain ⟨eqG⟩ := residueTorsion_equiv_zmod (q.gcd s) (Nat.gcd_pos_of_pos_left s hq).ne'
+  have incl : ResidueTorsion (q.gcd s) ≤ ResidueTorsion q :=
+    fun x hx => ((gcd_torsion_iff q s x).mp hx).1
+  let e := eqQ.toLinearMap.comp ((Submodule.inclusion incl).comp eqG.symm.toLinearMap)
+  refine ⟨e.toAddMonoidHom, eqQ.injective.comp
+    ((Submodule.inclusion_injective incl).comp eqG.symm.injective), fun y => ?_⟩
+  constructor
+  · intro hy
+    let u := eqQ.symm y
+    have hu : (s : ℤ) • u = 0 := by
+      apply eqQ.injective
+      rw [map_zsmul, LinearEquiv.apply_symm_apply, map_zero, natCast_zsmul, hy]
+    have hg := (gcd_torsion_iff q s u.val).mpr
+      ⟨u.prop, congrArg (fun x : ResidueTorsion q => x.val) hu⟩
+    let v : ResidueTorsion (q.gcd s) := ⟨u.val, hg⟩
+    refine ⟨eqG v, ?_⟩
+    change eqQ (Submodule.inclusion incl (eqG.symm (eqG v))) = _
+    rw [LinearEquiv.symm_apply_apply]
+    exact eqQ.apply_symm_apply y
+  · rintro ⟨x, rfl⟩
+    let v := eqG.symm x
+    have hk := ((gcd_torsion_iff q s v.val).mp v.prop).2
+    rw [← natCast_zsmul]
+    change (s : ℤ) • eqQ (Submodule.inclusion incl v) = 0
+    rw [← map_zsmul, ← eqQ.map_zero]
+    exact congrArg eqQ (Subtype.ext (by exact hk))
+
+private theorem omissionPotential_card_of_torsion {I T : Type*} [Fintype I]
+    (points : T → Fin 3 → I) (anchor : I) (q : ℕ) (hq : 0 < q) :
+    Nat.card {u : I → ZMod q // IsOmissionPotential points anchor u} =
+      Nat.card {u : I → ZMod (q.gcd 3) // IsOmissionPotential points anchor u} := by
+  obtain ⟨f, hf, hrange⟩ := zmod_torsion_embedding q 3 hq
+  have preserves (u : I → ZMod (q.gcd 3)) :
+      IsOmissionPotential points anchor (f ∘ u) ↔ IsOmissionPotential points anchor u := by
+    simp only [IsOmissionPotential, Function.comp_apply, ← map_sum, ← map_nsmul, ← map_add,
+      ← f.map_zero, hf.eq_iff]
+  let e : {u : I → ZMod (q.gcd 3) // IsOmissionPotential points anchor u} ≃
+      {u : I → ZMod q // IsOmissionPotential points anchor u} := by
+    refine Equiv.ofBijective (fun u => ⟨f ∘ u.val, (preserves _).mpr u.prop⟩) ?_
+    constructor
+    · intro u v h
+      apply Subtype.ext
+      funext i
+      exact hf (congrFun (congrArg Subtype.val h) i)
+    · intro u
+      have h (i : I) : u.val i ∈ Set.range f := (hrange _).mp (u.prop.2.2.1 i)
+      choose v hv using h
+      have he : f ∘ v = u.val := funext hv
+      exact ⟨⟨v, (preserves v).mp (he.symm ▸ u.prop)⟩, Subtype.ext he⟩
+  exact Nat.card_congr e.symm
+
+/-- At every divisor of the number of points, the cardinality of the reduced
+kernel is determined by the corresponding ternary potential count. -/
+private theorem rank_three_kernel_card_by_potential {I T : Type*}
+    [Fintype I] [LinearOrder I] [Fintype T]
+    (points : T → Fin 3 → I) (hinj : ∀ t, Function.Injective (points t))
+    (hdis : ∀ t s i j, i ≠ j →
+      (∃ a b, points t a = i ∧ points t b = j) →
+      (∃ a b, points s a = i ∧ points s b = j) → t = s)
+    (root anchor : I) (hne : anchor ≠ root) (q : ℕ) [NeZero q]
+    (hqn : q ∣ Fintype.card I) :
+    Nat.card {x : RemainingPair root anchor → ZMod q //
+        (reducedMatrix points root anchor).mulVec x = 0} * q ^ Fintype.card T =
+      q ^ Fintype.card (RemainingPair root anchor) *
+        Nat.card {u : I → ZMod (q.gcd 3) // IsOmissionPotential points anchor u} := by
+  have annihilates (x : ZMod q) : Fintype.card I • x = 0 := by
+    rw [nsmul_eq_mul, (ZMod.natCast_eq_zero_iff _ _).mpr hqn, zero_mul]
+  let E : {u : I → ZMod q // IsOmissionPotential points anchor u} ≃
+      {c : T → ZMod q // IsReducedRelation points root anchor c} :=
+    Equiv.ofBijective _ (potential_to_relations_bijective points hinj hdis
+      root anchor hne annihilates).bijective
+  let F : {c : T → ZMod q // (reducedMatrix points root anchor).transpose.mulVec c = 0} ≃
+      {c : T → ZMod q // IsReducedRelation points root anchor c} :=
+    Equiv.subtypeEquivRight (reduced_transpose_kernel_iff points hinj root anchor)
+  rw [primal_kernel_card_mul q, Nat.card_congr (F.trans E.symm),
+    omissionPotential_card_of_torsion points anchor q (NeZero.pos q)]
+
+private theorem remainingPair_card {I : Type*} [Fintype I] [LinearOrder I]
+    (root anchor : I) (hne : anchor ≠ root) :
+    Fintype.card (RemainingPair root anchor) = (Fintype.card I - 2).choose 2 := by
+  classical
+  let S := ((univ : Finset I).erase root).erase anchor
+  let U := {s : Set.powersetCard I 2 // root ∉ s.val ∧ anchor ∉ s.val}
+  have contained (s : Finset I) : s ⊆ S ↔ root ∉ s ∧ anchor ∉ s := by
+    simp only [S, subset_erase, subset_univ, true_and]
+  let e : U ≃ (S.powersetCard 2 : Finset (Finset I)) :=
+    { toFun := fun s => ⟨s.val.val, mem_powersetCard.mpr
+        ⟨(contained _).mpr s.prop, s.val.prop⟩⟩
+      invFun := fun s =>
+        let h := mem_powersetCard.mp s.prop
+        ⟨⟨s.val, h.2⟩, (contained _).mp h.1⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  rw [Fintype.card_congr ((pairIndexEquiv root anchor).trans e), Fintype.card_coe,
+    card_powersetCard, card_erase_of_mem (mem_erase.mpr ⟨hne, mem_univ _⟩),
+    card_erase_of_mem (mem_univ _), card_univ, Nat.sub_sub]
+
+private theorem reduced_kernel_torsion_card {I T : Type*} [Fintype I] [LinearOrder I]
+    (points : T → Fin 3 → I) (root anchor : I) (n q : ℕ) (hn : 0 < n) (hqn : q ∣ n) :
+    let K := (reducedMatrix points root anchor :
+      Matrix T (RemainingPair root anchor) (ZMod n)).mulVecLin.ker.restrictScalars ℤ
+    Nat.card {x : K // q • x = 0} =
+      Nat.card {x : RemainingPair root anchor → ZMod q //
+        (reducedMatrix points root anchor).mulVec x = 0} := by
+  intro K
+  have hEmbed := zmod_torsion_embedding n q hn
+  rw [Nat.gcd_eq_right hqn] at hEmbed
+  obtain ⟨f, hf, hrange⟩ := hEmbed
+  have preserves (x : RemainingPair root anchor → ZMod q) :
+      (reducedMatrix points root anchor).mulVec (f ∘ x) = 0 ↔
+        (reducedMatrix points root anchor).mulVec x = 0 := by
+    rw [← map_reducedMatrix_mulVec points root anchor f x]
+    constructor
+    · intro h
+      funext t
+      apply hf
+      exact (congrFun h t).trans f.map_zero.symm
+    · intro h
+      funext t
+      rw [h]
+      exact f.map_zero
+  let e : {x : RemainingPair root anchor → ZMod q //
+      (reducedMatrix points root anchor).mulVec x = 0} ≃ {x : K // q • x = 0} := by
+    let into (x : RemainingPair root anchor → ZMod q) (hx : _) : K :=
+      ⟨f ∘ x, (preserves _).mpr hx⟩
+    refine Equiv.ofBijective (fun x => ⟨into x.val x.prop, Subtype.ext ?_⟩) ?_
+    · funext i
+      exact (hrange _).mpr ⟨x.val i, rfl⟩
+    constructor
+    · intro x y h
+      apply Subtype.ext
+      funext i
+      exact hf (congrArg (fun u : {x : K // q • x = 0} => u.val.val i) h)
+    · intro y
+      have hy (i : RemainingPair root anchor) : q • y.val.val i = 0 :=
+        congrArg (fun x : K => x.val i) y.prop
+      choose x hx using fun i => (hrange _).mp (hy i)
+      have he : f ∘ x = y.val.val := funext hx
+      have mem := (preserves x).mp (he.symm ▸ y.val.prop)
+      exact ⟨⟨x, mem⟩, Subtype.ext (Subtype.ext he)⟩
+  exact Nat.card_congr e.symm
+
+private theorem sparse_triangle_unique_pair {I T : Type*} [LinearOrder I]
+    (triangles : T → Fin 3 ↪o I) (ht : Injective triangles)
+    (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
+      (fun H J => (H ∩ J).card + 2 ≤ 3))
+    (t s : T) (i j : I) (hij : i ≠ j)
+    (hi : covers (triangles t) i j) (hj : covers (triangles s) i j) : t = s := by
+  let H := (ofFinEmbEquiv (triangles t)).val
+  let J := (ofFinEmbEquiv (triangles s)).val
+  have HJ : H = J := by
+    by_contra hne
+    have hs := hsparse (show H ∈ Set.range _ from ⟨t, rfl⟩)
+      (show J ∈ Set.range _ from ⟨s, rfl⟩) hne
+    have covered (b : T) (h : covers (triangles b) i j) :
+        i ∈ (ofFinEmbEquiv (triangles b)).val ∧ j ∈ (ofFinEmbEquiv (triangles b)).val := by
+      obtain ⟨x, y, hx, hy⟩ := h
+      exact ⟨(mem_ofFinEmbEquiv_iff_mem_range _ _).mpr ⟨x, hx⟩,
+        (mem_ofFinEmbEquiv_iff_mem_range _ _).mpr ⟨y, hy⟩⟩
+    have hc := Finset.one_lt_card_iff.mpr
+      ⟨i, j, mem_inter.mpr ⟨(covered t hi).1, (covered s hj).1⟩,
+        mem_inter.mpr ⟨(covered t hi).2, (covered s hj).2⟩, hij⟩
+    change 1 < (H ∩ J).card at hc
+    omega
+  exact ht (ofFinEmbEquiv.injective (Subtype.ext HJ))
+
+/-- The point potentials count the elements of the integral obstruction
+killed by any divisor of the ground-set size. -/
+theorem rank_three_lifting_obstruction_torsion_card {I T : Type*}
+    [Fintype I] [LinearOrder I] [Fintype T]
+    (M : Matroid I) (triangles : T → Fin 3 ↪o I) (ht : Injective triangles)
+    (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
+    (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
+      (fun H J => (H ∩ J).card + 2 ≤ 3))
+    (hground : M.E = Set.univ)
+    (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
+      B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val)
+    (q : ℕ) [NeZero q] (hqn : q ∣ Fintype.card I) :
+    let G := JointSaturatedImage (M.comap (id : I → I)) ⧸
+      JointImageInSaturation (M.comap (id : I → I))
+    Nat.card {x : G // q • x = 0} * q ^ Fintype.card T =
+      q ^ ((Fintype.card I - 2).choose 2) *
+        Nat.card {u : I → ZMod (q.gcd 3) //
+          IsOmissionPotential (fun t => triangles t) anchor u} := by
+  intro G
+  let points (t : T) : Fin 3 → I := triangles t
+  obtain ⟨equiv⟩ := rank_three_lifting_obstruction_equiv_kernel M triangles root anchor
+    hne hn hsparse hground hbase
+  have transform := equiv.toEquiv.subtypeEquiv
+    (p := fun x : G => q • x = 0) (q := fun y => q • y = 0) (fun x => by
+      change q • x = 0 ↔ q • equiv x = 0
+      have hmap : equiv (q • x) = q • equiv x := by
+        simpa only [natCast_zsmul] using equiv.map_smul (q : ℤ) x
+      rw [← hmap, ← equiv.map_zero, equiv.injective.eq_iff])
+  rw [Nat.card_congr transform, reduced_kernel_torsion_card points root anchor
+    (Fintype.card I) q (by omega) hqn, ← remainingPair_card root anchor hne]
+  exact rank_three_kernel_card_by_potential points (fun t => (triangles t).injective)
+    (sparse_triangle_unique_pair triangles ht hsparse) root anchor hne q hqn
+
+private theorem int_cast_matrix_rigidity {m n : Type*} [Fintype m]
+    (A : Matrix n m ℤ) (q : ℕ) (hq : 3 < q)
+    (hkill : ∀ x : m → ZMod q, (A.map (Int.castRingHom (ZMod q))).mulVec x = 0 →
+      ∀ i, 3 • x i = 0) :
+    ∀ x : m → ℤ, A.mulVec x = 0 → x = 0 := by
+  classical
+  let qZ : ℤ := q
+  let g := Int.gcd qZ 3
+  have gpos : 0 < g := Int.gcd_pos_of_ne_zero_right _ (by decide)
+  obtain ⟨d, e, hde, hqde, h3de⟩ := Int.exists_gcd_one gpos
+  have gnz : (g : ℤ) ≠ 0 := by exact_mod_cast gpos.ne'
+  have gbound : (g : ℤ) ≤ 3 := Int.le_of_dvd (by decide) (Int.gcd_dvd_right qZ 3)
+  have dpos : 1 < d := by
+    have hq' : 3 < qZ := by
+      change 3 < (q : ℤ)
+      exact_mod_cast hq
+    nlinarith
+  have divisibility (x : m → ℤ) (hx : A.mulVec x = 0) (i : m) : d ∣ x i := by
+    let cast := Int.castRingHom (ZMod q)
+    have hm : (A.map cast).mulVec (cast ∘ x) = 0 := by
+      funext j
+      rw [← RingHom.map_mulVec, hx]
+      exact cast.map_zero
+    have h := hkill (cast ∘ x) hm i
+    rw [nsmul_eq_mul] at h
+    have h' : ((3 * x i : ℤ) : ZMod q) = 0 := by
+      simpa [cast, Int.cast_mul, Function.comp_def] using h
+    have hdiv : qZ ∣ 3 * x i := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp h'
+    have hdiv' : d * (g : ℤ) ∣ e * x i * (g : ℤ) := by
+      convert hdiv using 1
+      · exact hqde.symm
+      · rw [mul_right_comm, ← h3de]
+    exact Int.dvd_of_dvd_mul_right_of_gcd_one (Int.dvd_of_mul_dvd_mul_right gnz hdiv') hde
+  intro x hx
+  funext i
+  by_contra hi
+  have existsPositive : ∃ a : ℕ, ∃ v : m → ℤ, A.mulVec v = 0 ∧
+      v i ≠ 0 ∧ (v i).natAbs = a := ⟨_, x, hx, hi, rfl⟩
+  obtain ⟨v, hv, hvi, hmin⟩ := Nat.find_spec existsPositive
+  choose w hw using divisibility v hv
+  have veq : v = d • w := funext hw
+  have hscaled : d • A.mulVec w = 0 := by rwa [veq, Matrix.mulVec_smul] at hv
+  have wker : A.mulVec w = 0 := by
+    funext j
+    have h := congrFun hscaled j
+    change d * A.mulVec w j = 0 at h
+    exact (mul_eq_zero.mp h).resolve_left (by omega)
+  have wi : w i ≠ 0 := by
+    intro zero
+    exact hvi (by rw [hw, zero, mul_zero])
+  have less : (w i).natAbs < Nat.find existsPositive := by
+    rw [← hmin, hw, Int.natAbs_mul]
+    have habs : 1 < d.natAbs := by omega
+    have hwpos : 0 < (w i).natAbs := Int.natAbs_pos.mpr wi
+    nlinarith
+  exact (Nat.find_min existsPositive less) ⟨w, wker, wi, rfl⟩
+
+private theorem smith_kernel_split {m n : Type*} [Fintype m] [Fintype n]
+    (A : Matrix m n ℤ) (hA : Injective A.transpose.mulVecLin) (q : ℕ) :
+    Fintype.card m ≤ Fintype.card n ∧ ∃ d : Fin (Fintype.card m) → ℤ,
+      Nonempty (↥((A.map (Int.castRingHom (ZMod q))).mulVecLin.ker.restrictScalars ℤ) ≃ₗ[ℤ]
+        (Fin (Fintype.card n - Fintype.card m) → ZMod q) ×
+          ((i : Fin (Fintype.card m)) → Submodule.torsionBy ℤ (ZMod q) (d i))) := by
+  classical
+  let f := A.transpose.mulVecLin
+  let b := Pi.basisFun ℤ n
+  let c := Pi.basisFun ℤ m
+  obtain ⟨r, S⟩ := (LinearMap.range f).smithNormalForm b
+  have rcard : r = Fintype.card m := by
+    let br := c.map (LinearEquiv.ofInjective f hA)
+    simpa only [Fintype.card_fin] using Fintype.card_congr (S.bN.indexEquiv br)
+  subst r
+  let d := S.a
+  let D (i : Fin (Fintype.card m)) := Submodule.torsionBy ℤ (ZMod q) (d i)
+  refine ⟨by simpa using Fintype.card_le_of_injective S.f S.f.injective, d, ?_⟩
+  let cast := Int.castRingHom (ZMod q)
+  let K := (A.map cast).mulVecLin.ker.restrictScalars ℤ
+  let P : Submodule ℤ (n → ZMod q) :=
+    ⨅ i, (D i).comap (LinearMap.proj (R := ℤ) (φ := fun _ : n => ZMod q) (S.f i))
+  let coord : (n → ZMod q) ≃ₗ[ℤ] (n → ZMod q) :=
+    (b.constr ℤ).trans (S.bM.constr ℤ).symm
+  have read (x : n → ZMod q) (i : m) :
+      (A.map cast).mulVec x i = (b.constr ℤ x) (f (c i)) := by
+    have col : f (c i) = fun j => A i j := by
+      simp [f, c, Pi.basisFun_apply, Matrix.mulVec_single_one]
+      rfl
+    have expand : (fun j => A i j) = ∑ j, A i j • b j := by
+      funext k
+      simp [b, Pi.basisFun_apply, Finset.sum_apply, Pi.smul_apply,
+        Pi.single_apply, mul_ite]
+    rw [col]
+    conv => rhs; arg 2; rw [expand]
+    rw [map_sum]
+    change (∑ j, cast (A i j) * x j) = _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [map_smul, Module.Basis.constr_basis]
+    rw [zsmul_eq_mul]
+    rfl
+  have ann (x : n → ZMod q) : x ∈ K ↔ ∀ y : f.range, (b.constr ℤ x) y.val = 0 := by
+    change (A.map cast).mulVec x = 0 ↔ _
+    constructor
+    · intro h y
+      obtain ⟨z, hz⟩ := y.prop
+      have hz' : (b.constr ℤ x).comp f = 0 := c.ext fun i => by
+        exact (read x i).symm.trans (congrFun h i)
+      rw [← hz]
+      exact congrFun (congrArg DFunLike.coe hz') z
+    · intro h
+      funext i
+      rw [read]
+      exact h ⟨f (c i), ⟨c i, rfl⟩⟩
+  have diag (x : n → ZMod q) : x ∈ K ↔ coord x ∈ P := by
+    rw [ann]
+    have eqn (i : Fin (Fintype.card m)) :
+        (b.constr ℤ x) (S.bN i : f.range).val = d i • coord x (S.f i) := by
+      rw [S.snf, map_zsmul]
+      rfl
+    have constraints : coord x ∈ P ↔ ∀ i, d i • coord x (S.f i) = 0 := by
+      simp only [P, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.proj_apply,
+        Submodule.mem_torsionBy_iff, D]
+    rw [constraints]
+    constructor
+    · intro h i
+      rw [← eqn]
+      exact h (S.bN i)
+    · intro h y
+      have hzero : (b.constr ℤ x).comp f.range.subtype = 0 := S.bN.ext fun i => by
+        exact (eqn i).trans (h i)
+      exact congrFun (congrArg DFunLike.coe hzero) y
+  let e := coord.ofSubmodules K P (by
+    rw [Submodule.map_equiv_eq_comap_symm]
+    ext x
+    change coord.symm x ∈ K ↔ x ∈ P
+    rw [diag, LinearEquiv.apply_symm_apply])
+  let U := {j : n // j ∉ Set.range S.f}
+  have accepts (x : n → ZMod q) : x ∈ P ↔ ∀ i, x (S.f i) ∈ D i := by
+    simp only [P, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.proj_apply]
+  let separate : P →ₗ[ℤ] (U → ZMod q) × ((i : Fin (Fintype.card m)) → D i) :=
+    { toFun := fun x => (fun j => x.val j, fun i => ⟨x.val (S.f i), (accepts _).mp x.prop i⟩)
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  have bijective : Bijective separate := by
+    constructor
+    · intro x y h
+      apply Subtype.ext
+      funext j
+      by_cases hj : j ∈ Set.range S.f
+      · obtain ⟨i, rfl⟩ := hj
+        exact congrArg (fun v => (v.2 i).val) h
+      · exact congrArg (fun v => v.1 ⟨j, hj⟩) h
+    · intro y
+      let x (j : n) : ZMod q :=
+        if hj : j ∈ Set.range S.f then (y.2 hj.choose).val else y.1 ⟨j, hj⟩
+      have some (i : Fin (Fintype.card m)) : x (S.f i) = (y.2 i).val := by
+        have h : S.f i ∈ Set.range S.f := ⟨i, rfl⟩
+        dsimp only [x]
+        rw [dif_pos h, S.f.injective h.choose_spec]
+      refine ⟨⟨x, (accepts _).mpr (fun i => (some i).symm ▸ (y.2 i).prop)⟩, Prod.ext ?_ ?_⟩
+      · funext j
+        exact dif_neg j.prop
+      · funext i
+        exact Subtype.ext (some i)
+  have ucard : Fintype.card U = Fintype.card n - Fintype.card m := by
+    rw [Fintype.card_subtype_compl, ← Fintype.card_congr (Equiv.ofInjective S.f S.f.injective),
+      Fintype.card_fin]
+  let free := LinearEquiv.piCongrLeft' ℤ (fun _ : U => ZMod q) (Fintype.equivFinOfCardEq ucard)
+  exact ⟨e.trans ((LinearEquiv.ofBijective separate bijective).trans
+    (free.prodCongr (LinearEquiv.refl ℤ _)))⟩
+
+private theorem zmod_torsion_card (n q : ℕ) (hn : 0 < n) (hq : q ∣ n) :
+    Nat.card {x : ZMod n // q • x = 0} = q := by
+  have h := zmod_torsion_embedding n q hn
+  rw [Nat.gcd_eq_right hq] at h
+  obtain ⟨f, hf, hrange⟩ := h
+  let e : ZMod q ≃ {x : ZMod n // q • x = 0} :=
+    Equiv.ofBijective (fun x => ⟨f x, (hrange _).mpr ⟨x, rfl⟩⟩)
+      ⟨fun _ _ hx => hf (congrArg Subtype.val hx), fun y => by
+        obtain ⟨x, hx⟩ := (hrange _).mp y.prop
+        exact ⟨x, Subtype.ext hx⟩⟩
+  rw [← Nat.card_congr e, Nat.card_zmod]
+
+private theorem free_prod_torsion_card {G D : Type*} [AddCommGroup G] [AddCommGroup D]
+    (n r q : ℕ) (hn : 0 < n) (hq : q ∣ n)
+    (e : G ≃+ (Fin r → ZMod n) × D) :
+    Nat.card {x : G // q • x = 0} = q ^ r * Nat.card {y : D // q • y = 0} := by
+  let transfer : {x : G // q • x = 0} ≃ {x : (Fin r → ZMod n) × D // q • x = 0} :=
+    e.toEquiv.subtypeEquiv (fun x => by
+      change q • x = 0 ↔ q • e x = 0
+      rw [← map_nsmul, ← e.map_zero, e.injective.eq_iff])
+  let split : {x : (Fin r → ZMod n) × D // q • x = 0} ≃
+      {f : Fin r → ZMod n // ∀ i, q • f i = 0} × {y : D // q • y = 0} :=
+    (Equiv.subtypeEquivRight (fun x => by
+      rcases x with ⟨f, y⟩
+      change ((q • f, q • y) : (Fin r → ZMod n) × D) = (0, 0) ↔ _
+      simp only [Prod.mk.injEq, funext_iff, Pi.smul_apply, Pi.zero_apply])).trans
+      (@Equiv.subtypeProdEquivProd _ _ (fun f : Fin r → ZMod n => ∀ i, q • f i = 0)
+        (fun y : D => q • y = 0))
+  let pointwise : {f : Fin r → ZMod n // ∀ i, q • f i = 0} ≃
+      (Fin r → {x : ZMod n // q • x = 0}) :=
+    @Equiv.subtypePiEquivPi (Fin r) (fun _ => ZMod n) (fun _ x => q • x = 0)
+  rw [Nat.card_congr (transfer.trans split), Nat.card_prod,
+    Nat.card_congr pointwise, Nat.card_fun,
+    zmod_torsion_card n q hn hq, Nat.card_fin]
+
+/-- The integral lifting obstruction is the sum of the free residue coordinates
+and a ternary vector space of the same size as the normalized point potentials. -/
+theorem rank_three_lifting_obstruction_cyclic_factors {I T : Type*}
+    [Fintype I] [LinearOrder I] [Fintype T]
+    (M : Matroid I) (triangles : T → Fin 3 ↪o I) (ht : Injective triangles)
+    (root anchor : I) (hne : anchor ≠ root) (hn : 3 < Fintype.card I)
+    (hsparse : (Set.range fun t => (ofFinEmbEquiv (triangles t)).val).Pairwise
+      (fun H J => (H ∩ J).card + 2 ≤ 3))
+    (hground : M.E = Set.univ)
+    (hbase : ∀ B : Finset I, M.IsBase (B : Set I) ↔
+      B.card = 3 ∧ B ∉ Set.range fun t => (ofFinEmbEquiv (triangles t)).val) :
+    let n := Fintype.card I
+    let r := (n - 2).choose 2 - Fintype.card T
+    let G := JointSaturatedImage (M.comap (id : I → I)) ⧸
+      JointImageInSaturation (M.comap (id : I → I))
+    ∃ d, Nat.card {u : I → ZMod (n.gcd 3) //
+        IsOmissionPotential (fun t => triangles t) anchor u} = 3 ^ d ∧
+      Nonempty (G ≃ₗ[ℤ] (Fin r → ZMod n) × (Fin d → ZMod 3)) := by
+  classical
+  intro n r G
+  let b := (n - 2).choose 2
+  let m := Fintype.card T
+  let g := n.gcd 3
+  have hnpos : 0 < n := by omega
+  have hgpos : 0 < g := Nat.gcd_pos_of_pos_left 3 hnpos
+  let _ : NeZero n := ⟨hnpos.ne'⟩
+  let _ : NeZero g := ⟨hgpos.ne'⟩
+  let points (t : T) : Fin 3 → I := triangles t
+  let A : Matrix T (RemainingPair root anchor) ℤ := reducedMatrix points root anchor
+  have castA : A.map (Int.castRingHom (ZMod n)) =
+      (reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) (ZMod n)) := by
+    ext i j
+    exact reducedMatrix_intCast points root anchor i j
+  have castT : A.transpose.map (Int.castRingHom (ZMod n)) =
+      (reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) (ZMod n)).transpose := by
+    ext j i
+    exact reducedMatrix_intCast points root anchor i j
+  have nKills (x : ZMod n) : n • x = 0 := by
+    rw [nsmul_eq_mul, (ZMod.natCast_eq_zero_iff n n).mpr (dvd_refl _), zero_mul]
+  have hA : Injective A.transpose.mulVecLin := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro x hx
+    apply int_cast_matrix_rigidity A.transpose n hn _ x hx
+    intro c hc
+    rw [castT] at hc
+    have rel := (reduced_transpose_kernel_iff points (fun t => (triangles t).injective)
+      root anchor c).mp hc
+    exact (triangle_relation_potential points (fun t => (triangles t).injective)
+      (sparse_triangle_unique_pair triangles ht hsparse) root anchor hne nKills c rel).1
+  obtain ⟨mb, coeff, ⟨split⟩⟩ := smith_kernel_split A hA n
+  rw [remainingPair_card root anchor hne] at mb
+  change m ≤ b at mb
+  rw [castA, remainingPair_card root anchor hne] at split
+  let D := (i : Fin m) → Submodule.torsionBy ℤ (ZMod n) (coeff i)
+  obtain ⟨kernel⟩ := rank_three_lifting_obstruction_equiv_kernel M triangles root anchor
+    hne hn hsparse hground hbase
+  let e : G ≃ₗ[ℤ] (Fin r → ZMod n) × D := kernel.trans split
+  let N := Nat.card {u : I → ZMod g // IsOmissionPotential points anchor u}
+  have residual (q : ℕ) [NeZero q] (hq : q ∣ n) (hg : q.gcd 3 = g) :
+      Nat.card {y : D // q • y = 0} = N := by
+    have h := rank_three_lifting_obstruction_torsion_card M triangles ht root anchor hne hn
+      hsparse hground hbase q hq
+    change Nat.card {x : G // q • x = 0} * q ^ m =
+      q ^ b * Nat.card {u : I → ZMod (q.gcd 3) // IsOmissionPotential points anchor u} at h
+    rw [hg, free_prod_torsion_card n r q hnpos hq e.toAddEquiv, mul_right_comm] at h
+    change q ^ r * q ^ m * _ = q ^ b * N at h
+    have hr : r + m = b := Nat.sub_add_cancel mb
+    rw [← pow_add, hr] at h
+    exact Nat.eq_of_mul_eq_mul_left (Nat.pow_pos (NeZero.pos q)) h
+  have nKillsD (x : D) : n • x = 0 := by
+    funext i
+    exact Subtype.ext (nKills (x i).val)
+  have total : Nat.card D = N := by
+    rw [← Nat.card_congr (Equiv.subtypeUnivEquiv nKillsD)]
+    exact residual n (dvd_refl _) rfl
+  have gSus : Nat.card {x : D // g • x = 0} = N :=
+    residual g (Nat.gcd_dvd_left n 3) (Nat.gcd_eq_left (Nat.gcd_dvd_right n 3))
+  have covers : Surjective (Subtype.val : {x : D // g • x = 0} → D) :=
+    ((Nat.bijective_iff_injective_and_card _).mpr
+      ⟨Subtype.val_injective, gSus.trans total.symm⟩).2
+  have threeKills (x : D) : 3 • x = 0 := by
+    obtain ⟨y, rfl⟩ := covers x
+    obtain ⟨a, ha⟩ := Nat.gcd_dvd_right n 3
+    change 3 = g * a at ha
+    rw [ha, mul_nsmul, y.prop, nsmul_zero]
+  let _ : Module (ZMod 3) D := AddCommGroup.zmodModule threeKills
+  let s := Module.finrank (ZMod 3) D
+  let ternary : D ≃ₗ[ℤ] (Fin s → ZMod 3) :=
+    (Module.finBasis (ZMod 3) D).equivFun.toAddEquiv.toIntLinearEquiv
+  refine ⟨s, ?_, ⟨e.trans ((LinearEquiv.refl ℤ _).prodCongr ternary)⟩⟩
+  change N = 3 ^ s
+  rw [← total, Nat.card_congr ternary.toEquiv, Nat.card_fun, Nat.card_fin, Nat.card_zmod]
 
 /-- The actual integral lifting obstruction on the affine plane has nine
 cyclic factors of order nine and two of order three. -/
@@ -1481,9 +1752,20 @@ theorem affine_plane_lifting_obstruction_cyclic_factors (M : Matroid (Fin 9))
       (cover t (Finset.mem_inter.mp hi).1 (Finset.mem_inter.mp hj).1)
       (cover s (Finset.mem_inter.mp hi).2 (Finset.mem_inter.mp hj).2)
     exact hne (congrArg (fun r => (ofFinEmbEquiv (affineTriangle r)).val) h)
-  obtain ⟨E⟩ := rank_three_lifting_obstruction_equiv_kernel M affineTriangle 8 0
-    (by decide) (by decide) sparse hground hbase
-  obtain ⟨F⟩ := affine_kernel_cyclic_factors
-  exact ⟨E.trans F⟩
+  have ht : Injective affineTriangle := by
+    intro t s h
+    have h₀ := congrArg (fun e : Fin 3 ↪o Fin 9 => e 0) h
+    have h₁ := congrArg (fun e : Fin 3 ↪o Fin 9 => e 1) h
+    exact affine_pair_unique t s (affineLines t 0) (affineLines t 1)
+      ((affine_triangle_injective t).ne (by decide)) ⟨0, 1, rfl, rfl⟩
+      ⟨0, 1, h₀.symm, h₁.symm⟩
+  obtain ⟨d, hd, E⟩ := rank_three_lifting_obstruction_cyclic_factors M affineTriangle ht
+    8 0 (by decide) (by decide) sparse hground hbase
+  change Nat.card {u : Fin 9 → ZMod 3 // IsOmissionPotential affineLines 0 u} = 3 ^ d at hd
+  rw [Nat.card_congr (Equiv.subtypeEquivRight affine_compatible_iff),
+    affine_plane_potential_card] at hd
+  have htwo : d = 2 := Nat.pow_right_injective (by decide : 2 ≤ 3) hd.symm
+  subst d
+  exact E
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
