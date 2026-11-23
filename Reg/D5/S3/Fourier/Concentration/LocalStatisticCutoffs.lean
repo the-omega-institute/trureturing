@@ -19,24 +19,27 @@ abbrev magnitudeSignature :=
   SingleDependentReadout.signature (Σ _ : ℕ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization magnitudeSignature :=
-  realize magnitudeSignature (fun _ q m => m * (q.2 : ℝ)^q.1) (fun e => nomatch e)
+  realize magnitudeSignature (fun _ q m => m * ((q.2 - 1).descFactorial q.1 : ℝ))
+    (fun e => nomatch e)
 
 def rejected : Realization magnitudeSignature :=
-  realize magnitudeSignature (fun _ q m => (m - 1) * (q.2 : ℝ)^q.1) (fun e => nomatch e)
+  realize magnitudeSignature (fun _ q m => (m - 1) * ((q.2 - 1).descFactorial q.1 : ℝ))
+    (fun e => nomatch e)
 
 abbrev magnitudeArena : Arena where
   signature := magnitudeSignature
   Law v := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     {k D : ℕ} (s t : Finset J) (hs : s.Nonempty) (ht : t.Nonempty)
-    (g : J → ℝ) (F : (Fin (k+1) ↪ J) → ℝ) {R M : ℝ} (hM : 0 ≤ M)
+    (g : J → ℝ) (F : (Fin (k + 1) ↪ J) → ℝ) {R M : ℝ} (hM : 0 ≤ M)
     (hbounded : ∀ e, |F e| ≤ M)
     (hsupport : ∀ e, F e ≠ 0 → ∀ i, |g (e i) - g (e 0)| ≤ R)
-    (hlocal : ∀ j ∈ s ∪ t, ((s ∪ t).filter fun x => |g x - g j| ≤ 2*R).card ≤ D),
-    let A (u : Finset J) := ∑ e : Fin (k+1) ↪ J, if ∀ i, e i ∈ u then F e else 0
+    (hlocal : ∀ j ∈ s ∪ t, ((s ∪ t).filter fun x => |g x - g j| ≤ 2 * R).card ≤ D),
+    let A (u : Finset J) := ∑ e : Fin (k + 1) ↪ J, if ∀ i, e i ∈ u then F e else 0
     let b := ((s \ t) ∪ (t \ s)).card
+    let L := v.readout () ⟨k, D⟩ M
     |A s / s.card - A t / t.card| ≤
-      v.readout () ⟨k, D⟩ M * (((k+1 : ℕ) : ℝ) * b + |(s.card : ℝ) - t.card|) /
-        max (s.card : ℝ) t.card
+      min (L * (((k + 1 : ℕ) : ℝ) * b + |(s.card : ℝ) - t.card|) / max (s.card : ℝ) t.card)
+        (2 * L)
 
 private theorem rejected_law : ¬ magnitudeArena.{u}.Law rejected := by
   classical
@@ -53,7 +56,7 @@ private theorem rejected_law : ¬ magnitudeArena.{u}.Law rejected := by
   have h := law (k := 0) (D := 2) {i} {j} (singleton_nonempty _) (singleton_nonempty _)
     (fun _ => 0) (fun _ => 0) (R := 0) (M := 0) le_rfl (by simp) (by simp) hlocal
   have hval : (rejected.readout () ⟨0, 2⟩ 0 : ℝ) = -1 := by
-    change ((0 : ℝ) - 1) * ((2 : ℕ) : ℝ)^0 = -1
+    change ((0 : ℝ) - 1) * (Nat.descFactorial (2 - 1) 0 : ℝ) = -1
     norm_num
   norm_num [hval, hne, Ne.symm hne] at h
 
@@ -61,7 +64,8 @@ private theorem magnitude_dependence : ObservationalDependence magnitudeSignatur
   intro i
   cases i
   refine ⟨⟨0, 1⟩, 0, 1, ?_⟩
-  change (0 : ℝ) * ((1 : ℕ) : ℝ)^0 ≠ 1 * ((1 : ℕ) : ℝ)^0
+  change (0 : ℝ) * (Nat.descFactorial (1 - 1) 0 : ℝ) ≠
+    1 * (Nat.descFactorial (1 - 1) 0 : ℝ)
   norm_num
 
 def magnitudeEvidence :
@@ -87,7 +91,8 @@ def magnitudeRegistration :
   realization := .source magnitudeArena.{u} ⟨magnitudeEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize magnitudeSignature (fun _ q m => m * (q.2 : ℝ)^q.1) (fun e => nomatch e))
+  readout := some (realize magnitudeSignature (fun _ q m => m * ((q.2 - 1).descFactorial q.1 : ℝ))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -99,7 +104,7 @@ def magnitudeRegistration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "fn", "arg", "fn", "arg"]
+        "body", "body", "value"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
