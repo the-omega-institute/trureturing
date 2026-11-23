@@ -226,6 +226,20 @@ private theorem masked_axis_factor {n k budget : ℕ}
 
 namespace ListBridge
 
+/-- Regroup a finite sum into equal-sized consecutive blocks. -/
+theorem sum_blocks (f : ℕ → ℕ) (m n : ℕ) :
+    (∑ v : Fin (m * n), f v.val) =
+      ∑ b : Fin m, ∑ i : Fin n, f (n * b.val + i.val) := by
+  let e : Fin m × Fin n ≃ Fin (m * n) := finProdFinEquiv
+  rw [← e.sum_comp (fun v => f v.val), Fintype.sum_prod_type]
+  apply sum_congr rfl
+  intro b _
+  apply sum_congr rfl
+  intro i _
+  change f (i.val + n * b.val) = f (n * b.val + i.val)
+  rw [Nat.add_comm]
+
+
 private def boundedFinset {limit : ℕ} (entries : List ℕ)
     (bound : ∀ i ∈ entries, i < limit) : Finset (Fin limit) :=
   entries.toFinset.attachFin (fun i hi => bound i (List.mem_toFinset.mp hi))

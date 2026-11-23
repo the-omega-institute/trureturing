@@ -88,30 +88,12 @@ private def charge (row : ℕ → List ℕ) (v : ℕ) : ℕ :=
   if v ≠ pivot.val ∧ weight 13 v % 2 = 1 then
     (row v).countP (fun w => weight 13 w % 2 == 1) else 0
 
-private theorem sum_blocks (f : ℕ → ℕ) (m n : ℕ) :
-    (∑ v : Fin (m * n), f v.val) =
-      ∑ b : Fin m, ∑ i : Fin n, f (n * b.val + i.val) := by
-  let e : Fin m × Fin n ≃ Fin (m * n) := finProdFinEquiv
-  rw [← e.sum_comp (fun v => f v.val), Fintype.sum_prod_type]
-  apply sum_congr rfl
-  intro b _
-  apply sum_congr rfl
-  intro i _
-  change f (i.val + n * b.val) = f (n * b.val + i.val)
-  rw [Nat.add_comm]
-
-private theorem list_range_sum (f : ℕ → ℕ) (n : ℕ) :
-    ((List.range n).map f).sum = ∑ i ∈ Finset.range n, f i := by
-  induction n with
-  | zero => simp
-  | succ n ih => simp [List.range_succ, sum_range_succ, ih]
-
 private theorem block_sum (f : ℕ → ℕ) :
     (∑ v : Fin limit, f v.val) =
       ((List.range 128).map fun b => ((List.range 64).map fun i => f (64 * b + i)).sum).sum := by
   change (∑ v : Fin (128 * 64), f v.val) = _
-  rw [sum_blocks]
-  simp only [list_range_sum]
+  rw [ListBridge.sum_blocks]
+  simp only [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
   rw [Fin.sum_univ_eq_sum_range (fun b => ∑ i : Fin 64, f (64 * b + i.val))]
   apply sum_congr rfl
   intro b _
@@ -204,12 +186,12 @@ private def chunkCharge (row : Nat → List Nat) (c : Fin 16) : Nat :=
 
 private theorem assemble_cost (row : Nat → List Nat) :
     ((List.range 128).map (blockCharge row)).sum = ∑ c : Fin 16, chunkCharge row c := by
-  rw [PackedRows.list_range_sum,
+  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range,
     ← Fin.sum_univ_eq_sum_range (blockCharge row) 128]
-  rw [show (128 : Nat) = 16 * 8 by decide, PackedRows.sum_blocks]
+  rw [show (128 : Nat) = 16 * 8 by decide, ListBridge.sum_blocks]
   refine sum_congr rfl fun c _ => ?_
   unfold chunkCharge
-  rw [PackedRows.list_range_sum]
+  rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
   exact Fin.sum_univ_eq_sum_range (fun i => blockCharge row (8 * c.val + i)) 8
 
 private theorem checked_chunk_0 : chunkPass blockPass 0 = true := by decide +kernel

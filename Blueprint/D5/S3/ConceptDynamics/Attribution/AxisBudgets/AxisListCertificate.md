@@ -52,7 +52,19 @@ Lean statement: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertifica
 
 The mask with value two to the n minus one represents the full subset of free coordinates.
 
-**Theorem 1.5 (Bounded lists certify an exact factor table).**
+**Theorem 1.5 (Equal-sized blocks partition a finite sum).**
+
+Lean statement: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.sum_blocks`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.sum_blocks` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Sum a natural-valued function over the indices below the product of two natural numbers. Equivalently sum over each block of the second size and each position within it. The index equals the block number times the block size plus the position.
+
+**Theorem 1.6 (Bounded lists certify an exact factor table).**
 
 Lean statement: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.list_axis_factor`
 
@@ -71,5 +83,6 @@ For n free coordinates, take two families of row and column lists indexed by mas
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.maskEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.mask_rank`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.mask_top`
+- Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/AxisListCertificate.sum_blocks`
 - Dependency: [D5/S3/Combinatorics/ErdosUlam/SublatticeDefs](../../../Combinatorics/ErdosUlam/SublatticeDefs.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedAxisFactor](../ParitySeedAxisFactor.md)

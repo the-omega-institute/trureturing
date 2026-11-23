@@ -307,5 +307,84 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ListIncidence
 
+namespace BlockSums
+
+open Finset
+open _root_.D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate.ListBridge
+
+private abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature :=
+  realize signature (fun _ p f => ∑ b : Fin p.1, ∑ i : Fin p.2, f (p.2 * b.val + i.val))
+    (fun a => nomatch a)
+
+private def zero : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun a => nomatch a)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (f : ℕ → ℕ) (m n : ℕ), (∑ v : Fin (m * n), f v.val) = R.readout () (m, n) f
+
+private theorem zero_fails : ¬ arena.Law zero := by
+  intro h
+  have bad := h (fun _ => 1) 1 1
+  simp [zero, realize] at bad
+
+def family : Registration arena (type_of% @sum_blocks) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨sum_blocks, zero, zero_fails⟩
+  sensitivity := ⟨fun i => ⟨zero, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, zero_fails⟩, fun a => nomatch a⟩
+  dependence := by
+    rintro ⟨⟩
+    refine ⟨(1, 1), fun _ => 0, fun _ => 1, ?_⟩
+    simp [actual, realize]
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@sum_blocks) (Realization signature) Unit Unit where
+  unitName := `D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate.sum_blocks.audit
+  realizationName :=
+    `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate.BlockSums.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p f => ∑ b : Fin p.1, ∑ i : Fin p.2, f (p.2 * b.val + i.val))
+    (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate
+    definition := none
+    coordinates := #[1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end BlockSums
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.AxisListCertificate
