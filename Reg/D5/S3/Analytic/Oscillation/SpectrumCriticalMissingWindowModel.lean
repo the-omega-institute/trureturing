@@ -31,16 +31,19 @@ abbrev weightSignature : Signature where
 def weightActual : Realization weightSignature :=
   realize weightSignature (fun _ p j => p.2 j) (fun e => nomatch e)
 
-private def weightRejected : Realization weightSignature :=
+def weightRejected : Realization weightSignature :=
   realize weightSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-abbrev weightArena : Arena where
+abbrev weightArenaWithTail (tail : (S : Spectrum) → (S.index → ℝ) → Prop) : Arena where
   signature := weightSignature
   Law V := ∃ (S : Spectrum) (w : S.index → ℝ), Infinite S.index ∧
     (∀ j, 0 < V.readout () ⟨S, w⟩ j) ∧ LinearIndependent ℚ S.gamma ∧
-    HasLogSquaredMass S w ∧ HasSmallSquareTail S w
+    HasLogSquaredMass S w ∧ tail S w
 
-private theorem weight_rejected : ¬ weightArena.Law weightRejected := by
+abbrev weightArena : Arena := weightArenaWithTail HasSmallSquareTail
+
+theorem weight_rejected (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
+    ¬ (weightArenaWithTail tail).Law weightRejected := by
   rintro ⟨S, _, hInf, hw, _⟩
   obtain ⟨j⟩ : Nonempty S.index := @Infinite.nonempty _ hInf
   exact (lt_irrefl 0) (hw j)
@@ -57,26 +60,30 @@ private abbrev twoOrdinates : Spectrum where
   mult_pos _ := Nat.one_pos
   finite_le _ := Set.toFinite _
 
-private theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
+theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
   rintro ⟨⟩
   refine ⟨⟨twoOrdinates, twoOrdinates.gamma⟩, (0 : Fin 2), 1, ?_⟩
   change ((0 : ℕ) : ℝ) + 1 ≠ ((1 : ℕ) : ℝ) + 1
   norm_num
 
-def weightEvidence : Registration weightArena (type_of% @exists_infinite_critical_model) where
+theorem weight_sensitivity (tail : (S : Spectrum) → (S.index → ℝ) → Prop) :
+    Sensitivity (weightArenaWithTail tail) weightActual := by
+  constructor
+  · intro i
+    refine ⟨weightRejected, ?_, ?_, weight_rejected tail⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def weightEvidence :
+    Registration weightArena (type_of% @exists_infinite_critical_model) where
   actual := weightActual
   bridge := Iff.rfl
-  variation := ⟨@exists_infinite_critical_model, weightRejected, weight_rejected⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨weightRejected, ?_, ?_, weight_rejected⟩
-      · intro j hj
-        exact (hj (Subsingleton.elim j i)).elim
-      · funext e
-        exact nomatch e
-    · intro e
-      exact nomatch e
+  variation := ⟨@exists_infinite_critical_model, weightRejected, weight_rejected _⟩
+  sensitivity := weight_sensitivity _
   dependence := weight_dependence
 
 def weightAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
