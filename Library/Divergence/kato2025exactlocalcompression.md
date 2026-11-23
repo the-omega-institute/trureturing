@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Quantum/Measurements/FiniteLabelRecordDilation
   - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalReset
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetDistortion
 license: citation-only
 triage: anchor
 ---
