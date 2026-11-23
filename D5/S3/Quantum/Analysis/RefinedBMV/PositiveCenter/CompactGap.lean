@@ -27,8 +27,8 @@ private theorem shortGapQ_eq (h x : ℝ) (ha : upperTailGap h x ≠ 0) :
 
 /-- Reduce the short-gap sign for the actual matrix kernel to curvature of
 the scalar gap profile and the estimates for the marginal correction. -/
-theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε : ℝ}
-    (hu : 4 ≤ u) (huv : u < v) :
+theorem logKernel_gap_mixed_of_profile_margin_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v ε : ℝ}
+    (hu₀ : 0 < u) (huv : u < v) :
     let h := rate p
     let d := v-u
     let a := upperTailGap h
@@ -40,6 +40,7 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
     let m := 3 / 2 + h
     let Q := shortGapQuotient h
     let ξ := c h*a v*Real.exp (-((u+v)/2))
+    0 ≤ α u → β v ≤ 0 → α u - β v ≤ 1 / 2 →
     0 ≤ shortGapF h d →
     ε < deriv (deriv (shortGapF h)) d - (α u - β v) * deriv (shortGapF h) d -
       (β v - m) * Real.exp (-m * d) * (deriv Q u + (α u + m) * Q u) →
@@ -61,30 +62,23 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
   let E : ℝ → ℝ := fun x ↦ Real.exp (-x/2)
   let C : ℝ → ℝ := fun x ↦ c h*a x*E x
   let ξ := c h*a v*Real.exp (-((u+v)/2))
-  change 0 ≤ shortGapF h d →
+  change 0 ≤ α u → β v ≤ 0 → α u - β v ≤ 1 / 2 →
+    0 ≤ shortGapF h d →
     ε < deriv (deriv (shortGapF h)) d - (α u - β v) * deriv (shortGapF h) d -
       (β v - m) * Real.exp (-m * d) * (deriv Q u + (α u + m) * Q u) →
     0 ≤ deriv (shortGapJ h) d →
     deriv (shortGapJ h) d / 2 ≤ deriv (deriv (shortGapJ h)) d → 0 ≤ deriv Z v →
     deriv Z v * deriv (shortGapJ h) d ≤ ξ*(1/2-α u)*(1/2-α v) →
     _
-  intro hf hmargin hj' hj'' hz' hc
+  intro hα hβ hαβ hf hmargin hj' hj'' hz' hc
   have hp₀ : 0 < p := by omega
   have hh := rate_pos hp₀
-  have hhp : h ≤ 3/11 := by
-    have hreal : (11 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp
-    exact div_le_div_of_nonneg_left (by norm_num) (by norm_num) hreal
-  have hu₀ : 0 < u := by linarith
-  have hv : 4 ≤ v := hu.trans huv.le
   have hv₀ := hu₀.trans huv
   have hd : 0 < d := sub_pos.mpr huv
   have hPpos {t : ℝ} (ht : 0 < t) : 0 < P t :=
     div_pos (gap_pos hp₀ ht) (Real.sqrt_pos.mpr (W_pos hp₀ ht))
   have hVpos {t : ℝ} (ht : 0 < t) : 0 < V t :=
     one_div_pos.mpr (Real.sqrt_pos.mpr (W_pos hp₀ ht))
-  have hnorm {t : ℝ} (ht : 4 ≤ t) :
-      0 ≤ α t ∧ α t < 1/7 ∧ -(1/t) ≤ β t ∧ β t < 0 :=
-    shortGapNormalization_bounds hh hhp ht
   have hWdiff (t : ℝ) : DifferentiableAt ℝ (W h) t := by
     unfold W R upperTailGap
     fun_prop
@@ -173,11 +167,6 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
     ring
   rw [hξ, show -(P u * V v * ε) = P u * V v * (-ε) by ring]
   apply mul_lt_mul_of_pos_left _ (mul_pos (hPpos hu₀) (hVpos hv₀))
-  have hn₁ := hnorm hu
-  have hn₂ := hnorm hv
-  have hβ : -1/4 ≤ β v := by
-    have H := one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 4) hv
-    linarith only [H, hn₂.2.2.1]
   have hj : 0 ≤ shortGapJ h d :=
     div_nonneg (mul_nonneg (Real.exp_pos _).le (Real.sqrt_nonneg _)) (gap_pos hp₀ hd).le
   have hz : 0 ≤ 1-Z v := by
@@ -189,8 +178,48 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
       linarith only [hsum])
     rw [Real.sqrt_one] at H
     exact sub_nonneg.mpr H
-  exact shortGap_mixed_lt_of_profile_margin hn₁.1 hn₁.2.1.le hn₂.2.2.2.le hβ
+  exact shortGap_mixed_lt_of_profile_margin_of_slopes hα hβ hαβ
     hf hmargin hj hj' hj'' hz hz' hc
+
+/-- Reduce the short-gap sign for the actual matrix kernel to curvature of
+the scalar gap profile and the estimates for the marginal correction. -/
+theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε : ℝ}
+    (hu : 4 ≤ u) (huv : u < v) :
+    let h := rate p
+    let d := v-u
+    let a := upperTailGap h
+    let P := fun x ↦ a x / Real.sqrt (W h x)
+    let V := fun x ↦ 1 / Real.sqrt (W h x)
+    let Z := fun x ↦ Real.sqrt (X h x)
+    let α := fun x ↦ deriv P x / P x
+    let β := fun x ↦ deriv V x / V x
+    let m := 3 / 2 + h
+    let Q := shortGapQuotient h
+    let ξ := c h*a v*Real.exp (-((u+v)/2))
+    0 ≤ shortGapF h d →
+    ε < deriv (deriv (shortGapF h)) d - (α u - β v) * deriv (shortGapF h) d -
+      (β v - m) * Real.exp (-m * d) * (deriv Q u + (α u + m) * Q u) →
+    0 ≤ deriv (shortGapJ h) d →
+    deriv (shortGapJ h) d / 2 ≤ deriv (deriv (shortGapJ h)) d →
+    0 ≤ deriv Z v →
+    deriv Z v * deriv (shortGapJ h) d ≤ ξ*(1/2-α u)*(1/2-α v) →
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < -(P u * V v * ε) := by
+  dsimp only
+  have hp₀ : 0 < p := by omega
+  have hreal : (11 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp
+  have hh := rate_pos hp₀
+  have hhp : rate p ≤ 3 / 11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) hreal
+  have hv : 4 ≤ v := hu.trans huv.le
+  have hn₁ := shortGapNormalization_bounds hh hhp hu
+  have hn₂ := shortGapNormalization_bounds hh hhp hv
+  have hβ : -(1 / 4 : ℝ) ≤
+      deriv (fun t ↦ 1 / Real.sqrt (W (rate p) t)) v /
+        (1 / Real.sqrt (W (rate p) v)) := by
+    have H := one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 4) hv
+    linarith only [H, hn₂.2.2.1]
+  exact logKernel_gap_mixed_of_profile_margin_of_slopes hp (by linarith) huv
+    hn₁.1 hn₂.2.2.2.le (by linarith only [hn₁.2.1, hβ])
 
 /-- Ordinary curvature and slope estimates give the short-gap mixed sign. -/
 theorem logKernel_shortGap_mixed_of_scalar_bounds {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
