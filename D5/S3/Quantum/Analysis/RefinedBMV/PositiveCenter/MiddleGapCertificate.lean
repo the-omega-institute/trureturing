@@ -11,7 +11,7 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapJet
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapMoments
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapPhysicalJets
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapPolynomial
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SixBoxes
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripIntervals
 
 /-! # The compact strip of the positive-center kernel -/
 
