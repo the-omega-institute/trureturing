@@ -89,7 +89,7 @@ private theorem sorted_pair_mem : ∀ x y : Fin 5,
 /-- A class index for two triple patterns, invariant under their exchange. -/
 def pairClass (x y : Fin 5) : Fin 15 :=
   ⟨(List.ofFn classPair).idxOf (min x y, max x y),
-    List.length_ofFn ▸ List.idxOf_lt_length_of_mem (sorted_pair_mem x y)⟩
+    by simpa only [List.length_ofFn] using List.idxOf_lt_length_of_mem (sorted_pair_mem x y)⟩
 
 /-- Classify the even columns from the left and the odd columns from the right. -/
 def boundary (p : Row 3 6) : Fin 15 :=
