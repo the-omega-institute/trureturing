@@ -213,13 +213,19 @@ private theorem initial_exhausted_count (j : Fin 96) :
       · simp [headWeight, hp, show HardinA229635State.h p ≠ 1 by omega,
           show HardinA229635State.h p ≠ 2 by omega]
     _ = _ := by
-      rw [← Finset.sum_fiberwise' _ HardinA229635State.fresh, ← initial_from_starts j]
+      let weight (i : Fin 96) : ℤ :=
+        if exhaustedClass (HardinA229635State.rep i) = j
+        then headWeight (HardinA229635State.rep i) else 0
+      change (∑ p ∈ Finset.univ.filter (fun p => HardinA229635State.h p ≤ 2),
+        weight (HardinA229635State.fresh p)) = _
+      rw [← Finset.sum_fiberwise' _ HardinA229635State.fresh weight, ← initial_from_starts j]
       apply Finset.sum_congr rfl
       intro i _
       rw [Finset.filter_filter, Finset.sum_const, nsmul_eq_mul]
       have hf := fresh_start_count i
       rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, mul_one] at hf
       rw [hf, mul_comm]
+      dsimp only [weight]
       split_ifs <;> simp
 
 private theorem initial_counts (s : Fin 168) :
@@ -634,11 +640,15 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
   have hchain : rows.IsChain (fun u v => Matrix.vecMul u T = v) := by
     rw [List.isChain_iff_getElem]
     intro k hk
-    have hk' : k < 14 := by simpa [rows, List.length_ofFn] using hk
-    simpa [rows, List.getElem_ofFn] using (forward_step ⟨k, hk'⟩).symm
-  have hi : i.val < rows.length := by simpa [rows] using i.isLt
+    have hk' : k < 14 := by
+      simp only [rows, List.length_ofFn] at hk
+      omega
+    simp only [rows, List.getElem_ofFn]
+    exact (forward_step ⟨k, hk'⟩).symm
+  have hi : i.val < rows.length := by simpa only [rows, List.length_ofFn] using i.isLt
   have he := hchain.iterate_eq_of_apply_eq i.val hi
-  simpa [rows, List.getElem_ofFn, forward] using he
+  simp only [rows, List.getElem_ofFn] at he
+  exact he
 
 set_option maxRecDepth 14000 in
 set_option maxHeartbeats 3000000 in
@@ -686,10 +696,6 @@ private theorem scale_count (m : ℕ) :
   simp only [Nat.card_eq_fintype_card, Fintype.card_subtype, s] at h
   unfold literalCount a HardinA229585Strip.Normal
   convert h using 1
-  apply congrArg (fun x : ℕ => 6 * x)
-  apply congrArg Finset.card
-  ext f
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
 
 attribute [local irreducible] a T initial terminal
 
