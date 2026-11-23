@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Combinatorics/PowerSeries/DyadicDilation.reduce_lift`
 
 *Commentary.*
 
-Iterated degree doubling gives a dilation by 2^(r+1) modulo 2^(j+1).
+For every integral formal series p(q) and natural j and r, the coefficientwise reduction of p(q)^(2^(j+1+r)) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j) at the same modulus.
 
 **Theorem 1.6 (reduce_lift_mul).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Combinatorics/PowerSeries/DyadicDilation.reduce_lift_mul`
 
 *Commentary.*
 
-The iterated congruence remains valid after raising both sides to any natural power.
+For every integral formal series p(q) and natural j, r and t, the coefficientwise reduction of p(q)^(2^(j+1+r)·t) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j·t) at the same modulus.
 
 ## References
 

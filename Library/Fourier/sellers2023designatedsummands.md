@@ -19,9 +19,9 @@ triage: anchor
 The DOI is 10.48550/arXiv.2306.15130. The versioned arXiv record is https://arxiv.org/abs/2306.15130v1.
 
 Lemma 2.3 gives the classical two-dissections of $f_1f_3$ and
-$1/(f_1f_3)$, with $f_d=\prod_{i\ge1}(1-q^{di})$. It attributes these
-identities to M. D. Hirschhorn, *The Power of q*, equations (30.12.1)
-and (30.12.3). Multiplication by the even series $f_2/f_6$ gives the
+$1/(f_1f_3)$, with $f_d=\prod_{i\ge1}(1-q^{di})$. These are equations
+(30.12.1) and (30.12.3), respectively, in M. D. Hirschhorn's *The Power of q*.
+Multiplication by the even series $f_2/f_6$ gives the
 reciprocal dissection for $H=f_1f_2f_3/f_6$. Squaring the reciprocal-product
 dissection and multiplying by $(f_6/f_2)^2$ gives the odd multiplier in
 the dissection of $F^2$. [Lemma 2.3, PDF p. 3](https://arxiv.org/pdf/2306.15130v1#page=3)

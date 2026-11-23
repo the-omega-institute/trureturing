@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution of the exact Conjecture 6.1 from #33469
 exceptional_sharp proof_shape: content
-  escape_witness: the modulo-64 period of the degree-seven coefficient
+  escape_witness: the modulo-64 period of the degree-seven coefficient and its uniform residue
 result proof_shape: content
   escape_witness: the three uniform support arguments and sharpness at degrees three and seven
 Escape registration: unfinished. See https://github.com/the-omega-institute/trureturing/issues/33480.
@@ -83,60 +83,17 @@ private theorem series_convolution {R : Type*} [CommRing R] (p q : ℕ → R) :
   ext n
   simp [PowerSeries.coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, convolution]
 
-private def eulerPrefix (d : ℕ) (n : ℕ) : ℤ :=
-  if d ∣ n then [1,-1,-1,0,0,1,0,1][n/d]! else 0
-
-private theorem pentagonal_prefix (n : ℕ) (hn : n ≤ 7) :
-    coeff n (pentagonalSeries ℤ) = [1,-1,-1,0,0,1,0,1][n]! := by
-  have hp (k : ℤ) (hk : pentagonal k = n) : -2 ≤ k ∧ k ≤ 2 := by
-    constructor
-    · by_contra! hlt
-      have h := pentagonal_strictAntiOn (show k ∈ Set.Iic (0 : ℤ) by exact Set.mem_Iic.mpr (by omega))
-        (show (-2 : ℤ) ∈ Set.Iic (0 : ℤ) by decide) hlt
-      rw [show pentagonal (-2) = 7 by decide, hk] at h
-      omega
-    · by_contra! hlt
-      have h' : 3 ≤ k := by omega
-      by_cases he : k = 3
-      · subst k
-        norm_num [show pentagonal 3 = 12 by decide] at hk
-        omega
-      · have h3 := pentagonal_strictMonoOn (show (3 : ℤ) ∈ Set.Ici (0 : ℤ) by decide)
-          (show k ∈ Set.Ici (0 : ℤ) by exact Set.mem_Ici.mpr (by omega)) (show 3 < k by omega)
-        rw [show pentagonal 3 = 12 by decide, hk] at h3
-        omega
-  interval_cases n
-  · exact (coeff_pentagonalSeries_pentagonal ℤ 0).trans (by decide)
-  · exact (coeff_pentagonalSeries_pentagonal ℤ 1).trans (by decide)
-  · change coeff (pentagonal (-1)) (pentagonalSeries ℤ) = -1
-    rw [coeff_pentagonalSeries_pentagonal]
-    decide
-  · apply coeff_pentagonalSeries_eq_zero
-    rintro ⟨k,hk⟩
-    obtain ⟨hl,hu⟩ := hp k hk
-    interval_cases k <;> revert hk <;> decide
-  · apply coeff_pentagonalSeries_eq_zero
-    rintro ⟨k,hk⟩
-    obtain ⟨hl,hu⟩ := hp k hk
-    interval_cases k <;> revert hk <;> decide
-  · exact (coeff_pentagonalSeries_pentagonal ℤ 2).trans (by decide)
-  · apply coeff_pentagonalSeries_eq_zero
-    rintro ⟨k,hk⟩
-    obtain ⟨hl,hu⟩ := hp k hk
-    interval_cases k <;> revert hk <;> decide
-  · change coeff (pentagonal (-2)) (pentagonalSeries ℤ) = 1
-    rw [coeff_pentagonalSeries_pentagonal]
-    decide
-
-private theorem euler_prefix (d : ℕ) (hd : d ≠ 0) :
-    prefixEq 7 (euler d hd : PowerSeries ℤ) (PowerSeries.mk (eulerPrefix d)) := by
-  intro n hn
-  rw [euler, coeff_expand, coeff_mk, eulerPrefix]
-  split_ifs
-  · exact pentagonal_prefix _ ((Nat.div_le_self _ _).trans hn)
-  · rfl
-
-private def fPrefix (n : ℕ) : ℤ := [1,1,3,5,10,15,28,41][n]!
+private theorem le_pentagonal (k : ℤ) : k.natAbs ≤ pentagonal k := by
+  have h := two_mul_natCast_pentagonal k
+  by_cases hk : 0 ≤ k
+  · have habs : (k.natAbs : ℤ) = k := Int.natAbs_of_nonneg hk
+    by_cases hz : k = 0
+    · simp [hz]
+    · have hmul : 0 ≤ k * (k - 1) := mul_nonneg hk (by omega)
+      exact_mod_cast (show (k.natAbs : ℤ) ≤ (pentagonal k : ℤ) by rw [habs]; nlinarith)
+  · have habs : (k.natAbs : ℤ) = -k := Int.ofNat_natAbs_of_nonpos (by omega)
+    have hmul : 0 ≤ (-k) * (-k - 1) := mul_nonneg (by omega) (by omega)
+    exact_mod_cast (show (k.natAbs : ℤ) ≤ (pentagonal k : ℤ) by rw [habs]; nlinarith)
 
 private theorem F_mul_den :
     (F : PowerSeries ℤ) * (euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide)) =
@@ -146,76 +103,54 @@ private theorem F_mul_den :
   change (euler 6 (by decide) * invOfUnit D 1) * D = _
   rw [mul_assoc, mul_comm (invOfUnit D 1), hu, mul_one]
 
-private theorem F_prefix : prefixEq 7 (F : PowerSeries ℤ) (PowerSeries.mk fPrefix) := by
-  apply prefix_cancel (u := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide))
-  · simp [euler_const]
-  rw [F_mul_den]
-  have hc := prefix_mul (d := 7) (p := PowerSeries.mk fPrefix) (q := PowerSeries.mk fPrefix)
-    (fun _ _ => rfl) (prefix_mul (prefix_mul (euler_prefix 1 (by decide)) (euler_prefix 2 (by decide)))
-      (euler_prefix 3 (by decide)))
-  intro n hn
-  rw [euler_prefix 6 (by decide) n hn, hc n hn]
-  simp only [series_convolution, coeff_mk]
-  interval_cases n <;> decide
-
-private theorem F_small_coeff (n : ℕ) (hn : n ≤ 7) : coeff n (F : PowerSeries ℤ) = fPrefix n := by
-  rw [F_prefix n hn, coeff_mk]
-
-private theorem exceptional_representatives :
-    coeff 7 ((F : PowerSeries ℤ)^2) = 328 ∧
-    coeff 7 ((F : PowerSeries ℤ)^18) = 2748312 ∧
-    coeff 7 ((F : PowerSeries ℤ)^34) = 79541096 ∧
-    coeff 7 ((F : PowerSeries ℤ)^50) = 713942200 := by
-  have square_of (k : ℕ) (a b : ℕ → ℤ) (ha : prefixEq 7 ((F : PowerSeries ℤ)^k) (PowerSeries.mk a))
-      (hb : ∀ n ≤ 7, convolution a a n = b n) :
-      prefixEq 7 ((F : PowerSeries ℤ)^(k+k)) (PowerSeries.mk b) := by
-    intro n hn
-    rw [pow_add, prefix_mul ha ha n hn, series_convolution, coeff_mk, coeff_mk, hb n hn]
-  let v2 (n : ℕ) : ℤ := [1,2,7,16,39,80,171,328][n]!
-  have h2 : prefixEq 7 ((F : PowerSeries ℤ)^2) (PowerSeries.mk v2) :=
-    square_of 1 fPrefix v2 (by simpa using F_prefix) (by
-      intro n hn
-      interval_cases n <;> decide)
-  let v4 (n : ℕ) : ℤ := [1,4,18,60,191,540,1464,3708][n]!
-  have h4 : prefixEq 7 ((F : PowerSeries ℤ)^4) (PowerSeries.mk v4) :=
-    square_of 2 v2 v4 h2 (by
-      intro n hn
-      interval_cases n <;> decide)
-  let v8 (n : ℕ) : ℤ := [1,8,52,264,1186,4768,17724,61488][n]!
-  have h8 : prefixEq 7 ((F : PowerSeries ℤ)^8) (PowerSeries.mk v8) :=
-    square_of 4 v4 v8 h4 (by
-      intro n hn
-      interval_cases n <;> decide)
-  let v16 (n : ℕ) : ℤ := [1,16,168,1360,9300,55968,304776,1528640][n]!
-  have h16 : prefixEq 7 ((F : PowerSeries ℤ)^16) (PowerSeries.mk v16) :=
-    square_of 8 v8 v16 h8 (by
-      intro n hn
-      interval_cases n <;> decide)
-  let v32 (n : ℕ) : ℤ := [1,32,592,8096,90344,866496,7374928,56911360][n]!
-  have h32 : prefixEq 7 ((F : PowerSeries ℤ)^32) (PowerSeries.mk v32) :=
-    square_of 16 v16 v32 h16 (by
-      intro n hn
-      interval_cases n <;> decide)
-  constructor
-  · rw [h2 7 (by decide), coeff_mk]
-    decide
-  constructor
-  · rw [show 18 = 16+2 by decide, pow_add, prefix_mul h16 h2 7 (by decide), series_convolution, coeff_mk]
-    decide
-  constructor
-  · rw [show 34 = 32+2 by decide, pow_add, prefix_mul h32 h2 7 (by decide), series_convolution, coeff_mk]
-    decide
-  · rw [show 50 = (32+16)+2 by decide, pow_add, pow_add _ 32 16,
-      prefix_mul (prefix_mul h32 h16) h2 7 (by decide), series_convolution, series_convolution, coeff_mk]
-    decide
-
 private theorem coefficient_formula_three (k : ℕ) :
     2 * coeff 2 ((F : PowerSeries ℤ)^k) = (k : ℤ) * ((k : ℤ) + 5) ∧
     6 * coeff 3 ((F : PowerSeries ℤ)^k) = (k : ℤ) * ((k : ℤ) + 1) * ((k : ℤ) + 14) := by
+  let initial (n : ℕ) : ℤ := [1, 1, 3, 5][n]!
+  let pent (n : ℕ) : ℤ := [1, -1, -1, 0][n]!
+  have hPent (n : ℕ) (hn : n ≤ 3) : coeff n (pentagonalSeries ℤ) = pent n := by
+    have hzero {i : ℕ} (hi : i ≤ 3)
+        (h : ∀ k : ℤ, -3 ≤ k → k ≤ 3 → pentagonal k ≠ i) :
+        coeff i (pentagonalSeries ℤ) = 0 := by
+      apply coeff_pentagonalSeries_eq_zero
+      rintro ⟨k, hk⟩
+      have hbound := le_pentagonal k
+      rw [hk] at hbound
+      exact h k (by omega) (by omega) hk
+    interval_cases n
+    · exact (coeff_pentagonalSeries_pentagonal ℤ 0).trans (by decide)
+    · exact (coeff_pentagonalSeries_pentagonal ℤ 1).trans (by decide)
+    · change coeff (pentagonal (-1)) (pentagonalSeries ℤ) = -1
+      rw [coeff_pentagonalSeries_pentagonal]
+      decide
+    · apply hzero (i := 3) (by decide)
+      intro k hl hu
+      interval_cases k <;> decide
+  let eulerPrefix (d n : ℕ) : ℤ := if d ∣ n then pent (n / d) else 0
+  have hEuler (d : ℕ) (hd : d ≠ 0) :
+      prefixEq 3 (euler d hd : PowerSeries ℤ) (PowerSeries.mk (eulerPrefix d)) := by
+    intro n hn
+    simp only [euler, coeff_expand, coeff_mk, eulerPrefix]
+    split_ifs
+    · exact hPent (n / d) ((Nat.div_le_self _ _).trans hn)
+    · rfl
+  have hF : prefixEq 3 (F : PowerSeries ℤ) (PowerSeries.mk initial) := by
+    apply prefix_cancel (u := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide))
+    · simp [euler_const]
+    rw [F_mul_den]
+    have hDen := prefix_mul (prefix_mul (hEuler 1 (by decide)) (hEuler 2 (by decide)))
+      (hEuler 3 (by decide))
+    intro n hn
+    rw [hEuler 6 (by decide) n hn, (prefix_mul (fun _ _ => rfl : prefixEq 3 (PowerSeries.mk initial)
+      (PowerSeries.mk initial)) hDen) n hn]
+    simp only [series_convolution, coeff_mk]
+    interval_cases n <;> decide
+  have hcoeff (n : ℕ) (hn : n ≤ 3) : coeff n (F : PowerSeries ℤ) = initial n := by
+    rw [hF n hn, coeff_mk]
   have hc1 (j : ℕ) : coeff 1 ((F : PowerSeries ℤ)^j) = (j : ℤ) := by
     induction j with
     | zero => simp
-    | succ j ih => simp [pow_succ, coeff_one_mul, ih, F_const, F_small_coeff 1 (by decide), fPrefix]
+    | succ j ih => simp [pow_succ, coeff_one_mul, ih, F_const, hcoeff 1 (by decide), initial]
   induction k with
   | zero => simp
   | succ k ih =>
@@ -224,13 +159,13 @@ private theorem coefficient_formula_three (k : ℕ) :
     have hr2 : coeff 2 ((F : PowerSeries ℤ)^(k+1)) =
         3 + (k : ℤ) + coeff 2 ((F : PowerSeries ℤ)^k) := by
       rw [pow_succ, coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-      simp [sum_range_succ, hc1, h0', F_small_coeff 1 (by decide), F_small_coeff 2 (by decide),
-        F_small_coeff 3 (by decide), F_const, fPrefix]
+      simp [sum_range_succ, hc1, h0', hcoeff 1 (by decide), hcoeff 2 (by decide),
+        hcoeff 3 (by decide), F_const, initial]
     have hr3 : coeff 3 ((F : PowerSeries ℤ)^(k+1)) =
         5 + 3*(k : ℤ) + coeff 2 ((F : PowerSeries ℤ)^k) + coeff 3 ((F : PowerSeries ℤ)^k) := by
       rw [pow_succ, coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-      simp [sum_range_succ, hc1, h0', F_small_coeff 1 (by decide), F_small_coeff 2 (by decide),
-        F_small_coeff 3 (by decide), F_const, fPrefix]
+      simp [sum_range_succ, hc1, h0', hcoeff 1 (by decide), hcoeff 2 (by decide),
+        hcoeff 3 (by decide), F_const, initial]
       ring
     push_cast
     rw [hr2, hr3]
@@ -397,11 +332,98 @@ private theorem coeff_seven_period (k : ℕ) :
 
 theorem exceptional_sharp (k : ℕ) (hk : k % 16 = 2) :
     coeff 7 (reduce 16 (p^k)) = 8 := by
-  rw [coeff_seven_period]
-  have hr : k%64=2 ∨ k%64=18 ∨ k%64=34 ∨ k%64=50 := by omega
-  rcases exceptional_representatives with ⟨h2,h18,h34,h50⟩
-  rcases hr with h | h | h | h <;>
-    (rw [h, reduce, coeff_map]; first | rw [h2] | rw [h18] | rw [h34] | rw [h50]) <;> decide
+  let initial (n : ℕ) : ℤ := [1, 1, 3, 5, 10, 15, 28, 41][n]!
+  let pent (n : ℕ) : ℤ := [1, -1, -1, 0, 0, 1, 0, 1][n]!
+  have hPent (n : ℕ) (hn : n ≤ 7) : coeff n (pentagonalSeries ℤ) = pent n := by
+    have hzero {i : ℕ} (hi : i ≤ 7)
+        (h : ∀ k : ℤ, -7 ≤ k → k ≤ 7 → pentagonal k ≠ i) :
+        coeff i (pentagonalSeries ℤ) = 0 := by
+      apply coeff_pentagonalSeries_eq_zero
+      rintro ⟨k, hk⟩
+      have hbound := le_pentagonal k
+      rw [hk] at hbound
+      exact h k (by omega) (by omega) hk
+    interval_cases n
+    · exact (coeff_pentagonalSeries_pentagonal ℤ 0).trans (by decide)
+    · exact (coeff_pentagonalSeries_pentagonal ℤ 1).trans (by decide)
+    · change coeff (pentagonal (-1)) (pentagonalSeries ℤ) = -1
+      rw [coeff_pentagonalSeries_pentagonal]
+      decide
+    · apply hzero (i := 3) (by decide)
+      intro k hl hu
+      interval_cases k <;> decide
+    · apply hzero (i := 4) (by decide)
+      intro k hl hu
+      interval_cases k <;> decide
+    · exact (coeff_pentagonalSeries_pentagonal ℤ 2).trans (by decide)
+    · apply hzero (i := 6) (by decide)
+      intro k hl hu
+      interval_cases k <;> decide
+    · change coeff (pentagonal (-2)) (pentagonalSeries ℤ) = 1
+      rw [coeff_pentagonalSeries_pentagonal]
+      decide
+  let eulerPrefix (d n : ℕ) : ℤ := if d ∣ n then pent (n / d) else 0
+  have hEuler (d : ℕ) (hd : d ≠ 0) :
+      prefixEq 7 (euler d hd : PowerSeries ℤ) (PowerSeries.mk (eulerPrefix d)) := by
+    intro n hn
+    simp only [euler, coeff_expand, coeff_mk, eulerPrefix]
+    split_ifs
+    · exact hPent (n / d) ((Nat.div_le_self _ _).trans hn)
+    · rfl
+  have hF : prefixEq 7 (F : PowerSeries ℤ) (PowerSeries.mk initial) := by
+    apply prefix_cancel (u := euler 1 (by decide) * euler 2 (by decide) * euler 3 (by decide))
+    · simp [euler_const]
+    rw [F_mul_den]
+    have hDen := prefix_mul (prefix_mul (hEuler 1 (by decide)) (hEuler 2 (by decide)))
+      (hEuler 3 (by decide))
+    intro n hn
+    rw [hEuler 6 (by decide) n hn, (prefix_mul (fun _ _ => rfl : prefixEq 7 (PowerSeries.mk initial)
+      (PowerSeries.mk initial)) hDen) n hn]
+    simp only [series_convolution, coeff_mk]
+    interval_cases n <;> decide
+  have hFmod : prefixEq 7 (reduce 16 p)
+      (PowerSeries.mk fun n => (initial n : ZMod 16)) := by
+    intro n hn
+    rw [reduce, coeff_map, hF n hn, coeff_mk, coeff_mk]
+    rfl
+  have square (m : ℕ) (a b : ℕ → ZMod 16)
+      (ha : prefixEq 7 (reduce 16 p ^ m) (PowerSeries.mk a))
+      (hb : ∀ n ≤ 7, convolution a a n = b n) :
+      prefixEq 7 (reduce 16 p ^ (m + m)) (PowerSeries.mk b) := by
+    intro n hn
+    rw [pow_add, prefix_mul ha ha n hn, series_convolution, coeff_mk, coeff_mk, hb n hn]
+  let v2 (n : ℕ) : ZMod 16 := [1, 2, 7, 0, 7, 0, 11, 8][n]!
+  have h2 : prefixEq 7 (reduce 16 p ^ 2) (PowerSeries.mk v2) :=
+    square 1 _ v2 (by simpa only [pow_one] using hFmod) (by
+      intro n hn
+      interval_cases n <;> decide)
+  let v4 (n : ℕ) : ZMod 16 := [1, 4, 2, 12, 15, 12, 8, 12][n]!
+  have h4 : prefixEq 7 (reduce 16 p ^ 4) (PowerSeries.mk v4) :=
+    square 2 v2 v4 h2 (by intro n hn; interval_cases n <;> decide)
+  let v8 (n : ℕ) : ZMod 16 := [1, 8, 4, 8, 2, 0, 12, 0][n]!
+  have h8 : prefixEq 7 (reduce 16 p ^ 8) (PowerSeries.mk v8) :=
+    square 4 v4 v8 h4 (by intro n hn; interval_cases n <;> decide)
+  let v16 (n : ℕ) : ZMod 16 := [1, 0, 8, 0, 4, 0, 8, 0][n]!
+  have h16 : prefixEq 7 (reduce 16 p ^ 16) (PowerSeries.mk v16) :=
+    square 8 v8 v16 h8 (by intro n hn; interval_cases n <;> decide)
+  let v32 (n : ℕ) : ZMod 16 := [1, 0, 0, 0, 8, 0, 0, 0][n]!
+  have h32 : prefixEq 7 (reduce 16 p ^ 32) (PowerSeries.mk v32) :=
+    square 16 v16 v32 h16 (by intro n hn; interval_cases n <;> decide)
+  rw [coeff_seven_period, map_pow]
+  have hr : k % 64 = 2 ∨ k % 64 = 18 ∨ k % 64 = 34 ∨ k % 64 = 50 := by omega
+  rcases hr with h | h | h | h
+  · rw [h, h2 7 (by decide), coeff_mk]
+    decide
+  · rw [h, show 18 = 16 + 2 by decide, pow_add, prefix_mul h16 h2 7 (by decide),
+      series_convolution, coeff_mk]
+    decide
+  · rw [h, show 34 = 32 + 2 by decide, pow_add, prefix_mul h32 h2 7 (by decide),
+      series_convolution, coeff_mk]
+    decide
+  · rw [h, show 50 = (32 + 16) + 2 by decide, pow_add, pow_add _ 32 16,
+      prefix_mul (prefix_mul h32 h16) h2 7 (by decide), series_convolution,
+      series_convolution, coeff_mk]
+    decide
 
 private theorem full_lower (h E W : PowerSeries ℤ)
     (hunit : p*h=1) (hH : ∀ n, coeff (4*n+3) h=0)

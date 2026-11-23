@@ -94,7 +94,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandThetaDissection.U_dis
 
 *Commentary.*
 
-The two summands are psi(q⁴) phi(q⁶) and minus q times phi(q²) psi(q¹²).
+Over the rationals, U(q) U(q³) equals psi(q⁴) phi(q⁶) minus q phi(q²) psi(q¹²).
 
 ## References
 

@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.H0`
 
 *Commentary.*
 
-The series whose degree doubling is the even part of H.
+The Euler quotient f1^2 f4^2 f6^4 divided by f2^2 f3^2 f12^2, whose degree doubling is the even part of H over the integers.
 
 **Definition 1.3 (T).**
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.T`
 
 *Commentary.*
 
-The series whose degree quadrupling, shifted by one, gives the negative odd part of H.
+The Euler quotient f1^4 f6^2 divided by f2^2 f3^2. Over the integers, the odd part of H is −q T(q⁴).
 
 **Theorem 1.4 (FH).**
 
@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.E`
 
 *Commentary.*
 
-The unexpanded even part of F squared.
+The integral series such that E(q²) is the even part of F(q) squared.
 
 **Definition 1.8 (W).**
 
@@ -108,9 +108,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W`
 
 *Formalization.* `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Daniel Yaqubi and Madjid Mirzavaziri (2026). *Partitions with designated summands: k-tuples and their congruences*. DOI: [10.48550/arXiv.2611.05623](https://doi.org/10.48550/arXiv.2611.05623). URL: <https://arxiv.org/abs/2611.05623v1>.
+*Citation.* Daniel Yaqubi and Madjid Mirzavaziri (2026). *Partitions with designated summands: k-tuples and their congruences*. DOI: [10.48550/arXiv.2611.05623](https://doi.org/10.48550/arXiv.2611.05623). URL: <https://arxiv.org/abs/2611.05623v1>.
 
 *Commentary.*
 
@@ -134,13 +132,11 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W_suppo
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.W_support` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Daniel Yaqubi and Madjid Mirzavaziri (2026). *Partitions with designated summands: k-tuples and their congruences*. DOI: [10.48550/arXiv.2611.05623](https://doi.org/10.48550/arXiv.2611.05623). URL: <https://arxiv.org/abs/2611.05623v1>.
+*Citation.* Daniel Yaqubi and Madjid Mirzavaziri (2026). *Partitions with designated summands: k-tuples and their congruences*. DOI: [10.48550/arXiv.2611.05623](https://doi.org/10.48550/arXiv.2611.05623). URL: <https://arxiv.org/abs/2611.05623v1>.
 
 *Commentary.*
 
-Every odd coefficient of W is divisible by four.
+For every natural n, the coefficient of degree 2n+1 in the integral series W is divisible by four.
 
 ## References
 

@@ -14,7 +14,8 @@ euler_tendsto proof_shape: content
   escape_witness: the coefficientwise dilation of the full finite-product limit
 euler_const proof_shape: bind-only
   escape_witness: none
-  Consumers: F_const, F_eq_unit, F_mul_den, F_prefix, _proof_1, _proof_2, marked_series_eq_F
+  Consumers: F_const, F_eq_unit, F_mul_den, _proof_1, _proof_2,
+    coefficient_formula_three, exceptional_sharp, marked_series_eq_F
 map_eta proof_shape: bind-only
   escape_witness: none
   Consumers: H_dissection

@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Arith/ModularForms/DesignatedSummandCongruence.exceptiona
 
 *Commentary.*
 
-The degree-seven coefficient of F to the power k is 8 modulo 16 throughout k congruent to 2 modulo 16. Up through degree seven, F to the power 64 reduces to one. The four exponents 2, 18, 34 and 50 modulo 64 therefore suffice, with exact coefficients 328, 2748312, 79541096 and 713942200.
+For every natural k congruent to 2 modulo 16, the degree-seven coefficient of F to the power k is 8 modulo 16. Dyadic dilation makes F to the power 64 reduce to one through degree seven. Convolution modulo 16 through that degree gives residue 8 for each of the resulting exponent classes 2, 18, 34 and 50 modulo 64.
 
 **Theorem 1.2 (Common dyadic exponent).**
 

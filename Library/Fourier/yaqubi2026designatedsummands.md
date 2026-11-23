@@ -25,13 +25,21 @@ The DOI is 10.48550/arXiv.2611.05623. The versioned arXiv record is https://arxi
 Section 2 describes the individual mark as choosing one row from each block of equal
 parts. Definition 2.1 specifies $A_k(n)$ for ordered tuples and identifies its
 generating function as $F^k$, where $F=f_6/(f_1f_2f_3)$ and
-$f_d=\prod_{i\ge1}(1-q^{di})$. Lemma 2.2 states the all-degree Frobenius
-congruence modulo prime powers. [Source, §2](https://arxiv.org/html/2611.05623v1#S2)
+$f_d=\prod_{i\ge1}(1-q^{di})$. [Definition 2.1](https://arxiv.org/html/2611.05623v1#S2.Thmtheorem1)
 
-Lemma 3.11 gives the odd part of $F^2$ as $2qW(q^2)$ for
-$W=f_2^4f_6^4/(f_1^8f_3^4)$. Theorem 3.12 proves selected lower bounds.
+Section 2 gives the square and triangular theta series and their Euler
+quotients. Lemma 2.2 states the coefficientwise Frobenius congruence
+modulo prime powers. [Section 2](https://arxiv.org/html/2611.05623v1#S2) · [Lemma 2.2](https://arxiv.org/html/2611.05623v1#S2.Thmtheorem2)
+
+Lemma 3.11 identifies the odd part of $F^2$ as $2qW(q^2)$.
+[Lemma 3.11](https://arxiv.org/html/2611.05623v1#S3.Thmtheorem11)
+
+The proof of Theorem 3.12(b)–(c) defines $W=f_2^4f_6^4/(f_1^8f_3^4)$,
+shows $W\equiv f_6^2\pmod4$, and deduces that every odd coefficient of
+$W$ is divisible by four. [Theorem 3.12, proof of (b) and (c)](https://arxiv.org/html/2611.05623v1#S3.p29)
+
 Proposition 3.13 gives $6A_k(3)=k(k+1)(k+14)$ and exactness for
-$k\equiv6\pmod 8$. [Source, §3](https://arxiv.org/html/2611.05623v1#S3)
+$k\equiv6\pmod 8$. [Proposition 3.13](https://arxiv.org/html/2611.05623v1#S3.Thmtheorem13)
 
 Conjecture 6.1 states that for every $k\ge1$ the largest common power of
 two dividing the $A_k(4n+3)$ is $2^{v_2(A_k(3))}$ when

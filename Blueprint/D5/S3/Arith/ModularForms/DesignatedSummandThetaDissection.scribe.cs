@@ -18,7 +18,7 @@ internal sealed class DesignatedSummandThetaDissectionDocument : IScribeDocument
             Node("U_product", "The series U times the Euler factor f2 is f4 f1.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("phi_product", "The series phi times f1 squared and f4 squared is f2 to the fifth power.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
             Node("psi_product", "The series psi times f1 is f2 squared.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
-            Node("U_dissection", "The two summands are psi(q⁴) phi(q⁶) and minus q times phi(q²) psi(q¹²).", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+            Node("U_dissection", "Over the rationals, U(q) U(q³) equals psi(q⁴) phi(q⁶) minus q phi(q²) psi(q¹²).", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
         []));
 
     private static DocumentBlock Node(
