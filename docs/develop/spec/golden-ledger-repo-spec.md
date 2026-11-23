@@ -461,9 +461,11 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
 
-离线 truth release bundle 接口验证完整性及调用者声明的成功 check 名称；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
+离线 truth release bundle 接口验证完整性。历史清单要求调用者声明成功的 check 名称，定时发布清单不记录 CI 结论；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
 
-truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰含五个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export 和 Blueprint index。source snapshot 以 schema 标签 `source-snapshot` 标识，闭键恰为来源仓库、commit、tree、Lean toolchain、mathlib rev、producer package commit，以及 truth graph、raw Lean report、DAG Markdown、truth export 四个摘要；它不承载消化账目、残余工件或冻结事件字段。冻结成员资格由 `source_tree` 绑定的 `Golden/Frozen/state/**` 状态片决定，bundle 不另设账本头、事件计数或状态表摘要。manifest、source snapshot 与 publication 坐标的 transport 文件名为 `release-manifest.v1.json`、`source-snapshot.v1.json` 与 `truth-release-publication.v1.json`。reader 只接受上述标签与闭键：其他 manifest 或 source snapshot 标签、manifest 的 `frozen_ledger_head` 槽位及 source snapshot 的账本字段均被拒绝。已发布的 release 不改动。
+truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格式）或 `truth-release-scheduled`（定时发布）标识，恰含五个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export 和 Blueprint index。source snapshot 以 schema 标签 `source-snapshot` 标识，闭键恰为来源仓库、commit、tree、Lean toolchain、mathlib rev、producer package commit，以及 truth graph、raw Lean report、DAG Markdown、truth export 四个摘要；它不承载消化账目、残余工件或冻结事件字段。冻结成员资格由 `source_tree` 绑定的 `Golden/Frozen/state/**` 状态片决定，bundle 不另设账本头、事件计数或状态表摘要。manifest、source snapshot 与 publication 坐标的 transport 文件名为 `release-manifest.v1.json`、`source-snapshot.v1.json` 与 `truth-release-publication.v1.json`。reader 只接受上述标签与闭键：其他 manifest 或 source snapshot 标签、manifest 的 `frozen_ledger_head` 槽位及 source snapshot 的账本字段均被拒绝。已发布的 release 不改动。
+
+独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
