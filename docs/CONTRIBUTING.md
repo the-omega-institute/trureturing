@@ -381,7 +381,9 @@ state-file diff before committing. [Frozen state specification, A14](develop/spe
 
 A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
 a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
-claim applies to the compiled declaration at measurement time. For the library itself, the strict
+claim applies to the compiled declaration at measurement time. Published DAGs
+label qualifying declarations **仅 Omega · 零公理**. The Truth Release carries
+the corresponding evidence on each annotated declaration in the truth export. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
 `lake test -- OmegaMath.Projective` checks the projective topic.
