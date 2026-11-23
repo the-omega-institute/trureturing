@@ -19,14 +19,86 @@ internal sealed class HardinA233163KingStripDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Finset.univ ranges over every function on the displayed finite cell domain. Fin.val gives the natural coordinate. Fin.castSucc and Fin.succ are the two endpoints in adjacent columns; Fin.mk constructs the next row with its displayed bound proof. The rank 3 times row plus column is strictly row-major. The first-cell existential is false when n is zero, so the added constant coefficient is zero. The source counting problem concerns every positive n."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-row"), DeclarationHandle.Create(Prefix + "Row"),
+                H("Row"), StatementSource.FromAuthor(Disp(ApiFormula("Row"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Signed colours on the ordered row."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-boundary"), DeclarationHandle.Create(Prefix + "Boundary"),
+                H("Boundary"), StatementSource.FromAuthor(Disp(ApiFormula("Boundary"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Complementary-pair colours on the same row."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-rowlegal"), DeclarationHandle.Create(Prefix + "rowLegal"),
+                H("rowLegal"), StatementSource.FromAuthor(Disp(ApiFormula("rowLegal"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Adjacent signed colours exclude equality and complementarity."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-pairs"), DeclarationHandle.Create(Prefix + "pairs"),
+                H("pairs"), StatementSource.FromAuthor(Disp(ApiFormula("pairs"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The pair map is applied in each column."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-compatible"), DeclarationHandle.Create(Prefix + "compatible"),
+                H("compatible"), StatementSource.FromAuthor(Disp(ApiFormula("compatible"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Vertical and both diagonal pair colours differ."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-step"), DeclarationHandle.Create(Prefix + "step"),
+                H("step"), StatementSource.FromAuthor(Disp(ApiFormula("step"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The scanner-weighted sum ranges over every signed next row."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-saturated"), DeclarationHandle.Create(Prefix + "saturated"),
+                H("saturated"), StatementSource.FromAuthor(Disp(ApiFormula("saturated"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("All three precedence flags are true."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-proper"), DeclarationHandle.Create(Prefix + "proper"),
+                H("proper"), StatementSource.FromAuthor(Disp(ApiFormula("proper"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The productive pair-boundary predicate."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-kind"), DeclarationHandle.Create(Prefix + "kind"),
+                H("kind"), StatementSource.FromAuthor(Disp(ApiFormula("kind"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The alternating equality pattern determines the two rates."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-rate"), DeclarationHandle.Create(Prefix + "rate"),
+                H("rate"), StatementSource.FromAuthor(Disp(ApiFormula("rate"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The signed continuation count is integer valued."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("api-saturated-certificate"), DeclarationHandle.Create(Prefix + "saturated_certificate"),
+                H("saturated_certificate"), StatementSource.FromAuthor(Disp(ApiFormula("saturated_certificate"))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Every admissible signed continuation preserves saturation, properness and kind; the unweighted sum equals the displayed rate."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The complete rational formal power series"), StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The four complementary colour pairs are {0,7}, {1,6}, {2,5} and {3,4}. The private saturated_certificate checks that a proper pair boundary preserves its ABA or ABC type: there are 16 legal colour-row continuations of an ABA boundary and 8 of an ABC boundary. The private continuation theorem uses these premises in induction over every natural continuation length, giving the corresponding power of 16 or 8. The private finite_certificate checks that every legal two-row seed has seen 1, 2 and 3, and that there are four seeds of each type. Thus count_formula gives a(n+2)=4 times 16 to the n plus 4 times 8 to the n for every natural n, with a(1)=3. The fixed initial cases use continuation at lengths zero and one. These statements feed the coefficient proof of the entire rational series, including the initial numerator.")),
+                Blocks(Paragraph(Text("The four complementary colour pairs are {0,7}, {1,6}, {2,5} and {3,4}. The saturated_certificate checks that a proper pair boundary preserves its ABA or ABC type: there are 16 legal colour-row continuations of an ABA boundary and 8 of an ABC boundary. The private continuation theorem uses these premises in induction over every natural continuation length, giving the corresponding power of 16 or 8. The private finite_certificate checks that every legal two-row seed has seen 1, 2 and 3, and that there are four seeds of each type. Thus count_formula gives a(n+2)=4 times 16 to the n plus 4 times 8 to the n for every natural n, with a(1)=3. The fixed initial cases use continuation at lengths zero and one. These statements feed the coefficient proof of the entire rational series, including the initial numerator.")),
                     Paragraph(Text("The public Fin8 scanner Seen, good and finish, the pair map beta and colour_bond_iff, and the width-independent widthNormal, widthLegal, widthStep, widthV, widthTotal and width_counting_bridge are reused directly from HardinA233196Strip. Normal is independently expressed with strict rank 3 times row plus column; normal_iff proves its equivalence with the scanner. Both diagonal directions and every vertical bond are present in bonds. The literal count is independent of the transfer calculation. Formal inversion uses the denominator constant coefficient one. The result concerns rational formal series at every height; there is no finite cutoff or resource assumption."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233163"),
                     ResolutionKind.Proved)))));
+
+    private static Formula ApiFormula(string name)
+    {
+        var c = V("c"); var p = V("p"); var j = V("j"); var w = V("w"); var t = V("t");
+        var row = Arrow(Fin(3), Fin(8)); var boundary = Arrow(Fin(3), Fin(4));
+        var seen = Product(V("Bool"), Product(V("Bool"), V("Bool")));
+        var left = Call("Fin.castSucc", j); var right = Call("Fin.succ", j);
+        Formula PairColour(Formula a) => Call("HardinA233196Strip.beta", App(c, a));
+        var legal = All("j", Fin(2), And(Ne(App(c,left),App(c,right)), Ne(Add(Val(App(c,left)),Val(App(c,right))),D(7))));
+        var compat = And(All("j", Fin(3), Ne(App(p,j),PairColour(j))),
+            All("j", Fin(2), And(Ne(App(p,left),PairColour(right)),Ne(App(p,right),PairColour(left)))));
+        var prop = And(Ne(App(p,D(0)),App(p,D(1))),Ne(App(p,D(1)),App(p,D(2))));
+        var kind = Eq(App(p,D(0)),App(p,D(2)));
+        var pred = And(Call("rowLegal",c), And(Call("compatible",p,c), Call("HardinA233196Strip.good",Call("saturated"),c)));
+        return name switch
+        {
+            "Row" => Eq(Call("Row"),row),
+            "Boundary" => Eq(Call("Boundary"),boundary),
+            "rowLegal" => All("c",row,Iff(Call("rowLegal",c),legal)),
+            "pairs" => All("c",row,All("j",Fin(3),Eq(App(Call("pairs",c),j),PairColour(j)))),
+            "compatible" => All("p",boundary,All("c",row,Iff(Call("compatible",p,c),compat))),
+            "saturated" => Eq(Call("saturated"),Pair(V("true"),Pair(V("true"),V("true")))),
+            "proper" => All("p",boundary,Iff(Call("proper",p),prop)),
+            "kind" => All("p",boundary,Eq(Call("kind",p),Call("decide",Parenthesized(kind)))),
+            "rate" => All("b",V("Bool"),Eq(Call("rate",V("b")),Conditional(Eq(V("b"),V("true")),Typed(D(1,6),V("Int")),Typed(D(8),V("Int"))))),
+            "step" => All("w",Arrow(seen,Arrow(boundary,V("Int"))),All("t",seen,All("p",boundary,
+                Eq(Call("step",w,t,p),SumOver("c",row,Conditional(And(Call("rowLegal",c),And(Call("compatible",p,c),Call("HardinA233196Strip.good",t,c))),
+                    App(w,Call("HardinA233196Strip.finish",t,c),Call("pairs",c)),Typed(D(0),V("Int")))))))),
+            _ => All("p",boundary,Imp(Call("proper",p),And(All("c",row,Imp(pred,
+                And(Eq(Call("HardinA233196Strip.finish",Call("saturated"),c),Call("saturated")),
+                    And(Call("proper",Call("pairs",c)),Eq(Call("kind",Call("pairs",c)),Call("kind",p)))))),
+                Eq(Call("step",Call("Function.const",seen,Call("Function.const",boundary,Typed(D(1),V("Int")))),Call("saturated"),p),Call("rate",Call("kind",p))))))
+        };
+    }
+
+    private static Formula Typed(Formula f, Formula t) => Parenthesized(Seq(f,Colon,Sp,t));
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a),Sp,F.Iff,Sp,Parenthesized(b));
+    private static Formula Conditional(Formula p, Formula y, Formula n) => Parenthesized(Seq(Name("if"),Sp,Parenthesized(p),Sp,Name("then"),Sp,y,Sp,Name("else"),Sp,n));
+    private static Formula SumOver(string n, Formula t, Formula b) => Seq(Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(b));
 
     private static Formula CountFormula()
     {
@@ -52,7 +124,7 @@ internal sealed class HardinA233163KingStripDocument : IScribeDocumentDefinition
             And(Imp(Or(Eq(App(a, p), D(3)), Or(Eq(App(a, p), D(4)), Eq(App(a, p), D(5)))), Earlier(2)),
                 Imp(Eq(App(a, p), D(4)), Earlier(3)))));
         var predicate = Seq(LambdaLower, Sp, a, Colon, Sp, Arrow(cells, Fin(8)), Sp,
-            Mapsto, Sp, Par(And(first, And(horizontal, And(And(vertical, diagonal), normal)))));
+            Mapsto, Sp, Parenthesized(And(first, And(horizontal, And(And(vertical, diagonal), normal)))));
         return All("n", V("Nat"), Eq(Call("a", n),
             Call("Finset.card", Call("Finset.filter", predicate, Call("Finset.univ")))));
     }
@@ -61,10 +133,10 @@ internal sealed class HardinA233163KingStripDocument : IScribeDocumentDefinition
     {
         var x = V("X"); var n = V("n");
         var series = Call("PowerSeries.mk", Seq(LambdaLower, Sp, n, Colon, Sp, V("Nat"), Sp,
-            Mapsto, Sp, Par(Seq(Call("a", n), Colon, Sp, V("Rat")))));
+            Mapsto, Sp, Parenthesized(Seq(Call("a", n), Colon, Sp, V("Rat")))));
         var numerator = Mul(x, Add(Sub(D(3), Mul(D(6,4), x)), Mul(D(2,8,8), Pow(x, D(2)))));
         var denominator = Mul(Sub(D(1), Mul(D(8), x)), Sub(D(1), Mul(D(1,6), x)));
-        return Seq(Eq(series, Mul(numerator, Pow(Par(denominator), new Formula.Negate(Num(1))))),
+        return Seq(Eq(series, Mul(numerator, Pow(Parenthesized(denominator), new Formula.Negate(Num(1))))),
             Sp, Name("in"), Sp, Call("PowerSeries", V("Rat")));
     }
 
@@ -75,24 +147,24 @@ internal sealed class HardinA233163KingStripDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Name(name), args);
     private static Formula Fin(byte n) => Call("Fin", D(n));
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
-    private static Formula Product(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
-    private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, To, Sp, b);
-    private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
+    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Rank(Formula p) => Add(Mul(D(3), Val(Call("Prod.fst", p))), Val(Call("Prod.snd", p)));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Par(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
 }

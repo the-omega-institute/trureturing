@@ -6,7 +6,21 @@ Literal HDA colourings and exact defect transfer.
 
 The literal array has n rows, 3 columns and exactly 2 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 9 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. The active leading sector, initial vector and cached prefix are a block extension of HardinA229529Strip. Its original certificate supplies the inherited active successor and initial projections. Only the appended sectors and rows are stored here.
 
-**Definition 1.1 (The literal canonical array count).**
+**Definition 1.1 (The terminal vector).**
+
+$$(\operatorname{\mathit{HardinA229632Strip}}.\operatorname{\mathit{terminal}}: (\operatorname{\mathit{Fin}}\left(9\right)) \to (\operatorname{\mathit{Int}})) = \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((0: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((0: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((0: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((0: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((0: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((1: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((1: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((1: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((1: \operatorname{\mathit{Int}}), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecEmpty}}\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip.terminal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229632: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229632>.
+
+*Commentary.*
+
+Entries at indices 0 through 8 are 0, 0, 0, 0, 0, 1, 1, 1, 1.
+
+**Definition 1.2 (The literal canonical array count).**
 
 $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n\right) = \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda A: ((\operatorname{\mathit{Fin}}\left(n\right)) \times (\operatorname{\mathit{Fin}}\left(3\right))) \to (\operatorname{\mathit{Fin}}\left(3\right)) \mapsto ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{defects}}\left(\operatorname{\mathit{HardinA229581Strip}}.\operatorname{\mathit{horizontal}}, \operatorname{\mathit{HardinA229529Strip}}.\operatorname{\mathit{between}}, \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(n\right) \mapsto (\lambda j: \operatorname{\mathit{Fin}}\left(3\right) \mapsto (A\left((i, j)\right)))\right)\right) = 2) \land (\forall p: (\operatorname{\mathit{Fin}}\left(n\right)) \times (\operatorname{\mathit{Fin}}\left(3\right)), (\forall c: \operatorname{\mathit{Fin}}\left(3\right), ((c < A\left(p\right)) \implies (\exists q: (\operatorname{\mathit{Fin}}\left(n\right)) \times (\operatorname{\mathit{Fin}}\left(3\right)), ((\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(q\right)\right) \cdot 3 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(q\right)\right) < \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(p\right)\right) \cdot 3 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(p\right)\right)) \land (A\left(q\right) = c))))))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right))$$
 
@@ -18,7 +32,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229632Strip}}.\operator
 
 The filter ranges over every actual array over Fin 3. Canonical uses the lifted row-major order, independently of the transfer sweep. Each listed bond contributes exactly one when its two endpoint colours agree.
 
-**Theorem 1.2 (The registered all-index recurrence).**
+**Theorem 1.3 (The registered all-index recurrence).**
 
 $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 8\right): \operatorname{\mathit{Int}}) = 15 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 7\right): \operatorname{\mathit{Int}}) - 81 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 6\right): \operatorname{\mathit{Int}}) + 185 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 5\right): \operatorname{\mathit{Int}}) - 162 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 4\right): \operatorname{\mathit{Int}}) + 60 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 3\right): \operatorname{\mathit{Int}}) - 8 \cdot (\operatorname{\mathit{HardinA229632Strip}}.\operatorname{a}\left(n + 2\right): \operatorname{\mathit{Int}}))$$
 
@@ -40,6 +54,7 @@ The recurrence holds at every index at least 8. DefectTransfer.lumped_count and 
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip.result`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip.terminal`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport](../../../Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229529Strip](HardinA229529Strip.md)
