@@ -18,6 +18,10 @@ triage: anchor
 
 # Yaqubi and Mirzavaziri, Partitions with designated summands
 
+## Verified locator
+
+The DOI is 10.48550/arXiv.2611.05623. The versioned arXiv record is https://arxiv.org/abs/2611.05623v1.
+
 Section 2 describes the individual mark as choosing one row from each block of equal
 parts. Definition 2.1 specifies $A_k(n)$ for ordered tuples and identifies its
 generating function as $F^k$, where $F=f_6/(f_1f_2f_3)$ and

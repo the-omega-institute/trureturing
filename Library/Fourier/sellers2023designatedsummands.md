@@ -14,6 +14,10 @@ triage: anchor
 
 # Sellers, Congruences for 2-regular partitions with designated summands
 
+## Verified locator
+
+The DOI is 10.48550/arXiv.2306.15130. The versioned arXiv record is https://arxiv.org/abs/2306.15130v1.
+
 Lemma 2.3 gives the classical two-dissections of $f_1f_3$ and
 $1/(f_1f_3)$, with $f_d=\prod_{i\ge1}(1-q^{di})$. It attributes these
 identities to M. D. Hirschhorn, *The Power of q*, equations (30.12.1)
