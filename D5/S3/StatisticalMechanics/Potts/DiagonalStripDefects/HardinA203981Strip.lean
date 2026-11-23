@@ -26,6 +26,8 @@ import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Lemmas
 import Init.Prelude
+import Init.PropLemmas
+import Init.SimpLemmas
 import Init.Tactics
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
 import Init.Omega
@@ -33,11 +35,16 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Empty
+import Mathlib.Data.Finset.Filter
+import Mathlib.Data.Finset.Insert
 import Mathlib.Data.Finset.Image
 import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.OfFn
 import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Nat.Cast.Defs
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.SetTheory.Cardinal.Finite
 
 /-! Literal canonical counts and the six-column diagonal-strip recurrence. -/
