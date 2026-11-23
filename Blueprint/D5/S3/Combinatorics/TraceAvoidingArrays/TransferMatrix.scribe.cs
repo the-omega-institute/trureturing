@@ -104,8 +104,9 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
         var n = V("n"); var b = V("b"); var d = V("d"); var j = V("j"); var c = V("c");
         Formula Relation(Formula start) => Eq(MV(PlusF(start, d)), Sum("j", Fin(d),
             App(Qualified("HSMul", "hSMul"), App(c, j), MV(PlusF(start, Val(j))))));
+        var shifted = All("n", NatF(), Relation(PlusF(n, b)));
         var body = All("T", MatrixF(S(), S(), IntF()), All("d", NatF(), All("b", NatF(),
-            All("c", Arr(Fin(d), IntF()), Imp(Relation(b), All("n", NatF(), Relation(PlusF(n, b)))))));
+            All("c", Arr(Fin(d), IntF()), Imp(Relation(b), shifted)))));
         return Disp(StateOnly(body));
     }
     private static Formula ShiftFormula()
