@@ -31,19 +31,12 @@ arrayOK | bind-only | arrayOKIffGood
 arrayOKIffGood | content | HardinA185761Recurrence.source_card
 card_good | bind-only | cardMatrix
 cardMatrix | content | HardinA185761Recurrence.count_transfer
-vector_relation_shift | bind-only | scalarRelationShift, HardinA229538Strip.zero_values, HardinA229538Strip.inherited_polynomial
+vector_relation_shift | bind-only | scalarRelationShift
 scalarRelationShift | bind-only | HardinA185761Recurrence.recurrence
 tabulatedPowers | bind-only | HardinA185761Recurrence.powers_table
 -/
 
-import Init.Data.Int.Basic
-import Init.Data.Nat.Basic
-import Init.Prelude
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Group.Monoid
 import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.NormNum
 import Mathlib.Data.List.GetD
@@ -266,7 +259,7 @@ theorem cardMatrix (P : R → R → Prop) (Q : R → R → R → Prop)
  · simp [hab,cont_matrix P Q cl T hT n a b hab]
  · simp [hab]
 
-theorem vector_relation_shift (T : Matrix S S ℤ) (d b : ℕ) (c : Fin d → ℤ)
+private theorem vector_relation_shift (T : Matrix S S ℤ) (d b : ℕ) (c : Fin d → ℤ)
     (h : (T ^ (b+d)).mulVec (1 : S → ℤ) =
       ∑ j : Fin d, c j • (T ^ (b+j.val)).mulVec (1 : S → ℤ)) (n : ℕ) :
     (T ^ (n+b+d)).mulVec (1 : S → ℤ) =
