@@ -3,12 +3,12 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Classes34
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229752.result; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Certificate.transition_counts,D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Forward.structural_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Certificate.transition_counts; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Classes34.class_successors
    digest: Width-five exact-budget transfer measurement. -/
 
 /-
-admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers on the live path of HardinA229752.result)
+admission_basis: escape-witness
+escape_witness: class_successors verifies the sorted successor multiplicities of every valid canonical width-five source in class 34. The decision checks every indexed width-five row and transports the result through finFunctionFinEquiv. Certificate.canonical_successors substitutes the list into the transfer sum.
 class_successors: proof_shape=content; consumers=Width5.Certificate.canonical_successors
 -/
 
