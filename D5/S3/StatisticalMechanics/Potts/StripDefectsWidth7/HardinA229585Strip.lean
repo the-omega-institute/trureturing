@@ -43,11 +43,11 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects d
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
 open HardinA229585StripData
 
-private abbrev cellOrder (n : ℕ) : LinearOrder (Fin n × Fin 7) :=
+abbrev cellOrder (n : ℕ) : LinearOrder (Fin n × Fin 7) :=
   LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
-private def Normal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Prop :=
+def Normal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Prop :=
   @Canonical (Fin n × Fin 7) (cellOrder n).toLT 3 A
-private instance decidableNormal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Decidable (Normal A) := by
+instance decidableNormal {n : ℕ} (A : Fin n × Fin 7 → Fin 3) : Decidable (Normal A) := by
   unfold Normal Canonical
   change Decidable (∀ (i : Fin n × Fin 7) (b : Fin 3), b < A i →
     ∃ j : Fin n × Fin 7, finProdFinEquiv j < finProdFinEquiv i ∧ A j = b)
@@ -58,7 +58,7 @@ def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin n × Fin 7 → Fin 3 =>
     defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 1 ∧ Normal A).card
 
-private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
+theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
   unfold cross bondDefects
   apply congrArg Finset.card
   ext e
@@ -68,7 +68,7 @@ private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundar
     rfl
   · simp [he]
 
-private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
+theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   have hn :
       D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.normalize (e ∘ p) =
@@ -83,12 +83,12 @@ private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) 
     Function.comp_apply, e.injective.eq_iff, e.injective.ne_iff]
   rfl
 
-private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
+theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
   simpa only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
     Nat.add_zero] using DefectTransfer.relabel_defects horizontal antidiagonal e [r]
 
-private theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
+theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
     cross (e ∘ p) (e ∘ r) = cross p r := by
   have h := DefectTransfer.relabel_defects horizontal antidiagonal e [Fin.cons 0 p, r]
   simp only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,

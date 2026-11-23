@@ -40,7 +40,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 
 attribute [local irreducible] W T initial terminal cl
 
-private theorem tail_bound (r : Row) :
+theorem tail_bound (r : Row) :
     (Finset.univ.filter fun z : Fin 5 =>
       boundary r z.castSucc = boundary r z.succ).card ≤ bondDefects horizontal r r := by
   revert r
