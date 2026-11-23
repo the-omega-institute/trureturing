@@ -27,6 +27,11 @@ Remove sections that do not apply. -->
 
 <!-- For a bug, give the commit, environment, smallest reproducing command or input, and actual output or exit code. For a mathematical mismatch, quote the statement and identify the missing hypothesis or give a counterexample. Link relevant sources or related Issues. -->
 
-<!-- Claim the Issue before implementation with current facts and a concrete direction.
+<!-- Before implementing or delegating the work, record your claim on the matching
+Issue with the current facts and proposed action. A comment is enough.
 Correct invalidated premises promptly and add updates that carry evidence or a decision.
-Close a question with its answer. For an implementation, record the PR merged into dev, the merge SHA and the first applicable dev push result. -->
+Close a question with its answer. If a PR merged into dev resolves only part of
+the Issue, link the PR, record the remaining scope and keep the Issue open.
+For a full implementation, record the PR merged into dev, its merge SHA and
+the verified result of the first applicable dev push, then close the Issue.
+If GitHub closes it at merge, add the push result once verified. -->

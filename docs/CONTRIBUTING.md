@@ -122,14 +122,17 @@ For a proposal, state the desired outcome and how to verify it. For a question,
 state the exact point that needs an answer. Include necessary diagnostics and
 source links. Keep Issue and PR bodies focused on current results and evidence.
 
-When taking on an Issue, claim it before implementation and record the current
-facts and concrete direction. Correct invalidated premises promptly. Update the
-Issue when new evidence changes the diagnosis or the chosen action. Comments
-should add evidence or a decision, so skip routine status updates.
+Before implementing or delegating the work, record your claim on the matching
+Issue with the current facts and proposed action. A comment is enough. Correct
+invalidated premises promptly. Update the Issue when new evidence changes the
+diagnosis or the chosen action, and before changing frozen or protected state.
+Comments should add evidence or a decision, so skip routine status updates.
 
-Close a question with the actual answer. For an implementation, close with the
-PR merged into `dev`, the merge SHA, and the first applicable `dev` push result.
-If GitHub closes the Issue at merge, add that result once it is verified.
+Close a question with the actual answer. If a PR merged into `dev` resolves
+only part of an Issue, link the PR, record the remaining scope and keep the
+Issue open. For a full implementation, record the PR merged into `dev`, its
+merge SHA and the verified result of the first applicable `dev` push, then
+close the Issue. If GitHub closes it at merge, add the push result once verified.
 [Open a pull request](#open-a-pull-request)
 
 Follow the repository's provenance requirements for skills, producers, review
@@ -360,12 +363,21 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-search this repository, pinned Mathlib and admissible upstream libraries before
-proving anything locally. Reuse an existing result directly when it fits.
+check the D5 frozen ledger for the result and prefer OmegaMath when constructing
+the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
+For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
+root and prefix the original declaration name with `Omega.`. Place original
+results near their mathematical topic and mark the module `Omega original.`.
+D5 imports the specific module for its book-facing theorem. For example,
+`Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
+See the [module placement examples](../src/README.md).
 Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
-defined external open-problem exception.
+defined external open-problem exception. A book that needs a frozen GID for
+an existing OmegaMath theorem may use one direct D5 citation entry when the
+ledger has no matching item. Identify the book location and original proof
+in the PR and classify the entry as bind-only.
 
 Frozen results stay fixed. Changes involving assumptions, new axioms,
 `Hearts.lean` or protected policy must follow their existing authorization
@@ -440,15 +452,37 @@ upstream repository, use the bare branch name. [PR title and body](#pull-request
 make pr HEAD=YOUR-USERNAME:lane/governance/first-docs MESSAGE=pr.md DRAFT=1
 ```
 
-`DRAFT=1` returns after opening the draft. Use **Ready for review** on the same
-PR when it is ready. For a non-draft PR, `make pr` arms auto-merge by default
-and waits for required checks. Use `AUTO_MERGE=0` to wait without arming it.
+If review is pending, use `DRAFT=1` or `AUTO_MERGE=0`. `DRAFT=1` returns after
+opening the draft. Mark the existing draft **Ready for review** when it is ready.
+For a non-draft PR, `make pr` attempts to enable auto-merge by default before
+waiting for required checks. Enabling auto-merge requires write access to the
+base repository. Fork contributors without that access use `AUTO_MERGE=0` for
+non-draft PRs. A maintainer can merge the existing PR after review and required
+checks pass, or enable auto-merge after review. If a contributor without write
+access pushes a new head while auto-merge is enabled, GitHub disables it. A
+maintainer can enable it again after the new head is reviewed.
 
 Arrange the applicable independent review and address failures in GitHub's
-required checks on the current PR head. Reuse the watcher for that PR and head,
-including the one started by `make pr`. If you need a watcher, run
-`make pr-watch PR=123 HEAD_SHA="$head_sha"` once for the current head, using your
-PR number and its full current head SHA. After pushing a revision, use the new SHA.
+required checks on the current PR head. Replace `123` with your PR number and
+look up its head on GitHub.
+
+```sh
+pr_number=123
+head_sha="$(gh pr view "$pr_number" --repo the-omega-institute/trureturing \
+  --json headRefOid --jq .headRefOid)" && printf '%s\n' "$head_sha"
+```
+
+When pushing a revision, record the full SHA of the exact source ref or commit
+used in that push. Continue only once GitHub's `headRefOid` matches the SHA you
+pushed. If you're observing the PR, use the current SHA GitHub reports.
+
+Once you have the confirmed SHA, reuse the running wait handle or the completed
+result for that PR and SHA, including any result already returned by `make pr`.
+If neither exists, start a single watcher.
+
+```sh
+make pr-watch PR="$pr_number" HEAD_SHA="$head_sha"
+```
 
 Verify that GitHub reports **MERGED** into `dev` and record the merge SHA.
 Check Actions for the first applicable `dev` push for that SHA and verify the
