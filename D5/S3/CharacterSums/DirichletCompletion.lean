@@ -12,6 +12,7 @@ import D5.S3.CharacterSums.DirichletCompletionGamma
 import Mathlib.Analysis.Calculus.Deriv.Star
 import Mathlib.Analysis.Real.Pi.Bounds
 import D5.S3.Weil.ZetaExplicit.GammaRBracket
+import D5.S3.Weil.ZetaSeam.ZetaReflect
 import D5.S3.Weil.ZetaExplicit.XiLogDeriv
 import D5.S3.Analytic.Resolvent.EntireLogDerivDifference
 
@@ -407,7 +408,7 @@ theorem completion_zero_order {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ 
   simp only [not_or, hf, not_false_eq_true, and_true]
   exact (ha ρ).analyticOrderAt_ne_zero.symm
 
-/-- Every zero of a primitive nonprincipal completion lies in the open critical strip. -/
+/-- Every zero of a primitive completion lies in the open critical strip. -/
 theorem completion_zero_strip {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (hχ : χ.IsPrimitive) {ρ : ℂ} (hρ : completion χ ρ = 0) :
     0 < ρ.re ∧ ρ.re < 1 := by
@@ -429,39 +430,20 @@ theorem completion_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     completion χ (1 - conj s) = χ.rootNumber * conj (completion χ s) := by
   rw [completion_one_sub hχ, completion_inv_conj]
 
-private theorem iteratedDeriv_inv_conj {q : ℕ} [NeZero q]
-    (χ : DirichletCharacter ℂ q) (n : ℕ) (s : ℂ) :
-    iteratedDeriv n (completion χ⁻¹) (conj s) =
-      conj (iteratedDeriv n (completion χ) s) := by
-  induction n generalizing s with
-  | zero => simpa using completion_inv_conj χ s
-  | succ n ih =>
-    have he : iteratedDeriv n (completion χ⁻¹) =
-        conj ∘ iteratedDeriv n (completion χ) ∘ conj := by
-      funext z
-      simpa using ih (conj z)
-    rw [iteratedDeriv_succ, he, deriv_conj_conj, iteratedDeriv_succ]
-    simp only [Function.comp_apply, conj_conj]
-
 /-- Critical-line reflection preserves the zero divisor, including analytic multiplicity. -/
 theorem completion_reflect_order {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
     (completion χ (1 - conj s) = 0 ↔ completion χ s = 0) ∧
     analyticOrderAt (completion χ) (1 - conj s) =
       analyticOrderAt (completion χ) s := by
-  have hF := differentiable_completion χ hne
   have hFi := differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)
-  have hf := (completion_zero_order χ hne s).1
   have hi : analyticOrderAt (completion χ⁻¹) (conj s) =
       analyticOrderAt (completion χ) s := by
-    let n := analyticOrderNatAt (completion χ) s
-    have he : analyticOrderAt (completion χ) s = n :=
-      (ENat.natCast_toNat hf).symm
-    have hh := (analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero (hF.analyticAt s)).mp he
-    have he' : analyticOrderAt (completion χ⁻¹) (conj s) = n := by
-      apply (analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero (hFi.analyticAt _)).mpr
-      simpa only [iteratedDeriv_inv_conj, ne_eq, map_eq_zero] using hh
-    exact he'.trans he.symm
+    have he : completion χ⁻¹ = fun z => conj (completion χ (conj z)) := by
+      funext z
+      simpa using completion_inv_conj χ (conj z)
+    rw [he]
+    exact Zeta23.analyticOrderAt_conj_conj (completion χ) s
   have heq : (fun z : ℂ => completion χ (1 - z)) =
       fun z => χ.rootNumber * completion χ⁻¹ z := funext (completion_one_sub hχ)
   have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := completion χ)
@@ -483,7 +465,6 @@ private theorem logDeriv_reflect {q : ℕ} [NeZero q] {χ : DirichletCharacter �
     (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
     logDeriv (completion χ) (1 - conj s) = -conj (logDeriv (completion χ) s) := by
   have hF := differentiable_completion χ hne
-  have hFi := differentiable_completion χ⁻¹ (inv_ne_one.mpr hne)
   have heq : completion χ⁻¹ = conj ∘ completion χ ∘ conj := by
     funext z; simpa using completion_inv_conj χ (conj z)
   have hd : deriv (completion χ⁻¹) (conj s) = conj (deriv (completion χ) s) := by

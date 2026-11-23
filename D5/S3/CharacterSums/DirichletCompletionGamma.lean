@@ -10,6 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
 import Mathlib.Analysis.Convex.Jensen
 import D5.S3.Analytic.Asymptotics.GammaVerticalReciprocalBounds
+import D5.S3.Weil.Mertens.Estimates
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Weil.Mertens.Cryptids.DigammaBinet.Foundation
 import Mathlib.Analysis.SumIntegralComparisons
@@ -92,71 +93,38 @@ theorem logarithmic_series_bound :
     (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
       Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 ∧
     Real.log 2 / 4 + 4 * Real.log 3 / 9 + 1 / 3 < 1 := by
-  let f : ℝ → ℝ := fun x => Real.log x / x ^ 2
-  let g : ℝ → ℝ := fun x => -(Real.log x + 1) / x
-  have hd (x : ℝ) (hx : 3 ≤ x) : HasDerivAt g (f x) x := by
-    have hx0 : x ≠ 0 := by linarith
-    have hh := (((Real.hasDerivAt_log hx0).add_const 1).neg.div
-      (hasDerivAt_id x) hx0)
-    convert hh using 1
-    · rfl
-    · dsimp [f]
-      field_simp [hx0]
-      <;> ring
-  have hn (x : ℝ) (hx : 3 < x) : 0 ≤ f x :=
-    div_nonneg (Real.log_nonneg (by linarith)) (sq_nonneg _)
-  have ht : Tendsto g atTop (𝓝 0) := by
-    have hlog := Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
-    have hinv : Tendsto (fun x : ℝ => 1 / x) atTop (𝓝 0) := tendsto_const_nhds.div_atTop
-      tendsto_id
-    convert (hlog.add hinv).neg using 1
-    · funext x
-      simp [g, add_div, div_eq_mul_inv, mul_add, add_mul]
-    · norm_num
-  have hi := integrableOn_Ioi_deriv_of_nonneg' hd hn ht
-  have he := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht
-  have hanti : AntitoneOn f (Ici (3 : ℝ)) := by
-    apply antitoneOn_of_deriv_nonpos (convex_Ici _) ?_ ?_ ?_
-    · intro x hx
-      have hx3 : 3 ≤ x := hx
-      have hx0 : x ≠ 0 := by linarith
-      exact ((Real.continuousAt_log hx0).div
-        ((continuous_id.pow 2).continuousAt) (pow_ne_zero _ hx0)).continuousWithinAt
-    · intro x hx
-      have hx0 : x ≠ 0 := by simp only [interior_Ici, mem_Ioi] at hx; linarith
-      exact (((Real.differentiableAt_log hx0).div
-        (differentiableAt_id.pow 2) (pow_ne_zero _ hx0))).differentiableWithinAt
-    · intro x hx
-      have hx3 : 3 < x := by simpa only [interior_Ici, mem_Ioi] using hx
-      have hx0 : x ≠ 0 := by linarith
-      have hfd := (Real.hasDerivAt_log hx0).div ((hasDerivAt_id x).pow 2)
-        (pow_ne_zero _ hx0)
-      rw [show deriv f x = _ from hfd.deriv]
-      have hl : 1 / 2 ≤ Real.log x := by
-        have := Real.log_le_log (by norm_num : (0 : ℝ) < 2) (by linarith : 2 ≤ x)
-        linarith [Real.log_two_gt_d9]
-      dsimp only [Pi.pow_apply, id_eq]
-      apply div_nonpos_of_nonpos_of_nonneg _ (sq_nonneg _)
-      simp only [Nat.cast_ofNat, Nat.reduceSub, pow_one, mul_one]
-      field_simp [hx0]
-      nlinarith
-  have hs := hanti.summable_of_integrableOn_Ioi (N := 3) hi hn
-  have htbound := hanti.tsum_comp_add_le_integral 3 hi hn
-  have hall : Summable (fun n : ℕ => f n) := hs
-  have hsplit := hall.sum_add_tsum_nat_add 4
-  have hb : (∑' n : ℕ, f n) ≤ f 2 + f 3 + (Real.log 3 + 1) / 3 := by
-    dsimp [g] at he
-    have hh : (∫ x : ℝ in Ioi 3, f x) = (Real.log 3 + 1) / 3 := by
-      convert he using 1 <;> ring
-    norm_num only [Nat.cast_ofNat] at htbound
+  let f : ℝ → ℝ := fun x => Real.log (x + 2) / (x + 2) ^ 2
+  open private antitoneOn_log_div_sq log_div_sq_is_deriv
+    tendsto_antideriv_log_div_sq summable_log_div_sq from D5.S3.Weil.Mertens.Estimates in
+  have htail : Summable (fun n : ℕ => Real.log (n + 3) / (n + 3) ^ 2) :=
+    Mertens.summable_log_div_sq
+  have hall : Summable (fun n : ℕ => Real.log n / (n : ℝ) ^ 2) := by
+    apply (summable_nat_add_iff 3).mp
+    simpa only [Nat.cast_add, Nat.cast_ofNat] using htail
+  open private antitoneOn_log_div_sq log_div_sq_is_deriv
+    tendsto_antideriv_log_div_sq from D5.S3.Weil.Mertens.Estimates in
+  have hb : (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) ≤
+      Real.log 2 / 4 + Real.log 3 / 9 + (Real.log 3 + 1) / 3 := by
+    have hd (x : ℝ) (hx : 1 ≤ x) := Mertens.log_div_sq_is_deriv x (by linarith)
+    have hn (x : ℝ) (hx : 1 < x) : 0 ≤ f x :=
+      div_nonneg (Real.log_nonneg (by linarith)) (sq_nonneg _)
+    have hi := integrableOn_Ioi_deriv_of_nonneg' hd hn
+      Mertens.tendsto_antideriv_log_div_sq
+    have he := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn
+      Mertens.tendsto_antideriv_log_div_sq
+    have hanti : AntitoneOn f (Ici (1 : ℝ)) :=
+      Mertens.antitoneOn_log_div_sq.mono (by intro x hx; simp only [mem_Ici] at *; linarith)
+    have htbound := hanti.tsum_comp_add_le_integral 1 hi hn
+    have hh : (∫ x : ℝ in Ioi 1, f x) = (Real.log 3 + 1) / 3 := by
+      convert he using 1 <;> norm_num <;> ring
     rw [hh] at htbound
-    norm_num [Finset.sum_range_succ, f] at hsplit
-    change (∑' n : ℕ, f n) ≤ _
-    dsimp [f] at htbound ⊢
-    norm_num [Nat.cast_add, add_assoc] at htbound ⊢
+    have hsplit := hall.sum_add_tsum_nat_add 4
+    norm_num [Finset.sum_range_succ] at hsplit
+    dsimp [f] at htbound
+    norm_num [Nat.cast_add, add_assoc] at htbound
     linarith
   refine ⟨hall, ?_, ?_⟩
-  · convert hb using 1 <;> dsimp [f] <;> ring
+  · linarith [hb]
   · have h2 : Real.log 2 < 7 / 10 := by linarith [Real.log_two_lt_d9]
     have h3 : Real.log 3 < 11 / 10 := by linarith [Real.log_three_lt_d9]
     linarith
