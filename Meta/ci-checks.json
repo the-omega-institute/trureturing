@@ -18,6 +18,7 @@
         "tools/Trureturing.Truth/packages.lock.json",
         "*.lean",
         "D5/**/*.lean",
+        "src/**/*.lean",
         "Reg/**",
         "Meta/domains.yaml"
       ],
