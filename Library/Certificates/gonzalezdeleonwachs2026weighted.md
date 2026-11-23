@@ -10,6 +10,11 @@ strata_touched:
   - D5/S0/Certificates/GonzalezDLeonWachsWeightedBondSource
   - D5/S0/Certificates/GonzalezDLeonWachsThreeVertexMobius
   - D5/S0/Certificates/GonzalezDLeonWachsWeightedBondDifferenceRefutation
+  - D5/S3/Combinatorics/WeightedBond/FiniteOrder
+  - D5/S3/Combinatorics/WeightedBond/CountableColors
+  - D5/S3/Combinatorics/WeightedBond/PartitionExpansion
+  - D5/S3/Combinatorics/WeightedBond/ExponentialSeries
+  - D5/S3/Combinatorics/WeightedBond/CompleteGraphSpecialization
 license: citation-only
 triage: anchor
 ---
@@ -41,3 +46,21 @@ arXiv:2609.15784v1 develops nestohedron recurrences but did not provide a
 located resolution of Conjecture 4.13(2); its Mobius-polynomial follow-up was
 described as in preparation. This is bounded status evidence, not a worldwide
 priority claim.
+
+
+## Complete-graph specialization
+
+Version 2, Section 5.1 defines the connected-block refinement with color
+weights. Equation (7.1) sums the bottom incidence Möbius value of each
+element of the countable-color poset against its color monomial. Question
+7.1 asks for the specialization to the complete graph with the first
+\(r>2\) variables equal to \(t\) and the remaining variables zero. A
+partition with \(k\) blocks contributes degree \(n-k\) to this literal
+specialization. The forms printed in (7.3) and (7.4) use the reversed
+degree \(k-1\).
+
+- Source locator [arXiv:2608.08692v2, Question 7.1](https://arxiv.org/html/2608.08692v2#S7.Thmtheorem1)
+- Retrieved HTML SHA-256
+  `5fc152746b92a4f77d06f2bd70111f2ff53c9d1ba6df3b4a7c5e09810af4661c`
+- Earlier one-block inverse and Lie-symmetric-function coefficients [arXiv:1408.5415](https://arxiv.org/abs/1408.5415)
+- Earlier two-color evaluation [arXiv:1309.5527](https://arxiv.org/abs/1309.5527)
