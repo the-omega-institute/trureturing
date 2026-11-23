@@ -24,7 +24,7 @@ abbrev radiusArena : Arena where
   signature := frequencySignature.{u}
   Law A := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     (w radius : J → ℝ) (_ : ∀ j, 0 ≤ w j) {ρ : ℝ} (_ : 0 < ρ)
-    (_ : ∀ j, ρ ≤ radius j) (p : ℕ),
+    (_ : ∀ j, ρ ≤ |radius j|) (p : ℕ),
     let T := (∑ j, w j) ^ (2 * p)
     let Q (h : ℕ) := (ρ * Real.sqrt (2 * ((p - h : ℕ) : ℝ)))⁻¹
     let B (h : ℕ) := (range (h + 1)).inf' ⟨0, mem_range.mpr (Nat.succ_pos h)⟩
@@ -79,7 +79,7 @@ private theorem smallRadius_fails : ¬ radiusArena.{u}.Law smallRadiusReadout :=
     (single_le_sum (fun b _ => hterm m b) hns).trans
       (single_le_sum (fun a _ => sum_nonneg (fun b _ => hterm a b)) hms)
   have h := law (J := ULift.{u} Bool) w 1 (fun _ => zero_le_one) (ρ := 1)
-    zero_lt_one (fun _ => le_rfl) 1
+    zero_lt_one (fun _ => le_abs_self _) 1
   change (∑ a ∈ s, ∑ b ∈ s.erase a, term a b) ≤ _ at h
   have hbad := hsel.trans h
   have hW : (∑ j, w j) = 2 := by rw [sum_liftBool]; norm_num [w]

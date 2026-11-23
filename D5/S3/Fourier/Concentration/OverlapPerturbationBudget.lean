@@ -36,12 +36,15 @@ private theorem overlap_lt_degree_of_ne {J : Type*} [Fintype J]
   exact hne (funext fun j => (hpointM j (mem_univ j)).symm.trans (hpointN j (mem_univ j)))
 
 private theorem sqrt_scale_ge {J : Type*} [Fintype J] (radius : J → ℝ)
-    {ρ : ℝ} (hρ : 0 < ρ) (hr : ∀ j, ρ ≤ radius j)
+    {ρ : ℝ} (hρ : 0 < ρ) (hr : ∀ j, ρ ≤ |radius j|)
     {m n : J → ℕ} {p : ℕ} (hm : (∑ j, m j) = p) (hn : (∑ j, n j) = p)
     {d : ℕ} (hd : d + (∑ j, min (m j) (n j)) ≤ p) :
     ρ * Real.sqrt (2 * (d : ℝ)) ≤ Real.sqrt (∑ j, (((m j : ℝ) - n j) * radius j) ^ 2) := by
   have hreal : (d : ℝ) + ∑ j, (min (m j) (n j) : ℝ) ≤ p := by exact_mod_cast hd
-  have hscale := weighted_count_difference_sq_ge radius hρ.le hr m n p hm hn
+  have hscale : 2 * ρ ^ 2 * ((p : ℝ) - ∑ j, (min (m j) (n j) : ℝ)) ≤
+      ∑ j, (((m j : ℝ) - n j) * radius j) ^ 2 := by
+    simpa only [mul_pow, sq_abs] using
+      weighted_count_difference_sq_ge (fun j => |radius j|) hρ.le hr m n p hm hn
   rw [← Real.sqrt_sq hρ.le, ← Real.sqrt_mul (sq_nonneg ρ)]
   apply Real.sqrt_le_sqrt
   refine le_trans ?_ hscale
@@ -60,7 +63,7 @@ private theorem sum_erase_of_diagonal {A : Type*} [DecidableEq A] (s : Finset A)
 high-overlap masses, excluding the diagonal in every tail. -/
 theorem weighted_inverse_scale_le_of_overlap {J : Type*} [Fintype J] [DecidableEq J]
     (w radius : J → ℝ) (hw : ∀ j, 0 ≤ w j) {ρ : ℝ} (hρ : 0 < ρ)
-    (hr : ∀ j, ρ ≤ radius j) (p : ℕ) :
+    (hr : ∀ j, ρ ≤ |radius j|) (p : ℕ) :
     let T := (∑ j, w j) ^ (2 * p)
     let Q (h : ℕ) := (ρ * Real.sqrt (2 * ((p - h : ℕ) : ℝ)))⁻¹
     let B (h : ℕ) := (range (h + 1)).inf' ⟨0, mem_range.mpr (Nat.succ_pos h)⟩

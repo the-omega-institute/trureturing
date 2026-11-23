@@ -13,12 +13,12 @@ internal sealed class OverlapPerturbationBudgetDocument : IScribeDocumentDefinit
         H("A Diagonal Bound for the Sum of Inverse Scales"),
         Blocks(
             Paragraph(Text(
-                "On a finite set J, let w(j)≥0 and r(j)≥ρ>0. Write W for the sum of the "
+                "On a finite set J, let w(j)≥0 and |r(j)|≥ρ>0. Write W for the sum of the "
                 + "weights and c(m) for the weighted multinomial coefficient of m. For a natural "
                 + "degree p, write I(p) for the sum of c(m)c(n)/√S(m,n) over distinct "
                 + "ordered pairs of degree p, where S(m,n)=Σ((m(j)−n(j))r(j))². Define "
                 + "D(k) as the sum of c(l)² over degree k and A(k)=choose(p,k)² W^(2(p−k))D(k). "
-                + "Put T=W^(2p), Q(h)=1/(ρ√(2(p−h))) for 0≤h<p, and "
+                + "Put T=W^(2p), Q(h)=1/(ρ√(2(p−h))) for h<p with Q(h)=0 for h≥p, and "
                 + "B(h)=min over 0≤i≤h of min(A(i),T), minus D(p). "
                 + "The correction sum is empty for p≤1. At p=0 the result is zero.")),
             Describe.Lean(
