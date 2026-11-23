@@ -26,6 +26,7 @@ theorem norm_Gamma_le {z : ℂ} (hz : 0 < z.re) :
   refine (norm_integral_le_integral_norm _).trans_eq ?_
   apply setIntegral_congr_fun measurableSet_Ioi
   intro x hx
+  dsimp only
   rw [norm_mul, Complex.norm_of_nonneg (Real.exp_pos _).le,
     Complex.norm_cpow_eq_rpow_re_of_pos hx]
   simp
@@ -35,7 +36,9 @@ theorem Gamma_le_max_factorial {u : ℝ} (hu : 1 / 4 ≤ u) :
     Real.Gamma u ≤ max (Real.Gamma (1 / 4)) (Nat.factorial ⌈u⌉₊ : ℝ) := by
   have h := Real.convexOn_Gamma.le_max_of_mem_Icc
     (by norm_num : (1 / 4 : ℝ) ∈ Ioi 0)
-    (by positivity : ((⌈u⌉₊ : ℝ) + 1) ∈ Ioi 0)
+    (show ((⌈u⌉₊ : ℝ) + 1) ∈ Ioi 0 by
+      change 0 < (⌈u⌉₊ : ℝ) + 1
+      positivity)
     (show u ∈ Icc (1 / 4) ((⌈u⌉₊ : ℝ) + 1) from
       ⟨hu, (Nat.le_ceil u).trans (by linarith)⟩)
   simpa only [Real.Gamma_nat_eq_factorial] using h
