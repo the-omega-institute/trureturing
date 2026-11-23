@@ -48,8 +48,23 @@ For every real β > 0 and 1 < p < r, write Δa = a(β,p) − a(β,r) and define 
 
 Evaluate the positive endpoint form at (1,0) and at (−Δe/(2Δa),1).
 
+**Theorem 1.4 (Agreement with the Gibbs exponent coefficients).**
+
+$$\operatorname{K}\left(beta, q\right) = \operatorname{exponentK}\left(beta, q\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Semigroups/WuCriticalQuartic.K_eq_exponentK` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real β > 0 and q > 1, the two reduced matrices agree. For z = exp(−β), k = z^(1/q), u = z/k, g = 1 − u and h = 1 − k, exponentK has the same arrangement of entries with a = (q − 1)(z/k²)h²/(2g²), e = 2/g − 1 − 2(q − 1)uh/g², and d = 2/g − 3/2 − (1 + z)/(gh) + 2(q − 1)z/g².
+
+With x and y as above, k = exp(−2x), u = exp(−2y), z = ku and q − 1 = y/x. Substitute the exponential forms of the two hyperbolic cotangents and hyperbolic sines. The identity concerns the reduced coefficient matrices.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Semigroups/WuCriticalQuartic.K_eq_exponentK`
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuCriticalQuartic.deriv_value_neg`
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuCriticalQuartic.endpoint_drop_pos`
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuCriticalQuartic.endpoint_schur_pos`

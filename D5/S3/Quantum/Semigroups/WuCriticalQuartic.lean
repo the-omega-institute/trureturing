@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic
 import D5.S3.Observer.Fluctuation.ThermalCoefficientFloor
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.Positivity
 
@@ -107,7 +108,7 @@ private theorem scale_hasDerivAt {T x : ℝ} (hx : 0 < x) (hy : 0 < T - x) :
   · rfl
   · unfold scale
     simp only [rate, coth, Pi.div_apply, Pi.sub_apply, Pi.pow_apply, zero_sub, id_eq,
-      Nat.cast_ofNat, pow_one]
+      Nat.cast_ofNat]
     field_simp [hx.ne', hy.ne', (sinh_pos hx).ne', (sinh_pos hy).ne']
     ring
 
@@ -267,5 +268,103 @@ theorem endpoint_schur_pos {β p r : ℝ} (hβ : 0 < β) (hp : 1 < p) (hpr : p <
   dsimp [s]
   field_simp [ha.ne']
   ring
+
+/-- The same matrix in the real-exponent Gibbs coordinates of the reduced quartic. -/
+def exponentK (β q : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  let z := Real.exp (-β)
+  let k := z ^ (1 / q)
+  let u := z / k
+  let g := 1 - u
+  let h := 1 - k
+  let a := (q - 1) * (z / k ^ 2) * h ^ 2 / (2 * g ^ 2)
+  let e := 2 / g - 1 - 2 * (q - 1) * u * h / g ^ 2
+  let d := 2 / g - 3 / 2 - (1 + z) / (g * h) + 2 * (q - 1) * z / g ^ 2
+  !![a, e / 2; e / 2, d]
+
+private theorem hyperbolic_exp {t : ℝ} (ht : 0 < t) :
+    let w := Real.exp (-t)
+    let k := Real.exp (-2 * t)
+    Real.sinh t = (1 - k) / (2 * w) ∧ coth t = (1 + k) / (1 - k) := by
+  dsimp only
+  have hw := (Real.exp_pos (-t)).ne'
+  have hk : 0 < 1 - Real.exp (-2 * t) := by
+    apply sub_pos.mpr
+    exact Real.exp_lt_one_iff.mpr (by linarith)
+  have hid : Real.exp (-2 * t) = Real.exp (-t) ^ 2 := by
+    rw [show -2 * t = (2 : ℕ) * (-t) by norm_num, Real.exp_nat_mul]
+  have hs : Real.sinh t = (1 - Real.exp (-2 * t)) / (2 * Real.exp (-t)) := by
+    rw [Real.sinh_eq, hid, show Real.exp t = (Real.exp (-t))⁻¹ by rw [← Real.exp_neg, neg_neg]]
+    field_simp [hw]
+  have hc : Real.cosh t = (1 + Real.exp (-2 * t)) / (2 * Real.exp (-t)) := by
+    rw [Real.cosh_eq, hid, show Real.exp t = (Real.exp (-t))⁻¹ by rw [← Real.exp_neg, neg_neg]]
+    field_simp [hw]
+  exact ⟨hs, by rw [coth, hs, hc]; field_simp [hk.ne', hw]⟩
+
+/-- The normalized hyperbolic coefficients agree with the exponential Gibbs coefficients. -/
+theorem K_eq_exponentK {β q : ℝ} (hβ : 0 < β) (hq : 1 < q) :
+    K β q = exponentK β q := by
+  let x := xAt β q
+  let y := yAt β q
+  let z := Real.exp (-β)
+  let k := Real.exp (-2 * x)
+  let u := Real.exp (-2 * y)
+  have hx := x_pos hβ hq
+  have hy := y_pos hβ hq
+  have hq₀ : q ≠ 0 := by linarith
+  have hk : 0 < 1 - k := sub_pos.mpr (Real.exp_lt_one_iff.mpr (by linarith))
+  have hu : 0 < 1 - u := sub_pos.mpr (Real.exp_lt_one_iff.mpr (by linarith))
+  have hk₀ : k ≠ 0 := (Real.exp_pos _).ne'
+  have hxy : x + y = β / 2 := by dsimp [x, y, yAt]; ring
+  have hz : z = k * u := by
+    dsimp only [z, k, u]
+    rw [← Real.exp_add]
+    congr 1
+    linarith
+  have hk_def : z ^ (1 / q) = k := by
+    rw [Real.rpow_def_of_pos (Real.exp_pos (-β)), Real.log_exp]
+    unfold k x xAt
+    congr 1
+    ring
+  have hu_def : z / k = u := by rw [hz, mul_comm k u, mul_div_cancel_right₀ _ hk₀]
+  have hq_def : y / x = q - 1 := by
+    have hxq : x * q = β / 2 := by dsimp [x, xAt]; field_simp [hq₀]
+    apply (div_eq_iff hx.ne').mpr
+    linarith
+  obtain ⟨hsx, hcx⟩ := hyperbolic_exp hx
+  obtain ⟨hsy, hcy⟩ := hyperbolic_exp hy
+  have hA : scale x y = (q - 1) * (u / k) * (1 - k) ^ 2 / (1 - u) ^ 2 := by
+    change Real.sinh x = (1 - k) / (2 * Real.exp (-x)) at hsx
+    change Real.sinh y = (1 - u) / (2 * Real.exp (-y)) at hsy
+    have hxexp : Real.exp (-x) ^ 2 = k := by
+      rw [← Real.exp_nat_mul]
+      congr 1
+      norm_num
+    have hyexp : Real.exp (-y) ^ 2 = u := by
+      rw [← Real.exp_nat_mul]
+      congr 1
+      norm_num
+    unfold scale
+    rw [hq_def, hsx, hsy, div_pow, div_pow, mul_pow, mul_pow, hxexp, hyexp]
+    field_simp [hk₀, hu.ne', (Real.exp_pos (-2 * y)).ne']
+  change coth x = (1 + k) / (1 - k) at hcx
+  change coth y = (1 + u) / (1 - u) at hcy
+  dsimp only [K, exponentK]
+  rw [show Real.exp (-β) = z from rfl, hk_def, hu_def, hz]
+  have ha : a β q = (q - 1) * (k * u / k ^ 2) * (1 - k) ^ 2 / (2 * (1 - u) ^ 2) := by
+    change scale x y / 2 = _
+    rw [hA]
+    field_simp [hk₀, hu.ne']
+  have he : e β q = 2 / (1 - u) - 1 - 2 * (q - 1) * u * (1 - k) / (1 - u) ^ 2 := by
+    change coth y - scale x y * (coth x - 1) = _
+    rw [hA, hcx, hcy]
+    field_simp [hk₀, hk.ne', hu.ne']
+    ring
+  have hd : d β q = 2 / (1 - u) - 3 / 2 - (1 + k * u) / ((1 - u) * (1 - k)) +
+      2 * (q - 1) * (k * u) / (1 - u) ^ 2 := by
+    change -1 + (1 - coth x / 2) * coth y + scale x y / 2 * (coth x - 1) ^ 2 = _
+    rw [hA, hcx, hcy]
+    field_simp [hk₀, hk.ne', hu.ne']
+    ring
+  rw [ha, he, hd]
 
 end D5.S3.Quantum.Semigroups.WuCriticalQuartic

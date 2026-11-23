@@ -125,7 +125,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
         stateBinder := 0, functionOperand := true, stateOperand := none
         booleanPredicate := false }] }
   continuation := .unknown
@@ -139,12 +139,12 @@ namespace Schur
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {β p r : ℝ}, 0 < β → 1 < p → p < r →
-    R.readout () () 0 (a β p - a β r) ∧
+    0 < a β p - a β r ∧
     R.readout () () 0 (d β p - d β r - (e β p - e β r) ^ 2 / (4 * (a β p - a β r)))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (h (β := 1) (p := 2) (r := 3) (by norm_num) (by norm_num) (by norm_num)).1
+  exact (h (β := 1) (p := 2) (r := 3) (by norm_num) (by norm_num) (by norm_num)).2
 
 def family : Registration arena (type_of% @endpoint_schur_pos) where
   actual := realize signature (fun _ _ x y => x < y) (fun e => nomatch e)
@@ -176,9 +176,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
-        stateBinder := 0, functionOperand := true, stateOperand := none
-        booleanPredicate := false },
       { path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
         stateBinder := 0, functionOperand := true, stateOperand := none
         booleanPredicate := false }] }
@@ -187,5 +184,73 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Schur
+
+namespace ExponentialCoordinates
+
+private abbrev matrixSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Matrix (Fin 2) (Fin 2) ℝ) (fun _ => Matrix (Fin 2) (Fin 2) ℝ → Prop)
+
+private abbrev arena : Arena where
+  signature := matrixSignature
+  Law R := ∀ {β q : ℝ}, 0 < β → 1 < q →
+    R.readout () () (K β q) (exponentK β q)
+
+private def rejected : Realization matrixSignature :=
+  realize matrixSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (β := 1) (q := 2) (by norm_num) (by norm_num)
+
+private theorem dependence : ObservationalDependence matrixSignature
+    (realize matrixSignature (fun _ _ x y => x = y) (fun e => nomatch e)) := by
+  intro role
+  let A : Matrix (Fin 2) (Fin 2) ℝ := fun _ _ => 1
+  refine ⟨(), 0, A, ?_⟩
+  intro h
+  have he := congrFun h 0
+  have hA : A = 0 := Eq.mp he rfl
+  have hz := congrFun (congrFun hA 0) 0
+  norm_num [A] at hz
+
+def family : Registration arena (type_of% @K_eq_exponentK) where
+  actual := realize matrixSignature (fun _ _ x y => x = y) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨@K_eq_exponentK, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law _ rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@K_eq_exponentK) (Realization matrixSignature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuCriticalQuartic.K_eq_exponentK.audit
+  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuCriticalQuartic.ExponentialCoordinates.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize matrixSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Semigroups.WuCriticalQuartic
+    definition := none
+    coordinates := #[]
+    readouts := #[
+      { path := #["body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0, functionOperand := true, stateOperand := none
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExponentialCoordinates
 
 end Reg.D5.S3.Quantum.Semigroups.WuCriticalQuartic

@@ -27,7 +27,12 @@ internal sealed class WuCriticalQuarticDocument : IScribeDocumentDefinition
                     Lt(D(0), Sub(Delta("d"), new Formula.Fraction(new Formula.Power(Delta("e"), D(2)),
                         new Formula.Binary(D(4), FormulaBinaryOperator.Multiply, Delta("a")))))),
                 "For every real β > 0 and 1 < p < r, write Δa = a(β,p) − a(β,r) and define Δe and Δd by the same endpoint difference. Both displayed inequalities hold.",
-                "Evaluate the positive endpoint form at (1,0) and at (−Δe/(2Δa),1)."))));
+                "Evaluate the positive endpoint form at (1,0) and at (−Δe/(2Δa),1)."),
+            Entry("exponential-coordinates", "K_eq_exponentK", "Agreement with the Gibbs exponent coefficients",
+                new Formula.Relation(Call("K", F.Id("beta"), F.Id("q")), FormulaRelationOperator.Equal,
+                    Call("exponentK", F.Id("beta"), F.Id("q"))),
+                "For every real β > 0 and q > 1, the two reduced matrices agree. For z = exp(−β), k = z^(1/q), u = z/k, g = 1 − u and h = 1 − k, exponentK has the same arrangement of entries with a = (q − 1)(z/k²)h²/(2g²), e = 2/g − 1 − 2(q − 1)uh/g², and d = 2/g − 3/2 − (1 + z)/(gh) + 2(q − 1)z/g².",
+                "With x and y as above, k = exp(−2x), u = exp(−2y), z = ku and q − 1 = y/x. Substitute the exponential forms of the two hyperbolic cotangents and hyperbolic sines. The identity concerns the reduced coefficient matrices."))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string statement, string proof) =>
