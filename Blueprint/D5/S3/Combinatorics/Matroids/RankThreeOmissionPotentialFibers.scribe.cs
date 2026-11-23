@@ -18,9 +18,9 @@ internal sealed class RankThreeOmissionPotentialFibersDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Fix an anchor. Let d be the dimension of the normalized ternary point-potential space. "
-                    + "Evaluation in basis coordinates reaches every ternary vector of dimension d. Any two fibers are equivalent, "
+                    + "Evaluation in the coordinates of any basis reaches every ternary vector of dimension d. Any two fibers are equivalent, "
                     + "so the point count is three to the power d times the size of the zero fiber. When two evaluation vectors differ, "
-                    + "the pair belongs to an indexed triple whose third vector is their negative sum. "
+                    + "the pair belongs to a unique indexed triple whose third vector is their negative sum. "
                     + "If the point count equals three to the power d, evaluation is injective. The triples then correspond exactly to "
                     + "the triples of distinct vectors with zero sum, which are the affine lines over the ternary field. "
                     + "For two different fibers, fixing a point in the negative-sum fiber gives an involution that exchanges them by taking the third point."))),

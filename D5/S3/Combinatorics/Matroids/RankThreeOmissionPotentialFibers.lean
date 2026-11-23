@@ -107,7 +107,7 @@ private theorem evaluation_surjective {I T J : Type*} [Fintype J]
   have zeros := (Fintype.linearIndependent_iff.mp hindependent) c hcomb
   exact b.ext fun j => zeros j
 
-/-- The indices of three distinct entries of a listed triangle. -/
+/-- Three distinct positions of a listed triangle have the given values. -/
 def IsThird {I T : Type*} (points : T → Fin 3 → I) (i j k : I) : Prop :=
   ∃ t a b c, a ≠ b ∧ c ≠ a ∧ c ≠ b ∧
     points t a = i ∧ points t b = j ∧ points t c = k
@@ -252,18 +252,18 @@ theorem point_potential_evaluations {I T : Type*} [Fintype I]
     (hdis : ∀ t s i j, i ≠ j → covers (points t) i j → covers (points s) i j → t = s)
     (anchor : I) :
     let d := Module.finrank (ZMod 3) (potentialSpace points anchor)
-    ∃ value : I → Fin d → ZMod 3, Surjective value ∧
+    ∀ b : Module.Basis (Fin d) (ZMod 3) (potentialSpace points anchor),
+    let value : I → Fin d → ZMod 3 := fun i k => (b k).val i
+    Surjective value ∧
       (∀ x y, Nonempty ({i : I // value i = x} ≃ {i : I // value i = y})) ∧
       Fintype.card I = 3 ^ d * Nat.card {i : I // value i = 0} ∧
-      (∀ i j, value i ≠ value j → ∃ k, IsThird points i j k ∧ value k = -(value i + value j)) ∧
+      (∀ i j, value i ≠ value j → ∃! k, IsThird points i j k ∧ value k = -(value i + value j)) ∧
       (Fintype.card I = 3 ^ d →
         Injective value ∧ ∀ i j k, i ≠ j →
           (IsThird points i j k ↔ value k = -(value i + value j))) := by
   classical
-  intro d
+  intro d b value
   let P := potentialSpace points anchor
-  let b : Module.Basis (Fin d) (ZMod 3) P := Module.finBasis (ZMod 3) P
-  let value (i : I) (k : Fin d) : ZMod 3 := (b k).val i
   have pot (k : Fin d) : IsOmissionPotential points anchor (b k).val := (b k).prop
   have hanchor : value anchor = 0 := funext fun k => (pot k).1
   have hline (t : T) : (∑ j, value (points t j)) = 0 := by
@@ -289,14 +289,16 @@ theorem point_potential_evaluations {I T : Type*} [Fintype I]
     rw [sum_const, card_univ, ambient]
     exact nsmul_eq_mul _ _
   have mixed (i j : I) (h : value i ≠ value j) :
-      ∃ k, IsThird points i j k ∧ value k = -(value i + value j) := by
+      ∃! k, IsThird points i j k ∧ value k = -(value i + value j) := by
     obtain ⟨k, hk⟩ := third_exists points value covered h
-    exact ⟨k, hk, third_value points value hline hk⟩
-  refine ⟨value, onto, fibers, count, mixed, fun hn => ?_⟩
+    refine ⟨k, ⟨hk, third_value points value hline hk⟩, ?_⟩
+    intro l hl
+    exact third_unique points hinj hdis (fun eq => h (congrArg value eq)) hl.1 hk
+  refine ⟨onto, fibers, count, mixed, fun hn => ?_⟩
   have injective : Injective value :=
     ((Fintype.bijective_iff_surjective_and_card value).2 ⟨onto, hn.trans ambient.symm⟩).1
   refine ⟨injective, fun i j k hij => ⟨third_value points value hline, fun h => ?_⟩⟩
-  obtain ⟨l, hl, hv⟩ := mixed i j (injective.ne hij)
+  obtain ⟨l, ⟨hl, hv⟩, _⟩ := mixed i j (injective.ne hij)
   exact (injective (hv.trans h.symm)) ▸ hl
 
 open Set.powersetCard
@@ -362,8 +364,8 @@ theorem rank_three_lifting_obstruction_divisibility {I T : Type*}
       rw [Nat.card_congr b.equivFun.toEquiv, Nat.card_fun, Nat.card_fin, Nat.card_zmod]
     change Nat.card P = 3 ^ d at hd
     have eq : d = k := Nat.pow_right_injective (by decide : 2 ≤ 3) (hd.symm.trans card)
-    obtain ⟨value, _, _, hcount, _, _⟩ :=
-      point_potential_evaluations points (fun t => (triangles t).injective) hdis anchor
-    exact ⟨Nat.card {i : I // value i = 0}, eq.symm ▸ hcount⟩
+    obtain ⟨_, _, hcount, _, _⟩ :=
+      point_potential_evaluations points (fun t => (triangles t).injective) hdis anchor b
+    exact ⟨Nat.card {i : I // (fun j => (b j).val i) = 0}, eq.symm ▸ hcount⟩
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentialFibers
