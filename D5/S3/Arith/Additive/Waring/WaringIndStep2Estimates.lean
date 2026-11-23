@@ -89,7 +89,7 @@ theorem pointwise_bound {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) {M : ℕ} (hM
   have hm1 : 1 ≤ 8 ^ (d - 2) := by
     have h : (0 : ℕ) < 8 ^ (d - 2) := pow_pos (by norm_num) _
     omega
-  have hpt := normSq_pow_le (fun n => polyEval a d n) M α (8 ^ (d - 2)) hm1 hM1
+  have hpt := normSq_pow_le (fun n => polyEval a d n) M α (8 ^ (d - 2)) hm1
   have hTv : 0 ≤ SigTerm a d M α := by
     apply Finset.sum_nonneg
     intro h _

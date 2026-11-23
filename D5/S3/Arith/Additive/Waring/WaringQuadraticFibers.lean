@@ -17,10 +17,9 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringExpSum
+import D5.S3.Arith.Additive.Waring.WaringWeylInq
 import D5.S3.Arith.Additive.Waring.WaringCount
 import D5.S3.Arith.Additive.Waring.WaringLemma3
-import D5.S3.Arith.Additive.Waring.WaringSymm
 
 open Finset intervalIntegral
 

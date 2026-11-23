@@ -14,9 +14,10 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringLemma7.hmCount7_le`
 
 *Commentary.*
 
-For 1 ≤ H ≤ M the count of boxed solutions whose four bilinear terms sum to zero is at most 5250(HM)³.
+For 1 ≤ H ≤ M the count of boxed solutions whose four bilinear terms sum to zero is at most 5250(HM)³. The symmetric sum uses the even-function interval identity, and the positive divisor sums use the natural-to-integer interval image.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringLemma7.hmCount7_le`
-- Dependency: [D5/S3/Arith/Additive/Waring/WaringSymm](WaringSymm.md)
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringLemma3](WaringLemma3.md)
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringLemma6](WaringLemma6.md)

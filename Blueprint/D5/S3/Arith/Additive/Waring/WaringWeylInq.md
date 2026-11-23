@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringWeylInq.normSq_expSum_le`
 
 *Commentary.*
 
-Group the pairs by their signed displacement and bound the squared norm by the sum of the norms of the displacement sums.
+Group the pairs by their signed displacement and bound the squared norm by the sum of the norms of the displacement sums. The unit-interval Fourier calculation uses the coefficient at zero of a period-one Mathlib character.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringWeylInq.normSq_expSum_le`
-- Dependency: [D5/S3/Arith/Additive/Waring/WaringExpSum](WaringExpSum.md)
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringWeylDiff](WaringWeylDiff.md)

@@ -46,7 +46,7 @@ theorem abs_diffCoeff_le (a : ℕ → ℤ) (d : ℕ) (h : ℤ) (r : ℕ) :
 `|b_r| ≤ C·(Σ_{j>r} C(j,r))·N^{d−1−r}`。 -/
 theorem diffCoeff_bound {a : ℕ → ℤ} {d : ℕ} {h : ℤ} {C N : ℕ}
     (ha : ∀ j, j ≤ d → |a j| ≤ (C : ℤ) * (N : ℤ) ^ (d - j))
-    (hh : |h| ≤ (N : ℤ)) (hC : 0 ≤ (C : ℤ)) (r : ℕ) (hr : r < d) :
+    (hh : |h| ≤ (N : ℤ)) (r : ℕ) (hr : r < d) :
     |diffCoeff a d h r|
       ≤ (C : ℤ) * (∑ j ∈ Finset.Ico (r + 1) (d + 1), (j.choose r : ℤ))
         * (N : ℤ) ^ (d - 1 - r) := by

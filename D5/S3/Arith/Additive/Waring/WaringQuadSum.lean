@@ -156,7 +156,7 @@ theorem pointwise_expand (f : ℤ → ℤ) (N s : ℕ) (hs : 1 ≤ s) (S : Finse
     have hp : ‖T f N α h‖ ^ (2*s) = (Complex.normSq (T f N α h)) ^ s := by
       rw [pow_mul, ← Complex.normSq_eq_norm_sq]
     rw [hp, Complex.ofReal_pow]
-    exact normSq_pow_T_fiber f N h α s hs
+    exact normSq_pow_T_fiber f N h α s
   simp only [hterm]
   have hpow4 : ∀ x : ℂ, x ^ 4 = x * (x * (x * x)) := fun x => by ring
   rw [hpow4]

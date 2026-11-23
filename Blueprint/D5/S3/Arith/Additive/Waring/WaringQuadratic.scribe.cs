@@ -15,7 +15,7 @@ internal sealed class WaringQuadraticDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("The zero-sum quadratic count is bounded by the sum of squares of the quadratic phase-fiber counts over their bounded range."))),
+                Blocks(Paragraph(Text("The zero-sum quadratic count is bounded by the sum of squares of the quadratic phase-fiber counts over their bounded range. The reciprocal-divisor estimates on the symmetric interval use Mathlib’s even-function sum and the vanishing zero term."))),
                 DescribeRole.Theorem)
         )));
 }

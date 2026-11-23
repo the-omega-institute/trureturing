@@ -15,7 +15,7 @@ internal sealed class WaringLemma7Document : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("For 1 ≤ H ≤ M the count of boxed solutions whose four bilinear terms sum to zero is at most 5250(HM)³."))),
+                Blocks(Paragraph(Text("For 1 ≤ H ≤ M the count of boxed solutions whose four bilinear terms sum to zero is at most 5250(HM)³. The symmetric sum uses the even-function interval identity, and the positive divisor sums use the natural-to-integer interval image."))),
                 DescribeRole.Theorem)
         )));
 }

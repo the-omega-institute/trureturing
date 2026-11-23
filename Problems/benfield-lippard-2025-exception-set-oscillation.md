@@ -91,8 +91,8 @@ the paper's exact summand convention.
 Tier 1, theorem. The positive resolution concerns exactly Conjecture 10.5.
 The prime argument proves a strict local maximum at p−1 for every prime
 p ≥ 193, which is stronger than the existence of two changes in every
-tail. The cardinality inequalities leave the exact values and the remaining
-conjectures in §10 open.
+tail. The resolution leaves the general exact gap-count problem and the
+remaining §10 conjectures outside its scope.
 
 ## ASSUMED-UNVERIFIED
 

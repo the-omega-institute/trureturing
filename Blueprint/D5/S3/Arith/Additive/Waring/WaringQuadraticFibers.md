@@ -20,6 +20,5 @@ For a nonzero quadratic coefficient and target, the count of quadratic differenc
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringQuadraticFibers.qQ_le_sigma`
 - Dependency: [D5/S3/Arith/Additive/Waring/WaringCount](WaringCount.md)
-- Dependency: [D5/S3/Arith/Additive/Waring/WaringExpSum](WaringExpSum.md)
 - Dependency: [D5/S3/Arith/Additive/Waring/WaringLemma3](WaringLemma3.md)
-- Dependency: [D5/S3/Arith/Additive/Waring/WaringSymm](WaringSymm.md)
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringWeylInq](WaringWeylInq.md)

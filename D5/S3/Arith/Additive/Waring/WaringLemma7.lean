@@ -17,7 +17,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
 
-import D5.S3.Arith.Additive.Waring.WaringSymm
+import Mathlib.Algebra.BigOperators.Group.Finset.Interval
+import Mathlib.Data.Nat.Cast.SetInterval
+import D5.S3.Arith.Additive.Waring.WaringLemma6
+import D5.S3.Arith.Additive.Waring.WaringLemma3
 
 /-!
 # Lemma 7（Jameson）：`h₁,…,h₄` 全部非零的解数界
@@ -35,6 +38,16 @@ N(H, M) = #{(h, m) : hᵢ ∈ [-H,H]\{0}, mᵢ ∈ [0,M], Σ hᵢmᵢ = 0} ≤ C
 open Finset
 
 namespace Waring
+
+/-- Reindex a sum on the positive integer interval by natural numbers. -/
+private theorem sum_int_Icc_eq_sum_nat_Icc (K : ℕ) (f : ℕ → ℚ) :
+    (∑ n ∈ Finset.Icc (1 : ℤ) (K : ℤ), f n.natAbs) = ∑ m ∈ Finset.Icc 1 K, f m := by
+  have hmap : (Finset.Icc 1 K).map (Nat.castEmbedding : ℕ ↪ ℤ) =
+      Finset.Icc (1 : ℤ) (K : ℤ) := by
+    rw [Finset.map_eq_image]
+    exact Finset.coe_injective (by simpa using Nat.image_cast_int_Icc 1 K)
+  rw [← hmap, Finset.sum_map]
+  simp
 
 /-! ## 非零 `h` 的二元盒子 -/
 
@@ -533,12 +546,16 @@ theorem hmCount7_le (H M : ℕ) (hH : 1 ≤ H) (hHM : H ≤ M) :
       = ((Q7 H M 0 : ℚ)) ^ 2
         + 2 * ∑ n ∈ Finset.Icc (1 : ℤ) (K : ℤ), ((Q7 H M n : ℚ)) ^ 2 := by
     rw [count7_eq_sum_sq, ← hKZ]
-    have hnat := sum_Icc_symm_eq (K : ℤ) (by positivity)
-      (fun n => Q7 H M n ^ 2) (fun n => by rw [Q7_neg])
-    have hcast := congrArg (fun x : ℕ => (x : ℚ)) hnat
-    push_cast at hcast
     push_cast
-    exact hcast
+    have heven : Function.Even (fun n : ℤ => (Q7 H M n : ℚ) ^ 2) := fun n => by
+      simp only [Q7_neg]
+    rw [Finset.sum_Icc_of_even_eq_range heven K, Finset.sum_range_succ']
+    have hpos : (∑ n ∈ Finset.Icc (1 : ℤ) (K : ℤ), (Q7 H M n : ℚ) ^ 2) =
+        ∑ n ∈ Finset.range K, (Q7 H M ((n + 1 : ℕ) : ℤ) : ℚ) ^ 2 := by
+      rw [Int.Icc_eq_finset_map, Finset.sum_map]
+      simp [Function.Embedding.trans, add_comm]
+    rw [hpos]
+    ring
   -- 零项
   have h0 : ((Q7 H M 0 : ℚ)) ^ 2 ≤ 256 * ((H : ℚ) * (M : ℚ)) ^ 3 := by
     have hz : (Q7 H M 0 : ℚ) ≤ 16 * (H : ℚ) ^ 2 * (M : ℚ) := by

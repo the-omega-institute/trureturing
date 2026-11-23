@@ -17,6 +17,9 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
+import Mathlib.Algebra.BigOperators.Group.Finset.Interval
+import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+import D5.S3.Arith.Additive.Waring.WaringLemma6
 import D5.S3.Arith.Additive.Waring.WaringQuadraticFibers
 
 open Finset intervalIntegral
@@ -185,48 +188,14 @@ theorem qQ_zero_le (a b : ℤ) (ha : a ≠ 0) (H M : ℕ) :
   rw [hcard] at hsum
   linarith
 
-/-- 对称区间的求和公式（`ℚ` 值）。 -/
-theorem sum_Icc_symm_rat (K : ℤ) (hK : 0 ≤ K) (f : ℤ → ℚ) (hf : ∀ n, f (-n) = f n) :
-    (∑ n ∈ Finset.Icc (-K) K, f n) = f 0 + 2 * ∑ n ∈ Finset.Icc (1 : ℤ) K, f n := by
-  have hU1 : Finset.Icc (-K) (-1 : ℤ) ∪ Finset.Icc (0 : ℤ) K = Finset.Icc (-K) K := by
-    ext x
-    simp only [Finset.mem_union, Finset.mem_Icc]
-    omega
-  have hd1 : Disjoint (Finset.Icc (-K) (-1 : ℤ)) (Finset.Icc (0 : ℤ) K) := by
-    rw [Finset.disjoint_left]
-    intro x hx hy
-    simp only [Finset.mem_Icc] at hx hy
-    omega
-  have hU2 : ({0} : Finset ℤ) ∪ Finset.Icc (1 : ℤ) K = Finset.Icc (0 : ℤ) K := by
-    ext x
-    simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_Icc]
-    omega
-  have hd2 : Disjoint ({0} : Finset ℤ) (Finset.Icc (1 : ℤ) K) := by
-    rw [Finset.disjoint_left]
-    intro x hx hy
-    simp only [Finset.mem_singleton] at hx
-    simp only [Finset.mem_Icc] at hy
-    omega
-  have hneg : (∑ n ∈ Finset.Icc (-K) (-1 : ℤ), f n) = ∑ n ∈ Finset.Icc (1 : ℤ) K, f n := by
-    have h1 : (∑ n ∈ Finset.Icc (-K) (-1 : ℤ), f n)
-        = ∑ n ∈ Finset.Icc (1 : ℤ) K, f (-n) := by
-      refine Finset.sum_bij (fun n _ => -n) ?_ ?_ ?_ ?_
-      · intro n hn
-        simp only [Finset.mem_Icc] at hn ⊢
-        omega
-      · intro n1 hn1 n2 hn2 heq
-        simp only [Finset.mem_Icc] at hn1 hn2
-        omega
-      · intro m hm
-        simp only [Finset.mem_Icc] at hm
-        exact ⟨-m, by simp only [Finset.mem_Icc]; omega, by simp⟩
-      · intro n _
-        simp
-    rw [h1]
-    exact Finset.sum_congr rfl (fun n _ => hf n)
-  rw [← hU1, Finset.sum_union hd1, ← hU2, Finset.sum_union hd2,
-    Finset.sum_singleton, hneg]
-  ring
+/-- Discard the zero term when reindexing a sum over `range (k + 1)`. -/
+private theorem sum_range_succ_eq_sum_Icc_of_zero (f : ℕ → ℚ) (hf : f 0 = 0) (k : ℕ) :
+    (∑ n ∈ Finset.range (k + 1), f n) = ∑ n ∈ Finset.Icc 1 k, f n := by
+  have hrange : Finset.range (k + 1) = Finset.Icc 0 k := by
+    ext n
+    simp
+  rw [hrange, ← Finset.insert_Icc_add_one_left_eq_Icc (Nat.zero_le k),
+    Finset.sum_insert (by simp), hf, zero_add, Nat.zero_add]
 
 /-- `σ₋₁(0) = 0`。 -/
 theorem sigmaMinusOne_zero : sigmaMinusOne 0 = 0 := by
@@ -237,10 +206,12 @@ theorem sigmaMinusOne_zero : sigmaMinusOne 0 = 0 := by
 theorem sum_sigmaMinusOne_Icc (K : ℤ) (hK : 0 ≤ K) :
     (∑ n ∈ Finset.Icc (-K) K, sigmaMinusOne n.natAbs) ≤ 4 * (K : ℚ) := by
   obtain ⟨k, rfl⟩ : ∃ k : ℕ, K = (k : ℤ) := ⟨K.toNat, (Int.toNat_of_nonneg hK).symm⟩
-  rw [sum_Icc_symm_rat (k : ℤ) (by positivity)
-    (fun n => sigmaMinusOne n.natAbs) (fun n => by rw [Int.natAbs_neg])]
-  rw [Int.natAbs_zero, sigmaMinusOne_zero]
-  rw [sum_int_Icc_eq_sum_nat_Icc k (fun m => sigmaMinusOne m)]
+  have heven : Function.Even (fun n : ℤ => sigmaMinusOne n.natAbs) := fun n => by
+    simp only [Int.natAbs_neg]
+  rw [Finset.sum_Icc_of_even_eq_range heven k]
+  simp only [Int.natAbs_natCast, Int.natAbs_zero, sigmaMinusOne_zero, sub_zero, two_nsmul]
+  rw [sum_range_succ_eq_sum_Icc_of_zero (fun n => sigmaMinusOne n)
+    (by simp [sigmaMinusOne_zero])]
   have h := sum_sigmaMinusOne_le k
   push_cast
   linarith
@@ -249,10 +220,12 @@ theorem sum_sigmaMinusOne_Icc (K : ℤ) (hK : 0 ≤ K) :
 theorem sum_sigmaMinusOne_sq_Icc (K : ℤ) (hK : 0 ≤ K) :
     (∑ n ∈ Finset.Icc (-K) K, sigmaMinusOne n.natAbs ^ 2) ≤ 12 * (K : ℚ) := by
   obtain ⟨k, rfl⟩ : ∃ k : ℕ, K = (k : ℤ) := ⟨K.toNat, (Int.toNat_of_nonneg hK).symm⟩
-  rw [sum_Icc_symm_rat (k : ℤ) (by positivity)
-    (fun n => sigmaMinusOne n.natAbs ^ 2) (fun n => by rw [Int.natAbs_neg])]
-  rw [Int.natAbs_zero, sigmaMinusOne_zero]
-  rw [sum_int_Icc_eq_sum_nat_Icc k (fun m => sigmaMinusOne m ^ 2)]
+  have heven : Function.Even (fun n : ℤ => sigmaMinusOne n.natAbs ^ 2) := fun n => by
+    simp only [Int.natAbs_neg]
+  rw [Finset.sum_Icc_of_even_eq_range heven k]
+  simp only [Int.natAbs_natCast, Int.natAbs_zero, sigmaMinusOne_zero, sub_zero, two_nsmul, zero_pow (by decide : 2 ≠ 0)]
+  rw [sum_range_succ_eq_sum_Icc_of_zero (fun n => sigmaMinusOne n ^ 2)
+    (by simp [sigmaMinusOne_zero])]
   have h := sum_sigmaMinusOne_sq_le k
   push_cast
   linarith

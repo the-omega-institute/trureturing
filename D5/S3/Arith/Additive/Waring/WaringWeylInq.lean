@@ -16,11 +16,93 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringExpSum
+import Mathlib.Analysis.Fourier.AddCircle
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import D5.S3.Arith.Additive.Waring.WaringWeylDiff
 
-open Finset
+open Finset intervalIntegral
 
 namespace Waring
+
+/- The exponential-sum definitions and identities are adapted from WaringExpSum.lean
+   at the upstream revision above, under the same Apache-2.0 license. -/
+
+/-- `e(x) = exp(2πi x)`。 -/
+noncomputable def e (x : ℝ) : ℂ := Complex.exp (2 * Real.pi * Complex.I * (x : ℂ))
+
+/-- **正交性**：`∫₀¹ e(m·α) dα = 1`（`m = 0`）或 `0`（`m ≠ 0`）。 -/
+theorem integral_e_mul_int (m : ℤ) :
+    (∫ α in (0 : ℝ)..1, e ((m : ℝ) * α)) = if m = 0 then (1 : ℂ) else 0 := by
+  letI : Fact (0 < (1 : ℝ)) := ⟨zero_lt_one⟩
+  have h := congrFun (fourierCoeff_fourier (T := 1) m) 0
+  rw [fourierCoeff_eq_intervalIntegral _ _ 0] at h
+  simp only [neg_zero, fourier_zero, one_smul, one_div, inv_one, zero_add] at h
+  simp only [fourier_coe_apply] at h
+  rw [show (fun α : ℝ => e ((m : ℝ) * α)) =
+      (fun α : ℝ => Complex.exp (2 * Real.pi * Complex.I * (m : ℂ) * (α : ℂ))) by
+    funext α
+    simp only [e, Complex.ofReal_mul, Complex.ofReal_intCast, mul_assoc]]
+  by_cases hm : m = 0
+  · subst m
+    simpa using h
+  · simpa [Pi.single_eq_of_ne Ne.symm hm, hm] using h
+
+/-- 乘性：`e(x+y) = e(x)·e(y)`。 -/
+theorem e_add (x y : ℝ) : e (x + y) = e x * e y := by
+  unfold e
+  rw [← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+/-- 共轭：`e(−x) = conj (e x)`。 -/
+theorem e_neg (x : ℝ) : e (-x) = (starRingEnd ℂ) (e x) := by
+  unfold e
+  rw [← Complex.exp_conj]
+  congr 1
+  push_cast
+  simp only [map_mul, map_ofNat, Complex.conj_ofReal, Complex.conj_I]
+  ring
+
+/-- `|e(x)| = 1`。 -/
+theorem norm_e (x : ℝ) : ‖e x‖ = 1 := by
+  unfold e
+  have h : 2 * (Real.pi : ℂ) * Complex.I * (x : ℂ)
+      = (((2 * Real.pi * x : ℝ)) : ℂ) * Complex.I := by
+    push_cast
+    ring
+  rw [h, Complex.norm_exp_ofReal_mul_I]
+
+/-- 一般指数和 `expSum f N α = Σ_{n=0}^{N} e(α f(n))`。 -/
+noncomputable def expSum (f : ℤ → ℤ) (N : ℕ) (α : ℝ) : ℂ :=
+  ∑ n ∈ Finset.range (N + 1), e (((f (n : ℤ) : ℤ) : ℝ) * α)
+
+/-- 共轭把 `f` 变成 `−f`。 -/
+private theorem expSum_conj (f : ℤ → ℤ) (N : ℕ) (α : ℝ) :
+    (starRingEnd ℂ) (expSum f N α) = expSum (fun n => -f n) N α := by
+  unfold expSum
+  rw [map_sum]
+  refine Finset.sum_congr rfl (fun n _ => ?_)
+  rw [← e_neg]
+  congr 1
+  push_cast
+  ring
+
+/-- **`‖S‖²` 的双和展开**：`‖Σ_n e(α f(n))‖² = Σ_{n,m} e(α (f(m) − f(n)))`。
+这是 Weyl 差分不等式的起点（下一步按差 `m − n` 分组）。 -/
+private theorem normSq_expSum (f : ℤ → ℤ) (N : ℕ) (α : ℝ) :
+    ((Complex.normSq (expSum f N α) : ℝ) : ℂ)
+      = ∑ n ∈ Finset.range (N + 1), ∑ m ∈ Finset.range (N + 1),
+          e (((f (m : ℤ) - f (n : ℤ) : ℤ) : ℝ) * α) := by
+  rw [Complex.normSq_eq_conj_mul_self, expSum_conj]
+  unfold expSum
+  rw [Finset.sum_mul_sum]
+  refine Finset.sum_congr rfl (fun n _ => Finset.sum_congr rfl (fun m _ => ?_))
+  rw [← e_add]
+  congr 1
+  push_cast
+  ring
+
 
 variable {M : Type*} [AddCommMonoid M]
 

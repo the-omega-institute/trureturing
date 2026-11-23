@@ -259,8 +259,7 @@ theorem diffCoeff_bound' {a : ℕ → ℤ} {d : ℕ} {h : ℤ} {c N : ℕ}
     (ha : ∀ j, j ≤ d → |a j| ≤ (c : ℤ) * (N : ℤ) ^ (d - j))
     (hh : |h| ≤ (N : ℤ)) (r : ℕ) (hr : r < d) :
     |diffCoeff a d h r| ≤ (coeffConst c d : ℤ) * (N : ℤ) ^ (d - 1 - r) := by
-  have hbase := diffCoeff_bound (a := a) (d := d) (h := h) (C := c) (N := N) ha hh
-    (by positivity) r hr
+  have hbase := diffCoeff_bound (a := a) (d := d) (h := h) (C := c) (N := N) ha hh r hr
   have hsub : Finset.Ico (r + 1) (d + 1) ⊆ Finset.range (d + 1) := by
     intro j hj
     rw [Finset.mem_Ico] at hj
@@ -438,7 +437,7 @@ theorem BCount_le_integral (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (s : ℕ) (hs :
           = ∑ Q' ∈ QSet f N h s,
               (BCount f N h s Q' : ℂ) * e (((Q' - Q : ℤ) : ℝ) * α) := by
         intro α
-        rw [normSq_pow_T_fiber f N h α s hs, Finset.sum_mul]
+        rw [normSq_pow_T_fiber f N h α s, Finset.sum_mul]
         refine Finset.sum_congr rfl (fun Q' _ => ?_)
         rw [mul_assoc, ← e_add]
         congr 1

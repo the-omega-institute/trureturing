@@ -15,7 +15,7 @@ internal sealed class WaringWeylInqDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean")),
-                Blocks(Paragraph(Text("Group the pairs by their signed displacement and bound the squared norm by the sum of the norms of the displacement sums."))),
+                Blocks(Paragraph(Text("Group the pairs by their signed displacement and bound the squared norm by the sum of the norms of the displacement sums. The unit-interval Fourier calculation uses the coefficient at zero of a period-one Mathlib character."))),
                 DescribeRole.Theorem)
         )));
 }

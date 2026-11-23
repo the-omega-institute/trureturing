@@ -66,7 +66,7 @@ theorem add_pow_le_two_pow (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (m : ℕ) (
 
 /-- **Jameson (2) 的点态形式**（积分之前）：
 `‖S‖^{2m} ≤ 2^{m−1}·((N+1)^m + (2N)^{m−1}·Σ_{h≠0}‖b_h‖^m)`。 -/
-theorem normSq_pow_le (f : ℤ → ℤ) (N : ℕ) (α : ℝ) (m : ℕ) (hm : 1 ≤ m) (hN : 1 ≤ N) :
+theorem normSq_pow_le (f : ℤ → ℤ) (N : ℕ) (α : ℝ) (m : ℕ) (hm : 1 ≤ m) :
     ‖expSum f N α‖ ^ (2 * m)
       ≤ 2 ^ (m - 1) * ((N + 1 : ℝ) ^ m
           + (2 * (N : ℝ)) ^ (m - 1)

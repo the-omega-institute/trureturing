@@ -168,7 +168,7 @@ theorem sum_diff_fiber_pi {M : Type*} [AddCommMonoid M] {ι : Type*} [Fintype ι
 
 /-- **`|b_h|^{2s}` 的按频率展开**（一般 `s`）：
 `|b_h|^{2s} = Σ_Q BCount(Q) · e(Q·α)`。 -/
-theorem normSq_pow_T_fiber (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (α : ℝ) (s : ℕ) (_hs : 1 ≤ s) :
+theorem normSq_pow_T_fiber (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (α : ℝ) (s : ℕ) :
     ((Complex.normSq (T f N α h) : ℝ) : ℂ) ^ s
       = ∑ Q ∈ QSet f N h s, (BCount f N h s Q : ℂ) * e ((Q : ℝ) * α) := by
   -- 1) `↑(normSq b) = conj b · b`

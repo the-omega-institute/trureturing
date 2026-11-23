@@ -14,9 +14,10 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringQuadratic.qHMCount_le_sum_sq`
 
 *Commentary.*
 
-The zero-sum quadratic count is bounded by the sum of squares of the quadratic phase-fiber counts over their bounded range.
+The zero-sum quadratic count is bounded by the sum of squares of the quadratic phase-fiber counts over their bounded range. The reciprocal-divisor estimates on the symmetric interval use Mathlib’s even-function sum and the vanishing zero term.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Additive/Waring/WaringQuadratic.qHMCount_le_sum_sq`
+- Dependency: [D5/S3/Arith/Additive/Waring/WaringLemma6](WaringLemma6.md)
 - Dependency: [D5/S3/Arith/Additive/Waring/WaringQuadraticFibers](WaringQuadraticFibers.md)
