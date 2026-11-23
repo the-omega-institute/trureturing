@@ -66,10 +66,11 @@ private theorem spectral_qubit (X : Qubit) (hX : X.PosSemidef) (ht : X.trace = 1
       (∑ k, l k • Matrix.vecMulVec (v k) (star (v k))) = X := by
   let hH := hX.isHermitian
   let l := hH.eigenvalues
-  let v : Fin 2 → Fin 2 → ℂ := fun k => ⇑(hH.eigenvectorBasis k)
+  let v : Fin 2 → Fin 2 → ℂ := fun k i => hH.eigenvectorBasis k i
   refine ⟨l, v, hX.eigenvalues_nonneg, ?_, ?_, ?_⟩
-  · have h := congrArg Complex.re (ht.symm.trans hH.trace_eq_sum_eigenvalues)
-    simpa only [Complex.one_re, Complex.re_sum, Complex.ofReal_re, l] using h.symm
+  · have h : (∑ i, (hH.eigenvalues i : ℂ)) = 1 :=
+      hH.trace_eq_sum_eigenvalues.symm.trans ht
+    simpa only [Complex.one_re, Complex.re_sum, Complex.ofReal_re, l] using congrArg Complex.re h
   · intro k
     rw [dotProduct_comm]
     simpa only [v, EuclideanSpace.inner_eq_star_dotProduct] using
@@ -77,7 +78,11 @@ private theorem spectral_qubit (X : Qubit) (hX : X.PosSemidef) (ht : X.trace = 1
   · have h := D5.S3.Quantum.Recovery.PetzSpectralCoordinates.cfc_spectral_sum
       X hH (fun t : ℝ => t)
     rw [cfc_id' ℝ X hH.isSelfAdjoint] at h
-    simpa only [l, v, RCLike.real_smul_eq_coe_smul (K := ℂ)] using h.symm
+    apply Matrix.ext
+    intro i j
+    have hij := congrArg (fun Y : Qubit => Y i j) h.symm
+    simpa only [Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+      Complex.real_smul, smul_eq_mul, l, v] using hij
 
 private abbrev Choice := Fin 2 × Fin 2 × Fin 2
 
@@ -101,13 +106,13 @@ private theorem sum_product_marginal {E : Type*} [AddCommMonoid E] [Module ℝ E
     (l : Fin 3 → Fin 2 → ℝ) (hl : ∀ i, ∑ k, l i k = 1) (i : Fin 3) (f : Fin 2 → E) :
     (∑ k : Choice, productWeight l k • f (chosenIndex k i)) = ∑ j, l i j • f j := by
   fin_cases i
-  · change (∑ k : Choice, productWeight l k • f k.1) = _
+  · change (∑ k : Choice, productWeight l k • f k.1) = ∑ j, l 0 j • f j
     rw [sum_product_smul l (fun x _ _ => f x)]
     simp only [sum_const_smul l hl]
-  · change (∑ k : Choice, productWeight l k • f k.2.1) = _
+  · change (∑ k : Choice, productWeight l k • f k.2.1) = ∑ j, l 1 j • f j
     rw [sum_product_smul l (fun _ y _ => f y)]
     simp only [sum_const_smul l hl]
-  · change (∑ k : Choice, productWeight l k • f k.2.2) = _
+  · change (∑ k : Choice, productWeight l k • f k.2.2) = ∑ j, l 2 j • f j
     rw [sum_product_smul l (fun _ _ z => f z)]
     simp only [sum_const_smul l hl]
 
@@ -141,7 +146,7 @@ theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) �
   let w : Choice → ℝ := productWeight l
   let A : Choice → Qubit := contrast inputWeights ∘ ψ
   let C : Choice → Qubit := contrast referenceWeights ∘ ψ
-
+  -- Independent spectral choices carry the product of the three eigenvalues.
   have hw (k : Choice) : 0 ≤ w k := mul_nonneg
     (mul_nonneg (hl 0 k.1) (hl 1 k.2.1)) (hl 2 k.2.2)
   have hwSum : ∑ k, w k = 1 := by
@@ -158,8 +163,9 @@ theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) �
   have hC (k : Choice) : (C k).PosSemidef := (hpair k).2.1
   have hsupport (k : Choice) (x : Fin 2 → ℂ) (hx : C k *ᵥ x = 0) : A k *ᵥ x = 0 := by
     apply FannesRootFidelityHolevo.supported_of_le (hA k) (hpair k).2.2 x
+    change ((7 / 3 : ℝ) • C k) *ᵥ x = 0
     rw [Matrix.smul_mulVec, hx, smul_zero]
-
+  -- Each one-coordinate marginal reconstructs the corresponding preparation.
   have hmarginal (a : Fin 3 → ℝ) :
       (∑ k, w k • contrast a (ψ k)) = weightedMix a X := by
     change (∑ k : Choice, w k • ∑ i, a i • P i (chosenIndex k i)) =
@@ -178,11 +184,10 @@ theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) �
         exact congrArg (fun Y : Qubit => a i • Y) (hspec i)
   have hmixA : (∑ k, w k • A k) = weightedMix inputWeights X := hmarginal inputWeights
   have hmixC : (∑ k, w k • C k) = weightedMix referenceWeights X := hmarginal referenceWeights
-
   have hj := traceLog_jointConvex w A C hw hA hC hsupport
   dsimp only at hj
   rw [hmixA, hmixC] at hj
-
+  -- The trace pairings use the two-coordinate marginals.
   have h01 :
       (∑ k, w k * overlap (ψ k) 0 1) = (X 0 * X 1).trace.re := by
     simp_rw [← rankOne_trace_overlap]
@@ -207,7 +212,6 @@ theorem traceLog_le_benchmark_sub_margin (X : Fin 3 → Matrix (Fin 2) (Fin 2) �
         (3 * (1 - overlap (ψ k) 0 1) + 11 * overlap (ψ k) 0 2) / 63360 := by
     simpa only [traceLog, C3, A, C, Function.comp_apply, inputWeights, referenceWeights]
       using FibonacciClippedProfile.traceLog_le_benchmark_sub_margin (ψ k) (hψ k)
-
   change traceLog (weightedMix inputWeights X) (weightedMix referenceWeights X) ≤ _
   calc
     _ ≤ ∑ k, w k * traceLog (A k) (C k) := hj

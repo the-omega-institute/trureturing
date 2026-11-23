@@ -80,8 +80,8 @@ private theorem HasSupportIn.smul_same {S T : Matrix n n ℂ}
     simp
   · exact hST.smul a ha
 
-/-- Finite PSD sums preserve pointwise support inclusion. -/
 omit [DecidableEq n] in
+/-- Finite PSD sums preserve pointwise support inclusion. -/
 private theorem hasSupportIn_sum {ι : Type*} [Fintype ι] (S T : ι → Matrix n n ℂ)
     (hT : ∀ i, (T i).PosSemidef) (hST : ∀ i, HasSupportIn (S i) (T i)) :
     HasSupportIn (∑ i, S i) (∑ i, T i) := by
@@ -225,7 +225,8 @@ theorem traceLog_jointConvex (w : ι → ℝ) (S T : ι → Matrix n n ℂ)
     (fun i => (smul_nonneg (hw i) (hT i).nonneg).posSemidef)
     (fun i => HasSupportIn.smul_same (hST i) (w i))
   have hpoint (i : ι) := traceLog_scale_same (hS i).isHermitian (hT i).isHermitian (hST i) (w i)
-  simpa only [hpoint, relativeEntropy] using h
+  simp only [hpoint] at h
+  simpa only [relativeEntropy] using h
 
 end JointConvexity
 
