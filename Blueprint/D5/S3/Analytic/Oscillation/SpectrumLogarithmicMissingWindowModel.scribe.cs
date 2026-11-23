@@ -9,20 +9,22 @@ internal sealed class SpectrumLogarithmicMissingWindowModelDocument : IScribeDoc
     private const string Owner = "D5/S3/Analytic/Oscillation/SpectrumLogarithmicMissingWindowModel";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An infinite positive-weight spectrum realizes both mass hypotheses at once.",
-        H("An Infinite Spectrum for the Critical Missing-Window Bound"),
+        "Fourth-root bins realize the logarithmic square-tail bound.",
+        H("An Infinite Spectrum for the Logarithmic Waiting Gain"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("exists-infinite-logarithmic-model"),
                 DeclarationHandle.Create(Owner + ".exists_infinite_logarithmic_model"),
                 H("An infinite model for the logarithmic waiting gain"),
-                StatementSource.FromAuthor(Model("HasLogarithmicSquareTail")),
+                StatementSource.FromAuthor(Model()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Use the same rationally independent fourth-root bins and strictly "
                     + "positive weights. Their square tail is at most B/X² for a "
                     + "fixed B > 0 whenever X ≥ 1. Once log X ≥ 1, this is at most "
                     + "B log X/X uniformly in T ≥ X. "),
+                    Ref("D5/S3/Analytic/Oscillation/SpectrumCriticalMissingWindowModel"
+                        + ".exists_infinite_critical_model"),
                     Ref("D5/S3/Analytic/Oscillation/SpectrumLogarithmicMissingWindow"
                         + ".eventual_logarithmic_missing_window"))),
                 DescribeRole.Theorem))));
@@ -36,7 +38,7 @@ internal sealed class SpectrumLogarithmicMissingWindowModelDocument : IScribeDoc
     private static Formula Bind(FormulaQuantifier quantifier, string name, Formula type, Formula body) =>
         new Formula.Bind(quantifier, FormulaIdentifier.Create(name), type, body);
 
-    private static Formula Model(string tailCondition = "HasSmallSquareTail")
+    private static Formula Model()
     {
         var s = F.Id("S");
         var w = F.Id("w");
@@ -49,6 +51,6 @@ internal sealed class SpectrumLogarithmicMissingWindowModelDocument : IScribeDoc
             Bind(FormulaQuantifier.Exists, "w", Seq(index, Sp, To, Sp, reals),
                 And(Call("Infinite", index), And(positive,
                     And(Call("LinearIndependent", rats, Call("gamma", s)),
-                        And(Call("HasLogSquaredMass", s, w), Call(tailCondition, s, w))))))));
+                        And(Call("HasLogSquaredMass", s, w), Call("HasLogarithmicSquareTail", s, w))))))));
     }
 }

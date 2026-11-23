@@ -81,20 +81,23 @@ theorem score_dependence : ObservationalDependence scoreSignature scoreActual :=
     sine unitSpectrum (fun _ => 1) 1 (Real.pi / 2)
   simp [sine, hcut, Real.sin_pi_div_two]
 
+theorem score_sensitivity (law : Realization scoreSignature → Prop)
+    (hrejected : ¬ law scoreRejected) : Sensitivity ⟨scoreSignature, law⟩ scoreActual := by
+  constructor
+  · intro i
+    refine ⟨scoreRejected, ?_, ?_, hrejected⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
 def scoreEvidence : Registration scoreArena (type_of% @eventual_critical_missing_window) where
   actual := scoreActual
   bridge := Iff.rfl
   variation := ⟨@eventual_critical_missing_window, scoreRejected, score_rejected⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨scoreRejected, ?_, ?_, score_rejected⟩
-      · intro j hj
-        exact (hj (Subsingleton.elim j i)).elim
-      · funext e
-        exact nomatch e
-    · intro e
-      exact nomatch e
+  sensitivity := score_sensitivity scoreArena.Law score_rejected
   dependence := score_dependence
 
 def scoreAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}

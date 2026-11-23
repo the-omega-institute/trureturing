@@ -21,7 +21,7 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
                 DescribeId.Create("has-logarithmic-square-tail"),
                 DeclarationHandle.Create(Owner + ".HasLogarithmicSquareTail"),
                 H("A uniform logarithmic square-tail bound"),
-                StatementSource.FromAuthor(TailCondition(logarithmic: true)),
+                StatementSource.FromAuthor(TailCondition()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "One positive constant bounds the squared weights on (X,T] for every "
@@ -31,7 +31,7 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
                 DescribeId.Create("eventual-logarithmic-missing-window"),
                 DeclarationHandle.Create(Owner + ".eventual_logarithmic_missing_window"),
                 H("A logarithmic gain in the waiting exponent"),
-                StatementSource.FromAuthor(Window(logarithmic: true)),
+                StatementSource.FromAuthor(Window()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -56,7 +56,29 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
                         "The head, threshold and mesh allowance fit below β²W(T) − L. "
                         + "Rational linear independence restricts to the finite cutoff. "
                         + "The orbit supplies a closed score-time interval starting above A/r, "
-                        + "and scaling by r gives the stated interval."))),
+                        + "and scaling by r gives the stated interval.")),
+                    Paragraph(Text(
+                        "For positive zeta ordinates, assume RH and rational linear independence "
+                        + "of the distinct ordinates. The weight is mγ γ/(1/4+γ²), with analytic "
+                        + "multiplicity mγ and inclusive cutoff γ ≤ T. The harmonic mass estimate "
+                        + "gives coefficient 1/(4π). "), Ref(
+                        "D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootWeightedSine")),
+                    Paragraph(Text(
+                        "The analytic input is the bounded average of the normalized Montgomery "
+                        + "sum against 2(1−α) on 0 ≤ α ≤ 1. Baluyot, Goldston, Suriajaya and "
+                        + "Turnage-Butterbaugh (arXiv:2306.04799, Theorem 1) give this by "
+                        + "integrating their uniform formula. Under RH, each ordinate difference "
+                        + "contributes a nonnegative multiple of the triangular cosine transform. "
+                        + "This transform is 1 at zero and 2(1−cos z)/z² elsewhere. The equal-ordinate "
+                        + "terms contribute exactly the sum of squared multiplicities. "),
+                        Ref("D5/S3/Analytic/Oscillation/MontgomeryWindow")),
+                    Paragraph(Text(
+                        "Thus the cumulative sum of squared multiplicities is O(Y log Y). "
+                        + "On each band (2^k X, 2^(k+1) X], the squared harmonic weights "
+                        + "are bounded by the squared multiplicities divided by (2^k X)². Summing "
+                        + "the resulting geometric series with a linear factor in k gives "
+                        + "O(log X/X) uniformly in T ≥ X. The application uses the analytic "
+                        + "pair-correlation average as a literature input."))),
                 DescribeRole.Theorem))));
 
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
@@ -97,40 +119,22 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
     private static Formula OverSpectrum(Formula body) =>
         Disp(All("S", Spectrum, All("w", Weights, body)));
 
-    private static Formula MassCondition()
-    {
-        var y = F.Id("Y");
-        var a = F.Id("a");
-        var c = F.Id("C");
-        var log = Call("log", y);
-        var error = new Formula.Absolute(Subtract(Mass(y), Multiply(a, Square(log))));
-        var bound = AtMost(error, Multiply(c, Seq(Open, Add(D(1), log), Close)));
-        return OverSpectrum(Iff(Call("HasLogSquaredMass", F.Id("S"), F.Id("w")),
-            ExistsReal("a", ExistsReal("C",
-                And(Less(D(0), a), And(AtMost(D(0), c), Eventually(y, bound)))))));
-    }
-
-    private static Formula TailCondition(bool logarithmic = false)
+    private static Formula TailCondition()
     {
         var x = F.Id("X");
         var t = F.Id("T");
-        var constant = F.Id(logarithmic ? "C" : "eta");
+        var constant = F.Id("C");
         var j = F.Id("j");
         var cut = Seq(Call("cut", F.Id("S"), t), Sp, Setminus, Sp, Call("cut", F.Id("S"), x));
         var sum = Seq(Sum, Underscore, Grp(j, Sp, InMacro, Sp, cut), Sp, Square(Call("w", j)));
         var log = Call("log", x);
-        var bound = AtMost(sum, new Formula.Fraction(Multiply(constant, logarithmic ? log : Square(log)), x));
+        var bound = AtMost(sum, new Formula.Fraction(Multiply(constant, log), x));
         var uniform = Eventually(x, All("T", Reals, Implies(AtMost(x, t), bound)));
-        return OverSpectrum(Iff(Call(TailName(logarithmic), F.Id("S"), F.Id("w")),
-            logarithmic
-                ? ExistsReal("C", And(Less(D(0), constant), uniform))
-                : All("eta", Reals, Implies(Less(D(0), constant), uniform))));
+        return OverSpectrum(Iff(Call("HasLogarithmicSquareTail", F.Id("S"), F.Id("w")),
+            ExistsReal("C", And(Less(D(0), constant), uniform))));
     }
 
-    private static string TailName(bool logarithmic) =>
-        logarithmic ? "HasLogarithmicSquareTail" : "HasSmallSquareTail";
-
-    private static Formula Window(bool logarithmic = false)
+    private static Formula Window()
     {
         var t = F.Id("T");
         var a = F.Id("a");
@@ -143,17 +147,17 @@ internal sealed class SpectrumLogarithmicMissingWindowDocument : IScribeDocument
         var nonnegative = All("j", Call("index", s), AtMost(D(0), Call("w", F.Id("j"))));
         var independent = Call("LinearIndependent", Seq(Mathbb, Grp(F.Id("Q"))), Call("gamma", s));
         var conditions = And(nonnegative, And(independent,
-            And(Call("HasLogSquaredMass", s, w), And(Call(TailName(logarithmic), s, w),
+            And(Call("HasLogSquaredMass", s, w), And(Call("HasLogarithmicSquareTail", s, w),
                 And(Less(D(0), r), And(Less(D(0), b), Less(b, D(1))))))));
         var power = new Formula.Power(t, b);
-        var exponent = logarithmic ? Multiply(Multiply(c, power), Call("log", t)) : power;
+        var exponent = Multiply(Multiply(c, power), Call("log", t));
         var interval = Seq(OpenBracket, a, Comma, Add(a, Call("exp", exponent)), CloseBracket);
         var strict = Less(Call("sine", s, w, t, new Formula.Fraction(u, r)),
             Subtract(Multiply(Square(b), Mass(t)), Call("log", t)));
         var windows = All("A", Reals, ExistsReal("a",
             And(Less(F.Id("A"), a), All("u", interval, strict))));
         var eventual = Eventually(t, And(Less(D(0), Mass(t)), windows));
-        var conclusion = logarithmic ? ExistsReal("c", And(Less(D(0), c), eventual)) : eventual;
+        var conclusion = ExistsReal("c", And(Less(D(0), c), eventual));
         return OverSpectrum(All("r", Reals, All("beta", Reals, Implies(conditions, conclusion))));
     }
 }

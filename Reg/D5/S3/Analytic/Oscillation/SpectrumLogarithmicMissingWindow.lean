@@ -13,9 +13,11 @@ open _root_.D5.S3.Analytic.Oscillation.OrdinateCounting (Spectrum)
 open _root_.D5.S3.Analytic.Oscillation.SpectrumPhaseCutoff (mass sine)
 open _root_.D5.S3.Analytic.Oscillation.SpectrumCriticalMissingWindow (HasLogSquaredMass)
 open _root_.D5.S3.Analytic.Oscillation.SpectrumLogarithmicMissingWindow
-open _root_.D5.S3.Analytic.Oscillation.SpectrumLogarithmicMissingWindowModel (exists_infinite_logarithmic_model)
+open _root_.D5.S3.Analytic.Oscillation.SpectrumLogarithmicMissingWindowModel
+  (exists_infinite_logarithmic_model)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open SpectrumCriticalMissingWindow (scoreSignature scoreActual scoreRejected score_sensitivity score_dependence)
+open SpectrumCriticalMissingWindow
+  (scoreSignature scoreActual scoreRejected score_sensitivity score_dependence)
 open LeanInformationAudit Filter Set
 open scoped Topology
 
