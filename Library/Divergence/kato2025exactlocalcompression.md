@@ -15,6 +15,7 @@ strata_touched:
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalReset
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetDistortion
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetOptimum
+  - D5/S3/Quantum/Recovery/LocalCompression/SignedTestRecordDimension
 license: citation-only
 triage: anchor
 ---
@@ -114,3 +115,11 @@ fidelity, and Cha–Park–Lee Proposition 3.7 gives a nonisometric decoding
 advantage for average ensemble fidelity.
 [Farber–Gour](https://arxiv.org/abs/2610.14785) ·
 [Cha–Park–Lee](https://arxiv.org/abs/2605.01258)
+
+## Finite signed-test dimension bound
+
+Section VII motivates a static one-shot bound for a fixed finite experiment.
+The signed-test certificate compares density-weighted label loss to exact sign
+leakage and uses the spectral packing of each auxiliary label to bound the
+full trace-norm reconstruction error. The prescribed pure environment is
+part of the encoder isometry on the specified whole input space.

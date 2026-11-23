@@ -156,7 +156,7 @@ def weightedLinear {R : Type*} [CommRing R] (w : Fin 9 → R) :
     Module.End R (Q 9 → R) :=
   ∑ i, w i • direction i
 
-private theorem weightedLinear_apply {R : Type*} [CommRing R]
+theorem weightedLinear_apply {R : Type*} [CommRing R]
     (w : Fin 9 → R) (f : Q 9 → R) : weightedLinear w f = weightedAction w f := by
   funext x
   simp only [weightedLinear, weightedAction, LinearMap.sum_apply, Finset.sum_apply,
@@ -222,7 +222,7 @@ theorem weighted_halfFlip_anticommutator {R : Type*} [CommRing R]
     exact ite_eq_right hji
   · simp
 
-private theorem weightedLinear_square {R : Type*} [CommRing R] (w : Fin 9 → R) :
+theorem weightedLinear_square {R : Type*} [CommRing R] (w : Fin 9 → R) :
     weightedLinear w * weightedLinear w = (∑ i, w i ^ 2) • 1 := by
   let G (i : Fin 9) : Module.End R (Q 9 → R) := w i • direction i
   change (∑ i, G i) * (∑ i, G i) = (∑ i, w i ^ 2) • 1
