@@ -39,9 +39,9 @@ abbrev arena : Arena where
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 1 ∧ boundary r = j then (1 : ℤ) else 0) = r.readout () p j
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h ![0, 0, 0, 0, 0, 0] 0
-  have ha := one_counts ![0, 0, 0, 0, 0, 0] 0
-  change _ = costOne (boundary ![0, 0, 0, 0, 0, 0]) 0 + 1 at hb
+  have hb := h (0 : Row 3 6) 0
+  have ha := one_counts (0 : Row 3 6) 0
+  change _ = costOne (boundary (0 : Row 3 6)) 0 + 1 at hb
   exact (ne_of_lt (Int.lt_add_one_iff.mpr le_rfl)) (ha.symm.trans hb)
 def family : Registration arena (type_of% @one_counts) where
   actual := readout
@@ -51,7 +51,7 @@ def family : Registration arena (type_of% @one_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨![0, 0, 0, 0, 0, 0], 0, 3, ?_⟩
+    refine ⟨(0 : Row 3 6), 0, 3, ?_⟩
     change costOne 0 0 ≠ costOne 0 3
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -100,8 +100,8 @@ abbrev arena : Arena where
       then (1 : ℤ) else 0) = r.readout () ⟨p, d⟩ j
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h ![0, 0, 0, 0, 0, 0] 1 (Sum.inl 0)
-  have ha := transition_counts ![0, 0, 0, 0, 0, 0] 1 (Sum.inl 0)
+  have hb := h (0 : Row 3 6) 1 (Sum.inl 0)
+  have ha := transition_counts (0 : Row 3 6) 1 (Sum.inl 0)
   change _ = T (Sum.inl 0) (Sum.inl 0) at ha
   change _ = T (Sum.inl 0) (Sum.inl 0) + 1 at hb
   exact (ne_of_lt (Int.lt_add_one_iff.mpr le_rfl)) (ha.symm.trans hb)
@@ -113,7 +113,7 @@ def family : Registration arena (type_of% @transition_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨![0, 0, 0, 0, 0, 0], 1⟩, (Sum.inl 0), (Sum.inl 1), ?_⟩
+    refine ⟨⟨(0 : Row 3 6), 1⟩, (Sum.inl 0), (Sum.inl 1), ?_⟩
     change T (Sum.inl 0) (Sum.inl 0) ≠ T (Sum.inl 0) (Sum.inl 1)
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}

@@ -12,7 +12,6 @@ import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.Notation.Pi.Defs
-import Mathlib.Data.Fin.VecNotation
 
 namespace Reg.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripCertificate
 open _root_.D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripCertificate
@@ -36,9 +35,9 @@ abbrev arena : Arena where
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 0 ∧ boundary r = j then (1 : ℤ) else 0) = r.readout () p j
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h ![0, 0, 0, 0, 0, 0] 0
-  have ha := counts ![0, 0, 0, 0, 0, 0] 0
-  change _ = T (boundary ![0, 0, 0, 0, 0, 0]) 0 + 1 at hb
+  have hb := h (0 : Row 3 6) 0
+  have ha := counts (0 : Row 3 6) 0
+  change _ = T (boundary (0 : Row 3 6)) 0 + 1 at hb
   linarith
 def family : Registration arena (type_of% @counts) where
   actual := readout
@@ -48,7 +47,7 @@ def family : Registration arena (type_of% @counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨![0, 0, 0, 0, 0, 0], 0, 1, ?_⟩
+    refine ⟨(0 : Row 3 6), 0, 1, ?_⟩
     change T 0 0 ≠ T 0 1
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
