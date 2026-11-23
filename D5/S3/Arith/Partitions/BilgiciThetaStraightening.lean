@@ -52,40 +52,6 @@ private theorem omitted_triple (a b c : Fin 9)
     s = (wordE.tail.toFinset)ᶜ ∨ s = (wordF.tail.toFinset)ᶜ := by
   fin_cases a <;> decide +revert
 
-private theorem local211111 (l : Word) (hl : l.length = 6) (hd : l.Nodup)
-    (h0 : (0 : Fin 9) ∈ l) (hz : centered (0 :: l) = 0) :
-    (0 :: l).Perm baseC ∨ (0 :: l).Perm baseD ∨
-    (0 :: l).Perm wordE ∨ (0 :: l).Perm wordF := by
-  have hcard : (l.toFinsetᶜ).card = 3 := by
-    rw [Finset.card_compl, List.toFinset_card_of_nodup hd, hl]
-    decide
-  obtain ⟨a,b,c,hab,hac,hbc,he⟩ := Finset.card_eq_three.mp hcard
-  have ha : a ≠ 0 := by
-    have ha' : a ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_self _ _
-    exact fun hn => (Finset.mem_compl.mp ha') (List.mem_toFinset.mpr (hn.symm ▸ h0))
-  have hb : b ≠ 0 := by
-    have hb' : b ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_of_mem (Finset.mem_insert_self _ _)
-    exact fun hn => (Finset.mem_compl.mp hb') (List.mem_toFinset.mpr (hn.symm ▸ h0))
-  have hc : c ≠ 0 := by
-    have hc' : c ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_of_mem
-      (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-    exact fun hn => (Finset.mem_compl.mp hc') (List.mem_toFinset.mpr (hn.symm ▸ h0))
-  have hsum := complement_squares l hd
-  have hz' : -centered l = 1 := by
-    rw [centered_cons, show digit 0 ^ 2 = 1 by decide] at hz
-    exact (eq_neg_of_add_eq_zero_left hz).symm
-  rw [hz', he, Finset.sum_insert (by simp [hab, hac]), Finset.sum_pair hbc, ← add_assoc] at hsum
-  have h := omitted_triple a b c hab hac hbc ha hb hc hsum
-  rw [← he] at h
-  have hp (t : Word) (ht : t.tail.Nodup) (hc : l.toFinsetᶜ = t.tail.toFinsetᶜ) :
-      (0 :: l).Perm (0 :: t.tail) :=
-    (List.perm_of_nodup_nodup_toFinset_eq hd ht (compl_injective hc)).cons 0
-  rcases h with h | h | h | h
-  · exact Or.inl (hp baseC (by decide) h)
-  · exact Or.inr (Or.inl (hp baseD (by decide) h))
-  · exact Or.inr (Or.inr (Or.inl (hp wordE (by decide) h)))
-  · exact Or.inr (Or.inr (Or.inr (hp wordF (by decide) h)))
-
 private def twoDoubleRepresentative (m : Word) : Prop :=
   m.Perm baseB ∨ m.Perm wordI ∨ m.Perm rootR3 ∨
     m.Perm wordB7 ∨ m.Perm wordH ∨ m.Perm wordG
@@ -95,18 +61,6 @@ instance (m : Word) : Decidable (twoDoubleRepresentative m) := by
   infer_instance
 
 set_option maxHeartbeats 2500000 in
-private theorem local22111 (b c d e : Fin 9) (hd : [0,b,c,d,e].Nodup)
-    (hz : centered [0,0,b,b,c,d,e] = 0) :
-    twoDoubleRepresentative [0,0,b,b,c,d,e] ∨
-      twoDoubleRepresentative (scaleWord (digit b ^ 17) [0,0,b,b,c,d,e]) := by
-  fin_cases b <;> decide +revert
-
-private theorem local2221 (a b c : Fin 9) (hd : [a,b,c,0].Nodup)
-    (hz : centered [a,a,b,b,c,c,0] = 0) :
-    [a,a,b,b,c,c,0].Perm wordM ∨ [a,a,b,b,c,c,0].Perm wordN ∨
-      [a,a,b,b,c,c,0].Perm wordL := by
-  fin_cases a <;> decide +revert
-
 macro "smaller_mem" h:ident w:ident : tactic =>
   `(tactic| exact $h $w (by decide) (by decide) (by decide))
 
@@ -190,7 +144,12 @@ private theorem reduce22111 {M : Submodule K A} (a b c d e : Fin 9) (hd : [a,b,c
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  obtain h | h := local22111 _ _ _ _ hd' hz'
+  have step (b c d e : Fin 9) (hd : [0,b,c,d,e].Nodup)
+    (hz : centered [0,0,b,b,c,d,e] = 0) :
+    twoDoubleRepresentative [0,0,b,b,c,d,e] ∨
+      twoDoubleRepresentative (scaleWord (digit b ^ 17) [0,0,b,b,c,d,e]) := by
+    fin_cases b <;> decide +revert
+  obtain h | h := step _ _ _ _ hd' hz'
   · exact twoDoubleRepresentative_mem h hs' hb
   · have hn : digit (scaleIndex k b) ^ 17 ≠ 0 := pow_ne_zero _ (digit_nonzero _)
     obtain ⟨r, hr⟩ := evalWord_scale _ hn
@@ -206,7 +165,12 @@ private theorem reduce2221 {M : Submodule K A} (a b c d : Fin 9) (hd : [a,b,c,d]
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  obtain h | h | h := local2221 _ _ _ hd' hz'
+  have step (a b c : Fin 9) (hd : [a,b,c,0].Nodup)
+    (hz : centered [a,a,b,b,c,c,0] = 0) :
+    [a,a,b,b,c,c,0].Perm wordM ∨ [a,a,b,b,c,c,0].Perm wordN ∨
+      [a,a,b,b,c,c,0].Perm wordL := by
+    fin_cases a <;> decide +revert
+  obtain h | h | h := step _ _ _ hd' hz'
   · rw [evalWord_perm h]; exact stepM (smaller_perm h hs')
   · rw [evalWord_perm h]; exact stepN (smaller_perm h hs')
   · rw [evalWord_perm h]; exact stepL (smaller_perm h hs')
@@ -220,7 +184,40 @@ private theorem reduce211111 {M : Submodule K A} (a b c d e f : Fin 9) (hd : [a,
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  obtain h | h | h | h := local211111 _ rfl hd' (by simp) hz'
+  have step (l : Word) (hl : l.length = 6) (hd : l.Nodup)
+    (h0 : (0 : Fin 9) ∈ l) (hz : centered (0 :: l) = 0) :
+    (0 :: l).Perm baseC ∨ (0 :: l).Perm baseD ∨
+    (0 :: l).Perm wordE ∨ (0 :: l).Perm wordF := by
+    have hcard : (l.toFinsetᶜ).card = 3 := by
+      rw [Finset.card_compl, List.toFinset_card_of_nodup hd, hl]
+      decide
+    obtain ⟨a,b,c,hab,hac,hbc,he⟩ := Finset.card_eq_three.mp hcard
+    have ha : a ≠ 0 := by
+      have ha' : a ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_self _ _
+      exact fun hn => (Finset.mem_compl.mp ha') (List.mem_toFinset.mpr (hn.symm ▸ h0))
+    have hb : b ≠ 0 := by
+      have hb' : b ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_of_mem (Finset.mem_insert_self _ _)
+      exact fun hn => (Finset.mem_compl.mp hb') (List.mem_toFinset.mpr (hn.symm ▸ h0))
+    have hc : c ≠ 0 := by
+      have hc' : c ∈ l.toFinsetᶜ := he.symm ▸ Finset.mem_insert_of_mem
+        (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
+      exact fun hn => (Finset.mem_compl.mp hc') (List.mem_toFinset.mpr (hn.symm ▸ h0))
+    have hsum := complement_squares l hd
+    have hz' : -centered l = 1 := by
+      rw [centered_cons, show digit 0 ^ 2 = 1 by decide] at hz
+      exact (eq_neg_of_add_eq_zero_left hz).symm
+    rw [hz', he, Finset.sum_insert (by simp [hab, hac]), Finset.sum_pair hbc, ← add_assoc] at hsum
+    have h := omitted_triple a b c hab hac hbc ha hb hc hsum
+    rw [← he] at h
+    have hp (t : Word) (ht : t.tail.Nodup) (hc : l.toFinsetᶜ = t.tail.toFinsetᶜ) :
+        (0 :: l).Perm (0 :: t.tail) :=
+      (List.perm_of_nodup_nodup_toFinset_eq hd ht (compl_injective hc)).cons 0
+    rcases h with h | h | h | h
+    · exact Or.inl (hp baseC (by decide) h)
+    · exact Or.inr (Or.inl (hp baseD (by decide) h))
+    · exact Or.inr (Or.inr (Or.inl (hp wordE (by decide) h)))
+    · exact Or.inr (Or.inr (Or.inr (hp wordF (by decide) h)))
+  obtain h | h | h | h := step _ rfl hd' (by simp) hz'
   · rw [evalWord_perm h]; exact hc
   · rw [evalWord_perm h]; exact hd₀
   · rw [evalWord_perm h]; exact stepE (smaller_perm h hs')

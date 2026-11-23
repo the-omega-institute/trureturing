@@ -299,12 +299,6 @@ macro "perm_counts" : tactic =>
   `(tactic| (apply List.perm_iff_count.mpr; intro i; simp only [List.count_cons, List.count_nil]; omega))
 
 
-private theorem local7 (hd : ([0] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, 0, 0, 0] = 0) :
-    False := by
-  revert hz
-  decide
-
 theorem reduce7 {M : Submodule K A} (a : Fin 9) (hd : [a].Nodup)
     (hs : smaller M [a, a, a, a, a, a, a])
     (hz : centered [a, a, a, a, a, a, a] = 0) : evalWord [a, a, a, a, a, a, a] ∈ M := by
@@ -313,14 +307,13 @@ theorem reduce7 {M : Submodule K A} (a : Fin 9) (hd : [a].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local7  hd' hz'
-  exact h.elim
-
-private theorem local61 (b : Fin 9) (hd : ([0, b] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, 0, 0, b] = 0) :
+  have step (hd : ([0] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, 0, 0, 0] = 0) :
     False := by
-  revert b
-  decide
+    revert hz
+    decide
+  have h := step  hd' hz'
+  exact h.elim
 
 theorem reduce61 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
     (hs : smaller M [a, a, a, a, a, a, b])
@@ -330,13 +323,13 @@ theorem reduce61 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local61 (scaleIndex k b) hd' hz'
+  have step (b : Fin 9) (hd : ([0, b] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, 0, 0, b] = 0) :
+    False := by
+    revert b
+    decide
+  have h := step (scaleIndex k b) hd' hz'
   exact h.elim
-
-private theorem local52 (b : Fin 9) (hd : ([0, b] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, 0, b, b] = 0) :
-    goodMove 0 0 0 b [0, 0, b] := by
-  decide +revert
 
 theorem reduce52 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
     (hs : smaller M [a, a, a, a, a, b, b])
@@ -346,13 +339,12 @@ theorem reduce52 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local52 (scaleIndex k b) hd' hz'
+  have step (b : Fin 9) (hd : ([0, b] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, 0, b, b] = 0) :
+    goodMove 0 0 0 b [0, 0, b] := by
+    decide +revert
+  have h := step (scaleIndex k b) hd' hz'
   exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local511 (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, 0, b, c] = 0) :
-    goodMove 0 0 b c [0, 0, 0] ∨ goodMove 0 0 0 b [0, 0, c] ∨ goodMove 0 0 0 c [0, 0, b] := by
-  decide +revert
 
 theorem reduce511 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
     (hs : smaller M [a, a, a, a, a, b, c])
@@ -362,16 +354,15 @@ theorem reduce511 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local511 (scaleIndex k b) (scaleIndex k c) hd' hz'
+  have step (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, 0, b, c] = 0) :
+    goodMove 0 0 b c [0, 0, 0] ∨ goodMove 0 0 0 b [0, 0, c] ∨ goodMove 0 0 0 c [0, 0, b] := by
+    decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) hd' hz'
   rcases h with h | h | h
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local43 (a : Fin 9) (hd : ([a, 0] : Word).Nodup)
-    (hz : centered [a, a, a, a, 0, 0, 0] = 0) :
-    goodMove 0 0 0 a [a, a, a] := by
-  decide +revert
 
 theorem reduce43 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
     (hs : smaller M [a, a, a, a, b, b, b])
@@ -381,13 +372,12 @@ theorem reduce43 {M : Submodule K A} (a b : Fin 9) (hd : [a, b].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local43 (scaleIndex k a) hd' hz'
+  have step (a : Fin 9) (hd : ([a, 0] : Word).Nodup)
+    (hz : centered [a, a, a, a, 0, 0, 0] = 0) :
+    goodMove 0 0 0 a [a, a, a] := by
+    decide +revert
+  have h := step (scaleIndex k a) hd' hz'
   exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local421 (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, b, b, c] = 0) :
-    goodMove 0 0 b c [0, 0, b] := by
-  decide +revert
 
 theorem reduce421 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
     (hs : smaller M [a, a, a, a, b, b, c])
@@ -397,13 +387,12 @@ theorem reduce421 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local421 (scaleIndex k b) (scaleIndex k c) hd' hz'
+  have step (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, b, b, c] = 0) :
+    goodMove 0 0 b c [0, 0, b] := by
+    decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) hd' hz'
   exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local4111 (b c d : Fin 9) (hd : ([0, b, c, d] : Word).Nodup)
-    (hz : centered [0, 0, 0, 0, b, c, d] = 0) :
-    goodMove 0 0 b c [0, 0, d] ∨ goodMove 0 0 b d [0, 0, c] ∨ goodMove 0 0 c d [0, 0, b] := by
-  fin_cases b <;> decide +revert
 
 theorem reduce4111 {M : Submodule K A} (a b c d : Fin 9) (hd : [a, b, c, d].Nodup)
     (hs : smaller M [a, a, a, a, b, c, d])
@@ -413,16 +402,15 @@ theorem reduce4111 {M : Submodule K A} (a b c d : Fin 9) (hd : [a, b, c, d].Nodu
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local4111 (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) hd' hz'
+  have step (b c d : Fin 9) (hd : ([0, b, c, d] : Word).Nodup)
+    (hz : centered [0, 0, 0, 0, b, c, d] = 0) :
+    goodMove 0 0 b c [0, 0, d] ∨ goodMove 0 0 b d [0, 0, c] ∨ goodMove 0 0 c d [0, 0, b] := by
+    fin_cases b <;> decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) hd' hz'
   rcases h with h | h | h
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local331 (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
-    (hz : centered [0, 0, 0, b, b, b, c] = 0) :
-    goodMove 0 0 b c [0, b, b] ∨ goodMove b b 0 c [0, b, 0] := by
-  decide +revert
 
 theorem reduce331 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
     (hs : smaller M [a, a, a, b, b, b, c])
@@ -432,15 +420,14 @@ theorem reduce331 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local331 (scaleIndex k b) (scaleIndex k c) hd' hz'
+  have step (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
+    (hz : centered [0, 0, 0, b, b, b, c] = 0) :
+    goodMove 0 0 b c [0, b, b] ∨ goodMove b b 0 c [0, b, 0] := by
+    decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) hd' hz'
   rcases h with h | h
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local322 (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
-    (hz : centered [0, 0, 0, b, b, c, c] = 0) :
-    goodMove 0 0 b c [0, b, c] := by
-  decide +revert
 
 theorem reduce322 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
     (hs : smaller M [a, a, a, b, b, c, c])
@@ -450,13 +437,12 @@ theorem reduce322 {M : Submodule K A} (a b c : Fin 9) (hd : [a, b, c].Nodup)
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local322 (scaleIndex k b) (scaleIndex k c) hd' hz'
+  have step (b c : Fin 9) (hd : ([0, b, c] : Word).Nodup)
+    (hz : centered [0, 0, 0, b, b, c, c] = 0) :
+    goodMove 0 0 b c [0, b, c] := by
+    decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) hd' hz'
   exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
-
-private theorem local3211 (b c d : Fin 9) (hd : ([0, b, c, d] : Word).Nodup)
-    (hz : centered [0, 0, 0, b, b, c, d] = 0) :
-    goodMove 0 0 b c [0, b, d] ∨ goodMove 0 0 b d [0, b, c] ∨ goodMove b b 0 c [0, 0, d] ∨ goodMove b b 0 d [0, 0, c] ∨ [0, 0, 0, b, b, c, d].Perm baseA := by
-  fin_cases b <;> decide +revert
 
 theorem reduce3211 {M : Submodule K A} (a b c d : Fin 9) (hd : [a, b, c, d].Nodup)
     (ha : evalWord baseA ∈ M) (hs : smaller M [a, a, a, b, b, c, d])
@@ -466,18 +452,17 @@ theorem reduce3211 {M : Submodule K A} (a b c d : Fin 9) (hd : [a, b, c, d].Nodu
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local3211 (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) hd' hz'
+  have step (b c d : Fin 9) (hd : ([0, b, c, d] : Word).Nodup)
+    (hz : centered [0, 0, 0, b, b, c, d] = 0) :
+    goodMove 0 0 b c [0, b, d] ∨ goodMove 0 0 b d [0, b, c] ∨ goodMove b b 0 c [0, 0, d] ∨ goodMove b b 0 d [0, 0, c] ∨ [0, 0, 0, b, b, c, d].Perm baseA := by
+    fin_cases b <;> decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) hd' hz'
   rcases h with h | h | h | h | h
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · rwa [evalWord_perm h]
-
-private theorem local31111 (b c d e : Fin 9) (hd : ([0, b, c, d, e] : Word).Nodup)
-    (hz : centered [0, 0, 0, b, c, d, e] = 0) :
-    goodMove 0 0 b c [0, d, e] ∨ goodMove 0 0 b d [0, c, e] ∨ goodMove 0 0 b e [0, c, d] ∨ goodMove 0 0 c d [0, b, e] ∨ goodMove 0 0 c e [0, b, d] ∨ goodMove 0 0 d e [0, b, c] := by
-  fin_cases b <;> decide +revert
 
 theorem reduce31111 {M : Submodule K A} (a b c d e : Fin 9) (hd : [a, b, c, d, e].Nodup)
     (hs : smaller M [a, a, a, b, c, d, e])
@@ -487,7 +472,11 @@ theorem reduce31111 {M : Submodule K A} (a b c d e : Fin 9) (hd : [a, b, c, d, e
   have hd' := hd.map (scaleIndex_injective hk)
   simp only [scaleWord, List.map_cons, List.map_nil, h0] at hs' hz' ⊢
   simp only [List.map_cons, List.map_nil, h0] at hd'
-  have h := local31111 (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) (scaleIndex k e) hd' hz'
+  have step (b c d e : Fin 9) (hd : ([0, b, c, d, e] : Word).Nodup)
+    (hz : centered [0, 0, 0, b, c, d, e] = 0) :
+    goodMove 0 0 b c [0, d, e] ∨ goodMove 0 0 b d [0, c, e] ∨ goodMove 0 0 b e [0, c, d] ∨ goodMove 0 0 c d [0, b, e] ∨ goodMove 0 0 c e [0, b, d] ∨ goodMove 0 0 d e [0, b, c] := by
+    fin_cases b <;> decide +revert
+  have h := step (scaleIndex k b) (scaleIndex k c) (scaleIndex k d) (scaleIndex k e) hd' hz'
   rcases h with h | h | h | h | h | h
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'
   · exact goodMove_from_perm (by perm_counts) h hs' rfl hz'

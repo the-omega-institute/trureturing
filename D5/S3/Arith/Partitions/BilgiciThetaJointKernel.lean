@@ -64,6 +64,29 @@ theorem ell_mulS (n : ℕ) (hn : n < 55) (f : R) :
   change ell n hn (q S_Z * q f) = _
   rw [← map_mul, ell_q]
 
+theorem cubic_trace_coordinates (z : A) (a b : K)
+    (h : z = a • mulS (q h₁) + b • mulS (q h₂)) :
+    a = (9 : K) * ell 30 (by decide) z ∧
+      b = ell 49 (by decide) z - (9 : K) * a := by
+  have h₁trace : ellR 30 (S_Z * h₁) = 17 ∧ ellR 49 (S_Z * h₁) = 9 := by
+    rw [h₁, ← spProject_denote, ← denote_sSparse, ← denote_rawMul]
+    rw [ellR_sparse, ellR_sparse]
+    exact ⟨by decide, by decide⟩
+  have h₂trace : ellR 30 (S_Z * h₂) = 0 ∧ ellR 49 (S_Z * h₂) = 1 := by
+    rw [h₂, ← spProject_denote, ← denote_sSparse, ← denote_rawMul]
+    rw [ellR_sparse, ellR_sparse]
+    exact ⟨by decide, by decide⟩
+  have h30 := congrArg (ell 30 (by decide)) h
+  simp only [map_add, map_smul, ell_mulS, h₁trace.1,
+    h₂trace.1, smul_eq_mul, mul_zero, add_zero] at h30
+  have h49 := congrArg (ell 49 (by decide)) h
+  simp only [map_add, map_smul, ell_mulS, h₁trace.2,
+    h₂trace.2, smul_eq_mul, mul_one] at h49
+  constructor
+  · rw [h30, mul_left_comm, show (9 : K) * 17 = 1 by decide, mul_one]
+  · rw [h49]
+    ring
+
 private theorem test_columns_zero (a b c d : K)
     (h : tests (a • q u + b • q v + c • mulS (q h₁) + d • mulS (q h₂)) = 0) :
     a = 0 ∧ b = 0 := by
@@ -87,14 +110,9 @@ private theorem comparison_independent : LinearIndependent K comparison := by
   rw [map_zero] at htests
   obtain ⟨h0, h1⟩ := test_columns_zero _ _ _ _ htests
   rw [h0, h1, zero_smul, zero_smul, zero_add, zero_add] at hc
-  have h30 := congrArg (ell 30 (by decide)) hc
-  simp only [map_add, map_smul, map_zero, ell_mulS, S_h₁_trace.1, S_h₂_trace.1,
-    smul_eq_mul, mul_zero, add_zero] at h30
-  have h2 : c 2 = 0 := (mul_eq_zero.mp h30).resolve_right (by decide)
-  rw [h2, zero_smul, zero_add] at hc
-  have h49 := congrArg (ell 49 (by decide)) hc
-  have h3 : c 3 = 0 := by
-    simpa only [map_smul, map_zero, ell_mulS, S_h₂_trace.2, smul_eq_mul, mul_one] using h49
+  obtain ⟨h2, h3⟩ := cubic_trace_coordinates 0 _ _ hc.symm
+  simp only [map_zero, mul_zero] at h2
+  simp only [h2, map_zero, mul_zero, sub_zero] at h3
   intro i
   fin_cases i <;> assumption
 

@@ -496,9 +496,6 @@ private theorem multiplicities_cases (m : Word) (hm : m.length = 7) :
   rw [hsum] at h
   exact List.mem_filter.mpr ⟨h, decide_eq_true (multiplicities_sorted m)⟩
 
-private theorem profiles7_explicit : profiles7 =
-    [[1, 1, 1, 1, 1, 1, 1], [2, 1, 1, 1, 1, 1], [2, 2, 1, 1, 1], [2, 2, 2, 1], [3, 1, 1, 1, 1], [3, 2, 1, 1], [3, 2, 2], [3, 3, 1], [4, 1, 1, 1], [4, 2, 1], [4, 3], [5, 1, 1], [5, 2], [6, 1], [7]] := by decide
-
 inductive Profile : Word → Prop where
   | p1111111 (a b c d e f g : Fin 9) (distinct : [a, b, c, d, e, f, g].Nodup) : Profile [a, b, c, d, e, f, g]
   | p211111 (a b c d e f : Fin 9) (distinct : [a, b, c, d, e, f].Nodup) : Profile [a, a, b, c, d, e, f]
@@ -519,7 +516,9 @@ inductive Profile : Word → Prop where
 theorem classify_profile (m : Word) (hm : m.length = 7) :
     ∃ n, m.Perm n ∧ Profile n := by
   have hc := multiplicities_cases m hm
-  rw [profiles7_explicit] at hc
+  have hprofiles : profiles7 =
+    [[1, 1, 1, 1, 1, 1, 1], [2, 1, 1, 1, 1, 1], [2, 2, 1, 1, 1], [2, 2, 2, 1], [3, 1, 1, 1, 1], [3, 2, 1, 1], [3, 2, 2], [3, 3, 1], [4, 1, 1, 1], [4, 2, 1], [4, 3], [5, 1, 1], [5, 2], [6, 1], [7]] := by decide
+  rw [hprofiles] at hc
   have hd := groupedLabels_nodup m
   have hp := perm_expand m
   rw [expand_unpack] at hp

@@ -716,34 +716,18 @@ private theorem denote_traceF11 :
     denote_fullC, pow_succ', pow_zero, mul_one]
   ring
 
-private theorem B_order : traceAtLeast 30 fullB := by
-  unfold traceAtLeast
-  decide
-private theorem C_order : traceAtLeast 0 fullC := by
-  intro t ht
-  exact Nat.zero_le _
-private theorem B_bottom : traceHead 30 fullB =
-    [([2,5,6,8], (1 : K))] := by decide
-private theorem C_bottom : traceHead 0 fullC = [([8], (1 : K))] := by decide
-
-private theorem product_order : traceAtLeast 30 productTerms :=
-  traceAtLeast_rawMul (traceAtLeast_rawMul (traceAtLeast_rawMul B_order C_order) C_order) C_order
-
-private theorem product_bottom : traceHead 30 productTerms =
-    [([2,5,6,8,8,8,8], (1 : K))] := by
-  have h1 := traceAtLeast_rawMul B_order C_order
-  have h2 := traceAtLeast_rawMul h1 C_order
-  unfold productTerms
-  rw [traceHead_rawMul h2 C_order, traceHead_rawMul h1 C_order, traceHead_rawMul B_order C_order,
-    B_bottom, C_bottom]
-  decide
-
 private theorem literalF11_trace_low (n : ℕ) (hn : n < 30) : ellR n F11 = 0 := by
   rw [← denote_traceF11, ellR_sparse, traceCoeff_head]
+  have hB : traceAtLeast 30 fullB := by
+    unfold traceAtLeast
+    decide
+  have hC : traceAtLeast 0 fullC := fun _ _ => Nat.zero_le _
+  have horder : traceAtLeast 30 productTerms :=
+    traceAtLeast_rawMul (traceAtLeast_rawMul (traceAtLeast_rawMul hB hC) hC) hC
   have hhead : traceHead n (takeWeight productTerms) = [] := by
     apply List.filter_eq_nil_iff.mpr
     intro t ht
-    have h := product_order t (List.mem_filter.mp ht).1
+    have h := horder t (List.mem_filter.mp ht).1
     have hh : traceDegree t.1 ≠ n := by omega
     simp [hh]
   rw [hhead]
@@ -753,7 +737,19 @@ theorem literalF11_trace_thirty : ellR 30 F11 = 1 := by
   rw [← denote_traceF11, ellR_sparse, traceCoeff_head]
   have hcomm : traceHead 30 (takeWeight productTerms) = takeWeight (traceHead 30 productTerms) := by
     simp only [takeWeight, traceHead, List.filter_filter, Bool.and_comm]
-  rw [hcomm, product_bottom]
+  have hB : traceAtLeast 30 fullB := by
+    unfold traceAtLeast
+    decide
+  have hC : traceAtLeast 0 fullC := fun _ _ => Nat.zero_le _
+  have h1 := traceAtLeast_rawMul hB hC
+  have h2 := traceAtLeast_rawMul h1 hC
+  have hBhead : traceHead 30 fullB = [([2,5,6,8], (1 : K))] := by decide
+  have hChead : traceHead 0 fullC = [([8], (1 : K))] := by decide
+  have hhead : traceHead 30 productTerms = [([2,5,6,8,8,8,8], (1 : K))] := by
+    unfold productTerms
+    rw [traceHead_rawMul h2 hC, traceHead_rawMul h1 hC, traceHead_rawMul hB hC, hBhead, hChead]
+    decide
+  rw [hcomm, hhead]
   decide
 
 theorem literalF11_trace_test_zero : ell 11 (by decide) (q F11) = 0 := by

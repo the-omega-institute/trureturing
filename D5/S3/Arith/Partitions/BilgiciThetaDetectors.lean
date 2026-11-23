@@ -245,11 +245,6 @@ private theorem tracePairOrder_cast {u v : ℤ} (hu : u ≤ 9) :
   have h : 0 ≤ (9-u) * (10-u) := mul_nonneg (by omega) (by omega)
   nlinarith [sq_nonneg v]
 
-private theorem theta_pairs (a b c d : ℤ) :
-    theta (a,b,c,d) =
-      pair a d * pair b c - pair a c * pair b d + pair a b * pair c d :=
-  rfl
-
 private theorem trace_pair_positive (u v : ℤ) (hv : 0 ≤ v) (hvu : v < u) (hu : u ≤ 9) :
     trace (pair u v) = Polynomial.X ^ tracePairOrder u v := by
   change trace (Z (u+v) * Z (u-v)) = _
@@ -273,17 +268,20 @@ private theorem pair_diag (u : ℤ) : pair u u = 0 := by
   rw [sub_self, show Z 0 = 0 from Z_mul19 0, mul_zero]
 
 private theorem theta_swap₁ (a b c d : ℤ) : theta (b,a,c,d) = -theta (a,b,c,d) := by
-  simp only [theta_pairs]
+  change pair b d * pair a c - pair b c * pair a d + pair b a * pair c d =
+    -(pair a d * pair b c - pair a c * pair b d + pair a b * pair c d)
   rw [pair_swap a b]
   ring
 
 private theorem theta_swap₂ (a b c d : ℤ) : theta (a,c,b,d) = -theta (a,b,c,d) := by
-  simp only [theta_pairs]
+  change pair a d * pair c b - pair a b * pair c d + pair a c * pair b d =
+    -(pair a d * pair b c - pair a c * pair b d + pair a b * pair c d)
   rw [pair_swap b c]
   ring
 
 private theorem theta_swap₃ (a b c d : ℤ) : theta (a,b,d,c) = -theta (a,b,c,d) := by
-  simp only [theta_pairs]
+  change pair a c * pair b d - pair a d * pair b c + pair a b * pair d c =
+    -(pair a d * pair b c - pair a c * pair b d + pair a b * pair c d)
   rw [pair_swap c d]
   ring
 
@@ -502,14 +500,6 @@ noncomputable def v : R := P (monomialWord [1,2,3,4,6,9,9])
 noncomputable def h₁ : R := P (monomialWord [6,7,9,9])
 noncomputable def h₂ : R := P (monomialWord [3,6,8,9])
 
-private theorem u_tests : ellR 11 u = 17 ∧ epsR u = 13 := by
-  rw [u, ← spProject_denote, ellR_sparse, epsR_sparse]
-  exact ⟨by decide, by decide⟩
-
-private theorem v_tests : ellR 11 v = 0 ∧ epsR v = 1 := by
-  rw [v, ← spProject_denote, ellR_sparse, epsR_sparse]
-  exact ⟨by decide, by decide⟩
-
 theorem u_grades : u.IsHomogeneous 7 ∧ u.IsWeightedHomogeneous w 11 := by
   rw [u, ← spProject_denote]
   exact denote_grades _ _ _ (by decide)
@@ -526,21 +516,15 @@ theorem h₂_grades : h₂.IsHomogeneous 4 ∧ h₂.IsWeightedHomogeneous w 9 :=
   rw [h₂, ← spProject_denote]
   exact denote_grades _ _ _ (by decide)
 
-theorem S_h₁_trace : ellR 30 (S_Z * h₁) = 17 ∧ ellR 49 (S_Z * h₁) = 9 := by
-  rw [h₁, ← spProject_denote, ← denote_sSparse, ← denote_rawMul]
-  rw [ellR_sparse, ellR_sparse]
-  exact ⟨by decide, by decide⟩
+theorem quotient_u_tests : tests (q u) = (17, 13) := by
+  change (ellR 11 u, epsR u) = (17, 13)
+  rw [u, ← spProject_denote, ellR_sparse, epsR_sparse]
+  exact Prod.ext (by decide) (by decide)
 
-theorem S_h₂_trace : ellR 30 (S_Z * h₂) = 0 ∧ ellR 49 (S_Z * h₂) = 1 := by
-  rw [h₂, ← spProject_denote, ← denote_sSparse, ← denote_rawMul]
-  rw [ellR_sparse, ellR_sparse]
-  exact ⟨by decide, by decide⟩
-
-theorem quotient_u_tests : tests (q u) = (17, 13) :=
-  Prod.ext u_tests.1 u_tests.2
-
-theorem quotient_v_tests : tests (q v) = (0, 1) :=
-  Prod.ext v_tests.1 v_tests.2
+theorem quotient_v_tests : tests (q v) = (0, 1) := by
+  change (ellR 11 v, epsR v) = (0, 1)
+  rw [v, ← spProject_denote, ellR_sparse, epsR_sparse]
+  exact Prod.ext (by decide) (by decide)
 
 
 end D5.S3.Arith.Partitions.BilgiciThetaStructural

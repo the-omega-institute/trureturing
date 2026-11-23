@@ -32,17 +32,7 @@ private theorem range_trace_coordinates (y : eigengrade 4 9) :
         (9 : K) * ((9 : K) * ell 30 (by decide) (mulSZComponent y).val)) • mulS (q h₂) := by
   let z := (mulSZComponent y).val
   obtain ⟨a, b, hab⟩ := kernel_coordinates (mulSZComponent y).property (tests_mul_S_Z y)
-  have h30 := congrArg (ell 30 (by decide)) hab
-  simp only [map_add, map_smul, ell_mulS, S_h₁_trace.1,
-    S_h₂_trace.1, smul_eq_mul, mul_zero, add_zero] at h30
-  have ha : a = (9 : K) * ell 30 (by decide) z := by
-    rw [← h30, mul_left_comm, show (9 : K) * 17 = 1 by decide, mul_one]
-  have h49 := congrArg (ell 49 (by decide)) hab
-  simp only [map_add, map_smul, ell_mulS, S_h₁_trace.2,
-    S_h₂_trace.2, smul_eq_mul, mul_one] at h49
-  have hb : b = ell 49 (by decide) z - (9 : K) * a := by
-    rw [← h49]
-    ring
+  obtain ⟨ha, hb⟩ := cubic_trace_coordinates z a b hab.symm
   change z = _
   rw [← ha, ← hb, hab]
 
