@@ -53,11 +53,11 @@ def weightedRejected : Realization weightedSignature.{u} :=
 abbrev weightedArena : Arena where
   signature := weightedSignature.{u}
   Law r := ∀ {J : Type u} [DecidableEq J] (s : Finset J) (g w : J → ℝ)
-    (H : ℝ) (T : Set ℝ) (_hs : s.Nonempty) (_hw : ∀ j ∈ s, 0 < w j) (_hH : 1 ≤ H)
-    (_hshort : HasShortIncompatibleRelations s g H) (_htail : ∃ a, Ici a ⊆ T),
+    (T : Set ℝ) (_hw : ∀ j ∈ s, 0 ≤ w j) (_hW : 0 < ∑ j ∈ s, w j),
     let P := deletionFraction s g w
     let D := r.readout () ⟨J, s, g, w⟩ T
-    P / (2 * H ^ 2) ≤ D ∧ D ≤ 2 * P ∧ P / H ^ 2 ≤ D
+    (∀ H : ℝ, T.Nonempty → 0 < H → HasShortIncompatibleRelations s g H → P / H ^ 2 ≤ D) ∧
+      ((∃ a, Ici a ⊆ T) → D ≤ 2 * P)
 
 private theorem weightedRejectedLaw : ¬ weightedArena.{u}.Law weightedRejected := by
   classical
@@ -84,8 +84,9 @@ private theorem weightedRejectedLaw : ¬ weightedArena.{u}.Law weightedRejected 
       exact div_nonneg (Finset.sum_nonneg fun _ _ => zero_le_one)
         (Finset.sum_nonneg fun _ _ => zero_le_one)
   intro law
-  have h := (law s g w 1 univ (Finset.singleton_nonempty _) (fun _ _ => zero_lt_one)
-    le_rfl hshort ⟨0, subset_univ _⟩).2.2
+  have hW : 0 < ∑ j ∈ s, w j := by simp [s, w]
+  have h := (law s g w {0} (fun _ _ => zero_le_one) hW).1
+    1 (singleton_nonempty _) zero_lt_one hshort
   change deletionFraction s g w / (1 : ℝ) ^ 2 ≤ -1 at h
   norm_num at h
   linarith only [hP, h]
@@ -133,9 +134,8 @@ def weightedAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0
     definition := none
     coordinates := #[0, 2, 3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "value"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -162,20 +162,22 @@ def pairRejected : Realization pairSignature :=
 
 abbrev pairArena : Arena where
   signature := pairSignature
-  Law r := ∀ (n : ℕ) (w : ℝ) (_hn : 0 < n) (_hw : 0 < w) (T : Set ℝ)
+  Law r := ∀ (n : ℕ) (w : ℝ) (_hw : 0 < w) (T : Set ℝ)
     (_htail : ∃ a, Ici a ⊆ T),
     let H := 2 * (n : ℝ) + 1
     let g := pairFreq n
     let D := r.readout () ⟨n, w⟩ T
     deletionFraction Finset.univ g (fun _ => w) = 1 / 2 ∧
       HasShortIncompatibleRelations Finset.univ g H ∧
-      1 / (4 * H ^ 2) ≤ D ∧ D ≤ (Real.pi ^ 2 / 8) / H ^ 2 ∧
-      1 / (2 * H ^ 2) ≤ D
+      1 / (2 * H ^ 2) ≤ D ∧
+      D ≤ 1 - Real.cos (Real.pi / (2 * H)) ∧
+      1 - Real.cos (Real.pi / (2 * H)) ≤ (Real.pi ^ 2 / 8) / H ^ 2
 
 private theorem pairRejectedLaw : ¬ pairArena.Law pairRejected := by
   intro law
-  have h := (law 1 1 Nat.one_pos zero_lt_one univ ⟨0, subset_univ _⟩).2.2.2.1
-  change Real.pi ^ 2 + 1 ≤ (Real.pi ^ 2 / 8) / (2 * ((1 : ℕ) : ℝ) + 1) ^ 2 at h
+  have hpair := law 0 1 zero_lt_one univ ⟨0, subset_univ _⟩
+  have h := hpair.2.2.2.1.trans hpair.2.2.2.2
+  change Real.pi ^ 2 + 1 ≤ (Real.pi ^ 2 / 8) / (2 * ((0 : ℕ) : ℝ) + 1) ^ 2 at h
   norm_num at h
   nlinarith only [h, sq_nonneg Real.pi]
 
@@ -224,8 +226,8 @@ def pairAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "value"]
-      stateBinder := 4
+      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

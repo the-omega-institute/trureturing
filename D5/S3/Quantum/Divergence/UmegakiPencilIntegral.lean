@@ -34,7 +34,7 @@ open D5.S3.Resource.LogDet.LogDetInformationSubmodularity
 
 namespace D5.S3.Quantum.Divergence.UmegakiPencilIntegral
 
-private def shiftKernel (a b r : ℝ) : ℝ :=
+def shiftKernel (a b r : ℝ) : ℝ :=
   Real.log (b + r) - Real.log (a + r) + (a - b) / (b + r)
 
 private theorem shiftKernel_nonneg {a b r : ℝ} (ha : 0 ≤ a) (hb : 0 < b)
@@ -47,7 +47,7 @@ private theorem shiftKernel_nonneg {a b r : ℝ} (ha : 0 ≤ a) (hb : 0 < b)
   unfold shiftKernel
   linarith
 
-private theorem integral_shiftKernel {a b : ℝ} (ha : 0 ≤ a) (hb : 0 < b) :
+theorem integral_shiftKernel {a b : ℝ} (ha : 0 ≤ a) (hb : 0 < b) :
     IntegrableOn (shiftKernel a b) (Ioi 0) ∧
       (∫ r in Ioi (0 : ℝ), shiftKernel a b r) =
         a * Real.log a - a * Real.log b - (a - b) := by
@@ -132,7 +132,7 @@ private theorem cfc_add_shift (T : Matrix n n ℂ) (hT : T.IsHermitian) (r : ℝ
       cfc_add_const r id T continuousOn_id hT
     _ = _ := by rw [hid, Algebra.algebraMap_eq_smul_one]
 
-private theorem cfc_shift (T : Matrix n n ℂ) (hT : T.IsHermitian) (r : ℝ) (f : ℝ → ℝ) :
+theorem cfc_shift (T : Matrix n n ℂ) (hT : T.IsHermitian) (r : ℝ) (f : ℝ → ℝ) :
     cfc f (T + r • (1 : Matrix n n ℂ)) = cfc (fun x => f (x + r)) T := by
   rw [← cfc_add_shift T hT r]
   exact (cfc_comp' f (fun x => x + r) T
