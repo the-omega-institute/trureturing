@@ -20,6 +20,7 @@ import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Set.Function
 import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Dual
 import Mathlib.LinearAlgebra.Matrix.ToLin
@@ -1279,5 +1280,210 @@ theorem primal_kernel_card_mul {m n : Type*} [Fintype m] [Fintype n]
   change Nat.card (LinearMap.ker f) * (_ * _) = _
   exact (Nat.mul_assoc _ _ _).symm
 
+private theorem map_reducedMatrix_mulVec {I T R S : Type*}
+    [Fintype I] [LinearOrder I] [CommRing R] [CommRing S]
+    (points : T → Fin 3 → I) (root anchor : I) (f : R →+ S)
+    (x : RemainingPair root anchor → R) :
+    f ∘ (reducedMatrix points root anchor).mulVec x =
+      (reducedMatrix points root anchor).mulVec (f ∘ x) := by
+  funext t
+  change f (∑ ij, (reducedMatrix points root anchor) t ij * x ij) =
+    ∑ ij, (reducedMatrix points root anchor) t ij * f (x ij)
+  rw [map_sum]
+  apply Finset.sum_congr rfl
+  intro ij _
+  rw [← reducedMatrix_intCast (R := R), ← reducedMatrix_intCast (R := S)]
+  simpa only [zsmul_eq_mul] using f.map_zsmul
+    ((reducedMatrix points root anchor : Matrix T (RemainingPair root anchor) ℤ) t ij) (x ij)
+
+private theorem affine_pair_count : Fintype.card (RemainingPair (8 : Fin 9) 0) = 21 := by
+  let admissible (ij : Fin 9 × Fin 9) :=
+    ij.1 < ij.2 ∧ ij.1 ≠ 8 ∧ ij.2 ≠ 8 ∧ ij.1 ≠ 0 ∧ ij.2 ≠ 0
+  let _ : DecidablePred admissible := fun ij =>
+    inferInstanceAs (Decidable (ij.1 < ij.2 ∧ ij.1 ≠ 8 ∧ ij.2 ≠ 8 ∧ ij.1 ≠ 0 ∧ ij.2 ≠ 0))
+  calc
+    Fintype.card (RemainingPair (8 : Fin 9) 0) =
+        @Fintype.card {ij // admissible ij} (Subtype.fintype admissible) :=
+      @Fintype.card_congr _ _ (instRemainingPairFintype 8 0) (Subtype.fintype admissible)
+        (Equiv.refl _)
+    _ = 21 := by
+      rw [Fintype.card_subtype]
+      decide
+
+private noncomputable abbrev affineKernel (q : ℕ) :=
+  (reducedMatrix affineLines 8 0 :
+    Matrix (Fin 12) (RemainingPair (8 : Fin 9) 0) (ZMod q)).mulVecLin.ker.restrictScalars ℤ
+
+private theorem affine_kernel_card_three : Nat.card ↥(affineKernel 3) = 3 ^ 11 := by
+  have h := primal_kernel_card_mul 3 (reducedMatrix affineLines 8 0)
+  rw [affine_transpose_kernel_card_three, affine_pair_count, Fintype.card_fin] at h
+  change Nat.card ↥(affineKernel 3) * 3 ^ 12 = 3 ^ 21 * 9 at h
+  exact Nat.eq_of_mul_eq_mul_right (by decide : 0 < 3 ^ 12)
+    (h.trans (by decide : 3 ^ 21 * 9 = 3 ^ 11 * 3 ^ 12))
+
+private theorem affine_kernel_card_nine : Nat.card ↥(affineKernel 9) = 3 ^ 20 := by
+  have h := primal_kernel_card_mul 9 (reducedMatrix affineLines 8 0)
+  rw [affine_transpose_kernel_card_nine, affine_pair_count, Fintype.card_fin] at h
+  change Nat.card ↥(affineKernel 9) * 9 ^ 12 = 9 ^ 21 * 9 at h
+  exact Nat.eq_of_mul_eq_mul_right (by decide : 0 < 9 ^ 12)
+    (h.trans (by decide : 9 ^ 21 * 9 = 3 ^ 20 * 9 ^ 12))
+
+private theorem affine_kernel_torsion_three :
+    Nat.card {x : affineKernel 9 // 3 • x = 0} = 3 ^ 11 := by
+  have preserves (x : RemainingPair (8 : Fin 9) 0 → ZMod 3) :
+      (reducedMatrix affineLines 8 0).mulVec (embedThree ∘ x) = 0 ↔
+        (reducedMatrix affineLines 8 0).mulVec x = 0 := by
+    rw [← map_reducedMatrix_mulVec affineLines 8 0 embedThree x]
+    constructor
+    · intro h
+      funext t
+      apply embedThree_injective
+      change embedThree ((reducedMatrix affineLines 8 0).mulVec x t) = embedThree 0
+      rw [map_zero]
+      exact congrFun h t
+    · intro h
+      funext t
+      rw [h]
+      exact embedThree.map_zero
+  have killed : ∀ a : ZMod 3, 3 • embedThree a = 0 := by decide
+  let E : ↥(affineKernel 3) ≃ {x : affineKernel 9 // 3 • x = 0} := by
+    let embed (x : affineKernel 3) : affineKernel 9 :=
+      ⟨embedThree ∘ x.val, (preserves _).2 x.prop⟩
+    refine Equiv.ofBijective (fun x => ⟨embed x, Subtype.ext (funext fun i => killed (x.val i))⟩) ?_
+    constructor
+    · intro x y h
+      apply Subtype.ext
+      funext i
+      exact embedThree_injective (congrArg (fun u : {x : affineKernel 9 // 3 • x = 0} =>
+        u.val.val i) h)
+    · intro y
+      have hy (i : RemainingPair (8 : Fin 9) 0) : 3 • y.val.val i = 0 :=
+        congrArg (fun x : affineKernel 9 => x.val i) y.prop
+      choose x hx using fun i => embedThree_covers (y.val.val i) (hy i)
+      have he : embedThree ∘ x = y.val.val := funext hx
+      have mem : x ∈ affineKernel 3 := (preserves x).1 (he.symm ▸ y.val.prop)
+      exact ⟨⟨x, mem⟩, Subtype.ext (Subtype.ext he)⟩
+  rw [← Nat.card_congr E, affine_kernel_card_three]
+
+private theorem affine_kernel_cyclic_factors :
+    Nonempty (↥(affineKernel 9) ≃ₗ[ℤ] (Fin 9 → ZMod 9) × (Fin 2 → ZMod 3)) := by
+  classical
+  let K := ↥(affineKernel 9)
+  obtain ⟨ι, _, modulus, hgt, ⟨decomp⟩⟩ := AddCommGroup.equiv_directSum_zmod_of_finite' K
+  let E := decomp.trans (DirectSum.addEquivProd (fun i => ZMod (modulus i)))
+  have killed (x : K) : 9 • x = 0 := by
+    apply Subtype.ext
+    funext i
+    change 9 • x.val i = 0
+    rw [nsmul_eq_mul, show ((9 : ℕ) : ZMod 9) = 0 by decide, zero_mul]
+  have order (i : ι) : modulus i = 3 ∨ modulus i = 9 := by
+    have hk := congrArg (fun x : K => E x i) (killed (E.symm (Pi.single i 1)))
+    change E (9 • E.symm (Pi.single i 1)) i = E 0 i at hk
+    simp only [map_nsmul, AddEquiv.apply_symm_apply, Pi.smul_apply, Pi.single_eq_same,
+      map_zero, Pi.zero_apply, nsmul_eq_mul, mul_one] at hk
+    have hdiv : modulus i ∣ 9 := (ZMod.natCast_eq_zero_iff _ _).mp hk
+    have hpow : modulus i ∣ 3 ^ 2 := hdiv
+    obtain ⟨k, hk, hm⟩ := (Nat.dvd_prime_pow (by decide : Nat.Prime 3)).mp hpow
+    interval_cases k
+    · have := hgt i
+      simp [hm] at this
+    · exact Or.inl hm
+    · exact Or.inr hm
+  let U := {i : ι // modulus i = 9}
+  let V := {i : ι // modulus i ≠ 9}
+  let split : ((i : ι) → ZMod (modulus i)) ≃+
+      (((i : U) → ZMod (modulus i)) × ((i : V) → ZMod (modulus i))) :=
+    ⟨Equiv.piEquivPiSubtypeProd (fun i => modulus i = 9) (fun i => ZMod (modulus i)),
+      fun _ _ => rfl⟩
+  let u (i : U) : ZMod (modulus i) ≃+ ZMod 9 := by rw [i.prop]
+  let v (i : V) : ZMod (modulus i) ≃+ ZMod 3 := by
+    rw [(order i).resolve_right i.prop]
+  let f : K ≃+ (U → ZMod 9) × (V → ZMod 3) :=
+    E.trans (split.trans ((AddEquiv.piCongrRight u).prodCongr (AddEquiv.piCongrRight v)))
+  have total : 2 * Nat.card U + Nat.card V = 20 := by
+    have h := (Nat.card_congr f.toEquiv).symm.trans affine_kernel_card_nine
+    rw [Nat.card_prod, Nat.card_fun, Nat.card_fun, Nat.card_zmod, Nat.card_zmod] at h
+    change (3 ^ 2) ^ Nat.card U * 3 ^ Nat.card V = 3 ^ 20 at h
+    rw [← pow_mul, ← pow_add] at h
+    exact Nat.pow_right_injective (by decide : 2 ≤ 3) h
+  let transport : {x : K // 3 • x = 0} ≃
+      {x : (U → ZMod 9) × (V → ZMod 3) // 3 • x = 0} :=
+    f.toEquiv.subtypeEquiv (fun x => by
+      change 3 • x = 0 ↔ 3 • f x = 0
+      rw [← map_nsmul, ← f.map_zero, f.injective.eq_iff])
+  have hsplit (x : (U → ZMod 9) × (V → ZMod 3)) :
+      3 • x = 0 ↔ (∀ i, 3 • x.1 i = 0) ∧ (∀ i, 3 • x.2 i = 0) := by
+    rcases x with ⟨a, b⟩
+    change ((3 • a, 3 • b) : (U → ZMod 9) × (V → ZMod 3)) = (0, 0) ↔ _
+    simp only [Prod.mk.injEq, funext_iff, Pi.smul_apply, Pi.zero_apply]
+  let embed : ZMod 3 ≃ {x : ZMod 9 // 3 • x = 0} :=
+    Equiv.ofBijective (fun a => ⟨embedThree a, by
+      have killedAll : ∀ a : ZMod 3, 3 • embedThree a = 0 := by decide
+      exact killedAll a⟩)
+      ⟨fun _ _ h => embedThree_injective (congrArg Subtype.val h),
+        fun y => by
+          obtain ⟨a, h⟩ := embedThree_covers y.val y.prop
+          exact ⟨a, Subtype.ext h⟩⟩
+  let separate := (Equiv.subtypeEquivRight hsplit).trans
+    (@Equiv.subtypeProdEquivProd _ _ (fun a : U → ZMod 9 => ∀ i, 3 • a i = 0)
+      (fun b : V → ZMod 3 => ∀ i, 3 • b i = 0))
+  let evalU : {u : U → ZMod 9 // ∀ i, 3 • u i = 0} ≃ (U → ZMod 3) :=
+    Equiv.subtypePiEquivPi.trans (Equiv.piCongrRight fun _ => embed.symm)
+  let evalV : {v : V → ZMod 3 // ∀ i, 3 • v i = 0} ≃ (V → ZMod 3) :=
+    Equiv.subtypeUnivEquiv (fun v i => by
+      rw [nsmul_eq_mul, show ((3 : ℕ) : ZMod 3) = 0 by decide, zero_mul])
+  have torsion : Nat.card U + Nat.card V = 11 := by
+    have h := (Nat.card_congr (transport.trans (separate.trans (evalU.prodCongr evalV)))).symm.trans
+      affine_kernel_torsion_three
+    rw [Nat.card_prod, Nat.card_fun, Nat.card_fun, Nat.card_zmod, ← pow_add] at h
+    exact Nat.pow_right_injective (by decide : 2 ≤ 3) h
+  have hU : Fintype.card U = 9 := by
+    rw [← Nat.card_eq_fintype_card]
+    omega
+  have hV : Fintype.card V = 2 := by
+    rw [← Nat.card_eq_fintype_card]
+    omega
+  let first := LinearEquiv.piCongrLeft' ℤ (fun _ : U => ZMod 9) (Fintype.equivFinOfCardEq hU)
+  let second := LinearEquiv.piCongrLeft' ℤ (fun _ : V => ZMod 3) (Fintype.equivFinOfCardEq hV)
+  exact ⟨f.toIntLinearEquiv.trans (first.prodCongr second)⟩
+
+private theorem affine_lines_increasing : ∀ t, StrictMono (affineLines t) := by decide
+
+private def affineTriangle (t : Fin 12) : Fin 3 ↪o Fin 9 :=
+  OrderEmbedding.ofStrictMono (affineLines t) (affine_lines_increasing t)
+
+/-- The twelve affine lines on the nine points, numbered in row-major order. -/
+def affineOmissions : Set (Finset (Fin 9)) :=
+  Set.range fun t => (ofFinEmbEquiv (affineTriangle t)).val
+
+/-- The actual integral lifting obstruction on the affine plane has nine
+cyclic factors of order nine and two of order three. -/
+theorem affine_plane_lifting_obstruction_cyclic_factors (M : Matroid (Fin 9))
+    (hground : M.E = Set.univ)
+    (hbase : ∀ B : Finset (Fin 9), M.IsBase (B : Set (Fin 9)) ↔
+      B.card = 3 ∧ B ∉ affineOmissions) :
+    Nonempty ((JointSaturatedImage (M.comap (id : Fin 9 → Fin 9)) ⧸
+      JointImageInSaturation (M.comap (id : Fin 9 → Fin 9))) ≃ₗ[ℤ]
+        (Fin 9 → ZMod 9) × (Fin 2 → ZMod 3)) := by
+  have sparse : affineOmissions.Pairwise (fun H J => (H ∩ J).card + 2 ≤ 3) := by
+    rintro _ ⟨t, rfl⟩ _ ⟨s, rfl⟩ hne
+    by_contra! bad
+    have hcard : 1 < ((ofFinEmbEquiv (affineTriangle t)).val ∩
+      (ofFinEmbEquiv (affineTriangle s)).val).card := by omega
+    obtain ⟨i, j, hi, hj, hij⟩ := Finset.one_lt_card_iff.mp hcard
+    have cover (r : Fin 12) (hi : i ∈ (ofFinEmbEquiv (affineTriangle r)).val)
+        (hj : j ∈ (ofFinEmbEquiv (affineTriangle r)).val) :
+        covers (affineLines r) i j := by
+      obtain ⟨a, ha⟩ := (mem_ofFinEmbEquiv_iff_mem_range (affineTriangle r) i).mp hi
+      obtain ⟨b, hb⟩ := (mem_ofFinEmbEquiv_iff_mem_range (affineTriangle r) j).mp hj
+      exact ⟨a, b, ha, hb⟩
+    have h := affine_pair_unique t s i j hij
+      (cover t (Finset.mem_inter.mp hi).1 (Finset.mem_inter.mp hj).1)
+      (cover s (Finset.mem_inter.mp hi).2 (Finset.mem_inter.mp hj).2)
+    exact hne (congrArg (fun r => (ofFinEmbEquiv (affineTriangle r)).val) h)
+  obtain ⟨E⟩ := rank_three_lifting_obstruction_equiv_kernel M affineTriangle 8 0
+    (by decide) (by decide) sparse hground hbase
+  obtain ⟨F⟩ := affine_kernel_cyclic_factors
+  exact ⟨E.trans F⟩
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentials
