@@ -48,13 +48,17 @@ private theorem zeroError_fails : ¬ distortionArena.Law zeroError := by
         quadratic (modelBlock x) v = s} :=
       ⟨![0, 1, 0], by norm_num [Fin.sum_univ_three],
         by norm_num [quadratic, modelBlock, Fin.sum_univ_three]⟩
-    simpa [zeroError] using hmax.2 hm
+    have hb := hmax.2 hm
+    change 1 - x ^ 2 ≤ 3 * (0 : ℝ) at hb
+    simpa only [mul_zero] using hb
   have h₂ : x ^ 2 ≤ 0 := by
     have hm : x ^ 2 ∈ {s : ℝ | ∃ v : Qutrit → ℝ, (∑ i, v i ^ 2) = 1 ∧
         quadratic (modelBlock x) v = s} :=
       ⟨![0, 0, 1], by norm_num [Fin.sum_univ_three],
         by norm_num [quadratic, modelBlock, Fin.sum_univ_three]⟩
-    simpa [zeroError] using hmax.2 hm
+    have hb := hmax.2 hm
+    change x ^ 2 ≤ 3 * (0 : ℝ) at hb
+    simpa only [mul_zero] using hb
   linarith
 
 private theorem error_depends : ObservationalDependence ErrorSignature jointError := by
