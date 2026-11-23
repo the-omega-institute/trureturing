@@ -9,6 +9,19 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
         H("The critical arithmetic envelope from the complete zero strip"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-terminal-defect-exp-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_terminal_defect_exp_bound"),
+                H("The terminal defect in logarithmic coordinates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let 0<α≤1/2 and assume that every actual nontrivial zero "
+                    + "has real part at most 1-α. There is a real C≥0 such that for every real "
+                    + "y≥1 the absolute value of Q(exp(y))-a(exp(y))Jpsi(exp(y)) is at most "
+                    + "C exp(-αy)/y. Here a(exp(y))=y²/(1+y). Subtract the leading term "
+                    + "Q(exp(y))/y from Jpsi(exp(y)). The residual is bounded by a constant "
+                    + "times exp(-αy)/y². Multiplication by a(exp(y))≤y leaves the inverse "
+                    + "factor 1/y, and the remaining Q term carries a factor 1/(1+y)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-b-critical-strip-envelope"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope"),
                 H("The full-strip power and logarithm estimate"),

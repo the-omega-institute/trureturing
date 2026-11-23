@@ -1,0 +1,106 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.ModularForms;
+
+internal sealed class DesignatedSummandEtaDissectionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/ModularForms/DesignatedSummandEtaDissection.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Fourier/yaqubi2026designatedsummands");
+    private static readonly LibraryNoteRef Sellers = LibraryNoteRef.Create("D5/L/Fourier/sellers2023designatedsummands");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Parity dissections of the designated-summand generating series and its inverse.",
+        H("Integral reciprocal and square dissections"),
+        Blocks(
+            Paragraph(Text("The Jacobi product identities turn the parity dissection into an identity between Euler units. The coefficient map from integers to rationals is injective, so the reciprocal dissection holds integrally. Pairing odd Euler factors at q and −q gives the sign norm used to square F. The factor W reduces modulo four to f6 squared, which is supported on even degrees.")),
+            Paragraph(Text("Lemma 2.2 of Yaqubi and Mirzavaziri gives the prime-power Frobenius congruence. The dyadic lift uses the iterated Frobenius over ZMod 2, then raises the integral congruence to the required modulus.")),
+            Paragraph(Text("Write f indexed by d and R for the Euler factor at positive degree d over R. Each quotient uses the corresponding units of constant coefficient one and is coerced back to a formal series. The indeterminate q denotes PowerSeries.X, and substitution of its square is PowerSeries.expand at degree two.")),
+            Node("reduce", "For every natural m, apply the canonical integer ring homomorphism into ZMod m to each coefficient of the input integral formal power series. At m = 0, ZMod 0 is the integer ring and the map preserves every coefficient.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                ReduceFormula()),
+            Node("coeff_reduce_eq_zero", "A reduced coefficient vanishes exactly when the modulus divides the original coefficient.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("map_mod_eq_iff", "Two reductions coincide exactly when the constant series of the modulus divides the difference.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("reduce_lift", "For every integral formal series p(q) and natural j and r, the coefficientwise reduction of p(q)^(2^(j+1+r)) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j) at the same modulus.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("reduce_lift_mul", "For every integral formal series p(q) and natural j, r and t, the coefficientwise reduction of p(q)^(2^(j+1+r)·t) modulo 2^(j+1) equals the reduction of p(q^(2^(r+1)))^(2^j·t) at the same modulus.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("H", "The inverse unit of the generating series F.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                EulerQuotient(F.Id("H"), new Formula.Fraction(Product(Euler(1), Euler(2), Euler(3)), Euler(6)))),
+            Node("H0", "The Euler quotient f1^2 f4^2 f6^4 divided by f2^2 f3^2 f12^2, whose degree doubling is the even part of H over the integers.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                EulerQuotient(new Formula.Subscript(F.Id("H"), F.D(0)), new Formula.Fraction(
+                    Product(Euler(1, 2), Euler(4, 2), Euler(6, 4)), Product(Euler(2, 2), Euler(3, 2), Euler(12, 2))))),
+            Node("T", "The Euler quotient f1^4 f6^2 divided by f2^2 f3^2. Over the integers, the odd part of H is −q T(q⁴).", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                EulerQuotient(F.Id("T"), new Formula.Fraction(Product(Euler(1, 4), Euler(6, 2)), Product(Euler(2, 2), Euler(3, 2))))),
+            Node("FH", "The product of F and H is one.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("H_dissection", "Over the integers, H(q) is H0(q²) minus q T(q⁴). Sellers Lemma 2.3 gives the classical two-dissection of f1 f3. Multiplying that identity by the even unit f2/f6 gives the identity for H. The Lean proof derives the product dissection from the Jacobi identities and descends through the injective map from integer to rational coefficients.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Sellers)),
+            Node("H_support", "The integral coefficient of H in degree 4n+3 vanishes for every natural n.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("E", "The integral series such that E(q²) is the even part of F(q) squared. Here N is the underlying series of the unit quotient f2 f6/(f1^5 f3).", DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                EFormula()),
+            Node("W", "The integral Euler quotient f2^4 f6^4 divided by f1^8 f3^4.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
+                F.Disp(Define(F.Id("W"), Series(Integers()),
+                    new Formula.Fraction(Product(IntegralEuler(2, 4), IntegralEuler(6, 4)),
+                        Product(IntegralEuler(1, 8), IntegralEuler(3, 4)))))),
+            Node("F_square", "Over the integers, F(q) squared is E(q²) plus 2q W(q²).", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("W_support", "For every natural n, the coefficient of degree 2n+1 in the integral series W is divisible by four.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source))),
+        []));
+
+    private static DocumentBlock Node(
+        string declaration, string narrative, DescribeRole role, AssessedProvenance provenance, Formula? formula = null) =>
+        Describe.Lean(DescribeId.Create("designatedsummandetadissection-" + declaration.ToLowerInvariant().Replace('_', '-').Replace('₀', '0')),
+            DeclarationHandle.Create(Prefix + declaration), H(declaration),
+            formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(formula),
+            provenance, Blocks(Paragraph(Text(narrative))), role);
+
+    private static Formula ReduceFormula()
+    {
+        var modulus = F.Id("m");
+        var naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+        var target = Call("ZMod", modulus);
+        var cast = QualifiedCall("Int", "castRingHom", target);
+        var ringHom = Call("RingHom", Series(Integers()), Series(target));
+        return F.Disp(F.Seq(F.Forall, F.Sp, Typed(modulus, naturals), F.Comma, F.Sp,
+            Define(Call("reduce", modulus), ringHom, QualifiedCall("PowerSeries", "map", cast))));
+    }
+
+    private static Formula EFormula()
+    {
+        var q = F.Id("q");
+        var h0 = new Formula.Apply(new Formula.Subscript(F.Id("H"), F.D(0)), [Integers()]);
+        var t = Call("T", Integers());
+        var dilatedT = new Formula.Apply(t, [Square(q)]);
+        var norm = F.Id("N");
+        var evenPart = F.Seq(Square(h0), F.Sp, F.Plus, F.Sp, q, F.Thin, Square(dilatedT));
+        var normQuotient = new Formula.Fraction(Product(IntegralEuler(2), IntegralEuler(6)),
+            Product(IntegralEuler(1, 5), IntegralEuler(3)));
+        var series = Series(Integers());
+        return F.Disp(F.Seq(Define(F.Id("E"), series,
+            F.Seq(Square(norm), F.Thin, F.Open, evenPart, F.Close)),
+            F.Comma, F.Quad, F.Sp, Define(norm, series, normQuotient)));
+    }
+
+    private static Formula EulerQuotient(Formula name, Formula quotient)
+    {
+        var ring = F.Id("R");
+        return F.Disp(F.Seq(F.Forall, F.Sp, Typed(ring, F.Seq(F.Id("Type"), F.Star)), F.Sp,
+            F.OpenBracket, Call("CommRing", ring), F.CloseBracket, F.Comma, F.Sp,
+            Define(new Formula.Apply(name, [ring]), Series(ring), quotient)));
+    }
+
+    private static Formula Square(Formula value) => new Formula.Power(value, F.D(2));
+    private static Formula Euler(byte degree, byte exponent = 1) => EulerFactor(F.Id("R"), degree, exponent);
+    private static Formula IntegralEuler(byte degree, byte exponent = 1) => EulerFactor(Integers(), degree, exponent);
+    private static Formula EulerFactor(Formula ring, byte degree, byte exponent)
+    {
+        var factor = new Formula.Subscript(F.Id("f"), F.Seq(Num(degree), F.Comma, F.Sp, ring));
+        return exponent == 1 ? factor : new Formula.Power(factor, F.D(exponent));
+    }
+
+    private static Formula Product(params Formula[] factors) => F.Seq(factors);
+
+    private static Formula Integers() => F.Seq(F.Mathbb, F.Grp(F.Id("Z")));
+    private static Formula Series(Formula coefficients) => Call("PowerSeries", coefficients);
+    private static Formula QualifiedCall(string qualifier, string name, Formula argument) =>
+        new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id(qualifier), F.Dot, F.Id(name))), [argument]);
+    private static Formula Typed(Formula name, Formula type) =>
+        F.Seq(F.Open, name, F.Colon, F.Sp, type, F.Close);
+    private static Formula Define(Formula left, Formula type, Formula right) =>
+        F.Seq(left, F.Sp, F.Colon, F.Sp, type, F.Sp, F.Colon, F.Eq, F.Sp, right);
+}

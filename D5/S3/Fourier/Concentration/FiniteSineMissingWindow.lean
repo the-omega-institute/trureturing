@@ -111,7 +111,7 @@ theorem exists_signs_on_grid {J K : Type*} [Finite J] [Fintype K]
       exact mem_iUnion.mpr ⟨k, hk⟩
     simp [hall] at hmeasure
 
-private theorem floor_grid_cover {R h : ℝ} (hh : 0 < h) {t : ℝ}
+theorem floor_grid_cover {R h : ℝ} (hh : 0 < h) {t : ℝ}
     (ht : t ∈ Icc (0 : ℝ) R) :
     ∃ k : Fin (⌊R / h⌋₊ + 1), |t - (k : ℕ) * h| ≤ h := by
   let k := ⌊t / h⌋₊
@@ -125,7 +125,7 @@ private theorem floor_grid_cover {R h : ℝ} (hh : 0 < h) {t : ℝ}
   rw [abs_of_nonneg (sub_nonneg.mpr hleft)]
   linarith only [hright]
 
-private theorem sine_score_change {J : Type*} (s : Finset J)
+theorem sine_score_change {J : Type*} (s : Finset J)
     (f a : J → ℝ) (w : J → ℝ≥0) (t v : ℝ) :
     (∑ j ∈ s, (w j : ℝ) * Real.sin (a j + f j * t)) -
       (∑ j ∈ s, (w j : ℝ) * Real.sin (a j + f j * v)) ≤
