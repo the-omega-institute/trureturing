@@ -209,7 +209,7 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
             K k.rev (cls b) c := by
         simpa only [Fin.val_rev, Nat.succ_sub_succ_eq_sub] using h k.rev b c (Or.inr rfl) hc
       simp only [unordered, first _ (Or.inl rfl), first _ (Or.inr rfl),
-        second _ (Or.inl rfl), second _ (Or.inr rfl)]
+        second _ (Or.inl rfl), second _ (Or.inr rfl)] <;> rfl
 
 /-- Reverse the target before applying a half-strip class count. -/
 theorem reversed_count (n : ℕ) (a : Col) (j : Fin 5) :
