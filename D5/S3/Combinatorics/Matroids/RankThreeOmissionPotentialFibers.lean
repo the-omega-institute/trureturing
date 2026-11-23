@@ -7,6 +7,7 @@
    digest: Point-potential evaluations have equally sized fibers in a ternary affine space. -/
 
 import D5.S3.Combinatorics.Matroids.RankThreeOmissionRelations
+import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Module.ZMod
 import Mathlib.LinearAlgebra.Dual.Lemmas
 
@@ -62,5 +63,47 @@ theorem evaluation_range_neg_add {I T V : Type*} [AddCommGroup V] [Module (ZMod 
     have hab : a ≠ b := fun eq => h (congrArg value (ha.symm.trans (eq ▸ hb)))
     obtain ⟨c, _, _, hc⟩ := value_third points value hline t a b hab
     exact ⟨points t c, by simpa [ha, hb] using hc⟩
+
+/-- Independent point-potential coordinates realize every ternary vector. -/
+theorem evaluation_surjective {I T J : Type*} [Fintype J]
+    (points : T → Fin 3 → I) (value : I → J → ZMod 3)
+    (anchor : I) (hanchor : value anchor = 0)
+    (hline : ∀ t, ∑ j, value (points t j) = 0)
+    (hcovered : ∀ i j, value i ≠ value j → ∃ t a b, points t a = i ∧ points t b = j)
+    (hindependent : LinearIndependent (ZMod 3) (fun j i => value i j)) :
+    Surjective value := by
+  classical
+  have zeroMem : (0 : J → ZMod 3) ∈ Set.range value := ⟨anchor, hanchor⟩
+  have closed {x y : J → ZMod 3} (hx : x ∈ Set.range value) (hy : y ∈ Set.range value) :
+      -(x + y) ∈ Set.range value :=
+    evaluation_range_neg_add points value hline hcovered hx hy
+  have negMem (x : J → ZMod 3) (hx : x ∈ Set.range value) : -x ∈ Set.range value := by
+    simpa only [add_zero] using closed hx zeroMem
+  let S : AddSubgroup (J → ZMod 3) :=
+    { carrier := Set.range value
+      zero_mem' := zeroMem
+      add_mem' := fun hx hy => by simpa only [neg_neg] using negMem _ (closed hx hy)
+      neg_mem' := negMem _ }
+  let W := AddSubgroup.toZModSubmodule 3 S
+  suffices hW : W = ⊤ by
+    intro y
+    have hy : y ∈ W := hW.symm ▸ Submodule.mem_top
+    exact hy
+  apply (Submodule.dualAnnihilator_eq_bot_iff (W := W)).mp
+  rw [Submodule.eq_bot_iff]
+  intro φ hφ
+  let b := Pi.basisFun (ZMod 3) J
+  let c (j : J) := φ (b j)
+  have hcomb : (∑ j, c j • fun i => value i j) = (0 : I → ZMod 3) := by
+    funext i
+    have h := (W.mem_dualAnnihilator φ).mp hφ (value i) (show value i ∈ W from ⟨i, rfl⟩)
+    have expand : value i = ∑ j, value i j • b j := by
+      funext k
+      simp [b, Pi.basisFun_apply, Finset.sum_apply, Pi.smul_apply, Pi.single_apply, mul_ite]
+    rw [expand, map_sum] at h
+    simp only [map_smul, smul_eq_mul] at h
+    simpa only [Finset.sum_apply, Pi.smul_apply, Pi.zero_apply, smul_eq_mul, mul_comm] using h
+  have zeros := (Fintype.linearIndependent_iff.mp hindependent) c hcomb
+  exact b.ext fun j => zeros j
 
 end D5.S3.Combinatorics.Matroids.RankThreeOmissionPotentialFibers
