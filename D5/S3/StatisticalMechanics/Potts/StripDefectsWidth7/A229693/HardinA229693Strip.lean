@@ -10,26 +10,26 @@
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
 a: proof_shape=content; consumers=result, scale_count
-leading: proof_shape=content; consumers=forward_table, leadingCheck, leading_rec, leading_step, w_leading
-coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, result
+leading: proof_shape=content; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
+coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 exhaustedRank: proof_shape=bind-only; consumers=exhaustedRow
-exhaustedRow: proof_shape=content; consumers=w
-rightColumn: proof_shape=bind-only; consumers=checkColumn, rightColumn_eq
-rightColumn_eq: proof_shape=content; consumers=exhausted_step
-arithmeticRow: proof_shape=content; consumers=arithmeticRow_eq, arithmeticRow_length, arithmeticRow_length._proof_1_1, checkColumn, exhausted_step, w
-w: proof_shape=content; consumers=arithmeticRow_eq, checkColumn, exhausted_step, forward_table, forward_table._proof_1_1, leadingCheck, leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, polynomialCoordinates, polynomialCoordinates._proof_1_1, polynomial_relation, w_leading
-w_leading: proof_shape=bind-only; consumers=forward_table
-leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step
-leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leadingCoordinates._proof_1_1, leading_rec, leading_step, leading_step._proof_1_8
+exhaustedRow: proof_shape=content; consumers=w, w_leading
+rightColumn: proof_shape=bind-only; consumers=checkColumn, exhausted_step, rightColumn_eq
+rightColumn_eq: proof_shape=content; consumers=exhausted_step._simp_4
+arithmeticRow: proof_shape=content; consumers=checkColumn, exhausted_step
+w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, forward_step, forward_table, polynomialCoordinates, polynomial_relation, w_leading
+w_leading: proof_shape=bind-only; consumers=forward_step
+leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
+leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingCoordinates: proof_shape=content; consumers=leading_rec
 leading_rec: proof_shape=content; consumers=leading_step
-leading_step: proof_shape=content; consumers=forward_table
-checkColumn: proof_shape=content; consumers=exhausted_step
+leading_step: proof_shape=content; consumers=forward_step
+checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
-exhausted_step: proof_shape=content; consumers=forward_table
-leading_action: proof_shape=bind-only; consumers=forward_table
+exhausted_step: proof_shape=content; consumers=forward_step
+leading_action: proof_shape=bind-only; consumers=forward_step
 forward_step: proof_shape=content; consumers=forward_table
 forward_table: proof_shape=bind-only; consumers=polynomial_relation
 polynomialCoordinates: proof_shape=content; consumers=polynomial_relation

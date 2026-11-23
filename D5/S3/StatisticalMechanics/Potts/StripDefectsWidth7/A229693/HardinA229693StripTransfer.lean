@@ -9,39 +9,39 @@
 /-
 admission_basis: escape-witness
 escape_witness: exactExits_active and exactExits_new compute the multiplicities of transitions reaching budget zero
-Valid: proof_shape=bind-only; consumers=activeCover, activeCover._proof_1_1, cl_relabel, class_counts, class_counts_canonical, count_transfer, decidableValid, decidableValid._proof_1, exactExits_active, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedCover, exhaustedCover._proof_1_1, initial_valid, leading_counts, next_valid, old_exhausted_counts, old_valid, transition_counts, valid_shift
-tailCost_eq: proof_shape=bind-only; consumers=valid_shift, next_valid, initial_valid
-valid_parts: proof_shape=bind-only; consumers=class_counts_canonical
-valid_relabel: proof_shape=bind-only; consumers=class_counts, cl_relabel
-fresh_relabel: proof_shape=bind-only; consumers=cl_relabel
+Valid: proof_shape=bind-only; consumers=activeProfileCheck, cl_relabel, class_counts, class_counts_canonical, count_transfer, decidableValid, decidableValid._proof_1, exactExits_active, exactExits_new, exhaustedClass, exhaustedClass.eq_1, inheritedActiveCheck, inherited_active_spec, initial_valid, leading_counts, next_valid, old_exhausted_counts, old_exhausted_row, old_valid, transition_counts, valid_parts, valid_relabel, valid_shift
+tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, initial_valid, next_valid, valid_shift
+valid_parts: proof_shape=bind-only; consumers=class_counts_canonical, exactExits_active, exactExits_new, next_valid, valid_shift
+valid_relabel: proof_shape=bind-only; consumers=class_counts
+fresh_relabel: proof_shape=bind-only; consumers=cl_relabel, rep_weight
 rep_partition: proof_shape=bind-only; consumers=exactExits_active, exactExits_new
-decidableValid: proof_shape=bind-only; consumers=activeCover, activeCover._proof_1_1, cl_relabel, class_counts_canonical, exactExits_active, exactExits_new, exhaustedClass, exhaustedClass.eq_1, exhaustedCover, exhaustedCover._proof_1_1, old_exhausted_counts
-oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, initialExhausted.eq_1, initialExits_count, old_exhausted_counts
-exhaustedClass: proof_shape=content; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, leading_counts, old_exhausted_counts, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, terminal_eq, transition_counts, transition_counts._simp_1_1
+decidableValid: proof_shape=bind-only; consumers=activeProfileCheck, cl_relabel, class_counts_canonical, exactExits_active, exhaustedClass, exhaustedClass.eq_1, inheritedActiveCheck, inherited_active_spec, old_exhausted_counts, old_exhausted_row
+oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, initialExhausted, old_exhausted_counts, old_exhausted_row
+exhaustedClass: proof_shape=content; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, initial_counts, initial_counts._simp_1_3, initial_exhausted_count, initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, rep_weight, terminal_eq, transition_counts, transition_counts._simp_1_1
 cl: proof_shape=content; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, count_transfer, exhausted_cut, initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, terminal_eq, transition_counts, transition_counts._simp_1_1
-exitRead: proof_shape=content; consumers=activeWeight, exhaustedWeight
-oldExits: proof_shape=bind-only; consumers=activeWeight, T, old_exhausted_row
+exitRead: proof_shape=content; consumers=HardinA229693Strip.w, HardinA229693Strip.w_leading, activeWeight, exhaustedWeight
+oldExits: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, class_counts_canonical, leading_counts, old_exhausted_counts, old_exhausted_row
 oldTerminal: proof_shape=bind-only; consumers=oldDestination
-oldDestination: proof_shape=bind-only; consumers=old_exhausted_row, old_exhausted_counts, class_counts_canonical
-old_exhausted_row: proof_shape=bind-only; consumers=old_exhausted_counts, class_counts_canonical
+oldDestination: proof_shape=bind-only; consumers=old_exhausted_counts, old_exhausted_row
+old_exhausted_row: proof_shape=bind-only; consumers=class_counts_canonical, old_exhausted_counts
 activeExits: proof_shape=content; consumers=activeWeight
 exhaustedExits: proof_shape=content; consumers=exhaustedWeight
-activeWeight: proof_shape=content; consumers=T, T.eq_1, activeProfileCheck, activeProfileCheck.eq_1, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
-exhaustedWeight: proof_shape=content; consumers=T, T.eq_1, class_counts_canonical, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, leading_counts, old_exhausted_counts
-weightPack: proof_shape=bind-only; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_injective._proof_1_2, weightPack_sum
+activeWeight: proof_shape=content; consumers=HardinA229693Strip.leading_action, T, T.eq_1, activeProfileCheck, class_counts_canonical, exactExits_active, leading_counts, old_exhausted_counts
+exhaustedWeight: proof_shape=content; consumers=HardinA229693Strip.leading_action, T, T.eq_1, class_counts_canonical, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, leading_counts, old_exhausted_counts
+weightPack: proof_shape=bind-only; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count, weightPack_injective, weightPack_sum
 weightPack_sum: proof_shape=bind-only; consumers=classPack_count
 weightPack_injective: proof_shape=bind-only; consumers=checkHistogram_count
 classPack: proof_shape=bind-only; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, classPack_count
 classPack_count: proof_shape=bind-only; consumers=checkHistogram_count
-T: proof_shape=content; consumers=class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
-initialExhausted: proof_shape=content; consumers=initial, initial.eq_1, initialExits_count, initialHistogram, initialHistogram._proof_1_1, initial_counts
-initial: proof_shape=content; consumers=count_transfer, initial_counts
-terminal: proof_shape=bind-only; consumers=count_transfer, terminal_eq
-valid_shift: proof_shape=bind-only; consumers=leading_counts, old_valid
-old_valid: proof_shape=bind-only; consumers=old_exhausted_counts
+T: proof_shape=content; consumers=HardinA229693Strip.exhausted_step, HardinA229693Strip.forward_step, HardinA229693Strip.forward_table, HardinA229693Strip.leading_action, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.rightColumn_eq, class_counts, class_counts_canonical, count_transfer, leading_counts, old_exhausted_counts, transition_counts
+initialExhausted: proof_shape=content; consumers=HardinA229693Strip.w_leading, initial, initial.eq_1, initial_counts, initial_exhausted_count, initial_from_starts
+initial: proof_shape=content; consumers=HardinA229693Strip.forward_table, HardinA229693Strip.polynomial_relation, HardinA229693Strip.result, HardinA229693Strip.w, HardinA229693Strip.w_leading, count_transfer, initial_counts
+terminal: proof_shape=bind-only; consumers=HardinA229693Strip.result, count_transfer, terminal_eq
+valid_shift: proof_shape=bind-only; consumers=class_counts_canonical, inherited_active_spec, leading_counts, old_valid
+old_valid: proof_shape=bind-only; consumers=old_exhausted_counts, old_exhausted_row
 cl_relabel: proof_shape=bind-only; consumers=class_counts, exhausted_relabel
-exhausted_relabel: proof_shape=bind-only; consumers=class_counts
-blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_counts
+exhausted_relabel: proof_shape=bind-only; consumers=class_counts, rep_weight
+blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_row
 active_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_1, leading_counts._simp_1_1
 exhausted_cut: proof_shape=bind-only; consumers=initial_counts._simp_1_3, transition_counts._simp_1_1
 next_valid: proof_shape=bind-only; consumers=count_transfer
@@ -49,14 +49,14 @@ initial_valid: proof_shape=bind-only; consumers=count_transfer
 terminal_eq: proof_shape=bind-only; consumers=count_transfer
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
-horizontalCost: proof_shape=bind-only; consumers=completionCost_initial, completionCost_row, horizontalCost_eq, initial_counts, initial_counts._simp_1_4, rowCost, rowCost.eq_1, rowCost_eq
-horizontalCost_eq: proof_shape=bind-only; consumers=initial_counts._simp_1_4, rowCost_eq
+horizontalCost: proof_shape=bind-only; consumers=completionCost_row, horizontalCost_eq, rowCost, rowCost.eq_1, rowCost_eq
+horizontalCost_eq: proof_shape=bind-only; consumers=rowCost_eq
 rowCost: proof_shape=bind-only; consumers=completionCost_row, exactExits_count, rowCost_eq
 rowCost_eq: proof_shape=bind-only; consumers=exactExits_count
-matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_initial, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
-completionCost: proof_shape=content; consumers=completionCost_initial, completionCost_row, completionRows_count, completionRows_length_le, exactExits_count, initial_counts
-completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq, initial_counts
-completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count, initial_counts
+matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+completionCost: proof_shape=content; consumers=completionCost_row, completionRows_count, completionRows_length_le, exactExits_count
+completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq
+completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count
 completionCost_row: proof_shape=bind-only; consumers=exactExits_count
 completionCodes: proof_shape=content; consumers=completionCodes_eq, exitCodes, exitCodes.eq_1, exitCodes_eq
 rowCode_cons: proof_shape=bind-only; consumers=completionCodes_eq, rowCode_tail
@@ -65,21 +65,21 @@ rowCode_tail: proof_shape=bind-only; consumers=exitCodes_eq
 packedClass: proof_shape=content; consumers=exitCodes, exitCodes.eq_1, exitCodes_eq, packedClass_all, packedClass_all._proof_1_1, packedClass_eq
 packedClass_all: proof_shape=content; consumers=packedClass_eq
 packedClass_eq: proof_shape=content; consumers=exitCodes_eq
-exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq, initialExits_count, initial_counts
-exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound, initial_counts
+exitCodes: proof_shape=content; consumers=checkHistogram, checkHistogram.eq_1, checkHistogram_count, class_counts_canonical, exactExits_active, exactExits_count, exactExits_new, exitCodes_bound, exitCodes_eq
+exitCodes_eq: proof_shape=content; consumers=exactExits_count, exitCodes_bound
 completionRows_length_le: proof_shape=content; consumers=exitCodes_bound
 exitCodes_bound: proof_shape=content; consumers=checkHistogram_count
-checkHistogram: proof_shape=content; consumers=activeProfileCheck, activeProfileCheck.eq_1, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1, initialHistogram, initialHistogram._proof_1_1
-checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new, initialExits_count
+checkHistogram: proof_shape=content; consumers=activeProfileCheck, checkHistogram_count, exactExits_active, exactExits_new, exhaustedMultiplicities, exhaustedMultiplicities._proof_1_1
+checkHistogram_count: proof_shape=content; consumers=exactExits_active, exactExits_new
 exactExits_count: proof_shape=content; consumers=class_counts_canonical
-inheritedSource: proof_shape=bind-only; consumers=T
+inheritedSource: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, activeProfileCheck, class_counts_canonical, exactExits_active, inheritedActiveCheck, inherited_active_spec, leading_counts, old_exhausted_counts
 sourceCode: proof_shape=bind-only; consumers=activeWeight, inheritedSource
 activeGroups: proof_shape=content; consumers=activeMultiplicities
 activeMultiplicities: proof_shape=content; consumers=exactExits_active
-inheritedActiveCheck: proof_shape=bind-only; consumers=inheritedActiveCheck_all
+inheritedActiveCheck: proof_shape=bind-only; consumers=inheritedActiveCheck_all, inherited_active_spec
 inheritedActiveCheck_all: proof_shape=bind-only; consumers=inherited_active_spec
 inherited_active_spec: proof_shape=bind-only; consumers=class_counts_canonical
-activeProfileCheck: proof_shape=content; consumers=activeBudgetOne, activeCheck, activeOneGroups, exactExits_active
+activeProfileCheck: proof_shape=content; consumers=activeGroups, activeMultiplicities, exactExits_active
 exhaustedMultiplicities: proof_shape=content; consumers=exactExits_new
 exactExits_active: proof_shape=content; consumers=class_counts_canonical
 exactExits_new: proof_shape=content; consumers=class_counts_canonical
@@ -87,7 +87,7 @@ class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=count_transfer
 horizontal_cons: proof_shape=bind-only; consumers=head_weight_eq
-headWeight: proof_shape=bind-only; consumers=head_weight_eq
+headWeight: proof_shape=bind-only; consumers=head_weight_eq, initial_exhausted_count, initial_from_starts, rep_weight
 head_weight_eq: proof_shape=bind-only; consumers=initial_exhausted_count
 fresh_start_count: proof_shape=bind-only; consumers=initial_exhausted_count
 rep_weight: proof_shape=bind-only; consumers=initial_exhausted_count
@@ -182,113 +182,38 @@ private def sourceCode (i : Fin 72) : ℕ :=
 private def inheritedSource (i : Fin 72) : Option (Fin 16) :=
   if h : sourceCode i < 16 then some ⟨sourceCode i, h⟩ else none
 
+-- Each radix-16 digit is one multiplicity in a stored profile.
 private def activeExits (i : ℕ) (j : Fin 36) : ℕ :=
-  let table : Array (Array ℕ) := #[
-    #[4, 4, 4, 5, 4, 4, 3, 3, 2, 6, 4, 3, 4, 2, 3, 1, 4, 10, 3, 2, 6, 5, 3, 4, 1, 1, 1, 0, 0, 0, 1, 0, 2, 0, 0, 2],
-    #[4, 4, 4, 3, 5, 5, 5, 4, 3, 4, 5, 4, 2, 5, 2, 5, 4, 3, 7, 5, 2, 2, 2, 1, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 0],
-    #[3, 4, 4, 5, 1, 0, 4, 4, 5, 5, 3, 4, 3, 2, 5, 2, 4, 5, 4, 3, 2, 7, 3, 7, 2, 1, 0, 1, 1, 1, 0, 0, 0, 0, 2, 0],
-    #[5, 2, 5, 5, 2, 3, 3, 6, 4, 3, 8, 6, 1, 5, 2, 2, 3, 4, 8, 4, 3, 3, 6, 4, 2, 1, 0, 1, 0, 0, 4, 2, 0, 0, 0, 1],
-    #[4, 4, 5, 3, 3, 4, 5, 3, 5, 4, 4, 2, 2, 4, 4, 5, 5, 6, 7, 3, 2, 2, 4, 1, 0, 0, 2, 1, 1, 0, 0, 1, 3, 3, 2, 0],
-    #[5, 4, 4, 6, 3, 4, 5, 3, 5, 4, 4, 2, 5, 3, 2, 2, 4, 7, 4, 5, 6, 6, 2, 6, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1, 0, 2],
-    #[5, 5, 4, 4, 1, 0, 7, 3, 4, 7, 5, 2, 4, 4, 4, 2, 5, 3, 5, 6, 2, 7, 3, 7, 0, 0, 2, 1, 1, 0, 0, 1, 0, 0, 2, 0],
-    #[6, 4, 4, 6, 3, 3, 4, 4, 7, 5, 7, 6, 3, 7, 1, 2, 3, 2, 6, 7, 4, 7, 6, 4, 0, 0, 0, 0, 1, 1, 4, 2, 0, 0, 1, 1],
-    #[1, 0, 4, 4, 5, 5, 5, 2, 7, 7, 3, 5, 4, 4, 4, 2, 5, 5, 3, 7, 5, 2, 5, 1, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0, 2, 2],
-    #[3, 3, 3, 1, 6, 4, 10, 4, 6, 6, 4, 3, 3, 7, 1, 2, 3, 6, 2, 4, 5, 4, 1, 3, 0, 0, 4, 2, 2, 0, 0, 2, 0, 0, 1, 0],
-    #[1, 0, 4, 4, 3, 4, 4, 5, 4, 2, 7, 3, 3, 2, 3, 6, 4, 4, 5, 4, 2, 6, 3, 6, 0, 0, 0, 0, 2, 2, 0, 0, 1, 2, 0, 1],
-    #[3, 3, 3, 1, 2, 4, 1, 4, 4, 4, 6, 3, 4, 1, 7, 4, 3, 4, 7, 6, 5, 7, 7, 4, 0, 0, 4, 2, 2, 0, 0, 2, 3, 3, 1, 0],
-    #[5, 2, 3, 2, 3, 5, 3, 6, 4, 3, 2, 2, 3, 3, 6, 5, 5, 9, 4, 4, 3, 3, 2, 4, 4, 2, 0, 2, 0, 0, 2, 1, 0, 0, 0, 2],
-    #[2, 4, 3, 6, 6, 4, 4, 3, 2, 5, 6, 7, 4, 3, 6, 5, 4, 4, 6, 7, 2, 4, 1, 3, 4, 2, 0, 2, 2, 2, 0, 0, 0, 0, 1, 0],
-    #[3, 3, 4, 1, 3, 3, 1, 3, 6, 4, 2, 7, 4, 6, 3, 4, 4, 7, 7, 4, 2, 7, 3, 4, 0, 2, 0, 0, 0, 2, 0, 0, 1, 1, 1, 0],
-    #[2, 6, 1, 2, 5, 1, 3, 5, 4, 0, 4, 5, 4, 3, 5, 4, 1, 7, 6, 4, 5, 4, 5, 2, 2, 2, 2, 0, 0, 0, 2, 0, 1, 0, 0, 1],
-    #[1, 0, 1, 1, 0, 1, 6, 1, 5, 6, 4, 1, 0, 0, 1, 1, 1, 3, 5, 5, 0, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 0, 1, 1, 1, 5, 2, 5, 4, 5, 1, 0, 0, 1, 0, 0, 3, 4, 6, 2, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 1, 1, 1, 1, 6, 0, 4, 6, 4, 1, 1, 0, 1, 1, 1, 4, 5, 4, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 1, 0, 2, 2, 4, 2, 5, 4, 5, 1, 1, 1, 0, 1, 0, 6, 3, 3, 2, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 1, 1, 2, 2, 3, 1, 3, 4, 6, 1, 2, 1, 1, 2, 1, 5, 5, 5, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 0, 1, 1, 1, 5, 0, 4, 5, 3, 0, 2, 1, 1, 2, 1, 5, 5, 4, 0, 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 1, 1, 0, 0, 5, 1, 6, 4, 3, 1, 0, 1, 1, 0, 1, 5, 4, 5, 1, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 0, 1, 0, 0, 6, 1, 6, 4, 3, 1, 1, 1, 1, 1, 0, 3, 6, 6, 1, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 0, 1, 1, 1, 0, 3, 0, 3, 3, 5, 0, 5, 4, 1, 3, 0, 1, 1, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 0, 1, 1, 1, 3, 0, 5, 4, 4, 1, 3, 3, 2, 3, 4, 4, 4, 2, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 1, 1, 0, 0, 3, 1, 4, 4, 5, 0, 4, 4, 1, 3, 0, 0, 0, 4, 2, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 1, 0, 0, 0, 5, 0, 4, 5, 5, 1, 2, 2, 3, 2, 4, 2, 2, 4, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 1, 1, 0, 1, 0, 6, 5, 1, 6, 1, 4, 0, 0, 0, 2, 1, 5, 3, 5, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 1, 0, 0, 5, 4, 4, 2, 3, 4, 4, 2, 2, 2, 0, 0, 1, 4, 3, 2, 0, 4, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 0, 0, 3, 3, 2, 0, 2, 3, 2, 1, 0, 2, 0, 0, 2, 2, 6, 5, 0, 4, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 1, 2, 2, 3, 3, 7, 3, 7, 3, 0, 2, 2, 0, 2, 1, 6, 1, 3, 4, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 1, 0, 0, 0, 6, 4, 0, 4, 0, 4, 1, 0, 0, 2, 1, 5, 4, 5, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 1, 0, 2, 2, 2, 2, 5, 3, 5, 2, 0, 3, 3, 0, 3, 2, 6, 2, 2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 2, 1, 4, 4, 3, 2, 2, 4, 4, 2, 2, 2, 1, 1, 0, 4, 2, 3, 1, 6, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 2, 1, 2, 2, 3, 0, 1, 3, 1, 0, 0, 2, 1, 0, 2, 1, 6, 7, 0, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[5, 4, 1, 3, 0, 1, 4, 0, 5, 4, 2, 0, 2, 2, 0, 0, 1, 3, 4, 5, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[3, 3, 2, 3, 1, 1, 5, 1, 5, 2, 3, 0, 0, 2, 0, 0, 2, 6, 2, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[4, 4, 1, 3, 0, 0, 4, 0, 3, 4, 5, 1, 2, 2, 0, 2, 0, 2, 4, 3, 0, 7, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 3, 2, 0, 0, 3, 1, 3, 5, 5, 0, 2, 0, 2, 2, 2, 2, 5, 6, 1, 4, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[1, 1, 3, 1, 0, 0, 2, 2, 5, 3, 2, 0, 1, 0, 1, 1, 1, 5, 3, 2, 2, 4, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 2, 3, 0, 0, 3, 0, 1, 3, 6, 2, 1, 1, 0, 1, 0, 3, 6, 1, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[3, 3, 1, 3, 2, 2, 5, 2, 2, 2, 5, 0, 0, 1, 0, 0, 1, 2, 2, 5, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[4, 2, 2, 3, 0, 2, 2, 0, 2, 6, 3, 0, 1, 1, 0, 0, 2, 5, 3, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 4, 2, 1, 1, 5, 0, 4, 5, 3, 0, 0, 1, 2, 0, 1, 3, 5, 4, 0, 1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 4, 2, 2, 2, 3, 1, 3, 4, 6, 1, 1, 1, 2, 2, 0, 6, 3, 2, 2, 6, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 2, 0, 1, 1, 3, 1, 3, 5, 3, 1, 0, 3, 3, 0, 3, 6, 2, 6, 1, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 2, 0, 0, 0, 5, 2, 4, 2, 4, 2, 2, 0, 0, 1, 2, 2, 5, 2, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 2, 1, 1, 5, 3, 4, 5, 4, 3, 0, 1, 1, 0, 1, 4, 5, 4, 3, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 0, 0, 3, 3, 3, 0, 6, 5, 2, 2, 0, 1, 0, 0, 1, 2, 2, 3, 0, 4, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 2, 0, 0, 4, 2, 5, 1, 5, 1, 3, 1, 1, 1, 0, 0, 2, 3, 5, 3, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 2, 2, 0, 2, 0, 2, 4, 6, 6, 6, 2, 0, 0, 0, 1, 2, 2, 3, 2, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 2, 0, 0, 0, 3, 0, 1, 3, 6, 2, 1, 1, 3, 1, 2, 3, 3, 7, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 2, 2, 0, 0, 2, 2, 5, 3, 2, 0, 2, 2, 2, 3, 0, 4, 4, 5, 1, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 2, 0, 2, 2, 2, 2, 0, 6, 4, 1, 2, 3, 3, 1, 3, 2, 7, 7, 3, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[2, 0, 2, 2, 2, 0, 5, 0, 3, 1, 2, 0, 4, 2, 2, 3, 0, 6, 6, 3, 1, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-  let row := table[i]!
-  row[j.val]!
-
+  let table : Array ℕ := #[
+    2788275043799815682532746590457228291232836, 185794255416855400453938519237118859228228, 174224660458547477809789119302022232888387, 1393844427441978589848243499947228753188133,
+    191600245781807376049677704021765741819204, 2793718320689981833366592376332016687473733, 174245845068869012419384152290811552285781, 1480956801316840849800070374472505992897606,
+    2961841824321872249115168527719522922480641, 87154832342401075250539838829869247370035, 1405026069554678863642220569047189894153217, 104509233055375803759967330408923421348659,
+    2787617076572161830334784728496471675183909, 87112463121758003111215415028492395766594, 92897252325471848491076004523318269121587, 1394139515774346566067879968349375092302178,
+    425944194770854524146946305, 5380193019449183310779060241, 387183305827647125999128832, 5321934070679385020993503488,
+    5320885429844288518370758929, 5068144375681084288591269922, 5378909144512898604325671185, 427233382378717705528152098,
+    9964198299919589047799976193, 10542004410228803935260446737, 9964268840268645511431459072, 10542145489841831844706779392,
+    9965568983993651333653659920, 15242303215576119883396874256, 15552028494238442204282683409, 5032862411312900810819637248,
+    9965573706360414436761534737, 389454209708026711739859217, 15282268585898880711463801344, 10909904167569851720765936128,
+    60843873665324765353619781, 40056920297630211295490611, 10348651171569581851737600324, 15862793267818144743213245218,
+    15863691383221597439399039761, 5628863394789800678841659938, 41491320665556379100131635, 59404160625820105407738404,
+    5899884747045790436954285056, 15592892277558586358292947968, 698014816290330384801006114, 5052276356072224196313219618,
+    9926816947258021680090521600, 15242373460772483901814931490, 15513187325060523402377560096, 5052266911338697990047138336,
+    5339160415274857483449926144, 5050081011518940108688466432, 5338878256048798585116041250, 5049939930820827181475832322]
+  (table[i]! >>> (4 * j.val)) % 16
 
 private def exhaustedExits (i : Fin 40) (j : Fin 36) : ℕ :=
-  let table : Array (Array ℕ) := #[
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #[0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-  let row := table[i.val]!
-  row[j.val]!
-
+  let table : Array ℕ := #[
+    38770923972264970869014528, 38770923972264970852237312, 75853011632261924126720, 19423388491948103147978752,
+    5312662295500388564992, 5312662295500405342208, 19418666125467368101511168, 19418666125466333014392832,
+    19352848142611333022482432, 19423388491949129628385280, 19423388491948103147978752, 19352848142611333039259648,
+    80575378114032057712640, 19418666125467368084733952, 19418666125466333014392832, 80575378115067128053760,
+    38987857682571795196018688, 38987857682571795179241472, 161150756227995362394112, 161150756229030449512448,
+    14167099448815127625728, 19352257846799943558234112, 151410875358176230768640, 38841759469509110747103232,
+    227559034893281045512192, 19352257846800909892321280, 3504726867968, 1245574070272,
+    2272054476800, 3504710090752, 38690348594153210849001472, 227559034893281062289408,
+    19428406006338278138052608, 76148159538609491279872, 38690348594151071972065280, 14167099448815110848512,
+    80575378116170934648832, 80575378114100760412160, 19493928841285904032071680, 19493928841285904065626112]
+  (table[i.val]! >>> (4 * j.val)) % 16
 
 private def oldExits (i : Fin 72) (j : Fin 96) : ℤ :=
   Fin.append (fun k : Fin 56 => HardinA229585StripData.T i (k.natAdd 16))
