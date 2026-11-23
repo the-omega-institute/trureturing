@@ -263,4 +263,56 @@ theorem transversal_part_latin {d r : ℕ} {T : Type*} {U : Type u} [NeZero (3 *
     (transversal_finrank hd mixed internal family crosses sameRow dim) count
 
 
+/-- A partial Steiner triple system on the labels, represented by unordered triples. -/
+def IsPartialSteiner {r : ℕ} (family : Set (Set (Fin r))) : Prop :=
+  (∀ s ∈ family, s.ncard = 3) ∧
+  (∀ s ∈ family, ∀ t ∈ family, ∀ a b, a ≠ b → a ∈ s → b ∈ s → a ∈ t → b ∈ t → s = t)
+
+/-- Within a fixed row and residue, the label triples form a partial Steiner system. -/
+theorem monochromatic_partial_steiner {d r : ℕ} {U : Type*}
+    (e : Row d → (ZMod (3 * r) ≃ ZMod 3 × Fin r))
+    (internal : U → Fin 3 → Row d × ZMod (3 * r))
+    (sameRow : ∀ u i, (internal u i).1 = (internal u 0).1)
+    (injective : ∀ u, Function.Injective (internal u))
+    (pairUnique : ∀ t u x y, x ≠ y → covers (internal t) x y → covers (internal u) x y → t = u)
+    (x : Row d) (c : ZMod 3) :
+    let families : Set (Set (Fin r)) := {s | ∃ u, (internal u 0).1 = x ∧
+      (∀ i, (e x (internal u i).2).1 = c) ∧
+      s = Set.range (fun i => (e x (internal u i).2).2)}
+    IsPartialSteiner families := by
+  intro families
+  let point (a : Fin r) := (x, (e x).symm (c,a))
+  let label (u : U) (i : Fin 3) := (e x (internal u i).2).2
+  have recover (u : U) (hx : (internal u 0).1 = x)
+      (hc : ∀ i, (e x (internal u i).2).1 = c) (i : Fin 3) :
+      internal u i = point (label u i) := by
+    refine Prod.ext ((sameRow u i).trans hx) ?_
+    change (internal u i).2 = (e x).symm (c, label u i)
+    apply (e x).injective
+    rw [Equiv.apply_symm_apply]
+    exact Prod.ext (hc i) rfl
+  have pointInj : Function.Injective point := by
+    intro a b h
+    have eq : (e x).symm (c,a) = (e x).symm (c,b) := congrArg Prod.snd h
+    exact congrArg Prod.snd ((e x).symm.injective eq)
+  constructor
+  · rintro s ⟨u,hx,hc,rfl⟩
+    have labelInj : Function.Injective (label u) := by
+      intro i j eq
+      apply injective u
+      exact (recover u hx hc i).trans ((congrArg point eq).trans (recover u hx hc j).symm)
+    change (Set.range (label u)).ncard = 3
+    rw [Set.ncard_range_of_injective labelInj, Nat.card_fin]
+  · rintro s ⟨u,hx,hc,rfl⟩ t ⟨v,hy,hd,rfl⟩ a b ne ⟨i,hi⟩ ⟨j,hj⟩ ⟨k,hk⟩ ⟨l,hl⟩
+    have cover (w : U) (hr : (internal w 0).1 = x)
+        (hc : ∀ i, (e x (internal w i).2).1 = c) (i j : Fin 3)
+        (h1 : label w i = a) (h2 : label w j = b) :
+        covers (internal w) (point a) (point b) :=
+      ⟨i,j,(recover w hr hc i).trans (congrArg point h1),
+        (recover w hr hc j).trans (congrArg point h2)⟩
+    have uv := pairUnique u v (point a) (point b) (pointInj.ne ne)
+      (cover u hx hc i j hi hj) (cover v hy hd k l hk hl)
+    subst v
+    rfl
+
 end D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition
