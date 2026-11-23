@@ -56,7 +56,7 @@ Let B be a nonempty finite input basis and J a finite set of labels, with c from
 
 Write K for the sum of the integer quotients m_j divided by e. R(c,e,k) sums the largest k residues m_j modulo e, padding with zeros. The positive uniform weights form a prefix of each sorted padded list. Every full block strictly outweighs each remainder and K is at most d. After the full blocks, at most one positive block from each class competes for the remaining slots.
 
-The weighted supplier is the repository result in pull request #33375. Elron and Eldar Theorem 2 treats separately prepared code states. Nomura and Han Section VII gives classical fixed-length information-spectrum bounds. Publication priority for the combination of full-input isometry, fixed environment, and classwise remainder allocation is open.
+The weighted block theorem above supplies the operational optimum. Elron and Eldar Theorem 2 treats separately prepared code states. Nomura and Han Section VII gives classical fixed-length information-spectrum bounds. Publication priority for the combination of full-input isometry, fixed environment, and classwise remainder allocation is open.
 
 **Theorem 1.3 (Necessary and sufficient memory bounds from a minimum class cover).**
 

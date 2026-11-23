@@ -87,7 +87,7 @@ internal sealed class WeightedLabelRecordDilationDocument : IScribeDocumentDefin
                         + "After the full blocks, at most one positive block from each class competes "
                         + "for the remaining slots.")),
                     Paragraph(Text(
-                        "The weighted supplier is the repository result in pull request #33375. "
+                        "The weighted block theorem above supplies the operational optimum. "
                         + "Elron and Eldar Theorem 2 treats separately prepared code states. "
                         + "Nomura and Han Section VII gives classical fixed-length information-spectrum "
                         + "bounds. Publication priority for the combination of full-input isometry, "
