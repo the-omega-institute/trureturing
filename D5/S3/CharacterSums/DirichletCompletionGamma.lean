@@ -7,6 +7,7 @@
    digest: Euler's integral and convexity bound Gamma on a right half-plane. -/
 
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
 import Mathlib.Analysis.Convex.Jensen
 import Mathlib.Tactic
 
@@ -66,5 +67,15 @@ theorem Gamma_le_exp_bound {u : ℝ} (hu : 1 / 4 ≤ u) :
       Real.Gamma (1 / 4) ≤ max 1 (Real.Gamma (1 / 4)) := le_max_right _ _
       _ ≤ _ := le_mul_of_one_le_right (by positivity) he
   · exact hfac.trans (le_mul_of_one_le_left (Real.exp_pos _).le (le_max_left _ _))
+
+/-- The real-part bound for Deligne's real archimedean factor. -/
+theorem norm_GammaReal_le {s : ℂ} (hs : 0 < s.re) :
+    ‖Complex.Gammaℝ s‖ ≤ Real.pi ^ (-s.re / 2) * Real.Gamma (s.re / 2) := by
+  rw [Complex.Gammaℝ_def, norm_mul,
+    Complex.norm_cpow_eq_rpow_re_of_pos Real.pi_pos]
+  simp only [div_ofNat_re, neg_re]
+  have hg := norm_Gamma_le (z := s / 2) (by simpa using div_pos hs two_pos)
+  simpa only [div_ofNat_re] using mul_le_mul_of_nonneg_left hg
+    (Real.rpow_nonneg Real.pi_pos.le _)
 
 end D5.S3.CharacterSums.DirichletCompletionGamma
