@@ -163,7 +163,7 @@ theorem supportedKernel_finrank [Finite V] (Allowed : (V → Bool) → Prop) :
   rw [equiv.finrank_eq, Module.finrank_fintype_fun_eq_card, Nat.card_eq_fintype_card]
 
 omit [DecidableEq V] in
-private theorem allowed_pattern_hyperedges (forbidden : Set (Set V)) (p : Pattern V) :
+theorem allowed_pattern_hyperedges (forbidden : Set (Set V)) (p : Pattern V) :
     AllowedPattern (fun w => ∀ edge ∈ forbidden, ∃ i ∈ edge, w i = false) p ↔
       ∀ edge ∈ forbidden, (∃ i ∈ edge, p i = some false) ∧
         (∃ i ∈ edge, p i = some true) := by
@@ -348,7 +348,7 @@ open TripleCount
 private def tripleEdge {k : ℕ} (i : Fin k) : Set (Fin (k + 2)) :=
   {j | j.val = i.val ∨ j.val = i.val + 1 ∨ j.val = i.val + 2}
 
-private theorem exists_triple_edge {k : ℕ} (i : Fin k) {P : Fin (k + 2) → Prop} :
+theorem exists_triple_edge {k : ℕ} (i : Fin k) {P : Fin (k + 2) → Prop} :
     (∃ j ∈ tripleEdge i, P j) ↔
       P ⟨i, by omega⟩ ∨ P ⟨i.val + 1, by omega⟩ ∨ P ⟨i.val + 2, by omega⟩ := by
   constructor
