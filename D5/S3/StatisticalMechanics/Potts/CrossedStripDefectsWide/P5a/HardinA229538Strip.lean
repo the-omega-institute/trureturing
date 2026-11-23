@@ -717,32 +717,80 @@ def a (n : ℕ) : ℕ := canonicalCount 1 n
 def residual {C : Type*} (p : C) (d : ℕ) : C ⊕ C :=
     if d = 0 then Sum.inr p else Sum.inl p
 
-theorem transition_entry (p q : Column) (d : ℕ) (hd : d ≤ 1) (s : Column ⊕ Column) :
-    (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
-      (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
-  have zero := zero_cost_entry p q
-  have cutoff : cost p q ≤ 1 ↔ cost p q = 0 ∨ cost p q = 1 :=
-    Nat.le_one_iff_eq_zero_or_eq_one
-  have hd' : d = 0 ∨ d = 1 := Nat.le_one_iff_eq_zero_or_eq_one.mp hd
-  rcases hd' with rfl | rfl <;> cases s with
-  | inl s =>
-    all_goals
-      by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
+theorem transition_entry (p q : Column) (d : ℕ) :
+    (∀ s : Column ⊕ Column,
+      (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
+        (if Sum.elim id id s = q then
+          transfer (residual p d) s else 0)) ↔
+      d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q := by
+  have pending (hd : d ≤ 1) (s : Column ⊕ Column) :
+      (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
+        (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
+    have zero := zero_cost_entry p q
+    have cutoff : cost p q ≤ 1 ↔ cost p q = 0 ∨ cost p q = 1 :=
+      Nat.le_one_iff_eq_zero_or_eq_one
+    have hd' : d = 0 ∨ d = 1 := Nat.le_one_iff_eq_zero_or_eq_one.mp hd
+    rcases hd' with rfl | rfl <;> cases s with
+    | inl s =>
       all_goals
-        have hz := zero
-        simp only [h₀, ite_true, ite_false] at hz
-        by_cases hq : s = q
-        · subst s
-          simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz]
-        · simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz, hq, Ne.symm hq]
-  | inr s =>
-    all_goals
-      by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
+        by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
+        all_goals
+          have hz := zero
+          simp only [h₀, ite_true, ite_false] at hz
+          by_cases hq : s = q
+          · subst s
+            simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz]
+          · simp [residual, transfer, oneDefect, cutoff, h₀, h₁, ← hz, hq, Ne.symm hq]
+    | inr s =>
       all_goals
-        by_cases hq : s = q
-        · subst s
-          simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁]
-        · simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, Ne.symm hq]
+        by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1
+        all_goals
+          by_cases hq : s = q
+          · subst s
+            simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁]
+          · simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, Ne.symm hq]
+  constructor
+  · intro h
+    by_cases hd : d ≤ 1
+    · exact Or.inl hd
+    by_cases hz : cost p q = 0
+    · exact Or.inr (Or.inl hz)
+    by_cases ht : d < cost p q
+    · exact Or.inr (Or.inr ht)
+    have hle := Nat.le_of_not_gt ht
+    have hd0 : d ≠ 0 := by omega
+    have hh := h (residual q (d - cost p q))
+    by_cases he : d - cost p q = 0
+    · have hc : cost p q ≠ 1 := by omega
+      simp [residual, transfer,
+        oneDefect, hd0, he, hc, hle] at hh
+    · simp [residual, transfer,
+        ← zero_cost_entry, hd0, he, hle, hz] at hh
+  · rintro (hd | hz | ht) s
+    · exact pending hd s
+    · rcases s with x | x <;> by_cases hq : x = q
+      all_goals
+        first
+        | subst x
+          by_cases hd : d = 0 <;>
+            simp [residual, transfer,
+              ← zero_cost_entry, oneDefect, hz, hd]
+        | by_cases hd : d = 0 <;>
+            simp [residual, transfer,
+              ← zero_cost_entry, oneDefect, hz, hd, hq, Ne.symm hq]
+    · by_cases hd : d ≤ 1
+      · exact pending hd s
+      have hd0 : d ≠ 0 := by omega
+      have hc0 : cost p q ≠ 0 := by omega
+      have hc1 : cost p q ≠ 1 := by omega
+      rcases s with x | x <;> by_cases hq : x = q
+      all_goals
+        first
+        | subst x
+          simp [residual, transfer,
+            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht]
+        | simp [residual, transfer,
+            ← zero_cost_entry, oneDefect, hd0, hc0, hc1, Nat.not_le_of_lt ht, hq]
 
 private theorem transfer_count (n : ℕ) :
     (literalCount (q := 3) ∅ edges 1 (n + 1) : ℤ) =
@@ -760,7 +808,7 @@ private theorem transfer_count (n : ℕ) :
   · intro p d hd s
     rw [← columnEquiv.sum_comp]
     simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply,
-      transition_entry p _ d hd]
+      fun q => (transition_entry p q d).mpr (Or.inl hd) s]
     simp [Finset.sum_ite_eq']
   · intro r _
     exact Nat.sub_le _ _

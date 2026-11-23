@@ -771,7 +771,7 @@ private theorem transfer_count (n : ℕ) :
       cases x with
       | inl x => simp [col, cl, transfer, Matrix.fromBlocks, hd', bound]
       | inr x =>
-        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using transition_entry p q d hd' x
+        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using (transition_entry p q d).mpr (Or.inl hd') x
     · have hd₂ : d = 2 := Nat.le_antisymm hd (Nat.lt_of_not_ge hd')
       subst d
       rcases x with x | x
