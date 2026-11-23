@@ -24,7 +24,7 @@ internal sealed class KisielewiczFleetWinnersDocument : IScribeDocumentDefinitio
                 H("Two fixed fleets with no eventual outcome period"),
                 StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Geometry/kisielewicz2026cubetilings")),
+                    LibraryNoteRef.Create("D5/L/FiniteGeometry/kisielewicz2026cubetilings")),
                 Blocks(
                     Paragraph(Text("Divide the vertical coordinate by two to choose a slab. In each "
                         + "ordinary slab the horizontal grid has one common parity. The exceptional "
