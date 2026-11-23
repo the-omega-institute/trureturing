@@ -26,39 +26,32 @@ private theorem finite_common_choice {A K : Type*} [Fintype A] [Nonempty A]
     (hnonneg : ∀ k ∈ tests, ∀ a, 0 ≤ loss k a)
     (hthreshold : ∀ k ∈ tests, 0 < threshold k)
     (hmean : ∀ k ∈ tests, (∑ a : A, loss k a) ≤ (Fintype.card A : ℝ) * meanBound k)
-    (hbudget : (∑ k ∈ tests, meanBound k / threshold k) < 1) :
+    (hbudget : (∑ k ∈ tests, meanBound k / threshold k) ≤ 1) :
     ∃ a : A, ∀ k ∈ tests, loss k a ≤ threshold k := by
   classical
   by_contra! h
-  let failed (k : K) (a : A) : ℝ := if threshold k < loss k a then 1 else 0
-  have hpointwise (a : A) : 1 ≤ ∑ k ∈ tests, failed k a := by
+  have hpointwise (a : A) : 1 < ∑ k ∈ tests, loss k a / threshold k := by
     obtain ⟨k, hk, hbad⟩ := h a
-    simpa [failed, hbad] using
-      (single_le_sum (f := fun k => failed k a)
-        (fun i _ => by dsimp [failed]; split_ifs <;> positivity) hk)
-  have hfailed (k : K) (hk : k ∈ tests) :
-      ∑ a : A, failed k a ≤ (Fintype.card A : ℝ) * (meanBound k / threshold k) := by
-    have hpart :
-        (∑ a : A, failed k a) * threshold k ≤ ∑ a : A, loss k a := by
-      rw [sum_mul]
-      apply sum_le_sum
-      intro a _
-      by_cases ha : threshold k < loss k a
-      · simpa [failed, ha] using ha.le
-      · simpa [failed, ha] using hnonneg k hk a
-    have hq := (le_div_iff₀ (hthreshold k hk)).2 (hpart.trans (hmean k hk))
-    simpa only [mul_div_assoc] using hq
-  have hcard : (0 : ℝ) < (Fintype.card A : ℝ) := by exact_mod_cast Fintype.card_pos
-  have hle : (Fintype.card A : ℝ) ≤
-      (Fintype.card A : ℝ) * ∑ k ∈ tests, meanBound k / threshold k := by
+    have hone : 1 < loss k a / threshold k := by
+      apply (lt_div_iff₀ (hthreshold k hk)).2
+      simpa using hbad
+    exact hone.trans_le (single_le_sum (f := fun i => loss i a / threshold i)
+      (fun i hi => div_nonneg (hnonneg i hi a) (hthreshold i hi).le) hk)
+  have hnormalized (k : K) (hk : k ∈ tests) :
+      ∑ a : A, loss k a / threshold k ≤ (Fintype.card A : ℝ) * (meanBound k / threshold k) := by
+    rw [← sum_div, ← mul_div_assoc]
+    exact div_le_div_of_nonneg_right (hmean k hk) (hthreshold k hk).le
+  have hlt : (Fintype.card A : ℝ) < (Fintype.card A : ℝ) := by
     calc
       _ = ∑ _ : A, (1 : ℝ) := by simp
-      _ ≤ ∑ a : A, ∑ k ∈ tests, failed k a := sum_le_sum fun a _ => hpointwise a
-      _ = ∑ k ∈ tests, ∑ a : A, failed k a := sum_comm
+      _ < ∑ a : A, ∑ k ∈ tests, loss k a / threshold k :=
+        sum_lt_sum_of_nonempty univ_nonempty fun a _ => hpointwise a
+      _ = ∑ k ∈ tests, ∑ a : A, loss k a / threshold k := sum_comm
       _ ≤ ∑ k ∈ tests, (Fintype.card A : ℝ) * (meanBound k / threshold k) :=
-        sum_le_sum hfailed
-      _ = _ := (mul_sum ..).symm
-  exact (not_lt_of_ge hle) (by simpa using mul_lt_mul_of_pos_left hbudget hcard)
+        sum_le_sum hnormalized
+      _ = (Fintype.card A : ℝ) * ∑ k ∈ tests, meanBound k / threshold k := (mul_sum ..).symm
+      _ ≤ _ := by simpa using mul_le_mul_of_nonneg_left hbudget (Nat.cast_nonneg _)
+  exact (lt_irrefl _) hlt
 
 private theorem lift_finite_mean {J : Type*} [DecidableEq J]
     (M : J → ℕ) {U V : Finset J} (hVU : V ⊆ U)
@@ -105,7 +98,7 @@ private theorem exists_for_finite_tests {J K : Type*} [DecidableEq J]
     (hthreshold : ∀ k ∈ tests, 0 < threshold k)
     (hmean : ∀ k ∈ tests, (∑ x, loss k x) ≤
       (Fintype.card ((j : support k) → Fin (M j + 2)) : ℝ) * meanBound k)
-    (hbudget : (∑ k ∈ tests, meanBound k / threshold k) < 1) :
+    (hbudget : (∑ k ∈ tests, meanBound k / threshold k) ≤ 1) :
     ∃ x : (j : J) → Fin (M j + 2), ∀ k ∈ tests, loss k (fun j => x j) ≤ threshold k := by
   classical
   let U := tests.biUnion support
@@ -135,7 +128,7 @@ private theorem exists_for_all_finite_support_tests {J K : Type*} [DecidableEq J
     (hthreshold : ∀ k, 0 < threshold k)
     (hmean : ∀ k, (∑ x, loss k x) ≤
       (Fintype.card ((j : support k) → Fin (M j + 2)) : ℝ) * meanBound k)
-    (hbudget : ∀ tests : Finset K, (∑ k ∈ tests, meanBound k / threshold k) < 1) :
+    (hbudget : ∀ tests : Finset K, (∑ k ∈ tests, meanBound k / threshold k) ≤ 1) :
     ∃ x : (j : J) → Fin (M j + 2), ∀ k, loss k (fun j => x j) ≤ threshold k := by
   let good (k : K) : Set ((j : J) → Fin (M j + 2)) :=
     {x | loss k (fun j => x j) ≤ threshold k}
@@ -150,11 +143,13 @@ private theorem exists_for_all_finite_support_tests {J K : Type*} [DecidableEq J
   obtain ⟨x, hx⟩ := CompactSpace.iInter_nonempty hclosed hfinite
   exact ⟨x, fun k => Set.mem_iInter.mp hx k⟩
 
-private def diagonalMass {J : Type*} [Fintype J] [DecidableEq J]
+/-- The weighted degree-`p` mass contributed by equal degree vectors. -/
+def diagonalMass {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (p : ℕ) : ℝ :=
   ∑ m ∈ piAntidiag univ p, monomialWeight w m ^ 2
 
-private def offDiagonalMass {J : Type*} [Fintype J] [DecidableEq J]
+/-- The total weight available to distinct ordered pairs of degree vectors. -/
+def offDiagonalMass {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (p : ℕ) : ℝ :=
   (∑ j, w j) ^ (2 * p) - diagonalMass w p
 
@@ -205,8 +200,10 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
       ((min (M j + 2) (1 + ⌊η k * ((M j : ℝ) + 1) / ε j⌋₊) : ℕ) : ℝ) /
         (M j + 2) ≤ ρ k)
     (hbudget : ∀ tests : Finset K, ∑ k ∈ tests,
-      (if 0 < offDiagonalMass (w k) (p k) then ρ k / b k else 0) < 1) :
+      (if 0 < offDiagonalMass (w k) (p k) then ρ k / b k else 0) ≤ 1) :
     ∃ g' : J → ℝ, (∀ j, |g' j - g j| ≤ ε j) ∧
+      (∃ f : (j : J) → Fin (M j + 2), ∀ j,
+        g' j = g j + ε j * (2 * ((f j).val : ℝ) / ((M j : ℝ) + 1) - 1)) ∧
       ∀ k, tailCollisionMass (fun j : support k => g' j) (w k) (p k) (η k) ≤
         diagonalMass (w k) (p k) + b k * offDiagonalMass (w k) (p k) := by
   classical
@@ -243,13 +240,13 @@ theorem exists_common_nearby_collision_bounds {J K : Type*} [DecidableEq J]
       apply (div_le_iff₀ hk).mpr
       linarith only [hbound]
     · simp [loss, rate, hk]
-  have hbudget' (tests : Finset K) : ∑ k ∈ tests, rate k / b k < 1 := by
-    refine lt_of_eq_of_lt (sum_congr rfl ?_) (hbudget tests)
+  have hbudget' (tests : Finset K) : ∑ k ∈ tests, rate k / b k ≤ 1 := by
+    refine le_of_eq_of_le (sum_congr rfl ?_) (hbudget tests)
     intro k _
     by_cases hk : 0 < B k <;> simp [rate, B, hk] at *
   obtain ⟨x, hx⟩ := exists_for_all_finite_support_tests M support loss rate b
     hnonneg hb hmean hbudget'
-  refine ⟨fun j => g j + offset (ε j) (x j), ?_, ?_⟩
+  refine ⟨fun j => g j + offset (ε j) (x j), ?_, ⟨x, fun _ => rfl⟩, ?_⟩
   · intro j
     rw [add_sub_cancel_left]
     exact offset_abs_le (hε j).le (x j)
