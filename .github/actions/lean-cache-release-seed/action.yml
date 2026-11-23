@@ -36,7 +36,7 @@ runs:
       with:
         path: ${{ fromJSON(inputs.cache-keys || '{}').dependency_archive_path }}
         key: ${{ fromJSON(inputs.cache-keys || '{}').dependency_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').dependency_restore_prefix }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').dependency_restore_keys || fromJSON(inputs.cache-keys || '{}').dependency_restore_prefix }}
     - id: previous_checkpoint
       name: Find the last published cold Release checkpoint
       if: inputs.verification-history-anchor != '' && (inputs.checkpoint-run != '' || (inputs.checkpoint-seconds != '0' && fromJSON(github.run_attempt) > 1))
@@ -83,7 +83,7 @@ runs:
       with:
         path: ${{ fromJSON(inputs.cache-keys || '{}').project_archive_path }}
         key: ${{ fromJSON(inputs.cache-keys || '{}').project_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').project_restore_prefix }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').project_restore_keys || fromJSON(inputs.cache-keys || '{}').project_restore_prefix }}
     - name: Validate and install the selected seeds
       shell: bash
       env:
