@@ -33,7 +33,10 @@ result: proof_shape=content; consumers=HardinA229538Strip.chromatic_coordinate, 
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Init.Data.Fin.Basic
+import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
+import Init.Data.Nat.Basic
+import Init.Prelude
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Pi

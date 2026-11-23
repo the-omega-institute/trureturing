@@ -72,6 +72,7 @@ import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
+import Init.Data.Nat.Dvd
 import Init.Data.Nat.Lemmas
 import Init.Data.Sum.Basic
 import Init.Prelude
@@ -98,9 +99,9 @@ import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Dedup
 import Mathlib.Data.Finset.Defs
+import Mathlib.Data.Finset.Empty
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Finset.Image
-import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup

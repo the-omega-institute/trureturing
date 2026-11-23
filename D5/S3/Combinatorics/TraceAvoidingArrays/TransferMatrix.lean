@@ -36,7 +36,14 @@ scalarRelationShift | bind-only | HardinA185761Recurrence.recurrence
 tabulatedPowers | bind-only | HardinA185761Recurrence.powers_table
 -/
 
+import Init.Data.Int.Basic
+import Init.Data.Nat.Basic
+import Init.Prelude
+import Mathlib.Algebra.Group.Action.Defs
+import Mathlib.Algebra.Group.Monoid
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.NormNum
 import Mathlib.Data.List.GetD
