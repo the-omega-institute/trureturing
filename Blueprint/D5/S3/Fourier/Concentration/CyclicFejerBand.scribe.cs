@@ -28,12 +28,13 @@ internal sealed class CyclicFejerBandDocument : IScribeDocumentDefinition
                     + "of the pairs (j,j), with 0 ≤ j < N-H, by |z|. Use the first coordinate "
                     + "for positive z and the second for negative z. This injects N-H prefix "
                     + "indices into the fibre of ordered pairs with residue difference z. "
-                    + "This count accommodates repeated residues when N exceeds q.")),
+                    + "At residue zero, all N pairs (j,j) contribute, giving the extra H M(0). "
+                    + "The counts accommodate repeated residues when N exceeds q.")),
                 Paragraph(Text(
-                    "Summing fibrewise dominates (N-H) times the band mass by the pair sum. "
+                    "Summing fibrewise bounds the left-hand side by the pair sum. "
                     + "Fourier inversion expands the pair sum. Its two prefix sums are complex "
-                    + "conjugates, so their product is the squared norm of B_N(k). The triangle "
-                    + "inequality then gives the stated bound."))),
+                    + "conjugates, so their product is the squared norm of B_N(k). Taking the "
+                    + "real part preserves the signs of the Fourier contributions."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -54,10 +55,11 @@ internal sealed class CyclicFejerBandDocument : IScribeDocumentDefinition
                 Quad, Sp, q, Gt, D(0), Comma, Quad, Sp, h, Lt, n, Comma),
             Seq(Amp, Forall, Sp, m, Colon, integers, To, Sp,
                 Mathbb, Grp(F.Id("R")), Underscore, Grp(Ge, D(0)), Comma),
-            Seq(Amp, new Formula.Subscript(Sum, Seq(r, Sp, InMacro, Sp, band)), Sp, Call("M", r),
-                Sp, Le, Sp, Frac, Grp(D(1)), Grp(q, Open, n, Minus, h, Close),
+            Seq(Amp, Open, n, Minus, h, Close, new Formula.Subscript(Sum, Seq(r, Sp, InMacro, Sp, band)),
+                Sp, Call("M", r), Sp, Plus, Sp, h, Call("M", D(0)),
+                Sp, Le, Sp, Frac, Grp(D(1)), Grp(q),
                 new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, integers)), Sp,
-                new Formula.Power(Seq(Bar, windowValue, Bar), D(2)), Bar, transformValue, Bar, Dot)
+                new Formula.Power(Seq(Bar, windowValue, Bar), D(2)), Sp, Re, Sp, transformValue, Dot)
         ]));
     }
 }

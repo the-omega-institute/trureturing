@@ -26,9 +26,9 @@ abbrev arena : Arena where
   Law V := ∀ {q : ℕ} [NeZero q] (H N : ℕ) (_ : H < N) (M : ZMod q → ℝ)
       (_ : ∀ r, 0 ≤ M r),
     let windowWeight := V.readout () ()
-    (∑ r ∈ band q H, M r) ≤
+    ((N - H : ℕ) : ℝ) * (∑ r ∈ band q H, M r) + H * M 0 ≤
       (∑ k : ZMod q, windowWeight (prefixCharacter q N k) *
-        ‖ZMod.dft (fun r => (M r : ℂ)) k‖) / ((q : ℝ) * (N - H : ℕ))
+        (ZMod.dft (fun r => (M r : ℂ)) k).re) / (q : ℝ)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

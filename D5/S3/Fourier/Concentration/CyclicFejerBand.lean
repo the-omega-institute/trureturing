@@ -96,14 +96,40 @@ private theorem sum_prefixPairs (N : ℕ) (M : ZMod q → ℝ) :
   simp_rw [hrewrite]
   rw [sum_fiberwise_of_maps_to (fun p _ => mem_univ (rOf p)), sum_product]
 
-private theorem band_le_pair_sum (N H : ℕ) (M : ZMod q → ℝ) (hM : ∀ r, 0 ≤ M r) :
-    ((N - H : ℕ) : ℝ) * ∑ r ∈ band q H, M r ≤
+omit [NeZero q] in
+private theorem card_prefixPairs_zero (N : ℕ) : N ≤ (prefixPairs q N 0).card := by
+  refine (card_range N).symm.le.trans ?_
+  apply card_le_card_of_injOn (fun j => (j, j))
+  · intro j hj
+    exact mem_filter.mpr ⟨mem_product.mpr ⟨hj, hj⟩, sub_self _⟩
+  · intro i _ j _ hij
+    exact congrArg Prod.fst hij
+
+omit [NeZero q] in
+private theorem zero_mem_band (H : ℕ) : 0 ∈ band q H := by
+  refine mem_image.mpr ⟨(0 : ℤ), mem_Icc.mpr ⟨by omega, by positivity⟩, ?_⟩
+  exact Int.cast_zero
+
+private theorem band_le_pair_sum (N H : ℕ) (hHN : H ≤ N) (M : ZMod q → ℝ)
+    (hM : ∀ r, 0 ≤ M r) :
+    ((N - H : ℕ) : ℝ) * (∑ r ∈ band q H, M r) + H * M 0 ≤
       ∑ i ∈ range N, ∑ j ∈ range N, M ((i : ZMod q) - j) := by
-  rw [mul_sum, ← sum_prefixPairs]
+  have hbonus : H * M 0 = ∑ r ∈ band q H, if r = 0 then (H : ℝ) * M r else 0 := by
+    symm
+    rw [sum_eq_single_of_mem 0 (zero_mem_band H) (fun r _ hr => ite_eq_right hr)]
+    simp
+  rw [mul_sum, hbonus, ← sum_add_distrib, ← sum_prefixPairs]
   calc
     _ ≤ ∑ r ∈ band q H, ((prefixPairs q N r).card : ℝ) * M r := by
-      exact sum_le_sum fun r hr =>
-        mul_le_mul_of_nonneg_right (by exact_mod_cast card_prefixPairs_of_mem r hr) (hM r)
+      apply sum_le_sum
+      intro r hr
+      by_cases hzero : r = 0
+      · subst r
+        simp only [ite_true, ← add_mul]
+        rw [← Nat.cast_add, Nat.sub_add_cancel hHN]
+        exact mul_le_mul_of_nonneg_right (by exact_mod_cast card_prefixPairs_zero (q := q) N) (hM 0)
+      · simp only [ite_eq_right hzero, add_zero]
+        exact mul_le_mul_of_nonneg_right (by exact_mod_cast card_prefixPairs_of_mem r hr) (hM r)
     _ ≤ _ := sum_le_sum_of_subset_of_nonneg (subset_univ _) fun r _ _ =>
       mul_nonneg (Nat.cast_nonneg _) (hM r)
 
@@ -140,26 +166,28 @@ private theorem prefixCharacter_neg (N : ℕ) (k : ZMod q) :
 theorem band_le_positive_fourier (H N : ℕ) (hHN : H < N) (M : ZMod q → ℝ)
     (hM : ∀ r, 0 ≤ M r) :
     let windowWeight := fun z : ℂ => ‖z‖ ^ 2
-    (∑ r ∈ band q H, M r) ≤
+    ((N - H : ℕ) : ℝ) * (∑ r ∈ band q H, M r) + H * M 0 ≤
       (∑ k : ZMod q, windowWeight (prefixCharacter q N k) *
-        ‖ZMod.dft (fun r => (M r : ℂ)) k‖) / ((q : ℝ) * (N - H : ℕ)) := by
+        (ZMod.dft (fun r => (M r : ℂ)) k).re) / (q : ℝ) := by
   dsimp only
   have hq : (0 : ℝ) < q := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
-  have hNH : (0 : ℝ) < (N - H : ℕ) := by exact_mod_cast Nat.sub_pos_of_lt hHN
-  have hsum : 0 ≤ (∑ i ∈ range N, ∑ j ∈ range N, M ((i : ZMod q) - j)) :=
-    sum_nonneg fun i _ => sum_nonneg fun j _ => hM ((i : ZMod q) - j)
-  have hnorm := congrArg (fun z : ℂ => ‖z‖)
+  have hweight (k : ZMod q) :
+      prefixCharacter q N k * prefixCharacter q N (-k) =
+        ((‖prefixCharacter q N k‖ ^ 2 : ℝ) : ℂ) := by
+    rw [prefixCharacter_neg, mul_comm, ← Complex.normSq_eq_conj_mul_self,
+      Complex.normSq_eq_norm_sq]
+  have hre := congrArg (Complex.reLm : ℂ →ₗ[ℝ] ℝ)
     (fourier_pair_sum N (fun r => (M r : ℂ)))
-  simp only [← Complex.ofReal_sum, ← Complex.ofReal_natCast, ← Complex.ofReal_mul,
-    Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (mul_nonneg hq.le hsum)] at hnorm
-  rw [le_div_iff₀ (mul_pos hq hNH)]
+  have hre_apply (z : ℂ) : Complex.reLm z = z.re := rfl
+  simp only [hweight, ← Complex.ofReal_sum, ← Complex.ofReal_natCast, ← Complex.ofReal_mul] at hre
+  rw [map_sum] at hre
+  simp only [hre_apply, Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im, zero_mul,
+    sub_zero] at hre
+  rw [le_div_iff₀ hq]
   calc
-    _ = (q : ℝ) * (((N - H : ℕ) : ℝ) * ∑ r ∈ band q H, M r) := by ring
-    _ ≤ _ := mul_le_mul_of_nonneg_left (band_le_pair_sum N H M hM) hq.le
-    _ = _ := hnorm
-    _ ≤ ∑ k : ZMod q, ‖prefixCharacter q N k * prefixCharacter q N (-k) *
-        ZMod.dft (fun r => (M r : ℂ)) k‖ := norm_sum_le _ _
-    _ = _ := by
-      simp only [norm_mul, prefixCharacter_neg, sq, starRingEnd_apply, norm_star]
+    _ = (q : ℝ) * (((N - H : ℕ) : ℝ) * (∑ r ∈ band q H, M r) + H * M 0) :=
+      mul_comm _ _
+    _ ≤ _ := mul_le_mul_of_nonneg_left (band_le_pair_sum N H hHN.le M hM) hq.le
+    _ = _ := hre
 
 end D5.S3.Fourier.Concentration.CyclicFejerBand
