@@ -23,7 +23,7 @@ forward_one: proof_shape=content; consumers=finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
-budget_cut: proof_shape=bind-only; consumers=one_exact, HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.two_exact
+budget_cut: proof_shape=bind-only; consumers=HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.two_exact, one_exact, transition_counts
 one_exact: proof_shape=bind-only; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
 halfForwardOne: proof_shape=bind-only; consumers=HardinA229683StripCertificate.W, W
 -/
@@ -186,13 +186,16 @@ theorem transition_counts (p : Row 3 6) (d : Fin 2) (s : Fin 15 ⊕ Fin 15) :
       have cut (r : Row 3 6) :
           (bondDefects (betw 6) p r ≤ 1 ∧ cl r (1 - bondDefects (betw 6) p r) = Sum.inr j) ↔
           bondDefects (betw 6) p r = 1 ∧ boundary r = j := by
-        constructor
-        · rintro ⟨hc, hs⟩
-          rcases Nat.le_one_iff_eq_zero_or_eq_one.mp hc with hz | ho
-          · simp only [hz, Nat.sub_zero, cl, Nat.one_ne_zero, ite_false, Sum.inl_ne_inr] at hs
-          · exact ⟨ho, by simpa only [ho, Nat.sub_self, cl, ite_true, Sum.inr.injEq] using hs⟩
-        · rintro ⟨ho, hb⟩
-          simp only [ho, Nat.le_refl, Nat.sub_self, cl, ite_true, Sum.inr.injEq, hb, true_and]
+        let c := bondDefects (betw 6) p r
+        change (c ≤ 1 ∧ (if 1 - c = 0 then Sum.inr (boundary r) else Sum.inl (boundary r)) =
+          Sum.inr j) ↔ c = 1 ∧ boundary r = j
+        by_cases h : 1 - c = 0
+        · simpa only [h, ite_true, Sum.inr.injEq, and_true] using
+            and_congr (budget_cut c 1) (Iff.rfl : boundary r = j ↔ boundary r = j)
+        · have hne : c ≠ 1 := by
+            rintro rfl
+            exact h (Nat.sub_self _)
+          simp only [h, ite_false, Sum.inl_ne_inr, and_false, hne, false_and]
       change (∑ r : Row 3 6, if bondDefects (betw 6) p r ≤ 1 ∧
         cl r (1 - bondDefects (betw 6) p r) = Sum.inr j then (1 : ℤ) else 0) =
           T (cl p 1) (Sum.inr j)
