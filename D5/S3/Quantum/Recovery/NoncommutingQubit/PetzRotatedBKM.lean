@@ -38,8 +38,9 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift partialTracePetz)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 
-open private logMean logMean_self logMean_comm logMean_mul_logRatio from
-  D5.S3.Quantum.Recovery.BKMSpectralVariance
+open D5.S3.Quantum.Recovery.BKMSpectralVariance
+  (logMean logMean_self logMean_mul_logRatio)
+open private logMean_comm from D5.S3.Quantum.Recovery.BKMSpectralVariance
 
 set_option autoImplicit false
 

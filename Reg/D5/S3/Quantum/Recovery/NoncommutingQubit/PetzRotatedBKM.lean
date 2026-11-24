@@ -18,7 +18,7 @@ open _root_.D5.S3.Quantum.Recovery.BKMFlagRefinement (partialTracePetz)
 open _root_.D5.S3.Quantum.Recovery.BKMRelativeDensity (omega)
 open _root_.D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM
 
-open private logMean from D5.S3.Quantum.Recovery.BKMSpectralVariance
+open _root_.D5.S3.Quantum.Recovery.BKMSpectralVariance (logMean)
 open private diagonalReal blocks raise from D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM
 
 namespace Reg.D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM
