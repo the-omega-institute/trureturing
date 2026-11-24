@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
    generality: I
    mirror-B: D5/B/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Local channels preserving classical–quantum states cannot increase diagonal discord. -/
@@ -10,15 +10,18 @@ import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Quantum.Information.PartialTrace.Isometries
 import D5.S3.Quantum.Measurement.Auric.CoordinatePinching
+import D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import D5.S3.Quantum.Recovery.QubitActualResidualGeometry
 
 /-!
 # Finite-dimensional monotonicity of diagonal discord
 
 Liu–Takagi–Lloyd, *Diagonal quantum discord*, DOI 10.1088/1751-8121/ab0774,
 §3.2.2, p. 9 (arXiv:1708.09076v2, §III.B.2, p. 6) state Conjecture 1 for a
-measured qubit. The proof applies to all finite dimensions. The optimization
-includes every rank-one eigenbasis of the A marginal.
+measured qubit. Specializing the attained comparison to `a = Fin 2` gives
+their inequality for every local CPTP channel preserving classical–quantum
+states. The optimization includes every rank-one eigenbasis of the A marginal.
 
 The image of an eligible input pinching has the same marginal as the actual
 output. Any basis making that image classical–quantum is therefore eligible
@@ -34,8 +37,8 @@ noncomputable section
 
 namespace D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 
-open scoped BigOperators CStarAlgebra ComplexOrder Kronecker Matrix MatrixOrder
-open Matrix
+open scoped BigOperators CStarAlgebra ComplexOrder Kronecker _root_.Matrix MatrixOrder
+open _root_.Matrix
 open D5.S3.Observer.Conditioning
 open D5.S3.Quantum.Divergence.CanonicalChannelDPI
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
@@ -46,6 +49,8 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance (partialTrace_isometries)
 open D5.S3.Quantum.Measurement.Auric.CoordinatePinching
 open D5.S3.Quantum.Measurement.Auric.ProjectiveTree
+open D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality (partialTraceRight_sum)
+open D5.S3.Quantum.Recovery.QubitResidualRounding (tensorLeft)
 
 private abbrev mat {n : Type*} [Fintype n] [DecidableEq n]
     (ρ : DensityState n) : Matrix n n ℂ :=
@@ -252,19 +257,6 @@ section Local
 
 variable {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
-/-- Identity on B, with A in the first coordinate. This is the left-factor
-version of the private `QubitResidualRounding.tensorLeft` definition. -/
-private def leftTensor (a b : Type*) [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] :
-    Matrix a a ℂ →⋆ₐ[ℂ] Matrix (a × b) (a × b) ℂ where
-  toFun K := K ⊗ₖ (1 : Matrix b b ℂ)
-  map_one' := Matrix.one_kronecker_one
-  map_mul' K L := by rw [← Matrix.mul_kronecker_mul, Matrix.one_mul]
-  map_zero' := Matrix.zero_kronecker _
-  map_add' K L := Matrix.add_kronecker _ _ _
-  commutes' z := by simp [Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker]
-  map_star' K := by simp only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker,
-    Matrix.conjTranspose_one]
-
 private def mapPVM {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
     {k : ℕ} (f : Matrix n n ℂ →⋆ₐ[ℂ] Matrix m m ℂ) (p : CompletePVM n k) :
     CompletePVM m k where
@@ -281,13 +273,13 @@ private def basisPVM (U : Matrix.unitaryGroup a ℂ) : CompletePVM a (Fintype.ca
 
 /-- The rank-one A projectors in basis U, tensored with the identity on B. -/
 def localPVM (U : Matrix.unitaryGroup a ℂ) : CompletePVM (a × b) (Fintype.card a) :=
-  mapPVM (leftTensor a b) (basisPVM U)
+  mapPVM (tensorLeft (A := a) (B := b)) (basisPVM U)
 
-private theorem leftTensor_kraus_normalized [Nonempty a] (Λ : QuantumChannel a a) :
-    (∑ j, (leftTensor a b ((actual_kraus_representation Λ).kraus j))ᴴ *
-      leftTensor a b ((actual_kraus_representation Λ).kraus j)) = 1 := by
+private theorem tensorLeft_kraus_normalized [Nonempty a] (Λ : QuantumChannel a a) :
+    (∑ j, (tensorLeft (A := a) (B := b) ((actual_kraus_representation Λ).kraus j))ᴴ *
+      tensorLeft (A := a) (B := b) ((actual_kraus_representation Λ).kraus j)) = 1 := by
   let M := actual_kraus_representation Λ
-  let f := leftTensor a b
+  let f := tensorLeft (A := a) (B := b)
   change (∑ j, (f (M.kraus j))ᴴ * f (M.kraus j)) = 1
   have hstar (j : Fin (Fintype.card a) × Fin (Fintype.card a)) :
       (f (M.kraus j))ᴴ = f ((M.kraus j)ᴴ) := by
@@ -300,8 +292,8 @@ of Λ with the identity on B. -/
 def localChannel [Nonempty a] (Λ : QuantumChannel a a) :
     QuantumChannel (a × b) (a × b) :=
   (finite_kraus_quantum_channel
-    (fun j => leftTensor a b ((actual_kraus_representation Λ).kraus j))
-    (leftTensor_kraus_normalized (b := b) Λ)).choose
+    (fun j => tensorLeft (A := a) (B := b) ((actual_kraus_representation Λ).kraus j))
+    (tensorLeft_kraus_normalized (b := b) Λ)).choose
 
 /-- The Kraus action on the entire joint matrix algebra. -/
 theorem localChannel_apply [Nonempty a] (Λ : QuantumChannel a a)
@@ -312,16 +304,8 @@ theorem localChannel_apply [Nonempty a] (Λ : QuantumChannel a a)
       ∑ j, (M.kraus j ⊗ₖ (1 : Matrix b b ℂ)) * X *
         (M.kraus j ⊗ₖ (1 : Matrix b b ℂ))ᴴ :=
   (finite_kraus_quantum_channel
-    (fun j => leftTensor a b ((actual_kraus_representation Λ).kraus j))
-    (leftTensor_kraus_normalized (b := b) Λ)).choose_spec X
-
-omit [Fintype a] [DecidableEq a] [DecidableEq b] in
-private theorem partialTraceRight_sum {κ : Type*} [Fintype κ]
-    (X : κ → Matrix (a × b) (a × b) ℂ) :
-    partialTraceRight (∑ j, X j) = ∑ j, partialTraceRight (X j) := by
-  ext i l
-  simp only [partialTraceRight, Matrix.sum_apply]
-  exact Finset.sum_comm
+    (fun j => tensorLeft (A := a) (B := b) ((actual_kraus_representation Λ).kraus j))
+    (tensorLeft_kraus_normalized (b := b) Λ)).choose_spec X
 
 theorem marginalRight_localChannel [Nonempty a] (Λ : QuantumChannel a a)
     (ρ : DensityState (a × b)) :

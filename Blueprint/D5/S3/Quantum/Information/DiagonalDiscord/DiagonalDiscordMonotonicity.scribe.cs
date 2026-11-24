@@ -7,17 +7,19 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/liutakagilloyd2019diagonaldiscord");
+    private static readonly LibraryNoteRef GourMarvianSpekkens =
+        LibraryNoteRef.Create("D5/L/Entropy/gourmarvianspekkens2009referenceframe");
     private static readonly LibraryNoteRef HuFan =
         LibraryNoteRef.Create("D5/L/Entropy/hufan2016extracting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Diagonal discord decreases under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.",
+        "Diagonal discord is nonincreasing under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.",
         H("Monotonicity of diagonal discord in finite dimensions"),
         Blocks(
             Paragraph(Text(
                 "Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. "
                 + "It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. "
-                + "The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces.")),
+                + "The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces. Specializing the attained comparison to a two-dimensional measured subsystem gives the inequality of Conjecture 1.")),
             Definition("pinch", "Projective pinching",
                 "Pinching is the completely positive trace-preserving map obtained by forgetting the outcome of a complete projective measurement."),
             Theorem("supportContained_pinch", "Support of the pinched state",
@@ -27,7 +29,7 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
             Theorem("extendedQuantumRelativeEntropy_pinch_pythagoras", "Relative entropy at a fixed reference",
                 "For a reference fixed by the pinching and containing the input support, the divergence to that reference splits into the pinching gain and the divergence from the pinched state to the reference. "
                 + "The output support condition follows from data processing. The logarithm of the fixed reference commutes with the projections, so the trace cross term is unchanged. "
-                + "This is the fixed-projective case of Gour, Marvian and Spekkens, arXiv:0901.0943v2, Theorem 3, equations (9)–(15)."),
+                + "This is the fixed-projective case of Gour, Marvian and Spekkens, arXiv:0901.0943v2, Theorem 3, equations (9)–(15).", GourMarvianSpekkens),
             Definition("localPVM", "Local basis projections",
                 "Each projection onto a column of the measured-side unitary is tensored with the identity on the second subsystem."),
             Definition("localChannel", "Local channel",
@@ -66,8 +68,9 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo([Source, .. acknowledgements]), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
-    private static DocumentBlock.Describe Theorem(string name, string title, string text) =>
+    private static DocumentBlock.Describe Theorem(
+        string name, string title, string text, params LibraryNoteRef[] acknowledgements) =>
         Describe.Lean(DescribeId.Create("diagonal-discord-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo([Source, .. acknowledgements]), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }
