@@ -196,22 +196,12 @@ print(json.dumps({"result": {"verified": len(verified)}}), flush=True)
   assert.doesNotMatch(await requests(), /^put /m);
 });
 
-test('handover disables the legacy ID before draining and recovers the original dev pin', async t => {
+test('publisher pins dev directly and recovers the original source on retry', async t => {
   const { root } = await fixture(t);
   const tip = 'b'.repeat(40);
   const earlier = 'a'.repeat(40);
   await writeFile(join(root, 'bin/gh'), `#!/bin/sh
 case "$*" in
-  *actions/runs/7) echo '{"workflow_id":2,"path":".github/workflows/cache-release-publish.yml","head_branch":"dev"}' ;;
-  *actions/workflows/lean-cache-publish.yml) if test -f disabled; then state=disabled_manually; else state=active; fi
-    echo '{"id":1,"path":".github/workflows/lean-cache-publish.yml","state":"'"$state"'"}' ;;
-  *PUT*actions/workflows/1/disable) touch disabled ;;
-  *actions/workflows/1) if test -f disabled && ! test -f deny-disable; then state=disabled_manually; else state=active; fi
-    echo '{"id":1,"path":".github/workflows/lean-cache-publish.yml","state":"'"$state"'"}' ;;
-  *actions/workflows/1/runs*status=queued*) test -f disabled || exit 3; echo '[{"workflow_runs":[{"id":4}]}]' ;;
-  *actions/workflows/1/runs*status=in_progress*) echo '[{"workflow_runs":[{"id":4}]}]' ;;
-  *actions/workflows/1/runs*status=*) echo '[{"workflow_runs":[]}]' ;;
-  'run watch 4 '*) echo watch >> watched ;;
   *actions/runs/7/artifacts*) if test -f pin-exists; then echo '[{"artifacts":[{"name":"generation-pin-7","expired":false}]}]'; else echo '[{"artifacts":[]}]'; fi ;;
   *actions/runs/7/jobs*) if test -f pin-was-successful; then echo '[{"jobs":[{"name":"pin","conclusion":"success"}]}]'; else echo '[{"jobs":[{"name":"pin","conclusion":"failure"}]}]'; fi ;;
   *branches/dev*) echo '{"protected":true,"commit":{"sha":"${tip}"}}' ;;
@@ -220,25 +210,24 @@ case "$*" in
   *) echo "Unexpected request $*" >&2; exit 2 ;;
 esac
 `, { mode: 0o755 });
-  const command = fileURLToPath(new URL('handover.py', import.meta.url));
-  const invoke = () => spawnSync('python3', ['-B', command], { cwd: root, encoding: 'utf8', env: {
+  const command = fileURLToPath(new URL('pin-source.py', import.meta.url));
+  const invoke = (attempt) => spawnSync('python3', ['-B', command], { cwd: root, encoding: 'utf8', env: {
     ...process.env, PATH: join(root, 'bin') + ':' + process.env.PATH,
-    GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: '2', GITHUB_REPOSITORY: 'owner/repo', GITHUB_REF_PROTECTED: 'true',
+    GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: attempt, GITHUB_REPOSITORY: 'owner/repo',
     RUNNER_TEMP: root, GITHUB_OUTPUT: join(root, 'outputs'),
   }});
-  // The first attempt failed before it could upload its pin.
-  await writeFile(join(root, 'deny-disable'), '');
-  assert.equal(invoke().status, 1);
-  await assert.rejects(readFile(join(root, 'watched')), { code: 'ENOENT' });
-  await rm(join(root, 'deny-disable'));
-  const retry = invoke();
+  const first = invoke('1');
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(await readFile(join(root, 'outputs'), 'utf8'), 'source=' + tip + '\nupload=true\n');
+  await rm(join(root, 'outputs'));
+  // A retry can pin dev if the previous attempt failed before saving its pin.
+  const retry = invoke('2');
   assert.equal(retry.status, 0, retry.stderr);
-  assert.equal(await readFile(join(root, 'watched'), 'utf8'), 'watch\n');
   assert.equal(await readFile(join(root, 'outputs'), 'utf8'), 'source=' + tip + '\nupload=true\n');
   await writeFile(join(root, 'pin-was-successful'), '');
-  assert.equal(invoke().status, 1);
+  assert.equal(invoke('2').status, 1);
   await writeFile(join(root, 'pin-exists'), '');
-  const resume = invoke();
+  const resume = invoke('2');
   assert.equal(resume.status, 0, resume.stderr);
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
 });

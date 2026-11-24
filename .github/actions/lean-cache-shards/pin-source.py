@@ -1,12 +1,9 @@
-"""Drain earlier writers before pinning a protected dev generation."""
+"""Pin a protected dev commit for this publication and its retries."""
 
 import json
 import os
 from pathlib import Path
 import subprocess
-
-WORKFLOW = ".github/workflows/lean-cache-publish.yml"
-PUBLISHER = ".github/workflows/cache-release-publish.yml"
 
 
 def api(endpoint, *, pages=False):
@@ -15,39 +12,6 @@ def api(endpoint, *, pages=False):
         args.extend(["--paginate", "--slurp"])
     args.append("repos/" + os.environ["GITHUB_REPOSITORY"] + "/" + endpoint)
     return json.loads(subprocess.check_output(args))
-
-
-def retire():
-    # GitHub blocks reruns of a disabled workflow, including individual jobs.
-    # Existing runs keep executing until their terminal state.
-    run = api("actions/runs/" + os.environ["GITHUB_RUN_ID"])
-    if (run["path"] != PUBLISHER or run["head_branch"] != "dev"
-            or os.environ.get("GITHUB_REF_PROTECTED") != "true"):
-        raise ValueError("protected dev generation publisher required")
-    legacy = api("actions/workflows/lean-cache-publish.yml")
-    workflow = legacy["id"]
-    if legacy["path"] != WORKFLOW or workflow == run["workflow_id"]:
-        raise ValueError("legacy and generation publishers must have distinct workflow IDs")
-    path = f"actions/workflows/{workflow}"
-    if legacy["state"] != "disabled_manually":
-        subprocess.run(["gh", "api", "--method", "PUT",
-                        f"repos/{os.environ['GITHUB_REPOSITORY']}/{path}/disable"], check=True)
-    verified = api(path)
-    if verified["id"] != workflow or verified["path"] != WORKFLOW or verified["state"] != "disabled_manually":
-        raise ValueError("legacy workflow retirement was not confirmed")
-    return path
-
-
-def drain(workflow):
-    runs = set()
-    # A run can advance from queued to in_progress during discovery.
-    for state in ("requested", "waiting", "pending", "queued", "in_progress"):
-        pages = api(f"{workflow}/runs?per_page=100&status={state}", pages=True)
-        runs.update(run["id"] for page in pages for run in page["workflow_runs"])
-    for run in sorted(runs):
-        print(f"Awaiting retired writer {run}", flush=True)
-        subprocess.run(["gh", "run", "watch", str(run), "-R", os.environ["GITHUB_REPOSITORY"],
-                        "--compact", "--interval", "60"], check=True)
 
 
 def pin():
@@ -91,5 +55,4 @@ def pin():
 
 
 if __name__ == "__main__":
-    drain(retire())
     pin()

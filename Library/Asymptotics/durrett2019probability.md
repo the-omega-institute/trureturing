@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Analytic/Probability/UniformCDFConvergence
   - D5/S3/Analytic/Probability/FirstMomentWeakLimit
   - D5/S3/Analytic/Probability/BirkhoffPointwise
+  - D5/S3/Analytic/Probability/BirkhoffCondexp
   - D5/S3/Analytic/Probability/KingmanEstimates
   - D5/S3/Analytic/Probability/KingmanPointwise
 license: citation-only
@@ -105,6 +106,30 @@ Concrete symbolic frequencies, context-dependent compositions,
 joint-product moments, and entropy-production rates require their own
 law, ergodicity, observable, integral and orbit-identification arguments.
 The generic autonomous theorem does not supply those bridges.
+
+## Invariant conditional-expectation limits
+
+Theorem 6.2.1 also gives the nonergodic probability-space limit
+E_mu[g | I], almost surely and in L1, where I is the invariant sigma-algebra.
+`BirkhoffCondexp.birkhoff_conditional_expectation` proves both conclusions
+for arbitrary finite measures, including zero, and arbitrary integrable real
+inputs. It assumes measure preservation and does not assume ergodicity,
+invertibility, boundedness, pointwise measurability of the input or a
+standard-Borel carrier. The real integral of the absolute error tends to zero.
+
+The almost-everywhere proof adapts
+[Lua Viana Reis and Oliver Butterley's Pointwise.lean](https://github.com/lua-vr/mathlib4/blob/ebc0f703f74bec1576e2ca3b078fb173ba11039f/Mathlib/Dynamics/BirkhoffSum/Pointwise.lean),
+the source of [Mathlib PR 42078](https://github.com/leanprover-community/mathlib4/pull/42078).
+The source copyright is retained, and its complete supplier license is
+[mathlib-PR42078-LICENSE.txt](../../docs/reports/licenses/birkhoff-condexp/mathlib-PR42078-LICENSE.txt),
+SHA-256 `b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1`.
+This source gives probability-space almost-everywhere convergence. The
+finite-measure localization applies the existing maximal inequality to the
+restricted invariant divergence set. For a nonnegative input, dominated
+convergence of min(A_n,E_mu[g | I]) and equality of integrals yield L1
+convergence; the positive and negative parts give the general real case.
+This is a classical theorem with attributed proof reuse, without a new
+package dependency or a claim of mathematical originality.
 
 ## Nonnegative subadditive cocycles
 
