@@ -207,8 +207,40 @@ The adapted source is `LeanPool/HardSphereNBC/NBCMatroid.lean` from
 https://github.com/LeanPool/lean-pool at immutable revision
 `d7dcd3c02cf0e220932dd033d5cc2353933d754b`, with source SHA-256
 `52db754a8119adb22a04682e30f3936c39ea90c29e75b33876e2c7b7ed28e861`.
+The consumed parity normalization also comes from `LeanPool/HardSphereNBC/MayerNBC.lean`
+at that revision, SHA-256
+`c5d861414ac0c420d601f085a514bba434ad6eea50303972f29ff1ae713abf26`.
 Copyright (c) 2026 ukiyois and OpenCode agent sessions. The upstream repository's
 NOTICE applies to the HardSphereNBC source and the general LeanPool Apache notices.
 The local adaptation changes only namespace, visibility, pinned-version compatibility,
 and the actual-base/integer-power presentation. The port is retired when pinned Mathlib
 supplies an equivalent full theorem.
+
+
+## Applicable upstream NOTICE text
+
+The following notice applies to the source files used here.
+
+```text
+Lean Pool
+=========
+
+Copyright the Lean Pool contributors and the respective project authors.
+
+Lean Pool is licensed under the Apache License, Version 2.0. See the LICENSE
+file for the full license text.
+
+Lean Pool is an aggregation of third-party Lean 4 formalizations. Each project
+under LeanPool/ is the work of its original authors, who retain copyright as
+recorded in the per-file headers and in the project registry. This NOTICE file
+records, for every pooled project, the upstream repository it was imported from
+and the license under which it was originally published.
+
+Projects originally licensed under the Apache License, Version 2.0
+--------------------------------------------------------------------------------
+
+These projects were imported from repositories already licensed under the
+Apache License, Version 2.0, and are redistributed here under the same license.
+
+  LeanPool/HardSphereNBC             https://github.com/ukiyois/hs-virial-nbc-identity
+```

@@ -26,8 +26,14 @@ The source proves cancellation over a finite ambient carrier for an arbitrary ma
 It defines the least circuit-completing element using the circuit maximum convention, proves witness
 stability under toggling, preserves spanning, and applies the sign-reversing fixed-point-free
 involution to the bad spanning subsets. The no-broken-circuit spanning survivors are proved to be
-actual bases. This delivery ports that proof mechanism to the pinned Lean and presents the endpoint
-as the integer-power identity over the explicit ground-contained actual NBC-base filter.
+actual bases. The local endpoint is the integer-power identity over the explicit
+ground-contained actual NBC-base filter, with the original cancellation proof.
 
 The port is retired when the pinned Mathlib supplies an equivalent full finite-matroid cancellation
 result with the accepted standard axiom closure.
+
+The parity normalization `matroidParitySign_eq_neg_one_pow` is also present at the same revision
+in `LeanPool/HardSphereNBC/MayerNBC.lean`, whose SHA-256 is
+`c5d861414ac0c420d601f085a514bba434ad6eea50303972f29ff1ae713abf26`:
+https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/MayerNBC.lean#L85
+Its induction identifies the recursive cardinality sign with the integer power of minus one.

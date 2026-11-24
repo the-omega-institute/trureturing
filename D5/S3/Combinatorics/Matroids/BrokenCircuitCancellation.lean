@@ -21,9 +21,11 @@ public import Mathlib.Data.Finset.Max
 
 
 /-
-Faithful source port from LeanPool/lean-pool, revision d7dcd3c02cf0e220932dd033d5cc2353933d754b,
-LeanPool/HardSphereNBC/NBCMatroid.lean (SHA-256 52db754a8119adb22a04682e30f3936c39ea90c29e75b33876e2c7b7ed28e861).
-The proof mechanism is retained with namespace, visibility, target-presentation, and pinned-version adaptations.
+Source: LeanPool/lean-pool, revision d7dcd3c02cf0e220932dd033d5cc2353933d754b,
+LeanPool/HardSphereNBC/NBCMatroid.lean, SHA-256
+52db754a8119adb22a04682e30f3936c39ea90c29e75b33876e2c7b7ed28e861.
+Modified for the local namespace, visibility, pinned version and actual-base power identity.
+License and applicable notices: docs/reports/licenses/finite-matroid-nbc-third-party.md.
 The full Apache-2.0 text and upstream notice are recorded in
 docs/reports/licenses/finite-matroid-nbc-third-party.md.
 Retire this port when the pinned Mathlib supplies an equivalent finite-matroid cancellation theorem.
@@ -41,14 +43,14 @@ open scoped BigOperators
 
 
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [LinearOrder α]
+variable {α : Type*} [Fintype α] [LinearOrder α]
 
 /-- The ground set of a matroid on a finite ambient type, as a finite set. -/
 noncomputable def matroidGround (M : Matroid α) : Finset α := by
   classical
   exact Finset.univ.filter (fun e => e ∈ M.E)
 
-omit [DecidableEq α] [LinearOrder α] in
+omit [LinearOrder α] in
 private lemma mem_matroidGround (M : Matroid α) (e : α) :
     e ∈ matroidGround M ↔ e ∈ M.E := by
   simp [matroidGround]
@@ -103,16 +105,16 @@ private lemma leastNBCandidate_le {M : Matroid α} {A : Finset α}
   exact (mem_nbcCandidates.mpr ⟨nbcCandidate_mem_ground he, he⟩)
 
 /-- Remove an element if present and insert it otherwise. -/
-private def toggleEdge (A : Finset α) (e : α) : Finset α :=
+private def toggleEdge [DecidableEq α] (A : Finset α) (e : α) : Finset α :=
   if e ∈ A then A.erase e else insert e A
 
 omit [Fintype α] [LinearOrder α] in
-private lemma toggleEdge_toggleEdge (A : Finset α) (e : α) :
+private lemma toggleEdge_toggleEdge [DecidableEq α] (A : Finset α) (e : α) :
     toggleEdge (toggleEdge A e) e = A := by
   by_cases h : e ∈ A <;> simp [toggleEdge, h]
 
 omit [Fintype α] [LinearOrder α] in
-private lemma toggleEdge_ne (A : Finset α) (e : α) : toggleEdge A e ≠ A := by
+private lemma toggleEdge_ne [DecidableEq α] (A : Finset α) (e : α) : toggleEdge A e ≠ A := by
   by_cases h : e ∈ A <;> simp [toggleEdge, h]
 
 omit [Fintype α] in
@@ -212,7 +214,7 @@ private lemma matroidParitySign_succ (n : Nat) :
   rfl
 
 omit [Fintype α] [LinearOrder α] in
-private lemma toggleEdge_sign {A : Finset α} {e : α} :
+private lemma toggleEdge_sign [DecidableEq α] {A : Finset α} {e : α} :
     matroidParitySign (toggleEdge A e).card =
       -matroidParitySign A.card := by
   by_cases h : e ∈ A
@@ -233,7 +235,7 @@ private noncomputable def badSpanningSubsets (M : Matroid α) : Finset (Finset �
   classical
   exact (spanningSubsets M).filter (IsNBCBad M)
 
-omit [DecidableEq α] [LinearOrder α] in
+omit [LinearOrder α] in
 private lemma mem_spanningSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ spanningSubsets M) : M.Spanning (A : Set α) := by
   classical
@@ -487,7 +489,7 @@ its ground-contained actual no-broken-circuit bases. Circuits are finite sets,
 and a broken circuit is obtained by deleting a circuit maximum; arbitrary
 ambient elements outside the matroid ground, empty grounds, rank-zero matroids,
 loops, and disconnected matroids remain in scope. -/
-theorem spanningPower_eq_actualNBCBasePower (M : Matroid α) :
+theorem alternating_spanning_sum_eq_actual_nbc_base_sum (M : Matroid α) :
     (∑ A ∈ spanningSubsets M, (-1 : Int) ^ A.card) =
       actualNBCBasePowerSum M := by
   classical
