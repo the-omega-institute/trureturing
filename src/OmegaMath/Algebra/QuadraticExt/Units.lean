@@ -6,8 +6,8 @@ public import OmegaMath.Algebra.QuadraticExt.Operations
 Omega original.
 
 In a quadratic algebra an element is invertible exactly when its norm is
-invertible. Over the strict integers this gives the golden integer unit
-criteria of `D5.S0.Carrier.Units`, with inverse witnesses from conjugation.
+invertible. Over the strict integers the unit criterion is absolute norm one.
+Conjugation supplies explicit inverse witnesses.
 -/
 
 noncomputable section
