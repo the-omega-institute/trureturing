@@ -64,5 +64,13 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                     + "nonzero endpoint blocks. For example, the pure vacuum has two vacuum "
                     + "projections as endpoint blocks. The positive-pivot formula divides "
                     + "by b and requires the separate zero-occupation analysis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-rational-prescribed-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at"),
+                H("Rational extension at a prescribed coupling"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix a nonnegative middle occupation, rational observed entries, and a rational value for the unobserved coupling. Suppose the traces normalize the data, both residual marginals are positive semidefinite, and the row vanishes when the middle occupation is zero. The data admit a positive trace-one extension with rational real and imaginary parts in every entry.")),
+                    Paragraph(Text("Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates."))),
                 DescribeRole.Theorem))));
 }
