@@ -16,7 +16,21 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA203981Strip}}.\operator
 
 The arrays have one more row than the sequence index. The order is the one induced by the row-major index 6i+j, with colours introduced in increasing order. The published sequence starts at index one. The literal filter here also defines index zero.
 
-**Theorem 1.2 (Exact conversion from labelled to canonical arrays).**
+**Theorem 1.2 (Exact orbit scaling at positive width).**
+
+$$\forall w: \mathit{Nat}, (\forall m: \mathit{Nat}, (\forall d: \mathit{Nat}, (\forall H: \operatorname{\mathit{Finset}}\left((\operatorname{\mathit{Fin}}\left(w + 1\right)) \times (\operatorname{\mathit{Fin}}\left(w + 1\right))\right), (\forall V: \operatorname{\mathit{Finset}}\left((\operatorname{\mathit{Fin}}\left(w + 1\right)) \times (\operatorname{\mathit{Fin}}\left(w + 1\right))\right), (\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}_{3}\right)\left(H, V, d, m + 1\right) + (\operatorname{\mathit{if}} (d = \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(H\right) + m \cdot \left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(V\right) + \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(H\right)\right)) \operatorname{\mathit{then}} 3 \operatorname{\mathit{else}} 0) = 6 \cdot \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda f: ((\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(w + 1\right))) \to (\operatorname{\mathit{Fin}}\left(3\right)) \mapsto ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{defects}}\left(H, V, \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(m + 1\right) \mapsto (\lambda j: \operatorname{\mathit{Fin}}\left(w + 1\right) \mapsto (f\left((i, j)\right)))\right)\right) = d) \land (\forall p: (\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(w + 1\right)), (\forall c: \operatorname{\mathit{Fin}}\left(3\right), ((c < f\left(p\right)) \implies (\exists q: (\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(w + 1\right)), ((\left(w + 1\right) \cdot \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(q\right)\right) + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(q\right)\right) < \left(w + 1\right) \cdot \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(p\right)\right) + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(p\right)\right)) \land (f\left(q\right) = c))))))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.scale_count_of_bonds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.
+
+*Commentary.*
+
+The width is w plus one. H gives the bonds within a row, and V gives the bonds between consecutive rows. A constant array has one copy of H in each row and one copy of V per row pair. At that budget the three constant labelled arrays give one canonical array. Each nonconstant orbit contributes six labellings. Positive width supplies a cell at which to distinguish the three constant arrays.
+
+**Theorem 1.3 (Exact conversion from labelled to canonical arrays).**
 
 $$\forall m: \mathit{Nat}, (\forall d: \mathit{Nat}, (\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}_{3}\right)\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{empty}}, \operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{betw}}\left(6\right), d, m + 1\right) + (\operatorname{\mathit{if}} (d = m \cdot 10) \operatorname{\mathit{then}} 3 \operatorname{\mathit{else}} 0) = 6 \cdot \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda f: ((\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(6\right))) \to (\operatorname{\mathit{Fin}}\left(3\right)) \mapsto ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{defects}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{empty}}, \operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{betw}}\left(6\right), \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(m + 1\right) \mapsto (\lambda j: \operatorname{\mathit{Fin}}\left(6\right) \mapsto (f\left((i, j)\right)))\right)\right) = d) \land (\forall p: (\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(6\right)), (\forall c: \operatorname{\mathit{Fin}}\left(3\right), ((c < f\left(p\right)) \implies (\exists q: (\operatorname{\mathit{Fin}}\left(m + 1\right)) \times (\operatorname{\mathit{Fin}}\left(6\right)), ((6 \cdot \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(q\right)\right) + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(q\right)\right) < 6 \cdot \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(p\right)\right) + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(p\right)\right)) \land (f\left(q\right) = c))))))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right)))$$
 
@@ -30,7 +44,7 @@ $$\forall m: \mathit{Nat}, (\forall d: \mathit{Nat}, (\left(\operatorname{\mathi
 
 The subscript gives the palette size. Each pair of consecutive rows gives ten diagonal and antidiagonal bonds. A constant array with m plus one rows has exactly 10m defects. The constant arrays form one canonical class with three labellings. Every nonconstant class has six labellings.
 
-**Theorem 1.3 (Exact transfer for the canonical count).**
+**Theorem 1.4 (Exact transfer for the canonical count).**
 
 $$\forall m: \mathit{Nat}, (\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}^{m}, (1: (\operatorname{\mathit{Fin}}\left(15\right)) \to (\mathit{Int}))\right)\right) + (\operatorname{\mathit{if}} (m = 0) \operatorname{\mathit{then}} 3 \operatorname{\mathit{else}} 0) = 6 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(m\right): \mathit{Int}))$$
 
@@ -44,7 +58,7 @@ $$\forall m: \mathit{Nat}, (\operatorname{\mathit{dotProduct}}\left(\operatornam
 
 At least two rows supply a bond, so the zero budget excludes constant arrays and each canonical array has six labelled realizations. A single row admits the constant array, whose orbit has size three.
 
-**Theorem 1.4 (Order-six recurrence).**
+**Theorem 1.5 (Order-six recurrence).**
 
 $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 7\right): \mathit{Int}) = 25 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 6\right): \mathit{Int}) - 45 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 5\right): \mathit{Int}) - 963 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 4\right): \mathit{Int}) + 2025 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 3\right): \mathit{Int}) + 3645 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 2\right): \mathit{Int}) - 6561 \cdot (\operatorname{\mathit{HardinA203981Strip}}.\operatorname{a}\left(n + 1\right): \mathit{Int}))$$
 
@@ -64,6 +78,7 @@ The coefficient relation propagates under additional transfer steps. The display
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.counting_bridge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.scale_count`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.scale_count_of_bonds`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate](HardinA203981StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData](HardinA203981StripData.md)

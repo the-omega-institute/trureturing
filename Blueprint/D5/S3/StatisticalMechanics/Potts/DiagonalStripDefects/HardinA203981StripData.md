@@ -116,7 +116,35 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{
 
 Each row interleaves two representatives of the three-position equality classes.
 
-**Definition 1.9 (Unordered pair weights).**
+**Theorem 1.9 (Ordered classes of a representative).**
+
+$$\forall i: \operatorname{\mathit{Fin}}\left(15\right), ((\operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{parityRows}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right)\right)\right)\right) = \operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(i\right)\right)) \land (\operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{\mathit{cls}}\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{parityRows}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right)\right)\right)\right) = \operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(i\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.cls_at_rep` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.
+
+*Commentary.*
+
+Reading the parity triples reverses the interleaving and recovers the two listed classes in order.
+
+**Theorem 1.10 (Boundary of a representative).**
+
+$$\forall i: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{boundary}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{representatives}}\left(i\right)\right) = i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.boundary_at_rep` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.
+
+*Commentary.*
+
+Looking up the listed class pair recovers its original index.
+
+**Definition 1.11 (Unordered pair weights).**
 
 $$\forall (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Mul}}\left(\mathit{alpha}\right)] [\operatorname{\mathit{Add}}\left(\mathit{alpha}\right)] [\operatorname{\mathit{Zero}}\left(\mathit{alpha}\right)], (\forall u: (\operatorname{\mathit{Fin}}\left(5\right)) \to (\mathit{alpha}), (\forall v: (\operatorname{\mathit{Fin}}\left(5\right)) \to (\mathit{alpha}), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(u, v, j\right) = u\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)\right) \cdot v\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)\right) + (\operatorname{\mathit{if}} (\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right) = \operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)) \operatorname{\mathit{then}} 0 \operatorname{\mathit{else}} u\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)\right) \cdot v\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(j\right)\right)\right))))))$$
 
@@ -130,7 +158,7 @@ $$\forall (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Mul}}\left(\mat
 
 Equal classes contribute once. Distinct classes contribute in both orders.
 
-**Definition 1.10 (Zero-cost half-strip block).**
+**Definition 1.12 (Zero-cost half-strip block).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(5\right), (\forall j: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfZero}}\left(i, j\right) = \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{Q}\left(i, \operatorname{\mathit{Equiv}}.\operatorname{\mathit{swap}}\left(1, 3, j\right)\right)))$$
 
@@ -144,7 +172,7 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(5\right), (\forall j: \operatornam
 
 The half-strip reads the target triple backwards, which exchanges classes 1 and 3.
 
-**Definition 1.11 (Product of two class transitions).**
+**Definition 1.13 (Product of two class transitions).**
 
 $$\forall (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Mul}}\left(\mathit{alpha}\right)] [\operatorname{\mathit{Add}}\left(\mathit{alpha}\right)] [\operatorname{\mathit{Zero}}\left(\mathit{alpha}\right)], (\forall A: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{alpha}\right), (\forall B: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{alpha}\right), (\forall i: \operatorname{\mathit{Fin}}\left(15\right), (\forall j: \operatorname{\mathit{Fin}}\left(15\right), (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classProduct}}\left(A, B, i, j\right) = \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(A\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{fst}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(i\right)\right)\right), B\left(\operatorname{\mathit{Prod}}.\operatorname{\mathit{snd}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\left(i\right)\right)\right), j\right))))))$$
 
@@ -158,7 +186,7 @@ $$\forall (\mathit{alpha}: \mathit{Type}) [\operatorname{\mathit{Mul}}\left(\mat
 
 The first and second source classes select the two rows whose target weights are combined.
 
-**Definition 1.12 (Zero-cost transfer).**
+**Definition 1.14 (Zero-cost transfer).**
 
 $$\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T} = \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classProduct}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfZero}}, \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfZero}}\right)$$
 
@@ -172,7 +200,7 @@ $$\operatorname{\mathit{HardinA203981StripData}}.\operatorname{T} = \operatornam
 
 Each parity class contributes its zero-cost transition.
 
-**Definition 1.13 (Initial half-strip populations).**
+**Definition 1.15 (Initial half-strip populations).**
 
 $$\forall i: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfInitial}}\left(i\right) = \operatorname{\mathit{HardinA229588Strip}}.\operatorname{\mathit{initial}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(5, i\right)\right))$$
 
@@ -186,7 +214,7 @@ $$\forall i: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{H
 
 The first five entries of the half-strip initial vector are its class populations.
 
-**Definition 1.14 (Labelled first-row distribution).**
+**Definition 1.16 (Labelled first-row distribution).**
 
 $$\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{unordered}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfInitial}}, \operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{halfInitial}}\right)$$
 
@@ -205,8 +233,10 @@ The two independent labelled triples contribute the product of their populations
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.T`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.between_six`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.boundary`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.boundary_at_rep`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.classPair`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.classProduct`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.cls_at_rep`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.columnRows`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.halfInitial`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.halfZero`
