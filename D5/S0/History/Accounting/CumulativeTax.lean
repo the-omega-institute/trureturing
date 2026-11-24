@@ -5,34 +5,30 @@
    anchors: []
    digest: Stepwise additive taxes accumulate to the terminal balance. -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-
-/- Library-search audit trail (2026-08-16):
-   * Repository searches for telescoping, stepwise taxes, and cumulative accounting found
-     applications of telescoping sums but no declaration of this recurrence theorem.
-   * Pinned Mathlib and Loogle both returned the exact upstream telescoping lemma
-     `Finset.sum_range_sub`; the proof below applies it directly.
-   * The skill `smart_search.sh` text queries exited 1 without a declaration-name match. -/
+module
+prelude
+public import OmegaMath.Algebra.BigOperators.Range
+public import OmegaMath.Topology.SimplicialCoboundary
 
 namespace D5.S0.History.Accounting.CumulativeTax
 
-open scoped BigOperators
+open Omega
 
-/-- If every transition adds its tax to the current balance, the terminal balance is the
-initial balance plus the sum of all preceding taxes. -/
-theorem terminal_balance_eq_initial_add_tax
-    {G : Type*} [AddCommGroup G] (balance tax : Nat -> G)
-    (step : forall i, balance (i + 1) = balance i + tax i) (n : Nat) :
-    balance n = balance 0 + ∑ i ∈ Finset.range n, tax i := by
-  have tax_eq (i : Nat) : tax i = balance (i + 1) - balance i := by
-    rw [eq_sub_iff_add_eq]
-    simpa [add_comm] using (step i).symm
-  calc
-    balance n = balance 0 + (balance n - balance 0) := by simp
-    _ = balance 0 + ∑ i ∈ Finset.range n, (balance (i + 1) - balance i) := by
-      rw [Finset.sum_range_sub]
-    _ = balance 0 + ∑ i ∈ Finset.range n, tax i := by
-      congr 1
-      exact Finset.sum_congr rfl fun i _ => (tax_eq i).symm
+/-- If each transition adds its tax to the balance, the balance at any stage
+is the initial balance plus the sum of the preceding taxes. -/
+public theorem terminal_balance_eq_initial_add_tax
+    {A : Type u} (group : AddCommGroup A) (laws : group.Laws) (balance tax : Nat → A)
+    (step : ∀ index, Eq (balance index.succ) (group.add (balance index) (tax index)))
+    (bound : Nat) :
+    Eq (balance bound) (group.add (balance .zero) (sumRange group.zero group.add tax bound)) :=
+  Nat.rec
+    (motive := fun index =>
+      Eq (balance index) (group.add (balance .zero) (sumRange group.zero group.add tax index)))
+    (group.add_zero laws (balance .zero)).symm
+    (fun index previous =>
+      (step index).trans
+        ((congrArg (fun total => group.add total (tax index)) previous).trans
+          (laws.add_assoc (balance .zero) (sumRange group.zero group.add tax index) (tax index))))
+    bound
 
 end D5.S0.History.Accounting.CumulativeTax
