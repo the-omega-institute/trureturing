@@ -26,22 +26,23 @@ public theorem absolute_complement_requires_ambient_total
       ((congrArg (fun value => group.add value e) h).trans (group.sub_add_cancel laws v e))
   And.intro
     (Iff.intro recover (congrArg fun total => group.sub total e))
-    (Iff.intro (fun h => recover (congrArg (fun operation => operation e) h))
+    (Iff.intro (fun h => recover (congrArg (fun operation : A → A => operation e) h))
       (congrArg group.sub))
 
 /- Integer totals witness that changing the ambient total changes both outputs and operations. -/
 example :
-    let group := AddCommGroup.ofOperations Int.zero Int.add Int.neg
+    let group := AddCommGroup.ofOperations (Int.ofNat Nat.zero) Int.add Int.neg
     let one := Int.ofNat Nat.zero.succ
     let two := Int.ofNat Nat.zero.succ.succ
     And (Not (Eq (group.sub one group.zero) (group.sub two group.zero)))
       (Not (Eq (group.sub one) (group.sub two))) :=
-  let group := AddCommGroup.ofOperations Int.zero Int.add Int.neg
+  let group := AddCommGroup.ofOperations (Int.ofNat Nat.zero) Int.add Int.neg
   let one := Int.ofNat Nat.zero.succ
   let two := Int.ofNat Nat.zero.succ.succ
   have distinct : Not (Eq (group.sub one group.zero) (group.sub two group.zero)) :=
     fun h => Eq.subst (Nat.rec (motive := fun _ => Prop) True (fun _ _ => False))
       (Nat.succ.inj (congrArg Int.natAbs h)) True.intro
-  And.intro distinct (fun h => distinct (congrArg (fun operation => operation group.zero) h))
+  And.intro distinct
+    (fun h => distinct (congrArg (fun operation : Int → Int => operation group.zero) h))
 
 end D5.S0.Conventions.AmbientComplementDependence
