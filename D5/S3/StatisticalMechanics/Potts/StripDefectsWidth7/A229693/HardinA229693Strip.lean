@@ -356,8 +356,7 @@ private theorem rightColumn_eq (j : Fin 96) :
 set_option maxRecDepth 10000 in
 private theorem representative_data (j : Fin 96) :
     columnRank (columnRepresentative (columnRank j)) = columnRank j ∧
-    exitRead (columnRepresentative (columnRank j)) = exitRead j ∧
-    initial ((columnRepresentative (columnRank j)).natAdd 72) = initial (j.natAdd 72) := by
+    exitRead (columnRepresentative (columnRank j)) = exitRead j := by
   fin_cases j <;> decide +kernel
 
 private def exhaustedRank (k : Fin 60) : ℕ :=
@@ -574,13 +573,10 @@ private theorem leading_step (i : Fin 14) :
         omega)
       rw [← hc, ← hn, ih x hx]
 
-private theorem w_representative (i : Fin 15) (j : Fin 96) :
+private theorem w_representative (i : Fin 15) (hi : i.val ≠ 0) (j : Fin 96) :
     w i ((columnRepresentative (columnRank j)).natAdd 72) = w i (j.natAdd 72) := by
-  rcases representative_data j with ⟨hrank, hexit, hstart⟩
-  unfold w
-  split
-  · exact hstart
-  · simp only [Fin.addCases_right, hexit, hrank]
+  rcases representative_data j with ⟨hrank, hexit⟩
+  simp only [w, hi, dite_false, Fin.addCases_right, hexit, hrank]
 
 private def checkColumn (k : Fin 60) : Bool :=
   let j := columnRepresentative k
@@ -616,7 +612,7 @@ private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
   have hcol : rightColumn (columnRepresentative k) = rightColumn j := by
     unfold rightColumn
     rw [(representative_data j).1]
-  rw [beq_iff_eq, w_representative, hcol] at h
+  rw [beq_iff_eq, w_representative i.succ (Nat.succ_ne_zero _) j, hcol] at h
   simpa only [arithmeticRow, ← rightColumn_eq, sum_zip_mul, Matrix.vecMul] using h
 
 private theorem leading_action (v : Fin 168 → ℤ) (j : Fin 72) :
