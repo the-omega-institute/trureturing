@@ -39,25 +39,25 @@ open private quadratureParameterRow quadratureShiftBound from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortJointLower
 
 local cbv_simproc cbv_eval stageParameterRow (quadratureParameterRow _ _ _ _) :=
-  stageLiteral (List Rat)
+  stageLiteral (List Rat) (limitStatementSize := true)
 local cbv_simproc cbv_eval stageShiftedRow (shiftedQuadratureParameterRow _ _ _ _ _ _) :=
-  stageLiteral (List Rat)
+  stageLiteral (List Rat) (limitStatementSize := true)
 local cbv_simproc cbv_eval stageShiftBound (quadratureShiftBound _ _ _ _ _ _) :=
-  stageLiteral Rat
+  stageLiteral Rat (limitStatementSize := true)
 local cbv_simproc cbv_eval stageExpMoment (shortExpMomentBound _ _ _ _ _ _ _) :=
-  stageLiteral Rat
+  stageLiteral Rat (limitStatementSize := true)
 
-local cbv_simproc cbv_eval stageMul (Model.mul _ _) := stageOnModels 2 stageModel
-local cbv_simproc cbv_eval stageAdd (Model.add _ _) := stageOnModels 2 stageModel
-local cbv_simproc cbv_eval stageSub (Model.sub _ _) := stageOnModels 2 stageModel
-local cbv_simproc cbv_eval stageOfRat (Model.ofRat _) := stageModel
-local cbv_simproc cbv_eval stageWiden (Model.widen _ _) := stageOnModels 1 stageModel
-local cbv_simproc cbv_eval stageLower (Model.lower _) := stageOnModels 1 (stageLiteral Int)
-local cbv_simproc cbv_eval stageAbsUpper (Model.absUpper _) := stageOnModels 1 (stageLiteral Nat)
+local cbv_simproc cbv_eval stageMul (Model.mul _ _) := stageOnModels 2 (stageModel (limitStatementSize := true))
+local cbv_simproc cbv_eval stageAdd (Model.add _ _) := stageOnModels 2 (stageModel (limitStatementSize := true))
+local cbv_simproc cbv_eval stageSub (Model.sub _ _) := stageOnModels 2 (stageModel (limitStatementSize := true))
+local cbv_simproc cbv_eval stageOfRat (Model.ofRat _) := (stageModel (limitStatementSize := true))
+local cbv_simproc cbv_eval stageWiden (Model.widen _ _) := stageOnModels 1 (stageModel (limitStatementSize := true))
+local cbv_simproc cbv_eval stageLower (Model.lower _) := stageOnModels 1 (stageLiteral Int (limitStatementSize := true))
+local cbv_simproc cbv_eval stageAbsUpper (Model.absUpper _) := stageOnModels 1 (stageLiteral Nat (limitStatementSize := true))
 local cbv_simproc cbv_eval stageCenter (CompactTaylorModel.Model.center _) :=
-  stageOnModels 1 (stageLiteral Rat)
-local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat)
-local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat)
+  stageOnModels 1 (stageLiteral Rat (limitStatementSize := true))
+local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat) (limitStatementSize := true)
+local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat) (limitStatementSize := true)
 
 attribute [local cbv_opaque] Model.add Model.sub Model.mul Model.lower Model.absUpper
 

@@ -41,8 +41,8 @@ private partial def remainingStatementNodes (e : Expr) (budget : Nat) : Nat :=
     | _ => next
 
 -- The compiled evaluator proposes data. The kernel checks the resulting equality.
-private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr) :
-    Simproc := fun e => do
+private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr)
+    (limitStatementSize : Bool) : Simproc := fun e => do
   if e.hasFVar || e.hasMVar || e.hasLooseBVars then
     return .rfl
   let (output, equality) ← liftM (m := MetaM) <| do
@@ -53,7 +53,7 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
     -- Keep large computations in the proof term, where their expressions
     -- need not be serialized as exported theorem statements.
     if e.isAppOfArity ``Model.ofRat 1 || e.isAppOfArity ``Model.widen 2 ||
-        remainingStatementNodes theoremType 262144 = 0 then
+        (limitStatementSize && remainingStatementNodes theoremType 262144 == 0) then
       return (output, mkExpectedPropHint proof theoremType)
     let equality ← try
       withOptions (fun opts ↦ Lean.maxHeartbeats.set (Elab.async.set opts false) 350000) <|
@@ -63,10 +63,11 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
     pure (output, mkConst equality)
   return .step (← Sym.shareCommon output) equality (done := true)
 
-meta def stageLiteral (α : Type) [ToExpr α] : Simproc :=
-  stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr)
+meta def stageLiteral (α : Type) [ToExpr α] (limitStatementSize : Bool := false) : Simproc :=
+  stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr) limitStatementSize
 
-meta def stageModel : Simproc := stageQuoted Model (mkConst ``Model) quoteModel
+meta def stageModel (limitStatementSize : Bool := false) : Simproc :=
+  stageQuoted Model (mkConst ``Model) quoteModel limitStatementSize
 
 meta def stageOnModels (count : Nat) (proc : Simproc) : Simproc := fun e => do
   unless (e.getAppArgs.extract 0 count).all (fun a => a.isAppOfArity ``Model.mk 2) do
