@@ -31,8 +31,9 @@ open OriginalFourMAssignedOverlap
   (assignedChargeTerm assignedSector assigned_charge_summable_norm assigned_fourier_overlap)
 open OriginalFourMWickLowering (pairWeight)
 open OriginalFourMSpatialWickPartition (liftedScale)
-open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (doubleSlit doubleSlit_preconnected ball_subset_slitDomain)
-open OriginalFourMSlitMean (slitCovarianceEntry slitCovarianceEntry_analyticOnNhd)
+open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
+  (doubleSlit doubleSlit_preconnected ball_subset_slitDomain)
+open OriginalFourMSlitMean (slitCovarianceEntry slitCovarianceEntry_analyticOnNhd slitMeanEntry)
 open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit)
 open OriginalFourMOccupationTransport (flags)
 open OriginalFourMFixedChargeWick (Mode nativeModeCovariance nativeModeMean modeMatrix)
@@ -244,14 +245,35 @@ theorem mode_array_pullback (D : LatticeData) (q : Charge D) (c : Chart) (x : �
     nativeModeCovariance D c x slot colour n = (compactCovariance D c x F).submatrix f f ∧
       nativeModeMean D q c x slot colour n = compactMean D q c x F ∘ f := by
   dsimp only
+  let f := compactMode D c slot colour F hF
+  have hleg (a : Mode n) :
+      (compactMode D c slot colour F hF a).isRight = (flags c (slot a.1)).1 := by
+    cases h : (flags c (slot a.1)).1 <;> simp [compactMode, h]
+  have hlabel (a : Mode n) :
+      compactLabel (compactMode D c slot colour F hF a) =
+        ((flags c (slot a.1)).2, colour a.1, a.2.val) := by
+    cases h₁ : (flags c (slot a.1)).1 <;> cases h₂ : (flags c (slot a.1)).2 <;>
+      simp [compactMode, compactLabel, compactExternal, h₁, h₂]
+  have hslot (a : Mode n) : dPuncture (compactMode D .D slot colour F hF a) = slot a.1 := by
+    cases h : slot a.1 <;> simp only [compactMode, h] <;> rfl
+  have hmatrix (r : ℂ) (i j : CompactExternal D F ⊕ CompactExternal D F) :
+      slitMatrix D (compactExternal D F) r i j =
+        slitCovarianceEntry D i.isRight j.isRight (compactLabel i) (compactLabel j) r := by
+    cases i <;> cases j <;> rfl
+  have hmean (r : ℂ) (i : CompactExternal D F ⊕ CompactExternal D F) :
+      slitLinear D (compactExternal D F) r i =
+        slitMeanEntry i.isRight (compactLabel i).1 (compactLabel i).2.2 r := by
+    cases i <;> rfl
   constructor
   · ext a b
-    cases c <;> cases ha : slot a.1 <;> cases hb : slot b.1 <;>
+    change _ = compactCovariance D c x F (f a) (f b)
+    cases c <;>
       simp only [nativeModeCovariance, compactCovariance, Matrix.of_apply,
-        Matrix.submatrix_apply, compactMode, ha, hb] <;> rfl
+        hmatrix, topMode, hleg, hlabel, f, hslot] <;> rfl
   · funext a
-    cases c <;> cases ha : slot a.1 <;>
-      simp only [nativeModeMean, compactMean, Function.comp_apply, compactMode, ha] <;> rfl
+    change _ = compactMean D q c x F (f a)
+    cases c <;>
+      simp only [nativeModeMean, compactMean, hmean, topMode, hleg, hlabel, f, hslot]
 
 /-- Evaluate the literal compact affine coefficient with the four factorial
 weights obtained from the assigned occurrence word. -/
@@ -334,7 +356,7 @@ theorem compactCovariance_d_symm (D : LatticeData) {x : ℝ} (hx : 0 < x) (hx₁
       (hr : r ∈ dLip true) :
       entry i j r = slitMatrix D (compactExternal D F) r i j := by
     cases i <;> cases j <;> exact dLipCovarianceEntry_eq_slit D true _ _ _ _ hr
-  haveI : (𝓝[dLip true] (t : ℂ)).NeBot := by
+  have : (𝓝[dLip true] (t : ℂ)).NeBot := by
     apply mem_closure_iff_nhdsWithin_neBot.mp
     change (t : ℂ) ∈ closure {z : ℂ | z.im < 0}
     rw [Complex.closure_setOfPred_im_lt]
