@@ -8,7 +8,7 @@ internal sealed class UnistochasticTypeIMinusDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Quantum/Matrix/Unistochastic/TypeIMinus.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumBounds/bengtssonericssonkustadejzyczkowski2004unistochastic");
+        LibraryNoteRef.Create("D5/L/Convexity/bengtssonericssonkustadejzyczkowski2004unistochastic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The strict Type I− hyperoctant excludes order-four unistochastic matrices.",
