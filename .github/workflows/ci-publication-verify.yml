@@ -64,14 +64,13 @@ jobs:
     needs: parallel-compile
     name: verify cache publication and restore
     if: >-
-      !cancelled() && (github.event_name == 'push' ||
+      !cancelled() && github.event_name == 'workflow_dispatch' &&
       (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') &&
        ((contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && needs.parallel-compile.result == 'success' &&
          (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == inputs.mode)) ||
-        (!contains(fromJSON('["auto","release","parallel","compile-only"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
+        (!contains(fromJSON('["auto","release","parallel","compile-only"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')))
     runs-on: ubuntu-24.04-arm
-    # Dispatches and cold verification pushes use the scheduled Release build window.
-    timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
+    timeout-minutes: 360
     outputs:
       indexed-tag: ${{ steps.publish.outputs.indexed_tag }}
     permissions:
@@ -85,12 +84,12 @@ jobs:
     env:
       LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
-      STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && '21600' || '7200' }}
+      STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
       LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
       LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.parallel-compile.outputs.sparse == 'true' && '1' || '0' }}
-      SHARD_HANDOFF: ${{ needs.parallel-compile.outputs.seed || github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
-      CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
+      SHARD_HANDOFF: ${{ needs.parallel-compile.outputs.seed || inputs.mode }}
+      CHECKPOINT_SECONDS: ${{ inputs.checkpoint_seconds }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -200,6 +199,7 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+          cache: false
       - if: steps.entry.outputs.hit == 'true'
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - if: steps.entry.outputs.hit == 'true'
@@ -355,22 +355,21 @@ jobs:
           (( ${#reports[@]} == 0 ))
 
   cache-shards:
-    name: Verify Lean cache continuation transport
-    if: github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+    name: Verify read-only Lean cache recovery
+    if: github.event_name == 'push' && github.ref_protected
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
       contents: read
-      actions: write
+      actions: read
     env:
-      STRATALINT_CACHE_WRITES: 'true'
+      STRATALINT_CACHE_WRITES: 'false'
       CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
-      STRATALINT_SHARD_VERIFICATION: scoped-eviction
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 2002
+          fetch-depth: 2
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
@@ -385,6 +384,9 @@ jobs:
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check read-only cache requests on hits and misses
+        run: node --test .github/actions/lean-cache-shards/test-generation.mjs
       - if: steps.entry.outputs.hit == 'true'
         id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
@@ -403,81 +405,27 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - if: steps.entry.outputs.hit == 'true'
-        name: Prepare Lean dependencies and build the scoped checkpoint
+        name: Restore Lean dependencies
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-          make lean LEAN_TARGETS="$CACHE_SCOPE"
       - if: steps.entry.outputs.hit == 'true'
-        id: checkpoint
-        name: Save scoped producer continuation
+        name: Restore the selected module through the CI reader
+        continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
-          operation: save
-          state: resume
-          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+          operation: restore-published
           targets: ${{ env.CACHE_SCOPE }}
       - if: steps.entry.outputs.hit == 'true'
-        name: Isolate the restored build
+        name: Build the selected module with any recovered inputs
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
-          test -f .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
-          mv .lake/build .lake/shard-verification-source
-      - if: steps.entry.outputs.hit == 'true'
-        id: resumed
-        name: Restore the immutable producer continuation
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: restore
-          state: resume
-          targets: ${{ env.CACHE_SCOPE }}
-      - if: steps.entry.outputs.hit == 'true'
-        name: Check the recovered bytes and Lake freshness
-        env:
-          SAVED: ${{ steps.checkpoint.outputs.available }}
-          UNSAVED: ${{ steps.checkpoint.outputs.missing }}
-          RESTORED: ${{ steps.resumed.outputs.available }}
-          MISSING: ${{ steps.resumed.outputs.missing }}
-        run: |
-          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$UNSAVED" == 0 && "$MISSING" == 0 ]]
-          path=lib/lean/D5/S0/Tower/GoldenGapWord.olean
-          cmp ".lake/shard-verification-source/$path" ".lake/build/$path"
-          lake --no-build build "$CACHE_SCOPE"
-
-      - if: steps.entry.outputs.hit == 'true'
-        name: Evict one entry of this run's incomplete index
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          index=build/lean-cache/shards/index.json
-          prefix="$(python3 tools/scripts/worktree/lean_actions_shards.py identity --state resume | jq -er .prefix)"
-          digest="$(jq -er '.entries | to_entries[0].value' "$index")"
-          gh cache delete --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF" "${prefix}material-$digest"
-          mv .lake/build .lake/shard-verification-recovered
-      - if: steps.entry.outputs.hit == 'true'
-        id: evicted
-        name: Restore remaining checkpoint entries
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: restore
-          state: resume
-          targets: ${{ env.CACHE_SCOPE }}
-      - if: steps.entry.outputs.hit == 'true'
-        name: Rebuild the missing checkpoint entry through Lake
-        env:
-          SAVED: ${{ steps.checkpoint.outputs.available }}
-          AVAILABLE: ${{ steps.evicted.outputs.available }}
-          MISSING: ${{ steps.evicted.outputs.missing }}
-        run: |
-          [[ "$AVAILABLE" =~ ^[0-9]+$ && "$MISSING" == 1 && $((AVAILABLE + 1)) == "$SAVED" ]]
           make lean LEAN_TARGETS="$CACHE_SCOPE"
           lake --no-build build "$CACHE_SCOPE"
 
@@ -536,6 +484,7 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+          cache: false
       - if: steps.entry.outputs.hit == 'true'
         name: Publish an isolated verification resource pack
         env:

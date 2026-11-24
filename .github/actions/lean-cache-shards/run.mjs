@@ -1,5 +1,6 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { latestSeed, migrateSeed, selectSeed } from './legacy-seed.mjs';
 import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -282,8 +283,8 @@ function visibleEntries(ref, prefix) {
   if (!process.env.GH_TOKEN || !repository) throw new Error('Actions cache inventory credentials are missing');
   const listing = execFileSync('gh', [
     'api', '--paginate', '--method', 'GET', 'repos/' + repository + '/actions/caches',
-    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version}',
-  ], { encoding: 'utf8', timeout: 90000, maxBuffer: 4 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version, created_at}',
+  ], { encoding: 'utf8', timeout: 300000, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
   return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
 }
 
@@ -318,6 +319,61 @@ async function digestFile(path) {
   const hash = createHash('sha256');
   for await (const chunk of createReadStream(path)) hash.update(chunk);
   return hash.digest('hex');
+}
+
+function requirePublisher() {
+  const env = process.env;
+  if (!['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)
+      || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
+      || env.STRATALINT_CACHE_WRITES !== 'true'
+      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/lean-cache-publish.yml@refs/heads/dev') {
+    throw new Error('shared cache writes require the protected dev Release publisher');
+  }
+}
+
+async function generationIndex(digest, file) {
+  if (!/^[0-9a-f]{64}$/.test(digest) || !file) throw new Error('invalid generation index arguments');
+  const put = operation === 'generation-put';
+  if (put) {
+    requirePublisher();
+    if (await digestFile(file) !== digest) throw new Error('generation index digest mismatch');
+  }
+  // The Actions cache version includes the literal path. Every run and both
+  // operations must use this workspace-relative name, regardless of caller.
+  const path = 'build/lean-cache/generation/index.json';
+  const key = 'lean-generation-v1-' + digest;
+  const { cache } = await loadCacheClient();
+  await mkdir(dirname(path), { recursive: true });
+  if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
+    if (resolve(file) !== resolve(path)) await copyFile(file, path);
+    await cache.saveCache([path], key);
+  }
+  await rm(path, { force: true });
+  if (await cache.restoreCache([path], key, []) !== key || await digestFile(path) !== digest) {
+    throw new Error('missing or corrupt Actions generation index ' + digest);
+  }
+  if (!put && resolve(file) !== resolve(path)) await copyFile(path, file);
+}
+
+async function restorePublished() {
+  const directory = join(stage, 'reader');
+  await mkdir(directory, { recursive: true });
+  const index = join(directory, 'index.json');
+  const tool = 'tools/scripts/worktree/lean_cache_generation.py';
+  try {
+    execFileSync('python3', ['-B', tool, 'latest', '--transport', 'ci', '--output', index], { stdio: 'inherit' });
+  } catch (error) {
+    if (error.status !== 3) throw error;
+    execFileSync(process.execPath, [fileURLToPath(import.meta.url), 'restore-seed'], { stdio: 'inherit' });
+    return;
+  }
+  let selection = targetsFile;
+  if (!selection && targets.length) {
+    selection = join(directory, 'targets');
+    await writeFile(selection, targets.join('\n') + '\n');
+  }
+  execFileSync('python3', ['-B', tool, 'restore', '--index', index,
+    ...(selection ? ['--targets-file', selection] : [])], { stdio: 'inherit' });
 }
 
 async function save(cache, cacheVersion, identity) {
@@ -515,6 +571,30 @@ async function saveContinuation() {
 }
 
 async function main() {
+  if (operation === 'generation-get' || operation === 'generation-put') {
+    return generationIndex(process.argv[3], process.argv[4]);
+  }
+  if (['latest-seed', 'restore-seed', 'migrate-seed'].includes(operation)) {
+    const io = { ...await loadCacheClient(), visibleEntries, restoreIndex, payloadPath, indexPath, digestFile, paced };
+    const directory = join(process.env.RUNNER_TEMP, 'lean-generation-base');
+    if (operation === 'migrate-seed') return migrateSeed(io, directory);
+    const seed = await latestSeed(io, directory);
+    if (!seed) {
+      if (operation === 'latest-seed') throw new Error('no complete protected dev seed found');
+      console.log('LEAN_GENERATION_SEED no complete seed available');
+      return;
+    }
+    if (operation === 'latest-seed') {
+      await setOutputs({ key: seed.key, producer: seed.commit, run: seed.run, attempt: seed.attempt,
+        prefix: seed.prefix, index_sha256: seed.index_sha256 });
+      return;
+    }
+    const selected = join(directory, 'selected.json');
+    if (selectSeed(indexPath, selected)) await restorePayloads(io.cache, io.cacheVersion, [seed.prefix], selected);
+    return;
+  }
+  if (operation === 'restore-published') return restorePublished();
+  if (operation === 'save') requirePublisher();
   if (operation === 'save-continuation' && state === 'resume') return saveContinuation();
   if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {
     throw new Error('resume-after-attempt requires a continuation restore and a nonnegative attempt number');
