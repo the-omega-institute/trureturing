@@ -386,12 +386,44 @@ structure Activation (m : ℝ) (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ) : Prop wh
         2 * (∑' k : ℤ, (max 0 ((k : ℝ) ^ 2 - t) / Z) * v k)) ∧
     (q ≤ m → v ≠ w → (∑' k, w k ^ 2) < ∑' k, v k ^ 2)
 
+private theorem activation_parameters_unique {m t Z t' Z' : ℝ} {n n' : ℕ} {w w' : ℤ → ℝ}
+    (hn : 0 < n) (hn' : 0 < n')
+    (h : Activation m n t Z w) (h' : Activation m n' t' Z' w') :
+    (t, Z, w) = (t', Z', w') := by
+  have hw : w = w' := by
+    by_contra hne
+    have hlt := (h.comparison w' m h'.nonneg h'.mass h'.second_moment).2.2.2
+      le_rfl (fun he => hne he.symm)
+    have hlt' := (h'.comparison w m h.nonneg h.mass h.second_moment).2.2.2 le_rfl hne
+    exact lt_asymm hlt hlt'
+  subst w'
+  have one_le_radius {n : ℕ} {t : ℝ} (hn : 0 < n) (ht : (n : ℝ) ^ 2 ≤ t) :
+      1 ≤ t := by
+    have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    nlinarith only [ht, hnR, sq_nonneg ((n : ℝ) - 1)]
+  have ht := one_le_radius hn h.radius_lower
+  have ht' := one_le_radius hn' h'.radius_lower
+  have hzero : t / Z = t' / Z' := by
+    have e := (h.law 0).symm.trans (h'.law 0)
+    simpa [max_eq_right (zero_le_one.trans ht), max_eq_right (zero_le_one.trans ht')] using e
+  have hone : (t - 1) / Z = (t' - 1) / Z' := by
+    have e := (h.law 1).symm.trans (h'.law 1)
+    simpa [max_eq_right (sub_nonneg.mpr ht), max_eq_right (sub_nonneg.mpr ht')] using e
+  have hZ : Z = Z' := by
+    have e : Z⁻¹ = Z'⁻¹ := by
+      rw [← one_div, ← one_div]
+      linarith only [hzero, hone, sub_div t 1 Z, sub_div t' 1 Z']
+    simpa using congrArg Inv.inv e
+  subst Z'
+  have htr : t = t' := (div_left_inj' h.normalizer_pos.ne').mp hzero
+  simp [htr]
+
 /-- For every positive index, the attainable budgets on its radius interval are exactly
-the closed interval between the two activation thresholds. -/
+the closed interval between the two activation thresholds, with unique activation data. -/
 theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n) (m : ℝ) :
     let lowerBound := fun n : ℕ => ((n : ℝ) ^ 2 - 1) / 5
     (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ↔
-      ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w := by
+      ∃! a : ℝ × ℝ × (ℤ → ℝ), Activation m n a.1 a.2.1 a.2.2 := by
   constructor
   · rintro ⟨hmlo, hmhi⟩
     obtain ⟨t, ht, ht', hm⟩ := exists_radius n hn hmlo hmhi
@@ -403,12 +435,14 @@ theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n
     have hfinite : (Function.support (weight t (normalizer n t))).Finite := by
       rw [hsupp]
       split_ifs <;> exact Finset.finite_toSet _
-    refine ⟨t, normalizer n t, weight t (normalizer n t), ⟨ht, ht', hZ, rfl, fun _ => rfl,
-      weight_nonneg hZ, hmass, hmoment, hlow, hupp, hsupp, hfinite, ?_, ?_⟩⟩
-    · rintro rfl
+    have h : Activation m n t (normalizer n t) (weight t (normalizer n t)) := by
+      refine ⟨ht, ht', hZ, rfl, fun _ => rfl, weight_nonneg hZ, hmass, hmoment,
+        hlow, hupp, hsupp, hfinite, ?_, compare_weight hZ hmass hmoment⟩
+      rintro rfl
       exact weight_eq_single_of_zero n hn ht ht' hm hmass
-    · exact compare_weight hZ hmass hmoment
-  · rintro ⟨t, Z, w, h⟩
+    exact ⟨⟨t, normalizer n t, weight t (normalizer n t)⟩, h,
+      fun a ha => activation_parameters_unique hn hn ha h⟩
+  · rintro ⟨⟨t, Z, w⟩, h, _⟩
     have hZ : Z = normalizer n t := h.normalizer_eq
     subst Z
     have hw : w = weight t (normalizer n t) := funext h.law
@@ -418,16 +452,16 @@ theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n
       moment_thresholds n hn h.radius_lower h.radius_upper (hs.unique h.second_moment)
     exact ⟨hlo, hhi⟩
 
-/-- Every nonnegative second-moment budget on the integer lattice has a strictly unique
-squared-mass minimizer with the exact support and radius described by `Activation`. -/
+/-- Every nonnegative second-moment budget on the integer lattice has unique activation
+data on the half-open budget interval, including its index. -/
 theorem exists_lattice_square_moment_minimizer (m : ℝ) :
     let lowerBound := fun n : ℕ => ((n : ℝ) ^ 2 - 1) / 5
-    0 ≤ m ↔ ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
-      (lowerBound n ≤ m ∧ m < (n : ℝ) * (n + 2) / 5) ∧
-      Activation m n t Z w := by
+    0 ≤ m ↔ ∃! a : ℕ × ℝ × ℝ × (ℤ → ℝ), 0 < a.1 ∧
+      (lowerBound a.1 ≤ m ∧ m < (a.1 : ℝ) * (a.1 + 2) / 5) ∧
+      Activation m a.1 a.2.1 a.2.2.1 a.2.2.2 := by
   refine ⟨?_, ?_⟩
   swap
-  · rintro ⟨n, t, Z, w, _, _, h⟩
+  · rintro ⟨⟨n, t, Z, w⟩, ⟨_, _, h⟩, _⟩
     rw [← h.second_moment.tsum_eq]
     exact tsum_nonneg (fun k => mul_nonneg (sq_nonneg _) (h.nonneg k))
   intro hm
@@ -447,8 +481,22 @@ theorem exists_lattice_square_moment_minimizer (m : ℝ) :
   have hhi := (sq_lt_sq₀ hr (by positivity)).mpr hlt
   have hmlo : ((n : ℝ) ^ 2 - 1) / 5 ≤ m := by linarith
   have hmhi : m < (n : ℝ) * (n + 2) / 5 := by nlinarith only [hhi, hrsq]
-  obtain ⟨t, Z, w, h⟩ := (exists_lattice_square_moment_minimizer_on_interval n hn m).mp
+  obtain ⟨⟨t, Z, w⟩, h, _⟩ := (exists_lattice_square_moment_minimizer_on_interval n hn m).mp
     ⟨hmlo, hmhi.le⟩
-  exact ⟨n, t, Z, w, hn, ⟨hmlo, hmhi⟩, h⟩
+  refine ⟨⟨n, t, Z, w⟩, ⟨hn, ⟨hmlo, hmhi⟩, h⟩, ?_⟩
+  rintro ⟨n', t', Z', w'⟩ ⟨hn', ⟨hmlo', hmhi'⟩, h'⟩
+  have interval_order {i j : ℕ} (hij : i < j) :
+      (i : ℝ) * (i + 2) / 5 ≤ ((j : ℝ) ^ 2 - 1) / 5 := by
+    have hle : (i : ℝ) + 1 ≤ j := by exact_mod_cast Nat.succ_le_of_lt hij
+    have hs := (sq_le_sq₀ (by positivity : 0 ≤ (i : ℝ) + 1) (Nat.cast_nonneg j)).mpr hle
+    nlinarith only [hs]
+  have heq : n' = n := by
+    apply le_antisymm
+    · by_contra! hlt'
+      exact (hmhi.trans_le ((interval_order hlt').trans hmlo')).false
+    · by_contra! hlt'
+      exact (hmhi'.trans_le ((interval_order hlt').trans hmlo)).false
+  subst n'
+  exact congrArg (Prod.mk n) (activation_parameters_unique hn hn h' h)
 
 end D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation

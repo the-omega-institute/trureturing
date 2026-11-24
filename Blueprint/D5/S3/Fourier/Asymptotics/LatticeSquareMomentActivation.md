@@ -6,7 +6,7 @@ A second-moment budget on the integer lattice determines the support of the uniq
 
 **Theorem 1.1 (The budgets for one radius interval).**
 
-$$\forall n,m\quad0 < n\quad\longrightarrow\quad\frac{n^{2} - 1}{5} \le m \le \frac{n \cdot \left(n + 2\right)}{5} \Leftrightarrow \exists t,Z,w\quad\operatorname{Activation}\left(m, n, t, Z, w\right)$$
+$$\forall n,m\quad0 < n\quad\longrightarrow\quad\frac{n^{2} - 1}{5} \le m \le \frac{n \cdot \left(n + 2\right)}{5} \Leftrightarrow \exists! (t,Z,w)\quad\operatorname{Activation}\left(m, n, t, Z, w\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation.exists_lattice_square_moment_minimizer_on_interval` (`✓ std3`). ∎
 
@@ -22,7 +22,7 @@ Finite sums of squares and fourth powers give the normalized second moment at bo
 
 **Theorem 1.2 (Coverage of all nonnegative budgets).**
 
-$$\forall m\quad0 \le m \Leftrightarrow \exists n,t,Z,w\quad0 < n, \frac{n^{2} - 1}{5} \le m < \frac{n \cdot \left(n + 2\right)}{5}, \operatorname{Activation}\left(m, n, t, Z, w\right)$$
+$$\forall m\quad0 \le m \Leftrightarrow \exists! (n,t,Z,w)\quad0 < n, \frac{n^{2} - 1}{5} \le m < \frac{n \cdot \left(n + 2\right)}{5}, \operatorname{Activation}\left(m, n, t, Z, w\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation.exists_lattice_square_moment_minimizer` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\forall m\quad0 \le m \Leftrightarrow \exists n,t,Z,w\quad0 < n, \frac{n^{2} -
 
 *Commentary.*
 
-For every real m≥0 choose n as the floor of sqrt(5m+1). The floor gives a positive index whose lower threshold is at most m and whose upper threshold is strictly greater. Conversely a nonnegative law has nonnegative second moment. At a shared endpoint the interval descriptions select the same law by strict uniqueness.
+For every real m≥0 choose n as the floor of sqrt(5m+1). The floor gives a positive index whose lower threshold is at most m and whose upper threshold is strictly greater. Conversely a nonnegative law has nonnegative second moment. The half-open intervals are disjoint. At a shared endpoint the closed intervals select the same law, radius parameter and normalizer. The laws agree by strict comparison. Since t≥1, the values w(0)=t/Z and w(0)−w(1)=1/Z then identify Z and t.
 
 ## References
 

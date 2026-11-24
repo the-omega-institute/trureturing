@@ -32,7 +32,7 @@ abbrev arena : Arena where
   Law R := ∀ (n : ℕ), 0 < n → ∀ m : ℝ,
     let lowerBound := fun n : ℕ => R.readout () () n
     (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ↔
-      ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w
+      ∃! a : ℝ × ℝ × (ℤ → ℝ), Activation m n a.1 a.2.1 a.2.2
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
@@ -91,13 +91,13 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ m : ℝ,
     let lowerBound := fun n : ℕ => R.readout () () n
-    0 ≤ m ↔ ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
-      (lowerBound n ≤ m ∧ m < (n : ℝ) * (n + 2) / 5) ∧
-      Activation m n t Z w
+    0 ≤ m ↔ ∃! a : ℕ × ℝ × ℝ × (ℤ → ℝ), 0 < a.1 ∧
+      (lowerBound a.1 ≤ m ∧ m < (a.1 : ℝ) * (a.1 + 2) / 5) ∧
+      Activation m a.1 a.2.1 a.2.2.1 a.2.2.2
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  obtain ⟨n, t, Z, w, _, h, _⟩ := (law 0).mp le_rfl
+  obtain ⟨⟨n, t, Z, w⟩, ⟨_, h, _⟩, _⟩ := (law 0).mp le_rfl
   have hbad : (1 : ℝ) ≤ 0 := h.1
   norm_num at hbad
 
