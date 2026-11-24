@@ -25,11 +25,12 @@ def differenceRejected : Realization differenceSignature :=
 abbrev differenceArena : Arena where
   signature := differenceSignature
   Law V := ∀ (q : ℕ) [NeZero q]
-      (w : ZMod q → ℝ) (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j),
+      (w : ZMod q → ℝ),
     let d := ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)
     let s := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
-    (s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
-      (s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = 4 ∧
+    ((∑ j, w j) = 1 → (∀ j, 0 ≤ w j) → s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
+      ((∑ j, w j) = 1 ∧ (∀ j, 0 ≤ w j) ∧ s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔
+        ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = 4 ∧
         w a = 1 / 2 ∧ w b = 1 / 2 ∧ ∀ j, j ≠ a → j ≠ b → w j = 0)
 
 private theorem rejected_difference_law : ¬ differenceArena.Law differenceRejected := by
@@ -37,7 +38,7 @@ private theorem rejected_difference_law : ¬ differenceArena.Law differenceRejec
   obtain ⟨w, hw, hpos, hsecond, hfirst⟩ :=
     (zmod_exists_first_mode_half_of_second_zero 4).mpr (dvd_refl 4)
   obtain ⟨_, _, _, hfalse, _⟩ :=
-    (law 4 w hw hpos).2.mp ⟨hsecond, hfirst⟩
+    (law 4 w).2.mp ⟨hw, hpos, hsecond, hfirst⟩
   change (0 : ℕ) = 4 at hfalse
   contradiction
 
@@ -82,7 +83,7 @@ def differenceRegistration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg",
+      path := #["body", "body", "body", "body", "body", "arg", "arg",
         "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false

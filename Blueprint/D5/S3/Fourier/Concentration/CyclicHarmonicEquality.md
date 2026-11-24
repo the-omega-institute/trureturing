@@ -4,11 +4,11 @@
 
 When the second Fourier mode vanishes, saturation of the first requires a quarter turn.
 
-Let q be a positive integer and let w be a nonnegative real weight of total mass one on ZMod q. Use the unnormalized discrete Fourier transform and write c for the squared magnitude at frequency one and s for the coefficient at frequency two. Write ord for additive order.
+Let q be a positive integer and let w be a real weight on ZMod q. Write P(w) for the condition that w is nonnegative and has total mass one. Use the unnormalized discrete Fourier transform and write c for the squared magnitude at frequency one and s for the coefficient at frequency two. Write ord for additive order.
 
 **Theorem 1.1 (The upper bound and all its equality cases).**
 
-$$(s = 0 \implies c \leq \frac{1}{2}) \land (s = 0 \land c = \frac{1}{2} \iff \exists a, b \in \operatorname{ZMod}\left(q\right), a \neq b \land \operatorname{ord}\left(b-a\right) = 4 \land \operatorname{w}\left(a\right) = \frac{1}{2} \land \operatorname{w}\left(b\right) = \frac{1}{2} \land (\forall j \in \operatorname{ZMod}\left(q\right), j \neq a \land j \neq b \implies \operatorname{w}\left(j\right) = 0))$$
+$$(\operatorname{P}\left(w\right) \land s = 0 \implies c \leq \frac{1}{2}) \land (\operatorname{P}\left(w\right) \land s = 0 \land c = \frac{1}{2} \iff \exists a, b \in \operatorname{ZMod}\left(q\right), a \neq b \land \operatorname{ord}\left(b-a\right) = 4 \land \operatorname{w}\left(a\right) = \frac{1}{2} \land \operatorname{w}\left(b\right) = \frac{1}{2} \land (\forall j \in \operatorname{ZMod}\left(q\right), j \neq a \land j \neq b \implies \operatorname{w}\left(j\right) = 0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/CyclicHarmonicEquality.zmod_first_mode_le_half_of_second_zero` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ $$(s = 0 \implies c \leq \frac{1}{2}) \land (s = 0 \land c = \frac{1}{2} \iff \e
 
 *Commentary.*
 
-Assume s=0 for the forward bound and classification. Let m be the first coefficient and z(j) the standard additive character evaluated at −j. The w-weighted variance of the real part of the conjugate of m times z(j) is c/2 minus c squared. At equality each positive mass has projected real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. The imaginary mean vanishes, so both points occur with equal weights. Injectivity of the cyclic character gives exactly two residues, and the two phases differ by a quarter turn. Conversely, their squared phases cancel at frequency two, and the first coefficient is the average of two perpendicular unit phases.
+Assume P(w) and s=0 for the forward bound and classification. Let m be the first coefficient and z(j) the standard additive character evaluated at −j. The w-weighted variance of the real part of the conjugate of m times z(j) is c/2 minus c squared. At equality each positive mass has projected real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. The imaginary mean vanishes, so both points occur with equal weights. Injectivity of the cyclic character gives exactly two residues, and the two phases differ by a quarter turn. Conversely, two half-masses are nonnegative and sum to one. Their squared phases cancel at frequency two, and the first coefficient is the average of two perpendicular unit phases.
 
 On ZMod 4 a point mass has first squared magnitude one and second coefficient one. The nonnegative weight (1,1,0,0) has second coefficient zero and first squared magnitude two, with total mass two. The signed weight (1,1/2,−1/2,0) has total mass one and second coefficient zero, with first squared magnitude 5/2. Positive q supplies the finite DFT domain.
 

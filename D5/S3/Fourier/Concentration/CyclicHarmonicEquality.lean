@@ -209,13 +209,15 @@ private theorem character_sq_of_order_four {q : ℕ} [NeZero q] (d : ZMod q)
   exact (hs ▸ IsPrimitiveRoot.orderOf (ZMod.stdAddChar d ^ 2)).eq_neg_one_of_two_right
 
 /-- The vanishing second Fourier mode bounds the first and forces an order-four
-pair of equal masses at equality. Such a pair also forces the second mode to vanish. -/
+pair of equal masses at equality. Such a pair gives a probability weight with vanishing
+second mode and saturated first mode. -/
 theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
-    (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hpos : ∀ j, 0 ≤ w j) :
+    (w : ZMod q → ℝ) :
     let d := ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)
     let s := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
-    (s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
-      (s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ addOrderOf (b - a) = 4 ∧
+    ((∑ j, w j) = 1 → (∀ j, 0 ≤ w j) → s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
+      ((∑ j, w j) = 1 ∧ (∀ j, 0 ≤ w j) ∧ s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔
+        ∃ a b : ZMod q, a ≠ b ∧ addOrderOf (b - a) = 4 ∧
         w a = 1 / 2 ∧ w b = 1 / 2 ∧ ∀ j, j ≠ a → j ≠ b → w j = 0) := by
   let χ := (ZMod.stdAddChar (N := q))
   let z (j : ZMod q) := χ (-j)
@@ -235,10 +237,10 @@ theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
     exact mul_comm _ _
   dsimp only
   rw [hfirst]
-  refine ⟨fun hz₂ => (first_moment_le_half_and_projection z w hz hw hpos
+  refine ⟨fun hw hpos hz₂ => (first_moment_le_half_and_projection z w hz hw hpos
     (hsecondSum.trans hz₂)).1, ?_⟩
   constructor
-  · rintro ⟨hz₂, he⟩
+  · rintro ⟨hw, hpos, hz₂, he⟩
     have hn : Function.Injective z := fun _ _ h => neg_injective (ZMod.injective_stdAddChar h)
     obtain ⟨a, b, hab, hzrel, ha, hb, ho⟩ := equality_two_weights z w hz hn hw hpos (hsecondSum.trans hz₂) he
     have hchar : χ (a - b) = Complex.I := by
@@ -277,7 +279,17 @@ theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
         sum_singleton, ha, hb]
       push_cast
       rfl
-    refine ⟨?_, ?_⟩
+    have hw : (∑ j, w j) = 1 := by
+      have h := congrArg Complex.re (htwoTerms (fun _ => 1))
+      norm_num [Complex.re_sum] at h
+      exact h
+    have hpos (j : ZMod q) : 0 ≤ w j := by
+      by_cases hja : j = a
+      · rw [hja, ha]; norm_num
+      by_cases hjb : j = b
+      · rw [hjb, hb]; norm_num
+      rw [hzero j hja hjb]
+    refine ⟨hw, hpos, ?_, ?_⟩
     · rw [← hsecondSum, htwoTerms (fun j => z j ^ 2), hrel, mul_pow, hsq]
       ring
     have hm : m = (1 / 2 : ℂ) * (1 + t) * z a := by
@@ -300,7 +312,7 @@ theorem zmod_exists_first_mode_half_of_second_zero (q : ℕ) [NeZero q] :
   constructor
   · rintro ⟨w, hw, hpos, hsecond, hfirst⟩
     obtain ⟨a, b, _, hab, _⟩ :=
-      (zmod_first_mode_le_half_of_second_zero q w hw hpos).2.mp ⟨hsecond, hfirst⟩
+      (zmod_first_mode_le_half_of_second_zero q w).2.mp ⟨hw, hpos, hsecond, hfirst⟩
     have hdvd : addOrderOf (b - a) ∣ Fintype.card (ZMod q) := addOrderOf_dvd_card
     simpa only [hab, ZMod.card] using hdvd
   · intro hq
@@ -317,15 +329,7 @@ theorem zmod_exists_first_mode_half_of_second_zero (q : ℕ) [NeZero q] :
     have h0 : w 0 = 1 / 2 := by simp [w]
     have hwd : w d = 1 / 2 := by simp [w]
     have hoff (j : ZMod q) (h0 : j ≠ 0) (hd : j ≠ d) : w j = 0 := by simp [w, h0, hd]
-    have hpair : (0 : ZMod q) ∉ ({d} : Finset (ZMod q)) := by simpa using Ne.symm hd0
-    have hw : ∑ j, w j = 1 := by
-      rw [← sum_subset (subset_univ ({0, d} : Finset (ZMod q)))
-        (fun j _ h => hoff j (fun h0 => h (by simp [h0])) (fun hd => h (by simp [hd]))),
-        sum_insert hpair, sum_singleton, h0, hwd]
-      norm_num
-    have hpos (j : ZMod q) : 0 ≤ w j := by unfold w; split <;> norm_num
-    have hpairLaw := (zmod_first_mode_le_half_of_second_zero q w hw hpos).2.mpr
-      ⟨0, d, Ne.symm hd0, by simpa using hd, h0, hwd, hoff⟩
-    exact ⟨w, hw, hpos, hpairLaw.1, hpairLaw.2⟩
+    exact ⟨w, (zmod_first_mode_le_half_of_second_zero q w).2.mpr
+      ⟨0, d, Ne.symm hd0, by simpa using hd, h0, hwd, hoff⟩⟩
 
 end D5.S3.Fourier.Concentration.CyclicHarmonicEquality

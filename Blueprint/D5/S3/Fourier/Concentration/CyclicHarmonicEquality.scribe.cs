@@ -13,8 +13,9 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
         H("Equality for the First Two Cyclic Fourier Modes"),
         Blocks(
             Paragraph(Text(
-                "Let q be a positive integer and let w be a nonnegative real weight of total mass "
-                + "one on ZMod q. Use the unnormalized discrete Fourier transform and write c for "
+                "Let q be a positive integer and let w be a real weight on ZMod q. Write P(w) for "
+                + "the condition that w is nonnegative and has total mass one. Use the unnormalized "
+                + "discrete Fourier transform and write c for "
                 + "the squared magnitude at frequency one and s for the coefficient at frequency two. "
                 + "Write ord for additive order.")),
             Describe.Lean(
@@ -24,14 +25,15 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Classification()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume s=0 for the forward bound and classification. Let m be the first "
+                    "Assume P(w) and s=0 for the forward bound and classification. Let m be the first "
                     + "coefficient and z(j) the standard additive character evaluated at −j. "
                     + "The w-weighted variance of the real part of the conjugate of m times z(j) "
                     + "is c/2 minus c squared. At equality each positive mass has projected "
                     + "real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. "
                     + "The imaginary mean vanishes, so both points occur with equal weights. "
                     + "Injectivity of the cyclic character gives exactly two residues, and the "
-                    + "two phases differ by a quarter turn. Conversely, their squared phases cancel "
+                    + "two phases differ by a quarter turn. Conversely, two half-masses are "
+                    + "nonnegative and sum to one. Their squared phases cancel "
                     + "at frequency two, and the first coefficient is the average of two perpendicular "
                     + "unit phases.")),
                     Paragraph(Text(
@@ -85,8 +87,10 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
             Sp, Land, Sp, Call("w", a), Sp, Eq, Sp, half, Sp, Land, Sp, Call("w", b), Sp, Eq, Sp,
             half, Sp, Land, Sp, zeroElsewhere);
         var zeroMode = Seq(s, Sp, Eq, Sp, D(0));
-        return Disp(Seq(Open, zeroMode, Sp, Implies, Sp, c, Sp, Leq, Sp, half, Close,
-            Sp, Land, Sp, Open, zeroMode, Sp, Land, Sp, c, Sp, Eq, Sp, half,
+        var probability = Call("P", F.Id("w"));
+        return Disp(Seq(Open, probability, Sp, Land, Sp, zeroMode, Sp, Implies, Sp, c, Sp, Leq, Sp,
+            half, Close, Sp, Land, Sp, Open, probability, Sp, Land, Sp, zeroMode, Sp, Land, Sp,
+            c, Sp, Eq, Sp, half,
             Sp, Iff, Sp, support, Close));
     }
 
