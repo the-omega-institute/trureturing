@@ -310,7 +310,8 @@ private theorem isolated_right_gram {a b e d : ℕ} (hab : a < b) (hde : d < 2 *
         Matrix.smul_mul, hWZ, smul_smul, ← Finset.sum_smul, ν, dotProduct]
     have hFlat : D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat W * B =
         D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat Y := by
-      rw [W, flat_mix, Matrix.transpose_nonsing_inv, Matrix.transpose_transpose,
+      dsimp only [W]
+      rw [flat_mix, Matrix.transpose_nonsing_inv, Matrix.transpose_transpose,
         Matrix.mul_assoc, Matrix.nonsing_inv_mul _ ((Matrix.isUnit_iff_isUnit_det _).mp hB),
         Matrix.mul_one]
     have hback (r : Fin 3) : Y r = ∑ s, B s r • W s := by
@@ -330,18 +331,18 @@ private theorem isolated_right_gram {a b e d : ℕ} (hab : a < b) (hde : d < 2 *
       have hZJ : Zᴴ * Y 2 = star α • 1 := by
         simpa using congrArg Matrix.conjTranspose hα
       simp [D, hZJ, Matrix.mul_sub, Matrix.mul_smul, hZZ, smul_smul, τ, hν]
-    have hDD : Dᴴ * D = (1 - star τ * α) • 1 := by
+    have hDD : Dᴴ * D = (1 - τ * α) • 1 := by
       calc
         Dᴴ * D = (Y 2)ᴴ * D := by
           simp [D, Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, Matrix.sub_mul,
             Matrix.smul_mul, show Zᴴ * (Y 2 - τ • Z) = 0 from hZD]
-        _ = (1 - star τ * α) • 1 := by
+        _ = (1 - τ * α) • 1 := by
           simp [D, Matrix.mul_sub, Matrix.mul_smul, hJ, hα, smul_smul, sub_smul, mul_comm]
     have hrank {A : Matrix (Fin d) (Fin e) ℂ} {z : ℂ} (hz : z ≠ 0)
         (hA : Aᴴ * A = z • 1) : A.rank = e := by
       rw [← Matrix.rank_conjTranspose_mul_self A, hA, Matrix.rank_smul_of_mem_nonZeroDivisors _ (mem_nonZeroDivisors_of_ne_zero hz),
         Matrix.rank_one, Fintype.card_fin]
-    have hz : 1 - star τ * α = 0 := by
+    have hz : 1 - τ * α = 0 := by
       by_contra h
       have hp := Matrix.rank_add_rank_le_card_of_mul_eq_zero hZD
       rw [Matrix.rank_conjTranspose, hrank hν hZZ, hrank h hDD, Fintype.card_fin] at hp
@@ -371,7 +372,8 @@ private theorem residual_kernel {a b e d : ℕ}
       (w : Fin e → ℂ) :
       kronecker M N *ᵥ product x w =
         (Matrix.vecMulVec (N *ᵥ w) (M *ᵥ x)).vec := by
-    rw [product, Matrix.kronecker_mulVec_vec, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
+    dsimp only [product]
+    rw [Matrix.kronecker_mulVec_vec, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
       Matrix.vecMul_transpose]
   have kernel_nonzero (C : Matrix (Fin d) (Fin e) ℂ) (hC : Dᴴ * C = 0) :
       ∃ y : Fin e → ℂ, y ≠ 0 ∧ C *ᵥ y = 0 := by
@@ -408,7 +410,8 @@ private theorem residual_kernel {a b e d : ℕ}
         (by simp [Matrix.mul_add, Matrix.mul_smul, hR, hS])
       refine ⟨y, hy, ?_⟩
       simp only [Matrix.add_mulVec, Matrix.smul_mulVec] at hY
-      rw [F, Matrix.add_mulVec, tensor_apply, tensor_apply, hA]
+      dsimp only [F]
+      rw [Matrix.add_mulVec, tensor_apply, tensor_apply, hA]
       ext ⟨i,j⟩
       simp only [Matrix.vec, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul,
         Pi.add_apply, Pi.zero_apply]
@@ -419,7 +422,8 @@ private theorem residual_kernel {a b e d : ℕ}
   have heq : kronecker P (1 : Matrix (Fin e) (Fin e) ℂ) *ᵥ product x y = 0 := by
     rw [← hF, ← Matrix.mulVec_mulVec, show F *ᵥ product x y = 0 from hzero,
       Matrix.mulVec_zero]
-  rw [product, Matrix.kronecker_mulVec_vec, Matrix.one_mul, Matrix.vecMulVec_mul,
+  dsimp only [product] at heq
+  rw [Matrix.kronecker_mulVec_vec, Matrix.one_mul, Matrix.vecMulVec_mul,
     Matrix.vecMul_transpose] at heq
   obtain ⟨j, hj⟩ := Function.ne_iff.mp hy
   ext i
@@ -440,6 +444,7 @@ private theorem projected_width_three {a b c d q : ℕ}
   let CS := kronecker (1 : Matrix (Fin a) (Fin a) ℂ) C
   let W := CSᴴ * F
   let V := CSᴴ * (1 - F * Fᴴ) * CS
+  let D := (1 : Matrix (Fin b) (Fin b) ℂ) - Xᴴ * X
   have hCS : CSᴴ * CS = 1 := by
     simp only [CS, Matrix.kronecker, Matrix.conjTranspose_kronecker,
       Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul, Matrix.one_mul, hC,
@@ -451,26 +456,36 @@ private theorem projected_width_three {a b c d q : ℕ}
   have hdefect := row_defect_rank F hF
   have hv : V.rank ≤ (1 - F * Fᴴ).rank :=
     (Matrix.rank_mul_le_left _ _).trans (Matrix.rank_mul_le_right _ _)
-  have hx : Xᴴ.rank = a := by
-    rw [← Matrix.rank_conjTranspose_mul_self Xᴴ, Matrix.conjTranspose_conjTranspose,
-      hX, Matrix.rank_one, Fintype.card_fin]
+  have hd : D.rank ≤ b - a := by
+    have hDX : D * Xᴴ = 0 := by
+      simp [D, sub_mul, Matrix.mul_assoc, hX]
+    have h := Matrix.rank_add_rank_le_card_of_mul_eq_zero hDX
+    have hx : Xᴴ.rank = a := by
+      rw [← Matrix.rank_conjTranspose_mul_self Xᴴ, Matrix.conjTranspose_conjTranspose,
+        hX, Matrix.rank_one, Fintype.card_fin]
+    rw [hx, Fintype.card_fin] at h
+    omega
   have hW : W = ∑ i, Matrix.kronecker (Z i) (Cᴴ * Y i) := by
-    rw [W, hdecomp]
+    dsimp only [W]
+    rw [hdecomp]
     simp only [CS, Matrix.kronecker, Matrix.conjTranspose_kronecker,
       Matrix.conjTranspose_one, Matrix.mul_add, Matrix.mul_sum,
       ← Matrix.mul_kronecker_mul, Matrix.one_mul, hCJ, Matrix.kronecker_zero, zero_add]
   have hr (i : Fin 3) : (kronecker (Z i) (Cᴴ * Y i)).rank ≤ (b - a) * q := by
-    have hz := Matrix.rank_add_rank_le_card_of_mul_eq_zero (hZ i)
-    rw [hx, Fintype.card_fin] at hz
-    have hz' : (Z i).rank ≤ b - a := by omega
+    have hZd : Z i * D = Z i := by
+      simp [D, Matrix.mul_sub, ← Matrix.mul_assoc, hZ i]
     have hfac : kronecker (Z i) (Cᴴ * Y i) =
         kronecker (Z i) (1 : Matrix (Fin q) (Fin q) ℂ) *
+          kronecker D (1 : Matrix (Fin q) (Fin q) ℂ) *
           kronecker (1 : Matrix (Fin b) (Fin b) ℂ) (Cᴴ * Y i) := by
-      simp only [Matrix.kronecker, ← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+      simp only [Matrix.kronecker, ← Matrix.mul_kronecker_mul, hZd,
+        Matrix.mul_one, Matrix.one_mul]
     rw [hfac]
-    refine (Matrix.rank_mul_le_left _ _).trans ?_
-    rw [rank_kronecker_one_general]
-    simpa only [Nat.mul_comm] using Nat.mul_le_mul_left q hz'
+    have hrank := (Matrix.rank_mul_le_left _ _).trans
+      (Matrix.rank_mul_le_right
+        (kronecker (Z i) (1 : Matrix (Fin q) (Fin q) ℂ)) (kronecker D 1))
+    rw [rank_kronecker_one_general] at hrank
+    exact hrank.trans (by simpa [Nat.mul_comm] using Nat.mul_le_mul_left q hd)
   have hWr : W.rank ≤ 3 * ((b - a) * q) := by
     rw [hW, Fin.sum_univ_three]
     have h := rank_sum _ _
@@ -499,7 +514,9 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
   let H := kronecker A (R * E) + kronecker B (S * E)
   let CE := kronecker (1 : Matrix (Fin b) (Fin b) ℂ) E
   have hDD : Dᴴ * D = 1 := by
-    simp [D, Matrix.conjTranspose_mul, ← Matrix.mul_assoc, hJJ, hE]
+    calc
+      Dᴴ * D = Eᴴ * (Jᴴ * J) * E := by simp only [D, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+      _ = 1 := by rw [hJJ, Matrix.mul_one, hE]
   have hCE : CEᴴ * CE = 1 := by
     simp only [CE, Matrix.kronecker, Matrix.conjTranspose_kronecker,
       Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul,
@@ -520,7 +537,8 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
     simp only [Matrix.conjTranspose_add, Matrix.add_mul, Matrix.mul_add, hLH, hHL,
       add_zero, zero_add, L, Matrix.kronecker, Matrix.conjTranspose_kronecker,
       ← Matrix.mul_kronecker_mul, hDD] at h
-    rw [P, Matrix.kronecker, sub_kron, Matrix.one_kronecker_one]
+    change Hᴴ * H = kronecker (1 - Xᴴ * X) (1 : Matrix (Fin e) (Fin e) ℂ)
+    rw [sub_kron, Matrix.one_kronecker_one]
     rw [← h]
     abel
   have kill {k : ℕ} (M : Matrix (Fin b) (Fin k) ℂ) (hM : P * M = 0) :
@@ -549,7 +567,8 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
       congrArg Matrix.conjTranspose hPC
   have hCX : Cᴴ * Xᴴ * X = Cᴴ := by
     have h := hCP
-    rw [P, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, sub_eq_zero] at h
+    dsimp only [P] at h
+    rw [Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, sub_eq_zero] at h
     exact h.symm
   have hLC : (X * C)ᴴ * (X * C) = 1 := by
     rw [Matrix.conjTranspose_mul, ← Matrix.mul_assoc, hCX, hCC]
@@ -670,8 +689,10 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
       Matrix.rank_one, Fintype.card_fin]
   have hcd : c ≤ d := by
     simpa only [hJrank, Fintype.card_fin] using Jᴴ.rank_le_card_width
-  obtain ⟨K, hKK, hJK, _⟩ := kernel_columns Jᴴ
-  rw [hJrank] at K hKK hJK
+  obtain ⟨K, hKK, hJK⟩ :
+      ∃ K : Matrix (Fin d) (Fin (d - c)) ℂ, Kᴴ * K = 1 ∧ Jᴴ * K = 0 := by
+    obtain ⟨K, hKK, hJK, _⟩ := kernel_columns Jᴴ
+    exact hJrank ▸ ⟨K, hKK, hJK⟩
   have hKJ : Kᴴ * J = 0 := by simpa using congrArg Matrix.conjTranspose hJK
   let U : Fin 3 → Matrix (Fin a) (Fin b) ℂ := ![A, B, Z']
   let W : Fin 3 → Matrix (Fin d) (Fin c) ℂ := ![R, S, V]
@@ -733,7 +754,8 @@ private theorem bounds_of_orthogonal_combination {a b c d : ℕ}
   have hde : d < 2 * e := by dsimp [e]; omega
   have hse : a * d - b * c < e := by dsimp [e]; omega
   have hD : (J * E)ᴴ * (J * E) = 1 := by
-    simp [Matrix.conjTranspose_mul, ← Matrix.mul_assoc, hJJ, hEE]
+    rw [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc Jᴴ J E,
+      hJJ, Matrix.one_mul, hEE]
   obtain ⟨hNI, hi⟩ := isolated_right_gram hab hde M N hMN (by simpa [N] using hD)
   obtain ⟨α, hα⟩ := hi 0
   obtain ⟨β, hβ⟩ := hi 1

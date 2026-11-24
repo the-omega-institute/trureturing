@@ -390,9 +390,9 @@ private theorem diagonalize_pair (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosDef
   let e := hH.isHermitian.eigenvalues
   refine ⟨u, v, e 0, e 1, hH.eigenvalues_pos _, hH.eigenvalues_pos _, hdS, ?_⟩
   have hdiag : Uᴴ * H * U = diagonal (fun i => (e i : ℂ)) := by
-    simpa only [U, e, Function.comp_def, Matrix.star_eq_conjTranspose,
-      Unitary.conjStarAlgAut_star_apply] using
-      hH.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
+    have h := hH.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
+    rw [Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] at h
+    with_unfolding_all exact h
   calc
     (pairMatrix u v)ᴴ * H * pairMatrix u v = Eᴴ * (Uᴴ * H * U) * E := by
       rw [← hSform]
@@ -424,8 +424,8 @@ private theorem paired_change_mem (u v w x : ℂ)
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [B, pairedLin, paired, pairChange, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fin.sum_univ_four] <;>
-    first | ring | linear_combination -h₁ | linear_combination h₂
+      Fin.sum_univ_four, starRingEnd_apply] <;>
+    first | (ring; done) | (linear_combination -h₁; done) | linear_combination h₂
 
 
 private def topPair (i : Fin 2) : Fin 4 := Fin.castAdd 2 i
@@ -699,19 +699,18 @@ private theorem normalize_rank_three {a b c d : ℕ}
   have hQ : Q.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hT
   have hQr : Q.rank = 3 := by
     change ((P⁻¹)ᴴ * T * P⁻¹).rank = 3
-    rw [Matrix.rank_mul_eq_right_of_isUnit_det (P⁻¹)ᴴ T
-        ((Matrix.isUnit_iff_isUnit_det _).mp hPi.star),
-      Matrix.rank_mul_eq_left_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hPi),
-      hrank]
+    rw [Matrix.rank_mul_eq_left_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hPi),
+      Matrix.rank_mul_eq_right_of_isUnit_det (P⁻¹)ᴴ T
+        ((Matrix.isUnit_iff_isUnit_det _).mp hPi.star), hrank]
   let U : Matrix (Fin 4) (Fin 4) ℂ := hQ.eigenvectorUnitary
   let e := hQ.eigenvalues
   let D := diagonal (fun i => (e i : ℂ))
   have hU : Uᴴ * U = 1 := Unitary.coe_star_mul_self _
   have hU' : U * Uᴴ = 1 := Unitary.coe_mul_star_self _
   have hd : Uᴴ * Q * U = D := by
-    simpa only [U, D, e, Function.comp_def, Matrix.star_eq_conjTranspose,
-      Unitary.conjStarAlgAut_star_apply] using
-      hQ.conjStarAlgAut_star_eigenvectorUnitary
+    have h := hQ.conjStarAlgAut_star_eigenvectorUnitary
+    rw [Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] at h
+    with_unfolding_all exact h
   have hUd : IsUnit U.det := (Matrix.isUnit_iff_isUnit_det _).mp Unitary.isUnit_coe
   have hUD : U * D * Uᴴ = Q := by
     rw [← hd]
