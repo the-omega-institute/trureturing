@@ -44,6 +44,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripCertificate
+import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripSymmetry
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Core
