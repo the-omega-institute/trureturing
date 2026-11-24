@@ -391,18 +391,18 @@ private theorem old_exhausted_counts (p : Boundary) (hp : HardinA229635State.Val
       HardinA229585StripData.cl p 0 := Fin.ext (Nat.add_sub_of_le hh)
   rw [h]
   exact old_exhausted_row p 0 hv j
-private private def matchCost {m : ℕ} : Option (Fin m) → Fin m → ℕ
+private def matchCost {m : ℕ} : Option (Fin m) → Fin m → ℕ
   | none, _ => 0
   | some p, x => if p = x then 1 else 0
 
-private private def completionCost {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
+private def completionCost {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
     (Fin (k + 1) → Fin m) → ℕ
   | 0, _, prev, r => matchCost prev (r 0)
   | _k + 1, p, prev, r =>
     matchCost prev (r 0) + matchCost (p 0) (r 0) +
       completionCost (Fin.tail p) (some (r 0)) (Fin.tail r)
 
-private private def completionRows {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
+private def completionRows {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
     ℕ → List (Fin (k + 1) → Fin m)
   | 0, _, prev, d =>
     ((List.finRange m).filter fun x => matchCost prev x == d).map fun x _ => x
@@ -459,7 +459,7 @@ private theorem completionRows_count {k m : ℕ} (p : Fin k → Option (Fin m))
       intro h
       exact hc (h.1 ▸ Nat.le_add_right c _)
 
-private private def completionCodes {m : ℕ} : List (Option (Fin m)) → Option (Fin m) → ℕ → List ℕ
+private def completionCodes {m : ℕ} : List (Option (Fin m)) → Option (Fin m) → ℕ → List ℕ
   | [], prev, d =>
     ((List.finRange m).filter fun x => matchCost prev x == d).map Fin.val
   | a :: as, prev, d => (List.finRange m).flatMap fun x =>
