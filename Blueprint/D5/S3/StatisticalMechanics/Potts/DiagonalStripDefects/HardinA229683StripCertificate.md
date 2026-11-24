@@ -72,7 +72,7 @@ $$\forall k: \operatorname{\mathit{Fin}}\left(18\right), (\operatorname{\mathit{
 
 *Commentary.*
 
-The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial.
+The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial. IntegralDiscriminant.integerConvolution evaluates the displayed Cauchy sum over the corresponding range of first indices.
 
 **Theorem 1.6 (Numerical expansion).**
 
@@ -126,6 +126,7 @@ Seven coordinate shifts of the order-twelve relation give the relation on the fi
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.forward_two`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.transition_counts`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229683StripCertificate.two_counts`
+- Dependency: [D5/S3/Arith/ModularForms/IntegralDiscriminant](../../../Arith/ModularForms/IntegralDiscriminant.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate](HardinA203981StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData](HardinA203981StripData.md)

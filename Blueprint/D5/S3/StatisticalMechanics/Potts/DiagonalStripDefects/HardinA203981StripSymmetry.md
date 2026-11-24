@@ -32,6 +32,8 @@ $$\forall d: \mathit{Nat}, (\forall p: (\operatorname{\mathit{Fin}}\left(6\right
 
 Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum through a common representative.
 
+The boundary-equality premise is necessary in general. At budget zero and target class zero, the source representatives of classes 0 and 1 have four and two exact-cost targets, respectively.
+
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripSymmetry.cost_formula`

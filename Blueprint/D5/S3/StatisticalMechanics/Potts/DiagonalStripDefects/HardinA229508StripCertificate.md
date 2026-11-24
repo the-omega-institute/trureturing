@@ -128,7 +128,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229508StripCertificate}
 
 *Commentary.*
 
-The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent.
+The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent. IntegralDiscriminant.integerConvolution evaluates the displayed Cauchy sum over the corresponding range of first indices.
 
 **Definition 1.10 (Order-twelve coefficients).**
 
@@ -188,7 +188,7 @@ Each update combines transitions with one new defect from the first sector and z
 
 **Theorem 1.14 (A shifted forward relation in one coordinate).**
 
-$$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)], (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{Int}\right), (\forall v: (s) \to (\mathit{Int}), (\forall d: \mathit{Nat}, (\forall b: \mathit{Nat}, (\forall c: (\operatorname{\mathit{Fin}}\left(d\right)) \to (\mathit{Int}), ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + d\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(c\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))) \iff (\forall n: \mathit{Nat}, (\forall j: s, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + d\right)\left(j\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (c\left(k\right) \cdot \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\left(j\right)))))))))))$$
+$$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)], (\forall t: \operatorname{\mathit{Matrix}}\left(s, s, \mathit{Int}\right), (\forall v: (s) \to (\mathit{Int}), (\forall d: \mathit{Nat}, (\forall b: \mathit{Nat}, (\forall c: (\operatorname{\mathit{Fin}}\left(d\right)) \to (\mathit{Int}), ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + d\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(c\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))) \implies (\forall n: \mathit{Nat}, (\forall j: s, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + d\right)\left(j\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(d\right)} (c\left(k\right) \cdot \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(t, v, n + b + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\left(j\right)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.shifted_coordinate` (`✓ std3`). ∎
 
@@ -231,6 +231,7 @@ Seven applications of the coordinate shift to the order-six relation give the in
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.shifted_coordinate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.squareMonicCoeff`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA229508StripCertificate.transition_counts`
+- Dependency: [D5/S3/Arith/ModularForms/IntegralDiscriminant](../../../Arith/ModularForms/IntegralDiscriminant.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233258PairTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate](HardinA203981StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData](HardinA203981StripData.md)
