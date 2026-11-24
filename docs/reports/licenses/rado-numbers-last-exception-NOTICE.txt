@@ -1,0 +1,22 @@
+Lean Pool aggregation notice (applicable attribution)
+======================================================
+
+The ported proof leaves were published in the Lean Pool aggregation at
+https://github.com/leanprover-community/lean-pool/tree/623ba6c3c0026e133f
+after the source project was imported. Lean Pool is distributed under the
+Apache License, Version 2.0. The complete Apache license text is retained in
+rado-numbers-last-exception-LICENSE.txt.
+
+Rado last-exception source
+--------------------------
+
+The source proof is the work of Tyler B. Hughes and research agents, from the
+public source revision
+https://github.com/the-omega-institute/mathdiscoveries/tree/82a9a73903a9f68b476818a37e20b10405aa8b53
+and the corresponding Lean Pool revision
+https://github.com/leanprover-community/lean-pool/tree/623ba6c3c0026e133cf4f
+.
+
+Each ported Lean file retains its per-file Apache-2.0 copyright and author
+header. No unrelated Lean Pool project attribution is applicable to these
+files.

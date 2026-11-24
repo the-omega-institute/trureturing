@@ -10,11 +10,12 @@
 Copyright (c) 2026 Tyler B. Hughes. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Tyler B. Hughes
+Contributors: research agents
 -/
 
 module
 
-public import LeanPool.RadoNumbersLastException.LowerHalf
+public import D5.S3.Combinatorics.ArithmeticRamsey.RadoLastBoundary
 
 /-!
 # Upper Half and Main Theorems for Two-Colour Rado Numbers
@@ -25,7 +26,7 @@ Pure core Lean 4 formalization (no Mathlib imports) proving the upper half
 with the boundary colouring `LowerHalf.exists_good_col_cstar` to obtain:
 * `RadoNu.rado_last_exception`: complete both-halves characterization with expanded quantifiers;
 * `RadoNu.rado_eq_LB`, `RadoNu.not_forced_cstar`, `RadoNu.rado_last_exception_rado`;
-* `RadoNu.nu_iff` and `RadoNu.nu_5_eq_66` (settling Kim, Song, and Hwang 2023, `ν(5) = 66`).
+* `RadoNu.nu_iff`, the all-parameter threshold characterization.
 -/
 
 @[expose] public section
