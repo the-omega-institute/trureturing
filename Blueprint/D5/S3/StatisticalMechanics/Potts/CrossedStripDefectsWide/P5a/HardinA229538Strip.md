@@ -80,7 +80,7 @@ Continuation counts are resolved by the number of remaining monochromatic bonds.
 
 **Definition 1.6 (edges).**
 
-$$(\operatorname{HardinA229538Strip}.\operatorname{edges}: \operatorname{Finset}\left((\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right))\right)) = \operatorname{Finset}.\operatorname{filter}\left((\lambda ((r, s): (\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right)))\mapsto (\operatorname{Fin}.\operatorname{val}\left(s\right) = \operatorname{Fin}.\operatorname{val}\left(r\right) \lor \left(\operatorname{Fin}.\operatorname{val}\left(s\right) = (\operatorname{Fin}.\operatorname{val}\left(r\right)) + (1) \lor \operatorname{Fin}.\operatorname{val}\left(r\right) = (\operatorname{Fin}.\operatorname{val}\left(s\right)) + (1)\right))), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left((\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right))\right))\right)$$
+$$(\operatorname{HardinA229538Strip}.\operatorname{edges}: \operatorname{Finset}\left((\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right))\right)) = \operatorname{Finset}.\operatorname{diag}\left((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(5\right)\right))\right) \cup \operatorname{HardinA229637RowColumn}.\operatorname{betw}\left(5\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges` (`✓ std3`).
 
@@ -90,7 +90,7 @@ $$(\operatorname{HardinA229538Strip}.\operatorname{edges}: \operatorname{Finset}
 
 *Commentary.*
 
-The oriented cut is the set of pairs of row indices that form a bond between columns zero and one.
+The oriented cut is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs across consecutive columns.
 
 **Theorem 1.7 (mem_edges).**
 
@@ -104,23 +104,9 @@ $$\forall (e: (\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5
 
 *Commentary.*
 
-In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one.
+The two inequalities express that the row indices differ by at most one, as in the frozen edge predicate between columns zero and one.
 
-**Theorem 1.8 (edges_card).**
-
-$$\operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}\right) = 13$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_card` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229538: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229538>.
-
-*Commentary.*
-
-The cut contains five equal-row pairs and four pairs in each diagonal direction.
-
-**Theorem 1.9 (cut_total_exclusion).**
+**Theorem 1.8 (cut_total_exclusion).**
 
 $$\forall (D: \operatorname{Nat}), ((\forall (m: \operatorname{Nat}), (D \ne (m) \cdot (\operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}\right)))) \Leftrightarrow (\neg (13 \mid D)))$$
 
@@ -132,9 +118,9 @@ $$\forall (D: \operatorname{Nat}), ((\forall (m: \operatorname{Nat}), (D \ne (m)
 
 *Commentary.*
 
-A budget differs from the total for every number of cuts exactly when thirteen does not divide it. The cut cardinality is thirteen.
+A budget differs from the total for every number of cuts exactly when thirteen does not divide it. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction, with subtraction in the naturals. At height five this gives thirteen pairs.
 
-**Definition 1.10 (cost).**
+**Definition 1.9 (cost).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right): \operatorname{Nat}) = \operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}, \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right), \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(q\right)\right)))$$
 
@@ -148,7 +134,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 The cost is the number of monochromatic bonds on the cut between two decoded columns.
 
-**Theorem 1.11 (bondDefects_empty).**
+**Theorem 1.10 (bondDefects_empty).**
 
 $$\forall (q: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\forall (r: \operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right)), (\forall (t: \operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right)), (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left((\operatorname{Finset}.\operatorname{empty}: \operatorname{Finset}\left((\operatorname{Fin}\left(k\right))\times(\operatorname{Fin}\left(k\right))\right)), r, t\right) = 0))))$$
 
@@ -162,7 +148,7 @@ $$\forall (q: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\forall (r
 
 For any pair of rows, the empty edge set contributes zero monochromatic bonds.
 
-**Theorem 1.12 (cost_zero).**
+**Theorem 1.11 (cost_zero).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 0) \Leftrightarrow (\operatorname{HardinA233178Chromatic}.\operatorname{Bond}\left(p, q\right))))$$
 
@@ -176,7 +162,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 A cut has cost zero exactly when every bond has different colours at its endpoints.
 
-**Theorem 1.13 (zero_cost_entry).**
+**Theorem 1.12 (zero_cost_entry).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{if} (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 0) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} 0) = \operatorname{HardinA233178Chromatic}.\operatorname{T}\left(p, q\right)))$$
 
@@ -190,7 +176,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 The proper-colouring transfer entry is the indicator of a cut without monochromatic bonds.
 
-**Definition 1.14 (oneDefect).**
+**Definition 1.13 (oneDefect).**
 
 $$\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\operatorname{One}\left(R\right)] \forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{oneDefect}\left(p, q\right): R) = (\operatorname{if} (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 1) \operatorname{then} 1 \operatorname{else} 0))))$$
 
@@ -204,7 +190,7 @@ $$\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\oper
 
 Each entry is the indicator of a cut with exactly one monochromatic bond.
 
-**Definition 1.15 (transfer).**
+**Definition 1.14 (transfer).**
 
 $$(\operatorname{HardinA229538Strip}.\operatorname{transfer}: \operatorname{Matrix}\left(\operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}\right), \operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}\right), \operatorname{Int}\right)) = \operatorname{Matrix}.\operatorname{fromBlocks}\left(\operatorname{HardinA233178Chromatic}.\operatorname{T}, \operatorname{HardinA229538Strip}.\operatorname{oneDefect}, (0: \operatorname{Matrix}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{Int}\right)), \operatorname{HardinA233178Chromatic}.\operatorname{T}\right)$$
 
@@ -218,7 +204,7 @@ $$(\operatorname{HardinA229538Strip}.\operatorname{transfer}: \operatorname{Matr
 
 The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second.
 
-**Definition 1.16 (terminal).**
+**Definition 1.15 (terminal).**
 
 $$\forall (C: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\operatorname{Zero}\left(R\right)] [\operatorname{One}\left(R\right)] (\operatorname{HardinA229538Strip}.\operatorname{terminal}: \operatorname{Sum}\left(C, Z\right) \to R) = \operatorname{Sum}.\operatorname{elim}\left((0: C \to R), (1: Z \to R)\right))))$$
 
@@ -232,9 +218,9 @@ $$\forall (C: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), (\foral
 
 The empty continuation completes an array exactly when its remaining budget is zero.
 
-**Theorem 1.17 (transfer_readout).**
+**Theorem 1.16 (transfer_readout).**
 
-$$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), (\forall (K: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{DecidableEq}\left(S\right)] [\operatorname{Semiring}\left(R\right)] [\operatorname{DistribSMul}\left(K, R\right)] [\operatorname{SMulCommClass}\left(K, R, R\right)] \forall (M: \operatorname{Matrix}\left(S, S, R\right)), (\forall (u: S \to R), (\forall (d: \operatorname{Nat}), (\forall (b: \operatorname{Nat}), (\forall (c: \operatorname{Fin}\left(d\right) \to K), ((\operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (d)}, u\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} (\operatorname{SMul}.\operatorname{smul}\left(c\left(j\right), \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right))) \Leftrightarrow (\forall (v: S \to R), (\forall (n: \operatorname{Nat}), (\operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (d)}, u\right)\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} (\operatorname{SMul}.\operatorname{smul}\left(c\left(j\right), \operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right)\right)))))))))))))$$
+$$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), (\forall (K: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{DecidableEq}\left(S\right)] [\operatorname{Semiring}\left(R\right)] [\operatorname{SMul}\left(K, R\right)] [\operatorname{SMulCommClass}\left(K, R, R\right)] \forall (M: \operatorname{Matrix}\left(S, S, R\right)), (\forall (u: S \to R), (\forall (d: \operatorname{Nat}), (\forall (b: \operatorname{Nat}), (\forall (c: \operatorname{Fin}\left(d\right) \to K), ((\operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (d)}, u\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} (\operatorname{SMul}.\operatorname{smul}\left(c\left(j\right), \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right))) \Leftrightarrow (\forall (v: S \to R), (\forall (n: \operatorname{Nat}), (\operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (d)}, u\right)\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} (\operatorname{SMul}.\operatorname{smul}\left(c\left(j\right), \operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right)\right)))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.transfer_readout` (`✓ std3`). ∎
 
@@ -244,9 +230,9 @@ $$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), (\foral
 
 *Commentary.*
 
-The matrix entries form a semiring, and the independent scalar type acts distributively and commutes with multiplication by entries. Matrix action and the dot product give every shifted scalar relation. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence.
+The matrix entries form a semiring, and the independent coefficient action commutes with left multiplication by matrix and readout entries. This lets the matrix action and dot product carry the coefficients through the vector recurrence to give every shifted scalar relation. The commutation law with the right unit also makes the coefficient action distributive. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence.
 
-**Definition 1.18 (countCut).**
+**Definition 1.17 (countCut).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{countCut}\left(p, q\right): \operatorname{Nat}) = (((((((((((((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 0\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 0\right)) \operatorname{then} 1 \operatorname{else} 0)) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 0\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 1\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 0\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 1\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 1\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 2\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 2\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 2\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 3\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 3\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 3\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 4\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 4\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (\operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(p, 4\right) = \operatorname{HardinA233178Chromatic}.\operatorname{colour}\left(q, 4\right)) \operatorname{then} 1 \operatorname{else} 0))))$$
 
@@ -260,7 +246,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 The cost counts the colour coincidences at the thirteen oriented pairs of row positions.
 
-**Theorem 1.19 (cost_countCut).**
+**Theorem 1.18 (cost_countCut).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = \operatorname{HardinA229538Strip}.\operatorname{countCut}\left(p, q\right)))$$
 
@@ -274,7 +260,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 The sum of the thirteen indicators equals the number of monochromatic bonds on the cut.
 
-**Definition 1.20 (movesOne).**
+**Definition 1.19 (movesOne).**
 
 $$(\operatorname{HardinA229538Strip}.\operatorname{movesOne}: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{List}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}\right))$$
 
@@ -288,7 +274,7 @@ $$(\operatorname{HardinA229538Strip}.\operatorname{movesOne}: \operatorname{Hard
 
 The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order.
 
-**Theorem 1.21 (moves_one_filter).**
+**Theorem 1.20 (moves_one_filter).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{movesOne}\left(p\right): \operatorname{List}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}\right)) = \operatorname{List}.\operatorname{filter}\left((\lambda (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column})\mapsto \operatorname{decide}\left(\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 1\right)), \operatorname{List}.\operatorname{finRange}\left(243\right)\right))$$
 
@@ -302,9 +288,9 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\o
 
 Filtering the ordered column codes by cut cost one gives the stored successor list.
 
-**Theorem 1.22 (step_one).**
+**Theorem 1.21 (step_one).**
 
-$$\forall (R: \operatorname{Type}*), ([\operatorname{NonUnitalNonAssocSemiring}\left(R\right)] [\operatorname{One}\left(R\right)] (\forall (x: R), (((1: R)) \cdot (x) = x)) \Rightarrow (\forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to R), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{HardinA229538Strip}.\operatorname{oneDefect}, w\right)\left(p\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left(w, \operatorname{HardinA229538Strip}.\operatorname{movesOne}\left(p\right)\right)\right)))))$$
+$$\forall (R: \operatorname{Type}*), ([\operatorname{AddCommMonoid}\left(R\right)] [\operatorname{Mul}\left(R\right)] [\operatorname{One}\left(R\right)] (\forall (x: R), (((0: R)) \cdot (x) = (0: R))) \Rightarrow (\forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to R), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\operatorname{dotProduct}\left(\operatorname{HardinA229538Strip}.\operatorname{oneDefect}\left(p\right), w\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left((\lambda (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column})\mapsto (((1: R)) \cdot (w\left(q\right)))), \operatorname{HardinA229538Strip}.\operatorname{movesOne}\left(p\right)\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.step_one` (`✓ std3`). ∎
 
@@ -314,9 +300,9 @@ $$\forall (R: \operatorname{Type}*), ([\operatorname{NonUnitalNonAssocSemiring}\
 
 *Commentary.*
 
-The action of the exact-one-cut matrix is a sum over its successors. The entry one acts as a left unit on the vector values.
+The matrix row sums the successor values after multiplying each by one on the left. Left multiplication by zero removes all other entries.
 
-**Definition 1.23 (weights).**
+**Definition 1.22 (weights).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538Strip}.\operatorname{weights}\left(n\right) = (\operatorname{if} ((h: \operatorname{Fin}.\operatorname{val}\left(n\right) < 12)) \operatorname{then} (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(12\right), \operatorname{Fin}\left(12\right), \operatorname{Int}\right))\left(\operatorname{Fin}.\operatorname{castLT}\left(n, h\right)\right) \operatorname{else} (\operatorname{if} ((hn: \operatorname{Fin}.\operatorname{val}\left(n\right) = 12)) \operatorname{then} \operatorname{Fin}.\operatorname{append}\left((0: \operatorname{Fin}\left(2\right) \to \operatorname{Int}), \operatorname{HardinA233178Chromatic}.\operatorname{coefficients}\right) \operatorname{else} (\operatorname{let} (later: \operatorname{Fin}\left(10\right) \to \left(\operatorname{Fin}\left(12\right) \to \mathbb{Z}\right)) := \text{stored Lean literal} \operatorname{in} (later\left(\operatorname{Fin}.\operatorname{subNat}\left(13, n, \operatorname{Nat}.\operatorname{lt_{of_{le_{of_{ne}}}}}\left(\operatorname{Nat}.\operatorname{le_{of_{not_{gt}}}}\left(h\right), \operatorname{Ne}.\operatorname{symm}\left(hn\right)\right)\right)\right))))))$$
 
@@ -330,7 +316,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538St
 
 The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward.
 
-**Theorem 1.24 (weights_step).**
+**Theorem 1.23 (weights_step).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (h: 12 \le \operatorname{Fin}.\operatorname{val}\left(n\right)), (\forall (j: \operatorname{Fin}\left(12\right)), ((\operatorname{HardinA229538Strip}.\operatorname{weights}\left(n, j\right): \operatorname{Int}) = \sum_{(k: \operatorname{Fin}\left(10\right))} ((\operatorname{HardinA233178Chromatic}.\operatorname{coefficients}\left(k\right)) \cdot (\operatorname{HardinA229538Strip}.\operatorname{weights}\left(\operatorname{Fin}.\operatorname{castLE}\left(\operatorname{Eq}.\operatorname{trans_{le}}\left(\operatorname{Nat}.\operatorname{sub_{add_{cancel}}}\left(\operatorname{LE}.\operatorname{le}.\operatorname{trans}\left(\operatorname{Nat}.\operatorname{le_{add_{right}}}\left(10, 2\right), h\right)\right), \operatorname{Nat}.\operatorname{le_{of_{lt}}}\left(\operatorname{Fin}.\operatorname{isLt}\left(n\right)\right)\right), \operatorname{Fin}.\operatorname{natAdd}\left((\operatorname{Fin}.\operatorname{val}\left(n\right)) - (10), k\right)\right), j\right))))))$$
 
@@ -344,7 +330,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (h: 12 \le \operatorn
 
 Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23.
 
-**Definition 1.25 (classIndex).**
+**Definition 1.24 (classIndex).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{classIndex}\left(p\right): \operatorname{Fin}\left(25\right)) = (\operatorname{Matrix}.\operatorname{vecCons}\left(0, \operatorname{Matrix}.\operatorname{vecCons}\left(1, \operatorname{Matrix}.\operatorname{vecCons}\left(2, \operatorname{Matrix}.\operatorname{vecCons}\left(3, \operatorname{Matrix}.\operatorname{vecCons}\left(4, \operatorname{Matrix}.\operatorname{vecCons}\left(5, \operatorname{Matrix}.\operatorname{vecCons}\left(6, \operatorname{Matrix}.\operatorname{vecCons}\left(7, \operatorname{Matrix}.\operatorname{vecCons}\left(8, \operatorname{Matrix}.\operatorname{vecCons}\left(3, \operatorname{Matrix}.\operatorname{vecCons}\left(9, \operatorname{Matrix}.\operatorname{vecCons}\left(10, \operatorname{Matrix}.\operatorname{vecCons}\left(11, \operatorname{Matrix}.\operatorname{vecCons}\left(12, \operatorname{Matrix}.\operatorname{vecCons}\left(2, \operatorname{Matrix}.\operatorname{vecCons}\left(13, \operatorname{Matrix}.\operatorname{vecCons}\left(14, \operatorname{Matrix}.\operatorname{vecCons}\left(15, \operatorname{Matrix}.\operatorname{vecCons}\left(6, \operatorname{Matrix}.\operatorname{vecCons}\left(16, \operatorname{Matrix}.\operatorname{vecCons}\left(17, \operatorname{Matrix}.\operatorname{vecCons}\left(18, \operatorname{Matrix}.\operatorname{vecCons}\left(11, \operatorname{Matrix}.\operatorname{vecCons}\left(8, \operatorname{Matrix}.\operatorname{vecCons}\left(13, \operatorname{Matrix}.\operatorname{vecCons}\left(19, \operatorname{Matrix}.\operatorname{vecCons}\left(20, \operatorname{Matrix}.\operatorname{vecCons}\left(1, \operatorname{Matrix}.\operatorname{vecCons}\left(21, \operatorname{Matrix}.\operatorname{vecCons}\left(22, \operatorname{Matrix}.\operatorname{vecCons}\left(14, \operatorname{Matrix}.\operatorname{vecCons}\left(9, \operatorname{Matrix}.\operatorname{vecCons}\left(10, \operatorname{Matrix}.\operatorname{vecCons}\left(23, \operatorname{Matrix}.\operatorname{vecCons}\left(18, \operatorname{Matrix}.\operatorname{vecCons}\left(24, \operatorname{Matrix}.\operatorname{vecCons}\left(7, \operatorname{Matrix}.\operatorname{vecCons}\left(16, \operatorname{Matrix}.\operatorname{vecCons}\left(22, \operatorname{Matrix}.\operatorname{vecCons}\left(19, \operatorname{Matrix}.\operatorname{vecCons}\left(4, \operatorname{Matrix}.\operatorname{vecEmpty}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right): \operatorname{Fin}\left(41\right) \to \operatorname{Fin}\left(25\right))\left(\operatorname{HardinA233260Literal}.\operatorname{cls}\left((\operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right)\left(0\right), \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right)\left(1\right), \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right)\left(2\right), \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right)\left(3\right), \operatorname{HardinA233178Recurrence}.\operatorname{columnEquiv}\left(p\right)\left(4\right))\right)\right))$$
 
@@ -358,7 +344,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\o
 
 The lookup classifies five-entry boundary columns under colour permutation and row reversal.
 
-**Definition 1.26 (tableOne).**
+**Definition 1.25 (tableOne).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{tableOne}\left(n, p\right): \operatorname{Int}) = (\operatorname{let} (values: \operatorname{Fin}\left(23\right) \to \left(\operatorname{Fin}\left(25\right) \to \mathbb{Z}\right)) := \text{stored Lean literal} \operatorname{in} (values\left(n, \operatorname{HardinA229538Strip}.\operatorname{classIndex}\left(p\right)\right)))))$$
 
@@ -372,7 +358,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (p: \operatorname{Har
 
 The local literal values in the Lean definition has 23 rows and 25 columns. The indices are the exponent n and the class of p. The theorem table_powers pins this lookup through the first summand of the continuation vector.
 
-**Definition 1.27 (zeroValues).**
+**Definition 1.26 (zeroValues).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA229538Strip}.\operatorname{zeroValues}\left(n, p\right): \operatorname{Int}) = (\operatorname{if} ((h: \operatorname{Fin}.\operatorname{val}\left(n\right) < 12)) \operatorname{then} \operatorname{HardinA233178Chromatic}.\operatorname{table}\left(\operatorname{Fin}.\operatorname{castLT}\left(n, h\right), p\right) \operatorname{else} \sum_{(j: \operatorname{Fin}\left(12\right))} ((\operatorname{HardinA229538Strip}.\operatorname{weights}\left(n, j\right)) \cdot (\operatorname{HardinA233178Chromatic}.\operatorname{table}\left(j, p\right))))))$$
 
@@ -386,7 +372,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\forall (p: \operatorname{Har
 
 For larger exponents the zero-defect values are linear combinations of the twelve proper-colouring vectors.
 
-**Theorem 1.28 (weight_eq).**
+**Theorem 1.27 (weight_eq).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538Strip}.\operatorname{zeroValues}\left(n\right) = \sum_{(j: \operatorname{Fin}\left(12\right))} (\operatorname{SMul}.\operatorname{smul}\left(\operatorname{HardinA229538Strip}.\operatorname{weights}\left(n, j\right), \operatorname{HardinA233178Chromatic}.\operatorname{table}\left(j\right)\right)))$$
 
@@ -400,7 +386,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538St
 
 The same coefficient formula also holds at the tabulated exponents.
 
-**Theorem 1.29 (zero_values).**
+**Theorem 1.28 (zero_values).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538Strip}.\operatorname{zeroValues}\left(n\right) = \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{\operatorname{Fin}.\operatorname{val}\left(n\right)}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right))$$
 
@@ -414,7 +400,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{HardinA229538St
 
 The reconstructed value is the proper-colouring continuation vector at each exponent.
 
-**Theorem 1.30 (table_powers).**
+**Theorem 1.29 (table_powers).**
 
 $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229538Strip}.\operatorname{transfer})^{\operatorname{Fin}.\operatorname{val}\left(n\right)}, \operatorname{HardinA229538Strip}.\operatorname{terminal}\right) = \operatorname{Sum}.\operatorname{elim}\left(\operatorname{HardinA229538Strip}.\operatorname{tableOne}\left(n\right), \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{\operatorname{Fin}.\operatorname{val}\left(n\right)}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right)\right))$$
 
@@ -428,7 +414,7 @@ $$\forall (n: \operatorname{Fin}\left(23\right)), (\operatorname{Matrix}.\operat
 
 The first coordinate gives the one-defect continuations and the second gives the inherited proper-colouring continuations.
 
-**Definition 1.31 (coefficients538).**
+**Definition 1.30 (coefficients538).**
 
 $$(\operatorname{HardinA229538Strip}.\operatorname{coefficients538}: \operatorname{Fin}\left(20\right) \to \operatorname{Int}) = \operatorname{Matrix}.\operatorname{vecCons}\left((-1296), \operatorname{Matrix}.\operatorname{vecCons}\left(5184, \operatorname{Matrix}.\operatorname{vecCons}\left(8640, \operatorname{Matrix}.\operatorname{vecCons}\left((-64656), \operatorname{Matrix}.\operatorname{vecCons}\left(43848, \operatorname{Matrix}.\operatorname{vecCons}\left(214008, \operatorname{Matrix}.\operatorname{vecCons}\left((-371692), \operatorname{Matrix}.\operatorname{vecCons}\left((-48036), \operatorname{Matrix}.\operatorname{vecCons}\left(498819, \operatorname{Matrix}.\operatorname{vecCons}\left((-211910), \operatorname{Matrix}.\operatorname{vecCons}\left((-256127), \operatorname{Matrix}.\operatorname{vecCons}\left(183692, \operatorname{Matrix}.\operatorname{vecCons}\left(55115, \operatorname{Matrix}.\operatorname{vecCons}\left((-59620), \operatorname{Matrix}.\operatorname{vecCons}\left((-4121), \operatorname{Matrix}.\operatorname{vecCons}\left(8804, \operatorname{Matrix}.\operatorname{vecCons}\left((-123), \operatorname{Matrix}.\operatorname{vecCons}\left((-566), \operatorname{Matrix}.\operatorname{vecCons}\left(26, \operatorname{Matrix}.\operatorname{vecCons}\left(12, \operatorname{Matrix}.\operatorname{vecEmpty}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -442,7 +428,7 @@ $$(\operatorname{HardinA229538Strip}.\operatorname{coefficients538}: \operatorna
 
 The entries are ordered from the smallest shift of the recurrence to the largest.
 
-**Theorem 1.32 (vector_polynomial).**
+**Theorem 1.31 (vector_polynomial).**
 
 $$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229538Strip}.\operatorname{transfer})^{22}, \operatorname{HardinA229538Strip}.\operatorname{terminal}\right) = \sum_{(k: \operatorname{Fin}\left(20\right))} (\operatorname{SMul}.\operatorname{smul}\left(\operatorname{HardinA229538Strip}.\operatorname{coefficients538}\left(k\right), \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229538Strip}.\operatorname{transfer})^{(2) + (\operatorname{Fin}.\operatorname{val}\left(k\right))}, \operatorname{HardinA229538Strip}.\operatorname{terminal}\right)\right))$$
 
@@ -456,7 +442,7 @@ $$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229538S
 
 The relation holds simultaneously for all boundary columns and both residual budgets.
 
-**Theorem 1.33 (result).**
+**Theorem 1.32 (result).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (23)\right): \operatorname{Int}) = ((((((((((((((((((((12) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (22)\right): \operatorname{Int}))) + ((26) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (21)\right): \operatorname{Int})))) - ((566) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (20)\right): \operatorname{Int})))) - ((123) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (19)\right): \operatorname{Int})))) + ((8804) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (18)\right): \operatorname{Int})))) - ((4121) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (17)\right): \operatorname{Int})))) - ((59620) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (16)\right): \operatorname{Int})))) + ((55115) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (15)\right): \operatorname{Int})))) + ((183692) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (14)\right): \operatorname{Int})))) - ((256127) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (13)\right): \operatorname{Int})))) - ((211910) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (12)\right): \operatorname{Int})))) + ((498819) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (11)\right): \operatorname{Int})))) - ((48036) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (10)\right): \operatorname{Int})))) - ((371692) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (9)\right): \operatorname{Int})))) + ((214008) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int})))) + ((43848) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int})))) - ((64656) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) + ((8640) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) + ((5184) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int})))) - ((1296) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (3)\right): \operatorname{Int}))))$$
 
@@ -483,7 +469,6 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.countCut`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_card`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.labelled_scale`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.mem_edges`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.movesOne`
@@ -506,7 +491,6 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.zero_cost_entry`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.zero_values`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic](../../../../Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal](../../../../Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence](../../../../Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal](../../../../Combinatorics/TraceAvoidingArrays/HardinA233260Literal.md)

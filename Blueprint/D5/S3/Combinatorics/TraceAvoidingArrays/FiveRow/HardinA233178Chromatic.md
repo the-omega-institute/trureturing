@@ -126,7 +126,31 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 The legal-bond predicate is decidable by checking the finitely many row pairs.
 
-**Definition 1.11 (T).**
+**Definition 1.11 (forwardCutPair).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left(k\right)), (\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k, i\right) = (\operatorname{Fin}.\operatorname{castSucc}\left(i\right), \operatorname{Fin}.\operatorname{succ}\left(i\right))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.forwardCutPair` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The embedding sends a row index to its cast into the larger row type and its successor.
+
+**Theorem 1.12 (cut_parts).**
+
+$$\forall (k: \operatorname{Nat}), (\operatorname{HardinA229637RowColumn}.\operatorname{horiz}\left(k + 1\right) = \operatorname{Finset}.\operatorname{map}\left(\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right) \land (\operatorname{HardinA229637RowColumn}.\operatorname{betw}\left(k + 1\right) = \operatorname{Finset}.\operatorname{map}\left(\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right) \cup \operatorname{Finset}.\operatorname{map}\left(\operatorname{Equiv}.\operatorname{toEmbedding}\left(\operatorname{Equiv}.\operatorname{prodComm}\left(\operatorname{Fin}\left(k + 1\right), \operatorname{Fin}\left(k + 1\right)\right)\right), \operatorname{Finset}.\operatorname{map}\left(\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right)\right) \land (\operatorname{Disjoint}\left(\operatorname{Finset}.\operatorname{map}\left(\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right), \operatorname{Finset}.\operatorname{map}\left(\operatorname{Equiv}.\operatorname{toEmbedding}\left(\operatorname{Equiv}.\operatorname{prodComm}\left(\operatorname{Fin}\left(k + 1\right), \operatorname{Fin}\left(k + 1\right)\right)\right), \operatorname{Finset}.\operatorname{map}\left(\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right)\right)\right) \land (\operatorname{Disjoint}\left(\operatorname{Finset}.\operatorname{diag}\left((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k + 1\right)\right))\right), \operatorname{HardinA229637RowColumn}.\operatorname{betw}\left(k + 1\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.cut_parts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The adjacent pairs in one direction are the image of this embedding. The two diagonal directions are disjoint, and their union is disjoint from the straight pairs.
+
+**Definition 1.13 (T).**
 
 $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA233178Chromatic}.\operatorname{T}\left(p, q\right): \operatorname{Int}) = \operatorname{if} \operatorname{HardinA233178Chromatic}.\operatorname{Bond}\left(p, q\right) \operatorname{then} 1 \operatorname{else} 0))$$
 
@@ -138,7 +162,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 Rows index the current column and columns index its successor.
 
-**Definition 1.12 (v).**
+**Definition 1.14 (v).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n\right): \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int}) = \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{n}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right))$$
 
@@ -150,7 +174,7 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA233178Chromatic}.\oper
 
 Each coordinate counts continuations of the specified length from its boundary column.
 
-**Theorem 1.13 (vector_certificate).**
+**Theorem 1.15 (vector_certificate).**
 
 $$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{1 + 10}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right) = \sum_{(j: \operatorname{Fin}\left(10\right))} (\operatorname{SMul}.\operatorname{smul}\left(\operatorname{HardinA233178Chromatic}.\operatorname{coefficients}\left(j\right), \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178Chromatic}.\operatorname{T})^{1 + \operatorname{Fin}.\operatorname{val}\left(j\right)}, (1: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int})\right)\right))$$
 
@@ -162,7 +186,7 @@ $$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA233178C
 
 At exponent eleven the continuation vector is the given linear combination of the vectors at exponents one through ten.
 
-**Theorem 1.14 (result).**
+**Theorem 1.16 (result).**
 
 $$\forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \operatorname{Int}), (\forall (n: \operatorname{Nat}), (\operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 11\right)\right) = 6 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 10\right)\right) + 31 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 9\right)\right) - 97 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 8\right)\right) - 163 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 7\right)\right) + 417 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 6\right)\right) + 93 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 5\right)\right) - 514 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 4\right)\right) + 192 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 3\right)\right) + 72 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 2\right)\right) - 36 \cdot \operatorname{dotProduct}\left(w, \operatorname{HardinA233178Chromatic}.\operatorname{v}\left(n + 1\right)\right)))$$
 
@@ -181,6 +205,8 @@ The finite vector relation propagates to all subsequent exponents by TransferMat
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.T`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.coefficients`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.colour`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.cut_parts`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.forwardCutPair`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.instDecidableBond`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves_eq_filter`
@@ -191,3 +217,4 @@ The finite vector relation propagates to all subsequent exponents by TransferMat
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.vector_certificate`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](../TransferMatrix.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn](../../../StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.md)
