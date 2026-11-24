@@ -104,45 +104,43 @@ private theorem pairKet_rat (x y z : ℂ) (b : ℚ)
     simp only [pairKet, hi, hj, hi', hj', ite_true, ite_false, map_zero, zero_mul, mul_zero] <;>
     first | exact hxc | exact hyc | exact hxy | exact hyx | exact rationalEntry_zero
 
-/-- The two-word Fibonacci marginals have a rational pure extension exactly at the
-Gaussian rational norms on the forced coupling circle. -/
-theorem rational_pure_extension_iff (b : ℚ) :
+/-- The exact couplings of rational pure extensions in the two-word Fibonacci family. -/
+theorem rational_pure_coupling_iff (b : ℝ) (z : ℂ) :
     (∃ ψ : Word → ℂ, let ρ := rankOneDensity ψ
-      ρ.trace = 1 ∧ edgeTrace ρ 1 2 = edgeState (1 - (b : ℝ)) b 0 ∧
-      edgeTrace ρ 2 1 = edgeState (1 - (b : ℝ)) b 0 ∧
-      ∀ i j, RationalEntry (ρ i j)) ↔
-      ∃ a c : ℚ, a ^ 2 + c ^ 2 = b * (1 - b) := by
+      ρ.trace = 1 ∧ edgeTrace ρ 1 2 = edgeState (1 - b) b 0 ∧
+      edgeTrace ρ 2 1 = edgeState (1 - b) b 0 ∧
+      ρ (.inl 0) (.inr true) = z ∧ ∀ i j, RationalEntry (ρ i j)) ↔
+      (∃ q : ℚ, (q : ℝ) = b) ∧ RationalEntry z ∧ normSq z = b * (1 - b) := by
   constructor
-  · rintro ⟨ψ, _, hl, hr, hrat⟩
-    obtain ⟨a, c, ha, hc⟩ := hrat (.inl 0) (.inr true)
-    have hz := pure_pair_norm (b : ℝ) ψ hl hr
-    rw [normSq_apply, ← ha, ← hc] at hz
-    exact ⟨a, c, by
-      apply Rat.cast_injective (α := ℝ)
-      push_cast
-      simpa [pow_two] using hz⟩
-  · rintro ⟨a, c, hac⟩
-    let z : ℂ := ⟨a, c⟩
-    have hz : normSq z = (b : ℝ) * (1 - (b : ℝ)) := by
-      change (a : ℝ) * (a : ℝ) + (c : ℝ) * (c : ℝ) = _
-      exact_mod_cast (show a * a + c * c = b * (1 - b) by simpa [pow_two] using hac)
-    have hb : 0 ≤ (b : ℝ) := by nlinarith [normSq_nonneg z]
-    have hsome (x y : ℂ) (hx : normSq x = (b : ℝ)) (hy : normSq y = 1 - (b : ℝ))
+  · rintro ⟨ψ, _, hl, hr, hxy, hrat⟩
+    obtain ⟨q, _, hq, _⟩ := hrat (.inl 0) (.inl 0)
+    have hb := congrFun (congrFun hl 1) 1
+    change rankOneDensity ψ (.inl 0) (.inl 0) + 0 = (b : ℂ) at hb
+    rw [add_zero] at hb
+    refine ⟨⟨q, ?_⟩, hxy ▸ hrat (.inl 0) (.inr true), ?_⟩
+    · simpa only [Complex.ofReal_re, hb] using hq
+    · rw [← hxy]
+      exact pure_pair_norm b ψ hl hr
+  · rintro ⟨⟨q, rfl⟩, hrat, hz⟩
+    have hb : 0 ≤ (q : ℝ) := by nlinarith [normSq_nonneg z]
+    have hsome (x y : ℂ) (hx : normSq x = (q : ℝ)) (hy : normSq y = 1 - (q : ℝ))
         (hxy : x * conj y = z) :
         ∃ ψ : Word → ℂ, let ρ := rankOneDensity ψ
-          ρ.trace = 1 ∧ edgeTrace ρ 1 2 = edgeState (1 - (b : ℝ)) b 0 ∧
-          edgeTrace ρ 2 1 = edgeState (1 - (b : ℝ)) b 0 ∧
-          ∀ i j, RationalEntry (ρ i j) := by
-      have hout := pairKet_read x y b hx hy
-      exact ⟨pairKet x y, pairKet_trace x y b hx hy, hout.1, hout.2,
-        pairKet_rat x y z b hx hy hxy ⟨a, c, rfl, rfl⟩⟩
+          ρ.trace = 1 ∧ edgeTrace ρ 1 2 = edgeState (1 - (q : ℝ)) q 0 ∧
+          edgeTrace ρ 2 1 = edgeState (1 - (q : ℝ)) q 0 ∧
+          ρ (.inl 0) (.inr true) = z ∧ ∀ i j, RationalEntry (ρ i j) := by
+      have hout := pairKet_read x y q hx hy
+      refine ⟨pairKet x y, pairKet_trace x y q hx hy, hout.1, hout.2, ?_,
+        pairKet_rat x y z q hx hy hxy hrat⟩
+      change pairKet x y (.inl 0) * conj (pairKet x y (.inr true)) = z
+      simpa [pairKet] using hxy
     rcases hb.eq_or_lt with h0 | hp
     · have hz0 : z = 0 := normSq_eq_zero.mp (by simp [hz, ← h0])
       apply hsome 0 1 <;> simp [hz0, ← h0]
-    · let s : ℝ := Real.sqrt b
+    · let s : ℝ := Real.sqrt q
       let y := conj z / (s : ℂ)
       have hs : (s : ℂ) ≠ 0 := by exact_mod_cast (Real.sqrt_pos.mpr hp).ne'
-      have hnorm : normSq (s : ℂ) = (b : ℝ) := by
+      have hnorm : normSq (s : ℂ) = (q : ℝ) := by
         rw [normSq_ofReal]
         exact Real.mul_self_sqrt hb
       apply hsome (s : ℂ) y hnorm
