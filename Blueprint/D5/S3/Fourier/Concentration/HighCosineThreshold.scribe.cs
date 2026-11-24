@@ -53,8 +53,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "If u+ℓ=0, the first multiplier has zero intercept and its slope is assigned one, "
-                    + "already included in the maximum. Its negative value at positive r still "
-                    + "permits a feasible perturbation within the support. "
+                    + "already included in the maximum. "
                     + "When b < a is below the cutoff, all three supporting levels have positive "
                     + "weight. If a moment coefficient is negative, a perturbation within the "
                     + "support increases that moment and preserves the other. If an intermediate "
