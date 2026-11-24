@@ -78,6 +78,31 @@ private theorem rationalEntry_conj {z : ℂ} (hz : RationalEntry z) : RationalEn
   obtain ⟨a, c, ha, hc⟩ := hz
   exact ⟨a, -c, by simpa using ha, by simpa using congrArg Neg.neg hc⟩
 
+/-- The subfield of complex numbers with two rational coordinates. -/
+def rationalComplex : Subfield ℂ where
+  carrier := {z | RationalEntry z}
+  zero_mem' := rationalEntry_zero
+  one_mem' := ⟨1, 0, by simp, by simp⟩
+  add_mem' := by
+    rintro z w ⟨a, b, ha, hb⟩ ⟨c, d, hc, hd⟩
+    exact ⟨a + c, b + d, by simp [ha, hc], by simp [hb, hd]⟩
+  neg_mem' := by
+    rintro z ⟨a, b, ha, hb⟩
+    exact ⟨-a, -b, by simp [ha], by simp [hb]⟩
+  mul_mem' := by
+    rintro z w ⟨a, b, ha, hb⟩ ⟨c, d, hc, hd⟩
+    exact ⟨a*c - b*d, a*d + b*c,
+      by simp [ha, hb, hc, hd, Complex.mul_re], by simp [ha, hb, hc, hd, Complex.mul_im]⟩
+  inv_mem' := by
+    rintro z ⟨a, b, ha, hb⟩
+    refine ⟨a/(a*a+b*b), -b/(a*a+b*b), ?_, ?_⟩
+    · simp [ha, hb, Complex.inv_re, Complex.normSq_apply]
+    · simp [ha, hb, Complex.inv_im, Complex.normSq_apply]
+
+/-- Complex conjugation restricted to the subfield of rational coordinates. -/
+def rationalConjugate (z : rationalComplex) : rationalComplex :=
+  ⟨conj z.val, rationalEntry_conj z.property⟩
+
 private theorem pairKet_trace (x y : ℂ) (b : ℝ)
     (hx : normSq x = b) (hy : normSq y = 1 - b) :
     (rankOneDensity (pairKet x y)).trace = 1 := by
