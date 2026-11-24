@@ -14,7 +14,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "evenCoeff"),
                 H("Even trivial-zero coefficients"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For each natural n the index k=n+1 contributes the positive coefficient "
@@ -24,7 +24,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "evenT"),
                 H("The even trivial-zero tail"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "At logarithmic argument y the complete tail is the sum of 1/(2k(2k-1)) "
@@ -34,7 +34,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "evenT_nonneg"),
                 H("Positivity of the even tail"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "Every term is nonnegative, so the totalized series is nonnegative at every "
@@ -44,7 +44,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "evenT_le_mass"),
                 H("The exact mass controls the even tail"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For y at least zero the even tail is bounded by log(2). The exact "
@@ -55,7 +55,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parity"),
                 H("The parity index"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "The complex parity index is zero for an even character and one for an odd "
@@ -65,7 +65,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parityCorrection"),
                 H("Endpoint and trivial-zero corrections"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For even characters the correction is 1-log(x)+(log(2)-1)/x minus the even "
@@ -76,7 +76,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parityCorrection_one"),
                 H("The initial endpoint"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every character the correction at x=1 is zero. The even and odd "
@@ -86,7 +86,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parityCorrection_continuousOn"),
                 H("Continuity on the logarithmic half-axis"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "The correction evaluated at exp(y) is continuous for all y at least zero. "
@@ -97,7 +97,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "exp_integrable"),
                 H("Exponential damping"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every complex s with positive real part, exp(-sy) is integrable on the "
@@ -107,7 +107,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "exp_integral"),
                 H("The exponential Laplace integral"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every complex s with positive real part, the integral of exp(-sy) on "
@@ -117,7 +117,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parityCorrection_laplace_integrable"),
                 H("Absolute convergence of the correction transform"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "The complete parity correction has an absolutely convergent Laplace "
@@ -129,7 +129,7 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 DeclarationHandle.Create(
                     Prefix + "parityCorrection_laplace"),
                 H("The centered digamma transform"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "On the vertical line s=2+2 pi i t, for nonzero real t, the transform "

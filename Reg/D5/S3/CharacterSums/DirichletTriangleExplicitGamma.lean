@@ -22,31 +22,32 @@ local instance sourceMeasurableSpace : MeasurableSpace ℝ :=
 namespace Nonnegative
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    Unit (fun _ => ℝ) (fun _ => Bool)
+    Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ z => @decide (0 ≤ z) (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y : ℝ => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ : ℝ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (y : ℝ), R.readout () () (evenT y) = true
+  Law R := ∀ (y : ℝ), R.readout () () 0 (evenT y)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h 0
-  change false = true at he
-  cases he
+  exact he
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), -1, 0, by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congrFun h (0 : ℝ)
+  norm_num [actual, realize] at he
 
 def family : Registration arena (type_of% @evenT_nonneg) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
+  bridge := by simp only [arena, actual, realize]
+  variation := ⟨by simpa only [arena, actual, realize]
       using @evenT_nonneg, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -67,7 +68,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ z => @decide (0 ≤ z) (Classical.propDecidable _)) (fun e => nomatch e))
+    (fun _ _ x => fun y : ℝ => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -77,11 +78,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body"]
+      path := #["body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -91,31 +92,32 @@ end Nonnegative
 namespace Mass
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    Unit (fun _ => ℝ) (fun _ => Bool)
+    Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ z => @decide (z ≤ Real.log 2) (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y : ℝ => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ : ℝ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {y : ℝ} (hy : 0 ≤ y), R.readout () () (evenT y) = true
+  Law R := ∀ {y : ℝ} (hy : 0 ≤ y), R.readout () () (evenT y) (Real.log 2)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (y := 0) le_rfl
-  change false = true at he
-  cases he
+  exact he
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), Real.log 2, Real.log 2 + 1, by simp [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congrFun h (0 : ℝ)
+  norm_num [actual, realize] at he
 
 def family : Registration arena (type_of% @evenT_le_mass) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
+  bridge := by simp only [arena, actual, realize]
+  variation := ⟨by simpa only [arena, actual, realize]
       using @evenT_le_mass, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -136,7 +138,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ z => @decide (z ≤ Real.log 2) (Classical.propDecidable _)) (fun e => nomatch e))
+    (fun _ _ x => fun y : ℝ => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -146,11 +148,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body"]
+      path := #["body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

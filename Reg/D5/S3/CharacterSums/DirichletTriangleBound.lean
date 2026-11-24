@@ -65,43 +65,6 @@ def family {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (rejected_law hχ hne hx hT hfree)
   dependence := dependence
 
-def audit {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
-    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {x T : ℝ} (hx : 1 ≤ x) (hT : 32 < T)
-    (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ T → χ.LFunction s ≠ 0) :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@characterTriangle_finite_height) (Realization signature) Unit Unit where
-  unitName := .str
-    `D5.S3.CharacterSums.DirichletTriangleBound.characterTriangle_finite_height
-    "__information_unit"
-  realizationName := `Reg.D5.S3.CharacterSums.DirichletTriangleBound.Quantitative.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family hχ hne hx hT hfree⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.CharacterSums.DirichletTriangleBound
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 
 end Quantitative
 
@@ -135,41 +98,6 @@ def family (p : ℕ) [Fact p.Prime] (χ : DirichletCharacter ℂ p)
     (rejected_law p χ hne hp hfree)
   dependence := dependence
 
-def audit (p : ℕ) [Fact p.Prime] (χ : DirichletCharacter ℂ p)
-    (hne : χ ≠ 1) (hp : 10000 ≤ p)
-    (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@characterTriangle_prime_bound) (Realization signature) Unit Unit where
-  unitName := .str `D5.S3.CharacterSums.DirichletTriangleBound.characterTriangle_prime_bound
-    "__information_unit"
-  realizationName := `Reg.D5.S3.CharacterSums.DirichletTriangleBound.Prime.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family p χ hne hp hfree⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.CharacterSums.DirichletTriangleBound
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 
 end Prime
 end Reg.D5.S3.CharacterSums.DirichletTriangleBound

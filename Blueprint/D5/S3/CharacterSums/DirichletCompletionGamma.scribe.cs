@@ -43,7 +43,8 @@ internal sealed class DirichletCompletionGammaDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For every real u at least one quarter, Gamma(u) is at most "
-                    + "Gamma(1/4) or strictly below exp((u+1) log(u+1)). The factorial contribution is "
+                    + "Gamma(1/4) or strictly below exp((u+1) log(u+1)). The factorial "
+                    + "contribution is"
                     + "strictly below the exponential because ceiling(u) < u+1 and "
                     + "log(u+1) is positive. The fixed endpoint contribution remains in the "
                     + "first branch, while the second branch retains its strict inequality. "
@@ -92,7 +93,8 @@ internal sealed class DirichletCompletionGammaDocument : IScribeDocumentDefiniti
                     + "formula bounds the remainder after log(z)-1/(2z) by 1/(2 Re(z)). "
                     + "The real part of 1/(2z) is nonnegative and 1/(2 Re(z)) <= 1/2. "
                     + "The estimate 2 norm(z) <= 2 abs(Im(z))+3 and log(2)>1/2 absorb "
-                    + "the remainder while retaining both correction terms. This is a consequence of the classical "
+                    + "the remainder while retaining both correction terms. This is a "
+                    + "consequence of the classical"
                     + "Binet formula for the logarithmic derivative of Gamma."))),
                 DescribeRole.Theorem))));
 }
