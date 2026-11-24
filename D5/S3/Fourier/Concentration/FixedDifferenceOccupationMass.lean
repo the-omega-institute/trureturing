@@ -6,7 +6,7 @@
    utility: none
    digest: A fixed signed count difference factors through its common occupation counts. -/
 
-import D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
+import D5.S3.Fourier.Concentration.FiniteMultinomialOverlap
 
 /-! The contribution of a fixed count difference to a weighted moment. -/
 set_option autoImplicit false
@@ -16,6 +16,8 @@ namespace D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass
 open Finset
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialWeight diagonal)
 open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment (monomialWeight_nonneg)
+open D5.S3.Fourier.Concentration.FiniteMultinomialOverlap
+  (subvectorMultiplicity subvectorMultiplicity_mul_monomialWeight one_le_subvectorMultiplicity)
 
 noncomputable section
 
@@ -142,36 +144,17 @@ private theorem weight_add_bound {J : Type*} [Fintype J] [DecidableEq J]
     (ha : ∑ j, a j = d) (hl : ∑ j, l j = p - d) :
     monomialWeight w (l + a) ≤
       (Nat.choose p d : ℝ) * monomialWeight w l * monomialWeight w a := by
-  have hdeg : ∑ j, (l + a) j = p := by
-    change (∑ j, (l j + a j)) = p
-    rw [sum_add_distrib, hl, ha, Nat.sub_add_cancel hd]
-  have hfac : (Nat.choose p d : ℝ) * ((p - d).factorial : ℝ) * (d.factorial : ℝ) =
-      (p.factorial : ℝ) := by
-    exact_mod_cast (Nat.mul_right_comm (p.choose d) (p-d).factorial d.factorial).trans
-      (Nat.choose_mul_factorial_mul_factorial hd)
-  rw [weight_factorials w p _ hdeg, weight_factorials w (p - d) _ hl,
-    weight_factorials w d _ ha]
+  have h := subvectorMultiplicity_mul_monomialWeight w a l
+  rw [ha, hl, Nat.add_sub_of_le hd, add_comm a l] at h
+  have hm : 1 ≤ subvectorMultiplicity (l + a) a :=
+    one_le_subvectorMultiplicity fun j => by
+      change a j ≤ l j + a j
+      exact Nat.le_add_left _ _
   calc
-    _ ≤ (p.factorial : ℝ) * ∏ j,
-        (w j ^ l j / ((l j).factorial : ℝ)) *
-        (w j ^ a j / ((a j).factorial : ℝ)) := by
-      apply mul_le_mul_of_nonneg_left _ (by positivity)
-      apply prod_le_prod₀
-      · intro j _
-        have := hw j
-        positivity
-      · intro j _
-        change w j ^ (l j + a j) / ((l j + a j).factorial : ℝ) ≤ _
-        rw [pow_add, ← mul_div_mul_comm]
-        have hden : ((l j).factorial : ℝ) * ((a j).factorial : ℝ) ≤
-            ((l j + a j).factorial : ℝ) := by
-          exact_mod_cast Nat.le_of_dvd (Nat.factorial_pos _)
-            (Nat.factorial_mul_factorial_dvd_factorial_add (l j) (a j))
-        exact div_le_div_of_nonneg_left
-          (mul_nonneg (pow_nonneg (hw j) _) (pow_nonneg (hw j) _)) (by positivity) hden
-    _ = _ := by
-      rw [prod_mul_distrib, ← hfac]
-      ring
+    monomialWeight w (l + a) = 1 * monomialWeight w (l + a) := by simp
+    _ ≤ subvectorMultiplicity (l + a) a * monomialWeight w (l + a) :=
+      mul_le_mul_of_nonneg_right hm (monomialWeight_nonneg w hw _)
+    _ = _ := by rw [h]; ring
 
 private theorem fixedDifferenceMass_bound {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (a b : J → ℕ) (p d : ℕ) (hd : d ≤ p)

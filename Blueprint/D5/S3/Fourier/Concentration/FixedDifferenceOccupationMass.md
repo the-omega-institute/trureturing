@@ -25,4 +25,4 @@ The factorial product for l+a dominates the products for l and a. This bounds it
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/FixedDifferenceOccupationMass.fixed_difference_mass`
-- Dependency: [D5/S3/Fourier/Concentration/FiniteSincCollisionMoment](FiniteSincCollisionMoment.md)
+- Dependency: [D5/S3/Fourier/Concentration/FiniteMultinomialOverlap](FiniteMultinomialOverlap.md)
