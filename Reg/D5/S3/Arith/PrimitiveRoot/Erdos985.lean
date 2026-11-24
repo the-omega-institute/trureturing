@@ -69,8 +69,7 @@ abbrev arena : Arena where
       3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (_hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) ,
+    ,
     ∀ p, p.Prime → p ≠ 2 →
       ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
 private theorem rejected_law (hRH : RiemannHypothesis)
@@ -79,10 +78,9 @@ private theorem rejected_law (hRH : RiemannHypothesis)
       3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) : ¬ arena.Law rejected := by
+    : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨q, hq, hlt, ho⟩ := h hRH hL hsmall 3 (by decide) (by decide)
+  obtain ⟨q, hq, hlt, ho⟩ := h hRH hL 3 (by decide) (by decide)
   have hq2 : q = 2 := by have := hq.two_le; omega
   subst q
   have hh : orderOf (2 : ZMod 3) = 2 :=
@@ -95,15 +93,50 @@ def family (hRH : RiemannHypothesis)
       3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) :
-    Registration arena (type_of% @erdos985_of_GRH) where
+    : Registration arena (type_of% @erdos985_of_GRH) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@erdos985_of_GRH, rejected, rejected_law hRH hL hsmall⟩
+  variation := ⟨@erdos985_of_GRH, rejected, rejected_law hRH hL⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
-    (rejected_law hRH hL hsmall)
+    (rejected_law hRH hL)
   dependence := dependence
+def audit (hRH : RiemannHypothesis)
+    (hL : ∀ (p : ℕ) (hp : p.Prime),
+      letI : NeZero p := ⟨hp.ne_zero⟩;
+      3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
+      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+      erdos985_of_GRH (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.PrimitiveRoot.Erdos985.erdos985_of_GRH.__information_unit
+  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.Erdos985.All.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family hRH hL⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.Arith.PrimitiveRoot.Erdos985
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 end All
 
 #print axioms erdos985_large_prime
