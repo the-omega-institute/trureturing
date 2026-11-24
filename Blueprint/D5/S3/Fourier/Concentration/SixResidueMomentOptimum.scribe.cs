@@ -30,8 +30,7 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "The energy comparison applies to every nonnegative probability law "
                         + "w for which M₁(w) + M₂(w) ≥ 2a. This includes arbitrary nonsymmetric "
-                        + "laws satisfying the two individual bounds. In the last line, p is the "
-                        + "normalized positive part of 1 − t(1−c(k)), with t ≥ 0.")),
+                        + "laws satisfying the two individual bounds.")),
                     Paragraph(Text(
                         "The combined readout c+d takes the values 2, 0 and −1. On each set "
                         + "where c+d is constant the differences c−d sum to zero. A weight "
@@ -57,7 +56,7 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
         var t = F.Id("t");
         var p = new Formula.Subscript(F.Id("p"), t);
         var reals = Seq(Mathbb, Grp(F.Id("R")));
-        var domain = Seq(Call("Fin", D(6)), Sp, Rightarrow, Sp, reals);
+        var domain = Seq(Call("Fin", D(6)), Sp, To, Sp, reals);
         var sum = new Formula.Subscript(Sum, k);
         var first = new Formula.Subscript(F.Id("M"), D(1));
         var second = new Formula.Subscript(F.Id("M"), D(2));
