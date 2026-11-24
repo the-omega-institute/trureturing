@@ -606,6 +606,252 @@ private theorem checkpoint {a h d k : ℕ} (hd : 0 < d) (cop : a.Coprime d)
   have hW' := hhi.1
   omega
 
-#print axioms checkpoint
+
+private theorem distance_add_common_le {p : ℕ} (c u v : Fin p → ℕ) :
+    distance (c + u) (c + v) ≤ max (∑ i, u i) (∑ i, v i) := by
+  have hcommon (i : Fin p) : c i ≤ min (c i + u i) (c i + v i) :=
+    le_min (Nat.le_add_right _ _) (Nat.le_add_right _ _)
+  apply max_le
+  · apply le_trans _ (le_max_left _ _)
+    apply Finset.sum_le_sum
+    intro i _
+    have := hcommon i
+    change c i + u i - min (c i + u i) (c i + v i) ≤ u i
+    omega
+  · apply le_trans _ (le_max_right _ _)
+    apply Finset.sum_le_sum
+    intro i _
+    have := hcommon i
+    change c i + v i - min (c i + u i) (c i + v i) ≤ v i
+    omega
+
+private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 < h)
+    (hd : 0 < d) (cop : a.Coprime d) {z : Z (generators a h d k) (witness a h d k)}
+    (hz : Low h d (ceilParameter a k) z.val) (hY : count z.val < ceilParameter a k) :
+    ∃ w : Z (generators a h d k) (witness a h d k),
+      Low h d (ceilParameter a k) w.val ∧
+      count w.val = count z.val + 1 ∧ distance z.val w.val ≤ h + 1 := by
+  let g := generators a h d k
+  set t := ceilParameter a k
+  have hidx : ∃ i : Fin k, 0 < i.val ∧ 0 < z.val i.succ := by
+    by_contra! hi
+    have he : excess z.val = 0 := by
+      apply Finset.sum_eq_zero
+      intro i _
+      by_cases h0 : i.val = 0
+      · simp [h0]
+      · rw [Nat.eq_zero_of_le_zero (hi i (Nat.pos_of_ne_zero h0)), zero_mul]
+    have hsum := indexWeight_eq_count_add_excess z.val
+    rw [hz.1, he] at hsum
+    omega
+  obtain ⟨i, hi0, hzi⟩ := hidx
+  let j : Fin k := ⟨i.val - 1, by have := i.isLt; omega⟩
+  let i₁ := first (show 0 < k by omega)
+  let removed := basis (0 : Fin (k + 1)) h + basis i.succ 1
+  let added := basis i₁ 1 + basis j.succ 1
+  let c : Fin (k + 1) → ℕ := fun l => z.val l - removed l
+  have hz0 : h ≤ z.val 0 := by
+    rw [hz.2]
+    have := Nat.mul_le_mul_left h (show 1 ≤ t + 1 - count z.val by omega)
+    rw [Nat.mul_one] at this
+    omega
+  have hremoved : ∀ l, removed l ≤ z.val l := by
+    intro l
+    by_cases hl : l = 0
+    · subst l
+      simpa [removed, Pi.add_apply, basis] using hz0
+    · simpa [removed, Pi.add_apply, basis, Pi.single_eq_of_ne hl] using (basis_le hzi l)
+  have hsplit : c + removed = z.val := split_coordinates hremoved
+  have hj : j.succ.val = i.val := by dsimp [j]; omega
+  have hvalue : weight g removed = weight g added := by
+    simp only [g, removed, added, i₁, weight_add, weight_basis, Nat.one_mul, generators,
+      ite_true, Fin.succ_ne_zero, first_ne_zero, ite_false, first_val, hj, Fin.val_succ]
+    ring
+  have hweight : indexWeight removed = indexWeight added := by
+    simp only [indexWeight, removed, added, i₁, weight_add, weight_basis, Nat.one_mul,
+      Fin.val_zero, Nat.mul_zero, zero_add, first_val, hj, Fin.val_succ]
+    omega
+  have hcntR : count removed = 1 := by
+    simp [removed, count_add, count_basis_zero, count_basis_succ]
+  have hcntA : count added = 2 := by
+    change count (basis i₁ 1 + basis j.succ 1) = 2
+    rw [count_add, count_basis_succ, show count (basis i₁ 1) = 1 from count_basis_succ _ _]
+  let w : Z g (witness a h d k) := ⟨c + added, by
+    change weight g (c + added) = witness a h d k
+    rw [weight_add, ← hvalue, ← weight_add, hsplit]
+    exact z.property⟩
+  have hwY : count w.val = count z.val + 1 := by
+    have h := congrArg count hsplit
+    rw [count_add, hcntR] at h
+    change count (c + added) = _
+    rw [count_add, hcntA]
+    omega
+  have hwW : indexWeight w.val = t := by
+    change indexWeight (c + added) = t
+    have hadd : indexWeight (c + added) = indexWeight c + indexWeight added :=
+      weight_add _ _ _
+    have hrem : indexWeight (c + removed) = indexWeight c + indexWeight removed :=
+      weight_add _ _ _
+    rw [hadd, ← hweight, ← hrem, hsplit, hz.1]
+  have hlow : Low h d t w.val := by
+    rcases (fiber_iff_classes hk hka (by omega) hd cop w.val).1 w.property with hlow | hhigh
+    · exact hlow
+    · have hhW := hhigh.1
+      omega
+  refine ⟨w, hlow, hwY, ?_⟩
+  have hlenR : (∑ l, removed l) = h + 1 := by
+    rw [sum_coordinates, hcntR]
+    simp [removed, Pi.add_apply, basis]
+  have hlenA : (∑ l, added l) = 2 := by
+    rw [sum_coordinates, hcntA]
+    simp [added, i₁, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero _).symm]
+  change distance z.val (c + added) ≤ h + 1
+  rw [← hsplit]
+  exact (distance_add_common_le c removed added).trans
+    (by rw [hlenR, hlenA]; exact max_le le_rfl (by omega))
+
+private theorem low_eq_lowVector {k h d t : ℕ} (hk : 0 < k) {z : Fin (k + 1) → ℕ}
+    (hz : Low h d t z) (hY : count z = t) : z = lowVector hk h d t := by
+  have he : excess z = 0 := by
+    have := indexWeight_eq_count_add_excess z
+    have hW := hz.1
+    omega
+  have hvanish (i : Fin k) (hi : i.val ≠ 0) : z i.succ = 0 := by
+    have hle := coordinate_le_sum (fun i : Fin k => z i.succ * i.val) i
+    change z i.succ * i.val ≤ excess z at hle
+    rw [he] at hle
+    exact (Nat.mul_eq_zero.mp (Nat.eq_zero_of_le_zero hle)).resolve_right hi
+  let i₀ : Fin k := ⟨0, hk⟩
+  have hz1 : z (first hk) = t := by
+    rw [count, Fintype.sum_eq_single i₀] at hY
+    · exact hY
+    · intro j hj
+      exact hvanish j (fun h => hj (Fin.ext h))
+  have hz0 : z 0 = h + d := by
+    rw [hz.2, hY, show t + 1 - t = 1 by omega, Nat.mul_one]
+  funext l
+  refine Fin.cases ?_ (fun i => ?_) l
+  · simpa [lowVector, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero hk).symm]
+      using hz0
+  · by_cases hi : i = i₀
+    · subst i
+      change z (first hk) = lowVector hk h d t (first hk)
+      simpa [lowVector, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero hk)] using hz1
+    · have h₁ : i.succ ≠ first hk := by
+        intro h
+        exact hi (Fin.ext (by simpa [first_val] using congrArg Fin.val h))
+      simp [lowVector, Pi.add_apply, basis, Fin.succ_ne_zero, Pi.single_eq_of_ne h₁,
+        hvanish i (fun h => hi (Fin.ext h))]
+
+private theorem chain_symm {p n B : ℕ} {g : Fin p → ℕ} {z w : Z g n}
+    (h : Chain g n B z w) : Chain g n B w z := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih =>
+    exact Relation.ReflTransGen.head (by simpa only [distance_symm] using hbc) ih
+
+private theorem chain_mono {p n B B' : ℕ} {g : Fin p → ℕ} {z w : Z g n}
+    (hB : B ≤ B') (h : Chain g n B z w) : Chain g n B' z w :=
+  Relation.ReflTransGen.mono
+    (fun (u v : Z g n) (e : distance u.val v.val ≤ B) => e.trans hB) z w h
+
+private theorem low_chain {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 < h)
+    (hd : 0 < d) (cop : a.Coprime d) (z l : Z (generators a h d k) (witness a h d k))
+    (hz : Low h d (ceilParameter a k) z.val)
+    (hl : l.val = lowVector (show 0 < k by omega) h d (ceilParameter a k)) :
+    Chain (generators a h d k) (witness a h d k) (h + 1) z l := by
+  set t := ceilParameter a k
+  generalize he : t - count z.val = m
+  induction m using Nat.strong_induction_on generalizing z with
+  | h m ih =>
+    have hY : count z.val ≤ t := (count_le_indexWeight z.val).trans_eq hz.1
+    by_cases heq : count z.val = t
+    · have hzl : z = l := Subtype.ext ((low_eq_lowVector (by omega) hz heq).trans hl.symm)
+      rw [hzl]
+      exact Relation.ReflTransGen.refl
+    · obtain ⟨w, hw, hcnt, hstep⟩ := low_exchange hk hka hh hd cop hz (by omega)
+      exact Relation.ReflTransGen.head hstep
+        (ih (t - count w.val) (by omega) w hw rfl)
+
+private theorem high_distance {a k t : ℕ} {z w : Fin (k + 1) → ℕ}
+    (hz : High a t z) (hw : High a t w) : distance z w ≤ t + 1 := by
+  have hzlen : (∑ i, z i) = t + 1 := by rw [sum_coordinates, hz.2.2, hz.2.1, zero_add]
+  have hwlen : (∑ i, w i) = t + 1 := by rw [sum_coordinates, hw.2.2, hw.2.1, zero_add]
+  exact (distance_le_lengths z w).trans (by rw [hzlen, hwlen, max_self])
+
+private theorem witness_bridge {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 < h)
+    {l w : Fin (k + 1) → ℕ} (hl : l = lowVector (show 0 < k by omega) h d (ceilParameter a k))
+    (hw : High a (ceilParameter a k) w) :
+    distance l w = ceilParameter a k + h + d := by
+  subst l
+  set t := ceilParameter a k
+  have hlo := lowVector_low (show 0 < k by omega) h d t
+  have hY : count (lowVector (show 0 < k by omega) h d t) = t := by
+    rw [lowVector, count_add, count_basis_zero, zero_add]
+    exact count_basis_succ _ _
+  have hl_len := low_length (show 0 < h by omega) hlo
+  rw [hY, Nat.sub_self, Nat.mul_zero, add_zero] at hl_len
+  have hw_len : (∑ i, w i) = t + 1 := by rw [sum_coordinates, hw.2.2, hw.2.1, zero_add]
+  refine le_antisymm ((distance_le_lengths _ _).trans ?_) (cross_distance hk hka hh hlo hw)
+  rw [hl_len, hw_len]
+  exact max_le le_rfl (by omega)
+
+
+/-- Conjecture 18.2 on the original atoms, with the exact threshold and its two components
+at the preceding threshold on the witnessed element. -/
+theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
+    (hk : 1 < k) (hka : k < a) (hh : 1 < h) :
+    let g := generators a h d k
+    let t := ceilParameter a k
+    let n := witness a h d k
+    let N := t + h + d
+    WitnessCheckpoint a h d k ∧
+    (∀ z w : Z g n, Chain g n (N - 1) z w ↔
+      (Low h d t z.val ∧ Low h d t w.val) ∨ (High a t z.val ∧ High a t w.val)) ∧
+    IsLeast {B | ∀ z w : Z g n, Chain g n B z w} N ∧ N ∈ catenarySpectrum g := by
+  dsimp only
+  let g := generators a h d k
+  let t := ceilParameter a k
+  let n := witness a h d k
+  let N := t + h + d
+  have hc := checkpoint hd cop hk hka hh
+  have ht : 0 < t := (parameter_bounds hk hka).1
+  have hlo := lowVector_low (show 0 < k by omega) h d t
+  let l : Z g n := ⟨_, (fiber_iff_classes hk hka (by omega) hd cop _).2 (Or.inl hlo)⟩
+  obtain ⟨w₀, hw₀⟩ := high_inhabited (h := h) hk hka (by omega) hd cop
+  have classes (z : Z g n) : Low h d t z.val ∨ High a t z.val :=
+    (fiber_iff_classes hk hka (by omega) hd cop z.val).1 z.property
+  have low_to_l (z : Z g n) (hz : Low h d t z.val) : Chain g n (N - 1) z l :=
+    chain_mono (show h + 1 ≤ N - 1 by dsimp [N]; omega)
+      (low_chain hk hka hh hd cop z l hz rfl)
+  have hhigh (z w : Z g n) (hz : High a t z.val) (hw : High a t w.val) :
+      Chain g n (N - 1) z w :=
+    Relation.ReflTransGen.single ((high_distance hz hw).trans (show t + 1 ≤ N - 1 by
+      dsimp [N]
+      omega))
+  have hprev : ∀ z w : Z g n, Chain g n (N - 1) z w ↔
+      (Low h d t z.val ∧ Low h d t w.val) ∨ (High a t z.val ∧ High a t w.val) := by
+    intro z w
+    constructor
+    · intro hchain
+      have hB : N - 1 < N := by dsimp [N]; omega
+      rcases classes z with hz | hz <;> rcases classes w with hw | hw
+      · exact Or.inl ⟨hz, hw⟩
+      · exact (no_cross_chain hk hka hh hd cop hB hz hw hchain).elim
+      · exact (no_cross_chain hk hka hh hd cop hB hw hz (chain_symm hchain)).elim
+      · exact Or.inr ⟨hz, hw⟩
+    · rintro (⟨hz, hw⟩ | ⟨hz, hw⟩)
+      · exact (low_to_l z hz).trans (chain_symm (low_to_l w hw))
+      · exact hhigh z w hz hw
+  have to_l (z : Z g n) : Chain g n N z l := by
+    rcases classes z with hz | hz
+    · exact chain_mono (Nat.sub_le _ _) (low_to_l z hz)
+    · exact chain_symm (Relation.ReflTransGen.single (witness_bridge hk hka hh rfl hz).le)
+  have hleast : IsLeast {B | ∀ z w : Z g n, Chain g n B z w} N := by
+    refine ⟨fun z w => (to_l z).trans (chain_symm (to_l w)), ?_⟩
+    intro B hB
+    by_contra! hlt
+    exact no_cross_chain hk hka hh hd cop hlt hlo hw₀ (hB l w₀)
+  exact ⟨hc, hprev, hleast, ⟨n, ⟨l.val, l.property⟩, hleast⟩⟩
 
 end D5.S3.Arith.Additive.NarayanCatenarySpectrumMembership
