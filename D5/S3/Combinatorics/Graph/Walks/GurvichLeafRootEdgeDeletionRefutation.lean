@@ -140,17 +140,9 @@ private theorem connected_insert {U : Set V} {x a : V} (ha : a ∈ U) (e : G.Adj
 
 private theorem crossing_edge (hG : G.Preconnected) {U : Set V} {a b : V}
     (ha : a ∈ U) (hb : b ∉ U) : ∃ x ∈ U, ∃ y ∉ U, G.Adj x y := by
-  classical
-  by_contra! h
   obtain ⟨w⟩ := hG a b
-  have stays {u v : V} (p : G.Walk u v) (hu : u ∈ U) : v ∈ U := by
-    induction p with
-    | nil => exact hu
-    | @cons u v w e next ih =>
-        apply ih
-        by_contra hv
-        exact h u hu v hv e
-  exact hb (stays w ha)
+  obtain ⟨d, _, hd₁, hd₂⟩ := w.exists_boundary_dart U ha hb
+  exact ⟨d.fst, hd₁, d.snd, hd₂, d.adj⟩
 
 private theorem shift_away (p : Path6 G) {U : Set V} (hp : Away p U)
     {x : V} (hx : x ∉ Set.range p) (hxU : x ∉ U) (e : G.Adj (p 5) x) :

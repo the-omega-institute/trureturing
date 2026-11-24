@@ -16,7 +16,7 @@ internal sealed class GurvichLeafRootEdgeDeletionRefutationDocument : IScribeDoc
         Blocks(
             Describe.Lean(
                 DescribeId.Create("gurvich-leaf-root-claim"), DeclarationHandle.Create(Prefix + "claim"),
-                H("Conjecture 6.4"), StatementSource.FromAuthor(ClaimFormula()),
+                H("Conjecture 6.4"), StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("The graphs are finite and simple. The roots are ordered and distinct, with the degree of the first at most the degree of the second. The first root has exactly one neighbor, u. Deleting the unordered edge between s and u keeps both roots and every vertex.")),
@@ -25,7 +25,7 @@ internal sealed class GurvichLeafRootEdgeDeletionRefutationDocument : IScribeDoc
             Describe.Lean(
                 DescribeId.Create("gurvich-leaf-root-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The four-arm tree confines the deleted path"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
+                StatementSource.FromAuthor(Disp(new Formula.Not(Par(ClaimFormula())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("Take the path on vertices 0 through 5 in order. Its roots are 0 and 3, of degrees one and two. For the intact path, work in the connected component of any containing copy. The specialization of Lemma 3.4 chooses a maximal connected vertex set disjoint from some copy. Path shifts and reroutings give either a copy with no extension or a copy whose exterior neighbors at both roots lie in that connected set. In the latter case the set supplies a walk between the endpoints of every extension. Transporting the copy and the walks to the original host proves inherence.")),
@@ -45,8 +45,8 @@ internal sealed class GurvichLeafRootEdgeDeletionRefutationDocument : IScribeDoc
         var deleted = Call("deleteEdges", h, Seq(OpenBrace, new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("Sym"), D(2), Dot, F.Id("mk")))), [s, u]), CloseBrace));
         var conclusion = Implies(Inherence(h, s, t), Inherence(deleted, s, t));
         var body = Implies(degreeOrder, Implies(differentRoots, Implies(soleNeighbor, conclusion)));
-        return Disp(All("n", Naturals, All("H", Call("SimpleGraph", vertices),
-            All("s", vertices, All("t", vertices, All("u", vertices, body))))));
+        return All("n", Naturals, All("H", Call("SimpleGraph", vertices),
+            All("s", vertices, All("t", vertices, All("u", vertices, body)))));
     }
 
     private static Formula Inherence(Formula pattern, Formula firstRoot, Formula secondRoot)
