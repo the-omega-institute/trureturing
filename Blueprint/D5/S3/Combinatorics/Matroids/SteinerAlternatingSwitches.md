@@ -4,17 +4,17 @@
 
 Large alternating components identify all successful starts in a point-deleted Steiner system.
 
-**Definition 1.1 (The two pivot matchings).**
+**Definition 1.1 (The graph of the two pivot matchings).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotMatchings`
+Lean statement: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotGraph`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotMatchings` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotGraph` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Write e(a) for the inclusion of the retained label a, skipping the deleted point and then adjoining an extra point to the carrier. The two matchings are the translations through the deleted point and through e(v) for the fixed retained pivot v.
+Write e(a) for the inclusion of the retained label a, skipping the deleted point and then adjoining an extra point to the carrier. Join each vertex to its partners under the translations through the deleted point and through e(v) for the fixed retained pivot v.
 
 **Definition 1.2 (A successful starting label).**
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.point_d
 
 Delete any point q from a finite complete Steiner triple system on r+1 points and pull back the blocks avoiding q to the r retained labels. This is a partial Steiner system. One map m on the retained labels works for all pivots, with the pair a,b uncovered exactly when m(a)=b. Embed each retained label by first skipping q in the original point set and then including that point into the carrier with an adjoined point. For every retained pivot v, the component of the adjoined point is exactly that point, q, the embedded v, and the embedded m(v). The image of the successful starts under this embedding is exactly the set of vertices in components with at least six vertices in the union of the translations through q and the embedded v. If four divides r, the set of successful starts has at least six elements for every v.
 
-The square containing the adjoined point also contains the deleted point, the retained pivot, and its leave partner. All vertices outside the square are eligible retained starts. Pair completion gives the two switch blocks. Their switch is successful exactly where the translations disagree in the two orders. The enlarged carrier has r+2 points, so divisibility of r by four forces a large component.
+The square containing the adjoined point also contains the deleted point, the retained pivot, and its leave partner. All vertices outside the square are eligible retained starts. Pair completion gives the two switch blocks. Their switch is successful exactly where the translations disagree in the two orders. Such a disagreement yields six distinct vertices reached by alternating steps. At a commuting vertex the four corners close under both matching steps. The enlarged carrier has r+2 points, so divisibility of r by four forces a large component.
 
 **Theorem 1.4 (The first deficit without a switch hypothesis).**
 
@@ -59,8 +59,7 @@ Choose a successful start at any retained pivot and apply the one-class switch c
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.SuccessfulStart`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotMatchings`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.pivotGraph`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.point_deleted_first_deficit_of_four_dvd`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerAlternatingSwitches.point_deleted_successful_starts`
-- Dependency: [D5/S3/Combinatorics/Matroids/AlternatingMatchingComponents](AlternatingMatchingComponents.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations](SteinerMatchingTranslations.md)

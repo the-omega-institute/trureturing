@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.transl
 
 *Formalization.* `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.translate` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Robert W. Quackenbush (1976). *Varieties of Steiner Loops and Steiner Quasigroups*. DOI: [10.4153/CJM-1976-118-1](https://doi.org/10.4153/CJM-1976-118-1). URL: <https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00020873>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.transl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.translate_none` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Robert W. Quackenbush (1976). *Varieties of Steiner Loops and Steiner Quasigroups*. DOI: [10.4153/CJM-1976-118-1](https://doi.org/10.4153/CJM-1976-118-1). URL: <https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00020873>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.transl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.translate_self` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Robert W. Quackenbush (1976). *Varieties of Steiner Loops and Steiner Quasigroups*. DOI: [10.4153/CJM-1976-118-1](https://doi.org/10.4153/CJM-1976-118-1). URL: <https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00020873>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.transl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.translate_involutive` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Robert W. Quackenbush (1976). *Varieties of Steiner Loops and Steiner Quasigroups*. DOI: [10.4153/CJM-1976-118-1](https://doi.org/10.4153/CJM-1976-118-1). URL: <https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00020873>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.transl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations.translate_ne_self` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Robert W. Quackenbush (1976). *Varieties of Steiner Loops and Steiner Quasigroups*. DOI: [10.4153/CJM-1976-118-1](https://doi.org/10.4153/CJM-1976-118-1). URL: <https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00020873>.
 
 *Commentary.*
 

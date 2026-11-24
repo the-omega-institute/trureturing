@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
 internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Combinatorics/Matroids/SteinerMatchingTranslations";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/quackenbush1976steinerloops");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Pair completion in a complete Steiner triple system gives perfect matchings on the enlarged point set.",
@@ -15,7 +16,7 @@ internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".translate"),
                 H("Translation through a pivot"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Adjoin one point to the finite complete Steiner triple system. Pair it with the pivot. For an original point distinct from the pivot, take the third point of its block with the pivot."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -23,7 +24,7 @@ internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".translate_none"),
                 H("Translation at the adjoined point"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The translation sends the adjoined point to the pivot."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -31,7 +32,7 @@ internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".translate_self"),
                 H("Translation at the pivot"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The translation sends the pivot to the adjoined point."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -39,7 +40,7 @@ internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".translate_involutive"),
                 H("Involution law"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The translation applied twice is the identity. The second step uses the same block by uniqueness of pair completion."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -47,7 +48,7 @@ internal sealed class SteinerMatchingTranslationsDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".translate_ne_self"),
                 H("No fixed points"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Every point moves under the translation. A pivot exchanges with the adjoined point and the other pairs consist of distinct points in a block."))),
                 DescribeRole.Theorem),
             Describe.Lean(
