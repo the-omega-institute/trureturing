@@ -6,9 +6,9 @@ A bound on the number of Pasches guarantees a common maximum for all pivot pairs
 
 **Theorem 1.1 (One table attains every fixed-pair maximum).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.commonMaximum_of_paschCount`
+Lean statement: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.common_maximum_of_pasch_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.commonMaximum_of_paschCount` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.common_maximum_of_pasch_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ Embedding the quotient into the fibre gives one table with nonzero return at eve
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.commonMaximum_of_paschCount`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschThreshold.common_maximum_of_pasch_count`
 - Dependency: [D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount](SteinerPaschSwitchCount.md)

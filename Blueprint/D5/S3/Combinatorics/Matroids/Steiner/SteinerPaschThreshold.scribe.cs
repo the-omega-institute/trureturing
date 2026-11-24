@@ -11,7 +11,7 @@ internal sealed class SteinerPaschThresholdDocument : IScribeDocumentDefinition
         H("A Pasch-count bound for simultaneous switch maxima"),
         Blocks(Describe.Lean(
             DescribeId.Create("steiner-common-maximum-by-pasch-count"),
-            DeclarationHandle.Create(Module + ".commonMaximum_of_paschCount"),
+            DeclarationHandle.Create(Module + ".common_maximum_of_pasch_count"),
             H("One table attains every fixed-pair maximum"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

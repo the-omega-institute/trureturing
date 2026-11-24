@@ -57,7 +57,7 @@ private theorem column_dvd {I : Type*} (code : Four →ₗ[ZMod 2] (I → ZMod 2
     change 8 ∣ (univ.filter (fun x : Four => ¬ p x)).card
     rw [← Fintype.card_subtype, half]
 
-private theorem noFourDimensionalWeightFourCode {I : Type*} [Fintype I]
+private theorem no_four_dimensional_weight_four_code {I : Type*} [Fintype I]
     (code : Four →ₗ[ZMod 2] (I → ZMod 2)) :
     ¬ ∀ x : Four, x ≠ 0 → weight (code x) = 4 := by
   classical
@@ -103,7 +103,7 @@ private theorem span_line_binary {V : Type*} [AddCommGroup V] [Module (ZMod 2) V
     · exact Submodule.zero_mem _
     · exact mem_span_singleton_self _
 
-private theorem existsAvoidingKernelFromProjectedBound {V : Type*} [Finite V] [AddCommGroup V]
+private theorem exists_avoiding_kernel_from_projected_bound {V : Type*} [Finite V] [AddCommGroup V]
     [Module (ZMod 2) V] (S : Finset V) (d : ℕ) (H : Submodule (ZMod 2) V)
     (avoid : ∀ x ∈ S, x ∉ H)
     (bound : by
@@ -169,7 +169,7 @@ private theorem existsAvoidingKernelFromProjectedBound {V : Type*} [Finite V] [A
   have compare := Nat.pow_le_pow_right (by decide : 0 < (2 : ℕ)) exponent
   omega
 
-private theorem weightFourAvoidance {I : Type*} [Fintype I]
+private theorem weight_four_avoidance {I : Type*} [Fintype I]
     (S : Finset (I → ZMod 2)) (d : ℕ) (hd : 3 ≤ d)
     (weights : ∀ x ∈ S, weight x = 4) (bound : S.card ≤ 2 ^ (d + 1) - 1) :
     ∃ K : Submodule (ZMod 2) (I → ZMod 2),
@@ -181,7 +181,7 @@ private theorem weightFourAvoidance {I : Type*} [Fintype I]
   by_cases small : S.card < 2 ^ (d + 1) - 1
   · let H : Submodule (ZMod 2) (I → ZMod 2) := ⊥
     obtain ⟨K, _, avoids, dimension⟩ :=
-      existsAvoidingKernelFromProjectedBound S d H
+      exists_avoiding_kernel_from_projected_bound S d H
         (fun x hx => nonzero x hx) ((Finset.card_image_le (f := H.mkQ)).trans_lt small)
     exact ⟨K, avoids, dimension⟩
   have missing : ∃ x ∈ S, ∃ y ∈ S, x + y ≠ 0 ∧ x + y ∉ S := by
@@ -225,7 +225,7 @@ private theorem weightFourAvoidance {I : Type*} [Fintype I]
     have dimensions : Module.finrank (ZMod 2) Four ≤ Module.finrank (ZMod 2) W := by
       simpa [Four, Module.finrank_pi_fintype] using fourdim
     obtain ⟨embed, injective⟩ := finrank_le_iff_exists_linearMap.mp dimensions
-    apply noFourDimensionalWeightFourCode (W.subtype.comp embed)
+    apply no_four_dimensional_weight_four_code (W.subtype.comp embed)
     intro x hx
     have h : (embed x : I → ZMod 2) ≠ 0 := by
       intro hz
@@ -255,7 +255,7 @@ private theorem weightFourAvoidance {I : Type*} [Fintype I]
     intro eq
     exact apart ((Finset.injOn_of_card_image_eq eq) hx hy merge)
   obtain ⟨K, _, avoids, dimension⟩ :=
-    existsAvoidingKernelFromProjectedBound S d H avoid (shrink.trans_le bound)
+    exists_avoiding_kernel_from_projected_bound S d H avoid (shrink.trans_le bound)
   exact ⟨K, avoids, dimension⟩
 
 open Function
@@ -280,7 +280,7 @@ noncomputable def paschBlockSets {L : Type*} [Mul L] [Finite L] (e : L) :
     q * a = b ∧ p * b = c ∧ q * c = d ∧ p * d = a ∧ T = fourBlocks p q a b c d})
     (Set.toFinite _)
 
-private theorem fourBlocks_nodup {L : Type*} {e p q a b c d : L}
+private theorem four_blocks_nodup {L : Type*} {e p q a b c d : L}
     (distinct : [e, p, q, a, b, c, d].Nodup) :
     [({q, a, b} : Set L), {p, b, c}, {q, c, d}, {p, d, a}].Nodup := by
   classical
@@ -305,10 +305,10 @@ private theorem fourBlocks_nodup {L : Type*} {e p q a b c d : L}
     not_false_eq_true, List.nodup_nil, and_true]
   exact ⟨⟨first_second, first_third, first_fourth⟩, ⟨second_third, second_fourth⟩, third_fourth⟩
 
-private theorem fourBlocks_card {L : Type*} {e p q a b c d : L}
+private theorem four_blocks_card {L : Type*} {e p q a b c d : L}
     (distinct : [e, p, q, a, b, c, d].Nodup) : (fourBlocks p q a b c d).card = 4 := by
   classical
-  have blocks := fourBlocks_nodup distinct
+  have blocks := four_blocks_nodup distinct
   simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,
     not_false_eq_true, List.nodup_nil, and_true] at blocks
   rcases blocks with ⟨⟨h12, h13, h14⟩, ⟨h23, h24⟩, h34⟩
@@ -322,7 +322,7 @@ private noncomputable def blockWord {L : Type*} (T : Finset (Set L)) : Set L →
   classical
   exact fun B => if B ∈ T then 1 else 0
 
-private theorem weight_blockWord {L : Type*} [Fintype (Set L)] (T : Finset (Set L)) :
+private theorem weight_block_word {L : Type*} [Fintype (Set L)] (T : Finset (Set L)) :
     weight (blockWord T) = T.card := by
   classical
   unfold weight
@@ -386,7 +386,7 @@ private theorem square_row {L : Type*} [Mul L] {e p q a b c d : L}
   classical
   have closes : (fun z => p * (q * z))^[2] a = a := by
     rw [iterate_succ_apply', iterate_one, hab, hbc, hcd, hda]
-  have blocks := fourBlocks_nodup distinct
+  have blocks := four_blocks_nodup distinct
   simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,
     not_false_eq_true, List.nodup_nil, and_true] at distinct blocks
   have period := steinerSquarePeriod comm invol (show p ≠ q by tauto) closes
@@ -435,7 +435,7 @@ open SimpleGraph
 
 /-- A single normalized binary table attains every pivot pair's individual maximum
 whenever the number of Pasches is at most the stated bound. -/
-theorem commonMaximum_of_paschCount {L A : Type*} [Finite L] [Finite A]
+theorem common_maximum_of_pasch_count {L A : Type*} [Finite L] [Finite A]
     [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (unit : ∀ x, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centre : Set.center L = {e})
@@ -452,12 +452,12 @@ theorem commonMaximum_of_paschCount {L A : Type*} [Finite L] [Finite A]
   let S := (paschBlockSets e).image blockWord
   have weights (x) (hx : x ∈ S) : weight x = 4 := by
     obtain ⟨T, hT, rfl⟩ := Finset.mem_image.mp hx
-    rw [weight_blockWord]
+    rw [weight_block_word]
     unfold paschBlockSets at hT
     rw [Set.Finite.mem_toFinset] at hT
     obtain ⟨p, q, a, b, c, d, distinct, _, _, _, _, rfl⟩ := hT
-    exact fourBlocks_card distinct
-  obtain ⟨K, avoids, dimension⟩ := weightFourAvoidance S _ hd weights
+    exact four_blocks_card distinct
+  obtain ⟨K, avoids, dimension⟩ := weight_four_avoidance S _ hd weights
     (Finset.card_image_le.trans bound)
   obtain ⟨evaluate, injective⟩ := finrank_le_iff_exists_linearMap.mp dimension
   let readWord := Finsupp.linearEquivFunOnFinite (ZMod 2) (ZMod 2) (Set L)
