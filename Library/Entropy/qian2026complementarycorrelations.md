@@ -40,6 +40,7 @@ James Schneeloch, Curtis J. Broadbent and John C. Howell,
 inequality when either marginal is diagonal in a measured basis.
 This includes a maximally mixed marginal.
 
+- [Qian v2 record](https://arxiv.org/abs/2608.14806v2)
 - [Qian v2, §§7 and 11](https://arxiv.org/html/2608.14806v2#S7)
 - [Schneeloch, Broadbent and Howell](https://arxiv.org/abs/1404.6496)
 - [Qutrit discrimination release](https://doi.org/10.5281/zenodo.23933731)
