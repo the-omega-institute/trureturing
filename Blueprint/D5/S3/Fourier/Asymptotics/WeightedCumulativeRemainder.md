@@ -20,7 +20,11 @@ The real weight w has continuous derivative and satisfies 0 ≤ w(t) ≤ 1/t and
 
 For an individual jump, integrate the weight derivative from its height to T. Summing these identities gives finite partial summation. Apply integration by parts to the main term. For an envelope E, the two endpoint errors and the integrated error are bounded by 2 w(X) E(X) plus the integral of w E′. Integration by parts for the product w E cancels the right endpoint. Bound the remaining integral by replacing w with 1/t and evaluating the logarithmic primitive.
 
-For Ford and Zaharescu's Lemma 1, on the Riemann hypothesis, take the literal ordinate phases with multiplicity and use the prime-power main term divided by the square root of the frequency parameter x. For an explicit-formula error constant K the parameters are c=2x, A=K sqrt(x), and B=K/(sqrt(x) log(x)). The estimate is uniform in T for fixed x. Control of the full frequency range for growing moments remains open. https://arxiv.org/pdf/math/0405459
+For the application to Ford and Zaharescu's Lemma 1, assume RH, x>1 and T≥X>1. Index the zeros with X<γ≤T by occurrences, using multiplicity. Take the amplitude exp(iγ log x) and the baseline to be the sum of these phases over all occurrences with 0<γ≤X. Then C(t) is the full cumulative phase sum to t, which on RH equals the sum of x to the power ρ−1/2.
+
+Let nₓ be the nearest prime power to x and put θ=log(x/nₓ). The main term G(t) is the integral of exp(iθu) from 0 to t, multiplied by −Λ(nₓ)/(2π sqrt(x)). Its derivative g is that scalar times exp(iθt), including the constant case θ=0. Choose the weight w(t)=t/(t²+1/4). For t≥X>1 its derivative (1/4−t²)/(t²+1/4)² is nonpositive, and 0≤w(t)≤1/t.
+
+For an explicit-formula error constant K the parameters are c=2x, A=K sqrt(x), and B=K/(sqrt(x) log(x)). The resulting bound on the weighted ordinate sum minus the weighted principal term is uniform in T for fixed x. The full frequency range for growing moments remains open. https://arxiv.org/pdf/math/0405459v2
 
 ## References
 
