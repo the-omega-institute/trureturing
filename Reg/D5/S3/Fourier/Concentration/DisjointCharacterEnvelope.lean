@@ -29,14 +29,15 @@ abbrev arena : Arena where
     let phasePart := V.readout () ()
     ‖coeff n (coeff m (disjointSeries s a b))‖ ≤
       phasePart (r * (‖∑ j ∈ s, a j‖ + ‖∑ j ∈ s, b j‖)) *
-        (∏ j ∈ s, (1 + (Real.exp (r * ‖a j‖) - 1) * (Real.exp (r * ‖b j‖) - 1))) /
+        (∑ t ∈ overlapSubsets s m n,
+          ∏ j ∈ t, (Real.exp (r * ‖a j‖) - 1) * (Real.exp (r * ‖b j‖) - 1)) /
         r ^ (m + n)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hzero := h (J := ULift.{u} Unit) ∅ (fun _ => 0) (fun _ => 0) 0 0 1 (by norm_num)
   have hbad : (1 : ℝ) ≤ 0 := by
-    simpa [rejected, realize, disjointSeries] using hzero
+    simpa [rejected, realize, disjointSeries, overlapSubsets] using hzero
   norm_num at hbad
 
 def evidence : Registration arena.{u} (type_of% @coefficient_envelope.{u}) where

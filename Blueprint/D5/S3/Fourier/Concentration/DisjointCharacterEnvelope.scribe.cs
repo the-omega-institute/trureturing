@@ -26,7 +26,9 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
                     "Extract exp(a(j)x + b(j)y) from each factor. The remaining factor is "
                     + "1 plus the product of exp(-a(j)x) - 1 and 1 - exp(-b(j)y). Expanding this "
                     + "product over subsets gives one product of two separate series per subset. "
-                    + "The original exponentials have combined to the sums of a and b.")),
+                    + "The original exponentials have combined to the sums of a and b. Each "
+                    + "correction factor has positive degree on both axes. A subset larger than "
+                    + "either target degree contributes zero to the selected coefficient.")),
                 Paragraph(Text(
                     "For one variable, the sum of coefficient norms is submultiplicative on "
                     + "absolutely summable series, by the Cauchy product and the triangle inequality. "
@@ -54,7 +56,10 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
         var atA = new Formula.Apply(a, [j]);
         var atB = new Formula.Apply(b, [j]);
         var sum = new Formula.Subscript(Sum, Seq(j, Sp, InMacro, Sp, s));
-        var prod = new Formula.Subscript(Prod, Seq(j, Sp, InMacro, Sp, s));
+        var t = F.Id("T");
+        var subsets = new Formula.Subscript(Sum,
+            Seq(t, Sp, Subseteq, Sp, s, Comma, Bar, t, Bar, Sp, Le, Sp, Call("min", m, n)));
+        var prod = new Formula.Subscript(Prod, Seq(j, Sp, InMacro, Sp, t));
         return Disp(new Formula.Aligned([
             Seq(Amp, Forall, Sp, alphabet, Comma, s, Colon, Call("Finset", alphabet), Comma, Quad,
                 Forall, Sp, a, Comma, b, Colon, alphabet, To, Sp, Mathbb, Grp(F.Id("C")), Comma),
@@ -65,9 +70,9 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
                 new Formula.Power(F.Id("y"), n), CloseBracket, F.Id("P"), Bar, Sp, Le, Sp,
                 Frac, Grp(Call("exp", Seq(r, Open, Bar, sum, atA, Bar, Plus, Bar, sum, atB, Bar, Close))),
                 Grp(new Formula.Power(r, Seq(m, Plus, n)))),
-            Seq(Amp, Quad, Cdot, prod, OpenBracket, D(1), Plus,
+            Seq(Amp, Quad, Cdot, subsets, prod,
                 Open, Call("exp", Seq(r, Bar, atA, Bar)), Minus, D(1), Close,
-                Open, Call("exp", Seq(r, Bar, atB, Bar)), Minus, D(1), Close, CloseBracket, Dot)
+                Open, Call("exp", Seq(r, Bar, atB, Bar)), Minus, D(1), Close, Dot)
         ]));
     }
 }
