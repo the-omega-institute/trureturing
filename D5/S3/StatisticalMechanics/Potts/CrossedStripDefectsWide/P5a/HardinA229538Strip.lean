@@ -865,9 +865,8 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
     simpa only [literalCount, s, Fintype.card_subtype] using h
   have hcanon : canonicalCount H V D n = t.card := by
     unfold canonicalCount
-    apply congrArg Finset.card
-    ext A
-    simp only [t, s, P, K, Finset.mem_filter, Finset.mem_univ, true_and]
+    exact congrArg Finset.card
+      (Finset.filter_filter (p := P) (q := K) (Finset.univ : Finset (C → Fin 3))).symm
   rw [hlabel, hcanon]
   by_cases hempty : k = 0 ∨ n = 0
   · letI : IsEmpty C := by
