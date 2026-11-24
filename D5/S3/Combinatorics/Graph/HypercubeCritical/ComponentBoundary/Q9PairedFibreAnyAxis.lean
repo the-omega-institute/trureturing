@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9PairedFibreAnyAxis
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.ToLinearEquiv]
+   anchors: [mathlib/module/Archive.Sensitivity]
    utility: none
    digest: Huang energy limits single fibres with three paired neighbours. -/
 
