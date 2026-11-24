@@ -42,7 +42,8 @@ open OriginalFourMSectorContinuation (slitMatrix slitLinear)
 open AffineOccurrenceWick (wick affineMoment_eq_wick)
 open OriginalFourMNativeOccurrenceReadout (slotOccupation native_occurrence_readout)
 open NativeAffineExternalCoefficient (jetOccupation)
-open OriginalChargedRowSource (affineCoefficient)
+open OriginalChargedRowSource (affineCoefficient affineMoment_coefficient)
+open MvPolynomial (monomial)
 open FactorialFockMetric (weight)
 open private slit_matrix_symm from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCurrentRegression
@@ -57,6 +58,145 @@ open private dMatrix dLinear dLipCovarianceEntry dLipCovarianceEntry_analyticAt
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 open private external from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMFixedChargeWick
+
+section PartitionProduct
+
+variable {Y R : Type*} [CommSemiring R]
+
+/-- A correction endpoint partition restricted to a selected subword. -/
+private def filterParts (p : Y → Bool) (s : List Y × List Y) : List Y × List Y :=
+  (s.1.filter p, s.2.filter p)
+
+/-- Two independent subwords contribute the product of their finite sums
+over endpoint partitions. -/
+private theorem partition_product (l : List Y) (p : Y → Bool) (f g : List Y × List Y → R) :
+    ((partitions l).map fun s => f (filterParts p s) *
+      g (filterParts (fun a => !p a) s)).sum =
+      ((partitions (l.filter p)).map f).sum *
+        ((partitions (l.filter fun a => !p a)).map g).sum := by
+  induction l generalizing f g with
+  | nil => simp [partitions, filterParts]
+  | cons a l ih =>
+    cases h : p a
+    · simp only [partitions, List.map_append, List.map_map, List.sum_append, Function.comp_def,
+        filterParts, List.filter_cons, h, Bool.false_eq_true, Bool.not_false, ite_false, ite_true]
+      rw [mul_add, ← ih f (fun s => g (a :: s.1, s.2)),
+        ← ih f (fun s => g (s.1, a :: s.2))]
+      rfl
+    · simp only [partitions, List.map_append, List.map_map, List.sum_append, Function.comp_def,
+        filterParts, List.filter_cons, h, Bool.false_eq_true, Bool.not_true, ite_false, ite_true]
+      rw [add_mul, ← ih (fun s => f (a :: s.1, s.2)) g,
+        ← ih (fun s => f (s.1, a :: s.2)) g]
+      rfl
+
+/-- The sum over all correction endpoint partitions factors into the
+per-puncture sums when each factor sees only its own subword. -/
+private theorem partition_products {S : Type*} [DecidableEq S]
+    (slot : Y → S) (s : Finset S) (l : List Y)
+    (hs : ∀ a ∈ l, slot a ∈ s) (F : S → List Y × List Y → R) :
+    ((partitions l).map fun p => ∏ i ∈ s, F i (filterParts (fun a => decide (slot a = i)) p)).sum =
+      ∏ i ∈ s, ((partitions (l.filter fun a => decide (slot a = i))).map (F i)).sum := by
+  induction s using Finset.induction_on generalizing l with
+  | empty =>
+    cases l with
+    | nil => simp [partitions]
+    | cons a l => exact (Finset.notMem_empty (slot a) (hs a List.mem_cons_self)).elim
+  | insert i s hi ih =>
+    simp only [Finset.prod_insert hi]
+    let p : Y → Bool := fun a => decide (slot a = i)
+    let G (w : List Y × List Y) :=
+      ∏ j ∈ s, F j (filterParts (fun a => decide (slot a = j)) w)
+    have hG (w : List Y × List Y) : G w = G (filterParts (fun a => !p a) w) := by
+      unfold G
+      apply Finset.prod_congr rfl
+      intro j hj
+      congr 1
+      have he (w : List Y) : w.filter (fun a => decide (slot a = j)) =
+          (w.filter (fun a => !p a)).filter (fun a => decide (slot a = j)) := by
+        rw [List.filter_filter]
+        apply List.filter_congr
+        intro a _
+        by_cases ha : slot a = j
+        · have hji : j ≠ i := fun he => hi (he ▸ hj)
+          simp [p, ha, hji]
+        · simp [ha]
+      exact Prod.ext (he w.1) (he w.2)
+    change ((partitions l).map fun w => F i (filterParts p w) * G w).sum = _
+    have he : ((partitions l).map fun w => F i (filterParts p w) * G w).sum =
+        ((partitions l).map fun w => F i (filterParts p w) * G (filterParts (fun a => !p a) w)).sum :=
+      congrArg List.sum (List.map_congr_left fun w _ => congrArg (F i (filterParts p w) * ·) (hG w))
+    rw [he, partition_product l p (F i) G]
+    have hc : ∀ a ∈ l.filter (fun a => !p a), slot a ∈ s := by
+      intro a ha
+      have h := List.mem_filter.mp ha
+      exact (Finset.mem_insert.mp (hs a h.1)).resolve_left (by simpa [p] using h.2)
+    unfold G
+    rw [ih _ hc]
+    congr 1
+    apply Finset.prod_congr rfl
+    intro j hj
+    congr 3
+    rw [List.filter_filter]
+    apply List.filter_congr
+    intro a _
+    by_cases ha : slot a = j
+    · have hji : j ≠ i := fun he => hi (he ▸ hj)
+      simp [p, ha, hji]
+    · simp [ha]
+
+
+end PartitionProduct
+
+section Polynomial
+
+variable {Y J I : Type*} [Fintype J]
+
+/-- Expand the surviving linear creators in one common oscillator algebra. -/
+private def assignmentPolynomial (U : Matrix Y J ℂ) (f : J → I) (l : List Y) : MvPolynomial I ℂ :=
+  (l.map fun a => ∑ j, U a j • MvPolynomial.X (f j)).prod
+
+omit [Fintype J] in
+private theorem word_product (f : J → I) (l : List J) :
+    (l.map fun j => (MvPolynomial.X (f j) : MvPolynomial I ℂ)).prod =
+      monomial (jetOccupation (l.map f)) 1 := by
+  induction l with
+  | nil => simp [jetOccupation]
+  | cons a l ih =>
+    simp only [List.map_cons, List.prod_cons, jetOccupation]
+    rw [ih, MvPolynomial.X, monomial_mul_monomial, one_mul, add_comm]
+
+/-- The assignment sum is the linear readout of the product of the
+surviving creators. Repetition is carried by polynomial multiplication. -/
+private theorem assign_polynomial (U : Matrix Y J ℂ) (f : J → I) (l : List Y)
+    (R : MvPolynomial I ℂ →ₗ[ℂ] ℂ) :
+    assign U l (fun w => R (monomial (jetOccupation (w.map f)) 1)) =
+      R (assignmentPolynomial U f l) := by
+  simp_rw [← word_product]
+  induction l generalizing R with
+  | nil => rfl
+  | cons a l ih =>
+    simp only [assign, List.map_cons, List.prod_cons]
+    have he (j : J) := ih (R.comp (LinearMap.mulLeft ℂ (MvPolynomial.X (f j) : MvPolynomial I ℂ)))
+    simp only [LinearMap.comp_apply, LinearMap.mulLeft_apply] at he
+    simp only [he, assignmentPolynomial, List.map_cons, List.prod_cons,
+      Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, smul_eq_mul]
+
+/-- Evaluation against the actual affine coefficient array with the ordinary
+Fock weight at every occupation. -/
+private def affineReadout [Fintype I] (K : Matrix I I ℂ) (μ : I → ℂ) : MvPolynomial I ℂ →ₗ[ℂ] ℂ :=
+  (Finsupp.lsum ℂ fun d => ((weight d : ℂ) *
+    OriginalChargedRowSource.affineCoefficient K μ d) • (LinearMap.id : ℂ →ₗ[ℂ] ℂ)).comp
+      (AddMonoidAlgebra.coeffLinearEquiv ℂ).toLinearMap
+
+omit [Fintype J] in
+private theorem affineReadout_monomial [Fintype I] (K : Matrix I I ℂ) (μ : I → ℂ)
+    (d : I →₀ ℕ) :
+    affineReadout K μ (monomial d 1) = OriginalChargedRowSource.affineMoment K μ d := by
+  classical
+  rw [affineMoment_coefficient]
+  simp [affineReadout, monomial, AddMonoidAlgebra.lsingle]
+
+end Polynomial
 
 variable {X : Type*} {n : X → ℕ}
 
@@ -217,6 +357,24 @@ private theorem assigned_native_part [Fintype X] [DecidableEq X] (D : LatticeDat
   · exact compactCovariance_ab_symm D c x F hc hr
   · exact compactCovariance_d_symm D hx hx₁ F
 
+private theorem word_slots {Y S R : Type*} [DecidableEq S] [CommMonoid R]
+    (slot : Y → S) (slots : Finset S) (v : Y → R) (l : List Y)
+    (h : ∀ a ∈ l, slot a ∈ slots) :
+    (l.map v).prod = ∏ i ∈ slots, ((l.filter fun a => decide (slot a = i)).map v).prod := by
+  induction l with
+  | nil => simp
+  | cons a l ih =>
+    rw [List.map_cons, List.prod_cons, ih (fun b hb => h b (List.mem_cons_of_mem _ hb))]
+    have ha : slot a ∈ slots := h a List.mem_cons_self
+    conv_lhs => rw [← Finset.insert_erase ha, Finset.prod_insert (Finset.notMem_erase _ _)]
+    conv_rhs => rw [← Finset.insert_erase ha, Finset.prod_insert (Finset.notMem_erase _ _)]
+    rw [← mul_assoc]
+    congr 1
+    · simp
+    · apply Finset.prod_congr rfl
+      intro j hj
+      simp [Finset.ne_of_mem_erase hj |>.symm]
+
 open Classical in
 /-- The upper-chart charge summand with each surviving assigned word read
 in the four compact occupations. The correction pairs and lifted scales
@@ -245,6 +403,103 @@ private theorem assigned_charge_eq_compact [Fintype X] [DecidableEq X] (D : Latt
   unfold assignedChargeTerm compactChargeTerm
   simp only [assigned_native_part D q c hx hx₁ hc slot colour F hF]
 
+open Classical in
+/-- The compact charge term can be evaluated after multiplying the four
+puncture polynomials. Each polynomial partitions its own labelled word
+into correction endpoints and surviving marked modes. -/
+def punctureChargeTerm [Fintype X] [DecidableEq X] (D : LatticeData)
+    (slot : X → Puncture) (colour : X → Fin D.rank) (c : Chart) (x : ℝ)
+    (q : Charge D) (F : Finset (Index D))
+    (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) (l : List X) : ℂ :=
+  let punc : Finset Puncture := {.P, .Q, .R, .S}
+  let scale a := liftedScale c x (slot a) (n a)
+  let correction (i : Puncture) := Matrix.of fun a b =>
+    pairWeight D (-loweringParameter c i) (colour a, n a) (colour b, n b)
+  let U := modeMatrix c x slot n
+  let f := compactMode D c slot colour F hF
+  (chartPeriod true c x ^ (12 : ℕ))⁻¹ *
+    (Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau true c x * (bilinear D q q : ℂ) / 2) *
+      affineReadout (compactCovariance D c x F) (compactMean D q c x F)
+        (∏ i ∈ punc, ((partitions (l.filter fun a => decide (slot a = i))).map fun p =>
+          MvPolynomial.C ((p.1.map scale).prod * wick (correction i) 0 p.1) *
+            assignmentPolynomial U f p.2).sum))
+
+private theorem compact_word_eq_readout [Fintype X] (D : LatticeData) (q : Charge D)
+    (c : Chart) (x : ℝ) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (F : Finset (Index D)) (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F)
+    (hs : ∀ a b, compactCovariance D c x F a b = compactCovariance D c x F b a)
+    (l : List (Mode n)) :
+    compactWordReadout D q c x slot colour F hF l =
+      affineReadout (compactCovariance D c x F) (compactMean D q c x F)
+        (monomial (jetOccupation (l.map (compactMode D c slot colour F hF))) 1) := by
+  rw [affineReadout_monomial]
+  have h := native_occurrence_readout D F (compactCovariance D c x F) (compactMean D q c x F)
+    hs (compactMode D c slot colour F hF) l
+  rw [AffineOccurrenceWick.affineMoment_pullback _ _ hs] at h
+  exact h.symm
+
+/-- The original single positional partition sum equals the readout of
+the product of the four puncture sums, before taking any charge sum. -/
+theorem compact_charge_eq_punctures [Fintype X] [DecidableEq X] (D : LatticeData)
+    (q : Charge D) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hc : (c = .A ∨ c = .B) ∧ ‖parameter c (x : ℂ)‖ < 1 ∨ c = .D)
+    (slot : X → Puncture) (colour : X → Fin D.rank) (F : Finset (Index D))
+    (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) (l : List X) :
+    compactChargeTerm D slot colour c x q F hF l =
+      punctureChargeTerm D slot colour c x q F hF l := by
+  classical
+  let punc : Finset Puncture := {.P, .Q, .R, .S}
+  let scale a := liftedScale c x (slot a) (n a)
+  let C (i : Puncture) := Matrix.of fun a b => pairWeight D (-loweringParameter c i)
+    (colour a, n a) (colour b, n b)
+  let U := modeMatrix c x slot n
+  let f := compactMode D c slot colour F hF
+  let R := affineReadout (compactCovariance D c x F) (compactMean D q c x F)
+  let G (i : Puncture) (p : List X × List X) :=
+    MvPolynomial.C ((p.1.map scale).prod * wick (C i) 0 p.1) * assignmentPolynomial U f p.2
+  have hcols (a : X) : slot a ∈ punc := by cases slot a <;> simp [punc]
+  have hs (a b) : compactCovariance D c x F a b = compactCovariance D c x F b a := by
+    rcases hc with ⟨hc, hr⟩ | rfl
+    · exact compactCovariance_ab_symm D c x F hc hr a b
+    · exact compactCovariance_d_symm D hx hx₁ F a b
+  have hassign (w : List X) :
+      assign U w (compactWordReadout D q c x slot colour F hF) =
+        R (assignmentPolynomial U f w) := by
+    rw [← assign_polynomial]
+    congr 1
+    funext v
+    exact compact_word_eq_readout D q c x slot colour F hF hs v
+  have hword (w : List X) :
+      assignmentPolynomial U f w =
+        ∏ i ∈ punc, assignmentPolynomial U f (w.filter fun a => decide (slot a = i)) :=
+    word_slots slot punc (fun a => ∑ j, U a j • MvPolynomial.X (f j)) w (fun a _ => hcols a)
+  have hp (p : List X × List X) :
+      (p.1.map scale).prod *
+        (∏ i ∈ punc, wick (C i) 0 (p.1.filter fun a => decide (slot a = i))) *
+        assign U p.2 (compactWordReadout D q c x slot colour F hF) =
+        R (∏ i ∈ punc, G i (filterParts (fun a => decide (slot a = i)) p)) := by
+    simp only [G, filterParts, Finset.prod_mul_distrib]
+    rw [← map_prod, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul,
+      ← hword, hassign, word_slots slot punc scale p.1 (fun a _ => hcols a)]
+    simp only [Finset.prod_mul_distrib]
+  let H (p : List X × List X) := ∏ i ∈ punc, G i (filterParts (fun a => decide (slot a = i)) p)
+  have hmap : ((partitions l).map fun p => R (H p)).sum =
+      R (((partitions l).map H).sum) := by
+    rw [map_list_sum, List.map_map]
+    rfl
+  have hsum :
+      ((partitions l).map fun p => (p.1.map scale).prod *
+        (∏ i ∈ punc, wick (C i) 0 (p.1.filter fun a => decide (slot a = i))) *
+        assign U p.2 (compactWordReadout D q c x slot colour F hF)).sum =
+        R (∏ i ∈ punc, ((partitions (l.filter fun a => decide (slot a = i))).map (G i)).sum) := by
+    rw [show _ = ((partitions l).map fun p => R (H p)).sum from
+      congrArg List.sum (List.map_congr_left fun p _ => hp p), hmap]
+    exact congrArg R (partition_products slot punc l (fun a _ => hcols a) G)
+  unfold compactChargeTerm punctureChargeTerm
+  exact congrArg (fun v => (chartPeriod true c x ^ (12 : ℕ))⁻¹ *
+    (Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau true c x * (bilinear D q q : ℂ) / 2) *
+      v)) hsum
+
 /-- On the real overlap the three upper-chart charge expansions in compact
 native occupations are absolutely summable on every charge fibre. Their
 true-D and B values have the signed and quadratically signed Fourier
@@ -257,9 +512,9 @@ theorem compact_fourier_overlap [Fintype X] [DecidableEq X] (D : LatticeData)
     (a : ModTwoCharge D) (l : List X) (hl : l.Nodup)
     (F : Finset (Index D)) (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F) :
     let V := fun c b => ∑' q : {q : Charge D // reduceCharge D q = b},
-      compactChargeTerm D slot colour c x q.val F hF l
+      punctureChargeTerm D slot colour c x q.val F hF l
     (∀ c b, Summable (fun q : {q : Charge D // reduceCharge D q = b} =>
-      ‖compactChargeTerm D slot colour c x q.val F hF l‖)) ∧
+      ‖punctureChargeTerm D slot colour c x q.val F hF l‖)) ∧
     V .D a = ((2 : ℂ) ^ (12 : ℕ))⁻¹ * (∑ b, fourierSign D a b * V .A b) ∧
     V .B a = (periodRoot .A x ^ (12 : ℕ))⁻¹ *
       (((2 : ℂ) ^ (12 : ℕ))⁻¹ * ∑ b, fourierSign D a b * quadraticSign D b * V .A b) := by
@@ -276,8 +531,9 @@ theorem compact_fourier_overlap [Fintype X] [DecidableEq X] (D : LatticeData)
     · exact Or.inr ⟨rfl, rfl⟩
   have hterm (c : Chart) (q : Charge D) :
       assignedChargeTerm D slot colour true c x q n l =
-        compactChargeTerm D slot colour c x q F hF l :=
-    assigned_charge_eq_compact D q c hx hx₁ ((hchart c).imp id And.left) slot colour F hF l
+        punctureChargeTerm D slot colour c x q F hF l :=
+    (assigned_charge_eq_compact D q c hx hx₁ ((hchart c).imp id And.left) slot colour F hF l).trans
+      (compact_charge_eq_punctures D q c hx hx₁ ((hchart c).imp id And.left) slot colour F hF l)
   refine ⟨?_, ?_⟩
   · intro c b
     simpa only [hterm] using

@@ -48,6 +48,24 @@ internal sealed class OriginalFourMAssignedOccupationDocument : IScribeDocumentD
                     + "exponential, correction contractions and lifted scales of the physical "
                     + "partition sum. Read each surviving assignment by its four compact "
                     + "occupations and the actual signed covariance and charge-linear mean.")),
+            D("four-m-puncture-charge-term", "punctureChargeTerm", "Product of puncture polynomials",
+                DescribeRole.Definition,
+                Text("Filter the marked word at each puncture. Within each subword, sum over "
+                    + "correction endpoints and surviving occurrences. Multiply the signed "
+                    + "correction weight by the product of the signed linear mode rows of the "
+                    + "survivors, all in one compact oscillator algebra. Multiply the four "
+                    + "puncture polynomials before applying the affine occupation readout, then "
+                    + "multiply by the upper chart period and charge factors.")),
+            D("four-m-compact-charge-punctures", "compact_charge_eq_punctures",
+                "Factorization of the compact charge summand", DescribeRole.Theorem,
+                Text("Take a finite label type with decidable equality. Fix a charge and a finite "
+                    + "support containing every assigned mode. For a real argument strictly "
+                    + "between zero and one, use A or B inside the radial disk "
+                    + "or the true D lip. For every labelled word, the single compact positional "
+                    + "partition sum equals the affine readout of the product of the four "
+                    + "puncture polynomials with the same normalization. Factoring complementary "
+                    + "subwords preserves the order within each endpoint subword and counts "
+                    + "repeated positional choices with their full multiplicity.")),
             D("four-m-compact-fourier-overlap", "compact_fourier_overlap",
                 "Rank-24 signed Fourier overlap in compact occupations", DescribeRole.Theorem,
                 Text("Let the lattice have rank 24, unit Gram determinant and positive definite "
@@ -56,14 +74,20 @@ internal sealed class OriginalFourMAssignedOccupationDocument : IScribeDocumentD
                     + "labels from a finite decidable type, with puncture, colour and spatial "
                     + "degree assigned to each label and a finite support containing all assigned "
                     + "modes. The charge terms of every chart are absolutely summable on every "
-                    + "mod-two charge fibre. Write V for the resulting chart and class sums. "
+                    + "mod-two charge fibre. Write V for the sum over the fibre of the full "
+                    + "puncture charge term, including the normalized affine readout of "
+                    + "the product, the period and the charge exponential. "
                     + "For any class a, V(D,a) is 2⁻¹² times the sum of V(A,b) with Fourier sign "
                     + "at (a,b). V(B,a) is the corresponding sum with the extra quadratic sign "
                     + "of b and the inverse twelfth power of the A period root. Use the true D "
                     + "lip and the upper chart selection throughout. The proof replaces each "
                     + "surviving word using "),
                 Ref(FourPoint + "OriginalFourMNativeOccurrenceReadout.native_occurrence_readout"),
-                Text(" before applying "),
+                Text(", using "),
+                Ref(Prefix + "compactCovariance_d_symm"),
+                Text(" in chart D. It then applies "),
+                Ref(Prefix + "compact_charge_eq_punctures"),
+                Text(" before invoking "),
                 Ref(FourPoint + "OriginalFourMAssignedOverlap.assigned_fourier_overlap"),
                 Text(".")))));
 

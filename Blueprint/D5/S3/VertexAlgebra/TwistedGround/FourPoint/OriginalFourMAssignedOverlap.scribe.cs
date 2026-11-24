@@ -26,7 +26,7 @@ internal sealed class OriginalFourMAssignedOverlapDocument : IScribeDocumentDefi
                 Text("Assume unit Gram determinant, positive definite real Gram form, a finite "
                     + "decidable label type and a word without repeated labels. At a real argument "
                     + "strictly between zero and one, use either A or B with slit parameter of norm "
-                    + "less than one, or the true D lip. The charge sum on each mod-two fibre has "
+                    + "less than one, or D with the upper selection set to true. The charge sum on each mod-two fibre has "
                     + "sum equal to the physical product's marked Taylor coefficient at the origin. "
                     + "The copied labels have spatial degrees on the left and mark degree one on the right.")),
             D("four-m-assigned-charge-summable-norm", "assigned_charge_summable_norm",
@@ -35,7 +35,10 @@ internal sealed class OriginalFourMAssignedOverlapDocument : IScribeDocumentDefi
                     + "the assigned charge terms are summable on each mod-two fibre.")),
             D("four-m-assigned-fourier-overlap", "assigned_fourier_overlap",
                 "Signed overlaps of assigned charge sectors", DescribeRole.Theorem,
-                Text("Assume also rank 24 and an A-parameter square root of norm less than one. "
+                Text("Let the lattice have rank 24, unit Gram determinant and positive definite "
+                    + "real Gram form. Take a finite decidable label type, a word of distinct "
+                    + "labels and a real argument strictly between zero and one whose A "
+                    + "parameter has a square root of norm less than one. "
                     + "Use the upper chart selection throughout. D in class a is the Fourier sum "
                     + "of the A sectors with signs at (a,b) and factor 2⁻¹². B is the corresponding "
                     + "sum with the additional quadratic sign of b and the inverse twelfth power "
