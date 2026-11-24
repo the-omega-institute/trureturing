@@ -26,6 +26,8 @@ open private Model.center from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 open private shortMomentTaylorCoefficientsFromTable from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
+open private coeffAdd coeffScale from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 
 section
 
@@ -84,6 +86,9 @@ local cbv_simproc cbv_eval stageMarginalCoefficients
     (CompactShortMomentTable.marginalCoefficients _) := stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageMidpointCoefficients
     (shortMomentTaylorCoefficientsFromTable _ _ _) := stageLiteral (List Rat)
+-- Collect each scaled Taylor list with a single kernel-checked equality per operation.
+local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat)
+local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageRecenter (SmallCorner.recenterMomentCoeffs _ _) :=
   stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageLowerCheck (CompactShortBox.lowerCheck _ _ _) :=
