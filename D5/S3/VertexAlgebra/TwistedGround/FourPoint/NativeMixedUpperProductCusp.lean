@@ -9,7 +9,8 @@
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedWickCuspGerm
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedWickChartTransport
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMVariableSupport
-import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+import Mathlib.Analysis.Complex.TaylorSeries
 
 /-! The upper-branch B product, with native order (Q, R, P, S). -/
 
@@ -32,9 +33,11 @@ open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockGradedTrace
 open LatticeTwistedGroundRealization LatticeTwistedGroundRealization.SignQuotient
 open ActualLeechHyperbolic (leechData leech_spec)
 open ActualChargedAdjoint (actualForm)
-open Orbifold.NativeOddTwistedIntertwiner (Twisted leechUnit)
-open Orbifold.NativeOddUpperRightSkew (rightField rightField_coeff)
-open Orbifold.NativeMixedPairField (mu mu_coeff_even_zero mu_lower_truncation)
+open ActualOddGradeOrthogonality (actualForm_oddGrade_orthogonal)
+open Orbifold.NativeOddTwistedIntertwiner (Twisted OddCarrier leechUnit)
+open Orbifold.NativeOddUpperRightSkew (rightField rightField_coeff rightField_even_zero R_pairing_finite)
+open Orbifold.NativeMixedPairField (mu mu_coeff_of_grade mu_coeff_even_zero mu_lower_truncation)
+open Orbifold.NativeMixedPairState (mixedPairWeight mixedPairState_grade)
 open OriginalFourMVariableSupport (occupationReadout inverseFlow nativeSector
   nativePuncture wordAt loweredOscillator)
 open OriginalFourMChargeCoset (oscillatorLower)
@@ -48,6 +51,11 @@ open NativeMixedWickCuspGerm (mixedOccupationSewn mixedSewn mixedSewn_analyticAt
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
   (slitDomain isOpen_slitDomain ball_subset_slitDomain)
 
+open private J_energy from
+  D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddTwistedIntertwiner
+open private actualGrade_eigen from
+  D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddUpperRightSkew
+open private T lowering_eigen from D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
 open private mixedGroundWeight maxOddWeight_le_grade from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedWickCuspGerm
 open private analytic_neg_square_even_part coefficient_fun_sum coefficient_const_mul from
@@ -101,18 +109,21 @@ def bSewnNumerator (K L N : ℕ) (P Q U S : Oscillator leechData)
   ∑ a : ModTwoCharge leechData, mixedGroundWeight q r p d a *
     bSlitOccupation K L N P Q U S a z
 
-theorem bSewnNumerator_analyticAt (K L N : ℕ) (P Q U S : Oscillator leechData)
+private theorem bSewnNumerator_differentiableOn (K L N : ℕ) (P Q U S : Oscillator leechData)
     (p q r d : ActualGround leechData leechUnit) :
-    AnalyticAt ℂ (bSewnNumerator K L N P Q U S p q r d) 0 := by
+    DifferentiableOn ℂ (bSewnNumerator K L N P Q U S p q r d) slitDomain := by
   classical
   have hsector (a : ModTwoCharge leechData) (β γ δ η : Exponent leechData) :
-      AnalyticAt ℂ (slitChargeSector leechData a β γ δ η) 0 :=
-    DifferentiableOn.analyticOnNhd
-      (slitChargeSector_differentiableOn leechData leech_spec.2.2.1 a β γ δ η)
-      isOpen_slitDomain 0
-      (ball_subset_slitDomain (Metric.mem_ball_self zero_lt_one))
+      DifferentiableOn ℂ (slitChargeSector leechData a β γ δ η) slitDomain :=
+    slitChargeSector_differentiableOn leechData leech_spec.2.2.1 a β γ δ η
   unfold bSewnNumerator bSlitOccupation occupationReadout
   fun_prop
+
+theorem bSewnNumerator_analyticAt (K L N : ℕ) (P Q U S : Oscillator leechData)
+    (p q r d : ActualGround leechData leechUnit) :
+    AnalyticAt ℂ (bSewnNumerator K L N P Q U S p q r d) 0 :=
+  DifferentiableOn.analyticOnNhd (bSewnNumerator_differentiableOn K L N P Q U S p q r d)
+    isOpen_slitDomain 0 (ball_subset_slitDomain (Metric.mem_ball_self zero_lt_one))
 
 private def detectorSewn (K L N : ℕ) (P Q U S : Oscillator leechData)
     (p q r d : ActualGround leechData leechUnit) (ρ : ℂ) : ℂ :=
@@ -204,6 +215,142 @@ theorem bProductCoeff_eq_taylor (s t : Bool) (M K L N : ℕ)
     have h := mixedSewn_analyticAt K L Q U P ((oscillatorLower leechData ^ ell) S) q r p d
     fun_prop
 
+/-- The even detector Taylor coefficient is the corresponding coefficient
+of the slit numerator with the detector phase. -/
+private theorem bDetector_coefficient (K L N : ℕ)
+    (P Q U S : Oscillator leechData) (p q r d : ActualGround leechData leechUnit) (E : ℕ) :
+    coefficient (2 * E) (detectorSewn K L N P Q U S p q r d) =
+      I ^ ((L : ℤ) - 2 * (K : ℤ) - 3) * coefficient E (bSewnNumerator K L N P Q U S p q r d) := by
+  let F := detectorSewn K L N P Q U S p q r d
+  let B := bSewnNumerator K L N P Q U S p q r d
+  let phase := I ^ ((L : ℤ) - 2 * (K : ℤ) - 3)
+  obtain ⟨G, hG, hpull⟩ :=
+    analytic_neg_square_even_part (detectorSewn_analyticAt K L N P Q U S p q r d)
+  have hSquare : ∀ᶠ ρ : ℂ in 𝓝 0, G (-(ρ ^ 2)) = phase * B (ρ ^ 2) := by
+    filter_upwards [hpull, ball_mem_nhds (0 : ℂ) zero_lt_one] with ρ hρ hball
+    have hn : ‖ρ‖ < 1 := mem_ball_zero_iff.mp hball
+    rw [hρ, detectorSewn_eq K L N P Q U S p q r d hn,
+      detectorSewn_eq K L N P Q U S p q r d (ρ := -ρ) (by simpa only [norm_neg] using hn),
+      neg_sq]
+    change (phase * B (ρ ^ 2) + phase * B (ρ ^ 2)) / 2 = phase * B (ρ ^ 2)
+    ring
+  have hlocal : G =ᶠ[𝓝 0] fun z => phase * B (-z) := by
+    obtain ⟨δ, hδ, hball⟩ := Metric.eventually_nhds_iff_ball.mp hSquare
+    refine Metric.eventually_nhds_iff_ball.mpr ⟨δ ^ 2, sq_pos_of_pos hδ, ?_⟩
+    intro z hz
+    obtain ⟨ρ, hρ⟩ := IsAlgClosed.exists_pow_nat_eq (-z) (n := 2) zero_lt_two
+    have hsmall : ‖ρ‖ < δ := by
+      apply (sq_lt_sq₀ (norm_nonneg ρ) hδ.le).mp
+      rw [← norm_pow, hρ, norm_neg]
+      exact mem_ball_zero_iff.mp hz
+    simpa only [hρ, neg_neg] using hball ρ (mem_ball_zero_iff.mpr hsmall)
+  have hseries := hG.congr hlocal
+  have hcoef : coefficient E (fun z => phase * B (-z)) = (-1 : ℂ) ^ E * coefficient (2 * E) F := by
+    have heq := hseries.analyticAt.hasFPowerSeriesAt.eq_formalMultilinearSeries hseries
+    simpa only [FormalMultilinearSeries.coeff_ofScalars, coefficient] using
+      congrArg (fun series => FormalMultilinearSeries.coeff series E) heq
+  have hneg : coefficient E (fun z => B (-z)) = (-1 : ℂ) ^ E * coefficient E B := by
+    unfold coefficient
+    rw [iteratedDeriv_comp_neg, neg_zero, smul_eq_mul, mul_div_assoc]
+  rw [coefficient_const_mul, hneg] at hcoef
+  change coefficient (2 * E) F = phase * coefficient E B
+  apply mul_left_cancel₀ (pow_ne_zero E (by norm_num : (-1 : ℂ) ≠ 0))
+  calc
+    (-1 : ℂ) ^ E * coefficient (2 * E) F = phase * ((-1 : ℂ) ^ E * coefficient E B) :=
+      hcoef.symm
+    _ = _ := by ring
+
+/-- The original B energy diagonal sums on the punctured unit disk of the
+physical doubled coordinate. The sewn numerator is evaluated at its square. -/
+theorem b_product_hasSum_complex (s t : Bool) (M K L N : ℕ)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (P Q U S : Oscillator leechData) (p q r d : ActualGround leechData leechUnit)
+    (hv : v.val ∈ actualGrade leechData leechUnit K)
+    (hw : w.val ∈ actualGrade leechData leechUnit L)
+    (hu : u.val ∈ actualGrade leechData leechUnit M)
+    (hb : b.val ∈ actualGrade leechData leechUnit N)
+    (hvQ : v.val = Q ⊗ₜ[ℂ] q) (hwU : w.val = U ⊗ₜ[ℂ] r)
+    (huP : u.val = P ⊗ₜ[ℂ] p) (hbS : b.val = S ⊗ₜ[ℂ] d)
+    (hKL : Odd ((K : ℤ) + L)) (hNM : Odd ((N : ℤ) - M))
+    {ρ : ℂ} (hρ₀ : 0 < ‖ρ‖) (hρ₁ : ‖ρ‖ < 1) :
+    HasSum (fun E : ℕ => bProductCoeff s t M K L N v w u b E *
+      ρ ^ (2 * (E : ℤ) - (6 + (K : ℤ) + L)))
+      (ρ ^ (-(6 + (K : ℤ) + L)) *
+        I ^ ((L : ℤ) + N - M - 2 * (K : ℤ) - 3) *
+        bSewnNumerator K L N P Q U S p q r d (ρ ^ 2)) := by
+  let B := bSewnNumerator K L N P Q U S p q r d
+  let A : ℤ := 6 + (K : ℤ) + L
+  let phase : ℤ := (L : ℤ) + N - M - 2 * (K : ℤ) - 3
+  have hρ : ρ ≠ 0 := norm_pos_iff.mp hρ₀
+  have hdiff : DifferentiableOn ℂ B (ball (0 : ℂ) 1) :=
+    (bSewnNumerator_differentiableOn K L N P Q U S p q r d).mono ball_subset_slitDomain
+  have hball : ρ ^ 2 ∈ ball (0 : ℂ) 1 := by
+    rw [mem_ball_zero_iff, norm_pow]
+    exact pow_lt_one₀ (norm_nonneg ρ) hρ₁ (by decide)
+  have htaylor : HasSum (fun E : ℕ => coefficient E B * (ρ ^ (2 : ℕ)) ^ E) (B (ρ ^ 2)) := by
+    refine (Complex.hasSum_taylorSeries_on_ball hdiff hball).congr_fun ?_
+    intro E
+    simp only [coefficient, sub_zero, smul_eq_mul, div_eq_mul_inv]
+    ring
+  refine (htaylor.mul_left (ρ ^ (-A) * I ^ phase)).congr_fun fun E => ?_
+  have hpow : ρ ^ (2 * (E : ℤ) - A) = ρ ^ (-A) * (ρ ^ (2 : ℕ)) ^ E := by
+    rw [show 2 * (E : ℤ) - A = -A + 2 * (E : ℤ) by ring,
+      zpow_add₀ hρ, zpow_mul, zpow_natCast _ E]
+    rfl
+  rw [bProductCoeff_eq_taylor s t M K L N v w u b P Q U S p q r d
+    hv hw hu hb hvQ hwU huP hbS hKL hNM E, bDetector_coefficient, ← mul_assoc,
+    ← zpow_add₀ Complex.I_ne_zero, hpow]
+  have hphase : (N : ℤ) - M + ((L : ℤ) - 2 * (K : ℤ) - 3) = phase := by
+    dsimp only [phase]
+    ring
+  rw [hphase]
+  change I ^ phase * coefficient E B * (ρ ^ (-A) * (ρ ^ (2 : ℕ)) ^ E) = _
+  ring
+
+/-- On the positive interval the physical root is `sqrt y` and the upper
+chart root is `I * sqrt y`. -/
+theorem b_upper_product_hasSum_unitInterval (s t : Bool) (M K L N : ℕ)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (P Q U S : Oscillator leechData) (p q r d : ActualGround leechData leechUnit)
+    (hv : v.val ∈ actualGrade leechData leechUnit K)
+    (hw : w.val ∈ actualGrade leechData leechUnit L)
+    (hu : u.val ∈ actualGrade leechData leechUnit M)
+    (hb : b.val ∈ actualGrade leechData leechUnit N)
+    (hvQ : v.val = Q ⊗ₜ[ℂ] q) (hwU : w.val = U ⊗ₜ[ℂ] r)
+    (huP : u.val = P ⊗ₜ[ℂ] p) (hbS : b.val = S ⊗ₜ[ℂ] d)
+    (hKL : Odd ((K : ℤ) + L)) (hNM : Odd ((N : ℤ) - M))
+    {y : ℝ} (hy : 0 < y) (hy₁ : y < 1) :
+    HasSum (fun E : ℕ => bProductCoeff s t M K L N v w u b E *
+      (Real.sqrt y : ℂ) ^ (2 * (E : ℤ) - (6 + (K : ℤ) + L)))
+      ((I * (Real.sqrt y : ℂ)) ^ (-(6 + (K : ℤ) + L)) *
+        I ^ (3 + 2 * (L : ℤ) + N - M - K) * bSewnNumerator K L N P Q U S p q r d y) := by
+  let x : ℂ := Real.sqrt y
+  let A : ℤ := 6 + (K : ℤ) + L
+  have hx₀ : 0 < ‖x‖ := norm_pos_iff.mpr (Complex.ofReal_ne_zero.mpr (Real.sqrt_pos.2 hy).ne')
+  have hx₁ : ‖x‖ < 1 := by
+    change ‖(Real.sqrt y : ℂ)‖ < 1
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg y)]
+    exact (Real.sqrt_lt' zero_lt_one).2 (by simpa using hy₁)
+  have hsq : x ^ 2 = (y : ℂ) := by
+    change ((Real.sqrt y : ℝ) : ℂ) ^ (2 : ℕ) = (y : ℂ)
+    rw [← Complex.ofReal_pow, Real.sq_sqrt hy.le]
+  have hphase :
+      (I * x) ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K) =
+        x ^ (-A) * I ^ ((L : ℤ) + N - M - 2 * (K : ℤ) - 3) := by
+    rw [mul_zpow]
+    calc
+      _ = x ^ (-A) * (I ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K)) := by ring
+      _ = _ := by
+        rw [← zpow_add₀ Complex.I_ne_zero]
+        rw [show -A + (3 + 2 * (L : ℤ) + N - M - K) =
+          (L : ℤ) + N - M - 2 * (K : ℤ) - 3 by dsimp only [A]; ring]
+  change HasSum _ ((I * x) ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K) * _)
+  rw [hphase, ← hsq]
+  exact b_product_hasSum_complex s t M K L N v w u b P Q U S p q r d
+    hv hw hu hb hvQ hwU huP hbS hKL hNM hx₀ hx₁
+
 /-- The original B energy diagonal converges near the positive cusp. Its
 positive physical coordinate has root `sqrt y`. In the upper root of minus
 that coordinate, the Laurent factor is `(I * sqrt y)^(-(6+K+L))`. -/
@@ -223,75 +370,136 @@ theorem b_upper_product_hasSum (s t : Bool) (M K L N : ℕ)
         (Real.sqrt y : ℂ) ^ (2 * (E : ℤ) - (6 + (K : ℤ) + L)))
         ((I * (Real.sqrt y : ℂ)) ^ (-(6 + (K : ℤ) + L)) *
           I ^ (3 + 2 * (L : ℤ) + N - M - K) * bSewnNumerator K L N P Q U S p q r d y) := by
-  let F := detectorSewn K L N P Q U S p q r d
+  filter_upwards [gt_mem_nhds (show (0 : ℝ) < 1 from zero_lt_one)] with y hy₁ hy
+  exact b_upper_product_hasSum_unitInterval s t M K L N v w u b P Q U S p q r d
+    hv hw hu hb hvQ hwU huP hbS hKL hNM hy hy₁
+
+/-- A term of the actual B product at independent doubled modes, with
+`xRoot ^ 2 = x` and `zRoot ^ 2 = z`. -/
+def bJointTerm (s t : Bool)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (xRoot zRoot : ℂ) (i : ℤ × ℤ) : ℂ :=
+  actualForm leechData leechUnit b.val
+    ((rightField leechData leechUnit t u).coeff i.2 ((mu s v).coeff i.1 w)).val *
+      (zRoot ^ i.1 * xRoot ^ i.2)
+
+private theorem b_inner_energy (s : Bool) (K L E : ℕ)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (hv : v.val ∈ actualGrade leechData leechUnit K)
+    (hw : w.val ∈ actualGrade leechData leechUnit L)
+    (hKL : Odd ((K : ℤ) + L)) :
+    ((mu s v).coeff (2 * (E : ℤ) - (6 + (K : ℤ) + L)) w).val ∈
+      grade leechData (E : ℤ) := by
+  let m : ℤ := ((K : ℤ) + L + 3) / 2 - (E : ℤ)
+  have hj : 2 * (E : ℤ) - (6 + (K : ℤ) + L) = -2 * m - 3 := by
+    obtain ⟨k, hk⟩ := hKL
+    dsimp only [m]
+    omega
+  have hgrade : mixedPairWeight K L m = (E : ℤ) := by
+    obtain ⟨k, hk⟩ := hKL
+    unfold mixedPairWeight m
+    omega
+  rw [hj, mu_coeff_of_grade s K L m v w hv hw, ← hgrade]
+  exact mixedPairState_grade s K L m v w
+
+private theorem b_outer_pairing_off_grid (t : Bool) (M N E : ℕ)
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (hu : u.val ∈ actualGrade leechData leechUnit M)
+    (hb : b.val ∈ actualGrade leechData leechUnit N)
+    (a : OddCarrier leechData) (ha : a.val ∈ grade leechData (E : ℤ))
+    (e : ℤ) (he : e ≠ (N : ℤ) - M - 2 * (E : ℤ)) :
+    actualForm leechData leechUnit b.val
+      ((rightField leechData leechUnit t u).coeff e a).val = 0 := by
+  by_cases hEven : Even e
+  · rw [rightField_even_zero leechData leechUnit t e hEven, Submodule.coe_zero, map_zero]
+  · obtain ⟨k, hk⟩ := Int.not_even_iff_odd.mp hEven
+    let n : ℤ := -k - 2
+    have hn : e = -2 * n - 3 := by dsimp only [n]; omega
+    rw [hn, rightField_coeff, R_pairing_finite leechData leechUnit t n N u a b hb]
+    apply Finset.sum_eq_zero
+    intro ell _
+    have hbEigen := (actualGrade_eigen leechData leechUnit N b.val).mp hb
+    have hlow := lowering_eigen leechData leechUnit (N : ℤ) b.val
+      (by simpa only [Int.cast_natCast] using hbEigen) ell
+    have hout := J_energy leechData leechUnit t (n + (ell : ℤ)) (E : ℤ) M a u ha hu
+    rw [actualForm_oddGrade_orthogonal leechData leechUnit _ _ ((T leechData leechUnit ^ ell) b.val)
+      _ hlow hout (by omega), mul_zero]
+
+/-- The B product on the root double cover sums over both doubled modes.
+Homogeneity factors out the degree in `xRoot`, leaving the disk series
+at the ratio of the two roots. -/
+theorem b_joint_product_hasSum (s t : Bool) (M K L N : ℕ)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (P Q U S : Oscillator leechData) (p q r d : ActualGround leechData leechUnit)
+    (hv : v.val ∈ actualGrade leechData leechUnit K)
+    (hw : w.val ∈ actualGrade leechData leechUnit L)
+    (hu : u.val ∈ actualGrade leechData leechUnit M)
+    (hb : b.val ∈ actualGrade leechData leechUnit N)
+    (hvQ : v.val = Q ⊗ₜ[ℂ] q) (hwU : w.val = U ⊗ₜ[ℂ] r)
+    (huP : u.val = P ⊗ₜ[ℂ] p) (hbS : b.val = S ⊗ₜ[ℂ] d)
+    (hKL : Odd ((K : ℤ) + L)) (hNM : Odd ((N : ℤ) - M))
+    {xRoot zRoot : ℂ} (hx : xRoot ≠ 0)
+    (hρ₀ : 0 < ‖zRoot / xRoot‖) (hρ₁ : ‖zRoot / xRoot‖ < 1) :
+    HasSum (bJointTerm s t v w u b xRoot zRoot)
+      (xRoot ^ ((N : ℤ) - M - (6 + (K : ℤ) + L)) *
+        ((zRoot / xRoot) ^ (-(6 + (K : ℤ) + L)) *
+          I ^ ((L : ℤ) + N - M - 2 * (K : ℤ) - 3) *
+          bSewnNumerator K L N P Q U S p q r d ((zRoot / xRoot) ^ 2))) := by
   let A : ℤ := 6 + (K : ℤ) + L
-  obtain ⟨G, hG, hpull⟩ := analytic_neg_square_even_part
-    (detectorSewn_analyticAt K L N P Q U S p q r d)
-  have hsqrt : Tendsto (fun y : ℝ => (Real.sqrt y : ℂ)) (𝓝 0) (𝓝 0) := by
-    simpa only [Real.sqrt_zero, Complex.ofReal_zero, Function.comp_def] using
-      (Complex.continuous_ofReal.comp Real.continuous_sqrt).tendsto (0 : ℝ)
-  have hneg : Tendsto (fun y : ℝ => -(y : ℂ)) (𝓝 0) (𝓝 0) := by
-    have h : Continuous (fun y : ℝ => -(y : ℂ)) := by fun_prop
-    simpa only [Complex.ofReal_zero, neg_zero] using
-      h.tendsto (0 : ℝ)
-  filter_upwards [hneg.eventually hG.eventually_hasSum, hsqrt.eventually hpull,
-    hsqrt.eventually_mem (Metric.ball_mem_nhds (0 : ℂ) zero_lt_one)]
-    with y hsum hpull hball hy
-  let x : ℂ := Real.sqrt y
-  have hx : x ≠ 0 := Complex.ofReal_ne_zero.mpr (Real.sqrt_pos.2 hy).ne'
-  have hsq : x ^ 2 = (y : ℂ) := by
-    change ((Real.sqrt y : ℝ) : ℂ) ^ 2 = (y : ℂ)
-    rw [← Complex.ofReal_pow, Real.sq_sqrt hy.le]
-  have hsmall : ‖x‖ < 1 := mem_ball_zero_iff.mp hball
-  have hsmallneg : ‖-x‖ < 1 := by simpa only [norm_neg] using hsmall
-  have hvalue : G (-(y : ℂ)) =
-      I ^ ((L : ℤ) - 2 * (K : ℤ) - 3) * bSewnNumerator K L N P Q U S p q r d y := by
-    rw [← hsq]
-    change G (-(x ^ 2)) = _
-    rw [hpull, detectorSewn_eq K L N P Q U S p q r d hsmall,
-      detectorSewn_eq K L N P Q U S p q r d hsmallneg, neg_sq]
-    ring
-  have hnegative : HasSum (fun E : ℕ => ((-1 : ℂ) ^ E * coefficient (2 * E) F) *
-      (-(y : ℂ)) ^ E) (G (-(y : ℂ))) := by
-    simpa only [zero_add, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] using hsum
-  have hpositive : HasSum (fun E : ℕ => coefficient (2 * E) F * (y : ℂ) ^ E)
-      (G (-(y : ℂ))) := by
-    refine hnegative.congr_fun fun E => ?_
-    have hsign : (-1 : ℂ) ^ E * (-1 : ℂ) ^ E = 1 := by
-      rw [← mul_pow]
-      norm_num
-    rw [neg_pow]
+  let j (E : ℕ) : ℤ := 2 * (E : ℤ) - A
+  let e (E : ℕ) : ℤ := (N : ℤ) - M - 2 * (E : ℤ)
+  let mode (E : ℕ) : ℤ × ℤ := (j E, e E)
+  have hinj : Function.Injective mode := by
+    intro E F h
+    have hmode : j E = j F := congrArg Prod.fst h
+    dsimp only [j] at hmode
+    omega
+  have hzero (i : ℤ × ℤ) (hi : i ∉ Set.range mode) :
+      bJointTerm s t v w u b xRoot zRoot i = 0 := by
+    rcases i with ⟨a, c⟩
+    by_cases ha : ∃ E : ℕ, a = j E
+    · obtain ⟨E, rfl⟩ := ha
+      have hc : c ≠ e E := fun h => hi ⟨E, Prod.ext rfl h.symm⟩
+      have hgrade := b_inner_energy s K L E v w hv hw hKL
+      have hout := b_outer_pairing_off_grid t M N E u b hu hb ((mu s v).coeff (j E) w) hgrade c hc
+      change _ * (zRoot ^ j E * xRoot ^ c) = 0
+      rw [hout, zero_mul]
+    · have hinner := b_inner_coeff_off_grid s K L v w hv hw hKL a (fun E h => ha ⟨E, h⟩)
+      simp [bJointTerm, hinner]
+  apply (hinj.hasSum_iff hzero).mp
+  have hsum := b_product_hasSum_complex s t M K L N v w u b P Q U S p q r d
+    hv hw hu hb hvQ hwU huP hbS hKL hNM hρ₀ hρ₁
+  refine (hsum.mul_left (xRoot ^ ((N : ℤ) - M - A))).congr_fun fun E => ?_
+  change bProductCoeff s t M K L N v w u b E * (zRoot ^ j E * xRoot ^ e E) =
+    xRoot ^ ((N : ℤ) - M - A) * (bProductCoeff s t M K L N v w u b E * (zRoot / xRoot) ^ j E)
+  have hpow : zRoot ^ j E * xRoot ^ e E =
+      xRoot ^ ((N : ℤ) - M - A) * (zRoot / xRoot) ^ j E := by
+    rw [div_zpow, div_eq_mul_inv, ← zpow_neg]
     calc
-      _ = (coefficient (2 * E) F * (y : ℂ) ^ E) * 1 := by ring
-      _ = (coefficient (2 * E) F * (y : ℂ) ^ E) * ((-1 : ℂ) ^ E * (-1 : ℂ) ^ E) := by
-        rw [hsign]
+      _ = xRoot ^ e E * zRoot ^ j E := mul_comm _ _
+      _ = (xRoot ^ ((N : ℤ) - M - A) * xRoot ^ (-j E)) * zRoot ^ j E := by
+        rw [← zpow_add₀ hx, show (N : ℤ) - M - A + (-j E) = e E by dsimp only [j, e]; ring]
       _ = _ := by ring
-  have hpow (E : ℕ) : x ^ (2 * (E : ℤ) - A) = x ^ (-A) * (y : ℂ) ^ E := by
-    rw [show 2 * (E : ℤ) - A = -A + 2 * (E : ℤ) by ring,
-      zpow_add₀ hx, zpow_mul, zpow_natCast _ E]
-    change x ^ (-A) * (x ^ (2 : ℕ)) ^ E = _
-    rw [hsq]
-  have hphase :
-      (I * x) ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K) =
-        x ^ (-A) * I ^ ((N : ℤ) - M) * I ^ ((L : ℤ) - 2 * (K : ℤ) - 3) := by
-    rw [mul_zpow]
-    calc
-      _ = x ^ (-A) * (I ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K)) := by ring
-      _ = _ := by
-        rw [← zpow_add₀ Complex.I_ne_zero, mul_assoc, ← zpow_add₀ Complex.I_ne_zero]
-        rw [show -A + (3 + 2 * (L : ℤ) + N - M - K) =
-          ((N : ℤ) - M) + ((L : ℤ) - 2 * (K : ℤ) - 3) by
-          dsimp only [A]
-          ring]
-  change HasSum (fun E : ℕ => bProductCoeff s t M K L N v w u b E * x ^ (2 * (E : ℤ) - A))
-    ((I * x) ^ (-A) * I ^ (3 + 2 * (L : ℤ) + N - M - K) *
-      bSewnNumerator K L N P Q U S p q r d y)
-  rw [hphase, mul_assoc (x ^ (-A) * I ^ ((N : ℤ) - M)), ← hvalue]
-  refine (hpositive.mul_left (x ^ (-A) * I ^ ((N : ℤ) - M))).congr_fun fun E => ?_
-  rw [bProductCoeff_eq_taylor s t M K L N v w u b P Q U S p q r d
-    hv hw hu hb hvQ hwU huP hbS hKL hNM, hpow]
-  change (I ^ ((N : ℤ) - M) * coefficient (2 * E) F) * (x ^ (-A) * (y : ℂ) ^ E) = _
+  rw [hpow]
   ring
+
+/-- Reversing the physical `z` root changes the sign of the B product.
+The mixed inner field has only odd doubled modes. -/
+theorem b_joint_product_neg_root (s t : Bool)
+    (v : Twisted leechData leechUnit s) (w : Twisted leechData leechUnit (!s))
+    (u : Twisted leechData leechUnit t) (b : Twisted leechData leechUnit (!t))
+    (xRoot zRoot : ℂ) :
+    (∑' i, bJointTerm s t v w u b xRoot (-zRoot) i) =
+      -(∑' i, bJointTerm s t v w u b xRoot zRoot i) := by
+  rw [← tsum_neg]
+  apply tsum_congr
+  intro i
+  by_cases hEven : Even i.1
+  · simp [bJointTerm, mu_coeff_even_zero s i.1 v w hEven]
+  · have hOdd := Int.not_even_iff_odd.mp hEven
+    simp only [bJointTerm, hOdd.neg_zpow, neg_mul, mul_neg]
 
 open NativeMixedWickChartTransport (doubledOccupation gaussianOccupation normalizedOccupation
   bpzPhase laurentRoot laurentPower)
