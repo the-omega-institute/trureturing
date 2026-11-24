@@ -52,11 +52,44 @@ def mul (a b : Jet2) : Jet2 :=
   ⟨(a.j0.mul b.j0), ((a.j0.mul b.j1).add (a.j1.mul b.j0)),
     (((a.j0.mul b.j2).add (a.j1.mul b.j1)).add (a.j2.mul b.j0))⟩
 
+theorem finite_const {c : IntRatio} (h : c.Finite) : (const c).Finite :=
+  And.intro h (And.intro True.intro True.intro)
+
+theorem finite_var : var.Finite :=
+  And.intro True.intro (And.intro True.intro True.intro)
+
+theorem finite_add {a b : Jet2} (ha : a.Finite) (hb : b.Finite) : (a.add b).Finite :=
+  And.intro (IntRatio.finite_add ha.left hb.left)
+    (And.intro (IntRatio.finite_add ha.right.left hb.right.left)
+      (IntRatio.finite_add ha.right.right hb.right.right))
+
+theorem finite_neg {a : Jet2} (h : a.Finite) : a.neg.Finite :=
+  And.intro (IntRatio.finite_neg h.left)
+    (And.intro (IntRatio.finite_neg h.right.left) (IntRatio.finite_neg h.right.right))
+
+theorem finite_mul {a b : Jet2} (ha : a.Finite) (hb : b.Finite) : (a.mul b).Finite :=
+  And.intro (IntRatio.finite_mul ha.left hb.left)
+    (And.intro
+      (IntRatio.finite_add (IntRatio.finite_mul ha.left hb.right.left)
+        (IntRatio.finite_mul ha.right.left hb.left))
+      (IntRatio.finite_add
+        (IntRatio.finite_add (IntRatio.finite_mul ha.left hb.right.right)
+          (IntRatio.finite_mul ha.right.left hb.right.left))
+        (IntRatio.finite_mul ha.right.right hb.left)))
+
 theorem add_congr {a b c d : Jet2} (h : Equivalent a b) (k : Equivalent c d) :
     Equivalent (a.add c) (b.add d) :=
   And.intro (IntRatio.add_congr h.left k.left)
     (And.intro (IntRatio.add_congr h.right.left k.right.left)
       (IntRatio.add_congr h.right.right k.right.right))
+
+theorem neg_congr {a b : Jet2} (h : Equivalent a b) : Equivalent a.neg b.neg :=
+  And.intro (IntRatio.neg_congr h.left)
+    (And.intro (IntRatio.neg_congr h.right.left) (IntRatio.neg_congr h.right.right))
+
+theorem sub_congr {a b c d : Jet2} (h : Equivalent a b) (k : Equivalent c d) :
+    Equivalent (a.sub c) (b.sub d) :=
+  add_congr h (neg_congr k)
 
 theorem mul_congr {a b c d : Jet2} (h : Equivalent a b) (k : Equivalent c d) :
     Equivalent (a.mul c) (b.mul d) :=

@@ -208,7 +208,7 @@ private theorem finite_initial_value_induction (N : Nat) {P : Nat → Prop} (ini
       (ih.left (Nat.le_trans (Nat.le.step (Nat.le.step (Nat.le.refl k))) hk)))) k).left
 
 /-- A degree-`N` Cayley solution is fixed by its constant coefficients and the equations below degree `N`. -/
-theorem cayley_unique_at (N : Nat) {f g : JetSeq} (hf : Finite f) (hg : Finite g)
+private theorem cayley_unique_at_of_finite (N : Nat) {f g : JetSeq} (hf : Finite f) (hg : Finite g)
     (f0 : IntRatio.Equivalent (f Nat.zero) IntRatio.one)
     (g0 : IntRatio.Equivalent (g Nat.zero) IntRatio.zero)
     (odeF : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv f) oneAddEtaSq k)
@@ -229,6 +229,99 @@ theorem cayley_unique_at (N : Nat) {f g : JetSeq} (hf : Finite f) (hg : Finite g
         (coefficient_from_polynomial_deriv hg cayleySin_finite k lower.right sameG)
   have reach := finite_initial_value_induction N first step
   And.intro (fun k hk => (reach k hk).left) (fun k hk => (reach k hk).right)
+
+private theorem finite_of_equivalent {a b : IntRatio} (h : IntRatio.Equivalent a b) (hb : b.Finite) : a.Finite :=
+  (IntRatio.rec (motive := fun a => IntRatio.Equivalent a b → a.Finite)
+    (IntRatio.rec (motive := fun b => b.Finite → IntRatio.Equivalent IntRatio.undefined b → False)
+      (fun fb _ => fb) (fun _ _ _ eq => eq) b hb)
+    (fun _ _ _ => True.intro) a) h
+
+private theorem finite_of_add_left {a b : IntRatio} (h : (a.add b).Finite) : a.Finite :=
+  (IntRatio.rec (motive := fun a => (a.add b).Finite → a.Finite)
+    (fun p => p) (fun _ _ _ => True.intro) a) h
+
+private theorem finite_of_add_right {a b : IntRatio} (h : (a.add b).Finite) : b.Finite :=
+  finite_of_add_left (a := b) (b := a) (finite_of_equivalent (IntRatio.add_comm b a) h)
+
+private theorem finite_of_mul_left {a b : IntRatio} (h : (a.mul b).Finite) : a.Finite :=
+  (IntRatio.rec (motive := fun a => (a.mul b).Finite → a.Finite)
+    (fun p => p) (fun _ _ _ => True.intro) a) h
+
+private theorem finite_of_mul_right {a b : IntRatio} (h : (a.mul b).Finite) : b.Finite :=
+  finite_of_mul_left (a := b) (b := a) (finite_of_equivalent (IntRatio.mul_comm b a) h)
+
+private theorem finite_of_mul_deriv {f q : JetSeq} (k : Nat) (h : (mul (deriv f) q k).Finite) :
+    (f k.succ).Finite :=
+  (Nat.rec (motive := fun j => (mul (deriv f) q j).Finite → (f j.succ).Finite)
+    (fun h => finite_of_mul_right (h := finite_of_mul_left (h := h)))
+    (fun j _ h =>
+      have s := finite_of_equivalent (mul_succ_right (deriv f) q j).symm h
+      have term := finite_of_add_right (a := mul (deriv f) (tail q) j)
+        (b := (deriv f j.succ).mul (q Nat.zero)) s
+      have derivative := finite_of_mul_left (a := deriv f j.succ) (b := q Nat.zero) term
+      finite_of_mul_right (a := IntRatio.ofNat j.succ.succ) (b := f j.succ.succ) derivative) k) h
+
+/-- Extend the finite part of a stream by filling undefined coefficients with zero. -/
+private def replace_undefined (f : JetSeq) : JetSeq :=
+  fun k => IntRatio.rec (motive := fun _ => IntRatio) IntRatio.zero IntRatio.fraction (f k)
+
+private theorem finite_replace_undefined (f : JetSeq) : Finite (replace_undefined f) :=
+  fun k => IntRatio.rec (motive := fun x => (IntRatio.rec (motive := fun _ => IntRatio) IntRatio.zero IntRatio.fraction x).Finite)
+    True.intro (fun _ _ => True.intro) (f k)
+
+private theorem replace_undefined_agrees (f : JetSeq) (k : Nat) (h : (f k).Finite) :
+    IntRatio.Equivalent (f k) (replace_undefined f k) :=
+  (IntRatio.rec (motive := fun x => x.Finite →
+    IntRatio.Equivalent x (IntRatio.rec (motive := fun _ => IntRatio) IntRatio.zero IntRatio.fraction x))
+    (fun x => False.elim x) (fun a b _ => IntRatio.equivalent_refl (IntRatio.fraction a b)) (f k)) h
+
+private theorem cayley_prefix_finite (N : Nat) {f g : JetSeq}
+    (f0 : IntRatio.Equivalent (f Nat.zero) IntRatio.one)
+    (g0 : IntRatio.Equivalent (g Nat.zero) IntRatio.zero)
+    (odeF : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv f) oneAddEtaSq k)
+      (smul IntRatio.two.neg g k))
+    (odeG : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv g) oneAddEtaSq k)
+      (smul IntRatio.two f k)) :
+    ∀ k, Nat.le k N → And (f k).Finite (g k).Finite :=
+  Nat.rec (motive := fun k => Nat.le k N → And (f k).Finite (g k).Finite)
+    (fun _ => And.intro (finite_of_equivalent f0 True.intro) (finite_of_equivalent g0 True.intro))
+    (fun k ih hk =>
+      have lower := ih (Nat.le_trans (Nat.le.step (Nat.le.refl k)) hk)
+      And.intro
+        (finite_of_mul_deriv k (finite_of_equivalent (odeF k hk) (IntRatio.finite_mul True.intro lower.right)))
+        (finite_of_mul_deriv k (finite_of_equivalent (odeG k hk) (IntRatio.finite_mul True.intro lower.left))))
+
+/-- The Cayley initial values and the equations below degree `N` determine the coefficients through degree `N`. -/
+theorem cayley_unique_at (N : Nat) {f g : JetSeq}
+    (f0 : IntRatio.Equivalent (f Nat.zero) IntRatio.one)
+    (g0 : IntRatio.Equivalent (g Nat.zero) IntRatio.zero)
+    (odeF : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv f) oneAddEtaSq k)
+      (smul IntRatio.two.neg g k))
+    (odeG : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv g) oneAddEtaSq k)
+      (smul IntRatio.two f k)) :
+    And (EquivalentAt N f CayleyCos) (EquivalentAt N g CayleySin) :=
+  have finite := cayley_prefix_finite N f0 g0 odeF odeG
+  have fok : EquivalentAt N f (replace_undefined f) := fun k hk => replace_undefined_agrees f k (finite k hk).left
+  have gok : EquivalentAt N g (replace_undefined g) := fun k hk => replace_undefined_agrees g k (finite k hk).right
+  have transfer : ∀ {u v : JetSeq} {rate : IntRatio}, EquivalentAt N u (replace_undefined u) →
+      EquivalentAt N v (replace_undefined v) →
+      (∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv u) oneAddEtaSq k) (smul rate v k)) →
+      ∀ k, Nat.lt k N →
+        IntRatio.Equivalent (mul (deriv (replace_undefined u)) oneAddEtaSq k) (smul rate (replace_undefined v) k) :=
+    fun {u _v rate} uok vok ode k hk =>
+      have agree : EquivalentAt k (deriv u) (deriv (replace_undefined u)) := fun j hj =>
+        IntRatio.mul_congr (IntRatio.equivalent_refl _) (uok j.succ
+          (Nat.le_trans (Nat.succ_le_succ hj) hk))
+      have lhs := mul_congr_at k agree ((equivalent_refl oneAddEtaSq).at k) k (Nat.le.refl k)
+      have rhs := IntRatio.mul_congr (IntRatio.equivalent_refl rate)
+        (vok k (Nat.le_trans (Nat.le.step (Nat.le.refl k)) hk))
+      lhs.symm.trans ((ode k hk).trans rhs)
+  have solved := cayley_unique_at_of_finite N
+    (finite_replace_undefined f) (finite_replace_undefined g) ((fok _ (Nat.zero_le N)).symm.trans f0)
+    ((gok _ (Nat.zero_le N)).symm.trans g0) (transfer fok gok odeF) (transfer gok fok odeG)
+  And.intro (fun k hk => (fok k hk).trans (solved.left k hk))
+    (fun k hk => (gok k hk).trans (solved.right k hk))
+
 
 /-- A degree-`N` arctangent solution is fixed by its constant coefficient and its differential equation. -/
 theorem atan_unique_at (N : Nat) {f : JetSeq} (hf : Finite f)

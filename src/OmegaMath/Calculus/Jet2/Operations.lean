@@ -21,6 +21,14 @@ def inv (a : Jet2) : Jet2 :=
   let v := a.j2.mul r
   ⟨r, r.mul u.neg, r.mul ((u.mul u).sub v)⟩
 
+theorem inv_congr {a b : Jet2} (h : Equivalent a b) : Equivalent a.inv b.inv :=
+  have constant := IntRatio.inv_congr h.left
+  have linear := IntRatio.mul_congr h.right.left constant
+  have quadratic := IntRatio.mul_congr h.right.right constant
+  And.intro constant
+    (And.intro (IntRatio.mul_congr constant (IntRatio.neg_congr linear))
+      (IntRatio.mul_congr constant (IntRatio.sub_congr (IntRatio.mul_congr linear linear) quadratic)))
+
 theorem mul_inv {a : Jet2} (h₀ : a.j0.Unit) (h₁ : a.j1.Finite) (h₂ : a.j2.Finite) :
     Equivalent (a.mul a.inv) one :=
   let r := a.j0.inv
@@ -55,16 +63,6 @@ def first (f : Jet2) : IntRatio := f.j1
 
 /-- The second derivative at the expansion point is twice the quadratic coefficient. -/
 def second (f : Jet2) : IntRatio := IntRatio.two.mul f.j2
-
-private theorem finite_mul_jet {a b : Jet2} (ha : a.Finite) (hb : b.Finite) : (a.mul b).Finite :=
-  And.intro (IntRatio.finite_mul ha.left hb.left)
-    (And.intro
-      (IntRatio.finite_add (IntRatio.finite_mul ha.left hb.right.left)
-        (IntRatio.finite_mul ha.right.left hb.left))
-      (IntRatio.finite_add
-        (IntRatio.finite_add (IntRatio.finite_mul ha.left hb.right.right)
-          (IntRatio.finite_mul ha.right.left hb.right.left))
-        (IntRatio.finite_mul ha.right.right hb.left)))
 
 private theorem finite_const_mul (c : IntRatio) (f : Jet2) (hf : f.Finite) :
     Equivalent ((const c).mul f) ⟨c.mul f.j0, c.mul f.j1, c.mul f.j2⟩ :=
@@ -101,7 +99,7 @@ theorem compose_zero_shift {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
   have square := square_zero_shift hf h
   have quadratic : Equivalent ((const g.j2).mul (f.mul f))
       ⟨g.j2.mul IntRatio.zero, g.j2.mul IntRatio.zero, g.j2.mul (f.j1.mul f.j1)⟩ :=
-    (finite_const_mul g.j2 (f.mul f) (finite_mul_jet hf hf)).trans
+    (finite_const_mul g.j2 (f.mul f) (finite_mul hf hf)).trans
     (And.intro
       (IntRatio.mul_congr (IntRatio.equivalent_refl g.j2) square.left)
       (And.intro
@@ -125,7 +123,7 @@ theorem compose_zero_shift {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
   And.intro constant (And.intro degreeOne degreeTwo)
 
 /-- The two chain rules evaluated at the expansion point, where the inner jet has zero shift. -/
-theorem chain_rule {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
+private theorem chain_rule_finite {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
     (h : IntRatio.Equivalent f.j0 IntRatio.zero) :
     And (IntRatio.Equivalent (compose g f).first (g.first.mul f.first))
       (IntRatio.Equivalent (compose g f).second
@@ -140,5 +138,14 @@ theorem chain_rule {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
     ((IntRatio.mul_congr (IntRatio.equivalent_refl IntRatio.two) coeff.right).trans
       (distribute.trans ((IntRatio.add_congr inner outer).trans
         (IntRatio.add_comm (g.first.mul f.second) (g.second.mul (f.first.mul f.first))))))
+
+/-- At zero inner shift the derivative identities depend only on the outer derivative coefficients. -/
+theorem chain_rule {g f : Jet2} (hg₁ : g.j1.Finite) (hg₂ : g.j2.Finite) (hf : f.Finite)
+    (h : IntRatio.Equivalent f.j0 IntRatio.zero) :
+    And (IntRatio.Equivalent (compose g f).first (g.first.mul f.first))
+      (IntRatio.Equivalent (compose g f).second
+        ((g.second.mul (f.first.mul f.first)).add (g.first.mul f.second))) :=
+  chain_rule_finite (g := ⟨IntRatio.zero, g.j1, g.j2⟩)
+    (And.intro True.intro (And.intro hg₁ hg₂)) hf h
 
 end Omega.Jet2

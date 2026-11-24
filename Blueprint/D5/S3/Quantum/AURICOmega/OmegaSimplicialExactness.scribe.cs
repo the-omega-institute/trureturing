@@ -18,7 +18,7 @@ internal sealed class OmegaSimplicialExactnessDocument : IScribeDocumentDefiniti
             All(Equal(Call("d1", edge, x, y, z), Call("F", x, y, z)), Vertices("x", "y", "z")));
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Finite-chain integration and simplicial coboundaries for Chapter 32, §32.7.3.2, in the zero-axiom architecture of §32.8. "
+            "Finite-chain integration and simplicial coboundaries in Chapter 32, §32.7.3.2, and the vertex-cone identities in §32.7.5.4. "
                 + "The vertex domain V is an arbitrary sort and Cj consists of A-valued functions on all ordered tuples of j + 1 vertices, with repetitions allowed. "
                 + "The operators d0, d1 and d2 take the alternating sum of omitted-vertex faces. The cone operators H1, H2 and H3 prepend a chosen vertex. "
                 + "Sums, differences and zero are those of the coefficient operations G under their additive abelian group laws.",

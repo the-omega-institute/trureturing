@@ -112,7 +112,7 @@ theorem kappa_secant_discrepancy (x h : IntRatio) (hx : x.Finite) (hu : h.Unit) 
       ((IntRatio.sub_congr (IntRatio.equivalent_refl (h.mul (c.mul d))) (IntRatio.mul_comm a h)).trans
         ((IntRatio.mul_sub h (c.mul d) a).symm.trans
           (IntRatio.mul_congr (IntRatio.equivalent_refl h) (step_numerator x h hx)))))
-  have linear := (kappa_jet x hx).right.left
+  have linear := (kappa_jet x).right.left
   IntRatio.mul_cancel_left uDen
     ((IntRatio.mul_sub den ((b.inv.sub a.inv).mul h.inv) (kappaJetAt x).first).trans
       ((IntRatio.sub_congr scaledSlope

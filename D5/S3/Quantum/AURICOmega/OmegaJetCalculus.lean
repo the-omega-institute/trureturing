@@ -25,21 +25,21 @@ public theorem mul_inv {a : Jet2} (h₀ : a.j0.Unit) (h₁ : a.j1.Finite) (h₂ 
   Omega.Jet2.mul_inv h₀ h₁ h₂
 
 /-- The first and second chain rules hold at the zero shift of the inner jet. -/
-public theorem chain_rule {g f : Jet2} (hg : g.Finite) (hf : f.Finite)
+public theorem chain_rule {g f : Jet2} (hg₁ : g.j1.Finite) (hg₂ : g.j2.Finite) (hf : f.Finite)
     (h : IntRatio.Equivalent f.j0 IntRatio.zero) :
     And (IntRatio.Equivalent (Jet2.compose g f).first (g.first.mul f.first))
       (IntRatio.Equivalent (Jet2.compose g f).second
         ((g.second.mul (f.first.mul f.first)).add (g.first.mul f.second))) :=
-  Omega.Jet2.chain_rule hg hf h
+  Omega.Jet2.chain_rule hg₁ hg₂ hf h
 
 /-- The fidelity jet consists of three exact rational coefficients. -/
-public theorem kappa_jet (x : IntRatio) (hx : x.Finite) :
+public theorem kappa_jet (x : IntRatio) :
     Jet2.Equivalent (Jet2.kappaJetAt x)
       ⟨Jet2.kappa x,
         (IntRatio.two.mul x).neg.mul (((Jet2.fidelityDen x).mul (Jet2.fidelityDen x)).inv),
         ((IntRatio.three.mul (x.mul x)).sub IntRatio.one).mul
           ((((Jet2.fidelityDen x).mul (Jet2.fidelityDen x)).mul (Jet2.fidelityDen x)).inv)⟩ :=
-  Omega.Jet2.kappa_jet x hx
+  Omega.Jet2.kappa_jet x
 
 /-- The fidelity jet at one has coefficients one half, minus one half and one quarter. -/
 public theorem kappa_jet_one :
@@ -104,7 +104,7 @@ public theorem cayley_sin_ode :
   Omega.JetSeq.cayley_sin_ode
 
 /-- The Cayley initial point and equations below degree N force the coefficients through degree N. -/
-public theorem cayley_unique_at (N : Nat) {f g : JetSeq} (hf : Finite f) (hg : Finite g)
+public theorem cayley_unique_at (N : Nat) {f g : JetSeq}
     (f0 : IntRatio.Equivalent (f Nat.zero) IntRatio.one)
     (g0 : IntRatio.Equivalent (g Nat.zero) IntRatio.zero)
     (odeF : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv f) oneAddEtaSq k)
@@ -112,6 +112,6 @@ public theorem cayley_unique_at (N : Nat) {f g : JetSeq} (hf : Finite f) (hg : F
     (odeG : ∀ k, Nat.lt k N → IntRatio.Equivalent (mul (deriv g) oneAddEtaSq k)
       (smul IntRatio.two f k)) :
     And (EquivalentAt N f CayleyCos) (EquivalentAt N g CayleySin) :=
-  Omega.JetSeq.cayley_unique_at N hf hg f0 g0 odeF odeG
+  Omega.JetSeq.cayley_unique_at N f0 g0 odeF odeG
 
 end D5.S3.Quantum.AURICOmega.OmegaJetCalculus

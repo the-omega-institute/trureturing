@@ -42,6 +42,11 @@ theorem fidelityDenJet_eval (x : IntRatio) (hx : x.Finite) :
 def kappaJetAt (x : IntRatio) : Jet2 := (fidelityDenJet x).inv
 
 
+/-- The fidelity jet evaluates the reciprocal of the denominator at x + η. -/
+theorem kappaJetAt_eval (x : IntRatio) (hx : x.Finite) :
+    Equivalent (one.add (((const x).add var).mul ((const x).add var))).inv (kappaJetAt x) :=
+  inv_congr (fidelityDenJet_eval x hx)
+
 theorem sub_add (a b c : IntRatio) :
     IntRatio.Equivalent (a.sub (b.add c)) ((a.sub b).sub c) :=
   (IntRatio.add_congr (IntRatio.equivalent_refl a) (IntRatio.neg_add b c)).trans
@@ -62,7 +67,7 @@ theorem b_sq_sub_den (x : IntRatio) (hx : x.Finite) :
         (IntRatio.equivalent_refl IntRatio.one)))
 
 /-- The constant, linear and quadratic coefficients are exact rational quotients. -/
-theorem kappa_jet (x : IntRatio) (hx : x.Finite) :
+private theorem kappa_jet_finite (x : IntRatio) (hx : x.Finite) :
     Equivalent (kappaJetAt x)
       ⟨kappa x,
         (IntRatio.two.mul x).neg.mul (((fidelityDen x).mul (fidelityDen x)).inv),
@@ -99,6 +104,21 @@ theorem kappa_jet (x : IntRatio) (hx : x.Finite) :
       ((IntRatio.sub_mul (b.mul b) a rCube).symm.trans
         (IntRatio.mul_congr (b_sq_sub_den x hx) invCube.symm)))
   And.intro (IntRatio.equivalent_refl r) (And.intro linear quadratic)
+
+/-- The constant, linear and quadratic coefficients are exact rational quotients. -/
+theorem kappa_jet (x : IntRatio) :
+    Equivalent (kappaJetAt x)
+      ⟨kappa x,
+        (IntRatio.two.mul x).neg.mul (((fidelityDen x).mul (fidelityDen x)).inv),
+        ((IntRatio.three.mul (x.mul x)).sub IntRatio.one).mul
+          ((((fidelityDen x).mul (fidelityDen x)).mul (fidelityDen x)).inv)⟩ :=
+  IntRatio.rec (motive := fun x => Equivalent (kappaJetAt x)
+          ⟨kappa x,
+            (IntRatio.two.mul x).neg.mul (((fidelityDen x).mul (fidelityDen x)).inv),
+            ((IntRatio.three.mul (x.mul x)).sub IntRatio.one).mul
+              ((((fidelityDen x).mul (fidelityDen x)).mul (fidelityDen x)).inv)⟩)
+    (And.intro True.intro (And.intro True.intro True.intro))
+    (fun a b => kappa_jet_finite (IntRatio.fraction a b) True.intro) x
 
 /-- At x = 1, the coefficient triple is (1/2, −1/2, 1/4). -/
 theorem kappa_jet_one :
