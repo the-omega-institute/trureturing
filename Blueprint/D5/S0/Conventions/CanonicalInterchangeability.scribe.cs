@@ -41,9 +41,9 @@ internal sealed class CanonicalInterchangeabilityDocument : IScribeDocumentDefin
                     Open, F.Id("d"), Underscore, Grp(D(1)), Open, F.Id("w"), Close, Close, Close,
                     Close, Close, Close, Sp, Land, Sp,
                     Operatorname, Grp(F.Id("Bijective")), Open,
-                    Operatorname, Grp(F.Id("wEncoding")), Caret, Grp(Minus, D(1)), Close))),
+                    Operatorname, Grp(F.Id("decode")), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The first conjunct quantifies over every pair of faithful digit specifications whose word carriers decode equivalently to the natural numbers: composing one decoding with the inverse of the other is a bijection of digit words, that composite commutes with decoding, and any property factoring only through the decoded natural number holds of a word exactly when it holds of its transported image. The second conjunct exhibits the W-digit specification as a concrete inhabitant of the quantified domain, so the statement is not vacuous."))),
+                    "The first conjunct quantifies over every pair of faithful digit specifications whose word carriers decode equivalently to the natural numbers: composing one decoding with the inverse of the other is a bijection of digit words, that composite commutes with decoding, and any property factoring only through the decoded natural number holds of a word exactly when it holds of its transported image. The second conjunct proves that decoding is bijective on canonical W words, with canonicality expressed as a predicate on the occupied positions. The strict inverse laws construct each transported word."))),
                 DescribeRole.Theorem))));
 }
