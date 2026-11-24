@@ -23,6 +23,7 @@ module
 
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.Tactic.FieldSimp
 
 /-! Finite real Kullback–Leibler divergence and its common-channel chain identity. -/
