@@ -137,7 +137,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hm : ∑ i, w i = 1 := by simp [w, Pi.single_apply]
   have hM (r : ℕ) : cosineMoment r w = 1 := by
     unfold cosineMoment
-    simp [w, Pi.single_apply, ite_mul]
+    simp [w, Pi.single_apply, ite_mul, D5.S3.Fourier.Concentration.AggregateCosineBalance.mode]
   have hcos : Real.cos (2 * mesh 8) = 0 := by
     rw [show 2 * mesh 8 = Real.pi / 2 by unfold mesh; norm_num; ring, Real.cos_pi_div_two]
   have hh := h 8 (by decide) w 0 hw hm
