@@ -226,12 +226,12 @@ theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
     letI : SMul (Fin d) R := ⟨fun j x => c j • x⟩
     letI : SMulCommClass (Fin d) R R :=
       SMulCommClass.of_mul_smul_one fun j x => (rightMul j x).symm
-    letI : DistribSMul (Fin d) R where
-      toSMul := ‹SMul (Fin d) R›
-      smul_zero j := (rightMul j 0).trans (zero_mul _)
-      smul_add j x y := by
-        change c j • (x + y) = c j • x + c j • y
-        rw [rightMul j (x + y), rightMul j x, rightMul j y, add_mul]
+    letI : DistribSMul (Fin d) R :=
+      { toSMul := ‹SMul (Fin d) R›
+        smul_zero := fun j => (rightMul j 0).trans (zero_mul _)
+        smul_add := fun j x y => by
+          change c j • (x + y) = c j • x + c j • y
+          rw [rightMul j (x + y), rightMul j x, rightMul j y, add_mul] }
     change _ = ∑ j : Fin d, j • (M ^ (b + j.val)).mulVec u at h
     change _ = ∑ j : Fin d, j • dotProduct v ((M ^ (n + b + j.val)).mulVec u)
     have shifted := congrArg ((M ^ n).mulVec) h
