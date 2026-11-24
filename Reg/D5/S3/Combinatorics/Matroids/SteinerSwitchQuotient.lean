@@ -45,6 +45,7 @@ def law (R : Realization sig) : Prop :=
       (∀ x y, proj x = proj y ↔ ∃ z ∈ Z, z * x = y) ∧
       Semiconj proj (R.readout () r q * ·) P ∧ Semiconj proj (u * ·) Q ∧
       (∀ x y, H.Adj x y ↔ P x = y ∨ Q x = y) ∧
+      (∀ b, P b ≠ Q b) ∧
       ∀ x : Option (Fin (r + 1)), ∃ a ∈ Z,
         let k := minimalPeriod (P ∘ Q) (proj x)
         let d : ℕ := if a = none then 1 else 2

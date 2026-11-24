@@ -10,15 +10,16 @@
 point_deleted_component_lifts
   proof_shape: content
   admission_basis: escape-witness
-  escape_witness: the two disjoint forward-orbit classes identify the size of
-    each alternating component. Freeness and equivariant returns show that the
-    quotient period scales by the order of the return element, and the equal
-    fibre counts give the number of components above a fixed quotient component.
+  escape_witness: freeness and equivariant returns show that the quotient
+    period scales by the order of the return element. Path lifting and equal
+    fibre counts give the number of components above a quotient component.
   Direct frozen dependencies: SteinerSwitchCentre.steinerMul and product_comm,
-    SteinerAlternatingSwitches.pivotGraph, and translate_involutive.
+    SteinerAlternatingSwitches.pivotGraph, translate_involutive, and
+    AlternatingComponentParity.connected_ncard_eq_two_mul.
 -/
 
 import D5.S3.Combinatorics.Matroids.SteinerSwitchCentre
+import D5.S3.Combinatorics.PerfectMatchings.AlternatingComponentParity
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Dynamics.PeriodicPts.Lemmas
 
@@ -28,6 +29,7 @@ import Mathlib.Dynamics.PeriodicPts.Lemmas
 
 namespace D5.S3.Combinatorics.Matroids.SteinerSwitchQuotient
 
+open D5.S3.Combinatorics.PerfectMatchings
 open Function Set SimpleGraph
 
 private theorem card_of_equal_fibres {U V : Type*} [Finite U] [Finite V]
@@ -209,106 +211,48 @@ private theorem lift_period {A X Y : Type*} [CommGroup A] [MulAction A X]
 private theorem component_period {X : Type*} [Finite X] (G : SimpleGraph X) (p q : X → X)
     (hp : Involutive p) (hq : Involutive q)
     (noP : ∀ x, p x ≠ x) (noQ : ∀ x, q x ≠ x)
-    (_distinct : ∀ x, p x ≠ q x)
     (edges : ∀ u v, G.Adj u v ↔ p u = v ∨ q u = v) (x : X) :
-    let f := p ∘ q
-    let evenVertices := Set.range fun n : ℕ => f^[n] x
-    (G.connectedComponentMk x).supp = evenVertices ∪ p '' evenVertices ∧
-      Disjoint evenVertices (p '' evenVertices) ∧
-      (G.connectedComponentMk x).supp.ncard = 2 * minimalPeriod f x := by
+    (G.connectedComponentMk x).supp.ncard = 2 * minimalPeriod (p ∘ q) x := by
+  let s : Equiv.Perm X := ⟨p, p, hp, hp⟩
+  let t : Equiv.Perm X := ⟨q, q, hq, hq⟩
   let f := p ∘ q
-  let E := Set.range fun n : ℕ => f^[n] x
   let k := minimalPeriod f x
-  have inj : Injective f := hp.injective.comp hq.injective
-  have hper := inj.mem_periodicPts x
-  have kpos : 0 < k := minimalPeriod_pos_of_mem_periodicPts hper
-  have period : f^[k] x = x := isPeriodicPt_minimalPeriod f x
-  have reflectionStep (y : X) : f (p (f y)) = p y := by
-    change p (q (p (p (q y)))) = p y
-    rw [hp, hq]
-  have reflection (n : ℕ) (y : X) : f^[n] (p (f^[n] y)) = p y := by
-    induction n with
-    | zero => rfl
-    | succ n ih =>
-        rw [iterate_succ_apply, iterate_succ_apply' f n y, reflectionStep, ih]
-  have disjointOrbit (n : ℕ) : p x ≠ f^[n] x := by
-    intro eq
-    let i := n / 2
-    have parity : n = i + i ∨ n = i + i + 1 := by dsimp [i]; omega
-    rcases parity with evenN | oddN
-    · apply noP (f^[i] x)
-      apply (inj.iterate i)
-      rw [reflection, eq, evenN, iterate_add_apply]
-    · apply noQ (f^[i] x)
-      have qp (y : X) : q y = p (f y) := (hp (q y)).symm
-      rw [qp, ← iterate_succ_apply' f i x]
-      apply (inj.iterate (i + 1))
-      rw [reflection, eq, oddN, show i + i + 1 = (i + 1) + i by omega, iterate_add_apply]
-  have disjoint : Disjoint E (p '' E) := by
-    rw [Set.disjoint_left]
-    rintro _ ⟨i, rfl⟩ ⟨_, ⟨j, rfl⟩, eq⟩
-    change p (f^[j] x) = f^[i] x at eq
-    apply disjointOrbit (j + i)
-    rw [iterate_add_apply, ← eq, reflection]
-  have prev (n : ℕ) : q (p (f^[n] x)) = f^[k - 1 + n] x := by
-    apply inj
-    have undo (y : X) : f (q (p y)) = y := by
-      change p (q (q (p y))) = y
-      rw [hq, hp]
-    rw [undo, ← iterate_succ_apply' f (k - 1 + n) x, Nat.succ_eq_add_one,
-      show k - 1 + n + 1 = n + k by omega, iterate_add_apply, period]
-  have closed {u v : X} (hu : u ∈ E ∪ p '' E) (uv : G.Adj u v) : v ∈ E ∪ p '' E := by
-    rcases hu with ⟨n, rfl⟩ | ⟨_, ⟨n, rfl⟩, rfl⟩
-    · rcases (edges _ _).mp uv with rfl | rfl
-      · exact Or.inr ⟨_, ⟨n, rfl⟩, rfl⟩
-      · refine Or.inr ⟨_, ⟨n + 1, rfl⟩, ?_⟩
-        change p (f^[n + 1] x) = q (f^[n] x)
-        rw [iterate_succ_apply' f n x]
-        exact hp _
-    · rcases (edges _ _).mp uv with rfl | rfl
-      · exact Or.inl ⟨n, (hp _).symm⟩
-      · exact Or.inl ⟨k - 1 + n, (prev n).symm⟩
-  have stepP (u : X) : G.Reachable u (p u) := ((edges _ _).mpr (Or.inl rfl)).reachable
-  have stepQ (u : X) : G.Reachable u (q u) := ((edges _ _).mpr (Or.inr rfl)).reachable
-  have reaches (n : ℕ) : G.Reachable x (f^[n] x) := by
-    induction n with
-    | zero => exact Reachable.rfl
-    | succ n ih =>
-        rw [iterate_succ_apply']
-        exact ih.trans ((stepQ _).trans (stepP _))
-  have suppEq : (G.connectedComponentMk x).supp = E ∪ p '' E := by
+  have hinj : Injective f := hp.injective.comp hq.injective
+  have kpos : 0 < k := minimalPeriod_pos_of_mem_periodicPts (hinj.mem_periodicPts x)
+  have sameEdges : G.Adj = fun u v => p u = v ∨ q u = v := by
+    funext u v
+    exact propext (edges u v)
+  have sameComponent :
+      (G.connectedComponentMk x).supp = AlternatingComponentParity.Component s t x := by
     ext y
-    rw [ConnectedComponent.mem_supp_iff (G.connectedComponentMk x), ConnectedComponent.eq]
-    constructor
-    · intro h
-      have reachable : G.Reachable x y := h.symm
-      clear h
-      rw [reachable_iff_reflTransGen] at reachable
-      induction reachable with
-      | refl => exact Or.inl ⟨0, rfl⟩
-      | tail _ uv ih => exact closed ih uv
-    · rintro (⟨n, rfl⟩ | ⟨_, ⟨n, rfl⟩, rfl⟩)
-      · exact (reaches n).symm
-      · exact ((reaches n).trans (stepP _)).symm
-  have rangeEq : E = Set.range (fun n : Fin k => f^[n.val] x) := by
+    rw [ConnectedComponent.mem_supp_iff (G.connectedComponentMk x), ConnectedComponent.eq,
+      reachable_comm, reachable_iff_reflTransGen, sameEdges]
+    rfl
+  have permProduct : (⇑(s * t) : X → X) = f := by
+    funext y
+    exact Equiv.Perm.mul_apply s t y
+  have sameOrbit : InvolutionOrbitSplit.RotationOrbit (s * t) x =
+      Set.range (fun n : Fin k => f^[n.val] x) := by
     ext y
     constructor
-    · rintro ⟨n, rfl⟩
-      exact ⟨⟨n % k, Nat.mod_lt n kpos⟩, iterate_mod_minimalPeriod_eq⟩
-    · rintro ⟨n, rfl⟩
-      exact ⟨n.val, rfl⟩
-  have Ecard : E.ncard = k := by
-    rw [rangeEq, Set.ncard_range_of_injective]
+    · intro hy
+      obtain ⟨n, hn⟩ := Equiv.Perm.SameCycle.exists_nat_pow_eq hy
+      refine ⟨⟨n % k, Nat.mod_lt n kpos⟩, ?_⟩
+      change f^[n % minimalPeriod f x] x = y
+      rw [iterate_mod_minimalPeriod_eq]
+      simpa only [Equiv.Perm.coe_pow, permProduct] using hn
+    · rintro ⟨n, hn⟩
+      refine ⟨(n.val : ℤ), ?_⟩
+      rw [zpow_natCast]
+      simpa only [Equiv.Perm.coe_pow, permProduct] using hn
+  have hcard : (InvolutionOrbitSplit.RotationOrbit (s * t) x).ncard = k := by
+    rw [sameOrbit, Set.ncard_range_of_injective]
     · simp
-    · intro (i : Fin k) j h
+    · intro i j h
       apply Fin.ext
       exact (iterate_eq_iterate_iff_of_lt_minimalPeriod i.isLt j.isLt).mp h
-  refine ⟨suppEq, disjoint, ?_⟩
-  change (G.connectedComponentMk x).supp.ncard = 2 * k
-  calc
-    _ = E.ncard + E.ncard := by
-      rw [suppEq, Set.ncard_union_eq disjoint, Set.ncard_image_of_injective _ hp.injective]
-    _ = _ := by rw [Ecard]; omega
+  rw [sameComponent, AlternatingComponentParity.connected_ncard_eq_two_mul s t hp hq noP noQ x,
+    hcard]
 
 @[instance_reducible]
 private def centreGroup {L : Type*} [Mul L] (e : L)
@@ -361,6 +305,7 @@ private theorem central_quotient_component_size {L : Type*} [Finite L] [Mul L] (
     ∃ (P Q : C → C) (Gbar : SimpleGraph C),
       Semiconj proj (p * ·) P ∧ Semiconj proj (q * ·) Q ∧
       (∀ u v, Gbar.Adj u v ↔ P u = v ∨ Q u = v) ∧
+      (∀ b, P b ≠ Q b) ∧
       ∀ x : L, ∃ a : Set.center L,
         ((fun y => p * (q * y))^[minimalPeriod (P ∘ Q) (proj x)]) x = a • x ∧
         (G.connectedComponentMk x).supp.ncard =
@@ -437,9 +382,6 @@ private theorem central_quotient_component_size {L : Type*} [Finite L] [Mul L] (
         change z.val * (q * x) = p * x at hz
         rw [(Set.mem_center_iff.mp z.prop).left_assoc] at hz
         exact different ⟨z.val, z.prop, cancelRight x hz⟩
-  have upstairsDistinct (x : L) : p * x ≠ q * x := by
-    intro h
-    exact different ⟨e, centralUnit, (unit q).trans (cancelRight x h).symm⟩
   let H := overlay (lift p) (lift q) (liftInv p) (liftInv q)
     (downstairsFree p pNoncentral) (downstairsFree q qNoncentral)
   have semi : Semiconj proj (fun x => p * (q * x)) (lift p ∘ lift q) := by
@@ -447,7 +389,7 @@ private theorem central_quotient_component_size {L : Type*} [Finite L] [Mul L] (
     change proj (p * (q * x)) = lift p (lift q (proj x))
     rw [liftAt, liftAt]
   refine ⟨lift p, lift q, H, fun x => (liftAt p x).symm, fun x => (liftAt q x).symm,
-    fun _ _ => Iff.rfl, fun x => ?_⟩
+    fun _ _ => Iff.rfl, downstairsDistinct, fun x => ?_⟩
   have fEq (z : Set.center L) (y : L) :
       p * (q * (z • y)) = z • (p * (q * y)) := by rw [commutes q, commutes p]
   have gInj : Injective (lift p ∘ lift q) := (liftInv p).injective.comp (liftInv q).injective
@@ -456,11 +398,11 @@ private theorem central_quotient_component_size {L : Type*} [Finite L] [Mul L] (
   obtain ⟨a, ⟨ret, _, _, period, order⟩, _⟩ :=
     lift_period expTwo free proj (fun x => p * (q * x))
       (lift p ∘ lift q) fibre fEq semi x gPos
-  have sizeUp := (component_period G (p * ·) (q * ·)
-    (invol p) (invol q) pFree qFree upstairsDistinct edges x).2.2
-  have sizeDown := (component_period H (lift p) (lift q)
+  have sizeUp := component_period G (p * ·) (q * ·)
+    (invol p) (invol q) pFree qFree edges x
+  have sizeDown := component_period H (lift p) (lift q)
     (liftInv p) (liftInv q) (downstairsFree p pNoncentral) (downstairsFree q qNoncentral)
-    downstairsDistinct (fun _ _ => Iff.rfl) (proj x)).2.2
+    (fun _ _ => Iff.rfl) (proj x)
   have componentSize :
       (G.connectedComponentMk x).supp.ncard =
       (H.connectedComponentMk (proj x)).supp.ncard * orderOf a := by
@@ -494,6 +436,7 @@ theorem point_deleted_component_lifts {r : ℕ} {S : Set (Set (Fin (r + 1)))}
       (∀ x y, proj x = proj y ↔ ∃ z ∈ Z, z * x = y) ∧
       Semiconj proj ((some q : Option (Fin (r + 1))) * ·) P ∧ Semiconj proj (u * ·) Q ∧
       (∀ x y, H.Adj x y ↔ P x = y ∨ Q x = y) ∧
+      (∀ b, P b ≠ Q b) ∧
       ∀ x : Option (Fin (r + 1)), ∃ a ∈ Z,
         let k := minimalPeriod (P ∘ Q) (proj x)
         let d : ℕ := if a = none then 1 else 2
@@ -521,10 +464,10 @@ theorem point_deleted_component_lifts {r : ℕ} {S : Set (Set (Fin (r + 1)))}
   let _ := centreAction none unit comm invol
   let B := Quotient (MulAction.orbitRel Z (Option (Fin (r + 1))))
   let proj : Option (Fin (r + 1)) → B := Quotient.mk _
-  obtain ⟨P, Q, H, semiP, semiQ, edges, lift⟩ :=
+  obtain ⟨P, Q, H, semiP, semiQ, edges, distinct, lift⟩ :=
     central_quotient_component_size none p u unit comm invol pNoncentral uNoncentral
       different (pivotGraph valid complete q v) (fun _ _ => Iff.rfl)
-  refine ⟨B, proj, P, Q, H, Quotient.mk_surjective, ?_, semiP, semiQ, edges, ?_⟩
+  refine ⟨B, proj, P, Q, H, Quotient.mk_surjective, ?_, semiP, semiQ, edges, distinct, ?_⟩
   · intro x y
     constructor
     · intro h
