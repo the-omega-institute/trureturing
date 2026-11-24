@@ -7,6 +7,10 @@
    digest: A quartic lower bound for the undifferentiated short-gap joint moment. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMoments
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.HalfGapSlope
 import D5.S3.Quantum.Recovery.BKMSpectralVariance
 import D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth
 import Batteries.Tactic.OpenPrivate
@@ -27,6 +31,8 @@ open private shortMidpointMoment_eq_gridAverage from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
 open private gridAverage gridPoint from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTails
+open private compactMixedT_eq_cutoff from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
 
 /-- The lower fourth-order approximation at center `s` and gap `d`. -/
 def shortJointMomentFourth (p : ℕ) (s d : ℝ) : ℝ :=
@@ -257,6 +263,148 @@ theorem shortJointFourthQuadrature_le {p : ℕ} (hp : 11 ≤ p) {s d : ℝ}
     Finset.sum_congr rfl (fun i _ ↦ congrArg f (mul_comm h (i : ℝ)))
   rw [hnodes]
   exact (le_add_of_nonneg_right hrem).trans_eq heq.symm
+
+/-- The scalar comparison at the signed quadrature lower bound suffices for the
+mixed kernel sign throughout the short-gap strip. -/
+theorem logKernel_mixed_neg_of_shortJointFourthQuadrature {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 1 / 2 ≤ u) (huv : u < v) (hd : v - u ≤ 1)
+    (hcompare : 0 < compactRegularizedQ p u v - compactMixedT p u v
+      (shortJointFourthQuadrature (3 / (p : ℝ)) ((u + v) / 2) (v - u))) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  have hp₀ : 0 < p := by omega
+  have hu₀ : 0 < u := by linarith
+  have hv : 1 / 2 ≤ v := hu.trans huv.le
+  apply logKernel_mixed_neg_of_joint_lower hp₀ hu₀ huv
+    (compactMixedT_strictAnti_of_slope hp₀ hu₀
+      (reflectedHalfLogSlope_lt_two_add_spacing hp hv)).antitone
+    ((shortJointFourthQuadrature_le hp (by linarith) (sub_nonneg.mpr huv.le) hd).trans
+      (shortJointMomentFourth_le p u v))
+  rwa [compactMixedQ_eq_regularized hp₀ hu₀ huv]
+
+/-- Reflecting the joint density puts both closed quadratures on the same interval. -/
+theorem shortJointFourthQuadrature_reflect {h : ℝ} (hh : 0 ≤ h) (s d : ℝ) :
+    compactMarginalMeshDenominator h / 2 * shortJointFourthQuadrature h s d =
+      compactClosedQuadrature h (fun x ↦ (2 + h - x) *
+        shortJointFourthPolynomial h d (2 - x) * Real.exp (-s * x)) := by
+  let f (r : ℝ) := (r + h) * shortJointFourthPolynomial h d r * Real.exp (s * r)
+  let C := Real.exp (-2 * s)
+  let g (x : ℝ) := (2 + h - x) * shortJointFourthPolynomial h d (2 - x) * Real.exp (-s * x)
+  have hg : g = fun x ↦ C * f (2 - x) := by
+    funext x
+    have he : Real.exp (-s * x) = C * Real.exp (s * (2 - x)) := by
+      unfold C
+      rw [← Real.exp_add]
+      congr 1
+      ring
+    dsimp only [g, f]
+    rw [he]
+    ring
+  have hint : (∫ x in (-1 : ℝ)..2, g x) = C * (∫ r in (0 : ℝ)..3, f r) := by
+    rw [hg, intervalIntegral.integral_const_mul, intervalIntegral.integral_comp_sub_left]
+    norm_num
+  have hderiv (n : ℕ) (x : ℝ) : iteratedDeriv n g x =
+      C * ((-1 : ℝ) ^ n * iteratedDeriv n f (2 - x)) := by
+    rw [hg, iteratedDeriv_const_mul_field, iteratedDeriv_comp_const_sub]
+    rfl
+  have hleft : g (-1) = C * f 3 := by rw [hg]; norm_num
+  have hright : g 2 = C * f 0 := by rw [hg]; norm_num
+  have hden : compactMarginalMeshDenominator h ≠ 0 := by
+    unfold compactMarginalMeshDenominator
+    positivity
+  change _ = compactClosedQuadrature h g
+  unfold shortJointFourthQuadrature compactClosedQuadrature
+  change compactMarginalMeshDenominator h / 2 *
+      (2 * C / compactMarginalMeshDenominator h * ((∫ r in (0 : ℝ)..3, f r) +
+        h / 2 * (f 0 + f 3) + h ^ 2 / 12 * (deriv f 3 - deriv f 0) -
+        h ^ 4 / 720 * (iteratedDeriv 3 f 3 - iteratedDeriv 3 f 0))) = _
+  rw [hint, hleft, hright, hderiv 1 2, hderiv 1 (-1), hderiv 3 2, hderiv 3 (-1)]
+  norm_num [iteratedDeriv_one]
+  field_simp [hden]
+  ring
+
+/-- The closed-mesh normalization and the negative score used by the exact short-gap
+certificate. The marginal inputs are the regularized moment and its first two derivatives. -/
+def shortQuadratureNegativeScore (p : ℕ) (u v : ℝ) : ℝ :=
+  let h : ℝ := 3 / (p : ℝ)
+  let d := v - u
+  let J := (3 + h) * (3 + 2 * h) / 2
+  let q (t : ℝ) := (J * compactKappa p) * compactZ p t
+  let slope (t : ℝ) := deriv q t / q t
+  let a := 1 / u - slope (-u) / 2
+  let c := 1 / v - slope (-v) / 2
+  let δ := (slope v + slope (-v)) / 2
+  let r := slope d
+  let k := 1 / upperTailGap h u
+  let γ := 1 + k + a
+  let joint := J * shortJointFourthQuadrature h ((u + v) / 2) d
+  let affine := -γ * ((2 + h - c) * joint +
+    k * Real.exp (-(1 + h) * u) * (J + v ^ 2 * q v)) +
+    k * Real.exp u * ((γ - c) * (J + d ^ 2 * q d) + d * (2 * q d + d * deriv q d)) -
+    J * a * c
+  let multiplier := a + δ + r + d * (iteratedDeriv 2 q d / q d / 2 - r ^ 2 / 4 +
+    (a + δ) * r / 2 + a * δ)
+  show ℝ from -(affine + v * Real.sqrt (q v * q d) * multiplier)
+
+set_option maxRecDepth 2048 in
+/-- The arithmetic score is the exact scaled gap between the radical and the affine term. -/
+theorem shortQuadratureNegativeScore_eq {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (hv : 0 < v) :
+    let h : ℝ := 3 / (p : ℝ)
+    let J := (3 + h) * (3 + 2 * h) / 2
+    shortQuadratureNegativeScore p u v = J * (compactRegularizedQ p u v -
+      compactMixedT p u v (shortJointFourthQuadrature h ((u + v) / 2) (v - u))) := by
+  let h : ℝ := 3 / (p : ℝ)
+  let d := v - u
+  let J : ℝ := (3 + h) * (3 + 2 * h) / 2
+  let q (t : ℝ) := (J * compactKappa p) * compactZ p t
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
+  have hh : 0 ≤ h := div_nonneg (by norm_num) hpR.le
+  have hJ : 0 < J := by dsimp only [J]; positivity
+  have hκ : 0 < compactKappa p := by unfold compactKappa; positivity
+  have hscale : 0 < J * compactKappa p := mul_pos hJ hκ
+  have hderiv (t : ℝ) : deriv q t = (J * compactKappa p) *
+      SmallCorner.integralMarginalDerivative p (compactKappa p) 1 t := by
+    change deriv (fun x ↦ (J * compactKappa p) * compactZ p x) t = _
+    rw [deriv_const_mul_field, ← iteratedDeriv_one, iteratedDeriv_compactZ_eq_integral hp]
+  have hslope (t : ℝ) : deriv q t / q t = compactZSlope p t := by
+    rw [hderiv, compactZSlope_eq hp t]
+    dsimp only [q]
+    rw [mul_div_mul_left _ _ hscale.ne']
+  have hsecond (t : ℝ) : iteratedDeriv 2 q t / q t =
+      SmallCorner.integralMarginalDerivative p (compactKappa p) 2 t / compactZ p t := by
+    change iteratedDeriv 2 (fun x ↦ (J * compactKappa p) * compactZ p x) t / q t = _
+    rw [iteratedDeriv_const_mul_field, iteratedDeriv_compactZ_eq_integral hp]
+    dsimp only [q]
+    rw [mul_div_mul_left _ _ hscale.ne']
+  have hderivD : deriv q d = q d * compactZSlope p d := by
+    have hq : 0 < q d := mul_pos hscale (compactZ_pos hp d)
+    exact (div_eq_iff hq.ne').mp (hslope d) |>.trans (mul_comm _ _)
+  have hroot : Real.sqrt (q v * q d) =
+      (J * compactKappa p) * Real.sqrt (compactZ p v * compactZ p d) := by
+    rw [show q v * q d = (J * compactKappa p) ^ 2 * (compactZ p v * compactZ p d) by
+      dsimp only [q]
+      ring, Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq hscale.le]
+  change shortQuadratureNegativeScore p u v = J * (compactRegularizedQ p u v -
+    compactMixedT p u v (shortJointFourthQuadrature h ((u + v) / 2) d))
+  dsimp only [q, J, h, d] at hslope hsecond hderivD hroot
+  dsimp only [shortQuadratureNegativeScore, J, h, d]
+  simp only [hslope, hsecond, hroot]
+  rw [hderivD, compactMixedT_eq_cutoff hp hu hv]
+  simp only [compactRegularizedQ, deriv_compactZSlope hp]
+  ring
+
+theorem logKernel_mixed_neg_of_shortQuadratureNegativeScore {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 1 / 2 ≤ u) (huv : u < v) (hd : v - u ≤ 1)
+    (hscore : 0 < shortQuadratureNegativeScore p u v) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  have hp₀ : 0 < p := by omega
+  have hu₀ : 0 < u := by linarith
+  rw [shortQuadratureNegativeScore_eq hp₀ hu₀ (hu₀.trans huv)] at hscore
+  apply logKernel_mixed_neg_of_shortJointFourthQuadrature hp hu huv hd
+  have hh : 0 ≤ (3 : ℝ) / p := by
+    have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
+    positivity
+  exact (mul_pos_iff_of_pos_left (by positivity)).mp hscore
 
 end
 
