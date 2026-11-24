@@ -30,20 +30,18 @@ def generators (a h d k : ℕ) (i : Fin (k + 1)) : ℕ :=
 
 private def weight {p : ℕ} (g z : Fin p → ℕ) : ℕ := ∑ i, z i * g i
 
-private def basis {p : ℕ} (i : Fin p) (m : ℕ) : Fin p → ℕ := Pi.single i m
-
 private theorem weight_add {p : ℕ} (g z w : Fin p → ℕ) :
     weight g (z + w) = weight g z + weight g w := by
   simp [weight, Pi.add_apply, Nat.add_mul, Finset.sum_add_distrib]
 
 private theorem weight_basis {p : ℕ} (g : Fin p → ℕ) (i : Fin p) (m : ℕ) :
-    weight g (basis i m) = m * g i := by
+    weight g (Pi.single i m) = m * g i := by
   classical
   unfold weight
   rw [Fintype.sum_eq_single i]
-  · simp [basis]
+  · simp
   · intro j hji
-    simp [basis, Pi.single_eq_of_ne hji]
+    simp [Pi.single_eq_of_ne hji]
 
 private theorem weight_congr_mod {a d u v W I : ℕ} (cop : a.Coprime d)
     (he : a * u + W * d = a * v + I * d) : W ≡ I [MOD a] := by
@@ -93,15 +91,15 @@ private theorem count_add {k : ℕ} (z w : Fin (k + 1) → ℕ) :
   simp [count, Pi.add_apply, Finset.sum_add_distrib]
 
 private theorem count_basis_zero {k : ℕ} (m : ℕ) :
-    count (basis (0 : Fin (k + 1)) m) = 0 := by
-  simp [count, basis, Pi.single_eq_of_ne, Fin.succ_ne_zero]
+    count (Pi.single (0 : Fin (k + 1)) m) = 0 := by
+  simp [count, Pi.single_eq_of_ne, Fin.succ_ne_zero]
 
 private theorem count_basis_succ {k : ℕ} (i : Fin k) (m : ℕ) :
-    count (basis i.succ m) = m := by
+    count (Pi.single i.succ m) = m := by
   classical
   unfold count
   rw [Fintype.sum_eq_single i]
-  · simp [basis]
+  · simp
   · intro j hj
     exact Pi.single_eq_of_ne (by simpa using hj) _
 
@@ -127,7 +125,7 @@ private theorem closure_iff_fiber {p : ℕ} (g : Fin p → ℕ) (n : ℕ) :
     induction hn using AddSubmonoid.closure_induction with
     | mem m hm =>
       obtain ⟨i, rfl⟩ := hm
-      exact ⟨basis i 1, by change weight g (basis i 1) = g i; simp [weight_basis]⟩
+      exact ⟨Pi.single i 1, by change weight g (Pi.single i 1) = g i; simp [weight_basis]⟩
     | zero => exact ⟨0, by change weight g 0 = 0; simp [weight]⟩
     | add m n _ _ hm hn =>
       obtain ⟨z, hz⟩ := hm
@@ -164,7 +162,7 @@ def catenarySpectrum {p : ℕ} (g : Fin p → ℕ) : Set ℕ :=
 /-- The ceiling in Conjecture 18.2. -/
 def ceilParameter (a k : ℕ) : ℕ := (a - k) ⌈/⌉ (k - 1)
 
-/-- The witnessed element and its threshold. -/
+/-- The element attaining the threshold in Conjecture 18.2. -/
 def witness (a h d k : ℕ) : ℕ :=
   a * (h * (ceilParameter a k + 1)) + (a + ceilParameter a k) * d
 
@@ -265,7 +263,7 @@ private theorem first_ne_zero {k : ℕ} (hk : 0 < k) : first hk ≠ 0 :=
   Fin.succ_ne_zero _
 
 private def lowVector {k : ℕ} (hk : 0 < k) (h d t : ℕ) : Fin (k + 1) → ℕ :=
-  basis 0 (h + d) + basis (first hk) t
+  Pi.single 0 (h + d) + Pi.single (first hk) t
 
 private theorem lowVector_low {k : ℕ} (hk : 0 < k) (h d t : ℕ) :
     Low h d t (lowVector hk h d t) := by
@@ -275,7 +273,7 @@ private theorem lowVector_low {k : ℕ} (hk : 0 < k) (h d t : ℕ) :
   constructor
   · simp [lowVector, indexWeight, weight_add, weight_basis, first_val]
   · rw [hY, show t + 1 - t = 1 by omega, Nat.mul_one]
-    simp [lowVector, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero hk).symm]
+    simp [lowVector, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero hk).symm]
 
 private theorem high_inhabited {a h d k : ℕ} (hk : 1 < k) (hka : k < a)
     (hh : 0 < h) (hd : 0 < d) (cop : a.Coprime d) :
@@ -287,7 +285,7 @@ private theorem high_inhabited {a h d k : ℕ} (hk : 1 < k) (hka : k < a)
   change k * t + (2 + ρ) = a + t at htρ
   let i : Fin k := ⟨k - 1, by omega⟩
   let j : Fin k := ⟨1 + ρ, by omega⟩
-  let z := basis i.succ t + basis j.succ 1
+  let z := Pi.single (M := fun _ => ℕ) i.succ t + Pi.single j.succ 1
   have hz : High a t z := by
     refine ⟨?_, ?_, ?_⟩
     · have hi : i.succ.val = k := by dsimp [i]; omega
@@ -295,7 +293,7 @@ private theorem high_inhabited {a h d k : ℕ} (hk : 1 < k) (hka : k < a)
       simp only [z, indexWeight, weight_add, weight_basis, hi, hj, Nat.one_mul]
       rw [Nat.mul_comm t, htρ]
     · simp [z, count_add, count_basis_succ]
-    · simp [z, Pi.add_apply, basis]
+    · simp [z, Pi.add_apply, Pi.single_eq_of_ne (Fin.succ_ne_zero _).symm]
   exact ⟨⟨z, (fiber_iff_classes hk hka hh hd cop z).2 (Or.inr hz)⟩, hz⟩
 
 
@@ -468,11 +466,11 @@ private theorem weight_zero_of_total_zero {p : ℕ} (g z : Fin p → ℕ)
   simp [hz0, weight]
 
 private theorem basis_le {p : ℕ} {z : Fin p → ℕ} {i : Fin p} {c : ℕ}
-    (hc : c ≤ z i) : ∀ j, basis i c j ≤ z j := by
+    (hc : c ≤ z i) : ∀ j, Pi.single (M := fun _ => ℕ) i c j ≤ z j := by
   intro j
   by_cases hji : j = i
-  · simpa [basis, hji] using hc
-  · simp [basis, Pi.single_eq_of_ne hji]
+  · simpa [Pi.single, hji] using hc
+  · simp [Pi.single_eq_of_ne hji]
 
 private theorem split_coordinates {p : ℕ} {z u : Fin p → ℕ}
     (hu : ∀ i, u i ≤ z i) : (fun i => z i - u i) + u = z := by
@@ -495,10 +493,10 @@ private theorem atoms_iff_generator {a h d k : ℕ} (hka : k < a) (hh : 1 < h)
       have hz0 : z = 0 := funext fun i => Nat.eq_zero_of_le_zero (hc i)
       exact hn0 (hz.symm.trans ((weight_zero_iff hg).2 hz0))
     obtain ⟨i, hi⟩ := hpos
-    let c : Fin (k + 1) → ℕ := fun j => z j - basis i 1 j
+    let c : Fin (k + 1) → ℕ := fun j => z j - Pi.single (M := fun _ => ℕ) i 1 j
     have he : weight g c + g i = n := by
       calc
-        weight g c + g i = weight g (c + basis i 1) := by
+        weight g c + g i = weight g (c + Pi.single i 1) := by
           rw [weight_add, weight_basis, Nat.one_mul]
         _ = n := by rw [split_coordinates (basis_le hi), hz]
     have hc : weight g c ∈ S := (closure_iff_fiber g _).2 ⟨c, rfl⟩
@@ -546,7 +544,7 @@ private theorem cofinite {a h d k : ℕ} (hk : 0 < k) (ha : 0 < a) (cop : a.Copr
     obtain ⟨q, hq⟩ := hdiv
     have he : a * q + i.val * b = n := by omega
     apply (closure_iff_fiber _ _).2
-    refine ⟨basis 0 q + basis (first hk) i.val, ?_⟩
+    refine ⟨Pi.single 0 q + Pi.single (first hk) i.val, ?_⟩
     change weight (generators a h d k) _ = n
     rw [weight_add, weight_basis, weight_basis]
     simpa [generators, first_ne_zero hk, first_val, b, Nat.mul_comm q a] using he
@@ -576,7 +574,7 @@ private theorem no_cross_chain {a h d k B : ℕ} (hk : 1 < k) (hka : k < a) (hh 
   have hW' := hw.1
   omega
 
-/-- The generators and the two classes of the registered witnessed fiber. -/
+/-- The generators and the two classes of the exhibited element’s factorization fiber. -/
 def WitnessCheckpoint (a h d k : ℕ) : Prop :=
   let g := generators a h d k
   let S := AddSubmonoid.closure (Set.range g)
@@ -647,8 +645,8 @@ private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 
   obtain ⟨i, hi0, hzi⟩ := hidx
   let j : Fin k := ⟨i.val - 1, by have := i.isLt; omega⟩
   let i₁ := first (show 0 < k by omega)
-  let removed := basis (0 : Fin (k + 1)) h + basis i.succ 1
-  let added := basis i₁ 1 + basis j.succ 1
+  let removed : Fin (k + 1) → ℕ := Pi.single (0 : Fin (k + 1)) h + Pi.single i.succ 1
+  let added : Fin (k + 1) → ℕ := Pi.single i₁ 1 + Pi.single j.succ 1
   let c : Fin (k + 1) → ℕ := fun l => z.val l - removed l
   have hz0 : h ≤ z.val 0 := by
     rw [hz.2]
@@ -659,8 +657,8 @@ private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 
     intro l
     by_cases hl : l = 0
     · subst l
-      simpa [removed, Pi.add_apply, basis] using hz0
-    · simpa [removed, Pi.add_apply, basis, Pi.single_eq_of_ne hl] using (basis_le hzi l)
+      simpa [removed, Pi.add_apply, Pi.single_eq_of_ne (Fin.succ_ne_zero _).symm] using hz0
+    · simpa [removed, Pi.add_apply, Pi.single_eq_of_ne hl] using (basis_le hzi l)
   have hsplit : c + removed = z.val := split_coordinates hremoved
   have hj : j.succ.val = i.val := by dsimp [j]; omega
   have hvalue : weight g removed = weight g added := by
@@ -674,8 +672,8 @@ private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 
   have hcntR : count removed = 1 := by
     simp [removed, count_add, count_basis_zero, count_basis_succ]
   have hcntA : count added = 2 := by
-    change count (basis i₁ 1 + basis j.succ 1) = 2
-    rw [count_add, count_basis_succ, show count (basis i₁ 1) = 1 from count_basis_succ _ _]
+    change count (Pi.single i₁ 1 + Pi.single j.succ 1) = 2
+    rw [count_add, count_basis_succ, show count (Pi.single i₁ 1) = 1 from count_basis_succ _ _]
   let w : Z g (witness a h d k) := ⟨c + added, by
     change weight g (c + added) = witness a h d k
     rw [weight_add, ← hvalue, ← weight_add, hsplit]
@@ -701,10 +699,10 @@ private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 
   refine ⟨w, hlow, hwY, ?_⟩
   have hlenR : (∑ l, removed l) = h + 1 := by
     rw [sum_coordinates, hcntR]
-    simp [removed, Pi.add_apply, basis]
+    simp [removed, Pi.add_apply, Pi.single_eq_of_ne (Fin.succ_ne_zero _).symm]
   have hlenA : (∑ l, added l) = 2 := by
     rw [sum_coordinates, hcntA]
-    simp [added, i₁, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero _).symm]
+    simp [added, i₁, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero _).symm]
   change distance z.val (c + added) ≤ h + 1
   rw [← hsplit]
   exact (distance_add_common_le c removed added).trans
@@ -731,16 +729,16 @@ private theorem low_eq_lowVector {k h d t : ℕ} (hk : 0 < k) {z : Fin (k + 1) �
     rw [hz.2, hY, show t + 1 - t = 1 by omega, Nat.mul_one]
   funext l
   refine Fin.cases ?_ (fun i => ?_) l
-  · simpa [lowVector, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero hk).symm]
+  · simpa [lowVector, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero hk).symm]
       using hz0
   · by_cases hi : i = i₀
     · subst i
       change z (first hk) = lowVector hk h d t (first hk)
-      simpa [lowVector, Pi.add_apply, basis, Pi.single_eq_of_ne (first_ne_zero hk)] using hz1
+      simpa [lowVector, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero hk)] using hz1
     · have h₁ : i.succ ≠ first hk := by
         intro h
         exact hi (Fin.ext (by simpa [first_val] using congrArg Fin.val h))
-      simp [lowVector, Pi.add_apply, basis, Fin.succ_ne_zero, Pi.single_eq_of_ne h₁,
+      simp [lowVector, Pi.add_apply, Fin.succ_ne_zero, Pi.single_eq_of_ne h₁,
         hvanish i (fun h => hi (Fin.ext h))]
 
 private theorem chain_symm {p n B : ℕ} {g : Fin p → ℕ} {z w : Z g n}
@@ -818,9 +816,11 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
   have ht : 0 < t := (parameter_bounds hk hka).1
   have hlo := lowVector_low (show 0 < k by omega) h d t
   let l : Z g n := ⟨_, (fiber_iff_classes hk hka (by omega) hd cop _).2 (Or.inl hlo)⟩
-  obtain ⟨w₀, hw₀⟩ := high_inhabited (h := h) hk hka (by omega) hd cop
+  have hcParts := hc
+  change Function.Injective g ∧ _ at hcParts
+  obtain ⟨_, _, _, _, hpartition, _, _, ⟨w₀, hw₀⟩, _, hseparate⟩ := hcParts
   have classes (z : Z g n) : Low h d t z.val ∨ High a t z.val :=
-    (fiber_iff_classes hk hka (by omega) hd cop z.val).1 z.property
+    (hpartition z.val).1 z.property
   have low_to_l (z : Z g n) (hz : Low h d t z.val) : Chain g n (N - 1) z l :=
     chain_mono (show h + 1 ≤ N - 1 by dsimp [N]; omega)
       (low_chain hk hka hh hd cop z l hz rfl)
@@ -837,8 +837,8 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
       have hB : N - 1 < N := by dsimp [N]; omega
       rcases classes z with hz | hz <;> rcases classes w with hw | hw
       · exact Or.inl ⟨hz, hw⟩
-      · exact (no_cross_chain hk hka hh hd cop hB hz hw hchain).elim
-      · exact (no_cross_chain hk hka hh hd cop hB hw hz (chain_symm hchain)).elim
+      · exact (hseparate _ hB _ _ hz hw hchain).elim
+      · exact (hseparate _ hB _ _ hw hz (chain_symm hchain)).elim
       · exact Or.inr ⟨hz, hw⟩
     · rintro (⟨hz, hw⟩ | ⟨hz, hw⟩)
       · exact (low_to_l z hz).trans (chain_symm (low_to_l w hw))
@@ -851,7 +851,7 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
     refine ⟨fun z w => (to_l z).trans (chain_symm (to_l w)), ?_⟩
     intro B hB
     by_contra! hlt
-    exact no_cross_chain hk hka hh hd cop hlt hlo hw₀ (hB l w₀)
+    exact hseparate _ hlt _ _ hlo hw₀ (hB l w₀)
   exact ⟨hc, hprev, hleast, ⟨n, ⟨l.val, l.property⟩, hleast⟩⟩
 
 end D5.S3.Arith.Additive.NarayanCatenarySpectrumMembership
