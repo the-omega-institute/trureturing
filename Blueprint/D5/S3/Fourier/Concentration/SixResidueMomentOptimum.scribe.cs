@@ -78,7 +78,7 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                 Frac, Grp(new Formula.Power(Seq(Open, D(1), Minus, a, Close), D(2))), Grp(D(3)), Comma),
             Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad,
                 sum, Call("w", k), Eq, D(1), Colon),
-            Seq(Amp, Quad, a, Sp, Le, Sp, half, Sp, Longrightarrow, Sp, Call("D", w), Eq,
+            Seq(Amp, Quad, Sp, a, Sp, Le, Sp, half, Sp, Longrightarrow, Sp, Call("D", w), Eq,
                 Frac, Grp(D(2), a), Grp(D(3)), Call("m", w), Comma),
             Seq(Amp, Quad, half, Lt, a, Sp, Longrightarrow, Sp, Call("D", w), Eq,
                 Frac, Grp(D(4), a, Minus, D(1)), Grp(D(3)), Call("m", w), Plus,
