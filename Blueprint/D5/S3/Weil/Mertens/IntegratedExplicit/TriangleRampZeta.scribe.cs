@@ -26,7 +26,7 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(ErrorStatement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The center retains the complete trivial-zero tail and its integral. " +
-                    "The error has coefficient 7M/3 and the boundary gain 4M/(3x)."))),
+                    "The error has coefficient 7M/3 and the boundary gain 4M/(3x). At x=1 both sides equal M unconditionally; for x>1 RH supplies the envelope."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-zeta-explicit"),
                 DeclarationHandle.Create(Prefix + "smoothedMangoldt_explicit_lower"),
@@ -42,7 +42,7 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                     "coefficient to (7/3)M and retains 4M/(3x). " +
                     "The constant term contributes -log(2pi)+2log(2pi)/x. " +
                     "Nonnegativity of the integral of T and T<=1-log(2) give the displayed " +
-                    "bound." +
+                    "bound. " +
                     "Since M<1/3, the square-root coefficient is less than 7/9. " +
                     "Thus c2=1+log(pi) and c3=3/2+gamma-2log(2pi)-4M/3 retain " +
                     "both lower-endpoint gains without rounding the constants."))),
@@ -58,11 +58,11 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                     "On [5,10], the terms 2,3,4,5 give S(x)>=10/3-12/x. " +
                     "Concavity reduces both comparisons to their endpoints, using sqrt(5)>=2 " +
                     "and sqrt(10)>=3. The logarithmic bounds needed are log(2)>=2/3 " +
-                    "and log(3)>=1. For x>=10 the upper Euler-Mascheroni sequence at 16 " +
+                    "and log(3)>=1. For x>10 the upper Euler-Mascheroni sequence at 16 " +
                     "gives M<1/8. The explicit lower bound, log(pi)<6/5, and sqrt(x)>=22/7 " +
                     "then give the result. RH supplies the square-root zero envelope; " +
                     "no unconditional version or converse to RH is asserted. " +
-                    "The hypothesis is only 10<=x implies RH; below ten it is vacuous. " +
+                    "The hypothesis is only 10<x implies RH; at and below ten it is vacuous. " +
                     "Equality at x=0 prevents a uniformly positive additive improvement. " +
                     "At x=3, any coefficient c in the bound x/2-c sqrt(x)<=S(x) must satisfy " +
                     "c>=(3/2-log(2)/3)/sqrt(3). Optimality of the unit coefficient is unproved."))),
@@ -95,7 +95,7 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
             Mul(D(2), Call("log", Mul(D(2), pi)))), Mul(Div(D(4), D(3)), mass));
         var lower = Sub(Sub(Sub(Div(x, D(2)), Mul(coefficient, Sqrt(x))),
             Add(D(1), Call("log", pi))), Div(boundary, x));
-        return Imp(V("RiemannHypothesis"), All("x", R(),
+        return All("x", R(), Imp(Imp(Lt(D(1), x), V("RiemannHypothesis")),
             Imp(Le(D(1), x), Le(lower, Call("S", x)))));
     }
     private static Formula Center(Formula x)
@@ -113,22 +113,22 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
         var x = V("x"); var mass = Call("firstLiMass");
         var bound = Sub(Mul(Mul(Div(D(7), D(3)), mass), Sqrt(x)),
             Div(Mul(Div(D(4), D(3)), mass), x));
-        return Imp(V("RiemannHypothesis"), All("x", R(),
-            Imp(Lt(D(1), x), Le(Call("abs", Sub(Call("S", x), Center(x))), bound))));
+        return All("x", R(), Imp(Imp(Lt(D(1), x), V("RiemannHypothesis")),
+            Imp(Le(D(1), x), Le(Call("abs", Sub(Call("S", x), Center(x))), bound))));
     }
     private static Formula UniformStatement() => All("x", R(),
-        Imp(Imp(Le(D(1,0), V("x")), V("RiemannHypothesis")),
+        Imp(Imp(Lt(D(1,0), V("x")), V("RiemannHypothesis")),
             Le(Sub(Div(V("x"), D(2)), Sqrt(V("x"))), Call("S", V("x")))));
-    private static Formula PrincipalStatement() => All("p", Seq(Mathbb, Grp(V("N"))),
+    private static Formula PrincipalStatement() => All("p", Seq(Mathbb, Grp(V("N")), Sp),
         Imp(Call("Prime", V("p")),
             Imp(Imp(Le(D(1,0), V("p")), V("RiemannHypothesis")),
                 Le(Sub(Div(V("p"), D(2)), Sqrt(V("p"))),
                     Call("Re", Call("smoothedCharacterSum", V("p"), D(1)))))));
 
     private static Formula V(string n) => F.Id(n);
-    private static Formula R() => Seq(Mathbb, Grp(V("R")));
+    private static Formula R() => Seq(Mathbb, Grp(V("R")), Sp);
     private static Formula Call(string n, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
+        new Formula.Apply(Seq(Operatorname, Grp(V(n)), Sp), [.. args]);
     private static Formula All(string n, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), type, body);
     private static Formula Eq(Formula a, Formula b) =>

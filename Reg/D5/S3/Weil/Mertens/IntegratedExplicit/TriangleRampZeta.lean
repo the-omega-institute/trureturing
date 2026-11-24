@@ -36,7 +36,7 @@ namespace Error
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (hRH : RiemannHypothesis) {x : ℝ} (hx : 1 < x),
+  Law R := ∀ {x : ℝ} (hRH : 1 < x → RiemannHypothesis) (hx : 1 ≤ x),
     |R.readout () () x -
       (x / 2 - (3 / 2 + Real.eulerMascheroniConstant) / x - Real.log (2 * Real.pi) +
         2 * Real.log (2 * Real.pi) / x -
@@ -57,7 +57,7 @@ def rejectedError : Realization signature :=
 
 private theorem rejected_law (hRH : RiemannHypothesis) : ¬ arena.Law rejectedError := by
   intro h
-  have he := h hRH (x := 2) (by norm_num)
+  have he := h (x := 2) (fun _ => hRH) (by norm_num)
   dsimp only [rejectedError, realize] at he
   have he' : |7 / 3 * firstLiMass * Real.sqrt 2 - 4 / 3 * firstLiMass / 2| + 1 ≤
       7 / 3 * firstLiMass * Real.sqrt 2 - 4 / 3 * firstLiMass / 2 := by
@@ -84,7 +84,7 @@ namespace Explicit
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (hRH : RiemannHypothesis) {x : ℝ} (hx : 1 ≤ x),
+  Law R := ∀ {x : ℝ} (hRH : 1 < x → RiemannHypothesis) (hx : 1 ≤ x),
     x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
       (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
         4 / 3 * firstLiMass) / x ≤ R.readout () () x
@@ -94,7 +94,7 @@ private theorem source_bridge :
 
 private theorem rejected_law (hRH : RiemannHypothesis) : ¬arena.Law rejected := by
   intro h
-  have he := h hRH (x := 1) (by norm_num)
+  have he := h (x := 1) (fun _ => hRH) (by norm_num)
   change (1 : ℝ) / 2 - (7 / 3 * firstLiMass) * Real.sqrt 1 -
     (1 + Real.log Real.pi) -
     (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
@@ -118,7 +118,7 @@ namespace Uniform
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {x : ℝ} (hRH : 10 ≤ x → RiemannHypothesis),
+  Law R := ∀ {x : ℝ} (hRH : 10 < x → RiemannHypothesis),
     x / 2 - Real.sqrt x ≤ R.readout () () x
 
 private theorem source_bridge :
