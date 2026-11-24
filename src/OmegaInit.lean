@@ -6,3 +6,5 @@ module
 prelude
 
 public import OmegaInit.Data.Nat
+
+public import OmegaInit.Data.Int
