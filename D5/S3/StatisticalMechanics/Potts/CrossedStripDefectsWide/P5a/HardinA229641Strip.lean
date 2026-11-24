@@ -763,7 +763,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
-open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect
+open HardinA229538Strip (edges cost bondDefects_empty oneDefect
   canonicalCount transition_entry labelled_scale cut_total_exclusion)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)

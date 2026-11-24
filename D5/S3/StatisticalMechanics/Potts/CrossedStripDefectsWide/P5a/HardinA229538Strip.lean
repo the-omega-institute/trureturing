@@ -17,7 +17,7 @@ cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.result, H
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
 cost_zero: proof_shape=bind-only; consumers=HardinA229538Strip.zero_cost_entry._simp_1_1
-zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry, HardinA229641Strip.transfer_count._simp_1_2
+zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_entry
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result

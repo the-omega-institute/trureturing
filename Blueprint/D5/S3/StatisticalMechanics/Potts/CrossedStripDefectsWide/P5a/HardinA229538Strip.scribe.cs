@@ -165,8 +165,8 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var cost=Own("cost",p,q);
         var left=If(And(Le(cost,d),Eq(Own("residual",q,Sub(d,cost)),s)),N(1),N(0));
         var rhs=If(Eq(Call("Sum.elim",Q("id"),Q("id"),s),q),Own("transfer",Own("residual",p,d),s),N(0));
-        return All("p", Column(), All("q", Column(), All("d", Q("Nat"), All("s", Columns(),
-            Imp(Le(d, N(1)), Eq(AsInt(left), rhs)))));
+        return All("p", Column(), All("q", Column(), All("d", Q("Nat"),
+            Imp(Le(d, N(1)), All("s", Columns(), Eq(AsInt(left), rhs))))));
     }
 
     private static Formula LabelledScale() {
@@ -233,11 +233,12 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Call("SMul.smul", App(c, j), Power(Add(b, Val(j))))));
         var shifted = Eq(Readout(Add(Add(n, b), d)), SumOver("j", Fin(d),
             Mul(App(c, j), Readout(Add(Add(n, b), Val(j))))));
+        var shifts = All("c", Arrow(Fin(d), Q("Int")), Imp(relation, All("n", Q("Nat"), shifted)));
+        var parameters = All("M", M(state), All("u", vector, All("v", vector,
+            All("d", Q("Nat"), All("b", Q("Nat"), shifts)))));
         return All("S", Seq(Q("Type"), Star), Seq(
             OpenBracket, Call("Fintype", state), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", state), CloseBracket, Sp,
-            All("M", M(state), All("u", vector, All("v", vector, All("d", Q("Nat"), All("b", Q("Nat"),
-                All("c", Arrow(Fin(d), Q("Int")), Imp(relation, All("n", Q("Nat"), shifted)))))))));
+            OpenBracket, Call("DecidableEq", state), CloseBracket, Sp, parameters));
     }
 
     private static Formula EdgesSum()
