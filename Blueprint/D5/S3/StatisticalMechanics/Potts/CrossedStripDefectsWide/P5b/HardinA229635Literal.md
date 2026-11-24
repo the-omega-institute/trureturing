@@ -20,7 +20,7 @@ Both bond sets join adjacent columns across two consecutive rows, with both orie
 
 **Theorem 1.2 (Six labelled arrays per canonical array).**
 
-$$\forall m: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}\left(3, \operatorname{\mathit{horizontal}}, \operatorname{\mathit{between}}, 2, m + 1\right) = 6 \cdot \operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{T}\left(m + 1, 6\right))$$
+$$\forall m: \operatorname{\mathit{Nat}}, (\left(\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}_{3}\right)\left(\operatorname{\mathit{HardinA229584StripData}}.\operatorname{\mathit{horizontal}}, \operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{between}}, 2, m + 1\right) = 6 \cdot \operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{T}\left(m + 1, 6\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Literal.six_labellings` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\forall m: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{DefectTransfer}
 
 *Commentary.*
 
-The two literal bond sets agree with the transfer bond sets. A constant array already has more than two horizontal bonds in one row. A nonconstant array has six distinct relabellings, including when only two colours are used.
+The literalCount subscript gives the palette size. The two literal bond sets agree with the transfer bond sets. A constant array already has more than two horizontal bonds in one row. A nonconstant array has six distinct relabellings, including when only two colours are used.
 
 ## References
 

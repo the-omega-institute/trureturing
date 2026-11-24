@@ -62,7 +62,7 @@ The table stores the positions computed by the indexed lookup in the next statem
 
 **Theorem 1.5 (Position of the sorted pair).**
 
-$$\forall x: \operatorname{\mathit{Fin}}\left(5\right), (\forall y: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{pairClass}}\left(x, y\right)\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{idxOf}}\left(\operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\right), (\operatorname{\mathit{min}}\left(x, y\right), \operatorname{\mathit{max}}\left(x, y\right))\right)))$$
+$$\forall x: \operatorname{\mathit{Fin}}\left(5\right), (\forall y: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{pairClass}}\left(x, y\right)\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{idxOf}}\left((\operatorname{\mathit{min}}\left(x, y\right), \operatorname{\mathit{max}}\left(x, y\right)), \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPair}}\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData.pairClass_eq_lookup` (`✓ std3`). ∎
 
