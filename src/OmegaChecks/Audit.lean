@@ -92,10 +92,14 @@ private def testLibrary (selected : List String) : IO Unit := do
     let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ roots.toArray.map ("+" ++ ·) }
     unless (← proc.wait) == 0 do throw <| IO.userError "strict library build failed"
     audit roots ".lake/build/lib/lean" "Omega" none
-  let arithmeticPorts := ["OmegaMath.Data.Nat.Fib.Basic", "OmegaMath.Data.Nat.Choose.Basic"]
-  if selected.contains "OmegaChecks.NatCorrespondence" || arithmeticPorts.any modules.contains then
-    let proc ← IO.Process.spawn { cmd := "lake", args := #["build", "+OmegaChecks.NatCorrespondence"] }
-    unless (← proc.wait) == 0 do throw <| IO.userError "Mathlib natural-number correspondence failed"
+  let checks := [
+    ("OmegaChecks.NatCorrespondence", ["OmegaMath.Data.Nat.Fib.Basic", "OmegaMath.Data.Nat.Choose.Basic"]),
+    ("OmegaChecks.WDigitCorrespondence", ["OmegaMath.Arithmetic.WDigits", "OmegaMath.Arithmetic.WDigits.Codec"])]
+  let targets := checks.filterMap fun (check, dependencies) =>
+    if selected.contains check || dependencies.any modules.contains then some ("+" ++ check) else none
+  unless targets.isEmpty do
+    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ targets.toArray }
+    unless (← proc.wait) == 0 do throw <| IO.userError "Mathlib correspondence check failed"
 
 def main (args : List String) : IO Unit := do
   if let "--exact" :: root :: path :: expected := args then
