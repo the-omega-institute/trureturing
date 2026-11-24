@@ -82,7 +82,7 @@ class_counts: proof_shape=content; consumers=transition_counts
 old_exhausted_index: proof_shape=bind-only; consumers=zero_coordinates
 proper_destination: proof_shape=bind-only; consumers=zero_coordinates
 exhausted_support: proof_shape=content; consumers=zero_coordinates
-old_source_support: proof_shape=bind-only; consumers=zero_coordinates
+old_source_support: proof_shape=content; consumers=zero_coordinates
 uniformRegion: proof_shape=content; consumers=zero_coordinates, transition_counts, Transition.arena
 late_tail_classes: proof_shape=content; consumers=zero_coordinates
 zero_coordinates: proof_shape=content; consumers=transition_counts
