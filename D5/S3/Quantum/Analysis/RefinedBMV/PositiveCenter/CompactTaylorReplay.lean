@@ -26,7 +26,7 @@ private meta def quoteModel (p : Model) : MetaM Expr := do
   let terms ← mkListLit (mkConst ``DimThree.Certificate.Term) terms
   return mkApp2 (mkConst ``Model.mk) (mkApp (mkConst ``Sparse.mk) terms) (toExpr p.radius)
 
--- The compiled evaluator proposes only data. Each equality is checked in a separate theorem.
+-- The compiled evaluator proposes data. The kernel checks each equality in the enclosing proof.
 private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr) :
     Simproc := fun e => do
   if e.hasFVar || e.hasMVar || e.hasLooseBVars then
@@ -36,16 +36,8 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
     let output ← quoteValue value
     let theoremType ← mkEq e output
     let proof ← mkEqRefl output
-    -- Keep normalization witnesses in the kernel-checked proof, where they
-    -- do not become part of an exported auxiliary theorem's statement.
-    if e.isAppOfArity ``Model.ofRat 1 || e.isAppOfArity ``Model.widen 2 then
-      return (output, mkExpectedPropHint proof theoremType)
-    let equality ← try
-      withOptions (fun opts ↦ Lean.maxHeartbeats.set (Elab.async.set opts false) 350000) <|
-        mkAuxLemma [] theoremType proof
-    catch err =>
-      throwError "kernel replay of {e.getAppFn} failed: {err.toMessageData}"
-    pure (output, mkConst equality)
+    -- The equality may contain a large rational table. Keep its witness in the proof term.
+    pure (output, mkExpectedPropHint proof theoremType)
   return .step (← Sym.shareCommon output) equality (done := true)
 
 meta def stageLiteral (α : Type) [ToExpr α] : Simproc :=
