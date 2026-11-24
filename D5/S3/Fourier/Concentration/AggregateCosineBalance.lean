@@ -15,7 +15,7 @@ open Finset AddChar
 
 namespace D5.S3.Fourier.Concentration.AggregateCosineBalance
 
-private noncomputable def e {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) : ℂ :=
+noncomputable def e {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) : ℂ :=
   ZMod.stdAddChar ((m : ZMod q) * k)
 
 private theorem mul_e {q : ℕ} [NeZero q] (k : ZMod q) (a b : ℤ) :
@@ -71,7 +71,7 @@ private theorem sum_laurent {q : ℕ} [NeZero q] (hq : 7 ≤ q) :
     hs 6 (by decide) (by decide) (by decide)]
   ring
 
-private noncomputable def mode {q : ℕ} (k : ZMod q) (m : ℤ) : ℝ :=
+noncomputable def mode {q : ℕ} (k : ZMod q) (m : ℤ) : ℝ :=
   Real.cos (2 * Real.pi * (m : ℝ) * (k.val : ℝ) / (q : ℝ))
 
 private theorem e_exp {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) :
@@ -82,7 +82,7 @@ private theorem e_exp {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) :
   push_cast
   ring_nf
 
-private theorem e_pair {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) :
+theorem e_pair {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) :
     e k m + e k (-m) = 2 * (mode k m : ℂ) := by
   rw [e_exp, e_exp, mode, Complex.ofReal_cos, Complex.cos]
   push_cast
@@ -108,7 +108,7 @@ private theorem cubic_readout {q : ℕ} [NeZero q] (hq : 7 ≤ q) :
       2 * (q : ℝ) := by exact_mod_cast h
   linarith
 
-private theorem mode_double {q : ℕ} (k : ZMod q) :
+theorem mode_double {q : ℕ} (k : ZMod q) :
     mode k 2 = 2 * (mode k 1) ^ 2 - 1 := by
   dsimp [mode]
   rw [← Real.cos_two_mul]
