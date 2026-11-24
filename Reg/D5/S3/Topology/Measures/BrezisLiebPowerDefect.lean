@@ -19,9 +19,7 @@ namespace Reg.D5.S3.Topology.Measures.BrezisLiebPowerDefect
 
 universe u
 
-example : type_of%
-    (@_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u}) :=
-  @_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u}
+#check @_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u}
 
 #print axioms _root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect
 
