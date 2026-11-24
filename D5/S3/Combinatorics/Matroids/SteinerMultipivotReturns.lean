@@ -14,8 +14,8 @@ import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Data.List.Perm.Basic
 import Mathlib.Data.Finset.Image
 import Mathlib.Data.Set.Function
-import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.Group.Center
+import Mathlib.Tactic.FinCases
 
 /-! # Simultaneous returns over a Boolean Steiner subloop -/
 
@@ -50,12 +50,70 @@ private def square (p q x : BitVec 3) : List (Finset (BitVec 3)) :=
   let c := q ^^^ b
   [cubeTriple q x, cubeTriple p a, cubeTriple q b, cubeTriple p c]
 
-private theorem returnTable :
-    ∀ x : Fin 4, let y := BitVec.ofNat 3 (4 + x.val)
-      (square 1 2 y).Perm (colour 1 ++ colour 2) ∧
-      (square 1 3 y).Perm (colour 1 ++ colour 3) ∧
-      (square 2 3 y).Perm (colour 2 ++ colour 3) := by
-  decide
+private theorem triple_swap (p x : BitVec 3) :
+    cubeTriple p (p ^^^ x) = cubeTriple p x := by
+  have invol : p ^^^ (p ^^^ x) = x := by
+    rw [← BitVec.xor_assoc, BitVec.xor_self]
+    simp
+  simp only [cubeTriple, invol]
+  exact congrArg (insert p) (Finset.pair_comm _ _)
+
+private theorem xor_invol (a x : BitVec 3) : a ^^^ (a ^^^ x) = x := by
+  rw [← BitVec.xor_assoc, BitVec.xor_self]
+  simp
+
+private theorem xor_cross (a b x : BitVec 3) : a ^^^ (b ^^^ x) = b ^^^ (a ^^^ x) := by
+  rw [← BitVec.xor_assoc, BitVec.xor_comm a b, BitVec.xor_assoc]
+
+private theorem square_colours (p q x : BitVec 3) :
+    square p q x = [cubeTriple q x, cubeTriple p (q ^^^ x),
+      cubeTriple q (p ^^^ x), cubeTriple p x] := by
+  have middle : cubeTriple q (p ^^^ (q ^^^ x)) = cubeTriple q (p ^^^ x) := by
+    rw [xor_cross p q x, triple_swap]
+  have last : q ^^^ (p ^^^ (q ^^^ x)) = p ^^^ x := by
+    rw [xor_cross q p (q ^^^ x), xor_invol]
+  simp only [square, middle, last, triple_swap]
+
+private theorem square_shift_second (p q x : BitVec 3) :
+    (square p q (q ^^^ x)).Perm (square p q x) := by
+  rw [square_colours, square_colours, xor_invol, triple_swap, xor_cross p q x, triple_swap]
+  apply List.Perm.cons
+  exact List.reverse_perm [cubeTriple p (q ^^^ x), cubeTriple q (p ^^^ x), cubeTriple p x]
+
+private theorem square_shift_first (p q x : BitVec 3) :
+    (square p q (p ^^^ x)).Perm (square p q x) := by
+  rw [square_colours, square_colours, xor_invol, triple_swap, xor_cross q p x, triple_swap]
+  exact (List.reverse_perm [cubeTriple q x, cubeTriple p (q ^^^ x),
+    cubeTriple q (p ^^^ x)]).append_right [cubeTriple p x]
+
+private theorem returnTable (i : Fin 4) :
+    let x := BitVec.ofNat 3 (4 + i.val)
+    (square 1 2 x).Perm (colour 1 ++ colour 2) ∧
+    (square 1 3 x).Perm (colour 1 ++ colour 3) ∧
+    (square 2 3 x).Perm (colour 2 ++ colour 3) := by
+  intro x
+  have fromAnchor (p q : BitVec 3)
+      (cover : x = 4 ∨ x = p ^^^ 4 ∨ x = q ^^^ 4 ∨ x = p ^^^ (q ^^^ 4)) :
+      (square p q x).Perm (square p q 4) := by
+    rcases cover with hx | hx | hx | hx
+    · rw [hx]
+    · rw [hx]
+      exact square_shift_first p q 4
+    · rw [hx]
+      exact square_shift_second p q 4
+    · rw [hx]
+      exact (square_shift_first p q (q ^^^ 4)).trans (square_shift_second p q 4)
+  have c12 : x = 4 ∨ x = 1 ^^^ 4 ∨ x = 2 ^^^ 4 ∨ x = 1 ^^^ (2 ^^^ 4) := by
+    dsimp [x]
+    fin_cases i <;> decide
+  have c13 : x = 4 ∨ x = 1 ^^^ 4 ∨ x = 3 ^^^ 4 ∨ x = 1 ^^^ (3 ^^^ 4) := by
+    dsimp [x]
+    fin_cases i <;> decide
+  have c23 : x = 4 ∨ x = 2 ^^^ 4 ∨ x = 3 ^^^ 4 ∨ x = 2 ^^^ (3 ^^^ 4) := by
+    dsimp [x]
+    fin_cases i <;> decide
+  exact ⟨(fromAnchor 1 2 c12).trans (by decide), (fromAnchor 1 3 c13).trans (by decide),
+    (fromAnchor 2 3 c23).trans (by decide)⟩
 
 private def assign {A : Type*} [Zero A] (b c : A) (t : Finset (BitVec 3)) : A :=
   if t = cubeTriple 2 4 then b else if t = cubeTriple 3 4 then c else 0
@@ -251,102 +309,49 @@ theorem simultaneousReturns {A L : Type*} [AddCommGroup A] [Mul L]
       (matching labels 1 3 (by decide) (by decide) i a v).mpr h₂,
       (matching labels 2 3 (by decide) (by decide) i a w).mpr h₃⟩
 
-private abbrev Plane := Option (ZMod 3 × ZMod 3)
+private def pick {L : Type*} (e p : L) (b : Bool) : L := if b then p else e
 
-private def planeMul : Plane → Plane → Plane
-  | none, y => y
-  | x, none => x
-  | some x, some y => if x = y then none else some (-x - y)
+/-- Three equal Steiner factors contain a Boolean subloop, with the same identity as the product. -/
+theorem existsCentrelessBooleanCube {L : Type*} [Mul L] (e p : L)
+    (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
+    (invol : ∀ x y : L, x * (x * y) = y)
+    (centre : Set.center L = {e}) (hp : p ≠ e) :
+    ∃ b : BitVec 3 ↪ L × L × L, b 0 = (e, e, e) ∧
+      Set.center (L × L × L) = {b 0} ∧
+      ∀ x y : BitVec 3, b (x ^^^ y) = b x * b y := by
+  have rightUnit (x : L) : x * e = x := (comm x e).trans (unit x)
+  have square : p * p = e := by simpa only [rightUnit] using invol p e
+  have pickMul (a b : Bool) : pick e p (a ^^ b) = pick e p a * pick e p b := by
+    cases a <;> cases b <;> simp [pick, unit, rightUnit, square]
+  have pickInj : Function.Injective (pick e p) := by
+    intro a b h
+    cases a <;> cases b <;> simp_all [pick, hp, hp.symm]
+  let b : BitVec 3 ↪ L × L × L := ⟨fun x =>
+    (pick e p (x.getLsbD 0), pick e p (x.getLsbD 1), pick e p (x.getLsbD 2)), by
+      intro x y h
+      have h₀ := pickInj (congrArg Prod.fst h)
+      have h₁ := pickInj (congrArg (fun z => z.2.1) h)
+      have h₂ := pickInj (congrArg (fun z => z.2.2) h)
+      apply BitVec.eq_of_getLsbD_eq
+      intro i hi
+      have cases : i = 0 ∨ i = 1 ∨ i = 2 := by omega
+      rcases cases with rfl | rfl | rfl
+      · exact h₀
+      · exact h₁
+      · exact h₂⟩
+  have id : b 0 = (e, e, e) := rfl
+  refine ⟨b, id, ?_, ?_⟩
+  · rw [id, Set.center_prod, Set.center_prod, centre]
+    ext x
+    simp
+  · intro x y
+    have atBit (i : ℕ) : pick e p ((x ^^^ y).getLsbD i) =
+        pick e p (x.getLsbD i) * pick e p (y.getLsbD i) := by
+      rw [BitVec.getLsbD_xor]
+      exact pickMul _ _
+    exact Prod.ext (atBit 0) (Prod.ext (atBit 1) (atBit 2))
 
-private instance : Mul Plane := ⟨planeMul⟩
-
-private theorem planeUnit (x : Plane) : (none : Plane) * x = x := rfl
-
-private theorem planeComm : ∀ x y : Plane, x * y = y * x := by
-  decide
-
-private theorem planeInvol : ∀ x y : Plane, x * (x * y) = y := by
-  decide
-
-private theorem planeCentre : Set.center Plane = {none} := by
-  ext x
-  change x ∈ Set.center Plane ↔ x = none
-  have check : ∀ z : Plane,
-      ((∀ a, z * a = a * z) ∧ (∀ a b, z * (a * b) = (z * a) * b) ∧
-        (∀ a b, (a * b) * z = a * (b * z))) ↔ z = none := by
-    decide
-  rw [← check x]
-  constructor
-  · intro h
-    have hZ := Set.mem_center_iff.mp h
-    exact ⟨hZ.comm, hZ.left_assoc, hZ.right_assoc⟩
-  · rintro ⟨h₁, h₂, h₃⟩
-    exact Set.mem_center_iff.mpr ⟨h₁, h₂, h₃⟩
-
-private abbrev Model := Plane × Plane × Plane
-
-private def encodeBit (b : Bool) : Plane := if b then some (0, 0) else none
-
-private def embedModel (u : BitVec 3) : Model :=
-  (encodeBit (u.getLsbD 0), encodeBit (u.getLsbD 1), encodeBit (u.getLsbD 2))
-
-private theorem embedModel_injective : Function.Injective embedModel := by
-  change ∀ x y : BitVec 3, embedModel x = embedModel y → x = y
-  decide
-
-private theorem embedModel_mul : ∀ x y : BitVec 3,
-    embedModel (x ^^^ y) = embedModel x * embedModel y := by
-  decide
-
-private theorem modelCentre : Set.center Model = {embedModel 0} := by
-  rw [Set.center_prod, Set.center_prod, planeCentre]
-  ext x
-  rcases x with ⟨x,y,z⟩
-  simp [embedModel, encodeBit]
-
-private def cubeInCentreless : BitVec 3 ↪ Model :=
-  ⟨embedModel, embedModel_injective⟩
-
-private theorem centrelessIncompatibleReturns :
-    ¬ (∃ labels : Set Model → ZMod 2,
-      letI := extensionMul (embedModel 0) labels
-      ∀ i : Fin 4, ∀ a : ZMod 2,
-        let x := embedModel (BitVec.ofNat 3 (4 + i.val))
-        (pairLift (embedModel 1) (embedModel 2))^[2] (x, a) = (x, a + 1) ∧
-        (pairLift (embedModel 1) (embedModel 3))^[2] (x, a) = (x, a + 0) ∧
-        (pairLift (embedModel 2) (embedModel 3))^[2] (x, a) = (x, a + 0)) := by
-  intro h
-  have parity := (simultaneousReturns cubeInCentreless embedModel_mul
-    (show ∀ a : ZMod 2, a + a = 0 by decide) 1 0 0).mp h
-  exact (by decide : ¬ (((1 : ZMod 2) + 0) + 0 = 0)) parity
-
-/-- A centreless finite Steiner loop contains a Boolean cube with incompatible returns. -/
-theorem existsCentrelessObstruction :
-    ∃ (L : Type) (mul : Mul L) (b : BitVec 3 ↪ L),
-      letI := mul
-      Nat.card L = 1000 ∧
-      (∀ x : L, b 0 * x = x) ∧ (∀ x y : L, x * y = y * x) ∧
-      (∀ x y : L, x * (x * y) = y) ∧ Set.center L = {b 0} ∧
-      (∀ x y : BitVec 3, b (x ^^^ y) = b x * b y) ∧
-      ¬ (∃ labels : Set L → ZMod 2,
-        letI := extensionMul (b 0) labels
-        ∀ i : Fin 4, ∀ a : ZMod 2,
-          let x := b (BitVec.ofNat 3 (4 + i.val))
-          (pairLift (b 1) (b 2))^[2] (x, a) = (x, a + 1) ∧
-          (pairLift (b 1) (b 3))^[2] (x, a) = (x, a + 0) ∧
-          (pairLift (b 2) (b 3))^[2] (x, a) = (x, a + 0)) := by
-  refine ⟨Model, inferInstance, cubeInCentreless, ?_, ?_, ?_, ?_, modelCentre,
-    embedModel_mul, centrelessIncompatibleReturns⟩
-  · simp [Model, Plane, Nat.card_eq_fintype_card]
-  · intro x
-    rcases x with ⟨a, b, c⟩
-    exact Prod.ext (planeUnit a) (Prod.ext (planeUnit b) (planeUnit c))
-  · rintro ⟨a, b, c⟩ ⟨x, y, z⟩
-    exact Prod.ext (planeComm a x) (Prod.ext (planeComm b y) (planeComm c z))
-  · rintro ⟨a, b, c⟩ ⟨x, y, z⟩
-    exact Prod.ext (planeInvol a x) (Prod.ext (planeInvol b y) (planeInvol c z))
-
-#print axioms existsCentrelessObstruction
+#print axioms existsCentrelessBooleanCube
 #print axioms simultaneousReturns
 
 end D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns
