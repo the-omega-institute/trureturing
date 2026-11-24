@@ -40,9 +40,34 @@ private partial def remainingStatementNodes (e : Expr) (budget : Nat) : Nat :=
     | .mdata _ b | .proj _ _ b => remainingStatementNodes b next
     | _ => next
 
+/-- Count references to each expression, in dependency order. -/
+private partial def statementReferences (e : Expr) :
+    StateM (Std.HashMap ExprStructEq Nat × Array Expr) Unit := do
+  let (counts, order) ← get
+  if let some n := counts[(e : ExprStructEq)]? then
+    set (counts.insert e (n + 1), order)
+  else
+    set (counts.insert e 1, order)
+    e.foldlM (fun () child => statementReferences child) ()
+    modify fun (counts, order) => (counts, order.push e)
+
+private meta def shareStatement (type : Expr) : MetaM Expr := do
+  let (_, (counts, order)) := (statementReferences type).run ({}, #[])
+  let shared := order.filter fun (e : Expr) =>
+    !e.hasLooseBVars && counts[ExprStructEq.mk e]! > 1 && remainingStatementNodes e 128 == 0
+  bindShared shared.toList {}
+where
+  bindShared (terms : List Expr) (refs : Std.HashMap ExprStructEq Expr) : MetaM Expr :=
+    match terms with
+    | [] => pure (type.replace fun e => refs[(e : ExprStructEq)]?)
+    | e :: rest => do
+        let value := e.replace fun child => refs[(child : ExprStructEq)]?
+        mapLetDecl `shared (← inferType value) value fun ref =>
+          bindShared rest (refs.insert e ref)
+
 -- The compiled evaluator proposes data. The kernel checks the resulting equality.
 private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr)
-    (limitStatementSize : Bool) : Simproc := fun e => do
+    (limitStatementSize : Bool) (shareLargeStatement : Bool := false) : Simproc := fun e => do
   if e.hasFVar || e.hasMVar || e.hasLooseBVars then
     return .rfl
   let (output, equality) ← liftM (m := MetaM) <| do
@@ -55,9 +80,13 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
     if e.isAppOfArity ``Model.ofRat 1 || e.isAppOfArity ``Model.widen 2 ||
         (limitStatementSize && remainingStatementNodes theoremType 262144 == 0) then
       return (output, mkExpectedPropHint proof theoremType)
+    let auxType ←
+      if shareLargeStatement && remainingStatementNodes theoremType 262144 == 0 then
+        shareStatement theoremType
+      else pure theoremType
     let equality ← try
       withOptions (fun opts ↦ Lean.maxHeartbeats.set (Elab.async.set opts false) 350000) <|
-        mkAuxLemma [] theoremType proof
+        mkAuxLemma [] auxType proof
     catch err =>
       throwError "kernel replay of {e.getAppFn} failed: {err.toMessageData}"
     pure (output, mkConst equality)
@@ -65,6 +94,9 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
 
 meta def stageLiteral (α : Type) [ToExpr α] (limitStatementSize : Bool := false) : Simproc :=
   stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr) limitStatementSize
+
+meta def stageSharedLiteral (α : Type) [ToExpr α] : Simproc :=
+  stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr) false (shareLargeStatement := true)
 
 meta def stageModel (limitStatementSize : Bool := false) : Simproc :=
   stageQuoted Model (mkConst ``Model) quoteModel limitStatementSize

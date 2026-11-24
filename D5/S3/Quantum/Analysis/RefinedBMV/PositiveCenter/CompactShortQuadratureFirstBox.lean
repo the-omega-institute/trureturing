@@ -318,7 +318,8 @@ local cbv_simproc cbv_eval stageLower (Model.lower _) := stageOnModels 1 (stageL
 local cbv_simproc cbv_eval stageAbsUpper (Model.absUpper _) := stageOnModels 1 (stageLiteral Nat)
 local cbv_simproc cbv_eval stageCenter (CompactTaylorModel.Model.center _) :=
   stageOnModels 1 (stageLiteral Rat)
-local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat)
+local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) :=
+  stageSharedLiteral (List Rat)
 local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat)
 
 attribute [local cbv_opaque] Model.add Model.sub Model.mul Model.lower Model.absUpper
