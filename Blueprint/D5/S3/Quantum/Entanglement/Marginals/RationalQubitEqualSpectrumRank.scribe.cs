@@ -6,7 +6,7 @@ internal sealed class RationalQubitEqualSpectrumRankDocument : IScribeDocumentDe
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rational rank bound for qubit marginals with equal spectra.",
-        H("Rank-two rational extensions for equal spectra"),
+        H("Rational extensions of rank at most two for equal spectra"),
         Blocks(
             Describe.Lean(DescribeId.Create("rational-qubit-equal-spectrum-rank"),
                 DeclarationHandle.Create(

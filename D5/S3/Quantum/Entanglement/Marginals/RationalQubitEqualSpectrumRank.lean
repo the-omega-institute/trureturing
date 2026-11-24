@@ -6,6 +6,7 @@
    utility: none
    digest: Equal-spectrum rational qubit marginals admit a rational rank-two bound. -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
 import D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
@@ -14,7 +15,9 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 open Matrix Complex
 open scoped ComplexConjugate ComplexOrder Kronecker Matrix
 open D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
-open D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity (square_eq_trace_sub_det)
+open D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment (idempotent_trace_rank)
+open D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
+  (rational_det rational_product square_eq_trace_sub_det)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 set_option autoImplicit false
@@ -31,15 +34,6 @@ private theorem rational_one {n : Type*} [DecidableEq n] (i j : n) :
     exact rationalComplex.one_mem
   · rw [Matrix.one_apply, ite_eq_right h]
     exact rationalComplex.zero_mem
-
-private theorem projection_rank (P : Joint) (hP : P * P = P) (ht : P.trace = 2) :
-    P.rank = 2 := by
-  have hi : IsIdempotentElem P := hP
-  have hi' : IsIdempotentElem P.toLin' := hi.map Matrix.toLinAlgEquiv'
-  have hProj := (LinearMap.isProj_range_iff_isIdempotentElem _ |>.mpr hi').trace
-  rw [Matrix.trace_toLin'_eq, ht] at hProj
-  rw [Matrix.rank_eq_finrank_range_toLin P (Pi.basisFun ℂ _) (Pi.basisFun ℂ _)]
-  exact_mod_cast hProj.symm
 
 private theorem centered_square (A : Qubit) (ht : A.trace = 1) :
     (A - (1 / 2 : ℂ) • 1) * (A - (1 / 2 : ℂ) • 1) = (1 / 4 - A.det) • 1 := by
@@ -112,7 +106,10 @@ private theorem projector_extension (A B H K : Qubit) (s : ℂ) (hs : s ≠ 0)
     rw [hRight]
     rw [smul_smul, show (1 / 2 : ℂ) * s⁻¹ * (2 * s) = 1 by field_simp, one_smul]
     module
-  · exact (Matrix.rank_mul_le_right _ _).trans (by rw [projection_rank _ hP2 hPt])
+  · have hRank := idempotent_trace_rank P hP2
+    rw [hPt] at hRank
+    refine (Matrix.rank_mul_le_right _ _).trans_eq ?_
+    exact_mod_cast hRank.symm
   · intro i j
     rw [hXP]
     refine rationalComplex.mul_mem ?_ (rationalComplex.add_mem
@@ -121,7 +118,7 @@ private theorem projector_extension (A B H K : Qubit) (s : ℂ) (hs : s ≠ 0)
           (rationalComplex.mul_mem ?_ (hKQ _ _))))
     · exact rationalComplex.div_mem rationalComplex.one_mem
         (ofNat_mem rationalComplex 2)
-    · exact rationalComplex.sum_mem fun k _ => rationalComplex.mul_mem (hAQ _ k) (hHQ k _)
+    · exact rational_product hAQ hHQ _ _
 
 /-- Trace-one positive qubit marginals with rational entries and equal determinants admit
 a joint state with rational entries and rank at most two. -/
@@ -174,12 +171,9 @@ theorem rational_endpoint_rank_le_two_of_equal_det (A B : Matrix Bool Bool ℂ)
       rw [hHs, Matrix.conjTranspose_smul, Matrix.conjTranspose_one] at he
       simpa [Matrix.smul_apply] using he
     have hsQ : RationalEntry s := by
-      have hdet : RationalEntry A.det := by
-        rw [← Matrix.det_submatrix_equiv_self finTwoEquiv A, Matrix.det_fin_two]
-        exact rationalComplex.sub_mem (rationalComplex.mul_mem (hAQ _ _) (hAQ _ _))
-          (rationalComplex.mul_mem (hAQ _ _) (hAQ _ _))
       exact rationalComplex.sub_mem
-        (rationalComplex.div_mem rationalComplex.one_mem (ofNat_mem rationalComplex 4)) hdet
+        (rationalComplex.div_mem rationalComplex.one_mem (ofNat_mem rationalComplex 4))
+        (rational_det A hAQ)
     have hcomm : A * H = H * A := by simp [H, mul_sub, sub_mul]
     have htAH : (A * H).trace = 2 * s := by
       rw [show A * H = H * H + (1 / 2 : ℂ) • H by

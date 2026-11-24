@@ -1,4 +1,4 @@
-# Rank-two rational extensions for equal spectra
+# Rational extensions of rank at most two for equal spectra
 
 ## Abstract
 
@@ -21,5 +21,6 @@ Subtract half the identity from each marginal. The two centered matrices square 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/RationalQubitEqualSpectrumRank.rational_endpoint_rank_le_two_of_equal_det`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/ContractionAttainment](../AbsolutePPT/ContractionAttainment.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/RationalQubitPurity](RationalQubitPurity.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)

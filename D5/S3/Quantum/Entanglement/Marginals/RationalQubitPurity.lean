@@ -62,7 +62,7 @@ private theorem scalar_intertwiner (A B : Matrix Bool Bool ℂ)
   rw [mul_sub, sub_mul, mul_add, add_mul, hA, hB, mul_one, one_mul, hD]
   abel
 
-private theorem rational_det (A : Matrix Bool Bool ℂ)
+theorem rational_det (A : Matrix Bool Bool ℂ)
     (hA : ∀ i j, A i j ∈ rationalComplex) : A.det ∈ rationalComplex := by
   have hdet := Matrix.det_fin_two (A.submatrix finTwoEquiv finTwoEquiv)
   rw [Matrix.det_submatrix_equiv_self] at hdet
@@ -120,7 +120,7 @@ private theorem scalar_sq_normalization (U : Matrix Bool Bool ℂ) (hU : U.IsHer
     apply Complex.ext <;> simp [← h, ← hq.2]
   · exact Complex.ext rfl (by simp [← hq.2])
 
-private theorem rational_product {A B : Matrix Bool Bool ℂ}
+theorem rational_product {A B : Matrix Bool Bool ℂ}
     (ha : ∀ i j, A i j ∈ rationalComplex)
     (hb : ∀ i j, B i j ∈ rationalComplex) :
     ∀ i j, (A * B) i j ∈ rationalComplex := by
