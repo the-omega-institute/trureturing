@@ -13,9 +13,9 @@ internal sealed class EqualBlockEffectsDocument : IScribeDocumentDefinition
             H("Exact attained spectral entropy"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Quantum/aberg2006superposition"),
-                LibraryNoteRef.Create("D5/L/Quantum/lipoon2003principalsubmatrices"),
-                LibraryNoteRef.Create("D5/L/Quantum/massey2010noncommutativeschurhorn")),
+                LibraryNoteRef.Create("D5/L/Entropy/aberg2006superposition"),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/lipoon2003principalsubmatrices"),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/massey2010noncommutativeschurhorn")),
             Blocks(
                 Paragraph(Text("On a complex carrier of dimension d, take three positive semidefinite matrices of trace d/3, rank at most m, and sum equal to identity. Let ℓ = max(d − m, 0) and assume 3ℓ ≤ d. Set b = d − 3ℓ. For either φ(x) = −x log x or φ(x) = −(1 − x) log(1 − x), using the zero-log convention, the maximum of the sum of φ over the three spectra is 3(2ℓ)φ(1/2) + 3bφ(1/3).")),
                 Paragraph(Text("In each eigenbasis, the largest min(d, m) eigenvalues carry the effect. The map that stacks all excluded coordinates has rank at most 3ℓ. Project onto a b-dimensional subspace of its kernel. The projection diagonal in each eigenbasis gives weights in [0, 1] of total b, supported on the retained coordinates. Applying the existing weighted spectral inequality to one minus the eigenvalues on these coordinates bounds the sum of the smallest b retained eigenvalues by the corresponding compressed trace. The three compressed traces sum to b."),
