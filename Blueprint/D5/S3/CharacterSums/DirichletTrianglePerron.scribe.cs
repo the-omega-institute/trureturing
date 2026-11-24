@@ -56,7 +56,8 @@ internal sealed class DirichletTrianglePerronDocument : IScribeDocumentDefinitio
                 + "L-series formula to χ(n)Λ(n), then divide by x and use "
                 + "x^(s+1)=x x^s. The positive endpoint allows this division and "
                 + "the complex power identity. The result includes 0≤x≤1 and the "
-                + "line c=2. At x=0 the kernel and the finite sum both vanish. The separate integrability statement supplies absolute "
+                + "line c=2. At x=0 the kernel and the finite sum both vanish. "
+                + "The separate integrability statement supplies absolute "
                 + "convergence of the displayed integral."),
             Entry("integer-endpoint", "characterTriangle_nat",
                 "Agreement with the character sieve at integer endpoints",

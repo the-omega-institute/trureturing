@@ -374,7 +374,7 @@ theorem completion_growth_log {q : ℕ} [NeZero q]
       simp only [Real.exp_add, Real.exp_log hAp, Real.exp_log hRp]
     _ ≤ _ := Real.exp_le_exp.mpr he
 
-private theorem completion_power_growth {q : ℕ} [NeZero q]
+theorem completion_power_growth {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
     ‖completion χ s‖ < Real.exp (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ)) := by
   let R := 1 + ‖s‖

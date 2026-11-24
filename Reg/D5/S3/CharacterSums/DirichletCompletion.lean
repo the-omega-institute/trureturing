@@ -653,4 +653,75 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end Logarithmic
 
+namespace Power
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
+    (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law M :=
+    ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+      (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ),
+    ‖completion χ s‖ < M.readout () ()
+      (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ))
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
+  letI : NeZero q := ⟨hq⟩
+  have hh := h hp hn 0
+  change ‖completion χ 0‖ < -1 at hh
+  linarith [norm_nonneg (completion χ 0)]
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.exp 0 ≠ Real.exp 1
+  exact Real.exp_injective.ne (by norm_num)
+def family : Registration arena (type_of% @completion_power_growth) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨by
+    simpa only [arena, actual, realize, decide_eq_true_eq] using @completion_power_growth,
+    rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@completion_power_growth) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.CharacterSums.DirichletCompletion.completion_power_growth
+    "__information_unit"
+  realizationName := `Reg.D5.S3.CharacterSums.DirichletCompletion.Power.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.CharacterSums.DirichletCompletion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Power
+
 end Reg.D5.S3.CharacterSums.DirichletCompletion

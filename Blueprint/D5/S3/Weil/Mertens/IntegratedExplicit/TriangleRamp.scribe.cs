@@ -11,8 +11,10 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Triangular weights from affine ramps", H("Triangular weights from affine ramps"), Blocks(
             Describe.Lean(DescribeId.Create("triangle-remove-average"),
-                DeclarationHandle.Create(Prefix + "removeAverage"), H("Removing the running average"),
-                StatementSource.FromAuthor(Disp(AverageDefinition())), AssessedProvenance.FromRepo(),
+                DeclarationHandle.Create(Prefix + "removeAverage"),
+                H("Removing the running average"),
+                StatementSource.FromAuthor(Disp(AverageDefinition())),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The integral is the oriented real interval integral from one to x. " +
                     "Write D(f,x) for removeAverage(f,x)."))),
@@ -25,7 +27,8 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
                     "give the same weighted value there."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("triangle-kernel-change"),
-                DeclarationHandle.Create(Prefix + "removeAverage_ramp"), H("The exact change of kernel"),
+                DeclarationHandle.Create(Prefix + "removeAverage_ramp"),
+                H("The exact change of kernel"),
                 StatementSource.FromAuthor(Disp(RampStatement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Split the integral at n. Its nonzero part is (x-n)^2/(2n). " +
@@ -34,12 +37,15 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
                     "n=1/2 and x=1 give different sides."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-root-envelope"),
-                DeclarationHandle.Create(Prefix + "removeAverage_sqrt_bound"), H("A square-root envelope"),
-                StatementSource.FromAuthor(Disp(EnvelopeStatement())), AssessedProvenance.FromRepo(),
+                DeclarationHandle.Create(Prefix + "removeAverage_sqrt_bound"),
+                H("A square-root envelope"),
+                StatementSource.FromAuthor(Disp(EnvelopeStatement())),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Integrating sqrt(t) gives 2(x sqrt(x)-1)/3. The triangle inequality " +
                     "therefore retains the gain 4C/(3x) from the lower endpoint. " +
-                    "Only the endpoint bound and an almost everywhere interval bound are needed. The total Bochner integral is zero when integrability fails. " +
+                    "Only the endpoint bound and an almost everywhere interval bound are " +
+                    "needed. The total Bochner integral is zero when integrability fails." +
                     "At x=1 the estimate reduces to the assumed pointwise bound. " +
                     "For x>1, f(t)=C sqrt(t) except for f(x)=-C sqrt(x) attains the bound; " +
                     "thus the coefficient and endpoint term are sharp for this envelope class."))),
@@ -54,7 +60,8 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-concave-endpoints"),
                 DeclarationHandle.Create(Prefix + "affine_sqrt_ge_endpoints"), H("Endpoint minima"),
-                StatementSource.FromAuthor(Disp(EndpointStatement())), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(EndpointStatement())),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The reciprocal is convex on the positive half-axis and the square root " +
                     "is concave. Consequently A-B/x-x/2+sqrt(x) is concave for B>=0. " +

@@ -151,6 +151,17 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                     + "strictly below B phi(q) R exp((log(q)/2)R + U log(U)). This follows from "
                     + "the free-radius estimate, since R bounds both norm(s) and norm(1-s)."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("power-growth-bound"),
+                DeclarationHandle.Create(
+                    "D5/S3/CharacterSums/DirichletCompletion.completion_power_growth"),
+                H("An explicit power growth bound"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every primitive nonprincipal character the norm of the completion "
+                    + "is strictly below exp(3C R^(3/2)), where R=1+norm(s) "
+                    + "and C=growthConstant(q). The logarithmic envelope and "
+                    + "log(r)<=2sqrt(r) give growth order strictly below two."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("logarithmic-global-bound"),
                 DeclarationHandle.Create(
                     "D5/S3/CharacterSums/DirichletCompletion.completion_growth_log"),

@@ -1,12 +1,13 @@
 /- GID: D5/S3/Weil/Mertens/IntegratedExplicit/TriangleRampZeta
    generality: I
-   mirror-B: none(waiver:actual-zeta-application)
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/TriangleRampZeta
    mirror-E: none(waiver:conditional-rh-consumer)
    anchors: []
    utility: none
    digest: The actual von Mangoldt sum with triangular weight under RH. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRamp
+import D5.S3.Arith.PrimitiveRoot.CharacterSieve
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
@@ -107,11 +108,14 @@ private lemma mangoldtPart_explicit {x : ℝ} (hx : 1 < x) :
   rw [U_eq_complete_ramps hx0.le] at he
   linarith
 
-private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
+/-- A two-sided bound retaining the actual trivial-zero term and its integral. -/
+theorem smoothedMangoldt_explicit_bound (hRH : RiemannHypothesis)
     {x : ℝ} (hx : 1 < x) :
-    x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
-      (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
-        4 / 3 * firstLiMass) / x ≤ smoothedMangoldt x := by
+    |smoothedMangoldt x -
+      (x / 2 - (3 / 2 + Real.eulerMascheroniConstant) / x - Real.log (2 * Real.pi) +
+        2 * Real.log (2 * Real.pi) / x - trivialT (Real.log x) +
+        2 / x * (∫ t in (1 : ℝ)..x, trivialT (Real.log t)))| ≤
+      7 / 3 * firstLiMass * Real.sqrt x - 4 / 3 * firstLiMass / x := by
   have hx0 : 0 < x := by linarith
   let C : ℝ := firstLiMass
   let f : ℝ → ℝ := fun t => t * Real.log t - (1 + Real.eulerMascheroniConstant) * t
@@ -152,7 +156,7 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
     unfold removeAverage
     rw [hpoint x hx, hint]
     field_simp
-    <;> ring
+    ; ring
   have hbound (t : ℝ) (ht : 1 ≤ t) : |h t| ≤ C * Real.sqrt t := by
     have ht0 : 0 < t := by linarith
     have hterm (k : ℕ) :
@@ -168,17 +172,30 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
   have hb : |removeAverage h x| ≤ 7 * C / 3 * Real.sqrt x - 4 * C / (3 * x) := by
     apply removeAverage_sqrt_bound hx.le (hbound x hx.le)
     exact MeasureTheory.ae_of_all _ (fun t ht => hbound t ht.1.le)
+  have hm : removeAverage f x = x / 2 -
+      (3 / 2 + Real.eulerMascheroniConstant) / x := by
+    simpa only [f, show (1 : ℝ) + Real.eulerMascheroniConstant + 1 / 2 =
+      3 / 2 + Real.eulerMascheroniConstant by ring] using
+      removeAverage_main (1 + Real.eulerMascheroniConstant) hx0.le
+  rw [hkernel, hm]
+  convert hb using 1 <;> dsimp only [C, L, T] <;> congr 1 <;> ring
+
+private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
+    {x : ℝ} (hx : 1 < x) :
+    x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
+      (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
+        4 / 3 * firstLiMass) / x ≤ smoothedMangoldt x := by
+  have hx0 : 0 < x := by linarith
+  let C : ℝ := firstLiMass
+  let T : ℝ → ℝ := fun t => trivialT (Real.log t)
+  let L : ℝ := Real.log (2 * Real.pi)
+  have hb := smoothedMangoldt_explicit_bound hRH hx
   have hTbound : T x ≤ 1 - Real.log 2 := trivialT_le_mass (Real.log_nonneg hx.le)
   have hTnonneg : 0 ≤ 2 / x * (∫ t in (1 : ℝ)..x, T t) := by
     apply mul_nonneg (by positivity)
     apply intervalIntegral.integral_nonneg hx.le
     intro t ht
     exact trivialT_nonneg (Real.log_nonneg ht.1)
-  have hm : removeAverage f x = x / 2 -
-      (3 / 2 + Real.eulerMascheroniConstant) / x := by
-    simpa only [f, show (1 : ℝ) + Real.eulerMascheroniConstant + 1 / 2 =
-      3 / 2 + Real.eulerMascheroniConstant by ring] using
-      removeAverage_main (1 + Real.eulerMascheroniConstant) hx0.le
   have hL : L = Real.log 2 + Real.log Real.pi :=
     Real.log_mul (by norm_num) Real.pi_ne_zero
   have halg : x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x -
@@ -191,9 +208,11 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
     dsimp only [C]
     rw [hL, Real.log_mul (by norm_num) Real.pi_ne_zero]
     field_simp
-    <;> ring
-  rw [halg, hkernel, hm]
-  linarith [(abs_le.mp hb).1]
+    ; ring
+  rw [halg]
+  have hb' := (abs_le.mp hb).1
+  dsimp only [C, L, T] at *
+  linear_combination hb' + hTbound + hTnonneg
 
 /-- An explicit lower bound retaining the actual zero mass and both boundary gains. -/
 theorem smoothedMangoldt_explicit_lower (hRH : RiemannHypothesis)
@@ -234,7 +253,7 @@ private lemma smoothed_lower_of_subset {x : ℝ} (hx : 0 < x) (s : Finset ℕ)
         exact mul_nonneg ArithmeticFunction.vonMangoldt_nonneg (le_max_right _ _)
 
 /-- The triangular lower bound holds at every real argument. -/
-theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
+theorem smoothedMangoldt_lower {x : ℝ} (hRH : 10 ≤ x → RiemannHypothesis) :
     x / 2 - Real.sqrt x ≤ smoothedMangoldt x := by
   by_cases hx : 0 ≤ x
   swap
@@ -278,7 +297,7 @@ theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
     have hmass : (7 / 3 * firstLiMass) * Real.sqrt x ≤
         7 / 24 * Real.sqrt x :=
       mul_le_mul_of_nonneg_right (by linarith) (Real.sqrt_nonneg x)
-    have ha := smoothedMangoldt_explicit_lower hRH (by linarith : 1 ≤ x)
+    have ha := smoothedMangoldt_explicit_lower (hRH hx10) (by linarith : 1 ≤ x)
     have hc' := div_nonpos_of_nonpos_of_nonneg hc hx
     linarith
   have hx10' : x ≤ 10 := (lt_of_not_ge hx10).le
@@ -306,7 +325,7 @@ theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
         (by intro n hn; simp only [Finset.mem_insert, Finset.mem_singleton] at hn
             rcases hn with rfl | rfl | rfl <;> simp [hv2, hv3, hv4, h2, h3])
       norm_num [Finset.sum_insert, Finset.sum_singleton] at hh
-      convert hh using 1 <;> ring
+      convert hh using 1; ring
     have he := affine_sqrt_ge_endpoints (A := 7 / 3) (B := 7)
       (by norm_num) (by norm_num : (0 : ℝ) < 4)
       (show x ∈ Icc 4 5 from ⟨hx4', hx5⟩)
@@ -323,7 +342,7 @@ theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
         (by intro n hn; simp only [Finset.mem_insert, Finset.mem_singleton] at hn
             rcases hn with rfl | rfl | rfl | rfl <;> simp [hv2, hv3, hv4, hv5, h2, h3, h5])
       norm_num [Finset.sum_insert, Finset.sum_singleton] at hh
-      convert hh using 1 <;> ring
+      convert hh using 1; ring
     have he := affine_sqrt_ge_endpoints (A := 10 / 3) (B := 12)
       (by norm_num) (by norm_num : (0 : ℝ) < 5)
       (show x ∈ Icc 5 10 from ⟨hx5', hx10'⟩)
@@ -331,5 +350,29 @@ theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
     have hb : 0 ≤ (10 / 3 : ℝ) - 12 / 10 - 10 / 2 + Real.sqrt 10 := by linarith
     have hm := (le_min ha hb).trans he
     linarith
+
+private theorem principal_smoothedCharacterSum_eq {p : ℕ} (hp : p.Prime) :
+    (D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum p 1).re =
+      smoothedMangoldt p := by
+  classical
+  unfold D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum smoothedMangoldt
+  rw [Nat.ceil_natCast, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro n hn
+  rcases eq_or_ne n 0 with rfl | hn0
+  · simp
+  have hu : IsUnit (n : ZMod p) :=
+    (ZMod.isUnit_iff_coprime n p).2
+      (Nat.coprime_of_lt_prime hn0 (Finset.mem_range.mp hn) hp).symm
+  rw [MulChar.one_apply hu, mul_one]
+  simp
+
+/-- RH supplies the actual principal-character term used by the sieve. -/
+theorem principal_smoothedCharacterSum_lower {p : ℕ} (hp : p.Prime)
+    (hRH : 10 ≤ (p : ℝ) → RiemannHypothesis) :
+    (p : ℝ) / 2 - Real.sqrt p ≤
+      (D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum p 1).re := by
+  rw [principal_smoothedCharacterSum_eq hp]
+  exact smoothedMangoldt_lower hRH
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta
