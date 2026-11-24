@@ -106,6 +106,89 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+namespace ScalarPivot
+
+universe u
+
+private abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ lower value => lower ≤ value) (fun anchor => nomatch anchor)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun anchor => nomatch anchor)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law Y := ∀ {n : Type u} [Fintype n] (b : ℝ) (v : n → ℂ) (T : Matrix n n ℂ),
+    (assemble b v T).PosSemidef ↔
+      Y.readout () () 0 b ∧ (b = 0 → v = 0) ∧ (T - correction b v).PosSemidef
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hzero : (assemble (n := PUnit.{u+1}) 0 0 0).PosSemidef := by
+    apply (block_psd 0 0 0).mpr
+    simp [correction, Matrix.PosSemidef.zero]
+  exact ((h 0 0 0).mp hzero).1
+
+def family : Registration arena.{u} (type_of% @block_psd.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@block_psd.{u}, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩, fun anchor => nomatch anchor⟩
+  dependence := by
+    intro role
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    exact (not_le.mpr zero_lt_one : ¬ (1 : ℝ) ≤ 0)
+      (Eq.mp (congrFun h 0) (le_refl 0))
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@block_psd.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.block_psd.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.ScalarPivot.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ lower value => lower ≤ value)
+    (fun anchor => nomatch anchor))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ScalarPivot
+
 end
 
 end Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
