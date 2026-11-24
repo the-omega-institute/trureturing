@@ -163,7 +163,7 @@ private theorem logarithmic_continuous (q a b : ℝ) (ha : 16 < a) :
   exact (hl.add continuousOn_const).div (by fun_prop)
     (fun t ht => pow_ne_zero _ (by linarith [ht.1]))
 
-private theorem windowMass_gt : Real.pi - 1 / 4 < 2 * Real.arctan 8 := by
+theorem windowMass_gt : Real.pi - 1 / 4 < 2 * Real.arctan 8 := by
   have hi := Real.arctan_inv_of_pos (by norm_num : (0 : ℝ) < 1 / 8)
   norm_num only [one_div, inv_inv] at hi
   have hb := Real.arctan_lt_self (by norm_num : (0 : ℝ) < 1 / 8)

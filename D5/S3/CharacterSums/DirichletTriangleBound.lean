@@ -26,10 +26,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit
 namespace D5.S3.CharacterSums.DirichletTriangleBound
 
 private theorem windowMass_lower : (11 / 4 : ℝ) < 2 * Real.arctan 8 := by
-  have hi := Real.arctan_inv_of_pos (by norm_num : (0 : ℝ) < 1 / 8)
-  norm_num only [one_div, inv_inv] at hi
-  have hb := Real.arctan_lt_self (by norm_num : (0 : ℝ) < 1 / 8)
-  linarith [Real.pi_gt_three]
+  linarith [windowMass_gt, Real.pi_gt_three]
 
 private theorem log_lower {x : ℝ} (hx : 10000 ≤ x) : 9 ≤ Real.log x := by
   have hh : Real.log (10000 : ℝ) = 4 * Real.log 10 := by
@@ -70,7 +67,7 @@ private theorem tail_budget {x : ℝ} (hx : 10000 ≤ x) :
     nlinarith
   have hnum : 0 ≤ 17 / 9 * Real.log x := by positivity
   unfold tailBound
-  rw [if_neg hx0.ne']
+  rw [ite_eq_right hx0.ne']
   calc
     _ = (Real.log (x * (4 * Real.sqrt x - 13)) + 2) /
         ((2 * Real.arctan 8) * (4 * Real.sqrt x - 32)) := by field_simp
@@ -83,8 +80,8 @@ private theorem tail_budget {x : ℝ} (hx : 10000 ≤ x) :
 
 private theorem numerical_budget {x : ℝ} (hx : 10000 ≤ x) :
     (2 * Real.sqrt x + 4 + 2 / x) * ((Real.log (3 * x) + 1) / 2) +
-      (x + 2 + 3 / x) * tailBound x (4 * Real.sqrt x) + Real.log x + 3 ≤
-        (331411 / 222750 : ℝ) * Real.sqrt x * Real.log x := by
+      (x + 2 + 3 / x) * tailBound x (4 * Real.sqrt x) + Real.log x + 1 ≤
+        (165458 / 111375 : ℝ) * Real.sqrt x * Real.log x := by
   have hx0 : 0 < x := by linarith
   have hr := root_lower hx
   have hr0 : 0 < Real.sqrt x := by positivity
@@ -120,11 +117,11 @@ private theorem numerical_budget {x : ℝ} (hx : 10000 ≤ x) :
           ((10 / (99 * Real.sqrt x)) * (17 / 9 * Real.log x)) :=
         mul_le_mul_of_nonneg_right hc (by positivity)
       _ = _ := by field_simp; nlinarith [hsq]
-  have hthird : Real.log x + 3 ≤ 1 / 75 * Real.sqrt x * Real.log x := by
+  have hthird : Real.log x + 1 ≤ 1 / 90 * Real.sqrt x * Real.log x := by
     have hh := mul_le_mul_of_nonneg_right hr hL0
     nlinarith
   have he : (103 / 100 : ℝ) * (56 / 45) +
-      101 / 100 * (10 / 99) * (17 / 9) + 1 / 75 = 331411 / 222750 := by norm_num
+      101 / 100 * (10 / 99) * (17 / 9) + 1 / 90 = 165458 / 111375 := by norm_num
   nlinarith
 
 private theorem completion_standard_envelope {q : ℕ} [NeZero q]
@@ -139,8 +136,8 @@ private theorem completion_standard_envelope {q : ℕ} [NeZero q]
     DirichletCompletionGamma.logarithmic_series_bound.2.1.trans_lt
       DirichletCompletionGamma.logarithmic_series_bound.2.2
   have hi : 0 ≤ (1 / ((2 + (t : ℂ) * I) + (if χ.Even then 0 else 1))).re := by
-    split_ifs <;> simp only [one_div, Complex.inv_re, Complex.normSq_apply] <;>
-      norm_num <;> positivity
+    split_ifs <;> rw [one_div, Complex.inv_re] <;>
+      exact div_nonneg (by norm_num) (Complex.normSq_nonneg _)
   have hb := (completion_vertical_bound χ t).1
   rw [Real.log_mul hq.ne' (by positivity : |t| + 3 ≠ 0)]
   linarith [Real.log_two_gt_d9, Real.log_three_gt_d9]
@@ -356,7 +353,7 @@ private theorem zero_sum_bound {q : ℕ} [NeZero q]
         (α := ℝ) (analyticOrderNatAt (completion χ) ρ.1))
       have he : (analyticOrderNatAt (completion χ) ρ.1 : ℝ) *
           ((x + 2 + 3 / x) / ρ.1.im ^ 2) = B * H ρ := by
-        simp only [H, if_pos hh, w, B]
+        simp only [H, ite_eq_left hh, w, B]
         ring
       rw [he] at hw
       exact hw.trans (le_add_of_nonneg_left (mul_nonneg (by dsimp [A]; positivity) (hPn ρ)))
@@ -367,11 +364,12 @@ private theorem zero_sum_bound {q : ℕ} [NeZero q]
       have he : (analyticOrderNatAt (completion χ) ρ.1 : ℝ) *
           ((2 * Real.sqrt x + 4 + 2 / x) * ((3 / 2) / (9 / 4 + ρ.1.im ^ 2))) =
           A * P ρ + B * H ρ := by
-        simp only [A, P, H, if_neg hh, mul_zero, add_zero, w, hl]
+        simp only [A, P, H, ite_eq_right hh, mul_zero, add_zero, w, hl]
         ring
       exact he ▸ hw
-  exact (tsum_of_norm_bounded hsum hmajor).trans
-    (add_le_add_left (mul_le_mul_of_nonneg_left hH.2 (by positivity)) _)
+  have ht : B * (∑' ρ : Z, H ρ) ≤ B * tailBound q T :=
+    mul_le_mul_of_nonneg_left hH.2 (show 0 ≤ B by dsimp [B]; positivity)
+  exact (tsum_of_norm_bounded hsum hmajor).trans (by linarith)
 
 private theorem parityCorrection_norm {q : ℕ} (χ : DirichletCharacter ℂ q)
     {x : ℝ} (hx : 3 ≤ x) : ‖parityCorrection χ x‖ ≤ Real.log x := by
@@ -390,7 +388,7 @@ private theorem parityCorrection_norm {q : ℕ} (χ : DirichletCharacter ℂ q)
       div_le_self (by linarith) hx1
     have hquotn : 0 ≤ (1 - Real.log 2) / x := div_nonneg (by linarith) hx0.le
     have hq : (Real.log 2 - 1) / x = -((1 - Real.log 2) / x) := by ring
-    simp only [parityCorrection, if_pos heven, Complex.norm_real, Real.norm_eq_abs]
+    simp only [parityCorrection, ite_eq_left heven, Complex.norm_real, Real.norm_eq_abs]
     apply abs_le.mpr
     constructor <;> rw [hq] <;> linarith
   · have hTn := trivialT_nonneg (Real.log_nonneg hx1)
@@ -403,7 +401,7 @@ private theorem parityCorrection_norm {q : ℕ} (χ : DirichletCharacter ℂ q)
       linarith
     have he : -1 + (Real.log x + 2 - Real.log 2) / x - trivialT (Real.log x) / x =
         -1 + (Real.log x + 2 - Real.log 2 - trivialT (Real.log x)) / x := by ring
-    simp only [parityCorrection, if_neg heven, Complex.norm_real, Real.norm_eq_abs, he]
+    simp only [parityCorrection, ite_eq_right heven, Complex.norm_real, Real.norm_eq_abs, he]
     exact (abs_le.mpr ⟨by linarith, by linarith⟩ :
       |(-1 : ℝ) + (Real.log x + 2 - Real.log 2 - trivialT (Real.log x)) / x| ≤ 1).trans hL
 
@@ -434,7 +432,7 @@ theorem characterTriangle_finite_height {q : ℕ} [NeZero q]
       have hh := norm_sub_le (-zeroTriangle χ x)
         ((1 - (x : ℂ)⁻¹) * logDeriv χ.LFunction 2)
       simp only [norm_neg, norm_mul, hscalar] at hh
-      exact add_le_add_right hh _
+      linarith
     _ ≤ _ := by linarith
 
 /-- The explicit rational budget is strictly smaller than the three-halves coefficient. -/
@@ -442,7 +440,7 @@ theorem characterTriangle_prime_bound (p : ℕ) [Fact p.Prime]
     (χ : DirichletCharacter ℂ p) (hne : χ ≠ 1) (hp : 10000 ≤ p)
     (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
     ‖characterTriangle χ p‖ ≤
-      (331411 / 222750 : ℝ) * Real.sqrt p * Real.log p := by
+      (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p := by
   have hpR : (10000 : ℝ) ≤ p := by exact_mod_cast hp
   have hp0 : (0 : ℝ) < p := by linarith
   have hp3 : (3 : ℝ) ≤ p := by linarith
@@ -478,7 +476,7 @@ theorem characterTriangle_prime_bound (p : ℕ) [Fact p.Prime]
     _ ≤ (2 * Real.sqrt (p : ℝ) + 4 + 2 / (p : ℝ)) *
         ((Real.log (3 * (p : ℝ)) + 1) / 2) +
         ((p : ℝ) + 2 + 3 / (p : ℝ)) * tailBound p (4 * Real.sqrt p) +
-          Real.log p + 3 := by linarith
+          Real.log p + 1 := by linarith
     _ ≤ _ := numerical_budget hpR
 
 #print axioms characterTriangle_finite_height

@@ -36,7 +36,7 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
                     "For every prime p at least 10000 and every nonprincipal character, " +
                     "nonvanishing in the closed height window of radius four square roots " +
                     "of p implies the displayed estimate. Its rational coefficient is " +
-                    "strictly below three halves, with gap 1357/111375. " +
+                    "strictly below three halves, with gap 3209/222750. " +
                     "The finite rational budget combines the full positive Poisson mass, " +
                     "the ordinary reciprocal-square tail and the parity correction. " +
                     "Strictness comes from this positive rational gap, rather than a " +
@@ -63,7 +63,7 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
         var p = V("p"); var chi = V("chi");
         return All("p", N(), All("chi", Call("characters", p),
             Imp(Call("primeadmissible", p, chi), Le(Call("norm", Call("S", chi, p)),
-                Mul(Mul(Div(D(3,3,1,4,1,1), D(2,2,2,7,5,0)),
+                Mul(Mul(Div(D(1,6,5,4,5,8), D(1,1,1,3,7,5)),
                     Call("sqrt", p)), Call("log", p))))));
     }
 

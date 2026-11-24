@@ -244,14 +244,15 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let χ : DirichletCharacter ℂ 1 := 1
   have hχ : χ.Even := by
-    intro a
-    exact congrArg χ (Subsingleton.elim _ _)
+    change (1 : DirichletCharacter ℂ 1) (-1) = 1
+    exact MulChar.one_apply isUnit_neg_one
   have he := congrArg Complex.re (parityCorrection_one χ)
   have heT : evenT 0 = Real.log 2 := by
     have hg : (Real.log 2 - evenT 0 : ℝ) = 0 := by
-      simpa [parityCorrection, hχ] using he
+      simpa [parityCorrection, hχ, Complex.log_re] using he
     linarith
   have hc := (h χ) 0 (by simp)
+  simp only [ContinuousWithinAt, rejected, realize, if_pos rfl] at hc
   change Tendsto (fun y : ℝ => parityCorrection χ (if y = 0 then 1 else 0))
     (𝓝[Ici 0] 0) (𝓝 (parityCorrection χ 1)) at hc
   rw [parityCorrection_one] at hc
@@ -259,12 +260,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hz : (fun y : ℝ => parityCorrection χ (if y = 0 then 1 else 0)) =ᶠ[𝓝[>] 0]
       (fun _ => ((1 - Real.log 2 : ℝ) : ℂ)) := by
     filter_upwards [self_mem_nhdsWithin] with y hy
+    change 0 < y at hy
     simp [ne_of_gt hy, parityCorrection, hχ, heT]
   have hlim : Tendsto (fun y : ℝ => parityCorrection χ (if y = 0 then 1 else 0))
       (𝓝[>] 0) (𝓝 ((1 - Real.log 2 : ℝ) : ℂ)) :=
     (tendsto_congr' hz).2 tendsto_const_nhds
   have hzero := congrArg Complex.re (tendsto_nhds_unique hc' hlim)
-  norm_num at hzero
+  norm_num [Complex.log_re] at hzero
   linarith [Real.log_two_lt_d9]
 
 private theorem dependence : ObservationalDependence signature actual := by
@@ -341,7 +343,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, (Real.log 2 : ℂ), ?_⟩
-  norm_num [actual, realize, ← Complex.ofReal_exp, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+  change Complex.exp 0 ≠ Complex.exp (Real.log 2 : ℂ)
+  rw [Complex.exp_zero, ← Complex.ofReal_exp,
+    Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+  norm_num
 
 def family : Registration arena (type_of% @exp_integrable) where
   actual := actual

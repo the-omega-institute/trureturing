@@ -61,8 +61,8 @@ private theorem rejected_law (hRH : RiemannHypothesis) : ¬ arena.Law rejectedEr
   dsimp only [rejectedError, realize] at he
   have he' : |7 / 3 * firstLiMass * Real.sqrt 2 - 4 / 3 * firstLiMass / 2| + 1 ≤
       7 / 3 * firstLiMass * Real.sqrt 2 - 4 / 3 * firstLiMass / 2 := by
-    have he' : ||7 / 3 * firstLiMass * Real.sqrt 2 -
-        4 / 3 * firstLiMass / 2| + 1| ≤
+    have he' : |(|7 / 3 * firstLiMass * Real.sqrt 2 -
+        4 / 3 * firstLiMass / 2| + 1)| ≤
         7 / 3 * firstLiMass * Real.sqrt 2 - 4 / 3 * firstLiMass / 2 := by
       convert he using 1 <;> congr 1 <;> ring
     simpa only [abs_of_pos (by positivity : 0 <

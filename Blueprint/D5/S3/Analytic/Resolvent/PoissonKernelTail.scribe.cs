@@ -12,6 +12,17 @@ internal sealed class PoissonKernelTailDocument : IScribeDocumentDefinition
         H("Positive kernels and reciprocal-square tails"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("poisson-window-mass-lower"),
+                DeclarationHandle.Create(Owner + "windowMass_gt"),
+                H("A strict lower bound for the window mass"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The exact width-two window mass satisfies pi-1/4<2 arctan(8). "
+                    + "The reciprocal relation for arctan reduces the bound to "
+                    + "arctan(1/8)<1/8. The finite-height Dirichlet budget uses this "
+                    + "strict inequality before passing to a rational lower bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cauchy-kernel-continuous"),
                 DeclarationHandle.Create(Owner + "cauchyKernel_continuous"),
                 H("Continuity at every real width"),

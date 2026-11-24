@@ -113,12 +113,12 @@ abbrev arena : Arena where
     (_hne : χ ≠ 1) (_hp : 10000 ≤ p)
     (_hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0),
     R.readout () () (characterTriangle χ p) ≤
-      (331411 / 222750 : ℝ) * Real.sqrt p * Real.log p
+      (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p
 
 private theorem rejected_law (p : ℕ) [Fact p.Prime] (χ : DirichletCharacter ℂ p)
     (hne : χ ≠ 1) (hp : 10000 ≤ p)
     (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
-    ¬arena.Law (rejected ((331411 / 222750 : ℝ) * Real.sqrt p * Real.log p)) := by
+    ¬arena.Law (rejected ((165458 / 111375 : ℝ) * Real.sqrt p * Real.log p)) := by
   intro h
   have he := h p χ hne hp hfree
   change _ + 1 ≤ _ at he

@@ -1,6 +1,7 @@
 import D5.S3.Analytic.Resolvent.PoissonKernelTail
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 /-! The reciprocal-square tail reads the actual weight family in its total-mass bound. -/
 
@@ -417,5 +418,74 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Continuity
+
+namespace WindowMass
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => Real.arctan t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := Real.pi - 1 / 4 < 2 * R.readout () () 8
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  change Real.pi - 1 / 4 < 2 * (-1) at h
+  linarith [Real.pi_gt_three]
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  simp only [actual, realize, Real.arctan_zero, Real.arctan_one]
+  exact ne_of_lt (div_pos Real.pi_pos (by norm_num))
+
+def family : Registration arena (type_of% windowMass_gt) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨windowMass_gt, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    windowMass_gt (Realization signature) Unit Unit where
+  unitName := .str `D5.S3.Analytic.Resolvent.PoissonKernelTail.windowMass_gt
+    "__information_unit"
+  realizationName := `Reg.D5.S3.Analytic.Resolvent.PoissonKernelTail.WindowMass.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => Real.arctan t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Resolvent.PoissonKernelTail
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end WindowMass
 
 end Reg.D5.S3.Analytic.Resolvent.PoissonKernelTail

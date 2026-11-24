@@ -8,17 +8,43 @@ internal sealed class CompleteMangoldtHalfPlaneDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Mellin transform of the complete Mangoldt remainder",
         H("Absolute convergence in the open right half-plane"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("first-exponential-moment-integrable"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtHalfPlane."
+                    + "first_moment_integrable"),
+                H("Absolute integrability of the first exponential moment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every complex s with Re(s)>1, the function y exp((1-s)y) "
+                    + "is absolutely integrable over the positive real half-axis. "
+                    + "Its norm is y exp(-(Re(s)-1)y), with a strictly positive decay rate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("first-exponential-moment"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtHalfPlane."
+                    + "first_moment"),
+                H("The exact first exponential moment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For Re(s)>1 the integral of y exp((1-s)y) over y>0 is 1/(s-1)^2. "
+                    + "The primitive is exp((1-s)y)(y/(1-s)-1/(1-s)^2); "
+                    + "its upper endpoint tends to zero by exponential decay. "
+                    + "This supplies the logarithmic correction here and the first moment "
+                    + "of the Dirichlet parity correction after replacing s by s+1."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("arithmetic-mellin-transform"),
             DeclarationHandle.Create(
-                "D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtHalfPlane.u_laplace_half_plane"),
+                "D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtHalfPlane."
+                + "u_laplace_half_plane"),
             H("Transform of the inclusive integrated prime sum"),
             StatementSource.FromAuthor(Claim()), AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
                     "Write x = exp(y). The measure x⁻¹ dx becomes dy, so the Mellin "
                     + "transform of U on x > 1 is the Laplace transform of U(exp(y)) on y > 0. "
-                    + "The hypothesis Re(s) > 1 makes the arithmetic series absolutely convergent.")),
+                    + "Re(s)>1 makes the arithmetic series absolutely convergent.")),
                 Paragraph(Text(
                     "Fix σ = Re(s). Each nonnegative Mangoldt ramp is multiplied by exp(−sy). "
                     + "Its norm equals the ramp multiplied by exp(−σy). Its norm integral thus "
@@ -49,11 +75,13 @@ internal sealed class CompleteMangoldtHalfPlaneDocument : IScribeDocumentDefinit
         var value = Add(Subtract(new Formula.Fraction(logDerivative, Multiply(s, sMinusOne)),
             new Formula.Fraction(one, F.Seq(F.Open, sMinusOne, F.Close, F.Caret, F.Grp(F.D(2))))),
             new Formula.Fraction(Add(one, F.GammaLower), sMinusOne));
-        var result = new Formula.Logic(Apply("IntegrableOn", function, halfLine), FormulaLogicOperator.And,
+        var result = new Formula.Logic(Apply("IntegrableOn", function, halfLine),
+            FormulaLogicOperator.And,
             new Formula.Relation(integral, FormulaRelationOperator.Equal, value));
         return F.Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("s"),
             F.Seq(F.Mathbb, F.Grp(F.Id("C"))),
-            new Formula.Logic(new Formula.Relation(one, FormulaRelationOperator.LessThan, Apply("Re", s)),
+            new Formula.Logic(new Formula.Relation(one, FormulaRelationOperator.LessThan,
+                Apply("Re", s)),
                 FormulaLogicOperator.Implies, result)));
     }
 
