@@ -125,7 +125,7 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Subentropy.Basic
 import D5.S3.Quantum.Subentropy.PinchingGap
 import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
-import D5.S3.Quantum.Matrix.KroneckerSqrt
+import D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt
 
 /- One-site worst-case squared-infidelity risk for arXiv:2605.21457v2,
    equations (S13), (S34) and (S35), with n = 1 and m = 2.
@@ -134,7 +134,7 @@ import D5.S3.Quantum.Matrix.KroneckerSqrt
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open D5.S3.Quantum.Matrix.KroneckerSqrt (sqrt_kronecker)
+open D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt (sqrt_kronecker)
 
 noncomputable section
 namespace D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation

@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Information.ComplementaryCorrelations.AnchorMeasurementBKM
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
-import D5.S3.Quantum.Matrix.KroneckerSqrt
+import D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt
 
 /-! Pauli moments and the bridge from the raw qutrit certificate to the
 centered moments in the Simpson trace bound. -/
@@ -18,7 +18,7 @@ noncomputable section
 namespace AnchorMeasurement
 
 open Matrix
-open D5.S3.Quantum.Matrix.KroneckerSqrt (sqrt_kronecker)
+open D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt (sqrt_kronecker)
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix
   blochMatrix_trace bloch_geometry_of_isHermitian)

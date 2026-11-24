@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Matrix/KroneckerSqrt
+/- GID: D5/S3/Quantum/Matrix/Tensor/KroneckerSqrt
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -8,7 +8,7 @@
 
 import Mathlib.Analysis.Matrix.Order
 
-namespace D5.S3.Quantum.Matrix.KroneckerSqrt
+namespace D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt
 
 open scoped ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 
@@ -24,4 +24,4 @@ theorem sqrt_kronecker {a b : Type*} [Fintype a] [DecidableEq a]
   · exact ((Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg A)).kronecker
       (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg B))).nonneg
 
-end D5.S3.Quantum.Matrix.KroneckerSqrt
+end D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt
