@@ -4,10 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Fib.Basic
-import OmegaMath.Data.Nat.Choose.Basic
-import OmegaMath.Data.Nat.Fib.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Fib.Basic
+public import OmegaMath.Data.Nat.Choose.Basic
+public import OmegaMath.Data.Nat.Fib.Basic
 
 /-! The strict natural numbers and two arithmetic definitions interpreted in Mathlib. -/
 
@@ -44,10 +44,10 @@ public theorem toStd_le_iff (a b : Omega.Nat) :
   induction a generalizing b with
   | zero => exact ⟨fun _ => Omega.Nat.zero_le b, fun _ => Nat.zero_le (toStd b)⟩
   | succ a ih =>
-    cases b with
+    induction b using Omega.Nat.rec with
     | zero =>
       exact ⟨fun h => (Nat.not_succ_le_zero _ h).elim, fun h => Omega.False.elim h⟩
-    | succ b => exact Nat.succ_le_succ_iff.trans (ih b)
+    | succ b _ => exact Nat.succ_le_succ_iff.trans (ih b)
 
 /-- Every strict Fibonacci value agrees with the pinned Mathlib definition. -/
 public theorem toStd_fib (n : Omega.Nat) : toStd n.fib = (toStd n).fib := by
@@ -68,13 +68,13 @@ public theorem toStd_choose (n k : Omega.Nat) :
     toStd (n.choose k) = (toStd n).choose (toStd k) := by
   induction n generalizing k with
   | zero =>
-    cases k with
+    induction k using Omega.Nat.rec with
     | zero => rfl
-    | succ k => exact (Nat.choose_zero_succ (toStd k)).symm
+    | succ k _ => exact (Nat.choose_zero_succ (toStd k)).symm
   | succ n ih =>
-    cases k with
+    induction k using Omega.Nat.rec with
     | zero => exact (Nat.choose_zero_right (toStd n).succ).symm
-    | succ k =>
+    | succ k _ =>
       have recurrence : n.succ.choose k.succ = (n.choose k).add (n.choose k.succ) :=
         Omega.Eq.rec rfl (Omega.Nat.choose_succ_succ n k)
       rw [recurrence, toStd_add, ih k, ih k.succ]
