@@ -57,7 +57,8 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                     + "In the relaxation, the vanishing second coefficient makes both parity "
                     + "masses one half. A real first coefficient forces the masses at one and three "
                     + "to agree, and the coefficient equals the difference of the masses at zero and two. The "
-                    + "weight (1/2,1/4,0,1/4) attains one half."))),
+                    + "weight (1/2,1/4,0,1/4) attains one half. At p=1 both maxima equal "
+                    + "one half, so strict inequality first holds at p=2."))),
                 DescribeRole.Theorem))));
 
     private static Formula JointRange()

@@ -30,7 +30,7 @@ $$\operatorname{M}\left(w\right) = (1, u^{p}, v^{p}, u^{p}) \land A = (\frac{1}{
 
 *Commentary.*
 
-The singleton cyclic collision formula and Fourier inversion recover each coefficient from the same weight. The first and third Fourier magnitudes agree because the weights are real. At v=0 the preceding interval ends at one half. Taking the p-th power gives the first attained maximum. In the relaxation, the vanishing second coefficient makes both parity masses one half. A real first coefficient forces the masses at one and three to agree, and the coefficient equals the difference of the masses at zero and two. The weight (1/2,1/4,0,1/4) attains one half.
+The singleton cyclic collision formula and Fourier inversion recover each coefficient from the same weight. The first and third Fourier magnitudes agree because the weights are real. At v=0 the preceding interval ends at one half. Taking the p-th power gives the first attained maximum. In the relaxation, the vanishing second coefficient makes both parity masses one half. A real first coefficient forces the masses at one and three to agree, and the coefficient equals the difference of the masses at zero and two. The weight (1/2,1/4,0,1/4) attains one half. At p=1 both maxima equal one half, so strict inequality first holds at p=2.
 
 ## References
 
