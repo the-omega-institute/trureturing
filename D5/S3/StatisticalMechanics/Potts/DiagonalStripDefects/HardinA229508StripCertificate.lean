@@ -73,7 +73,7 @@ import Mathlib.Logic.Function.Conjugate
 
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripCertificate
 open HardinA229508StripData
-open HardinA203981StripData (boundary classPair parityRows representatives)
+open HardinA203981StripData (boundary representatives cls_at_rep boundary_at_rep)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (Row bondDefects forward forward_eq forward_shift)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (betw)
 set_option maxRecDepth 100000
@@ -139,11 +139,6 @@ private theorem representative_counts (i j : Fin 15) :
       · exact one_exact a c
     )
   rw [Fin.sum_univ_two] at h
-  have cls_at_rep : ∀ i : Fin 15,
-      cls (parityRows (representatives i)).1 = (classPair i).1 ∧
-      cls (parityRows (representatives i)).2 = (classPair i).2 := by
-    simp only [representatives, Equiv.apply_symm_apply]
-    decide +kernel
   rw [(cls_at_rep i).1, (cls_at_rep i).2] at h
   exact h
 
@@ -151,8 +146,6 @@ private theorem representative_counts (i j : Fin 15) :
 theorem one_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 1 ∧ boundary r = j
       then (1 : ℤ) else 0) = costOne (boundary p) j := by
-  have boundary_at_rep : ∀ i : Fin 15, boundary (representatives i) = i := by
-    decide +kernel
   exact (HardinA203981StripSymmetry.lift_counts 1 p (representatives (boundary p)) j
     (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
 

@@ -46,12 +46,11 @@ def family : Registration arena (type_of% @lift_counts) where
   dependence := by
     intro i
     refine ⟨⟨0, 0⟩, representatives 0, representatives 1, ?_⟩
-    have rep : ∀ i : Fin 15, boundary (representatives i) = i := by decide +kernel
     change (∑ r : Row 3 6, if bondDefects (betw 6) (representatives 0) r = 0 ∧
         boundary r = 0 then (1 : ℤ) else 0) ≠
       ∑ r : Row 3 6, if bondDefects (betw 6) (representatives 1) r = 0 ∧
         boundary r = 0 then (1 : ℤ) else 0
-    rw [counts (representatives 0) 0, counts (representatives 1) 0, rep, rep]
+    rw [counts (representatives 0) 0, counts (representatives 1) 0, boundary_at_rep, boundary_at_rep]
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}

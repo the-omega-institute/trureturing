@@ -252,11 +252,6 @@ private theorem representative_counts (i j : Fin 15) :
     fin_cases k
     exact zero_exact a c)
   rw [Fin.sum_univ_one] at h
-  have cls_at_rep : ∀ i : Fin 15,
-      cls (parityRows (HardinA203981StripData.representatives i)).1 = (classPair i).1 ∧
-      cls (parityRows (HardinA203981StripData.representatives i)).2 = (classPair i).2 := by
-    simp only [HardinA203981StripData.representatives, Equiv.apply_symm_apply]
-    decide +kernel
   rw [(cls_at_rep i).1, (cls_at_rep i).2] at h
   exact h
 
@@ -264,8 +259,6 @@ private theorem representative_counts (i j : Fin 15) :
 theorem counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 0 ∧ boundary r = j
       then (1 : ℤ) else 0) = T (boundary p) j := by
-  have boundary_at_rep : ∀ i : Fin 15, boundary (HardinA203981StripData.representatives i) = i := by
-    decide +kernel
   exact (HardinA203981StripSymmetry.lift_counts 0 p (HardinA203981StripData.representatives (boundary p)) j
     (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
 

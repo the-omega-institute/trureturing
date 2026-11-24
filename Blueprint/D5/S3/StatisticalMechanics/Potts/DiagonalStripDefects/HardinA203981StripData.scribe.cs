@@ -39,6 +39,15 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
                 Pair(Owner("representatives", Fst(Own("classPair", V("i")))),
                     Owner("representatives", Snd(Own("classPair", V("i")))))))),
             "Each row interleaves two representatives of the three-position equality classes."),
+        Describe.Lean(DescribeId.Create("cls-at-rep"), DeclarationHandle.Create(Prefix + "cls_at_rep"),
+            H("Ordered classes of a representative"), StatementSource.FromAuthor(Disp(RepresentativeClassesFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("Reading the parity triples reverses the interleaving and recovers the two listed classes in order."))), DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("boundary-at-rep"), DeclarationHandle.Create(Prefix + "boundary_at_rep"),
+            H("Boundary of a representative"), StatementSource.FromAuthor(Disp(All("i", Fin("15"),
+                Eq(Own("boundary", Own("representatives", V("i"))), V("i"))))),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("Looking up the listed class pair recovers its original index."))), DescribeRole.Theorem),
         Define("unordered", "Unordered pair weights", UnorderedFormula(),
             "Equal classes contribute once. Distinct classes contribute in both orders."),
         Define("half-zero", "Zero-cost half-strip block", All("i", Fin("5"), All("j", Fin("5"),
@@ -68,6 +77,16 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula PairNum(int a, int b) => Pair(D((byte)a), D((byte)b));
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
+
+    private static Formula RepresentativeClassesFormula()
+    {
+        var i = V("i");
+        var triples = Own("parityRows", Own("representatives", i));
+        var classes = Own("classPair", i);
+        return All("i", Fin("15"), Seq(
+            Parenthesized(Eq(Owner("cls", Fst(triples)), Fst(classes))), Sp, Land, Sp,
+            Parenthesized(Eq(Owner("cls", Snd(triples)), Snd(classes)))));
+    }
 
     private static Formula ParityRowsFormula()
     {
