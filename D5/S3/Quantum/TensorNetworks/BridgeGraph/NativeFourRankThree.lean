@@ -84,7 +84,7 @@ private theorem small_defect_compression {a b c d e : ℕ}
     simpa only [← Matrix.toLin'_apply', LinearMap.toMatrix'_toLin', map_zero] using h
   exact (sub_eq_zero.mp hz).symm
 
-/-- A common left kernel gives an isometric right factor and an orthogonal combination. -/
+/-- Nested kernels for three left factors isolate the fourth right factor. -/
 private theorem orthogonal_combination_of_one_direction_kernel {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ)
     (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -487,9 +487,15 @@ private theorem projected_width_three {a b c d q : ℕ}
     rw [rank_kronecker_one_general] at hrank
     exact hrank.trans (by simpa [Nat.mul_comm] using Nat.mul_le_mul_left q hd)
   have hWr : W.rank ≤ 3 * ((b - a) * q) := by
-    rw [hW, Fin.sum_univ_three]
-    have h := rank_sum _ _
-    have h' := rank_sum (kronecker (Z 1) (Cᴴ * Y 1)) (kronecker (Z 2) (Cᴴ * Y 2))
+    let K (i : Fin 3) := kronecker (Z i) (Cᴴ * Y i)
+    rw [hW]
+    change (∑ i, K i).rank ≤ _
+    rw [Fin.sum_univ_three]
+    have h01 := rank_sum (K 0) (K 1)
+    have h012 := rank_sum (K 0 + K 1) (K 2)
+    have h0 : (K 0).rank ≤ (b - a) * q := hr 0
+    have h1 : (K 1).rank ≤ (b - a) * q := hr 1
+    have h2 : (K 2).rank ≤ (b - a) * q := hr 2
     omega
   have hfinal := rank_sum (W * Wᴴ) V
   rw [hsum, Matrix.rank_one, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin,
