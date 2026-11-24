@@ -50,6 +50,7 @@ residual: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count
 transition_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
 transfer_count: proof_shape=bind-only; consumers=HardinA229538Strip.result
 labelled_scale: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
+integer_readout: proof_shape=bind-only; consumers=HardinA229538Strip.result, HardinA229641Strip.old_coordinate, HardinA229641Strip.result
 result: proof_shape=content; consumers=none (external open-problem-resolution #32224)
 -/
 
@@ -874,6 +875,17 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
 
 attribute [local irreducible] a
 
+theorem integer_readout {S : Type*} [Fintype S] [DecidableEq S]
+    (M : Matrix S S ℤ) (u v : S → ℤ) (d b : ℕ) (c : Fin d → ℤ)
+    (h : (M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) (n : ℕ) :
+    dotProduct v ((M ^ (n + b + d)).mulVec u) =
+      ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
+  have forward_polynomial : DefectTransfer.forward M.transpose u (b + d) =
+      ∑ j : Fin d, c j • DefectTransfer.forward M.transpose u (b + j.val) := by
+    simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using h
+  simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] using
+    DefectTransfer.forward_shift M.transpose u v d b c forward_polynomial n
+
 /-- Hardin's order-twenty recurrence, starting at width twenty-three. -/
 theorem result (n : ℕ) :
     (a (n + 23) : ℤ) = 12 * (a (n + 22) : ℤ) + 26 * (a (n + 21) : ℤ) - 566 * (a (n + 20) : ℤ) -
@@ -895,13 +907,8 @@ theorem result (n : ℕ) :
     rw [hscale]
     push_cast
     rfl
-  have forward_polynomial :
-      DefectTransfer.forward transfer.transpose terminal (2 + 20) =
-        ∑ j : Fin 20, coefficients538 j • DefectTransfer.forward transfer.transpose terminal (2 + j.val) := by
-    simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using vector_polynomial
-  have h := DefectTransfer.forward_shift transfer.transpose terminal
-    (Sum.elim (1 : Column → ℤ) 0) 20 2 coefficients538 forward_polynomial n
-  simp only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] at h
+  have h := integer_readout transfer terminal (Sum.elim (1 : Column → ℤ) 0)
+    20 2 coefficients538 vector_polynomial n
   rw [bridge (n + 2 + 20)] at h
   simp_rw [fun k : Fin 20 => bridge (n + 2 + k.val)] at h
   norm_num [coefficients538, Fin.sum_univ_succ, Nat.add_assoc] at h

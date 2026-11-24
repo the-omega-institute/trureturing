@@ -38,6 +38,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("table_powers",TablePowers(),true,"The first coordinate gives the one-defect continuations and the second gives the inherited proper-colouring continuations."),
             Node("coefficients538",Coefficients(),false,"The entries are ordered from the smallest shift of the recurrence to the largest."),
             Node("vector_polynomial",Polynomial(),true,"The relation holds simultaneously for all boundary columns and both residual budgets."),
+            Node("integer_readout", IntegerReadout(), true, "A vector recurrence for the terminal values of a finite integer matrix transfers to every shifted scalar readout."),
             Node("result",Recurrence(),true,"The transfer counts labelled arrays by adjacent column cuts. The six-to-one count in labelled_scale identifies that readout with six times a at the widths of the recurrence. Cancelling six in the integer readout gives the order-twenty recurrence for every width at least twenty-three."))));
 
     private static DocumentBlock Node(string name, Formula statement, bool theorem, string prose) =>
@@ -212,6 +213,31 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         Formula Power(Formula n)=>Call("Matrix.mulVec",Pow(Own("transfer"),n),Own("terminal"));
         return Eq(Power(N(22)),SumOver("k",Fin(20),
             Call("SMul.smul",Own("coefficients538",V("k")),Power(Add(N(2),Val(V("k")))))));
+    }
+
+    private static Formula IntegerReadout()
+    {
+        var state = V("S");
+        var matrix = V("M");
+        var u = V("u");
+        var v = V("v");
+        var d = V("d");
+        var b = V("b");
+        var c = V("c");
+        var j = V("j");
+        var n = V("n");
+        var vector = Arrow(state, Q("Int"));
+        Formula Power(Formula exponent) => Call("Matrix.mulVec", Pow(matrix, exponent), u);
+        Formula Readout(Formula exponent) => Call("dotProduct", v, Power(exponent));
+        var relation = Eq(Power(Add(b, d)), SumOver("j", Fin(d),
+            Call("SMul.smul", App(c, j), Power(Add(b, Val(j))))));
+        var shifted = Eq(Readout(Add(Add(n, b), d)), SumOver("j", Fin(d),
+            Mul(App(c, j), Readout(Add(Add(n, b), Val(j))))));
+        return All("S", Seq(Q("Type"), Star), Seq(
+            OpenBracket, Call("Fintype", state), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", state), CloseBracket, Sp,
+            All("M", M(state), All("u", vector, All("v", vector, All("d", Q("Nat"), All("b", Q("Nat"),
+                All("c", Arrow(Fin(d), Q("Int")), Imp(relation, All("n", Q("Nat"), shifted)))))))));
     }
 
     private static Formula EdgesSum()
