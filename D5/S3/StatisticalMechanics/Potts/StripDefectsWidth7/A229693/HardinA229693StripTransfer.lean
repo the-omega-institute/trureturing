@@ -247,7 +247,6 @@ private def exhaustedExits (i : Fin 40) (j : Fin 36) : ℕ :=
     19493928841285904032071680, 19493928841285904065626112]
   let index : Array ℕ := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 10, 11, 12, 7, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
   (table[index[i.val]!]! >>> (4 * j.val)) % 16
-
 private def oldExits (i : Fin 72) (j : Fin 96) : ℤ :=
   Fin.append (fun k : Fin 56 => HardinA229585StripData.T i (k.natAdd 16))
     (0 : Fin 40 → ℤ) j
