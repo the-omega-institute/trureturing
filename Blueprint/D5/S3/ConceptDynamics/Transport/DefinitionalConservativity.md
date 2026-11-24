@@ -16,7 +16,7 @@ $$\begin{gathered}\forall B, E: \operatorname{Type}, \\{}C: \operatorname{Calcul
 
 A calculus consists of an axiom predicate and a rule predicate on finite lists of premises. The extension calculus is constructed by applying the source expansion map to every axiom, premise, and conclusion; it introduces no independent axiom or rule.
 
-The old-language embedding is required to be a section of expansion. Induction on an extended derivation then yields a base derivation of the expanded conclusion, and the section law identifies that conclusion with the original old-language sentence.
+The old-language embedding is required to be a section of expansion. An extended derivation belongs to every family closed under the extended axioms and rules. Base derivability pulled back along expansion is such a family. The section law identifies the expanded conclusion with the original old-language sentence.
 
 This is the source's definitional-extension conservativity clause: every old-language sentence derivable in the expansion-only calculus was already derivable in the base calculus.
 

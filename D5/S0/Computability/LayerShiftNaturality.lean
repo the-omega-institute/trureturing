@@ -5,24 +5,23 @@
    anchors: []
    digest: A layer-shift natural transformation commutes with every lifting morphism. -/
 
-import Mathlib.CategoryTheory.NatTrans
-
-/- Provenance: thin honest wrapper over pinned Mathlib's naturality square
-   (`CategoryTheory.NatTrans.naturality`). -/
+module
+prelude
+public import OmegaMath.CategoryTheory.Naturality
 
 namespace D5.S0.Computability.LayerShiftNaturality
 
-open CategoryTheory
+open Omega
+open Omega.CategoryTheory
 
-universe u v
-
-/-- A layer shift represented by a natural transformation is compatible with
-every lifting morphism: shifting after the current-layer action equals acting
-at the shifted layer after shifting the source. -/
-theorem layer_shift_naturality {C : Type u} [Category.{v} C]
-    {Current Shifted : C ⥤ C} (shift : NatTrans Current Shifted)
-    {X Y : C} (lift : X ⟶ Y) :
-    Current.map lift ≫ shift.app Y = shift.app X ≫ Shifted.map lift :=
-  shift.naturality lift
+/-- A natural layer shift commutes with each lifting morphism. -/
+public theorem layer_shift_naturality {Obj : Type u} {Arrow : Obj → Obj → Type v}
+    (C : Category Obj Arrow) (_categoryLaws : C.Laws)
+    {Current Shifted : Functor Arrow Arrow}
+    (_currentLaws : Current.Laws C C) (_shiftedLaws : Shifted.Laws C C)
+    (shift : Transformation Current Shifted) (natural : Transformation.IsNatural shift C)
+    {X Y : Obj} (lift : Arrow X Y) :
+    Eq (C.comp (Current.map lift) (shift Y)) (C.comp (shift X) (Shifted.map lift)) :=
+  natural lift
 
 end D5.S0.Computability.LayerShiftNaturality

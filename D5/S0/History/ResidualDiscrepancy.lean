@@ -5,26 +5,30 @@
    anchors: []
    digest: A discrepancy is residual exactly when observed and expected readings differ. -/
 
-import Mathlib.Algebra.Group.Basic
+module
+prelude
+public import OmegaMath.Algebra.Group.Basic
 
-/- Provenance: thin honest wrapper over pinned mathlib's `sub_ne_zero`. -/
+noncomputable section
 
 namespace D5.S0.History.ResidualDiscrepancy
 
+open Omega
+
 /-- The discrepancy between an observed reading and its expected reading. -/
-def residualDiscrepancy {G : Type*} [AddGroup G]
-    (expected observed : G) : G :=
-  observed - expected
+@[expose] public def residualDiscrepancy {A : Type u} (group : AddGroup A)
+    (expected observed : A) : A :=
+  group.sub observed expected
 
 /-- A discrepancy is residual when it does not vanish. -/
-def IsResidual {G : Type*} [AddGroup G]
-    (expected observed : G) : Prop :=
-  residualDiscrepancy expected observed ≠ 0
+@[expose] public def IsResidual {A : Type u} (group : AddGroup A)
+    (expected observed : A) : Prop :=
+  Not (Eq (residualDiscrepancy group expected observed) group.zero)
 
 /-- A discrepancy is residual exactly when the observed and expected readings differ. -/
-theorem residual_iff_observed_ne_expected {G : Type*} [AddGroup G]
-    (expected observed : G) :
-    IsResidual expected observed ↔ observed ≠ expected := by
-  rw [IsResidual, residualDiscrepancy, sub_ne_zero]
+public theorem residual_iff_observed_ne_expected {A : Type u} (group : AddGroup A)
+    (laws : group.Laws) (expected observed : A) :
+    Iff (IsResidual group expected observed) (Not (Eq observed expected)) :=
+  sub_ne_zero group laws
 
 end D5.S0.History.ResidualDiscrepancy

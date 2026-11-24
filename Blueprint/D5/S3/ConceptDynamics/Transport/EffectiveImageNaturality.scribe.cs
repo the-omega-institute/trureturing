@@ -27,23 +27,18 @@ internal sealed class EffectiveImageNaturalityDocument : IScribeDocumentDefiniti
                     Paragraph(Text(
                         "For every value in the range of the first readout, transporting "
                             + "after applying its factor equals applying the transported factor "
-                            + "after the readout transport. The proof evaluates the four public "
-                            + "equations at a source point and uses equality congruence.")),
-                    Paragraph(Text(
-                        "The canonical Concept carrier is imported from the existing family. "
-                            + "Repository and pinned-library searches found no exact theorem "
-                            + "packaging these two naturality clauses with the effective-image "
-                            + "conclusion."))),
+                            + "after the readout transport. A source point witnessing image "
+                            + "membership supplies the four pointwise equations used in the proof."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
-    private static Formula Compose(Formula left, Formula right) =>
-        Seq(left, Sp, Circ, Sp, right);
+    private static Formula FunctionType(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
 
-    private static Formula Concept(Formula domain, Formula codomain) =>
-        Seq(Operatorname, Grp(F.Id("Concept")), Open, domain, Comma, Sp, codomain, Close);
+    private static Formula Pointwise(Formula point, Formula left, Formula right) =>
+        Seq(Open, Forall, Sp, point, Comma, Sp, left, Sp, Eq, Sp, right, Close);
 
     private static Formula Formula()
     {
@@ -66,29 +61,28 @@ internal sealed class EffectiveImageNaturalityDocument : IScribeDocumentDefiniti
         Formula point = F.Id("x");
         Formula range = Seq(Operatorname, Grp(F.Id("range")));
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
-        Formula transport = Seq(
-            Compose(tPrime, sourceMap), Sp, Eq, Sp, Compose(targetMap, t));
-        Formula readoutNaturality = Seq(
-            Compose(cPrime, sourceMap), Sp, Eq, Sp, Compose(readoutMap, c));
-        Formula factorization = Seq(
-            t, Sp, Eq, Sp, Compose(factor, c));
-        Formula factorizationPrime = Seq(
-            tPrime, Sp, Eq, Sp, Compose(factorPrime, cPrime));
+        Formula transport = Pointwise(point,
+            Apply(tPrime, Apply(sourceMap, point)), Apply(targetMap, Apply(t, point)));
+        Formula readoutNaturality = Pointwise(point,
+            Apply(cPrime, Apply(sourceMap, point)), Apply(readoutMap, Apply(c, point)));
+        Formula factorization = Pointwise(point, Apply(t, point), Apply(factor, Apply(c, point)));
+        Formula factorizationPrime = Pointwise(point,
+            Apply(tPrime, point), Apply(factorPrime, Apply(cPrime, point)));
         Formula inRange = Seq(
             value, Sp, InMacro, Sp, Apply(range, c));
         Formula conclusion = Seq(
             Apply(targetMap, Apply(factor, value)), Sp, Eq, Sp,
             Apply(factorPrime, Apply(readoutMap, value)));
         Formula maps = Seq(
-            c, Colon, Sp, Concept(source, readout), Comma, Sp,
-            cPrime, Colon, Sp, Concept(sourcePrime, readoutPrime), Comma, Sp,
-            t, Colon, Sp, Concept(source, target), Comma, Sp,
-            tPrime, Colon, Sp, Concept(sourcePrime, targetPrime), Comma, Sp,
-            factor, Colon, Sp, Concept(readout, target), Comma, Sp,
-            factorPrime, Colon, Sp, Concept(readoutPrime, targetPrime), Comma, Sp,
-            sourceMap, Colon, Sp, Concept(source, sourcePrime), Comma, Sp,
-            readoutMap, Colon, Sp, Concept(readout, readoutPrime), Comma, Sp,
-            targetMap, Colon, Sp, Concept(target, targetPrime));
+            c, Colon, Sp, FunctionType(source, readout), Comma, Sp,
+            cPrime, Colon, Sp, FunctionType(sourcePrime, readoutPrime), Comma, Sp,
+            t, Colon, Sp, FunctionType(source, target), Comma, Sp,
+            tPrime, Colon, Sp, FunctionType(sourcePrime, targetPrime), Comma, Sp,
+            factor, Colon, Sp, FunctionType(readout, target), Comma, Sp,
+            factorPrime, Colon, Sp, FunctionType(readoutPrime, targetPrime), Comma, Sp,
+            sourceMap, Colon, Sp, FunctionType(source, sourcePrime), Comma, Sp,
+            readoutMap, Colon, Sp, FunctionType(readout, readoutPrime), Comma, Sp,
+            targetMap, Colon, Sp, FunctionType(target, targetPrime));
         Formula types = Seq(
             source, Comma, Sp, sourcePrime, Comma, Sp, readout, Comma, Sp,
             readoutPrime, Comma, Sp, target, Comma, Sp, targetPrime,
@@ -101,7 +95,7 @@ internal sealed class EffectiveImageNaturalityDocument : IScribeDocumentDefiniti
             readoutNaturality, Sp, Land, Sp,
             factorization, Sp, Land, Sp,
             factorizationPrime, Sp, Rightarrow, Esc,
-            Forall, Sp, value, Colon, Sp, target, Comma, Sp,
+            Forall, Sp, value, Colon, Sp, readout, Comma, Sp,
             inRange, Sp, Rightarrow, Sp, conclusion, Dot));
     }
 }
