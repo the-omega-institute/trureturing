@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.Measures;
 internal sealed class BrezisLiebPowerDefectDocument : IScribeDocumentDefinition
 {
     private static Formula V(string name) => F.Id(name);
-    private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
+    private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula All(string name, Formula type) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp);
     private static Formula At(Formula f, Formula x) => Seq(f, Open, x, Close);
