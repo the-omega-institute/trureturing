@@ -34,7 +34,7 @@ A color permutation acts pointwise on a column.
 
 **Definition 1.3 (alternatingEquiv).**
 
-$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; (alternatingEquiv\left(k, n\right): Equiv\left((Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right), (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right)\right)), \forall f \in (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right),\; \forall p \in (Fin\left(k\right) \times Fin\left(n\right)),\; alternatingEquiv\left(k, n\right)\left(f, p\right) = \left((Fin.revPerm)^{Fin.val\left(Prod.snd\left(p\right)\right)}\right)\left(f\left(p\right)\right)$$
+$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; (alternatingEquiv\left(k, n\right): Equiv\left((Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right), (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right)\right)) = Equiv.piCongrRight\left((\lambda p: (Fin\left(k\right) \times Fin\left(n\right)) \mapsto (((Fin.revPerm: Equiv.Perm\left(Fin\left(3\right)\right)))^{Fin.val\left(Prod.snd\left(p\right)\right)}))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer.alternatingEquiv` (`✓ std3`).
 
