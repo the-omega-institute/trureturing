@@ -113,20 +113,6 @@ theorem mixedAgreement_stable (D : LatticeData) (hu : IsUnit D.G.det) (s : Bool)
   dsimp only
   simp only [hb]
 
-/-- In particular, every lawful mixed field has a fixed-mode-stable source kernel. -/
-theorem mixedKernel_stable (D : LatticeData) (hu : IsUnit D.G.det) (s : Bool)
-    (F : LawfulMixedField D hu s) (a : FixedCarrier D) (r : ℤ) (b : OddCarrier D)
-    (hb : b ∈ mixedAgreement D hu s F.coeff 0) :
-    oddMode D a r b ∈ mixedAgreement D hu s F.coeff 0 := by
-  rw [mem_mixedAgreement] at hb ⊢
-  intro q
-  apply LinearMap.ext
-  intro v
-  rw [mixed_iterate D hu s F]
-  dsimp only
-  simp only [hb, Pi.zero_apply, LinearMap.zero_apply, map_zero, smul_zero,
-    finsum_zero, sub_zero]
-
 /-- The charge-zero part of the actual odd untwisted carrier. -/
 def chargeZeroOdd (D : LatticeData) : Submodule ℂ (OddCarrier D) :=
   (Finsupp.supported (Oscillator D) ℂ ({0} : Set (Charge D))).comap (minusSpace D).subtype
