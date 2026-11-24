@@ -855,8 +855,9 @@ private theorem regular_and_balanced_of_component_singular (U : Finset (Q 9)) (K
     (K.reachable_of_mem_supp hRi hyK)).mpr hz)
 
 open Classical in
-private theorem signed_defect_det_eq_component (w : Fin 9 → ℝ) (U : Finset (Q 9))
-    (b : Bool) (K : Comp U) :
+/-- The component defect determinant is intrinsic to its selected support. -/
+theorem signed_defect_det_eq_component (w : Fin 9 → ℝ) (U : Finset (Q 9))
+    (b : Bool) (K : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent) :
     (defect w (signedBiadjacency w (componentFinset U K) b)).det =
       (componentDefect w U b K).det := by
   classical

@@ -274,7 +274,8 @@ theorem weightedAction_image_eq_kernel {F : Type*} [Field F]
   · intro hf
     exact ⟨_, weightedAction_halfFlip_preimage w i hi f hf⟩
 
-private theorem flip_off_parity {b : Bool} {x : Q 9} (j : Fin 9) (hx : parity x ≠ !b) :
+/-- Flipping one coordinate reverses cube parity. -/
+theorem flip_off_parity {b : Bool} {x : Q 9} (j : Fin 9) (hx : parity x ≠ !b) :
     parity (flip x j) ≠ b := by
   have hflip : (!parity x) = parity (flip x j) :=
     Bool.not_eq_iff.mpr (cubeParity_ne_of_adj (flip_adj x j))
