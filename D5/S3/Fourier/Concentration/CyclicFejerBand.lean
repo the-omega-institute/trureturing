@@ -23,7 +23,8 @@ variable {q : ℕ} [NeZero q]
 def band (q H : ℕ) : Finset (ZMod q) :=
   (Icc (-(H : ℤ)) (H : ℤ)).image (fun z : ℤ => (z : ZMod q))
 
-private def prefixPairs (q N : ℕ) (r : ZMod q) : Finset (ℕ × ℕ) :=
+/-- Ordered pairs of prefix indices with the given residue difference. -/
+def prefixPairs (q N : ℕ) (r : ZMod q) : Finset (ℕ × ℕ) :=
   (range N ×ˢ range N).filter fun p => ((p.1 : ZMod q) - p.2) = r
 
 omit [NeZero q] in
@@ -63,7 +64,8 @@ private theorem card_prefixPairs_of_mem {N H : ℕ} (r : ZMod q) (hr : r ∈ ban
 def prefixCharacter (q N : ℕ) [NeZero q] (k : ZMod q) : ℂ :=
   ∑ j ∈ range N, ZMod.stdAddChar ((j : ZMod q) * k)
 
-private theorem pair_char_factor (N : ℕ) (k : ZMod q) :
+/-- The character sum over ordered prefix pairs factors into two prefix sums. -/
+theorem pair_char_factor (N : ℕ) (k : ZMod q) :
     (∑ i ∈ range N, ∑ j ∈ range N,
       ZMod.stdAddChar (((i : ZMod q) - (j : ZMod q)) * k)) =
         prefixCharacter q N k * prefixCharacter q N (-k) := by
@@ -80,7 +82,8 @@ private theorem fourier_point (M : ZMod q → ℂ) (r : ZMod q) :
   simpa [ZMod.dft_apply, mul_neg, smul_eq_mul] using
     (congrFun (ZMod.dft_dft M) (-r)).symm
 
-private theorem sum_prefixPairs (N : ℕ) (M : ZMod q → ℝ) :
+/-- Sum over residue difference fibres by summing over the individual pairs. -/
+theorem sum_prefixPairs (N : ℕ) (M : ZMod q → ℝ) :
     (∑ r : ZMod q, ((prefixPairs q N r).card : ℝ) * M r) =
       ∑ i ∈ range N, ∑ j ∈ range N, M ((i : ZMod q) - j) := by
   let rOf (p : ℕ × ℕ) : ZMod q := (p.1 : ZMod q) - p.2
@@ -133,7 +136,8 @@ private theorem band_le_pair_sum (N H : ℕ) (hHN : H ≤ N) (M : ZMod q → ℝ
     _ ≤ _ := sum_le_sum_of_subset_of_nonneg (subset_univ _) fun r _ _ =>
       mul_nonneg (Nat.cast_nonneg _) (hM r)
 
-private theorem fourier_pair_sum (N : ℕ) (M : ZMod q → ℂ) :
+/-- Expand the ordered prefix pair sum with Fourier inversion. -/
+theorem fourier_pair_sum (N : ℕ) (M : ZMod q → ℂ) :
     (q : ℂ) * (∑ i ∈ range N, ∑ j ∈ range N, M ((i : ZMod q) - j)) =
       ∑ k : ZMod q, prefixCharacter q N k * prefixCharacter q N (-k) * ZMod.dft M k := by
   calc
@@ -155,7 +159,8 @@ private theorem fourier_pair_sum (N : ℕ) (M : ZMod q → ℂ) :
       simp_rw [← sum_mul]
       rw [pair_char_factor]
 
-private theorem prefixCharacter_neg (N : ℕ) (k : ZMod q) :
+/-- Negating the frequency conjugates the prefix character sum. -/
+theorem prefixCharacter_neg (N : ℕ) (k : ZMod q) :
     prefixCharacter q N (-k) = starRingEnd ℂ (prefixCharacter q N k) := by
   simp only [prefixCharacter, map_sum, mul_neg, AddChar.map_neg_eq_inv, ZMod.stdAddChar_apply]
   apply sum_congr rfl
