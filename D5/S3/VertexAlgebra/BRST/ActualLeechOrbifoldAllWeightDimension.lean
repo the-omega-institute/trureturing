@@ -6,7 +6,7 @@
    utility: none
    digest: Exact integer-weight dimensions from the assembled Leech stress mode. -/
 
-import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeCohomology
+import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldMatter
 import D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.LatticeHalfFockParityT
@@ -244,26 +244,3 @@ theorem weight_finrank (n : ℤ) :
     fixed_weight_finrank_eq_coefficients n, twisted_weight_finrank n]
 
 end D5.S3.VertexAlgebra.ActualLeechOrbifoldAllWeightDimension
-
-namespace D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeCohomology
-
-open ActualLeechOrbifoldCriticalMatter (hyperbolicPlane)
-open LatticeGeneratingFieldLocality (Charge)
-open ActualLeechOrbifoldAllWeightDimension (weightMultiplicity weight_finrank)
-
-local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
-  Submodule.addCommGroup (relativeShell p)
-
-local instance (p : Charge hyperbolicPlane) :
-    AddCommGroup (GradedCycles planeFrame planeBasis p 1) :=
-  Submodule.addCommGroup (GradedCycles planeFrame planeBasis p 1)
-
-/-- At nonzero plane charge the native relative ghost-one quotient has the
-orbifold multiplicity at the conformal weight selected by the charge. -/
-theorem ghost_one_finrank_nonzero (p : Charge hyperbolicPlane) (hp : p ≠ 0) :
-    (Module.finrank ℂ (GradedCohomology planeFrame planeBasis p 1) : ℂ) =
-      weightMultiplicity (1 - p (0 : Fin 2) * p (1 : Fin 2)) := by
-  rw [(ghostOneCohomologyEquivNonzero p hp).finrank_eq]
-  exact weight_finrank (1 - p (0 : Fin 2) * p (1 : Fin 2))
-
-end D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeCohomology

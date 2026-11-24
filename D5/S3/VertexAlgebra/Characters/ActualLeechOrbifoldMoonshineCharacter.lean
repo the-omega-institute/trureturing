@@ -4,14 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The actual Leech orbifold character and the nonzero BRST multiplicity recursion. -/
+   digest: The actual Leech orbifold character and its weight multiplicity recursion. -/
 
 import D5.S3.VertexAlgebra.Characters.ActualLeechOrbifoldTraceSeries
 import D5.S3.VertexAlgebra.Characters.LeechTwiningTraceModularity
 import D5.S3.VertexAlgebra.Lattice.ActualLeechTheta
 
 /-! The actual Leech character from its four trace series and the resulting
-coefficient recursion for nonzero relative BRST root spaces. -/
+coefficient recursion for the literal stress eigenspaces. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -133,7 +133,7 @@ theorem dimension_recursion (n : ℕ) :
     mul_one] at h
   linear_combination h
 
-private theorem dimension_eq_zero_of_neg (n : ℤ) (hn : n < 0) : dimension n = 0 := by
+theorem dimension_eq_zero_of_neg (n : ℤ) (hn : n < 0) : dimension n = 0 := by
   classical
   letI : IsEmpty (EnergyFiber leechData n) :=
     ⟨fun x => by
@@ -151,51 +151,5 @@ private theorem dimension_eq_zero_of_neg (n : ℤ) (hn : n < 0) : dimension n = 
 
 end D5.S3.VertexAlgebra.ActualLeechOrbifoldMoonshineCharacter
 
-namespace D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeCohomology
-
-open ActualLeechOrbifoldCriticalMatter (hyperbolicPlane)
-open LatticeGeneratingFieldLocality (Charge)
-open ActualLeechOrbifoldTraceSeries (dimension)
-open ActualLeechOrbifoldMoonshineCharacter (normalizedNumerator dimension_recursion)
-
-local notation "Δ" => ModularForm.discriminant
-
-local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
-  Submodule.addCommGroup (relativeShell p)
-
-local instance (p : Charge hyperbolicPlane) :
-    AddCommGroup (GradedCycles planeFrame planeBasis p 1) :=
-  Submodule.addCommGroup (GradedCycles planeFrame planeBasis p 1)
-
-/-- At nonzero plane momentum the recursion reads the coefficient with Laurent
-index minus the product of the two charge coordinates. -/
-theorem ghost_one_finrank_nonzero_moonshine (p : Charge hyperbolicPlane) (hp : p ≠ 0) :
-    let n : ℤ := 1 - p (0 : Fin 2) * p (1 : Fin 2)
-    (Module.finrank ℂ (GradedCohomology planeFrame planeBasis p 1) : ℂ) =
-      if 0 ≤ n then
-        (qExpansion 1 normalizedNumerator).coeff n.toNat -
-          ∑ k ∈ Finset.range n.toNat,
-            (dimension k : ℂ) * (qExpansion 1 Δ).coeff (n.toNat - k + 1)
-      else 0 := by
-  dsimp only
-  rw [(ghostOneCohomologyEquivNonzero p hp).finrank_eq]
-  let n : ℤ := 1 - p (0 : Fin 2) * p (1 : Fin 2)
-  change (dimension n : ℂ) =
-    if 0 ≤ n then
-      (qExpansion 1 normalizedNumerator).coeff n.toNat -
-        ∑ k ∈ Finset.range n.toNat,
-          (dimension k : ℂ) * (qExpansion 1 Δ).coeff (n.toNat - k + 1)
-    else 0
-  by_cases hn : 0 ≤ n
-  · rw [ite_eq_left hn]
-    have h := dimension_recursion n.toNat
-    rw [Int.toNat_of_nonneg hn] at h
-    exact h
-  · rw [ite_eq_right hn, ActualLeechOrbifoldMoonshineCharacter.dimension_eq_zero_of_neg n
-      (lt_of_not_ge hn), Nat.cast_zero]
-
-end D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeCohomology
-
 #print axioms D5.S3.VertexAlgebra.ActualLeechOrbifoldMoonshineCharacter.character_eq_j_sub_744
 #print axioms D5.S3.VertexAlgebra.ActualLeechOrbifoldMoonshineCharacter.dimension_recursion
-#print axioms D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeCohomology.ghost_one_finrank_nonzero_moonshine
