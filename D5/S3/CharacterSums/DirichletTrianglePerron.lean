@@ -4,9 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Absolutely convergent Laplace and Perron formulas for triangular character sums. -/
+   digest: Absolutely convergent Perron formulas for triangular character sums. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtLaplace
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Integral
 import D5.S3.Arith.PrimitiveRoot.CharacterSieve
 import Mathlib.NumberTheory.LSeries.DirichletContinuation
@@ -30,52 +29,6 @@ def characterTriangle {q : ℕ} (χ : DirichletCharacter ℂ q) (x : ℝ) : ℂ 
   ∑ n ∈ Finset.Icc 1 ⌊x⌋₊, (ArithmeticFunction.vonMangoldt n : ℂ) *
     χ n * (1 - (n : ℂ) / x)
 
-private def laplaceAtom (n : ℕ) (s : ℂ) (y : ℝ) : ℂ :=
-  (n : ℂ) * (Complex.exp (-(s + 1) * y) * (mangoldtRamp n (Real.exp y) : ℂ))
-
-private theorem atom_integrable (n : ℕ) {s : ℂ} (hs : 0 < s.re) :
-    IntegrableOn (laplaceAtom n s) (Ioi 0) := by
-  exact (mangoldtRamp_laplace_integrable (n := n) (s := s + 1)
-    (by simpa using hs)).const_mul _
-
-private theorem atom_integral (n : ℕ) {s : ℂ} (hs : 0 < s.re) :
-    (∫ y in Ioi 0, laplaceAtom n s y) =
-      LSeries.term (fun k : ℕ => (ArithmeticFunction.vonMangoldt k : ℂ)) s n /
-        (s * (s + 1)) := by
-  simp only [laplaceAtom]
-  rw [integral_const_mul, mangoldtRamp_laplace (by simpa using hs)]
-  rcases eq_or_ne n 0 with rfl | hn
-  · simp
-  have hnC : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hn
-  rw [LSeries.term_of_ne_zero hn, LSeries.term_of_ne_zero hn,
-    Complex.cpow_add _ _ hnC, Complex.cpow_one]
-  simp only [add_sub_cancel_right]
-  field_simp
-
-private theorem atom_norm_summable {s : ℂ} (hs : 1 < s.re) :
-    Summable (fun n : ℕ => ∫ y in Ioi 0, ‖laplaceAtom n s y‖) := by
-  let σ : ℂ := s.re
-  have hσ : 0 < σ.re := zero_lt_one.trans hs
-  have he (n : ℕ) (y : ℝ) : ‖laplaceAtom n s y‖ = (laplaceAtom n σ y).re := by
-    have hex : Complex.exp (-(σ + 1) * (y : ℂ)) =
-        (Real.exp (-(s.re + 1) * y) : ℂ) := by
-      rw [Complex.ofReal_exp]
-      congr 1
-      simp [σ]
-    simp only [laplaceAtom, norm_mul, Complex.norm_natCast, Complex.norm_exp,
-      Complex.mul_re, Complex.neg_re, Complex.add_re, Complex.one_re,
-      Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.norm_real,
-      Real.norm_eq_abs, abs_of_nonneg (mangoldtRamp_nonneg n _), hex]
-    simp
-  have hsum := (ArithmeticFunction.LSeriesSummable_vonMangoldt
-    (show 1 < σ.re from hs)).hasSum.div_const (σ * (σ + 1))
-  apply (Complex.hasSum_re hsum).summable.congr
-  intro n
-  rw [← atom_integral n hσ]
-  change RCLike.re (∫ y in Ioi 0, laplaceAtom n σ y) = _
-  rw [← integral_re (atom_integrable n hσ)]
-  exact setIntegral_congr_fun measurableSet_Ioi (fun y _ => (he n y).symm)
-
 private theorem series_integrable {F : ℕ → ℝ → ℂ} {μ : Measure ℝ}
     (hi : ∀ n, Integrable (F n) μ)
     (hn : Summable (fun n => ∫ y, ‖F n y‖ ∂μ)) :
@@ -94,54 +47,6 @@ private theorem series_integrable {F : ℕ → ℝ → ℂ} {μ : Measure ℝ}
       exact (ofReal_integral_norm_eq_lintegral_enorm (hi n)).symm
     _ < ⊤ := hn.tsum_ofReal_lt_top
 
-private theorem atom_sum {q : ℕ} (χ : DirichletCharacter ℂ q) (s : ℂ) (y : ℝ) :
-    (∑' n : ℕ, laplaceAtom n s y * χ n) =
-      Complex.exp (-s * y) * characterTriangle χ (Real.exp y) := by
-  have hex : Complex.exp (-(s + 1) * (y : ℂ)) =
-      Complex.exp (-s * y) / (Real.exp y : ℂ) := by
-    rw [Complex.ofReal_exp, div_eq_mul_inv, ← Complex.exp_neg, ← Complex.exp_add]
-    congr 1
-    ring
-  rw [tsum_eq_sum (s := Finset.Icc 1 ⌊Real.exp y⌋₊)]
-  · rw [characterTriangle, Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro n hn
-    have hn0 : 0 < n := (Finset.mem_Icc.mp hn).1
-    have hnC : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt hn0)
-    rw [laplaceAtom, ramp_eq_affine hn0
-      ((Nat.le_floor_iff (Real.exp_nonneg y)).mp (Finset.mem_Icc.mp hn).2), hex]
-    push_cast
-    field_simp
-  · intro n hn
-    rcases eq_or_ne n 0 with rfl | hn0
-    · simp [laplaceAtom]
-    · have hnf : ⌊Real.exp y⌋₊ < n := by
-        simp only [Finset.mem_Icc, not_and_or, not_le] at hn
-        omega
-      simp [laplaceAtom, ramp_zero_of_lt (Real.exp_nonneg y) (Nat.lt_of_floor_lt hnf)]
-
-private theorem twisted_norm_summable {q : ℕ} (χ : DirichletCharacter ℂ q)
-    {s : ℂ} (hs : 1 < s.re) :
-    Summable (fun n : ℕ => ∫ y in Ioi 0, ‖laplaceAtom n s y * χ n‖) := by
-  refine (atom_norm_summable hs).of_nonneg_of_le
-    (fun n => integral_nonneg (fun _ => norm_nonneg _)) (fun n => ?_)
-  apply integral_mono ((atom_integrable n (zero_lt_one.trans hs)).mul_const _).norm
-    (atom_integrable n (zero_lt_one.trans hs)).norm
-  intro y
-  change ‖laplaceAtom n s y * χ n‖ ≤ ‖laplaceAtom n s y‖
-  rw [norm_mul]
-  exact mul_le_of_le_one_right (norm_nonneg _) (χ.norm_le_one _)
-
-/-- The triangular sum has an absolutely convergent Laplace transform for Re(s) > 1. -/
-theorem characterTriangle_laplace_integrable {q : ℕ} (χ : DirichletCharacter ℂ q)
-    {s : ℂ} (hs : 1 < s.re) :
-    IntegrableOn (fun y : ℝ => Complex.exp (-s * y) *
-      characterTriangle χ (Real.exp y)) (Ioi 0) := by
-  have hi := series_integrable
-    (fun n => (atom_integrable n (zero_lt_one.trans hs)).mul_const (χ n))
-    (twisted_norm_summable χ hs)
-  simpa only [IntegrableOn, atom_sum] using hi
-
 private theorem twisted_series {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
     {s : ℂ} (hs : 1 < s.re) :
     LSeries (fun n : ℕ => χ n * (ArithmeticFunction.vonMangoldt n : ℂ)) s =
@@ -150,28 +55,6 @@ private theorem twisted_series {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ
     (fun n : ℕ => (ArithmeticFunction.vonMangoldt n : ℂ))) s = _
   rw [χ.LSeries_twist_vonMangoldt_eq hs, logDeriv_apply,
     χ.deriv_LFunction_eq_deriv_LSeries hs, χ.LFunction_eq_LSeries hs, neg_div]
-
-/-- The Laplace identity holds for principal and nonprincipal characters alike. -/
-theorem characterTriangle_laplace {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
-    {s : ℂ} (hs : 1 < s.re) :
-    (∫ y : ℝ in Ioi 0, Complex.exp (-s * y) * characterTriangle χ (Real.exp y)) =
-      -logDeriv χ.LFunction s / (s * (s + 1)) := by
-  have hi (n : ℕ) := (atom_integrable n (zero_lt_one.trans hs)).mul_const (χ n)
-  have he (n : ℕ) : (∫ y in Ioi 0, laplaceAtom n s y * χ n) =
-      LSeries.term (fun k : ℕ => χ k * (ArithmeticFunction.vonMangoldt k : ℂ)) s n /
-        (s * (s + 1)) := by
-    rw [integral_mul_const, atom_integral n (zero_lt_one.trans hs)]
-    rcases eq_or_ne n 0 with rfl | hn
-    · simp
-    · rw [LSeries.term_of_ne_zero hn, LSeries.term_of_ne_zero hn]
-      ring
-  have hx := hasSum_integral_of_summable_integral_norm hi (twisted_norm_summable χ hs)
-  simp_rw [he, atom_sum] at hx
-  have hL := (χ.LSeriesSummable_twist_vonMangoldt hs).hasSum.div_const (s * (s + 1))
-  change HasSum _ (LSeries
-    (fun n : ℕ => χ n * (ArithmeticFunction.vonMangoldt n : ℂ)) s / (s * (s + 1))) at hL
-  rw [twisted_series χ hs] at hL
-  exact hx.unique hL
 
 /-- The vertical integrand in the triangular Perron formula. -/
 def trianglePerronIntegrand {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)

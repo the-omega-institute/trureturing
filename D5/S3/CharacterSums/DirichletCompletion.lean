@@ -618,35 +618,6 @@ theorem completion_logDeriv {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
     push_cast
     ring
 
-/-- At two, the exact digamma values retain both parity and the logarithmic series. -/
-theorem completion_center_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
-    2 * (logDeriv (completion χ) 2).re ≤
-      Real.log (q : ℝ) - Real.log Real.pi +
-        (if χ.Even then -Real.eulerMascheroniConstant
-          else 2 - 2 * Real.log 2 - Real.eulerMascheroniConstant) +
-        2 * (∑' n : ℕ, Real.log n / (n : ℝ) ^ 2) := by
-  have hhalf : Complex.digamma (3 / 2) =
-      2 - 2 * Complex.log 2 - Real.eulerMascheroniConstant := by
-    have hh := Complex.digamma_apply_add_one (1 / 2) (by
-      intro m h
-      have he := congrArg Complex.re h
-      norm_num at he
-      linarith [Nat.cast_nonneg (α := ℝ) m])
-    rw [Complex.digamma_one_half] at hh
-    norm_num at hh ⊢
-    linear_combination hh
-  have hL := (Complex.re_le_norm _).trans (norm_logDeriv_LFunction_two χ 0)
-  have he := congrArg Complex.re (completion_logDeriv χ (s := 2) (by norm_num)
-    (χ.LFunction_ne_zero_of_one_le_re (.inr (by norm_num)) (by norm_num))
-    (.inl (by norm_num)))
-  split_ifs with hc
-  · simp only [if_pos hc] at he
-    norm_num [Complex.digamma_one, Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
-    linarith
-  · simp only [if_neg hc] at he
-    norm_num [hhalf, Complex.add_re, Complex.mul_re, Complex.log_re] at he hL
-    linarith
-
 /-- Every character has the upper bound; primitive nonprincipal characters have positivity. -/
 theorem completion_vertical_bound {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) (t : ℝ) :

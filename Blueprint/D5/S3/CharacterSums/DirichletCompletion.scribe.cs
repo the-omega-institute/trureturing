@@ -285,20 +285,6 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                     + "The product rule, the real Gamma-factor identity and its digamma "
                     + "logarithmic derivative yield the equality."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("real-center-bound"),
-                DeclarationHandle.Create(
-                    "D5/S3/CharacterSums/DirichletCompletion.completion_center_bound"),
-                H("A sharper estimate at the real center"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                      "For every positive modulus q and every complex character chi, twice "
-                    + "Re(Hchi(2)) is at most log(q)-log(pi)+c+2S, where S is the sum of "
-                    + "log(n)/n squared. The exact digamma constant c is minus Euler's constant "
-                    + "for even chi and 2-2 log(2) minus Euler's constant for odd chi. "
-                    + "The values at one and one half, with the digamma recurrence, give these "
-                    + "constants. No primitivity or nonprincipality is required."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("explicit-vertical-bound"),
                 DeclarationHandle.Create(
                     "D5/S3/CharacterSums/DirichletCompletion.completion_vertical_bound"),

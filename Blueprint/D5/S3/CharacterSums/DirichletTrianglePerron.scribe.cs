@@ -8,7 +8,7 @@ internal sealed class DirichletTrianglePerronDocument : IScribeDocumentDefinitio
     private const string Module = "D5/S3/CharacterSums/DirichletTrianglePerron.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Laplace and Perron formulas for triangular character sums",
+        "Perron formulas for triangular character sums",
         H("Triangular smoothing of the Mangoldt coefficients"),
         Blocks(
             Paragraph(Text("For a complex Dirichlet character χ modulo q, define Sχ(x) as the "
@@ -16,27 +16,6 @@ internal sealed class DirichletTrianglePerronDocument : IScribeDocumentDefinitio
                 + "weight. Write hχ(s) for the logarithmic derivative of L(s,χ). Principal "
                 + "characters and imprimitive characters are included. Let Kχ(x,c,t) be "
                 + "−hχ(c+it)x^(c+it)/((c+it)(c+1+it)).")),
-            Entry("laplace-integrability", "characterTriangle_laplace_integrable",
-                "Absolute convergence of the Laplace transform",
-                Call("IntegrableOn", Call("Lkernel", F.Id("s")), Call("Ioi", F.D(0))),
-                "For every modulus q, every χ and Re(s)>1, the function "
-                + "y ↦ exp(−sy)Sχ(exp(y)) is integrable on y>0. This assertion does not "
-                + "require q to be positive. Multiply the individual Mangoldt ramp at "
-                + "exp(y) by n exp(−y). At σ=Re(s), the integral of its norm is the real "
-                + "part of its positive Laplace transform. The von Mangoldt Dirichlet "
-                + "series at σ makes these integrals summable. The bound |χ(n)|≤1 "
-                + "preserves absolute summability. Tonelli controls the infinite sum."),
-            Entry("laplace-identity", "characterTriangle_laplace",
-                "The Laplace identity for every character",
-                Eq(Laplace(), new Formula.Fraction(
-                    new Formula.Negate(Call("hchi", F.Id("s"))),
-                    Mul(F.Id("s"), Add(F.Id("s"), F.D(1))))),
-                "For q>0 and Re(s)>1 the displayed integral is −hχ(s)/(s(s+1)). "
-                + "The single atom is evaluated by the Mangoldt ramp transform at s+1, "
-                + "multiplied by n. Absolute convergence justifies the exchange with "
-                + "the series. Its coefficient series is the character twist of Λ, "
-                + "whose sum is the negative logarithmic derivative of the L-function. "
-                + "Positive modulus is required by the L-function interface."),
             Entry("vertical-integrability", "trianglePerronIntegrand_integrable",
                 "Absolute convergence on every vertical line to the right of one",
                 Call("Integrable", Call("Kchi", F.Id("x"), F.Id("c"))),
@@ -72,11 +51,6 @@ internal sealed class DirichletTrianglePerronDocument : IScribeDocumentDefinitio
             DescribeId.Create(id), DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.FromAuthor(F.Disp(statement)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
-
-    private static Formula Laplace() => F.Seq(
-        F.Int, F.Underscore, F.Grp(F.D(0)), F.Caret, F.Grp(F.Infty), F.Sp,
-        Mul(Call("exp", new Formula.Negate(Mul(F.Id("s"), F.Id("y")))),
-            Call("Schi", Call("exp", F.Id("y")))), F.Sp, F.Id("d"), F.Id("y"));
 
     private static Formula Perron() => F.Seq(
         F.Int, F.Underscore, F.Grp(new Formula.Negate(F.Infty)),
