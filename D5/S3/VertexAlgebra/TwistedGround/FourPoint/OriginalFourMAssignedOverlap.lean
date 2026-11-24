@@ -74,6 +74,16 @@ theorem assigned_charge_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
   simpa only [assignedChargeTerm,
     physical_marked_coefficient_assign D hu slot colour upperA c hx hx₁ hc _ n l hl] using hs
 
+/-- The native assigned charge expansion is absolutely summable on each charge fibre. -/
+theorem assigned_charge_summable_norm (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hc : (c = .A ∨ c = .B) ∧ ‖parameter c (x : ℂ)‖ < 1 ∨ c = .D ∧ upperA = true)
+    (a : ModTwoCharge D) (n : X → ℕ) (l : List X) (hl : l.Nodup) :
+    Summable (fun q : {q : Charge D // reduceCharge D q = a} =>
+      ‖assignedChargeTerm D slot colour upperA c x q.val n l‖) :=
+  (assigned_charge_hasSum D hu hD slot colour upperA c hx hx₁ hc a n l hl).summable.norm
+
 /-- The true D lip and B chart obey the physical Fourier overlap on the
 complete finite assignments of an arbitrary occurrence word. -/
 theorem assigned_fourier_overlap (D : LatticeData) (hu : IsUnit D.G.det)

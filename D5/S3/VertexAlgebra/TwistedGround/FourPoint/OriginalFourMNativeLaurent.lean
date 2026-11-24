@@ -6,7 +6,7 @@
    utility: none
    digest: Native occupation readout and its Laurent evaluation in the three charts. -/
 
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCompactLowering
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMNativeOccupation
 
 /-! Native occupation support and Laurent evaluation after inverse lowering. -/
 
@@ -28,30 +28,43 @@ open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitDomain ball_subset_slitD
 open D5.S3.Analytic.OriginalSlitNome (slitNome_norm_lt_one)
 open OriginalFourMDLipNome (dNome_norm_lt_one)
 open OriginalFourMChargeCoset (fourierSign quadraticSign oscillatorLower)
-open OriginalFourMCompactLowering (punctureLowering loweredChargeTerm lowered_fourier_overlap
-  nativePuncture nativeChargeTerm occupationReadout loweredOscillator
-  lowered_charge_eq_native_occupations)
+open OriginalFourMCompactLowering (tagOscillators punctureLowering loweredChargeTerm
+  assigned_eq_lowered lowered_fourier_overlap)
+open OriginalFourMLoweredNormalization (lowered_charge_normalization)
+open OriginalFourMOccupationTransport (flags)
 open OriginalFourMSpatialWickPartition (liftedScale)
 open OriginalFourMFixedChargeWick (Mode)
 open OriginalFourMAssignedOccupation (compactCovariance compactMean)
-open OriginalFourMSectorContinuation (slitLinear slitChargeSector dLipChargeSector)
+open OriginalFourMAssignmentPolynomial (affineReadout)
+open OriginalFourMSectorContinuation (slitMatrix slitLinear slitChargeTerm slitChargeSector
+  dLipChargeSector)
 open OriginalFourMChargeCoset (slitDiagonal)
+open FourPoint.OriginalFourMChargeGerm (diagonalSewn)
 open LatticeHalfFockChargedTensorCoefficients (ActualGround)
 open LatticeHalfFockGradedTrace (actualTensorL0)
 open OriginalFourMEnergyCoefficient (lowered_left_selector right_selector)
 open LatticePositiveEnergy (chargeEnergy_zero)
-open OriginalGaussianSourceRestriction (compactExternal fourSupport)
+open OriginalGaussianSourceRestriction (CompactExternal compactExternal
+  externalOccupation fourSupport)
+open OriginalNormalRowSource (supportLabel restricted restricted_reconstruct embedded_weight)
+open OriginalChargedRowSource (affineCoefficient affineMoment_coefficient)
 open FactorialFockMetric (weight)
 
+open private affine_enlarge sum_embDomain from
+  D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction
+open private affineReadout_monomial from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAssignmentPolynomial
+open private determinant nome from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMLoweredNormalization
 open private dLipNumerator from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
-open private dLinear from
+open private dMatrix dLinear from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 open private dLipChargeTerm from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
 
-open private Compact determinant nome nativeChargeTerm_coeff from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCompactLowering
+open private Compact product_native nativeChargeTerm_coeff from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMNativeOccupation
 
 open Classical in
 /-- A single finite support covers the assigned modes and the variables of all
@@ -115,12 +128,7 @@ private theorem native_term_summable (D : LatticeData) (hD : (gramReal D).PosDef
     | .D => dLinear D true k r i
   have hm (q : Charge D) : compactMean D q c x F = fun i =>
       (bilinear D (unitCharge D (Sum.elim k k i).2.1) q : ℂ) * u i := by
-    cases c with
-    | A => rfl
-    | B => rfl
-    | D =>
-      funext i
-      rcases i with (i | i) | (i | i) <;> rfl
+    cases c <;> rfl
   obtain ⟨⟨bound, hs, hb⟩, _⟩ :=
     compact_charge_normal D hD b g d e ({0} : Set ℂ) isCompact_singleton
       (fun _ => determinant c x) (fun _ => nome c x)
@@ -316,9 +324,47 @@ theorem projectOccupations_eq_inverse_readout (D : LatticeData) (hu : IsUnit D.G
     occupationLinear_sum, Finset.mul_sum, phase_factor, mul_assoc]
   rfl
 
+open OriginalFourMPeriodSource (dLip)
+open private slitDiagonal_native from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitChartGerms
+open private dLipNumerator_eq_slitDiagonal from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
+
+/-- The selector evaluation of the actual true-D lip numerator agrees with
+the slit numerator on the open lip, after both left inverse flows. -/
+theorem projected_true_lip_eq_slit (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (H K : ℕ) (s : ℤ)
+    (P Q R S : Oscillator D) (p q : ActualGround D hu) (hp : p ≠ 0) (hq : q ≠ 0)
+    (hP : actualTensorL0 D hu (P ⊗ₜ[ℂ] p) = (H : ℂ) • (P ⊗ₜ[ℂ] p))
+    (hQ : actualTensorL0 D hu (Q ⊗ₜ[ℂ] q) = (K : ℂ) • (Q ⊗ₜ[ℂ] q))
+    (a : ModTwoCharge D) {r : ℂ} (hr : r ∈ dLip true) :
+    (-1 : ℂ) ^ (K : ℤ) *
+      occupationReadout D (inverseFlow D (H - 1) P) (inverseFlow D (K - 1) Q) R S
+        (fun b g d e => rightMode D (s - H - K + 1) d e *
+          dLipChargeSector D true a b g d e r) =
+      slitDiagonal D H K s P Q R S a r := by
+  rw [← dLipNumerator_eq_slitDiagonal D true H K s P Q R S a hr, dLipNumerator,
+    projectOccupations_eq_inverse_readout D hu hD h24 H K _ P Q R S p q hp hq hP hQ]
+
+/-- In the sewing disk, the same two selectors give the actual native diagonal
+germ. The square pullback is taken after the native occupation readout. -/
+theorem projected_slit_eq_sewn (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (H K : ℕ) (s : ℤ)
+    (P Q R S : Oscillator D) (p q : ActualGround D hu) (hp : p ≠ 0) (hq : q ≠ 0)
+    (hP : actualTensorL0 D hu (P ⊗ₜ[ℂ] p) = (H : ℂ) • (P ⊗ₜ[ℂ] p))
+    (hQ : actualTensorL0 D hu (Q ⊗ₜ[ℂ] q) = (K : ℂ) • (Q ⊗ₜ[ℂ] q))
+    (a : ModTwoCharge D) {w : ℂ} (hw : ‖w‖ < 1) :
+    (-1 : ℂ) ^ (K : ℤ) *
+      occupationReadout D (inverseFlow D (H - 1) P) (inverseFlow D (K - 1) Q) R S
+        (fun b g d e => rightMode D (s - H - K + 1) d e *
+          slitChargeSector D a b g d e (w ^ 2)) =
+      diagonalSewn D H K (s - H - K + 1) P Q R S a w := by
+  rw [← slitDiagonal_native D hD h24 H K s P Q R S a hw, slitDiagonal,
+    projectOccupations_eq_inverse_readout D hu hD h24 H K _ P Q R S p q hp hq hP hQ]
+
 open HalfFock.OriginalHalfCurrentWickPolynomial (word eval_word_eq_lowering)
-open FourPoint.FourPointChannelCoefficients (loweringWeight laurent loweredLaurent)
-open OriginalFourMChargeCoset (slitLowered)
+open FourPoint.FourPointChannelCoefficients (loweringWeight loweringCutoff laurent loweredLaurent)
+open OriginalFourMChargeCoset (slitLowered slitChannelA slitChannelB dLipChannel)
 open private lowering_weight from
   D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
 open private punctureLowering_eq from
@@ -640,5 +686,25 @@ theorem native_laurent_fourier_overlap {X : Type*} [Fintype X] [DecidableEq X]
   have hFourier := native_occupation_fourier_overlap D hu hD h24 slot colour hx hx₁ hwA hw a n l hl
   dsimp only at h hFourier ⊢
   simpa only [← h] using hFourier
+
+/-- At the actual signed-mode diagonal the outgoing energy cutoff equals the
+literal cutoff in both transported channels. -/
+theorem cutoff_of_output_weight (H K L J : ℕ) (m n r : ℤ)
+    (h : (J : ℤ) = H + K + L - (m + n + r) - 2) :
+    loweringCutoff H K L m n r = J - 1 := by
+  unfold loweringCutoff
+  omega
+
+/-- Both transported evaluations use the exact channel definitions once the
+output weight is chosen by the right selector. -/
+theorem nativeLaurent_eq_transported_channels (D : LatticeData) (H K L J : ℕ)
+    (m n r : ℤ) (h : (J : ℤ) = H + K + L - (m + n + r) - 2)
+    (P Q R S : Oscillator D) (a : ModTwoCharge D) (t : ℂ) :
+    nativeLaurent D .B H K L J (m + n + r) P Q R S a t =
+      slitChannelB D H K L m n r P Q R S a t ∧
+    (∑ b, quadraticSign D (b + a) * nativeLaurent D .D H K L J (m + n + r) P Q R S b t) =
+      dLipChannel D true H K L m n r P Q R S a t := by
+  rw [slitChannelB, dLipChannel, cutoff_of_output_weight H K L J m n r h]
+  exact ⟨rfl, rfl⟩
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMVariableSupport
