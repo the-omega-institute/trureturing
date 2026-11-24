@@ -39,7 +39,7 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Integrating sqrt(t) gives 2(x sqrt(x)-1)/3. The triangle inequality " +
                     "therefore retains the gain 4C/(3x) from the lower endpoint. " +
-                    "No measurability or integrability assumption on f is needed. " +
+                    "Only the endpoint bound and an almost everywhere interval bound are needed. The total Bochner integral is zero when integrability fails. " +
                     "At x=1 the estimate reduces to the assumed pointwise bound. " +
                     "For x>1, f(t)=C sqrt(t) except for f(x)=-C sqrt(x) attains the bound; " +
                     "thus the coefficient and endpoint term are sharp for this envelope class."))),
@@ -49,7 +49,7 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(MainStatement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The antiderivative is t^2 log(t)/2-t^2/4-a t^2/2. " +
-                    "The identity holds on the whole positive half-axis, including x<1 " +
+                    "The identity holds for x>=0, including 0<x<1 " +
                     "with the oriented integral."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-concave-endpoints"),
@@ -76,19 +76,21 @@ internal sealed class TriangleRampDocument : IScribeDocumentDefinition
     private static Formula EnvelopeStatement()
     {
         var c = V("C"); var x = V("x");
-        var bound = All("t", R(), Imp(Mem(V("t"), Call("Icc", D(1), x)),
-            Le(Call("abs", Call("f", V("t"))), Mul(c, Sqrt(V("t"))))));
+        var bound = Call("aeBound", V("f"), c, D(1), x);
+        var endpoint = Le(Call("abs", Call("f", x)), Mul(c, Sqrt(x)));
         return All("f", new Formula.TypeArrow(R(), R()), All("C", R(), All("x", R(),
-            Imp(Le(D(1), x), Imp(bound, Le(Call("abs", Call("D", V("f"), x)),
-                Sub(Mul(Div(Mul(D(7), c), D(3)), Sqrt(x)),
-                    Div(Mul(D(4), c), Mul(D(3), x)))))))));
+            Imp(Le(D(1), x), Imp(endpoint, Imp(bound,
+                Le(Call("abs", Call("D", V("f"), x)),
+                    Sub(Mul(Div(Mul(D(7), c), D(3)), Sqrt(x)),
+                        Div(Mul(D(4), c), Mul(D(3), x))))))))));
     }
+
     private static Formula MainStatement()
     {
         var a = V("a"); var x = V("x"); var t = V("t");
         var f = Seq(Open, LambdaLower, Sp, t, Colon, R(), Sp, Mapsto, Sp,
             Sub(Mul(t, Call("log", t)), Mul(a, t)), Close);
-        return All("a", R(), All("x", R(), Imp(Lt(D(0), x),
+        return All("a", R(), All("x", R(), Imp(Le(D(0), x),
             Eq(Call("D", f, x), Sub(Div(x, D(2)), Div(Add(a, Div(D(1), D(2))), x))))));
     }
     private static Formula Error(Formula x) =>

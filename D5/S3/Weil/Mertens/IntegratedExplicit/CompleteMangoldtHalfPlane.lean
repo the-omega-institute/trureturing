@@ -126,7 +126,7 @@ private theorem part_laplace {s : ℂ} (hs : 1 < s.re) :
     hs] at hL
   exact hx'.unique hL
 
-private theorem first_moment_integrable {s : ℂ} (hs : 1 < s.re) :
+theorem first_moment_integrable {s : ℂ} (hs : 1 < s.re) :
     IntegrableOn (fun y : ℝ => (y : ℂ) *
       Complex.exp ((1 - s) * y)) (Ioi 0) := by
   have hr : IntegrableOn (fun y : ℝ => y * Real.exp (-(s.re - 1) * y)) (Ioi 0) := by
@@ -142,7 +142,7 @@ private theorem first_moment_integrable {s : ℂ} (hs : 1 < s.re) :
     simp [Complex.norm_exp, Complex.mul_re, abs_of_nonneg (show 0 < y from hy).le])
 
 /-- The first moment exists since the real exponential rate is strictly negative. -/
-private theorem first_moment {s : ℂ} (hs : 1 < s.re) :
+theorem first_moment {s : ℂ} (hs : 1 < s.re) :
     (∫ y : ℝ in Ioi 0, (y : ℂ) * Complex.exp ((1 - s) * y)) =
       1 / (s - 1) ^ 2 := by
   let a : ℂ := 1 - s

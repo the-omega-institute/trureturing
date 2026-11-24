@@ -8,7 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRamp
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
-import D5.S3.Weil.Mertens.IntegratedExplicit.RHActualHSqrtBound
+import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
 /-! The arithmetic sum includes exactly the natural numbers strictly below x. -/
 
@@ -50,12 +50,9 @@ private lemma small_range_bound {x : ℝ} (hx : 0 ≤ x) (hx4 : x ≤ 4) :
 
 private lemma mangoldtPart_fixed {x t : ℝ} (ht : 0 ≤ t) (htx : t ≤ x) :
     mangoldtPart t = ∑ n ∈ Finset.range (⌊x⌋₊ + 1), mangoldtRamp n t := by
-  apply tsum_eq_sum
-  intro n hn
-  have hnx : ⌊x⌋₊ < n := by
-    simp only [Finset.mem_range, not_lt] at hn
-    omega
-  exact ramp_zero_of_lt ht (htx.trans_lt (Nat.lt_of_floor_lt hnx))
+  exact mangoldtPart_eq_range ht (by
+    push_cast
+    exact htx.trans_lt (Nat.lt_floor_add_one x))
 
 private lemma smoothed_eq_max_sum {x : ℝ} (hx : 0 < x) :
     smoothedMangoldt x = ∑ n ∈ Finset.range (⌊x⌋₊ + 1),
@@ -112,11 +109,11 @@ private lemma mangoldtPart_explicit {x : ℝ} (hx : 1 < x) :
 
 private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
     {x : ℝ} (hx : 1 < x) :
-    x / 2 - (707 / 300 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
+    x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
       (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
-        101 / 75 * firstLiMass) / x ≤ smoothedMangoldt x := by
+        4 / 3 * firstLiMass) / x ≤ smoothedMangoldt x := by
   have hx0 : 0 < x := by linarith
-  let C : ℝ := 101 / 100 * firstLiMass
+  let C : ℝ := firstLiMass
   let f : ℝ → ℝ := fun t => t * Real.log t - (1 + Real.eulerMascheroniConstant) * t
   let h : ℝ → ℝ := fun t => (actualH (Real.log t)).re
   let T : ℝ → ℝ := fun t => trivialT (Real.log t)
@@ -156,13 +153,21 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
     rw [hpoint x hx, hint]
     field_simp
     <;> ring
-  have hb : |removeAverage h x| ≤ 7 * C / 3 * Real.sqrt x - 4 * C / (3 * x) := by
-    apply removeAverage_sqrt_bound hx.le
-    intro t ht
-    have ht0 : 0 < t := by linarith [ht.1]
-    have he := actualH_sqrt_bound_of_rh_registered.2 hRH (Real.log t)
+  have hbound (t : ℝ) (ht : 1 ≤ t) : |h t| ≤ C * Real.sqrt t := by
+    have ht0 : 0 < t := by linarith
+    have hterm (k : ℕ) :
+        ‖actualCoeff k * Complex.exp ((Real.log t : ℂ) * actualZero k)‖ ≤
+          ‖actualCoeff k‖ * Real.exp (Real.log t / 2) := by
+      simp only [norm_mul, Complex.norm_exp, Complex.mul_re, Complex.ofReal_re,
+        Complex.ofReal_im, zero_mul, sub_zero, RHSharpActualEnvelope.on_line hRH k]
+      rw [show Real.log t * (1 / 2) = Real.log t / 2 by ring]
+    have he := tsum_of_norm_bounded
+      ((RHSharpActualEnvelope.coeff_norm_hasSum hRH).mul_right _) hterm
     rw [Real.exp_half, Real.exp_log ht0] at he
     exact (Complex.abs_re_le_norm _).trans he
+  have hb : |removeAverage h x| ≤ 7 * C / 3 * Real.sqrt x - 4 * C / (3 * x) := by
+    apply removeAverage_sqrt_bound hx.le (hbound x hx.le)
+    exact MeasureTheory.ae_of_all _ (fun t ht => hbound t ht.1.le)
   have hTbound : T x ≤ 1 - Real.log 2 := trivialT_le_mass (Real.log_nonneg hx.le)
   have hTnonneg : 0 ≤ 2 / x * (∫ t in (1 : ℝ)..x, T t) := by
     apply mul_nonneg (by positivity)
@@ -173,13 +178,13 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
       (3 / 2 + Real.eulerMascheroniConstant) / x := by
     simpa only [f, show (1 : ℝ) + Real.eulerMascheroniConstant + 1 / 2 =
       3 / 2 + Real.eulerMascheroniConstant by ring] using
-      removeAverage_main (1 + Real.eulerMascheroniConstant) hx0
+      removeAverage_main (1 + Real.eulerMascheroniConstant) hx0.le
   have hL : L = Real.log 2 + Real.log Real.pi :=
     Real.log_mul (by norm_num) Real.pi_ne_zero
-  have halg : x / 2 - (707 / 300 * firstLiMass) * Real.sqrt x -
+  have halg : x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x -
       (1 + Real.log Real.pi) -
       (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
-        101 / 75 * firstLiMass) / x =
+        4 / 3 * firstLiMass) / x =
       x / 2 - (3 / 2 + Real.eulerMascheroniConstant) / x -
         (7 * C / 3 * Real.sqrt x - 4 * C / (3 * x)) - L +
           2 * L / x - (1 - Real.log 2) := by
@@ -193,9 +198,9 @@ private lemma smoothed_explicit_lower_gt_one (hRH : RiemannHypothesis)
 /-- An explicit lower bound retaining the actual zero mass and both boundary gains. -/
 theorem smoothedMangoldt_explicit_lower (hRH : RiemannHypothesis)
     {x : ℝ} (hx : 1 ≤ x) :
-    x / 2 - (707 / 300 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
+    x / 2 - (7 / 3 * firstLiMass) * Real.sqrt x - (1 + Real.log Real.pi) -
       (3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
-        101 / 75 * firstLiMass) / x ≤ smoothedMangoldt x := by
+        4 / 3 * firstLiMass) / x ≤ smoothedMangoldt x := by
   rcases eq_or_lt_of_le hx with rfl | hx
   · have hL : Real.log (2 * Real.pi) = Real.log 2 + Real.log Real.pi :=
       Real.log_mul (by norm_num) Real.pi_ne_zero
@@ -264,14 +269,14 @@ theorem smoothedMangoldt_lower (hRH : RiemannHypothesis) {x : ℝ} :
     have hL : Real.log (2 * Real.pi) = Real.log 2 + Real.log Real.pi :=
       Real.log_mul (by norm_num) Real.pi_ne_zero
     have hc : 3 / 2 + Real.eulerMascheroniConstant - 2 * Real.log (2 * Real.pi) -
-        101 / 75 * firstLiMass ≤ 0 := by
+        4 / 3 * firstLiMass ≤ 0 := by
       rw [hL]
       linarith [Real.eulerMascheroniConstant_lt_two_thirds, firstLiMass_pos]
     have hs : (22 / 7 : ℝ) ≤ Real.sqrt x := by
       apply (Real.le_sqrt (by norm_num) hx).mpr
       nlinarith
-    have hmass : (707 / 300 * firstLiMass) * Real.sqrt x ≤
-        707 / 2400 * Real.sqrt x :=
+    have hmass : (7 / 3 * firstLiMass) * Real.sqrt x ≤
+        7 / 24 * Real.sqrt x :=
       mul_le_mul_of_nonneg_right (by linarith) (Real.sqrt_nonneg x)
     have ha := smoothedMangoldt_explicit_lower hRH (by linarith : 1 ≤ x)
     have hc' := div_nonpos_of_nonpos_of_nonneg hc hx

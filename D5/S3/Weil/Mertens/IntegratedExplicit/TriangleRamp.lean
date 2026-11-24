@@ -1,13 +1,12 @@
 /- GID: D5/S3/Weil/Mertens/IntegratedExplicit/TriangleRamp
    generality: G
-   mirror-B: none(waiver:direct-analytic-kernel)
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/TriangleRamp
    mirror-E: none(waiver:direct-analytic-kernel)
    anchors: []
    utility: none
    digest: Integral removal of an affine ramp produces the triangular weight. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.Convex.SpecificFunctions.Pow
 import Mathlib.Analysis.Convex.Mul
 import Mathlib.Tactic
@@ -56,7 +55,7 @@ private lemma ramp_integral {n x : ℝ} (hn : 1 ≤ n) (hnx : n ≤ x) :
     intervalIntegral.integral_div, integral_id, intervalIntegral.integral_const]
   simp only [smul_eq_mul, mul_one]
   field_simp
-  <;> ring
+  ; ring
 
 /-- The exact kernel change, including both sides of the entry point. -/
 theorem removeAverage_ramp {n x : ℝ} (hn : 1 ≤ n) (hx : 0 < x) :
@@ -68,7 +67,7 @@ theorem removeAverage_ramp {n x : ℝ} (hn : 1 ≤ n) (hx : 0 < x) :
       max_eq_left (by have := (one_le_div hn0).mpr hnx; linarith),
       max_eq_left (by have := (div_le_one hx0).mpr hnx; linarith)]
     field_simp
-    <;> ring
+    ; ring
   · have hxn : x ≤ n := (lt_of_not_ge hnx).le
     have hz : ∫ t in (1 : ℝ)..x, ramp n t = 0 := by
       apply intervalIntegral.integral_zero_ae
@@ -92,13 +91,10 @@ private lemma sqrt_integral {x : ℝ} (hx : 1 ≤ x) :
 
 /-- The loss in the square-root envelope retains the exact lower-endpoint term. -/
 theorem removeAverage_sqrt_bound {f : ℝ → ℝ} {C x : ℝ} (hx : 1 ≤ x)
-    (hbound : ∀ t ∈ Icc 1 x, |f t| ≤ C * Real.sqrt t) :
+    (hend : |f x| ≤ C * Real.sqrt x)
+    (hbound : ∀ᵐ t : ℝ, t ∈ Ioc 1 x → |f t| ≤ C * Real.sqrt t) :
     |removeAverage f x| ≤ 7 * C / 3 * Real.sqrt x - 4 * C / (3 * x) := by
   have hx0 : 0 < x := by linarith
-  have hC : 0 ≤ C := by
-    have h := hbound 1 ⟨le_rfl, hx⟩
-    simp only [Real.sqrt_one, mul_one] at h
-    exact (abs_nonneg _).trans h
   have hi : |∫ t in (1 : ℝ)..x, f t| ≤
       C * (2 / 3 * (x * Real.sqrt x - 1)) := by
     calc
@@ -107,8 +103,8 @@ theorem removeAverage_sqrt_bound {f : ℝ → ℝ} {C x : ℝ} (hx : 1 ≤ x)
           simpa only [Real.norm_eq_abs] using
             intervalIntegral.norm_integral_le_of_norm_le
               (f := f) (g := fun t => C * Real.sqrt t) (μ := volume) hx
-              (MeasureTheory.ae_of_all _ (fun t ht => by
-                simpa only [Real.norm_eq_abs] using hbound t ⟨ht.1.le, ht.2⟩))
+              (hbound.mono (fun t ht htx => by
+                simpa only [Real.norm_eq_abs] using ht htx))
               ((continuous_const.mul Real.continuous_sqrt).intervalIntegrable 1 x))
       _ = _ := by rw [intervalIntegral.integral_const_mul, sqrt_integral hx]
   calc
@@ -119,13 +115,14 @@ theorem removeAverage_sqrt_bound {f : ℝ → ℝ} {C x : ℝ} (hx : 1 ≤ x)
     _ ≤ C * Real.sqrt x + (2 / x) *
         (C * (2 / 3 * (x * Real.sqrt x - 1))) := by
       gcongr
-      exact hbound x ⟨hx, le_rfl⟩
     _ = _ := by field_simp; ring
 
 /-- The main-term transform has an exact boundary correction for arbitrary a. -/
-theorem removeAverage_main (a : ℝ) {x : ℝ} (hx : 0 < x) :
+theorem removeAverage_main (a : ℝ) {x : ℝ} (hx : 0 ≤ x) :
     removeAverage (fun t => t * Real.log t - a * t) x =
       x / 2 - (a + 1 / 2) / x := by
+  rcases eq_or_lt_of_le hx with rfl | hx
+  · simp [removeAverage]
   have hx0 : 0 < x := hx
   let F (t : ℝ) := t ^ 2 / 2 * Real.log t - t ^ 2 / 4 - a * t ^ 2 / 2
   have hpos (t : ℝ) (ht : t ∈ uIcc 1 x) : 0 < t :=
@@ -145,12 +142,12 @@ theorem removeAverage_main (a : ℝ) {x : ℝ} (hx : 0 < x) :
       simp only [F, Pi.sub_apply, Pi.mul_apply, Pi.pow_apply, id_eq]
     · simp only [id_eq, Pi.pow_apply, Nat.cast_ofNat, Nat.reduceSub, pow_one, mul_one]
       field_simp
-      <;> ring
+      ; ring
   have he := intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
   rw [removeAverage, he]
   simp only [F, Real.log_one, mul_zero, one_pow]
   field_simp
-  <;> ring
+  ; ring
 
 /-- Endpoint minima for the concave error between a triangular affine sum and its main term. -/
 theorem affine_sqrt_ge_endpoints {A B a b x : ℝ} (hB : 0 ≤ B)

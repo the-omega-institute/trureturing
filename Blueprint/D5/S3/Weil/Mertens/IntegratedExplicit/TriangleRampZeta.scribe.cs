@@ -27,12 +27,12 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                     "The actual integrated explicit formula identifies U(x) with " +
                     "Re(H(log x))+log(2pi)-T(log x), using the same complete ramps as U. " +
                     "Apply the running-average operator to these ramps. Under RH the " +
-                    "zero term has envelope (101/100)M sqrt(x). The operator changes its " +
-                    "coefficient to (707/300)M and retains 101M/(75x). " +
+                    "zero term has envelope M sqrt(x). The operator changes its " +
+                    "coefficient to (7/3)M and retains 4M/(3x). " +
                     "The constant term contributes -log(2pi)+2log(2pi)/x. " +
                     "Nonnegativity of the integral of T and T<=1-log(2) give the displayed bound. " +
-                    "Since M<1/3, the square-root coefficient is less than 707/900. " +
-                    "Thus c2=1+log(pi) and c3=3/2+gamma-2log(2pi)-101M/75 retain " +
+                    "Since M<1/3, the square-root coefficient is less than 7/9. " +
+                    "Thus c2=1+log(pi) and c3=3/2+gamma-2log(2pi)-4M/3 retain " +
                     "both lower-endpoint gains without rounding the constants."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-zeta-uniform"),
@@ -66,9 +66,9 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
     {
         var x = V("x"); var mass = Call("firstLiMass");
         var gamma = Call("eulerMascheroniConstant"); var pi = Call("pi");
-        var coefficient = Mul(Div(D(7,0,7), D(3,0,0)), mass);
+        var coefficient = Mul(Div(D(7), D(3)), mass);
         var boundary = Sub(Sub(Add(Div(D(3), D(2)), gamma),
-            Mul(D(2), Call("log", Mul(D(2), pi)))), Mul(Div(D(1,0,1), D(7,5)), mass));
+            Mul(D(2), Call("log", Mul(D(2), pi)))), Mul(Div(D(4), D(3)), mass));
         var lower = Sub(Sub(Sub(Div(x, D(2)), Mul(coefficient, Sqrt(x))),
             Add(D(1), Call("log", pi))), Div(boundary, x));
         return Imp(V("RiemannHypothesis"), All("x", R(),
@@ -87,10 +87,6 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Lt(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Mem(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) =>

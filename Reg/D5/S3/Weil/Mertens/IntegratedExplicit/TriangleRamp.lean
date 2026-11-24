@@ -92,13 +92,14 @@ namespace Sqrt
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {f : ℝ → ℝ} {C x : ℝ} (hx : 1 ≤ x)
-    (hbound : ∀ t ∈ Icc 1 x, |f t| ≤ C * Real.sqrt t),
+    (hend : |f x| ≤ C * Real.sqrt x)
+    (hbound : ∀ᵐ t : ℝ, t ∈ Ioc 1 x → |f t| ≤ C * Real.sqrt t),
     |R.readout () x f| ≤ 7 * C / 3 * Real.sqrt x - 4 * C / (3 * x)
 
 private theorem rejected_law : ¬arena.Law rejected := by
   intro h
   have he := h (f := fun _ => 0) (C := 0) (x := 1) (by norm_num)
-    (by intro t ht; simp)
+    (by simp) (by filter_upwards with t ht; simp)
   norm_num [rejected, realize] at he
 
 def family : Registration arena (type_of% @removeAverage_sqrt_bound) where
@@ -133,7 +134,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
@@ -148,7 +149,7 @@ namespace Main
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (a : ℝ) {x : ℝ} (hx : 0 < x),
+  Law R := ∀ (a : ℝ) {x : ℝ} (hx : 0 ≤ x),
     R.readout () x (fun t => t * Real.log t - a * t) = x / 2 - (a + 1 / 2) / x
 
 private theorem rejected_law : ¬arena.Law rejected := by
