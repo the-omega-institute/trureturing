@@ -30,12 +30,12 @@ public theorem sin_two_atan_eq_cayley (N : Nat) :
   JetSeq.sin_two_atan_eq_cayley N
 
 public theorem mat2_det_mul (A B : Mat2) : Eq (A.mul B).det (A.det.mul B.det) :=
-  Omega.mat2_det_mul A B
+  Mat2.det_mul A B
 
 public theorem phalf_qhalf_noncommutative :
     Not (Ternion.RayEquiv (Ternion.triad Ternion.pHalf Ternion.p0 Ternion.qHalf)
       (Ternion.triad Ternion.qHalf Ternion.p0 Ternion.pHalf)) :=
-  Omega.phalf_qhalf_noncommutative
+  Ternion.triad_noncommutative
 
 public theorem g120_spin_six_beat_orbit : PythSpinor.SixBeatOrbit :=
   PythSpinor.g120_spin_six_beat_orbit
@@ -45,7 +45,7 @@ public theorem orthogonal_triad_excess_quarter :
       (Geometry.BargmannGram.detGram3 Geometry.BargmannGram.Quad4.one
         Geometry.BargmannGram.pHalf Geometry.BargmannGram.qHalf)
       (IntRatio.value Int.one Nat.one.succ.succ.succ) :=
-  Omega.orthogonal_triad_excess_quarter
+  Geometry.BargmannGram.orthogonal_triad_excess
 
 open Omega.Fractran
 

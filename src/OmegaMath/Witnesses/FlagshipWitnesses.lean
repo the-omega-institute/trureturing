@@ -19,21 +19,6 @@ noncomputable section
 
 namespace Omega
 
-theorem mat2_det_mul (A B : Mat2) : Eq (A.mul B).det (A.det.mul B.det) :=
-  Mat2.det_mul A B
-
-theorem phalf_qhalf_noncommutative :
-    Not (Ternion.RayEquiv (Ternion.triad Ternion.pHalf Ternion.p0 Ternion.qHalf)
-      (Ternion.triad Ternion.qHalf Ternion.p0 Ternion.pHalf)) :=
-  Ternion.triad_noncommutative
-
-theorem orthogonal_triad_excess_quarter :
-    IntRatio.Equivalent
-      (Geometry.BargmannGram.detGram3 Geometry.BargmannGram.Quad4.one
-        Geometry.BargmannGram.pHalf Geometry.BargmannGram.qHalf)
-      (IntRatio.value Int.one Nat.one.succ.succ.succ) :=
-  Geometry.BargmannGram.orthogonal_triad_excess
-
 namespace PythSpinor
 
 /-- The six homogeneous signed spinors, with the third and sixth given by the
