@@ -11,6 +11,13 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite checks for the order-twelve recurrence", H("Finite checks for the order-twelve recurrence"), Blocks(
+        Describe.Lean(DescribeId.Create("budget-cut"), DeclarationHandle.Create(Prefix + "budget_cut"),
+            H("Exact spending of a natural-number budget"), StatementSource.FromAuthor(Disp(
+                All("c", V("Nat"), All("d", V("Nat"), Seq(
+                    Parenthesized(And(Leq(V("c"), V("d")), Eq(Sub(V("d"), V("c")), N("0")))),
+                    Sp, F.Iff, Sp, Parenthesized(Eq(V("c"), V("d")))))))),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("Truncated subtraction gives zero whenever the cost is at least the budget. Together with the cost being at most the budget, this forces equality."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("one-exact"), DeclarationHandle.Create(Prefix + "one_exact"),
             H("Exact one-cost half-strip counts"), StatementSource.FromAuthor(Disp(All("a", Call("HardinA233258PairTransfer.Col"), All("j", Fin("5"),
                 Eq(SumOver("b", Call("HardinA233258PairTransfer.Col"),

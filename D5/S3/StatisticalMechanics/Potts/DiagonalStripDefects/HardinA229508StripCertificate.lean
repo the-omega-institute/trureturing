@@ -23,12 +23,14 @@ forward_one: proof_shape=content; consumers=finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
+budget_cut: proof_shape=bind-only; consumers=one_exact._proof_1, HardinA229683StripCertificate.two_exact._proof_1, HardinA229683StripCertificate.cut_terminal
 one_exact: proof_shape=bind-only; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
 halfForwardOne: proof_shape=bind-only; consumers=HardinA229683StripCertificate.W, W
 -/
 
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Fintype.Defs
+import Mathlib.Order.Basic
 import Mathlib.Order.Fin.Basic
 import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Data.Finset.NatAntidiagonal
@@ -83,6 +85,11 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA203981StripCertificate (halfCost reversed_count zero_exact allocated_counts halfForwardZero)
 open HardinA203981StripData (halfZero columnRows unordered)
 
+/-- A cost within the budget spends it exactly when the remainder is zero. -/
+theorem budget_cut (c d : ℕ) : (c ≤ d ∧ d - c = 0) ↔ c = d := by
+  rw [Nat.sub_eq_zero_iff_le]
+  exact le_antisymm_iff.symm
+
 /-- Project the exact-one count from the frozen terminal sector. -/
 theorem one_exact (a : Col) (j : Fin 5) :
     (∑ b : Col, if halfCost a b = 1 ∧ cls b = j then (1 : ℤ) else 0) =
@@ -122,12 +129,7 @@ theorem one_exact (a : Col) (j : Fin 5) :
   let c := bondDefects HardinA229588Strip.between (columnRows a) (columnRows r)
   change (c = 1 ∧ cls r = Equiv.swap 1 3 j) ↔
     (c ≤ 1 ∧ HardinA229588Strip.cl (columnRows r) (1 - c) = (Equiv.swap 1 3 j).natAdd 5)
-  rw [terminal r]
-  constructor
-  · rintro ⟨hc, hj⟩
-    exact ⟨hc ▸ le_rfl, hc ▸ Nat.sub_self _, hj⟩
-  · rintro ⟨hle, hz, hj⟩
-    exact ⟨Nat.le_antisymm hle (Nat.sub_eq_zero_iff_le.mp hz), hj⟩
+  rw [terminal r, ← and_assoc, budget_cut]
 
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 1 ∧ boundary r = j

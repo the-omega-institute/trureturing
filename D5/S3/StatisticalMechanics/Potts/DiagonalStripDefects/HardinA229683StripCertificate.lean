@@ -85,7 +85,7 @@ open HardinA203981StripCertificate (halfCost reversed_count zero_exact allocated
 open HardinA203981StripData (halfZero columnRows unordered)
 open D5.S3.StatisticalMechanics.Potts.StripDefectsTwo
 open HardinA229508StripData (halfOne)
-open HardinA229508StripCertificate (one_exact halfForwardOne)
+open HardinA229508StripCertificate (budget_cut one_exact halfForwardOne)
 
 /-- Project the exact-two count from the frozen terminal sector. -/
 private theorem two_exact (a : Col) (j : Fin 5) :
@@ -122,12 +122,7 @@ private theorem two_exact (a : Col) (j : Fin 5) :
   let c := bondDefects HardinA229588Strip.between (columnRows a) (columnRows r)
   change (c = 2 ∧ cls r = Equiv.swap 1 3 j) ↔
     (c ≤ 2 ∧ HardinA229696StripData.cl (columnRows r) (2 - c) = (Equiv.swap 1 3 j).natAdd 10)
-  rw [terminal r]
-  constructor
-  · rintro ⟨hc, hj⟩
-    exact ⟨hc ▸ le_rfl, hc ▸ Nat.sub_self _, hj⟩
-  · rintro ⟨hle, hz, hj⟩
-    exact ⟨Nat.le_antisymm hle (Nat.sub_eq_zero_iff_le.mp hz), hj⟩
+  rw [terminal r, ← and_assoc, budget_cut]
 
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 2 ∧ boundary r = j
@@ -174,10 +169,11 @@ private theorem cut_terminal (p r : Row 3 6) (d : ℕ) (j : Fin 15) :
     rw [cl] at hs
     split at hs
     · rename_i hz
-      exact ⟨Nat.le_antisymm hc (Nat.sub_eq_zero_iff_le.mp hz), Sum.inr.inj hs⟩
+      exact ⟨(budget_cut _ _).1 ⟨hc, hz⟩, Sum.inr.inj hs⟩
     · exact (Sum.inl_ne_inr hs).elim
   · rintro ⟨hc, hb⟩
-    simp only [hc, Nat.le_refl, Nat.sub_self, cl, ite_true, hb, true_and]
+    obtain ⟨hle, hz⟩ := (budget_cut _ _).2 hc
+    exact ⟨hle, by simp only [hz, cl, ite_true, hb]⟩
 
 theorem transition_counts (p : Row 3 6) (d : Fin 3) (s : ((Fin 15 ⊕ Fin 15) ⊕ Fin 15)) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r ≤ d.val ∧
