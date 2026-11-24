@@ -56,9 +56,7 @@ internal sealed class DirichletTriangleExplicitDocument : IScribeDocumentDefinit
                     "Primitivity supplies reflection and the zero strip of the completion. " +
                     "The nonprincipal assumption supplies entireness without a pole correction. " +
                     "The half-axis x>=1 is the convergence domain of the trivial tails, and " +
-                    "the initial endpoint is included by its exact vanishing. This is an " +
-                    "application of the cited factorization and inversion theorems; the name " +
-                    "of the explicit formula does not by itself assert a new escape witness."))),
+                    "the initial endpoint is included by its exact vanishing."))),
                 DescribeRole.Theorem))));
 
     private static Formula KernelDefinition()
