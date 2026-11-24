@@ -28,8 +28,8 @@ zeroExitCodes: proof_shape=bind-only; consumers=zeroExitCodes_count, exhaustedMu
 zeroExitCodes_count: proof_shape=bind-only; consumers=class_counts_canonical
 rep_partition: proof_shape=bind-only; consumers=exactExits_active, exactExits_new
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, HardinA229693Strip.initialExhausted, old_exhausted_counts, old_exhausted_row
-exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_2, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2, zero_coordinates
-cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_1, HardinA229693Strip.initial_counts._simp_2, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2, zero_coordinates
+exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_2, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2
+cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_1, HardinA229693Strip.initial_counts._simp_2, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2
 exitRead: proof_shape=content; consumers=HardinA229693Strip.w, HardinA229693Strip.w_leading, activeWeight, exhaustedWeight
 oldExits: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, class_counts_canonical, leading_counts, old_exhausted_counts, old_exhausted_row
 oldTerminal: proof_shape=bind-only; consumers=oldDestination
@@ -50,7 +50,7 @@ old_valid: proof_shape=bind-only; consumers=old_exhausted_counts, old_exhausted_
 cl_relabel: proof_shape=bind-only; consumers=class_counts, exhausted_relabel
 exhausted_relabel: proof_shape=bind-only; consumers=class_counts, HardinA229693Strip.rep_weight
 blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_row
-active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1, leading_counts._simp_1_1
+active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1, leading_counts._simp_1_1, transition_counts._simp_1_1
 exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_2, transition_counts._simp_1_2
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
@@ -79,12 +79,8 @@ exactExits_active: proof_shape=content; consumers=class_counts_canonical
 exactExits_new: proof_shape=content; consumers=class_counts_canonical
 class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
-proper_destination: proof_shape=bind-only; consumers=zero_coordinates
-zeroBudgetClass_ge: proof_shape=bind-only; consumers=zero_coordinates, transition_counts
-exhausted_support: proof_shape=content; consumers=zero_coordinates
-zero_coordinates: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229693Strip.count_transfer, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.Transition.family._proof_3
-horizontal_cons: proof_shape=bind-only; consumers=zero_coordinates, HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
+horizontal_cons: proof_shape=bind-only; consumers=HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
@@ -815,53 +811,6 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
-private theorem proper_destination (p : Boundary) (hp : HardinA229635State.h p = 0) :
-    ∃ k : Fin 16, HardinA229585StripData.cl p 0 = HardinA229585StripData.zeroBudgetClass k := by
-  rw [tailCost_eq, Finset.card_eq_zero] at hp
-  have h : HardinA233255ShapeSymmetry.proper p := by
-    intro j hj
-    have hm : j ∈ Finset.univ.filter (fun j : Fin 5 => p j.castSucc = p j.succ) :=
-      Finset.mem_filter.mpr ⟨Finset.mem_univ _, hj⟩
-    simp [hp] at hm
-  refine ⟨HardinA233255ShapeSymmetry.classOf p, ?_⟩
-  simp only [HardinA229585StripData.cl, h, ite_true, Nat.zero_ne_one, ite_false]
-set_option maxRecDepth 12000 in
-set_option maxHeartbeats 6000000 in
-private theorem exhausted_support (i : Fin 96) (s : Fin 168) (h : T (i.natAdd 72) s ≠ 0) :
-    ∃ k : Fin 16, s.val = 56 + (HardinA229585StripData.zeroBudgetClass k).val := by
-  revert i
-  fin_cases s <;> decide +kernel
-
-private theorem zeroBudgetClass_ge : ∀ k : Fin 16,
-    16 ≤ (HardinA229585StripData.zeroBudgetClass k).val := by
-  decide +kernel
-
-private theorem zero_coordinates (p : Boundary) (s : Fin 168)
-    (hs : ∀ k : Fin 16, s.val ≠ 56 + (HardinA229585StripData.zeroBudgetClass k).val) :
-    (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 0 ∧
-      cl (boundary r) 0 = s then (1 : ℤ) else 0) = 0 ∧ T (cl p 0) s = 0 := by
-  constructor
-  · apply Finset.sum_eq_zero
-    intro r _
-    rw [ite_eq_right]
-    rintro ⟨hr, he⟩
-    have hhor := horizontal_cons (r 0) (boundary r)
-    rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at hhor
-    have hproper : HardinA229635State.h (boundary r) = 0 := by omega
-    obtain ⟨k, hk⟩ := proper_destination (boundary r) hproper
-    have hv : HardinA229635State.Valid (boundary r) 1 := by
-      change HardinA229635State.h (boundary r) + 1 ≤ 2
-      omega
-    have hindex := zeroBudgetClass_ge k
-    have h := congrArg Fin.val he
-    simp only [cl, ite_true, Fin.val_natAdd, exhaustedClass, hv, oldZeroImage, hk,
-      hindex, dite_true, Fin.val_castAdd, Fin.val_subNat] at h
-    exact hs k (by omega)
-  · by_contra h
-    have he : T ((exhaustedClass p).natAdd 72) s ≠ 0 := h
-    obtain ⟨k, hk⟩ := exhausted_support (exhaustedClass p) s he
-    exact hs k hk
-
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
     (hp : HardinA229635State.Valid p d) :
@@ -872,12 +821,12 @@ theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
   | left j =>
     by_cases hd : d = 0
     · subst d
-      obtain ⟨hl, hr⟩ := zero_coordinates p (j.castAdd 96) (fun k h => by
-        have hk := zeroBudgetClass_ge k
-        have hj := j.isLt
-        change j.val = 56 + (HardinA229585StripData.zeroBudgetClass k).val at h
-        omega)
-      simpa only [Nat.zero_sub] using hl.trans hr.symm
+      have hzero : T (cl p 0) (j.castAdd 96) = 0 := by
+        simp only [T, cl, ↓reduceIte, Matrix.reindex_apply, Matrix.submatrix_apply,
+          finSumFinEquiv_symm_apply_natAdd, finSumFinEquiv_symm_apply_castAdd,
+          Matrix.fromBlocks_apply₂₁, Matrix.zero_apply]
+      rw [hzero]
+      simp only [active_cut, Nat.lt_irrefl, false_and, ite_false, Finset.sum_const_zero]
     · exact leading_counts p d j hp (Nat.pos_of_ne_zero hd)
   | right j =>
     simp_rw [exhausted_cut]

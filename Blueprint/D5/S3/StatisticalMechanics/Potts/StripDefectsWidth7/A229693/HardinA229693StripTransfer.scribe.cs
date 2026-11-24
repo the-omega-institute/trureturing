@@ -37,7 +37,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(Disp(TransitionCounts())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Every next row whose cost fits the available budget contributes one to its destination.")),
-                    Paragraph(Text("At budget zero the possible destinations are 56 plus a value of zeroBudgetClass. The source-independent extension is a separate candidate.")),
+                    Paragraph(Text("At budget zero every leading destination has multiplicity zero. The literal counts require a strictly positive residual budget for a leading destination, and the transfer uses the zero lower-left block.")),
                     Paragraph(Text("A separate candidate is that the source is valid if and only if the two rows agree at every destination. Exhaustive integer comparisons give the converse at budgets zero through two. At budget three the literal row has total at least 810, compared with a maximum matrix row total of 426, and the literal total is nondecreasing. The converse still lacks a Lean proof."))), DescribeRole.Theorem),
             Node("oldZeroImage", "Reindex an inherited exhausted class",
                 All("i", Call("Fin", Num("72")), Eq(Call("oldZeroImage", V("i")),
