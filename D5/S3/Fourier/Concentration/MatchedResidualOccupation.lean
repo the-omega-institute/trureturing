@@ -21,11 +21,9 @@ open D5.S3.Quantum.Entanglement.OccupancyWordSectors
 namespace D5.S3.Fourier.Concentration.MatchedResidualOccupation
 
 private def align {J : Type*} {d : ℕ} (σ : Equiv.Perm (Fin d)) :
-    Word J d × Word J d ≃ (Fin d → J × J) where
-  toFun pair i := (pair.1 i, pair.2 (σ i))
-  invFun edge := (fun i => (edge i).1, fun i => (edge (σ.symm i)).2)
-  left_inv pair := Prod.ext rfl (funext fun i => by simp)
-  right_inv edge := funext fun i => Prod.ext rfl (by simp)
+    Word J d × Word J d ≃ (Fin d → J × J) :=
+  (Equiv.prodCongr (Equiv.refl _) (Equiv.arrowCongr σ.symm (Equiv.refl J))).trans
+    (Equiv.arrowProdEquivProdArrow (Fin d) (fun _ => J) (fun _ => J)).symm
 
 private theorem matched_words_mass_le {J : Type*} [Fintype J] {d : ℕ}
     (w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (E : J → J → Prop)
