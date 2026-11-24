@@ -20,9 +20,9 @@ table: proof_shape=bind-only; consumers=HardinA233178Chromatic.powers_table
 T: proof_shape=bind-only; consumers=HardinA233178Chromatic.v
 coefficients: proof_shape=bind-only; consumers=HardinA233178Chromatic.vector_certificate
 moves_eq_filter: proof_shape=content; consumers=HardinA233178Chromatic.moves_exact, HardinA233178Chromatic.moves_nodup
-moves_exact: proof_shape=content; consumers=HardinA233178Chromatic.step_fast._simp_1_2
+moves_exact: proof_shape=content; consumers=HardinA233178Chromatic.step_fast
 moves_nodup: proof_shape=content; consumers=HardinA233178Chromatic.step_fast
-weighted_indicator_sum: proof_shape=bind-only; consumers=HardinA229538Strip.step_one, HardinA229641Strip.step_two
+weighted_indicator_sum: proof_shape=bind-only; consumers=HardinA233178Chromatic.step_fast, HardinA229538Strip.step_one, HardinA229641Strip.step_two
 step_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
 table_base: proof_shape=bind-only; consumers=HardinA233178Chromatic.powers_table
 table_steps_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
@@ -457,10 +457,10 @@ theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul 
 
 theorem step_fast (w : Column → ℤ) (p : Column) :
     T.mulVec w p = ((moves p).map w).sum := by
-  classical
-  simp only [Matrix.mulVec, dotProduct, T, ite_mul, one_mul, zero_mul]
-  simp_rw [← moves_exact, ← List.mem_toFinset]
-  rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ (moves_nodup p)]
+  change dotProduct (fun q => if Bond p q then (1 : ℤ) else 0) w = _
+  simpa only [one_mul] using
+    weighted_indicator_sum (Bond p) (moves p) (moves_nodup p) (moves_exact p) w
+      (by simp only [zero_mul, Finset.sum_const_zero])
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
