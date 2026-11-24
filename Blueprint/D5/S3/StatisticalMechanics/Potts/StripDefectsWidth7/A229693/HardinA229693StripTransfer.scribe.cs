@@ -26,7 +26,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "exitRead"), H("Column indices of the exhausted block"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.exitRead"), Arrow(Call("Fin", Num("96")), Call("Fin", Num("108")))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("For values below 72, this 96-entry map indexes the old leading row for active sources and the zero prefix for new exhausted sources. Otherwise its value minus 72 is one of 36 radix-16 digit positions in the packed word selected by the source row. The tables store 56 active words and 38 distinct exhausted words. The successor formula pins the entries to their destination classes."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For the 56 active sources outside the zeroBudgetClass image and the 40 new exhausted sources, this 96-entry map selects the readout coordinate. Values below 72 index the old leading row for those active sources and the zero prefix for new exhausted sources. Otherwise its value minus 72 is one of 36 radix-16 digit positions in the packed word selected by the source row. The tables store 56 active words and 38 distinct exhausted words. The successor formula pins the entries to their destination classes."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("t"),
                 DeclarationHandle.Create(Prefix + "T"), H("Transfer matrix"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.T"), Call("Matrix", Call("Fin", Num("168")), Call("Fin", Num("168")), V("Int"))))),
