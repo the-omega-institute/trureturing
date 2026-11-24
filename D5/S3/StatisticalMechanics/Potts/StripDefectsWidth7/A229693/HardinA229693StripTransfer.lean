@@ -904,9 +904,10 @@ private theorem oldExits_eq_representative (i : Fin 72) (j : Fin 96)
   · have hr : r.val < 56 := (exitRepresentative_prefix j hj).mpr hp
     have hr' : (⟨r.val, hr⟩ : Fin 56).castAdd 40 = r := Fin.ext rfl
     have hj' : (⟨j.val, hp⟩ : Fin 56).castAdd 40 = j := Fin.ext rfl
-    simpa only [oldExits, ← hr', ← hj', Fin.append_left] using
-      beq_iff_eq.mp (List.all_eq_true.mp
-        (oldExits_representative j hj he hp hr) i (List.mem_finRange i))
+    simp only [oldExits]
+    rw [← hr', ← hj', Fin.append_left, Fin.append_left]
+    exact beq_iff_eq.mp (List.all_eq_true.mp
+      (oldExits_representative j hj he hp hr) i (List.mem_finRange i))
   · have hr : 56 ≤ r.val := Nat.le_of_not_gt (fun h => hp ((exitRepresentative_prefix j hj).mp h))
     rw [oldExits_padded i r hr, oldExits_padded i j (Nat.le_of_not_gt hp)]
 
@@ -938,6 +939,25 @@ private theorem copied_padding_check (j : Fin 40)
 set_option maxRecDepth 4000 in
 theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     T i (j.natAdd 72) = T i (Fin.castAdd 96 (⟨(exitRead j).val, hj⟩ : Fin 72)) := by
+  have hupper (k : Fin 16) : oldExits (k.castAdd 56) j =
+      HardinA229585StripData.T (HardinA229585StripData.zeroBudgetClass k)
+        ⟨(exitRead j).val, hj⟩ := by
+    induction j using Fin.addCases (m := 56) (n := 40) with
+    | left j =>
+      rw [oldExits, Fin.append_left]
+      exact beq_iff_eq.mp (List.all_eq_true.mp
+        (Bool.and_eq_true.mp (oldExits_copied_check j hj)).1 k (List.mem_finRange k))
+    | right j =>
+      rw [oldExits, Fin.append_right, Pi.zero_apply]
+      exact (beq_iff_eq.mp (List.all_eq_true.mp
+        (copied_padding_check j hj) k (List.mem_finRange k))).symm
+  have hlower (k : Fin 56) : oldExits (k.natAdd 16) j = 0 := by
+    induction j using Fin.addCases (m := 56) (n := 40) with
+    | left j =>
+      rw [oldExits, Fin.append_left]
+      exact beq_iff_eq.mp (List.all_eq_true.mp
+        (Bool.and_eq_true.mp (oldExits_copied_check j hj)).2 k (List.mem_finRange k))
+    | right j => rw [oldExits, Fin.append_right, Pi.zero_apply]
   let r : Fin 72 := ⟨(exitRead j).val, hj⟩
   change T i (j.natAdd 72) = T i (r.castAdd 96)
   have hread : exitRead j = r.castAdd 36 := Fin.ext rfl
@@ -952,15 +972,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
       rw [← HardinA229585StripOrbitTable.table_counts i r, Int.toNat_natCast]
     | some k =>
       rw [inheritedSource_index i k hi]
-      induction j using Fin.addCases (m := 56) (n := 40) with
-      | left j =>
-        rw [oldExits, Fin.append_left]
-        exact beq_iff_eq.mp (List.all_eq_true.mp
-          (Bool.and_eq_true.mp (oldExits_copied_check j hj)).1 k (List.mem_finRange k))
-      | right j =>
-        rw [oldExits, Fin.append_right, Pi.zero_apply]
-        exact (beq_iff_eq.mp (List.all_eq_true.mp
-          (copied_padding_check j hj) k (List.mem_finRange k))).symm
+      exact hupper k
   | right i =>
     simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
       finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
@@ -968,12 +980,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     induction i using Fin.addCases (m := 56) (n := 40) with
     | left i =>
       rw [Fin.append_left]
-      induction j using Fin.addCases (m := 56) (n := 40) with
-      | left j =>
-        rw [oldExits, Fin.append_left]
-        exact beq_iff_eq.mp (List.all_eq_true.mp
-          (Bool.and_eq_true.mp (oldExits_copied_check j hj)).2 i (List.mem_finRange i))
-      | right j => rw [oldExits, Fin.append_right, Pi.zero_apply]
+      exact hlower i
     | right i =>
       simp only [Fin.append_right, exhaustedWeight,
         hread, Fin.append_left,
