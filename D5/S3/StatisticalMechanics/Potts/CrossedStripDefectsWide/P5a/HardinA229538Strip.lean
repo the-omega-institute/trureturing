@@ -196,14 +196,22 @@ def transfer : Matrix (Column ⊕ Column) (Column ⊕ Column) ℤ :=
 def terminal {C : Type*} {Z : Type*} {R : Type*} [Zero R] [One R] : C ⊕ Z → R :=
   Sum.elim 0 1
 
-/-- The vector recurrence is equivalent to every shifted scalar readout recurrence. -/
+/-- The vector recurrence is equivalent to every shifted scalar readout recurrence.
+The coefficient action commutes with left multiplication by matrix and readout entries,
+so both operations carry the coefficients through the recurrence. -/
 theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
-    [Semiring R] [DistribSMul K R] [SMulCommClass K R R]
+    [Semiring R] [SMul K R] [SMulCommClass K R R]
     (M : Matrix S S R) (u : S → R) (d b : ℕ) (c : Fin d → K) :
     ((M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) ↔
       ∀ (v : S → R) (n : ℕ),
         dotProduct v ((M ^ (n + b + d)).mulVec u) =
           ∑ j : Fin d, c j • dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
+  have rightMul (k : K) (x : R) : k • x = x * (k • (1 : R)) := by
+    simpa only [smul_eq_mul, mul_one] using smul_comm k x (1 : R)
+  letI : DistribSMul K R :=
+    { toSMul := ‹SMul K R›
+      smul_zero := fun k => by rw [rightMul k 0, zero_mul]
+      smul_add := fun k x y => by rw [rightMul k (x + y), rightMul k x, rightMul k y, add_mul] }
   constructor
   · intro h v n
     have shifted := congrArg ((M ^ n).mulVec) h

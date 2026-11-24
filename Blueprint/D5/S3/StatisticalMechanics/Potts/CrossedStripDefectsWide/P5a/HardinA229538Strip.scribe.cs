@@ -28,7 +28,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("transfer_readout",TransferReadout(),true,"The matrix entries form a semiring, and the independent scalar type acts distributively and commutes with multiplication by entries. Matrix action and the dot product give every shifted scalar relation. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
+            Node("transfer_readout",TransferReadout(),true,"The matrix entries form a semiring, and the independent coefficient action commutes with left multiplication by matrix and readout entries. This lets the matrix action and dot product carry the coefficients through the vector recurrence to give every shifted scalar relation. The commutation law with the right unit also makes the coefficient action distributive. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
@@ -401,7 +401,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return All("S",type,All("R",type,All("K",type,Seq(OpenBracket,Call("Fintype",state),CloseBracket,Sp,
             OpenBracket,Call("DecidableEq",state),CloseBracket,Sp,
             OpenBracket,Call("Semiring",scalar),CloseBracket,Sp,
-            OpenBracket,Call("DistribSMul",action,scalar),CloseBracket,Sp,
+            OpenBracket,Call("SMul",action,scalar),CloseBracket,Sp,
             OpenBracket,Call("SMulCommClass",action,scalar,scalar),CloseBracket,Sp,parameters))));
     }
 }
