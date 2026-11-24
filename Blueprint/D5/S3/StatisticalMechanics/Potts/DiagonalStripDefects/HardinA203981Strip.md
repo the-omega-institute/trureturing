@@ -64,6 +64,10 @@ $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA203981Strip}}.\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin203981` (proved) by `D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin203981","declaration_gid":"D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A203981: canonical diagonal and antidiagonal strip colourings*. URL: <https://oeis.org/A203981>.

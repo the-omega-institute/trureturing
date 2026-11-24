@@ -30,7 +30,8 @@ internal sealed class HardinA203981StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
             H("Order-six recurrence"), StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("7")))), Sub(Add(Add(Sub(Sub(Mul(N("25"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("6"))))), Mul(N("45"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("5")))))), Mul(N("963"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("4")))))), Mul(N("2025"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("3")))))), Mul(N("3645"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("2")))))), Mul(N("6561"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("1")))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The coefficient relation propagates under additional transfer steps. The displayed shift gives every index at least seven."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The coefficient relation propagates under additional transfer steps. The displayed shift gives every index at least seven."))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin203981"), ResolutionKind.Proved)))));
     private static Formula ScaleCountOfBondsFormula()
     {
         var w = Add(V("w"), N("1"));
