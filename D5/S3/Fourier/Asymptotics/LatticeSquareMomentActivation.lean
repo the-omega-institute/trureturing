@@ -6,6 +6,7 @@
    utility: none
    digest: Exact support thresholds for the integer-lattice squared-mass minimizer. -/
 
+import D5.S3.Fourier.Concentration.CyclicPrefixFourthMoment
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Int.Interval
@@ -48,13 +49,6 @@ private theorem card_latticeInterval (n : ℕ) :
   unfold latticeInterval
   linarith [h']
 
-private theorem sum_square_rat (n : ℕ) :
-    (∑ j ∈ range (n + 1), (j : ℚ) ^ 2) =
-      (n : ℚ) * (n + 1) * (2 * n + 1) / 6 := by
-  rw [sum_range_pow]
-  norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two]
-  ring
-
 private theorem sum_fourth_rat (n : ℕ) :
     (∑ j ∈ range (n + 1), (j : ℚ) ^ 4) =
       (n : ℚ) * (n + 1) * (2 * n + 1) * (3 * (n : ℚ) ^ 2 + 3 * n - 1) / 30 := by
@@ -73,9 +67,9 @@ private theorem sum_lattice_square (n : ℕ) :
       (n : ℝ) * (n + 1) * (2 * n + 1) / 3 := by
   rw [sum_latticeInterval_even n _ (by simp) (by intro k; push_cast; ring)]
   push_cast
-  have h := congrArg (fun q : ℚ => (q : ℝ)) (sum_square_rat n)
-  push_cast at h
-  rw [h]
+  rw [Finset.sum_range_succ']
+  simp only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, zero_pow (by decide : 2 ≠ 0), add_zero]
+  rw [D5.S3.Fourier.Concentration.CyclicPrefixFourthMoment.sum_square_rank]
   ring
 
 private theorem sum_lattice_fourth (n : ℕ) :

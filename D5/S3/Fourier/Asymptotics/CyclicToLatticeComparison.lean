@@ -7,6 +7,7 @@
    digest: Quantitative comparison of the two-mode cyclic and lattice squared-mass minima. -/
 
 import D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation
+import D5.S3.Fourier.Concentration.AggregateCosineBalance
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.Tactic.FieldSimp
@@ -26,7 +27,7 @@ set_option autoImplicit false
 
 /-- The full cosine moment of the weights on residues at integral frequency `r`. -/
 def cosineMoment {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → ℝ) : ℝ :=
-  ∑ i : ZMod q, v i * Real.cos ((r : ℝ) * (2 * Real.pi * (i.val : ℝ) / q))
+  ∑ i : ZMod q, v i * D5.S3.Fourier.Concentration.AggregateCosineBalance.mode i (r : ℤ)
 
 /-- Probability weights with both the first and second cosine moments at least `a`. -/
 def feasible (q : ℕ) [NeZero q] (a : ℝ) : Set (ZMod q → ℝ) :=
@@ -49,6 +50,9 @@ theorem cosineMoment_eq_centered {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → 
   apply sum_congr rfl
   intro i _
   congr 1
+  rw [D5.S3.Fourier.Concentration.AggregateCosineBalance.mode, Int.cast_natCast]
+  rw [show 2 * Real.pi * (r : ℝ) * (i.val : ℝ) / q =
+    (r : ℝ) * (2 * Real.pi * (i.val : ℝ) / q) by ring]
   have he := congrArg (fun y : ℤ => (y : ℝ)) (ZMod.val_eq_ite_valMinAbs i)
   split at he
   · push_cast at he
