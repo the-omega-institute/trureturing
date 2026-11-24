@@ -21,8 +21,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
-      actions: write
-      checks: read
+      actions: read
     outputs:
       source: ${{ steps.pin.outputs.source }}
     steps:
@@ -30,12 +29,12 @@ jobs:
         with:
           ref: ${{ github.workflow_sha }}
           sparse-checkout-cone-mode: false
-          sparse-checkout: /.github/actions/lean-cache-shards/handover.py
+          sparse-checkout: /.github/actions/lean-cache-shards/pin-source.py
           persist-credentials: false
       - id: pin
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 .github/actions/lean-cache-shards/handover.py
+        run: python3 .github/actions/lean-cache-shards/pin-source.py
       - if: steps.pin.outputs.upload == 'true'
         uses: actions/upload-artifact@v6
         with:
