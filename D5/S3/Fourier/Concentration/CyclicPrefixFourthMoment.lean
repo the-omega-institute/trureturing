@@ -157,7 +157,7 @@ private theorem sum_linear_rank (n : ℕ) :
     rw [h]
     ring
 
-private theorem sum_square_rank (n : ℕ) :
+theorem sum_square_rank (n : ℕ) :
     (∑ j ∈ range n, ((j : ℝ) + 1) ^ 2) =
       (n : ℝ) * ((n : ℝ) + 1) * (2 * (n : ℝ) + 1) / 6 := by
   cases n with
