@@ -846,7 +846,7 @@ private theorem zero_coordinates (p : Boundary) (s : Fin 168)
     rw [ite_eq_right]
     rintro ⟨hr, he⟩
     have hhor := horizontal_cons (r 0) (boundary r)
-    rw [Fin.cons_self_tail r] at hhor
+    rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at hhor
     have hproper : HardinA229635State.h (boundary r) = 0 := by omega
     obtain ⟨k, hk⟩ := proper_destination (boundary r) hproper
     have hv : HardinA229635State.Valid (boundary r) 1 := by
