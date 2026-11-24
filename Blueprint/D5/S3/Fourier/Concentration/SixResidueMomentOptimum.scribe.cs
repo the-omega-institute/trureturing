@@ -15,9 +15,11 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
             Paragraph(Text(
                 "Use the residues k = 0 through 5 and the real modes c(k) = cos(πk/3) and "
                 + "d(k) = cos(2πk/3). Write E for the sum of squared weights and M₁, M₂ for "
-                + "the respective weighted moments. The threshold a ranges over [0, 1]. "
+                + "the respective weighted moments, with each sum over the six residues. "
                 + "For a ≤ 1/2 take v = ((1+4a)/6, 1/6, (1−2a)/6, 1/6, (1−2a)/6, 1/6). "
-                + "For a > 1/2 take v = (a, (1−a)/3, 0, (1−a)/3, 0, (1−a)/3).")),
+                + "For a > 1/2 take v = (a, (1−a)/3, 0, (1−a)/3, 0, (1−a)/3). "
++ "For every real t, put uₜ(k) = max(0, 1 − t(1−c(k))) and "
++ "pₜ(k) = uₜ(k)/∑ⱼuₜ(j).")),
             Describe.Lean(
                 DescribeId.Create("six-residue-two-mode-optimum"),
                 DeclarationHandle.Create(Owner + ".six_two_mode_optimum"),
@@ -52,7 +54,10 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
         var k = F.Id("k");
         var v = F.Id("v");
         var w = F.Id("w");
-        var p = F.Id("p");
+        var t = F.Id("t");
+        var p = new Formula.Subscript(F.Id("p"), t);
+        var reals = Seq(Mathbb, Grp(F.Id("R")));
+        var domain = Seq(Call("Fin", D(6)), Sp, Rightarrow, Sp, reals);
         var sum = new Formula.Subscript(Sum, k);
         var first = new Formula.Subscript(F.Id("M"), D(1));
         var second = new Formula.Subscript(F.Id("M"), D(2));
@@ -60,6 +65,8 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
         var ev = Call("E", v);
         var aSquared = new Formula.Power(a, D(2));
         return Disp(new Formula.Aligned([
+            Seq(Amp, Forall, Sp, a, Sp, InMacro, Sp, reals, Comma, Quad,
+                D(0), Sp, Le, Sp, a, Sp, Le, Sp, D(1), Colon),
             Seq(Amp, Forall, Sp, k, Comma, Sp, Call("v", k), Sp, Ge, D(0), Comma,
                 Quad, Sp, sum, Call("v", k), Eq, D(1), Comma, Quad, Sp,
                 new Formula.Apply(first, [v]), Eq, new Formula.Apply(second, [v]), Eq, a, Comma),
@@ -67,11 +74,15 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                 Grp(D(1), Plus, D(4), aSquared), Grp(D(6)), Comma),
             Seq(Amp, half, Lt, a, Sp, Longrightarrow, Sp, ev, Eq, aSquared, Plus,
                 Frac, Grp(new Formula.Power(Seq(Open, D(1), Minus, a, Close), D(2))), Grp(D(3)), Comma),
-            Seq(Amp, new Formula.Apply(first, [w]), Plus, new Formula.Apply(second, [w]), Sp, Ge, Sp,
-                D(2), a, Sp, Longrightarrow, Sp, Call("E", Seq(w, Minus, v)), Sp, Le, Sp,
+            Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad, Open, Forall, Sp, k, Comma, Sp,
+                Call("w", k), Sp, Ge, D(0), Close, Sp, Land, Sp, sum, Call("w", k), Eq, D(1), Sp,
+                Land, Sp, new Formula.Apply(first, [w]), Plus, new Formula.Apply(second, [w]),
+                Sp, Ge, Sp, D(2), a),
+            Seq(Amp, Quad, Sp, Longrightarrow, Sp, Call("E", Seq(w, Minus, v)), Sp, Le, Sp,
                 Call("E", w), Minus, ev, Comma),
-            Seq(Amp, D(0), Lt, a, Lt, D(1), Comma, Quad, Sp, new Formula.Apply(first, [p]), Eq, a,
-                Sp, Longrightarrow, Sp, new Formula.Apply(second, [p]), Lt, a, Dot)
+            Seq(Amp, Forall, Sp, t, Sp, InMacro, Sp, reals, Comma, Quad, D(0), Lt, a, Lt, D(1),
+                Sp, Land, Sp, new Formula.Apply(first, [p]), Eq, a, Sp, Longrightarrow, Sp,
+                new Formula.Apply(second, [p]), Lt, a, Dot)
         ]));
     }
 }

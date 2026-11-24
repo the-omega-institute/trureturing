@@ -1,5 +1,5 @@
 /- GID: D5/S3/Fourier/Concentration/SixResidueMomentOptimum
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Fourier/Concentration/SixResidueMomentOptimum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -38,7 +38,7 @@ private theorem sum_fin_six (f : Fin 6 → ℝ) :
   simp [Fin.sum_univ_succ]
   ring
 
-private theorem firstMode_moment_gap (a t : ℝ) (ha : 0 < a) (ha1 : a < 1) (ht : 0 ≤ t)
+private theorem firstMode_moment_gap (a t : ℝ) (ha : 0 < a) (ha1 : a < 1)
     (u : Fin 6 → ℝ) (hu : ∀ k, u k = max 0 (1 - t * (1 - firstMode k)))
     (v : Fin 6 → ℝ) (hv : ∀ k, v k = u k / ∑ j, u j)
     (hfirst : moment v firstMode = a) : moment v secondMode < a := by
@@ -52,11 +52,18 @@ private theorem firstMode_moment_gap (a t : ℝ) (ha : 0 < a) (ha1 : a < 1) (ht 
     linarith
   have hpos : 0 < t := by
     by_contra! hi
-    have hz : t = 0 := le_antisymm hi ht
-    have hU : ∀ k, u k = 1 := by intro k; rw [hu, hz]; norm_num
-    have hT : total = 6 := by simp [total, hU, sum_fin_six]; norm_num
-    have hV : ∀ k, v k = 1 / 6 := by intro k; rw [hv, hU]; exact congrArg (fun z : ℝ => 1 / z) hT
-    have hM : moment v firstMode = 0 := by norm_num [moment, sum_fin_six, hV, firstMode]
+    have hU : ∀ k, u k = 1 - t * (1 - firstMode k) := by
+      intro k
+      rw [hu, max_eq_right]
+      fin_cases k <;> norm_num [firstMode] <;> linarith
+    have hnum : (∑ k, u k * firstMode k) = 3 * t := by
+      simp only [sum_fin_six, hU]
+      norm_num [firstMode]
+      ring
+    have hM : moment v firstMode = 3 * t / total := by
+      simp only [moment, hv, div_mul_eq_mul_div, ← sum_div, hnum, total]
+    have hnonpos : 3 * t / total ≤ 0 :=
+      div_nonpos_of_nonpos_of_nonneg (by linarith) htotal.le
     linarith
   have ht2 : t < 2 := by
     by_contra! hi
@@ -271,7 +278,7 @@ theorem six_two_mode_optimum (a : ℝ) (ha : 0 ≤ a) (ha1 : a ≤ 1) :
       (∀ w : Fin 6 → ℝ, (∀ k, 0 ≤ w k) → (∑ k, w k) = 1 →
         2 * a ≤ (∑ k, w k * c k) + ∑ k, w k * d k →
         (∑ k, square (w k - v k)) ≤ (∑ k, square (w k)) - ∑ k, square (v k)) ∧
-      (0 < a → a < 1 → ∀ t : ℝ, 0 ≤ t →
+      (0 < a → a < 1 → ∀ t : ℝ,
         let u := fun k : Fin 6 => max 0 (1 - t * (1 - c k))
         let p := fun k => u k / ∑ j, u j
         (∑ k, p k * c k) = a → (∑ k, p k * d k) < a) := by
@@ -279,7 +286,7 @@ theorem six_two_mode_optimum (a : ℝ) (ha : 0 ≤ a) (ha1 : a ≤ 1) :
   simp_rw [← firstMode_cos, ← secondMode_cos]
   obtain ⟨h₁, h₂, h₃, h₄, h₅, h₆⟩ := six_weight_optimum a ha ha1
   refine ⟨h₁, h₂, h₃, h₄, h₅, h₆, ?_⟩
-  intro hpos hone t ht
-  exact firstMode_moment_gap a t hpos hone ht _ (fun _ => rfl) _ (fun _ => rfl)
+  intro hpos hone t
+  exact firstMode_moment_gap a t hpos hone _ (fun _ => rfl) _ (fun _ => rfl)
 
 end D5.S3.Fourier.Concentration.SixResidueMomentOptimum

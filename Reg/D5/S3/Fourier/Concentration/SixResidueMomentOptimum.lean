@@ -36,7 +36,7 @@ abbrev arena : Arena where
       (∀ w : Fin 6 → ℝ, (∀ k, 0 ≤ w k) → (∑ k, w k) = 1 →
         2 * a ≤ (∑ k, w k * c k) + ∑ k, w k * d k →
         (∑ k, square (w k - v k)) ≤ (∑ k, square (w k)) - ∑ k, square (v k)) ∧
-      (0 < a → a < 1 → ∀ t : ℝ, 0 ≤ t →
+      (0 < a → a < 1 → ∀ t : ℝ,
         let u := fun k : Fin 6 => max 0 (1 - t * (1 - c k))
         let p := fun k => u k / ∑ j, u j
         (∑ k, p k * c k) = a → (∑ k, p k * d k) < a)
