@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis.RefinedBMV.Tracial;
 
 internal sealed class RefinedBMVTracialBoundDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class RefinedBMVTracialBoundDocument : IScribeDocumentDefinition
         H("A quantitative refined BMV gap for finite traces"),
         Blocks(Describe.Lean(
             DescribeId.Create("refined-bmv-tracial-three-copy-gap"),
-            DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVTracialBound.wordMean_three_trace_gap"),
+            DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound.wordMean_three_trace_gap"),
             H("The gap and the commutator"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/HilbertOperators/hagele2026refinedbmv")),

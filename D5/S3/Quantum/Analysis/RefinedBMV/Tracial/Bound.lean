@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVTracialBound
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
    generality: G
-   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMVTracialBound
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -8,8 +8,8 @@
 
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic.Choose
-import D5.S3.Quantum.Analysis.RefinedBMVTracialMoments
-import D5.S3.Quantum.Analysis.RefinedBMVTracialKernel
+import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Moments
+import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Kernel
 import D5.S3.Quantum.Analysis.RefinedBMVExtremeAnalytic
 
 /-! Transmission of the three-factor refined BMV product bound to tracial C*-algebras. -/

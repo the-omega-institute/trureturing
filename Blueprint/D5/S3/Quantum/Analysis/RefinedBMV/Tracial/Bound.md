@@ -6,9 +6,9 @@ A quantitative refined BMV gap for finite traces
 
 **Theorem 1.1 (The gap and the commutator).**
 
-Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVTracialBound.wordMean_three_trace_gap`
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound.wordMean_three_trace_gap`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVTracialBound.wordMean_three_trace_gap` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound.wordMean_three_trace_gap` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ For positive elements A and B of any unital C*-algebra with a finite positive tr
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVTracialBound.wordMean_three_trace_gap`
-- Dependency: [D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic](RefinedBMVExtremeAnalytic.md)
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound.wordMean_three_trace_gap`
+- Dependency: [D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic](../../RefinedBMVExtremeAnalytic.md)

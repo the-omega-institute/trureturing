@@ -12,7 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
-  - D5/S3/Quantum/Analysis/RefinedBMVTracialBound
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel

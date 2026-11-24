@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Analysis.RefinedBMVTracialBound
+import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Bound
 import Reg.Support.DependentFamily
 
 /-! The three-factor gap reads the real trace of the commutator square. -/
 
-namespace Reg.D5.S3.Quantum.Analysis.RefinedBMVTracialBound
+namespace Reg.D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Bound
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.RefinedBMV (balancedWords)
@@ -102,7 +102,7 @@ def gapRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.RefinedBMVTracialBound
+    owner := `D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Bound
     definition := none
     coordinates := #[0, 4]
     readouts := #[{
@@ -119,4 +119,4 @@ def gapRegistration :
 #print axioms gapRegistration
 
 end
-end Reg.D5.S3.Quantum.Analysis.RefinedBMVTracialBound
+end Reg.D5.S3.Quantum.Analysis.RefinedBMV.Tracial.Bound
