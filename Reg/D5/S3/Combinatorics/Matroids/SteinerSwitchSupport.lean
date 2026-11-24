@@ -49,20 +49,20 @@ def commonCountLaw (R : Realization sig.{v}) : Prop :=
 
 abbrev commonCountArena : Arena := ⟨sig, commonCountLaw.{j,u,v}⟩
 
-private abbrev AffineLoop := ULift.{u} (Option (Fin 9))
+abbrev AffineLoop := ULift.{u} (Option (Fin 9))
 
-private instance : Mul AffineLoop.{u} :=
+instance : Mul AffineLoop.{u} :=
   letI := steinerMul affinePlane_valid affinePlane_complete
   inferInstanceAs (Mul (ULift (Option (Fin 9))))
 
-private abbrev affineIdentity : AffineLoop.{u} := ULift.up none
+abbrev affineIdentity : AffineLoop.{u} := ULift.up none
 
-private theorem affine_unit (x : AffineLoop.{u}) : affineIdentity * x = x := rfl
+theorem affine_unit (x : AffineLoop.{u}) : affineIdentity * x = x := rfl
 
-private theorem affine_comm (x y : AffineLoop.{u}) : x * y = y * x :=
+theorem affine_comm (x y : AffineLoop.{u}) : x * y = y * x :=
   ULift.ext (product_comm affinePlane_valid affinePlane_complete x.down y.down)
 
-private theorem affine_invol (x y : AffineLoop.{u}) : x * (x * y) = y := by
+theorem affine_invol (x y : AffineLoop.{u}) : x * (x * y) = y := by
   letI := steinerMul affinePlane_valid affinePlane_complete
   apply ULift.ext
   change x.down * (x.down * y.down) = y.down
@@ -70,7 +70,7 @@ private theorem affine_invol (x y : AffineLoop.{u}) : x * (x * y) = y := by
   | none => rfl
   | some i => exact translate_involutive affinePlane_valid affinePlane_complete i y.down
 
-private theorem affine_centreless : Set.center AffineLoop.{u} = {affineIdentity} := by
+theorem affine_centreless : Set.center AffineLoop.{u} = {affineIdentity} := by
   letI := steinerMul affinePlane_valid affinePlane_complete
   ext x
   constructor
@@ -92,7 +92,7 @@ private theorem affine_centreless : Set.center AffineLoop.{u} = {affineIdentity}
     exact ⟨affine_comm affineIdentity, fun _ _ => by rw [affine_unit, affine_unit],
       fun _ _ => by rw [rightUnit, rightUnit]⟩
 
-private theorem affine_noncommuting :
+theorem affine_noncommuting :
     ∃ p q x : AffineLoop.{u}, q * (p * x) ≠ p * (q * x) := by
   let p : AffineLoop := ULift.up (some 0)
   suffices ∃ q x : AffineLoop, q * (p * x) ≠ p * (q * x) by
