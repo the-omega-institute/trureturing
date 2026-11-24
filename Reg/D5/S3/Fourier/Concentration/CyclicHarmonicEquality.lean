@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Fourier.Concentration.CyclicHarmonicEquality
 
+/-! Readouts for the order of the support difference and for the admissible modulus. -/
+
 namespace Reg.D5.S3.Fourier.Concentration.CyclicHarmonicEquality
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -23,18 +25,19 @@ def differenceRejected : Realization differenceSignature :=
 abbrev differenceArena : Arena where
   signature := differenceSignature
   Law V := ∀ (q : ℕ) [NeZero q]
-      (w : ZMod q → ℝ) (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j)
-      (_ : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0),
+      (w : ZMod q → ℝ) (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j),
     let d := ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)
-    ‖d‖ ^ 2 ≤ 1 / 2 ∧
-      (‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = 4 ∧
+    let s := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
+    (s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
+      (s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = 4 ∧
         w a = 1 / 2 ∧ w b = 1 / 2 ∧ ∀ j, j ≠ a → j ≠ b → w j = 0)
 
 private theorem rejected_difference_law : ¬ differenceArena.Law differenceRejected := by
   intro law
   obtain ⟨w, hw, hpos, hsecond, hfirst⟩ :=
     (zmod_exists_first_mode_half_of_second_zero 4).mpr (dvd_refl 4)
-  obtain ⟨_, _, _, hfalse, _⟩ := (law 4 w hw hpos hsecond).2.mp hfirst
+  obtain ⟨_, _, _, hfalse, _⟩ :=
+    (law 4 w hw hpos).2.mp ⟨hsecond, hfirst⟩
   change (0 : ℕ) = 4 at hfalse
   contradiction
 
@@ -48,9 +51,8 @@ private theorem difference_dependence : ObservationalDependence differenceSignat
 def differenceEvidence :
     Registration differenceArena (type_of% @zmod_first_mode_le_half_of_second_zero) where
   actual := differenceActual
-  bridge := by simp only [differenceArena, differenceActual, realize]
-  variation := ⟨by simpa only [differenceArena, differenceActual, realize] using
-    @zmod_first_mode_le_half_of_second_zero, differenceRejected, rejected_difference_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@zmod_first_mode_le_half_of_second_zero, differenceRejected, rejected_difference_law⟩
   sensitivity := SingleDependentReadout.sensitivity differenceArena.Law differenceActual
     differenceRejected rejected_difference_law
   dependence := difference_dependence
@@ -122,9 +124,8 @@ private theorem modulus_dependence : ObservationalDependence modulusSignature mo
 def modulusEvidence :
     Registration modulusArena (type_of% @zmod_exists_first_mode_half_of_second_zero) where
   actual := modulusActual
-  bridge := by simp only [modulusArena, modulusActual, realize]
-  variation := ⟨by simpa only [modulusArena, modulusActual, realize] using
-    @zmod_exists_first_mode_half_of_second_zero, modulusRejected, rejected_modulus_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@zmod_exists_first_mode_half_of_second_zero, modulusRejected, rejected_modulus_law⟩
   sensitivity := SingleDependentReadout.sensitivity modulusArena.Law modulusActual modulusRejected
     rejected_modulus_law
   dependence := modulus_dependence

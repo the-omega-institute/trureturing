@@ -209,13 +209,13 @@ private theorem character_sq_of_order_four {q : ℕ} [NeZero q] (d : ZMod q)
   exact (hs ▸ IsPrimitiveRoot.orderOf (ZMod.stdAddChar d ^ 2)).eq_neg_one_of_two_right
 
 /-- The vanishing second Fourier mode bounds the first and forces an order-four
-pair of equal masses at equality. -/
+pair of equal masses at equality. Such a pair also forces the second mode to vanish. -/
 theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
-    (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hpos : ∀ j, 0 ≤ w j)
-    (hsecond : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0) :
+    (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hpos : ∀ j, 0 ≤ w j) :
     let d := ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)
-    ‖d‖ ^ 2 ≤ 1 / 2 ∧
-      (‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ addOrderOf (b - a) = 4 ∧
+    let s := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
+    (s = 0 → ‖d‖ ^ 2 ≤ 1 / 2) ∧
+      (s = 0 ∧ ‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ addOrderOf (b - a) = 4 ∧
         w a = 1 / 2 ∧ w b = 1 / 2 ∧ ∀ j, j ≠ a → j ≠ b → w j = 0) := by
   let χ := (ZMod.stdAddChar (N := q))
   let z (j : ZMod q) := χ (-j)
@@ -225,8 +225,9 @@ theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
     rw [ZMod.dft_apply]
     refine sum_congr rfl fun j _ => ?_
     rw [mul_one, smul_eq_mul, mul_comm]
-  have hsecond' : ∑ j, (w j : ℂ) * z j ^ 2 = 0 := by
-    rw [← hsecond, ZMod.dft_apply]
+  have hsecondSum : (∑ j, (w j : ℂ) * z j ^ 2) =
+      ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) := by
+    rw [ZMod.dft_apply]
     refine sum_congr rfl fun j _ => ?_
     have harg : -(j * 2) = 2 • (-j) := by rw [mul_two, two_nsmul, neg_add_rev]
     change (w j : ℂ) * χ (-j) ^ 2 = χ (-(j * 2)) • (w j : ℂ)
@@ -234,11 +235,12 @@ theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
     exact mul_comm _ _
   dsimp only
   rw [hfirst]
-  refine ⟨(first_moment_le_half_and_projection z w hz hw hpos hsecond').1, ?_⟩
+  refine ⟨fun hz₂ => (first_moment_le_half_and_projection z w hz hw hpos
+    (hsecondSum.trans hz₂)).1, ?_⟩
   constructor
-  · intro he
+  · rintro ⟨hz₂, he⟩
     have hn : Function.Injective z := fun _ _ h => neg_injective (ZMod.injective_stdAddChar h)
-    obtain ⟨a, b, hab, hzrel, ha, hb, ho⟩ := equality_two_weights z w hz hn hw hpos hsecond' he
+    obtain ⟨a, b, hab, hzrel, ha, hb, ho⟩ := equality_two_weights z w hz hn hw hpos (hsecondSum.trans hz₂) he
     have hchar : χ (a - b) = Complex.I := by
       have harg : -b = (a - b) + -a := by abel
       change χ (-b) = Complex.I * χ (-a) at hzrel
@@ -264,16 +266,23 @@ theorem zmod_first_mode_le_half_of_second_zero (q : ℕ) [NeZero q]
     have hrel : z b = t * z a := by
       change χ (-b) = χ (a - b) * χ (-a)
       rw [harg, AddChar.map_add_eq_mul]
-    have hm : m = (1 / 2 : ℂ) * (1 + t) * z a := by
-      have hab' : a ∉ ({b} : Finset (ZMod q)) := by simpa using hab
-      have hoff (j : ZMod q) (_ : j ∈ univ) (hj : j ∉ ({a,b} : Finset (ZMod q))) :
-          (w j : ℂ) * z j = 0 := by
+    have hab' : a ∉ ({b} : Finset (ZMod q)) := by simpa using hab
+    have htwoTerms (f : ZMod q → ℂ) : (∑ j, (w j : ℂ) * f j) =
+        (1 / 2 : ℂ) * f a + (1 / 2 : ℂ) * f b := by
+      have hoff (j : ZMod q) (_ : j ∈ univ) (hj : j ∉ ({a, b} : Finset (ZMod q))) :
+          (w j : ℂ) * f j = 0 := by
         rw [hzero j (fun h => hj (by simp [h])) (fun h => hj (by simp [h])),
           Complex.ofReal_zero, zero_mul]
-      unfold m
-      rw [← sum_subset (subset_univ ({a,b} : Finset (ZMod q))) hoff, sum_insert hab',
-        sum_singleton, ha, hb, hrel]
+      rw [← sum_subset (subset_univ ({a, b} : Finset (ZMod q))) hoff, sum_insert hab',
+        sum_singleton, ha, hb]
       push_cast
+      rfl
+    refine ⟨?_, ?_⟩
+    · rw [← hsecondSum, htwoTerms (fun j => z j ^ 2), hrel, mul_pow, hsq]
+      ring
+    have hm : m = (1 / 2 : ℂ) * (1 + t) * z a := by
+      unfold m
+      rw [htwoTerms z, hrel]
       ring
     have hz' : Complex.normSq (z a) = 1 := by
       rw [Complex.normSq_eq_norm_sq, hz, one_pow]
@@ -291,7 +300,7 @@ theorem zmod_exists_first_mode_half_of_second_zero (q : ℕ) [NeZero q] :
   constructor
   · rintro ⟨w, hw, hpos, hsecond, hfirst⟩
     obtain ⟨a, b, _, hab, _⟩ :=
-      (zmod_first_mode_le_half_of_second_zero q w hw hpos hsecond).2.mp hfirst
+      (zmod_first_mode_le_half_of_second_zero q w hw hpos).2.mp ⟨hsecond, hfirst⟩
     have hdvd : addOrderOf (b - a) ∣ Fintype.card (ZMod q) := addOrderOf_dvd_card
     simpa only [hab, ZMod.card] using hdvd
   · intro hq
@@ -315,19 +324,8 @@ theorem zmod_exists_first_mode_half_of_second_zero (q : ℕ) [NeZero q] :
         sum_insert hpair, sum_singleton, h0, hwd]
       norm_num
     have hpos (j : ZMod q) : 0 ≤ w j := by unfold w; split <;> norm_num
-    have hsecond : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0 := by
-      rw [ZMod.dft_apply]
-      have hz (j : ZMod q) (_ : j ∈ (univ : Finset (ZMod q)))
-          (hj : j ∉ ({0, d} : Finset (ZMod q))) :
-          ZMod.stdAddChar (-(j * 2)) • (w j : ℂ) = 0 := by
-        rw [hoff j (fun h0 => hj (by simp [h0])) (fun hd => hj (by simp [hd]))]
-        simp
-      have harg : -(d * 2) = 2 • (-d) := by rw [mul_two, two_nsmul, neg_add_rev]
-      have hs := character_sq_of_order_four (-d) (by rw [addOrderOf_neg, hd])
-      rw [← sum_subset (subset_univ ({0, d} : Finset (ZMod q))) hz, sum_insert hpair,
-        sum_singleton, zero_mul, neg_zero, AddChar.map_zero_eq_one, harg,
-        AddChar.map_nsmul_eq_pow, hs, h0, hwd, one_smul, neg_smul, one_smul, add_neg_cancel]
-    refine ⟨w, hw, hpos, hsecond, (zmod_first_mode_le_half_of_second_zero q w hw hpos hsecond).2.mpr ?_⟩
-    exact ⟨0, d, Ne.symm hd0, by simpa using hd, h0, hwd, hoff⟩
+    have hpairLaw := (zmod_first_mode_le_half_of_second_zero q w hw hpos).2.mpr
+      ⟨0, d, Ne.symm hd0, by simpa using hd, h0, hwd, hoff⟩
+    exact ⟨w, hw, hpos, hpairLaw.1, hpairLaw.2⟩
 
 end D5.S3.Fourier.Concentration.CyclicHarmonicEquality

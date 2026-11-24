@@ -15,8 +15,8 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "Let q be a positive integer and let w be a nonnegative real weight of total mass "
                 + "one on ZMod q. Use the unnormalized discrete Fourier transform and write c for "
-                + "the squared magnitude at frequency one. Assume the coefficient at frequency two "
-                + "vanishes. Write ord for additive order.")),
+                + "the squared magnitude at frequency one and s for the coefficient at frequency two. "
+                + "Write ord for additive order.")),
             Describe.Lean(
                 DescribeId.Create("first-mode-equality"),
                 DeclarationHandle.Create(Owner + ".zmod_first_mode_le_half_of_second_zero"),
@@ -30,8 +30,15 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                     + "real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. "
                     + "The imaginary mean vanishes, so both points occur with equal weights. "
                     + "Injectivity of the cyclic character gives exactly two residues, and the "
-                    + "two phases differ by a quarter turn. Conversely, the first coefficient of "
-                    + "the equal two-point law is the average of two perpendicular unit phases."))),
+                    + "two phases differ by a quarter turn. Conversely, their squared phases cancel "
+                    + "at frequency two, and the first coefficient is the average of two perpendicular "
+                    + "unit phases.")),
+                    Paragraph(Text(
+                        "On ZMod 4 a point mass has first squared magnitude one and second "
+                        + "coefficient one. The nonnegative weight (1,1,0,0) has second coefficient "
+                        + "zero and first squared magnitude two, with total mass two. The signed weight "
+                        + "(1,1/2,−1/2,0) has total mass one and second coefficient zero, with first "
+                        + "squared magnitude 5/2. Positive q supplies the finite DFT domain."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "For the same positive modulus q, write E(q) for existence of a nonnegative "
@@ -63,6 +70,7 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
     {
         var q = F.Id("q");
         var c = F.Id("c");
+        var s = F.Id("s");
         var a = F.Id("a");
         var b = F.Id("b");
         var j = F.Id("j");
@@ -75,7 +83,9 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
             a, Sp, Neq, Sp, b, Sp, Land, Sp, Call("ord", Seq(b, Minus, a)), Sp, Eq, Sp, D(4),
             Sp, Land, Sp, Call("w", a), Sp, Eq, Sp, half, Sp, Land, Sp, Call("w", b), Sp, Eq, Sp,
             half, Sp, Land, Sp, zeroElsewhere);
-        return Disp(Seq(c, Sp, Leq, Sp, half, Sp, Land, Sp, Open, c, Sp, Eq, Sp, half,
+        var zeroMode = Seq(s, Sp, Eq, Sp, D(0));
+        return Disp(Seq(Open, zeroMode, Sp, Implies, Sp, c, Sp, Leq, Sp, half, Close,
+            Sp, Land, Sp, Open, zeroMode, Sp, Land, Sp, c, Sp, Eq, Sp, half,
             Sp, Iff, Sp, support, Close));
     }
 
