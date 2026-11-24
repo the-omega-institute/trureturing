@@ -126,15 +126,19 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 | 从钉版 Mathlib 移植 | 保留上游定义所在模块的路径，把 `Mathlib` 换成 `OmegaMath` | 在上游声明的完整名字前加 `Omega.` |
 | Omega 原创形式化 | 放在相关专题附近，可与移植模块同目录 | 在 `Omega` 命名空间中取名，模块文档第一行写 `Omega original.`，随后说明用途 |
 
+## 与标准定义的对应
+
+对于声称对应 Mathlib 的定义，在混合核验模块中证明映射保留运算或谓词。自然数核验给出零和后继转换的两个往返等式、序关系的双向等价，以及 Fibonacci 数列和二项式系数对任意输入的逐点一致。`lake test -- OmegaChecks.NatCorrespondence` 可单独运行。严格闭包覆盖任一算术移植模块时也运行这项核验。[对应证明](OmegaChecks/NatCorrespondence.lean)
+
 ## 空内核审计
 
 | 审计入口 | 传递闭包的模块数 | 声明数 |
 | --- | ---: | ---: |
-| `OmegaInit` | 10 | 163 |
-| `OmegaMath` | 103 | 2,677 |
-| `OmegaInit` 与 `OmegaMath` 合并去重 | 104 | 2,677 |
+| `OmegaInit` | 11 | 170 |
+| `OmegaMath` | 120 | 2,840 |
+| `OmegaInit` 与 `OmegaMath` 合并去重 | 121 | 2,840 |
 
-计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 103 个模块包括 94 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
+计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 120 个模块包括 110 个 OmegaMath 模块和 10 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
 
 在仓库根目录运行以下命令。Lake 驱动构建并重放两个入口的联合闭包。Python 脚本按源文件清单核对两个入口的传递闭包，并检查旧消费入口和拒绝用例。[复现脚本](OmegaChecks/check.py)
 
