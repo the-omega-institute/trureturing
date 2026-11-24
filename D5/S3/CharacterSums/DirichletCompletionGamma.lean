@@ -6,16 +6,10 @@
    utility: none
    digest: Gamma products, convexity and integral tests bound completion factors. -/
 
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
-import Mathlib.Analysis.Convex.Jensen
 import D5.S3.Analytic.Asymptotics.GammaVerticalReciprocalBounds
 import D5.S3.Weil.Mertens.Estimates
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Weil.Mertens.Cryptids.DigammaBinet.Foundation
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Tactic
 
 /-! # Gamma and Dirichlet-series bounds for completions -/
 

@@ -176,7 +176,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                     + "norm(Fchi(s)) is strictly below exp(C R (1+log(R))). The comparison U at "
                     + "most 2R absorbs the radial Gamma argument. Since 1+log(R) is at most 3 "
                     + "sqrt(R) for R at least one, a strict bound exp(3 C R to the power 3/2) "
-                    + "follows. It"
+                    + "follows. It "
                     + "supplies the growth exponent below two for the two-point logarithmic "
                     + "derivative formula; exact order one is not asserted."))),
                 DescribeRole.Theorem),
@@ -241,14 +241,14 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                       "For primitive nonprincipal chi, real sigma >= 1 and every real t, the "
-                    + "series"
+                    + "series "
                     + "with term m(rho)(sigma-Re(rho))/((sigma-Re(rho)) squared + (t-Im(rho)) "
-                    + "squared) has"
+                    + "squared) has "
                     + "sum Re(Hchi(sigma+it)), where m(rho) is the natural analytic order and "
-                    + "Hchi is"
+                    + "Hchi is "
                     + "the logarithmic derivative of Fchi. Apply the entire two-point difference "
                     + "formula at sigma+it and 1-sigma+it. Conjugate reflection makes the "
-                    + "difference of"
+                    + "difference of "
                     + "logarithmic derivatives equal twice the real part. Taking real parts gives "
                     + "the sum of a positive kernel and its multiplicity-preserving reflected "
                     + "kernel. Reindex this summable real expression to obtain the formula without "
@@ -264,7 +264,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                       "For every positive modulus, every complex character and every real t, the "
                     + "norm of the logarithmic derivative of Lchi at 2+it is at most S, the sum of "
                     + "log(n)/n squared. S is at most A = log(2)/4+4 log(3)/9+1/3 < 1. No "
-                    + "primitivity or"
+                    + "primitivity or "
                     + "nonprincipality hypothesis is imposed. The von Mangoldt Dirichlet series "
                     + "and character norm bound reduce the estimate to the logarithmic series at "
                     + "exponent two. Its first terms and an integral tail give A."))),

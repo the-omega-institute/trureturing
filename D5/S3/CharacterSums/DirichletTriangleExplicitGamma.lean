@@ -98,11 +98,12 @@ theorem evenT_le_mass {y : ℝ} (hy : 0 ≤ y) :
       evenT 0 = Real.log 2 ∧ evenT y ≤ Real.log 2 := by
   refine ⟨evenT_summable hy, ?_, ?_⟩
   · simpa [evenT] using evenCoeff_hasSum.tsum_eq
-  ·   rw [← evenCoeff_hasSum.tsum_eq]
+  · rw [← evenCoeff_hasSum.tsum_eq]
     apply (evenT_summable hy).tsum_le_tsum _ evenCoeff_hasSum.summable
     intro n
     exact mul_le_of_le_one_right (evenCoeff_nonneg n)
       (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hy))
+
 private theorem evenT_continuousOn : ContinuousOn evenT (Ici 0) := by
   apply continuousOn_tsum (fun n => (show Continuous (fun y : ℝ =>
     evenCoeff n * Real.exp (-(2 * ((n : ℝ) + 1)) * y)) by fun_prop).continuousOn)
