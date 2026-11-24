@@ -103,8 +103,11 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
         var k = V("k");
         var i = V("i");
         var smaller = Call("Fin", k);
+        var larger = Call("Fin", Add(k, N(1)));
+        var codomain = Seq(Parenthesized(larger), Times, Parenthesized(larger));
+        var embedding = Typed(C("forwardCutPair", k), Call("Function.Embedding", smaller, codomain));
         return All("k", Q("Nat"), All("i", smaller,
-            Eq(C("forwardCutPair", k, i), Parenthesized(Seq(Call("Fin.castSucc", i), Comma, Sp, Call("Fin.succ", i))))));
+            Eq(App(embedding, i), Parenthesized(Seq(Call("Fin.castSucc", i), Comma, Sp, Call("Fin.succ", i))))));
     }
 
     private static Formula CutParts()
