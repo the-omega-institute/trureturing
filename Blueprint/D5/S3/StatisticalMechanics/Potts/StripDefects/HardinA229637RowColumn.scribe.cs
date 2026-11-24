@@ -22,6 +22,15 @@ internal sealed class HardinA229637RowColumnDocument : IScribeDocumentDefinition
                     "horiz k is the set of column pairs (j, j+1) of a row of width k; a pair whose "
                     + "two cells carry the same colour is a horizontal mistake."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("a229637-bond-row"),
+                DeclarationHandle.Create(Prefix + "bond_row"),
+                H("Counting monochromatic horizontal bonds"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every width k and row r of k cells over {0,1,2}, the number of monochromatic "
+                    + "bonds in horiz k is the cardinality of the set of positions i for which "
+                    + "a position j satisfies j = i + 1 and r(i) = r(j)."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a229637-between-bonds"),
                 DeclarationHandle.Create(Prefix + "betw"),
                 H("Diagonal and antidiagonal bonds between rows"),

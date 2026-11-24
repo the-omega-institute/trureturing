@@ -87,6 +87,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
@@ -97,6 +98,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Fin
@@ -128,14 +130,41 @@ theorem valid_parts (p : Boundary) (d : ℕ) :
   change HardinA229635State.h p + d ≤ 2 ↔ _
   omega
 
+private theorem bond_eq_adjacent {k : ℕ} (r : Fin (k + 1) → Fin 3) :
+    bondDefects (Finset.univ.image fun j : Fin k => (j.castSucc, j.succ)) r r =
+      (Finset.univ.filter fun j : Fin k => r j.castSucc = r j.succ).card := by
+  have he : HardinA229637RowColumn.horiz (k + 1) =
+      Finset.univ.image (fun j : Fin k => (j.castSucc, j.succ)) := by
+    ext e
+    simp only [HardinA229637RowColumn.horiz, Finset.mem_filter, Finset.mem_image,
+      Finset.mem_univ, true_and]
+    constructor
+    · intro h
+      have hi : e.1.val < k := by have := e.2.isLt; omega
+      exact ⟨e.1.castLT hi, Prod.ext (Fin.ext rfl) (Fin.ext h.symm)⟩
+    · rintro ⟨j, rfl⟩
+      rfl
+  rw [← he, HardinA229637RowColumn.bond_row, ← Finset.card_map Fin.castSuccEmb]
+  change (Finset.univ.filter fun i : Fin (k + 1) =>
+    ∃ j : Fin (k + 1), j.val = i.val + 1 ∧ r i = r j).card = _
+  congr 1
+  ext i
+  simp only [Finset.mem_filter, Finset.mem_map, Finset.mem_univ, true_and, Fin.castSuccEmb_apply]
+  constructor
+  · rintro ⟨j, hj, h⟩
+    have hi : i.val < k := by have := j.isLt; omega
+    let x : Fin k := i.castLT hi
+    have hx : x.castSucc = i := Fin.castSucc_castLT i hi
+    have hy : x.succ = j := Fin.ext hj.symm
+    exact ⟨x, hx ▸ hy ▸ h, hx⟩
+  · rintro ⟨j, h, rfl⟩
+    exact ⟨j.succ, rfl, h⟩
+
 private theorem tailCost_eq (p : Boundary) :
     HardinA229635State.h p =
-      (Finset.univ.filter fun j : Fin 5 => p j.castSucc = p j.succ).card := by
-  simp only [HardinA229635State.h, bondDefects,
-    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData.horizontal,
-    Finset.filter_image]
-  exact Finset.card_image_of_injective _ fun i j h =>
-    Fin.castSucc_injective 5 (congrArg Prod.fst h)
+      (Finset.univ.filter fun j : Fin 5 => p j.castSucc = p j.succ).card :=
+  bond_eq_adjacent p
+
 private theorem valid_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     HardinA229635State.Valid (e ∘ p) d ↔ HardinA229635State.Valid p d := by
   simp only [HardinA229635State.Valid, HardinA229635State.h_relabel]
@@ -287,9 +316,7 @@ theorem horizontal_cons (x : Fin 3) (p : Boundary) :
     bondDefects horizontal (Fin.cons x p) (Fin.cons x p) =
       (if x = p 0 then 1 else 0) + HardinA229635State.h p := by
   rw [tailCost_eq]
-  simp only [bondDefects, horizontal, Finset.filter_image]
-  rw [Finset.card_image_of_injective _ (fun i j h =>
-    Fin.castSucc_injective 6 (congrArg Prod.fst h))]
+  rw [horizontal, bond_eq_adjacent]
   let r : Row := Fin.cons x p
   have h : (∑ j : Fin 6, if r j.castSucc = r j.succ then (1 : ℕ) else 0) =
       (Finset.univ.filter fun j : Fin 6 => r j.castSucc = r j.succ).card := by
@@ -505,10 +532,10 @@ private theorem completionCost_row (p : Boundary) (r : Row) :
         List.sum_cons, List.sum_nil]
       ac_rfl
     _ = _ := by
+      rw [horizontal, bond_eq_adjacent]
       simp only [List.sum_ofFn, Finset.sum_boole, cross, bondDefects, antidiagonal,
-        horizontal, Finset.filter_image, Fin.cons_succ]
-      rw [Finset.card_image_of_injective _ (fun i j h => Fin.castSucc_injective 6 (congrArg Prod.snd h)),
-        Finset.card_image_of_injective _ (fun i j h => Fin.castSucc_injective 6 (congrArg Prod.fst h))]
+        Finset.filter_image, Fin.cons_succ]
+      rw [Finset.card_image_of_injective _ (fun i j h => Fin.castSucc_injective 6 (congrArg Prod.snd h))]
       simp only [Nat.cast_id]
 private theorem rowCode_tail (r : Row) :
     (finFunctionFinEquiv (boundary r)).val = (finFunctionFinEquiv r).val / 3 := by

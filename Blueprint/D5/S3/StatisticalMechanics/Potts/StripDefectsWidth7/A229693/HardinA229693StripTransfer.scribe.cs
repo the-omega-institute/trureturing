@@ -179,5 +179,4 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula Lambda(string name, Formula body) =>
         Parenthesized(Seq(LambdaLower, Sp, V(name), Sp, Mapsto, Sp, body));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
 }

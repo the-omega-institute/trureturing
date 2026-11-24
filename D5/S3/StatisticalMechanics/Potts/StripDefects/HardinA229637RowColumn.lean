@@ -422,7 +422,7 @@ private theorem column_one (n : ℕ) : T n 1 = 0 := by
   rw [hd] at hA
   exact absurd hA.1 (by decide)
 
-private theorem bond_row {k : ℕ} (r : Fin k → Fin 3) :
+theorem bond_row {k : ℕ} (r : Fin k → Fin 3) :
     bondDefects (horiz k) r r = (monoSet r).card := by
   unfold bondDefects
   rw [← Finset.card_image_of_injOn (f := Prod.fst)]
