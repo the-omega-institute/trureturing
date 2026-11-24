@@ -38,10 +38,12 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨1, 1, 2, ?_⟩
   change logarithmicMean 1 1 ≠ logarithmicMean 1 2
   have hlog : Real.log 2 < 1 := by
-    simpa using Real.log_lt_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
+    have h := Real.log_lt_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
       (show (2 : ℝ) ≠ 1 by norm_num)
+    norm_num at h
+    exact h
   have hp : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  rw [logarithmicMean, if_pos rfl, logarithmicMean, if_neg (by norm_num : (1 : ℝ) ≠ 2),
+  rw [logarithmicMean, ite_eq_left rfl, logarithmicMean, ite_eq_right (by norm_num : (1 : ℝ) ≠ 2),
     Real.log_one, zero_sub]
   intro he
   have hc := (eq_div_iff (neg_ne_zero.mpr hp.ne')).mp he

@@ -40,10 +40,6 @@ abbrev densityMatrix {n : Type*} [Fintype n] [DecidableEq n] (ρ : DensityState 
 def MarginalFree (D : JointMatrix) : Prop :=
   D.IsHermitian ∧ partialTraceRight D = 0 ∧ partialTraceLeft D = 0
 
-theorem MarginalFree.trace_eq_zero {D : JointMatrix} (hD : MarginalFree D) :
-    D.trace = 0 := by
-  rw [← trace_partialTraceRight D, hD.2.1, Matrix.trace_zero]
-
 theorem productMatrix_posDef (α : DensityState Alice) (β : DensityState Bob)
     (hα : (densityMatrix α).PosDef) (hβ : (densityMatrix β).PosDef) :
     (densityMatrix (productState α β)).PosDef :=
@@ -313,47 +309,6 @@ theorem measurementFisher_centered (α : DensityState Alice) (β : DensityState 
     rw [hσ, show p i * (a i) ^ 2 * (q j * (b j) ^ 2) =
       (p i * q j) * (a i * b j) ^ 2 by ring, hab]
     field_simp [(hp i).ne', (hq j).ne']
-
-/-- The finite Fisher dual inequality for an arbitrary product score.
-Equality is witnessed by centeredScore_factor on a marginal-free readout. -/
-theorem measurementFisher_dual_le (α : DensityState Alice) (β : DensityState Bob)
-    (hα : (densityMatrix α).PosDef) (hβ : (densityMatrix β).PosDef)
-    (U : Matrix.unitaryGroup Alice ℂ) (V : Matrix.unitaryGroup Bob ℂ)
-    (D : JointMatrix) (a : Alice → ℝ) (b : Bob → ℝ) :
-    let σ := densityMatrix (productState α β)
-    2 * (D * (observable U a ⊗ₖ observable V b)).trace.re ≤
-      measurementFisher U V σ D +
-        (densityMatrix α * observable U (fun i => (a i) ^ 2)).trace.re *
-        (densityMatrix β * observable V (fun j => (b j) ^ 2)).trace.re := by
-  let σ := densityMatrix (productState α β)
-  let p := readout U (densityMatrix α)
-  let q := readout V (densityMatrix β)
-  let d := readout (productBasis U V) D
-  have hp := readout_pos U hα
-  have hq := readout_pos V hβ
-  have hσ (i : Alice) (j : Bob) : readout (productBasis U V) σ (i, j) = p i * q j :=
-    readout_product U V hα.isHermitian hβ.isHermitian i j
-  dsimp only
-  rw [observable_product, trace_observable, trace_observable, trace_observable,
-    measurementFisher]
-  rw [Finset.sum_mul]
-  simp only [Fintype.sum_prod_type, Finset.mul_sum, ← Finset.sum_add_distrib]
-  apply Finset.sum_le_sum
-  intro i _
-  apply Finset.sum_le_sum
-  intro j _
-  change 2 * (d (i, j) * (a i * b j)) ≤ d (i, j) ^ 2 /
-    readout (productBasis U V) σ (i, j) + p i * (a i) ^ 2 * (q j * (b j) ^ 2)
-  rw [hσ]
-  let w := p i * q j
-  have hw : 0 < w := mul_pos (hp i) (hq j)
-  have hid : 2 * (d (i, j) * (a i * b j)) +
-      (d (i, j) - w * (a i * b j)) ^ 2 / w =
-      d (i, j) ^ 2 / w + p i * (a i) ^ 2 * (q j * (b j) ^ 2) := by
-    field_simp [hw.ne']
-    dsimp [w]
-    ring
-  linarith only [hid, div_nonneg (sq_nonneg (d (i, j) - w * (a i * b j))) hw.le]
 
 theorem observable_square {n : Type*} [Fintype n] [DecidableEq n]
     (U : Matrix.unitaryGroup n ℂ) (a : n → ℝ) :

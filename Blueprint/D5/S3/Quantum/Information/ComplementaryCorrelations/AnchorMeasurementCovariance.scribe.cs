@@ -13,9 +13,5 @@ internal sealed class AnchorMeasurementCovarianceDocument : IScribeDocumentDefin
                 H("Local covariance of Hermitian observables"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Hilbert–Schmidt Cauchy–Schwarz controls the endpoint, midpoint and imaginary mixed moments of two Hermitian observables under a positive weight."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("qian-anchormeasurementcovariance-acc23-of-raw-diagonal-circulant"),
-                DeclarationHandle.Create("D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurementCovariance.acc₂₃_of_raw_diagonal_circulant"),
-                H("Standard-basis anchor convexity from qutrit covariance"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Computational and Hadamard scores on the qubit reduce to centered Pauli Z and X. On the qutrit the scores are diagonal and circulant. The centered covariance estimate bounds the joint Simpson expression, yielding the anchor quadratic inequality."))), DescribeRole.Theorem))));
+            Paragraph(Text("Computational and Hadamard scores on the qubit reduce to centered Pauli Z and X. On the qutrit the scores are diagonal and circulant. The centered covariance estimate bounds the joint Simpson expression and yields the anchor quadratic inequality.")))));
 }

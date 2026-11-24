@@ -26,10 +26,5 @@ internal sealed class AnchorMeasurementDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurement.anchorQuadraticIn"),
                 H("The term in equation (39)"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo([Source]),
-                Blocks(Paragraph(Text("At the product state the trace pairing of the tangent with its log resolvent derivative is reduced by the two measured Fisher forms."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("qian-anchormeasurement-acc23allbases"),
-                DeclarationHandle.Create("D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurement.ACC₂₃AllBases"),
-                H("Anchor convexity for qubit–qutrit pairs"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo([Source]),
-                Blocks(Paragraph(Text("The inequality ranges over faithful marginal states, all fixed-marginal directions, and all pairs of local unitary bases with squared overlaps one half on Alice and one third on Bob."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("At the product state the trace pairing of the tangent with its log resolvent derivative is reduced by the two measured Fisher forms."))), DescribeRole.Definition))));
 }

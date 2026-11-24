@@ -317,18 +317,5 @@ theorem flat_three_equivalent (U : Matrix.unitaryGroup Bob ℂ)
   exact scaled_isComplexHadamard 3 (ZMod.card 3) (by decide) U
     (by simpa only [one_div, Nat.cast_ofNat] using hU)
 
-private theorem flat_of_scaled_entry {n : Type*} {m : ℕ} {H : Mat n}
-    {i j : n} (h : Complex.normSq (scaled m H i j) = 1) :
-    Complex.normSq (H i j) = (m : ℝ)⁻¹ := by
-  have hm : (m : ℝ) * Complex.normSq (H i j) = 1 := by
-    simpa only [scaled, Matrix.smul_apply, smul_eq_mul, Complex.normSq_mul,
-      Complex.normSq_ofReal, Real.mul_self_sqrt (Nat.cast_nonneg m)] using h
-  have hm0 : (m : ℝ) ≠ 0 := by
-    intro hz
-    rw [hz, zero_mul] at hm
-    exact zero_ne_one hm
-  apply mul_left_cancel₀ hm0
-  rw [hm, mul_inv_cancel₀ hm0]
-
 end MUBNormalForm
 end AnchorMeasurement

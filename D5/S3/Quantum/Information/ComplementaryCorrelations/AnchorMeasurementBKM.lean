@@ -168,15 +168,6 @@ theorem omega_logDeriv (hσ : σ.PosDef) (X : Mat n) : omega σ (logDeriv σ X) 
   rw [omega_entry hσ, logDeriv_entry hσ, ← mul_assoc, ← Complex.ofReal_mul,
     lm_mul_pairKernel (hσ.eigenvalues_pos i) (hσ.eigenvalues_pos j), Complex.ofReal_one, one_mul]
 
-theorem logDeriv_omega (hσ : σ.PosDef) (X : Mat n) : logDeriv σ (omega σ X) = X := by
-  apply ((Unitary.conjStarAlgAut ℂ (Mat n) (eigenBasis hσ)).symm).injective
-  change inBasis (eigenBasis hσ) _ = inBasis (eigenBasis hσ) X
-  ext i j
-  rw [logDeriv_entry hσ, omega_entry hσ, ← mul_assoc]
-  have h := lm_mul_pairKernel (hσ.eigenvalues_pos i) (hσ.eigenvalues_pos j)
-  rw [mul_comm] at h
-  rw [← Complex.ofReal_mul, h, Complex.ofReal_one, one_mul]
-
 /-- BKM Cauchy–Schwarz in the repository's metric coordinates. -/
 theorem bkm_pair_sq_le (hσ : σ.PosDef) (D O : Mat n) (hD : D.IsHermitian) (hO : O.IsHermitian) :
     (D * O).trace.re ^ 2 ≤
@@ -285,124 +276,6 @@ theorem omega_le_simpson (hσ : σ.PosDef) (O : Mat n) (hO : O.IsHermitian) :
 
 end Spectral
 
-private theorem product_mpow {A : Mat Alice} {B : Mat Bob}
-    (hA : A.PosDef) (hB : B.PosDef) (t : ℝ) :
-    mpow (A ⊗ₖ B) t = mpow A t ⊗ₖ mpow B t := by
-  let U := productBasis hA.isHermitian.eigenvectorUnitary hB.isHermitian.eigenvectorUnitary
-  let a := hA.isHermitian.eigenvalues
-  let b := hB.isHermitian.eigenvalues
-  have hdiag : A ⊗ₖ B = (U : Mat Joint) *
-      diagonal (fun p : Joint => ((a p.1 * b p.2 : ℝ) : ℂ)) * star (U : Mat Joint) := by
-    simpa [U, productBasis, a, b, Complex.ofReal_mul] using
-      kronecker_eq_conj_diagonal_eigenvalues hA.isHermitian hB.isHermitian
-  unfold mpow
-  rw [hdiag, cfc_unitary_diagonal, hA.isHermitian.cfc_eq, hB.isHermitian.cfc_eq]
-  simp only [U, productBasis, Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply,
-    Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker,
-    Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal, Function.comp_apply]
-  congr 2
-  ext p q
-  by_cases hpq : p = q
-  · subst q
-    simp [a, b, Real.mul_rpow (hA.eigenvalues_pos p.1).le
-      (hB.eigenvalues_pos p.2).le, Complex.ofReal_mul]
-  · simp [hpq]
-
-private theorem trace_mpow_sandwich {n : Type*} [Fintype n] [DecidableEq n]
-    {A : Mat n} (hA : A.PosDef) (X : Mat n) (t : ℝ) :
-    (mpow A t * X * mpow A (1 - t)).trace = (A * X).trace := by
-  rw [Matrix.trace_mul_cycle]
-  have hp (r : ℝ) : mpow A r = A ^ r := (CFC.rpow_eq_cfc_real hA.posSemidef.nonneg).symm
-  rw [hp, hp, ← CFC.rpow_add hA.isUnit, show 1 - t + t = 1 by ring,
-    CFC.rpow_one _ hA.posSemidef.nonneg]
-
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-/-- An observable BKM image of a product of centered tests is marginal free.
-The partial-trace computation is made under the actual BKM integral. -/
-theorem omega_centered_product_marginalFree
-    {A : Mat Alice} {B : Mat Bob} (hA : A.PosDef) (hB : B.PosDef)
-    {X : Mat Alice} {Y : Mat Bob} (hX : X.IsHermitian) (hY : Y.IsHermitian)
-    (hAX : (A * X).trace = 0) (hBY : (B * Y).trace = 0) :
-    MarginalFree (omega (A ⊗ₖ B) (X ⊗ₖ Y)) := by
-  let Pr : Mat Joint →ₗ[ℂ] Mat Alice :=
-    { toFun := partialTraceRight
-      map_add' := partialTraceRight_add
-      map_smul' := fun c Z => by
-        ext i j
-        simp only [partialTraceRight, Matrix.smul_apply, RingHom.id_apply,
-          smul_eq_mul, Finset.mul_sum] }
-  let Pl : Mat Joint →ₗ[ℂ] Mat Bob :=
-    { toFun := partialTraceLeft
-      map_add' := partialTraceLeft_add
-      map_smul' := fun c Z => by
-        ext i j
-        simp only [partialTraceLeft, Matrix.smul_apply, RingHom.id_apply,
-          smul_eq_mul, Finset.mul_sum] }
-  let S := A ⊗ₖ B
-  let P := X ⊗ₖ Y
-  have hS : S.PosDef := hA.kronecker hB
-  have hP : P.IsHermitian := by
-    change Pᴴ = P
-    simp only [P, Matrix.conjTranspose_kronecker, hX.eq, hY.eq]
-  let f : ℝ → Mat Joint := fun t => mpow S t * P * mpow S (1 - t)
-  have hcont := continuous_mpow S hS
-  have hsub : Continuous (fun t : ℝ => 1 - t) := continuous_const.sub continuous_id
-  have hi : IntervalIntegrable f volume 0 1 :=
-    ((hcont.mul (continuous_const (y := P))).mul (hcont.comp hsub)).intervalIntegrable 0 1
-  have hprod (t : ℝ) : f t =
-      (mpow A t * X * mpow A (1 - t)) ⊗ₖ (mpow B t * Y * mpow B (1 - t)) := by
-    simp only [f, S, P, product_mpow hA hB, ← Matrix.mul_kronecker_mul]
-  refine ⟨omega_isHermitian hS hP, ?_, ?_⟩
-  · change Pr.toContinuousLinearMap (∫ t : ℝ in 0..1, f t) = 0
-    rw [← Pr.toContinuousLinearMap.intervalIntegral_comp_comm hi]
-    have h (t : ℝ) : Pr.toContinuousLinearMap (f t) = 0 := by
-      change partialTraceRight (f t) = 0
-      rw [hprod]
-      change partialTraceRight (Matrix.kronecker _ _) = 0
-      rw [partialTraceRight_kronecker, trace_mpow_sandwich hB, hBY, zero_smul]
-    simp only [h, intervalIntegral.integral_zero]
-  · change Pl.toContinuousLinearMap (∫ t : ℝ in 0..1, f t) = 0
-    rw [← Pl.toContinuousLinearMap.intervalIntegral_comp_comm hi]
-    have h (t : ℝ) : Pl.toContinuousLinearMap (f t) = 0 := by
-      change partialTraceLeft (f t) = 0
-      rw [hprod]
-      change partialTraceLeft (Matrix.kronecker _ _) = 0
-      rw [partialTraceLeft_kronecker, trace_mpow_sandwich hA, hAX, zero_smul]
-    simp only [h, intervalIntegral.integral_zero]
-
-private theorem MarginalFree.add {D E : JointMatrix} (hD : MarginalFree D)
-    (hE : MarginalFree E) : MarginalFree (D + E) :=
-  ⟨hD.1.add hE.1, by rw [partialTraceRight_add, hD.2.1, hE.2.1, add_zero],
-    by rw [partialTraceLeft_add, hD.2.2, hE.2.2, add_zero]⟩
-
-private theorem trace_observable_eq_zero {n : Type*} [Fintype n] [DecidableEq n]
-    (U : Matrix.unitaryGroup n ℂ) (S : Mat n) (hS : S.IsHermitian) (a : n → ℝ)
-    (ha : (∑ i, readout U S i * a i) = 0) : (S * observable U a).trace = 0 :=
-  Complex.ext ((trace_observable U S a).trans ha)
-    (trace_hermitian_product_real S _ hS (observable_isHermitian U a))
-
-/-- The reverse Gram-duality witness stays in the same tangent space for
-two slots built from the actual centered classical scores. -/
-theorem omega_centered_two_slot_marginalFree
-    (UQ UR : Matrix.unitaryGroup Alice ℂ) (VQ VR : Matrix.unitaryGroup Bob ℂ)
-    {A : Mat Alice} {B : Mat Bob} (hA : A.PosDef) (hB : B.PosDef)
-    (aQ aR : Alice → ℝ) (bQ bR : Bob → ℝ)
-    (haQ : (∑ i, readout UQ A i * aQ i) = 0) (haR : (∑ i, readout UR A i * aR i) = 0)
-    (hbQ : (∑ j, readout VQ B j * bQ j) = 0) (hbR : (∑ j, readout VR B j * bR j) = 0) :
-    MarginalFree (omega (A ⊗ₖ B)
-      (observable UQ aQ ⊗ₖ observable VQ bQ + observable UR aR ⊗ₖ observable VR bR)) := by
-  have hQ := omega_centered_product_marginalFree hA hB
-    (observable_isHermitian UQ aQ) (observable_isHermitian VQ bQ)
-    (trace_observable_eq_zero UQ A hA.isHermitian aQ haQ)
-    (trace_observable_eq_zero VQ B hB.isHermitian bQ hbQ)
-  have hR := omega_centered_product_marginalFree hA hB
-    (observable_isHermitian UR aR) (observable_isHermitian VR bR)
-    (trace_observable_eq_zero UR A hA.isHermitian aR haR)
-    (trace_observable_eq_zero VR B hB.isHermitian bR hbR)
-  change MarginalFree (omegaLinear (hA.kronecker hB) (_ + _))
-  rw [map_add]
-  exact hQ.add hR
-
 /-- The sufficient Gram bound is consumed only on the two exact Fisher
 score witnesses. No infinite supremum is needed for this direction. -/
 theorem anchorQuadraticIn_nonneg_of_simpson
@@ -460,45 +333,5 @@ theorem anchorQuadraticIn_nonneg_of_simpson
   change 0 ≤ e - measurementFisher UQ VQ σ D - measurementFisher UR VR σ D
   dsimp [f] at hf
   linarith
-
-/-- Reverse BKM duality, with the exact tangent membership isolated.
-The remaining specialization is the vanishing of both partial traces of omega
-on the product-centered test. -/
-theorem gram_le_of_anchorQuadraticIn_nonneg
-    (UQ UR : Matrix.unitaryGroup Alice ℂ) (VQ VR : Matrix.unitaryGroup Bob ℂ)
-    (α : DensityState Alice) (β : DensityState Bob)
-    (hα : (densityMatrix α).PosDef) (hβ : (densityMatrix β).PosDef)
-    (hacc : ∀ D : JointMatrix, MarginalFree D → 0 ≤ anchorQuadraticIn UQ UR VQ VR α β D)
-    (aQ aR : Alice → ℝ) (bQ bR : Bob → ℝ) :
-    let σ := densityMatrix (productState α β)
-    let O := observable UQ aQ ⊗ₖ observable VQ bQ +
-      observable UR aR ⊗ₖ observable VR bR
-    MarginalFree (omega σ O) →
-      (O * omega σ O).trace.re ≤
-        (densityMatrix α * observable UQ (fun i => (aQ i) ^ 2)).trace.re *
-          (densityMatrix β * observable VQ (fun j => (bQ j) ^ 2)).trace.re +
-        (densityMatrix α * observable UR (fun i => (aR i) ^ 2)).trace.re *
-          (densityMatrix β * observable VR (fun j => (bR j) ^ 2)).trace.re := by
-  dsimp only
-  intro hD
-  let σ := densityMatrix (productState α β)
-  let O := observable UQ aQ ⊗ₖ observable VQ bQ +
-    observable UR aR ⊗ₖ observable VR bR
-  let D := omega σ O
-  have h := hacc D hD
-  change 0 ≤ (D * logDeriv σ D).trace.re -
-    measurementFisher UQ VQ σ D - measurementFisher UR VR σ D at h
-  have hInv : logDeriv σ D = O := logDeriv_omega (productMatrix_posDef α β hα hβ) O
-  rw [hInv] at h
-  have hQ := measurementFisher_dual_le α β hα hβ UQ VQ D aQ bQ
-  have hR := measurementFisher_dual_le α β hα hβ UR VR D aR bR
-  have hsplit : (D * O).trace.re =
-      (D * (observable UQ aQ ⊗ₖ observable VQ bQ)).trace.re +
-      (D * (observable UR aR ⊗ₖ observable VR bR)).trace.re := by
-    simp only [O, Matrix.mul_add, Matrix.trace_add, Complex.add_re]
-  change (O * D).trace.re ≤ _
-  rw [Matrix.trace_mul_comm, hsplit]
-  rw [hsplit] at h
-  linarith only [h, hQ, hR]
 
 end AnchorMeasurement

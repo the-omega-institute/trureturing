@@ -26,10 +26,6 @@ open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow (trace_hermitian_product_r
 def center {n : Type*} [Fintype n] [DecidableEq n] (ρ A : Mat n) : Mat n :=
   A - (ρ * A).trace.re • 1
 
-theorem center_trace_re {n : Type*} [Fintype n] [DecidableEq n]
-    (ρ A : Mat n) (hρ : ρ.trace = 1) : (ρ * center ρ A).trace.re = 0 := by
-  simp [center, Matrix.mul_sub, mul_smul_comm, Matrix.trace_sub, hρ]
-
 private abbrev Zc (z : ℝ) : Mat Alice := qubitZ - z • 1
 private abbrev Xc (x : ℝ) : Mat Alice := qubitX - x • 1
 

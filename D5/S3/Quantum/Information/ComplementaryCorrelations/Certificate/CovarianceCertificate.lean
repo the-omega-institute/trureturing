@@ -42,11 +42,6 @@ private theorem allFin_eq_true {n : ℕ} {p : Fin n → Bool} :
   simp [allFin]
 
 set_option maxRecDepth 16384 in
-theorem monomial_count (w : Weight) : (monomials w).length = 20 := by
-  revert w
-  decide +kernel
-
-set_option maxRecDepth 16384 in
 set_option maxHeartbeats 0 in
 theorem ldl_entries (w : Weight) :
     ∀ i j, shiftedGram (block w) i j = ldlEntry (block w) i j := by
