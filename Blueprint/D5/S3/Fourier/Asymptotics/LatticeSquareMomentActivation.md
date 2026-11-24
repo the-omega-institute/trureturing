@@ -6,7 +6,7 @@ A second-moment budget on the integer lattice determines the support of the uniq
 
 **Theorem 1.1 (The budgets for one radius interval).**
 
-$$\forall n,m\quad0 < n\quad\longrightarrow\quad\frac{n^{2} - 1}{5} \le m \le \frac{n \cdot \left(n + 2\right)}{5} \Leftrightarrow \exists! (t,Z,w)\quad\operatorname{Activation}\left(m, n, t, Z, w\right)$$
+$$\forall n,m\quad0 < n\quad\longrightarrow\quad(\frac{n^{2} - 1}{5} \le m \le \frac{n \cdot \left(n + 2\right)}{5} \Leftrightarrow \exists! (t,Z,w)\quad\operatorname{Activation}\left(m, n, t, Z, w\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation.exists_lattice_square_moment_minimizer_on_interval` (`✓ std3`). ∎
 

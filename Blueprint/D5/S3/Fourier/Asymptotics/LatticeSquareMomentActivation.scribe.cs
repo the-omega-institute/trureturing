@@ -70,7 +70,8 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
             Call("Activation", m, n, t, z, w));
         var equivalence = new Formula.Logic(RadiusBudget(n, m, F.Le), FormulaLogicOperator.Iff, exists);
         return F.Disp(F.Seq(F.Forall, F.Sp, n, F.Comma, m, F.Quad,
-            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Quad, F.Longrightarrow, F.Quad, equivalence));
+            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Quad, F.Longrightarrow, F.Quad,
+            F.Open, equivalence, F.Close));
     }
 
     private static Formula Global()
