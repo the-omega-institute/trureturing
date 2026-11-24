@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricIntervalSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
@@ -217,6 +218,11 @@ a continued integrand. For upper coordinates up to one, the low-strip
 enclosure gives its strict sign. From one to three halves, exact interval
 bounds on the marginal Taylor polynomials and the tilted joint moments
 give strict positivity at every integration point in the derivative identity.
+
+On the same range of lower coordinates, the mixed derivative is also
+strictly negative for gaps in [1, 3/2]. Three closed scalar bands cover
+the interval [1, 2], which contains every shifted gap in the geometric
+endpoint comparison.
 
 For first degrees at least eleven, the repository also proves strict
 negativity of the mixed derivative for every ordered pair of logarithmic
