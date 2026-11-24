@@ -136,10 +136,10 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 | 审计入口 | 传递闭包的模块数 | 声明数 |
 | --- | ---: | ---: |
 | `OmegaInit` | 10 | 163 |
-| `OmegaMath` | 87 | 2,211 |
-| `OmegaInit` 与 `OmegaMath` 合并去重 | 88 | 2,211 |
+| `OmegaMath` | 103 | 2,677 |
+| `OmegaInit` 与 `OmegaMath` 合并去重 | 104 | 2,677 |
 
-计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 87 个模块包括 78 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
+计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 103 个模块包括 94 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
 
 在仓库根目录运行以下命令。Lake 驱动构建并重放两个入口的联合闭包。Python 脚本按源文件清单核对两个入口的传递闭包，并检查旧消费入口和拒绝用例。[复现脚本](OmegaChecks/check.py)
 
