@@ -794,6 +794,8 @@ private theorem bounds_of_orthogonal_combination {a b c d : ℕ}
   exact h (small_defect_of_isolated_slice L (A 0) (A 1) (A 2) J R S V E
     hJJ hJV hEE hVE hR hS hindep hab hde hse (by dsimp; rw [hpres, hF]))
 
+open private diagonal_energy from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
+
 private theorem bounds_of_ordered_diagonal_compression {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ)
     (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -808,13 +810,14 @@ private theorem bounds_of_ordered_diagonal_compression {a b c d : ℕ}
   have hker : ∀ x : Fin b → ℂ, X 0 *ᵥ x = 0 →
       X 1 *ᵥ x = 0 ∧ X 2 *ᵥ x = 0 := by
     intro x hx
-    have h := congrArg
-      (fun A : Matrix (Fin b) (Fin b) ℂ => star x ⬝ᵥ (A *ᵥ x)) hdiag
-    rw [NativeFourKernel.compression, NativeRectangularBound.stackK_compression] at h
-    simp only [Matrix.sum_mulVec, dotProduct_sum, Matrix.smul_mulVec,
-      dotProduct_smul, smul_eq_mul, Matrix.zero_mulVec, dotProduct_zero,
-      D5.S3.Quantum.Algebra.CommonCoefficientPlane.cross_pairing] at h
-    simp [Matrix.diagonal_apply, Fin.sum_univ_four, hx] at h
+    have hdiag' : (fun i : Fin 4 => (((![r, -s, -t, 0] : Fin 4 → ℝ) i) : ℂ)) =
+        ![(r : ℂ), -(s : ℂ), -(t : ℂ), 0] := by
+      funext i
+      fin_cases i <;> simp
+    have h := diagonal_energy X ![r, -s, -t, 0] x (by
+      rw [hdiag']
+      exact hdiag)
+    simp [Fin.sum_univ_four, hx] at h
     have hpos1 : 0 ≤ (s : ℂ) * (star (X 1 *ᵥ x) ⬝ᵥ (X 1 *ᵥ x)) :=
       mul_nonneg (by exact_mod_cast hs.le) (dotProduct_star_self_nonneg _)
     have hpos2 : 0 ≤ (t : ℂ) * (star (X 2 *ᵥ x) ⬝ᵥ (X 2 *ᵥ x)) :=
