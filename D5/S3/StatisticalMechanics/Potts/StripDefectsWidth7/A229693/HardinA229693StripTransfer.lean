@@ -517,22 +517,37 @@ private theorem rowCode_tail (r : Row) :
   have hb := (r 0).isLt
   omega
 
-private def packedClass (i : ℕ) : Fin 96 :=
-  let packed : ℕ := eval% Nat.ofDigits 128
-    (List.ofFn fun i => (exhaustedClass (HardinA229635State.rowEquiv i)).val)
-  Fin.ofNat 96 ((packed >>> (7 * i)) % 128)
+private def classDigits : List ℕ :=
+  List.ofFn fun i => (exhaustedClass (HardinA229635State.rowEquiv i)).val
 
--- Check the packed readout at every boundary code.
+private def packedClassWord : ℕ := eval% Nat.ofDigits 128 classDigits
+
+private def packedClass (i : ℕ) : Fin 96 :=
+  Fin.ofNat 96 ((packedClassWord >>> (7 * i)) % 128)
+
 set_option maxRecDepth 12000 in
 set_option maxHeartbeats 3000000 in
-private theorem packedClass_all :
-    (List.finRange 729).all (fun i =>
-      packedClass i.val == exhaustedClass ((finFunctionFinEquiv (m := 3) (n := 6)).symm i)) = true := by
+private theorem packedClassWord_eq : packedClassWord = Nat.ofDigits 128 classDigits := by
   decide +kernel
+
 private theorem packedClass_eq (p : Boundary) :
     packedClass (finFunctionFinEquiv p).val = exhaustedClass p := by
-  have h := List.all_eq_true.mp packedClass_all (finFunctionFinEquiv p) (List.mem_finRange _)
-  simpa only [beq_iff_eq, Equiv.symm_apply_apply] using h
+  let j : Fin 729 := finFunctionFinEquiv p
+  have hj : j.val < classDigits.length := by simpa [classDigits] using j.isLt
+  have hd (a : ℕ) (ha : a ∈ classDigits) : a < 128 := by
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp ha
+    exact (exhaustedClass (HardinA229635State.rowEquiv i)).isLt.trans (by decide)
+  have hread : ((packedClassWord >>> (7 * j.val)) % 128) = (exhaustedClass p).val := by
+    rw [packedClassWord_eq, Nat.shiftRight_eq_div_pow, pow_mul]
+    change (Nat.ofDigits 128 classDigits / 128 ^ j.val) % 128 = _
+    rw [Nat.ofDigits_div_pow_eq_ofDigits_drop _ (by decide) classDigits hd,
+      Nat.ofDigits_mod_eq_head!, List.drop_eq_getElem_cons hj]
+    have hp : HardinA229635State.rowEquiv j = p := Equiv.symm_apply_apply _ _
+    simpa only [List.head!_cons, classDigits, List.getElem_ofFn, hp] using
+      Nat.mod_eq_of_lt ((exhaustedClass p).isLt.trans (show 96 < 128 by decide))
+  change Fin.ofNat 96 ((packedClassWord >>> (7 * j.val)) % 128) = _
+  rw [hread]
+  exact Fin.ext (Nat.mod_eq_of_lt (exhaustedClass p).isLt)
 private def exitCodes {k : ℕ} (p : Fin k → Option (Fin 3)) (d : ℕ) :
     List (Fin 96) :=
   ((completionCodes (m := 3) (List.ofFn p) none d).map fun r => packedClass (r / 3))
