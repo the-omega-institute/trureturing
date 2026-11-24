@@ -49,7 +49,7 @@ internal sealed class OmegaTernionHeapDocument : IScribeDocumentDefinition
                     All(quaternions, ["a", "b", "u", "v"], If(And(Nz(u), Nz(v)),
                         Equiv(Call("kappa", Triad(a, u, v), Triad(b, u, v)), fidelity))),
                     "The common right factor is the conjugate of u times v. Its squared norm scales each squared norm and the dot product by the same positive factor."),
-                Law("omega-spinor-cayley-lift", "lift_normSq", "The Cayley lift gives a rational unit spinor",
+                Law("omega-spinor-cayley-lift", "lift_normSq", "The Cayley lift numerator has squared norm equal to squared radius",
                     All(integers, ["a", "b", "c", "d"],
                         Equal(Norm(Call("liftNum", a, b, c, d)), Mul(radius, radius))),
                     "The homogeneous lift uses numerator (a²−s, 2ab, 2ac, 2ad) and radius a²+s, where s=b²+c²+d². Every nonzero quadruple gives a positive radius."),
