@@ -278,7 +278,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var zeroLeft = All("x", scalar, Eq(Mul(Typed(N(0), scalar), V("x")), Typed(N(0), scalar)));
         var weighted = Fn("q", Column(), Mul(Typed(N(1), scalar), App(V("w"), V("q"))));
         var equation = All("w", Arrow(Column(), scalar), All("p", Column(),
-            Eq(App(Call("Matrix.mulVec", Own("oneDefect"), V("w")), V("p")),
+            Eq(Call("dotProduct", Own("oneDefect", V("p")), V("w")),
                 Call("List.sum", Call("List.map", weighted, Own("movesOne", V("p")))))));
         return All("R", Seq(Q("Type"), Star), Seq(
             OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
@@ -331,7 +331,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var row = Fin(5);
         var straight = Call("Finset.diag", Typed(Q("Finset.univ"), Call("Finset", row)));
         var diagonal = Call("HardinA229637RowColumn.betw", N(5));
-        var cut = new Formula.SetOperation(straight, FormulaSetOperator.Union, diagonal);
+        var cut = Call("Finset.union", straight, diagonal);
         return Eq(Typed(Own("edges"), Call("Finset", Product(row, row))), cut);
     }
     private static Formula Cost() {
