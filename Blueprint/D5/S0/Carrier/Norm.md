@@ -62,7 +62,7 @@ $\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(
 
 *Commentary.*
 
-The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.
+The strict golden integers are coefficient pairs in the quadratic algebra with relation φ² = φ + 1. OmegaMath proves the power law by induction from the multiplicative norm and the norm of one. The Lean statement specializes that proof to the golden parameters.
 
 ## References
 

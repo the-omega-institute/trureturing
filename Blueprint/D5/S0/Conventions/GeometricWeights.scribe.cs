@@ -21,7 +21,7 @@ internal sealed class GeometricWeightsDocument : IScribeDocumentDefinition
                     "The W-digit convention defines wValue k as fib(k+2), so singleton bits have "
                     + "weights 1, 2, 3 at indices 0, 1, 2. The first two equations force the "
                     + "geometric ratio to be 2, while the third requires its square to be 3; "
-                    + "the nonzero scale excludes cancellation."))),
+                    + "the nonzero scale allows cancellation. The Lean proof uses exact rational representatives and cross-multiplication."))),
                 DescribeRole.Theorem))));
 
     private static Formula GeometricNoGoFormula()

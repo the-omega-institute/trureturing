@@ -365,6 +365,91 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end RationalCoordinates
 
+namespace UniqueExtension
+
+open _root_.D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension (Word edgeTrace)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law Y := ∀ (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) (_ : 0 < b),
+    (∃! ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧ ρ.trace = 1 ∧
+      edgeTrace ρ 1 2 = coherentEdge b L u v ∧ edgeTrace ρ 2 1 = coherentEdge b R u w) ↔
+    Y.readout () () (L.trace + (b : ℂ)) 1 ∧ R.trace = L.trace ∧
+    ∃! z : ℂ, (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef ∧
+      (R - partialTraceLeft (correction b (middleRow u v w z))).PosSemidef
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hrow : middleRow 0 0 0 0 = 0 := by
+    funext i
+    rcases i with ⟨a, c⟩
+    cases a <;> cases c <;> rfl
+  have hleft : partialTraceRight (0 : Matrix (Bool × Bool) (Bool × Bool) ℂ) = 0 := by
+    ext i j
+    simp [partialTraceRight]
+  have hright : partialTraceLeft (0 : Matrix (Bool × Bool) (Bool × Bool) ℂ) = 0 := by
+    ext i j
+    simp [partialTraceLeft]
+  have hu := (unique_coherent_extension_iff 1 0 0 0 0 0 zero_lt_one).mpr (by
+    refine ⟨by simp, rfl, 0, ⟨?_, ?_⟩, ?_⟩
+    · simpa [hrow, correction, hleft] using (Matrix.PosSemidef.zero (n := Bool) (R := ℂ))
+    · simpa [hrow, correction, hright] using (Matrix.PosSemidef.zero (n := Bool) (R := ℂ))
+    · rintro z ⟨hl, _⟩
+      have hd := hl.diag_nonneg (i := true)
+      simp [partialTraceRight, correction, middleRow, Matrix.vecMulVec_apply] at hd
+      rw [mul_comm, Complex.mul_conj, ← Complex.ofReal_zero, Complex.real_le_real] at hd
+      exact Complex.normSq_eq_zero.mp (le_antisymm hd (Complex.normSq_nonneg z)))
+  exact ((h 1 0 0 0 0 0 zero_lt_one).mp hu).1
+
+def family : Registration arena (type_of% @unique_coherent_extension_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@unique_coherent_extension_iff, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩, fun anchor => nomatch anchor⟩
+  dependence := by
+    intro role
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    exact one_ne_zero (Eq.mp (congrFun h 0) rfl)
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@unique_coherent_extension_iff) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.unique_coherent_extension_iff.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.UniqueExtension.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun anchor => nomatch anchor))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end UniqueExtension
+
 end
 
 end Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension

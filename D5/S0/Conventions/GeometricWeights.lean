@@ -5,19 +5,19 @@
    anchors: []
    digest: No nonzero rational rescaling of geometric weights matches all singleton W weights. -/
 
-import D5.S0.Conventions.WDigits
-import Mathlib.Tactic.Linarith
+module
+prelude
+public import OmegaMath.Arithmetic.WDigits.Geometric
 
 namespace D5.S0.Conventions.GeometricWeights
 
+open Omega Omega.Arithmetic.WDigits
+
 /-- Geometric weights cannot reproduce all singleton Zeckendorf weights up to nonzero scale. -/
-theorem no_geometric_weights_match_zeckendorf_singletons :
-    ¬ ∃ (w₁ Λ c : ℚ), c ≠ 0 ∧ ∀ k : ℕ, w₁ * Λ ^ k = c * (Nat.fib (k + 2) : ℚ) := by
-  rintro ⟨w₁, Λ, c, hc, h⟩
-  have h₀ := h 0
-  have h₁ := h 1
-  have h₂ := h 2
-  norm_num [Nat.fib] at h₀ h₁ h₂
-  rcases lt_or_gt_of_ne hc with hc | hc <;> nlinarith
+public theorem no_geometric_weights_match_zeckendorf_singletons :
+    Not (Exists fun first : FiniteRatio => Exists fun ratio : FiniteRatio =>
+      Exists fun scale : FiniteRatio =>
+        And (Not (Eq scale.num Int.zero)) (MatchesScaledWeights first ratio scale)) :=
+  no_scaled_geometric_weights
 
 end D5.S0.Conventions.GeometricWeights
