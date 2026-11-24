@@ -627,10 +627,6 @@ private theorem capacity_one_first_block {n : ℕ} (w : Word 1 (1+n)) (i : Fin (
   change w.val i / 1 = w.val first / 1 ↔ w.val i = 0
   simp [hfirst]
 
-private theorem capacity_one_color_unique {n : ℕ} (J : Finset (Fin n)) :
-    Subsingleton (Colors 1 n J) :=
-  inferInstance
-
 theorem capacity_one_stirling (t k : ℕ) : stirling 1 t k = Nat.stirlingSecond t k := by
   induction t generalizing k with
   | zero =>
@@ -695,23 +691,6 @@ theorem below_first_urn_payload_empty {m n k : ℕ} (hk : k < m) :
 theorem full_urn_reuse {A m : ℕ} (s : Finset (Address A m)) (a : Address A m)
     (hf : Full s a.1) : RawMove s a :=
   ⟨fun _ => hf, fun h => (h ⟨a.2, hf a.2⟩).elim⟩
-
-private def decideLegal (m : ℕ) : {t : ℕ} → (x : Fin t → ℕ) → Decidable (Legal m x)
-  | 0, _ => isTrue trivial
-  | t+1, x => by
-    change Decidable (Legal m (Fin.init x) ∧
-      Move m (used (Fin.init x)).card (x (Fin.last t)))
-    letI := decideLegal m (Fin.init x)
-    unfold Move
-    infer_instance
-
-/-- At capacity two, the fourth move can revisit urn zero while urn one is incomplete. -/
-theorem partial_example :
-    Legal 2 (![0,1,2,0,3] : Fin 5 → ℕ) ∧
-      before (![0,1,2,0,3] : Fin 5 → ℕ) 3 = Finset.range 3 := by
-  constructor
-  · exact @of_decide_eq_true _ (decideLegal 2 (![0,1,2,0,3] : Fin 5 → ℕ)) rfl
-  · decide
 
 /-! ## Actual raw addresses retained by deletion -/
 
