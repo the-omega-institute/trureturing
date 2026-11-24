@@ -280,8 +280,13 @@ private theorem logDeriv_diagonal_apply (d : Fin 2 × ι → ℝ) (hd : ∀ x, 0
     (X : Joint ι) (i j : Fin 2 × ι) :
     logDeriv (diagonalReal d) X i j = (((Λ (d i) (d j))⁻¹ : ℝ) : ℂ) * X i j := by
   let A := diagonalReal d
+  let M : Joint ι := Matrix.single j i 1
   let E : Joint ι →L[ℂ] ℂ :=
-    (Matrix.entryLinearMap ℂ ℂ i j).toContinuousLinearMap
+    (Matrix.traceLinearMap (Fin 2 × ι) ℂ ℂ).toContinuousLinearMap.comp
+      (Matrix.mulLeftLinearMap (Fin 2 × ι) ℂ M).toContinuousLinearMap
+  have hE (Y : Joint ι) : E Y = Y i j := by
+    change (M * Y).trace = Y i j
+    simp [M, Matrix.trace_single_mul]
   have hA : A.PosDef := Matrix.PosDef.diagonal fun k => by exact_mod_cast hd k
   have hres (t : ℝ) (ht : 0 < t) : (A + t • 1)⁻¹ =
       diagonal fun k => (((d k + t : ℝ) : ℂ)⁻¹) := by
@@ -299,10 +304,10 @@ private theorem logDeriv_diagonal_apply (d : Fin 2 × ι → ℝ) (hd : ∀ x, 0
   have hpoint (t : ℝ) (ht : 0 < t) :
       E ((A + t • 1)⁻¹ * X * (A + t • 1)⁻¹) =
         ((1 / ((d i + t) * (d j + t)) : ℝ) : ℂ) * X i j := by
-    change ((A + t • 1)⁻¹ * X * (A + t • 1)⁻¹) i j = _
-    rw [hres t ht, Matrix.mul_diagonal, Matrix.diagonal_mul]
+    rw [hE, hres t ht, Matrix.mul_diagonal, Matrix.diagonal_mul]
     simp only [one_div, Complex.ofReal_inv, Complex.ofReal_mul, mul_inv_rev]
     ac_rfl
+  rw [← hE (logDeriv (diagonalReal d) X)]
   change E (∫ t in Set.Ioi (0 : ℝ), (A + t • 1)⁻¹ * X * (A + t • 1)⁻¹) = _
   rw [← E.integral_comp_comm (logDeriv_integrable A X hA)]
   calc
@@ -587,6 +592,68 @@ private theorem rotated_bkm_le_weighted_sum (V : Matrix.unitaryGroup (Fin 2) ℂ
         w ^ 2 * ((p * g i + (1 - p) * g j) / 2) +
         w * (1 - w) * ((g i + g j) / 2) := add_le_add (add_le_add ha hb) hc
     _ = ((1 - P) * g i + P * g j) / 2 := by dsimp only [P]; ring
+
+/-- The true frequency cutoff gives a fixed marginal for the physical pencil
+and disjoint adjoint orientations for the BKM energy of its logarithmic tangent.
+The energy has three logarithmic-mean terms and admits the arithmetic upper
+bound weighted by the physical retained populations. -/
+theorem physical_pencil_rotated_bkm (V : Matrix.unitaryGroup (Fin 2) ℂ)
+    {p q rmin : ℝ} {g : ι → ℝ} (H : Matrix ι ι ℂ)
+    (hp : 0 < p) (hp' : p < 1) (hq : 0 < q) (hq' : q < 1)
+    (hr : 0 < rmin) (hg : ∀ i, 0 < g i) (hnorm : ∑ i, g i = 1)
+    (hband : ∀ i j, H i j ≠ 0 → rmin ≤ frequency q g i j)
+    (hsmall : q / ((1 - q) * rmin) < 1) :
+    let Q := diagonalReal (population q)
+    let Σ := reference q g
+    let τ := V.val * diagonalReal (population p) * V.valᴴ
+    let D := retainedDensity V p g
+    let X := pencilTangent q g H
+    let L := logDeriv Σ X
+    let C := logBlock q g H
+    let w := rotationWeight V
+    let P := p * (1 - w) + (1 - p) * w
+    let E := (L * omega D L).trace.re / 2
+    (∀ i j, H i j ≠ 0 → g i / g j ≤ q / ((1 - q) * rmin)) ∧
+    ((∀ i, H i i = 0) ∧ (∀ i j, H i j = 0 ∨ H j i = 0)) ∧
+    X = mpow Σ (1 / 2) * blocks raise H * mpow Σ (1 / 2) ∧
+    L = blocks raise C ∧
+    (τ 0 0).re = P ∧
+    (∀ s : ℝ,
+      let σ := Σ + s • X
+      let S := mpow σ (1 / 2)
+      let R := mpow Σ (-(1 / 2))
+      partialTraceRight σ = Q ∧ partialTracePetz σ τ = S * (R * D * R) * S) ∧
+    E = (∑ i, ∑ j, normSq (C i j) *
+      ((1 - w) ^ 2 * Λ ((1 - p) * g i) (p * g j) +
+        w ^ 2 * Λ (p * g i) ((1 - p) * g j) +
+        w * (1 - w) * Λ (g i) (g j))) ∧
+    E ≤ ∑ i, ∑ j, normSq (C i j) * (((1 - P) * g i + P * g j) / 2) := by
+  dsimp only
+  refine ⟨fun i j hij => (active_link_ratio hq' hr hg (hband i j hij) hsmall).1,
+    directed_support H hq' hr hg hband hsmall,
+    pencilTangent_eq_physical hq hq' hg H, logDeriv_pencilTangent H hq hq' hg, ?_,
+    fun s => ⟨pencil_marginal_of_band H hq' hr hg hnorm hband hsmall s,
+      partialTracePetz_pencil_of_band V H p s hq hq' hr hg hnorm hband hsmall⟩,
+    rotated_bkm_of_band V H hp hp' hq hq' hr hg hband hsmall,
+    rotated_bkm_le_weighted_sum V H hp hp' hq hq' hr hg hband hsmall⟩
+  have hrow := Matrix.unitary_row_sum_norm_sq V.val (Unitary.coe_mul_star_self V) 0
+  simp only [Fin.sum_univ_two, Complex.sq_norm] at hrow
+  have h01 : normSq (V.val 0 1) = rotationWeight V := by
+    unfold rotationWeight
+    linarith
+  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
+    Matrix.mul_diagonal, diagonalReal, population_zero, population_one, Complex.star_def]
+  rw [show V.val 0 0 * (p : ℂ) * (starRingEnd ℂ) (V.val 0 0) =
+      (p : ℂ) * (normSq (V.val 0 0) : ℂ) by rw [mul_comm _ (p : ℂ), mul_assoc, Complex.mul_conj],
+    show V.val 0 1 * ((1 - p : ℝ) : ℂ) * (starRingEnd ℂ) (V.val 0 1) =
+      ((1 - p : ℝ) : ℂ) * (normSq (V.val 0 1) : ℂ) by
+        rw [mul_comm _ ((1 - p : ℝ) : ℂ), mul_assoc, Complex.mul_conj]]
+  rw [Complex.add_re, ← Complex.ofReal_mul, ← Complex.ofReal_mul,
+    Complex.ofReal_re, Complex.ofReal_re, h01]
+  unfold rotationWeight
+  ring
+
+#print axioms physical_pencil_rotated_bkm
 
 end Rotation
 
