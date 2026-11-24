@@ -184,4 +184,20 @@ private theorem associator : ∀ p : Point, p ≠ 0 →
     ∃ x y : Point, pointProduct (pointProduct p x) y ≠ pointProduct p (pointProduct x y) := by
   decide +kernel
 
+private theorem fano_product :
+    ∀ p q : Point, p.val < 8 → q.val < 8 →
+      (pointProduct p q).val = p.val ^^^ q.val := by
+  decide +kernel
+
+private theorem fano_support :
+    ∀ i : Fin 7, ∀ t : Fin 57, t ∈ paschRows[i.val] →
+      ∀ x : Point, x ∈ blocks[t.val] → x.val < 8 := by
+  decide +kernel
+
+private theorem every_binary_plane_has_zero_combination (a b c : BitVec 2) :
+    a = 0 ∨ b = 0 ∨ c = 0 ∨ a ^^^ b = 0 ∨ a ^^^ c = 0 ∨ b ^^^ c = 0 ∨
+      a ^^^ b ^^^ c = 0 := by
+  revert a b c
+  decide
+
 end D5.S3.Combinatorics.Matroids.Steiner.SteinerSevenPasch
