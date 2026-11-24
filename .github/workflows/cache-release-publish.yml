@@ -1,0 +1,158 @@
+name: Cache Release Publish
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions: {}
+env:
+  STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
+concurrency:
+  group: lean-cache-generation-publisher-v1
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  pin:
+    if: >-
+      github.ref == 'refs/heads/dev' && github.ref_protected &&
+      (github.event_name == 'schedule' || (github.actor == 'loning' && github.triggering_actor == 'loning'))
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      actions: write
+      checks: read
+    outputs:
+      source: ${{ steps.pin.outputs.source }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/actions/lean-cache-shards/handover.py
+          persist-credentials: false
+      - id: pin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/actions/lean-cache-shards/handover.py
+      - if: steps.pin.outputs.upload == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: generation-pin-${{ github.run_id }}
+          path: ${{ runner.temp }}/pin/source
+
+  prepare:
+    needs: pin
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - id: baseline
+        run: |
+          dir="$RUNNER_TEMP/lean-generation-base"
+          mkdir -p "$dir"
+          status=0
+          python3 tools/scripts/worktree/lean_cache_generation.py latest --transport release --output "$dir/base.json" --marker-output "$dir/expected-marker" || status=$?
+          case "$status" in
+            0) echo 'seed=false' >> "$GITHUB_OUTPUT" ;;
+            3) echo 'seed=true' >> "$GITHUB_OUTPUT" ;;
+            *) exit "$status" ;;
+          esac
+      - id: seed
+        if: steps.baseline.outputs.seed == 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: latest-seed
+      - if: steps.baseline.outputs.seed == 'true'
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.seed.outputs.producer }}
+          path: build/seed-source
+          persist-credentials: false
+      - if: steps.baseline.outputs.seed == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - if: steps.baseline.outputs.seed == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.baseline.outputs.seed == 'true'
+        run: python3 build/seed-source/.github/scripts/install-tools.py
+      - if: steps.baseline.outputs.seed == 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: migrate-seed
+      - uses: actions/upload-artifact@v6
+        with:
+          name: lean-generation-base-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/lean-generation-base/base.json
+            ${{ runner.temp }}/lean-generation-base/expected-marker
+            ${{ runner.temp }}/lean-generation-base/seed.json
+          if-no-files-found: error
+          overwrite: true
+
+  compile:
+    needs: [pin, prepare]
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/ci-lean-generation-compile.yml
+    with:
+      source: ${{ needs.pin.outputs.source }}
+
+  publish:
+    needs: [pin, compile]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-generation-base-${{ github.run_id }}
+          path: ${{ runner.temp }}/base
+          digest-mismatch: error
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-generation-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}/plan
+          digest-mismatch: error
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: lean-generation-layer-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/receipts
+          merge-multiple: true
+          digest-mismatch: error
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Complete report and executable targets and publish both indexes
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: publish-generation

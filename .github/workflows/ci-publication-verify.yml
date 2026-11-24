@@ -131,6 +131,7 @@ jobs:
             .github/workflows/ci-publication-verify.yml
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
+            .github/workflows/cache-release-publish.yml
             .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/*
             .github/actions/lean-compile-layer/*

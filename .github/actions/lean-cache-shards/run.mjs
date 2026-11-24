@@ -345,7 +345,7 @@ function requirePublisher() {
   if (!['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)
       || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
       || env.STRATALINT_CACHE_WRITES !== 'true'
-      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/lean-cache-publish.yml@refs/heads/dev') {
+      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/cache-release-publish.yml@refs/heads/dev') {
     throw new Error('shared cache writes require the protected dev Release publisher');
   }
 }
@@ -372,7 +372,10 @@ async function generationIndex(digest, file) {
     if (!put) process.exitCode = 4;
     throw new Error('missing Actions generation index ' + digest);
   }
-  if (await digestFile(path) !== digest) throw new Error('corrupt Actions generation index ' + digest);
+  if (await digestFile(path) !== digest) {
+    if (!put) process.exitCode = 5;
+    throw new Error('corrupt Actions generation index ' + digest);
+  }
   if (!put && resolve(file) !== resolve(path)) await copyFile(path, file);
 }
 

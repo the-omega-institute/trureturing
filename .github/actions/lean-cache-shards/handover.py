@@ -1,13 +1,12 @@
 """Drain earlier writers before pinning a protected dev generation."""
 
-import base64
 import json
 import os
 from pathlib import Path
 import subprocess
 
 WORKFLOW = ".github/workflows/lean-cache-publish.yml"
-GROUP = "lean-cache-generation-publisher-v1"
+PUBLISHER = ".github/workflows/cache-release-publish.yml"
 
 
 def api(endpoint, *, pages=False):
@@ -18,31 +17,37 @@ def api(endpoint, *, pages=False):
     return json.loads(subprocess.check_output(args))
 
 
-def drain():
-    runs = {}
+def retire():
+    # GitHub blocks reruns of a disabled workflow, including individual jobs.
+    # Existing runs keep executing until their terminal state.
+    run = api("actions/runs/" + os.environ["GITHUB_RUN_ID"])
+    if (run["path"] != PUBLISHER or run["head_branch"] != "dev"
+            or os.environ.get("GITHUB_REF_PROTECTED") != "true"):
+        raise ValueError("protected dev generation publisher required")
+    legacy = api("actions/workflows/lean-cache-publish.yml")
+    workflow = legacy["id"]
+    if legacy["path"] != WORKFLOW or workflow == run["workflow_id"]:
+        raise ValueError("legacy and generation publishers must have distinct workflow IDs")
+    path = f"actions/workflows/{workflow}"
+    if legacy["state"] != "disabled_manually":
+        subprocess.run(["gh", "api", "--method", "PUT",
+                        f"repos/{os.environ['GITHUB_REPOSITORY']}/{path}/disable"], check=True)
+    verified = api(path)
+    if verified["id"] != workflow or verified["path"] != WORKFLOW or verified["state"] != "disabled_manually":
+        raise ValueError("legacy workflow retirement was not confirmed")
+    return path
+
+
+def drain(workflow):
+    runs = set()
     # A run can advance from queued to in_progress during discovery.
     for state in ("requested", "waiting", "pending", "queued", "in_progress"):
-        pages = api("actions/workflows/lean-cache-publish.yml/runs?per_page=100&status=" + state, pages=True)
-        for page in pages:
-            for run in page["workflow_runs"]:
-                if str(run["id"]) != os.environ["GITHUB_RUN_ID"]:
-                    runs[run["id"]] = run
-    owners = {}
-    for run in runs.values():
-        sha = run["head_sha"]
-        if sha not in owners:
-            record = api("contents/" + WORKFLOW + "?ref=" + sha)
-            definition = base64.b64decode(record["content"]).decode()
-            # Ruby's standard YAML parser reads the actual version's workflow
-            # group, including quotes, comments and inline mapping notation.
-            owners[sha] = subprocess.check_output(
-                ["ruby", "-ryaml", "-e", 'print YAML.safe_load(STDIN.read).dig("concurrency","group")'],
-                input=definition, text=True,
-            )
-        if owners[sha] != GROUP:
-            print(f"Awaiting legacy writer {run['id']} at {sha}", flush=True)
-            subprocess.run(["gh", "run", "watch", str(run["id"]), "-R", os.environ["GITHUB_REPOSITORY"],
-                            "--compact", "--interval", "60"], check=True)
+        pages = api(f"{workflow}/runs?per_page=100&status={state}", pages=True)
+        runs.update(run["id"] for page in pages for run in page["workflow_runs"])
+    for run in sorted(runs):
+        print(f"Awaiting retired writer {run}", flush=True)
+        subprocess.run(["gh", "run", "watch", str(run), "-R", os.environ["GITHUB_REPOSITORY"],
+                        "--compact", "--interval", "60"], check=True)
 
 
 def pin():
@@ -86,5 +91,5 @@ def pin():
 
 
 if __name__ == "__main__":
-    drain()
+    drain(retire())
     pin()
