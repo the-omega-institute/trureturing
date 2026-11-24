@@ -169,7 +169,7 @@ private theorem powers_table (i : Fin 11) : forward T initial i.val = W i := by
     rw [ih]
     exact (finite_certificate.2.2.2.2.2.1.2 i).symm
 
-theorem polynomial_relation :
+private theorem polynomial_relation :
     forward T initial (2 + 8) =
       ∑ j : Fin 8, (![-656100, 1574640, -1513404, 750384, -206469, 31428, -2466, 84] j : ℤ) • forward T initial (2 + j.val) := by
   rw [powers_table ⟨10, by omega⟩]
