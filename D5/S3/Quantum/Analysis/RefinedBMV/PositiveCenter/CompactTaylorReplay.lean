@@ -41,7 +41,7 @@ private partial def remainingStatementNodes (e : Expr) (budget : Nat) : Nat :=
     | _ => next
 
 -- The compiled evaluator proposes data. The kernel checks the resulting equality.
-private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr)
+private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr) :
     Simproc := fun e => do
   if e.hasFVar || e.hasMVar || e.hasLooseBVars then
     return .rfl
