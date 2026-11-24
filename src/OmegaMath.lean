@@ -18,6 +18,7 @@ public import OmegaMath.Calculus.DFiniteCompose
 public import OmegaMath.Calculus.DFiniteJet
 public import OmegaMath.Calculus.Jet2
 public import OmegaMath.Calculus.MidpointDrift
+public import OmegaMath.CategoryTheory.Naturality
 public import OmegaMath.Computability.Fractran
 public import OmegaMath.Computability.QuaternionFractran
 public import OmegaMath.Data.FiniteIndex
