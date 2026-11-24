@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Diagonal discord decreases under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.
+Diagonal discord is nonincreasing under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.
 
-Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces.
+Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces. Specializing the attained comparison to a two-dimensional measured subsystem gives the inequality of Conjecture 1.
 
 **Definition 1.1 (Projective pinching).**
 
@@ -57,6 +57,8 @@ Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonoto
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zi-Wen Liu; Ryuji Takagi; Seth Lloyd (2019). *Diagonal quantum discord*. DOI: [10.1088/1751-8121/ab0774](https://doi.org/10.1088/1751-8121/ab0774). URL: <https://arxiv.org/abs/1708.09076v2>.
+
+*Acknowledgement.* Gilad Gour; Iman Marvian; Robert W. Spekkens (2009). *Measuring the quality of a quantum reference frame: The relative entropy of frameness*. DOI: [10.1103/PhysRevA.80.012307](https://doi.org/10.1103/PhysRevA.80.012307). URL: <https://arxiv.org/abs/0901.0943v2>.
 
 *Commentary.*
 
@@ -269,4 +271,6 @@ There are eligible minimizing eigenbases for the input and output, and the minim
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../OrthogonalRecordEntropy.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTrace/Isometries](../PartialTrace/Isometries.md)
 - Dependency: [D5/S3/Quantum/Measurement/Auric/CoordinatePinching](../../Measurement/Auric/CoordinatePinching.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/AncillaFreeTesterRobustnessEquality](../../QuantumChannels/AncillaFreeTesterRobustnessEquality.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../../RandomCircuits/HaarTwoCopyTwirl.md)
+- Dependency: [D5/S3/Quantum/Recovery/QubitActualResidualGeometry](../../Recovery/QubitActualResidualGeometry.md)
