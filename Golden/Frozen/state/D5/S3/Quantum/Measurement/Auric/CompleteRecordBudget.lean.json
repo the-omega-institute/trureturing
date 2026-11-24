@@ -1,0 +1,1 @@
+{"statement_id":"sha256:e2a16cf188060de6e43aa5b54f6044cef622eb7bc51828fbd96354ac01b68837","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Measurement),5:Auric),22:complete_record_budget)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"]}]}
