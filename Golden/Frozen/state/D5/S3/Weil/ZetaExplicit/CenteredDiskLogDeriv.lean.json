@@ -1,0 +1,1 @@
+{"statement_id":"sha256:4a6b0271353ae9c563048d8fc3a0e11bc395edcdbaf110a449eef3472996f4c4","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),39:logDeriv_partial_fraction_unit_centered)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"]}]}
