@@ -18,8 +18,6 @@ For an additive commutative group, complementing e relative to u is the subtract
 
 The proof uses the strict additive group laws. Adding the effect back to its complement recovers the total, so subtracting that complement returns the effect. Evaluation at zero recovers the ambient total. The standard Lean interface transports the strict endpoint and involution results to Mathlib subtraction.
 
-This deposit closes only the complement-encoding clause at qdo-v1 theorem/38.1 for atom qdo-residual-ef4826943d8848ca382a11dd9ef8e07ab2930ca795c5645aeb15b92f5a4c0662. No claim is made about other residual clauses.
-
 ## References
 
 - Truth anchor: `D5/S0/Conventions/ComplementEncoding.complement_encoding`
