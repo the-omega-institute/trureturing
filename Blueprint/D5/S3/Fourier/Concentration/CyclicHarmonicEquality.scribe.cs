@@ -37,7 +37,7 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                     + "at frequency two, and the first coefficient is the average of two perpendicular "
                     + "unit phases.")),
                     Paragraph(Text(
-                        "On ZMod 4 a point mass has first squared magnitude one and second "
+                        "On ZMod 4 the point mass at residue zero has first squared magnitude one and second "
                         + "coefficient one. The nonnegative weight (1,1,0,0) has second coefficient "
                         + "zero and first squared magnitude two, with total mass two. The signed weight "
                         + "(1,1/2,−1/2,0) has total mass one and second coefficient zero, with first "

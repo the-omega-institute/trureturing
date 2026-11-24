@@ -18,7 +18,7 @@ $$(\operatorname{P}\left(w\right) \land s = 0 \implies c \leq \frac{1}{2}) \land
 
 Assume P(w) and s=0 for the forward bound and classification. Let m be the first coefficient and z(j) the standard additive character evaluated at −j. The w-weighted variance of the real part of the conjugate of m times z(j) is c/2 minus c squared. At equality each positive mass has projected real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. The imaginary mean vanishes, so both points occur with equal weights. Injectivity of the cyclic character gives exactly two residues, and the two phases differ by a quarter turn. Conversely, two half-masses are nonnegative and sum to one. Their squared phases cancel at frequency two, and the first coefficient is the average of two perpendicular unit phases.
 
-On ZMod 4 a point mass has first squared magnitude one and second coefficient one. The nonnegative weight (1,1,0,0) has second coefficient zero and first squared magnitude two, with total mass two. The signed weight (1,1/2,−1/2,0) has total mass one and second coefficient zero, with first squared magnitude 5/2. Positive q supplies the finite DFT domain.
+On ZMod 4 the point mass at residue zero has first squared magnitude one and second coefficient one. The nonnegative weight (1,1,0,0) has second coefficient zero and first squared magnitude two, with total mass two. The signed weight (1,1/2,−1/2,0) has total mass one and second coefficient zero, with first squared magnitude 5/2. Positive q supplies the finite DFT domain.
 
 For the same positive modulus q, write E(q) for existence of a nonnegative weight of total mass one with second coefficient zero and squared first magnitude one half.
 
