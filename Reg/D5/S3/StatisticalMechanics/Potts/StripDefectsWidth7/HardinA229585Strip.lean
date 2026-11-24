@@ -84,7 +84,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Row
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
     definition := none
