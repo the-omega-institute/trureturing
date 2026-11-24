@@ -41,6 +41,9 @@ def law (R : Realization sig.{v}) : Prop :=
       ∀ p q : V, p ≠ q → ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (some p, 0) ∧ label (some (i.succAbove v)) = (some q, 0) ∧
         (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+        (label ∘ Option.some ∘ i.succAbove) ''
+          {a | SuccessfulStart (pointDeletedFamily S i) m v a} =
+          ({none, some p, some q, some (-p - q)} : Set (Option V))ᶜ ×ˢ Set.univ ∧
         ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
           R.readout () () A * (Fintype.card V - 3)
 
@@ -69,7 +72,7 @@ private theorem rejected_law : ¬ law.{u,v} rejected := by
     have zeroOne : (0 : ZMod 3) = 1 :=
       congrArg (fun x : V => x.down 0) eq
     exact (by decide : (0 : ZMod 3) ≠ 1) zeroOne
-  obtain ⟨i, pivot, m, _, _, leave, noStarts⟩ := profiles p q different
+  obtain ⟨i, pivot, m, _, _, leave, _, noStarts⟩ := profiles p q different
   have sizeOfNumbering := Nat.card_congr label
   have rEq : r = 8 := by
     dsimp only [A] at sizeOfNumbering
@@ -124,9 +127,10 @@ def affineCountRegistration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "body", "arg", "arg", "arg", "body", "body", "body", "arg", "body",
-        "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg"]
+        "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "body", "arg", "body", "arg", "arg", "arg", "body", "body", "body",
+        "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg",
+        "arg", "arg", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none

@@ -6,12 +6,13 @@
    utility: none
    digest: Label-independent switch counts for binary extensions of affine ternary Steiner loops. -/
 
-import D5.S3.Combinatorics.Matroids.SteinerReturnDependencies
-import D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
+import D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
 
 /-! Exact switch counts for normalized binary extensions of affine ternary Steiner loops. -/
 
 open Function
+open D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
+  (labelledSwitchCount pointedNumbering steinerSquarePeriod)
 
 namespace D5.S3.Combinatorics.Matroids.SteinerAffineSwitchCount
 
@@ -151,24 +152,18 @@ private theorem specialMoves (three : ∀ a : V, a + a = -a) {p q : V} (differen
     by simp [move, mul, different.symm, qp, pthird, pr],
     by simp [move, mul]⟩
 
-private theorem periodTwoOfSwap {X : Type*} (f : X → X) {x y : X}
-    (ne : x ≠ y) (fw : f x = y) (bw : f y = x) : minimalPeriod f x = 2 := by
-  have h : IsPeriodicPt f 2 x := by
-    change f (f x) = x
-    rw [fw, bw]
-  rcases (Nat.dvd_prime Nat.prime_two).mp h.minimalPeriod_dvd with fixed | period
-  · have step := minimalPeriod_eq_one_iff_isFixedPt.mp fixed
-    exact (ne (step.symm.trans fw)).elim
-  · exact period
-
-private theorem specialPeriods (three : ∀ a : V, a + a = -a) {p q : V} (different : p ≠ q) :
+private theorem specialPeriods (three : ∀ a : V, a + a = -a) {p q : V}
+    (different : p ≠ q) :
     minimalPeriod (move p q) none = 2 ∧ minimalPeriod (move p q) (some (-p - q)) = 2 ∧
-    minimalPeriod (move p q) (some p) = 2 ∧ minimalPeriod (move p q) (some q) = 2 := by
-  obtain ⟨a, b, c, d⟩ := specialMoves three different
-  exact ⟨periodTwoOfSwap _ (fun h => Option.some_ne_none _ h.symm) a b,
-    periodTwoOfSwap _ (Option.some_ne_none _) b a,
-    periodTwoOfSwap _ (fun h => different (Option.some.inj h)) c d,
-    periodTwoOfSwap _ (fun h => different (Option.some.inj h).symm) d c⟩
+      minimalPeriod (move p q) (some p) = 2 ∧ minimalPeriod (move p q) (some q) = 2 := by
+  let _ : Mul (Option V) := ⟨mul⟩
+  have period (x : Option V) (closed : move p q (move p q x) = x) :
+      minimalPeriod (move p q) x = 2 :=
+    steinerSquarePeriod timesComm (timesInvolutive three)
+      (fun h => different (Option.some.inj h)) closed
+  obtain ⟨atUnit, atThird, atP, atQ⟩ := specialMoves three different
+  exact ⟨period none (atUnit.symm ▸ atThird), period (some (-p - q)) (atThird.symm ▸ atUnit),
+    period (some p) (atP.symm ▸ atQ), period (some q) (atQ.symm ▸ atP)⟩
 
 private theorem failsLeftAssociation (three : ∀ a : V, a + a = -a) {p q x : V}
     (hpq : p ≠ q) (h : outside p q x) :
@@ -305,7 +300,8 @@ private theorem squareRowsZero (three : ∀ a : V, a + a = -a) {p q : V}
   obtain ⟨per0, perR, perP, perQ⟩ := specialPeriods three different
   have q0 : mul (some q) none = some q := rfl
   have qq : mul (some q) (some q) = none := by simp [mul]
-  change ∀ x : Option V, (move p q)^[2] x = x → returnRow none (some p) (some q) x = 0
+  change ∀ x : Option V, (move p q)^[2] x = x →
+    returnRow none (some p) (some q) x = 0
   intro x returns
   cases x with
   | none => rw [unfoldSquare none per0, move0, q0, qr, f0, pqf, qrf, fsame,
@@ -327,92 +323,62 @@ private theorem squareRowsZero (three : ∀ a : V, a + a = -a) {p q : V}
       exact (by decide : ¬ 3 ∣ 2) dvd)
 
 
-private theorem selectedCount [Fintype V] (three : ∀ a : V, a + a = -a) {p q : V}
+private theorem twoStepReturnIffOnLine (three : ∀ a : V, a + a = -a) {p q : V}
+    (different : p ≠ q) (x : Option V) :
+    (move p q)^[2] x = x ↔ x ∈ ({none, some p, some q, some (-p - q)} : Set (Option V)) := by
+  let r := -p - q
+  let line : Set (Option V) := {none, some p, some q, some r}
+  change (move p q)^[2] x = x ↔ x ∈ line
+  obtain ⟨move0, moveR, moveP, moveQ⟩ := specialMoves three different
+  change move p q (move p q x) = x ↔ x ∈ line
+  cases x with
+  | none => simp [move0, moveR, line]
+  | some x =>
+    by_cases xp : x = p
+    · subst x
+      simp [moveP, moveQ, line]
+    by_cases xq : x = q
+    · subst x
+      simp [moveQ, moveP, line]
+    by_cases xr : x = r
+    · subst x
+      have closed : move p q (move p q (some r)) = some r := by rw [moveR, move0]
+      simp [closed, line]
+    have notPeriod : move p q (move p q (some x)) ≠ some x := by
+      intro eq
+      have divides := IsPeriodicPt.minimalPeriod_dvd
+        (show IsPeriodicPt (move p q) 2 (some x) from eq)
+      rw [outsidePeriod three p q x different ⟨xp, xq, xr⟩] at divides
+      exact (by decide : ¬ 3 ∣ 2) divides
+    simp [notPeriod, line, xp, xq, xr]
+
+omit [DecidableEq V] in
+private theorem complementCount [Fintype V] (three : ∀ a : V, a + a = -a) {p q : V}
     (different : p ≠ q) :
-    ({x : Option V | move p q (move p q x) ≠ x} : Set (Option V)).ncard =
+    ({none, some p, some q, some (-p - q)} : Set (Option V))ᶜ.ncard =
       Fintype.card V - 3 := by
   classical
   let r := -p - q
-  let line : Set (Option V) := {none, some p, some q, some r}
-  obtain ⟨move0, moveR, moveP, moveQ⟩ := specialMoves three different
-  have hline : ∀ x : Option V, (move p q)^[2] x = x ↔ x ∈ line := by
-    intro x
-    change move p q (move p q x) = x ↔ x ∈ line
-    cases x with
-    | none => simp [move0, moveR, line]
-    | some x =>
-      by_cases xp : x = p
-      · subst x
-        simp [moveP, moveQ, line]
-      by_cases xq : x = q
-      · subst x
-        simp [moveQ, moveP, line]
-      by_cases xr : x = r
-      · subst x
-        have closed : move p q (move p q (some r)) = some r := by rw [moveR, move0]
-        simp [closed, line]
-      have notPeriod : move p q (move p q (some x)) ≠ some x := by
-        intro eq
-        have divides := IsPeriodicPt.minimalPeriod_dvd
-          (show IsPeriodicPt (move p q) 2 (some x) from eq)
-        rw [outsidePeriod three p q x different ⟨xp, xq, xr⟩] at divides
-        exact (by decide : ¬ 3 ∣ 2) divides
-      simp [notPeriod, line, xp, xq, xr]
-  have chosen : ({x : Option V | move p q (move p q x) ≠ x} : Set (Option V)) = lineᶜ := by
-    ext x
-    exact not_congr (hline x)
-  have nline : line.ncard = 4 := by
+  have nline : ({none, some p, some q, some r} : Set (Option V)).ncard = 4 := by
     have hp := thirdNeLeft three different
     have hq := thirdNeRight three different
     have h0 : (none : Option V) ∉ ({some p, some q, some r} : Set (Option V)) := by simp
-    have hp0 : some p ∉ ({some q, some r} : Set (Option V)) := by simp [different, show p ≠ r from hp.symm]
+    have hp0 : some p ∉ ({some q, some r} : Set (Option V)) := by
+      simp [different, show p ≠ r from hp.symm]
     change ({none, some p, some q, some r} : Set (Option V)).ncard = 4
     rw [Set.ncard_insert_of_notMem h0, Set.ncard_insert_of_notMem hp0,
       Set.ncard_pair (show some q ≠ some r from fun h => hq (Option.some.inj h.symm))]
-  rw [chosen, Set.ncard_compl, nline, Nat.card_eq_fintype_card, Fintype.card_option]
+  rw [Set.ncard_compl, nline, Nat.card_eq_fintype_card, Fintype.card_option]
   omega
 
-
-open LinearMap
-open D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
-  (labelledSwitchCount pointedNumbering squareFixed steinerSquarePeriod)
+open D5.S3.Combinatorics.Matroids.SteinerSwitchSupport (selectedByRow)
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension
   (extensionMul extensionSteinerAndCentre)
-open D5.S3.Combinatorics.Matroids.SteinerReturnDependencies (firstReturn)
 open D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open D5.S3.Combinatorics.Matroids.RankThreeSaturatedTopGap (Covered Uncovered)
 open D5.S3.Combinatorics.Matroids.SteinerMatchingTranslations (translate)
 open D5.S3.Combinatorics.Matroids.PointDeletedSteinerSwitch (pointDeletedFamily)
 open D5.S3.Combinatorics.Matroids.SteinerAlternatingSwitches (SuccessfulStart)
-
-private theorem liftedSelection {A : Type*} [AddCommGroup A] [Module (ZMod 2) A]
-    (three : ∀ a : V, a + a = -a) {p q : V} (different : p ≠ q)
-    (labels : Set (Option V) → A) (x : Option V) (a : A)
-    (invol : letI : Mul (Option V) := ⟨mul⟩
-      letI := extensionMul (none : Option V) labels
-      ∀ u v : Option V × A, u * (u * v) = v) :
-    letI : Mul (Option V) := ⟨mul⟩
-    letI := extensionMul (none : Option V) labels
-    ((some q, 0) * ((some p, 0) * (x, a)) ≠ (some p, 0) * ((some q, 0) * (x, a))) ↔
-      move p q (move p q x) ≠ x := by
-  let _ : Mul (Option V) := ⟨mul⟩
-  let _ := extensionMul (none : Option V) labels
-  let P : Option V × A → Option V × A := ((some p, 0) * ·)
-  let Q : Option V × A → Option V × A := ((some q, 0) * ·)
-  change (¬ Q (P (x, a)) = P (Q (x, a))) ↔ _
-  have closedLift : Q (P (x, a)) = P (Q (x, a)) ↔ (P ∘ Q)^[2] (x, a) = (x, a) :=
-    squareFixed (P := P) (Q := Q) (invol (some p, 0)) (invol (some q, 0)) (x, a)
-  rw [not_congr closedLift]
-  by_cases closed : move p q (move p q x) = x
-  · have period : minimalPeriod (move p q) x = 2 :=
-      steinerSquarePeriod timesComm (timesInvolutive three)
-        (fun h => different (Option.some.inj h)) closed
-    have lifted : (P ∘ Q)^[minimalPeriod (move p q) x] (x, a) =
-        (x, a + Finsupp.linearCombination (ZMod 2) labels (returnRow none (some p) (some q) x)) :=
-      firstReturn none labels (some p) (some q) x a
-    rw [period, squareRowsZero three different x closed, map_zero, add_zero] at lifted
-    exact ⟨fun h => (h lifted).elim, fun h => (h closed).elim⟩
-  · exact ⟨fun _ => closed, fun _ equal => closed (congrArg Prod.fst equal)⟩
 
 /-- Every binary labelling gives the same count for all distinct affine pivot pairs. -/
 theorem labelledAffineSwitchCount {A : Type*} [Fintype V] [Finite A]
@@ -429,6 +395,9 @@ theorem labelledAffineSwitchCount {A : Type*} [Fintype V] [Finite A]
       ∀ p q : V, p ≠ q → ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (some p, 0) ∧ label (some (i.succAbove v)) = (some q, 0) ∧
         (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+        (label ∘ Option.some ∘ i.succAbove) ''
+          {a | SuccessfulStart (pointDeletedFamily S i) m v a} =
+          ({none, some p, some q, some (-p - q)} : Set (Option V))ᶜ ×ˢ Set.univ ∧
         ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
           Nat.card A * (Fintype.card V - 3) := by
   let _ : Mul (Option V) := ⟨mul⟩
@@ -447,18 +416,27 @@ theorem labelledAffineSwitchCount {A : Type*} [Fintype V] [Finite A]
   obtain ⟨i, v, hi, hv⟩ := locate (some p, 0) (some q, 0) (by simp) (by simp)
     (fun eq => different (Option.some.inj (congrArg Prod.fst eq)))
   obtain ⟨m, leave, byStart⟩ := byDeleted i
+  have image := (byStart v).1
   have count := (byStart v).2
-  rw [hi, hv] at count
-  let good : Set (Option V) := {x | move p q (move p q x) ≠ x}
+  rw [hi, hv] at image count
   have fibres :
       ({y : Option V × A | (some q, 0) * ((some p, 0) * y) ≠
         (some p, 0) * ((some q, 0) * y)} : Set (Option V × A)) =
-        good ×ˢ (Set.univ : Set A) := by
+        ({none, some p, some q, some (-p - q)} : Set (Option V))ᶜ ×ˢ Set.univ := by
     ext ⟨x, a⟩
-    simpa only [good, Set.mem_ofPred_eq, Set.mem_prod, Set.mem_univ, and_true] using
-      liftedSelection three different labels x a invol
-  have goodCount : good.ncard = Fintype.card V - 3 := selectedCount three different
-  refine ⟨i, v, m, hi, hv, leave, count.trans ?_⟩
-  rw [fibres, Set.ncard_prod, Set.ncard_univ, goodCount, Nat.mul_comm]
+    simp only [Set.mem_ofPred_eq, Set.mem_prod, Set.mem_univ, and_true, Set.mem_compl_iff]
+    have selection := selectedByRow none (some p) (some q) x labels a timesComm
+      (timesInvolutive three) (fun h => different (Option.some.inj h)) invol
+    dsimp only at selection
+    rw [selection]
+    change (move p q (move p q x) ≠ x ∨
+      Finsupp.linearCombination (ZMod 2) labels (returnRow none (some p) (some q) x) ≠ 0) ↔ _
+    have onLine := twoStepReturnIffOnLine three different x
+    by_cases returns : move p q (move p q x) = x
+    · simp [returns, onLine.mp returns, squareRowsZero three different x returns]
+    · exact ⟨fun _ h => returns (onLine.mpr h), fun _ => Or.inl returns⟩
+  rw [fibres] at image count
+  refine ⟨i, v, m, hi, hv, leave, image, count.trans ?_⟩
+  rw [Set.ncard_prod, Set.ncard_univ, complementCount three different, Nat.mul_comm]
 
 end D5.S3.Combinatorics.Matroids.SteinerAffineSwitchCount
