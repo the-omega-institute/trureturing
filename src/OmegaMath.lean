@@ -19,6 +19,7 @@ public import OmegaMath.Computability.QuaternionFractran
 public import OmegaMath.Data.Int
 public import OmegaMath.Data.IntRatio
 public import OmegaMath.Data.Nat
+public import OmegaMath.Data.Nat.Choose.Basic
 public import OmegaMath.Data.Ratio
 public import OmegaMath.Geometry.BargmannGram
 public import OmegaMath.Geometry.BargmannGram.Monomial
