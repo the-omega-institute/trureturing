@@ -13,7 +13,7 @@ Authors: Tyler B. Hughes
 Contributors: research agents
 -/
 
-/-!
+/-
 Proof source: LeanPool/lean-pool, revision
 623ba6c3c0026e133ff75089d66c60040eb05aec, RadoNumbersLastException.
 Primary proof and authorship: mathdiscoveries/rado-numbers-last-exception,
