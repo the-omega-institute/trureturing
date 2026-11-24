@@ -21,11 +21,17 @@ internal sealed class OmegaLieTripleAndFreeGroupDocument : IScribeDocumentDefini
         Formula second = Triple(u, Triple(x, y, v), w);
         Formula third = Triple(u, v, Triple(x, y, w));
         Formula primary = Call("denomPlus", a, b), shadow = Call("denomMinus", a, b);
-        Formula half = Call("fraction", D(1), D(2));
+        Formula half = Call("value", D(1), D(2));
         Formula output = Call("output", a, b);
         Formula radius = Call("radius", Call("product", a, b));
         Formula nonemptyReduced = And(Ne(w, F.Id("nil")), Call("IsReduced", w));
         Formula quat = Call("evalQuat", w);
+        Formula AgreeOn(string axis)
+        {
+            Formula input = Call("ofInt", F.Id(axis));
+            return Call("Equiv", Call("Ad", Call("evalQuat", u), input),
+                Call("Ad", Call("evalQuat", v), input));
+        }
         return DocumentDefinition.Create(ScribeNode.Create(
             "Lie triple curvature, rational dual charts, and the norm-five word theorem for Omega Math sections 4.2, 5.2, and 14.3–14.4.",
             H("Lie triple curvature, dual charts, and reduced words"),
@@ -61,21 +67,25 @@ internal sealed class OmegaLieTripleAndFreeGroupDocument : IScribeDocumentDefini
                     "Choose the antipodal representative with nonnegative scalar coordinate. Its stereographic output has positive denominator r+|w|."),
                 Law("omega-dual-chart-mrp", "dual_chart_mrp_denominators", "The chart denominators have the expanded MRP forms",
                     All(rationalVectors, ["a", "b"], And(
-                        Equiv(primary, Call("fraction", Call("mrpPlusNum", a, b), radius)),
-                        Equiv(shadow, Call("fraction", Call("mrpMinusNum", a, b), radius)))),
+                        Equiv(primary, Call("value", Call("mrpPlusNum", a, b), radius)),
+                        Equiv(shadow, Call("value", Call("mrpMinusNum", a, b), radius)))),
                     "For squared input norms A, B and dot product C, the normalized numerators are 1+AB−2C and A+B+2C. Both share denominator (1+A)(1+B)."),
-                Law("omega-hurwitz-word-split", "reduced_word_split5_nonzero", "A nonempty reduced word has nonzero split image",
-                    All(words, ["w"], If(nonemptyReduced, Equal(Call("isZero", Call("evalSplit5", w)), F.Id("false")))),
+                Law("omega-hurwitz-word-split", "reduced_word_split5_nonzero", "A reduced word has nonzero split image",
+                    All(words, ["w"], If(Call("IsReduced", w), Equal(Call("isZero", Call("evalSplit5", w)), F.Id("false")))),
                     "Each edge between adjacent outer products contributes a nonzero scalar modulo five."),
                 Law("omega-hurwitz-word-norm", "reduced_word_normSq", "The squared norm is five to the word length",
-                    All(words, ["w"], Equal(Call("normSq", quat), Call("pow", D(5), Call("length", w)))),
+                    All(words, ["w"], Equal(Call("normSq", quat), Call("powFive", Call("length", w)))),
                     "Hamilton multiplication multiplies squared norms, and every generator has squared norm five."),
-                Law("omega-hurwitz-word-divisibility", "reduced_word_not_div_five", "A nonempty reduced word is primitive at five",
-                    All(words, ["w"], If(nonemptyReduced, new Formula.Not(Call("AllDivisibleByFive", quat)))),
+                Law("omega-hurwitz-word-divisibility", "reduced_word_not_div_five", "A reduced word is primitive at five",
+                    All(words, ["w"], If(Call("IsReduced", w), new Formula.Not(Call("AllDivisibleByFive", quat)))),
                     "If five divided every quaternion coordinate, the split matrix modulo five would vanish."),
                 Law("omega-hurwitz-word-scalar", "reduced_word_non_scalar", "A nonempty reduced word evaluates to a nonscalar quaternion",
                     All(words, ["w"], If(nonemptyReduced, new Formula.Not(Call("IsScalar", quat)))),
-                    "A scalar quaternion with squared norm a positive power of five has scalar coordinate divisible by five."))));
+                    "A scalar quaternion with squared norm a positive power of five has scalar coordinate divisible by five."),
+                Law("omega-hurwitz-adjoint-injective", "reduced_words_adjoint_injective", "Distinct reduced words give distinct rational adjoint rotations",
+                    All(words, ["u", "v"], If(And(Call("IsReduced", u), Call("IsReduced", v)),
+                        If(And(AgreeOn("axisX"), AgreeOn("axisY")), Equal(u, v)))),
+                    "Equality of the actions makes the relative quaternion scalar. Remove the common prefix, then reverse the first suffix and replace each letter by its opposite before appending the second suffix. If the original words differed, the result is nonempty and reduced."))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>

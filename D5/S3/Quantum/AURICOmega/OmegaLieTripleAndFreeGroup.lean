@@ -10,6 +10,7 @@ module
 prelude
 public import OmegaMath.Geometry.LieTriple
 public import OmegaMath.Geometry.DualChartCayley
+public import OmegaMath.Harmonic.HurwitzFreeGroup.Adjoint
 
 namespace D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup
 
@@ -74,5 +75,33 @@ public theorem dual_chart_mrp_denominators (u v : RatVec3) :
     And (IntRatio.Equivalent (denomPlus u v) (.fraction (mrpPlusNum u v) r))
       (IntRatio.Equivalent (denomMinus u v) (.fraction (mrpMinusNum u v) r)) :=
   Omega.Geometry.DualChartCayley.dual_chart_mrp_denominators u v
+
+open Omega.Hurwitz.FreeGroup Omega.Geometry.Cayley3D
+
+/-- The mod-five split image of every reduced word is nonzero. -/
+public theorem reduced_word_split5_nonzero (w : Word) (hr : IsReduced w) :
+    Eq (evalSplit5 w).isZero .false :=
+  Omega.Hurwitz.FreeGroup.reduced_word_split5_nonzero w hr
+
+/-- The squared norm is five to the length of the word. -/
+public theorem reduced_word_normSq (w : Word) : Eq (evalQuat w).normSq (powFive w.length) :=
+  Omega.Hurwitz.FreeGroup.reduced_word_normSq w
+
+/-- Every reduced word has a quaternion coordinate indivisible by five. -/
+public theorem reduced_word_not_div_five (w : Word) (hr : IsReduced w) :
+    Not (AllDivisibleByFive (evalQuat w)) :=
+  Omega.Hurwitz.FreeGroup.reduced_word_not_div_five w hr
+
+/-- Every nonempty reduced word evaluates to a nonscalar quaternion. -/
+public theorem reduced_word_non_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil)) :
+    Not (IsScalar (evalQuat w)) :=
+  Omega.Hurwitz.FreeGroup.reduced_word_non_scalar w hr hn
+
+/-- Agreement of rational adjoint rotations on two coordinate axes identifies the reduced word. -/
+public theorem reduced_words_adjoint_injective (u v : Word) (hu : IsReduced u) (hv : IsReduced v)
+    (sameX : (Ad (evalQuat u) (RatVec3.ofInt axisX)).Equiv (Ad (evalQuat v) (RatVec3.ofInt axisX)))
+    (sameY : (Ad (evalQuat u) (RatVec3.ofInt axisY)).Equiv (Ad (evalQuat v) (RatVec3.ofInt axisY))) :
+    Eq u v :=
+  Omega.Hurwitz.FreeGroup.reduced_words_adjoint_injective u v hu hv sameX sameY
 
 end D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup

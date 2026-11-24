@@ -101,7 +101,7 @@ private theorem reverseOppositeAppend_ne_nil_right (u : Word) :
 private theorem joined_not_scalar (u v : Word) (hu : IsReduced u) (hv : IsReduced v)
     (join : CanJoin u v) (ne : Not (Eq (reverseOppositeAppend u v) .nil))
     (k : Int) : Not (Eq ((evalQuat u).conj.mul (evalQuat v)) (Quaternion.scalar k)) :=
-  fun scalar => reduced_word_non_scalar (reverseOppositeAppend u v)
+  fun scalar => reduced_word_ne_scalar (reverseOppositeAppend u v)
     (reverseOppositeAppend_reduced u v hu hv join) ne k
     ((reverseOppositeAppend_eval u v).trans scalar)
 

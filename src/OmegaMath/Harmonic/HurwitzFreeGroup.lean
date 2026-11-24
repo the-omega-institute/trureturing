@@ -137,13 +137,13 @@ private theorem outer_nonzero (g : Generator) {s t : Residue} (hrow : RowNonzero
       (fun hv => hrow.elim (fun hs => hs (recover f.v s hv e.right.right.left))
         (fun ht => ht (recover f.v t hv e.right.right.right)))
 
-/-- Every nonempty reduced word has a nonzero image modulo five. -/
-theorem reduced_word_split5_nonzero (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil)) :
+/-- Every reduced word has a nonzero image modulo five. -/
+theorem reduced_word_split5_nonzero (w : Word) (hr : IsReduced w) :
     Eq (evalSplit5 w).isZero .false :=
-  (Word.rec (motive := fun w => IsReduced w → Not (Eq w .nil) → Eq (evalSplit5 w).isZero .false)
-    (fun _ hn => False.elim (hn Eq.refl))
-    (fun g tail _ hr _ => (reduced_outer tail g hr).elim fun _ hs => hs.elim fun _ ht =>
-      (congrArg Matrix5.isZero ht.left).trans (outer_nonzero g ht.right)) w) hr hn
+  (Word.rec (motive := fun w => IsReduced w → Eq (evalSplit5 w).isZero .false)
+    (fun _ => Eq.refl)
+    (fun g tail _ hr => (reduced_outer tail g hr).elim fun _ hs => hs.elim fun _ ht =>
+      (congrArg Matrix5.isZero ht.left).trans (outer_nonzero g ht.right)) w) hr
 
 /-- Natural powers of five, iterated over the word length. -/
 def powFive : Nat → Nat := Nat.rec Nat.one (fun _ n => five.mul n)
@@ -182,12 +182,15 @@ private theorem quat_split_zero_of_coord_residues {q : Quaternion}
     ((Eq.map₂ (fun a b => Matrix5.mk a b (quaternionSplit5 q).c (quaternionSplit5 q).d) a b).trans
       (Eq.map₂ (Matrix5.mk .zero .zero) c d))).trans Eq.refl
 
-/-- The four coordinates of a nonempty reduced word are not simultaneously multiples of five. -/
-theorem reduced_word_not_div_five (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil)) :
-    let q := evalQuat w
-    let f := Int.ofNat five
-    Not (Exists fun a : Int => Exists fun b : Int => Exists fun c : Int => Exists fun d : Int =>
-      And (Eq q.w (f.mul a)) (And (Eq q.x (f.mul b)) (And (Eq q.y (f.mul c)) (Eq q.z (f.mul d))))) :=
+/-- All four integer coordinates are divisible by five. -/
+def AllDivisibleByFive (q : Quaternion) : Prop :=
+  let f := Int.ofNat five
+  Exists fun a : Int => Exists fun b : Int => Exists fun c : Int => Exists fun d : Int =>
+    And (Eq q.w (f.mul a)) (And (Eq q.x (f.mul b)) (And (Eq q.y (f.mul c)) (Eq q.z (f.mul d))))
+
+/-- The four coordinates of a reduced word are not simultaneously multiples of five. -/
+theorem reduced_word_not_div_five (w : Word) (hr : IsReduced w) :
+    Not (AllDivisibleByFive (evalQuat w)) :=
   fun all => all.elim fun a ha => ha.elim fun b hb => hb.elim fun c hc => hc.elim fun d hd =>
     let zero := fun (q k : Int) (h : Eq q ((Int.ofNat five).mul k)) =>
       (congrArg Residue.ofInt h).trans (residue_five_mul k)
@@ -195,7 +198,7 @@ theorem reduced_word_not_div_five (w : Word) (hr : IsReduced w) (hn : Not (Eq w 
       (zero _ a hd.left) (zero _ b hd.right.left)
       (zero _ c hd.right.right.left) (zero _ d hd.right.right.right)
     Residue.false_ne_true
-      ((reduced_word_split5_nonzero w hr hn).symm.trans
+      ((reduced_word_split5_nonzero w hr).symm.trans
         ((congrArg Matrix5.isZero (evalSplit5_eq w)).trans splitZero))
 
 private theorem norm_residue_zero (w : Word) (hn : Not (Eq w .nil)) :
@@ -207,7 +210,7 @@ private theorem norm_residue_zero (w : Word) (hn : Not (Eq w .nil)) :
       (fun _ tail _ _ => residue_five_mul (Int.ofNat (powFive tail.length))) w) hn)
 
 /-- No nonempty reduced word evaluates to an integer scalar. -/
-theorem reduced_word_non_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil))
+theorem reduced_word_ne_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil))
     (k : Int) : Not (Eq (evalQuat w) (Quaternion.scalar k)) :=
   fun h =>
     have norm := (congrArg (fun q : Quaternion => Residue.ofInt (Int.ofNat q.normSq)) h).symm.trans
@@ -223,8 +226,16 @@ theorem reduced_word_non_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .n
     have splitZero := quat_split_zero_of_coord_residues (q := Quaternion.scalar k)
       scalarZero Eq.refl Eq.refl Eq.refl
     Residue.false_ne_true
-      ((reduced_word_split5_nonzero w hr hn).symm.trans
+      ((reduced_word_split5_nonzero w hr).symm.trans
         ((congrArg Matrix5.isZero ((evalSplit5_eq w).trans (congrArg quaternionSplit5 h))).trans
           splitZero))
+
+/-- A scalar quaternion is an integer embedded in the scalar coordinate. -/
+def IsScalar (q : Quaternion) : Prop := Exists fun k : Int => Eq q (Quaternion.scalar k)
+
+/-- The quaternion represented by a nonempty reduced word is nonscalar. -/
+theorem reduced_word_non_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .nil)) :
+    Not (IsScalar (evalQuat w)) :=
+  fun h => h.elim (reduced_word_ne_scalar w hr hn)
 
 end Omega.Hurwitz.FreeGroup

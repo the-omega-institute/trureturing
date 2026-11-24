@@ -23,8 +23,8 @@ namespace Omega.Hurwitz.FreeGroup
 open Geometry.Cayley3D (Ad adjointNum adjointDen_eq adjointQuaternion adjoint_pure)
 open Quaternion.Polynomial (Expr Values)
 
-private def axisX : Vec3 := ⟨Int.one, Int.zero, Int.zero⟩
-private def axisY : Vec3 := ⟨Int.zero, Int.one, Int.zero⟩
+def axisX : Vec3 := ⟨Int.one, Int.zero, Int.zero⟩
+def axisY : Vec3 := ⟨Int.zero, Int.one, Int.zero⟩
 
 private theorem denominator_of_int (q : Quaternion) (hq : q.Nonzero) (v : Vec3) :
     Eq (Ad q (RatVec3.ofInt v)).den q.normSq :=
@@ -132,17 +132,20 @@ private theorem scalar_of_commutes (q : Quaternion)
     (Int.sub_eq_zero.mpr (congrArg Quaternion.y commX))
   Quaternion.ext Eq.refl (cancel q.x x) (cancel q.y y) (cancel q.z z)
 
-/-- Equal rational adjoint actions on integer vectors identify the reduced word. -/
+/-- Agreement on two coordinate axes identifies the reduced word. -/
 theorem reduced_words_adjoint_injective (u v : Word) (hu : IsReduced u) (hv : IsReduced v)
-    (same : ∀ a : Vec3, RatVec3.Equiv
-      (Ad (evalQuat u) (RatVec3.ofInt a)) (Ad (evalQuat v) (RatVec3.ofInt a))) :
+    (sameX : RatVec3.Equiv (Ad (evalQuat u) (RatVec3.ofInt axisX))
+      (Ad (evalQuat v) (RatVec3.ofInt axisX)))
+    (sameY : RatVec3.Equiv (Ad (evalQuat u) (RatVec3.ofInt axisY))
+      (Ad (evalQuat v) (RatVec3.ofInt axisY))) :
     Eq u v :=
   let p := evalQuat u
   let q := evalQuat v
-  have commute := fun a : Vec3 =>
-    relative_commutes p q (evalQuat_nonzero u) (evalQuat_nonzero v) a (same a)
+  have hp := evalQuat_nonzero u
+  have hq := evalQuat_nonzero v
   reduced_words_eq_of_relative_scalar u v hu hv (p.conj.mul q).w
-    (scalar_of_commutes (p.conj.mul q) (commute axisX) (commute axisY))
+    (scalar_of_commutes (p.conj.mul q) (relative_commutes p q hp hq axisX sameX)
+      (relative_commutes p q hp hq axisY sameY))
 
 private theorem ad_one_int (v : Vec3) :
     Eq (Ad Quaternion.one (RatVec3.ofInt v)) (RatVec3.ofInt v) :=
@@ -154,11 +157,13 @@ private theorem ad_one_int (v : Vec3) :
 
 /-- The Cayley adjoint representation has trivial kernel on reduced Hurwitz words. -/
 theorem reduced_word_adjoint_faithful (w : Word) (hr : IsReduced w)
-    (fixed : ∀ v : Vec3, RatVec3.Equiv
-      (Ad (evalQuat w) (RatVec3.ofInt v)) (RatVec3.ofInt v)) :
+    (fixedX : RatVec3.Equiv (Ad (evalQuat w) (RatVec3.ofInt axisX)) (RatVec3.ofInt axisX))
+    (fixedY : RatVec3.Equiv (Ad (evalQuat w) (RatVec3.ofInt axisY)) (RatVec3.ofInt axisY)) :
     Eq w .nil :=
-  reduced_words_adjoint_injective w .nil hr True.intro fun v =>
+  have fix := fun (v : Vec3) (h : RatVec3.Equiv
+      (Ad (evalQuat w) (RatVec3.ofInt v)) (RatVec3.ofInt v)) =>
     Eq.subst (fun r => RatVec3.Equiv (Ad (evalQuat w) (RatVec3.ofInt v)) r)
-      (ad_one_int v).symm (fixed v)
+      (ad_one_int v).symm h
+  reduced_words_adjoint_injective w .nil hr True.intro (fix axisX fixedX) (fix axisY fixedY)
 
 end Omega.Hurwitz.FreeGroup
