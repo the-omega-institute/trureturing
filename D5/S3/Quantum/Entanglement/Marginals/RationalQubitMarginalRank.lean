@@ -24,9 +24,8 @@ private def direction (x y : ℂ) : Bool → ℂ
   | false => x
   | true => y
 
-private theorem rational_conj {z : ℂ} (hz : RationalEntry z) : RationalEntry (conj z) := by
-  obtain ⟨p, q, hp, hq⟩ := hz
-  exact ⟨p, -q, by simpa using hp, by simpa using congrArg Neg.neg hq⟩
+private theorem rational_conj {z : ℂ} (hz : RationalEntry z) : RationalEntry (conj z) :=
+  (rationalConjugate ⟨z, hz⟩).property
 
 private theorem decompose_qubit (P : Matrix Bool Bool ℂ) (hP : P.PosSemidef) :
     ∃ (s t : ℂ) (x y : Bool → ℂ),
@@ -288,7 +287,7 @@ private theorem rank_three_atoms (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc
 
 /-- Two rational positive qubit marginals of equal trace admit a rational joint
 positive matrix of rank at most three. -/
-theorem rational_endpoint_rank_le_three (L R : Matrix Bool Bool ℂ)
+private theorem construct_rational_extension (L R : Matrix Bool Bool ℂ)
     (hL : L.PosSemidef) (hR : R.PosSemidef) (htrace : L.trace = R.trace)
     (hLQ : ∀ i j, RationalEntry (L i j)) (hRQ : ∀ i j, RationalEntry (R i j)) :
     ∃ S : Matrix (Bool × Bool) (Bool × Bool) ℂ,
@@ -330,5 +329,24 @@ theorem rational_endpoint_rank_le_three (L R : Matrix Bool Bool ℂ)
           (term_rational (cast_rational hQ') hxQ hyQ' i j))
         (term_rational (cast_rational hR') hxQ' hyQ i j))
       (term_rational (cast_rational hS) hxQ' hyQ' i j)
+
+/-- The two endpoint matrices admit a rational positive joint matrix of rank at most
+three exactly when they are rational, positive semidefinite, and have equal trace. -/
+theorem rational_endpoint_rank_le_three (L R : Matrix Bool Bool ℂ) :
+    (∃ S : Matrix (Bool × Bool) (Bool × Bool) ℂ,
+      S.PosSemidef ∧ partialTraceRight S = L ∧ partialTraceLeft S = R ∧
+        S.rank ≤ 3 ∧ ∀ i j, RationalEntry (S i j)) ↔
+      L.PosSemidef ∧ R.PosSemidef ∧ L.trace = R.trace ∧
+        (∀ i j, RationalEntry (L i j)) ∧ ∀ i j, RationalEntry (R i j) := by
+  constructor
+  · rintro ⟨S, hS, rfl, rfl, _, hQ⟩
+    refine ⟨partialTraceRight_posSemidef hS, partialTraceLeft_posSemidef hS,
+      (trace_partialTraceRight S).trans (trace_partialTraceLeft S).symm, ?_, ?_⟩
+    · intro i j
+      exact rationalComplex.sum_mem fun k _ => hQ (i, k) (j, k)
+    · intro i j
+      exact rationalComplex.sum_mem fun k _ => hQ (k, i) (k, j)
+  · rintro ⟨hL, hR, ht, hLQ, hRQ⟩
+    exact construct_rational_extension L R hL hR ht hLQ hRQ
 
 end D5.S3.Quantum.Entanglement.Marginals.RationalQubitMarginalRank

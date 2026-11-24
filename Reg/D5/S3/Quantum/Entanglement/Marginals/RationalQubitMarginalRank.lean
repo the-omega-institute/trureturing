@@ -35,12 +35,12 @@ private def acceptAll : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law Y := ∀ (L R : Matrix Bool Bool ℂ) (_ : L.PosSemidef) (_ : R.PosSemidef)
-    (_ : Y.readout () () L.trace R.trace)
-    (_ : ∀ i j, RationalEntry (L i j)) (_ : ∀ i j, RationalEntry (R i j)),
-    ∃ S : Matrix (Bool × Bool) (Bool × Bool) ℂ,
+  Law Y := ∀ (L R : Matrix Bool Bool ℂ),
+    (∃ S : Matrix (Bool × Bool) (Bool × Bool) ℂ,
       S.PosSemidef ∧ partialTraceRight S = L ∧ partialTraceLeft S = R ∧
-        S.rank ≤ 3 ∧ ∀ i j, RationalEntry (S i j)
+        S.rank ≤ 3 ∧ ∀ i j, RationalEntry (S i j)) ↔
+      L.PosSemidef ∧ R.PosSemidef ∧ Y.readout () () L.trace R.trace ∧
+        (∀ i j, RationalEntry (L i j)) ∧ ∀ i j, RationalEntry (R i j)
 
 private theorem rejected_law : ¬ arena.Law acceptAll := by
   intro h
@@ -51,12 +51,12 @@ private theorem rejected_law : ¬ arena.Law acceptAll := by
     split
     · exact rationalComplex.one_mem
     · exact rationalComplex.zero_mem
-  obtain ⟨S, _, hL, hR, _⟩ := h 0 1 Matrix.PosSemidef.zero Matrix.PosSemidef.one
-    trivial hzero hone
+  obtain ⟨S, _, hL, hR, _⟩ := (h 0 1).mpr ⟨Matrix.PosSemidef.zero, Matrix.PosSemidef.one,
+    trivial, hzero, hone⟩
   have he := (congrArg Matrix.trace hL).symm.trans
     ((trace_partialTraceRight S).trans ((trace_partialTraceLeft S).symm.trans
       (congrArg Matrix.trace hR)))
-  simpa using he
+  simp at he
 
 def family : Registration arena (type_of% @rational_endpoint_rank_le_three) where
   actual := actual
@@ -94,7 +94,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "domain", "fn", "fn"]
+      path := #["body", "body", "arg", "arg", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

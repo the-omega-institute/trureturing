@@ -14,10 +14,10 @@ internal sealed class RationalQubitMarginalRankDocument : IScribeDocumentDefinit
                 H("Rational extensions of rank at most three"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let the two positive semidefinite qubit matrices have equal trace and "
-                    + "rational real and imaginary parts in every entry. There exists a common "
-                    + "positive semidefinite matrix with the same entrywise rationality and "
-                    + "rank at most three.")),
+                    "A rational positive semidefinite joint matrix of rank at most three exists "
+                    + "exactly for two qubit marginals that are positive semidefinite, have equal "
+                    + "trace, and have rational real and imaginary parts in every entry. "
+                    + "Taking a partial trace preserves positivity and trace and only sums entries.")),
                     Paragraph(Text(
                     "Eliminate one scalar pivot in each marginal. The resulting decomposition "
                     + "has at most two terms, each a nonnegative rational weight times a "
