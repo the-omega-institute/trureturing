@@ -6,18 +6,14 @@
    utility: none
    digest: An antipodal-root certificate for the two-cosine cyclic minimum. -/
 
-import D5.S3.Analytic.Certified.TrigEnvelopePhaseReduction
 import D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison
 
 /-! The minimum sampled cosine is a root of the quadratic dual polynomial.
 A mass transfer at the center, its neighbors, and the antipodal level can saturate
 both cosine constraints. -/
 
-open Finset Filter
-open scoped Topology
-open D5.S3.Analytic.Certified.TrigEnvelopePhaseReduction
+open Finset
 open D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison
-open D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation
 
 noncomputable section
 
@@ -66,7 +62,7 @@ private theorem sample_antipode {q : ℕ} [NeZero q] :
     _ = (2 * (↑(q / 2) : ℝ)) * Real.pi / q := by unfold mesh; ring
     _ = ((q : ℝ) - (↑(q % 2) : ℝ)) * Real.pi / q := by
       rw [show 2 * (↑(q / 2) : ℝ) = (q : ℝ) - (↑(q % 2) : ℝ) by linarith only [hhalf]]
-    _ = _ := by unfold mesh; field_simp [ne_of_gt hq] <;> ring
+    _ = _ := by unfold mesh; field_simp [ne_of_gt hq]
 
 private theorem sample_antipode_le {q : ℕ} [NeZero q] (i : ZMod q) :
     sample ((↑(q / 2) : ℤ) : ZMod q) ≤ sample i := by
@@ -132,6 +128,7 @@ theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
     let ρ := -C - β / H
     let p := fun i : ZMod q =>
       (t - H * (1 - sample i ^ 2) - β * (1 - sample i)) / Z
+    sample ((↑(q / 2) : ℤ) : ZMod q) = C ∧
     (∀ i, C ≤ sample i ∧ p i = H * (sample i - C) * (sample i - ρ) / Z ∧
       (0 < clip (p i) ↔ C < sample i ∧ ρ < sample i)) ∧
     ∀ v ∈ feasible q a,
@@ -145,7 +142,7 @@ theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
   let β := (t - H * (1 - C ^ 2)) / (1 - C)
   let p : ZMod q → ℝ := fun i =>
     (t - H * (1 - sample i ^ 2) - β * (1 - sample i)) / Z
-  constructor
+  refine ⟨sample_antipode, ?_, ?_⟩
   · intro i
     have hc : C ≤ sample i := by
       change -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) ≤ sample i

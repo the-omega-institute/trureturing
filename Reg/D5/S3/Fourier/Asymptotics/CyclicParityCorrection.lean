@@ -36,6 +36,7 @@ abbrev arena : Arena where
     let ρ := -C - β / H
     let p := fun i : ZMod q =>
       (t - H * (1 - sample i ^ 2) - β * (1 - sample i)) / Z
+    sample ((↑(q / 2) : ℤ) : ZMod q) = C ∧
     (∀ i, C ≤ sample i ∧ p i = H * (sample i - C) * (sample i - ρ) / Z ∧
       (0 < clip (p i) ↔ C < sample i ∧ ρ < sample i)) ∧
     ∀ v ∈ feasible q a,
@@ -49,15 +50,11 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hc : -Real.cos ((↑(2 % 2 : ℕ) : ℝ) / 2 * mesh 2) < 1 := by norm_num
-  obtain ⟨hroot, _⟩ := h 2 0 1 1 0 (by norm_num) (by norm_num) hc
-  have hrep : (1 : ZMod 2).valMinAbs = 1 :=
-    (ZMod.valMinAbs_spec _ _).mpr ⟨by norm_num, by decide, by decide⟩
-  have hs : sample (1 : ZMod 2) = -1 := by
-    unfold sample centeredAngle
-    rw [hrep, Int.cast_one, mul_one]
-    norm_num [show 2 * Real.pi / 2 = Real.pi by ring, Real.cos_pi]
-  have hn := ((hroot 1).2.2.mp (by norm_num [rejected, realize])).1
-  norm_num [hs] at hn
+  obtain ⟨hrootSample, hroot, _⟩ := h 2 0 1 1 0 (by norm_num) (by norm_num) hc
+  let i : ZMod 2 := ((↑(2 / 2 : ℕ) : ℤ) : ZMod 2)
+  have hn := ((hroot i).2.2.mp (by norm_num [rejected, realize])).1
+  change sample i = _ at hrootSample
+  exact (lt_irrefl _ (hrootSample ▸ hn))
 
 def evidence : Registration arena (type_of% @antipodal_dual_certificate) where
   actual := actual
