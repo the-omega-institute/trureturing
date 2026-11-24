@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Information/DiagonalDiscordMonotonicity
+/- GID: D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
    generality: I
-   mirror-B: D5/B/S3/Quantum/Information/DiagonalDiscordMonotonicity
+   mirror-B: D5/B/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -32,7 +32,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+namespace D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 
 open scoped BigOperators CStarAlgebra ComplexOrder Kronecker Matrix MatrixOrder
 open Matrix
@@ -628,4 +628,4 @@ theorem diagonalDiscord_localChannel_mono_attained [Nonempty a] [Nonempty b]
 
 end Local
 
-end D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+end D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity

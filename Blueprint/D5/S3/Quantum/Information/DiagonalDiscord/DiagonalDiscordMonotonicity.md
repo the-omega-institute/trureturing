@@ -8,9 +8,9 @@ Conjecture 1 is stated for a measured qubit in Liu, Takagi and Lloyd, journal Se
 
 **Definition 1.1 (Projective pinching).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pinch`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pinch`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pinch` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pinch` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ Pinching is the completely positive trace-preserving map obtained by forgetting 
 
 **Theorem 1.2 (Support of the pinched state).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.supportContained_pinch`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.supportContained_pinch`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.supportContained_pinch` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.supportContained_pinch` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ A vector annihilated by the pinched state makes the sum of nonnegative compresse
 
 **Theorem 1.3 (Entropy gain of pinching).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,9 +50,9 @@ The relative entropy from a state to its pinching equals the gain in von Neumann
 
 **Theorem 1.4 (Relative entropy at a fixed reference).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,9 +64,9 @@ For a reference fixed by the pinching and containing the input support, the dive
 
 **Definition 1.5 (Local basis projections).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localPVM`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localPVM`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localPVM` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localPVM` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ Each projection onto a column of the measured-side unitary is tensored with the 
 
 **Definition 1.6 (Local channel).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ Tensoring the measured-side Kraus operators with the second identity defines the
 
 **Theorem 1.7 (Joint Kraus action).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel_apply`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel_apply`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel_apply` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel_apply` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -106,9 +106,9 @@ The joint channel applies the Kraus sum with each operator acting on the first f
 
 **Theorem 1.8 (Locality and the marginal).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.marginalRight_localChannel`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.marginalRight_localChannel`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.marginalRight_localChannel` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.marginalRight_localChannel` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -120,9 +120,9 @@ Tracing out the second factor after the local action gives the same first margin
 
 **Definition 1.9 (Eligible eigenbases).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.Eligible`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.Eligible`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.Eligible` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.Eligible` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -134,9 +134,9 @@ A basis is eligible when the actual first marginal is diagonal in it.
 
 **Definition 1.10 (Classical–quantum states).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.IsCQ`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.IsCQ`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.IsCQ` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.IsCQ` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -148,9 +148,9 @@ A state is classical–quantum when it is fixed by some rank-one local pinching.
 
 **Definition 1.11 (Preservation of classical–quantum states).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.PreservesCQ`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.PreservesCQ`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.PreservesCQ` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.PreservesCQ` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -162,9 +162,9 @@ Every classical–quantum input is sent to a classical–quantum output.
 
 **Definition 1.12 (Entropy gain in one basis).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.basisGain`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.basisGain`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.basisGain` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.basisGain` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -176,9 +176,9 @@ The gain is the entropy of the pinched joint state minus the input entropy.
 
 **Definition 1.13 (Diagonal discord).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord`
 
-*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -190,9 +190,9 @@ The quantity is the infimum of the entropy gain over eligible bases.
 
 **Theorem 1.14 (Transfer with a nonnegative residual).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pointwise_transfer`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pointwise_transfer`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pointwise_transfer` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pointwise_transfer` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -204,9 +204,9 @@ For every eligible input basis, send the pinched input through the channel to ob
 
 **Theorem 1.15 (Monotonicity of the optimized gain).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -218,9 +218,9 @@ The pointwise transfer bounds the output infimum by every eligible input value. 
 
 **Theorem 1.16 (Existence of a minimizing eigenbasis).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_attained`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_attained`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_attained` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_attained` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -232,9 +232,9 @@ The eligible eigenbases form a nonempty closed subset of the compact unitary gro
 
 **Theorem 1.17 (Comparison of attained minima).**
 
-Lean statement: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained`
+Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -246,25 +246,25 @@ There are eligible minimizing eigenbases for the input and output, and the minim
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.Eligible`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.IsCQ`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.PreservesCQ`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.basisGain`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_attained`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localChannel_apply`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.localPVM`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.marginalRight_localChannel`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pinch`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.pointwise_transfer`
-- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.supportContained_pinch`
-- Dependency: [D5/S3/Quantum/Divergence/CanonicalChannelDPI](../Divergence/CanonicalChannelDPI.md)
-- Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](OrthogonalRecordEntropy.md)
-- Dependency: [D5/S3/Quantum/Information/PartialTrace/Isometries](PartialTrace/Isometries.md)
-- Dependency: [D5/S3/Quantum/Measurement/Auric/CoordinatePinching](../Measurement/Auric/CoordinatePinching.md)
-- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../RandomCircuits/HaarTwoCopyTwirl.md)
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.Eligible`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.IsCQ`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.PreservesCQ`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.basisGain`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_attained`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.diagonalDiscord_localChannel_mono_attained`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.extendedQuantumRelativeEntropy_pinch_pythagoras`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.finiteTraceLogRelativeEntropy_pinch`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localChannel_apply`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.localPVM`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.marginalRight_localChannel`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pinch`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.pointwise_transfer`
+- Truth anchor: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.supportContained_pinch`
+- Dependency: [D5/S3/Quantum/Divergence/CanonicalChannelDPI](../../Divergence/CanonicalChannelDPI.md)
+- Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../OrthogonalRecordEntropy.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTrace/Isometries](../PartialTrace/Isometries.md)
+- Dependency: [D5/S3/Quantum/Measurement/Auric/CoordinatePinching](../../Measurement/Auric/CoordinatePinching.md)
+- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../../RandomCircuits/HaarTwoCopyTwirl.md)

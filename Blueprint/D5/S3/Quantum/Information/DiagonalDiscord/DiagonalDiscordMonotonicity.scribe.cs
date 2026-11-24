@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information.DiagonalDiscord;
 
 internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Information/DiagonalDiscordMonotonicity.";
+    private const string Prefix = "D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/liutakagilloyd2019diagonaldiscord");
 

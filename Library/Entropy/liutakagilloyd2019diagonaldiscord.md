@@ -7,7 +7,7 @@ doi: 10.1088/1751-8121/ab0774
 url: https://arxiv.org/abs/1708.09076v2
 claim: "Diagonal discord is the minimum entropy gain of pinching a bipartite state in an eigenbasis of the measured marginal. Conjecture 1 asserts monotonicity under local discord-nongenerating operations on the measured qubit. A separate conjecture concerns the isotropic characterization of channels that commute with the marginal pinching."
 strata_touched:
-  - D5/S3/Quantum/Information/DiagonalDiscordMonotonicity
+  - D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
   - D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation
 license: citation-only
 triage: anchor

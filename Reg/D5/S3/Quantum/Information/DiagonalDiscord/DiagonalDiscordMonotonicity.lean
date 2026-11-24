@@ -1,15 +1,15 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+import D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 import Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-! Source-bound audit of the entropy readout in the pinching gain identity. -/
 
-namespace Reg.D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+namespace Reg.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open _root_.D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
-open _root_.D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+open _root_.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 open _root_.D5.S3.Quantum.Measurement.Auric.CoordinatePinching
 open _root_.D5.S3.Quantum.Measurement.Auric.ProjectiveTree
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -60,8 +60,8 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@finiteTraceLogRelativeEntropy_pinch.{u}) (Realization signature.{u})
       (type_of% @DensityState.{u}) Unit := {
-  unitName := `Reg.D5.S3.Quantum.Information.DiagonalDiscordMonotonicity.entropyGain
-  realizationName := `Reg.D5.S3.Quantum.Information.DiagonalDiscordMonotonicity.source_registration
+  unitName := `Reg.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity.entropyGain
+  realizationName := `Reg.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -78,7 +78,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+    owner := `D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -92,4 +92,4 @@ def registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
+end Reg.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
