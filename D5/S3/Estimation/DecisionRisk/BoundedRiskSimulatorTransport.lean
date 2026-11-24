@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Simulator error bounds statewise risk for every bounded-loss decision rule. -/
 
 import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
@@ -76,7 +77,7 @@ private theorem bounded_expectation_le_add_total_variation
   linarith [splitDifference, discardNonpositive.trans
     (positivePart.trans_eq positivePartIsVariation)]
 
-private theorem row_stochastic_channel_comp
+theorem row_stochastic_channel_comp
     {Input Middle Output : Type*} [Fintype Middle] [Fintype Output]
     (first : Input → Middle → Real) (second : Middle → Output → Real)
     (firstStochastic : IsRowStochastic first)
@@ -107,7 +108,7 @@ private theorem row_stochastic_channel_comp
         rw [secondStochastic.2 middle, mul_one]
       _ = 1 := firstStochastic.2 input
 
-private theorem channel_output_comp
+theorem channel_output_comp
     {Input Middle Output : Type*} [Fintype Input] [Fintype Middle]
     (first : Input → Middle → Real) (second : Middle → Output → Real)
     (mass : Input → Real) :

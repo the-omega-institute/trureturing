@@ -86,30 +86,12 @@ theorem result {A : Type u} [Fintype A] [DecidableEq A] [Nonempty A]
         0 ≤ finiteBayesCost p l X d.1 ∧
         ∀ k : FiniteMarkovKernel O D,
           finiteBayesCost p l X d.1 ≤ finiteBayesCost p l X k.1 := by
-    have hm (a : O) := Finset.exists_min_image Finset.univ
-      (fun b : D => ∑ i, p i * X i a * l i b) Finset.univ_nonempty
-    choose m hm using hm
-    let d : FiniteMarkovKernel O D :=
-      ⟨fun a b => if m a = b then 1 else 0,
-        ⟨by intro a b; dsimp only; split_ifs <;> norm_num, by intro a; simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]⟩⟩
-    have hd : finiteBayesCost p l X d.1 = ∑ a, ∑ i, p i * X i a * l i (m a) := by
-      rw [cost_expand]
-      simp [d]
+    obtain ⟨d, hmin⟩ := finite_bayes_cost_minimizer p l X
     have hn : 0 ≤ finiteBayesCost p l X d.1 := by
-      rw [hd]
-      exact Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun i _ =>
-        mul_nonneg (mul_nonneg (hp i) (hX i a)) (hl i (m a))
-    have hmin (k : FiniteMarkovKernel O D) :
-        finiteBayesCost p l X d.1 ≤ finiteBayesCost p l X k.1 := by
-      rw [hd, cost_expand]
-      apply Finset.sum_le_sum
-      intro a _
-      calc
-        (∑ i, p i * X i a * l i (m a)) =
-            (∑ b, k.1 a b) * ∑ i, p i * X i a * l i (m a) := by rw [k.2.2, one_mul]
-        _ = ∑ b, k.1 a b * ∑ i, p i * X i a * l i (m a) := Finset.sum_mul _ _ _
-        _ ≤ _ := Finset.sum_le_sum fun b _ =>
-          mul_le_mul_of_nonneg_left ((hm a).2 b (Finset.mem_univ b)) (k.2.1 a b)
+      unfold finiteBayesCost channelOutput
+      exact Finset.sum_nonneg fun i _ => mul_nonneg (hp i)
+        (Finset.sum_nonneg fun b _ => mul_nonneg
+          (Finset.sum_nonneg fun a _ => mul_nonneg (hX i a) (d.2.1 a b)) (hl i b))
     refine ⟨d, le_antisymm (iInf_le _ d) (le_iInf fun k => ?_), hn, hmin⟩
     exact ENNReal.ofReal_le_ofReal (hmin k)
   -- The state-event simplex encodes a prior and bounded test simultaneously.
