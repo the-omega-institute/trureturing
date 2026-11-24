@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.SpectralGraph.FourPortHeatRealization
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
+/-! The cycle Gram matrix and heat-moment defect are essential observations. -/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -41,7 +43,7 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
     · intro i
       fin_cases i <;> norm_num [phantomGram]
     · intro i
-      fin_cases i <;> norm_num [phantomGram] <;> decide
+      fin_cases i <;> norm_num [phantomGram]
     · norm_num [phantomGram]
     · norm_num [phantomGram]
   exact (by decide : ¬ 4 ≤ 0) (h 0 0 (by simp) hb)
@@ -56,7 +58,10 @@ def family : Registration arena (type_of% cycle_gram_width) where
     refine ⟨(1 : ℕ), (0 : Matrix Port (Fin 1) ℝ), (Matrix.of fun _ _ => 1), ?_⟩
     intro h
     have hentry := congrArg (fun Q : PortMatrix => Q 0 0) h
-    norm_num [actual, realize, Matrix.mul_apply, Fin.sum_univ_one] at hentry
+    change ((0 : Matrix Port (Fin 1) ℝ) * (0 : Matrix Port (Fin 1) ℝ)ᵀ) 0 0 =
+      ((Matrix.of (fun _ _ => 1) : Matrix Port (Fin 1) ℝ) *
+        (Matrix.of (fun _ _ => 1) : Matrix Port (Fin 1) ℝ)ᵀ) 0 0 at hentry
+    norm_num [Matrix.mul_apply, Fin.sum_univ_one] at hentry
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     cycle_gram_width (Realization signature) Unit Unit where

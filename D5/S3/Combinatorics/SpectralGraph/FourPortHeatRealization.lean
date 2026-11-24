@@ -112,7 +112,7 @@ def defect {m : ℕ} (S : Generator m) : PortMatrix :=
 private theorem moment_apply {m : ℕ} (S : Generator m) (k : ℕ) (i j : Port) :
     moment S k i j = (S ^ k) (.inl i) (.inl j) := by
   simp [moment, Matrix.mul_apply, ports, Fintype.sum_sum_type, Matrix.one_apply,
-    Matrix.transpose_apply, Finset.sum_ite_eq, Finset.sum_ite_eq']
+    Matrix.transpose_apply, Finset.sum_ite_eq']
 
 private theorem defect_cross_gram {m : ℕ} (S : Generator m) (hS : S.IsSymm) :
     defect S = (-S.toBlocks₁₂) * (-S.toBlocks₁₂)ᵀ := by
@@ -229,7 +229,11 @@ private theorem heat_deriv {n : Type*} [Fintype n] [DecidableEq n]
     deriv (linearHeat T B C) t = linearHeat T (-(T * B)) C t := by
   have h := (sandwich C B).hasFDerivAt.comp_hasDerivAt t
     (hasDerivAt_exp_smul_const (-T) t)
-  simpa [linearHeat, sandwich, Function.comp_def, smul_neg, neg_smul, mul_assoc] using h.deriv
+  have hd := h.deriv
+  change deriv (fun x : ℝ => C * NormedSpace.exp (x • (-T)) * B) t =
+    C * (NormedSpace.exp (t • (-T)) * (-T)) * B at hd
+  unfold linearHeat
+  simpa only [smul_neg, neg_smul, Matrix.mul_assoc, Matrix.mul_neg, Matrix.neg_mul] using hd
 
 open scoped Matrix.Norms.Operator in
 private theorem first_moments_of_same_heat {n d : Type*}
@@ -293,7 +297,9 @@ private theorem reduced_heat : linearHeat reducedGenerator (ports 3) (ports 3)�
         Matrix.mul_assoc]
   calc
     _ = ((ports 4)ᵀ * lift) * reducedGenerator ^ k * ports 3 := by rw [ports_lift]
-    _ = (ports 4)ᵀ * (lift * reducedGenerator ^ k) * ports 3 := by rw [Matrix.mul_assoc]
+    _ = (ports 4)ᵀ * (lift * reducedGenerator ^ k) * ports 3 := by
+      exact congrArg (fun M : Matrix Port Reduced ℝ => M * ports 3)
+        (Matrix.mul_assoc (ports 4)ᵀ lift (reducedGenerator ^ k))
     _ = (ports 4)ᵀ * cycleGenerator ^ k * (lift * ports 3) := by
       rw [← hp, ← Matrix.mul_assoc, Matrix.mul_assoc ((ports 4)ᵀ * cycleGenerator ^ k)]
     _ = _ := by rw [lift_ports]
@@ -321,9 +327,14 @@ private theorem two_step_hankel {n : Type*} [Fintype n] [DecidableEq n]
   have h₁ : C * T * B = C * (T * B) := Matrix.mul_assoc _ _ _
   have h₂ : C * (T * T) * B = (C * T) * (T * B) := by simp only [Matrix.mul_assoc]
   ext i j
-  rcases i with i | i <;> rcases j with j | j <;>
-    simp [pow_two, h₂, firstColumns, firstRows, Matrix.mul_apply] <;>
-    exact congrFun (congrFun h₁ _) _
+  rcases i with i | i <;> rcases j with j | j
+  · simp
+  · change (C * (T * B)) i j.castSucc = (C * T^(1 : ℕ) * B : PortMatrix) i j.castSucc
+    rw [pow_one, h₁]
+  · simp [firstRows, Matrix.mul_apply]
+  · change ((C * T) * (T * B)) i.castSucc j.castSucc =
+      (C * T^(2 : ℕ) * B : PortMatrix) i.castSucc j.castSucc
+    rw [pow_two, h₂]
 
 private theorem cycle_frame_rank : (controlFrame cycleGenerator (ports 4)).rank = 7 := by
   let minor : Matrix (Fin 3) (Fin 3) ℝ :=
@@ -352,7 +363,8 @@ private theorem cycle_hankel_rank :
   have h : outputFrame cycleGenerator (ports 4)ᵀ =
       (controlFrame cycleGenerator (ports 4))ᵀ := by
     rw [outputFrame, controlFrame, Matrix.transpose_fromCols]
-    simp [firstRows, firstColumns, Matrix.transpose_submatrix, Matrix.transpose_mul, cycle_physical.1.eq]
+    simp [firstRows, firstColumns, Matrix.transpose_submatrix, Matrix.transpose_mul,
+      cycle_physical.1.eq]
   rw [h, Matrix.rank_transpose_mul_self, cycle_frame_rank]
 
 /-- The exact heat order of the cycle network, with a physical lower bound in the
