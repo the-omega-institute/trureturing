@@ -665,14 +665,14 @@ def arena : Arena where
   signature := signature
   Law M :=
     ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
-      (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ),
+      (hne : χ ≠ 1) (s : ℂ) (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive),
     ‖completion χ s‖ < M.readout () ()
       (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, χ, hp, hn⟩ := primitive_example
   letI : NeZero q := ⟨hq⟩
-  have hh := h hp hn 0
+  have hh := h hn 0 (.inr hp)
   change ‖completion χ 0‖ < -1 at hh
   linarith [norm_nonneg (completion χ 0)]
 private theorem dependence : ObservationalDependence signature actual := by

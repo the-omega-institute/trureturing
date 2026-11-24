@@ -158,7 +158,7 @@ internal sealed class DirichletCompletionDocument : IScribeDocumentDefinition
                 H("An explicit power growth bound"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every primitive nonprincipal character the norm of the completion "
+                    "For nonprincipal chi with Re(s) >= 1/2 or chi primitive, the completion norm "
                     + "is strictly below exp(3C R^(3/2)), where R=1+norm(s) "
                     + "and C=growthConstant(q). The logarithmic envelope and "
                     + "log(r)<=2sqrt(r) give growth order strictly below two."))),

@@ -375,7 +375,7 @@ theorem completion_growth_log {q : ℕ} [NeZero q]
     _ ≤ _ := Real.exp_le_exp.mpr he
 
 theorem completion_power_growth {q : ℕ} [NeZero q]
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1) (s : ℂ) :
+    {χ : DirichletCharacter ℂ q} (hne : χ ≠ 1) (s : ℂ) (hside : 1 / 2 ≤ s.re ∨ χ.IsPrimitive) :
     ‖completion χ s‖ < Real.exp (3 * growthConstant q * (1 + ‖s‖) ^ (3 / 2 : ℝ)) := by
   let R := 1 + ‖s‖
   have hR : 1 ≤ R := by dsimp [R]; linarith [norm_nonneg s]
@@ -385,7 +385,7 @@ theorem completion_power_growth {q : ℕ} [NeZero q]
     have hh := Real.log_le_rpow_div hp.le (by norm_num : (0 : ℝ) < 1 / 2)
     linarith
   have hC : 0 ≤ growthConstant q := (by norm_num : (0 : ℝ) ≤ 3).trans (le_max_right _ _)
-  refine (completion_growth_log hne s (.inr hχ)).trans_le (Real.exp_le_exp.mpr ?_)
+  refine (completion_growth_log hne s hside).trans_le (Real.exp_le_exp.mpr ?_)
   change growthConstant q * R * (1 + Real.log R) ≤ _
   have he : R ^ (3 / 2 : ℝ) = R * R ^ (1 / 2 : ℝ) := by
     rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, Real.rpow_add hp, Real.rpow_one]
@@ -513,7 +513,7 @@ theorem completion_vertical_resolvent {q : ℕ} [NeZero q]
   have hh := Complex.hasSum_re
     (D5.S3.Analytic.Resolvent.EntireLogDerivDifference.entire_logDeriv_difference_hasSum
       (differentiable_completion χ hne) (by norm_num : (3 / 2 : ℝ) < 2)
-      (fun z => (completion_power_growth hχ hne z).le) ha hs)
+      (fun z => (completion_power_growth hne z (.inr hχ)).le) ha hs)
   have hv : (logDeriv F s - logDeriv F a).re = 2 * (logDeriv F s).re := by
     rw [show logDeriv F a = -conj (logDeriv F s) from logDeriv_reflect hχ hne s]
     simp

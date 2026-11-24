@@ -50,7 +50,7 @@ private theorem difference {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
       (logDeriv (completion χ) s - logDeriv (completion χ) a) :=
   entire_logDeriv_difference_hasSum (differentiable_completion χ hne)
     (by norm_num : (3 / 2 : ℝ) < 2)
-    (fun z => (completion_power_growth hχ hne z).le) ha hs
+    (fun z => (completion_power_growth hne z (.inr hχ)).le) ha hs
 
 private theorem zero_denominators {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (hχ : χ.IsPrimitive) (ρ : {z : ℂ // completion χ z = 0}) :
