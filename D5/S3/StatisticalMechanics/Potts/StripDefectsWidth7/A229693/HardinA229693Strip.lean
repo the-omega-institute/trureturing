@@ -727,8 +727,8 @@ private theorem leading_polynomial (j : Fin 72) :
       (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) (fun n _ => h n)
 
 private def newHistoryRanks : List ℕ :=
-  (((List.finRange 60).filter fun k => 72 ≤ (exitRead (columnRepresentative k)).val)
-    .map exhaustedRank).eraseDups
+  let keys := (List.finRange 60).filter fun k => 72 ≤ (exitRead (columnRepresentative k)).val
+  (keys.map exhaustedRank).eraseDups
 
 set_option maxRecDepth 14000 in
 set_option maxHeartbeats 3000000 in
@@ -772,6 +772,7 @@ private theorem polynomial_relation :
         rw [(representative_data j).2]
         exact Nat.le_of_not_gt hj
       have hm : exhaustedRank k ∈ newHistoryRanks := by
+        unfold newHistoryRanks
         apply List.mem_eraseDups.mpr
         exact List.mem_map.mpr ⟨k, List.mem_filter.mpr ⟨List.mem_finRange k, decide_eq_true hk⟩, rfl⟩
       have h := List.all_eq_true.mp polynomialCoordinates (exhaustedRank k) hm
