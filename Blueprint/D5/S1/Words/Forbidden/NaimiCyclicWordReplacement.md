@@ -26,6 +26,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Forbidden/NaimiCyclicWordReplacement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/naimi-2026-cyclic-compatible-word-replacement` (refuted) by `D5/S1/Words/Forbidden/NaimiCyclicWordReplacement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"naimi-2026-cyclic-compatible-word-replacement","declaration_gid":"D5/S1/Words/Forbidden/NaimiCyclicWordReplacement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

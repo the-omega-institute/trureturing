@@ -50,5 +50,8 @@ internal sealed class NaimiCyclicWordReplacementDocument : IScribeDocumentDefini
                         + "One output would have to contain 011 at start 0 and 001 at "
                         + "start 1. Offset 1 of the first demand forces the letter 1 at "
                         + "coordinate 1, and offset 0 of the second forces the letter 0 there."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("naimi-2026-cyclic-compatible-word-replacement"),
+                    ResolutionKind.Refuted)))));
 }
