@@ -16,21 +16,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowC
 
 horiz k is the set of column pairs (j, j+1) of a row of width k; a pair whose two cells carry the same colour is a horizontal mistake.
 
-**Theorem 1.2 (Counting monochromatic horizontal bonds).**
-
-$$\forall k: \mathit{Nat}, (\forall r: \operatorname{\mathit{Fin}}\left(k\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{horiz}}\left(k\right), r, r\right) = \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(k\right) \mapsto (\exists j: \operatorname{\mathit{Fin}}\left(k\right), ((\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(j\right) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) + 1) \land (r\left(i\right) = r\left(j\right)))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right)))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.bond_row` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229637: exact-defect canonical three-colour arrays, table by width*. URL: <https://oeis.org/A229637>.
-
-*Commentary.*
-
-The filtered positions are those with an equal-coloured cell immediately to their right. The successor is taken on the natural-valued column indices.
-
-**Definition 1.3 (Diagonal and antidiagonal bonds between rows).**
+**Definition 1.2 (Diagonal and antidiagonal bonds between rows).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.betw`
 
@@ -42,7 +28,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowC
 
 betw k is the set of column pairs (j, j+1) and (j+1, j) joining a cell of a row to the diagonal and antidiagonal cells of the next row.
 
-**Definition 1.4 (The table T(n,k)).**
+**Definition 1.3 (The table T(n,k)).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.T`
 
@@ -54,7 +40,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowC
 
 T(n,k) counts the n × k arrays over {0,1,2} whose defect count, with the horizontal bonds inside rows and the diagonal and antidiagonal bonds between consecutive rows, is exactly 2, and whose colours are introduced in row-major order. It uses the same defect and canonical predicates as the width-5 column A229634.
 
-**Definition 1.5 (The first column and the first row).**
+**Definition 1.4 (The first column and the first row).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.claim`
 
@@ -66,7 +52,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowC
 
 The claim collects: T(n,1) = 0 for every n; T(1,1) = T(1,2) = 0 and T(1,3) = 1; T(1,k) = C(k−1,2)·2^(k−4) for k ≥ 4; the recurrence T(1,k) = 6T(1,k−1) − 12T(1,k−2) + 8T(1,k−3) for k ≥ 7, with residual −4 at k = 6; and no recurrence of order at most two with rational coefficients holds for all large k. OEIS records the column and row recurrences as empirical and identifies the row with A052482(k−2); the residual at k = 6 and the exclusion of order-two recurrences are added here.
 
-**Theorem 1.6 (Proof of the first column and row).**
+**Theorem 1.5 (Proof of the first column and row).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.result`
 
@@ -84,7 +70,6 @@ A single column has no horizontal, diagonal or antidiagonal neighbours, so no ar
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.T`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.betw`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.bond_row`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.horiz`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.result`
