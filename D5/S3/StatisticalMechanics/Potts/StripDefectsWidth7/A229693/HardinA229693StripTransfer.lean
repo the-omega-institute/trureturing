@@ -867,8 +867,7 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
--- The inherited slice needs a finite index check. The other two row
--- families read their columns directly through exitRead.
+-- Inherited rows need an index check. Packed rows read exitRead directly.
 private def exitRepresentative (key : Fin 108) : Fin 96 :=
   Fin.ofNat 96 ((List.ofFn exitRead).idxOf key)
 private theorem oldExits_padded (i : Fin 72) (j : Fin 96) (hj : 56 ≤ j.val) :
@@ -948,8 +947,8 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
       Matrix.of_apply]
     cases hi : inheritedSource i with
     | none =>
-      simp only [activeWeight, hread, Fin.append_left]
-      rw [← HardinA229585StripOrbitTable.table_counts i r, Int.toNat_natCast]
+      simp only [activeWeight, hread, Fin.append_left, ← HardinA229585StripOrbitTable.table_counts i r,
+        Int.toNat_natCast]
     | some k => simpa only [inheritedSource_index i k hi] using hupper k
   | right i =>
     simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
@@ -959,7 +958,6 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     | left i => simpa only [Fin.append_left] using hlower i
     | right i =>
       simp only [Fin.append_right, exhaustedWeight, hread, Fin.append_left, Pi.zero_apply, Nat.cast_zero]
-
 theorem new_column_congr (j k : Fin 96) (hj : 72 ≤ (exitRead j).val)
     (h : exitRead j = exitRead k) (i : Fin 168) :
     T i (j.natAdd 72) = T i (k.natAdd 72) := by
