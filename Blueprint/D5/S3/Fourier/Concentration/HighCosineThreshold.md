@@ -1,0 +1,49 @@
+# The high-threshold minimum for two cosine moments
+
+## Abstract
+
+A three-level probability law minimizes squared mass for high joint cosine thresholds.
+
+Write c for a finite real readout and use 2c² − 1 as the second readout. The top value is one and occurs once. The remaining values lie between the attained levels ℓ and u. Write g(x) = x − (2x² − 1), p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to the level ℓ. Each level’s mass is divided equally among its indices.
+
+**Theorem 1.1 (A finite interpolation certificate).**
+
+$$a_{crit}<1 \land (\forall a \in [a_{crit},1], \operatorname{Certified}(a))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.high_threshold_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three levels satisfy ℓ < u < 1, u + ℓ < 0 and g(ℓ) < 0 < g(u). Interpolate the three weights by a quadratic P with moment coefficients β and γ in the basis 1, x, 2x² − 1. For each of β, γ and the values −P(x) at intermediate levels, take the slope 1 − f(1)/f(0) as a function of r. Let B be the maximum of those slopes and one. At thresholds a in [1 − (1−b)/B, 1] the two moments equal a. The squared mass is (1−r)² + r²(p²/nᵤ + (1−p)²/nₗ), where nᵤ and nₗ are level counts. The excess squared mass of any feasible law bounds its squared distance from the candidate, which gives uniqueness.
+
+**Theorem 1.2 (A feasible descent below the cutoff).**
+
+$$\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.exists_smaller_energy_below_threshold` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When b < a is below the cutoff, all three supporting levels have positive weight. If a moment coefficient is negative, a perturbation within the support increases that moment and preserves the other. If an intermediate value of P is positive, a perturbation adds weight there and uses the three support levels to preserve both moments. A sufficiently small positive step decreases the squared mass in either case.
+
+**Theorem 1.3 (The sharp high-threshold interval on a cycle).**
+
+$$\begin{aligned}&q\ge4 \longrightarrow b<a_{crit}<1,\\&\forall a \in [a_{crit},1], \operatorname{Certified}(a),\\&\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_high_threshold_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For q at least four use c(k) = cos(2πk/q) on its canonical residue representatives. The first off-center maximum occurs at k = 1, and a minimum occurs at the integer part of q/2. Reflecting angles into [0, π] proves the required level order and strict signs. The cutoff lies strictly between b and one. The law minimizes squared mass from the cutoff through one, and a feasible law has smaller squared mass at each threshold strictly between b and the cutoff.
+
+## References
+
+- Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_high_threshold_certificate`
+- Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.exists_smaller_energy_below_threshold`
+- Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.high_threshold_certificate`
