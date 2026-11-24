@@ -4,16 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Disjoint occupation supports give an exponential penalty in the weighted multinomial mass. -/
+   digest: Exponential bounds for disjoint multinomial occupations. -/
 
-import D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
+import D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass
+
+/-! A product bound for disjoint multinomial occupations. -/
 
 set_option autoImplicit false
 noncomputable section
 
 open Finset
-open scoped Classical
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialWeight)
+open D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass (weight_factorials)
 
 namespace D5.S3.Fourier.Concentration.DisjointSupportOccupationMass
 
@@ -26,17 +28,12 @@ private theorem scaled_weight (w : J → ℝ) (s : ℝ) {d : ℕ} {a : J → ℕ
     (ha : a ∈ piAntidiag univ d) :
     s ^ d * monomialWeight w a = d.factorial * ∏ j, scaledCoefficient (s * w j) (a j) := by
   have hsum := (mem_piAntidiag.mp ha).1
-  have hfact : (∏ j, ((a j).factorial : ℝ)) * Nat.multinomial univ a =
-      (d.factorial : ℝ) := by
-    have h := Nat.multinomial_spec univ a
-    rw [hsum] at h
-    exact_mod_cast h
+  unfold scaledCoefficient
+  rw [← weight_factorials (fun j => s * w j) d a hsum]
   have hs : (∏ j, s ^ a j) = s ^ d := by rw [prod_pow_eq_pow_sum, hsum]
-  unfold monomialWeight scaledCoefficient
-  simp only [mul_pow, prod_div_distrib, prod_mul_distrib, hs]
-  rw [← hfact]
-  have hn : (∏ j, ((a j).factorial : ℝ)) ≠ 0 := by positivity
-  field_simp
+  unfold monomialWeight
+  simp only [mul_pow, prod_mul_distrib, hs]
+  ring
 
 private def coordinateBox (d : ℕ) : Finset (ℕ × ℕ) :=
   (range (d + 1) ×ˢ range (d + 1)).filter fun p => p.1 = 0 ∨ p.2 = 0

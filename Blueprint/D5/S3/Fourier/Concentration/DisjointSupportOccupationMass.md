@@ -23,4 +23,4 @@ The local factor at x=s w(j) is exp(2x) times 1−(1−exp(−x))². Bounding ea
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/DisjointSupportOccupationMass.scaled_disjoint_mass`
-- Dependency: [D5/S3/Fourier/Concentration/FiniteTailMomentMissingWindow](FiniteTailMomentMissingWindow.md)
+- Dependency: [D5/S3/Fourier/Concentration/FixedDifferenceOccupationMass](FixedDifferenceOccupationMass.md)
