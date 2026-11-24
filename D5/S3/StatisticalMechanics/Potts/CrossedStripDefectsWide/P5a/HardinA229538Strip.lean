@@ -181,11 +181,10 @@ private theorem cut_card (k : ℕ) :
     rw [Finset.card_union_of_disjoint hstraight, hbetw, Finset.card_union_of_disjoint hparts]
     simp only [Finset.diag_card, Finset.card_univ, Fintype.card_fin, Finset.card_map, Nat.add_sub_cancel]
     omega
-theorem cut_total_exclusion (k D : ℕ) :
-    (∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card) ↔
-      ¬ (k + 2 * (k - 1)) ∣ D := by
+theorem cut_total_exclusion (k D : ℕ) (h : ¬ (k + 2 * (k - 1)) ∣ D) :
+    ∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card := by
   rw [cut_card]
-  simp only [dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
+  simpa only [dvd_iff_exists_eq_mul_left, not_exists, ne_eq] using h
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
@@ -889,7 +888,7 @@ theorem result (n : ℕ) :
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
     have hD : 1 ≠ m * edges.card :=
-      (cut_total_exclusion 5 1).mpr (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
+      cut_total_exclusion 5 1 (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
       simpa only [Finset.card_empty, Nat.zero_add, Nat.add_zero, Nat.pred_succ, Nat.succ_ne_zero,
         or_self, ite_false, ite_eq_right hD, a] using labelled_scale ∅ edges 1 (m + 1)

@@ -902,7 +902,7 @@ theorem result (n : ℕ) :
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
     have hD : 2 ≠ m * edges.card :=
-      (cut_total_exclusion 5 2).mpr (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
+      cut_total_exclusion 5 2 (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
     have hscale : literalCount (q := 3) ∅ edges 2 (m + 1) = 6 * a (m + 1) := by
       simpa only [Finset.card_empty, Nat.zero_add, Nat.add_zero, Nat.pred_succ, Nat.succ_ne_zero,
         or_self, ite_false, ite_eq_right hD, table_count] using labelled_scale ∅ edges 2 (m + 1)
