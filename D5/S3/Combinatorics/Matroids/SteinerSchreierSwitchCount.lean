@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Matroids/SteinerSchreierSwitchCount
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Matroids/SteinerSchreierSwitchCount
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
