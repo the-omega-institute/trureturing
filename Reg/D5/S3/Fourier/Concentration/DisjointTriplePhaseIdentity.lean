@@ -16,26 +16,22 @@ noncomputable section
 
 universe uJ uR
 
-structure RingScope where
-  R : Type uR
-  [ring : CommRing R]
-
-attribute [instance] RingScope.ring
+abbrev RingScope := Σ R : Type uR, CommRing R
 
 abbrev signature := UniverseSingleReadout.signature RingScope.{uR}
-  (fun p => p.R × p.R) (fun p => p.R)
+  (fun p => p.1 × p.1) (fun p => p.1)
 
 def actual : Realization signature.{uR} :=
-  realize signature (fun _ _ => pairPolynomial) (fun e => nomatch e)
+  realize signature (fun _ p => @pairPolynomial p.1 p.2) (fun e => nomatch e)
 
 def rejected : Realization signature.{uR} :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ p _ => letI := p.2; (0 : p.1)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{uR}
   Law V := ∀ {J : Type uJ} {R : Type uR} [Fintype J] [DecidableEq J] [CommRing R]
       (x y : J → R) (_ : ∀ j, x j * y j = 1),
-    let pairPart := V.readout () ⟨R⟩
+    let pairPart := V.readout () ⟨R, inferInstance⟩
     disjointMass (slotWeight x y) =
       pairPart ((Fintype.card J : R), (∑ j, x j) * ∑ j, y j) -
         3 * ((∑ j, x j ^ 2) * (∑ j, y j) ^ 2 + (∑ j, y j ^ 2) * (∑ j, x j) ^ 2)
@@ -52,7 +48,7 @@ private theorem rejected_law : ¬ arena.{uJ, uR}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{uR} actual := by
   intro i
   cases i
-  refine ⟨⟨ULift.{uR} ℤ⟩, (0, 0), (1, 1), ?_⟩
+  refine ⟨⟨ULift.{uR} ℤ, inferInstance⟩, (0, 0), (1, 1), ?_⟩
   intro h
   have hInt := congrArg ULift.down h
   change (0 : ℤ) = 6 at hInt
@@ -87,7 +83,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Fourier.Concentration.DisjointTriplePhaseIdentity
     definition := none
-    coordinates := #[1, 4]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 0
