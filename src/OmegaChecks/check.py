@@ -8,20 +8,22 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / ".lake/build/lib/lean"
+SRC = ROOT / "src"
+
+
+def source_modules(root):
+    return [root, *(
+        ".".join(path.relative_to(SRC).with_suffix("").parts)
+        for path in sorted((SRC / root).rglob("*.lean"))
+    )]
+
+
+INIT = source_modules("OmegaInit")
+MATH = [*(name for name in INIT if name != "OmegaInit"), *source_modules("OmegaMath")]
 FOUNDATION = ["OmegaInit.Prelude", "OmegaInit.Core", "OmegaInit.Data.Nat.Basic", "OmegaInit.Data.Nat.Lemmas"]
-INT = [
-    "OmegaInit.Data.Nat", "OmegaInit.Data.Int.Basic", "OmegaInit.Data.Int.Lemmas",
-    "OmegaInit.Data.Int.Order", "OmegaInit.Data.Int",
-]
-INIT = [*FOUNDATION, *INT, "OmegaInit"]
 DATA = [*FOUNDATION, "OmegaMath.Data.Nat", "OmegaMath.Data.Ratio"]
 BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
-SIGNED = [
-    "OmegaMath.Data.Int", "OmegaMath.Data.IntRatio",
-    "OmegaMath.Projective.Circle.Identity", "OmegaMath.Projective.Circle",
-]
-MATH = [*DATA, *INT, BASIC, TOPIC, *SIGNED, "OmegaMath"]
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
 LEGACY = "D5.S1.Digit.Admissibility.SquarePrependOneAppendTwentyFive"
 TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]

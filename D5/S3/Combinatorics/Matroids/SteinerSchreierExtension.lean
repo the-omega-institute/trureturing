@@ -444,7 +444,7 @@ theorem pairedLift_eq_mul {L A : Type*} [Mul L] [AddCommMonoid A]
       0 + (0 + x.2 + factor e labels q x.1) + factor e labels p (q * x.1)
     simp [add_assoc]
 
-private theorem identityReturn {L A : Type*} [Mul L] [AddCommGroup A]
+theorem identityReturn {L A : Type*} [Mul L] [AddCommGroup A]
     (e p q : L) (labels : Set L → A) (a : A)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y)

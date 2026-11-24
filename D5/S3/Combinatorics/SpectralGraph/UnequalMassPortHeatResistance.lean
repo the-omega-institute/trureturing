@@ -34,21 +34,32 @@ abbrev triangle : SimpleGraph (Fin 3) := ⊤
 /-- The positive square roots of the prescribed masses are 1, 1 and 2. -/
 def rootMass : Fin 3 → ℝ := ![1, 1, 2]
 
-def inverseRootMass : Mat := Matrix.diagonal fun i => (rootMass i)⁻¹
+/-- The diagonal inverse of a vector of square roots of masses. -/
+def inverseRootMassFor (roots : Fin 3 → ℝ) : Mat :=
+  Matrix.diagonal fun i => (roots i)⁻¹
+
+def inverseRootMass : Mat := inverseRootMassFor rootMass
 
 /-- The physical stiffness uses negative off-diagonal weights and weighted degrees. -/
 def stiffness (w : Weights) : Mat := wLap triangle w
 
-def normalized (w : Weights) : Mat := inverseRootMass * stiffness w * inverseRootMass
+/-- Mass-normalized stiffness for a given diagonal inverse square root of the mass matrix. -/
+def normalizedWith (D : Mat) (w : Weights) : Mat := D * stiffness w * D
+
+/-- Physical impulse response for a given diagonal inverse square root of the mass matrix. -/
+def physicalHeatWith (D : Mat) (w : Weights) (t : ℝ) : Mat :=
+  D * exp ((-t) • normalizedWith D w) * D
+
+def normalized (w : Weights) : Mat := normalizedWith inverseRootMass w
 
 /-- Temperature at each output per unit physical impulse at each input. -/
 def physicalHeat (w : Weights) (t : ℝ) : Mat :=
-  inverseRootMass * exp ((-t) • normalized w) * inverseRootMass
+  physicalHeatWith inverseRootMass w t
 
 def PositiveWeights (w : Weights) : Prop :=
   ∀ i j : Fin 3, triangle.Adj i j → 0 < w s(i, j)
 
-private def edgeWeights (a b c : ℝ) : Weights :=
+def edgeWeights (a b c : ℝ) : Weights :=
   Sym2.lift ⟨fun i j => (!![0, a, b; a, 0, c; b, c, 0] : Mat) i j, by
     intro i j
     fin_cases i <;> fin_cases j <;> rfl⟩
@@ -76,7 +87,7 @@ private theorem conductances_positive (plus : Bool) : PositiveWeights (conductan
   cases plus <;> fin_cases i <;> fin_cases j <;> try contradiction
   all_goals norm_num [conductances, edgeWeights, Sym2.lift_mk]
 
-private theorem stiffness_edges (a b c : ℝ) :
+theorem stiffness_edges (a b c : ℝ) :
     stiffness (edgeWeights a b c) = !![a+b, -a, -b; -a, a+c, -c; -b, -c, b+c] := by
   ext i j
   simp only [stiffness, wLap, Finset.sum_filter, SimpleGraph.top_adj]
@@ -95,9 +106,9 @@ private theorem normalized_entries (plus : Bool) :
     normalized (conductances plus) =
       if plus then !![5/6, -4/15, -17/60; -4/15, 131/150, -91/300; -17/60, -91/300, 22/75]
       else !![5/6, -1/15, -23/60; -1/15, 119/150, -109/300; -23/60, -109/300, 28/75] := by
-  rw [normalized, stiffness_entries]
+  rw [normalized, normalizedWith, stiffness_entries]
   cases plus <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [inverseRootMass, rootMass, Matrix.diagonal_mul, Matrix.mul_diagonal]
+    norm_num [inverseRootMass, inverseRootMassFor, rootMass, Matrix.diagonal_mul, Matrix.mul_diagonal]
 
 private theorem reflection_symm : reflectionᵀ = reflection := by
   ext i j
@@ -134,7 +145,9 @@ private theorem port_heat_equal (t : ℝ) :
   have hexp : ∀ A : Mat, exp (reflection * A * reflection) = reflection * exp A * reflection := by
     intro A
     simpa only [Matrix.inv_eq_left_inv reflection_sq] using Matrix.exp_conj' reflection A hunit
-  simp only [physicalHeat, hs, hexp, inverseRootMass, Matrix.diagonal_mul, Matrix.mul_diagonal]
+  change (inverseRootMass * exp ((-t) • normalized (conductances true)) * inverseRootMass) 0 0 =
+    (inverseRootMass * exp ((-t) • normalized (conductances false)) * inverseRootMass) 0 0
+  simp only [hs, hexp, inverseRootMass, inverseRootMassFor, Matrix.diagonal_mul, Matrix.mul_diagonal]
   simp [reflection, rootMass, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_three]
 
 open scoped Matrix.Norms.Operator in
@@ -154,8 +167,9 @@ private theorem hidden_derivative (plus : Bool) :
   have hf : (fun t => physicalHeat (conductances plus) t 1 0) =
       (fun t => exp (-(t • L)) 1 0) := by
     funext t
-    simp [physicalHeat, inverseRootMass, rootMass, Matrix.diagonal_mul, Matrix.mul_diagonal,
-      L, neg_smul]
+    change (inverseRootMass * exp ((-t) • L) * inverseRootMass) 1 0 = exp (-(t • L)) 1 0
+    simp [inverseRootMass, inverseRootMassFor, rootMass, Matrix.diagonal_mul, Matrix.mul_diagonal,
+      neg_smul]
   have hslope : -L 1 0 = (if plus then 4/15 else 1/15) := by
     cases plus <;> norm_num [L, normalized_entries]
   rw [hf, ← hslope]

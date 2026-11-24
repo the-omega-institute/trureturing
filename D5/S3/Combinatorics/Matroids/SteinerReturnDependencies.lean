@@ -101,7 +101,7 @@ private theorem evaluateFactor {L A : Type*} [Mul L] [AddCommGroup A] [Module (Z
   · simp only [factor, ite_eq_left degenerate, map_zero]
   · simp only [factor, ite_eq_right degenerate, Finsupp.linearCombination_single, one_smul]
 
-private theorem firstReturn {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
+theorem firstReturn {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (labels : Set L → A) (p q x : L) (a : A) :
     letI := extensionMul e labels
     let step : L → L := fun y => p * (q * y)

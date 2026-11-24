@@ -133,7 +133,7 @@ private theorem loopTriples {L : Type*} [Mul L] {r : ℕ}
         simpa [hzP, hzX] using hz
       simpa [zy] using equal.symm
 
-private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
+theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
     (label : Option (Fin (r + 1)) ≃ L)
     (unit : ∀ a, label none * a = a)
     (comm : ∀ a b : L, a * b = b * a)
@@ -232,6 +232,39 @@ private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
 open Function
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul realizeSchreierReturns)
 
+/-- Two involutions commute at a point exactly when their composite closes in two steps. -/
+theorem squareFixed {X : Type*} {P Q : X → X}
+    (hp : Involutive P) (hq : Involutive Q) (x : X) :
+    Q (P x) = P (Q x) ↔ (P ∘ Q)^[2] x = x := by
+  change Q (P x) = P (Q x) ↔ P (Q (P (Q x))) = x
+  constructor
+  · intro h
+    rw [← h, hq, hp]
+  · intro h
+    have undo := congrArg (Q ∘ P) h
+    change Q (P (P (Q (P (Q x))))) = Q (P x) at undo
+    rw [hp (Q (P (Q x))), hq (P (Q x))] at undo
+    exact undo.symm
+
+/-- When distinct Steiner pivots close a square, their two-step map has period two. -/
+theorem steinerSquarePeriod {L : Type*} [Mul L] {p q x : L}
+    (comm : ∀ u v : L, u * v = v * u)
+    (invol : ∀ u v : L, u * (u * v) = v) (different : p ≠ q)
+    (closed : (fun y => p * (q * y))^[2] x = x) :
+    minimalPeriod (fun y => p * (q * y)) x = 2 := by
+  have notFixed : p * (q * x) ≠ x := by
+    intro h
+    have pq : q * x = p * x := by
+      simpa only [invol] using congrArg (p * ·) h
+    apply different
+    apply (show Involutive (x * ·) from invol x).injective
+    change x * p = x * q
+    rw [comm x p, comm x q, pq]
+  have period : IsPeriodicPt (fun y => p * (q * y)) 2 x := closed
+  rcases (Nat.dvd_prime Nat.prime_two).mp period.minimalPeriod_dvd with h | h
+  · exact (notFixed (minimalPeriod_eq_one_iff_isFixedPt.mp h)).elim
+  · exact h
+
 private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] (G : SimpleGraph L) (e p q : L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
@@ -262,32 +295,11 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
   let g : L → L := fun x => p * (q * x)
   let f : L × A → L × A := fun y => P * (Q * y)
   refine ⟨labels, idExt, commExt, involExt, centreExt, ?_⟩
-  have two (y : L × A) : f^[2] y = f (f y) := rfl
-  have step_ne (x : L) : g x ≠ x := by
-    intro h
-    have eq : q * x = p * x := by
-      change p * (q * x) = x at h
-      simpa only [invol] using congrArg (p * ·) h
-    apply hpq
-    apply (show Involutive (x * ·) from invol x).injective
-    change x * p = x * q
-    rw [comm x p, comm x q, eq]
-  have period {x : L} (hx : g (g x) = x) : minimalPeriod g x = 2 := by
-    have hper : IsPeriodicPt g 2 x := hx
-    have div := isPeriodicPt_iff_minimalPeriod_dvd.mp hper
-    rcases (Nat.dvd_prime Nat.prime_two).mp div with eq | eq
-    · exact (step_ne x (minimalPeriod_eq_one_iff_isFixedPt.mp eq)).elim
-    · exact eq
+  have period {x : L} (hx : g (g x) = x) : minimalPeriod g x = 2 :=
+    steinerSquarePeriod comm invol hpq hx
   have commute {y : L × A} :
-      Q * (P * y) = P * (Q * y) ↔ f^[2] y = y := by
-    rw [two]
-    change Q * (P * y) = P * (Q * y) ↔ P * (Q * (P * (Q * y))) = y
-    constructor
-    · intro h
-      rw [← h, involExt, involExt]
-    · intro h
-      have h' := congrArg (fun z => Q * (P * z)) h
-      simpa only [involExt, eq_comm] using h'
+      Q * (P * y) = P * (Q * y) ↔ f^[2] y = y :=
+    squareFixed (involExt P) (involExt Q) y
   let selected : Set L := {x | g (g x) ≠ x ∨
     ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
       t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
@@ -311,6 +323,40 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
       simp [h, hx, hc]
   · refine ⟨fun _ => Or.inl hx, fun _ h => hx ?_⟩
     exact congrArg Prod.fst h
+
+/-- Number a finite pointed type and locate any two distinct nonidentity points in the numbering. -/
+theorem pointedNumbering {X : Type*} [Finite X] (e : X) (nonidentity : ∃ x, x ≠ e) :
+    ∃ (r : ℕ) (label : Option (Fin (r + 1)) ≃ X), label none = e ∧
+      ∀ p q : X, p ≠ e → q ≠ e → p ≠ q →
+        ∃ (i : Fin (r + 1)) (v : Fin r), label (some i) = p ∧
+          label (some (i.succAbove v)) = q := by
+  classical
+  let W := {x : X // x ≠ e}
+  let _ := Fintype.ofFinite W
+  obtain ⟨x, hx⟩ := nonidentity
+  let _ : Nonempty W := ⟨⟨x, hx⟩⟩
+  let r := Fintype.card W - 1
+  have card : Fintype.card W = r + 1 := by
+    have pos : 0 < Fintype.card W := Fintype.card_pos
+    dsimp [r]
+    omega
+  let label : Option (Fin (r + 1)) ≃ X :=
+    (Equiv.optionCongr (Fintype.equivFinOfCardEq card).symm).trans (Equiv.optionSubtypeNe e)
+  have zero : label none = e := rfl
+  have locate (x : X) (hx : x ≠ e) : ∃ i : Fin (r + 1), label (some i) = x := by
+    obtain ⟨i, hi⟩ := label.surjective x
+    cases i with
+    | none => exact (hx (hi.symm.trans zero)).elim
+    | some i => exact ⟨i, hi⟩
+  refine ⟨r, label, zero, fun p q hp hq hpq => ?_⟩
+  obtain ⟨i, hi⟩ := locate p hp
+  obtain ⟨j, hj⟩ := locate q hq
+  have different : j ≠ i := by
+    intro same
+    rw [same, hi] at hj
+    exact hpq hj
+  obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq different
+  exact ⟨i, v, hi, hv.symm ▸ hj⟩
 
 /-- A labelled complete system realizes the count for a fixed prescription of returns. -/
 theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
@@ -349,34 +395,10 @@ theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
   obtain ⟨labels, unitExt, commExt, invExt, centreExt, fibres⟩ :=
     extensionNoncommutingCount G e p q unit comm invol twice centreless hpq hp hq edges t
   let _ := extensionMul e labels
-  let W := {y : L × A // y ≠ (e, 0)}
-  let _ := Fintype.ofFinite W
   have pNe : (p, (0 : A)) ≠ (e, 0) := fun h => hp (congrArg Prod.fst h)
   have qNe : (q, (0 : A)) ≠ (e, 0) := fun h => hq (congrArg Prod.fst h)
-  have : Nonempty W := ⟨⟨(p, 0), pNe⟩⟩
-  let r := Fintype.card W - 1
-  have card : Fintype.card W = r + 1 := by
-    have pos : 0 < Fintype.card W := Fintype.card_pos
-    dsimp [r]
-    omega
-  let label : Option (Fin (r + 1)) ≃ L × A :=
-    (Equiv.optionCongr (Fintype.equivFinOfCardEq card).symm).trans
-      (Equiv.optionSubtypeNe (e, 0))
-  have zero : label none = (e, 0) := rfl
-  have label_nonidentity (y : L × A) (hy : y ≠ (e, 0)) :
-      ∃ z : Fin (r + 1), label (some z) = y := by
-    obtain ⟨j, hj⟩ := label.surjective y
-    cases j with
-    | none => exact (hy (hj.symm.trans zero)).elim
-    | some j => exact ⟨j, hj⟩
-  obtain ⟨i, hi⟩ := label_nonidentity (p, 0) pNe
-  obtain ⟨j, hj⟩ := label_nonidentity (q, 0) qNe
-  have different : j ≠ i := by
-    intro he
-    rw [he, hi] at hj
-    exact hpq (congrArg Prod.fst hj)
-  obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq different
-  have hv' : label (some (i.succAbove v)) = (q, 0) := by rw [hv, hj]
+  obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) ⟨(p, 0), pNe⟩
+  obtain ⟨i, v, hi, hv'⟩ := locate (p, 0) (q, 0) pNe qNe (fun h => hpq (congrArg Prod.fst h))
   obtain ⟨S, valid, cover, transport, byPivot⟩ :=
     labelledSwitchCount label (by simpa only [zero] using unitExt) commExt invExt
   obtain ⟨m, leave, byStart⟩ := byPivot i
