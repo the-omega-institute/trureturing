@@ -6,7 +6,7 @@ Properties of finite event histories follow from the empty and one-event generat
 
 **Theorem 1.1 (Event histories admit generation induction).**
 
-$$\forall P: \operatorname{EventHistory}\to \operatorname{Prop}, (\operatorname{P}\left(1\right) \land (\forall h: \operatorname{EventHistory}, \forall u: \operatorname{Event}, \operatorname{P}\left(h\right) \Rightarrow \operatorname{P}\left(\operatorname{generate}\left(h, u\right)\right))) \Rightarrow \forall h: \operatorname{EventHistory}, \operatorname{P}\left(h\right).$$
+$$\forall P: \operatorname{EventHistory}\to \operatorname{Prop}, (\operatorname{P}\left(empty\right) \land (\forall h: \operatorname{EventHistory}, \forall u: \operatorname{Event}, \operatorname{P}\left(h\right) \Rightarrow \operatorname{P}\left(\operatorname{pushBack}\left(h, u\right)\right))) \Rightarrow \forall h: \operatorname{EventHistory}, \operatorname{P}\left(h\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Generation/EventHistoryInduction.event_history_induction` (`✓ std3`). ∎
 
@@ -14,9 +14,7 @@ $$\forall P: \operatorname{EventHistory}\to \operatorname{Prop}, (\operatorname{
 
 *Commentary.*
 
-The empty event history satisfies P, and P is preserved when generate appends one event. Every finite EventHistory therefore satisfies P. This closes only Definition 2.3 clause 3, the generation-induction principle; it makes no claim about the neighboring clauses.
-
-Pinned Mathlib was searched before proving. FreeMonoid.inductionOn' is the existing induction engine, while FreeMonoid.reverse_mul, FreeMonoid.reverse_of, and FreeMonoid.reverse_reverse transport its left-generator step to the repository's right-appending generate. The Lean declaration is a thin wrapper over those library results and reuses the existing EventHistory carrier.
+The empty event history satisfies P. A nonempty history consists of a shorter history and one last event. The induction hypothesis gives P for the shorter history, and the append hypothesis gives P for the whole history.
 
 ## References
 
