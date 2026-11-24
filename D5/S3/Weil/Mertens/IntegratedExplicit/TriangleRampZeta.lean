@@ -121,15 +121,15 @@ theorem smoothedMangoldt_explicit_bound {x : ℝ}
       simpa [trivialT] using trivialCoeff_hasSum.tsum_eq
     have hm := firstLiMass_split
     have hp := firstLiMass_pos
-    simp only [smoothedMangoldt, Nat.ceil_one, Finset.range_one, Finset.sum_singleton,
-      ArithmeticFunction.vonMangoldt_zero, zero_mul, Real.log_one, Real.sqrt_one,
+    have hs : smoothedMangoldt 1 = 0 := by norm_num [smoothedMangoldt]
+    simp only [hs, Real.log_one, Real.sqrt_one,
       intervalIntegral.integral_same, mul_zero, div_one, mul_one, hT]
     rw [Real.log_mul (by norm_num) Real.pi_ne_zero]
     have he : (1 : ℝ) / 2 - (3 / 2 + Real.eulerMascheroniConstant) -
         (Real.log 2 + Real.log Real.pi) + 2 * (Real.log 2 + Real.log Real.pi) -
         (1 - Real.log 2) = -firstLiMass := by linarith
     rw [he]
-    rw [zero_sub, abs_neg, abs_of_pos hp]
+    simp only [add_zero, zero_sub, neg_neg, abs_of_pos hp]
     linarith
   have hRH := hRH hx
   have hx0 : 0 < x := by linarith

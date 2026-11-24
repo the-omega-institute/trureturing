@@ -9,6 +9,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Complex
+open _root_.D5.S3.CharacterSums.DirichletCompletion
 open _root_.D5.S3.CharacterSums.DirichletTrianglePerron
 open _root_.D5.S3.CharacterSums.DirichletTriangleExplicit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

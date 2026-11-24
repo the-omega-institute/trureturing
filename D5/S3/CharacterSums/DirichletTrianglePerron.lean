@@ -19,7 +19,6 @@ set_option relaxedAutoImplicit false
 noncomputable section
 open MeasureTheory Set Filter Complex
 open scoped BigOperators Topology
-open D5.S3.Weil.Mertens.IntegratedExplicit
 open ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 namespace D5.S3.CharacterSums.DirichletTrianglePerron

@@ -26,7 +26,8 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(ErrorStatement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The center retains the complete trivial-zero tail and its integral. " +
-                    "The error has coefficient 7M/3 and the boundary gain 4M/(3x). At x=1 both sides equal M unconditionally; for x>1 RH supplies the envelope."))),
+                    "The error has coefficient 7M/3 and the boundary gain 4M/(3x). At x=1 " +
+                    "both sides equal M unconditionally; for x>1 RH supplies the envelope."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-zeta-explicit"),
                 DeclarationHandle.Create(Prefix + "smoothedMangoldt_explicit_lower"),

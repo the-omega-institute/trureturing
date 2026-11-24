@@ -461,9 +461,6 @@ theorem characterTriangle_prime_bound (q : ℕ) [NeZero q]
   have hinv : 0 ≤ 1 - 1 / (q : ℝ) := by
     apply sub_nonneg.mpr
     exact (div_le_one hq0).mpr (by linarith)
-  have hcoef : 1 - 1 / (q : ℝ) ≤ 1 := by
-    have hh : 0 ≤ 1 / (q : ℝ) := by positivity
-    linarith
   have hpar := parityCorrection_norm χ hq3
   have hendpoint : (1 - 1 / (q : ℝ)) * ‖logDeriv χ.LFunction 2‖ +
       ‖parityCorrection χ q‖ ≤ Real.log q + 1 - 1 / (q : ℝ) := by

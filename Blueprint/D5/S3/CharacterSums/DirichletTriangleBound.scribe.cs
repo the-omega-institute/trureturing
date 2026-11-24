@@ -41,7 +41,8 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
                     "the ordinary reciprocal-square tail and the parity correction. " +
                     "Strictness comes from this positive rational gap, rather than a " +
                     "strict inequality passed from finite sums to an infinite tail. " +
-                    "These are uniform analytic inequalities over an unbounded domain."))), DescribeRole.Theorem))));
+                    "These are uniform analytic inequalities over an unbounded domain."))),
+                DescribeRole.Theorem))));
 
     private static Formula GeneralStatement()
     {

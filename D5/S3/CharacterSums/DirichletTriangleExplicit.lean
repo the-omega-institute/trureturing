@@ -463,8 +463,7 @@ private theorem from_laplace {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q
     have he : Complex.exp (-(2 : ℂ) * y) *
         (Real.exp y : ℂ) ^ ((2 : ℂ) + (2 * Real.pi * t : ℝ) * I) =
         Complex.exp (((2 * Real.pi * (t * y) : ℝ) : ℂ) * I) := by
-      dsimp only [zeroKernel]
-  rw [Complex.cpow_def_of_ne_zero
+      rw [Complex.cpow_def_of_ne_zero
         (Complex.ofReal_ne_zero.mpr (Real.exp_pos y).ne'),
         ← Complex.ofReal_log (Real.exp_nonneg y), Real.log_exp, ← Complex.exp_add]
       congr 1
@@ -528,6 +527,7 @@ private theorem zeroKernel_summable {q : ℕ} [NeZero q] {χ : DirichletCharacte
   dsimp only [zeroKernel]
   rw [Complex.cpow_def_of_ne_zero (Complex.ofReal_ne_zero.mpr hx.ne'),
     ← Complex.ofReal_log hx.le]
+  simp only [div_eq_mul_inv, mul_inv_rev]
   ring
 
 /-- The exact triangular explicit formula uses the centered actual zero divisor. -/
