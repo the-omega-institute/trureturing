@@ -9,7 +9,7 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
-  (Boundary Row horizontal antidiagonal boundary cross)
+  (Boundary Row horizontal antidiagonal boundary cross zeroBudgetClass)
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects literalCount)
 open _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State (Valid)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -27,9 +27,9 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (p : Boundary) (d : ℕ), ∀ s : Fin 168, (Valid p d ∨ (d = 0 ∧ ∀ k : Fin 16, s.val ≠
-        56 + (HardinA229585StripData.zeroBudgetClass k).val) ∨
+        56 + (zeroBudgetClass k).val) ∨
       (d = 1 ∧ s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
-        (HardinA229585StripData.zeroBudgetClass k).val) ∨
+        (zeroBudgetClass k).val) ∨
       ((d = 1 ∨ 13 ≤ d) ∧ 128 ≤ s.val) ∨
       (15 ≤ d ∧ s.val < 16)) →
     (∑ q : Row, if cross p q + bondDefects horizontal q q ≤ d ∧
