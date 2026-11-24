@@ -152,18 +152,16 @@ private def zeroEnd : Function.End ZeroNeighbor := fun A => zeroPerm A
 private theorem zeroPerm_order : orderOf zeroPerm = 3 := by
   let : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
   apply orderOf_eq_prime
-  · ext A
+  · apply Equiv.ext
+    intro A
     exact step_cube A
   · intro heq
     let diagonal : Fin 7 → Binary := ![0, 1, 1, 1, 1, 1, 1]
     let A : Vertex := ⟨Matrix.diagonal diagonal, fun i j => by
-      simp only [Matrix.diagonal_apply]
-      split_ifs with h h'
+      by_cases h : i = j
       · subst j
         rfl
-      · exact (h' h.symm).elim
-      · exact (h h'.symm).elim
-      · rfl⟩
+      · simp [h, Ne.symm h]⟩
     have hrank : 5 ≤ A.val.rank := by
       change 5 ≤ (Matrix.diagonal diagonal).rank
       rw [Matrix.rank_diagonal]
@@ -347,8 +345,8 @@ private def expectedChunk : Fin 32 → ℕ :=
     26, 26, 24, 24, 24, 24, 26, 26,
     26, 26, 24, 24, 24, 24, 26, 26]
 
-/-- Each invocation of the kernel checks only the 32 masks in one chunk. -/
 set_option maxHeartbeats 0 in
+/-- Each invocation of the kernel checks only the 32 masks in one chunk. -/
 private theorem chunk_counts (c : Fin 32) : chunkCount c = expectedChunk c := by
   fin_cases c <;> decide +kernel
 
@@ -413,6 +411,7 @@ theorem result : ¬ claim := by
     have hdiv := Nat.mod_add_div n 3
     rw [hrem, hquot] at hdiv
     omega
+  let : Fintype ZeroNeighbor := Fintype.ofFinite _
   have hdegree : Nat.card ZeroNeighbor = t * (n - 1) :=
     Fintype.card_eq_nat_card.symm.trans ((binaryGraph.card_neighborSet_eq_degree zeroVertex).trans
       (hvalency zeroVertex))
