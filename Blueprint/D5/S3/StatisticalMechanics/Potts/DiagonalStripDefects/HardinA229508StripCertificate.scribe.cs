@@ -44,7 +44,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
             Blocks(Paragraph(Text("The upper-block projection specializes to the first sector, whose transition matrix is the zero-cost matrix."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("half-forward-one"), DeclarationHandle.Create(Prefix + "halfForwardOne"),
             H("The half-strip forward vectors in degree 1"),
-            StatementSource.FromAuthor(Disp(Typed(Call("HardinA229508StripCertificate.halfForwardOne"), Arr(Fin("21"), Arr(Fin("5"), V("Int")))))),
+            StatementSource.FromAuthor(Disp(HalfForwardFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The 21 by 5 integer table begins with the zero vector and the final five coordinates of HardinA229588Strip.W at exponent one. Exponent two uses the final five coordinates of the same frozen row at exponent two, with classes 1 and 3 exchanged. The later rows are tabulated half-strip samples. The unordered products are checked against the full-strip update in HardinA229508StripCertificate.forward_one."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("w"), DeclarationHandle.Create(Prefix + "W"),
@@ -156,6 +156,40 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
         return All("k", Fin("20"), Eq(
             Call("Matrix.vecMul", RowAt(Call("Fin.castSucc", k)), Call("HardinA229508StripData.T")),
             RowAt(Call("Fin.succ", k))));
+    }
+
+    private static Formula HalfForwardFormula()
+    {
+        const string table = "HardinA229508StripCertificate.halfForwardOne";
+        var j = V("j");
+        var swapped = Call("Equiv.swap", N("1"), N("3"), j);
+        Formula RowAt(string index) => Call(table, N(index));
+        return new Formula.Aligned([
+            Typed(Call(table), Arr(Fin("21"), Arr(Fin("5"), V("Int")))),
+            Eq(RowAt("0"), Vec(N("0"), N("0"), N("0"), N("0"), N("0"))),
+            All("j", Fin("5"), Eq(Call(table, N("1"), j),
+                Call("HardinA229588Strip.W", N("1"), Call("Fin.natAdd", N("5"), j)))),
+            All("j", Fin("5"), Eq(Call(table, N("2"), j),
+                Call("HardinA229588Strip.W", N("2"), Call("Fin.natAdd", N("5"), swapped)))),
+            Eq(RowAt("3"), Vec(N("1644"), N("2406"), N("1602"), N("2436"), N("1632"))),
+            Eq(RowAt("4"), Vec(N("10380"), N("13470"), N("8892"), N("13908"), N("8286"))),
+            Eq(RowAt("5"), Vec(N("59946"), N("73344"), N("49104"), N("75966"), N("41160"))),
+            Eq(RowAt("6"), Vec(N("331590"), N("387510"), N("261558"), N("404562"), N("203100"))),
+            Eq(RowAt("7"), Vec(N("1777398"), N("2010720"), N("1367730"), N("2110506"), N("995358"))),
+            Eq(RowAt("8"), Vec(N("9320448"), N("10280940"), N("7035318"), N("10841808"), N("4855182"))),
+            Eq(RowAt("9"), Vec(N("48062886"), N("51972294"), N("35741484"), N("55012938"), N("23584278"))),
+            Eq(RowAt("10"), Vec(N("244626816"), N("260291310"), N("179732718"), N("276379104"), N("114154620"))),
+            Eq(RowAt("11"), Vec(N("1232038140"), N("1293572766"), N("896272632"), N("1377107340"), N("550794234"))),
+            Eq(RowAt("12"), Vec(N("6151560582"), N("6386839908"), N("4438054080"), N("6814356114"), N("2650075116"))),
+            Eq(RowAt("13"), Vec(N("30493060134"), N("31358474490"), N("21844483506"), N("33521267202"), N("12718073172"))),
+            Eq(RowAt("14"), Vec(N("150226357422"), N("153222899172"), N("106966659546"), N("164061769962"), N("60895203666"))),
+            Eq(RowAt("15"), Vec(N("736199319228"), N("745515804252"), N("521439011046"), N("799411222140"), N("290960009814"))),
+            Eq(RowAt("16"), Vec(N("3591284854602"), N("3613865018010"), N("2531889435744"), N("3880090505550"), N("1387554925614"))),
+            Eq(RowAt("17"), Vec(N("17448371454444"), N("17460226198758"), N("12250924641810"), N("18767880996324"), N("6605447597328"))),
+            Eq(RowAt("18"), Vec(N("84472101194124"), N("84109078953726"), N("59093625304332"), N("90500741777316"), N("31394234901822"))),
+            Eq(RowAt("19"), Vec(N("407656599056970"), N("404091950193120"), N("284249234984832"), N("435200551114398"), N("148986407380296"))),
+            Eq(RowAt("20"), Vec(N("1961740076499606"), N("1936745253298374"), N("1363840823481174"), N("2087584250909826"), N("706057576313820")))
+        ]);
     }
 
     private static Formula ForwardWeightsFormula()

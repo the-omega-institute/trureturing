@@ -62,10 +62,13 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
     {
         var i = V("i");
         var j = V("j");
-        var forward = Call("DefectTransfer.forward", Call("HardinA229683StripData.T"),
-            Call("HardinA229683StripData.initial"), Call("Fin.val", i));
+        var zero = Call("HardinA203981StripCertificate.halfForwardZero", i);
+        var one = Call("HardinA229508StripCertificate.halfForwardOne", i);
+        var two = Call("HardinA229683StripCertificate.halfForwardTwo", i);
+        Formula PairWeights(Formula a, Formula b) => Call("HardinA203981StripData.unordered", a, b, j);
         return All("i", Fin("21"), All("j", Fin("15"),
-            Eq(Call("HardinA229683StripCertificate.W", i, j), App(Call("Function.comp", forward, Call("Sum.inr")), j))));
+            Eq(Call("HardinA229683StripCertificate.W", i, j),
+                Add(Add(PairWeights(zero, two), PairWeights(one, one)), PairWeights(two, zero)))));
     }
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Minus, N(digits)) :
