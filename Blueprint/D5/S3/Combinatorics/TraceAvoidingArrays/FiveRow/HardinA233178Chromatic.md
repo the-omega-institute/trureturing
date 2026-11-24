@@ -44,7 +44,7 @@ The coefficients are listed in order of increasing power.
 
 **Theorem 1.4 (weighted_indicator_sum).**
 
-$$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{AddCommMonoid}\left(R\right)] [\operatorname{Mul}\left(R\right)] [\operatorname{One}\left(R\right)] \forall (P: S \to \operatorname{Prop}), ([\operatorname{DecidablePred}\left(P\right)] \forall (L: \operatorname{List}\left(S\right)), ((\operatorname{List}.\operatorname{Nodup}\left(L\right)) \Rightarrow ((\forall (q: S), ((q \in L) \Leftrightarrow (P\left(q\right)))) \Rightarrow (\forall (w: S \to R), ((\forall (q: S), ((\neg (q \in L)) \Rightarrow (((0: R)) \cdot (w\left(q\right)) = (0: R)))) \Rightarrow (\operatorname{dotProduct}\left((\lambda (q: S)\mapsto ((\operatorname{if} (P\left(q\right)) \operatorname{then} (1: R) \operatorname{else} 0))), w\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left((\lambda (q: S)\mapsto (((1: R)) \cdot (w\left(q\right)))), L\right)\right)))))))))$$
+$$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{AddCommMonoid}\left(R\right)] [\operatorname{Mul}\left(R\right)] [\operatorname{One}\left(R\right)] \forall (P: S \to \operatorname{Prop}), ([\operatorname{DecidablePred}\left(P\right)] \forall (L: \operatorname{List}\left(S\right)), ((\operatorname{List}.\operatorname{Nodup}\left(L\right)) \Rightarrow ((\forall (q: S), ((q \in L) \Leftrightarrow (P\left(q\right)))) \Rightarrow (\forall (w: S \to R), ((\operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (q: S)\mapsto ((\neg (P\left(q\right))))), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(S\right))\right), (\lambda (q: S)\mapsto (((0: R)) \cdot (w\left(q\right))))\right) = (0: R)) \Rightarrow (\operatorname{dotProduct}\left((\lambda (q: S)\mapsto ((\operatorname{if} (P\left(q\right)) \operatorname{then} (1: R) \operatorname{else} 0))), w\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left((\lambda (q: S)\mapsto (((1: R)) \cdot (w\left(q\right)))), L\right)\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.weighted_indicator_sum` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\oper
 
 *Commentary.*
 
-The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish.
+The duplicate-free list L enumerates exactly the points satisfying P. Its weighted sum agrees with the indicator row when the omitted sum vanishes.
 
 **Theorem 1.5 (step_fast).**
 
