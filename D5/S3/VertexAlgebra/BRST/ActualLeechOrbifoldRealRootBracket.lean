@@ -360,8 +360,10 @@ open RelativeBracket (MomentumH1 current nativeValue cycleCurrent momentumBracke
   momentumBracket_incl bracket_mk)
 open private inclCycle inclCycle_congr from
   D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldEvenCurrent
-open private native_cycleCurrent native_smul from
+open private native_cycleCurrent native_add native_smul from
   D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeBracket
+open private assoc_cartan_modes from
+  D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldCartanAction
 open private cyclesEquiv from
   D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldRelativeZeroMomentum
 
@@ -410,6 +412,123 @@ private theorem incl_injective (q : Momentum) : Function.Injective (incl q) := b
   intro x y h
   simpa only [DirectSum.component.lof_self] using
     congrArg (fun z : MomentumH1 => DirectSum.component ℂ Momentum H q z) h
+
+private theorem current_u_cyclesCartan (i : Fin 2) (p : Momentum) (x : Cycles p) :
+    current (RelativeZeroMomentum.u i) (nativeValue x) =
+      nativeValue (cyclesCartan i p 1 x) := by
+  change originalMode 0 (VirasoroBRST.ghostB matter (-1) (RelativeZeroMomentum.u i))
+      (reassoc.symm x.val.val) =
+    reassoc.symm (((assocY (reassoc (cartanCurrent i)))[[0]]) x.val.val)
+  simp only [original_cartan_mode, assoc_cartan_modes, LinearEquiv.conjAlgEquiv_apply,
+    LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_symm,
+    LinearEquiv.apply_symm_apply]
+
+private theorem lie_cartanClass_cycle (f : Fin 2 → ℂ) (p : Momentum) (x : Cycles p) :
+    ⁅cartanClass f, inclCycle p x⁆ =
+      inclCycle p (f 0 • cyclesCartan 0 p 1 x + f 1 • cyclesCartan 1 p 1 x) := by
+  rw [cartanClass_eq, lie_cycles]
+  apply inclCycle_congr (zero_add p)
+  rw [native_cycleCurrent, cartanCycle_native, native_add, native_smul, native_smul]
+  simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply,
+    current_u_cyclesCartan]
+
+/-- The adjoint of the literal Cartan class descends from the original Cartan modes. -/
+theorem lie_cartanClass_eq_cohomologyCartan (f : Fin 2 → ℂ) (p : Momentum) (x : H p) :
+    ⁅cartanClass f, incl p x⁆ =
+      f 0 • incl p (cohomologyCartan 0 p 1 x) + f 1 • incl p (cohomologyCartan 1 p 1 x) := by
+  refine Submodule.Quotient.induction_on _ x fun y => ?_
+  have hm (i : Fin 2) : cohomologyCartan i p 1 (Submodule.Quotient.mk y) =
+      Submodule.Quotient.mk (cyclesCartan i p 1 y) :=
+    LinearMap.congr_fun (cohomologyCartan_mk i p 1) y
+  rw [hm 0, hm 1]
+  change ⁅cartanClass f, inclCycle p y⁆ =
+    f 0 • inclCycle p (cyclesCartan 0 p 1 y) + f 1 • inclCycle p (cyclesCartan 1 p 1 y)
+  simpa only [map_add, map_smul] using lie_cartanClass_cycle f p y
+
+/-- The actual Cartan adjoint is scalar on each momentum summand of relative H¹. -/
+theorem lie_cartanClass_incl (f : Fin 2 → ℂ) (p : Momentum) (x : H p) :
+    ⁅cartanClass f, incl p x⁆ =
+      (f 0 * (p (1 : Fin 2) : ℂ) + f 1 * (p (0 : Fin 2) : ℂ)) • incl p x := by
+  rw [lie_cartanClass_eq_cohomologyCartan]
+  simp only [cohomologyCartan_apply, map_smul, smul_smul,
+    (cartanEigenvalue_coordinates p).1, (cartanEigenvalue_coordinates p).2, add_smul]
+
+/-- The zero-momentum summand of the actual BRST Lie algebra is abelian. -/
+theorem zero_momentum_lie_eq_zero (x y : H 0) : ⁅incl 0 x, incl 0 y⁆ = 0 := by
+  obtain ⟨f, rfl⟩ := RelativeZeroMomentum.ghostOneCohomologyEquiv.symm.surjective x
+  change ⁅cartanClass f, incl 0 y⁆ = 0
+  simpa using lie_cartanClass_incl f 0 y
+
+private theorem lie_cartanBasis_incl (i : Fin 2) (p : Momentum) (x : H p) :
+    ⁅cartanClass (Pi.single i 1), incl p x⁆ = cartanEigenvalue i p • incl p x := by
+  rw [lie_cartanClass_incl]
+  fin_cases i
+  · simp [(cartanEigenvalue_coordinates p).1]
+  · simp [(cartanEigenvalue_coordinates p).2]
+
+local notation "component" => DirectSum.component ℂ Momentum H
+
+private theorem component_lie_cartanBasis (i : Fin 2) (p : Momentum) (z : MomentumH1) :
+    component p ⁅cartanClass (Pi.single i 1), z⁆ = cartanEigenvalue i p • component p z := by
+  classical
+  induction z using DirectSum.induction_on with
+  | zero => simp
+  | of q x =>
+    change component p ⁅cartanClass (Pi.single i 1), incl q x⁆ =
+      cartanEigenvalue i p • component p (incl q x)
+    rw [lie_cartanBasis_incl, map_smul]
+    by_cases h : q = p
+    · subst q
+      rfl
+    · simp only [DirectSum.component.of, dite_eq_right h, smul_zero]
+  | add x y hx hy =>
+    simp only [lie_add, map_add, hx, hy, smul_add]
+
+/-- Each momentum summand is the joint eigenspace for its two Cartan eigenvalues. -/
+theorem mem_momentum_range_iff_cartan_eigenvectors (p : Momentum) (z : MomentumH1) :
+    z ∈ LinearMap.range (incl p) ↔
+      ∀ i : Fin 2, ⁅cartanClass (Pi.single i 1), z⁆ = cartanEigenvalue i p • z := by
+  classical
+  constructor
+  · rintro ⟨x, rfl⟩ i
+    exact lie_cartanBasis_incl i p x
+  · intro hz
+    refine ⟨component p z, ?_⟩
+    apply DirectSum.ext_component ℂ
+    intro q
+    by_cases hpq : p = q
+    · subst q
+      rw [DirectSum.component.lof_self]
+    · rw [DirectSum.component.of, dite_eq_right hpq]
+      symm
+      by_contra hq
+      have hw (i : Fin 2) : cartanEigenvalue i q = cartanEigenvalue i p := by
+        have he := congrArg (component q) (hz i)
+        rw [component_lie_cartanBasis, map_smul] at he
+        have hd : (cartanEigenvalue i q - cartanEigenvalue i p) • component q z = 0 := by
+          rw [sub_smul, he, sub_self]
+        by_contra hne
+        apply hq
+        calc
+          component q z = (cartanEigenvalue i q - cartanEigenvalue i p)⁻¹ •
+              (cartanEigenvalue i q - cartanEigenvalue i p) • component q z :=
+            (inv_smul_smul₀ (sub_ne_zero.mpr hne) _).symm
+          _ = 0 := by rw [hd, smul_zero]
+      apply hpq
+      have h0 := (cartanEigenvalue_coordinates q).2.symm.trans
+        ((hw 1).trans (cartanEigenvalue_coordinates p).2)
+      have h1 := (cartanEigenvalue_coordinates q).1.symm.trans
+        ((hw 0).trans (cartanEigenvalue_coordinates p).1)
+      refine funext (fun (i : Fin 2) => ?_)
+      fin_cases i
+      · exact (Int.cast_injective (α := ℂ) h0).symm
+      · exact (Int.cast_injective (α := ℂ) h1).symm
+
+/-- The simultaneous centralizer of the two basis Cartan classes is the zero-momentum summand. -/
+theorem mem_zero_momentum_range_iff_cartan_centralizer (z : MomentumH1) :
+    z ∈ LinearMap.range (incl 0) ↔ ∀ i : Fin 2, ⁅cartanClass (Pi.single i 1), z⁆ = 0 := by
+  simpa only [cartanEigenvalue_zero, zero_smul] using
+    mem_momentum_range_iff_cartan_eigenvectors 0 z
 
 private theorem inclCycle_root_ne_zero (q : Momentum) (hq : q (0 : Fin 2) * q (1 : Fin 2) = 1) :
     inclCycle q (rootCycle q hq) ≠ 0 := by
