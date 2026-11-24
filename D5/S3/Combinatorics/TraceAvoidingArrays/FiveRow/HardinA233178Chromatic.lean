@@ -126,10 +126,11 @@ theorem cut_parts (k : ℕ) :
     have h₁ := (mem_forward e).mp hf
     have h₂ := (mem_backward e).mp hb
     omega
-  · rw [Finset.disjoint_left]
-    rintro ⟨x, y⟩ hdiag hbetw
-    have h : x = y := (Finset.mem_diag.mp hdiag).2
-    subst y
+  · apply (Finset.disjoint_diag_offDiag (s := Finset.univ)).mono_right
+    rintro ⟨x, y⟩ hbetw
+    refine Finset.mem_offDiag.mpr ⟨Finset.mem_univ _, Finset.mem_univ _, ?_⟩
+    change x ≠ y
+    rintro rfl
     simp [betw] at hbetw
 
 abbrev Column := Fin 243
