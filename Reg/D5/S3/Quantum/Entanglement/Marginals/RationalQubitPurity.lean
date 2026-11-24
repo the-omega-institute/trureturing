@@ -10,12 +10,11 @@ namespace Reg.D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
 
 open LeanInformationAudit
 open Matrix Complex
-open scoped ComplexOrder
+open scoped ComplexOrder Matrix
 open _root_.D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
 open _root_.D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
-open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 noncomputable section
 
@@ -38,9 +37,8 @@ private def rejectAll : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law Y := ∀ (L R : Matrix Bool Bool ℂ),
-    (∃ ψ : Bool × Bool → ℂ, (rankOneDensity ψ).trace = 1 ∧
-      partialTraceRight (rankOneDensity ψ) = L ∧ partialTraceLeft (rankOneDensity ψ) = R ∧
-      ∀ i j, RationalEntry (rankOneDensity ψ i j)) ↔
+    (∃ M : Matrix Bool Bool ℂ, L.trace = 1 ∧ M * Mᴴ = L ∧ (Mᴴ * M)ᵀ = R ∧
+      ∀ i j, RationalEntry (rankOneDensity (Function.uncurry M) i j)) ↔
       L.PosSemidef ∧ R.PosSemidef ∧ L.trace = 1 ∧ R.trace = 1 ∧
         Y.readout () () L.det R.det ∧ (∀ i j, RationalEntry (L i j)) ∧
         (∀ i j, RationalEntry (R i j)) ∧

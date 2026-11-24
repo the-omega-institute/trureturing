@@ -15,8 +15,9 @@ internal sealed class RationalQubitPurityDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A rational pure joint state exists exactly when both two-by-two "
-                        + "marginals are positive semidefinite, rational and trace one, their "
+                        "Write the target reductions as the two Gram products of the amplitude matrix, "
+                        + "with a transpose on the right reduction. A rational pure joint state exists "
+                        + "exactly when both marginals are positive semidefinite, rational and trace one, their "
                         + "determinants agree, and the common determinant is a sum of two rational squares.")),
                     Paragraph(Text(
                         "A nonzero column of the pure density supplies rational projective "

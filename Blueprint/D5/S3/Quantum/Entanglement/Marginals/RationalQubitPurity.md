@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Marginals/RationalQubitPurity.ration
 
 *Commentary.*
 
-A rational pure joint state exists exactly when both two-by-two marginals are positive semidefinite, rational and trace one, their determinants agree, and the common determinant is a sum of two rational squares.
+Write the target reductions as the two Gram products of the amplitude matrix, with a transpose on the right reduction. A rational pure joint state exists exactly when both marginals are positive semidefinite, rational and trace one, their determinants agree, and the common determinant is a sum of two rational squares.
 
 A nonzero column of the pure density supplies rational projective amplitudes. The determinant of their two-by-two array, divided by the diagonal entry of that column, has squared modulus equal to the marginal determinant.
 
@@ -25,4 +25,3 @@ For sufficiency, transpose the right marginal. The two Hermitian matrices are in
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/RationalQubitPurity.rational_qubit_purity_iff`
 - Dependency: [D5/S0/Observation/MatrixTracePowerSum](../../../../S0/Observation/MatrixTracePowerSum.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
-- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)

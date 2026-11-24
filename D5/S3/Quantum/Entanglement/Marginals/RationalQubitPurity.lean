@@ -8,7 +8,6 @@
 
 import D5.S0.Observation.MatrixTracePowerSum
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-! Gaussian norm obstruction and construction for rational pure two-qubit densities. -/
 
@@ -16,7 +15,6 @@ open Matrix Complex
 open scoped ComplexConjugate ComplexOrder Matrix
 open D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
-open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 set_option autoImplicit false
 
@@ -274,50 +272,34 @@ private theorem rational_gram_pair
       by_cases h : i = j <;> simp [Matrix.one_apply, h]
     exact rationalComplex.add_mem (hAQ i j) (rationalComplex.mul_mem hsQ hI)
 
-private theorem leftGram (M : Matrix Bool Bool ℂ) :
-    partialTraceRight (rankOneDensity (Function.uncurry M)) = M * Mᴴ := by
-  ext i j : 1
-  simp [partialTraceRight, Function.uncurry, rankOneDensity, Matrix.vecMulVec_apply, Matrix.mul_apply]
-
-private theorem rightGram (M : Matrix Bool Bool ℂ) :
-    partialTraceLeft (rankOneDensity (Function.uncurry M)) = (Mᴴ * M)ᵀ := by
-  ext i j : 1
-  simp [partialTraceLeft, Function.uncurry, rankOneDensity, Matrix.vecMulVec_apply, Matrix.mul_apply, mul_comm]
-
-private theorem rational_partialTraces {S : Matrix (Bool × Bool) (Bool × Bool) ℂ}
-    (hQ : ∀ i j, S i j ∈ rationalComplex) :
-    (∀ i j, partialTraceRight S i j ∈ rationalComplex) ∧
-      ∀ i j, partialTraceLeft S i j ∈ rationalComplex :=
-  ⟨fun i j => rationalComplex.sum_mem fun k _ => hQ (i,k) (j,k),
-    fun i j => rationalComplex.sum_mem fun k _ => hQ (k,i) (k,j)⟩
-
 /-- Two qubit marginals admit a rational pure joint density exactly when their trace,
 positivity, rationality, common determinant, and Gaussian norm conditions hold. -/
 theorem rational_qubit_purity_iff (L R : Matrix Bool Bool ℂ) :
-    (∃ ψ : Bool × Bool → ℂ, (rankOneDensity ψ).trace = 1 ∧
-      partialTraceRight (rankOneDensity ψ) = L ∧ partialTraceLeft (rankOneDensity ψ) = R ∧
-      ∀ i j, RationalEntry (rankOneDensity ψ i j)) ↔
+    (∃ M : Matrix Bool Bool ℂ, L.trace = 1 ∧ M * Mᴴ = L ∧ (Mᴴ * M)ᵀ = R ∧
+      ∀ i j, RationalEntry (rankOneDensity (Function.uncurry M) i j)) ↔
       L.PosSemidef ∧ R.PosSemidef ∧ L.trace = 1 ∧ R.trace = 1 ∧ L.det = R.det ∧
         (∀ i j, RationalEntry (L i j)) ∧ (∀ i j, RationalEntry (R i j)) ∧
         ∃ s : ℂ, RationalEntry s ∧ (normSq s : ℂ) = L.det := by
   constructor
-  · rintro ⟨ψ, ht, rfl, rfl, hQ⟩
-    let M : Matrix Bool Bool ℂ := Function.curry ψ
+  · rintro ⟨M, ht, rfl, rfl, hQ⟩
     have hM : M ≠ 0 := by
       intro h
-      have hψ : ψ = 0 := by
-        ext ⟨i, j⟩
-        exact congrFun (congrFun h i) j
-      simp [hψ, rankOneDensity] at ht
-    have hp : (rankOneDensity ψ).PosSemidef := posSemidef_vecMulVec_self_star ψ
-    obtain ⟨hLQ, hRQ⟩ := rational_partialTraces hQ
-    refine ⟨partialTraceRight_posSemidef hp, partialTraceLeft_posSemidef hp,
-      (trace_partialTraceRight _).trans ht, (trace_partialTraceLeft _).trans ht,
-      ?_, hLQ, hRQ, ?_⟩
-    · rw [show ψ = Function.uncurry M from rfl, leftGram, rightGram, Matrix.det_transpose,
-        Matrix.det_mul, Matrix.det_mul, mul_comm]
-    · rw [show ψ = Function.uncurry M from rfl, leftGram]
-      exact norm_det_of_rational_ray M hM hQ
+      simp [h] at ht
+    have hR : ((Mᴴ * M)ᵀ).PosSemidef := (Matrix.posSemidef_conjTranspose_mul_self M).transpose
+    refine ⟨Matrix.posSemidef_self_mul_conjTranspose M, hR, ht, ?_, ?_, ?_, ?_,
+      norm_det_of_rational_ray M hM hQ⟩
+    · rw [Matrix.trace_transpose, Matrix.trace_mul_comm, ht]
+    · rw [Matrix.det_transpose, Matrix.det_mul, Matrix.det_mul, mul_comm]
+    · intro i j
+      change (M * Mᴴ) i j ∈ rationalComplex
+      rw [Matrix.mul_apply]
+      exact rationalComplex.sum_mem fun k _ => hQ (i, k) (j, k)
+    · intro i j
+      change (Mᴴ * M) j i ∈ rationalComplex
+      rw [Matrix.mul_apply]
+      refine rationalComplex.sum_mem fun k _ => ?_
+      rw [mul_comm]
+      exact hQ (k, i) (k, j)
   · rintro ⟨hL, hR, htL, htR, hd, hLQ, hRQ, s, hsQ, hsN⟩
     have hs : ∃ t : ℂ, t ∈ rationalComplex ∧ 0 ≤ t.re ∧ t * conj t = L.det := by
       by_cases h : 0 ≤ s.re
@@ -347,14 +329,12 @@ theorem rational_qubit_purity_iff (L R : Matrix Bool Bool ℂ) :
       rw [show N = t • M from rfl, Matrix.conjTranspose_smul, Complex.star_def,
         Matrix.smul_mul, Matrix.mul_smul, smul_smul, ht', hMR, smul_smul,
         inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hc.ne'), one_smul]
-    refine ⟨Function.uncurry N, ?_, (leftGram N).trans hNL, ?_, ?_⟩
-    · rw [← trace_partialTraceRight, leftGram, hNL, htL]
-    · rw [rightGram, hNR, transpose_transpose]
-    · rintro ⟨i, j⟩ ⟨a, b⟩
-      change RationalEntry ((t * M i j) * conj (t * M a b))
-      rw [map_mul, show (t * M i j) * (conj t * conj (M a b)) =
-          (t * conj t) * (M i j * conj (M a b)) by ring, ht]
-      exact rationalComplex.mul_mem (rationalComplex.inv_mem hcQ) (rationalComplex.mul_mem
-        (hMQ i j) (rationalConjugate ⟨M a b, hMQ a b⟩).property)
+    refine ⟨N, htL, hNL, by rw [hNR, transpose_transpose], ?_⟩
+    rintro ⟨i, j⟩ ⟨a, b⟩
+    change RationalEntry ((t * M i j) * conj (t * M a b))
+    rw [map_mul, show (t * M i j) * (conj t * conj (M a b)) =
+        (t * conj t) * (M i j * conj (M a b)) by ring, ht]
+    exact rationalComplex.mul_mem (rationalComplex.inv_mem hcQ) (rationalComplex.mul_mem
+      (hMQ i j) (rationalConjugate ⟨M a b, hMQ a b⟩).property)
 
 end D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
