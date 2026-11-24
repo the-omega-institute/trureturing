@@ -71,7 +71,8 @@ private theorem ad_pow_incl_mem (σ q : Momentum) (u : H σ) (x : H q) (n : ℕ)
     exact (congrArg (fun p => z ∈ LinearMap.range (incl p)) hdegree).mp
       (LinearMap.mem_range_self (incl (σ + (q + n • σ))) _)
 
-private theorem ghostOne_eq_zero_of_negative_level (p : Momentum)
+/-- A negative available level kills every class in the native ghost-one quotient. -/
+theorem ghostOne_eq_zero_of_negative_level (p : Momentum)
     (hp : 1 - chargeEnergy hyperbolicPlane p < 0) (x : H p) : x = 0 := by
   have hshell := relativeShell_eq_bot_of_negative_level p hp
   refine Submodule.Quotient.induction_on _ x (fun z => ?_)
