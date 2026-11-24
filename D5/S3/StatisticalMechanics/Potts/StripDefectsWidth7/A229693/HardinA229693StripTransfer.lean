@@ -946,7 +946,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     | left j =>
       rw [oldExits, Fin.append_left]
       exact beq_iff_eq.mp (List.all_eq_true.mp
-        (Bool.and_eq_true.mp (oldExits_copied_check j hj)).1 k (List.mem_finRange k))
+        (Bool.and_eq_true_iff.mp (oldExits_copied_check j hj)).1 k (List.mem_finRange k))
     | right j =>
       rw [oldExits, Fin.append_right, Pi.zero_apply]
       exact (beq_iff_eq.mp (List.all_eq_true.mp
@@ -956,7 +956,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     | left j =>
       rw [oldExits, Fin.append_left]
       exact beq_iff_eq.mp (List.all_eq_true.mp
-        (Bool.and_eq_true.mp (oldExits_copied_check j hj)).2 k (List.mem_finRange k))
+        (Bool.and_eq_true_iff.mp (oldExits_copied_check j hj)).2 k (List.mem_finRange k))
     | right j => rw [oldExits, Fin.append_right, Pi.zero_apply]
   let r : Fin 72 := ⟨(exitRead j).val, hj⟩
   change T i (j.natAdd 72) = T i (r.castAdd 96)
