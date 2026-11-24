@@ -12,6 +12,7 @@ public import OmegaMath.Arithmetic.DepthBudget
 public import OmegaMath.Arithmetic.Euclidean
 public import OmegaMath.Arithmetic.WDigits.Codec
 public import OmegaMath.Arithmetic.WDigits.Geometric
+public import OmegaMath.Arithmetic.WDigits.Interchange
 public import OmegaMath.Calculus.DFiniteCompose
 public import OmegaMath.Calculus.DFiniteJet
 public import OmegaMath.Calculus.Jet2
