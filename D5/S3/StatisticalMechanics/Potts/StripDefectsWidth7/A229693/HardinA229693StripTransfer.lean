@@ -88,7 +88,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripDat
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
-import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
@@ -144,7 +143,7 @@ private theorem bond_eq_adjacent {k : ℕ} (r : Fin (k + 1) → Fin 3) :
       exact ⟨e.1.castLT hi, Prod.ext (Fin.ext rfl) (Fin.ext h.symm)⟩
     · rintro ⟨j, rfl⟩
       rfl
-  rw [← he, HardinA229637RowColumn.bond_row, ← Finset.card_map Fin.castSuccEmb]
+  rw [← he, HardinA229637RowColumn.bond_row, ← Finset.card_map (Fin.castSuccEmb : Fin k ↪ Fin (k + 1))]
   change (Finset.univ.filter fun i : Fin (k + 1) =>
     ∃ j : Fin (k + 1), j.val = i.val + 1 ∧ r i = r j).card = _
   congr 1
@@ -156,7 +155,8 @@ private theorem bond_eq_adjacent {k : ℕ} (r : Fin (k + 1) → Fin 3) :
     let x : Fin k := i.castLT hi
     have hx : x.castSucc = i := Fin.castSucc_castLT i hi
     have hy : x.succ = j := Fin.ext hj.symm
-    exact ⟨x, hx ▸ hy ▸ h, hx⟩
+    refine ⟨x, ?_, hx⟩
+    simpa only [hx, hy] using h
   · rintro ⟨j, h, rfl⟩
     exact ⟨j.succ, rfl, h⟩
 
