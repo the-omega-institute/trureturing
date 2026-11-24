@@ -12,7 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 a: proof_shape=bind-only; consumers=counting_bridge, result
 scale_count_of_bonds: proof_shape=content; consumers=scale_count
 scale_count: proof_shape=content; consumers=HardinA229508Strip.counting_bridge, HardinA229683Strip.counting_bridge, counting_bridge
-counting_bridge: proof_shape=bind-only; consumers=result
+counting_bridge: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #32721)
 -/
 
