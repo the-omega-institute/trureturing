@@ -94,4 +94,3 @@ For sufficiency, diagonalize both positive matrices with their common eigenvalue
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../../PureState/PureStateHandshake.md)
-- Dependency: [D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings](../../QuantumChannels/QubitWassersteinCouplings.md)
