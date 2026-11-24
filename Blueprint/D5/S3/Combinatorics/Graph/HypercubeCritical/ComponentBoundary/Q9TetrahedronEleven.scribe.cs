@@ -35,6 +35,20 @@ internal sealed class Q9TetrahedronElevenDocument : IScribeDocumentDefinition
                         + "the shell is obtained by XOR translation on the transverse coordinates, followed "
                         + "by complementation. Hong, Wu and Xia's Problem 2 asks about the full 258-point "
                         + "candidate. https://arxiv.org/html/2610.09483v1#Thmproblem2"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-twelve-triple-pivot-normal-form"),
+                DeclarationHandle.Create(Module + ".card_eq_nine_or_twelve_with_pivot"),
+                H("The twelve-triple normal form"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "A pivot with at most four incident triples determines the whole "
+                        + "twelve-triple family. Every triple consists of an edge of a "
+                        + "four-cycle and one of the three vertices off the cycle, "
+                        + "including the pivot. Complementation on seven vertices "
+                        + "gives the join of a triangle boundary and a four-cycle."))),
                 DescribeRole.Theorem)),
         []));
 }

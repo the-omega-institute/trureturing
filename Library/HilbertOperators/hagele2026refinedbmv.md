@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
+  - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
@@ -68,6 +69,19 @@ first factor and an arbitrary Hermitian second factor. The dyadic
 comparison in Hägele's Lemma 2 gives the exponential lower bound.
 Burgdorf's Theorem 1.5 and Example 2.1(b) in arXiv:0802.1153v2
 give cyclic square decompositions for the classical coefficient bound.
+
+## Six and seven copies of the first factor
+
+The lower comparisons at (6,4) and (7,4) hold in every finite complex
+dimension. The mean of the 210 words at (6,4) dominates the trace of
+`(A^(3/2) B)^4` for PSD A and B. The mean of the 330 words at (7,4)
+dominates the trace of `(A^(7/4) B)^4` for PSD A and Hermitian B.
+Both results include singular A. The cyclic coefficient identities
+compare the means with balanced integer words. Three rational Gram
+blocks give the six-copy comparison, including one weighted by B on
+both sides. The seven-copy comparison uses a Gram block weighted by A.
+The dyadic comparison gives the exponential bounds with exponents
+`6H + 4K` and `7H + 4K`.
 
 ## Scope and conventions
 
