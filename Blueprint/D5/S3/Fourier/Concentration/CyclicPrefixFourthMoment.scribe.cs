@@ -47,9 +47,9 @@ internal sealed class CyclicPrefixFourthMomentDocument : IScribeDocumentDefiniti
         var window = new Formula.Apply(new Formula.Subscript(F.Id("B"), n), [k]);
         var correction = new Formula.Subscript(Seq(Open, D(2), n, Minus, q, Minus, D(1), Close), Plus);
         return Disp(new Formula.Aligned([
-            Seq(Amp, Forall, Sp, q, Comma, n, Colon, naturals, Comma, Quad,
-                q, Gt, D(0), Comma, Quad, n, Le, q, Comma, Quad, m, Eq, correction, Comma),
-            Seq(Amp, D(3), new Formula.Subscript(Sum, Seq(k, InMacro, residues)), Sp,
+            Seq(Amp, Forall, Sp, q, Comma, n, Colon, naturals, Comma, Quad, Sp,
+                q, Gt, D(0), Comma, Quad, Sp, n, Sp, Le, Sp, q, Comma, Quad, Sp, m, Sp, Eq, Sp, correction, Comma),
+            Seq(Amp, D(3), new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, residues)), Sp,
                 new Formula.Power(Seq(Bar, window, Bar), D(4)), Sp, Eq, Sp,
                 q, Open, n, Open, D(2), new Formula.Power(n, D(2)), Plus, D(1), Close, Plus,
                 m, Open, m, Plus, D(1), Close, Open, m, Plus, D(2), Close, Close, Dot)

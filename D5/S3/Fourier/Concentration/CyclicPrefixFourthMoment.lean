@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The fourth moment of a cyclic prefix has an explicit correction for wrapped differences. -/
+   digest: Exact fourth moment of a cyclic prefix with a correction for wrapped differences. -/
 
 import D5.S3.Fourier.Concentration.CyclicFejerBand
 import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Nat.Choose.Cast
+import Mathlib.Data.Nat.Choose.Sum
 
 /-! Exact fourth moment of a prefix character sum on a finite cyclic group. -/
 
@@ -142,30 +144,56 @@ private theorem fourth_moment_pair_energy (q N : ℕ) [NeZero q] (hN : N ≤ q) 
   intro r _
   simp [C, card_prefixPairs_eq_add N hN]
 
+private theorem sum_linear_rank (n : ℕ) :
+    (∑ j ∈ range n, ((j : ℝ) + 1)) = (n : ℝ) * ((n : ℝ) + 1) / 2 := by
+  cases n with
+  | zero => simp
+  | succ n =>
+    have h := congrArg (fun a : ℕ => (a : ℝ)) (Nat.sum_range_add_choose n 1)
+    simp only [Nat.cast_sum, Nat.choose_one_right] at h
+    change (∑ j ∈ range (n + 1), (↑(j + 1) : ℝ)) = ↑((n + 1 + 1).choose 2) at h
+    rw [Nat.cast_choose_two] at h
+    simp only [Nat.cast_add, Nat.cast_one, Nat.cast_succ] at h ⊢
+    rw [h]
+    ring
+
 private theorem sum_square_rank (n : ℕ) :
     (∑ j ∈ range n, ((j : ℝ) + 1) ^ 2) =
       (n : ℝ) * ((n : ℝ) + 1) * (2 * (n : ℝ) + 1) / 6 := by
-  induction n with
+  cases n with
   | zero => simp
-  | succ n ih =>
-    rw [sum_range_succ, ih, Nat.cast_succ]
-    ring
+  | succ n =>
+    have hs := congrArg (fun a : ℕ => (a : ℝ)) (Nat.sum_range_add_choose n 2)
+    push_cast only [Nat.cast_sum] at hs
+    have hchoose : (((n + 2 + 1).choose 3 : ℕ) : ℝ) =
+        ((n : ℝ) + 3) * ((n : ℝ) + 2) * ((n : ℝ) + 1) / 6 := by
+      have h := congrArg (fun a : ℕ => (a : ℝ))
+        (Nat.descFactorial_eq_factorial_mul_choose (n + 2 + 1) 3)
+      rw [show (n + 2 + 1).descFactorial 3 =
+        (n + 2 + 1 - 2) * (n + 2 + 1).descFactorial 2 from Nat.descFactorial_succ _ 2,
+        show n + 2 + 1 - 2 = n + 1 by omega] at h
+      simp only [Nat.cast_mul, Nat.cast_descFactorial_two, Nat.cast_add, Nat.cast_one,
+        Nat.cast_ofNat] at h
+      norm_num [Nat.factorial] at h
+      linear_combination -h / 6
+    calc
+      _ = ∑ j ∈ range (n + 1), (2 * (((j + 2).choose 2 : ℕ) : ℝ) - ((j : ℝ) + 1)) := by
+        apply sum_congr rfl
+        intro j _
+        rw [Nat.cast_choose_two, Nat.cast_add, Nat.cast_ofNat]
+        ring
+      _ = _ := by
+        rw [sum_sub_distrib, ← mul_sum, hs, hchoose, sum_linear_rank, Nat.cast_succ]
+        ring
 
 private theorem sum_opposite_rank (m : ℕ) :
     (∑ j ∈ range m, ((j : ℝ) + 1) * ((m : ℝ) - (j : ℝ))) =
       (m : ℝ) * ((m : ℝ) + 1) * ((m : ℝ) + 2) / 6 := by
-  have hlinear : ∑ j ∈ range m, ((j : ℝ) + 1) =
-      (m : ℝ) * ((m : ℝ) + 1) / 2 := by
-    induction m with
-    | zero => simp
-    | succ m ih =>
-      rw [sum_range_succ, ih, Nat.cast_succ]
-      ring
   calc
     _ = (∑ j ∈ range m, (((m : ℝ) + 1) * ((j : ℝ) + 1) - ((j : ℝ) + 1) ^ 2)) := by
       exact sum_congr rfl fun j _ => by ring
     _ = _ := by
-      rw [sum_sub_distrib, ← mul_sum, sum_square_rank, hlinear]
+      rw [sum_sub_distrib, ← mul_sum, sum_square_rank, sum_linear_rank]
       ring
 
 private theorem sum_forward_count_sq (N q : ℕ) (hNq : N ≤ q) :
