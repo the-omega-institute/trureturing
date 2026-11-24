@@ -8,7 +8,7 @@ internal sealed class LeePositiveLatinSquareTypeDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/LeePositiveLatinSquareType.";
     private static readonly LibraryNoteRef Lee =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/lee2026assignmentpolytopes");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/lee2026assignmentpolytopes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The binary symmetric rank-threshold graph in dimension seven fails the positive Latin-square-type valency.",
