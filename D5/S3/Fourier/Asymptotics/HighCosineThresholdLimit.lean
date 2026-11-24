@@ -173,7 +173,7 @@ private theorem threshold_slope_limit (u l topWeight bottomWeight : ℕ → ℝ)
   have hbotNumer := (hbottom.mul (hu.const_sub 1)).mul (hdouble.const_sub 1)
   have hbotDenom := hspread.mul (hdouble.sub hl)
   have hbottomTerm := hbotNumer.div hbotDenom (by norm_num)
-  convert (htopTerm.const_add 1).add hbottomTerm using 2 <;> norm_num
+  convert (htopTerm.const_add 1).add hbottomTerm using 2; norm_num
 
 private theorem tail_moment_ratio_limit (u l : ℕ → ℝ)
     (hu : Tendsto u atTop (𝓝 1)) (hl : Tendsto l atTop (𝓝 (-1))) :
@@ -184,7 +184,7 @@ private theorem tail_moment_ratio_limit (u l : ℕ → ℝ)
   have hll := (hl.const_mul 2).add_const 1
   have hnum := huu.mul (hu.sub hl)
   have hdenom := ((hu.const_sub 1).mul huu).sub ((hl.const_sub 1).mul hll)
-  convert (hnum.div hdenom (by norm_num)).const_add 1 using 2 <;> norm_num
+  convert (hnum.div hdenom (by norm_num)).const_add 1 using 2; norm_num
 
 private theorem middle_slope_decomposition {l x u A C : ℝ}
     (hlx : l < x) (hxu : x < u) (hu : u < 1) :
@@ -248,3 +248,382 @@ private theorem multiplier_slope_order {l u A C : ℝ}
       sub_ne_zero.mpr hl.ne, sub_ne_zero.mpr hl.ne',
       sub_ne_zero.mpr hlu.ne, sub_ne_zero.mpr hlu.ne']
     ring
+
+private def grid (q n : ℕ) : ℝ := Real.cos (2 * Real.pi * (n : ℝ) / q)
+
+private theorem grid_strict {q n m : ℕ} (hnm : n < m) (hm : m ≤ q / 2) :
+    grid q m < grid q n := by
+  have hq : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
+  have hm' : 2 * (m : ℝ) ≤ q := by exact_mod_cast (show 2 * m ≤ q by omega)
+  have hnm' : (n : ℝ) < m := by exact_mod_cast hnm
+  apply Real.cos_lt_cos_of_nonneg_of_le_pi
+  · positivity
+  · apply (div_le_iff₀ hq).mpr
+    nlinarith only [mul_le_mul_of_nonneg_left hm' Real.pi_pos.le]
+  · apply (div_lt_div_iff_of_pos_right hq).mpr
+    exact mul_lt_mul_of_pos_left hnm' (by positivity)
+
+private theorem grid_one (q : ℕ) : grid q 1 = cyclicUpper q := by
+  simp [grid, cyclicUpper]
+
+private theorem grid_two (q : ℕ) : grid q 2 = 2 * (cyclicUpper q)^2 - 1 := by
+  rw [grid, cyclicUpper, show 2 * Real.pi * ((2 : ℕ) : ℝ) / q =
+    2 * (2 * Real.pi / q) by push_cast; ring, Real.cos_two_mul]
+
+private theorem grid_lower (q : ℕ) : grid q (q / 2) = cyclicLower q := rfl
+
+private theorem grid_half_angle {q : ℕ} (hq : 0 < q) :
+    Real.pi - Real.pi / q ≤ 2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q ∧
+      2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q ≤ Real.pi := by
+  have hq' : (0 : ℝ) < q := by exact_mod_cast hq
+  have hh : 2 * ((q / 2 : ℕ) : ℝ) ≤ q := by
+    exact_mod_cast (show 2 * (q / 2) ≤ q by omega)
+  have hr : (q : ℝ) ≤ 2 * ((q / 2 : ℕ) : ℝ) + 1 := by
+    exact_mod_cast (show q ≤ 2 * (q / 2) + 1 by omega)
+  constructor
+  · apply (le_div_iff₀ hq').mpr
+    rw [sub_mul, div_mul_cancel₀ _ hq'.ne']
+    nlinarith only [mul_le_mul_of_nonneg_left hr Real.pi_pos.le]
+  · apply (div_le_iff₀ hq').mpr
+    nlinarith only [mul_le_mul_of_nonneg_left hh Real.pi_pos.le]
+
+private theorem upper_add_lower_neg {q : ℕ} (hq : 4 ≤ q) :
+    cyclicUpper q + cyclicLower q < 0 := by
+  have hq' : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
+  have hq4 : (4 : ℝ) ≤ q := by exact_mod_cast hq
+  have hstep : 0 < Real.pi / q := by positivity
+  have hpos : 0 ≤ Real.pi - 2 * Real.pi / q := by
+    apply sub_nonneg.mpr
+    apply (div_le_iff₀ hq').mpr
+    nlinarith only [mul_le_mul_of_nonneg_left hq4 Real.pi_pos.le, Real.pi_pos]
+  obtain ⟨hl, hu⟩ := grid_half_angle (show 0 < q by omega)
+  have hg : Real.pi - 2 * Real.pi / q <
+      2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q := by
+    calc
+      _ < Real.pi - Real.pi / q := by rw [mul_div_assoc]; linarith
+      _ ≤ _ := hl
+  have h := Real.cos_lt_cos_of_nonneg_of_le_pi hpos hu hg
+  rw [Real.cos_pi_sub, ← cyclicLower, ← cyclicUpper] at h
+  linarith
+
+private theorem cyclic_upper_count {q : ℕ} (hq : 4 ≤ q) :
+    count (cyclicReadout q) (cyclicUpper q) = 2 := by
+  classical
+  let a : Fin q := ⟨1, by omega⟩
+  let b : Fin q := ⟨q - 1, by omega⟩
+  have hab : a ≠ b := by
+    intro h
+    have he := congrArg Fin.val h
+    dsimp [a, b] at he
+    omega
+  have htop : cyclicUpper q < 1 := by
+    have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
+    simpa [grid, cyclicUpper] using h
+  have hfold (k : Fin q) (hk : k.val ≠ 0) (he : cyclicReadout q k = cyclicUpper q) :
+      k = a ∨ k = b := by
+    obtain ⟨n, hn, hnh, hread, hindex⟩ := cyclic_fold k hk
+    change cyclicReadout q k = grid q n at hread
+    have hn1 : n = 1 := by
+      by_contra hne
+      have h := grid_strict (q := q) (n := 1) (m := n) (by omega) hnh
+      rw [grid_one, ← hread, he] at h
+      exact (lt_irrefl _) h
+    rcases hindex with h | h
+    · exact Or.inl (Fin.ext (by dsimp [a]; omega))
+    · exact Or.inr (Fin.ext (by dsimp [b]; have := k.isLt; omega))
+  have hreadA : cyclicReadout q a = cyclicUpper q := by simp [cyclicReadout, a, cyclicUpper]
+  have hreadB : cyclicReadout q b = cyclicUpper q := by
+    obtain ⟨n, hn, hnh, hre, hi⟩ := cyclic_fold b (by dsimp [b]; omega)
+    have hn1 : n = 1 := by
+      dsimp [b] at hi
+      omega
+    simpa [hn1, cyclicUpper] using hre
+  have hset : univ.filter (fun k : Fin q => cyclicReadout q k = cyclicUpper q) = {a,b} := by
+    ext k
+    simp only [mem_filter, mem_univ, true_and, mem_insert, mem_singleton]
+    constructor
+    · intro he
+      have hk : k.val ≠ 0 := by
+        intro hz
+        have h : cyclicReadout q k = 1 := by simp [cyclicReadout, hz]
+        rw [he] at h
+        exact htop.ne h
+      exact hfold k hk he
+    · rintro (rfl | rfl)
+      · exact hreadA
+      · exact hreadB
+  unfold count
+  rw [hset, Finset.card_pair hab]
+  norm_num
+
+private theorem cyclic_lower_count_ge_one {q : ℕ} (hq : 4 ≤ q) :
+    1 ≤ count (cyclicReadout q) (cyclicLower q) := by
+  classical
+  unfold count
+  have h : 0 < (univ.filter (fun k : Fin q => cyclicReadout q k = cyclicLower q)).card :=
+    Finset.card_pos.mpr ⟨⟨q / 2, by omega⟩, mem_filter.mpr ⟨mem_univ _, rfl⟩⟩
+  exact_mod_cast (show 1 ≤ _ from h)
+
+private theorem inv_nat_limit : Tendsto (fun q : ℕ => (q : ℝ)⁻¹) atTop (𝓝 0) :=
+  tendsto_inv_atTop_zero.comp tendsto_natCast_atTop_atTop
+
+private theorem upper_limit : Tendsto cyclicUpper atTop (𝓝 1) := by
+  have h := inv_nat_limit.const_mul (2 * Real.pi)
+  simp only [mul_zero] at h
+  change Tendsto (fun q : ℕ => Real.cos (2 * Real.pi / q)) atTop (𝓝 1)
+  simpa [div_eq_mul_inv, Real.cos_zero, Function.comp_def] using
+    (Real.continuous_cos.continuousAt (x := 0)).tendsto.comp h
+
+private theorem lower_limit : Tendsto cyclicLower atTop (𝓝 (-1)) := by
+  have hlow : Tendsto (fun q : ℕ => Real.pi - Real.pi / q) atTop (𝓝 Real.pi) := by
+    simpa [div_eq_mul_inv] using (inv_nat_limit.const_mul Real.pi).const_sub Real.pi
+  have ha : Tendsto (fun q : ℕ => 2 * Real.pi * ((q/2 : ℕ) : ℝ) / q)
+      atTop (𝓝 Real.pi) := by
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlow tendsto_const_nhds
+    · filter_upwards [eventually_ge_atTop 1] with q hq
+      exact (grid_half_angle (by omega)).1
+    · filter_upwards [eventually_ge_atTop 1] with q hq
+      exact (grid_half_angle (by omega)).2
+  change Tendsto (fun q : ℕ => Real.cos (2 * Real.pi * ((q/2 : ℕ) : ℝ) / q)) atTop (𝓝 (-1))
+  simpa [Real.cos_pi, Function.comp_def] using
+    (Real.continuous_cos.continuousAt (x := Real.pi)).tendsto.comp ha
+
+private theorem upper_fraction_limit :
+    Tendsto (fun q => upperFraction (cyclicUpper q) (cyclicLower q)) atTop (𝓝 1) := by
+  have hu := upper_limit.sub (((upper_limit.pow 2).const_mul 2).sub_const 1)
+  have hl := lower_limit.sub (((lower_limit.pow 2).const_mul 2).sub_const 1)
+  convert hl.neg.div (hu.sub hl) (by norm_num) using 2 <;> norm_num [upperFraction, difference, second]
+
+private def upperWeight (q : ℕ) : ℝ :=
+  upperFraction (cyclicUpper q) (cyclicLower q) / count (cyclicReadout q) (cyclicUpper q)
+
+private def lowerWeight (q : ℕ) : ℝ :=
+  (1 - upperFraction (cyclicUpper q) (cyclicLower q)) / count (cyclicReadout q) (cyclicLower q)
+
+private theorem upper_weight_limit : Tendsto upperWeight atTop (𝓝 (1/2)) := by
+  apply (upper_fraction_limit.div_const 2).congr'
+  filter_upwards [eventually_ge_atTop 4] with q hq
+  simp [upperWeight, cyclic_upper_count hq]
+
+private theorem fraction_bounds {q : ℕ}
+    (hu : cyclicUpper q < 1) (hul : -(1/2 : ℝ) < cyclicUpper q)
+    (hl : cyclicLower q < -(1/2 : ℝ)) :
+    0 < upperFraction (cyclicUpper q) (cyclicLower q) ∧
+      upperFraction (cyclicUpper q) (cyclicLower q) < 1 := by
+  have hdu : 0 < difference (cyclicUpper q) := by
+    unfold difference second
+    nlinarith only [mul_pos (sub_pos.mpr hu) (show 0 < 2 * cyclicUpper q + 1 by linarith)]
+  have hdl : difference (cyclicLower q) < 0 := by
+    unfold difference second
+    nlinarith only [mul_neg_of_pos_of_neg (show 0 < 1 - cyclicLower q by linarith)
+      (show 2 * cyclicLower q + 1 < 0 by linarith)]
+  have hd : 0 < difference (cyclicUpper q) - difference (cyclicLower q) := by linarith
+  exact ⟨div_pos (neg_pos.mpr hdl) hd, (div_lt_one hd).mpr (by linarith)⟩
+
+private theorem eventually_fraction_bounds :
+    ∀ᶠ q in atTop, 0 < upperFraction (cyclicUpper q) (cyclicLower q) ∧
+      upperFraction (cyclicUpper q) (cyclicLower q) < 1 := by
+  filter_upwards [eventually_ge_atTop 4, tendsto_const_nhds.eventually_lt upper_limit
+    (show -(1/2 : ℝ) < 1 by norm_num),
+    lower_limit.eventually_lt tendsto_const_nhds (show (-1 : ℝ) < -(1/2) by norm_num)]
+    with q hq hu hl
+  apply fraction_bounds _ hu hl
+  have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
+  simpa [grid, cyclicUpper] using h
+
+private theorem lower_weight_limit : Tendsto lowerWeight atTop (𝓝 0) := by
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
+    (show Tendsto (fun q => 1 - upperFraction (cyclicUpper q) (cyclicLower q)) atTop (𝓝 0) by
+      simpa using upper_fraction_limit.const_sub 1)
+  · filter_upwards [eventually_ge_atTop 4, eventually_fraction_bounds] with q hq hp
+    exact div_nonneg (sub_nonneg.mpr hp.2.le) ((cyclic_lower_count_ge_one hq).trans' zero_le_one)
+  · filter_upwards [eventually_ge_atTop 4, eventually_fraction_bounds] with q hq hp
+    exact div_le_self (sub_nonneg.mpr hp.2.le) (cyclic_lower_count_ge_one hq)
+
+private theorem intermediate_level {q : ℕ} (i : Fin q)
+    (hl : cyclicLower q < cyclicReadout q i) (hu : cyclicReadout q i < cyclicUpper q) :
+    ∃ n : ℕ, 2 ≤ n ∧ n < q / 2 ∧ cyclicReadout q i = grid q n := by
+  have hk : i.val ≠ 0 := by
+    intro h
+    have he : cyclicReadout q i = 1 := by simp [cyclicReadout, h]
+    rw [he] at hu
+    exact (not_lt_of_ge (Real.cos_le_one _)) hu
+  obtain ⟨n, hn, hnh, he, _⟩ := cyclic_fold i hk
+  change cyclicReadout q i = grid q n at he
+  refine ⟨n, ?_, ?_, he⟩
+  · by_contra! h
+    have hn1 : n = 1 := by omega
+    rw [he, hn1, grid_one] at hu
+    exact lt_irrefl _ hu
+  · by_contra! h
+    have hnh' : n = q / 2 := by omega
+    rw [he, hnh', grid_lower] at hl
+    exact lt_irrefl _ hl
+
+private theorem grid_two_between {q : ℕ} (hq : 6 ≤ q) :
+    cyclicLower q < grid q 2 ∧ grid q 2 < cyclicUpper q := by
+  rw [← grid_lower, ← grid_one]
+  exact ⟨grid_strict (by omega) le_rfl, grid_strict (by decide) (by omega)⟩
+
+private def middleSlope (q : ℕ) (x : ℝ) : ℝ :=
+  let P := polynomial (cyclicUpper q) (cyclicLower q)
+    (count (cyclicReadout q) (cyclicUpper q)) (count (cyclicReadout q) (cyclicLower q))
+  Concentration.HighCosineThreshold.slope (P 0 x) (P 1 x)
+
+private theorem middleSlope_eq {q : ℕ} {x : ℝ}
+    (hl : cyclicLower q < x) (hu : x < cyclicUpper q) (hut : cyclicUpper q < 1) :
+    let u := cyclicUpper q
+    let l := cyclicLower q
+    let A := upperWeight q
+    let C := lowerWeight q
+    middleSlope q x =
+      (1 + (A * (1 - l) - C * (1 - u)) / (u - l)) +
+      ((1 - u) * (1 - l) / (u - l)) * (A / (u - x) + C / (x - l)) := by
+  simpa [middleSlope, Concentration.HighCosineThreshold.slope, polynomial, topCoeff, upperCoeff, lowerCoeff,
+    upperWeight, lowerWeight] using middle_slope_decomposition hl hu hut
+      (A := upperWeight q) (C := lowerWeight q)
+
+private theorem middleSlope_two_eq {q : ℕ} (hq : 6 ≤ q)
+    (hut : cyclicUpper q < 1) :
+    let u := cyclicUpper q
+    let l := cyclicLower q
+    let A := upperWeight q
+    let C := lowerWeight q
+    middleSlope q (grid q 2) =
+      1 + A * (1 - l) * (2 * (1 + u)) / ((u - l) * (2 * u + 1)) +
+        C * (1 - u) * (1 - (2 * u^2 - 1)) / ((u - l) * (2 * u^2 - 1 - l)) := by
+  obtain ⟨hl, hu⟩ := grid_two_between hq
+  rw [middleSlope_eq hl hu hut]
+  let u := cyclicUpper q
+  let l := cyclicLower q
+  let A := upperWeight q
+  let C := lowerWeight q
+  have hspread : l < u := hl.trans hu
+  have hdouble : grid q 2 = 2 * u^2 - 1 := grid_two q
+  have hh : u - grid q 2 = (1 - u) * (2 * u + 1) := by rw [hdouble]; ring
+  have hpos : 0 < 2 * u + 1 :=
+    (mul_pos_iff_of_pos_left (sub_pos.mpr hut)).mp (hh ▸ sub_pos.mpr hu)
+  change (1 + (A * (1 - l) - C * (1 - u)) / (u - l)) +
+    ((1 - u) * (1 - l) / (u - l)) * (A / (u - grid q 2) + C / (grid q 2 - l)) =
+    1 + A * (1 - l) * (2 * (1 + u)) / ((u - l) * (2 * u + 1)) +
+      C * (1 - u) * (1 - (2 * u^2 - 1)) / ((u - l) * (2 * u^2 - 1 - l))
+  rw [hh, hdouble]
+  have hb : 2 * u^2 - 1 - l ≠ 0 := by rw [← hdouble]; exact sub_ne_zero.mpr hl.ne'
+  have hs : u - l ≠ 0 := sub_ne_zero.mpr hspread.ne'
+  have ht : 1 - u ≠ 0 := sub_ne_zero.mpr hut.ne'
+  have hpos' : 2 * u + 1 ≠ 0 := hpos.ne'
+  clear_value u l A C
+  have hpos'' : u * 2 + 1 ≠ 0 := by rwa [mul_comm u 2]
+  have hb' : u^2 * 2 - 1 - l ≠ 0 := by rwa [mul_comm (u^2) 2]
+  field_simp [hs, ht, hpos', hb, hpos'', hb']
+  ring
+
+private theorem eventual_upper_lt_one :
+    ∀ᶠ q in atTop, cyclicUpper q < 1 := by
+  filter_upwards [eventually_ge_atTop 4] with q hq
+  have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
+  simpa [grid, cyclicUpper] using h
+
+private theorem middleSlope_two_limit :
+    Tendsto (fun q => middleSlope q (grid q 2)) atTop (𝓝 (5 / 3)) := by
+  apply (threshold_slope_limit cyclicUpper cyclicLower upperWeight lowerWeight
+    upper_limit lower_limit upper_weight_limit lower_weight_limit).congr'
+  filter_upwards [eventually_ge_atTop 6, eventual_upper_lt_one] with q hq hu
+  exact (middleSlope_two_eq hq hu).symm
+
+private theorem grid_two_limit : Tendsto (fun q => grid q 2) atTop (𝓝 1) := by
+  convert ((upper_limit.pow 2).const_mul 2).sub_const 1 using 1
+  · ext q
+    exact grid_two q
+  · norm_num
+
+private theorem eventual_strict_slope_dominance :
+    ∀ᶠ q in atTop,
+    let c := cyclicReadout q
+    let u := cyclicUpper q
+    let l := cyclicLower q
+    let v := grid q 2
+    let nu := count c u
+    let nl := count c l
+    let β := firstMultiplier u l nu nl
+    let γ := secondMultiplier u l nu nl
+    6 ≤ q ∧ u < 1 ∧ u + l < 0 ∧ l < v ∧ v < u ∧
+      1 < middleSlope q v ∧
+      Concentration.HighCosineThreshold.slope (β 0) (β 1) < middleSlope q v ∧
+      Concentration.HighCosineThreshold.slope (γ 0) (γ 1) < middleSlope q v ∧
+      (∀ i, l < c i → c i < u → c i ≠ v → middleSlope q (c i) < middleSlope q v) := by
+  have hspread := grid_two_limit.sub lower_limit
+  have hAC := lower_weight_limit.const_mul 6
+  simp only [mul_zero] at hAC
+  filter_upwards [eventually_ge_atTop 6, eventual_upper_lt_one, eventually_fraction_bounds,
+    hAC.eventually_lt upper_weight_limit (by norm_num),
+    tendsto_const_nhds.eventually_lt hspread (show (1 : ℝ) < 1 - (-1) by norm_num),
+    tendsto_const_nhds.eventually_lt middleSlope_two_limit (show (1 : ℝ) < 5/3 by norm_num)]
+    with q hq hut hp hAC hspread hS
+  dsimp only
+  let c := cyclicReadout q
+  let u := cyclicUpper q
+  let l := cyclicLower q
+  let v := grid q 2
+  let A := upperWeight q
+  let C := lowerWeight q
+  have hA : 0 < A := by
+    unfold A upperWeight
+    rw [cyclic_upper_count (by omega)]
+    exact div_pos hp.1 (by norm_num)
+  have hC : 0 ≤ C := div_nonneg (sub_nonneg.mpr hp.2.le)
+    ((cyclic_lower_count_ge_one (by omega : 4 ≤ q)).trans' zero_le_one)
+  have hs := upper_add_lower_neg (by omega : 4 ≤ q)
+  obtain ⟨hlv, hvu⟩ := grid_two_between hq
+  have hlu := hlv.trans hvu
+  have hlt := hlu.trans hut
+  have hK : 0 < (1 - u) * (1 - l) / (u - l) :=
+    div_pos (mul_pos (sub_pos.mpr hut) (sub_pos.mpr hlt)) (sub_pos.mpr hlu)
+  have hC_A : C ≤ A := by change 6 * C < A at hAC; linarith
+  obtain ⟨hβγ, hγ⟩ := multiplier_slope_order hlu hut hs hC_A
+  have hβγ' :
+      Concentration.HighCosineThreshold.slope (firstMultiplier u l (count c u) (count c l) 0)
+        (firstMultiplier u l (count c u) (count c l) 1) ≤
+      Concentration.HighCosineThreshold.slope (secondMultiplier u l (count c u) (count c l) 0)
+        (secondMultiplier u l (count c u) (count c l) 1) := by
+    simpa [Concentration.HighCosineThreshold.slope, firstMultiplier, secondMultiplier, topCoeff, upperCoeff, lowerCoeff,
+      A, C, upperWeight, lowerWeight, c, u, l] using hβγ
+  have hγ' :
+      Concentration.HighCosineThreshold.slope (secondMultiplier u l (count c u) (count c l) 0)
+        (secondMultiplier u l (count c u) (count c l) 1) =
+      1 + (A * (1 - l) - C * (1 - u)) / (u - l) := by
+    simpa [Concentration.HighCosineThreshold.slope, secondMultiplier, topCoeff, upperCoeff, lowerCoeff,
+      A, C, upperWeight, lowerWeight, c, u, l] using hγ
+  have hγS : Concentration.HighCosineThreshold.slope (secondMultiplier u l (count c u) (count c l) 0)
+      (secondMultiplier u l (count c u) (count c l) 1) < middleSlope q v := by
+    rw [hγ', middleSlope_eq hlv hvu hut]
+    exact lt_add_of_pos_right _ (mul_pos hK
+      (add_pos_of_pos_of_nonneg (div_pos hA (sub_pos.mpr hvu))
+        (div_nonneg hC (sub_nonneg.mpr hlv.le))))
+  refine ⟨hq, hut, hs, hlv, hvu, hS, hβγ'.trans_lt hγS, hγS, ?_⟩
+  intro i hiL hiU hiV
+  let x := c i
+  obtain ⟨n, hn, hnh, he⟩ := intermediate_level i hiL hiU
+  have hn2 : 2 < n := by
+    by_contra! h
+    have hn' : n = 2 := by omega
+    exact hiV (by simpa [hn', v] using he)
+  have hxv : x < v := by
+    change x = grid q n at he
+    rw [he]
+    exact grid_strict hn2 hnh.le
+  have hgap : 1 - u ≤ x - l := by
+    change x = grid q n at he
+    rw [he]
+    exact grid_bottom_gap hq hnh
+  have hupper : u - v ≤ 3 * (1 - u) := by
+    dsimp only [v]
+    rw [grid_two]
+    nlinarith only [sq_nonneg (1 - u)]
+  have hwidth : u - x ≤ 2 := by
+    have hx : -1 ≤ x := Real.neg_one_le_cos _
+    linarith
+  have hcompare := inverse_gap_criterion hiL hxv hvu hut hA hC hAC
+    hgap hspread.le hupper hwidth
+  rw [middleSlope_eq hiL hiU hut, middleSlope_eq hlv hvu hut]
+  exact add_lt_add_right (mul_lt_mul_of_pos_left hcompare hK) _
