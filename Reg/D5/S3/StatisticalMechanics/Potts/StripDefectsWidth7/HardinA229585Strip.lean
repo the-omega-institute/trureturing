@@ -288,7 +288,7 @@ def family : Registration arena (type_of% @polynomial_relation) where
     have hs : forward T initial 10 = W 10 := by
       let rows := List.ofFn W
       have hchain : rows.IsChain (fun u v => Matrix.vecMul u T = v) :=
-        List.isChain_ofFn.mpr fun k hk => (finite_certificate.2.2.2.2.2.1.2 ⟨k, hk⟩).symm
+        List.isChain_ofFn.mpr fun k hk => (finite_certificate.2.2.2.2.2.1.2 ⟨k, by omega⟩).symm
       have hlast : 10 < rows.length := by simp only [rows, List.length_ofFn]; decide
       have he := hchain.iterate_eq_of_apply_eq 10 hlast
       simp only [rows, List.getElem_ofFn] at he
