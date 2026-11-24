@@ -73,8 +73,7 @@ private theorem coordinate_gram :
   let swap := Equiv.prodComm (Fin 1) (Fin 4)
   let stay := Equiv.refl (Fin 4 × Fin 1)
   change I.submatrix stay swap * I.submatrix swap stay = I
-  rw [Matrix.submatrix_mul_equiv I I stay swap stay, show I * I = I from Matrix.one_mul I]
-  rfl
+  rw [Matrix.submatrix_mul_equiv I I stay swap stay, show I * I = I from Matrix.one_mul I] <;> rfl
 
 private theorem cliffordRejected : ¬ cliffordArena.Law dimensionFalse := by
   intro h

@@ -79,8 +79,7 @@ private theorem witnessRankThree :
         {0, 1, 2} := by
       ext i
       fin_cases i <;> norm_num [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
-    rw [hs]
-    decide
+    rw [hs] <;> decide
 
 private theorem rankThreeRejected : ¬ rankThreeArena.Law dimensionFalse := by
   intro h
