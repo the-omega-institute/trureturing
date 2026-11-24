@@ -342,14 +342,16 @@ private theorem columnRepresentatives_eq :
 private theorem columnRank_eq (j : Fin 96) :
     columnRank j = Fin.ofNat 60 (columnKeys.idxOf (exitRead j)) := by
   unfold columnRank
-  rw [columnRanks_eq, getElem!_pos _ _ (by simpa only [Array.size_ofFn] using j.isLt),
-    Array.getElem_ofFn]
+  rw [columnRanks_eq, getElem!_pos]
+  · rw [Array.getElem_ofFn]
+  · simpa only [Array.size_ofFn] using j.isLt
 
 private theorem columnRepresentative_eq (k : Fin 60) :
     columnRepresentative k = exitRepresentative columnKeys[k.val]! := by
   unfold columnRepresentative
-  rw [columnRepresentatives_eq, getElem!_pos _ _ (by simpa only [Array.size_ofFn] using k.isLt),
-    Array.getElem_ofFn]
+  rw [columnRepresentatives_eq, getElem!_pos]
+  · rw [Array.getElem_ofFn]
+  · simpa only [Array.size_ofFn] using k.isLt
 
 -- Pack the existing transfer columns into radix-32 words at their representatives.
 set_option maxRecDepth 10000 in
@@ -400,7 +402,9 @@ private theorem representative_data (j : Fin 96) :
     rw [columnRepresentative_eq, hread]
     have hval : (exitRepresentative (exitRead j)).val = (List.ofFn exitRead).idxOf (exitRead j) :=
       Nat.mod_eq_of_lt hindex
-    simpa only [List.getElem_ofFn, ← hval] using List.getElem_idxOf hexit
+    have hget := List.getElem_idxOf hexit
+    rw [List.getElem_ofFn] at hget
+    exact (congrArg exitRead (Fin.ext hval)).trans hget
   exact ⟨by simp only [columnRank_eq, hrep], hrep⟩
 
 set_option maxRecDepth 10000 in
