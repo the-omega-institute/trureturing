@@ -15,7 +15,7 @@ internal sealed class DisjointTriplePhaseIdentityDocument : IScribeDocumentDefin
             DescribeId.Create("disjoint-triple-phase-identity"),
             DeclarationHandle.Create(Owner + ".disjoint_triple_phase_identity"),
             H("Pair contribution and mixed phase term"),
-            StatementSource.FromAuthor(Statement()),
+            StatementSource.FromAuthor(DisplayIdentity()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -43,19 +43,37 @@ internal sealed class DisjointTriplePhaseIdentityDocument : IScribeDocumentDefin
                     + "band selects the corresponding signed frequency differences."))),
             DescribeRole.Theorem))));
 
-    private static Formula Statement()
+    private static Formula DisplayIdentity()
     {
         var n = F.Id("n");
         var u = F.Id("u");
         var x = F.Id("X");
         var y = F.Id("Y");
+        var j = F.Id("j");
+        var alphabet = F.Id("J");
+        var ring = F.Id("R");
+        var left = F.Id("x");
+        var right = F.Id("y");
+        var x2 = new Formula.Subscript(x, D(2));
+        var y2 = new Formula.Subscript(y, D(2));
+        var sum = Seq(Sum, Underscore, Grp(j, Sp, InMacro, Sp, alphabet));
+        var xj = Call("x", j);
+        var yj = Call("y", j);
         var pair = new Formula.Subscript(F.Id("P"), n);
         return Disp(new Formula.Aligned([
-            Seq(Amp, Call("D", F.Id("x"), F.Id("y")), Sp, Eq, Sp,
+            Seq(Amp, Forall, Sp, alphabet, Quad, OpenBracket, Call("Fintype", alphabet), CloseBracket,
+                Quad, OpenBracket, Call("DecidableEq", alphabet), CloseBracket,
+                Quad, Forall, Sp, ring, Quad, OpenBracket, Call("CommRing", ring), CloseBracket, Comma),
+            Seq(Amp, Forall, Sp, left, Comma, right, Colon, alphabet, To, Sp, ring, Comma, Quad,
+                Open, Forall, Sp, j, InMacro, Sp, alphabet, Comma, xj, yj, Eq, D(1), Close, Implies),
+            Seq(Amp, n, Eq, Bar, alphabet, Bar, Comma, Quad, Sp, x, Eq, sum, xj, Comma,
+                Quad, Sp, y, Eq, sum, yj, Comma, Quad, Sp, x2, Eq, sum, Pow(xj, 2),
+                Comma, Quad, Sp, y2, Eq, sum, Pow(yj, 2), Comma),
+            Seq(Amp, Call("D", left, right), Sp, Eq, Sp,
                 new Formula.Apply(pair, [Seq(x, y)]), Sp, Minus, Sp, D(3), Open,
-                new Formula.Subscript(x, D(2)), Pow(y, 2), Sp, Plus, Sp,
-                new Formula.Subscript(y, D(2)), Pow(x, 2), Close, Comma),
-            Seq(Amp, new Formula.Apply(pair, [u]), Sp, Eq, Sp, Pow(u, 3), Sp, Plus, Sp,
+                x2, Pow(y, 2), Sp, Plus, Sp, y2, Pow(x, 2), Close, Comma),
+            Seq(Amp, Forall, Sp, u, Colon, ring, Comma, Quad, new Formula.Apply(pair, [u]),
+                Sp, Eq, Sp, Pow(u, 3), Sp, Plus, Sp,
                 Open, D(1, 8), Sp, Minus, Sp, D(9), n, Close, Pow(u, 2), Sp, Plus, Sp,
                 Open, D(1, 8), Pow(n, 2), Sp, Minus, Sp, D(6, 3), n, Sp, Plus, Sp,
                 D(5, 1), Close, u),
