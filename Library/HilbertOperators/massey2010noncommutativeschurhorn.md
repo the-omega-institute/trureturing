@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/0712.2246
 claim: The block-diagonal Schur–Horn theorem characterizes the image of a Hermitian unitary orbit under block pinching.
 strata_touched:
   - D5/S3/Quantum/Measurement/Auric/EqualBlockEffects
+  - D5/S3/Quantum/Measurement/Auric/EqualBlockProjection
 license: citation-only
 triage: anchor
 ---
