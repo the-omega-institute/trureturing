@@ -14,9 +14,9 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "For a finite index type I, write c for its real readout and use 2c² − 1 as the second readout. "
-                + "The top value is one and occurs once. With levels ℓ and u, write g(x) = x − (2x² − 1), "
+                + "The value one occurs at a unique index. With levels ℓ and u, write g(x) = x − (2x² − 1), "
                 + "p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). "
-                + "The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to "
+                + "The law gives mass 1−r to that index, rp to the level u, and r(1−p) to "
                 + "the level ℓ. Each level’s mass is divided equally among its indices.")),
             Paragraph(Text(
                 "The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, u+ℓ<0, "
@@ -36,7 +36,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "Interpolate the three weights by a quadratic P with moment coefficients β "
                     + "and γ in the basis 1, x, 2x² − 1. For each of β, γ and the values −P(x) at "
                     + "intermediate levels, take the slope 1 − f(1)/f(0) as a function of r. "
-                    + "Let B be the maximum of those slopes and one. At thresholds a in "
+                    + "Let B be the maximum of those slopes and one. The cutoff lies strictly between b and one. At thresholds a in "
                     + "[1 − (1−b)/B, 1] the two moments equal a. The squared mass is "
                     + "(1−r)² + r²(p²/nᵤ + (1−p)²/nₗ), where nᵤ and nₗ are level counts. "
                     + "The excess squared mass of any feasible law bounds its squared distance "
@@ -54,8 +54,8 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "support increases that moment and preserves the other. If an intermediate "
                     + "value of P is positive, a perturbation adds weight there and uses the "
                     + "three support levels to preserve both moments. A sufficiently small "
-                    + "positive step decreases the squared mass in either case. At a = b, the top weight is zero. "
-                    + "A small mixture toward the point mass at the top raises both moments and lowers squared mass."))),
+                    + "positive step decreases the squared mass in either case. At a = b, the weight at z is zero. "
+                    + "A small mixture toward the point mass at z raises both moments and lowers squared mass."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cyclic-high-threshold-certificate"),
@@ -110,7 +110,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
 
     private static Formula FiniteStatement() => Disp(new Formula.Aligned([
         Seq(Amp, Context(false), Sp, Longrightarrow, Sp),
-        Seq(Amp, Cutoff, Lt, D(1), Sp, Land, Sp, Open, CertifiedInterval(), Close)
+        Seq(Amp, F.Id("b"), Lt, Cutoff, Lt, D(1), Sp, Land, Sp, Open, CertifiedInterval(), Close)
     ]));
 
     private static Formula DescentStatement() => Disp(new Formula.Aligned([

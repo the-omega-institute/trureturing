@@ -341,6 +341,48 @@ private theorem ordered_levels {u l : ℝ} (hs : u + l < 0)
     rcases mul_neg_iff.mp hn with hyp | hyp <;> linarith [hyp.1, hyp.2]
   exact ⟨hu, by linarith⟩
 
+private theorem tailMoment_lt_cutoff {ι : Type*} [Fintype ι] {c : ι → ℝ} {u l : ℝ}
+    (hu : u < 1) (hl : l < u) (hs : u + l < 0)
+    (hgu : 0 < difference u) (hgl : difference l < 0) (hnu : 0 < count c u) :
+    tailMoment u l < criticalThreshold c u l := by
+  have hproduct : 0 < (1 - u) * (2 * u + 1) := by
+    unfold difference second at hgu
+    nlinarith only [hgu]
+  have hu_low := (mul_pos_iff_of_pos_left (sub_pos.mpr hu)).mp hproduct
+  let p := upperFraction u l
+  let b := tailMoment u l
+  let B := slopeBound c u l
+  let nu := count c u
+  let nl := count c l
+  have hg : 0 < difference u - difference l := sub_pos.mpr (hgl.trans hgu)
+  have hp : 0 < p := div_pos (neg_pos.mpr hgl) hg
+  have hp₁ : p < 1 := (div_lt_one hg).mpr (by linarith)
+  have hb : b < 1 := by
+    change p * u + (1 - p) * l < 1
+    nlinarith [mul_nonneg (sub_nonneg.mpr hp₁.le) (sub_nonneg.mpr hl.le)]
+  have hB : 1 < B := by
+    by_contra! h
+    obtain ⟨_, hβ, hγ, _⟩ := (signs_iff c hu hl hs (r := 1) zero_le_one).mp
+      (by simpa only [one_mul] using h)
+    have hP := polynomial_values hu hl nu nl 1
+    have h₁ := polynomial_expand u l nu nl 1 1
+    have h₂ := polynomial_expand u l nu nl 1 u
+    rw [hP.1, sub_self] at h₁
+    rw [hP.2.1, one_mul] at h₂
+    have hw : 0 < p / nu := div_pos hp hnu
+    have hdiff : 0 ≤ second 1 - second u := by
+      unfold second
+      nlinarith [mul_nonneg (sub_nonneg.mpr hu.le) (show 0 ≤ 1 + u by linarith)]
+    have hle := add_nonneg (mul_nonneg hβ (sub_nonneg.mpr hu.le)) (mul_nonneg hγ hdiff)
+    change 0 ≤ firstMultiplier u l nu nl 1 * (1 - u) +
+      secondMultiplier u l nu nl 1 * (second 1 - second u) at hle
+    change 0 < upperFraction u l / nu at hw
+    nlinarith only [h₁, h₂, hw, hle]
+  have hd : (1 - b) / B < 1 - b := (div_lt_iff₀ (zero_lt_one.trans hB)).mpr (by
+    nlinarith [mul_pos (sub_pos.mpr hb) (sub_pos.mpr hB)])
+  change b < 1 - (1 - b) / B
+  linarith
+
 /-- For a finite readout with a unique top value one, both moments bind near one.
 The off-center extreme levels must straddle the zero of the moment difference,
 and their sum must be negative. -/
@@ -350,7 +392,7 @@ theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
     (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0)
     (hlevels : ∀ i, c i = 1 ∨ (l ≤ c i ∧ c i ≤ u))
     (huAtt : ∃ i, c i = u) (hlAtt : ∃ i, c i = l) :
-    criticalThreshold c u l < 1 ∧
+    tailMoment u l < criticalThreshold c u l ∧ criticalThreshold c u l < 1 ∧
       ∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a := by
   classical
   obtain ⟨hu, hl⟩ := ordered_levels hs hgu hgl
@@ -372,7 +414,8 @@ theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
       _ < 1 := hu
   let B := slopeBound c u l
   have hB : 0 < B := zero_lt_one.trans_le (one_le_bound c u l)
-  refine ⟨sub_lt_self _ (div_pos (sub_pos.mpr hb) hB), ?_⟩
+  refine ⟨tailMoment_lt_cutoff hu hl hs hgu hgl hnu,
+    sub_lt_self _ (div_pos (sub_pos.mpr hb) hB), ?_⟩
   intro a ha ha₁
   let r := (1 - a) / (1 - b)
   let v := weights c u l r
@@ -658,44 +701,6 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
     · simp [hd]
     · simpa using hv.trans_lt (by simpa using lt_of_not_ge hβ)
 
-private theorem tailMoment_lt_cutoff {ι : Type*} [Fintype ι] {c : ι → ℝ} {u l : ℝ}
-    (hu₀ : 0 ≤ u) (hu : u < 1) (hl : l < u) (hs : u + l < 0)
-    (hgu : 0 < difference u) (hgl : difference l < 0) (hnu : 0 < count c u) :
-    tailMoment u l < criticalThreshold c u l := by
-  let p := upperFraction u l
-  let b := tailMoment u l
-  let B := slopeBound c u l
-  let nu := count c u
-  let nl := count c l
-  have hg : 0 < difference u - difference l := sub_pos.mpr (hgl.trans hgu)
-  have hp : 0 < p := div_pos (neg_pos.mpr hgl) hg
-  have hp₁ : p < 1 := (div_lt_one hg).mpr (by linarith)
-  have hb : b < 1 := by
-    change p * u + (1 - p) * l < 1
-    nlinarith [mul_nonneg (sub_nonneg.mpr hp₁.le) (sub_nonneg.mpr hl.le)]
-  have hB : 1 < B := by
-    by_contra! h
-    obtain ⟨_, hβ, hγ, _⟩ := (signs_iff c hu hl hs (r := 1) zero_le_one).mp
-      (by simpa only [one_mul] using h)
-    have hP := polynomial_values hu hl nu nl 1
-    have h₁ := polynomial_expand u l nu nl 1 1
-    have h₂ := polynomial_expand u l nu nl 1 u
-    rw [hP.1, sub_self] at h₁
-    rw [hP.2.1, one_mul] at h₂
-    have hw : 0 < p / nu := div_pos hp hnu
-    have hdiff : 0 ≤ second 1 - second u := by
-      unfold second
-      nlinarith [mul_nonneg (sub_nonneg.mpr hu.le) (show 0 ≤ 1 + u by linarith)]
-    have hle := add_nonneg (mul_nonneg hβ (sub_nonneg.mpr hu.le)) (mul_nonneg hγ hdiff)
-    change 0 ≤ firstMultiplier u l nu nl 1 * (1 - u) +
-      secondMultiplier u l nu nl 1 * (second 1 - second u) at hle
-    change 0 < upperFraction u l / nu at hw
-    nlinarith only [h₁, h₂, hw, hle]
-  have hd : (1 - b) / B < 1 - b := (div_lt_iff₀ (zero_lt_one.trans hB)).mpr (by
-    nlinarith [mul_pos (sub_pos.mpr hb) (sub_pos.mpr hB)])
-  change b < 1 - (1 - b) / B
-  linarith
-
 /-- The first cosine readout on the canonical residue representatives. -/
 def cyclicReadout (q : ℕ) (k : Fin q) : ℝ :=
   Real.cos (2 * Real.pi * (k.val : ℝ) / q)
@@ -775,9 +780,6 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     rw [hu, ← Real.cos_zero]
     exact Real.cos_lt_cos_of_nonneg_of_le_pi le_rfl
       ((hθmono (show 1 ≤ q / 2 by omega)).trans hhalf) (by simpa [θ] using hstep)
-  have hup : 0 ≤ cyclicUpper q := by
-    rw [hu, ← Real.cos_pi_div_two]
-    exact Real.cos_le_cos_of_nonneg_of_le_pi (hθ₀ 1) (by linarith [Real.pi_pos]) hquarter
   have hlo : cyclicLower q < -(1 / 2 : ℝ) := by
     rw [hl, ← Real.cos_pi_div_three, ← Real.cos_pi_sub]
     exact Real.cos_lt_cos_of_nonneg_of_le_pi (by linarith [Real.pi_pos]) hhalf
@@ -804,8 +806,10 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
       exact hzero
   let u := cyclicUpper q
   let l := cyclicLower q
-  have hlu : l < u := by dsimp [u, l]; linarith
   have hgu : 0 < u - (2 * u ^ 2 - 1) := by
+    have hn : 0 ≤ cyclicUpper q := by
+      rw [hu, ← Real.cos_pi_div_two]
+      exact Real.cos_le_cos_of_nonneg_of_le_pi (hθ₀ 1) (by linarith [Real.pi_pos]) hquarter
     have h := mul_pos (sub_pos.mpr htop) (show 0 < 2 * cyclicUpper q + 1 by linarith)
     dsimp only [u]
     nlinarith
@@ -820,9 +824,8 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     · exact Or.inr (hrange i hi)
   have huAtt : cyclicReadout q one = u := (hread one).trans hu.symm
   have hlAtt : cyclicReadout q half = l := (hread half).trans hl.symm
-  obtain ⟨hlt, hcert⟩ :=
+  obtain ⟨hcut, hlt, hcert⟩ :=
     high_threshold_certificate (cyclicReadout q) z huniq hsum hgu hgl hlevels ⟨one, huAtt⟩ ⟨half, hlAtt⟩
-  have hcut := tailMoment_lt_cutoff hup htop hlu hsum hgu hgl (count_pos ⟨one, huAtt⟩)
   exact ⟨hcut, hlt, hcert, fun _ ha hac =>
     exists_smaller_energy_below_threshold (cyclicReadout q) z one half huniq huAtt hlAtt
       hsum hgu hgl ha hac⟩
