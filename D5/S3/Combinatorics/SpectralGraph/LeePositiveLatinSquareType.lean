@@ -350,11 +350,6 @@ set_option maxHeartbeats 0 in
 private theorem chunk_counts (c : Fin 32) : chunkCount c = expectedChunk c := by
   fin_cases c <;> decide +kernel
 
-private theorem chunk_bounds (c i : Fin 32) :
-    32 * c.val ≤ (chunkMask (c, i)).val ∧ (chunkMask (c, i)).val < 32 * (c.val + 1) := by
-  change 32 * c.val ≤ i.val + 32 * c.val ∧ i.val + 32 * c.val < 32 * (c.val + 1)
-  omega
-
 private abbrev AcceptedMask := {a : Mask // rankTest a = true}
 
 private abbrev AcceptedOffset (c : Fin 32) :=
