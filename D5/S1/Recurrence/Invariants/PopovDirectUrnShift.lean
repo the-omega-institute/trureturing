@@ -371,6 +371,37 @@ theorem below_first_urn {m n k : ℕ} (hm : 0 < m) (hk : k < m) :
   let w := fiberEquivWord hm (le_refl (m+n)) q'
   exact (not_le_of_gt hk) (w.property ▸ word_card_ge_m w.val)
 
+/-- A signed column carries the actual payload at its natural occupied count, if one exists. -/
+abbrev SignedPayload (m n : ℕ) (z : ℤ) :=
+  Σ r : {r : ℕ // (r : ℤ) = z}, Payload m n r.val
+
+/-- There is no natural occupied count in a negative residual column. -/
+theorem signed_payload_empty {m n : ℕ} {z : ℤ} (hz : z < 0) :
+    IsEmpty (SignedPayload m n z) :=
+  ⟨fun ⟨⟨r, hr⟩, _⟩ => by omega⟩
+
+private def payloadEquivSigned (m n r : ℕ) :
+    Payload m n r ≃ SignedPayload m n (r : ℤ) := by
+  letI : Unique {s : ℕ // (s : ℤ) = (r : ℤ)} :=
+    ⟨⟨⟨r, rfl⟩⟩, fun s => Subtype.ext (Int.ofNat.inj s.property)⟩
+  exact (Equiv.uniqueSigma (fun s : {s : ℕ // (s : ℤ) = (r : ℤ)} =>
+    Payload m n s.val)).symm
+
+/-- The first-urn shift on actual orbits, including the two empty carriers below capacity. -/
+noncomputable def signedFirstUrnEquiv {m : ℕ} (hm : 0 < m) (n k : ℕ) :
+    U m (n + m) k ≃ SignedPayload m n ((k : ℤ) - m) := by
+  by_cases hk : k < m
+  · letI : IsEmpty (U m (n + m) k) := below_first_urn hm hk
+    letI : IsEmpty (SignedPayload m n ((k : ℤ) - m)) :=
+      signed_payload_empty (by omega)
+    exact Equiv.equivOfIsEmpty _ _
+  · let r := k - m
+    have hcol : k = m + r := by dsimp [r]; omega
+    have hres : (r : ℤ) = (k : ℤ) - m := by omega
+    exact (Equiv.cast (congrArg (U m (n + m)) hcol)).trans
+      ((firstUrnEquiv hm).trans
+        ((payloadEquivSigned m n r).trans (Equiv.cast (congrArg (SignedPayload m n) hres))))
+
 private theorem word_card_le_length {m t k : ℕ} (w : WordFiber m t k) : k ≤ t :=
   w.property ▸ used_card_le w.val.val
 
@@ -582,14 +613,15 @@ theorem shift_7_2 {m : ℕ} (hm : 0 < m) (n k : ℕ) :
     S m (n+m) k =
       ∑ j ∈ Finset.range (n+1), n.choose j * m^(n-j) * S m j ((k : ℤ) - m) := by
   by_cases h : k < m
-  · let : IsEmpty (U m (n+m) k) := below_first_urn hm h
+  · have hneg : (k : ℤ) - m < 0 := by omega
+    have hempty : IsEmpty (SignedPayload m n ((k : ℤ) - m)) := signed_payload_empty hneg
+    let : IsEmpty (U m (n+m) k) := ⟨fun q => hempty.false (signedFirstUrnEquiv hm n k q)⟩
     have hzero := card_urn_eq_stirling hm (n+m) k
     rw [Fintype.card_of_isEmpty] at hzero
     rw [S_nat, ← hzero]
     symm
     apply Finset.sum_eq_zero
     intro j _
-    have hneg : (k : ℤ) - m < 0 := by omega
     simp [S, hneg]
   · let r := k - m
     have hk : k = m+r := by dsimp [r]; omega

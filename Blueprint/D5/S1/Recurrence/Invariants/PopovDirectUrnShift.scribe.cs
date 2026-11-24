@@ -10,6 +10,7 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/popov2026mstirling");
     private static readonly Formula Nat = Seq(Mathbb, Grp(F.Id("N")));
+    private static readonly Formula Int = Seq(Mathbb, Grp(F.Id("Z")));
     private static readonly Formula M = F.Id("m");
     private static readonly Formula N = F.Id("n");
     private static readonly Formula R = F.Id("r");
@@ -18,6 +19,7 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
     private static readonly Formula J = F.Id("j");
     private static readonly Formula Q = F.Id("q");
     private static readonly Formula B = F.Id("b");
+    private static readonly Formula Z = F.Id("z");
     private static readonly Formula Positions = F.Id("J");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -51,10 +53,24 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                     Eqn(Call("delete", Call("reinsert", B)), B))),
                 "The rank ranges separate selected placements and colors, so the composite "
                 + "recovers the subset, each color, and the residual orbit."),
-            Paragraph(Text("For k below m, the source fiber is empty because the forced prefix uses "
-                + "m distinct pairs. The signed payload uses the same subset and colors with the "
-                + "residual fiber in column k−m. That column is negative and its fiber is empty, "
-                + "so the payload is empty for every choice of tail positions.")),
+            Node("signedFirstUrnEquiv", "The equivalence in every signed residual column",
+                Parameters(K, Seq(Call("U", M, Add(N, M), K), Sp, Sim, Sp,
+                    Call("SignedPayload", M, N, Sub(K, M)))),
+                "SignedPayload(m,n,z) consists of a natural count r whose integer image is z, "
+                + "together with Payload(m,n,r). This carries the same subset, complement colors, "
+                + "and actual residual orbit. Subtraction here is in the integers. For k at least m, "
+                + "the unique count r gives k=m+r, and the equivalence transports firstUrnEquiv "
+                + "in that column. For k below m, it is the equivalence between the two empty types.",
+                DescribeRole.Definition),
+            Node("below_first_urn", "The source orbit fiber below capacity is empty",
+                Parameters(K, Seq(K, Sp, Lt, Sp, M, Sp, Implies, Sp,
+                    Call("IsEmpty", Call("U", M, Add(N, M), K)))),
+                "The forced prefix uses m distinct pairs."),
+            Node("signed_payload_empty", "Negative residual columns have empty payloads",
+                All(M, Nat, All(N, Nat, All(Z, Int, Seq(Z, Sp, Lt, Sp, D(0), Sp, Implies, Sp,
+                    Call("IsEmpty", Call("SignedPayload", M, N, Z)))))),
+                "No natural count maps to a negative integer, so no subset, complement "
+                + "coloring, and residual orbit can inhabit the signed column."),
             Node("card_urn_eq_stirling", "The urn count satisfies the published recurrence",
                 All(M, Nat, Seq(D(0), Sp, Lt, Sp, M, Sp, Implies, Sp, All(T, Nat, All(K, Nat,
                     Eqn(Call("card", Call("U", M, T, K)), Call("stirling", M, T, K)))))),
@@ -67,12 +83,7 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                 + "contribute the binomial coefficient and there are m to the power n−j "
                 + "complement color functions. The residual quotient contributes S(m,j,k−m). "
                 + "Popov's Theorem 7.3 gives the prior algebraic proof of the same identity.",
-                provenance: AssessedProvenance.FromLiterature(Source),
-                resolution: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("popov-2026-direct-urn-shift"),
-                    ResolutionKind.Proved,
-                    [DeclarationHandle.Create(Prefix + "reinsert_delete"),
-                     DeclarationHandle.Create(Prefix + "delete_reinsert")])),
+                provenance: AssessedProvenance.FromLiterature(Source)),
             Paragraph(Text("At capacity one, the construction deletes the block containing the "
                 + "initial marble. If the tail is empty, the only occupied-count column is m, "
                 + "with one forced-prefix orbit and one empty residual orbit. In column m for "
@@ -80,11 +91,10 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                 + "Columns above the number of marbles are empty.")))));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
-        OpenProblemResolutionClaim? resolution = null) =>
+        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role, resolution);
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Shift() => Parameters(K,
         Eqn(Call("S", M, Add(N, M), K),
