@@ -25,7 +25,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ (q : ℕ) [NeZero q] (F : ZMod q → ℝ)
-    (_ : ∀ r, 0 ≤ F r) (a : ℝ) (_ : 0 ≤ a) (R J : Finset ℤ)
+    (_ : ∀ r, 0 ≤ F r) (a : ℝ) (R J : Finset ℤ)
     (_ : Set.InjOn (fun r : ℤ => (r : ZMod q)) (R : Set ℤ))
     (_ : ∀ r ∈ R, a ≤ F (r : ZMod q))
     (_ : ∀ r ∈ R, ∀ k ∈ J, 2 * |(r : ℝ) * (k : ℝ)| ≤ (q : ℝ)),
@@ -36,7 +36,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro ha
-  have h0 := ha 1 (fun _ => 0) (by simp) 0 le_rfl ∅ {0}
+  have h0 := ha 1 (fun _ => 0) (by simp) 0 ∅ {0}
     (by simp [Set.InjOn]) (by simp) (by simp)
   norm_num [rejected, realize] at h0
 
@@ -53,7 +53,8 @@ def family : Registration arena (type_of% @low_fourier_weight_deficit) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@low_fourier_weight_deficit) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Fourier.Concentration.CyclicShortTimeWeight.low_fourier_weight_deficit.__information_unit
+  unitName :=
+    `D5.S3.Fourier.Concentration.CyclicShortTimeWeight.low_fourier_weight_deficit.__information_unit
   realizationName := `Reg.D5.S3.Fourier.Concentration.CyclicShortTimeWeight.family
   realizationSource := none
   generated := false
@@ -75,7 +76,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "value"]
+        "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

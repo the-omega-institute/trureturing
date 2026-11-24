@@ -21,7 +21,7 @@ internal sealed class CyclicShortTimeWeightDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "The modulus q is a positive integer and F is a nonnegative real function " +
                     "on the residue classes. The finite sets R and J contain integers. " +
-                    "Reduction modulo q is injective on R. For a nonnegative real a, require " +
+                    "Reduction modulo q is injective on R. For a real a, require " +
                     "F(r mod q) ≥ a for r in R and 2 |rk| ≤ q for every r in R and k in J. " +
                     "The transform uses the negative character. Repeated residues represented " +
                     "in J contribute once for each representative.")),

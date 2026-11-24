@@ -14,7 +14,7 @@ $$\begin{aligned}&\sum_{k \in J} \Re \widehat{F}\left(k\right)+\frac{8a}{q^{2}} 
 
 *Commentary.*
 
-The modulus q is a positive integer and F is a nonnegative real function on the residue classes. The finite sets R and J contain integers. Reduction modulo q is injective on R. For a nonnegative real a, require F(r mod q) ≥ a for r in R and 2 |rk| ≤ q for every r in R and k in J. The transform uses the negative character. Repeated residues represented in J contribute once for each representative.
+The modulus q is a positive integer and F is a nonnegative real function on the residue classes. The finite sets R and J contain integers. Reduction modulo q is injective on R. For a real a, require F(r mod q) ≥ a for r in R and 2 |rk| ≤ q for every r in R and k in J. The transform uses the negative character. Repeated residues represented in J contribute once for each representative.
 
 Subtract each selected real Fourier coefficient from the zero coefficient. The difference is a sum of F(x) times the character deficit at x. Keep the terms from R. On each pair from R and J, 2 |rk| ≤ q puts the angle in the principal interval. The cosine inequality on that interval bounds its deficit below by 8 r² k² / q². The two sums of squares factor because the bound holds on the full product of the two sets.
 

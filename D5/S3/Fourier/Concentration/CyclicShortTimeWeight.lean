@@ -55,7 +55,7 @@ private theorem phase_deficit (q : ℕ) [NeZero q] (r k : ℤ)
 quadratic cost from each sampled point of the spatial majorant. Only the
 spatial samples must represent distinct residues. -/
 theorem low_fourier_weight_deficit (q : ℕ) [NeZero q] (F : ZMod q → ℝ)
-    (hF : ∀ r, 0 ≤ F r) (a : ℝ) (ha : 0 ≤ a) (R J : Finset ℤ)
+    (hF : ∀ r, 0 ≤ F r) (a : ℝ) (R J : Finset ℤ)
     (hR : Set.InjOn (fun r : ℤ => (r : ZMod q)) (R : Set ℤ))
     (hmajor : ∀ r ∈ R, a ≤ F (r : ZMod q))
     (hshort : ∀ r ∈ R, ∀ k ∈ J, 2 * |(r : ℝ) * (k : ℝ)| ≤ (q : ℝ)) :
