@@ -19,31 +19,22 @@ internal sealed class EventHistoryInductionDocument : IScribeDocumentDefinition
                     Forall, Sp, F.Id("P"), Colon, Sp,
                     Operatorname, Grp(F.Id("EventHistory")), To, Sp,
                     Operatorname, Grp(F.Id("Prop")), Comma, Sp,
-                    Open, Call("P", D(1)), Sp, Land, Sp,
+                    Open, Call("P", F.Id("empty")), Sp, Land, Sp,
                     Open, Forall, Sp, F.Id("h"), Colon, Sp,
                     Operatorname, Grp(F.Id("EventHistory")), Comma, Sp,
                     Forall, Sp, F.Id("u"), Colon, Sp,
                     Operatorname, Grp(F.Id("Event")), Comma, Sp,
                     Call("P", F.Id("h")), Sp, Rightarrow, Sp,
-                    Call("P", Call("generate", F.Id("h"), F.Id("u"))), Close, Close,
+                    Call("P", Call("pushBack", F.Id("h"), F.Id("u"))), Close, Close,
                     Sp, Rightarrow, Sp, Forall, Sp, F.Id("h"), Colon, Sp,
                     Operatorname, Grp(F.Id("EventHistory")), Comma, Sp,
                     Call("P", F.Id("h")), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The empty event history satisfies P, and P is preserved when generate "
-                        + "appends one event. Every finite EventHistory therefore satisfies P. "
-                        + "This closes only Definition 2.3 clause 3, the generation-induction "
-                        + "principle; it makes no claim about the neighboring clauses.")),
-                    Paragraph(Text(
-                        "Pinned Mathlib was searched before proving. FreeMonoid.inductionOn' is "
-                        + "the existing induction engine, while FreeMonoid.reverse_mul, "
-                        + "FreeMonoid.reverse_of, and FreeMonoid.reverse_reverse transport its "
-                        + "left-generator step to the repository's right-appending generate. "
-                        + "The Lean declaration is a thin wrapper over those library results and "
-                        + "reuses the existing EventHistory carrier."))),
-                DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(
-            GidRef.Create("D5/S0/History/HistoryCarrier"))]));
+                        "The empty event history satisfies P. A nonempty history consists of "
+                        + "a shorter history and one last event. The induction hypothesis gives "
+                        + "P for the shorter history, and the append hypothesis gives P for the "
+                        + "whole history."))),
+                DescribeRole.Theorem))));
 }

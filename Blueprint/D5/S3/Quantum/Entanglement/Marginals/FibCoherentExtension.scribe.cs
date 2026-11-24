@@ -64,5 +64,36 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                     + "nonzero endpoint blocks. For example, the pure vacuum has two vacuum "
                     + "projections as endpoint blocks. The positive-pivot formula divides "
                     + "by b and requires the separate zero-occupation analysis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-rational-prescribed-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at"),
+                H("Rational extension at a prescribed coupling"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix a nonnegative middle occupation, rational observed entries, and a rational value for the unobserved coupling. Suppose the traces normalize the data, both residual marginals are positive semidefinite, and the row vanishes when the middle occupation is zero. The data admit a positive trace-one extension with rational real and imaginary parts in every entry.")),
+                    Paragraph(Text("Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-unique-coherent-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff"),
+                H("When the edge marginals determine the state"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At positive middle occupation, the two edge marginals determine a unique "
+                    + "positive trace-one state exactly when the traces normalize the data and "
+                    + "there is exactly one coupling z for which both Schur residuals "
+                    + "are positive semidefinite.")),
+                    Paragraph(Text(
+                    "Every feasible coupling gives an extension. If both residuals at a feasible "
+                    + "coupling were positive definite, small variations in z would remain feasible. "
+                    + "A unique feasible coupling therefore gives at least one singular residual. "
+                    + "At trace zero the entire endpoint residual vanishes. At positive trace, "
+                    + "the singular qubit residual has rank one. A joint positive matrix with "
+                    + "a rank-one marginal factors, so its two marginals fix the joint residual. "
+                    + "Restoring the correction gives the only compatible state.")),
+                    Paragraph(Text(
+                    "At zero middle occupation the whole coupling row vanishes in every "
+                    + "positive state. The Schur residual inequalities then have no dependence "
+                    + "on z."))),
                 DescribeRole.Theorem))));
 }

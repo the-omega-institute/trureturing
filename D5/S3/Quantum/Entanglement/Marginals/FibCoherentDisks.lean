@@ -7,6 +7,7 @@
    digest: A closed-form choice of the unobserved coupling for coherent Fibonacci marginals. -/
 
 import D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
+import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 /-! Closed-form selection for the residual disks of coherent Fibonacci marginals. -/
 
 open Matrix Complex
@@ -328,5 +329,144 @@ theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : 
         ((edgeDisk_spec _ _ _ _ _ _ hb hR).mpr hd.2)
   · rintro ⟨hb, hn, ht, hzero, hl, hr⟩
     exact ⟨hb, hn, ht, _, hzero, hl, hr⟩
+
+open FibRationalPureExtension
+
+private def RationalReal (x : ℝ) : Prop := ∃ a : ℚ, (a : ℝ) = x
+
+private theorem realMk {x : ℝ} (h : RationalReal x) : RationalEntry (x : ℂ) := by
+  obtain ⟨q, hq⟩ := h
+  exact ⟨q, 0, hq, by simp⟩
+
+private theorem rnormSq {z : ℂ} (hz : RationalEntry z) : RationalReal (normSq z) := by
+  obtain ⟨a, b, ha, hb⟩ := hz
+  exact ⟨a*a + b*b, by simp [ha, hb, Complex.normSq_apply]⟩
+
+private theorem clipping {x : ℝ} (hx : RationalReal x) :
+    RationalReal (min 1 (max 0 x)) := by
+  by_cases h0 : x ≤ 0
+  · rw [max_eq_left h0, min_eq_right (by norm_num)]
+    exact ⟨0, by simp⟩
+  by_cases h1 : 1 ≤ x
+  · rw [max_eq_right (le_of_not_ge h0), min_eq_left h1]
+    exact ⟨1, by simp⟩
+  rwa [max_eq_right (le_of_not_ge h0), min_eq_right (le_of_not_ge h1)]
+
+private theorem rational_selected (p q : ℂ) (r s : ℝ)
+    (hp : RationalEntry p) (hq : RationalEntry q) (hr : RationalReal r) (hs : RationalReal s) :
+    RationalEntry (diskPoint p q r s) := by
+  unfold diskPoint diskWeight
+  dsimp only
+  apply rationalComplex.add_mem hp
+  apply rationalComplex.mul_mem (realMk (clipping ?_)) (rationalComplex.sub_mem hq hp)
+  obtain ⟨u, hu⟩ := rnormSq (rationalComplex.sub_mem hq hp)
+  obtain ⟨v, hv⟩ := hr
+  obtain ⟨w, hw⟩ := hs
+  exact ⟨(u+v-w)/(2*u), by simp [hu, hv, hw]⟩
+
+private theorem rreal {z : ℂ} (h : RationalEntry z) : RationalReal z.re := by
+  obtain ⟨a, _, ha, _⟩ := h
+  exact ⟨a, ha⟩
+
+private theorem rradd {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+    RationalReal (x+y) := by
+  obtain ⟨xq, hxq⟩ := hx
+  obtain ⟨yq, hyq⟩ := hy
+  exact ⟨xq+yq, by simp [hxq, hyq]⟩
+
+private theorem rrsub {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+    RationalReal (x-y) := by
+  obtain ⟨xq, hxq⟩ := hx
+  obtain ⟨yq, hyq⟩ := hy
+  exact ⟨xq-yq, by simp [hxq, hyq]⟩
+
+private theorem rrmul {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+    RationalReal (x*y) := by
+  obtain ⟨xq, hxq⟩ := hx
+  obtain ⟨yq, hyq⟩ := hy
+  exact ⟨xq*yq, by simp [hxq, hyq]⟩
+
+private theorem rrdiv {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+    RationalReal (x/y) := by
+  obtain ⟨xq, hxq⟩ := hx
+  obtain ⟨yq, hyq⟩ := hy
+  exact ⟨xq/yq, by simp [hxq, hyq]⟩
+
+private theorem diskRational (a e : ℝ) (c k : ℂ) (ha : RationalReal a)
+    (he : RationalReal e) (hc : RationalEntry c) (hk : RationalEntry k) :
+    RationalEntry (disk a e c k).1 ∧ RationalReal (disk a e c k).2 := by
+  have hd := rradd ha (rnormSq hk)
+  have hp := rationalComplex.div_mem (rationalComplex.mul_mem hk hc) (realMk hd)
+  unfold disk
+  split
+  · exact ⟨hp, rrdiv (rradd (rrsub (rrmul ha he) (rnormSq hc))
+      (rrmul hd (rnormSq hp))) hd⟩
+  · split
+    · split
+      · refine ⟨rationalComplex.zero_mem, ?_⟩
+        split
+        · exact he
+        · exact ⟨-1, by simp⟩
+      · refine ⟨hp, ?_⟩
+        dsimp only
+        split
+        · exact ⟨0, by simp⟩
+        · exact ⟨-1, by simp⟩
+    · exact ⟨rationalComplex.zero_mem, ⟨-1, by simp⟩⟩
+
+private theorem edgeDiskRational (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ)
+    (hb : RationalReal b) (hl : ∀ i j, RationalEntry (L i j))
+    (hu : RationalEntry u) (hv : RationalEntry v) (hw : RationalEntry w) :
+    RationalEntry (edgeDisk b L u v w).1 ∧ RationalReal (edgeDisk b L u v w).2 :=
+  diskRational _ _ _ _
+    (rrsub (rrsub (rrmul hb (rreal (hl false false))) (rnormSq hu)) (rnormSq hw))
+    (rrsub (rrmul hb (rreal (hl true true))) (rnormSq hv))
+    (rationalComplex.sub_mem (rationalComplex.mul_mem (realMk hb) (hl false true))
+      (rationalComplex.mul_mem (rationalConjugate ⟨u, hu⟩).property hv)) hw
+
+private theorem selected_rational (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
+    (hb : RationalReal b)
+    (hl : ∀ i j, RationalEntry (L i j)) (hr : ∀ i j, RationalEntry (R i j))
+    (hu : RationalEntry u) (hv : RationalEntry v) (hw : RationalEntry w) :
+    RationalEntry (selectedCoupling b L R u v w) := by
+  unfold selectedCoupling
+  split
+  · exact rationalComplex.zero_mem
+  · obtain ⟨hlp, hlr⟩ := edgeDiskRational b L u v w hb hl hu hv hw
+    obtain ⟨hrp, hrr⟩ := edgeDiskRational b R u w v hb hr hu hw hv
+    exact rational_selected _ _ _ _ hlp hrp hlr hrr
+
+open FibMarginalExtension (Word edgeTrace)
+
+/-- Compatible rational edge data have a rational common extension at the selected coupling. -/
+theorem rational_coherent_extendible_iff (b : ℝ) (L R : Matrix Bool Bool ℂ)
+    (u v w : ℂ)
+    (hl : ∀ i j, RationalEntry (L i j)) (hr : ∀ i j, RationalEntry (R i j))
+    (hu : RationalEntry u) (hv : RationalEntry v) (hw : RationalEntry w) :
+    CoherentExtendible b L R u v w ↔
+      ∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧
+        ρ.trace = 1 ∧ edgeTrace ρ 1 2 = coherentEdge b L u v ∧
+        edgeTrace ρ 2 1 = coherentEdge b R u w ∧
+        ρ (.inl 0) (.inr true) = selectedCoupling b L R u v w ∧
+        ∀ i j, RationalEntry (ρ i j) := by
+  constructor
+  · intro h
+    obtain ⟨hb', ht, hr', hzero, hleft, hright⟩ :=
+      (extendible_iff_selected b L R u v w).mp h
+    have htq : RationalEntry L.trace := rationalComplex.sum_mem fun i _ => hl i i
+    have hb : RationalReal b := by
+      obtain ⟨q, hq⟩ := rreal htq
+      have he := congrArg Complex.re ht
+      simp only [Complex.add_re, Complex.ofReal_re, Complex.one_re] at he
+      refine ⟨1-q, ?_⟩
+      push_cast
+      rw [hq]
+      linarith
+    obtain ⟨ρ, hp, ⟨hn, hL, hR, hz⟩, hq⟩ :=
+      rational_extension_at b L R u v w _ hb' ht hr' hzero hleft hright
+        hl hr hu hv hw (selected_rational b L R u v w hb hl hr hu hv hw)
+    exact ⟨ρ, hp, hn, hL, hR, hz, hq⟩
+  · rintro ⟨ρ, hp, ht, hleft, hright, _, _⟩
+    exact ⟨ρ, hp, ht, hleft, hright⟩
 
 end D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks

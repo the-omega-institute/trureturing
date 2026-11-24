@@ -6,6 +6,7 @@ module
 prelude
 
 public import OmegaMath.Arithmetic.Euclidean.Division
+public import OmegaMath.Data.Nat.Fib.Basic
 public import OmegaInit.Data.Int
 
 /-!
@@ -224,19 +225,14 @@ theorem denominator_le_next (coeffs : NatList) (a : Nat) (ha : Nat.lt Nat.zero a
       (Nat.add_le_add_left (Nat.zero_le previous) (a.mul q)))
 
 /-- The Fibonacci numbers, starting with zero and one. -/
-def fibonacci (n : Nat) : Nat :=
-  Nat.rec (motive := fun _ => Bool → Nat) (Bool.rec Nat.zero Nat.one)
-    (fun _ pair => Bool.rec (pair .true) ((pair .true).add (pair .false))) n .false
+def fibonacci (n : Nat) : Nat := Nat.fib n
 
 theorem fibonacci_step (n : Nat) :
     Eq (fibonacci n.succ.succ) ((fibonacci n.succ).add (fibonacci n)) :=
   Eq.refl
 
 private theorem fibonacci_succ_pos (n : Nat) : Nat.lt Nat.zero (fibonacci n.succ) :=
-  Nat.rec (motive := fun n => Nat.lt Nat.zero (fibonacci n.succ)) (Nat.le.refl Nat.one)
-    (fun n ih => Eq.subst (Nat.le Nat.one) (fibonacci_step n).symm
-      (Nat.le_trans ih
-        (Nat.add_le_add_left (Nat.zero_le (fibonacci n)) (fibonacci n.succ)))) n
+  Nat.fib_pos.mpr (Nat.zero_le n)
 
 private def DenominatorBounds (head : Nat) (tail : NatList) : Prop :=
   let pair := convergentPair (.cons head tail)

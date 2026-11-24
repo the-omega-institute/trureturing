@@ -8,7 +8,9 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
+import D5.S3.Quantum.Decoherence.LabelResetSupport
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 
 /-! Common extensions of adjacent Fibonacci marginals with arbitrary coherences. -/
 
@@ -119,22 +121,39 @@ private theorem partialTraceLeft_sub {A C : Type*} [Fintype A]
   ext i j
   simp [partialTraceLeft, Finset.sum_sub_distrib]
 
+private theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
+    [DecidableEq A] [DecidableEq C]
+    (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
+    (htr : L.trace = R.trace) :
+    let S := kronecker (L.trace⁻¹ • L) R
+    S.PosSemidef ∧ partialTraceRight S = L ∧ partialTraceLeft S = R := by
+  dsimp only
+  by_cases hz : L.trace = 0
+  · rw [(hL.trace_eq_zero_iff).mp hz, (hR.trace_eq_zero_iff).mp (htr.symm.trans hz)]
+    have hk : kronecker (((0 : Matrix A A ℂ).trace)⁻¹ • (0 : Matrix A A ℂ))
+        (0 : Matrix C C ℂ) = 0 := by
+      ext i j
+      simp
+    rw [hk]
+    exact ⟨.zero, by ext; simp [partialTraceRight], by ext; simp [partialTraceLeft]⟩
+  have hlo := hL.trace_nonneg
+  have ht : 0 ≤ L.trace⁻¹ := by
+    rw [Complex.nonneg_iff] at hlo ⊢
+    simp [Complex.inv_re, Complex.inv_im, ← hlo.2, div_nonneg hlo.1 (Complex.normSq_nonneg _)]
+  refine ⟨(hL.smul ht).kronecker hR, ?_, ?_⟩
+  · rw [partialTraceRight_kronecker, ← htr, smul_smul, mul_inv_cancel₀ hz, one_smul]
+  · rw [partialTraceLeft_kronecker, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz, one_smul]
+
+
 private theorem product_completion {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C]
     (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
     (htr : L.trace = R.trace) :
     ∃ S : Matrix (A × C) (A × C) ℂ, S.PosSemidef ∧
       partialTraceRight S = L ∧ partialTraceLeft S = R := by
-  by_cases hz : L.trace = 0
-  · rw [(hL.trace_eq_zero_iff).mp hz, (hR.trace_eq_zero_iff).mp (htr.symm.trans hz)]
-    exact ⟨0, .zero, by ext; simp [partialTraceRight], by ext; simp [partialTraceLeft]⟩
-  have hlo := hL.trace_nonneg
-  have ht : 0 ≤ L.trace⁻¹ := by
-    rw [Complex.nonneg_iff] at hlo ⊢
-    simp [Complex.inv_re, Complex.inv_im, ← hlo.2, div_nonneg hlo.1 (Complex.normSq_nonneg _)]
-  refine ⟨kronecker (L.trace⁻¹ • L) R, (hL.smul ht).kronecker hR, ?_, ?_⟩
-  · rw [partialTraceRight_kronecker, ← htr, smul_smul, mul_inv_cancel₀ hz, one_smul]
-  · rw [partialTraceLeft_kronecker, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz, one_smul]
+  let S := kronecker (L.trace⁻¹ • L) R
+  obtain ⟨hS, hleft, hright⟩ := product_completion_formula L R hL hR htr
+  exact ⟨S, hS, hleft, hright⟩
 
 private theorem block_marginals_iff {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C] (b : ℝ) (v : A × C → ℂ)
@@ -390,6 +409,33 @@ def MatchesCoherentData (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : ℂ)
   ρ.trace = 1 ∧ edgeTrace ρ 1 2 = coherentEdge b L u v ∧
     edgeTrace ρ 2 1 = coherentEdge b R u w ∧ ρ (.inl 0) (.inr true) = z
 
+private theorem extension_blocks {b : ℝ} {L R : Matrix Bool Bool ℂ} {u v w z : ℂ}
+    {ρ : Matrix Word Word ℂ} (hρ : ρ.PosSemidef)
+    (hdata : MatchesCoherentData b L R u v w z ρ) :
+    ∃ T : Matrix (Bool × Bool) (Bool × Bool) ℂ,
+      original (assemble b (middleRow u v w z) T) = ρ ∧
+      (T - correction b (middleRow u v w z)).PosSemidef ∧
+      partialTraceRight T = L ∧ partialTraceLeft T = R := by
+  obtain ⟨_, hl, hr, hz⟩ := hdata
+  let d := (ρ (.inl 0) (.inl 0)).re
+  let row := fun i => ρ (.inl 0) (wordEquiv (.inr i))
+  let T := ρ.submatrix (fun i => wordEquiv (.inr i)) (fun i => wordEquiv (.inr i))
+  have hsplit : original (assemble d row T) = ρ := split_state ρ hρ.isHermitian
+  rw [← hsplit, left_read] at hl
+  rw [← hsplit, right_read] at hr
+  have hd : d = b := by
+    have e := congrFun (congrFun hl 1) 1
+    change (d : ℂ) = (b : ℂ) at e
+    exact_mod_cast e
+  obtain ⟨hL, hR, hrow⟩ := recover_edge_data b d L R u v w row T hl hr
+  have hz' : row (true, true) = z := hz
+  rw [hd, hrow, hz'] at hsplit
+  have hblock : (assemble b (middleRow u v w z) T).PosSemidef := by
+    apply (Matrix.posSemidef_submatrix_equiv wordEquiv.symm).mp
+    change (original (assemble b (middleRow u v w z) T)).PosSemidef
+    rwa [hsplit]
+  exact ⟨T, hsplit, ((block_psd _ _ _).mp hblock).2.2, hL, hR⟩
+
 /-- At nonzero middle occupation, a pure extension exists exactly when the normalization
 and both zero-residual equations hold. If it exists, every positive extension with the
 same data equals it. -/
@@ -485,31 +531,336 @@ theorem pure_coherent_iff (b : ℝ) (L R : Matrix Bool Bool ℂ)
         rfl
   · intro ψ ρ hψ hρ hdata
     obtain ⟨hψeq, hL, _⟩ := recover ψ hψ
-    obtain ⟨_, hl, hr, hz⟩ := hdata
-    let d := (ρ (.inl 0) (.inl 0)).re
-    let row := fun i => ρ (.inl 0) (wordEquiv (.inr i))
-    let T := ρ.submatrix (fun i => wordEquiv (.inr i)) (fun i => wordEquiv (.inr i))
-    have hsplit : original (assemble d row T) = ρ := split_state ρ hρ.isHermitian
-    rw [← hsplit, left_read] at hl
-    rw [← hsplit, right_read] at hr
-    have hd : d = b := by
-      have e := congrFun (congrFun hl 1) 1
-      change (d : ℂ) = (b : ℂ) at e
-      exact_mod_cast e
-    obtain ⟨hLT, _, hrow⟩ := recover_edge_data b d L R u v w row T hl hr
-    have hz' : row (true, true) = z := hz
-    rw [hd, hrow, hz'] at hsplit
-    change original (assemble b row₀ T) = ρ at hsplit
-    have hblock : (assemble b row₀ T).PosSemidef := by
-      apply (Matrix.posSemidef_submatrix_equiv wordEquiv.symm).mp
-      change (original (assemble b row₀ T)).PosSemidef
-      rwa [hsplit]
-    have hres := ((block_psd b row₀ T).mp hblock).2.2
+    obtain ⟨T, hsplit, hres, hLT, _⟩ := extension_blocks hρ hdata
     change (T - T₀).PosSemidef at hres
     have hzero : (T - T₀).trace = 0 := by
       rw [← trace_partialTraceRight (T - T₀), partialTraceRight_sub, hLT, ← hL, sub_self,
         Matrix.trace_zero]
     have hT : T = T₀ := sub_eq_zero.mp (hres.trace_eq_zero_iff.mp hzero)
     rw [hψeq, ← hsplit, hT]
+
+open FibRationalPureExtension Complex
+
+/-- The prescribed rational coupling and positive Schur residuals give a rational extension. -/
+theorem rational_extension_at (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : ℂ)
+    (hb : 0 ≤ b) (htr : L.trace + (b : ℂ) = 1) (hr : R.trace = L.trace)
+    (hzero : b = 0 → middleRow u v w z = 0)
+    (hL : (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef)
+    (hR : (R - partialTraceLeft (correction b (middleRow u v w z))).PosSemidef)
+    (qL : ∀ i j, RationalEntry (L i j))
+    (qR : ∀ i j, RationalEntry (R i j))
+    (qu : RationalEntry u) (qv : RationalEntry v) (qw : RationalEntry w) (qz : RationalEntry z) :
+    ∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧ MatchesCoherentData b L R u v w z ρ ∧
+      ∀ i j, RationalEntry (ρ i j) := by
+  let row := middleRow u v w z
+  let K := correction b row
+  let X := L - partialTraceRight K
+  let Y := R - partialTraceLeft K
+  let S := kronecker (X.trace⁻¹ • X) Y
+  let T := S + K
+  have ht : X.trace = Y.trace := by
+    simp [X, Y, Matrix.trace_sub, hr, trace_partialTraceRight, trace_partialTraceLeft]
+  obtain ⟨hS, hsL, hsR⟩ := product_completion_formula X Y hL hR ht
+  change S.PosSemidef at hS
+  change partialTraceRight S = X at hsL
+  change partialTraceLeft S = Y at hsR
+  have hT := (block_psd b row T).mpr ⟨hb, hzero, by simpa [T, K] using hS⟩
+  have htL : partialTraceRight T = L := by simp [T, partialTraceRight_add, hsL, X]
+  have htR : partialTraceLeft T = R := by simp [T, partialTraceLeft_add, hsR, Y]
+  refine ⟨original (assemble b row T), hT.submatrix _, ⟨?_, ?_, ?_, rfl⟩, ?_⟩
+  · rw [trace_original, trace_assemble, ← trace_partialTraceRight T, htL, htr]
+  · rw [left_read, htL]
+    rfl
+  · rw [right_read, htR]
+    rfl
+  · have rr (i : Bool × Bool) : RationalEntry (row i) := by
+      rcases i with ⟨i,j⟩
+      cases i <;> cases j
+      · exact qu
+      · exact qw
+      · exact qv
+      · exact qz
+    have qpivot : RationalEntry (b : ℂ) := by
+      have htq : RationalEntry L.trace := rationalComplex.sum_mem fun i _ => qL i i
+      have hpivot : (b : ℂ) = 1 - L.trace := by
+        rw [← htr]
+        ring
+      rw [hpivot]
+      exact rationalComplex.sub_mem rationalComplex.one_mem htq
+    have qK (i j) : RationalEntry (K i j) := by
+      change RationalEntry ((↑b⁻¹ : ℂ) * (conj (row i) * row j))
+      rw [Complex.ofReal_inv]
+      exact rationalComplex.mul_mem (rationalComplex.inv_mem qpivot)
+        (rationalComplex.mul_mem (rationalConjugate ⟨row i, rr i⟩).property (rr j))
+    have qX (i j) : RationalEntry (X i j) :=
+      rationalComplex.sub_mem (qL i j) (rationalComplex.sum_mem fun k _ => qK (i, k) (j, k))
+    have qY (i j) : RationalEntry (Y i j) :=
+      rationalComplex.sub_mem (qR i j) (rationalComplex.sum_mem fun k _ => qK (k, i) (k, j))
+    have qtr : RationalEntry X.trace := rationalComplex.sum_mem fun i _ => qX i i
+    have qT (i j) : RationalEntry (T i j) :=
+      rationalComplex.add_mem (rationalComplex.mul_mem
+        (rationalComplex.mul_mem (rationalComplex.inv_mem qtr) (qX i.1 j.1)) (qY i.2 j.2)) (qK i j)
+    intro i j
+    change RationalEntry (assemble b row T (wordEquiv.symm i) (wordEquiv.symm j))
+    cases wordEquiv.symm i <;> cases wordEquiv.symm j
+    · exact qpivot
+    · apply rr
+    · exact (rationalConjugate ⟨_, rr _⟩).property
+    · apply qT
+
+open LabelResetBandwidth (pure_marginal_factors)
+
+private theorem pure_of_singular (L : Matrix Bool Bool ℂ) (hL : L.PosSemidef)
+    (hdet : L.det = 0) (ht : L.trace = 1) :
+    ∃ x : Bool → ℂ, star x ⬝ᵥ x = 1 ∧ L = LabelResetBandwidth.pure x := by
+  classical
+  let h := hL.isHermitian
+  let U : Matrix Bool Bool ℂ := h.eigenvectorUnitary
+  have he₀ : (h.eigenvalues false : ℂ) * (h.eigenvalues true : ℂ) = 0 := by
+    have hh := h.det_eq_prod_eigenvalues
+    rw [Fintype.prod_bool] at hh
+    rw [mul_comm]
+    exact hh.symm.trans hdet
+  have he₁ : (h.eigenvalues false : ℂ) + (h.eigenvalues true : ℂ) = 1 := by
+    simpa [h.trace_eq_sum_eigenvalues, Fintype.sum_bool, add_comm] using ht
+  obtain ⟨j, hj⟩ : ∃ j : Bool, ∀ i : Bool, (h.eigenvalues i : ℂ) =
+      if i = j then 1 else 0 := by
+    rcases mul_eq_zero.mp he₀ with hf | ht'
+    · refine ⟨true, fun i => ?_⟩
+      cases i
+      · simp [hf]
+      · simpa [hf] using he₁
+    · refine ⟨false, fun i => ?_⟩
+      cases i
+      · simpa [ht'] using he₁
+      · simp [ht']
+  let x : Bool → ℂ := fun i => U i j
+  refine ⟨x, ?_, ?_⟩
+  · have hu : Uᴴ * U = 1 := Unitary.coe_star_mul_self _
+    have h := congrFun (congrFun hu j) j
+    simpa [x, dotProduct, Matrix.mul_apply, Matrix.conjTranspose_apply] using h
+  · have hd : diagonal (RCLike.ofReal ∘ h.eigenvalues : Bool → ℂ) =
+        diagonal (fun i => if i = j then (1 : ℂ) else 0) := by
+      congr 1
+      funext i
+      exact hj i
+    rw [h.spectral_theorem, hd, Unitary.conjStarAlgAut_apply]
+    change U * diagonal (fun i => if i = j then (1 : ℂ) else 0) * Uᴴ = LabelResetBandwidth.pure x
+    ext i k
+    cases j <;> simp [x, LabelResetBandwidth.pure, Matrix.mul_apply, Matrix.vecMulVec_apply,
+      Pi.star_apply]
+
+private theorem singular_left_unique {S T : Matrix (Bool × Bool) (Bool × Bool) ℂ}
+    (hS : S.PosSemidef) (hT : T.PosSemidef)
+    (hL : partialTraceRight S = partialTraceRight T)
+    (hR : partialTraceLeft S = partialTraceLeft T)
+    (hd : (partialTraceRight S).det = 0) : S = T := by
+  let t := S.trace
+  have htT : T.trace = t := by
+    rw [← trace_partialTraceRight T, ← hL, trace_partialTraceRight]
+  by_cases hz : t = 0
+  · exact ((hS.trace_eq_zero_iff).mp hz).trans
+      ((hT.trace_eq_zero_iff).mp (htT.trans hz)).symm
+  have hi : 0 ≤ t⁻¹ := by
+    have hlo := hS.trace_nonneg
+    change 0 ≤ S.trace⁻¹
+    rw [Complex.nonneg_iff] at hlo ⊢
+    simp [Complex.inv_re, Complex.inv_im, ← hlo.2,
+      div_nonneg hlo.1 (Complex.normSq_nonneg _)]
+  let A := t⁻¹ • S
+  let B := t⁻¹ • T
+  have left_smul (K : Matrix (Bool × Bool) (Bool × Bool) ℂ) :
+      partialTraceRight (t⁻¹ • K) = t⁻¹ • partialTraceRight K := by
+    ext i j
+    simp [partialTraceRight, mul_add]
+  have right_smul (K : Matrix (Bool × Bool) (Bool × Bool) ℂ) :
+      partialTraceLeft (t⁻¹ • K) = t⁻¹ • partialTraceLeft K := by
+    ext i j
+    simp [partialTraceLeft, mul_add]
+  have ha : (partialTraceRight A).trace = 1 := by
+    rw [trace_partialTraceRight, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz]
+  have had : (partialTraceRight A).det = 0 := by
+    rw [left_smul, Matrix.det_smul, hd, mul_zero]
+  obtain ⟨x, hx, hAx⟩ := pure_of_singular _ (partialTraceRight_posSemidef (hS.smul hi)) had ha
+  have hBx : partialTraceRight B = LabelResetBandwidth.pure x := by
+    change partialTraceRight (t⁻¹ • T) = _
+    rwa [left_smul, ← hL, ← left_smul]
+  have hrAB : partialTraceLeft A = partialTraceLeft B := by
+    change partialTraceLeft (t⁻¹ • S) = partialTraceLeft (t⁻¹ • T)
+    rw [right_smul, right_smul, hR]
+  have hAp : A.PosSemidef := hS.smul hi
+  have hBp : B.PosSemidef := hT.smul hi
+  have hab : A = B :=
+    (pure_marginal_factors x hx hAp hAx).trans
+      ((congrArg (kronecker (LabelResetBandwidth.pure x)) hrAB).trans
+        (pure_marginal_factors x hx hBp hBx).symm)
+  have eq := congrArg (fun K : Matrix (Bool × Bool) (Bool × Bool) ℂ => t • K) hab
+  simpa only [A, B, smul_smul, mul_inv_cancel₀ hz, one_smul] using eq
+
+private theorem singular_right_unique {S T : Matrix (Bool × Bool) (Bool × Bool) ℂ}
+    (hS : S.PosSemidef) (hT : T.PosSemidef)
+    (hL : partialTraceRight S = partialTraceRight T)
+    (hR : partialTraceLeft S = partialTraceLeft T)
+    (hd : (partialTraceLeft S).det = 0) : S = T := by
+  let e := Equiv.prodComm Bool Bool
+  have h := singular_left_unique (hS.submatrix e) (hT.submatrix e) hR hL hd
+  ext i j
+  exact congrFun (congrFun h (e i)) (e j)
+
+private theorem psd_of_trace_det_pos {K : Matrix Bool Bool ℂ} (h : K.IsHermitian)
+    (ht : 0 < K.trace.re) (hd : 0 < K.det.re) : K.PosSemidef := by
+  have ht' : 0 < h.eigenvalues true + h.eigenvalues false := by
+    simpa [h.trace_eq_sum_eigenvalues, Fintype.sum_bool, Complex.add_re] using ht
+  have hd' : 0 < h.eigenvalues true * h.eigenvalues false := by
+    have hdet := h.det_eq_prod_eigenvalues
+    rw [Fintype.prod_bool] at hdet
+    rw [hdet] at hd
+    exact_mod_cast hd
+  apply h.posSemidef_iff_eigenvalues_nonneg.mpr
+  intro i
+  rcases mul_pos_iff.mp hd' with ⟨ha, hb⟩ | ⟨ha, hb⟩
+  · cases i
+    · exact hb.le
+    · exact ha.le
+  · linarith
+
+private theorem locally_feasible {F : ℂ → Matrix Bool Bool ℂ} (hF : Continuous F)
+    (hH : ∀ z, (F z).IsHermitian) {z : ℂ} (hp : (F z).PosSemidef)
+    (hd : (F z).det ≠ 0) : ∀ᶠ y in nhds z, (F y).PosSemidef := by
+  have hpos := hp.posDef_iff_det_ne_zero.mpr hd
+  have ht : ∀ᶠ y in nhds z, 0 < (F y).trace.re :=
+    (isOpen_lt continuous_const (Complex.continuous_re.comp hF.matrix_trace)).mem_nhds
+      ((Complex.pos_iff.mp hpos.trace_pos).1)
+  have he : ∀ᶠ y in nhds z, 0 < (F y).det.re :=
+    (isOpen_lt continuous_const (Complex.continuous_re.comp hF.matrix_det)).mem_nhds
+      ((Complex.pos_iff.mp hpos.det_pos).1)
+  filter_upwards [ht, he] with y hy hd'
+  exact psd_of_trace_det_pos (hH y) hy hd'
+
+private theorem extension_from_residuals {b : ℝ} {L R : Matrix Bool Bool ℂ} {u v w z : ℂ}
+    (hb : 0 < b) (ht : L.trace + (b : ℂ) = 1) (hr : R.trace = L.trace)
+    (hL : (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef)
+    (hR : (R - partialTraceLeft (correction b (middleRow u v w z))).PosSemidef) :
+    ∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧ MatchesCoherentData b L R u v w z ρ := by
+  obtain ⟨T, hT, hTL, hTR⟩ := (block_marginals_iff b _ L R hr.symm).mpr
+    ⟨hb.le, fun h => (hb.ne' h).elim, hL, hR⟩
+  refine ⟨original (assemble b (middleRow u v w z) T), hT.submatrix _, ?_, ?_, ?_, rfl⟩
+  · rwa [trace_original, trace_assemble, ← trace_partialTraceRight T, hTL]
+  · rw [left_read, hTL]
+    rfl
+  · rw [right_read, hTR]
+    rfl
+
+private theorem residual_continuous (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) :
+    Continuous (fun z : ℂ => L - partialTraceRight (correction b (middleRow u v w z))) ∧
+    Continuous (fun z : ℂ => R - partialTraceLeft (correction b (middleRow u v w z))) := by
+  have hrow (i : Bool × Bool) : Continuous (fun z : ℂ => middleRow u v w z i) := by
+    obtain ⟨i, j⟩ := i
+    cases i <;> cases j
+    all_goals first | exact continuous_const | exact continuous_id
+  have h (i j : Bool × Bool) : Continuous (fun z : ℂ =>
+      correction b (middleRow u v w z) i j) := by
+    simp only [correction, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+      Complex.real_smul]
+    exact continuous_const.mul ((continuous_star.comp (hrow i)).mul (hrow j))
+  constructor
+  · apply continuous_matrix
+    intro i j
+    simp only [Matrix.sub_apply, partialTraceRight, Fintype.sum_bool]
+    exact continuous_const.sub ((h _ _).add (h _ _))
+  · apply continuous_matrix
+    intro i j
+    simp only [Matrix.sub_apply, partialTraceLeft, Fintype.sum_bool]
+    exact continuous_const.sub ((h _ _).add (h _ _))
+
+private theorem residuals_hermitian {b : ℝ} {L R : Matrix Bool Bool ℂ} {u v w z : ℂ}
+    (hb : 0 < b) (hL : L.IsHermitian) (hR : R.IsHermitian) :
+    (L - partialTraceRight (correction b (middleRow u v w z))).IsHermitian ∧
+    (R - partialTraceLeft (correction b (middleRow u v w z))).IsHermitian := by
+  obtain ⟨ψ, hψ⟩ := pure_from_positive_pivot b (middleRow u v w z) hb
+  have hp : (assemble b (middleRow u v w z) (correction b (middleRow u v w z))).PosSemidef := by
+    rw [hψ]
+    exact Matrix.posSemidef_vecMulVec_self_star ψ
+  have hc : (correction b (middleRow u v w z)).PosSemidef := hp.submatrix Sum.inr
+  exact ⟨hL.sub (partialTraceRight_posSemidef hc).isHermitian,
+    hR.sub (partialTraceLeft_posSemidef hc).isHermitian⟩
+
+/-- At positive middle occupation, a compatible pair of edge marginals determines exactly
+one global state if and only if there is exactly one feasible hidden coupling. -/
+theorem unique_coherent_extension_iff (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
+    (hb : 0 < b) :
+    (∃! ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧ ρ.trace = 1 ∧
+      edgeTrace ρ 1 2 = coherentEdge b L u v ∧ edgeTrace ρ 2 1 = coherentEdge b R u w) ↔
+    L.trace + (b : ℂ) = 1 ∧ R.trace = L.trace ∧
+    ∃! z : ℂ, (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef ∧
+      (R - partialTraceLeft (correction b (middleRow u v w z))).PosSemidef := by
+  let coupling (ρ : Matrix Word Word ℂ) := ρ (.inl 0) (.inr true)
+  let A (z : ℂ) := L - partialTraceRight (correction b (middleRow u v w z))
+  let C (z : ℂ) := R - partialTraceLeft (correction b (middleRow u v w z))
+  have residuals (ρ : Matrix Word Word ℂ) (hp : ρ.PosSemidef)
+      (hdata : MatchesCoherentData b L R u v w (coupling ρ) ρ) :
+      (A (coupling ρ)).PosSemidef ∧ (C (coupling ρ)).PosSemidef := by
+    obtain ⟨T, _, hT, hL, hR⟩ := extension_blocks hp hdata
+    exact ⟨by simpa [A, partialTraceRight_sub, hL] using partialTraceRight_posSemidef hT,
+      by simpa [C, partialTraceLeft_sub, hR] using partialTraceLeft_posSemidef hT⟩
+  constructor
+  · rintro ⟨ρ, hρ, huniq⟩
+    obtain ⟨_, ht, hr, _⟩ := (coherent_extendible_iff b L R u v w).mp ⟨ρ, hρ⟩
+    obtain ⟨hp, htρ, hLρ, hRρ⟩ := hρ
+    refine ⟨ht, hr, coupling ρ, residuals ρ hp ⟨htρ, hLρ, hRρ, rfl⟩, ?_⟩
+    rintro z ⟨ha, hc⟩
+    obtain ⟨σ, hs, htσ, hLσ, hRσ, hz⟩ := extension_from_residuals hb ht hr ha hc
+    exact hz.symm.trans (congrArg coupling (huniq σ ⟨hs, htσ, hLσ, hRσ⟩))
+  · rintro ⟨ht, hr, z, ⟨hA, hC⟩, huniq⟩
+    obtain ⟨ρ, hp, hdata⟩ := extension_from_residuals hb ht hr hA hC
+    obtain ⟨T, hρ, hT, hLT, hRT⟩ := extension_blocks hp hdata
+    have hsing : (A z).det = 0 ∨ (C z).det = 0 := by
+      by_contra! hn
+      have hblock : T.PosSemidef := by
+        have h := hp.submatrix (fun i : Bool × Bool => wordEquiv (.inr i))
+        rw [← hρ] at h
+        convert h using 1
+        ext i j
+        simp [original, assemble]
+      have hLH : L.IsHermitian := hLT ▸ (partialTraceRight_posSemidef hblock).isHermitian
+      have hRH : R.IsHermitian := hRT ▸ (partialTraceLeft_posSemidef hblock).isHermitian
+      obtain ⟨ha, hc⟩ := residual_continuous b L R u v w
+      let U : Set ℂ := {y | (A y).PosSemidef ∧ (C y).PosSemidef}
+      have hU : U ∈ nhds z :=
+        (locally_feasible ha (fun y => (residuals_hermitian hb hLH hRH (z := y)).1)
+          hA hn.1).and
+        (locally_feasible hc (fun y => (residuals_hermitian hb hLH hRH (z := y)).2)
+          hC hn.2)
+      obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.mp hU
+      let y := (↑(ε / 2) : ℂ) + z
+      have hy : y ∈ Metric.ball z ε := by
+        change dist y z < ε
+        rw [dist_eq_norm, show y - z = (↑(ε / 2) : ℂ) by simp [y],
+          Complex.norm_real, Real.norm_of_nonneg (by positivity)]
+        linarith
+      have hne : y ≠ z := by
+        intro he
+        have hm : (↑(ε / 2) : ℂ) = 0 := add_right_cancel (he.trans (zero_add z).symm)
+        exact (by positivity : 0 < ε / 2).ne' (Complex.ofReal_eq_zero.mp hm)
+      exact hne (huniq y (hball hy))
+    obtain ⟨htρ, hLρ, hRρ, _⟩ := hdata
+    refine ⟨ρ, ⟨hp, htρ, hLρ, hRρ⟩, ?_⟩
+    rintro σ ⟨hs, htσ, hLσ, hRσ⟩
+    have hdσ : MatchesCoherentData b L R u v w (coupling σ) σ := ⟨htσ, hLσ, hRσ, rfl⟩
+    have hz : coupling σ = z := huniq _ (residuals σ hs hdσ)
+    rw [hz] at hdσ
+    obtain ⟨W, hσ, hW, hLW, hRW⟩ := extension_blocks hs hdσ
+    let Q := correction b (middleRow u v w z)
+    have heL : partialTraceRight (T - Q) = partialTraceRight (W - Q) := by
+      rw [partialTraceRight_sub, partialTraceRight_sub, hLT, hLW]
+    have heR : partialTraceLeft (T - Q) = partialTraceLeft (W - Q) := by
+      rw [partialTraceLeft_sub, partialTraceLeft_sub, hRT, hRW]
+    have he : T - Q = W - Q := by
+      rcases hsing with hl | hr
+      · apply singular_left_unique hT hW heL heR
+        rwa [partialTraceRight_sub, hLT]
+      · apply singular_right_unique hT hW heL heR
+        rwa [partialTraceLeft_sub, hRT]
+    rw [← hρ, ← hσ, sub_left_inj.mp he]
 
 end D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension

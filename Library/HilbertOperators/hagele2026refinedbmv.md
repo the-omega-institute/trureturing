@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
+  - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -82,6 +83,15 @@ blocks give the six-copy comparison, including one weighted by B on
 both sides. The seven-copy comparison uses a Gram block weighted by A.
 The dyadic comparison gives the exponential bounds with exponents
 `6H + 4K` and `7H + 4K`.
+
+## Eight copies of the first factor
+
+The (8,4) product comparison holds for every finite complex PSD pair.
+The mean of the 495 word traces dominates the fourth trace of the
+Hermitian part of A^(3/2) B A^(1/2) by three rational Gram blocks.
+The fourth trace of that Hermitian part bounds the trace of (A^2 B)^4.
+The proof treats singular A and B directly. The dyadic trace-power
+comparison from Lemma 2 gives the corresponding exponential bound.
 
 ## Scope and conventions
 
