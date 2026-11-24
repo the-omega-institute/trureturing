@@ -100,6 +100,7 @@ import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Ring.Defs
+import Mathlib.Basic.IsEmpty.Basic
 import Mathlib.Basic.IsEmpty.Defs
 import Mathlib.Basic.Logic.Basic
 import Mathlib.Basic.Unique
@@ -864,8 +865,7 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
     simp only [t, s, P, K, Finset.mem_filter, Finset.mem_univ, true_and]
   rw [hlabel, hcanon]
   by_cases hempty : k = 0 ∨ n = 0
-  · letI : IsEmpty C := ⟨fun (i, j) => hempty.elim
-      (fun hk => Fin.elim0 (hk ▸ i)) (fun hn => Fin.elim0 (hn ▸ j))⟩
+  · letI : IsEmpty C := by simpa only [isEmpty_prod, Fin.isEmpty_iff] using hempty
     letI : Unique (C → Fin 3) := Pi.uniqueOfIsEmpty _
     have hK (A : C → Fin 3) : K A := fun x => isEmptyElim x
     have ht : t = s := Finset.filter_true_of_mem fun A _ => hK A
