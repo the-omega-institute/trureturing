@@ -117,7 +117,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
             Mul(App(c, k), App(Forward(Add(Add(n, b), Call("Fin.val", k))), j))));
         var body = All("t", Matrix(s, s), All("v", Arr(s, V("Int")),
             All("d", V("Nat"), All("b", V("Nat"), All("c", Arr(fin, V("Int")),
-                Seq(Parenthesized(relation), Sp, F.Iff, Sp,
+                Seq(Parenthesized(relation), Sp, Implies, Sp,
                     Parenthesized(All("n", V("Nat"), All("j", s, conclusion)))))))));
         return Seq(Forall, Sp, Typed(s, V("Type")), Sp,
             Instance("Fintype", s),

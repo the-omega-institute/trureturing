@@ -290,9 +290,9 @@ theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
 private theorem inherited_relation (j : Fin 15 ⊕ Fin 15) :
     forward HardinA229508StripData.T HardinA229508StripData.initial (2 + 18) j =
       ∑ k : Fin 18, coeff k * forward HardinA229508StripData.T HardinA229508StripData.initial (2 + k.val) j := by
-  have rel (n : ℕ) := (HardinA229508StripCertificate.shifted_coordinate
+  have rel (n : ℕ) := HardinA229508StripCertificate.shifted_coordinate
     HardinA229508StripData.T HardinA229508StripData.initial
-    12 1 HardinA229508StripCertificate.coeff).1 HardinA229508StripCertificate.finite_certificate n j
+    12 1 HardinA229508StripCertificate.coeff HardinA229508StripCertificate.finite_certificate n j
   have h1 := rel 1
   have h2 := rel 2
   have h3 := rel 3
