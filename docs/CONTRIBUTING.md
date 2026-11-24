@@ -49,8 +49,8 @@ Run the consumer pin regression tests with `python3 -B .github/scripts/test-inst
   [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
   search for existing results before writing a proof.
 
-Use the [Issue template](https://github.com/the-omega-institute/trureturing/issues/new/choose)
-to report a problem, propose a change or ask a question.
+Follow the [Issue guidance](#issues) to report a problem, propose a change or ask
+a question.
 
 ## Branch, PR and Issue format
 
@@ -67,6 +67,11 @@ Use the kind that matches the primary change.
 | `theory` | Theory material maintained in this repository | `lane/theory/observer-ledger-notation` |
 | `governance` | Documentation, tooling, CI or repository policy | `lane/governance/github-contribution-format` |
 
+Start an implementation branch in a suitable linked worktree from fresh upstream
+`dev`. Push
+revisions for the same change to the branch behind its existing PR. Start a new
+topic branch for independent work. [Your first change](#your-first-change)
+
 ### Pull requests
 
 Write the title as `type(scope): action and result`, for example
@@ -76,20 +81,38 @@ verb and a short lowercase scope that names the affected area. PR types are
 `chore`. Ordinary contributions target `dev`. Release PRs follow the `main`
 release workflow.
 
-Start with the provenance fields in the [PR template](../.github/PULL_REQUEST_TEMPLATE.md).
-State what changed and why, and report the verification scope, commands and exit
-codes. Fill in the applicable mathematical or freeze details. Put Issue links
-in the body. Use `Closes #123` if the PR resolves that Issue and `Refs #123`
-for a related or partial change. For CLI submissions with `make pr`, put the
-title on the first line of `MESSAGE` and the Markdown body below it.
+Start with the provenance fields. State the result and its dependencies, report
+the verification scope, commands, exit codes, relevant failed findings and open
+cases, and complete the applicable mathematical or freeze fields. Check the
+statement about previously closed results only when it holds.
+[PR template](../.github/PULL_REQUEST_TEMPLATE.md)
+
+If an Issue applies, link it in the PR body. Use `Refs #123` for a related or
+partial change and `Closes #123` for a full resolution. The `Closes` keyword
+takes effect at merge when the PR targets the base repository's default branch
+(`dev` here). For an Issue in another repository, use `Refs owner/repo#123` or
+`Closes owner/repo#123`.
 
 ### Issues
+
+Search existing Issues and PRs before filing. Continue a matching active Issue
+and use its related PR when one already covers the change. Use the common Issue
+template for reports, proposals and questions.
+[Issue chooser](https://github.com/the-omega-institute/trureturing/issues/new/choose)
+
+File tools implementation work in the tools repository and consumer integration
+or pin changes here. [Tools repository](https://github.com/the-omega-institute/trureturing-tools)
+
+Route theory sources, intake and coverage to the theory source repository. Lean
+formalization and its Blueprint belong here. Link related changes across
+repositories. [Theory source repository](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)
 
 Write ordinary Issue titles as `type(scope): concrete symptom, proposal or question`.
 Use `bug`, `proposal` or `question`, for example
 `bug(ci): FILEMAP misses a newly added template`. Research tracking uses the
 existing `Preregister: <exact target>` and `Research unit: <exact target>` titles
 and the relevant research workflow's body fields.
+[Research workflow](../skills/autonomous-research/SKILL.md#3-preregister-probes-and-choose-one-unit)
 
 Start with provenance and identify the affected path, declaration or workflow.
 For a bug, include the commit, environment, smallest reproducing command or input,
@@ -99,8 +122,23 @@ For a proposal, state the desired outcome and how to verify it. For a question,
 state the exact point that needs an answer. Include necessary diagnostics and
 source links. Keep Issue and PR bodies focused on current results and evidence.
 
+Before implementing or delegating the work, record your claim on the matching
+Issue with the current facts and proposed action. A comment is enough. Correct
+invalidated premises promptly. Update the Issue when new evidence changes the
+diagnosis or the chosen action, and before changing frozen or protected state.
+Comments should add evidence or a decision, so skip routine status updates.
+
+Close a question with the actual answer. If a PR merged into `dev` resolves
+only part of an Issue, link the PR, record the remaining scope and keep the
+Issue open. For a full implementation, record the PR merged into `dev`, its
+merge SHA and the verified result of the first applicable `dev` push, then
+close the Issue. If GitHub closes it at merge, add the push result once verified.
+[Open a pull request](#open-a-pull-request)
+
 Follow the repository's provenance requirements for skills, producers, review
-scope and agent session recovery in [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露).
+scope and agent session recovery. When an agent takes over and updates an Issue
+or PR, append its session ID and resume command and retain the original entries.
+[AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露)
 
 ## Use Claude Code or Codex
 
@@ -273,9 +311,11 @@ cd ../trureturing-SESSION-ID
 ```
 
 This creates `lane/governance/first-docs` and restores the locked .NET dependencies.
-For later tasks, commit existing work, confirm a clean tree and switch to a
-validated branch in the same session worktree, following
-[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
+To reuse this worktree for the next independent task, finish delivery of the
+previous change and confirm the tree is clean, with no undelivered commits or
+unfinished Git operations. If the tree is compatible, fetch upstream `dev` again
+and create the next topic branch from it in the same worktree.
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery)
 Other branch kinds are `math` and `theory`; file-level checks still apply.
 Maintainers use `BASE=origin/dev`.
 
@@ -323,12 +363,21 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-search this repository, pinned Mathlib and admissible upstream libraries before
-proving anything locally. Reuse an existing result directly when it fits.
+check the D5 frozen ledger for the result and prefer OmegaMath when constructing
+the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
+For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
+root and prefix the original declaration name with `Omega.`. Place original
+results near their mathematical topic and mark the module `Omega original.`.
+D5 imports the specific module for its book-facing theorem. For example,
+`Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
+See the [module placement examples](../src/README.md).
 Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
-defined external open-problem exception.
+defined external open-problem exception. A book that needs a frozen GID for
+an existing OmegaMath theorem may use one direct D5 citation entry when the
+ledger has no matching item. Identify the book location and original proof
+in the PR and classify the entry as bind-only.
 
 Frozen results stay fixed. Changes involving assumptions, new axioms,
 `Hearts.lean` or protected policy must follow their existing authorization
@@ -381,7 +430,9 @@ state-file diff before committing. [Frozen state specification, A14](develop/spe
 
 A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
 a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
-claim applies to the compiled declaration at measurement time. For the library itself, the strict
+claim applies to the compiled declaration at measurement time. Published DAGs
+label qualifying declarations **仅 Omega · 零公理**. The Truth Release carries
+the corresponding evidence on each annotated declaration in the truth export. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
 `lake test -- OmegaMath.Projective` checks the projective topic.
@@ -389,19 +440,58 @@ an empty axiom set and replays the closure in a fresh Lean kernel environment.
 
 ## Open a pull request
 
-Push the branch to your fork with `git push -u origin lane/governance/first-docs`
-(substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
-`main` is the release branch.
+In the fork setup above, push your topic branch with
+`git push -u origin lane/governance/first-docs`, substituting your branch name.
+Select your fork and branch as the PR head and
+**`the-omega-institute/trureturing:dev`** as the base.
 
-Use the [PR title and body format](#pull-requests).
+For `make pr`, put the title on the first line of `MESSAGE` and the Markdown
+body below it. For a personal fork named `trureturing`, qualify `HEAD` with
+the fork owner's GitHub username. If you pushed the branch directly to the
+upstream repository, use the bare branch name. [PR title and body](#pull-requests)
 
-Arrange independent review. The repository's documented merge checks are
-one required check per independent CI workflow; inspect the actual check
-results on your PR and address failures. GitHub branch-protection configuration
-is an external setting, not a guarantee supplied by this guide. An open PR or
-green local check is not a merged contribution: completion is **MERGED** into
-`dev`. Reuse the session worktree for subsequent tasks; cleanup follows
-[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
+```sh
+make pr HEAD=YOUR-USERNAME:lane/governance/first-docs MESSAGE=pr.md DRAFT=1
+```
+
+If review is pending, use `DRAFT=1` or `AUTO_MERGE=0`. `DRAFT=1` returns after
+opening the draft. Mark the existing draft **Ready for review** when it is ready.
+For a non-draft PR, `make pr` attempts to enable auto-merge by default before
+waiting for required checks. Enabling auto-merge requires write access to the
+base repository. Fork contributors without that access use `AUTO_MERGE=0` for
+non-draft PRs. A maintainer can merge the existing PR after review and required
+checks pass, or enable auto-merge after review. If a contributor without write
+access pushes a new head while auto-merge is enabled, GitHub disables it. A
+maintainer can enable it again after the new head is reviewed.
+
+Arrange the applicable independent review and address failures in GitHub's
+required checks on the current PR head. Replace `123` with your PR number and
+look up its head on GitHub.
+
+```sh
+pr_number=123
+head_sha="$(gh pr view "$pr_number" --repo the-omega-institute/trureturing \
+  --json headRefOid --jq .headRefOid)" && printf '%s\n' "$head_sha"
+```
+
+When pushing a revision, record the full SHA of the exact source ref or commit
+used in that push. Continue only once GitHub's `headRefOid` matches the SHA you
+pushed. If you're observing the PR, use the current SHA GitHub reports.
+
+Once you have the confirmed SHA, reuse the running wait handle or the completed
+result for that PR and SHA, including any result already returned by `make pr`.
+If neither exists, start a single watcher.
+
+```sh
+make pr-watch PR="$pr_number" HEAD_SHA="$head_sha"
+```
+
+Verify that GitHub reports **MERGED** into `dev` and record the merge SHA.
+Check Actions for the first applicable `dev` push for that SHA and verify the
+affected entry point. [Actions on dev](https://github.com/the-omega-institute/trureturing/actions?query=branch%3Adev)
+
+Follow the worktree reuse or cleanup instructions.
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery)
 
 The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
 [licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)

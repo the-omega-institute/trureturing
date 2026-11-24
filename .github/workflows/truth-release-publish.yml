@@ -10,7 +10,7 @@ permissions: {}
 
 # Inspector and Scribe follow the source pin. The publisher has its own revision.
 env:
-  TRUTH_TOOLS_COMMIT: 9566f70cb7f56736639b89ce3dbb6a32ac6c2f86
+  TRUTH_TOOLS_COMMIT: bde58fcea76c0538fd182630f05cc1ab12e5bee9
 
 concurrency:
   group: truth-release-publish-dev
@@ -72,7 +72,9 @@ jobs:
         with:
           operation: restore
       - name: Prepare the source's Lean module reports
-        run: make lean-cache-prepare FULL_BUILD=1
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: bash .github/actions/lean-compile-layer/measure.sh --compile make lean-cache-prepare FULL_BUILD=1
       - name: Generate and package the DAG and truth release
         run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
       - id: upload
