@@ -129,6 +129,7 @@ section
 
 open scoped BigOperators Function
 open D5.S3.Combinatorics.TraceAvoidingArrays
+open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column T table moves step_fast weighted_indicator_sum)
 open HardinA229538Strip (cost oneDefect
   edges_filter_card movesOne step_one classIndex tableOne zeroValues zero_values
@@ -771,7 +772,6 @@ section
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect
