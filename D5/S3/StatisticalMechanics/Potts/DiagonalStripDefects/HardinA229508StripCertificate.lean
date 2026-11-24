@@ -32,8 +32,7 @@ import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Order.Fin.Basic
 import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Data.Finset.NatAntidiagonal
-import Mathlib.Algebra.Order.Antidiag.Prod
+import D5.S3.Arith.ModularForms.IntegralDiscriminant
 import Mathlib.Basic.Logic.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
@@ -251,8 +250,8 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
 
 /-- The squared monic polynomial, computed as a Cauchy product. -/
 def squareMonicCoeff (n : ℕ) : ℤ :=
-  ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n,
-    HardinA203981StripCertificate.monicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2
+  D5.S3.Arith.ModularForms.integerConvolution
+    HardinA203981StripCertificate.monicCoeff HardinA203981StripCertificate.monicCoeff n
 
 /-- Recurrence coefficients in increasing order of the input index. -/
 def coeff (k : Fin 12) : ℤ :=

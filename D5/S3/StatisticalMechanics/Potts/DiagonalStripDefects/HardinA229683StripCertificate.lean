@@ -27,8 +27,7 @@ halfForwardTwo: proof_shape=bind-only; consumers=W
 
 import Mathlib.Order.Fin.Basic
 import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Data.Finset.NatAntidiagonal
-import Mathlib.Algebra.Order.Antidiag.Prod
+import D5.S3.Arith.ModularForms.IntegralDiscriminant
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
@@ -242,8 +241,8 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
 
 /-- The missing lag-sixteen term has coefficient zero. -/
 def coeff (k : Fin 18) : ℤ :=
-  -(∑ p ∈ Finset.HasAntidiagonal.antidiagonal k.val,
-    HardinA229508StripCertificate.squareMonicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2)
+  -D5.S3.Arith.ModularForms.integerConvolution
+    HardinA229508StripCertificate.squareMonicCoeff HardinA203981StripCertificate.monicCoeff k.val
 
 /-- The computed expansion in increasing order of the input index. -/
 theorem coeff_values : coeff = ![-282429536481, 470715894135, 0, -366499782594, 132368667075, 92909172825, -54520532190, -6257717775, 8082823950, -601275555, -435322350, 70536825, 7404210, -2206575, 60075, 19486, -2010, 75] := by

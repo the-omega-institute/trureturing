@@ -30,7 +30,7 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
             H("Order-eighteen coefficients"), StatementSource.FromAuthor(Disp(CoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial. IntegralDiscriminant.integerConvolution evaluates the displayed Cauchy sum over the corresponding range of first indices."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("coeff-values"), DeclarationHandle.Create(Prefix + "coeff_values"),
             H("Numerical expansion"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA229683StripCertificate.coeff"), Arr(Fin("18"), V("Int"))), Vec(N("282429536481", true), N("470715894135"), N("0"), N("366499782594", true), N("132368667075"), N("92909172825"), N("54520532190", true), N("6257717775", true), N("8082823950"), N("601275555", true), N("435322350", true), N("70536825"), N("7404210"), N("2206575", true), N("60075"), N("19486"), N("2010", true), N("75"))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),

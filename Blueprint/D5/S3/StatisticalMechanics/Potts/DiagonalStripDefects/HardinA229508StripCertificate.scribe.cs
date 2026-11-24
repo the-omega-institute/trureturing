@@ -54,7 +54,7 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("square-monic-coeff"), DeclarationHandle.Create(Prefix + "squareMonicCoeff"),
             H("Squared monic polynomial coefficients"), StatementSource.FromAuthor(Disp(SquareMonicCoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent. IntegralDiscriminant.integerConvolution evaluates the displayed Cauchy sum over the corresponding range of first indices."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
             H("Order-twelve coefficients"), StatementSource.FromAuthor(Disp(CoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
