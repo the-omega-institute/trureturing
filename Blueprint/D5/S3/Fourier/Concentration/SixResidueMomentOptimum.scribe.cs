@@ -19,7 +19,8 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                 + "For a ≤ 1/2 take v = ((1+4a)/6, 1/6, (1−2a)/6, 1/6, (1−2a)/6, 1/6). "
                 + "For a > 1/2 take v = (a, (1−a)/3, 0, (1−a)/3, 0, (1−a)/3). "
 + "For every real t, put uₜ(k) = max(0, 1 − t(1−c(k))) and "
-+ "pₜ(k) = uₜ(k)/∑ⱼuₜ(j).")),
++ "pₜ(k) = uₜ(k)/∑ⱼuₜ(j). For a competitor w write D(w) = E(w) − E(v) − E(w−v) "
+                + "and m(w) = M₁(w) + M₂(w) − 2a.")),
             Describe.Lean(
                 DescribeId.Create("six-residue-two-mode-optimum"),
                 DeclarationHandle.Create(Owner + ".six_two_mode_optimum"),
@@ -30,7 +31,9 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "The energy comparison applies to every nonnegative probability law "
                         + "w for which M₁(w) + M₂(w) ≥ 2a. This includes arbitrary nonsymmetric "
-                        + "laws satisfying the two individual bounds.")),
+                        + "laws satisfying the two individual bounds. The exact energy identity needs "
+                        + "only total mass one. In the upper regime the last term retains the "
+                        + "contribution of the two clipped residues 2 and 4.")),
                     Paragraph(Text(
                         "The combined readout c+d takes the values 2, 0 and −1. On each set "
                         + "where c+d is constant the differences c−d sum to zero. A weight "
@@ -73,6 +76,14 @@ internal sealed class SixResidueMomentOptimumDocument : IScribeDocumentDefinitio
                 Grp(D(1), Plus, D(4), aSquared), Grp(D(6)), Comma),
             Seq(Amp, half, Lt, a, Sp, Longrightarrow, Sp, ev, Eq, aSquared, Plus,
                 Frac, Grp(new Formula.Power(Seq(Open, D(1), Minus, a, Close), D(2))), Grp(D(3)), Comma),
+            Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad,
+                sum, Call("w", k), Eq, D(1), Colon),
+            Seq(Amp, Quad, a, Sp, Le, Sp, half, Sp, Longrightarrow, Sp, Call("D", w), Eq,
+                Frac, Grp(D(2), a), Grp(D(3)), Call("m", w), Comma),
+            Seq(Amp, Quad, half, Lt, a, Sp, Longrightarrow, Sp, Call("D", w), Eq,
+                Frac, Grp(D(4), a, Minus, D(1)), Grp(D(3)), Call("m", w), Plus,
+                Open, D(2), a, Minus, D(1), Close,
+                Open, Call("w", D(2)), Plus, Call("w", D(4)), Close, Comma),
             Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad, Open, Forall, Sp, k, Comma, Sp,
                 Call("w", k), Sp, Ge, D(0), Close, Sp, Land, Sp, sum, Call("w", k), Eq, D(1), Sp,
                 Land, Sp, new Formula.Apply(first, [w]), Plus, new Formula.Apply(second, [w]),

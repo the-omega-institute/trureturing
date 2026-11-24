@@ -33,6 +33,11 @@ abbrev arena : Arena where
     (∀ k, 0 ≤ v k) ∧ (∑ k, v k) = 1 ∧ (∑ k, v k * c k) = a ∧ (∑ k, v k * d k) = a ∧
       (∑ k, square (v k)) = (if a ≤ 1 / 2 then (1 + 4 * a ^ 2) / 6
         else a ^ 2 + (1 - a) ^ 2 / 3) ∧
+      (∀ w : Fin 6 → ℝ, (∑ k, w k) = 1 →
+        let m := (∑ k, w k * c k) + (∑ k, w k * d k) - 2 * a
+        (∑ k, square (w k)) - (∑ k, square (v k)) - (∑ k, square (w k - v k)) =
+          if a ≤ 1 / 2 then (2 * a / 3) * m
+          else ((4 * a - 1) / 3) * m + (2 * a - 1) * (w 2 + w 4)) ∧
       (∀ w : Fin 6 → ℝ, (∀ k, 0 ≤ w k) → (∑ k, w k) = 1 →
         2 * a ≤ (∑ k, w k * c k) + ∑ k, w k * d k →
         (∑ k, square (w k - v k)) ≤ (∑ k, square (w k)) - ∑ k, square (v k)) ∧
