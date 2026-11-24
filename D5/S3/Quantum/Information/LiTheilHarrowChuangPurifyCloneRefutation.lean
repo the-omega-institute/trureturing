@@ -87,7 +87,6 @@ proof_shape: pauli_marginal: bind-only; consumers: pauli_purifications; escape_w
 proof_shape: pauli_purifications: bind-only; consumers: randomPurify_mem_target; escape_witness: none; Direct frozen dependencies: F2,F3,F4,F6,F7,F10,F13,F15,F17,F25,F26,F27.
 proof_shape: pauli_average: bind-only; consumers: randomPurify_mem_target; escape_witness: none; Direct frozen dependencies: F2,F3,F4,F6,F13,F17.
 proof_shape: randomPurify_mem_target: bind-only; consumers: competitor_loss_upper; escape_witness: none; Direct frozen dependencies: F2,F3,F4,F6,F7,F10,F13,F15,F17,F25,F26,F27.
-proof_shape: sqrt_kronecker: bind-only; consumers: sqFidelity_tensor_same_density,pure_target_fidelity_bound; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: sqFidelity_tensor_same_density: bind-only; consumers: competitor_fidelity_lower; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: sqrt_real_smul: bind-only; consumers: pure_target_fidelity_bound; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: oneSiteLoss_le_of_fidelity: bind-only; consumers: competitor_loss_upper; escape_witness: none; Direct frozen dependencies: F6,F11,F13.
@@ -126,6 +125,7 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Subentropy.Basic
 import D5.S3.Quantum.Subentropy.PinchingGap
 import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
+import D5.S3.Quantum.Matrix.KroneckerSqrt
 
 /- One-site worst-case squared-infidelity risk for arXiv:2605.21457v2,
    equations (S13), (S34) and (S35), with n = 1 and m = 2.
@@ -133,6 +133,8 @@ import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+open D5.S3.Quantum.Matrix.KroneckerSqrt (sqrt_kronecker)
 
 noncomputable section
 namespace D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
@@ -606,16 +608,6 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open scoped ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 noncomputable section
-
-private theorem sqrt_kronecker {a b : Type*} [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] (A : (Matrix a a ℂ)) (B : (Matrix b b ℂ))
-    (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    CFC.sqrt (A ⊗ₖ B) = CFC.sqrt A ⊗ₖ CFC.sqrt B := by
-  apply CFC.sqrt_unique
-  · rw [← Matrix.mul_kronecker_mul, CFC.sqrt_mul_sqrt_self A hA.nonneg,
-      CFC.sqrt_mul_sqrt_self B hB.nonneg]
-  · exact ((Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg A)).kronecker
-      (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg B))).nonneg
 
 private theorem sqFidelity_tensor_same_density {a b : Type*} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (A B : (Matrix a a ℂ)) (E : (Matrix b b ℂ))

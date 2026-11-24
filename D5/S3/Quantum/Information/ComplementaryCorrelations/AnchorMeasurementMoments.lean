@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.ComplementaryCorrelations.AnchorMeasurementBKM
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Quantum.Matrix.KroneckerSqrt
 
 /-! Pauli moments and the bridge from the raw qutrit certificate to the
 centered moments in the Simpson trace bound. -/
@@ -17,6 +18,7 @@ noncomputable section
 namespace AnchorMeasurement
 
 open Matrix
+open D5.S3.Quantum.Matrix.KroneckerSqrt (sqrt_kronecker)
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix
   blochMatrix_trace bloch_geometry_of_isHermitian)
@@ -234,15 +236,6 @@ theorem pauli_midpoint (v : EuclideanSpace ℝ (Fin 3)) (hα : (blochMatrix 1 v)
 section Tensor
 
 variable {a b : Type*} [Fintype a] [Fintype b] [DecidableEq a] [DecidableEq b]
-
-private theorem sqrt_kronecker (A : Mat a) (B : Mat b)
-    (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    CFC.sqrt (A ⊗ₖ B) = CFC.sqrt A ⊗ₖ CFC.sqrt B := by
-  apply CFC.sqrt_unique
-  · rw [← Matrix.mul_kronecker_mul, CFC.sqrt_mul_sqrt_self A hA.nonneg,
-      CFC.sqrt_mul_sqrt_self B hB.nonneg]
-  · exact ((Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg A)).kronecker
-      (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg B))).nonneg
 
 private theorem trace_product_two_slot (A P Q : Mat a) (B C D : Mat b) :
     let O := P ⊗ₖ C + Q ⊗ₖ D

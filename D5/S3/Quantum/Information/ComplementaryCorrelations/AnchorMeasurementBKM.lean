@@ -31,66 +31,38 @@ open D5.S3.Quantum.Divergence.UmegakiRareFlagBKM (pair_kernel_eval)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMActualMetricCoordinates
 open D5.S3.Quantum.Recovery.BKMSpectralVariance
-  (trace_conjStarAlgAut_symm omega_isHermitian omegaLinear)
+  (logMean logMean_self logMean_mul_logRatio omega_eigenbasis_entry
+    trace_conjStarAlgAut_symm omega_isHermitian omegaLinear)
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow (trace_hermitian_product_real)
 open D5.S3.Quantum.Matrix.SpectralPower (mpow)
-
-local notation "LM" => (fun a b : ℝ => ∫ s : ℝ in 0..1, a ^ s * b ^ (1 - s))
 
 private def inverseMean (a b : ℝ) : ℝ :=
   ∫ t in Set.Ioi (0 : ℝ), 1 / ((a + t) * (b + t))
 
-private theorem lm_self {a : ℝ} (ha : 0 < a) : LM a a = a := by
-  have h (s : ℝ) : a ^ s * a ^ (1 - s) = a := by
-    rw [← Real.rpow_add ha, show s + (1 - s) = 1 by ring, Real.rpow_one]
-  simp [h, intervalIntegral.integral_const]
-
--- BKMSpectralVariance has this scalar evaluation as a private lemma.
-private theorem lm_mul_log {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
-    LM a b * (Real.log a - Real.log b) = a - b := by
-  let r := Real.log (a / b)
-  have hr : Real.exp r = a / b := Real.exp_log (div_pos ha hb)
-  rw [← Real.log_div ha.ne' hb.ne']
-  change LM a b * r = a - b
-  by_cases hzero : r = 0
-  · rw [hzero, Real.exp_zero] at hr
-    have hab := (div_eq_iff hb.ne').mp hr.symm
-    simp [hzero, hab]
-  have h (s : ℝ) : a ^ s * b ^ (1 - s) = b * Real.exp (s * r) := by
-    calc
-      _ = Real.exp (Real.log b) * Real.exp (s * r) := by
-        rw [Real.rpow_def_of_pos ha, Real.rpow_def_of_pos hb, ← Real.exp_add, ← Real.exp_add]
-        congr 1
-        dsimp [r]
-        rw [Real.log_div ha.ne' hb.ne']
-        ring
-      _ = _ := by rw [Real.exp_log hb]
-  simp only [h, intervalIntegral.integral_const_mul,
-    intervalIntegral.integral_comp_mul_right Real.exp hzero, zero_mul, one_mul,
-    smul_eq_mul, integral_exp, hr, Real.exp_zero]
-  field_simp
-
 private theorem lm_mul_pairKernel {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
-    LM a b * inverseMean a b = 1 := by
+    logMean a b * inverseMean a b = 1 := by
   rw [inverseMean, pair_kernel_eval a b ha hb]
   by_cases h : a = b
   · subst b
-    rw [ite_eq_left rfl, lm_self ha]
+    rw [ite_eq_left rfl, logMean_self ha]
     field_simp
-  · rw [ite_eq_right h, ← mul_div_assoc, lm_mul_log ha hb, div_self (sub_ne_zero.mpr h)]
+  · rw [ite_eq_right h, ← mul_div_assoc, ← Real.log_div ha.ne' hb.ne',
+      logMean_mul_logRatio ha hb, div_self (sub_ne_zero.mpr h)]
 
 /-- The integral coefficient is the scalar logarithmic mean used in the Simpson estimate. -/
 private theorem lm_eq_logarithmicMean {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
-    LM a b = Omega.CovarianceToAnchor.logarithmicMean a b := by
+    logMean a b = Omega.CovarianceToAnchor.logarithmicMean a b := by
   by_cases hab : a = b
   · subst b
-    simpa [Omega.CovarianceToAnchor.logarithmicMean] using lm_self ha
+    simpa [Omega.CovarianceToAnchor.logarithmicMean] using logMean_self ha
   · rw [Omega.CovarianceToAnchor.logarithmicMean, ite_eq_right hab]
-    apply (eq_div_iff _).2 (lm_mul_log ha hb)
-    exact sub_ne_zero.mpr (fun h => hab (Real.log_injOn_pos ha hb h))
+    have hlog : Real.log a - Real.log b ≠ 0 :=
+      sub_ne_zero.mpr (fun h => hab (Real.log_injOn_pos ha hb h))
+    apply (eq_div_iff hlog).2
+    simpa only [Real.log_div ha.ne' hb.ne'] using logMean_mul_logRatio ha hb
 
 theorem logMean_le_simpson {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
-    LM a b ≤ (a + b + 4 * (Real.sqrt a * Real.sqrt b)) / 6 := by
+    logMean a b ≤ (a + b + 4 * (Real.sqrt a * Real.sqrt b)) / 6 := by
   rw [lm_eq_logarithmicMean ha hb, ← Real.sqrt_mul ha.le]
   exact Omega.CovarianceToAnchor.logarithmic_mean_le_simpson ha hb
 
@@ -107,32 +79,6 @@ private theorem mpow_entry (hσ : σ.PosDef) (r : ℝ) :
       diagonal (fun i : n => ((eigenvalue hσ i ^ r : ℝ) : ℂ)) := by
   rw [mpow, hσ.isHermitian.cfc_eq, Matrix.IsHermitian.cfc]
   exact StarAlgEquiv.symm_apply_apply _ _
-
--- This is the entry API of BKMSpectralVariance.omega_eigenbasis_entry,
--- emitted here as a draft because its pinned declaration is private.
-theorem omega_entry (hσ : σ.PosDef) (X : Mat n) (i j : n) :
-    inBasis (eigenBasis hσ) (omega σ X) i j =
-      (LM (eigenvalue hσ i) (eigenvalue hσ j) : ℂ) * inBasis (eigenBasis hσ) X i j := by
-  let F := (Unitary.conjStarAlgAut ℂ (Mat n) (eigenBasis hσ)).symm
-  let e := (Matrix.entryLinearMap ℂ ℂ i j).toContinuousLinearMap.comp
-    F.toAlgEquiv.toLinearEquiv.toContinuousLinearEquiv.toContinuousLinearMap
-  have hp := continuous_mpow σ hσ
-  have hc : Continuous (fun s : ℝ => 1 - s) := continuous_const.sub continuous_id
-  have hi : IntervalIntegrable (fun s : ℝ => mpow σ s * X * mpow σ (1 - s))
-      volume 0 1 := ((hp.mul (continuous_const (y := X))).mul (hp.comp hc)).intervalIntegrable 0 1
-  change e (∫ s : ℝ in 0..1, mpow σ s * X * mpow σ (1 - s)) = _
-  rw [← e.intervalIntegral_comp_comm hi]
-  have he (s : ℝ) : e (mpow σ s * X * mpow σ (1 - s)) =
-      ((eigenvalue hσ i ^ s * eigenvalue hσ j ^ (1 - s) : ℝ) : ℂ) *
-        inBasis (eigenBasis hσ) X i j := by
-    change inBasis (eigenBasis hσ) (mpow σ s * X * mpow σ (1 - s)) i j = _
-    simp only [inBasis, map_mul] at ⊢
-    change (inBasis (eigenBasis hσ) (mpow σ s) * inBasis (eigenBasis hσ) X *
-      inBasis (eigenBasis hσ) (mpow σ (1 - s))) i j = _
-    rw [mpow_entry hσ, mpow_entry hσ, Matrix.mul_diagonal, Matrix.diagonal_mul]
-    simp only [inBasis, Complex.ofReal_mul]
-    exact mul_right_comm _ _ _
-  simp only [he, intervalIntegral.integral_mul_const, intervalIntegral.integral_ofReal]
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 theorem logDeriv_entry (hσ : σ.PosDef) (X : Mat n) (i j : n) :
@@ -165,7 +111,11 @@ theorem omega_logDeriv (hσ : σ.PosDef) (X : Mat n) : omega σ (logDeriv σ X) 
   apply ((Unitary.conjStarAlgAut ℂ (Mat n) (eigenBasis hσ)).symm).injective
   change inBasis (eigenBasis hσ) _ = inBasis (eigenBasis hσ) X
   ext i j
-  rw [omega_entry hσ, logDeriv_entry hσ, ← mul_assoc, ← Complex.ofReal_mul,
+  have hentry : inBasis (eigenBasis hσ) (omega σ (logDeriv σ X)) i j =
+      (logMean (eigenvalue hσ i) (eigenvalue hσ j) : ℂ) *
+        inBasis (eigenBasis hσ) (logDeriv σ X) i j :=
+    omega_eigenbasis_entry hσ (logDeriv σ X) i j
+  rw [hentry, logDeriv_entry hσ, ← mul_assoc, ← Complex.ofReal_mul,
     lm_mul_pairKernel (hσ.eigenvalues_pos i) (hσ.eigenvalues_pos j), Complex.ofReal_one, one_mul]
 
 /-- BKM Cauchy–Schwarz in the repository's metric coordinates. -/
@@ -255,7 +205,7 @@ theorem omega_le_simpson (hσ : σ.PosDef) (O : Mat n) (hO : O.IsHermitian) :
     push_cast
     ring
   have h := trace_weighted_entry U O (omega σ O)
-    (fun i j => LM (l i) (l j)) (omega_entry hσ O)
+    (fun i j => logMean (l i) (l j)) (omega_eigenbasis_entry hσ O)
   have hcomparison : (Oᴴ * omega σ O).trace.re ≤ (Oᴴ * Y).trace.re := by
     rw [h, trace_weighted_entry U O Y _ hY]
     exact Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ =>
