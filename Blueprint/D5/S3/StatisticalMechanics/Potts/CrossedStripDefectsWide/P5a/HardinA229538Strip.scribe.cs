@@ -33,7 +33,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
             Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
-            Node("step_one",StepOne(),true,"The action of the exact-one-cut matrix is a sum over its successors. The entry one acts as a left unit on the vector values."),
+            Node("step_one",StepOne(),true,"The matrix row sums the successor values after multiplying each by one on the left. Left multiplication by zero removes all other entries."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
             Node("weights_step",WeightsStep(),true,"Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
@@ -276,13 +276,15 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
     private static Formula StepOne() {
         var scalar = V("R");
-        var leftUnit = All("x", scalar, Eq(Mul(Typed(N(1), scalar), V("x")), V("x")));
+        var zeroLeft = All("x", scalar, Eq(Mul(Typed(N(0), scalar), V("x")), Typed(N(0), scalar)));
+        var weighted = Fn("q", Column(), Mul(Typed(N(1), scalar), App(V("w"), V("q"))));
         var equation = All("w", Arrow(Column(), scalar), All("p", Column(),
             Eq(App(Call("Matrix.mulVec", Own("oneDefect"), V("w")), V("p")),
-                Call("List.sum", Call("List.map", V("w"), Own("movesOne", V("p")))))));
+                Call("List.sum", Call("List.map", weighted, Own("movesOne", V("p")))))));
         return All("R", Seq(Q("Type"), Star), Seq(
-            OpenBracket, Call("NonUnitalNonAssocSemiring", scalar), CloseBracket, Sp,
-            OpenBracket, Call("One", scalar), CloseBracket, Sp, Imp(leftUnit, equation)));
+            OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
+            OpenBracket, Call("Mul", scalar), CloseBracket, Sp,
+            OpenBracket, Call("One", scalar), CloseBracket, Sp, Imp(zeroLeft, equation)));
     }
     private static Formula WeightsStep()
     {
