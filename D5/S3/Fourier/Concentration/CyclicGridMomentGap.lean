@@ -68,33 +68,38 @@ private theorem sign_masses_ge_quarter {J : Type*} [Fintype J]
   have hs := abs_le.mp (abs_le_of_sq_le_sq hsq (by norm_num))
   exact ⟨by change 1 / 4 ≤ a; linarith [hs.1], by change 1 / 4 ≤ b; linarith [hs.2]⟩
 
-private theorem gap_error_budgets {c t δ : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 1 / 2)
+private theorem gap_error_budgets {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 8)
+    (hc' : c ≤ (1 + ε) / 2)
     (hδ : 0 < δ) (hδ' : δ ≤ 1) (ht : t ^ 2 = c * (1 - c))
-    (hgap : 1 / 2 - c < δ ^ 2 / 1024) :
-    4 * (c * (1 / 2 - c)) / t ^ 4 ≤ 1 / 4 ∧
-      (1 + 4 / t ^ 2) * (c * (1 / 2 - c)) < c * δ ^ 2 / 36 := by
+    (hgap : (1 + ε) / 2 - c < δ ^ 2 / 1024) :
+    let g := (1 + ε) / 2 - c
+    4 * (c * g) / t ^ 4 ≤ 1 / 4 ∧
+      (1 + 4 / t ^ 2) * (c * g) < c * δ ^ 2 / 36 := by
+  dsimp only
   have hδsq : δ ^ 2 ≤ 1 := (sq_le_one_iff_abs_le_one _).2 (by rwa [abs_of_pos hδ])
-  have hgsmall : 1 / 2 - c < 1 / 1024 := hgap.trans_le (by linarith)
+  have hgsmall : (1 + ε) / 2 - c < 1 / 1024 := hgap.trans_le (by linarith)
   have hcsmall : 1 / 4 ≤ c := by linarith
+  have hcupper : c ≤ 3 / 4 := by linarith
   have htlo : 3 / 16 ≤ t ^ 2 := by
     rw [ht]
-    nlinarith [mul_nonneg (sub_nonneg.mpr hcsmall) (sub_nonneg.mpr (show c ≤ 3 / 4 by linarith))]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hcsmall) (sub_nonneg.mpr hcupper)]
   have htpos : 0 < t ^ 2 := by linarith
   have htfour : (3 / 16 : ℝ) ^ 2 ≤ t ^ 4 := by
     simpa only [← pow_mul] using pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 3 / 16) htlo 2
   constructor
   · apply (div_le_iff₀ (show 0 < t ^ 4 by linarith)).mpr
-    have hf : 4 * (c * (1 / 2 - c)) ≤ 2 * (1 / 2 - c) := by
-      nlinarith [mul_nonneg (sub_nonneg.mpr hc') (sub_nonneg.mpr hc')]
+    have hg0 : 0 ≤ (1 + ε) / 2 - c := by linarith
+    have hf : 4 * (c * ((1 + ε) / 2 - c)) ≤ 3 * ((1 + ε) / 2 - c) := by
+      nlinarith [mul_nonneg (sub_nonneg.mpr hcupper) hg0]
     linarith
   · have hf : 4 / t ^ 2 ≤ 22 := by apply (div_le_iff₀ htpos).mpr; linarith
     have hcpos : 0 < c := by linarith
-    have hD : 0 ≤ c * (1 / 2 - c) := mul_nonneg hc (sub_nonneg.mpr hc')
+    have hD : 0 ≤ c * ((1 + ε) / 2 - c) := mul_nonneg hcpos.le (by linarith)
     calc
-      _ ≤ 23 * (c * (1 / 2 - c)) := mul_le_mul_of_nonneg_right (by linarith) hD
+      _ ≤ 23 * (c * ((1 + ε) / 2 - c)) := mul_le_mul_of_nonneg_right (by linarith) hD
       _ < 23 * (c * (δ ^ 2 / 1024)) := mul_lt_mul_of_pos_left
         (mul_lt_mul_of_pos_left hgap hcpos) (by norm_num)
-      _ ≤ _ := by nlinarith [mul_nonneg hc (sq_nonneg δ)]
+      _ ≤ _ := by nlinarith [mul_nonneg hcpos.le (sq_nonneg δ)]
 
 private theorem real_product_error (a b a' b' : ℂ) {r : ℝ}
     (ha : ‖a'‖ = r) (hb : ‖b‖ = r) :
@@ -109,26 +114,27 @@ private theorem real_product_error (a b a' b' : ℂ) {r : ℝ}
 
 private theorem gap_of_phase_contacts {J : Type*} [Fintype J]
     (w : J → ℝ) (X : J → ℂ) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j)
-    {c t δ : ℝ} (hc : 0 < c) (hc' : c ≤ 1 / 2) (hδ : 0 < δ) (hδ' : δ ≤ 1)
+    {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 8) (hc : 0 < c)
+    (hc' : c ≤ (1 + ε) / 2) (hδ : 0 < δ) (hδ' : δ ≤ 1)
     (ht : t ^ 2 = c * (1 - c)) (hX : ∀ j, ‖X j‖ ^ 2 = c)
     (hgap : ∀ j k, 0 < w j → 0 < w k → c * δ ≤ |(X j * star (X k)).re|) :
     let η (j : J) : ℝ := if 0 ≤ (X j).im then 1 else -1
     let A (j : J) : ℂ := (c : ℂ) + (↑(η j * t) : ℂ) * Complex.I
-    let E := c * (1 / 2 - c)
+    let E := c * ((1 + ε) / 2 - c)
     (∑ j, w j * ‖X j - A j‖ ^ 2) ≤ (1 + 4 / t ^ 2) * E →
     (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 →
-    c ≤ 1 / 2 - δ ^ 2 / 1024 := by
+    c ≤ (1 + ε) / 2 - δ ^ 2 / 1024 := by
   dsimp only
   let P (j : J) := 0 ≤ (X j).im
   let η (j : J) : ℝ := if P j then 1 else -1
   let A (j : J) : ℂ := (c : ℂ) + (↑(η j * t) : ℂ) * Complex.I
-  let E := c * (1 / 2 - c)
+  let E := c * ((1 + ε) / 2 - c)
   change (∑ j, w j * ‖X j - A j‖ ^ 2) ≤ (1 + 4 / t ^ 2) * E →
-    (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 → c ≤ 1 / 2 - δ ^ 2 / 1024
+    (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 → c ≤ (1 + ε) / 2 - δ ^ 2 / 1024
   intro he hb
   by_contra! hcontr
-  have hsmall : 1 / 2 - c < δ ^ 2 / 1024 := by linarith
-  obtain ⟨hbal, herr⟩ := gap_error_budgets hc.le hc' hδ hδ' ht hsmall
+  have hsmall : (1 + ε) / 2 - c < δ ^ 2 / 1024 := by linarith
+  obtain ⟨hbal, herr⟩ := gap_error_budgets hε0 hε hc' hδ hδ' ht hsmall
   have hsign := sign_masses_ge_quarter w P hw (hb.trans hbal)
   let C := c * δ ^ 2 / 9
   have hC : 0 ≤ C := div_nonneg (mul_nonneg hc.le (sq_nonneg _)) (by norm_num)
@@ -171,11 +177,11 @@ private theorem gap_of_phase_contacts {J : Type*} [Fintype J]
       _ = r ^ 2 * δ * (2 / 3) := by ring
       _ = _ := by rw [hr]
   have hmain : |c * (2 * c - 1)| < c * δ / 3 := by
-    rw [abs_mul, abs_of_pos hc, abs_of_nonpos (by linarith : 2 * c - 1 ≤ 0)]
+    rw [abs_mul, abs_of_pos hc, mul_div_assoc]
+    apply mul_lt_mul_of_pos_left _ hc
     have hδsq : δ ^ 2 ≤ δ := by nlinarith [mul_nonneg hδ.le (sub_nonneg.mpr hδ')]
-    have hlt : -(2 * c - 1) < δ / 3 := by linarith
-    have h := mul_lt_mul_of_pos_left hlt hc
-    linarith
+    apply abs_lt.mpr
+    constructor <;> linarith
   have hsum := abs_add_le ((X i * star (X j)).re - c * (2 * c - 1)) (c * (2 * c - 1))
   rw [sub_add_cancel] at hsum
   linarith [hgap i j hwi hwj]
@@ -314,25 +320,43 @@ private theorem centered_second_moment_bound
   rw [hsq] at ht
   exact ht
 
-/-- Pairwise separation from orthogonality forces a quantitative first-moment deficit. -/
-theorem first_moment_gap_of_zero_second
+/-- Separation from orthogonality improves the first-moment bound for a small second moment. -/
+theorem first_moment_gap_of_small_second
     {J : Type*} [Fintype J] (z : J → ℂ) (w : J → ℝ)
     (hz : ∀ j, ‖z j‖ = 1) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j)
-    (hb : ∑ j, (w j : ℂ) * z j ^ 2 = 0)
-    {δ : ℝ} (hδ : 0 < δ) (hδ' : δ ≤ 1)
+    {δ : ℝ} (hδ : 0 < δ)
     (hsep : ∀ j k, 0 < w j → 0 < w k → δ ≤ |(z j * star (z k)).re|) :
+    let b := ∑ j, (w j : ℂ) * z j ^ 2
     let deficit := (fun separation : ℝ => separation ^ 2 / 1024) δ
-    ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ 1 / 2 - deficit := by
+    ‖b‖ ≤ δ / 8 →
+      ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ (1 + ‖b‖) / 2 - deficit := by
+  let b := ∑ j, (w j : ℂ) * z j ^ 2
+  let ε := ‖b‖
   let m := ∑ j, (w j : ℂ) * z j
   let c := ‖m‖ ^ 2
   let X (j : J) := star m * z j
   let t := Real.sqrt (c * (1 - c))
-  change c ≤ 1 / 2 - δ ^ 2 / 1024
-  have hc' : c ≤ 1 / 2 := by
+  change ε ≤ δ / 8 → c ≤ (1 + ε) / 2 - δ ^ 2 / 1024
+  intro hε
+  have hδ' : δ ≤ 1 := by
+    have hpositive : ∃ j, 0 < w j := by
+      by_contra! hnonpos
+      have hsum : ∑ j, w j ≤ 0 := sum_nonpos fun j _ => hnonpos j
+      rw [hw] at hsum
+      norm_num at hsum
+    obtain ⟨j, hj⟩ := hpositive
+    have h := hsep j j hj hj
+    rw [mul_comm, Complex.star_def, Complex.conj_mul', hz j] at h
+    norm_num at h
+    exact h
+  have hε0 : 0 ≤ ε := norm_nonneg _
+  have hc' : c ≤ (1 + ε) / 2 := by
     have hmom := centered_second_moment_bound z w hz hw hweights
-    dsimp only at hmom
-    rw [hb, zero_sub, norm_neg, norm_pow] at hmom
-    change c ≤ 1 - c at hmom
+    change ‖b - m ^ 2‖ ≤ 1 - c at hmom
+    have htri : c ≤ ε + ‖b - m ^ 2‖ := calc
+      c = ‖m ^ 2‖ := (norm_pow _ _).symm
+      _ = ‖b + -(b - m ^ 2)‖ := by congr 1; ring
+      _ ≤ _ := by rw [← norm_neg (b - m ^ 2)]; exact norm_add_le _ _
     linarith
   rcases (sq_nonneg ‖m‖).eq_or_lt with hc0 | hc
   · have h := (sq_le_one_iff_abs_le_one δ).mpr (by rwa [abs_of_pos hδ])
@@ -353,31 +377,36 @@ theorem first_moment_gap_of_zero_second
     rw [he, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
       abs_mul, abs_of_pos hc]
     exact mul_le_mul_of_nonneg_left (hsep j k hj hk) hc.le
-  have h := first_two_moment_stability z w hz hw hweights
-  dsimp only at h
-  rw [hb, mul_zero, Complex.zero_re, zero_div, add_zero] at h
-  have hvar : c / 2 - c ^ 2 = c * (1 / 2 - c) := by ring
-  have h := h hc hc1
-  change (∑ j, w j * ‖X j - (c : ℂ) - (↑((if 0 ≤ (X j).im then (1 : ℝ) else -1) * t) : ℂ) * Complex.I‖ ^ 2) ≤
-      (1 + 4 / t ^ 2) * (c / 2 - c ^ 2) ∧
-    (∑ j, w j * (if 0 ≤ (X j).im then (1 : ℝ) else -1)) ^ 2 ≤ 4 * (c / 2 - c ^ 2) / t ^ 4 at h
-  rw [hvar] at h
-  exact gap_of_phase_contacts w X hw hweights hc hc' hδ hδ' ht hX hg
-    (by simpa only [sub_add_eq_sub_sub] using h.1) h.2
+  have hs := first_two_moment_stability z w hz hw hweights hc hc1
+  let D := c / 2 - c ^ 2 + (star m ^ 2 * b).re / 2
+  have hreal : (star m ^ 2 * b).re ≤ c * ε := calc
+    _ ≤ ‖star m ^ 2 * b‖ := Complex.re_le_norm _
+    _ = c * ε := by simp [norm_pow, c, ε]
+  have hvar : D ≤ c * ((1 + ε) / 2 - c) := calc
+    D ≤ c / 2 - c ^ 2 + c * ε / 2 :=
+      add_le_add (le_refl (c / 2 - c ^ 2))
+        (div_le_div_of_nonneg_right hreal (by norm_num : (0 : ℝ) ≤ 2))
+    _ = _ := by ring
+  have hcoef : 0 ≤ 1 + 4 / t ^ 2 := by positivity
+  have hden : 0 ≤ t ^ 4 := by positivity
+  apply gap_of_phase_contacts w X hw hweights hε0 hε hc hc' hδ hδ' ht hX hg
+  · exact (by simpa only [sub_add_eq_sub_sub] using hs.1 : _ ≤ (1 + 4 / t ^ 2) * D).trans
+      (mul_le_mul_of_nonneg_left hvar hcoef)
+  · exact hs.2.trans (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hvar (by norm_num)) hden)
 
 /-- On a cyclic grid without an element of order four, the separation is explicit. -/
 theorem cyclic_grid_fourier_gap (q : ℕ) [NeZero q] (hfour : ¬4 ∣ q)
-    (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j)
-    (hsecond : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0) :
+    (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j) :
     let δ := Real.sin ((if Even q then (2 : ℝ) else 1) * Real.pi / (2 * q))
-    ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ 1 / 2 - δ ^ 2 / 1024 := by
+    let b := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
+    ‖b‖ ≤ δ / 8 →
+      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 1024 := by
   let χ := ZMod.stdAddChar (N := q)
   let z (j : ZMod q) := χ (-j)
   let m := ∑ j, (w j : ℂ) * z j
   let δ := Real.sin ((if Even q then (2 : ℝ) else 1) * Real.pi / (2 * q))
   have hq : 0 < q := Nat.pos_of_ne_zero (NeZero.ne q)
   have hqR : (0 : ℝ) < q := by exact_mod_cast hq
-  have hδ' : δ ≤ 1 := Real.sin_le_one _
   have hδ : 0 < δ := by
     apply Real.sin_pos_of_pos_of_lt_pi
     · split <;> positivity
@@ -395,8 +424,9 @@ theorem cyclic_grid_fourier_gap (q : ℕ) [NeZero q] (hfour : ¬4 ∣ q)
     rw [ZMod.dft_apply]
     refine sum_congr rfl fun j _ => ?_
     rw [mul_one, smul_eq_mul, mul_comm]
-  have hb : (∑ j, (w j : ℂ) * z j ^ 2) = 0 := by
-    rw [← hsecond, ZMod.dft_apply]
+  have hb : (∑ j, (w j : ℂ) * z j ^ 2) =
+      ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) := by
+    rw [ZMod.dft_apply]
     refine sum_congr rfl fun j _ => ?_
     have harg : -(j * 2) = 2 • (-j) := by rw [mul_two, two_nsmul, neg_add_rev]
     change (w j : ℂ) * χ (-j) ^ 2 = χ (-(j * 2)) • (w j : ℂ)
@@ -425,7 +455,8 @@ theorem cyclic_grid_fourier_gap (q : ℕ) [NeZero q] (hfour : ¬4 ∣ q)
       ring
     rw [hcval]
     simpa [δ] using quarter_cos_separation q hq hfour ((k - j).val : ℤ)
-  rw [hm]
-  exact first_moment_gap_of_zero_second z w hz hw hweights hb hδ hδ' hsep
+  dsimp only
+  rw [hm, ← hb]
+  exact first_moment_gap_of_small_second z w hz hw hweights hδ hsep
 
 end D5.S3.Fourier.Concentration.CyclicGridMomentGap

@@ -28,11 +28,11 @@ abbrev phaseArena : Arena where
   signature := phaseSignature
   Law V := ∀ {J : Type u} [Fintype J] (z : J → ℂ) (w : J → ℝ)
       (_ : ∀ j, ‖z j‖ = 1) (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j)
-      (_ : ∑ j, (w j : ℂ) * z j ^ 2 = 0)
-      {δ : ℝ} (_ : 0 < δ) (_ : δ ≤ 1)
+      {δ : ℝ} (_ : 0 < δ)
       (_ : ∀ j k, 0 < w j → 0 < w k → δ ≤ |(z j * star (z k)).re|),
+    let b := ∑ j, (w j : ℂ) * z j ^ 2
     let deficit := V.readout () () δ
-    ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ 1 / 2 - deficit
+    ‖b‖ ≤ δ / 8 → ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ (1 + ‖b‖) / 2 - deficit
 
 private def triangle (j : Fin 3) : ℂ :=
   if j = 0 then 1 else ⟨-1 / 2, if j = 1 then Real.sqrt 3 / 2 else -Real.sqrt 3 / 2⟩
@@ -71,9 +71,12 @@ private theorem phase_rejected_law : ¬ phaseArena.{u}.Law phaseRejected := by
     apply Complex.ext <;>
       norm_num [z, w, triangle, pow_two, Complex.mul_re, Complex.mul_im, Complex.add_re,
         Complex.add_im, Complex.div_re, Complex.div_im] <;> nlinarith
-  have h := law z w (fun j => triangle_norm j.down) hmass hpos hb
-    (δ := 1 / 2) (by norm_num) (by norm_num) (fun j k _ _ => triangle_separation j.down k.down)
-  change _ ≤ 1 / 2 - 1 at h
+  have h := law z w (fun j => triangle_norm j.down) hmass hpos
+    (δ := 1 / 2) (by norm_num) (fun j k _ _ => triangle_separation j.down k.down)
+  dsimp only at h
+  rw [hb, norm_zero] at h
+  have impossible := h (by norm_num)
+  change _ ≤ (1 + 0) / 2 - 1 at impossible
   nlinarith [sq_nonneg ‖∑ j, (w j : ℂ) * z j‖]
 
 private theorem phase_dependence : ObservationalDependence phaseSignature phaseActual := by
@@ -83,10 +86,10 @@ private theorem phase_dependence : ObservationalDependence phaseSignature phaseA
   change (0 : ℝ) ^ 2 / 1024 ≠ 1 ^ 2 / 1024
   norm_num
 
-def phaseEvidence : Registration phaseArena.{u} (type_of% @first_moment_gap_of_zero_second.{u}) where
+def phaseEvidence : Registration phaseArena.{u} (type_of% @first_moment_gap_of_small_second.{u}) where
   actual := phaseActual
   bridge := Iff.rfl
-  variation := ⟨@first_moment_gap_of_zero_second.{u}, phaseRejected, phase_rejected_law⟩
+  variation := ⟨@first_moment_gap_of_small_second.{u}, phaseRejected, phase_rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity phaseArena.Law phaseActual phaseRejected phase_rejected_law
   dependence := phase_dependence
 
@@ -101,10 +104,11 @@ def gridRejected : Realization gridSignature :=
 abbrev gridArena : Arena where
   signature := gridSignature
   Law V := ∀ (q : ℕ) [NeZero q] (_ : ¬ 4 ∣ q) (w : ZMod q → ℝ)
-      (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j)
-      (_ : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0),
+      (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j),
     let δ := V.readout () () ((if Even q then (2 : ℝ) else 1) * Real.pi / (2 * q))
-    ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ 1 / 2 - δ ^ 2 / 1024
+    let b := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
+    ‖b‖ ≤ δ / 8 →
+      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 1024
 
 private theorem grid_rejected_law : ¬ gridArena.Law gridRejected := by
   intro law
@@ -118,8 +122,11 @@ private theorem grid_rejected_law : ¬ gridArena.Law gridRejected := by
         AddChar.sum_eq_zero_of_ne_one (ZMod.isPrimitive_stdAddChar 3
           (by decide : (-2 : ZMod 3) ≠ 0))
     rw [hz, zero_mul]
-  have h := law 3 (by decide) w (by simp [w, ZMod.card]) (fun _ => by norm_num [w]) hb
-  change _ ≤ 1 / 2 - (32 : ℝ) ^ 2 / 1024 at h
+  have h := law 3 (by decide) w (by simp [w, ZMod.card]) (fun _ => by norm_num [w])
+  dsimp only at h
+  rw [hb, norm_zero] at h
+  have impossible := h (by norm_num [gridRejected, realize])
+  change _ ≤ (1 + 0) / 2 - (32 : ℝ) ^ 2 / 1024 at impossible
   nlinarith [sq_nonneg ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 3)‖]
 
 private theorem grid_dependence : ObservationalDependence gridSignature gridActual := by
@@ -138,7 +145,7 @@ def gridEvidence : Registration gridArena (type_of% @cyclic_grid_fourier_gap) wh
 
 def phaseRegistration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@first_moment_gap_of_zero_second.{u}) (Realization phaseSignature) Unit Unit where
+      (@first_moment_gap_of_small_second.{u}) (Realization phaseSignature) Unit Unit where
   unitName := `Reg.D5.S3.Fourier.Concentration.CyclicGridMomentGap.phaseUnit
   realizationName := `Reg.D5.S3.Fourier.Concentration.CyclicGridMomentGap.phaseEvidence
   realizationSource := none
@@ -160,7 +167,7 @@ def phaseRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -193,7 +200,7 @@ def gridRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "value", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
