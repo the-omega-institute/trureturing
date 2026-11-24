@@ -112,8 +112,7 @@ open scoped BigOperators
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinActualTransfers
   (column_continuations column_count)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport (stripGraph)
-open private tailGood from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations (tailGood)
 
 namespace ColumnContinuations
 
@@ -269,8 +268,7 @@ end ColumnCount
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinActualTransfers
   (Word wordTransfer word_continuations word_count)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport (Row)
-open private word_power from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinActualTransfers (word_power)
 
 namespace Words
 
@@ -316,8 +314,7 @@ theorem readout_dependence : DependentFamily.ObservationalDependence signature a
 
 namespace Continuations
 
-open private tailGood from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport (tailGood)
 
 def arena : DependentFamily.Arena where
   signature := signature

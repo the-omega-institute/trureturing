@@ -17,11 +17,11 @@ set_option maxRecDepth 100000
 set_option Elab.async false
 
 /-- Successor multiplicities in a quotient row, including repeated class labels. -/
-private def quotientTransfer {K : ℕ} (rows : Vector (List (Fin K)) K) :
+def quotientTransfer {K : ℕ} (rows : Vector (List (Fin K)) K) :
     Matrix (Fin K) (Fin K) ℤ :=
   fun i j => ((rows[i.val] : Multiset (Fin K)).count j : ℤ)
 
-private theorem quotient_mulVec {K : ℕ} (rows : Vector (List (Fin K)) K)
+theorem quotient_mulVec {K : ℕ} (rows : Vector (List (Fin K)) K)
     (v : Fin K → ℤ) (i : Fin K) :
     (quotientTransfer rows).mulVec v i =
       ((rows[i.val] : Multiset (Fin K)).map v).sum := by
@@ -39,10 +39,10 @@ private theorem quotient_mulVec {K : ℕ} (rows : Vector (List (Fin K)) K)
       rw [Multiset.mem_toFinset] at hj
       simp [Multiset.count_eq_zero_of_notMem hj]
 
-private def asPowerTable {n K : ℕ} (table : Vector (Vector ℤ K) n) (i : Fin n) (j : Fin K) : ℤ :=
+def asPowerTable {n K : ℕ} (table : Vector (Vector ℤ K) n) (i : Fin n) (j : Fin K) : ℤ :=
   table[i.val][j.val]
 
-private def c7QuotientRows : Vector (List (Fin 50)) 50 := #v[
+def c7QuotientRows : Vector (List (Fin 50)) 50 := #v[
   [0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 9,
     9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14,
     14, 18, 18, 18, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
@@ -103,7 +103,7 @@ private def c7QuotientRows : Vector (List (Fin 50)) 50 := #v[
   [27]]
 
 /-- Quotient power vectors at exponents 0 through 24. -/
-private def prefixPowers : Vector (Vector ℤ 50) 25 := #v[
+def prefixPowers : Vector (Vector ℤ 50) 25 := #v[
   #v[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   #v[128, 32, 16, 32, 0, 16, 8, 32, 8, 16, 4, 4, 8, 8, 8, 8, 4, 8, 4, 4, 2, 4, 2, 4, 4, 2, 2, 8, 4,
@@ -362,7 +362,7 @@ private def prefixPowers : Vector (Vector ℤ 50) 25 := #v[
 
 set_option maxHeartbeats 6000000 in
 /-- Every quotient step up to exponent 24 is checked componentwise. -/
-private theorem prefixSteps (k : Fin 24) :
+theorem prefixSteps (k : Fin 24) :
     asPowerTable prefixPowers k.succ =
       (quotientTransfer c7QuotientRows).mulVec (asPowerTable prefixPowers k.castSucc) := by
   fin_cases k <;> (apply List.ofFn_inj.mp; simp only [List.ofFn, quotient_mulVec]; rfl)

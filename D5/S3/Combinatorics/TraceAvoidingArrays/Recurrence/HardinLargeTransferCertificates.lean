@@ -17,15 +17,11 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinLargeTransferCertificate
 
 open HardinActualTransfers
 open HardinThinGraphTransport (proper)
-open private code columnSuccessors wordSuccessors column_action word_action from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinTransferCertificates
-open private transportLag from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
+open HardinTransferCertificates (code columnSuccessors wordSuccessors column_action word_action)
+open HardinColumnPolynomials (transportLag)
 
-open private quotientTransfer quotient_mulVec asPowerTable c7QuotientRows from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinHeightSevenPrefixPowers
-open private c7Powers heightSevenSteps from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinHeightSevenSuffixPowers
+open HardinHeightSevenPrefixPowers (quotientTransfer quotient_mulVec asPowerTable c7QuotientRows)
+open HardinHeightSevenSuffixPowers (c7Powers heightSevenSteps)
 
 set_option maxRecDepth 100000
 set_option Elab.async false

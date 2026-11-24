@@ -12,8 +12,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinHeightSevenPrefi
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinHeightSevenSuffixPowers
 
-open private quotientTransfer quotient_mulVec asPowerTable c7QuotientRows prefixPowers prefixSteps from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinHeightSevenPrefixPowers
+open HardinHeightSevenPrefixPowers
+  (quotientTransfer quotient_mulVec asPowerTable c7QuotientRows prefixPowers prefixSteps)
 
 set_option maxRecDepth 100000
 set_option Elab.async false
@@ -890,7 +890,7 @@ private def suffixPowers : Vector (Vector ℤ 50) 24 := #v[
     3595385246145174951276667106697331915733278138224560340291,
     7676354418001988571569125626858702145276316246486469255572]]
 
-private def c7Powers : Vector (Vector ℤ 50) 49 :=
+def c7Powers : Vector (Vector ℤ 50) 49 :=
   prefixPowers ++ suffixPowers
 
 set_option maxHeartbeats 6000000 in
@@ -902,7 +902,7 @@ private theorem suffixSteps (k : Fin 24) :
   fin_cases k <;> (apply List.ofFn_inj.mp; simp only [List.ofFn, quotient_mulVec]; rfl)
 
 /-- The two checked ranges together cover every step from zero to 48. -/
-private theorem heightSevenSteps (k : Fin 48) :
+theorem heightSevenSteps (k : Fin 48) :
     asPowerTable c7Powers k.succ =
       (quotientTransfer c7QuotientRows).mulVec (asPowerTable c7Powers k.castSucc) := by
   refine Fin.addCases (m := 24) (n := 24) (fun i => ?_) suffixSteps k

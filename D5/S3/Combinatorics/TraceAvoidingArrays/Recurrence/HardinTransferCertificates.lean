@@ -17,8 +17,6 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinTransferCertificates
 open HardinActualTransfers
 open HardinColumnContinuations (Column cross)
 open HardinThinGraphTransport (Row proper compatible)
-open private sum_words cross_iff from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
 
 private def columnBond {n : ℕ} (i j : Fin n) : Prop :=
   i.val ≤ j.val + 1 ∧ j.val ≤ i.val + 1
@@ -66,19 +64,19 @@ private theorem mem_candidates {n : ℕ} (bond : Fin n → Fin n → Prop) [Deci
   simp only [candidates, Fintype.mem_piFinset, Finset.mem_filter, Finset.mem_univ, true_and]
   exact ⟨fun h i j => h j i, fun h j i => h i j⟩
 
-private def code (n : ℕ) : (Fin n → Fin 3) ≃ Fin (3 ^ n) := finFunctionFinEquiv
+def code (n : ℕ) : (Fin n → Fin 3) ≃ Fin (3 ^ n) := finFunctionFinEquiv
 
-private def columnSuccessors (h : ℕ) (a : Fin (3 ^ (h + 1))) : Finset (Fin (3 ^ (h + 1))) :=
+def columnSuccessors (h : ℕ) (a : Fin (3 ^ (h + 1))) : Finset (Fin (3 ^ (h + 1))) :=
   (candidates columnBond ((code (h + 1)).symm a)).map (code (h + 1)).toEmbedding
 
-private def wordSuccessors (d : Bool) (k : ℕ) (a : Fin (3 ^ (k + 1))) :
+def wordSuccessors (d : Bool) (k : ℕ) (a : Fin (3 ^ (k + 1))) :
     Finset (Fin (3 ^ (k + 1))) :=
   let p := (code (k + 1)).symm a
   if proper p then
     ((candidates (wordBond d) p).filter proper).map (code (k + 1)).toEmbedding
   else ∅
 
-private theorem column_action (h : ℕ) (p : Column h) (v : Fin (3 ^ (h + 1)) → ℤ) :
+theorem column_action (h : ℕ) (p : Column h) (v : Fin (3 ^ (h + 1)) → ℤ) :
     (∑ j ∈ columnSuccessors h (code (h + 1) p), v j) =
       (C h).mulVec (fun q => v (code (h + 1) q)) p := by
   simp only [columnSuccessors, Equiv.symm_apply_apply, Finset.sum_map, Equiv.toEmbedding_apply]
@@ -92,7 +90,7 @@ private theorem column_action (h : ℕ) (p : Column h) (v : Fin (3 ^ (h + 1)) �
     (if cross p q then 1 else 0) * v (code (h + 1) q)
   split_ifs <;> simp
 
-private theorem word_action (d : Bool) (k : ℕ) (p : Word k) (v : Fin (3 ^ (k + 1)) → ℤ) :
+theorem word_action (d : Bool) (k : ℕ) (p : Word k) (v : Fin (3 ^ (k + 1)) → ℤ) :
     (∑ j ∈ wordSuccessors d k (code (k + 1) p.val), v j) =
       (wordTransfer d k).mulVec (fun q => v (code (k + 1) q.val)) p := by
   simp only [wordSuccessors, Equiv.symm_apply_apply, p.property, ite_true,

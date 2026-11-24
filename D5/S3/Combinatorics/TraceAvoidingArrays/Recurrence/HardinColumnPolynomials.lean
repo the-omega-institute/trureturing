@@ -18,9 +18,6 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnPolynomials
 open HardinActualTransfers
 open HardinColumnContinuations (Column cross)
 
-open private cross_iff from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
-
 private theorem column_pullback {A B : Type} [Fintype A] [Fintype B] [DecidableEq B]
     {h : ℕ} (e : A ≃ Column h) (Q : Matrix B B ℤ) (cls : A → B)
     (P : A → A → Prop) [DecidableRel P]
@@ -61,7 +58,7 @@ private theorem of_ascending {A : Type} [Fintype A] [DecidableEq A]
     omega
   rw [he]
 
-private theorem transportLag {A B : Type} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+theorem transportLag {A B : Type} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (T : Matrix A A ℤ) (Q : Matrix B B ℤ) (cls : A → B)
     (powers : ∀ m a, (T ^ m).mulVec (1 : A → ℤ) a = (Q ^ m).mulVec (1 : B → ℤ) (cls a))
     (b : ℕ) {d : ℕ} (c : Fin d → ℤ) (hQ : IsLagRelation Q b c) :
@@ -110,8 +107,7 @@ theorem rowFour :
     linear_combination hh - h
 
 section Six
-open private compatible cls Q coefficients quotient_rows power_polynomial from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
+open HardinA233179PairTransfer (compatible cls Q coefficients quotient_rows power_polynomial)
 
 /-- The source degree-25 relation on all 729 six-row columns. -/
 theorem rowSix :
@@ -135,8 +131,7 @@ theorem rowSix :
 end Six
 section Walk
 
-open private tailGood tail_local from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
+open HardinColumnContinuations (tailGood tail_local)
 
 private def sixGrid (m : ℕ) :
     (Fin 6 × Fin (m + 1) → Fin 3) ≃ (Fin (m + 1) → Column 5) where

@@ -8,7 +8,6 @@
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
-import Batteries.Tactic.OpenPrivate
 
 /-! Source columns retain every colouring; source rows retain exactly the proper words. -/
 
@@ -19,8 +18,7 @@ open HardinColumnContinuations (Column cross columnV)
 open HardinThinGraphTransport (Row proper compatible stripGraph)
 
 section Words
-open private continuation tailGood tail_count graph_count from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
+open HardinThinGraphTransport (continuation tailGood tail_count graph_count)
 
 /-- A source word of length `k + 1` with adjacent letters different. -/
 abbrev Word (k : ℕ) := {p : Row k // proper p}
@@ -29,12 +27,12 @@ abbrev Word (k : ℕ) := {p : Row k // proper p}
 def wordTransfer (d : Bool) (k : ℕ) : Matrix (Word k) (Word k) ℤ :=
   fun p q => if compatible d p.val q.val then 1 else 0
 
-private theorem sum_words {k : ℕ} {A : Type*} [AddCommMonoid A] (f : Row k → A) :
+theorem sum_words {k : ℕ} {A : Type*} [AddCommMonoid A] (f : Row k → A) :
     (∑ p : Word k, f p.val) = ∑ p : Row k, if proper p then f p else 0 := by
   rw [← Finset.sum_filter]
   exact (Finset.sum_subtype (Finset.univ.filter proper) (by simp) f).symm
 
-private theorem word_power (d : Bool) (k m : ℕ) (p : Word k) :
+theorem word_power (d : Bool) (k m : ℕ) (p : Word k) :
     ((wordTransfer d k)^m).mulVec (1 : Word k → ℤ) p = continuation d m p.val := by
   induction m generalizing p with
   | zero => simp [continuation]
@@ -65,10 +63,9 @@ theorem word_count (d : Bool) (k m : ℕ) :
 
 end Words
 
-open private tailGood tail_count tail_local graph_count from
-  D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
+open HardinColumnContinuations (tailGood tail_count graph_count)
 
-private theorem cross_iff {h : ℕ} (p q : Column h) :
+theorem cross_iff {h : ℕ} (p q : Column h) :
     cross p q ↔ ∀ r s : Fin (h + 1),
       (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → p r ≠ q s := by
   constructor
