@@ -11,6 +11,18 @@ internal sealed class PrimitiveRootSieveThresholdExactDocument : IScribeDocument
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact arithmetic threshold for the coarse character sieve",
         H("The exact arithmetic threshold for the coarse character sieve"), Blocks(
+            Describe.Lean(DescribeId.Create("root-from-covering"),
+                DeclarationHandle.Create(Prefix + "exists_prime_primitiveRoot_of_covering"),
+                H("A character bound with arbitrary covering parameters"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a prime modulus, an arbitrary real bound M on nonprincipal " +
+                    "characters whose order divides rad(p−1) yields a prime primitive root " +
+                    "whenever nonzero covering parameters give a strict signed margin " +
+                    "against the actual principal sum. Positivity of delta and a lower " +
+                    "threshold are not separate hypotheses. The gcd reduction and " +
+                    "squarefree-order divisibility bridge are shared by both threshold " +
+                    "applications."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("feasible-ne-exceptions"),
                 DeclarationHandle.Create(
                     Prefix + "feasible_ne_exceptions"),

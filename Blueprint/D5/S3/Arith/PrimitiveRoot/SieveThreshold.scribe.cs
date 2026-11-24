@@ -66,6 +66,19 @@ internal sealed class PrimitiveRootSieveThresholdDocument : IScribeDocumentDefin
                     + "less than delta(U) times (x/2-sqrt(x)). This is an arithmetic "
                     + "condition for arbitrary natural x."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("covering-parameters"),
+                DeclarationHandle.Create(Prefix + "covering_parameters"),
+                H("A covering construction independent of the analytic main term"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every x>1, numerical margin rules for supports with at most seven " +
+                    "factors and for supports with eight or more factors supply covering " +
+                    "parameters for arbitrary real error M and main term N. The latter rule " +
+                    "retains delta≥610847/1616615 and the exact coefficient " +
+                    "delta(2^(m+2)−1)+(5+delta)2^(m+2), with " +
+                    "9699690 times 16^m at most x. The original coarse threshold and the " +
+                    "unconditional linear principal term consume this same construction."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("uniform-sieve-tail"),
                 DeclarationHandle.Create(
                     Prefix + "feasible_of_ge_4100000"),

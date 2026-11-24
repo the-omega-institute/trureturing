@@ -1,3 +1,4 @@
+import Reg.Support.SingleDependentReadout
 import D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
@@ -263,5 +264,105 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 end Necessary
+
+namespace CoveringRoot
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+def actual : Realization signature :=
+  realize signature (fun _ _ p => p - 1) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (p : ℕ) [Fact p.Prime] (M : ℝ)
+    (_hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤ M)
+    (_hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
+      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
+        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re),
+    ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
+private theorem rejected_law (p : ℕ) [Fact p.Prime] (M : ℝ)
+    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤ M)
+    (hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
+      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
+        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
+    ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨q, hq, hlt, ho⟩ := h p M hM hparams
+  have hz : (q : ZMod p) ≠ 0 := by
+    intro hz
+    have hd : p ∣ q := (CharP.cast_eq_zero_iff (ZMod p) p q).mp hz
+    exact Nat.not_dvd_of_pos_of_lt hq.pos hlt hd
+  have hd := ZMod.orderOf_dvd_card_sub_one hz
+  have hp1 := (Fact.out : p.Prime).one_lt
+  have hn := Nat.pos_of_dvd_of_pos hd (show 0 < p - 1 by omega)
+  have he : orderOf (q : ZMod p) = 0 := by simpa [rejected, realize] using ho
+  omega
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 1, 2, by norm_num [actual, realize]⟩
+def family (p : ℕ) [Fact p.Prime] (M : ℝ)
+    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤ M)
+    (hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
+      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
+        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
+    Registration arena (type_of% @exists_prime_primitiveRoot_of_covering) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_prime_primitiveRoot_of_covering, rejected,
+    rejected_law p M hM hparams⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    (rejected_law p M hM hparams)
+  dependence := dependence
+def audit (p : ℕ) [Fact p.Prime] (M : ℝ)
+    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤ M)
+    (hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
+      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
+        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+      (@exists_prime_primitiveRoot_of_covering) (Realization signature) Type Unit where
+  unitName :=
+    `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.exists_prime_primitiveRoot_of_covering.__information_unit
+  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.CoveringRoot.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family p M hM hparams⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
+        "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end CoveringRoot
 
 end Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdExact

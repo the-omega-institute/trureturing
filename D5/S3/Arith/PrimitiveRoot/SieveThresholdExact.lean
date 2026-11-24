@@ -330,20 +330,20 @@ theorem feasible_iff (x : ℕ) (hx : 3483481 ≤ x) :
     · exact feasible_of_ge_4100000 x htail
     · exact feasible_below_tail x (by omega) (by omega) hsecond
 
-/-- Coarse estimates for squarefree character orders give a prime primitive root. -/
-theorem exists_prime_primitiveRoot (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
+/-- Covering parameters transfer squarefree-order character bounds to a prime primitive root. -/
+theorem exists_prime_primitiveRoot_of_covering (p : ℕ) [Fact p.Prime]
+    (M : ℝ)
     (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
-      |(smoothedCharacterSum p χ).re| ≤ (3 / 2 : ℝ) * Real.sqrt p * Real.log p)
-    (hmain : (p : ℝ) / 2 - Real.sqrt p ≤ (smoothedCharacterSum p 1).re) :
+      |(smoothedCharacterSum p χ).re| ≤ M)
+    (hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
+      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
+        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
     ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   classical
-  have hne : p ≠ 3573571 := by
-    intro heq
-    have hprime : Nat.Prime 3573571 := heq ▸ (Fact.out : p.Prime)
-    norm_num at hprime
-  obtain ⟨e, T, he, hcover, hδ, hmargin⟩ :=
-    (feasible_iff p (by omega)).mpr ⟨by omega, hne⟩
+  obtain ⟨e, T, he, hcover, hmargin⟩ := hparams
+  have hp : 1 < p := (Fact.out : p.Prime).one_lt
   let f := Nat.gcd e (p - 1)
   have hf : f ≠ 0 := Nat.ne_of_gt (Nat.gcd_pos_of_pos_left _ (Nat.pos_of_ne_zero he))
   have hcoverf : ∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ f ∨ q ∈ T := by
@@ -357,26 +357,8 @@ theorem exists_prime_primitiveRoot (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
       exact ⟨ht, hprime, hd, fun h => hn (Nat.dvd_gcd h hd)⟩
     · rintro ⟨ht, hprime, hd, hn⟩
       exact ⟨ht, hprime, hd, fun h => hn (h.trans (Nat.gcd_dvd_left _ _))⟩
-  have hsum : (∑ t ∈ sievePrimes p e T, (t : ℝ)⁻¹) ≤
-      ((sievePrimes p e T).card : ℝ) / 2 := by
-    calc
-      _ ≤ ∑ _t ∈ sievePrimes p e T, (1 / 2 : ℝ) := by
-        apply Finset.sum_le_sum
-        intro t ht
-        have ht2 := (Finset.mem_filter.mp ht).2.1.two_le
-        have htR : (2 : ℝ) ≤ t := by exact_mod_cast ht2
-        simpa using (inv_anti₀ (by norm_num : (0 : ℝ) < 2) htR)
-      _ = _ := by simp [div_eq_mul_inv]
-  have hK : 0 ≤ errorCoefficient f (sievePrimes p e T) :=
-    ((errorCoefficient_nonneg f _).mp hsum).2
-  have htransfer (M : ℝ)
-      (hMb : M ≤ (3 / 2 : ℝ) * Real.sqrt p * Real.log p) :
-      errorCoefficient f (sievePrimes p e T) * M <
-        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re := by
-    exact (mul_le_mul_of_nonneg_left hMb hK).trans_lt
-      (hmargin.trans_le (mul_le_mul_of_nonneg_left hmain hδ.le))
   apply (exists_prime_primitiveRoot_of_smoothed_signed p f T
-    ((3 / 2 : ℝ) * Real.sqrt p * Real.log p) hf hcoverf ?_ ?_).2
+    M hf hcoverf ?_ ?_).2
   · intro χ hχ hord
     apply hM χ hχ
     have hsub : f.primeFactors ⊆ (p - 1).primeFactors :=
@@ -397,7 +379,25 @@ theorem exists_prime_primitiveRoot (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
         exact Finset.prod_dvd_prod_of_subset _ _ _ (Finset.insert_subset htmem hsub)
       exact hd.trans hdprod
   · rw [Nat.gcd_eq_left (Nat.gcd_dvd_right e (p - 1)), hU]
-    exact htransfer _ le_rfl
+    exact hmargin
+
+/-- Coarse estimates for squarefree character orders give a prime primitive root. -/
+theorem exists_prime_primitiveRoot (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
+    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤ (3 / 2 : ℝ) * Real.sqrt p * Real.log p)
+    (hmain : (p : ℝ) / 2 - Real.sqrt p ≤ (smoothedCharacterSum p 1).re) :
+    ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
+  classical
+  have hne : p ≠ 3573571 := by
+    intro heq
+    have hprime : Nat.Prime 3573571 := heq ▸ (Fact.out : p.Prime)
+    norm_num at hprime
+  obtain ⟨e, T, he, hcover, hδ, hmargin⟩ :=
+    (feasible_iff p (by omega)).mpr ⟨by omega, hne⟩
+  apply exists_prime_primitiveRoot_of_covering p _ hM
+  refine ⟨e, T, he, hcover, ?_⟩
+  exact hmargin.trans_le (mul_le_mul_of_nonneg_left hmain hδ.le)
 
 end D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
 

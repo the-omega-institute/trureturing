@@ -4,11 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Erdős #985 in the GRH conditional form assembled from the triangular
-   character bound and the exact primitive-root sieve threshold. -/
+   digest: Erdős #985 under finite-height Dirichlet zero exclusion with an
+   unconditional principal term and a kernel-certified finite range. -/
 
-import D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
-import D5.S3.Arith.PrimitiveRoot.SmallPrimes.FiniteRange
+import D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
+import D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.FiniteRangeExtended
 import D5.S3.CharacterSums.DirichletTriangleBound
 import D5.S3.CharacterSums.DirichletTrianglePerron
 import D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta
@@ -20,7 +21,8 @@ namespace D5.S3.Arith.PrimitiveRoot.Erdos985
 open scoped BigOperators
 open Complex
 open D5.S3.Arith.PrimitiveRoot.CharacterSieve
-open D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
+open D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
+open D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower
 open D5.S3.CharacterSums.DirichletTriangleBound
 open D5.S3.CharacterSums.DirichletTrianglePerron
 open D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta
@@ -35,8 +37,7 @@ private theorem isPrimitive_of_prime_of_ne_one {p : ℕ} [Fact p.Prime]
 
 /-- The large-prime part under the weakest finite-height zero exclusion used by
 the triangular estimate. -/
-theorem erdos985_large_prime (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
-    (hRH : RiemannHypothesis)
+theorem erdos985_large_prime (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
     (hL : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
@@ -47,38 +48,29 @@ theorem erdos985_large_prime (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
     have hprim : χ.IsPrimitive := isPrimitive_of_prime_of_ne_one χ hχ
     have hbound := characterTriangle_prime_bound p χ hprim (by omega)
       (hL χ hχ horder)
-    have hchar : |(smoothedCharacterSum p χ).re| ≤
-        (3 / 2 : ℝ) * Real.sqrt p * Real.log p := by
-      rw [← characterTriangle_nat p χ]
-      have hre := (abs_re_le_norm (characterTriangle χ p)).trans hbound
-      have hnonneg : 0 ≤ (1 / (p : ℝ)) := by positivity
-      have hcoef : (165458 / 111375 : ℝ) ≤ 3 / 2 := by norm_num
-      have hsqrt : 0 ≤ Real.sqrt p := Real.sqrt_nonneg _
-      have hlog : 0 ≤ Real.log p := by
-        apply Real.log_nonneg
-        exact_mod_cast (show 1 ≤ p by omega)
-      have hc := mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_right hcoef hsqrt) hlog
-      linarith
-    exact hchar
-  · exact principal_smoothedCharacterSum_lower (Fact.out : p.Prime)
-      (fun _ => hRH)
+    rw [← characterTriangle_nat p χ]
+    have hre := (abs_re_le_norm (characterTriangle χ p)).trans hbound
+    have hnonneg : 0 ≤ 1 / (p : ℝ) := by positivity
+    linarith
+  · exact principal_smoothedCharacterSum_large (Fact.out : p.Prime) hp
 
 /-- Conditional Erdős #985, including the kernel-certified finite prime range. -/
-theorem erdos985_of_GRH
-    (hRH : RiemannHypothesis)
+theorem erdos985_of_finiteHeight
     (hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;
-      3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      5000000 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
     ∀ p, p.Prime → p ≠ 2 →
       ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   intro p hp hne
-  by_cases hlarge : 3483482 ≤ p
+  by_cases hlarge : 5000000 ≤ p
   · let : Fact p.Prime := ⟨hp⟩
-    exact erdos985_large_prime p hlarge hRH (hL p hp hlarge)
+    exact erdos985_large_prime p hlarge (hL p hp hlarge)
   · have hp2 := hp.two_le
-    exact SmallPrimes.small_prime_primitiveRoot p (by omega) (by omega) hp
+    exact SmallPrimes.small_prime_primitiveRoot_extended p (by omega) (by omega) hp
+
+#print axioms erdos985_large_prime
+#print axioms erdos985_of_finiteHeight
 
 end D5.S3.Arith.PrimitiveRoot.Erdos985

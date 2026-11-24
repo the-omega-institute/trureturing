@@ -367,7 +367,7 @@ theorem smoothedMangoldt_lower {x : ℝ} (hRH : 10 < x → RiemannHypothesis) :
     have hm := (le_min ha hb).trans he
     linarith
 
-private theorem principal_smoothedCharacterSum_eq {p : ℕ} (hp : p.Prime) :
+theorem principal_smoothedCharacterSum_eq {p : ℕ} (hp : p.Prime) :
     (D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum p 1).re =
       smoothedMangoldt p := by
   classical

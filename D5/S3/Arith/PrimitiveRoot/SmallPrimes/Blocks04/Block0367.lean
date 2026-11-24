@@ -3,7 +3,7 @@
    mirror-B: none(waiver:finite-reduction-premise-in-main-proof-closure)
    mirror-E: none(waiver:kernel-checked-literal-certificate)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks04/Block0367.checked0367
+   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_finiteHeight; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks04/Block0367.checked0367
    digest: Kernel proof of checker success on consecutive odd slots. -/
 
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table038

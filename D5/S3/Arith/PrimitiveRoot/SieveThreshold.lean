@@ -213,12 +213,18 @@ lemma signed_margin {x d K A : ℝ} (hx : 1 ≤ x) (hd : 0 < d)
   have hsq := Real.sq_sqrt (show 0 ≤ x by linarith)
   nlinarith
 
-/-- Every integer at least `4100000` admits covering parameters with a strict signed margin. -/
-theorem feasible_of_ge_4100000 (x : ℕ) (hx : 4100000 ≤ x) : Feasible x := by
+/-- The covering construction separates arithmetic support bounds from analytic inputs. -/
+theorem covering_parameters (x : ℕ) (hx1 : 1 < x) (M N : ℝ)
+    (hsmall : ∀ d K : ℝ, 0 < d → K ≤ d * (4417 / 100) → K * M < d * N)
+    (hlarge : ∀ m : ℕ, (9699690 : ℝ) * 16 ^ m ≤ x → ∀ d K : ℝ,
+      (610847 / 1616615 : ℝ) ≤ d →
+      K = d * (2 ^ (m + 2) - 1) + (5 + d) * 2 ^ (m + 2) → K * M < d * N) :
+    ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ x - 1 → q ∣ e ∨ q ∈ T) ∧
+      0 < delta (sievePrimes x e T) ∧
+      errorCoefficient (Nat.gcd e (x - 1)) (sievePrimes x e T) * M <
+        delta (sievePrimes x e T) * N := by
   classical
-  have hx1 : 1 < x := by omega
-  have hxR : (4100000 : ℝ) ≤ x := by exact_mod_cast hx
-  have hxR1 : (1 : ℝ) ≤ x := by exact_mod_cast hx1.le
   let k := (x - 1).primeFactors.card
   by_cases hk2 : k ≤ 2
   · obtain ⟨e, T, he, hed, hcover, hr, hs, _, _, hU, hδ⟩ :=
@@ -230,12 +236,11 @@ theorem feasible_of_ge_4100000 (x : ℕ) (hx : 4100000 ≤ x) : Feasible x := by
     · rw [hU, hT]
       norm_num [delta]
     · rw [hU, hT]
-      apply signed_margin hxR1 (by norm_num [delta]) (A := 4417 / 100)
+      apply hsmall _ _ (by norm_num [delta])
       · have hp : (2 : ℝ) ^ k ≤ 2 ^ 2 :=
           pow_le_pow_right₀ (by norm_num) hk2
         norm_num [errorCoefficient, delta, hr] at *
         linarith
-      · exact margin_4100000 hxR le_rfl
   by_cases hk7 : k ≤ 7
   · let s := k - 2
     have hs5 : s ≤ 5 := by dsimp [s]; omega
@@ -254,13 +259,12 @@ theorem feasible_of_ge_4100000 (x : ℕ) (hx : 4100000 ≤ x) : Feasible x := by
     refine ⟨e, T, he, hcover, ?_, ?_⟩
     · rwa [hU]
     · rw [hU]
-      apply signed_margin hxR1 hδp (A := 4417 / 100)
+      apply hsmall _ _ hδp
       · unfold errorCoefficient
         rw [hr, hs]
         have hsR : (s : ℝ) ≤ 5 := by exact_mod_cast hs5
         norm_num only [show (2 : ℝ) ^ 2 = 4 by norm_num]
         nlinarith
-      · exact margin_4100000 hxR le_rfl
   · let m := k - 8
     have hc8 : (x - 1).primeFactors.card = 8 + m := by dsimp [k, m] at *; omega
     have hc : (x - 1).primeFactors.card = (m + 2) + 6 := by omega
@@ -282,21 +286,37 @@ theorem feasible_of_ge_4100000 (x : ℕ) (hx : 4100000 ≤ x) : Feasible x := by
         (Nat.mul_le_mul_left 9699690 (Nat.pow_le_pow_left (by omega) m)).trans
           (hrad.trans (by omega))
       exact_mod_cast hn
+    refine ⟨e, T, he, hcover, ?_, ?_⟩
+    · rwa [hU]
+    · rw [hU]
+      apply hlarge m hX _ _
+      · rw [hδ]
+        exact hbound
+      · unfold errorCoefficient
+        rw [hr, hs]
+        norm_num
+
+/-- Every integer at least `4100000` admits covering parameters with a strict signed margin. -/
+theorem feasible_of_ge_4100000 (x : ℕ) (hx : 4100000 ≤ x) : Feasible x := by
+  have hxR : (4100000 : ℝ) ≤ x := by exact_mod_cast hx
+  have hxR1 : (1 : ℝ) ≤ x := by exact_mod_cast (show 1 ≤ x by omega)
+  apply covering_parameters x (by omega)
+  · intro d K hd hK
+    exact signed_margin hxR1 hd hK (margin_4100000 hxR le_rfl)
+  · intro m hX d K hd hK
+    have hd' : (3 / 8 : ℝ) < d := by linarith
+    have hA : K ≤ d * ((184 / 3) * 2 ^ m) := by
+      rw [hK, pow_add]
+      norm_num only [show (2 : ℝ) ^ 2 = 4 by norm_num]
+      have hm := mul_nonneg (sub_nonneg.mpr hd'.le)
+        (show (0 : ℝ) ≤ 2 ^ m by positivity)
+      nlinarith
     have hX0 : Real.exp 2 ≤ (9699690 : ℝ) * 16 ^ m := by
       apply (exp_two_le (x := 4100000) (by norm_num)).trans
       have := one_le_pow₀ (show (1 : ℝ) ≤ 16 by norm_num) (n := m)
       nlinarith
-    refine ⟨e, T, he, hcover, ?_, ?_⟩
-    · rwa [hU]
-    · rw [hU]
-      apply signed_margin hxR1 hδp (A := (184 / 3) * 2 ^ m)
-      · unfold errorCoefficient
-        rw [hr, hs, pow_add]
-        norm_num only [Nat.cast_ofNat, show (2 : ℝ) ^ 2 = 4 by norm_num]
-        have hm := mul_nonneg (sub_nonneg.mpr hδb.le)
-          (show (0 : ℝ) ≤ 2 ^ m by positivity)
-        nlinarith
-      · exact margin_mono hX0 hX (margin_geometric m)
+    exact signed_margin hxR1 (by linarith) hA
+      (margin_mono hX0 hX (margin_geometric m))
 
 end D5.S3.Arith.PrimitiveRoot.SieveThreshold
 
