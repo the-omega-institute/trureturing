@@ -6,10 +6,17 @@
    utility: none
    digest: Fully revealing mixtures scale both CAR deficiencies exactly and admit ordinary partition realizations on a common seed. -/
 
-import D5.S3.Estimation.DecisionRisk.CARApproximateRecovery
-import Mathlib.Topology.Sion
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.Order.Partition.Finpartition
+module
+
+public import D5.S3.Estimation.DecisionRisk.CARApproximateRecovery
+public import D5.S3.Estimation.DecisionRisk.FixedMarginalGenericFeatures
+public import Mathlib.Topology.Sion
+public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.Order.Partition.Finpartition
+
+/-! Bayes-risk and revelation scaling for finite coarsening-at-random experiments. -/
+
+@[expose] public section
 
 universe u
 noncomputable section
@@ -21,6 +28,7 @@ open D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
 open D5.S3.TotalVariation.Pinsker D5.S3.TotalVariation.Metric
 open D5.S3.Estimation.DecisionRisk.CARApproximateRecovery
+open D5.S3.Estimation.DecisionRisk.FixedMarginalGenericFeatures
 
 namespace D5.S3.Estimation.DecisionRisk.CARRevelationScaling
 

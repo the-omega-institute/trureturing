@@ -6,7 +6,9 @@
    utility: none
    digest: Simulator error bounds statewise risk for every bounded-loss decision rule. -/
 
-import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
+module
+
+public import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 
 /- Library-search audit trail (2026-08-25):
    * All existing `Estimation/DecisionRisk` modules were checked. The Blackwell
@@ -20,6 +22,10 @@ import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
    * Pinned Mathlib searches for bounded expectations against total variation
      and decision-risk stability found no exact whole-theorem hit. The proof
      applies `total_variation_eq_sum_positive` and finite-sum order lemmas. -/
+
+/-! Finite stochastic simulators transport uniformly bounded decision losses. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

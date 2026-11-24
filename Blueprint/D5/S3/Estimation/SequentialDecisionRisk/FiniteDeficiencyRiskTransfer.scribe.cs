@@ -23,50 +23,7 @@ internal sealed class FiniteDeficiencyRiskTransferDocument : IScribeDocumentDefi
                 "A target decision is transported through each source-to-target simulator. The "
                     + "frozen statewise total-variation bound is averaged by the prior, after which "
                     + "extended-nonnegative infima optimize the decision and simulator independently."))),
-            DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("finite-real-bayes-cost-expansion"),
-                DeclarationHandle.Create("D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.finite_bayes_cost_expansion"),
-                H("Expected cost as a coefficient table"),
-                StatementSource.FromAuthor(ExpansionFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary finite state, observation and action types, the real expected loss equals the sum over observations and actions of the decision entry times its unnormalized posterior loss coefficient. This finite-sum identity is valid for arbitrary real arrays and does not require stochasticity or signs."))),
-                DescribeRole.Lemma),
-            Describe.Lean(
-                DescribeId.Create("finite-real-bayes-cost-minimizer"),
-                DeclarationHandle.Create("D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.finite_bayes_cost_minimizer"),
-                H("Finite real Bayes costs attain a minimum"),
-                StatementSource.FromAuthor(MinimumFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary finite state and observation types and a nonempty finite action type, every real coefficient table has an observationwise minimizing action. The corresponding point-mass decision minimizes finiteBayesCost over all stochastic decisions. The prior, experiment and loss need not have nonnegative entries for this finite linear minimization statement. In a statistical decision problem the prior and experiment satisfy their usual stochastic laws, and signed losses remain allowed."))),
-                DescribeRole.Lemma))));
-
-    private static Formula ExpansionFormula()
-    {
-        Formula prior = F.Id("p"), loss = F.Id("L"), experiment = F.Id("T"), decision = F.Id("d");
-        Formula obs = F.Id("x"), act = F.Id("a"), state = F.Id("theta");
-        Formula product = Seq(Call("entry", decision, obs, act), Sp, Cdot, Sp,
-            Call("sum", state, Seq(Call("entry", prior, state), Sp, Cdot, Sp,
-                Call("entry", experiment, state, obs), Sp, Cdot, Sp, Call("entry", loss, state, act))));
-        return Disp(Seq(Forall, Sp, prior, Comma, Sp, loss, Comma, Sp, experiment, Comma, Sp, decision,
-            Comma, Sp, Call("finiteBayesCost", prior, loss, experiment, decision), Sp, Eq, Sp,
-            Call("sum", obs, Call("sum", act, product))));
-    }
-
-    private static Formula MinimumFormula()
-    {
-        Formula state = F.Id("Theta"), obs = F.Id("O"), act = F.Id("A");
-        Formula prior = F.Id("p"), loss = F.Id("L"), experiment = F.Id("T");
-        Formula d = F.Id("d"), k = F.Id("k");
-        return Disp(Seq(Forall, Sp, state, Comma, Sp, obs, Comma, Sp, act, Comma, Sp,
-            Call("Fintype", state), Sp, Land, Sp, Call("Fintype", obs), Sp, Land, Sp,
-            Call("Fintype", act), Sp, Land, Sp, Call("Nonempty", act), Sp, Rightarrow, Sp,
-            Forall, Sp, prior, Comma, Sp, loss, Comma, Sp, experiment, Comma, Sp,
-            Exists, Sp, d, Colon, Sp, Call("FiniteMarkovKernel", obs, act), Comma, Sp,
-            Forall, Sp, k, Colon, Sp, Call("FiniteMarkovKernel", obs, act), Comma, Sp,
-            Call("finiteBayesCost", prior, loss, experiment, d), Sp, Leq, Sp,
-            Call("finiteBayesCost", prior, loss, experiment, k)));
-    }
+            DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {

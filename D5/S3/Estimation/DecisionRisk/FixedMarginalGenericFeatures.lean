@@ -6,12 +6,17 @@
    utility: none
    digest: Fixed-marginal signed decision quality is equivalent to randomized reconstruction with half the quality bound. -/
 
-import D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
+module
+
+public import D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
+public import Mathlib.Data.Fintype.EquivFin
 
 /-! Finite generic features and reconstruction. The real risk retains signed
 losses. The reconstruction indicator is inequality; the factor two agrees with
 full l1 distance. Source: van Rooyen and Williamson, Le Cam meets LeCun,
 arXiv:1402.4884v2, Definition 3 and Theorem 3. -/
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators
@@ -26,6 +31,59 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Estimation.DecisionRisk.FixedMarginalGenericFeatures
 
 universe u v w t
+
+/-- Finite Bayes cost expanded by observations and actions. -/
+theorem finite_bayes_cost_expansion
+    {State Observation Action : Type*}
+    [Fintype State] [Fintype Observation] [Fintype Action]
+    (p : State → ℝ) (l : State → Action → ℝ) (X : State → Observation → ℝ)
+    (d : Observation → Action → ℝ) :
+    finiteBayesCost p l X d = ∑ a, ∑ b, d a b * ∑ i, p i * X i a * l i b := by
+  classical
+  simp only [finiteBayesCost, channelOutput, Finset.mul_sum, Finset.sum_mul]
+  calc
+    (∑ i, ∑ b, ∑ a, p i * (X i a * d a b * l i b)) =
+        ∑ i, ∑ a, ∑ b, p i * (X i a * d a b * l i b) := by
+      apply Finset.sum_congr rfl; intro i _; rw [Finset.sum_comm]
+    _ = ∑ a, ∑ i, ∑ b, p i * (X i a * d a b * l i b) := Finset.sum_comm
+    _ = ∑ a, ∑ b, ∑ i, p i * (X i a * d a b * l i b) := by
+      apply Finset.sum_congr rfl; intro a _; rw [Finset.sum_comm]
+    _ = _ := by
+      apply Finset.sum_congr rfl; intro a _
+      apply Finset.sum_congr rfl; intro b _
+      apply Finset.sum_congr rfl; intro i _; ring
+
+/-- Finite real expected loss attains its minimum, including signed losses.
+The decision is chosen separately at each observation by minimizing its finite
+unnormalized posterior loss. No positive-mass assumption is needed. -/
+theorem finite_bayes_cost_minimizer
+    {State Observation Action : Type*}
+    [Fintype State] [Fintype Observation] [Fintype Action] [Nonempty Action]
+    (p : State → ℝ) (l : State → Action → ℝ) (X : State → Observation → ℝ) :
+    ∃ d : FiniteMarkovKernel Observation Action,
+      ∀ k : FiniteMarkovKernel Observation Action,
+        finiteBayesCost p l X d.1 ≤ finiteBayesCost p l X k.1 := by
+  classical
+  have hm (a : Observation) := Finset.exists_min_image Finset.univ
+    (fun b : Action => ∑ i, p i * X i a * l i b) Finset.univ_nonempty
+  choose m hm using hm
+  let d : FiniteMarkovKernel Observation Action :=
+    ⟨fun a b => if m a = b then 1 else 0,
+      ⟨by intro a b; dsimp only; split_ifs <;> norm_num,
+        by intro a; simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]⟩⟩
+  have hd : finiteBayesCost p l X d.1 = ∑ a, ∑ i, p i * X i a * l i (m a) := by
+    rw [finite_bayes_cost_expansion]
+    simp [d]
+  refine ⟨d, fun k => ?_⟩
+  rw [hd, finite_bayes_cost_expansion]
+  apply Finset.sum_le_sum
+  intro a _
+  calc
+    (∑ i, p i * X i a * l i (m a)) =
+        (∑ b, k.1 a b) * ∑ i, p i * X i a * l i (m a) := by rw [k.2.2, one_mul]
+    _ = ∑ b, k.1 a b * ∑ i, p i * X i a * l i (m a) := Finset.sum_mul _ _ _
+    _ ≤ _ := Finset.sum_le_sum fun b _ =>
+      mul_le_mul_of_nonneg_left ((hm a).2 b (Finset.mem_univ b)) (k.2.1 a b)
 
 /-- Infimum of real expected losses over every stochastic decision. -/
 def realBayesRisk {Θ O A : Type*} [Fintype Θ] [Fintype O] [Fintype A]
@@ -139,7 +197,7 @@ private theorem transported_cost_bound
       g θ y - g θ x ≤ 2 * lossNorm L * (if y ≠ x then 1 else 0) := by
     by_cases h : y = x
     · simp [h]
-    · simp only [Ne, h, not_false_eq_true, if_true, mul_one]
+    · simp only [Ne, h, not_false_eq_true, ite_true, mul_one]
       linarith [(hg θ y).2, (hg θ x).1]
   have expansion :
       finiteBayesCost π L (fun θ => channelOutput φ (T θ))
@@ -301,10 +359,19 @@ theorem generic_quality_iff_reconstruction
     let I : FiniteMarkovKernel X A :=
       ⟨fun x a => if eA.symm x = a then 1 else 0,
         ⟨by intro x a; dsimp only; split_ifs <;> norm_num,
-          by intro x; simp⟩⟩
+          by
+            intro x
+            exact Finset.sum_ite_eq_of_mem Finset.univ (eA.symm x)
+              (fun _ : A => (1 : ℝ)) (Finset.mem_univ _)⟩⟩
     have hI : finiteBayesCost p L T I.1 = -1 := by
       rw [cost_expectation]
-      simp [T, I, L, ← Finset.sum_mul, hpsum]
+      have hi (θ : H) : (∑ x, T θ x * ∑ a, I.1 x a * L θ a) = -1 := by
+        simp only [T, I, ite_mul, one_mul, zero_mul]
+        rw [Finset.sum_ite_eq_of_mem Finset.univ (eH θ) _ (Finset.mem_univ _)]
+        rw [Finset.sum_ite_eq_of_mem Finset.univ (eA.symm (eH θ)) _ (Finset.mem_univ _)]
+        simp [L]
+      simp_rw [hi]
+      rw [← Finset.sum_mul, hpsum, one_mul]
     have hbase : realBayesRisk p L T = -1 := by
       obtain ⟨k, hk, hkle⟩ := risk_min p L T
       apply le_antisymm
@@ -330,7 +397,7 @@ theorem generic_quality_iff_reconstruction
         simp only [L, eA.apply_symm_apply, eH.apply_symm_apply]
         have signed (y : X) : (if y = x then (-1 : ℝ) else 1) =
             2 * (if y ≠ x then 1 else 0) - 1 := by
-          by_cases hy : y = x <;> simp [hy]
+          by_cases hy : y = x <;> norm_num [hy]
         simp_rw [signed]
         simp only [mul_sub, mul_one, Finset.sum_sub_distrib]
         rw [show (∑ y, k.1 z (eA.symm y)) = 1 from d.2.2 z]
