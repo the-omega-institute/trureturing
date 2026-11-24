@@ -39,15 +39,15 @@ private abbrev sourceL1 (D : LatticeData) :=
   sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1
 
 set_option maxHeartbeats 1600000 in
-/-- The finite adjoint at the whole original fixed grade, with a common
-cutoff valid for every source in that grade and arbitrary actual tensor vectors. -/
-theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
+/-- The finite corrected-field adjoint on an entire original lattice grade.
+The common cutoff applies to both source parities and to arbitrary actual tensor vectors. -/
+theorem actual_corrected_adjoint_of_grade (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (d e : ℤ)
-    (a : fixedGrade D d) (x y : ActualTensor D hu) :
-    actualForm D hu ((correctedField D hu a.val).coeff e x) y =
+    (a : Carrier D) (ha : a ∈ grade D d) (x y : ActualTensor D hu) :
+    actualForm D hu ((correctedField D hu a).coeff e x) y =
       (-1 : ℂ)^d * ∑ j ∈ Finset.range (d.toNat + 1),
         (j.factorial : ℂ)⁻¹ *
-          actualForm D hu x ((correctedField D hu ((sourceL1 D ^ j) a.val)).coeff
+          actualForm D hu x ((correctedField D hu ((sourceL1 D ^ j) a)).coeff
             (-e - 4*d + 2*(j : ℤ)) y) := by
   classical
   let F : Carrier D →ₗ[ℂ] ℂ := ∑ j ∈ Finset.range (d.toNat + 1),
@@ -57,13 +57,13 @@ theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
       (j.factorial : ℂ)⁻¹ *
         K_R D hu (-e - 4*d + 2*(j : ℤ)) x y ((sourceL1 D ^ j) b) := by
     simp only [F, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, smul_eq_mul]
-  change K_L D hu e x y a.val = (-1 : ℂ)^d * ∑ j ∈ Finset.range (d.toNat + 1),
+  change K_L D hu e x y a = (-1 : ℂ)^d * ∑ j ∈ Finset.range (d.toNat + 1),
     (j.factorial : ℂ)⁻¹ * K_R D hu (-e - 4*d + 2*(j : ℤ)) x y
-      ((sourceL1 D ^ j) a.val)
+      ((sourceL1 D ^ j) a)
   rw [← evaluate]
   have hHG := Matrix.nonsing_inv_mul _ (SourceMobius.gram_det_unit D hu)
   have hGH := Matrix.mul_nonsing_inv _ (SourceMobius.gram_det_unit D hu)
-  have basis (α : Charge D) (m : Index D →₀ ℕ) (hm : m ∈ (a.val α).support) :
+  have basis (α : Charge D) (m : Index D →₀ ℕ) (hm : m ∈ (a α).support) :
       K_L D hu e x y (Finsupp.single α (monomial m 1)) =
         (-1 : ℂ)^d * F (Finsupp.single α (monomial m 1)) := by
     let R := m.weight (sourceWeight D)
@@ -72,7 +72,7 @@ theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
       change energy D (α, m) = d
       by_contra hn
       exact (MvPolynomial.mem_support_iff.mp hm)
-        ((mem_grade_iff D d a.val).mp a.property.1 (α, m) hn)
+        ((mem_grade_iff D d a).mp ha (α, m) hn)
     have hR : R ≤ d.toNat := by
       have hc := chargeEnergy_nonneg D hD α
       omega
@@ -109,15 +109,15 @@ theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
       have hz : (sourceL1 D ^ j) b = 0 := Module.End.pow_map_zero_of_le hle
         (SourceMobius.actual_sugawara_one_monomial_bound D hu α m 1)
       simp [term, hz]
-  have expansion : a.val = ∑ α ∈ a.val.support, ∑ m ∈ (a.val α).support,
-      (a.val α).coeff m • Finsupp.single α (monomial m 1) := by
+  have expansion : a = ∑ α ∈ a.support, ∑ m ∈ (a α).support,
+      (a α).coeff m • Finsupp.single α (monomial m 1) := by
     calc
-      a.val = ∑ α ∈ a.val.support, Finsupp.single α (a.val α) :=
-        (Finsupp.sum_single a.val).symm
+      a = ∑ α ∈ a.support, Finsupp.single α (a α) :=
+        (Finsupp.sum_single a).symm
       _ = _ := by
         apply Finset.sum_congr rfl
         intro α _
-        conv_lhs => arg 2; rw [(a.val α).as_sum]
+        conv_lhs => arg 2; rw [(a α).as_sum]
         rw [Finsupp.single_finsetSum]
         apply Finset.sum_congr rfl
         intro m _
@@ -130,6 +130,17 @@ theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
   intro m hm
   rw [basis α m hm]
   ring
+
+/-- The original corrected-field adjoint specialized to the fixed grade. -/
+theorem actual_corrected_grade_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (d e : ℤ)
+    (a : fixedGrade D d) (x y : ActualTensor D hu) :
+    actualForm D hu ((correctedField D hu a.val).coeff e x) y =
+      (-1 : ℂ)^d * ∑ j ∈ Finset.range (d.toNat + 1),
+        (j.factorial : ℂ)⁻¹ *
+          actualForm D hu x ((correctedField D hu ((sourceL1 D ^ j) a.val)).coeff
+            (-e - 4*d + 2*(j : ℤ)) y) :=
+  actual_corrected_adjoint_of_grade D hu hD d e a.val a.property.1 x y
 
 /-- BPZ transpose of the literal original translation and the original
 inverse-Gram Sugawara mode one. -/
