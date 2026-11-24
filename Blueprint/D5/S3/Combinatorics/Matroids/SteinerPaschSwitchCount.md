@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount.variableLa
 
 *Commentary.*
 
-Fix two distinct pivots in a finite Steiner loop with trivial centre and fix a finite nontrivial binary fibre. Use the graph given by left multiplication by the pivots. In normalized extensions, the compatible labelled complete triple systems give at least two distinct successful-start counts exactly when four blocks form a Pasch in which the two pivots occur in no common block.
+Fix distinct nonidentity pivots p and q in a finite Steiner loop with trivial centre, and fix a finite nontrivial binary fibre. Across normalized label tables, the compatible labelled extensions attain at least two successful-start counts for the lifted pivots (p,0) and (q,0) exactly when the original Steiner triple system contains a Pasch whose four blocks place p and q opposite one another.
 
 The four other points of such a Pasch form a square in the graph of the two matchings. Uniqueness of the block through two points excludes the special square containing the identity. Conversely, each other square gives four blocks through the two pivots and four distinct corners. The count range gives two distinct values as soon as there is one such square.
 
