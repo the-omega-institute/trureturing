@@ -16,9 +16,9 @@ Lean statement: `D5/S1/Words/Forbidden/NaimiCyclicWordReplacement.claim`
 
 Section 8 of Ramin Naimi's Swapping Compatible Words, arXiv:2610.31967v2, asks for a cyclic replacement of three or more patterns. The labels have successor i + 1 modulo the cycle size, and patterns may repeat.
 
-The directed border lengths from one pattern to another are the lengths at which a suffix of the first equals a prefix of the second. They include length zero and permit full length. Adjacent labels have equal self-border sets and equal directed sets in the two directions. Equality of the self-border sets forces a common pattern length.
+The directed border lengths from one pattern to another are the lengths at which a suffix of the first equals a prefix of the second. Length zero is always a border. For words of the same length, full length is a border exactly when the words are identical. Adjacent labels have equal self-border sets and equal directed sets in the two directions. Equality of the self-border sets forces a common pattern length.
 
-For each host length the claim asks for a single bijection on all hosts over the given finite alphabet. For every host, label, and zero-based start, the input has that occurrence exactly when the output has the successor occurrence at the same start. An occurrence lies on a nonempty interval inside the host, so an empty pattern has no occurrences.
+For each host length the claim asks for a single bijection on all hosts over the given finite alphabet. For every host, label, and zero-based start, the input has that occurrence exactly when the output has the successor occurrence at the same start. An occurrence lies on a nonempty interval inside the host, so an empty pattern has no occurrences. The same-position equivalence follows the two-pattern swap definition in Section 2.3, PDF p. 5. https://arxiv.org/html/2610.31967v2#S2.SS3.p4.1
 
 **Theorem 1.2 (Four patterns force conflicting letters).**
 
