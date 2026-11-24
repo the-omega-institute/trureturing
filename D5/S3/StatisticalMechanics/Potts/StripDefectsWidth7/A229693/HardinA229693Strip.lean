@@ -304,12 +304,9 @@ private def coefficients : Fin 12 → ℤ := ![-531441000, 1913187600, -29866984
 
 private theorem sum_zip_mul {n : ℕ} (u v : Fin n → ℤ) :
     (List.zipWith (· * ·) (List.ofFn u) (List.ofFn v)).sum = dotProduct u v := by
-  rw [dotProduct, ← List.sum_ofFn]
-  congr 1
-  apply List.ext_getElem
-  · simp
-  · intros
-    simp
+  rw [List.ofFn_eq_map, List.ofFn_eq_map, List.zipWith_map, List.zipWith_self,
+    ← List.ofFn_eq_map, List.sum_ofFn]
+  rfl
 
 private def columnRank (j : Fin 96) : Fin 60 :=
   (eval% (let keys := (List.ofFn exitRead).eraseDups
