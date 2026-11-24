@@ -58,43 +58,6 @@ def family (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     (rejected_law p hp hRH hL)
   dependence := dependence
-def audit (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
-    (hRH : RiemannHypothesis)
-    (hL : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
-      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@erdos985_large_prime) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.PrimitiveRoot.Erdos985.erdos985_large_prime.__information_unit
-  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.Erdos985.Large.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family p hp hRH hL⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.PrimitiveRoot.Erdos985
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Large
 
 namespace All
@@ -141,46 +104,6 @@ def family (hRH : RiemannHypothesis)
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     (rejected_law hRH hL hsmall)
   dependence := dependence
-def audit (hRH : RiemannHypothesis)
-    (hL : ∀ (p : ℕ) (hp : p.Prime),
-      letI : NeZero p := ⟨hp.ne_zero⟩;
-      3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
-      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@erdos985_of_GRH) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.PrimitiveRoot.Erdos985.erdos985_of_GRH.__information_unit
-  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.Erdos985.All.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family hRH hL hsmall⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.PrimitiveRoot.Erdos985
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end All
 
 #print axioms erdos985_large_prime
