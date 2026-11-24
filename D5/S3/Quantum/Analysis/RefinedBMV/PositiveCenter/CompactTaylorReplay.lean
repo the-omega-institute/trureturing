@@ -36,13 +36,17 @@ private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → Meta
     let output ← quoteValue value
     let theoremType ← mkEq e output
     let proof ← mkEqRefl output
+    -- Keep normalization witnesses in the kernel-checked proof, where they
+    -- do not become part of an exported auxiliary theorem's statement.
+    if e.isAppOfArity ``Model.ofRat 1 || e.isAppOfArity ``Model.widen 2 then
+      return (output, mkExpectedPropHint proof theoremType)
     let equality ← try
       withOptions (fun opts ↦ Lean.maxHeartbeats.set (Elab.async.set opts false) 350000) <|
         mkAuxLemma [] theoremType proof
     catch err =>
       throwError "kernel replay of {e.getAppFn} failed: {err.toMessageData}"
-    pure (output, equality)
-  return .step (← Sym.shareCommon output) (mkConst equality) (done := true)
+    pure (output, mkConst equality)
+  return .step (← Sym.shareCommon output) equality (done := true)
 
 meta def stageLiteral (α : Type) [ToExpr α] : Simproc :=
   stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr)
