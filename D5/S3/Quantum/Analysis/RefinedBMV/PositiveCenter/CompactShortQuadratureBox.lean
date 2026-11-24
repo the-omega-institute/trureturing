@@ -24,6 +24,27 @@ open private neg neg_sound inverse inverse_sound from
 open private CompactTaylorModel.Model.center from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 
+open private candidate_sound from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorResiduals
+
+private theorem radicalFrom_nonneg_sound {a : Model} {s t z x : ℝ}
+    (hb : InBox s t z) (ha : a.Encloses s t z x) (hx : 0 ≤ x)
+    (poly : DimThree.Certificate.Sparse) (hpoly : 0 < (⟨poly, 0⟩ : Model).lower) :
+    (CompactTaylorModel.radicalFrom a poly (Nat.sqrt (a.lower.toNat * scale))
+      (⟨poly, 0⟩ : Model).lower.toNat).Encloses s t z (Real.sqrt x) := by
+  by_cases hlo : 0 ≤ a.lower
+  · exact CompactTaylorModel.radicalFrom_lower_sound hb ha poly hlo hpoly (Nat.sqrt_le' _)
+  have hz : a.lower.toNat = 0 := Int.toNat_eq_zero.mpr (le_of_not_ge hlo)
+  have hcast : (((⟨poly, 0⟩ : Model).lower.toNat : ℕ) : ℝ) = ((⟨poly, 0⟩ : Model).lower : ℝ) := by
+    exact_mod_cast Int.toNat_of_nonneg hpoly.le
+  rw [hz]
+  apply CompactTaylorModel.radicalFrom_sound (lower := 0) hb ha poly
+  · simpa using hx
+  · simp
+  · rw [hcast]
+    exact Model.lower_sound hb (candidate_sound poly s t z)
+  · simpa using (show 0 < (⟨poly, 0⟩ : Model).lower.toNat by omega)
+
 private structure Interval where
   lo : ℚ
   hi : ℚ
@@ -212,7 +233,6 @@ structure Checks (b : Rectangle) (hLo hHi : ℚ) (orders : Orders) : Prop where
   rateGapSmall : ((spacingAxis hLo hHi).mul (neg (lowerAxis b))).argumentRadius ≤ 2
   decayOk : (decayInput b hLo hHi).expChecks
   growthOk : (lowerAxis b).expChecks
-  radicandNonneg : 0 ≤ (radicand b hLo hHi orders).lower
   rootPos : 0 < (⟨rootPolynomial b hLo hHi orders, 0⟩ : Model).lower
 
 private theorem Interval.radius_bound (I : Interval) {x : ℝ}
@@ -393,9 +413,12 @@ theorem score_lower_of_checks {b : Rectangle} {hLo hHi : ℚ} {orders : Orders}
     simpa only [Fin.val_one, iteratedDeriv_one] using hmarginal i 1
   have hradicand : (radicand b hLo hHi orders).Encloses s t z (q v * q d) :=
     Model.mul_sound hb (hq₀ 2) (hq₀ 3)
+  have hqpos (i : Fin 4) : 0 < q (arg i) :=
+    (div_pos (by exact_mod_cast checks.marginalPos i) scale_real_pos).trans_le
+      (Model.lower_sound hb (hq₀ i))
   have hroot : (inputs b hLo hHi orders).root.Encloses s t z (Real.sqrt (q v * q d)) :=
-    CompactTaylorModel.radicalFrom_lower_sound hb hradicand (rootPolynomial b hLo hHi orders)
-      checks.radicandNonneg checks.rootPos (Nat.sqrt_le' _)
+    radicalFrom_nonneg_sound hb hradicand (mul_nonneg (hqpos 2).le (hqpos 3).le)
+      (rootPolynomial b hLo hHi orders) checks.rootPos
   have hslope {P Q : Model} {x y : ℝ} (hP : P.Encloses s t z x) (hQ : Q.Encloses s t z y)
       (hpos : 0 < Q.lower) : (P.mul (inverse Q)).Encloses s t z (x / y) := by
     simpa only [div_eq_mul_inv, one_mul] using Model.mul_sound hb hP (inverse_sound hb hQ hpos)

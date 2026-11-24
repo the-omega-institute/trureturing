@@ -6,9 +6,11 @@
    utility: none
    digest: Cover the wider cleared middle-gap leaf by two checked rectangles. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ClearedMiddleReplay
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ClearedMiddleReplay.Staged
 
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel.ClearedMiddleGrid
+
+open scoped Staged
 
 private def leftLeaf : Leaf := ⟨⟨1, 3 / 2, 5 / 2, 3⟩, 2⟩
 private def rightLeaf : Leaf := ⟨⟨3 / 2, 2, 5 / 2, 3⟩, 2⟩
@@ -16,12 +18,12 @@ private def rightLeaf : Leaf := ⟨⟨3 / 2, 2, 5 / 2, 3⟩, 2⟩
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
 private theorem left_checked : leftLeaf.Checked := by
-  replay_cleared_middle_leaf
+  replay_staged_cleared_middle_leaf
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
 private theorem right_checked : rightLeaf.Checked := by
-  replay_cleared_middle_leaf
+  replay_staged_cleared_middle_leaf
 
 /-- The leaf with index 22 uses two degree-two tests after bisection in `u`. -/
 theorem split_mixedNegative : (leafAt 22).box.MixedNegative := by

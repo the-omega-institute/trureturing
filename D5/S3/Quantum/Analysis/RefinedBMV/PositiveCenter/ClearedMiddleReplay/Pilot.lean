@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ClearedMiddleReplay.UpperHeadGapStage
 
+/-! The first middle-gap rectangle uses the staged upper score at its first corner. -/
+
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel.ClearedMiddleGrid
 
 open private CompactMiddleBox.clearedScores CompactMiddleBox.elementaryChecks
@@ -43,9 +45,9 @@ local macro "replay_first_corner" : tactic => `(tactic| (
     cbv
   all_goals decide +kernel))
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 20000 in
 set_option cbv.maxSteps 5000000 in
+set_option maxHeartbeats 3000000 in
 -- Normalize only the score needed for this endpoint.
 private theorem first_zero_false_false : checkZeroScore (firstScores false false).1 = true := by
   conv_lhs =>
@@ -58,39 +60,44 @@ private theorem first_zero_false_false : checkZeroScore (firstScores false false
     cbv
   all_goals decide +kernel
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 20000 in
 set_option cbv.maxSteps 5000000 in
+set_option maxHeartbeats 3000000 in
 -- Share the model inputs of this corner's two scores.
 private theorem first_false_true : firstEndpointChecks (firstScores false true) = true := by
   replay_first_corner
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 20000 in
 set_option cbv.maxSteps 5000000 in
+set_option maxHeartbeats 3000000 in
 -- Share the model inputs of this corner's two scores.
 private theorem first_true_false : firstEndpointChecks (firstScores true false) = true := by
   replay_first_corner
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 20000 in
 set_option cbv.maxSteps 5000000 in
+set_option maxHeartbeats 3000000 in
 -- Share the model inputs of this corner's two scores.
 private theorem first_true_true : firstEndpointChecks (firstScores true true) = true := by
   replay_first_corner
 
 end
 
+set_option maxRecDepth 20000 in
+set_option maxHeartbeats 3000000 in
+-- Match the abstract pair of scores before selecting a concrete corner.
 private theorem first_corners_checked (a b : Bool) :
     (leafAt 0).model.clearedZeroCheck (leafAt 0).box.dLo a b = true ∧
       (leafAt 0).model.clearedUpperCheck (leafAt 0).box.dLo a b (leafAt 0).degree = true := by
+  change checkZeroScore (firstScores a b).1 = true ∧
+    checkUpperScore (firstScores a b).2 = true
   cases a
   · cases b
     · exact ⟨first_zero_false_false, firstUpperCorner_checked⟩
-    · exact Bool.and_eq_true.mp first_false_true
+    · exact Bool.and_eq_true_iff.mp first_false_true
   · cases b
-    · exact Bool.and_eq_true.mp first_true_false
-    · exact Bool.and_eq_true.mp first_true_true
+    · exact Bool.and_eq_true_iff.mp first_true_false
+    · exact Bool.and_eq_true_iff.mp first_true_true
 
 private theorem first_elementary_checked : (leafAt 0).model.ClearedChecks := by
   constructor

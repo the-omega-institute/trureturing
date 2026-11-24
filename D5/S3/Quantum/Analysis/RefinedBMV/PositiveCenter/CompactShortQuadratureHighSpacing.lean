@@ -82,7 +82,6 @@ private theorem checks : Checks box (3 / 22) (3 / 11) orders := by
   · constructor <;> decide_cbv
   · constructor <;> decide_cbv
   · decide_cbv
-  · decide_cbv
 
 private theorem scoreLower :
     lowerCheck (scoreModel box (3 / 22) (3 / 11) orders) 0 1 = true := by
