@@ -13,9 +13,10 @@ import Mathlib.Logic.Equiv.Defs
 import Mathlib.Tactic.FinCases
 
 /-!
-This addresses the opening paragraph of Section 8 of Ramin Naimi's
-*Swapping Compatible Words* (arXiv:2610.31967v2), using the position and
-border conventions of Sections 2.1 and 2.4.
+Ramin Naimi asks about cyclic replacement in the opening paragraph of
+Section 8 of *Swapping Compatible Words* (arXiv:2610.31967v2, PDF p. 33).
+The counterexample below uses the conventions in Section 2.1 and the
+[same-position swap definition in Section 2.3, PDF p. 5](https://arxiv.org/html/2610.31967v2#S2.SS3.p4.1).
 -/
 
 set_option autoImplicit false

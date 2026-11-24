@@ -20,13 +20,15 @@ DOI: https://doi.org/10.48550/arXiv.2610.31967
 
 The question is in the opening paragraph of §8 on printed and PDF page 33 of
 arXiv:2610.31967v2. Section 2.1 defines borders, compatibility and occurrences.
-Section 2.4 defines a swap using occurrences at the same position. The source
-is attributed to Ramin Naimi under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Section 2.3, PDF p. 5, defines a swap by an equivalence of occurrences at
+the same position in hosts of the same length. Ramin Naimi is the paper's
+sole author. [Swap definition](https://arxiv.org/html/2610.31967v2#S2.SS3.p4.1) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 [Versioned abstract](https://arxiv.org/abs/2610.31967v2) · [PDF page 33](https://arxiv.org/pdf/2610.31967v2#page=33)
 
 ## Finite linear words
 
-The cycle `001, 002, 011, 021` has equal self-border lengths and equal
+The counterexample formalized here uses the cycle `001, 002, 011, 021`,
+which has equal self-border lengths and equal
 directed border lengths in both directions along each adjacent edge. In
 `0021`, replacing `002` and `021` at their respective starts would require
 different letters at one output coordinate. The exact finite-linear claim

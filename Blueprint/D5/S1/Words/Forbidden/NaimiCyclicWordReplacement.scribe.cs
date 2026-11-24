@@ -24,7 +24,8 @@ internal sealed class NaimiCyclicWordReplacementDocument : IScribeDocumentDefini
                         + "and patterns may repeat.")),
                     Paragraph(Text("The directed border lengths from one pattern to another "
                         + "are the lengths at which a suffix of the first equals a prefix of "
-                        + "the second. They include length zero and permit full length. "
+                        + "the second. Length zero is always a border. For words of the same "
+                        + "length, full length is a border exactly when the words are identical. "
                         + "Adjacent labels have equal self-border sets and equal directed "
                         + "sets in the two directions. Equality of the self-border sets "
                         + "forces a common pattern length.")),
@@ -33,7 +34,9 @@ internal sealed class NaimiCyclicWordReplacementDocument : IScribeDocumentDefini
                         + "and zero-based start, the input has that occurrence exactly when "
                         + "the output has the successor occurrence at the same start. An "
                         + "occurrence lies on a nonempty interval inside the host, so an empty "
-                        + "pattern has no occurrences."))),
+                        + "pattern has no occurrences. The same-position equivalence follows "
+                        + "the two-pattern swap definition in Section 2.3, PDF p. 5. "
+                        + "https://arxiv.org/html/2610.31967v2#S2.SS3.p4.1"))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("naimi-positional-replacement-refuted"),
                 DeclarationHandle.Create(Prefix + "result"),

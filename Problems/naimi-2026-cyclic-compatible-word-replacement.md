@@ -25,7 +25,8 @@ Words*, arXiv:2610.31967v2, p. 33.
 The quote is attributed to Ramin Naimi. [Versioned source](https://arxiv.org/pdf/2610.31967v2#page=33) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 Let $B(x,y)$ consist of the lengths at which a suffix of $x$ equals a
-prefix of $y$, including length zero and permitting full length. Let
+prefix of $y$. Length zero is always a border. For two words of the same
+length, their full length is a border exactly when the words are identical. Let
 $\sigma(i)=i+1\bmod n$. For every finite alphabet and every cycle of
 $n\geq3$ patterns with
 $B(p_i,p_i)=B(p_{\sigma(i)},p_{\sigma(i)})$ and
@@ -35,8 +36,10 @@ label and start, the input occurrence of $p_i$ must be equivalent to the
 output occurrence of $p_{\sigma(i)}$ at the same start. Equal self-border
 sets force the pattern lengths to agree. The pattern labels may repeat.
 In §2.1, a positional occurrence occupies a nonempty interval, so the
-all-empty pattern cycle has vacuous occurrence requirements.
-[§2.1](https://arxiv.org/html/2610.31967v2#S2.SS1) · [§2.4](https://arxiv.org/html/2610.31967v2#S2.SS4)
+all-empty pattern cycle has vacuous occurrence requirements. The
+same-position equivalence follows the definition of a two-pattern swap
+in §2.3, PDF p. 5.
+[§2.1](https://arxiv.org/html/2610.31967v2#S2.SS1) · [§2.3 swap definition](https://arxiv.org/html/2610.31967v2#S2.SS3.p4.1)
 
 ## Motivation
 
@@ -55,7 +58,8 @@ coverage limits. [Issue #33746](https://github.com/the-omega-institute/trureturi
 
 ## Route
 
-Use the alphabet `{0,1,2}` and the cycle `001, 002, 011, 021`. Rows in
+The counterexample formalized here uses the alphabet `{0,1,2}` and the
+cycle `001, 002, 011, 021`. Rows in
 the directed border table give suffix owners and columns give prefix owners.
 
 | | `001` | `002` | `011` | `021` |
