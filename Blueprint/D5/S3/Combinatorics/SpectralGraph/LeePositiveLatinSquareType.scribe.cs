@@ -43,7 +43,9 @@ internal sealed class LeePositiveLatinSquareTypeDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "Independently, summing Schmidt’s published rank/type valencies gives the exact degree 262,802,624. "
                         + "The Lean proof establishes the obstruction by the orbit congruence."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-2026-symmetric-rank-threshold-latin-square-type"), ResolutionKind.Refuted)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(Operatorname, Grp(V(name)));

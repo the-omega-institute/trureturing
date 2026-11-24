@@ -22,6 +22,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/LeePositiveLatinSquareType.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lee-2026-symmetric-rank-threshold-latin-square-type` (refuted) by `D5/S3/Combinatorics/SpectralGraph/LeePositiveLatinSquareType.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lee-2026-symmetric-rank-threshold-latin-square-type","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/LeePositiveLatinSquareType.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jon Lee (2026). *The dimension of multi-index assignment polytopes and Latin-square transversal polytopes, via association schemes*. DOI: [10.48550/arXiv.2611.12780](https://doi.org/10.48550/arXiv.2611.12780). URL: <https://arxiv.org/abs/2611.12780v1>.
