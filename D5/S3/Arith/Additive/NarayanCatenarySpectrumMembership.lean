@@ -10,8 +10,8 @@ import D5.S3.Arith.Additive.NarayanExpandedGeneratorDeltaRefutation
 import Mathlib.Algebra.Order.Floor.Div
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.Algebra.Group.Submonoid.BigOperators
-import Mathlib.Data.Fintype.Card
+import Mathlib.Algebra.Group.Submonoid.Finsupp
+import Mathlib.Algebra.Order.Ring.Int
 import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Logic.Relation
 import Mathlib.Tactic.Ring
@@ -113,27 +113,9 @@ private theorem coordinate_le_sum {p : ℕ} (z : Fin p → ℕ) (i : Fin p) :
 /-- Membership of the generated additive submonoid coincides with existence in the source fiber. -/
 private theorem closure_iff_fiber {p : ℕ} (g : Fin p → ℕ) (n : ℕ) :
     n ∈ AddSubmonoid.closure (Set.range g) ↔ (Z g n).Nonempty := by
-  constructor
-  · intro hn
-    induction hn using AddSubmonoid.closure_induction with
-    | mem m hm =>
-      obtain ⟨i, rfl⟩ := hm
-      exact ⟨Pi.single i 1, by change weight g (Pi.single i 1) = g i; simp [weight_basis]⟩
-    | zero => exact ⟨0, by change weight g 0 = 0; simp [weight]⟩
-    | add m n _ _ hm hn =>
-      obtain ⟨z, hz⟩ := hm
-      obtain ⟨w, hw⟩ := hn
-      change weight g z = m at hz
-      change weight g w = n at hw
-      exact ⟨z + w, by change weight g (z + w) = m + n; rw [weight_add, hz, hw]⟩
-  · rintro ⟨z, hz⟩
-    change weight g z = n at hz
-    rw [← hz, weight]
-    apply AddSubmonoid.sum_mem
-    intro i _
-    simpa [nsmul_eq_mul] using
-      (AddSubmonoid.closure (Set.range g)).nsmul_mem (AddSubmonoid.subset_closure
-        (Set.mem_range_self i)) (z i)
+  change n ∈ AddSubmonoid.closure (Set.range g) ↔ ∃ z, weight g z = n
+  simpa only [weight, Nat.nsmul_eq_mul, eq_comm (a := n)] using
+    (AddSubmonoid.mem_closure_range_iff_of_fintype (f := g) (x := n))
 
 /-- A nonzero element is an atom when any decomposition in the monoid has a zero summand. -/
 def IsAtom (S : AddSubmonoid ℕ) (n : ℕ) : Prop :=
@@ -512,37 +494,22 @@ private theorem atoms_iff_generator {a h d k : ℕ} (hka : k < a) (hh : 1 < h)
     · exact Or.inl (hz.symm.trans (weight_zero_of_total_zero g z h))
     · exact Or.inr (hw.symm.trans (weight_zero_of_total_zero g w h))
 
-private theorem cofinite {a h d k : ℕ} (hk : 0 < k) (ha : 0 < a) (cop : a.Coprime d) :
+private theorem cofinite {a h d k : ℕ} (hk : 0 < k) (cop : a.Coprime d) :
     ((AddSubmonoid.closure (Set.range (generators a h d k)) : Set ℕ)ᶜ).Finite := by
   set b := a * h + d
   have hb : a.Coprime b := by
     simpa [b, Nat.add_comm] using (Nat.coprime_add_mul_left_right a d h).2 cop
-  let residues : Fin a → Fin a := fun i => ⟨i.val * b % a, Nat.mod_lt _ ha⟩
-  have hinj : Function.Injective residues := by
-    intro i j hij
-    have he : i.val * b ≡ j.val * b [MOD a] := congrArg Fin.val hij
-    have hc := Nat.ModEq.cancel_right_of_coprime hb he
-    apply Fin.ext
-    change i.val % a = j.val % a at hc
-    simpa [Nat.mod_eq_of_lt i.isLt, Nat.mod_eq_of_lt j.isLt] using hc
-  have hsurj := Finite.injective_iff_surjective.1 hinj
-  have htail : ∀ n ≥ a * b, n ∈ AddSubmonoid.closure (Set.range (generators a h d k)) := by
-    intro n hn
-    obtain ⟨i, hi⟩ := hsurj ⟨n % a, Nat.mod_lt _ ha⟩
-    have hm : n ≡ i.val * b [MOD a] := (congrArg Fin.val hi).symm
-    have hle : i.val * b ≤ n := (Nat.mul_le_mul_right b i.isLt.le).trans hn
-    have hdiv : a ∣ n - i.val * b := Nat.modEq_zero_iff_dvd.1
-      (by simpa using hm.sub hle (Nat.le_refl (i.val * b)) (Nat.ModEq.refl _))
-    obtain ⟨q, hq⟩ := hdiv
-    have he : a * q + i.val * b = n := by omega
-    apply (closure_iff_fiber _ _).2
-    refine ⟨Pi.single 0 q + Pi.single (first hk) i.val, ?_⟩
-    change weight (generators a h d k) _ = n
-    rw [weight_add, weight_basis, weight_basis]
-    simpa [generators, first, Fin.succ_ne_zero, b, Nat.mul_comm q a] using he
-  apply (Finset.range (a * b)).finite_toSet.subset
+  let S := AddSubmonoid.closure (Set.range (generators a h d k))
+  have ha : a ∈ S := AddSubmonoid.subset_closure ⟨0, by simp [generators]⟩
+  have hbmem : b ∈ S := AddSubmonoid.subset_closure
+    ⟨first hk, by simp [generators, first, b]⟩
+  apply (Finset.range (a.pred * b.pred)).finite_toSet.subset
   intro n hn
-  exact Finset.mem_range.mpr (lt_of_not_ge (fun hn' => hn (htail n hn')))
+  apply Finset.mem_range.mpr
+  by_contra! hlarge
+  obtain ⟨u, v, rfl⟩ := Nat.exists_add_mul_eq_of_gcd_dvd_of_mul_pred_le a b n
+    (by rw [hb.gcd_eq_one]; exact one_dvd _) hlarge
+  exact hn (S.add_mem (S.nsmul_mem ha u) (S.nsmul_mem hbmem v))
 
 
 private theorem no_cross_chain {a h d k B : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 < h)
@@ -586,7 +553,7 @@ private theorem checkpoint {a h d k : ℕ} (hd : 0 < d) (cop : a.Coprime d)
   dsimp only [WitnessCheckpoint]
   have hlo := lowVector_low (show 0 < k by omega) h d (ceilParameter a k)
   have hmem := (fiber_iff_classes hk hka (by omega) hd cop _).2 (Or.inl hlo)
-  refine ⟨generators_injective (by omega) hh hd, cofinite (by omega) (by omega) cop,
+  refine ⟨generators_injective (by omega) hh hd, cofinite (by omega) cop,
     atoms_iff_generator hka hh cop, (closure_iff_fiber _ _).2 ⟨_, hmem⟩,
     fiber_iff_classes hk hka (by omega) hd cop, ?_, ⟨⟨_, hmem⟩, hlo⟩,
     high_inhabited hk hka (by omega) hd cop, fun _ _ => cross_distance hk hka hh,
@@ -733,13 +700,6 @@ private theorem low_eq_lowVector {k h d t : ℕ} (hk : 0 < k) {z : Fin (k + 1) �
       simp [lowVector, Pi.add_apply, Fin.succ_ne_zero, Pi.single_eq_of_ne h₁,
         hvanish i (fun h => hi (Fin.ext h))]
 
-private theorem chain_symm {p n B : ℕ} {g : Fin p → ℕ} {z w : Z g n}
-    (h : Chain g n B z w) : Chain g n B w z := by
-  induction h with
-  | refl => exact Relation.ReflTransGen.refl
-  | tail _ hbc ih =>
-    exact Relation.ReflTransGen.head (by simpa only [distance_symm] using hbc) ih
-
 private theorem chain_mono {p n B B' : ℕ} {g : Fin p → ℕ} {z w : Z g n}
     (hB : B ≤ B') (h : Chain g n B z w) : Chain g n B' z w :=
   Relation.ReflTransGen.mono
@@ -804,6 +764,10 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
   let t := ceilParameter a k
   let n := witness a h d k
   let N := t + h + d
+  have reverseChain {B : ℕ} {z w : Z g n} (hchain : Chain g n B z w) : Chain g n B w z := by
+    let edgeSymm : Std.Symm (fun u v : Z g n => distance u.val v.val ≤ B) :=
+      ⟨fun u v hedge => (distance_symm v.val u.val).trans_le hedge⟩
+    exact (@Relation.ReflTransGen.stdSymm _ _ edgeSymm).symm z w hchain
   have hc := checkpoint hd cop hk hka hh
   have ht : 0 < t := (parameter_bounds hk hka).1
   have hlo := lowVector_low (show 0 < k by omega) h d t
@@ -830,17 +794,17 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
       rcases classes z with hz | hz <;> rcases classes w with hw | hw
       · exact Or.inl ⟨hz, hw⟩
       · exact (hseparate _ hB _ _ hz hw hchain).elim
-      · exact (hseparate _ hB _ _ hw hz (chain_symm hchain)).elim
+      · exact (hseparate _ hB _ _ hw hz (reverseChain hchain)).elim
       · exact Or.inr ⟨hz, hw⟩
     · rintro (⟨hz, hw⟩ | ⟨hz, hw⟩)
-      · exact (low_to_l z hz).trans (chain_symm (low_to_l w hw))
+      · exact (low_to_l z hz).trans (reverseChain (low_to_l w hw))
       · exact hhigh z w hz hw
   have to_l (z : Z g n) : Chain g n N z l := by
     rcases classes z with hz | hz
     · exact chain_mono (Nat.sub_le _ _) (low_to_l z hz)
-    · exact chain_symm (Relation.ReflTransGen.single (witness_bridge hk hka hh rfl hz).le)
+    · exact reverseChain (Relation.ReflTransGen.single (witness_bridge hk hka hh rfl hz).le)
   have hleast : IsLeast {B | ∀ z w : Z g n, Chain g n B z w} N := by
-    refine ⟨fun z w => (to_l z).trans (chain_symm (to_l w)), ?_⟩
+    refine ⟨fun z w => (to_l z).trans (reverseChain (to_l w)), ?_⟩
     intro B hB
     by_contra! hlt
     exact hseparate _ hlt _ _ hlo hw₀ (hB l w₀)
