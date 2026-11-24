@@ -68,9 +68,12 @@ private theorem coordinate_gram :
       Prod.mk.injEq, ite_mul, mul_ite]
   change Fᴴ * F = 1
   rw [hF]
-  change _ = _
-  rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one,
-    Matrix.submatrix_mul_equiv _ _ (Equiv.refl _) (Equiv.prodComm _ _) (Equiv.refl _), Matrix.one_mul]
+  rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one]
+  let I : Matrix (Fin 4 × Fin 1) (Fin 4 × Fin 1) ℂ := 1
+  let swap := Equiv.prodComm (Fin 1) (Fin 4)
+  let stay := Equiv.refl (Fin 4 × Fin 1)
+  change I.submatrix stay swap * I.submatrix swap stay = I
+  rw [Matrix.submatrix_mul_equiv I I stay swap stay, show I * I = I from Matrix.one_mul I]
   rfl
 
 private theorem cliffordRejected : ¬ cliffordArena.Law dimensionFalse := by
