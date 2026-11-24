@@ -18,17 +18,16 @@ attribute [local instance] InnerProductSpace.complexToReal
 
 universe u v
 
-structure Parameters where
-  H : Type u
-  [additive : NormedAddCommGroup H]
-  [inner : InnerProductSpace ℝ H]
+abbrev Parameters :=
+  Σ H : Type u, Σ additive : NormedAddCommGroup H,
+    @InnerProductSpace ℝ H _ additive.toSeminormedAddCommGroup
 
 abbrev signature : Signature where
   Params := Parameters.{u}
   State p :=
-    letI := p.additive
-    letI := p.inner
-    p.H →L[ℝ] p.H
+    letI := p.2.1
+    letI := p.2.2
+    p.1 →L[ℝ] p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -38,9 +37,9 @@ abbrev signature : Signature where
 
 def actual : Realization signature.{u} :=
   realize signature (fun _ p => by
-    letI := p.additive
-    letI := p.inner
-    exact ContinuousLinearMap.det) (fun e => nomatch e)
+    letI := p.2.1
+    letI := p.2.2
+    exact fun A => A.det) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => -1) (fun e => nomatch e)
@@ -55,7 +54,7 @@ abbrev arena : Arena where
       (∀ j ∈ S, T j ^ 3 = 1) →
       (∀ i ∈ S, ∀ j ∈ S, Commute (T i) (T j)) →
       (∀ x, ‖U x‖ = ‖x‖) →
-      R.readout () (@Parameters.mk H inferInstance inferInstance) U < 0 →
+      R.readout () ⟨H, inferInstance, inferInstance⟩ U < 0 →
       (∀ A : H →L[ℝ] H, (∀ j ∈ S, Commute A (T j)) → 0 ≤ A.det) →
       3 ≤ ∑ j ∈ S, commutatorNorm T U j ^ 2
 
@@ -72,7 +71,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro _
   let H := EuclideanSpace ℝ (ULift.{u} Unit)
-  refine ⟨@Parameters.mk H inferInstance inferInstance, 0, 1, ?_⟩
+  refine ⟨⟨H, inferInstance, inferInstance⟩, 0, 1, ?_⟩
   change (0 : H →L[ℝ] H).det ≠ (1 : H →L[ℝ] H).det
   rw [show (0 : H →L[ℝ] H).det = 0 from
     LinearMap.det_zero' (EuclideanSpace.basisFun (ULift.{u} Unit) ℝ).toBasis]
@@ -102,9 +101,9 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ p => by
-    letI := p.additive
-    letI := p.inner
-    exact ContinuousLinearMap.det) (fun e => nomatch e))
+    letI := p.2.1
+    letI := p.2.2
+    exact fun A => A.det) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -112,27 +111,21 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.HilbertOperators.OrderThreeOrientationBound
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 7
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
-structure PlaneParameters where
-  κ : Type v
-  [finite : Fintype κ]
-
 abbrev planeSignature : Signature where
-  Params := PlaneParameters.{v}
-  State p :=
-    letI := p.finite
-    EuclideanSpace ℂ p.κ →L[ℝ] EuclideanSpace ℂ p.κ
+  Params := Type v
+  State κ := EuclideanSpace ℂ κ →L[ℝ] EuclideanSpace ℂ κ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -141,9 +134,7 @@ abbrev planeSignature : Signature where
   finiteAnchor := inferInstance
 
 def planeActual : Realization planeSignature.{v} :=
-  realize planeSignature (fun _ p => by
-    letI := p.finite
-    exact ContinuousLinearMap.det) (fun e => nomatch e)
+  realize planeSignature (fun _ _ A => A.det) (fun e => nomatch e)
 
 def planeRejected : Realization planeSignature.{v} :=
   realize planeSignature (fun _ _ _ => -1) (fun e => nomatch e)
@@ -156,7 +147,7 @@ abbrev planeArena : Arena where
       (∀ j ∈ S, ∀ k, w j k ^ 3 = 1) →
       (∀ i k, ∃ j ∈ S, w j i ≠ starRingEnd ℂ (w j k)) →
       (∀ x, ‖U x‖ = ‖x‖) →
-      R.readout () (@PlaneParameters.mk κ inferInstance) U < 0 →
+      R.readout () κ U < 0 →
       (3 ≤ ∑ j ∈ S, commutatorNorm (fun j => characterPlane (w j)) U j ^ 2) ∧
         ∃ j ∈ S, Real.sqrt (3 / (S.card : ℝ)) ≤
           commutatorNorm (fun j => characterPlane (w j)) U j
@@ -173,7 +164,7 @@ private theorem plane_rejected_law : ¬ planeArena.{u,v}.Law planeRejected := by
 private theorem plane_dependence : ObservationalDependence planeSignature.{v} planeActual := by
   intro _
   let κ := ULift.{v} Unit
-  refine ⟨@PlaneParameters.mk κ inferInstance, 0, 1, ?_⟩
+  refine ⟨κ, 0, 1, ?_⟩
   let H := EuclideanSpace ℂ κ
   change (0 : H →L[ℝ] H).det ≠ (1 : H →L[ℝ] H).det
   have hzero : (0 : H →L[ℝ] H).det = 0 := by
@@ -208,9 +199,7 @@ def planeRegistration :
   realization := .source planeArena ⟨planeEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize planeSignature (fun _ p => by
-    letI := p.finite
-    exact ContinuousLinearMap.det) (fun e => nomatch e))
+  readout := some (realize planeSignature (fun _ _ A => A.det) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -218,13 +207,13 @@ def planeRegistration :
   sourceSelection := some {
     owner := `D5.S3.HilbertOperators.OrderThreeOrientationBound
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body",
         "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 5
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
