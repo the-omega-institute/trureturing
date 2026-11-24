@@ -130,6 +130,8 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 对于声称对应 Mathlib 的定义，在混合核验模块中证明映射保留运算或谓词。自然数核验给出零和后继转换的两个往返等式、序关系的双向等价，以及 Fibonacci 数列和二项式系数对任意输入的逐点一致。`lake test -- OmegaChecks.NatCorrespondence` 可单独运行。严格闭包覆盖任一算术移植模块时也运行这项核验。[对应证明](OmegaChecks/NatCorrespondence.lean)
 
+Zeckendorf 核验将零基权位 `i` 映射为 Fibonacci 下标 `i + 2`。Lean 证明两个规范性谓词等价、解码值一致、每个输入的编码等于 Mathlib 的 `Nat.zeckendorf`，并且每个 Mathlib 规范表示都可由严格编码表示。`lake test -- OmegaChecks.WDigitCorrespondence` 可单独运行。[对应证明](OmegaChecks/WDigitCorrespondence.lean)
+
 ## 空内核审计
 
 | 审计入口 | 传递闭包的模块数 | 声明数 |

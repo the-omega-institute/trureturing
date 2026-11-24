@@ -7,7 +7,7 @@
    digest: Exact attained entropy gain for three equal coordinate blocks of a flat-rank state. -/
 
 import D5.S3.Quantum.Measurement.Auric.EqualBlockEffects
-import D5.S3.Quantum.Measurement.Auric.ProjectionFrames
+import D5.S3.Quantum.Measurement.Auric.ProjectionSpectralTransport
 import D5.S3.Quantum.Measurement.Auric.CoordinatePinching
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
@@ -69,7 +69,7 @@ private theorem blockGrams_feasible (E : (Fin m × Fin 3) ≃ ι) (V : Matrix ι
   · apply (Matrix.rank_mul_le_right _ _).trans
     simpa using Matrix.rank_le_card_height (blockRows E V j)
 
-private theorem exists_flat_rows {A : Matrix n n ℂ} (hA : A.PosSemidef)
+theorem exists_flat_rows {A : Matrix n n ℂ} (hA : A.PosSemidef)
     (hm : 0 < m) (hr : A.rank ≤ m) :
     ∃ V : Matrix (Fin m) n ℂ, Vᴴ * V = A ∧
       ∀ i, ((V * Vᴴ) i i).re = (Matrix.trace A).re / m := by
@@ -205,7 +205,7 @@ private theorem capacity_card (c : ι → Fin 3)
     (hc : ∀ j, Fintype.card {i // c i = j} = m) : Fintype.card ι = 3 * m := by
   simpa [Nat.mul_comm] using (Fintype.card_congr (coordinateBlocks c hc)).symm
 
-private theorem trace_projection (P : Matrix ι ι ℂ) (hP : P * P = P) :
+theorem trace_projection (P : Matrix ι ι ℂ) (hP : P * P = P) :
     Matrix.trace P = (P.rank : ℂ) := by
   have hidem : IsIdempotentElem P.mulVecLin := by
     change P.mulVecLin.comp P.mulVecLin = P.mulVecLin
@@ -319,7 +319,7 @@ private theorem coordinate_pinching_blocks (c : ι → Fin 3)
       simp [hz, hk]
     · simp [hz]
 
-private def spectralSum (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X.IsHermitian) : ℝ :=
+def spectralSum (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X.IsHermitian) : ℝ :=
   ∑ i, f (hX.eigenvalues i)
 
 private theorem spectralSum_roots (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X.IsHermitian) :
@@ -327,7 +327,7 @@ private theorem spectralSum_roots (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X
   rw [hX.roots_charpoly_eq_eigenvalues]
   simp [spectralSum, Multiset.map_map, Function.comp_def, RCLike.ofReal_eq_complex_ofReal]
 
-private theorem spectralSum_reindex (e : n ≃ ι) (f : ℝ → ℝ) {X : Matrix n n ℂ}
+theorem spectralSum_reindex (e : n ≃ ι) (f : ℝ → ℝ) {X : Matrix n n ℂ}
     (hX : X.IsHermitian) (hE : (Matrix.reindex e e X).IsHermitian) :
     spectralSum f hE = spectralSum f hX := by
   rw [spectralSum_roots _ hE, spectralSum_roots _ hX, Matrix.charpoly_reindex]
@@ -349,20 +349,7 @@ private theorem spectralSum_blocks (f : ℝ → ℝ) (A : Fin 3 → Matrix n n �
   · simp [Multiset.sum_bind, Multiset.map_bind, Finset.sum_eq_multiset_sum]
   · exact Finset.prod_ne_zero_iff.mpr fun j _ => (Matrix.charpoly_monic (A j)).ne_zero
 
-private theorem spectralSum_gram (V : Matrix ι n ℂ) (f : ℝ → ℝ) (hf : f 0 = 0) :
-    spectralSum f (Matrix.isHermitian_mul_conjTranspose_self V) =
-      spectralSum f (Matrix.isHermitian_conjTranspose_mul_self V) := by
-  rw [spectralSum_roots, spectralSum_roots]
-  have h := congrArg Polynomial.roots (Matrix.charpoly_mul_comm' V Vᴴ)
-  rw [Polynomial.roots_mul (mul_ne_zero (pow_ne_zero _ Polynomial.X_ne_zero)
-    (Matrix.charpoly_monic _).ne_zero),
-    Polynomial.roots_mul (mul_ne_zero (pow_ne_zero _ Polynomial.X_ne_zero)
-      (Matrix.charpoly_monic _).ne_zero), Polynomial.roots_X_pow, Polynomial.roots_X_pow] at h
-  simpa [Multiset.map_add, Multiset.sum_add, Multiset.map_nsmul,
-    Multiset.sum_nsmul, Function.comp_def, hf] using
-    congrArg (fun t : Multiset ℂ => (t.map (f ∘ Complex.re)).sum) h
-
-private theorem spectralSum_affine (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X.IsHermitian)
+theorem spectralSum_affine (f : ℝ → ℝ) {X : Matrix n n ℂ} (hX : X.IsHermitian)
     (a b : ℝ) (hY : ((a : ℂ) • (1 : Matrix n n ℂ) + (b : ℂ) • X).IsHermitian) :
     spectralSum f hY = spectralSum (fun x => f (a + b*x)) hX := by
   let evals := hX.eigenvalues
@@ -416,7 +403,7 @@ private theorem entropy_spectral (ρ : DensityState n) :
   rw [hA.cfc_eq, Matrix.IsHermitian.cfc, Matrix.trace_map, Matrix.trace_diagonal, Complex.re_sum]
   rfl
 
-private theorem spectralSum_scale_entropy {X : Matrix n n ℂ} (hX : X.IsHermitian)
+theorem spectralSum_scale_entropy {X : Matrix n n ℂ} (hX : X.IsHermitian)
     (q : ℝ) (hY : ((q : ℂ) • X).IsHermitian) :
     spectralSum Real.negMulLog hY =
       q * spectralSum Real.negMulLog hX + (Matrix.trace X).re * Real.negMulLog q := by
@@ -431,7 +418,7 @@ private theorem spectralSum_scale_entropy {X : Matrix n n ℂ} (hX : X.IsHermiti
   rw [hX.trace_eq_sum_eigenvalues, Complex.re_sum]
   rfl
 
-private theorem entropy_flat_projection {P : Matrix ι ι ℂ}
+theorem entropy_flat_projection {P : Matrix ι ι ℂ}
     (hP : P.IsHermitian) (hP2 : P*P=P) : spectralSum Real.negMulLog hP = 0 := by
   unfold spectralSum
   apply Finset.sum_eq_zero
@@ -448,26 +435,6 @@ private theorem entropy_flat_projection {P : Matrix ι ι ℂ}
   rcases h with he | he
   · simp [he]
   · simp [sub_eq_zero.mp he]
-
-private theorem exists_projection_frame {d : ℕ} {Q : Matrix ι ι ℂ}
-    (hQ : FlatProjection d Q) (hd : d < Fintype.card ι) :
-    ∃ V : Matrix ι (Fin d) ℂ, Vᴴ * V = 1 ∧ V * Vᴴ = Q := by
-  by_cases hz : Q = 0
-  · have hzero : d = 0 := by simpa [hz] using hQ.2.2.1.symm
-    subst d
-    exact ⟨0, by ext i; exact Fin.elim0 i, by simp [hz]⟩
-  have hone : Q ≠ 1 := by
-    intro h
-    have hh := hQ.2.2.1
-    rw [h, Matrix.rank_one] at hh
-    omega
-  obtain ⟨k, l, _, _, _, V, _, hV, _, hVQ, _⟩ :=
-    exists_complementary_frames Q hQ.1 hQ.2.1 hz hone
-  have hr : Q.rank = k := by
-    rw [← hVQ, Matrix.rank_self_mul_conjTranspose, ← Matrix.rank_conjTranspose_mul_self V,
-      hV, Matrix.rank_one, Fintype.card_fin]
-  have hdk : d = k := hQ.2.2.1.symm.trans hr
-  exact hdk.symm ▸ ⟨V, hV, hVQ⟩
 
 def gain (c : ι → Fin 3) (ρ : DensityState ι) : ℝ :=
   vonNeumannEntropy ((pinchingChannel (coordinatePVM c)).mapState ρ) - vonNeumannEntropy ρ
@@ -566,7 +533,10 @@ private theorem gain_eq_rowEffects (c : ι → Fin 3)
       rw [spectralSum_roots _ (hB j), hBj, ← spectralSum_roots _ hsub]
       simp only [neg_one_mul, ← sub_eq_add_neg] at hh
       exact hh
-  rw [haff, spectralSum_gram W _ hz]
+  have hGram : spectralSum (entropyIntegrand flip) (Matrix.isHermitian_mul_conjTranspose_self W) =
+      spectralSum (entropyIntegrand flip) (Matrix.isHermitian_conjTranspose_mul_self W) :=
+    D5.S3.Quantum.Measurement.Auric.spectralSum_mul_reverse _ hz W Wᴴ _ _
+  rw [haff, hGram]
   rfl
 
 private theorem flatState_congr {r : ℕ} (hr : 0 < r) {P Q : Matrix ι ι ℂ}
@@ -595,7 +565,6 @@ theorem isGreatest_flat_record_gain (c : ι → Fin 3) (m r : ℕ) (hm : 0 < m) 
   let E := coordinateBlocks c hc
   have hN := capacity_card c hc
   have hn0 : 0 < Fintype.card ι := by rw [hN]; omega
-  have hdN : d < Fintype.card ι := by dsimp [d]; rw [hN]; omega
   have hmid : 3*(d-m) ≤ d := by dsimp [d]; omega
   have hopt := isGreatest_effectEntropy (n := Fin d) flip m (by simpa using hmid)
   have hr0 : (0 : ℝ) ≤ r := by positivity
@@ -628,7 +597,8 @@ theorem isGreatest_flat_record_gain (c : ι → Fin 3) (m r : ℕ) (hm : 0 < m) 
       by_cases hf : 3*m-r < r
       · simpa [Q, flip, hf, d, hN, Nat.min_eq_right hf.le] using hP.complement hn0
       · simpa [Q, flip, hf, d, Nat.min_eq_left (Nat.le_of_not_lt hf)] using hP
-    obtain ⟨V,hv,hVQ⟩ := exists_projection_frame hQ hdN
+    obtain ⟨V,hv,hVQ⟩ :=
+      D5.S3.Quantum.Measurement.Auric.exists_projection_frame hQ.1 hQ.2.1 hQ.2.2.1
     let P' := if flip then 1-V*Vᴴ else V*Vᴴ
     have hP' : P' = P := by
       dsimp only [P']
