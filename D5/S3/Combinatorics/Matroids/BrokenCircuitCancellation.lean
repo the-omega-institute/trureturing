@@ -431,4 +431,65 @@ theorem signed_spanning_eq_signed_nbc (M : Matroid α) :
   rw [hbad]
   simp [nbcBaseSubsets]
 
+/-- The actual no-broken-circuit bases: ground-contained bases avoiding every
+broken circuit obtained by deleting a circuit maximum. -/
+noncomputable def actualNBCBaseSubsets (M : Matroid α) : Finset (Finset α) := by
+  classical
+  exact (matroidGround M).powerset.filter
+    (fun A => M.IsBase (A : Set α) ∧ ¬IsNBCBad M A)
+
+lemma mem_actualNBCBaseSubsets {M : Matroid α} {A : Finset α}
+    (hA : A ∈ actualNBCBaseSubsets M) :
+    A ∈ (matroidGround M).powerset ∧
+      M.IsBase (A : Set α) ∧ ¬IsNBCBad M A := by
+  classical
+  exact Finset.mem_filter.mp hA
+
+lemma actualNBCBaseSubsets_eq_nbcBaseSubsets (M : Matroid α) :
+    actualNBCBaseSubsets M = nbcBaseSubsets M := by
+  classical
+  ext A
+  constructor
+  · intro hA
+    have hA' := mem_actualNBCBaseSubsets hA
+    have hground : A ∈ (matroidGround M).powerset := hA'.1
+    have hbase : M.IsBase (A : Set α) := hA'.2.1
+    have hspan : M.Spanning (A : Set α) := hbase.spanning
+    exact Finset.mem_filter.mpr ⟨Finset.mem_filter.mpr ⟨hground, hspan⟩, hA'.2.2⟩
+  · intro hA
+    have hA' := mem_nbcBaseSubsets hA
+    have hbase : M.IsBase (A : Set α) := nbcBase_isBase hA
+    have hground : A ∈ (matroidGround M).powerset := by
+      apply Finset.mem_powerset.mpr
+      intro x hx
+      exact (mem_matroidGround M x).2 (mem_spanningSubsets hA'.1).subset_ground hx
+    exact Finset.mem_filter.mpr ⟨hground, ⟨hbase, hA'.2⟩⟩
+
+private lemma matroidParitySign_eq_neg_one_pow (n : Nat) :
+    matroidParitySign n = (-1 : Int) ^ n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      rw [matroidParitySign_succ, ih, pow_succ]
+      simp [mul_comm]
+
+/-- The integer-power form of the alternating sum over actual NBC bases. -/
+noncomputable def actualNBCBasePowerSum (M : Matroid α) : Int :=
+  ∑ A ∈ actualNBCBaseSubsets M, (-1 : Int) ^ A.card
+
+/-- For every finite linearly ordered matroid carrier, the alternating sum over
+all ground-contained spanning subsets equals the integer-power sum over exactly
+its ground-contained actual no-broken-circuit bases. Circuits are finite sets,
+and a broken circuit is obtained by deleting a circuit maximum; arbitrary
+ambient elements outside the matroid ground, empty grounds, rank-zero matroids,
+loops, and disconnected matroids remain in scope. -/
+theorem spanningPower_eq_actualNBCBasePower (M : Matroid α) :
+    (∑ A ∈ spanningSubsets M, (-1 : Int) ^ A.card) =
+      actualNBCBasePowerSum M := by
+  classical
+  have h := signed_spanning_eq_signed_nbc M
+  unfold signedSpanningSum signedNBCSum at h
+  simp_rw [matroidParitySign_eq_neg_one_pow] at h
+  simpa [actualNBCBasePowerSum, actualNBCBaseSubsets_eq_nbcBaseSubsets M] using h
+
 end D5.S3.Combinatorics.Matroids.BrokenCircuitCancellation
