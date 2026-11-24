@@ -13,19 +13,16 @@ import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourCliffordRankThree
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
 noncomputable section
 
 open Matrix Module
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker
-
 namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourRankThree
 
 open NativeRectangularBound (reduce_left)
 open D5.S3.Quantum.Algebra.NativeCoefficientWhitening (mix)
 open D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
   (rank_kronecker_one_general)
-
 private theorem sub_kron {a b c d : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
     (C : Matrix (Fin d) (Fin c) ℂ) : kronecker (A - B) C = kronecker A C - kronecker B C := by
   change (Matrix.kroneckerBilinear (R := ℂ)) (A - B) C = _
@@ -408,8 +405,9 @@ private theorem residual_kernel {a b e d : ℕ}
       obtain ⟨y, hy, hR⟩ := kernel_nonzero R hR
       refine ⟨y, hy, ?_⟩
       change (kronecker A R + kronecker B S) *ᵥ product x y = 0
-      rw [Matrix.add_mulVec, tensor_apply, tensor_apply, hR, hB, Matrix.zero_vecMulVec,
-        Matrix.vecMulVec_zero, Matrix.vec_zero, zero_add]
+      rw [Matrix.add_mulVec, tensor_apply, tensor_apply, hR, hB]
+      ext ⟨i, j⟩
+      simp [Matrix.vec, Matrix.vecMulVec_apply]
     · let z := -t / s
       have hA : A *ᵥ x = z • (B *ᵥ x) := by
         apply (smul_right_injective (Fin a → ℂ) hs)
@@ -614,7 +612,8 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
     simp only [F, CL, Matrix.kronecker, Matrix.conjTranspose_kronecker, Matrix.mul_add,
       ← Matrix.mul_kronecker_mul, hDV, Matrix.kronecker_zero, add_zero,
       Matrix.conjTranspose_mul X C, hCX, hDJ] at h
-    exact add_left_cancel (show _ + _ = _ + 0 by simpa [add_assoc] using h)
+    apply add_left_cancel (a := kronecker Cᴴ Eᴴ)
+    simpa only [Matrix.conjTranspose_mul, Matrix.kronecker, add_assoc, add_zero] using h
   have hCrossZero : Dᴴ * R = 0 ∧ Dᴴ * S = 0 := by
     have hz (i : Fin e) (j : Fin c) : (Dᴴ * R) i j = 0 ∧ (Dᴴ * S) i j = 0 := by
       let s := (Dᴴ * R) i j
