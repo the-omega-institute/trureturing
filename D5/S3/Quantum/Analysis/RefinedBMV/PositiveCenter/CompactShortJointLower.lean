@@ -10,6 +10,7 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclos
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMoments
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.HalfGapSlope
 import D5.S3.Quantum.Recovery.BKMSpectralVariance
 import D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth
@@ -33,6 +34,8 @@ open private gridAverage gridPoint from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTails
 open private compactMixedT_eq_cutoff from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
+open private quadratureTailTerm from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
 
 /-- The lower fourth-order approximation at center `s` and gap `d`. -/
 def shortJointMomentFourth (p : ℕ) (s d : ℝ) : ℝ :=
@@ -321,6 +324,49 @@ theorem shortJointFourthQuadrature_reflect {h : ℝ} (hh : 0 ≤ h) (s d : ℝ) 
   norm_num [iteratedDeriv_one]
   field_simp [hden]
   ring
+
+/-- The finite parameter-series coefficient for closed quadrature of a weighted
+exponential density, before translation to the center of the parameter interval. -/
+def compactClosedQuadratureSeriesCoeff (h : ℝ) (degree : ℕ) (weight : ℕ → ℝ) (n : ℕ) : ℝ :=
+  weight n / (n.factorial : ℝ) * compactClosedQuadrature h (fun x ↦ x ^ (n + degree))
+
+/-- A centered polynomial enclosure for a closed quadrature. Its two error bounds
+control the infinite tail and the discarded terms of the translated polynomial. -/
+theorem compactClosedQuadrature_shiftedSeries_sound
+    {s t z h C center offset radius width : ℝ} {degree terms order : ℕ}
+    {X : CompactTaylorModel.Model} (hb : CompactTaylorModel.InBox s t z)
+    (hx : X.Encloses s t z offset) (hh : 0 ≤ h)
+    (horder : order ≤ terms) (hterms : 3 ≤ terms)
+    (hr : |center| + |offset| ≤ radius) (hratio : 2 * radius < (terms : ℝ) - 2)
+    (hw : |offset| ≤ width) {weight : ℕ → ℝ} (hweight : ∀ n, |weight n| ≤ C)
+    (models : ℕ → CompactTaylorModel.Model)
+    (hmodels : ∀ m < order, (models m).Encloses s t z
+      (CompactTaylorModel.shiftedSeriesCoeff
+        (compactClosedQuadratureSeriesCoeff h degree weight) terms center m))
+    {shiftError tailError : ℚ}
+    (hshift : width ^ order * ∑ n ∈ Finset.Ico order terms,
+        |compactClosedQuadratureSeriesCoeff h degree weight n| *
+          (n.choose order : ℝ) * radius ^ (n - order) ≤ (shiftError : ℝ))
+    (htail : C * ((3 + h) * quadratureTailTerm degree 0 radius terms +
+        h ^ 2 / 6 * quadratureTailTerm degree 1 radius terms +
+        h ^ 4 / 360 * quadratureTailTerm degree 3 radius terms) /
+        (1 - 2 * radius / ((terms : ℝ) - 2)) ≤ (tailError : ℝ)) :
+    (((CompactTaylorModel.Model.series order models X).widen shiftError).widen tailError).Encloses
+      s t z (compactClosedQuadrature h (fun x ↦ ∑' n : ℕ,
+        (weight n * ((center + offset) ^ n / n.factorial)) * x ^ (n + degree))) := by
+  have hseries := CompactTaylorModel.Model.shiftedSeries_sound hb hx horder hr hw
+    (compactClosedQuadratureSeriesCoeff h degree weight) models hmodels hshift
+  apply CompactTaylorModel.Model.widen_sound hseries
+  have habs : |center + offset| ≤ radius := (abs_add_le _ _).trans hr
+  have herror := compactClosedQuadrature_taylor_error_le
+    (offset := degree) hh habs hterms hratio hweight
+  have heq (n : ℕ) :
+      weight n * ((center + offset) ^ n / (n.factorial : ℝ)) *
+        compactClosedQuadrature h (fun x ↦ x ^ (n + degree)) =
+      compactClosedQuadratureSeriesCoeff h degree weight n * (center + offset) ^ n := by
+    simp only [compactClosedQuadratureSeriesCoeff, div_eq_mul_inv]
+    ring
+  simpa only [heq] using herror.trans htail
 
 /-- The closed-mesh normalization and the negative score used by the exact short-gap
 certificate. The marginal inputs are the regularized moment and its first two derivatives. -/

@@ -14,6 +14,108 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTai
 
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel
 
+open scoped BigOperators
+
+/-- The coefficient of degree `m` after translating a finite series by `center`. -/
+def shiftedSeriesCoeff (coeff : ℕ → ℝ) (terms : ℕ) (center : ℝ) (m : ℕ) : ℝ :=
+  ∑ n ∈ Finset.Ico m terms, coeff n * (n.choose m : ℝ) * center ^ (n - m)
+
+private theorem shiftedMonomialTail_le {n order : ℕ} (horder : order ≤ n)
+    {center offset radius width : ℝ} (hr : |center| + |offset| ≤ radius)
+    (hw : |offset| ≤ width) :
+    (∑ m ∈ Finset.Ico order (n + 1),
+      (n.choose m : ℝ) * |center| ^ (n - m) * |offset| ^ m) ≤
+      width ^ order * ((n.choose order : ℝ) * radius ^ (n - order)) := by
+  have hchoose (m : ℕ) (hm : order ≤ m) :
+      (n.choose m : ℝ) ≤ (n.choose order : ℝ) * ((n - order).choose (m - order) : ℝ) := by
+    exact_mod_cast calc
+      n.choose m = n.choose m * 1 := (Nat.mul_one _).symm
+      _ ≤ n.choose m * m.choose order := Nat.mul_le_mul_left _ (Nat.choose_pos hm)
+      _ = _ := Nat.choose_mul hm
+  calc
+    _ ≤ ∑ m ∈ Finset.Ico order (n + 1), width ^ order * (n.choose order : ℝ) *
+        (((n - order).choose (m - order) : ℝ) *
+          |center| ^ (n - m) * |offset| ^ (m - order)) := by
+      apply Finset.sum_le_sum
+      intro m hm
+      have hm₁ := (Finset.mem_Ico.mp hm).1
+      have he : m = order + (m - order) := (Nat.add_sub_of_le hm₁).symm
+      conv_lhs => arg 2; rw [he, pow_add]
+      calc
+        _ ≤ ((n.choose order : ℝ) * ((n - order).choose (m - order) : ℝ)) *
+            |center| ^ (n - m) * (width ^ order * |offset| ^ (m - order)) := by
+          gcongr
+          exact hchoose m hm₁
+        _ = _ := by ring
+    _ = width ^ order * (n.choose order : ℝ) * (|offset| + |center|) ^ (n - order) := by
+      rw [← Finset.mul_sum, Finset.sum_Ico_eq_sum_range, add_pow]
+      have hlen : n + 1 - order = n - order + 1 := by omega
+      rw [hlen]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro j hj
+      have he : n - (order + j) = n - order - j := by omega
+      rw [he, Nat.add_sub_cancel_left]
+      ring
+    _ ≤ _ := by
+      rw [← mul_assoc]
+      apply mul_le_mul_of_nonneg_left _ (by positivity)
+      exact pow_le_pow_left₀ (by positivity) (by simpa [add_comm] using hr) _
+
+/-- Translate and truncate a finite series with a single absolute error bound on the
+discarded terms. The bound uses the coefficient majorant at the outer radius. -/
+theorem shiftedSeries_error_le (coeff : ℕ → ℝ) {terms order : ℕ} (horder : order ≤ terms)
+    {center offset radius width : ℝ} (hr : |center| + |offset| ≤ radius)
+    (hw : |offset| ≤ width) :
+    |(∑ n ∈ Finset.range terms, coeff n * (center + offset) ^ n) -
+      (∑ m ∈ Finset.range order, shiftedSeriesCoeff coeff terms center m * offset ^ m)| ≤
+      width ^ order * ∑ n ∈ Finset.Ico order terms,
+        |coeff n| * (n.choose order : ℝ) * radius ^ (n - order) := by
+  have hshift :
+      (∑ m ∈ Finset.range terms, shiftedSeriesCoeff coeff terms center m * offset ^ m) =
+      ∑ n ∈ Finset.range terms, coeff n * (center + offset) ^ n := by
+    simp only [shiftedSeriesCoeff, Finset.sum_mul, ← Nat.Ico_zero_eq_range]
+    rw [Finset.sum_Ico_Ico_comm]
+    apply Finset.sum_congr rfl
+    intro n _
+    rw [Nat.Ico_zero_eq_range, add_comm center offset, add_pow, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro m _
+    ring
+  rw [← hshift, ← Finset.sum_range_add_sum_Ico _ horder, add_sub_cancel_left]
+  simp only [shiftedSeriesCoeff, Finset.sum_mul]
+  rw [Finset.sum_Ico_Ico_comm]
+  refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
+  rw [Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro n hn
+  refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
+  simp only [abs_mul, abs_pow, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) _)]
+  simp_rw [show ∀ m : ℕ,
+    |coeff n| * (n.choose m : ℝ) * |center| ^ (n - m) * |offset| ^ m =
+      |coeff n| * ((n.choose m : ℝ) * |center| ^ (n - m) * |offset| ^ m) from
+        fun m => by ring]
+  rw [← Finset.mul_sum]
+  calc
+    _ ≤ |coeff n| * (width ^ order * ((n.choose order : ℝ) * radius ^ (n - order))) :=
+      mul_le_mul_of_nonneg_left (shiftedMonomialTail_le (Finset.mem_Ico.mp hn).1 hr hw)
+        (abs_nonneg _)
+    _ = _ := by ring
+
+/-- Enclose a finite series using the shifted coefficient models and the
+certified error for the discarded terms. -/
+theorem Model.shiftedSeries_sound {s t z center offset radius width : ℝ} {X : Model}
+    (hb : InBox s t z) (hx : X.Encloses s t z offset) {terms order : ℕ}
+    (horder : order ≤ terms) (hr : |center| + |offset| ≤ radius) (hw : |offset| ≤ width)
+    (coeff : ℕ → ℝ) (models : ℕ → Model)
+    (hmodels : ∀ m < order, (models m).Encloses s t z (shiftedSeriesCoeff coeff terms center m))
+    {error : ℚ} (he : width ^ order * ∑ n ∈ Finset.Ico order terms,
+        |coeff n| * (n.choose order : ℝ) * radius ^ (n - order) ≤ (error : ℝ)) :
+    ((Model.series order models X).widen error).Encloses s t z
+      (∑ n ∈ Finset.range terms, coeff n * (center + offset) ^ n) :=
+  Model.widen_sound (Model.series_sound hb hx _ _ _ hmodels)
+    ((shiftedSeries_error_le coeff horder hr hw).trans he)
+
 private def expGeometricModel (order : ℕ) (radius : ℚ) (x : Model) : Model :=
   (Model.series order (fun n => Model.ofRat (1 / (n.factorial : ℚ))) x).widen
     (radius ^ order / (order.factorial : ℚ) / (1 - radius / (order.succ : ℚ)))
