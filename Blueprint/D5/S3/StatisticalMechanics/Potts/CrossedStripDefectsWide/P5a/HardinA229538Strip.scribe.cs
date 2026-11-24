@@ -28,7 +28,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
             Node("edges_filter_card",EdgesFilterCard(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. Each stored list contains the eligible columns in code order."),
-            Node("step_one",StepOne(),true,"The list enumerates exactly the cuts of cost one without duplicates. The indicator dot product equals its weighted sum when the sum over the omitted columns is zero."),
+            Node("step_one",StepOne(),true,"The list enumerates without duplicates the successor columns whose cut from p has cost one. The indicator dot product equals its weighted sum when the sum over the omitted columns is zero."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
             Node("tableOne",TableOne(),false,"The local literal values in the Lean definition has 23 rows and 25 columns. The indices are the exponent n and the class of p. The theorem table_powers pins this lookup through the first summand of the continuation vector."),
@@ -283,7 +283,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var equation = Eq(Call("dotProduct", Own("oneDefect", p), V("w")),
             Call("List.sum", Call("List.map", weighted, support)));
         var parameters = All("w", Arrow(Column(), scalar), All("p", Column(),
-            Imp(OmittedSum(Column(), scalar, Seq(Neg, Sp, Parenthesized(Eq(Own("cost", p, q), N(1))))), equation)));
+            Imp(OmittedSum(Column(), scalar, Seq(Neg, Sp, Parenthesized(Eq(Own("cost", p, V("q")), N(1))))), equation)));
         return All("R", Seq(Q("Type"), Star), WeightedRowLaws(scalar, parameters));
     }
     private static Formula ClassIndex()
