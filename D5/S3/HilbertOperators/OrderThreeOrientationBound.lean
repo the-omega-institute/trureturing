@@ -4,12 +4,15 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The squared commutator norms of an odd orthogonal map against commuting rotations of order dividing three have sum at least three when their commutant preserves orientation. -/
+   digest: Squared commutator lower bound for an odd orthogonal map and order-three rotations. -/
 
 module
 
 public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.RingTheory.Complex
+public import Mathlib.RingTheory.Norm.Transitivity
 public import Mathlib.Tactic.NoncommRing
 public import Mathlib.Tactic.Linarith
 
@@ -189,11 +192,9 @@ private theorem segment_lower (T A : End) (hT : ∀ x, ‖T x‖ = ‖x‖)
     change ‖conjugate T B - conjugate T A‖ ≤ e
     rwa [← conjugate_sub, conjugate_norm T hT hcube]
   have hAC : ‖A - C‖ ≤ e := by
-    change ‖A - C‖ ≤ e
     calc
       _ = ‖conjugate T C - conjugate T B‖ := by
         rw [show conjugate T C = A from conjugate_cube T hcube A]
-        rfl
       _ = ‖C - B‖ := by rw [← conjugate_sub, conjugate_norm T hT hcube]
       _ ≤ e := hCB
   have pair_bound (D F : End) (hDF : ‖D - F‖ ≤ e) :
@@ -220,7 +221,8 @@ private theorem segment_lower (T A : End) (hT : ∀ x, ‖T x‖ = ‖x‖)
 private theorem segment_one (T A : End) : segment T A 1 = average T A := by
   unfold segment average
   rw [smul_add, smul_add]
-  congr 2 <;> norm_num
+  congr 2
+  norm_num
 
 private theorem average_det_neg [FiniteDimensional ℝ H] (T A : End)
     (hT : ∀ x, ‖T x‖ = ‖x‖) (hcube : T ^ 3 = 1)
@@ -291,19 +293,172 @@ theorem sum_sq_commutatorNorm_ge_three
         average_det_neg (T i) A (hT i hiS) (hcube i hiS) he hpos hAlower hAneg
           (hAdefect i hiS), ?_, ?_, ?_⟩
       · intro x
-        rw [hsum, add_div, sub_add_eq_sub_sub, add_comm (e i ^ 2 / 3),
-          ← sub_add_eq_sub_sub, ← segment_one]
-        rw [sub_add_eq_sub_sub]
+        rw [hsum, add_comm (e i ^ 2), add_div, sub_add_eq_sub_sub, ← segment_one]
         exact segment_lower (T i) A (hT i hiS) (hcube i hiS) he hAlower
           (hAdefect i hiS) (by norm_num) x
       · intro j hj
         rcases Finset.mem_insert.mp hj with rfl | hj
-        · exact average_fixed _ (hcube i hiS) _
+        · exact average_fixed _ (hcube j hiS) _
         · rw [conjugate_average (hcomm j (hFS hj) i hiS), hAfixed j hj]
       · intro j hj
         rw [conjugate_average (hcomm j hj i hiS), ← average_sub]
         exact (average_norm_le (T i) (hT i hiS) (hcube i hiS) _).trans (hAdefect j hj)
   obtain ⟨A, hAneg, _, hAfixed, _⟩ := hstep S (fun _ hj => hj)
   exact (not_lt_of_ge (horient A (fun j hj => commute_of_fixed (hcube j hj) (hAfixed j hj)))) hAneg
+
+section CharacterPlanes
+
+attribute [local instance] InnerProductSpace.complexToReal
+
+variable {ι κ : Type*} [Fintype κ]
+
+local notation "Planes" => EuclideanSpace ℂ κ
+
+/-- Multiplication by the specified complex character value on each real plane. -/
+def characterPlane (w : κ → ℂ) : Planes →L[ℝ] Planes :=
+  ({
+    toFun := fun x => WithLp.toLp 2 (fun k => w k * x k)
+    map_add' := fun x y => by ext k; exact mul_add (w k) (x k) (y k)
+    map_smul' := fun r x => by
+      ext k
+      change w k * (r • x k) = r • (w k * x k)
+      rw [Complex.real_smul, Complex.real_smul]
+      ring
+  } : Planes →ₗ[ℝ] Planes).toContinuousLinearMap
+
+private theorem characterPlane_apply (w : κ → ℂ) (x : Planes) (k : κ) :
+    characterPlane w x k = w k * x k := rfl
+
+private theorem characterPlane_det_nonneg (S : Finset ι) (w : ι → κ → ℂ)
+    (hsep : ∀ i k, ∃ j ∈ S, w j i ≠ starRingEnd ℂ (w j k))
+    (A : Planes →L[ℝ] Planes)
+    (hA : ∀ j ∈ S, Commute A (characterPlane (w j))) : 0 ≤ A.det := by
+  classical
+  let J : Planes →ₗ[ℝ] Planes :=
+    (Complex.I • (LinearMap.id : Planes →ₗ[ℂ] Planes)).restrictScalars ℝ
+  let F := A.toLinearMap * J - J * A.toLinearMap
+  have hF (x : Planes) : F x = A (Complex.I • x) - Complex.I • A x := rfl
+  have hI (x : Planes) : Complex.I • Complex.I • x = -x := by
+    rw [smul_smul, Complex.I_mul_I, neg_one_smul]
+  have hanti (x : Planes) : F (Complex.I • x) = -(Complex.I • F x) := by
+    rw [hF, hF, hI, map_neg, smul_sub, hI]
+    abel
+  have hscalar (a : ℂ) (x : Planes) : F (a • x) = starRingEnd ℂ a • F x := by
+    have hconj : starRingEnd ℂ a = (a.re : ℂ) - (a.im : ℂ) * Complex.I := by
+      apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im]
+    rw [hconj, sub_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
+    nth_rw 1 [← Complex.re_add_im a]
+    rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul, map_add, map_smul, map_smul,
+      hanti, smul_neg, sub_eq_add_neg]
+  have hFcomm (j : ι) (hj : j ∈ S) (x : Planes) :
+      F (characterPlane (w j) x) = characterPlane (w j) (F x) := by
+    have hAx (y : Planes) : A (characterPlane (w j) y) = characterPlane (w j) (A y) :=
+      congrArg (fun B : Planes →L[ℝ] Planes => B y) (hA j hj).eq
+    have hJ (y : Planes) : Complex.I • characterPlane (w j) y =
+        characterPlane (w j) (Complex.I • y) := by
+      ext i
+      simp only [characterPlane_apply, PiLp.smul_apply, smul_eq_mul]
+      ring
+    rw [hF, hF, hJ, hAx, hAx, hJ, map_sub]
+  let b := (EuclideanSpace.basisFun κ ℂ).toBasis
+  have hBasis (k : κ) : F (b k) = 0 := by
+    ext i
+    obtain ⟨j, hj, hji⟩ := hsep i k
+    have hdiag : characterPlane (w j) (b k) = w j k • b k := by
+      ext l
+      simp only [characterPlane_apply, PiLp.smul_apply, smul_eq_mul]
+      change w j l * (EuclideanSpace.basisFun κ ℂ k) l =
+        w j k * (EuclideanSpace.basisFun κ ℂ k) l
+      rw [EuclideanSpace.basisFun_apply]
+      by_cases hl : l = k
+      · subst l
+        rfl
+      · simp [EuclideanSpace.single, hl]
+    have heq := hFcomm j hj (b k)
+    rw [hdiag, hscalar] at heq
+    have hi : starRingEnd ℂ (w j k) * F (b k) i = w j i * F (b k) i :=
+      by simpa only [characterPlane_apply, PiLp.smul_apply, smul_eq_mul] using
+        congrArg (fun y : Planes => y i) heq
+    have hz : (w j i - starRingEnd ℂ (w j k)) * F (b k) i = 0 := by
+      rw [sub_mul, hi, sub_self]
+    exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hji)
+  have hzero (x : Planes) : F x = 0 := by
+    rw [← b.sum_repr x, map_sum]
+    simp [hscalar, hBasis]
+  let B : Planes →ₗ[ℂ] Planes :=
+    { toFun := A
+      map_add' := A.map_add
+      map_smul' := fun a x => by
+        have hAI : A (Complex.I • x) = Complex.I • A x := by
+          simpa only [hF, sub_eq_zero] using hzero x
+        change A (a • x) = a • A x
+        rw [← Complex.re_add_im a, add_smul, add_smul, mul_smul, mul_smul,
+          Complex.coe_smul, Complex.coe_smul, Complex.coe_smul, Complex.coe_smul,
+          map_add, map_smul, map_smul, hAI] }
+  have hB : B.restrictScalars ℝ = A.toLinearMap := by ext x; rfl
+  change 0 ≤ A.toLinearMap.det
+  rw [← hB, LinearMap.det_restrictScalars, Algebra.norm_complex_apply, Complex.normSq_eq_norm_sq]
+  exact sq_nonneg _
+
+private theorem exists_sqrt_card_le {S : Finset ι} {e : ι → ℝ}
+    (he : ∀ j ∈ S, 0 ≤ e j) (h : 3 ≤ ∑ j ∈ S, e j ^ 2) :
+    ∃ j ∈ S, Real.sqrt (3 / (S.card : ℝ)) ≤ e j := by
+  classical
+  have hS : S.Nonempty := by
+    by_contra hn
+    rw [Finset.not_nonempty_iff_eq_empty.mp hn, Finset.sum_empty] at h
+    norm_num at h
+  have hc : (0 : ℝ) < S.card := by exact_mod_cast hS.card_pos
+  by_contra! hn
+  have hj (j : ι) (hj : j ∈ S) : e j ^ 2 < 3 / (S.card : ℝ) := by
+    have hs := hn j hj
+    rw [Real.lt_sqrt (he j hj)] at hs
+    exact hs
+  have hlt := Finset.sum_lt_sum_of_nonempty hS hj
+  rw [Finset.sum_const, nsmul_eq_mul, mul_div_cancel₀ _ (ne_of_gt hc)] at hlt
+  linarith
+
+/-- The character planes give the orientation obstruction whenever no character
+is the conjugate of another in the chosen list of plane labels. -/
+theorem characterPlane_commutator_bounds
+    (S : Finset ι) (w : ι → κ → ℂ) (U : Planes →L[ℝ] Planes)
+    (hcube : ∀ j ∈ S, ∀ k, w j k ^ 3 = 1)
+    (hsep : ∀ i k, ∃ j ∈ S, w j i ≠ starRingEnd ℂ (w j k))
+    (hU : ∀ x, ‖U x‖ = ‖x‖) (hneg : U.det < 0) :
+    (3 ≤ ∑ j ∈ S, commutatorNorm (fun j => characterPlane (w j)) U j ^ 2) ∧
+      ∃ j ∈ S, Real.sqrt (3 / (S.card : ℝ)) ≤
+        commutatorNorm (fun j => characterPlane (w j)) U j := by
+  have hnorm (j : ι) (hj : j ∈ S) (x : Planes) :
+      ‖characterPlane (w j) x‖ = ‖x‖ := by
+    have hw (k : κ) : ‖w j k‖ = 1 := by
+      have h := congrArg norm (hcube j hj k)
+      rw [norm_pow, norm_one] at h
+      exact (pow_left_inj₀ (norm_nonneg _) zero_le_one (by decide : 3 ≠ 0)).mp
+        (h.trans (one_pow 3).symm)
+    apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq]
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [characterPlane_apply, norm_mul, hw, one_mul]
+  have hpow (j : ι) (hj : j ∈ S) : characterPlane (w j) ^ 3 = 1 := by
+    ext x k
+    change characterPlane (w j) (characterPlane (w j) (characterPlane (w j) x)) k = x k
+    simp only [characterPlane_apply]
+    calc
+      _ = w j k ^ 3 * x k := by ring
+      _ = _ := by rw [hcube j hj k, one_mul]
+  have hcomm (i j : ι) : Commute (characterPlane (w i)) (characterPlane (w j)) := by
+    change characterPlane (w i) * characterPlane (w j) =
+      characterPlane (w j) * characterPlane (w i)
+    ext x k
+    change characterPlane (w i) (characterPlane (w j) x) k =
+      characterPlane (w j) (characterPlane (w i) x) k
+    simp only [characterPlane_apply]
+    ring
+  have hsum := sum_sq_commutatorNorm_ge_three S (fun j => characterPlane (w j)) U
+    hnorm hpow (fun i _ j _ => hcomm i j) hU hneg (characterPlane_det_nonneg S w hsep)
+  exact ⟨hsum, exists_sqrt_card_le (fun _ _ => norm_nonneg _) hsum⟩
+
+end CharacterPlanes
 
 end D5.S3.HilbertOperators.OrderThreeOrientationBound
