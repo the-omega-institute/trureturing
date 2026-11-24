@@ -190,6 +190,14 @@ theorem conj_mul (z w : QuadPoly A b c) :
       (mulScalar e1 conjZ e3.neg conjW e5.neg) Eq.refl)
     (prove r law vars linear.neg (mulLinear e0 conjZ e3.neg conjW e5.neg) Eq.refl)
 
+/-- Quadratic conjugation preserves the trace. -/
+theorem trace_conj (z : QuadPoly A b c) : r.eqv (trace r (conj r z)) (trace r z) :=
+  let vars := Variables.cons b (Variables.cons z.scalar
+    (Variables.cons z.linear (Variables.nil r)))
+  let conjugateScalar := e1.add (e0.mul e2)
+  prove r law vars ((conjugateScalar.add conjugateScalar).add (e0.mul e2.neg))
+    ((e1.add e1).add (e0.mul e2)) Eq.refl
+
 theorem add_conj (z : QuadPoly A b c) :
     Equivalent r (add r z (conj r z)) (ofScalar r (trace r z)) :=
   let vars := Variables.cons b (Variables.cons z.scalar
