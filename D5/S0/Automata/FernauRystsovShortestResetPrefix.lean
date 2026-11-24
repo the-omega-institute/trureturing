@@ -9,6 +9,7 @@
 import Mathlib.Computability.DFA
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.List.Basic
 import Mathlib.Data.List.OfFn
 
 /-! # Shortest reset prefixes in a shared-letter product -/
@@ -56,10 +57,8 @@ private theorem short_iff_shortestOn_univ {α σ : Type*} [Nonempty σ]
 
 private theorem eval_inter {α : Type u} {σ τ : Type v} (A : DFA α σ) (B : DFA α τ)
     (p : σ) (q : τ) (w : List α) :
-    (A.inter B).evalFrom (p, q) w = (A.evalFrom p w, B.evalFrom q w) := by
-  induction w generalizing p q with
-  | nil => rfl
-  | cons a w ih => simpa only [DFA.evalFrom_cons, DFA.inter_step] using ih (A.step p a) (B.step q a)
+    (A.inter B).evalFrom (p, q) w = (A.evalFrom p w, B.evalFrom q w) :=
+  List.foldl_hom₂ w Prod.mk A.step B.step (A.inter B).step p q (fun _ _ _ => rfl)
 
 private theorem reset_inter_iff {α : Type u} {σ τ : Type v} (A : DFA α σ) (B : DFA α τ)
     (w : List α) : Reset (A.inter B) w ↔ Reset A w ∧ Reset B w := by
@@ -110,7 +109,8 @@ private def relabel {α β σ τ : Type*} (e : α ≃ β) (f : σ ≃ τ) (A : D
 private theorem eval_relabel {α β σ τ : Type*} (e : α ≃ β) (f : σ ≃ τ)
     (A : DFA α σ) (p : σ) (w : List α) :
     (relabel e f A).evalFrom (f p) (w.map e) = f (A.evalFrom p w) := by
-  simp [relabel, List.map_map, Function.comp_def]
+  simp only [relabel, DFA.evalFrom_reindex, DFA.evalFrom_comap, Equiv.symm_apply_apply,
+    List.map_map, Function.comp_def, List.map_id']
 
 private theorem reset_relabel_iff {α β σ τ : Type*} (e : α ≃ β) (f : σ ≃ τ)
     (A : DFA α σ) (w : List α) :
@@ -254,20 +254,22 @@ theorem result : ¬ claim := by
     (reset_layers [b, b, a, a] (by decide)).2.2.mpr (by decide)
   have firstSingleton := (reset_iff_resetsOn_univ first _).mp firstReset
   have secondSingleton := (reset_iff_resetsOn_univ second _).mp secondReset
-  obtain ⟨u, v, huSource, _, huvSource⟩ :=
+  obtain ⟨u, v, huSource, hvSource, huvSource⟩ :=
     source_claim_iff.mp h (Fin 2) (Fin 3) (Fin 4) first second
       ⟨_, firstSingleton⟩ ⟨_, secondSingleton⟩
   have hu := (short_iff_shortestOn_univ first u).mpr huSource
+  have huvReset : Reset (first.inter second) (u ++ v) :=
+    (reset_inter_append_iff hu.1 v).mpr hvSource.1
   have huv := (short_iff_shortestOn_univ (first.inter second) (u ++ v)).mpr huvSource
   have huLength : u.length ≤ 2 := hu.2 _ firstReset
   have huvLength : (u ++ v).length ≤ 4 := huv.2 _ productReset
   have huWord : u = [a, a] :=
     mem_firstLayer_of_le_two huLength ((reset_layers u (by omega)).1.mp hu.1)
   have huvWord : u ++ v = [b, b, a, a] := by
-    have hm := (reset_layers (u ++ v) huvLength).2.2.mp huv.1
+    have hm := (reset_layers (u ++ v) huvLength).2.2.mp huvReset
     by_cases hl : (u ++ v).length = 4
-    · simpa only [productLayer, hl, if_true, List.mem_singleton] using hm
-    · simp only [productLayer, hl, if_false, List.not_mem_nil] at hm
+    · simpa only [productLayer, hl, ite_true, List.mem_singleton] using hm
+    · simp only [productLayer, hl, ite_false, List.not_mem_nil] at hm
   subst u
   have heads := congrArg List.head? huvWord
   change some a = some b at heads
