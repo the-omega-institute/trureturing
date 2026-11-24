@@ -62,6 +62,14 @@ $$\forall m \in \mathbb{N}, \forall n \in \mathbb{N}, \forall k \in \mathbb{N}, 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.shift_7_2` (`✓ std3`). ∎
 
+*Resolves.* `Problems/popov-2026-direct-urn-shift` (proved) by `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.shift_7_2` and `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.delete_reinsert` and `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.reinsert_delete`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"popov-2026-direct-urn-shift","declaration_gid":"D5/S1/Recurrence/Invariants/PopovDirectUrnShift.shift_7_2","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"popov-2026-direct-urn-shift","declaration_gid":"D5/S1/Recurrence/Invariants/PopovDirectUrnShift.delete_reinsert","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"popov-2026-direct-urn-shift","declaration_gid":"D5/S1/Recurrence/Invariants/PopovDirectUrnShift.reinsert_delete","resolution_kind":"proved"} -->
+
 *Citation.* Vencislav Popov (2026). *m-Bell and m-Stirling numbers: Iterated binomial transforms, hyper-Bessel functions, and moments of the Conway–Maxwell–Poisson distribution*. DOI: [10.48550/arXiv.2608.12011](https://doi.org/10.48550/arXiv.2608.12011). URL: <https://arxiv.org/abs/2608.12011v1>.
 
 *Commentary.*
