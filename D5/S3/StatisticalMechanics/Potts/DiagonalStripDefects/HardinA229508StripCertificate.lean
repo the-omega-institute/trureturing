@@ -191,7 +191,7 @@ theorem transition_counts (p : Row 3 6) (d : Fin 2) (s : Fin 15 ⊕ Fin 15) :
           rw [cl] at hs
           split at hs
           · rename_i hz
-            exact ⟨(budget_cut _ _).mp ⟨hc, hz⟩, Sum.inr.injEq.mp hs⟩
+            exact ⟨(budget_cut _ _).mp ⟨hc, hz⟩, Sum.inr.inj hs⟩
           · exact (Sum.inl_ne_inr hs).elim
         · rintro ⟨hc, hb⟩
           obtain ⟨hle, hz⟩ := (budget_cut _ _).mpr hc
