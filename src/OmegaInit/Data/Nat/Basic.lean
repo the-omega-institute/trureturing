@@ -58,4 +58,45 @@ theorem mul_assoc (a b c : Nat) : Eq (mul (mul a b) c) (mul a (mul b c)) :=
   Nat.rec (motive := fun n => Eq (mul (mul a b) n) (mul a (mul b n))) Eq.refl
     (fun n h => (congrArg (fun x => add x (mul a b)) h).trans (mul_add a (mul b n) b).symm) c
 
+theorem add_succ (a b : Nat) : Eq (add a (succ b)) (succ (add a b)) := Eq.refl
+
+theorem mul_zero (a : Nat) : Eq (mul a zero) zero := Eq.refl
+
+theorem mul_succ (a b : Nat) : Eq (mul a (succ b)) (add (mul a b) a) := Eq.refl
+
+theorem mul_one (a : Nat) : Eq (mul a (succ zero)) a := zero_add a
+
+theorem add_right_cancel {a b c : Nat} (h : Eq (add a c) (add b c)) : Eq a b :=
+  (Nat.rec (motive := fun n => Eq (add a n) (add b n) → Eq a b) (fun h => h)
+    (fun _ ih h => ih (succ.inj h)) c) h
+
+theorem add_left_cancel {a b c : Nat} (h : Eq (add a b) (add a c)) : Eq b c :=
+  add_right_cancel ((add_comm b a).trans (h.trans (add_comm a c)))
+
+theorem le_total (a b : Nat) : Or (le a b) (le b a) :=
+  (Nat.rec (motive := fun a => ∀ b, Or (le a b) (le b a))
+    (fun b => Or.inl (zero_le b))
+    (fun a ih b => Nat.rec (motive := fun b => Or (le (succ a) b) (le b (succ a)))
+      (Or.inr (zero_le (succ a))) (fun b _ =>
+        (ih b).elim (fun h => Or.inl (succ_le_succ h)) (fun h => Or.inr (succ_le_succ h))) b) a) b
+
+theorem add_le_add_left {a b : Nat} (h : le a b) (c : Nat) : le (add c a) (add c b) :=
+  have right : ∀ k, le (add a k) (add b k) :=
+    fun k => Nat.rec (motive := fun k => le (add a k) (add b k)) h
+      (fun _ ih => succ_le_succ ih) k
+  Eq.subst (fun x => le x (add c b)) (add_comm a c)
+    (Eq.subst (le (add a c)) (add_comm b c) (right c))
+
+theorem sub_succ (a b : Nat) : Eq (sub a (succ b)) (pred (sub a b)) := Eq.refl
+
+theorem succ_ne_zero (n : Nat) : Not (Eq (succ n) zero) :=
+  fun h => Eq.subst
+    (fun k => Nat.rec (motive := fun _ => Prop) False (fun _ _ => True) k) h True.intro
+
+theorem eq_zero_of_add_eq_zero {a b : Nat} (h : Eq (add a b) zero) :
+    And (Eq a zero) (Eq b zero) :=
+  (Nat.rec (motive := fun n => Eq (add a n) zero → And (Eq a zero) (Eq n zero))
+    (fun ha => And.intro ha Eq.refl)
+    (fun n _ hn => False.elim (succ_ne_zero (add a n) hn)) b) h
+
 end Omega.Nat

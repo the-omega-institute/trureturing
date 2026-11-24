@@ -11,7 +11,8 @@ trureturing/
     OmegaInit/
     OmegaMath.lean              public mathematics
     OmegaMath/Projective/Basic.lean  chapter 39 overlap
-    OmegaMath/Projective.lean        scaling theorem
+    OmegaMath/Projective.lean        unsigned scaling theorem
+    OmegaMath/Projective/Circle.lean signed rational circle
     OmegaChecks/                consumers, audit and experiment
 ```
 
@@ -25,22 +26,26 @@ trureturing/
 OmegaChecks.Mixed --> Mathlib.Data.Nat.Prime.Basic
                  +--> OmegaChecks.ProjectiveOverlap --> OmegaMath.Projective
 
-OmegaMath --------------------------------------------> OmegaMath.Projective
-OmegaMath.Projective ---------------------------------> OmegaMath.Projective.Basic
-OmegaChecks.Examples ---------------------------------> OmegaMath.Projective.Basic
+OmegaMath --> OmegaMath.Projective.Circle, OmegaMath.Projective
+OmegaMath.Projective.Circle --> OmegaMath.Data.IntRatio, OmegaMath.Projective.Circle.Identity
+OmegaMath.Projective.Circle.Identity --> OmegaMath.Data.Int
+OmegaMath.Data.IntRatio --> OmegaMath.Data.Int
+OmegaMath.Data.Int --> OmegaInit.Data.Int, OmegaMath.Data.Ratio
+OmegaMath.Projective --> OmegaMath.Projective.Basic
 OmegaMath.Projective.Basic --> OmegaMath.Data.Ratio --> OmegaMath.Data.Nat
-                                                             |
-                                                             v
-OmegaInit --> OmegaInit.Data.Nat --> OmegaInit.Data.Nat.Lemmas
-                                              |
-                                              v
-                                    OmegaInit.Data.Nat.Basic
-                                              |
-                                              v
-                                    OmegaInit.Core --> OmegaInit.Prelude
+OmegaMath.Data.Nat --> OmegaInit.Data.Nat.Lemmas
+OmegaChecks.Examples --> OmegaMath.Projective.Basic
+
+OmegaInit --> OmegaInit.Data.Int, OmegaInit.Data.Nat
+OmegaInit.Data.Int --> OmegaInit.Data.Int.Order --> OmegaInit.Data.Int.Lemmas
+OmegaInit.Data.Int.Lemmas --> OmegaInit.Data.Int.Basic --> OmegaInit.Data.Nat
+OmegaInit.Data.Nat --> OmegaInit.Data.Nat.Lemmas --> OmegaInit.Data.Nat.Basic
+OmegaInit.Data.Nat.Basic --> OmegaInit.Core --> OmegaInit.Prelude
 
 OmegaChecks.Audit --> Lean, Lean.Replay
 ```
+
+带符号的齐次坐标使用 [OmegaMath.Projective.Circle](OmegaMath/Projective/Circle.lean)。它给出射影等价与 Cayley 像逐坐标等价的充要条件、单位圆上每个有理点的齐次代表、反足点和旋转合成。对应的 [IntRatio](OmegaMath/Data/IntRatio.lean) 用正分母的前驱存储有限分数，以交叉相乘定义等价，并将未定义值传递到运算结果。加法逆元律适用于有限分数，乘法逆元律还要求分子非零。顺序关系定义在有限分数上。
 
 对于整数齐次坐标 `[P:Q]`，第 39 章的重叠度是 `Q²/(P²+Q²)`。两坐标均为零时读数未定义。比如 `[1:1]` 和 `[2:2]` 的读数都等价于 1/2。
 
@@ -58,6 +63,9 @@ OmegaChecks.Audit --> Lean, Lean.Replay
 | `Init.Core` | `Nat.add_zero` | [Core.lean](OmegaInit/Core.lean) | `Omega.Nat.add_zero` |
 | `Init.Data.Nat.Basic` | `Nat.add_comm` | [Basic.lean](OmegaInit/Data/Nat/Basic.lean) | `Omega.Nat.add_comm` |
 | `Init.Data.Nat.Lemmas` | `Nat.mul_right_comm` | [Lemmas.lean](OmegaInit/Data/Nat/Lemmas.lean) | `Omega.Nat.mul_right_comm` |
+| `Init.Data.Int.Basic` | `Int`、`Int.mul` | [Basic.lean](OmegaInit/Data/Int/Basic.lean) | `Omega.Int`、`Omega.Int.mul` |
+| `Init.Data.Int.Lemmas` | `Int.add_assoc`、`Int.mul_eq_zero` | [Lemmas.lean](OmegaInit/Data/Int/Lemmas.lean) | `Omega.Int.add_assoc`、`Omega.Int.mul_eq_zero` |
+| `Init.Data.Int.Order` | `Int.natAbs_mul` | [Order.lean](OmegaInit/Data/Int/Order.lean) | `Omega.Int.natAbs_mul` |
 
 ```lean
 prelude
@@ -92,9 +100,9 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 | 审计入口 | 传递闭包的模块数 | 声明数 | 传递公理数 |
 | --- | ---: | ---: | ---: |
-| `OmegaInit` | 6 | 36 | 0 |
-| `OmegaMath` | 9 | 49 | 0 |
-| `OmegaChecks.ProjectiveOverlap` | 9 | 50 | 0 |
+| `OmegaInit` | 10 | 163 | 0 |
+| `OmegaMath` | 18 | 302 | 0 |
+| `OmegaChecks.ProjectiveOverlap` | 9 | 102 | 0 |
 
 审计从编译产物读取完整导入集合，逐条检查声明，再把整个闭包交给空的 Lean 4.35.0 内核环境重放。三个入口的闭包均无官方 Init 或 Mathlib 模块。两个反例分别检验审计会拒绝未被使用的公理和遗漏 `prelude` 产生的隐式官方导入。信任基础包括官方内核的归纳类型、宇宙与定义相等规则。[审计实现](OmegaChecks/Audit.lean)
 
@@ -110,7 +118,7 @@ python3 src/OmegaChecks/check.py --incremental
 
 最后一条用于独立实验 worktree。它临时创建一个独立专题，分别修改已提交的射影和基础源码，对射影模块分别测试等价改写证明和新增公开定理，逐次定向构建并恢复，再核对原始锁文件字节。测量以被观察模块的 `.olean` 修改时间为准。测试使用匹配的 Mathlib 依赖缓存。[复现脚本](OmegaChecks/check.py)
 
-| 临时改动 | 被观察的 16 个模块中哪些重编 |
+| 基线实验的临时改动 | 基线观察的 16 个模块中哪些重编 |
 | --- | --- |
 | 加入目标均未引用的独立专题 | 0 个 |
 | 仅改写缩放定理的证明项，签名相同 | 1 个，即证明所在的射影模块 |
