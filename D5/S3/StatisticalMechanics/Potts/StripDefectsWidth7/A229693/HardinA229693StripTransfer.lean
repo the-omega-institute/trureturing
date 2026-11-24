@@ -830,9 +830,9 @@ private theorem proper_destination (p : Boundary) (hp : HardinA229635State.h p =
   simp only [HardinA229585StripData.cl, h, ite_true, Nat.zero_ne_one, ite_false]
 set_option maxRecDepth 12000 in
 set_option maxHeartbeats 6000000 in
-theorem exhausted_support (s : Fin 168) :
-    (∃ i : Fin 96, T (i.natAdd 72) s ≠ 0) ↔
-      ∃ k : Fin 16, s.val = 56 + (HardinA229585StripData.zeroBudgetClass k).val := by
+private theorem exhausted_support (i : Fin 96) (s : Fin 168) (h : T (i.natAdd 72) s ≠ 0) :
+    ∃ k : Fin 16, s.val = 56 + (HardinA229585StripData.zeroBudgetClass k).val := by
+  revert i
   fin_cases s <;> decide +kernel
 
 private theorem zeroBudgetClass_ge : ∀ k : Fin 16,
@@ -861,7 +861,7 @@ private theorem zero_coordinates (p : Boundary) (s : Fin 168)
     exact hs k (by have := zeroBudgetClass_ge k; omega)
   · by_contra h
     have he : T ((exhaustedClass p).natAdd 72) s ≠ 0 := h
-    obtain ⟨k, hk⟩ := (exhausted_support s).mp ⟨exhaustedClass p, he⟩
+    obtain ⟨k, hk⟩ := exhausted_support (exhaustedClass p) s he
     exact hs k hk
 
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/

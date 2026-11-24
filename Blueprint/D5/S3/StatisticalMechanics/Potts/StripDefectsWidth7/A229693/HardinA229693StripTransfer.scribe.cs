@@ -66,11 +66,6 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             Node("horizontal_cons", "Horizontal charge of a new head",
                 All("x", Fin3, All("p", BoundaryType, HorizontalConsFormula())),
                 "Prepending a colour adds one comparison with the first boundary cell.", DescribeRole.Theorem),
-            Node("exhausted_support", "Support of the exhausted matrix rows",
-                All("s", Fin168, Iff(ExistsIn("i", Call("Fin", Num("96")),
-                    Ne(App(Call("HardinA229693StripTransfer.T"), Call("Fin.natAdd", Num("72"), V("i")), V("s")), Num("0"))),
-                    ExistsIn("k", Call("Fin", Num("16")), Eq(Call("Fin.val", V("s")), Add(Num("56"), ZeroClassValue))))),
-                "A destination occurs in at least one of the 96 exhausted matrix rows precisely when it lies in this image.", DescribeRole.Theorem),
             Node("matchCost", "Cost of a colour match",
                 Seq(TypeOf(Call("matchCost"), Arrow(OptionColour, Arrow(Fin3, V("Nat")))), Comma, Sp,
                     Clause(All("x", Fin3, Eq(Call("matchCost", Call("none"), V("x")), D(0)))), Comma, Sp,
@@ -272,10 +267,8 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula Lambda(string name, Formula body) =>
         Parenthesized(Seq(LambdaLower, Sp, V(name), Sp, Mapsto, Sp, body));
     private static Formula OptionColour => Call("Option", Fin3);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula ExistsIn(string n, Formula t, Formula b) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(n), t, Parenthesized(b));
     private static Formula Code(Formula row) => Call("Fin.val", Call("finFunctionFinEquiv", row));
 }
