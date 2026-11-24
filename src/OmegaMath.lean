@@ -27,6 +27,7 @@ public import OmegaMath.Data.Nat
 public import OmegaMath.Data.Nat.Choose.Basic
 public import OmegaMath.Data.Ratio
 public import OmegaMath.Data.SnocList
+public import OmegaMath.Data.SnocList.Append
 public import OmegaMath.Geometry.BargmannGram
 public import OmegaMath.Geometry.BargmannGram.Monomial
 public import OmegaMath.Geometry.BargmannGram.Polynomial
