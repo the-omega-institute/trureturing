@@ -22,6 +22,7 @@ open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourRankThree
 
 open NativeRectangularBound (reduce_left)
+open D5.S3.Quantum.Algebra.NativeCoefficientWhitening (mix)
 open D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
   (rank_kronecker_one_general)
 
@@ -208,7 +209,6 @@ private theorem pivot_right_combination {a b c d : ℕ}
     dsimp [P]
     rw [← hrow, Matrix.det_updateRow_sum, Matrix.det_one, smul_eq_mul, mul_one]
     simp [u, p]
-  let mix := D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix
   let A := mix P.transpose⁻¹ L
   let B := mix P R
   refine ⟨A, B, ?_, ?_, ?_⟩
@@ -216,7 +216,7 @@ private theorem pivot_right_combination {a b c d : ℕ}
       (∑ i, kronecker (A i) (B i)) = ∑ i, kronecker (L i) (R i) := by
         apply tensor_mix
         rw [Matrix.transpose_nonsing_inv, Matrix.transpose_transpose,
-          Matrix.nonsing_inv_mul _ (hdet ▸ IsUnit.mk0 _ hk)]
+          Matrix.nonsing_inv_mul _ (by rw [hdet]; exact IsUnit.mk0 _ hk)]
       _ = _ := p.sum_comp (fun j => kronecker (X j) (Y j))
   · change (∑ i, P 2 i • R i) = ∑ i, v i • Y i
     simp only [P, Matrix.updateRow_self]
@@ -308,15 +308,15 @@ private theorem isolated_right_gram {a b e d : ℕ} (hab : a < b) (hde : d < 2 *
     have hZZ : Zᴴ * Z = ν • 1 := by
       simp only [Z, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, Matrix.sum_mul,
         Matrix.smul_mul, hWZ, smul_smul, ← Finset.sum_smul, ν, dotProduct]
-    have hFlat : D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation.flat W * B =
-        D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation.flat Y := by
+    have hFlat : D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat W * B =
+        D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat Y := by
       rw [W, flat_mix, Matrix.transpose_nonsing_inv, Matrix.transpose_transpose,
         Matrix.mul_assoc, Matrix.nonsing_inv_mul _ ((Matrix.isUnit_iff_isUnit_det _).mp hB),
         Matrix.mul_one]
     have hback (r : Fin 3) : Y r = ∑ s, B s r • W s := by
       ext i j
       have h := congrFun (congrFun hFlat (i, j)) r
-      simpa [D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation.flat,
+      simpa [D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat,
         Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, mul_comm] using h.symm
     have hYZ (r : Fin 3) : ∃ z : ℂ, (Y r)ᴴ * Z = z • 1 := by
       refine ⟨∑ s, star (B s r) * v s, ?_⟩

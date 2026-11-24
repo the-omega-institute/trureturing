@@ -23,8 +23,8 @@ namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourCliffordRankThree
 
 open NativeFourKernel (compression compression_star)
 open NativeRectangularBound
-open D5.S3.Quantum.Algebra.NativeCoefficientWhitening (mix mix_apply)
-open D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation (concatK flat flat_gram flat_injective)
+open D5.S3.Quantum.Algebra.NativeCoefficientWhitening (mix mix_apply flat flat_gram flat_injective)
+open D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation (concatK)
 
 private theorem full_rank_of_injective {c d : ℕ} (Y : Matrix (Fin d) (Fin c) ℂ)
     (hY : Function.Injective Y.mulVecLin) : Y.rank = c := by
@@ -49,7 +49,7 @@ private theorem orthogonal_rank {c d : ℕ} {A B : Matrix (Fin d) (Fin c) ℂ}
 
 private theorem rank_sum {m n : ℕ} (P Q : Matrix (Fin m) (Fin n) ℂ) :
     (P + Q).rank ≤ P.rank + Q.rank := by
-  simp only [Matrix.rank, Matrix.mulVecLin_add]
+  rw [Matrix.rank, Matrix.mulVecLin_add]
   have hr : LinearMap.range (P.mulVecLin + Q.mulVecLin) ≤
       LinearMap.range P.mulVecLin ⊔ LinearMap.range Q.mulVecLin := by
     rintro _ ⟨v, rfl⟩
@@ -121,11 +121,11 @@ private theorem equal_pairs {c d : ℕ} (A B C D : Matrix (Fin d) (Fin c) ℂ)
   obtain ⟨z, hz⟩ := hz
   obtain ⟨w, hw⟩ := hw
   have hz0 : z = 0 := scalar_offset_zero (A := Aᴴ * C) (B := -(Bᴴ * D))
-    hx0 (killA C x hx) (by simpa [killB D x hx])
+    hx0 (killA C x hx) (by rw [Matrix.conjTranspose_neg, Matrix.neg_mulVec, killB D x hx, neg_zero])
     (by simpa [sub_eq_add_neg] using hz)
   have hw0 : w = 0 := scalar_offset_zero hx0 (killA D x hx) (killB C x hx) hw
-  have hAC : Aᴴ * C = (Bᴴ * D)ᴴ := by simpa [hz0] using sub_eq_zero.mp
-    (show Aᴴ * C - (Bᴴ * D)ᴴ = 0 by simpa [hz0] using hz)
+  have hAC : Aᴴ * C = (Bᴴ * D)ᴴ :=
+    sub_eq_zero.mp (by simpa only [hz0, zero_smul] using hz)
   have hAD : Aᴴ * D = -(Bᴴ * C)ᴴ :=
     eq_neg_of_add_eq_zero_left (by simpa [hw0] using hw)
   have hBD : Bᴴ * D = (Aᴴ * C)ᴴ := by
@@ -135,16 +135,18 @@ private theorem equal_pairs {c d : ℕ} (A B C D : Matrix (Fin d) (Fin c) ℂ)
   obtain ⟨L, hKL⟩ := K.exists_isCompl
   let V : Matrix (Fin c) (Fin c) ℂ := LinearMap.toMatrix' (K.projection L hKL)
   have hV (y : Fin c → ℂ) : V *ᵥ y ∈ K := by
-    rw [V, LinearMap.toMatrix'_mulVec]
+    change (LinearMap.toMatrix' (K.projection L hKL)) *ᵥ y ∈ K
+    rw [LinearMap.toMatrix'_mulVec]
     exact (K.projectionOnto L hKL y).property
   have hVy (y : Fin c → ℂ) (hy : y ∈ K) : V *ᵥ y = y := by
-    rw [V, LinearMap.toMatrix'_mulVec, Submodule.projection_apply_of_mem_left hKL hy]
+    change (LinearMap.toMatrix' (K.projection L hKL)) *ᵥ y = y
+    rw [LinearMap.toMatrix'_mulVec, Submodule.projection_apply_of_mem_left hKL hy]
   have vanishes (M : Matrix (Fin c) (Fin c) ℂ)
       (hm : ∀ y ∈ K, M *ᵥ y = 0) : M * V = 0 := by
     ext i j
     have h := congrFun (hm (V *ᵥ Pi.single j 1) (hV _)) i
-    simpa only [Matrix.mulVec_mulVec, Matrix.mulVec_single_one, Matrix.col_apply,
-      Pi.zero_apply] using h
+    change (M *ᵥ V.col j) i = 0
+    simpa only [Matrix.mulVec_single_one, Pi.zero_apply] using h
   have vAC : Aᴴ * C * V = 0 := vanishes _ (fun y hy => by rw [hAC, killB D y hy])
   have vAD : Aᴴ * D * V = 0 := vanishes _ (fun y hy => by rw [hAD, Matrix.neg_mulVec, killB C y hy, neg_zero])
   have vBC : Bᴴ * C * V = 0 := vanishes _ (fun y hy => by rw [hBC, Matrix.neg_mulVec, killA D y hy, neg_zero])
@@ -155,9 +157,12 @@ private theorem equal_pairs {c d : ℕ} (A B C D : Matrix (Fin d) (Fin c) ℂ)
     have h := congrArg Matrix.conjTranspose vBC
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
       Matrix.conjTranspose_zero] at h
+    have h' : Vᴴ * Cᴴ * B = 0 := by simpa only [Matrix.mul_assoc] using h
+    have h'' : Vᴴ * Cᴴ * D * V = 0 := by
+      rw [Matrix.mul_assoc Vᴴ Cᴴ D, hCD, Matrix.mul_zero, Matrix.zero_mul]
     simp only [U, W, Matrix.conjTranspose_add, Matrix.conjTranspose_mul,
       Matrix.add_mul, Matrix.mul_add, ← Matrix.mul_assoc,
-      hAB, vAD, h, hCD, Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add]
+      hAB, vAD, h', h'', add_zero, zero_add]
   have extend_injective (Y Z : Matrix (Fin d) (Fin c) ℂ)
       (hy : Yᴴ * Y = P) (hz : Zᴴ * Z = Q) (hyz : Yᴴ * Z * V = 0)
       (hyK : ∀ y ∈ K, Y *ᵥ y = 0) : Function.Injective (Y + Z * V).mulVecLin := by
@@ -185,7 +190,8 @@ private theorem equal_pairs {c d : ℕ} (A B C D : Matrix (Fin d) (Fin c) ℂ)
     change (Y + Z * V) *ᵥ y ∈ S
     rw [Matrix.add_mulVec, ← Matrix.mulVec_mulVec]
     exact S.add_mem (hy ⟨y, rfl⟩) (hz ⟨V *ᵥ y, rfl⟩)
-  have h := orthogonal_rank (extend_range A C hAS hCS) (extend_range B D hBS hDS) hUW
+  have h : U.rank + W.rank ≤ finrank ℂ S :=
+    orthogonal_rank (extend_range A C hAS hCS) (extend_range B D hBS hDS) hUW
   omega
 
 private theorem paired_gram_bound {c d : ℕ} (A B C D : Matrix (Fin d) (Fin c) ℂ)
@@ -286,11 +292,17 @@ private def paired (v : Fin 5 → ℂ) : Coeff :=
      v 4, -v 2, -v 0, 0;
      v 3, v 1, 0, -v 0]
 
+private def pairedLin : (Fin 5 → ℂ) →ₗ[ℂ] Coeff where
+  toFun := paired
+  map_add' u v := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [paired, add_comm]
+  map_smul' z v := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [paired, Pi.smul_apply]
+
 private def pairedSpace : Submodule ℂ Coeff :=
-  LinearMap.range
-    { toFun := paired
-      map_add' := by intro u v; ext i j; fin_cases i <;> fin_cases j <;> simp [paired]
-      map_smul' := by intro z v; ext i j; fin_cases i <;> fin_cases j <;> simp [paired] }
+  LinearMap.range pairedLin
 
 private theorem clifford_reindex (T : Coeff)
     (h : T ∈ Submodule.span ℝ (Set.range pauliClifford)) :
@@ -298,22 +310,23 @@ private theorem clifford_reindex (T : Coeff)
   induction h using Submodule.span_induction with
   | mem T h =>
     obtain ⟨i, rfl⟩ := h
+    apply LinearMap.mem_range.mpr
     fin_cases i
     · refine ⟨![0, 1, 0, 0, 1], ?_⟩
       ext r s; fin_cases r <;> fin_cases s <;>
-        simp [paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
+        simp [pairedLin, paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
     · refine ⟨![0, -Complex.I, 0, 0, Complex.I], ?_⟩
       ext r s; fin_cases r <;> fin_cases s <;>
-        simp [paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
+        simp [pairedLin, paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
     · refine ⟨![0, 0, 1, 1, 0], ?_⟩
       ext r s; fin_cases r <;> fin_cases s <;>
-        simp [paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
+        simp [pairedLin, paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
     · refine ⟨![0, 0, -Complex.I, Complex.I, 0], ?_⟩
       ext r s; fin_cases r <;> fin_cases s <;>
-        simp [paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
+        simp [pairedLin, paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
     · refine ⟨![1, 0, 0, 0, 0], ?_⟩
       ext r s; fin_cases r <;> fin_cases s <;>
-        simp [paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
+        simp [pairedLin, paired, pauliClifford, Matrix.submatrix_apply, pairOrder, Equiv.swap_apply_def]
   | zero => exact pairedSpace.zero_mem
   | add A B _ _ hA hB => exact pairedSpace.add_mem hA hB
   | smul r A _ hA => exact pairedSpace.smul_mem (r : ℂ) hA
@@ -334,13 +347,16 @@ private theorem diagonalize_pair (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosDef
   have hU : Uᴴ * U = 1 := Unitary.coe_star_mul_self _
   have hd : star U.det * U.det = 1 := by
     simpa [Matrix.det_mul, Matrix.det_conjTranspose] using congrArg Matrix.det hU
+  have hd' : U.det * (starRingEnd ℂ) U.det = 1 := by
+    change U.det * star U.det = 1
+    rw [mul_comm, hd]
   let E : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![1, star U.det]
   let S := U * E
   have hE : Eᴴ * E = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [E, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
-        Matrix.one_apply, hd, mul_comm]
+        Matrix.one_apply, hd']
   have hS : Sᴴ * S = 1 := by
     change (U * E)ᴴ * (U * E) = 1
     rw [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc Uᴴ U E,
@@ -374,31 +390,40 @@ private theorem diagonalize_pair (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosDef
   let e := hH.isHermitian.eigenvalues
   refine ⟨u, v, e 0, e 1, hH.eigenvalues_pos _, hH.eigenvalues_pos _, hdS, ?_⟩
   have hdiag : Uᴴ * H * U = diagonal (fun i => (e i : ℂ)) := by
-    simpa [U, e, Unitary.conjStarAlgAut_star_apply] using
+    simpa only [U, e, Function.comp_def, Matrix.star_eq_conjTranspose,
+      Unitary.conjStarAlgAut_star_apply] using
       hH.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
   calc
     (pairMatrix u v)ᴴ * H * pairMatrix u v = Eᴴ * (Uᴴ * H * U) * E := by
-      rw [← hSform, S, Matrix.conjTranspose_mul]
-      simp only [Matrix.mul_assoc]
+      rw [← hSform]
+      change (U * E)ᴴ * H * (U * E) = _
+      simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
     _ = diagonal ![(e 0 : ℂ), (e 1 : ℂ)] := ?_
   rw [hdiag]
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [E, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
-      Matrix.diagonal_apply, ← mul_assoc, mul_comm, mul_left_comm, hd]
+      Matrix.diagonal_apply, ← mul_assoc]
+  calc
+    U.det * (e 1 : ℂ) * (starRingEnd ℂ) U.det =
+        (e 1 : ℂ) * (U.det * (starRingEnd ℂ) U.det) := by ring
+    _ = (e 1 : ℂ) := by rw [hd', mul_one]
 
 private theorem paired_change_mem (u v w x : ℂ)
     (hu : star u * u + star v * v = 1) (hw : star w * w + star x * x = 1)
     {T : Coeff} (hT : T ∈ pairedSpace) :
     (pairChange u v w x)ᴴ * T * pairChange u v w x ∈ pairedSpace := by
-  obtain ⟨a, rfl⟩ := hT
+  obtain ⟨a, ha⟩ := LinearMap.mem_range.mp (show T ∈ LinearMap.range pairedLin from hT)
+  change paired a = T at ha
+  rw [← ha]
+  apply LinearMap.mem_range.mpr
   let B := (pairChange u v w x)ᴴ * paired a * pairChange u v w x
   refine ⟨![a 0, B 0 2, B 0 3, B 3 0, B 2 0], ?_⟩
   have h₁ : (a 0) * (star u * u + star v * v) = a 0 := by rw [hu, mul_one]
   have h₂ : (a 0) * (star w * w + star x * x) = a 0 := by rw [hw, mul_one]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [B, paired, pairChange, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    simp [B, pairedLin, paired, pairChange, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_four] <;>
     first | ring | linear_combination -h₁ | linear_combination h₂
 
@@ -429,26 +454,15 @@ private def rightMoment {c d : ℕ} (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
 private theorem moment_mix {c d : ℕ} (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
     (P : Coeff) (l m : Fin c) :
     rightMoment (mix Pᵀ Y) l m = Pᴴ * rightMoment Y l m * P := by
-  classical
-  ext r s
-  simp only [rightMoment, mix_apply, Matrix.transpose_apply, Matrix.conjTranspose_sum,
-    Matrix.conjTranspose_smul, Matrix.smul_apply, Matrix.sum_apply, Matrix.mul_apply,
-    Matrix.conjTranspose_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  conv_lhs =>
-    arg 2
-    ext i
-    rw [Finset.sum_comm]
-  conv_lhs => rw [Finset.sum_comm]
-  conv_rhs => rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro j _
-  apply Finset.sum_congr rfl
-  intro i _
-  apply Finset.sum_congr rfl
-  intro a _
-  simp
-  ring
+  let column (U : Fin 4 → Matrix (Fin d) (Fin c) ℂ) (i : Fin c) :
+      Matrix (Fin d) (Fin 4) ℂ := fun a r => U r a i
+  have hcolumn (i : Fin c) : column (mix Pᵀ Y) i = column Y i * P := by
+    ext a r
+    simp [column, mix_apply, Matrix.mul_apply, mul_comm]
+  change (column (mix Pᵀ Y) l)ᴴ * column (mix Pᵀ Y) m =
+    Pᴴ * ((column Y l)ᴴ * column Y m) * P
+  rw [hcolumn l, hcolumn m, Matrix.conjTranspose_mul]
+  simp only [Matrix.mul_assoc]
 
 private def compressionLin {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) :
     Coeff →ₗ[ℂ] Matrix (Fin b) (Fin b) ℂ where
@@ -484,9 +498,12 @@ private theorem rightMoment_compression {a b c d : ℕ}
 private def coefficientTransport (P : Coeff) : Coeff →ₗ[ℂ] Coeff where
   toFun T := (Pᴴ * T * P).submatrix pairOrder pairOrder
   map_add' T U := by
-    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.submatrix_add]
+    ext i j
+    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.submatrix_apply, Matrix.add_apply]
   map_smul' z T := by
-    simp only [RingHom.id_apply, Matrix.mul_smul, Matrix.smul_mul, Matrix.submatrix_smul]
+    ext i j
+    simp only [RingHom.id_apply, Matrix.mul_smul, Matrix.smul_mul, Matrix.submatrix_apply,
+      Matrix.smul_apply]
 
 private theorem complex_kernel_transport {a b : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (P : Coeff)
@@ -509,7 +526,7 @@ private theorem complex_kernel_transport {a b : ℕ}
     apply clifford_reindex _ (hP B ?_ ?_)
     · change Bᴴ = B
       simp [B, Matrix.conjTranspose_smul, Matrix.conjTranspose_sub,
-        Matrix.conjTranspose_conjTranspose, Complex.star_def, Complex.conj_I, neg_smul, smul_sub]
+        Matrix.conjTranspose_conjTranspose, Complex.conj_I, neg_smul, smul_sub, sub_eq_add_neg, add_comm]
     · change compressionLin X (Complex.I • (T - Tᴴ)) = 0
       rw [map_smul, map_sub, hT, hstar, sub_self, smul_zero]
   have he : A - Complex.I • B = (2 : ℂ) • T := by
@@ -560,7 +577,7 @@ theorem clifford_kernel_four_bound {a b c d : ℕ}
       rw [map_smul, map_sum]
       simp only [rightMoment_compression X Y lam hF, Matrix.one_apply_eq, one_smul,
         Finset.sum_const, Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℂ,
-        smul_smul, one_div, inv_mul_cancel₀ hc', one_smul]
+        smul_smul, one_div, one_mul, ← mul_assoc, inv_mul_cancel₀ hc']
     let Hr := coefficientTransport P H
     have hHr : Hr.PosDef :=
       ((Matrix.IsUnit.posDef_star_left_conjugate_iff hP).mpr hHpos).submatrix pairOrder.injective
@@ -599,9 +616,10 @@ theorem clifford_kernel_four_bound {a b c d : ℕ}
         simp [T, Hr]
       rw [hT'] at h
       simpa [S, U, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul] using h
-    change ∀ l m, ∃ v : Fin 5 → ℂ,
-      paired v = rightMoment W l m - (1 : Matrix (Fin c) (Fin c) ℂ) l m • S at hcentered
-    choose f hf using hcentered
+    have hm (l m : Fin c) : ∃ v : Fin 5 → ℂ,
+        paired v = rightMoment W l m - (1 : Matrix (Fin c) (Fin c) ℂ) l m • S :=
+      LinearMap.mem_range.mp (hcentered l m)
+    choose f hf using hm
     let D : Matrix (Fin c) (Fin c) ℂ := fun l m => f l m 0
     have ent (i j : Fin 4) (l m : Fin c) :
         ((W i)ᴴ * W j) l m =
@@ -609,7 +627,10 @@ theorem clifford_kernel_four_bound {a b c d : ℕ}
       have h := congrFun (congrFun (hf l m) i) j
       change paired (f l m) i j = rightMoment W l m i j -
         (1 : Matrix (Fin c) (Fin c) ℂ) l m * S i j at h
-      exact (sub_eq_iff_eq_add.mp h.symm).trans (add_comm _ _).trans (by rw [mul_comm])
+      calc
+        ((W i)ᴴ * W j) l m = paired (f l m) i j + (1 : Matrix (Fin c) (Fin c) ℂ) l m * S i j :=
+          sub_eq_iff_eq_add.mp h.symm
+        _ = _ := by ring
     have h00 : S 0 0 = (p₁ : ℂ) := by simpa [topPair] using congrFun (congrFun htop' 0) 0
     have h11 : S 1 1 = (p₂ : ℂ) := by simpa [topPair] using congrFun (congrFun htop' 1) 1
     have h22 : S 2 2 = (q₁ : ℂ) := by simpa [bottomPair] using congrFun (congrFun hbottom' 0) 0
@@ -670,7 +691,6 @@ private theorem normalize_rank_three {a b c d : ℕ}
       NativeFourKernel.compression A (diagonal (fun i => (e i : ℂ))) = 0 ∧
       (diagonal (fun i => (e i : ℂ))).rank = 3 := by
   classical
-  let mix := D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix
   obtain ⟨P, hP, _, hFmix, hGram, _⟩ := NativeRectangularBound.exact_whitening X Y hY hc hF
   let L := mix P X
   let R := D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix P.transpose⁻¹ Y
@@ -678,7 +698,8 @@ private theorem normalize_rank_three {a b c d : ℕ}
   have hPi : IsUnit P⁻¹ := Matrix.isUnit_nonsing_inv_iff.mpr hP
   have hQ : Q.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hT
   have hQr : Q.rank = 3 := by
-    rw [Q, Matrix.rank_mul_eq_right_of_isUnit_det (P⁻¹)ᴴ T
+    change ((P⁻¹)ᴴ * T * P⁻¹).rank = 3
+    rw [Matrix.rank_mul_eq_right_of_isUnit_det (P⁻¹)ᴴ T
         ((Matrix.isUnit_iff_isUnit_det _).mp hPi.star),
       Matrix.rank_mul_eq_left_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hPi),
       hrank]
@@ -688,7 +709,8 @@ private theorem normalize_rank_three {a b c d : ℕ}
   have hU : Uᴴ * U = 1 := Unitary.coe_star_mul_self _
   have hU' : U * Uᴴ = 1 := Unitary.coe_mul_star_self _
   have hd : Uᴴ * Q * U = D := by
-    simpa [U, D, e, Unitary.conjStarAlgAut_star_apply] using
+    simpa only [U, D, e, Function.comp_def, Matrix.star_eq_conjTranspose,
+      Unitary.conjStarAlgAut_star_apply] using
       hQ.conjStarAlgAut_star_eigenvectorUnitary
   have hUd : IsUnit U.det := (Matrix.isUnit_iff_isUnit_det _).mp Unitary.isUnit_coe
   have hUD : U * D * Uᴴ = Q := by
@@ -706,9 +728,9 @@ private theorem normalize_rank_three {a b c d : ℕ}
     apply tensor_mix
     rw [← Matrix.transpose_mul, hU', Matrix.transpose_one]
   have hAnorm : ∑ i, (A i)ᴴ * A i = 1 := by
-    simpa only [A, mix, mixed_energy, Matrix.conjTranspose_conjTranspose, hU',
-      Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
-      Finset.mem_univ, ite_true] using hGram
+    change ∑ i, (mix Uᴴ L i)ᴴ * mix Uᴴ L i = 1
+    rw [mixed_energy, Matrix.conjTranspose_conjTranspose, hU']
+    simpa [Matrix.one_apply, ite_smul] using hGram
   have hPC : Pᴴ * Q * P = T := by
     have hI : P⁻¹ * P = 1 := Matrix.nonsing_inv_mul _ ((Matrix.isUnit_iff_isUnit_det _).mp hP)
     have hI' : Pᴴ * (P⁻¹)ᴴ = 1 := by
