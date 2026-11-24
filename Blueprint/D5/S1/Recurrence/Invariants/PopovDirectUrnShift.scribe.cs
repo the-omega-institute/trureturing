@@ -83,7 +83,14 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                 + "contribute the binomial coefficient and there are m to the power n−j "
                 + "complement color functions. The residual quotient contributes S(m,j,k−m). "
                 + "Popov's Theorem 7.3 gives the prior algebraic proof of the same identity.",
-                provenance: AssessedProvenance.FromLiterature(Source)),
+                provenance: AssessedProvenance.FromLiterature(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("popov-2026-direct-urn-shift"),
+                    ResolutionKind.Proved,
+                    [DeclarationHandle.Create(Prefix + "reinsert_delete"),
+                     DeclarationHandle.Create(Prefix + "delete_reinsert"),
+                     DeclarationHandle.Create(Prefix + "below_first_urn"),
+                     DeclarationHandle.Create(Prefix + "signed_payload_empty")])),
             Paragraph(Text("At capacity one, the construction deletes the block containing the "
                 + "initial marble. If the tail is empty, the only occupied-count column is m, "
                 + "with one forced-prefix orbit and one empty residual orbit. In column m for "
@@ -91,10 +98,11 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                 + "Columns above the number of marbles are empty.")))));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Shift() => Parameters(K,
         Eqn(Call("S", M, Add(N, M), K),
