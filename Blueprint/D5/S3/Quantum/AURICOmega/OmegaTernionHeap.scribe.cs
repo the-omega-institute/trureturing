@@ -43,7 +43,7 @@ internal sealed class OmegaTernionHeapDocument : IScribeDocumentDefinition
                     "The right side sums the squares of the six minors a_i b_j minus a_j b_i, one for each coordinate pair i < j."),
                 Law("omega-ternion-fidelity-bound", "kappa_le_one", "Projective fidelity is bounded by one",
                     All(quaternions, ["a", "b"], If(And(Nz(a), Nz(b)),
-                        new Formula.Relation(fidelity, FormulaRelationOperator.LessOrEqual, one))),
+                        new Formula.Relation(fidelity, FormulaRelationOperator.LessThanOrEqual, one))),
                     "The denominator is the product of squared norms. The Lagrange identity gives the nonnegative difference between that product and the squared dot product."),
                 Law("omega-ternion-fidelity-translation", "kappa_heap_invariant", "Common heap translation preserves fidelity",
                     All(quaternions, ["a", "b", "u", "v"], If(And(Nz(u), Nz(v)),
