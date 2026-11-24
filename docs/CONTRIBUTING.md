@@ -421,6 +421,30 @@ Commit and push each logical change; local checks provide early feedback alongsi
 remote CI. Report actual commands and exit codes. Local success does not replace
 required checks on the PR.
 
+### Migrate existing proofs to strict Omega mathematics
+
+Migrate the original D5 owner and affected callers to the strict types and
+proofs. Verify the old and new mathematical statements with a consumer-side Lean
+comparison when their representations differ. Keep imports, names, links and
+migration notes directed from the consumers to the library. Follow the scoped
+report and frozen-state procedure in the [migration skill](../skills/omega-math-migration/SKILL.md).
+
+### D5 publication references
+
+These frozen declarations supply references for the strict mathematics volumes.
+
+| Volume | Frozen modules |
+| --- | --- |
+| II | [OmegaCircleClosure](../D5/S3/Quantum/AURICOmega/OmegaCircleClosure.lean) |
+| III | [OmegaTernionHeap](../D5/S3/Quantum/AURICOmega/OmegaTernionHeap.lean) · [OmegaCayleyRotation](../D5/S3/Quantum/AURICOmega/OmegaCayleyRotation.lean) |
+| IV | [OmegaJetCalculus](../D5/S3/Quantum/AURICOmega/OmegaJetCalculus.lean) · [OmegaSimplicialExactness](../D5/S3/Quantum/AURICOmega/OmegaSimplicialExactness.lean) |
+| V | [OmegaQuadraticAndSchur](../D5/S3/Quantum/AURICOmega/OmegaQuadraticAndSchur.lean) · [OmegaChebyshevHecke](../D5/S3/Quantum/AURICOmega/OmegaChebyshevHecke.lean) · [OmegaBargmannHaarHecke](../D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.lean) |
+| VI | [OmegaArithmeticHorizon](../D5/S3/Quantum/AURICOmega/OmegaArithmeticHorizon.lean) · [OmegaMatrixAndFractran](../D5/S3/Quantum/AURICOmega/OmegaMatrixAndFractran.lean) |
+
+`OmegaShadowBridge` transports exact arithmetic and the projective circle into the
+standard number types. Its frozen record lists `propext` and `Quot.sound`.
+[Bridge](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [Frozen evidence](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
+
 ### Refresh frozen declaration evidence
 
 `make deposit GID=…` records declaration evidence for a new frozen module. To
