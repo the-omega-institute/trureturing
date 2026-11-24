@@ -183,6 +183,40 @@ private theorem tsum_moduli_eq_linearPrincipalValueQTailLimit (τ : ℍ) :
       intro n
       exact (summable_norm_linearQTailCoefficient (n + 1)).of_norm.tsum_mul_right _
 
+/-- On a positive-height strip, the error in the actual principal-value Fourier cutoff
+is bounded by the geometric mass times the sum of the omitted modulus majorants. -/
+theorem norm_linearPrincipalValueQTailLimit_sub_cutoff_le {δ : ℝ} (hδ : 0 < δ) :
+    ∃ A : ℝ, 0 ≤ A ∧ ∀ (τ : ℍ), δ ≤ τ.im → ∀ N : ℕ,
+      ‖linearPrincipalValueQTailLimit τ - linearPrincipalValueQTail N τ‖ ≤
+        A * ∑' k : ℕ, ((k + N : ℕ) : ℝ) ^ (-(9 / 8) : ℝ) := by
+  let A := (4 * Real.pi ^ 2 * (4 : ℝ) ^ (4 ^ 8 : ℕ)) * geometricMass δ
+  have hgeom := hasSum_qRadius_pow_succ hδ
+  have hmass : 0 ≤ geometricMass δ := by
+    rw [← hgeom.tsum_eq]
+    exact tsum_nonneg (fun n => pow_nonneg (Real.exp_pos _).le _)
+  refine ⟨A, mul_nonneg (by positivity) hmass, fun τ hτ N => ?_⟩
+  let row (c : ℕ) := ∑' n : ℕ, linearQTailTerm c n τ
+  have hrow (c : ℕ) : ‖row c‖ ≤ modulusMajorant c * geometricMass δ :=
+    tsum_of_norm_bounded (hgeom.mul_left (modulusMajorant c))
+      (norm_linearQTailTerm_le hτ c)
+  have hmajorant := summable_modulusMajorant.mul_right (geometricMass δ)
+  have hsum : Summable row := hmajorant.of_norm_bounded hrow
+  have hsplit :
+      linearPrincipalValueQTailLimit τ - linearPrincipalValueQTail N τ =
+        ∑' k : ℕ, row (k + N) := by
+    rw [← tsum_moduli_eq_linearPrincipalValueQTailLimit, linearPrincipalValueQTail_eq_sum_tsum]
+    change (∑' c : ℕ, row c) - (∑ c ∈ Finset.range N, row c) = _
+    rw [← hsum.sum_add_tsum_nat_add N, add_sub_cancel_left]
+  have hp : Summable (fun k : ℕ => ((k + N : ℕ) : ℝ) ^ (-(9 / 8) : ℝ)) :=
+    (summable_nat_add_iff (f := fun k : ℕ => (k : ℝ) ^ (-(9 / 8) : ℝ)) N).mpr
+      (Real.summable_nat_rpow.mpr (by norm_num))
+  rw [hsplit]
+  refine tsum_of_norm_bounded ?_ (fun k => hrow (k + N))
+  convert hp.hasSum.mul_left A using 1
+  funext k
+  unfold modulusMajorant A
+  ac_rfl
+
 /-- The linear principal-value Fourier tail converges uniformly above every positive height. -/
 theorem tendstoUniformlyOn_linearPrincipalValueQTail {δ : ℝ} (hδ : 0 < δ) :
     TendstoUniformlyOn linearPrincipalValueQTail linearPrincipalValueQTailLimit atTop
