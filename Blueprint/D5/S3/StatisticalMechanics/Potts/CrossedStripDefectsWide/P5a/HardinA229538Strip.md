@@ -204,11 +204,11 @@ $$\forall (C: \operatorname{Type}*), (\forall (Z: \operatorname{Type}*), (\foral
 
 The empty continuation completes an array exactly when its remaining budget is zero.
 
-**Theorem 1.15 (edges_filter_card).**
+**Theorem 1.15 (edges_sum).**
 
-$$\forall (A: \operatorname{Type}*), ([\operatorname{DecidableEq}\left(A\right)] \forall (r: \operatorname{Fin}\left(5\right) \to A), (\forall (t: \operatorname{Fin}\left(5\right) \to A), (\operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (e: (\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right)))\mapsto (r\left(\operatorname{Prod}.\operatorname{fst}\left(e\right)\right) = t\left(\operatorname{Prod}.\operatorname{snd}\left(e\right)\right))), \operatorname{HardinA229538Strip}.\operatorname{edges}\right)\right) = (((((((((((((\operatorname{if} (r\left(0\right) = t\left(0\right)) \operatorname{then} 1 \operatorname{else} 0)) + ((\operatorname{if} (r\left(0\right) = t\left(1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(1\right) = t\left(0\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(1\right) = t\left(1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(1\right) = t\left(2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(2\right) = t\left(1\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(2\right) = t\left(2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(2\right) = t\left(3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(3\right) = t\left(2\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(3\right) = t\left(3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(3\right) = t\left(4\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(4\right) = t\left(3\right)) \operatorname{then} 1 \operatorname{else} 0))) + ((\operatorname{if} (r\left(4\right) = t\left(4\right)) \operatorname{then} 1 \operatorname{else} 0)))))$$
+$$\forall (M: \operatorname{Type}*), ([\operatorname{AddCommMonoid}\left(M\right)] \forall (f: (\operatorname{Fin}\left(5\right))\times(\operatorname{Fin}\left(5\right)) \to M), (\operatorname{Finset}.\operatorname{sum}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}, f\right) = ((((((((((((f\left((0, 0)\right)) + (f\left((0, 1)\right))) + (f\left((1, 0)\right))) + (f\left((1, 1)\right))) + (f\left((1, 2)\right))) + (f\left((2, 1)\right))) + (f\left((2, 2)\right))) + (f\left((2, 3)\right))) + (f\left((3, 2)\right))) + (f\left((3, 3)\right))) + (f\left((3, 4)\right))) + (f\left((4, 3)\right))) + (f\left((4, 4)\right))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_filter_card` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -216,7 +216,7 @@ $$\forall (A: \operatorname{Type}*), ([\operatorname{DecidableEq}\left(A\right)]
 
 *Commentary.*
 
-The sum of the thirteen indicators equals the number of monochromatic bonds on the cut.
+For any additive commutative monoid, summing the edge weights over the cut gives the thirteen displayed terms. Both defect certificates assign weight one when the two endpoint colours agree and zero otherwise.
 
 **Definition 1.16 (movesOne).**
 
@@ -397,7 +397,7 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cost_zero`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_filter_card`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_sum`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.labelled_scale`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.movesOne`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.oneDefect`
