@@ -219,6 +219,26 @@ private theorem checkRows_sound {start : ℕ} {rows : List Row}
         rw [he] at hp ⊢
         exact ih h.2 k (by simpa only [List.length_cons, Nat.succ_lt_succ_iff] using hk) hp
 
+private theorem checkRows_append (start : ℕ) (xs ys : List Row) :
+    checkRows start (xs ++ ys) =
+      (checkRows start xs && checkRows (start + 2 * xs.length) ys) := by
+  induction xs generalizing start with
+  | nil => simp [checkRows]
+  | cons row xs ih =>
+    cases row <;>
+      simp [checkRows, ih, Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm,
+        Bool.and_assoc]
+
+/-- Adjacent successful blocks compose without rechecking their literal rows. -/
+theorem checkBlock_append {start n m : ℕ} {xs ys : List Row}
+    (hxs : checkBlock start n xs = true)
+    (hys : checkBlock (start + 2 * n) m ys = true) :
+    checkBlock start (n + m) (xs ++ ys) = true := by
+  simp only [checkBlock, Bool.and_eq_true, beq_iff_eq] at hxs hys ⊢
+  refine ⟨by simp [List.length_append, hxs.1, hys.1], ?_⟩
+  rw [checkRows_append, hxs.1, hxs.2, hys.2]
+  rfl
+
 /-- Every prime in every checked odd slot has a certified smaller prime primitive root. -/
 theorem checkBlock_sound {start count : ℕ} {rows : List Row}
     (h : checkBlock start count rows = true) :
@@ -229,6 +249,8 @@ theorem checkBlock_sound {start count : ℕ} {rows : List Row}
   rw [← h.1]
   exact checkRows_sound h.2
 
+#print axioms checkPrime_prime
+#print axioms checkBlock_append
 #print axioms checkPrime_sound
 #print axioms checkBlock_sound
 

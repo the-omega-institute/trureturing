@@ -39,6 +39,17 @@ internal sealed class SmallPrimeCheckerDocument : IScribeDocumentDefinition
                     "already certified smaller factors, so each factor's primality " +
                     "need not be checked again at every occurrence."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("small-prime-block-append"),
+                DeclarationHandle.Create(Prefix + "checkBlock_append"),
+                H("Concatenation preserves certified coverage"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A checked block of n slots starting at start concatenates with " +
+                    "a checked block of m slots starting at start+2n to give a checked " +
+                    "block of n+m slots. Both lengths and the second block's precise " +
+                    "offset are retained. Shared sub-block proofs therefore establish " +
+                    "the full literal block without repeating their kernel computation."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("small-prime-block-soundness"),
                 DeclarationHandle.Create(Prefix + "checkBlock_sound"),
                 H("Coverage of every checked odd slot"), StatementSource.WithoutFormula(),
