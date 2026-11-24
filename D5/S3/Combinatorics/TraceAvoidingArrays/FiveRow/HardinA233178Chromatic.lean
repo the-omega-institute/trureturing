@@ -68,7 +68,6 @@ import Mathlib.Data.Finset.Lattice.Basic
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
-import Mathlib.Data.Matrix.Defs
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
