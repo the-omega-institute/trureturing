@@ -59,11 +59,11 @@ noncomputable def trigForm (n d : ℕ) : ℝ :=
       Real.sin (Real.pi * k / (n + 1)) ^ 2
 
 /-- The second expression of Remark 4.3:
-`Σ_{j=-∞}^{∞} [binom(n+d-1, (n+1)j + d/2) - binom(n+d-1, (n+1)j + d/2 - 1)]` (binomials outside `0..n+d-1`
+`Σ_{j=-∞}^{∞} [binom_std(n+d-1, (n+1)j + d/2) - binom_std(n+d-1, (n+1)j + d/2 - 1)]` (binomials outside `0..n+d-1`
 are `0`; all but finitely many summands vanish). -/
 noncomputable def bilateralForm (n d : ℕ) : ℤ :=
-  ∑ᶠ j : ℤ, ((D5.S0.Conventions.IntegerIndexBinomial.binom (n + d - 1) ((n + 1 : ℤ) * j + (d / 2 : ℕ)) : ℤ) -
-    D5.S0.Conventions.IntegerIndexBinomial.binom (n + d - 1) ((n + 1 : ℤ) * j + (d / 2 : ℕ) - 1))
+  ∑ᶠ j : ℤ, ((D5.S0.Conventions.IntegerIndexBinomial.binom_std (n + d - 1) ((n + 1 : ℤ) * j + (d / 2 : ℕ)) : ℤ) -
+    D5.S0.Conventions.IntegerIndexBinomial.binom_std (n + d - 1) ((n + 1 : ℤ) * j + (d / 2 : ℕ) - 1))
 
 /-- Bouthat–Chávez–Sheng, arXiv:2606.17356v1, Remark 4.3 ("we have found that the following appears to hold
 for all n ≥ 1 and all even d ≥ 2"): `‖P_n‖_{X,d}^d` equals both expressions, where
@@ -325,21 +325,21 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormBCSRemark43
 open D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
 
-private theorem binomZ_zero_of_lt (L : ℕ) (r : ℤ) (h : (L : ℤ) < r) : D5.S0.Conventions.IntegerIndexBinomial.binom L r = 0 := by
-  rw [D5.S0.Conventions.IntegerIndexBinomial.binom, if_neg (by omega)]
+private theorem binomZ_zero_of_lt (L : ℕ) (r : ℤ) (h : (L : ℤ) < r) : D5.S0.Conventions.IntegerIndexBinomial.binom_std L r = 0 := by
+  rw [D5.S0.Conventions.IntegerIndexBinomial.binom_std, if_neg (by omega)]
   exact_mod_cast Nat.choose_eq_zero_of_lt (show L < r.toNat by omega)
 
-private theorem binomZ_reflect (L : ℕ) (r : ℤ) : D5.S0.Conventions.IntegerIndexBinomial.binom L r = D5.S0.Conventions.IntegerIndexBinomial.binom L ((L : ℤ)-r) := by
+private theorem binomZ_reflect (L : ℕ) (r : ℤ) : D5.S0.Conventions.IntegerIndexBinomial.binom_std L r = D5.S0.Conventions.IntegerIndexBinomial.binom_std L ((L : ℤ)-r) := by
   by_cases h0 : 0 ≤ r
   · by_cases hL : r ≤ L
-    · unfold D5.S0.Conventions.IntegerIndexBinomial.binom
+    · unfold D5.S0.Conventions.IntegerIndexBinomial.binom_std
       rw [if_neg (by omega), if_neg (by omega)]
       have he : ((L : ℤ)-r).toNat = L-r.toNat := by omega
       rw [he, Nat.choose_symm (by omega)]
     · rw [binomZ_zero_of_lt L r (by omega)]
-      simp only [D5.S0.Conventions.IntegerIndexBinomial.binom,if_pos (show (L : ℤ)-r < 0 by omega)]
+      simp only [D5.S0.Conventions.IntegerIndexBinomial.binom_std,if_pos (show (L : ℤ)-r < 0 by omega)]
   · rw [binomZ_zero_of_lt L ((L : ℤ)-r) (by omega)]
-    simp [D5.S0.Conventions.IntegerIndexBinomial.binom, show r < 0 by omega]
+    simp [D5.S0.Conventions.IntegerIndexBinomial.binom_std, show r < 0 by omega]
 
 private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
     bilateralForm n (2*m) = pathFormula n m := by
@@ -348,7 +348,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
   let L := n+2*m-1
   let M := m/N+1
   let f : ℤ → ℤ := fun j =>
-    (D5.S0.Conventions.IntegerIndexBinomial.binom L ((N : ℤ)*j+m) : ℤ)-D5.S0.Conventions.IntegerIndexBinomial.binom L ((N : ℤ)*j+m-1)
+    (D5.S0.Conventions.IntegerIndexBinomial.binom_std L ((N : ℤ)*j+m) : ℤ)-D5.S0.Conventions.IntegerIndexBinomial.binom_std L ((N : ℤ)*j+m-1)
   let s := (Finset.range M).image (fun k : ℕ => -(k : ℤ))
   let t := (Finset.range M).image (fun k : ℕ => (k : ℤ)+1)
   have hN : 0 < N := by exact Nat.succ_pos n
@@ -369,7 +369,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         have hmul' : (m : ℤ) < ((-j).toNat : ℤ)*N := by exact Int.lt_toNat.mp hmul
         rw [hjr]
         nlinarith
-      simp only [f, D5.S0.Conventions.IntegerIndexBinomial.binom,if_pos (show (N : ℤ)*j+m < 0 by omega),
+      simp only [f, D5.S0.Conventions.IntegerIndexBinomial.binom_std,if_pos (show (N : ℤ)*j+m < 0 by omega),
         if_pos (show (N : ℤ)*j+m-1 < 0 by omega),Int.cast_zero,sub_self]
     · have hjr : j = ((j-1).toNat : ℤ)+1 := by omega
       have hlarge : M ≤ (j-1).toNat := by

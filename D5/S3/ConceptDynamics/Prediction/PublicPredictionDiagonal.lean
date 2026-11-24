@@ -7,68 +7,55 @@
 
 import D5.S0.Diagonal.Feedback.StrategicResponseObstruction
 
-/- Library-search audit trail (2026-08-22):
-   * `rg -n -F 'no_correct_public_predictor' D5 Golden/Frozen/accepted` found no match.
-   * The requested fixed-point and diagonal search found the more general theorem
-     `strategic_response_precludes_universal_predictor`, which is reused below.
-   * Focused D5 prediction searches found no public-read definition or predictor-specific
-     fixed-point converse, so the definition and both witnesses below are new content.
-   * Pinned Mathlib defines `Function.IsFixedPt`; it is used instead of a local predicate. -/
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
 namespace D5.S3.ConceptDynamics.Prediction.PublicPredictionDiagonal
 
 open D5.S0.Diagonal.Feedback.StrategicResponseObstruction
 
-/-- The subject's action after publicly reading the prediction and applying its response.
-This definition represents condition 1 through dependence on `predict state`, while the
-response argument supplies condition 2. Condition 3 is the universal correctness claim
-negated by `no_correct_public_predictor`. -/
-def actual {State Action : Type*} (predict : State → Action) (react : Action → Action)
-    (state : State) : Action :=
+/-- The subject's action after publicly reading the prediction and applying its response. -/
+def actual {State : Type u} {Action : Type v}
+    (predict : State → Action) (react : Action → Action) (state : State) : Action :=
   react (predict state)
 
 /-- A fixed-point-free public response prevents a predictor from being correct in every
 nonempty state space. -/
 theorem no_correct_public_predictor
-    {State Action : Type*} (predict : State → Action) (react : Action → Action)
-    (hfixed : ∀ action, ¬ Function.IsFixedPt react action)
-    (stateExists : Nonempty State) :
-    ¬ ∀ state, predict state = actual predict react state := by
-  intro hcorrect
-  rcases stateExists with ⟨state⟩
-  have hnoCorrectResponse :
-      ¬ ∃ candidate : State → Action, ∀ s,
-        actual candidate react s = candidate s := by
-    apply strategic_response_precludes_universal_predictor react
-      (fun candidate s => actual candidate react s) hfixed
-    intro candidate
-    exact ⟨state, rfl⟩
-  exact hnoCorrectResponse ⟨predict, fun s => (hcorrect s).symm⟩
+    {State : Type u} {Action : Type v} (predict : State → Action) (react : Action → Action)
+    (fixedPointFree : ∀ action, Omega.Not (Omega.Eq (react action) action))
+    (stateExists : Omega.Exists (fun _ : State => Omega.True)) :
+    Omega.Not (∀ state, Omega.Eq (predict state) (actual predict react state)) :=
+  fun correct =>
+    strategic_response_precludes_universal_predictor react
+      (fun candidate state => actual candidate react state) fixedPointFree
+      (fun _ => stateExists.elim (fun state _ => Omega.Exists.intro state Omega.Eq.refl))
+      (Omega.Exists.intro predict (fun state => (correct state).symm))
 
-/-- Boolean negation is a concrete fixed-point-free response, so it defeats every public
-predictor on the one-state space. -/
-theorem bool_not_no_correct_public_predictor (predict : Unit → Bool) :
-    ¬ ∀ state, predict state = actual predict Bool.not state := by
-  exact no_correct_public_predictor predict Bool.not (by decide) ⟨()⟩
+/-- The state space for the Boolean example has one state. -/
+inductive OneState where
+  | only
 
-/-- The no-fixed-point condition is essential: a fixed point yields a universally correct
-constant public predictor. -/
+/-- Boolean negation defeats every public predictor on the one-state space. -/
+theorem bool_not_no_correct_public_predictor (predict : OneState → Omega.Bool) :
+    let negate := Omega.Bool.rec (motive := fun _ => Omega.Bool) .true .false
+    Omega.Not (∀ state, Omega.Eq (predict state) (actual predict negate state)) :=
+  let negate := Omega.Bool.rec (motive := fun _ => Omega.Bool) .true .false
+  have distinct : Omega.Not (Omega.Eq Omega.Bool.false Omega.Bool.true) :=
+    fun equal => Omega.Eq.subst
+      (Omega.Bool.rec (motive := fun _ => Prop) Omega.True Omega.False) equal Omega.True.intro
+  have fixedPointFree : ∀ value, Omega.Not (Omega.Eq (negate value) value) :=
+    Omega.Bool.rec (fun equal => distinct equal.symm) distinct
+  no_correct_public_predictor predict negate fixedPointFree (Omega.Exists.intro .only Omega.True.intro)
+
+/-- A fixed point yields a universally correct constant public predictor. -/
 theorem exists_correct_public_predictor_of_fixed_point
-    {State Action : Type*} (react : Action → Action) (action : Action)
-    (hfixed : Function.IsFixedPt react action) :
-    ∃ predict : State → Action, ∀ state, predict state = actual predict react state := by
-  refine ⟨fun _ => action, ?_⟩
-  intro state
-  exact hfixed.symm
+    {State : Type u} {Action : Type v} (react : Action → Action) (action : Action)
+    (fixed : Omega.Eq (react action) action) :
+    Omega.Exists (fun predict : State → Action =>
+      ∀ state, Omega.Eq (predict state) (actual predict react state)) :=
+  Omega.Exists.intro (fun _ => action) (fun _ => fixed.symm)
 
-example :
-    ¬ ∀ state : Unit, (fun _ => false) state =
-      actual (fun _ : Unit => false) Bool.not state :=
-  bool_not_no_correct_public_predictor (fun _ => false)
-
-#print axioms no_correct_public_predictor
+example : Omega.Not (∀ state : OneState, Omega.Eq ((fun _ => Omega.Bool.false) state)
+    (actual (fun _ : OneState => Omega.Bool.false)
+      (Omega.Bool.rec (motive := fun _ => Omega.Bool) .true .false) state)) :=
+  bool_not_no_correct_public_predictor (fun _ => .false)
 
 end D5.S3.ConceptDynamics.Prediction.PublicPredictionDiagonal

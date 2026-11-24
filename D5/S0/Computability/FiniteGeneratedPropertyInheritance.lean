@@ -6,6 +6,7 @@
    digest: Three object laws inherited by generators and finitary rules hold on their closure. -/
 
 import D5.S0.Computability.PropertyObject
+import OmegaMath.Data.FiniteIndex
 
 /- Library-search audit trail (2026-09-04):
    * D5 searches covered finite generation, generation complexity, structural
@@ -38,19 +39,19 @@ universe uObject
 /-- A finite collection of generators and construction rules. Each rule has a
 finite, rule-dependent arity. -/
 structure FiniteGenerationSystem (Object : Type uObject) where
-  generatorCount : Nat
-  generator : Fin generatorCount -> Object
-  ruleCount : Nat
-  arity : Fin ruleCount -> Nat
-  construct : (rule : Fin ruleCount) -> (Fin (arity rule) -> Object) -> Object
+  generatorCount : Omega.Nat
+  generator : Omega.FiniteIndex generatorCount -> Object
+  ruleCount : Omega.Nat
+  arity : Omega.FiniteIndex ruleCount -> Omega.Nat
+  construct : (rule : Omega.FiniteIndex ruleCount) -> (Omega.FiniteIndex (arity rule) -> Object) -> Object
 
 /-- The least class obtained by finitely many applications of the registered
 finite-arity construction rules to the registered generators. -/
 inductive Generated {Object : Type uObject} (system : FiniteGenerationSystem Object) :
     Object -> Prop where
-  | generator (index : Fin system.generatorCount) : Generated system (system.generator index)
-  | construct (rule : Fin system.ruleCount)
-      (inputs : Fin (system.arity rule) -> Object)
+  | generator (index : Omega.FiniteIndex system.generatorCount) : Generated system (system.generator index)
+  | construct (rule : Omega.FiniteIndex system.ruleCount)
+      (inputs : Omega.FiniteIndex (system.arity rule) -> Object)
       (generated : ∀ index, Generated system (inputs index)) :
       Generated system (system.construct rule inputs)
 
@@ -59,7 +60,7 @@ unitary, and ledgered. They remain external predicates rather than fields, so
 their inheritance is not true merely by construction. -/
 def HasThreeProperties {Object : Type uObject}
     (temporal unitary ledgered : Object -> Prop) (object : Object) : Prop :=
-  temporal object ∧ unitary object ∧ ledgered object
+  Omega.And (temporal object) (Omega.And (unitary object) (ledgered object))
 
 /-- If every generator has the temporal, unitary, and ledger properties and
 every registered finite-arity rule preserves all three simultaneously, then
@@ -72,17 +73,17 @@ theorem finite_generated_property_inheritance
       InternalProperty History Encoding Reading Ledger SelfCode Update Certificate -> Prop)
     (generatorLaws : ∀ index,
       HasThreeProperties temporal unitary ledgered (system.generator index))
-    (ruleLaws : ∀ (rule : Fin system.ruleCount)
-      (inputs : Fin (system.arity rule) ->
+    (ruleLaws : ∀ (rule : Omega.FiniteIndex system.ruleCount)
+      (inputs : Omega.FiniteIndex (system.arity rule) ->
         InternalProperty History Encoding Reading Ledger SelfCode Update Certificate),
       (∀ index, HasThreeProperties temporal unitary ledgered (inputs index)) ->
         HasThreeProperties temporal unitary ledgered (system.construct rule inputs)) :
     ∀ object, Generated system object -> HasThreeProperties temporal unitary ledgered object := by
   intro object generated
-  induction generated with
-  | generator index => exact generatorLaws index
-  | construct rule inputs _ inherited => exact ruleLaws rule inputs inherited
-
-#print axioms finite_generated_property_inheritance
+  exact Generated.rec
+    (motive := fun candidate _ => HasThreeProperties temporal unitary ledgered candidate)
+    generatorLaws
+    (fun rule inputs _ inherited => ruleLaws rule inputs inherited)
+    generated
 
 end D5.S0.Computability.FiniteGeneratedPropertyInheritance

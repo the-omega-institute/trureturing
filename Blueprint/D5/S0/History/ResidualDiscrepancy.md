@@ -16,7 +16,7 @@ $$\operatorname{IsResidual}(expected, observed) \iff observed \neq expected$$
 
 For readings in any additive group, the residual discrepancy is the observed value minus the expected value. It is residual exactly when that difference is nonzero. The theorem therefore identifies the source atom's residual condition with the direct statement that the two readings differ; no order, norm, or numeric representation is assumed.
 
-The pinned library was searched before proving. The exact algebraic core is Mathlib's `sub_ne_zero`, so the Lean declaration is a thin honest wrapper that unfolds the residual vocabulary and applies that theorem. Searches for an existing residual-discrepancy abstraction were negative. The source atom is definitional and contains no numerical certificate.
+Adding the expected reading back on the right of the difference recovers the observed reading. If the difference vanishes, that recovery forces both readings to agree. Equal readings give zero by the inverse law.
 
 ## References
 

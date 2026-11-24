@@ -39,7 +39,7 @@ internal sealed class LedgerLimitDocument : IScribeDocumentDefinition
                         + "clock, so there is a cutoff after which no adjacent pair of grades "
                         + "differs. Induction from the cutoff makes the entire tail constant. "
                         + "Two proposed terminal grades agree by evaluating both constant tails "
-                        + "at the maximum of their cutoffs. Pointwise choice therefore produces "
+                        + "at the later of their cutoffs. Pointwise choice therefore produces "
                         + "one terminal grading on all statements, and pointwise uniqueness plus "
                         + "function extensionality proves that this grading is unique.")),
                     Paragraph(Text(
