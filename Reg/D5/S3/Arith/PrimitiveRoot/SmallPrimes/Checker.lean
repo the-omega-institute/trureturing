@@ -1,3 +1,4 @@
+import Mathlib.Tactic.NormNum
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Checker
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -80,8 +81,8 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {start count : ℕ} {rows : List Row},
     checkBlock start count rows = true →
-      ∀ k, k < count → (start + 2 * k).Prime →
-        ∃ q, q.Prime ∧ q < start + 2 * k ∧
+      ∀ k : ℕ, k < count → (start + 2 * k).Prime →
+        ∃ q : ℕ, q.Prime ∧ q < start + 2 * k ∧
           orderOf (q : ZMod (start + 2 * k)) = R.readout () () (start + 2 * k)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -153,7 +154,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   cases hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 2, by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 2, ?_⟩
+  change decide (Nat.Prime 0) ≠ decide (Nat.Prime 2)
+  decide
 def family : Registration arena (type_of% @checkPrime_prime) where
   actual := actual
   bridge := by simp [actual, realize]

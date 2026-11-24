@@ -70,8 +70,8 @@ abbrev arena : Arena where
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
     ,
-    ∀ p, p.Prime → p ≠ 2 →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
+    ∀ p : ℕ, p.Prime → p ≠ 2 →
+      ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
 private theorem rejected_law (hRH : RiemannHypothesis)
     (hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;

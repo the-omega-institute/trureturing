@@ -1,13 +1,18 @@
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks01.Block0083
-import Reg.Support.SingleDependentReadout
+import Reg.Support.BooleanCheckerReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-! The selected source readout checks the complete literal row list. -/
+set_option maxRecDepth 200000
+set_option maxHeartbeats 0
+
 noncomputable section
 open _root_.D5.S3.Arith.PrimitiveRoot.SmallPrimes
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks01.Block0083
+
+attribute [local irreducible] checkBlock checkRows checkPrime
 
 abbrev signature := Reg.Support.SingleDependentReadout.signature Unit
   (fun _ => List Row) (fun _ => Bool)
@@ -22,20 +27,18 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   change false = true at h
   cases h
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), rows0083, [], ?_⟩
-  change checkBlock 679939 4096 rows0083 ≠ checkBlock 679939 4096 []
-  rw [checked0083]
-  decide
+private theorem empty_rejected : checkBlock 679939 4096 [] = false := by
+  decide +kernel
 
 def family : Registration arena (type_of% @checked0083) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := Reg.Support.BooleanCheckerReadout.bridge
+    (checkBlock 679939 4096) rows0083
   variation := ⟨checked0083, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := Reg.Support.BooleanCheckerReadout.dependence
+    (checkBlock 679939 4096) rows0083 [] checked0083 empty_rejected
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     checked0083 (Realization signature) (List Row) Unit where

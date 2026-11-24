@@ -13,6 +13,9 @@ import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group03
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group04
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group05
 
+set_option maxRecDepth 10000
+set_option maxHeartbeats 0
+
 /-! Complete odd-slot coverage uses only kernel-checked literal blocks.
 The prime hypothesis excludes the explicitly certified composite slots. The lower
 endpoint excludes 2, where there is no smaller prime. -/
@@ -20,8 +23,8 @@ endpoint excludes 2, where there is no smaller prime. -/
 namespace D5.S3.Arith.PrimitiveRoot.SmallPrimes
 
 private theorem all_odd_slots :
-    ∀ k, k < 1741740 → (3 + 2 * k).Prime →
-      ∃ q, q.Prime ∧ q < 3 + 2 * k ∧
+    ∀ (k : ℕ), k < 1741740 → (3 + 2 * k).Prime →
+      ∃ (q : ℕ), q.Prime ∧ q < 3 + 2 * k ∧
         orderOf (q : ZMod (3 + 2 * k)) = 3 + 2 * k - 1 := by
   intro k hk hp
   by_cases h0 : k < 327680
@@ -68,7 +71,7 @@ private theorem all_odd_slots :
 /-- The complete finite small-prime premise of conditional Erdős #985. -/
 theorem small_prime_primitiveRoot (p : ℕ) (hp3 : 3 ≤ p) (hlt : p < 3483482)
     (hp : p.Prime) :
-    ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
+    ∃ (q : ℕ), q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   have hodd : p % 2 = 1 := hp.eq_two_or_odd.resolve_left (by omega)
   have heq : 3 + 2 * ((p - 3) / 2) = p := by omega
   have hindex : (p - 3) / 2 < 1741740 := by omega

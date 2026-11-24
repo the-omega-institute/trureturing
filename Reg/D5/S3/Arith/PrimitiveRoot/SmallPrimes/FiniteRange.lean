@@ -1,3 +1,4 @@
+import Mathlib.Tactic.NormNum
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.FiniteRange
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -17,8 +18,8 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-    ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
+  Law R := ∀ p : ℕ, 3 ≤ p → p < 3483482 → p.Prime →
+    ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨q, hq, hlt, ho⟩ := h 3 (by decide) (by decide) (by decide)
