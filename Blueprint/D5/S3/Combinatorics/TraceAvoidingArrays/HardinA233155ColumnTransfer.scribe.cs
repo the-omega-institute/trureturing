@@ -38,14 +38,14 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         var grid=Arr(P(Seq(FinF(k),Sp,Times,Sp,FinF(n))),FinF(N(3)));
         var next=Next(j);
         var adjacent=new Formula.Logic(P(Eq(r,ss)),FormulaLogicOperator.Or,P(Eq(Val(r),PlusF(Val(ss),N(1)))));
-        var proper=All("j",FinF(n),All("h",LtF(PlusF(Val(j),N(1)),n),
-            All("r",FinF(k),All("s",FinF(k),Imp(adjacent,Ne(A(p,PairF(r,j)),A(p,PairF(ss,next))))))));
+        Formula Proper(Formula colour) => All("j",FinF(n),Proof("h",LtF(PlusF(Val(j),N(1)),n),
+            All("r",FinF(k),All("s",FinF(k),Imp(adjacent,Ne(A(colour,PairF(r,j)),A(colour,PairF(ss,next))))))));
         if (law)
             return All("k",NatF(),All("n",NatF(),All("f",grid,
                 new Formula.Logic(C("Legal",V("f")),FormulaLogicOperator.Iff,
-                    A(Lam("P",grid,proper),A(C("alternatingEquiv",k,n),V("f")))))));
+                    Proper(A(C("alternatingEquiv",k,n),V("f")))))));
         var source=C("Subtype",Lam("f",grid,C("Legal",V("f"))));
-        var target=C("Subtype",Lam("P",grid,proper));
+        var target=C("Subtype",Lam("P",grid,Proper(p)));
         return All("k",NatF(),All("n",NatF(),Cast(C("properEquiv",k,n),C("Equiv",source,target))));
     }
     private static Formula SuccessorsFormula() {
@@ -62,7 +62,7 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
     private static Formula CompatibleFormula() {
         var r=V("r"); var s=V("s"); var i=V("i"); var k=V("k");
         var horizontal=All("i",FinF(k),Ne(PlusF(Val(A(r,i)),Val(A(s,i))),N(2)));
-        var diagonal=All("i",FinF(k),All("h",LtF(PlusF(Val(i),N(1)),k),Ne(PlusF(Val(A(s,i)),Val(A(r,Next(i)))),N(2))));
+        var diagonal=All("i",FinF(k),Proof("h",LtF(PlusF(Val(i),N(1)),k),Ne(PlusF(Val(A(s,i)),Val(A(r,Next(i)))),N(2))));
         return All("k",NatF(),All("r",RowF(k),All("s",RowF(k),Eq(C("columnCompatible",r,s),And(horizontal,diagonal)))));
     }
     private static Formula Counts() => Sum("c",RowF(V("k")),Ite(And(C("columnCompatible",V("r"),V("c")),Eq(A(V("cls"),V("c")),V("s"))),Cast(N(1),IntF()),N(0)));
@@ -97,6 +97,8 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
     private static Formula P(Formula f) => Parenthesized(f);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Proof(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, P(type), Comma, Sp, P(body));
     private static Formula Lam(string name, Formula type, Formula body) => P(Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, P(body)));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.And, P(b));

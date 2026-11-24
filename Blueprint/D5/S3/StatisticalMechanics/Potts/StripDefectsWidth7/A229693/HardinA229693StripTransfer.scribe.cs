@@ -14,9 +14,9 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         Blocks(
             Describe.Lean(DescribeId.Create("exhausted-class"),
                 DeclarationHandle.Create(Prefix + "exhaustedClass"), H("Classes at budget zero"),
-                StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.exhaustedClass"), Arrow(Call("HardinA229585StripData.Boundary"), Call("Fin", Num("96")))))),
+                StatementSource.FromAuthor(Disp(ExhaustedClassFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("If Valid(p,1) holds, let i be the value of the A229585 class of p at budget zero. The return value is i minus 16 in Fin 96 when i is at least 16, and zero otherwise. If Valid(p,1) fails, use the A229635 first-occurrence equality-pattern index. Its first 40 entries are the lexicographically ordered canonical six-cell boundaries with exactly two adjacent equalities. Return 56 plus the residue of that index modulo 40. A pattern absent from the 40 entries in this branch has more than two adjacent equalities. Its equality mask is absent from the 96 A229635 representatives, whose lookup returns 96 before reduction modulo 96. The resulting index is zero, so the exhausted class is 56."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("If Valid(p,1) holds, let i be the value of the A229585 class of p at budget zero. The return value is i minus 16 in Fin 96 when i is at least 16, and zero otherwise. If Valid(p,1) fails, use the A229635 first-occurrence equality-pattern index. Its first 40 entries are the lexicographically ordered canonical six-cell boundaries with exactly two adjacent equalities. Fin.ofNat 40 takes the residue of its natural-valued input modulo 40. Fin.natAdd 56 embeds the residue with offset 56. A pattern absent from the 40 entries in this branch has more than two adjacent equalities. Its equality mask is absent from the 96 A229635 representatives, whose lookup returns 96 before reduction modulo 96. The resulting index is zero, so the exhausted class is 56."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("cl"),
                 DeclarationHandle.Create(Prefix + "cl"), H("Class of a boundary and budget"),
                 StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), Eq(Call("HardinA229693StripTransfer.cl", V("p"), V("d")), Conditional(Eq(V("d"), Num("0")), Call("Fin.natAdd", Num("72"), Call("HardinA229693StripTransfer.exhaustedClass", V("p"))), Call("Fin.castAdd", Num("96"), Call("HardinA229585StripData.cl", V("p"), Sub(V("d"), Num("1")))))))))),
@@ -26,23 +26,29 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "exitRead"), H("Column indices of the exhausted block"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.exitRead"), Arrow(Call("Fin", Num("96")), Call("Fin", Num("108")))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("This 96-entry map selects the leading column at indices below 72 and one of 36 stored profiles at indices from 72 through 107. The transition multiplicity formula pins the selected profile to its exhausted destination class."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("This 96-entry map selects an old column when the returned value is below 72. Otherwise its value minus 72 is one of 36 radix-16 digit positions in the packed word selected by the source row. The tables store 56 active words and 38 distinct exhausted words. The successor formula pins the entries to their destination classes."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("t"),
                 DeclarationHandle.Create(Prefix + "T"), H("Transfer matrix"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.T"), Call("Matrix", Call("Fin", Num("168")), Call("Fin", Num("168")), V("Int"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The leading block is the A229585 transfer matrix. The lower left block is zero. For every boundary and budget satisfying HardinA229635State.Valid, the right-block entries of the classified source row count next rows that spend the entire remaining budget. The 16 upper-right rows selected by zeroBudgetClass use the exhausted columns of the corresponding A229585 row followed by 40 zeros. In the other upper-right rows, 24 columns use entries of the leading block and the others use 36 multiplicity profiles. Within the lower right block, the original exhausted sources use the exhausted rows and columns of A229585, extended by zero columns. Each new lower-right row vanishes at exitRead values below 72. At greater or equal values it reads the radix-16 multiplicity at exitRead minus 72."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The leading block is the A229585 transfer matrix. The lower left block is zero. For a valid source boundary p and budget d, the entry at source cl(p,d) and exhausted destination 72 plus j counts next rows of exact cost d whose exhausted class is j. The 16 upper-right rows selected by zeroBudgetClass use the exhausted columns of the corresponding A229585 row followed by 40 zeros. The other 56 upper-right rows use the active words. For a right-column index j, an exitRead value below 72 selects the old leading entry at this source row and the indicated old column. The weight takes Int.toNat of that entry and casts it back to Int. An exitRead value at least 72 selects the digit at position exitRead minus 72 in the source word, starting with the least significant digit, and casts that digit to Int. Within the lower right block, the original exhausted sources reuse the exhausted rows and columns of A229585, followed by 40 zeros. The 40 new exhausted rows select from 38 distinct packed words. They return zero for exitRead values below 72 and cast the selected radix-16 digit to Int otherwise."))), DescribeRole.Definition),
+            Node("uniformRegion", "Destinations with source-independent agreement",
+                UniformRegionFormula(),
+                "Each listed coordinate has count zero and matrix entry zero for all sources. Exhaustive integer evaluation over all 729 boundaries and all 2,187 successor rows gives a mismatch witness for each omitted coordinate at budgets zero through fifteen. At fifteen and above, the twelve-bond cost bound leaves at least three units and the classifiers stabilize.", DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("transition-counts"),
                 DeclarationHandle.Create(Prefix + "transition_counts"), H("Multiplicity of a successor class"),
                 StatementSource.FromAuthor(Disp(TransitionCounts())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Every next row whose cost fits the available budget contributes one to its destination.")),
                     Paragraph(Text("At budget zero the possible destinations are 56 plus a value of zeroBudgetClass. At budget one the support is contained in the values of zeroBudgetClass and the interval 72 through 127. Both sides vanish outside these supports. At a constant zero boundary with budget one and destination 29, the literal count is two and the matrix entry is one.")),
-                    Paragraph(Text("The horizontal and antidiagonal filters each contain at most six bonds. At budgets at least thirteen no row exhausts the budget, and the matrix vanishes at destinations from 128 onward. At budgets at least fifteen every successor retains at least three units, and both sides vanish below destination 16."))), DescribeRole.Theorem),
+                    Paragraph(Text("A successor at destination 129 or greater must spend the entire budget and its boundary can have at most two horizontal matches. The cross charge plus the first horizontal bond adds at most seven to the boundary cost. The lower destination cases follow from the budget-two classifier checked on six-cell boundaries.")),
+                    Paragraph(Text("A separate candidate is that the source is valid if and only if the two rows agree at every destination. Exhaustive integer comparisons give the converse at budgets zero through two. At budget three the literal row has total at least 810, compared with a maximum matrix row total of 426, and the literal total is nondecreasing. The converse still lacks a Lean proof."))), DescribeRole.Theorem),
             Node("oldZeroImage", "Reindex an inherited exhausted class",
                 All("i", Call("Fin", Num("72")), Eq(Call("oldZeroImage", V("i")),
-                    Conditional(Leq(Num("16"), Call("Fin.val", V("i"))),
-                        Call("Fin.castAdd", Num("40"), Call("Fin.subNat", Num("16"), V("i"))), D(0)))),
+                    Parenthesized(Seq(Q("if"), Sp, V("h"), Colon, Sp,
+                        Parenthesized(Leq(Num("16"), Call("Fin.val", V("i")))), Sp, Q("then"), Sp,
+                        Call("Fin.castAdd", Num("40"), Call("Fin.subNat", Num("16"), V("i"), V("h"))),
+                        Sp, Q("else"), Sp, D(0))))),
                 "Subtract 16 below the embedding into Fin 96. The index is zero when the input is below 16.", DescribeRole.Definition),
             Node("valid_parts", "Source validity",
                 All("p", BoundaryType, All("d", V("Nat"), Iff(Call("HardinA229635State.Valid", V("p"), V("d")),
@@ -71,8 +77,10 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 "A destination occurs in at least one of the 96 exhausted matrix rows precisely when it lies in this image.", DescribeRole.Theorem),
             Node("matchCost", "Cost of a colour match",
                 Seq(TypeOf(Call("matchCost"), Arrow(OptionColour, Arrow(Fin3, V("Nat")))), Comma, Sp,
-                    Eq(Call("matchCost", V("none"), V("x")), D(0)), Comma, Sp,
-                    Eq(Call("matchCost", Call("some", V("p")), V("x")), Conditional(Eq(V("p"), V("x")), D(1), D(0)))),
+                    Clause(All("x", Fin3, Eq(Call("matchCost", Call("none"), V("x")), D(0)))), Comma, Sp,
+                    Clause(All("p", Fin3, All("x", Fin3,
+                        Eq(Call("matchCost", Call("some", V("p")), V("x")),
+                            Conditional(Eq(V("p"), V("x")), D(1), D(0))))))),
                 "An absent colour costs zero. A present colour costs one exactly when it agrees with the current colour.", DescribeRole.Definition),
             Node("completionCost", "Cost of a completion",
                 CompletionCostClauses(),
@@ -175,13 +183,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.horizontal"), r, r));
         var destination = Call("HardinA229693StripTransfer.cl",
             Call("HardinA229585StripData.boundary", r), Sub(d, Parenthesized(cost)));
-        var zero = And(Eq(d, D(0)), All("k", Call("Fin", Num("16")),
-            Ne(SVal, Add(Num("56"), ZeroClassValue))));
-        var one = And(Eq(d, D(1)), And(Lt(SVal, Num("72")),
-            All("k", Call("Fin", Num("16")), Ne(SVal, ZeroClassValue))));
-        var high = And(Or(Eq(d, D(1)), Leq(Num("13"), d)), Leq(Num("128"), SVal));
-        var low = And(Leq(Num("15"), d), Lt(SVal, Num("16")));
-        var premise = Or(Call("HardinA229635State.Valid", p, d), Or(zero, Or(one, Or(high, low))));
+        var premise = Or(Call("HardinA229635State.Valid", p, d), Call("uniformRegion", d, s));
         var literal = SumOver("r", Call("HardinA229585StripData.Row"),
             Conditional(And(Leq(cost, d), Eq(destination, s)), CastInt(D(1)), CastInt(D(0))));
         return All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"),
@@ -189,18 +191,55 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 Call("HardinA229693StripTransfer.cl", p, d), s))))));
     }
 
+    private static Formula ExhaustedClassFormula()
+    {
+        var p = V("p");
+        var oldClass = Call("oldZeroImage", Call("HardinA229585StripData.cl", p, D(0)));
+        var freshValue = Call("Fin.val", Call("HardinA229635State.fresh", p));
+        var newClass = Call("Fin.natAdd", Num("56"), Call("Fin.ofNat", Num("40"), freshValue));
+        return All("p", BoundaryType, Eq(Call("exhaustedClass", p),
+            Conditional(Call("HardinA229635State.Valid", p, D(1)), oldClass, newClass)));
+    }
+
+    private static Formula UniformRegionFormula()
+    {
+        var d = V("d");
+        var zero = And(Eq(d, D(0)), All("k", Call("Fin", Num("16")),
+            Ne(SVal, Add(Num("56"), ZeroClassValue))));
+        var one = And(Eq(d, D(1)), And(Lt(SVal, Num("72")),
+            All("k", Call("Fin", Num("16")), Ne(SVal, ZeroClassValue))));
+        var high = And(Or(Eq(d, D(1)), Leq(Num("13"), d)), Leq(Num("128"), SVal));
+        var laterHigh = And(Leq(Num("10"), d), Leq(Num("129"), SVal));
+        var twelve = And(Eq(d, Num("12")), InList(SVal, "9", "11"));
+        var thirteen = And(Eq(d, Num("13")), InList(SVal, "2", "4", "5", "6", "8", "9", "10", "11", "12", "13", "14"));
+        var fourteen = And(Eq(d, Num("14")), Lt(D(0), SVal));
+        var low = And(Lt(SVal, Num("16")), Or(twelve, Or(thirteen, Or(fourteen, Leq(Num("15"), d)))));
+        return All("d", V("Nat"), All("s", Fin168,
+            Eq(Call("uniformRegion", d, V("s")), Or(zero, Or(one, Or(high, Or(laterHigh, low)))))));
+    }
+
+    private static Formula InList(Formula x, params string[] values) =>
+        Seq(x, Sp, InMacro, Sp, OpenBracket,
+            Seq(values.SelectMany((v, i) => i == 0 ? new[] { Num(v) } : new[] { Comma, Sp, Num(v) }).ToArray()),
+            CloseBracket);
+
     private static Formula CompletionCostClauses()
     {
         var p = V("p");
         var b = V("b");
         var r = V("r");
+        var k = V("k");
         var head = App(r, D(0));
+        var baseEquation = Eq(Call("completionCost", p, b, r), Call("matchCost", b, head));
+        var stepEquation = Eq(Call("completionCost", p, b, r),
+            Add(LocalCharge(b, App(p, D(0)), head),
+                Call("completionCost", Call("Fin.tail", p), Call("some", head), Call("Fin.tail", r))));
         return Seq(TypeOf(Call("completionCost"),
                 All("k", V("Nat"), Arrow(Boundary, Arrow(OptionColour, Arrow(Row, V("Nat")))))), Comma, Sp,
-            Eq(Call("completionCost", D(0), p, b, r), Call("matchCost", b, head)), Comma, Sp,
-            Eq(Call("completionCost", Add(V("k"), D(1)), p, b, r),
-                Add(LocalCharge(b, App(p, D(0)), head),
-                    Call("completionCost", V("k"), Call("Fin.tail", p), Call("some", head), Call("Fin.tail", r)))));
+            Clause(All("p", OptionalRow(D(0)), All("b", OptionColour, All("r", ColourRow(D(1)), baseEquation)))),
+            Comma, Sp,
+            Clause(All("k", V("Nat"), All("p", OptionalRow(Add(k, D(1))),
+                All("b", OptionColour, All("r", ColourRow(Add(k, D(2))), stepEquation))))));
     }
 
     private static Formula CompletionRowsClauses()
@@ -210,15 +249,20 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         var b = V("b");
         var d = V("d");
         var c = V("c");
+        var k = V("k");
         var recursive = Call("List.map", Call("Fin.cons", x),
-            Call("completionRows", V("k"), Call("Fin.tail", p), Call("some", x), Sub(d, c)));
+            Call("completionRows", Call("Fin.tail", p), Call("some", x), Sub(d, c)));
+        var baseEquation = Eq(Call("completionRows", p, b, d),
+            Call("List.map", Lambda("x", Lambda("_", x)), LastColours(b, d)));
+        var stepEquation = Eq(Call("completionRows", p, b, d),
+            Call("List.flatMap", Lambda("x", LetCharge(b, App(p, D(0)), x,
+                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3))));
         return Seq(TypeOf(Call("completionRows"),
                 All("k", V("Nat"), Arrow(Boundary, Arrow(OptionColour, Arrow(V("Nat"), Call("List", Row)))))), Comma, Sp,
-            Eq(Call("completionRows", D(0), p, b, d),
-                Call("List.map", Lambda("x", Lambda("i", x)), LastColours(b, d))), Comma, Sp,
-            Eq(Call("completionRows", Add(V("k"), D(1)), p, b, d),
-                Call("List.flatMap", Lambda("x", LetCharge(b, App(p, D(0)), x,
-                    Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3)))));
+            Clause(All("p", OptionalRow(D(0)), All("b", OptionColour, All("d", V("Nat"), baseEquation)))),
+            Comma, Sp,
+            Clause(All("k", V("Nat"), All("p", OptionalRow(Add(k, D(1))),
+                All("b", OptionColour, All("d", V("Nat"), stepEquation))))));
     }
 
     private static Formula CompletionCodesClauses()
@@ -229,25 +273,32 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         var b = V("b");
         var d = V("d");
         var c = V("c");
+        var list = Call("List", OptionColour);
         var recursive = Call("List.map", Lambda("r", Add(Call("Fin.val", x), Mul(D(3), V("r")))),
             Call("completionCodes", bs, Call("some", x), Sub(d, c)));
-        return Seq(TypeOf(Call("completionCodes"), Arrow(Call("List", OptionColour),
+        var baseEquation = Eq(Call("completionCodes", Call("List.nil"), b, d),
+            Call("List.map", Call("Fin.val"), LastColours(b, d)));
+        var stepEquation = Eq(Call("completionCodes", Call("List.cons", a, bs), b, d),
+            Call("List.flatMap", Lambda("x", LetCharge(b, a, x,
+                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3))));
+        return Seq(TypeOf(Call("completionCodes"), Arrow(list,
                 Arrow(OptionColour, Arrow(V("Nat"), Call("List", V("Nat")))))), Comma, Sp,
-            Eq(Call("completionCodes", Call("List.nil"), b, d),
-                Call("List.map", Call("Fin.val"), LastColours(b, d))), Comma, Sp,
-            Eq(Call("completionCodes", Call("List.cons", a, bs), b, d),
-                Call("List.flatMap", Lambda("x", LetCharge(b, a, x,
-                    Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3)))));
+            Clause(All("b", OptionColour, All("d", V("Nat"), baseEquation))), Comma, Sp,
+            Clause(All("a", OptionColour, All("bs", list,
+                All("b", OptionColour, All("d", V("Nat"), stepEquation))))));
     }
 
+    private static Formula Clause(Formula body) => Parenthesized(body);
+    private static Formula OptionalRow(Formula n) => Arrow(Call("Fin", n), OptionColour);
+    private static Formula ColourRow(Formula n) => Arrow(Call("Fin", n), Fin3);
     private static Formula LastColours(Formula b, Formula d) => Call("List.filter",
-        Lambda("x", Eq(Call("matchCost", b, V("x")), d)), Call("List.finRange", D(3)));
+        Lambda("x", Call("decide", Eq(Call("matchCost", b, V("x")), d))), Call("List.finRange", D(3)));
     private static Formula LocalCharge(Formula b, Formula a, Formula x) =>
         Add(Call("matchCost", b, x), Call("matchCost", a, x));
     private static Formula LetCharge(Formula b, Formula a, Formula x, Formula body) =>
-        Seq(Q("let"), Sp, V("c"), Sp, Eq(Seq(Colon), LocalCharge(b, a, x)), Comma, Sp, body);
+        Seq(Q("let"), Sp, V("c"), Sp, Colon, F.Eq, Sp, LocalCharge(b, a, x), Comma, Sp, body);
     private static Formula Lambda(string name, Formula body) =>
-        Parenthesized(Seq(LambdaLower, Sp, V(name), Sp, Mapsto, Sp, body));
+        Parenthesized(Seq(LambdaLower, Sp, name == "_" ? Underscore : V(name), Sp, Mapsto, Sp, body));
     private static Formula OptionColour => Call("Option", Fin3);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);

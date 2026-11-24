@@ -14,7 +14,7 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("initial"),
                 DeclarationHandle.Create(Prefix + "initial"), H("First-row weights"),
-                StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693Strip.initial"), Arrow(Call("Fin", Num("168")), V("Int"))))),
+                StatementSource.FromAuthor(Disp(InitialFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The first 72 entries are the A229585 initial weights. The remaining entries count labelled rows with exactly two horizontal defects, grouped by exhausted boundary class. The strip counting formula uses this vector on the left."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("terminal"),
@@ -39,6 +39,23 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("All array counts in this equality are cast to integers. At least two colours occur in a nonempty array with two monochromatic bonds. Relabelling gives six labelled arrays per canonical array. The vector identity for the transfer at fourteen steps propagates to later steps by right multiplication.")),
                     Paragraph(Text("For every table p of fifteen integer row vectors indexed by Fin 168, assume that p at zero is the initial vector and that for every j in Fin 14, the row at j.succ is the product of the row at j.castSucc with T. Induction then identifies the row at every i in Fin 15 with forward iteration from the initial vector for i.val steps."))), DescribeRole.Theorem))));
 
+    private static Formula InitialFormula()
+    {
+        var i = V("i");
+        var k = V("k");
+        var leading = Call("HardinA229585StripData.initial");
+        var embedded = Call("oldZeroImage", Call("HardinA229585StripData.zeroBudgetClass", k));
+        var zero = Seq(Exists, Sp, k, Colon, Sp, Call("Fin", Num("16")), Comma, Sp,
+            Parenthesized(Eq(i, embedded)));
+        var suffix = Conditional(Lt(Call("Fin.val", i), Num("56")),
+            Conditional(zero, CastInt(Num("0")), CastInt(Num("6"))), CastInt(Num("12")));
+        return Eq(Call("HardinA229693Strip.initial"),
+            Call("Fin.append", leading, Fn("i", Call("Fin", Num("96")), suffix)));
+    }
+
+    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
+    private static Formula Conditional(Formula p, Formula y, Formula n) =>
+        Parenthesized(Seq(Q("if"), Sp, Parenthesized(p), Sp, Q("then"), Sp, y, Sp, Q("else"), Sp, n));
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((x,i) => i == 0

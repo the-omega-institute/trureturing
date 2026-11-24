@@ -913,7 +913,7 @@ private theorem zero_coordinates (p : Boundary) (d : ℕ) (s : Fin 168)
       split at hhor <;> omega
     have hspent (h : 72 ≤ (cl (boundary r) (d - c)).val) : d - c = 0 := by
       by_contra hn
-      rw [cl, if_neg hn, Fin.val_castAdd] at h
+      simp only [cl, hn, ite_false, Fin.val_castAdd] at h
       exact (Nat.not_lt_of_ge h) (Fin.isLt _)
     have htwo (h : (cl (boundary r) (d - c)).val < 16) : d - c = 2 := by
       by_contra ht
