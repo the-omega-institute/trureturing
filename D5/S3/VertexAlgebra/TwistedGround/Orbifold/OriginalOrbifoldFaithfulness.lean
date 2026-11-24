@@ -41,12 +41,14 @@ theorem fixedParitySlice_faithful (D : LatticeData) (hu : IsUnit D.G.det)
       ((fixedParitySlice D hu (-1) a)[[n]]) w = 0) : a = 0 := by
   obtain ⟨u, v, hvac⟩ := originalI_three_eq_vacuum D hu hD h24
   have h := original_mixed_jacobi D hu hD h24 (-1) 3 0 a u v
-  simp only [ha, map_zero, LinearMap.zero_apply, smul_zero, finsum_zero, sub_zero] at h
+  simp only [ha, map_zero, LinearMap.zero_apply, smul_zero, finsum_zero] at h
   rw [finsum_eq_single _ 0] at h
   · have hcreate := fixed_creation D a
     change fixedMode D a (-1) (fixedVacuum D) = a at hcreate
-    simpa only [Nat.cast_zero, add_zero, sub_zero, Int.cast_zero, pow_zero,
-      Ring.choose_zero_right, mul_one, one_smul, hvac, hcreate] using h.symm
+    have hsub : a - 0 = 0 := by
+      simpa only [Nat.cast_zero, add_zero, sub_zero, Int.cast_zero, pow_zero,
+        Ring.choose_zero_right, mul_one, one_smul, hvac, hcreate] using h.symm
+    exact (sub_zero a).symm.trans hsub
   · intro j hj
     simp only [Int.cast_zero, Ring.choose_zero_pos ℂ (Nat.pos_of_ne_zero hj), mul_zero, zero_smul]
 
