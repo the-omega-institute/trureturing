@@ -29,7 +29,7 @@ noncomputable def steinerMul : Mul (Option (Fin (r + 1))) where
     | none, x => x
     | some q, x => translate valid complete q x
 
-private theorem product_comm (x y : Option (Fin (r + 1))) :
+theorem product_comm (x y : Option (Fin (r + 1))) :
     letI := steinerMul valid complete
     x * y = y * x := by
   cases x with
