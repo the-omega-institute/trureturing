@@ -28,7 +28,7 @@ internal sealed class RadoLastExceptionDocument : IScribeDocumentDefinition
             Node("exception-rado-form", "IsRado formulation", "rado_last_exception_rado",
                 "The same result is stated with IsRado: all valid parameters above cstar(k) have the lower-bound Rado number, and any finite boundary Rado number lies strictly above the lower bound.", DescribeRole.Theorem),
             Node("exception-threshold", "Threshold characterization", "nu_iff",
-                "For every k at least three, a cutoff v has the exact lower-bound property for all valid c at least v exactly when v exceeds cstar(k).", DescribeRole.Theorem))),
+                "For every k at least three, a cutoff v has the exact lower-bound property for all valid c at least v exactly when v exceeds cstar(k).", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,

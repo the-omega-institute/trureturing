@@ -20,7 +20,7 @@ internal sealed class RadoLastBoundaryDocument : IScribeDocumentDefinition
             Node("boundary-col-even", "Even block colouring", "colEven",
                 "For even k, the colouring marks the exceptional singleton and the terminal block around k(k-2)/2.", DescribeRole.Definition),
             Node("boundary-existence", "The boundary avoiding colouring", "exists_good_col_cstar",
-                "For every k at least three, the explicit colouring has no monochromatic solution of x + y + cstar(k) = k z on [1,LB(cstar(k),k)]. Repeated variables remain allowed; no finite boundary Rado-number existence is asserted.", DescribeRole.Theorem))),
+                "For every k at least three, the explicit colouring has no monochromatic solution of x + y + cstar(k) = k z on [1,LB(cstar(k),k)]. Repeated variables remain allowed; no finite boundary Rado-number existence is asserted.", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
