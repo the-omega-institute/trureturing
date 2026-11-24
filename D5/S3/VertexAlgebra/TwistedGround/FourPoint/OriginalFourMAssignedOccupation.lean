@@ -269,7 +269,18 @@ theorem mode_array_pullback (D : LatticeData) (q : Charge D) (c : Chart) (x : �
     change _ = compactCovariance D c x F (f a) (f b)
     cases c <;>
       simp only [nativeModeCovariance, compactCovariance, Matrix.of_apply,
-        hmatrix, topMode, hleg, hlabel, f, hslot] <;> rfl
+        hmatrix, topMode, hleg, hlabel, f, hslot]
+    case A => rfl
+    case B => rfl
+    case D =>
+      have hentry (i : Mode n) :
+          ((flags .D (slot i.1)).2, colour i.1, i.2.val) =
+            ((flags .D (dPuncture (f i))).2, (compactLabel (f i)).2.1, i.2.val) := by
+        simp only [f, hslot, hlabel]
+      exact congrArg₂
+        (fun e g => dLipCovarianceEntry D true (flags .D (slot a.1)).1
+          (flags .D (slot b.1)).1 e g (parameter .D (x : ℂ)))
+        (hentry a) (hentry b)
   · funext a
     change _ = compactMean D q c x F (f a)
     cases c <;>
