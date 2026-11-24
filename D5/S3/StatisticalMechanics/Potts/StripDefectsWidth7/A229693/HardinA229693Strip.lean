@@ -316,13 +316,40 @@ private theorem sum_zip_mul {n : ℕ} (u v : Fin n → ℤ) :
     ← List.ofFn_eq_map, List.sum_ofFn]
   rfl
 
-private def columnRank (j : Fin 96) : Fin 60 :=
-  (eval% (let keys := (List.ofFn exitRead).eraseDups
-    Array.ofFn fun i : Fin 96 => Fin.ofNat 60 (keys.idxOf (exitRead i))) : Array (Fin 60))[j.val]!
+private def columnKeys : List (Fin 108) := (List.ofFn exitRead).eraseDups
 
-private def columnRepresentative (k : Fin 60) : Fin 96 :=
-  (eval% (List.ofFn fun k : Fin 60 => Fin.ofNat 96
-    ((List.ofFn columnRank).idxOf k)) : List (Fin 96))[k.val]!
+private def columnRanks : Array (Fin 60) :=
+  eval% (Array.ofFn fun j : Fin 96 => Fin.ofNat 60 (columnKeys.idxOf (exitRead j)))
+
+private def columnRank (j : Fin 96) : Fin 60 := columnRanks[j.val]!
+
+private def columnRepresentatives : Array (Fin 96) :=
+  eval% (Array.ofFn fun k : Fin 60 => exitRepresentative columnKeys[k.val]!)
+
+private def columnRepresentative (k : Fin 60) : Fin 96 := columnRepresentatives[k.val]!
+
+set_option maxRecDepth 10000 in
+private theorem columnRanks_eq :
+    columnRanks = Array.ofFn (fun j : Fin 96 => Fin.ofNat 60 (columnKeys.idxOf (exitRead j))) := by
+  decide +kernel
+
+set_option maxRecDepth 10000 in
+private theorem columnRepresentatives_eq :
+    columnRepresentatives =
+      Array.ofFn (fun k : Fin 60 => exitRepresentative columnKeys[k.val]!) := by
+  decide +kernel
+
+private theorem columnRank_eq (j : Fin 96) :
+    columnRank j = Fin.ofNat 60 (columnKeys.idxOf (exitRead j)) := by
+  unfold columnRank
+  rw [columnRanks_eq, getElem!_pos _ _ (by simpa only [Array.size_ofFn] using j.isLt),
+    Array.getElem_ofFn]
+
+private theorem columnRepresentative_eq (k : Fin 60) :
+    columnRepresentative k = exitRepresentative columnKeys[k.val]! := by
+  unfold columnRepresentative
+  rw [columnRepresentatives_eq, getElem!_pos _ _ (by simpa only [Array.size_ofFn] using k.isLt),
+    Array.getElem_ofFn]
 
 -- Pack the existing transfer columns into radix-32 words at their representatives.
 set_option maxRecDepth 10000 in
@@ -356,11 +383,25 @@ private def rightColumn (j : Fin 96) : List ℤ :=
   let word := columns[(columnRank j).val]!
   List.ofFn fun i : Fin 168 => (((word >>> (5 * i.val)) % 32 : ℕ) : ℤ)
 
-set_option maxRecDepth 10000 in
 private theorem representative_data (j : Fin 96) :
     columnRank (columnRepresentative (columnRank j)) = columnRank j ∧
     exitRead (columnRepresentative (columnRank j)) = exitRead j := by
-  fin_cases j <;> decide +kernel
+  have hmem : exitRead j ∈ List.ofFn exitRead := List.mem_ofFn.mpr ⟨j, rfl⟩
+  have hkey : exitRead j ∈ columnKeys := List.mem_eraseDups.mpr hmem
+  have hlength : columnKeys.length = 60 := by decide +kernel
+  have hrank := List.idxOf_lt_length_of_mem hkey
+  have hread : columnKeys[(columnRank j).val]! = exitRead j := by
+    rw [columnRank_eq, Fin.val_ofNat, Nat.mod_eq_of_lt (hlength ▸ hrank),
+      getElem!_pos _ _ hrank, List.getElem_idxOf hrank]
+  have hexit := List.idxOf_lt_length_of_mem hmem
+  have hindex : (List.ofFn exitRead).idxOf (exitRead j) < 96 := by
+    simpa only [List.length_ofFn] using hexit
+  have hrep : exitRead (columnRepresentative (columnRank j)) = exitRead j := by
+    rw [columnRepresentative_eq, hread]
+    have hval : (exitRepresentative (exitRead j)).val = (List.ofFn exitRead).idxOf (exitRead j) :=
+      Nat.mod_eq_of_lt hindex
+    simpa only [List.getElem_ofFn, ← hval] using List.getElem_idxOf hexit
+  exact ⟨by simp only [columnRank_eq, hrep], hrep⟩
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in

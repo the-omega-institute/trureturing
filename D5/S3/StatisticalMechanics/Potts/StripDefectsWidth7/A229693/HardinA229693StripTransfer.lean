@@ -867,7 +867,7 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     exhausted_relabel, cl_relabel] using h
 
 -- Inherited rows need an index check. Packed rows read exitRead directly.
-private def exitRepresentative (key : Fin 108) : Fin 96 :=
+def exitRepresentative (key : Fin 108) : Fin 96 :=
   Fin.ofNat 96 ((List.ofFn exitRead).idxOf key)
 private theorem oldExits_padded (i : Fin 72) (j : Fin 96) (hj : 56 ≤ j.val) :
     oldExits i j = 0 := by
