@@ -176,7 +176,7 @@ def certificateSlopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) : F
     ((univ.filter (fun i => l < c i ∧ c i < u)).image
       (fun i => slope (P 0 (c i)) (P 1 (c i))))))
 
-theorem one_mem_slopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) :
+private theorem one_mem_slopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) :
     1 ∈ certificateSlopes c u l := by
   classical
   simp [certificateSlopes]
