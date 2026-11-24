@@ -17,7 +17,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 1, 2, by decide⟩
+  exact ⟨(), 1, 2, by norm_num [actual, realize]⟩
 private def two : PrimeValue := ⟨2, by decide⟩
 private theorem order_two : orderOf (2 : ZMod 3) = 2 :=
   orderOf_eq_prime (by decide) (by decide)
@@ -126,7 +126,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "arg", "arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
@@ -153,10 +153,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   cases hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 2, by decide⟩
+  exact ⟨(), 0, 2, by norm_num [actual, realize]⟩
 def family : Registration arena (type_of% @checkPrime_prime) where
   actual := actual
-  bridge := by simp [arena, actual, realize]
+  bridge := by simp [actual, realize]
   variation := ⟨by simpa [arena, actual, realize] using @checkPrime_prime,
     rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity
@@ -217,7 +217,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   cases hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨⟨3, 1, 0⟩, [.p two [two]], [], by decide⟩
+  refine ⟨⟨3, 1, 0⟩, [.p two [two]], [], ?_⟩
+  change checkBlock 3 1 [.p two [two]] ≠ checkBlock 3 1 []
+  decide
 def family : Registration arena (type_of% @checkBlock_append) where
   actual := actual
   bridge := Iff.rfl
@@ -251,7 +253,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 3
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

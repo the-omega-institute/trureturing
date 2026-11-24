@@ -8,6 +8,7 @@
    character bound and the exact primitive-root sieve threshold. -/
 
 import D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.FiniteRange
 import D5.S3.CharacterSums.DirichletTriangleBound
 import D5.S3.CharacterSums.DirichletTrianglePerron
 import D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta
@@ -63,17 +64,14 @@ theorem erdos985_large_prime (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
   · exact principal_smoothedCharacterSum_lower (Fact.out : p.Prime)
       (fun _ => hRH)
 
-/-- Conditional Erdős #985, with the finite small-prime range supplied as an
-explicit certificate hypothesis. -/
+/-- Conditional Erdős #985, including the kernel-certified finite prime range. -/
 theorem erdos985_of_GRH
     (hRH : RiemannHypothesis)
     (hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;
       3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
-      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
-      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) :
+      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
     ∀ p, p.Prime → p ≠ 2 →
       ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   intro p hp hne
@@ -81,6 +79,6 @@ theorem erdos985_of_GRH
   · let : Fact p.Prime := ⟨hp⟩
     exact erdos985_large_prime p hlarge hRH (hL p hp hlarge)
   · have hp2 := hp.two_le
-    exact hsmall p (by omega) (by omega) hp
+    exact SmallPrimes.small_prime_primitiveRoot p (by omega) (by omega) hp
 
 end D5.S3.Arith.PrimitiveRoot.Erdos985

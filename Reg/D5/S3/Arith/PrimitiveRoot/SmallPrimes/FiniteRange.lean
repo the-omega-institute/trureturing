@@ -30,7 +30,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   omega
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 1, 2, by decide⟩
+  exact ⟨(), 1, 2, by norm_num [actual, realize]⟩
 def family : Registration arena (type_of% @small_prime_primitiveRoot) where
   actual := actual
   bridge := Iff.rfl

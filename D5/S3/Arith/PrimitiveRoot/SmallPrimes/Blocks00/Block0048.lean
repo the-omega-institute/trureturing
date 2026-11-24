@@ -6,6 +6,10 @@
    utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0048.checked0048
    digest: Kernel proof of checker success on consecutive odd slots. -/
 
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table012
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table016
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table026
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table064
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table065
 
 set_option maxRecDepth 200000

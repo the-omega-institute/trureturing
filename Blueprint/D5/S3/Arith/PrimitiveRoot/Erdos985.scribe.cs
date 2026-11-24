@@ -31,15 +31,17 @@ internal sealed class PrimitiveRootErdos985Document : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("erdos985-of-grh"),
                 DeclarationHandle.Create(Prefix + "erdos985_of_GRH"),
-                H("The conditional conclusion with an explicit finite premise"),
+                H("The conditional conclusion with a checked finite range"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Assume RH and the stated finite-height LFunction exclusion only for " +
                     "primes p≥3483482 and nonprincipal characters of squarefree order " +
-                    "dividing rad(p−1). Also assume that every prime 3≤p<3483482 has a " +
-                    "prime primitive root below p. Then every prime p≠2 has such a root. " +
-                    "The small-prime clause is an explicit hypothesis for a separate " +
-                    "certificate module; no finite certificate is asserted here.")),
+                    "dividing rad(p−1). Then every prime p≠2 has a prime primitive root below p. " +
+                    "SmallPrimes.FiniteRange supplies the entire range 3≤p<3483482 from " +
+                    "literal certificates checked by the Lean kernel. Positive slots use " +
+                    "Lucas order tests with shared certified prime factors; composite " +
+                    "slots exhibit a nontrivial divisor. The continuous odd-slot coverage " +
+                    "has no omitted interval or final slot.")),
                 Paragraph(Text(
                     "This is the GRH conditional form of Erdős #985, obtained by assembling " +
                     "the repository's analytic chain with its exact sieve threshold. " +
