@@ -189,7 +189,7 @@ private theorem exists_large_component_of_not_dvd [Fintype V] (hcard : ¬ 4 ∣ 
 end Matchings
 
 /-- The two matching translations for deletion at q and a fixed pivot. -/
-private noncomputable def pivotMatchings {r : ℕ} {S : Set (Set (Fin (r + 1)))}
+noncomputable def pivotMatchings {r : ℕ} {S : Set (Set (Fin (r + 1)))}
     (valid : IsPartialSteiner S) (complete : ∀ a b, a ≠ b → Covered S a b)
     (q : Fin (r + 1)) (v : Fin r) : Matchings (Option (Fin (r + 1))) where
   first := translate valid complete q

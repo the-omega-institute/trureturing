@@ -33,7 +33,7 @@ def law (R : Realization sig.{v}) : Prop :=
     (G : SimpleGraph L) (e p q : L)
     (one : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centreless : Set.center L = {e})
-    (hp : p ≠ e) (hq : q ≠ e) (different : p ≠ q)
+    (different : p ≠ q)
     (edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
     (count : ℕ),
     let b := ({x : L | p * (q * (p * (q * x))) ≠ x} : Set L).ncard
@@ -101,7 +101,7 @@ private theorem rejected_law : ¬ law.{u,v} rejected := by
       ⟨(x, 0), fun eq => noncommuting (congrArg Prod.fst eq)⟩
   obtain ⟨_, _, _, impossible⟩ :=
     (bound (L := L) (A := A) M.graph e p q affine_unit affine_comm affine_invol
-      affine_centreless hp hq different (fun _ _ => Iff.rfl)
+      affine_centreless different (fun _ _ => Iff.rfl)
       ({a | SuccessfulStart (pointDeletedFamily S i) matching w a} : Set (Fin r)).ncard).mp
         ⟨labels, r, label, S, valid, cover, i, w, matching, zero, atP, atQ, transport, leave, rfl⟩
   simp only [rejected, realize, zero_mul] at impossible
@@ -145,7 +145,7 @@ def fixedCountRegistration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "arg", "body", "arg", "arg",
+        "body", "body", "arg", "arg", "body", "arg", "arg",
         "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false

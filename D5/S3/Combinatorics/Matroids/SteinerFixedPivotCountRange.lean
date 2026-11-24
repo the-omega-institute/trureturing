@@ -14,18 +14,18 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 namespace D5.S3.Combinatorics.Matroids.SteinerFixedPivotCountRange
 
 open Finset Function SimpleGraph
-open D5.S3.Combinatorics.Matroids.SteinerAlternatingSwitches (Matchings SuccessfulStart)
+open D5.S3.Combinatorics.Matroids.SteinerAlternatingSwitches (Matchings SuccessfulStart pivotMatchings)
 open D5.S3.Combinatorics.Matroids.SteinerReturnDependencies (firstReturn returnRow)
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension
   (extensionMul extensionSteinerAndCentre identityReturn pairedLift_eq_mul returnAlongComponent)
 open D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
-  (extensionNoncommutingCount labelledSwitchCount pointedNumbering squareFixed)
+  (realizeLabelledSwitchCount squareFixed)
 open D5.S3.Combinatorics.Matroids.SteinerSwitchSupport (selectedByRow)
 open D5.S3.Combinatorics.Matroids.PointDeletedSteinerSwitch (pointDeletedFamily)
 open D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open D5.S3.Combinatorics.Matroids.RankThreeSaturatedTopGap (Covered Uncovered)
 open D5.S3.Combinatorics.Matroids.SteinerMatchingTranslations
-  (translate translate_involutive translate_ne_self translate_ne_translate)
+  (translate)
 
 private theorem pivotSquareSize {L : Type*} [Finite L] [Mul L]
     (G : SimpleGraph L) (e p q : L)
@@ -56,19 +56,8 @@ private theorem pivotSquareSize {L : Type*} [Finite L] [Mul L]
     matching.first (matching.second (matching.first (matching.second x))) = x
   have commute :
       matching.first (matching.second x) = matching.second (matching.first x) ↔
-        matching.first (matching.second (matching.first (matching.second x))) = x := by
-    have f := matching.first_involutive
-    have g := matching.second_involutive
-    constructor
-    · intro equal
-      rw [equal, g, f]
-    · intro equal
-      have back := congrArg (matching.second ∘ matching.first) equal
-      change matching.second (matching.first
-        (matching.first (matching.second (matching.first (matching.second x))))) =
-        matching.second (matching.first x) at back
-      rw [f, g] at back
-      exact back
+        matching.first (matching.second (matching.first (matching.second x))) = x :=
+    eq_comm.trans (squareFixed matching.first_involutive matching.second_involutive x)
   rw [← commute]
   refine ⟨fun card => ?_, fun equal => ?_⟩
   · by_contra! ne
@@ -135,24 +124,87 @@ private theorem fourFiberCount {L C : Type*} [Fintype L] [DecidableEq L] [Fintyp
       rw [filterEq, square c (sub hc)]
     _ = _ := by simp [Nat.mul_comm]
 
-private theorem fixedPivotCountRange {L A : Type*} [Fintype L] [DecidableEq L] [Mul L]
+/-- The attainable labelled switch counts form an arithmetic progression. -/
+theorem labelledFixedPivotCountRange {L A : Type*} [Finite L] [Mul L]
     [Finite A] [AddCommGroup A] [Module (ZMod 2) A]
-    (G : SimpleGraph L) [Fintype G.ConnectedComponent] [DecidableEq G.ConnectedComponent]
-    (e p q : L)
+    (G : SimpleGraph L) (e p q : L)
     (one : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centreless : Set.center L = {e})
-    (hp : p ≠ e) (hq : q ≠ e) (different : p ≠ q)
+    (different : p ≠ q)
     (edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
     (count : ℕ) :
     let b := ({x : L | p * (q * (p * (q * x))) ≠ x} : Set L).ncard
     let s := ({C : G.ConnectedComponent | C ≠ G.connectedComponentMk e ∧ C.supp.ncard = 4} :
       Set G.ConnectedComponent).ncard
-    (∃ labels : Set L → A,
+    (∃ (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
+      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b)
+      (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
       letI := extensionMul e labels
-      ({w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} :
-        Set (L × A)).ncard = count) ↔
+      label none = (e, 0) ∧ label (some i) = (p, 0) ∧
+      label (some (i.succAbove v)) = (q, 0) ∧
+      (∀ j a, label (translate valid cover j a) = label (some j) * label a) ∧
+      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+      ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard = count) ↔
       ∃ k ≤ s, (k = 0 ∨ Nontrivial A) ∧ count = Nat.card A * (b + 4 * k) := by
   classical
+  let _ := Fintype.ofFinite L
+  let _ := Fintype.ofFinite G.ConnectedComponent
+  have labelCount (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
+      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b)
+      (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r)
+      (atP : label (some i) = (p, 0))
+      (atQ : label (some (i.succAbove v)) = (q, 0))
+      (transport : letI := extensionMul e labels
+        ∀ j a, label (translate valid cover j a) = label (some j) * label a)
+      (leave : ∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) :
+      letI := extensionMul e labels
+      ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
+        ({w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} :
+          Set (L × A)).ncard := by
+    let _ := extensionMul e labels
+    have pass := SteinerAlternatingSwitches.point_deleted_successful_starts S valid cover i
+    obtain ⟨_, matched, relation, states⟩ := pass
+    have same : matched = m := funext fun a =>
+      (leave a (matched a)).mp ((relation a (matched a)).mpr rfl) |>.symm
+    subst matched
+    have image := (states v).2.1
+    let embed : Fin r → L × A := label ∘ Option.some ∘ i.succAbove
+    have inj : Function.Injective embed :=
+      label.injective.comp ((Option.some_injective _).comp Fin.succAbove_right_injective)
+    have transplant :
+        label '' {x | 6 ≤ ((SteinerAlternatingSwitches.pivotGraph valid cover i v).connectedComponentMk
+          x).supp.ncard} = {w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} := by
+      let matching := pivotMatchings valid cover i v
+      ext w
+      obtain ⟨x, rfl⟩ := label.surjective w
+      rw [Equiv.image_eq_preimage_symm]
+      simp only [Set.mem_preimage, Equiv.symm_apply_apply, Set.mem_ofPred_eq]
+      change 6 ≤ (matching.graph.connectedComponentMk x).supp.ncard ↔ _
+      rw [← matching.noncommute_iff_six_le_component x]
+      have endpoints :
+          label (matching.second (matching.first x)) = (q, 0) * ((p, 0) * label x) ∧
+          label (matching.first (matching.second x)) = (p, 0) * ((q, 0) * label x) := by
+        change label (translate valid cover (i.succAbove v) (translate valid cover i x)) = _ ∧
+          label (translate valid cover i (translate valid cover (i.succAbove v) x)) = _
+        simp only [transport, atP, atQ, and_self]
+      rw [← endpoints.1, ← endpoints.2, label.injective.ne_iff, ne_comm]
+    have exactImage : embed '' {a | SuccessfulStart (pointDeletedFamily S i) m v a} =
+        {w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} := by
+      change (label ∘ (Option.some ∘ i.succAbove)) '' _ = _
+      calc
+        _ = label '' ((Option.some ∘ i.succAbove) ''
+            {a | SuccessfulStart (pointDeletedFamily S i) m v a}) :=
+          (Set.image_image label (Option.some ∘ i.succAbove) _).symm
+        _ = _ := (congrArg (Set.image label) image).trans transplant
+    rw [← Set.ncard_image_of_injective _ inj, exactImage]
+  have hp : p ≠ e := by
+    intro eq
+    exact G.irrefl ((edges e e).mpr (Or.inl (by simpa [eq] using one e)))
+  have hq : q ≠ e := by
+    intro eq
+    exact G.irrefl ((edges e e).mpr (Or.inr (by simpa [eq] using one e)))
   have square := pivotSquareSize G e p q one comm invol hp hq different edges
   let comp := G.connectedComponentMk
   let idComponent := comp e
@@ -188,7 +240,8 @@ private theorem fixedPivotCountRange {L A : Type*} [Fintype L] [DecidableEq L] [
     have two : (2 : ZMod 2) = 0 := by decide
     simpa only [two_smul, zero_smul] using congrArg (fun c : ZMod 2 => c • a) two
   constructor
-  · rintro ⟨labels, hc⟩
+  · rintro ⟨labels, r, label, S, valid, cover, i, v, m, _, atP, atQ, transport, leave, n⟩
+    have hc := (labelCount labels r label S valid cover i v m atP atQ transport leave).symm.trans n
     let _ := extensionMul e labels
     let invExt := (extensionSteinerAndCentre e labels one comm invol twice centreless).2.2.1
     let values := returnValueOnComponent G e p q labels invol twice edges invExt
@@ -232,10 +285,9 @@ private theorem fixedPivotCountRange {L A : Type*} [Fintype L] [DecidableEq L] [
       active (fun zero => (Nat.ne_of_gt (Finset.card_pos.mpr ⟨C, present⟩)) (size.trans zero))
     let t (C : {C : G.ConnectedComponent // C ≠ comp e}) : A :=
       if C.val ∈ keep then value else 0
-    obtain ⟨labels, _, _, _, _, image⟩ :=
-      extensionNoncommutingCount G e p q one comm invol twice centreless different hp hq edges t
-    refine ⟨labels, ?_⟩
-    let _ := extensionMul e labels
+    obtain ⟨labels, r, label, i, v, S, valid, cover, m, zero, atP, atQ, _, transport, leave, _, measured⟩ :=
+      realizeLabelledSwitchCount G e p q one comm invol twice centreless different edges t
+    refine ⟨labels, r, label, S, valid, cover, i, v, m, zero, atP, atQ, transport, leave, ?_⟩
     let chosen := Base ∪ univ.filter (fun x => comp x ∈ keep)
     have selected :
         ({x : L | p * (q * (p * (q * x))) ≠ x ∨
@@ -250,120 +302,8 @@ private theorem fixedPivotCountRange {L A : Type*} [Fintype L] [DecidableEq L] [
         simp [t, absent] at active
       · intro present
         exact ⟨((memAvailable (comp x)).mp (subset present)).1, by simp [t, present, nonzero present]⟩
-    dsimp only at image
-    change ({w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} :
-      Set (L × A)).ncard = _
-    rw [image, selected, Set.ncard_prod, Set.ncard_univ, Set.ncard_coe_finset, Nat.mul_comm]
-    rw [fourFiberCount comp Available eachFour Base disjoint keep subset, size]
-
-/-- The attainable labelled switch counts form an arithmetic progression. -/
-theorem labelledFixedPivotCountRange {L A : Type*} [Finite L] [Mul L]
-    [Finite A] [AddCommGroup A] [Module (ZMod 2) A]
-    (G : SimpleGraph L) (e p q : L)
-    (one : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
-    (invol : ∀ x y : L, x * (x * y) = y) (centreless : Set.center L = {e})
-    (hp : p ≠ e) (hq : q ≠ e) (different : p ≠ q)
-    (edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
-    (count : ℕ) :
-    let b := ({x : L | p * (q * (p * (q * x))) ≠ x} : Set L).ncard
-    let s := ({C : G.ConnectedComponent | C ≠ G.connectedComponentMk e ∧ C.supp.ncard = 4} :
-      Set G.ConnectedComponent).ncard
-    (∃ (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
-      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
-      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b)
-      (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
-      letI := extensionMul e labels
-      label none = (e, 0) ∧ label (some i) = (p, 0) ∧
-      label (some (i.succAbove v)) = (q, 0) ∧
-      (∀ j a, label (translate valid cover j a) = label (some j) * label a) ∧
-      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
-      ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard = count) ↔
-      ∃ k ≤ s, (k = 0 ∨ Nontrivial A) ∧ count = Nat.card A * (b + 4 * k) := by
-  classical
-  let _ := Fintype.ofFinite L
-  let _ := Fintype.ofFinite G.ConnectedComponent
-  have twice (a : A) : a + a = 0 := by
-    have two : (2 : ZMod 2) = 0 := by decide
-    simpa only [two_smul, zero_smul] using congrArg (fun c : ZMod 2 => c • a) two
-  have labelCount (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
-      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
-      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b)
-      (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r)
-      (atP : label (some i) = (p, 0))
-      (atQ : label (some (i.succAbove v)) = (q, 0))
-      (transport : letI := extensionMul e labels
-        ∀ j a, label (translate valid cover j a) = label (some j) * label a)
-      (leave : ∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) :
-      letI := extensionMul e labels
-      ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
-        ({w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} :
-          Set (L × A)).ncard := by
-    let _ := extensionMul e labels
-    have pass := SteinerAlternatingSwitches.point_deleted_successful_starts S valid cover i
-    obtain ⟨_, matched, relation, states⟩ := pass
-    have same : matched = m := funext fun a =>
-      (leave a (matched a)).mp ((relation a (matched a)).mpr rfl) |>.symm
-    subst matched
-    have image := (states v).2.1
-    let embed : Fin r → L × A := label ∘ Option.some ∘ i.succAbove
-    have inj : Function.Injective embed :=
-      label.injective.comp ((Option.some_injective _).comp Fin.succAbove_right_injective)
-    have transplant :
-        label '' {x | 6 ≤ ((SteinerAlternatingSwitches.pivotGraph valid cover i v).connectedComponentMk
-          x).supp.ncard} = {w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} := by
-      let matching : Matchings (Option (Fin (r + 1))) := {
-        first := translate valid cover i
-        second := translate valid cover (i.succAbove v)
-        first_involutive := translate_involutive valid cover i
-        second_involutive := translate_involutive valid cover (i.succAbove v)
-        first_ne_self := translate_ne_self valid cover i
-        second_ne_self := translate_ne_self valid cover (i.succAbove v)
-        partners_ne := translate_ne_translate valid cover (Fin.succAbove_ne i v).symm
-      }
-      ext w
-      obtain ⟨x, rfl⟩ := label.surjective w
-      rw [Equiv.image_eq_preimage_symm]
-      simp only [Set.mem_preimage, Equiv.symm_apply_apply, Set.mem_ofPred_eq]
-      change 6 ≤ (matching.graph.connectedComponentMk x).supp.ncard ↔ _
-      rw [← matching.noncommute_iff_six_le_component x]
-      have endpoints :
-          label (matching.second (matching.first x)) = (q, 0) * ((p, 0) * label x) ∧
-          label (matching.first (matching.second x)) = (p, 0) * ((q, 0) * label x) := by
-        change label (translate valid cover (i.succAbove v) (translate valid cover i x)) = _ ∧
-          label (translate valid cover i (translate valid cover (i.succAbove v) x)) = _
-        simp only [transport, atP, atQ, and_self]
-      rw [← endpoints.1, ← endpoints.2, label.injective.ne_iff, ne_comm]
-    have exactImage : embed '' {a | SuccessfulStart (pointDeletedFamily S i) m v a} =
-        {w : L × A | (q, 0) * ((p, 0) * w) ≠ (p, 0) * ((q, 0) * w)} := by
-      change (label ∘ (Option.some ∘ i.succAbove)) '' _ = _
-      calc
-        _ = label '' ((Option.some ∘ i.succAbove) ''
-            {a | SuccessfulStart (pointDeletedFamily S i) m v a}) :=
-          (Set.image_image label (Option.some ∘ i.succAbove) _).symm
-        _ = _ := (congrArg (Set.image label) image).trans transplant
-    rw [← Set.ncard_image_of_injective _ inj, exactImage]
-  have range := fixedPivotCountRange (A := A) G e p q one comm invol centreless hp hq
-    different edges count
-  constructor
-  · rintro ⟨labels, r, label, S, valid, cover, i, v, m, _zero, atP, atQ, transport, leave, n⟩
-    exact range.mp ⟨labels, (labelCount labels r label S valid cover i v m
-      atP atQ transport leave).symm.trans n⟩
-  · intro result
-    obtain ⟨labels, n⟩ := range.mpr result
-    let _ := extensionMul e labels
-    obtain ⟨unitExt, commExt, invExt, _⟩ :=
-      extensionSteinerAndCentre e labels one comm invol twice centreless
-    have differentP : (p, (0 : A)) ≠ (e, 0) := fun h => hp (congrArg Prod.fst h)
-    have differentQ : (q, (0 : A)) ≠ (e, 0) := fun h => hq (congrArg Prod.fst h)
-    obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) ⟨(p, 0), differentP⟩
-    obtain ⟨i, v, atP, atQ⟩ := locate (p, 0) (q, 0) differentP differentQ
-      (fun h => different (congrArg Prod.fst h))
-    obtain ⟨S, valid, cover, transport, byDeleted⟩ :=
-      labelledSwitchCount label (by simpa only [zero] using unitExt) commExt invExt
-    obtain ⟨m, leave, starts⟩ := byDeleted i
-    have measured := (starts v).2
-    rw [atP, atQ] at measured
-    exact ⟨labels, r, label, S, valid, cover, i, v, m, zero, atP, atQ, transport, leave,
-      measured.trans n⟩
+    dsimp only at measured
+    rw [measured, selected, Set.ncard_coe_finset,
+      fourFiberCount comp Available eachFour Base disjoint keep subset, size]
 
 end D5.S3.Combinatorics.Matroids.SteinerFixedPivotCountRange
