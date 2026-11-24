@@ -160,6 +160,8 @@ $$\forall X: \mathit{Type}, (\forall n: \mathit{Nat}, (\forall f: (X) \to (X), (
 
 The list of table rows starts at the initial vector. Its adjacent update equations determine the forward vector at each index.
 
+With the identity on natural numbers and seed zero, a one-row table containing one vacuously satisfies the adjacent updates and fails at index zero. A two-row table containing zero and then one satisfies the start equation and fails at index one. These examples show why the table needs both the start equation and the adjacent updates.
+
 **Theorem 1.12 (Zero-degree table update).**
 
 $$\forall k: \operatorname{\mathit{Fin}}\left(20\right), (\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMul}}\left(\operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castSucc}}\left(k\right)\right), \operatorname{\mathit{HardinA203981StripData}}.\operatorname{T}\right) = \operatorname{\mathit{HardinA203981StripCertificate}}.\operatorname{W}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{succ}}\left(k\right)\right))$$

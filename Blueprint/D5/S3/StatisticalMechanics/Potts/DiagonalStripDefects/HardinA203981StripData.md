@@ -100,7 +100,7 @@ $$(\operatorname{\mathit{HardinA203981StripData}}.\operatorname{\mathit{classPai
 
 *Commentary.*
 
-The two entries are in increasing order with equality allowed.
+The entries follow the upper-triangular order of Mathlib's List.mapDiagM' on the five triple classes, including the diagonal.
 
 **Definition 1.8 (Representative rows).**
 

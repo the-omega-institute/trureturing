@@ -200,6 +200,8 @@ $$\forall (s: \mathit{Type}) [\operatorname{\mathit{Fintype}}\left(s\right)], (\
 
 The finite enumeration defines the matrix-vector sums. Taking the terminal vector equal to one at the selected coordinate and zero elsewhere reads that coordinate from the shifted relation.
 
+The seed equation is needed even at shift zero. For a one-state identity transfer with initial entry one, base zero, order one and coefficient zero, the left-hand side is one and the right-hand side is zero.
+
 **Theorem 1.15 (Forward relation at exponent thirteen).**
 
 $$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + 12\right) = \sum_{k: \operatorname{\mathit{Fin}}\left(12\right)} (\operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{HardinA229508StripCertificate}}.\operatorname{\mathit{coeff}}\left(k\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229508StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229508StripData}}.\operatorname{\mathit{initial}}, 1 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)\right)\right))$$
