@@ -444,15 +444,13 @@ private theorem sewing_on_cap (f g : ℂ → ℂ)
   have hEq := hfU.eqOn_of_preconnected_of_mem_closure hgU hU hr₀ hacc
   exact fun y hy hre => hEq ⟨by simpa using hy, hre⟩
 
-private theorem sew_integral_terms (cA cB : ℤ × ℤ → ℂ) (d iA iB : ℤ)
-    (haOff : ∀ p, p ∉ Set.range (energyModes d iA) → cA p = 0)
-    (hbOff : ∀ p, p ∉ Set.range (energyModes d iB) → cB p = 0)
+private theorem sewing_radii (cA cB : ℤ × ℤ → ℂ) (d iA iB : ℤ)
     (hreal : ∀ {x z : ℝ}, 0 < z → z < x → x < 2 * z →
       Summable (integralTerm cA ((x : ℂ) - z) z) ∧
       Summable (integralTerm cB (z : ℂ) x) ∧
       (∑' p, integralTerm cA ((x : ℂ) - z) z p) = ∑' p, integralTerm cB (z : ℂ) x p)
-    {x z : ℂ} (hx : x ≠ 0) (hzx : ‖z‖ < ‖x‖) (hxz : ‖x - z‖ < ‖z‖) :
-    ∃ s : ℂ, HasSum (integralTerm cA (x - z) z) s ∧ HasSum (integralTerm cB z x) s := by
+    : 1 ≤ (FormalMultilinearSeries.ofScalars ℂ (cA ∘ energyModes d iA)).radius ∧
+      1 ≤ (FormalMultilinearSeries.ofScalars ℂ (cB ∘ energyModes d iB)).radius := by
   have hradA : 1 ≤ (FormalMultilinearSeries.ofScalars ℂ (cA ∘ energyModes d iA)).radius := by
     apply radialSeries_radius
     intro r hr hr₁
@@ -469,6 +467,18 @@ private theorem sew_integral_terms (cA cB : ℤ × ℤ → ℂ) (d iA iB : ℤ)
       simpa using (hreal (x := 1) (z := r) hp hr₁ (by linarith)).2.1
     simpa [Function.comp_def] using
       summable_at_ratio cB d iB (Complex.ofReal_ne_zero.mpr hp.ne') one_ne_zero hs
+  exact ⟨hradA, hradB⟩
+
+private theorem sew_integral_terms (cA cB : ℤ × ℤ → ℂ) (d iA iB : ℤ)
+    (haOff : ∀ p, p ∉ Set.range (energyModes d iA) → cA p = 0)
+    (hbOff : ∀ p, p ∉ Set.range (energyModes d iB) → cB p = 0)
+    (hreal : ∀ {x z : ℝ}, 0 < z → z < x → x < 2 * z →
+      Summable (integralTerm cA ((x : ℂ) - z) z) ∧
+      Summable (integralTerm cB (z : ℂ) x) ∧
+      (∑' p, integralTerm cA ((x : ℂ) - z) z p) = ∑' p, integralTerm cB (z : ℂ) x p)
+    {x z : ℂ} (hx : x ≠ 0) (hzx : ‖z‖ < ‖x‖) (hxz : ‖x - z‖ < ‖z‖) :
+    ∃ s : ℂ, HasSum (integralTerm cA (x - z) z) s ∧ HasSum (integralTerm cB z x) s := by
+  obtain ⟨hradA, hradB⟩ := sewing_radii cA cB d iA iB hreal
   let A : ℂ → ℂ := FormalMultilinearSeries.ofScalarsSum (cA ∘ energyModes d iA)
   let B : ℂ → ℂ := FormalMultilinearSeries.ofScalarsSum (cB ∘ energyModes d iB)
   let t (y : ℂ) := (1 - y) / y
@@ -544,33 +554,22 @@ private theorem sew_integral_terms (cA cB : ℤ × ℤ → ℂ) (d iA iB : ℤ)
   rw [hEq y hy hre]
   simpa only [g, B, y, mul_assoc] using hBz
 
-/-- The actual A and upper B four-H matrix coefficients sew on the complex
-common radial domain. Both sums retain their full pair of doubled mode indices.
-A nonzero term has even doubled exponents and lies on the indicated energy diagonal. -/
-theorem fourH_actual_complex_sewing (M K L N : ℕ) (u v w b : TwistedEven)
+private theorem fourH_integral_data (M K L N : ℕ) (u v w b : TwistedEven)
     (hu : u.val ∈ actualGrade ℒ leechUnit M) (hv : v.val ∈ actualGrade ℒ leechUnit K)
     (hw : w.val ∈ actualGrade ℒ leechUnit L) (hb : b.val ∈ actualGrade ℒ leechUnit N)
-    {x z : ℂ} (hx : x ≠ 0) (hzx : ‖z‖ < ‖x‖) (hxz : ‖x - z‖ < ‖z‖) :
-    Summable (complexATerm x z u v w b) ∧ Summable (complexBTerm x z u v w b) ∧
-      (∑' p, complexATerm x z u v w b p) = (∑' p, complexBTerm x z u v w b p) ∧
-      (∀ p, complexATerm x z u v w b p ≠ 0 → Even p.1 ∧ Even p.2 ∧
-        ∃ E : ℕ, p = (fixedAExponent M K E, (N : ℤ) - L - 2 * (E : ℤ))) ∧
-      (∀ p, complexBTerm x z u v w b p ≠ 0 → Even p.1 ∧ Even p.2 ∧
-        ∃ E : ℕ, p = (fixedAExponent K L E, (N : ℤ) - M - 2 * (E : ℤ))) := by
-  by_cases hzero : u = 0 ∨ v = 0 ∨ w = 0 ∨ b = 0
-  · have hA : complexATerm x z u v w b = fun _ => 0 := by
-      funext p
-      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexATerm, integralTerm, aCoeff]
-    have hB : complexBTerm x z u v w b = fun _ => 0 := by
-      funext p
-      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexBTerm, integralTerm, bCoeff]
-    simp [hA, hB]
-  push Not at hzero
-  obtain ⟨⟨m, hm⟩, ⟨k, hk⟩, ⟨l, hl⟩, ⟨n, hn⟩⟩ : Even M ∧ Even K ∧ Even L ∧ Even N :=
-    ⟨by_contra fun h => hzero.1 (homogeneousH_zero_of_odd_grade M u hu h),
-     by_contra fun h => hzero.2.1 (homogeneousH_zero_of_odd_grade K v hv h),
-     by_contra fun h => hzero.2.2.1 (homogeneousH_zero_of_odd_grade L w hw h),
-     by_contra fun h => hzero.2.2.2 (homogeneousH_zero_of_odd_grade N b hb h)⟩
+    (hEven : Even M ∧ Even K ∧ Even L ∧ Even N) :
+    let cA (p : ℤ × ℤ) := aCoeff u v w b p.1 p.2
+    let cB (p : ℤ × ℤ) := bCoeff u v w b p.1 p.2
+    ∃ d iA iB : ℤ,
+      (∀ E, energyModes d iA E = (aModes M K L N ∘ fixedAExponent M K) E) ∧
+      (∀ E, energyModes d iB E = bModes M K L N E) ∧
+      (∀ p, p ∉ Set.range (energyModes d iA) → cA p = 0) ∧
+      (∀ p, p ∉ Set.range (energyModes d iB) → cB p = 0) ∧
+      (∀ {r s : ℝ}, 0 < s → s < r → r < 2 * s →
+        Summable (integralTerm cA ((r : ℂ) - s) s) ∧
+        Summable (integralTerm cB (s : ℂ) r) ∧
+        (∑' p, integralTerm cA ((r : ℂ) - s) s p) = ∑' p, integralTerm cB (s : ℂ) r p) := by
+  obtain ⟨⟨m, hm⟩, ⟨k, hk⟩, ⟨l, hl⟩, ⟨n, hn⟩⟩ := hEven
   let d : ℤ := (n : ℤ) - m - k - l - 3
   let iA : ℤ := (m : ℤ) + k + 3
   let iB : ℤ := (k : ℤ) + l + 3
@@ -600,6 +599,45 @@ theorem fourH_actual_complex_sewing (M K L N : ℕ) (u v w b : TwistedEven)
       funext (integralTerm_ofReal cB d iB hbOff hs.le (hs.trans hsr).le)
     rw [hA, hB]
     exact fourH_actual_real_sewing M K L N u v w b hu hv hw hb hs hsr hrs
+  exact ⟨d, iA, iB, hA_mode, hB_mode, haOff, hbOff, hreal⟩
+
+private theorem fourH_even_grades (M K L N : ℕ) (u v w b : TwistedEven)
+    (hu : u.val ∈ actualGrade ℒ leechUnit M) (hv : v.val ∈ actualGrade ℒ leechUnit K)
+    (hw : w.val ∈ actualGrade ℒ leechUnit L) (hb : b.val ∈ actualGrade ℒ leechUnit N)
+    (hzero : ¬ (u = 0 ∨ v = 0 ∨ w = 0 ∨ b = 0)) : Even M ∧ Even K ∧ Even L ∧ Even N := by
+  push Not at hzero
+  exact
+    ⟨by_contra fun h => hzero.1 (homogeneousH_zero_of_odd_grade M u hu h),
+     by_contra fun h => hzero.2.1 (homogeneousH_zero_of_odd_grade K v hv h),
+     by_contra fun h => hzero.2.2.1 (homogeneousH_zero_of_odd_grade L w hw h),
+     by_contra fun h => hzero.2.2.2 (homogeneousH_zero_of_odd_grade N b hb h)⟩
+
+/-- The actual A and upper B four-H matrix coefficients sew on the complex
+common radial domain. Both sums retain their full pair of doubled mode indices.
+A nonzero term has even doubled exponents and lies on the indicated energy diagonal. -/
+theorem fourH_actual_complex_sewing (M K L N : ℕ) (u v w b : TwistedEven)
+    (hu : u.val ∈ actualGrade ℒ leechUnit M) (hv : v.val ∈ actualGrade ℒ leechUnit K)
+    (hw : w.val ∈ actualGrade ℒ leechUnit L) (hb : b.val ∈ actualGrade ℒ leechUnit N)
+    {x z : ℂ} (hx : x ≠ 0) (hzx : ‖z‖ < ‖x‖) (hxz : ‖x - z‖ < ‖z‖) :
+    Summable (complexATerm x z u v w b) ∧ Summable (complexBTerm x z u v w b) ∧
+      (∑' p, complexATerm x z u v w b p) = (∑' p, complexBTerm x z u v w b p) ∧
+      (∀ p, complexATerm x z u v w b p ≠ 0 → Even p.1 ∧ Even p.2 ∧
+        ∃ E : ℕ, p = (fixedAExponent M K E, (N : ℤ) - L - 2 * (E : ℤ))) ∧
+      (∀ p, complexBTerm x z u v w b p ≠ 0 → Even p.1 ∧ Even p.2 ∧
+        ∃ E : ℕ, p = (fixedAExponent K L E, (N : ℤ) - M - 2 * (E : ℤ))) := by
+  by_cases hzero : u = 0 ∨ v = 0 ∨ w = 0 ∨ b = 0
+  · have hA : complexATerm x z u v w b = fun _ => 0 := by
+      funext p
+      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexATerm, integralTerm, aCoeff]
+    have hB : complexBTerm x z u v w b = fun _ => 0 := by
+      funext p
+      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexBTerm, integralTerm, bCoeff]
+    simp [hA, hB]
+  have hEven := fourH_even_grades M K L N u v w b hu hv hw hb hzero
+  let cA (p : ℤ × ℤ) := aCoeff u v w b p.1 p.2
+  let cB (p : ℤ × ℤ) := bCoeff u v w b p.1 p.2
+  obtain ⟨d, iA, iB, hA_mode, hB_mode, haOff, hbOff, hreal⟩ :=
+    fourH_integral_data M K L N u v w b hu hv hw hb hEven
   obtain ⟨s, haSum, hbSum⟩ := sew_integral_terms cA cB d iA iB haOff hbOff hreal hx hzx hxz
   refine ⟨haSum.summable, hbSum.summable, haSum.tsum_eq.trans hbSum.tsum_eq.symm, ?_, ?_⟩
   · intro p hp
@@ -616,5 +654,75 @@ theorem fourH_actual_complex_sewing (M K L N : ℕ) (u v w b : TwistedEven)
       simp [complexBTerm, integralTerm, show bCoeff u v w b p.1 p.2 = 0 from hbOff p h] at hp
     obtain ⟨E, rfl⟩ := hmem
     exact ⟨even_two_mul _, even_two_mul _, E, hB_mode E⟩
+
+/-- The punctured radial domain of the actual A iterate. -/
+def radialDomainA : Set (ℂ × ℂ) :=
+  {q | 0 < ‖q.1 - q.2‖ ∧ ‖q.1 - q.2‖ < ‖q.2‖}
+
+/-- The punctured radial domain of the actual upper B product. -/
+def radialDomainB : Set (ℂ × ℂ) :=
+  {q | 0 < ‖q.2‖ ∧ ‖q.2‖ < ‖q.1‖}
+
+private theorem isOpen_radial {a b : ℂ × ℂ → ℂ} (ha : Continuous a) (hb : Continuous b) :
+    IsOpen {q | 0 < ‖a q‖ ∧ ‖a q‖ < ‖b q‖} :=
+  (isOpen_lt continuous_const ha.norm).inter (isOpen_lt ha.norm hb.norm)
+
+private theorem integralTerm_on_radial (c : ℤ × ℤ → ℂ) (d i : ℤ)
+    (hoff : ∀ p, p ∉ Set.range (energyModes d i) → c p = 0)
+    (hc : 1 ≤ (FormalMultilinearSeries.ofScalars ℂ (c ∘ energyModes d i)).radius)
+    {a b : ℂ × ℂ → ℂ} (ha : ∀ q, AnalyticAt ℂ a q) (hb : ∀ q, AnalyticAt ℂ b q) :
+    let U := {q | 0 < ‖a q‖ ∧ ‖a q‖ < ‖b q‖}
+    (∀ q ∈ U, Summable (integralTerm c (a q) (b q))) ∧
+      AnalyticOnNhd ℂ (fun q => ∑' p, integralTerm c (a q) (b q) p) U := by
+  let F (q : ℂ × ℂ) := b q ^ d * ((a q / b q) ^ (-i) *
+    FormalMultilinearSeries.ofScalarsSum (c ∘ energyModes d i) (a q / b q))
+  have data (q : ℂ × ℂ) (hq : 0 < ‖a q‖ ∧ ‖a q‖ < ‖b q‖) :
+      a q ≠ 0 ∧ b q ≠ 0 ∧ ‖a q / b q‖ < 1 := by
+    have hbpos := hq.1.trans hq.2
+    exact ⟨norm_pos_iff.mp hq.1, norm_pos_iff.mp hbpos, by
+      rw [norm_div, div_lt_one hbpos]
+      exact hq.2⟩
+  have hsum (q : ℂ × ℂ) (hq : 0 < ‖a q‖ ∧ ‖a q‖ < ‖b q‖) :
+      HasSum (integralTerm c (a q) (b q)) (F q) := by
+    obtain ⟨ha₀, hb₀, hr⟩ := data q hq
+    simpa only [F, mul_assoc] using integralTerm_hasSum c d i hoff hc ha₀ hb₀ hr
+  refine ⟨fun q hq => (hsum q hq).summable, fun q hq => ?_⟩
+  have hopen := isOpen_radial (continuous_iff_continuousAt.mpr fun r => (ha r).continuousAt)
+    (continuous_iff_continuousAt.mpr fun r => (hb r).continuousAt)
+  obtain ⟨ha₀, hb₀, hr⟩ := data q hq
+  have hratio : AnalyticAt ℂ (fun r => a r / b r) q := (ha q).div (hb q) hb₀
+  have hLaurent := AnalyticAt.fun_comp (f := fun r => a r / b r) (x := q)
+    (laurentSeries_analyticAt _ i hc hr (div_ne_zero ha₀ hb₀)) hratio
+  have hF : AnalyticAt ℂ F q := ((hb q).zpow hb₀).mul hLaurent
+  exact hF.congr (Filter.Eventually.mono (hopen.mem_nhds hq)
+    fun r hr => (hsum r hr).tsum_eq.symm)
+
+/-- For homogeneous inputs, each raw double-mode series converges and its sum
+is jointly holomorphic on that channel's full radial domain. -/
+theorem fourH_actual_homogeneous_radial (M K L N : ℕ) (u v w b : TwistedEven)
+    (hu : u.val ∈ actualGrade ℒ leechUnit M) (hv : v.val ∈ actualGrade ℒ leechUnit K)
+    (hw : w.val ∈ actualGrade ℒ leechUnit L) (hb : b.val ∈ actualGrade ℒ leechUnit N) :
+    ((∀ q ∈ radialDomainA, Summable (complexATerm q.1 q.2 u v w b)) ∧
+      AnalyticOnNhd ℂ (fun q => ∑' p, complexATerm q.1 q.2 u v w b p) radialDomainA) ∧
+    ((∀ q ∈ radialDomainB, Summable (complexBTerm q.1 q.2 u v w b)) ∧
+      AnalyticOnNhd ℂ (fun q => ∑' p, complexBTerm q.1 q.2 u v w b p) radialDomainB) := by
+  by_cases hzero : u = 0 ∨ v = 0 ∨ w = 0 ∨ b = 0
+  · have hA (q : ℂ × ℂ) : complexATerm q.1 q.2 u v w b = fun _ => 0 := by
+      funext p
+      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexATerm, integralTerm, aCoeff]
+    have hB (q : ℂ × ℂ) : complexBTerm q.1 q.2 u v w b = fun _ => 0 := by
+      funext p
+      rcases hzero with rfl | rfl | rfl | rfl <;> simp [complexBTerm, integralTerm, bCoeff]
+    simp [hA, hB, analyticOnNhd_const]
+  have hEven := fourH_even_grades M K L N u v w b hu hv hw hb hzero
+  let cA (p : ℤ × ℤ) := aCoeff u v w b p.1 p.2
+  let cB (p : ℤ × ℤ) := bCoeff u v w b p.1 p.2
+  obtain ⟨d, iA, iB, _, _, haOff, hbOff, hreal⟩ :=
+    fourH_integral_data M K L N u v w b hu hv hw hb hEven
+  obtain ⟨hradA, hradB⟩ := sewing_radii cA cB d iA iB hreal
+  exact ⟨integralTerm_on_radial cA d iA haOff hradA
+      (fun _ => analyticAt_fst.sub analyticAt_snd) (fun _ => analyticAt_snd),
+    integralTerm_on_radial cB d iB hbOff hradB
+      (fun _ => analyticAt_snd) (fun _ => analyticAt_fst)⟩
 
 end D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeFourHRealSewing
