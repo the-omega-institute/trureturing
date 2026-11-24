@@ -138,13 +138,13 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 
-def twoDefect {R : Type*} [Zero R] [One R] : Matrix Column Column R :=
+private def twoDefect {R : Type*} [Zero R] [One R] : Matrix Column Column R :=
   fun p q => if cost p q = 2 then 1 else 0
 
-def transfer : Matrix (Column ⊕ (Column ⊕ Column)) (Column ⊕ (Column ⊕ Column)) ℤ :=
+private def transfer : Matrix (Column ⊕ (Column ⊕ Column)) (Column ⊕ (Column ⊕ Column)) ℤ :=
   Matrix.fromBlocks T (Matrix.fromCols oneDefect twoDefect) 0 HardinA229538Strip.transfer
 
-def terminal {C : Type*} {D : Type*} {Z : Type*} {R : Type*} [Zero R] [One R] : C ⊕ (D ⊕ Z) → R :=
+private def terminal {C : Type*} {D : Type*} {Z : Type*} {R : Type*} [Zero R] [One R] : C ⊕ (D ⊕ Z) → R :=
   Sum.elim 0 HardinA229538Strip.terminal
 
 private def movesTwo : Column → List Column := ![
@@ -711,7 +711,7 @@ private theorem table_powers (n : Fin 34) (p : Column) :
     rw [weighted_top]
     exact (table_step k p).symm
 
-def coefficients641 : Fin 30 → ℤ := ![-46656, 279936, 186624, -4611168, 7359984, 21460464, -73617984, 9610272, 227616084, -273411640, -168525432, 522690894, -138135927, -412178619, 287096430, 147888798, -190067859, -12632640, 66347438, -7797810, -13478352, 2851598, 1614489, -424479, -108707, 31983, 3468, -1191, -15, 18]
+private def coefficients641 : Fin 30 → ℤ := ![-46656, 279936, 186624, -4611168, 7359984, 21460464, -73617984, 9610272, 227616084, -273411640, -168525432, 522690894, -138135927, -412178619, 287096430, 147888798, -190067859, -12632640, 66347438, -7797810, -13478352, 2851598, 1614489, -424479, -108707, 31983, 3468, -1191, -15, 18]
 
 
 private theorem new_polynomial : ∀ p : Column,

@@ -13,10 +13,6 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
             Paragraph(Text("Colours are introduced in row-major order. At the widths used in the recurrence, the exact defect count excludes constant arrays. Each counted array has six distinct labelled representatives.")),
             Node("a",Count(),false,"The five-row entry of the A229637 table counts arrays with exactly two monochromatic horizontal, diagonal or antidiagonal bonds and canonical row-major colour introduction."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
-            Node("twoDefect", TwoDefect(), false, "The definition returns 1 for a cut of cost two and 0 for every other cut."),
-            Node("transfer", Transfer(), false, "The left summand has budget two. The inherited right summand has budgets one and zero."),
-            Node("terminal", Terminal(), false, "An empty continuation requires a remaining budget of zero."),
-            Node("coefficients641",Coefficients(),false,"The entries are ordered from the smallest shift of the recurrence to the largest."),
             Node("result",Recurrence(),true,"For each array, the table scans horizontal bonds within rows and diagonal and antidiagonal bonds between rows. In the transfer, each of these bonds lies in the cut of its two consecutive columns. Interchanging the finite row and column sums for each bond direction gives the same number of monochromatic bonds, and both filters impose the same row-major canonical condition. The labelled readout is therefore six times the table entry at each width used in the recurrence. Cancelling six over the integers gives the order-thirty recurrence for every width at least thirty-four."))));
 
     private static DocumentBlock Node(string name, Formula statement, bool theorem, string prose) =>
@@ -100,47 +96,4 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
         return All("n",Q("Nat"),Eq(a(34),rhs));
     }
 
-    private static Formula If(Formula c,Formula a,Formula b) =>
-        Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,a,Sp,Q("else"),Sp,b));
-    private static Formula VectorLiteral(long[] entries)
-    {
-        Formula tail = Q("Matrix.vecEmpty");
-        for (int i = entries.Length - 1; i >= 0; i--)
-            tail = Call("Matrix.vecCons", N(entries[i]), tail);
-        return tail;
-    }
-    private static Formula Column() => Q("HardinA233178Chromatic.Column");
-    private static Formula M(Formula s) => Call("Matrix",s,s,Q("Int"));
-    private static Formula D(string n,params Formula[] a) => Call("HardinA229538Strip."+n,a);
-    private static Formula C(string n,params Formula[] a) => Call("HardinA233178Chromatic."+n,a);
-
-    private static Formula Coefficients() =>
-        Eq(Typed(Own("coefficients641"),Arrow(Fin(30),Q("Int"))),VectorLiteral([-46656, 279936, 186624, -4611168, 7359984, 21460464, -73617984, 9610272, 227616084, -273411640, -168525432, 522690894, -138135927, -412178619, 287096430, 147888798, -190067859, -12632640, 66347438, -7797810, -13478352, 2851598, 1614489, -424479, -108707, 31983, 3468, -1191, -15, 18]));
-
-    private static Formula Budgets01() => Call("Sum",Column(),Column());
-    private static Formula Budgets012() => Call("Sum",Column(),Budgets01());
-    private static Formula TwoDefect() {
-        var scalar = V("R");
-        var entry = All("p", Column(), All("q", Column(),
-            Eq(Typed(Own("twoDefect", V("p"), V("q")), scalar),
-                If(Eq(D("cost", V("p"), V("q")), N(2)), N(1), N(0)))));
-        return All("R", Seq(Q("Type"), Star), Seq(
-            OpenBracket, Call("Zero", scalar), CloseBracket, Sp,
-            OpenBracket, Call("One", scalar), CloseBracket, Sp, entry));
-    }
-    private static Formula Transfer() => Eq(Typed(Own("transfer"),M(Budgets012())),
-        Call("Matrix.fromBlocks",C("T"),Call("Matrix.fromCols",D("oneDefect"),Own("twoDefect")),
-            Typed(N(0),Call("Matrix",Budgets01(),Column(),Q("Int"))),D("transfer")));
-    private static Formula Terminal()
-    {
-        var first = V("C");
-        var rest = Call("Sum", V("D"), V("Z"));
-        var result = V("R");
-        var type = Seq(Q("Type"), Star);
-        var definition = Eq(Typed(Own("terminal"), Arrow(Call("Sum", first, rest), result)),
-            Call("Sum.elim", Typed(N(0), Arrow(first, result)), D("terminal")));
-        var instances = Seq(OpenBracket, Call("Zero", result), CloseBracket, Sp,
-            OpenBracket, Call("One", result), CloseBracket, Sp, definition);
-        return All("C", type, All("D", type, All("Z", type, All("R", type, instances))));
-    }
 }
