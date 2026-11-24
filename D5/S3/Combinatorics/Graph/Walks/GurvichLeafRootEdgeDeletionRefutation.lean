@@ -11,7 +11,7 @@ module
 public import Mathlib.Combinatorics.SimpleGraph.Copy
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 import Mathlib.Tactic.FinCases
 
 /-! The rooted six-vertex path remains avoidable in every containing host.
@@ -128,15 +128,9 @@ private def Boundary (G : SimpleGraph V) (U : Set V) (x : V) : Prop :=
 
 private theorem connected_insert {U : Set V} {x a : V} (ha : a ∈ U) (e : G.Adj x a)
     (hU : (G.induce U).Connected) : (G.induce (insert x U)).Connected := by
-  let j := (G.induceHomOfLE (Set.subset_insert x U)).toHom
-  let anchor : (insert x U : Set V) := j ⟨a, ha⟩
-  have toAnchor (v : (insert x U : Set V)) :
-      (G.induce (insert x U)).Reachable v anchor := by
-    rcases Set.mem_insert_iff.mp v.property with hv | hv
-    · exact Adj.reachable (show G.Adj v.val a from hv.symm ▸ e)
-    · exact (hU.preconnected ⟨v.val, hv⟩ ⟨a, ha⟩).map j
-  exact { preconnected := fun v w => (toAnchor v).trans (toAnchor w).symm
-          nonempty := ⟨anchor⟩ }
+  simpa only [Set.singleton_union] using
+    G.connected_induce_union Preconnected.of_subsingleton hU.preconnected
+      (Set.mem_singleton x) ha e
 
 private theorem crossing_edge (hG : G.Preconnected) {U : Set V} {a b : V}
     (ha : a ∈ U) (hb : b ∉ U) : ∃ x ∈ U, ∃ y ∉ U, G.Adj x y := by
@@ -422,8 +416,8 @@ private theorem path6_inherent : Inherent (pathGraph 6) 0 3 := by
       fun ⟨i, hi⟩ => e.2.1 ⟨i, congrArg Subtype.val hi⟩,
       fun h => e.2.2.1 (congrArg Subtype.val h), e.2.2.2.1, e.2.2.2.2⟩
   let incl : C.toSimpleGraph.induce (Set.range q)ᶜ →g G.induce (Set.range f)ᶜ :=
-    { toFun := fun v => ⟨v.val.val, fun ⟨i, hi⟩ => v.property ⟨i, Subtype.ext hi⟩⟩
-      map_rel' := fun h => h }
+    induceHom C.toSimpleGraph_hom
+      (fun v hv ⟨i, hi⟩ => hv ⟨i, Subtype.ext hi⟩)
   exact (hq xC yC eC).map incl
 
 private def deletedPath : SimpleGraph (Fin 6) := (pathGraph 6).deleteEdges {s(0, 1)}
@@ -439,17 +433,13 @@ private instance (x y : Fin 9) : Decidable (towardMidpoint x y) :=
   inferInstanceAs (Decidable (∃ i : Fin 4, y = midpoint i ∧ (x = 0 ∨ x = tip i)))
 
 /-- The four two-edge arms with center zero. -/
-private def fourArm : SimpleGraph (Fin 9) where
-  Adj x y := towardMidpoint x y ∨ towardMidpoint y x
-  symm.symm _ _ := Or.symm
-  loopless.irrefl x := (by decide : ∀ v : Fin 9, ¬ (towardMidpoint v v ∨ towardMidpoint v v)) x
+private def fourArm : SimpleGraph (Fin 9) := SimpleGraph.fromRel towardMidpoint
 
 private instance : DecidableRel fourArm.Adj :=
-  fun x y => inferInstanceAs (Decidable (towardMidpoint x y ∨ towardMidpoint y x))
+  inferInstanceAs (DecidableRel (SimpleGraph.fromRel towardMidpoint).Adj)
 
 private instance : DecidableRel deletedPath.Adj :=
-  fun i j => decidable_of_iff ((pathGraph 6).Adj i j ∧ s(i, j) ≠ s((0 : Fin 6), 1))
-    (by simp [deletedPath])
+  inferInstanceAs (DecidableRel ((pathGraph 6).deleteEdges {s(0, 1)}).Adj)
 
 private def displayedCopy : Copy deletedPath fourArm :=
   ⟨{ toFun := ![5, 2, 1, 0, 3, 4]
