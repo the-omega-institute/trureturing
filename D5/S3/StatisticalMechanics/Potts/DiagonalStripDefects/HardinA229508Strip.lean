@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229508Strip.result)
 a: proof_shape=bind-only; consumers=counting_bridge, result
-counting_bridge: proof_shape=bind-only; consumers=result
+counting_bridge: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #32721)
 -/
 

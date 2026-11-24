@@ -9,9 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229508Strip.result)
-representative_counts: proof_shape=bind-only; consumers=one_counts
-one_counts: proof_shape=bind-only; consumers=HardinA229683StripCertificate.transition_counts, transition_counts
-transition_counts: proof_shape=bind-only; consumers=HardinA229508Strip.counting_bridge, HardinA229683StripCertificate.transition_counts
+representative_counts: proof_shape=content; consumers=one_counts
+one_counts: proof_shape=content; consumers=HardinA229683StripCertificate.transition_counts, transition_counts
+transition_counts: proof_shape=content; consumers=HardinA229508Strip.counting_bridge, HardinA229683StripCertificate.transition_counts
 block_projection: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_inherited, forward_zeroth
 forward_zeroth: proof_shape=bind-only; consumers=finite_certificate
 W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, HardinA229683StripCertificate.forward_two._proof_10, HardinA229683StripCertificate.forward_two._proof_11, HardinA229683StripCertificate.forward_two._proof_12, HardinA229683StripCertificate.forward_two._proof_13, HardinA229683StripCertificate.forward_two._proof_14, HardinA229683StripCertificate.forward_two._proof_15, HardinA229683StripCertificate.forward_two._proof_16, HardinA229683StripCertificate.forward_two._proof_17, HardinA229683StripCertificate.forward_two._proof_18, HardinA229683StripCertificate.forward_two._proof_19, HardinA229683StripCertificate.forward_two._proof_2, HardinA229683StripCertificate.forward_two._proof_20, HardinA229683StripCertificate.forward_two._proof_3, HardinA229683StripCertificate.forward_two._proof_4, HardinA229683StripCertificate.forward_two._proof_5, HardinA229683StripCertificate.forward_two._proof_6, HardinA229683StripCertificate.forward_two._proof_7, HardinA229683StripCertificate.forward_two._proof_8, HardinA229683StripCertificate.forward_two._proof_9, finite_certificate, finite_certificate._proof_1, forward_one, forward_step, forward_step._proof_1, forward_step._proof_10, forward_step._proof_11, forward_step._proof_12, forward_step._proof_13, forward_step._proof_14, forward_step._proof_15, forward_step._proof_16, forward_step._proof_17, forward_step._proof_18, forward_step._proof_19, forward_step._proof_2, forward_step._proof_20, forward_step._proof_3, forward_step._proof_4, forward_step._proof_5, forward_step._proof_6, forward_step._proof_7, forward_step._proof_8, forward_step._proof_9
@@ -24,7 +24,7 @@ shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertifica
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
 budget_cut: proof_shape=bind-only; consumers=HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.two_exact, one_exact, transition_counts
-one_exact: proof_shape=bind-only; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
+one_exact: proof_shape=content; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
 halfForwardOne: proof_shape=bind-only; consumers=HardinA229683StripCertificate.W, W
 -/
 

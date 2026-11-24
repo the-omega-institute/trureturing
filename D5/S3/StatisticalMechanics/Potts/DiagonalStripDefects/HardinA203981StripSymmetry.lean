@@ -15,11 +15,11 @@ cost_formula: proof_shape=bind-only; consumers=HardinA203981StripCertificate.exa
 cost_recolor: proof_shape=bind-only; consumers=lift_counts
 cost_reflect: proof_shape=bind-only; consumers=lift_counts
 boundary_recolor: proof_shape=bind-only; consumers=lift_counts
-boundary_reflect: proof_shape=bind-only; consumers=lift_counts
+boundary_reflect: proof_shape=content; consumers=lift_counts
 triple_match: proof_shape=bind-only; consumers=recolor_match
-pair_match: proof_shape=bind-only; consumers=lift_counts
+pair_match: proof_shape=content; consumers=lift_counts
 recolor_match: proof_shape=bind-only; consumers=lift_counts
-lift_counts: proof_shape=bind-only; consumers=HardinA203981StripCertificate.counts, HardinA229508StripCertificate.one_counts, HardinA229683StripCertificate.two_counts
+lift_counts: proof_shape=content; consumers=HardinA203981StripCertificate.counts, HardinA229508StripCertificate.one_counts, HardinA229683StripCertificate.two_counts
 -/
 
 import Init.Core
