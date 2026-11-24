@@ -1,0 +1,85 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Asymptotics;
+
+internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDefinition
+{
+    private const string Owner = "D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A second-moment budget on the integer lattice determines the support of the unique squared-mass minimizer.",
+        H("Exact support thresholds on the integer lattice"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("exact-lattice-support-interval"),
+                DeclarationHandle.Create(Owner + ".exists_lattice_square_moment_minimizer_on_interval"),
+                H("The budgets for one radius interval"),
+                StatementSource.FromAuthor(Interval()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Here n is a positive integer and m is real. Activation(m,n,t,Z,w) requires "
+                        + "n² ≤ t ≤ (n+1)² and Z = Σ_{|j|≤n}(t−j²) > 0. The law w on the integers is "
+                        + "max(0,t−j²)/Z. It is nonnegative with convergent sums giving mass one "
+                        + "and second moment m. Each budget endpoint occurs exactly at the corresponding "
+                        + "endpoint for t. At t=n² the support is [−(n−1),n−1] in the integers. "
+                        + "For n²<t≤(n+1)² the support is [−n,n]. At m=0 the law is the point mass at zero.")),
+                    Paragraph(Text(
+                        "For every nonnegative competitor v with mass one and convergent second moment s≤m, "
+                        + "its squares are summable. Its squared mass minus that of w is at least "
+                        + "Σ_j(v(j)−w(j))² + 2(m−s)/Z, and it is strictly greater than that of w whenever v differs from w.")),
+                    Paragraph(Text(
+                        "Finite sums of squares and fourth powers give the normalized second moment at both endpoints. "
+                        + "The denominator stays positive and the moment varies continuously, so every intermediate budget "
+                        + "is attained. To prove the comparison, expand the squared masses and bound the cross term "
+                        + "using the affine function (t−j²)/Z below the positive-part law, with equality on its support."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("lattice-moment-minimizer-for-all-budgets"),
+                DeclarationHandle.Create(Owner + ".exists_lattice_square_moment_minimizer"),
+                H("Coverage of all nonnegative budgets"),
+                StatementSource.FromAuthor(Global()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real m≥0 choose n as the floor of sqrt(5m+1). "
+                    + "This integer is positive, and the floor inequalities place m between the two thresholds. "
+                    + "At a shared endpoint the interval descriptions select the same law by strict uniqueness."))),
+                DescribeRole.Theorem))));
+
+    private static Formula RadiusBudget(Formula n, Formula m)
+    {
+        var lower = new Formula.Fraction(
+            Subtract(new Formula.Power(n, F.D(2)), F.D(1)), F.D(5));
+        var upper = new Formula.Fraction(Multiply(n, Add(n, F.D(2))), F.D(5));
+        return F.Seq(lower, F.Sp, F.Le, F.Sp, m, F.Sp, F.Le, F.Sp, upper);
+    }
+
+    private static Formula Interval()
+    {
+        var m = F.Id("m");
+        var n = F.Id("n");
+        var t = F.Id("t");
+        var z = F.Id("Z");
+        var w = F.Id("w");
+        var exists = F.Seq(F.Exists, F.Sp, t, F.Comma, z, F.Comma, w, F.Quad,
+            Call("Activation", m, n, t, z, w));
+        var equivalence = new Formula.Logic(RadiusBudget(n, m), FormulaLogicOperator.Iff, exists);
+        return F.Disp(F.Seq(F.Forall, F.Sp, n, F.Comma, m, F.Quad,
+            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Quad, F.Longrightarrow, F.Quad, equivalence));
+    }
+
+    private static Formula Global()
+    {
+        var m = F.Id("m");
+        var n = F.Id("n");
+        var t = F.Id("t");
+        var z = F.Id("Z");
+        var w = F.Id("w");
+        return F.Disp(F.Seq(F.Forall, F.Sp, m, F.Quad, F.D(0), F.Sp, F.Le, F.Sp, m,
+            F.Quad, F.Longrightarrow, F.Quad,
+            F.Exists, F.Sp, n, F.Comma, t, F.Comma, z, F.Comma, w, F.Quad,
+            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Comma, F.Sp, RadiusBudget(n, m), F.Comma, F.Sp,
+            Call("Activation", m, n, t, z, w)));
+    }
+}

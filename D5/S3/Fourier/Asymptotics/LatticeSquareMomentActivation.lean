@@ -386,7 +386,8 @@ structure Activation (m : ℝ) (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ) : Prop wh
 /-- For every positive index, the attainable budgets on its radius interval are exactly
 the closed interval between the two activation thresholds. -/
 theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n) (m : ℝ) :
-    (((n : ℝ) ^ 2 - 1) / 5 ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ↔
+    let lowerBound := fun n : ℕ => ((n : ℝ) ^ 2 - 1) / 5
+    (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ↔
       ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w := by
   constructor
   · rintro ⟨hmlo, hmhi⟩
@@ -417,8 +418,9 @@ theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n
 /-- Every nonnegative second-moment budget on the integer lattice has a strictly unique
 squared-mass minimizer with the exact support and radius described by `Activation`. -/
 theorem exists_lattice_square_moment_minimizer (m : ℝ) (hm : 0 ≤ m) :
+    let lowerBound := fun n : ℕ => ((n : ℝ) ^ 2 - 1) / 5
     ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
-      (((n : ℝ) ^ 2 - 1) / 5 ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ∧
+      (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ∧
       Activation m n t Z w := by
   let r := Real.sqrt (5 * m + 1)
   let n := ⌊r⌋₊
