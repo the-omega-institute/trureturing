@@ -51,12 +51,10 @@ internal sealed class PopovDirectUrnShiftDocument : IScribeDocumentDefinition
                     Eqn(Call("delete", Call("reinsert", B)), B))),
                 "The rank ranges separate selected placements and colors, so the composite "
                 + "recovers the subset, each color, and the residual orbit."),
-            Node("below_first_urn_payload_empty", "Empty payload below the first urn",
-                All(M, Nat, All(N, Nat, All(K, Nat, Seq(K, Sp, Lt, Sp, M, Sp, Implies, Sp,
-                    Call("IsEmpty", Call("SignedPayload", M, N, Sub(K, M))))))),
-                "SignedPayload uses the same subset and colors and the signed residual fiber, "
-                + "which is empty at every negative column. The source is empty for k below m "
-                + "because the forced prefix uses m distinct pairs."),
+            Paragraph(Text("For k below m, the source fiber is empty because the forced prefix uses "
+                + "m distinct pairs. The signed payload uses the same subset and colors with the "
+                + "residual fiber in column k−m. That column is negative and its fiber is empty, "
+                + "so the payload is empty for every choice of tail positions.")),
             Node("card_urn_eq_stirling", "The urn count satisfies the published recurrence",
                 All(M, Nat, Seq(D(0), Sp, Lt, Sp, M, Sp, Implies, Sp, All(T, Nat, All(K, Nat,
                     Eqn(Call("card", Call("U", M, T, K)), Call("stirling", M, T, K)))))),

@@ -265,10 +265,6 @@ private theorem replay_codes {A m t : ℕ} (hm : 0 < m) (ht : t ≤ A) (w : Word
   funext i
   exact code_replay hm ht w i
 
-private theorem replay_card {A m t : ℕ} (hm : 0 < m) (ht : t ≤ A) (w : Word m t) :
-    (used (replay hm ht w)).card = (used w.val).card := by
-  rw [← replay_codes hm ht, Finset.card_image_of_injective _ (code_injective hm)]
-
 private theorem mem_layout {A m p : ℕ} {s : Finset (Address A m)} (hm : 0 < m)
     (hs : s.image code = Finset.range p) (a : Address A m) :
     a ∈ s ↔ code a < p := by

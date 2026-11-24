@@ -42,19 +42,9 @@ $$\forall m \in \mathbb{N}, \forall n \in \mathbb{N}, \forall r \in \mathbb{N}, 
 
 The rank ranges separate selected placements and colors, so the composite recovers the subset, each color, and the residual orbit.
 
-**Theorem 1.4 (Empty payload below the first urn).**
+For k below m, the source fiber is empty because the forced prefix uses m distinct pairs. The signed payload uses the same subset and colors with the residual fiber in column k−m. That column is negative and its fiber is empty, so the payload is empty for every choice of tail positions.
 
-$$\forall m \in \mathbb{N}, \forall n \in \mathbb{N}, \forall k \in \mathbb{N}, k < m \implies \operatorname{IsEmpty}\left(\operatorname{SignedPayload}\left(m, n, k - m\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.below_first_urn_payload_empty` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-SignedPayload uses the same subset and colors and the signed residual fiber, which is empty at every negative column. The source is empty for k below m because the forced prefix uses m distinct pairs.
-
-**Theorem 1.5 (The urn count satisfies the published recurrence).**
+**Theorem 1.4 (The urn count satisfies the published recurrence).**
 
 $$\forall m \in \mathbb{N}, 0 < m \implies \forall t \in \mathbb{N}, \forall k \in \mathbb{N}, \operatorname{card}\left(\operatorname{U}\left(m, t, k\right)\right) = \operatorname{stirling}\left(m, t, k\right)$$
 
@@ -66,7 +56,7 @@ $$\forall m \in \mathbb{N}, 0 < m \implies \forall t \in \mathbb{N}, \forall k \
 
 There is one empty history and zero histories of positive length in column zero. At a positive column k the last move reuses one of the m floor(k/m) slots in complete urns or opens the unique fresh slot from column k−1. This gives Definition 7.1 and recurrence (7.1). The signed count S vanishes at negative columns.
 
-**Theorem 1.6 (Popov's shift identity by finite counting).**
+**Theorem 1.5 (Popov's shift identity by finite counting).**
 
 $$\forall m \in \mathbb{N}, \forall n \in \mathbb{N}, \forall k \in \mathbb{N}, 0 < m \implies \operatorname{S}\left(m, n + m, k\right) = \sum_{j=0}^{n} \operatorname{choose}\left(n, j\right) \cdot \operatorname{pow}\left(m, n - j\right) \cdot \operatorname{S}\left(m, j, k - m\right)$$
 
@@ -82,7 +72,6 @@ At capacity one, the construction deletes the block containing the initial marbl
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.below_first_urn_payload_empty`
 - Truth anchor: `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.card_urn_eq_stirling`
 - Truth anchor: `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.delete_reinsert`
 - Truth anchor: `D5/S1/Recurrence/Invariants/PopovDirectUrnShift.firstUrnEquiv`

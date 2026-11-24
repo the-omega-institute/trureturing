@@ -361,10 +361,6 @@ noncomputable def firstUrnEquiv {m n r : ℕ} (hm : 0 < m) :
 /-- The signed column is empty at every negative index. -/
 def SignedU (m t : ℕ) (k : ℤ) := if k < 0 then Empty else U m t k.toNat
 
-theorem signed_negative_empty {m t : ℕ} {k : ℤ} (hn : k < 0) : IsEmpty (SignedU m t k) := by
-  rw [SignedU, ite_eq_left hn]
-  infer_instance
-
 private theorem word_card_ge_m {m n : ℕ} (w : Word m (m+n)) : m ≤ (used w.val).card := by
   have ha := assemble_split _ (forced_prefix w.property)
   rw [← ha, used_assemble, card_range_union_shift]
@@ -671,40 +667,7 @@ theorem zero_tail_source_empty {m k : ℕ} (hm : 0 < m) (hk : k ≠ m) :
   · exact below_first_urn hm h
   · exact beyond_length hm (by simpa using h)
 
-theorem zero_tail_residual_empty {m r : ℕ} (hm : 0 < m) (hr : 0 < r) :
-    IsEmpty (Payload m 0 r) := by
-  refine ⟨fun d => ?_⟩
-  have hc : d.1.card = 0 := by rw [zero_tail_selected d.1, Finset.card_empty]
-  exact (beyond_length (k := r) hm (by rwa [hc])).false d.2.2
-
-theorem beyond_length_payload_empty {m n r : ℕ} (hm : 0 < m) (hr : n < r) :
-    IsEmpty (Payload m n r) := by
-  refine ⟨fun d => ?_⟩
-  have hJ : d.1.card ≤ n := by simpa using Finset.card_le_card (Finset.subset_univ d.1)
-  exact (beyond_length hm (hJ.trans_lt hr)).false d.2.2
-
-theorem below_first_urn_payload_empty {m n k : ℕ} (hk : k < m) :
-    IsEmpty (Σ J : Finset (Fin n), Colors m n J × SignedU m J.card ((k : ℤ) - m)) :=
-  ⟨fun d => (signed_negative_empty (by omega)).false d.2.2⟩
-
-/-- Old slots of any full urn remain legal, even if another urn has only started. -/
-theorem full_urn_reuse {A m : ℕ} (s : Finset (Address A m)) (a : Address A m)
-    (hf : Full s a.1) : RawMove s a :=
-  ⟨fun _ => hf, fun h => (h ⟨a.2, hf a.2⟩).elim⟩
-
 /-! ## Actual raw addresses retained by deletion -/
-
-/-- In column `m`, every tail marble goes back to the first urn. -/
-theorem zero_residual_selected {m n : ℕ} (hm : 0 < m) (d : Payload m n 0) :
-    d.1 = ∅ := by
-  apply Finset.card_eq_zero.mp
-  by_contra h
-  let w := fiberEquivWord hm (le_refl d.1.card) d.2.2
-  let i : Fin d.1.card := ⟨0, Nat.pos_of_ne_zero h⟩
-  have hp : 0 < (used w.val.val).card := Finset.card_pos.mpr ⟨_, mem_used.mpr ⟨i,rfl⟩⟩
-  have h0 : (used w.val.val).card = 0 := w.property
-  rw [h0] at hp
-  exact (Nat.lt_irrefl 0) hp
 
 /-- Selection for deletion is exactly avoidance of the raw urn containing marble one. -/
 theorem selected_iff_avoids_first_urn {A m n : ℕ} (hm : 0 < m) (ht : m+n ≤ A)
