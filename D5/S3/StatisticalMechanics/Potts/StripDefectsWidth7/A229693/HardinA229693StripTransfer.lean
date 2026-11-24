@@ -853,7 +853,6 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
-/-- Transfer multiplicities for both the positive and exhausted budgets. -/
 -- The inherited slice needs a finite index check. The other two row
 -- families read their columns directly through exitRead.
 private def exitRepresentative (key : Fin 108) : Fin 96 :=
@@ -941,6 +940,7 @@ theorem new_column_congr (j k : Fin 96) (hj : 72 ≤ (exitRead j).val)
     | left i => simpa only [Fin.append_left] using hold (i.natAdd 16)
     | right i => simp only [Fin.append_right, exhaustedWeight, h]
 
+/-- Transfer multiplicities for both the positive and exhausted budgets. -/
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
     (hp : HardinA229635State.Valid p d) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧

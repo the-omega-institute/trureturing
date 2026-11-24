@@ -16,6 +16,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
+attribute [local irreducible] T
 
 namespace Transition
 abbrev signature : Signature :=
@@ -88,6 +89,148 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 
 end Transition
+
+namespace CopiedColumn
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ({j : Fin 96 // (exitRead j).val < 72}) (fun _ => Fin 168)
+    (fun _ => ℤ)
+
+def readout : Realization signature :=
+  realize signature (fun _ j i => T i (j.val.natAdd 72)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ j i => T i (j.val.natAdd 72) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (j : Fin 96) (h : (exitRead j).val < 72) (i : Fin 168),
+    R.readout () ⟨j, h⟩ i = T i ((⟨(exitRead j).val, h⟩ : Fin 72).castAdd 96)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 12 (by decide +kernel) 0
+  have ht := copied_column 12 (by decide +kernel) 0
+  simp only [rejected, realize] at hf
+  linarith
+
+def family : Registration arena (type_of% @copied_column) where
+  actual := readout
+  bridge := Iff.rfl
+  variation := ⟨copied_column, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law readout rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨⟨12, by decide +kernel⟩, 0, 72, ?_⟩
+    change T 0 84 ≠ T 72 84
+    unfold T
+    decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@copied_column) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.CopiedColumn.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ j i => T i (j.val.natAdd 72)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CopiedColumn
+
+
+namespace NewColumn
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Fin 96) (fun _ => Fin 168)
+    (fun _ => ℤ)
+
+def readout : Realization signature :=
+  realize signature (fun _ j i => T i (j.natAdd 72)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ j i => T i (j.natAdd 72) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (j k : Fin 96) (_ : 72 ≤ (exitRead j).val) (_ : exitRead j = exitRead k) (i : Fin 168),
+    R.readout () j i = T i (k.natAdd 72)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 0 1 (by decide +kernel) (by decide +kernel) 0
+  have ht := new_column_congr 0 1 (by decide +kernel) (by decide +kernel) 0
+  simp only [rejected, realize] at hf
+  linarith
+
+def family : Registration arena (type_of% @new_column_congr) where
+  actual := readout
+  bridge := Iff.rfl
+  variation := ⟨new_column_congr, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law readout rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨0, 0, 128, ?_⟩
+    change T 0 72 ≠ T 128 72
+    unfold T
+    decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@new_column_congr) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.NewColumn.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ j i => T i (j.natAdd 72)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end NewColumn
+
 
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
