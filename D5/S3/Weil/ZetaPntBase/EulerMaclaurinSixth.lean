@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Signed sixth-derivative Euler–Maclaurin remainder on one cell. -/
+   digest: Signed sixth-derivative Euler–Maclaurin remainder on a uniform mesh. -/
 
 module
 
@@ -14,15 +14,17 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 /-!
-# A signed Euler–Maclaurin remainder on one cell
+# A signed Euler–Maclaurin remainder on a uniform mesh
 
 The kernel is the one-cell Bernoulli remainder from the Euler–Maclaurin
-formula (DLMF 2.10.1). The proof uses an explicit antiderivative.
+formula (DLMF 2.10.1). The one-cell proof uses an explicit antiderivative.
+Adding the cells telescopes the endpoint corrections on the mesh.
 -/
 
 @[expose] public section
 
 open MeasureTheory
+open scoped BigOperators
 
 namespace D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth
 
@@ -148,5 +150,141 @@ theorem trapezoid_sub_integral_eq {a h : ℝ} {f0 f1 f2 f3 f4 f5 f6 : ℝ → �
     _ = _ := by
       rw [← hFTC]
       ring
+
+/-- The sum of the signed sixth-derivative remainders on the consecutive mesh cells. -/
+noncomputable def meshRemainder (a h : ℝ) (n : ℕ) (f6 : ℝ → ℝ) : ℝ :=
+  ∑ i ∈ Finset.range n,
+    ∫ x in (a + (i : ℝ) * h)..(a + ((i + 1 : ℕ) : ℝ) * h),
+      kernel h (x - (a + (i : ℝ) * h)) * f6 x
+
+private theorem mesh_node_succ (a h : ℝ) (i : ℕ) :
+    a + ((i + 1 : ℕ) : ℝ) * h = a + (i : ℝ) * h + h := by
+  rw [Nat.cast_add, Nat.cast_one]
+  ring
+
+/-- The closed uniform mesh sum is the integral with endpoint corrections
+plus the signed sixth-derivative remainder. There are `n` cells and `n + 1` nodes. -/
+theorem mesh_sum_eq {a h : ℝ} {n : ℕ} {f0 f1 f2 f3 f4 f5 f6 : ℝ → ℝ}
+    (h0 : ∀ x, HasDerivAt f0 (f1 x) x)
+    (h1 : ∀ x, HasDerivAt f1 (f2 x) x)
+    (h2 : ∀ x, HasDerivAt f2 (f3 x) x)
+    (h3 : ∀ x, HasDerivAt f3 (f4 x) x)
+    (h4 : ∀ x, HasDerivAt f4 (f5 x) x)
+    (h5 : ∀ x, HasDerivAt f5 (f6 x) x)
+    (h6 : Continuous f6) :
+    h * (∑ i ∈ Finset.range (n + 1), f0 (a + (i : ℝ) * h)) =
+      (∫ x in a..(a + (n : ℝ) * h), f0 x) +
+        h / 2 * (f0 a + f0 (a + (n : ℝ) * h)) +
+        h ^ 2 / 12 * (f1 (a + (n : ℝ) * h) - f1 a) -
+        h ^ 4 / 720 * (f3 (a + (n : ℝ) * h) - f3 a) + meshRemainder a h n f6 := by
+  let node (i : ℕ) : ℝ := a + (i : ℝ) * h
+  let cell (i : ℕ) : ℝ :=
+    ∫ x in (node i)..(node (i + 1)), kernel h (x - node i) * f6 x
+  have hzero : node 0 = a := by simp [node]
+  have hcell (i : ℕ) :
+      h / 2 * (f0 (node i) + f0 (node (i + 1))) -
+          (∫ x in (node i)..(node (i + 1)), f0 x) -
+          h ^ 2 / 12 * (f1 (node (i + 1)) - f1 (node i)) +
+          h ^ 4 / 720 * (f3 (node (i + 1)) - f3 (node i)) = cell i := by
+    have hstep : node (i + 1) = node i + h := mesh_node_succ a h i
+    dsimp only [cell]
+    rw [hstep]
+    exact trapezoid_sub_integral_eq
+      (fun x _ => h0 x) (fun x _ => h1 x) (fun x _ => h2 x)
+      (fun x _ => h3 x) (fun x _ => h4 x) (fun x _ => h5 x) h6.continuousOn
+  have hcont : Continuous f0 := continuous_iff_continuousAt.mpr fun x => (h0 x).continuousAt
+  unfold meshRemainder
+  change h * (∑ i ∈ Finset.range (n + 1), f0 (node i)) =
+    (∫ x in a..(node n), f0 x) + h / 2 * (f0 a + f0 (node n)) +
+      h ^ 2 / 12 * (f1 (node n) - f1 a) - h ^ 4 / 720 * (f3 (node n) - f3 a) +
+      ∑ i ∈ Finset.range n, cell i
+  induction n with
+  | zero =>
+    simp only [Nat.zero_add, Finset.sum_range_one, Finset.range_zero, Finset.sum_empty, hzero,
+      intervalIntegral.integral_same, sub_self]
+    ring
+  | succ n ih =>
+    have hsplit :
+        (∫ x in a..(node n), f0 x) + (∫ x in (node n)..(node (n + 1)), f0 x) =
+          ∫ x in a..(node (n + 1)), f0 x :=
+      intervalIntegral.integral_add_adjacent_intervals
+        (hcont.intervalIntegrable a (node n)) (hcont.intervalIntegrable (node n) (node (n + 1)))
+    rw [Finset.sum_range_succ (fun i => f0 (node i)) (n + 1), Finset.sum_range_succ cell n,
+      mul_add, ih, ← hsplit, ← hcell n]
+    ring
+
+/-- On a mesh of nonnegative width, a nonnegative sixth derivative gives a
+nonnegative remainder. -/
+theorem meshRemainder_nonneg {a h : ℝ} {n : ℕ} {f6 : ℝ → ℝ}
+    (hh : 0 ≤ h) (hf : ∀ x ∈ Set.Icc a (a + (n : ℝ) * h), 0 ≤ f6 x) :
+    0 ≤ meshRemainder a h n f6 := by
+  let node (i : ℕ) : ℝ := a + (i : ℝ) * h
+  have hmono : Monotone node := by
+    intro i j hij
+    simpa only [node, add_comm a] using
+      add_le_add_left (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hij) hh) a
+  unfold meshRemainder
+  change 0 ≤ ∑ i ∈ Finset.range n,
+    ∫ x in (node i)..(node (i + 1)), kernel h (x - node i) * f6 x
+  refine Finset.sum_nonneg fun i hi =>
+    intervalIntegral.integral_nonneg (hmono (Nat.le_succ i)) (fun x hx => ?_)
+  have hright : x ≤ node i + h := hx.2.trans_eq (mesh_node_succ a h i)
+  have hleft : a ≤ node i := le_add_of_nonneg_right (mul_nonneg (Nat.cast_nonneg i) hh)
+  have hi' : i + 1 ≤ n := Nat.succ_le_of_lt (Finset.mem_range.mp hi)
+  exact mul_nonneg (kernel_bounds (sub_nonneg.mpr hx.1) (sub_le_iff_le_add'.mpr hright)).1
+    (hf x ⟨hleft.trans hx.1, hx.2.trans (hmono hi')⟩)
+
+/-- The absolute remainder is bounded by the maximum cell kernel times the
+integral of the absolute sixth derivative over the whole mesh. -/
+theorem abs_meshRemainder_le {a h : ℝ} {n : ℕ} {f6 : ℝ → ℝ}
+    (hh : 0 ≤ h) (hf : Continuous f6) :
+    |meshRemainder a h n f6| ≤
+      h ^ 6 / 15360 * (∫ x in a..(a + (n : ℝ) * h), |f6 x|) := by
+  let node (i : ℕ) : ℝ := a + (i : ℝ) * h
+  let integrand (i : ℕ) (x : ℝ) : ℝ := kernel h (x - node i) * f6 x
+  let cell (i : ℕ) : ℝ := ∫ x in (node i)..(node (i + 1)), integrand i x
+  have hcell (i : ℕ) :
+      |cell i| ≤ h ^ 6 / 15360 * (∫ x in (node i)..(node (i + 1)), |f6 x|) := by
+    have hstep : node (i + 1) = node i + h := mesh_node_succ a h i
+    have hab : node i ≤ node (i + 1) := by
+      rw [hstep]
+      exact le_add_of_nonneg_right hh
+    have hk : Continuous (fun x : ℝ => kernel h (x - node i)) := by
+      let q (x : ℝ) : ℝ := (x - node i) * (h - (x - node i))
+      have hs : Continuous (fun x : ℝ => x - node i) := continuous_id.sub continuous_const
+      have hq : Continuous q := hs.mul (continuous_const.sub hs)
+      change Continuous (fun x => q x ^ 2 * (h ^ 2 + 2 * q x) / 1440)
+      exact ((hq.pow 2).mul (continuous_const.add (continuous_const.mul hq))).div_const _
+    have hintegrand : Continuous (integrand i) := hk.mul hf
+    have hmajorant : Continuous (fun x => (h ^ 6 / 15360) * |f6 x|) :=
+      continuous_const.mul hf.abs
+    calc
+      |cell i| ≤ ∫ x in (node i)..(node (i + 1)), |integrand i x| :=
+        intervalIntegral.abs_integral_le_integral_abs hab
+      _ ≤ ∫ x in (node i)..(node (i + 1)), (h ^ 6 / 15360) * |f6 x| := by
+        refine intervalIntegral.integral_mono_on hab (hintegrand.abs.intervalIntegrable _ _)
+          (hmajorant.intervalIntegrable _ _) ?_
+        intro x hx
+        have hright : x ≤ node i + h := hx.2.trans_eq hstep
+        have hbounds := kernel_bounds (sub_nonneg.mpr hx.1) (sub_le_iff_le_add'.mpr hright)
+        change |kernel h (x - node i) * f6 x| ≤ (h ^ 6 / 15360) * |f6 x|
+        rw [abs_mul, abs_of_nonneg hbounds.1]
+        exact mul_le_mul_of_nonneg_right hbounds.2 (abs_nonneg _)
+      _ = _ := intervalIntegral.integral_const_mul _ _
+  have hzero : node 0 = a := by simp [node]
+  have hintegral :
+      (∑ i ∈ Finset.range n, ∫ x in (node i)..(node (i + 1)), |f6 x|) =
+        ∫ x in a..(node n), |f6 x| := by
+    simpa only [hzero] using
+      (intervalIntegral.sum_integral_adjacent_intervals (a := node) (n := n)
+        (μ := volume) (f := fun x => |f6 x|)
+        (fun i _ => hf.abs.intervalIntegrable (node i) (node (i + 1))))
+  unfold meshRemainder
+  change |∑ i ∈ Finset.range n, cell i| ≤ h ^ 6 / 15360 * (∫ x in a..(node n), |f6 x|)
+  calc
+    _ ≤ ∑ i ∈ Finset.range n, |cell i| := Finset.abs_sum_le_sum_abs cell _
+    _ ≤ ∑ i ∈ Finset.range n, (h ^ 6 / 15360) * (∫ x in (node i)..(node (i + 1)), |f6 x|) :=
+      Finset.sum_le_sum (fun i _ => hcell i)
+    _ = _ := by rw [← Finset.mul_sum, hintegral]
 
 end D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth

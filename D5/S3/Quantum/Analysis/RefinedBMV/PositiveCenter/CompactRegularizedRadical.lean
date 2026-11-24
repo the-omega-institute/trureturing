@@ -505,4 +505,64 @@ theorem deriv_compactZ_eq_combined_quotient {p : ℕ} (hp : 0 < p) {t : ℝ} (ht
   simp only [div_eq_mul_inv]
   ring
 
+/-- The quadratic exponential remainder divided by `t ^ 2`, continued at `t = 0`. -/
+def regularizedMarginalRemainder (t : ℝ) : ℝ → ℝ :=
+  if t = 0 then (fun x ↦ x ^ 2 / 2) else (fun x ↦ (Real.exp (t * x) - 1 - t * x) / t ^ 2)
+
+private theorem contDiff_regularizedMarginalRemainder (t : ℝ) :
+    ContDiff ℝ ⊤ (regularizedMarginalRemainder t) := by
+  by_cases ht : t = 0 <;>
+    simp only [regularizedMarginalRemainder, ht, ite_true, ite_false] <;> fun_prop
+
+/-- For fixed `t`, the regularized marginal integrand is smooth in the spatial variable. -/
+theorem contDiff_regularizedMarginalIntegrand (h t : ℝ) :
+    ContDiff ℝ ⊤ (fun x ↦ (2 + h - x) * regularizedMarginalRemainder t x) :=
+  (show ContDiff ℝ ⊤ (fun x : ℝ ↦ 2 + h - x) by fun_prop).mul
+    (contDiff_regularizedMarginalRemainder t)
+
+/-- The sixth spatial derivative of the weighted, regularized marginal integrand. -/
+theorem iteratedDeriv_six_regularizedMarginalIntegrand (h t x : ℝ) :
+    iteratedDeriv 6 (fun y ↦ (2 + h - y) * regularizedMarginalRemainder t y) x =
+      t ^ 3 * Real.exp (t * x) * (t * (2 + h - x) - 6) := by
+  let first (y : ℝ) := if t = 0 then y else (Real.exp (t * y) - 1) / t
+  have hfirst : deriv (regularizedMarginalRemainder t) = first := by
+    funext y
+    apply HasDerivAt.deriv
+    by_cases ht : t = 0
+    · simp only [regularizedMarginalRemainder, first, ht, ite_true]
+      exact (((hasDerivAt_id' y).fun_pow 2).div_const 2).congr_deriv (by norm_num <;> ring)
+    · simp only [regularizedMarginalRemainder, first, ht, ite_false]
+      have hd := (hasDerivAt_id' y).const_mul t
+      refine (((hd.exp.sub_const 1).fun_sub hd).div_const (t ^ 2)).congr_deriv ?_
+      field_simp [ht] <;> ring
+  have hsecond : deriv first = fun y ↦ Real.exp (t * y) := by
+    funext y
+    apply HasDerivAt.deriv
+    by_cases ht : t = 0
+    · simpa only [first, ht, ite_true, zero_mul, Real.exp_zero] using hasDerivAt_id' y
+    · simp only [first, ht, ite_false]
+      have hd := (hasDerivAt_id' y).const_mul t
+      refine ((hd.exp.sub_const 1).div_const t).congr_deriv ?_
+      field_simp [ht] <;> ring
+  have hderiv (n : ℕ) : iteratedDeriv (n + 2) (regularizedMarginalRemainder t) =
+      fun y ↦ t ^ n * Real.exp (t * y) := by
+    rw [show n + 2 = (n + 1) + 1 by rfl, iteratedDeriv_succ', hfirst,
+      iteratedDeriv_succ', hsecond, iteratedDeriv_exp_const_mul]
+  have hAffine (n : ℕ) : iteratedDeriv n (fun y : ℝ ↦ 2 + h - y) x =
+      if n = 0 then 2 + h - x else if n = 1 then -1 else 0 := by
+    cases n with
+    | zero => simp
+    | succ n =>
+      rw [iteratedDeriv_succ', deriv_const_sub_id', iteratedDeriv_const] <;>
+        cases n <;> simp
+  have h₅ : iteratedDeriv 5 (regularizedMarginalRemainder t) x =
+      t ^ 3 * Real.exp (t * x) := congrFun (hderiv 3) x
+  have h₆ : iteratedDeriv 6 (regularizedMarginalRemainder t) x =
+      t ^ 4 * Real.exp (t * x) := congrFun (hderiv 4) x
+  have hA : ContDiffAt ℝ 6 (fun y : ℝ ↦ 2 + h - y) x := by fun_prop
+  have hT : ContDiffAt ℝ 6 (regularizedMarginalRemainder t) x :=
+    ((contDiff_regularizedMarginalRemainder t).of_le le_top).contDiffAt
+  rw [iteratedDeriv_fun_mul hA hT]
+  norm_num [Finset.sum_range_succ, Nat.choose, hAffine, h₅, h₆] <;> ring
+
 end RefinedBMV.PositiveCenter
