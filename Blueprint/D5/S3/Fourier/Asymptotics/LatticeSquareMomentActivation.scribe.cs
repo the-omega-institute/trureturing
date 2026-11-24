@@ -46,7 +46,9 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
                     "For every real m≥0 choose n as the floor of sqrt(5m+1). "
                     + "The floor gives a positive index whose lower threshold is at most m and whose upper "
                     + "threshold is strictly greater. Conversely a nonnegative law has nonnegative second moment. "
-                    + "At a shared endpoint the interval descriptions select the same law by strict uniqueness."))),
+                    + "The half-open intervals are disjoint. At a shared endpoint the closed intervals select the same law, "
+                    + "radius parameter and normalizer. The laws agree by strict comparison. Since t≥1, "
+                    + "the values w(0)=t/Z and w(0)−w(1)=1/Z then identify Z and t."))),
                 DescribeRole.Theorem))));
 
     private static Formula RadiusBudget(Formula n, Formula m, Formula upperRelation)
@@ -64,7 +66,7 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
         var t = F.Id("t");
         var z = F.Id("Z");
         var w = F.Id("w");
-        var exists = F.Seq(F.Exists, F.Sp, t, F.Comma, z, F.Comma, w, F.Quad,
+        var exists = F.Seq(F.Exists, F.Bang, F.Sp, F.Open, t, F.Comma, z, F.Comma, w, F.Close, F.Quad,
             Call("Activation", m, n, t, z, w));
         var equivalence = new Formula.Logic(RadiusBudget(n, m, F.Le), FormulaLogicOperator.Iff, exists);
         return F.Disp(F.Seq(F.Forall, F.Sp, n, F.Comma, m, F.Quad,
@@ -78,7 +80,8 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
         var t = F.Id("t");
         var z = F.Id("Z");
         var w = F.Id("w");
-        var exists = F.Seq(F.Exists, F.Sp, n, F.Comma, t, F.Comma, z, F.Comma, w, F.Quad,
+        var exists = F.Seq(F.Exists, F.Bang, F.Sp, F.Open, n, F.Comma, t, F.Comma, z, F.Comma, w,
+            F.Close, F.Quad,
             F.D(0), F.Sp, F.Lt, F.Sp, n, F.Comma, F.Sp, RadiusBudget(n, m, F.Lt), F.Comma, F.Sp,
             Call("Activation", m, n, t, z, w));
         var nonnegative = F.Seq(F.D(0), F.Sp, F.Le, F.Sp, m);
