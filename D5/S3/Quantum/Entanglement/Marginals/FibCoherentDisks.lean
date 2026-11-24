@@ -7,7 +7,7 @@
    digest: A closed-form choice of the unobserved coupling for coherent Fibonacci marginals. -/
 
 import D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
-import Mathlib.Analysis.Complex.Norm
+/-! Closed-form selection for the residual disks of coherent Fibonacci marginals. -/
 
 open Matrix Complex
 open scoped ComplexConjugate ComplexOrder Matrix
@@ -98,78 +98,33 @@ private def block (a d : ℝ) (x : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
 
 private def scalarBlock (a : ℝ) : Matrix Unit Unit ℂ := fun _ _ => a
 
-private def coupling (x : ℂ) : Matrix Unit Unit ℂ := fun _ _ => x
-
-private def split : Unit ⊕ Unit ≃ Fin 2 where
-  toFun
-    | .inl _ => 0
-    | .inr _ => 1
-  invFun i := if i = 0 then .inl () else .inr ()
-  left_inv := by rintro (i | i) <;> cases i <;> decide
-  right_inv := by intro i; fin_cases i <;> decide
-
-private theorem scalar_matrix (a : ℝ) : scalarBlock a = diagonal (fun _ => (a : ℂ)) := by
-  ext i j
-  cases i
-  cases j
-  simp [scalarBlock]
+private abbrev split : Unit ⊕ Unit ≃ Fin 2 :=
+  (Equiv.sumCongr finOneEquiv.symm finOneEquiv.symm).trans finSumFinEquiv
 
 private theorem scalar_psd (a : ℝ) : (scalarBlock a).PosSemidef ↔ 0 ≤ a := by
-  rw [scalar_matrix, posSemidef_diagonal_iff]
-  simp [Complex.nonneg_iff]
-
-private theorem block_schur (a d : ℝ) (x : ℂ) (ha : 0 < a) :
-    (block a d x).PosSemidef ↔ normSq x ≤ a*d := by
-  rw [← Matrix.posSemidef_submatrix_equiv split]
-  have hblock : (block a d x).submatrix split split =
-      fromBlocks (scalarBlock a) (coupling x) (coupling x)ᴴ (scalarBlock d) := by
-    ext i j
-    cases i <;> cases j <;> rfl
-  rw [hblock]
-  have hA : (scalarBlock a).PosDef := by
-    rw [scalar_matrix, posDef_diagonal_iff]
-    intro i
-    simpa [Complex.lt_def] using ha
-  let := hA.isUnit.invertible
-  rw [Matrix.PosDef.fromBlocks₁₁ _ _ hA]
-  have hr : scalarBlock d - (coupling x)ᴴ * (scalarBlock a)⁻¹ * coupling x =
-      scalarBlock (d - normSq x / a) := by
+  have hm : scalarBlock a = diagonal (fun _ => (a : ℂ)) := by
     ext i j
     cases i
     cases j
-    have hne : (a : ℂ) ≠ 0 := by exact_mod_cast ha.ne'
-    have hi : (scalarBlock a)⁻¹ = diagonal (fun _ : Unit => (a : ℂ)⁻¹) := by
-      apply Matrix.inv_eq_right_inv
-      ext i j
-      cases i
-      cases j
-      simp [scalarBlock, Matrix.mul_apply, hne]
-    rw [hi]
-    simp [scalarBlock, coupling, Matrix.mul_apply, Complex.ofReal_div]
-    rw [← Complex.mul_conj]
-    ring
-  rw [hr, scalar_psd, sub_nonneg, div_le_iff₀ ha]
-  rw [mul_comm]
+    simp [scalarBlock]
+  rw [hm, posSemidef_diagonal_iff]
+  simp [Complex.nonneg_iff]
 
-private theorem block_zero (d : ℝ) (x : ℂ) :
-    (block 0 d x).PosSemidef ↔ x = 0 ∧ 0 ≤ d := by
-  constructor
-  · intro h
-    have hz := h.det_nonneg
-    rw [block, Matrix.det_fin_two] at hz
-    change 0 ≤ (0 : ℂ) * (d : ℂ) - x * conj x at hz
-    rw [zero_mul, Complex.mul_conj] at hz
-    have hx : normSq x = 0 := by
-      have hn := (Complex.nonneg_iff.mp hz).1
-      simp at hn
-      exact le_antisymm hn (normSq_nonneg _)
-    exact ⟨normSq_eq_zero.mp hx, by simpa [block, Complex.nonneg_iff] using h.diag_nonneg (i := 1)⟩
-  · rintro ⟨rfl, hd⟩
-    have hm : block 0 d 0 = diagonal ![0, (d : ℂ)] := by
-      ext i j
-      fin_cases i <;> fin_cases j <;> simp [block]
-    rw [hm]
-    exact .diagonal (by intro i; fin_cases i <;> simp [Complex.nonneg_iff, hd])
+private theorem block_criterion (a d : ℝ) (x : ℂ) :
+    (block a d x).PosSemidef ↔ 0 ≤ a ∧ (a = 0 → x = 0) ∧ 0 ≤ d - normSq x / a := by
+  rw [← Matrix.posSemidef_submatrix_equiv split]
+  have hm : (block a d x).submatrix split split =
+      assemble a (fun _ : Unit => x) (scalarBlock d) := by
+    ext i j
+    cases i <;> cases j <;> rfl
+  have hc : scalarBlock d - correction a (fun _ : Unit => x) =
+      scalarBlock (d - normSq x / a) := by
+    ext i j
+    simp [scalarBlock, correction, Matrix.vecMulVec_apply, Complex.ofReal_div,
+      ← Complex.mul_conj]
+    ring
+  rw [hm, block_psd, hc, scalar_psd]
+  simp [funext_iff]
 
 private theorem completing_square (a e : ℝ) (c k z : ℂ) :
     let h := a + normSq k
@@ -219,7 +174,8 @@ private theorem disk_spec (a e : ℝ) (c k z : ℂ) :
       normSq (z-(disk a e c k).1) ≤ (disk a e c k).2 := by
   by_cases ha : 0 < a
   · simp only [disk, ite_eq_left ha]
-    rw [block_schur _ _ _ ha]
+    rw [block_criterion, and_iff_right ha.le,
+      and_iff_right (fun h => (ha.ne' h).elim), sub_nonneg, div_le_iff₀ ha, mul_comm (e - normSq z) a]
     let h := a + normSq k
     let p := k*c / (h : ℂ)
     have hh : 0 < h := add_pos_of_pos_of_nonneg ha (normSq_nonneg _)
@@ -232,7 +188,7 @@ private theorem disk_spec (a e : ℝ) (c k z : ℂ) :
     constructor <;> intro ht <;> linarith only [he, ht]
   by_cases hz : a = 0
   · subst a
-    rw [block_zero]
+    simp only [block_criterion, le_refl, true_and, true_implies, div_zero, sub_zero]
     by_cases hk : k = 0
     · subst k
       by_cases hc : c = 0
@@ -281,12 +237,6 @@ private theorem disk_spec (a e : ℝ) (c k z : ℂ) :
       linarith [normSq_nonneg (z-0)]
 
 
-private def boolIndex : Fin 2 ≃ Bool where
-  toFun i := i = 1
-  invFun b := if b then 1 else 0
-  left_inv := by intro i; fin_cases i <;> decide
-  right_inv := by intro b; cases b <;> decide
-
 private noncomputable def edgeDisk (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ) : ℂ × ℝ :=
   disk (b*(L false false).re - normSq u - normSq w)
     (b*(L true true).re - normSq v)
@@ -312,15 +262,15 @@ private theorem edgeDisk_spec (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : �
       simp at hh ⊢
       linarith
   have hc : conj (L false true) = L true false := hL.apply _ _
-  rw [hpos, ← Matrix.posSemidef_submatrix_equiv boolIndex]
-  have hm : ((b : ℂ) • G).submatrix boolIndex boolIndex =
+  rw [hpos, ← Matrix.posSemidef_submatrix_equiv finTwoEquiv]
+  have hm : ((b : ℂ) • G).submatrix finTwoEquiv finTwoEquiv =
       block (b*(L false false).re - normSq u - normSq w)
         (b*(L true true).re - normSq v - normSq z)
         ((b : ℂ)*L false true - conj u * v - conj w * z) := by
     ext i j
     have hb0 : (b : ℂ) ≠ 0 := by exact_mod_cast hb.ne'
     fin_cases i <;> fin_cases j <;>
-      simp [G, block, boolIndex, Matrix.vecMulVec_apply, correction, partialTraceRight,
+      simp [G, block, finTwoEquiv, Matrix.vecMulVec_apply, correction, partialTraceRight,
         middleRow, Complex.ofReal_mul, Complex.ofReal_inv, hdiag, hc,
         ← Complex.mul_conj, Complex.ofReal_sub] <;>
       field_simp <;> ring
@@ -342,7 +292,7 @@ noncomputable def selectedCoupling (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w
 
 /-- For positive middle weight, testing the selected coupling decides common extension. -/
 theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
-    (hb : 0 < b) (hL : L.IsHermitian) (hR : R.IsHermitian) :
+    (hb : 0 < b) :
     CoherentExtendible b L R u v w ↔
       L.trace + (b : ℂ) = 1 ∧ R.trace = L.trace ∧
       (L - partialTraceRight
@@ -352,6 +302,13 @@ theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : 
   rw [coherent_extendible_iff]
   constructor
   · rintro ⟨_, hn, ht, z, _, hl, hr⟩
+    have hc : (correction b (middleRow u v w z)).PosSemidef := by
+      unfold correction
+      exact (posSemidef_vecMulVec_star_self _).smul (inv_nonneg.mpr hb.le)
+    have hL : L.IsHermitian := by
+      simpa using (hl.add (partialTraceRight_posSemidef hc)).isHermitian
+    have hR : R.IsHermitian := by
+      simpa using (hr.add (partialTraceLeft_posSemidef hc)).isHermitian
     rw [swapped_trace] at hr ⊢
     have hd := (diskPoint_iff (edgeDisk b L u v w).1 (edgeDisk b R u w v).1
       (edgeDisk b L u v w).2 (edgeDisk b R u w v).2).mp
