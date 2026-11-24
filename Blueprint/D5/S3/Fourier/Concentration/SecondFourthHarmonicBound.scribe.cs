@@ -21,7 +21,8 @@ internal sealed class SecondFourthHarmonicBoundDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text(
                         "Take a finite family of unit phases and one set of nonnegative real "
-                        + "weights summing to one. The moments m₁, m₂, and m₄ are the weighted "
+                        + "weights summing to one. Write P for these laws and P₃ for laws on "
+                        + "three indexed phases, allowing zero weights. The moments m₁, m₂, and m₄ are weighted "
                         + "first, second, and fourth powers. The caps e and k lie in [0,1]. "
                         + "Put b=min(e,sqrt((1+k)/2)) and r=(1+b)/2. For b=1 the bound B "
                         + "is one. For b<1 put a=min(sqrt(r),sqrt((1+k)/(4(1−b)))) and "
@@ -37,8 +38,7 @@ internal sealed class SecondFourthHarmonicBoundDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "For b<1 the attaining law puts weight (r−a²)/(1−a²) at 1 and "
                         + "splits the remaining weight between conjugate unit phases with real "
-                        + "part a. The third phase is dispensable whenever its weight is zero. "
-                        + "For b=1 take a point mass. In particular the bound for e=k=0 is 2/3."))),
+                        + "part a. For b=1 take a point mass. In particular the bound for e=k=0 is 2/3."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -46,9 +46,19 @@ internal sealed class SecondFourthHarmonicBoundDocument : IScribeDocumentDefinit
         var first = Magnitude(1);
         var condition = Seq(Magnitude(2), Sp, Leq, Sp, F.Id("e"), Sp, Land, Sp,
             Magnitude(4), Sp, Leq, Sp, F.Id("k"));
-        return Disp(Seq(condition, Sp, Implies, Sp, first, Sp, Leq, Sp, F.Id("B")));
+        var law = F.Id("L");
+        var laws = Seq(Mathcal, Grp(F.Id("P")));
+        var bound = F.Id("B");
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, law, Sp, InMacro, Sp, laws, Comma, Sp,
+                Parenthesized(Seq(condition, Sp, Implies, Sp, first, Sp, Leq, Sp, bound))),
+            Seq(Exists, Sp, law, Sp, InMacro, Sp, new Formula.Subscript(laws, D(3)), Comma, Sp,
+                Parenthesized(Seq(condition, Sp, Land, Sp, first, Sp, Eq, Sp, bound)))]));
     }
 
+    private static Formula Parenthesized(Formula formula) => Seq(Open, formula, Close);
+
     private static Formula Magnitude(byte mode) =>
-        new Formula.Absolute(new Formula.Subscript(F.Id("m"), D(mode)));
+        new Formula.Absolute(Seq(new Formula.Subscript(F.Id("m"), D(mode)),
+            Parenthesized(F.Id("L"))));
 }
