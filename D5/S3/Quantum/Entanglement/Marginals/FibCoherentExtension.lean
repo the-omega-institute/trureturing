@@ -10,7 +10,6 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
 import D5.S3.Quantum.Decoherence.LabelResetSupport
 import D5.S3.Quantum.PureState.PureStateHandshake
-import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 
 /-! Common extensions of adjacent Fibonacci marginals with arbitrary coherences. -/
@@ -864,25 +863,15 @@ theorem unique_coherent_extension_iff (b : ℝ) (L R : Matrix Bool Bool ℂ) (u 
         rwa [partialTraceLeft_sub, hRT]
     rw [← hρ, ← hσ, sub_left_inj.mp he]
 
-open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
-  (pureCoupling ptrace2_pure ptrace1_pure)
-
 private theorem leftGram (M : Matrix Bool Bool ℂ) :
     partialTraceRight (rankOneDensity (fun p : Bool × Bool => M p.1 p.2)) = M * Mᴴ := by
-  have h := ptrace2_pure (M.submatrix finTwoEquiv finTwoEquiv)
   ext i j : 1
-  simpa [partialTraceRight, pureCoupling, rankOneDensity, Function.uncurry, Matrix.vecMulVec_apply,
-    Matrix.mul_apply, Fintype.sum_bool, Fin.sum_univ_two, add_comm] using
-    congrFun (congrFun h (finTwoEquiv.symm i)) (finTwoEquiv.symm j)
+  simp [partialTraceRight, rankOneDensity, Matrix.vecMulVec_apply, Matrix.mul_apply]
 
 private theorem rightGram (M : Matrix Bool Bool ℂ) :
     partialTraceLeft (rankOneDensity (fun p : Bool × Bool => M p.1 p.2)) = (Mᴴ * M)ᵀ := by
-  have h := ptrace1_pure (M.submatrix finTwoEquiv finTwoEquiv)
   ext i j : 1
-  simpa [partialTraceLeft, pureCoupling, rankOneDensity, Function.uncurry, Matrix.vecMulVec_apply,
-    Matrix.mul_apply, Fintype.sum_bool, Fin.sum_univ_two, add_comm,
-    show finTwoEquiv 0 = false from rfl, show finTwoEquiv 1 = true from rfl] using
-    congrFun (congrFun h (finTwoEquiv.symm i)) (finTwoEquiv.symm j)
+  simp [partialTraceLeft, rankOneDensity, Matrix.vecMulVec_apply, Matrix.mul_apply, mul_comm]
 
 private theorem endpoint_purity_iff (L R : Matrix Bool Bool ℂ) :
     (∃ ψ : Bool × Bool → ℂ, partialTraceRight (rankOneDensity ψ) = L ∧
