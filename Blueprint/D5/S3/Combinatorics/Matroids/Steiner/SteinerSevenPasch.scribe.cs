@@ -20,4 +20,3 @@ internal sealed class SteinerSevenPaschDocument : IScribeDocumentDefinition
                 Paragraph(Text("For each normalized label table into a binary fibre of dimension two, take three generating Pasch returns. The seven returns consist of the three generators, their three pairwise sums and their triple sum. Some nonempty sum of the three is zero in dimension two. The corresponding outside square misses successful starts. The fixed-pair return construction yields a second table with a strictly larger count for that pair."))),
             DescribeRole.Theorem))));
 }
-
