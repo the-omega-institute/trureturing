@@ -95,6 +95,79 @@ def registration :
   familyRecord := none
   options := #[]
 
+namespace FactorialExpansion
+
+abbrev signature := SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => (n.factorial : ℝ)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {J : Type u} [Fintype J] [DecidableEq J] (w : J → ℝ)
+      (p : ℕ) (m : J → ℕ), (∑ j, m j = p) →
+    monomialWeight w m = V.readout () () p *
+      ∏ j, w j ^ m j / ((m j).factorial : ℝ)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro law
+  classical
+  have h := law (J := ULift.{u} (Fin 0)) (fun _ => 0) 0 (fun _ => 0) (by simp)
+  norm_num [rejected, realize, monomialWeight, Nat.multinomial] at h
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨(), 0, 2, ?_⟩
+  change (Nat.factorial 0 : ℝ) ≠ (Nat.factorial 2 : ℝ)
+  norm_num [Nat.factorial]
+
+def evidence : Registration arena.{u} (type_of% @weight_factorials.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weight_factorials.{u}, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@weight_factorials.{u}) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass.FactorialExpansion.unit
+  realizationName := `Reg.D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass.FactorialExpansion.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => (n.factorial : ℝ))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FactorialExpansion
+
 end
 
 end Reg.D5.S3.Fourier.Concentration.FixedDifferenceOccupationMass

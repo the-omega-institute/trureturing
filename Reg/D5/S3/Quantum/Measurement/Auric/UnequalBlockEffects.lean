@@ -16,16 +16,16 @@ set_option autoImplicit false
 
 noncomputable section
 
-private abbrev signature : Signature :=
+abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Set ℝ) (fun _ => ℝ → Prop)
 
-private def actual : Realization signature :=
+def actual : Realization signature :=
   realize signature (fun _ _ s x => IsGreatest s x) (fun e => nomatch e)
 
-private def rejected : Realization signature :=
+def rejected : Realization signature :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), {0}, ∅, ?_⟩
   intro h

@@ -9,10 +9,19 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / ".lake/build/lib/lean"
 FOUNDATION = ["OmegaInit.Prelude", "OmegaInit.Core", "OmegaInit.Data.Nat.Basic", "OmegaInit.Data.Nat.Lemmas"]
-INIT = [*FOUNDATION, "OmegaInit.Data.Nat", "OmegaInit"]
+INT = [
+    "OmegaInit.Data.Nat", "OmegaInit.Data.Int.Basic", "OmegaInit.Data.Int.Lemmas",
+    "OmegaInit.Data.Int.Order", "OmegaInit.Data.Int",
+]
+INIT = [*FOUNDATION, *INT, "OmegaInit"]
 DATA = [*FOUNDATION, "OmegaMath.Data.Nat", "OmegaMath.Data.Ratio"]
 BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
+SIGNED = [
+    "OmegaMath.Data.Int", "OmegaMath.Data.IntRatio",
+    "OmegaMath.Projective.Circle.Identity", "OmegaMath.Projective.Circle",
+]
+MATH = [*DATA, *INT, BASIC, TOPIC, *SIGNED, "OmegaMath"]
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
 LEGACY = "D5.S1.Digit.Admissibility.SquarePrependOneAppendTwentyFive"
 TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
@@ -42,8 +51,7 @@ def audit(name, modules, paths, error=None):
 
 
 def check_audits():
-    math = [*DATA, BASIC, TOPIC, "OmegaMath"]
-    for root, modules in [("OmegaInit", INIT), ("OmegaMath", math), (CONSUMER, [*DATA, BASIC, TOPIC, CONSUMER])]:
+    for root, modules in [("OmegaInit", INIT), ("OmegaMath", MATH), (CONSUMER, [*DATA, BASIC, TOPIC, CONSUMER])]:
         audit(root, modules, [LIB])
     with tempfile.TemporaryDirectory(prefix="omega-olean-") as tmp:
         tmp = Path(tmp)
@@ -55,7 +63,7 @@ def check_audits():
             lean = tmp / f"{name}.lean"
             lean.write_text(source)
             run("lake", "env", "lean", "-R", tmp, "-o", tmp / f"{name}.olean", lean)
-            audit(name, [*math, name], [tmp, LIB], reason)
+            audit(name, [*MATH, name], [tmp, LIB], reason)
     # Temporary modules exercise the naming check against the installed upstream artifacts.
     init = "OmegaInit.Data.Nat.Basic"
     prime = "OmegaMath.Data.Nat.Prime.Defs"
@@ -106,7 +114,7 @@ example (p q k : Omega.Nat) :
 
 
 def versions():
-    modules = [*INIT, *DATA, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+    modules = [*MATH, "OmegaInit", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
     files["Mathlib.Data.Nat.Prime.Basic"] = (
         ROOT / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime/Basic.olean")
@@ -123,7 +131,7 @@ def check_incremental():
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean", None,
          "\npublic theorem Omega.congrFun' {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k : α → β => k a) h\n",
-         {*INIT, *DATA, BASIC, TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         {*INIT, *MATH, CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
     ]
     for filename, replace, text, expected in probes:
         path = ROOT / filename

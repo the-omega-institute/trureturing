@@ -309,7 +309,7 @@ and one unrestricted type, weighted by the number of coordinates of each type. -
 def allocationValue (f : ℝ → ℝ) (l : Fin 3 → ℕ) (b : ℕ) (t : Fin 3 → Fin 4 → ℝ) : ℝ :=
   ∑ j, ∑ c, (multiplicity l b c : ℝ) * f (allocation t j c)
 
-private theorem multiplicity_missing (l : Fin 3 → ℕ) (b : ℕ) (j : Fin 3) :
+theorem multiplicity_missing (l : Fin 3 → ℕ) (b : ℕ) (j : Fin 3) :
     multiplicity l b j.castSucc = l j := by
   fin_cases j <;> rfl
 
@@ -546,7 +546,7 @@ theorem isGreatest_direct (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ) (w : Fin 3 �
     (fun j c => by rw [← hslope]; unfold Real.negMulLog; ring)
     (weight_columns w hw hwt) hrow
 
-private theorem complement_support {y x : ℝ} (hy : 0 < y) (hx : x ∈ Set.Icc (0 : ℝ) 1) :
+theorem complement_support {y x : ℝ} (hy : 0 < y) (hx : x ∈ Set.Icc (0 : ℝ) 1) :
     let t := max 0 (1 - y)
     Real.negMulLog (1 - x) ≤ (Real.log y + 1) * x +
       (Real.negMulLog (1 - t) - (Real.log y + 1) * t) := by
