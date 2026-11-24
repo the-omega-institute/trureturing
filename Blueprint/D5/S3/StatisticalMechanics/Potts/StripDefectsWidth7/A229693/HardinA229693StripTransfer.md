@@ -74,6 +74,8 @@ $$\forall p: \operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathi
 
 Every next row whose cost fits the available budget contributes one to its destination.
 
+The exact-cost check tries each colour at a cell and subtracts its matches with the previous colour and the optional boundary colour. It discards a choice when its cost exceeds the remaining budget and accepts a final colour only when it spends the entire remainder. It accumulates the surviving rows as radix-three codes and counts their exhausted classes.
+
 At budget zero every leading destination has multiplicity zero. The literal counts require a strictly positive residual budget for a leading destination, and the transfer uses the zero lower-left block.
 
 A separate candidate is that the source is valid if and only if the two rows agree at every destination. Exhaustive integer comparisons give the converse at budgets zero through two. At budget three the literal row has total at least 810, compared with a maximum matrix row total of 426, and the literal total is nondecreasing. The converse still lacks a Lean proof.
@@ -176,25 +178,11 @@ $$\forall x: \operatorname{\mathit{Fin}}\left(3\right), (\forall p: \operatornam
 
 Prepending a colour adds one comparison with the first boundary cell.
 
-**Definition 1.13 (Cost of a colour match).**
+**Theorem 1.13 (The copied exhausted columns).**
 
-$$\operatorname{\mathit{matchCost}} : \forall m: \mathit{Nat}, ((\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)) \to ((\operatorname{\mathit{Fin}}\left(m\right)) \to (\mathit{Nat}))), (\forall m: \mathit{Nat}, (\forall x: \operatorname{\mathit{Fin}}\left(m\right), (\operatorname{\mathit{matchCost}}\left(\operatorname{\mathit{none}}, x\right) = 0))), (\forall m: \mathit{Nat}, (\forall p: \operatorname{\mathit{Fin}}\left(m\right), (\forall x: \operatorname{\mathit{Fin}}\left(m\right), (\operatorname{\mathit{matchCost}}\left(\operatorname{\mathit{some}}\left(p\right), x\right) = (\operatorname{\mathit{if}} (p = x) \operatorname{\mathit{then}} 1 \operatorname{\mathit{else}} 0)))))$$
+$$\forall j: \operatorname{\mathit{Fin}}\left(96\right), (\forall h: \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{exitRead}}\left(j\right)\right) < 72, (\forall i: \operatorname{\mathit{Fin}}\left(168\right), (\operatorname{T}\left(i, \operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(72, j\right)\right) = \operatorname{T}\left(i, \operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(96, (\langle\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{exitRead}}\left(j\right)\right), h\rangle : \operatorname{\mathit{Fin}}\left(72\right))\right)\right))))$$
 
-*Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.matchCost` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229693: two-defect three-colour width-7 sheared strips*. URL: <https://oeis.org/A229693>.
-
-*Commentary.*
-
-An absent colour costs zero. A present colour costs one exactly when it agrees with the current colour.
-
-**Definition 1.14 (Cost of a completion).**
-
-$$\forall m: \mathit{Nat}, (\operatorname{\mathit{completionCost}} : \forall k: \mathit{Nat}, (((\operatorname{\mathit{Fin}}\left(k\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right))) \to ((\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)) \to (((\operatorname{\mathit{Fin}}\left(k + 1\right)) \to (\operatorname{\mathit{Fin}}\left(m\right))) \to (\mathit{Nat})))), (\forall p: (\operatorname{\mathit{Fin}}\left(0\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall r: (\operatorname{\mathit{Fin}}\left(1\right)) \to (\operatorname{\mathit{Fin}}\left(m\right)), (\operatorname{\mathit{completionCost}}\left(p, b, r\right) = \operatorname{\mathit{matchCost}}\left(b, r\left(0\right)\right))))), (\forall k: \mathit{Nat}, (\forall p: (\operatorname{\mathit{Fin}}\left(k + 1\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall r: (\operatorname{\mathit{Fin}}\left(k + 2\right)) \to (\operatorname{\mathit{Fin}}\left(m\right)), (\operatorname{\mathit{completionCost}}\left(p, b, r\right) = \operatorname{\mathit{matchCost}}\left(b, r\left(0\right)\right) + \operatorname{\mathit{matchCost}}\left(p\left(0\right), r\left(0\right)\right) + \operatorname{\mathit{completionCost}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{tail}}\left(p\right), \operatorname{\mathit{some}}\left(r\left(0\right)\right), \operatorname{\mathit{Fin}}.\operatorname{\mathit{tail}}\left(r\right)\right)))))))$$
-
-*Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionCost` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.copied_column` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -202,27 +190,13 @@ $$\forall m: \mathit{Nat}, (\operatorname{\mathit{completionCost}} : \forall k: 
 
 *Commentary.*
 
-Sum the initial match, when a previous colour is supplied, the matches between neighbours, and the matches against the optional boundary colours.
+A readout below 72 gives the corresponding frozen leading column with a zero suffix.
 
-**Definition 1.15 (Pruned completion list).**
+**Theorem 1.14 (Columns with the same new readout).**
 
-$$\forall m: \mathit{Nat}, (\operatorname{\mathit{completionRows}} : \forall k: \mathit{Nat}, (((\operatorname{\mathit{Fin}}\left(k\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right))) \to ((\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)) \to ((\mathit{Nat}) \to (\operatorname{\mathit{List}}\left((\operatorname{\mathit{Fin}}\left(k + 1\right)) \to (\operatorname{\mathit{Fin}}\left(m\right))\right))))), (\forall p: (\operatorname{\mathit{Fin}}\left(0\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall d: \mathit{Nat}, (\operatorname{\mathit{completionRows}}\left(p, b, d\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{map}}\left(\operatorname{\mathit{Function}}.\operatorname{\mathit{const}}\left(\operatorname{\mathit{Fin}}\left(1\right)\right), \operatorname{\mathit{List}}.\operatorname{\mathit{filter}}\left((\lambda x \mapsto \operatorname{\mathit{BEq}}.\operatorname{\mathit{beq}}\left(\operatorname{\mathit{matchCost}}\left(b, x\right), d\right)), \operatorname{\mathit{List}}.\operatorname{\mathit{finRange}}\left(m\right)\right)\right))))), (\forall k: \mathit{Nat}, (\forall p: (\operatorname{\mathit{Fin}}\left(k + 1\right)) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall d: \mathit{Nat}, (\operatorname{\mathit{completionRows}}\left(p, b, d\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{flatMap}}\left((\lambda x \mapsto \operatorname{\mathit{let}} c := \operatorname{\mathit{matchCost}}\left(b, x\right) + \operatorname{\mathit{matchCost}}\left(p\left(0\right), x\right), (\operatorname{\mathit{if}} (c \le d) \operatorname{\mathit{then}} \operatorname{\mathit{List}}.\operatorname{\mathit{map}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{cons}}\left(x\right), \operatorname{\mathit{completionRows}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{tail}}\left(p\right), \operatorname{\mathit{some}}\left(x\right), d - c\right)\right) \operatorname{\mathit{else}} \operatorname{\mathit{List}}.\operatorname{\mathit{nil}})), \operatorname{\mathit{List}}.\operatorname{\mathit{finRange}}\left(m\right)\right)))))))$$
+$$\forall j: \operatorname{\mathit{Fin}}\left(96\right), (\forall k: \operatorname{\mathit{Fin}}\left(96\right), ((72 \le \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{exitRead}}\left(j\right)\right)) \implies ((\operatorname{\mathit{exitRead}}\left(j\right) = \operatorname{\mathit{exitRead}}\left(k\right)) \implies (\forall i: \operatorname{\mathit{Fin}}\left(168\right), (\operatorname{T}\left(i, \operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(72, j\right)\right) = \operatorname{T}\left(i, \operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(72, k\right)\right))))))$$
 
-*Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionRows` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229693: two-defect three-colour width-7 sheared strips*. URL: <https://oeis.org/A229693>.
-
-*Commentary.*
-
-Try the m available colours in order, keep each head whose cost fits the budget, and prepend it to the completions at the remaining budget. The last cell must spend the entire remaining budget.
-
-**Definition 1.16 (Pruned list in base m).**
-
-$$\forall m: \mathit{Nat}, (\operatorname{\mathit{completionCodes}} : (\operatorname{\mathit{List}}\left(\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)\right)) \to ((\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)) \to ((\mathit{Nat}) \to (\operatorname{\mathit{List}}\left(\mathit{Nat}\right)))), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall d: \mathit{Nat}, (\operatorname{\mathit{completionCodes}}\left(\operatorname{\mathit{List}}.\operatorname{\mathit{nil}}, b, d\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{map}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}, \operatorname{\mathit{List}}.\operatorname{\mathit{filter}}\left((\lambda x \mapsto \operatorname{\mathit{BEq}}.\operatorname{\mathit{beq}}\left(\operatorname{\mathit{matchCost}}\left(b, x\right), d\right)), \operatorname{\mathit{List}}.\operatorname{\mathit{finRange}}\left(m\right)\right)\right)))), (\forall a: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall \mathit{bs}: \operatorname{\mathit{List}}\left(\operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right)\right), (\forall b: \operatorname{\mathit{Option}}\left(\operatorname{\mathit{Fin}}\left(m\right)\right), (\forall d: \mathit{Nat}, (\operatorname{\mathit{completionCodes}}\left(\operatorname{\mathit{List}}.\operatorname{\mathit{cons}}\left(a, \mathit{bs}\right), b, d\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{flatMap}}\left((\lambda x \mapsto \operatorname{\mathit{let}} c := \operatorname{\mathit{matchCost}}\left(b, x\right) + \operatorname{\mathit{matchCost}}\left(a, x\right), (\operatorname{\mathit{if}} (c \le d) \operatorname{\mathit{then}} \operatorname{\mathit{List}}.\operatorname{\mathit{map}}\left((\lambda r \mapsto \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(x\right) + m \cdot r), \operatorname{\mathit{completionCodes}}\left(\mathit{bs}, \operatorname{\mathit{some}}\left(x\right), d - c\right)\right) \operatorname{\mathit{else}} \operatorname{\mathit{List}}.\operatorname{\mathit{nil}})), \operatorname{\mathit{List}}.\operatorname{\mathit{finRange}}\left(m\right)\right)))))))$$
-
-*Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionCodes` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.new_column_congr` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -230,23 +204,21 @@ $$\forall m: \mathit{Nat}, (\operatorname{\mathit{completionCodes}} : (\operator
 
 *Commentary.*
 
-Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with the natural value of x plus m times c.
+A readout at least 72 determines the entire exhausted destination column.
 
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.T`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.active_cut`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.cl`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionCodes`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionCost`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.completionRows`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.copied_column`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.exhaustedClass`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.exhausted_cut`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.exhausted_relabel`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.exitRead`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.fresh_relabel`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.horizontal_cons`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.matchCost`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.new_column_congr`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.oldZeroImage`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.transition_counts`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693StripTransfer.valid_parts`
@@ -255,10 +227,9 @@ Run the same recursion on a list of boundary colours. Prepending a colour x repl
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer](../../../../Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155RowTransfer](../../../../Combinatorics/TraceAvoidingArrays/HardinA233155RowTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](../../../../Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Laws](../../CrossedStripDefectsWide/P5b/HardinA229635Laws.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State](../../CrossedStripDefectsWide/P5b/HardinA229635State.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584StripData](../../StripDefects/HardinA229584StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn](../../StripDefects/HardinA229637RowColumn.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip](../HardinA229585Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585StripData](../HardinA229585StripData.md)

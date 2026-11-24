@@ -102,7 +102,21 @@ $$(\forall p: \mathit{Boundary}, (\forall d: \operatorname{\mathit{Fin}}\left(2\
 
 The first two clauses preserve the exact residual budget. The next three clauses give all class transition and initial counts. The final clauses verify each forward-table step and its polynomial relation. Finite indices in the last clause have value 2+j and satisfy 2+j < 11.
 
-**Theorem 1.8 (The integer recurrence).**
+**Theorem 1.8 (The order-eight forward-vector relation).**
+
+$$\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, 2 + 8\right) = \sum_{j: \operatorname{\mathit{Fin}}\left(8\right)} (\operatorname{\mathit{HSMul}}.\operatorname{\mathit{hSMul}}\left(\operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((-656100), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left(1574640, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((-1513404), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left(750384, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((-206469), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left(31428, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left((-2466), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecCons}}\left(84, \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecEmpty}}\right)\right)\right)\right)\right)\right)\right)\right)\left(j\right), \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{forward}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{T}, \operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, 2 + \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(j\right)\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.polynomial_relation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229585: one-defect three-colour width-7 sheared strips*. URL: <https://oeis.org/A229585>.
+
+*Commentary.*
+
+The finite transfer certificate gives the vector relation at shift two. The forward iterates use the width-seven transfer and its initial weights.
+
+**Theorem 1.9 (The integer recurrence).**
 
 $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 9\right): \mathit{Int}) = 84 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 8\right): \mathit{Int}) - 2466 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 7\right): \mathit{Int}) + 31428 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 6\right): \mathit{Int}) - 206469 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 5\right): \mathit{Int}) + 750384 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 4\right): \mathit{Int}) - 1513404 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 3\right): \mathit{Int}) + 1574640 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 2\right): \mathit{Int}) - 656100 \cdot (\operatorname{\mathit{HardinA229585Strip}}.\operatorname{a}\left(n + 1\right): \mathit{Int}))$$
 
@@ -129,6 +143,7 @@ All natural counts in this equality are cast to integers. Relabelling the three 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.cross_relabel`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.edge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.finite_certificate`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.polynomial_relation`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)

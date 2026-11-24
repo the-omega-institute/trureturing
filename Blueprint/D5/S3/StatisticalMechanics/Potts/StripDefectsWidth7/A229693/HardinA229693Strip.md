@@ -6,7 +6,7 @@ The width-seven two-defect recurrence.
 
 **Definition 1.1 (First-row weights).**
 
-$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{addCases}}\left(\lambda j: \operatorname{\mathit{Fin}}\left(56\right) \mapsto (\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(16, j\right)\right) - 6), \lambda j: \operatorname{\mathit{Fin}}\left(40\right) \mapsto ((12: \mathit{Int}))\right)\right)$$
+$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{addCases}}\left(\lambda j: \operatorname{\mathit{Fin}}\left(56\right) \mapsto (\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(16, j\right)\right) - 6), (12 : (\operatorname{\mathit{Fin}}\left(40\right)) \to (\mathit{Int}))\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.initial` (`✓ std3`).
 
