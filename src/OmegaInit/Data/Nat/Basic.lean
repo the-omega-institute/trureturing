@@ -99,4 +99,20 @@ theorem eq_zero_of_add_eq_zero {a b : Nat} (h : Eq (add a b) zero) :
     (fun ha => And.intro ha Eq.refl)
     (fun n _ hn => False.elim (succ_ne_zero (add a n) hn)) b) h
 
+
+/-- Subtracting the same allowance from a sum bound gives the remaining bound. -/
+theorem sub_le_of_le_add {a b c : Nat} (h : le a (add c b)) : le (sub a b) c :=
+  have zeroSub (n : Nat) : Eq (sub zero n) zero :=
+    Nat.rec (motive := fun n => Eq (sub zero n) zero)
+      Eq.refl (fun _ ih => congrArg pred ih) n
+  (Nat.rec (motive := fun n => ∀ value, le value (add c n) → le (sub value n) c)
+    (fun _ bound => bound)
+    (fun n ih value =>
+      Nat.rec (motive := fun x => le x (add c (succ n)) → le (sub x (succ n)) c)
+        (fun _ => Eq.subst (fun x => le x c) (zeroSub (succ n)).symm (zero_le c))
+        (fun x _ bound =>
+          Eq.subst (fun z => le z c) (succ_sub_succ_eq_sub x n).symm
+            (ih x (le_of_succ_le_succ bound))) value)
+    b) a h
+
 end Omega.Nat

@@ -1,6 +1,6 @@
 # Omega 数学模块的架构与验证
 
-`OmegaInit` 提供严格基础，`OmegaMath` 公开六卷的数学模块。根目录的 Lake 配置以 `srcDir = "src"` 登记这两个库和 `OmegaChecks`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`，D5 引用位于根目录的 `D5/`。[Lake 配置](../lakefile.toml)
+`OmegaInit` 提供严格基础，`OmegaMath` 公开六卷的数学模块。根目录的 Lake 配置以 `srcDir = "src"` 登记这两个库和 `OmegaChecks`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
 ## 六卷与模块树
 
@@ -11,7 +11,7 @@
 | III | 整数四元数、射影三元数堆、PythSpinor 与三维 Cayley 旋转 | `OmegaMath.Algebra.Quaternion`、`OmegaMath.Ternion.Heap`、`OmegaMath.Geometry.Cayley3D` |
 | IV | 二阶与有限阶 jet、单纯上边界与正合性 | `OmegaMath.Calculus.{Jet2,DFiniteJet}`、`OmegaMath.Topology.SimplicialCoboundary` |
 | V | 二次扩张、Lagrange–Gram 与 Schur 恒等式、Bargmann 行列式、Haar 矩与 Chebyshev–Hecke 算子 | `OmegaMath.Algebra.QuadraticExt`、`OmegaMath.Matrix.LagrangeSchur`、`OmegaMath.Geometry.BargmannGram`、`OmegaMath.Harmonic.{ChebyshevHecke,PiFreeHaar}` |
-| VI | 欧几里得算法、连分数、深度预算、整数矩阵、Hurwitz 分裂、FRACTRAN 与标准实数桥接 | `OmegaMath.Arithmetic.{Euclidean,ContinuedFraction,DepthBudget}`、`OmegaMath.Matrix.Mat2`、`OmegaMath.Matrix.Mat2.Hurwitz`、`OmegaMath.Computability.{Fractran,QuaternionFractran}` 与 D5 的 `OmegaShadowBridge` |
+| VI | 欧几里得算法、连分数、深度预算、整数矩阵、Hurwitz 分裂与 FRACTRAN | `OmegaMath.Arithmetic.{Euclidean,ContinuedFraction,DepthBudget}`、`OmegaMath.Matrix.Mat2`、`OmegaMath.Matrix.Mat2.Hurwitz`、`OmegaMath.Computability.{Fractran,QuaternionFractran}` |
 
 下列树以模块名表示源文件。带子项的节点也可以是模块，例如 `OmegaMath.Projective` 和 `OmegaMath.Algebra.QuadraticExt.Polynomial`。同层模块用逗号列出。
 
@@ -119,42 +119,26 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 ## OmegaMath 的专题与来源
 
-可独立使用的定义和定理放在 `OmegaMath` 对应专题下。只为一个 D5 证明服务的辅助结果可与该证明放在一起。来源标记以文件为单位。审计器在独立的上游环境中核对移植声明的名字和定义模块，严格闭包另经空内核重放。[审计实现](OmegaChecks/Audit.lean)
+可独立使用的定义和定理放在 `OmegaMath` 对应专题下。库的依赖闭包由严格基础与数学模块组成。来源标记以文件为单位。审计器在独立的上游环境中核对移植声明的名字和定义模块，严格闭包另经空内核重放。[审计实现](OmegaChecks/Audit.lean)
 
 | 来源 | 模块位置 | 公开名称与来源标注 |
 | --- | --- | --- |
 | 从钉版 Mathlib 移植 | 保留上游定义所在模块的路径，把 `Mathlib` 换成 `OmegaMath` | 在上游声明的完整名字前加 `Omega.` |
 | Omega 原创形式化 | 放在相关专题附近，可与移植模块同目录 | 在 `Omega` 命名空间中取名，模块文档第一行写 `Omega original.`，随后说明用途 |
 
-## D5 冻结引用
+## 与标准定义的对应
 
-十三个零公理 D5 模块公开供书稿引用的结论。
-
-| 卷 | 冻结模块 |
-| --- | --- |
-| II | [OmegaCircleClosure](../D5/S3/Quantum/AURICOmega/OmegaCircleClosure.lean) |
-| III | [OmegaTernionHeap](../D5/S3/Quantum/AURICOmega/OmegaTernionHeap.lean) · [OmegaCayleyRotation](../D5/S3/Quantum/AURICOmega/OmegaCayleyRotation.lean) |
-| IV | [OmegaJetCalculus](../D5/S3/Quantum/AURICOmega/OmegaJetCalculus.lean) · [OmegaSimplicialExactness](../D5/S3/Quantum/AURICOmega/OmegaSimplicialExactness.lean) |
-| V | [OmegaQuadraticAndSchur](../D5/S3/Quantum/AURICOmega/OmegaQuadraticAndSchur.lean) · [OmegaChebyshevHecke](../D5/S3/Quantum/AURICOmega/OmegaChebyshevHecke.lean) · [OmegaBargmannHaarHecke](../D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.lean) |
-| VI | [OmegaArithmeticHorizon](../D5/S3/Quantum/AURICOmega/OmegaArithmeticHorizon.lean) · [OmegaMatrixAndFractran](../D5/S3/Quantum/AURICOmega/OmegaMatrixAndFractran.lean) |
-
-| Wave 3 | 冻结模块 | 内容 |
-| --- | --- | --- |
-| 3A | [OmegaComposeAndWitnesses](../D5/S3/Quantum/AURICOmega/OmegaComposeAndWitnesses.lean) | 有限阶 jet 复合、Cayley 三角公式与精确见证 |
-| 3B | [OmegaSphericalHaarMidpoint](../D5/S3/Quantum/AURICOmega/OmegaSphericalHaarMidpoint.lean) | 各阶偶特征标的 Haar 正交归一性、有理球面三角定律与 Cayley 中点漂移 |
-| 3C | [OmegaLieTripleAndFreeGroup](../D5/S3/Quantum/AURICOmega/OmegaLieTripleAndFreeGroup.lean) | Lie 三重积曲率、有理 Cayley 双图的分母界与范数为五的 Hurwitz 约化词 |
-
-Layer 2 的 `OmegaShadowBridge` 也已冻结。它将精确算术和射影圆结论映到标准自然数、整数、有理数和实数。它导入 Mathlib，冻结记录包含 `propext` 和 `Quot.sound`，位于严格库闭包之外。[桥接源码](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [冻结记录](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
+对于声称对应 Mathlib 的定义，在混合核验模块中证明映射保留运算或谓词。自然数核验给出零和后继转换的两个往返等式、序关系的双向等价，以及 Fibonacci 数列和二项式系数对任意输入的逐点一致。`lake test -- OmegaChecks.NatCorrespondence` 可单独运行。严格闭包覆盖任一算术移植模块时也运行这项核验。[对应证明](OmegaChecks/NatCorrespondence.lean)
 
 ## 空内核审计
 
 | 审计入口 | 传递闭包的模块数 | 声明数 |
 | --- | ---: | ---: |
-| `OmegaInit` | 10 | 163 |
-| `OmegaMath` | 103 | 2,677 |
-| `OmegaInit` 与 `OmegaMath` 合并去重 | 104 | 2,677 |
+| `OmegaInit` | 11 | 170 |
+| `OmegaMath` | 120 | 2,840 |
+| `OmegaInit` 与 `OmegaMath` 合并去重 | 121 | 2,840 |
 
-计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 103 个模块包括 94 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
+计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 120 个模块包括 110 个 OmegaMath 模块和 10 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
 
 在仓库根目录运行以下命令。Lake 驱动构建并重放两个入口的联合闭包。Python 脚本按源文件清单核对两个入口的传递闭包，并检查旧消费入口和拒绝用例。[复现脚本](OmegaChecks/check.py)
 

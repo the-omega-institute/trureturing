@@ -29,11 +29,9 @@ internal sealed class ResidualDiscrepancyDocument : IScribeDocumentDefinition
                         + "statement that the two readings differ; no order, norm, or "
                         + "numeric representation is assumed.")),
                     Paragraph(Text(
-                        "The pinned library was searched before proving. The exact algebraic "
-                        + "core is Mathlib's `sub_ne_zero`, so the Lean declaration is a thin "
-                        + "honest wrapper that unfolds the residual vocabulary and applies "
-                        + "that theorem. Searches for an existing residual-discrepancy "
-                        + "abstraction were negative. The source atom is definitional and "
-                        + "contains no numerical certificate."))),
+                        "Adding the expected reading back on the right of the difference "
+                        + "recovers the observed reading. If the difference vanishes, that "
+                        + "recovery forces both readings to agree. Equal readings give zero "
+                        + "by the inverse law."))),
                 DescribeRole.Theorem))));
 }

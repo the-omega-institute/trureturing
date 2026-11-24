@@ -14,13 +14,12 @@ $$\forall n\in\mathbb{Z},\ \operatorname{norm}((phiUnit^n:\operatorname{GoldenIn
 
 *Commentary.*
 
-The distinguished golden unit phiUnit has value phi. Mapping its integer powers through the frozen norm monoid homomorphism gives the corresponding power of the unit -1 in the integer units; the displayed `.val` extracts the integer.
+The distinguished golden unit phiUnit has value phi. The strict golden power uses phi for nonnegative exponents and its inverse for negative exponents. Both bases have norm -1.
 
-The proof uses Units.map and MonoidHom.map_zpow, so negative exponents are handled by the unit inverse rather than by a new norm definition.
+The proof applies natural-power norm multiplicativity in each integer case. It raises -1 to the absolute exponent because -1 is its own inverse.
 
 This closes the integer-power extension clause of remark 27.722. The even-power positivity and cone-selection consequences remain unresolved.
 
 ## References
 
 - Truth anchor: `D5/S0/Carrier/Powers/IntegerPowerNorm.norm_phiUnit_zpow`
-- Dependency: [D5/S0/Carrier/Units](../Units.md)

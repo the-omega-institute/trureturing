@@ -26,9 +26,10 @@ internal sealed class DefinitionalConservativityDocument : IScribeDocumentDefini
                             + "conclusion; it introduces no independent axiom or rule.")),
                     Paragraph(Text(
                         "The old-language embedding is required to be a section of expansion. "
-                            + "Induction on an extended derivation then yields a base derivation "
-                            + "of the expanded conclusion, and the section law identifies that "
-                            + "conclusion with the original old-language sentence.")),
+                            + "An extended derivation belongs to every family closed under the "
+                            + "extended axioms and rules. Base derivability pulled back along "
+                            + "expansion is such a family. The section law identifies the "
+                            + "expanded conclusion with the original old-language sentence.")),
                     Paragraph(Text(
                         "This is the source's definitional-extension conservativity clause: every "
                             + "old-language sentence derivable in the expansion-only calculus was "

@@ -10,8 +10,8 @@
 result: proof_shape: bind-only; escape_witness: none.
 admission_basis: open-problem-resolution (#22903; Proved).
 Direct frozen dependencies (declaration statement_id):
-D5/S0/Conventions/IntegerIndexBinomial.binom
-  sha256:1b5d115d3154df46a4f4c71aecf721ba76b76342a8accd9a42835a7efcd0ea68;
+D5/S0/Conventions/IntegerIndexBinomial.binom_std
+  sha256:2932418d7d8984e0c7057d61b2081a49ed39b0f3a753858c17413d146cf58238;
 D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.binary_catalan
   sha256:22e9a38eaef0b535a11f074b5cb2bbf9af2f900fa6a30c3aafefb6160b7ff175;
 D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.catalanSeries
@@ -26,8 +26,8 @@ sum_eval_even, sum_eval_odd -> odd_z_iff; z_cast_eq_A, odd_z_iff -> result.
 The literal terminating sum in A and the proposition in claim use the
 preregistered expressions. Proofs reuse ordinaryHypergeometricCoefficient and
 binary_catalan. The source-specific expressions in A and claim remain literal;
-proofs use the shared ballotE owner through the consumed correspondence ballotE_eq.
-Shared owner: D5/S0/Conventions/IntegerIndexBinomial.ballotE.
+proofs use the shared ballotE_std owner through the consumed correspondence ballotE_eq.
+Shared owner: D5/S0/Conventions/IntegerIndexBinomial.ballotE_std.
 ballotE_eq -> coeff_eq, row_sum_q, sum_eval_even.
 -/
 
@@ -35,7 +35,7 @@ import D5.S0.Conventions.IntegerIndexBinomial
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
 
-open D5.S0.Conventions.IntegerIndexBinomial (ballotE)
+open D5.S0.Conventions.IntegerIndexBinomial (ballotE_std)
 open scoped BigOperators
 open PowerSeries
 namespace D5.S1.Recurrence.Invariants.LuschnyA323206Parity
@@ -83,21 +83,21 @@ private theorem pos_pochhammer (k j : ℕ) :
 
 
 private theorem ballotE_eq (k j : ℕ) :
-    ballotE k (j + 1) =
+    ballotE_std k (j + 1) =
       (if j = 0 then (1 : ℤ) else ((k+j).choose j : ℤ) - (k+j).choose (j-1)) := by
-  unfold ballotE
+  unfold ballotE_std
   rw [show k + (j + 1) - 1 = k + j by omega,
     show ((j + 1 : ℕ) : ℤ) - 1 = (j : ℤ) by omega,
     show ((j + 1 : ℕ) : ℤ) - 2 = (j : ℤ) - 1 by omega]
   by_cases hj : j = 0
-  · simp [hj, D5.S0.Conventions.IntegerIndexBinomial.binom]
-  · simp [hj, D5.S0.Conventions.IntegerIndexBinomial.binom,
+  · simp [hj, D5.S0.Conventions.IntegerIndexBinomial.binom_std]
+  · simp [hj, D5.S0.Conventions.IntegerIndexBinomial.binom_std,
       show ¬ (j : ℤ) - 1 < 0 by omega,
       show ((j : ℤ) - 1).toNat = j - 1 by omega]
 
 private theorem coeff_eq (k j : ℕ) (hjk : j ≤ k) :
     ordinaryHypergeometricCoefficient (-(k : ℚ)) ((k : ℚ) + 1)
-      (-(k : ℚ) - 1) j = ((ballotE k (j + 1)) : ℚ) := by
+      (-(k : ℚ) - 1) j = ((ballotE_std k (j + 1)) : ℚ) := by
   rw [ballotE_eq]
   by_cases hj : j = 0
   · subst j
@@ -195,10 +195,10 @@ private theorem second_sum (k : ℕ) :
       _ = ((2 * (k + 1) + 1).choose ((k + 1) + 2) : ℚ) := by congr 2
 
 private theorem row_sum_q (k : ℕ) :
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ℚ)) =
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ℚ)) =
       ((2 * k + 1).choose (k + 1) : ℚ) - ((2 * k + 1).choose (k + 2) : ℚ) := by
   calc
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ℚ)) =
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ℚ)) =
         ∑ j ∈ Finset.range (k + 1),
           (((k+j).choose j : ℚ) -
             (if j = 0 then (0 : ℚ) else ((k+j).choose (j-1) : ℚ))) := by
@@ -215,7 +215,7 @@ private theorem row_sum_q (k : ℕ) :
 
 
 private theorem row_sum_catalan_q (k : ℕ) :
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ℚ)) =
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ℚ)) =
       (catalan (k + 1) : ℚ) := by
   rw [row_sum_q]
   have hpascal : (2 * k + 2).choose (k + 2) =
@@ -256,7 +256,7 @@ private theorem row_sum_catalan_q (k : ℕ) :
 
 
 private noncomputable def z (n k : ℕ) : ℤ :=
-  ∑ j ∈ Finset.range (k + 1), (ballotE k (j + 1)) * (n : ℤ) ^ j
+  ∑ j ∈ Finset.range (k + 1), (ballotE_std k (j + 1)) * (n : ℤ) ^ j
 
 private theorem z_cast_eq_A (n k : ℕ) :
     (z n k : ℚ) = A n k := by
@@ -269,20 +269,20 @@ private theorem z_cast_eq_A (n k : ℕ) :
 
 private theorem z_mod_two (n k : ℕ) :
     (z n k : ZMod 2) =
-      ∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j := by
+      ∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j := by
   rw [z]
   push_cast
   rfl
 
 
 private theorem sum_b_mod_two (k : ℕ) :
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ZMod 2)) =
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ZMod 2)) =
       (catalan (k + 1) : ZMod 2) := by
-  have hi : (∑ j ∈ Finset.range (k + 1), (ballotE k (j + 1)) : ℤ) = (catalan (k + 1) : ℤ) := by
+  have hi : (∑ j ∈ Finset.range (k + 1), (ballotE_std k (j + 1)) : ℤ) = (catalan (k + 1) : ℤ) := by
     exact_mod_cast row_sum_catalan_q k
   calc
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ZMod 2)) =
-        ((∑ j ∈ Finset.range (k + 1), (ballotE k (j + 1)) : ℤ) : ZMod 2) := by
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ZMod 2)) =
+        ((∑ j ∈ Finset.range (k + 1), (ballotE_std k (j + 1)) : ℤ) : ZMod 2) := by
       push_cast
       rfl
     _ = (catalan (k + 1) : ZMod 2) := by rw [hi]; norm_cast
@@ -305,13 +305,13 @@ private theorem catalan_mod_two_iff (k : ℕ) :
     exact h.mpr ⟨e, hk⟩
 
 private theorem sum_eval_even (n k : ℕ) (hn : Even n) :
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j) = 1 := by
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j) = 1 := by
   have hn0 : (n : ZMod 2) = 0 := Even.natCast_zmod_two hn
   rw [Finset.sum_range_succ']
   simp [hn0, ballotE_eq]
 
 private theorem sum_eval_odd (n k : ℕ) (hn : Odd n) :
-    (∑ j ∈ Finset.range (k + 1), ((ballotE k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j) =
+    (∑ j ∈ Finset.range (k + 1), ((ballotE_std k (j + 1)) : ZMod 2) * (n : ZMod 2) ^ j) =
       (catalan (k + 1) : ZMod 2) := by
   have hn1 : (n : ZMod 2) = 1 := Odd.natCast_zmod_two hn
   rw [Finset.sum_congr rfl (fun j hj => by rw [hn1, one_pow, mul_one])]

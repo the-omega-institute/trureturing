@@ -1,9 +1,11 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
 import hashlib
+import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,8 +27,12 @@ DATA = [*FOUNDATION, "OmegaMath.Data.Nat", "OmegaMath.Data.Ratio"]
 BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
+NAT_CORRESPONDENCE = "OmegaChecks.NatCorrespondence"
 LEGACY = "D5.S1.Digit.Admissibility.SquarePrependOneAppendTwentyFive"
-TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", NAT_CORRESPONDENCE, LEGACY]
+AUDIT = ROOT / ".lake/build/bin/omegaAudit"
+# Resolved once: each `lake env` call re-reads the workspace configuration.
+ENV = {}
 
 
 def run(*args):
@@ -37,10 +43,20 @@ def build():
     run("make", "lean", "LEAN_TARGETS=" + " ".join(TARGETS))
 
 
+def lake_environment():
+    script = "import json, os; print(json.dumps(dict(os.environ)))"
+    output = subprocess.run(["lake", "env", sys.executable, "-c", script], cwd=ROOT,
+                            stdout=subprocess.PIPE, text=True, check=True).stdout
+    return json.loads(output)
+
+
+def lean(*args, **options):
+    return subprocess.run([ENV["LEAN"], *map(str, args)], cwd=ROOT, env=ENV, text=True, check=True, **options)
+
+
 def audit(name, modules, paths, error=None):
-    args = ["lake", "env", "lean", "--run", "src/OmegaChecks/Audit.lean", "--exact", name,
-            os.pathsep.join(map(str, paths)), *modules]
-    result = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
+    args = [AUDIT, "--exact", name, os.pathsep.join(map(str, paths)), *modules]
+    result = subprocess.run(args, cwd=ROOT, env=ENV, capture_output=True, text=True)
     output = result.stdout + result.stderr
     if error is None:
         if result.returncode:
@@ -62,9 +78,9 @@ def check_audits():
              "hiddenAssumption"),
             ("ImplicitInit", "import OmegaMath\n", "unknown module prefix 'Init'"),
         ]:
-            lean = tmp / f"{name}.lean"
-            lean.write_text(source)
-            run("lake", "env", "lean", "-R", tmp, "-o", tmp / f"{name}.olean", lean)
+            source_file = tmp / f"{name}.lean"
+            source_file.write_text(source)
+            lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
             audit(name, [*MATH, name], [tmp, LIB], reason)
     # Temporary modules exercise the naming check against the installed upstream artifacts.
     init = "OmegaInit.Data.Nat.Basic"
@@ -87,14 +103,14 @@ def check_audits():
             marker = "/-! Omega original. -/\n" if name == original else ""
             body = "" if declaration.startswith("axiom ") else " := ∀ p : Prop, p → p"
             source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n")
-            run("lake", "env", "lean", "-R", tmp, "-o", source.with_suffix(".olean"), source)
+            lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             audit(name, [name], [tmp], error)
     example = """prelude
 import OmegaInit.Data.Nat.Basic
 open Omega
 example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 """
-    subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, input=example, text=True, check=True)
+    lean("--stdin", input=example)
 
 
 def check_root_d5_import():
@@ -110,13 +126,12 @@ example (p q k : Omega.Nat) :
       (Omega.Projective.kappa p q) :=
   Omega.Projective.kappa_scale p q k
 """
-    subprocess.run(["lake", "env", "lean", "--stdin", str(filename)], cwd=ROOT,
-                   input=overlay, text=True, check=True)
+    lean("--stdin", filename, input=overlay)
     print(f"{LEGACY}: source overlay importing {TOPIC} passed", flush=True)
 
 
 def versions():
-    modules = [*MATH, "OmegaInit", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+    modules = [*MATH, "OmegaInit", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", NAT_CORRESPONDENCE, LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
     files["Mathlib.Data.Nat.Prime.Basic"] = (
         ROOT / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime/Basic.olean")
@@ -133,7 +148,7 @@ def check_incremental():
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean", None,
          "\npublic theorem Omega.congrFun' {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k : α → β => k a) h\n",
-         {*INIT, *MATH, CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         {*INIT, *MATH, CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", NAT_CORRESPONDENCE}),
     ]
     for filename, replace, text, expected in probes:
         path = ROOT / filename
@@ -173,6 +188,9 @@ if __name__ == "__main__":
     manifest = ROOT / "lake-manifest.json"
     initial = manifest.read_bytes()
     build()
+    # The compiled driver runs the current Audit.lean without elaborating it for every audit.
+    run("lake", "build", "omegaAudit")
+    ENV.update(lake_environment())
     check_audits()
     check_root_d5_import()
     if args.incremental:
