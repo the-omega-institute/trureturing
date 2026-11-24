@@ -19,6 +19,17 @@ internal sealed class OmegaComposeAndWitnessesDocument : IScribeDocumentDefiniti
         Formula rule = F.Id("pOmega"), start = D(1, 3, 1, 0, 7, 2), end = D(2, 2), count = D(1, 5);
         Formula ph = F.Id("pHalf"), qh = F.Id("qHalf"), o = F.Id("o");
 
+        Formula identity = F.Id("identity");
+        Formula Beat(byte i) => Call("pow", s, D(i));
+        Formula Signed(byte i, Formula point) => Call("SignedEq", Beat(i), point);
+        Formula Fidelity(byte i, byte value) => Equiv(Call("kappaSpin", identity, Beat(i)), D(value));
+        Formula orbit = And(Signed(1, s),
+            And(Signed(2, F.Id("second")),
+                And(Signed(3, F.Id("antipode")),
+                    And(Signed(4, F.Id("fourth")),
+                        And(Signed(5, F.Id("fifth")),
+                            And(Signed(6, identity), And(Fidelity(3, 0), Fidelity(6, 1))))))));
+
         return DocumentDefinition.Create(ScribeNode.Create(
             "Formal power-series substitution and exact algebraic, geometric and arithmetic identities.",
             H("Formal composition, Cayley trigonometry and concrete witnesses"),
@@ -43,17 +54,10 @@ internal sealed class OmegaComposeAndWitnessesDocument : IScribeDocumentDefiniti
                     Disp(Seq(Neg, Sp, Call("RayEquiv", Call("triad", ph, o, qh), Call("triad", qh, o, ph)))),
                     "The middle point is the identity quaternion. The two products have the same nonzero real coordinate and opposite last coordinates, so they cannot represent the same ray."),
                 Law("g120_spin_six_beat_orbit", "The signed six-beat orbit",
-                    Disp(And(And(And(Call("SignedEq", Call("pow", s, D(1)), s),
-                                        Call("SignedEq", Call("pow", s, D(2)), F.Id("second"))),
-                                    And(Call("SignedEq", Call("pow", s, D(3)), F.Id("antipode")),
-                                        Call("SignedEq", Call("pow", s, D(4)), F.Id("fourth")))),
-                                And(And(Call("SignedEq", Call("pow", s, D(5)), F.Id("fifth")),
-                                        Call("SignedEq", Call("pow", s, D(6)), F.Id("identity"))),
-                                    And(Equiv(Call("kappaSpin", F.Id("identity"), Call("pow", s, D(3))), D(0)),
-                                        Equiv(Call("kappaSpin", F.Id("identity"), Call("pow", s, D(6))), D(1))))),
-                    "Here S has homogeneous coordinates (1, 1, 1, 1) with denominator two. The second, fourth and fifth beats have numerators (-1, 1, 1, 1), (-1, -1, -1, -1) and (1, -1, -1, -1), each with denominator two. Beat three is the radius-one antipode and beat six is the radius-one identity. The corresponding accumulated rotation angles are 360 and 720 degrees."),
+                    Disp(orbit),
+                    "The generator has homogeneous coordinates (1, 1, 1, 1) with denominator two. The second, fourth and fifth beats have numerators (-1, 1, 1, 1), (-1, -1, -1, -1) and (1, -1, -1, -1), each with denominator two. Beat three is the radius-one antipode and beat six is the radius-one identity. The corresponding accumulated rotation angles are 360 and 720 degrees."),
                 Law("orthogonal_triad_excess_quarter", "Quarter Gram determinant",
-                    Disp(Equiv(Call("detGram", o, ph, qh), Frac(D(1), D(4)))),
+                    Disp(Equiv(Call("detGram", o, ph, qh), new Formula.Fraction(D(1), D(4)))),
                     "The three vectors are the identity coordinate vector and the sums of that vector with the first and second imaginary coordinate vectors. Their normalized Gram determinant is one quarter."),
                 Law("p_omega_halts_at_22", "Exact first halt of the four-rule FRACTRAN program",
                     Disp(And(Call("Follows", rule, F.Id("trace"), start),
@@ -76,12 +80,12 @@ internal sealed class OmegaComposeAndWitnessesDocument : IScribeDocumentDefiniti
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
     private static Formula Equal(Formula a, Formula b) => Rel(a, FormulaRelationOperator.Equal, b);
-    private static Formula Equiv(Formula a, Formula b) => Call("Equivalent", a, b);
+    private static Formula Equiv(Formula a, Formula b) => Rel(a, FormulaRelationOperator.Equivalent, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula If(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
 
     private static DocumentBlock.Describe Law(string selector, string title, Formula statement, string note) =>
-        Describe.Lean(DescribeId.Create(selector.Replace('_', '-')), DeclarationHandle.Create($"{Module}.{selector}"),
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create($"{Module}.{selector}"),
             H(title), StatementSource.FromAuthor(statement), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(note))), DescribeRole.Theorem);
 }
