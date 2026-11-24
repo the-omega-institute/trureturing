@@ -2,25 +2,29 @@
 
 ## Abstract
 
-A normalized positive part attains a prescribed real moment at minimum squared mass.
+A normalized positive part minimizes squared mass with a lower bound on one real moment.
 
 **Theorem 1.1 (Exact optimizer for one real lower moment bound).**
 
-$$\begin{aligned}&\frac{\sum_{i}c_{i}}{|I|} \le a \le C,\quad \exists t \ge0,\\&u_{i}=\max(0,1-t(C-c_{i})),\quad v_{i}=\frac{u_{i}}{\sum_{j}u_{j}},\\&v_{i} \ge0,\quad \sum_{i}v_{i}=1,\quad \sum_{i}v_{i}c_{i}=a,\\&\sum_{i}(w_{i}-v_{i})^{2} \le \sum_{i}\left(w_{i}\right)^{2}-\sum_{i}\left(v_{i}\right)^{2}.\end{aligned}$$
+$$\begin{aligned}&0 \le t \le \sum_{i}\max(0,\frac{1}{C-c_{i}}),\quad a \le \mu \longrightarrow t=0,\\&u_{i}=\max(0,1-t(C-c_{i})),\quad v_{i}=\frac{u_{i}}{Z},\quad Z=\sum_{j}u_{j},\\&v_{i} \ge0,\quad \sum_{i}v_{i}=1,\quad \operatorname{M}\left(v\right)=\max(\mu,a),\\&\operatorname{E}\left(w\right)-\operatorname{E}\left(v\right)=\sum_{i}(w_{i}-v_{i})^{2}+\frac{2}{Z}(t(\operatorname{M}\left(w\right)-\operatorname{M}\left(v\right))+\sum_{i}(t(C-c_{i})-1)_{+}w_{i}),\\&\sum_{i}(w_{i}-v_{i})^{2} \le \operatorname{E}\left(w\right)-\operatorname{E}\left(v\right).\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/ClippedMomentWeights.exists_clipped_moment_minimizer` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Weimi Zhou and Yong-Jin Liu (2025). *Fast projection onto the intersection of simplex and singly linear constraint and its generalized Jacobian*. DOI: [10.61208/pjo-2025-002](https://doi.org/10.61208/pjo-2025-002). URL: <https://arxiv.org/html/2310.10388v3>.
+
 *Commentary.*
 
-The indices form a finite set I. The readout c is real, C is its attained maximum, and a lies between the mean of c under the uniform law and C. All sums range over I. The last line holds for every nonnegative w with sum one and moment at least a.
+Let I be a finite set, let c be a real readout on I, and take a target a at most an attained value C. Write μ for the uniform mean of c, M(w) for the weighted moment, E(w) for the sum of squared weights, and Z for the sum of the raw clipped weights u. The energy identity holds for any real w of sum one. The inequality applies when w is also nonnegative and M(w) is at least a.
 
-At t = 0 the weights are uniform. Every index attaining the maximum has raw weight one for every t, so the normalization stays positive. At one plus the sum of the reciprocals of the positive gaps C − cᵢ, every submaximal index has weight zero. The normalized moment is continuous between these endpoints, so it attains a at a finite t.
+Zhou and Liu study Euclidean projection onto the intersection of the simplex and one linear half-space. With center zero and half-space vector −c, their shifted simplex projection gives the thresholded affine form for this objective.
 
-Write the raw affine weights as 1 − t(C − cᵢ). Their inner product with w − v is nonnegative because the masses agree and the moment of w is at least that of v. Taking positive parts can only increase this inner product. At each clipped index v vanishes and w is nonnegative. After normalization, expand the squared norm around v. The lower bound by the squared distance forces uniqueness.
+At t = 0 the weights are uniform. Every index attaining C has raw weight one for all t, so the denominator stays positive. At the sum of the reciprocals of positive gaps C − cᵢ, the weights below C have vanished. The normalized moment is then at least C. Continuity gives a finite parameter for the required moment.
 
-For cyclic Fourier weights, cᵢ can be the real part of a character at a single spatial residue. The resulting squared mass is the minimum with this one constraint. A whole spatial band imposes further joint constraints.
+The affine constant disappears in the inner product with w − v by equality of total mass. At each clipped entry v vanishes, so replacing the negative raw weight by zero adds the clipped contribution in the identity. Both terms of the correction are nonnegative for feasible w when the moment bound is active. At t = 0 the correction is zero. The squared distance forces uniqueness.
+
+On a finite cyclic group the readout can be the real part of a character at a single spatial residue. A whole spatial band imposes further joint constraints.
 
 ## References
 

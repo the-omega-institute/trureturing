@@ -26,21 +26,25 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {ι : Type u} [Fintype ι] (c : ι → ℝ) {C a : ℝ}
-      (_ : ∀ i, c i ≤ C) (_ : ∃ j, c j = C)
-      (_ : (∑ i, c i) / Fintype.card ι ≤ a) (_ : a ≤ C),
+      (_ : ∃ j, c j = C) (_ : a ≤ C),
     let positivePart := V.readout () ()
-    ∃ t : ℝ, 0 ≤ t ∧
+    let mean := (∑ i, c i) / Fintype.card ι
+    ∃ t : ℝ, 0 ≤ t ∧ t ≤ (∑ i, max 0 (C - c i)⁻¹) ∧ (a ≤ mean → t = 0) ∧
       let u := fun i : ι => positivePart (1 - t * (C - c i))
       let v := fun i : ι => u i / ∑ j, u j
-      (∀ i, 0 ≤ v i) ∧ (∑ i, v i) = 1 ∧ (∑ i, v i * c i) = a ∧
-      ∀ w : ι → ℝ, (∀ i, 0 ≤ w i) → (∑ i, w i) = 1 → a ≤ (∑ i, w i * c i) →
-        (∑ i, (w i - v i) ^ 2) ≤ (∑ i, w i ^ 2) - ∑ i, v i ^ 2
+      (∀ i, 0 ≤ v i) ∧ (∑ i, v i) = 1 ∧ (∑ i, v i * c i) = max mean a ∧
+      ∀ w : ι → ℝ, (∑ i, w i) = 1 →
+        let distance := ∑ i, (w i - v i) ^ 2
+        let gap := (∑ i, w i ^ 2) - ∑ i, v i ^ 2
+        let correction := t * ((∑ i, w i * c i) - ∑ i, v i * c i) +
+          ∑ i, max 0 (t * (C - c i) - 1) * w i
+        gap = distance + 2 * correction / (∑ i, u i) ∧
+          ((∀ i, 0 ≤ w i) → a ≤ (∑ i, w i * c i) → distance ≤ gap)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro law
-  obtain ⟨t, _, _, hsum, _⟩ :=
-    law (ι := ULift.{u} Unit) (fun _ => 0) (C := 0) (a := 0)
-      (by simp) ⟨ULift.up (), rfl⟩ (by simp) le_rfl
+  obtain ⟨t, _, _, _, _, hsum, _⟩ :=
+    law (ι := ULift.{u} Unit) (fun _ => 0) (C := 0) (a := 0) ⟨ULift.up (), rfl⟩ le_rfl
   simp [rejected, realize] at hsum
 
 def evidence : Registration arena.{u} (type_of% @exists_clipped_moment_minimizer.{u}) where
@@ -78,7 +82,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
