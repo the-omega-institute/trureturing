@@ -18,7 +18,16 @@ internal sealed class FibCoherentDisksDocument : IScribeDocumentDefinition
                     "Assume positive middle occupation. A common "
                     + "positive semidefinite trace-one extension exists exactly when the two "
                     + "endpoint block traces equal one minus the middle occupation and both "
-                    + "Schur residuals at the prescribed coupling are positive semidefinite.")),
+                    + "Schur residuals at the prescribed coupling are positive semidefinite. "
+                    + "These residuals and the subtracted outer-product marginals are Hermitian, "
+                    + "so positivity of the residuals also forces the endpoint blocks to be "
+                    + "Hermitian.")),
+                    Paragraph(Text(
+                    "At zero middle occupation the correction vanishes and positivity of the "
+                    + "joint state forces the entire coupling row to vanish. For example, both "
+                    + "endpoint blocks can be the vacuum projection with a nonzero "
+                    + "middle-to-vacuum coupling. The residuals then pass both positivity tests, "
+                    + "and the nonzero coupling rules out a common extension.")),
                     Paragraph(Text(
                     "After scaling by the middle occupation, either residual has a fixed "
                     + "upper diagonal a, a lower diagonal e minus the squared modulus of z, "
