@@ -70,7 +70,7 @@ private theorem distinctPivotTriple {L : Type*} [Mul L] {p q x y : L}
     rw [hp x] at swapped
     exact hxpq swapped.symm
 
-private noncomputable def factor {L A : Type*} [Mul L] [Zero A]
+noncomputable def factor {L A : Type*} [Mul L] [Zero A]
     (e : L) (labels : Set L → A) (p x : L) : A := by
   classical
   exact if p = e ∨ x = e ∨ p = x then 0 else labels (triple p x)
@@ -80,7 +80,7 @@ private noncomputable def pairedLift {L A : Type*} [Mul L] [AddCommMonoid A]
   (p * (q * x.1), x.2 + (factor e labels q x.1 + factor e labels p (q * x.1)))
 
 /-- After any number of rounds, the fibre coordinate is the sum of their two edge labels. -/
-private theorem pairedLiftIterate {L A : Type*} [Mul L] [AddCommMonoid A]
+theorem pairedLiftIterate {L A : Type*} [Mul L] [AddCommMonoid A]
     (e : L) (labels : Set L → A) (p q x : L) (a : A) (n : ℕ) :
     let step : L → L := fun y => p * (q * y)
     (pairedLift e labels p q)^[n] (x, a) =
@@ -365,7 +365,7 @@ private theorem factor_invariant {L A : Type*} [Mul L] [Zero A]
     tauto
   simp only [factor, branch, same]
 
-private theorem extensionSteinerAndCentre {L A : Type*} [Mul L] [AddCommGroup A]
+theorem extensionSteinerAndCentre {L A : Type*} [Mul L] [AddCommGroup A]
     (e : L) (labels : Set L → A) (unit : ∀ x : L, e * x = x)
     (comm : ∀ x y : L, x * y = y * x) (invol : ∀ x y : L, x * (x * y) = y)
     (twice : ∀ a : A, a + a = 0) (centreless : Set.center L = {e}) :
@@ -432,7 +432,7 @@ private theorem extensionSteinerAndCentre {L A : Type*} [Mul L] [AddCommGroup A]
 
 
 /-- The product of the two lifted pivots is the two-step fibre map. -/
-private theorem pairedLift_eq_mul {L A : Type*} [Mul L] [AddCommMonoid A]
+theorem pairedLift_eq_mul {L A : Type*} [Mul L] [AddCommMonoid A]
     (e : L) (labels : Set L → A) (p q : L) :
     letI := extensionMul e labels
     pairedLift e labels p q = (fun x : L × A => (p, 0) * ((q, 0) * x)) := by
@@ -532,7 +532,7 @@ private theorem returnAlongReflection {L A : Type*} [AddCommGroup A]
       abel
   rwa [left, right] at h
 
-private theorem returnAlongComponent {L A : Type*} [Mul L] [AddCommGroup A]
+theorem returnAlongComponent {L A : Type*} [Mul L] [AddCommGroup A]
     (G : SimpleGraph L) (e p q : L) (labels : Set L → A)
     (invol : ∀ x y : L, x * (x * y) = y)
     (twice : ∀ a : A, a + a = 0)
