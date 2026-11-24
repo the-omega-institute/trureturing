@@ -25,7 +25,7 @@ Remove sections that do not apply. -->
 
 ## Evidence and reproduction
 
-<!-- For a bug, give the commit, environment, smallest reproducing command or input, and key output or exit code. For a mathematical mismatch, quote the statement and give the missing hypothesis or a counterexample. Link to the source or check for full details. -->
+<!-- For a bug, give the commit, environment, smallest reproducing command or input, and key output or exit code. For a mathematical mismatch, quote the statement and give the missing hypothesis or a counterexample. Link to durable sources, such as a file at a specific commit, for details. -->
 
 <!-- Before implementing or delegating the work, record your claim on the matching
 Issue with the current facts and proposed action. A comment is enough.
