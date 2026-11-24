@@ -30,7 +30,7 @@ abbrev arena : Arena where
     let square := V.readout () ()
     tailMoment u l < criticalThreshold c u l ∧ criticalThreshold c u l < 1 ∧
       (∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a) ∧
-      ∀ a, tailMoment u l < a → a < criticalThreshold c u l →
+      ∀ a, tailMoment u l ≤ a → a < criticalThreshold c u l →
         let v := weights c u l ((1 - a) / (1 - tailMoment u l))
         ∃ w : Fin q → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
           a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
@@ -40,7 +40,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   obtain ⟨hlt, _, _, hdescent⟩ := law (q := 4) (by decide)
   obtain ⟨a, hba, hac⟩ := exists_between hlt
-  obtain ⟨w, _, _, _, _, hw⟩ := hdescent a hba hac
+  obtain ⟨w, _, _, _, _, hw⟩ := hdescent a hba.le hac
   simp [rejected, realize] at hw
 
 def evidence : Registration arena (type_of% @cyclic_high_threshold_certificate) where

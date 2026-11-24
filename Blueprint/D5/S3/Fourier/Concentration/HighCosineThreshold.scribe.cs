@@ -14,13 +14,12 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "For a finite index type I, write c for its real readout and use 2c² − 1 as the second readout. "
-                + "The top value is one and occurs once. The remaining values lie between "
-                + "the attained levels ℓ and u. Write g(x) = x − (2x² − 1), "
+                + "The top value is one and occurs once. With levels ℓ and u, write g(x) = x − (2x² − 1), "
                 + "p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). "
                 + "The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to "
                 + "the level ℓ. Each level’s mass is divided equally among its indices.")),
             Paragraph(Text(
-                "The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, ℓ<u<1, u+ℓ<0, "
+                "The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, u+ℓ<0, "
                 + "and g(ℓ)<0<g(u). R(c,u,ℓ) means both levels are attained and each value "
                 + "is either one or belongs to [ℓ,u]. The predicate Certified(a) requires "
                 + "nonnegative weights of mass one, both moments equal to a, the exact squared mass, "
@@ -33,7 +32,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(FiniteStatement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The three levels satisfy ℓ < u < 1, u + ℓ < 0 and g(ℓ) < 0 < g(u). "
+                    "The sign assumptions imply ℓ < u < 1 by g(x)=(1−x)(2x+1). "
                     + "Interpolate the three weights by a quadratic P with moment coefficients β "
                     + "and γ in the basis 1, x, 2x² − 1. For each of β, γ and the values −P(x) at "
                     + "intermediate levels, take the slope 1 − f(1)/f(0) as a function of r. "
@@ -55,7 +54,8 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "support increases that moment and preserves the other. If an intermediate "
                     + "value of P is positive, a perturbation adds weight there and uses the "
                     + "three support levels to preserve both moments. A sufficiently small "
-                    + "positive step decreases the squared mass in either case."))),
+                    + "positive step decreases the squared mass in either case. At a = b, the top weight is zero. "
+                    + "A small mixture toward the point mass at the top raises both moments and lowers squared mass."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cyclic-high-threshold-certificate"),
@@ -70,7 +70,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "[0, π] proves the required level order and strict signs. The cutoff lies "
                     + "strictly between b and one. The law minimizes squared mass from the "
                     + "cutoff through one, and a feasible law has smaller squared mass "
-                    + "at each threshold strictly between b and the cutoff."))),
+                    + "at every threshold from b up to the cutoff, excluding the cutoff."))),
                 DescribeRole.Theorem))));
 
     private static Formula Cutoff => new Formula.Subscript(F.Id("a"), F.Id("crit"));
@@ -80,7 +80,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
             CloseBracket, Comma, Sp, Operatorname, Grp(F.Id("Certified")), Open, F.Id("a"), Close);
 
     private static Formula Descent() =>
-        Seq(Forall, Sp, F.Id("a"), Sp, InMacro, Sp, Open, F.Id("b"), Comma, Cutoff, Close,
+        Seq(Forall, Sp, F.Id("a"), Sp, InMacro, Sp, OpenBracket, F.Id("b"), Comma, Cutoff, Close,
             Comma, Sp, Exists, Sp, F.Id("w"), Comma, Sp, Operatorname, Grp(F.Id("Feasible")),
             Open, F.Id("w"), Comma, F.Id("a"), Close, Sp, Land, Sp, F.Id("E"), Open, F.Id("w"),
             Close, Lt, F.Id("E"), Open, new Formula.Subscript(F.Id("v"), F.Id("a")), Close);

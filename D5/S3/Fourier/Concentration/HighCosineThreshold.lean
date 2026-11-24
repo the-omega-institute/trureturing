@@ -330,18 +330,30 @@ def IsCertified {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l a : ℝ) : Prop 
       (∑ i, (w i - v i) ^ 2) ≤ (∑ i, w i ^ 2) - exactEnergy c u l r ∧
       ((∑ i, w i ^ 2) = exactEnergy c u l r → w = v)
 
+private theorem ordered_levels {u l : ℝ} (hs : u + l < 0)
+    (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0) :
+    u < 1 ∧ l < u := by
+  have hp : 0 < (1 - u) * (2 * u + 1) := by nlinarith only [hgu]
+  have ⟨hu, hu'⟩ : u < 1 ∧ -(1 / 2) < u := by
+    rcases mul_pos_iff.mp hp with hyp | hyp <;> constructor <;> linarith [hyp.1, hyp.2]
+  have hn : (1 - l) * (2 * l + 1) < 0 := by nlinarith only [hgl]
+  have hlow : 2 * l + 1 < 0 := by
+    rcases mul_neg_iff.mp hn with hyp | hyp <;> linarith [hyp.1, hyp.2]
+  exact ⟨hu, by linarith⟩
+
 /-- For a finite readout with a unique top value one, both moments bind near one.
 The off-center extreme levels must straddle the zero of the moment difference,
 and their sum must be negative. -/
 theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
     (z : ι) (hz : ∀ i, c i = 1 ↔ i = z) {u l : ℝ}
-    (hu : u < 1) (hl : l < u) (hs : u + l < 0)
+    (hs : u + l < 0)
     (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0)
     (hlevels : ∀ i, c i = 1 ∨ (l ≤ c i ∧ c i ≤ u))
     (huAtt : ∃ i, c i = u) (hlAtt : ∃ i, c i = l) :
     criticalThreshold c u l < 1 ∧
       ∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a := by
   classical
+  obtain ⟨hu, hl⟩ := ordered_levels hs hgu hgl
   change 0 < difference u at hgu
   change difference l < 0 at hgl
   let p := upperFraction u l
@@ -478,13 +490,13 @@ private theorem sum_adjust {ι : Type*} [Fintype ι] (c : ι → ℝ) (z j k : �
     sub_ne_zero.mpr (hl.trans hu).ne']
   ring
 
-/-- If the mass at every supporting level is positive and the threshold lies below
-the certificate boundary, some feasible law has strictly smaller squared mass. -/
+/-- From the common tail moment up to the certificate boundary, excluding the boundary,
+some feasible law has strictly smaller squared mass. -/
 theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι → ℝ)
     (z j k : ι) {u l a : ℝ} (htop : ∀ i, c i = 1 ↔ i = z) (hj : c j = u) (hk : c k = l)
-    (hu : u < 1) (hl : l < u) (hs : u + l < 0)
+    (hs : u + l < 0)
     (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0)
-    (ha : tailMoment u l < a) (hac : a < criticalThreshold c u l) :
+    (ha : tailMoment u l ≤ a) (hac : a < criticalThreshold c u l) :
     let r := (1 - a) / (1 - tailMoment u l)
     let v := weights c u l r
     ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
@@ -492,6 +504,7 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
       (∑ i, w i ^ 2) < (∑ i, v i ^ 2) := by
   classical
   have hz : c z = 1 := (htop z).mpr rfl
+  obtain ⟨hu, hl⟩ := ordered_levels hs hgu hgl
   change 0 < difference u at hgu
   change difference l < 0 at hgl
   let p := upperFraction u l
@@ -515,6 +528,53 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
   have hB := zero_lt_one.trans_le (one_le_bound c u l)
   have ha₁ : a < 1 := hac.trans (sub_lt_self _ (div_pos (sub_pos.mpr hb) hB))
   have hr : 0 < r := div_pos (sub_pos.mpr ha₁) (sub_pos.mpr hb)
+  have hr_le : r ≤ 1 := (div_le_one (sub_pos.mpr hb)).mpr (by linarith)
+  have hposU : 0 < v j := by
+    simpa [v, weights, hj, hu.ne] using div_pos (mul_pos hr hp) hνu
+  have hposL : 0 < v k := by
+    simpa [v, weights, hk, (hl.trans hu).ne, hl.ne] using
+      div_pos (mul_pos hr (sub_pos.mpr hp₁)) hνl
+  have hnonneg (i : ι) : 0 ≤ v i := by
+    by_cases h₁ : c i = 1
+    · simpa [v, weights, h₁] using sub_nonneg.mpr hr_le
+    · by_cases h₂ : c i = u
+      · simpa [v, weights, h₂, hu.ne] using (div_pos (mul_pos hr hp) hνu).le
+      · by_cases h₃ : c i = l
+        · simpa [v, weights, h₃, (hl.trans hu).ne, hl.ne] using
+            (div_pos (mul_pos hr (sub_pos.mpr hp₁)) hνl).le
+        · simp [v, weights, h₁, h₂, h₃]
+  let d (i : ι) := second (c i)
+  obtain ⟨hmass, hfirst, hsecond⟩ := weights_moments htop hu hl hνu hνl hgu hgl hb (a := a)
+  suffices ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = (∑ i, v i) ∧
+      (∑ i, v i * c i) ≤ (∑ i, w i * c i) ∧ (∑ i, v i * d i) ≤ (∑ i, w i * d i) ∧
+      (∑ i, w i ^ 2) < (∑ i, v i ^ 2) by
+    obtain ⟨w, hw, hwm, hwc, hwd, hwe⟩ := this
+    exact ⟨w, hw, hwm.trans hmass, hfirst.symm.trans_le hwc, hsecond.symm.trans_le hwd, hwe⟩
+  rcases lt_or_eq_of_le ha with ha_lt | ha_eq
+  swap
+  · have hEq : a = b := ha_eq.symm
+    have hr_eq : r = 1 := by
+      dsimp only [r]
+      rw [hEq, div_self (sub_ne_zero.mpr hb.ne')]
+    have hvz : v z = 0 := by simp [v, weights, hz, hr_eq]
+    let e (i : ι) := spike z 1 i - v i
+    have he (f : ι → ℝ) : (∑ i, e i * f i) = f z - ∑ i, v i * f i := by
+      simp only [e, sub_mul, sum_sub_distrib, sum_spike, one_mul]
+    have henergy : 0 < ∑ i, v i ^ 2 :=
+      sum_pos' (fun i _ => sq_nonneg (v i)) ⟨j, mem_univ j, sq_pos_of_pos hposU⟩
+    refine exists_descent c d v e hnonneg (fun i hi => ?_) ?_ ?_ ?_ ?_
+    · have hspike : 0 ≤ spike z 1 i := by simp [spike, apply_ite]
+      change spike z 1 i - v i < 0 at hi
+      linarith
+    · have hm : (∑ i, v i) = 1 := hmass
+      simpa only [mul_one, hm, sub_self] using he (fun _ => 1)
+    · rw [he, hz, hfirst]
+      exact sub_nonneg.mpr ha₁.le
+    · have hdz : d z = 1 := by norm_num [d, second, hz]
+      rw [he, hdz, hsecond]
+      exact sub_nonneg.mpr ha₁.le
+    · rw [he, hvz, zero_sub]
+      simpa only [pow_two] using neg_neg_of_pos henergy
   have hr₁ : r < 1 := (div_lt_one (sub_pos.mpr hb)).mpr (by linarith)
   have hrB : 1 < r * slopeBound c u l := by
     change a < 1 - (1 - b) / slopeBound c u l at hac
@@ -526,20 +586,6 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
       _ < (1 - a) * slopeBound c u l := h
       _ = r * slopeBound c u l * (1 - b) := by rw [← he]; ring
   have hposZ : 0 < v z := by simpa [v, weights, hz] using sub_pos.mpr hr₁
-  have hposU : 0 < v j := by
-    simpa [v, weights, hj, hu.ne] using div_pos (mul_pos hr hp) hνu
-  have hposL : 0 < v k := by
-    simpa [v, weights, hk, (hl.trans hu).ne, hl.ne] using
-      div_pos (mul_pos hr (sub_pos.mpr hp₁)) hνl
-  have hnonneg (i : ι) : 0 ≤ v i := by
-    by_cases h₁ : c i = 1
-    · simpa [v, weights, h₁] using (sub_pos.mpr hr₁).le
-    · by_cases h₂ : c i = u
-      · simpa [v, weights, h₂, hu.ne] using (div_pos (mul_pos hr hp) hνu).le
-      · by_cases h₃ : c i = l
-        · simpa [v, weights, h₃, (hl.trans hu).ne, hl.ne] using
-            (div_pos (mul_pos hr (sub_pos.mpr hp₁)) hνl).le
-        · simp [v, weights, h₁, h₂, h₃]
   have hvP (i : ι) (hi : i = z ∨ i = j ∨ i = k) : v i = α + β * c i + γ * second (c i) := by
     have hvals := polynomial_values hu hl nu nl r
     have he : v i = P (c i) := by
@@ -548,7 +594,6 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
       · simpa [v, weights, hj, hu.ne, P] using hvals.2.1.symm
       · simpa [v, weights, hk, (hl.trans hu).ne, hl.ne, P] using hvals.2.2.symm
     exact he.trans (polynomial_expand u l nu nl r (c i))
-  let d (i : ι) := second (c i)
   have hadjust (m f s : ℝ) :
       (∑ i, adjust z j k u l m f s i) = m ∧
       (∑ i, adjust z j k u l m f s i * c i) = f ∧
@@ -572,12 +617,6 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
     by_contra! hn
     have h := hsupport m f s i (fun hh => (not_lt_of_ge hn) (hactive i hh))
     linarith
-  suffices ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = (∑ i, v i) ∧
-      (∑ i, v i * c i) ≤ (∑ i, w i * c i) ∧ (∑ i, v i * d i) ≤ (∑ i, w i * d i) ∧
-      (∑ i, w i ^ 2) < (∑ i, v i ^ 2) by
-    obtain ⟨w, hw, hwm, hwc, hwd, hwe⟩ := this
-    obtain ⟨hm, hc, hd⟩ := weights_moments htop hu hl hνu hνl hgu hgl hb (a := a)
-    exact ⟨w, hw, hwm.trans hm, hc.symm.trans_le hwc, hd.symm.trans_le hwd, hwe⟩
   by_cases hβ : 0 ≤ β
   · by_cases hγ : 0 ≤ γ
     · have hn : ¬ ∀ i, l < c i → c i < u → P (c i) ≤ 0 := by
@@ -676,7 +715,7 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     let square := fun x : ℝ => x ^ 2
     tailMoment u l < criticalThreshold c u l ∧ criticalThreshold c u l < 1 ∧
       (∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a) ∧
-      ∀ a, tailMoment u l < a → a < criticalThreshold c u l →
+      ∀ a, tailMoment u l ≤ a → a < criticalThreshold c u l →
         let v := weights c u l ((1 - a) / (1 - tailMoment u l))
         ∃ w : Fin q → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
           a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
@@ -781,11 +820,11 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     · exact Or.inr (hrange i hi)
   have huAtt : cyclicReadout q one = u := (hread one).trans hu.symm
   have hlAtt : cyclicReadout q half = l := (hread half).trans hl.symm
-  obtain ⟨hlt, hcert⟩ := high_threshold_certificate (cyclicReadout q) z huniq htop hlu hsum
-    hgu hgl hlevels ⟨one, huAtt⟩ ⟨half, hlAtt⟩
+  obtain ⟨hlt, hcert⟩ :=
+    high_threshold_certificate (cyclicReadout q) z huniq hsum hgu hgl hlevels ⟨one, huAtt⟩ ⟨half, hlAtt⟩
   have hcut := tailMoment_lt_cutoff hup htop hlu hsum hgu hgl (count_pos ⟨one, huAtt⟩)
   exact ⟨hcut, hlt, hcert, fun _ ha hac =>
     exists_smaller_energy_below_threshold (cyclicReadout q) z one half huniq huAtt hlAtt
-      htop hlu hsum hgu hgl ha hac⟩
+      hsum hgu hgl ha hac⟩
 
 end D5.S3.Fourier.Concentration.HighCosineThreshold
