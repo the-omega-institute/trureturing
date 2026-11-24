@@ -865,7 +865,9 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
     simp only [t, s, P, K, Finset.mem_filter, Finset.mem_univ, true_and]
   rw [hlabel, hcanon]
   by_cases hempty : k = 0 ∨ n = 0
-  · letI : IsEmpty C := by simpa only [isEmpty_prod, Fin.isEmpty_iff] using hempty
+  · letI : IsEmpty C := by
+      change IsEmpty (Fin k × Fin n)
+      simpa only [isEmpty_prod, Fin.isEmpty_iff] using hempty
     letI : Unique (C → Fin 3) := Pi.uniqueOfIsEmpty _
     have hK (A : C → Fin 3) : K A := fun x => isEmptyElim x
     have ht : t = s := Finset.filter_true_of_mem fun A _ => hK A
