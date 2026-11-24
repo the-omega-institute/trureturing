@@ -28,6 +28,8 @@ Retire this port when the pinned Mathlib supplies an equivalent finite-matroid c
 -/
 
 
+/-! Finite-matroid broken-circuit cancellation by the least-completer involution. -/
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Matroids.BrokenCircuitCancellation
@@ -45,7 +47,7 @@ noncomputable def matroidGround (M : Matroid α) : Finset α := by
   exact Finset.univ.filter (fun e => e ∈ M.E)
 
 omit [DecidableEq α] [LinearOrder α] in
-lemma mem_matroidGround (M : Matroid α) (e : α) :
+private lemma mem_matroidGround (M : Matroid α) (e : α) :
     e ∈ matroidGround M ↔ e ∈ M.E := by
   simp [matroidGround]
 
@@ -66,53 +68,53 @@ noncomputable def nbcCandidates (M : Matroid α) (A : Finset α) : Finset α := 
 def IsNBCBad (M : Matroid α) (A : Finset α) : Prop :=
   Finset.Nonempty (nbcCandidates M A)
 
-lemma nbcCandidate_mem_ground {M : Matroid α} {A : Finset α} {e : α}
+private lemma nbcCandidate_mem_ground {M : Matroid α} {A : Finset α} {e : α}
     (h : IsNBCandidate M A e) : e ∈ matroidGround M := by
   rcases h with ⟨C, hC, heC, _, _⟩
   apply (mem_matroidGround M e).2
   exact hC.subset_ground (by simpa using heC)
 
-lemma mem_nbcCandidates {M : Matroid α} {A : Finset α} {e : α} :
+private lemma mem_nbcCandidates {M : Matroid α} {A : Finset α} {e : α} :
     e ∈ nbcCandidates M A ↔ e ∈ matroidGround M ∧ IsNBCandidate M A e := by
   classical
   simp [nbcCandidates]
 
 /-- The least circuit-completing element, chosen to define the cancellation pairing. -/
-noncomputable def leastNBCandidate (M : Matroid α) (A : Finset α)
+private noncomputable def leastNBCandidate (M : Matroid α) (A : Finset α)
     (h : IsNBCBad M A) : α :=
   (nbcCandidates M A).min' h
 
-lemma leastNBCandidate_mem {M : Matroid α} {A : Finset α}
+private lemma leastNBCandidate_mem {M : Matroid α} {A : Finset α}
     (h : IsNBCBad M A) :
     leastNBCandidate M A h ∈ nbcCandidates M A := by
   exact Finset.min'_mem _ _
 
-lemma leastNBCandidate_isCandidate {M : Matroid α} {A : Finset α}
+private lemma leastNBCandidate_isCandidate {M : Matroid α} {A : Finset α}
     (h : IsNBCBad M A) :
     IsNBCandidate M A (leastNBCandidate M A h) := by
   exact (mem_nbcCandidates.mp (leastNBCandidate_mem h)).2
 
-lemma leastNBCandidate_le {M : Matroid α} {A : Finset α}
+private lemma leastNBCandidate_le {M : Matroid α} {A : Finset α}
     (h : IsNBCBad M A) {e : α} (he : IsNBCandidate M A e) :
     leastNBCandidate M A h ≤ e := by
   apply Finset.min'_le
   exact (mem_nbcCandidates.mpr ⟨nbcCandidate_mem_ground he, he⟩)
 
 /-- Remove an element if present and insert it otherwise. -/
-def toggleEdge (A : Finset α) (e : α) : Finset α :=
+private def toggleEdge (A : Finset α) (e : α) : Finset α :=
   if e ∈ A then A.erase e else insert e A
 
 omit [Fintype α] [LinearOrder α] in
-lemma toggleEdge_toggleEdge (A : Finset α) (e : α) :
+private lemma toggleEdge_toggleEdge (A : Finset α) (e : α) :
     toggleEdge (toggleEdge A e) e = A := by
   by_cases h : e ∈ A <;> simp [toggleEdge, h]
 
 omit [Fintype α] [LinearOrder α] in
-lemma toggleEdge_ne (A : Finset α) (e : α) : toggleEdge A e ≠ A := by
+private lemma toggleEdge_ne (A : Finset α) (e : α) : toggleEdge A e ≠ A := by
   by_cases h : e ∈ A <;> simp [toggleEdge, h]
 
 omit [Fintype α] in
-lemma candidate_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
+private lemma candidate_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
     (h : IsNBCandidate M A e) :
     IsNBCandidate M (toggleEdge A e) e := by
   rcases h with ⟨C, hC, heC, hmax, hsub⟩
@@ -128,7 +130,7 @@ lemma candidate_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
   · simp [toggleEdge, heA, hxA]
 
 omit [Fintype α] in
-lemma candidate_smaller_toggle_iff {M : Matroid α} {A : Finset α}
+private lemma candidate_smaller_toggle_iff {M : Matroid α} {A : Finset α}
     {e f : α} (hfe : f < e) :
     IsNBCandidate M (toggleEdge A e) f ↔ IsNBCandidate M A f := by
   constructor
@@ -163,7 +165,7 @@ lemma candidate_smaller_toggle_iff {M : Matroid α} {A : Finset α}
     · simp [toggleEdge, heA, hxe, hxA]
     · simp [toggleEdge, heA, hxA]
 
-lemma leastNBCandidate_toggle_eq {M : Matroid α} {A : Finset α}
+private lemma leastNBCandidate_toggle_eq {M : Matroid α} {A : Finset α}
     (h : IsNBCBad M A) :
     leastNBCandidate M (toggleEdge A (leastNBCandidate M A h))
         (by
@@ -199,16 +201,16 @@ lemma leastNBCandidate_toggle_eq {M : Matroid α} {A : Finset α}
   simp [e, heq]
 
 /-- The alternating sign determined by a natural-number cardinality. -/
-def matroidParitySign : Nat -> Int
+private def matroidParitySign : Nat -> Int
   | 0 => 1
   | n + 1 => -matroidParitySign n
 
-lemma matroidParitySign_succ (n : Nat) :
+private lemma matroidParitySign_succ (n : Nat) :
     matroidParitySign (n + 1) = -matroidParitySign n := by
   rfl
 
 omit [Fintype α] [LinearOrder α] in
-lemma toggleEdge_sign {A : Finset α} {e : α} :
+private lemma toggleEdge_sign {A : Finset α} {e : α} :
     matroidParitySign (toggleEdge A e).card =
       -matroidParitySign A.card := by
   by_cases h : e ∈ A
@@ -225,17 +227,17 @@ noncomputable def spanningSubsets (M : Matroid α) : Finset (Finset α) := by
   exact (matroidGround M).powerset.filter (fun A => M.Spanning (A : Set α))
 
 /-- Enumerate spanning subsets with a broken-circuit witness. -/
-noncomputable def badSpanningSubsets (M : Matroid α) : Finset (Finset α) := by
+private noncomputable def badSpanningSubsets (M : Matroid α) : Finset (Finset α) := by
   classical
   exact (spanningSubsets M).filter (IsNBCBad M)
 
 omit [DecidableEq α] [LinearOrder α] in
-lemma mem_spanningSubsets {M : Matroid α} {A : Finset α}
+private lemma mem_spanningSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ spanningSubsets M) : M.Spanning (A : Set α) := by
   classical
   exact (Finset.mem_filter.mp hA).2
 
-lemma mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
+private lemma mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ badSpanningSubsets M) :
     M.Spanning (A : Set α) ∧ IsNBCBad M A := by
   classical
@@ -243,7 +245,7 @@ lemma mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
     (Finset.mem_filter.mp hA).2⟩
 
 omit [Fintype α] in
-lemma spanning_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
+private lemma spanning_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
     (hA : M.Spanning (A : Set α)) (he : IsNBCandidate M A e) :
     M.Spanning (toggleEdge A e : Set α) := by
   classical
@@ -283,13 +285,13 @@ lemma spanning_toggleEdge {M : Matroid α} {A : Finset α} {e : α}
       simp only [Finset.mem_coe, Finset.mem_insert]
       exact Or.inr hx)
 
-lemma mem_badSpanningSubsets_iff {M : Matroid α} {A : Finset α} :
+private lemma mem_badSpanningSubsets_iff {M : Matroid α} {A : Finset α} :
     A ∈ badSpanningSubsets M ↔
       A ∈ spanningSubsets M ∧ IsNBCBad M A := by
   classical
   simp [badSpanningSubsets]
 
-lemma toggle_mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
+private lemma toggle_mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ badSpanningSubsets M) :
     toggleEdge A (leastNBCandidate M A (mem_badSpanningSubsets hA).2) ∈
       badSpanningSubsets M := by
@@ -312,7 +314,7 @@ lemma toggle_mem_badSpanningSubsets {M : Matroid α} {A : Finset α}
         ⟨nbcCandidate_mem_ground (candidate_toggleEdge hc), candidate_toggleEdge hc⟩⟩
     exact hbad
 
-lemma toggle_bad_involutive {M : Matroid α} {A : Finset α}
+private lemma toggle_bad_involutive {M : Matroid α} {A : Finset α}
     (hA : A ∈ badSpanningSubsets M) :
     toggleEdge
         (toggleEdge A (leastNBCandidate M A (mem_badSpanningSubsets hA).2))
@@ -339,7 +341,7 @@ lemma toggle_bad_involutive {M : Matroid α} {A : Finset α}
       apply leastNBCandidate_toggle_eq (mem_badSpanningSubsets hA).2]
   exact toggleEdge_toggleEdge A e
 
-lemma spanning_not_nbcBad_isIndependent {M : Matroid α} {A : Finset α}
+private lemma spanning_not_nbcBad_isIndependent {M : Matroid α} {A : Finset α}
     (hA : A ∈ spanningSubsets M) (hbad : ¬IsNBCBad M A) :
     M.Indep (A : Set α) := by
   classical
@@ -370,31 +372,31 @@ lemma spanning_not_nbcBad_isIndependent {M : Matroid α} {A : Finset α}
   exact hbad ⟨e, mem_nbcCandidates.mpr ⟨nbcCandidate_mem_ground hc, hc⟩⟩
 
 /-- Enumerate spanning sets with no broken circuit, which are the surviving bases. -/
-noncomputable def nbcBaseSubsets (M : Matroid α) : Finset (Finset α) := by
+private noncomputable def nbcBaseSubsets (M : Matroid α) : Finset (Finset α) := by
   classical
   exact (spanningSubsets M).filter (fun A => ¬IsNBCBad M A)
 
-lemma mem_nbcBaseSubsets {M : Matroid α} {A : Finset α}
+private lemma mem_nbcBaseSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ nbcBaseSubsets M) :
     A ∈ spanningSubsets M ∧ ¬IsNBCBad M A := by
   classical
   exact Finset.mem_filter.mp hA
 
-lemma nbcBase_isBase {M : Matroid α} {A : Finset α}
+private lemma nbcBase_isBase {M : Matroid α} {A : Finset α}
     (hA : A ∈ nbcBaseSubsets M) : M.IsBase (A : Set α) := by
   have h := mem_nbcBaseSubsets hA
   exact (spanning_not_nbcBad_isIndependent h.1 h.2).isBase_of_spanning
     (mem_spanningSubsets h.1)
 
 /-- The sum of cardinality-parity signs over all spanning subsets. -/
-noncomputable def signedSpanningSum (M : Matroid α) : Int :=
+private noncomputable def signedSpanningSum (M : Matroid α) : Int :=
   ∑ A ∈ spanningSubsets M, matroidParitySign A.card
 
 /-- The sum of cardinality-parity signs over the surviving no-broken-circuit sets. -/
-noncomputable def signedNBCSum (M : Matroid α) : Int :=
+private noncomputable def signedNBCSum (M : Matroid α) : Int :=
   ∑ A ∈ nbcBaseSubsets M, matroidParitySign A.card
 
-lemma badSpanningSum_zero (M : Matroid α) :
+private lemma badSpanningSum_zero (M : Matroid α) :
     (∑ A ∈ badSpanningSubsets M, matroidParitySign A.card) = 0 := by
   classical
   let g : ∀ A, A ∈ badSpanningSubsets M → Finset α := fun A hA =>
@@ -416,7 +418,7 @@ lemma badSpanningSum_zero (M : Matroid α) :
   · intro A hA
     simpa [g] using toggle_mem_badSpanningSubsets hA
 
-theorem signed_spanning_eq_signed_nbc (M : Matroid α) :
+private theorem signed_spanning_eq_signed_nbc (M : Matroid α) :
     signedSpanningSum M = signedNBCSum M := by
   classical
   unfold signedSpanningSum signedNBCSum
@@ -438,14 +440,14 @@ noncomputable def actualNBCBaseSubsets (M : Matroid α) : Finset (Finset α) := 
   exact (matroidGround M).powerset.filter
     (fun A => M.IsBase (A : Set α) ∧ ¬IsNBCBad M A)
 
-lemma mem_actualNBCBaseSubsets {M : Matroid α} {A : Finset α}
+private lemma mem_actualNBCBaseSubsets {M : Matroid α} {A : Finset α}
     (hA : A ∈ actualNBCBaseSubsets M) :
     A ∈ (matroidGround M).powerset ∧
       M.IsBase (A : Set α) ∧ ¬IsNBCBad M A := by
   classical
-  exact Finset.mem_filter.mp hA
+  simpa [actualNBCBaseSubsets] using hA
 
-lemma actualNBCBaseSubsets_eq_nbcBaseSubsets (M : Matroid α) :
+private lemma actualNBCBaseSubsets_eq_nbcBaseSubsets (M : Matroid α) :
     actualNBCBaseSubsets M = nbcBaseSubsets M := by
   classical
   ext A
@@ -462,7 +464,7 @@ lemma actualNBCBaseSubsets_eq_nbcBaseSubsets (M : Matroid α) :
     have hground : A ∈ (matroidGround M).powerset := by
       apply Finset.mem_powerset.mpr
       intro x hx
-      exact (mem_matroidGround M x).2 (mem_spanningSubsets hA'.1).subset_ground hx
+      exact (mem_matroidGround M x).2 ((mem_spanningSubsets hA'.1).subset_ground hx)
     exact Finset.mem_filter.mpr ⟨hground, ⟨hbase, hA'.2⟩⟩
 
 private lemma matroidParitySign_eq_neg_one_pow (n : Nat) :
