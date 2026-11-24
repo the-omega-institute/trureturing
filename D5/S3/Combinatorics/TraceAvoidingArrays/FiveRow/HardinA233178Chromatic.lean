@@ -445,8 +445,8 @@ theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul 
       apply Finset.sum_congr rfl
       intro q _
       by_cases h : q ∈ L
-      · rw [if_pos h, if_pos ((mem q).mp h)]
-      · rw [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
+      · simp only [if_pos h, if_pos ((mem q).mp h)]
+      · simp only [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
     _ = _ := by
       simp_rw [← List.mem_toFinset]
       rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
