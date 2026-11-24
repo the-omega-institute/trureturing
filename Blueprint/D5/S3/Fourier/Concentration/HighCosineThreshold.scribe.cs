@@ -66,6 +66,18 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "the energy inequality and makes both moment constraints strict."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("positive-half-cycle-representative"),
+                DeclarationHandle.Create(Owner + ".cyclic_fold"),
+                H("A representative in the positive half of the cycle"),
+                StatementSource.FromAuthor(FoldStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For the residue k, write K(k) for its natural representative and "
+                    + "c(q,n)=cos(2πn/q) for a natural index n. When K(k) is nonzero, "
+                    + "choose K(k) if it is at most ⌊q/2⌋ and q−K(k) otherwise. "
+                    + "Cosine is invariant under reflection of the angle about π."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cyclic-high-threshold-certificate"),
                 DeclarationHandle.Create(Owner + ".cyclic_high_threshold_certificate"),
                 H("The sharp high-threshold interval on a cycle"),
@@ -125,6 +137,27 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
         Seq(Amp, Context(true), Sp, Longrightarrow, Sp),
         Seq(Amp, Descent())
     ]));
+
+    private static Formula FoldStatement()
+    {
+        var q = F.Id("q");
+        var k = F.Id("k");
+        var n = F.Id("n");
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
+        var representative = T("K", k);
+        var half = Seq(Lfloor, new Formula.Fraction(q, D(2)), Rfloor);
+        var boundsAndIdentity = Seq(D(1), Sp, Le, Sp, n, Sp, Le, Sp, half, Sp, Land, Sp,
+            T("c", q, representative), Eq, T("c", q, n));
+        var alternatives = Seq(Open, n, Eq, representative, Sp, Lor, Sp,
+            n, Eq, Subtract(q, representative), Close);
+        return Disp(new Formula.Aligned([
+            Seq(Amp, Forall, Sp, q, Sp, InMacro, Sp, naturals, Comma, Sp,
+                Forall, Sp, k, Sp, InMacro, Sp, T("Fin", q), Comma, Sp,
+                representative, Sp, Neq, Sp, D(0), Sp, Longrightarrow, Sp),
+            Seq(Amp, Exists, Sp, n, Sp, InMacro, Sp, naturals, Comma, Sp,
+                boundsAndIdentity, Sp, Land, Sp, alternatives)
+        ]));
+    }
 
     private static Formula CyclicStatement()
     {

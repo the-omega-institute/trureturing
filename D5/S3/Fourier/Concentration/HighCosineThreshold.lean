@@ -770,10 +770,13 @@ def cyclicUpper (q : ℕ) : ℝ := Real.cos (2 * Real.pi / q)
 def cyclicLower (q : ℕ) : ℝ := Real.cos (2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q)
 
 /-- A nonzero residue folds into the positive half of the cosine grid. -/
-theorem cyclic_fold {q : ℕ} (k : Fin q) (hk : k.val ≠ 0) :
-    ∃ n : ℕ, 1 ≤ n ∧ n ≤ q / 2 ∧
-      cyclicReadout q k = Real.cos (2 * Real.pi * (n : ℝ) / q) ∧
+theorem cyclic_fold :
+    let sample := fun (q n : ℕ) => Real.cos (2 * Real.pi * (n : ℝ) / q)
+    ∀ {q : ℕ} (k : Fin q), k.val ≠ 0 → ∃ n : ℕ, 1 ≤ n ∧ n ≤ q / 2 ∧
+      cyclicReadout q k = sample q n ∧
       (n = k.val ∨ n = q - k.val) := by
+  dsimp only
+  intro q k hk
   have hbound := k.isLt
   by_cases h : k.val ≤ q / 2
   · exact ⟨k.val, by omega, h, rfl, Or.inl rfl⟩
