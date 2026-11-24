@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonoto
 
 *Commentary.*
 
-For a reference fixed by the pinching and containing the input support, the divergence to that reference splits into the pinching gain and the divergence from the pinched state to the reference. The output support condition follows from data processing. The logarithm of the fixed reference commutes with the projections, so the trace cross term is unchanged. This is the fixed-projective case of Gour, Marvian and Spekkens, arXiv:0901.0943v2, Theorem 3, equations (9)–(15).
+For a reference fixed by the pinching and containing the input support, the divergence to that reference splits into the pinching gain and the divergence from the pinched state to the reference. The Lean proof handles singular states by deriving the output support condition from data processing. The logarithm of the fixed reference commutes with the projections, so the trace cross term is unchanged. The decomposition uses Gour, Marvian and Spekkens, arXiv:0901.0943v2, Theorem 3 and its proof (pp. 3–4, Eqs. (9)–(13), especially Eq. (12) for the trace-log equality).
 
 **Definition 1.5 (Local basis projections).**
 
