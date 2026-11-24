@@ -21,6 +21,33 @@ variable {A : Type} {rel : A → A → Prop} {b c : A}
 def IsUnit (r : CommRingOps A rel) (z : QuadPoly A b c) : Prop :=
   Exists fun w => Equivalent r (mul r z w) (one r)
 
+theorem isUnit_one {r : CommRingOps A rel} (law : r.Laws) :
+    IsUnit r (one (b := b) (c := c) r) :=
+  Exists.intro (one r) (mul_one law (one r))
+
+theorem IsUnit.mul {r : CommRingOps A rel} (law : r.Laws) {z w : QuadPoly A b c}
+    (hz : IsUnit r z) (hw : IsUnit r w) : IsUnit r (mul r z w) :=
+  let l := ringLaws (b := b) (c := c) law
+  hz.elim fun zi hzi =>
+    hw.elim fun wi hwi =>
+      have h : Equivalent r (QuadPoly.mul r w (QuadPoly.mul r wi zi)) zi :=
+        l.trans (l.symm (l.mul_assoc w wi zi))
+          (l.trans (l.mul_congr hwi (l.refl zi)) (l.one_mul zi))
+      Exists.intro (QuadPoly.mul r wi zi) (l.trans (l.mul_assoc z w (QuadPoly.mul r wi zi))
+        (l.trans (l.mul_congr (l.refl z) h) hzi))
+
+theorem IsUnit.neg {r : CommRingOps A rel} (law : r.Laws) {z : QuadPoly A b c}
+    (hz : IsUnit r z) : IsUnit r (neg r z) :=
+  let l := ringLaws (b := b) (c := c) law
+  hz.elim fun w hw =>
+    Exists.intro (QuadPoly.neg r w) (l.trans (l.neg_mul z (QuadPoly.neg r w))
+      (l.trans (l.neg_congr (l.mul_neg z w)) (l.trans (l.neg_neg (QuadPoly.mul r z w)) hw)))
+
+theorem IsUnit.pow {r : CommRingOps A rel} (law : r.Laws) {z : QuadPoly A b c}
+    (hz : IsUnit r z) (n : Nat) : IsUnit r (pow r z n) :=
+  Nat.rec (motive := fun n => IsUnit r (QuadPoly.pow r z n))
+    (isUnit_one law) (fun _ ih => hz.mul law ih) n
+
 theorem isUnit_iff_norm_isUnit {r : CommRingOps A rel} (law : r.Laws)
     (z : QuadPoly A b c) :
     Iff (IsUnit r z) (Exists fun s => r.eqv (r.mul (norm r z) s) r.one) :=
@@ -78,5 +105,25 @@ theorem golden_alpha_mul_neg_conj :
     let phi : IntQuadPoly Int.one Int.one := alpha intRing
     Equivalent intRing (mul intRing phi (neg intRing (conj intRing phi))) (one intRing) :=
   And.intro Eq.refl Eq.refl
+
+/-- Compute `±φ^n` from the two constructors of the integer exponent. -/
+def signedGoldenPower (negative : Bool) (n : Int) : IntQuadPoly Int.one Int.one :=
+  let phi : IntQuadPoly Int.one Int.one := alpha intRing
+  let phiInv := neg intRing (conj intRing phi)
+  let power := Int.rec (pow intRing phi) (fun k => pow intRing phiInv k.succ) n
+  Bool.rec power (neg intRing power) negative
+
+theorem signedGoldenPower_isUnit (negative : Bool) (n : Int) :
+    IsUnit intRing (signedGoldenPower negative n) :=
+  let phi : IntQuadPoly Int.one Int.one := alpha intRing
+  let phiInv := neg intRing (conj intRing phi)
+  have phiUnit : IsUnit intRing phi := Exists.intro phiInv golden_alpha_mul_neg_conj
+  have invUnit : IsUnit intRing phiInv :=
+    Exists.intro phi (trans intRingLaws (mul_comm intRingLaws phiInv phi) golden_alpha_mul_neg_conj)
+  have powerUnit : IsUnit intRing (signedGoldenPower .false n) :=
+    Int.rec (motive := fun n => IsUnit intRing (signedGoldenPower .false n))
+      (fun k => phiUnit.pow intRingLaws k) (fun k => invUnit.pow intRingLaws k.succ) n
+  Bool.rec (motive := fun sign => IsUnit intRing (signedGoldenPower sign n))
+    powerUnit (powerUnit.neg intRingLaws) negative
 
 end Omega.QuadPoly
