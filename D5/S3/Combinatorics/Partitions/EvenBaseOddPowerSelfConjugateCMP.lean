@@ -1,22 +1,18 @@
 /- GID: D5/S3/Combinatorics/Partitions/EvenBaseOddPowerSelfConjugateCMP
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/EvenBaseOddPowerSelfConjugateCMP
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Lower bound on the odd exponent of a self-conjugate CMP of an even-base power. -/
 
-module
-
-public import D5.S3.Combinatorics.Partitions.OddPowerSelfConjugateCMP
+import D5.S3.Combinatorics.Partitions.OddPowerSelfConjugateCMP
 import Mathlib.NumberTheory.Multiplicity
 
 /-! A square congruence and the area bounds of a self-conjugate Young diagram
 give a lower bound on the odd exponent of an even-base power. -/
 
 namespace D5.S3.Combinatorics.Partitions.EvenBaseOddPowerSelfConjugateCMP
-
-public section
 
 open OddPowerSelfConjugateCMP
 
