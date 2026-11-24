@@ -6,9 +6,9 @@ Finite matroid broken-circuit cancellation by the least completer involution.
 
 **Definition 1.1 (The finite ground subset).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.matroidGround`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.matroidGround`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.matroidGround` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.matroidGround` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -18,9 +18,9 @@ For a finite ambient type alpha and a matroid M on alpha, matroidGround M is the
 
 **Definition 1.2 (A circuit-completing element).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCandidate`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCandidate`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCandidate` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCandidate` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -30,9 +30,9 @@ For an arbitrary finite subset A of the ambient type and an element e, IsNBCandi
 
 **Definition 1.3 (All circuit-completing elements).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.nbcCandidates`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.nbcCandidates`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.nbcCandidates` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.nbcCandidates` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -42,9 +42,9 @@ nbcCandidates M A is the finite filter of matroidGround M consisting of all elem
 
 **Definition 1.4 (A broken-circuit witness).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCBad`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCBad`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCBad` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCBad` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -54,9 +54,9 @@ IsNBCBad M A means that nbcCandidates M A is nonempty. It records exactly the ex
 
 **Definition 1.5 (Ground-contained spanning subsets).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.spanningSubsets`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.spanningSubsets`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.spanningSubsets` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.spanningSubsets` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -66,9 +66,9 @@ spanningSubsets M is the finite powerset of matroidGround M filtered by M.Spanni
 
 **Definition 1.6 (Actual no-broken-circuit bases).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBaseSubsets`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBaseSubsets`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBaseSubsets` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBaseSubsets` (`✓ std3`).
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -78,9 +78,9 @@ actualNBCBaseSubsets M is the finite filter of matroidGround M powerset elements
 
 **Definition 1.7 (The integer-power survivor sum).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBasePowerSum`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBasePowerSum`
 
-*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBasePowerSum` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBasePowerSum` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ actualNBCBasePowerSum M sums (-1 : Int) ^ A.card over the exact actualNBCBaseSub
 
 **Theorem 1.8 (Broken-circuit cancellation identity).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.alternating_spanning_sum_eq_actual_nbc_base_sum`
+Lean statement: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.alternating_spanning_sum_eq_actual_nbc_base_sum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.alternating_spanning_sum_eq_actual_nbc_base_sum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.alternating_spanning_sum_eq_actual_nbc_base_sum` (`✓ std3`). ∎
 
 *Citation.* ukiyois; OpenCode agent sessions (2026). *Finite-matroid broken-circuit cancellation*. URL: <https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean>.
 
@@ -104,11 +104,11 @@ The statement covers empty ambient carriers, empty grounds, rank zero, loops, no
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCBad`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.IsNBCandidate`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBasePowerSum`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.actualNBCBaseSubsets`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.alternating_spanning_sum_eq_actual_nbc_base_sum`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.matroidGround`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.nbcCandidates`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation.spanningSubsets`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCBad`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.IsNBCandidate`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBasePowerSum`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.actualNBCBaseSubsets`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.alternating_spanning_sum_eq_actual_nbc_base_sum`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.matroidGround`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.nbcCandidates`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation.spanningSubsets`

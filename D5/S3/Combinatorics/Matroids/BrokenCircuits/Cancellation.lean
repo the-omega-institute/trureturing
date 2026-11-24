@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation
+/- GID: D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Matroids/BrokenCircuitCancellation
+   mirror-B: D5/B/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -36,7 +36,7 @@ Retire this port when the pinned Mathlib supplies an equivalent finite-matroid c
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Matroids.BrokenCircuitCancellation
+namespace D5.S3.Combinatorics.Matroids.BrokenCircuits.Cancellation
 
 open Set
 open scoped BigOperators
@@ -498,4 +498,4 @@ theorem alternating_spanning_sum_eq_actual_nbc_base_sum (M : Matroid α) :
   simp_rw [matroidParitySign_eq_neg_one_pow] at h
   simpa [actualNBCBasePowerSum, actualNBCBaseSubsets_eq_nbcBaseSubsets M] using h
 
-end D5.S3.Combinatorics.Matroids.BrokenCircuitCancellation
+end D5.S3.Combinatorics.Matroids.BrokenCircuits.Cancellation

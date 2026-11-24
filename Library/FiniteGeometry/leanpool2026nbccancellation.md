@@ -7,7 +7,7 @@ doi: null
 url: "https://github.com/LeanPool/lean-pool/blob/d7dcd3c02cf0e220932dd033d5cc2353933d754b/LeanPool/HardSphereNBC/NBCMatroid.lean"
 claim: "The immutable source supplies the least circuit-completer toggle, its stability and span-preservation, the sign-reversing involution on bad spanning subsets, and the surviving NBC-base cancellation identity."
 strata_touched:
-  - D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation
+  - D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation
 license: Apache-2.0
 triage: anchor
 ---

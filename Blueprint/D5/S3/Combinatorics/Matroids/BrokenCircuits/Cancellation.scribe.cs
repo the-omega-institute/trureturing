@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids.BrokenCircuits;
 
-internal sealed class BrokenCircuitCancellationDocument : IScribeDocumentDefinition
+internal sealed class CancellationDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Combinatorics/Matroids/BrokenCircuitCancellation";
+    private const string Module = "D5/S3/Combinatorics/Matroids/BrokenCircuits/Cancellation";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/FiniteGeometry/leanpool2026nbccancellation");
 
