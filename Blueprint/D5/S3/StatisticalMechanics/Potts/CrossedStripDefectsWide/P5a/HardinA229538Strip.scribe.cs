@@ -39,7 +39,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("coefficients538",Coefficients(),false,"The entries are ordered from the smallest shift of the recurrence to the largest."),
             Node("vector_polynomial",Polynomial(),true,"The relation holds simultaneously for all boundary columns and both residual budgets."),
             Node("integer_readout", IntegerReadout(), true, "A vector recurrence for the terminal values of a finite integer matrix transfers to every shifted scalar readout."),
-            Node("result",Recurrence(),true,"The transfer counts labelled arrays by adjacent column cuts. The six-to-one count in labelled_scale identifies that readout with six times a at the widths of the recurrence. Cancelling six in the integer readout gives the order-twenty recurrence for every width at least twenty-three."))));
+            Node("result",Recurrence(),true,"The transfer counts labelled arrays by adjacent column cuts. The integer_readout theorem carries the transfer vector recurrence to the scalar count. The six-to-one count in labelled_scale identifies that readout with six times a at the widths of the recurrence. Cancelling six in the integer readout gives the order-twenty recurrence for every width at least twenty-three."))));
 
     private static DocumentBlock Node(string name, Formula statement, bool theorem, string prose) =>
         Describe.Lean(DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),
@@ -79,8 +79,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula And(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
     private static Formula Imp(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));
-    private static Formula Iff(Formula a, Formula b) =>
-        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Or(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);

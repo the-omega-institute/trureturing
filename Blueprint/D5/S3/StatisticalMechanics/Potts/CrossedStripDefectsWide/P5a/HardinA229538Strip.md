@@ -50,7 +50,7 @@ Budgets zero and one select the right and left summands respectively.
 
 **Theorem 1.4 (transition_entry).**
 
-$$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (d: \operatorname{Nat}), (\forall (s: \operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}\right)), ((((\operatorname{if} ((\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) \le d) \land (\operatorname{HardinA229538Strip}.\operatorname{residual}\left(q, (d) - (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right))\right) = s)) \operatorname{then} 1 \operatorname{else} 0): \operatorname{Int})) - ((\operatorname{if} (\operatorname{Sum}.\operatorname{elim}\left(\operatorname{id}, \operatorname{id}, s\right) = q) \operatorname{then} \operatorname{HardinA229538Strip}.\operatorname{transfer}\left(\operatorname{HardinA229538Strip}.\operatorname{residual}\left(p, d\right), s\right) \operatorname{else} 0)) = (\operatorname{if} ((1 < d) \land ((0 < \operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right)) \land (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) \le d))) \operatorname{then} ((\operatorname{if} (s = \operatorname{HardinA229538Strip}.\operatorname{residual}\left(q, (d) - (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right))\right)) \operatorname{then} 1 \operatorname{else} 0)) - ((\operatorname{if} ((\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) = 1) \land (s = \operatorname{Sum}.\operatorname{inr}\left(q\right))) \operatorname{then} 1 \operatorname{else} 0)) \operatorname{else} 0)))))$$
+$$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\forall (d: \operatorname{Nat}), ((d \le 1) \Rightarrow (\forall (s: \operatorname{Sum}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}, \operatorname{HardinA233178Chromatic}.\operatorname{Column}\right)), (((\operatorname{if} ((\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right) \le d) \land (\operatorname{HardinA229538Strip}.\operatorname{residual}\left(q, (d) - (\operatorname{HardinA229538Strip}.\operatorname{cost}\left(p, q\right))\right) = s)) \operatorname{then} 1 \operatorname{else} 0): \operatorname{Int}) = (\operatorname{if} (\operatorname{Sum}.\operatorname{elim}\left(\operatorname{id}, \operatorname{id}, s\right) = q) \operatorname{then} \operatorname{HardinA229538Strip}.\operatorname{transfer}\left(\operatorname{HardinA229538Strip}.\operatorname{residual}\left(p, d\right), s\right) \operatorname{else} 0))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.transition_entry` (`✓ std3`). ∎
 
@@ -60,7 +60,7 @@ $$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\fo
 
 *Commentary.*
 
-For a budget above one and a positive cost within that budget, the difference of the entries is +1 at the affordable residual successor and −1 at the exhausted successor when the cost is one. The difference is zero in all other cases.
+For budget zero or one, the indicator of an affordable cut with the specified residual successor equals the corresponding guarded transfer entry.
 
 **Theorem 1.5 (labelled_scale).**
 
@@ -94,7 +94,7 @@ The oriented cut contains the pairs of rows at distance at most one across conse
 
 **Theorem 1.7 (cut_total_exclusion).**
 
-$$\forall (k: \operatorname{Nat}), (\forall (D: \operatorname{Nat}), ((\forall (m: \operatorname{Nat}), (D \ne (m) \cdot (\operatorname{Finset}.\operatorname{card}\left((\operatorname{Finset}.\operatorname{diag}\left((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right) \cup \operatorname{HardinA229637RowColumn}.\operatorname{betw}\left(k\right))\right)))) \Leftrightarrow (\neg ((k) + ((2) \cdot ((k) - (1))) \mid D))))$$
+$$\forall (k: \operatorname{Nat}), (\forall (D: \operatorname{Nat}), ((\neg ((k) + ((2) \cdot ((k) - (1))) \mid D)) \Rightarrow (\forall (m: \operatorname{Nat}), (D \ne (m) \cdot (\operatorname{Finset}.\operatorname{card}\left((\operatorname{Finset}.\operatorname{diag}\left((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right))\right) \cup \operatorname{HardinA229637RowColumn}.\operatorname{betw}\left(k\right))\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion` (`✓ std3`). ∎
 
@@ -104,7 +104,7 @@ $$\forall (k: \operatorname{Nat}), (\forall (D: \operatorname{Nat}), ((\forall (
 
 *Commentary.*
 
-A budget differs from the total for every number of cuts exactly when the cut cardinality does not divide the budget. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction, with subtraction in the naturals. At height five this gives thirteen pairs.
+If the cut cardinality does not divide the budget, the budget differs from the total for every number of cuts. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction, with subtraction in the naturals. At height five this gives thirteen pairs.
 
 **Definition 1.8 (cost).**
 
@@ -372,7 +372,21 @@ $$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229538S
 
 The relation holds simultaneously for all boundary columns and both residual budgets.
 
-**Theorem 1.27 (result).**
+**Theorem 1.27 (integer_readout).**
+
+$$\forall (S: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{DecidableEq}\left(S\right)] \forall (M: \operatorname{Matrix}\left(S, S, \operatorname{Int}\right)), (\forall (u: S \to \operatorname{Int}), (\forall (v: S \to \operatorname{Int}), (\forall (d: \operatorname{Nat}), (\forall (b: \operatorname{Nat}), (\forall (c: \operatorname{Fin}\left(d\right) \to \operatorname{Int}), ((\operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (d)}, u\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} (\operatorname{SMul}.\operatorname{smul}\left(c\left(j\right), \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{(b) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right))) \Rightarrow (\forall (n: \operatorname{Nat}), (\operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (d)}, u\right)\right) = \sum_{(j: \operatorname{Fin}\left(d\right))} ((c\left(j\right)) \cdot (\operatorname{dotProduct}\left(v, \operatorname{Matrix}.\operatorname{mulVec}\left((M)^{((n) + (b)) + (\operatorname{Fin}.\operatorname{val}\left(j\right))}, u\right)\right))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.integer_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229538: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229538>.
+
+*Commentary.*
+
+A vector recurrence for the terminal values of a finite integer matrix transfers to every shifted scalar readout.
+
+**Theorem 1.28 (result).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (23)\right): \operatorname{Int}) = ((((((((((((((((((((12) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (22)\right): \operatorname{Int}))) + ((26) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (21)\right): \operatorname{Int})))) - ((566) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (20)\right): \operatorname{Int})))) - ((123) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (19)\right): \operatorname{Int})))) + ((8804) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (18)\right): \operatorname{Int})))) - ((4121) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (17)\right): \operatorname{Int})))) - ((59620) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (16)\right): \operatorname{Int})))) + ((55115) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (15)\right): \operatorname{Int})))) + ((183692) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (14)\right): \operatorname{Int})))) - ((256127) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (13)\right): \operatorname{Int})))) - ((211910) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (12)\right): \operatorname{Int})))) + ((498819) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (11)\right): \operatorname{Int})))) - ((48036) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (10)\right): \operatorname{Int})))) - ((371692) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (9)\right): \operatorname{Int})))) + ((214008) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int})))) + ((43848) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int})))) - ((64656) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) + ((8640) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) + ((5184) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int})))) - ((1296) \cdot ((\operatorname{HardinA229538Strip}.\operatorname{a}\left((n) + (3)\right): \operatorname{Int}))))$$
 
@@ -384,7 +398,7 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229538Strip}.\operator
 
 *Commentary.*
 
-The transfer counts labelled arrays by adjacent column cuts. The six-to-one count in labelled_scale identifies that readout with six times a at the widths of the recurrence. Cancelling six in the integer readout gives the order-twenty recurrence for every width at least twenty-three.
+The transfer counts labelled arrays by adjacent column cuts. The integer_readout theorem carries the transfer vector recurrence to the scalar count. The six-to-one count in labelled_scale identifies that readout with six times a at the widths of the recurrence. Cancelling six in the integer readout gives the order-twenty recurrence for every width at least twenty-three.
 
 ## References
 
@@ -398,6 +412,7 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_sum`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.integer_readout`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.labelled_scale`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.movesOne`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.oneDefect`

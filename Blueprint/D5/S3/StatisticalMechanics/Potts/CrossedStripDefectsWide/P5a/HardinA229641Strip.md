@@ -34,7 +34,7 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229641Strip}.\operator
 
 *Commentary.*
 
-For each array, the table scans horizontal bonds within rows and diagonal and antidiagonal bonds between rows. In the transfer, each of these bonds lies in the cut of its two consecutive columns. Interchanging the finite row and column sums for each bond direction gives the same number of monochromatic bonds, and both filters impose the same row-major canonical condition. The labelled readout is therefore six times the table entry at each width used in the recurrence. Cancelling six over the integers gives the order-thirty recurrence for every width at least thirty-four.
+For each array, the table scans horizontal bonds within rows and diagonal and antidiagonal bonds between rows. In the transfer, each of these bonds lies in the cut of its two consecutive columns. Interchanging the finite row and column sums for each bond direction gives the same number of monochromatic bonds, and both filters impose the same row-major canonical condition. The labelled readout is therefore six times the table entry at each width used in the recurrence. The shared integer_readout theorem carries the transfer vector recurrence to this scalar count. Cancelling six over the integers gives the order-thirty recurrence for every width at least thirty-four.
 
 ## References
 
