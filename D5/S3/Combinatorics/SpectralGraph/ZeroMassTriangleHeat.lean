@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/ZeroMassTriangleHeat
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/ZeroMassTriangleHeat
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Normed.Algebra.MatrixExponential]
