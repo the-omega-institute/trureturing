@@ -26,6 +26,7 @@ public import OmegaMath.Data.Int
 public import OmegaMath.Data.IntRatio
 public import OmegaMath.Data.Nat
 public import OmegaMath.Data.Nat.Choose.Basic
+public import OmegaMath.Data.Product
 public import OmegaMath.Data.Ratio
 public import OmegaMath.Data.SnocList
 public import OmegaMath.Geometry.BargmannGram
@@ -48,6 +49,7 @@ public import OmegaMath.Harmonic.HurwitzFreeGroup.Residue
 public import OmegaMath.Harmonic.HurwitzFreeGroup.Split5
 public import OmegaMath.Harmonic.PiFreeHaar
 public import OmegaMath.Logic.Function.Basic
+public import OmegaMath.Logic.Function.Defs
 public import OmegaMath.Matrix.LagrangeSchur
 public import OmegaMath.Matrix.Mat2
 public import OmegaMath.Matrix.Mat2.Hurwitz
