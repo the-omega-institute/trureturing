@@ -757,15 +757,14 @@ theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
       rcases s with x | x <;> by_cases hq : x = q <;>
         simp [residual, transfer, ← zero_cost_entry, oneDefect, hd0, hc0, hc1,
           Nat.not_le_of_lt ht, hq]
+  have complement : (¬ (d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q)) ↔
+      1 < d ∧ 0 < cost p q ∧ cost p q ≤ d := by
+    simp only [not_or, Nat.not_le, Nat.not_lt, ← Nat.le_zero]
   by_cases allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q
-  · have noDiscrepancy : ¬ (1 < d ∧ 0 < cost p q ∧ cost p q ≤ d) := by
-      rcases allowed with hsmall | hzero | hlarge <;> omega
-    rw [agree allowed s, sub_self, if_neg noDiscrepancy]
-  · have hd : 1 < d := by omega
+  · rw [agree allowed s, sub_self, if_neg (fun h => (complement.mpr h) allowed)]
+  · obtain ⟨hd, hc, hle⟩ := complement.mp allowed
     have hd0 : d ≠ 0 := by omega
-    have hc : 0 < cost p q := by omega
     have hcz : cost p q ≠ 0 := by omega
-    have hle : cost p q ≤ d := by omega
     by_cases h1 : cost p q = 1
     · have hres : d - 1 ≠ 0 := by omega
       have hd1 : 1 ≤ d := by omega
@@ -871,7 +870,7 @@ theorem labelled_scale {k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) :
   let : Nonempty C := ⟨(0, 0)⟩
   let const : Fin 3 ↪ (C → Fin 3) := ⟨Function.const C, Function.const_injective⟩
   have constant_array (A : C → Fin 3) (h : ¬ NC A) : A = const (A (0, 0)) :=
-    funext fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
+    Function.eq_const_iff.mpr fun i => Classical.byContradiction fun hi => h ⟨i, (0, 0), hi⟩
   have constant_budget (c : Fin 3) : P (const c) ↔ D = H.card + m * (V.card + H.card) := by
     change defects H V (List.ofFn fun _ : Fin (m + 1) => fun _ : Fin (k + 1) => c) = D ↔ _
     simp only [List.ofFn_const, DefectTransfer.constant_defects, eq_comm]
