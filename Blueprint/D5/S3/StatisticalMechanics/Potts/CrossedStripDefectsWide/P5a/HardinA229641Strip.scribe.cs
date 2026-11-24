@@ -102,9 +102,6 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
 
     private static Formula If(Formula c,Formula a,Formula b) =>
         Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,a,Sp,Q("else"),Sp,b));
-    private static Formula SumOver(string n,Formula t,Formula body) =>
-        Seq(F.Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(body));
-    private static Formula Pow(Formula a,Formula b) => Seq(Parenthesized(a),Caret,Grp(b));
     private static Formula VectorLiteral(long[] entries)
     {
         Formula tail = Q("Matrix.vecEmpty");
