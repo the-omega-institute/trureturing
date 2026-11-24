@@ -128,7 +128,7 @@ private theorem disjoint_coeff {J K : Type*} [Fintype J] [DecidableEq J] [AddCom
   simp [Q, loc]
 
 open Classical in
-private theorem band_via_dft {q : ℕ} [NeZero q] (F : ZMod q → ℂ) (R : Finset (ZMod q)) :
+theorem band_via_dft {q : ℕ} [NeZero q] (F : ZMod q → ℂ) (R : Finset (ZMod q)) :
     (q : ℂ) * (∑ r ∈ R, F r) =
       ∑ k : ZMod q, ZMod.dft F k * ∑ r ∈ R, ZMod.stdAddChar (k * r) := by
   rw [mul_sum]
