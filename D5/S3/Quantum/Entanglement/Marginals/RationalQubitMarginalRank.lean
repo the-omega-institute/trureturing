@@ -104,20 +104,26 @@ private theorem decompose_qubit (P : Matrix Bool Bool ℂ) (hP : P.PosSemidef) :
         · exact rationalComplex.one_mem
 
 private theorem three_weights (a a' b b' : ℝ)
-    (ha : 0 ≤ a) (ha' : 0 ≤ a') (hb : 0 ≤ b) (hb' : 0 ≤ b') (ht : a+a'=b+b') :
+    (ha : 0 ≤ a) (ha' : 0 ≤ a') (hb : 0 ≤ b) (hb' : 0 ≤ b') (ht : a + a' = b + b')
+    (haQ : RationalEntry (a : ℂ)) (haQ' : RationalEntry (a' : ℂ))
+    (hbQ : RationalEntry (b : ℂ)) (hbQ' : RationalEntry (b' : ℂ)) :
     ∃ p q r s : ℝ, 0 ≤ p ∧ 0 ≤ q ∧ 0 ≤ r ∧ 0 ≤ s ∧
-      p+q=a ∧ r+s=a' ∧ p+r=b ∧ q+s=b' ∧ (q=0 ∨ r=0) ∧
-      ((∃ A A' B B' : ℚ, (A : ℝ)=a ∧ (A' : ℝ)=a' ∧ (B : ℝ)=b ∧ (B' : ℝ)=b') →
-        ∃ P Q R S : ℚ, (P : ℝ)=p ∧ (Q : ℝ)=q ∧ (R : ℝ)=r ∧ (S : ℝ)=s) := by
+      p + q = a ∧ r + s = a' ∧ p + r = b ∧ q + s = b' ∧ (q = 0 ∨ r = 0) ∧
+      RationalEntry (p : ℂ) ∧ RationalEntry (q : ℂ) ∧
+      RationalEntry (r : ℂ) ∧ RationalEntry (s : ℂ) := by
   rcases le_total a b with he | he
-  · refine ⟨a, 0, b-a, b', ha, le_rfl, sub_nonneg.mpr he, hb', by ring, by linarith,
-      by ring, by ring, Or.inl rfl, ?_⟩
-    rintro ⟨A, _, B, B', hA, _, hB, hB'⟩
-    exact ⟨A, 0, B-A, B', hA, by simp, by simp [hA, hB], hB'⟩
-  · refine ⟨b, a-b, 0, a', hb, sub_nonneg.mpr he, le_rfl, ha', by ring, by ring,
-      by ring, by linarith, Or.inr rfl, ?_⟩
-    rintro ⟨A, A', B, _, hA, hA', hB, _⟩
-    exact ⟨B, A-B, 0, A', hB, by simp [hA, hB], by simp, hA'⟩
+  · refine ⟨a, 0, b - a, b', ha, le_rfl, sub_nonneg.mpr he, hb', by ring, by linarith,
+      by ring, by ring, Or.inl rfl, haQ, ?_, ?_, hbQ'⟩
+    · exact rationalComplex.zero_mem
+    · change ((b - a : ℝ) : ℂ) ∈ rationalComplex
+      rw [Complex.ofReal_sub]
+      exact rationalComplex.sub_mem hbQ haQ
+  · refine ⟨b, a - b, 0, a', hb, sub_nonneg.mpr he, le_rfl, ha', by ring, by ring,
+      by ring, by linarith, Or.inr rfl, hbQ, ?_, ?_, haQ'⟩
+    · change ((a - b : ℝ) : ℂ) ∈ rationalComplex
+      rw [Complex.ofReal_sub]
+      exact rationalComplex.sub_mem haQ hbQ
+    · exact rationalComplex.zero_mem
 
 private theorem normalize_atom (s : ℂ) (hs : 0 ≤ s) (x : Bool → ℂ) (hx : x ≠ 0)
     (hsQ : RationalEntry s) (hxQ : ∀ i, RationalEntry (x i)) :
@@ -205,15 +211,6 @@ private theorem trace_two_atoms {P : Matrix Bool Bool ℂ} {a a' : ℝ}
     P.trace.re = a + a' := by
   simp [h, Matrix.trace_add, Matrix.trace_smul, h1, h2, Complex.add_re]
 
-private theorem rational_cast {a : ℝ} (ha : RationalEntry (a : ℂ)) :
-    ∃ A : ℚ, (A : ℝ) = a := by
-  obtain ⟨A, _, h, _⟩ := ha
-  exact ⟨A, h⟩
-
-private theorem cast_rational {a : ℝ} {A : ℚ} (ha : (A : ℝ) = a) :
-    RationalEntry (a : ℂ) :=
-  ⟨A, 0, ha, by simp⟩
-
 private theorem kronecker_atom (x y : Bool → ℂ) :
     atom x ⊗ₖ atom y =
       let z := fun k : Bool × Bool => x k.1 * y k.2
@@ -298,13 +295,8 @@ private theorem construct_rational_extension (L R : Matrix Bool Bool ℂ)
   have ht : a + a' = b + b' :=
     (trace_two_atoms hLe hx hx').symm.trans
       ((congrArg Complex.re htrace).trans (trace_two_atoms hRe hy hy'))
-  obtain ⟨p, q, r, s, hp, hq, hr, hs, hpa, hraa, hpb, hqbb, hzero, hQ⟩ :=
-    three_weights a a' b b' ha ha' hb hb' ht
-  obtain ⟨A, hA⟩ := rational_cast haQ
-  obtain ⟨A', hA'⟩ := rational_cast haQ'
-  obtain ⟨B, hB⟩ := rational_cast hbQ
-  obtain ⟨B', hB'⟩ := rational_cast hbQ'
-  obtain ⟨P, Q, R', S, hP, hQ', hR', hS⟩ := hQ ⟨A, A', B, B', hA, hA', hB, hB'⟩
+  obtain ⟨p, q, r, s, hp, hq, hr, hs, hpa, hraa, hpb, hqbb, hzero, hpQ, hqQ, hrQ, hsQ⟩ :=
+    three_weights a a' b b' ha ha' hb hb' ht haQ haQ' hbQ hbQ'
   let E := (p : ℂ) • (atom x ⊗ₖ atom y)
   let F := (q : ℂ) • (atom x ⊗ₖ atom y')
   let G := (r : ℂ) • (atom x' ⊗ₖ atom y)
@@ -325,10 +317,10 @@ private theorem construct_rational_extension (L R : Matrix Bool Bool ℂ)
     exact rationalComplex.add_mem
       (rationalComplex.add_mem
         (rationalComplex.add_mem
-          (term_rational (cast_rational hP) hxQ hyQ i j)
-          (term_rational (cast_rational hQ') hxQ hyQ' i j))
-        (term_rational (cast_rational hR') hxQ' hyQ i j))
-      (term_rational (cast_rational hS) hxQ' hyQ' i j)
+          (term_rational hpQ hxQ hyQ i j)
+          (term_rational hqQ hxQ hyQ' i j))
+        (term_rational hrQ hxQ' hyQ i j))
+      (term_rational hsQ hxQ' hyQ' i j)
 
 /-- The two endpoint matrices admit a rational positive joint matrix of rank at most
 three exactly when they are rational, positive semidefinite, and have equal trace. -/
