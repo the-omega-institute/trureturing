@@ -26,13 +26,21 @@ namespace D5.S3.Fourier.Asymptotics.CyclicNegativeCosineMass
 
 set_option autoImplicit false
 
+private theorem mode_residue {q : ℕ} (r : ℕ) (i : ZMod q) :
+    D5.S3.Fourier.Concentration.AggregateCosineBalance.mode i (r : ℤ) =
+      Real.cos ((r : ℝ) * (2 * Real.pi * (i.val : ℝ) / q)) := by
+  unfold D5.S3.Fourier.Concentration.AggregateCosineBalance.mode
+  rw [Int.cast_natCast]
+  congr 1
+  ring
+
 private theorem cos_residue_eq {q : ℕ} [NeZero q] (r : ℕ) (i : ZMod q) :
     Real.cos ((r : ℝ) * (2 * Real.pi * (i.val : ℝ) / q)) =
       Real.cos ((r : ℝ) * centeredAngle i) := by
   classical
   have h := cosineMoment_eq_centered r (Pi.single i (1 : ℝ))
   dsimp [cosineMoment] at h
-  simpa [Pi.single_apply, ite_mul, Finset.sum_ite_eq'] using h
+  simpa [mode_residue, Pi.single_apply, ite_mul, Finset.sum_ite_eq'] using h
 
 private theorem eventually_centered (j : ℤ) :
     ∀ᶠ k : ℕ in atTop, (j : ZMod k.succ).valMinAbs = j := by
@@ -121,8 +129,17 @@ private theorem total_deficits {q : ℕ} [NeZero q] (hq : 4 ≤ q) {lam : ℝ}
     {v : ZMod q → ℝ} (hv : v ∈ feasible q (1 - lam / (q : ℝ) ^ 2))
     (hmin : IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v) :
     (∑ i, deficit 1 v i) = lam ∧ (∑ i, deficit 2 v i) = lam := by
-  have htwo (i : ZMod q) :
-      2 * (2 * Real.pi * (i.val : ℝ) / q) = 4 * Real.pi * (i.val : ℝ) / q := by ring
+  have hfirst (i : ZMod q) :
+      D5.S3.Fourier.Concentration.AggregateCosineBalance.mode i ((1 : ℕ) : ℤ) =
+        Real.cos (2 * Real.pi * (i.val : ℝ) / q) := by
+    simpa only [Nat.cast_one, one_mul] using mode_residue 1 i
+  have hsecond (i : ZMod q) :
+      D5.S3.Fourier.Concentration.AggregateCosineBalance.mode i ((2 : ℕ) : ℤ) =
+        Real.cos (4 * Real.pi * (i.val : ℝ) / q) := by
+    rw [mode_residue]
+    congr 1
+    push_cast
+    ring
   have heq : cosineMoment 1 v = 1 - lam / (q : ℝ) ^ 2 ∧
       cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2 := by
     rcases hlam.eq_or_lt with hzero | hpositive
@@ -140,23 +157,22 @@ private theorem total_deficits {q : ℕ} [NeZero q] (hq : 4 ≤ q) {lam : ℝ}
     have hlt : 1 - lam / (q : ℝ) ^ 2 < 1 := by
       have h := div_pos hpositive (show 0 < (q : ℝ) ^ 2 by positivity)
       linarith
-    simp only [cosineMoment, Nat.cast_one, one_mul, Nat.cast_ofNat, htwo]
+    simp only [cosineMoment, hfirst, hsecond]
     apply (active_cosine_constraints hq hpos hlt).2.2
     refine ⟨⟨⟨hv.1, hv.2.1⟩, ?_⟩, ?_⟩
-    · simpa only [cosineMoment, Nat.cast_one, one_mul, Nat.cast_ofNat, htwo] using hv.2.2
+    · simpa only [cosineMoment, hfirst, hsecond] using hv.2.2
     · intro u hu
       apply hmin
       refine ⟨hu.1.1, hu.1.2, ?_⟩
-      simpa only [cosineMoment, Nat.cast_one, one_mul, Nat.cast_ofNat, htwo] using hu.2
+      simpa only [cosineMoment, hfirst, hsecond] using hu.2
   have htotal (r : ℕ) (hr : cosineMoment r v = 1 - lam / (q : ℝ) ^ 2) :
       ∑ i, deficit r v i = lam := by
     calc
       _ = (q : ℝ) ^ 2 * ((∑ i, v i) - cosineMoment r v) := by
-        unfold cosineMoment
+        rw [cosineMoment_eq_centered]
         rw [← sum_sub_distrib, mul_sum]
         apply sum_congr rfl
         intro i _
-        rw [cos_residue_eq]
         unfold deficit
         ring
       _ = lam := by
