@@ -79,12 +79,8 @@ private def reversePath (p : Path6 G) : Path6 G where
   injective' := p.injective.comp Fin.rev_injective
 
 private theorem reverse_range (p : Path6 G) : Set.range (reversePath p) = Set.range p := by
-  ext v
-  constructor
-  · rintro ⟨i, rfl⟩
-    exact ⟨i.rev, rfl⟩
-  · rintro ⟨i, rfl⟩
-    exact ⟨i.rev, by change p i.rev.rev = p i; simp⟩
+  change Set.range ((p : Fin 6 → V) ∘ Fin.rev) = Set.range (p : Fin 6 → V)
+  exact Function.Surjective.range_comp (Fin.rev_surjective (n := 6)) (p : Fin 6 → V)
 
 private def relist {k : ℕ} (p : Path6 G) (new : Fin k → V)
     (hnew : Function.Injective new) (hout : ∀ j, new j ∉ Set.range p)
