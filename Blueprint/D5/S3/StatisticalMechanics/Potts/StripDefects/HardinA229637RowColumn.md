@@ -18,7 +18,7 @@ horiz k is the set of column pairs (j, j+1) of a row of width k; a pair whose tw
 
 **Theorem 1.2 (Counting monochromatic horizontal bonds).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.bond_row`
+$$\forall k: \mathit{Nat}, (\forall r: \operatorname{\mathit{Fin}}\left(k\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229637RowColumn}}.\operatorname{\mathit{horiz}}\left(k\right), r, r\right) = \operatorname{\mathit{Finset}}.\operatorname{\mathit{card}}\left(\operatorname{\mathit{Finset}}.\operatorname{\mathit{filter}}\left(\lambda i: \operatorname{\mathit{Fin}}\left(k\right) \mapsto (\exists j: \operatorname{\mathit{Fin}}\left(k\right), ((\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(j\right) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) + 1) \land (r\left(i\right) = r\left(j\right)))), \operatorname{\mathit{Finset}}.\operatorname{\mathit{univ}}\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.bond_row` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowC
 
 *Commentary.*
 
-For every width k and row r of k cells over {0,1,2}, the number of monochromatic bonds in horiz k is the cardinality of the set of positions i for which a position j satisfies j = i + 1 and r(i) = r(j).
+The filtered positions are those with an equal-coloured cell immediately to their right. The successor is taken on the natural-valued column indices.
 
 **Definition 1.3 (Diagonal and antidiagonal bonds between rows).**
 
