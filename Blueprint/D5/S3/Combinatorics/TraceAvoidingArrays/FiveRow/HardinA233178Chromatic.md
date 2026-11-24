@@ -16,21 +16,9 @@ $$(\operatorname{HardinA233178Chromatic}.\operatorname{moves}: \operatorname{Har
 
 *Commentary.*
 
-The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. The theorem moves_eq_filter identifies each list with the eligible columns in code order.
+The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. Each stored list contains the eligible columns in code order.
 
-**Theorem 1.2 (moves_eq_filter).**
-
-$$\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), ((\operatorname{HardinA233178Chromatic}.\operatorname{moves}\left(p\right): \operatorname{List}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Column}\right)) = \operatorname{List}.\operatorname{filter}\left((\lambda (q: \operatorname{HardinA233178Chromatic}.\operatorname{Column})\mapsto \operatorname{decide}\left(\operatorname{HardinA233178Chromatic}.\operatorname{Bond}\left(p, q\right)\right)), \operatorname{List}.\operatorname{finRange}\left(243\right)\right))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves_eq_filter` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Filtering the ordered column codes by the bond condition gives the stored successor list.
-
-**Definition 1.3 (table).**
+**Definition 1.2 (table).**
 
 $$(\operatorname{HardinA233178Chromatic}.\operatorname{table}: \operatorname{Fin}\left(12\right) \to \left(\operatorname{HardinA233178Chromatic}.\operatorname{Column} \to \mathbb{Z}\right))$$
 
@@ -42,7 +30,7 @@ $$(\operatorname{HardinA233178Chromatic}.\operatorname{table}: \operatorname{Fin
 
 The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors.
 
-**Definition 1.4 (coefficients).**
+**Definition 1.3 (coefficients).**
 
 $$(\operatorname{HardinA233178Chromatic}.\operatorname{coefficients}: \operatorname{Fin}\left(10\right) \to \operatorname{Int}) = \operatorname{Matrix}.\operatorname{vecCons}\left((-36), \operatorname{Matrix}.\operatorname{vecCons}\left(72, \operatorname{Matrix}.\operatorname{vecCons}\left(192, \operatorname{Matrix}.\operatorname{vecCons}\left((-514), \operatorname{Matrix}.\operatorname{vecCons}\left(93, \operatorname{Matrix}.\operatorname{vecCons}\left(417, \operatorname{Matrix}.\operatorname{vecCons}\left((-163), \operatorname{Matrix}.\operatorname{vecCons}\left((-97), \operatorname{Matrix}.\operatorname{vecCons}\left(31, \operatorname{Matrix}.\operatorname{vecCons}\left(6, \operatorname{Matrix}.\operatorname{vecEmpty}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -53,6 +41,18 @@ $$(\operatorname{HardinA233178Chromatic}.\operatorname{coefficients}: \operatorn
 *Commentary.*
 
 The coefficients are listed in order of increasing power.
+
+**Theorem 1.4 (weighted_indicator_sum).**
+
+$$\forall (S: \operatorname{Type}*), (\forall (R: \operatorname{Type}*), ([\operatorname{Fintype}\left(S\right)] [\operatorname{AddCommMonoid}\left(R\right)] [\operatorname{Mul}\left(R\right)] [\operatorname{One}\left(R\right)] \forall (P: S \to \operatorname{Prop}), ([\operatorname{DecidablePred}\left(P\right)] \forall (L: \operatorname{List}\left(S\right)), ((\operatorname{List}.\operatorname{Nodup}\left(L\right)) \Rightarrow ((\forall (q: S), ((q \in L) \Leftrightarrow (P\left(q\right)))) \Rightarrow (\forall (w: S \to R), ((\forall (q: S), ((\neg (q \in L)) \Rightarrow (((0: R)) \cdot (w\left(q\right)) = (0: R)))) \Rightarrow (\operatorname{dotProduct}\left((\lambda (q: S)\mapsto ((\operatorname{if} (P\left(q\right)) \operatorname{then} (1: R) \operatorname{else} 0))), w\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left((\lambda (q: S)\mapsto (((1: R)) \cdot (w\left(q\right)))), L\right)\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.weighted_indicator_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish.
 
 **Theorem 1.5 (step_fast).**
 
@@ -128,7 +128,7 @@ The legal-bond predicate is decidable by checking the finitely many row pairs.
 
 **Definition 1.11 (forwardCutPair).**
 
-$$\forall (k: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left(k\right)), (\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k, i\right) = (\operatorname{Fin}.\operatorname{castSucc}\left(i\right), \operatorname{Fin}.\operatorname{succ}\left(i\right))))$$
+$$\forall (k: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left(k\right)), ((\operatorname{HardinA233178Chromatic}.\operatorname{forwardCutPair}\left(k\right): \operatorname{Function}.\operatorname{Embedding}\left(\operatorname{Fin}\left(k\right), (\operatorname{Fin}\left(k + 1\right))\times(\operatorname{Fin}\left(k + 1\right))\right))\left(i\right) = (\operatorname{Fin}.\operatorname{castSucc}\left(i\right), \operatorname{Fin}.\operatorname{succ}\left(i\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.forwardCutPair` (`✓ std3`).
 
@@ -209,12 +209,12 @@ The finite vector relation propagates to all subsequent exponents by TransferMat
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.forwardCutPair`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.instDecidableBond`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.moves_eq_filter`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.powers_table`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.step_fast`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.table`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.vector_certificate`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.weighted_indicator_sum`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](../TransferMatrix.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn](../../../StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn.md)

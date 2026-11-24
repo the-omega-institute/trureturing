@@ -78,21 +78,7 @@ $$(\operatorname{HardinA229641Strip}.\operatorname{coefficients641}: \operatorna
 
 The entries are ordered from the smallest shift of the recurrence to the largest.
 
-**Theorem 1.6 (vector_polynomial).**
-
-$$\operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229641Strip}.\operatorname{transfer})^{33}, \operatorname{HardinA229641Strip}.\operatorname{terminal}\right) = \sum_{(k: \operatorname{Fin}\left(30\right))} (\operatorname{SMul}.\operatorname{smul}\left(\operatorname{HardinA229641Strip}.\operatorname{coefficients641}\left(k\right), \operatorname{Matrix}.\operatorname{mulVec}\left((\operatorname{HardinA229641Strip}.\operatorname{transfer})^{(3) + (\operatorname{Fin}.\operatorname{val}\left(k\right))}, \operatorname{HardinA229641Strip}.\operatorname{terminal}\right)\right))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.vector_polynomial` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229641: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229641>.
-
-*Commentary.*
-
-The relation holds simultaneously for all boundary columns and all three residual budgets.
-
-**Theorem 1.7 (result).**
+**Theorem 1.6 (result).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (34)\right): \operatorname{Int}) = ((((((((((((((((((((((((((((((18) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (33)\right): \operatorname{Int}))) - ((15) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (32)\right): \operatorname{Int})))) - ((1191) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (31)\right): \operatorname{Int})))) + ((3468) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (30)\right): \operatorname{Int})))) + ((31983) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (29)\right): \operatorname{Int})))) - ((108707) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (28)\right): \operatorname{Int})))) - ((424479) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (27)\right): \operatorname{Int})))) + ((1614489) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (26)\right): \operatorname{Int})))) + ((2851598) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (25)\right): \operatorname{Int})))) - ((13478352) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (24)\right): \operatorname{Int})))) - ((7797810) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (23)\right): \operatorname{Int})))) + ((66347438) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (22)\right): \operatorname{Int})))) - ((12632640) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (21)\right): \operatorname{Int})))) - ((190067859) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (20)\right): \operatorname{Int})))) + ((147888798) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (19)\right): \operatorname{Int})))) + ((287096430) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (18)\right): \operatorname{Int})))) - ((412178619) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (17)\right): \operatorname{Int})))) - ((138135927) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (16)\right): \operatorname{Int})))) + ((522690894) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (15)\right): \operatorname{Int})))) - ((168525432) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (14)\right): \operatorname{Int})))) - ((273411640) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (13)\right): \operatorname{Int})))) + ((227616084) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (12)\right): \operatorname{Int})))) + ((9610272) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (11)\right): \operatorname{Int})))) - ((73617984) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (10)\right): \operatorname{Int})))) + ((21460464) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (9)\right): \operatorname{Int})))) + ((7359984) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int})))) - ((4611168) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int})))) + ((186624) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) + ((279936) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) - ((46656) \cdot ((\operatorname{HardinA229641Strip}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int}))))$$
 
@@ -114,7 +100,6 @@ For each array, the table scans horizontal bonds within rows and diagonal and an
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.terminal`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.transfer`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.twoDefect`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229641Strip.vector_polynomial`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic](../../../../Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence](../../../../Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
