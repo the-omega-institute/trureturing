@@ -171,7 +171,8 @@ private theorem shortSpacingCoeffs_sound (cs : List ℚ) {z h : ℝ}
     change momentHorner z ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ) / B) = _
     rw [show ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ) / B) =
           ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ)).map (fun c => c / B) by
-        simp only [List.map_map, Function.comp_apply],
+        simp only [List.map_map]
+        rfl,
       momentHorner_div, recenterSpacingInts_cast]
     simpa only [Rat.cast_one, one_mul] using
       congrArg (fun x : ℝ => x / (B : ℝ)) (SmallCorner.recenterMomentCoeffs_eval 1 z qs)

@@ -34,12 +34,12 @@ private def checkUpperScore (score : Model) : Bool :=
 private def firstEndpointChecks (scores : Model × Model) : Bool :=
   checkZeroScore scores.1 && checkUpperScore scores.2
 
+-- Keep the endpoint and score lets for the paired replay.
 local macro "replay_first_corner" : tactic => `(tactic| (
   conv_lhs =>
     arg 1
     simp only [firstScores, CompactMiddleBox.clearedScores, CompactMiddleBox.weights,
-      CompactMiddleBox.upperRadicand, first_upper_gap_fv_eq, middleClearedEndpointModels,
-      middleScoreCoreModels]
+      CompactMiddleBox.upperRadicand, first_upper_gap_fv_eq]
     cbv
   all_goals decide +kernel))
 
@@ -48,7 +48,15 @@ set_option maxRecDepth 20000 in
 set_option cbv.maxSteps 5000000 in
 -- Normalize only the score needed for this endpoint.
 private theorem first_zero_false_false : checkZeroScore (firstScores false false).1 = true := by
-  replay_first_corner
+  conv_lhs =>
+    arg 1
+    -- Reduce the projections before cbv evaluates the models behind them.
+    dsimp only [firstScores, CompactMiddleBox.clearedScores, middleClearedEndpointModels,
+      middleScoreCoreModels, middleDefectModels, middleClearedJetModels, CompactMiddleBox.weights,
+      middleWeightModels]
+    simp only [first_upper_gap_fv_eq]
+    cbv
+  all_goals decide +kernel
 
 set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 20000 in
