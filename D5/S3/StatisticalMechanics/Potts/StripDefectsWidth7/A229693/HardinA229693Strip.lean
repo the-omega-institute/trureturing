@@ -25,7 +25,7 @@ initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
 leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
-coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result
+coefficients: proof_shape=bind-only; consumers=polynomialCoordinates, polynomial_relation, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
 columnRepresentative: proof_shape=bind-only; consumers=representative_data, checkColumn, exhausted_step
