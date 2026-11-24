@@ -14,7 +14,7 @@ completionCodes_eq: proof_shape=content; consumers=exitCodes_eq
 completionCost: proof_shape=content; consumers=completionCost_row, completionRows_count, completionRows_length_le, exactExits_count
 completionRows: proof_shape=content; consumers=completionCodes_eq, completionRows_count, completionRows_length_le, exactExits_count, exitCodes_bound, exitCodes_eq
 completionRows_count: proof_shape=content; consumers=completionRows_length_le, exactExits_count
-matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count, completionRows_count._proof_1_9
+matchCost: proof_shape=bind-only; consumers=completionCodes._f, completionCodes._sunfold, completionCodes._unsafe_rec, completionCodes.eq_1, completionCodes.eq_2, completionCodes.eq_def, completionCodes_eq, completionCost._f, completionCost._sunfold, completionCost._unsafe_rec, completionCost.eq_1, completionCost.eq_2, completionCost.eq_def, completionCost_row, completionRows._f, completionRows._sunfold, completionRows._unsafe_rec, completionRows.eq_1, completionRows.eq_2, completionRows.eq_def, completionRows_count
 rowCode_cons: proof_shape=bind-only; consumers=completionCodes_eq, rowCode_tail
 tailCost_eq: proof_shape=bind-only; consumers=horizontal_cons, valid_shift
 decidableBudget: proof_shape=bind-only; consumers=activeProfileCheck, exhaustedClass, inheritedActiveCheck
@@ -28,8 +28,8 @@ zeroExitCodes: proof_shape=bind-only; consumers=zeroExitCodes_count, exhaustedMu
 zeroExitCodes_count: proof_shape=bind-only; consumers=class_counts_canonical
 rep_partition: proof_shape=bind-only; consumers=exactExits_active, exactExits_new
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, HardinA229693Strip.initialExhausted, old_exhausted_counts, old_exhausted_row
-exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_2, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_3
-cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_1, HardinA229693Strip.initial_counts._simp_2, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_3
+exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_2, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2, zero_coordinates
+cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_1, HardinA229693Strip.initial_counts._simp_2, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_2, zero_coordinates
 exitRead: proof_shape=content; consumers=HardinA229693Strip.w, HardinA229693Strip.w_leading, activeWeight, exhaustedWeight
 oldExits: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, class_counts_canonical, leading_counts, old_exhausted_counts, old_exhausted_row
 oldTerminal: proof_shape=bind-only; consumers=oldDestination
@@ -51,7 +51,7 @@ cl_relabel: proof_shape=bind-only; consumers=class_counts, exhausted_relabel
 exhausted_relabel: proof_shape=bind-only; consumers=class_counts, HardinA229693Strip.rep_weight
 blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_row
 active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1, leading_counts._simp_1_1
-exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_2, transition_counts._simp_1_3
+exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_2, transition_counts._simp_1_2
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
 completionCost_row: proof_shape=bind-only; consumers=exactExits_count
