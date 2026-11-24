@@ -14,9 +14,8 @@ $$\operatorname{trace}\left(\operatorname{conj}\left(x\right)\right) = \operator
 
 *Commentary.*
 
-Conjugating a golden integer preserves its integral trace. In coordinates, conjugation sends `(a,b)` to `(a+b,-b)`, and both traces simplify to `2a+b`.
+Conjugating a golden integer preserves its integral trace. In coordinates, conjugation sends `(a,b)` to `(a+b,-b)`, and both traces simplify to `2a+b`. The formal proof specializes the strict quadratic trace identity to the golden parameters.
 
 ## References
 
 - Truth anchor: `D5/S0/Carrier/TraceConjugation.trace_conj`
-- Dependency: [D5/S0/Carrier/Conj](Conj.md)

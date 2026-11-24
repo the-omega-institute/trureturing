@@ -190,6 +190,14 @@ theorem conj_mul (z w : QuadPoly A b c) :
       (mulScalar e1 conjZ e3.neg conjW e5.neg) Eq.refl)
     (prove r law vars linear.neg (mulLinear e0 conjZ e3.neg conjW e5.neg) Eq.refl)
 
+/-- Quadratic conjugation preserves the trace. -/
+theorem trace_conj (z : QuadPoly A b c) : r.eqv (trace r (conj r z)) (trace r z) :=
+  let vars := Variables.cons b (Variables.cons z.scalar
+    (Variables.cons z.linear (Variables.nil r)))
+  let conjugateScalar := e1.add (e0.mul e2)
+  prove r law vars ((conjugateScalar.add conjugateScalar).add (e0.mul e2.neg))
+    ((e1.add e1).add (e0.mul e2)) Eq.refl
+
 theorem add_conj (z : QuadPoly A b c) :
     Equivalent r (add r z (conj r z)) (ofScalar r (trace r z)) :=
   let vars := Variables.cons b (Variables.cons z.scalar
@@ -200,6 +208,13 @@ theorem add_conj (z : QuadPoly A b c) :
 
 private def normExpr (b c x y : Expr) : Expr :=
   (x.square.add (b.mul (x.mul y))).sub (c.mul y.square)
+
+theorem norm_congr {z w : QuadPoly A b c} (h : Equivalent r z w) :
+    r.eqv (norm r z) (norm r w) :=
+  law.sub_congr
+    (law.add_congr (law.mul_congr h.left h.left)
+      (law.mul_congr (law.refl b) (law.mul_congr h.left h.right)))
+    (law.mul_congr (law.refl c) (law.mul_congr h.right h.right))
 
 theorem mul_conj (z : QuadPoly A b c) :
     Equivalent r (mul r z (conj r z)) (ofScalar r (norm r z)) :=
@@ -232,6 +247,14 @@ theorem scale_congr (a : A) {z w : QuadPoly A b c} (h : Equivalent r z w) :
     Equivalent r (scale r a z) (scale r a w) :=
   And.intro (law.mul_congr (law.refl a) h.left) (law.mul_congr (law.refl a) h.right)
 
+/-- Multiplying the conjugate by an inverse of the norm gives an inverse. -/
+theorem mul_scale_conj_eq_one (z : QuadPoly A b c) (s : A)
+    (hs : r.eqv (r.mul (norm r z) s) r.one) :
+    Equivalent r (mul r z (scale r s (conj r z))) (one r) :=
+  trans law (mul_scale law s z (conj r z))
+    (trans law (scale_congr law s (mul_conj law z))
+      (And.intro (law.trans (law.mul_comm s (norm r z)) hs) (law.mul_zero s)))
+
 end QuadPoly
 
 namespace RatQuadPoly
@@ -245,14 +268,8 @@ def inv {b c : Int} (z : RatQuadPoly b c) : RatQuadPoly b c :=
 theorem mul_inv {b c : Int} (z : RatQuadPoly b c)
     (h : Not (Eq (norm rationalRing z).num Int.zero)) :
     Equivalent rationalRing (mul rationalRing z z.inv) (one rationalRing) :=
-  let normZ := norm rationalRing z
-  let law := rationalRingLaws
-  have step := mul_scale law normZ.inv z (conj rationalRing z)
-  have product := scale_congr law normZ.inv (mul_conj law z)
-  have cancel := And.intro
-    (law.trans (law.mul_comm normZ.inv normZ) (normZ.mul_inv_cancel h))
-    (law.mul_zero normZ.inv)
-  trans law step (trans law product cancel)
+  mul_scale_conj_eq_one rationalRingLaws z (norm rationalRing z).inv
+    ((norm rationalRing z).mul_inv_cancel h)
 
 end RatQuadPoly
 end Omega

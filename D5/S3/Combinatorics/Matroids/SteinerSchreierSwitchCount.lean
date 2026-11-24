@@ -265,7 +265,7 @@ theorem steinerSquarePeriod {L : Type*} [Mul L] {p q x : L}
   · exact (notFixed (minimalPeriod_eq_one_iff_isFixedPt.mp h)).elim
   · exact h
 
-private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [Mul L]
+theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] (G : SimpleGraph L) (e p q : L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y)

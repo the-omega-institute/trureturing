@@ -7,6 +7,9 @@ doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
+  - D5/S3/Quantum/Analysis/RefinedBMV84
+  - D5/S3/Quantum/Analysis/RefinedBMV67
+  - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
@@ -56,6 +59,39 @@ the trace gap as a sum of nonnegative terms. Ando, Hiai and Okubo's
 Corollary 2.2(ii) gives the two weighted word comparisons used in the
 sum. Their Corollary 2.4 gives the upper word bound.
 The dyadic comparison from Hägele's Lemma 2 gives the exponential result.
+
+## Five copies of the first factor
+
+For the (5,4) comparison, the mean of the 126 word traces dominates
+the trace of A(AB)^4 by a sum of four Frobenius squares weighted by A.
+Three further Frobenius squares compare this intermediate trace to
+the trace of (A^(5/4) B)^4. The product proof permits a singular PSD
+first factor and an arbitrary Hermitian second factor. The dyadic
+comparison in Hägele's Lemma 2 gives the exponential lower bound.
+Burgdorf's Theorem 1.5 and Example 2.1(b) in arXiv:0802.1153v2
+give cyclic square decompositions for the classical coefficient bound.
+
+## Six and seven copies of the first factor
+
+The lower comparisons at (6,4) and (7,4) hold in every finite complex
+dimension. The mean of the 210 words at (6,4) dominates the trace of
+`(A^(3/2) B)^4` for PSD A and B. The mean of the 330 words at (7,4)
+dominates the trace of `(A^(7/4) B)^4` for PSD A and Hermitian B.
+Both results include singular A. The cyclic coefficient identities
+compare the means with balanced integer words. Three rational Gram
+blocks give the six-copy comparison, including one weighted by B on
+both sides. The seven-copy comparison uses a Gram block weighted by A.
+The dyadic comparison gives the exponential bounds with exponents
+`6H + 4K` and `7H + 4K`.
+
+## Eight copies of the first factor
+
+The (8,4) product comparison holds for every finite complex PSD pair.
+The mean of the 495 word traces dominates the fourth trace of the
+Hermitian part of A^(3/2) B A^(1/2) by three rational Gram blocks.
+The fourth trace of that Hermitian part bounds the trace of (A^2 B)^4.
+The proof treats singular A and B directly. The dyadic trace-power
+comparison from Lemma 2 gives the corresponding exponential bound.
 
 ## Scope and conventions
 
