@@ -253,7 +253,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         var recursive = Call("List.map", Call("Fin.cons", x),
             Call("completionRows", Call("Fin.tail", p), Call("some", x), Sub(d, c)));
         var baseEquation = Eq(Call("completionRows", p, b, d),
-            Call("List.map", Lambda("x", Lambda("_", x)), LastColours(b, d)));
+            Call("List.map", Call("Function.const", Call("Fin", D(1))), LastColours(b, d)));
         var stepEquation = Eq(Call("completionRows", p, b, d),
             Call("List.flatMap", Lambda("x", LetCharge(b, App(p, D(0)), x,
                 Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3))));
@@ -292,13 +292,13 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula OptionalRow(Formula n) => Arrow(Call("Fin", n), OptionColour);
     private static Formula ColourRow(Formula n) => Arrow(Call("Fin", n), Fin3);
     private static Formula LastColours(Formula b, Formula d) => Call("List.filter",
-        Lambda("x", Call("decide", Eq(Call("matchCost", b, V("x")), d))), Call("List.finRange", D(3)));
+        Lambda("x", Call("BEq.beq", Call("matchCost", b, V("x")), d)), Call("List.finRange", D(3)));
     private static Formula LocalCharge(Formula b, Formula a, Formula x) =>
         Add(Call("matchCost", b, x), Call("matchCost", a, x));
     private static Formula LetCharge(Formula b, Formula a, Formula x, Formula body) =>
         Seq(Q("let"), Sp, V("c"), Sp, Colon, F.Eq, Sp, LocalCharge(b, a, x), Comma, Sp, body);
     private static Formula Lambda(string name, Formula body) =>
-        Parenthesized(Seq(LambdaLower, Sp, name == "_" ? Underscore : V(name), Sp, Mapsto, Sp, body));
+        Parenthesized(Seq(LambdaLower, Sp, V(name), Sp, Mapsto, Sp, body));
     private static Formula OptionColour => Call("Option", Fin3);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
