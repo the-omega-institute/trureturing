@@ -13,7 +13,11 @@ open _root_.D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
 open SteinerSchreierExtension (extensionMul)
 open SteinerReturnDependencies (returnRow)
 open SteinerSwitchCentre (steinerMul product_comm)
-open SteinerMatchingTranslations (translate_involutive)
+open SteinerMatchingTranslations (translate translate_involutive)
+open SteinerAlternatingSwitches (SuccessfulStart point_deleted_successful_starts)
+open PointDeletedSteinerSwitch (pointDeletedFamily)
+open RankThreeInternalSteinerDecomposition (IsPartialSteiner)
+open RankThreeSaturatedTopGap (Covered Uncovered)
 open _root_.Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchCentre
   (affinePlane_valid affinePlane_complete)
 open _root_.Reg.D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
@@ -174,6 +178,124 @@ def commonCountRegistration :
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def labelledCountLaw (R : Realization sig.{v}) : Prop :=
+  ∀ {J : Type j} {L : Type u} {A : Type v}
+    [Finite L] [Nontrivial L] [Finite A] [Mul L]
+    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    (e : L) (p q : J → L)
+    (_unit : ∀ x : L, e * x = x) (_comm : ∀ x y : L, x * y = y * x)
+    (_invol : ∀ x y : L, x * (x * y) = y) (_centreless : Set.center L = {e})
+    (_hp : ∀ j, p j ≠ e) (_hq : ∀ j, q j ≠ e) (_different : ∀ j, p j ≠ q j)
+    (H : Submodule (ZMod 2) (Set L →₀ ZMod 2))
+    (_dimension : finrank (ZMod 2) ((Set L →₀ ZMod 2) ⧸ H) ≤ finrank (ZMod 2) A),
+    ∃ (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
+      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b),
+      letI := extensionMul e labels
+      label none = (e, 0) ∧
+      (∀ i a, label (translate valid cover i a) = label (some i) * label a) ∧
+      ∀ j, ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
+        label (some i) = (p j, 0) ∧ label (some (i.succAbove v)) = (q j, 0) ∧
+        (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+        ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
+          R.readout () () A * ({x : L |
+            let g := fun y : L => p j * (q j * y)
+            g (g x) ≠ x ∨ returnRow e (p j) (q j) x ∉ H} : Set L).ncard
+
+abbrev labelledCountArena : Arena := ⟨sig, labelledCountLaw.{j,u,v}⟩
+
+private theorem labelledCount_rejected : ¬ labelledCountLaw.{j,u,v} rejected := by
+  intro bound
+  let J := PUnit.{j+1}
+  let A := PUnit.{v+1}
+  letI : Module.Finite (ZMod 2) A :=
+    Module.Finite.of_surjective (0 : ZMod 2 →ₗ[ZMod 2] A) (fun a => ⟨0, Subsingleton.elim _ a⟩)
+  obtain ⟨p, q, x, noncommuting⟩ := affine_noncommuting.{u}
+  have hp : p ≠ affineIdentity := by
+    intro h
+    exact noncommuting (by rw [h, affine_unit, affine_unit])
+  have hq : q ≠ affineIdentity := by
+    intro h
+    exact noncommuting (by rw [h, affine_unit, affine_unit])
+  have hpq : p ≠ q := by
+    intro h
+    subst q
+    exact noncommuting rfl
+  let H : Submodule (ZMod 2) (Set AffineLoop →₀ ZMod 2) := ⊤
+  have dimension : finrank (ZMod 2) ((Set AffineLoop →₀ ZMod 2) ⧸ H) ≤ finrank (ZMod 2) A := by
+    have h : finrank (ZMod 2) ((Set AffineLoop →₀ ZMod 2) ⧸ H) = 0 := by
+      change finrank (ZMod 2) ((Set AffineLoop →₀ ZMod 2) ⧸
+        (⊤ : Submodule (ZMod 2) (Set AffineLoop →₀ ZMod 2))) = 0
+      exact Module.finrank_zero_of_subsingleton
+    rw [h]
+    exact Nat.zero_le _
+  obtain ⟨_, r, label, S, valid, cover, _, _, profiles⟩ :=
+    bound (J := J) (A := A) affineIdentity (fun _ => p) (fun _ => q)
+      affine_unit affine_comm affine_invol affine_centreless (fun _ => hp) (fun _ => hq)
+      (fun _ => hpq) H dimension
+  obtain ⟨i, v, m, _, _, leave, noStarts⟩ := profiles PUnit.unit
+  have size := Nat.card_congr label
+  have rEq : r = 8 := by
+    change Nat.card (Option (Fin (r + 1))) = Nat.card (ULift.{u} (Option (Fin 9)) × A) at size
+    dsimp only [A] at size
+    simp only [Nat.card_eq_fintype_card, Fintype.card_option, Fintype.card_fin,
+      Fintype.card_prod, Fintype.card_ulift, Fintype.card_punit, mul_one] at size
+    omega
+  have hr : 4 ∣ r := rEq.symm ▸ (by decide : 4 ∣ 8)
+  obtain ⟨_, canonical, canonicalLeave, starts⟩ := point_deleted_successful_starts S valid cover i
+  have same : canonical = m := funext fun a =>
+    ((leave a (canonical a)).mp ((canonicalLeave a (canonical a)).mpr rfl)).symm
+  subst canonical
+  have six := (starts v).2.2 hr
+  simp only [rejected, realize, zero_mul] at noStarts
+  omega
+
+def labelledCountSource :
+    Registration labelledCountArena.{j,u,v} (type_of% (@labelledCommonSwitchCounts.{j,u,v})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@labelledCommonSwitchCounts, rejected, labelledCount_rejected⟩
+  sensitivity := sensitivity labelledCountLaw actual rejected labelledCount_rejected
+  dependence := cardinality_dependence
+
+def labelledCountRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@labelledCommonSwitchCounts.{j,u,v}) (Realization sig.{v}) Unit Unit where
+  unitName :=
+    `D5.S3.Combinatorics.Matroids.SteinerSwitchSupport.labelledCommonSwitchCounts.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchSupport.labelledCountSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨labelledCountArena⟩
+  objectArena := .source ⟨labelledCountArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source labelledCountArena ⟨labelledCountSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body",
+        "arg", "body", "arg", "body", "body", "arg", "arg", "body", "arg", "body", "arg",
+        "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
