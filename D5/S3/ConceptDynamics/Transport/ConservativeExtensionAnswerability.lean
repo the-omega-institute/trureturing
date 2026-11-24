@@ -7,15 +7,11 @@
 
 module
 prelude
-public import OmegaInit.Core
+public import OmegaInit.Data.Function
 
 namespace D5.S3.ConceptDynamics.Transport.ConservativeExtensionAnswerability
 
 open Omega
-
-/-- Each old state has a preimage under the projection. -/
-public def StrictSurjective {X : Sort u} {Y : Sort v} (p : Y → X) : Prop :=
-  ∀ x, Exists (fun y => Eq (p y) x)
 
 /-- The target factors pointwise through the concept. -/
 public def StrictRefines {X : Sort u} {Cval : Sort v} {Tval : Sort w}
@@ -35,7 +31,7 @@ public noncomputable def constantOldConcept : Bool → SingleState := fun _ => .
 /-- Surjective pullback preserves and reflects factorization of the target. -/
 public theorem answerability_transports_along_surjection
     {X : Sort u₁} {Y : Sort u₂} {Cval : Sort v₁} {Tval : Sort v₂}
-    (p : Y → X) (surjective : StrictSurjective p) (C : X → Cval) (T : X → Tval) :
+    (p : Y → X) (surjective : Omega.Function.Surjective p) (C : X → Cval) (T : X → Tval) :
     Iff (StrictRefines T C) (StrictRefines (fun y => T (p y)) (fun y => C (p y))) :=
   Iff.intro
     (fun h => h.elim (fun factor agrees => Exists.intro factor (fun y => agrees (p y))))
@@ -46,7 +42,7 @@ public theorem answerability_transports_along_surjection
 /-- The one-state pullback hides the conflict between two states with the same
 concept value and distinct Boolean targets. -/
 public theorem nonsurjective_pullback_can_hide_unanswerability :
-    And (Not (StrictSurjective nonSurjectiveProjection))
+    And (Not (Omega.Function.Surjective nonSurjectiveProjection))
       (And (StrictRefines nonSurjectiveProjection
           (fun state => constantOldConcept (nonSurjectiveProjection state)))
         (Not (StrictRefines (fun x : Bool => x) constantOldConcept))) :=
