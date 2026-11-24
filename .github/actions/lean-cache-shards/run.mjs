@@ -641,8 +641,7 @@ async function main() {
       return;
     }
     if (operation === 'latest-seed') {
-      await setOutputs({ key: seed.key, producer: seed.commit, run: seed.run, attempt: seed.attempt,
-        prefix: seed.prefix, index_sha256: seed.index_sha256 });
+      await setOutputs({ key: seed.key, producer: seed.commit });
       return;
     }
     const selected = join(directory, 'selected.json');

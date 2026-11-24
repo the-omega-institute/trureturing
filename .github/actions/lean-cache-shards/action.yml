@@ -35,14 +35,6 @@ outputs:
     description: Immutable Actions snapshot index key
   producer:
     description: Protected dev commit that produced the selected complete seed
-  run:
-    description: Workflow run that produced the seed
-  attempt:
-    description: Attempt that produced the seed
-  prefix:
-    description: Cache key prefix for material referenced by the seed
-  index_sha256:
-    description: SHA-256 of the stored seed index bytes
   visible:
     description: Distinct material keys physically listed on the index owner ref during lookup
   available:
