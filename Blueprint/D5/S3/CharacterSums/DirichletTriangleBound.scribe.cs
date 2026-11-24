@@ -30,10 +30,10 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-prime-bound"),
                 DeclarationHandle.Create(Prefix + "characterTriangle_prime_bound"),
-                H("The prime-modulus endpoint"),
+                H("The primitive-character endpoint"),
                 StatementSource.FromAuthor(Disp(PrimeStatement())),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For every prime p at least 10000 and every nonprincipal character, " +
+                    "For every modulus p at least 10000 and every primitive character, " +
                     "nonvanishing in the closed height window of radius four square roots " +
                     "of p implies the displayed estimate. Its rational coefficient is " +
                     "strictly below three halves, with gap 3209/222750. " +
@@ -41,9 +41,7 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
                     "the ordinary reciprocal-square tail and the parity correction. " +
                     "Strictness comes from this positive rational gap, rather than a " +
                     "strict inequality passed from finite sums to an infinite tail. " +
-                    "These are uniform analytic inequalities over an unbounded domain; " +
-                    "the rational calculations are internal estimates rather than an " +
-                    "independently delivered finite certificate."))), DescribeRole.Theorem))));
+                    "These are uniform analytic inequalities over an unbounded domain."))), DescribeRole.Theorem))));
 
     private static Formula GeneralStatement()
     {
@@ -62,9 +60,9 @@ internal sealed class DirichletTriangleBoundDocument : IScribeDocumentDefinition
     {
         var p = V("p"); var chi = V("chi");
         return All("p", N(), All("chi", Call("characters", p),
-            Imp(Call("primeadmissible", p, chi), Le(Call("norm", Call("S", chi, p)),
-                Mul(Mul(Div(D(1,6,5,4,5,8), D(1,1,1,3,7,5)),
-                    Call("sqrt", p)), Call("log", p))))));
+            Imp(Call("primitiveadmissible", p, chi), Le(Call("norm", Call("S", chi, p)),
+                Sub(Mul(Mul(Div(D(1,6,5,4,5,8), D(1,1,1,3,7,5)),
+                    Call("sqrt", p)), Call("log", p)), Div(D(1), p))))));
     }
 
     private static Formula V(string n) => F.Id(n);

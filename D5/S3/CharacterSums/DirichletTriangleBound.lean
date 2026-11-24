@@ -436,50 +436,47 @@ theorem characterTriangle_finite_height {q : ℕ} [NeZero q]
     _ ≤ _ := by linarith
 
 /-- The explicit rational budget is strictly smaller than the three-halves coefficient. -/
-theorem characterTriangle_prime_bound (p : ℕ) [Fact p.Prime]
-    (χ : DirichletCharacter ℂ p) (hne : χ ≠ 1) (hp : 10000 ≤ p)
-    (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
-    ‖characterTriangle χ p‖ ≤
-      (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p := by
-  have hpR : (10000 : ℝ) ≤ p := by exact_mod_cast hp
-  have hp0 : (0 : ℝ) < p := by linarith
-  have hp3 : (3 : ℝ) ≤ p := by linarith
-  have hprim : χ.IsPrimitive := by
-    rcases (Fact.out : p.Prime).eq_one_or_self_of_dvd χ.conductor
-      χ.conductor_dvd_level with hc | hc
-    · exact (hne (DirichletCharacter.eq_one_iff_conductor_eq_one.mpr hc)).elim
-    · exact hc
-  have hT : 32 < 4 * Real.sqrt (p : ℝ) := by linarith [root_lower hpR]
-  have hb := characterTriangle_finite_height hprim hne (by linarith : (1 : ℝ) ≤ p) hT hfree
+theorem characterTriangle_prime_bound (q : ℕ) [NeZero q]
+    (χ : DirichletCharacter ℂ q) (hprim : χ.IsPrimitive) (hq : 10000 ≤ q)
+    (hfree : ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt q → χ.LFunction s ≠ 0) :
+    ‖characterTriangle χ q‖ ≤
+      (165458 / 111375 : ℝ) * Real.sqrt q * Real.log q - 1 / (q : ℝ) := by
+  have hqR : (10000 : ℝ) ≤ q := by exact_mod_cast hq
+  have hq0 : (0 : ℝ) < q := by linarith
+  have hq3 : (3 : ℝ) ≤ q := by linarith
+  have hne : χ ≠ 1 := by
+    intro he
+    have hc : q = 1 := by simpa [he, DirichletCharacter.conductor_one] using hprim.symm
+    omega
+  have hT : 32 < 4 * Real.sqrt (q : ℝ) := by linarith [root_lower hqR]
+  have hb := characterTriangle_finite_height hprim hne (by linarith : (1 : ℝ) ≤ q) hT hfree
   have hP : (logDeriv (completion χ) 2).re ≤
-      (Real.log (3 * (p : ℝ)) + 1) / 2 := by
+      (Real.log (3 * (q : ℝ)) + 1) / 2 := by
     simpa [mul_comm] using completion_standard_envelope χ 0
   have hL : ‖logDeriv χ.LFunction 2‖ ≤ 1 := by
     have hh := (norm_logDeriv_LFunction_two χ 0).trans
       (DirichletCompletionGamma.logarithmic_series_bound.2.1.trans
         DirichletCompletionGamma.logarithmic_series_bound.2.2.le)
     simpa using hh
-  have hinv : 0 ≤ 1 - 1 / (p : ℝ) := by
+  have hinv : 0 ≤ 1 - 1 / (q : ℝ) := by
     apply sub_nonneg.mpr
-    exact (div_le_one hp0).mpr (by linarith)
-  have hcoef : 1 - 1 / (p : ℝ) ≤ 1 := by
-    have hh : 0 ≤ 1 / (p : ℝ) := by positivity
+    exact (div_le_one hq0).mpr (by linarith)
+  have hcoef : 1 - 1 / (q : ℝ) ≤ 1 := by
+    have hh : 0 ≤ 1 / (q : ℝ) := by positivity
     linarith
-  have hpar := parityCorrection_norm χ hp3
-  have hendpoint : (1 - 1 / (p : ℝ)) * ‖logDeriv χ.LFunction 2‖ +
-      ‖parityCorrection χ p‖ ≤ Real.log p + 1 := by
+  have hpar := parityCorrection_norm χ hq3
+  have hendpoint : (1 - 1 / (q : ℝ)) * ‖logDeriv χ.LFunction 2‖ +
+      ‖parityCorrection χ q‖ ≤ Real.log q + 1 - 1 / (q : ℝ) := by
     have hh := mul_le_mul_of_nonneg_left hL hinv
     nlinarith
   have hfirst := mul_le_mul_of_nonneg_left hP
-    (show 0 ≤ 2 * Real.sqrt (p : ℝ) + 4 + 2 / (p : ℝ) by positivity)
+    (show 0 ≤ 2 * Real.sqrt (q : ℝ) + 4 + 2 / (q : ℝ) by positivity)
   calc
-    _ ≤ (2 * Real.sqrt (p : ℝ) + 4 + 2 / (p : ℝ)) *
-        ((Real.log (3 * (p : ℝ)) + 1) / 2) +
-        ((p : ℝ) + 2 + 3 / (p : ℝ)) * tailBound p (4 * Real.sqrt p) +
-          Real.log p + 1 := by linarith
-    _ ≤ _ := numerical_budget hpR
+    _ ≤ (2 * Real.sqrt (q : ℝ) + 4 + 2 / (q : ℝ)) *
+        ((Real.log (3 * (q : ℝ)) + 1) / 2) +
+        ((q : ℝ) + 2 + 3 / (q : ℝ)) * tailBound q (4 * Real.sqrt q) +
+          Real.log q + 1 - 1 / (q : ℝ) := by linarith
+    _ ≤ _ := sub_le_sub_right (numerical_budget hqR) _
 
-#print axioms characterTriangle_finite_height
-#print axioms characterTriangle_prime_bound
 
 end D5.S3.CharacterSums.DirichletTriangleBound
