@@ -30,7 +30,9 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
                     + "correction factor has positive degree on both axes. A subset larger than "
                     + "either target degree contributes zero to the selected coefficient. The "
                     + "empty subset gives two pure exponentials, whose selected coefficient "
-                    + "norms are exact.")),
+                    + "norms are exact. Bounding that same coefficient by the complete "
+                    + "exponential coefficient budgets would give exp(r(|A|+|B|))/r^(m+n), "
+                    + "where A and B are the two phase sums.")),
                 Paragraph(Text(
                     "For one variable, the sum of coefficient norms is submultiplicative on "
                     + "absolutely summable series, by the Cauchy product and the triangle inequality. "
