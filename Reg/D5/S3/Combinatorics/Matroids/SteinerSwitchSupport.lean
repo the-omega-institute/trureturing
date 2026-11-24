@@ -1,6 +1,7 @@
 import Reg.D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
 import D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
 import Mathlib.Algebra.Module.PUnit
+import Mathlib.Algebra.Module.ULift
 
 /-! # Source registration for simultaneous Steiner switch counts -/
 
@@ -10,7 +11,7 @@ open Function LeanInformationAudit Module Submodule
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Matroids
 open _root_.D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
-open SteinerSchreierExtension (extensionMul)
+open SteinerSchreierExtension (extensionMul extensionSteinerAndCentre)
 open SteinerReturnDependencies (returnRow)
 open SteinerSwitchCentre (steinerMul product_comm)
 open SteinerMatchingTranslations (translate translate_involutive)
@@ -22,7 +23,7 @@ open _root_.Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchCentre
   (affinePlane_valid affinePlane_complete)
 open _root_.Reg.D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
   (sig actual rejected affine_not_central)
-open _root_.Reg.Support.UniverseSingleReadout (sensitivity)
+open _root_.Reg.Support.UniverseSingleReadout (sensitivity signature)
 
 universe j u v
 
@@ -297,6 +298,141 @@ def labelledCountRegistration :
         "arg", "body", "arg", "body", "body", "arg", "arg", "body", "arg", "body", "arg",
         "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg"]
       stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev supportSig := signature (Sigma fun _ : Type j => Type v)
+    (fun P => P.1 → P.2) (fun P => P.1 → P.2)
+
+def supportActual : Realization supportSig.{j,v} :=
+  realize supportSig (fun _ _ target => target) (fun anchor => nomatch anchor)
+
+def supportRejected : Realization supportSig.{j,v} := by
+  classical
+  exact realize supportSig (fun _ _ target i =>
+    if h : ∃ a, a ≠ target i then Classical.choose h else target i) (fun anchor => nomatch anchor)
+
+def supportLaw (R : Realization supportSig.{j,v}) : Prop :=
+  ∀ {I : Type j} {L : Type u} {A : Type v} [Finite L] [Mul L]
+    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    (e : L) (p q rep : I → L) (G : I → SimpleGraph L)
+    (_unit : ∀ x : L, e * x = x) (_comm : ∀ x y : L, x * y = y * x)
+    (_invol : ∀ x y : L, x * (x * y) = y) (_centreless : Set.center L = {e})
+    (_edges : ∀ i u v, (G i).Adj u v ↔ p i * u = v ∨ q i * u = v)
+    (vanishes : I → Prop),
+    (∃ labels : Set L → A, ∃ target : I → A,
+      (∀ i, R.readout () ⟨I, A⟩ target i = 0 ↔ vanishes i) ∧
+      letI := extensionMul e labels
+      ∀ i x, (G i).Reachable (rep i) x → ∀ a : A,
+        (fun y : L × A => (p i, 0) * ((q i, 0) * y))^[
+          minimalPeriod (fun y => p i * (q i * y)) x] (x, a) = (x, a + target i)) ↔
+      HasAvoidingSubspace (K := ZMod 2) (fun i => returnRow e (p i) (q i) (rep i))
+        vanishes (finrank (ZMod 2) A)
+
+abbrev supportArena : Arena := ⟨supportSig, supportLaw.{j,u,v}⟩
+
+private theorem support_rejected : ¬ supportLaw.{j,u,v} supportRejected := by
+  classical
+  intro rule
+  let I := PUnit.{j+1}
+  let L := AffineLoop.{u}
+  let A := ULift.{v} (ZMod 2)
+  let e : L := affineIdentity
+  let p : L := ULift.up (some 0)
+  let G : SimpleGraph L := SimpleGraph.fromRel (fun x y => p * x = y)
+  have hp : p ≠ e := fun h => Option.some_ne_none _ (congrArg ULift.down h)
+  have edges (i : I) (x y : L) : G.Adj x y ↔ p * x = y ∨ p * x = y := by
+    rw [SimpleGraph.fromRel_adj]
+    constructor
+    · rintro ⟨_, h | h⟩
+      · exact Or.inl h
+      · exact Or.inl ((congrArg (p * ·) h).symm.trans (affine_invol p y))
+    · intro h
+      have hxy := h.elim id id
+      refine ⟨?_, Or.inl hxy⟩
+      intro equal
+      have px : p * x = e * x := (hxy.trans equal.symm).trans (affine_unit x).symm
+      have xp : x * p = x * e := by simpa only [affine_comm x p, affine_comm x e] using px
+      exact hp ((show Involutive (x * ·) from affine_invol x).injective xp)
+  have avoiding : HasAvoidingSubspace (K := ZMod 2)
+      (fun _ : I => returnRow e p p e) (fun _ => True) (finrank (ZMod 2) A) := by
+    unfold HasAvoidingSubspace
+    dsimp only
+    refine ⟨⊤, ?_, fun _ no => (no trivial).elim⟩
+    rw [Module.finrank_zero_of_subsingleton]
+    exact Nat.zero_le _
+  obtain ⟨labels, target, support, returns⟩ :=
+    (rule (A := A) e (fun _ => p) (fun _ => p) (fun _ => e) (fun _ => G) affine_unit
+      affine_comm affine_invol affine_centreless edges (fun _ => True)).mpr avoiding
+  letI := extensionMul e labels
+  have twice (a : A) : a + a = 0 := by
+    apply ULift.ext
+    exact (show ∀ b : ZMod 2, b + b = 0 by decide) a.down
+  obtain ⟨_, _, invol, _⟩ :=
+    extensionSteinerAndCentre e labels affine_unit affine_comm affine_invol twice affine_centreless
+  have period : minimalPeriod (fun y : L => p * (p * y)) e = 1 :=
+    minimalPeriod_eq_one_iff_isFixedPt.mpr (affine_invol p e)
+  have zero := returns PUnit.unit e SimpleGraph.Reachable.rfl 0
+  rw [period, Function.iterate_one, invol] at zero
+  have targetZero : target PUnit.unit = 0 := by
+    simpa only [zero_add] using (congrArg Prod.snd zero).symm
+  have others : ∃ a : A, a ≠ target PUnit.unit := by
+    rw [targetZero]
+    exact ⟨ULift.up 1, by decide⟩
+  have observed := (support PUnit.unit).mpr trivial
+  simp only [supportRejected, realize, dif_pos others] at observed
+  exact Classical.choose_spec others (observed.trans targetZero.symm)
+
+private theorem support_dependence : ObservationalDependence supportSig.{j,v} supportActual := by
+  intro role
+  refine ⟨⟨PUnit.{j+1}, ULift.{v} Bool⟩, (fun _ => ULift.up false),
+    (fun _ => ULift.up true), ?_⟩
+  intro equal
+  exact Bool.noConfusion (congrArg ULift.down (congrFun equal PUnit.unit))
+
+def supportSource :
+    Registration supportArena.{j,u,v} (type_of% (@realizesReturnSupport.{j,u,v})) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@realizesReturnSupport, supportRejected, support_rejected⟩
+  sensitivity := sensitivity supportLaw supportActual supportRejected support_rejected
+  dependence := support_dependence
+
+def supportRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@realizesReturnSupport.{j,u,v}) (Realization supportSig.{j,v})
+      (Sigma fun _ : Type j => Type v) Unit where
+  unitName :=
+    `D5.S3.Combinatorics.Matroids.SteinerSwitchSupport.realizesReturnSupport.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchSupport.supportSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨supportArena⟩
+  objectArena := .source ⟨supportArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source supportArena ⟨supportSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize supportSig supportActual.readout supportActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "arg", "body", "fn", "arg", "body", "fn", "arg",
+        "fn", "arg", "fn"]
+      stateBinder := 20
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
