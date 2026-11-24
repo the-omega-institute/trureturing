@@ -120,11 +120,11 @@ $$\operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Stri
 
 The cut contains five equal-row pairs and four pairs in each diagonal direction.
 
-**Theorem 1.9 (small_budget_ne_cut_total).**
+**Theorem 1.9 (cut_total_exclusion).**
 
-$$\forall (D: \operatorname{Nat}), (\forall (m: \operatorname{Nat}), ((0 < D) \Rightarrow ((D < \operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}\right)) \Rightarrow (D \ne (m) \cdot (\operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}\right))))))$$
+$$\forall (D: \operatorname{Nat}), ((\forall (m: \operatorname{Nat}), (D \ne (m) \cdot (\operatorname{Finset}.\operatorname{card}\left(\operatorname{HardinA229538Strip}.\operatorname{edges}\right)))) \Leftrightarrow (\neg (13 \mid D)))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.small_budget_ne_cut_total` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -132,7 +132,7 @@ $$\forall (D: \operatorname{Nat}), (\forall (m: \operatorname{Nat}), ((0 < D) \R
 
 *Commentary.*
 
-Constant arrays in this strip have budgets that are multiples of the thirteen-bond cut. The strict interval excludes zero and the budget realized by one cut.
+A budget differs from the total for every number of cuts exactly when thirteen does not divide it. The cut cardinality is thirteen.
 
 **Definition 1.10 (cost).**
 
@@ -304,7 +304,7 @@ Filtering the ordered column codes by cut cost one gives the stored successor li
 
 **Theorem 1.22 (step_one).**
 
-$$\forall (R: \operatorname{Type}*), ([\operatorname{NonAssocSemiring}\left(R\right)] \forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to R), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{HardinA229538Strip}.\operatorname{oneDefect}, w\right)\left(p\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left(w, \operatorname{HardinA229538Strip}.\operatorname{movesOne}\left(p\right)\right)\right))))$$
+$$\forall (R: \operatorname{Type}*), ([\operatorname{NonUnitalNonAssocSemiring}\left(R\right)] [\operatorname{One}\left(R\right)] (\forall (x: R), (((1: R)) \cdot (x) = x)) \Rightarrow (\forall (w: \operatorname{HardinA233178Chromatic}.\operatorname{Column} \to R), (\forall (p: \operatorname{HardinA233178Chromatic}.\operatorname{Column}), (\operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{HardinA229538Strip}.\operatorname{oneDefect}, w\right)\left(p\right) = \operatorname{List}.\operatorname{sum}\left(\operatorname{List}.\operatorname{map}\left(w, \operatorname{HardinA229538Strip}.\operatorname{movesOne}\left(p\right)\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.step_one` (`✓ std3`). ∎
 
@@ -314,7 +314,7 @@ $$\forall (R: \operatorname{Type}*), ([\operatorname{NonAssocSemiring}\left(R\ri
 
 *Commentary.*
 
-The action of the exact-one-cut matrix is a sum over its successors.
+The action of the exact-one-cut matrix is a sum over its successors. The entry one acts as a left unit on the vector values.
 
 **Definition 1.23 (weights).**
 
@@ -481,6 +481,7 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cost_countCut`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cost_zero`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.countCut`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.cut_total_exclusion`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.edges_card`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.labelled_scale`
@@ -490,7 +491,6 @@ The transfer counts labelled arrays by adjacent column cuts. The six-to-one coun
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.oneDefect`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.residual`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.result`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.small_budget_ne_cut_total`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.step_one`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.tableOne`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5a/HardinA229538Strip.table_powers`
