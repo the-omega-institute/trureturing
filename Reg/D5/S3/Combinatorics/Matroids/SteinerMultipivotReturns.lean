@@ -24,10 +24,12 @@ abbrev sig := signature (Type u) (fun A => A) (fun A => A)
 def actual : Realization sig.{u} :=
   realize sig (fun _ _ w => w) (fun anchor => nomatch anchor)
 
-def rejected : Realization sig.{u} := by
+private def other {A : Type u} (w : A) : A := by
   classical
-  exact realize sig (fun _ A w => if h : ∃ a : A, a ≠ w then Classical.choose h else w)
-    (fun anchor => nomatch anchor)
+  exact if h : ∃ a : A, a ≠ w then Classical.choose h else w
+
+def rejected : Realization sig.{u} :=
+  realize sig (fun _ _ w => other w) (fun anchor => nomatch anchor)
 
 def law (R : Realization sig.{u}) : Prop :=
   ∀ {A : Type u} {L : Type v} [AddCommGroup A] [Mul L]
@@ -50,15 +52,16 @@ private theorem rejected_law : ¬ law.{u,v} rejected := by
   let A := ULift.{u} (ZMod 2)
   let L := ULift.{v} B
   let cube : BitVec 3 ↪ L :=
-    ⟨fun x => ULift.up (b x), fun h => b.injective (congrArg ULift.down h)⟩
+    ⟨fun x => ULift.up (b x), fun {_ _} h => b.injective (congrArg ULift.down h)⟩
   have mul (x y : BitVec 3) : cube (x ^^^ y) = cube x * cube y := ULift.ext (hmul x y)
   have twice (a : A) : a + a = 0 :=
     ULift.ext ((show ∀ j : ZMod 2, j + j = 0 by decide) a.down)
   have altered : rejected.readout () A (0 : A) ≠ 0 := by
     classical
     have hn : ∃ a : A, a ≠ 0 := ⟨ULift.up 1, by decide⟩
-    change (if h : ∃ a : A, a ≠ 0 then Classical.choose h else 0) ≠ 0
-    rw [dif_pos hn]
+    change other (0 : A) ≠ (0 : A)
+    unfold other
+    rw [dite_eq_left hn]
     exact Classical.choose_spec hn
   have zeroReturn := (simultaneousReturns cube mul twice (0 : A) 0 0).mpr (by simp)
   have incompatible := (rule cube mul twice (0 : A) 0 0).mp zeroReturn
@@ -76,6 +79,41 @@ def source : Registration arena.{u,v} (type_of% (@simultaneousReturns.{u,v})) wh
   variation := ⟨@simultaneousReturns, rejected, rejected_law⟩
   sensitivity := sensitivity law actual rejected rejected_law
   dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@simultaneousReturns.{u,v}) (Realization sig.{u}) Type Unit where
+  unitName :=
+    `D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns.simultaneousReturns.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns.ReturnRange.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg", "fn", "arg", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end ReturnRange
 
@@ -120,6 +158,41 @@ def source : Registration arena (type_of% existsCentrelessObstruction) where
   variation := ⟨existsCentrelessObstruction, rejected, rejected_law⟩
   sensitivity := sensitivity law actual rejected rejected_law
   dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (existsCentrelessObstruction) (Realization sig) Unit Unit where
+  unitName :=
+    `D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns.existsCentrelessObstruction.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns.CentrelessModel.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "body", "arg", "body", "arg", "body", "fn", "arg", "fn",
+        "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end CentrelessModel
 
