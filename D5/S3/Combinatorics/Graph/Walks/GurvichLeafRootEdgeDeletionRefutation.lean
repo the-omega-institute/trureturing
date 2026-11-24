@@ -125,4 +125,326 @@ private theorem simplicial_first (p : Path6 G)
     (h : ∀ x, G.Adj (p 0) x → x ∈ Set.range p) : Avoidable p 0 3 :=
   fun x _ e => (e.1 (h x e.2.2.2.1)).elim
 
+private def Away (p : Path6 G) (U : Set V) : Prop := ∀ i, p i ∉ U
+
+private def Boundary (G : SimpleGraph V) (U : Set V) (x : V) : Prop :=
+  ∃ a ∈ U, G.Adj x a
+
+private theorem connected_insert {U : Set V} {x a : V} (ha : a ∈ U) (e : G.Adj x a)
+    (hU : (G.induce U).Connected) : (G.induce (insert x U)).Connected := by
+  let j := (G.induceHomOfLE (Set.subset_insert x U)).toHom
+  let anchor : (insert x U : Set V) := j ⟨a, ha⟩
+  have toAnchor (v : (insert x U : Set V)) :
+      (G.induce (insert x U)).Reachable v anchor := by
+    rcases Set.mem_insert_iff.mp v.property with hv | hv
+    · exact Adj.reachable (show G.Adj v.val a from hv.symm ▸ e)
+    · exact (hU.preconnected ⟨v.val, hv⟩ ⟨a, ha⟩).map j
+  exact { preconnected := fun v w => (toAnchor v).trans (toAnchor w).symm
+          nonempty := ⟨anchor⟩ }
+
+private theorem crossing_edge (hG : G.Preconnected) {U : Set V} {a b : V}
+    (ha : a ∈ U) (hb : b ∉ U) : ∃ x ∈ U, ∃ y ∉ U, G.Adj x y := by
+  classical
+  by_contra! h
+  obtain ⟨w⟩ := hG a b
+  have stays {u v : V} (p : G.Walk u v) (hu : u ∈ U) : v ∈ U := by
+    induction p with
+    | nil => exact hu
+    | @cons u v w e next ih =>
+        apply ih
+        by_contra hv
+        exact h u hu v hv e
+  exact hb (stays w ha)
+
+private theorem shift_away (p : Path6 G) {U : Set V} (hp : Away p U)
+    {x : V} (hx : x ∉ Set.range p) (hxU : x ∉ U) (e : G.Adj (p 5) x) :
+    Away (shift p x hx e) U := by
+  intro i
+  fin_cases i
+  · exact hp 1
+  · exact hp 2
+  · exact hp 3
+  · exact hp 4
+  · exact hp 5
+  · exact hxU
+
+private theorem shift_at (p : Path6 G) {x : V} (hx : x ∉ Set.range p)
+    (e : G.Adj (p 5) x) (i : Fin 5) : shift p x hx e i.castSucc = p i.succ := by
+  fin_cases i <;> rfl
+
+private theorem outer_endpoints {U : Set V}
+    (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
+    (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
+    (p : Path6 G) (hp : Away p U) (hfirst : Boundary G U (p 0)) :
+    Boundary G U (p 5) ∧ ∀ x ∉ Set.range p, G.Adj (p 5) x → x ∈ U := by
+  classical
+  have force (x : V) (hx : x ∉ Set.range p) (edge : G.Adj (p 5) x) : x ∈ U := by
+    by_contra hxU
+    exact shift_misses_first p x hx edge
+      (hits _ (shift_away p hp hx hxU edge) (p 0) (hp 0) hfirst)
+  obtain ⟨x, hx, e⟩ := external (reversePath p)
+  rw [reverse_range] at hx
+  exact ⟨⟨x, force x hx e, e⟩, force⟩
+
+private theorem exists_outer {U : Set V}
+    (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
+    (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
+    (p : Path6 G) (hp : Away p U) {b : V} (hb : b ∉ U) (hbB : Boundary G U b) :
+    ∃ q : Path6 G, Away q U ∧ Boundary G U (q 0) ∧ Boundary G U (q 5) := by
+  classical
+  let occurs (k : ℕ) := ∃ q : Path6 G, Away q U ∧ ∃ i : Fin 6, i.val = k ∧ q i = b
+  obtain ⟨i, hi⟩ := hits p hp b hb hbB
+  have ex : ∃ k, occurs k := ⟨i.val, p, hp, i, rfl, hi⟩
+  obtain ⟨q, hq, j, hj, hqj⟩ := Nat.find_spec ex
+  by_cases hj0 : j = 0
+  · subst j
+    have hfirst : Boundary G U (q 0) := hqj ▸ hbB
+    exact ⟨q, hq, hfirst, (outer_endpoints external hits q hq hfirst).1⟩
+  by_cases hlast : Boundary G U (q 5)
+  · let qr := reversePath q
+    have hqr : Away qr U := fun i => hq i.rev
+    exact ⟨qr, hqr, hlast, (outer_endpoints external hits qr hqr hlast).1⟩
+  obtain ⟨x, hx, edge⟩ := external (reversePath q)
+  rw [reverse_range] at hx
+  have hxU : x ∉ U := fun h => hlast ⟨x, h, edge⟩
+  let k : Fin 5 := j.pred hj0
+  have heq : k.succ = j := Fin.succ_pred _ _
+  have hq' : occurs k.val :=
+    ⟨shift q x hx edge, shift_away q hq hx hxU edge, k.castSucc, rfl,
+      (shift_at q hx edge k).trans (heq ▸ hqj)⟩
+  have hmin := Nat.find_min' ex hq'
+  have hval : k.val + 1 = j.val := congrArg Fin.val heq
+  omega
+
+private theorem relist_away {k : ℕ} (p : Path6 G) {U : Set V} (hp : Away p U)
+    (new : Fin k → V) (hnew : Function.Injective new) (hout : ∀ j, new j ∉ Set.range p)
+    (order : Fin 6 ↪ Fin (6 + k))
+    (steps : ∀ i : Fin 5, G.Adj (Fin.append p new (order i.castSucc))
+      (Fin.append p new (order i.succ)))
+    (hnU : ∀ j, new j ∉ U) : Away (relist p new hnew hout order steps) U := by
+  intro i
+  change (Fin.append p new (order i)) ∉ U
+  generalize order i = j
+  refine Fin.addCases (fun l => ?_) (fun r => ?_) j
+  · simpa only [Fin.append_left] using hp l
+  · simpa only [Fin.append_right] using hnU r
+
+private theorem relist_misses {k : ℕ} (p : Path6 G)
+    (new : Fin k → V) (hnew : Function.Injective new) (hout : ∀ j, new j ∉ Set.range p)
+    (order : Fin 6 ↪ Fin (6 + k))
+    (steps : ∀ i : Fin 5, G.Adj (Fin.append p new (order i.castSucc))
+      (Fin.append p new (order i.succ)))
+    (i : Fin 6) (hi : ∀ j, order j ≠ i.castAdd k) :
+    p i ∉ Set.range (relist p new hnew hout order steps) := by
+  rintro ⟨j, hj⟩
+  apply hi j
+  apply Fin.append_injective_iff.mpr
+    ⟨p.injective, hnew, fun a b h => hout b ⟨a, h⟩⟩
+  change Fin.append p new (order j) = p i at hj
+  rwa [Fin.append_left]
+
+private theorem front_no_attachment {U : Set V}
+    (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
+    (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
+    (p : Path6 G) (hp : Away p U) (hfirst : Boundary G U (p 0))
+    (hlast : Boundary G U (p 5)) {r : V} (hr : r ∉ Set.range p) (hrU : r ∉ U) :
+    ¬ G.Adj (p 0) r ∧ ¬ G.Adj (p 1) r := by
+  constructor
+  · intro e
+    have hp' : Away (reversePath p) U := fun i => hp i.rev
+    have hr' : r ∉ Set.range (reversePath p) := by rwa [reverse_range]
+    exact hrU ((outer_endpoints external hits (reversePath p) hp' hlast).2 r hr' e)
+  · intro edge
+    let new : Fin 1 → V := ![r]
+    have hn : Function.Injective new := Function.injective_of_subsingleton new
+    have hout : ∀ j, new j ∉ Set.range p := by
+      intro j
+      fin_cases j
+      exact hr
+    let order : Fin 6 ↪ Fin 7 := ⟨![6, 1, 2, 3, 4, 5], by decide⟩
+    have steps (i : Fin 5) : G.Adj (Fin.append p new (order i.castSucc))
+        (Fin.append p new (order i.succ)) := by
+      fin_cases i
+      · exact edge.symm
+      · exact path_step p 1
+      · exact path_step p 2
+      · exact path_step p 3
+      · exact path_step p 4
+    have hnU (j : Fin 1) : new j ∉ U := by
+      fin_cases j
+      exact hrU
+    have hf : ∀ j, order j ≠ (0 : Fin 6).castAdd 1 := by decide
+    exact relist_misses p new hn hout order steps 0 hf
+      (hits _ (relist_away p hp new hn hout order steps hnU) (p 0) (hp 0) hfirst)
+
+private theorem middle_attachments {U : Set V}
+    (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
+    (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
+    (p : Path6 G) (hp : Away p U) (hfirst : Boundary G U (p 0))
+    (hlast : Boundary G U (p 5)) {r : V} (hr : r ∉ Set.range p) (hrU : r ∉ U)
+    (i : Fin 6) (e : G.Adj (p i) r) : i = 2 ∨ i = 3 := by
+  obtain ⟨h0, h1⟩ := front_no_attachment external hits p hp hfirst hlast hr hrU
+  have hp' : Away (reversePath p) U := fun i => hp i.rev
+  have hr' : r ∉ Set.range (reversePath p) := by rwa [reverse_range]
+  obtain ⟨h5, h4⟩ := front_no_attachment external hits (reversePath p) hp' hlast hfirst hr' hrU
+  fin_cases i
+  · exact (h0 e).elim
+  · exact (h1 e).elim
+  · exact Or.inl rfl
+  · exact Or.inr rfl
+  · exact (h4 e).elim
+  · exact (h5 e).elim
+
+private theorem pair_injective {x y : V} (hxy : x ≠ y) :
+    Function.Injective (![x, y] : Fin 2 → V) := by
+  intro i j h
+  fin_cases i <;> fin_cases j
+  · rfl
+  · exact (hxy h).elim
+  · exact (hxy h.symm).elim
+  · rfl
+
+private theorem simplicial_from_attachment {U : Set V}
+    (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
+    (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
+    (p : Path6 G) (hp : Away p U) (hfirst : Boundary G U (p 0))
+    (hlast : Boundary G U (p 5)) {r : V} (hr : r ∉ Set.range p) (hrU : r ∉ U)
+    (attach : G.Adj (p 2) r) : ∃ q : Path6 G, Avoidable q 0 3 := by
+  have neighbors (z : V) (ez : G.Adj r z) : z = p 2 ∨ z = p 3 := by
+    classical
+    by_cases hz : z ∈ Set.range p
+    · obtain ⟨i, rfl⟩ := hz
+      rcases middle_attachments external hits p hp hfirst hlast hr hrU i ez.symm with hi | hi
+      · exact Or.inl (congrArg p hi)
+      · exact Or.inr (congrArg p hi)
+    · exfalso
+      have hzU : z ∉ U := fun h => hr (hits p hp r hrU ⟨z, h, ez⟩)
+      let new : Fin 2 → V := ![r, z]
+      have hn := pair_injective ez.ne
+      have hout (j : Fin 2) : new j ∉ Set.range p := by
+        fin_cases j
+        · exact hr
+        · exact hz
+      have hnU (j : Fin 2) : new j ∉ U := by
+        fin_cases j
+        · exact hrU
+        · exact hzU
+      let order : Fin 6 ↪ Fin 8 := ⟨![7, 6, 2, 3, 4, 5], by decide⟩
+      have steps (i : Fin 5) : G.Adj (Fin.append p new (order i.castSucc))
+          (Fin.append p new (order i.succ)) := by
+        fin_cases i
+        · exact ez.symm
+        · exact attach.symm
+        · exact path_step p 2
+        · exact path_step p 3
+        · exact path_step p 4
+      have hf : ∀ j, order j ≠ (0 : Fin 6).castAdd 2 := by decide
+      exact relist_misses p new hn hout order steps 0 hf
+        (hits _ (relist_away p hp new hn hout order steps hnU) (p 0) (hp 0) hfirst)
+  obtain ⟨u, hu, eu⟩ := hlast
+  let new : Fin 2 → V := ![r, u]
+  have hn : Function.Injective new := pair_injective (fun h => hrU (h ▸ hu))
+  have hout (j : Fin 2) : new j ∉ Set.range p := by
+    fin_cases j
+    · exact hr
+    · rintro ⟨i, hi⟩
+      exact hp i (hi.symm ▸ hu)
+  let order : Fin 6 ↪ Fin 8 := ⟨![6, 2, 3, 4, 5, 7], by decide⟩
+  have steps (i : Fin 5) : G.Adj (Fin.append p new (order i.castSucc))
+      (Fin.append p new (order i.succ)) := by
+    fin_cases i
+    · exact attach.symm
+    · exact path_step p 2
+    · exact path_step p 3
+    · exact path_step p 4
+    · exact eu
+  let q := relist p new hn hout order steps
+  refine ⟨q, simplicial_first q fun z ez => ?_⟩
+  rcases neighbors z ez with h | h
+  · exact ⟨1, h.symm⟩
+  · exact ⟨2, h.symm⟩
+
+/-- Lemma 3.4's maximal-complement argument for the six-vertex path. -/
+private theorem path6_avoidable_connected [Finite V] (hG : G.Connected) (p : Path6 G) :
+    ∃ q : Path6 G, Avoidable q 0 3 := by
+  classical
+  by_contra none
+  have external (q : Path6 G) : ∃ x ∉ Set.range q, G.Adj (q 0) x := by
+    by_contra! absent
+    exact none ⟨q, simplicial_first q fun x edge => by
+      by_contra hx
+      exact absent x hx edge⟩
+  let good (U : Set V) : Prop := (G.induce U).Connected ∧ ∃ q : Path6 G, Away q U
+  obtain ⟨x, hx, _⟩ := external p
+  have hgood : good {x} := by
+    refine ⟨Connected.of_subsingleton, p, ?_⟩
+    intro i hi
+    exact hx ⟨i, Set.mem_singleton_iff.mp hi⟩
+  obtain ⟨U, hU, maximal⟩ :=
+    (Set.toFinite {U : Set V | good U}).exists_maximal ⟨{x}, hgood⟩
+  obtain ⟨q, hq⟩ := hU.2
+  have hits (p' : Path6 G) (hp' : Away p' U) (b : V)
+      (hb : b ∉ U) (hB : Boundary G U b) : b ∈ Set.range p' := by
+    by_contra hmiss
+    obtain ⟨u, hu, e⟩ := hB
+    have hnew : good (insert b U) := by
+      refine ⟨connected_insert hu e hU.1, p', fun i hi => ?_⟩
+      rcases Set.mem_insert_iff.mp hi with he | he
+      · exact hmiss ⟨i, he⟩
+      · exact hp' i he
+    exact hb (maximal hnew (Set.subset_insert b U) (Set.mem_insert b U))
+  obtain ⟨u⟩ := hU.1.nonempty
+  obtain ⟨v, hvU, b, hb, evb⟩ := crossing_edge hG.preconnected u.property (hq 0)
+  obtain ⟨a, ha, ha0, ha5⟩ := exists_outer external hits q hq hb ⟨v, hvU, evb.symm⟩
+  by_cases hcover : ∀ z ∉ U, z ∈ Set.range a
+  · refine none ⟨a, fun v w ext => ?_⟩
+    have hv : v ∈ U := by
+      by_contra hn
+      exact ext.1 (hcover v hn)
+    have hw : w ∈ U := by
+      by_contra hn
+      exact ext.2.1 (hcover w hn)
+    have hsub : U ⊆ (Set.range a)ᶜ := by
+      intro z hz
+      rintro ⟨i, rfl⟩
+      exact ha i hz
+    exact (hU.1.preconnected ⟨v, hv⟩ ⟨w, hw⟩).map (G.induceHomOfLE hsub).toHom
+  · push Not at hcover
+    obtain ⟨r, hrU, hr⟩ := hcover
+    have hrUnion : r ∉ U ∪ Set.range a := fun h => h.elim hrU hr
+    obtain ⟨v, hv, z, hz, evz⟩ :=
+      crossing_edge hG.preconnected (Set.mem_union_left (Set.range a) u.property) hrUnion
+    have hzU : z ∉ U := fun h => hz (Or.inl h)
+    have hzrange : z ∉ Set.range a := fun h => hz (Or.inr h)
+    rcases hv with hv | ⟨i, rfl⟩
+    · exact hzrange (hits a ha z hzU ⟨v, hv, evz.symm⟩)
+    · rcases middle_attachments external hits a ha ha0 ha5 hzrange hzU i evz with rfl | rfl
+      · exact none (simplicial_from_attachment external hits a ha ha0 ha5 hzrange hzU evz)
+      · have ha' : Away (reversePath a) U := fun j => ha j.rev
+        have hzrange' : z ∉ Set.range (reversePath a) := by rwa [reverse_range]
+        exact none (simplicial_from_attachment external hits (reversePath a) ha' ha5 ha0
+          hzrange' hzU evz)
+
+private theorem path6_inherent : Inherent (pathGraph 6) 0 3 := by
+  intro m G ⟨p⟩
+  let C := G.connectedComponentMk (p 0)
+  have hp (i : Fin 6) : p i ∈ C :=
+    ConnectedComponent.sound (((preconnected_pathGraph 6) i 0).map p.toHom)
+  let pC : Path6 C.toSimpleGraph :=
+    ⟨{ toFun := fun i => ⟨p i, hp i⟩, map_rel' := fun e => p.toHom.map_rel e },
+      fun _ _ h => p.injective (congrArg Subtype.val h)⟩
+  obtain ⟨q, hq⟩ := path6_avoidable_connected C.connected_toSimpleGraph pC
+  let f : Path6 G := (Copy.induce G C.supp).comp q
+  refine ⟨f, fun x y e => ?_⟩
+  let xC : C := ⟨x, C.mem_supp_of_adj_mem_supp (q 0).property e.2.2.2.1⟩
+  let yC : C := ⟨y, C.mem_supp_of_adj_mem_supp (q 3).property e.2.2.2.2⟩
+  have eC : Extension q 0 3 xC yC :=
+    ⟨fun ⟨i, hi⟩ => e.1 ⟨i, congrArg Subtype.val hi⟩,
+      fun ⟨i, hi⟩ => e.2.1 ⟨i, congrArg Subtype.val hi⟩,
+      fun h => e.2.2.1 (congrArg Subtype.val h), e.2.2.2.1, e.2.2.2.2⟩
+  let incl : C.toSimpleGraph.induce (Set.range q)ᶜ →g G.induce (Set.range f)ᶜ :=
+    { toFun := fun v => ⟨v.val.val, fun ⟨i, hi⟩ => v.property ⟨i, Subtype.ext hi⟩⟩
+      map_rel' := fun h => h }
+  exact (hq xC yC eC).map incl
+
 end GurvichLeafRootEdgeDeletionRefutation
