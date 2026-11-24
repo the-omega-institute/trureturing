@@ -587,6 +587,300 @@ def pythagorasRegistration :
   familyRecord := none
   options := #[] }
 
+namespace Optimized
+
+open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
+  (marginalRight partialTraceRight)
+
+private abbrev PairQubit := ULift.{v} (Fin 2)
+
+private theorem sumTwo {R : Type*} [AddCommMonoid R] (f : Qubit.{u} → R) :
+    ∑ i, f i = f ⟨0⟩ + f ⟨1⟩ := by
+  rw [← (Equiv.ulift.symm : Fin 2 ≃ Qubit.{u}).sum_comp]
+  exact Fin.sum_univ_two _
+
+private def amplitude (i : Fin 2) : ℂ := if i = 0 then 3/5 else 4/5
+private def mass (i : Fin 2) : ℝ := if i = 0 then 9/25 else 16/25
+
+private def schmidtVector (i : Qubit.{u} × PairQubit.{v}) : ℂ :=
+  if i.1.down = i.2.down then amplitude i.1.down else 0
+
+private def pinchedMass (i : Qubit.{u} × PairQubit.{v}) : ℝ :=
+  if i.1.down = i.2.down then mass i.1.down else 0
+
+private theorem schmidtNorm : star schmidtVector.{u,v} ⬝ᵥ schmidtVector.{u,v} = 1 := by
+  simp only [dotProduct, Pi.star_apply, Fintype.sum_prod_type, sumTwo]
+  norm_num [schmidtVector, amplitude, Complex.star_def]
+
+private theorem pinchedMass_nonneg (i : Qubit.{u} × PairQubit.{v}) : 0 ≤ pinchedMass i := by
+  unfold pinchedMass mass
+  split_ifs <;> norm_num
+
+private theorem pinchedMass_sum : ∑ i, pinchedMass.{u,v} i = 1 := by
+  simp only [Fintype.sum_prod_type, sumTwo]
+  norm_num [pinchedMass, mass]
+
+private def schmidtState : DensityState (Qubit.{u} × PairQubit.{v}) :=
+  pureState schmidtVector schmidtNorm
+
+private def pinchedState : DensityState (Qubit.{u} × PairQubit.{v}) :=
+  diagonalDensity pinchedMass pinchedMass_nonneg pinchedMass_sum
+
+private theorem schmidtMarginal :
+    CStarMatrix.ofMatrix.symm (marginalRight schmidtState.{u,v}).1 =
+      Matrix.diagonal (fun i : Qubit.{u} => (mass i.down : ℂ)) := by
+  ext ⟨i⟩ ⟨j⟩
+  change (∑ k : PairQubit.{v}, rankOneDensity schmidtVector.{u,v} (⟨i⟩, k) (⟨j⟩, k)) = _
+  fin_cases i <;> fin_cases j <;>
+    norm_num [sumTwo, rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply,
+      schmidtVector, amplitude, mass, Complex.star_def, map_ofNat, Matrix.diagonal_apply]
+
+private theorem massInjective :
+    Function.Injective (fun i : Qubit.{u} => (mass i.down : ℂ)) := by
+  intro ⟨i⟩ ⟨j⟩ h
+  fin_cases i <;> fin_cases j <;> first | rfl | norm_num [mass] at h
+
+/-- A rank-one local pinching in an eigenbasis of a simple diagonal marginal
+keeps exactly the matrix entries within each measured coordinate block. -/
+private theorem simpleMarginalPinch {a : Type u} {b : Type v}
+    [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    (ρ : DensityState (a × b)) (U : Matrix.unitaryGroup a ℂ)
+    (hU : Eligible ρ U) (d : a → ℂ) (hd : Function.Injective d)
+    (hm : CStarMatrix.ofMatrix.symm (marginalRight ρ).1 = Matrix.diagonal d) (i j : a × b) :
+    CStarMatrix.ofMatrix.symm (pinch (localPVM U) ρ).1 i j =
+      if i.1 = j.1 then CStarMatrix.ofMatrix.symm ρ.1 i j else 0 := by
+  let f := Unitary.conjStarAlgAut ℂ (Matrix a a ℂ) U
+  let E := coordinatePVM (Fintype.equivFin a)
+  let Q := fun k => f (E.proj k)
+  let p := localPVM (b := b) U
+  have hdiag : (f.symm (Matrix.diagonal d)).IsDiag := by
+    change (f.symm (CStarMatrix.ofMatrix.symm (marginalRight ρ).1)).IsDiag at hU
+    rwa [hm] at hU
+  have hQ (k) : (Q k).IsDiag := by
+    have hcomm : Commute (f.symm (Matrix.diagonal d)) (E.proj k) := by
+      rw [← hdiag.diagonal_diag]
+      exact Matrix.commute_diagonal _ _
+    have he := congrArg f hcomm.eq
+    simp only [map_mul, StarAlgEquiv.apply_symm_apply] at he
+    intro s t hst
+    have hentry := congrArg (fun M : Matrix a a ℂ => M s t) he
+    change (Matrix.diagonal d * Q k) s t = (Q k * Matrix.diagonal d) s t at hentry
+    rw [Matrix.diagonal_mul, Matrix.mul_diagonal, mul_comm (Q k s t)] at hentry
+    have hz : (d s - d t) * Q k s t = 0 := by rw [sub_mul, hentry, sub_self]
+    exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr (fun h => hst (hd h)))
+  have hQentry (k) (s t : a) :
+      Q k s t = U.val s ((Fintype.equivFin a).symm k) *
+        star (U.val t ((Fintype.equivFin a).symm k)) := by
+    change (U.val * (E.proj k) * U.valᴴ) s t = _
+    rw [Matrix.mul_apply, Finset.sum_eq_single ((Fintype.equivFin a).symm k)]
+    · simp [E, coordinatePVM, Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+    · intro l _ hl
+      have h : Fintype.equivFin a l ≠ k :=
+        fun he => hl ((Fintype.equivFin a).injective
+          (he.trans ((Fintype.equivFin a).apply_symm_apply k).symm))
+      simp [E, coordinatePVM, Matrix.mul_diagonal, h]
+    · simp
+  have hpDiag (k) : (p.proj k).IsDiag :=
+    (hQ k).kronecker Matrix.isDiag_one
+  have hpEntry (k) (z : a × b) : p.proj k z z = Q k z.1 z.1 := by
+    change (Q k ⊗ₖ (1 : Matrix b b ℂ)) z z = _
+    simp [Matrix.kroneckerMap_apply]
+  have hcompress (k) :
+      (p.proj k * CStarMatrix.ofMatrix.symm ρ.1 * p.proj k) i j =
+        p.proj k i i * CStarMatrix.ofMatrix.symm ρ.1 i j * p.proj k j j := by
+    conv_lhs => rw [← (hpDiag k).diagonal_diag]
+    rw [Matrix.mul_diagonal, Matrix.diagonal_mul]
+    rfl
+  change CStarMatrix.ofMatrix.symm
+    ((pinchingChannel p).toCompletelyPositiveMap (CStarMatrix.ofMatrix (CStarMatrix.ofMatrix.symm ρ.1)))
+      i j = _
+  rw [pinchingChannel_apply, unreadState, Matrix.sum_apply]
+  by_cases hij : i.1 = j.1
+  · rw [ite_eq_left hij]
+    have hsum : (∑ k, p.proj k i i) = 1 := by
+      simpa only [Matrix.sum_apply, Matrix.one_apply_eq] using
+        congrArg (fun M : Matrix (a × b) (a × b) ℂ => M i i) p.complete
+    calc
+      _ = ∑ k, p.proj k i i * CStarMatrix.ofMatrix.symm ρ.1 i j := by
+        apply Finset.sum_congr rfl
+        intro k _
+        have hsame : p.proj k j j = p.proj k i i := by rw [hpEntry, hpEntry, hij]
+        have hid := congrArg (fun M : Matrix (a × b) (a × b) ℂ => M i i) (p.idempotent k)
+        change (p.proj k * p.proj k) i i = p.proj k i i at hid
+        conv at hid =>
+          lhs
+          rw [← (hpDiag k).diagonal_diag]
+        rw [Matrix.diagonal_mul, Matrix.diagonal_apply_eq] at hid
+        rw [hcompress, hsame, mul_right_comm]
+        exact congrArg (fun z => z * CStarMatrix.ofMatrix.symm ρ.1 i j) hid
+      _ = _ := by rw [← Finset.sum_mul, hsum, one_mul]
+  · rw [ite_eq_right hij]
+    apply Finset.sum_eq_zero
+    intro k _
+    have hz := mul_eq_zero.mp ((hQentry k i.1 j.1).symm.trans (hQ k hij))
+    rw [hcompress, hpEntry, hpEntry, hQentry, hQentry]
+    rcases hz with hz | hz
+    · rw [hz, zero_mul, zero_mul, zero_mul]
+    · rw [hz, mul_zero, mul_zero]
+
+private theorem schmidtPinch (U : Matrix.unitaryGroup Qubit.{u} ℂ)
+    (hU : Eligible schmidtState.{u,v} U) :
+    pinch (localPVM U) schmidtState.{u,v} = pinchedState.{u,v} := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  ext ⟨⟨i⟩, ⟨k⟩⟩ ⟨⟨j⟩, ⟨l⟩⟩
+  rw [simpleMarginalPinch schmidtState U hU _ massInjective schmidtMarginal]
+  change (if (⟨i⟩ : Qubit.{u}) = ⟨j⟩ then
+      rankOneDensity schmidtVector.{u,v} (⟨i⟩, ⟨k⟩) (⟨j⟩, ⟨l⟩) else 0) =
+    Matrix.diagonal (fun z => (pinchedMass.{u,v} z : ℂ)) (⟨i⟩, ⟨k⟩) (⟨j⟩, ⟨l⟩)
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply, schmidtVector,
+      amplitude, pinchedMass, mass, Complex.star_def, Matrix.diagonal_apply]
+
+private theorem schmidtDiscord_pos : 0 < diagonalDiscord schmidtState.{u,v} := by
+  obtain ⟨U, hU, _, he⟩ := diagonalDiscord_attained schmidtState.{u,v}
+  rw [he, basisGain, schmidtPinch U hU]
+  change 0 < vonNeumannEntropy pinchedState.{u,v} - vonNeumannEntropy (pureState _ schmidtNorm)
+  rw [pure_entropy, sub_zero, pinchedState, diagonalEntropy, Fintype.sum_prod_type]
+  simp only [sumTwo]
+  norm_num [pinchedMass, mass, Real.negMulLog]
+  have h9 : Real.log (9/25) < 0 := Real.log_neg (by norm_num) (by norm_num)
+  have h16 : Real.log (16/25) < 0 := Real.log_neg (by norm_num) (by norm_num)
+  linarith
+
+/-- The product of the two maximally mixed qubit states. -/
+private def mixedProduct : DensityState (Qubit.{u} × PairQubit.{v}) :=
+  diagonalDensity (fun _ => 1/4) (fun _ => by norm_num)
+    (by simp only [Fintype.sum_prod_type, sumTwo]; norm_num)
+
+private theorem mixedProductPinch (U : Matrix.unitaryGroup Qubit.{u} ℂ) :
+    pinch (localPVM U) mixedProduct.{u,v} = mixedProduct.{u,v} := by
+  let p := localPVM (b := PairQubit.{v}) U
+  have hm : CStarMatrix.ofMatrix.symm mixedProduct.{u,v}.1 =
+      (1/4 : ℂ) • (1 : Matrix (Qubit.{u} × PairQubit.{v}) _ ℂ) := by
+    rw [Matrix.smul_one_eq_diagonal]
+    change Matrix.diagonal (fun _ => (↑(1/4 : ℝ) : ℂ)) = _
+    simp
+  have hp : CStarMatrix.ofMatrix.symm (pinch p mixedProduct).1 =
+      unreadState p.proj (CStarMatrix.ofMatrix.symm mixedProduct.1) :=
+    pinchingChannel_apply p _
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  rw [hp, hm, unreadState]
+  simp_rw [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one, p.idempotent,
+    ← Finset.smul_sum, p.complete]
+
+private theorem mixedProductDiscord : diagonalDiscord mixedProduct.{u,v} = 0 := by
+  obtain ⟨U, _, _, he⟩ := diagonalDiscord_attained mixedProduct.{u,v}
+  rw [he, basisGain, mixedProductPinch, sub_self]
+
+private abbrev Carriers :=
+  Σ a : Type u, Σ b : Type v, Σ _ : Fintype a, Σ _ : DecidableEq a,
+    Σ _ : Fintype b, DecidableEq b
+
+private abbrev discordSignature : Signature :=
+  Reg.Support.UniverseSingleReadout.signature Carriers.{u,v}
+    (fun p => @DensityState (p.1 × p.2.1)
+      (@instFintypeProd _ _ p.2.2.1 p.2.2.2.2.1)
+      (@instDecidableEqProd _ _ p.2.2.2.1 p.2.2.2.2.2)) (fun _ => ℝ)
+
+private def readDiscord : ∀ (_ : Unit) (p : Carriers.{u,v}), discordSignature.State p → ℝ :=
+  fun _ p ρ =>
+    @diagonalDiscord p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 ρ
+
+private def discordActual : Realization discordSignature.{u,v} :=
+  realize discordSignature readDiscord (fun e => nomatch e)
+
+private def discordRejected : Realization discordSignature.{u,v} :=
+  realize discordSignature (fun _ p ρ => readDiscord () p ρ - 1) (fun e => nomatch e)
+
+private theorem discordDependence :
+    ObservationalDependence discordSignature.{u,v} discordActual := by
+  intro _
+  let p : Carriers.{u,v} :=
+    ⟨Qubit, PairQubit, inferInstance, inferInstance, inferInstance, inferInstance⟩
+  refine ⟨p, schmidtState, mixedProduct, ?_⟩
+  change diagonalDiscord schmidtState.{u,v} ≠ diagonalDiscord mixedProduct.{u,v}
+  rw [mixedProductDiscord]
+  exact ne_of_gt schmidtDiscord_pos
+
+private def discordLaw (r : Realization discordSignature.{u,v}) : Prop :=
+  ∀ {a : Type u} {b : Type v} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Nonempty a] [Nonempty b] (Λ : QuantumChannel a a)
+    (_hCQ : PreservesCQ (localChannel (b := b) Λ)) (ρ : DensityState (a × b)),
+    diagonalDiscord ((localChannel Λ).mapState ρ) ≤
+      r.readout () ⟨a, b, inferInstance, inferInstance, inferInstance, inferInstance⟩ ρ
+
+private abbrev discordArena : Arena where
+  signature := discordSignature.{u,v}
+  Law := discordLaw
+
+private theorem singletonDiscord (ρ : DensityState (MeasuredSingleton.{u} × Scalar.{v})) :
+    diagonalDiscord ρ = 0 := by
+  obtain ⟨U, _, _, he⟩ := diagonalDiscord_attained ρ
+  exact he.trans (singletonGain ρ U)
+
+private theorem discordRejected_law : ¬ discordArena.{u,v}.Law discordRejected := by
+  intro h
+  have hbad := h singletonChannel singletonCQ singletonInput.{u,v}
+  change diagonalDiscord _ ≤ diagonalDiscord singletonInput.{u,v} - 1 at hbad
+  rw [singletonDiscord, singletonDiscord] at hbad
+  linarith
+
+private abbrev discordStatement := type_of% @diagonalDiscord_localChannel_mono.{u,v}
+
+private theorem discordBridge : discordStatement.{u,v} ↔ discordArena.{u,v}.Law discordActual :=
+  Iff.rfl
+
+private theorem discordVariation : Variation discordArena.{u,v} discordActual :=
+  ⟨@diagonalDiscord_localChannel_mono, discordRejected, discordRejected_law⟩
+
+private theorem discordSensitivity : Sensitivity discordArena.{u,v} discordActual :=
+  Reg.Support.UniverseSingleReadout.sensitivity _ _ _ discordRejected_law
+
+def discordSource : Registration discordArena.{u,v} discordStatement.{u,v} where
+  actual := discordActual
+  bridge := discordBridge
+  variation := discordVariation
+  sensitivity := discordSensitivity
+  dependence := discordDependence
+
+def discordRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@diagonalDiscord_localChannel_mono.{u,v}) (Realization discordSignature.{u,v})
+      (type_of% @DensityState.{max u v}) Unit := {
+  unitName := .str ``discordSource "unit"
+  realizationName := ``discordSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨discordArena.{u,v}⟩
+  objectArena := .source ⟨discordArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source discordArena.{u,v} ⟨discordSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize discordSignature readDiscord (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg"]
+      stateBinder := 10
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Optimized
 end BasisGainAudit
 
 namespace PinchingSupportAudit
