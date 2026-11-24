@@ -54,7 +54,7 @@ internal sealed class PathCHSNormBCSRemark43Document : IScribeDocumentDefinition
     private static Formula SumOver(string name, Formula set, Formula body) => Seq(new Formula.Subscript(Sum, Seq(V(name), Sp, InMacro, Sp, set)), Sp, Parenthesized(body));
 
     private static Formula Chs(Formula n, Formula d) => C("D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chs", n, d);
-    private static Formula Binom(Formula l, Formula r) => C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, r);
+    private static Formula Binom(Formula l, Formula r) => C("D5.S0.Conventions.IntegerIndexBinomial.binom_std", l, r);
     private static Formula Angle(Formula n, Formula k) => Rat(M(Q("Real.pi"), Cast(k, Real())), A(Cast(n, Real()), D(1)));
     private static Formula TrigFormula()
     {

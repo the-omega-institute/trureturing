@@ -81,7 +81,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
         Formula n = V("n"), m = V("m"), k = V("k");
         var l = S(A(M(D(2), m), n), D(1));
         var r = S(Cast(m, Int()), M(Cast(k, Int()), A(Cast(n, Int()), D(1))));
-        var value = A(S(Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, r), Int()), M(D(2), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, S(r, D(1))), Int()))), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, S(r, D(2))), Int()));
+        var value = A(S(Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom_std", l, r), Int()), M(D(2), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom_std", l, S(r, D(1))), Int()))), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom_std", l, S(r, D(2))), Int()));
         var sum = SumOver("k", C("Finset.range", A(C("Nat.div", m, A(n, D(1))), D(1))), value);
         return Disp(Naturals(["n", "m"], Eq(C("pathFormula", n, m), sum)));
     }

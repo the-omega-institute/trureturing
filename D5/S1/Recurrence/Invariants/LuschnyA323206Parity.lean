@@ -11,7 +11,7 @@ result: proof_shape: bind-only; escape_witness: none.
 admission_basis: open-problem-resolution (#22903; Proved).
 Direct frozen dependencies (declaration statement_id):
 D5/S0/Conventions/IntegerIndexBinomial.binom_std
-  sha256:1b5d115d3154df46a4f4c71aecf721ba76b76342a8accd9a42835a7efcd0ea68;
+  sha256:2932418d7d8984e0c7057d61b2081a49ed39b0f3a753858c17413d146cf58238;
 D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.binary_catalan
   sha256:22e9a38eaef0b535a11f074b5cb2bbf9af2f900fa6a30c3aafefb6160b7ff175;
 D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.catalanSeries
