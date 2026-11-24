@@ -212,6 +212,49 @@ private theorem selectedByRow {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZM
   · refine ⟨fun _ => Or.inl square, fun _ h => square ?_⟩
     exact congrArg Prod.fst h
 
+private theorem labelsWithKernel {L A : Type*} [Finite L] [Finite A]
+    [AddCommGroup A] [Module (ZMod 2) A]
+    (H : Submodule (ZMod 2) (Set L →₀ ZMod 2))
+    (dimension : finrank (ZMod 2) ((Set L →₀ ZMod 2) ⧸ H) ≤ finrank (ZMod 2) A) :
+    ∃ labels : Set L → A, ker (Finsupp.linearCombination (ZMod 2) labels) = H := by
+  classical
+  obtain ⟨g, injective⟩ := finrank_le_iff_exists_linearMap.mp dimension
+  let f : (Set L →₀ ZMod 2) →ₗ[ZMod 2] A := g.comp H.mkQ
+  let coefficients := Finsupp.lift A (ZMod 2) (Set L)
+  let labels := coefficients.symm f
+  have table : Finsupp.linearCombination (ZMod 2) labels = f := by
+    apply LinearMap.ext
+    intro row
+    rw [Finsupp.linearCombination_apply, ← Finsupp.lift_apply]
+    exact congrArg (fun map : (Set L →₀ ZMod 2) →ₗ[ZMod 2] A => map row)
+      (coefficients.apply_symm_apply f)
+  refine ⟨labels, table.symm ▸ ?_⟩
+  ext row
+  rw [mem_ker, show f row = g (H.mkQ row) from rfl, ← g.map_zero, injective.eq_iff]
+  exact Submodule.Quotient.mk_eq_zero (p := H)
+
+private theorem noncommutingCount {L A : Type*} [Finite L] [Finite A] [Mul L]
+    [AddCommGroup A] [Module (ZMod 2) A]
+    (e p q : L) (labels : Set L → A) (comm : ∀ x y : L, x * y = y * x)
+    (invol : ∀ x y : L, x * (x * y) = y) (different : p ≠ q)
+    (involExt : letI := extensionMul e labels
+      ∀ x y : L × A, x * (x * y) = y) :
+    letI := extensionMul e labels
+    ({y : L × A | (q, 0) * ((p, 0) * y) ≠ (p, 0) * ((q, 0) * y)} : Set (L × A)).ncard =
+      Nat.card A * ({x : L |
+        let g := fun y : L => p * (q * y)
+        g (g x) ≠ x ∨ returnRow e p q x ∉ ker (Finsupp.linearCombination (ZMod 2) labels)} : Set L).ncard := by
+  letI := extensionMul e labels
+  have fibres : ({y : L × A | (q, 0) * ((p, 0) * y) ≠
+      (p, 0) * ((q, 0) * y)} : Set (L × A)) =
+      ({x : L | let g := fun y : L => p * (q * y)
+        g (g x) ≠ x ∨ returnRow e p q x ∉ ker (Finsupp.linearCombination (ZMod 2) labels)} : Set L) ×ˢ
+        (Set.univ : Set A) := by
+    ext ⟨x, a⟩
+    simpa only [Set.mem_ofPred_eq, Set.mem_prod, Set.mem_univ, and_true, mem_ker] using
+      selectedByRow e p q x labels a comm invol different involExt
+  rw [fibres, Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
+
 /-- A common family of counts is realizable precisely by the fibre-sized subspace counts. -/
 theorem commonSwitchCounts {J L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] [Module (ZMod 2) A]
@@ -231,56 +274,23 @@ theorem commonSwitchCounts {J L A : Type*} [Finite L] [Finite A] [Mul L]
           g (g x) ≠ x ∨ returnRow e (p i) (q i) x ∉ H} : Set L).ncard = counts i := by
   classical
   let _ : Fintype (Set L) := Fintype.ofFinite (Set L)
-  let V := Set L →₀ ZMod 2
-  let evaluate (labels : Set L → A) : V →ₗ[ZMod 2] A :=
-    Finsupp.linearCombination (ZMod 2) labels
-  let good (H : Submodule (ZMod 2) V) (i : J) : Set L := {x |
-    let g := fun y : L => p i * (q i * y)
-    g (g x) ≠ x ∨ returnRow e (p i) (q i) x ∉ H}
+  let evaluate (labels : Set L → A) := Finsupp.linearCombination (ZMod 2) labels
   have twice (a : A) : a + a = 0 := by
     have two : (2 : ZMod 2) = 0 := by decide
     simpa only [two_smul, zero_smul] using congrArg (fun c : ZMod 2 => c • a) two
-  have formula (labels : Set L → A) (i : J) :
-      letI := extensionMul e labels
-      ({y : L × A | (q i, 0) * ((p i, 0) * y) ≠
-        (p i, 0) * ((q i, 0) * y)} : Set (L × A)).ncard =
-        Nat.card A * (good (ker (evaluate labels)) i).ncard := by
-    letI := extensionMul e labels
-    obtain ⟨_, _, inv, _⟩ := extensionSteinerAndCentre e labels unit comm invol twice centreless
-    have fibres :
-        ({y : L × A | (q i, 0) * ((p i, 0) * y) ≠
-          (p i, 0) * ((q i, 0) * y)} : Set (L × A)) =
-          good (ker (evaluate labels)) i ×ˢ (Set.univ : Set A) := by
-      ext ⟨x, a⟩
-      simpa only [Set.mem_ofPred_eq, Set.mem_prod, Set.mem_univ, and_true,
-        good, evaluate, mem_ker] using
-        selectedByRow e (p i) (q i) x labels a comm invol (different i) inv
-    rw [fibres, Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
+  have law (labels : Set L → A) :=
+    extensionSteinerAndCentre e labels unit comm invol twice centreless
+  have formula (labels : Set L → A) (i : J) :=
+    noncommutingCount e (p i) (q i) labels comm invol (different i) (law labels).2.2.1
   constructor
   · rintro ⟨labels, _, realized⟩
     refine ⟨ker (evaluate labels), ?_, fun i => (formula labels i).symm.trans (realized i)⟩
     rw [(evaluate labels).quotKerEquivRange.finrank_eq]
     exact Submodule.finrank_le (range (evaluate labels))
   · rintro ⟨H, dimension, constrained⟩
-    obtain ⟨g, injective⟩ := finrank_le_iff_exists_linearMap.mp dimension
-    let f : V →ₗ[ZMod 2] A := g.comp H.mkQ
-    let labels : Set L → A := fun s => f (Finsupp.single s 1)
-    have table : evaluate labels = f := by
-      apply Finsupp.lhom_ext
-      intro s c
-      change Finsupp.linearCombination (ZMod 2) labels (Finsupp.single s c) =
-        f (Finsupp.single s c)
-      rw [Finsupp.linearCombination_single]
-      have scale : Finsupp.single s c = c • Finsupp.single s (1 : ZMod 2) := by
-        simp only [Finsupp.smul_single, smul_eq_mul, mul_one]
-      rw [scale, map_smul]
-    have kernel : ker f = H := by
-      ext row
-      rw [mem_ker, show f row = g (H.mkQ row) from rfl, ← g.map_zero, injective.eq_iff]
-      exact Submodule.Quotient.mk_eq_zero (p := H)
-    refine ⟨labels, (extensionSteinerAndCentre e labels unit comm invol twice centreless).2.2.2,
-      fun i => ?_⟩
-    rw [formula labels i, table, kernel]
+    obtain ⟨labels, kernel⟩ := labelsWithKernel (A := A) H dimension
+    refine ⟨labels, (law labels).2.2.2, fun i => ?_⟩
+    rw [formula labels i, kernel]
     exact constrained i
 
 /-- The same labelled triple system realizes every count in the chosen subspace profile. -/
@@ -299,6 +309,7 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
       letI := extensionMul e labels
       label none = (e, 0) ∧
       Set.center (L × A) = {x | x.1 = e} ∧
+      ker (Finsupp.linearCombination (ZMod 2) labels) = H ∧
       (∀ i a, label (translate valid cover i a) = label (some i) * label a) ∧
       ∀ j, ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (p j, 0) ∧ label (some (i.succAbove v)) = (q j, 0) ∧
@@ -308,17 +319,12 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
             let g := fun y : L => p j * (q j * y)
             g (g x) ≠ x ∨ returnRow e (p j) (q j) x ∉ H} : Set L).ncard := by
   classical
-  let counts (j : J) := Nat.card A * ({x : L |
-    let g := fun y : L => p j * (q j * y)
-    g (g x) ≠ x ∨ returnRow e (p j) (q j) x ∉ H} : Set L).ncard
-  obtain ⟨labels, centre, realized⟩ :=
-    (commonSwitchCounts e p q unit comm invol centreless different counts).mpr
-      ⟨H, dimension, fun _ => rfl⟩
+  obtain ⟨labels, kernel⟩ := labelsWithKernel (A := A) H dimension
   have twice (a : A) : a + a = 0 := by
     have two : (2 : ZMod 2) = 0 := by decide
     simpa only [two_smul, zero_smul] using congrArg (fun c : ZMod 2 => c • a) two
   letI := extensionMul e labels
-  obtain ⟨idExt, commExt, invExt, _⟩ :=
+  obtain ⟨idExt, commExt, invExt, centre⟩ :=
     extensionSteinerAndCentre e labels unit comm invol twice centreless
   have pNe (j : J) : (p j, (0 : A)) ≠ (e, 0) := fun h => hp j (congrArg Prod.fst h)
   have qNe (j : J) : (q j, (0 : A)) ≠ (e, 0) := fun h => hq j (congrArg Prod.fst h)
@@ -328,13 +334,15 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
   obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) nonidentity
   obtain ⟨S, valid, cover, transport, byDeleted⟩ :=
     labelledSwitchCount label (by simpa only [zero] using idExt) commExt invExt
-  refine ⟨labels, r, label, S, valid, cover, zero, centre, transport, fun j => ?_⟩
+  refine ⟨labels, r, label, S, valid, cover, zero, centre, kernel, transport, fun j => ?_⟩
   obtain ⟨i, v, hi, hv'⟩ := locate (p j, 0) (q j, 0) (pNe j) (qNe j)
     (fun h => different j (congrArg Prod.fst h))
   obtain ⟨m, leave, byStart⟩ := byDeleted i
   refine ⟨i, v, m, hi, hv', leave, ?_⟩
   have read := (byStart v).2
   rw [hi, hv'] at read
-  exact read.trans (realized j)
+  have count := noncommutingCount e (p j) (q j) labels comm invol (different j) invExt
+  rw [kernel] at count
+  exact read.trans count
 
 end D5.S3.Combinatorics.Matroids.SteinerSwitchSupport

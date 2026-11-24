@@ -38,6 +38,6 @@ internal sealed class SteinerSwitchSupportDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(CriticalProblem),
                 Blocks(
-                    Paragraph(Text("For a nontrivial base loop and distinct nonidentity members of every pivot pair, the same normalized extension and the same labelled complete triple system realize the counts supplied by the chosen subspace. The extension has exactly the identity fibre as its centre. The matching of uncovered pairs after each deletion is the actual matching of that labelled system. The fibre count therefore applies to the successful switch starts for all the specified deletions and pivots."))),
+                    Paragraph(Text("For a nontrivial base loop and distinct nonidentity members of every pivot pair, the same normalized extension and the same labelled complete triple system realize the counts supplied by the chosen subspace. The extension has exactly the identity fibre as its centre. Its triple labelling has exactly the chosen subspace as its kernel, so the same system realizes the support and the count profile. The matching of uncovered pairs after each deletion is the actual matching of that labelled system. The fibre count therefore applies to the successful switch starts for all the specified deletions and pivots."))),
                 DescribeRole.Theorem))));
 }

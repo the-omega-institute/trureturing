@@ -206,6 +206,7 @@ def labelledCountLaw (R : Realization sig.{v}) : Prop :=
       letI := extensionMul e labels
       label none = (e, 0) ∧
       Set.center (L × A) = {x | x.1 = e} ∧
+      LinearMap.ker (Finsupp.linearCombination (ZMod 2) labels) = H ∧
       (∀ i a, label (translate valid cover i a) = label (some i) * label a) ∧
       ∀ j, ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (p j, 0) ∧ label (some (i.succAbove v)) = (q j, 0) ∧
@@ -242,7 +243,7 @@ private theorem labelledCount_rejected : ¬ labelledCountLaw.{j,u,v} rejected :=
       exact Module.finrank_zero_of_subsingleton
     rw [h]
     exact Nat.zero_le _
-  obtain ⟨_, r, label, S, valid, cover, _, _, _, profiles⟩ :=
+  obtain ⟨_, r, label, S, valid, cover, _, _, _, _, profiles⟩ :=
     bound (J := J) (A := A) affineIdentity (fun _ => p) (fun _ => q)
       affine_unit affine_comm affine_invol affine_centreless (fun _ => hp) (fun _ => hq)
       (fun _ => hpq) H dimension
@@ -300,8 +301,8 @@ def labelledCountRegistration :
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "arg", "body", "arg", "body", "arg", "body",
         "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg",
-        "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg",
-        "arg", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "arg", "arg", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
