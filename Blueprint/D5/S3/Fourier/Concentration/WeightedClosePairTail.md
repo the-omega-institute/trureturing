@@ -21,3 +21,4 @@ The larger ordinate h of a close pair is at least X. Its smaller ordinate is at 
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/WeightedClosePairTail.weighted_close_pairs_le`
+- Dependency: [D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Smoothing](../../Weil/Mertens/Cryptids/WeightedStieltjes/Smoothing.md)

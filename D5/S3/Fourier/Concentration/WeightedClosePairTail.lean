@@ -6,7 +6,7 @@
    utility: none
    digest: Cumulative close-pair mass bounds reciprocal-product weights by partial summation. -/
 
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Smoothing
 
 /-! Partial summation over the maximum ordinate of each close pair. -/
 
@@ -40,20 +40,14 @@ private theorem inverse_cube_integral {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
 private theorem log_decay_integral {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
     (∫ t in a..b, Real.log t / t ^ 2) =
       (Real.log a + 1) / a - (Real.log b + 1) / b := by
-  have hCont : ContinuousOn (fun t : ℝ => Real.log t / t ^ 2) (Icc a b) :=
-    (Real.continuousOn_log.mono fun _ ht => (ha.trans_le ht.1).ne').div
-      (continuousOn_id.pow 2) fun _ ht => pow_ne_zero 2 (ha.trans_le ht.1).ne'
-  have hDeriv (t : ℝ) (ht : t ∈ uIcc a b) :
-      HasDerivAt (fun u : ℝ => -((Real.log u + 1) / u)) (Real.log t / t ^ 2) t := by
-    have ht' : 0 < t := ha.trans_le ((uIcc_of_le hab ▸ ht).1)
-    have h := (((Real.hasDerivAt_log ht'.ne').add_const 1).div
-      (hasDerivAt_id t) ht'.ne').neg
-    convert h using 1 <;> try rfl
-    simp only [id_eq]
-    field_simp
-    ring
-  rw [integral_eq_sub_of_hasDerivAt hDeriv (hCont.intervalIntegrable_of_Icc hab)]
-  ring
+  convert ConjectureMachines.Semantics.Riemann.WeightedStieltjes.intervalIntegral_riemannVonMangoldt_div_cube
+    ha hab 1 0 0 using 1
+  · apply intervalIntegral.integral_congr
+    intro t ht
+    rw [uIcc_of_le hab] at ht
+    have ht0 : t ≠ 0 := (ha.trans_le ht.1).ne'
+    field_simp [ht0] <;> ring
+  · ring
 
 private theorem restricted_integral {x y T : ℝ} (hx : 0 < x) (hxy : x ≤ y) (hyT : y ≤ T)
     (c : ℝ) :
