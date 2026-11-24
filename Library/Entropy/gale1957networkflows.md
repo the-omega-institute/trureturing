@@ -8,13 +8,14 @@ url: https://msp.org/pjm/1957/7-2/p04.xhtml
 claim: "A prescribed demand is feasible exactly when it satisfies every network cut capacity."
 strata_touched:
   - D5/S3/Quantum/Measurement/Auric/UnequalBlockEffects
+  - D5/S3/Quantum/Measurement/Auric/UnequalBlockTraceCertificates
 license: citation-only
 triage: anchor
 ---
 
 # Network cuts for allowed entropy allocations
 
-For the finite scalar allocation problem the row masses are the demands and the allowed row–column connections are the edges. A single row can reach all coordinates except its own missing type. Any two distinct rows together reach all coordinates. These cut constraints describe feasibility of the scalar allocation. They give a way to study existence of normalized weights for prescribed traces. The ordered-projection inequality for matrices uses a separate argument.
+For the finite scalar allocation problem the row masses are the demands and the allowed row–column connections are the edges. A single row can reach all coordinates except its own missing type. Any two distinct rows together reach all coordinates. Gale's criterion accounts for scalar feasibility with nonnegative demands, total demand d and singleton bounds τⱼ ≤ d − ℓⱼ. The strict-trace certificate proofs obtain their specific proportional and clipped allocations by compact price minimization. The ordered projection argument extends the resulting scalar bounds to the matrix spectral objectives.
 
 ## Verified locator
 
