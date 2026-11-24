@@ -40,6 +40,12 @@ open D5.S3.Quantum.Measurements.WeightedLabelRecordDilation
 variable {B J I L κ : Type*} [Fintype B] [DecidableEq B]
   [Fintype J] [DecidableEq J] [Fintype I] [Fintype L] [Fintype κ]
 
+private theorem kraus_apply {A C : Type*} [Fintype A]
+    (K : κ → Matrix C A ℂ) (X : Matrix A A ℂ) :
+    MatrixMap.of_kraus K K X = ∑ a, K a * X * (K a)ᴴ := by
+  simp only [MatrixMap.of_kraus, LinearMap.coe_sum, LinearMap.coe_mk, AddHom.coe_mk,
+    Finset.sum_apply]
+
 /-- The two real trace pairings for sign leakage, using the full Jordan parts. -/
 def signLeakage {H : Matrix B B ℂ} (hH : H.IsHermitian) (X : Matrix B B ℂ) : ℝ :=
   let P := positiveSpectralProjection hH
@@ -76,7 +82,7 @@ theorem sum_signLeakage_eq (K : κ → Matrix B B ℂ)
   calc
     ∑ a, signLeakage hH (K a) =
         ((1 - P) * T A).trace.re + (P * T N).trace.re := by
-      simp only [T, MatrixMap.of_kraus_apply, signLeakage, P, A, N,
+      simp only [T, kraus_apply, signLeakage, P, A, N,
         Matrix.mul_sum, trace_sum, Complex.re_sum, Finset.sum_add_distrib]
     _ = (P * (H - T H)).trace.re := by
       rw [← hsplit]
@@ -102,7 +108,7 @@ private theorem signLeakage_bound (K : κ → Matrix B B ℂ)
     split_ifs <;> norm_num
   have htrace : (H - T H).trace = 0 := by rw [trace_sub, hT H, sub_self]
   have hHerm : (H - T H).IsHermitian := hH.sub (by
-    rw [show T H = ∑ a, K a * H * (K a)ᴴ from MatrixMap.of_kraus_apply K H]
+    rw [show T H = ∑ a, K a * H * (K a)ᴴ from kraus_apply K H]
     unfold Matrix.IsHermitian
     rw [conjTranspose_sum]
     apply Finset.sum_congr rfl
@@ -225,7 +231,7 @@ private theorem encode_density_pair (V : Matrix (Fin d × Fin e) B ℂ) (q : B �
     (M : Matrix (Fin d) (Fin d) ℂ) :
     (M * MatrixMap.of_kraus (encoderSlice V) (encoderSlice V) (diagonal q)).trace =
       ∑ b, q b * (M * reducedColumn V b).trace := by
-  rw [MatrixMap.of_kraus_apply]
+  rw [kraus_apply]
   simp only [trace_sum, trace_mul_reducedColumn, Finset.mul_sum]
   rw [Finset.sum_comm (s := (Finset.univ : Finset B))]
   apply Finset.sum_congr rfl
@@ -246,7 +252,7 @@ private theorem record_apply (V : Matrix (Fin d × Fin e) B ℂ)
       CStarMatrix.ofMatrix.symm (decoder.toCompletelyPositiveMap
         (CStarMatrix.ofMatrix (MatrixMap.of_kraus (encoderSlice V) (encoderSlice V) Y))) := by
   rw [(actual_kraus_representation decoder).haction]
-  simp only [MatrixMap.of_kraus_apply, Fintype.sum_prod_type, Matrix.mul_sum, Matrix.sum_mul,
+  simp only [kraus_apply, Fintype.sum_prod_type, Matrix.mul_sum, Matrix.sum_mul,
     recordKraus, conjTranspose_mul, Matrix.mul_assoc]
 
 omit [Fintype J] in
@@ -271,8 +277,7 @@ private theorem label_loss_sub_score (label : B → J) (mass : B → ℝ)
   have hT := record_tp V hV decoder
   calc
     _ = ∑ j, ((1 - labelProjection label j) * T (labelDensity label mass j)).trace.re := by
-      simp only [labelLeakage, T, MatrixMap.of_kraus_apply, Matrix.mul_sum, trace_sum,
-        Complex.re_sum]
+      simp only [labelLeakage, T, kraus_apply, Matrix.mul_sum, trace_sum, Complex.re_sum]
       exact Finset.sum_comm
     _ = ∑ j, (1 - (labelProjection label j * T (labelDensity label mass j)).trace.re) := by
       apply Finset.sum_congr rfl
@@ -339,7 +344,7 @@ theorem label_count_sub_memory_le_deficit (label : B → J) (mass : B → ℝ)
       let A := E (labelDensity label mass j)
       have hA : A.PosSemidef := by
         change (E (labelDensity label mass j)).PosSemidef
-        simp only [E, MatrixMap.of_kraus_apply]
+        simp only [E, kraus_apply]
         apply Matrix.posSemidef_sum
         intro t _
         apply Matrix.PosSemidef.mul_mul_conjTranspose_same

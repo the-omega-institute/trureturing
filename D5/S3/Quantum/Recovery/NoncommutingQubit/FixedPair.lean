@@ -27,7 +27,8 @@ local notation "Qubit" => Matrix (Fin 2) (Fin 2) ℂ
 private theorem eigenline_weight {s : Type*} [Fintype s] (K : s → Qubit) (i j : Fin 2) :
     (MatrixMap.of_kraus K K (Matrix.single j j 1) i i).re =
       ∑ a, Complex.normSq (K a i j) := by
-  simp only [MatrixMap.of_kraus_apply, Matrix.sum_apply, Complex.re_sum]
+  simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.sum_apply, Complex.re_sum]
   apply Finset.sum_congr rfl
   intro a _
   rw [Matrix.mul_apply]
@@ -82,7 +83,8 @@ private theorem identity_in_eigenbasis {s : Type*} [Fintype s] (K : s → Qubit)
   let c (i j : Fin 2) : ℂ := ∑ a, K a i i * star (K a j j)
   have hschur (X : Qubit) (i j : Fin 2) : L X i j = c i j * X i j := by
     change MatrixMap.of_kraus K K X i j = _
-    simp only [MatrixMap.of_kraus_apply, Matrix.sum_apply, c, Finset.sum_mul]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      Matrix.sum_apply, c, Finset.sum_mul]
     apply Finset.sum_congr rfl
     intro a _
     have ha := hdiag a
@@ -135,8 +137,8 @@ theorem cptp_eq_id_of_noncommuting_fixed_pair (L : MatrixMap (Fin 2) (Fin 2) ℂ
   let L' := MatrixMap.of_kraus (fun a => F (K a)) (fun a => F (K a))
   have hConj (X : Qubit) : L' (F X) = F (L X) := by
     change MatrixMap.of_kraus _ _ (F X) = F (MatrixMap.of_kraus K K X)
-    simp only [MatrixMap.of_kraus_apply, map_sum, map_mul, ← Matrix.star_eq_conjTranspose,
-      map_star]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      map_sum, map_mul, ← Matrix.star_eq_conjTranspose, map_star]
   have traceF (X : Qubit) : (F X).trace = X.trace := by
     change (star (hD.eigenvectorUnitary : Qubit) * X * hD.eigenvectorUnitary.val).trace = _
     rw [Matrix.trace_mul_cycle, ← Unitary.coe_star, Unitary.coe_mul_star_self, Matrix.one_mul]
@@ -252,9 +254,9 @@ theorem tensor_form_of_noncommuting_qubit_recovery
   obtain ⟨E, hE⟩ := MatrixMap.IsCompletelyPositive.exists_kraus R hRcp
   obtain ⟨A, hA⟩ := MatrixMap.IsCompletelyPositive.exists_kraus Φ hΦcp
   have hR (Z : Qubit) : R Z = ∑ a, E a * Z * (E a)ᴴ := by
-    rw [hE, MatrixMap.of_kraus_apply]
+    simp only [hE, MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   have hΦ (X : Matrix n n ℂ) : Φ X = ∑ b, A b * X * (A b)ᴴ := by
-    rw [hA, MatrixMap.of_kraus_apply]
+    simp only [hA, MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   have hETP : ∑ a, (E a)ᴴ * E a = 1 :=
     Original8340Global.kraus_normalization_from_actual_trace E fun X => hR X ▸ hRtp X
   have hATP : ∑ b, (A b)ᴴ * A b = 1 :=
@@ -263,8 +265,9 @@ theorem tensor_form_of_noncommuting_qubit_recovery
   have hJE (Z : Qubit) : (Φ.comp R) Z = MatrixMap.of_kraus J J Z := by
     change Φ (R Z) = MatrixMap.of_kraus J J Z
     rw [hΦ, hR]
-    simp only [MatrixMap.of_kraus_apply, J, Fintype.sum_prod_type, Matrix.conjTranspose_mul,
-      Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      J, Fintype.sum_prod_type, Matrix.conjTranspose_mul, Matrix.mul_sum, Matrix.sum_mul,
+      Matrix.mul_assoc]
   have hJ : MatrixMap.IsCompletelyPositive (Φ.comp R) := by
     rw [LinearMap.ext hJE]
     exact MatrixMap.of_kraus_isCompletelyPositive J

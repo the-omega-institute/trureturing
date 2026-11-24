@@ -63,6 +63,12 @@ private lemma spectralProjection_mul_self {H : Matrix n n ℂ} (hH : H.IsHermiti
   by_cases hx : 0 < x <;> simp [Pi.mul_apply, hx]
 
 omit [DecidableEq n] in
+private lemma kraus_apply (K : κ → Matrix n n ℂ) (X : Matrix n n ℂ) :
+    MatrixMap.of_kraus K K X = ∑ a, K a * X * (K a)ᴴ := by
+  simp only [MatrixMap.of_kraus, LinearMap.coe_sum, LinearMap.coe_mk, AddHom.coe_mk,
+    Finset.sum_apply]
+
+omit [DecidableEq n] in
 private lemma rtrace_sub' (X Y : Matrix n n ℂ) :
     (X - Y).trace.re = X.trace.re - Y.trace.re := by
   rw [trace_sub, Complex.sub_re]
@@ -117,7 +123,7 @@ private lemma block_trace_bound (K : κ → Matrix n n ℂ) {P Q X : Matrix n n 
     (hP : P.IsHermitian) (hQ : Q.IsHermitian) (hPP : P * P = P) (hQQ : Q * Q = Q)
     (hQpos : Q.PosSemidef) {g : ℝ} (hgap : (X - (g : ℂ) • P).PosSemidef) :
     g * (∑ a, frobSq (Q * K a * P)) ≤ (Q * MatrixMap.of_kraus K K X).trace.re := by
-  simp only [MatrixMap.of_kraus_apply, Finset.mul_sum, trace_sum, Complex.re_sum]
+  simp only [kraus_apply, Finset.mul_sum, trace_sum, Complex.re_sum]
   apply Finset.sum_le_sum
   intro a _
   have h := trace_mul_nonneg_of_posSemidef hQpos (hgap.mul_mul_conjTranspose_same (K a))
@@ -197,7 +203,7 @@ theorem spectral_test_leakage_asymmetric (K : κ → Matrix n n ℂ)
   have hsplit : A - B = H := hermPosPart_sub_hermNegPart hH
   have htrace : (H - T H).trace = 0 := by rw [trace_sub, hT H, sub_self]
   have hHerm : (H - T H).IsHermitian := hH.sub (by
-    rw [MatrixMap.of_kraus_apply]
+    rw [kraus_apply]
     unfold Matrix.IsHermitian
     rw [conjTranspose_sum]
     apply Finset.sum_congr rfl
