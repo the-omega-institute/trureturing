@@ -775,8 +775,10 @@ private theorem polynomial_relation :
         apply List.mem_eraseDups.mpr
         exact List.mem_map.mpr ⟨k, List.mem_filter.mpr ⟨List.mem_finRange k, decide_eq_true hk⟩, rfl⟩
       have h := List.all_eq_true.mp polynomialCoordinates (exhaustedRank k) hm
-      have hindex (i : Fin 12) : ((i.natAdd 1).castAdd 1).succ = (i.natAdd 2).castAdd 1 :=
-        Fin.ext rfl
+      have hindex (i : Fin 12) : ((i.natAdd 1).castAdd 1).succ = (i.natAdd 2).castAdd 1 := by
+        apply Fin.ext
+        simp only [Fin.val_succ, Fin.val_natAdd, Fin.val_castAdd]
+        omega
       change w (Fin.last 13).succ (j.natAdd 72) = _
       simp only [← hindex, fun i => w_new i j (Nat.le_of_not_gt hj)]
       simpa only [beq_iff_eq, sum_zip_mul, dotProduct] using h
