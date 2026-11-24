@@ -8,7 +8,7 @@
 /- Library-search audit trail (2026-08-22):
    * The repository family source of truth is
      `D5.S0.Conventions.ComplementEncoding.complement`; it is imported and used directly.
-   * The exact repository theorem `ComplementEncoding.complement_encoding` recovers the ambient
+   * The standard interface `ComplementEncoding.complement_encoding_std` recovers the ambient
      total from the whole complement operation and is applied directly below.
    * Pinned Mathlib and repository searches found no `OrderUnit` or `IsOrderUnit` predicate.
      The cancellation lemma `sub_left_inj` handles dependence at a fixed argument. -/
@@ -35,7 +35,7 @@ theorem absolute_complement_requires_ambient_total
   · constructor
     · intro h
       have hvu : v = u :=
-        (D5.S0.Conventions.ComplementEncoding.complement_encoding u e).2.2.2 v (by
+        (D5.S0.Conventions.ComplementEncoding.complement_encoding_std u e).2.2.2 v (by
           simpa only [D5.S0.Conventions.ComplementEncoding.complement] using h.symm)
       exact hvu.symm
     · rintro rfl

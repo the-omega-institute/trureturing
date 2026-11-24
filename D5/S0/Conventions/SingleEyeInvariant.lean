@@ -5,39 +5,34 @@
    anchors: []
    digest: Single-eyed observers admit invariants depending only on one coordinate. -/
 
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Insert
+module
+prelude
+public import OmegaInit.Prelude
 
 namespace D5.S0.Conventions.SingleEyeInvariant
 
-open Set
+open Omega
 
 universe u v
 
 /-- An observer admits only invariants whose dependency sets lie in one coordinate. -/
-def IsSingleEyed {Coordinate : Type u} {Invariant : Type v}
+@[expose] public def IsSingleEyed {Coordinate : Type u} {Invariant : Type v}
     (coordinate : Coordinate)
-    (admitted : Set Invariant)
-    (dependency : Invariant -> Set Coordinate) : Prop :=
-  ∀ invariant ∈ admitted, dependency invariant ⊆ {coordinate}
+    (admitted : Invariant → Prop)
+    (dependency : Invariant → Coordinate → Prop) : Prop :=
+  ∀ invariant, admitted invariant → ∀ input, dependency invariant input → Eq input coordinate
 
 /-- A singleton family is single-eyed at its sole coordinate. -/
-example :
-    IsSingleEyed (coordinate := (0 : Nat)) ({()} : Set Unit)
-      (fun _ : Unit => ({0} : Set Nat)) := by
-  intro invariant hinvariant
-  cases invariant
-  simp
+example : IsSingleEyed Nat.zero (fun value : Bool => Eq value .false)
+    (fun _ input => Eq input Nat.zero) :=
+  fun _ _ _ h => h
 
 /-- An admitted invariant depending on two coordinates is not single-eyed at zero. -/
-example :
-    ¬ IsSingleEyed (coordinate := (0 : Nat)) ({()} : Set Unit)
-      (fun _ : Unit => ({0, 1} : Set Nat)) := by
-  intro h
-  have hsubset := h () (Set.mem_singleton ())
-  have hmem : (1 : Nat) ∈ ({0, 1} : Set Nat) :=
-    Set.mem_insert_iff.mpr (Or.inr (Set.mem_singleton 1))
-  have : (1 : Nat) ∈ ({0} : Set Nat) := hsubset hmem
-  exact Nat.noConfusion (Set.mem_singleton_iff.mp this)
+example : Not (IsSingleEyed Nat.zero (fun value : Bool => Eq value .false)
+    (fun _ input => Or (Eq input Nat.zero) (Eq input Nat.zero.succ))) :=
+  fun h =>
+    have one_eq_zero := h .false Eq.refl Nat.zero.succ (Or.inr Eq.refl)
+    Eq.subst (Nat.rec (motive := fun _ => Prop) False (fun _ _ => True))
+      one_eq_zero True.intro
 
 end D5.S0.Conventions.SingleEyeInvariant
