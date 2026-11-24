@@ -24,7 +24,7 @@ initial_exhausted_count: proof_shape=content; consumers=initial_counts
 initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
-leading: proof_shape=bind-only; consumers=forward_step, leading.eq_1, leadingCoordinates, leadingCoordinates._proof_1, leading_forward, leading_polynomial, leading_polynomial._simp_2, leading_rec, leading_step, polynomial_relation, w, w.eq_1, w_copied, w_leading, w_new, w_representative
+leading: proof_shape=bind-only; consumers=forward_step, leading.eq_1, leadingCoordinates, leadingCoordinates._proof_1, leading_polynomial, leading_polynomial._simp_2, leading_rec, leading_step, polynomial_relation, w, w.eq_1, w_copied, w_leading, w_new, w_representative
 coefficients: proof_shape=bind-only; consumers=polynomialCoordinates, polynomial_relation, recurrence_convolution, leading_polynomial, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=exhausted_step, exhausted_step._proof_1, exhausted_step._proof_2, exhausted_step._proof_3, polynomial_relation, polynomial_relation._proof_2, representative_data, representative_data._proof_1, representative_data._proof_10, representative_data._proof_11, representative_data._proof_12, representative_data._proof_13, representative_data._proof_14, representative_data._proof_15, representative_data._proof_16, representative_data._proof_17, representative_data._proof_18, representative_data._proof_19, representative_data._proof_2, representative_data._proof_20, representative_data._proof_21, representative_data._proof_22, representative_data._proof_23, representative_data._proof_24, representative_data._proof_25, representative_data._proof_26, representative_data._proof_27, representative_data._proof_28, representative_data._proof_29, representative_data._proof_3, representative_data._proof_30, representative_data._proof_31, representative_data._proof_32, representative_data._proof_33, representative_data._proof_34, representative_data._proof_35, representative_data._proof_36, representative_data._proof_37, representative_data._proof_38, representative_data._proof_39, representative_data._proof_4, representative_data._proof_40, representative_data._proof_41, representative_data._proof_42, representative_data._proof_43, representative_data._proof_44, representative_data._proof_45, representative_data._proof_46, representative_data._proof_47, representative_data._proof_48, representative_data._proof_49, representative_data._proof_5, representative_data._proof_50, representative_data._proof_51, representative_data._proof_52, representative_data._proof_53, representative_data._proof_54, representative_data._proof_55, representative_data._proof_56, representative_data._proof_57, representative_data._proof_58, representative_data._proof_59, representative_data._proof_6, representative_data._proof_60, representative_data._proof_61, representative_data._proof_62, representative_data._proof_63, representative_data._proof_64, representative_data._proof_65, representative_data._proof_66, representative_data._proof_67, representative_data._proof_68, representative_data._proof_69, representative_data._proof_7, representative_data._proof_70, representative_data._proof_71, representative_data._proof_72, representative_data._proof_73, representative_data._proof_74, representative_data._proof_75, representative_data._proof_76, representative_data._proof_77, representative_data._proof_78, representative_data._proof_79, representative_data._proof_8, representative_data._proof_80, representative_data._proof_81, representative_data._proof_82, representative_data._proof_83, representative_data._proof_84, representative_data._proof_85, representative_data._proof_86, representative_data._proof_87, representative_data._proof_88, representative_data._proof_89, representative_data._proof_9, representative_data._proof_90, representative_data._proof_91, representative_data._proof_92, representative_data._proof_93, representative_data._proof_94, representative_data._proof_95, representative_data._proof_96, rightColumn, rightColumn_eq, w, w.eq_1, w_copied, w_leading, w_new, w_representative
@@ -50,7 +50,6 @@ exhausted_step: proof_shape=content; consumers=forward_step
 leading_action: proof_shape=bind-only; consumers=forward_step
 forward_step: proof_shape=content; consumers=forward_table
 forward_table: proof_shape=content; consumers=polynomial_relation
-leading_forward: proof_shape=bind-only; consumers=leading_polynomial._simp_2
 recurrence_convolution: proof_shape=bind-only; consumers=leading_polynomial
 leading_polynomial: proof_shape=bind-only; consumers=polynomial_relation
 w_copied: proof_shape=bind-only; consumers=forward_step, polynomial_relation
@@ -689,21 +688,6 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
   simp only [rows, List.getElem_ofFn] at he
   exact he
 
-private theorem leading_forward (i : Fin 15) :
-    forward HardinA229585StripData.T HardinA229585StripData.initial i.val = leading i := by
-  let rows := List.ofFn leading
-  have hchain : rows.IsChain
-      (fun u v => Matrix.vecMul u HardinA229585StripData.T = v) :=
-    List.isChain_ofFn.mpr fun k hk => (leading_step ⟨k, by omega⟩).symm
-  have hi : i.val < rows.length := by simpa only [rows, List.length_ofFn] using i.isLt
-  have he := hchain.iterate_eq_of_apply_eq i.val hi
-  simp only [rows, List.getElem_ofFn] at he
-  change forward HardinA229585StripData.T (leading 0) i.val = leading i at he
-  have hzero : leading 0 = HardinA229585StripData.initial :=
-    HardinA229585Strip.finite_certificate.2.2.2.2.2.1.1
-  rw [hzero] at he
-  exact he
-
 -- The five shifted order-eight residuals give the order-twelve residual.
 private theorem recurrence_convolution (v : ℕ → ℤ)
     (h : ∀ n : ℕ, n ≤ 4 → v (n + 2 + 8) =
@@ -722,12 +706,17 @@ private theorem recurrence_convolution (v : ℕ → ℤ)
 private theorem leading_polynomial (j : Fin 72) :
     leading (Fin.last 14) j =
       ∑ k : Fin 12, coefficients k * leading ((k.natAdd 2).castAdd 1) j := by
-  have h (n : ℕ) := forward_shift HardinA229585StripData.T HardinA229585StripData.initial
-    (Pi.single j (1 : ℤ)) 8 2 leadingCoefficient HardinA229585Strip.polynomial_relation n
-  simp only [Matrix.dotProduct_mulVec, dotProduct_single_one, ← forward_eq] at h
-  simpa only [← leading_forward, Fin.val_last, Fin.val_castAdd, Fin.val_natAdd] using
-    recurrence_convolution
-      (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) (fun n _ => h n)
+  let v (n : ℕ) := leading (Fin.ofNat 15 n) j
+  have hv (i : Fin 15) : leading i j = v i.val :=
+    congrArg (fun t => leading t j) (Fin.ext (Nat.mod_eq_of_lt i.isLt)).symm
+  have h (n : ℕ) (hn : n ≤ 4) :
+      v (n + 2 + 8) = ∑ k : Fin 8, leadingCoefficient k * v (n + 2 + k.val) := by
+    let i : Fin 5 := ⟨n, by omega⟩
+    have hr := congrFun (leading_rec i) j
+    simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hv, Fin.val_natAdd,
+      leadingIndex, i, Nat.add_comm 2 n, Nat.add_comm 10 n, Nat.add_assoc] using hr
+  simpa only [hv, Fin.val_last, Fin.val_castAdd, Fin.val_natAdd] using
+    recurrence_convolution v h
 
 private def newHistoryRanks : List ℕ :=
   let keys := (List.finRange 60).filter fun k => 72 ≤ (exitRead (columnRepresentative k)).val
