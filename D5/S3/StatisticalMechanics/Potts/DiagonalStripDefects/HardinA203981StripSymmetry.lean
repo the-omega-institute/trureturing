@@ -41,6 +41,9 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Order.Defs.LinearOrder
 import Init.Data.Fin.Lemmas
+import Init.Data.List.Basic
+import Init.Data.List.Find
+import Init.Data.List.OfFn
 
 /-! Parity recolouring and simultaneous reflection of rows preserve diagonal defect counts. -/
 
@@ -105,13 +108,24 @@ private theorem triple_match (p r : Col) (h : cls p = cls r) :
   rw [h, ← hf] at he
   exact ⟨e.trans f.symm, (congrArg (relabel f).symm he).trans ((relabel f).symm_apply_apply r)⟩
 
-private theorem pair_match : ∀ i j : Fin 5,
+private theorem pair_match (i j : Fin 5) :
     let r := parityRows (representatives (pairClass i j))
     let a := cls r.1
     let b := cls r.2
     (i = a ∧ j = b) ∨ (j = a ∧ i = b) := by
-  simp only [representatives, Equiv.apply_symm_apply]
-  decide +kernel
+  have index_lt : (pairClass i j).val < (List.ofFn classPair).length := by
+    simpa only [List.length_ofFn] using (pairClass i j).isLt
+  have lookup_lt := index_lt
+  rw [pairClass_eq_lookup] at lookup_lt
+  have readback := List.getElem?_idxOf (List.idxOf_lt_length_iff.mp lookup_lt)
+  rw [← pairClass_eq_lookup, List.getElem?_eq_getElem index_lt, List.getElem_ofFn] at readback
+  have coordinates : classPair (pairClass i j) = (min i j, max i j) :=
+    Option.some.inj readback
+  dsimp only
+  rw [(cls_at_rep (pairClass i j)).1, (cls_at_rep (pairClass i j)).2, coordinates]
+  rcases le_total i j with h | h
+  · exact Or.inl ⟨(min_eq_left h).symm, (max_eq_right h).symm⟩
+  · exact Or.inr ⟨(min_eq_right h).symm, (max_eq_left h).symm⟩
 
 private theorem recolor_match (p r : Row 3 6)
     (h₀ : cls (parityRows p).1 = cls (parityRows r).1)
