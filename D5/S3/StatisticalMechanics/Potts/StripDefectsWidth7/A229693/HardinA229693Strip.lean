@@ -684,15 +684,16 @@ private theorem leading_polynomial (j : Fin 72) :
   have hbase : forward HardinA229585StripData.T HardinA229585StripData.initial (2 + 8) =
       ∑ k : Fin 8, leadingCoefficient k •
         forward HardinA229585StripData.T HardinA229585StripData.initial (2 + k.val) := by
-    have hcertificate : leading (10 : Fin 15) =
-        ∑ k : Fin 8, leadingCoefficient k • leading (leadingIndex (0 : Fin 5) k) :=
+    have hcertificate : leading ⟨2 + 8, by decide⟩ =
+        ∑ k : Fin 8, leadingCoefficient k • leading ⟨2 + k.val, by omega⟩ :=
       HardinA229585Strip.finite_certificate.2.2.2.2.2.2
-    simpa only [← leading_forward] using hcertificate
+    simpa only [← leading_forward, Fin.val_mk] using hcertificate
   have h (n : ℕ) := forward_shift HardinA229585StripData.T HardinA229585StripData.initial
     (Pi.single j (1 : ℤ)) 8 2 leadingCoefficient hbase n
   simp only [Matrix.dotProduct_mulVec, dotProduct_single_one, ← forward_eq] at h
-  simpa only [← leading_forward] using recurrence_convolution
-    (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) (fun n _ => h n)
+  simpa only [← leading_forward, Fin.val_last, Fin.val_castAdd, Fin.val_natAdd] using
+    recurrence_convolution
+      (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) (fun n _ => h n)
 
 private theorem w_copied (i : Fin 15) (hi : i.val ≠ 0) (j : Fin 96)
     (hj : (exitRead j).val < 72) :
