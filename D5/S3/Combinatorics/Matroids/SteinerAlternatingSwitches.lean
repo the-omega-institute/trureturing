@@ -22,7 +22,7 @@ open PointDeletedSteinerSwitch (pointDeletedFamily point_deleted_switch)
 open SteinerMatchingTranslations
 
 /-- Two perfect matchings with distinct partners at each vertex. -/
-private structure Matchings (V : Type*) where
+structure Matchings (V : Type*) where
   first : V → V
   second : V → V
   first_involutive : Function.Involutive first
@@ -36,7 +36,7 @@ namespace Matchings
 variable {V : Type*} (M : Matchings V)
 
 /-- The union of the two undirected perfect matchings. -/
-private def graph : SimpleGraph V where
+def graph : SimpleGraph V where
   Adj x y := M.first x = y ∨ M.second x = y
   symm := ⟨by
     intro x y h
@@ -57,7 +57,7 @@ private theorem supp_eq_reachable (x : V) :
   exact ConnectedComponent.eq.trans ⟨Reachable.symm, Reachable.symm⟩
 
 /-- At a commuting vertex the entire connected component consists of the four corners. -/
-private theorem component_eq_square {x : V} (h : M.first (M.second x) = M.second (M.first x)) :
+theorem component_eq_square {x : V} (h : M.first (M.second x) = M.second (M.first x)) :
     (M.graph.connectedComponentMk x).supp =
       {x, M.first x, M.second x, M.first (M.second x)} := by
   let corners : Set V := {x, M.first x, M.second x, M.first (M.second x)}
@@ -91,7 +91,7 @@ private theorem component_eq_square {x : V} (h : M.first (M.second x) = M.second
     · exact M.stepSecond x
     · exact (M.stepSecond x).trans (M.stepFirst (M.second x))
 
-private theorem square_card [Finite V] (x : V) :
+theorem square_card [Finite V] (x : V) :
     ({x, M.first x, M.second x, M.first (M.second x)} : Set V).ncard = 4 := by
   have hf := M.first_involutive
   have hg := M.second_involutive
@@ -153,7 +153,7 @@ private theorem six_le_component_of_noncommute [Finite V] {x : V}
   · exact ((M.stepFirst x).trans (M.stepSecond (f x))).trans (M.stepFirst (g (f x)))
 
 /-- A vertex fails to commute exactly when its component has at least six vertices. -/
-private theorem noncommute_iff_six_le_component [Finite V] (x : V) :
+theorem noncommute_iff_six_le_component [Finite V] (x : V) :
     M.first (M.second x) ≠ M.second (M.first x) ↔
       6 ≤ (M.graph.connectedComponentMk x).supp.ncard := by
   refine ⟨M.six_le_component_of_noncommute, fun size h => ?_⟩
@@ -189,7 +189,7 @@ private theorem exists_large_component_of_not_dvd [Fintype V] (hcard : ¬ 4 ∣ 
 end Matchings
 
 /-- The two matching translations for deletion at q and a fixed pivot. -/
-private noncomputable def pivotMatchings {r : ℕ} {S : Set (Set (Fin (r + 1)))}
+noncomputable def pivotMatchings {r : ℕ} {S : Set (Set (Fin (r + 1)))}
     (valid : IsPartialSteiner S) (complete : ∀ a b, a ≠ b → Covered S a b)
     (q : Fin (r + 1)) (v : Fin r) : Matchings (Option (Fin (r + 1))) where
   first := translate valid complete q
