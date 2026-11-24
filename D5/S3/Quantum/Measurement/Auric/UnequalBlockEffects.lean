@@ -751,10 +751,6 @@ private theorem last_mem_allowedRows (j : Fin 3) : j ∈ allowedRows (Fin.last 3
 private theorem allowedRows_nonempty (c : Fin 4) : (allowedRows c).Nonempty := by
   fin_cases c <;> decide
 
-private theorem multiplicity_castSucc (l : Fin 3 → ℕ) (b : ℕ) (j : Fin 3) :
-    multiplicity l b j.castSucc = l j := by
-  fin_cases j <;> rfl
-
 private theorem multiplicity_last (l : Fin 3 → ℕ) (b : ℕ) :
     multiplicity l b (Fin.last 3) = b := rfl
 
@@ -772,7 +768,7 @@ private theorem priceObjective_shift (l : Fin 3 → ℕ) (b : ℕ) (d : ℝ) (τ
   simp only [hG, mul_add, sum_add_distrib, ← sum_mul, hτ]
   have hc : (∑ c, (multiplicity l b c : ℝ)) = d := by
     rw [Fin.sum_univ_castSucc]
-    simp only [multiplicity_castSucc, multiplicity_last, add_comm _ (b : ℝ), hd]
+    simp only [multiplicity_missing, multiplicity_last, add_comm _ (b : ℝ), hd]
   rw [hc]
   ring
 
@@ -835,7 +831,7 @@ private theorem price_coercivity (l : Fin 3 → ℕ) (b : ℕ) (d : ℝ) (τ : F
         priceObjective l b τ G u := by
     unfold priceObjective
     rw [Fin.sum_univ_castSucc, ← hsplit (fun a => τ a * u a)]
-    simp only [multiplicity_castSucc, multiplicity_last, mul_sub, sum_sub_distrib,
+    simp only [multiplicity_missing, multiplicity_last, mul_sub, sum_sub_distrib,
       ← Finset.sum_mul, hsum_τ]
     have hfull' := mul_le_mul_of_nonneg_left hfull (Nat.cast_nonneg b)
     have hl := congrArg (fun x : ℝ => x * u j) hsum_l
@@ -954,7 +950,7 @@ private theorem derivative_log_expSum (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4
 /-- Every strictly admissible trace triple admits positive normalized direct
 entropy weights. The row equations use the original labels. -/
 theorem exists_direct_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
-    (_hd : 0 < d) (hcap : ∑ j, (d - m j) ≤ d)
+    (hcap : ∑ j, (d - m j) ≤ d)
     (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (d : ℝ) - (d - m j : ℕ))
     (htotal : ∑ j, τ j = d) :
     ∃ w : Fin 3 → ℝ, (∀ j, 0 < w j) ∧ (∑ j, w j = 1) ∧
@@ -1018,7 +1014,7 @@ private theorem weightMass_relabel (e : Equiv.Perm (Fin 3)) (l : Fin 3 → ℕ) 
   unfold weightMass
   conv_lhs => rw [Fin.sum_univ_castSucc]
   conv_rhs => rw [Fin.sum_univ_castSucc]
-  simp only [multiplicity_castSucc, multiplicity_last, hlast, hmiss, Function.comp_apply]
+  simp only [multiplicity_missing, multiplicity_last, hlast, hmiss, Function.comp_apply]
   congr 1
   simpa only [e.apply_eq_iff_eq] using Equiv.sum_comp e
     (fun k => (l k : ℝ) * (if k = e j then 0 else w (e j) / (1 - w k)))
@@ -1047,7 +1043,7 @@ private theorem spectralValues_relabel (e : Equiv.Perm (Fin 3)) (f : ℝ → ℝ
 /-- The direct entropy maximum for strictly admissible traces is attained by
 the proportional allocation after sorting the weights and relabeling the rows. -/
 theorem exists_isGreatest_direct (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
-    (hd : 0 < Fintype.card n) (hcap : ∑ j, (Fintype.card n - m j) ≤ Fintype.card n)
+    (hcap : ∑ j, (Fintype.card n - m j) ≤ Fintype.card n)
     (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (Fintype.card n : ℝ) - (Fintype.card n - m j : ℕ))
     (htotal : ∑ j, τ j = Fintype.card n) :
     ∃ (e : Equiv.Perm (Fin 3)) (w : Fin 3 → ℝ), Antitone w ∧
@@ -1057,7 +1053,7 @@ theorem exists_isGreatest_direct (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
           (Fintype.card n - ∑ j, (Fintype.card n - m j)) (weightEntries w)) := by
   let l (j : Fin 3) := Fintype.card n - m j
   obtain ⟨w, hw, hwt, hr⟩ :=
-    exists_direct_certificate (Fintype.card n) m τ hd hcap hpos hupper htotal
+    exists_direct_certificate (Fintype.card n) m τ hcap hpos hupper htotal
   let e := Tuple.sort (fun j => -w j)
   have he : Antitone (w ∘ e) := fun _ _ hij =>
     neg_le_neg_iff.mp (Tuple.monotone_sort (fun j => -w j) hij)
@@ -1292,16 +1288,13 @@ private theorem complementPotential_shift (c : Fin 4) (u : Fin 3 → ℝ) (a : �
     exact h₂
 
 open Filter Topology in
-/-- Every strictly admissible trace triple admits a complementary entropy
-certificate with the original row labels and positive row and column parameters. -/
-theorem exists_complement_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
-    (_hd : 0 < d) (hcap : ∑ j, (d - m j) ≤ d)
+private theorem exists_complement_weights (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (hcap : ∑ j, (d - m j) ≤ d)
     (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (d : ℝ) - (d - m j : ℕ))
     (htotal : ∑ j, τ j = d) :
-    ∃ (w : Fin 3 → ℝ) (k : Fin 4 → ℝ), (∀ j, 0 < w j) ∧ (∀ c, 0 < k c) ∧
-      (∀ c, ∑ j, allocation (complementEntries w k) j c = 1) ∧
+    ∃ w : Fin 3 → ℝ, (∀ j, 0 < w j) ∧
       ∀ j, (∑ c, (multiplicity (fun j => d - m j) (d - ∑ i, (d - m i)) c : ℝ) *
-        allocation (complementEntries w k) j c) = τ j := by
+        allocation (complementEntries w (complementScales w)) j c) = τ j := by
   let l (j : Fin 3) := d - m j
   let b := d - ∑ i, l i
   let F := priceObjective l b τ complementPotential
@@ -1322,9 +1315,7 @@ theorem exists_complement_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 
       (continuous_finsetSum _ (fun j _ => continuous_const.mul (continuous_apply j)))
   obtain ⟨u, hu⟩ := exists_minimum_prices F hF
     (priceObjective_shift l b d τ hcount htotal _ complementPotential_shift) hδ hbound
-  refine ⟨complementWeights u, complementScales (complementWeights u), fun _ => Real.exp_pos _,
-    complementScales_pos _ (fun _ => Real.exp_pos _),
-    complement_columns _ (fun _ => Real.exp_pos _), fun j => ?_⟩
+  refine ⟨complementWeights u, fun _ => Real.exp_pos _, fun j => ?_⟩
   let line (t : ℝ) (i : Fin 3) := u i + if i = j then t else 0
   let mass (p : Fin 3 → ℝ) : ℝ :=
     ∑ c, (multiplicity l b c : ℝ) * complementPoint p j c
@@ -1375,6 +1366,89 @@ theorem exists_complement_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 
     have h := hineq t
     by_contra! hn
     exact (mul_neg_of_pos_of_neg ht' (sub_neg.mpr hn)).not_ge h
+
+/-- Every strictly admissible trace triple admits a complementary entropy
+certificate with the original row labels and positive row and column parameters. -/
+theorem exists_complement_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (hcap : ∑ j, (d - m j) ≤ d)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (d : ℝ) - (d - m j : ℕ))
+    (htotal : ∑ j, τ j = d) :
+    ∃ (w : Fin 3 → ℝ) (k : Fin 4 → ℝ), (∀ j, 0 < w j) ∧ (∀ c, 0 < k c) ∧
+      (∀ c, ∑ j, allocation (complementEntries w k) j c = 1) ∧
+      ∀ j, (∑ c, (multiplicity (fun j => d - m j) (d - ∑ i, (d - m i)) c : ℝ) *
+        allocation (complementEntries w k) j c) = τ j := by
+  obtain ⟨w, hw, hr⟩ := exists_complement_weights d m τ hcap hpos hupper htotal
+  exact ⟨w, complementScales w, hw, complementScales_pos w hw, complement_columns w hw, hr⟩
+
+/-- The complementary entropy maximum for strictly admissible traces is attained by
+the clipped allocation after sorting the weights and relabeling the rows. -/
+theorem exists_isGreatest_complement (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (hcap : ∑ j, (Fintype.card n - m j) ≤ Fintype.card n)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (Fintype.card n : ℝ) - (Fintype.card n - m j : ℕ))
+    (htotal : ∑ j, τ j = Fintype.card n) :
+    ∃ (e : Equiv.Perm (Fin 3)) (w : Fin 3 → ℝ) (k : Fin 4 → ℝ), Monotone k ∧
+      IsGreatest {v : ℝ | ∃ A : Fin 3 → Matrix n n ℂ, ∃ hA : Feasible m τ A,
+        spectralSum (fun x => Real.negMulLog (1 - x)) A hA.1 = v}
+        (allocationValue (fun x => Real.negMulLog (1 - x)) (fun j => Fintype.card n - m (e j))
+          (Fintype.card n - ∑ j, (Fintype.card n - m j)) (complementEntries w k)) := by
+  let l (j : Fin 3) := Fintype.card n - m j
+  let b := Fintype.card n - ∑ j, l j
+  obtain ⟨w, hw, hr⟩ := exists_complement_weights (Fintype.card n) m τ hcap hpos hupper htotal
+  let e := Tuple.sort w
+  let q := finSuccEquiv' (Fin.last 3)
+  let p : Equiv.Perm (Fin 4) := (q.trans (Equiv.optionCongr e)).trans q.symm
+  have hp (i : Fin 3) : p i.castSucc = (e i).castSucc := by
+    change q.symm (Option.map e (q i.castSucc)) = (e i).castSucc
+    rw [show q i.castSucc = some i from finSuccEquiv'_last_apply_castSucc i]
+    exact Fin.succAbove_last_apply (e i)
+  have hlast : p (Fin.last 3) = Fin.last 3 := by simp [p, q]
+  let k := complementScales w
+  let k' := k ∘ p
+  have hord : Monotone k' := by
+    intro a c
+    refine Fin.lastCases (fun h => ?_) (fun i => ?_) a
+    · have hc : c = Fin.last 3 := le_antisymm (Fin.le_last c) h
+      rw [hc]
+    · refine Fin.lastCases ?_ (fun j => ?_) c
+      · intro _
+        simp only [k', Function.comp_apply, hp, hlast, k, complementScales,
+          Fin.lastCases_castSucc, Fin.lastCases_last]
+        exact (le_sup' (fun i => (pairWeight w i)⁻¹) (mem_univ (e i))).trans (le_max_right _ _)
+      · intro hij
+        simp only [k', Function.comp_apply, hp, k, complementScales, Fin.lastCases_castSucc]
+        apply inv_anti₀ (pairWeight_pos w hw (e j))
+        rw [pairWeight_eq, pairWeight_eq]
+        exact sub_le_sub_left (Tuple.monotone_sort w (Fin.castSucc_le_castSucc_iff.mp hij)) _
+  have ha (j : Fin 3) (c : Fin 4) :
+      allocation (complementEntries (w ∘ e) k') j c =
+        allocation (complementEntries w k) (e j) (p c) := by
+    simp only [allocation, complementEntries, Function.comp_apply, k', ← hp, p.apply_eq_iff_eq]
+  have hl (c : Fin 4) : multiplicity (l ∘ e) b c = multiplicity l b (p c) := by
+    refine Fin.lastCases ?_ (fun i => ?_) c
+    · rw [hlast, multiplicity_last, multiplicity_last]
+    · rw [hp, multiplicity_missing, multiplicity_missing]
+      rfl
+  have hc : (∑ j, l (e j)) = ∑ j, l j := Equiv.sum_comp e l
+  have hcap' : (∑ j, l (e j)) ≤ Fintype.card n := hc.trans_le hcap
+  have hcol' (c : Fin 4) : ∑ j, allocation (complementEntries (w ∘ e) k') j c = 1 := by
+    simp_rw [ha]
+    exact (Equiv.sum_comp e _).trans (complement_columns w hw (p c))
+  have hr' (j : Fin 3) :
+      (∑ c, (multiplicity (l ∘ e) (Fintype.card n - ∑ i, l (e i)) c : ℝ) *
+        allocation (complementEntries (w ∘ e) k') j c) = τ (e j) := by
+    rw [hc]
+    change (∑ c, (multiplicity (l ∘ e) b c : ℝ) *
+      allocation (complementEntries (w ∘ e) k') j c) = τ (e j)
+    simp_rw [hl, ha]
+    exact (Equiv.sum_comp p _).trans (hr (e j))
+  have hm := isGreatest_complement (n := n) (m ∘ e) (τ ∘ e) (w ∘ e) k' hcap'
+    (fun j => hw (e j)) (fun c => complementScales_pos w hw (p c)) hord hcol' hr'
+  change IsGreatest _ (allocationValue (fun x => Real.negMulLog (1 - x)) (l ∘ e)
+    (Fintype.card n - ∑ j, l (e j)) (complementEntries (w ∘ e) k')) at hm
+  rw [spectralValues_relabel, hc] at hm
+  exact ⟨e, w ∘ e, k', hord, hm⟩
+
+#print axioms exists_isGreatest_complement
 
 #print axioms exists_complement_certificate
 
