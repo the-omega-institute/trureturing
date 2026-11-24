@@ -75,8 +75,12 @@ private theorem witnessRankThree :
       norm_num [witnessX, Matrix.diagonal_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
         Matrix.sum_apply, Matrix.smul_apply, Fin.sum_univ_two, Fin.sum_univ_four]
   · rw [Matrix.rank_diagonal, Fintype.card_subtype]
-    rw [show (Finset.univ : Finset (Fin 4)) = {0, 1, 2, 3} by decide]
-    norm_num
+    have hs : (Finset.univ.filter fun i : Fin 4 => ![(2 : ℂ), -1, -1, 0] i ≠ 0) =
+        {0, 1, 2} := by
+      ext i
+      fin_cases i <;> norm_num [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+    rw [hs]
+    decide
 
 private theorem rankThreeRejected : ¬ rankThreeArena.Law dimensionFalse := by
   intro h
