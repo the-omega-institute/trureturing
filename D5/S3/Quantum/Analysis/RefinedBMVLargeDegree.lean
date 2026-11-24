@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The refined BMV lower bounds for first degree at least eleven in every finite dimension. -/
+   digest: The refined BMV lower bounds with three copies of the second factor in every finite dimension. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ClearedMiddleSign
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureCover
@@ -58,13 +58,13 @@ local instance : DecidableEq n := Classical.decEq n
 
 /-- The product lower bound for PSD factors in any finite complex matrix space,
 including singular factors. -/
-theorem product_bound {p : ℕ} (hp : 11 ≤ p) (A B : Matrix n n ℂ)
+private theorem product_bound {p : ℕ} (hp : 11 ≤ p) (A B : Matrix n n ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef) :
     trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ DimThree.wordMean p A B :=
   ExtremeWalk.product_bound_all (upperPSD.{u} hp) A B hA hB
 
 /-- The exponential lower bound for Hermitian factors in any finite complex matrix space. -/
-theorem exponential_bound {p : ℕ} (hp : 11 ≤ p) (H K : Matrix n n ℂ)
+private theorem exponential_bound {p : ℕ} (hp : 11 ≤ p) (H K : Matrix n n ℂ)
     (hH : H.IsHermitian) (hK : K.IsHermitian) :
     trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) :=
   ExtremeWalk.exponential_bound_all (upperPSD.{u} hp) H K hH hK

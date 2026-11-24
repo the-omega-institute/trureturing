@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV33
+  - D5/S3/Quantum/Analysis/RefinedBMVLargeDegree
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -44,6 +45,24 @@ Theorem 1 and Lemma 2 give the known low-dimensional cases and the reduction
 from a stronger trace-power comparison. Section 7(iii), page 8, identifies
 the higher-dimensional cases with word counts `(3,3)` and `(4,3)`. Sections 3–5 derive the
 closed-walk trace expansion and the three-dimensional comparison.
+
+## All first degrees at least three
+
+Hägele formulates the product comparison (Eₚ,₃) and exponential lower
+bound (Lₚ,₃) in Section 1. Section 7(ii) describes the scalar certificate
+route in dimension three for larger first degrees, and Section 7(iii)
+identifies the obstruction to the triangle pairing in higher dimensions.
+For every integer p ≥ 3, the repository proof gives both bounds in every
+finite complex matrix space, with arbitrary spectra and singular PSD
+inputs allowed in the product comparison. The proof for p ≥ 11 uses the composition average
+and cubic walk expansion from Lemma 3 and Sections 3–4. For the original
+logarithmic kernel, the strip estimates, the short-gap quadrature certificates,
+the cleared middle-gap replay, and the gap-four estimate give a strictly
+negative mixed derivative. The two endpoint limits complete the interval
+Gram argument on arbitrary finite samples. Continuity includes zero
+centers, and the centered Schur walks give the product comparison. A dyadic
+trace-power comparison gives the exponential bound by the implication
+in Lemma 2. For 3 ≤ p ≤ 10 the theorem uses the existing finite-degree proofs.
 
 ## Scope and conventions
 
