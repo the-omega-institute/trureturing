@@ -35,7 +35,7 @@ private theorem scaled_weight (w : J → ℝ) (s : ℝ) {d : ℕ} {a : J → ℕ
   simp only [mul_pow, prod_mul_distrib, hs]
   ring
 
-private def coordinateBox (d : ℕ) : Finset (ℕ × ℕ) :=
+def coordinateBox (d : ℕ) : Finset (ℕ × ℕ) :=
   (range (d + 1) ×ˢ range (d + 1)).filter fun p => p.1 = 0 ∨ p.2 = 0
 
 private theorem sum_coordinateBox (x : ℝ) (d : ℕ) :

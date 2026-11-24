@@ -6,12 +6,14 @@
    utility: kind=certified-instance; basis=refutes=atom:bcd6ccc04843e1ea8eec6f311a87f1c58d908c0e79e292a6cddb653eda8101ae
    digest: A kernel certificate refutes Switkay's expanded factor-density coincidence claim. -/
 
+import D5.S3.Arith.PrimitiveRoot.SievePrimeFactors
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.PrimeCounting
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic.IntervalCases
 
 namespace D5.S3.Factorization.FactorDensityHighlyCompositeCounterexample
+open D5.S3.Arith.PrimitiveRoot.SievePrimeFactors
 
 /-- The number of positive divisors of `n`. -/
 def tau (n : Nat) : Nat := n.divisors.card
@@ -183,42 +185,6 @@ private theorem profileCheck_sound {bases es : List Nat} {v t : Nat}
         (by simpa [profileValue, mul_assoc] using hvalue)
         hnext
       simpa [profileTau, mul_assoc] using hrec
-
-private theorem nth_prime_succ_le_of_prime {k p : Nat} (hp : Nat.Prime p)
-    (h : Nat.nth Nat.Prime k < p) : Nat.nth Nat.Prime (k + 1) <= p := by
-  by_contra hn
-  have hp_lt : p < Nat.nth Nat.Prime (k + 1) := Nat.lt_of_not_ge hn
-  exact (not_le_of_gt h) (Nat.le_nth_of_lt_nth_succ hp_lt hp)
-
-private theorem nth_prime_le_get {qs : List Nat} (hsorted : qs.SortedLT)
-    (hprime : forall q, q ∈ qs -> Nat.Prime q) :
-    forall i (hi : i < qs.length), Nat.nth Nat.Prime i <= qs[i] := by
-  intro i
-  induction i with
-  | zero =>
-      intro hi
-      simpa using (hprime qs[0] (List.getElem_mem hi)).two_le
-  | succ i ih =>
-      intro hi
-      have hi' : i < qs.length := by omega
-      apply nth_prime_succ_le_of_prime (hprime qs[i + 1] (List.getElem_mem hi))
-      exact lt_of_le_of_lt (ih hi')
-        (hsorted.getElem_lt_getElem_of_lt (i := i) (j := i + 1) (by omega))
-
-private theorem nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by
-  have h := Nat.nth_count (p := Nat.Prime) (by decide : Nat.Prime 13)
-  norm_num [Nat.count] at h
-  exact h
-
-private theorem nth_prime_six : Nat.nth Nat.Prime 6 = 17 := by
-  have h := Nat.nth_count (p := Nat.Prime) (by decide : Nat.Prime 17)
-  norm_num [Nat.count] at h
-  exact h
-
-private theorem nth_prime_seven : Nat.nth Nat.Prime 7 = 19 := by
-  have h := Nat.nth_count (p := Nat.Prime) (by decide : Nat.Prime 19)
-  norm_num [Nat.count] at h
-  exact h
 
 private theorem nth_prime_eight : Nat.nth Nat.Prime 8 = 23 := by
   have h := Nat.nth_count (p := Nat.Prime) (by decide : Nat.Prime 23)

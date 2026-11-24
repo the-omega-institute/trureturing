@@ -260,3 +260,133 @@ set_option pp.proofs false in
 end TwoForms
 end
 end Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
+
+namespace Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.ThroughPhase
+open _root_.D5.S3.Combinatorics.PerfectMatchings
+open SerialEndpointPairing SerialEndpointPairing.CutModule
+open FiniteBandSwitch.FourEndpoint
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Equiv LeanInformationAudit
+noncomputable section
+universe u
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+abbrev signature : Signature where
+  Params := Σ n : ℕ, Fin n → Perm (Fin 2)
+  State p := Fin (p.1 + 1) → CutModule.{u}
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p M => throughPhase (serialOn p.1 M p.2).pairing)
+    (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (n : ℕ) (M : Fin (n+1) → CutModule.{u}) (c : Fin n → Perm (Fin 2)),
+    (∀ i, (M i).pairing ≠ thirdPairing) →
+      R.readout () ⟨n,c⟩ M = serialPhase n M c
+
+private def straight : CutModule.{u} := toy J0
+  (by intro i; fin_cases i <;> rfl) (by intro i; fin_cases i <;> decide)
+
+private def crossed : CutModule.{u} := toy J1
+  (by intro i; fin_cases i <;> rfl) (by intro i; fin_cases i <;> decide)
+
+private theorem straight_pairing : straight.{u}.pairing = J0 := toy_pairing _ _ _
+private theorem crossed_pairing : crossed.{u}.pairing = J1 := toy_pairing _ _ _
+
+private def emptySeams : Fin 0 → Perm (Fin 2) := Fin.elim0
+private def baseStraight : Fin 1 → CutModule.{u} := fun _ => straight
+private def baseCrossed : Fin 1 → CutModule.{u} := fun _ => crossed
+
+private theorem crossed_through (i : Fin 1) : (baseCrossed.{u} i).pairing ≠ thirdPairing := by
+  change crossed.{u}.pairing ≠ thirdPairing
+  rw [crossed_pairing]
+  decide
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h 0 baseCrossed.{u} emptySeams crossed_through
+  change false = throughPhase crossed.{u}.pairing at hh
+  rw [crossed_pairing] at hh
+  exact (by decide : ¬(false = throughPhase J1)) hh
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro role
+  have hr : role = () := Subsingleton.elim _ _
+  subst role
+  refine ⟨⟨0,emptySeams⟩,baseStraight.{u},baseCrossed.{u},?_⟩
+  change throughPhase (serialOn 0 baseStraight.{u} emptySeams).pairing ≠
+    throughPhase (serialOn 0 baseCrossed.{u} emptySeams).pairing
+  have ht : ∀ i, (baseStraight.{u} i).pairing ≠ thirdPairing := by
+    intro i
+    change straight.{u}.pairing ≠ _
+    rw [straight_pairing]
+    decide
+  rw [serialOn_phase _ _ _ ht, serialOn_phase _ _ _ crossed_through]
+  change throughPhase straight.{u}.pairing ≠ throughPhase crossed.{u}.pairing
+  rw [straight_pairing,crossed_pairing]
+  decide
+
+def source_registration : Registration arena.{u} (type_of% @serialOn_phase.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨serialOn_phase,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl,rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@serialOn_phase.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.CutModule.serialOn_phase.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.ThroughPhase.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun _ p M => throughPhase (serialOn p.1 M p.2).pairing) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
+    definition := none
+    coordinates := #[0,2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.ThroughPhase
