@@ -258,8 +258,11 @@ def haarKappaPoly (p : CoefficientList) : IntRatio := haarKappaPolyFrom Nat.zero
 def haarInner (p q : CoefficientList) : IntRatio := haarKappaPoly (p.mul q)
 
 def chi0 : CoefficientList := .cons (IntRatio.ofInt Int.one) .nil
+def chi1Constant : Int := Int.one.neg
+def chi1Linear : Int := Int.ofNat four
+
 def chi1 : CoefficientList :=
-  .cons (IntRatio.ofInt Int.one.neg) (.cons (IntRatio.ofInt (Int.ofNat four)) .nil)
+  .cons (IntRatio.ofInt chi1Constant) (.cons (IntRatio.ofInt chi1Linear) .nil)
 def chi2 : CoefficientList :=
   .cons (IntRatio.ofInt Int.one) (.cons (IntRatio.ofInt (Int.ofNat (three.mul four)).neg)
     (.cons (IntRatio.ofInt (Int.ofNat sixteen)) .nil))
@@ -345,6 +348,21 @@ theorem haarInner_chi22 :
             (integrate_multiple four Int.two (Int.ofNat seven) oneTwentyEight.pred haarKappaMoment_4
               (integrate_nil five))))))
     Eq.refl
+
+theorem haarInner_chi10 :
+    Equivalent (haarInner chi1 chi0) (IntRatio.ofInt Int.zero) :=
+  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (Eq.refl : Eq (chi0.mul chi1) (chi1.mul chi0))) haarInner_chi01
+
+theorem haarInner_chi20 :
+    Equivalent (haarInner chi2 chi0) (IntRatio.ofInt Int.zero) :=
+  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (Eq.refl : Eq (chi0.mul chi2) (chi2.mul chi0))) haarInner_chi02
+
+theorem haarInner_chi21 :
+    Equivalent (haarInner chi2 chi1) (IntRatio.ofInt Int.zero) :=
+  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (Eq.refl : Eq (chi1.mul chi2) (chi2.mul chi1))) haarInner_chi12
 
 /-- The six entries on and above the diagonal of the character Gram matrix. -/
 theorem peter_weyl_chi012_orthonormal :

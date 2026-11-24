@@ -47,12 +47,12 @@ internal sealed class OmegaBargmannHaarHeckeDocument : IScribeDocumentDefinition
                     All(Equiv(Call("moment", Add(k, one)),
                         Mul(Call("moment", k), new Formula.Fraction(Add(Mul(two, k), one),
                             Mul(two, Add(k, two))))), ("k", Naturals)),
-                    "The factorial functional evaluates the even monomials of the normalized three-sphere. Cancelling the shared factorials and powers of four gives the recurrence for every natural degree."),
+                    "The factorial functional is defined by the normalized three-sphere formula for even monomials. Cancelling the shared factorials and powers of four gives the recurrence for every natural degree."),
                 Law("three-character-orthonormality", "peter_weyl_chi012_orthonormal",
                     "The first three even characters are orthonormal",
                     Disp(And(Inner(0, 0, one), And(Inner(0, 1, zero), And(Inner(0, 2, zero),
                         And(Inner(1, 1, one), And(Inner(1, 2, zero), Inner(2, 2, one))))))),
-                    "The characters have coefficient lists (1), (−1, 4), and (1, −12, 16). Convolving the coefficients and applying moments of degrees zero through four gives these six entries. Convolution is symmetric in the two factors."),
+                    "The characters have coefficient lists (1), (−1, 4), and (1, −12, 16). Convolving the coefficients and applying moments of degrees zero through four gives these six entries. The three reverse pairings also vanish by the exact coefficient products."),
                 Law("norm-five-hecke-eigenvalue", "heckeT5_chi1_eigenvalue",
                     "The six-spinor Hecke sum has eigenvalue negative two fifths",
                     All(If(Ne(q, zero), Equiv(Call("hecke", q), Mul(eigenvalue, Call("character", q)))),
@@ -60,7 +60,7 @@ internal sealed class OmegaBargmannHaarHeckeDocument : IScribeDocumentDefinition
                     "The six right products each have five times the original squared norm. Pairing the opposite coordinate signs cancels the mixed terms in the squared scalar parts. The operator uses the unnormalized sum."),
                 Law("norm-five-ramanujan-margin", "heckeT5_ramanujan_margin",
                     "The rational eigenvalue has positive Ramanujan margin",
-                    Disp(And(Equiv(Sub(Mul(D(4), five), Square(eigenvalue)), margin), Lt(zero, margin))),
+                    Disp(And(Equiv(Sub(Mul(D(4), five), Square(Seq(Open, eigenvalue, Close))), margin), Lt(zero, margin))),
                     "Subtracting the squared eigenvalue from four times five gives 496 over 25."),
                 Law("quaternion-gate-determinism", "quaternion_fractran_deterministic",
                     "Quaternion division by a nonzero integer is deterministic",
@@ -76,7 +76,7 @@ internal sealed class OmegaBargmannHaarHeckeDocument : IScribeDocumentDefinition
                                 Seq(Neg, Sp, Open, new Formula.Bind(FormulaQuantifier.Exists,
                                     FormulaIdentifier.Create("q"), quadruples,
                                     Eq(Call("mul", yx, unwindY), Call("scale", five, q))), Close))))),
-                    "The ordered states are (1, 2, 2, 4) and (1, 2, 2, −4). The unwind rotor is (1, 0, −2, 0) and the successful quotient is (1, 2, 0, 0). The reversed product has second coordinate −6, which has no integral quotient by five."))));
+                    "The ordered states are (1, 2, 2, 4) and (1, 2, 2, −4). The unwind rotor is (1, 0, −2, 0) and the successful quotient is (1, 2, 0, 0). Right multiplication of YX by the unwind rotor gives second coordinate −6, which has no integral quotient by five."))));
     }
 
     private static Formula Integers => Seq(Mathbb, Grp(F.Id("Z")));

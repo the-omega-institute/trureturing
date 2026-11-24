@@ -20,7 +20,7 @@ namespace Omega.Computability.QuaternionFractran
 open Omega.Geometry.BargmannGram (Quad4)
 
 def Step (psi A : Quad4) (p : Nat) (q : Quad4) : Prop :=
-  Eq (psi.mul A) (Quad4.scale (Int.ofNat p) q)
+  And (Not (Eq p Nat.zero)) (Eq (psi.mul A) (Quad4.scale (Int.ofNat p) q))
 
 def Enabled (psi A : Quad4) (p : Nat) : Prop :=
   Exists (fun q => Step psi A p q)
@@ -32,12 +32,12 @@ theorem quaternion_fractran_deterministic {psi A q₁ q₂ : Quad4} {p : Int}
   Quad4.scale_injective p hp (h₁.symm.trans h₂)
 
 theorem Step.deterministic {psi A q₁ q₂ : Quad4} {p : Nat}
-    (hp : Not (Eq p Nat.zero)) (h₁ : Step psi A p q₁) (h₂ : Step psi A p q₂) : Eq q₁ q₂ :=
-  quaternion_fractran_deterministic (fun h => hp (Int.ofNat_inj.mp h)) h₁ h₂
+    (h₁ : Step psi A p q₁) (h₂ : Step psi A p q₂) : Eq q₁ q₂ :=
+  quaternion_fractran_deterministic (fun h => h₁.left (Int.ofNat_inj.mp h)) h₁.right h₂.right
 
 theorem Step.norm_identity {psi A q : Quad4} {p : Nat} (h : Step psi A p q) :
     Eq (psi.mul A).normSq ((p.mul p).mul q.normSq) :=
-  (congrArg Quad4.normSq h).trans
+  (congrArg Quad4.normSq h.right).trans
     ((Quad4.normSq_scale (Int.ofNat p) q).trans (Nat.mul_assoc p p q.normSq).symm)
 
 def psiX : Quad4 := ⟨Int.one, Int.two, Int.zero, Int.zero⟩
@@ -55,7 +55,7 @@ def gateUnwindY : Quad4 := psiY.conj
 def unwindDenominator : Nat := Nat.one.succ.succ.succ.succ
 
 theorem psiXY_step : Step psiXY gateUnwindY unwindDenominator psiX :=
-  Eq.refl
+  And.intro (Nat.succ_ne_zero _) Eq.refl
 
 private theorem five_mul_ne_six (n : Nat) :
     Not (Eq (unwindDenominator.mul n) unwindDenominator.succ) :=
@@ -73,7 +73,7 @@ private theorem five_mul_ne_six (n : Nat) :
 theorem psiYX_blocked : Not (Enabled psiYX gateUnwindY unwindDenominator) :=
   fun enabled => enabled.elim (fun q h =>
     have hx : Eq ((Int.ofNat unwindDenominator).mul q.x) (Int.negSucc unwindDenominator) :=
-      (congrArg Quad4.x h).symm
+      (congrArg Quad4.x h.right).symm
     five_mul_ne_six q.x.natAbs
       ((Int.natAbs_mul (Int.ofNat unwindDenominator) q.x).symm.trans (congrArg Int.natAbs hx)))
 

@@ -7,6 +7,7 @@ prelude
 public import OmegaMath.Geometry.BargmannGram.Fractions
 import OmegaMath.Geometry.BargmannGram.Identities
 import OmegaMath.Geometry.BargmannGram.Polynomial
+public import OmegaMath.Harmonic.PiFreeHaar.Moments
 
 /-!
 Omega original.
@@ -37,7 +38,6 @@ end HeckeT5
 
 open HeckeT5
 
-private def four : Int := Int.ofNat Nat.one.succ.succ.succ
 private def five : Nat := Nat.one.succ.succ.succ.succ
 
 private def sumSpinors {α : Type} (add : α → α → α) (term : Quad4 → α) : α :=
@@ -46,8 +46,7 @@ private def sumSpinors {α : Type} (add : α → α → α) (term : Quad4 → α
 
 /-- The first character in terms of the squared normalized scalar coordinate. -/
 def evalChi1 (q : Quad4) : IntRatio :=
-  let four := Int.ofNat Nat.one.succ.succ.succ
-  ((IntRatio.ofInt four).mul (kappa q Quad4.one)).sub (IntRatio.ofInt Int.one)
+  ((IntRatio.ofInt chi1Linear).mul (kappa q Quad4.one)).sub (IntRatio.ofInt chi1Constant.neg)
 
 /-- The unnormalized sum of the character over the six right products. -/
 def heckeT5Chi1 (q : Quad4) : IntRatio :=
@@ -56,7 +55,7 @@ def heckeT5Chi1 (q : Quad4) : IntRatio :=
     ((term spinorZPos).add (term spinorZNeg))
 
 private def chi1Numerator (scalar denominator : Int) : Int :=
-  (four.mul (Int.square scalar)).sub denominator
+  (chi1Linear.mul (Int.square scalar)).sub denominator
 
 private theorem dot_one (q : Quad4) : Eq (q.dot Quad4.one) q.w :=
   have left := (Eq.map₂ Int.add (Int.mul_one q.w) (Int.mul_zero q.x)).trans (Int.add_zero q.w)
@@ -66,11 +65,11 @@ private theorem dot_one (q : Quad4) : Eq (q.dot Quad4.one) q.w :=
 private theorem evalChi1_value (q : Quad4) (d : Nat) (hd : Not (Eq d Nat.zero))
     (hnorm : Eq q.normSq d) :
     Equivalent (evalChi1 q) (IntRatio.value (chi1Numerator q.w (Int.ofNat d)) d) :=
-  let a := four.mul (Int.square q.w)
+  let a := chi1Linear.mul (Int.square q.w)
   have hk : Eq (kappa q Quad4.one) (IntRatio.value (Int.square q.w) d) :=
     Eq.map₂ IntRatio.value (congrArg Int.square (dot_one q))
       ((Nat.mul_one q.normSq).trans hnorm)
-  have hm := (congrArg (IntRatio.ofInt four).mul hk).trans (value_mul_int four (Int.square q.w) d)
+  have hm := (congrArg (IntRatio.ofInt chi1Linear).mul hk).trans (value_mul_int chi1Linear (Int.square q.w) d)
   Eq.subst (fun v : IntRatio => Equivalent (v.sub (IntRatio.ofInt Int.one))
       (IntRatio.value (chi1Numerator q.w (Int.ofNat d)) d)) hm.symm
     ((IntRatio.sub_congr (IntRatio.equivalent_refl (IntRatio.value a d))
@@ -93,7 +92,7 @@ private theorem sum_numerators (q : Quad4) :
   let norm := (w.sq.add x.sq).add (y.sq.add z.sq)
   let scalar := fun r : Quad4 =>
     (((w.mul (.const r.w)).sub (x.mul (.const r.x))).sub (y.mul (.const r.y))).sub (z.mul (.const r.z))
-  let numerator := fun (s d : Expr) => ((Expr.const four).mul s.sq).sub d
+  let numerator := fun (s d : Expr) => ((Expr.const chi1Linear).mul s.sq).sub d
   have cancel := Expr.certify values
     (sumSpinors Expr.add (fun r => numerator (scalar r) ((Expr.const (Int.ofNat five)).mul norm)))
     ((Expr.const Int.two.neg).mul (numerator w norm)) Eq.refl

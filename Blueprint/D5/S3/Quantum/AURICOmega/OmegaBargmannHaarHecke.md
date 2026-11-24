@@ -50,7 +50,7 @@ $$\forall k \in \mathbb{N},\; \operatorname{Equivalent}\left(\operatorname{momen
 
 *Commentary.*
 
-The factorial functional evaluates the even monomials of the normalized three-sphere. Cancelling the shared factorials and powers of four gives the recurrence for every natural degree.
+The factorial functional is defined by the normalized three-sphere formula for even monomials. Cancelling the shared factorials and powers of four gives the recurrence for every natural degree.
 
 **Theorem 1.5 (The first three even characters are orthonormal).**
 
@@ -62,7 +62,7 @@ $$\operatorname{Equivalent}\left(\operatorname{inner}\left(chi_{0}, chi_{0}\righ
 
 *Commentary.*
 
-The characters have coefficient lists (1), (−1, 4), and (1, −12, 16). Convolving the coefficients and applying moments of degrees zero through four gives these six entries. Convolution is symmetric in the two factors.
+The characters have coefficient lists (1), (−1, 4), and (1, −12, 16). Convolving the coefficients and applying moments of degrees zero through four gives these six entries. The three reverse pairings also vanish by the exact coefficient products.
 
 **Theorem 1.6 (The six-spinor Hecke sum has eigenvalue negative two fifths).**
 
@@ -78,7 +78,7 @@ The six right products each have five times the original squared norm. Pairing t
 
 **Theorem 1.7 (The rational eigenvalue has positive Ramanujan margin).**
 
-$$\operatorname{Equivalent}\left(4 \cdot 5 - \frac{-2}{5}^{2}, \frac{496}{25}\right) \land 0 < \frac{496}{25}$$
+$$\operatorname{Equivalent}\left(4 \cdot 5 - (\frac{-2}{5})^{2}, \frac{496}{25}\right) \land 0 < \frac{496}{25}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.heckeT5_ramanujan_margin` (`✓ std3`). ∎
 
@@ -110,7 +110,7 @@ $$\operatorname{normSq}\left(XY\right) = 25 \land \left(\operatorname{normSq}\le
 
 *Commentary.*
 
-The ordered states are (1, 2, 2, 4) and (1, 2, 2, −4). The unwind rotor is (1, 0, −2, 0) and the successful quotient is (1, 2, 0, 0). The reversed product has second coordinate −6, which has no integral quotient by five.
+The ordered states are (1, 2, 2, 4) and (1, 2, 2, −4). The unwind rotor is (1, 0, −2, 0) and the successful quotient is (1, 2, 0, 0). Right multiplication of YX by the unwind rotor gives second coordinate −6, which has no integral quotient by five.
 
 ## References
 

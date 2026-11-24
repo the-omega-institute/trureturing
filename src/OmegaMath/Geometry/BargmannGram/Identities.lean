@@ -6,7 +6,7 @@ import OmegaMath.Geometry.BargmannGram.Polynomial
 /-!
 Omega original.
 
-Hamilton multiplication preserves the squared norm. The quaternion triad with
+The squared norm is multiplicative under Hamilton multiplication. The quaternion triad with
 repeated outer input lies in the linear span of its two inputs.
 -/
 
