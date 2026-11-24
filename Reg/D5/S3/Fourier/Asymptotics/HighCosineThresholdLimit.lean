@@ -27,35 +27,36 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R :=
+  Law R := ∀ (q : ℕ), 13 ≤ q →
     let contact := fun q : ℕ => R.readout () () q
-    ∀ᶠ q : ℕ in atTop,
-      let c := cyclicReadout q
-      let u := cyclicUpper q
-      let l := cyclicLower q
-      let v := contact q
-      let a := criticalThreshold c u l
-      let r := (1 - a) / (1 - tailMoment u l)
-      let nu := count c u
-      let nl := count c l
-      let P := polynomial u l nu nl r
-      let β := firstMultiplier u l nu nl r
-      let γ := secondMultiplier u l nu nl r
-      l < v ∧ v < u ∧ (∃ i, c i = v) ∧ 0 < r ∧ r < 1 ∧
-        0 < β ∧ 0 < γ ∧ P v = 0 ∧
-        (∀ i, l < c i → c i < u → c i ≠ v → P (c i) < 0) ∧
-        P 1 = 1 - r ∧ P u = r * upperFraction u l / nu ∧
-        P l = r * (1 - upperFraction u l) / nl ∧
-        (∀ x, P x = (topCoeff u l r * u * l + upperCoeff u l nu r * l +
-          lowerCoeff u l nl r * u + γ) + β * x + γ * (2 * x ^ 2 - 1)) ∧
-        (∀ i, weights c u l r i = max 0 (P (c i))) ∧ IsCertified c u l a
+    let c := cyclicReadout q
+    let u := cyclicUpper q
+    let l := cyclicLower q
+    let v := contact q
+    let a := criticalThreshold c u l
+    let r := (1 - a) / (1 - tailMoment u l)
+    let nu := count c u
+    let nl := count c l
+    let P := polynomial u l nu nl r
+    let β := firstMultiplier u l nu nl r
+    let γ := secondMultiplier u l nu nl r
+    l < v ∧ v < u ∧ (∃ i, c i = v) ∧ 0 < r ∧ r < 1 ∧
+      0 < β ∧ 0 < γ ∧ P v = 0 ∧
+      (∀ i, l < c i → c i < u → c i ≠ v → P (c i) < 0) ∧
+      P 1 = 1 - r ∧ P u = r * upperFraction u l / nu ∧
+      P l = r * (1 - upperFraction u l) / nl ∧
+      (∀ x, P x = (topCoeff u l r * u * l + upperCoeff u l nu r * l +
+        lowerCoeff u l nl r * u + γ) + β * x + γ * (2 * x ^ 2 - 1)) ∧
+      (∀ i, weights c u l r i = max 0 (P (c i))) ∧ IsCertified c u l a ∧
+      a < 1 ∧ polynomial u l nu nl 0 v < 0 ∧
+      (∀ a' : ℝ, polynomial u l nu nl ((1 - a') / (1 - tailMoment u l)) v =
+        polynomial u l nu nl 0 v * ((a' - a) / (1 - a)))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  obtain ⟨q, h⟩ := law.exists
-  have hlt : (2 : ℝ) < cyclicUpper q := h.2.1
-  change (2 : ℝ) < Real.cos (2 * Real.pi / q) at hlt
-  linarith only [hlt, Real.cos_le_one (2 * Real.pi / q)]
+  have hlt : (2 : ℝ) < Real.cos (2 * Real.pi / (↑(13 : ℕ) : ℝ)) :=
+    (law 13 le_rfl).2.1
+  linarith only [hlt, Real.cos_le_one (2 * Real.pi / (↑(13 : ℕ) : ℝ))]
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -97,7 +98,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["value"]
+      path := #["body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

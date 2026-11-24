@@ -17,7 +17,6 @@ import Mathlib.Tactic.Ring
 
 open Finset Filter
 open scoped Topology
-
 noncomputable section
 
 namespace D5.S3.Fourier.Asymptotics.HighCosineThresholdLimit
@@ -753,10 +752,11 @@ private theorem cutoff_tail_mass {ι : Type*} [Fintype ι] (c : ι → ℝ) {u l
 /-- For every modulus at least thirteen the exact predecessor cutoff has a unique distinct
 intermediate contact level, with both moment multipliers still strictly positive. -/
 theorem cyclic_threshold_first_contact (q : ℕ) (hq13 : 13 ≤ q) :
+  let contact := fun q : ℕ => Real.cos (4 * Real.pi / q)
   let c := cyclicReadout q
   let u := cyclicUpper q
   let l := cyclicLower q
-  let v := Real.cos (4 * Real.pi / q)
+  let v := contact q
   let a := criticalThreshold c u l
   let r := (1 - a) / (1 - tailMoment u l)
   let nu := count c u
@@ -996,5 +996,4 @@ theorem cyclic_criticalThreshold_limit :
   simp only [Pi.div_apply]
   rw [criticalThreshold, slope_maximum hq, sub_sub_cancel, tailMoment_gap_factor hd]
   ring
-
 end D5.S3.Fourier.Asymptotics.HighCosineThresholdLimit

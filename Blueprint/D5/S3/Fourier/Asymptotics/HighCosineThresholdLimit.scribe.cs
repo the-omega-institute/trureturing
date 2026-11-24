@@ -8,7 +8,7 @@ internal sealed class HighCosineThresholdLimitDocument : IScribeDocumentDefiniti
     private const string Owner = "D5/S3/Fourier/Asymptotics/HighCosineThresholdLimit";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The largest intermediate cosine level determines the high-threshold boundary for large cycles.",
+        "The largest intermediate cosine level determines the high-threshold boundary for every modulus at least thirteen.",
         H("First contact at the high-threshold boundary"),
         Blocks(
             Paragraph(Text(
@@ -32,14 +32,31 @@ internal sealed class HighCosineThresholdLimitDocument : IScribeDocumentDefiniti
                         + "A(q) = T u(q) l(q) + U l(q) + L u(q) + G(q). "
                         + "Certified(q) is the finite certificate at a(q), including normalized "
                         + "nonnegative weights, both moments equal to a(q), the exact squared mass, "
-                        + "the squared-distance bound for every feasible competitor and uniqueness.")),
+                        + "the squared-distance bound for every feasible competitor and uniqueness. "
+                        + "At a general real threshold s, PAt(q,s,x) uses tail mass (1−s)/(1−b(q)). "
+                        + "The affine crossing gives a negative value at v(q) above the cutoff "
+                        + "and a positive value below it.")),
                     Paragraph(Text(
                         "The slope for an intermediate level is the quadratic-multiplier slope "
                         + "plus nonnegative multiples of the reciprocals of its two distances from "
-                        + "the outer cosine levels. The lower distance is at least 1−u(q) for either parity. "
-                        + "The upper per-residue mass tends to one half and the lower per-residue mass tends to zero. "
-                        + "The two reciprocal terms then give a strict comparison in favor of v(q), "
-                        + "uniform over all the other intermediate levels."))),
+                        + "the outer cosine levels. The upper per-residue share p(q)/N(q) per unit of "
+                        + "tail mass tends to one half, and the lower share (1−p(q))/M(q) tends to zero. "
+                        + "For even moduli the lowest intermediate level is −u(q) and u(q)>8/9. "
+                        + "For odd moduli the lower gap is at least 2 cos(π/q)(1−u(q)). "
+                        + "These comparisons give strict dominance at v(q) from modulus thirteen."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("no-contact-at-modulus-twelve"),
+                DeclarationHandle.Create(Owner + ".cyclic_threshold_twelve_no_contact"),
+                H("Sharpness at modulus twelve"),
+                StatementSource.FromAuthor(Twelve()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At modulus twelve the interval starts with a negative interpolant at v(12). "
+                    + "The lowest intermediate level is −u, attained at residue five. Here u=√3/2, "
+                    + "the lower level is −1 with multiplicity one, and g(u)(2u+1)=1 for "
+                    + "g(x)=(1−x)(2x+1). The slope at −u is strictly greater than the slope "
+                    + "at v(12), so v(12) has not reached zero at the exact cutoff."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sharp-cosine-threshold-limit"),
@@ -71,7 +88,6 @@ internal sealed class HighCosineThresholdLimitDocument : IScribeDocumentDefiniti
     private static Formula FirstContact()
     {
         var q = F.Id("q");
-        var threshold = F.Id("Q");
         var i = F.Id("i");
         var x = F.Id("x");
         var upper = Call("u", q);
@@ -101,9 +117,14 @@ internal sealed class HighCosineThresholdLimitDocument : IScribeDocumentDefiniti
             Eq(P(x), Add(Add(Call("A", q), Multiply(beta, x)), Multiply(gamma, second))));
         var positivePart = Bind(FormulaQuantifier.ForAll, "i", indices,
             Eq(Call("w", q, i), Call("max", zero, P(c))));
-        var domain = F.Seq(F.Exists, F.Sp, threshold, F.Sp, F.InMacro, F.Sp, N,
-            F.Comma, F.Sp, F.Forall, F.Sp, q, F.Sp, F.InMacro, F.Sp, N, F.Comma, F.Sp,
-            new Formula.Relation(threshold, FormulaRelationOperator.LessThanOrEqual, q),
+        var cutoff = Call("a", q);
+        var firstHeight = Call("PAt", q, one, contact);
+        var s = F.Id("s");
+        var crossing = Bind(FormulaQuantifier.ForAll, "s", R,
+            Eq(Call("PAt", q, s, contact), Multiply(firstHeight,
+                new Formula.Fraction(Subtract(s, cutoff), Subtract(one, cutoff)))));
+        var domain = F.Seq(F.Forall, F.Sp, q, F.Sp, F.InMacro, F.Sp, N, F.Comma, F.Sp,
+            new Formula.Relation(F.D(1, 3), FormulaRelationOperator.LessThanOrEqual, q),
             F.Sp, F.Longrightarrow, F.Sp, F.OpenBracket);
         return F.Disp(new Formula.Aligned([
             F.Seq(F.Amp, domain),
@@ -112,8 +133,16 @@ internal sealed class HighCosineThresholdLimitDocument : IScribeDocumentDefiniti
             F.Seq(F.Amp, multipliers, F.Comma, F.Sp, Eq(P(contact), zero), F.Comma, F.Sp, negative, F.Comma),
             F.Seq(F.Amp, nodeValues, F.Comma),
             F.Seq(F.Amp, expansion, F.Comma),
-            F.Seq(F.Amp, positivePart, F.Comma, F.Sp, Call("Certified", q), F.CloseBracket)
+            F.Seq(F.Amp, positivePart, F.Comma, F.Sp, Call("Certified", q), F.Comma),
+            F.Seq(F.Amp, Lt(cutoff, one), F.Comma, F.Sp, Lt(firstHeight, zero), F.Comma),
+            F.Seq(F.Amp, crossing, F.CloseBracket)
         ]));
+    }
+
+    private static Formula Twelve()
+    {
+        var q = F.D(1, 2);
+        return F.Disp(Lt(Call("P", q, Call("v", q)), F.D(0)));
     }
 
     private static Formula CutoffLimit()
