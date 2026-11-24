@@ -19,7 +19,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs across consecutive columns."),
             Node("mem_edges", MemEdges(), true, "The two inequalities express that the row indices differ by at most one, as in the frozen edge predicate between columns zero and one."),
-            Node("cut_total_exclusion", CutTotalExclusion(), true, "A budget differs from the total for every number of cuts exactly when thirteen does not divide it. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction. At height five this gives thirteen pairs."),
+            Node("cut_total_exclusion", CutTotalExclusion(), true, "A budget differs from the total for every number of cuts exactly when thirteen does not divide it. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction, with subtraction in the naturals. At height five this gives thirteen pairs."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
@@ -331,7 +331,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var row = Fin(5);
         var straight = Call("Finset.diag", Typed(Q("Finset.univ"), Call("Finset", row)));
         var diagonal = Call("HardinA229637RowColumn.betw", N(5));
-        var cut = Call("Finset.union", straight, diagonal);
+        var cut = Seq(straight, Sp, Cup, Sp, diagonal);
         return Eq(Typed(Own("edges"), Call("Finset", Product(row, row))), cut);
     }
     private static Formula Cost() {

@@ -42,6 +42,7 @@ import Init.Data.List.Nat.Pairwise
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Lemmas
 import Init.Data.Prod
+import Init.Ext
 import Init.Prelude
 import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
@@ -103,7 +104,8 @@ theorem cut_parts (k : ℕ) :
       cases h
       rfl
     · intro h
-      have hx : x.val < k := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
+      have hy : x.val + 1 < k + 1 := h ▸ y.isLt
+      have hx : x.val < k := Nat.lt_of_succ_lt_succ hy
       exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
   have mem_backward (e : Fin (k + 1) × Fin (k + 1)) :
       e ∈ (Finset.univ.map (forwardCutPair k)).map (Equiv.prodComm _ _).toEmbedding ↔

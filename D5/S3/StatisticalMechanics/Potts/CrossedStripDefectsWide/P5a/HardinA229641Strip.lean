@@ -59,6 +59,7 @@ import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
+import Init.Data.Int.Lemmas
 import Init.Data.List.Basic
 import Init.Data.List.FinRange
 import Init.Data.List.Nat.Pairwise

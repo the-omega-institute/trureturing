@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.a
-mem_edges: proof_shape=content; consumers=HardinA229538Strip.cost_zero._simp_1_2
+mem_edges: proof_shape=content; consumers=HardinA229538Strip.cost_zero
 edges_eq: proof_shape=content; consumers=HardinA229538Strip.cost_countCut
 cut_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion
 cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
@@ -69,6 +69,7 @@ import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Function
 import Init.Data.Int.Basic
+import Init.Data.Int.Lemmas
 import Init.Data.List.Basic
 import Init.Data.List.FinRange
 import Init.Data.List.Nat.Pairwise
@@ -185,8 +186,9 @@ theorem bondDefects_empty {q k : ℕ} (r t : Fin k → Fin q) : bondDefects ∅ 
   rw [bondDefects, Finset.filter_empty, Finset.card_empty]
 
 theorem cost_zero (p q : Column) : cost p q = 0 ↔ Bond p q := by
-  simp only [cost, bondDefects, Finset.card_filter_eq_zero_iff, mem_edges, Bond]
-  exact ⟨fun h i j hij => h (i, j) hij, fun h e he => h e.1 e.2 he⟩
+  simp only [cost, bondDefects, Finset.card_filter_eq_zero_iff, Bond]
+  exact ⟨fun h i j hij => h (i, j) ((mem_edges _).mpr hij),
+    fun h e he => h e.1 e.2 ((mem_edges _).mp he)⟩
 
 theorem zero_cost_entry (p q : Column) : (if cost p q = 0 then (1 : ℤ) else 0) = T p q := by
   simp only [T, cost_zero]

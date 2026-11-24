@@ -119,7 +119,7 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
         var backward = Call("Finset.map", swap, forward);
         var straight = Call("Finset.diag", Universe(row));
         var diagonal = Call("HardinA229637RowColumn.betw", height);
-        var union = Call("Finset.union", forward, backward);
+        var union = Seq(forward, Sp, Cup, Sp, backward);
         return All("k", Q("Nat"), And(Eq(Call("HardinA229637RowColumn.horiz", height), forward),
             And(Eq(diagonal, union), And(Call("Disjoint", forward, backward), Call("Disjoint", straight, diagonal)))));
     }
