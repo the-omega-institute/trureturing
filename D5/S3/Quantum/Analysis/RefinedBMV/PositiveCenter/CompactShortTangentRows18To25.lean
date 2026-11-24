@@ -17,14 +17,14 @@ set_option maxRecDepth 20000 in
 set_option maxHeartbeats 0 in
 /-- Rows 18 through 25 in grid order. -/
 def rows18To25 : List CheckedBox := [
-  ⟨mkBox (27 / 8) (7 / 2) (7 / 8) 1 (1305 / 256), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (27 / 8) (7 / 2) (3 / 4) (7 / 8) (37 / 8), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (13 / 4) (27 / 8) (7 / 8) 1 (605 / 128), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (13 / 4) (27 / 8) (3 / 4) (7 / 8) (1099 / 256), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (13 / 4) (7 / 2) (1 / 2) (3 / 4) (497 / 128), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (13 / 4) (7 / 2) (1 / 4) (1 / 2) (209 / 64), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (13 / 4) (7 / 2) 0 (1 / 4) (357 / 128), by constructor <;> decide +kernel⟩,
-  ⟨mkBox (25 / 8) (13 / 4) (7 / 8) 1 (1123 / 256), by constructor <;> decide +kernel⟩
+  ⟨mkBox (27 / 8) (7 / 2) (7 / 8) 1 (1305 / 256) 25 28 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (27 / 8) (7 / 2) (3 / 4) (7 / 8) (37 / 8) 23 26 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (13 / 4) (27 / 8) (7 / 8) 1 (605 / 128) 23 26 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (13 / 4) (27 / 8) (3 / 4) (7 / 8) (1099 / 256) 23 26 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (13 / 4) (7 / 2) (1 / 2) (3 / 4) (497 / 128) 23 26 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (13 / 4) (7 / 2) (1 / 4) (1 / 2) (209 / 64) 21 24 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (13 / 4) (7 / 2) 0 (1 / 4) (357 / 128) 19 22 6, by constructor <;> decide +kernel⟩,
+  ⟨mkBox (25 / 8) (13 / 4) (7 / 8) 1 (1123 / 256) 23 26 6, by constructor <;> decide +kernel⟩
 ]
 
 end RefinedBMV.PositiveCenter.CompactTaylorModel.ShortTangentReplay

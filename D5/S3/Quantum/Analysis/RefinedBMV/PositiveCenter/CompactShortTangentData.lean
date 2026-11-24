@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Common Taylor orders and score threshold for the short-gap replay. -/
+   digest: Box data and score threshold for the short-gap replay. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
 
@@ -12,9 +12,10 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
 
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel.ShortTangentReplay
 
-/-- Form a box with the common truncation orders for the normalized short-gap table. -/
-def mkBox (uLo uHi dLo dHi root : ℚ) : CompactShortBox :=
-  ⟨uLo, uHi, dLo, dHi, root, 29, 32, 6⟩
+/-- Form a short-gap box with the row's marginal, center, and offset orders. -/
+def mkBox (uLo uHi dLo dHi root : ℚ) (marginalTerms centerTerms offsetTerms : ℕ) :
+    CompactShortBox :=
+  ⟨uLo, uHi, dLo, dHi, root, marginalTerms, centerTerms, offsetTerms⟩
 
 /-- All box checks, with one fixed-point unit as the positive score endpoint.
 The lower checker tries the direct estimate first and uses degree zero for its fallback. -/

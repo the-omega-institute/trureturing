@@ -97,7 +97,7 @@ local cbv_simproc cbv_eval stageLowerCheck (CompactShortBox.lowerCheck _ _ _) :=
 attribute [local cbv_opaque] Model.add Model.sub Model.mul Model.lower Model.absUpper
 attribute [local cbv_opaque] SmallCorner.recenterMomentCoeffs
 
-private def pilotBox : CompactShortBox := mkBox (63 / 16) 4 (7 / 8) 1 (457 / 64)
+private def pilotBox : CompactShortBox := ⟨63 / 16, 4, 7 / 8, 1, 457 / 64, 27, 30, 6⟩
 
 private def arithmeticChecks : Bool :=
   let u := CompactShortBox.U pilotBox
