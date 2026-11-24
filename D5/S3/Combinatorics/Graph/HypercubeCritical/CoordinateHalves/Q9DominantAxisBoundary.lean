@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Translation.Q9TranslationAperiodicity
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9WeightedSaturation
+import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Order.Interval.Set.Infinite
 
@@ -28,10 +29,14 @@ open Q9WeightedSaturation (Rows)
 
 noncomputable section
 
+private def boundaryOver {R : Type*} [CommRing R] (C : Finset (Q 9)) (b : Bool)
+    (w : Fin 9 → R) : Matrix (Exterior C b) (Rows C b) R :=
+  fun y x => signed w y.1.1 x.1.1
+
 /-- The signed weighted boundary from the retained side of `C` to its actual exterior. -/
 def boundary (C : Finset (Q 9)) (b : Bool) (w : Fin 9 → ℝ) :
     Matrix (Exterior C b) (Rows C b) ℝ :=
-  fun y x => signed w y.1.1 x.1.1
+  boundaryOver C b w
 
 /-- Retained vertices whose other endpoint on the chosen axis also lies in `C`. -/
 abbrev PairedRows (C : Finset (Q 9)) (b : Bool) (i : Fin 9) :=
@@ -45,9 +50,9 @@ private def axisBoundary (C : Finset (Q 9)) (b : Bool) (i : Fin 9) :
     Matrix (Exterior C b) (Rows C b) ℝ :=
   boundary C b (fun a => if a = i then 1 else 0)
 
-private def transverseBoundary (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (w : Fin 9 → ℝ) :
-    Matrix (Exterior C b) (Rows C b) ℝ :=
-  boundary C b (fun a => if a = i then 0 else w a)
+private def transverseBoundary {R : Type*} [CommRing R] (C : Finset (Q 9)) (b : Bool)
+    (i : Fin 9) (w : Fin 9 → R) : Matrix (Exterior C b) (Rows C b) R :=
+  boundaryOver C b (fun a => if a = i then 0 else w a)
 
 /-- The signed transverse boundary from paired retained vertices to empty fibres. -/
 def emptyFibreBoundary (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (w : Fin 9 → ℝ) :
@@ -62,7 +67,7 @@ private theorem axisBoundary_apply (C : Finset (Q 9)) (b : Bool) (i : Fin 9)
     axisBoundary C b i y x =
       if flip y.1.1 i = x.1.1 then (flipSign i y.1.1 : ℝ) else 0 := by
   classical
-  unfold axisBoundary boundary signed
+  unfold axisBoundary boundary boundaryOver signed
   rw [Finset.sum_eq_single i]
   · simp
   · intro a _ ha
@@ -74,7 +79,7 @@ private theorem boundary_axisWeights_apply (C : Finset (Q 9)) (b : Bool)
     boundary C b (axisWeights i w t) y x =
       axisBoundary C b i y x + t * transverseBoundary C b i w y x := by
   classical
-  simp only [boundary, axisBoundary, transverseBoundary, signed, Finset.mul_sum,
+  simp only [axisBoundary, boundary, transverseBoundary, boundaryOver, signed, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro a _
@@ -223,6 +228,102 @@ theorem exists_emptyFibreBoundary_kernel (C : Finset (Q 9)) (b : Bool)
       rw [hsingle x hn, mul_zero]
     exact heq.trans (congrFun hzero y)
 
+private theorem transverseBoundary_eq_zero_of_ne_bit {R : Type*} [CommRing R]
+    {C : Finset (Q 9)} {b : Bool} {i : Fin 9} (w : Fin 9 → R)
+    {y : Exterior C b} {x : Rows C b} (h : y.1.1 i ≠ x.1.1 i) :
+    transverseBoundary C b i w y x = 0 := by
+  simp only [transverseBoundary, boundaryOver, signed]
+  apply Finset.sum_eq_zero
+  intro a _
+  by_cases ha : a = i
+  · simp [ha]
+  · have hflip : flip y.1.1 a ≠ x.1.1 := by
+      intro he
+      apply h
+      simpa only [BalancedCriticalSpectrum.flip, Function.update_of_ne (Ne.symm ha)] using
+        congrFun he i
+    simp [hflip]
+
+private theorem eval_gram_det {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ]
+    (w : Fin 9 → ℝ) (P : Matrix κ ι (MvPolynomial (Fin 9) ℝ)) :
+    MvPolynomial.eval w (Pᵀ * P).det = ((P.map (MvPolynomial.eval w))ᵀ *
+      P.map (MvPolynomial.eval w)).det := by
+  rw [RingHom.map_det]
+  change ((Pᵀ * P).map (MvPolynomial.eval w)).det = _
+  rw [Matrix.map_mul, Matrix.transpose_map]
+
+/-- A single bit on the dropped axis supports a nonzero empty-fibre kernel
+for every real weighting. -/
+theorem exists_fixed_bit_emptyFibreBoundary_kernel (C : Finset (Q 9)) (b : Bool) (i : Fin 9)
+    (hker : ∀ w : Fin 9 → ℝ, ∃ f ≠ 0, emptyFibreBoundary C b i w *ᵥ f = 0) :
+    ∃ t : Bool, ∀ w : Fin 9 → ℝ, ∃ f : PairedRows C b i → ℝ,
+      f ≠ 0 ∧ emptyFibreBoundary C b i w *ᵥ f = 0 ∧
+      ∀ x, x.1.1.1 i ≠ t → f x = 0 := by
+  classical
+  let bit (x : PairedRows C b i) := x.1.1.1 i
+  let P : Matrix (EmptyExterior C b i) (PairedRows C b i) (MvPolynomial (Fin 9) ℝ) :=
+    (transverseBoundary C b i MvPolynomial.X).submatrix Subtype.val Subtype.val
+  let G := Pᵀ * P
+  have hmap (w : Fin 9 → ℝ) : P.map (MvPolynomial.eval w) = emptyFibreBoundary C b i w := by
+    ext y x
+    change MvPolynomial.eval w (transverseBoundary C b i MvPolynomial.X y.1 x.1) =
+      transverseBoundary C b i w y.1 x.1
+    simp only [transverseBoundary, boundaryOver, signed, map_sum]
+    apply Finset.sum_congr rfl
+    intro a _
+    split_ifs <;> simp
+  have hdet : G.det = 0 := by
+    apply MvPolynomial.funext
+    intro w
+    rw [map_zero, eval_gram_det, hmap]
+    exact (gram_det_eq_zero_iff _).2 (hker w)
+  have htri : G.BlockTriangular bit := by
+    intro x z hxz
+    have hne : bit x ≠ bit z := ne_of_gt hxz
+    simp only [G, Matrix.mul_apply, Matrix.transpose_apply]
+    apply Finset.sum_eq_zero
+    intro y _
+    by_cases hy : y.1.1.1 i = bit x
+    · have hz : P y z = 0 := transverseBoundary_eq_zero_of_ne_bit MvPolynomial.X
+        (y := y.1) (x := z.1) (hy.trans_ne hne)
+      rw [hz, mul_zero]
+    · have hx : P y x = 0 := transverseBoundary_eq_zero_of_ne_bit MvPolynomial.X
+        (y := y.1) (x := x.1) hy
+      rw [hx, zero_mul]
+  have hprod := htri.det_fintype.symm.trans hdet
+  obtain ⟨t, _, ht⟩ := Finset.prod_eq_zero_iff.mp hprod
+  refine ⟨t, fun w => ?_⟩
+  let E := emptyFibreBoundary C b i w
+  -- The Gram block is the Gram of the restriction to the selected columns.
+  let Pt := P.submatrix id (Subtype.val : {x // bit x = t} → PairedRows C b i)
+  let Et := E.submatrix id (Subtype.val : {x // bit x = t} → PairedRows C b i)
+  have hmapt : Pt.map (MvPolynomial.eval w) = Et := by
+    ext y x
+    exact congrFun (congrFun (hmap w) y) x.1
+  have ht' : (Ptᵀ * Pt).det = 0 := ht
+  have hdet' := congrArg (MvPolynomial.eval w) ht'
+  rw [eval_gram_det, hmapt, map_zero] at hdet'
+  obtain ⟨g, hg, hzero⟩ := (gram_det_eq_zero_iff Et).1 hdet'
+  let f (x : PairedRows C b i) : ℝ := if hx : bit x = t then g ⟨x, hx⟩ else 0
+  have hf (x : {x // bit x = t}) : f x.1 = g x := dite_eq_left x.2
+  refine ⟨f, ?_, ?_, fun x hx => dite_eq_right hx⟩
+  · intro he
+    apply hg
+    funext x
+    exact (hf x).symm.trans (congrFun he x.1)
+  · funext y
+    calc
+      (E *ᵥ f) y = (Et *ᵥ g) y := by
+        simp only [Matrix.mulVec, dotProduct, Et, Matrix.submatrix_apply, id_eq]
+        symm
+        refine Fintype.sum_of_injective Subtype.val Subtype.val_injective _ _ ?_ ?_
+        · intro x hx
+          have hne : bit x ≠ t := fun h => hx ⟨⟨x, h⟩, rfl⟩
+          simp [f, hne]
+        · intro x
+          rw [hf]
+      _ = 0 := congrFun hzero y
+
 end
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9DominantAxisBoundary
@@ -231,7 +332,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9Dominan
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary
 
-open scoped Matrix
+open scoped BigOperators Matrix
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q)
 open Q9BoundaryGram (Exterior)
@@ -283,5 +384,55 @@ theorem exists_two_components_with_emptyFibre_kernels (U : Finset (Q 9)) (hU : U
     rw [boundary_gram_eq_signed_defect, signed_defect_det_eq_component]
     exact hA v
   exact ⟨go C (fun v => (hdet v).1), go D (fun v => (hdet v).2)⟩
+
+private theorem projected_parity_eq (i : Fin 9) {x : Q 9} {b t : Bool}
+    (hb : parity x = b) (ht : x i = t) :
+    (∑ j : Fin 8, x (i.succAbove j)) = t + b := by
+  change (∑ j : Fin 9, x j) = b at hb
+  rw [Fin.sum_univ_succAbove x i, ht] at hb
+  rw [← hb]
+  cases t <;> cases (∑ j : Fin 8, x (i.succAbove j)) <;> rfl
+
+open Classical in
+/-- For each retained parity of a 258-point subcubic support, two distinct actual
+components have a nonzero kernel on paired fibres for every transverse weighting
+and mask. For each dominant axis, each component has a single projected parity
+supporting these kernels. -/
+theorem exists_two_components_with_fixed_projectedParity_emptyFibre_kernels
+    (U : Finset (Q 9)) (hU : U.card = 258)
+    (hdeg : ∀ x : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree x ≤ 3)
+    (b : Bool) :
+    ∃ C D : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent,
+      C ≠ D ∧ ∀ i : Fin 9, ∃ pC pD : Bool,
+        ∀ (I : Finset (Fin 9)) (w : Fin 9 → ℝ),
+          (∃ f : PairedRows (componentFinset U C) b i → ℝ,
+            f ≠ 0 ∧
+            emptyFibreBoundary (componentFinset U C) b i (fun a => if a ∈ I then w a else 0)
+              *ᵥ f = 0 ∧
+            ∀ x, (∑ j : Fin 8, x.1.1.1 (i.succAbove j)) ≠ pC → f x = 0) ∧
+          (∃ f : PairedRows (componentFinset U D) b i → ℝ,
+            f ≠ 0 ∧
+            emptyFibreBoundary (componentFinset U D) b i (fun a => if a ∈ I then w a else 0)
+              *ᵥ f = 0 ∧
+            ∀ x, (∑ j : Fin 8, x.1.1.1 (i.succAbove j)) ≠ pD → f x = 0) := by
+  obtain ⟨C, D, hCD, hker⟩ := exists_two_components_with_emptyFibre_kernels U hU hdeg b
+  refine ⟨C, D, hCD, fun i => ?_⟩
+  obtain ⟨tC, hC⟩ := exists_fixed_bit_emptyFibreBoundary_kernel (componentFinset U C) b i
+    (fun w => (hker i w).1)
+  obtain ⟨tD, hD⟩ := exists_fixed_bit_emptyFibreBoundary_kernel (componentFinset U D) b i
+    (fun w => (hker i w).2)
+  refine ⟨tC + b, tD + b, fun I w => ?_⟩
+  let v (a : Fin 9) : ℝ := if a ∈ I then w a else 0
+  obtain ⟨f, hf, hfzero, hfsupp⟩ := hC v
+  obtain ⟨g, hg, hgzero, hgsupp⟩ := hD v
+  refine ⟨⟨f, hf, hfzero, ?_⟩, ⟨g, hg, hgzero, ?_⟩⟩
+  · intro x hx
+    apply hfsupp x
+    intro ht
+    exact hx (projected_parity_eq i (Finset.mem_filter.mp x.1.property).2 ht)
+  · intro x hx
+    apply hgsupp x
+    intro ht
+    exact hx (projected_parity_eq i (Finset.mem_filter.mp x.1.property).2 ht)
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9DominantAxisBoundary

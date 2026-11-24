@@ -34,10 +34,25 @@ For each retained parity, choose two distinct actual connected components of an 
 
 The reduced kernel is nonzero for every real transverse weighting, including sparse masks. The rows and columns each record a single fibre, so the condition constrains the projected occupancy when searching for a witness for f₂(Q₉)=3. https://arxiv.org/html/2610.09483v1#Thmproblem2
 
+**Theorem 1.3 (Each component has a fixed projected parity).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9DominantAxisBoundary.exists_two_components_with_fixed_projectedParity_emptyFibre_kernels`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9DominantAxisBoundary.exists_two_components_with_fixed_projectedParity_emptyFibre_kernels` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix the retained parity and the deleted axis. The two possible bits on the deleted axis give two blocks of the paired-column Gram matrix. Polynomial evaluation recovers the real weighted matrices, including every coordinate mask. The product of the two block determinants is the zero polynomial, so one block is singular before the weights are chosen.
+
+The retained parity is the sum of the deleted bit and the projected parity. This identifies a single projected parity for each component and axis. Any family of sparse masks can therefore be tested against that same projected parity.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9DominantAxisBoundary.exists_emptyFibreBoundary_kernel`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9DominantAxisBoundary.exists_two_components_with_emptyFibre_kernels`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9DominantAxisBoundary.exists_two_components_with_fixed_projectedParity_emptyFibre_kernels`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9ComponentSaturation](../ComponentBoundary/Q9ComponentSaturation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9WeightedBoundaryGram](../ComponentBoundary/Q9WeightedBoundaryGram.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9WeightedSaturation](../ComponentBoundary/Q9WeightedSaturation.md)
