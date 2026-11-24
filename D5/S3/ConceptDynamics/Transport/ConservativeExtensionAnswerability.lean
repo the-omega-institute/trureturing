@@ -5,81 +5,62 @@
    anchors: []
    digest: Answerability of old questions is reflected and preserved by surjective pullback. -/
 
-import D5.S3.ConceptDynamics.ConceptJoinUniversal
-import Mathlib.Logic.Function.Basic
-
-/- Library-search audit trail (2026-08-22):
-   * `rg -n -F 'answerability_transports_along_surjection' D5 Golden/Frozen/accepted`
-     returned no matches.
-   * Repository searches for `Refines`, surjective factorization, pullback, and
-     answerability found `DynamicsDescent.dynamics_descends_iff`,
-     `AnswerabilityCriterion.answerability_criterion`, and the nearby transport family,
-     but no theorem with this pullback equivalence or its nonsurjective counterexample.
-   * Pinned Mathlib contains the exact equality-reflection lemma
-     `Function.Surjective.injective_comp_right`; the reverse implication reuses it.
-   * The forward implication uses the same factor map and associativity of composition;
-     the counterexample uses only Boolean discrimination and function extensionality. -/
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
+module
+prelude
+public import OmegaInit.Core
 
 namespace D5.S3.ConceptDynamics.Transport.ConservativeExtensionAnswerability
 
-open D5.S3.ConceptDynamics.ConceptFiberDecomposition
-open D5.S3.ConceptDynamics.ConceptJoinUniversal
+open Omega
+
+/-- Each old state has a preimage under the projection. -/
+public def StrictSurjective {X : Sort u} {Y : Sort v} (p : Y → X) : Prop :=
+  ∀ x, Exists (fun y => Eq (p y) x)
+
+/-- The target factors pointwise through the concept. -/
+public def StrictRefines {X : Sort u} {Cval : Sort v} {Tval : Sort w}
+    (target : X → Tval) (concept : X → Cval) : Prop :=
+  Exists (fun factor : Cval → Tval => ∀ x, Eq (target x) (factor (concept x)))
+
+/-- The singleton state and concept space in the Boolean example. -/
+public inductive SingleState where
+  | sole
 
 /-- A one-state extension sees only the old Boolean state `false`. -/
-def nonSurjectiveProjection : Unit -> Bool := fun _ => false
+public noncomputable def nonSurjectiveProjection : SingleState → Bool := fun _ => .false
 
 /-- The old concept in the counterexample identifies both Boolean states. -/
-def constantOldConcept : Bool -> Unit := fun _ => ()
+public noncomputable def constantOldConcept : Bool → SingleState := fun _ => .sole
 
-/-- Pullback along a surjective new-to-old state projection preserves and reflects
-factorization of an old target through an old concept. -/
-theorem answerability_transports_along_surjection
-    {X Y Cval Tval : Type*}
-    (p : Y -> X) (hp : Function.Surjective p)
-    (C : Concept X Cval) (T : Concept X Tval) :
-    Refines T C <-> Refines (T ∘ p) (C ∘ p) := by
-  constructor
-  · rintro ⟨factor, hfactor⟩
-    refine ⟨factor, ?_⟩
-    rw [hfactor]
-    rfl
-  · rintro ⟨factor, hfactor⟩
-    refine ⟨factor, ?_⟩
-    apply hp.injective_comp_right
-    exact hfactor
+/-- Surjective pullback preserves and reflects factorization of the target. -/
+public theorem answerability_transports_along_surjection
+    {X : Sort u₁} {Y : Sort u₂} {Cval : Sort v₁} {Tval : Sort v₂}
+    (p : Y → X) (surjective : StrictSurjective p) (C : X → Cval) (T : X → Tval) :
+    Iff (StrictRefines T C) (StrictRefines (fun y => T (p y)) (fun y => C (p y))) :=
+  Iff.intro
+    (fun h => h.elim (fun factor agrees => Exists.intro factor (fun y => agrees (p y))))
+    (fun h => h.elim (fun factor agrees => Exists.intro factor (fun x =>
+      (surjective x).elim (fun y preimage =>
+        Eq.subst (fun state => Eq (T state) (factor (C state))) preimage (agrees y)))))
 
-/-- Without surjectivity, pulled-back answerability need not reflect old-state
-answerability: the one-state extension cannot see the distinction in `Bool`. -/
-theorem nonsurjective_pullback_can_hide_unanswerability :
-    ¬Function.Surjective nonSurjectiveProjection ∧
-      Refines (id ∘ nonSurjectiveProjection)
-        (constantOldConcept ∘ nonSurjectiveProjection) ∧
-      ¬Refines (id : Bool -> Bool) constantOldConcept := by
-  constructor
-  · intro hSurjective
-    obtain ⟨u, hu⟩ := hSurjective true
-    cases u
-    cases hu
-  constructor
-  · refine ⟨fun _ => false, ?_⟩
-    funext u
-    cases u
-    rfl
-  · rintro ⟨factor, hfactor⟩
-    have hfalse : false = factor () := by
-      simpa [constantOldConcept] using congrFun hfactor false
-    have htrue : true = factor () := by
-      simpa [constantOldConcept] using congrFun hfactor true
-    exact Bool.noConfusion (hfalse.trans htrue.symm)
+/-- The one-state pullback hides the conflict between two states with the same
+concept value and distinct Boolean targets. -/
+public theorem nonsurjective_pullback_can_hide_unanswerability :
+    And (Not (StrictSurjective nonSurjectiveProjection))
+      (And (StrictRefines nonSurjectiveProjection
+          (fun state => constantOldConcept (nonSurjectiveProjection state)))
+        (Not (StrictRefines (fun x : Bool => x) constantOldConcept))) :=
+  have falseNeTrue : Not (Eq Bool.false Bool.true) :=
+    fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+  And.intro
+    (fun surjective => (surjective Bool.true).elim (fun _ atTrue => falseNeTrue atTrue))
+    (And.intro (Exists.intro (fun _ => Bool.false) (fun _ => Eq.refl))
+      (fun h => h.elim (fun _ agrees =>
+        falseNeTrue ((agrees Bool.false).trans (agrees Bool.true).symm))))
 
-example :
-    Refines (id : Bool -> Bool) id <->
-      Refines ((id : Bool -> Bool) ∘ id) (id ∘ id) :=
-  answerability_transports_along_surjection id Function.surjective_id id id
-
-#print axioms answerability_transports_along_surjection
+example : Iff (StrictRefines (fun x : Bool => x) (fun x => x))
+    (StrictRefines (fun x : Bool => x) (fun x => x)) :=
+  answerability_transports_along_surjection (fun x : Bool => x)
+    (fun x => Exists.intro x Eq.refl) (fun x => x) (fun x => x)
 
 end D5.S3.ConceptDynamics.Transport.ConservativeExtensionAnswerability
