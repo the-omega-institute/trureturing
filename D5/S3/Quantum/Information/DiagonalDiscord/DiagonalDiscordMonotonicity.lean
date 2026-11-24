@@ -10,6 +10,7 @@ import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Quantum.Information.PartialTrace.Isometries
 import D5.S3.Quantum.Measurement.Auric.CoordinatePinching
+import D5.S3.Quantum.ProcessReconstruction.ReconstructionChannels
 import D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Recovery.QubitActualResidualGeometry
@@ -19,9 +20,13 @@ import D5.S3.Quantum.Recovery.QubitActualResidualGeometry
 
 Liu–Takagi–Lloyd, *Diagonal quantum discord*, DOI 10.1088/1751-8121/ab0774,
 §3.2.2, p. 9 (arXiv:1708.09076v2, §III.B.2, p. 6) state Conjecture 1 for a
-measured qubit. Specializing the attained comparison to `a = Fin 2` gives
-their inequality for every local CPTP channel preserving classical–quantum
-states. The optimization includes every rank-one eigenbasis of the A marginal.
+measured qubit. Their Corollary 6 (arXiv v2, §III.B.2(b), p. 8) proves
+monotonicity under local discord-nongenerating channels for measured dimension
+greater than two in Section III.B's setting of a nondegenerate measured
+marginal. The results here prove monotonicity for every local CPTP channel
+preserving classical–quantum states, including degenerate measured marginals.
+The comparison exhibits minimizing eigenbases at both the input and the output.
+Specializing it to `a = Fin 2` gives the inequality of Conjecture 1.
 
 The image of an eligible input pinching has the same marginal as the actual
 output. Any basis making that image classical–quantum is therefore eligible
@@ -219,39 +224,16 @@ theorem extendedQuantumRelativeEntropy_pinch_pythagoras [Nonempty n]
 private theorem finiteTraceLogRelativeEntropy_nonneg [Nonempty n]
     {ρ τ : DensityState n} (h : SupportContained ρ τ) :
     0 ≤ finiteTraceLogRelativeEntropy ρ τ := by
-  classical
-  -- The row selecting coordinate i has initial projection |i⟩⟨i|.
-  let K (i : n) : Matrix Unit n ℂ := fun _ j => if i = j then 1 else 0
-  have hentry (c i j : n) :
-      ((K c)ᴴ * K c) i j = (if c = i then 1 else 0) * (if c = j then 1 else 0) := by
-    rw [Matrix.mul_apply, Fintype.sum_unique, Matrix.conjTranspose_apply]
-    change star (if c = i then (1 : ℂ) else 0) * _ = _
-    rw [apply_ite star, star_one, star_zero]
-  have hK : (∑ i, (K i)ᴴ * K i) = 1 := by
-    ext i j
-    simp only [Matrix.sum_apply, hentry, Matrix.one_apply]
-    by_cases hij : i = j
-    · subst j
-      simp
-    · rw [ite_eq_right hij]
-      apply Finset.sum_eq_zero
-      intro c _
-      by_cases hci : c = i
-      · subst c
-        simp [hij]
-      · simp [hci]
-  obtain ⟨Φ, _⟩ := finite_kraus_quantum_channel K hK
-  have hunit (σ υ : DensityState Unit) : σ = υ := by
+  let discard : QuantumChannel n PUnit :=
+    UnitaryReconstruction.discard (Equiv.prodPUnit n).symm
+  have hstate : discard.mapState ρ = discard.mapState τ := by
     apply Subtype.ext
     apply CStarMatrix.ofMatrix.symm.injective
-    ext i j
-    cases i
-    cases j
-    change σ.1 () () = υ.1 () ()
-    simpa [Matrix.trace, Matrix.diag] using σ.trace_eq_one.trans υ.trace_eq_one.symm
-  have hd := (supported_channel_dpi Φ h).2
-  rw [hunit (Φ.mapState ρ) (Φ.mapState τ), finiteTraceLogRelativeEntropy_self] at hd
-  exact hd
+    ext ⟨⟩ ⟨⟩
+    simpa [Matrix.trace, Matrix.diag] using
+      (discard.mapState ρ).trace_eq_one.trans (discard.mapState τ).trace_eq_one.symm
+  simpa only [hstate, finiteTraceLogRelativeEntropy_self] using
+    (supported_channel_dpi discard h).2
 
 end Pinching
 

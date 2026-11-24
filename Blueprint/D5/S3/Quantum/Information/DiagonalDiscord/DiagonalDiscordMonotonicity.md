@@ -4,7 +4,7 @@
 
 Diagonal discord is nonincreasing under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.
 
-Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces. Specializing the attained comparison to a two-dimensional measured subsystem gives the inequality of Conjecture 1.
+Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. Their Corollary 6 (arXiv v2, Section III.B.2(b), p. 8) proves monotonicity under the same channel class for measured dimension greater than two in Section III.B's setting of a nondegenerate measured marginal. The paper's equations (2) and (8) already optimize over choices of eigenbasis within degenerate eigenspaces. The Lean comparison includes degenerate measured marginals and exhibits minimizing eigenbases for both the input and the output. Its two-dimensional specialization gives the inequality of Conjecture 1.
 
 **Definition 1.1 (Projective pinching).**
 
@@ -271,6 +271,7 @@ There are eligible minimizing eigenbases for the input and output, and the minim
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../OrthogonalRecordEntropy.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTrace/Isometries](../PartialTrace/Isometries.md)
 - Dependency: [D5/S3/Quantum/Measurement/Auric/CoordinatePinching](../../Measurement/Auric/CoordinatePinching.md)
+- Dependency: [D5/S3/Quantum/ProcessReconstruction/ReconstructionChannels](../../ProcessReconstruction/ReconstructionChannels.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/AncillaFreeTesterRobustnessEquality](../../QuantumChannels/AncillaFreeTesterRobustnessEquality.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../../RandomCircuits/HaarTwoCopyTwirl.md)
 - Dependency: [D5/S3/Quantum/Recovery/QubitActualResidualGeometry](../../Recovery/QubitActualResidualGeometry.md)

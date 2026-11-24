@@ -19,7 +19,9 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
             Paragraph(Text(
                 "Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. "
                 + "It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. "
-                + "The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces. Specializing the attained comparison to a two-dimensional measured subsystem gives the inequality of Conjecture 1.")),
+                + "Their Corollary 6 (arXiv v2, Section III.B.2(b), p. 8) proves monotonicity under the same channel class for measured dimension greater than two in Section III.B's setting of a nondegenerate measured marginal. "
+                + "The paper's equations (2) and (8) already optimize over choices of eigenbasis within degenerate eigenspaces. "
+                + "The Lean comparison includes degenerate measured marginals and exhibits minimizing eigenbases for both the input and the output. Its two-dimensional specialization gives the inequality of Conjecture 1.")),
             Definition("pinch", "Projective pinching",
                 "Pinching is the completely positive trace-preserving map obtained by forgetting the outcome of a complete projective measurement."),
             Theorem("supportContained_pinch", "Support of the pinched state",
