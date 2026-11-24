@@ -18,4 +18,4 @@ For the finite scalar allocation problem the row masses are the demands and the 
 
 ## Verified locator
 
-Page 1075, Feasibility Theorem, Eq. (5). [Publisher PDF](https://msp.org/pjm/1957/7-2/pjm-v7-n2-p04-s.pdf)
+Page 1075, Feasibility Theorem, Eq. (5). [DOI 10.2140/pjm.1957.7.1073](https://doi.org/10.2140/pjm.1957.7.1073) · [Publisher page](https://msp.org/pjm/1957/7-2/p04.xhtml) · [Publisher PDF](https://msp.org/pjm/1957/7-2/pjm-v7-n2-p04-s.pdf)

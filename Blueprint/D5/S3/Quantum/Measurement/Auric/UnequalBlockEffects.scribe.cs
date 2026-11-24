@@ -13,10 +13,11 @@ internal sealed class UnequalBlockEffectsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Measurement/Auric/UnequalBlockEffects.isGreatest_direct"),
                 H("Attained maximum for normalized weights"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/gale1957networkflows")),
                 Blocks(
                     Paragraph(Text("Take three complex positive semidefinite effects that sum to identity on a finite carrier of dimension d. Each effect has rank at most its own cap mⱼ and real trace τⱼ. Put ℓⱼ = max(d − mⱼ, 0), assume their sum is at most d, and let b be the difference. For positive normalized weights w₀ ≥ w₁ ≥ w₂, put wⱼ on the common column and wⱼ/(1 − wᵢ) on missing-type column i for each j ≠ i. The excluded row i is zero. The trace assumption requires τⱼ to be the weighted row mass with the stated multiplicities.")),
                     Paragraph(Text("The total of −x log x over the three spectra has a greatest value. It equals the sum of the scalar entropies of the missing-type columns with multiplicities ℓᵢ, plus b times the entropy of the common column. Diagonal effects realize the allocation.")),
+                    Paragraph(Text("Gale's cut criterion characterizes feasibility of the scalar row masses on the allowed row–column connections. The spectral maximum here assumes the normalized weights and trace equations above.")),
                     Paragraph(Text("Select ℓⱼ zero eigenvectors of each effect. Pad the spans of successive prefixes to a nested flag, then take differences of its orthogonal projections. The diagonal overlaps of these layers in each effect eigenbasis give the weights for the scalar supporting lines. Each selected zero eigenvector has all its layer mass in its flag prefix, so the ordered intercepts bound the excluded contribution from below. The linear terms sum using the prescribed traces and the identity sum of the three effects. The bound allows arbitrary intersections among the original kernels and holds when a layer has zero dimension."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -26,7 +27,8 @@ internal sealed class UnequalBlockEffectsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Use the same rank caps, real traces, PSD conditions and identity sum. The objective is the sum of φ(x) = −(1 − x) log(1 − x) over the three spectra. Fix a positive multiplier for each row and positive nondecreasing scales for the three missing column types and the common type. Every allowed entry is the maximum of zero and one minus the product of its row multiplier and column scale. An excluded entry is zero. Assume each column sums to one and the weighted row sums are the prescribed traces.")),
+                    Paragraph(Text("Take three complex positive semidefinite effects that sum to identity in dimension d, with rank caps mⱼ and real traces τⱼ. Assume the missing dimensions ℓⱼ = max(d − mⱼ, 0) satisfy ∑ⱼ ℓⱼ ≤ d. The three missing types have multiplicities ℓⱼ and the common type has multiplicity d − ∑ⱼ ℓⱼ. The objective is the sum of φ(x) = −(1 − x) log(1 − x) over the three spectra.")),
+                    Paragraph(Text("Fix a positive multiplier for each row and positive nondecreasing scales for the three missing column types and the common type. Each allowed entry is the maximum of zero and one minus the product of its row multiplier and column scale. An excluded entry is zero. Assume all four column-sum equations hold, with the sum of the three entries equal to one in each missing-type column and in the common column, including columns of multiplicity zero. The multiplicity-weighted row sums must equal the prescribed traces.")),
                     Paragraph(Text("The scalar allocation attains the greatest spectral sum. A supporting line at each allowed entry uses the logarithm of the product plus one as its slope. The zero cutoff supplies the supporting line at an endpoint, including for excluded entries when the product is at least one. Increasing column scales decrease the intercepts, which supplies the ordering used in the same projection argument."))),
                 DescribeRole.Theorem),
             Describe.Lean(

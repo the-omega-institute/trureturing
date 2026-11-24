@@ -6,8 +6,8 @@
    utility: none
    digest: Attained spectral entropy for three effects with unequal rank caps. -/
 
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Proj
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+import D5.S3.Quantum.Analysis.RefinedBMVWords
+import D5.S3.Quantum.Measurement.Auric.EqualBlockEffects
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-! # Ordered supporting prices for three effects -/
@@ -15,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 namespace D5.S3.Quantum.Measurement.Auric.UnequalBlockEffects
 
 open Matrix Finset
+open EqualBlockEffects (diagonal_entropy effect_le_one eigenvalues_mem_unit projector_apply)
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 
 noncomputable section
@@ -105,14 +106,6 @@ private theorem paddedFlag (K : Fin 3 → Submodule ℂ H) (l : Fin 3 → ℕ)
 
 private def proj (S : Submodule ℂ H) : Matrix n n ℂ := (HermitianMat.projector S).mat
 
-private theorem proj_apply (S : Submodule ℂ H) (x : H) :
-    toEuclideanLin (proj S) x = S.starProjection x := by
-  change toEuclideanLin
-      (LinearMap.toMatrix (PiLp.basisFun 2 ℂ n) (PiLp.basisFun 2 ℂ n)
-        (S.subtypeL.comp S.orthogonalProjectionOnto)) x = _
-  rw [show toEuclideanLin = toLpLin (2 : ENNReal) (2 : ENNReal) from rfl,
-    toLpLin_eq_toLin, Matrix.toLin_toMatrix] <;> rfl
-
 private theorem proj_trace (S : Submodule ℂ H) :
     (trace (proj S)).re = Module.finrank ℂ S := by
   change RCLike.re (HermitianMat.projector S).mat.trace = _
@@ -132,7 +125,7 @@ private theorem proj_diff_psd {S T : Submodule ℂ H} (hst : S ≤ T) :
   have h := Matrix.isPositive_toEuclideanLin_iff.mpr (proj_psd (n := n) T)
   have h' := Matrix.isPositive_toEuclideanLin_iff.mpr (proj_psd (n := n) S)
   refine ⟨by simpa using h.1.sub h'.1, fun x => ?_⟩
-  simp only [map_sub, LinearMap.sub_apply, proj_apply]
+  simp only [map_sub, LinearMap.sub_apply, proj, projector_apply]
   rw [inner_sub_left, map_sub, sub_nonneg,
     T.re_inner_starProjection_eq_normSq, S.re_inner_starProjection_eq_normSq]
   have hn := S.norm_orthogonalProjectionOnto_apply_le (T.starProjection x)
@@ -151,25 +144,21 @@ private theorem overlap_nonneg {A P : Matrix n n ℂ} (h : A.IsHermitian)
     ((map_nonneg (Unitary.conjStarAlgAut ℂ _ (star h.eigenvectorUnitary))
       hP.nonneg).posSemidef.diag_nonneg (i := i))).1
 
-private theorem trace_conj (U : Matrix.unitaryGroup n ℂ) (B : Matrix n n ℂ) :
-    trace (Unitary.conjStarAlgAut ℂ _ U B) = trace B := by
-  rw [Unitary.conjStarAlgAut_apply, trace_mul_cycle, Unitary.coe_star_mul_self, one_mul]
-
 private theorem overlap_trace {A : Matrix n n ℂ} (h : A.IsHermitian) (P : Matrix n n ℂ) :
     ∑ i, overlap h P i = (trace P).re := by
-  rw [← trace_conj (star h.eigenvectorUnitary) P]
+  rw [← RefinedBMV.trace_conjugation (star h.eigenvectorUnitary) P]
   simp [trace, Complex.re_sum, overlap]
 
 private theorem overlap_mul_trace {A : Matrix n n ℂ} (h : A.IsHermitian) (P : Matrix n n ℂ) :
     ∑ i, h.eigenvalues i * overlap h P i = (trace (P * A)).re := by
-  rw [← trace_conj (star h.eigenvectorUnitary) (P * A), map_mul,
+  rw [← RefinedBMV.trace_conjugation (star h.eigenvectorUnitary) (P * A), map_mul,
     h.conjStarAlgAut_star_eigenvectorUnitary]
   simp [trace, mul_diagonal, Complex.mul_re, overlap, mul_comm]
 
 private theorem overlap_proj_one {A : Matrix n n ℂ} (h : A.IsHermitian) (S : Submodule ℂ H)
     {i : n} (hi : h.eigenvectorBasis i ∈ S) : overlap h (proj S) i = 1 := by
   have hP : (proj S).mulVec (h.eigenvectorBasis i) = h.eigenvectorBasis i := by
-    have h := congrArg WithLp.ofLp (proj_apply S (h.eigenvectorBasis i))
+    have h := congrArg WithLp.ofLp (projector_apply S (h.eigenvectorBasis i))
     rw [Submodule.starProjection_eq_self_iff.mpr hi] at h
     exact h
   unfold overlap
@@ -188,25 +177,11 @@ private theorem overlap_sub {A : Matrix n n ℂ} (h : A.IsHermitian) (P Q : Matr
   unfold overlap
   rw [map_sub, Matrix.sub_apply, Complex.sub_re]
 
-private theorem overlap_one {A : Matrix n n ℂ} (h : A.IsHermitian) (i : n) :
-    overlap h 1 i = 1 := by simp [overlap]
-
 private theorem overlap_unit_sum {A : Matrix n n ℂ} (h : A.IsHermitian)
     (L : Fin 4 → Matrix n n ℂ) (hL : ∑ c, L c = 1) (i : n) :
     ∑ c, overlap h (L c) i = 1 := by
   have he := congrArg (fun P => overlap h P i) hL
   simpa [overlap, map_sum, Matrix.sum_apply, Complex.re_sum] using he
-
-private theorem effect_spectrum_unit {A : Fin 3 → Matrix n n ℂ}
-    (hp : ∀ j, (A j).PosSemidef) (hs : ∑ j, A j = 1) (j : Fin 3) (i : n) :
-    (hp j).isHermitian.eigenvalues i ∈ Set.Icc (0 : ℝ) 1 := by
-  have hle : A j ≤ 1 := by
-    apply Matrix.le_iff.mpr
-    rw [← hs, ← Finset.sum_erase_add _ _ (Finset.mem_univ j), add_sub_cancel_right]
-    exact Matrix.posSemidef_sum _ fun k _ => hp k
-  exact ⟨(hp j).eigenvalues_nonneg i,
-    (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff (hp j).isHermitian 1).mpr
-      (by simpa using hle) i⟩
 
 /-- Number of coordinates of each of the three missing types and the common type. -/
 def multiplicity (l : Fin 3 → ℕ) (b : ℕ) : Fin 4 → ℕ :=
@@ -295,11 +270,11 @@ private theorem matrix_bound (f : ℝ → ℝ) (hf : f 0 = 0) (m : Fin 3 → ℕ
       simpa [mul_comm] using weighted_le_of_prefix (g j) (fun c => w j c i) j
         (hg j) (fun c => hwp j c i) (hws j i) (hpre j i hi)
     · rw [ite_eq_right hi, sub_zero]
+      have hei := eigenvalues_mem_unit (hA.1 j) (effect_le_one A hA.1 hA.2.1 j) i
       calc
         _ = ∑ c, w j c i * f (e j i) := by rw [← sum_mul, hws, one_mul]
         _ ≤ _ := sum_le_sum fun c _ =>
-          mul_le_mul_of_nonneg_left (hsupport j c _ (effect_spectrum_unit hA.1 hA.2.1 j i))
-            (hwp j c i)
+          mul_le_mul_of_nonneg_left (hsupport j c _ hei) (hwp j c i)
   have hrow (j : Fin 3) :
       (∑ i, f (e j i)) ≤ p j * τ j +
         (∑ c, s c * (trace (L c * A j)).re) +
@@ -328,19 +303,6 @@ private theorem matrix_bound (f : ℝ → ℝ) (hf : f 0 = 0) (m : Fin 3 → ℕ
   rw [Finset.sum_comm (f := fun j c => s c * (trace (L c * A j)).re)] at hsum
   simp_rw [← mul_sum, hcol, mul_comm (s _)] at hsum
   exact hsum
-
-private theorem diagonal_spectrum (f : ℝ → ℝ) (v : n → ℝ)
-    (h : (diagonal fun i => (v i : ℂ)).IsHermitian) :
-    (∑ i, f (h.eigenvalues i)) = ∑ i, f (v i) := by
-  have hdiag : (diagonal (fun i => (v i : ℂ))).charpoly.roots =
-      Finset.univ.val.map (fun i => (v i : ℂ)) := by
-    rw [Matrix.charpoly_diagonal, Polynomial.roots_prod]
-    · simp
-    · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
-  have he := h.roots_charpoly_eq_eigenvalues
-  rw [hdiag] at he
-  simpa [Multiset.map_map, Function.comp_def] using
-    (congrArg (fun t : Multiset ℂ => (t.map (f ∘ Complex.re)).sum) he).symm
 
 /-- The allowed scalar entries, with a missing column type for each effect
 and one unrestricted type, weighted by the number of coordinates of each type. -/
@@ -423,7 +385,7 @@ private theorem matrix_attains (f : ℝ → ℝ) (m : Fin 3 → ℕ) (τ : Fin 3
           exact_mod_cast le_of_not_ge h
   refine ⟨A, ⟨hp, hs, htrace, hr⟩, ?_⟩
   unfold spectralSum allocationValue
-  exact sum_congr rfl fun j _ => (diagonal_spectrum f (v j) _).trans (hv f j)
+  exact sum_congr rfl fun j _ => (diagonal_entropy f (v j) _).trans (hv f j)
 
 private theorem allocation_dual_identity (f : ℝ → ℝ) (hf : f 0 = 0)
     (l : Fin 3 → ℕ) (b : ℕ) (τ p : Fin 3 → ℝ) (s : Fin 4 → ℝ)
@@ -494,9 +456,6 @@ private theorem entropy_support {t x : ℝ} (ht : 0 < t) (hx : 0 ≤ x) :
 and then the unrestricted type. -/
 def columnDenominator (w : Fin 3 → ℝ) : Fin 4 → ℝ :=
   ![1 - w 0, 1 - w 1, 1 - w 2, 1]
-
-private theorem denom_missing (w : Fin 3 → ℝ) (j : Fin 3) :
-    columnDenominator w j.castSucc = 1 - w j := by fin_cases j <;> rfl
 
 /-- Scalar entries before imposing the zero belonging to each missing type. -/
 def weightEntries (w : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4) : ℝ :=
