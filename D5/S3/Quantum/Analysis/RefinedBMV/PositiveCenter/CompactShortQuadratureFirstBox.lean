@@ -28,7 +28,7 @@ private def midpointOffset : Model :=
   (Model.affineCoordinate 0 0 (-1 / 32)).add (Model.affineCoordinate 1 0 (-1 / 32))
 
 private def jointDensity (i : Fin 3) : Model :=
-  shortJointClosedQuadratureModel i (3 / 22) (9 / 2) (1 / 16) (-71 / 16) 55 5 H midpointOffset
+  shortJointClosedQuadratureModel i (3 / 22) (9 / 2) (1 / 16) (-71 / 16) 36 5 H midpointOffset
 
 def joint : Model :=
   let D₂ := D.mul D
@@ -52,7 +52,7 @@ private theorem jointDensity_sound (i : Fin 3) {s t z u v h : ℝ}
     simp only [abs_neg, abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 32)]
     linarith
   have hmodel := shortJointClosedQuadratureModel_sound (upper := 3 / 22) (center := -71 / 16)
-    (radius := 9 / 2) (width := 1 / 16) (terms := 55) (order := 5)
+    (radius := 9 / 2) (width := 1 / 16) (terms := 36) (order := 5)
     i hb hH hx hh (by simpa only [Rat.cast_div, Rat.cast_ofNat] using hhmax)
     (by decide) (by decide) (by norm_num; linarith) (by simpa using hw) (by norm_num)
   have hc : ((-71 / 16 : ℚ) : ℝ) + offset = -((u + v) / 2) := by
@@ -85,7 +85,7 @@ private def offsetD : Model := Model.affineCoordinate 1 0 (1 / 16)
 private def offsetV : Model := offsetU.add offsetD
 
 private def marginal (j : Fin 3) (center radius width : ℚ) (cap : ℕ) (X : Model) : Model :=
-  (marginalClosedQuadratureModel (3 / 22) radius width center j 55 5 H X).widen
+  (marginalClosedQuadratureModel (3 / 22) radius width center j 36 5 H X).widen
     (shortMarginalMeshError (3 / 22) radius cap j)
 
 private def reflectedLower (j : Fin 3) : Model := marginal j (-127 / 32) 4 (1 / 32) 4 (neg offsetU)
@@ -142,14 +142,14 @@ private theorem marginal_sound {p : ℕ} (hp : 0 < p) {s t z x offset : ℝ}
     (hH : H.Encloses s t z (3 / (p : ℝ))) (hhmax : 3 / (p : ℝ) ≤ 3 / 22)
     (hX : X.Encloses s t z offset) (hx : (center : ℝ) + offset = x)
     (hr : |(center : ℝ)| + |offset| ≤ (radius : ℝ)) (hw : |offset| ≤ (width : ℝ))
-    (hratio : 2 * (radius : ℝ) < (55 : ℝ) - 2)
+    (hratio : 2 * (radius : ℝ) < (36 : ℝ) - 2)
     (hneg : -(cap : ℝ) ≤ x) (hpos : 2 * x ≤ (cap : ℝ)) :
     let h : ℝ := 3 / (p : ℝ)
     let J := (3 + h) * (3 + 2 * h) / 2
     (marginal j center radius width cap X).Encloses s t z
       (iteratedDeriv (j : ℕ) (fun a ↦ (J * compactKappa p) * compactZ p a) x) := by
   have h := marginalClosedQuadratureModel_widen_meshError_sound (upper := 3 / 22)
-    (N := cap) (terms := 55)
+    (N := cap) (terms := 36)
     (order := 5) j hb hp hH hX (by simpa only [Rat.cast_div, Rat.cast_ofNat] using hhmax)
     (by decide) (by decide) hr hw hratio (by rw [hx]; exact hneg) (by rw [hx]; exact hpos)
   simpa only [marginal, hx] using h
@@ -170,6 +170,7 @@ private structure Checks : Prop where
   sign : 0 < inputs.score.lower
 
 set_option maxRecDepth 12000 in
+set_option maxHeartbeats 1000000 in
 private theorem sign_of_checks {p : ℕ} {u v : ℝ} (checks : Checks)
     (hp : 22 ≤ p) (hu₀ : 63 / 16 ≤ u) (hu₁ : u ≤ 4)
     (hd₀ : 7 / 8 ≤ v - u) (hd₁ : v - u ≤ 1) :
@@ -265,39 +266,52 @@ private theorem sign_of_checks {p : ℕ} {u v : ℝ} (checks : Checks)
   have hroot : inputs.root.Encloses s t z (Real.sqrt (q v * q d)) := by
     simpa only [inputs, rootLower] using
       root_sound hb hradicand rootPolynomial checks.radicandNonneg checks.rootPos
-  have hbound := ShortQuadratureScoreInputs.score_sound (m := inputs) (p := p) (u := u)
-    (v := v) hb hU hD hH (inverse_sound hb hU checks.lowerPos)
-    (inverse_sound hb hV checks.upperPos)
   have hslope {P Q : Model} {x y : ℝ} (hP : P.Encloses s t z x) (hQ : Q.Encloses s t z y)
       (hpos : 0 < Q.lower) : (P.mul (inverse Q)).Encloses s t z (x / y) := by
     simpa only [div_eq_mul_inv, one_mul] using
       Model.mul_sound hb hP (inverse_sound hb hQ hpos)
   have hgapDeriv : (directGap 1).Encloses s t z (deriv q d) := by
     simpa only [Fin.val_one, iteratedDeriv_one] using hdq 1
-  specialize hbound
-    (hslope (by simpa [iteratedDeriv_one] using hru 1) (by simpa using hru 0) checks.reflectedLowerPos)
-    (hslope (by simpa [iteratedDeriv_one] using hrv 1) (by simpa using hrv 0) checks.reflectedUpperPos)
-    (hslope (by simpa [iteratedDeriv_one] using hvq 1) (by simpa using hvq 0) checks.directUpperPos)
-    (hslope (by simpa [iteratedDeriv_one] using hdq 1) (by simpa using hdq 0) checks.directGapPos)
-    (hslope (by simpa using hdq 2) (by simpa using hdq 0) checks.directGapPos)
-    (inverse_sound hb hRate checks.rateGapPos)
-    (Model.expChecks_sound hb hDecay checks.decayOk) (Model.expChecks_sound hb hU checks.growthOk)
-    (joint_sound hb hh.le hhmax rfl rfl rfl) hqv₀ hqd₀
-    hgapDeriv hroot
+  have hJoint : inputs.joint.Encloses s t z (J * shortJointFourthQuadrature h ((u + v) / 2) d) :=
+    joint_sound (u := u) (v := v) (h := h) hb hh.le hhmax rfl rfl rfl
+  have hbound : inputs.score.Encloses s t z (shortQuadratureNegativeScore p u v) := by
+    refine ShortQuadratureScoreInputs.score_sound (m := inputs) (p := p) (u := u) (v := v)
+      (s := s) (t := t) (z := z) hb hU hD hH
+      (inverse_sound hb hU checks.lowerPos) (inverse_sound hb hV checks.upperPos)
+      ?_ ?_ ?_ ?_ ?_ ?_ ?_ ?_ hJoint ?_ ?_ ?_ hroot
+    · exact hslope (by
+          simpa [q, J, h, iteratedDeriv_one, deriv_const_mul_field] using hru 1)
+        (by simpa using hru 0) checks.reflectedLowerPos
+    · exact hslope (by
+          simpa [q, J, h, iteratedDeriv_one, deriv_const_mul_field] using hrv 1)
+        (by simpa using hrv 0) checks.reflectedUpperPos
+    · exact hslope (by
+          simpa [q, J, h, iteratedDeriv_one, deriv_const_mul_field] using hvq 1)
+        hqv₀ checks.directUpperPos
+    · exact hslope hgapDeriv hqd₀ checks.directGapPos
+    · exact hslope (by
+          simpa [q, J, h, d, iteratedDeriv_const_mul_field] using hdq 2)
+        hqd₀ checks.directGapPos
+    · exact inverse_sound hb hRate checks.rateGapPos
+    · exact Model.expChecks_sound hb hDecay checks.decayOk
+    · exact Model.expChecks_sound hb hU checks.growthOk
+    · simpa only [inputs, q, J, h] using hqv₀
+    · simpa only [inputs, q, J, h, d] using hqd₀
+    · simpa only [inputs, q, J, h, d] using hgapDeriv
   exact (div_pos (Int.cast_pos.mpr checks.sign) CompactTaylorModel.scale_real_pos).trans_le
     (Model.lower_sound hb hbound)
 
-set_option maxRecDepth 16000 in
+set_option maxRecDepth 20000 in
 set_option maxHeartbeats 8000000 in
 private theorem firstBoxChecks : Checks := by
-  constructor <;> decide +kernel
+  constructor <;> (try unfold Model.expChecks) <;> decide +kernel
 
 /-- The mixed logarithmic derivative is strictly negative on the first
 short-gap subbox for spacings at most 3/22. -/
 theorem logKernel_mixed_lt {p : ℕ} {u v : ℝ} (hp : 22 ≤ p)
     (hu₀ : 63 / 16 ≤ u) (hu₁ : u ≤ 4) (hd₀ : 7 / 8 ≤ v - u) (hd₁ : v - u ≤ 1) :
-    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
-  exact logKernel_mixed_neg_of_shortQuadratureNegativeScore (by omega) (by linarith)
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 :=
+  logKernel_mixed_neg_of_shortQuadratureNegativeScore (by omega) (by linarith)
     (by linarith) hd₁ (sign_of_checks firstBoxChecks hp hu₀ hu₁ hd₀ hd₁)
 
 end RefinedBMV.PositiveCenter.CompactShortQuadratureFirstBox
