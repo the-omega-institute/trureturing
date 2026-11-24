@@ -441,6 +441,12 @@ These frozen declarations supply references for the strict mathematics volumes.
 | V | [OmegaQuadraticAndSchur](../D5/S3/Quantum/AURICOmega/OmegaQuadraticAndSchur.lean) · [OmegaChebyshevHecke](../D5/S3/Quantum/AURICOmega/OmegaChebyshevHecke.lean) · [OmegaBargmannHaarHecke](../D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.lean) |
 | VI | [OmegaArithmeticHorizon](../D5/S3/Quantum/AURICOmega/OmegaArithmeticHorizon.lean) · [OmegaMatrixAndFractran](../D5/S3/Quantum/AURICOmega/OmegaMatrixAndFractran.lean) |
 
+| Batch | Frozen module |
+| --- | --- |
+| 3A | [OmegaComposeAndWitnesses](../D5/S3/Quantum/AURICOmega/OmegaComposeAndWitnesses.lean) |
+| 3B | [OmegaSphericalHaarMidpoint](../D5/S3/Quantum/AURICOmega/OmegaSphericalHaarMidpoint.lean) |
+| 3C | [OmegaLieTripleAndFreeGroup](../D5/S3/Quantum/AURICOmega/OmegaLieTripleAndFreeGroup.lean) |
+
 `OmegaShadowBridge` transports exact arithmetic and the projective circle into the
 standard number types. Its frozen record lists `propext` and `Quot.sound`.
 [Bridge](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [Frozen evidence](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
