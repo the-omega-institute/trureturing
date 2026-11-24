@@ -194,19 +194,16 @@ private theorem prescribeEmbeddedCubeReturns {A L : Type*} [AddCommGroup A]
     simpa only [recover] using sums
 
 open Function
-open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul)
+open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension
+  (extensionMul factor pairedLift_eq_mul pairedLiftIterate)
 
-private theorem liftColour {A L : Type*} [AddCommGroup A] [Mul L]
+private theorem factorColour {A L : Type*} [AddCommGroup A] [Mul L]
     (b : BitVec 3 ↪ L) (mul : ∀ x y, b (x ^^^ y) = b x * b y)
-    (labels : Set L → A) (p x : BitVec 3) (a : A)
+    (labels : Set L → A) (p x : BitVec 3)
     (hp : p ≠ 0) (hx : x ≠ 0) (hpx : p ≠ x) :
-    letI := extensionMul (b 0) labels
-    ((b p, (0 : A)) : L × A) * (b x, a) =
-      (b (p ^^^ x), a + labels (b '' (↑(cubeTriple p x) : Set (BitVec 3)))) := by
+    factor (b 0) labels (b p) (b x) =
+      labels (b '' (↑(cubeTriple p x) : Set (BitVec 3))) := by
   classical
-  let _ := extensionMul (b 0) labels
-  change (b p * b x, 0 + a + (if b p = b 0 ∨ b x = b 0 ∨ b p = b x then 0 else
-    labels ({b p, b x, b p * b x} : Set L))) = _
   have image : b '' (↑(cubeTriple p x) : Set (BitVec 3)) =
       ({b p, b x, b p * b x} : Set L) := by
     rw [← mul p x]
@@ -217,7 +214,8 @@ private theorem liftColour {A L : Type*} [AddCommGroup A] [Mul L]
     · exact hp (b.injective h)
     · exact hx (b.injective h)
     · exact hpx (b.injective h)
-  rw [ite_eq_right hn, zero_add, image, mul]
+  simp only [factor, ite_eq_right hn, image]
+  rfl
 
 private theorem liftSquare {A L : Type*} [AddCommGroup A] [Mul L]
     (b : BitVec 3 ↪ L) (mul : ∀ x y, b (x ^^^ y) = b x * b y)
@@ -233,8 +231,9 @@ private theorem liftSquare {A L : Type*} [AddCommGroup A] [Mul L]
   let _ := extensionMul (b 0) labels
   let x := BitVec.ofNat 3 (4 + i.val)
   let f : L × A → L × A := fun y => (b p, 0) * ((b q, 0) * y)
+  let step : L → L := fun y => b p * (b q * y)
   let key := fun s : Finset (BitVec 3) => labels (b '' (↑s : Set (BitVec 3)))
-  change f (f (b x, a)) = (b x, a + ((square p q x).map key).sum)
+  change f^[2] (b x, a) = (b x, a + ((square p q x).map key).sum)
   have checked : ∀ (p q : BitVec 3) (i : Fin 4),
       p ∈ ([1, 2, 3] : List (BitVec 3)) → q ∈ ([1, 2, 3] : List (BitVec 3)) →
       let x := BitVec.ofNat 3 (4 + i.val)
@@ -245,16 +244,26 @@ private theorem liftSquare {A L : Type*} [AddCommGroup A] [Mul L]
         q ≠ x ∧ p ≠ y ∧ q ≠ z ∧ p ≠ w ∧ (p ^^^ w) = x := by
     decide
   obtain ⟨p0, q0, x0, y0, z0, w0, qx, py, qz, pw, returns⟩ := checked p q i hp hq
+  have qMul (y : BitVec 3) : b q * b y = b (q ^^^ y) := (mul q y).symm
+  have stepAt (y : BitVec 3) : step (b y) = b (p ^^^ (q ^^^ y)) := by
+    simp only [step, qMul, ← mul p]
+  have closes : step^[2] (b x) = b x := by
+    change step (step (b x)) = b x
+    rw [stepAt, stepAt, returns]
   dsimp only [f]
-  rw [liftColour b mul labels q x a q0 x0 qx,
-    liftColour b mul labels p (q ^^^ x) _ p0 y0 py,
-    liftColour b mul labels q (p ^^^ (q ^^^ x)) _ q0 z0 qz,
-    liftColour b mul labels p (q ^^^ (p ^^^ (q ^^^ x))) _ p0 w0 pw]
-  change (b (p ^^^ (q ^^^ (p ^^^ (q ^^^ x)))), _) = (b x, _)
-  apply Prod.ext
-  · exact congrArg b returns
-  · simp only [square, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero]
-    abel
+  rw [← pairedLift_eq_mul (b 0) labels (b p) (b q), pairedLiftIterate]
+  change (step^[2] (b x), a + ∑ j ∈ Finset.range 2,
+    (factor (b 0) labels (b q) (step^[j] (b x)) +
+      factor (b 0) labels (b p) (b q * step^[j] (b x)))) =
+    (b x, a + ((square p q x).map key).sum)
+  rw [closes]
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, iterate_zero,
+    id_eq, iterate_one, stepAt, qMul, factorColour b mul labels q x q0 x0 qx,
+    factorColour b mul labels p (q ^^^ x) p0 y0 py,
+    factorColour b mul labels q (p ^^^ (q ^^^ x)) q0 z0 qz,
+    factorColour b mul labels p (q ^^^ (p ^^^ (q ^^^ x))) p0 w0 pw,
+    square, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, key]
+  abel
 
 /-- One round takes the second matching edge and then the first. -/
 def pairLift {A L : Type*} [Mul (L × A)] [Zero A] (p q : L)
