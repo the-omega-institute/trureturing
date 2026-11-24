@@ -655,6 +655,8 @@ def rows0003 : List Row :=
   b0003c16 ++ b0003c17 ++ b0003c18 ++ b0003c19 ++ b0003c20 ++ b0003c21 ++ b0003c22 ++ b0003c23 ++
   b0003c24 ++ b0003c25 ++ b0003c26 ++ b0003c27 ++ b0003c28 ++ b0003c29 ++ b0003c30 ++ b0003c31
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0003 : checkBlock 24579 4096 rows0003 = true :=
   checkBlock_append h0003c00 (
     checkBlock_append h0003c01 (

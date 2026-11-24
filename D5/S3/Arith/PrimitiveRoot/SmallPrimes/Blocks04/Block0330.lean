@@ -643,6 +643,8 @@ def rows0330 : List Row :=
   b0330c16 ++ b0330c17 ++ b0330c18 ++ b0330c19 ++ b0330c20 ++ b0330c21 ++ b0330c22 ++ b0330c23 ++
   b0330c24 ++ b0330c25 ++ b0330c26 ++ b0330c27 ++ b0330c28 ++ b0330c29 ++ b0330c30 ++ b0330c31
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0330 : checkBlock 2703363 4096 rows0330 = true :=
   checkBlock_append h0330c00 (
     checkBlock_append h0330c01 (

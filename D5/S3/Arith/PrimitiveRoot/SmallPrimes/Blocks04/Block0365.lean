@@ -641,6 +641,8 @@ def rows0365 : List Row :=
   b0365c16 ++ b0365c17 ++ b0365c18 ++ b0365c19 ++ b0365c20 ++ b0365c21 ++ b0365c22 ++ b0365c23 ++
   b0365c24 ++ b0365c25 ++ b0365c26 ++ b0365c27 ++ b0365c28 ++ b0365c29 ++ b0365c30 ++ b0365c31
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0365 : checkBlock 2990083 4096 rows0365 = true :=
   checkBlock_append h0365c00 (
     checkBlock_append h0365c01 (

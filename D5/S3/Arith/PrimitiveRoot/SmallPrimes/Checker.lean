@@ -9,7 +9,7 @@
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.ZMod.Basic
 import Mathlib.NumberTheory.LucasPrimality
-import Mathlib.Tactic
+import Mathlib.Tactic.SplitIfs
 
 /-! Literal certificates use shared proofs of primality. The checker verifies all
 odd slots, including nontrivial divisors in composite slots. Modular exponentiation
@@ -87,7 +87,7 @@ private theorem powLoop_cast (k b e m r : ℕ) :
         simp only [ZMod.natCast_mod, Nat.cast_mul]
         conv_rhs => rw [heq]
         rw [pow_add, pow_mul, pow_two, pow_one]
-        ring
+        simp only [mul_pow, mul_assoc, mul_comm, mul_left_comm]
       next ho =>
         have ho : e % 2 = 0 := by
           have : e % 2 ≠ 1 := by simpa using ho

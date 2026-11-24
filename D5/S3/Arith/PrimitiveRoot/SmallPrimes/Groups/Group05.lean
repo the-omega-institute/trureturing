@@ -37,6 +37,8 @@ set_option maxRecDepth 10000
 
 namespace D5.S3.Arith.PrimitiveRoot.SmallPrimes
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 private theorem checkedGroup05 :
     checkBlock 3276803 103340 (
       rows0400 ++

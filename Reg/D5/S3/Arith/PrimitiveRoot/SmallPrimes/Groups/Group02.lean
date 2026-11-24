@@ -22,7 +22,7 @@ abbrev arena : Arena where
       orderOf (q : ZMod (1310723 + 2 * k)) = R.readout () () k
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hp : (1310723 : ℕ).Prime := by decide
+  have hp : (1310723 : ℕ).Prime := by norm_num
   let : Fact (1310723 : ℕ).Prime := ⟨hp⟩
   obtain ⟨q, hq, hlt, ho⟩ := h 0 (by decide) hp
   have hz : (q : ZMod 1310723) ≠ 0 := by

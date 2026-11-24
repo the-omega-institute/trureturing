@@ -164,6 +164,8 @@ private theorem h0425c07 : checkBlock 3483395 44 b0425c07 = true := by
 def rows0425 : List Row :=
   b0425c00 ++ b0425c01 ++ b0425c02 ++ b0425c03 ++ b0425c04 ++ b0425c05 ++ b0425c06 ++ b0425c07
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0425 : checkBlock 3481603 940 rows0425 = true :=
   checkBlock_append h0425c00 (
     checkBlock_append h0425c01 (

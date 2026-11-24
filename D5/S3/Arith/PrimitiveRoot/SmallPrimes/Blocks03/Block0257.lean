@@ -638,6 +638,8 @@ def rows0257 : List Row :=
   b0257c16 ++ b0257c17 ++ b0257c18 ++ b0257c19 ++ b0257c20 ++ b0257c21 ++ b0257c22 ++ b0257c23 ++
   b0257c24 ++ b0257c25 ++ b0257c26 ++ b0257c27 ++ b0257c28 ++ b0257c29 ++ b0257c30 ++ b0257c31
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0257 : checkBlock 2105347 4096 rows0257 = true :=
   checkBlock_append h0257c00 (
     checkBlock_append h0257c01 (

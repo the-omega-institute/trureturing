@@ -634,6 +634,8 @@ def rows0248 : List Row :=
   b0248c16 ++ b0248c17 ++ b0248c18 ++ b0248c19 ++ b0248c20 ++ b0248c21 ++ b0248c22 ++ b0248c23 ++
   b0248c24 ++ b0248c25 ++ b0248c26 ++ b0248c27 ++ b0248c28 ++ b0248c29 ++ b0248c30 ++ b0248c31
 
+attribute [local irreducible] checkBlock checkRows checkPrime
+
 theorem checked0248 : checkBlock 2031619 4096 rows0248 = true :=
   checkBlock_append h0248c00 (
     checkBlock_append h0248c01 (
