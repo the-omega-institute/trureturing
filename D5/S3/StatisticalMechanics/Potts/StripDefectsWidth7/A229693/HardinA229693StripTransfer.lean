@@ -71,7 +71,7 @@ activeGroups: proof_shape=content; consumers=activeMultiplicities
 activeMultiplicities: proof_shape=content; consumers=exactExits_active
 inheritedActiveCheck: proof_shape=bind-only; consumers=inheritedActiveCheck_all, inherited_active_spec
 inheritedActiveCheck_all: proof_shape=content; consumers=inherited_active_spec
-inherited_active_spec: proof_shape=bind-only; consumers=class_counts_canonical
+inherited_active_spec: proof_shape=content; consumers=class_counts_canonical
 activeProfileCheck: proof_shape=content; consumers=activeGroups, activeMultiplicities, exactExits_active
 exhaustedMultiplicities: proof_shape=content; consumers=exactExits_new
 exactExits_active: proof_shape=content; consumers=class_counts_canonical
