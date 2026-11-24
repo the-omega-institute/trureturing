@@ -8,8 +8,7 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortTangentData
 import Lean.Elab.Tactic.Cbv
-import Lean.Elab.Tactic.CbvSimproc
-import Lean.Meta.Eval
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorReplay
 
 /-! The first checked row of the normalized short-gap table. -/
 
@@ -31,42 +30,7 @@ open private coeffAdd coeffScale from
 
 section
 
-private meta def quoteModel (p : Model) : MetaM Expr := do
-  let terms ← p.polynomial.terms.mapM fun a => do
-    let (i, j, k) := a.exponents
-    let jk ← mkAppM ``Prod.mk #[toExpr j, toExpr k]
-    let ijk ← mkAppM ``Prod.mk #[toExpr i, jk]
-    return mkApp2 (mkConst ``DimThree.Certificate.Term.mk) ijk (toExpr a.coefficient)
-  let terms ← mkListLit (mkConst ``DimThree.Certificate.Term) terms
-  return mkApp2 (mkConst ``Model.mk) (mkApp (mkConst ``Sparse.mk) terms) (toExpr p.radius)
-
--- The compiled evaluator proposes only data. Each equality is checked in a separate theorem.
-private meta def stageQuoted (α : Type) (type : Expr) (quoteValue : α → MetaM Expr) :
-    Simproc := fun e => do
-  if e.hasFVar || e.hasMVar || e.hasLooseBVars then
-    return .rfl
-  let (output, equality) ← liftM (m := MetaM) <| do
-    let value ← unsafe evalExpr α type e
-    let output ← quoteValue value
-    let theoremType ← mkEq e output
-    let proof ← mkEqRefl output
-    let equality ← try
-      withOptions (fun opts ↦ Lean.maxHeartbeats.set (Elab.async.set opts false) 350000) <|
-        mkAuxLemma [] theoremType proof
-    catch err =>
-      throwError "kernel replay of {e.getAppFn} failed: {err.toMessageData}"
-    pure (output, equality)
-  return .step (← Sym.shareCommon output) (mkConst equality) (done := true)
-
-private meta def stageLiteral (α : Type) [ToExpr α] : Simproc :=
-  stageQuoted α (toTypeExpr (α := α)) (pure ∘ toExpr)
-
-private meta def stageModel : Simproc := stageQuoted Model (mkConst ``Model) quoteModel
-
-private meta def stageOnModels (count : Nat) (proc : Simproc) : Simproc := fun e => do
-  unless (e.getAppArgs.extract 0 count).all (fun a => a.isAppOfArity ``Model.mk 2) do
-    throwError "expected reduced model inputs for {e.getAppFn}"
-  proc e
+open CompactTaylorModel.Replay
 
 -- These simprocs receive the arguments after cbv has reduced them.
 local cbv_simproc cbv_eval stageMul (Model.mul _ _) := stageOnModels 2 stageModel

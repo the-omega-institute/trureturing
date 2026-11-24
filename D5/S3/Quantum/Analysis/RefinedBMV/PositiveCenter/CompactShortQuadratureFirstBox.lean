@@ -9,17 +9,22 @@
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureScore
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMarginalBoxError
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorReplay
+import Lean.Elab.Tactic.Cbv
 
 /-! The short-gap subbox near lower coordinate four and gap one, at spacing at most 3/22. -/
 
 namespace RefinedBMV.PositiveCenter.CompactShortQuadratureFirstBox
 
 open CompactTaylorModel (Model InBox)
+open CompactTaylorModel.Replay
 
 open private neg neg_sound inverse inverse_sound from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
-open private CompactTaylorModel.Model.center from
+open private CompactTaylorModel.Model.center CompactTaylorModel.Model.expHalvings from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
+open private coeffAdd coeffScale from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 
 private def U : Model := Model.affineCoordinate 0 (127 / 32) (1 / 32)
 private def D : Model := Model.affineCoordinate 1 (15 / 16) (1 / 16)
@@ -171,6 +176,7 @@ private structure Checks : Prop where
 
 set_option maxRecDepth 12000 in
 set_option maxHeartbeats 1000000 in
+-- Assemble the larger dependent type of the score enclosure at the concrete box.
 private theorem sign_of_checks {p : ℕ} {u v : ℝ} (checks : Checks)
     (hp : 22 ≤ p) (hu₀ : 63 / 16 ≤ u) (hu₁ : u ≤ 4)
     (hd₀ : 7 / 8 ≤ v - u) (hd₁ : v - u ≤ 1) :
@@ -301,10 +307,60 @@ private theorem sign_of_checks {p : ℕ} {u v : ℝ} (checks : Checks)
   exact (div_pos (Int.cast_pos.mpr checks.sign) CompactTaylorModel.scale_real_pos).trans_le
     (Model.lower_sound hb hbound)
 
+section
+
+local cbv_simproc cbv_eval stageMul (Model.mul _ _) := stageOnModels 2 stageModel
+local cbv_simproc cbv_eval stageAdd (Model.add _ _) := stageOnModels 2 stageModel
+local cbv_simproc cbv_eval stageSub (Model.sub _ _) := stageOnModels 2 stageModel
+local cbv_simproc cbv_eval stageOfRat (Model.ofRat _) := stageModel
+local cbv_simproc cbv_eval stageWiden (Model.widen _ _) := stageOnModels 1 stageModel
+local cbv_simproc cbv_eval stageLower (Model.lower _) := stageOnModels 1 (stageLiteral Int)
+local cbv_simproc cbv_eval stageAbsUpper (Model.absUpper _) := stageOnModels 1 (stageLiteral Nat)
+local cbv_simproc cbv_eval stageCenter (CompactTaylorModel.Model.center _) :=
+  stageOnModels 1 (stageLiteral Rat)
+local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat)
+local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat)
+
+attribute [local cbv_opaque] Model.add Model.sub Model.mul Model.lower Model.absUpper
+
+private def expCheck (P : Model) : Bool :=
+  let c := CompactTaylorModel.Model.center P
+  let n := CompactTaylorModel.Model.expHalvings P
+  decide (|c / (2 : ℚ) ^ n| ≤ 51 / 100) &&
+    decide ((P.sub (Model.ofRat c)).argumentRadius < 32)
+
+private theorem expCheck_eq_true {P : Model} (h : expCheck P = true) : P.expChecks := by
+  simpa only [expCheck, Model.expChecks, Bool.and_eq_true, decide_eq_true_eq] using h
+
+private def arithmeticChecks : Bool :=
+  decide (0 < U.lower) &&
+  (decide (0 < V.lower) &&
+  (decide (0 < (reflectedLower 0).lower) &&
+  (decide (0 < (reflectedUpper 0).lower) &&
+  (decide (0 < (directUpper 0).lower) &&
+  (decide (0 < (directGap 0).lower) &&
+  (decide (0 < rateGap.lower) &&
+  (decide ((H.mul (neg U)).argumentRadius ≤ 2) &&
+  (expCheck decayInput &&
+  (expCheck U &&
+  (decide (0 ≤ radicand.lower) &&
+  (decide (0 < (⟨rootPolynomial, 0⟩ : Model).lower) &&
+    decide (0 < inputs.score.lower))))))))))))
+
 set_option maxRecDepth 20000 in
-set_option maxHeartbeats 8000000 in
+set_option cbv.maxSteps 5000000 in
+set_option maxHeartbeats 0 in
+private theorem arithmeticChecks_true : arithmeticChecks = true := by
+  decide_cbv
+
 private theorem firstBoxChecks : Checks := by
-  constructor <;> (try unfold Model.expChecks) <;> decide +kernel
+  have h := arithmeticChecks_true
+  simp only [arithmeticChecks, Bool.and_eq_true, decide_eq_true_eq] at h
+  obtain ⟨hu, hv, hru, hrv, hvq, hdq, hk, hsmall, hdec, hgrow, hrad, hroot, hscore⟩ := h
+  exact ⟨hu, hv, hru, hrv, hvq, hdq, hk, hsmall, expCheck_eq_true hdec,
+    expCheck_eq_true hgrow, hrad, hroot, hscore⟩
+
+end
 
 /-- The mixed logarithmic derivative is strictly negative on the first
 short-gap subbox for spacings at most 3/22. -/
