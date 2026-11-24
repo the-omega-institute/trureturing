@@ -18,7 +18,8 @@ internal sealed class HardinA203981StripSymmetryDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create("lift-counts"), DeclarationHandle.Create(Prefix + "lift_counts"),
             H("Transfer counts are constant on a boundary class"), StatementSource.FromAuthor(Disp(LiftCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum through a common representative."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("Independent colour permutations on the two parities preserve cost when interchanged on the next row. Reflection exchanges the two triples and preserves cost. HardinA233258PairTransfer supplies the colour invariance and representative of each triple class. The resulting bijections transport each exact-cost sum through a common representative.")),
+                Paragraph(Text("The boundary-equality premise is necessary in general. At budget zero and target class zero, the source representatives of classes 0 and 1 have four and two exact-cost targets, respectively."))), DescribeRole.Theorem))));
     private static Formula CostFormula()
     {
         var p = V("p");
