@@ -19,6 +19,7 @@ public import OmegaMath.Calculus.Jet2
 public import OmegaMath.Calculus.MidpointDrift
 public import OmegaMath.Computability.Fractran
 public import OmegaMath.Computability.QuaternionFractran
+public import OmegaMath.Data.FiniteIndex
 public import OmegaMath.Data.Int
 public import OmegaMath.Data.IntRatio
 public import OmegaMath.Data.Nat
