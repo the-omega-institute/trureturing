@@ -39,10 +39,10 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                 + "singleton cyclic collision masses of the degree-p lattice sums. The lattice coordinate "
                 + "is its representative in {0,1,2,3}. With nonnegative w these masses form "
                 + "the law of the difference between two independent p-fold sums. Let A be the "
-                + "maximum coefficient at frequency one among probability weights with coefficient "
-                + "zero at frequency two. Let B be the maximum "
-                + "nonnegative first coefficient among probability laws with Fourier "
-                + "coefficient vector (1,B,0,B).")),
+                + "maximum of M(w) at frequency one over all nonnegative real weights w of "
+                + "total mass one for which M(w) at frequency two is zero. Let B be the maximum "
+                + "of the real numbers b at least zero for which a probability law on the four "
+                + "residues has Fourier coefficient vector (1,b,0,b).")),
             Describe.Lean(
                 DescribeId.Create("four-first-moment-maxima"),
                 DeclarationHandle.Create(Owner + ".four_first_moment_maxima"),
