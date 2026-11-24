@@ -13,6 +13,8 @@ import D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
+import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
 
 /-! Signed quadrature remainders for the regularized refined BMV marginal. -/
 
@@ -66,6 +68,66 @@ theorem iteratedDeriv_regularizedMarginalRemainder_parameter (j : ℕ) (x t : �
         fun t ↦ x ^ 2 * (∫ s in (0 : ℝ)..1, (1 - s) * (x * s) ^ j * Real.exp (t * (x * s)))
         from funext ih]
       exact ((hasDerivAt_exponential_moment_integral x j t).const_mul (x ^ 2)).deriv
+
+/-- The shifted exponential series gives the exact pointwise coefficients used for
+the first two parameter derivatives and the regularized value itself. -/
+theorem iteratedDeriv_regularizedMarginalRemainder_eq_tsum (j : ℕ) (x t : ℝ) :
+    iteratedDeriv j (fun r ↦ regularizedMarginalRemainder r x) t =
+      ∑' n : ℕ, (1 / ((((j + n : ℕ) : ℝ) + 1) * (((j + n : ℕ) : ℝ) + 2))) *
+        (t ^ n / n.factorial) * x ^ (j + n + 2) := by
+  let f (n : ℕ) : C(ℝ, ℝ) := ⟨fun s ↦ (1 - s) * (x * s) ^ j *
+    ((t * (x * s)) ^ n / n.factorial), by fun_prop⟩
+  let majorant (n : ℕ) := |x| ^ j * (|t * x| ^ n / n.factorial)
+  have hmaj : Summable majorant := (Real.summable_pow_div_factorial |t * x|).mul_left _
+  have hnorm : Summable fun n ↦
+      ‖(f n).restrict (⟨Set.uIcc (0 : ℝ) 1, isCompact_uIcc⟩ : TopologicalSpace.Compacts ℝ)‖ := by
+    apply Summable.of_nonneg_of_le (fun _ ↦ norm_nonneg _) _ hmaj
+    intro n
+    refine (ContinuousMap.norm_le _ (show 0 ≤ majorant n by unfold majorant; positivity)).mpr ?_
+    intro s
+    let y : ℝ := s
+    have hs : y ∈ Set.uIcc (0 : ℝ) 1 := s.property
+    have hy : y ∈ Set.Icc (0 : ℝ) 1 := by
+      simpa only [Set.uIcc_of_le zero_le_one] using hs
+    have hb : |x * y| ≤ |x| := by
+      rw [abs_mul, abs_of_nonneg hy.1]
+      exact mul_le_of_le_one_right (abs_nonneg x) hy.2
+    have ht : |t * (x * y)| ≤ |t * x| := by
+      rw [← mul_assoc, abs_mul, abs_of_nonneg hy.1]
+      exact mul_le_of_le_one_right (abs_nonneg _) hy.2
+    have hw : |1 - y| ≤ 1 := by rw [abs_of_nonneg (sub_nonneg.mpr hy.2)]; linarith [hy.1]
+    change |(1 - y) * (x * y) ^ j * ((t * (x * y)) ^ n / n.factorial)| ≤ majorant n
+    rw [abs_mul, abs_mul, abs_pow, abs_div, abs_pow,
+      abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n.factorial)]
+    calc
+      _ ≤ 1 * |x| ^ j * (|t * x| ^ n / n.factorial) :=
+        mul_le_mul (mul_le_mul hw (pow_le_pow_left₀ (abs_nonneg _) hb j) (by positivity) zero_le_one)
+          (div_le_div_of_nonneg_right (pow_le_pow_left₀ (abs_nonneg _) ht n) (Nat.cast_nonneg _))
+          (by positivity) (by positivity)
+      _ = _ := by simp [majorant]
+  have hint := intervalIntegral.tsum_intervalIntegral_eq_of_summable_norm
+    (a := (0 : ℝ)) (b := 1) hnorm
+  rw [iteratedDeriv_regularizedMarginalRemainder_parameter]
+  calc
+    _ = x ^ 2 * (∫ s in (0 : ℝ)..1, ∑' n, f n s) := by
+      congr 1
+      apply intervalIntegral.integral_congr
+      intro s _
+      rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+      change (1 - s) * (x * s) ^ j * ((∑' n : ℕ, (t * (x * s)) ^ n / n.factorial)) = _
+      rw [← tsum_mul_left]
+      rfl
+    _ = x ^ 2 * (∑' n : ℕ, ∫ s in (0 : ℝ)..1, f n s) := by rw [← hint]
+    _ = _ := by
+      rw [← tsum_mul_left]
+      refine tsum_congr fun n ↦ ?_
+      have hf (s : ℝ) : f n s =
+          (x ^ (j + n) * (t ^ n / n.factorial)) * ((1 - s) * s ^ (j + n)) := by
+        simp only [f, ContinuousMap.coe_mk, mul_pow, pow_add]
+        ring
+      simp_rw [hf]
+      rw [intervalIntegral.integral_const_mul, unit_weight_moment, pow_add x (j + n) 2]
+      ring
 
 private theorem compactKappa_mul_compactZ_eq_gridAverage {p : ℕ} (hp : 0 < p) (t : ℝ) :
     compactKappa p * compactZ p t = gridAverage p (regularizedMarginalRemainder t) := by
@@ -215,6 +277,99 @@ theorem compactClosedQuadrature_polynomial (h : ℝ) (n : ℕ) (c : ℕ → ℝ)
       unfold compactClosedQuadrature f
       simp only [intervalIntegral.integral_const_mul, iteratedDeriv_const_mul_field]
       ring
+
+/-- Closed quadrature commutes with a factorially weighted series of monomials. -/
+theorem compactClosedQuadrature_tsum {C : ℝ} (h t : ℝ) (offset : ℕ) (weight : ℕ → ℝ)
+    (hw : ∀ n, |weight n| ≤ C) :
+    compactClosedQuadrature h (fun x ↦ ∑' n : ℕ, weight n * t ^ n / n.factorial *
+      x ^ (n + offset)) =
+      ∑' n : ℕ, weight n * t ^ n / n.factorial *
+        compactClosedQuadrature h (fun x ↦ x ^ (n + offset)) := by
+  let c (n : ℕ) : ℝ := weight n * t ^ n / n.factorial
+  let f (n : ℕ) (x : ℝ) := c n * x ^ (n + offset)
+  let F (x : ℝ) := ∑' n, f n x
+  let s := Set.Ioo (-3 : ℝ) 3
+  have hs : IsOpen s := isOpen_Ioo
+  have hC : 0 ≤ C := (abs_nonneg _).trans (hw 0)
+  have hwithin (j n : ℕ) {x : ℝ} (hx : x ∈ s) :
+      iteratedDerivWithin j (f n) s x =
+        c n * ((n + offset).descFactorial j * x ^ (n + offset - j)) := by
+    rw [iteratedDerivWithin_of_isOpen hs hx]
+    simp only [f, iteratedDeriv_const_mul_field, iteratedDeriv_pow]
+  let bound (j n : ℕ) : ℝ :=
+    (C * j.factorial * 6 ^ offset) * ((6 * |t|) ^ n / n.factorial)
+  have hboundSum (j : ℕ) : Summable (bound j) :=
+    (Real.summable_pow_div_factorial _).mul_left _
+  have hbound (j n : ℕ) (x : ℝ) (hx : x ∈ s) :
+      ‖iteratedDerivWithin j (f n) s x‖ ≤ bound j n := by
+    have hx3 : |x| ≤ 3 := abs_le.mpr ⟨hx.1.le, hx.2.le⟩
+    have hp : |x| ^ (n + offset - j) ≤ (3 : ℝ) ^ (n + offset) :=
+      (pow_le_pow_left₀ (abs_nonneg _) hx3 _).trans
+        (pow_le_pow_right₀ (by norm_num) (Nat.sub_le _ _))
+    have hd : ((n + offset).descFactorial j : ℝ) ≤
+        (j.factorial : ℝ) * 2 ^ (n + offset) := by
+      exact_mod_cast (Nat.descFactorial_eq_factorial_mul_choose (n + offset) j).le.trans
+        (Nat.mul_le_mul_left _ (Nat.choose_le_two_pow (n + offset) j))
+    rw [hwithin j n hx]
+    simp only [Real.norm_eq_abs, abs_mul, abs_pow, c, abs_div,
+      abs_of_nonneg (Nat.cast_nonneg (α := ℝ) _)]
+    calc
+      _ ≤ C * |t| ^ n / n.factorial *
+          ((j.factorial : ℝ) * 2 ^ (n + offset) * 3 ^ (n + offset)) := by
+        gcongr
+        exact hw n
+      _ = bound j n := by
+        simp only [bound, show (6 : ℝ) = 2 * 3 by norm_num, mul_pow, pow_add]
+        ring
+  have huniform (j : ℕ) :
+      HasSumUniformlyOn (fun n ↦ iteratedDerivWithin j (f n) s)
+        (fun x ↦ ∑' n, iteratedDerivWithin j (f n) s x) s :=
+    HasSumUniformlyOn.of_norm_le_summable (hboundSum j) (hbound j)
+  have hvalue {x : ℝ} (hx : x ∈ s) : HasSum (fun n ↦ f n x) (F x) := by
+    simpa only [iteratedDerivWithin_zero, F] using (huniform 0).hasSum hx
+  have hderiv (j : ℕ) {x : ℝ} (hx : x ∈ s) :
+      HasSum (fun n ↦ iteratedDeriv j (f n) x) (iteratedDeriv j F x) := by
+    rw [← iteratedDerivWithin_of_isOpen hs hx]
+    have heq := iteratedDerivWithin_tsum (f := f) j hs hx
+      (fun _ hy ↦ (hvalue hy).summable)
+      (fun k _ _ ↦ (huniform k).hasSumLocallyUniformlyOn.summableLocallyUniformlyOn) (by
+        intro n k y _ hy
+        have hevent := (hs.eventually_mem hy).mono (fun z hz ↦ hwithin k n hz)
+        exact (show DifferentiableAt ℝ
+          (fun z : ℝ ↦ c n * ((n + offset).descFactorial k * z ^ (n + offset - k))) y by
+            fun_prop).congr_of_eventuallyEq hevent)
+    rw [show iteratedDerivWithin j F s x = _ from heq]
+    simpa only [iteratedDerivWithin_of_isOpen hs hx] using (huniform j).hasSum hx
+  let g (n : ℕ) : C(ℝ, ℝ) := ⟨f n, by dsimp [f]; fun_prop⟩
+  let K : TopologicalSpace.Compacts ℝ := ⟨Set.uIcc (-1 : ℝ) 2, isCompact_uIcc⟩
+  have hnorm : Summable (fun n ↦ ‖(g n).restrict K‖) := by
+    refine Summable.of_nonneg_of_le (fun _ ↦ norm_nonneg _) (fun n ↦ ?_) (hboundSum 0)
+    apply (ContinuousMap.norm_le _ (by dsimp [bound]; positivity)).2
+    intro x
+    have hx : (x : ℝ) ∈ Set.Icc (-1 : ℝ) 2 := by
+      simpa only [K, TopologicalSpace.Compacts.coe_mk, Set.uIcc_of_le
+        (by norm_num : (-1 : ℝ) ≤ 2)] using x.property
+    have hxs : (x : ℝ) ∈ s :=
+      ⟨(by norm_num : (-3 : ℝ) < -1).trans_le hx.1, hx.2.trans_lt (by norm_num)⟩
+    simpa only [ContinuousMap.restrict_apply, g, ContinuousMap.coe_mk, iteratedDerivWithin_zero]
+      using hbound 0 n (x : ℝ) hxs
+  have hint : HasSum (fun n ↦ ∫ x in (-1 : ℝ)..2, f n x) (∫ x in (-1 : ℝ)..2, F x) :=
+    intervalIntegral.hasSum_intervalIntegral_of_summable_norm (f := g) hnorm
+  have hleft : (-1 : ℝ) ∈ s := by norm_num [s, Set.mem_Ioo]
+  have hright : (2 : ℝ) ∈ s := by norm_num [s, Set.mem_Ioo]
+  have hsum : HasSum (fun n ↦ compactClosedQuadrature h (f n)) (compactClosedQuadrature h F) := by
+    unfold compactClosedQuadrature
+    exact ((hint.add (((hvalue hleft).add (hvalue hright)).mul_left (h / 2))).add
+      (((hderiv 1 hright).sub (hderiv 1 hleft)).mul_left (h ^ 2 / 12))).sub
+      (((hderiv 3 hright).sub (hderiv 3 hleft)).mul_left (h ^ 4 / 720))
+  change compactClosedQuadrature h F = ∑' n, c n *
+    compactClosedQuadrature h (fun x ↦ x ^ (n + offset))
+  rw [← hsum.tsum_eq]
+  congr 1
+  funext n
+  unfold compactClosedQuadrature f
+  simp only [intervalIntegral.integral_const_mul, iteratedDeriv_const_mul_field]
+  ring
 
 /-- The monomial majorant used in the geometric tail of the quadrature expansion. -/
 theorem compactClosedQuadrature_monomial_abs_le {h : ℝ} (hh : 0 ≤ h) (k : ℕ) :
@@ -414,6 +569,32 @@ theorem compactClosedQuadrature_series_tail_le {h C t R : ℝ} {offset N : ℕ}
       · exact h1.2
       · exact h3.2
     _ = _ := by dsimp only [den]; ring
+
+/-- Verified truncation of a closed-quadrature expansion. The right-hand side
+uses only the first omitted monomial majorants and a geometric ratio. -/
+theorem compactClosedQuadrature_taylor_error_le {h C t R : ℝ} {offset N : ℕ}
+    (hh : 0 ≤ h) (ht : |t| ≤ R) (hN : 3 ≤ N) (hr : 2 * R < (N : ℝ) - 2)
+    {weight : ℕ → ℝ} (hw : ∀ n, |weight n| ≤ C) :
+    let c (n : ℕ) := weight n * (t ^ n / n.factorial)
+    |compactClosedQuadrature h (fun x ↦ ∑' n : ℕ, c n * x ^ (n + offset)) -
+      ∑ n ∈ Finset.range N, c n * compactClosedQuadrature h (fun x ↦ x ^ (n + offset))| ≤
+      C * ((3 + h) * quadratureTailTerm offset 0 R N +
+        h ^ 2 / 6 * quadratureTailTerm offset 1 R N +
+        h ^ 4 / 360 * quadratureTailTerm offset 3 R N) / (1 - 2 * R / ((N : ℝ) - 2)) := by
+  let c (n : ℕ) := weight n * (t ^ n / n.factorial)
+  let a (n : ℕ) := c n * compactClosedQuadrature h (fun x ↦ x ^ (n + offset))
+  have hC : 0 ≤ C := (abs_nonneg _).trans (hw 0)
+  have htail := compactClosedQuadrature_series_tail_le (offset := offset) hh hC ht hN hr
+    (fun n _ ↦ hw n)
+  have hs : Summable (fun n : ℕ ↦ ‖a (n + N)‖) := by
+    simpa only [a, c, Real.norm_eq_abs] using htail.1
+  have hsum : Summable a := (summable_nat_add_iff N).mp hs.of_norm
+  have heq : compactClosedQuadrature h (fun x ↦ ∑' n : ℕ, c n * x ^ (n + offset)) = ∑' n, a n := by
+    simpa only [c, a, mul_div_assoc] using compactClosedQuadrature_tsum h t offset weight hw
+  change |compactClosedQuadrature h (fun x ↦ ∑' n : ℕ, c n * x ^ (n + offset)) -
+    ∑ n ∈ Finset.range N, a n| ≤ _
+  rw [heq, ← hsum.sum_add_tsum_nat_add N, add_sub_cancel_left]
+  exact (norm_tsum_le_tsum_norm hs).trans (by simpa only [a, c, Real.norm_eq_abs] using htail.2)
 
 /-- The normalized Euler–Maclaurin quadrature with endpoint corrections through order four. -/
 def compactMarginalQuadrature (h t : ℝ) : ℝ :=
