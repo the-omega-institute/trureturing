@@ -143,7 +143,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         var value = All("i", index, Eq(Call("Nat.iterate", f, Call("Fin.val", i), v), App(table, i)));
         return All("X", V("Type"), All("n", V("Nat"), All("f", Arr(x, x),
             All("v", x, All("table", Arr(index, x), Seq(
-                Parenthesized(value), Sp, F.Iff, Sp, Parenthesized(And(zero, update))))))));
+                Parenthesized(And(zero, Parenthesized(update))), Sp, Implies, Sp, Parenthesized(value)))))));
     }
 
     private static Formula ForwardStepFormula()

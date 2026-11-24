@@ -284,7 +284,8 @@ theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := 
     · fin_cases j <;> rfl
     · fin_cases j <;> rfl
   exact congrArg (· ∘ (Sum.inr : Fin 15 → (Fin 15 ⊕ Fin 15) ⊕ Fin 15))
-    ((HardinA203981StripCertificate.forward_table_of_steps (fun w => Matrix.vecMul w T) initial table).2 ⟨zero, step⟩ i)
+    (HardinA203981StripCertificate.forward_table_of_steps
+      (fun w => Matrix.vecMul w T) initial table zero step i)
 
 private theorem inherited_relation (j : Fin 15 ⊕ Fin 15) :
     forward HardinA229508StripData.T HardinA229508StripData.initial (2 + 18) j =
