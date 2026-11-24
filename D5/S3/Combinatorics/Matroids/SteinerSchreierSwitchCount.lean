@@ -133,7 +133,7 @@ private theorem loopTriples {L : Type*} [Mul L] {r : ℕ}
         simpa [hzP, hzX] using hz
       simpa [zy] using equal.symm
 
-private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
+theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
     (label : Option (Fin (r + 1)) ≃ L)
     (unit : ∀ a, label none * a = a)
     (comm : ∀ a b : L, a * b = b * a)
@@ -232,6 +232,39 @@ private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
 open Function
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul realizeSchreierReturns)
 
+/-- Two involutions commute at a point exactly when their composite closes in two steps. -/
+theorem squareFixed {X : Type*} {P Q : X → X}
+    (hp : Involutive P) (hq : Involutive Q) (x : X) :
+    Q (P x) = P (Q x) ↔ (P ∘ Q)^[2] x = x := by
+  change Q (P x) = P (Q x) ↔ P (Q (P (Q x))) = x
+  constructor
+  · intro h
+    rw [← h, hq, hp]
+  · intro h
+    have undo := congrArg (Q ∘ P) h
+    change Q (P (P (Q (P (Q x))))) = Q (P x) at undo
+    rw [hp (Q (P (Q x))), hq (P (Q x))] at undo
+    exact undo.symm
+
+/-- When distinct Steiner pivots close a square, their two-step map has period two. -/
+theorem steinerSquarePeriod {L : Type*} [Mul L] {p q x : L}
+    (comm : ∀ u v : L, u * v = v * u)
+    (invol : ∀ u v : L, u * (u * v) = v) (different : p ≠ q)
+    (closed : (fun y => p * (q * y))^[2] x = x) :
+    minimalPeriod (fun y => p * (q * y)) x = 2 := by
+  have notFixed : p * (q * x) ≠ x := by
+    intro h
+    have pq : q * x = p * x := by
+      simpa only [invol] using congrArg (p * ·) h
+    apply different
+    apply (show Involutive (x * ·) from invol x).injective
+    change x * p = x * q
+    rw [comm x p, comm x q, pq]
+  have period : IsPeriodicPt (fun y => p * (q * y)) 2 x := closed
+  rcases (Nat.dvd_prime Nat.prime_two).mp period.minimalPeriod_dvd with h | h
+  · exact (notFixed (minimalPeriod_eq_one_iff_isFixedPt.mp h)).elim
+  · exact h
+
 private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] (G : SimpleGraph L) (e p q : L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
@@ -262,32 +295,11 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
   let g : L → L := fun x => p * (q * x)
   let f : L × A → L × A := fun y => P * (Q * y)
   refine ⟨labels, idExt, commExt, involExt, centreExt, ?_⟩
-  have two (y : L × A) : f^[2] y = f (f y) := rfl
-  have step_ne (x : L) : g x ≠ x := by
-    intro h
-    have eq : q * x = p * x := by
-      change p * (q * x) = x at h
-      simpa only [invol] using congrArg (p * ·) h
-    apply hpq
-    apply (show Involutive (x * ·) from invol x).injective
-    change x * p = x * q
-    rw [comm x p, comm x q, eq]
-  have period {x : L} (hx : g (g x) = x) : minimalPeriod g x = 2 := by
-    have hper : IsPeriodicPt g 2 x := hx
-    have div := isPeriodicPt_iff_minimalPeriod_dvd.mp hper
-    rcases (Nat.dvd_prime Nat.prime_two).mp div with eq | eq
-    · exact (step_ne x (minimalPeriod_eq_one_iff_isFixedPt.mp eq)).elim
-    · exact eq
+  have period {x : L} (hx : g (g x) = x) : minimalPeriod g x = 2 :=
+    steinerSquarePeriod comm invol hpq hx
   have commute {y : L × A} :
-      Q * (P * y) = P * (Q * y) ↔ f^[2] y = y := by
-    rw [two]
-    change Q * (P * y) = P * (Q * y) ↔ P * (Q * (P * (Q * y))) = y
-    constructor
-    · intro h
-      rw [← h, involExt, involExt]
-    · intro h
-      have h' := congrArg (fun z => Q * (P * z)) h
-      simpa only [involExt, eq_comm] using h'
+      Q * (P * y) = P * (Q * y) ↔ f^[2] y = y :=
+    squareFixed (involExt P) (involExt Q) y
   let selected : Set L := {x | g (g x) ≠ x ∨
     ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
       t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
