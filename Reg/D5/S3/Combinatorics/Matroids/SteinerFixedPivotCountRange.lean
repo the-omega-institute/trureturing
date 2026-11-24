@@ -10,8 +10,8 @@ open LeanInformationAudit SimpleGraph
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Matroids
 open _root_.D5.S3.Combinatorics.Matroids.SteinerFixedPivotCountRange
-open SteinerSchreierExtension (extensionMul extensionSteinerAndCentre)
-open SteinerSchreierSwitchCount (pointedNumbering labelledSwitchCount)
+open SteinerSchreierExtension (extensionMul)
+open SteinerSchreierSwitchCount (realizeLabelledSwitchCount squareFixed)
 open SteinerAlternatingSwitches (SuccessfulStart Matchings)
 open PointDeletedSteinerSwitch (pointDeletedFamily)
 open RankThreeInternalSteinerDecomposition (IsPartialSteiner)
@@ -80,32 +80,26 @@ private theorem rejected_law : ¬ law.{u,v} rejected := by
     second_ne_self := fun x eq => hq (injectRight x (eq.trans (affine_unit x).symm))
     partners_ne := fun x eq => different (injectRight x eq)
   }
-  let labels : Set L → A := fun _ => 0
-  let _ := extensionMul e labels
-  obtain ⟨unitExt, commExt, invExt, _⟩ :=
-    extensionSteinerAndCentre e labels affine_unit affine_comm affine_invol
-      (fun _ => Subsingleton.elim _ _) affine_centreless
-  have pNe : (p, (0 : A)) ≠ (e, 0) := fun eq => hp (congrArg Prod.fst eq)
-  have qNe : (q, (0 : A)) ≠ (e, 0) := fun eq => hq (congrArg Prod.fst eq)
-  obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) ⟨(p, 0), pNe⟩
-  obtain ⟨i, w, atP, atQ⟩ := locate (p, 0) (q, 0) pNe qNe
-    (fun eq => different (congrArg Prod.fst eq))
-  obtain ⟨S, valid, cover, transport, byDeleted⟩ :=
-    labelledSwitchCount label (by simpa only [zero] using unitExt) commExt invExt
-  obtain ⟨matching, leave, starts⟩ := byDeleted i
-  have measured := (starts w).2
-  rw [atP, atQ] at measured
+  let zeroReturn : {C : M.graph.ConnectedComponent // C ≠ M.graph.connectedComponentMk e} → A :=
+    fun _ => 0
+  obtain ⟨labels, r, label, i, w, S, valid, cover, matching, zero, atP, atQ, _, transport, leave, _,
+    measured⟩ :=
+    realizeLabelledSwitchCount M.graph e p q affine_unit affine_comm affine_invol
+      (fun _ => Subsingleton.elim _ _) affine_centreless different (fun _ _ => Iff.rfl) zeroReturn
   have positive :
-      0 < ({y : L × A | (q, 0) * ((p, 0) * y) ≠ (p, 0) * ((q, 0) * y)} : Set (L × A)).ncard :=
-    Set.ncard_pos (Set.toFinite _) |>.mpr
-      ⟨(x, 0), fun eq => noncommuting (congrArg Prod.fst eq)⟩
+      0 < ({a | SuccessfulStart (pointDeletedFamily S i) matching w a} : Set (Fin r)).ncard := by
+    rw [measured]
+    apply Nat.mul_pos Nat.card_pos
+    apply (Set.ncard_pos (Set.toFinite _)).mpr
+    refine ⟨x, Or.inl ?_⟩
+    exact fun closes => noncommuting ((squareFixed (affine_invol p) (affine_invol q) x).mpr closes)
   obtain ⟨_, _, _, impossible⟩ :=
     (bound (L := L) (A := A) M.graph e p q affine_unit affine_comm affine_invol
       affine_centreless different (fun _ _ => Iff.rfl)
       ({a | SuccessfulStart (pointDeletedFamily S i) matching w a} : Set (Fin r)).ncard).mp
         ⟨labels, r, label, S, valid, cover, i, w, matching, zero, atP, atQ, transport, leave, rfl⟩
   simp only [rejected, realize, zero_mul] at impossible
-  exact (Nat.ne_of_gt (measured.symm ▸ positive)) impossible
+  exact (Nat.ne_of_gt positive) impossible
 
 def source : Registration arena.{u,v} (type_of% (@labelledFixedPivotCountRange.{u,v})) where
   actual := actual
