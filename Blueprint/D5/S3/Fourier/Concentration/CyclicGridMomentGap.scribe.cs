@@ -60,7 +60,7 @@ internal sealed class CyclicGridMomentGapDocument : IScribeDocumentDefinition
                         + "q is even. Apply sine monotonicity on the resulting interval between "
                         + "zero and pi/2 to bound the absolute cosine of the phase difference. "
                         + "The finite-phase theorem then applies to the standard additive character. "
-                        + "At zero second coefficient the bound is 1/2 minus delta squared over 1024. "
+                        + "At zero second coefficient the bound is 1/2 minus delta squared over 684. "
                         + "The separation hypothesis concerns a fixed finite support. A weighted "
                         + "positive-resolution bound at growing order for actual zeta ordinates "
                         + "remains open."))),
@@ -71,9 +71,9 @@ internal sealed class CyclicGridMomentGapDocument : IScribeDocumentDefinition
         var magnitude = new Formula.Absolute(F.Id(moment));
         var squaredGap = new Formula.Power(DeltaLower, D(2));
         var epsilon = Varepsilon;
-        return Disp(Seq(epsilon, Sp, Leq, Sp, new Formula.Fraction(DeltaLower, D(8)), Sp,
+        return Disp(Seq(epsilon, Sp, Leq, Sp, new Formula.Fraction(DeltaLower, D(3)), Sp,
             Implies, Sp, new Formula.Power(magnitude, D(2)), Sp, Leq, Sp,
             new Formula.Fraction(Add(D(1), epsilon), D(2)), Minus,
-            new Formula.Fraction(squaredGap, D(1, 0, 2, 4))));
+            new Formula.Fraction(squaredGap, D(6, 8, 4))));
     }
 }

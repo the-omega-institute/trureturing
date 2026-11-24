@@ -29,12 +29,12 @@ private theorem exists_small_weighted_error {J : Type*} [Fintype J]
     (hw : ∀ j, 0 ≤ w j) (hE : ∀ j, 0 ≤ E j) {cap : ℝ} (hc : 0 ≤ cap)
     (hmass : 1 / 4 ≤ ∑ j with P j, w j)
     (hbudget : (∑ j, w j * E j) < cap / 4) :
-    ∃ j, P j ∧ 0 < w j ∧ E j ≤ cap := by
+    ∃ j, P j ∧ 0 < w j ∧ E j < cap := by
   by_contra! hn
   have hterm (j : J) (hj : j ∈ univ.filter P) : w j * cap ≤ w j * E j := by
     rcases (hw j).eq_or_lt with h | h
     · simp [← h]
-    · exact mul_le_mul_of_nonneg_left (hn j (mem_filter.mp hj).2 h).le (hw j)
+    · exact mul_le_mul_of_nonneg_left (hn j (mem_filter.mp hj).2 h) (hw j)
   have hcap : cap / 4 ≤ ∑ j with P j, w j * E j := calc
     _ = (1 / 4 : ℝ) * cap := by ring
     _ ≤ (∑ j with P j, w j) * cap := mul_le_mul_of_nonneg_right hmass hc
@@ -68,36 +68,36 @@ private theorem sign_masses_ge_quarter {J : Type*} [Fintype J]
   have hs := abs_le.mp (abs_le_of_sq_le_sq hsq (by norm_num))
   exact ⟨by change 1 / 4 ≤ a; linarith [hs.1], by change 1 / 4 ≤ b; linarith [hs.2]⟩
 
-private theorem gap_error_budgets {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 8)
+private theorem gap_error_budgets {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 3)
     (hc' : c ≤ (1 + ε) / 2)
     (hδ : 0 < δ) (hδ' : δ ≤ 1) (ht : t ^ 2 = c * (1 - c))
-    (hgap : (1 + ε) / 2 - c < δ ^ 2 / 1024) :
+    (hgap : (1 + ε) / 2 - c < δ ^ 2 / 684) :
     let g := (1 + ε) / 2 - c
     4 * (c * g) / t ^ 4 ≤ 1 / 4 ∧
       (1 + 4 / t ^ 2) * (c * g) < c * δ ^ 2 / 36 := by
   dsimp only
   have hδsq : δ ^ 2 ≤ 1 := (sq_le_one_iff_abs_le_one _).2 (by rwa [abs_of_pos hδ])
-  have hgsmall : (1 + ε) / 2 - c < 1 / 1024 := hgap.trans_le (by linarith)
-  have hcsmall : 1 / 4 ≤ c := by linarith
-  have hcupper : c ≤ 3 / 4 := by linarith
-  have htlo : 3 / 16 ≤ t ^ 2 := by
+  have hgsmall : (1 + ε) / 2 - c < 1 / 684 := hgap.trans_le (by linarith)
+  have hcsmall : 1 / 3 ≤ c := by linarith
+  have hcupper : c ≤ 2 / 3 := by linarith
+  have htlo : 2 / 9 ≤ t ^ 2 := by
     rw [ht]
     nlinarith [mul_nonneg (sub_nonneg.mpr hcsmall) (sub_nonneg.mpr hcupper)]
   have htpos : 0 < t ^ 2 := by linarith
-  have htfour : (3 / 16 : ℝ) ^ 2 ≤ t ^ 4 := by
-    simpa only [← pow_mul] using pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 3 / 16) htlo 2
+  have htfour : (2 / 9 : ℝ) ^ 2 ≤ t ^ 4 := by
+    simpa only [← pow_mul] using pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2 / 9) htlo 2
   constructor
   · apply (div_le_iff₀ (show 0 < t ^ 4 by linarith)).mpr
     have hg0 : 0 ≤ (1 + ε) / 2 - c := by linarith
     have hf : 4 * (c * ((1 + ε) / 2 - c)) ≤ 3 * ((1 + ε) / 2 - c) := by
       nlinarith [mul_nonneg (sub_nonneg.mpr hcupper) hg0]
     linarith
-  · have hf : 4 / t ^ 2 ≤ 22 := by apply (div_le_iff₀ htpos).mpr; linarith
+  · have hf : 4 / t ^ 2 ≤ 18 := by apply (div_le_iff₀ htpos).mpr; linarith
     have hcpos : 0 < c := by linarith
     have hD : 0 ≤ c * ((1 + ε) / 2 - c) := mul_nonneg hcpos.le (by linarith)
     calc
-      _ ≤ 23 * (c * ((1 + ε) / 2 - c)) := mul_le_mul_of_nonneg_right (by linarith) hD
-      _ < 23 * (c * (δ ^ 2 / 1024)) := mul_lt_mul_of_pos_left
+      _ ≤ 19 * (c * ((1 + ε) / 2 - c)) := mul_le_mul_of_nonneg_right (by linarith) hD
+      _ < 19 * (c * (δ ^ 2 / 684)) := mul_lt_mul_of_pos_left
         (mul_lt_mul_of_pos_left hgap hcpos) (by norm_num)
       _ ≤ _ := by nlinarith [mul_nonneg hcpos.le (sq_nonneg δ)]
 
@@ -114,7 +114,7 @@ private theorem real_product_error (a b a' b' : ℂ) {r : ℝ}
 
 private theorem gap_of_phase_contacts {J : Type*} [Fintype J]
     (w : J → ℝ) (X : J → ℂ) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j)
-    {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 8) (hc : 0 < c)
+    {c t δ ε : ℝ} (hε0 : 0 ≤ ε) (hε : ε ≤ δ / 3) (hc : 0 < c)
     (hc' : c ≤ (1 + ε) / 2) (hδ : 0 < δ) (hδ' : δ ≤ 1)
     (ht : t ^ 2 = c * (1 - c)) (hX : ∀ j, ‖X j‖ ^ 2 = c)
     (hgap : ∀ j k, 0 < w j → 0 < w k → c * δ ≤ |(X j * star (X k)).re|) :
@@ -123,17 +123,17 @@ private theorem gap_of_phase_contacts {J : Type*} [Fintype J]
     let E := c * ((1 + ε) / 2 - c)
     (∑ j, w j * ‖X j - A j‖ ^ 2) ≤ (1 + 4 / t ^ 2) * E →
     (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 →
-    c ≤ (1 + ε) / 2 - δ ^ 2 / 1024 := by
+    c ≤ (1 + ε) / 2 - δ ^ 2 / 684 := by
   dsimp only
   let P (j : J) := 0 ≤ (X j).im
   let η (j : J) : ℝ := if P j then 1 else -1
   let A (j : J) : ℂ := (c : ℂ) + (↑(η j * t) : ℂ) * Complex.I
   let E := c * ((1 + ε) / 2 - c)
   change (∑ j, w j * ‖X j - A j‖ ^ 2) ≤ (1 + 4 / t ^ 2) * E →
-    (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 → c ≤ (1 + ε) / 2 - δ ^ 2 / 1024
+    (∑ j, w j * η j) ^ 2 ≤ 4 * E / t ^ 4 → c ≤ (1 + ε) / 2 - δ ^ 2 / 684
   intro he hb
   by_contra! hcontr
-  have hsmall : (1 + ε) / 2 - c < δ ^ 2 / 1024 := by linarith
+  have hsmall : (1 + ε) / 2 - c < δ ^ 2 / 684 := by linarith
   obtain ⟨hbal, herr⟩ := gap_error_budgets hε0 hε hc' hδ hδ' ht hsmall
   have hsign := sign_masses_ge_quarter w P hw (hb.trans hbal)
   let C := c * δ ^ 2 / 9
@@ -162,25 +162,28 @@ private theorem gap_of_phase_contacts {J : Type*} [Fintype J]
       nlinarith [ht]
     exact le_antisymm (le_of_sq_le_sq (hnorm.trans hr.symm).le hr0)
       (le_of_sq_le_sq (hr.trans hnorm.symm).le (norm_nonneg _))
-  have hd (k : J) (h : ‖X k - A k‖ ^ 2 ≤ C) : ‖X k - A k‖ ≤ r * δ / 3 := by
+  have hd (k : J) (h : ‖X k - A k‖ ^ 2 < C) : ‖X k - A k‖ < r * δ / 3 := by
     have hcap : C = (r * δ / 3) ^ 2 := by dsimp [C]; rw [div_pow, mul_pow, hr]; norm_num
-    exact le_of_sq_le_sq (h.trans_eq hcap) (by positivity)
+    by_contra! hlarge
+    have hsq := pow_le_pow_left₀ (show 0 ≤ r * δ / 3 by positivity) hlarge 2
+    exact (not_le_of_gt h) (hcap.trans_le hsq)
   have hprod := real_product_error (X i) (X j) (A i) (A j) hAi hXj
   have hperp : (A i * star (A j)).re = c * (2 * c - 1) := by
     simp [A, η, hi, hj, Complex.mul_re, Complex.add_re, Complex.add_im]
     nlinarith [ht]
-  have hh : |(X i * star (X j)).re - c * (2 * c - 1)| ≤ c * δ * (2 / 3) := calc
+  have hrpos : 0 < r := Real.sqrt_pos.2 hc
+  have hh : |(X i * star (X j)).re - c * (2 * c - 1)| < c * δ * (2 / 3) := calc
     _ ≤ _ := hperp ▸ hprod
-    _ ≤ r * (r * δ / 3 + r * δ / 3) :=
-      mul_le_mul_of_nonneg_left (add_le_add (hd i hEi) (hd j hEj)) hr0
+    _ < r * (r * δ / 3 + r * δ / 3) :=
+      mul_lt_mul_of_pos_left (add_lt_add (hd i hEi) (hd j hEj)) hrpos
     _ = _ := by calc
       _ = r ^ 2 * δ * (2 / 3) := by ring
       _ = _ := by rw [hr]
-  have hmain : |c * (2 * c - 1)| < c * δ / 3 := by
+  have hmain : |c * (2 * c - 1)| ≤ c * δ / 3 := by
     rw [abs_mul, abs_of_pos hc, mul_div_assoc]
-    apply mul_lt_mul_of_pos_left _ hc
+    apply mul_le_mul_of_nonneg_left _ hc.le
     have hδsq : δ ^ 2 ≤ δ := by nlinarith [mul_nonneg hδ.le (sub_nonneg.mpr hδ')]
-    apply abs_lt.mpr
+    apply abs_le.mpr
     constructor <;> linarith
   have hsum := abs_add_le ((X i * star (X j)).re - c * (2 * c - 1)) (c * (2 * c - 1))
   rw [sub_add_cancel] at hsum
@@ -327,8 +330,8 @@ theorem first_moment_gap_of_small_second
     {δ : ℝ} (hδ : 0 < δ)
     (hsep : ∀ j k, 0 < w j → 0 < w k → δ ≤ |(z j * star (z k)).re|) :
     let b := ∑ j, (w j : ℂ) * z j ^ 2
-    let deficit := (fun separation : ℝ => separation ^ 2 / 1024) δ
-    ‖b‖ ≤ δ / 8 →
+    let deficit := (fun separation : ℝ => separation ^ 2 / 684) δ
+    ‖b‖ ≤ δ / 3 →
       ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ (1 + ‖b‖) / 2 - deficit := by
   let b := ∑ j, (w j : ℂ) * z j ^ 2
   let ε := ‖b‖
@@ -336,7 +339,7 @@ theorem first_moment_gap_of_small_second
   let c := ‖m‖ ^ 2
   let X (j : J) := star m * z j
   let t := Real.sqrt (c * (1 - c))
-  change ε ≤ δ / 8 → c ≤ (1 + ε) / 2 - δ ^ 2 / 1024
+  change ε ≤ δ / 3 → c ≤ (1 + ε) / 2 - δ ^ 2 / 684
   intro hε
   have hδ' : δ ≤ 1 := by
     have hpositive : ∃ j, 0 < w j := by
@@ -399,8 +402,8 @@ theorem cyclic_grid_fourier_gap (q : ℕ) [NeZero q] (hfour : ¬4 ∣ q)
     (w : ZMod q → ℝ) (hw : ∑ j, w j = 1) (hweights : ∀ j, 0 ≤ w j) :
     let δ := Real.sin ((if Even q then (2 : ℝ) else 1) * Real.pi / (2 * q))
     let b := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
-    ‖b‖ ≤ δ / 8 →
-      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 1024 := by
+    ‖b‖ ≤ δ / 3 →
+      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 684 := by
   let χ := ZMod.stdAddChar (N := q)
   let z (j : ZMod q) := χ (-j)
   let m := ∑ j, (w j : ℂ) * z j

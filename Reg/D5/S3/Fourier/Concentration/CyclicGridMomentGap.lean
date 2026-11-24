@@ -19,7 +19,7 @@ universe u
 abbrev phaseSignature := SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def phaseActual : Realization phaseSignature :=
-  realize phaseSignature (fun _ _ x => x ^ 2 / 1024) (fun e => nomatch e)
+  realize phaseSignature (fun _ _ x => x ^ 2 / 684) (fun e => nomatch e)
 
 def phaseRejected : Realization phaseSignature :=
   realize phaseSignature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -32,7 +32,7 @@ abbrev phaseArena : Arena where
       (_ : ∀ j k, 0 < w j → 0 < w k → δ ≤ |(z j * star (z k)).re|),
     let b := ∑ j, (w j : ℂ) * z j ^ 2
     let deficit := V.readout () () δ
-    ‖b‖ ≤ δ / 8 → ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ (1 + ‖b‖) / 2 - deficit
+    ‖b‖ ≤ δ / 3 → ‖∑ j, (w j : ℂ) * z j‖ ^ 2 ≤ (1 + ‖b‖) / 2 - deficit
 
 private def triangle (j : Fin 3) : ℂ :=
   if j = 0 then 1 else ⟨-1 / 2, if j = 1 then Real.sqrt 3 / 2 else -Real.sqrt 3 / 2⟩
@@ -83,7 +83,7 @@ private theorem phase_dependence : ObservationalDependence phaseSignature phaseA
   intro i
   cases i
   refine ⟨(), 0, 1, ?_⟩
-  change (0 : ℝ) ^ 2 / 1024 ≠ 1 ^ 2 / 1024
+  change (0 : ℝ) ^ 2 / 684 ≠ 1 ^ 2 / 684
   norm_num
 
 def phaseEvidence : Registration phaseArena.{u} (type_of% @first_moment_gap_of_small_second.{u}) where
@@ -107,8 +107,8 @@ abbrev gridArena : Arena where
       (_ : ∑ j, w j = 1) (_ : ∀ j, 0 ≤ w j),
     let δ := V.readout () () ((if Even q then (2 : ℝ) else 1) * Real.pi / (2 * q))
     let b := ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q)
-    ‖b‖ ≤ δ / 8 →
-      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 1024
+    ‖b‖ ≤ δ / 3 →
+      ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 ≤ (1 + ‖b‖) / 2 - δ ^ 2 / 684
 
 private theorem grid_rejected_law : ¬ gridArena.Law gridRejected := by
   intro law
@@ -126,7 +126,7 @@ private theorem grid_rejected_law : ¬ gridArena.Law gridRejected := by
   dsimp only at h
   rw [hb, norm_zero] at h
   have impossible := h (by norm_num [gridRejected, realize])
-  change _ ≤ (1 + 0) / 2 - (32 : ℝ) ^ 2 / 1024 at impossible
+  change _ ≤ (1 + 0) / 2 - (32 : ℝ) ^ 2 / 684 at impossible
   nlinarith [sq_nonneg ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 3)‖]
 
 private theorem grid_dependence : ObservationalDependence gridSignature gridActual := by
@@ -157,7 +157,7 @@ def phaseRegistration :
   realization := .source phaseArena.{u} ⟨phaseEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize phaseSignature (fun _ _ x => x ^ 2 / 1024) (fun e => nomatch e))
+  readout := some (realize phaseSignature (fun _ _ x => x ^ 2 / 684) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
