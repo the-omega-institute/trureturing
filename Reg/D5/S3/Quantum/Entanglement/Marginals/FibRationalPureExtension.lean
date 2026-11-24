@@ -1,3 +1,4 @@
+import Mathlib.NumberTheory.Real.Irrational
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 import Reg.Support.DependentFamily

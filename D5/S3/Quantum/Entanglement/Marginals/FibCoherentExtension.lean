@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 
 /-! Common extensions of adjacent Fibonacci marginals with arbitrary coherences. -/
 
@@ -119,22 +120,39 @@ private theorem partialTraceLeft_sub {A C : Type*} [Fintype A]
   ext i j
   simp [partialTraceLeft, Finset.sum_sub_distrib]
 
+private theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
+    [DecidableEq A] [DecidableEq C]
+    (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
+    (htr : L.trace = R.trace) :
+    let S := kronecker (L.trace⁻¹ • L) R
+    S.PosSemidef ∧ partialTraceRight S = L ∧ partialTraceLeft S = R := by
+  dsimp only
+  by_cases hz : L.trace = 0
+  · rw [(hL.trace_eq_zero_iff).mp hz, (hR.trace_eq_zero_iff).mp (htr.symm.trans hz)]
+    have hk : kronecker (((0 : Matrix A A ℂ).trace)⁻¹ • (0 : Matrix A A ℂ))
+        (0 : Matrix C C ℂ) = 0 := by
+      ext i j
+      simp
+    rw [hk]
+    exact ⟨.zero, by ext; simp [partialTraceRight], by ext; simp [partialTraceLeft]⟩
+  have hlo := hL.trace_nonneg
+  have ht : 0 ≤ L.trace⁻¹ := by
+    rw [Complex.nonneg_iff] at hlo ⊢
+    simp [Complex.inv_re, Complex.inv_im, ← hlo.2, div_nonneg hlo.1 (Complex.normSq_nonneg _)]
+  refine ⟨(hL.smul ht).kronecker hR, ?_, ?_⟩
+  · rw [partialTraceRight_kronecker, ← htr, smul_smul, mul_inv_cancel₀ hz, one_smul]
+  · rw [partialTraceLeft_kronecker, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz, one_smul]
+
+
 private theorem product_completion {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C]
     (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
     (htr : L.trace = R.trace) :
     ∃ S : Matrix (A × C) (A × C) ℂ, S.PosSemidef ∧
       partialTraceRight S = L ∧ partialTraceLeft S = R := by
-  by_cases hz : L.trace = 0
-  · rw [(hL.trace_eq_zero_iff).mp hz, (hR.trace_eq_zero_iff).mp (htr.symm.trans hz)]
-    exact ⟨0, .zero, by ext; simp [partialTraceRight], by ext; simp [partialTraceLeft]⟩
-  have hlo := hL.trace_nonneg
-  have ht : 0 ≤ L.trace⁻¹ := by
-    rw [Complex.nonneg_iff] at hlo ⊢
-    simp [Complex.inv_re, Complex.inv_im, ← hlo.2, div_nonneg hlo.1 (Complex.normSq_nonneg _)]
-  refine ⟨kronecker (L.trace⁻¹ • L) R, (hL.smul ht).kronecker hR, ?_, ?_⟩
-  · rw [partialTraceRight_kronecker, ← htr, smul_smul, mul_inv_cancel₀ hz, one_smul]
-  · rw [partialTraceLeft_kronecker, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz, one_smul]
+  let S := kronecker (L.trace⁻¹ • L) R
+  obtain ⟨hS, hleft, hright⟩ := product_completion_formula L R hL hR htr
+  exact ⟨S, hS, hleft, hright⟩
 
 private theorem block_marginals_iff {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C] (b : ℝ) (v : A × C → ℂ)
@@ -511,5 +529,74 @@ theorem pure_coherent_iff (b : ℝ) (L R : Matrix Bool Bool ℂ)
         Matrix.trace_zero]
     have hT : T = T₀ := sub_eq_zero.mp (hres.trace_eq_zero_iff.mp hzero)
     rw [hψeq, ← hsplit, hT]
+
+open FibRationalPureExtension Complex
+
+/-- The prescribed rational coupling and positive Schur residuals give a rational extension. -/
+theorem rational_extension_at (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : ℂ)
+    (hb : 0 ≤ b) (htr : L.trace + (b : ℂ) = 1) (hr : R.trace = L.trace)
+    (hzero : b = 0 → middleRow u v w z = 0)
+    (hL : (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef)
+    (hR : (R - partialTraceLeft (correction b (middleRow u v w z))).PosSemidef)
+    (qL : ∀ i j, RationalEntry (L i j))
+    (qR : ∀ i j, RationalEntry (R i j))
+    (qu : RationalEntry u) (qv : RationalEntry v) (qw : RationalEntry w) (qz : RationalEntry z) :
+    ∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧ MatchesCoherentData b L R u v w z ρ ∧
+      ∀ i j, RationalEntry (ρ i j) := by
+  let row := middleRow u v w z
+  let K := correction b row
+  let X := L - partialTraceRight K
+  let Y := R - partialTraceLeft K
+  let S := kronecker (X.trace⁻¹ • X) Y
+  let T := S + K
+  have ht : X.trace = Y.trace := by
+    simp [X, Y, Matrix.trace_sub, hr, trace_partialTraceRight, trace_partialTraceLeft]
+  obtain ⟨hS, hsL, hsR⟩ := product_completion_formula X Y hL hR ht
+  change S.PosSemidef at hS
+  change partialTraceRight S = X at hsL
+  change partialTraceLeft S = Y at hsR
+  have hT := (block_psd b row T).mpr ⟨hb, hzero, by simpa [T, K] using hS⟩
+  have htL : partialTraceRight T = L := by simp [T, partialTraceRight_add, hsL, X]
+  have htR : partialTraceLeft T = R := by simp [T, partialTraceLeft_add, hsR, Y]
+  refine ⟨original (assemble b row T), hT.submatrix _, ⟨?_, ?_, ?_, rfl⟩, ?_⟩
+  · rw [trace_original, trace_assemble, ← trace_partialTraceRight T, htL, htr]
+  · rw [left_read, htL]
+    rfl
+  · rw [right_read, htR]
+    rfl
+  · have rr (i : Bool × Bool) : RationalEntry (row i) := by
+      rcases i with ⟨i,j⟩
+      cases i <;> cases j
+      · exact qu
+      · exact qw
+      · exact qv
+      · exact qz
+    have qpivot : RationalEntry (b : ℂ) := by
+      have htq : RationalEntry L.trace := rationalComplex.sum_mem fun i _ => qL i i
+      have hpivot : (b : ℂ) = 1 - L.trace := by
+        rw [← htr]
+        ring
+      rw [hpivot]
+      exact rationalComplex.sub_mem rationalComplex.one_mem htq
+    have qK (i j) : RationalEntry (K i j) := by
+      change RationalEntry ((↑b⁻¹ : ℂ) * (conj (row i) * row j))
+      rw [Complex.ofReal_inv]
+      exact rationalComplex.mul_mem (rationalComplex.inv_mem qpivot)
+        (rationalComplex.mul_mem (rationalConjugate ⟨row i, rr i⟩).property (rr j))
+    have qX (i j) : RationalEntry (X i j) :=
+      rationalComplex.sub_mem (qL i j) (rationalComplex.sum_mem fun k _ => qK (i, k) (j, k))
+    have qY (i j) : RationalEntry (Y i j) :=
+      rationalComplex.sub_mem (qR i j) (rationalComplex.sum_mem fun k _ => qK (k, i) (k, j))
+    have qtr : RationalEntry X.trace := rationalComplex.sum_mem fun i _ => qX i i
+    have qT (i j) : RationalEntry (T i j) :=
+      rationalComplex.add_mem (rationalComplex.mul_mem
+        (rationalComplex.mul_mem (rationalComplex.inv_mem qtr) (qX i.1 j.1)) (qY i.2 j.2)) (qK i j)
+    intro i j
+    change RationalEntry (assemble b row T (wordEquiv.symm i) (wordEquiv.symm j))
+    cases wordEquiv.symm i <;> cases wordEquiv.symm j
+    · exact qpivot
+    · apply rr
+    · exact (rationalConjugate ⟨_, rr _⟩).property
+    · apply qT
 
 end D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
