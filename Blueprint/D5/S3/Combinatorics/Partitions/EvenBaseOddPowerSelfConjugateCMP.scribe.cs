@@ -29,7 +29,10 @@ internal sealed class EvenBaseOddPowerSelfConjugateCMPDocument : IScribeDocument
             Blocks(
                 Paragraph(Text("Write N for the number of cells and L for the first row length. The first row and column meet in one cell, and the diagram lies inside an L by L square. Thus 2L − 1 ≤ N ≤ L². If N = mᵉ and L = mᴷ, with e odd, these bounds give 0 < 2K − e ≤ e − 2. The square congruence for N − (2L − 1), together with the first-order expansion of the two powers modulo (m − 1)², shows that m − 1 divides 2K − e. Hence e ≥ m + 1, including at base 2 and for the candidate e = 1.")),
                 Paragraph(Text("The attaining diagram is the union of rectangles with height mʲ and width m to the power m − j, for j = 0 through m. Transposition swaps the rectangles indexed by j and m − j. The top row has width mᵐ. For each j from 1 through m, the rows with zero-based index from m to the power j − 1 inclusive up to mʲ exclusive have width m to the power m − j. These are the multiplicities in Flowers and Lockard, Lemma 4.2, cited in Discussion 5.11 of the source. Each of those m bands has mᵐ − m to the power m − 1 cells, so the exact area is m to the power m + 1. Evenness of m makes that exponent odd."))),
-            DescribeRole.Theorem)), []));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("dfl512-even-odd-power"),
+                ResolutionKind.Proved))), []));
 
     private static Formula Minimum()
     {

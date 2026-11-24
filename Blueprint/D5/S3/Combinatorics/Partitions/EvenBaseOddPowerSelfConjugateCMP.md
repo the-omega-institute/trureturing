@@ -22,6 +22,10 @@ $$\forall m \in \mathbb{N},\; ((2 \le m) \Rightarrow ((\operatorname{Even}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/EvenBaseOddPowerSelfConjugateCMP.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dfl512-even-odd-power` (proved) by `D5/S3/Combinatorics/Partitions/EvenBaseOddPowerSelfConjugateCMP.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dfl512-even-odd-power","declaration_gid":"D5/S3/Combinatorics/Partitions/EvenBaseOddPowerSelfConjugateCMP.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
