@@ -158,12 +158,10 @@ private theorem mem_edges {k : ℕ} (e : Fin k × Fin k) :
   simp only [betw, Finset.mem_union, Finset.mem_diag, Finset.mem_filter,
     Finset.mem_univ, true_and, ← Fin.val_inj]
   constructor
-  · rintro (rfl | hy | hx)
-    · exact ⟨Nat.le_succ _, Nat.le_succ _⟩
-    · subst y
-      exact ⟨Nat.le_succ_of_le (Nat.le_succ _), Nat.le_refl _⟩
-    · subst x
-      exact ⟨Nat.le_refl _, Nat.le_succ_of_le (Nat.le_succ _)⟩
+  · rintro (h | hy | hx)
+    · rw [h]; exact ⟨Nat.le_succ _, Nat.le_succ _⟩
+    · rw [hy]; exact ⟨Nat.le_succ_of_le (Nat.le_succ _), Nat.le_refl _⟩
+    · rw [hx]; exact ⟨Nat.le_refl _, Nat.le_succ_of_le (Nat.le_succ _)⟩
   · rw [Nat.le_add_one_iff, Nat.le_add_one_iff]
     rintro ⟨hxy | hxy, hyx | hyx⟩
     · exact Or.inl (Nat.le_antisymm hxy hyx)
@@ -228,11 +226,12 @@ theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
     letI : SMul (Fin d) R := ⟨fun j x => c j • x⟩
     letI : SMulCommClass (Fin d) R R :=
       SMulCommClass.of_mul_smul_one fun j x => (rightMul j x).symm
-    letI : DistribSMul (Fin d) R :=
-      { smul_zero := fun j => (rightMul j 0).trans (zero_mul _)
-        smul_add := fun j x y => by
-          change c j • (x + y) = c j • x + c j • y
-          rw [rightMul j (x + y), rightMul j x, rightMul j y, add_mul] }
+    letI : DistribSMul (Fin d) R where
+      toSMul := ‹SMul (Fin d) R›
+      smul_zero j := (rightMul j 0).trans (zero_mul _)
+      smul_add j x y := by
+        change c j • (x + y) = c j • x + c j • y
+        rw [rightMul j (x + y), rightMul j x, rightMul j y, add_mul]
     change _ = ∑ j : Fin d, j • (M ^ (b + j.val)).mulVec u at h
     change _ = ∑ j : Fin d, j • dotProduct v ((M ^ (n + b + j.val)).mulVec u)
     have shifted := congrArg ((M ^ n).mulVec) h
