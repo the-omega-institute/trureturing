@@ -136,8 +136,9 @@ def audit (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
     (hmain : (23 / 50 : ℝ) * p ≤ (smoothedCharacterSum p 1).re) :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       (@exists_prime_primitiveRoot) (Realization signature) Type Unit where
-  unitName :=
-    `D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional.exists_prime_primitiveRoot.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional.exists_prime_primitiveRoot
+    "__information_unit"
   realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional.PrimeRoot.family
   realizationSource := none
   generated := false

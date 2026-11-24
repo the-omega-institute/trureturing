@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/PrimitiveRoot/SmallPrimes/FiniteRange
    mirror-E: none(waiver:kernel-checked-literal-certificates)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_finiteHeight; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0000.checked0000
+   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0000.checked0000
    digest: Every odd prime below the exact sieve threshold has a smaller prime root. -/
 
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group00

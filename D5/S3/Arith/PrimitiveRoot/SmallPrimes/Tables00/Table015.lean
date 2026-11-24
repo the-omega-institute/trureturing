@@ -3,7 +3,7 @@
    mirror-B: none(waiver:finite-reduction-premise-in-main-proof-closure)
    mirror-E: none(waiver:kernel-checked-literal-certificate)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_finiteHeight; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Tables00/Table015.pv35171
+   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Tables00/Table015.pv35171
    digest: Shared Lucas certificates for the prime factor alphabet. -/
 
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables00.Table003

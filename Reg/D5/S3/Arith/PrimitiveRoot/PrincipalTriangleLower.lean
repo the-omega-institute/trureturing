@@ -43,8 +43,8 @@ def family (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
 def audit (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@principal_smoothedCharacterSum_large) (Realization signature) Unit Unit where
-  unitName := (`D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower).str
-    "principal_smoothedCharacterSum_large" |>.str "__information_unit"
+  unitName := ((`D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower).str
+    "principal_smoothedCharacterSum_large").str "__information_unit"
   realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower.family
   realizationSource := none
   generated := false

@@ -18,6 +18,6 @@ internal sealed class SmallPrimeGroup03Document : IScribeDocumentDefinition
                     "is 1966083+2k−1. The proof uses the literal block-success " +
                     "certificate selected by the consecutive-slot index and applies " +
                     "checkBlock_sound. These group conclusions jointly supply the " +
-                    "complete finite range consumed by erdos985_of_GRH."))),
+                    "complete finite range consumed by erdos985_of_finiteHeight."))),
                 DescribeRole.Theorem))));
 }

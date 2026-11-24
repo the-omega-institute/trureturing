@@ -266,6 +266,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end Necessary
 
 namespace CoveringRoot
+open _root_.D5.S3.Arith.PrimitiveRoot.CharacterSieve
+open _root_.D5.S3.Arith.PrimitiveRoot.CharacterExpansion
+open scoped BigOperators
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 def actual : Realization signature :=
@@ -332,8 +335,9 @@ def audit (p : ℕ) [Fact p.Prime] (M : ℝ)
         delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       (@exists_prime_primitiveRoot_of_covering) (Realization signature) Type Unit where
-  unitName :=
-    `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.exists_prime_primitiveRoot_of_covering.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.exists_prime_primitiveRoot_of_covering
+    "__information_unit"
   realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.CoveringRoot.family
   realizationSource := none
   generated := false

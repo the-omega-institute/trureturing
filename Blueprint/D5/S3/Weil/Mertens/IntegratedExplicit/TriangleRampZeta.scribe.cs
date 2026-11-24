@@ -68,6 +68,16 @@ internal sealed class TriangleRampZetaDocument : IScribeDocumentDefinition
                     "At x=3, any coefficient c in the bound x/2-c sqrt(x)<=S(x) must satisfy " +
                     "c>=(3/2-log(2)/3)/sqrt(3). Optimality of the unit coefficient is unproved."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("triangle-principal-equality"),
+                DeclarationHandle.Create(Prefix + "principal_smoothedCharacterSum_eq"),
+                H("The full principal Mangoldt sum"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For a prime modulus p, the real principal character sum equals " +
+                    "smoothedMangoldt(p). Every nonzero n<p is a unit modulo p and " +
+                    "the principal character is one there; Lambda(0)=0 removes the " +
+                    "zero term. This identity needs no zero hypothesis and retains " +
+                    "prime powers. PrincipalTriangleLower uses it for its unconditional " +
+                    "Chebyshev lower bound."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("triangle-principal-main"),
                 DeclarationHandle.Create(Prefix + "principal_smoothedCharacterSum_lower"),
                 H("The principal character term"),

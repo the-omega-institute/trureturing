@@ -3,7 +3,7 @@
    mirror-B: none(waiver:finite-coverage-helper-in-main-proof-closure)
    mirror-E: none(waiver:kernel-checked-literal-certificates)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_finiteHeight; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks02/Block0160.checked0160
+   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks02/Block0160.checked0160
    digest: Adjacent checker successes cover a complete interval of odd slots. -/
 
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks02.Block0160

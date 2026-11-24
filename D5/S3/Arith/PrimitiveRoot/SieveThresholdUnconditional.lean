@@ -82,7 +82,7 @@ private lemma many_margin (m : ℕ) :
       (show (9699690 : ℝ) * 16 < 2 ^ 28 by norm_num)
     rw [Real.log_pow] at hl
     norm_num only [Nat.cast_ofNat] at hl
-    have hs : (12000 : ℝ) < Real.sqrt (9699690 * 16) :=
+    have hs : (12000 : ℝ) < Real.sqrt (155195040 : ℝ) :=
       (Real.lt_sqrt (by norm_num)).mpr (by norm_num)
     nlinarith [Real.log_two_lt_d9]
   | succ m ih =>

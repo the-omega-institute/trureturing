@@ -247,4 +247,62 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end Principal
 
+namespace PrincipalEquality
+
+open Principal
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {p : ℕ} (hp : p.Prime),
+    R.readout () ()
+      (_root_.D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum p 1) =
+        smoothedMangoldt p
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h Nat.prime_two
+  change (-1 : ℝ) = smoothedMangoldt 2 at he
+  norm_num [smoothedMangoldt, Finset.sum_range_succ] at he
+
+def family : Registration arena (type_of% @principal_smoothedCharacterSum_eq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@principal_smoothedCharacterSum_eq, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := Principal.dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@principal_smoothedCharacterSum_eq) (Realization signature) Unit Unit where
+  unitName := ((`D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta).str
+    "principal_smoothedCharacterSum_eq").str "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta.PrincipalEquality.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end PrincipalEquality
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.TriangleRampZeta

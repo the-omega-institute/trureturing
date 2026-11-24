@@ -1,3 +1,4 @@
+import Reg.Support.SingleDependentReadout
 import D5.S3.Arith.PrimitiveRoot.SieveThreshold
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
@@ -409,5 +410,83 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 end Signed
+
+namespace CoveringParameters
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ N => N) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : ℕ) (_hx1 : 1 < x) (M N : ℝ)
+    (_hsmall : ∀ d K : ℝ, 0 < d → K ≤ d * (4417 / 100) → K * M < d * N)
+    (_hlarge : ∀ m : ℕ, (9699690 : ℝ) * 16 ^ m ≤ x → ∀ d K : ℝ,
+      (610847 / 1616615 : ℝ) ≤ d →
+      K = d * (2 ^ (m + 2) - 1) + (5 + d) * 2 ^ (m + 2) → K * M < d * N),
+    ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
+      (∀ q : ℕ, q.Prime → q ∣ x - 1 → q ∣ e ∨ q ∈ T) ∧
+      0 < delta (sievePrimes x e T) ∧
+      errorCoefficient (Nat.gcd e (x - 1)) (sievePrimes x e T) * M <
+        delta (sievePrimes x e T) * R.readout () () N
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hsmall : ∀ d K : ℝ, 0 < d → K ≤ d * (4417 / 100) → K * 0 < d * 1 := by
+    intro d K hd hK
+    simpa using hd
+  have hlarge : ∀ m : ℕ, (9699690 : ℝ) * 16 ^ m ≤ (2 : ℕ) → ∀ d K : ℝ,
+      (610847 / 1616615 : ℝ) ≤ d →
+      K = d * (2 ^ (m + 2) - 1) + (5 + d) * 2 ^ (m + 2) → K * 0 < d * 1 := by
+    intro m hm
+    have hp := one_le_pow₀ (show (1 : ℝ) ≤ 16 by norm_num) (n := m)
+    norm_num only [Nat.cast_ofNat] at hm
+    nlinarith
+  obtain ⟨e, T, he, hc, hd, hm⟩ := h 2 (by decide) 0 1 hsmall hlarge
+  norm_num [rejected, realize] at hm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+def family : Registration arena (type_of% covering_parameters) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨covering_parameters, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    covering_parameters (Realization signature) Type Unit where
+  unitName :=
+    `D5.S3.Arith.PrimitiveRoot.SieveThreshold.covering_parameters.__information_unit
+  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThreshold.CoveringParameters.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ N => N) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℝ
+  sourceSelection := some {
+    owner := `D5.S3.Arith.PrimitiveRoot.SieveThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg",
+        "body", "arg", "arg", "arg", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end CoveringParameters
 
 end Reg.D5.S3.Arith.PrimitiveRoot.SieveThreshold

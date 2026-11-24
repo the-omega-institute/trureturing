@@ -55,7 +55,7 @@ theorem erdos985_large_prime (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
   · exact principal_smoothedCharacterSum_large (Fact.out : p.Prime) hp
 
 /-- Conditional Erdős #985, including the kernel-certified finite prime range. -/
-theorem erdos985_of_finiteHeight
+theorem erdos985_of_GRH
     (hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;
       5000000 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
@@ -70,7 +70,19 @@ theorem erdos985_of_finiteHeight
   · have hp2 := hp.two_le
     exact SmallPrimes.small_prime_primitiveRoot_extended p (by omega) (by omega) hp
 
+/-- The finite-height conclusion, with the compatibility interface consumed explicitly. -/
+theorem erdos985_of_finiteHeight
+    (hL : ∀ (p : ℕ) (hp : p.Prime),
+      letI : NeZero p := ⟨hp.ne_zero⟩;
+      5000000 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
+      ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) :
+    ∀ p, p.Prime → p ≠ 2 →
+      ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 :=
+  erdos985_of_GRH hL
+
 #print axioms erdos985_large_prime
+#print axioms erdos985_of_GRH
 #print axioms erdos985_of_finiteHeight
 
 end D5.S3.Arith.PrimitiveRoot.Erdos985

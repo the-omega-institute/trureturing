@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/PrimitiveRoot/SmallPrimes/Checker
    mirror-E: none(waiver:kernel-checked-literal-certificates)
    anchors: [mathlib/module/Mathlib.GroupTheory.OrderOfElement]
-   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_finiteHeight; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0000.checked0000
+   utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0000.checked0000
    digest: Sound modular-order certificates with complete consecutive odd coverage. -/
 
 import Mathlib.GroupTheory.OrderOfElement

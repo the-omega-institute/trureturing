@@ -23,7 +23,7 @@ internal sealed class SmallPrimeFiniteRangeDocument : IScribeDocumentDefinition
                     "The restriction 3≤p excludes p=2: no prime is strictly below two. " +
                     "The upper endpoint is the exact split used by the analytic " +
                     "large-prime theorem. This finite theorem supplies the small-prime " +
-                    "premise of erdos985_of_GRH; it carries no Riemann-hypothesis or " +
+                    "premise of erdos985_of_finiteHeight; it carries no Riemann-hypothesis or " +
                     "Dirichlet L-function assumptions. Every block checks literal input " +
                     "inside the Lean kernel. A list of primes supplied by external " +
                     "software is never used as an unproved coverage assumption."))),

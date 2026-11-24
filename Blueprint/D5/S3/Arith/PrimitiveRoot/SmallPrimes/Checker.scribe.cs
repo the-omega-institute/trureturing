@@ -66,7 +66,7 @@ internal sealed class SmallPrimeCheckerDocument : IScribeDocumentDefinition
                     "every prime between three and 3483482 has a smaller prime primitive " +
                     "root. Literal block-success theorems are checking-success proofs, " +
                     "and their conclusions are consumed by the finite-range theorem, " +
-                    "which is in turn consumed by erdos985_of_GRH. They are checker " +
+                    "which is in turn consumed by erdos985_of_finiteHeight. They are checker " +
                     "instances, rather than independent positive enumeration claims."))),
                 DescribeRole.Theorem))));
 }
