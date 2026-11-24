@@ -61,7 +61,8 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
             Seq(t, Sp, Subseteq, Sp, s, Comma, Bar, t, Bar, Sp, Le, Sp, Call("min", m, n)));
         var prod = new Formula.Subscript(Prod, Seq(j, Sp, InMacro, Sp, t));
         return Disp(new Formula.Aligned([
-            Seq(Amp, Forall, Sp, alphabet, Comma, s, Colon, Call("Finset", alphabet), Comma, Quad,
+            Seq(Amp, Forall, Sp, alphabet, Colon, Sp, Call("Type"), Comma, Sp,
+                s, Colon, Call("Finset", alphabet), Comma, Quad,
                 Forall, Sp, a, Comma, b, Colon, alphabet, To, Sp, Mathbb, Grp(F.Id("C")), Comma),
             Seq(Amp, Forall, Sp, m, Comma, n, Colon, Mathbb, Grp(F.Id("N")), Comma,
                 Quad, Forall, Sp, r, Colon, Mathbb, Grp(F.Id("R")), Comma, Quad, Sp,

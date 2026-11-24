@@ -6,7 +6,7 @@ The mixed coefficient bound retains the two phase sums before estimating local o
 
 **Theorem 1.1 (Disjoint coefficient bound).**
 
-$$\begin{aligned}&\forall J,s:\operatorname{Finset}\left(J\right),\quad\forall a,b:J\to \mathbb{C},\\&\forall m,n:\mathbb{N},\quad\forall r:\mathbb{R},\quad r>0\implies\\&|[x^{m}y^{n}]P| \le \frac{\operatorname{exp}\left(r(|\sum_{j \in s}a\left(j\right)|+|\sum_{j \in s}b\left(j\right)|)\right)}{r^{m+n}}\\&\quad\cdot\sum_{T \subseteq s,|T| \le \operatorname{min}\left(m, n\right)}\prod_{j \in T}(\operatorname{exp}\left(r|a\left(j\right)|\right)-1)(\operatorname{exp}\left(r|b\left(j\right)|\right)-1).\end{aligned}$$
+$$\begin{aligned}&\forall J: \operatorname{Type}\left(\right), s:\operatorname{Finset}\left(J\right),\quad\forall a,b:J\to \mathbb{C},\\&\forall m,n:\mathbb{N},\quad\forall r:\mathbb{R},\quad r>0\implies\\&|[x^{m}y^{n}]P| \le \frac{\operatorname{exp}\left(r(|\sum_{j \in s}a\left(j\right)|+|\sum_{j \in s}b\left(j\right)|)\right)}{r^{m+n}}\\&\quad\cdot\sum_{T \subseteq s,|T| \le \operatorname{min}\left(m, n\right)}\prod_{j \in T}(\operatorname{exp}\left(r|a\left(j\right)|\right)-1)(\operatorname{exp}\left(r|b\left(j\right)|\right)-1).\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/DisjointCharacterEnvelope.coefficient_envelope` (`✓ std3`). ∎
 
