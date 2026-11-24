@@ -32,7 +32,7 @@ open private quadratureParameterRow quadratureShiftBound from
 scoped cbv_simproc cbv_eval stageParameterRow (quadratureParameterRow _ _ _ _) :=
   stageLiteral (List Rat)
 scoped cbv_simproc cbv_eval stageShiftedRow (shiftedQuadratureParameterRow _ _ _ _ _ _) :=
-  stageLiteral (List Rat)
+  stageLiteral (List Rat) (inlineProof := true)
 scoped cbv_simproc cbv_eval stageShiftBound (quadratureShiftBound _ _ _ _ _ _) :=
   stageLiteral Rat
 scoped cbv_simproc cbv_eval stageExpMoment (shortExpMomentBound _ _ _ _ _ _ _) :=
