@@ -111,7 +111,6 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Fin168 => Call("Fin", Num("168"));
-    private static Formula ZeroClassValue => Call("Fin.val", Call("HardinA229585StripData.zeroBudgetClass", V("k")));
     private static Formula Fin3 => Call("Fin", D(3));
     private static Formula Colour => Call("Fin", V("m"));
     private static Formula Boundary => OptionalRow(V("k"));
