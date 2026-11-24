@@ -478,7 +478,7 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 <a id="a22-ci-cache-flow"></a>
 **缓存角色与数据流。** 全库共用一个已发布代引用。普通 push 在事件提交、PR 在 merge candidate 上计算目标键。CI 从 Actions 索引恢复所需产物，本地取回入口从 Release 索引恢复。两个索引绑定同一目标提交、有效输入、依赖键、帧摘要与卷区间。未命中项目在当前作业补建，检查沿用原有准入条件。
 
-受保护 dev 上的 Cache Release Publish 由定时或授权手动触发。它在整个运行期间持有同一并发组，选定 dev 提交与基线。首发交接等待旧写者退出，固定完整 Actions seed 的来源提交、run、attempt 与索引摘要。编译器产物按目标比较有效 Lake 配置、源码、兼容环境与依赖键。报告与原生程序有各自的输入与平台条件。
+受保护 dev 上的 Cache Release Publish 由定时或授权手动触发。它在整个运行期间持有同一并发组，选定 dev 提交与基线。首发交接等待旧发布工作流停用、在途写者退出，固定完整 Actions seed 的来源提交、run、attempt 与索引摘要。编译器产物按目标比较有效 Lake 配置、源码、兼容环境与依赖键。报告与原生程序有各自的输入与平台条件。
 
 公共前置集中构建，独立分片使用独立 runner。一个批次完成时上传新卷并保存经校验的检查点。后续运行可以接续已完成批次。每一代有完整索引，继承行直接引用旧卷的地址和字节区间。汇总任务按目标清单校验依赖、帧和卷，回读 CI 与 Release 两个入口，最后按预期前值更新公共引用。在途读者继续使用其固定的索引。检查点与历史版本引用的卷保留在共享存储中。
 
@@ -533,7 +533,7 @@ Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、�
 
 **模块报告重产。** 本地显式入口为 `make lean-cache-prepare FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。常规发布依据报告输入、utility 与登记的提取程序确定要准备的目标。编译与报告恢复均保留 Lean、utility/audit 与报告验证要求。
 
-[普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/lean-cache-publish.yml)
+[普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
 
 **退出与部署。** raw 0 为成功，1 为候选检查失败，2 为输入/基础设施失败，3 只表示 SL-022 保护面变更标注。只有其余义务已通过才可将 3 归一为 workflow 成功；make 配方失败会折叠为 2，报告时保留底层退出码与 Block 列表。缺失报告或无效 TRX 不得成为成功。
 
