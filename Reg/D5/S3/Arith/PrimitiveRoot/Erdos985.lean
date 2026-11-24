@@ -23,9 +23,9 @@ private theorem dependence : ObservationalDependence signature actual := by
 namespace Large
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (p : ℕ) [Fact p.Prime] (hp : 3483482 ≤ p)
-    (hRH : RiemannHypothesis)
-    (hL : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+  Law R := ∀ (p : ℕ) [Fact p.Prime] (_hp : 3483482 ≤ p)
+    (_hRH : RiemannHypothesis)
+    (_hL : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0) ,
     ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
@@ -100,13 +100,13 @@ end Large
 namespace All
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (hRH : RiemannHypothesis)
-    (hL : ∀ (p : ℕ) (hp : p.Prime),
+  Law R := ∀ (_hRH : RiemannHypothesis)
+    (_hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;
       3483482 ≤ p → ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
       orderOf χ ∣ ∏ r ∈ (p - 1).primeFactors, r →
       ∀ s : ℂ, 1 / 2 < s.re → |s.im| ≤ 4 * Real.sqrt p → χ.LFunction s ≠ 0)
-    (hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
+    (_hsmall : ∀ p, 3 ≤ p → p < 3483482 → p.Prime →
       ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1) ,
     ∀ p, p.Prime → p ≠ 2 →
       ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
@@ -124,8 +124,8 @@ private theorem rejected_law (hRH : RiemannHypothesis)
   subst q
   have hh : orderOf (2 : ZMod 3) = 2 :=
     orderOf_eq_prime (by decide) (by decide)
-  simp only [rejected, realize, hh] at ho
-  norm_num at ho
+  change orderOf (2 : ZMod 3) = 0 at ho
+  omega
 def family (hRH : RiemannHypothesis)
     (hL : ∀ (p : ℕ) (hp : p.Prime),
       letI : NeZero p := ⟨hp.ne_zero⟩;
