@@ -34,6 +34,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hv := ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two
   norm_num [actual, realize, Chebyshev.psi,
     show Finset.Ioc 0 2 = {1, 2} by decide, hv]
+  exact ne_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2))
 def family : Registration arena (type_of% psi_nat_lower) where
   actual := actual
   bridge := Iff.rfl

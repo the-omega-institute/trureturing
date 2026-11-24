@@ -249,7 +249,9 @@ end Principal
 
 namespace PrincipalEquality
 
-open Principal
+abbrev signature := Principal.signature
+abbrev actual := Principal.actual
+abbrev rejected := Principal.rejected
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {p : ℕ} (hp : p.Prime),
