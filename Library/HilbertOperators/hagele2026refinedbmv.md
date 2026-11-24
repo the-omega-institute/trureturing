@@ -232,7 +232,7 @@ and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
 
-For first degrees at least eleven and lower coordinate at most one half,
+For first degrees at least eleven and lower coordinate in \((0,1/2]\),
 the logarithmic kernel has strictly negative mixed derivative at all
 gaps at least one. Geometric reduction controls the scaled scalar
 through integration gap seven halves with exact Taylor enclosures. The
