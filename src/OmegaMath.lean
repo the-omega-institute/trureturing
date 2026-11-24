@@ -39,6 +39,7 @@ public import OmegaMath.Harmonic.HurwitzFreeGroup.ReducedDifference
 public import OmegaMath.Harmonic.HurwitzFreeGroup.Residue
 public import OmegaMath.Harmonic.HurwitzFreeGroup.Split5
 public import OmegaMath.Harmonic.PiFreeHaar
+public import OmegaMath.Logic.Function.Basic
 public import OmegaMath.Matrix.LagrangeSchur
 public import OmegaMath.Matrix.Mat2
 public import OmegaMath.Matrix.Mat2.Hurwitz
