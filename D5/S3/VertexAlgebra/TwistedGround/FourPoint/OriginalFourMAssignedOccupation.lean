@@ -32,9 +32,9 @@ open OriginalFourMAssignedOverlap
 open OriginalFourMWickLowering (pairWeight)
 open OriginalFourMSpatialWickPartition (liftedScale)
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
-  (doubleSlit doubleSlit_preconnected ball_subset_slitDomain)
+  (doubleSlit doubleSlit_preconnected midpoint_mem)
 open OriginalFourMSlitMean (slitCovarianceEntry slitCovarianceEntry_analyticOnNhd slitMeanEntry)
-open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit)
+open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit dLip_neBot)
 open OriginalFourMOccupationTransport (flags)
 open OriginalFourMFixedChargeWick (Mode nativeModeCovariance nativeModeMean modeMatrix)
 open AffineWickAssignments (assign)
@@ -340,15 +340,13 @@ private theorem slit_symm_all (D : LatticeData) {Y : Type*}
   have hnorm : ‖r₀‖ < 1 := by
     rw [show r₀ = ((1 / 2 : ℝ) : ℂ) by norm_num [r₀]]
     norm_num [Complex.norm_real]
-  have h₀ : r₀ ∈ doubleSlit :=
-    ⟨ball_subset_slitDomain (by simpa [Metric.mem_ball, dist_zero_right] using hnorm),
-      Complex.mem_slitPlane_iff.2 (Or.inl (by norm_num [r₀, div_eq_mul_inv]))⟩
   have hfreq : ∃ᶠ r : ℂ in 𝓝[≠] r₀, slitMatrix D e r a b = slitMatrix D e r b a := by
     have hb : ∀ᶠ r : ℂ in 𝓝 r₀, ‖r‖ < 1 :=
       (isOpen_lt continuous_norm continuous_const).mem_nhds hnorm
     exact ((hb.filter_mono nhdsWithin_le_nhds).mono fun r hr =>
       slit_matrix_symm D e hr a b).frequently
-  exact (ha a b).eqOn_of_preconnected_of_frequently_eq (ha b a) doubleSlit_preconnected h₀ hfreq
+  exact (ha a b).eqOn_of_preconnected_of_frequently_eq
+    (ha b a) doubleSlit_preconnected midpoint_mem hfreq
 
 /-- The original D covariance is symmetric at the true boundary lip.
 The proof continues the literal compact slit entries and takes their
@@ -367,11 +365,7 @@ theorem compactCovariance_d_symm (D : LatticeData) {x : ℝ} (hx : 0 < x) (hx₁
       (hr : r ∈ dLip true) :
       entry i j r = slitMatrix D (compactExternal D F) r i j := by
     cases i <;> cases j <;> exact dLipCovarianceEntry_eq_slit D true _ _ _ _ hr
-  have : (𝓝[dLip true] (t : ℂ)).NeBot := by
-    apply mem_closure_iff_nhdsWithin_neBot.mp
-    change (t : ℂ) ∈ closure {z : ℂ | z.im < 0}
-    rw [Complex.closure_setOfPred_im_lt]
-    exact le_of_eq (Complex.ofReal_im t)
+  have : (𝓝[dLip true] (t : ℂ)).NeBot := dLip_neBot true t
   have hEq : entry a b =ᶠ[𝓝[dLip true] (t : ℂ)] entry b a := by
     filter_upwards [self_mem_nhdsWithin] with r hr
     rw [he a b hr, he b a hr]
