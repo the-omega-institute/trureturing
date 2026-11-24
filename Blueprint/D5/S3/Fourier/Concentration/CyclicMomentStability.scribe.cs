@@ -55,7 +55,7 @@ internal sealed class CyclicMomentStabilityDocument : IScribeDocumentDefinition
         var sign = Call("eta", j);
         var sum = new Formula.Subscript(Sum, j);
         var error = new Formula.Absolute(Seq(Call("X", j), Minus, c, Minus,
-            Multiply(F.Id("i"), sign, t)));
+            Multiply(Multiply(F.Id("i"), sign), t)));
         var phaseError = Seq(sum, Sp, Multiply(weight, new Formula.Power(error, D(2))));
         var phaseBound = Multiply(Seq(Open, Add(D(1),
             new Formula.Fraction(D(4), new Formula.Power(t, D(2)))), Close), Dv);
