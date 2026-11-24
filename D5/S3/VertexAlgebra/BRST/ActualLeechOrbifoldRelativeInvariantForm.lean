@@ -35,10 +35,14 @@ local notation "H" => fun p : Momentum => GradedCohomology planeFrame planeBasis
 local notation "Cycles" => fun p : Momentum => GradedCycles planeFrame planeBasis p 1
 local notation "Boundaries" => fun p : Momentum => GradedBoundaries planeFrame planeBasis p 1
 
-local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
-local instance (p : Momentum) : AddCommGroup (relativeShell p) := Submodule.addCommGroup _
-local instance (p : Momentum) : AddCommGroup (NativeShell p) := Submodule.addCommGroup _
-local instance (p : Momentum) : AddCommGroup (Cycles p) := Submodule.addCommGroup _
+local instance invariantFormStateAddCommGroup : AddCommGroup ComplexState :=
+  TensorProduct.addCommGroup
+local instance invariantFormShellAddCommGroup (p : Momentum) : AddCommGroup (relativeShell p) :=
+  Submodule.addCommGroup _
+local instance invariantFormNativeShellAddCommGroup (p : Momentum) : AddCommGroup (NativeShell p) :=
+  Submodule.addCommGroup _
+local instance invariantFormCyclesAddCommGroup (p : Momentum) : AddCommGroup (Cycles p) :=
+  Submodule.addCommGroup _
 
 local notation "incl" => DirectSum.lof ℂ Momentum H
 
