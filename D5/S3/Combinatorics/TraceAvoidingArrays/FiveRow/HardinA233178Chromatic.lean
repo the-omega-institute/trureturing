@@ -437,20 +437,23 @@ private theorem moves_nodup : ∀ p : Column, (moves p).Nodup := by
 
 theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul R] [One R]
     (P : S → Prop) [DecidablePred P] (L : List S) (nodup : L.Nodup)
-    (mem : ∀ q, q ∈ L ↔ P q) (w : S → R) (zeroLeft : ∀ q ∉ L, (0 : R) * w q = 0) :
+    (mem : ∀ q, q ∈ L ↔ P q) (w : S → R)
+    (zeroLeft : ∑ q ∈ Finset.univ.filter (fun q => ¬ P q), (0 : R) * w q = 0) :
     dotProduct (fun q => if P q then (1 : R) else 0) w =
       (L.map (fun q => (1 : R) * w q)).sum := by
   classical
-  calc
-    _ = ∑ q : S, if q ∈ L then (1 : R) * w q else 0 := by
-      apply Finset.sum_congr rfl
-      intro q _
-      by_cases h : q ∈ L
-      · simp only [if_pos h, if_pos ((mem q).mp h)]
-      · simp only [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
-    _ = _ := by
-      simp_rw [← List.mem_toFinset]
-      rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
+  unfold dotProduct
+  rw [← Finset.sum_filter_add_sum_filter_not Finset.univ P]
+  have omitted :
+      ∑ q ∈ Finset.univ.filter (fun q => ¬ P q), (if P q then (1 : R) else 0) * w q = 0 := by
+    refine (Finset.sum_congr rfl fun q hq => ?_).trans zeroLeft
+    rw [ite_eq_right (Finset.mem_filter.mp hq).2]
+  rw [omitted, add_zero]
+  have support : Finset.univ.filter P = L.toFinset := by
+    ext q
+    simpa only [Finset.mem_filter, Finset.mem_univ, true_and, List.mem_toFinset] using (mem q).symm
+  rw [← List.sum_toFinset _ nodup, ← support]
+  exact Finset.sum_congr rfl fun q hq => by rw [ite_eq_left (Finset.mem_filter.mp hq).2]
 
 theorem step_fast (w : Column → ℤ) (p : Column) :
     T.mulVec w p = ((moves p).map w).sum := by

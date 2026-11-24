@@ -19,7 +19,7 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             LiteralNode("moves", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. Each stored list contains the eligible columns in code order."),
             LiteralNode("table", Arrow(Fin(12), Arrow(Column(), new Formula.Integers())), "The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors."),
             FormulaNode("coefficients", Coefficients(), false, "The coefficients are listed in order of increasing power."),
-            FormulaNode("weighted_indicator_sum",WeightedIndicatorSum(),true,"The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish."),
+            FormulaNode("weighted_indicator_sum",WeightedIndicatorSum(),true,"The duplicate-free list L enumerates exactly the points satisfying P. Its weighted sum agrees with the indicator row when the omitted sum vanishes."),
             FormulaNode("step_fast", Step(), true, "Matrix action at a boundary is the sum over its legal successors."),
             FormulaNode("powers_table", Powers(), true, "The tabulated row is the continuation vector at the specified exponent."),
             FormulaNode("Column", Eq(Column(), Fin(243)), false, "Five-row column codes in base three."),
@@ -127,11 +127,12 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             And(Eq(diagonal, union), And(Call("Disjoint", forward, backward), Call("Disjoint", straight, diagonal)))));
     }
 
-    private static Formula OmittedProducts(Formula domain, Formula scalar, Formula support)
+    private static Formula OmittedSum(Formula domain, Formula scalar, Formula negativeSupport)
     {
-        var q = V("q");
-        var omitted = Seq(Neg, Sp, Parenthesized(new Formula.Relation(q, FormulaRelationOperator.MemberOf, support)));
-        return All("q", domain, Imp(omitted, Eq(Mul(Typed(N(0), scalar), App(V("w"), q)), Typed(N(0), scalar))));
+        var excluded = Call("Finset.filter", Fn("q", domain, Parenthesized(negativeSupport)),
+            Typed(Q("Finset.univ"), Call("Finset", domain)));
+        return Eq(Call("Finset.sum", excluded, Fn("q", domain, Mul(Typed(N(0), scalar), App(V("w"), V("q"))))),
+            Typed(N(0), scalar));
     }
 
     private static Formula WeightedRowLaws(Formula scalar, Formula body) => Seq(
@@ -151,7 +152,7 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
         var weighted = Fn("q", domain, Mul(Typed(N(1), scalar), App(V("w"), q)));
         var sum = Call("List.sum", Call("List.map", weighted, support));
         var equality = Eq(Call("dotProduct", row, V("w")), sum);
-        var body = All("w", Arrow(domain, scalar), Imp(OmittedProducts(domain, scalar, support), equality));
+        var body = All("w", Arrow(domain, scalar), Imp(OmittedSum(domain, scalar, Seq(Neg, Sp, Parenthesized(App(predicate, q)))), equality));
         var list = All("L", Call("List", domain), Imp(Call("List.Nodup", support),
             Imp(All("q", domain, Iff(member, App(predicate, q))), body)));
         var predicates = All("P", Arrow(domain, Q("Prop")), Seq(
