@@ -21,9 +21,7 @@ maximal-ergodic argument and real L1 convergence.
 module
 
 public import D5.S3.Analytic.Probability.BirkhoffPointwise
-public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLogExp
 public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 public import Mathlib.MeasureTheory.MeasurableSpace.Invariants
 public import Mathlib.Tactic.FunProp
 public import Mathlib.Tactic.Positivity
@@ -243,7 +241,9 @@ private lemma tendsto_integral_abs_average_sub_condExp_of_nonneg
     exact (integrable_average μ hf hg n).inf hc
   have hmin : Tendsto (fun n ↦ ∫ x, min (birkhoffAverage ℝ f g n x) (c x) ∂μ)
       atTop (𝓝 (∫ x, c x ∂μ)) := by
-    apply tendsto_integral_of_dominated_convergence c
+    simp only [integral_eq_setToFun]
+    apply tendsto_setToFun_of_dominated_convergence
+      (dominatedFinMeasAdditive_weightedSMul μ) c
       (fun n ↦ (hmin_int n).1) hc
     · intro n
       filter_upwards [hcpos] with x hx
