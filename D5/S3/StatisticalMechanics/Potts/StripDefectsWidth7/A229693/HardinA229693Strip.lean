@@ -401,7 +401,7 @@ private theorem representative_data (j : Fin 96) :
   have hrank := List.idxOf_lt_length_of_mem hkey
   have hread : columnKeys[(columnRank j).val]! = exitRead j := by
     rw [columnRank_eq, Fin.val_ofNat, Nat.mod_eq_of_lt (hlength ▸ hrank),
-      getElem!_pos _ _ hrank, List.getElem_idxOf hrank]
+      getElem!_pos columnKeys _ hrank, List.getElem_idxOf hrank]
   have hexit := List.idxOf_lt_length_of_mem hmem
   have hindex : (List.ofFn exitRead).idxOf (exitRead j) < 96 := by
     simpa only [List.length_ofFn] using hexit
@@ -412,7 +412,8 @@ private theorem representative_data (j : Fin 96) :
     have hget := List.getElem_idxOf hexit
     rw [List.getElem_ofFn] at hget
     exact (congrArg exitRead (Fin.ext hval)).trans hget
-  exact ⟨by simp only [columnRank_eq, hrep], hrep⟩
+  refine ⟨?_, hrep⟩
+  rw [columnRank_eq (columnRepresentative (columnRank j)), hrep, columnRank_eq j]
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
