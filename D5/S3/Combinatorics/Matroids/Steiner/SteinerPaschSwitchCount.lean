@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount
+/- GID: D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Matroids/SteinerPaschSwitchCount
+   mirror-B: D5/B/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Matroids.SteinerFixedPivotCountRange
 
 /-! The four blocks in a Pasch configuration form a square of the two pivot matchings. -/
 
-namespace D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+namespace D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
 
 open SimpleGraph Function
 open D5.S3.Combinatorics.Matroids.SteinerAlternatingSwitches (Matchings SuccessfulStart)
@@ -186,4 +186,4 @@ theorem variableLabelledSwitchCount_iff {L A : Type*} [Finite L] [Mul L]
     · exact (range _).mpr ⟨1, positive, Or.inr inferInstance, by simp⟩
     · exact Nat.ne_of_lt (Nat.mul_lt_mul_of_pos_left (by omega) cardA)
 
-end D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+end D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount

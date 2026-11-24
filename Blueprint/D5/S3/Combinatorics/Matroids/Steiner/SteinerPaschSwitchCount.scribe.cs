@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids.Steiner;
 
 internal sealed class SteinerPaschSwitchCountDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount";
+    private const string Module = "D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount";
     private static readonly LibraryNoteRef Pasch = LibraryNoteRef.Create(
         "D5/L/FiniteGeometry/falconefigulagalici2025veblenpoints");
 

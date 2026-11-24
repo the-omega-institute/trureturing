@@ -1,14 +1,14 @@
 import Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchSupport
 import D5.S3.Combinatorics.Matroids.SteinerMultipivotReturns
-import D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+import D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
 
 /-! Source registration for the opposite-pivot Pasch predicate. -/
-namespace Reg.D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+namespace Reg.D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Matroids
-open _root_.D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+open _root_.D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
 open SteinerSchreierExtension (extensionMul)
 open SteinerAlternatingSwitches (SuccessfulStart)
 open PointDeletedSteinerSwitch (pointDeletedFamily)
@@ -137,8 +137,8 @@ def source : Registration arena.{u,v} (type_of% (@variableLabelledSwitchCount_if
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@variableLabelledSwitchCount_iff.{u,v}) (Realization sig.{u}) Unit Unit where
   unitName :=
-    `D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount.variableLabelledSwitchCount_iff.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount.source
+    `D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount.variableLabelledSwitchCount_iff.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount.source
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -154,7 +154,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+    owner := `D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
     definition := none
     coordinates := #[0, 9, 10]
     readouts := #[{
@@ -169,4 +169,4 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end
-end Reg.D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
+end Reg.D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount

@@ -6,9 +6,9 @@ Pasch configurations detect whether the number of successful starts can vary wit
 
 **Theorem 1.1 (An opposite pair in a Pasch gives variable switch counts).**
 
-Lean statement: `D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff`
+Lean statement: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ The four other points of such a Pasch form a square in the graph of the two matc
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Matroids/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff`
 - Dependency: [D5/S3/Combinatorics/Matroids/SteinerFixedPivotCountRange](SteinerFixedPivotCountRange.md)
