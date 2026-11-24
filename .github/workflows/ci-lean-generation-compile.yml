@@ -18,6 +18,7 @@ jobs:
     outputs:
       shared: ${{ steps.plan.outputs.shared }}
       workers: ${{ steps.plan.outputs.workers }}
+      independent: ${{ steps.plan.outputs.independent }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -88,4 +89,26 @@ jobs:
         with:
           generation: 'true'
           shared: ${{ needs.generation-plan.outputs.shared }}
+          stage: ${{ matrix.stage }}
+
+  generation-independent:
+    needs: generation-plan
+    if: needs.generation-plan.outputs.independent != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: ${{ fromJSON(needs.generation-plan.outputs.independent) }}
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/lean-compile-layer
+        with:
+          generation: 'true'
           stage: ${{ matrix.stage }}
