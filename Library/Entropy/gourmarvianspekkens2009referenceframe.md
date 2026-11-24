@@ -5,7 +5,7 @@ year: 2009
 title: "Measuring the quality of a quantum reference frame: The relative entropy of frameness"
 doi: 10.1103/PhysRevA.80.012307
 url: https://arxiv.org/abs/0901.0943v2
-claim: "Theorem 3 and equations (9)–(15) give the relative-entropy decomposition at a reference fixed by a unital idempotent channel."
+claim: "Theorem 3 and its proof (pp. 3–4, Eqs. (9)–(13), especially Eq. (12)) give the relative-entropy decomposition at a reference fixed by a unital idempotent channel."
 strata_touched:
   - D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
 license: citation-only
@@ -16,4 +16,4 @@ triage: anchor
 
 ## Verified locator
 
-The proof of Theorem 3 splits relative entropy to a fixed reference into the entropy gain of the idempotent channel and the relative entropy from the processed state to that reference. Equations (9)–(15) establish the trace-log identity. The projective case used for diagonal discord explicitly handles support inclusion for singular states. [Journal](https://doi.org/10.1103/PhysRevA.80.012307) · [arXiv v2](https://arxiv.org/abs/0901.0943v2) · [PDF, p. 3](https://arxiv.org/pdf/0901.0943v2#page=3)
+Theorem 3 and its proof (pp. 3–4, Eqs. (9)–(13)) give the relative-entropy decomposition, with the trace-log equality in Eq. (12). The Lean proof for diagonal discord explicitly handles support inclusion for singular states in the projective case. [Journal](https://doi.org/10.1103/PhysRevA.80.012307) · [arXiv v2](https://arxiv.org/abs/0901.0943v2) · [PDF, pp. 3–4](https://arxiv.org/pdf/0901.0943v2#page=3)

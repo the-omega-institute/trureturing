@@ -25,9 +25,11 @@ states. The optimization includes every rank-one eigenbasis of the A marginal.
 
 The image of an eligible input pinching has the same marginal as the actual
 output. Any basis making that image classical–quantum is therefore eligible
-for the output. The fixed-pinching Pythagorean decomposition of Gour, Marvian
-and Spekkens (arXiv:0901.0943v2, Theorem 3, eqs. (9)–(15)) and channel data
-processing give the pointwise bound with its nonnegative residual.
+for the output. The fixed-pinching Pythagorean decomposition uses Gour, Marvian
+and Spekkens (arXiv:0901.0943v2, Theorem 3 and its proof, pp. 3–4,
+Eqs. (9)–(13), especially Eq. (12) for the trace-log equality). The Lean proof
+handles support inclusion for singular states. The decomposition and channel
+data processing give the pointwise bound with its nonnegative residual.
 -/
 
 set_option autoImplicit false
