@@ -7,7 +7,7 @@
    digest: Exact first clipping threshold for two real cosine moments. -/
 
 import D5.S3.Fourier.Concentration.AggregateCosineBalance
-import Mathlib.RingTheory.Polynomial.RationalRoot
+import Mathlib.NumberTheory.Niven
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Algebra.Order.Round
@@ -25,17 +25,8 @@ private theorem sum_e {q : ℕ} [NeZero q] (hq : 5 ≤ q) (m : ℤ)
     (∑ k : ZMod q, e k m) = 0 := by
   have hmod : (m : ZMod q) ≠ 0 := by
     intro h
-    obtain ⟨b, hb⟩ := (ZMod.intCast_zmod_eq_zero_iff_dvd m q).mp h
-    have hq' : (5 : ℤ) ≤ (q : ℤ) := by exact_mod_cast hq
-    rcases lt_trichotomy b 0 with hneg | heq | hpos
-    · have h := mul_le_mul_of_nonneg_left (show b ≤ -1 by omega)
-        (show 0 ≤ (q : ℤ) by positivity)
-      linarith
-    · simp [heq] at hb
-      exact hm hb
-    · have h := mul_le_mul_of_nonneg_left (show 1 ≤ b by omega)
-        (show 0 ≤ (q : ℤ) by positivity)
-      linarith
+    exact hm (Int.eq_zero_of_dvd_of_natAbs_lt_natAbs
+      ((ZMod.intCast_zmod_eq_zero_iff_dvd m q).mp h) (by omega))
   exact sum_eq_zero_of_ne_one (ZMod.isPrimitive_stdAddChar q hmod)
 
 
@@ -50,15 +41,12 @@ private theorem sum_mode_zero {q : ℕ} [NeZero q] (hq : 5 ≤ q) (m : ℤ)
 
 private theorem mode_prod {q : ℕ} [NeZero q] (k : ZMod q) (m n : ℤ) :
     2 * (mode k m * mode k n) = mode k (m + n) + mode k (m - n) := by
-  apply Complex.ofReal_injective
-  push_cast
-  have h : (e k m + e k (-m)) * (e k n + e k (-n)) =
-      (e k (m + n) + e k (-(m + n))) + (e k (m - n) + e k (-(m - n))) := by
-    simp only [mul_add, add_mul, mul_e, sub_eq_add_neg, neg_add, neg_neg]
-    rw [add_comm (-m) n]
-    ring
-  simp only [e_pair] at h
-  linear_combination h / 2
+  let θ (j : ℤ) := 2 * Real.pi * (j : ℝ) * (k.val : ℝ) / (q : ℝ)
+  have h_add : θ (m + n) = θ m + θ n := by dsimp [θ]; push_cast; ring
+  have h_sub : θ (m - n) = θ m - θ n := by dsimp [θ]; push_cast; ring
+  change 2 * (Real.cos (θ m) * Real.cos (θ n)) =
+    Real.cos (θ (m + n)) + Real.cos (θ (m - n))
+  rw [h_add, h_sub, ← mul_assoc, Real.two_mul_cos_mul_cos, add_comm]
 
 private theorem two_modes_orthogonal {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
     (∑ k : ZMod q, mode k 1) = 0 ∧ (∑ k : ZMod q, mode k 2) = 0 ∧
@@ -168,26 +156,17 @@ private theorem affine_cosine_mass {q : ℕ} [NeZero q] (hq : 5 ≤ q) (a : ℝ)
 
 
 private theorem mode_ne_quarter {q : ℕ} [NeZero q] (k : ZMod q) : mode k 1 ≠ -(1 / 4 : ℝ) := by
-  have hpow (m : ℤ) : e k m ^ q = 1 := by
-    rw [e, ← AddChar.map_nsmul_eq_pow]
-    simp [nsmul_eq_mul]
-  have hi (m : ℤ) : IsIntegral ℤ (e k m) := by
-    apply IsIntegral.of_pow (NeZero.pos q)
-    rw [hpow]
-    exact isIntegral_one
   intro h
-  have hs := (hi 1).add (hi (-1))
-  rw [e_pair, h] at hs
-  have hs' : IsIntegral ℤ (-1/2 : ℂ) := by
-    convert hs using 1
+  rw [mode, Int.cast_one, mul_one] at h
+  have hθ : ∃ r : ℚ, 2 * Real.pi * (k.val : ℝ) / (q : ℝ) = (r : ℝ) * Real.pi := by
+    refine ⟨(2 * (k.val : ℚ)) / (q : ℚ), ?_⟩
     push_cast
     ring
-  obtain ⟨z, hz⟩ := hs'.mem_range_ratCast_iff.mp ⟨(-1/2 : ℚ), by norm_num⟩
-  have hzR := congrArg Complex.re hz
-  norm_num [Complex.div_re] at hzR
-  have hz' : (2 * z : ℤ) = -1 := by
-    exact_mod_cast (show (2 : ℝ) * (z : ℝ) = -1 by linarith)
-  omega
+  have hcos : ∃ r : ℚ, Real.cos (2 * Real.pi * (k.val : ℝ) / (q : ℝ)) = (r : ℝ) :=
+    ⟨-(1 / 4), by simpa using h⟩
+  have hn := niven hθ hcos
+  rw [h] at hn
+  norm_num at hn
 
 private theorem exists_quarter_nearby {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
     ∃ k : ZMod q, |mode k 1 + 1/4| ≤ Real.pi / (q : ℝ) := by
@@ -325,7 +304,7 @@ theorem first_cosine_clipping {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
     ∃ m : ℝ, (∃ k, m = s k) ∧ (∀ k, m ≤ s k) ∧
       4 / 9 < -1 / (2 * m) ∧
       -1 / (2 * m) ≤ 4 / 9 + 16 * square Real.pi / (9 * square (q : ℝ)) ∧
-      ∀ a : ℝ, 0 ≤ a →
+      ∀ a : ℝ,
         let v := fun k => (1 + 2 * a * s k) / (q : ℝ)
         let lower := (1 + 4 * square a) / (q : ℝ)
         let feasible := fun w : ZMod q → ℝ =>
@@ -336,15 +315,18 @@ theorem first_cosine_clipping {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
             (∑ k, square (w k)) - lower =
               (∑ k, square (w k - v k)) +
                 (4 * a / (q : ℝ)) * ((∑ k, w k * s k) - 2 * a)) ∧
-          (∀ w, feasible w →
-            lower + (∑ k, square (max 0 (-v k))) ≤ (∑ k, square (w k)) ∧
-              ((∑ k, square (w k)) = lower ↔ w = v)) ∧
-          ((∃ w, feasible w ∧ (∑ k, square (w k)) = lower) ↔ a ≤ -1 / (2 * m)) := by
+          (0 ≤ a →
+            ((∀ k, 0 ≤ v k) ↔ a ≤ -1 / (2 * m)) ∧
+            (-1 / (2 * m) < a → 0 < ∑ k, square (max 0 (-v k))) ∧
+            (∀ w, feasible w →
+              lower + (∑ k, square (max 0 (-v k))) ≤ (∑ k, square (w k)) ∧
+                ((∑ k, square (w k)) = lower ↔ w = v)) ∧
+            ((∃ w, feasible w ∧ (∑ k, square (w k)) = lower) ↔ a ≤ -1 / (2 * m))) := by
   dsimp only
   let s (k : ZMod q) := mode k 1 + mode k 2
   obtain ⟨m, hm, hmin, hlo, hhi, hcut⟩ := exact_cosine_clipping_threshold hq
   refine ⟨m, hm, hmin, hlo, hhi, ?_⟩
-  intro a ha
+  intro a
   let v (k : ZMod q) := (1 + 2 * a * s k) / (q : ℝ)
   obtain ⟨hv, h₁, h₂, hgap⟩ := affine_cosine_mass hq a
   change (∑ k, v k * mode k 1) = a at h₁
@@ -357,6 +339,14 @@ theorem first_cosine_clipping {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
     change (∑ k, v k ^ 2) - (1 + 4 * a ^ 2) / (q : ℝ) =
       (∑ k, (v k - v k) ^ 2) + (4 * a / (q : ℝ)) * ((∑ k, v k * s k) - 2 * a) at h
     simpa [hs, sub_eq_zero] using h
+  refine ⟨hv, h₁, h₂, hgap, ?_⟩
+  intro ha
+  have hclip (habove : -1 / (2 * m) < a) : 0 < ∑ k, (max 0 (-v k)) ^ 2 := by
+    obtain ⟨k, hk⟩ := not_forall.mp
+      (fun hn => (not_le.mpr habove) ((hcut a ha).mp hn))
+    have hneg : v k < 0 := lt_of_not_ge hk
+    exact sum_pos' (fun j _ => sq_nonneg _) ⟨k, mem_univ k,
+      pow_pos ((neg_pos.mpr hneg).trans_le (le_max_right _ _)) 2⟩
   have hFor (w : ZMod q → ℝ) (hw : ∀ k, 0 ≤ w k) (hws : ∑ k, w k = 1)
       (hwm1 : a ≤ ∑ k, w k * mode k 1) (hwm2 : a ≤ ∑ k, w k * mode k 2) :
       (1 + 4 * a ^ 2) / (q : ℝ) + (∑ k, (max 0 (-v k)) ^ 2) ≤ (∑ k, w k ^ 2) ∧
@@ -388,7 +378,7 @@ theorem first_cosine_clipping {q : ℕ} [NeZero q] (hq : 5 ≤ q) :
       exact sub_eq_zero.mp (hz.elim id id)
     · rintro rfl
       exact hvEnergy
-  refine ⟨hv, h₁, h₂, hgap, fun w ⟨hn, hws, hm₁, hm₂⟩ => hFor w hn hws hm₁ hm₂, ?_⟩
+  refine ⟨hcut a ha, hclip, fun w ⟨hn, hws, hm₁, hm₂⟩ => hFor w hn hws hm₁ hm₂, ?_⟩
   constructor
   · rintro ⟨w, ⟨hw, hws, hwm1, hwm2⟩, he⟩
     have heq := (hFor w hw hws hwm1 hwm2).2.mp he

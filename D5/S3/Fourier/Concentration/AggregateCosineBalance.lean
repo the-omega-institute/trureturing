@@ -18,7 +18,7 @@ namespace D5.S3.Fourier.Concentration.AggregateCosineBalance
 noncomputable def e {q : ℕ} [NeZero q] (k : ZMod q) (m : ℤ) : ℂ :=
   ZMod.stdAddChar ((m : ZMod q) * k)
 
-theorem mul_e {q : ℕ} [NeZero q] (k : ZMod q) (a b : ℤ) :
+private theorem mul_e {q : ℕ} [NeZero q] (k : ZMod q) (a b : ℤ) :
     e k a * e k b = e k (a + b) := by
   simp only [e, Int.cast_add, add_mul, map_add_eq_mul]
 

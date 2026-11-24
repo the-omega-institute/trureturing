@@ -17,7 +17,7 @@ internal sealed class FirstCosineClippingDocument : IScribeDocumentDefinition
                 + "Let M₁ and M₂ denote the corresponding weighted moments, and let E be squared mass. "
                 + "The threshold attached to an attained minimum m of s is T(m) = −1/(2m).")),
             Paragraph(Text(
-                "For each real a ≥ 0, set v(k) = (1+2as(k))/q, L = (1+4a²)/q, "
+                "For each real a, set v(k) = (1+2as(k))/q, L = (1+4a²)/q, "
                 + "D(w) = E(w−v), and N(v) = Σₖ max(0,−v(k))². The notation P(w) "
                 + "means w is a nonnegative real weight of total mass one with both moments at least a. "
                 + "All competitors are real functions on the residues, and all k-sums run over the residues.")),
@@ -31,12 +31,13 @@ internal sealed class FirstCosineClippingDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Character orthogonality gives the affine law total mass one and the two moments a. "
                         + "Expanding its squared distance from a mass-one competitor gives the exact remainder. "
-                        + "Any feasible competitor pays at least the squared negative entries of that affine law. "
+                        + "For a ≥ 0, any feasible competitor pays at least the squared negative entries of that affine law. "
+                        + "Above the cutoff a minimizing residue has a negative affine entry, so the penalty is positive. "
                         + "Equality with L forces all Euclidean distance terms to vanish.")),
                     Paragraph(Text(
-                        "Completing the square gives s(k) = 2(c(k)+1/4)²−9/8. Twice c(k) is a sum of "
-                        + "roots of unity and is integral over the integers. The rational value −1/2 would "
-                        + "be a noninteger rational algebraic integer. This gives the strict lower bound on T(m). "
+                        "Completing the square gives s(k) = 2(c(k)+1/4)²−9/8. Niven’s theorem excludes "
+                        + "the value −1/4 for c(k) because the angle is a rational multiple of π. "
+                        + "This gives the strict lower bound on T(m). "
                         + "Rounding the angle whose cosine is −1/4 to the nearest grid point controls the "
                         + "squared error by (π/q)². The mean-zero and second-moment identities imply m ≤ −1/2 "
                         + "by summing (2−s(k))(s(k)−m). These two bounds control the reciprocal threshold."))),
@@ -69,20 +70,24 @@ internal sealed class FirstCosineClippingDocument : IScribeDocumentDefinition
                 Sp, Land, Sp, Open, Forall, Sp, k, Comma, Sp, m, Sp, Le, Sp, Call("s", k), Close),
             Seq(Amp, Quad, Sp, Land, Sp, fourNinths, Lt, t, Sp, Le, Sp, fourNinths, Plus,
                 Frac, Grp(D(1, 6), piSquared), Grp(D(9), new Formula.Power(q, D(2))), Comma),
-            Seq(Amp, Quad, Sp, Forall, Sp, a, Sp, InMacro, Sp, reals, Comma, Quad, Sp,
-                a, Sp, Ge, D(0), Colon),
+            Seq(Amp, Quad, Sp, Forall, Sp, a, Sp, InMacro, Sp, reals, Colon),
             Seq(Amp, Quad, Sp, sum, Call("v", k), Eq, D(1), Comma, Quad, Sp,
                 First(v), Eq, Second(v), Eq, a, Comma),
             Seq(Amp, Quad, Sp, Forall, Sp, w, Colon, domain, Comma, Quad, Sp,
                 sum, Call("w", k), Eq, D(1), Sp, Longrightarrow, Sp,
                 Call("E", w), Minus, lower, Eq, Call("D", w), Plus,
                 Frac, Grp(D(4), a), Grp(q), Open, First(w), Plus, Second(w), Minus, D(2), a, Close, Comma),
+            Seq(Amp, Quad, Sp, a, Sp, Ge, Sp, D(0), Sp, Longrightarrow, Sp, OpenBracket),
+            Seq(Amp, Quad, Quad, Sp, Open, Forall, Sp, k, Comma, Sp, Call("v", k),
+                Sp, Ge, Sp, D(0), Close, Sp, Iff, Sp, a, Sp, Le, Sp, t, Comma),
+            Seq(Amp, Quad, Quad, Sp, t, Sp, Lt, Sp, a, Sp, Longrightarrow, Sp,
+                D(0), Sp, Lt, Sp, Call("N", v), Comma),
             Seq(Amp, Quad, Sp, Forall, Sp, w, Colon, domain, Comma, Quad, Sp,
                 Call("P", w), Sp, Longrightarrow, Sp, lower, Plus, Call("N", v), Sp, Le, Sp,
                 Call("E", w), Sp, Land, Sp, Open, Call("E", w), Eq, lower, Sp, Iff, Sp, w, Eq, v, Close, Comma),
             Seq(Amp, Quad, Sp, Open, Exists, Sp, w, Colon, domain, Comma, Sp,
                 Call("P", w), Sp, Land, Sp, Call("E", w), Eq, lower, Close,
-                Sp, Iff, Sp, a, Sp, Le, Sp, t, Dot)
+                Sp, Iff, Sp, a, Sp, Le, Sp, t, CloseBracket, Dot)
         ]));
     }
 }

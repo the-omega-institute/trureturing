@@ -32,7 +32,7 @@ abbrev arena : Arena where
     ∃ m : ℝ, (∃ k, m = s k) ∧ (∀ k, m ≤ s k) ∧
       4 / 9 < -1 / (2 * m) ∧
       -1 / (2 * m) ≤ 4 / 9 + 16 * square Real.pi / (9 * square (q : ℝ)) ∧
-      ∀ a : ℝ, 0 ≤ a →
+      ∀ a : ℝ,
         let v := fun k => (1 + 2 * a * s k) / (q : ℝ)
         let lower := (1 + 4 * square a) / (q : ℝ)
         let feasible := fun w : ZMod q → ℝ =>
@@ -43,10 +43,13 @@ abbrev arena : Arena where
             (∑ k, square (w k)) - lower =
               (∑ k, square (w k - v k)) +
                 (4 * a / (q : ℝ)) * ((∑ k, w k * s k) - 2 * a)) ∧
-          (∀ w, feasible w →
-            lower + (∑ k, square (max 0 (-v k))) ≤ (∑ k, square (w k)) ∧
-              ((∑ k, square (w k)) = lower ↔ w = v)) ∧
-          ((∃ w, feasible w ∧ (∑ k, square (w k)) = lower) ↔ a ≤ -1 / (2 * m))
+          (0 ≤ a →
+            ((∀ k, 0 ≤ v k) ↔ a ≤ -1 / (2 * m)) ∧
+            (-1 / (2 * m) < a → 0 < ∑ k, square (max 0 (-v k))) ∧
+            (∀ w, feasible w →
+              lower + (∑ k, square (max 0 (-v k))) ≤ (∑ k, square (w k)) ∧
+                ((∑ k, square (w k)) = lower ↔ w = v)) ∧
+            ((∃ w, feasible w ∧ (∑ k, square (w k)) = lower) ↔ a ≤ -1 / (2 * m)))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
