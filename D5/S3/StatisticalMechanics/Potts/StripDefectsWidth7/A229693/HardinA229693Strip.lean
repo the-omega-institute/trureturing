@@ -80,7 +80,6 @@ import Mathlib.Tactic.Eval
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Matrix.Mul
-import Mathlib.Logic.Function.Iterate
 import Lean.Elab.Tactic.ElabTerm
 import Lean.Meta.ReduceEval
 
@@ -654,14 +653,18 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
 
 private theorem leading_forward (i : Fin 15) :
     forward HardinA229585StripData.T HardinA229585StripData.initial i.val = leading i := by
-  induction i using Fin.induction with
-  | zero => exact HardinA229585Strip.finite_certificate.2.2.2.2.2.1.1.symm
-  | succ i ih =>
-    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
-    change Matrix.vecMul
-      (forward HardinA229585StripData.T HardinA229585StripData.initial i.castSucc.val)
-      HardinA229585StripData.T = _
-    rw [ih, leading_step]
+  let rows := List.ofFn leading
+  have hchain : rows.IsChain
+      (fun u v => Matrix.vecMul u HardinA229585StripData.T = v) :=
+    List.isChain_ofFn.mpr fun k hk => (leading_step ⟨k, by omega⟩).symm
+  have hi : i.val < rows.length := by simpa only [rows, List.length_ofFn] using i.isLt
+  have he := hchain.iterate_eq_of_apply_eq i.val hi
+  simp only [rows, List.getElem_ofFn] at he
+  change forward HardinA229585StripData.T (leading 0) i.val = leading i at he
+  have hzero : leading 0 = HardinA229585StripData.initial :=
+    HardinA229585Strip.finite_certificate.2.2.2.2.2.1.1
+  rw [hzero] at he
+  exact he
 
 -- The five shifted order-eight residuals give the order-twelve residual.
 private theorem recurrence_convolution (v : ℕ → ℤ)
