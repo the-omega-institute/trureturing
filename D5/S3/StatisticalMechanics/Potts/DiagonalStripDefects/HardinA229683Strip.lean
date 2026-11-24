@@ -19,6 +19,7 @@ import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripC
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981Strip
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripCertificate
+import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
