@@ -11,6 +11,7 @@ import D5.S3.Quantum.Measurement.Auric.EqualBlockEffects
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Fin.Tuple.Sort
 
 /-! # Ordered supporting prices for three effects -/
 
@@ -744,6 +745,9 @@ private theorem mem_allowedRows (c : Fin 4) (j : Fin 3) :
     j ∈ allowedRows c ↔ c ≠ j.castSucc := by
   simp [allowedRows]
 
+private theorem last_mem_allowedRows (j : Fin 3) : j ∈ allowedRows (Fin.last 3) :=
+  (mem_allowedRows _ _).2 (Fin.castSucc_ne_last j).symm
+
 private theorem allowedRows_nonempty (c : Fin 4) : (allowedRows c).Nonempty := by
   fin_cases c <;> decide
 
@@ -757,6 +761,20 @@ private theorem multiplicity_last (l : Fin 3 → ℕ) (b : ℕ) :
 private def priceObjective (l : Fin 3 → ℕ) (b : ℕ) (τ : Fin 3 → ℝ)
     (G : Fin 4 → (Fin 3 → ℝ) → ℝ) (u : Fin 3 → ℝ) : ℝ :=
   (∑ c, (multiplicity l b c : ℝ) * G c u) - ∑ j, τ j * u j
+
+private theorem priceObjective_shift (l : Fin 3 → ℕ) (b : ℕ) (d : ℝ) (τ : Fin 3 → ℝ)
+    (hd : (b : ℝ) + ∑ j, (l j : ℝ) = d) (hτ : ∑ j, τ j = d)
+    (G : Fin 4 → (Fin 3 → ℝ) → ℝ)
+    (hG : ∀ c u a, G c (fun j => u j + a) = G c u + a)
+    (u : Fin 3 → ℝ) (a : ℝ) :
+    priceObjective l b τ G (fun j => u j + a) = priceObjective l b τ G u := by
+  unfold priceObjective
+  simp only [hG, mul_add, sum_add_distrib, ← sum_mul, hτ]
+  have hc : (∑ c, (multiplicity l b c : ℝ)) = d := by
+    rw [Fin.sum_univ_castSucc]
+    simp only [multiplicity_castSucc, multiplicity_last, add_comm _ (b : ℝ), hd]
+  rw [hc]
+  ring
 
 /-- A column potential that dominates each allowed price gives a uniform
 lower bound in terms of the largest difference of row prices. -/
@@ -783,10 +801,7 @@ private theorem price_coercivity (l : Fin 3 → ℕ) (b : ℕ) (d : ℝ) (τ : F
   obtain ⟨s, hs, hsecond⟩ := rest.exists_max_image u hrest
   have hsne : s ≠ j := (mem_erase.mp hs).1
   have hsj : u s ≤ u j := hj s (mem_univ s)
-  have hfull : u j ≤ G (Fin.last 3) u := hG _ _ _ ((mem_allowedRows _ _).2 (by
-    intro h
-    have hv := congrArg Fin.val h
-    exact (Nat.not_lt_of_ge (Nat.le_of_eq hv)) j.isLt))
+  have hfull : u j ≤ G (Fin.last 3) u := hG _ _ _ (last_mem_allowedRows j)
   have hmissing : ∑ a, (l a : ℝ) * (if a = j then u s else u j) ≤
       ∑ a, (l a : ℝ) * G a.castSucc u := by
     apply sum_le_sum
@@ -888,9 +903,7 @@ private theorem expSum_last (u : Fin 3 → ℝ) :
     expSum (Fin.last 3) u = ∑ j, Real.exp (u j) := by
   unfold expSum allowedRows
   rw [filter_eq_self.mpr]
-  intro j _ h
-  have hv := congrArg Fin.val h
-  exact (Nat.not_lt_of_ge (Nat.le_of_eq hv)) j.isLt
+  exact fun j _ => (mem_allowedRows _ _).1 (last_mem_allowedRows j)
 
 private theorem expSum_castSucc (u : Fin 3 → ℝ) (j : Fin 3) :
     expSum j.castSucc u = expSum (Fin.last 3) u - Real.exp (u j) := by
@@ -901,6 +914,10 @@ private theorem expSum_castSucc (u : Fin 3 → ℝ) (j : Fin 3) :
     simp [Fin.ext_iff, ne_comm]
   rw [h]
   exact sum_erase_add _ _ (mem_univ j)
+
+private theorem columnDenominator_castSucc (w : Fin 3 → ℝ) (j : Fin 3) :
+    columnDenominator w j.castSucc = 1 - w j := by
+  fin_cases j <;> rfl
 
 private theorem derivative_log_expSum (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4)
     (w : Fin 3 → ℝ) (hw : ∀ i, w i = Real.exp (u i) / expSum (Fin.last 3) u) :
@@ -924,9 +941,8 @@ private theorem derivative_log_expSum (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4
     · change _ = 1 * _
       rw [one_mul]
     · rw [expSum_castSucc]
-      have hc' : columnDenominator w a.castSucc = 1 - w a := by
-        fin_cases a <;> rfl
-      rw [hc', hw, sub_mul, one_mul, div_mul_cancel₀ _ (expSum_pos _ _).ne']
+      rw [columnDenominator_castSucc, hw, sub_mul, one_mul,
+        div_mul_cancel₀ _ (expSum_pos _ _).ne']
   have heq : ((if c ≠ j.castSucc then Real.exp (u j) else 0) / expSum c u) =
       allocation (weightEntries w) j c := by
     by_cases hc : c = j.castSucc
@@ -963,15 +979,8 @@ theorem exists_direct_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → 
     simp only [Real.exp_add, ← Finset.sum_mul]
     change Real.log (expSum c u * Real.exp a) = _
     rw [Real.log_mul (expSum_pos c u).ne' (Real.exp_pos a).ne', Real.log_exp]
-  have hFshift (u : Fin 3 → ℝ) (a : ℝ) : F (fun j => u j + a) = F u := by
-    unfold F priceObjective
-    simp only [hshift, mul_add, sum_add_distrib, ← Finset.sum_mul, htotal]
-    have hc : (∑ c, (multiplicity l b c : ℝ)) = d := by
-      rw [Fin.sum_univ_castSucc]
-      simp only [multiplicity_castSucc, multiplicity_last, add_comm _ (b : ℝ), hcount]
-    rw [hc]
-    ring
-  obtain ⟨u, hu⟩ := exists_minimum_prices F hF hFshift hδ hbound
+  obtain ⟨u, hu⟩ := exists_minimum_prices F hF
+    (priceObjective_shift l b d τ hcount htotal G (fun c u a => hshift u a c)) hδ hbound
   let w (j : Fin 3) := Real.exp (u j) / expSum (Fin.last 3) u
   refine ⟨w, fun j => div_pos (Real.exp_pos _) (expSum_pos _ _), ?_, fun j => ?_⟩
   · change (∑ j, Real.exp (u j) / expSum (Fin.last 3) u) = 1
@@ -994,6 +1003,382 @@ theorem exists_direct_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → 
       exact hu (line t)
     have hzero := hMin.isLocalMin (by simp)
     exact sub_eq_zero.mp (hD.deriv.symm.trans hzero.deriv_eq_zero)
+
+private theorem weightMass_relabel (e : Equiv.Perm (Fin 3)) (l : Fin 3 → ℕ) (b : ℕ)
+    (w : Fin 3 → ℝ) (j : Fin 3) :
+    weightMass (l ∘ e) b (w ∘ e) j = weightMass l b w (e j) := by
+  have hlast (v : Fin 3 → ℝ) (i : Fin 3) :
+      allocation (weightEntries v) i (Fin.last 3) = v i := by
+    have h := (mem_allowedRows _ _).1 (last_mem_allowedRows i)
+    change (if Fin.last 3 = i.castSucc then 0 else v i / 1) = v i
+    rw [ite_eq_right h, div_one]
+  have hmiss (v : Fin 3 → ℝ) (i k : Fin 3) :
+      allocation (weightEntries v) i k.castSucc = if k = i then 0 else v i / (1 - v k) := by
+    simp [allocation, weightEntries, columnDenominator_castSucc, Fin.ext_iff]
+  unfold weightMass
+  conv_lhs => rw [Fin.sum_univ_castSucc]
+  conv_rhs => rw [Fin.sum_univ_castSucc]
+  simp only [multiplicity_castSucc, multiplicity_last, hlast, hmiss, Function.comp_apply]
+  congr 1
+  simpa only [e.apply_eq_iff_eq] using Equiv.sum_comp e
+    (fun k => (l k : ℝ) * (if k = e j then 0 else w (e j) / (1 - w k)))
+
+private theorem feasible_relabel (e : Equiv.Perm (Fin 3)) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (A : Fin 3 → Matrix n n ℂ) (hA : Feasible m τ A) :
+    Feasible (m ∘ e) (τ ∘ e) (A ∘ e) :=
+  ⟨fun j => hA.1 (e j), (Equiv.sum_comp e A).trans hA.2.1, fun j => hA.2.2.1 (e j),
+    fun j => hA.2.2.2 (e j)⟩
+
+private theorem spectralValues_relabel (e : Equiv.Perm (Fin 3)) (f : ℝ → ℝ)
+    (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ) :
+    {v : ℝ | ∃ A : Fin 3 → Matrix n n ℂ, ∃ hA : Feasible (m ∘ e) (τ ∘ e) A,
+      spectralSum f A hA.1 = v} =
+    {v : ℝ | ∃ A : Fin 3 → Matrix n n ℂ, ∃ hA : Feasible m τ A,
+      spectralSum f A hA.1 = v} := by
+  ext v
+  constructor <;> rintro ⟨A, hA, rfl⟩
+  · have h := feasible_relabel e.symm _ _ A hA
+    have h' : Feasible m τ (A ∘ e.symm) := by simpa [Function.comp_def] using h
+    exact ⟨_, h', Equiv.sum_comp e.symm
+      (fun j => ∑ i, f ((hA.1 j).isHermitian.eigenvalues i))⟩
+  · refine ⟨_, feasible_relabel e m τ A hA, ?_⟩
+    exact Equiv.sum_comp e (fun j => ∑ i, f ((hA.1 j).isHermitian.eigenvalues i))
+
+/-- The direct entropy maximum for strictly admissible traces is attained by
+the proportional allocation after sorting the weights and relabeling the rows. -/
+theorem exists_isGreatest_direct (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (hd : 0 < Fintype.card n) (hcap : ∑ j, (Fintype.card n - m j) ≤ Fintype.card n)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (Fintype.card n : ℝ) - (Fintype.card n - m j : ℕ))
+    (htotal : ∑ j, τ j = Fintype.card n) :
+    ∃ (e : Equiv.Perm (Fin 3)) (w : Fin 3 → ℝ), Antitone w ∧
+      IsGreatest {v : ℝ | ∃ A : Fin 3 → Matrix n n ℂ, ∃ hA : Feasible m τ A,
+        spectralSum Real.negMulLog A hA.1 = v}
+        (allocationValue Real.negMulLog (fun j => Fintype.card n - m (e j))
+          (Fintype.card n - ∑ j, (Fintype.card n - m j)) (weightEntries w)) := by
+  let l (j : Fin 3) := Fintype.card n - m j
+  obtain ⟨w, hw, hwt, hr⟩ :=
+    exists_direct_certificate (Fintype.card n) m τ hd hcap hpos hupper htotal
+  let e := Tuple.sort (fun j => -w j)
+  have he : Antitone (w ∘ e) := fun _ _ hij =>
+    neg_le_neg_iff.mp (Tuple.monotone_sort (fun j => -w j) hij)
+  have hc : (∑ j, l (e j)) = ∑ j, l j := Equiv.sum_comp e l
+  have hcap' : (∑ j, l (e j)) ≤ Fintype.card n := hc.trans_le hcap
+  have hr' (j : Fin 3) : weightMass (l ∘ e)
+      (Fintype.card n - ∑ i, l (e i)) (w ∘ e) j = τ (e j) := by
+    rw [hc, weightMass_relabel]
+    exact hr (e j)
+  have hm := isGreatest_direct (n := n) (m ∘ e) (τ ∘ e) (w ∘ e) hcap'
+    (fun j => hw (e j)) ((Equiv.sum_comp e w).trans hwt) he hr'
+  change IsGreatest _ (allocationValue Real.negMulLog (l ∘ e)
+    (Fintype.card n - ∑ j, l (e j)) (weightEntries (w ∘ e))) at hm
+  rw [spectralValues_relabel, hc] at hm
+  exact ⟨e, w ∘ e, he, hm⟩
+
+private def pairWeight (w : Fin 3 → ℝ) (j : Fin 3) : ℝ :=
+  ∑ i ∈ (univ : Finset (Fin 3)).erase j, w i
+
+private theorem pairWeight_eq (w : Fin 3 → ℝ) (j : Fin 3) :
+    pairWeight w j = (∑ i, w i) - w j :=
+  eq_sub_iff_add_eq.2 (sum_erase_add _ _ (mem_univ j))
+
+private theorem pairWeight_pos (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (j : Fin 3) :
+    0 < pairWeight w j := by
+  apply sum_pos (fun i _ => hw i)
+  fin_cases j <;> decide
+
+private def complementScales (w : Fin 3 → ℝ) (c : Fin 4) : ℝ :=
+  Fin.lastCases
+    (max (2 / ∑ i, w i) (univ.sup' univ_nonempty (fun i => (pairWeight w i)⁻¹)))
+    (fun i => (pairWeight w i)⁻¹) c
+
+private theorem complementScales_pos (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (c : Fin 4) :
+    0 < complementScales w c := by
+  refine Fin.lastCases ?_ (fun i => ?_) c
+  · exact (div_pos two_pos (sum_pos (fun i _ => hw i) univ_nonempty)).trans_le (le_max_left _ _)
+  · simpa only [complementScales, Fin.lastCases_castSucc] using inv_pos.mpr (pairWeight_pos w hw i)
+
+private theorem clipped_pair {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
+    max 0 (1 - a * (a + b)⁻¹) + max 0 (1 - b * (a + b)⁻¹) = 1 := by
+  have hab := add_pos ha hb
+  have h (x : ℝ) (hx : x ≤ a + b) : 0 ≤ 1 - x * (a + b)⁻¹ := by
+    rw [← div_eq_mul_inv]
+    exact sub_nonneg.mpr ((div_le_one hab).2 hx)
+  rw [max_eq_right (h a (by linarith)), max_eq_right (h b (by linarith))]
+  field_simp
+  ring
+
+private theorem clipped_triple {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hac : a ≤ c) (hbc : b ≤ c) :
+    let k := max (2 / (a + b + c)) (a + b)⁻¹
+    max 0 (1 - a * k) + max 0 (1 - b * k) + max 0 (1 - c * k) = 1 := by
+  dsimp only
+  have hab := add_pos ha hb
+  have hsum := add_pos hab hc
+  by_cases ht : c ≤ a + b
+  · have hk : (a + b)⁻¹ ≤ 2 / (a + b + c) := by
+      rw [inv_eq_one_div, div_le_div_iff₀ hab hsum]
+      linarith
+    have h (x : ℝ) (hx : x ≤ c) : 0 ≤ 1 - x * (2 / (a + b + c)) := by
+      rw [← mul_div_assoc]
+      exact sub_nonneg.mpr ((div_le_one hsum).2 (by linarith))
+    rw [max_eq_left hk, max_eq_right (h a hac), max_eq_right (h b hbc), max_eq_right (h c le_rfl)]
+    field_simp
+    ring
+  · have ht' := le_of_not_ge ht
+    have hk : 2 / (a + b + c) ≤ (a + b)⁻¹ := by
+      rw [inv_eq_one_div, div_le_div_iff₀ hsum hab]
+      linarith
+    have h : 1 - c * (a + b)⁻¹ ≤ 0 := by
+      rw [← div_eq_mul_inv]
+      exact sub_nonpos.mpr ((one_le_div hab).2 ht')
+    rw [max_eq_right hk, max_eq_left h, add_zero]
+    exact clipped_pair ha hb
+
+private theorem complement_columns (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (c : Fin 4) :
+    ∑ j, allocation (complementEntries w (complementScales w)) j c = 1 := by
+  refine Fin.lastCases ?_ (fun i => ?_) c
+  · let e := Tuple.sort w
+    have he (j : Fin 3) : w (e j) ≤ w (e 2) :=
+      Tuple.monotone_sort w (by omega : j ≤ 2)
+    have he' (j : Fin 3) : w j ≤ w (e 2) := by simpa using he (e.symm j)
+    have hsum : (∑ j, w j) = w (e 0) + w (e 1) + w (e 2) := by
+      rw [← Equiv.sum_comp e w, Fin.sum_univ_three]
+    have hpair :
+        univ.sup' univ_nonempty (fun i => (pairWeight w i)⁻¹) = (pairWeight w (e 2))⁻¹ := by
+      refine le_antisymm (sup'_le _ _ fun j _ => ?_)
+        (le_sup' (fun i => (pairWeight w i)⁻¹) (mem_univ (e 2)))
+      apply inv_anti₀ (pairWeight_pos w hw (e 2))
+      rw [pairWeight_eq, pairWeight_eq]
+      exact sub_le_sub_left (he' j) _
+    have hpair' : pairWeight w (e 2) = w (e 0) + w (e 1) := by
+      rw [pairWeight_eq, hsum]
+      ring
+    have hLast (j : Fin 3) : Fin.last 3 ≠ j.castSucc := (Fin.castSucc_ne_last j).symm
+    simp only [allocation, ite_eq_right (hLast _), complementEntries, complementScales,
+      Fin.lastCases_last, hsum, hpair, hpair']
+    rw [← Equiv.sum_comp e, Fin.sum_univ_three]
+    exact clipped_triple (hw _) (hw _) (hw _) (he 0) (he 1)
+  · have h0 : pairWeight w 0 = w 1 + w 2 := by
+      unfold pairWeight
+      rw [show (univ : Finset (Fin 3)).erase 0 = {1, 2} by decide]
+      simp
+    have h1 : pairWeight w 1 = w 0 + w 2 := by
+      unfold pairWeight
+      rw [show (univ : Finset (Fin 3)).erase 1 = {0, 2} by decide]
+      simp
+    have h2 : pairWeight w 2 = w 0 + w 1 := by
+      unfold pairWeight
+      rw [show (univ : Finset (Fin 3)).erase 2 = {0, 1} by decide]
+      simp
+    unfold allocation complementEntries
+    simp only [complementScales, Fin.lastCases_castSucc]
+    fin_cases i <;> simp [Fin.sum_univ_three, Fin.ext_iff, h0, h1, h2]
+    · exact clipped_pair (hw 1) (hw 2)
+    · exact clipped_pair (hw 0) (hw 2)
+    · exact clipped_pair (hw 0) (hw 1)
+
+private def complementWeights (u : Fin 3 → ℝ) (j : Fin 3) : ℝ :=
+  Real.exp (-u j - 1)
+
+private def complementPoint (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4) : ℝ :=
+  allocation (complementEntries (complementWeights u) (complementScales (complementWeights u))) j c
+
+private theorem complementPoint_zero (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4)
+    (h : c = j.castSucc) : complementPoint u j c = 0 := by
+  simp [complementPoint, allocation, h]
+
+private theorem complementPoint_unit (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4) :
+    complementPoint u j c ∈ Set.Icc (0 : ℝ) 1 := by
+  unfold complementPoint allocation
+  split
+  · exact ⟨le_rfl, zero_le_one⟩
+  · exact ⟨le_max_left _ _, max_le zero_le_one (sub_le_self _
+      (mul_pos (Real.exp_pos _) (complementScales_pos _ (fun _ => Real.exp_pos _) _)).le)⟩
+
+private theorem continuous_complementPoint (j : Fin 3) (c : Fin 4) :
+    Continuous fun u => complementPoint u j c := by
+  have hw (i : Fin 3) : Continuous fun u => complementWeights u i :=
+    Real.continuous_exp.comp ((continuous_apply i).neg.sub continuous_const)
+  have hp (i : Fin 3) : Continuous fun u => (pairWeight (complementWeights u) i)⁻¹ :=
+    (continuous_finsetSum _ fun j _ => hw j).inv₀
+      (fun u => (pairWeight_pos _ (fun _ => Real.exp_pos _) i).ne')
+  have hk (c : Fin 4) : Continuous fun u => complementScales (complementWeights u) c := by
+    refine Fin.lastCases ?_ (fun i => ?_) c
+    · exact (continuous_const.div (continuous_finsetSum _ fun j _ => hw j)
+        (fun u => (sum_pos (fun i _ => Real.exp_pos (-u i - 1)) univ_nonempty).ne')).max
+        (Continuous.finset_sup'_apply univ_nonempty fun i _ => hp i)
+    · simpa only [complementScales, Fin.lastCases_castSucc] using hp i
+  by_cases h : c = j.castSucc
+  · simpa [complementPoint, allocation, h] using
+      (continuous_const : Continuous fun _ : Fin 3 → ℝ => (0 : ℝ))
+  · simp only [complementPoint, allocation, ite_eq_right h, complementEntries]
+    exact continuous_const.max (continuous_const.sub ((hw j).mul (hk c)))
+
+private def complementScore (u x : Fin 3 → ℝ) : ℝ :=
+  ∑ j, (Real.negMulLog (1 - x j) + u j * x j)
+
+private def complementPotential (c : Fin 4) (u : Fin 3 → ℝ) : ℝ :=
+  complementScore u (fun j => complementPoint u j c)
+
+private theorem complementPotential_ge_score (c : Fin 4) (u x : Fin 3 → ℝ)
+    (hx : ∀ j, x j ∈ Set.Icc (0 : ℝ) 1) (hsum : ∑ j, x j = 1)
+    (hzero : ∀ j, c = j.castSucc → x j = 0) :
+    complementScore u x ≤ complementPotential c u := by
+  let k := complementScales (complementWeights u) c
+  let y (j : Fin 3) := complementPoint u j c
+  have hs (j : Fin 3) :
+      Real.negMulLog (1 - x j) + u j * x j ≤
+        Real.negMulLog (1 - y j) + u j * y j + Real.log k * (x j - y j) := by
+    by_cases h : c = j.castSucc
+    · rw [hzero j h, show y j = 0 from complementPoint_zero u j c h]
+      simp
+    · have hk : 0 < k := complementScales_pos _ (fun _ => Real.exp_pos _) _
+      have hlog : Real.log (complementWeights u j * k) + 1 = -u j + Real.log k := by
+        unfold complementWeights
+        rw [Real.log_mul (Real.exp_pos _).ne' hk.ne', Real.log_exp]
+        ring
+      have hsup := complement_support (mul_pos (Real.exp_pos (-u j - 1)) hk) (hx j)
+      dsimp only at hsup
+      change Real.negMulLog (1 - x j) ≤
+        (Real.log (complementWeights u j * k) + 1) * x j +
+          (Real.negMulLog (1 - max 0 (1 - complementWeights u j * k)) -
+            (Real.log (complementWeights u j * k) + 1) *
+              max 0 (1 - complementWeights u j * k)) at hsup
+      have hy : y j = max 0 (1 - complementWeights u j * k) := by
+        simp only [y, complementPoint, allocation, ite_eq_right h, complementEntries, k]
+      rw [hlog, ← hy] at hsup
+      linarith only [hsup]
+  have hy : ∑ j, y j = 1 := complement_columns _ (fun _ => Real.exp_pos _) c
+  have h := sum_le_sum (s := (univ : Finset (Fin 3))) (fun j _ => hs j)
+  simp only [sum_add_distrib, ← mul_sum, sum_sub_distrib, hsum, hy, sub_self, mul_zero,
+    add_zero] at h
+  simpa only [complementScore, complementPotential, sum_add_distrib, y] using h
+
+private theorem le_complementPotential (c : Fin 4) (u : Fin 3 → ℝ) (j : Fin 3)
+    (hj : j ∈ allowedRows c) : u j ≤ complementPotential c u := by
+  let vertex (i : Fin 3) : ℝ := if i = j then 1 else 0
+  have hv (i : Fin 3) : vertex i ∈ Set.Icc (0 : ℝ) 1 := by
+    by_cases h : i = j <;> simp [vertex, h]
+  have hs : ∑ i, vertex i = 1 := by simp [vertex]
+  have hz (i : Fin 3) (h : c = i.castSucc) : vertex i = 0 := by
+    have hi : i ≠ j := fun hij => (mem_allowedRows _ _).1 hj (hij ▸ h)
+    simp [vertex, hi]
+  refine le_trans ?_ (complementPotential_ge_score c u vertex hv hs hz)
+  have hvertex (i : Fin 3) : Real.negMulLog (1 - vertex i) + u i * vertex i =
+      (if i = j then u i else 0) := by
+    by_cases h : i = j <;> simp [vertex, h]
+  simp [complementScore, hvertex]
+
+private theorem complementScore_shift (u x : Fin 3 → ℝ) (a : ℝ) (hx : ∑ j, x j = 1) :
+    complementScore (fun j => u j + a) x = complementScore u x + a := by
+  unfold complementScore
+  simp only [add_mul, ← add_assoc, sum_add_distrib, ← mul_sum, hx, mul_one]
+
+private theorem complementPotential_shift (c : Fin 4) (u : Fin 3 → ℝ) (a : ℝ) :
+    complementPotential c (fun j => u j + a) = complementPotential c u + a := by
+  let v : Fin 3 → ℝ := fun j => u j + a
+  have h (p : Fin 3 → ℝ) : ∑ j, complementPoint p j c = 1 :=
+    complement_columns _ (fun _ => Real.exp_pos _) c
+  have h₁ := complementPotential_ge_score c u (fun j => complementPoint v j c)
+    (fun j => complementPoint_unit v j c) (h v) (fun j => complementPoint_zero v j c)
+  have h₂ := complementPotential_ge_score c v (fun j => complementPoint u j c)
+    (fun j => complementPoint_unit u j c) (h u) (fun j => complementPoint_zero u j c)
+  refine le_antisymm ?_ ?_
+  · change complementScore (fun j => u j + a) _ ≤ _
+    rw [complementScore_shift _ _ _ (h v)]
+    exact add_le_add h₁ le_rfl
+  · change complementScore (fun j => u j + a) (fun j => complementPoint u j c) ≤ _ at h₂
+    rw [complementScore_shift _ _ _ (h u)] at h₂
+    exact h₂
+
+open Filter Topology in
+/-- Every strictly admissible trace triple admits a complementary entropy
+certificate with the original row labels and positive row and column parameters. -/
+theorem exists_complement_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (_hd : 0 < d) (hcap : ∑ j, (d - m j) ≤ d)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (d : ℝ) - (d - m j : ℕ))
+    (htotal : ∑ j, τ j = d) :
+    ∃ (w : Fin 3 → ℝ) (k : Fin 4 → ℝ), (∀ j, 0 < w j) ∧ (∀ c, 0 < k c) ∧
+      (∀ c, ∑ j, allocation (complementEntries w k) j c = 1) ∧
+      ∀ j, (∑ c, (multiplicity (fun j => d - m j) (d - ∑ i, (d - m i)) c : ℝ) *
+        allocation (complementEntries w k) j c) = τ j := by
+  let l (j : Fin 3) := d - m j
+  let b := d - ∑ i, l i
+  let F := priceObjective l b τ complementPotential
+  have hcount : (b : ℝ) + ∑ j, (l j : ℝ) = d := by
+    exact_mod_cast Nat.sub_add_cancel hcap
+  obtain ⟨δ, hδ, hbound⟩ := price_coercivity l b d τ hcount htotal hpos hupper _
+    le_complementPotential
+  have hG (c : Fin 4) : Continuous (complementPotential c) := by
+    unfold complementPotential complementScore
+    apply continuous_finsetSum
+    intro j _
+    apply Continuous.add
+    · exact Real.continuous_negMulLog.comp
+        (continuous_const.sub (continuous_complementPoint j c))
+    · exact (continuous_apply j).mul (continuous_complementPoint j c)
+  have hF : Continuous F :=
+    (continuous_finsetSum _ (fun c _ => continuous_const.mul (hG c))).sub
+      (continuous_finsetSum _ (fun j _ => continuous_const.mul (continuous_apply j)))
+  obtain ⟨u, hu⟩ := exists_minimum_prices F hF
+    (priceObjective_shift l b d τ hcount htotal _ complementPotential_shift) hδ hbound
+  refine ⟨complementWeights u, complementScales (complementWeights u), fun _ => Real.exp_pos _,
+    complementScales_pos _ (fun _ => Real.exp_pos _),
+    complement_columns _ (fun _ => Real.exp_pos _), fun j => ?_⟩
+  let line (t : ℝ) (i : Fin 3) := u i + if i = j then t else 0
+  let mass (p : Fin 3 → ℝ) : ℝ :=
+    ∑ c, (multiplicity l b c : ℝ) * complementPoint p j c
+  change mass u = τ j
+  have hcompare (t : ℝ) (c : Fin 4) :
+      complementPotential c (line t) ≤
+        complementPotential c u + t * complementPoint (line t) j c := by
+    let x (i : Fin 3) := complementPoint (line t) i c
+    have h := complementPotential_ge_score c u x (fun i => complementPoint_unit _ i c)
+      (complement_columns _ (fun _ => Real.exp_pos _) _) (fun i => complementPoint_zero _ i c)
+    have hscore : complementScore (line t) x = complementScore u x + t * x j := by
+      simp only [complementScore, line, add_mul, ← add_assoc, sum_add_distrib, ite_mul,
+        zero_mul, sum_ite_eq', mem_univ, ite_true]
+    exact hscore.trans_le (add_le_add h le_rfl)
+  have hineq (t : ℝ) : 0 ≤ t * (mass (line t) - τ j) := by
+    have h := sum_le_sum (s := (univ : Finset (Fin 4))) fun c _ =>
+      mul_le_mul_of_nonneg_left (hcompare t c) (Nat.cast_nonneg (multiplicity l b c))
+    simp only [mul_add, sum_add_distrib, mul_left_comm _ t, ← mul_sum] at h
+    have hmin := hu (line t)
+    have hτ : (∑ i, τ i * line t i) = (∑ i, τ i * u i) + τ j * t := by
+      simp only [line, mul_add, sum_add_distrib, mul_ite, mul_zero, sum_ite_eq', mem_univ, ite_true]
+    unfold F priceObjective at hmin
+    rw [hτ] at hmin
+    change (∑ c, (multiplicity l b c : ℝ) * complementPotential c (line t)) ≤
+      (∑ c, (multiplicity l b c : ℝ) * complementPotential c u) + t * mass (line t) at h
+    linarith only [hmin, h]
+  have hcts : Continuous (fun t => mass (line t)) := by
+    have hline : Continuous line := continuous_pi fun i => by
+      by_cases hi : i = j
+      · simp only [line, hi, ite_true]
+        exact continuous_const.add continuous_id
+      · simpa [line, hi] using (continuous_const : Continuous fun _ : ℝ => u i)
+    exact (continuous_finsetSum _ (fun c _ =>
+      continuous_const.mul (continuous_complementPoint j c))).comp hline
+  have h0 : line 0 = u := by funext i; simp [line]
+  have hlim : Tendsto (fun t => mass (line t)) (𝓝 0) (𝓝 (mass u)) := by
+    simpa only [h0] using hcts.continuousAt (x := (0 : ℝ)).tendsto
+  refine le_antisymm ?_ ?_
+  · apply le_of_tendsto (hlim.mono_left (nhdsWithin_le_nhds (s := Set.Iio 0)))
+    filter_upwards [self_mem_nhdsWithin (s := Set.Iio (0 : ℝ))] with t ht
+    have ht' : t < 0 := ht
+    have h := hineq t
+    by_contra! hn
+    exact (mul_neg_of_neg_of_pos ht' (sub_pos.mpr hn)).not_ge h
+  · apply ge_of_tendsto (hlim.mono_left (nhdsWithin_le_nhds (s := Set.Ioi 0)))
+    filter_upwards [self_mem_nhdsWithin (s := Set.Ioi (0 : ℝ))] with t ht
+    have ht' : 0 < t := ht
+    have h := hineq t
+    by_contra! hn
+    exact (mul_neg_of_pos_of_neg ht' (sub_neg.mpr hn)).not_ge h
+
+#print axioms exists_complement_certificate
+
+#print axioms exists_isGreatest_direct
 
 #print axioms exists_direct_certificate
 
