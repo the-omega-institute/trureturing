@@ -14,6 +14,14 @@ triage: anchor
 
 # Projection onto a simplex with a lower moment bound
 
+## Verified locator
+
+- Published DOI [10.61208/pjo-2025-002](https://doi.org/10.61208/pjo-2025-002).
+- Versioned preprint https://arxiv.org/html/2310.10388v3. See problem (P) in
+  Section 1, Proposition 2.2, equation (3.4), and Propositions 3.1 and 3.2.
+
+## Constrained projection
+
 In Zhou and Liu's problem (P), take the point to project to be zero, the
 half-space coefficient vector to be `-c`, and its right-hand side to be
 `-a`. The feasible simplex weights then have real moment at least `a`.
