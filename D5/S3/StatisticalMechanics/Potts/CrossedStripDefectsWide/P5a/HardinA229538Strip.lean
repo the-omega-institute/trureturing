@@ -26,7 +26,7 @@ countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
 movesOne: proof_shape=bind-only; consumers=HardinA229538Strip.step_one
 moves_one_filter: proof_shape=content; consumers=HardinA229538Strip.step_one
-step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image
+step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image, HardinA229641Strip.seed_image₁
 weights: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 weights_initial: proof_shape=bind-only; consumers=HardinA229538Strip.weight_eq
 weights_step: proof_shape=content; consumers=HardinA229538Strip.zero_values
