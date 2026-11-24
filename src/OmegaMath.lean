@@ -11,6 +11,7 @@ public import OmegaMath.Arithmetic.ContinuedFraction
 public import OmegaMath.Arithmetic.DepthBudget
 public import OmegaMath.Arithmetic.Euclidean
 public import OmegaMath.Arithmetic.WDigits.Codec
+public import OmegaMath.Arithmetic.WDigits.Geometric
 public import OmegaMath.Calculus.DFiniteJet
 public import OmegaMath.Calculus.Jet2
 public import OmegaMath.Computability.Fractran
