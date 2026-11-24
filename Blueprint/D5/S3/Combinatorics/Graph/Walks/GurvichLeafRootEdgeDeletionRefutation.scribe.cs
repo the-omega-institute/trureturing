@@ -30,7 +30,10 @@ internal sealed class GurvichLeafRootEdgeDeletionRefutationDocument : IScribeDoc
                 Blocks(
                     Paragraph(Text("Take the path on vertices 0 through 5 in order. Its roots are 0 and 3, of degrees one and two. For the intact path, work in the connected component of any containing copy. The specialization of Lemma 3.4 chooses a maximal connected vertex set disjoint from some copy. Path shifts and reroutings give either a copy with no extension or a copy whose exterior neighbors at both roots lie in that connected set. In the latter case the set supplies a walk between the endpoints of every extension. Transporting the copy and the walks to the original host proves inherence.")),
                     Paragraph(Text("Delete edge 0–1. The host tree has center 0 and arms (0,1,2), (0,3,4), (0,5,6) and (0,7,8). The tuple (5,2,1,0,3,4) gives a copy of the deleted graph in pattern vertex order. In every copy the surviving four-edge path uses two full arms and places root 3 at the center. Root 0 lies on a third arm. Attach its other vertex at the first root and the midpoint of the fourth arm at the second root. The first endpoint is isolated in the graph induced outside the copy, so the two endpoints cannot be joined there. This applies to every copy of the deleted graph."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gurvich-krnc-milanic-vyalyi-2026-leaf-root-edge-deletion"),
+                    ResolutionKind.Refuted))), []));
 
     private static Formula ClaimFormula()
     {

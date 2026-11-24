@@ -24,6 +24,10 @@ $$\neg (\forall (n : \mathbb{N}), \forall (H : \operatorname{SimpleGraph}\left(\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/GurvichLeafRootEdgeDeletionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gurvich-krnc-milanic-vyalyi-2026-leaf-root-edge-deletion` (refuted) by `D5/S3/Combinatorics/Graph/Walks/GurvichLeafRootEdgeDeletionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gurvich-krnc-milanic-vyalyi-2026-leaf-root-edge-deletion","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/GurvichLeafRootEdgeDeletionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Martin Milanič; Mikhail Vyalyi (2026). *Non-induced inherent graphs*. DOI: [10.48550/arXiv.2611.06636](https://doi.org/10.48550/arXiv.2611.06636). URL: <https://arxiv.org/abs/2611.06636v1>.
