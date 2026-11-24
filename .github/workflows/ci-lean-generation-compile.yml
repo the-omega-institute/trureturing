@@ -1,0 +1,117 @@
+name: Compile missing Lean generation inputs
+
+on:
+  workflow_call:
+    inputs:
+      source:
+        description: Protected dev SHA selected by the publisher
+        required: true
+        type: string
+
+env:
+  STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  generation-plan:
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      shared: ${{ steps.plan.outputs.shared }}
+      workers: ${{ steps.plan.outputs.workers }}
+      independent: ${{ steps.plan.outputs.independent }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-generation-base-${{ github.run_id }}
+          path: ${{ runner.temp }}/generation-base
+          digest-mismatch: error
+      - id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SOURCE: ${{ inputs.source }}
+        run: |
+          [[ "$(git rev-parse HEAD)" == "$EXPECTED_SOURCE" ]]
+          python3 tools/scripts/worktree/lean_generation_plan.py plan \
+            --base "$RUNNER_TEMP/generation-base/base.json" \
+            --output "$RUNNER_TEMP/generation-plan"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: lean-generation-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}/generation-plan/
+          overwrite: true
+          if-no-files-found: error
+
+  generation-shared:
+    needs: generation-plan
+    if: needs.generation-plan.outputs.shared == 'true'
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/lean-compile-layer
+        with:
+          generation: 'true'
+          stage: common
+
+  generation-worker:
+    needs: [generation-plan, generation-shared]
+    if: >-
+      !cancelled() && needs.generation-plan.result == 'success' &&
+      contains(fromJSON('["success","skipped"]'), needs.generation-shared.result) &&
+      needs.generation-plan.outputs.workers != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: ${{ fromJSON(needs.generation-plan.outputs.workers) }}
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/lean-compile-layer
+        with:
+          generation: 'true'
+          shared: ${{ needs.generation-plan.outputs.shared }}
+          stage: ${{ matrix.stage }}
+
+  generation-independent:
+    needs: generation-plan
+    if: needs.generation-plan.outputs.independent != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: ${{ fromJSON(needs.generation-plan.outputs.independent) }}
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/lean-compile-layer
+        with:
+          generation: 'true'
+          stage: ${{ matrix.stage }}
