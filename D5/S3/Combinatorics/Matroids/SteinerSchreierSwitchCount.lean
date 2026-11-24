@@ -15,6 +15,7 @@ import Mathlib.Logic.Equiv.Option
 namespace D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
 
 open Set
+open scoped Set.Notation
 open D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open D5.S3.Combinatorics.Matroids.RankThreeSaturatedTopGap (Covered Uncovered pair_completion)
 open D5.S3.Combinatorics.Matroids.SteinerMatchingTranslations
@@ -137,18 +138,23 @@ private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
     (unit : ∀ a, label none * a = a)
     (comm : ∀ a b : L, a * b = b * a)
     (invol : ∀ a b : L, a * (a * b) = b) :
-    ∃ S : Set (Set (Fin (r + 1))), IsPartialSteiner S ∧
-      (∀ a b : Fin (r + 1), a ≠ b → Covered S a b) ∧
+    ∃ (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b),
+      (∀ (p : Fin (r + 1)) (a : Option (Fin (r + 1))),
+        label (translate valid cover p a) = label (some p) * label a) ∧
       ∀ q : Fin (r + 1), ∃ m : Fin r → Fin r,
         (∀ a b, Uncovered (pointDeletedFamily S q) a b ↔ m a = b) ∧
         ∀ v : Fin r,
         let p := label (some q)
         let w := label (some (q.succAbove v))
+        (label ∘ Option.some ∘ q.succAbove) ''
+          {a | SuccessfulStart (pointDeletedFamily S q) m v a} =
+          {x | w * (p * x) ≠ p * (w * x)} ∧
         ({a | SuccessfulStart (pointDeletedFamily S q) m v a} : Set (Fin r)).ncard =
           ({x | w * (p * x) ≠ p * (w * x)} : Set L).ncard := by
   classical
   obtain ⟨S, valid, cover, transport⟩ := loopTriples label unit comm invol
-  refine ⟨S, valid, cover, ?_⟩
+  refine ⟨S, valid, cover, transport, ?_⟩
   intro q
   obtain ⟨_, m, _, _, leave, switch⟩ := point_deleted_switch S valid cover q
   refine ⟨m, leave, ?_⟩
@@ -221,7 +227,7 @@ private theorem labelledSwitchCount {L : Type*} [Mul L] {r : ℕ}
           exact (h atP).elim
         · obtain ⟨a, rfl⟩ := Fin.exists_succAbove_eq eq
           exact ⟨a, (onLabels a).mpr h, rfl⟩
-  rw [← image, ncard_image_of_injective _ inj]
+  exact ⟨image, (ncard_image_of_injective _ inj).symm.trans (congrArg Set.ncard image)⟩
 
 open Function
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul realizeSchreierReturns)
@@ -243,10 +249,10 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
       (∀ x y : L × A, x * y = y * x) ∧
       (∀ x y : L × A, x * (x * y) = y) ∧
       Set.center (L × A) = {x | x.1 = e} ∧
-      ({y | Q * (P * y) ≠ P * (Q * y)} : Set (L × A)).ncard =
-        Nat.card A * ({x | g (g x) ≠ x ∨
-          ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
-            t ⟨G.connectedComponentMk x, h⟩ ≠ 0} : Set L).ncard := by
+      let selected : Set L := {x | g (g x) ≠ x ∨
+        ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
+          t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
+      {y : L × A | Q * (P * y) ≠ P * (Q * y)} = selected ×ˢ Set.univ := by
   classical
   obtain ⟨labels, idExt, commExt, involExt, centreExt, identity, prescribed⟩ :=
     realizeSchreierReturns G e p q unit comm invol twice centreless hpq hp hq edges t
@@ -285,30 +291,26 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
   let selected : Set L := {x | g (g x) ≠ x ∨
     ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
       t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
-  have shape :
-      ({y | Q * (P * y) ≠ P * (Q * y)} : Set (L × A)) = selected ×ˢ Set.univ := by
-    ext ⟨x, a⟩
-    change (Q * (P * (x, a)) ≠ P * (Q * (x, a))) ↔ x ∈ selected ∧ a ∈ Set.univ
-    simp only [Set.mem_univ, and_true, selected, Set.mem_ofPred_eq]
-    change (¬Q * (P * (x, a)) = P * (Q * (x, a))) ↔ _
-    rw [not_congr (commute (y := (x, a)))]
-    by_cases hx : g (g x) = x
-    · have k := period hx
-      by_cases hc : G.connectedComponentMk x = G.connectedComponentMk e
-      · have h := identity x hc a
-        change f^[minimalPeriod g x] (x, a) = (x, a) at h
-        rw [k] at h
-        simp [h, hx, hc]
-      · have h := prescribed ⟨G.connectedComponentMk x, hc⟩ x rfl a
-        change f^[minimalPeriod g x] (x, a) =
-          (x, a + t ⟨G.connectedComponentMk x, hc⟩) at h
-        rw [k] at h
-        simp [h, hx, hc]
-    · refine ⟨fun _ => Or.inl hx, fun _ h => hx ?_⟩
-      exact congrArg Prod.fst h
-  change ({y | Q * (P * y) ≠ P * (Q * y)} : Set (L × A)).ncard =
-    Nat.card A * selected.ncard
-  rw [shape, Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
+  change ({y | Q * (P * y) ≠ P * (Q * y)} : Set (L × A)) = selected ×ˢ Set.univ
+  ext ⟨x, a⟩
+  change (Q * (P * (x, a)) ≠ P * (Q * (x, a))) ↔ x ∈ selected ∧ a ∈ Set.univ
+  simp only [Set.mem_univ, and_true, selected, Set.mem_ofPred_eq]
+  change (¬Q * (P * (x, a)) = P * (Q * (x, a))) ↔ _
+  rw [not_congr (commute (y := (x, a)))]
+  by_cases hx : g (g x) = x
+  · have k := period hx
+    by_cases hc : G.connectedComponentMk x = G.connectedComponentMk e
+    · have h := identity x hc a
+      change f^[minimalPeriod g x] (x, a) = (x, a) at h
+      rw [k] at h
+      simp [h, hx, hc]
+    · have h := prescribed ⟨G.connectedComponentMk x, hc⟩ x rfl a
+      change f^[minimalPeriod g x] (x, a) =
+        (x, a + t ⟨G.connectedComponentMk x, hc⟩) at h
+      rw [k] at h
+      simp [h, hx, hc]
+  · refine ⟨fun _ => Or.inl hx, fun _ h => hx ?_⟩
+    exact congrArg Prod.fst h
 
 /-- A labelled complete system realizes the count for a fixed prescription of returns. -/
 theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
@@ -316,29 +318,42 @@ theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y)
     (twice : ∀ a : A, a + a = 0) (centreless : Set.center L = {e})
-    (hpq : p ≠ q) (hp : p ≠ e) (hq : q ≠ e)
+    (hpq : p ≠ q)
     (edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
     (t : {C : G.ConnectedComponent // C ≠ G.connectedComponentMk e} → A) :
-    ∃ (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
+    ∃ (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
       (i : Fin (r + 1)) (v : Fin r)
-      (S : Set (Set (Fin (r + 1)))) (m : Fin r → Fin r),
-      label none = (e, 0) ∧ label (some i) = (p, 0) ∧ label (some (i.succAbove v)) = (q, 0) ∧
-      IsPartialSteiner S ∧ (∀ a b : Fin (r + 1), a ≠ b → Covered S a b) ∧
-      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b) (m : Fin r → Fin r),
+      letI := extensionMul e labels
       let g : L → L := fun x => p * (q * x)
+      let selected : Set L := {x | g (g x) ≠ x ∨
+        ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
+          t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
+      label none = (e, 0) ∧ label (some i) = (p, 0) ∧ label (some (i.succAbove v)) = (q, 0) ∧
+      Set.center (L × A) = {x | x.1 = e} ∧
+      (∀ (j : Fin (r + 1)) (a : Option (Fin (r + 1))),
+        label (translate valid cover j a) = label (some j) * label a) ∧
+      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+      (label ∘ Option.some ∘ i.succAbove) ''
+        {a | SuccessfulStart (pointDeletedFamily S i) m v a} = selected ×ˢ Set.univ ∧
       ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
-        Nat.card A * ({x | g (g x) ≠ x ∨
-          ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
-            t ⟨G.connectedComponentMk x, h⟩ ≠ 0} : Set L).ncard := by
+        Nat.card A * selected.ncard := by
   classical
-  obtain ⟨labels, unitExt, commExt, invExt, _, count⟩ :=
+  have hp : p ≠ e := by
+    intro eq
+    exact G.irrefl ((edges e e).mpr (Or.inl (by simpa [eq] using unit e)))
+  have hq : q ≠ e := by
+    intro eq
+    exact G.irrefl ((edges e e).mpr (Or.inr (by simpa [eq] using unit e)))
+  obtain ⟨labels, unitExt, commExt, invExt, centreExt, fibres⟩ :=
     extensionNoncommutingCount G e p q unit comm invol twice centreless hpq hp hq edges t
   let _ := extensionMul e labels
   let W := {y : L × A // y ≠ (e, 0)}
   let _ := Fintype.ofFinite W
   have pNe : (p, (0 : A)) ≠ (e, 0) := fun h => hp (congrArg Prod.fst h)
   have qNe : (q, (0 : A)) ≠ (e, 0) := fun h => hq (congrArg Prod.fst h)
-  haveI : Nonempty W := ⟨⟨(p, 0), pNe⟩⟩
+  have : Nonempty W := ⟨⟨(p, 0), pNe⟩⟩
   let r := Fintype.card W - 1
   have card : Fintype.card W = r + 1 := by
     have pos : 0 < Fintype.card W := Fintype.card_pos
@@ -362,14 +377,16 @@ theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     exact hpq (congrArg Prod.fst hj)
   obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq different
   have hv' : label (some (i.succAbove v)) = (q, 0) := by rw [hv, hj]
-  obtain ⟨S, valid, cover, byPivot⟩ :=
+  obtain ⟨S, valid, cover, transport, byPivot⟩ :=
     labelledSwitchCount label (by simpa only [zero] using unitExt) commExt invExt
   obtain ⟨m, leave, byStart⟩ := byPivot i
-  refine ⟨r, label, i, v, S, m, zero, hi, hv', valid, cover, leave, ?_⟩
+  refine ⟨labels, r, label, i, v, S, valid, cover, m, zero, hi, hv', centreExt,
+    transport, leave, ?_⟩
   have transported := byStart v
   dsimp only at transported
   rw [hi, hv'] at transported
-  exact transported.trans count
+  refine ⟨transported.1.trans fibres, ?_⟩
+  rw [transported.2, fibres, Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
 
 #print axioms realizeLabelledSwitchCount
 

@@ -8,7 +8,8 @@ import Mathlib.Algebra.Group.PUnit
 
 namespace Reg.D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
 
-open LeanInformationAudit SimpleGraph
+open LeanInformationAudit SimpleGraph Function
+open scoped Set.Notation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.Support.UniverseSingleReadout (signature sensitivity)
 open _root_.D5.S3.Combinatorics.Matroids
@@ -17,7 +18,8 @@ open _root_.Reg.D5.S3.Combinatorics.Matroids.SteinerSwitchCentre
   (affinePlane_valid affinePlane_complete)
 open _root_.D5.S3.Combinatorics.Matroids.SteinerSwitchCentre
 open SteinerAlternatingSwitches (pivotGraph point_deleted_successful_starts SuccessfulStart)
-open SteinerMatchingTranslations (translate_involutive)
+open SteinerMatchingTranslations (translate translate_involutive)
+open _root_.D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul)
 open PointDeletedSteinerSwitch (pointDeletedFamily)
 open RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open RankThreeSaturatedTopGap (Covered Uncovered)
@@ -40,20 +42,27 @@ def law (R : Realization sig.{v}) : Prop :=
     (_unit : ∀ x : L, e * x = x) (_comm : ∀ x y : L, x * y = y * x)
     (_invol : ∀ x y : L, x * (x * y) = y)
     (_twice : ∀ a : A, a + a = 0) (_centreless : Set.center L = {e})
-    (_hpq : p ≠ q) (_hp : p ≠ e) (_hq : q ≠ e)
+    (_hpq : p ≠ q)
     (_edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
     (t : {C : G.ConnectedComponent // C ≠ G.connectedComponentMk e} → A),
-    ∃ (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
+    ∃ (labels : Set L → A) (r : ℕ) (label : Option (Fin (r + 1)) ≃ L × A)
       (i : Fin (r + 1)) (v : Fin r)
-      (S : Set (Set (Fin (r + 1)))) (m : Fin r → Fin r),
-      label none = (e, 0) ∧ label (some i) = (p, 0) ∧ label (some (i.succAbove v)) = (q, 0) ∧
-      IsPartialSteiner S ∧ (∀ a b : Fin (r + 1), a ≠ b → Covered S a b) ∧
-      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+      (S : Set (Set (Fin (r + 1)))) (valid : IsPartialSteiner S)
+      (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b) (m : Fin r → Fin r),
+      letI := extensionMul e labels
       let g : L → L := fun x => p * (q * x)
+      let selected : Set L := {x | g (g x) ≠ x ∨
+        ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
+          t ⟨G.connectedComponentMk x, h⟩ ≠ 0}
+      label none = (e, 0) ∧ label (some i) = (p, 0) ∧ label (some (i.succAbove v)) = (q, 0) ∧
+      Set.center (L × A) = {x | x.1 = e} ∧
+      (∀ (j : Fin (r + 1)) (a : Option (Fin (r + 1))),
+        label (translate valid cover j a) = label (some j) * label a) ∧
+      (∀ a b, Uncovered (pointDeletedFamily S i) a b ↔ m a = b) ∧
+      (label ∘ Option.some ∘ i.succAbove) ''
+        {a | SuccessfulStart (pointDeletedFamily S i) m v a} = selected ×ˢ Set.univ ∧
       ({a | SuccessfulStart (pointDeletedFamily S i) m v a} : Set (Fin r)).ncard =
-        R.readout () () A * ({x | g (g x) ≠ x ∨
-          ∃ h : G.connectedComponentMk x ≠ G.connectedComponentMk e,
-            t ⟨G.connectedComponentMk x, h⟩ ≠ 0} : Set L).ncard
+        R.readout () () A * selected.ncard
 
 abbrev arena : Arena := ⟨sig, law.{u,v}⟩
 
@@ -112,20 +121,12 @@ private theorem rejected_law : ¬ law.{u,v} rejected := by
     have down : some (0 : Fin 9) = some ((0 : Fin 9).succAbove (0 : Fin 8)) :=
       congrArg ULift.down eq
     exact Fin.succAbove_ne _ _ (Option.some.inj down).symm
-  have hp : p ≠ e := by
-    intro eq
-    have h : some (0 : Fin 9) = (none : B) := congrArg ULift.down eq
-    cases h
-  have hq : q ≠ e := by
-    intro eq
-    have h : some ((0 : Fin 9).succAbove (0 : Fin 8)) = (none : B) := congrArg ULift.down eq
-    cases h
   have edges (x y : L) : G.Adj x y ↔ p * x = y ∨ q * x = y := by
     change (p.down * x.down = y.down ∨ q.down * x.down = y.down) ↔ _
     exact or_congr ⟨ULift.ext, congrArg ULift.down⟩ ⟨ULift.ext, congrArg ULift.down⟩
-  obtain ⟨r, label, i, v, S, m, _, _, _, valid, complete, leave, noStarts⟩ :=
+  obtain ⟨_, r, label, i, v, S, valid, complete, m, _, _, _, _, _, leave, _, noStarts⟩ :=
     bound (A := A) G e p q unit comm invol (fun _ => Subsingleton.elim _ _) centreless
-      hpq hp hq edges (fun _ => 0)
+      hpq edges (fun _ => 0)
   have size := Nat.card_congr label
   have rEq : r = 8 := by
     change Nat.card (Option (Fin (r + 1))) = Nat.card (ULift.{u} (Option (Fin 9)) × A) at size
@@ -184,9 +185,10 @@ def registration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
-        "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg",
-        "arg", "arg", "body", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body",
+        "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
+        "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
