@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.a
-mem_edges: proof_shape=content; consumers=HardinA229538Strip.cost_zero
+mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 edges_eq: proof_shape=content; consumers=HardinA229538Strip.cost_countCut
 cut_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion
 cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
@@ -153,13 +153,25 @@ open HardinA229637RowColumn (betw)
 
 def edges : Finset (Fin 5 × Fin 5) := Finset.univ.diag ∪ betw 5
 
-theorem mem_edges (e : Fin 5 × Fin 5) :
-    e ∈ edges ↔ e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
+private theorem mem_edges {k : ℕ} (e : Fin k × Fin k) :
+    e ∈ (Finset.univ : Finset (Fin k)).diag ∪ betw k ↔
+      e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
   obtain ⟨x, y⟩ := e
-  simp only [edges, betw, Finset.mem_union, Finset.mem_diag, Finset.mem_filter,
-    Finset.mem_univ, true_and]
-  rw [← Fin.val_inj]
-  omega
+  simp only [betw, Finset.mem_union, Finset.mem_diag, Finset.mem_filter,
+    Finset.mem_univ, true_and, ← Fin.val_inj]
+  constructor
+  · rintro (rfl | hy | hx)
+    · exact ⟨Nat.le_succ _, Nat.le_succ _⟩
+    · subst y
+      exact ⟨Nat.le_succ_of_le (Nat.le_succ _), Nat.le_refl _⟩
+    · subst x
+      exact ⟨Nat.le_refl _, Nat.le_succ_of_le (Nat.le_succ _)⟩
+  · rw [Nat.le_add_one_iff, Nat.le_add_one_iff]
+    rintro ⟨hxy | hxy, hyx | hyx⟩
+    · exact Or.inl (Nat.le_antisymm hxy hyx)
+    · exact Or.inr (Or.inl hyx)
+    · exact Or.inr (Or.inr hxy)
+    · exact Or.inr (Or.inr hxy)
 
 private theorem edges_eq :
     edges = {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),

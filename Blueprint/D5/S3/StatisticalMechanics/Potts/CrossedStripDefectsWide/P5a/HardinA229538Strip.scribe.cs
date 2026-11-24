@@ -17,8 +17,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transition_entry",TransitionEntry(),true,"For a budget above one and a positive cost within that budget, the difference of the entries is +1 at the affordable residual successor and −1 at the exhausted successor when the cost is one. The difference is zero in all other cases."),
             Node("labelled_scale",LabelledScale(),true,"The subscript 3 on the literal count is the palette parameter q := 3. The nonconstant arrays contribute six labelled representatives per canonical array. At positive height and width, the three constant arrays contribute one canonical class at budget H.card plus (n − 1) times the sum of the cut cardinalities. At height or width zero, the unique empty array contributes one labelled and one canonical representative at budget zero. The correction is three in the former case and five in the latter."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
-            Node("edges",Edges(),false,"The oriented cut is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs across consecutive columns."),
-            Node("mem_edges", MemEdges(), true, "The two inequalities express that the row indices differ by at most one, as in the frozen edge predicate between columns zero and one."),
+            Node("edges",Edges(),false,"The oriented cut contains the pairs of rows at distance at most one across consecutive columns. It is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs."),
             Node("cut_total_exclusion", CutTotalExclusion(), true, "The excluded budgets are the multiples of the cut cardinality. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction, with subtraction in the naturals. At height five this gives thirteen pairs."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
@@ -185,16 +184,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var correction = If(Or(Eq(k, N(0)), Eq(n, N(0))), If(Eq(d, N(0)), N(5), N(0)),
             If(Eq(d, constantBudget), N(3), N(0)));
         return CutParameters(Eq(Add(labelled, correction), Mul(N(6), Own("canonicalCount", h, v, d, n))));
-    }
-
-    private static Formula MemEdges()
-    {
-        var e = V("e");
-        var x = Val(Call("Prod.fst", e));
-        var y = Val(Call("Prod.snd", e));
-        return All("e", Product(Fin(5), Fin(5)),
-            Iff(new Formula.Relation(e, FormulaRelationOperator.MemberOf, Own("edges")),
-                And(Le(x, Add(y, N(1))), Le(y, Add(x, N(1))))));
     }
 
     private static Formula CutTotalExclusion()
