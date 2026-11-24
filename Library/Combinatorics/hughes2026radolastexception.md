@@ -4,7 +4,7 @@ authors: Tyler B. Hughes and research agents
 year: 2026
 title: "The Last Exception for Two-Colour Rado Numbers"
 doi: null
-url: https://github.com/the-omega-institute/mathdiscoveries/tree/82a9a73903a9f68b476818a37e20b10405aa8b53
+url: https://github.com/mathdiscoveries/rado-numbers-last-exception/tree/82a9a73903a9f68b476818a37e20b10405aa8b53
 claim: "For every k >= 3, the explicit c*(k) is the last boundary for the two-colour lower bound: every valid c > c*(k) has Rado number LB(c,k), while [1,LB(c*(k),k)] has an avoiding colouring."
 strata_touched:
   - D5/S3/Combinatorics/ArithmeticRamsey/RadoLastBoundary
@@ -20,14 +20,14 @@ triage: anchor
 ## Verified primary sources
 
 The formal source is the immutable public revision
-[mathdiscoveries@82a9a73903a9f68b476818a37e20b10405aa8b53](https://github.com/the-omega-institute/mathdiscoveries/tree/82a9a73903a9f68b476818a37e20b10405aa8b53),
+[mathdiscoveries@82a9a73903a9f68b476818a37e20b10405aa8b53](https://github.com/mathdiscoveries/rado-numbers-last-exception/tree/82a9a73903a9f68b476818a37e20b10405aa8b53),
 with the corresponding Lean Pool aggregation at
-[lean-pool@623ba6c3c0026e133cf4f](https://github.com/leanprover-community/lean-pool/tree/623ba6c3c0026e133cf4f).
+[LeanPool/lean-pool@623ba6c3c0026e133ff75089d66c60040eb05aec](https://github.com/LeanPool/lean-pool/tree/623ba6c3c0026e133ff75089d66c60040eb05aec).
 The ported files are pure Lean 4 and retain the source proof structure. The
 source reports no human referee; no originality or open-problem-resolution
 claim is made here.
 
-Kim, Song, and Hwang, “Rado numbers for the equation x + y + c = kz,”
+Kim, Song, and Hwang, “Two-color Rado number of x + y + c = kz for large c,”
 *Discrete Mathematics* 346 (2023), article 113597,
 [doi:10.1016/j.disc.2023.113597](https://doi.org/10.1016/j.disc.2023.113597),
 is the verified bibliographic source for the surrounding Rado-number problem.
@@ -59,3 +59,25 @@ The ported files are released under Apache License 2.0. The full source license
 and the applicable Lean Pool aggregation notice are retained in
 `docs/reports/licenses/rado-numbers-last-exception-LICENSE.txt` and
 `docs/reports/licenses/rado-numbers-last-exception-NOTICE.txt`.
+
+## Adoption and replacement
+
+The adopted pooled leaves use Lean 4.36.0 and Mathlib revision
+`fc4f59e577feb1a4956671bc04ac18aaaf8cd842`; this repository uses Lean 4.35.0
+and Mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`.
+The incompatible pooled supplier is ported under SPEC A17.2. The original
+Hughes project uses Lean 4.35.0, has no external dependencies and has no
+Mathlib manifest; no incompatibility of that original project is asserted.
+
+The adopted source SHA-256 values are
+`95ea9e735c20de221dae819a2c3b40ddc9d55924d495f4541f7cb65a0ba3d89d`
+for LowerHalf and
+`31e004613fad445140ccf5d663b5a2e91e5c3901baa822db79dacad79899260f`
+for UpperHalf. The port retains their colouring and forcing constructions,
+with consumed proof helpers and one complete upper endpoint. Boundary
+validity is included explicitly in that endpoint. Arithmetic parameter
+helpers receive no independent mathematical-content credit.
+
+When this repository's own pinned Lean supply contains equivalent declarations
+with the complete quantified scope, replace this port by direct invocation.
+The replacement condition does not depend on an upstream acceptance event.

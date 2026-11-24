@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/ArithmeticRamsey/RadoLastException
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArithmeticRamsey/RadoLastException
-   mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Combinatorics/ArithmeticRamsey/RadoLastBoundary]
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
    utility: none
    digest: The two-colour Rado lower bound is exact above the explicit last exception for every k >= 3. -/
 
@@ -11,6 +11,20 @@ Copyright (c) 2026 Tyler B. Hughes. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Tyler B. Hughes
 Contributors: research agents
+-/
+
+/-!
+Proof source: LeanPool/lean-pool, revision
+623ba6c3c0026e133ff75089d66c60040eb05aec, RadoNumbersLastException.
+Primary proof and authorship: mathdiscoveries/rado-numbers-last-exception,
+revision 82a9a73903a9f68b476818a37e20b10405aa8b53.
+Adapted for repository module paths, headers, declaration visibility and
+endpoint organization; the source mathematical constructions are retained.
+The full Apache license and applicable notices are retained in
+`docs/reports/licenses/rado-numbers-last-exception-LICENSE.txt` and
+`docs/reports/licenses/rado-numbers-last-exception-NOTICE.txt`.
+Replace this port by a direct invocation when this repository's own pinned
+Lean supply contains equivalent declarations with the complete stated scope.
 -/
 
 module
@@ -23,10 +37,8 @@ public import D5.S3.Combinatorics.ArithmeticRamsey.RadoLastBoundary
 Pure core Lean 4 formalization (no Mathlib imports) proving the upper half
 `R(c, k) = LB(c, k)` for every `k ≥ 3` and every valid `c > c*(k)` via the reflection
 `x ↦ N + 1 - x` combined with Martinelli and Schaal's lower bound, and combining it
-with the boundary colouring `LowerHalf.exists_good_col_cstar` to obtain:
-* `RadoNu.rado_last_exception`: complete both-halves characterization with expanded quantifiers;
-* `RadoNu.rado_eq_LB`, `RadoNu.not_forced_cstar`, `RadoNu.rado_last_exception_rado`;
-* `RadoNu.nu_iff`, the all-parameter threshold characterization.
+with the boundary colouring `LowerHalf.exists_good_col_cstar` and boundary validity
+to obtain the complete `rado_last_exception` statement.
 -/
 
 @[expose] public section
@@ -51,14 +63,14 @@ def Good (k b N : Nat) (col : Nat → Bool) : Prop :=
 
 /-! ## The forcing rule -/
 
-theorem force_z {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
+private theorem force_z {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
     {x y z : Nat} {c : Bool} (hx : 1 ≤ x ∧ x ≤ N) (hy : 1 ≤ y ∧ y ≤ N)
     (hz : 1 ≤ z ∧ z ≤ N) (h : x + y = k * z + b)
     (cx : col x = c) (cy : col y = c) : col z = !c := by
   have h0 := g x y z hx.1 hx.2 hy.1 hy.2 hz.1 hz.2 h
   cases hcz : col z <;> cases c <;> simp_all
 
-theorem force_y {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
+private theorem force_y {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
     {x y z : Nat} {c : Bool} (hx : 1 ≤ x ∧ x ≤ N) (hy : 1 ≤ y ∧ y ≤ N)
     (hz : 1 ≤ z ∧ z ≤ N) (h : x + y = k * z + b)
     (cx : col x = c) (cz : col z = c) : col y = !c := by
@@ -66,7 +78,7 @@ theorem force_y {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
   cases hcy : col y <;> cases c <;> simp_all
 
 /-- For a solution (x, x, z): the colour of z gives the colour of x. -/
-theorem force_xx {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
+private theorem force_xx {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
     {x z : Nat} {c : Bool} (hx : 1 ≤ x ∧ x ≤ N)
     (hz : 1 ≤ z ∧ z ≤ N) (h : x + x = k * z + b)
     (cz : col z = c) : col x = !c := by
@@ -74,14 +86,14 @@ theorem force_xx {k b N : Nat} {col : Nat → Bool} (g : Good k b N col)
   cases hcx : col x <;> cases c <;> simp_all
 
 /-- Swapping the two colours keeps a colouring good. -/
-theorem good_not {k b N : Nat} {col : Nat → Bool} (g : Good k b N col) :
+private theorem good_not {k b N : Nat} {col : Nat → Bool} (g : Good k b N col) :
     Good k b N (fun x => !col x) := by
   intro x y z hx1 hxN hy1 hyN hz1 hzN h hm
   apply g x y z hx1 hxN hy1 hyN hz1 hzN h
   cases hx : col x <;> cases hy : col y <;> cases hz : col z <;> simp_all
 
 /-- A colouring that is not good has a monochromatic solution. -/
-theorem exists_mono {k b N : Nat} {col : Nat → Bool} (h : ¬ Good k b N col) :
+private theorem exists_mono {k b N : Nat} {col : Nat → Bool} (h : ¬ Good k b N col) :
     ∃ x y z : Nat, (1 ≤ x ∧ x ≤ N) ∧ (1 ≤ y ∧ y ≤ N) ∧ (1 ≤ z ∧ z ≤ N) ∧
       x + y = k * z + b ∧ col x = col y ∧ col y = col z :=
   Classical.byContradiction fun hne => h fun x y z hx1 hxN hy1 hyN hz1 hzN e hm =>
@@ -89,7 +101,7 @@ theorem exists_mono {k b N : Nat} {col : Nat → Bool} (h : ¬ Good k b N col) :
 
 /-! ## The least red number -/
 
-theorem least_true (p : Nat → Bool) : ∀ n, p n = true →
+private theorem least_true (p : Nat → Bool) : ∀ n, p n = true →
     ∃ t, t ≤ n ∧ p t = true ∧ ∀ x, x < t → p x = false := by
   intro n
   induction n using Nat.strongRecOn with
@@ -116,7 +128,7 @@ structure Ctx (k b N t : Nat) (col : Nat → Bool) : Prop where
 
 /-- **Lemma 0.** If h = ceil((k + b)/2) <= N and 1 is blue, the least red
 number t exists and 2 <= t <= h. -/
-theorem lemma0 {k b N h : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb : 1 ≤ b)
+private theorem lemma0 {k b N h : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb : 1 ≤ b)
     (g : Good k b N col) (h1 : col 1 = false)
     (hh1 : k + b ≤ 2 * h) (hh2 : 2 * h ≤ k + b + 1) (hN : h ≤ N) :
     ∃ t, t ≤ h ∧ Ctx k b N t col := by
@@ -154,7 +166,7 @@ def X (k b j : Nat) : Nat := (k * j + b) / 2
 
 /-- For j of the parity of Hs with j <= Hs: k j + b is even, and
 1 <= x_j <= N. Here Hs (the text's H*) has k Hs + b even and <= 2N. -/
-theorem X_facts {k b N Hs j : Nat} (hHe : (k * Hs + b) % 2 = 0)
+private theorem X_facts {k b N Hs j : Nat} (hHe : (k * Hs + b) % 2 = 0)
     (hHN : k * Hs + b ≤ 2 * N) (hb : 1 ≤ b) (hj : j ≤ Hs)
     (hp : j % 2 = Hs % 2) :
     2 * X k b j = k * j + b ∧ 1 ≤ X k b j ∧ X k b j ≤ N := by
@@ -165,21 +177,21 @@ theorem X_facts {k b N Hs j : Nat} (hHe : (k * Hs + b) % 2 = 0)
   omega
 
 /-- x_i + x_j = k m + b when i + j = 2m. -/
-theorem X_sum {k b i j m : Nat} (hi : 2 * X k b i = k * i + b)
+private theorem X_sum {k b i j m : Nat} (hi : 2 * X k b i = k * i + b)
     (hj : 2 * X k b j = k * j + b) (hm : i + j = 2 * m) :
     X k b i + X k b j = k * m + b := by
   have e : k * i + k * j = 2 * (k * m) := by
     rw [← Nat.mul_add, hm, Nat.mul_left_comm]
   omega
 
-theorem le_N_of_le_Hs {k b N Hs z : Nat} (hk : 3 ≤ k)
+private theorem le_N_of_le_Hs {k b N Hs z : Nat} (hk : 3 ≤ k)
     (hHN : k * Hs + b ≤ 2 * N) (hz : z ≤ Hs) : z ≤ N := by
   have := Nat.mul_le_mul_right Hs hk
   omega
 
 /-- The start of Lemma S: with q the least number >= t of the parity of Hs
 (q = t or t + 1), x_{q-2} is red and x_q is blue. -/
-theorem lemmaS_start {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaS_start {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N)
     {q : Nat} (hq : q = t ∨ q = t + 1) (hqp : q % 2 = Hs % 2) (hqH : q ≤ Hs) :
     col (X k b (q - 2)) = true ∧ col (X k b q) = false := by
@@ -217,7 +229,7 @@ theorem lemmaS_start {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t co
 
 /-- If x_i is blue for every i >= t of the parity of Hs up to M <= Hs, then z
 is red for t <= z, where z <= M (z of that parity) or z + 1 <= M (else). -/
-theorem red_of_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem red_of_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N)
     {M : Nat} (hM : M ≤ Hs)
     (hB : ∀ i, i % 2 = Hs % 2 → t ≤ i → i ≤ M → col (X k b i) = false)
@@ -247,7 +259,7 @@ theorem red_of_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col
         (X_sum f1.1 f2.1 (by omega)) b1 b2
 
 /-- x_j is blue for every j >= t of the parity of Hs, j <= Hs. -/
-theorem lemmaS_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaS_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N) :
     ∀ j, j % 2 = Hs % 2 → t ≤ j → j ≤ Hs → col (X k b j) = false := by
   intro j
@@ -278,7 +290,7 @@ theorem lemmaS_blue {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col
         (X_sum fa.1 fj.1 (by omega)) st.1 hzr
 
 /-- **Lemma S.** Every z with t <= z <= Hs is red. -/
-theorem lemmaS {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaS {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N)
     {z : Nat} (htz : t ≤ z) (hzH : z ≤ Hs) : col z = true :=
   red_of_blue c hHe hHN (M := Hs) (Nat.le_refl _)
@@ -288,7 +300,7 @@ theorem lemmaS {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
 
 /-- **Lemma E (i).** b = k m1 + s1 with 2 <= s1 <= 2t - 2, m1 <= t - 2, and
 t + 1 <= H (that is k(t + 1) + b <= 2N): the colouring is not good. -/
-theorem lemmaE1 {k b N t : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaE1 {k b N t : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     {m1 s1 : Nat} (hbs : b = k * m1 + s1) (hs2 : 2 ≤ s1)
     (hs : s1 ≤ 2 * t - 2) (hm : m1 + 2 ≤ t)
     (hH : k * (t + 1) + b ≤ 2 * N) : False := by
@@ -324,7 +336,7 @@ theorem lemmaE1 {k b N t : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
 
 /-- **Lemma E (ii).** b = k m1 + s1 with 2 <= s1 <= 2t - 2, m1 >= t - 1,
 k + b - 1 <= N and m1 + 2 <= Hs: the colouring is not good. -/
-theorem lemmaE2 {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaE2 {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N)
     {m1 s1 : Nat} (hbs : b = k * m1 + s1) (hs2 : 2 ≤ s1)
     (hs : s1 ≤ 2 * t - 2) (hm : t ≤ m1 + 1) (hN : k + b ≤ N + 1)
@@ -356,7 +368,7 @@ theorem lemmaE2 {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
 /-- **Lemma F.** t <= k, 1 <= x <= t - 1, x + k <= Hs and
 e = k(t - 1) + b - x <= N: the colouring is not good. (The text takes
 x = min(t - 1, H* - k).) -/
-theorem lemmaF {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
+private theorem lemmaF {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
     (hHe : (k * Hs + b) % 2 = 0) (hHN : k * Hs + b ≤ 2 * N)
     (htk : t ≤ k) {x : Nat} (hx1 : 1 ≤ x) (hxt : x < t) (hxH : x + k ≤ Hs)
     (he : k * (t - 1) + b ≤ N + x) : False := by
@@ -387,27 +399,27 @@ theorem lemmaF {k b N t Hs : Nat} {col : Nat → Bool} (c : Ctx k b N t col)
 /-! ## Part B: Theorems 1 and 2 -/
 
 
-theorem Good.mono {k b n N : Nat} {col : Nat → Bool} (h : n ≤ N)
+private theorem Good.mono {k b n N : Nat} {col : Nat → Bool} (h : n ≤ N)
     (g : Good k b N col) : Good k b n col :=
   fun x y z hx1 hxn hy1 hyn hz1 hzn e =>
     g x y z hx1 (by omega) hy1 (by omega) hz1 (by omega) e
 
-theorem even_mul {k n : Nat} (h : k % 2 = 0) : (k * n) % 2 = 0 := by
+private theorem even_mul {k n : Nat} (h : k % 2 = 0) : (k * n) % 2 = 0 := by
   simp [Nat.mul_mod, h]
 
-theorem even_mul_succ (k : Nat) : (k * (k + 1)) % 2 = 0 := by
+private theorem even_mul_succ (k : Nat) : (k * (k + 1)) % 2 = 0 := by
   by_cases h : k % 2 = 0
   · exact even_mul h
   · rw [Nat.mul_comm]
     exact even_mul (by omega)
 
-theorem mul_pred_add {k t : Nat} (ht : 1 ≤ t) : k * t = k * (t - 1) + k := by
+private theorem mul_pred_add {k t : Nat} (ht : 1 ≤ t) : k * t = k * (t - 1) + k := by
   have := Nat.mul_add k (t - 1) 1
   rw [show t - 1 + 1 = t by omega, Nat.mul_one] at this
   exact this
 
 /-- For d >= 0: z = floor(d/k) + 1 and x = k z - d, so 1 <= x <= k. -/
-theorem ceil_rep {k : Nat} (d : Nat) (hk : 0 < k) :
+private theorem ceil_rep {k : Nat} (d : Nat) (hk : 0 < k) :
     ∃ z x, 1 ≤ x ∧ x ≤ k ∧ x + d = k * z ∧ 1 ≤ z ∧ ∀ M, d < k * M → z ≤ M := by
   have h1 := Nat.div_add_mod d k
   have h2 := Nat.mod_lt d hk
@@ -432,7 +444,7 @@ def h0 (k b : Nat) : Nat := (k + b + 1) / 2
 def n1 (k b : Nat) : Nat := (k * h0 k b + b + 1) / 2
 
 /-- e <= N in Lemma F with x = t - 1 (first sub-case of Theorem 1), u = t - 1. -/
-theorem arith_F1 {k u b h N : Nat} (hk : 3 ≤ k) (h1 : 2 * u ≤ k)
+private theorem arith_F1 {k u b h N : Nat} (hk : 3 ≤ k) (h1 : 2 * u ≤ k)
     (h2 : k + b ≤ 2 * h) (h3 : k + 1 ≤ b) (h4 : k * h + b ≤ 2 * N) :
     k * u + b ≤ N + u := by
   obtain ⟨m, rfl⟩ : ∃ m, k = m + 2 := ⟨k - 2, by omega⟩
@@ -442,13 +454,13 @@ theorem arith_F1 {k u b h N : Nat} (hk : 3 ≤ k) (h1 : 2 * u ≤ k)
   grind
 
 /-- e <= N in Lemma F with x = 1, b = k + 1, h0 = k + 1 (second sub-case). -/
-theorem arith_F2 {k u N : Nat} (h1 : 2 * u ≤ k)
+private theorem arith_F2 {k u N : Nat} (h1 : 2 * u ≤ k)
     (h2 : k * (k + 1) + (k + 1) ≤ 2 * N) : k * u + (k + 1) ≤ N + 1 := by
   have P1 := Nat.mul_le_mul_left k h1
   grind
 
 /-- Theorem 1 for a colouring with 1 blue. -/
-theorem thm1_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb : k + 1 ≤ b)
+private theorem thm1_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb : k + 1 ≤ b)
     (hpar : k % 2 = 0 → b % 2 = 0) (g : Good k b (n1 k b) col)
     (h1 : col 1 = false) : False := by
   obtain ⟨h, hh⟩ : ∃ h, h = h0 k b := ⟨_, rfl⟩
@@ -550,7 +562,7 @@ theorem thm1_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb : k + 1 ≤
 
 /-- **Theorem 1.** k >= 3, b >= k + 1, b even if k is even: no 2-colouring of
 [1, n], n = ceil((k ceil((k + b)/2) + b)/2), is good for x + y = k z + b. -/
-theorem thm1 {k b : Nat} (hk : 3 ≤ k) (hb : k + 1 ≤ b)
+private theorem thm1 {k b : Nat} (hk : 3 ≤ k) (hb : k + 1 ≤ b)
     (hpar : k % 2 = 0 → b % 2 = 0) (col : Nat → Bool) :
     ¬ Good k b (n1 k b) col := by
   intro g
@@ -567,7 +579,7 @@ def j0 (k b : Nat) : Nat := if (k * (k + 1) + b) % 2 = 0 then k + 1 else k + 2
 def N2 (k b : Nat) : Nat := (k * j0 k b + b) / 2
 
 /-- j0 is k + 1 or k + 2, and k j0 + b is even. -/
-theorem j0_facts {k b : Nat} (hpar : k % 2 = 0 → b % 2 = 0) :
+private theorem j0_facts {k b : Nat} (hpar : k % 2 = 0 → b % 2 = 0) :
     (j0 k b = k + 1 ∧ b % 2 = 0 ∨ j0 k b = k + 2 ∧ b % 2 = 1 ∧ k % 2 = 1) ∧
       (k * j0 k b + b) % 2 = 0 := by
   have e0 := even_mul_succ k
@@ -588,13 +600,13 @@ theorem j0_facts {k b : Nat} (hpar : k % 2 = 0 → b % 2 = 0) :
     omega
 
 /-- e <= N in Lemma F with x = 1 (Theorem 2), u = t - 1. -/
-theorem arith_F3 {k u b N : Nat} (h1 : 2 * u + 1 ≤ k) (hbk : b ≤ k)
+private theorem arith_F3 {k u b N : Nat} (h1 : 2 * u + 1 ≤ k) (hbk : b ≤ k)
     (h2 : k * (k + 1) + b ≤ 2 * N) : k * u + b ≤ N + 1 := by
   have P1 := Nat.mul_le_mul_left k h1
   grind
 
 /-- Theorem 2 for a colouring with 1 blue. -/
-theorem thm2_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb1 : 1 ≤ b)
+private theorem thm2_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb1 : 1 ≤ b)
     (hbk : b ≤ k) (hpar : k % 2 = 0 → b % 2 = 0) (g : Good k b (N2 k b) col)
     (h1 : col 1 = false) : False := by
   obtain ⟨j, hj⟩ : ∃ j, j = j0 k b := ⟨_, rfl⟩
@@ -631,7 +643,7 @@ theorem thm2_aux {k b : Nat} {col : Nat → Bool} (hk : 3 ≤ k) (hb1 : 1 ≤ b)
 
 /-- **Theorem 2.** k >= 3, 1 <= b <= k, b even if k is even: no 2-colouring of
 [1, N2], N2 = (k j0 + b)/2, is good for x + y = k z + b. -/
-theorem thm2 {k b : Nat} (hk : 3 ≤ k) (hb1 : 1 ≤ b) (hbk : b ≤ k)
+private theorem thm2 {k b : Nat} (hk : 3 ≤ k) (hb1 : 1 ≤ b) (hbk : b ≤ k)
     (hpar : k % 2 = 0 → b % 2 = 0) (col : Nat → Bool) :
     ¬ Good k b (N2 k b) col := by
   intro g
@@ -662,7 +674,7 @@ def Valid (c k : Nat) : Prop := k % 2 = 1 ∨ c % 2 = 0
 /-! ## Arithmetic -/
 
 /-- q = ceil(a/k) = (a + k - 1)/k satisfies a <= k q <= a + k - 1. -/
-theorem ceil_spec {a k : Nat} (hk : 0 < k) :
+private theorem ceil_spec {a k : Nat} (hk : 0 < k) :
     a ≤ k * ((a + k - 1) / k) ∧ k * ((a + k - 1) / k) ≤ a + k - 1 := by
   have h1 := Nat.div_add_mod (a + k - 1) k
   have h2 := Nat.mod_lt (a + k - 1) hk
@@ -674,7 +686,7 @@ theorem ceil_spec {a k : Nat} (hk : 0 < k) :
   omega
 
 /-- 2 c*(k) = k^3 + k^2 - 4k for odd k, k^3 - 2k for even k. -/
-theorem two_cstar {k : Nat} (hk : 3 ≤ k) :
+private theorem two_cstar {k : Nat} (hk : 3 ≤ k) :
     (k % 2 = 1 → 2 * cstar k + 4 * k = k * k * k + k * k) ∧
       (k % 2 = 0 → 2 * cstar k + 2 * k = k * k * k) := by
   constructor
@@ -696,7 +708,7 @@ theorem two_cstar {k : Nat} (hk : 3 ≤ k) :
     grind
 
 /-- Lemma A, b >= 1. -/
-theorem arith_A1 {m A N c cs : Nat}
+private theorem arith_A1 {m A N c cs : Nat}
     (h1 : (m + 2) * A ≤ c + 2 + (m + 2) - 1)
     (h2 : (m + 2) * N ≤ 2 * A + c + (m + 2) - 1)
     (hcs : (m + 2) * (m + 2) * (m + 2) ≤ 2 * cs + 2 * (m + 2))
@@ -712,7 +724,7 @@ theorem arith_A1 {m A N c cs : Nat}
     grind
 
 /-- Lemma A, b >= k + 1: k h0 + b <= 2N. -/
-theorem arith_A2 {m A N b h : Nat}
+private theorem arith_A2 {m A N b h : Nat}
     (h1 : m * (N + 1) + b + 2 ≤ (m + 2) * A)
     (h2 : 2 * A + (m * (N + 1) + b) ≤ (m + 2) * N)
     (hh : 2 * h ≤ m + 2 + b + 1) : (m + 2) * h + b ≤ 2 * N := by
@@ -724,7 +736,7 @@ theorem arith_A2 {m A N b h : Nat}
   grind
 
 /-- Lemma A, b <= k: N <= N2 - 1 gives c <= c*(k). -/
-theorem arith_A3 {m N b j c cs : Nat}
+private theorem arith_A3 {m N b j c cs : Nat}
     (hc : c = m * (N + 1) + b) (hN : 2 * (N + 1) ≤ (m + 2) * j + b)
     (hj : j = m + 3 ∧ b % 2 = 0 ∨ j = m + 4 ∧ m % 2 = 1) (hbk : b ≤ m + 2)
     (ho : m % 2 = 1 →
@@ -749,7 +761,7 @@ theorem arith_A3 {m N b j c cs : Nat}
 /-- **Lemma A.** k >= 3, c > c*(k) valid, N = LB(c, k): then
 c = (k - 2)(N + 1) + b with b >= 1 (b even if k is even);
 N >= ceil((k h0 + b)/2) if b >= k + 1; and N >= N2 if b <= k. -/
-theorem lemmaA {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c) (hval : Valid c k) :
+private theorem lemmaA {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c) (hval : Valid c k) :
     ∃ b, 1 ≤ b ∧ c = (k - 2) * (LB c k + 1) + b ∧ (k % 2 = 0 → b % 2 = 0) ∧
       (k + 1 ≤ b → n1 k b ≤ LB c k) ∧ (b ≤ k → N2 k b ≤ LB c k) := by
   have hkpos : 0 < k := by omega
@@ -814,7 +826,7 @@ theorem lemmaA {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c) (hval : Valid c k) 
 
 /-- R(c, k) <= LB(c, k) for valid c > c*(k): every 2-colouring of
 [1, LB(c, k)] has a monochromatic solution of x + y + c = k z. -/
-theorem upper {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c) (hval : Valid c k) :
+private theorem upper {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c) (hval : Valid c k) :
     Forced c k (LB c k) := by
   obtain ⟨b, hb1, hcb, hpar, hA1, hA2⟩ := lemmaA hk hc hval
   obtain ⟨N, hN⟩ : ∃ N, N = LB c k := ⟨_, rfl⟩
@@ -846,7 +858,7 @@ def blockCol (c k x : Nat) : Bool := decide (x < (c + 2 + k - 1) / k)
 
 /-- The two-block colouring has no monochromatic solution of x + y + c = k z
 with x, y >= 1 and z <= LB(c, k) - 1. -/
-theorem lower_col {c k : Nat} (hk : 0 < k) (x y z : Nat) (hx : 1 ≤ x)
+private theorem lower_col {c k : Nat} (hk : 0 < k) (x y z : Nat) (hx : 1 ≤ x)
     (hy : 1 ≤ y) (hz : z < LB c k) (e : x + y + c = k * z) :
     ¬ (blockCol c k x = blockCol c k y ∧ blockCol c k y = blockCol c k z) := by
   intro ⟨c1, c2⟩
@@ -869,90 +881,39 @@ theorem lower_col {c k : Nat} (hk : 0 < k) (x y z : Nat) (hx : 1 ≤ x)
   · omega
 
 /-- R(c, k) >= LB(c, k): no n < LB(c, k) is forced. -/
-theorem lower {c k n : Nat} (hk : 0 < k) (hn : n < LB c k) : ¬ Forced c k n := by
+private theorem lower {c k n : Nat} (hk : 0 < k) (hn : n < LB c k) : ¬ Forced c k n := by
   intro hf
   obtain ⟨x, y, z, hx, _, hz, e, c1, c2⟩ := hf (blockCol c k)
   exact lower_col hk x y z hx.1 (by omega) (by omega) e ⟨c1, c2⟩
 
 /-! ## The theorem -/
 
-theorem Forced.mono {c k n n' : Nat} (h : n ≤ n') (f : Forced c k n) :
-    Forced c k n' := fun col =>
-  let ⟨x, y, z, hx, hy, hz, e, c1, c2⟩ := f col
-  ⟨x, y, z, ⟨hx.1, by omega⟩, ⟨hy.1, by omega⟩, ⟨hz.1, by omega⟩, e, c1, c2⟩
-
 /-- R(c, k) = LB(c, k) for every valid c > c*(k). -/
-theorem rado_eq_LB {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c)
+private theorem rado_eq_LB {k c : Nat} (hk : 3 ≤ k) (hc : cstar k < c)
     (hval : Valid c k) : IsRado c k (LB c k) :=
   ⟨upper hk hc hval, fun _ hn => lower (by omega) hn⟩
 
-/-- Non-forcing at `[1, LB(c*(k), k)]`:
-some 2-colouring of `[1, LB(c*(k), k)]` has no monochromatic solution. -/
-theorem not_forced_cstar {k : Nat} (hk : 3 ≤ k) :
-    ¬ Forced (cstar k) k (LB (cstar k) k) := by
-  intro hf
-  obtain ⟨col, h⟩ := LowerHalf.exists_good_col_cstar k hk
-  obtain ⟨x, y, z, hx, hy, hz, e, c1, c2⟩ := hf col
-  exact h x y z hx.1 hx.2 hy.1 hy.2 hz.1 hz.2 e ⟨c1, c2⟩
-
 /-- `c*(k)` is valid: it is even when `k` is even. -/
-theorem valid_cstar {k : Nat} (hk : 3 ≤ k) : Valid (cstar k) k := by
+private theorem valid_cstar {k : Nat} (hk : 3 ≤ k) : Valid (cstar k) k := by
   by_cases ho : k % 2 = 1
   · exact Or.inl ho
   · refine Or.inr ?_
     rw [LowerHalf.cstar_even (j := k / 2) (by omega) (by omega)]
     exact even_mul (by omega)
 
-/-- Complete both-halves characterization, with all quantifiers written out.
-For every `k ≥ 3`:
-(1) for every valid `c > c*(k)` (`k` odd or `c` even), every 2-colouring of
-`[1, LB(c, k)]` has a monochromatic solution of `x + y + c = k z`, and some
-2-colouring of `[1, LB(c, k) - 1]` has none, so `R(c, k) = LB(c, k)`;
-(2) some 2-colouring of `[1, LB(c*(k), k)]` has no monochromatic solution of
-`x + y + c*(k) = k z`. -/
+/-- The valid last-exception boundary and the complete two-halves theorem.
+Every valid parameter above `cstar k` has Rado number `LB c k`, and an explicit
+colouring avoids the equation on the closed boundary interval. -/
 theorem rado_last_exception (k : Nat) (hk : 3 ≤ k) :
-    (∀ c : Nat, cstar k < c → (k % 2 = 1 ∨ c % 2 = 0) →
-      (∀ col : Nat → Bool, ∃ x y z : Nat,
-        (1 ≤ x ∧ x ≤ LB c k) ∧ (1 ≤ y ∧ y ≤ LB c k) ∧ (1 ≤ z ∧ z ≤ LB c k) ∧
-        x + y + c = k * z ∧ col x = col y ∧ col y = col z) ∧
-      (∃ col : Nat → Bool, ∀ x y z : Nat,
-        1 ≤ x → x < LB c k → 1 ≤ y → y < LB c k → 1 ≤ z → z < LB c k →
-        x + y + c = k * z → ¬ (col x = col y ∧ col y = col z))) ∧
+    Valid (cstar k) k ∧
+    (∀ c : Nat, cstar k < c → Valid c k → IsRado c k (LB c k)) ∧
     (∃ col : Nat → Bool, ∀ x y z : Nat,
       1 ≤ x → x ≤ LB (cstar k) k →
       1 ≤ y → y ≤ LB (cstar k) k →
       1 ≤ z → z ≤ LB (cstar k) k →
       x + y + cstar k = k * z →
       ¬ (col x = col y ∧ col y = col z)) :=
-  ⟨fun c hc hval =>
-    ⟨upper hk hc hval, blockCol c k, fun x y z hx _ hy _ _ hz e =>
-      lower_col (by omega) x y z hx hy hz e⟩,
+  ⟨valid_cstar hk, fun c hc hval => rado_eq_LB hk hc hval,
     LowerHalf.exists_good_col_cstar k hk⟩
-
-/-- Both-halves characterization in terms of `IsRado`: for every `k ≥ 3`,
-`R(c, k) = LB(c, k)` for every valid `c > c*(k)`, `[1, LB(c*(k), k)]` is not
-forced, and any Rado number `R` of `c*(k)` satisfies `LB(c*(k), k) < R`. -/
-theorem rado_last_exception_rado (k : Nat) (hk : 3 ≤ k) :
-    (∀ c, cstar k < c → Valid c k → IsRado c k (LB c k)) ∧
-      ¬ Forced (cstar k) k (LB (cstar k) k) ∧
-      ∀ R, IsRado (cstar k) k R → LB (cstar k) k < R := by
-  refine ⟨fun c hc hval => rado_eq_LB hk hc hval, not_forced_cstar hk, ?_⟩
-  intro R hR
-  rcases Nat.lt_or_ge (LB (cstar k) k) R with h | h
-  · exact h
-  · exact absurd (hR.1.mono h) (not_forced_cstar hk)
-
-/-- nu(k): "R(c, k) = LB(c, k) for every valid c >= v" holds exactly when
-v > c*(k). So the least such v is c*(k) + 1, and the least valid one is
-c*(k) + 1 for odd k and c*(k) + 2 for even k (c*(k) is valid). -/
-theorem nu_iff (k : Nat) (hk : 3 ≤ k) (v : Nat) :
-    (∀ c, v ≤ c → Valid c k → IsRado c k (LB c k)) ↔ cstar k < v := by
-  constructor
-  · intro h
-    rcases Nat.lt_or_ge (cstar k) v with h1 | h1
-    · exact h1
-    · exact absurd (h (cstar k) h1 (valid_cstar hk)).1 (not_forced_cstar hk)
-  · intro h c hc hval
-    exact rado_eq_LB hk (by omega) hval
 
 end RadoNu

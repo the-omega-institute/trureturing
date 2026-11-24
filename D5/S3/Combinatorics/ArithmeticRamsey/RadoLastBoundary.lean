@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/ArithmeticRamsey/RadoLastBoundary
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ArithmeticRamsey/RadoLastBoundary
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The explicit residue colouring avoids the boundary equation x + y + c*(k) = k z for every k >= 3. -/
@@ -11,6 +11,20 @@ Copyright (c) 2026 Tyler B. Hughes. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Tyler B. Hughes
 Contributors: research agents
+-/
+
+/-!
+Proof source: LeanPool/lean-pool, revision
+623ba6c3c0026e133ff75089d66c60040eb05aec, RadoNumbersLastException.
+Primary proof and authorship: mathdiscoveries/rado-numbers-last-exception,
+revision 82a9a73903a9f68b476818a37e20b10405aa8b53.
+Adapted for repository module paths, headers, declaration visibility and
+endpoint organization; the source mathematical constructions are retained.
+The full Apache license and applicable notices are retained in
+`docs/reports/licenses/rado-numbers-last-exception-LICENSE.txt` and
+`docs/reports/licenses/rado-numbers-last-exception-NOTICE.txt`.
+Replace this port by a direct invocation when this repository's own pinned
+Lean supply contains equivalent declarations with the complete stated scope.
 -/
 
 module
@@ -54,24 +68,20 @@ def colEven (k x : Nat) : Bool :=
 /-- The proof's colouring for k. -/
 def col (k x : Nat) : Bool := if k % 2 = 1 then colOdd k x else colEven k x
 
-/-- The proof's N: k(j + 2) - 1 for odd k = 2j + 1; q + 2k - 1 for even k. -/
-def N (k : Nat) : Nat :=
-  if k % 2 = 1 then k * ((k - 1) / 2 + 2) - 1 else k * (k - 2) / 2 + 2 * k - 1
-
 /-! ## Small arithmetic lemmas -/
 
-theorem div_eq_of_decomp {a k q r : Nat} (h : a = k * q + r) (hr : r < k) :
+private theorem div_eq_of_decomp {a k q r : Nat} (h : a = k * q + r) (hr : r < k) :
     a / k = q := by
   subst h
   rw [Nat.mul_add_div (by omega), Nat.div_eq_of_lt hr, Nat.add_zero]
 
-theorem mod_eq_of_decomp {a k q r : Nat} (h : a = k * q + r) (hr : r < k) :
+private theorem mod_eq_of_decomp {a k q r : Nat} (h : a = k * q + r) (hr : r < k) :
     a % k = r := by
   subst h
   rw [Nat.mul_add_mod, Nat.mod_eq_of_lt hr]
 
 /-- If r + s = k w with r, s < k then w <= 1. -/
-theorem sum_lt_two {k r s w : Nat} (hr : r < k) (hs : s < k)
+private theorem sum_lt_two {k r s w : Nat} (hr : r < k) (hs : s < k)
     (h : r + s = k * w) : w = 0 ∨ w = 1 := by
   by_cases hw : 2 ≤ w
   · have h2 := Nat.mul_le_mul_left k hw
@@ -79,7 +89,7 @@ theorem sum_lt_two {k r s w : Nat} (hr : r < k) (hs : s < k)
   · omega
 
 /-- From x + y + k m = k z: z = m + t with x + y = k t. -/
-theorem shift {k m x y z : Nat} (hk : 0 < k) (h : x + y + k * m = k * z) :
+private theorem shift {k m x y z : Nat} (hk : 0 < k) (h : x + y + k * m = k * z) :
     ∃ t, z = m + t ∧ x + y = k * t := by
   have hzm : m ≤ z := by
     by_cases hc : m ≤ z
@@ -94,7 +104,7 @@ theorem shift {k m x y z : Nat} (hk : 0 < k) (h : x + y + k * m = k * z) :
 
 /-! ## Odd k = 2j + 1 -/
 
-theorem sq_odd {k j : Nat} (hk : k = 2 * j + 1) : k * k = 2 * (k * j) + k := by
+private theorem sq_odd {k j : Nat} (hk : k = 2 * j + 1) : k * k = 2 * (k * j) + k := by
   have h1 : k * k = k * (2 * j + 1) := by rw [← hk]
   rw [h1, Nat.mul_add, Nat.mul_one, Nat.mul_left_comm]
 
@@ -109,7 +119,7 @@ theorem cstar_odd {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) :
   rw [h2, Nat.mul_left_comm k 2, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
 
 /-- LB(c*(k), k) = k(j + 2) - 1 for odd k = 2j + 1. -/
-theorem LB_odd {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) :
+private theorem LB_odd {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) :
     LB (cstar k) k = k * (j + 2) - 1 := by
   have hkk := sq_odd hk
   rw [cstar_odd hk hj]
@@ -128,7 +138,7 @@ theorem LB_odd {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) :
   omega
 
 /-- The odd colouring at x = k u + r, r < k. -/
-theorem colOdd_eq {k j u r : Nat} (hk : k = 2 * j + 1) (hr : r < k) :
+private theorem colOdd_eq {k j u r : Nat} (hk : k = 2 * j + 1) (hr : r < k) :
     colOdd k (k * u + r) =
       decide ((1 ≤ r ∧ r ≤ j) ∨ (r = 0 ∧ j / 2 + 2 ≤ u)) := by
   have hmod : (k * u + r) % k = r := mod_eq_of_decomp rfl hr
@@ -144,7 +154,7 @@ theorem colOdd_eq {k j u r : Nat} (hk : k = 2 * j + 1) (hr : r < k) :
     omega
 
 /-- Odd case of the lower half, with `N` and `c*` in closed form. -/
-theorem odd_case {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) (x y z : Nat)
+private theorem odd_case {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) (x y z : Nat)
     (hx1 : 1 ≤ x) (hy1 : 1 ≤ y) (hzN : z ≤ k * (j + 2) - 1)
     (h : x + y + k * (k * j + 2 * j - 1) = k * z) :
     ¬ (colOdd k x = colOdd k y ∧ colOdd k y = colOdd k z) := by
@@ -197,17 +207,17 @@ theorem odd_case {k j : Nat} (hk : k = 2 * j + 1) (hj : 1 ≤ j) (x y z : Nat)
 
 /-! ## Even k = 2j, j >= 2 -/
 
-theorem sq_even {k j : Nat} (hk : k = 2 * j) : k * k = 2 * (k * j) := by
+private theorem sq_even {k j : Nat} (hk : k = 2 * j) : k * k = 2 * (k * j) := by
   have h1 : k * k = k * (2 * j) := by rw [← hk]
   rw [h1, Nat.mul_left_comm]
 
-theorem mul_pred {k j : Nat} (hj : 2 ≤ j) : k * j = k * (j - 1) + k := by
+private theorem mul_pred {k j : Nat} (hj : 2 ≤ j) : k * j = k * (j - 1) + k := by
   have h := Nat.mul_add k (j - 1) 1
   rw [show j - 1 + 1 = j by omega, Nat.mul_one] at h
   exact h
 
 /-- q = k(k - 2)/2 = k(j - 1). -/
-theorem q_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
+private theorem q_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
     k * (k - 2) / 2 = k * (j - 1) := by
   rw [show k - 2 = 2 * (j - 1) by omega, Nat.mul_left_comm k 2,
     Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
@@ -224,7 +234,7 @@ theorem cstar_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
   rw [h2, Nat.mul_left_comm k 2, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
 
 /-- LB(c*(k), k) = q + 2k - 1 for even k >= 4. -/
-theorem LB_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
+private theorem LB_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
     LB (cstar k) k = k * (k - 2) / 2 + 2 * k - 1 := by
   have hq := q_even hk hj
   have hkj := mul_pred (k := k) hj
@@ -243,7 +253,7 @@ theorem LB_even {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) :
   omega
 
 /-- Even case of the lower half, with `N` and `c*` in closed form. -/
-theorem even_case {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) (x y z : Nat)
+private theorem even_case {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) (x y z : Nat)
     (hx1 : 1 ≤ x) (hxN : x ≤ k * (k - 2) / 2 + 2 * k - 1)
     (hy1 : 1 ≤ y) (hyN : y ≤ k * (k - 2) / 2 + 2 * k - 1)
     (hzN : z ≤ k * (k - 2) / 2 + 2 * k - 1)
@@ -290,18 +300,9 @@ theorem even_case {k j : Nat} (hk : k = 2 * j) (hj : 2 ≤ j) (x y z : Nat)
 
 /-! ## The claim -/
 
-/-- LB(c*(k), k) equals the proof's N, for every k >= 3. -/
-theorem LB_cstar (k : Nat) (hk : 3 ≤ k) : LB (cstar k) k = N k := by
-  unfold N
-  by_cases hodd : k % 2 = 1
-  · simp only [hodd, ↓reduceIte]
-    exact LB_odd (by omega) (by omega)
-  · simp only [hodd, ↓reduceIte]
-    exact LB_even (j := k / 2) (by omega) (by omega)
-
 /-- The proof's colouring `col k` has no monochromatic solution on
 [1, LB(c*(k), k)]. -/
-theorem lower_col_valid (k : Nat) (hk : 3 ≤ k) (x y z : Nat)
+private theorem lower_col_valid (k : Nat) (hk : 3 ≤ k) (x y z : Nat)
     (hx1 : 1 ≤ x) (hxN : x ≤ LB (cstar k) k)
     (hy1 : 1 ≤ y) (hyN : y ≤ LB (cstar k) k)
     (_hz1 : 1 ≤ z) (hzN : z ≤ LB (cstar k) k)
