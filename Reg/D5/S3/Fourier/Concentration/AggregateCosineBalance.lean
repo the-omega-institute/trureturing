@@ -23,7 +23,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ (q : ℕ) [NeZero q] (_ : 7 ≤ q),
+  Law V := ∀ {q : ℕ} [NeZero q] (_ : 7 ≤ q),
     let c := fun k : ZMod q => Real.cos (2 * Real.pi * (k.val : ℝ) / q)
     let d := fun k : ZMod q => Real.cos (4 * Real.pi * (k.val : ℝ) / q)
     let square := V.readout () ()
@@ -32,7 +32,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  have h := (law 7 (by decide)).1
+  have h := (law (q := 7) (by decide)).1
   norm_num [rejected, realize] at h
 
 def evidence : Registration arena (type_of% @aggregate_cosine_imbalance) where
