@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.DependentFamily
+import Reg.Support.HardinLagAudit
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
 
 /-! The per-column readout in the full six-row continuation sum. -/
@@ -123,46 +123,33 @@ open scoped BigOperators
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
 noncomputable section
 
+open Reg.Support.HardinLagAudit (column_power_one_ne_two)
+
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnPolynomials
   (rowFour rowSix)
 
 namespace RowFour
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := Fin 7
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℤ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature := Reg.Support.HardinLagAudit.signature 7
 
 def actual : Realization signature :=
-  realize signature (fun _ _ j => (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) j) (fun e => nomatch e)
+  realize signature (fun _ _ j => (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) j) (fun e => Empty.elim e)
 
-def erased : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law r :=
-    IsLagRelation (C 3) 1 (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) ∧
-      (∑ j : Fin 7, r.readout () () j) = 1
-
-theorem erased_law : ¬ arena.Law erased := by
-  intro h
-  have hsum : (∑ _ : Fin 7, (0 : ℤ)) = 1 := h.2
-  simp at hsum
+abbrev arena : Arena := Reg.Support.HardinLagAudit.arena 7 (C 3) 1
 
 def registration : Registration arena (type_of% (@rowFour)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@rowFour, erased, erased_law⟩
-  sensitivity := ⟨fun i => ⟨erased, fun j h => (h (Subsingleton.elim j i)).elim,
-    rfl, erased_law⟩, fun i => nomatch i⟩
+  variation :=
+    Reg.Support.HardinLagAudit.variation (T := C 3) (b := 1) (d := 7)
+      rowFour 5 6 (fun _ => 0)
+      (column_power_one_ne_two 3).symm
+  sensitivity :=
+    Reg.Support.HardinLagAudit.sensitivity (T := C 3) (b := 1) (d := 7)
+      rowFour 5 6 (fun _ => 0)
+      (column_power_one_ne_two 3).symm
   dependence := by
-    intro i
+    intro role
     refine ⟨(), 0, 1, ?_⟩
     change (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) 0 ≠ (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) 1
     decide +kernel
@@ -183,7 +170,7 @@ def registration_1 :
   realization := .source arena ⟨registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ j => (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) j) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ j => (![4, 13, -19, -22, 27, 2, -4] : Fin 7 → ℤ) j) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -192,13 +179,17 @@ def registration_1 :
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
     definition := none
     coordinates := #[]
-    readouts := #[{
-      path := #["arg", "fn", "arg", "arg", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false
-    }]
+    readouts := #[
+      { path := #["fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["arg", "fn", "arg", "arg", "body"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }]
   }
   continuation := .unknown
   familyRecord := none
@@ -215,45 +206,28 @@ end RowFour
 
 namespace RowSix
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := Fin 24
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℤ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature := Reg.Support.HardinLagAudit.signature 24
 
 def actual : Realization signature :=
   realize signature (fun _ _ j => (![7, 103, -365, -2896, 7168, 32291, -75471, -161805, 426135,
       333692, -1225001, -155206, 1850161, -363389, -1524689, 557502, 690388, -312941,
-      -166928, 81406, 19997, -9672, -906, 420] : Fin 24 → ℤ) j) (fun e => nomatch e)
+      -166928, 81406, 19997, -9672, -906, 420] : Fin 24 → ℤ) j) (fun e => Empty.elim e)
 
-def erased : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law r :=
-    IsLagRelation (C 5) 1 (![7, 103, -365, -2896, 7168, 32291, -75471, -161805, 426135,
-      333692, -1225001, -155206, 1850161, -363389, -1524689, 557502, 690388, -312941,
-      -166928, 81406, 19997, -9672, -906, 420] : Fin 24 → ℤ) ∧
-      (∑ j : Fin 24, r.readout () () j) = 1
-
-theorem erased_law : ¬ arena.Law erased := by
-  intro h
-  have hsum : (∑ _ : Fin 24, (0 : ℤ)) = 1 := h.2
-  simp at hsum
+abbrev arena : Arena := Reg.Support.HardinLagAudit.arena 24 (C 5) 1
 
 def registration : Registration arena (type_of% (@rowSix)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@rowSix, erased, erased_law⟩
-  sensitivity := ⟨fun i => ⟨erased, fun j h => (h (Subsingleton.elim j i)).elim,
-    rfl, erased_law⟩, fun i => nomatch i⟩
+  variation :=
+    Reg.Support.HardinLagAudit.variation (T := C 5) (b := 1) (d := 24)
+      rowSix 22 23 (fun _ => 0)
+      (column_power_one_ne_two 5).symm
+  sensitivity :=
+    Reg.Support.HardinLagAudit.sensitivity (T := C 5) (b := 1) (d := 24)
+      rowSix 22 23 (fun _ => 0)
+      (column_power_one_ne_two 5).symm
   dependence := by
-    intro i
+    intro role
     refine ⟨(), 0, 1, ?_⟩
     change (![7, 103, -365, -2896, 7168, 32291, -75471, -161805, 426135,
       333692, -1225001, -155206, 1850161, -363389, -1524689, 557502, 690388, -312941,
@@ -280,7 +254,7 @@ def registration_1 :
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ j => (![7, 103, -365, -2896, 7168, 32291, -75471, -161805, 426135,
       333692, -1225001, -155206, 1850161, -363389, -1524689, 557502, 690388, -312941,
-      -166928, 81406, 19997, -9672, -906, 420] : Fin 24 → ℤ) j) (fun e => nomatch e))
+      -166928, 81406, 19997, -9672, -906, 420] : Fin 24 → ℤ) j) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -289,13 +263,17 @@ def registration_1 :
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
     definition := none
     coordinates := #[]
-    readouts := #[{
-      path := #["arg", "fn", "arg", "arg", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false
-    }]
+    readouts := #[
+      { path := #["fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["arg", "fn", "arg", "arg", "body"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }]
   }
   continuation := .unknown
   familyRecord := none

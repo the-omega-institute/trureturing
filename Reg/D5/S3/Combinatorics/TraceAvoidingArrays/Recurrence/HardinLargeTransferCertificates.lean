@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinLargeTransferCertificates
-import Reg.Support.DependentFamily
+import Reg.Support.HardinLagAudit
 
 /-! Source registrations for the full-state lag certificates. -/
 
@@ -11,46 +11,33 @@ open scoped BigOperators
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinLargeTransferCertificates
 noncomputable section
 
+open Reg.Support.HardinLagAudit (column_power_one_ne_two)
+
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinLargeTransferCertificates
   (rowSeven wordSeven rowSevenCoefficients wordSevenCoefficients)
 
 namespace RowSeven
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := Fin 47
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℤ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature := Reg.Support.HardinLagAudit.signature 47
 
 def actual : Realization signature :=
-  realize signature (fun _ _ j => rowSevenCoefficients j) (fun e => nomatch e)
+  realize signature (fun _ _ j => rowSevenCoefficients j) (fun e => Empty.elim e)
 
-def erased : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law r :=
-    IsLagRelation (C 6) 1 rowSevenCoefficients ∧
-      (∑ j : Fin 47, r.readout () () j) = 1
-
-theorem erased_law : ¬ arena.Law erased := by
-  intro h
-  have hsum : (∑ _ : Fin 47, (0 : ℤ)) = 1 := h.2
-  simp at hsum
+abbrev arena : Arena := Reg.Support.HardinLagAudit.arena 47 (C 6) 1
 
 def registration : Registration arena (type_of% (@rowSeven)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@rowSeven, erased, erased_law⟩
-  sensitivity := ⟨fun i => ⟨erased, fun j h => (h (Subsingleton.elim j i)).elim,
-    rfl, erased_law⟩, fun i => nomatch i⟩
+  variation :=
+    Reg.Support.HardinLagAudit.variation (T := C 6) (b := 1) (d := 47)
+      rowSeven 45 46 (fun _ => 0)
+      (column_power_one_ne_two 6).symm
+  sensitivity :=
+    Reg.Support.HardinLagAudit.sensitivity (T := C 6) (b := 1) (d := 47)
+      rowSeven 45 46 (fun _ => 0)
+      (column_power_one_ne_two 6).symm
   dependence := by
-    intro i
+    intro role
     refine ⟨(), 0, 1, ?_⟩
     change rowSevenCoefficients 0 ≠ rowSevenCoefficients 1
     decide +kernel
@@ -71,7 +58,7 @@ def registration_1 :
   realization := .source arena ⟨registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ j => rowSevenCoefficients j) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ j => rowSevenCoefficients j) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -80,13 +67,17 @@ def registration_1 :
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinLargeTransferCertificates
     definition := none
     coordinates := #[]
-    readouts := #[{
-      path := #["arg", "fn", "arg", "arg", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false
-    }]
+    readouts := #[
+      { path := #["fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["arg", "fn", "arg", "arg", "body"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }]
   }
   continuation := .unknown
   familyRecord := none
@@ -103,41 +94,35 @@ end RowSeven
 
 namespace WordSeven
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := Fin 20
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℤ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature := Reg.Support.HardinLagAudit.signature 20
 
 def actual : Realization signature :=
-  realize signature (fun _ _ j => wordSevenCoefficients j) (fun e => nomatch e)
+  realize signature (fun _ _ j => wordSevenCoefficients j) (fun e => Empty.elim e)
 
-def erased : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena := Reg.Support.HardinLagAudit.arena 20 (wordTransfer true 6) 0
 
-abbrev arena : Arena where
-  signature := signature
-  Law r :=
-    IsLagRelation (wordTransfer true 6) 0 wordSevenCoefficients ∧
-      (∑ j : Fin 20, r.readout () () j) = 1
+private def alternatingWord : Word 6 :=
+  ⟨![0, 1, 0, 1, 0, 1, 0], by decide⟩
 
-theorem erased_law : ¬ arena.Law erased := by
-  intro h
-  have hsum : (∑ _ : Fin 20, (0 : ℤ)) = 1 := h.2
-  simp at hsum
+private theorem word_power_one_ne_zero :
+    ((wordTransfer true 6) ^ (1 : ℕ)).mulVec (1 : Word 6 → ℤ) alternatingWord ≠
+      ((wordTransfer true 6) ^ (0 : ℕ)).mulVec (1 : Word 6 → ℤ) alternatingWord := by
+  rw [word_power, word_power]
+  decide +kernel
 
 def registration : Registration arena (type_of% (@wordSeven)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@wordSeven, erased, erased_law⟩
-  sensitivity := ⟨fun i => ⟨erased, fun j h => (h (Subsingleton.elim j i)).elim,
-    rfl, erased_law⟩, fun i => nomatch i⟩
+  variation :=
+    Reg.Support.HardinLagAudit.variation (T := wordTransfer true 6) (b := 0) (d := 20)
+      wordSeven 18 19 alternatingWord
+      word_power_one_ne_zero
+  sensitivity :=
+    Reg.Support.HardinLagAudit.sensitivity (T := wordTransfer true 6) (b := 0) (d := 20)
+      wordSeven 18 19 alternatingWord
+      word_power_one_ne_zero
   dependence := by
-    intro i
+    intro role
     refine ⟨(), 0, 1, ?_⟩
     change wordSevenCoefficients 0 ≠ wordSevenCoefficients 1
     decide +kernel
@@ -158,7 +143,7 @@ def registration_1 :
   realization := .source arena ⟨registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ j => wordSevenCoefficients j) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ j => wordSevenCoefficients j) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -167,13 +152,17 @@ def registration_1 :
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinLargeTransferCertificates
     definition := none
     coordinates := #[]
-    readouts := #[{
-      path := #["arg", "fn", "arg", "arg", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false
-    }]
+    readouts := #[
+      { path := #["fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["arg", "fn", "arg", "arg", "body"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }]
   }
   continuation := .unknown
   familyRecord := none
