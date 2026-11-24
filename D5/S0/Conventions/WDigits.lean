@@ -38,7 +38,17 @@ def wValue (index : ℕ) : ℕ := Nat.fib (index + 2)
 
 theorem wValue_add_two_nat (index : ℕ) :
     wValue (index + 2) = wValue index + wValue (index + 1) := by
-  simpa [wValue, Nat.add_assoc] using (Nat.fib_add_two (n := index + 2))
+  let step (pair : Nat × Nat) := (pair.2, pair.1 + pair.2)
+  have commute (n : Nat) (pair : Nat × Nat) :
+      (step^[n]) (step pair) = step ((step^[n]) pair) := by
+    induction n generalizing pair with
+    | zero => rfl
+    | succ n ih => exact ih (step pair)
+  have advance (n : Nat) : (step^[n + 1]) (0, 1) = step ((step^[n]) (0, 1)) :=
+    commute n (0, 1)
+  change ((step^[index + 2 + 1 + 1]) (0, 1)).1 =
+    ((step^[index + 2]) (0, 1)).1 + ((step^[index + 2 + 1]) (0, 1)).1
+  rw [advance (index + 2 + 1), advance (index + 2)]
 
 /-- Canonical W digits, stored as the occupied Fibonacci indices used by mathlib. -/
 def wdigits (n : ℕ) : List ℕ := Nat.zeckendorf n
