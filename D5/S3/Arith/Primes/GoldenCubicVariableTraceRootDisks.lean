@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/Primes/GoldenCubicVariableTraceRootDisks
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Primes/GoldenCubicVariableTraceRootDisks
    mirror-E: none(waiver:proved-variable-seed-root-frontier)
    anchors: []
    utility: none
-   digest: The golden variable-seed block has an exact primitive signed trace and each same-prime root disk maps bijectively to the zero disk. -/
+   digest: The golden variable-seed block has primitive signed traces and exact same-prime root disks; its seed-one readout uses the discriminant-five Lucas instance. -/
 
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Tactic.LinearCombination
