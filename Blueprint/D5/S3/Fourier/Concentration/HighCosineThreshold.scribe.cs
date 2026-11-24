@@ -20,11 +20,12 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                 + "the level ℓ. Each level’s mass is divided equally among its indices.")),
             Paragraph(Text(
                 "The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, u+ℓ<0, "
-                + "and g(ℓ)<0<g(u). R(c,u,ℓ) means both levels are attained and each value "
+                + "and g(ℓ)<0<g(u). Write J(c,z,u,ℓ) for the same conditions with u+ℓ≤0. "
+                + "R(c,u,ℓ) means both levels are attained and each value "
                 + "is either one or belongs to [ℓ,u]. The predicate Certified(a) requires "
                 + "nonnegative weights of mass one, both moments equal to a, the exact squared mass, "
                 + "and the squared-distance lower bound for every feasible competitor. "
-                + "A feasible competitor is a nonnegative real weight of mass one with both moments at least a.")),
+                + "StrictlyFeasible(w,a) means w is nonnegative of mass one with both moments strictly above a.")),
             Describe.Lean(
                 DescribeId.Create("finite-readout-threshold-certificate"),
                 DeclarationHandle.Create(Owner + ".high_threshold_certificate"),
@@ -55,7 +56,9 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "value of P is positive, a perturbation adds weight there and uses the "
                     + "three support levels to preserve both moments. A sufficiently small "
                     + "positive step decreases the squared mass in either case. At a = b, the weight at z is zero. "
-                    + "A small mixture toward the point mass at z raises both moments and lowers squared mass."))),
+                    + "A small mixture toward the point mass at z raises both moments and lowers squared mass. "
+                    + "For any strict energy decrease, a further small mixture with this point mass preserves "
+                    + "the energy inequality and makes both moment constraints strict."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cyclic-high-threshold-certificate"),
@@ -70,7 +73,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                     + "[0, π] proves the required level order and strict signs. The cutoff lies "
                     + "strictly between b and one. The law minimizes squared mass from the "
                     + "cutoff through one, and a feasible law has smaller squared mass "
-                    + "at every threshold from b up to the cutoff, excluding the cutoff."))),
+                    + "with both moments strictly above the threshold at every a from b up to the cutoff, excluding the cutoff."))),
                 DescribeRole.Theorem))));
 
     private static Formula Cutoff => new Formula.Subscript(F.Id("a"), F.Id("crit"));
@@ -81,7 +84,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
 
     private static Formula Descent() =>
         Seq(Forall, Sp, F.Id("a"), Sp, InMacro, Sp, OpenBracket, F.Id("b"), Comma, Cutoff, Close,
-            Comma, Sp, Exists, Sp, F.Id("w"), Comma, Sp, Operatorname, Grp(F.Id("Feasible")),
+            Comma, Sp, Exists, Sp, F.Id("w"), Comma, Sp, Operatorname, Grp(F.Id("StrictlyFeasible")),
             Open, F.Id("w"), Comma, F.Id("a"), Close, Sp, Land, Sp, F.Id("E"), Open, F.Id("w"),
             Close, Lt, F.Id("E"), Open, new Formula.Subscript(F.Id("v"), F.Id("a")), Close);
 
@@ -105,7 +108,7 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
         var j = F.Id("j");
         var k = F.Id("k");
         return Seq(readout, Sp, Forall, Sp, z, Comma, j, Comma, k, Sp, InMacro, Sp, i, Comma, Sp, levels, Sp,
-            T("H", c, z, u, ell), Sp, Land, Sp, T("c", j), Eq, u, Sp, Land, Sp, T("c", k), Eq, ell);
+            T("J", c, z, u, ell), Sp, Land, Sp, T("c", j), Eq, u, Sp, Land, Sp, T("c", k), Eq, ell);
     }
 
     private static Formula FiniteStatement() => Disp(new Formula.Aligned([

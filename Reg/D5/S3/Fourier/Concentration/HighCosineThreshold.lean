@@ -33,7 +33,7 @@ abbrev arena : Arena where
       ∀ a, tailMoment u l ≤ a → a < criticalThreshold c u l →
         let v := weights c u l ((1 - a) / (1 - tailMoment u l))
         ∃ w : Fin q → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
-          a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
+          a < (∑ i, w i * c i) ∧ a < (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
           (∑ i, square (w i)) < (∑ i, square (v i))
 
 private theorem rejected_law : ¬ arena.Law rejected := by

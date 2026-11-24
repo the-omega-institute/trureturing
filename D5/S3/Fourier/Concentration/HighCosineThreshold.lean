@@ -203,12 +203,12 @@ private theorem affine_sign {f : ℝ → ℝ} {r : ℝ} (h₀ : 0 < f 0)
   rw [h, mul_nonneg_iff_of_pos_left h₀, sub_nonneg]
 
 private theorem signs_iff {ι : Type*} [Fintype ι] (c : ι → ℝ) {u l r : ℝ}
-    (hu : u < 1) (hl : l < u) (hs : u + l < 0) (hr : 0 ≤ r) :
+    (hu : u < 1) (hl : l < u) (hs : u + l ≤ 0) (hr : 0 ≤ r) :
     let β := firstMultiplier u l (count c u) (count c l)
     let γ := secondMultiplier u l (count c u) (count c l)
     let P := polynomial u l (count c u) (count c l)
     r * slopeBound c u l ≤ 1 ↔
-      r ≤ 1 ∧ 0 ≤ β r ∧ 0 ≤ γ r ∧
+      r ≤ 1 ∧ (u + l < 0 → 0 ≤ β r) ∧ 0 ≤ γ r ∧
         ∀ i, l < c i → c i < u → P r (c i) ≤ 0 := by
   classical
   dsimp only
@@ -218,14 +218,20 @@ private theorem signs_iff {ι : Type*} [Fintype ι] (c : ι → ℝ) {u l r : �
   have ht : 0 < topCoeff u l 0 := by
     unfold topCoeff
     exact div_pos (by norm_num) (mul_pos (sub_pos.mpr hu) (sub_pos.mpr (hl.trans hu)))
-  have hb0 : 0 < β 0 := by
-    simp [β, firstMultiplier, upperCoeff, lowerCoeff, mul_neg_of_pos_of_neg ht hs]
   have hg0 : 0 < γ 0 := by
     simp [γ, secondMultiplier, upperCoeff, lowerCoeff, ht]
-  have hb := affine_sign (r := r) hb0 (by
-    unfold β firstMultiplier topCoeff upperCoeff lowerCoeff
-    simp only [div_eq_mul_inv]
-    ring)
+  have hb (hr₁ : r ≤ 1) :
+      (u + l < 0 → 0 ≤ β r) ↔ r * slope (β 0) (β 1) ≤ 1 := by
+    by_cases hstrict : u + l < 0
+    · have hb0 : 0 < β 0 := by
+        simp [β, firstMultiplier, upperCoeff, lowerCoeff, mul_neg_of_pos_of_neg ht hstrict]
+      simpa only [hstrict, true_implies] using affine_sign (r := r) hb0 (by
+        unfold β firstMultiplier topCoeff upperCoeff lowerCoeff
+        simp only [div_eq_mul_inv]
+        ring)
+    · have hsum : u + l = 0 := le_antisymm hs (le_of_not_gt hstrict)
+      have hb0 : β 0 = 0 := by simp [β, firstMultiplier, upperCoeff, lowerCoeff, hsum]
+      simp [hstrict, slope, hb0, hr₁]
   have hg := affine_sign (r := r) hg0 (by
     unfold γ secondMultiplier topCoeff upperCoeff lowerCoeff
     simp only [div_eq_mul_inv]
@@ -251,17 +257,17 @@ private theorem signs_iff {ι : Type*} [Fintype ι] (c : ι → ℝ) {u l r : �
       change slopeBound c u l = s at he
       rw [he]
       exact h s hs'
-  change _ ↔ r ≤ 1 ∧ 0 ≤ β r ∧ 0 ≤ γ r ∧ ∀ i, l < c i → c i < u → P r (c i) ≤ 0
-  rw [hbound, hb, hg]
+  change _ ↔ r ≤ 1 ∧ (u + l < 0 → 0 ≤ β r) ∧ 0 ≤ γ r ∧ ∀ i, l < c i → c i < u → P r (c i) ≤ 0
+  rw [hbound, hg]
   simp only [certificateSlopes, Finset.forall_mem_insert, mul_one, forall_mem_image,
     mem_filter, mem_univ, true_and]
   change (r ≤ 1 ∧ r * slope (β 0) (β 1) ≤ 1 ∧ r * slope (γ 0) (γ 1) ≤ 1 ∧
     ∀ ⦃x : ι⦄, l < c x ∧ c x < u → r * slope (P 0 (c x)) (P 1 (c x)) ≤ 1) ↔ _
   constructor
   · rintro ⟨h₁, h₂, h₃, h₄⟩
-    exact ⟨h₁, h₂, h₃, fun i hi hj => (hP i hi hj).mpr (h₄ (x := i) ⟨hi, hj⟩)⟩
+    exact ⟨h₁, (hb h₁).mpr h₂, h₃, fun i hi hj => (hP i hi hj).mpr (h₄ (x := i) ⟨hi, hj⟩)⟩
   · rintro ⟨h₁, h₂, h₃, h₄⟩
-    exact ⟨h₁, h₂, h₃, fun {i} hi => (hP i hi.1 hi.2).mp (h₄ i hi.1 hi.2)⟩
+    exact ⟨h₁, (hb h₁).mp h₂, h₃, fun {i} hi => (hP i hi.1 hi.2).mp (h₄ i hi.1 hi.2)⟩
 
 private theorem weights_eq_max {ι : Type*} [Fintype ι] (c : ι → ℝ)
     {u l r : ℝ} (hu : u < 1) (hl : l < u)
@@ -330,7 +336,7 @@ def IsCertified {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l a : ℝ) : Prop 
       (∑ i, (w i - v i) ^ 2) ≤ (∑ i, w i ^ 2) - exactEnergy c u l r ∧
       ((∑ i, w i ^ 2) = exactEnergy c u l r → w = v)
 
-private theorem ordered_levels {u l : ℝ} (hs : u + l < 0)
+private theorem ordered_levels {u l : ℝ} (hs : u + l ≤ 0)
     (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0) :
     u < 1 ∧ l < u := by
   have hp : 0 < (1 - u) * (2 * u + 1) := by nlinarith only [hgu]
@@ -362,7 +368,7 @@ private theorem tailMoment_lt_cutoff {ι : Type*} [Fintype ι] {c : ι → ℝ} 
     nlinarith [mul_nonneg (sub_nonneg.mpr hp₁.le) (sub_nonneg.mpr hl.le)]
   have hB : 1 < B := by
     by_contra! h
-    obtain ⟨_, hβ, hγ, _⟩ := (signs_iff c hu hl hs (r := 1) zero_le_one).mp
+    obtain ⟨_, hβ, hγ, _⟩ := (signs_iff c hu hl hs.le (r := 1) zero_le_one).mp
       (by simpa only [one_mul] using h)
     have hP := polynomial_values hu hl nu nl 1
     have h₁ := polynomial_expand u l nu nl 1 1
@@ -373,7 +379,7 @@ private theorem tailMoment_lt_cutoff {ι : Type*} [Fintype ι] {c : ι → ℝ} 
     have hdiff : 0 ≤ second 1 - second u := by
       unfold second
       nlinarith [mul_nonneg (sub_nonneg.mpr hu.le) (show 0 ≤ 1 + u by linarith)]
-    have hle := add_nonneg (mul_nonneg hβ (sub_nonneg.mpr hu.le)) (mul_nonneg hγ hdiff)
+    have hle := add_nonneg (mul_nonneg (hβ hs) (sub_nonneg.mpr hu.le)) (mul_nonneg hγ hdiff)
     change 0 ≤ firstMultiplier u l nu nl 1 * (1 - u) +
       secondMultiplier u l nu nl 1 * (second 1 - second u) at hle
     change 0 < upperFraction u l / nu at hw
@@ -395,7 +401,7 @@ theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
     tailMoment u l < criticalThreshold c u l ∧ criticalThreshold c u l < 1 ∧
       ∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a := by
   classical
-  obtain ⟨hu, hl⟩ := ordered_levels hs hgu hgl
+  obtain ⟨hu, hl⟩ := ordered_levels hs.le hgu hgl
   change 0 < difference u at hgu
   change difference l < 0 at hgl
   let p := upperFraction u l
@@ -429,7 +435,7 @@ theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
     calc
       r * B * (1 - b) = (r * (1 - b)) * B := by ring
       _ ≤ 1 * (1 - b) := by rwa [hra, one_mul]
-  obtain ⟨hr₁, hβ, hγ, hc⟩ := (signs_iff c hu hl hs hr).mp hrB
+  obtain ⟨hr₁, hβ, hγ, hc⟩ := (signs_iff c hu hl hs.le hr).mp hrB
   have hv := weights_eq_max c hu hl hlevels hr hr₁ hp.le hp₁.le hc
   obtain ⟨hmass, hfirst, hsecond⟩ := weights_moments hz hu hl hnu hnl hgu hgl hb (a := a)
   have henergy : (∑ i, v i ^ 2) = exactEnergy c u l r := by
@@ -445,7 +451,7 @@ theorem high_threshold_certificate {ι : Type*} [Fintype ι] (c : ι → ℝ)
     ring
   refine ⟨fun i => hv i ▸ le_max_left _ _, hmass, hfirst, hsecond, henergy, ?_⟩
   intro w hw hws hwc hwd
-  have hd := squared_distance_le_gap c (fun i => second (c i)) v w hβ hγ
+  have hd := squared_distance_le_gap c (fun i => second (c i)) v w (hβ hs) hγ
     (fun i => (hv i).trans (congrArg (max 0) (polynomial_expand u l nu nl r (c i))))
     hw (hws.trans hmass.symm)
     (hfirst.trans_le hwc) (hsecond.trans_le hwd)
@@ -533,16 +539,14 @@ private theorem sum_adjust {ι : Type*} [Fintype ι] (c : ι → ℝ) (z j k : �
     sub_ne_zero.mpr (hl.trans hu).ne']
   ring
 
-/-- From the common tail moment up to the certificate boundary, excluding the boundary,
-some feasible law has strictly smaller squared mass. -/
-theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι → ℝ)
+private theorem exists_feasible_descent_below_threshold {ι : Type*} [Fintype ι] (c : ι → ℝ)
     (z j k : ι) {u l a : ℝ} (htop : ∀ i, c i = 1 ↔ i = z) (hj : c j = u) (hk : c k = l)
-    (hs : u + l < 0)
+    (hs : u + l ≤ 0)
     (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0)
     (ha : tailMoment u l ≤ a) (hac : a < criticalThreshold c u l) :
     let r := (1 - a) / (1 - tailMoment u l)
     let v := weights c u l r
-    ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
+    a < 1 ∧ ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
       a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
       (∑ i, w i ^ 2) < (∑ i, v i ^ 2) := by
   classical
@@ -570,6 +574,7 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
     nlinarith [mul_nonneg (sub_nonneg.mpr hp₁.le) (sub_nonneg.mpr hl.le)]
   have hB := zero_lt_one.trans_le (one_le_bound c u l)
   have ha₁ : a < 1 := hac.trans (sub_lt_self _ (div_pos (sub_pos.mpr hb) hB))
+  refine ⟨ha₁, ?_⟩
   have hr : 0 < r := div_pos (sub_pos.mpr ha₁) (sub_pos.mpr hb)
   have hr_le : r ≤ 1 := (div_le_one (sub_pos.mpr hb)).mpr (by linarith)
   have hposU : 0 < v j := by
@@ -664,7 +669,7 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
   · by_cases hγ : 0 ≤ γ
     · have hn : ¬ ∀ i, l < c i → c i < u → P (c i) ≤ 0 := by
         intro h
-        exact (not_le_of_gt hrB) ((signs_iff c hu hl hs hr.le).mpr ⟨hr₁.le, hβ, hγ, h⟩)
+        exact (not_le_of_gt hrB) ((signs_iff c hu hl hs hr.le).mpr ⟨hr₁.le, fun _ => hβ, hγ, h⟩)
       push Not at hn
       obtain ⟨i, hi₁, hi₂, hiP⟩ := hn
       let e (x : ι) := spike i 1 x + adjust z j k u l (-1) (-c i) (-d i) x
@@ -701,6 +706,59 @@ theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι 
     · simp [hd]
     · simpa using hv.trans_lt (by simpa using lt_of_not_ge hβ)
 
+private theorem strict_moments_of_feasible_descent {ι : Type*} [Fintype ι]
+    (c d v w : ι → ℝ) (z : ι) {a : ℝ} (ha : a < 1) (hc : c z = 1) (hd : d z = 1)
+    (hw : ∀ i, 0 ≤ w i) (hs : (∑ i, w i) = 1)
+    (hwc : a ≤ (∑ i, w i * c i)) (hwd : a ≤ (∑ i, w i * d i))
+    (hE : (∑ i, w i ^ 2) < (∑ i, v i ^ 2)) :
+    ∃ w' : ι → ℝ, (∀ i, 0 ≤ w' i) ∧ (∑ i, w' i) = 1 ∧
+      a < (∑ i, w' i * c i) ∧ a < (∑ i, w' i * d i) ∧
+      (∑ i, w' i ^ 2) < (∑ i, v i ^ 2) := by
+  classical
+  let mix (t : ℝ) (i : ι) := (1 - t) * w i + t * spike z 1 i
+  have hcont : Continuous (fun t : ℝ => ∑ i, (mix t i) ^ 2) := by
+    unfold mix
+    fun_prop
+  have hzero : (∑ i, (mix 0 i) ^ 2) < (∑ i, v i ^ 2) := by simpa [mix] using hE
+  obtain ⟨δ, hδ, hnear⟩ := Metric.eventually_nhds_iff.mp
+    (hcont.continuousAt.eventually_lt continuousAt_const hzero)
+  let t := min δ 1 / 2
+  have ht : 0 < t := half_pos (lt_min hδ zero_lt_one)
+  have htδ : t < δ := (half_lt_self (lt_min hδ zero_lt_one)).trans_le (min_le_left _ _)
+  have ht₁ : t < 1 := (half_lt_self (lt_min hδ zero_lt_one)).trans_le (min_le_right _ _)
+  have htnear : dist t (0 : ℝ) < δ := by simpa [Real.dist_eq, abs_of_pos ht] using htδ
+  have hmoment (f : ι → ℝ) :
+      (∑ i, mix t i * f i) = (1 - t) * (∑ i, w i * f i) + t * f z := by
+    simp only [mix, add_mul, sum_add_distrib, mul_assoc, ← mul_sum, sum_spike, one_mul]
+  have hstrict (f : ι → ℝ) (hf : f z = 1) (hwf : a ≤ (∑ i, w i * f i)) :
+      a < (∑ i, mix t i * f i) := by
+    rw [hmoment, hf, mul_one]
+    nlinarith only [mul_le_mul_of_nonneg_left hwf (sub_nonneg.mpr ht₁.le),
+      mul_pos ht (sub_pos.mpr ha)]
+  refine ⟨mix t, ?_, ?_, hstrict c hc hwc, hstrict d hd hwd, hnear htnear⟩
+  · intro i
+    have hz : 0 ≤ spike z 1 i := by unfold spike; split <;> norm_num
+    exact add_nonneg (mul_nonneg (sub_nonneg.mpr ht₁.le) (hw i)) (mul_nonneg ht.le hz)
+  · simpa [hs] using hmoment (fun _ => 1)
+
+ /-- From the common tail moment up to the certificate boundary, excluding the boundary,
+a law with both moments strictly above the threshold has strictly smaller squared mass. -/
+theorem exists_smaller_energy_below_threshold {ι : Type*} [Fintype ι] (c : ι → ℝ)
+    (z j k : ι) {u l a : ℝ} (htop : ∀ i, c i = 1 ↔ i = z) (hj : c j = u) (hk : c k = l)
+    (hs : u + l ≤ 0)
+    (hgu : 0 < u - (2 * u ^ 2 - 1)) (hgl : l - (2 * l ^ 2 - 1) < 0)
+    (ha : tailMoment u l ≤ a) (hac : a < criticalThreshold c u l) :
+    let r := (1 - a) / (1 - tailMoment u l)
+    let v := weights c u l r
+    ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
+      a < (∑ i, w i * c i) ∧ a < (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
+      (∑ i, w i ^ 2) < (∑ i, v i ^ 2) := by
+  obtain ⟨ha₁, w, hw, hws, hfirst, hsecond, hE⟩ :=
+    exists_feasible_descent_below_threshold c z j k htop hj hk hs hgu hgl ha hac
+  have hz : c z = 1 := (htop z).mpr rfl
+  exact strict_moments_of_feasible_descent c (fun i => 2 * (c i) ^ 2 - 1) _ w z
+    ha₁ hz (by norm_num [hz]) hw hws hfirst hsecond hE
+
 /-- The first cosine readout on the canonical residue representatives. -/
 def cyclicReadout (q : ℕ) (k : Fin q) : ℝ :=
   Real.cos (2 * Real.pi * (k.val : ℝ) / q)
@@ -723,7 +781,7 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
       ∀ a, tailMoment u l ≤ a → a < criticalThreshold c u l →
         let v := weights c u l ((1 - a) / (1 - tailMoment u l))
         ∃ w : Fin q → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
-          a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
+          a < (∑ i, w i * c i) ∧ a < (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
           (∑ i, square (w i)) < (∑ i, square (v i)) := by
   let z : Fin q := ⟨0, by omega⟩
   let one : Fin q := ⟨1, by omega⟩
@@ -828,6 +886,6 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     high_threshold_certificate (cyclicReadout q) z huniq hsum hgu hgl hlevels ⟨one, huAtt⟩ ⟨half, hlAtt⟩
   exact ⟨hcut, hlt, hcert, fun _ ha hac =>
     exists_smaller_energy_below_threshold (cyclicReadout q) z one half huniq huAtt hlAtt
-      hsum hgu hgl ha hac⟩
+      hsum.le hgu hgl ha hac⟩
 
 end D5.S3.Fourier.Concentration.HighCosineThreshold
