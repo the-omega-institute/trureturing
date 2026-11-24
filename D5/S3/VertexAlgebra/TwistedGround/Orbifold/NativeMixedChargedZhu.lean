@@ -62,7 +62,7 @@ def fixedChargedZero (t : Bool) (c : Charge D) : Module.End ℂ (twistedTop D hu
     (by simpa only [Int.toNat_of_nonneg (chargeEnergy_nonneg D hD c)] using
       fixedChargedVacuum_grade D c)
 
-local instance (t : Bool) : AddCommGroup (twistedTop D hu t) :=
+local instance chargedTopAddCommGroup (t : Bool) : AddCommGroup (twistedTop D hu t) :=
   @Submodule.addCommGroup ℂ (Twisted D hu t) _ _ _ (twistedTop D hu t)
 
 /-- The fixed charged action on a neutral current has exactly one singular source mode.
