@@ -463,3 +463,140 @@ end Count
 end Words
 
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
+
+namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers.RowFibres
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinActualTransfers
+  (row_fibres_iff_pow_mulVec)
+open scoped BigOperators
+
+universe u v
+
+abbrev Parameters :=
+  Σ A : Type u, Σ B : Type v, Σ _ : Fintype A, Σ _ : DecidableEq A,
+    Σ _ : Matrix A A ℤ, Σ _ : Matrix B B ℤ, Σ _ : A → B, Σ _ : B → ℤ, Nat
+
+abbrev signature : DependentFamily.Signature where
+  Params := Parameters.{u,v}
+  State p := p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => Int
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature.{u,v} :=
+  DependentFamily.realize signature
+    (fun _ p a =>
+      letI : Fintype p.1 := p.2.2.1
+      letI : DecidableEq p.1 := p.2.2.2.1
+      (p.2.2.2.2.1 ^ p.2.2.2.2.2.2.2.2).mulVec
+        (p.2.2.2.2.2.2.2.1 ∘ p.2.2.2.2.2.2.1) a)
+    (fun e => nomatch e)
+
+def erased : DependentFamily.Realization signature.{u,v} :=
+  DependentFamily.realize signature (fun _ _ _ => (0 : Int)) (fun e => nomatch e)
+
+def arena : DependentFamily.Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {A : Type u} {B : Type v}
+      [fA : Fintype A] [dA : DecidableEq A] [Fintype B] [DecidableEq B]
+      (T : Matrix A A ℤ) (Q : Matrix B B ℤ) (cls : A → B),
+    (∀ a b, (∑ x : A, if cls x = b then T a x else 0) = Q (cls a) b) ↔
+      ∀ (v : B → ℤ) (m : Nat) (a : A),
+        R.readout () ⟨A, B, fA, dA, T, Q, cls, v, m⟩ a =
+          (Q ^ m).mulVec v (cls a)
+
+abbrev sourceScope := type_of% (@row_fibres_iff_pow_mulVec.{u,v})
+
+theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law actual := Iff.rfl
+
+private abbrev testClass (a : ULift.{u} Bool) : ULift.{v} Bool := ⟨a.down⟩
+private abbrev testVector (b : ULift.{v} Bool) : Int := if b.down then 1 else 0
+
+theorem erased_fails : ¬ arena.{u,v}.Law erased := by
+  intro h
+  have original := row_fibres_iff_pow_mulVec
+    (1 : Matrix (ULift.{u} Bool) (ULift.{u} Bool) Int)
+    (1 : Matrix (ULift.{v} Bool) (ULift.{v} Bool) Int) testClass
+  have fibres := original.mpr (by intro v m a; simp)
+  have zero := (h
+    (1 : Matrix (ULift.{u} Bool) (ULift.{u} Bool) Int)
+    (1 : Matrix (ULift.{v} Bool) (ULift.{v} Bool) Int) testClass).mp
+    fibres testVector 0 ⟨true⟩
+  change (0 : Int) =
+    ((1 : Matrix (ULift.{v} Bool) (ULift.{v} Bool) Int) ^ (0 : Nat)).mulVec
+      testVector ⟨true⟩ at zero
+  simp [testVector] at zero
+
+theorem readout_dependence :
+    DependentFamily.ObservationalDependence signature.{u,v} actual := by
+  intro i
+  cases i
+  refine ⟨⟨ULift.{u} Bool, ULift.{v} Bool, inferInstance, inferInstance, 1, 1,
+    testClass, testVector, 0⟩, ⟨false⟩, ⟨true⟩, ?_⟩
+  change
+    ((1 : Matrix (ULift.{u} Bool) (ULift.{u} Bool) Int) ^ (0 : Nat)).mulVec
+        (testVector.{v} ∘ testClass.{u,v}) ⟨false⟩ ≠
+      ((1 : Matrix (ULift.{u} Bool) (ULift.{u} Bool) Int) ^ (0 : Nat)).mulVec
+        (testVector.{v} ∘ testClass.{u,v}) ⟨true⟩
+  simp [testVector]
+
+def family : DependentFamily.Registration arena.{u,v} sourceScope.{u,v} where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp (@row_fibres_iff_pow_mulVec.{u,v}), erased, erased_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨erased, ?_, rfl, erased_fails⟩
+      intro j different
+      exact (different (@Subsingleton.elim Unit _ j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := readout_dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
+      (@row_fibres_iff_pow_mulVec.{u,v}) (DependentFamily.Realization signature.{u,v})
+      Unit Unit where
+  unitName := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinActualTransfers.row_fibres_iff_pow_mulVec.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers.RowFibres.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (DependentFamily.realize signature
+    (fun _ p a =>
+      letI : Fintype p.1 := p.2.2.1
+      letI : DecidableEq p.1 := p.2.2.2.1
+      (p.2.2.2.2.1 ^ p.2.2.2.2.2.2.2.2).mulVec
+        (p.2.2.2.2.2.2.2.1 ∘ p.2.2.2.2.2.2.1) a)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
+    definition := none
+    coordinates := #[0, 1, 6, 7, 8, 9, 10]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "body", "body", "fn", "arg"]
+      stateBinder := 11
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers.RowFibres
