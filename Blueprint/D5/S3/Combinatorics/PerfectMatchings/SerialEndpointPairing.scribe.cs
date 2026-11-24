@@ -70,6 +70,15 @@ internal sealed class SerialEndpointPairingDocument : IScribeDocumentDefinition
                         + "relations used above. This result is the deterministic series rule; it makes no assertion "
                         + "about diamond counts, sign distributions, physical edge categories, necklace graph "
                         + "properties, expected values, thresholds or limits."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("serial-through-phase"),
+                DeclarationHandle.Create(Prefix + "serialOn_phase"),
+                H("Through phase on the original serial chain"),
+                StatementSource.FromAuthor(PhaseStatement()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("In an all-through chain, label T = (02)(13) by false and U = (03)(12) by true. Label each connector by false for the identity and true for its swap. The measured through bit of the actual outer first-return pairing is the XOR of the pieces' bits and the connector bits.")),
+                    Paragraph(Text("The proof checks the two-module endpoint composition on its measured eight-port cycle reduction, then propagates the equality along the original carrier. It preserves the distinction between the two through pairings, which the existing cap/through criterion alone does not identify.")),
+                    Paragraph(Text("This result is deterministic and valid for any nonempty chain. It does not assert a graphwise sign law or enumerate numerical density witnesses."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string x) => F.Id(x);
@@ -89,6 +98,16 @@ internal sealed class SerialEndpointPairingDocument : IScribeDocumentDefinition
     private static Formula Band(Formula x) => Call("band", K(), x);
     private static Formula P(Formula m) => Call("pairing", m);
     private static Formula Dead() => Call("Dead");
+
+    private static Formula PhaseStatement()
+    {
+        var localThrough = All("i", Indices(), NotEqual(P(Module(V("i"))), Dead()));
+        var phaseLaw = Equal(Call("throughPhase", P(K())), Call("serialPhase", V("n"), V("M"), V("c")));
+        return Disp(All("n", V("Nat"),
+            All("M", Call("Function", Indices(), V("CutModule")),
+            All("c", Call("Function", Fin(V("n")), Call("Perm", Fin(Num(2)))),
+                Imp(localThrough, phaseLaw)))));
+    }
 
     private static Formula Statement()
     {

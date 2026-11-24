@@ -183,7 +183,8 @@ theorem realizesReturnSupport {I L A : Type*} [Finite L] [Mul L]
     ((vanishingPattern (A := A) rows vanishes).symm.trans
       (patternOnRowSpan (A := A) rows vanishes))
 
-private theorem selectedByRow {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
+/-- The lifted translations fail to commute exactly at the selected quotient vertices. -/
+theorem selectedByRow {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
     (e p q x : L) (labels : Set L → A) (a : A)
     (comm : ∀ u v : L, u * v = v * u)
     (invol : ∀ u v : L, u * (u * v) = v) (different : p ≠ q)
