@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 
 /-! Common extensions of adjacent Fibonacci marginals with arbitrary coherences. -/
@@ -598,5 +599,177 @@ theorem rational_extension_at (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : 
     · apply rr
     · exact (rationalConjugate ⟨_, rr _⟩).property
     · apply qT
+
+
+open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
+  (pureCoupling ptrace2_pure ptrace1_pure)
+
+private theorem leftGram {n : Type*} [Fintype n] (M : Matrix n n ℂ) :
+    partialTraceRight (rankOneDensity (fun p : n × n => M p.1 p.2)) = M * Mᴴ := by
+  let e := (Fintype.equivFin n).symm
+  let N := M.submatrix e e
+  let T := rankOneDensity (fun p : n × n => M p.1 p.2)
+  have ht : (partialTraceRight T).submatrix e e = partialTraceRight (pureCoupling N) := by
+    ext i j : 1
+    change (∑ k : n, T (e i, k) (e j, k)) =
+      ∑ k : Fin (Fintype.card n), T (e i, e k) (e j, e k)
+    exact (Fintype.sum_equiv e _ _ fun _ => rfl).symm
+  have hm : (M * Mᴴ).submatrix e e = N * Nᴴ := by
+    exact (submatrix_mul_equiv M Mᴴ e e e).symm
+  have h := ht.trans ((ptrace2_pure N).trans hm.symm)
+  ext i j : 1
+  obtain ⟨a, rfl⟩ := e.surjective i
+  obtain ⟨c, rfl⟩ := e.surjective j
+  exact congrFun (congrFun h a) c
+
+private theorem rightGram {n : Type*} [Fintype n] (M : Matrix n n ℂ) :
+    partialTraceLeft (rankOneDensity (fun p : n × n => M p.1 p.2)) = (Mᴴ * M)ᵀ := by
+  let e := (Fintype.equivFin n).symm
+  let N := M.submatrix e e
+  let T := rankOneDensity (fun p : n × n => M p.1 p.2)
+  have ht : (partialTraceLeft T).submatrix e e = partialTraceLeft (pureCoupling N) := by
+    ext i j : 1
+    change (∑ k : n, T (k, e i) (k, e j)) =
+      ∑ k : Fin (Fintype.card n), T (e k, e i) (e k, e j)
+    exact (Fintype.sum_equiv e _ _ fun _ => rfl).symm
+  have hm : ((Mᴴ * M)ᵀ).submatrix e e = (Nᴴ * N)ᵀ := by
+    change ((Mᴴ * M).submatrix e e)ᵀ = _
+    exact congrArg Matrix.transpose (submatrix_mul_equiv Mᴴ M e e e).symm
+  have h := ht.trans ((ptrace1_pure N).trans hm.symm)
+  ext i j : 1
+  obtain ⟨a, rfl⟩ := e.surjective i
+  obtain ⟨c, rfl⟩ := e.surjective j
+  exact congrFun (congrFun h a) c
+
+private theorem endpoint_purity_iff {n : Type*} [Fintype n] [DecidableEq n]
+    (L R : Matrix n n ℂ) :
+    (∃ ψ : n × n → ℂ, partialTraceRight (rankOneDensity ψ) = L ∧
+      partialTraceLeft (rankOneDensity ψ) = R) ↔
+      L.PosSemidef ∧ R.PosSemidef ∧ L.charpoly = R.charpoly := by
+  constructor
+  · rintro ⟨ψ, rfl, rfl⟩
+    have hp : (rankOneDensity ψ).PosSemidef := Matrix.posSemidef_vecMulVec_self_star ψ
+    refine ⟨partialTraceRight_posSemidef hp, partialTraceLeft_posSemidef hp, ?_⟩
+    let M : Matrix n n ℂ := fun i j => ψ (i,j)
+    change (partialTraceRight (rankOneDensity (fun p : n × n => M p.1 p.2))).charpoly = _
+    rw [leftGram]
+    change _ = (partialTraceLeft (rankOneDensity (fun p : n × n => M p.1 p.2))).charpoly
+    rw [rightGram, Matrix.charpoly_transpose, Matrix.charpoly_mul_comm]
+  · rintro ⟨hL, hR, hc⟩
+    let hLH := hL.isHermitian
+    let hRH := hR.isHermitian
+    have he := (hLH.eigenvalues_eq_eigenvalues_iff hRH).mpr hc
+    let U : Matrix n n ℂ := hLH.eigenvectorUnitary
+    let V : Matrix n n ℂ := hRH.eigenvectorUnitary
+    let D : Matrix n n ℂ := diagonal (fun i => (Real.sqrt (hLH.eigenvalues i) : ℂ))
+    let Ω : Matrix n n ℂ := diagonal (fun i => (hLH.eigenvalues i : ℂ))
+    have hu : Uᴴ * U = 1 := by
+      exact Unitary.coe_star_mul_self hLH.eigenvectorUnitary
+    have hv : Vᴴ * V = 1 := by
+      exact Unitary.coe_star_mul_self hRH.eigenvectorUnitary
+    have hvt : Vᵀ * (Vᵀ)ᴴ = 1 := by
+      rw [conjTranspose_transpose_eq_transpose_conjTranspose, ← transpose_mul, hv, transpose_one]
+    have hd : Dᴴ = D := by simp [D]
+    have hdd : D * D = Ω := by
+      rw [show D = diagonal (fun i => (Real.sqrt (hLH.eigenvalues i) : ℂ)) from rfl,
+        diagonal_mul_diagonal]
+      refine congrArg diagonal (funext fun i => ?_)
+      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hL.eigenvalues_nonneg i)]
+    have hLdiag : L = U * Ω * Uᴴ := by
+      simpa only [U, Ω, Unitary.conjStarAlgAut_apply, star_eq_conjTranspose, Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using hLH.spectral_theorem
+    have hRdiag : R = V * Ω * Vᴴ := by
+      rw [show Ω = diagonal (fun i => (hRH.eigenvalues i : ℂ)) by rw [← he]]
+      simpa only [V, Unitary.conjStarAlgAut_apply, star_eq_conjTranspose, Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using hRH.spectral_theorem
+    let M := U * D * Vᵀ
+    refine ⟨fun p => M p.1 p.2, ?_, ?_⟩
+    · rw [leftGram, hLdiag]
+      dsimp only [M]
+      rw [conjTranspose_mul, conjTranspose_mul, hd]
+      calc
+        _ = U * (D * (Vᵀ * (Vᵀ)ᴴ) * D) * Uᴴ := by simp only [Matrix.mul_assoc]
+        _ = _ := by rw [hvt, mul_one, hdd]
+    · rw [rightGram, hRdiag]
+      dsimp only [M]
+      rw [conjTranspose_mul, conjTranspose_mul, hd]
+      calc
+        _ = ((Vᵀ)ᴴ * (D * (Uᴴ * U) * D) * Vᵀ)ᵀ := by simp only [Matrix.mul_assoc]
+        _ = _ := by
+          rw [hu, mul_one, hdd, transpose_mul, transpose_mul, transpose_transpose,
+            conjTranspose_transpose_eq_transpose_conjTranspose, transpose_transpose]
+          simp [Ω, Matrix.mul_assoc]
+
+private theorem charpoly_bool_iff (L R : Matrix Bool Bool ℂ) :
+    L.charpoly = R.charpoly ↔ L.trace = R.trace ∧ L.det = R.det := by
+  have hcard : Fintype.card Bool = 2 := by decide
+  rw [Matrix.charpoly_of_card_eq_two L hcard, Matrix.charpoly_of_card_eq_two R hcard]
+  constructor
+  · intro h
+    have yt := congrArg (fun p : Polynomial ℂ => p.coeff 1) h
+    have yd := congrArg (fun p : Polynomial ℂ => p.coeff 0) h
+    simp at yt yd
+    exact ⟨yt, yd⟩
+  · rintro ⟨ht,hd⟩
+    rw [ht,hd]
+
+/-- At zero middle occupation, pure extensions exist exactly for zero coupling and
+positive trace-one endpoint marginals with equal determinants. -/
+theorem pure_coherent_zero_iff (L R : Matrix Bool Bool ℂ) (u v w z : ℂ) :
+    (∃ ψ : Word → ℂ, MatchesCoherentData 0 L R u v w z (rankOneDensity ψ)) ↔
+      u = 0 ∧ v = 0 ∧ w = 0 ∧ z = 0 ∧
+        L.PosSemidef ∧ R.PosSemidef ∧ L.trace = 1 ∧ R.trace = 1 ∧ L.det = R.det := by
+  constructor
+  · rintro ⟨ψ, ht, hl, hr, hz⟩
+    let y := fun i : Bool × Bool => ψ (wordEquiv (.inr i))
+    let T := rankOneDensity y
+    have hxnorm : Complex.normSq (ψ (.inl 0)) = 0 := by
+      have obs := congrFun (congrFun hl 1) 1
+      change ψ (.inl 0) * conj (ψ (.inl 0)) + 0 = (0 : ℂ) at obs
+      rw [add_zero, Complex.mul_conj] at obs
+      exact_mod_cast obs
+    have hx := Complex.normSq_eq_zero.mp hxnorm
+    have hp : (rankOneDensity ψ).PosSemidef := Matrix.posSemidef_vecMulVec_self_star ψ
+    have hsplit : original (assemble 0 0 T) = rankOneDensity ψ := by
+      have hh := split_state (rankOneDensity ψ) hp.isHermitian
+      change original (assemble ((ψ (.inl 0) * conj (ψ (.inl 0))).re)
+        (fun i => ψ (.inl 0) * conj (y i)) T) = rankOneDensity ψ at hh
+      simpa only [hx, zero_mul, Complex.zero_re, Pi.zero_def] using hh
+    rw [← hsplit, left_read] at hl
+    rw [← hsplit, right_read] at hr
+    have hu : u = 0 := (congrFun (congrFun hl 1) 0).symm
+    have hv : v = 0 := (congrFun (congrFun hl 1) 2).symm
+    have hw : w = 0 := (congrFun (congrFun hr 1) 2).symm
+    have hz0 : z = 0 := by
+      change ψ (.inl 0) * conj (ψ (.inr true)) = z at hz
+      simpa [hx] using hz.symm
+    obtain ⟨hL, hR, _⟩ := recover_edge_data 0 0 L R u v w 0 T hl hr
+    obtain ⟨hLP, hRP, hc⟩ := (endpoint_purity_iff L R).mp ⟨y, hL, hR⟩
+    have htT : T.trace = 1 := by
+      rw [← hsplit, trace_original, trace_assemble, Complex.ofReal_zero, add_zero] at ht
+      exact ht
+    have htL : L.trace = 1 := by rw [← hL, trace_partialTraceRight, htT]
+    have htR : R.trace = 1 := by rw [← hR, trace_partialTraceLeft, htT]
+    exact ⟨hu, hv, hw, hz0, hLP, hRP, htL, htR, ((charpoly_bool_iff L R).mp hc).2⟩
+  · rintro ⟨rfl, rfl, rfl, rfl, hLP, hRP, htL, htR, hd⟩
+    obtain ⟨y, hL, hR⟩ := (endpoint_purity_iff L R).mpr
+      ⟨hLP, hRP, (charpoly_bool_iff L R).mpr ⟨htL.trans htR.symm, hd⟩⟩
+    let x : Unit ⊕ (Bool × Bool) → ℂ := Sum.elim (fun _ => 0) y
+    let T := rankOneDensity y
+    let ψ := x ∘ wordEquiv.symm
+    have hsplit : original (assemble 0 0 T) = rankOneDensity ψ := by
+      unfold original ψ
+      suffices h : assemble 0 0 T = rankOneDensity x by
+        rw [h]
+        rfl
+      ext i j
+      rcases i with (_ | i) <;> rcases j with (_ | j) <;>
+        simp [assemble, pivot, cross, rankOneDensity, x, T, Matrix.vecMulVec_apply]
+    refine ⟨ψ, ?_, ?_, ?_, ?_⟩ <;> rw [← hsplit]
+    · rw [trace_original, trace_assemble, ← trace_partialTraceRight T, hL, Complex.ofReal_zero, add_zero]
+      exact htL
+    · rw [left_read, hL]
+      rfl
+    · rw [right_read, hR]
+      rfl
+    · rfl
 
 end D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension

@@ -365,6 +365,79 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end RationalCoordinates
 
+namespace ZeroOccupation
+
+open _root_.D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension (Word)
+open _root_.D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law Y := ∀ (L R : Matrix Bool Bool ℂ) (u v w z : ℂ),
+    (∃ ψ : Word → ℂ, MatchesCoherentData 0 L R u v w z (rankOneDensity ψ)) ↔
+      u = 0 ∧ v = 0 ∧ w = 0 ∧ z = 0 ∧
+        L.PosSemidef ∧ R.PosSemidef ∧ Y.readout () () L.trace 1 ∧
+        R.trace = 1 ∧ L.det = R.det
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let L : Matrix Bool Bool ℂ := Matrix.diagonal fun i => if i then 0 else 1
+  have hL : L.PosSemidef := Matrix.PosSemidef.diagonal fun i => by
+    cases i <;> simp
+  have ht : L.trace = 1 := by
+    simp [L, Matrix.trace, Matrix.diag_apply, Fintype.univ_bool]
+  have he := (pure_coherent_zero_iff L L 0 0 0 0).mpr
+    ⟨rfl, rfl, rfl, rfl, hL, hL, ht, ht, rfl⟩
+  exact ((h L L 0 0 0 0).mp he).2.2.2.2.2.2.1
+
+def family : Registration arena (type_of% @pure_coherent_zero_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pure_coherent_zero_iff, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩, fun anchor => nomatch anchor⟩
+  dependence := by
+    intro role
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    exact one_ne_zero (Eq.mp (congrFun h 0) rfl)
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pure_coherent_zero_iff) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.pure_coherent_zero_iff.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension.ZeroOccupation.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun anchor => nomatch anchor))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg",
+        "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn",
+        "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ZeroOccupation
+
 end
 
 end Reg.D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension

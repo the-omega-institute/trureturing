@@ -72,5 +72,26 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Fix a nonnegative middle occupation, rational observed entries, and a rational value for the unobserved coupling. Suppose the traces normalize the data, both residual marginals are positive semidefinite, and the row vanishes when the middle occupation is zero. The data admit a positive trace-one extension with rational real and imaginary parts in every entry.")),
                     Paragraph(Text("Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-pure-zero-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff"),
+                H("Pure extensions at zero middle occupation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At zero middle occupation, a pure extension exists exactly when all "
+                    + "four couplings vanish and both endpoint matrices are positive "
+                    + "semidefinite with trace one and equal determinants.")),
+                    Paragraph(Text(
+                    "Arrange the four endpoint amplitudes into a two-by-two matrix M. "
+                    + "The reductions are M times its adjoint and the transpose of the "
+                    + "product in reverse order. These matrices have the same characteristic "
+                    + "polynomial. Two-by-two matrices have equal characteristic polynomials "
+                    + "exactly when they have equal traces and determinants.")),
+                    Paragraph(Text(
+                    "For sufficiency, diagonalize both positive matrices with their common "
+                    + "eigenvalue list. Insert the square roots of those eigenvalues between "
+                    + "the left eigenvector unitary and the transpose of the right one. "
+                    + "The resulting amplitude matrix has the two specified reductions."))),
                 DescribeRole.Theorem))));
 }

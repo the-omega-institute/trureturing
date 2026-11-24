@@ -50,12 +50,30 @@ Fix a nonnegative middle occupation, rational observed entries, and a rational v
 
 Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates.
 
+**Theorem 1.4 (Pure extensions at zero middle occupation).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At zero middle occupation, a pure extension exists exactly when all four couplings vanish and both endpoint matrices are positive semidefinite with trace one and equal determinants.
+
+Arrange the four endpoint amplitudes into a two-by-two matrix M. The reductions are M times its adjoint and the transpose of the product in reverse order. These matrices have the same characteristic polynomial. Two-by-two matrices have equal characteristic polynomials exactly when they have equal traces and determinants.
+
+For sufficiency, diagonalize both positive matrices with their common eigenvalue list. Insert the square roots of those eigenvalues between the left eigenvector unitary and the transpose of the right one. The resulting amplitude matrix has the two specified reductions.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.coherent_extendible_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_iff`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at`
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibMarginalExtension](FibMarginalExtension.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings](../../QuantumChannels/QubitWassersteinCouplings.md)
