@@ -33,7 +33,9 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "Fix a natural number p at least two. For a real weight w of total mass one, "
-                + "write M(w) for the vector of Fourier coefficients at 0, 1, 2 and 3 of the "
+                + "let u and v be the squared magnitudes of the unnormalized discrete Fourier "
+                + "transform of this same w at frequencies one and two, respectively. Write M(w) "
+                + "for the vector of Fourier coefficients at 0, 1, 2 and 3 of the "
                 + "singleton cyclic collision masses of the degree-p lattice sums. The lattice coordinate "
                 + "is its representative in {0,1,2,3}. With nonnegative w these masses form "
                 + "the law of the difference between two independent p-fold sums. Let A be the "
