@@ -161,6 +161,34 @@ theorem compactClosedQuadrature_monomial (h : ℝ) (k : ℕ) :
     Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.val_zero, Fin.val_succ]
   split_ifs <;> push_cast <;> ring
 
+/-- A finite Taylor polynomial is evaluated by taking the same linear combination of
+the exact quadrature rows. -/
+theorem compactClosedQuadrature_polynomial (h : ℝ) (n : ℕ) (c : ℕ → ℝ) :
+    compactClosedQuadrature h (fun x ↦ ∑ k ∈ Finset.range n, c k * x ^ k) =
+      ∑ k ∈ Finset.range n,
+        c k * (∑ i : Fin 5, (compactQuadratureMonomialCoefficients k i : ℝ) * h ^ (i : ℕ)) := by
+  let f (k : ℕ) (x : ℝ) := c k * x ^ k
+  have hf (k : ℕ) : ContDiff ℝ ⊤ (f k) := by
+    unfold f
+    fun_prop
+  have hint : (∫ x in (-1 : ℝ)..2, ∑ k ∈ Finset.range n, f k x) =
+      ∑ k ∈ Finset.range n, ∫ x in (-1 : ℝ)..2, f k x :=
+    intervalIntegral.integral_finsetSum fun k _ ↦ (hf k).continuous.intervalIntegrable _ _
+  have hd (j : ℕ) (x : ℝ) : iteratedDeriv j (fun y ↦ ∑ k ∈ Finset.range n, f k y) x =
+      ∑ k ∈ Finset.range n, iteratedDeriv j (f k) x :=
+    iteratedDeriv_fun_sum fun k _ ↦ ((hf k).of_le le_top).contDiffAt
+  change compactClosedQuadrature h (fun x ↦ ∑ k ∈ Finset.range n, f k x) = _
+  calc
+    _ = ∑ k ∈ Finset.range n, compactClosedQuadrature h (f k) := by
+      unfold compactClosedQuadrature
+      rw [hint, hd 1 2, hd 1 (-1), hd 3 2, hd 3 (-1)]
+      simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, mul_add, mul_sub, Finset.mul_sum]
+    _ = _ := Finset.sum_congr rfl fun k _ ↦ by
+      rw [← compactClosedQuadrature_monomial]
+      unfold compactClosedQuadrature f
+      simp only [intervalIntegral.integral_const_mul, iteratedDeriv_const_mul_field]
+      ring
+
 /-- The monomial majorant used in the geometric tail of the quadrature expansion. -/
 theorem compactClosedQuadrature_monomial_abs_le {h : ℝ} (hh : 0 ≤ h) (k : ℕ) :
     |compactClosedQuadrature h (fun x ↦ x ^ k)| ≤
@@ -207,12 +235,158 @@ theorem compactClosedQuadrature_monomial_abs_le {h : ℝ} (hh : 0 ≤ h) (k : �
     abs_of_nonneg (show 0 ≤ h ^ 2 / 12 by positivity),
     abs_of_nonneg (show 0 ≤ h ^ 4 / 720 by positivity)]
   calc
-    _ ≤ 3 * 2 ^ k + h / 2 * (2 * 2 ^ k) + h ^ 2 / 12 * ((k.descFactorial 1 : ℝ) * (2 * 2 ^ (k - 1))) +
+    _ ≤ 3 * 2 ^ k + h / 2 * (2 * 2 ^ k) +
+        h ^ 2 / 12 * ((k.descFactorial 1 : ℝ) * (2 * 2 ^ (k - 1))) +
         h ^ 4 / 720 * ((k.descFactorial 3 : ℝ) * (2 * 2 ^ (k - 3))) :=
       add_le_add (add_le_add (add_le_add hI (mul_le_mul_of_nonneg_left hE (by positivity)))
         (mul_le_mul_of_nonneg_left (hD 1) (by positivity)))
         (mul_le_mul_of_nonneg_left (hD 3) (by positivity))
     _ = _ := by rw [Nat.descFactorial_one]; ring
+
+private def quadratureTailTerm (offset order : ℕ) (radius : ℝ) (n : ℕ) : ℝ :=
+  ((n + offset).descFactorial order : ℝ) * 2 ^ (n + offset - order) * radius ^ n / n.factorial
+
+private theorem quadratureTailTerm_succ_le {offset order N n : ℕ} {R : ℝ}
+    (hR : 0 ≤ R) (horder : order ≤ 3) (hN : 3 ≤ N) (hn : N ≤ n) :
+    quadratureTailTerm offset order R (n + 1) ≤
+      (2 * R / ((N : ℝ) - 2)) * quadratureTailTerm offset order R n := by
+  have hle' : order ≤ n + offset + 1 := by omega
+  have hpow : n + 1 + offset - order = (n + offset - order) + 1 := by omega
+  have hfactor : ((n + offset : ℕ) : ℝ) + 1 - order = (↑(n + offset + 1 - order) : ℝ) := by
+    push_cast [Nat.cast_sub hle']
+    rfl
+  have hdesc : ((n + offset : ℕ).descFactorial order : ℝ) * ((n : ℝ) + offset + 1) =
+      ((n + 1 + offset : ℕ).descFactorial order : ℝ) * ((n : ℝ) + offset + 1 - order) := by
+    have hr := congrArg (fun m : ℕ ↦ (m : ℝ)) (Nat.succ_descFactorial (n + offset) order)
+    rw [Nat.cast_mul, Nat.cast_mul, ← hfactor, Nat.cast_add n offset,
+      Nat.cast_add (n + offset) 1, Nat.cast_add n offset, Nat.cast_one,
+      show n + offset + 1 = n + 1 + offset by omega] at hr
+    linarith only [hr]
+  have hleft : 0 < (N : ℝ) - 2 := sub_pos.mpr (by exact_mod_cast (show 2 < N by omega))
+  have hc : 0 < (n : ℝ) + offset + 1 - order := by
+    have hn' : (3 : ℝ) ≤ n := by exact_mod_cast hN.trans hn
+    have ho' : (order : ℝ) ≤ 3 := by exact_mod_cast horder
+    linarith [Nat.cast_nonneg (α := ℝ) offset]
+  have hn' : (N : ℝ) ≤ n := by exact_mod_cast hn
+  have ho' : (order : ℝ) ≤ 3 := by exact_mod_cast horder
+  have hcross : ((N : ℝ) - 2) * ((n : ℝ) + offset + 1) ≤
+      ((n : ℝ) + 1) * ((n : ℝ) + offset + 1 - order) := by
+    have hs : (N : ℝ) - 2 ≤ (n : ℝ) + 1 - order := by linarith
+    have hb := mul_le_mul_of_nonneg_right hs (show 0 ≤ (n : ℝ) + offset + 1 by positivity)
+    have hd := mul_nonneg (Nat.cast_nonneg (α := ℝ) offset) (Nat.cast_nonneg (α := ℝ) order)
+    nlinarith only [hb, hd]
+  have hstep : quadratureTailTerm offset order R (n + 1) =
+      (2 * R) * (((n : ℝ) + offset + 1) /
+        (((n : ℝ) + 1) * ((n : ℝ) + offset + 1 - order))) * quadratureTailTerm offset order R n := by
+    have hd : ((n + 1 + offset : ℕ).descFactorial order : ℝ) =
+        ((n + offset : ℕ).descFactorial order : ℝ) * ((n : ℝ) + offset + 1) /
+          ((n : ℝ) + offset + 1 - order) := (eq_div_iff hc.ne').mpr hdesc.symm
+    unfold quadratureTailTerm
+    rw [hpow, pow_succ (2 : ℝ), pow_succ R, Nat.factorial_succ, hd]
+    push_cast
+    simp only [div_eq_mul_inv, mul_inv_rev]
+    ring
+  have hratio : ((n : ℝ) + offset + 1) /
+        (((n : ℝ) + 1) * ((n : ℝ) + offset + 1 - order)) ≤ 1 / ((N : ℝ) - 2) := by
+    apply (div_le_div_iff₀ (mul_pos (by positivity) hc) hleft).2
+    simpa only [one_mul, mul_comm ((N : ℝ) - 2)] using hcross
+  rw [hstep]
+  apply mul_le_mul_of_nonneg_right _ (by unfold quadratureTailTerm; positivity)
+  calc
+    _ ≤ (2 * R) * (1 / ((N : ℝ) - 2)) :=
+      mul_le_mul_of_nonneg_left hratio (mul_nonneg (by norm_num) hR)
+    _ = _ := by ring
+
+/-- A common geometric tail for the value, first-endpoint, and third-endpoint
+monomial terms. A shift in the monomial degree does not worsen the ratio. -/
+theorem quadratureTailTerm_tsum_le {offset order N : ℕ} {R : ℝ}
+    (hR : 0 ≤ R) (horder : order ≤ 3) (hN : 3 ≤ N) (hr : 2 * R < (N : ℝ) - 2) :
+    Summable (fun n : ℕ ↦ quadratureTailTerm offset order R (n + N)) ∧
+      (∑' n : ℕ, quadratureTailTerm offset order R (n + N)) ≤
+        quadratureTailTerm offset order R N / (1 - 2 * R / ((N : ℝ) - 2)) := by
+  let a (n : ℕ) := quadratureTailTerm offset order R (n + N)
+  let ρ := 2 * R / ((N : ℝ) - 2)
+  have hden : 0 < (N : ℝ) - 2 := sub_pos.mpr (by exact_mod_cast (show 2 < N by omega))
+  have hρ : 0 ≤ ρ := div_nonneg (mul_nonneg (by norm_num) hR) hden.le
+  have hρ' : ρ < 1 := (div_lt_one hden).mpr hr
+  have ha (n : ℕ) : 0 ≤ a n := by unfold a quadratureTailTerm; positivity
+  have hbound (n : ℕ) : a n ≤ a 0 * ρ ^ n := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      calc
+        a (n + 1) = quadratureTailTerm offset order R (n + N + 1) := by
+          dsimp only [a]
+          rw [show n + 1 + N = n + N + 1 by omega]
+        _ ≤ ρ * a n := quadratureTailTerm_succ_le hR horder hN (by omega)
+        _ ≤ ρ * (a 0 * ρ ^ n) := mul_le_mul_of_nonneg_left ih hρ
+        _ = a 0 * ρ ^ (n + 1) := by rw [pow_succ]; ring
+  have hsum := (summable_geometric_of_lt_one hρ hρ').mul_left (a 0)
+  have has := Summable.of_nonneg_of_le ha hbound hsum
+  have htsum := has.tsum_le_tsum hbound hsum
+  rw [tsum_mul_left, tsum_geometric_of_lt_one hρ hρ'] at htsum
+  exact ⟨has, by simpa only [a, ρ, zero_add, div_eq_mul_inv] using htsum⟩
+
+/-- A single majorant covers each shifted monomial density. For the regularized exponential,
+the inverse quadratic coefficient can be bounded at the first omitted index. -/
+theorem compactClosedQuadrature_series_tail_le {h C t R : ℝ} {offset N : ℕ}
+    (hh : 0 ≤ h) (hC : 0 ≤ C) (ht : |t| ≤ R) (hN : 3 ≤ N)
+    (hr : 2 * R < (N : ℝ) - 2) {weight : ℕ → ℝ}
+    (hw : ∀ n ≥ N, |weight n| ≤ C) :
+    let term (n : ℕ) := |weight (n + N) * (t ^ (n + N) / (n + N).factorial) *
+      compactClosedQuadrature h (fun x ↦ x ^ (n + N + offset))|
+    Summable term ∧ (∑' n : ℕ, term n) ≤
+      C * ((3 + h) * quadratureTailTerm offset 0 R N +
+        h ^ 2 / 6 * quadratureTailTerm offset 1 R N +
+        h ^ 4 / 360 * quadratureTailTerm offset 3 R N) / (1 - 2 * R / ((N : ℝ) - 2)) := by
+  let term (n : ℕ) := |weight (n + N) * (t ^ (n + N) / (n + N).factorial) *
+    compactClosedQuadrature h (fun x ↦ x ^ (n + N + offset))|
+  let A (j n : ℕ) := quadratureTailTerm offset j R (n + N)
+  let B (n : ℕ) := (3 + h) * A 0 n + h ^ 2 / 6 * A 1 n + h ^ 4 / 360 * A 3 n
+  let den := 1 - 2 * R / ((N : ℝ) - 2)
+  have hR : 0 ≤ R := (abs_nonneg t).trans ht
+  have hdom (n : ℕ) : term n ≤ C * B n := by
+    let k := n + N + offset
+    let M := (3 + h) * 2 ^ k + h ^ 2 / 6 * (k : ℝ) * 2 ^ (k - 1) +
+      h ^ 4 / 360 * (k.descFactorial 3 : ℝ) * 2 ^ (k - 3)
+    have hp : |t| ^ (n + N) ≤ R ^ (n + N) := pow_le_pow_left₀ (abs_nonneg t) ht _
+    have hw' : |weight (n + N)| ≤ C := hw _ (by omega)
+    unfold term
+    simp only [abs_mul, abs_div, abs_pow,
+      abs_of_nonneg (Nat.cast_nonneg (α := ℝ) (n + N).factorial)]
+    calc
+      _ ≤ C * (R ^ (n + N) / (n + N).factorial) * M :=
+        mul_le_mul (mul_le_mul hw' (div_le_div_of_nonneg_right hp (Nat.cast_nonneg _))
+          (by positivity) hC) (compactClosedQuadrature_monomial_abs_le hh k)
+          (abs_nonneg _) (by positivity)
+      _ = _ := by
+        dsimp only [B, A, M, k, quadratureTailTerm]
+        simp only [Nat.descFactorial_zero, Nat.descFactorial_one, Nat.cast_one, Nat.sub_zero]
+        ring
+  have h0 := quadratureTailTerm_tsum_le (offset := offset) (order := 0) hR (by decide) hN hr
+  have h1 := quadratureTailTerm_tsum_le (offset := offset) (order := 1) hR (by decide) hN hr
+  have h3 := quadratureTailTerm_tsum_le (offset := offset) (order := 3) hR (by decide) hN hr
+  have s0 : Summable (fun n ↦ (3 + h) * A 0 n) := h0.1.mul_left _
+  have s1 : Summable (fun n ↦ h ^ 2 / 6 * A 1 n) := h1.1.mul_left _
+  have s3 : Summable (fun n ↦ h ^ 4 / 360 * A 3 n) := h3.1.mul_left _
+  have sB : Summable B := (s0.add s1).add s3
+  have has : Summable term := Summable.of_nonneg_of_le (fun _ ↦ abs_nonneg _) hdom (sB.mul_left _)
+  refine ⟨has, (has.tsum_le_tsum hdom (sB.mul_left _)).trans ?_⟩
+  rw [tsum_mul_left]
+  have hB : (∑' n : ℕ, B n) = (3 + h) * (∑' n : ℕ, A 0 n) +
+      h ^ 2 / 6 * (∑' n : ℕ, A 1 n) + h ^ 4 / 360 * (∑' n : ℕ, A 3 n) := by
+    unfold B
+    rw [(s0.add s1).tsum_add s3, s0.tsum_add s1, tsum_mul_left, tsum_mul_left, tsum_mul_left]
+  rw [hB]
+  calc
+    _ ≤ C * ((3 + h) * (quadratureTailTerm offset 0 R N / den) +
+        h ^ 2 / 6 * (quadratureTailTerm offset 1 R N / den) +
+        h ^ 4 / 360 * (quadratureTailTerm offset 3 R N / den)) := by
+      gcongr
+      · exact h0.2
+      · exact h1.2
+      · exact h3.2
+    _ = _ := by dsimp only [den]; ring
 
 /-- The normalized Euler–Maclaurin quadrature with endpoint corrections through order four. -/
 def compactMarginalQuadrature (h t : ℝ) : ℝ :=
