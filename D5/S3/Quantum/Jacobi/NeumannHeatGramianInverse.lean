@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [lake/module/D5.S3.Quantum.Jacobi.NeumannHeatGramianJet]
    utility: none
-   digest: Sparse centered heat Gramian coefficients identify a positive path of known total length at the sharp finite degree. -/
+   digest: The sharp finite Gramian jet identifies a positive path of known total length. -/
 
 module
 
@@ -41,8 +41,10 @@ private theorem variance_cubic (H : ℝ⟦X⟧) :
     obtain rfl | rfl | rfl : d = 0 ∨ d = 1 ∨ d = 2 := by omega
     · simp [gramian]
     · norm_num [h 0, sum_range_succ]
-    · norm_num [h 1, sum_range_succ] <;> ring
-  · norm_num [h 2, sum_range_succ] <;> ring
+    · norm_num [h 1, sum_range_succ]
+      ring
+  · norm_num [h 2, sum_range_succ]
+    ring
 
 /-- The first nonzero coefficient of the centered physical Gramian is cubic.
 Its value depends only on the first edge, even with a constant heat offset. -/
@@ -56,12 +58,12 @@ theorem cubic_coefficient {n : ℕ} (p : Path n) (c : ℝ) (hn : 0 < n) :
     have hn₀ : 0 < n + 1 := by omega
     norm_num [amplitude, Option.elim, hn₀, Path.diagonal, Path.mass]
     field_simp [he.ne']
-    <;> ring
+    ring
   refine ⟨hbelow, ?_⟩
   rw [hcubic]
   norm_num [Path.heat, coeff_C, hm]
   field_simp [he.ne']
-  <;> ring
+  ring
 
 /-- The coefficient read at edge index k, counting from the measured endpoint. -/
 def readoutDegree (k : ℕ) : ℕ := if k = 0 then 3 else 2 * k + 2
@@ -75,7 +77,7 @@ private theorem first_unequal_readout {n k : ℕ} (p q : Path n) (c e : ℝ) (hk
   · subst k
     obtain ⟨hp, hp₃⟩ := cubic_coefficient p c hk
     obtain ⟨hq, hq₃⟩ := cubic_coefficient q e hk
-    simp only [readoutDegree, if_pos rfl]
+    rw [show readoutDegree 0 = 3 from rfl]
     refine ⟨fun d hd => (hp d hd).trans (hq d hd).symm, ?_⟩
     rw [hp₃, hq₃]
     intro h
@@ -83,12 +85,18 @@ private theorem first_unequal_readout {n k : ℕ} (p q : Path n) (c e : ℝ) (hk
     have hpos (a : Path n) : 0 < a.edge 0 := by
       simpa [Path.edge, hk] using a.positive ⟨0, hk⟩
     have hpow : p.edge 0 ^ 6 = q.edge 0 ^ 6 := by
-      have hcancel := (div_eq_div_iff (by positivity) (by positivity)).mp h
+      have hden (a : Path n) : 3 * a.edge 0 ^ 6 ≠ 0 :=
+        mul_ne_zero (by norm_num) (pow_ne_zero _ (hpos a).ne')
+      have hcancel := (div_eq_div_iff (hden p) (hden q)).mp h
       linarith
     exact (pow_left_strictMonoOn₀ (by decide : (6 : ℕ) ≠ 0)).injOn
       (hpos p).le (hpos q).le hpow
   · obtain ⟨hbelow, _, hgap⟩ := first_reveal p q k c e (Nat.pos_of_ne_zero hz) hk hprefix hne
-    simpa only [readoutDegree, if_neg hz, map_sub, sub_eq_zero] using And.intro hbelow hgap
+    simp only [readoutDegree, ite_eq_right hz]
+    refine ⟨?_, ?_⟩
+    · simpa only [map_sub, sub_eq_zero] using hbelow
+    · rw [map_sub] at hgap
+      exact sub_ne_zero.mp hgap
 
 private theorem eq_of_prefix_and_total {n : ℕ} (p q : Path n)
     (htotal : ∑ i, p.length i = ∑ i, q.length i)
@@ -99,7 +107,9 @@ private theorem eq_of_prefix_and_total {n : ℕ} (p q : Path n)
     | zero => exact i.elim0
     | succ m =>
       have hinit (j : Fin m) : p.length j.castSucc = q.length j.castSucc := by
-        simpa [Path.edge, j.castSucc.isLt] using hprefix j.val (by omega)
+        have hjn : j.val < m + 1 := by omega
+        have hj : (⟨j.val, hjn⟩ : Fin (m + 1)) = j.castSucc := Fin.ext rfl
+        simpa only [Path.edge, dite_eq_left hjn, hj] using hprefix j.val (by omega)
       rw [Fin.sum_univ_castSucc, Fin.sum_univ_castSucc] at htotal
       have hlast : p.length (Fin.last m) = q.length (Fin.last m) := by
         rw [sum_congr rfl (fun j _ => hinit j)] at htotal
@@ -134,7 +144,7 @@ def jetCutoff (n : ℕ) : ℕ := if n ≤ 1 then 0 else readoutDegree (n - 2)
 private theorem readout_le_cutoff {n k : ℕ} (hk : k + 1 < n) :
     readoutDegree k ≤ jetCutoff n := by
   unfold jetCutoff
-  rw [if_neg (by omega)]
+  rw [ite_eq_right (by omega)]
   unfold readoutDegree
   split <;> split <;> omega
 
@@ -172,8 +182,9 @@ private theorem swap_last_pair (m : ℕ) (L : ℝ) (hL : 0 < L) :
       have : i = m + 1 := congrArg Fin.val h
       omega
     simp [Path.edge, hin, q, swap, Equiv.swap_apply_of_ne_of_ne h₁ h₂]
-  · simp [Path.edge, show m < m + 2 by omega, q, swap, p, hlast, ← show
-        (⟨m, by omega⟩ : Fin (m + 2)) = penult from rfl, ha.ne']
+  · simp only [Path.edge, dite_eq_left (show m < m + 2 by omega)]
+    rw [show (⟨m, by omega⟩ : Fin (m + 2)) = penult from Fin.ext rfl]
+    simp [q, swap, p, hlast, ha.ne']
 
 /-- Full jets through degree d distinguish all positive paths of a given positive
 total exactly at and above the cutoff. The two offsets are independently arbitrary. -/

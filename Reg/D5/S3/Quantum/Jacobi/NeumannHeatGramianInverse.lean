@@ -31,7 +31,7 @@ namespace Cubic
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ Path (fun _ => ℝ)
 
-def actual : Realization signature := realize signature (fun n _ u => u.edge 0) (fun e => nomatch e)
+def actual : Realization signature := realize signature (fun _ _ u => u.edge 0) (fun e => nomatch e)
 
 def discarded : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
@@ -39,7 +39,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (u : Path n) (c : ℝ), 0 < n →
     (∀ d < 3, coeff d (gramian (u.heat c)) = 0) ∧
-    coeff 3 (gramian (u.heat c)) = 4 / (3 * R.readout n () u ^ 6)
+    coeff 3 (gramian (u.heat c)) = 4 / (3 * R.readout () n u ^ 6)
 
 private theorem discarded_fails : ¬ arena.Law discarded := by
   intro law
@@ -56,7 +56,7 @@ def family : Registration arena (type_of% @cubic_coefficient) where
   sensitivity := sensitivity arena.Law actual discarded discarded_fails
   dependence := by
     intro i
-    refine ⟨2, p, q, ?_⟩
+    refine ⟨(2 : ℕ), p, q, ?_⟩
     change p.edge 0 ≠ q.edge 0
     norm_num [p, q, twoCells, Path.edge]
 
@@ -73,7 +73,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun n _ u => u.edge 0) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ u => u.edge 0) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -99,7 +99,8 @@ namespace Sparse
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
-def actual : Realization signature := realize signature (fun _ _ k => readoutDegree k) (fun e => nomatch e)
+def actual : Realization signature :=
+  realize signature (fun _ _ k => readoutDegree k) (fun e => nomatch e)
 
 def discarded : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
@@ -168,7 +169,8 @@ namespace Cutoff
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
-def actual : Realization signature := realize signature (fun _ _ n => jetCutoff n) (fun e => nomatch e)
+def actual : Realization signature :=
+  realize signature (fun _ _ n => jetCutoff n) (fun e => nomatch e)
 
 def discarded : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
