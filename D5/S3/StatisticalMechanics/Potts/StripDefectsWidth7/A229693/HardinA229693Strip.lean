@@ -22,7 +22,7 @@ rep_weight: proof_shape=bind-only; consumers=initial_exhausted_count
 initial_from_starts: proof_shape=content; consumers=initial_exhausted_count
 initial_exhausted_count: proof_shape=content; consumers=initial_counts
 initial_counts: proof_shape=content; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Recurrence.family._proof_2
+count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
 leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
 coefficients: proof_shape=content; consumers=polynomialCoordinates, polynomial_relation, result

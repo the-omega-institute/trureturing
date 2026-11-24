@@ -28,8 +28,8 @@ zeroExitCodes: proof_shape=bind-only; consumers=zeroExitCodes_count, exhaustedMu
 zeroExitCodes_count: proof_shape=bind-only; consumers=class_counts_canonical
 rep_partition: proof_shape=bind-only; consumers=exactExits_active, exactExits_new
 oldZeroImage: proof_shape=bind-only; consumers=cl_relabel, class_counts_canonical, exhaustedClass, exhaustedClass.eq_1, HardinA229693Strip.initialExhausted, old_exhausted_counts, old_exhausted_row
-exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, initial_counts._simp_1_3, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_1
-cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, initial_counts._simp_1_1, initial_counts._simp_1_3, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_1
+exhaustedClass: proof_shape=bind-only; consumers=active_cut, cl, cl.eq_1, cl_relabel, class_counts, class_counts_canonical, exactExits_count, exhausted_cut, exhausted_relabel, exitCodes_bound, exitCodes_eq, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_2, HardinA229693Strip.initial_exhausted_count, HardinA229693Strip.initial_from_starts, leading_counts, old_exhausted_counts, old_exhausted_row, packedClass_all, packedClass_all._proof_1_1, packedClass_eq, HardinA229693Strip.rep_weight, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_3
+cl: proof_shape=bind-only; consumers=active_cut, cl_relabel, class_counts, class_counts_canonical, HardinA229693Strip.count_transfer, exhausted_cut, HardinA229693Strip.initial_counts, HardinA229693Strip.initial_counts._simp_1, HardinA229693Strip.initial_counts._simp_2, leading_counts, leading_counts._simp_1_1, old_exhausted_counts, HardinA229693Strip.terminal_eq, transition_counts, transition_counts._simp_1_3
 exitRead: proof_shape=content; consumers=HardinA229693Strip.w, HardinA229693Strip.w_leading, activeWeight, exhaustedWeight
 oldExits: proof_shape=bind-only; consumers=HardinA229693Strip.leading_action, T, class_counts_canonical, leading_counts, old_exhausted_counts, old_exhausted_row
 oldTerminal: proof_shape=bind-only; consumers=oldDestination
@@ -50,8 +50,8 @@ old_valid: proof_shape=bind-only; consumers=old_exhausted_counts, old_exhausted_
 cl_relabel: proof_shape=bind-only; consumers=class_counts, exhausted_relabel
 exhausted_relabel: proof_shape=bind-only; consumers=class_counts, HardinA229693Strip.rep_weight
 blocks_disjoint: proof_shape=bind-only; consumers=active_cut, exhausted_cut, old_exhausted_row
-active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1_1, leading_counts._simp_1_1
-exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1_3, transition_counts._simp_1_1
+active_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_1, leading_counts._simp_1_1
+exhausted_cut: proof_shape=bind-only; consumers=HardinA229693Strip.initial_counts._simp_2, transition_counts._simp_1_3
 leading_counts: proof_shape=bind-only; consumers=transition_counts
 old_exhausted_counts: proof_shape=bind-only; consumers=class_counts_canonical
 completionCost_row: proof_shape=bind-only; consumers=exactExits_count
@@ -86,7 +86,7 @@ tail_bound: proof_shape=bind-only; consumers=zero_coordinates
 exhausted_support: proof_shape=content; consumers=zero_coordinates
 old_source_support: proof_shape=bind-only; consumers=zero_coordinates
 zero_coordinates: proof_shape=content; consumers=transition_counts
-transition_counts: proof_shape=content; consumers=HardinA229693Strip.count_transfer, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.Transition.family._proof_2
+transition_counts: proof_shape=content; consumers=HardinA229693Strip.count_transfer, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.Transition.family._proof_3
 horizontal_cons: proof_shape=bind-only; consumers=HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
 -/
 
