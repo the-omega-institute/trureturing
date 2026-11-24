@@ -119,8 +119,11 @@ For a bug, include the commit, environment, smallest reproducing command or inpu
 expected behavior and observed output or exit code. For a mathematical mismatch,
 quote the statement and identify a missing hypothesis or give a counterexample.
 For a proposal, state the desired outcome and how to verify it. For a question,
-state the exact point that needs an answer. Include necessary diagnostics and
-source links. Keep Issue and PR bodies focused on current results and evidence.
+state the exact point that needs an answer. Keep essential diagnostics in the
+body and link to durable sources, such as a file at a specific commit, for details.
+Keep the body current when editing it. Research and audit Issues retain their
+required statements, evidence and acceptance criteria.
+[Issue body and updates](../CLAUDE.md#53-issue-留痕的判决节点)
 
 Before implementing or delegating the work, record your claim on the matching
 Issue with the current facts and proposed action. A comment is enough. Correct
