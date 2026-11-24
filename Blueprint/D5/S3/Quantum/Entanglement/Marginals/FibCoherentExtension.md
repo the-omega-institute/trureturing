@@ -50,7 +50,23 @@ Fix a nonnegative middle occupation, rational observed entries, and a rational v
 
 Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates.
 
-**Theorem 1.4 (Pure extensions at zero middle occupation).**
+**Theorem 1.4 (When the edge marginals determine the state).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At positive middle occupation, the two edge marginals determine a unique positive trace-one state exactly when the traces normalize the data and there is exactly one coupling z for which both Schur residuals are positive semidefinite.
+
+Every feasible coupling gives an extension. If both residuals at a feasible coupling were positive definite, small variations in z would remain feasible. A unique feasible coupling therefore gives at least one singular residual. At trace zero the entire endpoint residual vanishes. At positive trace, the singular qubit residual has rank one. A joint positive matrix with a rank-one marginal factors, so its two marginals fix the joint residual. Restoring the correction gives the only compatible state.
+
+At zero middle occupation the whole coupling row vanishes in every positive state. The Schur residual inequalities then have no dependence on z.
+
+**Theorem 1.5 (Pure extensions at zero middle occupation).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 
@@ -72,6 +88,8 @@ For sufficiency, diagonalize both positive matrices with their common eigenvalue
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff`
+- Dependency: [D5/S3/Quantum/Decoherence/LabelResetSupport](../../Decoherence/LabelResetSupport.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibMarginalExtension](FibMarginalExtension.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
