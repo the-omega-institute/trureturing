@@ -32,8 +32,9 @@ paper is credited for the spectral calculation, not for the subsystem
 monotonicity or overlapping-set submodularity of generalized
 concentratable entanglement proved by the downstream theorem.
 
-## Verified locators
+## Verified locator
 
 - Publisher DOI: https://doi.org/10.1088/0305-4470/35/1/313
-- Preprint: https://arxiv.org/pdf/quant-ph/0102011v5, Section II, Eq. (11)
+- Declared preprint record: https://arxiv.org/abs/quant-ph/0102011v5
+- PDF discussion: https://arxiv.org/pdf/quant-ph/0102011v5, Section II, Eq. (11)
   (eigenvalues) and Eq. (13) (concurrence).
