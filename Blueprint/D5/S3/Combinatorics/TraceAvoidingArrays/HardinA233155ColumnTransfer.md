@@ -6,7 +6,7 @@ Unrestricted columns retain the literal horizontal and antidiagonal bonds.
 
 **Definition 1.1 (columnCompatible).**
 
-$$\forall k \in \operatorname{Nat},\; \forall r \in Row\left(k\right),\; \forall s \in Row\left(k\right),\; columnCompatible\left(r, s\right) = \left((\forall i \in Fin\left(k\right),\; Fin.val\left(r\left(i\right)\right) + Fin.val\left(s\left(i\right)\right) \ne 2) \land (\forall i \in Fin\left(k\right),\; \forall h \in Fin.val\left(i\right) + 1 < k,\; Fin.val\left(s\left(i\right)\right) + Fin.val\left(r\left(\langle Fin.val\left(i\right) + 1, h\rangle\right)\right) \ne 2)\right)$$
+$$\forall k \in \operatorname{Nat},\; \forall r \in Row\left(k\right),\; \forall s \in Row\left(k\right),\; columnCompatible\left(r, s\right) = \left((\forall i \in Fin\left(k\right),\; Fin.val\left(r\left(i\right)\right) + Fin.val\left(s\left(i\right)\right) \ne 2) \land (\forall i \in Fin\left(k\right),\; \forall h: (Fin.val\left(i\right) + 1 < k), (Fin.val\left(s\left(i\right)\right) + Fin.val\left(r\left(\langle Fin.val\left(i\right) + 1, h\rangle\right)\right) \ne 2))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer.columnCompatible` (`✓ std3`).
 
@@ -48,7 +48,7 @@ The permutation in column j is the jth power of the colour-reversing permutation
 
 **Theorem 1.4 (alternating_legal).**
 
-$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; \forall f \in (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right),\; Legal\left(f\right) \Leftrightarrow (\lambda P: (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right) \mapsto (\forall j \in Fin\left(n\right),\; \forall h \in Fin.val\left(j\right) + 1 < n,\; \forall r \in Fin\left(k\right),\; \forall s \in Fin\left(k\right),\; ((r = s) \lor (Fin.val\left(r\right) = Fin.val\left(s\right) + 1)) \Rightarrow (P\left((r, j)\right) \ne P\left((s, \langle Fin.val\left(j\right) + 1, h\rangle)\right))))\left(alternatingEquiv\left(k, n\right)\left(f\right)\right)$$
+$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; \forall f \in (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right),\; Legal\left(f\right) \Leftrightarrow \left(\forall j \in Fin\left(n\right),\; \forall h: (Fin.val\left(j\right) + 1 < n), (\forall r \in Fin\left(k\right),\; \forall s \in Fin\left(k\right),\; ((r = s) \lor (Fin.val\left(r\right) = Fin.val\left(s\right) + 1)) \Rightarrow (alternatingEquiv\left(k, n\right)\left(f\right)\left((r, j)\right) \ne alternatingEquiv\left(k, n\right)\left(f\right)\left((s, \langle Fin.val\left(j\right) + 1, h\rangle)\right)))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer.alternating_legal` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ After alternating the colours, every bond satisfies inequality exactly when the 
 
 **Definition 1.5 (properEquiv).**
 
-$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; (properEquiv\left(k, n\right): Equiv\left(Subtype\left((\lambda f: (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right) \mapsto (Legal\left(f\right)))\right), Subtype\left((\lambda P: (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right) \mapsto (\forall j \in Fin\left(n\right),\; \forall h \in Fin.val\left(j\right) + 1 < n,\; \forall r \in Fin\left(k\right),\; \forall s \in Fin\left(k\right),\; ((r = s) \lor (Fin.val\left(r\right) = Fin.val\left(s\right) + 1)) \Rightarrow (P\left((r, j)\right) \ne P\left((s, \langle Fin.val\left(j\right) + 1, h\rangle)\right))))\right)\right))$$
+$$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; (properEquiv\left(k, n\right): Equiv\left(Subtype\left((\lambda f: (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right) \mapsto (Legal\left(f\right)))\right), Subtype\left((\lambda P: (Fin\left(k\right) \times Fin\left(n\right)) \to Fin\left(3\right) \mapsto (\forall j \in Fin\left(n\right),\; \forall h: (Fin.val\left(j\right) + 1 < n), (\forall r \in Fin\left(k\right),\; \forall s \in Fin\left(k\right),\; ((r = s) \lor (Fin.val\left(r\right) = Fin.val\left(s\right) + 1)) \Rightarrow (P\left((r, j)\right) \ne P\left((s, \langle Fin.val\left(j\right) + 1, h\rangle)\right)))))\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer.properEquiv` (`✓ std3`).
 

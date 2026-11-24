@@ -6,7 +6,7 @@ The width-seven two-defect recurrence.
 
 **Definition 1.1 (First-row weights).**
 
-$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} : (\operatorname{\mathit{Fin}}\left(168\right)) \to (\mathit{Int})$$
+$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, \lambda i: \operatorname{\mathit{Fin}}\left(96\right) \mapsto ((\operatorname{\mathit{if}} (\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) < 56) \operatorname{\mathit{then}} (\operatorname{\mathit{if}} (\exists k: \operatorname{\mathit{Fin}}\left(16\right), (i = \operatorname{\mathit{oldZeroImage}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{zeroBudgetClass}}\left(k\right)\right))) \operatorname{\mathit{then}} (0: \mathit{Int}) \operatorname{\mathit{else}} (6: \mathit{Int})) \operatorname{\mathit{else}} (12: \mathit{Int})))\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.initial` (`✓ std3`).
 
