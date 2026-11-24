@@ -809,16 +809,9 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
   change (∑ r : Row, if cross (e ∘ p) (e ∘ r) + bondDefects horizontal (e ∘ r) (e ∘ r) = d ∧
     exhaustedClass (boundary (e ∘ r)) = j then (1 : ℤ) else 0) =
     T (cl (e ∘ p) d) (j.natAdd 72) at h
-  have horizontal_eq (r : Row) :
-      bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r :=
-    relabel_defects horizontal antidiagonal e [r]
-  have cross_eq (r : Row) : cross (e ∘ p) (e ∘ r) = cross p r := by
-    have hc := relabel_defects ∅ antidiagonal e [Fin.cons 0 p, r]
-    have hempty (x : Row) : bondDefects ∅ x x = 0 := by simp [bondDefects]
-    simp only [List.map_cons, List.map_nil, defects, tailDefects, hempty, Nat.zero_add,
-      Nat.add_zero, HardinA229585Strip.edge] at hc
-    exact hc
-  simpa only [cross_eq, horizontal_eq,
+  simpa only [HardinA229585Strip.cross_relabel,
+    show ∀ r : Row, bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r from
+      fun r => relabel_defects horizontal antidiagonal e [r],
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
