@@ -25,7 +25,11 @@ internal sealed class NativeFourRankThreeDocument : IScribeDocumentDefinition
                         "When the right dimensions violate the stronger bound, the isolated isometry " +
                         "on that kernel determines the right output slice. The small row defect forces the " +
                         "paired left factor to be a coisometry. Projecting to the perpendicular right " +
-                        "output then bounds its rank by the three remaining factors and the row defect."))),
+                        "output then bounds its rank by the three remaining factors and the row defect.")),
+                    Paragraph(Text(
+                        "At (4,5,4,5), (5,6,4,5), and (5,6,5,6), the row defects are zero, one, and zero. " +
+                        "They are smaller than the corresponding thresholds three, three, and four. " +
+                        "At each size the stronger dimension inequality forbids a rank-three coefficient."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);

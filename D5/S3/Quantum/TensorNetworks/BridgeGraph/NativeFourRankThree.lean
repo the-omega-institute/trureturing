@@ -410,7 +410,7 @@ private theorem residual_kernel {a b e d : ℕ}
       simp only [Matrix.add_mulVec, Matrix.smul_mulVec] at hY
       rw [F, Matrix.add_mulVec, tensor_apply, tensor_apply, hA]
       ext ⟨i,j⟩
-      simp only [Matrix.vec_apply, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul,
+      simp only [Matrix.vec, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul,
         Pi.add_apply, Pi.zero_apply]
       have h := congrFun hY j
       simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at h

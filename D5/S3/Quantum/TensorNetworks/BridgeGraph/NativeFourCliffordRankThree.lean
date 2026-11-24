@@ -339,7 +339,7 @@ private theorem diagonalize_pair (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosDef
   have hE : Eᴴ * E = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [E, Matrix.conjTranspose_diagonal, Matrix.diagonal_mul_diagonal,
+      simp [E, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
         Matrix.one_apply, hd, mul_comm]
   have hS : Sᴴ * S = 1 := by
     change (U * E)ᴴ * (U * E) = 1
@@ -384,7 +384,7 @@ private theorem diagonalize_pair (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosDef
   rw [hdiag]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [E, Matrix.conjTranspose_diagonal, Matrix.diagonal_mul_diagonal,
+    simp [E, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
       Matrix.diagonal_apply, ← mul_assoc, mul_comm, mul_left_comm, hd]
 
 private theorem paired_change_mem (u v w x : ℂ)

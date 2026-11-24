@@ -127,5 +127,19 @@ def rankThreeRegistration :
   familyRecord := none
   options := #[]
 
+example {a b c d : ℕ}
+    (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
+    (lam : ℝ) (hlam : 0 < lam)
+    (hF : (∑ i, kronecker (X i) (Y i))ᴴ * (∑ i, kronecker (X i) (Y i)) =
+      (lam : ℂ) • (1 : Matrix (Fin b × Fin c) (Fin b × Fin c) ℂ))
+    (hSize : (a = 4 ∧ b = 5 ∧ c = 4 ∧ d = 5) ∨
+      (a = 5 ∧ b = 6 ∧ c = 4 ∧ d = 5) ∨ (a = 5 ∧ b = 6 ∧ c = 5 ∧ d = 6)) :
+    ¬ ∃ T : Matrix (Fin 4) (Fin 4) ℂ, T.IsHermitian ∧ compression X T = 0 ∧ T.rank = 3 := by
+  have hdim : a < b ∧ a * d - b * c < 2 * c - d ∧ 3 * d < 4 * c := by
+    rcases hSize with ⟨rfl, rfl, rfl, rfl⟩ | ⟨rfl, rfl, rfl, rfl⟩ | ⟨rfl, rfl, rfl, rfl⟩ <;>
+      decide
+  intro hK
+  exact (not_le_of_gt hdim.2.2) ((rank_three_small_defect_four_bound X Y lam hlam hdim.1 hF hK).2 hdim.2.1)
+
 end
 end Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourRankThree
