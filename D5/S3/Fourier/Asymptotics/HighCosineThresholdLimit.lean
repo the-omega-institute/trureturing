@@ -7,7 +7,8 @@
    digest: First intermediate contact and sharp asymptotic limit for the cyclic two-cosine certificate. -/
 
 import D5.S3.Fourier.Concentration.HighCosineThreshold
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Order.Filter.AtTopBot.Archimedean
 import Mathlib.Topology.Algebra.Order.Field
@@ -74,89 +75,6 @@ private theorem cyclic_versine_limit :
       ring, hqt]
   rfl
 
-
-private theorem cosine_edge_gap {t y : ℝ}
-    (ht : 0 ≤ t) (hy : 0 ≤ y) (hmid : y + t / 2 ≤ Real.pi / 2) :
-    1 - Real.cos t ≤ Real.cos y - Real.cos (y + t) := by
-  have hs := Real.sin_le_sin_of_le_of_le_pi_div_two
-    (show -(Real.pi / 2) ≤ t / 2 by linarith [Real.pi_pos]) hmid (by linarith : t / 2 ≤ y + t / 2)
-  have hsn : 0 ≤ Real.sin (t / 2) :=
-    Real.sin_nonneg_of_nonneg_of_le_pi (by linarith) (by linarith [Real.pi_pos])
-  have hid : 1 - Real.cos t = 2 * Real.sin (t / 2) * Real.sin (t / 2) := by
-    have h := Real.cos_sub_cos 0 t
-    rw [Real.cos_zero, zero_add, zero_sub, neg_div, Real.sin_neg] at h
-    linarith
-  rw [hid, Real.cos_sub_cos]
-  rw [show (y + (y + t)) / 2 = y + t / 2 by ring,
-    show (y - (y + t)) / 2 = -(t / 2) by ring, Real.sin_neg]
-  nlinarith only [mul_le_mul_of_nonneg_right hs hsn]
-
-/-- Bounds uniform in the intermediate level suffice for strict slope comparison. -/
-private theorem inverse_gap_criterion {l x v u A C : ℝ}
-    (hlx : l < x) (hxv : x < v) (hvu : v < u) (hu : u < 1)
-    (hA : 0 < A) (hC : 0 ≤ C) (hAC : 6 * C < A)
-    (hgap : 1 - u ≤ x - l) (hspread : 1 ≤ v - l)
-    (hupper : u - v ≤ 3 * (1 - u)) (hwidth : u - x ≤ 2) :
-    A / (u - x) + C / (x - l) < A / (u - v) + C / (v - l) := by
-  apply strict_inverse_gap_dominance hlx hxv hvu
-  calc
-    C * ((u - v) * (u - x)) ≤ C * (3 * (1 - u) * 2) := by
-      exact mul_le_mul_of_nonneg_left
-        (mul_le_mul hupper hwidth (sub_nonneg.mpr (hxv.trans hvu).le) (by linarith)) hC
-    _ = (6 * C) * (1 - u) := by ring
-    _ < A * (1 - u) := mul_lt_mul_of_pos_right hAC (sub_pos.mpr hu)
-    _ ≤ A * ((v - l) * (x - l)) := by
-      apply mul_le_mul_of_nonneg_left _ hA.le
-      calc
-        1 - u ≤ x - l := hgap
-        _ = 1 * (x - l) := (one_mul _).symm
-        _ ≤ (v - l) * (x - l) := mul_le_mul_of_nonneg_right hspread (sub_nonneg.mpr hlx.le)
-
-/-- The gap above the folded bottom is at least the top versine for either parity. -/
-private theorem grid_bottom_gap {q n : ℕ} (hq : 6 ≤ q) (hn : n < q / 2) :
-    1 - Real.cos (2 * Real.pi / (q : ℝ)) ≤
-      Real.cos (2 * Real.pi * (n : ℝ) / q) -
-      Real.cos (2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q) := by
-  let t : ℝ := 2 * Real.pi / q
-  let y : ℝ := Real.pi - t * ((q / 2 : ℕ) : ℝ)
-  have hq₀ : 0 < (q : ℝ) := by exact_mod_cast (show 0 < q by omega)
-  have ht : 0 < t := div_pos (by positivity) hq₀
-  have htq : t * (q : ℝ) = 2 * Real.pi := div_mul_cancel₀ _ hq₀.ne'
-  have hhalf : (2 : ℝ) * ((q / 2 : ℕ) : ℝ) ≤ q := by
-    exact_mod_cast (show 2 * (q / 2) ≤ q by omega)
-  have hrem : (q : ℝ) ≤ 2 * ((q / 2 : ℕ) : ℝ) + 1 := by
-    exact_mod_cast (show q ≤ 2 * (q / 2) + 1 by omega)
-  have hy₀ : 0 ≤ y := by
-    dsimp only [y]
-    nlinarith only [mul_le_mul_of_nonneg_left hhalf ht.le, htq]
-  have hy₁ : y ≤ t / 2 := by
-    dsimp only [y]
-    nlinarith only [mul_le_mul_of_nonneg_left hrem ht.le, htq]
-  have ht₁ : t ≤ Real.pi / 2 := by
-    have h : (4 : ℝ) ≤ q := by exact_mod_cast (show 4 ≤ q by omega)
-    nlinarith only [mul_le_mul_of_nonneg_left h ht.le, htq]
-  have hfirst := cosine_edge_gap ht.le hy₀ (show y + t / 2 ≤ Real.pi / 2 by linarith)
-  have hnR : (n : ℝ) + 1 ≤ ((q / 2 : ℕ) : ℝ) := by
-    exact_mod_cast (show n + 1 ≤ q / 2 by omega)
-  have ha₀ : 0 ≤ t * (n : ℝ) := mul_nonneg ht.le (Nat.cast_nonneg _)
-  have ha₁ : t * (n : ℝ) ≤ Real.pi - (y + t) := by
-    dsimp only [y]
-    nlinarith only [mul_le_mul_of_nonneg_left hnR ht.le]
-  have ha₂ : Real.pi - (y + t) ≤ Real.pi := by linarith
-  have hsecond := Real.cos_le_cos_of_nonneg_of_le_pi ha₀ ha₂ ha₁
-  rw [Real.cos_pi_sub] at hsecond
-  have hycos : Real.cos (t * ((q / 2 : ℕ) : ℝ)) = -Real.cos y := by
-    rw [← Real.cos_pi_sub]
-    congr 1
-    dsimp [y]
-    ring
-  rw [show 2 * Real.pi * (n : ℝ) / (q : ℝ) = t * n by unfold t; ring,
-    show 2 * Real.pi * ((q / 2 : ℕ) : ℝ) / (q : ℝ) = t * ((q / 2 : ℕ) : ℝ) by
-      unfold t
-      ring]
-  change 1 - Real.cos t ≤ Real.cos (t * (n : ℝ)) - Real.cos (t * ((q / 2 : ℕ) : ℝ))
-  rw [hycos]
-  linarith only [hfirst, hsecond]
 
 private theorem threshold_slope_limit (u l topWeight bottomWeight : ℕ → ℝ)
     (hu : Tendsto u atTop (𝓝 1)) (hl : Tendsto l atTop (𝓝 (-1)))
@@ -289,6 +207,100 @@ private theorem grid_half_angle {q : ℕ} (hq : 0 < q) :
   · apply (div_le_iff₀ hq').mpr
     nlinarith only [mul_le_mul_of_nonneg_left hh Real.pi_pos.le]
 
+private theorem grid_reflect {q n k : ℕ} (hq : 0 < q) (h : 2 * n + k = q) :
+    grid q n = -Real.cos (Real.pi * k / q) := by
+  have hq' : (0 : ℝ) < q := by exact_mod_cast hq
+  have h' : 2 * (n : ℝ) + k = q := by exact_mod_cast h
+  rw [grid, ← Real.cos_pi_sub]
+  congr 1
+  apply (div_eq_iff hq'.ne').mpr
+  rw [sub_mul, div_mul_cancel₀ _ hq'.ne']
+  linear_combination Real.pi * h'
+
+private theorem cyclic_lower_even {q : ℕ} (hq : 0 < q) (he : q % 2 = 0) :
+    cyclicLower q = -1 := by
+  rw [← grid_lower, grid_reflect (k := 0) hq (by omega)]
+  simp
+
+private theorem cyclic_lower_odd {q : ℕ} (hq : 0 < q) (ho : q % 2 = 1) :
+    cyclicLower q = -Real.cos (Real.pi / q) := by
+  rw [← grid_lower, grid_reflect (k := 1) hq (by omega)]
+  simp
+
+private theorem grid_bottom_even {q n : ℕ} (hq : 4 ≤ q) (he : q % 2 = 0) (hn : n < q / 2) :
+    -cyclicUpper q ≤ grid q n := by
+  have h := grid_reflect (n := q / 2 - 1) (k := 2) (by omega : 0 < q) (by omega)
+  rw [show Real.pi * ((2 : ℕ) : ℝ) / q = 2 * Real.pi / q by push_cast; ring,
+    ← cyclicUpper] at h
+  rw [← h]
+  rcases lt_or_eq_of_le (show n ≤ q / 2 - 1 by omega) with hn' | rfl
+  · exact (grid_strict hn' (by omega)).le
+  · exact le_rfl
+
+private theorem grid_bottom_odd {q n : ℕ} (hq : 4 ≤ q) (ho : q % 2 = 1) (hn : n < q / 2) :
+    2 * Real.cos (Real.pi / q) * (1 - cyclicUpper q) ≤ grid q n - cyclicLower q := by
+  let s : ℝ := Real.pi / q
+  have h := grid_reflect (n := q / 2 - 1) (k := 3) (by omega : 0 < q) (by omega)
+  rw [show Real.pi * ((3 : ℕ) : ℝ) / q = 3 * s by unfold s; push_cast; ring] at h
+  have hcos : Real.cos (3 * s) + Real.cos s = 2 * Real.cos (2 * s) * Real.cos s := by
+    rw [show 3 * s = 2 * s + s by ring, Real.cos_add]
+    conv_lhs =>
+      arg 2
+      rw [show s = 2 * s - s by ring, Real.cos_sub]
+    ring
+  have hu : cyclicUpper q = Real.cos (2 * s) := by
+    unfold cyclicUpper s
+    ring_nf
+  have hstep : 2 * Real.cos s * (1 - cyclicUpper q) =
+      grid q (q / 2 - 1) - cyclicLower q := by
+    rw [h, cyclic_lower_odd (by omega : 0 < q) ho, hu]
+    change 2 * Real.cos s * (1 - Real.cos (2 * s)) = -Real.cos (3 * s) - -Real.cos s
+    linear_combination hcos
+  rw [hstep]
+  apply sub_le_sub_right
+  rcases lt_or_eq_of_le (show n ≤ q / 2 - 1 by omega) with hn' | rfl
+  · exact (grid_strict hn' (by omega)).le
+  · exact le_rfl
+
+private theorem cyclic_versine_bound {q : ℕ} (hq : 0 < q) {k : ℝ} (hk : k ≠ 0) :
+    1 - Real.cos (k * Real.pi / q) < (k ^ 2 * 5) / (q : ℝ)^2 := by
+  have hpi : Real.pi ^ 2 < 10 := by
+    have h := pow_lt_pow_left₀ Real.pi_lt_d2 Real.pi_pos.le (by decide : 2 ≠ 0)
+    exact h.trans (by norm_num)
+  have hq' : (0 : ℝ) < q := by exact_mod_cast hq
+  have hangle : k * Real.pi / q ≠ 0 := div_ne_zero (mul_ne_zero hk Real.pi_ne_zero) hq'.ne'
+  have hcos := Real.one_sub_sq_div_two_lt_cos hangle
+  calc
+    _ < (k * Real.pi / q)^2 / 2 := by linarith only [hcos]
+    _ = k ^ 2 * (Real.pi ^ 2 / 2) / (q : ℝ)^2 := by rw [div_pow, mul_pow]; ring
+    _ < _ := div_lt_div_of_pos_right
+      (mul_lt_mul_of_pos_left (by linarith only [hpi]) (sq_pos_of_ne_zero hk)) (sq_pos_of_pos hq')
+
+private theorem cyclic_upper_gt {q m : ℕ} (hm : 0 < m) (hq : m ≤ q) :
+    1 - 20 / (m : ℝ)^2 < cyclicUpper q := by
+  have hm' : (0 : ℝ) < m := by exact_mod_cast hm
+  have hmq : (m : ℝ) ≤ q := by exact_mod_cast hq
+  have hb : 20 / (q : ℝ)^2 ≤ 20 / (m : ℝ)^2 :=
+    div_le_div_of_nonneg_left (by norm_num) (sq_pos_of_pos hm')
+      (pow_le_pow_left₀ hm'.le hmq 2)
+  have h := cyclic_versine_bound (hm.trans_le hq) (k := 2) (by norm_num)
+  norm_num at h
+  change 1 - cyclicUpper q < _ at h
+  linarith only [h, hb]
+
+private theorem cyclic_half_cos_gt {q : ℕ} (hq : 13 ≤ q) : 97 / 100 < Real.cos (Real.pi / q) := by
+  have hq' : (13 : ℝ) ≤ q := by exact_mod_cast hq
+  have hb : 5 / (q : ℝ)^2 ≤ 5 / (13 : ℝ)^2 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num)
+      (pow_le_pow_left₀ (by norm_num) hq' 2)
+  have h := cyclic_versine_bound (by omega : 0 < q) (k := 1) (by norm_num)
+  simp only [one_mul, one_pow] at h
+  linarith only [h, hb]
+
+private theorem cyclic_upper_lt_one {q : ℕ} (hq : 4 ≤ q) : cyclicUpper q < 1 := by
+  have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
+  simpa [grid, cyclicUpper] using h
+
 private theorem upper_add_lower_neg {q : ℕ} (hq : 4 ≤ q) :
     cyclicUpper q + cyclicLower q < 0 := by
   have hq' : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
@@ -407,40 +419,117 @@ private theorem upper_weight_limit : Tendsto upperWeight atTop (𝓝 (1/2)) := b
   filter_upwards [eventually_ge_atTop 4] with q hq
   simp [upperWeight, cyclic_upper_count hq]
 
-private theorem fraction_bounds {q : ℕ}
-    (hu : cyclicUpper q < 1) (hul : -(1/2 : ℝ) < cyclicUpper q)
-    (hl : cyclicLower q < -(1/2 : ℝ)) :
-    0 < upperFraction (cyclicUpper q) (cyclicLower q) ∧
-      upperFraction (cyclicUpper q) (cyclicLower q) < 1 := by
-  have hdu : 0 < difference (cyclicUpper q) := by
-    unfold difference second
-    nlinarith only [mul_pos (sub_pos.mpr hu) (show 0 < 2 * cyclicUpper q + 1 by linarith)]
-  have hdl : difference (cyclicLower q) < 0 := by
-    unfold difference second
-    nlinarith only [mul_neg_of_pos_of_neg (show 0 < 1 - cyclicLower q by linarith)
-      (show 2 * cyclicLower q + 1 < 0 by linarith)]
-  have hd : 0 < difference (cyclicUpper q) - difference (cyclicLower q) := by linarith
+private theorem difference_factor (x : ℝ) :
+    difference x = (1 - x) * (2 * x + 1) := by
+  unfold difference second
+  ring
+
+private theorem fraction_bounds {u l : ℝ}
+    (hdu : 0 < difference u) (hdl : difference l < 0) :
+    0 < upperFraction u l ∧ upperFraction u l < 1 := by
+  have hd : 0 < difference u - difference l := by linarith
   exact ⟨div_pos (neg_pos.mpr hdl) hd, (div_lt_one hd).mpr (by linarith)⟩
 
-private theorem eventually_fraction_bounds :
-    ∀ᶠ q in atTop, 0 < upperFraction (cyclicUpper q) (cyclicLower q) ∧
-      upperFraction (cyclicUpper q) (cyclicLower q) < 1 := by
-  filter_upwards [eventually_ge_atTop 4, tendsto_const_nhds.eventually_lt upper_limit
-    (show -(1/2 : ℝ) < 1 by norm_num),
-    lower_limit.eventually_lt tendsto_const_nhds (show (-1 : ℝ) < -(1/2) by norm_num)]
-    with q hq hu hl
-  apply fraction_bounds _ hu hl
-  have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
-  simpa [grid, cyclicUpper] using h
+private theorem cyclic_difference_signs {q : ℕ} (hq : 13 ≤ q) :
+    0 < difference (cyclicUpper q) ∧ difference (cyclicLower q) < 0 := by
+  have hu := cyclic_upper_gt (by decide : 0 < 13) hq
+  have ht := cyclic_upper_lt_one (by omega : 4 ≤ q)
+  have hl : cyclicLower q < -(1 / 2 : ℝ) := by
+    by_cases he : q % 2 = 0
+    · rw [cyclic_lower_even (by omega) he]
+      norm_num
+    · rw [cyclic_lower_odd (by omega) (by omega)]
+      linarith only [cyclic_half_cos_gt hq]
+  rw [difference_factor, difference_factor]
+  exact ⟨mul_pos (sub_pos.mpr ht) (by linarith only [hu]),
+    mul_neg_of_pos_of_neg (by linarith only [hl]) (by linarith only [hl])⟩
+
+private theorem cyclic_fraction_bounds {q : ℕ} (hq : 13 ≤ q) :
+    0 < upperFraction (cyclicUpper q) (cyclicLower q) ∧
+      upperFraction (cyclicUpper q) (cyclicLower q) < 1 :=
+  fraction_bounds (cyclic_difference_signs hq).1 (cyclic_difference_signs hq).2
+
+private theorem lowerWeight_eq {q : ℕ} (hq : 4 ≤ q)
+    (hdu : 0 < difference (cyclicUpper q)) (hdl : difference (cyclicLower q) < 0) :
+    lowerWeight q = upperWeight q *
+      (2 * difference (cyclicUpper q) / (count (cyclicReadout q) (cyclicLower q) *
+        (-difference (cyclicLower q)))) := by
+  have hd : difference (cyclicUpper q) - difference (cyclicLower q) ≠ 0 := by
+    linarith only [hdu, hdl]
+  have hc : count (cyclicReadout q) (cyclicLower q) ≠ 0 :=
+    ne_of_gt (zero_lt_one.trans_le (cyclic_lower_count_ge_one hq))
+  unfold lowerWeight upperWeight upperFraction
+  rw [cyclic_upper_count hq]
+  field_simp [hd, hc, hdl.ne]
+  ring
+
+private theorem cyclic_weight_bound {q : ℕ} (hq : 13 ≤ q) :
+    lowerWeight q < (if q % 2 = 0 then (8 / 25 : ℝ) else 2 / 5) * upperWeight q := by
+  let u := cyclicUpper q
+  let l := cyclicLower q
+  let M := count (cyclicReadout q) l
+  have hM : 1 ≤ M := cyclic_lower_count_ge_one (by omega)
+  obtain ⟨hdu, hdl⟩ := cyclic_difference_signs hq
+  have hA : 0 < upperWeight q := by
+    rw [upperWeight, cyclic_upper_count (by omega : 4 ≤ q)]
+    exact div_pos (fraction_bounds hdu hdl).1 (by norm_num)
+  rw [lowerWeight_eq (by omega) hdu hdl, mul_comm (upperWeight q)]
+  apply mul_lt_mul_of_pos_right _ hA
+  apply (div_lt_iff₀ (mul_pos (zero_lt_one.trans_le hM) (neg_pos.mpr hdl))).mpr
+  have hden : -difference l ≤ M * -difference l :=
+    le_mul_of_one_le_left (neg_nonneg.mpr hdl.le) hM
+  change 2 * difference u < _ * (M * -difference l)
+  by_cases he : q % 2 = 0
+  · rw [ite_eq_left he]
+    have hu : (8 / 9 : ℝ) < u := by
+      have h := cyclic_upper_gt (by decide : 0 < 14) (show 14 ≤ q by omega)
+      norm_num at h
+      linarith only [h]
+    have hd : difference u < 25 / 81 := by
+      rw [difference_factor]
+      have h := mul_neg_of_pos_of_neg (sub_pos.mpr hu)
+        (show 1 - 2 * (u + 8 / 9) < 0 by linarith only [hu])
+      nlinarith only [h]
+    have hl : -difference l = 2 := by
+      dsimp only [l]
+      rw [cyclic_lower_even (by omega) he]
+      norm_num [difference, second]
+    rw [hl] at hden ⊢
+    linarith only [hden, hd]
+  · rw [ite_eq_right he]
+    have hu : (22 / 25 : ℝ) < u := by
+      have h := cyclic_upper_gt (by decide : 0 < 13) hq
+      norm_num at h
+      linarith only [h]
+    have hut := cyclic_upper_lt_one (by omega : 4 ≤ q)
+    have hd : difference u < 9 / 25 := by
+      rw [difference_factor]
+      have h := mul_lt_mul_of_pos_right
+        (show 1 - u < 3 / 25 by linarith only [hu])
+        (show 0 < 2 * u + 1 by linarith only [hu])
+      linarith only [h, hut]
+    have hl : l < -(97 / 100 : ℝ) := by
+      dsimp only [l]
+      rw [cyclic_lower_odd (by omega) (by omega)]
+      linarith only [cyclic_half_cos_gt hq]
+    have hd' : (9 / 5 : ℝ) < -difference l := by
+      rw [difference_factor, ← mul_neg]
+      have h := mul_lt_mul (show (197 / 100 : ℝ) < 1 - l by linarith only [hl])
+        (show (94 / 100 : ℝ) ≤ -(2 * l + 1) by linarith only [hl])
+        (by norm_num) (show 0 ≤ 1 - l by linarith only [hl])
+      linarith only [h]
+    linarith only [hden, hd, hd']
 
 private theorem lower_weight_limit : Tendsto lowerWeight atTop (𝓝 0) := by
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
     (show Tendsto (fun q => 1 - upperFraction (cyclicUpper q) (cyclicLower q)) atTop (𝓝 0) by
       simpa using upper_fraction_limit.const_sub 1)
-  · filter_upwards [eventually_ge_atTop 4, eventually_fraction_bounds] with q hq hp
-    exact div_nonneg (sub_nonneg.mpr hp.2.le) ((cyclic_lower_count_ge_one hq).trans' zero_le_one)
-  · filter_upwards [eventually_ge_atTop 4, eventually_fraction_bounds] with q hq hp
-    exact div_le_self (sub_nonneg.mpr hp.2.le) (cyclic_lower_count_ge_one hq)
+  · filter_upwards [eventually_ge_atTop 13] with q hq
+    have hp := cyclic_fraction_bounds hq
+    exact div_nonneg (sub_nonneg.mpr hp.2.le) ((cyclic_lower_count_ge_one (by omega : 4 ≤ q)).trans' zero_le_one)
+  · filter_upwards [eventually_ge_atTop 13] with q hq
+    have hp := cyclic_fraction_bounds hq
+    exact div_le_self (sub_nonneg.mpr hp.2.le) (cyclic_lower_count_ge_one (by omega : 4 ≤ q))
 
 private theorem intermediate_level {q : ℕ} (i : Fin q)
     (hl : cyclicLower q < cyclicReadout q i) (hu : cyclicReadout q i < cyclicUpper q) :
@@ -520,27 +609,99 @@ private theorem middleSlope_two_eq {q : ℕ} (hq : 6 ≤ q)
   field_simp [hs, ht, hpos', hb, hpos'', hb']
   ring
 
-private theorem eventual_upper_lt_one :
-    ∀ᶠ q in atTop, cyclicUpper q < 1 := by
-  filter_upwards [eventually_ge_atTop 4] with q hq
-  have h := grid_strict (q := q) (n := 0) (m := 1) (by decide) (by omega)
-  simpa [grid, cyclicUpper] using h
-
 private theorem middleSlope_two_limit :
     Tendsto (fun q => middleSlope q (grid q 2)) atTop (𝓝 (5 / 3)) := by
   apply (threshold_slope_limit cyclicUpper cyclicLower upperWeight lowerWeight
     upper_limit lower_limit upper_weight_limit lower_weight_limit).congr'
-  filter_upwards [eventually_ge_atTop 6, eventual_upper_lt_one] with q hq hu
-  exact (middleSlope_two_eq hq hu).symm
+  filter_upwards [eventually_ge_atTop 6] with q hq
+  exact (middleSlope_two_eq hq (cyclic_upper_lt_one (by omega))).symm
 
-private theorem grid_two_limit : Tendsto (fun q => grid q 2) atTop (𝓝 1) := by
-  convert ((upper_limit.pow 2).const_mul 2).sub_const 1 using 1
-  · ext q
-    exact grid_two q
-  · norm_num
+private theorem cyclic_inverse_gap_comparison {q n : ℕ} (hq : 13 ≤ q) (hn : n < q / 2)
+    {x : ℝ} (hxv : x < grid q 2) (hx : x = grid q n) :
+    let u := cyclicUpper q
+    let l := cyclicLower q
+    let v := grid q 2
+    lowerWeight q * ((u - v) * (u - x)) < upperWeight q * ((v - l) * (x - l)) := by
+  dsimp only
+  let u := cyclicUpper q
+  let l := cyclicLower q
+  let v := grid q 2
+  let A := upperWeight q
+  let C := lowerWeight q
+  change C * ((u - v) * (u - x)) < A * ((v - l) * (x - l))
+  have hut : u < 1 := cyclic_upper_lt_one (by omega)
+  have hδ := sub_pos.mpr hut
+  obtain ⟨hlv, hvu⟩ := grid_two_between (by omega : 6 ≤ q)
+  change l < v at hlv
+  change v < u at hvu
+  have huv := sub_pos.mpr hvu
+  have hux := sub_pos.mpr (hxv.trans hvu)
+  have hv : v = 2 * u^2 - 1 := grid_two q
+  have huv_eq : u - v = (1 - u) * (2 * u + 1) := by rw [hv]; ring
+  have hA : 0 < A := by
+    unfold A upperWeight
+    rw [cyclic_upper_count (by omega : 4 ≤ q)]
+    exact div_pos (cyclic_fraction_bounds hq).1 (by norm_num)
+  have hw := cyclic_weight_bound hq
+  change C < _ at hw
+  by_cases he : q % 2 = 0
+  · rw [ite_eq_left he] at hw
+    have hl : l = -1 := cyclic_lower_even (by omega) he
+    have hu : (8 / 9 : ℝ) < u := by
+      have h := cyclic_upper_gt (by decide : 0 < 14) (show 14 ≤ q by omega)
+      norm_num at h
+      linarith only [h]
+    have h0u : 0 < u := by linarith only [hu]
+    have hxL : -u ≤ x := hx ▸ grid_bottom_even (by omega) he hn
+    have hratio : 8 / 25 * (2 * u + 1) < u := by linarith only [hu]
+    calc
+      _ < (8 / 25 * A) * ((u - v) * (u - x)) :=
+        mul_lt_mul_of_pos_right hw (mul_pos huv hux)
+      _ ≤ (8 / 25 * A) * ((u - v) * (2 * u)) := by
+        gcongr
+        linarith only [hxL]
+      _ = (A * ((1 - u) * (2 * u))) * (8 / 25 * (2 * u + 1)) := by rw [huv_eq]; ring
+      _ < (A * ((1 - u) * (2 * u))) * u :=
+        mul_lt_mul_of_pos_left hratio (mul_pos hA (mul_pos hδ (by positivity)))
+      _ = A * ((v - l) * (1 - u)) := by rw [hv, hl]; ring
+      _ ≤ _ := by
+        apply mul_le_mul_of_nonneg_left _ hA.le
+        apply mul_le_mul_of_nonneg_left _ (sub_nonneg.mpr hlv.le)
+        rw [hl]
+        linarith only [hxL]
+  · rw [ite_eq_right he] at hw
+    have ho : q % 2 = 1 := by omega
+    let w := Real.cos (Real.pi / q)
+    have hl : l = -w := cyclic_lower_odd (by omega) ho
+    have hw₀ : (97 / 100 : ℝ) < w := cyclic_half_cos_gt hq
+    have hu : (22 / 25 : ℝ) < u := by
+      have h := cyclic_upper_gt (by decide : 0 < 13) hq
+      norm_num at h
+      linarith only [h]
+    have hspread : (3 / 2 : ℝ) < v - l := by
+      rw [hv, hl]
+      nlinarith only [hw₀, hu, sq_nonneg (u - 22 / 25)]
+    have hxL : 2 * w * (1 - u) ≤ x - l := hx ▸ grid_bottom_odd (by omega) ho hn
+    have hgap : (19 / 10 : ℝ) * (1 - u) ≤ x - l := by
+      refine (mul_le_mul_of_nonneg_right ?_ hδ.le).trans hxL
+      linarith only [hw₀]
+    have hupper : u - v ≤ 3 * (1 - u) := by
+      rw [hv]
+      nlinarith only [sq_nonneg (1 - u)]
+    have hx₁ : -1 ≤ x := by rw [hx, grid]; exact Real.neg_one_le_cos _
+    have hwidth : u - x ≤ 2 := by linarith only [hx₁, hut]
+    calc
+      _ < (2 / 5 * A) * ((u - v) * (u - x)) :=
+        mul_lt_mul_of_pos_right hw (mul_pos huv hux)
+      _ ≤ (2 / 5 * A) * ((3 * (1 - u)) * 2) := by gcongr
+      _ = A * ((12 / 5) * (1 - u)) := by ring
+      _ ≤ A * ((3 / 2) * ((19 / 10) * (1 - u))) := by
+        rw [← mul_assoc (3 / 2 : ℝ)]
+        exact mul_le_mul_of_nonneg_left
+          (mul_le_mul_of_nonneg_right (by norm_num) hδ.le) hA.le
+      _ ≤ _ := by gcongr
 
-private theorem eventual_strict_slope_dominance :
-    ∀ᶠ q in atTop,
+private theorem strict_slope_dominance {q : ℕ} (hq13 : 13 ≤ q) :
     let c := cyclicReadout q
     let u := cyclicUpper q
     let l := cyclicLower q
@@ -554,15 +715,10 @@ private theorem eventual_strict_slope_dominance :
       Concentration.HighCosineThreshold.slope (β 0) (β 1) < middleSlope q v ∧
       Concentration.HighCosineThreshold.slope (γ 0) (γ 1) < middleSlope q v ∧
       (∀ i, l < c i → c i < u → c i ≠ v → middleSlope q (c i) < middleSlope q v) := by
-  have hspread := grid_two_limit.sub lower_limit
-  have hAC := lower_weight_limit.const_mul 6
-  simp only [mul_zero] at hAC
-  filter_upwards [eventually_ge_atTop 6, eventual_upper_lt_one, eventually_fraction_bounds,
-    hAC.eventually_lt upper_weight_limit (by norm_num),
-    tendsto_const_nhds.eventually_lt hspread (show (1 : ℝ) < 1 - (-1) by norm_num),
-    tendsto_const_nhds.eventually_lt middleSlope_two_limit (show (1 : ℝ) < 5/3 by norm_num)]
-    with q hq hut hp hAC hspread hS
   dsimp only
+  have hq : 6 ≤ q := by omega
+  have hut := cyclic_upper_lt_one (by omega : 4 ≤ q)
+  have hp := cyclic_fraction_bounds hq13
   let c := cyclicReadout q
   let u := cyclicUpper q
   let l := cyclicLower q
@@ -581,7 +737,23 @@ private theorem eventual_strict_slope_dominance :
   have hlt := hlu.trans hut
   have hK : 0 < (1 - u) * (1 - l) / (u - l) :=
     div_pos (mul_pos (sub_pos.mpr hut) (sub_pos.mpr hlt)) (sub_pos.mpr hlu)
-  have hC_A : C ≤ A := by change 6 * C < A at hAC; linarith
+  have hw := cyclic_weight_bound hq13
+  have hC_A : C ≤ A := by
+    change C < _ at hw
+    split at hw <;> linarith only [hA, hw]
+  have hS : 1 < middleSlope q v := by
+    rw [middleSlope_two_eq hq hut, ← grid_two q]
+    change 1 < 1 + A * (1 - l) * (2 * (1 + u)) / ((u - l) * (2 * u + 1)) +
+      C * (1 - u) * (1 - v) / ((u - l) * (v - l))
+    have hu := cyclic_upper_gt (by decide : 0 < 13) hq13
+    have hu₁ : 0 < 1 + u := by dsimp [u]; linarith only [hu]
+    have hu₂ : 0 < 2 * u + 1 := by dsimp [u]; linarith only [hu]
+    have htop := div_pos (mul_pos (mul_pos hA (sub_pos.mpr hlt)) (mul_pos (by norm_num : (0 : ℝ) < 2) hu₁))
+      (mul_pos (sub_pos.mpr hlu) hu₂)
+    have hbottom := div_nonneg
+      (mul_nonneg (mul_nonneg hC (sub_nonneg.mpr hut.le)) (sub_nonneg.mpr (hvu.trans hut).le))
+      (mul_nonneg (sub_nonneg.mpr hlu.le) (sub_nonneg.mpr hlv.le))
+    linarith only [htop, hbottom]
   obtain ⟨hβγ, hγ⟩ := multiplier_slope_order hlu hut hs hC_A
   have hβγ' :
       Concentration.HighCosineThreshold.slope (firstMultiplier u l (count c u) (count c l) 0)
@@ -614,19 +786,8 @@ private theorem eventual_strict_slope_dominance :
     change x = grid q n at he
     rw [he]
     exact grid_strict hn2 hnh.le
-  have hgap : 1 - u ≤ x - l := by
-    change x = grid q n at he
-    rw [he]
-    exact grid_bottom_gap hq hnh
-  have hupper : u - v ≤ 3 * (1 - u) := by
-    dsimp only [v]
-    rw [grid_two]
-    nlinarith only [sq_nonneg (1 - u)]
-  have hwidth : u - x ≤ 2 := by
-    have hx : -1 ≤ x := Real.neg_one_le_cos _
-    linarith
-  have hcompare := inverse_gap_criterion hiL hxv hvu hut hA hC hAC
-    hgap hspread.le hupper hwidth
+  have hcross := cyclic_inverse_gap_comparison hq13 hnh hxv (x := x) he
+  have hcompare := strict_inverse_gap_dominance hiL hxv hvu hcross
   rw [middleSlope_eq hiL hiU hut, middleSlope_eq hlv hvu hut]
   exact add_lt_add_right (mul_lt_mul_of_pos_left hcompare hK) _
 
@@ -682,13 +843,11 @@ private theorem exact_slope_maximum {q : ℕ} (hq : 6 ≤ q)
       · exact (hm j hjL hjU h).le
   · exact Finset.le_sup' id hmem
 
-private theorem eventual_slope_maximum :
-    ∀ᶠ q in atTop,
-      slopeBound (cyclicReadout q) (cyclicUpper q) (cyclicLower q) =
-        middleSlope q (grid q 2) := by
-  filter_upwards [eventual_strict_slope_dominance] with q hq
-  obtain ⟨hq, _, _, hl, hu, hS, hβ, hγ, hm⟩ := hq
-  exact exact_slope_maximum hq hl hu hS hβ hγ hm
+private theorem slope_maximum {q : ℕ} (hq : 13 ≤ q) :
+    slopeBound (cyclicReadout q) (cyclicUpper q) (cyclicLower q) =
+      middleSlope q (grid q 2) := by
+  obtain ⟨hq', _, _, hl, hu, hS, hβ, hγ, hm⟩ := strict_slope_dominance hq
+  exact exact_slope_maximum hq' hl hu hS hβ hγ hm
 
 private theorem affine_slope_value {f : ℝ → ℝ} {r : ℝ} (h₀ : f 0 ≠ 0)
     (haff : f r = (1 - r) * f 0 + r * f 1) :
@@ -697,32 +856,35 @@ private theorem affine_slope_value {f : ℝ → ℝ} {r : ℝ} (h₀ : f 0 ≠ 0
   field_simp
   ring
 
-/-- For sufficiently large moduli the exact predecessor cutoff has a unique distinct
+/-- For every modulus at least thirteen the exact predecessor cutoff has a unique distinct
 intermediate contact level, with both moment multipliers still strictly positive. -/
-theorem cyclic_threshold_first_contact :
-    let contact := fun q : ℕ => Real.cos (4 * Real.pi / q)
-    ∀ᶠ q : ℕ in atTop,
-      let c := cyclicReadout q
-      let u := cyclicUpper q
-      let l := cyclicLower q
-      let v := contact q
-      let a := criticalThreshold c u l
-      let r := (1 - a) / (1 - tailMoment u l)
-      let nu := count c u
-      let nl := count c l
-      let P := polynomial u l nu nl r
-      let β := firstMultiplier u l nu nl r
-      let γ := secondMultiplier u l nu nl r
-      l < v ∧ v < u ∧ (∃ i, c i = v) ∧ 0 < r ∧ r < 1 ∧
-        0 < β ∧ 0 < γ ∧ P v = 0 ∧
-        (∀ i, l < c i → c i < u → c i ≠ v → P (c i) < 0) ∧
-        P 1 = 1 - r ∧ P u = r * upperFraction u l / nu ∧
-        P l = r * (1 - upperFraction u l) / nl ∧
-        (∀ x, P x = (topCoeff u l r * u * l + upperCoeff u l nu r * l +
-          lowerCoeff u l nl r * u + γ) + β * x + γ * (2 * x^2 - 1)) ∧
-        (∀ i, weights c u l r i = max 0 (P (c i))) ∧ IsCertified c u l a := by
-  filter_upwards [eventual_strict_slope_dominance, eventual_slope_maximum,
-    eventually_fraction_bounds] with q hdom hmax hp
+theorem cyclic_threshold_first_contact (q : ℕ) (hq13 : 13 ≤ q) :
+  let contact := fun q : ℕ => Real.cos (4 * Real.pi / q)
+  let c := cyclicReadout q
+  let u := cyclicUpper q
+  let l := cyclicLower q
+  let v := contact q
+  let a := criticalThreshold c u l
+  let r := (1 - a) / (1 - tailMoment u l)
+  let nu := count c u
+  let nl := count c l
+  let P := polynomial u l nu nl r
+  let β := firstMultiplier u l nu nl r
+  let γ := secondMultiplier u l nu nl r
+  l < v ∧ v < u ∧ (∃ i, c i = v) ∧ 0 < r ∧ r < 1 ∧
+    0 < β ∧ 0 < γ ∧ P v = 0 ∧
+    (∀ i, l < c i → c i < u → c i ≠ v → P (c i) < 0) ∧
+    P 1 = 1 - r ∧ P u = r * upperFraction u l / nu ∧
+    P l = r * (1 - upperFraction u l) / nl ∧
+    (∀ x, P x = (topCoeff u l r * u * l + upperCoeff u l nu r * l +
+      lowerCoeff u l nl r * u + γ) + β * x + γ * (2 * x^2 - 1)) ∧
+    (∀ i, weights c u l r i = max 0 (P (c i))) ∧ IsCertified c u l a ∧
+    polynomial u l nu nl 0 v < 0 ∧
+    (∀ a' : ℝ, polynomial u l nu nl ((1 - a') / (1 - tailMoment u l)) v =
+      polynomial u l nu nl 0 v * ((a' - a) / (1 - a))) := by
+  have hdom := strict_slope_dominance hq13
+  have hmax := slope_maximum hq13
+  have hp := cyclic_fraction_bounds hq13
   dsimp only at hdom ⊢
   obtain ⟨hq, hut, hs, hlv, hvu, hS, hβ, hγ, hm⟩ := hdom
   let c := cyclicReadout q
@@ -784,19 +946,19 @@ theorem cyclic_threshold_first_contact :
   have hP₀ (x : ℝ) (hxL : l < x) (hxU : x < u) : P 0 x < 0 := by
     simp only [P, polynomial, upperCoeff, lowerCoeff, zero_mul, zero_div, add_zero]
     exact mul_neg_of_neg_of_pos (mul_neg_of_pos_of_neg ht (sub_neg.mpr hxU)) (sub_pos.mpr hxL)
-  have hPaff (x : ℝ) (hxL : l < x) (hxU : x < u) :
-      P r x = P 0 x * (1 - r * middleSlope q x) := by
+  have hPaff (t x : ℝ) (hxL : l < x) (hxU : x < u) :
+      P t x = P 0 x * (1 - t * middleSlope q x) := by
     apply affine_slope_value (f := fun t => P t x) (hP₀ x hxL hxU).ne
     unfold P polynomial topCoeff upperCoeff lowerCoeff
     simp only [div_eq_mul_inv]
     ring
   have hz : P r v = 0 := by
-    rw [hPaff v hlv hvu]
+    rw [hPaff r v hlv hvu]
     change P 0 v * (1 - r * S) = 0
     rw [hrS, sub_self, mul_zero]
   have hneg (i : Fin q) (hiL : l < c i) (hiU : c i < u) (hiV : c i ≠ v) :
       P r (c i) < 0 := by
-    rw [hPaff (c i) hiL hiU]
+    rw [hPaff r (c i) hiL hiU]
     exact mul_neg_of_neg_of_pos (hP₀ _ hiL hiU) (hltS (hm i hiL hiU hiV))
   have hnonpos (i : Fin q) (hiL : l < c i) (hiU : c i < u) : P r (c i) ≤ 0 := by
     by_cases h : c i = v
@@ -821,19 +983,32 @@ theorem cyclic_threshold_first_contact :
   have hvals := polynomial_values hut hlu nu nl r
   have hmaxval := weights_eq_max c hut hlu hlevels hr.le hr1.le hp.1.le hp.2.le hnonpos
   have hcert' : IsCertified c u l a := hcert a le_rfl ha.le
+  have hcross (a' : ℝ) :
+      P ((1 - a') / (1 - tailMoment u l)) v = P 0 v * ((a' - a) / (1 - a)) := by
+    rw [hPaff _ v hlv hvu]
+    congr 1
+    change 1 - (1 - a') / (1 - tailMoment u l) * S = _
+    have hgap : (1 - a) * S = 1 - tailMoment u l := by
+      dsimp only [a, criticalThreshold]
+      rw [hmax, sub_sub_cancel]
+      exact div_mul_cancel₀ _ (ne_of_gt (zero_lt_one.trans hB))
+    have hane : 1 - a ≠ 0 := sub_ne_zero.mpr ha.ne'
+    have hSne : S ≠ 0 := ne_of_gt (zero_lt_one.trans hB)
+    rw [← hgap, div_mul_eq_mul_div, mul_comm (1 - a) S, mul_comm (1 - a') S,
+      mul_div_mul_left _ _ hSne]
+    apply (eq_div_iff hane).mpr
+    rw [sub_mul, div_mul_cancel₀ _ hane]
+    ring
   rw [← hv]
   exact ⟨hlv, hvu, hi, hr, hr1, hβpos, hγpos, hz, hneg, hvals.1, hvals.2.1, hvals.2.2,
-    polynomial_expand u l nu nl r, hmaxval, hcert'⟩
+    polynomial_expand u l nu nl r, hmaxval, hcert', hP₀ v hlv hvu, hcross⟩
 
 private theorem tailMoment_gap_factor {u l : ℝ} (hd : difference u - difference l ≠ 0) :
     1 - tailMoment u l =
       (1 - u) * (1 + (2 * u + 1) * (u - l) /
         ((1 - u) * (2 * u + 1) - (1 - l) * (2 * l + 1))) := by
-  have h (x : ℝ) : difference x = (1 - x) * (2 * x + 1) := by
-    unfold difference second
-    ring
   unfold tailMoment upperFraction
-  rw [h u, h l] at hd ⊢
+  rw [difference_factor u, difference_factor l] at hd ⊢
   generalize he : (1 - u) * (2 * u + 1) - (1 - l) * (2 * l + 1) = d at hd ⊢
   field_simp [hd]
   rw [← he]
@@ -866,8 +1041,8 @@ theorem cyclic_criticalThreshold_limit :
     have h := tendsto_const_nhds.eventually_lt hdiff (show (0 : ℝ) < (1 - (2 * 1^2 - 1)) -
       (-1 - (2 * (-1)^2 - 1)) by norm_num)
     simpa [difference, second] using h
-  filter_upwards [eventual_slope_maximum, hpos] with q hmax hd
-  rw [criticalThreshold, hmax, sub_sub_cancel, tailMoment_gap_factor hd.ne']
+  filter_upwards [eventually_ge_atTop 13, hpos] with q hq hd
+  rw [criticalThreshold, slope_maximum hq, sub_sub_cancel, tailMoment_gap_factor hd.ne']
   ring
 
 end D5.S3.Fourier.Asymptotics.HighCosineThresholdLimit
