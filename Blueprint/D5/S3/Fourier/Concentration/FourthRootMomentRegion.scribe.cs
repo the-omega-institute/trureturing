@@ -33,11 +33,12 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "Fix a natural number p at least two. For a real weight w of total mass one, "
-                + "write M(k) for the Fourier transform at k of the singleton cyclic collision "
-                + "masses of the degree-p lattice sums. The lattice coordinate of each residue "
+                + "write M(w) for the vector of Fourier coefficients at 0, 1, 2 and 3 of the "
+                + "singleton cyclic collision masses of the degree-p lattice sums. The lattice coordinate "
                 + "is its representative in {0,1,2,3}. With nonnegative w these masses form "
                 + "the law of the difference between two independent p-fold sums. Let A be the "
-                + "maximum of M(1) among probability weights with M(2)=0. Let B be the maximum "
+                + "maximum coefficient at frequency one among probability weights with coefficient "
+                + "zero at frequency two. Let B be the maximum "
                 + "nonnegative first coefficient among probability laws with Fourier "
                 + "coefficient vector (1,B,0,B).")),
             Describe.Lean(
@@ -51,9 +52,9 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                     + "coefficient from the same weight. The first and third Fourier magnitudes "
                     + "agree because the weights are real. At v=0 the preceding interval ends "
                     + "at one half. Taking the p-th power gives the first attained maximum. "
-                    + "In the relaxation, the vanishing "
-                    + "second coefficient makes both parity masses one half. Symmetry makes the "
-                    + "first coefficient the difference of the masses at zero and two. The "
+                    + "In the relaxation, the vanishing second coefficient makes both parity "
+                    + "masses one half. A real first coefficient forces the masses at one and three "
+                    + "to agree, and the coefficient equals the difference of the masses at zero and two. The "
                     + "weight (1/2,1/4,0,1/4) attains one half."))),
                 DescribeRole.Theorem))));
 
