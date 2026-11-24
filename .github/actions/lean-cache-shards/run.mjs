@@ -2,7 +2,7 @@ import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { latestSeed, migrateSeed, selectSeed } from './legacy-seed.mjs';
 import { createReadStream } from 'node:fs';
-import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { performance } from 'node:perf_hooks';
 import { dirname, join, resolve } from 'node:path';
@@ -45,20 +45,39 @@ function python(command, extra = []) {
 }
 
 async function loadCacheClient() {
-  const install = resolve(stage, 'client');
-  await mkdir(install, { recursive: true });
-  for (const file of ['package.json', 'package-lock.json']) {
-    await copyFile(join(actionPath, file), join(install, file));
+  const manifests = ['package.json', 'package-lock.json'];
+  const hash = createHash('sha256').update([process.version, process.platform, process.arch].join('/'));
+  for (const manifest of manifests) hash.update('\0').update(await readFile(join(actionPath, manifest)));
+  const parent = join(process.env.RUNNER_TEMP, 'lean-actions-sdk');
+  const install = join(parent, hash.digest('hex'));
+  await mkdir(parent, { recursive: true });
+  try {
+    await stat(install);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    const temporary = await mkdtemp(join(parent, 'install-'));
+    try {
+      for (const file of manifests) await copyFile(join(actionPath, file), join(temporary, file));
+      execFileSync('npm', ['ci', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], {
+        cwd: temporary, env: { PATH: process.env.PATH, HOME: process.env.HOME }, stdio: 'inherit', timeout: 120000,
+      });
+      // A completed installation becomes visible in a single rename. Other
+      // processes can only observe an intact tree from the same package lock.
+      try {
+        await rename(temporary, install);
+      } catch (error) {
+        if (!['EEXIST', 'ENOTEMPTY'].includes(error.code)) throw error;
+      }
+    } finally {
+      await rm(temporary, { recursive: true, force: true });
+    }
   }
-  const env = { PATH: process.env.PATH, HOME: process.env.HOME };
-  execFileSync('npm', ['ci', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], {
-    cwd: install, env, stdio: 'inherit', timeout: 120000,
-  });
   const library = join(install, 'node_modules/@actions/cache/lib');
   const cache = await import(pathToFileURL(join(library, 'cache.js')).href);
   const utils = await import(pathToFileURL(join(library, 'internal/cacheUtils.js')).href);
   const compression = await utils.getCompressionMethod();
-  return { cache, cacheVersion: path => utils.getCacheVersion([path], compression) };
+  return { cache, packageFile: join(install, 'node_modules/@actions/cache/package.json'),
+    cacheVersion: path => utils.getCacheVersion([path], compression) };
 }
 
 function payloadPath(digest) {
@@ -376,10 +395,10 @@ async function restorePublished() {
     ...(selection ? ['--targets-file', selection] : [])], { stdio: 'inherit' });
 }
 
-async function save(cache, cacheVersion, identity) {
+async function save(cache, cacheVersion, identity, packageFile) {
   // The pinned SDK reports both a denied reservation and a race as -1.
   // Observe its original diagnostic for this write operation only.
-  const sdkRequire = createRequire(resolve(stage, 'client/node_modules/@actions/cache/package.json'));
+  const sdkRequire = createRequire(packageFile);
   const core = sdkRequire('@actions/core');
   const warning = core.warning;
   const writes = new AbortController();
@@ -625,10 +644,10 @@ async function main() {
     throw new Error('invalid Actions shard operation or state');
   }
   if (operation === 'save' && !anchor) throw new Error('Actions cache writes require a pinned history anchor');
-  const { cache, cacheVersion } = await loadCacheClient();
+  const { cache, cacheVersion, packageFile } = await loadCacheClient();
   const identity = python('identity');
   await mkdir(stage, { recursive: true });
-  if (operation === 'save') await save(cache, cacheVersion, identity);
+  if (operation === 'save') await save(cache, cacheVersion, identity, packageFile);
   else await restore(cache, cacheVersion, identity);
 }
 

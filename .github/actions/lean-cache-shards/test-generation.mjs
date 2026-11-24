@@ -22,6 +22,7 @@ async function fixture(t) {
   // Install a recording cache SDK at exactly the path resolved by the action.
   await writeFile(join(bin, 'npm'), `#!/bin/sh
 set -eu
+echo install >> "$(dirname "$0")/installs"
 mkdir -p node_modules/@actions/cache
 cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 `, { mode: 0o755 });
@@ -109,6 +110,7 @@ test('publisher retries verify existing bytes and conflicting contents fail', as
     assert.equal(result.status, 0, result.stderr);
   }
   assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 1);
+  assert.equal(await readFile(join(root, 'bin/installs'), 'utf8'), 'install\n');
   await writeFile(join(root, 'lean-generation-v1-' + digest), 'different');
   const conflict = run('schedule', 'generation-put', digest, 'input.json');
   assert.equal(conflict.status, 1);
