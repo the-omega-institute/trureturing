@@ -67,42 +67,21 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 All("x", Fin3, All("p", BoundaryType, HorizontalConsFormula())),
                 "Prepending a colour adds one comparison with the first boundary cell.", DescribeRole.Theorem),
             Node("matchCost", "Cost of a colour match",
-                Seq(TypeOf(Call("matchCost"), Arrow(OptionColour, Arrow(Fin3, V("Nat")))), Comma, Sp,
-                    Clause(All("x", Fin3, Eq(Call("matchCost", Call("none"), V("x")), D(0)))), Comma, Sp,
-                    Clause(All("p", Fin3, All("x", Fin3,
+                Seq(TypeOf(Call("matchCost"), All("m", V("Nat"), Arrow(OptionColour, Arrow(Colour, V("Nat"))))), Comma, Sp,
+                    Clause(AtRadix(All("x", Colour, Eq(Call("matchCost", Call("none"), V("x")), D(0))))), Comma, Sp,
+                    Clause(AtRadix(All("p", Colour, All("x", Colour,
                         Eq(Call("matchCost", Call("some", V("p")), V("x")),
-                            Conditional(Eq(V("p"), V("x")), D(1), D(0))))))),
+                            Conditional(Eq(V("p"), V("x")), D(1), D(0)))))))),
                 "An absent colour costs zero. A present colour costs one exactly when it agrees with the current colour.", DescribeRole.Definition),
             Node("completionCost", "Cost of a completion",
                 CompletionCostClauses(),
                 "Sum the initial match, when a previous colour is supplied, the matches between neighbours, and the matches against the optional boundary colours.", DescribeRole.Definition),
             Node("completionRows", "Pruned completion list",
                 CompletionRowsClauses(),
-                "Try the three available colours in order, keep each head whose cost fits the budget, and prepend it to the completions at the remaining budget. The last cell must spend the entire remaining budget.", DescribeRole.Definition),
-            Node("completionRows_count", "Multiplicity of qualifying rows",
-                All("k", V("Nat"), All("p", Boundary, All("b", Call("Option", Fin3),
-                    All("d", V("Nat"), All("f", Arrow(Row, V("Bool")),
-                        Eq(Call("List.countP", V("f"), Call("completionRows", V("p"), V("b"), V("d"))),
-                            Seq(Sum, Underscore, Grp(V("r"), Colon, Sp, Row), Sp, Parenthesized(Seq(
-                                V("if"), Sp, Parenthesized(Eq(Call("completionCost", V("p"), V("b"), V("r")), V("d"))),
-                                Sp, Land, Sp, Parenthesized(Eq(Call("f", V("r")), V("true"))),
-                                Sp, V("then"), Sp, D(1), Sp, V("else"), Sp, D(0)))))))))),
-                "The sum counts each qualifying row once.", DescribeRole.Theorem),
-            Node("completionCodes", "Pruned list in base three",
+                "Try the m available colours in order, keep each head whose cost fits the budget, and prepend it to the completions at the remaining budget. The last cell must spend the entire remaining budget.", DescribeRole.Definition),
+            Node("completionCodes", "Pruned list in base m",
                 CompletionCodesClauses(),
-                "Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with the natural value of x plus three times c.", DescribeRole.Definition),
-            Node("rowCode_cons", "Code of a row with a new head",
-                All("m", V("Nat"), All("k", V("Nat"), All("x", Call("Fin", V("m")),
-                    All("r", Arrow(Call("Fin", V("k")), Call("Fin", V("m"))),
-                        Eq(Code(Call("Fin.cons", V("x"), V("r"))),
-                            Add(Call("Fin.val", V("x")), Mul(V("m"), Code(V("r"))))))))),
-                "The leading cell is the least significant digit of the code.", DescribeRole.Theorem),
-            Node("completionCodes_eq", "Agreement of the two lists",
-                All("k", V("Nat"), All("p", Boundary, All("b", Call("Option", Fin3), All("d", V("Nat"),
-                    Eq(Call("completionCodes", Call("List.ofFn", V("p")), V("b"), V("d")),
-                        Call("List.map", Seq(LambdaLower, Sp, V("r"), Sp, Mapsto, Sp, Code(V("r"))),
-                            Call("completionRows", V("p"), V("b"), V("d")))))))),
-                "The numeric enumerator returns the codes of the pruned completion list in the same order.", DescribeRole.Theorem))));
+                "Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with the natural value of x plus m times c.", DescribeRole.Definition)));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
@@ -134,8 +113,9 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula Fin168 => Call("Fin", Num("168"));
     private static Formula ZeroClassValue => Call("Fin.val", Call("HardinA229585StripData.zeroBudgetClass", V("k")));
     private static Formula Fin3 => Call("Fin", D(3));
-    private static Formula Boundary => Arrow(Call("Fin", V("k")), Call("Option", Fin3));
-    private static Formula Row => Arrow(Call("Fin", Add(V("k"), D(1))), Fin3);
+    private static Formula Colour => Call("Fin", V("m"));
+    private static Formula Boundary => OptionalRow(V("k"));
+    private static Formula Row => ColourRow(Add(V("k"), D(1)));
     private static Formula BoundaryType => Call("HardinA229585StripData.Boundary");
     private static Formula Compose(Formula e, Formula p) =>
         Lambda("i", App(e, App(p, V("i"))));
@@ -201,12 +181,12 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         var stepEquation = Eq(Call("completionCost", p, b, r),
             Add(LocalCharge(b, App(p, D(0)), head),
                 Call("completionCost", Call("Fin.tail", p), Call("some", head), Call("Fin.tail", r))));
-        return Seq(TypeOf(Call("completionCost"),
+        return AtRadix(Seq(TypeOf(Call("completionCost"),
                 All("k", V("Nat"), Arrow(Boundary, Arrow(OptionColour, Arrow(Row, V("Nat")))))), Comma, Sp,
             Clause(All("p", OptionalRow(D(0)), All("b", OptionColour, All("r", ColourRow(D(1)), baseEquation)))),
             Comma, Sp,
             Clause(All("k", V("Nat"), All("p", OptionalRow(Add(k, D(1))),
-                All("b", OptionColour, All("r", ColourRow(Add(k, D(2))), stepEquation))))));
+                All("b", OptionColour, All("r", ColourRow(Add(k, D(2))), stepEquation)))))));
     }
 
     private static Formula CompletionRowsClauses()
@@ -223,13 +203,13 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             Call("List.map", Call("Function.const", Call("Fin", D(1))), LastColours(b, d)));
         var stepEquation = Eq(Call("completionRows", p, b, d),
             Call("List.flatMap", Lambda("x", LetCharge(b, App(p, D(0)), x,
-                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3))));
-        return Seq(TypeOf(Call("completionRows"),
+                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", V("m"))));
+        return AtRadix(Seq(TypeOf(Call("completionRows"),
                 All("k", V("Nat"), Arrow(Boundary, Arrow(OptionColour, Arrow(V("Nat"), Call("List", Row)))))), Comma, Sp,
             Clause(All("p", OptionalRow(D(0)), All("b", OptionColour, All("d", V("Nat"), baseEquation)))),
             Comma, Sp,
             Clause(All("k", V("Nat"), All("p", OptionalRow(Add(k, D(1))),
-                All("b", OptionColour, All("d", V("Nat"), stepEquation))))));
+                All("b", OptionColour, All("d", V("Nat"), stepEquation)))))));
     }
 
     private static Formula CompletionCodesClauses()
@@ -241,34 +221,34 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
         var d = V("d");
         var c = V("c");
         var list = Call("List", OptionColour);
-        var recursive = Call("List.map", Lambda("r", Add(Call("Fin.val", x), Mul(D(3), V("r")))),
+        var recursive = Call("List.map", Lambda("r", Add(Call("Fin.val", x), Mul(V("m"), V("r")))),
             Call("completionCodes", bs, Call("some", x), Sub(d, c)));
         var baseEquation = Eq(Call("completionCodes", Call("List.nil"), b, d),
             Call("List.map", Call("Fin.val"), LastColours(b, d)));
         var stepEquation = Eq(Call("completionCodes", Call("List.cons", a, bs), b, d),
             Call("List.flatMap", Lambda("x", LetCharge(b, a, x,
-                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", D(3))));
-        return Seq(TypeOf(Call("completionCodes"), Arrow(list,
+                Conditional(Leq(c, d), recursive, Call("List.nil")))), Call("List.finRange", V("m"))));
+        return AtRadix(Seq(TypeOf(Call("completionCodes"), Arrow(list,
                 Arrow(OptionColour, Arrow(V("Nat"), Call("List", V("Nat")))))), Comma, Sp,
             Clause(All("b", OptionColour, All("d", V("Nat"), baseEquation))), Comma, Sp,
             Clause(All("a", OptionColour, All("bs", list,
-                All("b", OptionColour, All("d", V("Nat"), stepEquation))))));
+                All("b", OptionColour, All("d", V("Nat"), stepEquation)))))));
     }
 
+    private static Formula AtRadix(Formula body) => All("m", V("Nat"), body);
     private static Formula Clause(Formula body) => Parenthesized(body);
     private static Formula OptionalRow(Formula n) => Arrow(Call("Fin", n), OptionColour);
-    private static Formula ColourRow(Formula n) => Arrow(Call("Fin", n), Fin3);
+    private static Formula ColourRow(Formula n) => Arrow(Call("Fin", n), Colour);
     private static Formula LastColours(Formula b, Formula d) => Call("List.filter",
-        Lambda("x", Call("BEq.beq", Call("matchCost", b, V("x")), d)), Call("List.finRange", D(3)));
+        Lambda("x", Call("BEq.beq", Call("matchCost", b, V("x")), d)), Call("List.finRange", V("m")));
     private static Formula LocalCharge(Formula b, Formula a, Formula x) =>
         Add(Call("matchCost", b, x), Call("matchCost", a, x));
     private static Formula LetCharge(Formula b, Formula a, Formula x, Formula body) =>
         Seq(Q("let"), Sp, V("c"), Sp, Colon, F.Eq, Sp, LocalCharge(b, a, x), Comma, Sp, body);
     private static Formula Lambda(string name, Formula body) =>
         Parenthesized(Seq(LambdaLower, Sp, V(name), Sp, Mapsto, Sp, body));
-    private static Formula OptionColour => Call("Option", Fin3);
+    private static Formula OptionColour => Call("Option", Colour);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(n), t, Parenthesized(b));
-    private static Formula Code(Formula row) => Call("Fin.val", Call("finFunctionFinEquiv", row));
 }

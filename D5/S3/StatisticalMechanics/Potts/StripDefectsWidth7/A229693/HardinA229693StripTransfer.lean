@@ -396,42 +396,46 @@ private theorem old_exhausted_counts (p : Boundary) (hp : HardinA229635State.Val
       HardinA229585StripData.cl p 0 := Fin.ext (Nat.add_sub_of_le hh)
   rw [h]
   exact old_exhausted_row p 0 hv j
-def matchCost : Option (Fin 3) → Fin 3 → ℕ
+def matchCost {m : ℕ} : Option (Fin m) → Fin m → ℕ
   | none, _ => 0
   | some p, x => if p = x then 1 else 0
 
-def completionCost : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
-    (Fin (k + 1) → Fin 3) → ℕ
+def completionCost {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
+    (Fin (k + 1) → Fin m) → ℕ
   | 0, _, prev, r => matchCost prev (r 0)
   | _k + 1, p, prev, r =>
     matchCost prev (r 0) + matchCost (p 0) (r 0) +
       completionCost (Fin.tail p) (some (r 0)) (Fin.tail r)
 
-def completionRows : {k : ℕ} → (Fin k → Option (Fin 3)) → Option (Fin 3) →
-    ℕ → List (Fin (k + 1) → Fin 3)
+def completionRows {m : ℕ} : {k : ℕ} → (Fin k → Option (Fin m)) → Option (Fin m) →
+    ℕ → List (Fin (k + 1) → Fin m)
   | 0, _, prev, d =>
-    ((List.finRange 3).filter fun x => matchCost prev x == d).map fun x _ => x
-  | _k + 1, p, prev, d => (List.finRange 3).flatMap fun x =>
+    ((List.finRange m).filter fun x => matchCost prev x == d).map fun x _ => x
+  | _k + 1, p, prev, d => (List.finRange m).flatMap fun x =>
     let c := matchCost prev x + matchCost (p 0) x
     if c ≤ d then (completionRows (Fin.tail p) (some x) (d - c)).map (Fin.cons x) else []
-theorem completionRows_count {k : ℕ} (p : Fin k → Option (Fin 3))
-    (prev : Option (Fin 3)) (d : ℕ) (f : (Fin (k + 1) → Fin 3) → Bool) :
+private theorem completionRows_count {k m : ℕ} (p : Fin k → Option (Fin m))
+    (prev : Option (Fin m)) (d : ℕ) (f : (Fin (k + 1) → Fin m) → Bool) :
     (completionRows p prev d).countP f =
       ∑ r, if completionCost p prev r = d ∧ f r = true then 1 else 0 := by
   induction k generalizing prev d with
   | zero =>
-    rw [← (Equiv.funUnique (Fin 1) (Fin 3)).symm.sum_comp]
+    rw [← (Equiv.funUnique (Fin 1) (Fin m)).symm.sum_comp]
     simp only [completionCost, completionRows, List.countP_map, List.countP_filter,
-      Equiv.funUnique_symm_apply, uniqueElim_const, Function.comp_apply, Fin.sum_univ_three]
-    change ([(0 : Fin 3), 1, 2].countP
-      (fun x => f (fun _ => x) && (matchCost prev x == d))) =
-      (if matchCost prev 0 = d ∧ f (fun _ => 0) = true then 1 else 0) +
-      (if matchCost prev 1 = d ∧ f (fun _ => 1) = true then 1 else 0) +
-      (if matchCost prev 2 = d ∧ f (fun _ => 2) = true then 1 else 0)
-    simp only [List.countP_cons, List.countP_nil, Bool.and_eq_true, beq_iff_eq, and_comm]
-    omega
+      Equiv.funUnique_symm_apply, uniqueElim_const, Function.comp_apply]
+    let accepted (x : Fin m) := matchCost prev x = d ∧ f (fun _ : Fin 1 => x) = true
+    have h : (List.finRange m).countP (fun x => f (fun _ : Fin 1 => x) &&
+        (matchCost prev x == d)) = (List.finRange m).countP (fun x => decide (accepted x)) := by
+      congr 1
+      funext x
+      rw [Bool.eq_iff_iff]
+      simp [accepted, Bool.and_eq_true, beq_iff_eq, and_comm]
+    rw [h, ← Finset.sum_filter_count_eq_countP accepted]
+    rw [List.toFinset_finRange, Finset.sum_filter]
+    simp only [List.count_finRange, accepted]
+    rfl
   | succ k ih =>
-    rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => Fin 3)).sum_comp, Fintype.sum_prod_type]
+    rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => Fin m)).sum_comp, Fintype.sum_prod_type]
     simp only [completionRows, List.countP_flatMap, ← List.ofFn_id,
       List.map_ofFn, List.sum_ofFn, Function.comp_apply, id_eq]
     apply Finset.sum_congr rfl
@@ -460,14 +464,14 @@ theorem completionRows_count {k : ℕ} (p : Fin k → Option (Fin 3))
       intro h
       exact hc (h.1 ▸ Nat.le_add_right c _)
 
-def completionCodes : List (Option (Fin 3)) → Option (Fin 3) → ℕ → List ℕ
+def completionCodes {m : ℕ} : List (Option (Fin m)) → Option (Fin m) → ℕ → List ℕ
   | [], prev, d =>
-    ((List.finRange 3).filter fun x => matchCost prev x == d).map Fin.val
-  | a :: as, prev, d => (List.finRange 3).flatMap fun x =>
+    ((List.finRange m).filter fun x => matchCost prev x == d).map Fin.val
+  | a :: as, prev, d => (List.finRange m).flatMap fun x =>
     let c := matchCost prev x + matchCost a x
-    if c ≤ d then (completionCodes as (some x) (d - c)).map (fun r => x.val + 3 * r)
+    if c ≤ d then (completionCodes as (some x) (d - c)).map (fun r => x.val + m * r)
     else []
-theorem rowCode_cons {k m : ℕ} (x : Fin m) (r : Fin k → Fin m) :
+private theorem rowCode_cons {k m : ℕ} (x : Fin m) (r : Fin k → Fin m) :
     (finFunctionFinEquiv (Fin.cons x r)).val = x.val + m * (finFunctionFinEquiv r).val := by
   simp only [finFunctionFinEquiv_apply, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ,
     Fin.val_zero, Fin.val_succ, pow_zero, mul_one, pow_succ', Finset.mul_sum]
@@ -475,8 +479,8 @@ theorem rowCode_cons {k m : ℕ} (x : Fin m) (r : Fin k → Fin m) :
   apply Finset.sum_congr rfl
   intro j _
   ac_rfl
-theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
-    (prev : Option (Fin 3)) (d : ℕ) :
+private theorem completionCodes_eq {k m : ℕ} (p : Fin k → Option (Fin m))
+    (prev : Option (Fin m)) (d : ℕ) :
     completionCodes (List.ofFn p) prev d =
       (completionRows p prev d).map (fun r => (finFunctionFinEquiv r).val) := by
   induction k generalizing prev d with
@@ -497,7 +501,7 @@ theorem completionCodes_eq {k : ℕ} (p : Fin k → Option (Fin 3))
       exact (rowCode_cons x r).symm
     · rfl
 private theorem completionCost_row (p : Boundary) (r : Row) :
-    completionCost (some ∘ p) none r = cross p r + bondDefects horizontal r r := by
+    completionCost (m := 3) (some ∘ p) none r = cross p r + bondDefects horizontal r r := by
   calc
     _ = (List.ofFn fun j : Fin 6 => if p j = r j.castSucc then 1 else 0).sum +
         (List.ofFn fun j : Fin 6 => if r j.castSucc = r j.succ then 1 else 0).sum := by
@@ -536,19 +540,19 @@ private theorem packedClass_eq (p : Boundary) :
   simpa only [beq_iff_eq, Equiv.symm_apply_apply] using h
 private def exitCodes {k : ℕ} (p : Fin k → Option (Fin 3)) (d : ℕ) :
     List (Fin 96) :=
-  ((completionCodes (List.ofFn p) none d).map fun r => packedClass (r / 3))
+  ((completionCodes (m := 3) (List.ofFn p) none d).map fun r => packedClass (r / 3))
 private theorem exitCodes_eq (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
     exitCodes p d =
-      (completionRows p none d).map (fun r => exhaustedClass (boundary r)) := by
+      (completionRows (m := 3) p none d).map (fun r => exhaustedClass (boundary r)) := by
   rw [exitCodes, completionCodes_eq, List.map_map]
   apply List.map_congr_left
   intro r _
   change packedClass ((finFunctionFinEquiv r).val / 3) = exhaustedClass (boundary r)
   rw [← rowCode_tail r, packedClass_eq]
 private theorem completionRows_length_le (p : Fin 6 → Option (Fin 3)) (d : ℕ) :
-    (completionRows p none d).length ≤ 2187 := by
+    (completionRows (m := 3) p none d).length ≤ 2187 := by
   rw [← List.countP_true]
-  have h := completionRows_count p none d (fun _ => true)
+  have h := completionRows_count (m := 3) p none d (fun _ => true)
   rw [h]
   calc
     _ ≤ ∑ _ : Row, (1 : ℕ) := Finset.sum_le_sum fun i _ => by split_ifs <;> decide
@@ -573,11 +577,11 @@ private theorem exactExits_count (p : Boundary) (d : ℕ) (j : Fin 96) :
       ∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
         exhaustedClass (boundary r) = j then 1 else 0 := by
   rw [exitCodes_eq, List.count_eq_countP, List.countP_map]
-  change ((completionRows (some ∘ p) none d).countP
+  change ((completionRows (m := 3) (some ∘ p) none d).countP
     (fun r => exhaustedClass (boundary r) == j) : ℤ) = _
   exact_mod_cast (by
     simpa only [completionCost_row, beq_iff_eq] using
-      completionRows_count (some ∘ p) none d (fun r => exhaustedClass (boundary r) == j) :
+      completionRows_count (m := 3) (some ∘ p) none d (fun r => exhaustedClass (boundary r) == j) :
     _ = ∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
       exhaustedClass (boundary r) = j then (1 : ℕ) else 0)
 private def alternating : Row ≃ Row :=
