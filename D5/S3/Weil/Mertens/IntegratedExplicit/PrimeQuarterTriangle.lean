@@ -169,16 +169,8 @@ private theorem tendsto_mangoldtRamp_div :
   have hq : Tendsto q atTop (𝓝 0) := tendsto_integral_Ioi_zero tendsto_id
   have hlim : Tendsto (fun x => -q x) atTop (𝓝 0) := by
     simpa only [neg_zero] using hq.neg
-  refine hlim.congr' ((eventually_ge_atTop (2 : ℝ)).mono fun x hx => ?_)
-  have hx0 : x ≠ 0 := by linarith
-  have htail :=
-    D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
-      D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable hx
-  change q x = _ at htail
-  change -q x = U x / x
-  rw [htail, U]
-  field_simp [hx0]
-  ring
+  exact hlim.congr' ((eventually_ge_atTop (2 : ℝ)).mono fun x hx =>
+    (D5.S3.Weil.Mertens.ZeroAbscissaPower.primitive_eq_negative_tail (x := x) hx).symm)
 
 /-- The weighted Mangoldt sum in the dyadic hinge. Its summand vanishes for
 `n ≤ x`, and the finite cutoff includes `n = 4*x` when that is an integer. -/
@@ -222,18 +214,6 @@ private theorem mangoldt_ramp_upper_bound {X θ A : ℝ} (hX : 0 < X) (hθ0 : 0 
       U x ≤ B + A / ((2 ^ θ - 1) * (2 - 2 ^ θ)) * x ^ θ :=
   upper_bound_of_hinge_lower_bound hX hθ0 hθ1 hA (continuousOn_mangoldtRamp hX)
     tendsto_mangoldtRamp_div hhinge
-
-/-- A lower bound on the finite weighted sum implies the same-power ramp bound. -/
-private theorem mangoldt_ramp_upper_bound_of_sum {X θ A : ℝ} (hX : 0 < X) (hθ0 : 0 < θ)
-    (hθ1 : θ < 1) (hA : 0 ≤ A)
-    (hsum : ∀ x ≥ X, 2 * x * Real.log 2 - A * x ^ θ ≤ mangoldtHingeSum x) :
-    ∃ B : ℝ, ∀ x ≥ X,
-      U x ≤ B + A / ((2 ^ θ - 1) * (2 - 2 ^ θ)) * x ^ θ := by
-  apply mangoldt_ramp_upper_bound hX hθ0 hθ1 hA
-  intro x hx
-  rw [hinge_mangoldtRamp_eq (hX.trans_le hx)]
-  linarith only [hsum x hx]
-
 
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (firstLiMass firstLiMass_lt_one)
 
@@ -438,7 +418,8 @@ private theorem rh_iff_eventual_quarter_triangular_lower :
 
 
 
-/-- The tent weight vanishes outside `(x, 4*x)` and takes the value `1` at `2*x`. -/
+/-- For positive `x` and `n`, the tent weight vanishes outside `(x, 4*x)`
+and takes the value `1` at `2*x`. -/
 def triangleWeight (x n : ℝ) : ℝ :=
   max (4 * x / n - 1) 0 - 3 * max (2 * x / n - 1) 0 + 2 * max (x / n - 1) 0
 
