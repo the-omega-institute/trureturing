@@ -8,6 +8,7 @@ url: https://doi.org/10.1080/0308108031000069164
 claim: Additive spectral inequalities characterize prescribed eigenvalues of a Hermitian matrix and its principal diagonal blocks.
 strata_touched:
   - D5/S3/Quantum/Measurement/Auric/EqualBlockEffects
+  - D5/S3/Quantum/Measurement/Auric/EqualBlockProjection
 license: citation-only
 triage: anchor
 ---
