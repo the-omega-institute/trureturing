@@ -4,7 +4,7 @@
 
 Triple labels realize prescribed component returns in a central extension.
 
-**Theorem 1.1 (Prescribing a return at a representative of each component).**
+**Theorem 1.1 (Prescribing the returns throughout each component).**
 
 Lean statement: `D5/S3/Combinatorics/Matroids/SteinerSchreierExtension.realizeSchreierReturns`
 
@@ -20,7 +20,7 @@ Fix a finite centreless Steiner loop, two distinct nonidentity pivots, and a com
 
 The extension adds one group label for the triple traversed at each step. Within a component, the disjoint product orbits keep the two directions of a matching edge from occurring twice in one circuit. Outside the identity component, different matching edges use different triples. One chosen label per component therefore realizes all prescribed returns.
 
-At a chosen representative of each component, the first return to its fibre under the lifted two-step map shifts the fibre coordinate by the prescribed element. The identity returns with shift zero. The extension is a Steiner loop, and its centre comprises exactly the fibre over the identity.
+The first return to the fibre of any vertex shifts the fibre coordinate by the prescribed element. Conjugation by either matching step reverses the circuit and negates its return. Every group element equals its negative, so this gives the same return at all corners. The component through the identity has zero return. The extension is a Steiner loop, and its centre is exactly the fibre over the identity.
 
 ## References
 

@@ -490,7 +490,101 @@ private theorem identityReturn {L A : Type*} [Mul L] [AddCommGroup A]
     iterate_one, first, qpr, rightUnit, factorUnit, factorSquare, add_zero, matching, twice]
 
 
-/-- The extension realizes every prescribed return at one chosen vertex of each component. -/
+private theorem iterateReflection {X : Type*} (f T : X → X)
+    (reflect : ∀ x, f (T (f x)) = T x) (n : ℕ) (x : X) :
+    f^[n] (T (f^[n] x)) = T x := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [iterate_succ_apply, iterate_succ_apply' f n x, reflect, ih]
+
+private theorem periodAtReflection {X : Type*} (f T : X → X)
+    (reflect : ∀ x, f (T (f x)) = T x) (hT : Involutive T) (x : X) :
+    minimalPeriod f (T x) = minimalPeriod f x := by
+  have divides (y : X) : minimalPeriod f (T y) ∣ minimalPeriod f y := by
+    have h := iterateReflection f T reflect (minimalPeriod f y) y
+    rw [show f^[minimalPeriod f y] y = y from isPeriodicPt_minimalPeriod f y] at h
+    exact (show IsPeriodicPt f (minimalPeriod f y) (T y) from h).minimalPeriod_dvd
+  refine Nat.dvd_antisymm (divides x) ?_
+  simpa only [hT x] using divides (T x)
+
+private theorem returnAlongReflection {L A : Type*} [AddCommGroup A]
+    (g T : L → L) (f : L × A → L × A) (offset : L → A)
+    (reflectG : ∀ x, g (T (g x)) = T x) (hT : Involutive T)
+    (reflectF : ∀ w, f ((T (f w).1, (f w).2 + offset (f w).1)) =
+        (T w.1, w.2 + offset w.1))
+    (twice : ∀ a : A, a + a = 0) {x : L} {t : A}
+    (returns : ∀ a : A, f^[minimalPeriod g x] (x, a) = (x, a + t)) :
+    ∀ b : A, f^[minimalPeriod g (T x)] (T x, b) = (T x, b + t) := by
+  intro b
+  rw [periodAtReflection g T reflectG hT]
+  let lift (w : L × A) : L × A := (T w.1, w.2 + offset w.1)
+  let a := b - offset x
+  have shift : f^[minimalPeriod g x] (x, a + t) = (x, a) := by
+    rw [returns, add_assoc, twice, add_zero]
+  have h := iterateReflection f lift reflectF (minimalPeriod g x) (x, a + t)
+  rw [shift] at h
+  have left : lift (x, a) = (T x, b) := by simp [lift, a]
+  have right : lift (x, a + t) = (T x, b + t) := by
+    apply Prod.ext
+    · rfl
+    · change b - offset x + t + offset x = b + t
+      abel
+  rwa [left, right] at h
+
+private theorem returnAlongComponent {L A : Type*} [Mul L] [AddCommGroup A]
+    (G : SimpleGraph L) (e p q : L) (labels : Set L → A)
+    (invol : ∀ x y : L, x * (x * y) = y)
+    (twice : ∀ a : A, a + a = 0)
+    (edges : ∀ u v, G.Adj u v ↔ p * u = v ∨ q * u = v)
+    (involExt : letI := extensionMul e labels
+      ∀ x y : L × A, x * (x * y) = y)
+    {x y : L} (path : G.Reachable x y) (t : A) :
+    letI := extensionMul e labels
+    let g : L → L := fun u => p * (q * u)
+    let f : L × A → L × A := fun u => (p, 0) * ((q, 0) * u)
+    (∀ a : A, f^[minimalPeriod g x] (x, a) = (x, a + t)) →
+      ∀ a : A, f^[minimalPeriod g y] (y, a) = (y, a + t) := by
+  letI := extensionMul e labels
+  let g : L → L := fun u => p * (q * u)
+  let f : L × A → L × A := fun u => (p, 0) * ((q, 0) * u)
+  change (∀ a : A, f^[minimalPeriod g x] (x, a) = (x, a + t)) →
+    ∀ a : A, f^[minimalPeriod g y] (y, a) = (y, a + t)
+  intro ret
+  have multiply (z : L) (u : L × A) :
+      (z, 0) * u = (z * u.1, u.2 + factor e labels z u.1) := by
+    apply Prod.ext
+    · rfl
+    · exact congrArg (· + factor e labels z u.1) (zero_add _)
+  have reflectsP (u : L) : g (p * g u) = p * u := by
+    change p * (q * (p * (p * (q * u)))) = p * u
+    rw [invol p, invol q]
+  have reflectsQ (u : L) : g (q * g u) = q * u := by
+    change p * (q * (q * (p * (q * u)))) = q * u
+    rw [invol q, invol p]
+  have reflectsLiftP (u : L × A) : f ((p, 0) * f u) = (p, 0) * u := by
+    change (p, (0 : A)) * ((q, (0 : A)) * ((p, (0 : A)) *
+      ((p, (0 : A)) * ((q, (0 : A)) * u)))) = (p, (0 : A)) * u
+    rw [involExt (p, 0), involExt (q, 0)]
+  have reflectsLiftQ (u : L × A) : f ((q, 0) * f u) = (q, 0) * u := by
+    change (p, (0 : A)) * ((q, (0 : A)) * ((q, (0 : A)) *
+      ((p, (0 : A)) * ((q, (0 : A)) * u)))) = (q, (0 : A)) * u
+    rw [involExt (q, 0), involExt (p, 0)]
+  have reflectPair (z : L) (h : ∀ u, f ((z, 0) * f u) = (z, 0) * u) (u : L × A) :
+      f ((z * (f u).1, (f u).2 + factor e labels z (f u).1)) =
+         (z * u.1, u.2 + factor e labels z u.1) := by
+    simpa only [multiply] using h u
+  rw [reachable_iff_reflTransGen] at path
+  induction path with
+  | refl => exact ret
+  | @tail u v _ edge ih =>
+    rcases (edges u v).1 edge with rfl | rfl
+    · exact returnAlongReflection g (p * ·) f (factor e labels p) reflectsP
+        (invol p) (reflectPair p reflectsLiftP) twice ih
+    · exact returnAlongReflection g (q * ·) f (factor e labels q) reflectsQ
+        (invol q) (reflectPair q reflectsLiftQ) twice ih
+
+/-- The extension realizes every prescribed return throughout each component. -/
 theorem realizeSchreierReturns {L A : Type*} [Finite L] [Mul L] [AddCommGroup A]
     (G : SimpleGraph L) (e p q : L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
@@ -507,9 +601,10 @@ theorem realizeSchreierReturns {L A : Type*} [Finite L] [Mul L] [AddCommGroup A]
       (∀ x y : L × A, x * y = y * x) ∧
       (∀ x y : L × A, x * (x * y) = y) ∧
       Set.center (L × A) = {x | x.1 = e} ∧
-      (∀ a : A, f^[minimalPeriod g e] (e, a) = (e, a)) ∧
-      ∀ C : {C : G.ConnectedComponent // C ≠ G.connectedComponentMk e}, ∃ x,
-        G.connectedComponentMk x = C.val ∧
+      (∀ x, G.connectedComponentMk x = G.connectedComponentMk e →
+        ∀ a : A, f^[minimalPeriod g x] (x, a) = (x, a)) ∧
+      ∀ (C : {C : G.ConnectedComponent // C ≠ G.connectedComponentMk e}) (x : L),
+        G.connectedComponentMk x = C.val →
           ∀ a : A, f^[minimalPeriod g x] (x, a) = (x, a + t C) := by
   classical
   let I := {C : G.ConnectedComponent // C ≠ G.connectedComponentMk e}
@@ -535,15 +630,23 @@ theorem realizeSchreierReturns {L A : Type*} [Finite L] [Mul L] [AddCommGroup A]
   obtain ⟨idExt, commExt, involExt, centerExt⟩ :=
     extensionSteinerAndCentre e labels unit comm invol twice centreless
   refine ⟨labels, idExt, commExt, involExt, centerExt, ?_, ?_⟩
-  · intro a
-    obtain ⟨period, identity⟩ := identityReturn e p q labels a unit comm invol twice hpq
-    rw [period, ← pairedLift_eq_mul e labels p q]
-    exact identity
-  · intro C
-    refine ⟨rep C, hrep C, ?_⟩
-    intro a
-    rw [← pairedLift_eq_mul e labels p q]
-    exact returns C a
+  · intro x connected
+    have atIdentity (a : A) :
+        (fun y : L × A => (p, 0) * ((q, 0) * y))^[
+          minimalPeriod (fun y => p * (q * y)) e] (e, a) = (e, a + 0) := by
+      obtain ⟨period, identity⟩ := identityReturn e p q labels a unit comm invol twice hpq
+      rw [period, ← pairedLift_eq_mul e labels p q, add_zero]
+      exact identity
+    simpa only [add_zero] using returnAlongComponent G e p q labels invol twice edges
+      involExt (ConnectedComponent.exact connected.symm) 0 atIdentity
+  · intro C x connected
+    have fromRep (a : A) :
+        (fun y : L × A => (p, 0) * ((q, 0) * y))^[
+          minimalPeriod (fun y => p * (q * y)) (rep C)] (rep C, a) = (rep C, a + t C) := by
+      rw [← pairedLift_eq_mul e labels p q]
+      exact returns C a
+    exact returnAlongComponent G e p q labels invol twice edges involExt
+      (ConnectedComponent.exact ((hrep C).trans connected.symm)) (t C) fromRep
 
 
 end D5.S3.Combinatorics.Matroids.SteinerSchreierExtension
