@@ -129,7 +129,7 @@ open scoped BigOperators Function
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA233178Chromatic (Column T table moves step_fast)
 open HardinA229538Strip (cost oneDefect transfer_readout
-  cost_countCut movesOne step_one classIndex tableOne zeroValues zero_values
+  cost_countCut movesOne weighted_indicator_sum step_one classIndex tableOne zeroValues zero_values
   weight_eq weights coefficients538)
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
@@ -402,18 +402,12 @@ private theorem moves_two_filter (p : Column) :
   exact checked block offset
 
 private theorem step_two {R : Type*} [AddCommMonoid R] [Mul R] [One R]
-    (zeroLeft : ∀ x : R, 0 * x = 0) (w : Column → R) (p : Column) :
-    dotProduct (twoDefect p) w = ((movesTwo p).map (fun q => (1 : R) * w q)).sum := by
-  classical
-  have nodup : (movesTwo p).Nodup := by
-    rw [moves_two_filter]
-    exact (List.nodup_finRange _).filter _
-  have mem (q : Column) : q ∈ movesTwo p ↔ cost p q = 2 := by
-    rw [moves_two_filter]
-    simp
-  simp only [dotProduct, twoDefect, ite_mul, zeroLeft]
-  simp_rw [← mem, ← List.mem_toFinset]
-  rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
+    (w : Column → R) (p : Column)
+    (zeroLeft : ∀ q : Column, q ∉ movesTwo p → (0 : R) * w q = 0) :
+    dotProduct (twoDefect p) w = ((movesTwo p).map (fun q => (1 : R) * w q)).sum :=
+  weighted_indicator_sum (fun q => cost p q = 2) (movesTwo p)
+    (by rw [moves_two_filter]; exact (List.nodup_finRange _).filter _)
+    (fun q => by rw [moves_two_filter]; simp) w zeroLeft
 
 private def oldWeights (n : Fin 34) : Fin 23 → ℤ :=
   if h : n.val < 23 then (1 : Matrix (Fin 23) (Fin 23) ℤ) (n.castLT h)
@@ -522,7 +516,7 @@ private def seedImage₁ (k : Fin 23) (p : Column) : ℤ :=
 
 private theorem seed_image₁ (k : Fin 23) (p : Column) :
     oneDefect.mulVec (tableOne k) p = seedImage₁ k p := by
-  rw [Matrix.mulVec, step_one Int.zero_mul, List.sum_map_mul_left, one_mul]
+  rw [Matrix.mulVec, step_one (tableOne k) p (fun q _ => Int.zero_mul (tableOne k q)), List.sum_map_mul_left, one_mul]
   have checked : ∀ (n : Fin 23) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesOne col).map (tableOne n)).sum = seedImage₁ n col := by
@@ -553,7 +547,7 @@ private def seedImage₂ (k : Fin 12) (p : Column) : ℤ :=
 
 private theorem seed_image₂ (k : Fin 12) (p : Column) :
     twoDefect.mulVec (table k) p = seedImage₂ k p := by
-  rw [Matrix.mulVec, step_two Int.zero_mul, List.sum_map_mul_left, one_mul]
+  rw [Matrix.mulVec, step_two (table k) p (fun q _ => Int.zero_mul (table k q)), List.sum_map_mul_left, one_mul]
   have checked : ∀ (n : Fin 12) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesTwo col).map (table n)).sum = seedImage₂ n col := by

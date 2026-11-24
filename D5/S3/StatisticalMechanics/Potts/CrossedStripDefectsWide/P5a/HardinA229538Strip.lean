@@ -26,6 +26,7 @@ countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
 movesOne: proof_shape=bind-only; consumers=HardinA229538Strip.step_one
 moves_one_filter: proof_shape=content; consumers=HardinA229538Strip.step_one
+weighted_indicator_sum: proof_shape=bind-only; consumers=HardinA229538Strip.step_one, HardinA229641Strip.step_two
 step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image, HardinA229641Strip.seed_image₁
 weights: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 weights_initial: proof_shape=bind-only; consumers=HardinA229538Strip.weight_eq
@@ -72,6 +73,7 @@ import Init.Data.Int.Basic
 import Init.Data.Int.Lemmas
 import Init.Data.List.Basic
 import Init.Data.List.FinRange
+import Init.Data.List.Lemmas
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
@@ -80,6 +82,7 @@ import Init.Data.Nat.Lemmas
 import Init.Data.Prod
 import Init.Data.Sum.Basic
 import Init.Prelude
+import Init.Notation
 import Init.PropLemmas
 import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
@@ -509,16 +512,30 @@ private theorem moves_one_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-theorem step_one {R : Type*} [AddCommMonoid R] [Mul R] [One R]
-    (zeroLeft : ∀ x : R, 0 * x = 0) (w : Column → R) (p : Column) :
-    dotProduct (oneDefect p) w = ((movesOne p).map (fun q => (1 : R) * w q)).sum := by
+theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul R] [One R]
+    (P : S → Prop) [DecidablePred P] (L : List S) (nodup : L.Nodup)
+    (mem : ∀ q, q ∈ L ↔ P q) (w : S → R) (zeroLeft : ∀ q ∉ L, (0 : R) * w q = 0) :
+    dotProduct (fun q => if P q then (1 : R) else 0) w =
+      (L.map (fun q => (1 : R) * w q)).sum := by
   classical
-  have nodup : (movesOne p).Nodup := by
-    rw [moves_one_filter]; exact (List.nodup_finRange _).filter _
-  have mem (q : Column) : q ∈ movesOne p ↔ cost p q = 1 := by rw [moves_one_filter]; simp
-  simp only [dotProduct, oneDefect, ite_mul, zeroLeft]
-  simp_rw [← mem, ← List.mem_toFinset]
-  rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
+  calc
+    _ = ∑ q : S, if q ∈ L then (1 : R) * w q else 0 := by
+      apply Finset.sum_congr rfl
+      intro q _
+      by_cases h : q ∈ L
+      · rw [if_pos h, if_pos ((mem q).mp h)]
+      · rw [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
+    _ = _ := by
+      simp_rw [← List.mem_toFinset]
+      rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
+
+theorem step_one {R : Type*} [AddCommMonoid R] [Mul R] [One R]
+    (w : Column → R) (p : Column)
+    (zeroLeft : ∀ q : Column, q ∉ movesOne p → (0 : R) * w q = 0) :
+    dotProduct (oneDefect p) w = ((movesOne p).map (fun q => (1 : R) * w q)).sum :=
+  weighted_indicator_sum (fun q => cost p q = 1) (movesOne p)
+    (by rw [moves_one_filter]; exact (List.nodup_finRange _).filter _)
+    (fun q => by rw [moves_one_filter]; simp) w zeroLeft
 
 def weights (n : Fin 23) : Fin 12 → ℤ :=
   if h : n.val < 12 then (1 : Matrix (Fin 12) (Fin 12) ℤ) (n.castLT h)
@@ -652,7 +669,7 @@ private def seedImage (k : Fin 12) (p : Column) : ℤ :=
 
 private theorem seed_image (k : Fin 12) (p : Column) :
     oneDefect.mulVec (table k) p = seedImage k p := by
-  rw [Matrix.mulVec, step_one Int.zero_mul, List.sum_map_mul_left, one_mul]
+  rw [Matrix.mulVec, step_one (table k) p (fun q _ => Int.zero_mul (table k q)), List.sum_map_mul_left, one_mul]
   have checked : ∀ (i : Fin 12) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesOne col).map (table i)).sum = seedImage i col := by

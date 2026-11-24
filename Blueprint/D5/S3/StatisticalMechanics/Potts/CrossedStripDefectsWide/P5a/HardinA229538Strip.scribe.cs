@@ -32,7 +32,8 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
             Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
-            Node("step_one",StepOne(),true,"The matrix row sums the successor values after multiplying each by one on the left. Left multiplication by zero removes all other entries."),
+            Node("weighted_indicator_sum",WeightedIndicatorSum(),true,"The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish."),
+            Node("step_one",StepOne(),true,"The matrix row sums the successor values after multiplying each by one on the left. Only products at omitted columns must vanish."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
             Node("weights_step",WeightsStep(),true,"Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
@@ -273,17 +274,51 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return All("p", Column(), Eq(Typed(Own("movesOne", p), Call("List", Column())),
             Call("List.filter", predicate, Call("List.finRange", N(243)))));
     }
-    private static Formula StepOne() {
+    private static Formula OmittedProducts(Formula domain, Formula scalar, Formula support)
+    {
+        var q = V("q");
+        var omitted = Not(new Formula.Relation(q, FormulaRelationOperator.MemberOf, support));
+        return All("q", domain, Imp(omitted, Eq(Mul(Typed(N(0), scalar), App(V("w"), q)), Typed(N(0), scalar))));
+    }
+
+    private static Formula WeightedRowLaws(Formula scalar, Formula body) => Seq(
+        OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
+        OpenBracket, Call("Mul", scalar), CloseBracket, Sp,
+        OpenBracket, Call("One", scalar), CloseBracket, Sp, body);
+
+    private static Formula WeightedIndicatorSum()
+    {
+        var domain = V("S");
         var scalar = V("R");
-        var zeroLeft = All("x", scalar, Eq(Mul(Typed(N(0), scalar), V("x")), Typed(N(0), scalar)));
+        var support = V("L");
+        var predicate = V("P");
+        var q = V("q");
+        var member = new Formula.Relation(q, FormulaRelationOperator.MemberOf, support);
+        var row = Fn("q", domain, If(App(predicate, q), Typed(N(1), scalar), N(0)));
+        var weighted = Fn("q", domain, Mul(Typed(N(1), scalar), App(V("w"), q)));
+        var sum = Call("List.sum", Call("List.map", weighted, support));
+        var equality = Eq(Call("dotProduct", row, V("w")), sum);
+        var body = All("w", Arrow(domain, scalar), Imp(OmittedProducts(domain, scalar, support), equality));
+        var list = All("L", Call("List", domain), Imp(Call("List.Nodup", support),
+            Imp(All("q", domain, Iff(member, App(predicate, q))), body)));
+        var predicates = All("P", Arrow(domain, Q("Prop")), Seq(
+            OpenBracket, Call("DecidablePred", predicate), CloseBracket, Sp, list));
+        var type = Seq(Q("Type"), Star);
+        return All("S", type, All("R", type, Seq(
+            OpenBracket, Call("Fintype", domain), CloseBracket, Sp, WeightedRowLaws(scalar, predicates))));
+    }
+
+    private static Formula StepOne()
+    {
+        var scalar = V("R");
+        var p = V("p");
+        var support = Own("movesOne", p);
         var weighted = Fn("q", Column(), Mul(Typed(N(1), scalar), App(V("w"), V("q"))));
-        var equation = All("w", Arrow(Column(), scalar), All("p", Column(),
-            Eq(Call("dotProduct", Own("oneDefect", V("p")), V("w")),
-                Call("List.sum", Call("List.map", weighted, Own("movesOne", V("p")))))));
-        return All("R", Seq(Q("Type"), Star), Seq(
-            OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
-            OpenBracket, Call("Mul", scalar), CloseBracket, Sp,
-            OpenBracket, Call("One", scalar), CloseBracket, Sp, Imp(zeroLeft, equation)));
+        var equation = Eq(Call("dotProduct", Own("oneDefect", p), V("w")),
+            Call("List.sum", Call("List.map", weighted, support)));
+        var parameters = All("w", Arrow(Column(), scalar), All("p", Column(),
+            Imp(OmittedProducts(Column(), scalar, support), equation)));
+        return All("R", Seq(Q("Type"), Star), WeightedRowLaws(scalar, parameters));
     }
     private static Formula WeightsStep()
     {
