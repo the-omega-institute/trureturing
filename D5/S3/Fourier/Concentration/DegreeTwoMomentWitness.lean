@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Fourier/Concentration/DegreeTwoMomentWitness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Fourier/Concentration/DegreeTwoMomentWitness.degreeOneDeterminesDegreeTwo; result=D5/S3/Fourier/Concentration/DegreeTwoMomentWitness.degree_one_does_not_determine_degree_two; claim=D5/S3/Fourier/Concentration/DegreeTwoMomentWitness.degreeOneDeterminesDegreeTwo
    digest: Matched degree-one data permit different degree-two residual masses. -/
 
 import D5.S3.Fourier.Concentration.DegreeTwoResidualDifferenceEnergy
@@ -103,5 +103,35 @@ theorem exists_equal_first_data_distinct_degree_two :
   intro η hη hη'
   obtain ⟨hcloseA, hcloseB⟩ := both_degree_one hη hη'
   exact ⟨hcloseA, hcloseB, collision_witness hη hη'⟩
+
+/-- Sufficiency of the common band, first two moments and full degree-one
+profile below unit resolution for the disjoint degree-two profile. -/
+def degreeOneDeterminesDegreeTwo : Prop :=
+  ∀ a b : Fin 5 → ℤ,
+    (∑ i, a i) = (∑ i, b i) →
+    (∑ i, a i ^ 2) = (∑ i, b i ^ 2) →
+    (∀ i, a i ∈ Set.Icc 0 13 ∧ b i ∈ Set.Icc 0 13) →
+    a 0 = 0 → b 0 = 0 → a 4 = 13 → b 4 = 13 →
+    (∀ η : ℝ, 0 ≤ η → η < 1 →
+      nearCollisionMass univ (fun i => (a i : ℝ)) (fun _ => 1) η =
+        nearCollisionMass univ (fun i => (b i : ℝ)) (fun _ => 1) η) →
+    ∀ η : ℝ, 0 ≤ η → η < 1 →
+      degreeTwoResidualMass (fun i => (a i : ℝ)) (fun _ => 1) η =
+        degreeTwoResidualMass (fun i => (b i : ℝ)) (fun _ => 1) η
+
+/-- Identical degree-one profiles and moments allow different disjoint
+degree-two profiles. -/
+theorem degree_one_does_not_determine_degree_two : ¬ degreeOneDeterminesDegreeTwo := by
+  intro determines
+  obtain ⟨a, b, ha, hb, ha2, hb2, hband, ha0, hb0, ha4, hb4, mass⟩ :=
+    exists_equal_first_data_distinct_degree_two
+  have hfirst (η : ℝ) (hη : 0 ≤ η) (hη' : η < 1) := by
+    obtain ⟨hleft, hright, _⟩ := mass η hη hη'
+    exact hleft.trans hright.symm
+  have h := determines a b (ha.trans hb.symm) (ha2.trans hb2.symm)
+    hband ha0 hb0 ha4 hb4 hfirst 0 le_rfl zero_lt_one
+  obtain ⟨_, _, hleft, hright⟩ := mass 0 le_rfl zero_lt_one
+  rw [hleft, hright] at h
+  norm_num at h
 
 end D5.S3.Fourier.Concentration.DegreeTwoMomentWitness
