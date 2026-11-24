@@ -65,7 +65,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group07
     definition := none
