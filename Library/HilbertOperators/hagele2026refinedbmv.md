@@ -18,7 +18,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
-  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricIntervalSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
@@ -219,18 +219,17 @@ enclosure gives its strict sign. From one to three halves, exact interval
 bounds on the marginal Taylor polynomials and the tilted joint moments
 give strict positivity at every integration point in the derivative identity.
 
+On the same range of lower coordinates, the mixed derivative is also
+strictly negative for gaps in [1, 3/2]. Three closed scalar bands cover
+the interval [1, 2], which contains every shifted gap in the geometric
+endpoint comparison.
+
 For first degrees at least eleven, the repository also proves strict
 negativity of the mixed derivative for every ordered pair of logarithmic
 coordinates with lower coordinate at least four. Short gaps through two
 and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
-
-For first degrees at least eleven and lower coordinate at most one half,
-the logarithmic kernel has strictly negative mixed derivative at all
-gaps at least one. Geometric reduction controls the scaled scalar
-through integration gap seven halves with exact Taylor enclosures. The
-analytic tail estimate supplies the sign past that threshold.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

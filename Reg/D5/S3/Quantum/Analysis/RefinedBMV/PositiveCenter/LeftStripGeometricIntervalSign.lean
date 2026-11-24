@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricIntervalSign
 import Reg.Support.SingleDependentReadout
 
-/-! Register the separated left-strip sign through the outer derivative readout. -/
+/-! Register the left-strip interval sign through the outer derivative readout. -/
 
 noncomputable section
 
-namespace Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
+namespace Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricIntervalSign
 
 open _root_.RefinedBMV.PositiveCenter
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -23,14 +23,14 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {p : ℕ}, 11 ≤ p → ∀ {u v : ℝ}, 0 < u → u ≤ 1 / 2 → 1 ≤ v - u →
+  Law R := ∀ {p : ℕ}, 11 ≤ p → ∀ {u v : ℝ}, 0 < u → u ≤ 1 / 2 → 1 ≤ v - u → v - u ≤ 3 / 2 →
     R.readout () v (fun y ↦ deriv (fun x ↦ logKernel p x y) u) < 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact (lt_irrefl (0 : ℝ))
     (h (p := 11) (by decide) (u := 1 / 2) (v := 3 / 2)
-      (by norm_num) (by norm_num) (by norm_num))
+      (by norm_num) (by norm_num) (by norm_num) (by norm_num))
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -38,20 +38,20 @@ private theorem dependence : ObservationalDependence signature actual := by
   change deriv (fun _ : ℝ => (0 : ℝ)) 0 ≠ deriv (fun t : ℝ => t) 0
   simp [deriv_id'']
 
-def source_registration : Registration arena (type_of% @leftStrip_logKernel_mixed_lt_ge_one) where
+def source_registration : Registration arena (type_of% @leftStrip_logKernel_mixed_lt_gap_one_to_three_halves) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@leftStrip_logKernel_mixed_lt_ge_one, rejected, rejected_law⟩
+  variation := ⟨@leftStrip_logKernel_mixed_lt_gap_one_to_three_halves, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@leftStrip_logKernel_mixed_lt_ge_one) (Realization signature) Type Unit where
-  unitName := `RefinedBMV.PositiveCenter.leftStrip_logKernel_mixed_lt_ge_one.__information_unit
+      (@leftStrip_logKernel_mixed_lt_gap_one_to_three_halves) (Realization signature) Type Unit where
+  unitName := `RefinedBMV.PositiveCenter.leftStrip_logKernel_mixed_lt_gap_one_to_three_halves.__information_unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign.source_registration
+    `Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricIntervalSign.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -67,11 +67,11 @@ def registration :
   partialSensitivity := none
   escapeFrom := some (ℝ → ℝ)
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
+    owner := `D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricIntervalSign
     definition := none
     coordinates := #[3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
@@ -83,4 +83,4 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
-end Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
+end Reg.D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricIntervalSign
