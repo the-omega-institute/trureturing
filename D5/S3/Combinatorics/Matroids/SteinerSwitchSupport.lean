@@ -18,7 +18,8 @@ open D5.S3.Combinatorics.Matroids.SteinerReturnDependencies
   (returnRow firstReturn realizesExactlyCompatibleReturns)
 open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension
   (extensionMul extensionSteinerAndCentre)
-open D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount (labelledSwitchCount squareFixed steinerSquarePeriod)
+open D5.S3.Combinatorics.Matroids.SteinerSchreierSwitchCount
+  (labelledSwitchCount pointedNumbering squareFixed steinerSquarePeriod)
 open D5.S3.Combinatorics.Matroids.RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open D5.S3.Combinatorics.Matroids.RankThreeSaturatedTopGap (Covered Uncovered)
 open D5.S3.Combinatorics.Matroids.SteinerMatchingTranslations (translate)
@@ -76,10 +77,8 @@ private theorem steinerVanishingPattern {I L A : Type*} [Finite L] [Mul L]
   · rintro ⟨f, hf⟩
     let target := fun i => f (rows i)
     have composition : Finsupp.linearCombination (ZMod 2) target =
-        f.comp (Finsupp.linearCombination (ZMod 2) rows) := by
-      apply Finsupp.lhom_ext
-      intro i c
-      simp only [target, LinearMap.comp_apply, Finsupp.linearCombination_single, map_smul]
+        f.comp (Finsupp.linearCombination (ZMod 2) rows) :=
+      Finsupp.linearCombination_linear_comp (ZMod 2) (v := rows) f
     have compatible c (hz : Finsupp.linearCombination (ZMod 2) rows c = 0) :
         Finsupp.linearCombination (ZMod 2) target c = 0 := by
       rw [composition, LinearMap.comp_apply, hz, map_zero]
@@ -130,6 +129,7 @@ private theorem patternAfterContraction {K I V A : Type*} [Field K]
 /-- After the prescribed zero rows are factored out, the remaining rows avoid a subspace
 of codimension at most the fibre dimension. -/
 def HasAvoidingSubspace {K I V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    [Module.Finite K V]
     (rows : I → V) (vanishes : I → Prop) (dimension : ℕ) : Prop :=
   let W := Submodule.span K (Set.range rows)
   let r : I → W := fun i => ⟨rows i, Submodule.subset_span (Set.mem_range_self i)⟩
@@ -214,13 +214,14 @@ private theorem selectedByRow {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZM
 
 /-- A common family of counts is realizable precisely by the fibre-sized subspace counts. -/
 theorem commonSwitchCounts {J L A : Type*} [Finite L] [Finite A] [Mul L]
-    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (p q : J → L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centreless : Set.center L = {e})
     (different : ∀ i, p i ≠ q i) (counts : J → ℕ) :
     (∃ labels : Set L → A,
       letI := extensionMul e labels
+      Set.center (L × A) = {x | x.1 = e} ∧
       ∀ i, ({y : L × A | (q i, 0) * ((p i, 0) * y) ≠
         (p i, 0) * ((q i, 0) * y)} : Set (L × A)).ncard = counts i) ↔
       ∃ H : Submodule (ZMod 2) (Set L →₀ ZMod 2),
@@ -256,7 +257,7 @@ theorem commonSwitchCounts {J L A : Type*} [Finite L] [Finite A] [Mul L]
         selectedByRow e (p i) (q i) x labels a comm invol (different i) inv
     rw [fibres, Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
   constructor
-  · rintro ⟨labels, realized⟩
+  · rintro ⟨labels, _, realized⟩
     refine ⟨ker (evaluate labels), ?_, fun i => (formula labels i).symm.trans (realized i)⟩
     rw [(evaluate labels).quotKerEquivRange.finrank_eq]
     exact Submodule.finrank_le (range (evaluate labels))
@@ -277,14 +278,15 @@ theorem commonSwitchCounts {J L A : Type*} [Finite L] [Finite A] [Mul L]
       ext row
       rw [mem_ker, show f row = g (H.mkQ row) from rfl, ← g.map_zero, injective.eq_iff]
       exact Submodule.Quotient.mk_eq_zero (p := H)
-    refine ⟨labels, fun i => ?_⟩
+    refine ⟨labels, (extensionSteinerAndCentre e labels unit comm invol twice centreless).2.2.2,
+      fun i => ?_⟩
     rw [formula labels i, table, kernel]
     exact constrained i
 
 /-- The same labelled triple system realizes every count in the chosen subspace profile. -/
 theorem labelledCommonSwitchCounts {J L A : Type*}
     [Finite L] [Nontrivial L] [Finite A] [Mul L]
-    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (p q : J → L)
     (unit : ∀ x : L, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centreless : Set.center L = {e})
@@ -296,6 +298,7 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
       (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b),
       letI := extensionMul e labels
       label none = (e, 0) ∧
+      Set.center (L × A) = {x | x.1 = e} ∧
       (∀ i a, label (translate valid cover i a) = label (some i) * label a) ∧
       ∀ j, ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (p j, 0) ∧ label (some (i.succAbove v)) = (q j, 0) ∧
@@ -308,7 +311,7 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
   let counts (j : J) := Nat.card A * ({x : L |
     let g := fun y : L => p j * (q j * y)
     g (g x) ≠ x ∨ returnRow e (p j) (q j) x ∉ H} : Set L).ncard
-  obtain ⟨labels, realized⟩ :=
+  obtain ⟨labels, centre, realized⟩ :=
     (commonSwitchCounts e p q unit comm invol centreless different counts).mpr
       ⟨H, dimension, fun _ => rfl⟩
   have twice (a : A) : a + a = 0 := by
@@ -317,38 +320,17 @@ theorem labelledCommonSwitchCounts {J L A : Type*}
   letI := extensionMul e labels
   obtain ⟨idExt, commExt, invExt, _⟩ :=
     extensionSteinerAndCentre e labels unit comm invol twice centreless
-  let P := {y : L × A // y ≠ (e, 0)}
-  let _ := Fintype.ofFinite P
   have pNe (j : J) : (p j, (0 : A)) ≠ (e, 0) := fun h => hp j (congrArg Prod.fst h)
   have qNe (j : J) : (q j, (0 : A)) ≠ (e, 0) := fun h => hq j (congrArg Prod.fst h)
-  have : Nonempty P := by
+  have nonidentity : ∃ y : L × A, y ≠ (e, 0) := by
     obtain ⟨x, hx⟩ := exists_ne e
-    exact ⟨⟨(x, 0), fun h => hx (congrArg Prod.fst h)⟩⟩
-  let r := Fintype.card P - 1
-  have card : Fintype.card P = r + 1 := by
-    have pos : 0 < Fintype.card P := Fintype.card_pos
-    dsimp [r]
-    omega
-  let label : Option (Fin (r + 1)) ≃ L × A :=
-    (Equiv.optionCongr (Fintype.equivFinOfCardEq card).symm).trans
-      (Equiv.optionSubtypeNe (e, 0))
-  have zero : label none = (e, 0) := rfl
-  have nonidentity (y : L × A) (hy : y ≠ (e, 0)) :
-      ∃ z : Fin (r + 1), label (some z) = y := by
-    obtain ⟨z, hz⟩ := label.surjective y
-    cases z with
-    | none => exact (hy (hz.symm.trans zero)).elim
-    | some z => exact ⟨z, hz⟩
+    exact ⟨(x, 0), fun h => hx (congrArg Prod.fst h)⟩
+  obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) nonidentity
   obtain ⟨S, valid, cover, transport, byDeleted⟩ :=
     labelledSwitchCount label (by simpa only [zero] using idExt) commExt invExt
-  refine ⟨labels, r, label, S, valid, cover, zero, transport, fun j => ?_⟩
-  obtain ⟨i, hi⟩ := nonidentity (p j, 0) (pNe j)
-  obtain ⟨k, hk⟩ := nonidentity (q j, 0) (qNe j)
-  have distinct : k ≠ i := by
-    intro same
-    exact different j (congrArg Prod.fst (hi.symm.trans (same ▸ hk)))
-  obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq distinct
-  have hv' : label (some (i.succAbove v)) = (q j, 0) := by rw [hv, hk]
+  refine ⟨labels, r, label, S, valid, cover, zero, centre, transport, fun j => ?_⟩
+  obtain ⟨i, v, hi, hv'⟩ := locate (p j, 0) (q j, 0) (pNe j) (qNe j)
+    (fun h => different j (congrArg Prod.fst h))
   obtain ⟨m, leave, byStart⟩ := byDeleted i
   refine ⟨i, v, m, hi, hv', leave, ?_⟩
   have read := (byStart v).2

@@ -324,6 +324,40 @@ private theorem extensionNoncommutingCount {L A : Type*} [Finite L] [Finite A] [
   · refine ⟨fun _ => Or.inl hx, fun _ h => hx ?_⟩
     exact congrArg Prod.fst h
 
+/-- Number a finite pointed type and locate any two distinct nonidentity points in the numbering. -/
+theorem pointedNumbering {X : Type*} [Finite X] (e : X) (nonidentity : ∃ x, x ≠ e) :
+    ∃ (r : ℕ) (label : Option (Fin (r + 1)) ≃ X), label none = e ∧
+      ∀ p q : X, p ≠ e → q ≠ e → p ≠ q →
+        ∃ (i : Fin (r + 1)) (v : Fin r), label (some i) = p ∧
+          label (some (i.succAbove v)) = q := by
+  classical
+  let W := {x : X // x ≠ e}
+  let _ := Fintype.ofFinite W
+  obtain ⟨x, hx⟩ := nonidentity
+  let _ : Nonempty W := ⟨⟨x, hx⟩⟩
+  let r := Fintype.card W - 1
+  have card : Fintype.card W = r + 1 := by
+    have pos : 0 < Fintype.card W := Fintype.card_pos
+    dsimp [r]
+    omega
+  let label : Option (Fin (r + 1)) ≃ X :=
+    (Equiv.optionCongr (Fintype.equivFinOfCardEq card).symm).trans (Equiv.optionSubtypeNe e)
+  have zero : label none = e := rfl
+  have locate (x : X) (hx : x ≠ e) : ∃ i : Fin (r + 1), label (some i) = x := by
+    obtain ⟨i, hi⟩ := label.surjective x
+    cases i with
+    | none => exact (hx (hi.symm.trans zero)).elim
+    | some i => exact ⟨i, hi⟩
+  refine ⟨r, label, zero, fun p q hp hq hpq => ?_⟩
+  obtain ⟨i, hi⟩ := locate p hp
+  obtain ⟨j, hj⟩ := locate q hq
+  have different : j ≠ i := by
+    intro same
+    rw [same, hi] at hj
+    exact hpq hj
+  obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq different
+  exact ⟨i, v, hi, hv.symm ▸ hj⟩
+
 /-- A labelled complete system realizes the count for a fixed prescription of returns. -/
 theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] (G : SimpleGraph L) (e p q : L)
@@ -361,34 +395,10 @@ theorem realizeLabelledSwitchCount {L A : Type*} [Finite L] [Finite A] [Mul L]
   obtain ⟨labels, unitExt, commExt, invExt, centreExt, fibres⟩ :=
     extensionNoncommutingCount G e p q unit comm invol twice centreless hpq hp hq edges t
   let _ := extensionMul e labels
-  let W := {y : L × A // y ≠ (e, 0)}
-  let _ := Fintype.ofFinite W
   have pNe : (p, (0 : A)) ≠ (e, 0) := fun h => hp (congrArg Prod.fst h)
   have qNe : (q, (0 : A)) ≠ (e, 0) := fun h => hq (congrArg Prod.fst h)
-  have : Nonempty W := ⟨⟨(p, 0), pNe⟩⟩
-  let r := Fintype.card W - 1
-  have card : Fintype.card W = r + 1 := by
-    have pos : 0 < Fintype.card W := Fintype.card_pos
-    dsimp [r]
-    omega
-  let label : Option (Fin (r + 1)) ≃ L × A :=
-    (Equiv.optionCongr (Fintype.equivFinOfCardEq card).symm).trans
-      (Equiv.optionSubtypeNe (e, 0))
-  have zero : label none = (e, 0) := rfl
-  have label_nonidentity (y : L × A) (hy : y ≠ (e, 0)) :
-      ∃ z : Fin (r + 1), label (some z) = y := by
-    obtain ⟨j, hj⟩ := label.surjective y
-    cases j with
-    | none => exact (hy (hj.symm.trans zero)).elim
-    | some j => exact ⟨j, hj⟩
-  obtain ⟨i, hi⟩ := label_nonidentity (p, 0) pNe
-  obtain ⟨j, hj⟩ := label_nonidentity (q, 0) qNe
-  have different : j ≠ i := by
-    intro he
-    rw [he, hi] at hj
-    exact hpq (congrArg Prod.fst hj)
-  obtain ⟨v, hv⟩ := Fin.exists_succAbove_eq different
-  have hv' : label (some (i.succAbove v)) = (q, 0) := by rw [hv, hj]
+  obtain ⟨r, label, zero, locate⟩ := pointedNumbering (e, (0 : A)) ⟨(p, 0), pNe⟩
+  obtain ⟨i, v, hi, hv'⟩ := locate (p, 0) (q, 0) pNe qNe (fun h => hpq (congrArg Prod.fst h))
   obtain ⟨S, valid, cover, transport, byPivot⟩ :=
     labelledSwitchCount label (by simpa only [zero] using unitExt) commExt invExt
   obtain ⟨m, leave, byStart⟩ := byPivot i

@@ -31,13 +31,14 @@ noncomputable section
 
 def commonCountLaw (R : Realization sig.{v}) : Prop :=
   ∀ {J : Type j} {L : Type u} {A : Type v} [Finite L] [Finite A] [Mul L]
-    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (p q : J → L)
     (_unit : ∀ x : L, e * x = x) (_comm : ∀ x y : L, x * y = y * x)
     (_invol : ∀ x y : L, x * (x * y) = y) (_centreless : Set.center L = {e})
     (_different : ∀ i, p i ≠ q i) (counts : J → ℕ),
     (∃ labels : Set L → A,
       letI := extensionMul e labels
+      Set.center (L × A) = {x | x.1 = e} ∧
       ∀ i, ({y : L × A | (q i, 0) * ((p i, 0) * y) ≠
         (p i, 0) * ((q i, 0) * y)} : Set (L × A)).ncard = counts i) ↔
       ∃ H : Submodule (ZMod 2) (Set L →₀ ZMod 2),
@@ -126,6 +127,8 @@ private theorem commonCount_rejected : ¬ commonCountLaw.{j,u,v} rejected := by
     exact noncommuting rfl
   let labels : Set AffineLoop → A := fun _ => 0
   letI := extensionMul affineIdentity labels
+  have centre := (extensionSteinerAndCentre affineIdentity labels affine_unit affine_comm
+    affine_invol (fun _ => Subsingleton.elim _ _) affine_centreless).2.2.2
   let successful : Set (AffineLoop × A) :=
     {y | (q, 0) * ((p, 0) * y) ≠ (p, 0) * ((q, 0) * y)}
   have good : (x, (0 : A)) ∈ successful :=
@@ -133,7 +136,7 @@ private theorem commonCount_rejected : ¬ commonCountLaw.{j,u,v} rejected := by
   have positive : 0 < successful.ncard := (Set.ncard_pos (Set.toFinite _)).mpr ⟨_, good⟩
   obtain ⟨H, _, noStarts⟩ := (bound (J := J) (A := A) affineIdentity (fun _ => p)
     (fun _ => q) affine_unit affine_comm affine_invol affine_centreless (fun _ => different)
-    (fun _ => successful.ncard)).mp ⟨labels, fun _ => rfl⟩
+    (fun _ => successful.ncard)).mp ⟨labels, centre, fun _ => rfl⟩
   have impossible := noStarts PUnit.unit
   simp only [rejected, realize, zero_mul] at impossible
   exact (Nat.ne_of_gt positive) impossible.symm
@@ -177,8 +180,8 @@ def commonCountRegistration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+        "body", "body", "body", "body", "body", "body", "body", "body", "arg",
+        "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
@@ -190,7 +193,7 @@ def commonCountRegistration :
 def labelledCountLaw (R : Realization sig.{v}) : Prop :=
   ∀ {J : Type j} {L : Type u} {A : Type v}
     [Finite L] [Nontrivial L] [Finite A] [Mul L]
-    [AddCommGroup A] [Module (ZMod 2) A] [Module.Finite (ZMod 2) A]
+    [AddCommGroup A] [Module (ZMod 2) A]
     (e : L) (p q : J → L)
     (_unit : ∀ x : L, e * x = x) (_comm : ∀ x y : L, x * y = y * x)
     (_invol : ∀ x y : L, x * (x * y) = y) (_centreless : Set.center L = {e})
@@ -202,6 +205,7 @@ def labelledCountLaw (R : Realization sig.{v}) : Prop :=
       (cover : ∀ a b : Fin (r + 1), a ≠ b → Covered S a b),
       letI := extensionMul e labels
       label none = (e, 0) ∧
+      Set.center (L × A) = {x | x.1 = e} ∧
       (∀ i a, label (translate valid cover i a) = label (some i) * label a) ∧
       ∀ j, ∃ (i : Fin (r + 1)) (v : Fin r) (m : Fin r → Fin r),
         label (some i) = (p j, 0) ∧ label (some (i.succAbove v)) = (q j, 0) ∧
@@ -238,7 +242,7 @@ private theorem labelledCount_rejected : ¬ labelledCountLaw.{j,u,v} rejected :=
       exact Module.finrank_zero_of_subsingleton
     rw [h]
     exact Nat.zero_le _
-  obtain ⟨_, r, label, S, valid, cover, _, _, profiles⟩ :=
+  obtain ⟨_, r, label, S, valid, cover, _, _, _, profiles⟩ :=
     bound (J := J) (A := A) affineIdentity (fun _ => p) (fun _ => q)
       affine_unit affine_comm affine_invol affine_centreless (fun _ => hp) (fun _ => hq)
       (fun _ => hpq) H dimension
@@ -293,10 +297,11 @@ def labelledCountRegistration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "body", "arg", "body", "body", "arg", "arg", "body", "arg", "body", "arg",
-        "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg"]
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "body", "arg", "body", "arg", "body",
+        "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg",
+        "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg",
+        "arg", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

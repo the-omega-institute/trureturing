@@ -29,7 +29,7 @@ internal sealed class SteinerSwitchSupportDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(CriticalProblem),
                 Blocks(
-                    Paragraph(Text("A family of counts of noncommuting starts in a single extension is realizable exactly when one subspace of the triple-coordinate space gives all the counts. Its codimension is at most the fibre dimension. For each pivot pair, count every quotient vertex that fails to return within two rounds and every other vertex whose circuit row lies outside the subspace. Multiply this number by the size of the fibre."))),
+                    Paragraph(Text("A family of counts of noncommuting starts in one normalized extension with the identity fibre as its centre is realizable exactly when one subspace of the triple-coordinate space gives all the counts. Its codimension is at most the fibre dimension. For each pivot pair, count every quotient vertex that fails to return within two rounds and every other vertex whose circuit row lies outside the subspace. Multiply this number by the size of the fibre."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("steiner-shared-labelled-counts"),
@@ -38,6 +38,6 @@ internal sealed class SteinerSwitchSupportDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(CriticalProblem),
                 Blocks(
-                    Paragraph(Text("For a nontrivial base loop and distinct nonidentity members of every pivot pair, the same normalized extension and the same labelled complete triple system realize the counts supplied by the chosen subspace. The matching of uncovered pairs after each deletion is the actual matching of that labelled system. The fibre count therefore applies to the successful switch starts for all the specified deletions and pivots."))),
+                    Paragraph(Text("For a nontrivial base loop and distinct nonidentity members of every pivot pair, the same normalized extension and the same labelled complete triple system realize the counts supplied by the chosen subspace. The extension has exactly the identity fibre as its centre. The matching of uncovered pairs after each deletion is the actual matching of that labelled system. The fibre count therefore applies to the successful switch starts for all the specified deletions and pivots."))),
                 DescribeRole.Theorem))));
 }
