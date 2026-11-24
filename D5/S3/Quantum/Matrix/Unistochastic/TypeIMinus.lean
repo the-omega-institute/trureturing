@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Matrix/UnistochasticTypeIMinus
+/- GID: D5/S3/Quantum/Matrix/Unistochastic/TypeIMinus
    generality: I
-   mirror-B: D5/B/S3/Quantum/Matrix/UnistochasticTypeIMinus
+   mirror-B: D5/B/S3/Quantum/Matrix/Unistochastic/TypeIMinus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ noncomputable section
 open Matrix Finset
 open scoped ComplexConjugate
 
-namespace D5.S3.Quantum.Matrix.UnistochasticTypeIMinus
+namespace D5.S3.Quantum.Matrix.Unistochastic.TypeIMinus
 
 private def signs : Matrix (Fin 4) (Fin 3) ℝ :=
   !![1, 1, 1; 1, -1, -1; -1, 1, -1; -1, -1, 1]
@@ -490,4 +490,4 @@ theorem exists_nonneg_typeIMinus (U : Matrix (Fin 4) (Fin 4) ℂ)
   exact schur_contradiction (p i) (p j) (p k) (q i) (q j) (q k)
     (hdiag i) (hdiag j) (hdiag k) hupper a a' b b' rfl rfl rfl rfl hab hab' ha hc hprod hsum hdiff
 
-end D5.S3.Quantum.Matrix.UnistochasticTypeIMinus
+end D5.S3.Quantum.Matrix.Unistochastic.TypeIMinus
