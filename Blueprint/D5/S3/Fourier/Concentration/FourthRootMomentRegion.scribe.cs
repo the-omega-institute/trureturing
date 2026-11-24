@@ -32,11 +32,14 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                     + "by the same fraction of their endpoint values."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "For a natural number p at least two, let A be the maximum of the p-th power "
-                + "of the squared first magnitude among probability weights whose p-th power "
-                + "of the squared second magnitude vanishes. Let B be the maximum real "
-                + "nonnegative first Fourier coefficient among symmetric probability weights "
-                + "whose second Fourier coefficient vanishes.")),
+                "Fix a natural number p at least two. For a real weight w of total mass one, "
+                + "write M(k) for the Fourier transform at k of the singleton cyclic collision "
+                + "masses of the degree-p lattice sums. The lattice coordinate of each residue "
+                + "is its representative in {0,1,2,3}. With nonnegative w these masses form "
+                + "the law of the difference between two independent p-fold sums. Let A be the "
+                + "maximum of M(1) among probability weights with M(2)=0. Let B be the maximum "
+                + "nonnegative first coefficient among probability laws with Fourier "
+                + "coefficient vector (1,B,0,B).")),
             Describe.Lean(
                 DescribeId.Create("four-first-moment-maxima"),
                 DeclarationHandle.Create(Owner + ".four_first_moment_maxima"),
@@ -44,8 +47,11 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Maxima()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "At v=0 the preceding interval ends at one half. Taking the p-th power "
-                    + "gives the first attained maximum. In the relaxation, the vanishing "
+                    "The singleton cyclic collision formula and Fourier inversion recover each "
+                    + "coefficient from the same weight. The first and third Fourier magnitudes "
+                    + "agree because the weights are real. At v=0 the preceding interval ends "
+                    + "at one half. Taking the p-th power gives the first attained maximum. "
+                    + "In the relaxation, the vanishing "
                     + "second coefficient makes both parity masses one half. Symmetry makes the "
                     + "first coefficient the difference of the masses at zero and two. The "
                     + "weight (1/2,1/4,0,1/4) attains one half."))),
@@ -63,8 +69,14 @@ internal sealed class FourthRootMomentRegionDocument : IScribeDocumentDefinition
 
     private static Formula Maxima()
     {
+        var p = F.Id("p");
         var half = new Formula.Fraction(D(1), D(2));
-        var trueMaximum = new Formula.Power(Seq(Open, half, Close), F.Id("p"));
-        return Disp(Seq(F.Id("A"), Sp, Eq, Sp, trueMaximum, Sp, Lt, Sp, half, Sp, Eq, Sp, F.Id("B")));
+        var trueMaximum = new Formula.Power(Seq(Open, half, Close), p);
+        var first = new Formula.Power(F.Id("u"), p);
+        var second = new Formula.Power(F.Id("v"), p);
+        var coefficients = new Formula.FunctionCall(FormulaIdentifier.Create("M"), [F.Id("w")]);
+        var values = Seq(Open, D(1), Comma, Sp, first, Comma, Sp, second, Comma, Sp, first, Close);
+        var attained = Seq(F.Id("A"), Sp, Eq, Sp, trueMaximum, Sp, Lt, Sp, half, Sp, Eq, Sp, F.Id("B"));
+        return Disp(new Formula.Logic(Seq(coefficients, Sp, Eq, Sp, values), FormulaLogicOperator.And, attained));
     }
 }

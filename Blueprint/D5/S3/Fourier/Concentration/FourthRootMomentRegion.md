@@ -18,11 +18,11 @@ $$\operatorname{Attainable}\left(u, v\right) \iff 0 \leq v \leq 1 \land 0 \leq u
 
 If e and o are the even and odd masses, the squared second magnitude is (e−o) squared. The two signed differences of masses within each parity can independently fill [−e,e] and [−o,o]. Their squared sum is at most e squared plus o squared, which is (1+v)/2. To attain any allowed pair, take e=(1+sqrt(v))/2 and o=(1−sqrt(v))/2. Vary both signed differences by the same fraction of their endpoint values.
 
-For a natural number p at least two, let A be the maximum of the p-th power of the squared first magnitude among probability weights whose p-th power of the squared second magnitude vanishes. Let B be the maximum real nonnegative first Fourier coefficient among symmetric probability weights whose second Fourier coefficient vanishes.
+Fix a natural number p at least two. For a real weight w of total mass one, write M(k) for the Fourier transform at k of the singleton cyclic collision masses of the degree-p lattice sums. The lattice coordinate of each residue is its representative in {0,1,2,3}. With nonnegative w these masses form the law of the difference between two independent p-fold sums. Let A be the maximum of M(1) among probability weights with M(2)=0. Let B be the maximum nonnegative first coefficient among probability laws with Fourier coefficient vector (1,B,0,B).
 
 **Theorem 1.2 (Different attained maxima for the powered moments and their relaxation).**
 
-$$A = (\frac{1}{2})^{p} < \frac{1}{2} = B$$
+$$\operatorname{M}\left(w\right) = (1, u^{p}, v^{p}, u^{p}) \land A = (\frac{1}{2})^{p} < \frac{1}{2} = B$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/FourthRootMomentRegion.four_first_moment_maxima` (`✓ std3`). ∎
 
@@ -30,9 +30,11 @@ $$A = (\frac{1}{2})^{p} < \frac{1}{2} = B$$
 
 *Commentary.*
 
-At v=0 the preceding interval ends at one half. Taking the p-th power gives the first attained maximum. In the relaxation, the vanishing second coefficient makes both parity masses one half. Symmetry makes the first coefficient the difference of the masses at zero and two. The weight (1/2,1/4,0,1/4) attains one half.
+The singleton cyclic collision formula and Fourier inversion recover each coefficient from the same weight. The first and third Fourier magnitudes agree because the weights are real. At v=0 the preceding interval ends at one half. Taking the p-th power gives the first attained maximum. In the relaxation, the vanishing second coefficient makes both parity masses one half. Symmetry makes the first coefficient the difference of the masses at zero and two. The weight (1/2,1/4,0,1/4) attains one half.
 
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/FourthRootMomentRegion.dft_four_squared_region`
 - Truth anchor: `D5/S3/Fourier/Concentration/FourthRootMomentRegion.four_first_moment_maxima`
+- Dependency: [D5/S3/Fourier/Concentration/CyclicCollisionCertificate](CyclicCollisionCertificate.md)
+- Dependency: [D5/S3/PrimeForms/Splitting/QuarticCharacterCompletion](../../PrimeForms/Splitting/QuarticCharacterCompletion.md)

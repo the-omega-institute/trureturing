@@ -8,6 +8,7 @@ namespace Reg.D5.S3.Fourier.Concentration.FourthRootMomentRegion
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Fourier.Concentration.FourthRootMomentRegion
+open _root_.D5.S3.Fourier.Concentration.CyclicCollisionCertificate
 open _root_.Reg.Support
 
 noncomputable section
@@ -100,22 +101,31 @@ def maximumRejected : Realization maximumSignature :=
 abbrev maximumArena : Arena where
   signature := maximumSignature
   Law V := ∀ (p : ℕ) (_ : 2 ≤ p),
+    let moments (w : ZMod 4 → ℝ) := ZMod.dft
+      (fun x => (cyclicCollisionMass 4 (fun j : ZMod 4 => (j.val : ℤ)) w p {x} : ℂ))
     let cap := V.readout () () p
+    (∀ w : ZMod 4 → ℝ, (∑ j, w j) = 1 →
+      let f : ZMod 4 → ℂ := fun j => w j
+      moments w 0 = 1 ∧
+        moments w 1 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ) ∧
+        moments w 2 = ((‖ZMod.dft f 2‖ ^ 2) ^ p : ℝ) ∧
+        moments w 3 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ)) ∧
     IsGreatest
       {A : ℝ | ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
-        (‖ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4)‖ ^ 2) ^ p = 0 ∧
-        (‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4)‖ ^ 2) ^ p = A}
+        moments w 2 = 0 ∧ moments w 1 = (A : ℂ)}
       cap ∧
     IsGreatest
       {A : ℝ | 0 ≤ A ∧ ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
-        w 1 = w 3 ∧ ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
-        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ)}
+        ZMod.dft (fun j => (w j : ℂ)) (0 : ZMod 4) = 1 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ) ∧
+        ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (3 : ZMod 4) = (A : ℂ)}
       (1 / 2 : ℝ) ∧ cap < 1 / 2
 
 private theorem maximum_rejected : ¬ maximumArena.Law maximumRejected := by
   intro law
-  have h := (law 2 (by decide)).1
-  have hw := (four_first_moment_maxima 2 (by decide)).1
+  have h := (law 2 (by decide)).2.1
+  have hw := (four_first_moment_maxima 2 (by decide)).2.1
   have hf := le_antisymm (h.2 hw.1) (hw.2 h.1)
   change (1 / 2 : ℝ) ^ 2 = 0 at hf
   norm_num at hf
@@ -160,7 +170,7 @@ def maximumRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "value"]
+      path := #["body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

@@ -4,17 +4,26 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Classify joint Fourier moments of one probability weight on the cyclic group of order four. -/
+   digest: Joint Fourier moments of a probability weight modulo four. -/
 
-import Mathlib.Analysis.Fourier.ZMod
+import D5.S3.Fourier.Concentration.CyclicCollisionCertificate
+import D5.S3.PrimeForms.Splitting.QuarticCharacterCompletion
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
+
+/-! Joint Fourier moments and the corresponding cyclic difference law. -/
 
 set_option autoImplicit false
 
 open Finset
 
 namespace D5.S3.Fourier.Concentration.FourthRootMomentRegion
+
+open scoped ZMod
+open D5.S3.Fourier.FinitePoisson (character character_apply)
+open D5.S3.Fourier.Concentration.CyclicCollisionCertificate
+open D5.S3.PrimeForms.Splitting.QuarticCharacterCompletion
+  (psi_five_maps_mod_five_generator_two_to_i)
 
 noncomputable section
 
@@ -73,16 +82,12 @@ private theorem squared_mode_region (u v : ℝ) :
           (o * (1 + t) / 2 + o * (1 - t) / 2) = s := by linarith [hdiff]
       rw [h, hs]
 
-private theorem char_four_one : ZMod.stdAddChar (1 : ZMod 4) = Complex.I := by
-  have h := ZMod.stdAddChar_coe (N := 4) 1
-  change ZMod.stdAddChar (1 : ZMod 4) = _ at h
-  rw [h]
-  calc
-    Complex.exp _ = Complex.exp ((Real.pi : ℂ) / 2 * Complex.I) := by
-      congr 1
-      push_cast
-      ring
-    _ = Complex.I := Complex.exp_pi_div_two_mul_I
+private theorem char_four_one : ZMod.stdAddChar (1 : ZMod 4) = Complex.I :=
+  psi_five_maps_mod_five_generator_two_to_i
+
+private theorem sum_four {M : Type*} [AddCommMonoid M] (f : ZMod 4 → M) :
+    (∑ j, f j) = f 0 + f 1 + f 2 + f 3 :=
+  Fin.sum_univ_four f
 
 private theorem char_four_two : ZMod.stdAddChar (2 : ZMod 4) = -1 := by
   rw [show (2 : ZMod 4) = 1 + 1 by decide, AddChar.map_add_eq_mul, char_four_one]
@@ -91,12 +96,6 @@ private theorem char_four_two : ZMod.stdAddChar (2 : ZMod 4) = -1 := by
 private theorem char_four_three : ZMod.stdAddChar (3 : ZMod 4) = -Complex.I := by
   rw [show (3 : ZMod 4) = 2 + 1 by decide, AddChar.map_add_eq_mul, char_four_two,
     char_four_one, neg_one_mul]
-
-private theorem sum_four {M : Type*} [AddCommMonoid M] (f : ZMod 4 → M) :
-    (∑ j, f j) = f 0 + f 1 + f 2 + f 3 := by
-  have hu : (univ : Finset (ZMod 4)) = {0, 1, 2, 3} := by decide
-  rw [hu, sum_insert (by decide), sum_insert (by decide), sum_insert (by decide), sum_singleton]
-  ac_rfl
 
 private theorem dft_four_first (w : ZMod 4 → ℝ) :
     ZMod.dft (fun x => (w x : ℂ)) (1 : ZMod 4) =
@@ -115,6 +114,16 @@ private theorem dft_four_second (w : ZMod 4 → ℝ) :
   simp only [show -(0 * 2 : ZMod 4) = 0 by decide, show -(1 * 2 : ZMod 4) = 2 by decide,
     show -(2 * 2 : ZMod 4) = 0 by decide, show -(3 * 2 : ZMod 4) = 2 by decide,
     AddChar.map_zero_eq_one, char_four_two, smul_eq_mul, Complex.ofReal_add, Complex.ofReal_sub]
+  ring
+
+private theorem dft_four_third (w : ZMod 4 → ℝ) :
+    ZMod.dft (fun x => (w x : ℂ)) (3 : ZMod 4) =
+      ((w 0 - w 2 : ℝ) : ℂ) + ((w 1 - w 3 : ℝ) : ℂ) * Complex.I := by
+  rw [ZMod.dft_apply, sum_four]
+  simp only [show -(0 * 3 : ZMod 4) = 0 by decide, show -(1 * 3 : ZMod 4) = 1 by decide,
+    show -(2 * 3 : ZMod 4) = 2 by decide, show -(3 * 3 : ZMod 4) = 3 by decide,
+    AddChar.map_zero_eq_one, char_four_one, char_four_two,
+    char_four_three, smul_eq_mul, Complex.ofReal_sub]
   ring
 
 /-- The first two squared Fourier magnitudes of one probability weight range over an exact region. -/
@@ -156,6 +165,57 @@ theorem dft_four_squared_region (u v : ℝ) :
     · rw [hfirst, w0, w1, w2, w3, hu]
     · rw [hsecond, w0, w1, w2, w3, hv]
 
+private theorem dft_cyclic_singletons (q : ℕ) [NeZero q]
+    (w : ZMod q → ℝ) (p : ℕ) (k : ZMod q) :
+    ZMod.dft (fun x => (cyclicCollisionMass q (fun j : ZMod q => (j.val : ℤ)) w p {x} : ℂ)) k =
+      ((‖ZMod.dft (fun j => (w j : ℂ)) k‖ ^ (2 * p) : ℝ) : ℂ) := by
+  let f : ZMod q → ℂ := fun j => w j
+  let μ : ZMod q → ℂ := fun x =>
+    (cyclicCollisionMass q (fun j : ZMod q => (j.val : ℤ)) w p {x} : ℂ)
+  let ψ : ZMod q → ℂ := fun k => ((‖ZMod.dft f (-k)‖ ^ (2 * p) : ℝ) : ℂ)
+  have hchar (x : ZMod q) : (∑ j, (w j : ℂ) * character x ((j.val : ℤ) : ZMod q)) =
+      ZMod.dft f (-x) := by
+    rw [ZMod.dft_apply]
+    refine sum_congr rfl fun j _ => ?_
+    simp [character_apply, mul_comm, f, smul_eq_mul]
+  have hμ : (q : ℂ) • μ = ZMod.dft ψ := by
+    ext1 x
+    have h := cyclicCollisionMass_fourier q (fun j : ZMod q => (j.val : ℤ)) w p {x}
+    simp only [hchar, sum_singleton] at h
+    rw [ZMod.dft_apply]
+    simpa [μ, ψ, character_apply, mul_neg, smul_eq_mul, mul_comm] using h
+  have hft := congrFun (congrArg (ZMod.dft (N := q) (E := ℂ)) hμ) k
+  rw [map_smul, ZMod.dft_dft] at hft
+  change (q : ℂ) * (ZMod.dft μ k) = (q : ℂ) * ψ (-k) at hft
+  have hq : (q : ℂ) ≠ 0 := by exact_mod_cast (NeZero.ne q)
+  simpa [μ, ψ, f] using mul_left_cancel₀ hq hft
+
+private theorem four_difference_moment_coefficients (w : ZMod 4 → ℝ) (p : ℕ)
+    (hw : ∑ j, w j = 1) :
+    let f : ZMod 4 → ℂ := fun j => w j
+    let moments := ZMod.dft
+      (fun x => (cyclicCollisionMass 4 (fun j : ZMod 4 => (j.val : ℤ)) w p {x} : ℂ))
+    moments 0 = 1 ∧
+      moments 1 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ) ∧
+      moments 2 = ((‖ZMod.dft f 2‖ ^ 2) ^ p : ℝ) ∧
+      moments 3 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ) := by
+  dsimp only
+  have hthird :
+      ‖ZMod.dft (fun x => (w x : ℂ)) (3 : ZMod 4)‖ ^ 2 =
+        ‖ZMod.dft (fun x => (w x : ℂ)) (1 : ZMod 4)‖ ^ 2 := by
+    rw [dft_four_third, dft_four_first, Complex.sq_norm, Complex.sq_norm,
+      Complex.normSq_apply, Complex.normSq_apply]
+    simp [Complex.mul_re, Complex.mul_im]
+    ring
+  have hzero : ZMod.dft (fun j => (w j : ℂ)) (0 : ZMod 4) = 1 := by
+    rw [ZMod.dft_apply_zero, ← Complex.ofReal_sum, hw, Complex.ofReal_one]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [dft_cyclic_singletons, hzero]
+    simp
+  · rw [dft_cyclic_singletons, pow_mul]
+  · rw [dft_cyclic_singletons, pow_mul]
+  · rw [dft_cyclic_singletons, pow_mul, hthird]
+
 private theorem four_actual_first_moment_max (p : ℕ) (hp : p ≠ 0) :
     IsGreatest
       {A : ℝ | ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
@@ -176,8 +236,10 @@ private theorem four_actual_first_moment_max (p : ℕ) (hp : p ≠ 0) :
 private theorem four_relaxed_first_moment_max :
     IsGreatest
       {A : ℝ | 0 ≤ A ∧ ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
-        w 1 = w 3 ∧ ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
-        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ)}
+        ZMod.dft (fun j => (w j : ℂ)) (0 : ZMod 4) = 1 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ) ∧
+        ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (3 : ZMod 4) = (A : ℂ)}
       (1 / 2 : ℝ) := by
   constructor
   · refine ⟨by norm_num, ?_⟩
@@ -186,17 +248,21 @@ private theorem four_relaxed_first_moment_max :
     have w1 : w 1 = 1 / 4 := rfl
     have w2 : w 2 = 0 := rfl
     have w3 : w 3 = 1 / 4 := rfl
-    refine ⟨w, ?_, ?_, w1.trans w3.symm, ?_, ?_⟩
+    refine ⟨w, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · intro j
       dsimp [w]
       split_ifs <;> norm_num
     · norm_num [sum_four, w0, w1, w2, w3]
-    · rw [dft_four_second, w0, w1, w2, w3]
-      norm_num
+    · rw [ZMod.dft_apply_zero, sum_four]
+      norm_num [w0, w1, w2, w3]
     · rw [dft_four_first, w0, w1, w2, w3]
       norm_num
+    · rw [dft_four_second, w0, w1, w2, w3]
+      norm_num
+    · rw [dft_four_third, w0, w1, w2, w3]
+      norm_num
   · intro A hA
-    obtain ⟨_, w, hw, hsum, _, hsecond, hfirst⟩ := hA
+    obtain ⟨_, w, hw, hsum, _, hfirst, hsecond, _⟩ := hA
     rw [sum_four] at hsum
     rw [dft_four_second] at hsecond
     rw [dft_four_first] at hfirst
@@ -206,25 +272,48 @@ private theorem four_relaxed_first_moment_max :
     simp at hsecondRe
     linarith [hw 2]
 
-/-- With the second mode zero, the true powered moment and the Fourier-positive
-probability relaxation have different maxima for every degree at least two. -/
+/-- The difference-law moments come from the same weight. At zero second mode the
+first coefficient has a strictly larger maximum in the Fourier-positive relaxation. -/
 theorem four_first_moment_maxima (p : ℕ) (hp : 2 ≤ p) :
+    let moments (w : ZMod 4 → ℝ) := ZMod.dft
+      (fun x => (cyclicCollisionMass 4 (fun j : ZMod 4 => (j.val : ℤ)) w p {x} : ℂ))
     let cap := (1 / 2 : ℝ) ^ p
+    (∀ w : ZMod 4 → ℝ, (∑ j, w j) = 1 →
+      let f : ZMod 4 → ℂ := fun j => w j
+      moments w 0 = 1 ∧
+        moments w 1 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ) ∧
+        moments w 2 = ((‖ZMod.dft f 2‖ ^ 2) ^ p : ℝ) ∧
+        moments w 3 = ((‖ZMod.dft f 1‖ ^ 2) ^ p : ℝ)) ∧
     IsGreatest
       {A : ℝ | ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
-        (‖ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4)‖ ^ 2) ^ p = 0 ∧
-        (‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4)‖ ^ 2) ^ p = A}
+        moments w 2 = 0 ∧ moments w 1 = (A : ℂ)}
       cap ∧
     IsGreatest
       {A : ℝ | 0 ≤ A ∧ ∃ w : ZMod 4 → ℝ, (∀ j, 0 ≤ w j) ∧ (∑ j, w j) = 1 ∧
-        w 1 = w 3 ∧ ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
-        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ)}
+        ZMod.dft (fun j => (w j : ℂ)) (0 : ZMod 4) = 1 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod 4) = (A : ℂ) ∧
+        ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod 4) = 0 ∧
+        ZMod.dft (fun j => (w j : ℂ)) (3 : ZMod 4) = (A : ℂ)}
       (1 / 2 : ℝ) ∧ cap < 1 / 2 := by
   dsimp only
-  refine ⟨four_actual_first_moment_max p (by omega), four_relaxed_first_moment_max, ?_⟩
-  simpa only [pow_one] using
-    pow_lt_pow_right_of_lt_one₀ (by norm_num : (0 : ℝ) < 1 / 2)
-      (by norm_num : (1 / 2 : ℝ) < 1) (show 1 < p by omega)
+  refine ⟨fun w hw => four_difference_moment_coefficients w p hw, ?_,
+    four_relaxed_first_moment_max, ?_⟩
+  · convert four_actual_first_moment_max p (by omega) using 1
+    ext A
+    constructor
+    · rintro ⟨w, hw, hsum, hsecond, hfirst⟩
+      have h := four_difference_moment_coefficients w p hsum
+      dsimp only at h
+      rw [h.2.2.1, Complex.ofReal_eq_zero] at hsecond
+      rw [h.2.1, Complex.ofReal_inj] at hfirst
+      exact ⟨w, hw, hsum, hsecond, hfirst⟩
+    · rintro ⟨w, hw, hsum, hsecond, hfirst⟩
+      have h := four_difference_moment_coefficients w p hsum
+      dsimp only at h
+      exact ⟨w, hw, hsum, by rw [h.2.2.1, hsecond, Complex.ofReal_zero], by rw [h.2.1, hfirst]⟩
+  · simpa only [pow_one] using
+      pow_lt_pow_right_of_lt_one₀ (by norm_num : (0 : ℝ) < 1 / 2)
+        (by norm_num : (1 / 2 : ℝ) < 1) (show 1 < p by omega)
 
 #print axioms dft_four_squared_region
 #print axioms four_first_moment_maxima
