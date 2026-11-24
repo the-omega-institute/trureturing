@@ -27,6 +27,25 @@ def HasOppositePasch {L : Type*} [Mul L] (e p q : L) : Prop :=
   ∃ a b c d : L, [e, p, q, a, b, c, d].Nodup ∧
     q * a = b ∧ p * b = c ∧ q * c = d ∧ p * d = a
 
+/-- Matchings given by the left translations of distinct nonidentity pivots. -/
+def loopPivotMatchings {L : Type*} [Mul L] (e p q : L)
+    (one : ∀ x, e * x = x) (comm : ∀ x y : L, x * y = y * x)
+    (invol : ∀ x y : L, x * (x * y) = y)
+    (hp : p ≠ e) (hq : q ≠ e) (different : p ≠ q) : Matchings L := by
+  have injectRight (x : L) : Injective (· * x) := by
+    intro u v eq
+    exact (show Involutive (x * ·) from invol x).injective
+      (by simpa only [comm x u, comm x v] using eq)
+  exact {
+    first := (p * ·)
+    second := (q * ·)
+    first_involutive := invol p
+    second_involutive := invol q
+    first_ne_self := fun x eq => hp (injectRight x (eq.trans (one x).symm))
+    second_ne_self := fun x eq => hq (injectRight x (eq.trans (one x).symm))
+    partners_ne := fun x eq => different (injectRight x eq)
+  }
+
 private theorem hasOppositePasch_iff_square {L : Type*} [Finite L] [Mul L]
     (G : SimpleGraph L) (e p q : L)
     (one : ∀ x, e * x = x) (comm : ∀ x y : L, x * y = y * x)
@@ -37,19 +56,7 @@ private theorem hasOppositePasch_iff_square {L : Type*} [Finite L] [Mul L]
   classical
   have hp : p ≠ e := fun eq => G.irrefl ((edges e e).mpr (Or.inl (eq.symm ▸ one e)))
   have hq : q ≠ e := fun eq => G.irrefl ((edges e e).mpr (Or.inr (eq.symm ▸ one e)))
-  have injectRight (x : L) : Injective (· * x) := by
-    intro u v eq
-    exact (show Involutive (x * ·) from invol x).injective
-      (by simpa only [comm x u, comm x v] using eq)
-  let M : Matchings L := {
-    first := (p * ·)
-    second := (q * ·)
-    first_involutive := invol p
-    second_involutive := invol q
-    first_ne_self := fun x eq => hp (injectRight x (eq.trans (one x).symm))
-    second_ne_self := fun x eq => hq (injectRight x (eq.trans (one x).symm))
-    partners_ne := fun x eq => different (injectRight x eq)
-  }
+  let M := loopPivotMatchings e p q one comm invol hp hq different
   have graphEq : G = M.graph := by
     ext u v
     exact edges u v
@@ -60,7 +67,9 @@ private theorem hasOppositePasch_iff_square {L : Type*} [Finite L] [Mul L]
     change p * (q * e) = q * (p * e)
     rw [atP, atQ, comm p q]
   have special : (M.graph.connectedComponentMk e).supp = {e, p, q, p * q} := by
-    simpa only [M, atP, atQ] using M.component_eq_square specialCommute
+    have original := M.component_eq_square specialCommute
+    change (M.graph.connectedComponentMk e).supp = {e, p * e, q * e, p * (q * e)} at original
+    simpa only [atP, atQ] using original
   constructor
   · rintro ⟨a, b, c, d, distinct, hab, hbc, hcd, hda⟩
     simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,

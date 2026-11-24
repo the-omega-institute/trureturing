@@ -10,7 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Matroids
 open _root_.D5.S3.Combinatorics.Matroids.SteinerPaschSwitchCount
 open SteinerSchreierExtension (extensionMul)
-open SteinerAlternatingSwitches (SuccessfulStart Matchings)
+open SteinerAlternatingSwitches (SuccessfulStart)
 open PointDeletedSteinerSwitch (pointDeletedFamily)
 open RankThreeInternalSteinerDecomposition (IsPartialSteiner)
 open RankThreeSaturatedTopGap (Covered Uncovered)
@@ -104,20 +104,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     Prod.ext (affine_comm _ _) (Prod.ext (affine_comm _ _) (affine_comm _ _))
   have invol (x y : L) : x * (x * y) = y :=
     Prod.ext (affine_invol _ _) (Prod.ext (affine_invol _ _) (affine_invol _ _))
-  have injectRight (x : L) : Function.Injective (· * x) := by
-    intro i j eq
-    exact (show Function.Involutive (x * ·) from invol x).injective
-      (by simpa only [comm x i, comm x j] using eq)
-  let M : Matchings L := {
-    first := (p * ·)
-    second := (q * ·)
-    first_involutive := invol p
-    second_involutive := invol q
-    first_ne_self := fun x eq => hp (injectRight x (eq.trans (one x).symm))
-    second_ne_self := fun x eq => hq (injectRight x (eq.trans (one x).symm))
-    partners_ne := fun x eq => different (injectRight x eq)
-  }
-  let G := M.graph
+  let G := (loopPivotMatchings e p q one comm invol hp hq different).graph
   have existsCounts := (variableLabelledSwitchCount_iff (L := L) (A := A) G e p q
     one comm invol centre different (fun _ _ => Iff.rfl)).mpr pasch
   exact Bool.false_ne_true ((bad (L := L) (A := A) G e p q one comm invol centre different
