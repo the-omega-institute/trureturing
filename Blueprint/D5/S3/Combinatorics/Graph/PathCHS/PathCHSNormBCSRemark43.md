@@ -18,7 +18,7 @@ Page 18, Remark 4.3: “While we have not been able to prove this fact, we have 
 
 **Definition 1.2 (The bilateral binomial sum).**
 
-$$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \operatorname{bilateralForm}\left(n, d\right) = \left(\sum^{\operatorname{f}}\right)_{j:\mathbb{Z}} ((\operatorname{D5}.\operatorname{S0}.\operatorname{Conventions}.\operatorname{IntegerIndexBinomial}.\operatorname{binom}\left(n + d - 1, \left((n:\mathbb{Z}) + 1\right) \cdot j + (\operatorname{Nat}.\operatorname{div}\left(d, 2\right):\mathbb{Z})\right):\mathbb{Z}) - (\operatorname{D5}.\operatorname{S0}.\operatorname{Conventions}.\operatorname{IntegerIndexBinomial}.\operatorname{binom}\left(n + d - 1, \left((n:\mathbb{Z}) + 1\right) \cdot j + (\operatorname{Nat}.\operatorname{div}\left(d, 2\right):\mathbb{Z}) - 1\right):\mathbb{Z}))$$
+$$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \operatorname{bilateralForm}\left(n, d\right) = \left(\sum^{\operatorname{f}}\right)_{j:\mathbb{Z}} ((\operatorname{binom}\left(n + d - 1, \left((n:\mathbb{Z}) + 1\right) \cdot j + (\operatorname{Nat}.\operatorname{div}\left(d, 2\right):\mathbb{Z})\right):\mathbb{Z}) - (\operatorname{binom}\left(n + d - 1, \left((n:\mathbb{Z}) + 1\right) \cdot j + (\operatorname{Nat}.\operatorname{div}\left(d, 2\right):\mathbb{Z}) - 1\right):\mathbb{Z}))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.bilateralForm` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \operatorname{bilatera
 
 *Commentary.*
 
-Page 18, Remark 4.3: “While we have not been able to prove this fact, we have found that the following appears to hold for all n ≥ 1 and all even d ≥ 2: ‖P_n‖_{X,d}^d = (2^{n+d}/(n+1)) Σ_{k=1}^{n} (−1)^{k+1} cos^{n−1+d}(πk/(n+1)) sin²(πk/(n+1)) = Σ_{j=−∞}^{∞} [binom(n+d−1, (n+1)j + d/2) − binom(n+d−1, (n+1)j + d/2 − 1)].” The sum is finsum over integer j; only finitely many terms are nonzero. Nat.div is the natural quotient.
+Page 18, Remark 4.3: “While we have not been able to prove this fact, we have found that the following appears to hold for all n ≥ 1 and all even d ≥ 2: ‖P_n‖_{X,d}^d = (2^{n+d}/(n+1)) Σ_{k=1}^{n} (−1)^{k+1} cos^{n−1+d}(πk/(n+1)) sin²(πk/(n+1)) = Σ_{j=−∞}^{∞} [binom(n+d−1, (n+1)j + d/2) − binom(n+d−1, (n+1)j + d/2 − 1)].” The sum is finsum over integer j; only finitely many terms are nonzero. Nat.div is the natural quotient. The displayed binom is the standard Lean definition binom_std.
 
 **Definition 1.3 (The two identities of Remark 4.3).**
 
