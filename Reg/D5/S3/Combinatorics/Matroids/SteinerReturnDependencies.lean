@@ -17,7 +17,8 @@ universe i u v
 
 noncomputable section
 
-abbrev sig := signature (Type u × Type v) (fun P => P.1 × P.2) (fun P => P.1 × P.2)
+abbrev sig :=
+  signature (Sigma fun _ : Type u => Type v) (fun P => P.1 × P.2) (fun P => P.1 × P.2)
 
 def actual : Realization sig.{u,v} :=
   realize sig (fun _ _ x => x) (fun a => nomatch a)
@@ -36,7 +37,7 @@ def law (R : Realization sig.{u,v}) : Prop :=
     (target : I → A),
     (∃ labels : Set L → A,
       letI := extensionMul e labels
-      (∀ x : L × A, (e, 0) * x = R.readout () (L, A) x) ∧
+      (∀ x : L × A, (e, 0) * x = R.readout () ⟨L, A⟩ x) ∧
       (∀ x y : L × A, x * y = y * x) ∧
       (∀ x y : L × A, x * (x * y) = y) ∧
       Set.center (L × A) = {x | x.1 = e} ∧
@@ -87,14 +88,14 @@ private theorem rejected_law : ¬ law.{i,u,v} rejected := by
     change 0 + 0 + _root_.D5.S3.Combinatorics.Matroids.SteinerSchreierExtension.factor
       e labels e e = 0
     simp [_root_.D5.S3.Combinatorics.Matroids.SteinerSchreierExtension.factor]
-  have changed : (rejected.readout () (L, A) (e, 0)).2 ≠ (0 : A) := by
+  have changed : (rejected.readout () ⟨L, A⟩ (e, 0)).2 ≠ (0 : A) := by
     simp only [rejected, realize, dif_pos others]
     exact Classical.choose_spec others
   exact changed (observed.symm.trans zeroShift)
 
 private theorem dependence : ObservationalDependence sig.{u,v} actual := by
   intro r
-  refine ⟨(PUnit.{u+1}, ULift.{v} Bool), (PUnit.unit, ULift.up false),
+  refine ⟨⟨PUnit.{u+1}, ULift.{v} Bool⟩, (PUnit.unit, ULift.up false),
     (PUnit.unit, ULift.up true), ?_⟩
   intro eq
   exact Bool.noConfusion (congrArg (fun x => x.2.down) eq)
@@ -132,8 +133,8 @@ def registration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg",
-        "arg", "body", "body", "fn", "arg", "body", "arg"]
-      stateBinder := 19
+        "arg", "body", "fn", "arg", "body", "arg"]
+      stateBinder := 18
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
