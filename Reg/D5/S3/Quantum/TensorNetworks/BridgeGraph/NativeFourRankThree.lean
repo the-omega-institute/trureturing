@@ -110,7 +110,7 @@ def rankThreeRegistration :
   realization := .source rankThreeArena ⟨rankThreeFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some dimensionLe
+  readout := some (realize dimensionSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
