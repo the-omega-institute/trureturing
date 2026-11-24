@@ -1,6 +1,3 @@
-import Mathlib.Data.List.Chain
-import Mathlib.Data.List.ChainOfFn
-import Mathlib.Data.List.OfFn
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
@@ -254,84 +251,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 
 end Certificate
-namespace PolynomialRelation
-
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 72) (fun _ => ℤ)
-def readout : Realization signature :=
-  realize signature (fun _ _ i => forward T initial (2 + 8) i) (fun e => nomatch e)
-def rejected : Realization signature :=
-  realize signature (fun _ _ i => forward T initial (2 + 8) i + 1) (fun e => nomatch e)
-abbrev arena : Arena where
-  signature := signature
-  Law R := R.readout () () =
-    ∑ j : Fin 8, (![-656100, 1574640, -1513404, 750384, -206469, 31428, -2466, 84] j : ℤ) •
-      forward T initial (2 + j.val)
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hf := congrFun h (0 : Fin 72)
-  have ht := congrFun polynomial_relation (0 : Fin 72)
-  change forward T initial (2 + 8) 0 + 1 = _ at hf
-  linarith
-
-def family : Registration arena (type_of% @polynomial_relation) where
-  actual := readout
-  bridge := Iff.rfl
-  variation := ⟨polynomial_relation, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law readout rejected rejected_law
-  dependence := by
-    intro i
-    refine ⟨(), 0, 2, ?_⟩
-    change forward T initial 10 0 ≠ forward T initial 10 2
-    have hs : forward T initial 10 = W 10 := by
-      let rows := List.ofFn W
-      have hchain : rows.IsChain (fun u v => Matrix.vecMul u T = v) :=
-        List.isChain_ofFn.mpr fun k hk => (finite_certificate.2.2.2.2.2.1.2 ⟨k, by omega⟩).symm
-      have hlast : 10 < rows.length := by simp only [rows, List.length_ofFn]; decide
-      have he := hchain.iterate_eq_of_apply_eq 10 hlast
-      simp only [rows, List.getElem_ofFn] at he
-      change forward T (W 0) 10 = W 10 at he
-      rw [finite_certificate.2.2.2.2.2.1.1] at he
-      exact he
-    rw [hs]
-    unfold W
-    decide +kernel
-
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@polynomial_relation) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip.PolynomialRelation.auditUnit
-  realizationName := ``family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ i => forward T initial (2 + 8) i) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end PolynomialRelation
-
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip

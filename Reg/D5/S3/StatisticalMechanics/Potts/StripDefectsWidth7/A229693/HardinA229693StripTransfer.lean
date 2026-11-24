@@ -92,19 +92,19 @@ end Transition
 
 namespace CopiedColumn
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Fin 96) (fun _ => Fin 168)
+  _root_.Reg.Support.SingleDependentReadout.signature ({j : Fin 96 // (exitRead j).val < 72}) (fun _ => Fin 168)
     (fun _ => ℤ)
 
 def readout : Realization signature :=
-  realize signature (fun _ j i => T i (j.natAdd 72)) (fun e => nomatch e)
+  realize signature (fun _ j i => T i (j.val.natAdd 72)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ j i => T i (j.natAdd 72) + 1) (fun e => nomatch e)
+  realize signature (fun _ j i => T i (j.val.natAdd 72) + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (j : Fin 96) (h : (exitRead j).val < 72) (i : Fin 168),
-    R.readout () j i = T i ((⟨(exitRead j).val, h⟩ : Fin 72).castAdd 96)
+    R.readout () ⟨j, h⟩ i = T i ((⟨(exitRead j).val, h⟩ : Fin 72).castAdd 96)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -121,7 +121,7 @@ def family : Registration arena (type_of% @copied_column) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨12, 0, 72, ?_⟩
+    refine ⟨⟨12, by decide +kernel⟩, 0, 72, ?_⟩
     change T 0 84 ≠ T 72 84
     unfold T
     decide +kernel
@@ -139,7 +139,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ j i => T i (j.natAdd 72)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ j i => T i (j.val.natAdd 72)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -147,12 +147,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -223,7 +223,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
