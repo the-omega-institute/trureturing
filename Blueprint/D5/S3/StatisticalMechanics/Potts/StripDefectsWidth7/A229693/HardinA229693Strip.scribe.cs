@@ -45,7 +45,7 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
         var leading = Call("HardinA229585StripData.initial");
         var inherited = Fn("j", Call("Fin", Num("56")),
             Sub(Call("HardinA229585StripData.initial", Call("Fin.natAdd", Num("16"), V("j"))), Num("6")));
-        var fresh = Fn("j", Call("Fin", Num("40")), CastInt(Num("12")));
+        var fresh = Parenthesized(TypeOf(Num("12"), Arrow(Call("Fin", Num("40")), V("Int"))));
         return Eq(Call("HardinA229693Strip.initial"),
             Call("Fin.append", leading, Call("Fin.addCases", inherited, fresh)));
     }
