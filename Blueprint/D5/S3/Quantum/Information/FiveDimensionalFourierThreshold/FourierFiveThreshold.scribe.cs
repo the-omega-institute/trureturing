@@ -8,7 +8,7 @@ internal sealed class FourierFiveThresholdDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Qian =
         LibraryNoteRef.Create("D5/L/Entropy/qian2026complementarycorrelations");
     private static readonly LibraryNoteRef Qutrit =
-        LibraryNoteRef.Create("D5/L/Quantum/anonymous2026sharpqutritdiscrimination");
+        LibraryNoteRef.Create("D5/L/Entropy/anonymous2026sharpqutritdiscrimination");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The combined triangular discrimination of the computational and Fourier measurement outcomes is less than 377/100 for any two complex unit vectors in dimension five.",
