@@ -48,11 +48,11 @@ internal sealed class CrtMarginalCollisionDocument : IScribeDocumentDefinition
         var common = new Formula.Power(new Formula.Fraction(D(7), D(6, 4)), p);
         Formula Gap(Formula value) => new Formula.Fraction(
             Seq(new Formula.Power(new Formula.Fraction(value, D(1, 6)), p), Minus, common), D(3));
-        return Disp(Seq(left, Eq, F.Id("C"), Sp, Land, Sp,
-            right, Eq, F.Id("F"), Sp, Land, Sp,
-            ep, Lt, product, Lt, eq, Sp, Land, Sp,
-            Seq(ep, Minus, product, Eq, Gap(D(1))), Sp, Land, Sp,
-            Seq(eq, Minus, product, Eq, Gap(D(1, 3)))));
+        return Disp(new Formula.Aligned([
+            Seq(left, Eq, F.Id("C"), Sp, Land, Sp, right, Eq, F.Id("F")),
+            Seq(ep, Lt, product, Lt, eq),
+            Seq(ep, Minus, product, Eq, Gap(D(1))),
+            Seq(eq, Minus, product, Eq, Gap(D(1, 3)))]));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
