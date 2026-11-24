@@ -26,8 +26,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
-            Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
+            Node("edges_filter_card",EdgesFilterCard(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. Each stored list contains the eligible columns in code order."),
             Node("step_one",StepOne(),true,"The list enumerates exactly the cuts of cost one without duplicates. The indicator dot product equals its weighted sum when the sum over the omitted columns is zero."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen."),
@@ -218,14 +217,24 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Call("SMul.smul",Own("coefficients538",V("k")),Power(Add(N(2),Val(V("k")))))));
     }
 
-    private static Formula CountCut() {
-        var p=V("p");var q=V("q");
-        var bonds=new[]{new[]{0,0},new[]{0,1},new[]{1,0},new[]{1,1},new[]{1,2},new[]{2,1},new[]{2,2},new[]{2,3},new[]{3,2},new[]{3,3},new[]{3,4},new[]{4,3},new[]{4,4}};
-        var terms=bonds.Select(e=>If(Eq(C("colour",p,N(e[0])),C("colour",q,N(e[1]))),N(1),N(0)));
-        return All("p",Column(),All("q",Column(),Eq(Typed(Own("countCut",p,q),Q("Nat")),terms.Aggregate(Add))));
+    private static Formula EdgesFilterCard()
+    {
+        var shade = V("A");
+        var row = Arrow(Fin(5), shade);
+        var r = V("r");
+        var t = V("t");
+        var e = V("e");
+        var pairs = Product(Fin(5), Fin(5));
+        var matching = Eq(App(r, Call("Prod.fst", e)), App(t, Call("Prod.snd", e)));
+        var filter = Call("Finset.filter", Fn("e", pairs, matching), Own("edges"));
+        (int Left, int Right)[] bonds = [(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),
+            (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)];
+        var terms = bonds.Select(bond => If(Eq(App(r, N(bond.Left)), App(t, N(bond.Right))), N(1), N(0)));
+        var identity = All("r", row, All("t", row, Eq(Call("Finset.card", filter), terms.Aggregate(Add))));
+        return All("A", Seq(Q("Type"), Star),
+            Seq(OpenBracket, Call("DecidableEq", shade), CloseBracket, Sp, identity));
     }
-    private static Formula CutEquality() => All("p",Column(),All("q",Column(),Eq(Own("cost",V("p"),V("q")),
-        Own("countCut",V("p"),V("q")))));
+
     private static Formula Weights()
     {
         var n = V("n");

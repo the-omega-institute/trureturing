@@ -131,7 +131,7 @@ open scoped BigOperators Function
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA233178Chromatic (Column T table moves step_fast weighted_indicator_sum)
 open HardinA229538Strip (cost oneDefect
-  cost_countCut movesOne step_one classIndex tableOne zeroValues zero_values
+  edges_filter_card movesOne step_one classIndex tableOne zeroValues zero_values
   weight_eq weights coefficients538)
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
@@ -398,7 +398,7 @@ private theorem moves_two_filter (p : Column) :
       let col := finProdFinEquiv (block, offset)
       movesTwo col = (List.finRange 243).filter (fun q => decide (cost col q = 2)) := by
     intro block
-    simp only [cost_countCut]
+    simp only [cost, DefectTransfer.bondDefects, edges_filter_card]
     fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
