@@ -8,17 +8,18 @@ internal sealed class PrimeWindowPoleGrowthDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Weil/Mertens/IntegratedExplicit/PrimeWindowPoleGrowth.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Zeta zeros and the negative part of the prime tail",
+        "Zeta zeros and signed Chebyshev tail mass",
         H("Growth on every late power window"),
         Blocks(
-            Paragraph(Text("Let Q(t) be the integral from t to infinity of (θ(x)−x)/x², "
-                + "where θ counts each prime with logarithmic weight. Write A(b,Y) for the integral "
-                + "of max(−Q(x),0)/√x from Y to Yᵇ. The prime powers of exponent at least two "
-                + "change the corresponding complete Mangoldt budget by at most a multiple of log Y.")),
-            Describe.Lean(DescribeId.Create("pole-window-growth"),
-                DeclarationHandle.Create(Module + "off_line_zero_forces_window_mass"),
-                H("Lower bound from a zero to the right of the critical line"),
-                StatementSource.FromAuthor(Growth()), AssessedProvenance.FromRepo(),
+            Paragraph(Text("Let Q(t) be the integral from t to infinity of (ψ(x)−x)/x², "
+                + "where ψ counts prime powers with weight log p at pᵏ. Write B(s,b,Y) for the integral "
+                + "of max(s·(−Q(x)),0)/√x from Y to Yᵇ. For the prime-only tail replace ψ by θ, "
+                + "which counts primes with logarithmic weight. Write A(b,Y) for the resulting "
+                + "integral with s=1.")),
+            Describe.Lean(DescribeId.Create("signed-complete-window-growth"),
+                DeclarationHandle.Create(Module + "off_line_zero_forces_signed_complete_window_mass"),
+                H("Both signs of the complete tail on every late window"),
+                StatementSource.FromAuthor(Growth(signed: true)), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let β be the real part of the given zero. On a vertical line of "
                     + "large real part σ, choose two disks of equal radius. The disk centered at σ is "
                     + "free of zeros. A vertical displacement gives a unique closest zero in the second "
@@ -26,12 +27,21 @@ internal sealed class PrimeWindowPoleGrowthDocument : IScribeDocumentDefinition
                     + "Cauchy's estimate bounds the analytic remainder. The pole term gives a geometric "
                     + "lower bound for all sufficiently high normalized derivatives. "
                     + "The zero in the second disk can differ from the original zero.")),
-                    Paragraph(Text("Adding the derivative at the real center bounds this quantity by "
-                    + "twice the positive Mangoldt moment. Set a=log Y and choose order floor(σha) "
-                    + "with 1<h<b. Tilting the two gamma tails controls the parts outside [a,ba]. "
+                    Paragraph(Text("Cauchy's estimate at the real center bounds the absolute value "
+                    + "of the real part of the normalized derivative at a smaller geometric rate. "
+                    + "The signed moment inequality uses the same derivative lower bound for either "
+                    + "sign. Set a=log Y and choose order floor(σha) with 1<h<b. Tilting the two "
+                    + "gamma tails controls the parts outside [a,ba]. "
                     + "Inside the window the kernel of order k is bounded by exp(−u/2)/(σ−1/2)ᵏ. "
                     + "Choosing h close to b and δ small gives the stated "
                     + "exponent at every sufficiently large Y."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pole-window-growth"),
+                DeclarationHandle.Create(Module + "off_line_zero_forces_window_mass"),
+                H("Lower bound for the negative part of the prime-only tail"),
+                StatementSource.FromAuthor(Growth()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Take s=1 in the signed complete window bound. Pointwise "
+                    + "comparison of ψ and θ gives B(1,b,Y) ≤ A(b,Y). The difference is at most "
+                    + "a multiple of log Y for fixed b."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("subpower-prime-windows"),
                 DeclarationHandle.Create(Module + "rh_iff_frequently_small_prime_windows"),
                 H("The Riemann hypothesis and arbitrarily late small windows"),
@@ -52,13 +62,14 @@ internal sealed class PrimeWindowPoleGrowthDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), Real, body);
     private static Formula Implies(Formula p, Formula q) => new Formula.Logic(p, FormulaLogicOperator.Implies, q);
     private static Formula And(Formula p, Formula q) => new Formula.Logic(p, FormulaLogicOperator.And, q);
+    private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Less(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
     private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula Power(Formula x, Formula y) => F.Seq(x, F.Caret, F.Grp(y));
     private static Formula At(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
 
-    private static Formula Growth()
+    private static Formula Growth(bool signed = false)
     {
         var z = F.Id("z");
         var b = F.Id("b");
@@ -68,10 +79,17 @@ internal sealed class PrimeWindowPoleGrowthDocument : IScribeDocumentDefinition
         var half = F.Seq(F.Frac, F.Grp(F.D(1)), F.Grp(F.D(2)));
         var beta = At("Re", z);
         var power = F.Seq(b, F.Open, beta, F.Minus, half, F.Close, F.Minus, e);
-        var tail = Exists("T", All("Y", Real, Implies(Le(t, y), Le(Power(y, power), At("A", b, y)))));
+        Formula bound = Le(Power(y, power), At("A", b, y));
+        if (signed)
+        {
+            var s = F.Id("s");
+            var sign = new Formula.Logic(Eq(s, F.D(1)), FormulaLogicOperator.Or, Eq(s, F.Seq(F.Minus, F.D(1))));
+            bound = All("s", Real, Implies(sign, Le(Power(y, power), At("B", s, b, y))));
+        }
+        var tail = Exists("T", All("Y", Real, Implies(Le(t, y), bound)));
         var windows = All("b", Real, Implies(Less(F.D(1), b),
             All("e", Real, Implies(Less(F.D(0), e), tail))));
-        var zero = new Formula.Relation(At("zeta", z), FormulaRelationOperator.Equal, F.D(0));
+        var zero = Eq(At("zeta", z), F.D(0));
         return F.Disp(All("z", Complex, Implies(And(zero, Less(half, beta)), windows)));
     }
 

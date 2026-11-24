@@ -7,11 +7,11 @@
    digest: Identify the centered xi logarithmic derivative with its normalized zero resolvent. -/
 
 import D5.S3.Analytic.Resolvent.XiGlobalGrowth
+import D5.S3.Analytic.Resolvent.EntireLogDerivDifference
 import D5.S3.Analytic.Dilation.ScalarUnitDressing
 import D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
 import D5.S3.Zeros.Endpoints.XiEndpointValues
 import D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
-import Mathlib.Analysis.Complex.Schwarz
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
@@ -118,30 +118,6 @@ private theorem rational_summable (Z : ZeroData) (s : ℂ) :
   filter_upwards [he] with n hn
   simpa [mul_div_assoc] using rational_tail s (Z.zero n) ‖s‖ (Z.multiplicity n) le_rfl hn
 
-private theorem centered_cf {f : ℂ → ℂ}
-    (hfa : AnalyticOnNhd ℂ f (Metric.closedBall 0 1)) (hf0 : f 0 = 1)
-    {B : ℝ} (hB : 2 ≤ B) (hfB : ∀ w, ‖w‖ ≤ 24 / 25 → ‖f w‖ ≤ B)
-    {z : ℂ} (hz : ‖z‖ < 83 / 100) :
-    ‖logDeriv (Cf (22 / 25) f) z - logDeriv (Cf (22 / 25) f) 0‖ ≤
-      (2 * (44795000 * Real.log B) / (83 / 100 : ℝ)) * ‖z‖ := by
-  have hf0' : f 0 ≠ 0 := by rw [hf0]; exact one_ne_zero
-  have hfin := finite_SetOfZeros hfa hf0'
-  have hc := CfAnalytic (by norm_num : (22 / 25 : ℝ) < 9 / 10) (by norm_num) hfa hf0'
-  have hd : DifferentiableOn ℂ (logDeriv (Cf (22 / 25) f)) (Metric.ball 0 (83 / 100)) := by
-    intro w hw
-    have hw' : ‖w‖ < 83 / 100 := by simpa using hw
-    have ha := hc w (by simpa using (show ‖w‖ ≤ 9 / 10 by linarith))
-    exact (ha.deriv.div ha (Cf_ne_zero hfa hf0' (by norm_num) hfin
-      (by linarith))).differentiableAt.differentiableWithinAt
-  have hb (w : ℂ) (hw : ‖w‖ ≤ 83 / 100) := norm_logDeriv_Cf_le hfa hf0 hfin hB hfB hw
-  have hm : MapsTo (logDeriv (Cf (22 / 25) f)) (Metric.ball 0 (83 / 100))
-      (Metric.closedBall (logDeriv (Cf (22 / 25) f) 0) (2 * (44795000 * Real.log B))) := by
-    intro w hw
-    rw [Metric.mem_closedBall, dist_eq_norm]
-    have hw' : ‖w‖ ≤ 83 / 100 := le_of_lt (by simpa using hw)
-    exact (norm_sub_le _ _).trans (by linarith [hb w hw', hb 0 (by norm_num)])
-  simpa [dist_eq_norm] using Complex.dist_le_div_mul_dist_of_mapsTo_ball hd hm
-    (show z ∈ Metric.ball 0 (83 / 100) by simpa using hz)
 private def scaled (R : ℝ) (w : ℂ) := (2 : ℂ) * xiReading ((R : ℂ) * w)
 
 private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
@@ -290,10 +266,15 @@ private theorem physical_error (C : ℝ) (hC : 0 < C)
     apply mul_le_mul_of_nonneg_left ((hg _).trans ?_) (by norm_num)
     gcongr
   rw [norm_div, Complex.norm_of_nonneg hR0.le]
+  have hc := D5.S3.Analytic.Resolvent.EntireLogDerivDifference.centered_cf
+    hscaledAnalytic hscaledZero hB hfB hz.le
+  have hc0 := norm_logDeriv_Cf_le hscaledAnalytic hscaledZero
+    (finite_SetOfZeros hscaledAnalytic (by rw [hscaledZero]; norm_num))
+    hB hfB (z := 0) (by norm_num)
   calc
     _ ≤ ((2 * (44795000 * Real.log (2 * Real.exp (C * (1 + R) ^ (3 / 2 : ℝ)))) / (83 / 100 : ℝ)) *
       ‖s / (R : ℂ)‖) / R :=
-      div_le_div_of_nonneg_right (centered_cf hscaledAnalytic hscaledZero hB hfB hz) hR0.le
+      div_le_div_of_nonneg_right (hc.trans (by gcongr; linarith)) hR0.le
     _ = _ := by rw [norm_div, Complex.norm_of_nonneg hR0.le]; ring
 
 private theorem growth_decay (C : ℝ) (hC : 0 < C) :
@@ -383,7 +364,5 @@ theorem xi_reading_normalized_resolvent_hasSum
       rw [norm_div, Complex.norm_of_nonneg hR0.le, div_lt_iff₀ hR0]; linarith)
   have hval := tendsto_nhds_unique hl hv
   exact hval ▸ ha.hasSum
-
-#print axioms xi_reading_normalized_resolvent_hasSum
 
 end D5.S3.Zeros.Resolvent.XiNormalizedResolvent

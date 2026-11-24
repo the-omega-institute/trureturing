@@ -1,0 +1,130 @@
+name: DAG and truth release
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  repository_dispatch:
+    types: [publish-truth-release]
+
+permissions: {}
+
+# Inspector and Scribe follow the source pin. The publisher has its own revision.
+env:
+  TRUTH_TOOLS_COMMIT: bde58fcea76c0538fd182630f05cc1ab12e5bee9
+
+concurrency:
+  group: truth-release-publish-dev
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+      STRATALINT_ACCEPT_COLD_BUILD: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Check out the fixed truth release tools
+        uses: actions/checkout@v5
+        with:
+          repository: the-omega-institute/trureturing-tools
+          ref: ${{ env.TRUTH_TOOLS_COMMIT }}
+          path: truth-tools
+          persist-credentials: false
+      - name: Install the tools pinned by the source
+        run: make install-tools
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Install the pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Select the Lean dependency cache
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean dependencies
+        id: dependencies
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+      - name: Prepare the restored dependencies
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependencies.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
+            --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - name: Restore existing Lean modules and reports
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+      - name: Prepare the source's Lean module reports
+        run: make lean-cache-prepare FULL_BUILD=1
+      - name: Generate and package the DAG and truth release
+        run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
+      - id: upload
+        uses: actions/upload-artifact@v6
+        with:
+          name: truth-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/truth-assets/
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: write
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out the fixed truth release tools
+        uses: actions/checkout@v5
+        with:
+          repository: the-omega-institute/trureturing-tools
+          ref: ${{ env.TRUTH_TOOLS_COMMIT }}
+          path: truth-tools
+          persist-credentials: false
+      - uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/truth-assets
+          merge-multiple: true
+      - uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6
+        with:
+          version: 1.3.0
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Publish the truth bundle to GHCR
+        id: oci
+        run: python3 truth-tools/.github/scripts/truth_release/publish.py oci "$RUNNER_TEMP/truth-assets"
+      - uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
+        with:
+          subject-name: ghcr.io/the-omega-institute/trureturing/truth-release
+          subject-digest: ${{ steps.oci.outputs.digest }}
+          push-to-registry: true
+      - name: Publish DAG.md and the truth bundle to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REFERENCE: ${{ steps.oci.outputs.reference }}
+        run: python3 truth-tools/.github/scripts/truth_release/publish.py mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"

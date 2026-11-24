@@ -9,6 +9,8 @@ claim: "Lemmas 4–5 establish the shift and its derivative and endpoint behavio
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
   - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
+  - D5/S3/Quantum/Divergence/ForwardHockeyStickIntegral
+  - D5/S3/Quantum/Divergence/SingleCoordinatePinchingEntropy
 license: "citation-only"
 triage: "anchor"
 ---
@@ -30,8 +32,17 @@ eigenbases, followed by the congruence and the integrated negative-inertia
 identity. The trace correction is the limit of the shifted pairing at infinity.
 At a zero eigenvalue the term \(a\log a\) has its continuous value zero.
 
+The equal-trace shifted determinant formula in Fibonacci observation entropy,
+`thermal-operation-width-renewal/fibonacci-observation-entropy/proof.txt` §18,
+uses the same real scalar shift with the common reference \(b=1\). Equal
+dimension and trace cancel its two correction sums, including for singular
+positive semidefinite matrices. The resulting integral is the difference of
+the two real trace-entropy pairings.
+
 Related forms appear in Hirche and Tomamichel’s Corollary 2.3 and Eq. (2.22),
 Jenčová’s Corollary 1, and Schmitt’s Corollary 4.2. Liu, Hirche and Cheng’s §4.1
 gives an operator layer-cake proof. [Hirche and Tomamichel](https://arxiv.org/abs/2306.12343)
 · [Jenčová](https://arxiv.org/abs/2303.11707) · [Schmitt](https://arxiv.org/abs/2609.12547)
 · [Liu, Hirche and Cheng](https://arxiv.org/abs/2507.07065)
+
+Both tails of Theorem 6 are transformed by the same involution \(s\mapsto s/(s-1)\) in the forward-profile identity. The integral on the central interval vanishes by positive semidefiniteness.

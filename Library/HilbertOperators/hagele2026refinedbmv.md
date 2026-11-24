@@ -19,6 +19,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
@@ -206,6 +209,21 @@ from one half to four, the same mixed sign holds from gap four. A sharper
 bound couples the linear correction to the leading square, and a
 divided-difference average bounds the radical contribution. When the gap
 is greater than eleven, the sign holds for all positive lower coordinates.
+
+For first degrees at least eleven, the original logarithmic kernel also
+has strictly negative mixed derivative when the lower coordinate is in
+(0, 1/2] and the log gap is in (0, 1]. Factoring the marginal zeros gives
+a continued integrand. For upper coordinates up to one, the low-strip
+enclosure gives its strict sign. From one to three halves, exact interval
+bounds on the marginal Taylor polynomials and the tilted joint moments
+give strict positivity at every integration point in the derivative identity.
+
+For first degrees at least eleven, the repository also proves strict
+negativity of the mixed derivative for every ordered pair of logarithmic
+coordinates with lower coordinate at least four. Short gaps through two
+and gaps from four have separate bounds. Between two and four, a finite
+cover and dyadic Taylor enclosures preserve the sign in the original
+normalized kernel.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
