@@ -10,8 +10,7 @@ public import OmegaMath.Data.Nat.Fib.Basic
 /-!
 Omega original.
 
-The zero-based Fibonacci weights used by the W-coordinate system of
-`D5.S0.Conventions.WDigits`.
+The zero-based Fibonacci weights for canonical nonadjacent integer digits.
 -/
 
 noncomputable section
