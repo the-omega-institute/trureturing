@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
-   digest: A Pasch-count bound suffices for one binary labelling to maximize every pivot-pair switch count. -/
+   digest: A Pasch-count bound ensures a common binary table attains every switch maximum. -/
 
 import D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount
 import Mathlib.Data.Fintype.Pi
@@ -12,6 +12,8 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.FieldTheory.Finiteness
 import Mathlib.Order.Preorder.Finite
 
+
+/-! The support of each alternating square gives one forbidden weight-four vector. -/
 
 namespace D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschThreshold
 
@@ -391,9 +393,9 @@ private theorem square_row {L : Type*} [Mul L] {e p q a b c d : L}
     not_false_eq_true, List.nodup_nil, and_true] at distinct blocks
   have period := steinerSquarePeriod comm invol (show p ≠ q by tauto) closes
   have nondegenerate (u v : L) (hu : u ≠ e) (hv : v ≠ e) (different : u ≠ v) :
-      D5.S3.Combinatorics.Matroids.SteinerSchreierExtension.factor e (fun t => Finsupp.single t (1 : ZMod 2)) u v =
+      SteinerSchreierExtension.factor e (fun t => Finsupp.single t (1 : ZMod 2)) u v =
         Finsupp.single ({u, v, u * v} : Set L) (1 : ZMod 2) := by
-    rw [D5.S3.Combinatorics.Matroids.SteinerSchreierExtension.factor, ite_eq_right (by tauto)]
+    rw [SteinerSchreierExtension.factor, ite_eq_right (by tauto)]
     rfl
   have f1 := nondegenerate q a (by tauto) (by tauto) (by tauto)
   have f2 := nondegenerate p b (by tauto) (by tauto) (by tauto)
@@ -459,16 +461,22 @@ theorem common_maximum_of_pasch_count {L A : Type*} [Finite L] [Finite A]
     exact four_blocks_card distinct
   obtain ⟨K, avoids, dimension⟩ := weight_four_avoidance S _ hd weights
     (Finset.card_image_le.trans bound)
-  obtain ⟨evaluate, injective⟩ := finrank_le_iff_exists_linearMap.mp dimension
   let readWord := Finsupp.linearEquivFunOnFinite (ZMod 2) (ZMod 2) (Set L)
-  let f := evaluate.comp (K.mkQ.comp readWord.toLinearMap)
-  let coefficients := Finsupp.lift A (ZMod 2) (Set L)
-  let labels := coefficients.symm f
-  have table : Finsupp.linearCombination (ZMod 2) labels = f := by
-    apply LinearMap.ext
-    intro row
-    rw [Finsupp.linearCombination_apply, ← Finsupp.lift_apply]
-    exact LinearMap.congr_fun (coefficients.apply_symm_apply f) row
+  let project := K.mkQ.comp readWord.toLinearMap
+  let H := LinearMap.ker project
+  have dimensionH : Module.finrank (ZMod 2) ((Set L →₀ ZMod 2) ⧸ H) ≤
+      Module.finrank (ZMod 2) A := by
+    rw [(project.quotKerEquivOfSurjective (K.mkQ_surjective.comp readWord.surjective)).finrank_eq]
+    exact dimension
+  let PivotPair := {pq : L × L // pq.1 ≠ e ∧ pq.2 ≠ e ∧ pq.1 ≠ pq.2}
+  let first (i : PivotPair) := i.1.1
+  let second (i : PivotPair) := i.1.2
+  let profile (i : PivotPair) := Nat.card A * ({x : L |
+    first i * (second i * (first i * (second i * x))) ≠ x ∨
+      returnRow e (first i) (second i) x ∉ H} : Set L).ncard
+  obtain ⟨labels, _, realizes⟩ :=
+    (commonSwitchCounts (A := A) e first second unit comm invol centre
+      (fun i => i.2.2.2) profile).mpr ⟨H, dimensionH, fun _ => rfl⟩
   have twice (a : A) : a + a = 0 := by
     have two : (2 : ZMod 2) = 0 := by decide
     simpa only [two_smul, zero_smul] using congrArg (fun c : ZMod 2 => c • a) two
@@ -477,20 +485,22 @@ theorem common_maximum_of_pasch_count {L A : Type*} [Finite L] [Finite A]
   let g : L → L := fun z => p * (q * z)
   let M := loopPivotMatchings e p q unit comm invol hp hq hpq
   have rightUnit (x : L) : x * e = x := (comm x e).trans (unit x)
-  have identitySquare : (M.graph.connectedComponentMk e).supp = {e, p, q, p * q} := by
-    have here : M.first (M.second e) = M.second (M.first e) := by
-      change p * (q * e) = q * (p * e)
-      rw [rightUnit, rightUnit, comm p q]
-    have support := M.component_eq_square here
-    change (M.graph.connectedComponentMk e).supp = {e, p * e, q * e, p * (q * e)} at support
-    simpa only [rightUnit] using support
   have edges (u v : L) : M.graph.Adj u v ↔ p * u = v ∨ q * u = v := Iff.rfl
+  have reachP : M.graph.Reachable e p := ((edges e p).mpr (Or.inl (rightUnit p))).reachable
+  have reachQ : M.graph.Reachable e q := ((edges e q).mpr (Or.inr (rightUnit q))).reachable
+  have reachPQ : M.graph.Reachable e (p * q) :=
+    reachQ.trans ((edges q (p * q)).mpr (Or.inl rfl)).reachable
   have special {x : L} (hx : x ∈ ({e, p, q, p * q} : Set L)) :
       Finsupp.linearCombination (ZMod 2) other (returnRow e p q x) = 0 := by
     let _ := extensionMul e other
     have path : M.graph.Reachable e x := by
-      rw [← identitySquare, ConnectedComponent.mem_supp_iff] at hx
-      exact ConnectedComponent.exact hx.symm
+      simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+      rcases hx with h | h | h | h
+      · subst x
+        exact SimpleGraph.Reachable.refl e
+      · exact h ▸ reachP
+      · exact h ▸ reachQ
+      · exact h ▸ reachPQ
     have atE (a : A) :
         (fun z : L × A => (p, 0) * ((q, 0) * z))^[minimalPeriod g e] (e, a) = (e, a + 0) := by
       obtain ⟨period, stable⟩ := identityReturn e p q other a unit comm invol twice hpq
@@ -504,22 +514,31 @@ theorem common_maximum_of_pasch_count {L A : Type*} [Finite L] [Finite A]
     have same := congrArg Prod.snd (target.symm.trans moved)
     simpa using same
   have outsideRet {x : L} (hx : x ∉ ({e, p, q, p * q} : Set L))
-      (closes : g (g x) = x) :
-      Finsupp.linearCombination (ZMod 2) labels (returnRow e p q x) ≠ 0 := by
+      (closes : g (g x) = x) : returnRow e p q x ∉ H := by
     obtain ⟨B, hB, row⟩ := square_row_in_family unit comm invol hp hq hpq hx closes
-    rw [table]
-    change evaluate (K.mkQ (returnRow e p q x : Set L → ZMod 2)) ≠ 0
-    rw [row, ← evaluate.map_zero, injective.ne_iff]
-    exact fun h => avoids _ (Finset.mem_image.mpr ⟨B, hB, rfl⟩)
-      ((Submodule.Quotient.mk_eq_zero K).mp h)
-  refine Set.ncard_le_ncard ?_ (Set.toFinite _)
-  rintro ⟨x, a⟩ chosen
-  have old := (selectedByRow e p q x other a comm invol hpq (law other)).mp chosen
-  apply (selectedByRow e p q x labels a comm invol hpq (law labels)).mpr
-  rcases old with long | ret
-  · exact Or.inl long
-  · by_cases closes : g (g x) = x
-    · exact Or.inr (outsideRet (fun hx => ret (special hx)) closes)
-    · exact Or.inl closes
+    intro member
+    have vanishes : K.mkQ (returnRow e p q x : Set L → ZMod 2) = 0 := member
+    rw [row] at vanishes
+    exact avoids _ (Finset.mem_image.mpr ⟨B, hB, rfl⟩)
+      ((Submodule.Quotient.mk_eq_zero K).mp vanishes)
+  let i : PivotPair := ⟨(p, q), hp, hq, hpq⟩
+  let _ := extensionMul e other
+  let target := ({x : L | g (g x) ≠ x ∨ returnRow e p q x ∉ H} : Set L) ×ˢ
+    (Set.univ : Set A)
+  have subset : ({y : L × A | (q, 0) * ((p, 0) * y) ≠ (p, 0) * ((q, 0) * y)} :
+      Set (L × A)) ⊆ target := by
+    rintro ⟨x, a⟩ chosen
+    have old := (selectedByRow e p q x other a comm invol hpq (law other)).mp chosen
+    refine ⟨?_, Set.mem_univ _⟩
+    rcases old with long | ret
+    · exact Or.inl long
+    · by_cases closes : g (g x) = x
+      · exact Or.inr (outsideRet (fun hx => ret (special hx)) closes)
+      · exact Or.inl closes
+  have targetCard : target.ncard = profile i := by
+    dsimp [target, profile, i, first, second, g]
+    rw [Set.ncard_prod, Set.ncard_univ, Nat.mul_comm]
+  exact (Set.ncard_le_ncard subset (Set.toFinite _)).trans
+    (targetCard.trans (realizes i).symm).le
 
 end D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschThreshold
