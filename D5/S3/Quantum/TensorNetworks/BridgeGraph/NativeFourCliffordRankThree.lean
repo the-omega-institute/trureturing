@@ -421,10 +421,12 @@ private theorem paired_change_mem (u v w x : ℂ)
   refine ⟨![a 0, B 0 2, B 0 3, B 3 0, B 2 0], ?_⟩
   have h₁ : (a 0) * (star u * u + star v * v) = a 0 := by rw [hu, mul_one]
   have h₂ : (a 0) * (star w * w + star x * x) = a 0 := by rw [hw, mul_one]
+  change a 0 * ((starRingEnd ℂ) u * u + (starRingEnd ℂ) v * v) = a 0 at h₁
+  change a 0 * ((starRingEnd ℂ) w * w + (starRingEnd ℂ) x * x) = a 0 at h₂
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [B, pairedLin, paired, pairChange, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fin.sum_univ_four, starRingEnd_apply] <;>
+      Fin.sum_univ_four] <;>
     first | (ring; done) | (linear_combination -h₁; done) | linear_combination h₂
 
 
@@ -464,14 +466,14 @@ private theorem moment_mix {c d : ℕ} (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ
   rw [hcolumn l, hcolumn m, Matrix.conjTranspose_mul]
   simp only [Matrix.mul_assoc]
 
+open private compression_add compression_smul from
+  D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
+
 private def compressionLin {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) :
     Coeff →ₗ[ℂ] Matrix (Fin b) (Fin b) ℂ where
   toFun := compression X
-  map_add' T U := by
-    simp only [compression, Matrix.kronecker, Matrix.add_kronecker, Matrix.mul_add, Matrix.add_mul]
-  map_smul' z T := by
-    simp only [compression, RingHom.id_apply, Matrix.kronecker, Matrix.smul_kronecker,
-      Matrix.mul_smul, Matrix.smul_mul]
+  map_add' := compression_add X
+  map_smul' := compression_smul X
 
 private theorem rightMoment_compression {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -537,13 +539,7 @@ private theorem complex_kernel_transport {a b : ℕ}
   have hinv := pairedSpace.smul_mem (2 : ℂ)⁻¹ h
   simpa [smul_smul] using hinv
 
-private theorem scalar_gram_swap {a b c d k : ℕ}
-    (X : Fin k → Matrix (Fin a) (Fin b) ℂ) (Y : Fin k → Matrix (Fin d) (Fin c) ℂ) :
-    (∑ i, kronecker (Y i) (X i)) =
-      (∑ i, kronecker (X i) (Y i)).submatrix (Equiv.prodComm _ _) (Equiv.prodComm _ _) := by
-  ext i j
-  simp [Matrix.submatrix_apply, Matrix.sum_apply, Matrix.kronecker,
-    Matrix.kroneckerMap_apply, mul_comm]
+open private reduce_right from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeRectangularBound
 
 /-- A Hermitian coefficient kernel congruent into the five Pauli directions
 forces the opposite input-output ratio to be at most three quarters. -/
@@ -668,11 +664,9 @@ theorem clifford_kernel_four_bound {a b c d : ℕ}
       (Matrix.rank_conjTranspose_mul_self C).le.trans (by simpa using C.rank_le_card_height)
     omega
   · obtain ⟨g, hg, i, hi⟩ := Fintype.not_linearIndependent_iff.mp hY
-    obtain ⟨N, M, h⟩ := reduce_left (n := 3) Y X g i hi hg
-    have hf : (∑ i, kronecker (M i) (N i)) = ∑ i, kronecker (X i) (Y i) := by
-      rw [scalar_gram_swap N M, h, ← scalar_gram_swap]
+    obtain ⟨M, N, h⟩ := reduce_right (n := 3) X Y g i hi hg
     have h3 := NativeThreeRectangularBound.native_three_rectangular_bound M N lam hlam hab
-      (by simpa only [hf] using hF)
+      (by simpa only [h] using hF)
     omega
 
 open private compression_mix from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
