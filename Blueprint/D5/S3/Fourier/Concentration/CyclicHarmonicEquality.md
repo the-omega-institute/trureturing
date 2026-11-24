@@ -16,7 +16,7 @@ $$(s = 0 \implies c \leq \frac{1}{2}) \land (s = 0 \land c = \frac{1}{2} \iff \e
 
 *Commentary.*
 
-Let m be the first coefficient and z(j) be the unit character at residue j. The w-weighted variance of the real part of the projection by the conjugate of m is c/2 minus c squared. At equality each positive mass has projected real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. The imaginary mean vanishes, so both points occur with equal weights. Injectivity of the cyclic character gives exactly two residues, and the two phases differ by a quarter turn. Conversely, their squared phases cancel at frequency two, and the first coefficient is the average of two perpendicular unit phases.
+Assume s=0 for the forward bound and classification. Let m be the first coefficient and z(j) the standard additive character evaluated at −j. The w-weighted variance of the real part of the conjugate of m times z(j) is c/2 minus c squared. At equality each positive mass has projected real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. The imaginary mean vanishes, so both points occur with equal weights. Injectivity of the cyclic character gives exactly two residues, and the two phases differ by a quarter turn. Conversely, their squared phases cancel at frequency two, and the first coefficient is the average of two perpendicular unit phases.
 
 On ZMod 4 a point mass has first squared magnitude one and second coefficient one. The nonnegative weight (1,1,0,0) has second coefficient zero and first squared magnitude two, with total mass two. The signed weight (1,1/2,−1/2,0) has total mass one and second coefficient zero, with first squared magnitude 5/2. Positive q supplies the finite DFT domain.
 
@@ -34,7 +34,7 @@ $$\operatorname{E}\left(q\right) \iff 4 \mid q$$
 
 The additive order of the difference divides q. When four divides q, choose the residues zero and q/4. The two second-mode phases cancel, and the classification gives equality.
 
-For an indexed lattice spectrum a(j) with normalized weights w(j), fix a frequency k modulo q. Send index j to the residue b(j)=a(j)k and sum its weight into the mass v at that residue. The same pushed-forward probability weight v supplies both modes. Expanding the sums by fibers recovers mode k of the original spectrum at mode one of v, and mode 2k at mode two of v. The classification then bounds the squared magnitude at k when the coefficient at 2k is zero. A quantitative bound for the high-order weighted collisions of actual zeta ordinates at positive resolution remains open.
+For a finite indexed lattice spectrum a(j) with nonnegative weights w(j) of total mass one, fix a frequency k modulo q. Send index j to the residue b(j)=a(j)k and sum its weight into the mass v at that residue. The same pushed-forward probability weight v supplies both modes. Expanding the sums by fibers recovers mode k of the original spectrum at mode one of v, and mode 2k at mode two of v. The classification then bounds the squared magnitude at k when the coefficient at 2k is zero. A quantitative bound for the high-order weighted collisions of actual zeta ordinates at positive resolution remains open.
 
 ## References
 

@@ -24,9 +24,10 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Classification()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let m be the first coefficient and z(j) be the unit character at residue j. "
-                    + "The w-weighted variance of the real part of the projection by the conjugate "
-                    + "of m is c/2 minus c squared. At equality each positive mass has projected "
+                    "Assume s=0 for the forward bound and classification. Let m be the first "
+                    + "coefficient and z(j) the standard additive character evaluated at −j. "
+                    + "The w-weighted variance of the real part of the conjugate of m times z(j) "
+                    + "is c/2 minus c squared. At equality each positive mass has projected "
                     + "real part 1/2. Its projected imaginary part is then either 1/2 or −1/2. "
                     + "The imaginary mean vanishes, so both points occur with equal weights. "
                     + "Injectivity of the cyclic character gives exactly two residues, and the "
@@ -57,7 +58,7 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                     + "and the classification gives equality."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "For an indexed lattice spectrum a(j) with normalized weights w(j), fix a "
+                "For a finite indexed lattice spectrum a(j) with nonnegative weights w(j) of total mass one, fix a "
                 + "frequency k modulo q. Send index j to the residue b(j)=a(j)k and sum its "
                 + "weight into the mass v at that residue. The same pushed-forward probability "
                 + "weight v supplies both modes. Expanding the sums by fibers recovers mode k "
