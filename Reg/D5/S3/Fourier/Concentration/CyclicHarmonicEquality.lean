@@ -11,14 +11,14 @@ open _root_.Reg.Support
 noncomputable section
 
 abbrev differenceSignature :=
-  SingleDependentReadout.signature ℕ ZMod (fun _ => Bool)
+  SingleDependentReadout.signature ℕ ZMod (fun _ => ℕ)
 
 def differenceActual : Realization differenceSignature :=
-  realize differenceSignature (fun _ _ d => @decide (addOrderOf d = 4) (Classical.propDecidable _))
+  realize differenceSignature (fun _ _ d => addOrderOf d)
     (fun e => nomatch e)
 
 def differenceRejected : Realization differenceSignature :=
-  realize differenceSignature (fun _ _ _ => false) (fun e => nomatch e)
+  realize differenceSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev differenceArena : Arena where
   signature := differenceSignature
@@ -27,7 +27,7 @@ abbrev differenceArena : Arena where
       (_ : ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0),
     let d := ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)
     ‖d‖ ^ 2 ≤ 1 / 2 ∧
-      (‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = true ∧
+      (‖d‖ ^ 2 = 1 / 2 ↔ ∃ a b : ZMod q, a ≠ b ∧ V.readout () q (b - a) = 4 ∧
         w a = 1 / 2 ∧ w b = 1 / 2 ∧ ∀ j, j ≠ a → j ≠ b → w j = 0)
 
 private theorem rejected_difference_law : ¬ differenceArena.Law differenceRejected := by
@@ -35,22 +35,21 @@ private theorem rejected_difference_law : ¬ differenceArena.Law differenceRejec
   obtain ⟨w, hw, hpos, hsecond, hfirst⟩ :=
     (zmod_exists_first_mode_half_of_second_zero 4).mpr (dvd_refl 4)
   obtain ⟨_, _, _, hfalse, _⟩ := (law 4 w hw hpos hsecond).2.mp hfirst
-  change false = true at hfalse
+  change (0 : ℕ) = 4 at hfalse
   contradiction
 
 private theorem difference_dependence : ObservationalDependence differenceSignature differenceActual := by
   intro i
   cases i
   refine ⟨4, 1, 0, ?_⟩
-  change (@decide (addOrderOf (1 : ZMod 4) = 4) (Classical.propDecidable _)) ≠
-    (@decide (addOrderOf (0 : ZMod 4) = 4) (Classical.propDecidable _))
+  change addOrderOf (1 : ZMod 4) ≠ addOrderOf (0 : ZMod 4)
   simp
 
 def differenceEvidence :
     Registration differenceArena (type_of% @zmod_first_mode_le_half_of_second_zero) where
   actual := differenceActual
-  bridge := by simp only [differenceArena, differenceActual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [differenceArena, differenceActual, realize, decide_eq_true_eq] using
+  bridge := by simp only [differenceArena, differenceActual, realize]
+  variation := ⟨by simpa only [differenceArena, differenceActual, realize] using
     @zmod_first_mode_le_half_of_second_zero, differenceRejected, rejected_difference_law⟩
   sensitivity := SingleDependentReadout.sensitivity differenceArena.Law differenceActual
     differenceRejected rejected_difference_law
@@ -71,7 +70,7 @@ def differenceRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize differenceSignature
-    (fun _ _ d => @decide (addOrderOf d = 4) (Classical.propDecidable _)) (fun e => nomatch e))
+    (fun _ _ d => addOrderOf d) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -82,23 +81,23 @@ def differenceRegistration :
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg",
-        "arg", "body", "arg", "body", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg", "arg"]
-      booleanPredicate := true }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 abbrev modulusSignature :=
-  SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Bool)
+  SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
 def modulusActual : Realization modulusSignature :=
-  realize modulusSignature (fun _ _ q => decide (4 ∣ q)) (fun e => nomatch e)
+  realize modulusSignature (fun _ _ q => q) (fun e => nomatch e)
 
 def modulusRejected : Realization modulusSignature :=
-  realize modulusSignature (fun _ _ _ => false) (fun e => nomatch e)
+  realize modulusSignature (fun _ _ _ => 3) (fun e => nomatch e)
 
 abbrev modulusArena : Arena where
   signature := modulusSignature
@@ -106,14 +105,14 @@ abbrev modulusArena : Arena where
     (∃ w : ZMod q → ℝ, (∑ j, w j) = 1 ∧ (∀ j, 0 ≤ w j) ∧
       ZMod.dft (fun j => (w j : ℂ)) (2 : ZMod q) = 0 ∧
       ‖ZMod.dft (fun j => (w j : ℂ)) (1 : ZMod q)‖ ^ 2 = 1 / 2) ↔
-        V.readout () () q = true
+        4 ∣ V.readout () () q
 
 private theorem rejected_modulus_law : ¬ modulusArena.Law modulusRejected := by
   intro law
   have hw := (zmod_exists_first_mode_half_of_second_zero 4).mpr (dvd_refl 4)
   have hfalse := (law 4).mp hw
-  change false = true at hfalse
-  contradiction
+  change (4 : ℕ) ∣ 3 at hfalse
+  norm_num at hfalse
 
 private theorem modulus_dependence : ObservationalDependence modulusSignature modulusActual := by
   intro i
@@ -123,8 +122,8 @@ private theorem modulus_dependence : ObservationalDependence modulusSignature mo
 def modulusEvidence :
     Registration modulusArena (type_of% @zmod_exists_first_mode_half_of_second_zero) where
   actual := modulusActual
-  bridge := by simp only [modulusArena, modulusActual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [modulusArena, modulusActual, realize, decide_eq_true_eq] using
+  bridge := by simp only [modulusArena, modulusActual, realize]
+  variation := ⟨by simpa only [modulusArena, modulusActual, realize] using
     @zmod_exists_first_mode_half_of_second_zero, modulusRejected, rejected_modulus_law⟩
   sensitivity := SingleDependentReadout.sensitivity modulusArena.Law modulusActual modulusRejected
     rejected_modulus_law
@@ -144,7 +143,7 @@ def modulusRegistration :
   realization := .source modulusArena ⟨modulusEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize modulusSignature (fun _ _ q => decide (4 ∣ q)) (fun e => nomatch e))
+  readout := some (realize modulusSignature (fun _ _ q => q) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -154,11 +153,11 @@ def modulusRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg"]
+      path := #["body", "body", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
