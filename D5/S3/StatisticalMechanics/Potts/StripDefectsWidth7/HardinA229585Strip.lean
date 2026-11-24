@@ -15,7 +15,7 @@ decidableNormal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=result
 edge: proof_shape=bind-only; consumers=cross_relabel, count_transfer
 class_relabel: proof_shape=bind-only; consumers=transition_counts
-horizontal_relabel: proof_shape=bind-only; consumers=cross_relabel, transition_counts
+horizontal_relabel: proof_shape=bind-only; consumers=cross_relabel, transition_counts, HardinA229693StripTransfer.class_counts
 cross_relabel: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=count_transfer, powers_table, polynomial_relation
@@ -83,7 +83,7 @@ theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     Function.comp_apply, e.injective.eq_iff, e.injective.ne_iff]
   rfl
 
-private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
+theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
   simpa only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
     Nat.add_zero] using DefectTransfer.relabel_defects horizontal antidiagonal e [r]

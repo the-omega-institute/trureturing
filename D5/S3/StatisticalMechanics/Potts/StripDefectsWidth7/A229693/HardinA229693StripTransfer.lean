@@ -134,7 +134,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA229585StripData (Boundary Row horizontal antidiagonal boundary cross)
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
-open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (relabel_defects defects tailDefects)
+open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (defects tailDefects)
 
 private instance decidableBudget (p : Boundary) (d : ℕ) :
     Decidable (HardinA229635State.Valid p d) :=
@@ -863,8 +863,7 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     exhaustedClass (boundary (e ∘ r)) = j then (1 : ℤ) else 0) =
     T (cl (e ∘ p) d) (j.natAdd 72) at h
   simpa only [HardinA229585Strip.cross_relabel,
-    show ∀ r : Row, bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r from
-      fun r => relabel_defects horizontal antidiagonal e [r],
+    HardinA229585Strip.horizontal_relabel,
     show ∀ r : Row, boundary (e ∘ r) = e ∘ boundary r from fun _ => rfl,
     exhausted_relabel, cl_relabel] using h
 
