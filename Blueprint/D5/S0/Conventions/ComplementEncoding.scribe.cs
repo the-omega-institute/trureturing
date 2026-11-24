@@ -38,10 +38,11 @@ internal sealed class ComplementEncodingDocument : IScribeDocumentDefinition
                         + "the subtraction u - e. The theorem records the endpoint values, "
                         + "the involution law, and recovery of u from the value at zero.")),
                     Paragraph(Text(
-                        "Pinned Mathlib was searched before proving. The exact algebraic hits "
-                        + "were sub_zero, sub_self, and sub_sub_self; the proof is a direct "
-                        + "application of these library lemmas. Repository searches found no "
-                        + "existing declaration for this total-recovery complement statement.")),
+                        "The proof uses the strict additive group laws. Adding the effect back "
+                        + "to its complement recovers the total, so subtracting that complement "
+                        + "returns the effect. Evaluation at zero recovers the ambient total. "
+                        + "The standard Lean interface transports the strict endpoint and "
+                        + "involution results to Mathlib subtraction.")),
                     Paragraph(Text(
                         "This deposit closes only the complement-encoding clause at "
                         + "qdo-v1 theorem/38.1 for atom "
