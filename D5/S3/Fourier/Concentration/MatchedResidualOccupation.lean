@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 import D5.S3.Quantum.Schatten.MatrixSimilarity
+import D5.S3.PrimeGaps.GreedyResidues
 
 /-! Bounds for occupations that admit a pointwise matching along a finite relation. -/
 
@@ -34,26 +35,28 @@ private theorem matched_words_mass_le {J : Type*} [Fintype J] {d : ℕ}
       (d.factorial : ℝ) * (∑ e : J × J, if E e.1 e.2 then w e.1 * w e.2 else 0) ^ d := by
   classical
   let k (e : J × J) : ℝ := if E e.1 e.2 then w e.1 * w e.2 else 0
-  have hk (e : J × J) : 0 ≤ k e := by
-    dsimp [k]
-    split_ifs
-    · exact mul_nonneg (hw _) (hw _)
-    · exact le_rfl
   let H (x : Word J d × Word J d) (σ : Equiv.Perm (Fin d)) : ℝ :=
     ∏ i, k (align σ x i)
-  have hH (x) (σ) : 0 ≤ H x σ := prod_nonneg fun i _ => hk _
-  have hterm (x) (hx : x ∈ S) :
-      (∏ i, w (x.1 i)) * ∏ i, w (x.2 i) ≤ ∑ σ, H x σ := by
-    obtain ⟨σ, hσ⟩ := hS x hx
-    have hsame : H x σ = (∏ i, w (x.1 i)) * ∏ i, w (x.2 i) := by
+  let term (x : Word J d × Word J d) := (∏ i, w (x.1 i)) * ∏ i, w (x.2 i)
+  let event (σ : Equiv.Perm (Fin d)) (x : Word J d × Word J d) :=
+    ∀ i, E (x.1 i) (x.2 (σ i))
+  have hnonneg (x) : 0 ≤ term x :=
+    mul_nonneg (prod_nonneg fun i _ => hw _) (prod_nonneg fun i _ => hw _)
+  have hmask (σ) (x) : H x σ = term x * (if event σ x then 1 else 0) := by
+    by_cases h : event σ x
+    · rw [ite_eq_left h, mul_one]
       unfold H
       calc
         _ = ∏ i, w (x.1 i) * w (x.2 (σ i)) :=
-          prod_congr rfl fun i _ => ite_eq_left (hσ i)
-        _ = _ := by
-          rw [prod_mul_distrib, Equiv.prod_comp σ (fun i => w (x.2 i))]
-    rw [← hsame]
-    exact single_le_sum (fun π _ => hH x π) (mem_univ σ)
+          prod_congr rfl fun i _ => ite_eq_left (h i)
+        _ = _ := by rw [prod_mul_distrib, Equiv.prod_comp σ (fun i => w (x.2 i))]
+    · rw [ite_eq_right h, mul_zero]
+      obtain ⟨i, hi⟩ := not_forall.mp h
+      apply prod_eq_zero (mem_univ i)
+      exact ite_eq_right hi
+  have hcovered : S ⊆ univ.filter (fun x => ∃ σ, event σ x) := by
+    intro x hx
+    exact mem_filter.mpr ⟨mem_univ x, hS x hx⟩
   have hcol (σ : Equiv.Perm (Fin d)) :
       (∑ x, H x σ) = (∑ e, k e) ^ d := by
     rw [show (∑ x, H x σ) = ∑ z : Fin d → J × J, ∏ i, k (z i) from
@@ -61,10 +64,14 @@ private theorem matched_words_mass_le {J : Type*} [Fintype J] {d : ℕ}
     simpa using (Finset.sum_pow' (univ : Finset (J × J)) k d).symm
   change _ ≤ (d.factorial : ℝ) * (∑ e, k e) ^ d
   calc
-    _ ≤ ∑ x ∈ S, ∑ σ, H x σ := sum_le_sum hterm
-    _ ≤ ∑ x, ∑ σ, H x σ :=
-      sum_le_sum_of_subset_of_nonneg (subset_univ S) fun x _ _ => sum_nonneg fun σ _ => hH x σ
-    _ = ∑ σ, ∑ x, H x σ := sum_comm
+    _ ≤ ∑ x ∈ univ.filter (fun x => ∃ σ, event σ x), term x :=
+      sum_le_sum_of_subset_of_nonneg hcovered fun x _ _ => hnonneg x
+    _ = ∑ x, term x * (if ∃ σ, event σ x then 1 else 0) := by
+      rw [sum_filter]
+      simp only [mul_ite, mul_one, mul_zero]
+    _ ≤ ∑ σ, ∑ x, term x * (if event σ x then 1 else 0) :=
+      LongGapsBetweenPrimes.weighted_union_bound term event hnonneg
+    _ = ∑ σ, ∑ x, H x σ := by simp only [hmask]
     _ = _ := by simp [hcol, Fintype.card_perm, nsmul_eq_mul]
 
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (monomialWeight)
