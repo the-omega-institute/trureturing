@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#33283; Proved)
 escape_witness: polynomial_relation computes the order-twelve vector relation at shift two
-initialExhausted: proof_shape=content; consumers=w_leading, initial, initial.eq_1, initial_counts, initial_exhausted_count, initial_from_starts
-initial: proof_shape=content; consumers=count_transfer, forward_table, initial.eq_1, initial_counts, polynomial_relation, result, w, w.eq_1, w_copied, w_leading, w_new, w_representative, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.arena, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.audit, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_1, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.rejected_law
+initialExhausted: proof_shape=bind-only; consumers=w_leading, initial, initial.eq_1, initial_counts, initial_exhausted_count, initial_from_starts
+initial: proof_shape=bind-only; consumers=count_transfer, forward_table, initial.eq_1, initial_counts, polynomial_relation, result, w, w.eq_1, w_copied, w_leading, w_new, w_representative, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.arena, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.audit, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_1, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.rejected_law
 terminal: proof_shape=bind-only; consumers=result, count_transfer, terminal_eq
 next_valid: proof_shape=bind-only; consumers=count_transfer
 initial_valid: proof_shape=bind-only; consumers=count_transfer
