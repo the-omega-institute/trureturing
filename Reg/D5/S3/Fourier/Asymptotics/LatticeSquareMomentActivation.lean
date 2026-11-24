@@ -89,15 +89,15 @@ namespace Global
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ m : ℝ, 0 ≤ m →
+  Law R := ∀ m : ℝ,
     let lowerBound := fun n : ℕ => R.readout () () n
-    ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
-      (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ∧
+    0 ≤ m ↔ ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
+      (lowerBound n ≤ m ∧ m < (n : ℝ) * (n + 2) / 5) ∧
       Activation m n t Z w
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  obtain ⟨n, t, Z, w, _, h, _⟩ := law 0 le_rfl
+  obtain ⟨n, t, Z, w, _, h, _⟩ := (law 0).mp le_rfl
   have hbad : (1 : ℝ) ≤ 0 := h.1
   norm_num at hbad
 
@@ -132,7 +132,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "value"]
+      path := #["body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

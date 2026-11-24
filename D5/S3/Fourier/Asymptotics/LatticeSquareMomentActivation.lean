@@ -6,6 +6,7 @@
    utility: none
    digest: Exact support thresholds for the integer-lattice squared-mass minimizer. -/
 
+import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Int.Interval
 import Mathlib.NumberTheory.Bernoulli
@@ -36,22 +37,8 @@ private def latticeInterval (n : ℕ) : Finset ℤ :=
 private theorem sum_latticeInterval_even (n : ℕ) (f : ℤ → ℝ)
     (hzero : f 0 = 0) (heven : ∀ k, f (-k) = f k) :
     (∑ k ∈ latticeInterval n, f k) = 2 * ∑ j ∈ range (n + 1), f (j : ℤ) := by
-  induction n with
-  | zero => simp [latticeInterval, hzero]
-  | succ n ih =>
-    have hsplit : latticeInterval (n + 1) =
-        insert (-(n + 1 : ℤ)) (insert (n + 1 : ℤ) (latticeInterval n)) := by
-      ext k
-      simp only [latticeInterval, Nat.cast_add, Nat.cast_one, mem_Icc, mem_insert]
-      omega
-    have hpos : (n + 1 : ℤ) ∉ latticeInterval n := by
-      simp [latticeInterval]
-    have hneg : (-(n + 1 : ℤ)) ∉ insert (n + 1 : ℤ) (latticeInterval n) := by
-      simp only [latticeInterval, mem_insert, mem_Icc]
-      omega
-    rw [hsplit, sum_insert hneg, sum_insert hpos, heven, ih, sum_range_succ _ (n + 1)]
-    push_cast
-    ring
+  unfold latticeInterval
+  rw [Finset.sum_Icc_of_even_eq_range heven, hzero, sub_zero, two_nsmul, two_mul]
 
 private theorem card_latticeInterval (n : ℕ) :
     ((latticeInterval n).card : ℝ) = 2 * (n : ℝ) + 1 := by
@@ -229,11 +216,13 @@ private theorem compare_weight {m t Z : ℝ} (hZ : 0 < Z)
     (hvmass : HasSum (weight t Z) 1)
     (hvmoment : HasSum (fun k : ℤ => (k : ℝ) ^ 2 * weight t Z k) m)
     (w : ℤ → ℝ) (q : ℝ) (hw : ∀ k, 0 ≤ w k) (hwmass : HasSum w 1)
-    (hwmoment : HasSum (fun k : ℤ => (k : ℝ) ^ 2 * w k) q) (hq : q ≤ m) :
+    (hwmoment : HasSum (fun k : ℤ => (k : ℝ) ^ 2 * w k) q) :
     Summable (fun k => w k ^ 2) ∧
-    ((∑' k, (w k - weight t Z k) ^ 2) + 2 * ((m - q) / Z) ≤
-      (∑' k, w k ^ 2) - ∑' k, (weight t Z k) ^ 2) ∧
-    (w ≠ weight t Z → (∑' k, (weight t Z k) ^ 2) < ∑' k, w k ^ 2) := by
+    Summable (fun k : ℤ => (max 0 ((k : ℝ) ^ 2 - t) / Z) * w k) ∧
+    ((∑' k, w k ^ 2) - (∑' k, (weight t Z k) ^ 2) =
+      (∑' k, (w k - weight t Z k) ^ 2) + 2 * ((m - q) / Z) +
+        2 * (∑' k : ℤ, (max 0 ((k : ℝ) ^ 2 - t) / Z) * w k)) ∧
+    (q ≤ m → w ≠ weight t Z → (∑' k, (weight t Z k) ^ 2) < ∑' k, w k ^ 2) := by
   let v := weight t Z
   let a (k : ℤ) := (t - (k : ℝ) ^ 2) / Z
   have hv := weight_nonneg (t := t) hZ
@@ -254,27 +243,38 @@ private theorem compare_weight {m t Z : ℝ} (hZ : 0 < Z)
       ring
     · rw [div_eq_mul_inv]
       ring
-  have hpoint (k : ℤ) :
-      (w k - v k) ^ 2 + 2 * (a k * (w k - v k)) ≤ w k ^ 2 - v k ^ 2 := by
+  let gap : ℝ := (∑' k, w k ^ 2) - ∑' k, v k ^ 2
+  let distance : ℝ := ∑' k, (w k - v k) ^ 2
+  let tail (k : ℤ) := (max 0 ((k : ℝ) ^ 2 - t) / Z) * w k
+  have htail : HasSum tail ((gap - distance) / 2 - (m - q) / Z) := by
+    convert (((hwsq.hasSum.sub hvsq.hasSum).sub hdist.hasSum).div_const 2).sub hdot using 1
+    ext k
+    change tail k = ((w k ^ 2 - v k ^ 2) - (w k - v k) ^ 2) / 2 - a k * (w k - v k)
     by_cases hk : 0 ≤ t - (k : ℝ) ^ 2
     · have he : v k = a k := by simp [v, a, weight, max_eq_right hk]
-      rw [he]
-      apply le_of_eq
+      have hneg : (k : ℝ) ^ 2 - t ≤ 0 := by linarith
+      simp only [tail, max_eq_left hneg, zero_div, zero_mul, he]
       ring
     · have hk' := le_of_not_ge hk
       have he : v k = 0 := by simp [v, weight, max_eq_left hk']
-      have ha : a k ≤ 0 := div_nonpos_of_nonpos_of_nonneg hk' hZ.le
-      rw [he]
-      nlinarith [mul_nonpos_of_nonpos_of_nonneg ha (hw k)]
-  have hgap := hasSum_le hpoint (hdist.hasSum.add (hdot.mul_left 2))
-    (hwsq.hasSum.sub hvsq.hasSum)
-  refine ⟨hwsq, hgap, ?_⟩
-  intro hne
+      have hpos : 0 ≤ (k : ℝ) ^ 2 - t := by linarith
+      simp only [tail, a, max_eq_right hpos, he, zero_pow (by decide : 2 ≠ 0), sub_zero]
+      ring
+  have hgap : gap = distance + 2 * ((m - q) / Z) + 2 * (∑' k, tail k) := by
+    rw [htail.tsum_eq]
+    ring
+  refine ⟨hwsq, htail.summable, hgap, ?_⟩
+  intro hq hne
   obtain ⟨k, hk⟩ : ∃ k, w k ≠ v k := Function.ne_iff.mp hne
   have hpos : 0 < ∑' k, (w k - v k) ^ 2 :=
     hdist.tsum_pos (fun j => sq_nonneg _) k (sq_pos_of_ne_zero (sub_ne_zero.mpr hk))
   have hmoment : 0 ≤ (m - q) / Z := div_nonneg (sub_nonneg.mpr hq) hZ.le
-  linarith
+  have htail_nonneg : 0 ≤ ∑' k, tail k := tsum_nonneg (fun k =>
+    mul_nonneg (div_nonneg (le_max_left ..) hZ.le) (hw k))
+  apply sub_pos.mp
+  change 0 < gap
+  rw [hgap]
+  exact add_pos_of_pos_of_nonneg (add_pos_of_pos_of_nonneg hpos (by positivity)) (by positivity)
 
 private theorem moment_thresholds (n : ℕ) (hn : 0 < n) {t m : ℝ}
     (ht : (n : ℝ) ^ 2 ≤ t) (ht' : t ≤ ((n : ℝ) + 1) ^ 2)
@@ -378,10 +378,13 @@ structure Activation (m : ℝ) (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ) : Prop wh
   finite_support : (Function.support w).Finite
   at_zero : m = 0 → w = Pi.single 0 1
   comparison : ∀ (v : ℤ → ℝ) (q : ℝ), (∀ k, 0 ≤ v k) → HasSum v 1 →
-    HasSum (fun k : ℤ => (k : ℝ) ^ 2 * v k) q → q ≤ m →
+    HasSum (fun k : ℤ => (k : ℝ) ^ 2 * v k) q →
     Summable (fun k => v k ^ 2) ∧
-    ((∑' k, (v k - w k) ^ 2) + 2 * ((m - q) / Z) ≤ (∑' k, v k ^ 2) - ∑' k, w k ^ 2) ∧
-    (v ≠ w → (∑' k, w k ^ 2) < ∑' k, v k ^ 2)
+    Summable (fun k : ℤ => (max 0 ((k : ℝ) ^ 2 - t) / Z) * v k) ∧
+    ((∑' k, v k ^ 2) - (∑' k, w k ^ 2) =
+      (∑' k, (v k - w k) ^ 2) + 2 * ((m - q) / Z) +
+        2 * (∑' k : ℤ, (max 0 ((k : ℝ) ^ 2 - t) / Z) * v k)) ∧
+    (q ≤ m → v ≠ w → (∑' k, w k ^ 2) < ∑' k, v k ^ 2)
 
 /-- For every positive index, the attainable budgets on its radius interval are exactly
 the closed interval between the two activation thresholds. -/
@@ -417,11 +420,17 @@ theorem exists_lattice_square_moment_minimizer_on_interval (n : ℕ) (hn : 0 < n
 
 /-- Every nonnegative second-moment budget on the integer lattice has a strictly unique
 squared-mass minimizer with the exact support and radius described by `Activation`. -/
-theorem exists_lattice_square_moment_minimizer (m : ℝ) (hm : 0 ≤ m) :
+theorem exists_lattice_square_moment_minimizer (m : ℝ) :
     let lowerBound := fun n : ℕ => ((n : ℝ) ^ 2 - 1) / 5
-    ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
-      (lowerBound n ≤ m ∧ m ≤ (n : ℝ) * (n + 2) / 5) ∧
+    0 ≤ m ↔ ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
+      (lowerBound n ≤ m ∧ m < (n : ℝ) * (n + 2) / 5) ∧
       Activation m n t Z w := by
+  refine ⟨?_, ?_⟩
+  swap
+  · rintro ⟨n, t, Z, w, _, _, h⟩
+    rw [← h.second_moment.tsum_eq]
+    exact tsum_nonneg (fun k => mul_nonneg (sq_nonneg _) (h.nonneg k))
+  intro hm
   let r := Real.sqrt (5 * m + 1)
   let n := ⌊r⌋₊
   have hr : 0 ≤ r := Real.sqrt_nonneg _
@@ -435,11 +444,11 @@ theorem exists_lattice_square_moment_minimizer (m : ℝ) (hm : 0 ≤ m) :
     have hsq := (sq_lt_sq₀ hr zero_le_one).mpr hlt
     linarith
   have hlo := (sq_le_sq₀ (Nat.cast_nonneg n) hr).mpr hle
-  have hhi := (sq_le_sq₀ hr (by positivity)).mpr hlt.le
+  have hhi := (sq_lt_sq₀ hr (by positivity)).mpr hlt
   have hmlo : ((n : ℝ) ^ 2 - 1) / 5 ≤ m := by linarith
-  have hmhi : m ≤ (n : ℝ) * (n + 2) / 5 := by nlinarith only [hhi, hrsq]
+  have hmhi : m < (n : ℝ) * (n + 2) / 5 := by nlinarith only [hhi, hrsq]
   obtain ⟨t, Z, w, h⟩ := (exists_lattice_square_moment_minimizer_on_interval n hn m).mp
-    ⟨hmlo, hmhi⟩
+    ⟨hmlo, hmhi.le⟩
   exact ⟨n, t, Z, w, hn, ⟨hmlo, hmhi⟩, h⟩
 
 end D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation

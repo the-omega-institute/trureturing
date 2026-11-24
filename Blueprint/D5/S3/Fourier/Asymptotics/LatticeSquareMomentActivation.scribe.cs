@@ -26,14 +26,15 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
                         + "endpoint for t. At t=n² the support is [−(n−1),n−1] in the integers. "
                         + "For n²<t≤(n+1)² the support is [−n,n]. At m=0 the law is the point mass at zero.")),
                     Paragraph(Text(
-                        "For every nonnegative competitor v with mass one and convergent second moment s≤m, "
-                        + "its squares are summable. Its squared mass minus that of w is at least "
-                        + "Σ_j(v(j)−w(j))² + 2(m−s)/Z, and it is strictly greater than that of w whenever v differs from w.")),
+                        "For every nonnegative competitor v with mass one and convergent second moment s, "
+                        + "its squared mass minus that of w equals Σ_j(v(j)−w(j))² + 2(m−s)/Z "
+                        + "plus the summable nonnegative correction 2 Σ_j max(0,j²−t)v(j)/Z. "
+                        + "If s≤m and v differs from w, its squared mass is strictly greater than that of w.")),
                     Paragraph(Text(
                         "Finite sums of squares and fourth powers give the normalized second moment at both endpoints. "
                         + "The denominator stays positive and the moment varies continuously, so every intermediate budget "
-                        + "is attained. To prove the comparison, expand the squared masses and bound the cross term "
-                        + "using the affine function (t−j²)/Z below the positive-part law, with equality on its support."))),
+                        + "is attained. To prove the comparison, expand the squared masses and split the cross term "
+                        + "into the affine function (t−j²)/Z and its correction outside the support."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("lattice-moment-minimizer-for-all-budgets"),
@@ -43,16 +44,17 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every real m≥0 choose n as the floor of sqrt(5m+1). "
-                    + "This integer is positive, and the floor inequalities place m between the two thresholds. "
+                    + "The floor gives a positive index whose lower threshold is at most m and whose upper "
+                    + "threshold is strictly greater. Conversely a nonnegative law has nonnegative second moment. "
                     + "At a shared endpoint the interval descriptions select the same law by strict uniqueness."))),
                 DescribeRole.Theorem))));
 
-    private static Formula RadiusBudget(Formula n, Formula m)
+    private static Formula RadiusBudget(Formula n, Formula m, Formula upperRelation)
     {
         var lower = new Formula.Fraction(
             Subtract(new Formula.Power(n, F.D(2)), F.D(1)), F.D(5));
         var upper = new Formula.Fraction(Multiply(n, Add(n, F.D(2))), F.D(5));
-        return F.Seq(lower, F.Sp, F.Le, F.Sp, m, F.Sp, F.Le, F.Sp, upper);
+        return F.Seq(lower, F.Sp, F.Le, F.Sp, m, F.Sp, upperRelation, F.Sp, upper);
     }
 
     private static Formula Interval()
@@ -64,7 +66,7 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
         var w = F.Id("w");
         var exists = F.Seq(F.Exists, F.Sp, t, F.Comma, z, F.Comma, w, F.Quad,
             Call("Activation", m, n, t, z, w));
-        var equivalence = new Formula.Logic(RadiusBudget(n, m), FormulaLogicOperator.Iff, exists);
+        var equivalence = new Formula.Logic(RadiusBudget(n, m, F.Le), FormulaLogicOperator.Iff, exists);
         return F.Disp(F.Seq(F.Forall, F.Sp, n, F.Comma, m, F.Quad,
             F.D(0), F.Sp, F.Lt, F.Sp, n, F.Quad, F.Longrightarrow, F.Quad, equivalence));
     }
@@ -76,10 +78,11 @@ internal sealed class LatticeSquareMomentActivationDocument : IScribeDocumentDef
         var t = F.Id("t");
         var z = F.Id("Z");
         var w = F.Id("w");
-        return F.Disp(F.Seq(F.Forall, F.Sp, m, F.Quad, F.D(0), F.Sp, F.Le, F.Sp, m,
-            F.Quad, F.Longrightarrow, F.Quad,
-            F.Exists, F.Sp, n, F.Comma, t, F.Comma, z, F.Comma, w, F.Quad,
-            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Comma, F.Sp, RadiusBudget(n, m), F.Comma, F.Sp,
-            Call("Activation", m, n, t, z, w)));
+        var exists = F.Seq(F.Exists, F.Sp, n, F.Comma, t, F.Comma, z, F.Comma, w, F.Quad,
+            F.D(0), F.Sp, F.Lt, F.Sp, n, F.Comma, F.Sp, RadiusBudget(n, m, F.Lt), F.Comma, F.Sp,
+            Call("Activation", m, n, t, z, w));
+        var nonnegative = F.Seq(F.D(0), F.Sp, F.Le, F.Sp, m);
+        return F.Disp(F.Seq(F.Forall, F.Sp, m, F.Quad,
+            new Formula.Logic(nonnegative, FormulaLogicOperator.Iff, exists)));
     }
 }
