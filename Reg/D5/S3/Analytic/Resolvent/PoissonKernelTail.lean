@@ -422,28 +422,28 @@ end Continuity
 namespace WindowMass
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ t => Real.arctan t) (fun e => nomatch e)
+  realize signature (fun _ _ x => fun y : ℝ => x < y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => fun _ : ℝ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := Real.pi - 1 / 4 < 2 * R.readout () () 8
+  Law R := R.readout () () (Real.pi - 1 / 4) (2 * Real.arctan 8)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  change Real.pi - 1 / 4 < 2 * (-1) at h
-  linarith [Real.pi_gt_three]
+  exact h
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  simp only [actual, realize, Real.arctan_zero, Real.arctan_one]
-  exact ne_of_lt (div_pos Real.pi_pos (by norm_num))
+  intro h
+  have he := congrFun h (1 : ℝ)
+  norm_num [actual, realize] at he
 
 def family : Registration arena (type_of% windowMass_gt) where
   actual := actual
@@ -467,7 +467,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ t => Real.arctan t) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => fun y : ℝ => x < y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -477,10 +477,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg"]
+      path := #["fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

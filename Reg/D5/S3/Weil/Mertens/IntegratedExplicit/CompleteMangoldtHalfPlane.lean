@@ -11,6 +11,9 @@ open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtHalfPlane
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
+local instance sourceMeasurableSpace : MeasurableSpace ℝ :=
+  Real.measureSpace.toMeasurableSpace
+
 namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtHalfPlane
 
 abbrev signature : Signature :=
