@@ -102,6 +102,90 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end CrossRelabel
 
+namespace HorizontalRelabel
+
+abbrev signature : Signature where
+  Params := Equiv.Perm (Fin 3)
+  State _ := Row
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readout : Realization signature :=
+  realize signature (fun b w r => match b with
+    | false => bondDefects horizontal (w ∘ r) (w ∘ r)
+    | true => bondDefects horizontal r r) (fun e => nomatch e)
+
+def rejected (i : Bool) : Realization signature :=
+  realize signature (fun j w r =>
+    if j = i then readout.readout j w r + 1 else readout.readout j w r) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (e : Equiv.Perm (Fin 3)) (r : Row),
+    R.readout false e r = R.readout true e r
+
+private theorem rejected_law (i : Bool) : ¬ arena.Law (rejected i) := by
+  intro h
+  have hh := h (Equiv.refl _) (fun _ => 0)
+  cases i <;> exact (by decide +kernel : ¬ _) hh
+
+def family : Registration arena (type_of% @horizontal_relabel) where
+  actual := readout
+  bridge := Iff.rfl
+  variation := ⟨horizontal_relabel, rejected false, rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected i, ?_, rfl, rejected_law i⟩
+      intro j hj
+      funext w r
+      simp [rejected, realize, hj]
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨Equiv.refl _, fun _ => 0, fun j => ⟨j.val % 3, Nat.mod_lt _ (by decide)⟩, ?_⟩
+    cases i <;> decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@horizontal_relabel) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip.HorizontalRelabel.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun b w r => match b with
+    | false => bondDefects horizontal (w ∘ r) (w ∘ r)
+    | true => bondDefects horizontal r r) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
+    definition := none
+    coordinates := #[0]
+    readouts := #[
+      { path := #["body", "body", "arg"], stateBinder := 1,
+        functionOperand := false, stateOperand := none, booleanPredicate := false },
+      { path := #["body", "body", "fn", "arg"], stateBinder := 1,
+        functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end HorizontalRelabel
+
 namespace Recurrence
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
