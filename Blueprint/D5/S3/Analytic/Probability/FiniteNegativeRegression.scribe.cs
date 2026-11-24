@@ -32,9 +32,15 @@ internal sealed class FiniteNegativeRegressionDocument : IScribeDocumentDefiniti
                 + "are a chain, a binary factor times a chain, and three binary factors. Conditional means under the actual "
                 + "marginal retain all subblock comparisons by the finite tower identity. The binary-by-chain proof compares "
                 + "the upper row tail and the corresponding marginal tail. The cube case uses the upper-event sign on "
-                + "the three-bit cube. Decomposing increasing real tests into upper-level indicators gives the covariance sign."))));
+                + "the three-bit cube. Decomposing increasing real tests into upper-level indicators gives the covariance sign. "
+                + "The strictly positive four-ternary law attains 81, giving the exact minimum.",
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("su-hu-2026-minimum-rectangular-size"),
+                    ResolutionKind.Proved,
+                    [DeclarationHandle.Create("D5/S3/Analytic/Probability/SuHuTable41.table_attainment")])))));
 
-    private static DocumentBlock Entry(string name, string heading, DescribeRole role, string narrative) =>
+    private static DocumentBlock Entry(string name, string heading, DescribeRole role, string narrative,
+        OpenProblemResolutionClaim? openProblemResolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("finite-negative-regression-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading),
             role == DescribeRole.Definition ? StatementSource.WithoutFormula() :
@@ -42,7 +48,8 @@ internal sealed class FiniteNegativeRegressionDocument : IScribeDocumentDefiniti
                     ? Seq(Forall, Sp, F.Id("p"), Comma, Sp, Apply("UpperNRD"), Sp, Rightarrow, Sp, Apply("FullNRD"))
                     : Seq(Forall, Sp, F.Id("p"), Comma, Sp, Apply("FullNRD"), Sp, Land, Sp,
                         Apply("marginalProduct"), Sp, Lt, Sp, D(8, 1), Sp, Rightarrow, Sp, Apply("NA")))),
-            AssessedProvenance.FromRepo(SuHu), Blocks(Paragraph(Text(narrative))), role);
+            AssessedProvenance.FromRepo(SuHu), Blocks(Paragraph(Text(narrative))), role,
+            openProblemResolutionClaim: openProblemResolutionClaim);
     private static Formula Apply(string name) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, F.Id("p"), Close);
 }

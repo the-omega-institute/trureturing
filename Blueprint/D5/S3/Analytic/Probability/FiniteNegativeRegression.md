@@ -66,13 +66,19 @@ $$\forall p, \operatorname{FullNRD}(p) \land \operatorname{marginalProduct}(p) <
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/FiniteNegativeRegression.na_of_fullNRD_of_marginalProduct_lt_81` (`✓ std3`). ∎
 
+*Resolves.* `Problems/su-hu-2026-minimum-rectangular-size` (proved) by `D5/S3/Analytic/Probability/FiniteNegativeRegression.na_of_fullNRD_of_marginalProduct_lt_81` and `D5/S3/Analytic/Probability/SuHuTable41.table_attainment`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"su-hu-2026-minimum-rectangular-size","declaration_gid":"D5/S3/Analytic/Probability/FiniteNegativeRegression.na_of_fullNRD_of_marginalProduct_lt_81","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"su-hu-2026-minimum-rectangular-size","declaration_gid":"D5/S3/Analytic/Probability/SuHuTable41.table_attainment","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yuting Su and Taizhong Hu (2026). *Full negative regression dependence: counterexamples for tail dependence and negative association*. URL: <https://arxiv.org/abs/2609.23313v1>.
 
 *Commentary.*
 
-Restrict to the coordinate supports and omit singleton factors in each observed block. For disjoint blocks, the product of their sizes is below 81, so at least one has size at most eight. The nonconstant possibilities are a chain, a binary factor times a chain, and three binary factors. Conditional means under the actual marginal retain all subblock comparisons by the finite tower identity. The binary-by-chain proof compares the upper row tail and the corresponding marginal tail. The cube case uses the upper-event sign on the three-bit cube. Decomposing increasing real tests into upper-level indicators gives the covariance sign.
+Restrict to the coordinate supports and omit singleton factors in each observed block. For disjoint blocks, the product of their sizes is below 81, so at least one has size at most eight. The nonconstant possibilities are a chain, a binary factor times a chain, and three binary factors. Conditional means under the actual marginal retain all subblock comparisons by the finite tower identity. The binary-by-chain proof compares the upper row tail and the corresponding marginal tail. The cube case uses the upper-event sign on the three-bit cube. Decomposing increasing real tests into upper-level indicators gives the covariance sign. The strictly positive four-ternary law attains 81, giving the exact minimum.
 
 ## References
 
