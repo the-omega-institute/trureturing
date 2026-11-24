@@ -407,8 +407,9 @@ private theorem residual_kernel {a b e d : ℕ}
         simpa [hs] using hx
       obtain ⟨y, hy, hR⟩ := kernel_nonzero R hR
       refine ⟨y, hy, ?_⟩
-      simp only [F, Matrix.add_mulVec, tensor_apply, hR, hB, Matrix.zero_vecMulVec,
-        Matrix.vecMulVec_zero, Matrix.vec_zero, add_zero]
+      change (kronecker A R + kronecker B S) *ᵥ product x y = 0
+      rw [Matrix.add_mulVec, tensor_apply, tensor_apply, hR, hB, Matrix.zero_vecMulVec,
+        Matrix.vecMulVec_zero, Matrix.vec_zero, zero_add]
     · let z := -t / s
       have hA : A *ᵥ x = z • (B *ᵥ x) := by
         apply (smul_right_injective (Fin a → ℂ) hs)
@@ -467,7 +468,7 @@ private theorem projected_width_three {a b c d q : ℕ}
       Matrix.one_kronecker_one]
   have hsum : W * Wᴴ + V = 1 := by
     simp only [W, V, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
-      Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Matrix.mul_assoc]
+      Matrix.mul_sub, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_assoc]
     rw [← hCS]
     abel
   have hdefect := row_defect_rank F hF
@@ -558,8 +559,8 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
     have hLL : Lᴴ * L = kronecker (Xᴴ * X) (1 : Matrix (Fin e) (Fin e) ℂ) := by
       simp only [L, Matrix.kronecker, Matrix.conjTranspose_kronecker,
         ← Matrix.mul_kronecker_mul, hDD]
-    rw [Matrix.conjTranspose_add, Matrix.add_mul, Matrix.mul_add, Matrix.mul_add,
-      hLH, hHL, add_zero, zero_add, hLL] at h
+    rw [Matrix.conjTranspose_add, Matrix.add_mul, Matrix.mul_add Lᴴ L H,
+      Matrix.mul_add Hᴴ L H, hLH, hHL, add_zero, zero_add, hLL] at h
     change Hᴴ * H = kronecker (1 - Xᴴ * X) (1 : Matrix (Fin e) (Fin e) ℂ)
     rw [sub_kron, show kronecker (1 : Matrix (Fin b) (Fin b) ℂ)
       (1 : Matrix (Fin e) (Fin e) ℂ) = 1 from Matrix.one_kronecker_one]
