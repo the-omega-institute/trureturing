@@ -17,11 +17,11 @@ set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Topology
 open Filter
-open OriginalFourMCurrentRegression (slit_matrix_symm)
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMAssignedOccupation
 
 open LatticeGeneratingFieldLocality LatticeHalfFock
+open OriginalFourMCurrentRegression (slit_matrix_symm)
 open LatticeDiscriminantTheta (gramReal)
 open LatticeTwistedGroundRealization.SignQuotient (ModTwoCharge reduceCharge)
 open FourPoint.OriginalFourMActualChart
@@ -204,6 +204,7 @@ private def compactLabel {D : LatticeData} {F : Finset (Index D)} :
     CompactExternal D F ⊕ CompactExternal D F → OriginalGaussianExternalBlocks.External D :=
   Sum.elim (compactExternal D F) (compactExternal D F)
 
+/-- Recover the puncture from the two tags of the D chart. -/
 private def dPuncture {D : LatticeData} {F : Finset (Index D)} :
     CompactExternal D F ⊕ CompactExternal D F → Puncture
   | .inl (.inl _) => .P
@@ -346,14 +347,9 @@ theorem compactCovariance_d_symm (D : LatticeData) {x : ℝ} (hx : 0 < x) (hx₁
       compactCovariance D .D x F i j = entry i j (t : ℂ) := by
     have hparam : parameter .D (x : ℂ) = (t : ℂ) := by
       simp [t, parameter, Complex.ofReal_inv]
-    cases i with
-    | inl i => cases i <;> cases j with
-      | inl j => cases j <;> exact congrArg _ hparam
-      | inr j => cases j <;> exact congrArg _ hparam
-    | inr i => cases i <;> cases j with
-      | inl j => cases j <;> exact congrArg _ hparam
-      | inr j => cases j <;> exact congrArg _ hparam
-  rw [hc, hc]
+    rw [← hparam]
+    rcases i with (i | i) | (i | i) <;> rcases j with (j | j) | (j | j) <;> rfl
+  simp only [hc]
   exact tendsto_nhds_unique_of_eventuallyEq
     ((ha a b).continuousAt.tendsto.mono_left nhdsWithin_le_nhds)
     ((ha b a).continuousAt.tendsto.mono_left nhdsWithin_le_nhds) hEq
