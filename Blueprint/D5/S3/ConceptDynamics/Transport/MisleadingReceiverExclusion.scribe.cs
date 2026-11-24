@@ -25,8 +25,8 @@ internal sealed class MisleadingReceiverExclusionDocument : IScribeDocumentDefin
                             + "receiver's decoder. A receiver is misleading at state a exactly "
                             + "when delta(M_S(a)) differs from T(a).")),
                     Paragraph(Text(
-                        "If the target factors as T = d composed with M_S and delta agrees with "
-                            + "d on the actual message image, then every actual message decodes "
+                        "If the target at each state equals d applied to that state's message "
+                            + "and delta agrees with d on the actual message image, each message decodes "
                             + "to its target. Thus no state is misleading."))),
                 DescribeRole.Theorem))));
 
@@ -60,7 +60,8 @@ internal sealed class MisleadingReceiverExclusionDocument : IScribeDocumentDefin
         Formula stateValue = F.Id("a");
         Formula messageValue = F.Id("m");
         Formula factorization = Seq(
-            F.Id("T"), Sp, Eq, Sp, correct, Sp, Circ, Sp, messageOf);
+            Forall, Sp, stateValue, Comma, Sp,
+            At(F.Id("T"), stateValue), Sp, Eq, Sp, At(correct, At(messageOf, stateValue)));
         Formula agreement = Seq(
             Forall, Sp, messageValue, Comma, Sp,
             messageValue, Sp, InMacro, Sp, Call("range", messageOf), Sp,
