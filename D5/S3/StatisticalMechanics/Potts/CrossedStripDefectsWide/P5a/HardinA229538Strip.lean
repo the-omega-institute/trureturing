@@ -176,9 +176,9 @@ private theorem cut_card (k : ℕ) :
     simp only [Finset.diag_card, Finset.card_univ, Fintype.card_fin, Finset.card_map, Nat.add_sub_cancel]
     omega
 
-theorem cut_total_exclusion (D : ℕ) :
-    (∀ m : ℕ, D ≠ m * edges.card) ↔ ¬ 13 ∣ D := by
-  change (∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin 5)).diag ∪ betw 5).card) ↔ _
+theorem cut_total_exclusion (k D : ℕ) :
+    (∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card) ↔
+      ¬ (k + 2 * (k - 1)) ∣ D := by
   rw [cut_card]
   simp only [dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
 
@@ -1001,7 +1001,7 @@ theorem result (n : ℕ) :
       dotProduct (Sum.elim (1 : Column → ℤ) 0) ((transfer ^ m).mulVec terminal) =
         6 * (a (m + 1) : ℤ) := by
     rw [← transfer_count]
-    have hD := (cut_total_exclusion 1).mpr (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
+    have hD := (cut_total_exclusion 5 1).mpr (Nat.not_dvd_of_pos_of_lt (by decide) (by decide)) m
     have hscale : literalCount (q := 3) ∅ edges 1 (m + 1) = 6 * a (m + 1) := by
       simpa only [Finset.card_empty, Nat.zero_add, Nat.add_zero, Nat.pred_succ, Nat.succ_ne_zero,
         or_self, ite_false, ite_eq_right hD, a] using labelled_scale ∅ edges 1 (m + 1)
