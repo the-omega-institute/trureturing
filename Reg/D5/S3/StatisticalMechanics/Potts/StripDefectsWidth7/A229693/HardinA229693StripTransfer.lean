@@ -26,7 +26,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ i j => T i j + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ (p : Boundary) (d : ℕ), ∀ s : Fin 168, (Valid p d ∨ uniformRegion d s) →
+  Law r := ∀ (p : Boundary) (d : ℕ), ∀ s : Fin 168, Valid p d →
     (∑ q : Row, if cross p q + bondDefects horizontal q q ≤ d ∧
       cl (boundary q) (d - (cross p q + bondDefects horizontal q q)) = s
       then (1 : ℤ) else 0) = r.readout () () (cl p d) s
@@ -37,8 +37,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hp : Valid p 2 := by
     unfold Valid
     decide +kernel
-  have hh := h p 2 0 (Or.inl hp)
-  have ha := transition_counts p 2 0 (Or.inl hp)
+  have hh := h p 2 0 hp
+  have ha := transition_counts p 2 0 hp
   change _ = T (cl p 2) 0 + 1 at hh
   linarith
 

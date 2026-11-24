@@ -250,7 +250,7 @@ theorem count_transfer (n : ℕ) :
   exact D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer.lumped_count
     horizontal antidiagonal boundary cross HardinA229635State.Valid cl T initial terminal 2
     HardinA229585Strip.edge (fun p d _ => terminal_eq p d) next_valid
-    (fun p d hp s => transition_counts p d s (Or.inl hp)) initial_valid initial_counts n
+    (fun p d hp s => transition_counts p d s hp) initial_valid initial_counts n
 
 /-- Canonical arrays with exactly two monochromatic bonds. -/
 def a (n : ℕ) : ℕ :=
