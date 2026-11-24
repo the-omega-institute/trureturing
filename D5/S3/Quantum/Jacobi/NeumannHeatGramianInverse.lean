@@ -22,12 +22,6 @@ namespace D5.S3.Quantum.Jacobi.NeumannHeatGramianInverse
 open Finset PowerSeries NeumannHeatGramianJet EndpointMomentTruncation
 noncomputable section
 
-private theorem coeff_product (F G : ℝ⟦X⟧) (r : ℕ) :
-    coeff r (F * G) = ∑ i ∈ range (r + 1), coeff i F * coeff (r - i) G := by
-  rw [coeff_mul]
-  exact Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk
-    (fun ij => coeff ij.1 F * coeff ij.2 G) r
-
 private theorem variance_cubic (H : ℝ⟦X⟧) :
     (∀ d < 3, coeff d (gramian H) = 0) ∧
     coeff 3 (gramian H) = coeff 1 H ^ 2 / 12 := by
@@ -35,7 +29,8 @@ private theorem variance_cubic (H : ℝ⟦X⟧) :
       (∑ i ∈ range (r + 1), coeff i H * coeff (r - i) H) / (r + 1 : ℝ) -
       ∑ i ∈ range (r + 1), (coeff i H / (i + 1 : ℝ)) *
         (coeff (r - i) H / (↑(r - i) + 1 : ℝ)) := by
-    simp [gramian, coeff_succ_X_mul, timeAverage, coeff_product]
+    rw [gramian, coeff_succ_X_mul]
+    simp [timeAverage, coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   constructor
   · intro d hd
     obtain rfl | rfl | rfl : d = 0 ∨ d = 1 ∨ d = 2 := by omega
