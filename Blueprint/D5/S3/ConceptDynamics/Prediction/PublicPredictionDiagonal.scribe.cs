@@ -107,7 +107,7 @@ internal sealed class PublicPredictionDiagonalDocument : IScribeDocumentDefiniti
 
     private static Formula BooleanNegationFormula()
     {
-        Formula unitType = F.Id("Unit");
+        Formula oneState = F.Id("OneState");
         Formula boolType = F.Id("Bool");
         Formula predictor = F.Id("predict");
         Formula state = F.Id("state");
@@ -115,9 +115,9 @@ internal sealed class PublicPredictionDiagonalDocument : IScribeDocumentDefiniti
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, Typed(predictor, Arrow(unitType, boolType)), Comma,
+            Forall, Sp, Typed(predictor, Arrow(oneState, boolType)), Comma,
             RowBreak, Grp(),
-            Neg, Sp, Forall, Sp, Typed(state, unitType), Comma, Sp,
+            Neg, Sp, Forall, Sp, Typed(state, oneState), Comma, Sp,
             Apply(predictor, state), Sp, Eq, Sp,
             Actual(predictor, booleanNegation, state), Dot,
             End, Grp(F.Id("gathered"))));

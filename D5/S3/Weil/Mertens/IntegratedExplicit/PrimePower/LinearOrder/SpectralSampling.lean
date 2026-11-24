@@ -158,43 +158,46 @@ private theorem binKernel_summable : Summable binKernel := by
   exact ⟨h.congr fun n => (hp n).symm, h.congr fun n => by
     simpa [binKernel, Int.cast_neg, abs_neg] using (hp n).symm⟩
 
-private theorem binKernel_row_le (B : Finset ℤ) (k : ℤ) :
-    ∑ l ∈ B, binKernel (k-l) ≤ ∑' d : ℤ, binKernel d := by
+private theorem binKernel_row_le (K : ℤ → ℝ) (hK : ∀ d, 0 ≤ K d)
+    (hsum : Summable K) (B : Finset ℤ) (k : ℤ) :
+    ∑ l ∈ B, K (k-l) ≤ ∑' d : ℤ, K d := by
   let e : ℤ ≃ ℤ := Equiv.subLeft k
-  have h : ∑ l ∈ B, binKernel (k-l) = ∑ d ∈ B.map e.toEmbedding, binKernel d := by
+  have h : ∑ l ∈ B, K (k-l) = ∑ d ∈ B.map e.toEmbedding, K d := by
     rw [Finset.sum_map]
     rfl
   rw [h]
-  exact binKernel_summable.sum_le_tsum _ (fun d _ => (Real.exp_pos _).le)
+  exact hsum.sum_le_tsum _ (fun d _ => hK d)
 
-private theorem binKernel_symm (k l : ℤ) : binKernel (k-l) = binKernel (l-k) := by
-  unfold binKernel
-  rw [show l-k = -(k-l) by omega, Int.cast_neg, abs_neg]
-
-private theorem binEnergy_le (B : Finset ℤ) (mass : ℤ → ℝ) :
-    ∑ k ∈ B, ∑ l ∈ B, mass k * mass l * binKernel (k-l) ≤
-      (∑' d : ℤ, binKernel d) * (∑ k ∈ B, mass k ^ 2) := by
-  have hrow : (∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * binKernel (k-l)) ≤
-      (∑' d : ℤ, binKernel d) * (∑ k ∈ B, mass k ^ 2) := by
+/-- An even nonnegative summable kernel controls bin energy by its full row sum. -/
+theorem binEnergy_le (K : ℤ → ℝ) (hK : ∀ d, 0 ≤ K d)
+    (heven : Function.Even K) (hsum : Summable K) (B : Finset ℤ) (mass : ℤ → ℝ) :
+    ∑ k ∈ B, ∑ l ∈ B, mass k * mass l * K (k-l) ≤
+      (∑' d : ℤ, K d) * (∑ k ∈ B, mass k ^ 2) := by
+  have hrow : (∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * K (k-l)) ≤
+      (∑' d : ℤ, K d) * (∑ k ∈ B, mass k ^ 2) := by
     rw [Finset.mul_sum]
     apply Finset.sum_le_sum
     intro k hk
-    rw [← Finset.mul_sum, mul_comm (∑' d : ℤ, binKernel d)]
-    exact mul_le_mul_of_nonneg_left (binKernel_row_le B k) (sq_nonneg _)
+    rw [← Finset.mul_sum, mul_comm (∑' d : ℤ, K d)]
+    exact mul_le_mul_of_nonneg_left (binKernel_row_le K hK hsum B k) (sq_nonneg _)
   calc
-    _ ≤ ∑ k ∈ B, ∑ l ∈ B, (mass k ^ 2 + mass l ^ 2) / 2 * binKernel (k-l) := by
+    _ ≤ ∑ k ∈ B, ∑ l ∈ B, (mass k ^ 2 + mass l ^ 2) / 2 * K (k-l) := by
       apply Finset.sum_le_sum
       intro k hk
       apply Finset.sum_le_sum
       intro l hl
-      apply mul_le_mul_of_nonneg_right _ (Real.exp_pos _).le
+      apply mul_le_mul_of_nonneg_right _ (hK _)
       nlinarith only [sq_nonneg (mass k - mass l)]
-    _ = ∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * binKernel (k-l) := by
+    _ = ∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * K (k-l) := by
       have hswap :
-          (∑ k ∈ B, ∑ l ∈ B, mass l ^ 2 * binKernel (k-l)) =
-            ∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * binKernel (k-l) := by
+          (∑ k ∈ B, ∑ l ∈ B, mass l ^ 2 * K (k-l)) =
+            ∑ k ∈ B, ∑ l ∈ B, mass k ^ 2 * K (k-l) := by
         rw [Finset.sum_comm]
-        simp_rw [binKernel_symm]
+        apply Finset.sum_congr rfl
+        intro k _
+        apply Finset.sum_congr rfl
+        intro l _
+        rw [show l - k = -(k - l) by omega, heven]
       simp only [div_mul_eq_mul_div, ← Finset.sum_div, add_mul, Finset.sum_add_distrib]
       rw [hswap]
       ring
@@ -215,37 +218,31 @@ theorem mem_frequencyBin (x : ℝ) :
 def binMass (S : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (k : ℤ) : ℝ :=
   ∑ i ∈ S with frequencyBin (γ i) = k, ‖a i‖
 
-private theorem regroup_binEnergy (S : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) :
-    (∑ i ∈ S, ∑ j ∈ S, ‖a i‖ * ‖a j‖ * binKernel (frequencyBin (γ i) - frequencyBin (γ j))) =
-      ∑ k ∈ S.image (frequencyBin ∘ γ), ∑ l ∈ S.image (frequencyBin ∘ γ),
-        binMass S γ a k * binMass S γ a l * binKernel (k-l) := by
-  classical
-  let g := frequencyBin ∘ γ
-  let B := S.image g
-  have hg : ∀ i ∈ S, g i ∈ B := fun i hi => Finset.mem_image_of_mem g hi
+/-- Group a finite quadratic sum by both fibers of the bin map. -/
+theorem regroup_binEnergy {I : Type*} (s : Finset I) (b : I → ℤ) (c : I → ℝ)
+    (K : ℤ → ℤ → ℝ) :
+    let mass := fun k => ∑ i ∈ s with b i = k, c i
+    (∑ i ∈ s, ∑ j ∈ s, c i * c j * K (b i) (b j)) =
+      ∑ k ∈ s.image b, ∑ l ∈ s.image b, mass k * mass l * K k l := by
+  intro mass
+  let bins := s.image b
+  have hb : ∀ i ∈ s, b i ∈ bins := fun i hi => mem_image_of_mem b hi
   calc
-    _ = ∑ k ∈ B, ∑ i ∈ S with g i = k, ∑ l ∈ B, ∑ j ∈ S with g j = l,
-        ‖a i‖ * ‖a j‖ * binKernel (g i - g j) := by
-      rw [Finset.sum_fiberwise_of_maps_to hg]
-      apply Finset.sum_congr rfl
-      intro i hi
-      exact (Finset.sum_fiberwise_of_maps_to hg _).symm
+    _ = ∑ k ∈ bins, ∑ i ∈ s with b i = k, ∑ l ∈ bins, ∑ j ∈ s with b j = l,
+        c i * c j * K (b i) (b j) := by
+      rw [sum_fiberwise_of_maps_to hb]
+      refine sum_congr rfl fun i hi => ?_
+      exact (sum_fiberwise_of_maps_to hb _).symm
     _ = _ := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro l hl
-      unfold binMass
-      change _ = (∑ i ∈ S with g i = k, ‖a i‖) *
-        (∑ j ∈ S with g j = l, ‖a j‖) * binKernel (k-l)
-      rw [Finset.sum_mul, Finset.sum_mul]
-      apply Finset.sum_congr rfl
-      intro i hi
-      rw [Finset.mul_sum, Finset.sum_mul]
-      apply Finset.sum_congr rfl
-      intro j hj
-      rw [(Finset.mem_filter.mp hi).2, (Finset.mem_filter.mp hj).2]
+      refine sum_congr rfl fun k hk => ?_
+      rw [sum_comm]
+      refine sum_congr rfl fun l hl => ?_
+      dsimp only [mass]
+      simp only [sum_mul]
+      refine sum_congr rfl fun i hi => ?_
+      rw [mul_sum, sum_mul]
+      refine sum_congr rfl fun j hj => ?_
+      rw [(mem_filter.mp hi).2, (mem_filter.mp hj).2]
 
 private theorem gaussian_bin_energy_le (S : Finset ℕ) (γ : ℕ → ℝ)
     (a : ℕ → ℂ) (c : ℝ) :
@@ -279,8 +276,15 @@ private theorem gaussian_bin_energy_le (S : Finset ℕ) (γ : ℕ → ℝ)
       rw [Int.cast_sub]
       exact separated_gauss_bound (mem_frequencyBin _) (mem_frequencyBin _)
     _ ≤ _ := by
-      rw [regroup_binEnergy, mul_assoc]
-      exact mul_le_mul_of_nonneg_left (binEnergy_le _ _) (norm_nonneg _)
+      have hregroup :
+          (∑ i ∈ S, ∑ j ∈ S, ‖a i‖ * ‖a j‖ * binKernel (frequencyBin (γ i) - frequencyBin (γ j))) =
+            ∑ k ∈ S.image (frequencyBin ∘ γ), ∑ l ∈ S.image (frequencyBin ∘ γ),
+              binMass S γ a k * binMass S γ a l * binKernel (k - l) :=
+        regroup_binEnergy S (frequencyBin ∘ γ) (fun i => ‖a i‖) (fun k l => binKernel (k - l))
+      rw [hregroup, mul_assoc]
+      exact mul_le_mul_of_nonneg_left
+        (binEnergy_le binKernel (fun _ => (Real.exp_pos _).le)
+          (fun d => by simp [binKernel, Int.cast_neg]) binKernel_summable _ _) (norm_nonneg _)
 
 private def localEnergyConstant : ℝ :=
   Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))

@@ -5,19 +5,20 @@
    anchors: []
    digest: No same-level code type enumerates all predicates on itself. -/
 
-import Mathlib.Logic.Function.Basic
+module
+prelude
+public import OmegaMath.Logic.Function.Basic
 
 universe u
 
 namespace D5.S0.Computability.SyntaxSemanticsBoundary
 
-/-- A same-level syntax cannot enumerate its full predicate semantics. For
-any proposed interpretation from codes to predicates on codes, some predicate
-is absent from its range. This is a thin honest wrapper around Mathlib's
-`Function.cantor_surjective`. -/
-theorem same_layer_predicates_not_enumerable {Code : Type u}
-    (semantics : Code -> Set Code) :
-    Function.Surjective semantics -> False :=
-  Function.cantor_surjective semantics
+open Omega
+
+/-- A same-level syntax cannot enumerate its full predicate semantics. -/
+public theorem same_layer_predicates_not_enumerable {Code : Type u}
+    (semantics : Code → Code → Prop) :
+    Not (∀ predicate : Code → Prop, Exists (fun code => Eq (semantics code) predicate)) :=
+  Omega.Function.cantor_surjective semantics
 
 end D5.S0.Computability.SyntaxSemanticsBoundary

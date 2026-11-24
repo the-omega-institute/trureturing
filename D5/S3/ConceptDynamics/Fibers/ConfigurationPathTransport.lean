@@ -6,11 +6,15 @@
    utility: none
    digest: Configuration ideal completion, finite-endpoint edge composition and graph transport. -/
 
-import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
-import Mathlib.Order.Ideal
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Data.Real.Basic
-import Lean.Elab.Tactic.Omega
+module
+
+public import D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity
+public import Mathlib.Order.Ideal
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Data.Real.Basic
+public import Lean.Elab.Tactic.Omega
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -119,7 +123,7 @@ private theorem mem_finiteIdeal {compatible : Finset E → Prop}
     (hempty : compatible ∅) (C : Configurations compatible) (K : FiniteConfigurations compatible) :
     K ∈ finiteIdeal hempty C ↔ K.1 ⊆ C.1 := Iff.rfl
 
-private theorem ideal_union_configuration {compatible : Finset E → Prop}
+theorem ideal_union_configuration {compatible : Finset E → Prop}
     (I : Order.Ideal (FiniteConfigurations compatible)) :
     Configuration compatible (⋃₀ (Subtype.val '' (I : Set (FiniteConfigurations compatible)))) := by
   apply configuration_union
@@ -205,7 +209,7 @@ noncomputable def configurationIdealIso {compatible : Finset E → Prop}
 
 /-! ## Finite endpoints in an arbitrary ambient poset -/
 
-private theorem exec_data {I J : Set E} {l : List E} (hl : Exec I l J) :
+theorem exec_data {I J : Set E} {l : List E} (hl : Exec I l J) :
     I ⊆ J ∧ l.Nodup ∧ (∀ e, e ∈ l ↔ e ∈ J ∧ e ∉ I) := by
   induction l generalizing I with
   | nil => cases hl; exact ⟨Set.Subset.rfl, by simp, by simp⟩
@@ -536,7 +540,7 @@ def edgeWalk {V : Type u} {G : BiGraph V} {F : V → Type v}
   | _, _, .nil _ => Equiv.refl _
   | _, _, .cons h p => (edge h).trans (edgeWalk edge p)
 
-private theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
+theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
     (edge : ∀ {v w}, G.Adj v w → F v ≃ F w)
     {a b c : V} (p : Walk G a b) (q : Walk G b c) :
     edgeWalk edge (p.append q) = (edgeWalk edge p).trans (edgeWalk edge q) := by
@@ -544,7 +548,7 @@ private theorem edgeWalk_append {V : Type u} {G : BiGraph V} {F : V → Type v}
   | nil => rfl
   | cons h p ih => simp only [Walk.append, edgeWalk, ih, Equiv.trans_assoc]
 
-private theorem edgeWalk_reverse {V : Type u} {G : BiGraph V} {F : V → Type v}
+theorem edgeWalk_reverse {V : Type u} {G : BiGraph V} {F : V → Type v}
     (edge : ∀ {v w}, G.Adj v w → F v ≃ F w)
     (rev : ∀ {v w} (h : G.Adj v w), edge (G.symm h) = (edge h).symm)
     {a b : V} (p : Walk G a b) : edgeWalk edge p.reverse = (edgeWalk edge p).symm := by
@@ -584,7 +588,7 @@ noncomputable def rootSection
     (x : F r) : ∀ v, F v :=
   fun v => T.walk (Classical.choice (hc v)) x
 
-private theorem rootSection_parallel
+theorem rootSection_parallel
     {V : Type u} {G : BiGraph V} {F : V → Type v}
     (T : EdgeTransport G F) (r : V) (hc : GraphConnectedFrom G r)
     {x : F r} (hfix : RootFixed T r x) {v w : V} (h : G.Adj v w) :

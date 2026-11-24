@@ -1,0 +1,1 @@
+{"statement_id":"sha256:9cddadc2b821bf0dc9c22a854f6fc904fd18de86232aa18e711c4fedad84d4d1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),10:AURICOmega),24:ProjectiveOverlapScaling),11:kappa_scale)","kind":"theorem","libraries":["OmegaInit","OmegaMath"],"axioms":[]}]}

@@ -15,7 +15,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
-open private adjacent hasTwoSetBits moves toggle from
+open CubeBitMoves (toggle)
+open private adjacent hasTwoSetBits moves from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 
 private abbrev Vertex := BitVec 9

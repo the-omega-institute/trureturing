@@ -565,6 +565,421 @@ theorem weightedLabelRecord_optimum [Nonempty J] (c : B → J) (p : B → ℝ)
   ⟨fun V E hV hE hSum => success_le c p hp hN V hV E hE hSum,
     attain c p hp hN, success_one_iff c p hp hpSum he hN⟩
 
+
+/-- Number of input basis words carrying a given label. -/
+def classSize (c : B → J) (j : J) : ℕ :=
+  (univ.filter fun b => c b = j).card
+
+/-- The prior assigning equal mass to each input basis word. -/
+def uniformPrior (B : Type*) [Fintype B] : B → ℝ :=
+  fun _ => (Fintype.card B : ℝ)⁻¹
+
+private theorem classSize_le (c : B → J) (j : J) : classSize c j ≤ Fintype.card B := by
+  simp only [classSize]
+  exact card_filter_le _ _
+
+private theorem sum_classSize (c : B → J) : ∑ j, classSize c j = Fintype.card B := by
+  simpa only [classSize, card_univ] using
+    (card_eq_sum_card_fiberwise (s := (univ : Finset B)) (t := (univ : Finset J))
+      (f := c) (by simp)).symm
+
+private theorem uniform_sortedWeight [Nonempty B] (c : B → J)
+    (hN : Fintype.card B ≤ d * e) (j : J) (i : Fin (d * e)) :
+    sortedWeight c (uniformPrior B) hN j i =
+      if i.val < classSize c j then (Fintype.card B : ℝ)⁻¹ else 0 := by
+  let P : B ⊕ Fin (d * e - Fintype.card B) → Prop :=
+    Sum.elim (fun b => c b = j) (fun _ => False)
+  let s := sortedIndex c (uniformPrior B) hN j
+  have hx (k : Fin (d * e)) : sortedWeight c (uniformPrior B) hN j k =
+      if P (s k) then (Fintype.card B : ℝ)⁻¹ else 0 := by
+    change Sum.elim (labelWeight c (uniformPrior B) j) (fun _ => 0) (s k) = _
+    cases s k with
+    | inl b => by_cases hb : c b = j <;> simp [P, labelWeight, uniformPrior, hb]
+    | inr z => simp [P]
+  have hcount : (univ.filter fun k => P (s k)).card = classSize c j := by
+    calc
+      _ = (univ.filter P).card := by
+        apply Finset.card_bij (fun k _ => s k)
+        · simp
+        · exact fun _ _ _ _ h => s.injective h
+        · intro a ha
+          exact ⟨s.symm a, by simpa using ha, s.apply_symm_apply a⟩
+      _ = _ := by
+        symm
+        apply Finset.card_bij (fun b _ => Sum.inl b)
+        · simp [P]
+        · simp
+        · intro a ha
+          cases a with
+          | inl b => exact ⟨b, by simpa [P] using ha, rfl⟩
+          | inr z => simp [P] at ha
+  have hprefix : ∀ k l : Fin (d * e), k ≤ l → P (s l) → P (s k) := by
+    intro k l hkl hl
+    have hle := decreasing_antitone (paddedWeight c (uniformPrior B) hN j) hkl
+    change sortedWeight c (uniformPrior B) hN j l ≤
+      sortedWeight c (uniformPrior B) hN j k at hle
+    rw [hx, hx, if_pos hl] at hle
+    by_contra hk
+    rw [if_neg hk] at hle
+    exact (not_le_of_gt (by positivity : 0 < (Fintype.card B : ℝ)⁻¹)) hle
+  have hi := Fin.lt_card_filter_univ_iff_apply_of_imp (j := i) (fun k => P (s k)) (fun k l h => hprefix l k h)
+  rw [hcount] at hi
+  rw [hx]
+  by_cases h : i.val < classSize c j
+  · simp [h, hi.mp h]
+  · have hk : ¬ P (s i) := fun hp => h (hi.mpr hp)
+    simp only [ite_eq_right h, ite_eq_right hk]
+
+private def blockSize (c : B → J) (e : ℕ) (j : J) (i : ℕ) : ℕ :=
+  if i < classSize c j / e then e
+  else if i = classSize c j / e then classSize c j % e else 0
+
+private theorem uniform_blockMass [Nonempty B] (c : B → J)
+    (he : 0 < e) (hN : Fintype.card B ≤ d * e) (j : J) (i : Fin d) :
+    blockMass c (uniformPrior B) hN j i =
+      (blockSize c e j i : ℝ) / Fintype.card B := by
+  let m := classSize c j
+  have hm : e * (m / e) + m % e = m := Nat.div_add_mod _ _
+  have hr : m % e < e := Nat.mod_lt _ he
+  have hcount : ∀ t : Fin e, (finProdFinEquiv (i, t)).val < m ↔
+      (t : ℕ) < blockSize c e j i := by
+    intro t
+    change (t : ℕ) + e * (i : ℕ) < m ↔
+      (t : ℕ) < (if i.val < m / e then e else if i.val = m / e then m % e else 0)
+    by_cases hi : (i : ℕ) < m / e
+    · have hmul := Nat.mul_le_mul_left e (Nat.succ_le_of_lt hi)
+      rw [Nat.mul_succ] at hmul
+      simp only [ite_eq_left hi]
+      constructor
+      · exact fun _ => t.isLt
+      · omega
+    by_cases hi' : (i : ℕ) = m / e
+    · suffices (t : ℕ) + e * (i : ℕ) < m ↔ (t : ℕ) < m % e by
+        simpa only [ite_eq_right hi, ite_eq_left hi'] using this
+      rw [hi']
+      omega
+    · have hmul := Nat.mul_le_mul_left e (show m / e + 1 ≤ (i : ℕ) by omega)
+      rw [Nat.mul_succ] at hmul
+      simp only [ite_eq_right hi, ite_eq_right hi']
+      omega
+  have hblock : blockSize c e j i ≤ e := by
+    change (if i.val < m / e then e else if i.val = m / e then m % e else 0) ≤ e
+    split_ifs <;> omega
+  unfold blockMass
+  simp_rw [uniform_sortedWeight c hN j]
+  have hterms (t : Fin e) :
+      (if (finProdFinEquiv (i, t)).val < classSize c j then
+        (Fintype.card B : ℝ)⁻¹ else 0) =
+      if (t : ℕ) < blockSize c e j i then (Fintype.card B : ℝ)⁻¹ else 0 := by
+    by_cases ht : (t : ℕ) < blockSize c e j i
+    · have hp : (finProdFinEquiv (i, t)).val < classSize c j := (hcount t).mpr ht
+      simp only [ite_eq_left ht, ite_eq_left hp]
+    · have hp : ¬ (finProdFinEquiv (i, t)).val < classSize c j :=
+        fun hp => ht ((hcount t).mp hp)
+      simp only [ite_eq_right ht, ite_eq_right hp]
+  simp_rw [hterms]
+  rw [← Finset.sum_filter]
+  simp [Fin.card_filter_val_lt, min_eq_right hblock, div_eq_mul_inv]
+
+private theorem sum_le_topSet {I : Type*} [Fintype I] (w : I → ℝ) (hw : ∀ i, 0 ≤ w i)
+    (n : ℕ) (S : Finset I) (hS : S.card ≤ n) :
+    ∑ i ∈ S, w i ≤ ∑ i ∈ topSet w n, w i := by
+  let ind (i : I) : ℝ := if i ∈ S then 1 else 0
+  have hbudget : ∑ i, ind i ≤ n := by
+    rw [show (∑ i, ind i) = S.card by simp [ind]]
+    exact_mod_cast hS
+  have h := weighted_sum_le_top w ind n _ (card_topSet w n) (topSet_top w n) hw
+    (fun i => by dsimp [ind]; split_ifs <;> norm_num)
+    (fun i => by dsimp [ind]; split_ifs <;> norm_num) hbudget
+  simpa [ind, mul_ite] using h
+
+
+
+/-- Number of completely filled rows in the classwise division by the environment size. -/
+def fullBlockCount (c : B → J) (e : ℕ) : ℕ :=
+  ∑ j, classSize c j / e
+
+/-- Sum of the largest `n` class remainders, equivalent to padding by zeros. -/
+def largestRemainderSum (c : B → J) (e n : ℕ) : ℝ :=
+  let r := fun j => (classSize c j % e : ℕ)
+  ∑ j ∈ topSet (fun j => (r j : ℝ)) n, (r j : ℝ)
+
+private def fullBlocks (c : B → J) (d e : ℕ) : Finset (J × Fin d) :=
+  univ.filter fun a => a.2.val < classSize c a.1 / e
+
+private def remainderBlocks (c : B → J) (d e : ℕ) (S : Finset J) :
+    Finset (J × Fin d) :=
+  univ.filter fun a => a.1 ∈ S ∧ a.2.val = classSize c a.1 / e ∧ 0 < classSize c a.1 % e
+
+private theorem class_quotient_le (c : B → J) (hN : Fintype.card B ≤ d * e) (j : J) :
+    classSize c j / e ≤ d :=
+  Nat.div_le_of_le_mul ((classSize_le c j).trans (by simpa [Nat.mul_comm] using hN))
+
+private theorem class_quotient_lt (c : B → J) (hN : Fintype.card B ≤ d * e) (j : J)
+    (hr : 0 < classSize c j % e) : classSize c j / e < d := by
+  have hle := class_quotient_le c hN j
+  by_contra! h
+  have hEq := le_antisymm hle h
+  have hdecomp := Nat.div_add_mod (classSize c j) e
+  rw [hEq, Nat.mul_comm e d] at hdecomp
+  have := (classSize_le c j).trans hN
+  omega
+
+private theorem card_fullBlocks (c : B → J) (hN : Fintype.card B ≤ d * e) :
+    (fullBlocks c d e).card = fullBlockCount c e := by
+  classical
+  calc
+    (fullBlocks c d e).card = (∑ j, (univ.filter fun i : Fin d =>
+        i.val < classSize c j / e).card) := by
+      rw [← Finset.card_sigma]
+      apply Finset.card_bij (fun a _ => ⟨a.1, a.2⟩)
+      · intro a ha
+        simpa [fullBlocks] using ha
+      · rintro ⟨j, i⟩ _ ⟨k, l⟩ _ h
+        cases h
+        rfl
+      · rintro ⟨j, i⟩ hi
+        exact ⟨(j, i), by simpa [fullBlocks] using hi, rfl⟩
+    _ = fullBlockCount c e := by
+      unfold fullBlockCount
+      exact sum_congr rfl (fun j _ => Fin.card_filter_val_lt.trans
+        (min_eq_right (class_quotient_le c hN j)))
+
+private theorem fullBlockCount_le (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) : fullBlockCount c e ≤ d := by
+  refine le_trans (b := Fintype.card B / e) ((Nat.le_div_iff_mul_le he).mpr ?_) (Nat.div_le_of_le_mul ?_)
+  · rw [fullBlockCount, Finset.sum_mul, ← sum_classSize c]
+    exact Finset.sum_le_sum fun j _ => Nat.div_mul_le_self _ _
+  · simpa [Nat.mul_comm] using hN
+
+private theorem remainder_inj (c : B → J) {T : Finset (J × Fin d)}
+    (hT : ∀ a ∈ T, a.2.val = classSize c a.1 / e) : Set.InjOn Prod.fst (T : Set (J × Fin d)) := by
+  intro a ha b hb hab
+  exact Prod.ext hab (Fin.ext (by rw [hT a ha, hT b hb, hab]))
+
+private theorem remainder_image (c : B → J) (hN : Fintype.card B ≤ d * e) (S : Finset J) :
+    (remainderBlocks c d e S).image Prod.fst = S.filter (fun j => 0 < classSize c j % e) := by
+  ext j
+  constructor
+  · rintro hj
+    obtain ⟨a, ha, rfl⟩ := mem_image.mp hj
+    exact mem_filter.mpr ⟨(mem_filter.mp ha).2.1, (mem_filter.mp ha).2.2.2⟩
+  · intro hj
+    obtain ⟨hj, hr⟩ := mem_filter.mp hj
+    exact mem_image.mpr ⟨(j, ⟨_, class_quotient_lt c hN j hr⟩),
+      by simp [remainderBlocks, hj, hr], rfl⟩
+
+private theorem blockSize_eq_remainder (c : B → J) (j : J) (i : ℕ)
+    (hf : ¬ i < classSize c j / e) :
+    blockSize c e j i = if i = classSize c j / e then classSize c j % e else 0 := by
+  simp [blockSize, hf]
+
+private theorem sum_blockSize_le_top [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) (S : Finset (J × Fin d)) (hS : S.card ≤ d) :
+    (∑ a ∈ S, (blockSize c e a.1 a.2 : ℝ)) ≤
+      Fintype.card B * optimalSuccess c (uniformPrior B) hN := by
+  let w := fun a : J × Fin d => blockMass c (uniformPrior B) hN a.1 a.2
+  have hscale (a : J × Fin d) :
+      (Fintype.card B : ℝ) * w a = blockSize c e a.1 a.2 := by
+    dsimp [w]
+    rw [uniform_blockMass c he hN, mul_comm, div_mul_cancel₀ _ (by positivity)]
+  simp_rw [← hscale, ← Finset.mul_sum]
+  have hw (a : J × Fin d) : 0 ≤ w a := by
+    dsimp [w]
+    rw [uniform_blockMass c he hN]
+    positivity
+  exact mul_le_mul_of_nonneg_left (sum_le_topSet w hw d S hS) (by positivity)
+
+private theorem uniform_full_add_remainders_le [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) (S : Finset J) (hS : S.card ≤ d - fullBlockCount c e) :
+    (e : ℝ) * fullBlockCount c e + ∑ j ∈ S, (↑(classSize c j % e) : ℝ) ≤
+      Fintype.card B * optimalSuccess c (uniformPrior B) hN := by
+  let F := fullBlocks c d e
+  let R := remainderBlocks c d e S
+  have hi : Set.InjOn Prod.fst (R : Set (J × Fin d)) :=
+    remainder_inj c fun a ha => (mem_filter.mp ha).2.2.1
+  have hR : R.card ≤ S.card := by
+    rw [← card_image_of_injOn hi, remainder_image c hN S]
+    exact card_filter_le _ _
+  have hFR : Disjoint F R := by
+    rw [Finset.disjoint_left]
+    intro a ha hb
+    exact (Nat.ne_of_lt (mem_filter.mp ha).2) (mem_filter.mp hb).2.2.1
+  have hF : F.card = fullBlockCount c e := card_fullBlocks c hN
+  have hcard : (F ∪ R).card ≤ d := by
+    rw [card_union_of_disjoint hFR, hF]
+    have := fullBlockCount_le c he hN
+    omega
+  have h := sum_blockSize_le_top c he hN (F ∪ R) hcard
+  rw [sum_union hFR] at h
+  have hfst : (∑ a ∈ F, (blockSize c e a.1 a.2 : ℝ)) = (e : ℝ) * fullBlockCount c e := by
+    rw [Finset.sum_congr rfl (fun a ha => show (blockSize c e a.1 a.2 : ℝ) = e by
+      simp [blockSize, (mem_filter.mp ha).2]), sum_const, nsmul_eq_mul, hF, mul_comm]
+  have hsnd : (∑ a ∈ R, (blockSize c e a.1 a.2 : ℝ)) =
+      ∑ j ∈ S, (↑(classSize c j % e) : ℝ) := by
+    calc
+      _ = ∑ j ∈ R.image Prod.fst, (↑(classSize c j % e) : ℝ) := by
+        rw [sum_image hi]
+        refine sum_congr rfl fun a ha => ?_
+        have h := (mem_filter.mp ha).2.2.1
+        simp [blockSize, h]
+      _ = _ := by
+        rw [remainder_image c hN S, sum_filter]
+        refine sum_congr rfl fun j _ => ?_
+        split_ifs with h
+        · rfl
+        · simp [Nat.eq_zero_of_not_pos h]
+  rwa [hfst, hsnd] at h
+
+/-- Under whole-input feasibility, every full row is selected before any class remainder. -/
+theorem uniform_optimalSuccess_eq [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) :
+    (Fintype.card B : ℝ) * optimalSuccess c (uniformPrior B) hN =
+      (e : ℝ) * fullBlockCount c e + largestRemainderSum c e (d - fullBlockCount c e) := by
+  let r := fun j => (↑(classSize c j % e) : ℝ)
+  let w := fun a : J × Fin d => blockMass c (uniformPrior B) hN a.1 a.2
+  let T := topSet w d
+  let F := fullBlocks c d e
+  have hF : F.card = fullBlockCount c e := card_fullBlocks c hN
+  have hT : T.card = d := by
+    letI : Nonempty J := ⟨c (Classical.choice inferInstance)⟩
+    rw [card_topSet, Fintype.card_prod, Fintype.card_fin, min_eq_left]
+    exact Nat.le_mul_of_pos_left d (Fintype.card_pos (α := J))
+  have hscale (a : J × Fin d) :
+      (Fintype.card B : ℝ) * w a = blockSize c e a.1 a.2 := by
+    dsimp [w]
+    rw [uniform_blockMass c he hN, mul_comm, div_mul_cancel₀ _ (by positivity)]
+  have hFT : F ⊆ T := by
+    intro a ha
+    by_contra hn
+    have hTF : T ⊆ F := by
+      intro b hb
+      by_contra hbf
+      have h := mul_le_mul_of_nonneg_left (topSet_top w d b hb a hn)
+        (by positivity : 0 ≤ (Fintype.card B : ℝ))
+      rw [hscale, hscale] at h
+      have haf : a.2.val < classSize c a.1 / e := (mem_filter.mp ha).2
+      have hbf' : ¬ b.2.val < classSize c b.1 / e := by simpa [F, fullBlocks] using hbf
+      have hr := Nat.mod_lt (classSize c b.1) he
+      simp only [blockSize, if_pos haf, if_neg hbf'] at h
+      split_ifs at h <;> exact (not_le_of_gt (by exact_mod_cast (by omega : _ < e))) h
+    have hlt := card_lt_card (Finset.ssubset_iff_subset_ne.mpr
+      ⟨hTF, fun hEq => hn (hEq.symm ▸ ha)⟩)
+    rw [hT, hF] at hlt
+    exact (not_lt_of_ge (fullBlockCount_le c he hN)) hlt
+  let R := (T \ F).filter fun a => a.2.val = classSize c a.1 / e
+  have hi : Set.InjOn Prod.fst (R : Set (J × Fin d)) := remainder_inj c fun a ha => (mem_filter.mp ha).2
+  have hR : (R.image Prod.fst).card ≤ d - fullBlockCount c e := by
+    rw [card_image_of_injOn hi]
+    calc
+      R.card ≤ (T \ F).card := card_filter_le _ _
+      _ = d - fullBlockCount c e := by rw [card_sdiff_of_subset hFT, hT, hF]
+  refine le_antisymm ?_ (uniform_full_add_remainders_le c he hN _ (by
+    rw [card_topSet]; exact min_le_left _ _))
+  change (Fintype.card B : ℝ) * (∑ a ∈ T, w a) ≤ _
+  rw [Finset.mul_sum]
+  simp_rw [hscale]
+  rw [← sum_sdiff hFT]
+  have hfst : (∑ a ∈ F, (blockSize c e a.1 a.2 : ℝ)) = (e : ℝ) * fullBlockCount c e := by
+    rw [Finset.sum_congr rfl (fun a ha => show (blockSize c e a.1 a.2 : ℝ) = e by
+      simp [blockSize, (mem_filter.mp ha).2]), sum_const, nsmul_eq_mul, hF, mul_comm]
+  have hsnd : (∑ a ∈ T \ F, (blockSize c e a.1 a.2 : ℝ)) = ∑ j ∈ R.image Prod.fst, r j := by
+    rw [sum_image hi, show R = _ from rfl, sum_filter]
+    refine sum_congr rfl fun a ha => ?_
+    have hf : ¬ a.2.val < classSize c a.1 / e := by
+      simpa [F, fullBlocks] using (mem_sdiff.mp ha).2
+    simp [r, blockSize_eq_remainder c _ _ hf, Nat.cast_ite]
+  rw [hfst, hsnd, add_comm]
+  exact add_le_add (le_refl _) (sum_le_topSet r (fun _ => by positivity) _ _ hR)
+
+
+
+/-- Uniform probability of the classes in a finite label set. -/
+def classMass (c : B → J) (S : Finset J) : ℝ :=
+  (∑ j ∈ S, (classSize c j : ℝ)) / Fintype.card B
+
+/-- Number of labels containing at least one full block. -/
+def fullLabelCount (c : B → J) (e : ℕ) : ℕ :=
+  (univ.filter fun j => e ≤ classSize c j).card
+
+private theorem sum_classSize_decompose (c : B → J) (e : ℕ) (S : Finset J) :
+    ∑ j ∈ S, (classSize c j : ℝ) =
+      (e : ℝ) * (∑ j ∈ S, (↑(classSize c j / e) : ℝ)) +
+      ∑ j ∈ S, (↑(classSize c j % e) : ℝ) := by
+  rw [Finset.mul_sum, ← sum_add_distrib]
+  exact sum_congr rfl fun j _ => by exact_mod_cast (Nat.div_add_mod (classSize c j) e).symm
+
+private theorem classMass_le_optimalSuccess [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) (S : Finset J) (hS : S.card ≤ d - fullBlockCount c e) :
+    classMass c S ≤ optimalSuccess c (uniformPrior B) hN := by
+  unfold classMass
+  apply (div_le_iff₀ (by positivity : 0 < (Fintype.card B : ℝ))).mpr
+  rw [mul_comm, sum_classSize_decompose c e S]
+  refine le_trans ?_ (uniform_full_add_remainders_le c he hN S hS)
+  gcongr
+  rw [fullBlockCount, Nat.cast_sum]
+  exact sum_le_sum_of_subset_of_nonneg (subset_univ S) (fun _ _ _ => by positivity)
+
+private theorem exists_class_cover [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) :
+    ∃ S : Finset J, S.card ≤ fullLabelCount c e + (d - fullBlockCount c e) ∧
+      optimalSuccess c (uniformPrior B) hN ≤ classMass c S := by
+  let F := univ.filter fun j => e ≤ classSize c j
+  let r := fun j => (↑(classSize c j % e) : ℝ)
+  let R := topSet r (d - fullBlockCount c e)
+  let S := F ∪ R
+  refine ⟨S, ?_, ?_⟩
+  · exact (card_union_le F R).trans (Nat.add_le_add_left (by
+      rw [card_topSet]; exact min_le_left _ _) _)
+  unfold classMass
+  apply (le_div_iff₀ (by positivity : 0 < (Fintype.card B : ℝ))).mpr
+  rw [mul_comm, uniform_optimalSuccess_eq c he hN, sum_classSize_decompose c e S]
+  apply add_le_add
+  · have hfull : (∑ j, classSize c j / e) = ∑ j ∈ S, classSize c j / e := by
+      refine (sum_subset (subset_univ S) ?_).symm
+      intro j _ hj
+      exact Nat.div_eq_of_lt (lt_of_not_ge (fun h => hj (mem_union_left _ (by simp [F, h]))))
+    rw [fullBlockCount, hfull, Nat.cast_sum]
+  · exact sum_le_sum_of_subset_of_nonneg (subset_union_right (s₁ := F)) (fun _ _ _ => by positivity)
+
+private theorem uniformPrior_sum [Nonempty B] : ∑ b, uniformPrior B b = 1 := by
+  simp [uniformPrior, nsmul_eq_mul]
+
+/-- At a feasible memory dimension, an arbitrary POVM reaches the target only above
+the lower count bound. The upper count bound suffices with a full-input product-cell encoder. -/
+theorem uniform_record_memory_bounds [Nonempty B] (c : B → J) (he : 0 < e)
+    (hN : Fintype.card B ≤ d * e) (α : ℝ) (M : ℕ)
+    (hM : ∃ S : Finset J, S.card = M ∧ α ≤ classMass c S ∧
+      ∀ T : Finset J, α ≤ classMass c T → M ≤ T.card) :
+    let Reaches := ∃ (V : Matrix (Fin d × Fin e) B ℂ) (E : J → Matrix (Fin d) (Fin d) ℂ),
+      Vᴴ * V = 1 ∧ (∀ j, (E j).PosSemidef) ∧ (∑ j, E j) = 1 ∧
+        α ≤ averageSuccess c (uniformPrior B) V E
+    (Reaches → max (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M - fullLabelCount c e) ≤ d) ∧
+    (max (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M) ≤ d → Reaches) := by
+  have hK := fullBlockCount_le c he hN
+  have hC : Fintype.card B ⌈/⌉ e ≤ d :=
+    (ceilDiv_le_iff_le_mul he).mpr (by simpa only [Nat.mul_comm e d] using hN)
+  obtain ⟨S, hCard, hMass, hMin⟩ := hM
+  letI : Nonempty J := ⟨c (Classical.choice inferInstance)⟩
+  have op := weightedLabelRecord_optimum c (uniformPrior B)
+    (fun _ => by unfold uniformPrior; positivity) uniformPrior_sum he hN
+  constructor
+  · rintro ⟨V, E, hV, hE, hSum, hScore⟩
+    have hOpt := hScore.trans (op.1 V E hV hE hSum)
+    obtain ⟨T, hT, hMassT⟩ := exists_class_cover c he hN
+    have hMT := hMin T (hOpt.trans hMassT)
+    exact max_le hC (by omega)
+  · intro hd
+    have hS : S.card ≤ d - fullBlockCount c e := by
+      have := le_trans (le_max_right (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M)) hd
+      omega
+    have hOpt := hMass.trans (classMass_le_optimalSuccess c he hN S hS)
+    obtain ⟨g, r, hV, hE, hSum, _, hScore⟩ := op.2.1
+    exact ⟨_, _, hV, hE, hSum, hScore ▸ hOpt⟩
+
+
+#print axioms uniform_record_memory_bounds
+#print axioms uniform_optimalSuccess_eq
 #print axioms weightedLabelRecord_optimum
 
 end

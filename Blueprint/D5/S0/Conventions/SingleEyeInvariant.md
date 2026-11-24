@@ -16,7 +16,7 @@ $$\forall invariant admitted, \operatorname{dependency}(invariant) \subset \{coo
 
 For arbitrary coordinate and invariant types, admitted is the set of invariants an observer accepts and dependency assigns each invariant its coordinate set. IsSingleEyed says every admitted dependency set is a subset of the singleton containing the selected coordinate.
 
-Pinned Mathlib supplies the singleton-subset interface used by this predicate, but no exact observer declaration was found in the library or repository. The Lean statement is therefore a direct generic encoding of the selected definition clause.
+The strict definition represents sets by membership predicates. For each admitted invariant and each input in its dependency set, it requires equality of that input with the selected coordinate.
 
 This deposit is an honest partial closure of the leading definition clause of interface-philosophy-v4 corollary 4.5. Its later existence and visibility claims remain unresolved and are not asserted here.
 

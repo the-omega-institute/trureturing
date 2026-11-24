@@ -19,9 +19,9 @@ open MeasureTheory
 
 namespace D5.S3.Weil.DirichletPolynomialMeanSquare
 
-private def phase (v t : ℝ) : ℂ := Complex.exp ((v : ℂ) * Complex.I * (t : ℂ))
+def phase (v t : ℝ) : ℂ := Complex.exp ((v : ℂ) * Complex.I * (t : ℂ))
 
-private def phaseIntegral (A B v : ℝ) : ℂ :=
+def phaseIntegral (A B v : ℝ) : ℂ :=
   ∫ t in A..B, phase v t
 
 private def frequency (m n : ℕ) : ℝ := Real.log (n : ℝ) - Real.log (m : ℝ)
@@ -54,7 +54,7 @@ private theorem phaseIntegral_eq {A B v : ℝ} (hv : v ≠ 0) :
   exact integral_exp_mul_complex
     (mul_ne_zero (Complex.ofReal_ne_zero.mpr hv) Complex.I_ne_zero)
 
-private theorem norm_phaseIntegral_le (A B : ℝ) {v : ℝ} (hv : v ≠ 0) :
+theorem norm_phaseIntegral_le (A B : ℝ) {v : ℝ} (hv : v ≠ 0) :
     ‖phaseIntegral A B v‖ ≤ 2 / |v| := by
   rw [phaseIntegral_eq hv, norm_div, norm_mul, Complex.norm_I, mul_one,
     Complex.norm_real, Real.norm_eq_abs]

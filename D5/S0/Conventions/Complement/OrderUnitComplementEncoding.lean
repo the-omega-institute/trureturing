@@ -7,7 +7,7 @@
 
 /- Library-search audit trail (2026-09-04):
    * The repository source of truth is `ComplementEncoding.complement`; it is imported directly.
-   * The frozen `ComplementEncoding.complement_encoding` supplies the endpoints, involution, and
+   * The standard interface `ComplementEncoding.complement_encoding_std` supplies the endpoints, involution, and
      quantified uniqueness of the ambient total.
    * `OrderUnitAmbientDependence` establishes the local ordered-module, order-unit-domination, and
      `Set.Icc` carrier convention used here; pinned Mathlib has no `OrderUnit` predicate.
@@ -44,7 +44,7 @@ theorem order_unit_complement_encoding
       0 < r ∧ (-r) • x ≤ y ∧ y ≤ r • x} := ⟨u, hOrderUnit⟩
   let typedEffect : Set.Icc (0 : V) (typedOrderUnit : V) :=
     ⟨e, by simpa [typedOrderUnit] using he⟩
-  have h := complement_encoding (typedOrderUnit : V) (typedEffect : V)
+  have h := complement_encoding_std (typedOrderUnit : V) (typedEffect : V)
   change
     complement (typedOrderUnit : V) 0 = (typedOrderUnit : V) ∧
       complement (typedOrderUnit : V) (typedOrderUnit : V) = 0 ∧

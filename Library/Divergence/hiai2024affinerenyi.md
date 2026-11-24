@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2402.16067
 claim: Section 3 defines the alpha-z Renyi divergences; Remark 3.2 asks monotonicity along nonnegative affine parameter lines.
 strata_touched:
   - D5/S3/Quantum/Divergence/AlphaZAffine
+  - D5/S3/Quantum/Divergence/SingularWeightedLogIncrement
 license: citation-only
 triage: anchor
 ---

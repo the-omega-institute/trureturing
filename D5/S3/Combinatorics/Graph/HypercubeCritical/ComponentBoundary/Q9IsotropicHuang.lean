@@ -156,7 +156,7 @@ def weightedLinear {R : Type*} [CommRing R] (w : Fin 9 → R) :
     Module.End R (Q 9 → R) :=
   ∑ i, w i • direction i
 
-private theorem weightedLinear_apply {R : Type*} [CommRing R]
+theorem weightedLinear_apply {R : Type*} [CommRing R]
     (w : Fin 9 → R) (f : Q 9 → R) : weightedLinear w f = weightedAction w f := by
   funext x
   simp only [weightedLinear, weightedAction, LinearMap.sum_apply, Finset.sum_apply,
@@ -222,7 +222,7 @@ theorem weighted_halfFlip_anticommutator {R : Type*} [CommRing R]
     exact ite_eq_right hji
   · simp
 
-private theorem weightedLinear_square {R : Type*} [CommRing R] (w : Fin 9 → R) :
+theorem weightedLinear_square {R : Type*} [CommRing R] (w : Fin 9 → R) :
     weightedLinear w * weightedLinear w = (∑ i, w i ^ 2) • 1 := by
   let G (i : Fin 9) : Module.End R (Q 9 → R) := w i • direction i
   change (∑ i, G i) * (∑ i, G i) = (∑ i, w i ^ 2) • 1
@@ -274,7 +274,8 @@ theorem weightedAction_image_eq_kernel {F : Type*} [Field F]
   · intro hf
     exact ⟨_, weightedAction_halfFlip_preimage w i hi f hf⟩
 
-private theorem flip_off_parity {b : Bool} {x : Q 9} (j : Fin 9) (hx : parity x ≠ !b) :
+/-- Flipping one coordinate reverses cube parity. -/
+theorem flip_off_parity {b : Bool} {x : Q 9} (j : Fin 9) (hx : parity x ≠ !b) :
     parity (flip x j) ≠ b := by
   have hflip : (!parity x) = parity (flip x j) :=
     Bool.not_eq_iff.mpr (cubeParity_ne_of_adj (flip_adj x j))

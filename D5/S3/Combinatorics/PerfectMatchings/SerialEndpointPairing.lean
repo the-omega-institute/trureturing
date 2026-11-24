@@ -633,3 +633,71 @@ end CutModule
 #print axioms CutModule.serial_endpoint_pairing
 end
 end D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
+
+namespace D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
+noncomputable section
+open Equiv FiniteEndpointPairing FiniteBandSwitch FourEndpoint
+
+namespace CutModule
+/-- Read the sign of a genuine through endpoint pairing, with J0 = 0 and J1 = 1. -/
+def throughPhase (P : Perm (Fin 4)) : Bool := decide (P 0 = 3)
+
+/-- Orientation bit of a literal two-wire joining permutation. -/
+def seamPhase (c : Perm (Fin 2)) : Bool := decide (c 0 = 1)
+
+private theorem phase_of_compressed_join (P Q : Perm (Fin 4))
+    (hP : Function.Involutive P) (hQ : Function.Involutive Q)
+    (hPf : ∀ i, P i ≠ i) (hQf : ∀ i, Q i ≠ i) (c : Perm (Fin 2))
+    (hp : P ≠ thirdPairing) (hq : Q ≠ thirdPairing) :
+    (Perm.sumCongr P Q * connector c).SameCycle (Sum.inl 0) (Sum.inr 3) ↔
+    Bool.xor (Bool.xor (throughPhase P) (throughPhase Q)) (seamPhase c) = true := by
+  rcases pairing_three_forms P hP hPf with rfl|rfl|rfl <;>
+    rcases pairing_three_forms Q hQ hQf with rfl|rfl|rfl <;>
+    rcases two_forms c with rfl|rfl
+  all_goals first | contradiction | decide
+
+/-- Actual parity law at a physical seam: replacing its straight pairing by
+a crossed pairing toggles the composite phase of two through modules. -/
+private theorem join_phase (M N : CutModule) (c : Perm (Fin 2))
+    (hm : M.pairing ≠ thirdPairing) (hn : N.pairing ≠ thirdPairing) :
+    throughPhase (M.join N c).pairing =
+      Bool.xor (Bool.xor (throughPhase M.pairing) (throughPhase N.pairing)) (seamPhase c) := by
+  let A := M.join N c
+  have h₁ : (A.pairing 0 = 3) ↔ A.pairing.SameCycle 0 3 := by
+    rw [same_cycle_involutive_iff A.pairing A.pairing_involutive 0 3]
+    simp
+  have h₂ : A.pairing.SameCycle 0 3 ↔
+      (Perm.sumCongr M.pairing N.pairing * connector c).SameCycle (Sum.inl 0) (Sum.inr 3) := by
+    rw [← A.cycle_iff]
+    exact joined_cycles M N c (Sum.inl 0) (Sum.inr 3)
+  have h₃ := phase_of_compressed_join M.pairing N.pairing M.pairing_involutive
+    N.pairing_involutive M.pairing_free N.pairing_free c hm hn
+  apply Bool.eq_iff_iff.mpr
+  simpa only [throughPhase,decide_eq_true_eq] using h₁.trans (h₂.trans h₃)
+
+/-- Boolean phase of the whole serial system, transported through exact
+physical joins rather than by identifying physical flags with phase bits. -/
+def serialPhase : (n : ℕ) → (Fin (n+1) → CutModule) → (Fin n → Perm (Fin 2)) → Bool
+  | 0,M,_ => throughPhase (M 0).pairing
+  | n+1,M,c =>
+    Bool.xor (Bool.xor (serialPhase n (fun i => M i.castSucc) (fun i => c i.castSucc))
+      (throughPhase (M (Fin.last (n+1))).pairing)) (seamPhase (c (Fin.last n)))
+
+theorem serialOn_phase (n : ℕ) (M : Fin (n+1) → CutModule) (c : Fin n → Perm (Fin 2))
+    (h : ∀ i, (M i).pairing ≠ thirdPairing) :
+    throughPhase (serialOn n M c).pairing = serialPhase n M c := by
+  have hpair : (serialOn n M c).pairing = (serial n M c).pairing := reindex_pairing _ _
+  rw [hpair]
+  clear hpair
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [serial,join_phase,ih,serialPhase]
+    · exact fun i => h i.castSucc
+    · exact (serial_through n (fun j => M j.castSucc) (fun j => c j.castSucc)).mpr
+        (fun j => h j.castSucc)
+    · exact h _
+
+end CutModule
+end
+end D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing

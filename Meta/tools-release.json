@@ -1,4 +1,6 @@
 {
-  "version": "v0.1.1-dev.g1c6093edc219ec72be86d5b7942e2a7d7726fe0f",
-  "sha256": "ac93b1fcf69fa681e231e816675c3f0cb2f9262e8ff9a4cb34124687cfc04fb6"
+  "version": "v0.1.1-pr.60.89.g614911980e43",
+  "sha256": "4dbd23ae73446115c66f3af368741710bc92ef7b76796c8f7cdc8671e8c9baad",
+  "source_sha": "614911980e432822ca279b2a557b04951c9efcc6",
+  "previous_pin": "3be8eea1b8a2dc7645e9eefbcc5d7b0f0c089082"
 }
