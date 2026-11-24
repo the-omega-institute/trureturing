@@ -19,38 +19,48 @@ private abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 private def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
+  realize signature (fun _ _ x => decide (0 ≤ x)) (fun e => nomatch e)
 
 private def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 private abbrev arena : Arena where
   signature := signature
   Law A := ∀ (U : Matrix (Fin 4) (Fin 4) ℂ), U ∈ Matrix.unitaryGroup (Fin 4) ℂ →
-    ∃ i j : Fin 3, A.readout () () ((Hᵀ * RHLinalg.normSqMatrix U * H) i j)
+    ∃ i j : Fin 3, A.readout () () ((Hᵀ * RHLinalg.normSqMatrix U * H) i j) = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨_, _, hf⟩ := h 1 (Matrix.unitaryGroup (Fin 4) ℂ).one_mem
-  exact hf
+  exact Bool.false_ne_true hf
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0 : ℝ), -1, ?_⟩
   intro h
-  change (0 ≤ (0 : ℝ)) = (0 ≤ (-1 : ℝ)) at h
-  have hf := Eq.mp h (le_refl (0 : ℝ))
-  norm_num at hf
+  change decide (0 ≤ (0 : ℝ)) = decide (0 ≤ (-1 : ℝ)) at h
+  rw [decide_eq_true (le_refl (0 : ℝ)),
+    decide_eq_false (by norm_num : ¬ (0 ≤ (-1 : ℝ)))] at h
+  contradiction
 
 def family : Registration arena (type_of% @exists_nonneg_typeIMinus) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@exists_nonneg_typeIMinus, rejected, rejected_law⟩
+  bridge := by
+    constructor
+    · intro source U hU
+      obtain ⟨i, j, h⟩ := source U hU
+      exact ⟨i, j, decide_eq_true h⟩
+    · intro law U hU
+      obtain ⟨i, j, h⟩ := law U hU
+      exact ⟨i, j, of_decide_eq_true h⟩
+  variation := ⟨fun U hU => by
+    obtain ⟨i, j, h⟩ := exists_nonneg_typeIMinus U hU
+    exact ⟨i, j, decide_eq_true h⟩, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -74,7 +84,7 @@ def registration :
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x => decide (0 ≤ x)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -84,11 +94,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "fn"]
+      path := #["body", "body", "arg", "body", "arg", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
