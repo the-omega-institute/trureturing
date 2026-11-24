@@ -38,8 +38,25 @@ For any four-port cut module, the two left labels are in the same corner/band ro
 
 No connectedness or restriction on unmarked components is imposed. The construction keeps components missing all local ports and closed components meeting internal ports but missing the four outer ports. They do not change the marked orbit relations used above. This result is the deterministic series rule; it makes no assertion about diamond counts, sign distributions, physical edge categories, necklace graph properties, expected values, thresholds or limits.
 
+**Theorem 1.3 (Through phase on the original serial chain).**
+
+$$\forall n \in Nat,\; \forall M \in \operatorname{Function}\left(\operatorname{Fin}\left(n + 1\right), CutModule\right),\; \forall c \in \operatorname{Function}\left(\operatorname{Fin}\left(n\right), \operatorname{Perm}\left(\operatorname{Fin}\left(2\right)\right)\right),\; \left(\forall i \in \operatorname{Fin}\left(n + 1\right),\; \operatorname{pairing}\left(\operatorname{apply}\left(M, i\right)\right) \ne \operatorname{Dead}\left(\right)\right) \Rightarrow \operatorname{throughPhase}\left(\operatorname{pairing}\left(\operatorname{serialOn}\left(n, M, c\right)\right)\right) = \operatorname{serialPhase}\left(n, M, c\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing.serialOn_phase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In an all-through chain, label T = (02)(13) by false and U = (03)(12) by true. Label each connector by false for the identity and true for its swap. The measured through bit of the actual outer first-return pairing is the XOR of the pieces' bits and the connector bits.
+
+The proof checks the two-module endpoint composition on its measured eight-port cycle reduction, then propagates the equality along the original carrier. It preserves the distinction between the two through pairings, which the existing cap/through criterion alone does not identify.
+
+This result is deterministic and valid for any nonempty chain. It does not assert a graphwise sign law or enumerate numerical density witnesses.
+
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing.serialOn_phase`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing.serial_endpoint_pairing`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing.two_forms`
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch](FiniteBandSwitch.md)
