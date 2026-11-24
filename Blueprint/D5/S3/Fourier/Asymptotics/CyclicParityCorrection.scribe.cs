@@ -101,7 +101,8 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
             Add(Add(Add(Add(Call("B", Threshold), Call("R", V)), Multiply(Two, Call("J", V))),
                     Multiply(Div(Multiply(Two, Beta), Z), Subtract(Call("M", One, V), Threshold))),
                 Multiply(Div(Hscale, Z), Subtract(Call("M", Two, V), Threshold))));
-        return F.Disp(And(roots, All("v", Call("Feasible", Q, Threshold), energy)));
+        return F.Disp(And(Eq(Call("c", Call("HalfFloor", Q)), C),
+            And(roots, All("v", Call("Feasible", Q, Threshold), energy))));
     }
 
     private static Formula TransferStatement()
@@ -109,7 +110,7 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
         var residues = Call("ZMod", Q);
         var rhs = Add(Add(Add(Subtract(Call("w", I), Multiply(Add(Delta, Mu), Call("Indicator", Zero, I))),
                     Multiply(Neighbor, Call("Indicator", One, I))),
-                Multiply(Neighbor, Call("Indicator", F.Seq(F.Neg, F.Sp, One), I))),
+                Multiply(Neighbor, Call("Indicator", F.Seq(F.Minus, One), I))),
             Multiply(Mu, Call("Indicator", Call("HalfFloor", Q), I)));
         return F.Disp(All("q", Naturals, All("w", Call("Weights", Q),
             All("delta", Reals, All("mu", Reals, All("s", Reals, All("i", residues,
