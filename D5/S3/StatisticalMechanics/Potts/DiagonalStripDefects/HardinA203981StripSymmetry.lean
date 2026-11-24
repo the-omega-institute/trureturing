@@ -44,6 +44,8 @@ import Init.Data.Fin.Lemmas
 import Init.Data.List.Basic
 import Init.Data.List.Find
 import Init.Data.List.OfFn
+import Init.GetElem
+import Mathlib.Data.List.Basic
 
 /-! Parity recolouring and simultaneous reflection of rows preserve diagonal defect counts. -/
 
