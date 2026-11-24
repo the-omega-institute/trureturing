@@ -325,48 +325,6 @@ def family (p : ℕ) [Fact p.Prime] (M : ℝ)
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     (rejected_law p M hM hparams)
   dependence := dependence
-def audit (p : ℕ) [Fact p.Prime] (M : ℝ)
-    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
-      |(smoothedCharacterSum p χ).re| ≤ M)
-    (hparams : ∃ (e : ℕ) (T : Finset ℕ), e ≠ 0 ∧
-      (∀ q : ℕ, q.Prime → q ∣ p - 1 → q ∣ e ∨ q ∈ T) ∧
-      errorCoefficient (Nat.gcd e (p - 1)) (sievePrimes p e T) * M <
-        delta (sievePrimes p e T) * (smoothedCharacterSum p 1).re) :
-    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@exists_prime_primitiveRoot_of_covering) (Realization signature) Type Unit where
-  unitName := Lean.Name.str
-    `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.exists_prime_primitiveRoot_of_covering
-    "__information_unit"
-  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdExact.CoveringRoot.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family p M hM hparams⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.PrimitiveRoot.SieveThresholdExact
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
-        "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end CoveringRoot
 
 end Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdExact

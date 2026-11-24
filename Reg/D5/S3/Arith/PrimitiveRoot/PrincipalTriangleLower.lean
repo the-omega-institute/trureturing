@@ -22,25 +22,23 @@ abbrev arena : Arena where
   Law R := ∀ {p : ℕ} (hp : p.Prime) (hlarge : 5000000 ≤ p),
     (23 / 50 : ℝ) * p ≤ R.readout () ()
       (_root_.D5.S3.Arith.PrimitiveRoot.CharacterSieve.smoothedCharacterSum p 1)
-private theorem rejected_law (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
-    ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h hp hlarge
-  change (23 / 50 : ℝ) * p ≤ -1 at he
-  have hp0 : (0 : ℝ) ≤ p := Nat.cast_nonneg p
-  linarith
+  have he := h (p := 5000011) (by norm_num) (by norm_num)
+  change (23 / 50 : ℝ) * 5000011 ≤ -1 at he
+  norm_num at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
-def family (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
+def family :
     Registration arena (type_of% @principal_smoothedCharacterSum_large) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@principal_smoothedCharacterSum_large, rejected, rejected_law p hp hlarge⟩
+  variation := ⟨@principal_smoothedCharacterSum_large, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected (rejected_law p hp hlarge)
+    arena.Law actual rejected (rejected_law)
   dependence := dependence
-def audit (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
+def audit :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@principal_smoothedCharacterSum_large) (Realization signature) Unit Unit where
   unitName := ((`D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower).str
@@ -52,7 +50,7 @@ def audit (p : ℕ) (hp : p.Prime) (hlarge : 5000000 ≤ p) :
   objectArena := .source ⟨arena⟩
   catalog := .anonymous
   localNames := false
-  realization := .source arena ⟨family p hp hlarge⟩
+  realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ z => z.re) (fun e => nomatch e))

@@ -128,45 +128,5 @@ def family (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     (rejected_law p hp hM hmain)
   dependence := dependence
-def audit (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
-    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
-      |(smoothedCharacterSum p χ).re| ≤
-        (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p)
-    (hmain : (23 / 50 : ℝ) * p ≤ (smoothedCharacterSum p 1).re) :
-    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@exists_prime_primitiveRoot) (Realization signature) Type Unit where
-  unitName := Lean.Name.str
-    `D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional.exists_prime_primitiveRoot
-    "__information_unit"
-  realizationName := `Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional.PrimeRoot.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family p hp hM hmain⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p - 1) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
-        "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end PrimeRoot
 end Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
