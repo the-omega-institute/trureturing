@@ -1,4 +1,6 @@
+import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Groups.Group05
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration

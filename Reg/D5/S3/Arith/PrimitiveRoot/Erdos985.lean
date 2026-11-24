@@ -1,4 +1,5 @@
 import D5.S3.Arith.PrimitiveRoot.Erdos985
+import Reg.D5.S3.Arith.PrimitiveRoot.SmallPrimes.FiniteRange
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
