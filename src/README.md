@@ -38,10 +38,12 @@ OmegaMath
 │   └── Euclidean
 │       └── Division, GCD, Prime
 ├── Calculus
+│   ├── DFiniteCompose
 │   ├── DFiniteJet
 │   │   └── Basic, Cayley, Coefficients, Identities
-│   └── Jet2
-│       └── Basic, Fidelity, Operations, Scalar, Secant
+│   ├── Jet2
+│   │   └── Basic, Fidelity, Operations, Scalar, Secant
+│   └── MidpointDrift
 ├── Computability
 │   ├── Fractran
 │   │   └── Division
@@ -51,11 +53,16 @@ OmegaMath
 ├── Geometry
 │   ├── BargmannGram
 │   │   └── Coordinates, Determinant, Fractions, Identities, Monomial, Polynomial, Scaling
-│   └── Cayley3D
-│       └── Adjoint, Matrix, Recurrence
+│   ├── Cayley3D
+│   │   └── Adjoint, Matrix, Recurrence
+│   └── DualChartCayley, LieTriple, SphericalLaws
 ├── Harmonic
+│   ├── AllDegreeHaar
+│   │   └── Characters, Coefficients, Integration, MomentTable
 │   ├── ChebyshevHecke
 │   │   └── Character, Orbitals, Recurrence, S5, SpinShells, Traces
+│   ├── HurwitzFreeGroup
+│   │   └── Adjoint, ReducedDifference, Residue, Split5
 │   └── PiFreeHaar
 │       └── Hecke, Moments
 ├── Matrix
@@ -70,8 +77,10 @@ OmegaMath
 ├── Ternion
 │   └── Heap
 │       └── Core, Fidelity, Spinor
-└── Topology
-    └── SimplicialCoboundary
+├── Topology
+│   └── SimplicialCoboundary
+└── Witnesses
+    └── FlagshipWitnesses
 ```
 
 ## 导入与来源
@@ -119,7 +128,7 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 ## D5 冻结引用
 
-十个零公理 D5 模块公开供书稿引用的结论。
+十三个零公理 D5 模块公开供书稿引用的结论。
 
 | 卷 | 冻结模块 |
 | --- | --- |
@@ -129,17 +138,23 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 | V | [OmegaQuadraticAndSchur](../D5/S3/Quantum/AURICOmega/OmegaQuadraticAndSchur.lean) · [OmegaChebyshevHecke](../D5/S3/Quantum/AURICOmega/OmegaChebyshevHecke.lean) · [OmegaBargmannHaarHecke](../D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.lean) |
 | VI | [OmegaArithmeticHorizon](../D5/S3/Quantum/AURICOmega/OmegaArithmeticHorizon.lean) · [OmegaMatrixAndFractran](../D5/S3/Quantum/AURICOmega/OmegaMatrixAndFractran.lean) |
 
-第 11 个冻结模块是 Layer 2 的 `OmegaShadowBridge`。它将精确算术和射影圆结论映到标准自然数、整数、有理数和实数。它导入 Mathlib，冻结记录包含 `propext` 和 `Quot.sound`，位于严格库闭包之外。[桥接源码](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [冻结记录](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
+| Wave 3 | 冻结模块 | 内容 |
+| --- | --- | --- |
+| 3A | [OmegaComposeAndWitnesses](../D5/S3/Quantum/AURICOmega/OmegaComposeAndWitnesses.lean) | 有限阶 jet 复合、Cayley 三角公式与精确见证 |
+| 3B | [OmegaSphericalHaarMidpoint](../D5/S3/Quantum/AURICOmega/OmegaSphericalHaarMidpoint.lean) | 各阶偶特征标的 Haar 正交归一性、有理球面三角定律与 Cayley 中点漂移 |
+| 3C | [OmegaLieTripleAndFreeGroup](../D5/S3/Quantum/AURICOmega/OmegaLieTripleAndFreeGroup.lean) | Lie 三重积曲率、有理 Cayley 双图的分母界与范数为五的 Hurwitz 约化词 |
+
+Layer 2 的 `OmegaShadowBridge` 也已冻结。它将精确算术和射影圆结论映到标准自然数、整数、有理数和实数。它导入 Mathlib，冻结记录包含 `propext` 和 `Quot.sound`，位于严格库闭包之外。[桥接源码](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [冻结记录](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
 
 ## 空内核审计
 
 | 审计入口 | 传递闭包的模块数 | 声明数 |
 | --- | ---: | ---: |
 | `OmegaInit` | 10 | 163 |
-| `OmegaMath` | 87 | 2,211 |
-| `OmegaInit` 与 `OmegaMath` 合并去重 | 88 | 2,211 |
+| `OmegaMath` | 103 | 2,677 |
+| `OmegaInit` 与 `OmegaMath` 合并去重 | 104 | 2,677 |
 
-计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 87 个模块包括 78 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
+计数取自钉版 Lean 工具链的编译产物，包含总入口、传递依赖和重放的所有声明。`OmegaMath` 的 103 个模块包括 94 个 OmegaMath 模块和 9 个 OmegaInit 依赖模块。审计确认各闭包的公理、`Quot` 声明、不安全声明、官方 `Init` 模块和 Mathlib 模块的数量均为零。它逐条检查编译声明及其公理依赖，再在空内核环境中重放。上游名字匹配使用独立环境。[审计实现](OmegaChecks/Audit.lean)
 
 在仓库根目录运行以下命令。Lake 驱动构建并重放两个入口的联合闭包。Python 脚本按源文件清单核对两个入口的传递闭包，并检查旧消费入口和拒绝用例。[复现脚本](OmegaChecks/check.py)
 
