@@ -9,7 +9,7 @@
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.Tactic.Abel
-import Mathlib.Tactic.IntervalCases
+import Mathlib.RingTheory.RootsOfUnity.Complex
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Push
@@ -191,45 +191,22 @@ private theorem equality_two_weights
   rw [haIm, hbIm] at hbal
   exact ⟨a, b, hab, hz', by linarith, by linarith, hzero⟩
 
+private theorem character_order {q : ℕ} [NeZero q] (d : ZMod q) :
+    orderOf (ZMod.stdAddChar d) = addOrderOf d := by
+  exact orderOf_injective (ZMod.stdAddChar (N := q)).toMonoidHom
+    (fun _ _ h => ZMod.injective_stdAddChar h) (Multiplicative.ofAdd d)
+
 private theorem order_four_of_character_i {q : ℕ} [NeZero q] (d : ZMod q)
     (h : ZMod.stdAddChar d = Complex.I) : addOrderOf d = 4 := by
-  let χ := (ZMod.stdAddChar (N := q))
-  have h4 : 4 • d = 0 := by
-    apply ZMod.injective_stdAddChar
-    change χ (4 • d) = χ 0
-    rw [AddChar.map_nsmul_eq_pow, h, Complex.I_pow_four, AddChar.map_zero_eq_one]
-  have h2 : 2 • d ≠ 0 := by
-    intro hz
-    have hc := congrArg χ hz
-    rw [AddChar.map_nsmul_eq_pow, h, Complex.I_sq, AddChar.map_zero_eq_one] at hc
-    norm_num at hc
-  have hdvd : addOrderOf d ∣ 4 := addOrderOf_dvd_iff_nsmul_eq_zero.mpr h4
-  have hpow : addOrderOf d ∣ 2 ^ 2 := hdvd
-  obtain ⟨k, hk, he⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp hpow
-  have hne : ¬ addOrderOf d ∣ 2 := fun h => h2 (addOrderOf_dvd_iff_nsmul_eq_zero.mp h)
-  interval_cases k <;> simp_all
+  rw [← character_order d, h, ← Complex.isPrimitiveRoot_I.eq_orderOf]
 
 private theorem character_sq_of_order_four {q : ℕ} [NeZero q] (d : ZMod q)
     (h : addOrderOf d = 4) : ZMod.stdAddChar d ^ 2 = -1 := by
-  let χ := (ZMod.stdAddChar (N := q))
-  have hfour : 4 • d = 0 := by
-    rw [← h]
-    exact addOrderOf_nsmul_eq_zero d
-  have htwo : 2 • d ≠ 0 := by
-    intro h2
-    have hdvd := addOrderOf_dvd_iff_nsmul_eq_zero.mpr h2
-    rw [h] at hdvd
-    norm_num at hdvd
-  have hfour' := congrArg χ hfour
-  rw [AddChar.map_nsmul_eq_pow, AddChar.map_zero_eq_one] at hfour'
-  have hs : (χ d ^ 2) ^ 2 = 1 := by rw [← pow_mul]; exact hfour'
-  rcases sq_eq_one_iff.mp hs with hs | hs
-  · apply False.elim
-    apply htwo
-    apply ZMod.injective_stdAddChar
-    change χ (2 • d) = χ 0
-    rw [AddChar.map_nsmul_eq_pow, hs, AddChar.map_zero_eq_one]
-  · exact hs
+  have horder : orderOf (ZMod.stdAddChar d) = 4 := (character_order d).trans h
+  have hdvd : 2 ∣ orderOf (ZMod.stdAddChar d) := by rw [horder]; decide
+  have hs : orderOf (ZMod.stdAddChar d ^ 2) = 2 := by
+    rw [orderOf_pow_of_dvd (by decide : 2 ≠ 0) hdvd, horder]
+  exact (hs ▸ IsPrimitiveRoot.orderOf (ZMod.stdAddChar d ^ 2)).eq_neg_one_of_two_right
 
 /-- The vanishing second Fourier mode bounds the first and forces an order-four
 pair of equal masses at equality. -/

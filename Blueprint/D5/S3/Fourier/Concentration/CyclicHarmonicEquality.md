@@ -32,6 +32,8 @@ $$\operatorname{E}\left(q\right) \iff 4 \mid q$$
 
 The additive order of the difference divides q. When four divides q, choose the residues zero and q/4. The two second-mode phases cancel, and the classification gives equality.
 
+For an indexed lattice spectrum a(j) with normalized weights w(j), fix a frequency k modulo q. Send index j to the residue b(j)=a(j)k and sum its weight into the mass v at that residue. The same pushed-forward probability weight v supplies both modes. Expanding the sums by fibers recovers mode k of the original spectrum at mode one of v, and mode 2k at mode two of v. The classification then bounds the squared magnitude at k when the coefficient at 2k is zero. A quantitative bound for the high-order weighted collisions of actual zeta ordinates at positive resolution remains open.
+
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Concentration/CyclicHarmonicEquality.zmod_exists_first_mode_half_of_second_zero`

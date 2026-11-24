@@ -48,7 +48,16 @@ internal sealed class CyclicHarmonicEqualityDocument : IScribeDocumentDefinition
                     "The additive order of the difference divides q. When four divides q, "
                     + "choose the residues zero and q/4. The two second-mode phases cancel, "
                     + "and the classification gives equality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "For an indexed lattice spectrum a(j) with normalized weights w(j), fix a "
+                + "frequency k modulo q. Send index j to the residue b(j)=a(j)k and sum its "
+                + "weight into the mass v at that residue. The same pushed-forward probability "
+                + "weight v supplies both modes. Expanding the sums by fibers recovers mode k "
+                + "of the original spectrum at mode one of v, and mode 2k at mode two of v. "
+                + "The classification then bounds the squared magnitude at k when the coefficient "
+                + "at 2k is zero. A quantitative bound for the high-order weighted collisions of "
+                + "actual zeta ordinates at positive resolution remains open.")))));
 
     private static Formula Classification()
     {
