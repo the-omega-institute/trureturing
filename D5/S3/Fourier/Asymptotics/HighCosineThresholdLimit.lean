@@ -700,11 +700,12 @@ private theorem affine_slope_value {f : ℝ → ℝ} {r : ℝ} (h₀ : f 0 ≠ 0
 /-- For sufficiently large moduli the exact predecessor cutoff has a unique distinct
 intermediate contact level, with both moment multipliers still strictly positive. -/
 theorem cyclic_threshold_first_contact :
+    let contact := fun q : ℕ => Real.cos (4 * Real.pi / q)
     ∀ᶠ q : ℕ in atTop,
       let c := cyclicReadout q
       let u := cyclicUpper q
       let l := cyclicLower q
-      let v := Real.cos (4 * Real.pi / q)
+      let v := contact q
       let a := criticalThreshold c u l
       let r := (1 - a) / (1 - tailMoment u l)
       let nu := count c u
@@ -841,7 +842,8 @@ private theorem tailMoment_gap_factor {u l : ℝ} (hd : difference u - differenc
 /-- The deficit of the exact finite-grid threshold has sharp order q⁻²,
 with coefficient 24π²/5. -/
 theorem cyclic_criticalThreshold_limit :
-    Tendsto (fun q : ℕ => (q : ℝ)^2 *
+    let scale := fun q : ℕ => (q : ℝ) ^ 2
+    Tendsto (fun q : ℕ => scale q *
       (1 - criticalThreshold (cyclicReadout q) (cyclicUpper q) (cyclicLower q)))
       atTop (𝓝 (24 * Real.pi^2 / 5)) := by
   have hratio := tail_moment_ratio_limit cyclicUpper cyclicLower upper_limit lower_limit
