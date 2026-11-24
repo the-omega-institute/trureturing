@@ -523,4 +523,3 @@ theorem commonMaximum_of_paschCount {L A : Type*} [Finite L] [Finite A]
     · exact Or.inl closes
 
 end D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschThreshold
-
