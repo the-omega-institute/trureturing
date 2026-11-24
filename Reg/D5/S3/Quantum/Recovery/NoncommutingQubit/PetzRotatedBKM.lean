@@ -2,9 +2,12 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registration of the physical retained population. -/
+
 noncomputable section
 universe u
-open Matrix Complex (normSq)
+open Matrix
+open Complex (normSq)
 open scoped BigOperators Kronecker Matrix Matrix.Norms.L2Operator
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -35,10 +38,10 @@ private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     (V : Matrix.unitaryGroup (Fin 2) ℂ) {p q rmin : ℝ} {g : ι → ℝ} (H : Matrix ι ι ℂ)
-    (hp : 0 < p) (hp' : p < 1) (hq : 0 < q) (hq' : q < 1)
-    (hr : 0 < rmin) (hg : ∀ i, 0 < g i) (hnorm : ∑ i, g i = 1)
-    (hband : ∀ i j, H i j ≠ 0 → rmin ≤ frequency q g i j)
-    (hsmall : q / ((1 - q) * rmin) < 1),
+    (_hp : 0 < p) (_hp' : p < 1) (_hq : 0 < q) (_hq' : q < 1)
+    (_hr : 0 < rmin) (_hg : ∀ i, 0 < g i) (_hnorm : ∑ i, g i = 1)
+    (_hband : ∀ i j, H i j ≠ 0 → rmin ≤ frequency q g i j)
+    (_hsmall : q / ((1 - q) * rmin) < 1),
     let Q := diagonalReal (population q)
     let sigma0 := reference q g
     let τ := V.val * diagonalReal (population p) * V.valᴴ
@@ -79,10 +82,11 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     · by_cases hj : j = ULift.up 1
       · subst i j
         norm_num [frequency, g]
-      · exact (hij (by simp [H, Matrix.single, hi, hj])).elim
-    · exact (hij (by simp [H, Matrix.single, hi])).elim
+      · exact (hij (by simp [H, Matrix.single, hi, Ne.symm hj])).elim
+    · exact (hij (by simp [H, Matrix.single, Ne.symm hi])).elim
   have result := @h ι inferInstance inferInstance 1 (1 / 3) (1 / 4) 1 g H
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) hg hnorm hband (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    hg hnorm hband (by norm_num)
   have hP := result.2.2.2.2.1
   norm_num [rejected, realize, rotationWeight] at hP
 
@@ -103,7 +107,7 @@ def family : Registration arena.{u} (type_of% @physical_pencil_rotated_bkm.{u}) 
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@physical_pencil_rotated_bkm.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM.physical_pencil_rotated_bkm.__information_unit
+  unitName := (``physical_pencil_rotated_bkm).str "__information_unit"
   realizationName := `Reg.D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM.family
   realizationSource := none
   generated := false
@@ -124,7 +128,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "arg", "arg", "arg",
+        "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
