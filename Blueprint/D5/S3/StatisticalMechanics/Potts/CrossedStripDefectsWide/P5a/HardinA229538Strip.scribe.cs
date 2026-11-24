@@ -26,7 +26,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("edges_filter_card",EdgesFilterCard(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
+            Node("edges_sum",EdgesSum(),true,"For any additive commutative monoid, summing the edge weights over the cut gives the thirteen displayed terms. Both defect certificates assign weight one when the two endpoint colours agree and zero otherwise."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. Each stored list contains the eligible columns in code order."),
             Node("step_one",StepOne(),true,"The list enumerates without duplicates the successor columns whose cut from p has cost one. The indicator dot product equals its weighted sum when the sum over the omitted columns is zero."),
             Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen."),
@@ -217,22 +217,17 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Call("SMul.smul",Own("coefficients538",V("k")),Power(Add(N(2),Val(V("k")))))));
     }
 
-    private static Formula EdgesFilterCard()
+    private static Formula EdgesSum()
     {
-        var shade = V("A");
-        var row = Arrow(Fin(5), shade);
-        var r = V("r");
-        var t = V("t");
-        var e = V("e");
+        var scalar = V("M");
+        var f = V("f");
         var pairs = Product(Fin(5), Fin(5));
-        var matching = Eq(App(r, Call("Prod.fst", e)), App(t, Call("Prod.snd", e)));
-        var filter = Call("Finset.filter", Fn("e", pairs, matching), Own("edges"));
         (int Left, int Right)[] bonds = [(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),
             (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)];
-        var terms = bonds.Select(bond => If(Eq(App(r, N(bond.Left)), App(t, N(bond.Right))), N(1), N(0)));
-        var identity = All("r", row, All("t", row, Eq(Call("Finset.card", filter), terms.Aggregate(Add))));
-        return All("A", Seq(Q("Type"), Star),
-            Seq(OpenBracket, Call("DecidableEq", shade), CloseBracket, Sp, identity));
+        var terms = bonds.Select(bond => App(f, Pair(N(bond.Left), N(bond.Right))));
+        var identity = All("f", Arrow(pairs, scalar), Eq(Call("Finset.sum", Own("edges"), f), terms.Aggregate(Add)));
+        return All("M", Seq(Q("Type"), Star),
+            Seq(OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp, identity));
     }
 
     private static Formula Weights()

@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.a
 mem_edges: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
-edges_eq: proof_shape=content; consumers=HardinA229538Strip.edges_filter_card
+edges_eq: proof_shape=content; consumers=HardinA229538Strip.edges_sum
 cut_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion
 cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
@@ -21,9 +21,7 @@ zero_cost_entry: proof_shape=bind-only; consumers=HardinA229538Strip.transition_
 oneDefect: proof_shape=bind-only; consumers=HardinA229538Strip.transfer
 transfer: proof_shape=bind-only; consumers=HardinA229538Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229538Strip.result
-countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
-edges_filter_card: proof_shape=content; consumers=HardinA229538Strip.cost_countCut, HardinA229641Strip.moves_two_filter
-cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
+edges_sum: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter, HardinA229641Strip.moves_two_filter
 movesOne: proof_shape=bind-only; consumers=HardinA229538Strip.step_one
 moves_one_filter: proof_shape=content; consumers=HardinA229538Strip.step_one
 step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image, HardinA229641Strip.seed_image₁
@@ -215,34 +213,13 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 
-private def countCut (p q : Column) : ℕ :=
-    (if colour p 0 = colour q 0 then 1 else 0)
-    + (if colour p 0 = colour q 1 then 1 else 0)
-    + (if colour p 1 = colour q 0 then 1 else 0)
-    + (if colour p 1 = colour q 1 then 1 else 0)
-    + (if colour p 1 = colour q 2 then 1 else 0)
-    + (if colour p 2 = colour q 1 then 1 else 0)
-    + (if colour p 2 = colour q 2 then 1 else 0)
-    + (if colour p 2 = colour q 3 then 1 else 0)
-    + (if colour p 3 = colour q 2 then 1 else 0)
-    + (if colour p 3 = colour q 3 then 1 else 0)
-    + (if colour p 3 = colour q 4 then 1 else 0)
-    + (if colour p 4 = colour q 3 then 1 else 0)
-    + (if colour p 4 = colour q 4 then 1 else 0)
-
-theorem edges_filter_card {A : Type*} [DecidableEq A] (r t : Fin 5 → A) :
-    (edges.filter (fun e => r e.1 = t e.2)).card =
-      (if r 0 = t 0 then 1 else 0) + (if r 0 = t 1 then 1 else 0)
-      + (if r 1 = t 0 then 1 else 0) + (if r 1 = t 1 then 1 else 0) + (if r 1 = t 2 then 1 else 0)
-      + (if r 2 = t 1 then 1 else 0) + (if r 2 = t 2 then 1 else 0) + (if r 2 = t 3 then 1 else 0)
-      + (if r 3 = t 2 then 1 else 0) + (if r 3 = t 3 then 1 else 0) + (if r 3 = t 4 then 1 else 0)
-      + (if r 4 = t 3 then 1 else 0) + (if r 4 = t 4 then 1 else 0) := by
-  simp only [edges_eq, Finset.card_filter]
+theorem edges_sum {M : Type*} [AddCommMonoid M] (f : Fin 5 × Fin 5 → M) :
+    ∑ e ∈ edges, f e =
+      f (0, 0) + f (0, 1) + f (1, 0) + f (1, 1) + f (1, 2) + f (2, 1) + f (2, 2) + f (2, 3)
+      + f (3, 2) + f (3, 3) + f (3, 4) + f (4, 3) + f (4, 4) := by
+  rw [edges_eq]
   repeat' rw [Finset.sum_insert (by decide)]
-  simp only [Finset.sum_singleton, Nat.add_assoc]
-
-private theorem cost_countCut (p q : Column) : cost p q = countCut p q :=
-  edges_filter_card (columnEquiv p) (columnEquiv q)
+  simp only [Finset.sum_singleton, add_assoc]
 
 def movesOne : Column → List Column := ![
   [],
@@ -494,7 +471,8 @@ private theorem moves_one_filter (p : Column) :
   have checked : ∀ (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       movesOne col = (List.finRange 243).filter (fun q => decide (cost col q = 1)) := by
-    intro block; simp only [cost_countCut]
+    intro block
+    simp only [cost, bondDefects, Finset.card_filter, edges_sum]
     fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
