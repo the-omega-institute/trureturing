@@ -17,10 +17,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transition_entry",TransitionEntry(),true,"For a budget above one and a positive cost within that budget, the difference of the entries is +1 at the affordable residual successor and −1 at the exhausted successor when the cost is one. The difference is zero in all other cases."),
             Node("labelled_scale",LabelledScale(),true,"The subscript 3 on the literal count is the palette parameter q := 3. The nonconstant arrays contribute six labelled representatives per canonical array. At positive height and width, the three constant arrays contribute one canonical class at budget H.card plus (n − 1) times the sum of the cut cardinalities. At height or width zero, the unique empty array contributes one labelled and one canonical representative at budget zero. The correction is three in the former case and five in the latter."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
-            Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
-            Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
-            Node("edges_card", Eq(Call("Finset.card", Own("edges")), N(13)), true, "The cut contains five equal-row pairs and four pairs in each diagonal direction."),
-            Node("cut_total_exclusion", CutTotalExclusion(), true, "A budget differs from the total for every number of cuts exactly when thirteen does not divide it. The cut cardinality is thirteen."),
+            Node("edges",Edges(),false,"The oriented cut is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs across consecutive columns."),
+            Node("mem_edges", MemEdges(), true, "The two inequalities express that the row indices differ by at most one, as in the frozen edge predicate between columns zero and one."),
+            Node("cut_total_exclusion", CutTotalExclusion(), true, "A budget differs from the total for every number of cuts exactly when thirteen does not divide it. At height k there are k same-row pairs and k − 1 pairs in each diagonal direction. At height five this gives thirteen pairs."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
@@ -329,15 +328,11 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     }
 
     private static Formula Edges() {
-        var pairs = Product(Fin(5),Fin(5));
-        var r = Call("Fin.val",V("r"));
-        var s = Call("Fin.val",V("s"));
-        var adjacent = new Formula.Logic(Eq(s,Add(r,N(1))),FormulaLogicOperator.Or,Eq(r,Add(s,N(1))));
-        var predicate = new Formula.Logic(Eq(s,r),FormulaLogicOperator.Or,adjacent);
-        var filter = Parenthesized(Seq(LambdaLower,Sp,Typed(Pair(V("r"),V("s")),pairs),
-            Mapsto,Sp,Parenthesized(predicate)));
-        var universe = Typed(Q("Finset.univ"),Call("Finset",pairs));
-        return Eq(Typed(Own("edges"),Call("Finset",pairs)),Call("Finset.filter",filter,universe));
+        var row = Fin(5);
+        var straight = Call("Finset.diag", Typed(Q("Finset.univ"), Call("Finset", row)));
+        var diagonal = Call("HardinA229637RowColumn.betw", N(5));
+        var cut = new Formula.SetOperation(straight, FormulaSetOperator.Union, diagonal);
+        return Eq(Typed(Own("edges"), Call("Finset", Product(row, row))), cut);
     }
     private static Formula Cost() {
         Formula Decode(string n)=>Call("HardinA233178Recurrence.columnEquiv",V(n));

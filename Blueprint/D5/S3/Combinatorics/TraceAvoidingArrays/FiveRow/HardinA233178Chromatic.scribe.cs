@@ -26,6 +26,8 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             FormulaNode("colour", Colour(), false, "Nat.div takes the natural quotient and Nat.mod takes its remainder modulo three."),
             FormulaNode("Bond", Bond(), false, "Each entry differs from the entries at the same or adjacent rows of the next column."),
             FormulaNode("instDecidableBond", BondInstance(), false, "The legal-bond predicate is decidable by checking the finitely many row pairs."),
+            FormulaNode("forwardCutPair", ForwardCutPair(), false, "The embedding sends a row index to its cast into the larger row type and its successor."),
+            FormulaNode("cut_parts", CutParts(), true, "The adjacent pairs in one direction are the image of this embedding. The two diagonal directions are disjoint, and their union is disjoint from the straight pairs."),
             FormulaNode("T", TransferEntry(), false, "Rows index the current column and columns index its successor."),
             FormulaNode("v", Continuations(), false, "Each coordinate counts continuations of the specified length from its boundary column."),
             FormulaNode("vector_certificate", VectorCertificate(), true, "At exponent eleven the continuation vector is the given linear combination of the vectors at exponents one through ten."),
@@ -95,6 +97,32 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
 
     private static Formula BondInstance() => All("p", Column(), All("q", Column(),
         Typed(C("instDecidableBond", V("p"), V("q")), Call("Decidable", C("Bond", V("p"), V("q"))))));
+
+    private static Formula ForwardCutPair()
+    {
+        var k = V("k");
+        var i = V("i");
+        var smaller = Call("Fin", k);
+        return All("k", Q("Nat"), All("i", smaller,
+            Eq(C("forwardCutPair", k, i), Parenthesized(Seq(Call("Fin.castSucc", i), Comma, Sp, Call("Fin.succ", i))))));
+    }
+
+    private static Formula CutParts()
+    {
+        var k = V("k");
+        var height = Add(k, N(1));
+        var row = Call("Fin", height);
+        Formula Universe(Formula type) => Typed(Q("Finset.univ"), Call("Finset", type));
+        Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, Parenthesized(b));
+        var forward = Call("Finset.map", C("forwardCutPair", k), Universe(Call("Fin", k)));
+        var swap = Call("Equiv.toEmbedding", Call("Equiv.prodComm", row, row));
+        var backward = Call("Finset.map", swap, forward);
+        var straight = Call("Finset.diag", Universe(row));
+        var diagonal = Call("HardinA229637RowColumn.betw", height);
+        var union = new Formula.SetOperation(forward, FormulaSetOperator.Union, backward);
+        return All("k", Q("Nat"), And(Eq(Call("HardinA229637RowColumn.horiz", height), forward),
+            And(Eq(diagonal, union), And(Call("Disjoint", forward, backward), Call("Disjoint", straight, diagonal)))));
+    }
 
     private static Formula MovesFilter()
     {

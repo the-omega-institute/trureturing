@@ -10,9 +10,9 @@
 admission_basis: open-problem-resolution (#32224; Proved)
 escape_witness: none (helpers consumed by the settlement result)
 edges: proof_shape=bind-only; consumers=HardinA229538Strip.a
-mem_edges: proof_shape=bind-only; consumers=HardinA229641Strip.result._simp_1_6
-edges_eq: proof_shape=content; consumers=HardinA229538Strip.edges_card, HardinA229538Strip.cost_countCut
-edges_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion
+mem_edges: proof_shape=content; consumers=HardinA229538Strip.cost_zero._simp_1_2
+edges_eq: proof_shape=content; consumers=HardinA229538Strip.cost_countCut
+cut_card: proof_shape=content; consumers=HardinA229538Strip.cut_total_exclusion
 cut_total_exclusion: proof_shape=content; consumers=HardinA229538Strip.result, HardinA229641Strip.result
 cost: proof_shape=bind-only; consumers=HardinA229538Strip.cost_zero
 bondDefects_empty: proof_shape=bind-only; consumers=HardinA229538Strip.transfer_count, HardinA229641Strip.transfer_count
@@ -56,15 +56,14 @@ result: proof_shape=content; consumers=none (external open-problem-resolution #3
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Chromatic
-import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
-import Init.Classical
 import Init.ByCases
+import Init.Classical
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
@@ -77,6 +76,7 @@ import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Dvd
 import Init.Data.Nat.Lemmas
+import Init.Data.Prod
 import Init.Data.Sum.Basic
 import Init.Prelude
 import Init.PropLemmas
@@ -88,10 +88,10 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Defs
-import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Action.Defs
 import Mathlib.Algebra.GroupWithZero.Defs
@@ -112,6 +112,8 @@ import Mathlib.Data.Finset.Empty
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Finset.Image
 import Mathlib.Data.Finset.Insert
+import Mathlib.Data.Finset.Lattice.Basic
+import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
@@ -139,38 +141,42 @@ section
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233178Chromatic (colour Column Bond T moves step_fast table powers_table)
+open HardinA233178Chromatic (colour Column Bond T moves step_fast table powers_table cut_parts)
 open HardinA233178Recurrence (columnEquiv)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open DefectTransfer (bondDefects)
+open HardinA229637RowColumn (betw)
 
-def edges : Finset (Fin 5 × Fin 5) :=
-  letI : DecidablePred (fun e : Fin 5 × Fin 5 =>
-      @HardinA233178Literal.Edges 2 (e.1, 0) (e.2, 1)) :=
-    fun _ => by unfold HardinA233178Literal.Edges; infer_instance
-  Finset.univ.filter fun e => @HardinA233178Literal.Edges 2 (e.1, 0) (e.2, 1)
+def edges : Finset (Fin 5 × Fin 5) := Finset.univ.diag ∪ betw 5
 
 theorem mem_edges (e : Fin 5 × Fin 5) :
     e ∈ edges ↔ e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
-  letI : DecidablePred (fun a : Fin 5 × Fin 5 =>
-      @HardinA233178Literal.Edges 2 (a.1, 0) (a.2, 1)) :=
-    fun _ => by unfold HardinA233178Literal.Edges; infer_instance
-  change e ∈ Finset.univ.filter (fun a : Fin 5 × Fin 5 =>
-    @HardinA233178Literal.Edges 2 (a.1, 0) (a.2, 1)) ↔ _
-  rw [Finset.mem_filter]
-  exact ⟨fun h => h.2.2, fun h => ⟨Finset.mem_univ _, rfl, h⟩⟩
+  obtain ⟨x, y⟩ := e
+  simp only [edges, betw, Finset.mem_union, Finset.mem_diag, Finset.mem_filter,
+    Finset.mem_univ, true_and]
+  rw [← Fin.val_inj]
+  omega
 
 private theorem edges_eq :
     edges = {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),
       (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)} := by
   decide +kernel
 
-theorem edges_card : edges.card = 13 := by
-  rw [edges_eq]; decide +kernel
+private theorem cut_card (k : ℕ) :
+    ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card = k + 2 * (k - 1) := by
+  cases k with
+  | zero => simp [betw]
+  | succ k =>
+    obtain ⟨_, hbetw, hparts, hstraight⟩ := cut_parts k
+    rw [Finset.card_union_of_disjoint hstraight, hbetw, Finset.card_union_of_disjoint hparts]
+    simp only [Finset.diag_card, Finset.card_univ, Fintype.card_fin, Finset.card_map, Nat.add_sub_cancel]
+    omega
 
 theorem cut_total_exclusion (D : ℕ) :
     (∀ m : ℕ, D ≠ m * edges.card) ↔ ¬ 13 ∣ D := by
-  simp only [edges_card, dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
+  change (∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin 5)).diag ∪ betw 5).card) ↔ _
+  rw [cut_card]
+  simp only [dvd_iff_exists_eq_mul_left, not_exists, ne_eq]
 
 def cost (p q : Column) : ℕ :=
   bondDefects edges (columnEquiv p) (columnEquiv q)
@@ -179,9 +185,7 @@ theorem bondDefects_empty {q k : ℕ} (r t : Fin k → Fin q) : bondDefects ∅ 
   rw [bondDefects, Finset.filter_empty, Finset.card_empty]
 
 theorem cost_zero (p q : Column) : cost p q = 0 ↔ Bond p q := by
-  simp only [cost, bondDefects, Finset.card_filter_eq_zero_iff, edges,
-    Finset.mem_filter, Finset.mem_univ, true_and, HardinA233178Literal.Edges,
-    Fin.val_zero, Fin.val_one, zero_add, Bond]
+  simp only [cost, bondDefects, Finset.card_filter_eq_zero_iff, mem_edges, Bond]
   exact ⟨fun h i j hij => h (i, j) hij, fun h e he => h e.1 e.2 he⟩
 
 theorem zero_cost_entry (p q : Column) : (if cost p q = 0 then (1 : ℤ) else 0) = T p q := by

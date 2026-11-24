@@ -766,7 +766,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect transfer_readout
-  canonicalCount transition_entry labelled_scale cut_total_exclusion mem_edges)
+  canonicalCount transition_entry labelled_scale cut_total_exclusion)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)
 open DefectTransfer (bondDefects defects literalCount lumped_count)
@@ -854,53 +854,11 @@ theorem result (n : ℕ) :
     have sweep (A : Fin 5 × Fin (m + 1) → Fin 3) :
         defects (horiz (m + 1)) (betw (m + 1)) (List.ofFn fun i j => A (i, j)) =
           defects ∅ edges (List.ofFn fun j i => A (i, j)) := by
-      let forward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
-        (⟨Function.diag, Function.diag_injective⟩ : Fin k ↪ Fin k × Fin k).trans
-          (Fin.castSuccEmb.prodMap (Fin.succEmb k))
-      let backward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
-        (forward k).trans (Equiv.prodComm _ _).toEmbedding
-      have mem_forward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
-          e ∈ Finset.univ.map (forward k) ↔ e.2.val = e.1.val + 1 := by
-        obtain ⟨x, y⟩ := e
-        simp only [Finset.mem_map, Finset.mem_univ, true_and]
-        change (∃ i : Fin k, (i.castSucc, i.succ) = (x, y)) ↔ y.val = x.val + 1
-        constructor
-        · rintro ⟨i, h⟩
-          cases h
-          rfl
-        · intro h
-          have hy : x.val + 1 < k + 1 := h ▸ y.isLt
-          have hx : x.val < k := Nat.lt_of_succ_lt_succ hy
-          exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
-      have mem_backward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
-          e ∈ Finset.univ.map (backward k) ↔ e.1.val = e.2.val + 1 := by
-        change e ∈ Finset.univ.map ((forward k).trans (Equiv.prodComm _ _).toEmbedding) ↔ _
-        rw [← Finset.map_map, Finset.mem_map_equiv]
-        exact mem_forward e.swap
-      have horizontal : horiz (m + 1) = Finset.univ.map (forward m) := by
-        ext e
-        simp only [horiz, Finset.mem_filter, Finset.mem_univ, true_and, mem_forward]
-      have diagonals (k : ℕ) : betw (k + 1) =
-          Finset.univ.map (forward k) ∪ Finset.univ.map (backward k) := by
-        ext e
-        simp only [betw, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_union,
-          mem_forward, mem_backward]
-      have diagonals_disjoint (k : ℕ) :
-          Disjoint (Finset.univ.map (forward k)) (Finset.univ.map (backward k)) := by
-        rw [Finset.disjoint_left]
-        intro e hf hb
-        have h₁ := (mem_forward e).mp hf
-        have h₂ := (mem_backward e).mp hb
-        omega
-      have cuts : edges = Finset.univ.diag ∪
-          (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
-        rw [← diagonals 4]
-        ext e
-        obtain ⟨x, y⟩ := e
-        simp only [mem_edges, Finset.mem_union, betw, Finset.mem_diag, Finset.mem_filter,
-          Finset.mem_univ, true_and]
-        rw [← Fin.val_inj]
-        omega
+      obtain ⟨horizontal, diagonals, diagonalDisjoint, _⟩ := HardinA233178Chromatic.cut_parts m
+      obtain ⟨_, cutDiagonals, cutDiagonalDisjoint, straightDisjoint⟩ :=
+        HardinA233178Chromatic.cut_parts 4
+      change defects (horiz (m + 1)) (betw (m + 1)) (List.ofFn fun i j => A (i, j)) =
+        defects ∅ (Finset.univ.diag ∪ betw 5) (List.ofFn fun j i => A (i, j))
       have count_union {k : ℕ} {E F : Finset (Fin k × Fin k)} (h : Disjoint E F)
           (r t : Fin k → Fin 3) :
           bondDefects (E ∪ F) r t = bondDefects E r t + bondDefects F r t := by
@@ -910,21 +868,10 @@ theorem result (n : ℕ) :
           bondDefects (Finset.univ.map e) r t =
             ∑ i, if r (e i).1 = t (e i).2 then 1 else 0 := by
         rw [bondDefects, Finset.card_filter, Finset.sum_map]
-      have hl : Disjoint (Finset.univ.diag : Finset (Fin 5 × Fin 5))
-          (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
-        apply (Finset.disjoint_diag_offDiag (s := Finset.univ)).mono_right
-        intro e he
-        simp only [Finset.mem_union, mem_forward, mem_backward] at he
-        exact Finset.mem_offDiag.mpr ⟨Finset.mem_univ _, Finset.mem_univ _, fun eq => by
-          rcases e with ⟨x, y⟩
-          change x = y at eq
-          subst y
-          simp at he⟩
-      rw [GridBridge.defects_rows _ _ 4, GridBridge.defects_rows _ _ m, horizontal, diagonals m, cuts]
-      simp_rw [bondDefects_empty, count_union (diagonals_disjoint m), count_union hl,
-        count_union (diagonals_disjoint 4),
-        Finset.diag, count_map]
-      dsimp only [forward, backward, Function.diag, Function.Embedding.coeFn_mk]
+      rw [GridBridge.defects_rows _ _ 4, GridBridge.defects_rows _ _ m, horizontal, diagonals]
+      simp_rw [bondDefects_empty, count_union diagonalDisjoint, count_union straightDisjoint,
+        cutDiagonals, count_union cutDiagonalDisjoint, Finset.diag, Finset.map_map, count_map]
+      dsimp only [HardinA233178Chromatic.forwardCutPair, Function.diag, Function.Embedding.coeFn_mk]
       simp only [Finset.sum_const_zero, zero_add, Finset.sum_add_distrib]
       rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin 5))),
         Finset.sum_comm (s := (Finset.univ : Finset (Fin 4))),

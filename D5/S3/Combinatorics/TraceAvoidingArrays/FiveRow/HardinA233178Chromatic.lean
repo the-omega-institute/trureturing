@@ -9,6 +9,8 @@
 /-
 admission_basis: escape-witness
 escape_witness: the checked successor lists, continuation steps and finite vector relation feed vector_certificate and result.
+forwardCutPair: proof_shape=bind-only; consumers=HardinA233178Chromatic.cut_parts, HardinA229641Strip.result
+cut_parts: proof_shape=content; consumers=HardinA229538Strip.cut_card, HardinA229641Strip.result
 Column: proof_shape=bind-only; consumers=HardinA233178Chromatic.colour
 colour: proof_shape=bind-only; consumers=HardinA233178Chromatic.Bond
 Bond: proof_shape=bind-only; consumers=HardinA233178Chromatic.T
@@ -32,11 +34,16 @@ result: proof_shape=content; consumers=HardinA233178Recurrence.chromatic_recurre
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Data.Fin.Basic
+import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
 import Init.Data.Nat.Basic
+import Init.Data.Nat.Lemmas
+import Init.Data.Prod
 import Init.Prelude
+import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Pi
@@ -45,10 +52,23 @@ import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Defs
+import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Finset.Dedup
+import Mathlib.Data.Finset.Disjoint
+import Mathlib.Data.Finset.Filter
+import Mathlib.Data.Finset.Image
+import Mathlib.Data.Finset.Lattice.Basic
+import Mathlib.Data.Finset.Prod
+import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
 import Mathlib.Data.Matrix.Mul
+import Mathlib.Logic.Embedding.Basic
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Logic.Equiv.Prod
+import Mathlib.Logic.Function.Conjugate
+import Mathlib.Logic.Function.Defs
+import Mathlib.Order.Disjoint
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -59,6 +79,54 @@ set_option maxHeartbeats 0
 /-! The three-label transfer is an auxiliary count, not the normalized six-colour source count. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
+
+open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (horiz betw)
+
+/-- The oriented pair of successive rows, indexed by its smaller row. -/
+def forwardCutPair (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
+  (⟨Function.diag, Function.diag_injective⟩ : Fin k ↪ Fin k × Fin k).trans
+    (Fin.castSuccEmb.prodMap (Fin.succEmb k))
+
+/-- The straight pairs and the two orientations of successive pairs are disjoint. -/
+theorem cut_parts (k : ℕ) :
+    let forward := Finset.univ.map (forwardCutPair k)
+    let backward := forward.map (Equiv.prodComm _ _).toEmbedding
+    horiz (k + 1) = forward ∧ betw (k + 1) = forward ∪ backward ∧
+      Disjoint forward backward ∧ Disjoint (Finset.univ : Finset (Fin (k + 1))).diag (betw (k + 1)) := by
+  have mem_forward (e : Fin (k + 1) × Fin (k + 1)) :
+      e ∈ Finset.univ.map (forwardCutPair k) ↔ e.2.val = e.1.val + 1 := by
+    obtain ⟨x, y⟩ := e
+    simp only [Finset.mem_map, Finset.mem_univ, true_and]
+    change (∃ i : Fin k, (i.castSucc, i.succ) = (x, y)) ↔ y.val = x.val + 1
+    constructor
+    · rintro ⟨i, h⟩
+      cases h
+      rfl
+    · intro h
+      have hx : x.val < k := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
+      exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
+  have mem_backward (e : Fin (k + 1) × Fin (k + 1)) :
+      e ∈ (Finset.univ.map (forwardCutPair k)).map (Equiv.prodComm _ _).toEmbedding ↔
+        e.1.val = e.2.val + 1 := by
+    rw [Finset.mem_map_equiv]
+    exact mem_forward e.swap
+  dsimp only
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · ext e
+    simp only [horiz, Finset.mem_filter, Finset.mem_univ, true_and, mem_forward]
+  · ext e
+    simp only [betw, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_union,
+      mem_forward, mem_backward]
+  · rw [Finset.disjoint_left]
+    intro e hf hb
+    have h₁ := (mem_forward e).mp hf
+    have h₂ := (mem_backward e).mp hb
+    omega
+  · rw [Finset.disjoint_left]
+    rintro ⟨x, y⟩ hdiag hbetw
+    have h : x = y := (Finset.mem_diag.mp hdiag).2
+    subst y
+    simp [betw] at hbetw
 
 abbrev Column := Fin 243
 
