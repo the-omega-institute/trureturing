@@ -42,19 +42,23 @@ private theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
   rw [← mul_div_assoc, div_le_iff₀ hq]
   nlinarith only [mul_le_mul_of_nonneg_left hhalf Real.pi_pos.le]
 
-private def cosineFourth (x h : ℝ) : ℝ :=
+/-- The fourth-order normalized remainder of the cosine after its quadratic term. -/
+def cosineFourth (x h : ℝ) : ℝ :=
   (Real.cos (x * h) - (1 - (x * h) ^ 2 / 2)) / h ^ 4
 
-private def cosineSecond (x h : ℝ) : ℝ :=
+/-- The extended second-order normalized cosine deficit. -/
+def cosineSecond (x h : ℝ) : ℝ :=
   x ^ 2 / 2 - h ^ 2 * cosineFourth x h
 
-private theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
+/-- The normalized deficit recovers the exact cosine deficit at nonzero mesh. -/
+theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
     1 - Real.cos (x * h) = h ^ 2 * cosineSecond x h := by
   unfold cosineSecond cosineFourth
   field_simp [hn]
   ring
 
-private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
+/-- The normalized cosine remainder converges to its quartic coefficient. -/
+theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineFourth x (h i)) l (𝓝 (x ^ 4 / 24)) := by
   have hxh : Tendsto (fun i => |x * h i|) l (𝓝 0) := by
@@ -87,7 +91,8 @@ private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → �
         ring
   · simpa using (hh.pow 2).const_mul (|x| ^ 6 / 720)
 
-private theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
+/-- The normalized cosine deficit converges to its quadratic coefficient. -/
+theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineSecond x (h i)) l (𝓝 (x ^ 2 / 2)) := by
   simpa [cosineSecond] using
@@ -126,14 +131,18 @@ private theorem clip_sq_correction {ι : Type*} {l : Filter ι} {s r : ι → �
     field_simp [hi.ne']
     ring
 
-private def parityModulus (odd : Bool) (k : ℕ) : ℕ := 2 * k + if odd then 1 else 2
+/-- The increasing enumeration of positive moduli of the indicated parity. -/
+def parityModulus (odd : Bool) (k : ℕ) : ℕ := 2 * k + if odd then 1 else 2
 
-private instance parityNeZero (odd : Bool) (k : ℕ) : NeZero (parityModulus odd k) :=
+/-- The parity enumeration uses positive moduli. -/
+instance parityNeZero (odd : Bool) (k : ℕ) : NeZero (parityModulus odd k) :=
   ⟨by cases odd <;> simp [parityModulus]⟩
 
-private def parityOffset (odd : Bool) : ℝ := if odd then 1 / 2 else 0
+/-- The distance of the farthest center from the antipodal position in mesh units. -/
+def parityOffset (odd : Bool) : ℝ := if odd then 1 / 2 else 0
 
-private theorem parity_offset (odd : Bool) (k : ℕ) :
+/-- The parity enumeration has the indicated antipodal offset. -/
+theorem parity_offset (odd : Bool) (k : ℕ) :
     (↑(parityModulus odd k % 2) : ℝ) / 2 = parityOffset odd := by
   cases odd <;> simp [parityModulus, parityOffset, Nat.add_mod]
 
@@ -143,7 +152,8 @@ private theorem parity_modulus_eventually_gt (odd : Bool) (M : ℕ) :
   unfold parityModulus
   omega
 
-private theorem mesh_tendsto (odd : Bool) :
+/-- The mesh converges to zero along each parity. -/
+theorem mesh_tendsto (odd : Bool) :
     Tendsto (fun k => mesh (parityModulus odd k)) atTop (𝓝 0) := by
   have hq : Tendsto (fun k => parityModulus odd k) atTop atTop :=
     tendsto_atTop.2 fun M => (parity_modulus_eventually_gt odd M).mono fun _ h => h.le
