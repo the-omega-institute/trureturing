@@ -12,8 +12,10 @@ public import OmegaMath.Arithmetic.DepthBudget
 public import OmegaMath.Arithmetic.Euclidean
 public import OmegaMath.Arithmetic.WDigits.Codec
 public import OmegaMath.Arithmetic.WDigits.Geometric
+public import OmegaMath.Calculus.DFiniteCompose
 public import OmegaMath.Calculus.DFiniteJet
 public import OmegaMath.Calculus.Jet2
+public import OmegaMath.Calculus.MidpointDrift
 public import OmegaMath.Computability.Fractran
 public import OmegaMath.Computability.QuaternionFractran
 public import OmegaMath.Data.Int
@@ -24,7 +26,20 @@ public import OmegaMath.Geometry.BargmannGram
 public import OmegaMath.Geometry.BargmannGram.Monomial
 public import OmegaMath.Geometry.BargmannGram.Polynomial
 public import OmegaMath.Geometry.Cayley3D
+public import OmegaMath.Geometry.DualChartCayley
+public import OmegaMath.Geometry.LieTriple
+public import OmegaMath.Geometry.SphericalLaws
+public import OmegaMath.Harmonic.AllDegreeHaar
+public import OmegaMath.Harmonic.AllDegreeHaar.Characters
+public import OmegaMath.Harmonic.AllDegreeHaar.Coefficients
+public import OmegaMath.Harmonic.AllDegreeHaar.Integration
+public import OmegaMath.Harmonic.AllDegreeHaar.MomentTable
 public import OmegaMath.Harmonic.ChebyshevHecke
+public import OmegaMath.Harmonic.HurwitzFreeGroup
+public import OmegaMath.Harmonic.HurwitzFreeGroup.Adjoint
+public import OmegaMath.Harmonic.HurwitzFreeGroup.ReducedDifference
+public import OmegaMath.Harmonic.HurwitzFreeGroup.Residue
+public import OmegaMath.Harmonic.HurwitzFreeGroup.Split5
 public import OmegaMath.Harmonic.PiFreeHaar
 public import OmegaMath.Matrix.LagrangeSchur
 public import OmegaMath.Matrix.Mat2
@@ -34,6 +49,7 @@ public import OmegaMath.Projective.Basic
 public import OmegaMath.Projective.Circle
 public import OmegaMath.Ternion.Heap
 public import OmegaMath.Topology.SimplicialCoboundary
+public import OmegaMath.Witnesses.FlagshipWitnesses
 
 /-!
 Omega original.
