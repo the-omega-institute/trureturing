@@ -1,29 +1,30 @@
+/- GID: D5/S3/Quantum/Information/DiagonalDiscordMonotonicity
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Information/DiagonalDiscordMonotonicity
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: Local channels preserving classical–quantum states cannot increase diagonal discord. -/
+
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
+import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Quantum.Information.PartialTrace.Isometries
 import D5.S3.Quantum.Measurement.Auric.CoordinatePinching
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute
-import Mathlib.LinearAlgebra.Matrix.IsDiag
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 /-!
 # Finite-dimensional monotonicity of diagonal discord
 
-Source draft. Every declaration below is unelaborated and has no Lean/kernel
-verification. See the verification targets at the end.
+Liu–Takagi–Lloyd, *Diagonal quantum discord*, DOI 10.1088/1751-8121/ab0774,
+§3.2.2, p. 9 (arXiv:1708.09076v2, §III.B.2, p. 6) state Conjecture 1 for a
+measured qubit. The proof applies to all finite dimensions. The optimization
+includes every rank-one eigenbasis of the A marginal.
 
-Liu–Takagi–Lloyd, *Diagonal quantum discord*, arXiv:1708.09076v2,
-§III.B.2, Conjecture 1 states the qubit assertion. The accompanying
-`diagonal-discord-monotonicity.txt` gives the all-finite-dimensional proof.
-The optimization is over every rank-one eigenbasis of the A marginal.
-The finite indices are nonempty whenever a trace-one joint state exists.
-The pointwise bound retains the nonnegative divergence to the CQ reference.
-
-The pure-phase support and log calculations in `Auric.CoordinatePinchingEntropy`
-are specialized. This draft uses the PSD quadratic-form criterion and real CFC
-commutation for arbitrary input rank. `Conditioning.left_project_unread` and
-`CoordinatePinching.pinching_mul_proj` are private. The proof below uses the
-public fixed-point characterization instead. The public trace-log splitting
-lemma in `VonNeumannEntropyPinching` applies to the finite branch by
-definitional equality of the two trace-one PSD carriers.
+The image of an eligible input pinching has the same marginal as the actual
+output. Any basis making that image classical–quantum is therefore eligible
+for the output. The fixed-pinching Pythagorean decomposition of Gour, Marvian
+and Spekkens (arXiv:0901.0943v2, Theorem 3, eqs. (9)–(15)) and channel data
+processing give the pointwise bound with its nonnegative residual.
 -/
 
 set_option autoImplicit false
@@ -31,7 +32,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace DiagonalDiscordMonotonicityDraft
+namespace D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
 
 open scoped BigOperators CStarAlgebra ComplexOrder Kronecker Matrix MatrixOrder
 open Matrix
@@ -82,6 +83,7 @@ private theorem pinch_idempotent (p : CompletePVM n k) (ρ : DensityState n) :
   rw [pinch_matrix]
   exact unreadState_idempotent (recordMeasurement p) (mat ρ)
 
+omit [DecidableEq n] in
 private theorem compression_form (P X : Matrix n n ℂ) (hP : Pᴴ = P) (x : n → ℂ) :
     star x ⬝ᵥ ((P * X * P) *ᵥ x) =
       star (P *ᵥ x) ⬝ᵥ (X *ᵥ (P *ᵥ x)) := by
@@ -119,7 +121,7 @@ private theorem unread_fixed_iff_commute (p : CompletePVM n k) (X : Matrix n n �
   constructor
   · intro h j
     have hoff := (unreadState_fixed_iff (recordMeasurement p) X).mp h
-    show X * p.proj j = p.proj j * X
+    change X * p.proj j = p.proj j * X
     calc
       _ = ∑ i, p.proj i * X * p.proj j := by
         rw [← Matrix.sum_mul, ← Matrix.sum_mul, p.complete, Matrix.one_mul]
@@ -150,6 +152,8 @@ private theorem trace_log_fixed (p : CompletePVM n k) (ρ τ : DensityState n)
     have h : Commute τ.1 (CStarMatrix.ofMatrix (p.proj j)) := by
       change mat τ * p.proj j = p.proj j * mat τ
       exact (hcomm j).eq
+    let _ : ContinuousFunctionalCalculus ℝ (CStarMatrix n n ℂ) IsSelfAdjoint :=
+      IsSelfAdjoint.instContinuousFunctionalCalculus
     have hlog := (h.cfc_real Real.log).eq
     change L * p.proj j = p.proj j * L at hlog
     exact hlog
@@ -160,10 +164,10 @@ private theorem trace_log_fixed (p : CompletePVM n k) (ρ τ : DensityState n)
 theorem finiteTraceLogRelativeEntropy_pinch (p : CompletePVM n k) (ρ : DensityState n) :
     finiteTraceLogRelativeEntropy ρ (pinch p ρ) =
       vonNeumannEntropy (pinch p ρ) - vonNeumannEntropy ρ := by
-  change D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.quantumRelativeEntropy
-    ρ (pinch p ρ) = _
-  rw [quantum_relative_entropy_eq_neg_entropy_sub_cross,
-    ← trace_log_fixed p ρ (pinch p ρ) (pinch_idempotent p ρ)]
+  have hsplit : finiteTraceLogRelativeEntropy ρ (pinch p ρ) =
+      -vonNeumannEntropy ρ - (Matrix.trace (ρ.1 * CFC.log (pinch p ρ).1)).re :=
+    quantum_relative_entropy_eq_neg_entropy_sub_cross ρ (pinch p ρ)
+  rw [hsplit, ← trace_log_fixed p ρ (pinch p ρ) (pinch_idempotent p ρ)]
   unfold vonNeumannEntropy
   ring
 
@@ -179,7 +183,7 @@ private theorem supported_channel_dpi
     apply (extendedQuantumRelativeEntropy_ne_top_iff _ _).1
     intro ht
     rw [ht] at hd
-    exact WithTop.coe_ne_top (top_le_iff.mp hd).symm
+    exact WithTop.coe_ne_top (top_le_iff.mp hd)
   rw [extendedQuantumRelativeEntropy_eq_coe_of_support hout] at hd
   exact ⟨hout, WithTop.coe_le_coe.mp hd⟩
 
@@ -199,13 +203,10 @@ theorem extendedQuantumRelativeEntropy_pinch_pythagoras [Nonempty n]
     extendedQuantumRelativeEntropy_eq_coe_of_support hout, ← WithTop.coe_add]
   congr 1
   rw [finiteTraceLogRelativeEntropy_pinch]
-  change D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.quantumRelativeEntropy
-      ρ τ = vonNeumannEntropy (pinch p ρ) - vonNeumannEntropy ρ +
-      D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.quantumRelativeEntropy
-        (pinch p ρ) τ
-  rw [quantum_relative_entropy_eq_neg_entropy_sub_cross ρ τ,
-    quantum_relative_entropy_eq_neg_entropy_sub_cross (pinch p ρ) τ,
-    trace_log_fixed p ρ τ hτ]
+  have split (σ : DensityState n) : finiteTraceLogRelativeEntropy σ τ =
+      -vonNeumannEntropy σ - (Matrix.trace (σ.1 * CFC.log τ.1)).re :=
+    quantum_relative_entropy_eq_neg_entropy_sub_cross σ τ
+  rw [split ρ, split (pinch p ρ), trace_log_fixed p ρ τ hτ]
   ring
 
 private theorem finiteTraceLogRelativeEntropy_nonneg [Nonempty n]
@@ -214,25 +215,35 @@ private theorem finiteTraceLogRelativeEntropy_nonneg [Nonempty n]
   classical
   -- The row selecting coordinate i has initial projection |i⟩⟨i|.
   let K (i : n) : Matrix Unit n ℂ := fun _ j => if i = j then 1 else 0
+  have hentry (c i j : n) :
+      ((K c)ᴴ * K c) i j = (if c = i then 1 else 0) * (if c = j then 1 else 0) := by
+    rw [Matrix.mul_apply, Fintype.sum_unique, Matrix.conjTranspose_apply]
+    change star (if c = i then (1 : ℂ) else 0) * _ = _
+    rw [apply_ite star, star_one, star_zero]
   have hK : (∑ i, (K i)ᴴ * K i) = 1 := by
     ext i j
+    simp only [Matrix.sum_apply, hentry, Matrix.one_apply]
     by_cases hij : i = j
     · subst j
-      simp [K, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
-        apply_ite, ite_mul, mul_ite]
-    · simp [K, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
-        apply_ite, ite_mul, mul_ite, hij]
+      simp
+    · rw [ite_eq_right hij]
+      apply Finset.sum_eq_zero
+      intro c _
+      by_cases hci : c = i
+      · subst c
+        simp [hij]
+      · simp [hci]
   obtain ⟨Φ, _⟩ := finite_kraus_quantum_channel K hK
-  have hunit (σ : DensityState Unit) : σ = oneDimensionalState := by
+  have hunit (σ υ : DensityState Unit) : σ = υ := by
     apply Subtype.ext
     apply CStarMatrix.ofMatrix.symm.injective
     ext i j
     cases i
     cases j
-    change σ.1 () () = 1
-    simpa [Matrix.trace, Matrix.diag] using σ.trace_eq_one
+    change σ.1 () () = υ.1 () ()
+    simpa [Matrix.trace, Matrix.diag] using σ.trace_eq_one.trans υ.trace_eq_one.symm
   have hd := (supported_channel_dpi Φ h).2
-  rw [hunit (Φ.mapState ρ), hunit (Φ.mapState τ), finiteTraceLogRelativeEntropy_self] at hd
+  rw [hunit (Φ.mapState ρ) (Φ.mapState τ), finiteTraceLogRelativeEntropy_self] at hd
   exact hd
 
 end Pinching
@@ -304,6 +315,7 @@ theorem localChannel_apply [Nonempty a] (Λ : QuantumChannel a a)
     (fun j => leftTensor a b ((actual_kraus_representation Λ).kraus j))
     (leftTensor_kraus_normalized (b := b) Λ)).choose_spec X
 
+omit [Fintype a] [DecidableEq a] [DecidableEq b] in
 private theorem partialTraceRight_sum {κ : Type*} [Fintype κ]
     (X : κ → Matrix (a × b) (a × b) ℂ) :
     partialTraceRight (∑ j, X j) = ∑ j, partialTraceRight (X j) := by
@@ -346,7 +358,7 @@ private theorem marginal_pinch_matrix (U : Matrix.unitaryGroup a ℂ)
         partialTraceRight (K j * mat ρ * (K j)ᴴ) := by rw [hp]
     _ = p.proj j * partialTraceRight (mat ρ) * (p.proj j)ᴴ :=
       partialTrace_isometries (p.proj j) (1 : Matrix b b ℂ) (by simp) (mat ρ)
-    _ = _ := by rw [(p.hermitian j).eq]
+    _ = p.proj j * partialTraceRight (mat ρ) * p.proj j := by rw [(p.hermitian j).eq]
 
 /-- The actual A marginal is diagonal in U. Degenerate eigenspaces allow all
 unitary choices within them. -/
@@ -360,12 +372,12 @@ private theorem coordinateUnread_apply {n : Type*} [Fintype n] [DecidableEq n] {
   simp only [unreadState, Matrix.sum_apply, coordinatePVM, Matrix.mul_diagonal,
     Matrix.diagonal_mul]
   by_cases hij : c i = c j
-  · rw [if_pos hij, Finset.sum_eq_single (c i)]
+  · rw [ite_eq_left hij, Finset.sum_eq_single (c i)]
     · simp [hij]
     · intro d _ hd
       simp [Ne.symm hd]
     · simp
-  · rw [if_neg hij]
+  · rw [ite_eq_right hij]
     apply Finset.sum_eq_zero
     intro d _
     by_cases hid : c i = d
@@ -383,13 +395,19 @@ private theorem basisUnread_fixed_iff (U : Matrix.unitaryGroup a ℂ) (X : Matri
       unreadState (coordinatePVM c).proj Y := by
     change f.symm (∑ j, f ((coordinatePVM c).proj j) * X * f ((coordinatePVM c).proj j)) = _
     simp only [unreadState, map_sum, map_mul, StarAlgEquiv.symm_apply_apply, Y]
-  change _ ↔ Y.IsDiag
-  rw [← f.symm.injective.eq_iff, hmap]
+  have he : unreadState (basisPVM U).proj X = X ↔
+      unreadState (coordinatePVM c).proj Y = Y := by
+    constructor
+    · intro h
+      exact hmap.symm.trans (congrArg f.symm h)
+    · intro h
+      exact f.symm.injective (hmap.trans h)
+  rw [he]
   change unreadState (coordinatePVM c).proj Y = Y ↔ Y.IsDiag
   constructor
   · intro h i j hij
     have he := congrArg (fun M : Matrix a a ℂ => M i j) h
-    rw [coordinateUnread_apply, if_neg (fun e => hij (c.injective e))] at he
+    rw [coordinateUnread_apply, ite_eq_right (fun e => hij (c.injective e))] at he
     exact he.symm
   · intro h
     ext i j
@@ -397,15 +415,17 @@ private theorem basisUnread_fixed_iff (U : Matrix.unitaryGroup a ℂ) (X : Matri
     by_cases hij : i = j
     · subst j
       simp
-    · rw [if_neg (fun e => hij (c.injective e)), h hij]
+    · rw [ite_eq_right (fun e => hij (c.injective e)), h hij]
 
 private theorem eligible_iff_marginal_pinch (ρ : DensityState (a × b))
     (U : Matrix.unitaryGroup a ℂ) :
     Eligible ρ U ↔ marginalRight (pinch (localPVM U) ρ) = marginalRight ρ := by
   have hval : Function.Injective (fun σ : DensityState a => mat σ) :=
     fun _ _ h => Subtype.ext (CStarMatrix.ofMatrix.symm.injective h)
-  change ((Unitary.conjStarAlgAut ℂ _ U).symm (mat (marginalRight ρ))).IsDiag ↔ _
-  rw [← hval.eq_iff, marginal_pinch_matrix, basisUnread_fixed_iff]
+  have he : mat (marginalRight (pinch (localPVM U) ρ)) = mat (marginalRight ρ) ↔
+      Eligible ρ U :=
+    (marginal_pinch_matrix U ρ ▸ basisUnread_fixed_iff U (mat (marginalRight ρ)))
+  exact (hval.eq_iff.symm.trans he).symm
 
 private theorem exists_eligible (ρ : DensityState (a × b)) :
     ∃ U : Matrix.unitaryGroup a ℂ, Eligible ρ U := by
@@ -474,6 +494,7 @@ theorem pointwise_transfer [Nonempty a] [Nonempty b] (Λ : QuantumChannel a a)
   have hsame : marginalRight τ = marginalRight R := by
     dsimp only [τ, R, T]
     simp only [marginalRight_localChannel, (eligible_iff_marginal_pinch ρ U).1 hU]
+    rfl
   have hVeligible : Eligible R V := by
     have h : Eligible τ V := (eligible_iff_marginal_pinch τ V).2 (congrArg marginalRight hV)
     unfold Eligible at h ⊢
@@ -516,22 +537,95 @@ theorem diagonalDiscord_localChannel_mono [Nonempty a] [Nonempty b]
     diagonalDiscord R ≤ basisGain R V := csInf_le hbdd ⟨V, hV, rfl⟩
     _ ≤ basisGain ρ U := le_trans (le_add_of_nonneg_right hnonneg) hbound
 
+private theorem isClosed_eligible (ρ : DensityState (a × b)) :
+    IsClosed {U : Matrix.unitaryGroup a ℂ | Eligible ρ U} := by
+  let X := mat (marginalRight ρ)
+  have hU : Continuous (fun U : Matrix.unitaryGroup a ℂ => U.val) :=
+    continuous_subtype_val
+  have hconj : Continuous (fun U : Matrix.unitaryGroup a ℂ =>
+      U.valᴴ * X * U.val) :=
+    (hU.matrix_conjTranspose.matrix_mul continuous_const).matrix_mul hU
+  have heq : {U : Matrix.unitaryGroup a ℂ | Eligible ρ U} =
+      ⋂ i : a, ⋂ j : a, ⋂ (_ : i ≠ j), {U | (U.valᴴ * X * U.val) i j = 0} := by
+    ext U
+    simp only [Set.mem_ofPred_eq, Set.mem_iInter]
+    rfl
+  rw [heq]
+  exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ =>
+    isClosed_eq (hconj.matrix_elem i j) continuous_const
+
+private theorem continuous_pinch_matrix (ρ : DensityState (a × b)) :
+    Continuous (fun U : Matrix.unitaryGroup a ℂ => mat (pinch (localPVM U) ρ)) := by
+  have hU : Continuous (fun U : Matrix.unitaryGroup a ℂ => U.val) :=
+    continuous_subtype_val
+  have hproj (j : Fin (Fintype.card a)) :
+      Continuous (fun U : Matrix.unitaryGroup a ℂ => (localPVM (b := b) U).proj j) := by
+    let E := (coordinatePVM (Fintype.equivFin a)).proj j
+    have h : Continuous (fun U : Matrix.unitaryGroup a ℂ => U.val * E * U.valᴴ) :=
+      (hU.matrix_mul continuous_const).matrix_mul hU.matrix_conjTranspose
+    change Continuous (fun U : Matrix.unitaryGroup a ℂ =>
+      (U.val * E * U.valᴴ) ⊗ₖ (1 : Matrix b b ℂ))
+    refine continuous_matrix fun i j => ?_
+    exact (h.matrix_elem i.1 j.1).mul continuous_const
+  simp only [pinch_matrix, unreadState]
+  exact continuous_finsetSum _ fun j _ =>
+    ((hproj j).matrix_mul continuous_const).matrix_mul (hproj j)
+
+private theorem continuous_basisGain (ρ : DensityState (a × b)) :
+    Continuous (basisGain ρ) := by
+  open D5.S3.Quantum.Information.OrthogonalRecordEntropy in
+  have hEntropy : Continuous (fun U : Matrix.unitaryGroup a ℂ =>
+      vonNeumannEntropy (pinch (localPVM U) ρ)) := by
+    let _ : ContinuousFunctionalCalculus ℝ (CStarMatrix (a × b) (a × b) ℂ) IsSelfAdjoint :=
+      IsSelfAdjoint.instContinuousFunctionalCalculus
+    have hmat : Continuous (fun U : Matrix.unitaryGroup a ℂ =>
+        (pinch (localPVM U) ρ).1) :=
+      (CStarMatrix.ofMatrixL (m := a × b) (n := a × b) (A := ℂ)).continuous.comp
+        (continuous_pinch_matrix ρ)
+    have hCfc := hmat.cfc_of_mem_nhdsSet (s := (Set.univ : Set ℝ)) Real.negMulLog
+      Filter.univ_mem (fun U => IsSelfAdjoint.of_nonneg (pinch (localPVM U) ρ).nonnegative)
+      Real.continuous_negMulLog.continuousOn
+    have hTrace : Continuous (realTrace : CStarMatrix (a × b) (a × b) ℂ → ℝ) :=
+      Complex.continuous_re.comp
+        ((CStarMatrix.ofMatrixL (m := a × b) (n := a × b) (A := ℂ)).symm.continuous.matrix_trace)
+    exact (hTrace.comp hCfc).congr fun U => (entropy_eq_trace_cfc (pinch (localPVM U) ρ)).symm
+  exact hEntropy.sub continuous_const
+
+/-- Every finite bipartite state has an eligible eigenbasis attaining the
+    diagonal discord. The same basis minimizes the entropy gain over all
+    choices in each degenerate eigenspace. -/
+theorem diagonalDiscord_attained (ρ : DensityState (a × b)) :
+    ∃ U : Matrix.unitaryGroup a ℂ, Eligible ρ U ∧
+      IsMinOn (basisGain ρ) {V | Eligible ρ V} U ∧
+      diagonalDiscord ρ = basisGain ρ U := by
+  let _ : CompactSpace (Matrix.unitaryGroup a ℂ) :=
+    D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryCompactSpace
+  obtain ⟨U, hU, hmin⟩ := (isClosed_eligible ρ).isCompact.exists_isMinOn
+    (exists_eligible ρ) (continuous_basisGain ρ).continuousOn
+  have hbelow : ∀ x ∈ basisGain ρ '' {V | Eligible ρ V}, basisGain ρ U ≤ x := by
+    rintro _ ⟨V, hV, rfl⟩
+    exact hmin hV
+  refine ⟨U, hU, hmin, le_antisymm ?_ ?_⟩
+  · exact csInf_le ⟨_, hbelow⟩ ⟨U, hU, rfl⟩
+  · exact le_csInf ⟨_, U, hU, rfl⟩ hbelow
+
+/-- Conjecture 1 with the input and output optima expressed as attained
+    minima, in arbitrary finite dimensions. -/
+theorem diagonalDiscord_localChannel_mono_attained [Nonempty a] [Nonempty b]
+    (Λ : QuantumChannel a a) (hCQ : PreservesCQ (localChannel (b := b) Λ))
+    (ρ : DensityState (a × b)) :
+    let R := (localChannel (b := b) Λ).mapState ρ
+    ∃ U V : Matrix.unitaryGroup a ℂ,
+      Eligible ρ U ∧ Eligible R V ∧
+      IsMinOn (basisGain ρ) {W | Eligible ρ W} U ∧
+      IsMinOn (basisGain R) {W | Eligible R W} V ∧
+      basisGain R V ≤ basisGain ρ U := by
+  dsimp only
+  obtain ⟨U, hU, hUmin, hUeq⟩ := diagonalDiscord_attained ρ
+  obtain ⟨V, hV, hVmin, hVeq⟩ := diagonalDiscord_attained ((localChannel Λ).mapState ρ)
+  exact ⟨U, V, hU, hV, hUmin, hVmin,
+    hVeq.symm.trans_le ((diagonalDiscord_localChannel_mono Λ hCQ ρ).trans_eq hUeq)⟩
+
 end Local
 
-end DiagonalDiscordMonotonicityDraft
-
-/-!
-## Pending verification
-
-* Elaborate the support proof, especially its finite sum rewrites and ordered
-  complex quadratic-form lemmas. Check the `Matrix`/ `CStarMatrix` reductions,
-  the `WithTop` coercions, and reuse of the incumbent trace-log splitting lemma.
-* Elaborate the trace-to-Unit Kraus normalization and the local Kraus action
-  through `mapState` and `marginalRight`. Verify the coordinate mask calculation,
-  bundled conjugation, and both uses of the finite partial-trace identity.
-* Kernel-check the Pythagoras, pointwise, and infimum theorems with their
-  dependencies. These are draft proof expressions throughout.
-* To identify the infimum with the paper's minimum, establish compactness of
-  the closed eligible subset of the unitary group and continuity of the entropy
-  gain there. The entropy uses continuous `negMulLog` including zero.
--/
+end D5.S3.Quantum.Information.DiagonalDiscordMonotonicity
