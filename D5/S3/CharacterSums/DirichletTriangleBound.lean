@@ -383,7 +383,7 @@ private theorem parityCorrection_norm {q : ℕ} (χ : DirichletCharacter ℂ q)
   have h21 : Real.log 2 ≤ 1 := by linarith [Real.log_two_lt_d9]
   by_cases heven : χ.Even
   · have hTn := evenT_nonneg (Real.log x)
-    have hTm := evenT_le_mass (Real.log_nonneg hx1)
+    have hTm := (evenT_le_mass (Real.log_nonneg hx1)).2.2
     have hquot : (1 - Real.log 2) / x ≤ 1 - Real.log 2 :=
       div_le_self (by linarith) hx1
     have hquotn : 0 ≤ (1 - Real.log 2) / x := div_nonneg (by linarith) hx0.le
@@ -423,7 +423,7 @@ theorem characterTriangle_finite_height {q : ℕ} [NeZero q]
       push_cast
       ring
     rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)]
-  rw [characterTriangle_explicit hχ hne hx]
+  rw [(characterTriangle_explicit hχ hne hx).2]
   calc
     _ ≤ ‖-zeroTriangle χ x - (1 - (x : ℂ)⁻¹) * logDeriv χ.LFunction 2‖ +
         ‖parityCorrection χ x‖ := norm_add_le _ _

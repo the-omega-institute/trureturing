@@ -29,6 +29,9 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
     (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {x : ℝ} (hx : 1 ≤ x),
+    (∀ {t : ℝ}, 0 < t → Summable
+      (fun ρ : {z : ℂ // completion χ z = 0} =>
+        (analyticOrderNatAt (completion χ) ρ.1 : ℂ) * zeroKernel ρ.1 t)) ∧
     characterTriangle χ x = R.readout () ()
       (-zeroTriangle χ x - (1 - (x : ℂ)⁻¹) * logDeriv χ.LFunction 2)
       (parityCorrection χ x)
@@ -38,8 +41,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨q, hq, χ, hχ, hne⟩ :=
     _root_.Reg.D5.S3.CharacterSums.DirichletCompletion.ZeroData.primitive_example
   letI : NeZero q := ⟨hq⟩
-  have he := h hχ hne (x := 1) (by norm_num)
-  have hf := characterTriangle_explicit hχ hne (x := 1) (by norm_num)
+  have he := (h hχ hne (x := 1) (by norm_num)).2
+  have hf := (characterTriangle_explicit hχ hne (x := 1) (by norm_num)).2
   change _ = _ + _ + 1 at he
   have hz : (0 : ℂ) = 1 := by linear_combination he - hf
   exact zero_ne_one hz
@@ -83,7 +86,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

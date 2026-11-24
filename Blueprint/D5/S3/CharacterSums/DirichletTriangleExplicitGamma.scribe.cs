@@ -47,8 +47,8 @@ internal sealed class DirichletTriangleExplicitGammaDocument : IScribeDocumentDe
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                      "For y at least zero the even tail is bounded by log(2). The exact "
-                    + "coefficient sum is log(2), obtained from the digamma series at negative "
+                      "For y at least zero the even tail is summable and bounded by log(2). Its value "
+                    + "at zero and its coefficient sum are exactly log(2), obtained from the digamma series at negative "
                     + "one half and the Gamma recurrence."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("character-parity"),

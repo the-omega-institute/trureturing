@@ -515,12 +515,30 @@ private theorem zeroTriangle_one {q : ℕ} [NeZero q] {χ : DirichletCharacter �
   rw [he]
   exact tsum_zero
 
+private theorem zeroKernel_summable {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) (hne : χ ≠ 1) {x : ℝ} (hx : 0 < x) :
+    Summable (fun ρ : {z : ℂ // completion χ z = 0} =>
+      (analyticOrderNatAt (completion χ) ρ.1 : ℂ) * zeroKernel ρ.1 x) := by
+  have he := ((zeroSeries_summable hχ hne (Real.log x)).sub
+    (constant_hasSum hχ hne).summable).add
+      ((inverse_hasSum hχ hne).summable.div_const (x : ℂ))
+  apply he.congr
+  intro ρ
+  rw [Complex.cpow_def_of_ne_zero (Complex.ofReal_ne_zero.mpr hx.ne'),
+    ← Complex.ofReal_log hx.le]
+  dsimp only [zeroKernel]
+  ring
+
 /-- The exact triangular explicit formula uses the centered actual zero divisor. -/
 theorem characterTriangle_explicit {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hne : χ ≠ 1)
     {x : ℝ} (hx : 1 ≤ x) :
+    (∀ {t : ℝ}, 0 < t → Summable
+      (fun ρ : {z : ℂ // completion χ z = 0} =>
+        (analyticOrderNatAt (completion χ) ρ.1 : ℂ) * zeroKernel ρ.1 t)) ∧
     characterTriangle χ x = -zeroTriangle χ x -
       (1 - (x : ℂ)⁻¹) * logDeriv χ.LFunction 2 + parityCorrection χ x := by
+  refine ⟨fun ht => zeroKernel_summable hχ hne ht, ?_⟩
   classical
   rcases eq_or_lt_of_le hx with rfl | hx
   · rw [zeroTriangle_one hχ, parityCorrection_one]

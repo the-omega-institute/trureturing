@@ -36,14 +36,15 @@ internal sealed class DirichletTriangleExplicitDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text(
                     "Here S is characterTriangle, Z is zeroTriangle, ell is the actual " +
                     "logarithmic derivative of the Dirichlet L-function; " +
-                    "C is parityCorrection. " +
+                    "C is parityCorrection. The grouped zero series is absolutely convergent " +
+                    "at every positive real argument, including those below one. " +
                     "For even characters C is 1-log(x)+(log(2)-1)/x minus the full even trivial " +
                     "tail. For odd characters C is -1+(log(x)+2-log(2))/x minus x inverse " +
                     "times the existing full trivial tail. " +
                     "The conductor and Euler constants " +
                     "cancel after centering the completed logarithmic derivative at two.")),
                     Paragraph(Text(
-                    "The arithmetic Laplace transform comes from DirichletTrianglePerron. " +
+                    "The arithmetic Perron formula comes from DirichletTrianglePerron. " +
                     "The two-point difference formula supplies the three convergent zero " +
                     "coefficients. Absolute domination justifies the spectral Laplace exchange. " +
                     "The centered zero transform is (H(s)-H(2))/(s(s+1)); the parity correction " +

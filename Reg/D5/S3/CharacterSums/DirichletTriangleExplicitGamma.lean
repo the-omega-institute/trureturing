@@ -100,12 +100,14 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => fun _ : ℝ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {y : ℝ} (hy : 0 ≤ y), R.readout () () (evenT y) (Real.log 2)
+  Law R := ∀ {y : ℝ} (hy : 0 ≤ y),
+    Summable (fun n : ℕ => evenCoeff n * Real.exp (-(2 * ((n : ℝ) + 1)) * y)) ∧
+      evenT 0 = Real.log 2 ∧ R.readout () () (evenT y) (Real.log 2)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (y := 0) le_rfl
-  exact he
+  exact he.2.2
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -148,7 +150,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "fn"]
+      path := #["body", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
