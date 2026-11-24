@@ -101,7 +101,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripDat
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbitTable
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
@@ -111,8 +110,9 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Image
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -128,7 +128,6 @@ import Mathlib.Data.List.Sort
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
-open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (horiz bond_row)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
   (Canonical canonical_exists_unique)
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -147,33 +146,10 @@ theorem valid_parts (p : Boundary) (d : ℕ) :
 private theorem bond_eq_adjacent {k : ℕ} (r : Fin (k + 1) → Fin 3) :
     bondDefects (Finset.univ.image fun j : Fin k => (j.castSucc, j.succ)) r r =
       (Finset.univ.filter fun j : Fin k => r j.castSucc = r j.succ).card := by
-  have he : horiz (k + 1) =
-      Finset.univ.image (fun j : Fin k => (j.castSucc, j.succ)) := by
-    ext e
-    simp only [horiz, Finset.mem_filter, Finset.mem_image,
-      Finset.mem_univ, true_and]
-    constructor
-    · intro h
-      have hi : e.1.val < k := by have := e.2.isLt; omega
-      exact ⟨e.1.castLT hi, Prod.ext (Fin.ext rfl) (Fin.ext h.symm)⟩
-    · rintro ⟨j, rfl⟩
-      rfl
-  rw [← he, bond_row, ← Finset.card_map (Fin.castSuccEmb : Fin k ↪ Fin (k + 1))]
-  change (Finset.univ.filter fun i : Fin (k + 1) =>
-    ∃ j : Fin (k + 1), j.val = i.val + 1 ∧ r i = r j).card = _
-  congr 1
-  ext i
-  simp only [Finset.mem_filter, Finset.mem_map, Finset.mem_univ, true_and, Fin.castSuccEmb_apply]
-  constructor
-  · rintro ⟨j, hj, h⟩
-    have hi : i.val < k := by have := j.isLt; omega
-    let x : Fin k := i.castLT hi
-    have hx : x.castSucc = i := Fin.castSucc_castLT i hi
-    have hy : x.succ = j := Fin.ext hj.symm
-    refine ⟨x, ?_, hx⟩
-    simpa only [hx, hy] using h
-  · rintro ⟨j, h, rfl⟩
-    exact ⟨j.succ, rfl, h⟩
+  unfold bondDefects
+  rw [Finset.filter_image]
+  exact Finset.card_image_of_injective _
+    (fun i j h => Fin.castSucc_injective k (congrArg Prod.fst h))
 
 private theorem tailCost_eq (p : Boundary) :
     HardinA229635State.h p =

@@ -1,6 +1,4 @@
-using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.StripDefects;
 
@@ -24,14 +22,6 @@ internal sealed class HardinA229637RowColumnDocument : IScribeDocumentDefinition
                     "horiz k is the set of column pairs (j, j+1) of a row of width k; a pair whose "
                     + "two cells carry the same colour is a horizontal mistake."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("a229637-bond-row"),
-                DeclarationHandle.Create(Prefix + "bond_row"),
-                H("Counting monochromatic horizontal bonds"),
-                StatementSource.FromAuthor(Disp(BondRowFormula())), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "The filtered positions are those with an equal-coloured cell immediately "
-                    + "to their right. The successor is taken on the natural-valued column indices."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a229637-between-bonds"),
                 DeclarationHandle.Create(Prefix + "betw"),
                 H("Diagonal and antidiagonal bonds between rows"),
@@ -84,37 +74,4 @@ internal sealed class HardinA229637RowColumnDocument : IScribeDocumentDefinition
                     + "k, and the combination of these equations whose quadratic and linear parts "
                     + "cancel gives 8 = 0."))),
                 DescribeRole.Theorem))));
-
-    private static Formula BondRowFormula()
-    {
-        var k = V("k");
-        var r = V("r");
-        var i = V("i");
-        var j = V("j");
-        var columns = Call("Fin", k);
-        var colours = Call("Fin", D(3));
-        var next = Eq(Call("Fin.val", j),
-            new Formula.Binary(Call("Fin.val", i), FormulaBinaryOperator.Add, D(1)));
-        var equal = Eq(App(r, i), App(r, j));
-        var predicate = Fn("i", columns, Bind(Exists, "j", columns, And(next, equal)));
-        return Bind(Forall, "k", V("Nat"), Bind(Forall, "r", Seq(columns, Sp, To, Sp, colours),
-            Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.horiz", k), r, r),
-                Call("Finset.card", Call("Finset.filter", predicate, Call("Finset.univ"))))));
-    }
-
-    private static Formula V(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
-    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, index) => index == 0
-        ? new[] { Seq(Operatorname, Grp(V(part))) }
-        : new[] { Dot, Seq(Operatorname, Grp(V(part))) }).ToArray());
-    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula Call(string name, params Formula[] args) =>
-        args.Length == 0 ? Q(name) : App(Q(name), args);
-    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
-    private static Formula Eq(Formula lhs, Formula rhs) => Seq(lhs, Sp, F.Eq, Sp, rhs);
-    private static Formula And(Formula lhs, Formula rhs) =>
-        Seq(Parenthesized(lhs), Sp, Land, Sp, Parenthesized(rhs));
-    private static Formula Bind(Formula quantifier, string name, Formula type, Formula body) =>
-        Seq(quantifier, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
-    private static Formula Fn(string name, Formula type, Formula body) =>
-        Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, Parenthesized(body));
 }
