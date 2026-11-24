@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockCreationTranslationAdjoint
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -19,6 +20,9 @@ open LatticeHalfFock LatticeHalfFockHermitian LatticeHalfFockChargedCoefficients
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockCreationTranslationAdjoint
 open MvPolynomial
 open scoped BigOperators
+
+open private oscillator_current_ward
+  from D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
 
 noncomputable section
 

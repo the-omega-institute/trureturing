@@ -399,7 +399,7 @@ private theorem oscillator_annihilation (D : LatticeData) (colour : Fin D.rank)
   simp only [oscillatorCoefficient_as_sum, half_translated_derivation]
   exact nativeCoefficientMap_annihilation D colour mode charge exponent _
 
-theorem oscillator_current_ward (D : LatticeData) (colour : Fin D.rank)
+private theorem oscillator_current_ward (D : LatticeData) (colour : Fin D.rank)
     (charge : Charge D) (mode exponent : ℤ) (polynomial : Oscillator D) :
     LatticeHalfFock.current D colour mode (oscillatorCoefficient D charge exponent polynomial) -
       oscillatorCoefficient D charge exponent (LatticeHalfFock.current D colour mode polynomial) =

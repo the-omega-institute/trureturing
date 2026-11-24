@@ -248,7 +248,7 @@ private theorem shiftField_zero (D : LatticeData) (hu : IsUnit D.G.det)
   rw [shiftField_coefficient_public]
   simp only [Nat.cast_zero, mul_zero, add_zero]
 
-theorem quadratic_field (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem quadratic_field (D : LatticeData) (hu : IsUnit D.G.det)
     (i j : Fin D.rank) :
     correctedField D hu (Finsupp.single 0 (X (i, 0) * X (j, 0))) =
       singletonLinear D hu (i, 0) (tensorCurrentField D (ActualGround D hu) j) +
@@ -266,7 +266,7 @@ theorem quadratic_field (D : LatticeData) (hu : IsUnit D.G.det)
     rw [MvPolynomial.smul_eq_C_mul, mul_one]
   rw [constant, map_smul, polynomialField_one, current_charged_zero_identity, map_smul]
 
-theorem normal_pair_coeff (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem normal_pair_coeff (D : LatticeData) (hu : IsUnit D.G.det)
     (i j : Fin D.rank) (e : ℤ) (v : ActualTensor D hu) :
     (singletonLinear D hu (i, 0) (tensorCurrentField D (ActualGround D hu) j)).coeff e v =
       if e % 2 = 0 then
@@ -308,7 +308,7 @@ theorem normal_pair_coeff (D : LatticeData) (hu : IsUnit D.G.det)
       split_ifs <;> simp [tensorEnd]
     simp only [zero, finsum_zero]
 
-theorem shift_identity_coeff (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem shift_identity_coeff (D : LatticeData) (hu : IsUnit D.G.det)
     (e : ℤ) (v : ActualTensor D hu) :
     (shiftField D hu 2 FieldNormalProduct.identityField).coeff e v =
       if e = -4 then v else 0 := by

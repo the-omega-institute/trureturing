@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.HalfFock.NormFourFirstGradeSpectrum
 import D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockChargedHermitian
 import D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockSugawaraHermitian
+import Batteries.Tactic.OpenPrivate
 
 /-! Hermitian adjoints on the actual algebraic negative-parity HalfFock sector. -/
 
@@ -20,13 +21,16 @@ namespace D5.S3.VertexAlgebra.HalfFock.NormFourAxisAdjoint
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
 open LatticeHalfFock LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockFockNormalField LatticeHalfFockCorrectedField
-open LatticeHalfFockCorrectedConformal (quadratic_field normal_pair_coeff shift_identity_coeff)
-open NormFourLowestGrades (charge_square_expansion)
 open LatticeHalfFockTensorHermitian LatticeHalfFockChargedHermitian
 open LatticeHalfFockSugawaraHermitian
 open LatticeHalfFockParityField NormFourFirstGradeSpectrum
 open _root_.D5.S3.VertexAlgebra.Lattice MvPolynomial
 open scoped BigOperators TensorProduct VertexOperator
+
+open private quadratic_field normal_pair_coeff shift_identity_coeff
+  from D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
+open private tensor_normalSum from D5.S3.VertexAlgebra.LatticeHalfFockTensorFields
+open private charge_square_expansion from D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
 
 noncomputable section
 
