@@ -58,7 +58,7 @@ def family : Registration arena (type_of% @cross_relabel) where
       refine ⟨rejected i, ?_, rfl, rejected_law i⟩
       intro j hj
       funext w r
-      simp only [rejected, realize, if_neg hj]
+      simp [rejected, realize, hj]
     · intro e
       exact nomatch e
   dependence := by
@@ -90,8 +90,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[
-      { path := #["body", "body", "body", "fn", "arg"], stateBinder := 2 },
-      { path := #["body", "body", "body", "arg"], stateBinder := 2 }] }
+      { path := #["body", "body", "body", "fn", "arg"], stateBinder := 2,
+        functionOperand := false, stateOperand := none, booleanPredicate := false },
+      { path := #["body", "body", "body", "arg"], stateBinder := 2,
+        functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
