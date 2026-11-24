@@ -10,6 +10,8 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorModel
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalTails
 
+/-! Fixed-point enclosures for marginal and tilted joint moments. -/
+
 namespace RefinedBMV.PositiveCenter.CompactTaylorModel
 
 open DimThree (evalTerms)
@@ -80,16 +82,16 @@ private def recenterSpacingInts : List ℤ → List ℤ
   | b :: bs => addSpacingShift b (recenterSpacingInts bs)
 
 private theorem addSpacingShift_cast (b : ℤ) (bs : List ℤ) :
-    (addSpacingShift b bs).map (fun c => (c : ℚ)) =
-      coeffAdd (bs.map fun c => (c : ℚ)) ((b : ℚ) :: bs.map fun c => (c : ℚ)) := by
+    (addSpacingShift b bs).map (fun c : ℤ => (c : ℚ)) =
+      coeffAdd (bs.map fun c : ℤ => (c : ℚ)) ((b : ℚ) :: bs.map fun c : ℤ => (c : ℚ)) := by
   induction bs generalizing b with
   | nil => rfl
   | cons c cs ih =>
     simp only [addSpacingShift, List.map_cons, coeffAdd, Int.cast_add, ih]
 
 private theorem recenterSpacingInts_cast (bs : List ℤ) :
-    (recenterSpacingInts bs).map (fun c => (c : ℚ)) =
-      SmallCorner.recenterMomentCoeffs 1 (bs.map fun c => (c : ℚ)) := by
+    (recenterSpacingInts bs).map (fun c : ℤ => (c : ℚ)) =
+      SmallCorner.recenterMomentCoeffs 1 (bs.map fun c : ℤ => (c : ℚ)) := by
   induction bs with
   | nil => rfl
   | cons b bs ih =>
@@ -106,13 +108,13 @@ private def roundSpacingInput (m : ℚ) : List ℚ → List ℤ
 
 private theorem roundSpacingInput_sound (w : ℝ) (hw : |w| ≤ 2) (m : ℚ) (cs : List ℚ) :
     |(m : ℝ) * momentHorner ((3 / 22 : ℝ) * w) cs -
-      momentHorner w ((roundSpacingInput m cs).map fun b => (b : ℚ))| ≤
+      momentHorner w ((roundSpacingInput m cs).map fun b : ℤ => (b : ℚ))| ≤
       ((2 : ℝ) ^ cs.length - 1) / 2 := by
   induction cs generalizing m with
   | nil => simp [roundSpacingInput, momentHorner]
   | cons c cs ih =>
     let err := ((m * (3 / 22 : ℚ) : ℚ) : ℝ) * momentHorner ((3 / 22 : ℝ) * w) cs -
-      momentHorner w ((roundSpacingInput (m * (3 / 22)) cs).map fun b => (b : ℚ))
+      momentHorner w ((roundSpacingInput (m * (3 / 22)) cs).map fun b : ℤ => (b : ℚ))
     have hhead : |(m : ℝ) * (c : ℝ) - (round (m * c) : ℝ)| ≤ 1 / 2 := by
       have hq := (Rat.cast_mono (K := ℝ)) (abs_sub_round (m * c))
       simpa only [Rat.cast_abs, Rat.cast_sub, Rat.cast_mul, Rat.cast_intCast,
@@ -123,7 +125,7 @@ private theorem roundSpacingInput_sound (w : ℝ) (hw : |w| ≤ 2) (m : ℚ) (cs
     rw [show (m : ℝ) * ((c : ℝ) + (3 / 22 : ℝ) * w *
             momentHorner ((3 / 22 : ℝ) * w) cs) -
           ((round (m * c) : ℝ) +
-            w * momentHorner w ((roundSpacingInput (m * (3 / 22)) cs).map fun b => (b : ℚ))) =
+            w * momentHorner w ((roundSpacingInput (m * (3 / 22)) cs).map fun b : ℤ => (b : ℚ))) =
         ((m : ℝ) * (c : ℝ) - (round (m * c) : ℝ)) + w * err by
       simp only [err, Rat.cast_mul, Rat.cast_div, Rat.cast_ofNat]
       ring]
@@ -147,7 +149,7 @@ private def shortSpacingFactor (cs : List ℚ) : ℚ := (scale : ℚ) * 2 ^ cs.l
 private def shortSpacingCoeffs (cs : List ℚ) : List ℚ :=
   let B := shortSpacingFactor cs
   let bs := roundSpacingInput B cs
-  (recenterSpacingInts bs).map fun b => (b : ℚ) / B
+  (recenterSpacingInts bs).map fun b : ℤ => (b : ℚ) / B
 
 private theorem shortSpacingCoeffs_sound (cs : List ℚ) {z h : ℝ}
     (hz : |z| ≤ 1) (hh : h = (3 / 22 : ℝ) + (3 / 22 : ℝ) * z) :
@@ -155,7 +157,7 @@ private theorem shortSpacingCoeffs_sound (cs : List ℚ) {z h : ℝ}
       (1 / 2 : ℝ) / (scale : ℝ) := by
   let B := shortSpacingFactor cs
   let bs := roundSpacingInput B cs
-  let qs := bs.map fun b => (b : ℚ)
+  let qs := bs.map fun b : ℤ => (b : ℚ)
   have hB : (B : ℝ) = (scale : ℝ) * (2 : ℝ) ^ cs.length := by
     simp only [B, shortSpacingFactor, Rat.cast_mul, Rat.cast_natCast, Rat.cast_pow, Rat.cast_ofNat]
   have hBpos : 0 < (B : ℝ) := by
@@ -166,9 +168,9 @@ private theorem shortSpacingCoeffs_sound (cs : List ℚ) {z h : ℝ}
       _ ≤ |(1 : ℝ)| + |z| := abs_add_le ..
       _ ≤ 2 := by rw [abs_one]; linarith
   have heval : momentHorner z (shortSpacingCoeffs cs) = momentHorner (1 + z) qs / (B : ℝ) := by
-    change momentHorner z ((recenterSpacingInts bs).map fun b => (b : ℚ) / B) = _
-    rw [show ((recenterSpacingInts bs).map fun b => (b : ℚ) / B) =
-          ((recenterSpacingInts bs).map fun b => (b : ℚ)).map (fun c => c / B) by
+    change momentHorner z ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ) / B) = _
+    rw [show ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ) / B) =
+          ((recenterSpacingInts bs).map fun b : ℤ => (b : ℚ)).map (fun c => c / B) by
         simp only [List.map_map, Function.comp_apply],
       momentHorner_div, recenterSpacingInts_cast]
     simpa only [Rat.cast_one, one_mul] using

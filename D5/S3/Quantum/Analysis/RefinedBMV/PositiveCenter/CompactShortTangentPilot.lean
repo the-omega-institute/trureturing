@@ -89,13 +89,12 @@ local cbv_simproc cbv_eval stageMidpointCoefficients
 -- Collect each scaled Taylor list with a single kernel-checked equality per operation.
 local cbv_simproc cbv_eval stageCoeffScale (coeffScale _ _) := stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageCoeffAdd (coeffAdd _ _) := stageLiteral (List Rat)
-local cbv_simproc cbv_eval stageRecenter (SmallCorner.recenterMomentCoeffs _ _) :=
-  stageLiteral (List Rat)
+local cbv_simproc cbv_eval stageShortSpacing (Model.shortSpacing _) := stageModel
 local cbv_simproc cbv_eval stageLowerCheck (CompactShortBox.lowerCheck _ _ _) :=
   stageOnModels 1 (stageLiteral Bool)
 
 attribute [local cbv_opaque] Model.add Model.sub Model.mul Model.lower Model.absUpper
-attribute [local cbv_opaque] SmallCorner.recenterMomentCoeffs
+attribute [local cbv_opaque] Model.shortSpacing
 
 private def pilotBox : CompactShortBox := ⟨63 / 16, 4, 7 / 8, 1, 457 / 64, 27, 30, 6⟩
 
