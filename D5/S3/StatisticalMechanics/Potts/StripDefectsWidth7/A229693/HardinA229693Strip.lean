@@ -50,7 +50,7 @@ exhausted_step: proof_shape=content; consumers=forward_step
 leading_action: proof_shape=bind-only; consumers=forward_step
 forward_step: proof_shape=content; consumers=forward_table
 forward_table: proof_shape=content; consumers=polynomial_relation
-leading_forward: proof_shape=bind-only; consumers=leading_polynomial
+leading_forward: proof_shape=bind-only; consumers=leading_polynomial._simp_1
 recurrence_convolution: proof_shape=bind-only; consumers=leading_polynomial
 leading_polynomial: proof_shape=bind-only; consumers=polynomial_relation
 w_copied: proof_shape=bind-only; consumers=polynomial_relation
