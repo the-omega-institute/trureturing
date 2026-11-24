@@ -15,6 +15,10 @@ internal sealed class HardinA203981StripDocument : IScribeDocumentDefinition
             H("Literal row-major canonical count"), StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("HardinA203981Strip.a", V("n")), Call("Finset.card", Call("Finset.filter", Fn("f", Arr(Prod(Call("Fin", Add(V("n"), N("1"))), Fin("6")), Fin("3")), And(Eq(Call("DefectTransfer.defects", Call("Finset.empty"), Call("HardinA229637RowColumn.betw", N("6")), Call("List.ofFn", Fn("i", Call("Fin", Add(V("n"), N("1"))), Fn("j", Fin("6"), App(V("f"), Pair(V("i"), V("j"))))))), N("0")), All("p", Prod(Call("Fin", Add(V("n"), N("1"))), Fin("6")), All("c", Fin("3"), Imp(Lt(V("c"), App(V("f"), V("p"))), Ex("q", Prod(Call("Fin", Add(V("n"), N("1"))), Fin("6")), And(Lt(Add(Mul(N("6"), Call("Fin.val", Call("Prod.fst", V("q")))), Call("Fin.val", Call("Prod.snd", V("q")))), Add(Mul(N("6"), Call("Fin.val", Call("Prod.fst", V("p")))), Call("Fin.val", Call("Prod.snd", V("p"))))), Eq(App(V("f"), V("q")), V("c"))))))))), Call("Finset.univ"))))))),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The arrays have one more row than the sequence index. The order is the one induced by the row-major index 6i+j, with colours introduced in increasing order. The published sequence starts at index one. The literal filter here also defines index zero."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("scale-count-of-bonds"), DeclarationHandle.Create(Prefix + "scale_count_of_bonds"),
+            H("Exact orbit scaling at positive width"), StatementSource.FromAuthor(Disp(ScaleCountOfBondsFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("The width is w plus one. H gives the bonds within a row, and V gives the bonds between consecutive rows. A constant array has one copy of H in each row and one copy of V per row pair. At that budget the three constant labelled arrays give one canonical array. Each nonconstant orbit contributes six labellings. Positive width supplies a cell at which to distinguish the three constant arrays."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("scale-count"), DeclarationHandle.Create(Prefix + "scale_count"),
             H("Exact conversion from labelled to canonical arrays"), StatementSource.FromAuthor(Disp(All("m", V("Nat"), All("d", V("Nat"), Eq(Add(App(new Formula.Subscript(Call("DefectTransfer.literalCount"), N("3")), Call("Finset.empty"), Call("HardinA229637RowColumn.betw", N("6")), V("d"), Add(V("m"), N("1"))), Correction(Eq(V("d"), Mul(V("m"), N("10"))))), Mul(N("6"), Call("Finset.card", Call("Finset.filter", Fn("f", Arr(Prod(Call("Fin", Add(V("m"), N("1"))), Fin("6")), Fin("3")), And(Eq(Call("DefectTransfer.defects", Call("Finset.empty"), Call("HardinA229637RowColumn.betw", N("6")), Call("List.ofFn", Fn("i", Call("Fin", Add(V("m"), N("1"))), Fn("j", Fin("6"), App(V("f"), Pair(V("i"), V("j"))))))), V("d")), All("p", Prod(Call("Fin", Add(V("m"), N("1"))), Fin("6")), All("c", Fin("3"), Imp(Lt(V("c"), App(V("f"), V("p"))), Ex("q", Prod(Call("Fin", Add(V("m"), N("1"))), Fin("6")), And(Lt(Add(Mul(N("6"), Call("Fin.val", Call("Prod.fst", V("q")))), Call("Fin.val", Call("Prod.snd", V("q")))), Add(Mul(N("6"), Call("Fin.val", Call("Prod.fst", V("p")))), Call("Fin.val", Call("Prod.snd", V("p"))))), Eq(App(V("f"), V("q")), V("c"))))))))), Call("Finset.univ"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -27,6 +31,33 @@ internal sealed class HardinA203981StripDocument : IScribeDocumentDefinition
             H("Order-six recurrence"), StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("7")))), Sub(Add(Add(Sub(Sub(Mul(N("25"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("6"))))), Mul(N("45"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("5")))))), Mul(N("963"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("4")))))), Mul(N("2025"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("3")))))), Mul(N("3645"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("2")))))), Mul(N("6561"), CastInt(Call("HardinA203981Strip.a", Add(V("n"), N("1")))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The coefficient relation propagates under additional transfer steps. The displayed shift gives every index at least seven."))), DescribeRole.Theorem))));
+    private static Formula ScaleCountOfBondsFormula()
+    {
+        var w = Add(V("w"), N("1"));
+        var m = V("m");
+        var height = Add(m, N("1"));
+        var rows = Call("Fin", height);
+        var columns = Call("Fin", w);
+        var cells = Prod(rows, columns);
+        var bondSet = Call("Finset", Prod(columns, columns));
+        var h = V("H");
+        var v = V("V");
+        var d = V("d");
+        var f = V("f");
+        var values = Call("List.ofFn", Fn("i", rows, Fn("j", columns, App(f, Pair(V("i"), V("j"))))));
+        Formula Index(Formula cell) => Add(Mul(w, Call("Fin.val", Call("Prod.fst", cell))),
+            Call("Fin.val", Call("Prod.snd", cell)));
+        var canonical = All("p", cells, All("c", Fin("3"), Imp(Lt(V("c"), App(f, V("p"))),
+            Ex("q", cells, And(Lt(Index(V("q")), Index(V("p"))), Eq(App(f, V("q")), V("c")))))));
+        var selected = Fn("f", Arr(cells, Fin("3")),
+            And(Eq(Call("DefectTransfer.defects", h, v, values), d), canonical));
+        var labelled = App(new Formula.Subscript(Call("DefectTransfer.literalCount"), N("3")), h, v, d, height);
+        var constantCost = Add(Call("Finset.card", h), Mul(m, Add(Call("Finset.card", v), Call("Finset.card", h))));
+        var law = Eq(Add(labelled, Correction(Eq(d, constantCost))),
+            Mul(N("6"), Call("Finset.card", Call("Finset.filter", selected, Call("Finset.univ")))));
+        return All("w", V("Nat"), All("m", V("Nat"), All("d", V("Nat"), All("H", bondSet, All("V", bondSet, law)))));
+    }
+
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Neg, Sp, N(digits)) :
         D(digits.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
