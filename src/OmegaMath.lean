@@ -20,6 +20,7 @@ public import OmegaMath.Data.Int
 public import OmegaMath.Data.IntRatio
 public import OmegaMath.Data.Nat
 public import OmegaMath.Data.Ratio
+public import OmegaMath.Data.SnocList
 public import OmegaMath.Geometry.BargmannGram
 public import OmegaMath.Geometry.BargmannGram.Monomial
 public import OmegaMath.Geometry.BargmannGram.Polynomial
