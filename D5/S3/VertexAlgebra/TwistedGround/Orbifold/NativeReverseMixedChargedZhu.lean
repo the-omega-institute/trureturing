@@ -132,7 +132,7 @@ theorem oddTopHalfOscillator_injective (w : E D) (hw : w ≠ 0) :
 
 variable (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
 
-local instance (b : Bool) : AddCommGroup (twistedTop D hu b) :=
+local instance reverseTopAddCommGroup (b : Bool) : AddCommGroup (twistedTop D hu b) :=
   @Submodule.addCommGroup ℂ (Twisted D hu b) _ _ _ (twistedTop D hu b)
 
 /-- The signed charged Zhu identity for an arbitrary neutral current direction. -/
