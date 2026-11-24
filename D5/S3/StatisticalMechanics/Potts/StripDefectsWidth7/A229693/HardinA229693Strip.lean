@@ -793,8 +793,10 @@ private theorem scale_count (m : ℕ) :
     have he : f = fun _ => f (0, 0) := funext fun i => h i (0, 0)
     change defects horizontal antidiagonal _ = 2 at hf
     rw [he, List.ofFn_const, constant_defects] at hf
-    have hc : horizontal.card = 6 ∧ antidiagonal.card = 6 := by decide +kernel
-    rw [hc.1, hc.2] at hf
+    have hc : horizontal.card = 6 := by
+      rw [horizontal, Finset.card_image_of_injective, Finset.card_univ, Fintype.card_fin]
+      exact fun _ _ h => Fin.castSucc_inj.mp (congrArg Prod.fst h)
+    rw [hc] at hf
     omega
   have h := @canonical_pattern_card (Fin (m + 1) × Fin 7) inferInstance
     (HardinA229585Strip.cellOrder (m + 1)) s hinv huse
