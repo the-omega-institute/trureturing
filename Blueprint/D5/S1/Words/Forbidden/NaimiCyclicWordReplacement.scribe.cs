@@ -15,7 +15,7 @@ internal sealed class NaimiCyclicWordReplacementDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("naimi-positional-replacement-claim"),
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("Positional replacement by a bijection"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Section 8 of Ramin Naimi's Swapping Compatible Words, "
