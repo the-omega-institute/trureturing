@@ -852,10 +852,11 @@ private theorem zero_coordinates (p : Boundary) (s : Fin 168)
     have hv : HardinA229635State.Valid (boundary r) 1 := by
       change HardinA229635State.h (boundary r) + 1 ≤ 2
       omega
+    have hindex := zeroBudgetClass_ge k
     have h := congrArg Fin.val he
     simp only [cl, ite_true, Fin.val_natAdd, exhaustedClass, hv, oldZeroImage, hk,
-      zeroBudgetClass_ge, dite_true, Fin.val_castAdd, Fin.val_subNat] at h
-    exact hs k (by have := zeroBudgetClass_ge k; omega)
+      hindex, dite_true, Fin.val_castAdd, Fin.val_subNat] at h
+    exact hs k (by omega)
   · by_contra h
     have he : T ((exhaustedClass p).natAdd 72) s ≠ 0 := h
     obtain ⟨k, hk⟩ := exhausted_support (exhaustedClass p) s he
