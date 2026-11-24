@@ -24,6 +24,8 @@ public import Mathlib.Data.Finset.Max
 Faithful source port from LeanPool/lean-pool, revision d7dcd3c02cf0e220932dd033d5cc2353933d754b,
 LeanPool/HardSphereNBC/NBCMatroid.lean (SHA-256 52db754a8119adb22a04682e30f3936c39ea90c29e75b33876e2c7b7ed28e861).
 The proof mechanism is retained with namespace, visibility, target-presentation, and pinned-version adaptations.
+The full Apache-2.0 text and upstream notice are recorded in
+docs/reports/licenses/finite-matroid-nbc-third-party.md.
 Retire this port when the pinned Mathlib supplies an equivalent finite-matroid cancellation theorem.
 -/
 
