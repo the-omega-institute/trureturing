@@ -3,9 +3,15 @@
    mirror-B: D5/B/S3/Combinatorics/Matroids/Steiner/SteinerSevenPasch
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Matroids/Steiner/SteinerSevenPasch.two_dimensional_claim; result=D5/S3/Combinatorics/Matroids/Steiner/SteinerSevenPasch.result; claim=D5/S3/Combinatorics/Matroids/Steiner/SteinerSevenPasch.two_dimensional_claim
    digest: A 19-point Steiner system has exactly the seven Pasches of one Fano subsystem. -/
 
+import D5.S3.Combinatorics.Matroids.Steiner.SteinerRamseyObstruction
+import Mathlib.Algebra.Group.Center
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Tactic.Abel
+import Mathlib.Data.List.FinRange
+import Mathlib.Data.Finset.Image
 import Lean
 
 /-! A finite Steiner loop for checking the dimension-two endpoint. -/
@@ -199,5 +205,312 @@ private theorem every_binary_plane_has_zero_combination (a b c : BitVec 2) :
       a ^^^ b ^^^ c = 0 := by
   revert a b c
   decide
+
+local instance : Mul Point := ⟨pointProduct⟩
+
+private theorem centreless : Set.center Point = {0} := by
+  ext p
+  rw [Set.mem_center_iff, Set.mem_singleton_iff]
+  constructor
+  · intro central
+    by_contra h
+    obtain ⟨x, y, failure⟩ := associator p h
+    exact failure (central.left_assoc x y).symm
+  · rintro rfl
+    have right (p : Point) : p * 0 = p := (comm p 0).trans (unit p)
+    exact ⟨fun p => comm 0 p, fun x y => by simp only [show ∀ p : Point, 0 * p = p from unit],
+      fun x y => by simp only [right]⟩
+
+private def blockSet (i : Fin 57) : Set Point := {x | x ∈ blocks[i.val]}
+
+private noncomputable def paschSet (i : Fin 7) : Finset (Set Point) := by
+  classical
+  exact (paschRows[i.val]).toFinset.image blockSet
+
+private noncomputable def startPasch (p q a : Point) : Finset (Set Point) := by
+  classical
+  let b := q * a
+  let c := p * b
+  let d := q * c
+  exact {{q, a, b}, {p, b, c}, {q, c, d}, {p, d, a}}
+
+private theorem to_pasch_set {p q a : Point} {i : Fin 7} (h : IsStart p q a)
+    (reads : ∀ j : Fin 57, j ∈ edgeBlocks p q a ↔ j ∈ paschRows[i.val]) :
+    startPasch p q a = paschSet i := by
+  classical
+  let b := pointProduct q a
+  let c := pointProduct p b
+  let d := pointProduct q c
+  have distinct : [0, p, q, a, b, c, d].Nodup := h.1
+  have close : pointProduct p d = a := h.2
+  simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,
+    not_false_eq_true, List.nodup_nil, and_true] at distinct
+  have read {u v : Point} (hu : u ≠ 0) (hv : v ≠ 0) (hne : u ≠ v) :
+      blockSet (blockNumber u v) = {u, v, pointProduct u v} := by
+    ext x
+    simpa [blockSet] using read_block u v x hu hv hne
+  have one := read (u := q) (v := a) (by tauto) (by tauto) (by tauto)
+  have two := read (u := p) (v := b) (by tauto) (by tauto) (by tauto)
+  have three := read (u := q) (v := c) (by tauto) (by tauto) (by tauto)
+  have four := read (u := p) (v := d) (by tauto) (by tauto) (by tauto)
+  have codes : (edgeBlocks p q a).toFinset = (paschRows[i.val]).toFinset :=
+    Finset.ext fun j => by simpa only [List.mem_toFinset] using reads j
+  unfold paschSet
+  rw [← codes]
+  change startPasch p q a = ([blockNumber q a, blockNumber p b, blockNumber q c,
+    blockNumber p d].toFinset).image blockSet
+  change {{q, a, b}, {p, b, c}, {q, c, d}, {p, d, a}} = _
+  rw [List.toFinset_cons, List.toFinset_cons, List.toFinset_cons, List.toFinset_cons,
+    List.toFinset_nil, Finset.image_insert, Finset.image_insert, Finset.image_insert,
+    Finset.image_insert, Finset.image_empty, one, two, three, four, close]
+  rfl
+
+private theorem represented (p q a : Point) (h : IsStart p q a) :
+    ∃ i : Fin 7, startPasch p q a = paschSet i := by
+  obtain ⟨i, hi⟩ := covers_pasch p q a h
+  exact ⟨i, to_pasch_set h hi⟩
+
+private abbrev Fibre := Fin 2 → ZMod 2
+
+private theorem fibre_twice (v : Fibre) : v + v = 0 := by
+  have twice : ∀ a : ZMod 2, a + a = 0 := by decide
+  funext i
+  exact twice (v i)
+
+private theorem fibre_relation :
+    ∀ x y z : Fibre, x = 0 ∨ y = 0 ∨ z = 0 ∨ x + y = 0 ∨ x + z = 0 ∨
+      y + z = 0 ∨ x + y + z = 0 := by
+  decide
+
+private def rowValue (labels : Set Point → Fibre) (i : Fin 7) : Fibre :=
+  (paschRows[i.val].map (labels ∘ blockSet)).sum
+
+private theorem some_row_zero (labels : Set Point → Fibre) :
+    ∃ i : Fin 7, rowValue labels i = 0 := by
+  let f (i : Fin 57) := labels (blockSet i)
+  let x := f 0 + f 1 + f 3 + f 6
+  let y := f 0 + f 1 + f 4 + f 5
+  let z := f 0 + f 2 + f 3 + f 5
+  have hxy : x + y = rowValue labels 6 := by
+    change (f 0 + f 1 + f 3 + f 6) + (f 0 + f 1 + f 4 + f 5) =
+      f 3 + (f 4 + (f 5 + (f 6 + 0)))
+    calc
+      _ = (f 3 + (f 4 + (f 5 + (f 6 + 0)))) + (f 0 + f 0) + (f 1 + f 1) := by abel
+      _ = _ := by simp [fibre_twice]
+  have hxz : x + z = rowValue labels 5 := by
+    change (f 0 + f 1 + f 3 + f 6) + (f 0 + f 2 + f 3 + f 5) =
+      f 1 + (f 2 + (f 5 + (f 6 + 0)))
+    calc
+      _ = (f 1 + (f 2 + (f 5 + (f 6 + 0)))) + (f 0 + f 0) + (f 3 + f 3) := by abel
+      _ = _ := by simp [fibre_twice]
+  have hyz : y + z = rowValue labels 4 := by
+    change (f 0 + f 1 + f 4 + f 5) + (f 0 + f 2 + f 3 + f 5) =
+      f 1 + (f 2 + (f 3 + (f 4 + 0)))
+    calc
+      _ = (f 1 + (f 2 + (f 3 + (f 4 + 0)))) + (f 0 + f 0) + (f 5 + f 5) := by abel
+      _ = _ := by simp [fibre_twice]
+  have hxyz : x + y + z = rowValue labels 3 := by
+    rw [hxy]
+    change (f 3 + (f 4 + (f 5 + (f 6 + 0)))) + (f 0 + f 2 + f 3 + f 5) =
+      f 0 + (f 2 + (f 4 + (f 6 + 0)))
+    calc
+      _ = (f 0 + (f 2 + (f 4 + (f 6 + 0)))) + (f 3 + f 3) + (f 5 + f 5) := by abel
+      _ = _ := by simp [fibre_twice]
+  rcases fibre_relation x y z with h | h | h | h | h | h | h
+  · refine ⟨0, ?_⟩
+    change f 0 + (f 1 + (f 3 + (f 6 + 0))) = 0
+    simpa [x, add_assoc] using h
+  · refine ⟨1, ?_⟩
+    change f 0 + (f 1 + (f 4 + (f 5 + 0))) = 0
+    simpa [y, add_assoc] using h
+  · refine ⟨2, ?_⟩
+    change f 0 + (f 2 + (f 3 + (f 5 + 0))) = 0
+    simpa [z, add_assoc] using h
+  · exact ⟨6, hxy.symm.trans h⟩
+  · exact ⟨5, hxz.symm.trans h⟩
+  · exact ⟨4, hyz.symm.trans h⟩
+  · exact ⟨3, hxyz.symm.trans h⟩
+
+private theorem representative_nodup :
+    ∀ i : Fin 7,
+      let (p, q, a) := representatives[i.val]
+      (edgeBlocks p q a).Nodup ∧ (paschRows[i.val]).Nodup := by decide
+
+private theorem representative_values (labels : Set Point → Fibre) (i : Fin 7) :
+    let (p, q, a) := representatives[i.val]
+    ((edgeBlocks p q a).map (labels ∘ blockSet)).sum = rowValue labels i := by
+  rcases data : representatives[i.val] with ⟨p, q, a⟩
+  have pair := representative_nodup i
+  rw [data] at pair
+  have reads := read_pasch i
+  rw [data] at reads
+  exact (((List.perm_ext_iff_of_nodup pair.1 pair.2).mpr reads.2).map _).sum_eq
+
+open Function SimpleGraph
+open D5.S3.Combinatorics.Matroids.SteinerSchreierExtension (extensionMul factor)
+open D5.S3.Combinatorics.Matroids.Steiner.SteinerPaschSwitchCount (loopPivotMatchings)
+open D5.S3.Combinatorics.Matroids.Steiner.SteinerRamseyObstruction
+  (switchCount switchCount_eq improve)
+
+private theorem representative_outside :
+    ∀ i : Fin 7, let (p, q, a) := representatives[i.val]
+      a ∉ ([0, p, q, pointProduct p q] : List Point) := by decide
+
+private theorem special_closed :
+    ∀ p q x : Point, x ∈ [0, p, q, pointProduct p q] →
+      pointProduct p x ∈ [0, p, q, pointProduct p q] ∧
+        pointProduct q x ∈ [0, p, q, pointProduct p q] := by decide +kernel
+
+private theorem stationary_on_zero_row {p q a : Point}
+    (labels : Set Point → Fibre) (h : IsStart p q a)
+    (zero : ((edgeBlocks p q a).map (labels ∘ blockSet)).sum = 0) :
+    letI := extensionMul 0 labels
+    (fun u : Point × Fibre => (p, 0) * ((q, 0) * u))^[2] (a, 0) = (a, 0) := by
+  let _ := extensionMul 0 labels
+  let b := q * a
+  let c := p * b
+  let d := q * c
+  have close : p * d = a := h.2
+  have distinct : [0, p, q, a, b, c, d].Nodup := h.1
+  simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,
+    not_false_eq_true, List.nodup_nil, and_true] at distinct
+  have step (u v : Point) (hu : u ≠ 0) (hv : v ≠ 0) (different : u ≠ v) (z : Fibre) :
+      (u, 0) * (v, z) = (u * v, z + labels (blockSet (blockNumber u v))) := by
+    have triple : blockSet (blockNumber u v) = ({u, v, u * v} : Set Point) := by
+      ext x
+      change (x ∈ blocks[(blockNumber u v).val]) ↔ x ∈ ({u, v, pointProduct u v} : Set Point)
+      simpa using read_block u v x hu hv different
+    change (u * v, 0 + z + factor 0 labels u v) = _
+    rw [zero_add, factor, ite_eq_right (by tauto), triple]
+    rfl
+  let f (u v : Point) := labels (blockSet (blockNumber u v))
+  have first := step q a (by tauto) (by tauto) (by tauto) 0
+  have second := step p b (by tauto) (by tauto) (by tauto) (0 + f q a)
+  have third := step q c (by tauto) (by tauto) (by tauto) (0 + f q a + f p b)
+  have fourth := step p d (by tauto) (by tauto) (by tauto) (0 + f q a + f p b + f q c)
+  change (p, 0) * ((q, 0) * ((p, 0) * ((q, 0) * (a, (0 : Fibre))))) = (a, 0)
+  rw [first, second, third, fourth, close]
+  congr 1
+  change f q a + (f p b + (f q c + (f p d + 0))) = 0 at zero
+  simpa only [zero_add, add_zero, add_assoc] using zero
+
+private theorem representative_beats (labels : Set Point → Fibre) :
+    ∃ p q : Point, p ≠ 0 ∧ q ≠ 0 ∧ p ≠ q ∧
+      ∃ better : Set Point → Fibre, switchCount 0 p q labels < switchCount 0 p q better := by
+  classical
+  obtain ⟨i, vanishes⟩ := some_row_zero labels
+  rcases data : representatives[i.val] with ⟨p,q,a⟩
+  have computed := read_pasch i
+  have outside := representative_outside i
+  have value := representative_values labels i
+  rw [data] at computed outside value
+  have start : IsStart p q a := computed.1
+  have distinct := start.1
+  simp only [List.nodup_cons, List.mem_cons, List.not_mem_nil, not_or, or_false,
+    not_false_eq_true, List.nodup_nil, and_true] at distinct
+  have hp : p ≠ 0 := by tauto
+  have hq : q ≠ 0 := by tauto
+  have hpq : p ≠ q := by tauto
+  let M := loopPivotMatchings 0 p q unit comm invol hp hq hpq
+  have edges (u v : Point) : M.graph.Adj u v ↔ p * u = v ∨ q * u = v := Iff.rfl
+  have notReach : ¬ M.graph.Reachable 0 a := by
+    have stays {u : Point} (path : M.graph.Reachable 0 u) :
+        u ∈ ([0, p, q, pointProduct p q] : List Point) := by
+      rw [reachable_iff_reflTransGen] at path
+      induction path with
+      | refl => simp
+      | @tail u v _ adjacent hu =>
+        rcases (edges u v).mp adjacent with rfl | rfl
+        · exact (special_closed p q u hu).1
+        · exact (special_closed p q u hu).2
+    exact fun path => outside (stays path)
+  have differentComponent : M.graph.connectedComponentMk a ≠ M.graph.connectedComponentMk 0 :=
+    fun same => notReach (ConnectedComponent.exact same.symm)
+  have fixedPoint := stationary_on_zero_row labels start (value.trans vanishes)
+  obtain ⟨better, good⟩ := improve M.graph 0 p q a labels unit comm invol centreless
+    hp hq hpq edges differentComponent fixedPoint
+  refine ⟨p, q, hp, hq, hpq, better, ?_⟩
+  rw [switchCount_eq 0 p q labels unit comm invol centreless,
+    switchCount_eq 0 p q better unit comm invol centreless]
+  exact good
+
+private noncomputable def pasches {L : Type} [Mul L] (e : L) : Set (Finset (Set L)) := by
+  classical
+  exact {T | ∃ p q a b c d : L, [e, p, q, a, b, c, d].Nodup ∧
+    q * a = b ∧ p * b = c ∧ q * c = d ∧ p * d = a ∧
+    T = {{q, a, b}, {p, b, c}, {q, c, d}, {p, d, a}}}
+
+
+private theorem first_blocks_separated :
+    ∀ i j : Fin 57, i.val < 7 → j.val < 7 → i ≠ j →
+      ∃ x : Point, ¬ (x ∈ blocks[i.val] ↔ x ∈ blocks[j.val]) := by decide +kernel
+
+private theorem row_ids_small :
+    ∀ i : Fin 7, ∀ j : Fin 57, j ∈ paschRows[i.val] → j.val < 7 := by decide
+
+private theorem rows_separated :
+    ∀ i j : Fin 7, i ≠ j → ∃ t : Fin 57, t ∈ paschRows[i.val] ∧ t ∉ paschRows[j.val] := by
+  decide
+
+private theorem pasch_set_injective : Function.Injective paschSet := by
+  classical
+  intro i j equal
+  by_contra different
+  obtain ⟨t, present, absent⟩ := rows_separated i j different
+  have mem : blockSet t ∈ paschSet i :=
+    Finset.mem_image.mpr ⟨t, List.mem_toFinset.mpr present, rfl⟩
+  rw [equal] at mem
+  obtain ⟨u, hu, he⟩ := Finset.mem_image.mp mem
+  have used := List.mem_toFinset.mp hu
+  have same : u = t := by
+    by_contra h
+    obtain ⟨x, separates⟩ :=
+      first_blocks_separated u t (row_ids_small j u used) (row_ids_small i t present) h
+    exact separates (Iff.of_eq (congrArg (fun S : Set Point => x ∈ S) he))
+  exact absent (same ▸ used)
+
+private theorem seven_pasches : (pasches (0 : Point)).ncard = 7 := by
+  classical
+  let listed := (Finset.univ : Finset (Fin 7)).image paschSet
+  have classified : pasches (0 : Point) = (listed : Set _) := by
+    ext T
+    constructor
+    · rintro ⟨p, q, a, b, c, d, distinct, hab, hbc, hcd, hda, eq⟩
+      subst b
+      subst c
+      subst d
+      obtain ⟨i, hi⟩ := represented p q a ⟨distinct, hda⟩
+      change T = startPasch p q a at eq
+      exact Finset.mem_image.mpr ⟨i, Finset.mem_univ _, (eq.trans hi).symm⟩
+    · intro member
+      obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp (show T ∈ listed from member)
+      rcases data : representatives[i.val] with ⟨p, q, a⟩
+      have checks := read_pasch i
+      rw [data] at checks
+      let b := q * a
+      let c := p * b
+      let d := q * c
+      exact ⟨p, q, a, b, c, d, checks.1.1, rfl, rfl, rfl, checks.1.2,
+        (to_pasch_set checks.1 checks.2).symm⟩
+  rw [classified, Set.ncard_coe_finset, Finset.card_image_of_injective _ pasch_set_injective]
+  simp
+
+/-- The dimension-two endpoint would guarantee a common maximum with at most seven Pasches. -/
+def two_dimensional_claim : Prop :=
+  ∀ (L : Type) [Finite L] [Mul L] (e : L),
+    (∀ x, e * x = x) → (∀ x y : L, x * y = y * x) →
+    (∀ x y : L, x * (x * y) = y) → Set.center L = {e} →
+    (pasches e).ncard ≤ 7 →
+    ∃ labels : Set L → Fibre, ∀ p q : L, p ≠ e → q ≠ e → p ≠ q →
+      ∀ other : Set L → Fibre, switchCount e p q other ≤ switchCount e p q labels
+
+/-- The 19-point instance refutes the inclusive seven-Pasch bound in fibre dimension two. -/
+theorem result : ¬ two_dimensional_claim := by
+  classical
+  intro claim
+  have cap : (pasches (0 : Point)).ncard ≤ 7 := seven_pasches.le
+  obtain ⟨labels, realizes⟩ := claim Point 0 unit comm invol centreless cap
+  obtain ⟨p, q, hp, hq, hpq, better, improved⟩ := representative_beats labels
+  exact (not_lt_of_ge (realizes p q hp hq hpq better)) improved
 
 end D5.S3.Combinatorics.Matroids.Steiner.SteinerSevenPasch
