@@ -12,6 +12,8 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripWideSign
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapReplay
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedFourKernel
+import D5.S3.Quantum.Analysis.RefinedBMV43
+import D5.S3.Quantum.Analysis.RefinedBMVExtremeAnalytic
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterBoundaryBridge
 
 /-! # The refined BMV lower bounds with three copies of the second factor -/
@@ -67,9 +69,61 @@ theorem exponential_bound {p : ℕ} (hp : 11 ≤ p) (H K : Matrix n n ℂ)
     trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) :=
   ExtremeWalk.exponential_bound_all (upperPSD.{u} hp) H K hH hK
 
+private theorem wordMean_three (A B : Matrix n n ℂ) :
+    DimThree.wordMean 3 A B = RefinedBMV.wordMean A B := by
+  rw [RefinedBMV.wordMean_eq_enumerated]
+  have hlength : (balancedWords 3 3).length = 20 := by simp [balancedWords]
+  simp only [DimThree.wordMean, hlength, Nat.cast_ofNat]
+
+private theorem wordMean_four (A B : Matrix n n ℂ) :
+    DimThree.wordMean 4 A B = mean43 A B := by
+  rw [mean43_eq_enumerated]
+  simp only [DimThree.wordMean, balancedWords43_count.1, Nat.cast_ofNat]
+
+/-- The refined product lower bound for every first count at least three
+and every finite complex matrix space. -/
+theorem product_bound_all {p : ℕ} (hp : 3 ≤ p) (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ DimThree.wordMean p A B := by
+  by_cases hlarge : 11 ≤ p
+  · exact product_bound hlarge A B hA hB
+  have hsmall : p ≤ 10 := by omega
+  interval_cases p
+  · rw [wordMean_three, show ((3 : ℕ) : ℝ) / 3 = 1 by norm_num, CFC.rpow_one A hA.nonneg]
+    exact E33_all A B hA hB
+  · simpa only [Nat.cast_ofNat, wordMean_four] using E43_all A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_five A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_six A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_seven A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_eight A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_nine A B hA hB
+  · simpa only [Nat.cast_ofNat] using Extreme.product_bound_ten A B hA hB
+
+/-- The refined exponential lower bound for every first count at least three
+and every finite complex matrix space. -/
+theorem exponential_bound_all {p : ℕ} (hp : 3 ≤ p) (H K : Matrix n n ℂ)
+    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) := by
+  by_cases hlarge : 11 ≤ p
+  · exact exponential_bound hlarge H K hH hK
+  have hsmall : p ≤ 10 := by omega
+  interval_cases p
+  · rw [wordMean_three]
+    exact (ThreeSpectralValues.trace_exp_le_cube H K hH hK).trans
+      (E33_all _ _ hH.isSelfAdjoint.exp_nonneg.posSemidef hK.isSelfAdjoint.exp_nonneg.posSemidef)
+  · simpa only [Nat.cast_ofNat, wordMean_four] using L43_all H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_five H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_six H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_seven H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_eight H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_nine H K hH hK
+  · simpa only [Nat.cast_ofNat] using Extreme.exponential_bound_ten H K hH hK
+
 #print axioms logKernel_mixed_neg
 #print axioms upperPSD
 #print axioms product_bound
 #print axioms exponential_bound
+#print axioms product_bound_all
+#print axioms exponential_bound_all
 
 end RefinedBMV.LargeDegree
