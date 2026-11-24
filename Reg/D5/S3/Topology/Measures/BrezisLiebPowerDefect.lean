@@ -19,12 +19,10 @@ namespace Reg.D5.S3.Topology.Measures.BrezisLiebPowerDefect
 
 universe u
 
-abbrev source_scope := type_of%
-  (@_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u})
-
-theorem source_actual : source_scope.{u} :=
+example : type_of%
+    (@_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u}) :=
   @_root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect.{u}
 
-#print axioms source_actual
+#print axioms _root_.D5.S3.Topology.Measures.BrezisLiebPowerDefect.brezis_lieb_power_defect
 
 end Reg.D5.S3.Topology.Measures.BrezisLiebPowerDefect
