@@ -1,12 +1,21 @@
 name: Compile a Lean Release layer
 description: Build the shared imports or one independent branch at the checked-out revision
 inputs:
+  generation:
+    description: Compile and publish the missing objects in a generation layer
+    default: 'false'
+  shared:
+    description: A common generation layer was built in this run
+    default: 'false'
   stage:
     description: common or the zero-based worker number
     required: true
 runs:
   using: composite
   steps:
+    - if: inputs.generation == 'true'
+      shell: bash
+      run: python3 .github/scripts/install-tools.py
     - uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
@@ -40,11 +49,11 @@ runs:
       run: |
         python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
         bash .github/actions/lean-compile-layer/prepare-dependencies.sh
-    - if: inputs.stage != 'common'
+    - if: inputs.stage != 'common' && inputs.generation != 'true'
       uses: ./.github/actions/lean-recover-layer
       with:
         stage: common
-    - if: inputs.stage != 'common'
+    - if: inputs.stage != 'common' && inputs.generation != 'true'
       name: Verify the recovered shared imports
       shell: bash
       run: |
@@ -53,16 +62,49 @@ runs:
         if [[ ${#targets[@]} -gt 0 ]]; then args=(--target "${targets[@]}"); fi
         python3 tools/scripts/worktree/lean_compile_layers.py verify --stage common --artifacts "$RUNNER_TEMP/lean-compile" "${args[@]}"
     - name: Compile the assigned targets and persist finished outputs
+      if: inputs.generation != 'true'
       uses: ./.github/actions/lean-compile-checkpoint
       env:
         GH_TOKEN: ${{ github.token }}
         STAGE: ${{ inputs.stage }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
-    - uses: actions/upload-artifact@v6
+    - if: inputs.generation != 'true'
+      uses: actions/upload-artifact@v6
       with:
         name: lean-compile-${{ github.run_id }}-${{ inputs.stage }}
         path: ${{ runner.temp }}/lean-compile/${{ inputs.stage }}.tar.gz
         compression-level: 0
+        if-no-files-found: error
+        overwrite: true
+        retention-days: 7
+
+    - if: inputs.generation == 'true'
+      uses: actions/download-artifact@v8
+      with:
+        name: lean-generation-plan-${{ github.run_id }}
+        path: ${{ runner.temp }}/generation-plan
+        digest-mismatch: error
+    - if: inputs.generation == 'true' && inputs.shared == 'true'
+      uses: actions/download-artifact@v8
+      with:
+        name: lean-generation-layer-${{ github.run_id }}-common
+        path: ${{ runner.temp }}/generation-common
+        digest-mismatch: error
+    - if: inputs.generation == 'true'
+      name: Restore this layer's imports, compile and stage its objects
+      env:
+        GH_TOKEN: ${{ github.token }}
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_CACHE_WRITES: 'true'
+        STAGE: ${{ inputs.stage }}
+      uses: ./.github/actions/lean-cache-shards
+      with:
+        operation: compile-generation
+    - if: inputs.generation == 'true'
+      uses: actions/upload-artifact@v6
+      with:
+        name: lean-generation-layer-${{ github.run_id }}-${{ inputs.stage }}
+        path: ${{ runner.temp }}/generation-layer/
         if-no-files-found: error
         overwrite: true
         retention-days: 7

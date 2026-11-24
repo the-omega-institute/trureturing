@@ -2,7 +2,7 @@ name: Transport Lean cache shards
 description: Restore or publish immutable project shard entries and a bound index
 inputs:
   operation:
-    description: Look up, restore or save project shards, save a producer continuation, or pack or adopt a PR preparation
+    description: Restore the published generation or transport project shards and producer continuations
     required: true
   state:
     description: Complete snapshot or producer continuation
@@ -33,6 +33,8 @@ outputs:
     description: All requested project shards present for the selected operation
   key:
     description: Immutable Actions snapshot index key
+  producer:
+    description: Protected dev commit that produced the selected complete seed
   visible:
     description: Distinct material keys physically listed on the index owner ref during lookup
   available:
