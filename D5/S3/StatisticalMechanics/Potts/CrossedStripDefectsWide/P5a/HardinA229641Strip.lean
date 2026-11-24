@@ -78,6 +78,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Algebra.BigOperators.Ring.List
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Monoid
@@ -521,7 +522,7 @@ private def seedImage₁ (k : Fin 23) (p : Column) : ℤ :=
 
 private theorem seed_image₁ (k : Fin 23) (p : Column) :
     oneDefect.mulVec (tableOne k) p = seedImage₁ k p := by
-  simp only [Matrix.mulVec, step_one Int.zero_mul, one_mul]
+  rw [Matrix.mulVec, step_one Int.zero_mul, List.sum_map_mul_left, one_mul]
   have checked : ∀ (n : Fin 23) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesOne col).map (tableOne n)).sum = seedImage₁ n col := by
@@ -552,7 +553,7 @@ private def seedImage₂ (k : Fin 12) (p : Column) : ℤ :=
 
 private theorem seed_image₂ (k : Fin 12) (p : Column) :
     twoDefect.mulVec (table k) p = seedImage₂ k p := by
-  simp only [Matrix.mulVec, step_two Int.zero_mul, one_mul]
+  rw [Matrix.mulVec, step_two Int.zero_mul, List.sum_map_mul_left, one_mul]
   have checked : ∀ (n : Fin 12) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesTwo col).map (table n)).sum = seedImage₂ n col := by
