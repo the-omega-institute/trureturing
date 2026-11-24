@@ -87,6 +87,84 @@ def registration :
   familyRecord := none
   options := #[]
 
+namespace Fold
+
+abbrev signature := UniverseSingleReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ q n => Real.cos (2 * Real.pi * (n : ℝ) / q)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => 2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V :=
+    let sample := fun (q n : ℕ) => V.readout () () q n
+    ∀ {q : ℕ} (k : Fin q), k.val ≠ 0 → ∃ n : ℕ, 1 ≤ n ∧ n ≤ q / 2 ∧
+      cyclicReadout q k = sample q n ∧ (n = k.val ∨ n = q - k.val)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  obtain ⟨n, _, _, he, _⟩ := law (⟨1, by decide⟩ : Fin 4) (by decide)
+  change Real.cos (2 * Real.pi * (↑(1 : ℕ) : ℝ) / (↑(4 : ℕ) : ℝ)) = 2 at he
+  norm_num only [Nat.cast_ofNat] at he
+  linarith only [he, Real.cos_le_one (2 * Real.pi * (1 : ℝ) / 4)]
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 4, 8, ?_⟩
+  intro he
+  have h := congrFun he 2
+  change Real.cos (2 * Real.pi * (↑(2 : ℕ) : ℝ) / (↑(4 : ℕ) : ℝ)) =
+    Real.cos (2 * Real.pi * (↑(2 : ℕ) : ℝ) / (↑(8 : ℕ) : ℝ)) at h
+  norm_num only [Nat.cast_ofNat] at h
+  rw [show 2 * Real.pi * 2 / 4 = Real.pi by ring,
+    show 2 * Real.pi * 2 / 8 = Real.pi / 2 by ring, Real.cos_pi, Real.cos_pi_div_two] at h
+  norm_num at h
+
+def evidence : Registration arena (type_of% @cyclic_fold) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@cyclic_fold, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@cyclic_fold) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Concentration.HighCosineThreshold.Fold.unit
+  realizationName := `Reg.D5.S3.Fourier.Concentration.HighCosineThreshold.Fold.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Concentration.HighCosineThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Fold
+
 end
 
 end Reg.D5.S3.Fourier.Concentration.HighCosineThreshold
