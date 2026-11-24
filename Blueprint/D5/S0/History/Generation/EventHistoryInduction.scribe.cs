@@ -36,7 +36,5 @@ internal sealed class EventHistoryInductionDocument : IScribeDocumentDefinition
                         + "a shorter history and one last event. The induction hypothesis gives "
                         + "P for the shorter history, and the append hypothesis gives P for the "
                         + "whole history."))),
-                DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(
-            GidRef.Create("D5/S0/History/HistoryCarrier"))]));
+                DescribeRole.Theorem))));
 }

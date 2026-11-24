@@ -19,4 +19,3 @@ The empty event history satisfies P. A nonempty history consists of a shorter hi
 ## References
 
 - Truth anchor: `D5/S0/History/Generation/EventHistoryInduction.event_history_induction`
-- Dependency: [D5/S0/History/HistoryCarrier](../HistoryCarrier.md)
