@@ -619,4 +619,16 @@ private theorem fourArm_not_avoidable (f : Copy deletedPath fourArm) : ¬ Avoida
     fun eq => ext.2.2.1 (congrArg Subtype.val eq)
   exact not_reachable_of_neighborSet_left_eq_empty hne isolated.neighborSet_eq_empty (h x y ext)
 
+/-- The four-arm host refutes the literal implication in Conjecture 6.4. -/
+public theorem result : ¬ claim := by
+  intro h
+  have degree_order : (pathGraph 6).degree 0 ≤ (pathGraph 6).degree 3 := by decide
+  have unique_neighbor : ∀ v, (pathGraph 6).Adj 0 v ↔ v = 1 := by decide
+  have deleted_inherent : Inherent deletedPath 0 3 :=
+    h 6 (pathGraph 6) 0 3 1 (by
+      simp only [← ncard_neighborSet] at degree_order ⊢
+      exact degree_order) (by decide) unique_neighbor path6_inherent
+  obtain ⟨f, hf⟩ := deleted_inherent 9 fourArm ⟨displayedCopy⟩
+  exact fourArm_not_avoidable f hf
+
 end GurvichLeafRootEdgeDeletionRefutation
