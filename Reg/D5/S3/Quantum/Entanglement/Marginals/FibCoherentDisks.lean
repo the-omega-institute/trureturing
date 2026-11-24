@@ -36,10 +36,10 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law Y := ∀ (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
-    (_ : 0 < b),
+  Law Y := ∀ (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ),
     CoherentExtendible b L R u v w ↔
-      Y.readout () () (L.trace + (b : ℂ)) 1 ∧ R.trace = L.trace ∧
+      0 ≤ b ∧ Y.readout () () (L.trace + (b : ℂ)) 1 ∧ R.trace = L.trace ∧
+      (b = 0 → middleRow u v w (selectedCoupling b L R u v w) = 0) ∧
       (L - partialTraceRight
         (correction b (middleRow u v w (selectedCoupling b L R u v w)))).PosSemidef ∧
       (R - partialTraceLeft
@@ -61,8 +61,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     refine ⟨zero_le_one, by simp, rfl, 0, fun _ => hr, ?_, ?_⟩
     · simpa [hr, correction, hleft] using (Matrix.PosSemidef.zero (n := Bool) (R := ℂ))
     · simpa [hr, correction, hright] using (Matrix.PosSemidef.zero (n := Bool) (R := ℂ)))
-  have hp : 0 < (1 : ℝ) := zero_lt_one
-  exact ((h 1 0 0 0 0 0 hp).mp he).1
+  exact ((h 1 0 0 0 0 0).mp he).2.1
 
 def family : Registration arena (type_of% @extendible_iff_selected) where
   actual := actual
@@ -100,8 +99,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

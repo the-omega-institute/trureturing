@@ -175,7 +175,8 @@ private theorem disk_spec (a e : ℝ) (c k z : ℂ) :
   by_cases ha : 0 < a
   · simp only [disk, ite_eq_left ha]
     rw [block_criterion, and_iff_right ha.le,
-      and_iff_right (fun h => (ha.ne' h).elim), sub_nonneg, div_le_iff₀ ha, mul_comm (e - normSq z) a]
+      and_iff_right (fun h => (ha.ne' h).elim), sub_nonneg, div_le_iff₀ ha,
+      mul_comm (e - normSq z) a]
     let h := a + normSq k
     let p := k*c / (h : ℂ)
     have hh : 0 < h := add_pos_of_pos_of_nonneg ha (normSq_nonneg _)
@@ -286,22 +287,31 @@ private theorem swapped_trace (b : ℝ) (u v w z : ℂ) :
 
 /-- The coupling given by the two residual disks. -/
 noncomputable def selectedCoupling (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) : ℂ :=
-  let left := edgeDisk b L u v w
-  let right := edgeDisk b R u w v
-  diskPoint left.1 right.1 left.2 right.2
+  if b = 0 then 0
+  else
+    let left := edgeDisk b L u v w
+    let right := edgeDisk b R u w v
+    diskPoint left.1 right.1 left.2 right.2
 
-/-- For positive middle weight, testing the selected coupling decides common extension. -/
-theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
-    (hb : 0 < b) :
+/-- Testing the selected coupling decides common extension, including zero middle weight. -/
+theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) :
     CoherentExtendible b L R u v w ↔
-      L.trace + (b : ℂ) = 1 ∧ R.trace = L.trace ∧
+      0 ≤ b ∧ L.trace + (b : ℂ) = 1 ∧ R.trace = L.trace ∧
+      (b = 0 → middleRow u v w (selectedCoupling b L R u v w) = 0) ∧
       (L - partialTraceRight
         (correction b (middleRow u v w (selectedCoupling b L R u v w)))).PosSemidef ∧
       (R - partialTraceLeft
         (correction b (middleRow u v w (selectedCoupling b L R u v w)))).PosSemidef := by
   rw [coherent_extendible_iff]
   constructor
-  · rintro ⟨_, hn, ht, z, _, hl, hr⟩
+  · rintro ⟨hb, hn, ht, z, hzero, hl, hr⟩
+    rcases hb.eq_or_lt with heq | hb
+    · subst b
+      have hz : z = 0 := congrFun (hzero rfl) (true, true)
+      subst z
+      simpa [selectedCoupling] using
+        And.intro (le_refl (0 : ℝ)) (And.intro hn (And.intro ht ⟨hzero rfl, hl, hr⟩))
+    refine ⟨hb.le, hn, ht, (fun heq => (hb.ne' heq).elim), ?_⟩
     have hc : (correction b (middleRow u v w z)).PosSemidef := by
       unfold correction
       exact (posSemidef_vecMulVec_star_self _).smul (inv_nonneg.mpr hb.le)
@@ -313,9 +323,10 @@ theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : 
     have hd := (diskPoint_iff (edgeDisk b L u v w).1 (edgeDisk b R u w v).1
       (edgeDisk b L u v w).2 (edgeDisk b R u w v).2).mp
       ⟨z, (edgeDisk_spec _ _ _ _ _ _ hb hL).mp hl, (edgeDisk_spec _ _ _ _ _ _ hb hR).mp hr⟩
-    exact ⟨hn, ht, (edgeDisk_spec _ _ _ _ _ _ hb hL).mpr hd.1,
-      (edgeDisk_spec _ _ _ _ _ _ hb hR).mpr hd.2⟩
-  · rintro ⟨hn, ht, hl, hr⟩
-    exact ⟨hb.le, hn, ht, _, fun h => (hb.ne' h).elim, hl, hr⟩
+    simpa only [selectedCoupling, ite_eq_right hb.ne'] using
+      And.intro ((edgeDisk_spec _ _ _ _ _ _ hb hL).mpr hd.1)
+        ((edgeDisk_spec _ _ _ _ _ _ hb hR).mpr hd.2)
+  · rintro ⟨hb, hn, ht, hzero, hl, hr⟩
+    exact ⟨hb, hn, ht, _, hzero, hl, hr⟩
 
 end D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks

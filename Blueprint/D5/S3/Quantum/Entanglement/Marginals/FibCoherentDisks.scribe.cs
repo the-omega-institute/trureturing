@@ -15,19 +15,17 @@ internal sealed class FibCoherentDisksDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Result), H("Testing one prescribed coupling"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume positive middle occupation. A common "
-                    + "positive semidefinite trace-one extension exists exactly when the two "
-                    + "endpoint block traces equal one minus the middle occupation and both "
-                    + "Schur residuals at the prescribed coupling are positive semidefinite. "
-                    + "These residuals and the subtracted outer-product marginals are Hermitian, "
-                    + "so positivity of the residuals also forces the endpoint blocks to be "
-                    + "Hermitian.")),
+                    "A common positive semidefinite trace-one extension exists exactly when "
+                    + "the middle occupation is nonnegative, the two endpoint block traces equal "
+                    + "one minus the middle occupation, the coupling row at the prescribed "
+                    + "coupling vanishes if the middle occupation is zero, and both Schur "
+                    + "residuals at that coupling are positive semidefinite.")),
                     Paragraph(Text(
-                    "At zero middle occupation the correction vanishes and positivity of the "
-                    + "joint state forces the entire coupling row to vanish. For example, both "
-                    + "endpoint blocks can be the vacuum projection with a nonzero "
-                    + "middle-to-vacuum coupling. The residuals then pass both positivity tests, "
-                    + "and the nonzero coupling rules out a common extension.")),
+                    "At zero middle occupation the prescribed coupling is zero. The correction "
+                    + "vanishes, so the residuals are the endpoint blocks. At positive middle "
+                    + "occupation, a positive semidefinite residual and the subtracted "
+                    + "outer-product marginal are both Hermitian. Their sum forces the "
+                    + "corresponding endpoint block to be Hermitian.")),
                     Paragraph(Text(
                     "After scaling by the middle occupation, either residual has a fixed "
                     + "upper diagonal a, a lower diagonal e minus the squared modulus of z, "
