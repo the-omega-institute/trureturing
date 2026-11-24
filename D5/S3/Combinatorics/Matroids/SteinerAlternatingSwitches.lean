@@ -48,6 +48,8 @@ theorem point_deleted_successful_starts {r : ℕ} (S : Set (Set (Fin (r + 1))))
       ∀ v : Fin r,
         let M := pivotMatchings valid complete q v
         let large := {x | 6 ≤ (M.graph.connectedComponentMk x).supp.ncard}
+        (M.graph.connectedComponentMk none).supp =
+          {none, some q, some (q.succAbove v), some (q.succAbove (m v))} ∧
         (Option.some ∘ q.succAbove) '' {a | SuccessfulStart P m v a} = large ∧
           (4 ∣ r → 6 ≤ ({a | SuccessfulStart P m v a} : Set (Fin r)).ncard) := by
   classical
@@ -112,7 +114,7 @@ theorem point_deleted_successful_starts {r : ℕ} (S : Set (Set (Fin (r + 1))))
         · obtain ⟨a,ha⟩ := Fin.exists_succAbove_eq eq
           have e : embed a = some u := congrArg some ha
           exact ⟨a,(on_labels a).mp (e.symm ▸ h),e⟩
-  refine ⟨image_eq,?_⟩
+  refine ⟨special,image_eq,?_⟩
   intro four
   have nodvd : ¬4 ∣ Fintype.card (Option (Fin (r + 1))) := by
     simp only [Fintype.card_option, Fintype.card_fin]
@@ -151,7 +153,7 @@ theorem point_deleted_first_deficit_of_four_dvd {d r : ℕ} [NeZero (3 * r)] {T 
     exact (NeZero.ne (3 * r)) (by simp [rz])
   let v : Fin r := ⟨0,hr⟩
   obtain ⟨validP,m,leave,counts⟩ := point_deleted_successful_starts S valid complete q
-  have card := (counts v).2 four
+  have card := (counts v).2.2 four
   have nonempty : {a | SuccessfulStart (pointDeletedFamily S q) m v a}.Nonempty := by
     by_contra h
     rw [(Set.not_nonempty_iff_eq_empty).mp h, Set.ncard_empty] at card
@@ -172,4 +174,3 @@ theorem point_deleted_first_deficit_of_four_dvd {d r : ℕ} [NeZero (3 * r)] {T 
       exact Ne.symm success)
 
 end D5.S3.Combinatorics.Matroids.SteinerAlternatingSwitches
-

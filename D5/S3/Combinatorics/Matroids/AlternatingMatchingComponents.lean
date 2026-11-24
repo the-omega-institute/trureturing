@@ -184,4 +184,3 @@ theorem exists_large_component_of_not_dvd [Fintype V] (hcard : ¬ 4 ∣ Fintype.
 end Matchings
 
 end D5.S3.Combinatorics.Matroids.AlternatingMatchingComponents
-
