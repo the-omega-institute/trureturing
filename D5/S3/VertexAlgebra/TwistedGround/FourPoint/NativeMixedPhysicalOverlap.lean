@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The native Leech HHBB iterate equals the negatively scaled upper product. -/
+   digest: The native Leech HHBB iterate agrees with the scaled B and upper-lip D values. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeFixedPairAIterate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedUpperDLip
@@ -37,7 +37,9 @@ open NativeMixedUpperProductCusp (bProductCoeff bProductCoeff_eq_taylor
 open NativeMixedWickChartTransport (MixedParity bpzPhase doubledOccupation
   gaussianOccupation laurentPower laurentRoot normalizedOccupation
   normalized_occupation_fourier_overlap sigma)
-open OriginalFourMChargeCoset (fourierSign quadraticSign ground_exchange_first)
+open OriginalFourMChargeCoset (fourierSign quadraticSign ground_exchange_first ground_exchange_second)
+open NativeMixedUpperDLip (dSlitProduct dSlitProduct_tendsto_weighted_normalizedOccupation)
+open OriginalFourMPeriodSource (dLip)
 open OriginalFourMVariableSupport
   (inverseFlow loweredOscillator nativeSector occupationReadout wordAt)
 open OriginalFourMSectorContinuation (slitChargeSector slitChargeSector_differentiableOn)
@@ -62,7 +64,7 @@ open private punctureLowering_eq_word from
 
 open OriginalFourMCompactLowering (punctureLowering)
 open OriginalFourMActualChart (loweringParameter)
-open private fourierSign_swap from
+open private fourierSign_swap translated_gauss_sum from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
 
 local notation "ℒ" => leechData
@@ -341,5 +343,106 @@ theorem hhbb_actual_overlap {X : Type*} [Finite X]
     ← hhbb_ground_weighted_A_eq_neg_B slot colour n l hl hpar p q r d hy hy₁,
     a_weighted_normalizedOccupation_eq slot colour n l p q r d y]
   exact hA
+
+set_option maxHeartbeats 4000000 in
+-- Elaborate the Fourier contraction over the Leech charge quotient.
+private theorem hhbb_ground_weighted_D_eq_A {X : Type*} [Finite X]
+    (slot : X → Puncture) (colour : X → Fin leechData.rank) (n : X → ℕ) (l : List X)
+    (hl : l.Nodup) (hpar : MixedParity slot n l)
+    (p q r d : ActualGround ℒ leechUnit) {y : ℝ} (hy : (1 / 2 : ℝ) < y) (hy₁ : y < 1) :
+    (∑ a : ModTwoCharge ℒ, mixedGroundWeight p r q d a *
+      normalizedOccupation ℒ slot colour n l .D y a) =
+    ∑ a : ModTwoCharge ℒ, mixedGroundWeight p q r d a *
+      normalizedOccupation ℒ slot colour n l .A y a := by
+  classical
+  letI := Fintype.ofFinite X
+  let F := fun (c : Chart) a => normalizedOccupation ℒ slot colour n l c y a
+  let W := mixedGroundWeight q r p d
+  let k : ℂ := (2 : ℂ) ^ (12 : ℕ)
+  have hk : k ≠ 0 := pow_ne_zero _ (by norm_num : (2 : ℂ) ≠ 0)
+  have hFD (a : ModTwoCharge ℒ) :
+      F .D a = k⁻¹ * ∑ c, fourierSign ℒ a c * F .A c := by
+    have h : k * F .D a = ∑ c, fourierSign ℒ a c * F .A c :=
+      (normalized_occupation_fourier_overlap ℒ leechUnit leech_spec.2.2.1 leech_spec.1
+        slot colour n l hl hpar hy hy₁ a).2
+    rw [← h, ← mul_assoc, inv_mul_cancel₀ hk, one_mul]
+  have hWD (a : ModTwoCharge ℒ) :
+      mixedGroundWeight p r q d a = ∑ b, k⁻¹ * quadraticSign ℒ (a + b) * W b := by
+    have h := ground_exchange_second ℒ leechUnit a p q r d
+    rw [original_ground_dimension ℒ leechUnit leech_spec.1] at h
+    simpa only [mixedGroundWeight, W, k, mul_assoc] using h
+  have hWA (c : ModTwoCharge ℒ) :
+      mixedGroundWeight p q r d c =
+        ∑ b, k⁻¹ * quadraticSign ℒ c * fourierSign ℒ c b * W b := by
+    have h := ground_exchange_first ℒ leechUnit c p q r d
+    rw [original_ground_dimension ℒ leechUnit leech_spec.1] at h
+    simpa only [mixedGroundWeight, W, k, mul_assoc] using h
+  have hTransform (b : ModTwoCharge ℒ) :
+      (∑ a, quadraticSign ℒ (a + b) * F .D a) =
+        ∑ c, quadraticSign ℒ c * fourierSign ℒ c b * F .A c := by
+    calc
+      _ = k⁻¹ * ∑ a, ∑ c, (quadraticSign ℒ (a + b) * fourierSign ℒ a c) * F .A c := by
+        simp only [hFD, Finset.mul_sum]
+        exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => by ring
+      _ = _ := by
+        rw [Finset.sum_comm, Finset.mul_sum]
+        refine Finset.sum_congr rfl fun c _ => ?_
+        rw [← Finset.sum_mul, translated_gauss_sum ℒ leechUnit leech_spec.1 b c]
+        calc
+          _ = (k⁻¹ * k) * (quadraticSign ℒ c * fourierSign ℒ c b * F .A c) := by ring
+          _ = _ := by rw [inv_mul_cancel₀ hk, one_mul]
+  change (∑ a, mixedGroundWeight p r q d a * F .D a) =
+    ∑ c, mixedGroundWeight p q r d c * F .A c
+  calc
+    _ = ∑ a, ∑ b, (k⁻¹ * quadraticSign ℒ (a + b) * W b) * F .D a := by
+      simp only [hWD, Finset.sum_mul]
+    _ = ∑ b, (k⁻¹ * W b) * (∑ a, quadraticSign ℒ (a + b) * F .D a) := by
+      rw [Finset.sum_comm]
+      simp only [Finset.mul_sum]
+      exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => by ring
+    _ = _ := by
+      simp only [hTransform, hWA, Finset.mul_sum, Finset.sum_mul]
+      rw [Finset.sum_comm]
+      exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => by ring
+
+set_option maxHeartbeats 4000000 in
+-- Elaborate the field iterate and boundary continuation at the marked grades.
+/-- The actual A iterate equals the upper-lip boundary value of the analytic
+continuation of the D product in its native order `(P, R, Q, S)`. -/
+theorem hhbb_actual_A_eq_upper_D_limit {X : Type*} [Finite X]
+    (slot : X → Puncture) (colour : X → Fin leechData.rank) (n : X → ℕ) (l : List X)
+    (hl : l.Nodup) (hpar : MixedParity slot n l)
+    (u v : TwistedEven) (w b : TwistedOdd) (p q r d : ActualGround ℒ leechUnit)
+    (hu : u.val = wordAt ℒ slot colour n l .P ⊗ₜ[ℂ] p)
+    (hv : v.val = wordAt ℒ slot colour n l .Q ⊗ₜ[ℂ] q)
+    (hw : w.val = wordAt ℒ slot colour n l .R ⊗ₜ[ℂ] r)
+    (hb : b.val = wordAt ℒ slot colour n l .S ⊗ₜ[ℂ] d)
+    {y : ℝ} (hy : (1 / 2 : ℝ) < y) (hy₁ : y < 1) :
+    let H := fun i => (doubledOccupation slot n l i).toNat
+    let V := wordAt ℒ slot colour n l
+    Tendsto (dSlitProduct (H .P) (H .Q) (H .R) (H .S) (V .P) (V .Q) (V .R) (V .S) p q r d)
+      (𝓝[dLip true] (parameter .D (y : ℂ)))
+      (𝓝 (∑' j : ℤ, fixedAIterateCoeff false (H .P) (H .Q) (H .R) (H .S) j
+        u v w.val b.val * laurentRoot .A y ^ j)) := by
+  let H := punctureExcitation slot colour n l
+  let V := wordAt ℒ slot colour n l
+  have hP := hpar.1
+  have hQ := hpar.2.1
+  rw [← punctureExcitation_cast slot colour n l] at hP hQ
+  have hPK : Even ((H .P : ℤ) + (H .Q : ℤ)) := by
+    dsimp only [H]
+    exact Int.even_iff.mpr (by omega)
+  have hA := fixedAIterate_hasSum_on_overlap false (H .P) (H .Q) (H .R) (H .S) u v
+    (V .P) (V .Q) (V .R) (V .S) p q r d
+    (hu.symm ▸ wordAt_grade slot colour n l .P p) (hv.symm ▸ wordAt_grade slot colour n l .Q q)
+    hu hv (wordAt_grade slot colour n l .R r) (wordAt_grade slot colour n l .S d)
+    hPK hy hy₁
+  have hD := dSlitProduct_tendsto_weighted_normalizedOccupation slot colour n l p q r d
+    (by linarith : 0 < y) hy₁
+  dsimp only at hA hD ⊢
+  simp only [occupationGrade_eq slot colour n l]
+  rw [hw, hb, hA.tsum_eq, ← a_weighted_normalizedOccupation_eq slot colour n l p q r d y,
+    ← hhbb_ground_weighted_D_eq_A slot colour n l hl hpar p q r d hy hy₁]
+  exact hD
 
 end D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedPhysicalOverlap
