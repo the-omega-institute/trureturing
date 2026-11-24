@@ -81,13 +81,13 @@ class_counts_canonical: proof_shape=content; consumers=class_counts
 class_counts: proof_shape=content; consumers=transition_counts
 old_exhausted_index: proof_shape=bind-only; consumers=zero_coordinates
 proper_destination: proof_shape=bind-only; consumers=zero_coordinates
-cost_bound: proof_shape=bind-only; consumers=zero_coordinates
-tail_bound: proof_shape=bind-only; consumers=zero_coordinates
 exhausted_support: proof_shape=content; consumers=zero_coordinates
 old_source_support: proof_shape=bind-only; consumers=zero_coordinates
+uniformRegion: proof_shape=content; consumers=zero_coordinates, transition_counts, Transition.arena
+late_tail_classes: proof_shape=content; consumers=zero_coordinates
 zero_coordinates: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229693Strip.count_transfer, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer.Transition.family._proof_3
-horizontal_cons: proof_shape=bind-only; consumers=HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
+horizontal_cons: proof_shape=bind-only; consumers=zero_coordinates, HardinA229693Strip.head_weight_eq, HardinA229693Strip.next_valid, HardinA229693Strip.initial_valid
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
@@ -131,7 +131,6 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (relabel_defec
 private instance decidableBudget (p : Boundary) (d : ℕ) :
     Decidable (HardinA229635State.Valid p d) :=
   inferInstanceAs (Decidable (HardinA229635State.h p + d ≤ 2))
-
 theorem valid_parts (p : Boundary) (d : ℕ) :
     HardinA229635State.Valid p d ↔ d ≤ 2 ∧ HardinA229635State.h p ≤ 2 - d := by
   change HardinA229635State.h p + d ≤ 2 ↔ _
@@ -148,7 +147,6 @@ private theorem tailCost_eq (p : Boundary) :
 private theorem valid_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     HardinA229635State.Valid (e ∘ p) d ↔ HardinA229635State.Valid p d := by
   simp only [HardinA229635State.Valid, HardinA229635State.h_relabel]
-
 theorem fresh_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
     HardinA229635State.fresh (e ∘ p) = HardinA229635State.fresh p := by
   apply Fin.natAdd_injective 96 31
@@ -157,15 +155,12 @@ theorem fresh_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
 
 def oldZeroImage (i : Fin 72) : Fin 96 :=
   if h : 16 ≤ i.val then (Fin.subNat 16 i h).castAdd 40 else 0
-
 def exhaustedClass (p : Boundary) : Fin 96 :=
   if HardinA229635State.Valid p 1 then oldZeroImage (HardinA229585StripData.cl p 0)
   else (Fin.ofNat 40 (HardinA229635State.fresh p).val).natAdd 56
-
 def cl (p : Boundary) (d : ℕ) : Fin 168 :=
   if d = 0 then (exhaustedClass p).natAdd 72 else
     (HardinA229585StripData.cl p (d - 1)).castAdd 96
-
 def exitRead (i : Fin 96) : Fin 108 :=
   (#[72, 72, 73, 73, 74, 74, 75, 75, 76, 76, 77, 77, 29, 78, 78, 79, 79, 80, 80, 33, 37, 81, 81,
     82, 39, 82, 83, 83, 84, 84, 85, 85, 86, 86, 87, 87, 88, 88, 89, 54, 89, 90, 90, 57, 61, 91,
@@ -202,7 +197,6 @@ private def activeExits (i : ℕ) (j : Fin 36) : ℕ :=
     9926816947258021680090521600, 15242373460772483901814931490, 15513187325060523402377560096, 5052266911338697990047138336,
     5339160415274857483449926144, 5050081011518940108688466432, 5338878256048798585116041250, 5049939930820827181475832322]
   (table[i]! >>> (4 * j.val)) % 16
-
 private def exhaustedExits (i : Fin 40) (j : Fin 36) : ℕ :=
   let table : Array ℕ := #[
     38770923972264970869014528, 38770923972264970852237312, 75853011632261924126720, 19423388491948103147978752,
@@ -221,14 +215,11 @@ private def exhaustedExits (i : Fin 40) (j : Fin 36) : ℕ :=
 private def oldExits (i : Fin 72) (j : Fin 96) : ℤ :=
   Fin.append (fun k : Fin 56 => HardinA229585StripData.T i (k.natAdd 16))
     (0 : Fin 40 → ℤ) j
-
 private def activeWeight (i : Fin 72) : Fin 96 → ℕ :=
   fun j => Fin.append (fun k => (HardinA229585StripData.T i k).toNat)
     (activeExits (sourceCode i - 16)) (exitRead j)
-
 private def exhaustedWeight (i : Fin 40) : Fin 96 → ℕ :=
   fun j => Fin.append (0 : Fin 72 → ℕ) (exhaustedExits i) (exitRead j)
-
 private def weightPack {n : ℕ} (f : Fin n → ℕ) : ℕ :=
   Nat.ofDigits 4096 (List.ofFn f)
 private theorem weightPack_sum {n : ℕ} (f : Fin n → ℕ) :
@@ -236,7 +227,6 @@ private theorem weightPack_sum {n : ℕ} (f : Fin n → ℕ) :
   simp only [weightPack, Nat.ofDigits_eq_sum_mapIdx, List.mapIdx_eq_ofFn,
     List.sum_ofFn, List.get_ofFn, List.length_ofFn, Fin.cast_refl, Nat.cast_id]
   rfl
-
 private theorem weightPack_injective {n : ℕ} (f g : Fin n → ℕ)
     (hf : ∀ j, f j < 4096) (hg : ∀ j, g j < 4096) (h : weightPack f = weightPack g) :
     f = g := by
@@ -244,7 +234,6 @@ private theorem weightPack_injective {n : ℕ} (f g : Fin n → ℕ)
   apply List.ofFn_inj.mp
   exact Nat.ofDigits_inj_of_len_eq (by decide) (by simp) (by simpa using hf)
     (by simpa using hg) h
-
 private def classPack {n : ℕ} (xs : List (Fin n)) : ℕ :=
   (xs.map fun j => 4096 ^ j.val).sum
 private theorem classPack_count {n : ℕ} (xs : List (Fin n)) :
@@ -271,7 +260,6 @@ private theorem valid_shift (p : Boundary) (d : ℕ) (h : 0 < d) :
 private theorem old_valid (p : Boundary) :
     HardinA229635State.Valid p 1 ↔ HardinA229585StripData.Valid p 0 :=
   valid_shift p 1 Nat.one_pos
-
 private theorem cl_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, exhaustedClass, valid_relabel, fresh_relabel, HardinA229585Strip.class_relabel]
@@ -295,7 +283,6 @@ theorem active_cut (p : Boundary) (d c : ℕ) (j : Fin 72) :
     have hb := (blocks_disjoint j (exhaustedClass p)).symm
     simp only [cl, he, ↓reduceIte, hb, and_false, false_iff, not_and]
     omega
-
 theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
     (c ≤ d ∧ cl p (d - c) = j.natAdd 72) ↔ (c = d ∧ exhaustedClass p = j) := by
   by_cases h : c < d
@@ -319,7 +306,6 @@ theorem horizontal_cons (x : Fin 3) (p : Boundary) :
   rw [← h, Fin.sum_univ_succ]
   simp only [r, Fin.castSucc_zero, Fin.castSucc_succ, Fin.cons_zero, Fin.cons_succ,
     Finset.sum_boole, Nat.cast_id]
-
 private theorem leading_counts (p : Boundary) (d : ℕ) (j : Fin 72)
     (hp : HardinA229635State.Valid p d) (hd : 0 < d) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧
@@ -413,7 +399,6 @@ private theorem old_exhausted_counts (p : Boundary) (hp : HardinA229635State.Val
       HardinA229585StripData.cl p 0 := Fin.ext (Nat.add_sub_of_le hh)
   rw [h]
   exact old_exhausted_row p 0 hv j
-
 def matchCost : Option (Fin 3) → Fin 3 → ℕ
   | none, _ => 0
   | some p, x => if p = x then 1 else 0
@@ -598,7 +583,6 @@ private theorem exactExits_count (p : Boundary) (d : ℕ) (j : Fin 96) :
       completionRows_count (some ∘ p) none d (fun r => exhaustedClass (boundary r) == j) :
     _ = ∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
       exhaustedClass (boundary r) = j then (1 : ℕ) else 0)
-
 private def alternating : Row ≃ Row :=
   let e := (Equiv.curry (Fin 1) (Fin 7) (Fin 3)).trans (Equiv.funUnique (Fin 1) Row)
   e.symm.trans ((HardinA233155ColumnTransfer.alternatingEquiv 1 7).trans e)
@@ -671,7 +655,6 @@ private theorem rep_partition (i : Fin 96) :
     HardinA229635State.h (HardinA229635State.rep i) ≤ 1 ↔ 40 ≤ i.val := by
   revert i
   decide +kernel
-
 private def activeProfileCheck (d : Fin 2) (i : Fin 96) : Bool :=
   let p := HardinA229635State.rep i
   let k := HardinA229585StripData.cl p d.val
@@ -721,7 +704,6 @@ private theorem exactExits_active (p : Boundary) (d : Fin 2)
   unfold activeProfileCheck at hc
   simp only [he, hd, Option.isNone_none, decide_eq_true hp, Bool.true_and, ite_true] at hc
   exact checkHistogram_count _ _ hc (exitCodes_bound _ _) j
-
 private def inheritedActiveCheck (i : Fin 96) (d : Fin 2) : Bool :=
   let p := HardinA229635State.rep i
   match inheritedSource (HardinA229585StripData.cl p d.val) with
@@ -814,7 +796,6 @@ private theorem class_counts_canonical (p : Boundary) (d : ℕ) (hp : HardinA229
         omega
       rw [← hi.2.2, hd₁]
       exact old_exhausted_row p 1 hi.1 j
-
 private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.Valid p d)
     (j : Fin 96) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r = d ∧
@@ -844,7 +825,6 @@ set_option maxRecDepth 10000 in
 set_option maxHeartbeats 3000000 in
 private theorem old_exhausted_index : ∀ p : Boundary, 16 ≤ (HardinA229585StripData.cl p 0).val := by
   decide +kernel
-
 private theorem proper_destination (p : Boundary) (hp : HardinA229635State.h p = 0) :
     ∃ k : Fin 16, HardinA229585StripData.cl p 0 = HardinA229585StripData.zeroBudgetClass k := by
   rw [tailCost_eq, Finset.card_eq_zero] at hp
@@ -855,20 +835,6 @@ private theorem proper_destination (p : Boundary) (hp : HardinA229635State.h p =
     simp [hp] at hm
   refine ⟨HardinA233255ShapeSymmetry.classOf p, ?_⟩
   simp only [HardinA229585StripData.cl, h, ite_true, Nat.zero_ne_one, ite_false]
-
-private theorem cost_bound (p : Boundary) (r : Row) :
-    cross p r + bondDefects horizontal r r ≤ 12 := by
-  have hcross : cross p r ≤ 6 :=
-    (Finset.card_filter_le _ _).trans (show antidiagonal.card ≤ 6 by decide)
-  have hrow : bondDefects horizontal r r ≤ 6 :=
-    (Finset.card_filter_le _ _).trans (show horizontal.card ≤ 6 by decide)
-  omega
-private theorem tail_bound (r : Row) : HardinA229635State.h (boundary r) ≤
-    bondDefects horizontal r r := by
-  have h := horizontal_cons (r 0) (boundary r)
-  rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at h
-  omega
-
 set_option maxRecDepth 12000 in
 set_option maxHeartbeats 6000000 in
 theorem exhausted_support (s : Fin 168) :
@@ -884,94 +850,131 @@ private theorem old_source_support (s : Fin 168)
     T ((i.natAdd 16).castAdd 96) s = 0 := by
   revert i hs
   fin_cases s <;> decide +kernel
+/-- Destinations where both transition counts vanish for every source boundary. -/
+def uniformRegion (d : ℕ) (s : Fin 168) : Prop :=
+  (d = 0 ∧ ∀ k : Fin 16, s.val ≠ 56 + (HardinA229585StripData.zeroBudgetClass k).val) ∨
+  (d = 1 ∧ s.val < 72 ∧ ∀ k : Fin 16, s.val ≠ (HardinA229585StripData.zeroBudgetClass k).val) ∨
+  ((d = 1 ∨ 13 ≤ d) ∧ 128 ≤ s.val) ∨ (10 ≤ d ∧ 129 ≤ s.val) ∨
+  (s.val < 16 ∧ ((d = 12 ∧ s.val ∈ [9, 11]) ∨
+    (d = 13 ∧ s.val ∈ [2, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]) ∨
+    (d = 14 ∧ 0 < s.val) ∨ 15 ≤ d))
+
+set_option maxRecDepth 12000 in
+set_option maxHeartbeats 6000000 in
+private theorem late_tail_classes : ∀ q : Boundary,
+    (3 ≤ HardinA229635State.h q → (exhaustedClass q).val = 56 ∧
+      (HardinA229585StripData.cl q 1).val ∉ [9, 11]) ∧
+    (4 ≤ HardinA229635State.h q →
+      (HardinA229585StripData.cl q 1).val ∉ [2, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]) ∧
+    (5 ≤ HardinA229635State.h q → (HardinA229585StripData.cl q 1).val = 0) := by
+  decide +kernel
+
 private theorem zero_coordinates (p : Boundary) (d : ℕ) (s : Fin 168)
-    (hs : (d = 0 ∧ ∀ k : Fin 16, s.val ≠
-        56 + (HardinA229585StripData.zeroBudgetClass k).val) ∨
-      (d = 1 ∧ s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
-        (HardinA229585StripData.zeroBudgetClass k).val) ∨
-      ((d = 1 ∨ 13 ≤ d) ∧ 128 ≤ s.val) ∨
-      (15 ≤ d ∧ s.val < 16)) :
+    (hs : uniformRegion d s) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧
       cl (boundary r) (d - (cross p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = 0 ∧ T (cl p d) s = 0 := by
-  have hbudget (q : Boundary) (b : ℕ) (h : b = 1 ∨ 3 ≤ b) :
+  have hbudget (q : Boundary) (b : ℕ) (hn : b ≠ 0) (ht : b ≠ 2) :
       cl q b = (HardinA229585StripData.cl q 0).castAdd 96 := by
-    have hn : b - 1 ≠ 1 := by omega
-    simp only [cl, HardinA229585StripData.cl, show b ≠ 0 by omega, hn, Nat.zero_ne_one, ite_false]
-  have hmatrix (h : d = 1 ∨ 3 ≤ d) (h' : (s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
+    simp only [cl, HardinA229585StripData.cl, hn, show b - 1 ≠ 1 by omega,
+      Nat.zero_ne_one, ite_false]
+  have hindex (k : Fin 16) : 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val :=
+    (show ∀ k : Fin 16, 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val by decide +kernel) k
+  have hmatrix (hn : d ≠ 0) (ht : d ≠ 2) (h' : (s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
       (HardinA229585StripData.zeroBudgetClass k).val) ∨ 128 ≤ s.val) :
       T (cl p d) s = 0 := by
-    rw [hbudget _ _ h]
+    rw [hbudget _ _ hn ht]
     let k := Fin.subNat 16 (HardinA229585StripData.cl p 0) (old_exhausted_index p)
     have hk : k.natAdd 16 = HardinA229585StripData.cl p 0 :=
       Fin.natAdd_subNat_cast (old_exhausted_index p)
     rw [← hk]
     exact old_source_support s h' k
+  have hlow (hn : d ≠ 0) (ht : d ≠ 2) (h : s.val < 16) : T (cl p d) s = 0 :=
+    hmatrix hn ht (Or.inl ⟨by omega, fun k hk => by have := hindex k; omega⟩)
   constructor
   · apply Finset.sum_eq_zero
     intro r _
     rw [ite_eq_right]
     rintro ⟨hr, he⟩
     let c := cross p r + bondDefects horizontal r r
-    have hb := tail_bound r
-    have hc := cost_bound p r
     change c ≤ d at hr
     change cl (boundary r) (d - c) = s at he
     subst s
-    have hproper (h : c = 0) := proper_destination (boundary r) (by omega)
-    have hex (h : c ≤ 1) : (exhaustedClass (boundary r)).val < 56 := by
+    have hhor := horizontal_cons (r 0) (boundary r)
+    rw [show Fin.cons (r 0) (boundary r) = r from Fin.cons_self_tail r] at hhor
+    have hcross : cross p r ≤ 6 :=
+      (Finset.card_filter_le _ _).trans (show antidiagonal.card ≤ 6 by decide)
+    have hrow : bondDefects horizontal r r ≤ 6 :=
+      (Finset.card_filter_le _ _).trans (show horizontal.card ≤ 6 by decide)
+    have hc : c ≤ 12 := by dsimp [c]; omega
+    have hb : HardinA229635State.h (boundary r) ≤ c := by dsimp [c]; omega
+    have hcharge : c ≤ HardinA229635State.h (boundary r) + 7 := by
+      dsimp [c]
+      split at hhor <;> omega
+    have hspent (h : 72 ≤ (cl (boundary r) (d - c)).val) : d - c = 0 := by
+      by_contra hn
+      rw [cl, if_neg hn, Fin.val_castAdd] at h
+      exact (Nat.not_lt_of_ge h) (Fin.isLt _)
+    have htwo (h : (cl (boundary r) (d - c)).val < 16) : d - c = 2 := by
+      by_contra ht
+      by_cases hn : d - c = 0
+      · simp only [hn, cl, ite_true, Fin.val_natAdd] at h
+        omega
+      · rw [hbudget _ _ hn ht, Fin.val_castAdd] at h
+        exact (not_lt_of_ge (old_exhausted_index _)) h
+    have hlate := late_tail_classes (boundary r)
+    rcases hs with ⟨rfl, hs⟩ | ⟨rfl, hl, hs⟩ | ⟨hd, hs⟩ | ⟨hd, hs⟩ | ⟨hl, hs⟩
+    · obtain ⟨k, hk⟩ := proper_destination (boundary r) (by omega)
       have hv : HardinA229635State.Valid (boundary r) 1 := by
         change HardinA229635State.h (boundary r) + 1 ≤ 2
         omega
-      unfold exhaustedClass oldZeroImage
-      simp only [hv, ite_true, old_exhausted_index, dite_true, Fin.val_castAdd]
-      exact Fin.isLt _
-    rcases hs with ⟨rfl, hs⟩ | ⟨rfl, hl, hs⟩ | ⟨hd, hs⟩ | ⟨hd, hs⟩
-    · obtain ⟨k, hk⟩ := hproper (by omega)
-      simp only [Nat.zero_sub, cl, ite_true, Fin.val_natAdd] at hs
-      have hv : HardinA229635State.Valid (boundary r) 1 := by
-        change HardinA229635State.h (boundary r) + 1 ≤ 2
-        omega
-      have hi := old_exhausted_index (boundary r)
       apply hs k
-      simp only [exhaustedClass, hv, ite_true, oldZeroImage, hi, dite_true,
-        Fin.val_castAdd, Fin.val_subNat]
-      rw [← hk]
+      simp only [Nat.zero_sub, cl, ite_true, Fin.val_natAdd, exhaustedClass, hv,
+        oldZeroImage, old_exhausted_index, dite_true, Fin.val_castAdd, Fin.val_subNat]
+      rw [hk]
+      have := hindex k
       omega
-    · by_cases hz : c = 0
-      · obtain ⟨k, hk⟩ := hproper hz
-        apply hs k
-        rw [hz, Nat.sub_zero, hbudget _ 1 (Or.inl rfl), Fin.val_castAdd, hk]
-      · simp only [show 1 - c = 0 by omega, cl, ite_true, Fin.val_natAdd] at hl
+    · have hz : c = 0 := by
+        by_contra hn
+        simp only [show 1 - c = 0 by omega, cl, ite_true, Fin.val_natAdd] at hl
         omega
-    · by_cases hz : d - c = 0
-      · have he := hex (by omega)
-        simp only [show d - c = 0 from hz, cl, ite_true, Fin.val_natAdd] at hs
+      obtain ⟨k, hk⟩ := proper_destination (boundary r) (by omega)
+      exact hs k (by rw [hz, Nat.sub_zero, hbudget _ 1 (by decide) (by decide), Fin.val_castAdd, hk])
+    · have hz := hspent (by omega)
+      have hv : HardinA229635State.Valid (boundary r) 1 := by
+        change HardinA229635State.h (boundary r) + 1 ≤ 2
         omega
-      · simp only [cl, show d - c ≠ 0 from hz, ite_false, Fin.val_castAdd] at hs
+      have he : (exhaustedClass (boundary r)).val < 56 := by
+        simp only [exhaustedClass, hv, ite_true, oldZeroImage, old_exhausted_index,
+          dite_true, Fin.val_castAdd]
+        exact Fin.isLt _
+      simp only [hz, cl, ite_true, Fin.val_natAdd] at hs
+      omega
+    · have hz := hspent (by omega)
+      simp only [hz, cl, ite_true, Fin.val_natAdd, (hlate.1 (by omega)).1] at hs
+      omega
+    · have ht := htwo hl
+      simp only [ht, cl, Nat.reduceEqDiff, ite_false, Nat.reduceSub, Fin.val_castAdd] at hs
+      rcases hs with ⟨rfl, hs⟩ | ⟨rfl, hs⟩ | ⟨rfl, hs⟩ | hd
+      · exact (hlate.1 (by omega)).2 hs
+      · exact hlate.2.1 (by omega) hs
+      · rw [hlate.2.2 (by omega)] at hs
         omega
-    · rw [hbudget _ _ (Or.inr (by omega)), Fin.val_castAdd] at hs
-      exact (not_lt_of_ge (old_exhausted_index _)) hs
-  · rcases hs with ⟨rfl, hs⟩ | ⟨rfl, hl, hs⟩ | ⟨hd, hs⟩ | ⟨hd, hs⟩
+      · omega
+  · rcases hs with ⟨rfl, hs⟩ | ⟨rfl, hl, hs⟩ | ⟨hd, hs⟩ | ⟨hd, hs⟩ | ⟨hl, hs⟩
     · by_contra h
       have he : T ((exhaustedClass p).natAdd 72) s ≠ 0 := h
       obtain ⟨k, hk⟩ := (exhausted_support s).mp ⟨exhaustedClass p, he⟩
       exact hs k hk
-    · exact hmatrix (Or.inl rfl) (Or.inl ⟨hl, hs⟩)
-    · exact hmatrix (hd.imp_right (by omega)) (Or.inr hs)
-    · have hclass : ∀ k : Fin 16, 16 ≤ (HardinA229585StripData.zeroBudgetClass k).val := by
-        decide +kernel
-      exact hmatrix (Or.inr (by omega)) (Or.inl ⟨by omega, fun k hk =>
-        (not_lt_of_ge (hclass k)) (hk ▸ hs)⟩)
+    · exact hmatrix (by decide) (by decide) (Or.inl ⟨hl, hs⟩)
+    · exact hmatrix (by omega) (by omega) (Or.inr hs)
+    · exact hmatrix (by omega) (by omega) (Or.inr (by omega))
+    · have hd : 12 ≤ d := by rcases hs with h | h | h | h <;> omega
+      exact hlow (by omega) (by omega) hl
 
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
-    (hp : HardinA229635State.Valid p d ∨ (d = 0 ∧ ∀ k : Fin 16, s.val ≠
-        56 + (HardinA229585StripData.zeroBudgetClass k).val) ∨
-      (d = 1 ∧ s.val < 72 ∧ ∀ k : Fin 16, s.val ≠
-        (HardinA229585StripData.zeroBudgetClass k).val) ∨
-      ((d = 1 ∨ 13 ≤ d) ∧ 128 ≤ s.val) ∨
-      (15 ≤ d ∧ s.val < 16)) :
+    (hp : HardinA229635State.Valid p d ∨ uniformRegion d s) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧
       cl (boundary r) (d - (cross p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
@@ -993,5 +996,4 @@ theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
       exact class_counts p d hv j
   · obtain ⟨hl, hr⟩ := zero_coordinates p d s hz
     exact hl.trans hr.symm
-
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693StripTransfer
