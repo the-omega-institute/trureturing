@@ -14,7 +14,7 @@ $$\begin{aligned}M_{p}(a-b) = (p!)^{2} \prod_{j \in J} \left(w_{j}\right)^{a_{j}
 
 *Commentary.*
 
-Let J be finite with real weights w. Let a and b be nonnegative integer vectors with disjoint supports and the same total degree d, with d≤p. Write M with subscript p for the total product of multinomial weights of degree-p pairs whose count difference is a−b. Write c with subscript d for the weighted multinomial coefficient of degree d and D with subscript k for the sum of their squares at degree k.
+Let J be finite with real weights w. Let a and b be nonnegative integer vectors with disjoint supports and the same total degree d, with d≤p. Write M with subscript p for the sum, over ordered degree-p pairs with count difference a−b, of the product of their two multinomial weights. Write c with subscript d for the weighted multinomial coefficient of degree d and D with subscript k for the sum of their squares at degree k.
 
 R is the sum over degree p−d vectors l of the coordinate products (w(j)²)^l(j)/(l(j)!(l(j)+a(j)+b(j))!). C denotes the binomial coefficient with parameters p and d. The inequality applies when all weights are nonnegative.
 

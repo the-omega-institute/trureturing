@@ -21,8 +21,8 @@ internal sealed class FixedDifferenceOccupationMassDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "Let J be finite with real weights w. Let a and b be nonnegative integer vectors "
                     + "with disjoint supports and the same total degree d, with d≤p. Write M with "
-                    + "subscript p for the total product of multinomial weights of degree-p pairs "
-                    + "whose count difference is a−b. Write c with subscript d for the weighted "
+                    + "subscript p for the sum, over ordered degree-p pairs with count difference "
+                    + "a−b, of the product of their two multinomial weights. Write c with subscript d for the weighted "
                     + "multinomial coefficient of degree d and D with subscript k for the sum "
                     + "of their squares at degree k.")),
                 Paragraph(Text(
