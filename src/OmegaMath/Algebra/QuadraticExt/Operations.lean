@@ -11,6 +11,14 @@ The quadratic coefficient pair inherits commutative ring operations and powers.
 noncomputable section
 @[expose] public section
 
+namespace Omega.CommRingOps
+
+/-- Natural powers in a scalar ring. -/
+def powNat {A : Type} {rel : A → A → Prop} (r : CommRingOps A rel) (a : A) (n : Nat) : A :=
+  Nat.rec r.one (fun _ power => r.mul a power) n
+
+end Omega.CommRingOps
+
 namespace Omega.QuadPoly
 
 variable {A : Type} {rel : A → A → Prop} {b c : A}
@@ -70,5 +78,12 @@ theorem norm_one {r : CommRingOps A rel} (law : r.Laws) :
   let o := Polynomial.Expr.one
   Polynomial.prove r law vars
     ((o.square.add (Polynomial.e0.mul (o.mul z))).sub (Polynomial.e1.mul z.square)) o Eq.refl
+
+/-- The norm of a natural power is the same power of the norm. -/
+theorem norm_pow {r : CommRingOps A rel} (law : r.Laws) (z : QuadPoly A b c) (n : Nat) :
+    r.eqv (norm r (pow r z n)) (r.powNat (norm r z) n) :=
+  Nat.rec (motive := fun k => r.eqv (norm r (pow r z k)) (r.powNat (norm r z) k))
+    (norm_one law) (fun k ih => law.trans (norm_mul law z (pow r z k))
+      (law.mul_congr (law.refl (norm r z)) ih)) n
 
 end Omega.QuadPoly

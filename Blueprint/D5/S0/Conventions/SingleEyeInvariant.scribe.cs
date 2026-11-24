@@ -28,10 +28,9 @@ internal sealed class SingleEyeInvariantDocument : IScribeDocumentDefinition
                         + "coordinate set. IsSingleEyed says every admitted dependency set is a "
                         + "subset of the singleton containing the selected coordinate.")),
                     Paragraph(Text(
-                        "Pinned Mathlib supplies the singleton-subset interface used by this predicate, "
-                        + "but no exact observer declaration was found in the library or repository. "
-                        + "The Lean statement is therefore a direct generic encoding of the selected "
-                        + "definition clause.")),
+                        "The strict definition represents sets by membership predicates. For each "
+                        + "admitted invariant and each input in its dependency set, it requires "
+                        + "equality of that input with the selected coordinate.")),
                     Paragraph(Text(
                         "This deposit is an honest partial closure of the leading definition clause of "
                         + "interface-philosophy-v4 corollary 4.5. Its later existence and visibility "

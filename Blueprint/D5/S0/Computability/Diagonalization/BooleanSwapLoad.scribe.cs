@@ -28,8 +28,10 @@ internal sealed class BooleanSwapLoadDocument : IScribeDocumentDefinition
                     SigmaLower, Open, F.Id("V"), Open, F.Id("h"), Comma, F.Id("h"), Close,
                     Close, Sp, Neq, Sp,
                     F.Id("V"), Open, F.Id("h"), Comma, F.Id("h"), Close,
-                    Close, Sp, Iff, Sp, SigmaLower, Sp, Eq, Sp,
-                    Operatorname, Grp(F.Id("Bool"), Dot, F.Id("not")),
+                    Close, Sp, Iff, Sp,
+                    Forall, Sp, F.Id("b"), Sp, Colon, Sp, F.Id("Bool"), Comma, Sp,
+                    SigmaLower, Open, F.Id("b"), Close, Sp, Eq, Sp,
+                    Operatorname, Grp(F.Id("not")), Open, F.Id("b"), Close,
                     Close, RowBreak, Sp, Land, Sp, Neg, Open, Forall, Sp,
                     Open, F.Id("History"), Sp, Colon, Sp, F.Id("Type"), Close, Sp,
                     Open, F.Id("V"), Sp, Colon, Sp,
@@ -51,11 +53,10 @@ internal sealed class BooleanSwapLoadDocument : IScribeDocumentDefinition
                         + "when sigma is Boolean negation.")),
                     Paragraph(Text(
                         "The second conjunct records the source's deletion test explicitly. Replacing "
-                        + "the swap by identity fails on the constant-false evaluator over Unit, so "
-                        + "the diagonal contradiction has no statement after the swap is removed. "
-                        + "Conversely, Bool.not_ne_self supplies the mismatch for negation; testing any "
-                        + "universally escaping operation on the two constant diagonals forces both of "
-                        + "its values and hence forces the operation itself to be Bool.not.")),
+                        + "the swap by identity fails on the constant-false evaluator over Bool. "
+                        + "Negation changes each of the two Boolean values. Testing any universally "
+                        + "escaping operation on the two constant diagonals yields pointwise equality "
+                        + "with negation on the entire Boolean carrier.")),
                     Paragraph(Text(
                         "The neighboring DiagonalSwap theorem proves the forward mismatch for a fixed "
                         + "natural-number assignment. This theorem quantifies over every history type "
