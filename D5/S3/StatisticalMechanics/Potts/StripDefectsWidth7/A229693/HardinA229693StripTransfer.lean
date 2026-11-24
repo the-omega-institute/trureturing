@@ -812,6 +812,90 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
     exhausted_relabel, cl_relabel] using h
 
 /-- Transfer multiplicities for both the positive and exhausted budgets. -/
+-- The inherited slice needs a finite index check. The other two row
+-- families read their columns directly through exitRead.
+private def exitRepresentative (key : Fin 108) : Fin 96 :=
+  Fin.ofNat 96 ((List.ofFn exitRead).idxOf key)
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 6000000 in
+private theorem oldExits_representative (j : Fin 96) (hj : 72 ≤ (exitRead j).val) :
+    (List.finRange 72).all (fun i => oldExits i (exitRepresentative (exitRead j)) ==
+      oldExits i j) = true := by
+  fin_cases j <;> revert hj <;> decide +kernel
+
+private theorem inheritedSource_index (i : Fin 72) (k : Fin 16)
+    (h : inheritedSource i = some k) : i = k.castAdd 56 := by
+  have hc : (inheritedSource i).all (fun l => decide (i = l.castAdd 56)) = true := by
+    fin_cases i <;> decide +kernel
+  simpa only [h, Option.all_some, decide_eq_true_eq] using hc
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 6000000 in
+private theorem oldExits_copied_check (j : Fin 96) (hj : (exitRead j).val < 72) :
+    let k := Fin.ofNat 72 (exitRead j).val
+    ((List.finRange 16).all (fun i =>
+        oldExits (i.castAdd 56) j == HardinA229585StripData.T (i.castAdd 56) k) &&
+      (List.finRange 56).all (fun i => oldExits (i.natAdd 16) j == 0) &&
+      (List.finRange 72).all (fun i => decide (0 ≤ HardinA229585StripData.T i k))) = true := by
+  fin_cases j <;> revert hj <;> decide +kernel
+
+theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
+    T i (j.natAdd 72) = T i (Fin.castAdd 96 (⟨(exitRead j).val, hj⟩ : Fin 72)) := by
+  have hk : Fin.ofNat 72 (exitRead j).val = (⟨_, hj⟩ : Fin 72) :=
+    Fin.ext (Nat.mod_eq_of_lt hj)
+  have hc := oldExits_copied_check j hj
+  dsimp only at hc
+  rw [hk, Bool.and_eq_true, Bool.and_eq_true] at hc
+  induction i using Fin.addCases (m := 72) (n := 96) with
+  | left i =>
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+      finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
+      Matrix.of_apply]
+    cases hi : inheritedSource i with
+    | none =>
+      simp only [activeWeight, show exitRead j = (⟨_, hj⟩ : Fin 72).castAdd 36 from Fin.ext rfl,
+        Fin.append_left]
+      exact Int.toNat_of_nonneg
+        (of_decide_eq_true (List.all_eq_true.mp hc.2 i (List.mem_finRange i)))
+    | some k =>
+      rw [inheritedSource_index i k hi]
+      exact beq_iff_eq.mp (List.all_eq_true.mp hc.1.1 k (List.mem_finRange k))
+  | right i =>
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+      finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
+      Matrix.of_apply, Matrix.zero_apply]
+    induction i using Fin.addCases (m := 56) (n := 40) with
+    | left i =>
+      rw [Fin.append_left]
+      exact beq_iff_eq.mp (List.all_eq_true.mp hc.1.2 i (List.mem_finRange i))
+    | right i =>
+      simp only [Fin.append_right, exhaustedWeight,
+        show exitRead j = (⟨_, hj⟩ : Fin 72).castAdd 36 from Fin.ext rfl, Fin.append_left,
+        Pi.zero_apply, Nat.cast_zero]
+
+theorem new_column_congr (j k : Fin 96) (hj : 72 ≤ (exitRead j).val)
+    (h : exitRead j = exitRead k) (i : Fin 168) :
+    T i (j.natAdd 72) = T i (k.natAdd 72) := by
+  have hk : 72 ≤ (exitRead k).val := h ▸ hj
+  have hold (r : Fin 72) : oldExits r j = oldExits r k := by
+    have hrep (l : Fin 96) (hl : 72 ≤ (exitRead l).val) :=
+      beq_iff_eq.mp (List.all_eq_true.mp (oldExits_representative l hl) r (List.mem_finRange r))
+    rw [← hrep j hj, h, hrep k hk]
+  induction i using Fin.addCases (m := 72) (n := 96) with
+  | left i =>
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+      finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₁₂, Matrix.of_apply]
+    cases inheritedSource i with
+    | none => rw [activeWeight, activeWeight, h]
+    | some l => exact hold (l.castAdd 56)
+  | right i =>
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd,
+      Matrix.fromBlocks_apply₂₂, Matrix.of_apply]
+    induction i using Fin.addCases (m := 56) (n := 40) with
+    | left i => simpa only [Fin.append_left] using hold (i.natAdd 16)
+    | right i => simp only [Fin.append_right, exhaustedWeight, h]
+
 theorem transition_counts (p : Boundary) (d : ℕ) (s : Fin 168)
     (hp : HardinA229635State.Valid p d) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d ∧

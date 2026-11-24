@@ -330,7 +330,14 @@ private def rightColumn (j : Fin 96) : List ℤ :=
     run_tac
       let mut columns : Array Lean.Expr := #[]
       for k in List.finRange 60 do
-        let j := (columnRepresentative k).natAdd 72
+        let representative := columnRepresentative k
+        let key : Nat ← Lean.Meta.withTransparency .all <| Lean.Meta.reduceEval
+          (Lean.mkApp2 (Lean.mkConst ``Fin.val) (Lean.mkRawNatLit 108)
+            (Lean.mkApp (Lean.mkConst ``exitRead) (Lean.toExpr representative)))
+        if key < 72 then
+          columns := columns.push (Lean.mkRawNatLit 0)
+          continue
+        let j := representative.natAdd 72
         let word ← Lean.Meta.savingCache do
           let mut word := 0
           for i in List.finRange 168 do
@@ -348,16 +355,30 @@ private def rightColumn (j : Fin 96) : List ℤ :=
   List.ofFn fun i : Fin 168 => (((word >>> (5 * i.val)) % 32 : ℕ) : ℤ)
 
 set_option maxRecDepth 10000 in
-set_option maxHeartbeats 6000000 in
-private theorem rightColumn_eq (j : Fin 96) :
-    List.ofFn (fun k : Fin 168 => T k (j.natAdd 72)) = rightColumn j := by
-  fin_cases j <;> decide +kernel
-
-set_option maxRecDepth 10000 in
 private theorem representative_data (j : Fin 96) :
     columnRank (columnRepresentative (columnRank j)) = columnRank j ∧
     exitRead (columnRepresentative (columnRank j)) = exitRead j := by
   fin_cases j <;> decide +kernel
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 6000000 in
+private theorem rightColumn_at_representative (k : Fin 60)
+    (hk : 72 ≤ (exitRead (columnRepresentative k)).val) :
+    List.ofFn (fun i : Fin 168 => T i ((columnRepresentative k).natAdd 72)) =
+      rightColumn (columnRepresentative k) := by
+  fin_cases k <;> revert hk <;> decide +kernel
+
+private theorem rightColumn_eq (j : Fin 96) (hj : 72 ≤ (exitRead j).val) :
+    List.ofFn (fun i : Fin 168 => T i (j.natAdd 72)) = rightColumn j := by
+  rcases representative_data j with ⟨hrank, hexit⟩
+  calc
+    _ = List.ofFn (fun i : Fin 168 => T i ((columnRepresentative (columnRank j)).natAdd 72)) :=
+      congrArg List.ofFn (funext (new_column_congr j _ hj hexit.symm))
+    _ = rightColumn (columnRepresentative (columnRank j)) :=
+      rightColumn_at_representative _ (hexit.symm ▸ hj)
+    _ = rightColumn j := by
+      unfold rightColumn
+      rw [hrank]
 
 private def exhaustedRank (k : Fin 60) : ℕ :=
   let packed : ℕ := eval% (
@@ -586,7 +607,8 @@ private def checkColumn (k : Fin 60) : Bool :=
       (List.zipWith (· * ·) (arithmeticRow i.castSucc) column).sum
 
 private def stepGroup (g : Fin 10) : Bool :=
-  (((List.finRange 60).drop (6 * g.val)).take 6).all checkColumn
+  ((((List.finRange 60).drop (6 * g.val)).take 6).filter
+    (fun k => 72 ≤ (exitRead (columnRepresentative k)).val)).all checkColumn
 
 -- Check one destination from each class of equal right columns.
 set_option maxRecDepth 8000 in
@@ -594,7 +616,8 @@ set_option maxHeartbeats 6000000 in
 private theorem exhaustedSteps (g : Fin 10) : stepGroup g = true := by
   fin_cases g <;> decide +kernel
 
-private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
+private theorem exhausted_step (i : Fin 14) (j : Fin 96)
+    (hj : 72 ≤ (exitRead j).val) :
     w i.succ (j.natAdd 72) = Matrix.vecMul (w i.castSucc) T (j.natAdd 72) := by
   let k := columnRank j
   let g : Fin 10 := ⟨k.val / 6, by omega⟩
@@ -604,8 +627,12 @@ private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
     apply Fin.ext
     simp [List.getElem_take, List.getElem_drop, g]
     omega
+  have hk : 72 ≤ (exitRead (columnRepresentative k)).val := by
+    rw [(representative_data j).2]
+    exact hj
   have h := List.all_eq_true.mp
-    (List.all_eq_true.mp (exhaustedSteps g) k hm) i (List.mem_finRange i)
+    (List.all_eq_true.mp (exhaustedSteps g) k (List.mem_filter.mpr ⟨hm, decide_eq_true hk⟩))
+    i (List.mem_finRange i)
   change (w i.succ ((columnRepresentative k).natAdd 72) ==
     (List.zipWith (· * ·) (arithmeticRow i.castSucc) (rightColumn (columnRepresentative k))).sum)
       = true at h
@@ -613,7 +640,7 @@ private theorem exhausted_step (i : Fin 14) (j : Fin 96) :
     unfold rightColumn
     rw [(representative_data j).1]
   rw [beq_iff_eq, w_representative i.succ (Nat.succ_ne_zero _) j, hcol] at h
-  simpa only [arithmeticRow, ← rightColumn_eq, sum_zip_mul, Matrix.vecMul] using h
+  simpa only [arithmeticRow, ← rightColumn_eq j hj, sum_zip_mul, Matrix.vecMul] using h
 
 private theorem leading_action (v : Fin 168 → ℤ) (j : Fin 72) :
     Matrix.vecMul v T (j.castAdd 96) =
@@ -627,6 +654,11 @@ private theorem leading_action (v : Fin 168 → ℤ) (j : Fin 72) :
     add_zero]
   rfl
 
+private theorem w_copied (i : Fin 15) (hi : i.val ≠ 0) (j : Fin 96)
+    (hj : (exitRead j).val < 72) :
+    w i (j.natAdd 72) = leading i ⟨(exitRead j).val, hj⟩ := by
+  simp only [w, hi, dite_false, Fin.addCases_right, hj, dite_true]
+
 private theorem forward_step (i : Fin 14) :
     w i.succ = Matrix.vecMul (w i.castSucc) T := by
   funext j
@@ -635,7 +667,14 @@ private theorem forward_step (i : Fin 14) :
     rw [leading_action]
     simpa only [w_leading] using congrFun (leading_step i) j
   | right j =>
-    exact exhausted_step i j
+    by_cases hj : (exitRead j).val < 72
+    · rw [w_copied _ (Nat.succ_ne_zero _) j hj]
+      have hcol : Matrix.vecMul (w i.castSucc) T (j.natAdd 72) =
+          Matrix.vecMul (w i.castSucc) T ((⟨(exitRead j).val, hj⟩ : Fin 72).castAdd 96) := by
+        simp only [Matrix.vecMul, dotProduct, copied_column j hj]
+      rw [hcol, leading_action]
+      simpa only [w_leading] using congrFun (leading_step i) ⟨(exitRead j).val, hj⟩
+    · exact exhausted_step i j (Nat.le_of_not_gt hj)
 
 private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
   let rows := List.ofFn w
@@ -686,11 +725,6 @@ private theorem leading_polynomial (j : Fin 72) :
   simpa only [← leading_forward, Fin.val_last, Fin.val_castAdd, Fin.val_natAdd] using
     recurrence_convolution
       (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) (fun n _ => h n)
-
-private theorem w_copied (i : Fin 15) (hi : i.val ≠ 0) (j : Fin 96)
-    (hj : (exitRead j).val < 72) :
-    w i (j.natAdd 72) = leading i ⟨(exitRead j).val, hj⟩ := by
-  simp only [w, hi, dite_false, Fin.addCases_right, hj, dite_true]
 
 set_option maxRecDepth 14000 in
 set_option maxHeartbeats 3000000 in

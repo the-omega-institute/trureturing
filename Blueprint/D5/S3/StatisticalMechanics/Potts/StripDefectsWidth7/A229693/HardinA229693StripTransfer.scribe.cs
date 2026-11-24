@@ -66,6 +66,18 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             Node("horizontal_cons", "Horizontal charge of a new head",
                 All("x", Fin3, All("p", BoundaryType, HorizontalConsFormula())),
                 "Prepending a colour adds one comparison with the first boundary cell.", DescribeRole.Theorem),
+            Node("copied_column", "The copied exhausted columns",
+                All("j", Fin96, All("h", Lt(Call("Fin.val", Call("exitRead", V("j"))), Num("72")),
+                    All("i", Fin168, Eq(Call("T", V("i"), Call("Fin.natAdd", Num("72"), V("j"))),
+                        Call("T", V("i"), Call("Fin.castAdd", Num("96"),
+                            Parenthesized(TypeOf(Seq(Langle, Call("Fin.val", Call("exitRead", V("j"))), Comma, Sp, V("h"), Rangle), Call("Fin", Num("72"))))))))),
+                "A readout below 72 gives the corresponding frozen leading column with a zero suffix.", DescribeRole.Theorem),
+            Node("new_column_congr", "Columns with the same new readout",
+                All("j", Fin96, All("k", Fin96, Imp(Leq(Num("72"), Call("Fin.val", Call("exitRead", V("j")))),
+                    Imp(Eq(Call("exitRead", V("j")), Call("exitRead", V("k"))), All("i", Fin168,
+                        Eq(Call("T", V("i"), Call("Fin.natAdd", Num("72"), V("j"))),
+                            Call("T", V("i"), Call("Fin.natAdd", Num("72"), V("k")))))))),
+                "A readout at least 72 determines the entire exhausted destination column.", DescribeRole.Theorem),
             Node("matchCost", "Cost of a colour match",
                 Seq(TypeOf(Call("matchCost"), All("m", V("Nat"), Arrow(OptionColour, Arrow(Colour, V("Nat"))))), Comma, Sp,
                     Clause(AtRadix(All("x", Colour, Eq(Call("matchCost", Call("none"), V("x")), D(0))))), Comma, Sp,
@@ -110,6 +122,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
             H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)), Blocks(Paragraph(Text(prose))), role);
 
+    private static Formula Fin96 => Call("Fin", Num("96"));
     private static Formula Fin168 => Call("Fin", Num("168"));
     private static Formula Fin3 => Call("Fin", D(3));
     private static Formula Colour => Call("Fin", V("m"));
