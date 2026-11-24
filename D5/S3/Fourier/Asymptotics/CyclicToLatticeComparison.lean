@@ -236,18 +236,11 @@ private theorem embedded_feasible {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w : �
     linarith only [hsum]
   exact ⟨u, ⟨fun i => A.nonneg _, hmass, hdeficit 1 (by omega), hdeficit 2 le_rfl⟩, henergy⟩
 
-private theorem quadratic_dual_le {x p : ℝ} (hx : 0 ≤ x) :
-    2 * (x * p) - (max 0 p) ^ 2 ≤ x ^ 2 := by
-  by_cases hp : 0 ≤ p
-  · rw [max_eq_right hp]
-    nlinarith only [sq_nonneg (x - p)]
-  · rw [max_eq_left (le_of_not_ge hp)]
-    nlinarith only [mul_nonpos_of_nonneg_of_nonpos hx (le_of_not_ge hp), sq_nonneg x]
-
 private theorem universal_lower_bound {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w : ℤ → ℝ}
     (hq : 2 * n < q) (A : Activation (lam / (8 * Real.pi ^ 2)) n t Z w)
     {v : ZMod q → ℝ} (hv : v ∈ feasible q (1 - lam / (q : ℝ) ^ 2)) :
-    (∑' k : ℤ, w k ^ 2) - (2 * t / Z) * (lam / (q : ℝ) ^ 2) ≤ energy v := by
+    (∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2) ≤
+      energy v - (∑' k : ℤ, w k ^ 2) + (2 * t / Z) * (lam / (q : ℝ) ^ 2) := by
   let m := lam / (8 * Real.pi ^ 2)
   let δ := lam / (q : ℝ) ^ 2
   let C := ((q : ℝ) / (2 * Real.pi)) ^ 2 / 2
@@ -256,7 +249,7 @@ private theorem universal_lower_bound {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w 
     have hq' : (q : ℝ) ≠ 0 := by exact_mod_cast (NeZero.ne q)
     dsimp [C, δ, m]
     field_simp [Real.pi_ne_zero]
-    <;> ring
+    ring
   have hdot : (∑ i, v i * P i) =
       (t * cosineMoment 1 v - C * (1 - cosineMoment 2 v)) / Z := by
     have hp (i : ZMod q) : v i * P i =
@@ -285,18 +278,20 @@ private theorem universal_lower_bound {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w 
   have hsq : (∑ i : ZMod q, w i.valMinAbs ^ 2) = ∑' k : ℤ, w k ^ 2 :=
     sum_centered_eq_tsum hq (fun k => w k ^ 2)
       (fun k hk => by simp only [activation_zero_outside A hk, zero_pow two_ne_zero])
+  have hdot_weight : (∑ i, v i * P i) ≤ ∑ i : ZMod q, v i * w i.valMinAbs :=
+    sum_le_sum fun i _ =>
+      mul_le_mul_of_nonneg_left ((le_max_right 0 _).trans (dual_positive_part_le A i)) (hv.1 i)
+  have hdist : (∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2) =
+      energy v - 2 * (∑ i : ZMod q, v i * w i.valMinAbs) + (∑' k : ℤ, w k ^ 2) := by
+    simp_rw [sub_sq, mul_assoc]
+    rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, hsq, energy]
   calc
-    _ ≤ 2 * (∑ i, v i * P i) - ∑' k : ℤ, w k ^ 2 := by
+    _ ≤ energy v - 2 * (∑ i, v i * P i) + (∑' k : ℤ, w k ^ 2) := by
+      rw [hdist]
+      linarith only [hdot_weight]
+    _ ≤ _ := by
       rw [lattice_energy_eq A]
-      change (t - m) / Z - (2 * t / Z) * δ ≤ 2 * (∑ i, v i * P i) - (t - m) / Z
       linarith only [hdot_lower, show (2 * t / Z) * δ = 2 * (t * δ / Z) by ring]
-    _ ≤ 2 * (∑ i, v i * P i) - ∑ i, (max 0 (P i)) ^ 2 := by
-      rw [← hsq]
-      exact sub_le_sub_left (sum_le_sum fun i _ =>
-        (sq_le_sq₀ (le_max_left _ _) (A.nonneg _)).mpr (dual_positive_part_le A i)) _
-    _ ≤ energy v := by
-      rw [mul_sum, ← sum_sub_distrib, energy]
-      exact sum_le_sum fun i _ => quadratic_dual_le (hv.1 i)
 
 private theorem exists_cyclic_minimum {q : ℕ} [NeZero q] {a : ℝ}
     (hne : (feasible q a).Nonempty) :
@@ -324,24 +319,39 @@ private theorem exists_cyclic_minimum {q : ℕ} [NeZero q] {a : ℝ}
 at threshold `1 - λ/q²` is attained. Its gap below the lattice minimum is at most
 `(2t/Z) λ/q²`, hence at most `2λ/q²`. -/
 theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (hq : 2 * n < q)
-    (lam : ℝ) (hlam : 0 ≤ lam)
+    (lam : ℝ)
     (hmlo : ((n : ℝ) ^ 2 - 1) / 5 ≤ lam / (8 * Real.pi ^ 2))
     (hmhi : lam / (8 * Real.pi ^ 2) ≤ (n : ℝ) * (n + 2) / 5) :
     letI : NeZero q := ⟨by omega⟩
     let m := lam / (8 * Real.pi ^ 2)
     let a := 1 - lam / (q : ℝ) ^ 2
+    let error := fun x : ℝ => 2 * x
     ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w ∧
+      (∀ u ∈ feasible q a, (∑ i : ZMod q, (u i - w i.valMinAbs) ^ 2) ≤
+        energy u - (∑' k : ℤ, w k ^ 2) + (2 * t / Z) * (lam / (q : ℝ) ^ 2)) ∧
       ∃ v ∈ feasible q a, IsMinOn energy (feasible q a) v ∧
         0 ≤ (∑' k : ℤ, w k ^ 2) - energy v ∧
         (∑' k : ℤ, w k ^ 2) - energy v ≤ (2 * t / Z) * (lam / (q : ℝ) ^ 2) ∧
-        (∑' k : ℤ, w k ^ 2) - energy v ≤ 2 * lam / (q : ℝ) ^ 2 := by
+        (∑' k : ℤ, w k ^ 2) - energy v ≤ error (lam / (q : ℝ) ^ 2) := by
   let _ : NeZero q := ⟨by omega⟩
+  have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hm : 0 ≤ lam / (8 * Real.pi ^ 2) := by
+    have h := (sq_le_sq₀ (by norm_num : (0 : ℝ) ≤ 1) (by positivity : (0 : ℝ) ≤ n)).mpr hn'
+    linarith
+  have hlam : 0 ≤ lam := by
+    rw [le_div_iff₀ (by positivity : 0 < 8 * Real.pi ^ 2), zero_mul] at hm
+    exact hm
   obtain ⟨t, Z, w, A⟩ :=
     (exists_lattice_square_moment_minimizer_on_interval n hn _).mp ⟨hmlo, hmhi⟩
   obtain ⟨u, hu, huenergy⟩ := embedded_feasible hq A
   obtain ⟨v, hv, hvmin⟩ := exists_cyclic_minimum ⟨u, hu⟩
-  have hgap := sub_le_comm.mp (universal_lower_bound hq A hv)
-  refine ⟨t, Z, w, A, v, hv, hvmin, sub_nonneg.mpr ((hvmin hu).trans_eq huenergy), hgap, ?_⟩
+  have hdist := universal_lower_bound hq A hv
+  have hnonneg : 0 ≤ ∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2 :=
+    sum_nonneg fun i _ => sq_nonneg _
+  have hgap : (∑' k : ℤ, w k ^ 2) - energy v ≤ (2 * t / Z) * (lam / (q : ℝ) ^ 2) := by
+    linarith only [hdist, hnonneg]
+  refine ⟨t, Z, w, A, fun u hu => universal_lower_bound hq A hu, v, hv, hvmin,
+    sub_nonneg.mpr ((hvmin hu).trans_eq huenergy), hgap, ?_⟩
   have hratio : 2 * t / Z ≤ 2 := by
     rw [div_le_iff₀ A.normalizer_pos]
     exact mul_le_mul_of_nonneg_left (radius_le_normalizer A) (by norm_num)
@@ -349,6 +359,5 @@ theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (hq : 2 * n < q)
     _ ≤ (2 * t / Z) * (lam / (q : ℝ) ^ 2) := hgap
     _ ≤ 2 * (lam / (q : ℝ) ^ 2) :=
       mul_le_mul_of_nonneg_right hratio (div_nonneg hlam (sq_nonneg _))
-    _ = _ := by ring
 
 end D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison
