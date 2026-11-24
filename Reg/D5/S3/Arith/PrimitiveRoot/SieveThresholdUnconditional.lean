@@ -1,3 +1,4 @@
+import D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower
 import D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -90,43 +91,47 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p : ℕ) [Fact p.Prime] (_hp : 5000000 ≤ p)
     (_hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
+      orderOf χ ∣ ∏ q ∈ (R.readout () () p).primeFactors, q →
       |(smoothedCharacterSum p χ).re| ≤
         (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p)
     (_hmain : (23 / 50 : ℝ) * p ≤ (smoothedCharacterSum p 1).re),
     ∃ q : ℕ, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = R.readout () () p
-private theorem rejected_law (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
-    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
-      |(smoothedCharacterSum p χ).re| ≤
-        (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p)
-    (hmain : (23 / 50 : ℝ) * p ≤ (smoothedCharacterSum p 1).re) :
-    ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨q, hq, hlt, ho⟩ := h p hp hM hmain
+  let p : ℕ := 5000011
+  have hp : p.Prime := by norm_num [p]
+  letI : Fact p.Prime := ⟨hp⟩
+  have hlarge : 5000000 ≤ p := by norm_num [p]
+  have hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
+      orderOf χ ∣ ∏ q ∈ (rejected.readout () () p).primeFactors, q →
+      |(smoothedCharacterSum p χ).re| ≤
+        (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p := by
+    intro χ hχ hord
+    have ho : orderOf χ = 1 := Nat.dvd_one.mp (by simpa [rejected, realize] using hord)
+    exact (hχ (orderOf_eq_one_iff.mp ho)).elim
+  have hmain :=
+    _root_.D5.S3.Arith.PrimitiveRoot.PrincipalTriangleLower.principal_smoothedCharacterSum_large
+      hp hlarge
+  obtain ⟨q, hq, hlt, ho⟩ := h p hlarge hM hmain
   have hz : (q : ZMod p) ≠ 0 := by
     intro hz
     exact Nat.not_dvd_of_pos_of_lt hq.pos hlt
       ((CharP.cast_eq_zero_iff (ZMod p) p q).mp hz)
   have hd := ZMod.orderOf_dvd_card_sub_one hz
-  have hn := Nat.pos_of_dvd_of_pos hd (show 0 < p - 1 by omega)
+  have hn := Nat.pos_of_dvd_of_pos hd (show 0 < p - 1 by norm_num [p])
   have he : orderOf (q : ZMod p) = 0 := by simpa [rejected, realize] using ho
   omega
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), 1, 2, by norm_num [actual, realize]⟩
-def family (p : ℕ) [Fact p.Prime] (hp : 5000000 ≤ p)
-    (hM : ∀ χ : DirichletCharacter ℂ p, χ ≠ 1 →
-      orderOf χ ∣ ∏ q ∈ (p - 1).primeFactors, q →
-      |(smoothedCharacterSum p χ).re| ≤
-        (165458 / 111375 : ℝ) * Real.sqrt p * Real.log p)
-    (hmain : (23 / 50 : ℝ) * p ≤ (smoothedCharacterSum p 1).re) :
-    Registration arena (type_of% @exists_prime_primitiveRoot) where
+def family : Registration arena (type_of% @exists_prime_primitiveRoot) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@exists_prime_primitiveRoot, rejected, rejected_law p hp hM hmain⟩
+  variation := ⟨@exists_prime_primitiveRoot, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
-    (rejected_law p hp hM hmain)
+    rejected_law
   dependence := dependence
+
+#print axioms family
 end PrimeRoot
 end Reg.D5.S3.Arith.PrimitiveRoot.SieveThresholdUnconditional
