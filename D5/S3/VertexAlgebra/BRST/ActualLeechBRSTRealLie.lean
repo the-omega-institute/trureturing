@@ -56,7 +56,8 @@ open private matterConjugation matterConjugation_tmul planeConjugation ghostConj
 open private tensor_pairing_tmul
   from D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldNativeBPZ
 
-local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
+local instance realLieStateAddCommGroup : AddCommGroup ComplexState :=
+  TensorProduct.addCommGroup
 
 local notation "Momentum" => Charge hyperbolicPlane
 local notation "H" => fun p : Momentum => GradedCohomology planeFrame planeBasis p 1
@@ -66,8 +67,10 @@ local notation "incl" => DirectSum.lof ℂ Momentum H
 local notation "RealMomentumH1" => RestrictScalars ℝ ℂ MomentumH1
 local notation "κ" => coefficientConjugationMomentum
 
-local instance (p : Momentum) : AddCommGroup (relativeShell p) := Submodule.addCommGroup _
-local instance (p : Momentum) : AddCommGroup (Cycles p) := Submodule.addCommGroup _
+local instance realLieShellAddCommGroup (p : Momentum) : AddCommGroup (relativeShell p) :=
+  Submodule.addCommGroup _
+local instance realLieCyclesAddCommGroup (p : Momentum) : AddCommGroup (Cycles p) :=
+  Submodule.addCommGroup _
 
 /-- Covariance for the Lie bracket on the actual BRST momentum direct sum. -/
 theorem momentumConjugation_lie (x y : MomentumH1) :
