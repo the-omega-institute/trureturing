@@ -41,8 +41,8 @@ w_leading: proof_shape=bind-only; consumers=forward_step, polynomial_relation
 leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step, recurrence_convolution, leading_polynomial
 leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingCoordinates: proof_shape=bind-only; consumers=leading_rec
-leading_rec: proof_shape=bind-only; consumers=leading_step
-leading_step: proof_shape=bind-only; consumers=forward_step, leading_forward
+leading_rec: proof_shape=bind-only; consumers=leading_step, leading_polynomial
+leading_step: proof_shape=bind-only; consumers=forward_step
 checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=bind-only; consumers=exhaustedSteps, exhaustedSteps._proof_1, exhaustedSteps._proof_10, exhaustedSteps._proof_2, exhaustedSteps._proof_3, exhaustedSteps._proof_4, exhaustedSteps._proof_5, exhaustedSteps._proof_6, exhaustedSteps._proof_7, exhaustedSteps._proof_8, exhaustedSteps._proof_9
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
