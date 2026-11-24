@@ -19,7 +19,15 @@
      coordinate and then by the output coordinate.
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Tactic.FieldSimp
+
+/-! Finite real Kullback–Leibler divergence and its common-channel chain identity. -/
+
+@[expose] public section
 
 namespace D5.S3.Divergence.ClassicalDPI
 

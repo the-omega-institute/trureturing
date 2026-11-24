@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Estimation.DecisionRisk;
 
 internal sealed class FixedMarginalGenericFeaturesDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Estimation/vanrooyenwilliamson2014genericfeatures");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fixed data marginal relates universal signed-loss quality to one randomized reconstruction rule.",
         H("Fixed-marginal generic features"),
@@ -14,7 +17,7 @@ internal sealed class FixedMarginalGenericFeaturesDocument : IScribeDocumentDefi
             DeclarationHandle.Create("D5/S3/Estimation/DecisionRisk/FixedMarginalGenericFeatures.generic_quality_iff_reconstruction"),
             H("Universal decision quality and reconstruction"),
             StatementSource.FromAuthor(Statement()),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(Source),
             Blocks(
                 Paragraph(Text("Let X and Z be arbitrary finite types, q a nonnegative real mass of total one on X, and phi a row-stochastic encoder from X to Z. For epsilon greater than zero, universal quality means that every finite hypothesis type, normalized prior, nonempty finite action type, compatible experiment with data marginal q, and real signed loss has feature Bayes risk minus data Bayes risk at most epsilon times the maximum absolute loss. All four type universes are independent.")),
                 Paragraph(Text("The Bayes risk is the real sInf of finiteBayesCost over every row-stochastic randomized decision. Negative losses remain signed. The finite maximum is lossNorm, the real supremum of the finite nonempty set of absolute loss values. Normalization supplies nonemptiness of the data and hypothesis types; the encoder then supplies nonemptiness of the feature type. No support condition is imposed on any entry.")),
