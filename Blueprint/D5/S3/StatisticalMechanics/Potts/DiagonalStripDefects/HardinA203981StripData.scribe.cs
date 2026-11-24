@@ -33,7 +33,7 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
             Product(Fin("5"), Fin("5")))), Vec(PairNum(0,0), PairNum(0,1), PairNum(0,2), PairNum(0,3),
                 PairNum(0,4), PairNum(1,1), PairNum(1,2), PairNum(1,3), PairNum(1,4), PairNum(2,2),
                 PairNum(2,3), PairNum(2,4), PairNum(3,3), PairNum(3,4), PairNum(4,4))),
-            "The two entries are in increasing order with equality allowed.", "classPair"),
+            "The entries follow the upper-triangular order of Mathlib's List.mapDiagM' on the five triple classes, including the diagonal.", "classPair"),
         Define("representatives", "Representative rows", All("i", Fin("15"),
             Eq(Own("representatives", V("i")), App(Call("Equiv.symm", Own("parityRows")),
                 Pair(Owner("representatives", Fst(Own("classPair", V("i")))),

@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 between_six: proof_shape=bind-only; consumers=HardinA203981Strip.scale_count, HardinA203981StripSymmetry.cost_formula
 parityRows: proof_shape=bind-only; consumers=HardinA203981StripCertificate.allocated_counts, HardinA203981StripCertificate.exact_cost_split, HardinA203981StripCertificate.initial_counts, HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.recolor_match, HardinA229508StripCertificate.representative_counts, HardinA229683StripCertificate.representative_counts, boundary, boundary.eq_1, boundary_at_rep, cls_at_rep, representatives, representatives.eq_1
 sorted_pair_mem: proof_shape=bind-only; consumers=pairClassLookup._proof_1
+classPair_eq_mapDiagM: proof_shape=bind-only; consumers=sorted_pair_mem
 pairClassLookup: proof_shape=bind-only; consumers=pairClass_eq_lookup, pairClass_eq_lookup._proof_1_1
 pairClass_eq_lookup: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.pair_match
 classPair: proof_shape=bind-only; consumers=HardinA203981StripCertificate.allocated_counts, HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, HardinA203981StripCertificate.pair_sum, HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.pair_match, HardinA229508StripCertificate.representative_counts, HardinA229683StripCertificate.representative_counts, boundary_at_rep, classProduct, cls_at_rep, pairClassLookup, pairClassLookup._proof_1, pairClass_eq_lookup, representatives, representatives.eq_1, sorted_pair_mem, sorted_pair_mem._proof_1_1, unordered, unordered.eq_1
@@ -30,7 +31,9 @@ halfInitial: proof_shape=bind-only; consumers=HardinA203981StripCertificate.half
 -/
 
 import Init.Data.List.Basic
+import Init.Control.State
 import Init.Data.List.Find
+import Init.Data.List.FinRange
 import Init.Data.List.OfFn
 import Init.Tactics
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Literal
@@ -39,6 +42,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.Rev
+import Mathlib.Data.List.Defs
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
@@ -86,8 +90,16 @@ def classPair : Fin 15 → Fin 5 × Fin 5 :=
   ![(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (1, 4),
     (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]
 
+private theorem classPair_eq_mapDiagM :
+    List.ofFn classPair =
+      ((List.finRange 5).mapDiagM'
+        (m := StateM (List (Fin 5 × Fin 5)))
+        (fun a b => modify ((a, b) :: ·)) |>.run []).2.reverse := by
+  rfl
+
 private theorem sorted_pair_mem : ∀ x y : Fin 5,
     (min x y, max x y) ∈ List.ofFn classPair := by
+  rw [classPair_eq_mapDiagM]
   decide +kernel
 
 private def pairClassLookup (x y : Fin 5) : Fin 15 :=
