@@ -358,9 +358,6 @@ noncomputable def firstUrnEquiv {m n r : ℕ} (hm : 0 < m) :
     U m (n + m) (m + r) ≃ Payload m n r :=
   ⟨deleteFirstUrn hm, reinsertFirstUrn hm, reinsert_delete hm, delete_reinsert hm⟩
 
-/-- The signed column is empty at every negative index. -/
-def SignedU (m t : ℕ) (k : ℤ) := if k < 0 then Empty else U m t k.toNat
-
 private theorem word_card_ge_m {m n : ℕ} (w : Word m (m+n)) : m ≤ (used w.val).card := by
   have ha := assemble_split _ (forced_prefix w.property)
   rw [← ha, used_assemble, card_range_union_shift]
@@ -603,25 +600,6 @@ theorem shift_7_2 {m : ℕ} (hm : 0 < m) (n k : ℕ) :
 
 
 /-! ## Boundary cases -/
-
-/-- At capacity one, the legal move is exactly the ordinary zero-based restricted-growth rule. -/
-theorem capacity_one_legal {t : ℕ} (x : Fin t → ℕ) :
-    Legal 1 x ↔ ∀ i : Fin t, x i ≤ (before x i.val).card := by
-  rw [legal_iff_moves]
-  simp only [Move, threshold, Nat.div_one, Nat.one_mul, le_iff_eq_or_lt]
-
-/-- At capacity one, the first urn is the block containing the initial marble. -/
-private theorem capacity_one_first_block {n : ℕ} (w : Word 1 (1+n)) (i : Fin (1+n)) :
-    w.val i / 1 = w.val ((0 : Fin 1).castAdd n) / 1 ↔ w.val i = 0 := by
-  let first : Fin (1 + n) := (0 : Fin 1).castAdd n
-  have h := (capacity_one_legal w.val).1 w.property first
-  have hbefore : before w.val first.val = ∅ := by
-    ext a
-    simp [mem_before, first]
-  rw [hbefore, Finset.card_empty] at h
-  have hfirst : w.val first = 0 := Nat.eq_zero_of_le_zero h
-  change w.val i / 1 = w.val first / 1 ↔ w.val i = 0
-  simp [hfirst]
 
 theorem capacity_one_stirling (t k : ℕ) : stirling 1 t k = Nat.stirlingSecond t k := by
   induction t generalizing k with
