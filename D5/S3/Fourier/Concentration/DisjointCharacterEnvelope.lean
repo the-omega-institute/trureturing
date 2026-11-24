@@ -156,9 +156,13 @@ private theorem prod_axis {J : Type*} (s : Finset J) (a : J → ℂ) :
 def disjointSeries {J : Type*} (s : Finset J) (a b : J → ℂ) : BiSeries :=
   ∏ j ∈ s, (xAxis (a j) + yAxis (b j) - 1)
 
-/-- Overlap subsets that can contribute at both selected degrees. -/
-def overlapSubsets {J : Type*} (s : Finset J) (m n : ℕ) : Finset (Finset J) :=
-  s.powerset.filter (fun t => t.card ≤ min m n)
+/-- Nonempty overlap subsets that can contribute at both selected degrees. -/
+noncomputable def overlapSubsets {J : Type*} (s : Finset J) (m n : ℕ) : Finset (Finset J) := by
+  classical
+  exact (s.powerset.filter (fun t => t.card ≤ min m n)).erase ∅
+
+/-- The coefficient norm for an exponential with the given norm and degree. -/
+def expTermNorm (zd : ℝ × ℕ) : ℝ := zd.1 ^ zd.2 / (zd.2.factorial : ℝ)
 
 private theorem split_product {J : Type*} (s : Finset J) (a b : J → ℂ) :
     disjointSeries s a b =
@@ -208,6 +212,7 @@ private theorem overlap_coeff_eq_zero {J : Type*} (t : Finset J) (c : ℂ)
 
 private theorem coefficient_envelope_at_one {J : Type*} (s : Finset J) (a b : J → ℂ) (m n : ℕ) :
     ‖coeff n (coeff m (disjointSeries s a b))‖ ≤
+      expTermNorm (‖∑ j ∈ s, a j‖, m) * expTermNorm (‖∑ j ∈ s, b j‖, n) +
       Real.exp (‖∑ j ∈ s, a j‖ + ‖∑ j ∈ s, b j‖) *
         ∑ t ∈ overlapSubsets s m n,
           ∏ j ∈ t, (Real.exp ‖a j‖ - 1) * (Real.exp ‖b j‖ - 1) := by
@@ -230,7 +235,7 @@ private theorem coefficient_envelope_at_one {J : Type*} (s : Finset J) (a b : J 
     simpa [v] using tail_budget (-b j)
   rw [split_product]
   simp only [map_sum, coeff_onBoth]
-  let admissible := overlapSubsets s m n
+  let admissible := s.powerset.filter (fun t => t.card ≤ min m n)
   have hvanish (t : Finset J) (ht : ¬ t.card ≤ min m n) :
       coeff m (P t) * coeff n (Q t) = 0 := by
     have h0 (z : ℂ) : constantCoeff (axis z) = 1 := by
@@ -247,20 +252,35 @@ private theorem coefficient_envelope_at_one {J : Type*} (s : Finset J) (a b : J 
     intro t ht hbad
     exact hvanish t (fun h => hbad (mem_filter.mpr ⟨ht, h⟩))
   rw [hrestrict]
+  have hempty : ∅ ∈ admissible := by simp [admissible]
+  rw [← sum_erase_add _ _ hempty, add_comm]
+  have hnonempty :
+      ‖∑ t ∈ admissible.erase ∅, coeff m (P t) * coeff n (Q t)‖ ≤
+        A * B * ∑ t ∈ overlapSubsets s m n, ∏ j ∈ t, u j * v j := by
+    change ‖∑ t ∈ overlapSubsets s m n, coeff m (P t) * coeff n (Q t)‖ ≤ _
+    calc
+      _ ≤ ∑ t ∈ overlapSubsets s m n, ‖coeff m (P t) * coeff n (Q t)‖ := norm_sum_le _ _
+      _ ≤ ∑ t ∈ overlapSubsets s m n, (A * ∏ j ∈ t, u j) * (B * ∏ j ∈ t, v j) := by
+        apply sum_le_sum
+        intro t _
+        rw [norm_mul]
+        exact mul_le_mul ((hP t).coeff_le m) ((hQ t).coeff_le n) (norm_nonneg _) (hP t).nonneg
+      _ = _ := by
+        rw [mul_sum]
+        apply sum_congr rfl
+        intro t _
+        rw [prod_mul_distrib]
+        ring
+  have hprincipal :
+      ‖coeff m (P ∅) * coeff n (Q ∅)‖ =
+        expTermNorm (‖∑ j ∈ s, a j‖, m) * expTermNorm (‖∑ j ∈ s, b j‖, n) := by
+    simp [P, Q, axis_norm_coeff, expTermNorm]
   calc
-    _ ≤ ∑ t ∈ admissible, ‖coeff m (P t) * coeff n (Q t)‖ := norm_sum_le _ _
-    _ ≤ ∑ t ∈ admissible, (A * ∏ j ∈ t, u j) * (B * ∏ j ∈ t, v j) := by
-      apply sum_le_sum
-      intro t _
-      rw [norm_mul]
-      exact mul_le_mul ((hP t).coeff_le m) ((hQ t).coeff_le n) (norm_nonneg _) (hP t).nonneg
-    _ = A * B * ∑ t ∈ admissible, ∏ j ∈ t, u j * v j := by
-      rw [mul_sum]
-      apply sum_congr rfl
-      intro t _
-      rw [prod_mul_distrib]
-      ring
-    _ = _ := by rw [Real.exp_add]
+    _ ≤ ‖coeff m (P ∅) * coeff n (Q ∅)‖ +
+          ‖∑ t ∈ admissible.erase ∅, coeff m (P t) * coeff n (Q t)‖ := norm_add_le _ _
+    _ ≤ _ := by
+      rw [hprincipal, Real.exp_add]
+      exact add_le_add_right hnonempty _
 
 private def scaleBoth (r : ℂ) : BiSeries →+* BiSeries :=
   (PowerSeries.map (rescale r)).comp (rescale (PowerSeries.C r))
@@ -292,11 +312,12 @@ private theorem scaleBoth_disjoint {J : Type*} (r : ℂ) (s : Finset J) (a b : J
 /-- Bound a disjoint coefficient using the sums of its two complex phase families. -/
 theorem coefficient_envelope {J : Type*} (s : Finset J) (a b : J → ℂ) (m n : ℕ)
     (r : ℝ) (hr : 0 < r) :
-    let phasePart := Real.exp
+    let emptyPart := expTermNorm
     ‖coeff n (coeff m (disjointSeries s a b))‖ ≤
-      phasePart (r * (‖∑ j ∈ s, a j‖ + ‖∑ j ∈ s, b j‖)) *
+      (emptyPart (r * ‖∑ j ∈ s, a j‖, m) * emptyPart (r * ‖∑ j ∈ s, b j‖, n) +
+      Real.exp (r * (‖∑ j ∈ s, a j‖ + ‖∑ j ∈ s, b j‖)) *
         (∑ t ∈ overlapSubsets s m n,
-          ∏ j ∈ t, (Real.exp (r * ‖a j‖) - 1) * (Real.exp (r * ‖b j‖) - 1)) /
+          ∏ j ∈ t, (Real.exp (r * ‖a j‖) - 1) * (Real.exp (r * ‖b j‖) - 1))) /
         r ^ (m + n) := by
   dsimp only
   have h := coefficient_envelope_at_one s (fun j => (r : ℂ) * a j)

@@ -28,12 +28,14 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
                     + "product over subsets gives one product of two separate series per subset. "
                     + "The original exponentials have combined to the sums of a and b. Each "
                     + "correction factor has positive degree on both axes. A subset larger than "
-                    + "either target degree contributes zero to the selected coefficient.")),
+                    + "either target degree contributes zero to the selected coefficient. The "
+                    + "empty subset gives two pure exponentials, whose selected coefficient "
+                    + "norms are exact.")),
                 Paragraph(Text(
                     "For one variable, the sum of coefficient norms is submultiplicative on "
                     + "absolutely summable series, by the Cauchy product and the triangle inequality. "
                     + "A scaled exponential contributes exp(|a|), and removal of its constant "
-                    + "term leaves exp(|a|) - 1. Applying these two bounds and summing the subsets "
+                    + "term leaves exp(|a|) - 1. Applying these two bounds to the nonempty subsets "
                     + "gives the estimate at radius one. Rescaling both axes gives the radius factor.")),
                 Paragraph(Text(
                     "For characters on a finite cyclic group, take a(j) = w(j) times the character "
@@ -58,7 +60,7 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
         var sum = new Formula.Subscript(Sum, Seq(j, Sp, InMacro, Sp, s));
         var t = F.Id("T");
         var subsets = new Formula.Subscript(Sum,
-            Seq(t, Sp, Subseteq, Sp, s, Comma, Bar, t, Bar, Sp, Le, Sp, Call("min", m, n)));
+            Seq(t, Sp, Subseteq, Sp, s, Comma, D(0), Lt, Bar, t, Bar, Sp, Le, Sp, Call("min", m, n)));
         var prod = new Formula.Subscript(Prod, Seq(j, Sp, InMacro, Sp, t));
         return Disp(new Formula.Aligned([
             Seq(Amp, Forall, Sp, alphabet, Colon, Sp, Call("Type"), Comma, Sp,
@@ -69,6 +71,9 @@ internal sealed class DisjointCharacterEnvelopeDocument : IScribeDocumentDefinit
                 r, Gt, D(0), Implies),
             Seq(Amp, Bar, OpenBracket, new Formula.Power(F.Id("x"), m),
                 new Formula.Power(F.Id("y"), n), CloseBracket, F.Id("P"), Bar, Sp, Le, Sp,
+                Frac, Grp(new Formula.Power(Seq(Bar, sum, atA, Bar), m),
+                    new Formula.Power(Seq(Bar, sum, atB, Bar), n)),
+                Grp(m, Bang, n, Bang), Sp, Plus, Sp,
                 Frac, Grp(Call("exp", Seq(r, Open, Bar, sum, atA, Bar, Plus, Bar, sum, atB, Bar, Close))),
                 Grp(new Formula.Power(r, Seq(m, Plus, n)))),
             Seq(Amp, Quad, Cdot, subsets, prod,
