@@ -49,6 +49,6 @@ internal sealed class SecondFourthHarmonicBoundDocument : IScribeDocumentDefinit
         return Disp(Seq(condition, Sp, Implies, Sp, first, Sp, Leq, Sp, F.Id("B")));
     }
 
-    private static Formula Magnitude(int mode) =>
+    private static Formula Magnitude(byte mode) =>
         new Formula.Absolute(new Formula.Subscript(F.Id("m"), D(mode)));
 }
