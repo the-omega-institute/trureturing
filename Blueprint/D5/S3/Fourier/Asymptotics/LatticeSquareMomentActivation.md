@@ -36,3 +36,4 @@ For every real m≥0 choose n as the floor of sqrt(5m+1). The floor gives a posi
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation.exists_lattice_square_moment_minimizer`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation.exists_lattice_square_moment_minimizer_on_interval`
+- Dependency: [D5/S3/Fourier/Concentration/CyclicPrefixFourthMoment](../Concentration/CyclicPrefixFourthMoment.md)

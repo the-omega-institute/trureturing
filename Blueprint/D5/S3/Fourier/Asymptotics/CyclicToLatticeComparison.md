@@ -39,3 +39,4 @@ For the upper bound the lattice support embeds injectively on the cycle since q>
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicToLatticeComparison.cosineMoment_eq_centered`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicToLatticeComparison.cyclic_to_lattice_comparison`
 - Dependency: [D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation](LatticeSquareMomentActivation.md)
+- Dependency: [D5/S3/Fourier/Concentration/AggregateCosineBalance](../Concentration/AggregateCosineBalance.md)
