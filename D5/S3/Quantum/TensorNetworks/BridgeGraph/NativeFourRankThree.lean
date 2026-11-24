@@ -30,11 +30,13 @@ private theorem sub_kron {a b c d : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
     (C : Matrix (Fin d) (Fin c) ℂ) : kronecker (A - B) C = kronecker A C - kronecker B C := by
   change (Matrix.kroneckerBilinear (R := ℂ)) (A - B) C = _
   rw [map_sub, LinearMap.sub_apply]
+  rfl
 
 private theorem kron_sub {a b c d : ℕ} (A : Matrix (Fin a) (Fin b) ℂ)
     (B C : Matrix (Fin d) (Fin c) ℂ) : kronecker A (B - C) = kronecker A B - kronecker A C := by
   change (Matrix.kroneckerBilinear (R := ℂ)) A (B - C) = _
   rw [map_sub]
+  rfl
 
 private theorem column_rank {a b c d : ℕ} (F : Matrix (Fin a × Fin d) (Fin b × Fin c) ℂ)
     (hF : Fᴴ * F = 1) : F.rank = b * c := by
@@ -115,8 +117,10 @@ private theorem orthogonal_combination_of_one_direction_kernel {a b c d : ℕ}
       fin_cases r <;> assumption
     apply hstack
     ext ⟨r, j⟩
-    simpa only [NativeRectangularBound.stackK, Matrix.mulVecLin_apply,
-      Matrix.mulVec, map_zero, Pi.zero_apply] using congrFun (hall r) j
+    change ((NativeRectangularBound.stackK X).mulVecLin x.val) (r, j) =
+      ((NativeRectangularBound.stackK X).mulVecLin 0) (r, j)
+    rw [map_zero, Pi.zero_apply]
+    exact congrFun (hall r) j
   let D := LinearMap.range (X 0).mulVecLin
   let R := LinearMap.range f
   have hdimR : finrank ℂ R = finrank ℂ K := LinearMap.finrank_range_of_inj hf
@@ -176,13 +180,13 @@ private theorem orthogonal_combination_of_one_direction_kernel {a b c d : ℕ}
   have horth : (Y 3)ᴴ * (∑ i, v i • Y i) = 0 := by
     ext l m
     have h := hrow (T l m) (hT l m)
-    simpa [T, v, Fin.sum_univ_four, Matrix.mul_sum, Matrix.mul_smul,
-      Matrix.sum_apply, Matrix.smul_apply, mul_comm] using h
+    rw [Matrix.mul_sum]
+    simp_rw [Matrix.mul_smul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+    simpa [T, v, Fin.sum_univ_four, mul_comm] using h
   exact ⟨hJ, v, hv, by simp [v], horth⟩
 open private tensor_mix from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeRectangularBound
 open private normalize_rank_three rank_sum from
   D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourCliffordRankThree
-
 open private kernel_columns from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourStaircase
 
 private theorem pivot_right_combination {a b c d : ℕ}
@@ -217,10 +221,10 @@ private theorem pivot_right_combination {a b c d : ℕ}
         apply tensor_mix
         rw [Matrix.transpose_nonsing_inv, Matrix.transpose_transpose,
           Matrix.nonsing_inv_mul _ (by rw [hdet]; exact IsUnit.mk0 _ hk)]
-      _ = _ := p.sum_comp (fun j => kronecker (X j) (Y j))
+      _ = _ := Equiv.sum_comp p (fun j => kronecker (X j) (Y j))
   · change (∑ i, P 2 i • R i) = ∑ i, v i • Y i
     simp only [P, Matrix.updateRow_self]
-    exact p.sum_comp (fun j => v j • Y j)
+    exact Equiv.sum_comp p (fun j => v j • Y j)
   · have h3 : p 3 = 3 := Equiv.swap_apply_of_ne_of_ne (by decide) hk3.symm
     change (∑ i, P 3 i • R i) = Y 3
     simpa [P, Matrix.updateRow_ne, Matrix.one_apply, R, h3]
@@ -309,6 +313,7 @@ private theorem isolated_right_gram {a b e d : ℕ} (hab : a < b) (hde : d < 2 *
     have hZZ : Zᴴ * Z = ν • 1 := by
       simp only [Z, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, Matrix.sum_mul,
         Matrix.smul_mul, hWZ, smul_smul, ← Finset.sum_smul, ν, dotProduct]
+      rfl
     have hFlat : D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat W * B =
         D5.S3.Quantum.Algebra.NativeCoefficientWhitening.flat Y := by
       dsimp only [W]
@@ -369,13 +374,14 @@ private theorem residual_kernel {a b e d : ℕ}
   classical
   let F := kronecker A R + kronecker B S
   let product (v : Fin b → ℂ) (w : Fin e → ℂ) := (Matrix.vecMulVec w v).vec
-  have tensor_apply (M : Matrix (Fin a) (Fin b) ℂ) (N : Matrix (Fin d) (Fin e) ℂ)
+  have tensor_apply {m n : ℕ} (M : Matrix (Fin m) (Fin b) ℂ)
+      (N : Matrix (Fin n) (Fin e) ℂ)
       (w : Fin e → ℂ) :
       kronecker M N *ᵥ product x w =
         (Matrix.vecMulVec (N *ᵥ w) (M *ᵥ x)).vec := by
     dsimp only [product]
-    rw [Matrix.kronecker_mulVec_vec, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
-      Matrix.vecMul_transpose]
+    rw [Matrix.kronecker, Matrix.kronecker_mulVec_vec, Matrix.mul_vecMulVec,
+      Matrix.vecMulVec_mul, Matrix.vecMul_transpose]
   have kernel_nonzero (C : Matrix (Fin d) (Fin e) ℂ) (hC : Dᴴ * C = 0) :
       ∃ y : Fin e → ℂ, y ≠ 0 ∧ C *ᵥ y = 0 := by
     have hd : Dᴴ.rank = e := by
@@ -401,10 +407,12 @@ private theorem residual_kernel {a b e d : ℕ}
         simpa [hs] using hx
       obtain ⟨y, hy, hR⟩ := kernel_nonzero R hR
       refine ⟨y, hy, ?_⟩
-      simp [F, Matrix.add_mulVec, tensor_apply, hR, hB]
+      simp only [F, Matrix.add_mulVec, tensor_apply, hR, hB, Matrix.zero_vecMulVec,
+        Matrix.vecMulVec_zero, Matrix.vec_zero, add_zero]
     · let z := -t / s
       have hA : A *ᵥ x = z • (B *ᵥ x) := by
         apply (smul_right_injective (Fin a → ℂ) hs)
+        change s • (A *ᵥ x) = s • (z • (B *ᵥ x))
         rw [smul_smul, show s * z = -t by dsimp [z]; field_simp, neg_smul]
         exact eq_neg_of_add_eq_zero_left hx
       obtain ⟨y, hy, hY⟩ := kernel_nonzero (z • R + S)
@@ -423,13 +431,20 @@ private theorem residual_kernel {a b e d : ℕ}
   have heq : kronecker P (1 : Matrix (Fin e) (Fin e) ℂ) *ᵥ product x y = 0 := by
     rw [← hF, ← Matrix.mulVec_mulVec, show F *ᵥ product x y = 0 from hzero,
       Matrix.mulVec_zero]
-  dsimp only [product] at heq
-  rw [Matrix.kronecker_mulVec_vec, Matrix.one_mul, Matrix.vecMulVec_mul,
-    Matrix.vecMul_transpose] at heq
+  rw [tensor_apply, Matrix.one_mulVec] at heq
   obtain ⟨j, hj⟩ := Function.ne_iff.mp hy
   ext i
   have h := congrFun heq (i, j)
   exact (mul_eq_zero.mp (show y j * (P *ᵥ x) i = 0 from h)).resolve_left hj
+
+private theorem rank_sum_product {m n p q : ℕ}
+    (A B : Matrix (Fin m × Fin n) (Fin p × Fin q) ℂ) :
+    (A + B).rank ≤ A.rank + B.rank := by
+  let r : Fin (m * n) ≃ Fin m × Fin n := finProdFinEquiv.symm
+  let c : Fin (p * q) ≃ Fin p × Fin q := finProdFinEquiv.symm
+  have h := rank_sum (A.submatrix r c) (B.submatrix r c)
+  change ((A + B).submatrix r c).rank ≤ (A.submatrix r c).rank + (B.submatrix r c).rank at h
+  simpa only [Matrix.rank_submatrix] using h
 
 private theorem projected_width_three {a b c d q : ℕ}
     (F : Matrix (Fin a × Fin d) (Fin b × Fin c) ℂ)
@@ -453,13 +468,14 @@ private theorem projected_width_three {a b c d q : ℕ}
   have hsum : W * Wᴴ + V = 1 := by
     simp only [W, V, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
       Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Matrix.mul_assoc]
-    rw [add_sub_cancel_comm, hCS]
+    rw [← hCS]
+    abel
   have hdefect := row_defect_rank F hF
   have hv : V.rank ≤ (1 - F * Fᴴ).rank :=
     (Matrix.rank_mul_le_left _ _).trans (Matrix.rank_mul_le_right _ _)
   have hd : D.rank ≤ b - a := by
     have hDX : D * Xᴴ = 0 := by
-      simp [D, sub_mul, Matrix.mul_assoc, hX]
+      simp [D, Matrix.sub_mul, Matrix.mul_assoc, hX]
     have h := Matrix.rank_add_rank_le_card_of_mul_eq_zero hDX
     have hx : Xᴴ.rank = a := by
       rw [← Matrix.rank_conjTranspose_mul_self Xᴴ, Matrix.conjTranspose_conjTranspose,
@@ -490,13 +506,13 @@ private theorem projected_width_three {a b c d q : ℕ}
     rw [hW]
     change (∑ i, K i).rank ≤ _
     rw [Fin.sum_univ_three]
-    have h01 := rank_sum (K 0) (K 1)
-    have h012 := rank_sum (K 0 + K 1) (K 2)
+    have h01 := rank_sum_product (K 0) (K 1)
+    have h012 := rank_sum_product (K 0 + K 1) (K 2)
     have h0 : (K 0).rank ≤ (b - a) * q := hr 0
     have h1 : (K 1).rank ≤ (b - a) * q := hr 1
     have h2 : (K 2).rank ≤ (b - a) * q := hr 2
     omega
-  have hfinal := rank_sum (W * Wᴴ) V
+  have hfinal := rank_sum_product (W * Wᴴ) V
   rw [hsum, Matrix.rank_one, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin,
     Matrix.rank_self_mul_conjTranspose] at hfinal
   omega
@@ -539,11 +555,14 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
       rw [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc Fᴴ F,
         hF, Matrix.one_mul, hCE]
     rw [hFE] at h
-    simp only [Matrix.conjTranspose_add, Matrix.add_mul, Matrix.mul_add, hLH, hHL,
-      add_zero, zero_add, L, Matrix.kronecker, Matrix.conjTranspose_kronecker,
-      ← Matrix.mul_kronecker_mul, hDD] at h
+    have hLL : Lᴴ * L = kronecker (Xᴴ * X) (1 : Matrix (Fin e) (Fin e) ℂ) := by
+      simp only [L, Matrix.kronecker, Matrix.conjTranspose_kronecker,
+        ← Matrix.mul_kronecker_mul, hDD]
+    rw [Matrix.conjTranspose_add, Matrix.add_mul, Matrix.mul_add, Matrix.mul_add,
+      hLH, hHL, add_zero, zero_add, hLL] at h
     change Hᴴ * H = kronecker (1 - Xᴴ * X) (1 : Matrix (Fin e) (Fin e) ℂ)
-    rw [sub_kron, Matrix.one_kronecker_one]
+    rw [sub_kron, show kronecker (1 : Matrix (Fin b) (Fin b) ℂ)
+      (1 : Matrix (Fin e) (Fin e) ℂ) = 1 from Matrix.one_kronecker_one]
     rw [← h]
     abel
   have kill {k : ℕ} (M : Matrix (Fin b) (Fin k) ℂ) (hM : P * M = 0) :
@@ -618,7 +637,9 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
       have hK := Submodule.finrank_mono hker
       have hp := P.mulVecLin.finrank_range_add_finrank_ker
       have hm := M.mulVecLin.finrank_range_add_finrank_ker
-      simp only [← Matrix.rank, Module.finrank_fintype_fun_eq_card, Fintype.card_fin] at hp hm
+      change P.rank + finrank ℂ (LinearMap.ker P.mulVecLin) = _ at hp
+      change M.rank + finrank ℂ (LinearMap.ker M.mulVecLin) = _ at hm
+      simp only [Module.finrank_fintype_fun_eq_card, Fintype.card_fin] at hp hm
       have hdim := Matrix.rank_add_rank_le_card_of_mul_eq_zero hM
       have hLCrank : (X * C)ᴴ.rank = l := by
         rw [Matrix.rank_conjTranspose, ← Matrix.rank_conjTranspose_mul_self (X * C),
@@ -644,9 +665,12 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
           Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
       _ = _ := by
         rw [hQQ, hQF]
-        simp only [Matrix.kronecker, Matrix.conjTranspose_kronecker,
-          Matrix.conjTranspose_conjTranspose, ← Matrix.mul_kronecker_mul, hE,
-          sub_kron, Matrix.one_kronecker_one]
+        have hXEE : kronecker X Eᴴ * (kronecker X Eᴴ)ᴴ =
+            kronecker (X * Xᴴ) (1 : Matrix (Fin e) (Fin e) ℂ) := by
+          simp only [Matrix.kronecker, Matrix.conjTranspose_kronecker,
+            Matrix.conjTranspose_conjTranspose, ← Matrix.mul_kronecker_mul, hE]
+        rw [hXEE, sub_kron, show kronecker (1 : Matrix (Fin a) (Fin a) ℂ)
+          (1 : Matrix (Fin e) (Fin e) ℂ) = 1 from Matrix.one_kronecker_one]
   have hXX := (small_defect_compression F hF X D hdef).2 hsmall
   have hPX : P * Xᴴ = 0 := by simp [P, Matrix.sub_mul, Matrix.mul_assoc, hXX]
   obtain ⟨hAX, hBX⟩ := kill Xᴴ hPX
@@ -697,12 +721,16 @@ private theorem small_defect_of_isolated_slice {a b c d e : ℕ}
   obtain ⟨K, hKK, hJK⟩ :
       ∃ K : Matrix (Fin d) (Fin (d - c)) ℂ, Kᴴ * K = 1 ∧ Jᴴ * K = 0 := by
     obtain ⟨K, hKK, hJK, _⟩ := kernel_columns Jᴴ
-    exact hJrank ▸ ⟨K, hKK, hJK⟩
+    rw [show d - c = d - Jᴴ.rank by rw [hJrank]]
+    exact ⟨K, hKK, hJK⟩
   have hKJ : Kᴴ * J = 0 := by simpa using congrArg Matrix.conjTranspose hJK
   let U : Fin 3 → Matrix (Fin a) (Fin b) ℂ := ![A, B, Z']
   let W : Fin 3 → Matrix (Fin d) (Fin c) ℂ := ![R, S, V]
   have hUW : F = kronecker X J + ∑ i, kronecker (U i) (W i) := by
-    simp [F, U, W, hZ', Fin.sum_univ_three, add_assoc]
+    rw [Fin.sum_univ_three]
+    change F = kronecker X J + (kronecker A R + kronecker B S + kronecker Z' V)
+    rw [hZ']
+    simp only [F, add_assoc]
   have hUX (i : Fin 3) : U i * Xᴴ = 0 := by
     fin_cases i <;> simp [U, hAX, hBX, hZX]
   have hbound := projected_width_three F X J U W K hF hUW hXX hUX hKK hKJ
@@ -778,21 +806,24 @@ private theorem bounds_of_orthogonal_combination {a b c d : ℕ}
   have hindep (s t : ℂ) (hrel : s • (R * E) + t • (S * E) = 0) : s = 0 ∧ t = 0 := by
     let f : Fin 3 → ℂ := ![s, t, -(s * α + t * β)]
     have hf : ∑ i, f i • N i = 0 := by
+      rw [Fin.sum_univ_three]
+      change s • N 0 + t • N 1 + (-(s * α + t * β)) • N 2 = 0
+      rw [hRE, hSE] at hrel
       convert hrel using 1
-      simp only [f, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, hRE, hSE, smul_sub, smul_smul, neg_smul, add_smul]
+      simp only [smul_sub, smul_smul, neg_smul, add_smul]
       abel
     have hz := Fintype.linearIndependent_iff.mp hNI f hf
     exact ⟨hz 0, hz 1⟩
   have hpres : kronecker L J + kronecker (A 0) R + kronecker (A 1) S +
       kronecker (A 2) V = ∑ i, kronecker (X i) (Y i) := by
     rw [← hAB, Fin.sum_univ_four]
-    simp only [L, R, S, J, V, Matrix.kronecker, Matrix.add_kronecker,
-      Matrix.smul_kronecker, kron_sub, Matrix.kronecker_smul]
+    dsimp only [L, R, S, J, V]
+    rw [kron_sub, kron_sub]
+    simp only [Matrix.kronecker, Matrix.add_kronecker, Matrix.smul_kronecker,
+      Matrix.kronecker_smul]
     abel
   exact h (small_defect_of_isolated_slice L (A 0) (A 1) (A 2) J R S V E
-    hJJ hJV hEE hVE hR hS hindep hab hde hse (by dsimp; rw [hpres, hF]))
-
+    hJJ hJV hEE hVE hR hS hindep hab hde hse (by dsimp only; rw [hpres, hF]))
 open private diagonal_energy from D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
 
 private theorem bounds_of_ordered_diagonal_compression {a b c d : ℕ}
@@ -875,11 +906,11 @@ private theorem bounds_of_diagonal_compression {a b c d : ℕ}
     let B : Fin 4 → Matrix (Fin d) (Fin c) ℂ := fun i => Y (p i)
     have hpres : (∑ i, kronecker (A i) (B i)) =
         ∑ i, kronecker (X i) (Y i) :=
-      p.sum_comp (fun i => kronecker (X i) (Y i))
+      Equiv.sum_comp p (fun i => kronecker (X i) (Y i))
     have hF' : (∑ i, kronecker (A i) (B i))ᴴ *
         (∑ i, kronecker (A i) (B i)) = 1 := by rw [hpres, hF]
     have hX' : (∑ i, (A i)ᴴ * A i) = 1 :=
-      (p.sum_comp (fun i => (X i)ᴴ * X i)).trans hX
+      (Equiv.sum_comp p (fun i => (X i)ᴴ * X i)).trans hX
     have hD : NativeFourKernel.compression A
         (diagonal ![(f (p 0) : ℂ), (f (p 1) : ℂ), (f (p 2) : ℂ), 0]) = 0 := by
       have heq : ![(f (p 0) : ℂ), (f (p 1) : ℂ), (f (p 2) : ℂ), 0] =
@@ -889,7 +920,7 @@ private theorem bounds_of_diagonal_compression {a b c d : ℕ}
       rw [heq, NativeFourKernel.compression, NativeRectangularBound.stackK_compression]
       simp only [Matrix.diagonal_apply, ite_smul, zero_smul, Finset.sum_ite_eq,
         Finset.mem_univ, ite_true]
-      exact (p.sum_comp (fun i => (f i : ℂ) • ((X i)ᴴ * X i))).trans hf
+      exact (Equiv.sum_comp p (fun i => (f i : ℂ) • ((X i)ᴴ * X i))).trans hf
     exact bounds_of_ordered_diagonal_compression A B hab hF' hX'
       (f (p 0)) (-f (p 1)) (-f (p 2)) (neg_pos.mpr h1) (neg_pos.mpr h2)
       (by simpa only [Complex.ofReal_neg, neg_neg] using hD)
@@ -962,9 +993,6 @@ theorem rank_three_small_defect_four_bound {a b c d : ℕ}
     obtain ⟨A, B, h⟩ := reduce_right (n := 3) X Y g i hi hg
     have h3 := NativeThreeRectangularBound.native_three_rectangular_bound A B lam hlam hab
       (by simpa only [h] using hF)
-    constructor
-    · omega
-    · intro _
-      omega
+    exact ⟨by omega, fun _ => by omega⟩
 
 end D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourRankThree
