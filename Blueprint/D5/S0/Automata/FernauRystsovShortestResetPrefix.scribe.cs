@@ -34,7 +34,10 @@ internal sealed class FernauRystsovShortestResetPrefixDocument : IScribeDocument
                     + "and the unique shortest product reset bbaa. The product reset begins with b, so aa cannot be its prefix. "
                     + "After aa the second-factor image is {1,2}, whose shortest reset is bbb. "
                     + "The staged word aabbb thus has length five, while bbaa has length four."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fernau-rystsov-2026-shortest-reset-prefix"),
+                ResolutionKind.Refuted)))));
 
     private static Formula Refutation()
     {

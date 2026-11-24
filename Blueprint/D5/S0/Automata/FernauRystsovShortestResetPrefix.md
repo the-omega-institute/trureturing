@@ -10,6 +10,10 @@ $$\neg (\begin{aligned}\forall k,m,n: \mathbb{N}, 0 < k \land \left(0 < m \land 
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/FernauRystsovShortestResetPrefix.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fernau-rystsov-2026-shortest-reset-prefix` (refuted) by `D5/S0/Automata/FernauRystsovShortestResetPrefix.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fernau-rystsov-2026-shortest-reset-prefix","declaration_gid":"D5/S0/Automata/FernauRystsovShortestResetPrefix.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Henning Fernau and Igor Rystsov (2026). *Shortest Synchronizing Words on Product Automata*. DOI: [10.48550/arXiv.2611.09136](https://doi.org/10.48550/arXiv.2611.09136). URL: <https://arxiv.org/abs/2611.09136v1>.
