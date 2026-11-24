@@ -9,6 +9,8 @@ claim: "Proposition 4(iv) characterizes the closure of finite thermal operations
 strata_touched:
   - D5/S3/QuantumChannels/ThermalOperationDegeneracyRefutation
   - D5/S3/QuantumChannels/ThermalDegeneracyNoUniformCap
+  - D5/S3/Quantum/Decoherence/FourLevelBathPhysical
+  - D5/S3/Quantum/Decoherence/FourLevelBathCubic
 license: citation-only
 triage: anchor
 ---
@@ -22,6 +24,8 @@ Equation (1) in Section II defines finite-bath thermal operations. Proposition 4
 ## Scope and derivation
 
 Equation (1) defines the operation by adjoining a finite Gibbs bath, applying a unitary commuting with total energy, and tracing out the bath. In the bath eigenbasis, energy multiplicities are the dimensions of the eigenspaces. Conjugating the joint unitary by the corresponding bath basis change preserves commutation, the Gibbs preparation and the partial trace. Proposition 4(iv) establishes resonant spectra as sufficient to generate the closure. Corollaries 5 and 6 describe related reductions for commensurate system energies. These results allow the dimensions of the bath energy eigenspaces to vary.
+
+For a qutrit with zero Hamiltonian and four distinct fixed bath energies, Eq. (1) specializes to a Gibbs-weighted mixture of qutrit unitary conjugations, one for each bath energy. The fixed-bath pinching results use this model to derive the weighted phase condition and its cubic criterion.
 
 The second open question in Section V reads “Can one specify an upper bound for how degenerate the energy levels of the bath need to be?” It then conjectures that “the definition of TO can be restricted to such (resonant) bath Hamiltonians which have degeneracy at most dimension of the system.” [Source, arXiv v4](https://arxiv.org/html/2207.11189v4#S5)
 
