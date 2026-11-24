@@ -684,15 +684,8 @@ private theorem recurrence_convolution (v : ℕ → ℤ)
 private theorem leading_polynomial (j : Fin 72) :
     leading (Fin.last 14) j =
       ∑ k : Fin 12, coefficients k * leading ((k.natAdd 2).castAdd 1) j := by
-  have hbase : forward HardinA229585StripData.T HardinA229585StripData.initial (2 + 8) =
-      ∑ k : Fin 8, leadingCoefficient k •
-        forward HardinA229585StripData.T HardinA229585StripData.initial (2 + k.val) := by
-    have hcertificate : leading ⟨2 + 8, by decide⟩ =
-        ∑ k : Fin 8, leadingCoefficient k • leading ⟨2 + k.val, by omega⟩ :=
-      HardinA229585Strip.finite_certificate.2.2.2.2.2.2
-    simpa only [← leading_forward, Fin.val_mk] using hcertificate
   have h (n : ℕ) := forward_shift HardinA229585StripData.T HardinA229585StripData.initial
-    (Pi.single j (1 : ℤ)) 8 2 leadingCoefficient hbase n
+    (Pi.single j (1 : ℤ)) 8 2 leadingCoefficient HardinA229585Strip.polynomial_relation n
   simp only [Matrix.dotProduct_mulVec, dotProduct_single_one, ← forward_eq] at h
   simpa only [← leading_forward, Fin.val_last, Fin.val_castAdd, Fin.val_natAdd] using
     recurrence_convolution
