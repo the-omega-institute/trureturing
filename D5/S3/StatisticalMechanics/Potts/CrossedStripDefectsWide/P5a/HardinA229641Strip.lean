@@ -443,7 +443,9 @@ private theorem old_coordinate (p : Column ⊕ Column) (n : ℕ) :
         ((HardinA229538Strip.transfer ^ (n + 2 + k.val)).mulVec HardinA229538Strip.terminal) p := by
   simpa only [single_one_dotProduct, smul_eq_mul] using
     (transfer_readout HardinA229538Strip.transfer HardinA229538Strip.terminal
-      20 2 coefficients538).mp HardinA229538Strip.vector_polynomial (Pi.single p 1) n
+      20 2 coefficients538 (fun j x y => by
+        rw [(mul_smul_one (coefficients538 j) (x * y)).symm, (mul_smul_one (coefficients538 j) y).symm, mul_assoc])).mp
+      HardinA229538Strip.vector_polynomial (Pi.single p 1) n
 
 private theorem old_values (n : Fin 34) :
     (HardinA229538Strip.transfer ^ n.val).mulVec HardinA229538Strip.terminal =
@@ -895,7 +897,9 @@ theorem result (n : ℕ) :
     rw [hscale]
     push_cast
     rfl
-  have h := (transfer_readout transfer terminal 30 3 _).mp
+  have h := (transfer_readout transfer terminal 30 3 coefficients641
+    (fun j x y => by
+      rw [(mul_smul_one (coefficients641 j) (x * y)).symm, (mul_smul_one (coefficients641 j) y).symm, mul_assoc])).mp
     vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
   simp only [smul_eq_mul] at h
   rw [bridge (n + 3 + 30)] at h
