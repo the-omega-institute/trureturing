@@ -1,3 +1,4 @@
+using System.Globalization;
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
@@ -67,7 +68,7 @@ internal sealed class HardinA229585StripDocument : IScribeDocumentDefinition
         Call("DefectTransfer.forward", Call("HardinA229585StripData.T"), Call("HardinA229585StripData.initial"), t);
     private static Formula MatrixVector(int[] entries) => entries.Reverse().Aggregate(Call("Matrix.vecEmpty"),
         (tail, entry) => Call("Matrix.vecCons",
-            entry < 0 ? Parenthesized(Seq(Minus, Num((-entry).ToString()))) : Num(entry.ToString()), tail));
+            entry < 0 ? Parenthesized(Seq(Minus, Num((-entry).ToString(CultureInfo.InvariantCulture)))) : Num(entry.ToString(CultureInfo.InvariantCulture)), tail));
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((x,i) => i == 0
