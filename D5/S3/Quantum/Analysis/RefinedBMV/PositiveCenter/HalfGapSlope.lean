@@ -7,7 +7,8 @@
    digest: Uniform reflected marginal slope bound from the half-gap endpoint. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapNormalization
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.WeightedTaylorReplay
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MarginalTaylor
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 
 /-! # The reflected marginal slope above a half gap -/
 
@@ -102,14 +103,16 @@ private theorem marginalTaylor_endpoint_eq {p : ℕ} (hp : 0 < p) :
   have hi : (0 : ℝ) < (i : ℝ) + 1 := by positivity
   field_simp [hi.ne']; ring_nf
 
-private abbrev rationalHorner (h : ℚ) : List ℚ → ℚ := marginalHorner (· + ·) (· * ·) 0 h
+private def rationalHorner (h : ℚ) : List ℚ → ℚ
+  | [] => 0
+  | c :: cs => rationalHorner h cs * h + c
 
 private theorem abs_momentHorner_le {h : ℝ} {H : ℚ} (hh : 0 ≤ h) (hle : h ≤ H)
     (cs : List ℚ) : |momentHorner h cs| ≤ (rationalHorner H (cs.map abs) : ℝ) := by
   induction cs with
-  | nil => simp [momentHorner, marginalHorner]
+  | nil => simp [momentHorner, rationalHorner]
   | cons c cs ih =>
-    simp only [momentHorner, List.map_cons, rationalHorner, marginalHorner,
+    simp only [momentHorner, List.map_cons, rationalHorner,
       Rat.cast_add, Rat.cast_mul, Rat.cast_abs]
     calc
       _ ≤ |(c : ℝ)| + |h * momentHorner h cs| := abs_add_le _ _
@@ -124,7 +127,7 @@ private def endpointLower (cs : List ℚ) : ℚ :=
 private theorem endpointLower_le {h : ℝ} (hh : 0 ≤ h) (hle : h ≤ (3 / 11 : ℝ))
     (cs : List ℚ) : (endpointLower cs : ℝ) ≤ momentHorner h cs := by
   cases cs with
-  | nil => norm_num [endpointLower, momentHorner, marginalHorner]
+  | nil => norm_num [endpointLower, momentHorner, rationalHorner]
   | cons c cs =>
     have hB : h ≤ ((3 / 11 : ℚ) : ℝ) := by
       simpa only [Rat.cast_div, Rat.cast_ofNat] using hle
