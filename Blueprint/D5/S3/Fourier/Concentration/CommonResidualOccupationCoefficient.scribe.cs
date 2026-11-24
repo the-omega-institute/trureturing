@@ -28,7 +28,7 @@ internal sealed class CommonResidualOccupationCoefficientDocument : IScribeDocum
                     + "Their term has degrees u,v,min(u,v), factorial coefficient "
                     + "w(j)^(u+v)/(u!v!) and the negative character at (u−v)a(j). "
                     + "Let Q with subscript k be the product of these local factors, and "
-                    + "write X with subscript k for the positive character.")),
+                    + "write X with subscript k for the positive character, for every k modulo q.")),
                 Paragraph(Text(
                     "Coefficient selection in degrees (p,p,h) retains both totals and "
                     + "their common part. At the intermediate residue coefficient, a finite "
@@ -43,15 +43,16 @@ internal sealed class CommonResidualOccupationCoefficientDocument : IScribeDocum
         var h = F.Id("h");
         var p = F.Id("p");
         var k = F.Id("k");
+        var q = F.Id("q");
         var r = F.Id("r");
         var band = F.Id("R");
         var mass = new Formula.Subscript(F.Id("M"), Seq(h, Comma, band));
         var coefficient = Seq(new Formula.Subscript(F.Id("Q"), k), OpenBracket,
             p, Comma, p, Comma, h, CloseBracket);
         var character = new Formula.Subscript(F.Id("X"), k);
-        return Disp(Seq(F.Id("q"), mass, Sp, Eq, Sp,
+        return Disp(Seq(q, mass, Sp, Eq, Sp,
             new Formula.Power(Seq(Open, p, Bang, Close), D(2)), Sp,
-            new Formula.Subscript(Sum, k), coefficient, Sp,
+            new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, Call("ZMod", q))), coefficient, Sp,
             new Formula.Subscript(Sum, Seq(r, Sp, InMacro, Sp, band)),
             character, Open, r, Close));
     }

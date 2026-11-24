@@ -24,7 +24,7 @@ internal sealed class CyclicDisjointOccupationCoefficientDocument : IScribeDocum
                     + "the weighted mass of ordered pairs of disjoint degree-d occupations "
                     + "whose first frequency sum minus the second belongs to R.")),
                 Paragraph(Text(
-                    "For character k, the local polynomial has constant coefficient one. "
+                    "For each k modulo q, the local polynomial has constant coefficient one. "
                     + "For n from one to d, it assigns w(j)^n/n! to degree (n,0) with the "
                     + "negative character at n a(j), and to degree (0,n) with the positive "
                     + "character at n a(j). Write X with subscript k for the positive character. The product of those local polynomials is Q with "
@@ -51,7 +51,7 @@ internal sealed class CyclicDisjointOccupationCoefficientDocument : IScribeDocum
         var character = new Formula.Subscript(F.Id("X"), k);
         return Disp(Seq(q, mass, Sp, Eq, Sp,
             new Formula.Power(Seq(Open, d, Bang, Close), D(2)), Sp,
-            new Formula.Subscript(Sum, k), coefficient, Sp,
+            new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp, Call("ZMod", q))), coefficient, Sp,
             new Formula.Subscript(Sum, Seq(r, Sp, InMacro, Sp, band)),
             character, Open, r, Close));
     }
