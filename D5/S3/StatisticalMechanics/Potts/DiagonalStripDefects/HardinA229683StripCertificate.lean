@@ -41,7 +41,6 @@ import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripD
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripCertificate
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripCertificate
-import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripSymmetry
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Core
@@ -146,8 +145,8 @@ private theorem representative_counts (i j : Fin 15) :
 theorem two_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 2 ∧ boundary r = j
       then (1 : ℤ) else 0) = costTwo (boundary p) j := by
-  exact (HardinA203981StripSymmetry.lift_counts 2 p (representatives (boundary p)) j
-    (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
+  exact ((HardinA203981StripCertificate.lift_counts_iff p (representatives (boundary p))).2
+    (boundary_at_rep (boundary p)).symm 2 j).trans (representative_counts (boundary p) j)
 
 private theorem cut_inherited (p r : Row 3 6) (d : ℕ) (s : Fin 15 ⊕ Fin 15) :
     (bondDefects (betw 6) p r ≤ d + 1 ∧

@@ -13,6 +13,7 @@ reverseColumn: proof_shape=bind-only; consumers=halfCost, halfCost.eq_1, reverse
 pair_indicator: proof_shape=bind-only; consumers=pair_sum
 representative_counts: proof_shape=bind-only; consumers=counts
 counts: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA229508StripCertificate.transition_counts, HardinA229683StripCertificate.transition_counts
+lift_counts_iff: proof_shape=content; consumers=HardinA229508StripCertificate.one_counts, HardinA229683StripCertificate.two_counts
 initial_counts: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA229508Strip.counting_bridge, HardinA229683Strip.counting_bridge
 W: proof_shape=bind-only; consumers=HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_step, HardinA229508StripCertificate.forward_step._proof_1, HardinA229508StripCertificate.forward_step._proof_10, HardinA229508StripCertificate.forward_step._proof_11, HardinA229508StripCertificate.forward_step._proof_12, HardinA229508StripCertificate.forward_step._proof_13, HardinA229508StripCertificate.forward_step._proof_14, HardinA229508StripCertificate.forward_step._proof_15, HardinA229508StripCertificate.forward_step._proof_16, HardinA229508StripCertificate.forward_step._proof_17, HardinA229508StripCertificate.forward_step._proof_18, HardinA229508StripCertificate.forward_step._proof_19, HardinA229508StripCertificate.forward_step._proof_2, HardinA229508StripCertificate.forward_step._proof_20, HardinA229508StripCertificate.forward_step._proof_3, HardinA229508StripCertificate.forward_step._proof_4, HardinA229508StripCertificate.forward_step._proof_5, HardinA229508StripCertificate.forward_step._proof_6, HardinA229508StripCertificate.forward_step._proof_7, HardinA229508StripCertificate.forward_step._proof_8, HardinA229508StripCertificate.forward_step._proof_9, HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, HardinA229683StripCertificate.forward_two._proof_10, HardinA229683StripCertificate.forward_two._proof_11, HardinA229683StripCertificate.forward_two._proof_12, HardinA229683StripCertificate.forward_two._proof_13, HardinA229683StripCertificate.forward_two._proof_14, HardinA229683StripCertificate.forward_two._proof_15, HardinA229683StripCertificate.forward_two._proof_16, HardinA229683StripCertificate.forward_two._proof_17, HardinA229683StripCertificate.forward_two._proof_18, HardinA229683StripCertificate.forward_two._proof_19, HardinA229683StripCertificate.forward_two._proof_2, HardinA229683StripCertificate.forward_two._proof_20, HardinA229683StripCertificate.forward_two._proof_3, HardinA229683StripCertificate.forward_two._proof_4, HardinA229683StripCertificate.forward_two._proof_5, HardinA229683StripCertificate.forward_two._proof_6, HardinA229683StripCertificate.forward_two._proof_7, HardinA229683StripCertificate.forward_two._proof_8, HardinA229683StripCertificate.forward_two._proof_9, finite_certificate, finite_certificate._proof_1, forward_step, forward_step._proof_1, forward_step._proof_10, forward_step._proof_11, forward_step._proof_12, forward_step._proof_13, forward_step._proof_14, forward_step._proof_15, forward_step._proof_16, forward_step._proof_17, forward_step._proof_18, forward_step._proof_19, forward_step._proof_2, forward_step._proof_20, forward_step._proof_3, forward_step._proof_4, forward_step._proof_5, forward_step._proof_6, forward_step._proof_7, forward_step._proof_8, forward_step._proof_9, forward_table
 coeff: proof_shape=bind-only; consumers=HardinA203981Strip.result, HardinA229508StripCertificate.inherited_relation, coeff.eq_1, finite_certificate, finite_certificate._proof_1, monicCoeff
@@ -261,6 +262,25 @@ theorem counts (p : Row 3 6) (j : Fin 15) :
       then (1 : ℤ) else 0) = T (boundary p) j := by
   exact (HardinA203981StripSymmetry.lift_counts 0 p (HardinA203981StripData.representatives (boundary p)) j
     (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
+
+/-- Two rows have the same exact-cost count distribution precisely when their boundaries agree.
+The zero-cost counts suffice to recover the boundary, since the rows of `T` are distinct. -/
+theorem lift_counts_iff (p q : Row 3 6) :
+    (∀ (d : ℕ) (j : Fin 15),
+      (∑ r : Row 3 6, if bondDefects (betw 6) p r = d ∧ boundary r = j
+        then (1 : ℤ) else 0) =
+      ∑ r : Row 3 6, if bondDefects (betw 6) q r = d ∧ boundary r = j
+        then (1 : ℤ) else 0) ↔ boundary p = boundary q := by
+  constructor
+  · intro h
+    have rows_distinct : ∀ i k : Fin 15, List.ofFn (T i) = List.ofFn (T k) → i = k := by
+      decide +kernel
+    apply rows_distinct
+    apply congrArg List.ofFn
+    funext j
+    exact (counts p j).symm.trans ((h 0 j).trans (counts q j))
+  · intro h d j
+    exact HardinA203981StripSymmetry.lift_counts d p q j h
 
 /-- The distribution of labelled single rows. -/
 theorem initial_counts (j : Fin 15) :

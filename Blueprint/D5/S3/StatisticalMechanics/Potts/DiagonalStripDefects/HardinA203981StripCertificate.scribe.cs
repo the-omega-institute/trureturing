@@ -33,6 +33,10 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             H("Exact zero-cost class counts"), StatementSource.FromAuthor(Disp(All("p", Row("6"), All("j", Fin("15"), Eq(SumOver("r", Row("6"), If(And(Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), V("p"), V("r")), N("0")), Eq(Call("HardinA203981StripData.boundary", V("r")), V("j"))), CastInt(N("1")), CastInt(N("0")))), Call("HardinA203981StripData.T", Call("HardinA203981StripData.boundary", V("p")), V("j"))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The ten bonds split into two copies of the three-position compatibility relation. Each half count uses the zero-budget clause of HardinA229588Strip.finite_certificate with the reversed target classes. Their products count the possible orders of the two target classes, and parity recolouring and reflection extend the result to every source row."))), DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("lift-counts-iff"), DeclarationHandle.Create(Prefix + "lift_counts_iff"),
+            H("Exact-cost counts classify the source boundary"), StatementSource.FromAuthor(Disp(LiftCountsFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("Two rows with the same boundary have the same counts by parity recolouring and reflection. Conversely, the zero-cost counts select a row of T. The fifteen rows of T are pairwise distinct, so those counts determine the boundary."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("initial-counts"), DeclarationHandle.Create(Prefix + "initial_counts"),
             H("Labelled row populations"), StatementSource.FromAuthor(Disp(All("j", Fin("15"), Eq(SumOver("r", Row("6"), If(Eq(Call("HardinA203981StripData.boundary", V("r")), V("j")), CastInt(N("1")), CastInt(N("0")))), Call("HardinA203981StripData.initial", V("j")))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -70,6 +74,22 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             H("The forward relation at exponent seven"), StatementSource.FromAuthor(Disp(Eq(Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), Add(N("1"), N("6"))), SumOver("j", Fin("6"), Call("SMul.smul", Call("HardinA203981StripCertificate.coeff", V("j")), Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), Add(N("1"), Call("Fin.val", V("j"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The entrywise relation follows from the tabulated forward vectors."))), DescribeRole.Theorem))));
+    private static Formula LiftCountsFormula()
+    {
+        var p = V("p");
+        var q = V("q");
+        var d = V("d");
+        var j = V("j");
+        var r = V("r");
+        Formula Boundary(Formula row) => Call("HardinA203981StripData.boundary", row);
+        Formula Count(Formula row) => SumOver("r", Row("6"), If(And(
+            Eq(Call("DefectTransfer.bondDefects", Call("HardinA229637RowColumn.betw", N("6")), row, r), d),
+            Eq(Boundary(r), j)), CastInt(N("1")), CastInt(N("0"))));
+        return All("p", Row("6"), All("q", Row("6"), Seq(
+            Parenthesized(All("d", V("Nat"), All("j", Fin("15"), Eq(Count(p), Count(q))))),
+            Sp, F.Iff, Sp, Parenthesized(Eq(Boundary(p), Boundary(q))))));
+    }
+
     private static Formula MonicCoeffFormula()
     {
         var n = V("n");
