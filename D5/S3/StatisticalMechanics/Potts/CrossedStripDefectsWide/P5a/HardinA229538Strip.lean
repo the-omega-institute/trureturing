@@ -94,6 +94,7 @@ import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.Group.Semigroup
 import Mathlib.Algebra.GroupWithZero.Action.Defs
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.BigOperators
