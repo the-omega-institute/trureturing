@@ -4,7 +4,7 @@ import Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Reg.Support.UniverseSingleReadout
 import D5.S3.Quantum.Measurement.Auric.CoordinatePinchingEntropy
 
-/-! Source-bound audit of the entropy readout in the pinching gain identity. -/
+/-! Source-bound audits for pinching entropy and the diagonal discord comparison. -/
 
 namespace Reg.D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
 
@@ -112,15 +112,20 @@ private abbrev Params :=
 
 private abbrev gainSignature : Signature :=
   Reg.Support.UniverseSingleReadout.signature Params.{u,v}
-    (fun ⟨a, b, fa, da, fb, db, _⟩ => @DensityState (a × b) (@instFintypeProd _ _ fa fb)
-      (@instDecidableEqProd _ _ da db)) (fun _ => ℝ)
+    (fun p => @DensityState (p.1 × p.2.1)
+      (@instFintypeProd _ _ p.2.2.1 p.2.2.2.2.1)
+      (@instDecidableEqProd _ _ p.2.2.2.1 p.2.2.2.2.2.1)) (fun _ => ℝ)
 
 private def gainActual : Realization gainSignature.{u,v} :=
-  realize gainSignature (fun _ ⟨a, b, fa, da, fb, db, U⟩ ρ => @basisGain a b fa da fb db ρ U)
+  realize gainSignature (fun _ p ρ =>
+      @basisGain p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1
+        ρ p.2.2.2.2.2.2)
     (fun e => nomatch e)
 
 private def gainRejected : Realization gainSignature.{u,v} :=
-  realize gainSignature (fun _ ⟨a, b, fa, da, fb, db, U⟩ ρ => @basisGain a b fa da fb db ρ U - 1)
+  realize gainSignature (fun _ p ρ =>
+      @basisGain p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1
+        ρ p.2.2.2.2.2.2 - 1)
     (fun e => nomatch e)
 
 private abbrev Qubit := ULift.{u} (Fin 2)
@@ -317,7 +322,6 @@ def transferSource :
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ transferRejected
   dependence := gainDependence
 
-
 def attainedRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@diagonalDiscord_localChannel_mono_attained.{u,v}) (Realization gainSignature.{u,v})
@@ -334,7 +338,9 @@ def attainedRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize gainSignature
-    (fun _ ⟨a, b, fa, da, fb, db, U⟩ ρ => @basisGain a b fa da fb db ρ U)
+    (fun _ p ρ =>
+      @basisGain p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1
+        ρ p.2.2.2.2.2.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -371,7 +377,9 @@ def transferRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize gainSignature
-    (fun _ ⟨a, b, fa, da, fb, db, U⟩ ρ => @basisGain a b fa da fb db ρ U)
+    (fun _ p ρ =>
+      @basisGain p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1
+        ρ p.2.2.2.2.2.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -385,6 +393,69 @@ def transferRegistration :
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
           "body", "body", "body", "body", "body", "body", "arg", "body",
           "arg", "arg", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+private abbrev minimumArena : Arena where
+  signature := gainSignature.{u,v}
+  Law r := ∀ {a : Type u} {b : Type v}
+    [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (ρ : DensityState (a × b)),
+    ∃ U : Matrix.unitaryGroup a ℂ,
+      Eligible ρ U ∧ IsMinOn (basisGain ρ) {V | Eligible ρ V} U ∧
+      diagonalDiscord ρ =
+        r.readout () ⟨a, b, inferInstance, inferInstance, inferInstance, inferInstance, U⟩ ρ
+
+private theorem minimumRejected : ¬ minimumArena.{u,v}.Law gainRejected := by
+  intro h
+  obtain ⟨U, _, _, hbad⟩ := h singletonInput.{u,v}
+  obtain ⟨V, _, _, hactual⟩ := diagonalDiscord_attained singletonInput.{u,v}
+  change diagonalDiscord singletonInput = basisGain singletonInput U - 1 at hbad
+  rw [singletonGain] at hbad hactual
+  linarith
+
+def minimumSource :
+    Registration minimumArena.{u,v} (type_of% @diagonalDiscord_attained.{u,v}) where
+  actual := gainActual
+  bridge := Iff.rfl
+  variation := ⟨@diagonalDiscord_attained, gainRejected, minimumRejected⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ minimumRejected
+  dependence := gainDependence
+
+def minimumRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@diagonalDiscord_attained.{u,v}) (Realization gainSignature.{u,v})
+      (type_of% @DensityState.{max u v}) Unit := {
+  unitName := .str ``minimumSource "unit"
+  realizationName := ``minimumSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨minimumArena.{u,v}⟩
+  objectArena := .source ⟨minimumArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source minimumArena.{u,v} ⟨minimumSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize gainSignature
+    (fun _ p ρ =>
+      @basisGain p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1 ρ p.2.2.2.2.2.2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.DiagonalDiscord.DiagonalDiscordMonotonicity
+    definition := none
+    coordinates := #[0, 1, 7]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
