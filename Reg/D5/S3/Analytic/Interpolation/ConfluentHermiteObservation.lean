@@ -22,7 +22,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Set
 open scoped ContDiff Matrix.Norms.L2Operator
 
-abbrev ObservationParams := Σ m : ℕ, ℝ × ℝ × (Fin (m + 1) → ℝ)
+abbrev ObservationParams := Σ m : ℕ, Σ _lo : ℝ, Σ _hi : ℝ, (Fin (m + 1) → ℝ)
 
 abbrev observationSignature (Y : Type) : Signature.{0, 0, 0, 0, 0} where
   Params := ObservationParams
