@@ -20,7 +20,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
 
-private theorem square_eq_trace_sub_det (A : Matrix Bool Bool ℂ) :
+theorem square_eq_trace_sub_det (A : Matrix Bool Bool ℂ) :
     A * A = A.trace • A - A.det • (1 : Matrix Bool Bool ℂ) := by
   let e := finTwoEquiv
   let B := A.submatrix e e
