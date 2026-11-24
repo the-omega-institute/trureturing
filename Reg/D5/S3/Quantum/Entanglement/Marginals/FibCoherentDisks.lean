@@ -36,8 +36,8 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law Y := ∀ (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ),
-    0 < b → L.IsHermitian → R.IsHermitian →
+  Law Y := ∀ (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ)
+    (_ : 0 < b) (_ : L.IsHermitian) (_ : R.IsHermitian),
     CoherentExtendible b L R u v w ↔
       Y.readout () () (L.trace + (b : ℂ)) 1 ∧ R.trace = L.trace ∧
       (L - partialTraceRight
