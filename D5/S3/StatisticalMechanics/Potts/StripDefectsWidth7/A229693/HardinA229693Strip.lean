@@ -88,9 +88,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_e
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (canonical_pattern_card)
 
 private def initialExhausted (i : Fin 96) : ℤ :=
-  Fin.addCases (fun j : Fin 56 =>
-    if j.castAdd 40 ∈ Finset.univ.image (oldZeroImage ∘ HardinA229585StripData.zeroBudgetClass)
-      then 0 else 6)
+  Fin.addCases (fun j : Fin 56 => HardinA229585StripData.initial (j.natAdd 16) - 6)
     (fun _ : Fin 40 => 12) i
 
 def initial : Fin 168 → ℤ :=

@@ -16,7 +16,7 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "initial"), H("First-row weights"),
                 StatementSource.FromAuthor(Disp(InitialFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The first 72 entries are the A229585 initial weights. The remaining entries count labelled rows with exactly two horizontal defects, grouped by exhausted boundary class. The strip counting formula uses this vector on the left."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The first 72 entries are the A229585 initial weights. The next 56 entries subtract six from the corresponding inherited exhausted weights. The final 40 entries are twelve. The exhausted entries count labelled rows with exactly two horizontal defects, grouped by boundary class. The strip counting formula uses this vector on the left."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("terminal"),
                 DeclarationHandle.Create(Prefix + "terminal"), H("Acceptance weights"),
                 StatementSource.FromAuthor(Disp(Eq(Call("HardinA229693Strip.terminal"), Call("Fin.append", TypeOf(Num("0"), Arrow(Call("Fin", Num("72")), V("Int"))), TypeOf(Num("1"), Arrow(Call("Fin", Num("96")), V("Int"))))))),
@@ -41,21 +41,14 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
 
     private static Formula InitialFormula()
     {
-        var i = V("i");
-        var k = V("k");
         var leading = Call("HardinA229585StripData.initial");
-        var embedded = Call("oldZeroImage", Call("HardinA229585StripData.zeroBudgetClass", k));
-        var zero = Seq(Exists, Sp, k, Colon, Sp, Call("Fin", Num("16")), Comma, Sp,
-            Parenthesized(Eq(i, embedded)));
-        var suffix = Conditional(Lt(Call("Fin.val", i), Num("56")),
-            Conditional(zero, CastInt(Num("0")), CastInt(Num("6"))), CastInt(Num("12")));
+        var inherited = Fn("j", Call("Fin", Num("56")),
+            Sub(Call("HardinA229585StripData.initial", Call("Fin.natAdd", Num("16"), V("j"))), Num("6")));
+        var fresh = Fn("j", Call("Fin", Num("40")), CastInt(Num("12")));
         return Eq(Call("HardinA229693Strip.initial"),
-            Call("Fin.append", leading, Fn("i", Call("Fin", Num("96")), suffix)));
+            Call("Fin.append", leading, Call("Fin.addCases", inherited, fresh)));
     }
 
-    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
-    private static Formula Conditional(Formula p, Formula y, Formula n) =>
-        Parenthesized(Seq(Q("if"), Sp, Parenthesized(p), Sp, Q("then"), Sp, y, Sp, Q("else"), Sp, n));
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((x,i) => i == 0
