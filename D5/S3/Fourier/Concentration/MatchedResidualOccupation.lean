@@ -41,17 +41,10 @@ private theorem matched_words_mass_le {J : Type*} [Fintype J] {d : ℕ}
   have hnonneg (x) : 0 ≤ term x :=
     mul_nonneg (prod_nonneg fun i _ => hw _) (prod_nonneg fun i _ => hw _)
   have hmask (σ) (x) : H x σ = term x * (if event σ x then 1 else 0) := by
-    by_cases h : event σ x
-    · rw [ite_eq_left h, mul_one]
-      unfold H
-      calc
-        _ = ∏ i, w (x.1 i) * w (x.2 (σ i)) :=
-          prod_congr rfl fun i _ => ite_eq_left (h i)
-        _ = _ := by rw [prod_mul_distrib, Equiv.prod_comp σ (fun i => w (x.2 i))]
-    · rw [ite_eq_right h, mul_zero]
-      obtain ⟨i, hi⟩ := not_forall.mp h
-      apply prod_eq_zero (mem_univ i)
-      exact ite_eq_right hi
+    change (∏ i, if E (x.1 i) (x.2 (σ i)) then w (x.1 i) * w (x.2 (σ i)) else 0) = _
+    rw [Fintype.prod_ite_zero, prod_mul_distrib, Equiv.prod_comp σ (fun i => w (x.2 i))]
+    simp only [term, event, mul_ite, mul_one, mul_zero]
+    split_ifs <;> rfl
   have hcovered : S ⊆ univ.filter (fun x => ∃ σ, event σ x) := by
     intro x hx
     exact mem_filter.mpr ⟨mem_univ x, hS x hx⟩
