@@ -72,7 +72,7 @@ private theorem count_fiber {J : Type*} [Fintype J] [DecidableEq J]
       change l j + a j + b j = l j + b j + a j
       ac_rfl
 
-private theorem weight_factorials {J : Type*} [Fintype J] [DecidableEq J]
+theorem weight_factorials {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (p : ℕ) (m : J → ℕ) (hm : ∑ j, m j = p) :
     monomialWeight w m = (p.factorial : ℝ) *
       ∏ j, w j ^ m j / ((m j).factorial : ℝ) := by
