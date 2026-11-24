@@ -50,7 +50,8 @@ internal sealed class NarayanCatenarySpectrumMembershipDocument : IScribeDocumen
                 "Narayan's Conjecture 18.2 on p. 22 asserts that the ceiling parameter plus h + d belongs to the catenary spectrum under the hypotheses in §3. "
                     + "The exchange of h copies of a and one copy of generator i for one copy each of generators 1 and i − 1 preserves value and reduces t − Y. Iteration joins the low class to its representative. At i = 2 the exchange adds two copies of generator 1. "
                     + "The high class is connected by edges of size at most t + 1. At N − 1 these two classes are exactly the components. At N the low representative is adjacent to every high vector, establishing the least connecting threshold. The proof includes k = 2, k = a − 1, a = 3 and h = 2.",
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("narayan-catenary-spectrum-membership"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
