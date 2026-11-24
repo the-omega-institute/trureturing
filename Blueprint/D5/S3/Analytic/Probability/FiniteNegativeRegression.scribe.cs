@@ -22,8 +22,10 @@ internal sealed class FiniteNegativeRegressionDocument : IScribeDocumentDefiniti
             Entry("marginalProduct", "Actual marginal-support product", DescribeRole.Definition,
                 "Take the product of the sizes of the supports of the one-coordinate marginal probability mass functions."),
             Entry("fullNRD_of_upper", "Upper events suffice for full negative regression", DescribeRole.Theorem,
-                "UpperNRD denotes the full negative regression condition with the response test restricted to upper-set indicators. A finite increasing test can be built from a constant and nonnegative multiples of its upper-level indicators. "
-                + "The two positive-fiber conditional laws give the same expectation to constants."),
+                "UpperNRD restricts the response tests to upper-set indicators. Normalize each positive conditioning fiber "
+                + "and project its law onto the response block. Finite Strassen gives a coupling from the law at the larger "
+                + "conditioning tuple to the law at the smaller one, supported on ordered response pairs. An increasing "
+                + "test is ordered on each supported pair, and the coupling marginals give the two conditional means."),
             Entry("na_of_fullNRD_of_marginalProduct_lt_81", "The lower bound for arbitrary finite products", DescribeRole.Theorem,
                 "Restrict to the coordinate supports and omit singleton factors in each observed block. For disjoint blocks, "
                 + "the product of their sizes is below 81, so at least one has size at most eight. The nonconstant possibilities "

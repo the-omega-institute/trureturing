@@ -17,6 +17,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
+import D5.S3.Analytic.Probability.FiniteOrderedStrassen
 import D5.S3.Analytic.Probability.ThreeBitCubeConditionalMeans
 
 /-! Finite negative dependence via exact marginal laws and upper-event tests. -/
@@ -131,6 +132,17 @@ private theorem upper_test_induction [Fintype β] [Preorder β] (w : β → ℝ)
   · have : IsEmpty β := ⟨fun x => hs ⟨g x, hgs x⟩⟩
     simp
 
+omit [Fintype ι] [∀ i, Fintype (C i)] [∀ i, LinearOrder (C i)] in
+private theorem sum_by_fibers [Fintype β] (q : α → β) (w : α → ℝ) (g : β → ℝ) :
+    ∑ b, fiberSum q b w * g b = ∑ x, w x * g (q x) := by
+  rw [← Finset.sum_fiberwise univ q (fun x => w x * g (q x))]
+  apply sum_congr rfl
+  intro b _
+  rw [fiberSum, sum_mul]
+  apply sum_congr (by ext x; simp)
+  intro x hx
+  rw [(mem_filter.mp hx).2]
+
 /-- Upper-event inequalities suffice for full negative regression, including zero fibers. -/
 theorem fullNRD_of_upper (p : PMF (∀ i, C i))
     (h : ∀ (I J : Finset ι), Disjoint I J → ∀ U : Set (∀ i : I, C i), IsUpperSet U →
@@ -152,29 +164,57 @@ theorem fullNRD_of_upper (p : PMF (∀ i, C i))
     apply sum_congr rfl
     intro x _
     by_cases hx : project J x = c <;> simp [density, hx, div_mul_eq_mul_div, Function.comp_apply]
-  have hnorm (c : ∀ j : J, C j) (hc : 0 < mass p (project J) c) : ∑ x, density c x = 1 := by
-    have he := hcond c (fun _ => 1)
+  let responseMass (c : ∀ j : J, C j) (y : ∀ i : I, C i) :=
+    fiberSum (project I) y (density c)
+  have hmean (c : ∀ j : J, C j) (g : (∀ i : I, C i) → ℝ) :
+      cond p (project J) c (g ∘ project I) = ∑ y, responseMass c y * g y := by
+    rw [hcond c g]
+    exact (sum_by_fibers (project I) (density c) g).symm
+  have hnonneg (c : ∀ j : J, C j) (hc : 0 < mass p (project J) c) (y : ∀ i : I, C i) :
+      0 ≤ responseMass c y := by
+    apply sum_nonneg
+    intro x _
+    by_cases hx : project J x = c
+    · simp [density, hx, div_nonneg ENNReal.toReal_nonneg hc.le]
+    · simp [density, hx]
+  have htotal (c : ∀ j : J, C j) (hc : 0 < mass p (project J) c) :
+      ∑ y, responseMass c y = 1 := by
+    have he := hmean c (fun _ => 1)
     simp only [cond, Function.comp_apply, mul_one] at he
     change mass p (project J) c / mass p (project J) c = _ at he
-    rw [div_self hc.ne'] at he
-    exact he.symm
-  let w (y : ∀ i : I, C i) := fiberSum (project I) y (fun x => density b x - density a x)
-  have hsum (g : (∀ i : I, C i) → ℝ) :
-      ∑ y, w y * g y = cond p (project J) b (g ∘ project I) -
-        cond p (project J) a (g ∘ project I) := by
-    simp only [w, fiberSum, sum_mul, hcond, ← sum_sub_distrib, ← sub_mul]
-    rw [← Finset.sum_fiberwise (s := univ) (g := project I)
-      (f := fun x => (density b x - density a x) * g (project I x))]
-    apply sum_congr rfl
-    intro y _
-    apply Finset.sum_congr (by ext x; simp)
-    intro x hx
-    rw [(mem_filter.mp hx).2]
-  have hzero : ∑ y, w y = 0 := by
-    simpa only [mul_one, hcond, hnorm _ ha, hnorm _ hb, sub_self] using hsum (fun _ => 1)
-  have hsign := upper_test_induction w hzero
-    (fun U hU => by rw [hsum]; exact sub_nonpos.mpr (h I J hd U hU a b hab ha hb)) f hf
-  rwa [hsum, sub_nonpos] at hsign
+    rwa [div_self hc.ne', eq_comm] at he
+  have hupper (U : Finset (∀ i : I, C i))
+      (hU : ∀ ⦃x y⦄, x ∈ U → x ≤ y → y ∈ U) :
+      ∑ y ∈ U, responseMass b y ≤ ∑ y ∈ U, responseMass a y := by
+    have hSet : IsUpperSet (↑U : Set (∀ i : I, C i)) :=
+      fun _ _ hxy hx => hU hx hxy
+    have htest := h I J hd (↑U) hSet a b hab ha hb
+    have he (c : ∀ j : J, C j) :
+        cond p (project J) c (event (↑U) ∘ project I) = ∑ y ∈ U, responseMass c y := by
+      have hfilter : univ.filter (fun y => y ∈ U) = U := by ext y; simp
+      rw [hmean c (event (↑U))]
+      simp only [event, Finset.mem_coe, mul_ite, mul_one, mul_zero]
+      rw [← Finset.sum_filter, hfilter]
+    simpa only [he] using htest
+  obtain ⟨π, hπ, hrow, hcol, hsupp⟩ :=
+    (FiniteOrderedStrassen.forall_isUpperSet_sum_le_iff_exists_coupling
+      (responseMass b) (responseMass a) (hnonneg b hb) (hnonneg a ha)
+      ((htotal b hb).trans (htotal a ha).symm)).mp hupper
+  rw [hmean b f, hmean a f]
+  calc
+    ∑ x, responseMass b x * f x = ∑ x, ∑ y, π x y * f x := by
+      simp only [← sum_mul, hrow]
+    _ ≤ ∑ x, ∑ y, π x y * f y := by
+      apply sum_le_sum
+      intro x _
+      apply sum_le_sum
+      intro y _
+      by_cases hxy : x ≤ y
+      · exact mul_le_mul_of_nonneg_left (hf hxy) (hπ x y)
+      · simp [hsupp x y hxy]
+    _ = ∑ y, responseMass a y * f y := by
+      rw [Finset.sum_comm]
+      simp only [← sum_mul, hcol]
 
 omit [Fintype ι] [∀ i, Fintype (C i)] [∀ i, LinearOrder (C i)] in
 private theorem map_weight (p : PMF α) (q : α → β) (b : β) :
@@ -188,17 +228,6 @@ private theorem map_weight (p : PMF α) (q : α → β) (b : β) :
     split_ifs
     · exact p.apply_ne_top x
     · exact ENNReal.zero_ne_top
-
-omit [Fintype ι] [∀ i, Fintype (C i)] [∀ i, LinearOrder (C i)] in
-private theorem sum_by_fibers [Fintype β] (q : α → β) (w : α → ℝ) (g : β → ℝ) :
-    ∑ b, fiberSum q b w * g b = ∑ x, w x * g (q x) := by
-  rw [← Finset.sum_fiberwise univ q (fun x => w x * g (q x))]
-  apply sum_congr rfl
-  intro b _
-  rw [fiberSum, sum_mul]
-  apply sum_congr (by ext x; simp)
-  intro x hx
-  rw [(mem_filter.mp hx).2]
 
 omit [Fintype ι] [∀ i, Fintype (C i)] [∀ i, LinearOrder (C i)] in
 private theorem mass_nonneg (p : PMF α) (q : α → β) (a : β) : 0 ≤ mass p q a :=

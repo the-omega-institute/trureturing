@@ -58,7 +58,7 @@ $$\forall p, \operatorname{UpperNRD}(p) \Rightarrow \operatorname{FullNRD}(p)$$
 
 *Commentary.*
 
-UpperNRD denotes the full negative regression condition with the response test restricted to upper-set indicators. A finite increasing test can be built from a constant and nonnegative multiples of its upper-level indicators. The two positive-fiber conditional laws give the same expectation to constants.
+UpperNRD restricts the response tests to upper-set indicators. Normalize each positive conditioning fiber and project its law onto the response block. Finite Strassen gives a coupling from the law at the larger conditioning tuple to the law at the smaller one, supported on ordered response pairs. An increasing test is ordered on each supported pair, and the coupling marginals give the two conditional means.
 
 **Theorem 1.5 (The lower bound for arbitrary finite products).**
 
@@ -81,4 +81,5 @@ Restrict to the coordinate supports and omit singleton factors in each observed 
 - Truth anchor: `D5/S3/Analytic/Probability/FiniteNegativeRegression.fullNRD_of_upper`
 - Truth anchor: `D5/S3/Analytic/Probability/FiniteNegativeRegression.marginalProduct`
 - Truth anchor: `D5/S3/Analytic/Probability/FiniteNegativeRegression.na_of_fullNRD_of_marginalProduct_lt_81`
+- Dependency: [D5/S3/Analytic/Probability/FiniteOrderedStrassen](FiniteOrderedStrassen.md)
 - Dependency: [D5/S3/Analytic/Probability/ThreeBitCubeConditionalMeans](ThreeBitCubeConditionalMeans.md)
