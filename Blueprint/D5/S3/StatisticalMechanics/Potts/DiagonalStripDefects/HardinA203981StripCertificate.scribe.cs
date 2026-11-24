@@ -19,7 +19,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("allocated-counts"), DeclarationHandle.Create(Prefix + "allocated_counts"),
             H("Allocate exact cost between the parity classes"), StatementSource.FromAuthor(Disp(AllocatedCountsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The count uses only the two source triples of the chosen representative and the two classes in the chosen target pair. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k)."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("For any source row p in Row 3 6, the count uses the two actual triples parityRows(p) and the two classes in the chosen target pair. Each summand reads the unordered target class. For k in Fin(d+1), Fin.rev(k) has natural value d minus Fin.val(k)."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("reversed-count"), DeclarationHandle.Create(Prefix + "reversed_count"),
             H("Reindex the target triple under reversal"), StatementSource.FromAuthor(Disp(ReversedCountFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
