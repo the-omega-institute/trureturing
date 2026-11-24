@@ -58,8 +58,9 @@ private theorem shiftedMonomialTail_le {n order : ℕ} (horder : order ≤ n)
       rw [he, Nat.add_sub_cancel_left]
       ring
     _ ≤ _ := by
+      have hwidth : 0 ≤ width := (abs_nonneg offset).trans hw
       rw [← mul_assoc]
-      apply mul_le_mul_of_nonneg_left _ (by positivity)
+      apply mul_le_mul_of_nonneg_left _ (mul_nonneg (pow_nonneg hwidth _) (Nat.cast_nonneg _))
       exact pow_le_pow_left₀ (by positivity) (by simpa [add_comm] using hr) _
 
 /-- Translate and truncate a finite series with a single absolute error bound on the

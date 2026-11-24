@@ -36,6 +36,14 @@ open private compactMixedT_eq_cutoff from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
 open private quadratureTailTerm from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
+open private marginalQuadratureWeight marginalQuadratureWeight_abs_le marginalQuadratureCoefficient
+  compactClosedQuadrature_parameter_series compactClosedQuadrature_monomial_abs_le_geometric
+  summable_factorial_quadrature_series from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
+open private coeffAdd coeffScale coeffSum horner_add horner_scale horner_sum
+  from D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
+
+open SmallCorner (momentHorner)
 
 /-- The lower fourth-order approximation at center `s` and gap `d`. -/
 def shortJointMomentFourth (p : ℕ) (s d : ℝ) : ℝ :=
@@ -367,6 +375,211 @@ theorem compactClosedQuadrature_shiftedSeries_sound
     simp only [compactClosedQuadratureSeriesCoeff, div_eq_mul_inv]
     ring
   simpa only [heq] using herror.trans htail
+
+/-- Multiply an ascending spacing row by a power of the spacing. -/
+private def spacingMonomialMul (degree : ℕ) (row : List ℚ) : List ℚ :=
+  List.replicate degree 0 ++ row
+
+private theorem spacingMonomialMul_eval (h : ℝ) (degree : ℕ) (row : List ℚ) :
+    momentHorner h (spacingMonomialMul degree row) = h ^ degree * momentHorner h row := by
+  induction degree with
+  | zero => simp [spacingMonomialMul]
+  | succ degree ih =>
+      simp only [spacingMonomialMul, List.replicate_succ, List.cons_append, momentHorner,
+        Rat.cast_zero, zero_add] at ih ⊢
+      rw [ih, pow_succ']
+      ring
+
+/-- A density entry records the degree in the integration variable, the degree in
+the spacing and a rational scalar. These rows are evaluated before the Taylor model. -/
+private def quadratureDensityRow (offset : ℕ) : List (ℕ × ℕ × ℚ) → List ℚ
+  | [] => []
+  | (power, spacingPower, scalar) :: terms =>
+      let monomial := List.ofFn (compactQuadratureMonomialCoefficients (offset + power))
+      coeffAdd (coeffScale scalar (spacingMonomialMul spacingPower monomial))
+        (quadratureDensityRow offset terms)
+
+private theorem quadratureDensityRow_eval (h : ℝ) (offset : ℕ)
+    (density : List (ℕ × ℕ × ℚ)) :
+    momentHorner h (quadratureDensityRow offset density) =
+      (density.map fun (power, spacingPower, scalar) =>
+        (scalar : ℝ) * h ^ spacingPower *
+          compactClosedQuadrature h (fun x ↦ x ^ (offset + power))).sum := by
+  induction density with
+  | nil => rfl
+  | cons item density ih =>
+      rcases item with ⟨power, spacingPower, scalar⟩
+      have hrow :
+          momentHorner h (List.ofFn (compactQuadratureMonomialCoefficients (offset + power))) =
+            compactClosedQuadrature h (fun x ↦ x ^ (offset + power)) := by
+        rw [compactClosedQuadrature_monomial]
+        simp only [List.ofFn_succ, List.ofFn_zero,
+          Fin.sum_univ_succ, Fin.sum_univ_zero,
+          momentHorner, Fin.val_zero, Fin.val_succ, pow_zero]
+        ring
+      simp only [quadratureDensityRow, horner_add, horner_scale, spacingMonomialMul_eval, hrow,
+        List.map_cons, List.sum_cons, ih]
+      ring
+
+/-- Compute a parameter Taylor coefficient as a rational polynomial in the spacing,
+with the factorial weight included. -/
+private def quadratureParameterRow (density : List (ℕ × ℕ × ℚ)) (offset : ℕ)
+    (weight : ℕ → ℚ) (n : ℕ) : List ℚ :=
+  coeffScale (weight n / n.factorial) (quadratureDensityRow (n + offset) density)
+
+/-- First translate a finite parameter series, then evaluate its coefficients in the
+spacing. This keeps the arithmetic in the certificate rational until model rounding. -/
+def shiftedQuadratureParameterRow (density : List (ℕ × ℕ × ℚ)) (offset terms : ℕ)
+    (weight : ℕ → ℚ) (center : ℚ) (m : ℕ) : List ℚ :=
+  coeffSum (fun j =>
+    let n := m + j
+    coeffScale ((n.choose m : ℚ) * center ^ (n - m))
+      (quadratureParameterRow density offset weight n)) (terms - m)
+
+theorem shiftedQuadratureParameterRow_eval (h : ℝ) (density : List (ℕ × ℕ × ℚ))
+    (offset terms : ℕ) (weight : ℕ → ℚ) (center : ℚ) (m : ℕ) :
+    momentHorner h (shiftedQuadratureParameterRow density offset terms weight center m) =
+      CompactTaylorModel.shiftedSeriesCoeff (fun n =>
+        ((weight n : ℝ) / n.factorial) *
+          (density.map fun (power, spacingPower, scalar) =>
+            (scalar : ℝ) * h ^ spacingPower *
+              compactClosedQuadrature h (fun x ↦ x ^ (n + offset + power))).sum)
+        terms center m := by
+  rw [shiftedQuadratureParameterRow, horner_sum, CompactTaylorModel.shiftedSeriesCoeff,
+    Finset.sum_Ico_eq_sum_range]
+  apply Finset.sum_congr rfl
+  intro j _
+  simp only [quadratureParameterRow, horner_scale, quadratureDensityRow_eval, Rat.cast_mul,
+    Rat.cast_natCast, Rat.cast_div, Rat.cast_pow]
+  ring
+
+private def marginalDensity : List (ℕ × ℕ × ℚ) := [(0, 0, 2), (0, 1, 1), (1, 0, -1)]
+
+private def marginalWeight (j n : ℕ) : ℚ := 1 / ((((j + n : ℕ) : ℚ) + 1) *
+  (((j + n : ℕ) : ℚ) + 2))
+
+private theorem cast_marginalWeight (j n : ℕ) :
+    (marginalWeight j n : ℝ) = marginalQuadratureWeight (j + n) := by
+  simp only [marginalWeight, marginalQuadratureWeight, Rat.cast_div, Rat.cast_one, Rat.cast_mul,
+    Rat.cast_add, Rat.cast_natCast, Rat.cast_ofNat]
+
+private theorem marginalQuadratureParameterRow_eval (h : ℝ) (j n : ℕ) :
+    momentHorner h (quadratureParameterRow marginalDensity (j + 2) (marginalWeight j) n) =
+      marginalQuadratureCoefficient h (j + n) / (n.factorial : ℝ) := by
+  simp only [quadratureParameterRow, horner_scale, quadratureDensityRow_eval, Rat.cast_div,
+    Rat.cast_natCast, cast_marginalWeight, marginalDensity, List.map_cons, List.map_nil,
+    List.sum_cons, List.sum_nil, marginalQuadratureCoefficient]
+  norm_num [show n + (j + 2) + 0 = j + n + 2 by omega,
+    show n + (j + 2) + 1 = j + n + 3 by omega]
+  ring
+
+/-- The same three density terms give the scaled marginal and each of its
+parameter derivatives. This identifies the exact rational row used in a box. -/
+theorem shiftedMarginalQuadratureRow_eval (h : ℝ) (j terms : ℕ) (center : ℚ) (m : ℕ) :
+    momentHorner h (shiftedQuadratureParameterRow marginalDensity (j + 2) terms
+      (marginalWeight j) center m) =
+      CompactTaylorModel.shiftedSeriesCoeff
+        (fun n => marginalQuadratureCoefficient h (j + n) / (n.factorial : ℝ))
+        terms center m := by
+  rw [shiftedQuadratureParameterRow, horner_sum, CompactTaylorModel.shiftedSeriesCoeff,
+    Finset.sum_Ico_eq_sum_range]
+  apply Finset.sum_congr rfl
+  intro n _
+  simp only [horner_scale, Rat.cast_mul, Rat.cast_pow, Rat.cast_natCast,
+    marginalQuadratureParameterRow_eval]
+  ring
+
+private def shortQuadratureTail (h radius : ℝ) (offset terms : ℕ) : ℝ :=
+  ((3 + h) * quadratureTailTerm offset 0 radius terms +
+    h ^ 2 / 6 * quadratureTailTerm offset 1 radius terms +
+    h ^ 4 / 360 * quadratureTailTerm offset 3 radius terms) /
+    (1 - 2 * radius / ((terms : ℝ) - 2))
+
+private theorem marginalClosedQuadrature_tail_le {h t radius : ℝ} {terms : ℕ}
+    (hh : 0 ≤ h) (ht : |t| ≤ radius) (hterms : 3 ≤ terms)
+    (hr : 2 * radius < (terms : ℝ) - 2) (j : ℕ) :
+    |compactClosedQuadrature h
+        (fun x ↦ iteratedDeriv j (fun y ↦ regularizedMarginalIntegrand h y x) t) -
+      ∑ n ∈ Finset.range terms, (marginalQuadratureCoefficient h (j + n) / n.factorial) *
+        t ^ n| ≤ (2 + h) * shortQuadratureTail h radius (j + 2) terms +
+      shortQuadratureTail h radius (j + 3) terms := by
+  let w (n : ℕ) := marginalQuadratureWeight (j + n)
+  let A (offset n : ℕ) := w n * (t ^ n / n.factorial) *
+    compactClosedQuadrature h (fun x ↦ x ^ (n + offset))
+  have hw (n : ℕ) : |w n| ≤ 1 := marginalQuadratureWeight_abs_le (j + n)
+  have hs (offset : ℕ) : Summable (A offset) := by
+    let a (n : ℕ) := w n * compactClosedQuadrature h (fun x ↦ x ^ (n + offset))
+    have ha (n : ℕ) : |a n| ≤
+        ((3 + h + h ^ 2 / 6 + h ^ 4 / 60) * 4 ^ offset) * 4 ^ n := by
+      dsimp only [a]
+      rw [abs_mul]
+      calc
+        _ ≤ 1 * ((3 + h + h ^ 2 / 6 + h ^ 4 / 60) * 4 ^ (n + offset)) :=
+          mul_le_mul (hw n) (compactClosedQuadrature_monomial_abs_le_geometric hh _)
+            (abs_nonneg _) zero_le_one
+        _ = _ := by rw [pow_add]; ring
+    have he : A offset = fun n ↦ a n * t ^ n / n.factorial := by
+      funext n
+      dsimp only [A, a]
+      ring
+    rw [he]
+    exact summable_factorial_quadrature_series ha t
+  have htail (offset : ℕ) :
+      |(∑' n, A offset n) - ∑ n ∈ Finset.range terms, A offset n| ≤
+        shortQuadratureTail h radius offset terms := by
+    have he := compactClosedQuadrature_taylor_error_le (offset := offset) hh ht hterms hr hw
+    have hQ : compactClosedQuadrature h (fun x ↦ ∑' n : ℕ,
+        w n * (t ^ n / n.factorial) * x ^ (n + offset)) = ∑' n, A offset n := by
+      simpa only [A, mul_div_assoc] using compactClosedQuadrature_tsum h t offset w hw
+    dsimp only at he
+    rw [hQ] at he
+    simpa only [shortQuadratureTail, A, one_mul] using he
+  have he (n : ℕ) :
+      (marginalQuadratureCoefficient h (j + n) / n.factorial) * t ^ n =
+        (2 + h) * A (j + 2) n - A (j + 3) n := by
+    simp only [A, w, marginalQuadratureCoefficient,
+      show n + (j + 2) = j + n + 2 by omega, show n + (j + 3) = j + n + 3 by omega]
+    ring
+  rw [compactClosedQuadrature_parameter_series hh]
+  simp_rw [show ∀ n : ℕ, marginalQuadratureCoefficient h (j + n) * t ^ n / n.factorial =
+    (marginalQuadratureCoefficient h (j + n) / n.factorial) * t ^ n from fun n => by ring, he]
+  rw [((hs (j + 2)).mul_left (2 + h)).tsum_sub (hs (j + 3)), tsum_mul_left,
+    Finset.sum_sub_distrib, ← Finset.mul_sum]
+  have he' (a b c d : ℝ) :
+      ((2 + h) * a - b) - ((2 + h) * c - d) = (2 + h) * (a - c) - (b - d) := by ring
+  rw [he']
+  refine (abs_sub _ _).trans ?_
+  rw [abs_mul, abs_of_nonneg (show 0 ≤ 2 + h by positivity)]
+  exact add_le_add (mul_le_mul_of_nonneg_left (htail (j + 2)) (by positivity)) (htail (j + 3))
+
+/-- The rational spacing rows give a centered enclosure of the closed quadrature
+for a marginal derivative, including the errors of both Taylor truncations. -/
+theorem marginalClosedQuadrature_model_sound
+    {s t z h offset : ℝ} {center radius width : ℚ} {j terms order : ℕ}
+    {H X : CompactTaylorModel.Model} (hb : CompactTaylorModel.InBox s t z)
+    (hH : H.Encloses s t z h) (hX : X.Encloses s t z offset)
+    (hh : 0 ≤ h) (horder : order ≤ terms) (hterms : 3 ≤ terms)
+    (hr : |(center : ℝ)| + |offset| ≤ radius) (hw : |offset| ≤ (width : ℝ))
+    (hratio : 2 * (radius : ℝ) < (terms : ℝ) - 2)
+    {shiftError tailError : ℚ}
+    (hshift : (width : ℝ) ^ order * ∑ n ∈ Finset.Ico order terms,
+        |marginalQuadratureCoefficient h (j + n) / n.factorial| *
+          (n.choose order : ℝ) * (radius : ℝ) ^ (n - order) ≤ (shiftError : ℝ))
+    (htail : (2 + h) * shortQuadratureTail h radius (j + 2) terms +
+        shortQuadratureTail h radius (j + 3) terms ≤ (tailError : ℝ)) :
+    (((CompactTaylorModel.Model.series order (fun m =>
+      CompactTaylorModel.Model.horner
+        (shiftedQuadratureParameterRow marginalDensity (j + 2) terms (marginalWeight j) center m)
+        H) X).widen shiftError).widen tailError).Encloses s t z
+      (compactClosedQuadrature h (fun x ↦
+        iteratedDeriv j (fun y ↦ regularizedMarginalIntegrand h y x) ((center : ℝ) + offset))) := by
+  refine CompactTaylorModel.Model.widen_sound
+    (CompactTaylorModel.Model.shiftedSeries_sound hb hX horder hr hw
+      (fun n => marginalQuadratureCoefficient h (j + n) / n.factorial) _ ?_ hshift) ?_
+  · intro m _
+    rw [← shiftedMarginalQuadratureRow_eval h j terms center m]
+    exact CompactTaylorModel.Model.horner_sound hb hH _
+  · exact (marginalClosedQuadrature_tail_le hh ((abs_add_le _ _).trans hr) hterms hratio j).trans htail
 
 /-- The closed-mesh normalization and the negative score used by the exact short-gap
 certificate. The marginal inputs are the regularized moment and its first two derivatives. -/
