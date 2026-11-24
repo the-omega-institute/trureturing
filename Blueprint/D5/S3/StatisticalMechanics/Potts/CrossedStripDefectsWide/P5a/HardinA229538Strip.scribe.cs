@@ -26,7 +26,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("oneDefect",OneDefect(),false,"Each entry is the indicator of a cut with exactly one monochromatic bond."),
             Node("transfer",Transfer(),false,"The two summands represent one and zero residual defects. A zero-cost cut preserves the budget and a cut of cost one moves from the first summand to the second."),
             Node("terminal",Terminal(),false,"The empty continuation completes an array exactly when its remaining budget is zero."),
-            Node("transfer_readout",TransferReadout(),true,"The matrix entries form a semiring, and each supplied coefficient commutes with left multiplication by matrix and readout entries. This lets the matrix action and dot product carry the coefficients through the vector recurrence to give every shifted scalar relation. The commutation law with the right unit also makes the coefficient action distributive. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
             LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. Each stored list contains the eligible columns in code order."),
@@ -353,30 +352,4 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return All("C", type, All("Z", type, All("R", type, instances)));
     }
 
-    private static Formula TransferReadout() {
-        var state=V("S");var matrix=V("M");var u=V("u");var v=V("v");
-        var d=V("d");var b=V("b");var n=V("n");var j=V("j");
-        var index=Call("Fin",d);
-        var scalar=V("R");var action=V("K");
-        var type=Seq(Q("Type"),Star);
-        var vectors=Arrow(state,scalar);
-        Formula power(Formula k)=>Call("Matrix.mulVec",Pow(matrix,k),u);
-        Formula coefficient()=>new Formula.Apply(V("c"),[j]);
-        Formula read(Formula k)=>Call("dotProduct",v,power(k));
-        var premise=Eq(power(Add(b,d)),SumOver("j",index,
-            Call("SMul.smul",coefficient(),power(Add(b,Call("Fin.val",j))))));
-        var shifted=Add(n,b);
-        var conclusion=Eq(read(Add(shifted,d)),SumOver("j",index,
-            Call("SMul.smul",coefficient(),read(Add(shifted,Call("Fin.val",j))))));
-        var equivalence = Iff(premise, All("v", vectors, All("n", Q("Nat"), conclusion)));
-        var x = V("x"); var y = V("y");
-        var commutes = All("j", index, All("x", scalar, All("y", scalar,
-            Eq(Call("SMul.smul", coefficient(), Mul(x, y)), Mul(x, Call("SMul.smul", coefficient(), y))))));
-        var parameters = All("M", Call("Matrix", state, state, scalar), All("u", vectors, All("d", Q("Nat"),
-            All("b", Q("Nat"), All("c", Arrow(index, action), Imp(commutes, equivalence))))));
-        return All("S",type,All("R",type,All("K",type,Seq(OpenBracket,Call("Fintype",state),CloseBracket,Sp,
-            OpenBracket,Call("DecidableEq",state),CloseBracket,Sp,
-            OpenBracket,Call("Semiring",scalar),CloseBracket,Sp,
-            OpenBracket,Call("SMul",action,scalar),CloseBracket,Sp,parameters))));
-    }
 }

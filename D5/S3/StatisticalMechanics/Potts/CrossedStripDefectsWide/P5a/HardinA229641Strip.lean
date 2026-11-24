@@ -23,6 +23,7 @@ seedTable₁: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 seedImage₁: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 seed_image₁: proof_shape=content; consumers=HardinA229641Strip.weighted_top
 twoAtWidthOne: proof_shape=bind-only; consumers=HardinA229641Strip.topTable
+integer_readout: proof_shape=bind-only; consumers=HardinA229641Strip.old_coordinate, HardinA229641Strip.result
 old_coordinate: proof_shape=content; consumers=HardinA229641Strip.old_values
 seedTable₂: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 seedImage₂: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
@@ -129,7 +130,7 @@ section
 open scoped BigOperators Function
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA233178Chromatic (Column T table moves step_fast weighted_indicator_sum)
-open HardinA229538Strip (cost oneDefect transfer_readout
+open HardinA229538Strip (cost oneDefect
   cost_countCut movesOne step_one classIndex tableOne zeroValues zero_values
   weight_eq weights coefficients538)
 set_option backward.isDefEq.respectTransparency false
@@ -438,15 +439,24 @@ private theorem old_weights_step : ∀ (n : Fin 34) (hn : 23 ≤ n.val) (j : Fin
           (Nat.le_of_lt n.isLt))) j := by
   decide +kernel
 
+private theorem integer_readout {S : Type*} [Fintype S] [DecidableEq S]
+    (M : Matrix S S ℤ) (u v : S → ℤ) (d b : ℕ) (c : Fin d → ℤ)
+    (h : (M ^ (b + d)).mulVec u = ∑ j : Fin d, c j • (M ^ (b + j.val)).mulVec u) (n : ℕ) :
+    dotProduct v ((M ^ (n + b + d)).mulVec u) =
+      ∑ j : Fin d, c j * dotProduct v ((M ^ (n + b + j.val)).mulVec u) := by
+  have forward_polynomial : DefectTransfer.forward M.transpose u (b + d) =
+      ∑ j : Fin d, c j • DefectTransfer.forward M.transpose u (b + j.val) := by
+    simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose] using h
+  simpa only [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec] using
+    DefectTransfer.forward_shift M.transpose u v d b c forward_polynomial n
+
 private theorem old_coordinate (p : Column ⊕ Column) (n : ℕ) :
     ((HardinA229538Strip.transfer ^ (n + 2 + 20)).mulVec HardinA229538Strip.terminal) p =
       ∑ k : Fin 20, coefficients538 k *
         ((HardinA229538Strip.transfer ^ (n + 2 + k.val)).mulVec HardinA229538Strip.terminal) p := by
-  simpa only [single_one_dotProduct, smul_eq_mul] using
-    (transfer_readout HardinA229538Strip.transfer HardinA229538Strip.terminal
-      20 2 coefficients538 (fun j x y => by
-        rw [(mul_smul_one (coefficients538 j) (x * y)).symm, (mul_smul_one (coefficients538 j) y).symm, mul_assoc])).mp
-      HardinA229538Strip.vector_polynomial (Pi.single p 1) n
+  simpa only [single_one_dotProduct] using
+    integer_readout HardinA229538Strip.transfer HardinA229538Strip.terminal (Pi.single p 1)
+      20 2 coefficients538 HardinA229538Strip.vector_polynomial n
 
 private theorem old_values (n : Fin 34) :
     (HardinA229538Strip.transfer ^ n.val).mulVec HardinA229538Strip.terminal =
@@ -764,7 +774,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
-open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect transfer_readout
+open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect
   canonicalCount transition_entry labelled_scale cut_total_exclusion)
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
 open HardinA229637RowColumn (horiz betw)
@@ -899,11 +909,8 @@ theorem result (n : ℕ) :
     rw [hscale]
     push_cast
     rfl
-  have h := (transfer_readout transfer terminal 30 3 coefficients641
-    (fun j x y => by
-      rw [(mul_smul_one (coefficients641 j) (x * y)).symm, (mul_smul_one (coefficients641 j) y).symm, mul_assoc])).mp
-    vector_polynomial (Sum.elim (1 : Column → ℤ) 0) n
-  simp only [smul_eq_mul] at h
+  have h := integer_readout transfer terminal (Sum.elim (1 : Column → ℤ) 0)
+    30 3 coefficients641 vector_polynomial n
   rw [bridge (n + 3 + 30)] at h
   simp_rw [fun k : Fin 30 => bridge (n + 3 + k.val)] at h
   norm_num [coefficients641, Fin.sum_univ_succ, Nat.add_assoc] at h
