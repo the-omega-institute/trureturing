@@ -7,13 +7,16 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/liutakagilloyd2019diagonaldiscord");
+    private static readonly LibraryNoteRef HuFan =
+        LibraryNoteRef.Create("D5/L/Entropy/hufan2016extracting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Diagonal discord decreases under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.",
         H("Monotonicity of diagonal discord in finite dimensions"),
         Blocks(
             Paragraph(Text(
-                "Conjecture 1 is stated for a measured qubit in Liu, Takagi and Lloyd, journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. "
+                "Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. "
+                + "It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. "
                 + "The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces.")),
             Definition("pinch", "Projective pinching",
                 "Pinching is the completely positive trace-preserving map obtained by forgetting the outcome of a complete projective measurement."),
@@ -42,7 +45,9 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
             Definition("basisGain", "Entropy gain in one basis",
                 "The gain is the entropy of the pinched joint state minus the input entropy."),
             Definition("diagonalDiscord", "Diagonal discord",
-                "The quantity is the infimum of the entropy gain over eligible bases."),
+                "The quantity is the infimum of the entropy gain over eligible bases. "
+                + "Hu and Fan's Eq. (6), arXiv v2, p. 2, gives the same quantity by taking relative entropy in their B-side measurement-induced disturbance, swapping A and B, and converting bits to nats. "
+                + "Their Theorem 1, Eq. (8), bounds steering-induced coherence by that disturbance.", HuFan),
             Theorem("pointwise_transfer", "Transfer with a nonnegative residual",
                 "For every eligible input basis, send the pinched input through the channel to obtain a classical–quantum reference. Its first marginal equals the actual output marginal, so a classical basis for the reference is eligible for the output. "
                 + "The gain in this output basis plus the nonnegative relative entropy from the pinched output to the reference is bounded by the input gain. "
@@ -55,10 +60,11 @@ internal sealed class DiagonalDiscordMonotonicityDocument : IScribeDocumentDefin
                 "There are eligible minimizing eigenbases for the input and output, and the minimum output gain is at most the minimum input gain. The comparison holds in arbitrary finite dimensions.")),
         []));
 
-    private static DocumentBlock.Describe Definition(string name, string title, string text) =>
+    private static DocumentBlock.Describe Definition(
+        string name, string title, string text, params LibraryNoteRef[] acknowledgements) =>
         Describe.Lean(DescribeId.Create("diagonal-discord-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
+            AssessedProvenance.FromRepo([Source, .. acknowledgements]), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
     private static DocumentBlock.Describe Theorem(string name, string title, string text) =>
         Describe.Lean(DescribeId.Create("diagonal-discord-" + name.ToLowerInvariant().Replace('_', '-')),

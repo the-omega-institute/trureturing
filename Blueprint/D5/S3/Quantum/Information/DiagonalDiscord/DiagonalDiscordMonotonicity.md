@@ -4,7 +4,7 @@
 
 Diagonal discord decreases under every local quantum channel on the measured subsystem that preserves classical–quantum states. Both optimized entropy gains are attained.
 
-Conjecture 1 is stated for a measured qubit in Liu, Takagi and Lloyd, journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces.
+Conjecture 1 of Liu, Takagi and Lloyd asserts monotonicity under every local discord-nongenerating channel on the measured qubit. It appears in journal Section 3.2.2, p. 9, and arXiv v2 Section III.B.2, p. 6. The definitions in equations (2) and (8) include all rank-one eigenbasis measurements within degenerate eigenspaces.
 
 **Definition 1.1 (Projective pinching).**
 
@@ -184,9 +184,11 @@ Lean statement: `D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonoto
 
 *Acknowledgement.* Zi-Wen Liu; Ryuji Takagi; Seth Lloyd (2019). *Diagonal quantum discord*. DOI: [10.1088/1751-8121/ab0774](https://doi.org/10.1088/1751-8121/ab0774). URL: <https://arxiv.org/abs/1708.09076v2>.
 
+*Acknowledgement.* Xueyuan Hu; Heng Fan (2016). *Extracting quantum coherence via steering*. DOI: [10.1038/srep34380](https://doi.org/10.1038/srep34380). URL: <https://arxiv.org/abs/1508.01978v2>.
+
 *Commentary.*
 
-The quantity is the infimum of the entropy gain over eligible bases.
+The quantity is the infimum of the entropy gain over eligible bases. Hu and Fan's Eq. (6), arXiv v2, p. 2, gives the same quantity by taking relative entropy in their B-side measurement-induced disturbance, swapping A and B, and converting bits to nats. Their Theorem 1, Eq. (8), bounds steering-induced coherence by that disturbance.
 
 **Theorem 1.14 (Transfer with a nonnegative residual).**
 
