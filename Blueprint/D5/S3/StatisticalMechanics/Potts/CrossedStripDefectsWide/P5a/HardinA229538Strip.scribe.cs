@@ -20,7 +20,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("edges",Edges(),false,"The oriented cut is the set of pairs of row indices that form a bond between columns zero and one."),
             Node("mem_edges", MemEdges(), true, "In the frozen edge predicate, the columns already differ by one. The remaining inequalities express that the two rows differ by at most one."),
             Node("edges_card", Eq(Call("Finset.card", Own("edges")), N(13)), true, "The cut contains five equal-row pairs and four pairs in each diagonal direction."),
-            Node("small_budget_ne_cut_total", SmallBudget(), true, "Constant arrays in this strip have budgets that are multiples of the thirteen-bond cut. The strict interval excludes zero and the budget realized by one cut."),
+            Node("cut_total_exclusion", CutTotalExclusion(), true, "A budget differs from the total for every number of cuts exactly when thirteen does not divide it. The cut cardinality is thirteen."),
             Node("cost",Cost(),false,"The cost is the number of monochromatic bonds on the cut between two decoded columns."),
             Node("bondDefects_empty",BondDefectsEmpty(),true,"For any pair of rows, the empty edge set contributes zero monochromatic bonds."),
             Node("cost_zero",ZeroCost(),true,"A cut has cost zero exactly when every bond has different colours at its endpoints."),
@@ -197,13 +197,14 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
                 And(Le(x, Add(y, N(1))), Le(y, Add(x, N(1))))));
     }
 
-    private static Formula SmallBudget()
+    private static Formula CutTotalExclusion()
     {
         var d = V("D");
         var m = V("m");
         var cutCard = Call("Finset.card", Own("edges"));
-        return All("D", Q("Nat"), All("m", Q("Nat"),
-            Imp(Lt(N(0), d), Imp(Lt(d, cutCard), Ne(d, Mul(m, cutCard))))));
+        var multiple = new Formula.Relation(N(13), FormulaRelationOperator.Divides, d);
+        return All("D", Q("Nat"), Iff(All("m", Q("Nat"), Ne(d, Mul(m, cutCard))),
+            Seq(Neg, Sp, Parenthesized(multiple))));
     }
 
     private static Formula SumOver(string n,Formula t,Formula body) =>
