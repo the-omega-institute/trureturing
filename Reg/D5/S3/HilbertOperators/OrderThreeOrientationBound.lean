@@ -67,14 +67,17 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     (by simp) (by simp) (by simp) (by simp)
     (by norm_num [rejected, realize])
     (fun A _ => by simp [ContinuousLinearMap.det, LinearMap.det_eq_one_of_subsingleton])
-  simpa using hb
+  norm_num at hb
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro _
   let H := EuclideanSpace ℝ (ULift.{u} Unit)
   refine ⟨@Parameters.mk H inferInstance inferInstance, 0, 1, ?_⟩
   change (0 : H →L[ℝ] H).det ≠ (1 : H →L[ℝ] H).det
-  simp [ContinuousLinearMap.det]
+  rw [show (0 : H →L[ℝ] H).det = 0 from
+    LinearMap.det_zero' (EuclideanSpace.basisFun (ULift.{u} Unit) ℝ).toBasis]
+  change 0 ≠ (1 : H →ₗ[ℝ] H).det
+  simp
 
 def evidence : Registration arena.{u,v} (type_of% @sum_sq_commutatorNorm_ge_three.{u,v}) where
   actual := actual
@@ -158,22 +161,32 @@ abbrev planeArena : Arena where
         ∃ j ∈ S, Real.sqrt (3 / (S.card : ℝ)) ≤
           commutatorNorm (fun j => characterPlane (w j)) U j
 
-private theorem plane_rejected_law : ¬ planeArena.{v,u}.Law planeRejected := by
+private theorem plane_rejected_law : ¬ planeArena.{u,v}.Law planeRejected := by
   intro h
   let κ := ULift.{v} (Fin 0)
   have hb := h (ι := ULift.{u} Unit) (κ := κ) ∅ (fun _ _ => 1) 1
     (by simp) (fun i => isEmptyElim i) (by simp)
     (by norm_num [planeRejected, realize])
-  simpa using hb.1
+  have hz := hb.1
+  norm_num at hz
 
 private theorem plane_dependence : ObservationalDependence planeSignature.{v} planeActual := by
   intro _
   let κ := ULift.{v} Unit
   refine ⟨@PlaneParameters.mk κ inferInstance, 0, 1, ?_⟩
-  change (0 : EuclideanSpace ℂ κ →L[ℝ] EuclideanSpace ℂ κ).det ≠ 1
-  simp [ContinuousLinearMap.det]
+  let H := EuclideanSpace ℂ κ
+  change (0 : H →L[ℝ] H).det ≠ (1 : H →L[ℝ] H).det
+  have hzero : (0 : H →L[ℝ] H).det = 0 := by
+    change (0 : H →ₗ[ℝ] H).det = 0
+    apply LinearMap.det_eq_zero_iff_ker_ne_bot.mpr
+    rw [LinearMap.ker_zero]
+    exact top_ne_bot
+  rw [hzero]
+  change 0 ≠ (1 : H →ₗ[ℝ] H).det
+  simp
 
-def planeEvidence : Registration planeArena.{v,u} (type_of% @characterPlane_commutator_bounds.{u,v}) where
+def planeEvidence :
+    Registration planeArena.{u,v} (type_of% @characterPlane_commutator_bounds.{u,v}) where
   actual := planeActual
   bridge := Iff.rfl
   variation := ⟨@characterPlane_commutator_bounds.{u,v}, planeRejected, plane_rejected_law⟩
