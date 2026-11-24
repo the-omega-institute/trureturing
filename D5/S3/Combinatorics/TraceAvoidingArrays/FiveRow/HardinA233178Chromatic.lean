@@ -454,7 +454,8 @@ theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul 
     ext q
     simpa only [Finset.mem_filter, Finset.mem_univ, true_and, List.mem_toFinset] using (mem q).symm
   rw [← List.sum_toFinset _ nodup, ← support]
-  exact Finset.sum_congr rfl fun q hq => by rw [ite_eq_left (Finset.mem_filter.mp hq).2]
+  refine Finset.sum_congr rfl fun q hq => ?_
+  simp only [ite_eq_left (Finset.mem_filter.mp hq).2]
 
 theorem step_fast (w : Column → ℤ) (p : Column) :
     T.mulVec w p = ((moves p).map w).sum := by
