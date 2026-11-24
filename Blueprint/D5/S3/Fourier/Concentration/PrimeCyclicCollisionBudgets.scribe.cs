@@ -24,6 +24,17 @@ internal sealed class PrimeCyclicCollisionBudgetsDocument : IScribeDocumentDefin
                 + "Assume that Q to the power B+1 strictly exceeds the product "
                 + "of |D−y| over the integers y in [−H,H].")),
             Describe.Lean(
+                DescribeId.Create("band-alias-card"),
+                DeclarationHandle.Create(Owner + ".band_alias_card_le"),
+                H("A count of prime moduli for a single off-band gap"),
+                StatementSource.FromAuthor(Disp(Seq(F.Id("n"), Sp, Leq, Sp, F.Id("B")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For one integer gap d with H < |d| ≤ D, n counts the primes in P "
+                    + "for which the residue of d is the image of some band shift. Each such "
+                    + "prime divides the nonzero product of the absolute shifted gaps."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sum-cyclic-excess"),
                 DeclarationHandle.Create(Owner + ".sum_cyclic_excess_le"),
                 H("An upper bound on the sum of modular excesses"),

@@ -21,7 +21,7 @@ noncomputable section
 
 namespace D5.S3.Fourier.Concentration.PrimeCyclicCollisionBudgets
 
-private theorem band_alias_card_le
+theorem band_alias_card_le
     (P : Finset ℕ) (Q B H D : ℕ) (d : ℤ)
     (hQ : 2 ≤ Q) (hP : ∀ q ∈ P, q.Prime ∧ Q ≤ q)
     (hd : H < d.natAbs) (hD : d.natAbs ≤ D)
