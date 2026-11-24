@@ -40,24 +40,24 @@ private abbrev arena : Arena where
     (hband : ∀ i j, H i j ≠ 0 → rmin ≤ frequency q g i j)
     (hsmall : q / ((1 - q) * rmin) < 1),
     let Q := diagonalReal (population q)
-    let Σ := reference q g
+    let sigma0 := reference q g
     let τ := V.val * diagonalReal (population p) * V.valᴴ
     let D := retainedDensity V p g
     let X := pencilTangent q g H
-    let L := logDeriv Σ X
+    let L := logDeriv sigma0 X
     let C := logBlock q g H
     let w := rotationWeight V
     let P := p * (1 - w) + (1 - p) * w
     let E := (L * omega D L).trace.re / 2
     (∀ i j, H i j ≠ 0 → g i / g j ≤ q / ((1 - q) * rmin)) ∧
     ((∀ i, H i i = 0) ∧ (∀ i j, H i j = 0 ∨ H j i = 0)) ∧
-    X = mpow Σ (1 / 2) * blocks raise H * mpow Σ (1 / 2) ∧
+    X = mpow sigma0 (1 / 2) * blocks raise H * mpow sigma0 (1 / 2) ∧
     L = blocks raise C ∧
     R.readout () () (τ 0 0) = P ∧
     (∀ s : ℝ,
-      let σ := Σ + s • X
+      let σ := sigma0 + s • X
       let S := mpow σ (1 / 2)
-      let R₀ := mpow Σ (-(1 / 2))
+      let R₀ := mpow sigma0 (-(1 / 2))
       partialTraceRight σ = Q ∧ partialTracePetz σ τ = S * (R₀ * D * R₀) * S) ∧
     E = (∑ i, ∑ j, normSq (C i j) *
       ((1 - w) ^ 2 * Λ ((1 - p) * g i) (p * g j) +

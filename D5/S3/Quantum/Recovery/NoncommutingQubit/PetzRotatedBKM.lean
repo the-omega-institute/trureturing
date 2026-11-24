@@ -13,7 +13,6 @@ import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Hermitia
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 import D5.S3.Quantum.Recovery.BKMFlagRefinementPetz
 import D5.S3.Quantum.Recovery.BKMSpectralVariance
-import Mathlib.Tactic
 
 /-!
 # Rotated BKM energy of a directed Petz perturbation
@@ -83,7 +82,7 @@ private theorem active_link_ratio {ι : Type*} {q rmin : ℝ} {g : ι → ℝ}
   have hmul := (le_div_iff₀ (mul_pos hq1 (hg i))).mp hfreq
   have hratio : g i / g j ≤ q / ((1 - q) * rmin) := by
     apply (div_le_div_iff₀ (hg j) (mul_pos hq1 hr)).mpr
-    convert hmul using 1 <;> ring
+    convert hmul using 1; ring
   exact ⟨hratio, by
     simpa only [one_mul] using (div_lt_iff₀ (hg j)).mp (hratio.trans_lt hsmall)⟩
 
@@ -129,7 +128,7 @@ private theorem mean_inv_kernel {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
   have hlog : Real.log (x / y) ≠ 0 :=
     Real.log_ne_zero_of_pos_of_ne_one (div_pos hx hy) hratio
   have hmean := (eq_div_iff hlog).mpr (logMean_mul_logRatio hx hy)
-  rw [hmean, inv_div, Real.log_div hx.ne' hy.ne', if_neg hxy]
+  rw [hmean, inv_div, Real.log_div hx.ne' hy.ne', ite_eq_right hxy]
 
 /-- The lower retained block of the physical integral logarithmic derivative.
 Here `Λ(r,1)` is the logarithmic-mean function `F(r)`, including resonance. -/
@@ -140,6 +139,10 @@ private def raise : Qubit := Matrix.single 1 0 1
 
 private def blocks {ι : Type*} (A : Qubit) (C : Matrix ι ι ℂ) : Joint ι :=
   A ⊗ₖ C + (A ⊗ₖ C)ᴴ
+
+private theorem blocks_entry {ι : Type*} (A : Qubit) (C : Matrix ι ι ℂ)
+    (a b : Fin 2) (i j : ι) :
+    blocks A C (a, i) (b, j) = A a b * C i j + star (A b a * C j i) := rfl
 
 private theorem blocks_hermitian {ι : Type*} (A : Qubit) (C : Matrix ι ι ℂ) :
     (blocks A C).IsHermitian := by
@@ -180,7 +183,7 @@ private theorem omega_trace_spectral (W : Matrix.unitaryGroup n ℂ)
   let f : ℝ → Matrix n n ℂ := fun t => mpow D t * L * mpow D (1 - t)
   let T : Matrix n n ℂ →L[ℂ] ℂ :=
     (Matrix.traceLinearMap n ℂ ℂ).toContinuousLinearMap.comp
-      (Matrix.mulLeftLinearMap n ℂ L).toContinuousLinearMap
+      (mulLeftLinearMap n ℂ L).toContinuousLinearMap
   let term (i j : n) (t : ℝ) : ℂ :=
     ((d i ^ t * d j ^ (1 - t) : ℝ) : ℂ) * (normSq (Z i j) : ℂ)
   have hpow := continuous_mpow D (spectralMatrix_posDef W hd)
@@ -246,11 +249,14 @@ private theorem pencilTangent_eq_physical {q : ℝ} {g : ι → ℝ}
   rw [hsqrt]
   apply Matrix.ext
   rintro ⟨a, i⟩ ⟨b, j⟩
+  let B : Matrix ι ι ℂ := fun k l =>
+    ((Real.sqrt ((1 - q) * g k) * Real.sqrt (q * g l) : ℝ) : ℂ) * H k l
+  change blocks raise B (a, i) (b, j) = _
+  rw [blocks_entry raise B a b i j]
+  simp only [diagonalReal, Matrix.mul_diagonal, Matrix.diagonal_mul]
+  rw [blocks_entry raise H a b i j]
   fin_cases a <;> fin_cases b <;>
-    simp [pencilTangent, blocks, raise, Matrix.single, Matrix.diagonal_mul, Matrix.mul_diagonal,
-      Matrix.kronecker_apply, Matrix.conjTranspose_apply, diagonalReal, eigenvalue,
-      Complex.star_def, Complex.ofReal_mul] <;>
-    ring
+    simp [B, raise, Matrix.single, eigenvalue, Complex.ofReal_mul] <;> ring
 
 /-- The pencil `Σ + s • pencilTangent` has physical marginal `Q` at every s. -/
 private theorem pencil_marginal_of_band {q rmin : ℝ} {g : ι → ℝ}
@@ -267,12 +273,21 @@ private theorem pencil_marginal_of_band {q rmin : ℝ} {g : ι → ℝ}
   have ht : (diagonalReal g).trace = 1 := by
     simp only [diagonalReal, Matrix.trace_diagonal]
     exact_mod_cast hnorm
-  rw [partialTraceRight_add, hprod, partialTraceRight_kronecker, ht, one_smul]
+  have hm : partialTraceRight (reference q g) = diagonalReal (population q) := by
+    rw [hprod]
+    change partialTraceRight (Matrix.kronecker (diagonalReal (population q)) (diagonalReal g)) = _
+    rw [partialTraceRight_kronecker, ht, one_smul]
+  rw [partialTraceRight_add, hm]
   have hz : partialTraceRight (s • pencilTangent q g H) = 0 := by
     apply Matrix.ext
     intro a b
-    simp [partialTraceRight, pencilTangent, blocks, Matrix.kronecker_apply,
-      Matrix.conjTranspose_apply, hdiag]
+    let B : Matrix ι ι ℂ := fun k l =>
+      ((Real.sqrt ((1 - q) * g k) * Real.sqrt (q * g l) : ℝ) : ℂ) * H k l
+    change (∑ i, s • blocks raise B (a, i) (b, i)) = 0
+    apply Finset.sum_eq_zero
+    intro i _
+    rw [blocks_entry raise B a b i i]
+    simp [B, hdiag]
   rw [hz, add_zero]
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
@@ -283,7 +298,7 @@ private theorem logDeriv_diagonal_apply (d : Fin 2 × ι → ℝ) (hd : ∀ x, 0
   let M : Joint ι := Matrix.single j i 1
   let E : Joint ι →L[ℂ] ℂ :=
     (Matrix.traceLinearMap (Fin 2 × ι) ℂ ℂ).toContinuousLinearMap.comp
-      (Matrix.mulLeftLinearMap (Fin 2 × ι) ℂ M).toContinuousLinearMap
+      (mulLeftLinearMap (Fin 2 × ι) ℂ M).toContinuousLinearMap
   have hE (Y : Joint ι) : E Y = Y i j := by
     change (M * Y).trace = Y i j
     simp [M, Matrix.trace_single_mul]
@@ -294,7 +309,7 @@ private theorem logDeriv_diagonal_apply (d : Fin 2 × ι → ℝ) (hd : ∀ x, 0
       apply Matrix.ext
       intro k l
       by_cases h : k = l <;>
-        simp [A, diagonalReal, h, Matrix.one_apply, Complex.real_smul, Complex.ofReal_add]
+        simp [A, diagonalReal, h, Complex.real_smul, Complex.ofReal_add]
     rw [hdiag]
     apply Matrix.inv_eq_right_inv
     rw [diagonalReal, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
@@ -305,7 +320,7 @@ private theorem logDeriv_diagonal_apply (d : Fin 2 × ι → ℝ) (hd : ∀ x, 0
       E ((A + t • 1)⁻¹ * X * (A + t • 1)⁻¹) =
         ((1 / ((d i + t) * (d j + t)) : ℝ) : ℂ) * X i j := by
     rw [hE, hres t ht, Matrix.mul_diagonal, Matrix.diagonal_mul]
-    simp only [one_div, Complex.ofReal_inv, Complex.ofReal_mul, mul_inv_rev]
+    simp only [one_div, Complex.ofReal_inv, Complex.ofReal_mul, _root_.mul_inv_rev]
     ac_rfl
   rw [← hE (logDeriv (diagonalReal d) X)]
   change E (∫ t in Set.Ioi (0 : ℝ), (A + t • 1)⁻¹ * X * (A + t • 1)⁻¹) = _
@@ -329,7 +344,7 @@ private theorem lower_log_coefficient {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     nlinarith only [Real.sq_sqrt hx.le]
   calc
     _ = (x⁻¹ * Real.sqrt x) * Real.sqrt y * (Λ (y / x) 1)⁻¹ := by
-      rw [hmean, mul_inv_rev]
+      rw [hmean, _root_.mul_inv_rev]
       ring
     _ = _ := by
       rw [hcancel, Real.sqrt_div hy.le]
@@ -355,9 +370,12 @@ private theorem logDeriv_pencilTangent {q : ℝ} {g : ι → ℝ} (H : Matrix ι
   apply Matrix.ext
   rintro ⟨a, i⟩ ⟨b, j⟩
   rw [reference, logDeriv_diagonal_apply _ hd]
+  let B : Matrix ι ι ℂ := fun k l =>
+    ((Real.sqrt ((1 - q) * g k) * Real.sqrt (q * g l) : ℝ) : ℂ) * H k l
+  change _ * blocks raise B (a, i) (b, j) = blocks raise (logBlock q g H) (a, i) (b, j)
+  rw [blocks_entry raise B a b i j, blocks_entry raise (logBlock q g H) a b i j]
   fin_cases a <;> fin_cases b <;>
-    simp [pencilTangent, logBlock, blocks, raise, Matrix.single, Matrix.kronecker_apply,
-      Matrix.conjTranspose_apply, eigenvalue, Complex.star_def,
+    simp [B, logBlock, raise, Matrix.single, eigenvalue,
       -Complex.ofReal_mul, -Complex.ofReal_inv, -Complex.ofReal_div,
       ← mul_assoc, hcast, logMean_comm (q * g i) ((1 - q) * g j)]
 
@@ -477,6 +495,7 @@ private theorem retained_sum (V : Matrix.unitaryGroup (Fin 2) ℂ) {p x y : ℝ}
     mean_scale p x y hp hx.le hy.le, mean_scale (1 - p) x y (sub_pos.mpr hp') hx.le hy.le]
   ring
 
+omit [DecidableEq ι] in
 /-- The reversed orientation doubles the same weighted sum. The disjointness
 hypothesis is used at the level of each complex joint entry. -/
 private theorem directed_spectral_sum (d : Fin 2 × ι → ℝ) (A : Qubit) (C : Matrix ι ι ℂ)
@@ -493,7 +512,7 @@ private theorem directed_spectral_sum (d : Fin 2 × ι → ℝ) (A : Qubit) (C :
     simp only [term, blocks, Matrix.kronecker_apply, Matrix.add_apply, Matrix.conjTranspose_apply]
     rw [logMean_comm (d (b, j)) (d (a, i))]
     rcases hs i j with h | h <;>
-      simp [h, Complex.star_def, Complex.normSq_conj, Complex.normSq_mul]
+      simp [h, Complex.normSq_conj, Complex.normSq_mul]
   simp_rw [hentry, Finset.sum_add_distrib]
   have hreverse : (∑ x, ∑ y, term y x) = ∑ x, ∑ y, term x y := Finset.sum_comm
   rw [hreverse, ← two_mul, mul_div_cancel_left₀ _ (by norm_num : (2 : ℝ) ≠ 0)]
@@ -509,6 +528,8 @@ private theorem directed_spectral_sum (d : Fin 2 × ι → ℝ) (A : Qubit) (C :
   intro b _
   ring
 
+set_option maxHeartbeats 1500000 in
+-- The spectral rewrite matches products in the arbitrary finite joint index.
 /-- Exact rotated BKM trace of the physical logarithmic tangent. The first two
 means couple opposite retained indices. Homogeneity combines the equal-retained
 terms into the single environmental logarithmic mean. -/
@@ -550,10 +571,12 @@ private theorem mean_le_arith {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
   have hpos : 0 < 2 / (x + y) := div_pos (by norm_num) (add_pos hx hy)
   have h := inv_anti₀ hpos hkernel
   have hmean := mean_inv_kernel hx hy
-  rw [if_neg hxy] at hmean
+  rw [ite_eq_right hxy] at hmean
   rw [← hmean, inv_inv, inv_div] at h
   exact h
 
+set_option maxHeartbeats 1500000 in
+-- The bound rewrites the full rotated energy before estimating each summand.
 /-- Arithmetic upper bound for the finite weighted sum, with the physical
 retained populations. The population of the physical `|0⟩` is
 `P = p(1-w)+(1-p)w`. -/
@@ -593,6 +616,8 @@ private theorem rotated_bkm_le_weighted_sum (V : Matrix.unitaryGroup (Fin 2) ℂ
         w * (1 - w) * ((g i + g j) / 2) := add_le_add (add_le_add ha hb) hc
     _ = ((1 - P) * g i + P * g j) / 2 := by dsimp only [P]; ring
 
+set_option maxHeartbeats 1500000 in
+-- The conclusion elaborates the common pencil and the full weighted trace together.
 /-- The true frequency cutoff gives a fixed marginal for the physical pencil
 and disjoint adjoint orientations for the BKM energy of its logarithmic tangent.
 The energy has three logarithmic-mean terms and admits the arithmetic upper
@@ -604,24 +629,24 @@ theorem physical_pencil_rotated_bkm (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (hband : ∀ i j, H i j ≠ 0 → rmin ≤ frequency q g i j)
     (hsmall : q / ((1 - q) * rmin) < 1) :
     let Q := diagonalReal (population q)
-    let Σ := reference q g
+    let sigma0 := reference q g
     let τ := V.val * diagonalReal (population p) * V.valᴴ
     let D := retainedDensity V p g
     let X := pencilTangent q g H
-    let L := logDeriv Σ X
+    let L := logDeriv sigma0 X
     let C := logBlock q g H
     let w := rotationWeight V
     let P := p * (1 - w) + (1 - p) * w
     let E := (L * omega D L).trace.re / 2
     (∀ i j, H i j ≠ 0 → g i / g j ≤ q / ((1 - q) * rmin)) ∧
     ((∀ i, H i i = 0) ∧ (∀ i j, H i j = 0 ∨ H j i = 0)) ∧
-    X = mpow Σ (1 / 2) * blocks raise H * mpow Σ (1 / 2) ∧
+    X = mpow sigma0 (1 / 2) * blocks raise H * mpow sigma0 (1 / 2) ∧
     L = blocks raise C ∧
-    (τ 0 0).re = P ∧
+    Complex.re (τ 0 0) = P ∧
     (∀ s : ℝ,
-      let σ := Σ + s • X
+      let σ := sigma0 + s • X
       let S := mpow σ (1 / 2)
-      let R := mpow Σ (-(1 / 2))
+      let R := mpow sigma0 (-(1 / 2))
       partialTraceRight σ = Q ∧ partialTracePetz σ τ = S * (R * D * R) * S) ∧
     E = (∑ i, ∑ j, normSq (C i j) *
       ((1 - w) ^ 2 * Λ ((1 - p) * g i) (p * g j) +
@@ -641,8 +666,9 @@ theorem physical_pencil_rotated_bkm (V : Matrix.unitaryGroup (Fin 2) ℂ)
   have h01 : normSq (V.val 0 1) = rotationWeight V := by
     unfold rotationWeight
     linarith
-  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
-    Matrix.mul_diagonal, diagonalReal, population_zero, population_one, Complex.star_def]
+  simp only [diagonalReal]
+  rw [Matrix.mul_apply, Fin.sum_univ_two, Matrix.mul_diagonal, Matrix.mul_diagonal]
+  simp only [Matrix.conjTranspose_apply, population_zero, population_one, Complex.star_def]
   rw [show V.val 0 0 * (p : ℂ) * (starRingEnd ℂ) (V.val 0 0) =
       (p : ℂ) * (normSq (V.val 0 0) : ℂ) by rw [mul_comm _ (p : ℂ), mul_assoc, Complex.mul_conj],
     show V.val 0 1 * ((1 - p : ℝ) : ℂ) * (starRingEnd ℂ) (V.val 0 1) =
