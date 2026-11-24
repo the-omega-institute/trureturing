@@ -24,13 +24,13 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         return All("k",NatF(),All("e",PermF(),body));
     }
     private static Formula AlternatingEquivFormula() {
-        var k=V("k"); var n=V("n"); var f=V("f"); var p=V("p");
+        var k=V("k"); var n=V("n"); var p=V("p");
         var cell=P(Seq(FinF(k),Sp,Times,Sp,FinF(n)));
         var grid=Arr(cell,FinF(N(3)));
-        var column=C("Prod.snd",p);
-        var image=A(Pow(C("Fin.revPerm"),Val(column)),A(f,p));
-        return All("k",NatF(),All("n",NatF(),Seq(Cast(C("alternatingEquiv",k,n),C("Equiv",grid,grid)),
-            Comma,Sp,All("f",grid,All("p",cell,Eq(A(C("alternatingEquiv",k,n),f,p),image))))));
+        return All("k",NatF(),All("n",NatF(),Eq(
+            Cast(C("alternatingEquiv",k,n),C("Equiv",grid,grid)),
+            C("Equiv.piCongrRight",Lam("p",cell,
+                Pow(Cast(C("Fin.revPerm"),PermF()),Val(C("Prod.snd",p))))))));
     }
     private static Formula ProperEquivFormula(bool law = false) {
         var k=V("k"); var n=V("n"); var p=V("P"); var j=V("j"); var r=V("r"); var ss=V("s");
