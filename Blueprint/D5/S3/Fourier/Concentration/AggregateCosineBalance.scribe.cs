@@ -50,7 +50,7 @@ internal sealed class AggregateCosineBalanceDocument : IScribeDocumentDefinition
         var positivePart = Call("max", Seq(D(0), Comma, Sp, c, Plus, d));
         return Disp(new Formula.Aligned([
             Seq(Amp, Forall, Sp, q, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
-                Comma, Quad, q, Sp, Ge, Sp, D(7), Colon),
+                Comma, Quad, Sp, q, Sp, Ge, Sp, D(7), Colon),
             Seq(Amp, sum, delta, new Formula.Power(aggregate, D(2)), Eq,
                 Frac, Grp(q), Grp(D(4)), Comma),
             Seq(Amp, D(0), Lt, sum, delta, positivePart, Dot)
