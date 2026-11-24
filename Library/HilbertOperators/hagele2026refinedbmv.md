@@ -7,6 +7,8 @@ doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
+  - D5/S3/Quantum/Analysis/RefinedBMV54
+  - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
@@ -44,6 +46,28 @@ Theorem 1 and Lemma 2 give the known low-dimensional cases and the reduction
 from a stronger trace-power comparison. Section 7(iii), page 8, identifies
 the higher-dimensional cases with word counts `(3,3)` and `(4,3)`. Sections 3–5 derive the
 closed-walk trace expansion and the three-dimensional comparison.
+
+## Four copies of each factor
+
+Section 7(iii) identifies the three-dimensional (4,4) case. For every
+finite complex PSD pair A and B, the repository proof bounds the mean of
+the seventy word traces below by the trace of (AB)^4. The fourth moment
+of the Hermitian part of AB and the cyclic word counts combine to express
+the trace gap as a sum of nonnegative terms. Ando, Hiai and Okubo's
+Corollary 2.2(ii) gives the two weighted word comparisons used in the
+sum. Their Corollary 2.4 gives the upper word bound.
+The dyadic comparison from Hägele's Lemma 2 gives the exponential result.
+
+## Five copies of the first factor
+
+For the (5,4) comparison, the mean of the 126 word traces dominates
+the trace of A(AB)^4 by a sum of four Frobenius squares weighted by A.
+Three further Frobenius squares compare this intermediate trace to
+the trace of (A^(5/4) B)^4. The product proof permits a singular PSD
+first factor and an arbitrary Hermitian second factor. The dyadic
+comparison in Hägele's Lemma 2 gives the exponential lower bound.
+Burgdorf's Theorem 1.5 and Example 2.1(b) in arXiv:0802.1153v2
+give cyclic square decompositions for the classical coefficient bound.
 
 ## Scope and conventions
 
