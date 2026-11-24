@@ -1,10 +1,10 @@
 /- GID: D5/S3/Quantum/Analysis/RefinedBMVTracialBound
    generality: G
-   mirror-B: none(waiver:internal-proof-component)
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMVTracialBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Transmission of the three-factor refined BMV product bound to tracial C*-algebras. -/
+   digest: The refined BMV product bound and a quantitative degree-three gap for finite traces. -/
 
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic.Choose
