@@ -45,7 +45,7 @@ theorem complement_encoding_std {G : Type*} [AddCommGroup G] (u e : G) :
     (fun x : G => u - x) 0 = u ∧
       (fun x : G => u - x) u = 0 ∧
         (fun x : G => u - x) ((fun x : G => u - x) e) = e ∧
-          ∀ v : G, (fun x : G => v - x) = (fun x : G => u - x) → v = u := by
+          ∀ v : G, (fun x : G => v - x) = (fun x : G => u - x) → v = u :=
   let group := Omega.AddCommGroup.ofOperations (0 : G) (· + ·) Neg.neg
   have laws : group.Laws :=
     Omega.AddCommGroup.Laws.intro group
@@ -57,11 +57,10 @@ theorem complement_encoding_std {G : Type*} [AddCommGroup G] (u e : G) :
   have atZero (a : G) : a - 0 = a :=
     (sub_transport a 0).symm.trans (toStdEq (complement_encoding group laws a e).left)
   have result := complement_encoding group laws u e
-  refine ⟨atZero u, (sub_transport u u).symm.trans (toStdEq result.right.left), ?_, ?_⟩
-  · change u - (u - e) = e
-    rw [← sub_transport u e, ← sub_transport u (group.sub u e)]
-    exact toStdEq result.right.right.left
-  · intro v h
-    exact (atZero v).symm.trans ((congrFun h 0).trans (atZero u))
+  ⟨atZero u, (sub_transport u u).symm.trans (toStdEq result.right.left),
+    (sub_transport u (u - e)).symm.trans
+      ((congrArg (group.sub u) (sub_transport u e).symm).trans
+        (toStdEq result.right.right.left)),
+    fun v h => (atZero v).symm.trans ((congrFun h 0).trans (atZero u))⟩
 
 end D5.S0.Conventions.ComplementEncoding
