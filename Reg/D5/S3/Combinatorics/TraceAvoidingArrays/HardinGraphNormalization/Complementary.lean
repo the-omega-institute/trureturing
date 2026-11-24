@@ -13,11 +13,15 @@ open scoped BigOperators
 
 namespace Bond
 
+@[instance_reducible] private def finiteRole : Fintype Bool where
+  elems := ⟨[false, true], by simp⟩
+  complete := by intro role; cases role <;> simp
+
 abbrev signature : Signature where
   Params := Nat
   State p := Fin (2 * p)
-  Role := Unit
-  finiteRole := inferInstance
+  Role := Bool
+  finiteRole := finiteRole
   nonemptyRole := inferInstance
   Output _ p := Fin p
   Anchor := Empty
@@ -29,34 +33,37 @@ def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {p : Nat} (c d : Fin (2 * p)),
-    R.readout () p c ≠ pair d ↔ c ≠ d ∧ c.val + d.val ≠ 2 * p - 1
+    R.readout false p c ≠ R.readout true p d ↔ c ≠ d ∧ c.val + d.val ≠ 2 * p - 1
 
-def rejected : Realization signature :=
-  realize signature (fun _ p c => ⟨0, by have := c.isLt; omega⟩) (fun e => nomatch e)
+private def rejected (changed : Bool) : Realization signature :=
+  realize signature
+    (fun role _ c => if role = changed then ⟨0, by have := c.isLt; omega⟩ else pair c)
+    (fun e => nomatch e)
 
-theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law (changed : Bool) : ¬ arena.Law (rejected changed) := by
   intro h
-  have rule : (1 : Fin 4) ≠ 0 ∧ (1 : Fin 4).val + (0 : Fin 4).val ≠ 2 * 2 - 1 := by decide
-  have hne := (h (p := 2) 1 0).mpr rule
-  exact hne (by decide)
-
-theorem observed : actual.readout () 2 0 ≠ actual.readout () 2 1 := by decide
+  cases changed
+  · exact ((h (p := 2) 1 0).mpr (by decide)) (by decide)
+  · exact ((h (p := 2) 0 1).mpr (by decide)) (by decide)
 
 def family : Registration arena (type_of% (@bond_iff)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@bond_iff, rejected, rejected_law⟩
+  variation := ⟨@bond_iff, rejected false, rejected_law false⟩
   sensitivity := by
     constructor
-    · rintro ⟨⟩
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      rintro ⟨⟩ h
-      exact (h rfl).elim
+    · intro changed
+      refine ⟨rejected changed, ?_, rfl, rejected_law changed⟩
+      intro role h
+      funext p c
+      simp [actual, rejected, realize, h]
     · intro e
       exact nomatch e
   dependence := by
-    rintro ⟨⟩
-    exact ⟨2, 0, 1, observed⟩
+    intro role
+    refine ⟨2, 0, 1, ?_⟩
+    change pair (p := 2) 0 ≠ pair (p := 2) 1
+    decide
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     (@bond_iff) (Realization signature) Unit Unit where
@@ -80,12 +87,17 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Complementary
     definition := none
     coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[
+      { path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
+        stateBinder := 1
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["body", "body", "body", "fn", "arg", "arg"]
+        stateBinder := 2
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
