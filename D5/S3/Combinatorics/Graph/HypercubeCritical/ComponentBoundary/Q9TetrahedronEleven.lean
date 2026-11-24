@@ -166,14 +166,21 @@ private theorem card_triples_in_pivot_four (C : Family)
   simp only [P, card_map]
 
 /-- A capped family of triples with the four-set singleton exclusion and a
-nonempty pivot link of size at most four has size nine or twelve. -/
-theorem card_eq_nine_or_twelve (C : Finset (Finset (Option (Fin 6))))
+nonempty pivot link of size at most four has size nine or twelve. In the
+twelve-triple case the pivot triples use the four cycle edges, and the other
+triples extend those same edges by the two vertices off the cycle. -/
+theorem card_eq_nine_or_twelve_with_pivot (C : Finset (Finset (Option (Fin 6))))
     (htriple : ∀ s ∈ C, s.card = 3)
     (hfour : ∀ s : Finset (Option (Fin 6)), s.card = 4 → (C.filter (· ⊆ s)).card ≠ 1)
     (hpair : ∀ p : Finset (Option (Fin 6)), p.card = 2 → (C.filter (p ⊆ ·)).card ≤ 3)
     (hmin : 1 ≤ (C.filter fun s => none ∈ s).card)
     (hmax : (C.filter fun s => none ∈ s).card ≤ 4) :
-    C.card = 9 ∨ C.card = 12 := by
+    C.card = 9 ∨
+      (C.card = 12 ∧ ∃ a b c d : Fin 6, ({a, b, c, d} : Finset (Fin 6)).card = 4 ∧
+        let cycle : Finset (Finset (Fin 6)) := {{a, b}, {b, c}, {c, d}, {d, a}}
+        (∀ e : Finset (Fin 6), insertNone e ∈ C ↔ e ∈ cycle) ∧
+        (∀ t : Finset (Fin 6), t.map Function.Embedding.some ∈ C ↔
+          ∃ e ∈ cycle, ∃ v ∉ ({a, b, c, d} : Finset (Fin 6)), t = insert v e)) := by
   let E := pivotEdges C
   let B := outsideFaces C
   have hedge (e : Face) (he : e ∈ E) : e.card = 2 := by
@@ -240,11 +247,33 @@ theorem card_eq_nine_or_twelve (C : Finset (Finset (Option (Fin 6))))
   have hsum : E.card + B.card = C.card := by
     rw [hECard, hBCard]
     exact card_filter_add_card_filter_not (fun s => none ∈ s)
-  obtain ⟨_, hcases⟩ := Q9SparseCocycleSupport.sparse_cocycle_support E B hedge
+  obtain ⟨_, hcases⟩ := Q9SparseCocycleSupport.sparse_cocycle_support_classification E B hedge
     (hECard.symm ▸ hmin) (hECard.symm ▸ hmax) hdegree hforced hsupported hcap
-  rcases hcases with ⟨hE, hB⟩ | ⟨hE, hB⟩
+  rcases hcases with ⟨hE, _, hB⟩ | ⟨hE, hB, a, b, c, d, hvertices, hcycle, houtside⟩
   · exact Or.inl (by rw [← hsum, hE, hB])
-  · exact Or.inr (by rw [← hsum, hE, hB])
+  · refine Or.inr ⟨by rw [← hsum, hE, hB], a, b, c, d, hvertices, ?_, ?_⟩
+    · intro e
+      have he : e ∈ E ↔ insertNone e ∈ C := mem_pivotEdges
+      rw [hcycle] at he
+      exact he.symm
+    · intro t
+      have ht : t ∈ B ↔ t.map Function.Embedding.some ∈ C := mem_outsideFaces
+      have h := ht.symm.trans (houtside t)
+      rw [hcycle] at h
+      exact h
+
+/-- A capped family of triples with the four-set singleton exclusion and a
+nonempty pivot link of size at most four has size nine or twelve. -/
+theorem card_eq_nine_or_twelve (C : Finset (Finset (Option (Fin 6))))
+    (htriple : ∀ s ∈ C, s.card = 3)
+    (hfour : ∀ s : Finset (Option (Fin 6)), s.card = 4 → (C.filter (· ⊆ s)).card ≠ 1)
+    (hpair : ∀ p : Finset (Option (Fin 6)), p.card = 2 → (C.filter (p ⊆ ·)).card ≤ 3)
+    (hmin : 1 ≤ (C.filter fun s => none ∈ s).card)
+    (hmax : (C.filter fun s => none ∈ s).card ≤ 4) :
+    C.card = 9 ∨ C.card = 12 := by
+  rcases card_eq_nine_or_twelve_with_pivot C htriple hfour hpair hmin hmax with h | ⟨h, _⟩
+  · exact Or.inl h
+  · exact Or.inr h
 
 private theorem card_complement_filter (T : Family) (p : OptionFace → Prop) [DecidablePred p] :
     ((T.image fun s => sᶜ).filter p).card = (T.filter fun s => p sᶜ).card := by
