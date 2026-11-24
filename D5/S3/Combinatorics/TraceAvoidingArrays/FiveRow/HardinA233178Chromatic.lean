@@ -51,6 +51,7 @@ import Init.Prelude
 import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs

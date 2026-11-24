@@ -772,6 +772,7 @@ section
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
+open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233178Chromatic (Column)
 open HardinA233178Recurrence (columnEquiv)
 open HardinA229538Strip (edges cost bondDefects_empty zero_cost_entry oneDefect
