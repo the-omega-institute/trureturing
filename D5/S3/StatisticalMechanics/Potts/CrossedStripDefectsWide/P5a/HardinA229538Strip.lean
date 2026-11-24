@@ -577,17 +577,11 @@ theorem zero_values (n : Fin 23) :
           have h₁ : m - 11 + 1 + 10 = m := Nat.sub_add_cancel hbound
           have h₂ (k : Fin 10) : m - 11 + 1 + k.val = m - 10 + k.val :=
             congrArg (· + k.val) (Nat.sub_add_sub_cancel hbound (Nat.le_succ 10))
-          have forwardCertificate :
-              DefectTransfer.forward T.transpose (1 : Column → ℤ) (1 + 10) =
-                ∑ k : Fin 10, HardinA233178Chromatic.coefficients k •
-                  DefectTransfer.forward T.transpose (1 : Column → ℤ) (1 + k.val) := by
-            simpa only [DefectTransfer.forward_eq, ← Matrix.transpose_pow, Matrix.vecMul_transpose]
-              using HardinA233178Chromatic.vector_certificate
           refine dotProduct_eq _ _ fun v => ?_
-          have shifted := DefectTransfer.forward_shift T.transpose
-            (1 : Column → ℤ) v 10 1 HardinA233178Chromatic.coefficients forwardCertificate (m - 11)
-          simpa only [dotProduct_comm _ v, dotProduct_sum, dotProduct_smul, smul_eq_mul,
-            ← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec, h₁, h₂] using shifted
+          have shifted := TransferMatrix.scalarRelationShift T v 10 1
+            HardinA233178Chromatic.coefficients HardinA233178Chromatic.vector_certificate (m - 11)
+          simpa only [dotProduct_comm _ v, dotProduct_sum, dotProduct_smul, smul_eq_mul, h₁, h₂]
+            using shifted
         rw [relation]
         have prior (k : Fin 10) : m - 10 + k.val < m := by
           simpa only [Fin.val_natAdd, Nat.sub_add_cancel ((Nat.le_add_right 10 2).trans large)]
