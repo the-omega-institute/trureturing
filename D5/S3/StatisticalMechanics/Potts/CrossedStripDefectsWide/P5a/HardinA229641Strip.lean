@@ -127,9 +127,9 @@ section
 
 open scoped BigOperators Function
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233178Chromatic (Column T table moves step_fast)
+open HardinA233178Chromatic (Column T table moves step_fast weighted_indicator_sum)
 open HardinA229538Strip (cost oneDefect transfer_readout
-  cost_countCut movesOne weighted_indicator_sum step_one classIndex tableOne zeroValues zero_values
+  cost_countCut movesOne step_one classIndex tableOne zeroValues zero_values
   weight_eq weights coefficients538)
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
@@ -736,7 +736,7 @@ private theorem inherited_polynomial (p : Column ⊕ Column) :
   intro j _
   rw [sub_eq_zero.mpr (old_coordinate p (1 + j.val)), mul_zero]
 
-theorem vector_polynomial :
+private theorem vector_polynomial :
     (transfer ^ 33).mulVec terminal =
       ∑ k : Fin 30, coefficients641 k • (transfer ^ (3 + k.val)).mulVec terminal := by
   funext p

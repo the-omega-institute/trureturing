@@ -26,7 +26,6 @@ countCut: proof_shape=bind-only; consumers=HardinA229538Strip.cost_countCut
 cost_countCut: proof_shape=content; consumers=HardinA229538Strip.moves_one_filter
 movesOne: proof_shape=bind-only; consumers=HardinA229538Strip.step_one
 moves_one_filter: proof_shape=content; consumers=HardinA229538Strip.step_one
-weighted_indicator_sum: proof_shape=bind-only; consumers=HardinA229538Strip.step_one, HardinA229641Strip.step_two
 step_one: proof_shape=content; consumers=HardinA229538Strip.seed_image, HardinA229641Strip.seed_image₁
 weights: proof_shape=bind-only; consumers=HardinA229641Strip.top_seed
 weights_initial: proof_shape=bind-only; consumers=HardinA229538Strip.weight_eq
@@ -73,7 +72,6 @@ import Init.Data.Int.Basic
 import Init.Data.Int.Lemmas
 import Init.Data.List.Basic
 import Init.Data.List.FinRange
-import Init.Data.List.Lemmas
 import Init.Data.List.Nat.Pairwise
 import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
@@ -87,7 +85,6 @@ import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Pi
@@ -141,18 +138,19 @@ import Mathlib.SetTheory.Cardinal.Finite
 
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5a.HardinA229538Strip
 
-section
-
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233178Chromatic (colour Column Bond T moves step_fast table powers_table cut_parts)
-open HardinA233178Recurrence (columnEquiv)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
+open HardinA233178Chromatic (Column)
+open HardinA233178Recurrence (columnEquiv)
+
+section
+
+open HardinA233178Chromatic (colour Bond T moves step_fast table powers_table cut_parts weighted_indicator_sum)
 open DefectTransfer (bondDefects)
 open HardinA229637RowColumn (betw)
 
 def edges : Finset (Fin 5 × Fin 5) := Finset.univ.diag ∪ betw 5
-
 private theorem mem_edges {k : ℕ} (e : Fin k × Fin k) :
     e ∈ (Finset.univ : Finset (Fin k)).diag ∪ betw k ↔
       e.1.val ≤ e.2.val + 1 ∧ e.2.val ≤ e.1.val + 1 := by
@@ -172,12 +170,10 @@ private theorem mem_edges {k : ℕ} (e : Fin k × Fin k) :
     · exact Or.inr (Or.inl hyx)
     · exact Or.inr (Or.inr hxy)
     · exact Or.inr (Or.inr hxy)
-
 private theorem edges_eq :
     edges = {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2),
       (2, 3), (3, 2), (3, 3), (3, 4), (4, 3), (4, 4)} := by
   decide +kernel
-
 private theorem cut_card (k : ℕ) :
     ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card = k + 2 * (k - 1) := by
   cases k with
@@ -187,7 +183,6 @@ private theorem cut_card (k : ℕ) :
     rw [Finset.card_union_of_disjoint hstraight, hbetw, Finset.card_union_of_disjoint hparts]
     simp only [Finset.diag_card, Finset.card_univ, Fintype.card_fin, Finset.card_map, Nat.add_sub_cancel]
     omega
-
 theorem cut_total_exclusion (k D : ℕ) :
     (∀ m : ℕ, D ≠ m * ((Finset.univ : Finset (Fin k)).diag ∪ betw k).card) ↔
       ¬ (k + 2 * (k - 1)) ∣ D := by
@@ -199,12 +194,10 @@ def cost (p q : Column) : ℕ :=
 
 theorem bondDefects_empty {q k : ℕ} (r t : Fin k → Fin q) : bondDefects ∅ r t = 0 := by
   rw [bondDefects, Finset.filter_empty, Finset.card_empty]
-
 theorem cost_zero (p q : Column) : cost p q = 0 ↔ Bond p q := by
   simp only [cost, bondDefects, Finset.card_filter_eq_zero_iff, Bond]
   exact ⟨fun h i j hij => h (i, j) ((mem_edges _).mpr hij),
     fun h e he => h e.1 e.2 ((mem_edges _).mp he)⟩
-
 theorem zero_cost_entry (p q : Column) : (if cost p q = 0 then (1 : ℤ) else 0) = T p q := by
   simp only [T, cost_zero]
 
@@ -236,8 +229,7 @@ theorem transfer_readout {S R K : Type*} [Fintype S] [DecidableEq S]
     letI : SMulCommClass (Fin d) R R :=
       SMulCommClass.of_mul_smul_one fun j x => (rightMul j x).symm
     letI : DistribSMul (Fin d) R :=
-      { toSMul := ‹SMul (Fin d) R›
-        smul_zero := fun j => by rw [show j • (0 : R) = _ from rightMul j 0, zero_mul]
+      { smul_zero := fun j => (rightMul j 0).trans (zero_mul _)
         smul_add := fun j x y => by
           change c j • (x + y) = c j • x + c j • y
           rw [rightMul j (x + y), rightMul j x, rightMul j y, add_mul] }
@@ -531,23 +523,6 @@ private theorem moves_one_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul R] [One R]
-    (P : S → Prop) [DecidablePred P] (L : List S) (nodup : L.Nodup)
-    (mem : ∀ q, q ∈ L ↔ P q) (w : S → R) (zeroLeft : ∀ q ∉ L, (0 : R) * w q = 0) :
-    dotProduct (fun q => if P q then (1 : R) else 0) w =
-      (L.map (fun q => (1 : R) * w q)).sum := by
-  classical
-  calc
-    _ = ∑ q : S, if q ∈ L then (1 : R) * w q else 0 := by
-      apply Finset.sum_congr rfl
-      intro q _
-      by_cases h : q ∈ L
-      · rw [if_pos h, if_pos ((mem q).mp h)]
-      · rw [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
-    _ = _ := by
-      simp_rw [← List.mem_toFinset]
-      rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
-
 theorem step_one {R : Type*} [AddCommMonoid R] [Mul R] [One R]
     (w : Column → R) (p : Column)
     (zeroLeft : ∀ q : Column, q ∉ movesOne p → (0 : R) * w q = 0) :
@@ -572,7 +547,6 @@ def weights (n : Fin 23) : Fin 12 → ℤ :=
   ![0, 0, -5397620832, 10130851944, 30034747932, -73370000708, 4910588464, 63133362044, -16670193923, -16600107248, 2607144359, 1221227969],
   ![0, 0, -43964206884, 82530792936, 244606621992, -597676428134, 40204200409, 514162651537, -135926796903, -135129306916, 21257959791, 9934512173]]
     later (n.subNat 13 (Nat.lt_of_le_of_ne (Nat.le_of_not_gt h) (Ne.symm hn)))
-
 private theorem weights_initial (i j : Fin 12) :
     weights (i.castAdd 11) j = if i = j then 1 else 0 := by
   simp only [weights, Fin.val_castAdd, dite_eq_left i.isLt, Fin.castLT_castAdd, Matrix.one_apply]
@@ -588,7 +562,6 @@ private theorem weights_step : ∀ (n : Fin 23) (hn : 12 ≤ n.val) (j : Fin 12)
 def zeroValues (n : Fin 23) (p : Column) : ℤ :=
   if h : n.val < 12 then table (n.castLT h) p
   else ∑ j : Fin 12, weights n j * table j p
-
 theorem weight_eq (i : Fin 23) :
     zeroValues i = ∑ j : Fin 12, weights i j • table j := by
   funext p
@@ -599,7 +572,6 @@ theorem weight_eq (i : Fin 23) :
       simpa only [Fin.castAdd_castLT] using weights_initial (i.castLT hi) j
     simp_rw [hi', ite_mul, one_mul, zero_mul]; simp
   · rfl
-
 theorem zero_values (n : Fin 23) :
     zeroValues n = (T ^ n.val).mulVec (1 : Column → ℤ) := by
   have reconstruct (m : ℕ) (hm : m < 23) :
@@ -703,7 +675,6 @@ private theorem weighted_image (k : Fin 23) (p : Column) :
     smul_eq_mul, seed_image]
 
 private theorem table_base (p : Column) : tableOne 0 p = 0 := rfl
-
 private theorem table_step (k : Fin 22) (p : Column) :
     tableOne k.succ p = T.mulVec (tableOne k.castSucc) p +
       oneDefect.mulVec (zeroValues k.castSucc) p := by
@@ -715,7 +686,6 @@ private theorem table_step (k : Fin 22) (p : Column) :
     intro n block; fin_cases n <;> fin_cases block <;> decide +kernel
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked k block offset
-
 theorem table_powers (n : Fin 23) :
     (transfer ^ n.val).mulVec terminal =
       Sum.elim (tableOne n) ((T ^ n.val).mulVec (1 : Column → ℤ)) := by
@@ -743,7 +713,6 @@ private theorem new_polynomial : ∀ p : Column,
     tableOne (Fin.last 22) p = ∑ k : Fin 20, coefficients538 k *
       tableOne ((Fin.natAdd 2 k).castSucc) p := by
   decide +kernel
-
 private theorem inherited_polynomial (p : Column) :
     ((T ^ 22).mulVec (1 : Column → ℤ)) p =
       ∑ k : Fin 20, coefficients538 k * ((T ^ (2 + k.val)).mulVec (1 : Column → ℤ)) p := by
@@ -766,7 +735,6 @@ private theorem inherited_polynomial (p : Column) :
       ∑ k : Fin 10, HardinA233178Chromatic.coefficients k * f (1 + j.val + 1 + k.val) := by
     simpa only [f, single_one_dotProduct] using shifted
   rw [sub_eq_zero.mpr coordinate, mul_zero]
-
 theorem vector_polynomial :
     (transfer ^ 22).mulVec terminal =
       ∑ k : Fin 20, coefficients538 k • (transfer ^ (2 + k.val)).mulVec terminal := by
@@ -784,12 +752,7 @@ end
 
 section
 
-open scoped BigOperators
-open D5.S3.Combinatorics.TraceAvoidingArrays
-open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA233177Canonical (Canonical canonical_pattern_card)
-open HardinA233178Chromatic (Column)
-open HardinA233178Recurrence (columnEquiv)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects defects literalCount lumped_count)
 
 set_option maxHeartbeats 0

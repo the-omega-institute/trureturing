@@ -16,10 +16,10 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             Paragraph(Text("A column is encoded in base three, with row r stored in digit r. "
                 + "Bond tests precisely the pairs of rows at distance at most one across consecutive "
                 + "columns. The strip has free boundaries and has no within-column bonds.")),
-            LiteralNode("moves", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. The theorem moves_eq_filter identifies each list with the eligible columns in code order."),
-            FormulaNode("moves_eq_filter", MovesFilter(), true, "Filtering the ordered column codes by the bond condition gives the stored successor list."),
+            LiteralNode("moves", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to the current column code selects its list. Each stored list contains the eligible columns in code order."),
             LiteralNode("table", Arrow(Fin(12), Arrow(Column(), new Formula.Integers())), "The Lean definition is the literal 12-by-243 integer vector of vectors. The first index is the number of extra columns and the second selects the boundary code. The theorem powers_table identifies the rows with continuation vectors."),
             FormulaNode("coefficients", Coefficients(), false, "The coefficients are listed in order of increasing power."),
+            FormulaNode("weighted_indicator_sum",WeightedIndicatorSum(),true,"The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish."),
             FormulaNode("step_fast", Step(), true, "Matrix action at a boundary is the sum over its legal successors."),
             FormulaNode("powers_table", Powers(), true, "The tabulated row is the continuation vector at the specified exponent."),
             FormulaNode("Column", Eq(Column(), Fin(243)), false, "Five-row column codes in base three."),
@@ -127,15 +127,52 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
             And(Eq(diagonal, union), And(Call("Disjoint", forward, backward), Call("Disjoint", straight, diagonal)))));
     }
 
-    private static Formula MovesFilter()
+    private static Formula OmittedProducts(Formula domain, Formula scalar, Formula support)
     {
-        var p = V("p");
         var q = V("q");
-        var predicate = Parenthesized(Seq(LambdaLower, Sp, Typed(q, Column()), Mapsto, Sp,
-            Call("decide", C("Bond", p, q))));
-        return All("p", Column(), Eq(Typed(C("moves", p), Call("List", Column())),
-            Call("List.filter", predicate, Call("List.finRange", N(243)))));
+        var omitted = Seq(Neg, Sp, Parenthesized(new Formula.Relation(q, FormulaRelationOperator.MemberOf, support)));
+        return All("q", domain, Imp(omitted, Eq(Mul(Typed(N(0), scalar), App(V("w"), q)), Typed(N(0), scalar))));
     }
+
+    private static Formula WeightedRowLaws(Formula scalar, Formula body) => Seq(
+        OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
+        OpenBracket, Call("Mul", scalar), CloseBracket, Sp,
+        OpenBracket, Call("One", scalar), CloseBracket, Sp, body);
+
+    private static Formula WeightedIndicatorSum()
+    {
+        var domain = V("S");
+        var scalar = V("R");
+        var support = V("L");
+        var predicate = V("P");
+        var q = V("q");
+        var member = new Formula.Relation(q, FormulaRelationOperator.MemberOf, support);
+        var row = Fn("q", domain, If(App(predicate, q), Typed(N(1), scalar), N(0)));
+        var weighted = Fn("q", domain, Mul(Typed(N(1), scalar), App(V("w"), q)));
+        var sum = Call("List.sum", Call("List.map", weighted, support));
+        var equality = Eq(Call("dotProduct", row, V("w")), sum);
+        var body = All("w", Arrow(domain, scalar), Imp(OmittedProducts(domain, scalar, support), equality));
+        var list = All("L", Call("List", domain), Imp(Call("List.Nodup", support),
+            Imp(All("q", domain, Iff(member, App(predicate, q))), body)));
+        var predicates = All("P", Arrow(domain, Q("Prop")), Seq(
+            OpenBracket, Call("DecidablePred", predicate), CloseBracket, Sp, list));
+        var type = Seq(Q("Type"), Star);
+        return All("S", type, All("R", type, Seq(
+            OpenBracket, Call("Fintype", domain), CloseBracket, Sp, WeightedRowLaws(scalar, predicates))));
+    }
+
+
+    private static Formula If(Formula c, Formula a, Formula b) =>
+        Parenthesized(Seq(Q("if"), Sp, Parenthesized(c), Sp, Q("then"), Sp, a, Sp, Q("else"), Sp, b));
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Fn(string n, Formula type, Formula body) =>
+        Parenthesized(Seq(LambdaLower, Sp, Typed(V(n), type), Mapsto, Sp, Parenthesized(body)));
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+
     private static Formula Coefficients() => Eq(Typed(C("coefficients"),Arrow(Fin(10),Q("Int"))),
         VectorLiteral([-36,72,192,-514,93,417,-163,-97,31,6]));
     private static Formula One() => Typed(N(1),Arrow(Column(),Q("Int")));

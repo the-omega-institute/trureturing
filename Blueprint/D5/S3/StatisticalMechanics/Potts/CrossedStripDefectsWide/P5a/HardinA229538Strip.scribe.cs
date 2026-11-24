@@ -29,12 +29,9 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("transfer_readout",TransferReadout(),true,"The matrix entries form a semiring, and each supplied coefficient commutes with left multiplication by matrix and readout entries. This lets the matrix action and dot product carry the coefficients through the vector recurrence to give every shifted scalar relation. The commutation law with the right unit also makes the coefficient action distributive. At shift zero a readout supported at a single coordinate recovers that component of the vector recurrence."),
             Node("countCut",CountCut(),false,"The cost counts the colour coincidences at the thirteen oriented pairs of row positions."),
             Node("cost_countCut",CutEquality(),true,"The sum of the thirteen indicators equals the number of monochromatic bonds on the cut."),
-            LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. The theorem moves_one_filter identifies each list with the eligible columns in code order."),
-            Node("moves_one_filter",MovesFilter(),true,"Filtering the ordered column codes by cut cost one gives the stored successor list."),
-            Node("weighted_indicator_sum",WeightedIndicatorSum(),true,"The weighted sum over a duplicate-free list agrees with the indicator row when the omitted products vanish."),
+            LiteralNode("movesOne", Arrow(Column(), Call("List", Column())), "The Lean definition is the literal vector of 243 successor lists. Applying the vector to a column code selects its list. Each stored list contains the eligible columns in code order."),
             Node("step_one",StepOne(),true,"The matrix row sums the successor values after multiplying each by one on the left. Only products at omitted columns must vanish."),
-            Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen. The theorem weights_step pins the rows from exponent twelve onward."),
-            Node("weights_step",WeightsStep(),true,"Each index on the right is below the current exponent. The bound proof supplied to Fin.castLE embeds these indices in Fin 23."),
+            Node("weights",Weights(),false,"The first twelve rows come from the identity matrix. The row at exponent twelve appends the proper-colouring coefficients to two zeros. For exponents thirteen through twenty-two, the local literal later in the Lean definition supplies row n minus thirteen."),
             Node("classIndex",ClassIndex(),false,"The lookup classifies five-entry boundary columns under colour permutation and row reversal."),
             Node("tableOne",TableOne(),false,"The local literal values in the Lean definition has 23 rows and 25 columns. The indices are the exponent n and the class of p. The theorem table_powers pins this lookup through the first summand of the continuation vector."),
             Node("zeroValues",ZeroValues(),false,"For larger exponents the zero-defect values are linear combinations of the twelve proper-colouring vectors."),
@@ -256,15 +253,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         return All("n", Fin(23), All("p", Column(), Eq(AsInt(Own("tableOne", n, p)), entry)));
     }
 
-    private static Formula MovesFilter()
-    {
-        var p = V("p");
-        var q = V("q");
-        var predicate = Parenthesized(Seq(LambdaLower, Sp, Typed(q, Column()), Mapsto, Sp,
-            Call("decide", Eq(Own("cost", p, q), N(1)))));
-        return All("p", Column(), Eq(Typed(Own("movesOne", p), Call("List", Column())),
-            Call("List.filter", predicate, Call("List.finRange", N(243)))));
-    }
     private static Formula OmittedProducts(Formula domain, Formula scalar, Formula support)
     {
         var q = V("q");
@@ -276,28 +264,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         OpenBracket, Call("AddCommMonoid", scalar), CloseBracket, Sp,
         OpenBracket, Call("Mul", scalar), CloseBracket, Sp,
         OpenBracket, Call("One", scalar), CloseBracket, Sp, body);
-
-    private static Formula WeightedIndicatorSum()
-    {
-        var domain = V("S");
-        var scalar = V("R");
-        var support = V("L");
-        var predicate = V("P");
-        var q = V("q");
-        var member = new Formula.Relation(q, FormulaRelationOperator.MemberOf, support);
-        var row = Fn("q", domain, If(App(predicate, q), Typed(N(1), scalar), N(0)));
-        var weighted = Fn("q", domain, Mul(Typed(N(1), scalar), App(V("w"), q)));
-        var sum = Call("List.sum", Call("List.map", weighted, support));
-        var equality = Eq(Call("dotProduct", row, V("w")), sum);
-        var body = All("w", Arrow(domain, scalar), Imp(OmittedProducts(domain, scalar, support), equality));
-        var list = All("L", Call("List", domain), Imp(Call("List.Nodup", support),
-            Imp(All("q", domain, Iff(member, App(predicate, q))), body)));
-        var predicates = All("P", Arrow(domain, Q("Prop")), Seq(
-            OpenBracket, Call("DecidablePred", predicate), CloseBracket, Sp, list));
-        var type = Seq(Q("Type"), Star);
-        return All("S", type, All("R", type, Seq(
-            OpenBracket, Call("Fintype", domain), CloseBracket, Sp, WeightedRowLaws(scalar, predicates))));
-    }
 
     private static Formula StepOne()
     {
@@ -311,22 +277,6 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Imp(OmittedProducts(Column(), scalar, support), equation)));
         return All("R", Seq(Q("Type"), Star), WeightedRowLaws(scalar, parameters));
     }
-    private static Formula WeightsStep()
-    {
-        var n = V("n");
-        var j = V("j");
-        var h = V("h");
-        var k = V("k");
-        var exponent = Val(n);
-        var lower = Call("LE.le.trans", Call("Nat.le_add_right", N(10), N(2)), h);
-        var bound = Call("Eq.trans_le", Call("Nat.sub_add_cancel", lower),
-            Call("Nat.le_of_lt", Call("Fin.isLt", n)));
-        var index = Call("Fin.castLE", bound, Call("Fin.natAdd", Sub(exponent, N(10)), k));
-        return All("n", Fin(23), All("h", Le(N(12), exponent), All("j", Fin(12),
-            Eq(AsInt(Own("weights", n, j)), SumOver("k", Fin(10),
-                Mul(C("coefficients", k), Own("weights", index, j)))))));
-    }
-
     private static Formula ClassIndex()
     {
         var p = V("p");

@@ -17,7 +17,6 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
             Node("transfer", Transfer(), false, "The left summand has budget two. The inherited right summand has budgets one and zero."),
             Node("terminal", Terminal(), false, "An empty continuation requires a remaining budget of zero."),
             Node("coefficients641",Coefficients(),false,"The entries are ordered from the smallest shift of the recurrence to the largest."),
-            Node("vector_polynomial",Polynomial(),true,"The relation holds simultaneously for all boundary columns and all three residual budgets."),
             Node("result",Recurrence(),true,"For each array, the table scans horizontal bonds within rows and diagonal and antidiagonal bonds between rows. In the transfer, each of these bonds lies in the cut of its two consecutive columns. Interchanging the finite row and column sums for each bond direction gives the same number of monochromatic bonds, and both filters impose the same row-major canonical condition. The labelled readout is therefore six times the table entry at each width used in the recurrence. Cancelling six over the integers gives the order-thirty recurrence for every width at least thirty-four."))));
 
     private static DocumentBlock Node(string name, Formula statement, bool theorem, string prose) =>
@@ -120,11 +119,6 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
 
     private static Formula Coefficients() =>
         Eq(Typed(Own("coefficients641"),Arrow(Fin(30),Q("Int"))),VectorLiteral([-46656, 279936, 186624, -4611168, 7359984, 21460464, -73617984, 9610272, 227616084, -273411640, -168525432, 522690894, -138135927, -412178619, 287096430, 147888798, -190067859, -12632640, 66347438, -7797810, -13478352, 2851598, 1614489, -424479, -108707, 31983, 3468, -1191, -15, 18]));
-    private static Formula Polynomial() {
-        Formula Power(Formula n)=>Call("Matrix.mulVec",Pow(Own("transfer"),n),Own("terminal"));
-        return Eq(Power(N(33)),SumOver("k",Fin(30),
-            Call("SMul.smul",Own("coefficients641",V("k")),Power(Add(N(3),Val(V("k")))))));
-    }
 
     private static Formula Budgets01() => Call("Sum",Column(),Column());
     private static Formula Budgets012() => Call("Sum",Column(),Budgets01());

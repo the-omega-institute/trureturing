@@ -22,6 +22,7 @@ coefficients: proof_shape=bind-only; consumers=HardinA233178Chromatic.vector_cer
 moves_eq_filter: proof_shape=content; consumers=HardinA233178Chromatic.moves_exact, HardinA233178Chromatic.moves_nodup
 moves_exact: proof_shape=content; consumers=HardinA233178Chromatic.step_fast._simp_1_2
 moves_nodup: proof_shape=content; consumers=HardinA233178Chromatic.step_fast
+weighted_indicator_sum: proof_shape=bind-only; consumers=HardinA229538Strip.step_one, HardinA229641Strip.step_two
 step_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
 table_base: proof_shape=bind-only; consumers=HardinA233178Chromatic.powers_table
 table_steps_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
@@ -39,6 +40,7 @@ import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
+import Init.Data.List.Lemmas
 import Init.Data.List.Nat.Pairwise
 import Init.Data.Nat.Basic
 import Init.Data.Nat.Lemmas
@@ -48,8 +50,10 @@ import Init.Prelude
 import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs
+import Mathlib.Algebra.Group.Defs
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Notation.Defs
@@ -64,6 +68,7 @@ import Mathlib.Data.Finset.Lattice.Basic
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.List.Nodup
+import Mathlib.Data.Matrix.Defs
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
@@ -71,6 +76,7 @@ import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
 import Mathlib.Logic.Function.Conjugate
 import Mathlib.Logic.Function.Defs
+import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Order.Disjoint
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
@@ -428,6 +434,23 @@ private theorem moves_nodup : ∀ p : Column, (moves p).Nodup := by
   intro p
   rw [moves_eq_filter]
   exact (List.nodup_finRange _).filter _
+
+theorem weighted_indicator_sum {S R : Type*} [Fintype S] [AddCommMonoid R] [Mul R] [One R]
+    (P : S → Prop) [DecidablePred P] (L : List S) (nodup : L.Nodup)
+    (mem : ∀ q, q ∈ L ↔ P q) (w : S → R) (zeroLeft : ∀ q ∉ L, (0 : R) * w q = 0) :
+    dotProduct (fun q => if P q then (1 : R) else 0) w =
+      (L.map (fun q => (1 : R) * w q)).sum := by
+  classical
+  calc
+    _ = ∑ q : S, if q ∈ L then (1 : R) * w q else 0 := by
+      apply Finset.sum_congr rfl
+      intro q _
+      by_cases h : q ∈ L
+      · rw [if_pos h, if_pos ((mem q).mp h)]
+      · rw [if_neg h, if_neg (fun hP => h ((mem q).mpr hP)), zeroLeft q h]
+    _ = _ := by
+      simp_rw [← List.mem_toFinset]
+      rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
 
 theorem step_fast (w : Column → ℤ) (p : Column) :
     T.mulVec w p = ((moves p).map w).sum := by
