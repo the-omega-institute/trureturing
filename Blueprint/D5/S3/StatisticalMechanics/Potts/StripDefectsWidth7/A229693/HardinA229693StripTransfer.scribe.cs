@@ -81,7 +81,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 "Try the m available colours in order, keep each head whose cost fits the budget, and prepend it to the completions at the remaining budget. The last cell must spend the entire remaining budget.", DescribeRole.Definition),
             Node("completionCodes", "Pruned list in base m",
                 CompletionCodesClauses(),
-                "Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with the natural value of x plus m times c.", DescribeRole.Definition)));
+                "Run the same recursion on a list of boundary colours. Prepending a colour x replaces the tail code c with the natural value of x plus m times c.", DescribeRole.Definition))));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
@@ -250,5 +250,4 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula OptionColour => Call("Option", Colour);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(n), t, Parenthesized(b));
 }

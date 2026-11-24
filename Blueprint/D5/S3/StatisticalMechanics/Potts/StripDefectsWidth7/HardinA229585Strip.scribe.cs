@@ -35,7 +35,7 @@ internal sealed class HardinA229585StripDocument : IScribeDocumentDefinition
                     All("p", Call("HardinA229585StripData.Boundary"), All("r", Call("HardinA229585StripData.Row"),
                         Eq(Call("HardinA229585StripData.cross", Call("Function.comp", V("e"), V("p")),
                             Call("Function.comp", V("e"), V("r"))),
-                            Call("HardinA229585StripData.cross", V("p"), V("r"))))))),
+                            Call("HardinA229585StripData.cross", V("p"), V("r")))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The same colour permutation acts on the preceding boundary and the next row."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a"),
