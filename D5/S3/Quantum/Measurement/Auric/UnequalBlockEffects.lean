@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVWords
 import D5.S3.Quantum.Measurement.Auric.EqualBlockEffects
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-! # Ordered supporting prices for three effects -/
@@ -734,6 +736,266 @@ theorem isGreatest_three_four_four :
     ring
   rw [hb', hl, hv] at hh
   exact hh
+
+private def allowedRows (c : Fin 4) : Finset (Fin 3) :=
+  univ.filter (fun j => c ≠ j.castSucc)
+
+private theorem mem_allowedRows (c : Fin 4) (j : Fin 3) :
+    j ∈ allowedRows c ↔ c ≠ j.castSucc := by
+  simp [allowedRows]
+
+private theorem allowedRows_nonempty (c : Fin 4) : (allowedRows c).Nonempty := by
+  fin_cases c <;> decide
+
+private theorem multiplicity_castSucc (l : Fin 3 → ℕ) (b : ℕ) (j : Fin 3) :
+    multiplicity l b j.castSucc = l j := by
+  fin_cases j <;> rfl
+
+private theorem multiplicity_last (l : Fin 3 → ℕ) (b : ℕ) :
+    multiplicity l b (Fin.last 3) = b := rfl
+
+private def priceObjective (l : Fin 3 → ℕ) (b : ℕ) (τ : Fin 3 → ℝ)
+    (G : Fin 4 → (Fin 3 → ℝ) → ℝ) (u : Fin 3 → ℝ) : ℝ :=
+  (∑ c, (multiplicity l b c : ℝ) * G c u) - ∑ j, τ j * u j
+
+/-- A column potential that dominates each allowed price gives a uniform
+lower bound in terms of the largest difference of row prices. -/
+private theorem price_coercivity (l : Fin 3 → ℕ) (b : ℕ) (d : ℝ) (τ : Fin 3 → ℝ)
+    (hd : (b : ℝ) + ∑ j, (l j : ℝ) = d) (hτ : ∑ j, τ j = d)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < d - l j)
+    (G : Fin 4 → (Fin 3 → ℝ) → ℝ)
+    (hG : ∀ c u j, j ∈ allowedRows c → u j ≤ G c u) :
+    ∃ δ > 0, ∀ u i k, δ * (u i - u k) ≤ priceObjective l b τ G u := by
+  classical
+  let margin (j : Fin 3) := min (τ j) (d - l j - τ j)
+  obtain ⟨r, _, hr⟩ := univ.exists_min_image margin Finset.univ_nonempty
+  let δ := margin r
+  have hδ : 0 < δ := lt_min (hpos r) (sub_pos.mpr (hupper r))
+  have hδτ (j : Fin 3) : δ ≤ τ j :=
+    (hr j (mem_univ j)).trans (min_le_left _ _)
+  have hδcap (j : Fin 3) : δ ≤ d - l j - τ j :=
+    (hr j (mem_univ j)).trans (min_le_right _ _)
+  refine ⟨δ, hδ, fun u i k => ?_⟩
+  obtain ⟨j, _, hj⟩ := univ.exists_max_image u Finset.univ_nonempty
+  let rest := (univ : Finset (Fin 3)).erase j
+  have hrest : rest.Nonempty := by
+    fin_cases j <;> decide
+  obtain ⟨s, hs, hsecond⟩ := rest.exists_max_image u hrest
+  have hsne : s ≠ j := (mem_erase.mp hs).1
+  have hsj : u s ≤ u j := hj s (mem_univ s)
+  have hfull : u j ≤ G (Fin.last 3) u := hG _ _ _ ((mem_allowedRows _ _).2 (by
+    intro h
+    have hv := congrArg Fin.val h
+    exact (Nat.not_lt_of_ge (Nat.le_of_eq hv)) j.isLt))
+  have hmissing : ∑ a, (l a : ℝ) * (if a = j then u s else u j) ≤
+      ∑ a, (l a : ℝ) * G a.castSucc u := by
+    apply sum_le_sum
+    intro a _
+    apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg _)
+    by_cases ha : a = j
+    · subst a
+      exact (ite_eq_left rfl).trans_le (hG _ _ _ ((mem_allowedRows _ _).2
+        (fun h => hsne (Fin.castSucc_injective _ h.symm))))
+    · exact (ite_eq_right ha).trans_le (hG _ _ _ ((mem_allowedRows _ _).2
+        (fun h => ha (Fin.castSucc_injective _ h))))
+  have hsplit (f : Fin 3 → ℝ) : (∑ a ∈ rest, f a) + f j = ∑ a, f a :=
+    sum_erase_add _ _ (mem_univ j)
+  have hsum_l : (b : ℝ) + ∑ a ∈ rest, (l a : ℝ) = d - l j := by
+    linarith [hsplit (fun a => (l a : ℝ))]
+  have hsum_τ : ∑ a ∈ rest, τ a = d - τ j := by
+    linarith [hsplit τ]
+  rw [← hsplit (fun a => (l a : ℝ) * (if a = j then u s else u j))] at hmissing
+  have hmissing' : (∑ a ∈ rest, (l a : ℝ)) * u j + l j * u s ≤
+      ∑ a, (l a : ℝ) * G a.castSucc u := by
+    rw [Finset.sum_mul]
+    have hrw : (∑ a ∈ rest, (l a : ℝ) * (if a = j then u s else u j)) =
+        ∑ a ∈ rest, (l a : ℝ) * u j := by
+      apply sum_congr rfl
+      intro a ha
+      rw [ite_eq_right (mem_erase.mp ha).1]
+    rw [hrw] at hmissing
+    simpa using hmissing
+  have hdecomp :
+      (d - l j - τ j) * (u j - u s) + ∑ a ∈ rest, τ a * (u s - u a) ≤
+        priceObjective l b τ G u := by
+    unfold priceObjective
+    rw [Fin.sum_univ_castSucc, ← hsplit (fun a => τ a * u a)]
+    simp only [multiplicity_castSucc, multiplicity_last, mul_sub, sum_sub_distrib,
+      ← Finset.sum_mul, hsum_τ]
+    have hfull' := mul_le_mul_of_nonneg_left hfull (Nat.cast_nonneg b)
+    have hl := congrArg (fun x : ℝ => x * u j) hsum_l
+    linarith only [hmissing', hfull', hl]
+  have hgap := mul_le_mul_of_nonneg_right (hδcap j) (sub_nonneg.mpr hsj)
+  have hterms (a : Fin 3) (ha : a ∈ rest) : 0 ≤ τ a * (u s - u a) :=
+    mul_nonneg (hpos a).le (sub_nonneg.mpr (hsecond a ha))
+  have htop : δ * (u j - u k) ≤ priceObjective l b τ G u := by
+    by_cases hk : k = j
+    · subst k
+      simp only [sub_self, mul_zero]
+      exact (add_nonneg (mul_nonneg (sub_pos.mpr (hupper j)).le (sub_nonneg.mpr hsj))
+        (sum_nonneg hterms)).trans hdecomp
+    · have hk' : k ∈ rest := mem_erase.mpr ⟨hk, mem_univ k⟩
+      have hkterm := mul_le_mul_of_nonneg_right (hδτ k) (sub_nonneg.mpr (hsecond k hk'))
+      have hsum := single_le_sum hterms hk'
+      linarith only [hgap, hkterm, hsum, hdecomp]
+  exact (mul_le_mul_of_nonneg_left (sub_le_sub_right (hj i (mem_univ i)) _) hδ.le).trans htop
+
+private theorem exists_minimum_prices (F : (Fin 3 → ℝ) → ℝ) (hF : Continuous F)
+    (hshift : ∀ u a, F (fun j => u j + a) = F u)
+    {δ : ℝ} (hδ : 0 < δ) (hbound : ∀ u i k, δ * (u i - u k) ≤ F u) :
+    ∃ u, ∀ v, F u ≤ F v := by
+  let S : Set (Fin 3 → ℝ) := {u | u 0 = 0 ∧ F u ≤ F 0}
+  let R := F 0 / δ
+  have hclosed : IsClosed S :=
+    (isClosed_eq (continuous_apply 0) continuous_const).inter
+      (isClosed_le hF continuous_const)
+  have hcompact : IsCompact S := by
+    apply (isCompact_Icc (a := fun _ : Fin 3 => -R) (b := fun _ => R)).of_isClosed_subset hclosed
+    intro u hu
+    change u 0 = 0 ∧ F u ≤ F 0 at hu
+    constructor
+    · intro i
+      have h := (hbound u 0 i).trans hu.2
+      rw [hu.1, zero_sub] at h
+      have h' : -u i ≤ R := (le_div_iff₀ hδ).2 (by simpa only [mul_comm] using h)
+      linarith
+    · intro i
+      have h := (hbound u i 0).trans hu.2
+      rw [hu.1, sub_zero] at h
+      exact (le_div_iff₀ hδ).2 (by simpa [mul_comm] using h)
+  have hzero : (0 : Fin 3 → ℝ) ∈ S := ⟨rfl, le_rfl⟩
+  obtain ⟨u, _, hu⟩ := hcompact.exists_isMinOn ⟨0, hzero⟩ hF.continuousOn
+  refine ⟨u, fun v => ?_⟩
+  by_cases hv : F v ≤ F 0
+  · let v' : Fin 3 → ℝ := fun j => v j + -v 0
+    have hs : F v' = F v := hshift v _
+    rw [← hs]
+    exact hu (show v' ∈ S from ⟨by simp [v'], hs.trans_le hv⟩)
+  · exact (hu hzero).trans (le_of_not_ge hv)
+
+private def expSum (c : Fin 4) (u : Fin 3 → ℝ) : ℝ :=
+  ∑ j ∈ allowedRows c, Real.exp (u j)
+
+private theorem expSum_pos (c : Fin 4) (u : Fin 3 → ℝ) : 0 < expSum c u :=
+  sum_pos (fun j _ => Real.exp_pos (u j)) (allowedRows_nonempty c)
+
+private theorem le_log_expSum (c : Fin 4) (u : Fin 3 → ℝ) (j : Fin 3)
+    (hj : j ∈ allowedRows c) : u j ≤ Real.log (expSum c u) := by
+  rw [← Real.log_exp (u j)]
+  exact Real.log_le_log (Real.exp_pos _) (single_le_sum (fun i _ => (Real.exp_pos (u i)).le) hj)
+
+private theorem expSum_last (u : Fin 3 → ℝ) :
+    expSum (Fin.last 3) u = ∑ j, Real.exp (u j) := by
+  unfold expSum allowedRows
+  rw [filter_eq_self.mpr]
+  intro j _ h
+  have hv := congrArg Fin.val h
+  exact (Nat.not_lt_of_ge (Nat.le_of_eq hv)) j.isLt
+
+private theorem expSum_castSucc (u : Fin 3 → ℝ) (j : Fin 3) :
+    expSum j.castSucc u = expSum (Fin.last 3) u - Real.exp (u j) := by
+  rw [expSum_last, eq_sub_iff_add_eq]
+  unfold expSum allowedRows
+  have h : univ.filter (fun a : Fin 3 => j.castSucc ≠ a.castSucc) = univ.erase j := by
+    ext a
+    simp [Fin.ext_iff, ne_comm]
+  rw [h]
+  exact sum_erase_add _ _ (mem_univ j)
+
+private theorem derivative_log_expSum (u : Fin 3 → ℝ) (j : Fin 3) (c : Fin 4)
+    (w : Fin 3 → ℝ) (hw : ∀ i, w i = Real.exp (u i) / expSum (Fin.last 3) u) :
+    HasDerivAt (fun t : ℝ => Real.log (expSum c (fun i => u i + if i = j then t else 0)))
+      (allocation (weightEntries w) j c) 0 := by
+  classical
+  have hd (i : Fin 3) : HasDerivAt
+      (fun t : ℝ => Real.exp (u i + if i = j then t else 0))
+      (if i = j then Real.exp (u i) else 0) 0 := by
+    by_cases hij : i = j
+    · simpa [hij] using (((hasDerivAt_id (0 : ℝ)).const_add (u i)).exp)
+    · simpa [hij] using (hasDerivAt_const (0 : ℝ) (Real.exp (u i)))
+  have hz (i : Fin 3) : u i + (if i = j then (0 : ℝ) else 0) = u i := by simp
+  have h := (HasDerivAt.fun_sum (u := allowedRows c) (fun i _ => hd i)).log
+    (by simpa only [hz, expSum] using (expSum_pos c u).ne')
+  simp only [hz, Finset.sum_ite_eq', mem_allowedRows] at h
+  change HasDerivAt (fun t : ℝ =>
+    Real.log (∑ i ∈ allowedRows c, Real.exp (u i + if i = j then t else 0))) _ 0
+  have hden : expSum c u = columnDenominator w c * expSum (Fin.last 3) u := by
+    refine Fin.lastCases ?_ (fun a => ?_) c
+    · change _ = 1 * _
+      rw [one_mul]
+    · rw [expSum_castSucc]
+      have hc' : columnDenominator w a.castSucc = 1 - w a := by
+        fin_cases a <;> rfl
+      rw [hc', hw, sub_mul, one_mul, div_mul_cancel₀ _ (expSum_pos _ _).ne']
+  have heq : ((if c ≠ j.castSucc then Real.exp (u j) else 0) / expSum c u) =
+      allocation (weightEntries w) j c := by
+    by_cases hc : c = j.castSucc
+    · simp [allocation, hc]
+    · simp [allocation, weightEntries, hc, hw, hden, div_div, mul_comm]
+  rw [← heq]
+  exact h
+
+/-- Every strictly admissible trace triple admits positive normalized direct
+entropy weights. The row equations use the original labels. -/
+theorem exists_direct_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
+    (_hd : 0 < d) (hcap : ∑ j, (d - m j) ≤ d)
+    (hpos : ∀ j, 0 < τ j) (hupper : ∀ j, τ j < (d : ℝ) - (d - m j : ℕ))
+    (htotal : ∑ j, τ j = d) :
+    ∃ w : Fin 3 → ℝ, (∀ j, 0 < w j) ∧ (∑ j, w j = 1) ∧
+      ∀ j, weightMass (fun j => d - m j) (d - ∑ i, (d - m i)) w j = τ j := by
+  let l (j : Fin 3) := d - m j
+  let b := d - ∑ i, l i
+  let G (c : Fin 4) (u : Fin 3 → ℝ) := Real.log (expSum c u)
+  let F := priceObjective l b τ G
+  have hcount : (b : ℝ) + ∑ j, (l j : ℝ) = d := by
+    exact_mod_cast Nat.sub_add_cancel hcap
+  obtain ⟨δ, hδ, hbound⟩ := price_coercivity l b d τ hcount htotal hpos hupper G le_log_expSum
+  have hF : Continuous F := by
+    have hG (c : Fin 4) : Continuous (G c) := by
+      apply Continuous.log
+      · exact continuous_finsetSum _ (fun j _ => Real.continuous_exp.comp (continuous_apply j))
+      · exact fun u => (expSum_pos c u).ne'
+    exact (continuous_finsetSum _ (fun c _ => continuous_const.mul (hG c))).sub
+      (continuous_finsetSum _ (fun j _ => continuous_const.mul (continuous_apply j)))
+  have hshift (u : Fin 3 → ℝ) (a : ℝ) (c : Fin 4) :
+      G c (fun j => u j + a) = G c u + a := by
+    change Real.log (∑ j ∈ allowedRows c, Real.exp (u j + a)) = Real.log (expSum c u) + a
+    simp only [Real.exp_add, ← Finset.sum_mul]
+    change Real.log (expSum c u * Real.exp a) = _
+    rw [Real.log_mul (expSum_pos c u).ne' (Real.exp_pos a).ne', Real.log_exp]
+  have hFshift (u : Fin 3 → ℝ) (a : ℝ) : F (fun j => u j + a) = F u := by
+    unfold F priceObjective
+    simp only [hshift, mul_add, sum_add_distrib, ← Finset.sum_mul, htotal]
+    have hc : (∑ c, (multiplicity l b c : ℝ)) = d := by
+      rw [Fin.sum_univ_castSucc]
+      simp only [multiplicity_castSucc, multiplicity_last, add_comm _ (b : ℝ), hcount]
+    rw [hc]
+    ring
+  obtain ⟨u, hu⟩ := exists_minimum_prices F hF hFshift hδ hbound
+  let w (j : Fin 3) := Real.exp (u j) / expSum (Fin.last 3) u
+  refine ⟨w, fun j => div_pos (Real.exp_pos _) (expSum_pos _ _), ?_, fun j => ?_⟩
+  · change (∑ j, Real.exp (u j) / expSum (Fin.last 3) u) = 1
+    rw [← Finset.sum_div, ← expSum_last, div_self (expSum_pos _ _).ne']
+  · let line (t : ℝ) (i : Fin 3) := u i + if i = j then t else 0
+    have hlin (i : Fin 3) : HasDerivAt (fun t => τ i * line t i)
+        (if i = j then τ i else 0) 0 := by
+      by_cases hij : i = j
+      · simpa [line, hij] using (((hasDerivAt_id (0 : ℝ)).const_add (u i)).const_mul (τ i))
+      · simpa [line, hij] using (hasDerivAt_const (0 : ℝ) (τ i * u i))
+    have hD := (HasDerivAt.fun_sum (u := univ) (fun c _ =>
+      (derivative_log_expSum u j c w (fun _ => rfl)).const_mul (multiplicity l b c : ℝ))).sub
+        (HasDerivAt.fun_sum (u := univ) (fun i _ => hlin i))
+    simp only [Finset.sum_ite_eq', mem_univ, ite_true] at hD
+    have hMin : IsMinOn (fun t => F (line t)) Set.univ 0 := by
+      intro t _
+      have h0 : line 0 = u := by funext i; simp [line]
+      change F (line 0) ≤ F (line t)
+      rw [h0]
+      exact hu (line t)
+    have hzero := hMin.isLocalMin (by simp)
+    exact sub_eq_zero.mp (hD.deriv.symm.trans hzero.deriv_eq_zero)
+
+#print axioms exists_direct_certificate
 
 #print axioms isGreatest_direct
 #print axioms isGreatest_complement
