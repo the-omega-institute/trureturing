@@ -493,14 +493,15 @@ private theorem moves_one_filter (p : Column) :
   obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
   exact checked block offset
 
-theorem step_one {R : Type*} [NonAssocSemiring R]
+theorem step_one {R : Type*} [NonUnitalNonAssocSemiring R] [One R]
+    (leftUnit : ∀ x : R, (1 : R) * x = x)
     (w : Column → R) (p : Column) :
     oneDefect.mulVec w p = ((movesOne p).map w).sum := by
   classical
   have nodup : (movesOne p).Nodup := by
     rw [moves_one_filter]; exact (List.nodup_finRange _).filter _
   have mem (q : Column) : q ∈ movesOne p ↔ cost p q = 1 := by rw [moves_one_filter]; simp
-  simp only [Matrix.mulVec, dotProduct, oneDefect, ite_mul, one_mul, zero_mul]
+  simp only [Matrix.mulVec, dotProduct, oneDefect, ite_mul, leftUnit, zero_mul]
   simp_rw [← mem, ← List.mem_toFinset]
   rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ nodup]
 
@@ -642,7 +643,7 @@ private def seedImage (k : Fin 12) (p : Column) : ℤ :=
 
 private theorem seed_image (k : Fin 12) (p : Column) :
     oneDefect.mulVec (table k) p = seedImage k p := by
-  rw [step_one]
+  rw [step_one one_mul]
   have checked : ∀ (i : Fin 12) (block : Fin 27) (offset : Fin 9),
       let col := finProdFinEquiv (block, offset)
       ((movesOne col).map (table i)).sum = seedImage i col := by
