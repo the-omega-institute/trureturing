@@ -20,16 +20,6 @@ namespace D5.S3.Fourier.Concentration.WeightedOccupationDiagonal
 /-- An exponential majorant for the series with squared reciprocal factorial coefficients. -/
 noncomputable def diagonalEnvelope (x : ℝ) : ℝ := 2 * exp (x / 2) - 1
 
-private theorem factorial_succ_lower (n : ℕ) : 2 ^ n ≤ n.succ.factorial := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [pow_succ, Nat.factorial_succ]
-    calc
-      2 ^ n * 2 ≤ n.succ.factorial * 2 := Nat.mul_le_mul_right _ ih
-      _ = 2 * n.succ.factorial := Nat.mul_comm _ _
-      _ ≤ n.succ.succ * n.succ.factorial := Nat.mul_le_mul_right _ (by omega)
-
 private theorem local_bound (x : ℝ) (hx : 0 ≤ x) (p : ℕ) :
     (∑ n ∈ range (p + 1), x ^ n / (n.factorial : ℝ) ^ 2) ≤
       2 * exp (x / 2) - 1 := by
@@ -38,7 +28,9 @@ private theorem local_bound (x : ℝ) (hx : 0 ≤ x) (p : ℕ) :
         2 * ((x / 2) ^ (n + 1) / ((n + 1).factorial : ℝ)) := by
     have hfac : 0 < ((n + 1).factorial : ℝ) := by positivity
     have htwo : (2 : ℝ) ^ n ≤ ((n + 1).factorial : ℝ) := by
-      exact_mod_cast factorial_succ_lower n
+      have h : (2 : ℕ) ^ n ≤ (n + 1).factorial := by
+        simpa [Nat.add_comm] using (Nat.factorial_mul_pow_le_factorial (m := 1) (n := n))
+      exact_mod_cast h
     have hxpow : 0 ≤ x ^ (n + 1) := pow_nonneg hx _
     calc
       x ^ (n + 1) / ((n + 1).factorial : ℝ) ^ 2 =
