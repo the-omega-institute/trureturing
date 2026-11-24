@@ -368,9 +368,11 @@ async function generationIndex(digest, file) {
     await cache.saveCache([path], key);
   }
   await rm(path, { force: true });
-  if (await cache.restoreCache([path], key, []) !== key || await digestFile(path) !== digest) {
-    throw new Error('missing or corrupt Actions generation index ' + digest);
+  if (await cache.restoreCache([path], key, []) !== key) {
+    if (!put) process.exitCode = 4;
+    throw new Error('missing Actions generation index ' + digest);
   }
+  if (await digestFile(path) !== digest) throw new Error('corrupt Actions generation index ' + digest);
   if (!put && resolve(file) !== resolve(path)) await copyFile(path, file);
 }
 
@@ -589,7 +591,38 @@ async function saveContinuation() {
   }
 }
 
+async function runPublisher() {
+  requirePublisher();
+  const temp = process.env.RUNNER_TEMP;
+  const run = (command, args) => execFileSync(command, args, { stdio: 'inherit' });
+  // Hosted runners supply the cache service identity to JavaScript actions.
+  // Keep that identity in this action's subprocesses throughout the operation.
+  if (operation === 'compile-generation') {
+    const stage = process.env.STAGE;
+    if (!/^(common|0|[1-9][0-9]*)$/.test(stage)) throw new Error('invalid generation worker stage');
+    const output = join(temp, 'generation-layer');
+    await mkdir(output, { recursive: true });
+    run('bash', ['.github/actions/lean-compile-layer/measure.sh', '--compile', 'python3',
+      'tools/scripts/worktree/lean_generation_plan.py', 'worker', '--plan', join(temp, 'generation-plan/plan.json'),
+      '--base', join(temp, 'generation-plan/hits.json'), '--common', join(temp, 'generation-common/common.json'),
+      '--stage', stage, '--output', join(output, stage + '.json')]);
+    return;
+  }
+  const receipts = join(temp, 'receipts');
+  const base = join(temp, 'base/base.json');
+  const plan = join(temp, 'complete-plan.json');
+  const expected = join(temp, 'base/expected-marker');
+  await mkdir(receipts, { recursive: true });
+  await copyFile(join(temp, 'plan/hits.json'), join(receipts, 'compiler-hits.json'));
+  run('python3', ['tools/scripts/worktree/lean_generation_facets.py', '--plan', join(temp, 'plan/plan.json'),
+    '--base', base, '--receipts', receipts, '--output', plan]);
+  const prior = (await stat(expected)).size ? ['--base', base] : [];
+  run('python3', ['tools/scripts/worktree/lean_cache_generation.py', 'commit', '--plan', plan,
+    ...prior, '--receipts', receipts, '--expected-marker', expected]);
+}
+
 async function main() {
+  if (['compile-generation', 'publish-generation'].includes(operation)) return runPublisher();
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);
   }
@@ -597,7 +630,8 @@ async function main() {
     const io = { ...await loadCacheClient(), visibleEntries, restoreIndex, payloadPath, indexPath, digestFile, paced };
     const directory = join(process.env.RUNNER_TEMP, 'lean-generation-base');
     if (operation === 'migrate-seed') return migrateSeed(io, directory);
-    const seed = await latestSeed(io, directory);
+    if (operation === 'latest-seed') requirePublisher();
+    const seed = await latestSeed(io, directory, operation === 'latest-seed');
     if (!seed) {
       if (operation === 'latest-seed') throw new Error('no complete protected dev seed found');
       console.log('LEAN_GENERATION_SEED no complete seed available');
@@ -609,7 +643,7 @@ async function main() {
       return;
     }
     const selected = join(directory, 'selected.json');
-    if (selectSeed(indexPath, selected)) await restorePayloads(io.cache, io.cacheVersion, [seed.prefix], selected);
+    if (selectSeed(join(directory, 'index.json'), selected)) await restorePayloads(io.cache, io.cacheVersion, [seed.prefix], selected);
     return;
   }
   if (operation === 'restore-published') return restorePublished();
@@ -654,6 +688,6 @@ async function main() {
 try {
   await main();
 } catch (error) {
-  process.exitCode = 1;
+  process.exitCode ||= 1;
   console.error('LEAN_ACTIONS_SHARDS ' + error.message);
 }

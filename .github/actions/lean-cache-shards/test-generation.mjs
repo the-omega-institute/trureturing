@@ -57,7 +57,7 @@ exports.saveCache = async function(paths, key) {
     GITHUB_OUTPUT: join(root, 'outputs'),
     GITHUB_SHA: 'b'.repeat(40),
     GH_TOKEN: 'test',
-    PYTHONPATH: fileURLToPath(new URL('../../../tools/scripts/worktree', import.meta.url)),
+    PYTHONPATH: process.env.LEAN_GENERATION_TEST_TOOLS || fileURLToPath(new URL('../../../tools/scripts/worktree', import.meta.url)),
     GITHUB_REF: 'refs/heads/dev',
     GITHUB_REF_PROTECTED: 'true',
     GITHUB_REPOSITORY: 'owner/repo',
@@ -71,7 +71,7 @@ exports.saveCache = async function(paths, key) {
     spawnSync(process.execPath, [action, operation, sha, file], {
       encoding: 'utf8', cwd: root, env: { ...env, GITHUB_EVENT_NAME: event },
     });
-  return { root, requests, run };
+  return { root, requests, run, env };
 }
 
 for (const event of ['push', 'pull_request']) {
@@ -83,8 +83,8 @@ for (const event of ['push', 'pull_request']) {
     assert.equal(hit.status, 0, hit.stderr);
     assert.equal(await readFile(join(root, 'output.json'), 'utf8'), bytes);
     const miss = run(event, 'generation-get', '0'.repeat(64));
-    assert.equal(miss.status, 1);
-    assert.match(miss.stderr, /missing or corrupt/);
+    assert.equal(miss.status, 4);
+    assert.match(miss.stderr, /missing Actions generation index/);
     const forbidden = run(event, 'generation-put', digest, 'input.json');
     assert.equal(forbidden.status, 1);
     assert.match(forbidden.stderr, /require the protected dev Release publisher/);
@@ -114,7 +114,7 @@ test('publisher retries verify existing bytes and conflicting contents fail', as
   await writeFile(join(root, 'lean-generation-v1-' + digest), 'different');
   const conflict = run('schedule', 'generation-put', digest, 'input.json');
   assert.equal(conflict.status, 1);
-  assert.match(conflict.stderr, /missing or corrupt/);
+  assert.match(conflict.stderr, /corrupt Actions generation index/);
   assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 1);
 });
 
@@ -148,6 +148,12 @@ test('migration pins the newest complete verified owner and checks each streamed
   await writeFile(join(root, 'inventory'), inventory.map(i => JSON.stringify(i)).join('\n'));
   await writeFile(join(root, 'bin/gh'), `#!/bin/sh
 case "$*" in
+  *git/ref/tags/lean-generation-bootstrap-v1*) if test -f pin-ref; then cat pin-ref; else echo '{"status":"404"}'; exit 1; fi ;;
+  *git/blobs*--method*) jq '. + {sha:"blob",size:(.content|@base64d|length)}' > seed-blob; echo '{"sha":"blob"}' ;;
+  *git/tags*--method*) jq '. + {object:{sha:.object,type:.type}}' > seed-tag; echo '{"sha":"tag"}' ;;
+  *git/refs*--method*) jq '. + {object:{sha:.sha,type:"tag"}}' > pin-ref; cat pin-ref ;;
+  *git/tags/tag*) cat seed-tag ;;
+  *git/blobs/blob*) cat seed-blob ;;
   *actions/caches*) cat inventory ;;
   *branches/dev*) echo '{"protected":true,"commit":{"sha":"${commit}"}}' ;;
   *actions/runs/1/attempts/1*) echo '{"id":1,"run_attempt":1,"status":"completed","conclusion":"success","event":"push","head_branch":"dev","head_sha":"${commit}","head_repository":{"full_name":"owner/repo"},"path":".github/workflows/lean-cache-publish.yml"}' ;;
@@ -161,6 +167,13 @@ esac
   const pin = JSON.parse(await readFile(join(base, 'seed.json')));
   assert.equal(pin.key, prefix + 'snapshot-1-1');
   assert.equal(pin.index_sha256, hash(await readFile(join(base, 'index.json'))));
+  await rm(join(root, pin.key));
+  await rm(join(root, 'inventory'));
+  await rm(base, { recursive: true });
+  const retry = run('schedule', 'latest-seed');
+  assert.equal(retry.status, 0, retry.stderr);
+  assert.deepEqual(JSON.parse(await readFile(join(base, 'seed.json'))), pin);
+  assert.equal(hash(await readFile(join(base, 'index.json'))), pin.index_sha256);
   await writeFile(join(root, 'tools/scripts/worktree/lean_generation_seed.py'), `
 import json
 from pathlib import Path
@@ -186,7 +199,7 @@ test('handover drains legacy workflow versions and recovers the original dev pin
   const tip = 'b'.repeat(40);
   const earlier = 'a'.repeat(40);
   const old = Buffer.from("concurrency: {group: old-producer}\n").toString('base64');
-  const current = Buffer.from("concurrency: {group: lean-cache-release-publisher}\n").toString('base64');
+  const current = Buffer.from("concurrency: {group: lean-cache-generation-publisher-v1}\n").toString('base64');
   await writeFile(join(root, 'bin/gh'), `#!/bin/sh
 case "$*" in
   *status=queued*) echo '[{"workflow_runs":[{"id":4,"head_sha":"old"},{"id":5,"head_sha":"new"}]}]' ;;
@@ -220,4 +233,63 @@ esac
   const resume = invoke();
   assert.equal(resume.status, 0, resume.stderr);
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
+});
+
+test('ordinary push and PR restore a scoped generation from cold workspaces', async t => {
+  for (const [event, evict] of [['push', false], ['pull_request', true]]) {
+    const { root, requests, run, env } = await fixture(t);
+    const dir = join(root, 'tools/scripts/worktree');
+    await mkdir(dir, { recursive: true });
+    const prepare = spawnSync('python3', ['-B', '-c', `
+from pathlib import Path
+from lean_generation_index import encode
+from test_lean_cache_generation import Generations
+generation = Generations()
+generation.setUp()
+try:
+    generation.commit(generation.plan, None, [generation.receipt])
+    store = generation.remote
+    Path("plan").write_bytes(encode(generation.plan))
+    Path("marker").write_bytes(encode(store.marker))
+    digest = store.marker["index"]
+    Path("release-index").write_bytes(store.indexes["release"][digest])
+    Path("lean-generation-v1-" + digest).write_bytes(store.indexes["ci"][digest])
+    for address, data in store.volumes.items():
+        Path(address).write_bytes(data)
+finally:
+    generation.doCleanups()
+`], { cwd: root, env, encoding: 'utf8' });
+    assert.equal(prepare.status, 0, prepare.stderr);
+    const marker = JSON.parse(await readFile(join(root, 'marker')));
+    if (evict) await rm(join(root, 'lean-generation-v1-' + marker.index));
+    await writeFile(join(dir, 'lean_cache_generation.py'), `
+import os, subprocess, sys
+from pathlib import Path
+sys.path.insert(0, os.environ["PYTHONPATH"])
+import lean_cache_generation as cli
+from lean_generation_index import read, sha
+class Transport:
+    deadline = None
+    def __init__(self, root, deadline): pass
+    def current(self): return "verified", read("marker")
+    def get_index(self, digest, output, transport):
+        if transport == "ci":
+            subprocess.run(["node", ${JSON.stringify(action)}, "generation-get", digest, str(output)], check=True)
+        else:
+            output.write_bytes(Path("release-index").read_bytes())
+        assert sha(output.read_bytes()) == digest
+        return read(output)
+    def volume(self, digest, size): return Path(digest)
+    def blocks(self, path, start, size): yield path.read_bytes()[start:start + size]
+cli.GitHub = Transport
+cli.checkout_plan = lambda root: read("plan")
+sys.exit(cli.main())
+`);
+    env.INPUT_TARGETS = 'B';
+    const recovered = run(event, 'restore-published');
+    assert.equal(recovered.status, 0, recovered.stderr);
+    assert.equal(await readFile(join(root, '.lake/build/lib/lean/A.olean'), 'utf8'), 'library');
+    assert.equal(await readFile(join(root, '.lake/build/lib/lean/B.olean'), 'utf8'), 'consumer');
+    assert.equal(await requests(), 'get lean-generation-v1-' + marker.index + '\n');
+  }
 });

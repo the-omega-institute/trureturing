@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 
 WORKFLOW = ".github/workflows/lean-cache-publish.yml"
-GROUP = "lean-cache-release-publisher"
+GROUP = "lean-cache-generation-publisher-v1"
 
 
 def api(endpoint, *, pages=False):

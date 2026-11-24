@@ -12,6 +12,46 @@ function api(path, projection = '.') {
     { encoding: 'utf8', timeout: 90000 }));
 }
 
+const pinName = 'lean-generation-bootstrap-v1';
+
+function gitApi(path, body) {
+  const args = ['api', 'repos/' + process.env.GITHUB_REPOSITORY + '/git/' + path];
+  if (body) args.push('--method', 'POST', '--input', '-');
+  return JSON.parse(execFileSync('gh', args, {
+    input: body ? JSON.stringify(body) : undefined, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
+    timeout: 120000, stdio: ['pipe', 'pipe', 'pipe'],
+  }));
+}
+
+async function pinnedSeed(io, directory) {
+  let ref;
+  try {
+    ref = gitApi('ref/tags/' + pinName);
+  } catch (error) {
+    if (error.status && JSON.parse(error.stdout || '{}').status === '404') return;
+    throw error;
+  }
+  if (ref.ref !== 'refs/tags/' + pinName || ref.object.type !== 'tag') throw new Error('invalid bootstrap ref');
+  const tag = gitApi('tags/' + ref.object.sha);
+  if (tag.tag !== pinName || tag.object.type !== 'blob') throw new Error('invalid bootstrap pin');
+  const seed = JSON.parse(tag.message);
+  const blob = gitApi('blobs/' + tag.object.sha);
+  if (blob.sha !== tag.object.sha || blob.encoding !== 'base64' || blob.size > 32 * 1024 * 1024) {
+    throw new Error('invalid bootstrap index blob');
+  }
+  await mkdir(directory, { recursive: true });
+  await writeFile(join(directory, 'index.json'), Buffer.from(blob.content, 'base64'));
+  await writeFile(join(directory, 'seed.json'), JSON.stringify(seed) + '\n');
+  await validatePin(io, directory);
+  return seed;
+}
+
+function persistSeed(seed, bytes) {
+  const blob = gitApi('blobs', { content: bytes.toString('base64'), encoding: 'base64' });
+  const tag = gitApi('tags', { tag: pinName, message: JSON.stringify(seed), object: blob.sha, type: 'blob' });
+  gitApi('refs', { ref: 'refs/tags/' + pinName, sha: tag.sha });
+}
+
 function ownerMatches(seed, dev) {
   const { run, attempt, commit } = seed;
   if (!/^[0-9a-f]{40}$/.test(commit)) return false;
@@ -37,7 +77,9 @@ export function selectSeed(file, selected) {
   return true;
 }
 
-export async function latestSeed(io, directory) {
+export async function latestSeed(io, directory, pin) {
+  const prior = await pinnedSeed(io, directory);
+  if (prior) return prior;
   const branch = api('branches/dev');
   if (branch.protected !== true) throw new Error('seed selection requires protected dev');
   const dev = ['schedule', 'workflow_dispatch'].includes(process.env.GITHUB_EVENT_NAME)
@@ -70,11 +112,15 @@ export async function latestSeed(io, directory) {
     await copyFile(io.indexPath, join(directory, 'index.json'));
     await writeFile(join(directory, 'seed.json'), JSON.stringify(seed) + '\n');
     console.log('LEAN_GENERATION_SEED ' + JSON.stringify({ ...seed, complete: true, entries: digests.size }));
+    if (pin) {
+      persistSeed(seed, await readFile(io.indexPath));
+      return pinnedSeed(io, directory);
+    }
     return seed;
   }
 }
 
-export async function migrateSeed(io, directory) {
+async function validatePin(io, directory) {
   const descriptor = JSON.parse(await readFile(join(directory, 'seed.json'), 'utf8'));
   const file = join(directory, 'index.json');
   const index = JSON.parse(await readFile(file, 'utf8'));
@@ -82,6 +128,11 @@ export async function migrateSeed(io, directory) {
       || snapshot.exec(descriptor.key)?.[1] !== descriptor.prefix || index.owner.ref !== ref
       || index.owner.commit !== descriptor.commit || index.owner.run !== descriptor.run
       || index.owner.attempt !== descriptor.attempt) throw new Error('legacy seed pin mismatch');
+  return { descriptor, index };
+}
+
+export async function migrateSeed(io, directory) {
+  const { descriptor, index } = await validatePin(io, directory);
   const digests = new Set(Object.values(index.entries));
   const child = spawn('python3', ['-B', 'tools/scripts/worktree/lean_generation_seed.py',
     '--seed-root', 'build/seed-source', '--directory', directory], { stdio: ['pipe', 'pipe', 'inherit'] });

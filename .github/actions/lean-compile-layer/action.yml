@@ -97,13 +97,9 @@ runs:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
         STRATALINT_CACHE_WRITES: 'true'
         STAGE: ${{ inputs.stage }}
-      shell: bash
-      run: |
-        mkdir -p "$RUNNER_TEMP/generation-layer"
-        bash "$GITHUB_ACTION_PATH/measure.sh" --compile python3 tools/scripts/worktree/lean_generation_plan.py worker \
-          --plan "$RUNNER_TEMP/generation-plan/plan.json" --base "$RUNNER_TEMP/generation-plan/hits.json" \
-          --common "$RUNNER_TEMP/generation-common/common.json" --stage "$STAGE" \
-          --output "$RUNNER_TEMP/generation-layer/$STAGE.json"
+      uses: ./.github/actions/lean-cache-shards
+      with:
+        operation: compile-generation
     - if: inputs.generation == 'true'
       uses: actions/upload-artifact@v6
       with:

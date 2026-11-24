@@ -6,8 +6,10 @@ on:
   workflow_dispatch:
 
 permissions: {}
+env:
+  STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
 concurrency:
-  group: lean-cache-release-publisher
+  group: lean-cache-generation-publisher-v1
   queue: max
   cancel-in-progress: false
 
@@ -151,14 +153,6 @@ jobs:
         env:
           STRATALINT_ACCEPT_COLD_BUILD: '1'
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/receipts"
-          cp "$RUNNER_TEMP/plan/hits.json" "$RUNNER_TEMP/receipts/compiler-hits.json"
-          python3 tools/scripts/worktree/lean_generation_facets.py --plan "$RUNNER_TEMP/plan/plan.json" \
-            --base "$RUNNER_TEMP/base/base.json" --receipts "$RUNNER_TEMP/receipts" --output "$RUNNER_TEMP/complete-plan.json"
-          base=()
-          if [[ -s "$RUNNER_TEMP/base/expected-marker" ]]; then base=(--base "$RUNNER_TEMP/base/base.json"); fi
-          python3 tools/scripts/worktree/lean_cache_generation.py commit \
-            --plan "$RUNNER_TEMP/complete-plan.json" "${base[@]}" \
-            --receipts "$RUNNER_TEMP/receipts" --expected-marker "$RUNNER_TEMP/base/expected-marker"
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: publish-generation
