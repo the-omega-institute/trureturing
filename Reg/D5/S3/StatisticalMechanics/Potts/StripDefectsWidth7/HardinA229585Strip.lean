@@ -18,6 +18,86 @@ open scoped BigOperators
 noncomputable section
 attribute [local irreducible] a T initial terminal W cl
 
+namespace CrossRelabel
+
+abbrev signature : Signature where
+  Params := Σ _ : Equiv.Perm (Fin 3), Boundary
+  State _ := Row
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readout : Realization signature :=
+  realize signature (fun b w r => if b then cross w.2 r
+    else cross (w.1 ∘ w.2) (w.1 ∘ r)) (fun e => nomatch e)
+
+def rejected (i : Bool) : Realization signature :=
+  realize signature (fun j w r =>
+    if j = i then readout.readout j w r + 1 else readout.readout j w r) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row),
+    R.readout false ⟨e, p⟩ r = R.readout true ⟨e, p⟩ r
+
+private theorem rejected_law (i : Bool) : ¬ arena.Law (rejected i) := by
+  intro h
+  have hh := h (Equiv.refl _) (fun _ => 0) (fun _ => 0)
+  cases i <;> exact (by decide +kernel : ¬ _) hh
+
+def family : Registration arena (type_of% @cross_relabel) where
+  actual := readout
+  bridge := Iff.rfl
+  variation := ⟨cross_relabel, rejected false, rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected i, ?_, rfl, rejected_law i⟩
+      intro j hj
+      funext w r
+      simp only [rejected, realize, if_neg hj]
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨Equiv.refl _, fun _ => 0⟩, fun _ => 0, fun _ => 1, ?_⟩
+    cases i <;> decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@cross_relabel) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip.CrossRelabel.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun b w r => if b then cross w.2 r
+    else cross (w.1 ∘ w.2) (w.1 ∘ r)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some Row
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[
+      { path := #["body", "body", "body", "fn", "arg"], stateBinder := 2 },
+      { path := #["body", "body", "body", "arg"], stateBinder := 2 }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CrossRelabel
+
 namespace Recurrence
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
