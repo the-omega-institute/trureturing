@@ -8,6 +8,7 @@ url: https://msp.org/pjm/1957/7-2/p04.xhtml
 claim: "A prescribed demand is feasible exactly when it satisfies every network cut capacity."
 strata_touched:
   - D5/S3/Quantum/Measurement/Auric/UnequalBlockEffects
+  - D5/S3/Quantum/Measurement/Auric/UnequalBlockTraceCertificates
 license: citation-only
 triage: anchor
 ---
