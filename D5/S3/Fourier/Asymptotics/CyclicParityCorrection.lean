@@ -27,12 +27,12 @@ def mesh (q : ℕ) : ℝ := 2 * Real.pi / q
 /-- The cosine at the centered representative of a residue. -/
 def sample {q : ℕ} (i : ZMod q) : ℝ := Real.cos (centeredAngle i)
 
-private theorem centeredAngle_eq_mesh {q : ℕ} (i : ZMod q) :
+theorem centeredAngle_eq_mesh {q : ℕ} (i : ZMod q) :
     centeredAngle i = (i.valMinAbs : ℝ) * mesh q := by
   unfold centeredAngle mesh
   ring
 
-private theorem mesh_pos {q : ℕ} [NeZero q] : 0 < mesh q :=
+theorem mesh_pos {q : ℕ} [NeZero q] : 0 < mesh q :=
   div_pos (by positivity) (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q))
 
 private theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
@@ -117,8 +117,8 @@ private theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
     ring
 
 /-- On the whole grid the clipped quadratic is positive exactly above both roots.
-The energy separates into the dual bound, a squared distance, and the three
-nonnegative terms for complementary slackness. -/
+The energy separates into the dual bound, a squared distance, and three terms for
+complementary slackness. The terms are nonnegative when the first multiplier is nonnegative. -/
 theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
     (hH : 0 < H) (hZ : 0 < Z)
     (hC : -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) < 1) :
@@ -248,8 +248,8 @@ private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 < q)
       Pi.single_eq_of_ne hineg, sub_zero, add_zero]
     exact add_nonneg (hw i) (hrest i)
 
-/-- The three-site mass transfer matches both cosine deficits exactly whenever its
-denominator is nonzero. Nonnegative resulting weights give a feasible comparison. -/
+/-- The mass transfer matches both cosine deficits exactly. Nonnegative resulting
+weights give a feasible comparison. -/
 theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
     (w : ZMod q → ℝ) (A : ℝ) (hw : ∀ i, 0 ≤ w i) (hmass : ∑ i, w i = 1) :
     let splitMass := fun x : ℝ => x / 2
@@ -262,7 +262,6 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    U ≠ 0 → G - V * F / U ≠ 0 →
     0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A := by
@@ -276,9 +275,30 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
   let V := 2 * (1 - C ^ 2)
   let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
   let μ := (A - D₁ - F * δ) / U
-  change U ≠ 0 → G - V * F / U ≠ 0 →
-    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 → 0 ≤ μ → _
-  intro hU hden h0 h1 hneg hμ
+  change 0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 → 0 ≤ μ → _
+  intro h0 h1 hneg hμ
+  have hhalf : (1 : ℝ) < (↑(q / 2) : ℝ) := by
+    exact_mod_cast (show 1 < q / 2 by omega)
+  have hmesh : mesh q < (↑(q / 2) : ℝ) * mesh q := by
+    simpa only [one_mul] using mul_lt_mul_of_pos_right hhalf (mesh_pos (q := q))
+  have hcos : Real.cos (mesh q) < 1 := by
+    rw [← Real.cos_zero]
+    exact Real.cos_lt_cos_of_nonneg_of_le_pi (by norm_num)
+      (hmesh.le.trans half_mesh_le_pi) mesh_pos
+  have hC : C < Real.cos (mesh q) := by
+    rw [← show sample ((↑(q / 2) : ℤ) : ZMod q) = C from sample_antipode,
+      sample_cast _ (by omega) (by omega), Int.cast_natCast]
+    exact Real.cos_lt_cos_of_nonneg_of_le_pi mesh_pos.le half_mesh_le_pi hmesh
+  have hU : U ≠ 0 := (sub_pos.mpr (hC.trans hcos)).ne'
+  have hfactor : G - V * F / U =
+      2 * (1 - Real.cos (mesh q)) * (Real.cos (mesh q) - C) := by
+    unfold G V F U
+    rw [Real.cos_two_mul]
+    field_simp [show 1 - C ≠ 0 from hU]
+    ring
+  have hden : G - V * F / U ≠ 0 := by
+    rw [hfactor]
+    exact (mul_pos (mul_pos (by norm_num) (sub_pos.mpr hcos)) (sub_pos.mpr hC)).ne'
   let v := adjusted w δ μ (δ / 2)
   have hvmass : ∑ i, v i = 1 := by
     simpa only [mul_one, hmass, show 1 - (δ + μ) + δ / 2 + δ / 2 + μ = 1 by ring] using

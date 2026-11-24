@@ -123,7 +123,6 @@ abbrev arena : Arena where
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    U ≠ 0 → G - V * F / U ≠ 0 →
     0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A
@@ -138,14 +137,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hM (r : ℕ) : cosineMoment r w = 1 := by
     unfold cosineMoment
     simp [w, Pi.single_apply, ite_mul, D5.S3.Fourier.Concentration.AggregateCosineBalance.mode]
-  have hcos : Real.cos (2 * mesh 8) = 0 := by
-    rw [show 2 * mesh 8 = Real.pi / 2 by unfold mesh; norm_num; ring, Real.cos_pi_div_two]
   have hh := h 8 (by decide) w 0 hw hm
   have hh' : adjusted w 0 0 1 ∈ feasible 8 1 ∧
       cosineMoment 1 (adjusted w 0 0 1) = 1 ∧ cosineMoment 2 (adjusted w 0 0 1) = 1 := by
     have h1 : 0 ≤ w 1 + 1 := by linarith only [hw 1]
     have hneg : 0 ≤ w (-1) + 1 := by linarith only [hw (-1)]
-    simpa [hM, hcos, rejected, realize, show w 0 = 1 by simp [w], h1, hneg] using hh
+    simpa [hM, rejected, realize, show w 0 = 1 by simp [w], h1, hneg] using hh
   have hsum : ∑ i, adjusted w 0 0 1 i = 3 := by
     norm_num [adjusted, w, Pi.single_apply, sum_add_distrib]
   linarith only [hh'.1.2.1, hsum]
