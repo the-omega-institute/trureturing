@@ -401,11 +401,12 @@ theorem result : ¬ claim := by
     rw [hn', Nat.cast_pow, Nat.cast_ofNat]
     exact D5.S1.Digit.GoldenBase4ResidueBridge.four_pow_mod_three 7
   have hrem : n % 3 = 1 := (ZMod.natCast_eq_natCast_iff' n 1 3).1 hcast
-  have hquot : n / 3 = 5461 := hn ▸ (by decide : 16384 / 3 = 5461)
-  have hfactor : n - 1 = 3 * 5461 := by
+  have hfactor : n - 1 = 3 * (n / 3) := by
     have hdiv := Nat.mod_add_div n 3
-    rw [hrem, hquot] at hdiv
-    omega
+    rw [hrem] at hdiv
+    calc
+      n - 1 = (1 + 3 * (n / 3)) - 1 := congrArg (fun k : ℕ => k - 1) hdiv.symm
+      _ = 3 * (n / 3) := Nat.add_sub_cancel_left 1 _
   let : Fintype ZeroNeighbor := Fintype.ofFinite _
   have hdegree : Nat.card ZeroNeighbor = t * (n - 1) :=
     Fintype.card_eq_nat_card.symm.trans ((binaryGraph.card_neighborSet_eq_degree zeroVertex).trans

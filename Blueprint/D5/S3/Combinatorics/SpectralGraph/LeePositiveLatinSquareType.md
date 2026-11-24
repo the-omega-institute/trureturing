@@ -28,7 +28,9 @@ $$\neg \operatorname{claim}$$
 
 *Commentary.*
 
-The 28 upper-triangular entries give 2²⁸ vertices, so n must be 16,384. Simultaneous reindexing by (0 1 2)(3 4 5) acts on the actual zero-neighbor set with order three. The ten classes of ordered index pairs under reindexing and transpose give exactly 1,024 fixed symmetric matrices. Decoding all 128 binary vectors identifies the parity test with actual kernel membership. Rank-nullity identifies rank at least five with kernel cardinality at most four. The kernel checks 32 chunks of 32 masks, and the equivalence with accepted masks gives 770 fixed neighbors. The orbit congruence gives degree 2 modulo 3, whereas every t(16,384 − 1) is divisible by 3.
+The 28 upper-triangular entries give 2²⁸ vertices, so n must be 16,384. Simultaneous reindexing by (0 1 2)(3 4 5) acts on the actual zero-neighbor set with order three. The ten classes of ordered index pairs under reindexing and transpose give exactly 1,024 fixed symmetric matrices. Decoding all 128 binary vectors identifies the parity test with actual kernel membership. Rank-nullity identifies rank at least five with kernel cardinality at most four. The kernel checks 32 chunks of 32 masks, and the equivalence with accepted masks gives 770 fixed zero-neighbors. The nonfixed orbits have size three, so the degree at zero is congruent to 770, or 2 modulo 3. With n = 4⁷, the frozen base-four residue theorem gives n ≡ 1 modulo 3, which makes the required valency t(n − 1) divisible by 3.
+
+Independently, summing Schmidt’s published rank/type valencies gives the exact degree 262,802,624. The Lean proof establishes the obstruction by the orbit congruence.
 
 ## References
 
