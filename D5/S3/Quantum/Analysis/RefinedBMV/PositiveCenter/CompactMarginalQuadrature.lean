@@ -40,6 +40,33 @@ def compactMarginalMeshDenominator (h : ℝ) : ℝ := (3 + h) * (3 + 2 * h)
 def regularizedMarginalIntegrand (h t x : ℝ) : ℝ :=
   (2 + h - x) * regularizedMarginalRemainder t x
 
+/-- The pointwise regularized remainder and all its parameter derivatives have one
+integral representation, including at a zero parameter. -/
+theorem iteratedDeriv_regularizedMarginalRemainder_parameter (j : ℕ) (x t : ℝ) :
+    iteratedDeriv j (fun r ↦ regularizedMarginalRemainder r x) t =
+      x ^ 2 * (∫ s in (0 : ℝ)..1, (1 - s) * (x * s) ^ j * Real.exp (t * (x * s))) := by
+  have hzero (r : ℝ) : regularizedMarginalRemainder r x =
+      x ^ 2 * (∫ s in (0 : ℝ)..1, (1 - s) * Real.exp (r * (x * s))) := by
+    by_cases hr : r = 0
+    · subst r
+      have h : (∫ s in (0 : ℝ)..1, 1 - s) = (1 : ℝ) / 2 := by
+        rw [intervalIntegral.integral_sub (f := fun _ : ℝ ↦ (1 : ℝ)) (g := fun s : ℝ ↦ s)
+          (continuous_const.intervalIntegrable _ _) (continuous_id.intervalIntegrable _ _)]
+        norm_num [intervalIntegral.integral_const, integral_id, smul_eq_mul]
+      simp only [regularizedMarginalRemainder, ite_true, zero_mul, Real.exp_zero, mul_one, h]
+      ring
+    · rw [regularizedMarginalRemainder, ite_eq_right hr, exp_quadratic_remainder_eq_integral]
+      apply (div_eq_iff (pow_ne_zero _ hr)).2
+      simp only [mul_assoc r, mul_pow]
+      ring
+  induction j generalizing t with
+  | zero => simpa only [iteratedDeriv_zero, pow_zero, mul_one] using hzero t
+  | succ j ih =>
+      rw [iteratedDeriv_succ, show iteratedDeriv j (fun r ↦ regularizedMarginalRemainder r x) =
+        fun t ↦ x ^ 2 * (∫ s in (0 : ℝ)..1, (1 - s) * (x * s) ^ j * Real.exp (t * (x * s)))
+        from funext ih]
+      exact ((hasDerivAt_exponential_moment_integral x j t).const_mul (x ^ 2)).deriv
+
 private theorem compactKappa_mul_compactZ_eq_gridAverage {p : ℕ} (hp : 0 < p) (t : ℝ) :
     compactKappa p * compactZ p t = gridAverage p (regularizedMarginalRemainder t) := by
   by_cases ht : t = 0
