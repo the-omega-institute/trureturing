@@ -123,7 +123,8 @@ private theorem partition_products {S : Type*} [DecidableEq S]
       exact Prod.ext (he w.1) (he w.2)
     change ((partitions l).map fun w => F i (filterParts p w) * G w).sum = _
     have he : ((partitions l).map fun w => F i (filterParts p w) * G w).sum =
-        ((partitions l).map fun w => F i (filterParts p w) * G (filterParts (fun a => !p a) w)).sum :=
+        ((partitions l).map fun w =>
+          F i (filterParts p w) * G (filterParts (fun a => !p a) w)).sum :=
       congrArg List.sum (List.map_congr_left fun w _ => congrArg (F i (filterParts p w) * ·) (hG w))
     rw [he, partition_product l p (F i) G]
     have hc : ∀ a ∈ l.filter (fun a => !p a), slot a ∈ s := by
@@ -163,7 +164,7 @@ private theorem word_product (f : J → I) (l : List J) :
   | nil => simp [jetOccupation]
   | cons a l ih =>
     simp only [List.map_cons, List.prod_cons, jetOccupation]
-    rw [ih, MvPolynomial.X, monomial_mul_monomial, one_mul, add_comm]
+    rw [ih, MvPolynomial.X, MvPolynomial.monomial_mul_monomial, one_mul, add_comm]
 
 /-- The assignment sum is the linear readout of the product of the
 surviving creators. Repetition is carried by polynomial multiplication. -/
@@ -424,7 +425,7 @@ def punctureChargeTerm [Fintype X] [DecidableEq X] (D : LatticeData)
           MvPolynomial.C ((p.1.map scale).prod * wick (correction i) 0 p.1) *
             assignmentPolynomial U f p.2).sum))
 
-private theorem compact_word_eq_readout [Fintype X] (D : LatticeData) (q : Charge D)
+private theorem compact_word_eq_readout [Finite X] (D : LatticeData) (q : Charge D)
     (c : Chart) (x : ℝ) (slot : X → Puncture) (colour : X → Fin D.rank)
     (F : Finset (Index D)) (hF : ∀ a : Mode n, (colour a.1, a.2.val) ∈ F)
     (hs : ∀ a b, compactCovariance D c x F a b = compactCovariance D c x F b a)
@@ -432,6 +433,7 @@ private theorem compact_word_eq_readout [Fintype X] (D : LatticeData) (q : Charg
     compactWordReadout D q c x slot colour F hF l =
       affineReadout (compactCovariance D c x F) (compactMean D q c x F)
         (monomial (jetOccupation (l.map (compactMode D c slot colour F hF))) 1) := by
+  let := Fintype.ofFinite X
   rw [affineReadout_monomial]
   have h := native_occurrence_readout D F (compactCovariance D c x F) (compactMean D q c x F)
     hs (compactMode D c slot colour F hF) l
