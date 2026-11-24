@@ -126,6 +126,10 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 | 从钉版 Mathlib 移植 | 保留上游定义所在模块的路径，把 `Mathlib` 换成 `OmegaMath` | 在上游声明的完整名字前加 `Omega.` |
 | Omega 原创形式化 | 放在相关专题附近，可与移植模块同目录 | 在 `Omega` 命名空间中取名，模块文档第一行写 `Omega original.`，随后说明用途 |
 
+## 与标准定义的对应
+
+对于声称对应 Mathlib 的定义，在混合核验模块中证明映射保留运算或谓词。自然数核验给出零和后继转换的两个往返等式、序关系的双向等价，以及 Fibonacci 数列和二项式系数对任意输入的逐点一致。`lake test -- OmegaChecks.NatCorrespondence` 可单独运行。严格闭包覆盖任一算术移植模块时也运行这项核验。[对应证明](OmegaChecks/NatCorrespondence.lean)
+
 ## 空内核审计
 
 | 审计入口 | 传递闭包的模块数 | 声明数 |

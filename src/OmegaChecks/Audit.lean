@@ -55,7 +55,8 @@ private def checkUpstreamNames (strict : Environment) : IO Unit := do
   IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
 /-- Replay the imported artifacts in an empty kernel environment. -/
-private def audit (roots : List String) (path label : String) (expected : Option (List String)) : IO Unit := do
+private def audit (roots : List String) (path label : String)
+    (expected : Option (List String)) : IO (List String) := do
   searchPathRef.set (System.SearchPath.parse path)
   let env ← importModules (roots.toArray.map fun name => { module := name.toName }) {}
   let actual := env.allImportedModuleNames.toList.map Name.toString
@@ -80,19 +81,24 @@ private def audit (roots : List String) (path label : String) (expected : Option
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
   checkUpstreamNames env
   IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
+  return actual
 
 private def testLibrary (selected : List String) : IO Unit := do
   if selected.isEmpty then
     throw <| IO.userError "pass a module scope, for example: lake test -- OmegaMath.Projective"
   let strict := selected.filter fun name => isStrict name.toName
   let roots := if strict.isEmpty && selected.contains "OmegaChecks.Audit" then ["OmegaInit.Prelude"] else strict
-  if roots.isEmpty then return
-  let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ roots.toArray.map ("+" ++ ·) }
-  unless (← proc.wait) == 0 do throw <| IO.userError "strict library build failed"
-  audit roots ".lake/build/lib/lean" "Omega" none
+  let modules ← if roots.isEmpty then pure [] else do
+    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ roots.toArray.map ("+" ++ ·) }
+    unless (← proc.wait) == 0 do throw <| IO.userError "strict library build failed"
+    audit roots ".lake/build/lib/lean" "Omega" none
+  let arithmeticPorts := ["OmegaMath.Data.Nat.Fib.Basic", "OmegaMath.Data.Nat.Choose.Basic"]
+  if selected.contains "OmegaChecks.NatCorrespondence" || arithmeticPorts.any modules.contains then
+    let proc ← IO.Process.spawn { cmd := "lake", args := #["build", "+OmegaChecks.NatCorrespondence"] }
+    unless (← proc.wait) == 0 do throw <| IO.userError "Mathlib natural-number correspondence failed"
 
 def main (args : List String) : IO Unit := do
   if let "--exact" :: root :: path :: expected := args then
-    audit [root] path root (some expected)
+    discard <| audit [root] path root (some expected)
   else
     testLibrary args
