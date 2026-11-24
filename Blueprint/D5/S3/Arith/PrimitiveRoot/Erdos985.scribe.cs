@@ -38,7 +38,8 @@ internal sealed class PrimitiveRootErdos985Document : IScribeDocumentDefinition
                     "for primes at least five million. Its type contains no RH premise. " +
                     "It assembles the large-prime proof and the certified finite range, " +
                     "and is consumed by erdos985_of_finiteHeight. The finite-range " +
-                    "checker metadata names this actual proof dependency."))), DescribeRole.Theorem),
+                    "checker metadata names this actual proof dependency."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("erdos985-of-finite-height"),
                 DeclarationHandle.Create(Prefix + "erdos985_of_finiteHeight"),
                 H("The conditional conclusion with a checked finite range"),
