@@ -243,10 +243,11 @@ private theorem no_width_two {a b e d : ℕ} (hab : a < b) (he : 0 < e) (hde : d
         kronecker (A 0) (1 : Matrix (Fin e) (Fin e) ℂ) := by
       simp only [W, Matrix.kronecker, ← Matrix.mul_kronecker_mul,
         Matrix.one_mul, Matrix.mul_one]
-    have hr := (Matrix.rank_mul_le_right _ _).trans
-      (Matrix.rank_le_card_height (kronecker (A 0) (1 : Matrix (Fin e) (Fin e) ℂ)))
     have hdim : b * e ≤ a * e := by
-      simpa only [← hfac, hW, Fintype.card_prod, Fintype.card_fin] using hr
+      rw [← hW, hfac]
+      apply (Matrix.rank_mul_le_right _ _).trans
+      simpa only [Fintype.card_prod, Fintype.card_fin] using
+        (Matrix.rank_le_card_height (kronecker (A 0) (1 : Matrix (Fin e) (Fin e) ℂ)))
     exact (Nat.not_le_of_lt (Nat.mul_lt_mul_of_pos_right hab he)) hdim
   by_cases hX : LinearIndependent ℂ X
   · by_cases hY : LinearIndependent ℂ Y
@@ -481,11 +482,9 @@ private theorem projected_width_three {a b c d q : ℕ}
       simp only [Matrix.kronecker, ← Matrix.mul_kronecker_mul, hZd,
         Matrix.mul_one, Matrix.one_mul]
     rw [hfac]
-    have hrank := (Matrix.rank_mul_le_left _ _).trans
-      (Matrix.rank_mul_le_right
-        (kronecker (Z i) (1 : Matrix (Fin q) (Fin q) ℂ)) (kronecker D 1))
-    rw [rank_kronecker_one_general] at hrank
-    exact hrank.trans (by simpa [Nat.mul_comm] using Nat.mul_le_mul_left q hd)
+    refine (Matrix.rank_mul_le_left _ _).trans ((Matrix.rank_mul_le_right _ _).trans ?_)
+    rw [rank_kronecker_one_general]
+    simpa only [Nat.mul_comm] using Nat.mul_le_mul_left q hd
   have hWr : W.rank ≤ 3 * ((b - a) * q) := by
     let K (i : Fin 3) := kronecker (Z i) (Cᴴ * Y i)
     rw [hW]
