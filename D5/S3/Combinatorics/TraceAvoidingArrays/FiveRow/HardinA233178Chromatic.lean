@@ -35,6 +35,7 @@ result: proof_shape=content; consumers=HardinA233178Recurrence.chromatic_recurre
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
+import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
@@ -55,6 +56,7 @@ import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Data.Fin.Embedding
 import Mathlib.Data.Finset.Dedup
+import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Disjoint
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Finset.Image
