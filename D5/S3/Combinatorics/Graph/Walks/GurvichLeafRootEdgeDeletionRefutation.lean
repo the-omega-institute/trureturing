@@ -447,4 +447,176 @@ private theorem path6_inherent : Inherent (pathGraph 6) 0 3 := by
       map_rel' := fun h => h }
   exact (hq xC yC eC).map incl
 
+private def deletedPath : SimpleGraph (Fin 6) := (pathGraph 6).deleteEdges {s(0, 1)}
+
+private def midpoint (i : Fin 4) : Fin 9 := ⟨2 * i.val + 1, by omega⟩
+
+private def tip (i : Fin 4) : Fin 9 := ⟨2 * i.val + 2, by omega⟩
+
+private def towardMidpoint (x y : Fin 9) : Prop :=
+  ∃ i : Fin 4, y = midpoint i ∧ (x = 0 ∨ x = tip i)
+
+private instance (x y : Fin 9) : Decidable (towardMidpoint x y) :=
+  inferInstanceAs (Decidable (∃ i : Fin 4, y = midpoint i ∧ (x = 0 ∨ x = tip i)))
+
+/-- The four two-edge arms with center zero. -/
+private def fourArm : SimpleGraph (Fin 9) where
+  Adj x y := towardMidpoint x y ∨ towardMidpoint y x
+  symm.symm _ _ := Or.symm
+  loopless.irrefl x := (by decide : ∀ v : Fin 9, ¬ (towardMidpoint v v ∨ towardMidpoint v v)) x
+
+private instance : DecidableRel fourArm.Adj :=
+  fun x y => inferInstanceAs (Decidable (towardMidpoint x y ∨ towardMidpoint y x))
+
+private instance : DecidableRel deletedPath.Adj :=
+  fun i j => decidable_of_iff ((pathGraph 6).Adj i j ∧ s(i, j) ≠ s((0 : Fin 6), 1))
+    (by simp [deletedPath])
+
+private def displayedCopy : Copy deletedPath fourArm :=
+  ⟨{ toFun := ![5, 2, 1, 0, 3, 4]
+     map_rel' :=
+       (by decide : ∀ (i j : Fin 6), deletedPath.Adj i j →
+         fourArm.Adj (![5, 2, 1, 0, 3, 4] i) (![5, 2, 1, 0, 3, 4] j)) },
+    by decide⟩
+
+private theorem center_adj (v : Fin 9) :
+    fourArm.Adj 0 v ↔ ∃ i : Fin 4, v = midpoint i :=
+  (by decide : ∀ v : Fin 9, fourArm.Adj 0 v ↔ ∃ i : Fin 4, v = midpoint i) v
+
+private theorem midpoint_adj (i : Fin 4) (v : Fin 9) :
+    fourArm.Adj (midpoint i) v ↔ v = 0 ∨ v = tip i :=
+  (by decide : ∀ (i : Fin 4) (v : Fin 9),
+    fourArm.Adj (midpoint i) v ↔ v = 0 ∨ v = tip i) i v
+
+private theorem tip_adj (i : Fin 4) (v : Fin 9) : fourArm.Adj (tip i) v ↔ v = midpoint i :=
+  (by decide : ∀ (i : Fin 4) (v : Fin 9), fourArm.Adj (tip i) v ↔ v = midpoint i) i v
+
+private theorem vertex_cases (v : Fin 9) :
+    v = 0 ∨ ∃ i : Fin 4, v = midpoint i ∨ v = tip i :=
+  (by decide : ∀ v : Fin 9, v = 0 ∨ ∃ i : Fin 4, v = midpoint i ∨ v = tip i) v
+
+private theorem arm_distinct (i j : Fin 4) (hij : i ≠ j) :
+    midpoint i ≠ midpoint j ∧ midpoint i ≠ tip j ∧
+      tip i ≠ midpoint j ∧ tip i ≠ tip j :=
+  (by decide : ∀ i j : Fin 4, i ≠ j → midpoint i ≠ midpoint j ∧ midpoint i ≠ tip j ∧
+    tip i ≠ midpoint j ∧ tip i ≠ tip j) i j hij
+
+private theorem arm_nonzero (i : Fin 4) : midpoint i ≠ 0 ∧ tip i ≠ 0 :=
+  (by decide : ∀ i : Fin 4, midpoint i ≠ 0 ∧ tip i ≠ 0) i
+
+private theorem spare_arm (i j k : Fin 4) : ∃ l : Fin 4, l ≠ i ∧ l ≠ j ∧ l ≠ k :=
+  (by decide : ∀ i j k : Fin 4, ∃ l : Fin 4, l ≠ i ∧ l ≠ j ∧ l ≠ k) i j k
+
+/-- The middle of an injective four-edge path must be the center. -/
+private theorem fourArm_path_center (f : Copy deletedPath fourArm) : f 3 = 0 := by
+  have e12 : fourArm.Adj (f 1) (f 2) := f.toHom.map_rel (by decide : deletedPath.Adj 1 2)
+  have e23 : fourArm.Adj (f 2) (f 3) := f.toHom.map_rel (by decide : deletedPath.Adj 2 3)
+  have e34 : fourArm.Adj (f 3) (f 4) := f.toHom.map_rel (by decide : deletedPath.Adj 3 4)
+  have e45 : fourArm.Adj (f 4) (f 5) := f.toHom.map_rel (by decide : deletedPath.Adj 4 5)
+  have distinct {a b : Fin 6} (n : a ≠ b) : f a ≠ f b := fun e => n (f.injective e)
+  rcases vertex_cases (f 3) with hc | ⟨i, hmid | htip⟩
+  · exact hc
+  · have before := (midpoint_adj i (f 2)).mp (hmid ▸ e23.symm)
+    have after := (midpoint_adj i (f 4)).mp (hmid ▸ e34)
+    rcases before with h2 | h2
+    · rcases after with h4 | h4
+      · exact (distinct (by decide : (2 : Fin 6) ≠ 4) (h2.trans h4.symm)).elim
+      · have h5 := (tip_adj i (f 5)).mp (h4 ▸ e45)
+        exact (distinct (by decide : (5 : Fin 6) ≠ 3) (h5.trans hmid.symm)).elim
+    · have h1 := (tip_adj i (f 1)).mp (h2 ▸ e12.symm)
+      exact (distinct (by decide : (1 : Fin 6) ≠ 3) (h1.trans hmid.symm)).elim
+  · have h2 := (tip_adj i (f 2)).mp (htip ▸ e23.symm)
+    have h4 := (tip_adj i (f 4)).mp (htip ▸ e34)
+    exact (distinct (by decide : (2 : Fin 6) ≠ 4) (h2.trans h4.symm)).elim
+
+/-- The isolated pattern vertex occupies a third arm, opposite the first extension endpoint. -/
+private theorem fourArm_obstruction (f : Copy deletedPath fourArm) :
+    ∃ (x y : Fin 9) (e : Extension f 0 3 x y),
+      (fourArm.induce (Set.range f)ᶜ).IsIsolated ⟨x, e.1⟩ := by
+  have h3 := fourArm_path_center f
+  have e12 : fourArm.Adj (f 1) (f 2) := f.toHom.map_rel (by decide : deletedPath.Adj 1 2)
+  have e23 : fourArm.Adj (f 2) (f 3) := f.toHom.map_rel (by decide : deletedPath.Adj 2 3)
+  have e34 : fourArm.Adj (f 3) (f 4) := f.toHom.map_rel (by decide : deletedPath.Adj 3 4)
+  have e45 : fourArm.Adj (f 4) (f 5) := f.toHom.map_rel (by decide : deletedPath.Adj 4 5)
+  have distinct {a b : Fin 6} (n : a ≠ b) : f a ≠ f b := fun e => n (f.injective e)
+  obtain ⟨i, h2⟩ := (center_adj (f 2)).mp (h3 ▸ e23.symm)
+  obtain ⟨j, h4⟩ := (center_adj (f 4)).mp (h3 ▸ e34)
+  have h1 : f 1 = tip i :=
+    ((midpoint_adj i (f 1)).mp (h2 ▸ e12.symm)).resolve_left
+      (fun h => distinct (by decide : (1 : Fin 6) ≠ 3) (h.trans h3.symm))
+  have h5 : f 5 = tip j :=
+    ((midpoint_adj j (f 5)).mp (h4 ▸ e45)).resolve_left
+      (fun h => distinct (by decide : (5 : Fin 6) ≠ 3) (h.trans h3.symm))
+  obtain ⟨k, hk⟩ := (vertex_cases (f 0)).resolve_left
+    (fun h => distinct (by decide : (0 : Fin 6) ≠ 3) (h.trans h3.symm))
+  have hki : k ≠ i := by
+    rintro rfl
+    rcases hk with h | h
+    · exact distinct (by decide : (0 : Fin 6) ≠ 2) (h.trans h2.symm)
+    · exact distinct (by decide : (0 : Fin 6) ≠ 1) (h.trans h1.symm)
+  have hkj : k ≠ j := by
+    rintro rfl
+    rcases hk with h | h
+    · exact distinct (by decide : (0 : Fin 6) ≠ 4) (h.trans h4.symm)
+    · exact distinct (by decide : (0 : Fin 6) ≠ 5) (h.trans h5.symm)
+  obtain ⟨l, hli, hlj, hlk⟩ := spare_arm i j k
+  have arm_off_path (a : Fin 4) (hai : a ≠ i) (haj : a ≠ j)
+      {v : Fin 9} (hv : v = midpoint a ∨ v = tip a) (hv0 : v ≠ f 0) :
+      v ∉ Set.range f := by
+    obtain ⟨ami, ati, tmi, tti⟩ := arm_distinct a i hai
+    obtain ⟨amj, atj, tmj, ttj⟩ := arm_distinct a j haj
+    obtain ⟨am0, at0⟩ := arm_nonzero a
+    rintro ⟨d, hd⟩
+    fin_cases d
+    · exact hv0 hd.symm
+    · rcases hv with rfl | rfl
+      · exact ati (hd.symm.trans h1)
+      · exact tti (hd.symm.trans h1)
+    · rcases hv with rfl | rfl
+      · exact ami (hd.symm.trans h2)
+      · exact tmi (hd.symm.trans h2)
+    · rcases hv with rfl | rfl
+      · exact am0 (hd.symm.trans h3)
+      · exact at0 (hd.symm.trans h3)
+    · rcases hv with rfl | rfl
+      · exact amj (hd.symm.trans h4)
+      · exact tmj (hd.symm.trans h4)
+    · rcases hv with rfl | rfl
+      · exact atj (hd.symm.trans h5)
+      · exact ttj (hd.symm.trans h5)
+  have yRoot : midpoint l ≠ f 0 := by
+    rcases hk with h | h
+    · exact fun eq => (arm_distinct l k hlk).1 (eq.trans h)
+    · exact fun eq => (arm_distinct l k hlk).2.1 (eq.trans h)
+  have hy := arm_off_path l hli hlj (Or.inl rfl) yRoot
+  have ey : fourArm.Adj (f 3) (midpoint l) := h3 ▸ (center_adj _).mpr ⟨l, rfl⟩
+  have other_end :
+      ∃ x, (x = midpoint k ∨ x = tip k) ∧ x ≠ f 0 ∧ fourArm.Adj (f 0) x ∧
+        ∀ v, fourArm.Adj x v → v = 0 ∨ v = f 0 := by
+    rcases hk with h | h
+    · have adj := (tip_adj k (midpoint k)).mpr rfl
+      refine ⟨tip k, Or.inr rfl, fun eq => adj.ne (eq.trans h), h ▸ adj.symm, ?_⟩
+      exact fun v e => Or.inr (((tip_adj k v).mp e).trans h.symm)
+    · have adj := (tip_adj k (midpoint k)).mpr rfl
+      refine ⟨midpoint k, Or.inl rfl, fun eq => adj.ne (eq.trans h).symm, h ▸ adj, ?_⟩
+      exact fun v e => ((midpoint_adj k v).mp e).imp id (fun he => he.trans h.symm)
+  obtain ⟨x, hxArm, hxRoot, ex, only⟩ := other_end
+  have hx := arm_off_path k hki hkj hxArm hxRoot
+  have hxy : x ≠ midpoint l := by
+    rcases hxArm with rfl | rfl
+    · exact (arm_distinct k l hlk.symm).1
+    · exact (arm_distinct k l hlk.symm).2.2.1
+  refine ⟨x, midpoint l, ⟨hx, hy, hxy, ex, ey⟩, ?_⟩
+  intro v e
+  rcases only v.val e with h | h
+  · exact v.property ⟨3, h3.trans h.symm⟩
+  · exact v.property ⟨0, h.symm⟩
+
+private theorem fourArm_not_avoidable (f : Copy deletedPath fourArm) : ¬ Avoidable f 0 3 := by
+  intro h
+  obtain ⟨x, y, ext, isolated⟩ := fourArm_obstruction f
+  have hne : (⟨x, ext.1⟩ : ((Set.range f)ᶜ : Set (Fin 9))) ≠ ⟨y, ext.2.1⟩ :=
+    fun eq => ext.2.2.1 (congrArg Subtype.val eq)
+  exact not_reachable_of_neighborSet_left_eq_empty hne isolated.neighborSet_eq_empty (h x y ext)
+
 end GurvichLeafRootEdgeDeletionRefutation
