@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Probability;
 internal sealed class SuHuTable41Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Probability/SuHuTable41.";
-    private static readonly LibraryNoteRef SuHu = LibraryNoteRef.Create("D5/L/Dynamics/suhu2026fullnegative");
+    private static readonly LibraryNoteRef SuHu = LibraryNoteRef.Create("D5/L/Estimation/suhu2026fullnegative");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact negative dependence calculations for the Su and Hu four-coordinate law.",
@@ -46,6 +46,18 @@ internal sealed class SuHuTable41Document : IScribeDocumentDefinition
                     + "of these upper sets. Compare integer fiber weights by cross multiplication and lift the "
                     + "upper-event inequalities to increasing real tests. Strict positivity gives four marginal "
                     + "supports of size three. The exact positive covariance violates negative association."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("su-hu-table-41-refuted-implication"),
+                DeclarationHandle.Create(Prefix + "claim"), H("The implication on four ternary coordinates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(SuHu),
+                Blocks(Paragraph(Text("Every strictly positive probability mass function on the four-coordinate ternary "
+                    + "product with full negative regression would have negative association."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("su-hu-table-41-refutation"),
+                DeclarationHandle.Create(Prefix + "result"), H("The implication fails"),
+                StatementSource.FromAuthor(Disp(Seq(Neg, Sp, F.Id("claim")))),
+                AssessedProvenance.FromLiterature(SuHu),
+                Blocks(Paragraph(Text("The strictly positive Table 4.1 law satisfies full negative regression, and the "
+                    + "positive covariance on its disjoint upper events contradicts negative association."))),
                 DescribeRole.Theorem))));
     private static Formula Apply(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);

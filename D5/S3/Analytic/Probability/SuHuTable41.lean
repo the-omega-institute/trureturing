@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/Probability/SuHuTable41
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=bounded-enumeration; basis=terminal=gid:D5/S3/Analytic/Probability/SuHuTable41.table_attainment
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Analytic/Probability/SuHuTable41.claim; result=D5/S3/Analytic/Probability/SuHuTable41.result; claim=D5/S3/Analytic/Probability/SuHuTable41.claim
    digest: A strictly positive full-NRD ternary law with positive covariance on disjoint events. -/
 
 import D5.S3.Analytic.Probability.FiniteNegativeRegression
@@ -486,7 +486,8 @@ private theorem check_all (J : Finset (Fin 4)) (hJ : J ≠ ∅) : checkRows J = 
 
 /-- The literal normalized law satisfies full negative regression. -/
 private theorem table_fullNRD : FullNRD tablePMF := by
-  apply fullNRD_of_upper
+  unfold FullNRD
+  apply fullNRD_of_upper tablePMF
   intro I J hd U hU a b hab ha hb
   have he : @Pi.instFintype (Fin 4) (fun _ => Fin 3)
       (fun a b => Classical.propDecidable (a = b)) _ _ = (inferInstance : Fintype State) :=
@@ -524,5 +525,15 @@ theorem table_attainment :
     Subsingleton.elim _ _
   rw [he] at hc'
   exact (not_lt_of_ge hc') hc
+
+/-- The full-NRD implication on strictly positive four-coordinate ternary laws. -/
+def claim : Prop :=
+  ∀ p : PMF State, (∀ x, 0 < p x) → FullNRD p → NA p
+
+/-- The literal Table 4.1 law refutes the full-NRD implication on this product. -/
+theorem result : ¬ claim := by
+  intro h
+  exact table_attainment.2.2.2
+    (h tablePMF table_attainment.1 table_attainment.2.2.1)
 
 end D5.S3.Analytic.Probability.SuHuTable41

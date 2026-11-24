@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Probability;
 internal sealed class FiniteNegativeRegressionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Probability/FiniteNegativeRegression.";
-    private static readonly LibraryNoteRef SuHu = LibraryNoteRef.Create("D5/L/Dynamics/suhu2026fullnegative");
+    private static readonly LibraryNoteRef SuHu = LibraryNoteRef.Create("D5/L/Estimation/suhu2026fullnegative");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full negative regression implies negative association below rectangular size 81.",

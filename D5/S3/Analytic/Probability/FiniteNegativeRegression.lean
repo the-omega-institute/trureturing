@@ -137,7 +137,11 @@ theorem fullNRD_of_upper (p : PMF (∀ i, C i))
       ∀ (a b : ∀ j : J, C j), a ≤ b →
         0 < mass p (project J) a → 0 < mass p (project J) b →
         cond p (project J) b (event U ∘ project I) ≤
-          cond p (project J) a (event U ∘ project I)) : FullNRD p := by
+          cond p (project J) a (event U ∘ project I)) :
+    ∀ (I J : Finset ι), Disjoint I J → ∀ (f : (∀ i : I, C i) → ℝ), Monotone f →
+    ∀ (a b : ∀ j : J, C j), a ≤ b →
+      0 < mass p (project J) a → 0 < mass p (project J) b →
+        cond p (project J) b (f ∘ project I) ≤ cond p (project J) a (f ∘ project I) := by
   intro I J hd f hf a b hab ha hb
   let density (c : ∀ j : J, C j) (x : ∀ i, C i) :=
     if project J x = c then (p x).toReal / mass p (project J) c else 0
@@ -894,7 +898,11 @@ private theorem na_of_product_lt (p : PMF (∀ i, C i)) (hn : FullNRD p)
 /-- Every full-NRD finite law with actual marginal-support product below 81
 is negatively associated. -/
 theorem na_of_fullNRD_of_marginalProduct_lt_81 (p : PMF (∀ i, C i))
-    (hn : FullNRD p) (hsize : marginalProduct p < 81) : NA p := by
+    (hn : FullNRD p) (hsize : marginalProduct p < 81) :
+    ∀ (I J : Finset ι), Disjoint I J → ∀ (f : (∀ i : I, C i) → ℝ)
+    (g : (∀ j : J, C j) → ℝ), Monotone f → Monotone g →
+      cov p (f ∘ project I) (g ∘ project J) ≤ 0 := by
+  show NA p
   apply support_na
   exact na_of_product_lt (p.map (encodeSupport p)) (support_nrd p hn) hsize
 

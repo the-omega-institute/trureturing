@@ -42,8 +42,34 @@ $$(\forall x, \operatorname{tablePMF}\left(x\right) > 0) \land \operatorname{mar
 
 For each conditioning block, enumerate comparable tuples and upper sets on the complementary block. Each upper set on a disjoint response block pulls back to one of these upper sets. Compare integer fiber weights by cross multiplication and lift the upper-event inequalities to increasing real tests. Strict positivity gives four marginal supports of size three. The exact positive covariance violates negative association.
 
+**Definition 1.4 (The implication on four ternary coordinates).**
+
+Lean statement: `D5/S3/Analytic/Probability/SuHuTable41.claim`
+
+*Formalization.* `D5/S3/Analytic/Probability/SuHuTable41.claim` (`✓ std3`).
+
+*Citation.* Yuting Su and Taizhong Hu (2026). *Full negative regression dependence: counterexamples for tail dependence and negative association*. URL: <https://arxiv.org/abs/2609.23313v1>.
+
+*Commentary.*
+
+Every strictly positive probability mass function on the four-coordinate ternary product with full negative regression would have negative association.
+
+**Theorem 1.5 (The implication fails).**
+
+$$\neg claim$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/SuHuTable41.result` (`✓ std3`). ∎
+
+*Citation.* Yuting Su and Taizhong Hu (2026). *Full negative regression dependence: counterexamples for tail dependence and negative association*. URL: <https://arxiv.org/abs/2609.23313v1>.
+
+*Commentary.*
+
+The strictly positive Table 4.1 law satisfies full negative regression, and the positive covariance on its disjoint upper events contradicts negative association.
+
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Probability/SuHuTable41.claim`
+- Truth anchor: `D5/S3/Analytic/Probability/SuHuTable41.result`
 - Truth anchor: `D5/S3/Analytic/Probability/SuHuTable41.tablePMF`
 - Truth anchor: `D5/S3/Analytic/Probability/SuHuTable41.table_attainment`
 - Truth anchor: `D5/S3/Analytic/Probability/SuHuTable41.table_positive_covariance`
