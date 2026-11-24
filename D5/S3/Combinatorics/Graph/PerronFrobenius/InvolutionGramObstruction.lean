@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PerronFrobenius/InvolutionGramObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Archive.Sensitivity]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Irreducible.Defs]
    utility: none
    digest: Positive Gram kernels and polynomial restrictions to involution-fixed vectors. -/
 
