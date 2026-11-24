@@ -36,9 +36,13 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerSwitchCentre.admits_switch_
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Giovanni Falcone, Ágota Figula, Mario Galici (2025). *Extensions of Steiner Triple Systems*. DOI: [10.1002/jcd.21964](https://doi.org/10.1002/jcd.21964). URL: <https://arxiv.org/abs/2406.12796>.
+
 *Commentary.*
 
 In a finite complete Steiner triple system on r+1 points, deleting an original point admits a maximal switch exactly when that point lies outside the centre of its Steiner loop. Centrality means commuting with every element and satisfying both the left and right association laws.
+
+The Veblen condition requires Pasch completion through the deleted point q. If a,v,b form a retained block and m is the leave partner map, the required completing block is m(a),v,m(b). Pair uniqueness makes this condition equivalent to the failure of the switch at v,a.
 
 At an eligible start, the switch fails exactly when the two translations commute there. The adjoined identity, the deleted point, a retained pivot and the third point of their block form a commuting square. Together these cases show that failure at every retained pivot gives commutation on the whole carrier. In the commutative loop, interchanging the other two inputs converts this condition into the association laws.
 
@@ -50,11 +54,13 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SteinerSwitchCentre.ncard_admits_s
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Giovanni Falcone, Ágota Figula, Mario Galici (2025). *Extensions of Steiner Triple Systems*. DOI: [10.1002/jcd.21964](https://doi.org/10.1002/jcd.21964). URL: <https://arxiv.org/abs/2406.12796>.
+
 *Commentary.*
 
 In a finite complete Steiner triple system on r+1 points, the number of deleted points with some successful switch is r+2 minus the cardinality of the Steiner loop centre.
 
-The original points admitting a switch embed onto the complement of the centre. The only adjoined point is the identity, which lies in the centre.
+The original points admitting a switch embed onto the complement of the centre. The adjoined identity lies in the centre. Removing its other members from the original points excludes exactly the Veblen points.
 
 ## References
 
