@@ -66,7 +66,7 @@ def law (R : Realization sig.{v}) : Prop :=
 
 abbrev arena : Arena := ⟨sig, law.{u,v}⟩
 
-private theorem affine_not_central (i : Fin 9) :
+theorem affine_not_central (i : Fin 9) :
     let _ := steinerMul affinePlane_valid affinePlane_complete
     some i ∉ Set.center (Option (Fin 9)) := by
   let _ := steinerMul affinePlane_valid affinePlane_complete
