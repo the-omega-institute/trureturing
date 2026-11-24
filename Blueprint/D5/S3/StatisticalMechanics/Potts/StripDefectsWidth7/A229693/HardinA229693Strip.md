@@ -6,7 +6,7 @@ The width-seven two-defect recurrence.
 
 **Definition 1.1 (First-row weights).**
 
-$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, \lambda i: \operatorname{\mathit{Fin}}\left(96\right) \mapsto ((\operatorname{\mathit{if}} (\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) < 56) \operatorname{\mathit{then}} (\operatorname{\mathit{if}} (\exists k: \operatorname{\mathit{Fin}}\left(16\right), (i = \operatorname{\mathit{oldZeroImage}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{zeroBudgetClass}}\left(k\right)\right))) \operatorname{\mathit{then}} (0: \mathit{Int}) \operatorname{\mathit{else}} (6: \mathit{Int})) \operatorname{\mathit{else}} (12: \mathit{Int})))\right)$$
+$$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{addCases}}\left(\lambda j: \operatorname{\mathit{Fin}}\left(56\right) \mapsto (\operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathit{initial}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(16, j\right)\right) - 6), \lambda j: \operatorname{\mathit{Fin}}\left(40\right) \mapsto ((12: \mathit{Int}))\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/A229693/HardinA229693Strip.initial` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$\operatorname{\mathit{HardinA229693Strip}}.\operatorname{\mathit{initial}} = \
 
 *Commentary.*
 
-The first 72 entries are the A229585 initial weights. The remaining entries count labelled rows with exactly two horizontal defects, grouped by exhausted boundary class. The strip counting formula uses this vector on the left.
+The first 72 entries are the A229585 initial weights. The next 56 entries subtract six from the corresponding inherited exhausted weights. The final 40 entries are twelve. The exhausted entries count labelled rows with exactly two horizontal defects, grouped by boundary class. The strip counting formula uses this vector on the left.
 
 **Definition 1.2 (Acceptance weights).**
 
@@ -71,6 +71,8 @@ $$\forall t: \mathit{Nat}, ((\operatorname{\mathit{HardinA229693Strip}}.\operato
 *Commentary.*
 
 All array counts in this equality are cast to integers. At least two colours occur in a nonempty array with two monochromatic bonds. Relabelling gives six labelled arrays per canonical array. The vector identity for the transfer at fourteen steps propagates to later steps by right multiplication.
+
+The 72 leading coordinates and 24 exhausted coordinates that copy leading values satisfy the order-twelve identity by the frozen A229585 order-eight recurrence. Its five successive shifts are combined with coefficients 810, -972, 351, -42 and 1 in increasing shift order. The finite order-twelve check covers the remaining exhausted coordinates.
 
 For every table p of fifteen integer row vectors indexed by Fin 168, assume that p at zero is the initial vector and that for every j in Fin 14, the row at j.succ is the product of the row at j.castSucc with T. Induction then identifies the row at every i in Fin 15 with forward iteration from the initial vector for i.val steps.
 

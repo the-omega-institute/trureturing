@@ -44,7 +44,7 @@ $$\operatorname{\mathit{HardinA229693StripTransfer}}.\operatorname{\mathit{exitR
 
 *Commentary.*
 
-For values below 72, this 96-entry map indexes the old leading row for active sources and the zero prefix for new exhausted sources. Otherwise its value minus 72 is one of 36 radix-16 digit positions in the packed word selected by the source row. The tables store 56 active words and 38 distinct exhausted words. The successor formula pins the entries to their destination classes.
+For the 56 active sources outside the zeroBudgetClass image and the 40 new exhausted sources, this 96-entry map selects the readout coordinate. Values below 72 index the old leading row for those active sources and the zero prefix for new exhausted sources. Otherwise its value minus 72 is one of 36 radix-16 digit positions in the packed word selected by the source row. The tables store 56 active words and 38 distinct exhausted words. The successor formula pins the entries to their destination classes.
 
 **Definition 1.4 (Transfer matrix).**
 
@@ -74,7 +74,7 @@ $$\forall p: \operatorname{\mathit{HardinA229585StripData}}.\operatorname{\mathi
 
 Every next row whose cost fits the available budget contributes one to its destination.
 
-At budget zero the possible destinations are 56 plus a value of zeroBudgetClass. The source-independent extension is a separate candidate.
+At budget zero every leading destination has multiplicity zero. The literal counts require a strictly positive residual budget for a leading destination, and the transfer uses the zero lower-left block.
 
 A separate candidate is that the source is valid if and only if the two rows agree at every destination. Exhaustive integer comparisons give the converse at budgets zero through two. At budget three the literal row has total at least 810, compared with a maximum matrix row total of 426, and the literal total is nondecreasing. The converse still lacks a Lean proof.
 
