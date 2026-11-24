@@ -16,11 +16,12 @@ open Omega
 /-- Applying the Boolean swap to a value selected on the self-application
 diagonal changes that value. -/
 public theorem swap_changes_self_diagonal {Index : Type u} (assignment : Index → Index → Bool) :
-    ∀ index, Not (Eq (Bool.rec .true .false (assignment index index)) (assignment index index)) :=
+    ∀ index, Not (Eq (Bool.rec (motive := fun _ => Bool) .true .false (assignment index index))
+      (assignment index index)) :=
   fun index =>
     have distinct : Not (Eq Bool.false Bool.true) :=
-      fun h => Eq.subst (Bool.rec True False) h True.intro
-    Bool.rec (motive := fun b => Not (Eq (Bool.rec .true .false b) b))
+      fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+    Bool.rec (motive := fun b => Not (Eq (Bool.rec (motive := fun _ => Bool) .true .false b) b))
       (fun h => distinct h.symm) distinct (assignment index index)
 
 /-- A concrete inhabited index domain for the diagonal statement. -/
