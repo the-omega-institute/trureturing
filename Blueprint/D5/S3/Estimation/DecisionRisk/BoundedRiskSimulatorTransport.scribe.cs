@@ -43,7 +43,9 @@ internal sealed class BoundedRiskSimulatorTransportDocument
                 H("Composition preserves stochastic rows"),
                 StatementSource.FromAuthor(CompositionFormula(true)),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary input types and finite intermediate and output types, composing two nonnegative unit-row matrices gives another nonnegative unit-row matrix. The inner row sum reduces the composite row sum to the first matrix's row sum."))),
+                Blocks(
+                    Paragraph(Text("Here I is an arbitrary type and M and O are finite types; K : I → M → ℝ and D : M → O → ℝ. The displayed composite is indexed by i : I and o : O.")),
+                    Paragraph(Text("For arbitrary input types and finite intermediate and output types, composing two nonnegative unit-row matrices gives another nonnegative unit-row matrix. The inner row sum reduces the composite row sum to the first matrix's row sum."))),
                 DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("channel-output-associativity"),
@@ -51,7 +53,9 @@ internal sealed class BoundedRiskSimulatorTransportDocument
                 H("Finite channel output is associative"),
                 StatementSource.FromAuthor(CompositionFormula(false)),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For finite input and intermediate types and an arbitrary output type, applying a composite real matrix to a real mass agrees with two successive channel outputs. This is a finite distributive identity and requires no positivity or normalization."))),
+                Blocks(
+                    Paragraph(Text("Here I and M are finite types and O is an arbitrary type; K : I → M → ℝ, D : M → O → ℝ and p : I → ℝ. The displayed composite is indexed by i : I and o : O.")),
+                    Paragraph(Text("For finite input and intermediate types and an arbitrary output type, applying a composite real matrix to a real mass agrees with two successive channel outputs. This is a finite distributive identity and requires no positivity or normalization."))),
                 DescribeRole.Lemma))));
 
     private static Formula CompositionFormula(bool stochastic)

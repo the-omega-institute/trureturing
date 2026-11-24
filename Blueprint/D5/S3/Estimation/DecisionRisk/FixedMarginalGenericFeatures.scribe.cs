@@ -19,6 +19,7 @@ internal sealed class FixedMarginalGenericFeaturesDocument : IScribeDocumentDefi
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromLiterature(Source),
             Blocks(
+                Paragraph(Text("Here X : Type u and Z : Type v are finite types, q : X → ℝ, phi : X → Z → ℝ and epsilon : ℝ. The decoder d : FiniteMarkovKernel Z X has an underlying row-stochastic array of type Z → X → ℝ. GenericQuality quantifies finite hypothesis types Theta : Type w and nonempty finite action types A : Type t, with prior pi : Theta → ℝ, experiment T : Theta → X → ℝ and loss L : Theta → A → ℝ; u, v, w and t are independent universes.")),
                 Paragraph(Text("Let X and Z be arbitrary finite types, q a nonnegative real mass of total one on X, and phi a row-stochastic encoder from X to Z. For epsilon greater than zero, universal quality means that every finite hypothesis type, normalized prior, nonempty finite action type, compatible experiment with data marginal q, and real signed loss has feature Bayes risk minus data Bayes risk at most epsilon times the maximum absolute loss. All four type universes are independent.")),
                 Paragraph(Text("The Bayes risk is the real sInf of finiteBayesCost over every row-stochastic randomized decision. Negative losses remain signed. The finite maximum is lossNorm, the real supremum of the finite nonempty set of absolute loss values. Normalization supplies nonemptiness of the data and hypothesis types; the encoder then supplies nonemptiness of the feature type. No support condition is imposed on any entry.")),
                 Paragraph(Text("This universal quality condition holds precisely when a single stochastic decoder from Z to X has q-weighted mismatch probability at most epsilon divided by two. The decoder is common to all compatible decision problems. Its error is the sum over x, z and y of q(x) phi(x,z) d(z,y) times the indicator of y different from x.")),
@@ -32,7 +33,9 @@ internal sealed class FixedMarginalGenericFeaturesDocument : IScribeDocumentDefi
                 H("Expected cost as a coefficient table"),
                 StatementSource.FromAuthor(ExpansionFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary finite state, observation and action types, the real expected loss equals the sum over observations and actions of the decision entry times its unnormalized posterior loss coefficient. This finite-sum identity is valid for arbitrary real arrays and does not require stochasticity or signs."))),
+                Blocks(
+                    Paragraph(Text("Here Theta, O and A are arbitrary finite types; p : Theta → ℝ, L : Theta → A → ℝ, T : Theta → O → ℝ and d : O → A → ℝ. The sum indices are theta : Theta, x : O and a : A.")),
+                    Paragraph(Text("For arbitrary finite state, observation and action types, the real expected loss equals the sum over observations and actions of the decision entry times its unnormalized posterior loss coefficient. This finite-sum identity is valid for arbitrary real arrays and does not require stochasticity or signs."))),
                 DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("finite-real-bayes-cost-minimizer"),
@@ -40,7 +43,9 @@ internal sealed class FixedMarginalGenericFeaturesDocument : IScribeDocumentDefi
                 H("Finite real Bayes costs attain a minimum"),
                 StatementSource.FromAuthor(MinimumFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary finite state and observation types and a nonempty finite action type, every real coefficient table has an observationwise minimizing action. The corresponding point-mass decision minimizes finiteBayesCost over all stochastic decisions. The prior, experiment and loss need not have nonnegative entries for this finite linear minimization statement. In a statistical decision problem the prior and experiment satisfy their usual stochastic laws, and signed losses remain allowed."))),
+                Blocks(
+                    Paragraph(Text("Here Theta, O and A are finite types with Nonempty A; p : Theta → ℝ, L : Theta → A → ℝ and T : Theta → O → ℝ. The decisions d, k : FiniteMarkovKernel O A have underlying row-stochastic arrays of type O → A → ℝ, with theta : Theta, x : O and a : A indexing states, observations and actions.")),
+                    Paragraph(Text("For arbitrary finite state and observation types and a nonempty finite action type, every real coefficient table has an observationwise minimizing action. The corresponding point-mass decision minimizes finiteBayesCost over all stochastic decisions. The prior, experiment and loss need not have nonnegative entries for this finite linear minimization statement. In a statistical decision problem the prior and experiment satisfy their usual stochastic laws, and signed losses remain allowed."))),
                 DescribeRole.Lemma))));
 
 

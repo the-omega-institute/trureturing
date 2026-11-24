@@ -30,6 +30,8 @@ $$\forall K, D, {}\operatorname{IsRowStochastic}(K) \land \operatorname{IsRowSto
 
 *Commentary.*
 
+Here I is an arbitrary type and M and O are finite types; K : I → M → ℝ and D : M → O → ℝ. The displayed composite is indexed by i : I and o : O.
+
 For arbitrary input types and finite intermediate and output types, composing two nonnegative unit-row matrices gives another nonnegative unit-row matrix. The inner row sum reduces the composite row sum to the first matrix's row sum.
 
 **Lemma 1.3 (Finite channel output is associative).**
@@ -41,6 +43,8 @@ $$\forall K, D, p, \operatorname{channelOutput}((i, o \mapsto \operatorname{chan
 *Source.* Repository-derived.
 
 *Commentary.*
+
+Here I and M are finite types and O is an arbitrary type; K : I → M → ℝ, D : M → O → ℝ and p : I → ℝ. The displayed composite is indexed by i : I and o : O.
 
 For finite input and intermediate types and an arbitrary output type, applying a composite real matrix to a real mass agrees with two successive channel outputs. This is a finite distributive identity and requires no positivity or normalization.
 

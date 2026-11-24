@@ -14,6 +14,8 @@ $$\forall X, Z, q, phi, epsilon, {\operatorname{Fintype}\left(X\right) \land \op
 
 *Commentary.*
 
+Here X : Type u and Z : Type v are finite types, q : X → ℝ, phi : X → Z → ℝ and epsilon : ℝ. The decoder d : FiniteMarkovKernel Z X has an underlying row-stochastic array of type Z → X → ℝ. GenericQuality quantifies finite hypothesis types Theta : Type w and nonempty finite action types A : Type t, with prior pi : Theta → ℝ, experiment T : Theta → X → ℝ and loss L : Theta → A → ℝ; u, v, w and t are independent universes.
+
 Let X and Z be arbitrary finite types, q a nonnegative real mass of total one on X, and phi a row-stochastic encoder from X to Z. For epsilon greater than zero, universal quality means that every finite hypothesis type, normalized prior, nonempty finite action type, compatible experiment with data marginal q, and real signed loss has feature Bayes risk minus data Bayes risk at most epsilon times the maximum absolute loss. All four type universes are independent.
 
 The Bayes risk is the real sInf of finiteBayesCost over every row-stochastic randomized decision. Negative losses remain signed. The finite maximum is lossNorm, the real supremum of the finite nonempty set of absolute loss values. Normalization supplies nonemptiness of the data and hypothesis types; the encoder then supplies nonemptiness of the feature type. No support condition is imposed on any entry.
@@ -36,6 +38,8 @@ $$\forall p, L, T, d, \operatorname{finiteBayesCost}\left(p, L, T, d\right) = \o
 
 *Commentary.*
 
+Here Theta, O and A are arbitrary finite types; p : Theta → ℝ, L : Theta → A → ℝ, T : Theta → O → ℝ and d : O → A → ℝ. The sum indices are theta : Theta, x : O and a : A.
+
 For arbitrary finite state, observation and action types, the real expected loss equals the sum over observations and actions of the decision entry times its unnormalized posterior loss coefficient. This finite-sum identity is valid for arbitrary real arrays and does not require stochasticity or signs.
 
 **Lemma 1.3 (Finite real Bayes costs attain a minimum).**
@@ -47,6 +51,8 @@ $$\forall Theta, O, A, \operatorname{Fintype}\left(Theta\right) \land \operatorn
 *Source.* Repository-derived.
 
 *Commentary.*
+
+Here Theta, O and A are finite types with Nonempty A; p : Theta → ℝ, L : Theta → A → ℝ and T : Theta → O → ℝ. The decisions d, k : FiniteMarkovKernel O A have underlying row-stochastic arrays of type O → A → ℝ, with theta : Theta, x : O and a : A indexing states, observations and actions.
 
 For arbitrary finite state and observation types and a nonempty finite action type, every real coefficient table has an observationwise minimizing action. The corresponding point-mass decision minimizes finiteBayesCost over all stochastic decisions. The prior, experiment and loss need not have nonnegative entries for this finite linear minimization statement. In a statistical decision problem the prior and experiment satisfy their usual stochastic laws, and signed losses remain allowed.
 
