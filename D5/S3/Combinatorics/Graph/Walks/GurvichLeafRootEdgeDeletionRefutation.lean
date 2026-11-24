@@ -295,15 +295,6 @@ private theorem middle_attachments {U : Set V}
   · exact (h4 e).elim
   · exact (h5 e).elim
 
-private theorem pair_injective {x y : V} (hxy : x ≠ y) :
-    Function.Injective (![x, y] : Fin 2 → V) := by
-  intro i j h
-  fin_cases i <;> fin_cases j
-  · rfl
-  · exact (hxy h).elim
-  · exact (hxy h.symm).elim
-  · rfl
-
 private theorem simplicial_from_attachment {U : Set V}
     (external : ∀ p : Path6 G, ∃ x ∉ Set.range p, G.Adj (p 0) x)
     (hits : ∀ p : Path6 G, Away p U → ∀ x ∉ U, Boundary G U x → x ∈ Set.range p)
@@ -320,7 +311,7 @@ private theorem simplicial_from_attachment {U : Set V}
     · exfalso
       have hzU : z ∉ U := fun h => hr (hits p hp r hrU ⟨z, h, ez⟩)
       let new : Fin 2 → V := ![r, z]
-      have hn := pair_injective ez.ne
+      have hn := Matrix.injective_pair_iff_ne.mpr ez.ne
       have hout (j : Fin 2) : new j ∉ Set.range p := by
         fin_cases j
         · exact hr
@@ -343,7 +334,7 @@ private theorem simplicial_from_attachment {U : Set V}
         (hits _ (relist_away p hp new hn hout order steps hnU) (p 0) (hp 0) hfirst)
   obtain ⟨u, hu, eu⟩ := hlast
   let new : Fin 2 → V := ![r, u]
-  have hn : Function.Injective new := pair_injective (fun h => hrU (h ▸ hu))
+  have hn : Function.Injective new := Matrix.injective_pair_iff_ne.mpr (fun h => hrU (h ▸ hu))
   have hout (j : Fin 2) : new j ∉ Set.range p := by
     fin_cases j
     · exact hr
