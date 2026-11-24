@@ -25,7 +25,7 @@ initial_counts: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=result, Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip.Count.family._proof_2
 a: proof_shape=bind-only; consumers=result, scale_count
 leading: proof_shape=bind-only; consumers=forward_step, leadingCoordinates, leading_rec, leading_step, w, w_leading
-coefficients: proof_shape=bind-only; consumers=polynomialCoordinates, polynomial_relation, result
+coefficients: proof_shape=bind-only; consumers=polynomialCoordinates, polynomial_relation, recurrence_convolution, leading_polynomial, result
 sum_zip_mul: proof_shape=bind-only; consumers=exhausted_step, polynomial_relation
 columnRank: proof_shape=bind-only; consumers=rightColumn, representative_data, w, exhausted_step
 columnRepresentative: proof_shape=bind-only; consumers=representative_data, checkColumn, exhausted_step
@@ -37,12 +37,12 @@ rightColumn: proof_shape=bind-only; consumers=checkColumn, exhausted_step, right
 rightColumn_eq: proof_shape=bind-only; consumers=exhausted_step._simp_4
 arithmeticRow: proof_shape=bind-only; consumers=checkColumn, exhausted_step
 w: proof_shape=content; consumers=arithmeticRow, checkColumn, exhausted_step, forward_step, forward_table, polynomialCoordinates, polynomial_relation, w_leading
-w_leading: proof_shape=bind-only; consumers=forward_step
-leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
+w_leading: proof_shape=bind-only; consumers=forward_step, polynomial_relation
+leadingCoefficient: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step, recurrence_convolution, leading_polynomial
 leadingIndex: proof_shape=bind-only; consumers=leadingCoordinates, leading_rec, leading_step
 leadingCoordinates: proof_shape=bind-only; consumers=leading_rec
-leading_rec: proof_shape=bind-only; consumers=leading_step
-leading_step: proof_shape=bind-only; consumers=forward_step
+leading_rec: proof_shape=bind-only; consumers=leading_step, leading_polynomial
+leading_step: proof_shape=bind-only; consumers=forward_step, leading_forward
 checkColumn: proof_shape=content; consumers=exhausted_step, stepGroup
 stepGroup: proof_shape=content; consumers=exhaustedSteps
 exhaustedSteps: proof_shape=content; consumers=exhausted_step
@@ -50,6 +50,10 @@ exhausted_step: proof_shape=content; consumers=forward_step
 leading_action: proof_shape=bind-only; consumers=forward_step
 forward_step: proof_shape=content; consumers=forward_table
 forward_table: proof_shape=content; consumers=polynomial_relation
+leading_forward: proof_shape=bind-only; consumers=leading_polynomial
+recurrence_convolution: proof_shape=bind-only; consumers=leading_polynomial
+leading_polynomial: proof_shape=bind-only; consumers=polynomial_relation
+w_copied: proof_shape=bind-only; consumers=polynomial_relation
 polynomialCoordinates: proof_shape=content; consumers=polynomial_relation
 polynomial_relation: proof_shape=content; consumers=result
 scale_count: proof_shape=bind-only; consumers=result
@@ -72,6 +76,9 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic.Eval
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Logic.Function.Iterate
 import Lean.Elab.Tactic.ElabTerm
 import Lean.Meta.ReduceEval
 
@@ -643,13 +650,57 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
   simp only [rows, List.getElem_ofFn] at he
   exact he
 
+private theorem leading_forward (i : Fin 15) :
+    forward HardinA229585StripData.T HardinA229585StripData.initial i.val = leading i := by
+  induction i using Fin.induction with
+  | zero => exact HardinA229585Strip.finite_certificate.2.2.2.2.2.1.1.symm
+  | succ i ih =>
+    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
+    change Matrix.vecMul
+      (forward HardinA229585StripData.T HardinA229585StripData.initial i.castSucc.val)
+      HardinA229585StripData.T = _
+    rw [ih, leading_step]
+
+-- The five shifted order-eight residuals give the order-twelve residual.
+private theorem recurrence_convolution (v : ℕ → ℤ)
+    (h : ∀ n : ℕ, v (n + 2 + 8) =
+      ∑ k : Fin 8, leadingCoefficient k * v (n + 2 + k.val)) :
+    v 14 = ∑ k : Fin 12, coefficients k * v (2 + k.val) := by
+  have h0 := h 0
+  have h1 := h 1
+  have h2 := h 2
+  have h3 := h 3
+  have h4 := h 4
+  norm_num only [leadingCoefficient, coefficients, Fin.sum_univ_succ, Fin.sum_univ_zero,
+    Fin.val_zero, Fin.val_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    Fin.val_one, Nat.add_zero, Nat.reduceAdd] at h0 h1 h2 h3 h4 ⊢
+  linear_combination h4 - 42 * h3 + 351 * h2 - 972 * h1 + 810 * h0
+
+private theorem leading_polynomial (j : Fin 72) :
+    leading (Fin.last 14) j =
+      ∑ k : Fin 12, coefficients k * leading ((k.natAdd 2).castAdd 1) j := by
+  have hbase : forward HardinA229585StripData.T HardinA229585StripData.initial (2 + 8) =
+      ∑ k : Fin 8, leadingCoefficient k •
+        forward HardinA229585StripData.T HardinA229585StripData.initial (2 + k.val) := by
+    simpa only [← leading_forward] using leading_rec (0 : Fin 5)
+  have h (n : ℕ) := forward_shift HardinA229585StripData.T HardinA229585StripData.initial
+    (Pi.single j (1 : ℤ)) 8 2 leadingCoefficient hbase n
+  simp only [Matrix.dotProduct_mulVec, dotProduct_single_one, ← forward_eq] at h
+  simpa only [← leading_forward] using recurrence_convolution
+    (fun n => forward HardinA229585StripData.T HardinA229585StripData.initial n j) h
+
+private theorem w_copied (i : Fin 15) (hi : i.val ≠ 0) (j : Fin 96)
+    (hj : (exitRead j).val < 72) :
+    w i (j.natAdd 72) = leading i ⟨(exitRead j).val, hj⟩ := by
+  simp only [w, hi, dite_false, Fin.addCases_right, hj, dite_true]
+
 set_option maxRecDepth 14000 in
 set_option maxHeartbeats 3000000 in
 private theorem polynomialCoordinates :
-    (List.finRange 168).all (fun k =>
-      w (Fin.last 14) k ==
+    ((List.finRange 96).filter (fun j => 72 ≤ (exitRead j).val)).all (fun j =>
+      w (Fin.last 14) (j.natAdd 72) ==
         (List.zipWith (· * ·) (List.ofFn coefficients)
-          (List.ofFn fun j : Fin 12 => w ((j.natAdd 2).castAdd 1) k)).sum) = true := by
+          (List.ofFn fun k : Fin 12 => w ((k.natAdd 2).castAdd 1) (j.natAdd 72))).sum) = true := by
   decide +kernel
 
 private theorem polynomial_relation :
@@ -660,9 +711,22 @@ private theorem polynomial_relation :
   simp_rw [show ∀ j : Fin 12, forward T initial (2 + j.val) =
       w ((j.natAdd 2).castAdd 1) from fun j => forward_table ((j.natAdd 2).castAdd 1)]
   funext k
-  have h := List.all_eq_true.mp polynomialCoordinates k (List.mem_finRange k)
-  simpa only [beq_iff_eq, sum_zip_mul, dotProduct, Finset.sum_apply, Pi.smul_apply,
-    smul_eq_mul] using h
+  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  induction k using Fin.addCases (m := 72) (n := 96) with
+  | left j =>
+    simpa only [w_leading] using leading_polynomial j
+  | right j =>
+    by_cases hj : (exitRead j).val < 72
+    · have hlast : (Fin.last 14).val ≠ 0 := by decide
+      have hindex (i : Fin 12) : ((i.natAdd 2).castAdd 1).val ≠ 0 := by
+        simp only [Fin.val_castAdd, Fin.val_natAdd]
+        omega
+      simpa only [w_copied _ hlast j hj, fun i => w_copied _ (hindex i) j hj] using
+        leading_polynomial ⟨(exitRead j).val, hj⟩
+    · have hm : j ∈ (List.finRange 96).filter (fun j => 72 ≤ (exitRead j).val) := by
+        simp [Nat.le_of_not_gt hj]
+      have h := List.all_eq_true.mp polynomialCoordinates j hm
+      simpa only [beq_iff_eq, sum_zip_mul, dotProduct] using h
 
 private theorem scale_count (m : ℕ) :
     literalCount (q := 3) horizontal antidiagonal 2 (m + 1) = 6 * a (m + 1) := by
