@@ -35,7 +35,7 @@ abbrev arena : Arena where
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment c w) w →
       moment c w = a ∧ moment d w < a) ∧
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment d w) w →
-      moment d w = a ∧ moment c w < a) ∧
+      moment d w = a ∧ moment c w < a ∧ (Even q → moment c w = 0)) ∧
     ∀ w, minimum (fun w => probability w ∧ a ≤ moment c w ∧ a ≤ moment d w) w →
       moment c w = a ∧ moment d w = a
 

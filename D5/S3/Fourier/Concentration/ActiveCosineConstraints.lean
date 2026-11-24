@@ -84,6 +84,7 @@ private theorem cosine_mean (m : ZMod q) (hm : m ≠ 0) :
   simpa only [cosine, map_sum, Complex.reCLM_apply, Complex.zero_re] using
     congrArg (Complex.reCLM : ℂ →L[ℝ] ℝ) hh
 
+omit [NeZero q] in
 private theorem two_ne_zero_of_four_le (hq : 4 ≤ q) : (2 : ZMod q) ≠ 0 := by
   intro h
   have hv : (2 : ZMod q).val = 2 := ZMod.val_natCast_of_lt (n := q) (a := 2) (by omega)
@@ -356,7 +357,7 @@ private theorem cosine_active (hq : 4 ≤ q) {a : ℝ} (ha : 0 < a) (ha' : a < 1
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment c w) w →
       moment c w = a ∧ moment d w < a) ∧
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment d w) w →
-      moment d w = a ∧ moment c w < a) ∧
+      moment d w = a ∧ moment c w < a ∧ (Even q → moment c w = 0)) ∧
     ∀ w, minimum (fun w => probability w ∧ a ≤ moment c w ∧ a ≤ moment d w) w →
       moment c w = a ∧ moment d w = a := by
   dsimp only
@@ -379,12 +380,12 @@ private theorem cosine_active (hq : 4 ≤ q) {a : ℝ} (ha : 0 < a) (ha' : a < 1
     change moment d vs < moment c vs
     simp only [moment, vs, div_mul_eq_mul_div, ← sum_div]
     exact div_lt_div_of_pos_right hsum (clip_total_pos c hc s)
+  have hEven (heven : Even q) : moment c vt = 0 := by
+    simp only [moment, vt, div_mul_eq_mul_div, ← sum_div]
+    rw [clip_sums_even heven t, zero_div]
   have htc : moment c vt < a := by
     rcases Nat.even_or_odd q with heven | hodd
-    · have hz : moment c vt = 0 := by
-        simp only [moment, vt, div_mul_eq_mul_div, ← sum_div]
-        rw [clip_sums_even heven t, zero_div]
-      rw [hz]
+    · rw [hEven heven]
       exact ha
     · have hw := clip_at_one_pos d hd (fun k hk =>
         cosine_le_at_one hq (2 * k) (fun h => hk (by simpa only [d, h] using (cosine_zero (q := q))))) ht.le ha' htd
@@ -405,7 +406,8 @@ private theorem cosine_active (hq : 4 ≤ q) {a : ℝ} (ha : 0 < a) (ha' : a < 1
       by_contra hne
       exact (not_lt_of_ge (hw.2 vt ⟨hvt, htd.ge⟩))
         (energy_strict_of_distance hne (htgap w hw.1.1 hw.1.2))
-    exact ⟨by simpa only [heq] using htd, by simpa only [heq] using htc⟩
+    exact ⟨by simpa only [heq] using htd, by simpa only [heq] using htc,
+      by simpa only [heq] using hEven⟩
   · intro w hw
     have hslt := energy_strict_of_distance (w := w) (v := vs)
       (fun h => (not_lt_of_ge (by simpa only [h] using hw.1.2.2)) hsd) (hsgap w hw.1.1 hw.1.2.1)
@@ -414,7 +416,6 @@ private theorem cosine_active (hq : 4 ≤ q) {a : ℝ} (ha : 0 < a) (ha' : a < 1
     have hswap : minimum (fun u => probability u ∧ a ≤ moment d u ∧ a ≤ moment c u) w :=
       ⟨⟨hw.1.1, hw.1.2.2, hw.1.2.1⟩, fun u hu => hw.2 u ⟨hu.1, hu.2.2, hu.2.1⟩⟩
     exact ⟨tight_opposite hswap hvt htd.ge htc htlt, tight_opposite hw hvs hsc.ge hsd hslt⟩
-
 
 /-- Each singly constrained minimum violates the opposite lower cosine bound strictly.
 Consequently both lower bounds are attained at every jointly constrained minimum. -/
@@ -430,7 +431,7 @@ theorem active_cosine_constraints (hq : 4 ≤ q) {a : ℝ} (ha : 0 < a) (ha' : a
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment c w) w →
       moment c w = a ∧ moment d w < a) ∧
     (∀ w, minimum (fun w => probability w ∧ a ≤ moment d w) w →
-      moment d w = a ∧ moment c w < a) ∧
+      moment d w = a ∧ moment c w < a ∧ (Even q → moment c w = 0)) ∧
     ∀ w, minimum (fun w => probability w ∧ a ≤ moment c w ∧ a ≤ moment d w) w →
       moment c w = a ∧ moment d w = a := by
   have h := cosine_active (q := q) hq ha ha'

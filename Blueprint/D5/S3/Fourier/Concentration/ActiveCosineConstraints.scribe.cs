@@ -9,7 +9,7 @@ internal sealed class ActiveCosineConstraintsDocument : IScribeDocumentDefinitio
     private const string Owner = "D5/S3/Fourier/Concentration/ActiveCosineConstraints";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Both cosine moment bounds are tight at every joint minimum of the squared mass on a finite cycle.",
+        "For q ≥ 4 and 0 < a < 1, both cosine moment bounds are tight at a joint minimum of squared mass.",
         H("Two active cosine moment constraints"),
         Blocks(
             Paragraph(Text(
@@ -17,7 +17,8 @@ internal sealed class ActiveCosineConstraintsDocument : IScribeDocumentDefinitio
                 + "Let M and N be moments against c and d respectively. "
                 + "At a common target a, C(w), D(w), and J(w) mean that w minimizes "
                 + "the sum of squared weights over probability laws subject to the first bound, "
-                + "the second bound, and both bounds, respectively. Each bound is a lower bound a.")),
+                + "the second bound, and both bounds, respectively. Each bound is a lower bound a. "
+                + "Even(q) means that q is divisible by two.")),
             Describe.Lean(
                 DescribeId.Create("active-cosine-constraints"),
                 DeclarationHandle.Create(Owner + ".active_cosine_constraints"),
@@ -37,7 +38,11 @@ internal sealed class ActiveCosineConstraintsDocument : IScribeDocumentDefinitio
                         + "and residue 1 supplies strict inequality.")),
                     Paragraph(Text(
                         "If one bound had slack at a joint minimum, a small mixture with the minimizer for "
-                        + "the other bound would still satisfy both bounds and would decrease the squared mass."))),
+                        + "the other bound would still satisfy both bounds and would decrease the squared mass.")),
+                    Paragraph(Text(
+                        "Direct evaluation at q = 3 gives identical readouts. At q = 2 the second readout is constant 1. "
+                        + "At a = 0 the uniform minimizer has both moments zero. At a = 1 the first-mode bound forces "
+                        + "the point mass at residue zero, whose two moments are one."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -56,7 +61,8 @@ internal sealed class ActiveCosineConstraintsDocument : IScribeDocumentDefinitio
             Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad, Sp, Call("C", w), Sp, Longrightarrow, Sp,
                 m, Eq, a, Sp, Land, Sp, n, Lt, a, Comma),
             Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad, Sp, Call("D", w), Sp, Longrightarrow, Sp,
-                n, Eq, a, Sp, Land, Sp, m, Lt, a, Comma),
+                n, Eq, a, Sp, Land, Sp, m, Lt, a, Sp, Land, Sp, Open, Call("Even", q),
+                Sp, Longrightarrow, Sp, m, Eq, D(0), Close, Comma),
             Seq(Amp, Forall, Sp, w, Colon, domain, Comma, Quad, Sp, Call("J", w), Sp, Longrightarrow, Sp,
                 m, Eq, a, Sp, Land, Sp, n, Eq, a, Dot)
         ]));
