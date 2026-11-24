@@ -115,8 +115,8 @@ Each response can carry its own unknown constant offset. -/
 theorem sparse_injective {n : ℕ} (p q : Path n) (c e : ℝ)
     (htotal : ∑ i, p.length i = ∑ i, q.length i)
     (hread : ∀ k, k + 1 < n →
-      coeff (readoutDegree k) (gramian (p.heat c)) =
-        coeff (readoutDegree k) (gramian (q.heat e))) : p = q := by
+      let d := readoutDegree k
+      coeff d (gramian (p.heat c)) = coeff d (gramian (q.heat e))) : p = q := by
   apply eq_of_prefix_and_total p q htotal
   intro i hi
   by_contra hne
