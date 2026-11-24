@@ -28,9 +28,12 @@ local notation "Momentum" => Charge hyperbolicPlane
 local notation "H" => fun p : Momentum => GradedCohomology planeFrame planeBasis p 1
 local notation "incl" => DirectSum.lof ℂ Momentum H
 
-local instance : AddCommGroup ComplexState := TensorProduct.addCommGroup
-local instance (p : Momentum) : AddCommGroup (relativeShell p) := Submodule.addCommGroup _
-local instance (p : Momentum) : AddCommGroup (GradedCycles planeFrame planeBasis p 1) :=
+local instance oppositeBracketStateAddCommGroup : AddCommGroup ComplexState :=
+  TensorProduct.addCommGroup
+local instance oppositeBracketShellAddCommGroup (p : Momentum) : AddCommGroup (relativeShell p) :=
+  Submodule.addCommGroup _
+local instance oppositeBracketCyclesAddCommGroup (p : Momentum) :
+    AddCommGroup (GradedCycles planeFrame planeBasis p 1) :=
   Submodule.addCommGroup _
 
 /-- The graded bracket of opposite homogeneous classes lies in the zero-momentum summand. -/
