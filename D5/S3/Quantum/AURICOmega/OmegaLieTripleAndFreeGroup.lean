@@ -9,6 +9,7 @@
 module
 prelude
 public import OmegaMath.Geometry.LieTriple
+public import OmegaMath.Geometry.DualChartCayley
 
 namespace D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup
 
@@ -48,5 +49,30 @@ public theorem lieTriple_sectional_ratio (u v : RatVec3)
       ((rationalCurvatureNumerator u v).mul (rationalGramAreaSq u v).inv)
       (IntRatio.ofInt Int.one) :=
   Omega.Geometry.LieTriple.lieTriple_sectional_ratio u v h
+
+open Omega.Geometry.DualChartCayley
+
+/-- The normalized chart denominators sum to one. -/
+public theorem dual_chart_denom_sum_one (u v : RatVec3) :
+    IntRatio.Equivalent ((denomPlus u v).add (denomMinus u v)) (IntRatio.ofInt Int.one) :=
+  Omega.Geometry.DualChartCayley.dual_chart_denom_sum_one u v
+
+/-- At least one chart denominator is at least one half. -/
+public theorem dual_chart_denom_ge_half (u v : RatVec3) :
+    let half := IntRatio.fraction Int.one Nat.one
+    Or (IntRatio.Le half (denomPlus u v)) (IntRatio.Le half (denomMinus u v)) :=
+  Omega.Geometry.DualChartCayley.dual_chart_denom_ge_half u v
+
+/-- The selected stereographic coordinates lie in the closed unit ball. -/
+public theorem dual_chart_ball_containment (u v : RatVec3) :
+    IntRatio.Le ((output u v).dot3 (output u v)) (IntRatio.ofInt Int.one) :=
+  Omega.Geometry.DualChartCayley.dual_chart_ball_containment u v
+
+/-- Both normalized denominators have the expanded MRP forms. -/
+public theorem dual_chart_mrp_denominators (u v : RatVec3) :
+    let r := (product u v).radiusPred
+    And (IntRatio.Equivalent (denomPlus u v) (.fraction (mrpPlusNum u v) r))
+      (IntRatio.Equivalent (denomMinus u v) (.fraction (mrpMinusNum u v) r)) :=
+  Omega.Geometry.DualChartCayley.dual_chart_mrp_denominators u v
 
 end D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup

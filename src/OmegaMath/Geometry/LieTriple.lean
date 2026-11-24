@@ -128,7 +128,7 @@ theorem lieTriple_sectional_curvature_reversed (u v : Vec3) :
   ((U.triple V V).dot U).sound
     (((U.dot U).mul (V.dot V)).sub (U.dot V).sq).neg (inputs u (inputs v .nil)) Eq.refl
 
-private def areaDenPred (u v : RatVec3) : Nat :=
+def areaDenPred (u v : RatVec3) : Nat :=
   let pair := IntRatio.mulDenPred u.denPred v.denPred
   IntRatio.mulDenPred pair pair
 
