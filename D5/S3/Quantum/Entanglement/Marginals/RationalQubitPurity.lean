@@ -6,8 +6,11 @@
    utility: none
    digest: A common Gaussian norm characterizes rational pure extensions of qubit marginals. -/
 
+import D5.S0.Observation.MatrixTracePowerSum
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+
+/-! Gaussian norm obstruction and construction for rational pure two-qubit densities. -/
 
 open Matrix Complex
 open scoped ComplexConjugate ComplexOrder Matrix
@@ -19,18 +22,28 @@ set_option autoImplicit false
 
 namespace D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
 
+private theorem square_eq_trace_sub_det (A : Matrix Bool Bool ℂ) :
+    A * A = A.trace • A - A.det • (1 : Matrix Bool Bool ℂ) := by
+  let e := finTwoEquiv
+  let B := A.submatrix e e
+  have htrace : B.trace = A.trace := Fintype.sum_equiv e _ _ fun _ => rfl
+  have h := D5.S0.Observation.MatrixTracePowerSum.pow_add_two B 0
+  simp only [Nat.zero_add, pow_two, pow_one, pow_zero, htrace, B,
+    Matrix.det_submatrix_equiv_self] at h
+  apply Matrix.submatrix_injective e.surjective e.surjective
+  change (A * A).submatrix e e = (A.trace • A - A.det • 1).submatrix e e
+  rw [← Matrix.submatrix_mul_equiv A A e e e]
+  change B * B = A.trace • B - A.det • (1 : Matrix Bool Bool ℂ).submatrix e e
+  rw [Matrix.submatrix_one_equiv]
+  exact h
+
 private theorem traceless_sq (U : Matrix Bool Bool ℂ) (h : U.trace = 0) :
     U * U = (-U.det) • (1 : Matrix Bool Bool ℂ) := by
-  have hd : U true true = -(U false false) := by
-    have h' : U false false + U true true = 0 := by
-      simpa [Matrix.trace, Fintype.sum_bool, add_comm] using h
-    linear_combination h'
-  have hdet := Matrix.det_fin_two (U.submatrix finTwoEquiv finTwoEquiv)
-  rw [Matrix.det_submatrix_equiv_self] at hdet
-  ext i j
-  cases i <;> cases j <;>
-    simp [Matrix.mul_apply, hdet, hd,
-      show finTwoEquiv 0 = false from rfl, show finTwoEquiv 1 = true from rfl] <;> ring
+  rw [square_eq_trace_sub_det, h, zero_smul, zero_sub, neg_smul]
+
+private theorem square_trace_one (A : Matrix Bool Bool ℂ) (h : A.trace = 1) :
+    A * A = A - A.det • (1 : Matrix Bool Bool ℂ) := by
+  rw [square_eq_trace_sub_det, h, one_smul]
 
 private theorem shifted_gram (A : Matrix Bool Bool ℂ) (s : ℂ)
     (hA : A.IsHermitian)
@@ -51,6 +64,14 @@ private theorem scalar_intertwiner (A B : Matrix Bool Bool ℂ)
   rw [mul_sub, sub_mul, mul_add, add_mul, hA, hB, mul_one, one_mul, hD]
   abel
 
+private theorem rational_det (A : Matrix Bool Bool ℂ)
+    (hA : ∀ i j, A i j ∈ rationalComplex) : A.det ∈ rationalComplex := by
+  have hdet := Matrix.det_fin_two (A.submatrix finTwoEquiv finTwoEquiv)
+  rw [Matrix.det_submatrix_equiv_self] at hdet
+  rw [hdet]
+  exact rationalComplex.sub_mem (rationalComplex.mul_mem (hA _ _) (hA _ _))
+    (rationalComplex.mul_mem (hA _ _) (hA _ _))
+
 private theorem norm_det_of_rational_ray (M : Matrix Bool Bool ℂ)
     (hM : M ≠ 0)
     (hQ : ∀ i j : Bool × Bool, RationalEntry
@@ -70,12 +91,7 @@ private theorem norm_det_of_rational_ray (M : Matrix Bool Bool ℂ)
     exact h
   have hsQ : M i j * c ∈ rationalComplex := hQ (i,j) (i,j)
   have hs0 : M i j * c ≠ 0 := mul_ne_zero hij hc
-  have hD := Matrix.det_fin_two (N.submatrix finTwoEquiv finTwoEquiv)
-  rw [Matrix.det_submatrix_equiv_self] at hD
-  have hDN : N.det ∈ rationalComplex := by
-    rw [hD]
-    exact rationalComplex.sub_mem (rationalComplex.mul_mem (hN _ _) (hN _ _))
-      (rationalComplex.mul_mem (hN _ _) (hN _ _))
+  have hDN := rational_det N hN
   refine ⟨N.det / (M i j * c), rationalComplex.div_mem hDN hsQ, ?_⟩
   rw [← Complex.mul_conj, map_div₀, Matrix.det_mul, Matrix.det_conjTranspose, Complex.star_def]
   have hc' : conj c = M i j := by simp [c]
@@ -88,27 +104,6 @@ private theorem norm_det_of_rational_ray (M : Matrix Bool Bool ℂ)
   have hcard : Fintype.card Bool = 2 := by decide
   rw [Matrix.det_smul, hcard, map_mul, map_pow, hc']
   field_simp
-
-private theorem square_trace_one (A : Matrix Bool Bool ℂ) (h : A.trace = 1) :
-    A * A = A - A.det • (1 : Matrix Bool Bool ℂ) := by
-  have hd : A true true = 1 - A false false := by
-    have h' : A false false + A true true = 1 := by
-      simpa [Matrix.trace, Fintype.sum_bool, add_comm] using h
-    linear_combination h'
-  have hdet := Matrix.det_fin_two (A.submatrix finTwoEquiv finTwoEquiv)
-  rw [Matrix.det_submatrix_equiv_self] at hdet
-  ext i j
-  cases i <;> cases j <;>
-    simp [Matrix.mul_apply, hdet, hd,
-      show finTwoEquiv 0 = false from rfl, show finTwoEquiv 1 = true from rfl] <;> ring
-
-private theorem rational_det (A : Matrix Bool Bool ℂ)
-    (hA : ∀ i j, A i j ∈ rationalComplex) : A.det ∈ rationalComplex := by
-  have hdet := Matrix.det_fin_two (A.submatrix finTwoEquiv finTwoEquiv)
-  rw [Matrix.det_submatrix_equiv_self] at hdet
-  rw [hdet]
-  exact rationalComplex.sub_mem (rationalComplex.mul_mem (hA _ _) (hA _ _))
-    (rationalComplex.mul_mem (hA _ _) (hA _ _))
 
 private theorem scalar_sq_normalization (U : Matrix Bool Bool ℂ) (hU : U.IsHermitian)
     (ht : U.trace = 0) (h0 : U ≠ 0) :
