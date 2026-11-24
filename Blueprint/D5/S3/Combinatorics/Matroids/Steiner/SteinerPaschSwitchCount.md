@@ -23,4 +23,4 @@ The four other points of such a Pasch form a square in the graph of the two matc
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/Steiner/SteinerPaschSwitchCount.variableLabelledSwitchCount_iff`
-- Dependency: [D5/S3/Combinatorics/Matroids/SteinerFixedPivotCountRange](SteinerFixedPivotCountRange.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/SteinerFixedPivotCountRange](../SteinerFixedPivotCountRange.md)
