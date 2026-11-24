@@ -36,11 +36,15 @@ def feasible (q : ℕ) [NeZero q] (a : ℝ) : Set (ZMod q → ℝ) :=
 def energy {q : ℕ} [NeZero q] (v : ZMod q → ℝ) : ℝ :=
   ∑ i, v i ^ 2
 
-private def centeredAngle {q : ℕ} (i : ZMod q) : ℝ :=
+/-- The angle determined by the centered integer representative of a residue. -/
+def centeredAngle {q : ℕ} (i : ZMod q) : ℝ :=
   2 * Real.pi * (i.valMinAbs : ℝ) / q
 
-private theorem cosineMoment_eq_centered {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → ℝ) :
-    cosineMoment r v = ∑ i : ZMod q, v i * Real.cos ((r : ℝ) * centeredAngle i) := by
+/-- Centering representatives preserves every integral cosine moment. -/
+theorem cosineMoment_eq_centered {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → ℝ) :
+    let readout := Real.cos
+    cosineMoment r v = ∑ i : ZMod q, v i * readout ((r : ℝ) * centeredAngle i) := by
+  dsimp only
   unfold cosineMoment
   apply sum_congr rfl
   intro i _
@@ -139,18 +143,22 @@ private theorem dual_positive_part_le {q : ℕ} [NeZero q] {m t Z : ℝ} {n : �
   · exact (sub_nonpos.mpr ((mul_nonpos_of_nonneg_of_nonpos ht (le_of_not_ge hc)).trans
       (sq_nonneg _))).trans (le_max_left _ _)
 
+/-- The support radius drops by one at the lower activation threshold. -/
+def latticeSupportRadius (n : ℕ) (m : ℝ) : ℕ :=
+  if m = ((n : ℝ) ^ 2 - 1) / 5 then n - 1 else n
+
 private theorem activation_zero_outside {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
-    (A : Activation m n t Z w) {k : ℤ} (hk : k ∉ Icc (-(n : ℤ)) (n : ℤ)) : w k = 0 := by
+    (A : Activation m n t Z w) {k : ℤ}
+    (hk : k ∉ Icc (-(latticeSupportRadius n m : ℤ)) (latticeSupportRadius n m : ℤ)) :
+    w k = 0 := by
   by_contra h
   have hs : k ∈ Function.support w := h
   rw [A.support] at hs
-  split at hs
-  · simp only [Finset.mem_coe, Finset.mem_Icc] at hs
-    apply hk
-    simp only [Finset.mem_Icc]
-    have hpred : ((n - 1 : ℕ) : ℤ) ≤ n := by exact_mod_cast Nat.sub_le n 1
-    omega
-  · exact hk hs
+  by_cases hm : m = ((n : ℝ) ^ 2 - 1) / 5
+  · rw [ite_eq_left (A.lower_endpoint.mp hm)] at hs
+    exact hk (by simpa [latticeSupportRadius, hm] using hs)
+  · rw [ite_eq_right (fun ht => hm (A.lower_endpoint.mpr ht))] at hs
+    exact hk (by simpa [latticeSupportRadius, hm] using hs)
 
 private theorem sum_centered_eq_tsum {q n : ℕ} [NeZero q] (hq : 2 * n < q) (f : ℤ → ℝ)
     (hf : ∀ k, k ∉ Icc (-(n : ℤ)) (n : ℤ) → f k = 0) :
@@ -193,11 +201,11 @@ private theorem radius_le_normalizer {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
   simpa using single_le_sum hterm (show (0 : ℤ) ∈ Icc (-(n : ℤ)) (n : ℤ) by simp)
 
 private theorem embedded_feasible {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w : ℤ → ℝ}
-    (hq : 2 * n < q) (A : Activation (lam / (8 * Real.pi ^ 2)) n t Z w) :
+    (hq : 2 * latticeSupportRadius n (lam / (8 * Real.pi ^ 2)) < q)
+    (A : Activation (lam / (8 * Real.pi ^ 2)) n t Z w) :
     ∃ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), energy u = ∑' k : ℤ, w k ^ 2 := by
   let u : ZMod q → ℝ := fun i => w i.valMinAbs
-  have hz (k : ℤ) (hk : k ∉ Icc (-(n : ℤ)) (n : ℤ)) : w k = 0 :=
-    activation_zero_outside A hk
+  have hz := fun k hk => activation_zero_outside A (k := k) hk
   have hmass : (∑ i, u i) = 1 := (sum_centered_eq_tsum hq w hz).trans A.mass.tsum_eq
   have hmoment : (∑ i : ZMod q, (i.valMinAbs : ℝ) ^ 2 * u i) = lam / (8 * Real.pi ^ 2) :=
     (sum_centered_eq_tsum hq _ (fun k hk => by rw [hz k hk, mul_zero])).trans
@@ -237,9 +245,13 @@ private theorem embedded_feasible {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w : �
   exact ⟨u, ⟨fun i => A.nonneg _, hmass, hdeficit 1 (by omega), hdeficit 2 le_rfl⟩, henergy⟩
 
 private theorem universal_lower_bound {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w : ℤ → ℝ}
-    (hq : 2 * n < q) (A : Activation (lam / (8 * Real.pi ^ 2)) n t Z w)
-    {v : ZMod q → ℝ} (hv : v ∈ feasible q (1 - lam / (q : ℝ) ^ 2)) :
-    (∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2) ≤
+    (hq : 2 * latticeSupportRadius n (lam / (8 * Real.pi ^ 2)) < q)
+    (A : Activation (lam / (8 * Real.pi ^ 2)) n t Z w)
+    {v : ZMod q → ℝ} (hv : ∀ i, 0 ≤ v i) (hmass : ∑ i, v i = 1) :
+    let a := 1 - lam / (q : ℝ) ^ 2
+    (∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2) +
+      (2 * t / Z) * (cosineMoment 1 v - a) +
+      (((q : ℝ) / (2 * Real.pi)) ^ 2 / Z) * (cosineMoment 2 v - a) ≤
       energy v - (∑' k : ℤ, w k ^ 2) + (2 * t / Z) * (lam / (q : ℝ) ^ 2) := by
   let m := lam / (8 * Real.pi ^ 2)
   let δ := lam / (q : ℝ) ^ 2
@@ -265,33 +277,31 @@ private theorem universal_lower_bound {q n : ℕ} [NeZero q] {lam t Z : ℝ} {w 
     have hdeficit : (∑ i, v i * (1 - Real.cos (2 * centeredAngle i))) =
         1 - cosineMoment 2 v := by
       simp_rw [mul_sub, mul_one]
-      rw [sum_sub_distrib, hv.2.1, ← hsecond]
+      rw [sum_sub_distrib, hmass, ← hsecond]
     simp_rw [hp]
     rw [← sum_div, sum_sub_distrib, ← mul_sum, ← mul_sum, ← hfirst, hdeficit]
-  have hdot_lower : (t - m) / Z - t * δ / Z ≤ ∑ i, v i * P i := by
-    rw [hdot, ← sub_div]
-    apply (div_le_div_iff_of_pos_right A.normalizer_pos).mpr
-    have h₁ := mul_le_mul_of_nonneg_left hv.2.2.1 ((sq_nonneg _).trans A.radius_lower)
-    have h₂ := mul_le_mul_of_nonneg_left (show 1 - cosineMoment 2 v ≤ δ by
-      linarith only [hv.2.2.2]) (show 0 ≤ C by positivity)
-    linarith only [h₁, h₂, hCδ]
+  have hdot_exact : 2 * (∑ i, v i * P i) =
+      2 * ((t - m) / Z) - (2 * t / Z) * δ +
+        (2 * t / Z) * (cosineMoment 1 v - (1 - δ)) +
+        (2 * C / Z) * (cosineMoment 2 v - (1 - δ)) := by
+    rw [hdot, ← hCδ]
+    ring
   have hsq : (∑ i : ZMod q, w i.valMinAbs ^ 2) = ∑' k : ℤ, w k ^ 2 :=
     sum_centered_eq_tsum hq (fun k => w k ^ 2)
       (fun k hk => by simp only [activation_zero_outside A hk, zero_pow two_ne_zero])
   have hdot_weight : (∑ i, v i * P i) ≤ ∑ i : ZMod q, v i * w i.valMinAbs :=
     sum_le_sum fun i _ =>
-      mul_le_mul_of_nonneg_left ((le_max_right 0 _).trans (dual_positive_part_le A i)) (hv.1 i)
+      mul_le_mul_of_nonneg_left ((le_max_right 0 _).trans (dual_positive_part_le A i)) (hv i)
   have hdist : (∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2) =
       energy v - 2 * (∑ i : ZMod q, v i * w i.valMinAbs) + (∑' k : ℤ, w k ^ 2) := by
     simp_rw [sub_sq, mul_assoc]
     rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, hsq, energy]
-  calc
-    _ ≤ energy v - 2 * (∑ i, v i * P i) + (∑' k : ℤ, w k ^ 2) := by
-      rw [hdist]
-      linarith only [hdot_weight]
-    _ ≤ _ := by
-      rw [lattice_energy_eq A]
-      linarith only [hdot_lower, show (2 * t / Z) * δ = 2 * (t * δ / Z) by ring]
+  have hC : 2 * C / Z = ((q : ℝ) / (2 * Real.pi)) ^ 2 / Z := by dsimp [C]; ring
+  dsimp only
+  rw [hdist, lattice_energy_eq A, ← hC]
+  change _ + (2 * t / Z) * (cosineMoment 1 v - (1 - δ)) +
+      (2 * C / Z) * (cosineMoment 2 v - (1 - δ)) ≤ _
+  linarith only [hdot_weight, hdot_exact]
 
 private theorem exists_cyclic_minimum {q : ℕ} [NeZero q] {a : ℝ}
     (hne : (feasible q a).Nonempty) :
@@ -315,11 +325,11 @@ private theorem exists_cyclic_minimum {q : ℕ} [NeZero q] {a : ℝ}
     fun_prop
   exact (isCompact_Icc.of_isClosed_subset hclosed hbounded).exists_isMinOn hne hcont.continuousOn
 
-/-- For a positive activation index of `m = λ / (8π²)` and `q > 2n`, the cyclic minimum
+/-- If the lattice support fits in the centered residues, the cyclic minimum
 at threshold `1 - λ/q²` is attained. Its gap below the lattice minimum is at most
 `(2t/Z) λ/q²`, hence at most `2λ/q²`. -/
-theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (hq : 2 * n < q)
-    (lam : ℝ)
+theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (lam : ℝ)
+    (hq : 2 * latticeSupportRadius n (lam / (8 * Real.pi ^ 2)) < q)
     (hmlo : ((n : ℝ) ^ 2 - 1) / 5 ≤ lam / (8 * Real.pi ^ 2))
     (hmhi : lam / (8 * Real.pi ^ 2) ≤ (n : ℝ) * (n + 2) / 5) :
     letI : NeZero q := ⟨by omega⟩
@@ -327,7 +337,10 @@ theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (hq : 2 * n < q)
     let a := 1 - lam / (q : ℝ) ^ 2
     let error := fun x : ℝ => 2 * x
     ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w ∧
-      (∀ u ∈ feasible q a, (∑ i : ZMod q, (u i - w i.valMinAbs) ^ 2) ≤
+      (∀ (u : ZMod q → ℝ), (∀ i, 0 ≤ u i) → (∑ i, u i) = 1 →
+        (∑ i : ZMod q, (u i - w i.valMinAbs) ^ 2) +
+          (2 * t / Z) * (cosineMoment 1 u - a) +
+          (((q : ℝ) / (2 * Real.pi)) ^ 2 / Z) * (cosineMoment 2 u - a) ≤
         energy u - (∑' k : ℤ, w k ^ 2) + (2 * t / Z) * (lam / (q : ℝ) ^ 2)) ∧
       ∃ v ∈ feasible q a, IsMinOn energy (feasible q a) v ∧
         0 ≤ (∑' k : ℤ, w k ^ 2) - energy v ∧
@@ -341,16 +354,22 @@ theorem cyclic_to_lattice_comparison (q n : ℕ) (hn : 0 < n) (hq : 2 * n < q)
   have hlam : 0 ≤ lam := by
     rw [le_div_iff₀ (by positivity : 0 < 8 * Real.pi ^ 2), zero_mul] at hm
     exact hm
-  obtain ⟨t, Z, w, A⟩ :=
+  obtain ⟨⟨t, Z, w⟩, A, _⟩ :=
     (exists_lattice_square_moment_minimizer_on_interval n hn _).mp ⟨hmlo, hmhi⟩
   obtain ⟨u, hu, huenergy⟩ := embedded_feasible hq A
   obtain ⟨v, hv, hvmin⟩ := exists_cyclic_minimum ⟨u, hu⟩
-  have hdist := universal_lower_bound hq A hv
+  have hdist := universal_lower_bound hq A hv.1 hv.2.1
   have hnonneg : 0 ≤ ∑ i : ZMod q, (v i - w i.valMinAbs) ^ 2 :=
     sum_nonneg fun i _ => sq_nonneg _
   have hgap : (∑' k : ℤ, w k ^ 2) - energy v ≤ (2 * t / Z) * (lam / (q : ℝ) ^ 2) := by
-    linarith only [hdist, hnonneg]
-  refine ⟨t, Z, w, A, fun u hu => universal_lower_bound hq A hu, v, hv, hvmin,
+    have ht : 0 ≤ t := (sq_nonneg _).trans A.radius_lower
+    have hs₁ := mul_nonneg (div_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) ht) A.normalizer_pos.le)
+      (sub_nonneg.mpr hv.2.2.1)
+    have hs₂ := mul_nonneg (div_nonneg (sq_nonneg ((q : ℝ) / (2 * Real.pi))) A.normalizer_pos.le)
+      (sub_nonneg.mpr hv.2.2.2)
+    dsimp only at hdist
+    linarith only [hdist, hnonneg, hs₁, hs₂]
+  refine ⟨t, Z, w, A, fun _ hu hmass => universal_lower_bound hq A hu hmass, v, hv, hvmin,
     sub_nonneg.mpr ((hvmin hu).trans_eq huenergy), hgap, ?_⟩
   have hratio : 2 * t / Z ≤ 2 := by
     rw [div_le_iff₀ A.normalizer_pos]

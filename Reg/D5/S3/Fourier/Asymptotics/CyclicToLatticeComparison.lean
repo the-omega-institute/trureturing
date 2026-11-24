@@ -24,7 +24,8 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (q n : ℕ), 0 < n → ∀ hq : 2 * n < q, ∀ lam : ℝ,
+  Law R := ∀ (q n : ℕ), 0 < n → ∀ lam : ℝ,
+    ∀ hq : 2 * latticeSupportRadius n (lam / (8 * Real.pi ^ 2)) < q,
     ((n : ℝ) ^ 2 - 1) / 5 ≤ lam / (8 * Real.pi ^ 2) →
     lam / (8 * Real.pi ^ 2) ≤ (n : ℝ) * (n + 2) / 5 →
     letI : NeZero q := ⟨by omega⟩
@@ -32,7 +33,10 @@ abbrev arena : Arena where
     let a := 1 - lam / (q : ℝ) ^ 2
     let error := fun x : ℝ => R.readout () () x
     ∃ (t Z : ℝ) (w : ℤ → ℝ), Activation m n t Z w ∧
-      (∀ u ∈ feasible q a, (∑ i : ZMod q, (u i - w i.valMinAbs) ^ 2) ≤
+      (∀ (u : ZMod q → ℝ), (∀ i, 0 ≤ u i) → (∑ i, u i) = 1 →
+        (∑ i : ZMod q, (u i - w i.valMinAbs) ^ 2) +
+          (2 * t / Z) * (cosineMoment 1 u - a) +
+          (((q : ℝ) / (2 * Real.pi)) ^ 2 / Z) * (cosineMoment 2 u - a) ≤
         energy u - (∑' k : ℤ, w k ^ 2) + (2 * t / Z) * (lam / (q : ℝ) ^ 2)) ∧
       ∃ v ∈ feasible q a, IsMinOn energy (feasible q a) v ∧
         0 ≤ (∑' k : ℤ, w k ^ 2) - energy v ∧
@@ -42,7 +46,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   obtain ⟨_, _, _, _, _, _, _, _, hnonneg, _, hbound⟩ :=
-    law 3 1 (by decide) (by decide) 0 (by norm_num) (by norm_num)
+    law 3 1 (by decide) 0 (by norm_num [latticeSupportRadius]) (by norm_num) (by norm_num)
   have hbad := hnonneg.trans hbound
   change (0 : ℝ) ≤ -1 at hbad
   norm_num at hbad
@@ -90,6 +94,70 @@ def registration :
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace Centering
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.cos x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → ℝ),
+    let readout := R.readout () ()
+    cosineMoment r v = ∑ i : ZMod q, v i * readout ((r : ℝ) * centeredAngle i)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have h := law (q := 1) 0 (fun _ => 1)
+  simp [cosineMoment, rejected, realize, ZMod.card] at h
+
+def evidence : Registration arena (type_of% @cosineMoment_eq_centered) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@cosineMoment_eq_centered, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, Real.pi, ?_⟩
+    norm_num [actual, realize]
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@cosineMoment_eq_centered) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison.Centering.unit
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison.Centering.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Centering
 
 end
 
