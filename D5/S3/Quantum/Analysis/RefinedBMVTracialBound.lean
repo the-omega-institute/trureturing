@@ -137,28 +137,28 @@ theorem compositionTrace_ge_all
     (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
     (X B : A) (hX : 0 ≤ X) (hB : 0 ≤ B)
     (p : ℕ) (hp : 3 ≤ p)
-    (hLarge : ∀ q : ℕ, 11 ≤ q → ExtremeWalk.UpperPSD.{0} q) :
+    (hLarge : 11 ≤ p → ExtremeWalk.UpperPSD.{0} p) :
     ((gaps p).length : ℂ) * τ ((X ^ p * B) ^ 3) ≤
       ((gaps p).map fun g =>
         τ ((X ^ 3) ^ g.1 * B * (X ^ 3) ^ g.2.1 * B * (X ^ 3) ^ g.2.2 * B)).sum := by
   classical
-  have hUpper (q : ℕ) (hq : 5 ≤ q) : ExtremeWalk.UpperPSD.{0} q := by
-    by_cases h : 11 ≤ q
-    · exact hLarge q h
-    have hq' : q ≤ 10 := by omega
-    interval_cases q
-    · exact Extreme.upperPSD_five
-    · exact Extreme.upperPSD_six
-    · exact Extreme.upperPSD_seven
-    · exact Extreme.upperPSD_eight
-    · exact Extreme.upperPSD_nine
-    · exact Extreme.upperPSD_ten
   by_cases h : 5 ≤ p
-  · apply compositionTrace_ge_of_centeredKernel τ hτ X B hX hB p
+  · have hUpper : ExtremeWalk.UpperPSD.{0} p := by
+      by_cases hl : 11 ≤ p
+      · exact hLarge hl
+      have hp' : p ≤ 10 := by omega
+      interval_cases p
+      · exact Extreme.upperPSD_five
+      · exact Extreme.upperPSD_six
+      · exact Extreme.upperPSD_seven
+      · exact Extreme.upperPSD_eight
+      · exact Extreme.upperPSD_nine
+      · exact Extreme.upperPSD_ten
+    apply compositionTrace_ge_of_centeredKernel τ hτ X B hX hB p
       (ExtremeWalk.centeredKernel p)
     · exact ExtremeWalk.defect_eq_cyclic_all p
     · intro m x hx i
-      exact ExtremeWalk.centered_posSemidef (hUpper p h) (x i) (hx i) x
+      exact ExtremeWalk.centered_posSemidef hUpper (x i) (hx i) x
   have hp' : p ≤ 4 := by omega
   interval_cases p
   · apply compositionTrace_ge_of_centeredKernel τ hτ X B hX hB 3
@@ -198,7 +198,7 @@ theorem productTrace_ge_all
     (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
     (a b : A) (ha : 0 ≤ a) (hb : 0 ≤ b)
     (p : ℕ) (hp : 3 ≤ p)
-    (hLarge : ∀ q : ℕ, 11 ≤ q → ExtremeWalk.UpperPSD.{0} q) :
+    (hLarge : 11 ≤ p → ExtremeWalk.UpperPSD.{0} p) :
     τ (((a ^ ((p : ℝ) / 3)) * b) ^ 3) ≤
       ((gaps p).map fun g => τ (a ^ g.1 * b * a ^ g.2.1 * b * a ^ g.2.2 * b)).sum /
         ((gaps p).length : ℂ) := by
@@ -229,7 +229,7 @@ theorem productTrace_ge_wordMean
     (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
     (a b : A) (ha : 0 ≤ a) (hb : 0 ≤ b)
     (p : ℕ) (hp : 3 ≤ p)
-    (hLarge : ∀ q : ℕ, 11 ≤ q → ExtremeWalk.UpperPSD.{0} q) :
+    (hLarge : 11 ≤ p → ExtremeWalk.UpperPSD.{0} p) :
     τ (((a ^ ((p : ℝ) / 3)) * b) ^ 3) ≤
       ((balancedWords p 3).map fun w =>
         τ ((w.map fun letter => if letter then a else b).prod)).sum /
