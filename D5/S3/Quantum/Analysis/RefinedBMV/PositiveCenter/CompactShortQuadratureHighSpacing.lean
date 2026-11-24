@@ -39,13 +39,13 @@ open private quadratureParameterRow quadratureShiftBound from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortJointLower
 
 local cbv_simproc cbv_eval stageParameterRow (quadratureParameterRow _ _ _ _) :=
-  stageLiteral (List Rat) (inlineProof := true)
+  stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageShiftedRow (shiftedQuadratureParameterRow _ _ _ _ _ _) :=
-  stageLiteral (List Rat) (inlineProof := true)
+  stageLiteral (List Rat)
 local cbv_simproc cbv_eval stageShiftBound (quadratureShiftBound _ _ _ _ _ _) :=
-  stageLiteral Rat (inlineProof := true)
+  stageLiteral Rat
 local cbv_simproc cbv_eval stageExpMoment (shortExpMomentBound _ _ _ _ _ _ _) :=
-  stageLiteral Rat (inlineProof := true)
+  stageLiteral Rat
 
 local cbv_simproc cbv_eval stageMul (Model.mul _ _) := stageOnModels 2 stageModel
 local cbv_simproc cbv_eval stageAdd (Model.add _ _) := stageOnModels 2 stageModel
