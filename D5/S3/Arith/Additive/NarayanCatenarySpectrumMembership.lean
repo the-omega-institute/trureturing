@@ -106,13 +106,6 @@ private theorem count_basis_succ {k : ℕ} (i : Fin k) (m : ℕ) :
 private theorem sum_coordinates {k : ℕ} (z : Fin (k + 1) → ℕ) :
     (∑ i, z i) = z 0 + count z := Fin.sum_univ_succ z
 
-private theorem weight_zero_iff {p : ℕ} {g z : Fin p → ℕ} (hg : ∀ i, 0 < g i) :
-    weight g z = 0 ↔ z = 0 := by
-  classical
-  rw [weight, Finset.sum_eq_zero_iff_of_nonneg (by intro i hi; exact Nat.zero_le _)]
-  simp only [Finset.mem_univ, true_implies, Nat.mul_eq_zero, fun i => (hg i).ne', or_false]
-  exact ⟨fun hz => funext hz, fun hz i => congrFun hz i⟩
-
 private theorem coordinate_le_sum {p : ℕ} (z : Fin p → ℕ) (i : Fin p) :
     z i ≤ ∑ j, z j :=
   Finset.single_le_sum (fun j _ => Nat.zero_le (z j)) (Finset.mem_univ i)
@@ -257,8 +250,6 @@ private theorem fiber_iff_classes {a h d k : ℕ} (hk : 1 < k) (hka : k < a)
 
 private def first {k : ℕ} (hk : 0 < k) : Fin (k + 1) := (⟨0, hk⟩ : Fin k).succ
 
-private theorem first_val {k : ℕ} (hk : 0 < k) : (first hk).val = 1 := rfl
-
 private theorem first_ne_zero {k : ℕ} (hk : 0 < k) : first hk ≠ 0 :=
   Fin.succ_ne_zero _
 
@@ -271,7 +262,7 @@ private theorem lowVector_low {k : ℕ} (hk : 0 < k) (h d t : ℕ) :
     rw [lowVector, count_add, count_basis_zero, zero_add]
     exact count_basis_succ _ _
   constructor
-  · simp [lowVector, indexWeight, weight_add, weight_basis, first_val]
+  · simp [lowVector, indexWeight, weight_add, weight_basis, first, Fin.val_succ]
   · rw [hY, show t + 1 - t = 1 by omega, Nat.mul_one]
     simp [lowVector, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero hk).symm]
 
@@ -360,7 +351,7 @@ private theorem cross_distance {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 
     by_cases hi : i.val = 0
     · have hfirst : i.succ = first (by omega) := by
         apply Fin.ext
-        simpa [first_val] using hi
+        simpa [first, Fin.val_succ] using hi
       rw [hfirst, hw1, min_zero]
       exact Nat.zero_le _
     · exact (min_le_left _ _).trans (Nat.le_mul_of_pos_right _ (Nat.pos_of_ne_zero hi))
@@ -491,7 +482,8 @@ private theorem atoms_iff_generator {a h d k : ℕ} (hka : k < a) (hh : 1 < h)
     have hpos : ∃ i, 0 < z i := by
       by_contra! hc
       have hz0 : z = 0 := funext fun i => Nat.eq_zero_of_le_zero (hc i)
-      exact hn0 (hz.symm.trans ((weight_zero_iff hg).2 hz0))
+      apply hn0
+      simpa [hz0, weight] using hz.symm
     obtain ⟨i, hi⟩ := hpos
     let c : Fin (k + 1) → ℕ := fun j => z j - Pi.single (M := fun _ => ℕ) i 1 j
     have he : weight g c + g i = n := by
@@ -547,7 +539,7 @@ private theorem cofinite {a h d k : ℕ} (hk : 0 < k) (ha : 0 < a) (cop : a.Copr
     refine ⟨Pi.single 0 q + Pi.single (first hk) i.val, ?_⟩
     change weight (generators a h d k) _ = n
     rw [weight_add, weight_basis, weight_basis]
-    simpa [generators, first_ne_zero hk, first_val, b, Nat.mul_comm q a] using he
+    simpa [generators, first, Fin.succ_ne_zero, b, Nat.mul_comm q a] using he
   apply (Finset.range (a * b)).finite_toSet.subset
   intro n hn
   exact Finset.mem_range.mpr (lt_of_not_ge (fun hn' => hn (htail n hn')))
@@ -663,11 +655,11 @@ private theorem low_exchange {a h d k : ℕ} (hk : 1 < k) (hka : k < a) (hh : 1 
   have hj : j.succ.val = i.val := by dsimp [j]; omega
   have hvalue : weight g removed = weight g added := by
     simp only [g, removed, added, i₁, weight_add, weight_basis, Nat.one_mul, generators,
-      ite_true, Fin.succ_ne_zero, first_ne_zero, ite_false, first_val, hj, Fin.val_succ]
+      ite_true, Fin.succ_ne_zero, first, ite_false, hj, Fin.val_succ, Nat.zero_add]
     ring
   have hweight : indexWeight removed = indexWeight added := by
     simp only [indexWeight, removed, added, i₁, weight_add, weight_basis, Nat.one_mul,
-      Fin.val_zero, Nat.mul_zero, zero_add, first_val, hj, Fin.val_succ]
+      Fin.val_zero, Nat.mul_zero, zero_add, first, hj, Fin.val_succ]
     omega
   have hcntR : count removed = 1 := by
     simp [removed, count_add, count_basis_zero, count_basis_succ]
@@ -737,7 +729,7 @@ private theorem low_eq_lowVector {k h d t : ℕ} (hk : 0 < k) {z : Fin (k + 1) �
       simpa [lowVector, Pi.add_apply, Pi.single_eq_of_ne (first_ne_zero hk)] using hz1
     · have h₁ : i.succ ≠ first hk := by
         intro h
-        exact hi (Fin.ext (by simpa [first_val] using congrArg Fin.val h))
+        exact hi (Fin.ext (by simpa [first, Fin.val_succ] using congrArg Fin.val h))
       simp [lowVector, Pi.add_apply, Fin.succ_ne_zero, Pi.single_eq_of_ne h₁,
         hvanish i (fun h => hi (Fin.ext h))]
 
@@ -815,10 +807,10 @@ theorem result (a h d k : ℕ) (hd : 0 < d) (cop : a.Coprime d)
   have hc := checkpoint hd cop hk hka hh
   have ht : 0 < t := (parameter_bounds hk hka).1
   have hlo := lowVector_low (show 0 < k by omega) h d t
-  let l : Z g n := ⟨_, (fiber_iff_classes hk hka (by omega) hd cop _).2 (Or.inl hlo)⟩
   have hcParts := hc
   change Function.Injective g ∧ _ at hcParts
   obtain ⟨_, _, _, _, hpartition, _, _, ⟨w₀, hw₀⟩, _, hseparate⟩ := hcParts
+  let l : Z g n := ⟨_, (hpartition _).2 (Or.inl hlo)⟩
   have classes (z : Z g n) : Low h d t z.val ∨ High a t z.val :=
     (hpartition z.val).1 z.property
   have low_to_l (z : Z g n) (hz : Low h d t z.val) : Chain g n (N - 1) z l :=
