@@ -94,6 +94,7 @@ packedClassWord_eq: proof_shape=bind-only; consumers=packedClass_eq
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbitTable
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
@@ -868,12 +869,42 @@ private theorem class_counts (p : Boundary) (d : ℕ) (hp : HardinA229635State.V
 private def exitRepresentative (key : Fin 108) : Fin 96 :=
   Fin.ofNat 96 ((List.ofFn exitRead).idxOf key)
 
+private theorem oldExits_padded (i : Fin 72) (j : Fin 96) (hj : 56 ≤ j.val) :
+    oldExits i j = 0 := by
+  have h : (⟨j.val - 56, by omega⟩ : Fin 40).natAdd 56 = j :=
+    Fin.ext (by simp only [Fin.val_natAdd]; omega)
+  rw [← h, oldExits, Fin.append_right, Pi.zero_apply]
+
+private theorem exitRepresentative_prefix (j : Fin 96) (hj : 72 ≤ (exitRead j).val) :
+    (exitRepresentative (exitRead j)).val < 56 ↔ j.val < 56 := by
+  fin_cases j <;> revert hj <;> decide +kernel
+
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
-private theorem oldExits_representative (j : Fin 96) (hj : 72 ≤ (exitRead j).val) :
-    (List.finRange 72).all (fun i => oldExits i (exitRepresentative (exitRead j)) ==
-      oldExits i j) = true := by
-  fin_cases j <;> revert hj <;> decide +kernel
+private theorem oldExits_representative (j : Fin 96) (hj : 72 ≤ (exitRead j).val)
+    (hne : exitRepresentative (exitRead j) ≠ j) (hp : j.val < 56)
+    (hr : (exitRepresentative (exitRead j)).val < 56) :
+    (List.finRange 72).all (fun i =>
+      HardinA229585StripData.T i ((⟨(exitRepresentative (exitRead j)).val, hr⟩ : Fin 56).natAdd 16) ==
+      HardinA229585StripData.T i ((⟨j.val, hp⟩ : Fin 56).natAdd 16)) = true := by
+  fin_cases j <;> revert hj hne hp hr <;> decide +kernel
+
+private theorem oldExits_eq_representative (i : Fin 72) (j : Fin 96)
+    (hj : 72 ≤ (exitRead j).val) :
+    oldExits i (exitRepresentative (exitRead j)) = oldExits i j := by
+  let r := exitRepresentative (exitRead j)
+  change oldExits i r = oldExits i j
+  by_cases he : r = j
+  · rw [he]
+  by_cases hp : j.val < 56
+  · have hr : r.val < 56 := (exitRepresentative_prefix j hj).mpr hp
+    have hr' : (⟨r.val, hr⟩ : Fin 56).castAdd 40 = r := Fin.ext rfl
+    have hj' : (⟨j.val, hp⟩ : Fin 56).castAdd 40 = j := Fin.ext rfl
+    simpa only [oldExits, ← hr', ← hj', Fin.append_left] using
+      beq_iff_eq.mp (List.all_eq_true.mp
+        (oldExits_representative j hj he hp hr) i (List.mem_finRange i))
+  · have hr : 56 ≤ r.val := Nat.le_of_not_gt (fun h => hp ((exitRepresentative_prefix j hj).mp h))
+    rw [oldExits_padded i r hr, oldExits_padded i j (Nat.le_of_not_gt hp)]
 
 private theorem inheritedSource_index (i : Fin 72) (k : Fin 16)
     (h : inheritedSource i = some k) : i = HardinA229585StripData.zeroBudgetClass k := by
@@ -883,12 +914,21 @@ private theorem inheritedSource_index (i : Fin 72) (k : Fin 16)
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 6000000 in
-private theorem oldExits_copied_check (j : Fin 96) (hj : (exitRead j).val < 72) :
-    let k := Fin.ofNat 72 (exitRead j).val
+private theorem oldExits_copied_check (j : Fin 56)
+    (hj : (exitRead (j.castAdd 40)).val < 72) :
+    let k : Fin 72 := ⟨(exitRead (j.castAdd 40)).val, hj⟩
     ((List.finRange 16).all (fun i =>
-        oldExits (i.castAdd 56) j == HardinA229585StripData.T (HardinA229585StripData.zeroBudgetClass i) k) &&
-      (List.finRange 56).all (fun i => oldExits (i.natAdd 16) j == 0) &&
-      (List.finRange 72).all (fun i => decide (0 ≤ HardinA229585StripData.T i k))) = true := by
+        HardinA229585StripData.T (i.castAdd 56) (j.natAdd 16) ==
+        HardinA229585StripData.T (HardinA229585StripData.zeroBudgetClass i) k) &&
+      (List.finRange 56).all (fun i => HardinA229585StripData.T (i.natAdd 16) (j.natAdd 16) == 0)) = true := by
+  fin_cases j <;> revert hj <;> decide +kernel
+
+set_option maxRecDepth 8000 in
+private theorem copied_padding_check (j : Fin 40)
+    (hj : (exitRead (j.natAdd 56)).val < 72) :
+    (List.finRange 16).all (fun i =>
+      HardinA229585StripData.T (HardinA229585StripData.zeroBudgetClass i)
+        ⟨(exitRead (j.natAdd 56)).val, hj⟩ == 0) = true := by
   fin_cases j <;> revert hj <;> decide +kernel
 
 set_option maxRecDepth 4000 in
@@ -896,11 +936,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     T i (j.natAdd 72) = T i (Fin.castAdd 96 (⟨(exitRead j).val, hj⟩ : Fin 72)) := by
   let r : Fin 72 := ⟨(exitRead j).val, hj⟩
   change T i (j.natAdd 72) = T i (r.castAdd 96)
-  have hk : Fin.ofNat 72 (exitRead j).val = r := Fin.ext (Nat.mod_eq_of_lt hj)
   have hread : exitRead j = r.castAdd 36 := Fin.ext rfl
-  have hc := oldExits_copied_check j hj
-  dsimp only at hc
-  rw [hk, Bool.and_eq_true, Bool.and_eq_true] at hc
   induction i using Fin.addCases (m := 72) (n := 96) with
   | left i =>
     simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
@@ -908,13 +944,19 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
       Matrix.of_apply]
     cases hi : inheritedSource i with
     | none =>
-      simp only [activeWeight, hread,
-        Fin.append_left]
-      exact Int.toNat_of_nonneg
-        (of_decide_eq_true (List.all_eq_true.mp hc.2 i (List.mem_finRange i)))
+      simp only [activeWeight, hread, Fin.append_left]
+      rw [← HardinA229585StripOrbitTable.table_counts i r, Int.toNat_natCast]
     | some k =>
       rw [inheritedSource_index i k hi]
-      exact beq_iff_eq.mp (List.all_eq_true.mp hc.1.1 k (List.mem_finRange k))
+      induction j using Fin.addCases (m := 56) (n := 40) with
+      | left j =>
+        rw [oldExits, Fin.append_left]
+        exact beq_iff_eq.mp (List.all_eq_true.mp
+          (Bool.and_eq_true.mp (oldExits_copied_check j hj)).1 k (List.mem_finRange k))
+      | right j =>
+        rw [oldExits, Fin.append_right, Pi.zero_apply]
+        exact (beq_iff_eq.mp (List.all_eq_true.mp
+          (copied_padding_check j hj) k (List.mem_finRange k))).symm
   | right i =>
     simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
       finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
@@ -922,7 +964,12 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     induction i using Fin.addCases (m := 56) (n := 40) with
     | left i =>
       rw [Fin.append_left]
-      exact beq_iff_eq.mp (List.all_eq_true.mp hc.1.2 i (List.mem_finRange i))
+      induction j using Fin.addCases (m := 56) (n := 40) with
+      | left j =>
+        rw [oldExits, Fin.append_left]
+        exact beq_iff_eq.mp (List.all_eq_true.mp
+          (Bool.and_eq_true.mp (oldExits_copied_check j hj)).2 i (List.mem_finRange i))
+      | right j => rw [oldExits, Fin.append_right, Pi.zero_apply]
     | right i =>
       simp only [Fin.append_right, exhaustedWeight,
         hread, Fin.append_left,
@@ -933,9 +980,7 @@ theorem new_column_congr (j k : Fin 96) (hj : 72 ≤ (exitRead j).val)
     T i (j.natAdd 72) = T i (k.natAdd 72) := by
   have hk : 72 ≤ (exitRead k).val := h ▸ hj
   have hold (r : Fin 72) : oldExits r j = oldExits r k := by
-    have hrep (l : Fin 96) (hl : 72 ≤ (exitRead l).val) :=
-      beq_iff_eq.mp (List.all_eq_true.mp (oldExits_representative l hl) r (List.mem_finRange r))
-    rw [← hrep j hj, h, hrep k hk]
+    rw [← oldExits_eq_representative r j hj, h, oldExits_eq_representative r k hk]
   induction i using Fin.addCases (m := 72) (n := 96) with
   | left i =>
     simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
