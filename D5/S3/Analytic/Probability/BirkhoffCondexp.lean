@@ -23,7 +23,9 @@ import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLogExp
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.MeasurableSpace.Invariants
-import Mathlib.Tactic
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Lift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -65,17 +67,17 @@ private lemma limsup_birkhoffAverage_nonpos_of_notMem_divergentSet (hx : x ∉ d
 
 variable [MeasurableSpace α] (μ : Measure α) [IsFiniteMeasure μ]
 
-private private lemma measurable_divergentSet (hf : Measurable f) (hg : Measurable g) :
+private lemma measurable_divergentSet (hf : Measurable f) (hg : Measurable g) :
     MeasurableSet (divergentSet f g) := by
   have h : Measurable (sumSup f g) := Measurable.iSup fun n ↦
     Measurable.coe_real_ereal <| Finset.measurable_sum _ fun j _ ↦ hg.comp (hf.iterate j)
   exact h (measurableSet_singleton ⊤)
 
-private private lemma measurable_invariants_divergentSet (hf : Measurable f) (hg : Measurable g) :
+private lemma measurable_invariants_divergentSet (hf : Measurable f) (hg : Measurable g) :
     MeasurableSet[invariants f] (divergentSet f g) :=
   ⟨measurable_divergentSet hf hg, funext fun _ ↦ propext divergentSet_invariant⟩
 
-private private lemma setIntegral_in_divergentSet_nonneg (g_meas : Measurable g)
+private lemma setIntegral_in_divergentSet_nonneg (g_meas : Measurable g)
     (hf : MeasurePreserving f μ μ) (hg : Integrable g μ) :
     0 ≤ ∫ x in divergentSet f g, g x ∂μ := by
   have hD := measurable_divergentSet hf.measurable g_meas
