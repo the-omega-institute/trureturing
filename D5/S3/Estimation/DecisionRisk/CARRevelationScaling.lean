@@ -61,22 +61,6 @@ theorem result {A : Type u} [Fintype A] [DecidableEq A] [Nonempty A]
           (∀ i, channelOutput R.1 (row (M t v) i) = E p Q i))) := by
   classical
   dsimp only
-  have cost_expand {O D : Type u} [Fintype O] [Fintype D] (p : A → ℝ)
-      (l : A → D → ℝ) (X : A → O → ℝ) (d : O → D → ℝ) :
-      finiteBayesCost p l X d =
-        ∑ a, ∑ b, d a b * ∑ i, p i * X i a * l i b := by
-    simp only [finiteBayesCost, channelOutput, Finset.mul_sum, Finset.sum_mul]
-    calc
-      (∑ i, ∑ b, ∑ a, p i * (X i a * d a b * l i b)) =
-          ∑ i, ∑ a, ∑ b, p i * (X i a * d a b * l i b) := by
-        apply Finset.sum_congr rfl; intro i _; rw [Finset.sum_comm]
-      _ = ∑ a, ∑ i, ∑ b, p i * (X i a * d a b * l i b) := Finset.sum_comm
-      _ = ∑ a, ∑ b, ∑ i, p i * (X i a * d a b * l i b) := by
-        apply Finset.sum_congr rfl; intro a _; rw [Finset.sum_comm]
-      _ = _ := by
-        apply Finset.sum_congr rfl; intro a _
-        apply Finset.sum_congr rfl; intro b _
-        apply Finset.sum_congr rfl; intro i _; ring
   have bayes_attain {O D : Type u} [Fintype O] [Fintype D] [Nonempty D]
       (p : A → ℝ) (l : A → D → ℝ) (X : A → O → ℝ)
       (hp : ∀ i, 0 ≤ p i) (hl : ∀ i b, 0 ≤ l i b)
@@ -295,7 +279,7 @@ theorem result {A : Type u} [Fintype A] [DecidableEq A] [Nonempty A]
     intro u hu
     have hc (d : O → D → ℝ) : finiteBayesCost p l (row u) d =
         ∑ B, u B * ∑ a, d B a * ∑ i ∈ B.1, p i * l i a := by
-      rw [cost_expand]
+      rw [finite_bayes_cost_expansion]
       apply Finset.sum_congr rfl; intro B _
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl; intro a _

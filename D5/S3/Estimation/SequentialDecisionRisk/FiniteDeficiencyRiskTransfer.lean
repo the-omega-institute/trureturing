@@ -60,6 +60,27 @@ def finiteBayesCost
     ∑ action,
       channelOutput decision (experiment state) action * loss state action
 
+/-- Finite Bayes cost expanded by observations and actions. -/
+theorem finite_bayes_cost_expansion
+    {State Observation Action : Type*}
+    [Fintype State] [Fintype Observation] [Fintype Action]
+    (p : State → ℝ) (l : State → Action → ℝ) (X : State → Observation → ℝ)
+    (d : Observation → Action → ℝ) :
+    finiteBayesCost p l X d = ∑ a, ∑ b, d a b * ∑ i, p i * X i a * l i b := by
+  classical
+  simp only [finiteBayesCost, channelOutput, Finset.mul_sum, Finset.sum_mul]
+  calc
+    (∑ i, ∑ b, ∑ a, p i * (X i a * d a b * l i b)) =
+        ∑ i, ∑ a, ∑ b, p i * (X i a * d a b * l i b) := by
+      apply Finset.sum_congr rfl; intro i _; rw [Finset.sum_comm]
+    _ = ∑ a, ∑ i, ∑ b, p i * (X i a * d a b * l i b) := Finset.sum_comm
+    _ = ∑ a, ∑ b, ∑ i, p i * (X i a * d a b * l i b) := by
+      apply Finset.sum_congr rfl; intro a _; rw [Finset.sum_comm]
+    _ = _ := by
+      apply Finset.sum_congr rfl; intro a _
+      apply Finset.sum_congr rfl; intro b _
+      apply Finset.sum_congr rfl; intro i _; ring
+
 /-- Finite real expected loss attains its minimum, including signed losses.
 The decision is chosen separately at each observation by minimizing its finite
 unnormalized posterior loss. No positive-mass assumption is needed. -/
@@ -71,21 +92,6 @@ theorem finite_bayes_cost_minimizer
       ∀ k : FiniteMarkovKernel Observation Action,
         finiteBayesCost p l X d.1 ≤ finiteBayesCost p l X k.1 := by
   classical
-  have cost_expand (d : Observation → Action → ℝ) :
-      finiteBayesCost p l X d =
-        ∑ a, ∑ b, d a b * ∑ i, p i * X i a * l i b := by
-    simp only [finiteBayesCost, channelOutput, Finset.mul_sum, Finset.sum_mul]
-    calc
-      (∑ i, ∑ b, ∑ a, p i * (X i a * d a b * l i b)) =
-          ∑ i, ∑ a, ∑ b, p i * (X i a * d a b * l i b) := by
-        apply Finset.sum_congr rfl; intro i _; rw [Finset.sum_comm]
-      _ = ∑ a, ∑ i, ∑ b, p i * (X i a * d a b * l i b) := Finset.sum_comm
-      _ = ∑ a, ∑ b, ∑ i, p i * (X i a * d a b * l i b) := by
-        apply Finset.sum_congr rfl; intro a _; rw [Finset.sum_comm]
-      _ = _ := by
-        apply Finset.sum_congr rfl; intro a _
-        apply Finset.sum_congr rfl; intro b _
-        apply Finset.sum_congr rfl; intro i _; ring
   have hm (a : Observation) := Finset.exists_min_image Finset.univ
     (fun b : Action => ∑ i, p i * X i a * l i b) Finset.univ_nonempty
   choose m hm using hm
@@ -94,10 +100,10 @@ theorem finite_bayes_cost_minimizer
       ⟨by intro a b; dsimp only; split_ifs <;> norm_num,
         by intro a; simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]⟩⟩
   have hd : finiteBayesCost p l X d.1 = ∑ a, ∑ i, p i * X i a * l i (m a) := by
-    rw [cost_expand]
+    rw [finite_bayes_cost_expansion]
     simp [d]
   refine ⟨d, fun k => ?_⟩
-  rw [hd, cost_expand]
+  rw [hd, finite_bayes_cost_expansion]
   apply Finset.sum_le_sum
   intro a _
   calc

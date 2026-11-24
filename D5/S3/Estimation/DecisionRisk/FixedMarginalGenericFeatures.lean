@@ -103,14 +103,18 @@ private theorem cost_expectation {Θ O A : Type*}
     [Fintype Θ] [Fintype O] [Fintype A]
     (π : Θ → ℝ) (L : Θ → A → ℝ) (T : Θ → O → ℝ) (D : O → A → ℝ) :
     finiteBayesCost π L T D = ∑ θ, π θ * ∑ x, T θ x * ∑ a, D x a * L θ a := by
-  unfold finiteBayesCost channelOutput
-  apply Finset.sum_congr rfl; intro θ _
-  congr 1
-  simp only [Finset.sum_mul, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl; intro x _
-  apply Finset.sum_congr rfl; intro a _
-  ring
+  rw [finite_bayes_cost_expansion]
+  simp only [Finset.mul_sum]
+  calc
+    (∑ x, ∑ a, ∑ θ, D x a * (π θ * T θ x * L θ a)) =
+        ∑ x, ∑ θ, ∑ a, D x a * (π θ * T θ x * L θ a) := by
+      apply Finset.sum_congr rfl; intro x _; rw [Finset.sum_comm]
+    _ = ∑ θ, ∑ x, ∑ a, D x a * (π θ * T θ x * L θ a) := Finset.sum_comm
+    _ = _ := by
+      apply Finset.sum_congr rfl; intro θ _
+      apply Finset.sum_congr rfl; intro x _
+      apply Finset.sum_congr rfl; intro a _
+      ring
 
 private theorem transported_cost_bound
     {X Z Θ A : Type*} [Fintype X] [Fintype Z] [Fintype Θ] [Fintype A]

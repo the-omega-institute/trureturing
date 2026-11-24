@@ -36,7 +36,39 @@ internal sealed class BoundedRiskSimulatorTransportDocument
                         "For every loss taking values between zero and one, the finite supremum "
                             + "of the rowwise total-variation simulation error bounds the increase "
                             + "of expected loss separately at every state."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("row-stochastic-channel-composition"),
+                DeclarationHandle.Create("D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.row_stochastic_channel_comp"),
+                H("Composition preserves stochastic rows"),
+                StatementSource.FromAuthor(CompositionFormula(true)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary input types and finite intermediate and output types, composing two nonnegative unit-row matrices gives another nonnegative unit-row matrix. The inner row sum reduces the composite row sum to the first matrix's row sum."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("channel-output-associativity"),
+                DeclarationHandle.Create("D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.channel_output_comp"),
+                H("Finite channel output is associative"),
+                StatementSource.FromAuthor(CompositionFormula(false)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite input and intermediate types and an arbitrary output type, applying a composite real matrix to a real mass agrees with two successive channel outputs. This is a finite distributive identity and requires no positivity or normalization."))),
+                DescribeRole.Lemma))));
+
+    private static Formula CompositionFormula(bool stochastic)
+    {
+        Formula first = F.Id("K"), second = F.Id("D"), mass = F.Id("p");
+        Formula i = F.Id("i"), o = F.Id("o");
+        Formula composite = Seq(Open, i, Comma, Sp, o, Sp, Mapsto, Sp,
+            Apply(Call("channelOutput", second, Apply(first, i)), o), Close);
+        Formula body = stochastic
+            ? Seq(Call("IsRowStochastic", first), Sp, Land, Sp,
+                Call("IsRowStochastic", second), Sp, Rightarrow, Sp,
+                Call("IsRowStochastic", composite))
+            : Seq(Call("channelOutput", composite, mass), Sp, Eq, Sp,
+                Call("channelOutput", second, Call("channelOutput", first, mass)));
+        return Disp(Seq(Forall, Sp, first, Comma, Sp, second, Comma, Sp,
+            stochastic ? Grp() : Seq(mass, Comma, Sp), body));
+    }
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
