@@ -13,12 +13,19 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
         H("The high-threshold minimum for two cosine moments"),
         Blocks(
             Paragraph(Text(
-                "Write c for a finite real readout and use 2c² − 1 as the second readout. "
+                "For a finite index type I, write c for its real readout and use 2c² − 1 as the second readout. "
                 + "The top value is one and occurs once. The remaining values lie between "
                 + "the attained levels ℓ and u. Write g(x) = x − (2x² − 1), "
                 + "p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). "
                 + "The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to "
                 + "the level ℓ. Each level’s mass is divided equally among its indices.")),
+            Paragraph(Text(
+                "The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, ℓ<u<1, u+ℓ<0, "
+                + "and g(ℓ)<0<g(u). R(c,u,ℓ) means both levels are attained and each value "
+                + "is either one or belongs to [ℓ,u]. The predicate Certified(a) requires "
+                + "nonnegative weights of mass one, both moments equal to a, the exact squared mass, "
+                + "and the squared-distance lower bound for every feasible competitor. "
+                + "A feasible competitor is a nonnegative real weight of mass one with both moments at least a.")),
             Describe.Lean(
                 DescribeId.Create("finite-readout-threshold-certificate"),
                 DeclarationHandle.Create(Owner + ".high_threshold_certificate"),
@@ -78,15 +85,47 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
             Open, F.Id("w"), Comma, F.Id("a"), Close, Sp, Land, Sp, F.Id("E"), Open, F.Id("w"),
             Close, Lt, F.Id("E"), Open, new Formula.Subscript(F.Id("v"), F.Id("a")), Close);
 
-    private static Formula FiniteStatement() =>
-        Disp(Seq(Cutoff, Lt, D(1), Sp, Land, Sp, Open, CertifiedInterval(), Close));
+    private static Formula T(string name, params Formula[] args) => new Formula.Apply(
+        Seq(Operatorname, Grp(F.Id(name))), [.. args]);
 
-    private static Formula DescentStatement() => Disp(Descent());
+    private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
 
-    private static Formula CyclicStatement() =>
-        Disp(new Formula.Aligned([
-            Seq(Amp, F.Id("q"), Ge, D(4), Sp, Longrightarrow, Sp, F.Id("b"), Lt, Cutoff, Lt, D(1), Comma),
+    private static Formula Context(bool descent)
+    {
+        var i = F.Id("I");
+        var c = F.Id("c");
+        var z = F.Id("z");
+        var u = F.Id("u");
+        var ell = F.Id("l");
+        var readout = Seq(Forall, Sp, c, Colon, i, Sp, To, Sp, Reals, Comma);
+        var levels = Seq(Forall, Sp, u, Comma, ell, Sp, InMacro, Sp, Reals, Comma);
+        if (!descent)
+            return Seq(readout, Sp, Forall, Sp, z, Sp, InMacro, Sp, i, Comma, Sp, levels, Sp,
+                T("H", c, z, u, ell), Sp, Land, Sp, T("R", c, u, ell));
+        var j = F.Id("j");
+        var k = F.Id("k");
+        return Seq(readout, Sp, Forall, Sp, z, Comma, j, Comma, k, Sp, InMacro, Sp, i, Comma, Sp, levels, Sp,
+            T("H", c, z, u, ell), Sp, Land, Sp, T("c", j), Eq, u, Sp, Land, Sp, T("c", k), Eq, ell);
+    }
+
+    private static Formula FiniteStatement() => Disp(new Formula.Aligned([
+        Seq(Amp, Context(false), Sp, Longrightarrow, Sp),
+        Seq(Amp, Cutoff, Lt, D(1), Sp, Land, Sp, Open, CertifiedInterval(), Close)
+    ]));
+
+    private static Formula DescentStatement() => Disp(new Formula.Aligned([
+        Seq(Amp, Context(true), Sp, Longrightarrow, Sp),
+        Seq(Amp, Descent())
+    ]));
+
+    private static Formula CyclicStatement()
+    {
+        var q = F.Id("q");
+        return Disp(new Formula.Aligned([
+            Seq(Amp, Forall, Sp, q, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                q, Ge, D(4), Sp, Longrightarrow, Sp, OpenBracket, F.Id("b"), Lt, Cutoff, Lt, D(1), Comma),
             Seq(Amp, CertifiedInterval(), Comma),
-            Seq(Amp, Descent())
+            Seq(Amp, Descent(), CloseBracket)
         ]));
+    }
 }

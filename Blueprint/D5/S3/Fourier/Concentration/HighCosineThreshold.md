@@ -4,11 +4,13 @@
 
 A three-level probability law minimizes squared mass for high joint cosine thresholds.
 
-Write c for a finite real readout and use 2c² − 1 as the second readout. The top value is one and occurs once. The remaining values lie between the attained levels ℓ and u. Write g(x) = x − (2x² − 1), p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to the level ℓ. Each level’s mass is divided equally among its indices.
+For a finite index type I, write c for its real readout and use 2c² − 1 as the second readout. The top value is one and occurs once. The remaining values lie between the attained levels ℓ and u. Write g(x) = x − (2x² − 1), p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). The law gives mass 1−r to the top index, rp to the level u, and r(1−p) to the level ℓ. Each level’s mass is divided equally among its indices.
+
+The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, ℓ<u<1, u+ℓ<0, and g(ℓ)<0<g(u). R(c,u,ℓ) means both levels are attained and each value is either one or belongs to [ℓ,u]. The predicate Certified(a) requires nonnegative weights of mass one, both moments equal to a, the exact squared mass, and the squared-distance lower bound for every feasible competitor. A feasible competitor is a nonnegative real weight of mass one with both moments at least a.
 
 **Theorem 1.1 (A finite interpolation certificate).**
 
-$$a_{crit}<1 \land (\forall a \in [a_{crit},1], \operatorname{Certified}(a))$$
+$$\begin{aligned}&\forall c:I \to \mathbb{R}, \forall z \in I, \forall u,l \in \mathbb{R}, \operatorname{H}\left(c, z, u, l\right) \land \operatorname{R}\left(c, u, l\right) \longrightarrow \\&a_{crit}<1 \land (\forall a \in [a_{crit},1], \operatorname{Certified}(a))\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.high_threshold_certificate` (`✓ std3`). ∎
 
@@ -20,7 +22,7 @@ The three levels satisfy ℓ < u < 1, u + ℓ < 0 and g(ℓ) < 0 < g(u). Interpo
 
 **Theorem 1.2 (A feasible descent below the cutoff).**
 
-$$\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})$$
+$$\begin{aligned}&\forall c:I \to \mathbb{R}, \forall z,j,k \in I, \forall u,l \in \mathbb{R}, \operatorname{H}\left(c, z, u, l\right) \land \operatorname{c}\left(j\right)=u \land \operatorname{c}\left(k\right)=l \longrightarrow \\&\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.exists_smaller_energy_below_threshold` (`✓ std3`). ∎
 
@@ -32,7 +34,7 @@ When b < a is below the cutoff, all three supporting levels have positive weight
 
 **Theorem 1.3 (The sharp high-threshold interval on a cycle).**
 
-$$\begin{aligned}&q\ge4 \longrightarrow b<a_{crit}<1,\\&\forall a \in [a_{crit},1], \operatorname{Certified}(a),\\&\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})\end{aligned}$$
+$$\begin{aligned}&\forall q \in \mathbb{N}, q\ge4 \longrightarrow [b<a_{crit}<1,\\&\forall a \in [a_{crit},1], \operatorname{Certified}(a),\\&\forall a \in (b,a_{crit}), \exists w, \operatorname{Feasible}(w,a) \land E(w)<E(v_{a})]\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_high_threshold_certificate` (`✓ std3`). ∎
 

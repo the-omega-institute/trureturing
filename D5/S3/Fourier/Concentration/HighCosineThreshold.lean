@@ -673,13 +673,14 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     let c := cyclicReadout q
     let u := cyclicUpper q
     let l := cyclicLower q
+    let square := fun x : ℝ => x ^ 2
     tailMoment u l < criticalThreshold c u l ∧ criticalThreshold c u l < 1 ∧
       (∀ a, criticalThreshold c u l ≤ a → a ≤ 1 → IsCertified c u l a) ∧
       ∀ a, tailMoment u l < a → a < criticalThreshold c u l →
         let v := weights c u l ((1 - a) / (1 - tailMoment u l))
         ∃ w : Fin q → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧
           a ≤ (∑ i, w i * c i) ∧ a ≤ (∑ i, w i * (2 * (c i) ^ 2 - 1)) ∧
-          (∑ i, w i ^ 2) < (∑ i, v i ^ 2) := by
+          (∑ i, square (w i)) < (∑ i, square (v i)) := by
   let z : Fin q := ⟨0, by omega⟩
   let one : Fin q := ⟨1, by omega⟩
   let half : Fin q := ⟨q / 2, by omega⟩
