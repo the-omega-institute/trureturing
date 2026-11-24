@@ -31,8 +31,9 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def readout : Realization signature :=
-  realize signature (fun b w r => if b then cross w.2 r
-    else cross (w.1 ∘ w.2) (w.1 ∘ r)) (fun e => nomatch e)
+  realize signature (fun b w r => match b with
+    | false => cross (w.1 ∘ w.2) (w.1 ∘ r)
+    | true => cross w.2 r) (fun e => nomatch e)
 
 def rejected (i : Bool) : Realization signature :=
   realize signature (fun j w r =>
@@ -79,8 +80,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun b w r => if b then cross w.2 r
-    else cross (w.1 ∘ w.2) (w.1 ∘ r)) (fun e => nomatch e))
+  readout := some (realize signature (fun b w r => match b with
+    | false => cross (w.1 ∘ w.2) (w.1 ∘ r)
+    | true => cross w.2 r) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
