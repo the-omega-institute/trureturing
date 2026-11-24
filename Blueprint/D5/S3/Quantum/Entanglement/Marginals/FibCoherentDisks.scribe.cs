@@ -45,5 +45,13 @@ internal sealed class FibCoherentDisksDocument : IScribeDocumentDefinition
                     + "At coincident centers the selected point is their common center. "
                     + "The weighted squared-distance identity shows this point belongs to both "
                     + "disks whenever their intersection is nonempty."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-rational-common-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentDisks.rational_coherent_extendible_iff"),
+                H("Rational common extensions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Suppose the two endpoint blocks and the three observed couplings have rational real and imaginary parts. A positive trace-one common extension exists exactly when there is one with rational entries whose unobserved coupling is the selected point of the two residual disks.")),
+                    Paragraph(Text("Normalization gives the middle occupation as one minus the trace of the left endpoint block. In the positive case the disk centers and squared radii use only rational operations on the measured data. The clipped segment parameter preserves rationality, including at tangency. At zero occupation the selected coupling is zero. The rational Schur construction then gives the whole density."))),
                 DescribeRole.Theorem))));
 }
