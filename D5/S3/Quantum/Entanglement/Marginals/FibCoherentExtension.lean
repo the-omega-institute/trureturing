@@ -24,7 +24,8 @@ private def pivot (b : ℝ) : Matrix Unit Unit ℂ := diagonal fun _ => (b : ℂ
 
 private def cross {n : Type*} (v : n → ℂ) : Matrix Unit n ℂ := fun _ i => v i
 
-private def assemble {n : Type*} (b : ℝ) (v : n → ℂ) (T : Matrix n n ℂ) :
+/-- Assemble a Hermitian scalar pivot with its coupling row and residual block. -/
+def assemble {n : Type*} (b : ℝ) (v : n → ℂ) (T : Matrix n n ℂ) :
     Matrix (Unit ⊕ n) (Unit ⊕ n) ℂ :=
   fromBlocks (pivot b) (cross v) (cross v)ᴴ T
 
@@ -81,7 +82,8 @@ private theorem block_zero_psd {n : Type*} [Fintype n] {T : Matrix n n ℂ}
     simpa [assemble, pivot, cross, dotProduct, mulVec, Fintype.sum_sum_type] using
       hT.dotProduct_mulVec_nonneg (x ∘ Sum.inr)
 
-private theorem block_psd {n : Type*} [Fintype n] (b : ℝ) (v : n → ℂ)
+/-- Positivity of a scalar pivot, including its zero case. -/
+theorem block_psd {n : Type*} [Fintype n] (b : ℝ) (v : n → ℂ)
     (T : Matrix n n ℂ) :
     (assemble b v T).PosSemidef ↔
       0 ≤ b ∧ (b = 0 → v = 0) ∧ (T - correction b v).PosSemidef := by
