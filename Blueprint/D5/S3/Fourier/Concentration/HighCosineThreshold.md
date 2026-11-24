@@ -6,7 +6,7 @@ A three-level probability law minimizes squared mass for high joint cosine thres
 
 For a finite index type I, write c for its real readout and use 2c² − 1 as the second readout. The value one occurs at a unique index. With levels ℓ and u, write g(x) = x − (2x² − 1), p = −g(ℓ)/(g(u) − g(ℓ)), b = pu + (1−p)ℓ and r = (1−a)/(1−b). The law gives mass 1−r to that index, rp to the level u, and r(1−p) to the level ℓ. Each level’s mass is divided equally among its indices.
 
-The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, u+ℓ<0, and g(ℓ)<0<g(u). Write J(c,z,u,ℓ) for the same conditions with u+ℓ≤0. R(c,u,ℓ) means both levels are attained and each value is either one or belongs to [ℓ,u]. The predicate Certified(a) requires nonnegative weights of mass one, both moments equal to a, the exact squared mass, and the squared-distance lower bound for every feasible competitor. StrictlyFeasible(w,a) means w is nonnegative of mass one with both moments strictly above a.
+The notation H(c,z,u,ℓ) means c(i)=1 exactly at i=z, u+ℓ<0, and g(ℓ)<0<g(u). Write J(c,z,u,ℓ) for the same conditions with u+ℓ≤0. R(c,u,ℓ) means both levels are attained and each value is either one or belongs to [ℓ,u]. The predicate Certified(a) requires nonnegative weights of mass one, both moments equal to a, the exact squared mass, and the squared-distance lower bound for every feasible competitor. A feasible competitor has nonnegative weights of mass one and both moments at least a. E is the sum of squared weights. StrictlyFeasible(w,a) means w is nonnegative of mass one with both moments strictly above a.
 
 **Theorem 1.1 (A finite interpolation certificate).**
 
@@ -30,7 +30,7 @@ $$\begin{aligned}&\forall c:I \to \mathbb{R}, \forall z,j,k \in I, \forall u,l \
 
 *Commentary.*
 
-When b < a is below the cutoff, all three supporting levels have positive weight. If a moment coefficient is negative, a perturbation within the support increases that moment and preserves the other. If an intermediate value of P is positive, a perturbation adds weight there and uses the three support levels to preserve both moments. A sufficiently small positive step decreases the squared mass in either case. At a = b, the weight at z is zero. A small mixture toward the point mass at z raises both moments and lowers squared mass. For any strict energy decrease, a further small mixture with this point mass preserves the energy inequality and makes both moment constraints strict.
+If u+ℓ=0, the first multiplier has zero intercept and its slope is assigned one, already included in the maximum. Its negative value at positive r still permits a feasible perturbation within the support. When b < a is below the cutoff, all three supporting levels have positive weight. If a moment coefficient is negative, a perturbation within the support increases that moment and preserves the other. If an intermediate value of P is positive, a perturbation adds weight there and uses the three support levels to preserve both moments. A sufficiently small positive step decreases the squared mass in either case. At a = b, the weight at z is zero. A small mixture toward the point mass at z raises both moments and lowers squared mass. For any strict energy decrease, a further small mixture with this point mass preserves the energy inequality and makes both moment constraints strict.
 
 **Theorem 1.3 (The sharp high-threshold interval on a cycle).**
 

@@ -25,6 +25,8 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                 + "is either one or belongs to [ℓ,u]. The predicate Certified(a) requires "
                 + "nonnegative weights of mass one, both moments equal to a, the exact squared mass, "
                 + "and the squared-distance lower bound for every feasible competitor. "
+                + "A feasible competitor has nonnegative weights of mass one and both moments at least a. "
+                + "E is the sum of squared weights. "
                 + "StrictlyFeasible(w,a) means w is nonnegative of mass one with both moments strictly above a.")),
             Describe.Lean(
                 DescribeId.Create("finite-readout-threshold-certificate"),
@@ -50,7 +52,10 @@ internal sealed class HighCosineThresholdDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(DescentStatement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "When b < a is below the cutoff, all three supporting levels have positive "
+                    "If u+ℓ=0, the first multiplier has zero intercept and its slope is assigned one, "
+                    + "already included in the maximum. Its negative value at positive r still "
+                    + "permits a feasible perturbation within the support. "
+                    + "When b < a is below the cutoff, all three supporting levels have positive "
                     + "weight. If a moment coefficient is negative, a perturbation within the "
                     + "support increases that moment and preserves the other. If an intermediate "
                     + "value of P is positive, a perturbation adds weight there and uses the "
