@@ -57,6 +57,21 @@ private theorem horner_scale (h : ℝ) (c : ℚ) (xs : List ℚ) :
     rw [ih]
     ring
 
+/-- Exact coefficients after substituting h = a + a * z in an ascending Horner list. -/
+def recenterMomentCoeffs (a : ℚ) : List ℚ → List ℚ
+  | [] => []
+  | c :: cs =>
+    let scaled := coeffScale a (recenterMomentCoeffs a cs)
+    coeffAdd scaled (c :: scaled)
+
+theorem recenterMomentCoeffs_eval (a : ℚ) (z : ℝ) (cs : List ℚ) :
+    momentHorner z (recenterMomentCoeffs a cs) = momentHorner ((a : ℝ) + (a : ℝ) * z) cs := by
+  induction cs with
+  | nil => rfl
+  | cons c cs ih =>
+    simp only [recenterMomentCoeffs, horner_add, momentHorner, horner_scale, ih]
+    ring
+
 private theorem horner_mul (h : ℝ) (xs ys : List ℚ) :
     momentHorner h (coeffMul xs ys) = momentHorner h xs * momentHorner h ys := by
   induction xs with

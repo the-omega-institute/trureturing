@@ -7,7 +7,7 @@
    digest: One-dimensional moment formulas for the compact short-gap certificate. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMidpoint
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTails
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentTable
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorMoments
 import Mathlib.Tactic.FinCases
 
@@ -125,27 +125,41 @@ open SmallCorner (momentHorner)
 open private coeffScale coeffMul coeffSum horner_scale horner_mul horner_sum horner_monomial from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 
-/-- Exact spacing coefficients for the corresponding midpoint Taylor coefficient. -/
-def shortMomentTaylorCoefficients (j : Fin 4) (k n : ℕ) : List ℚ :=
+private def shortMomentTaylorCoefficientsWith (tilted : ℕ → ℕ → List ℚ)
+    (j : Fin 4) (k n : ℕ) : List ℚ :=
   coeffSum (fun l ↦
     let (power, coefficient) := shortEvenTerm j l
     let weight := coefficient * (-1 : ℚ) ^ (k+n) * ((k+n).factorial : ℚ) / (n.factorial : ℚ)
-    coeffScale weight (coeffMul (List.replicate power 0 ++ [1])
-      (compactTiltedMomentCoefficients (2*l) (k+n)))) 4
+    coeffScale weight (coeffMul (List.replicate power 0 ++ [1]) (tilted (2*l) (k+n)))) 4
 
-private theorem shortMomentTaylorCoefficients_eval (h : ℝ) (j : Fin 4) (k n : ℕ) :
-    momentHorner h (shortMomentTaylorCoefficients j k n) =
+/-- Exact spacing coefficients for the corresponding midpoint Taylor coefficient. -/
+def shortMomentTaylorCoefficients (j : Fin 4) (k n : ℕ) : List ℚ :=
+  shortMomentTaylorCoefficientsWith compactTiltedMomentCoefficients j k n
+
+private def shortMomentTaylorCoefficientsFromTable (j : Fin 4) (k n : ℕ) : List ℚ :=
+  shortMomentTaylorCoefficientsWith CompactShortMomentTable.coefficients j k n
+
+private theorem shortMomentTaylorCoefficientsWith_eval (h : ℝ) (tilted : ℕ → ℕ → List ℚ)
+    (htilted : ∀ j n, momentHorner h (tilted j n) =
+      compactPositiveMomentCoefficient h j n / (n.factorial : ℝ))
+    (j : Fin 4) (k n : ℕ) :
+    momentHorner h (shortMomentTaylorCoefficientsWith tilted j k n) =
       shortMomentCoefficient h j (k+n) / (n.factorial : ℝ) := by
-  rw [shortMomentTaylorCoefficients, horner_sum, shortMomentCoefficient, Finset.sum_div,
+  rw [shortMomentTaylorCoefficientsWith, horner_sum, shortMomentCoefficient, Finset.sum_div,
     ← Fin.sum_univ_eq_sum_range]
   refine Finset.sum_congr rfl fun l _ ↦ ?_
   cases he : shortEvenTerm j l with
   | mk power coefficient =>
     simp only [shortEvenCoefficient, he, horner_scale, horner_mul, horner_monomial,
-      compactTiltedMomentCoefficients_eval, Rat.cast_div, Rat.cast_mul, Rat.cast_natCast,
+      htilted, Rat.cast_div, Rat.cast_mul, Rat.cast_natCast,
       Rat.cast_pow, Rat.cast_neg, Rat.cast_one, one_mul]
     have hfac : ((k+n).factorial : ℝ) ≠ 0 := by positivity
     field_simp [hfac]
+
+private theorem shortMomentTaylorCoefficients_eval (h : ℝ) (j : Fin 4) (k n : ℕ) :
+    momentHorner h (shortMomentTaylorCoefficients j k n) =
+      shortMomentCoefficient h j (k+n) / (n.factorial : ℝ) :=
+  shortMomentTaylorCoefficientsWith_eval h _ (compactTiltedMomentCoefficients_eval h) j k n
 
 private theorem shortMomentTaylor_eq {p : ℕ} (hp : 0 < p) (j : Fin 4) (k n : ℕ) (w : ℝ) :
     let h := 3 / (p : ℝ)
@@ -222,14 +236,20 @@ theorem shortMomentTaylor_eq_horner_sum (h : ℝ) (j : Fin 4) (k n : ℕ) (w : �
   exact Finset.sum_congr rfl fun m _ ↦ by rw [shortMomentTaylorCoefficients_eval]; ring
 
 private def shortMomentCenterCoefficients (j : Fin 4) (k terms : ℕ) (center : ℚ) : List ℚ :=
-  coeffSum (fun n ↦ coeffScale (center ^ n) (shortMomentTaylorCoefficients j k n)) terms
+  coeffSum (fun n ↦ coeffScale (center ^ n) (shortMomentTaylorCoefficientsFromTable j k n)) terms
 
-private theorem shortMomentCenterCoefficients_eval (h : ℝ) (j : Fin 4) (k terms : ℕ)
-    (center : ℚ) :
+private theorem shortMomentCenterCoefficients_eval {p : ℕ} (hp : 0 < p)
+    (j : Fin 4) (k terms : ℕ) (center : ℚ) :
+    let h := 3 / (p : ℝ)
     momentHorner h (shortMomentCenterCoefficients j k terms center) =
       shortMomentTaylor h j k terms center := by
+  intro h
   rw [shortMomentCenterCoefficients, horner_sum, shortMomentTaylor_eq_horner_sum]
-  simp only [horner_scale, Rat.cast_pow, mul_comm]
+  refine Finset.sum_congr rfl fun n _ ↦ ?_
+  rw [horner_scale, shortMomentTaylorCoefficientsFromTable,
+    shortMomentTaylorCoefficientsWith_eval h _ (CompactShortMomentTable.coefficients_eval hp),
+    shortMomentTaylorCoefficients_eval, Rat.cast_pow]
+  exact mul_comm _ _
 
 private noncomputable def shiftedShortMomentTaylor (p : ℕ) (j : Fin 4)
     (k terms : ℕ) (center offset : ℝ) : ℝ :=
@@ -321,27 +341,28 @@ private theorem shortMidpointMoment_sub_taylor_le {p : ℕ} (hp : 11 ≤ p)
 
 namespace CompactTaylorModel
 
-/-- Recenter the short-gap moment before enclosing it. The center coefficients are evaluated
-with a univariate polynomial in the spacing, and the box expansion uses small offsets. -/
-def shiftedShortMidpointMomentModel (j : Fin 4) (k centerTerms offsetTerms : ℕ)
-    (center r bound : ℚ) (Offset H : Model) : Model :=
+private def shiftedShortMidpointMomentModelUsing (evalSpacing : List ℚ → Model) (j : Fin 4)
+    (k centerTerms offsetTerms : ℕ) (center r bound : ℚ) (Offset : Model) : Model :=
   let mass := fun k ↦ (3 : ℚ) ^ (2 * (j : ℕ)) * 2 ^ k * (7 / 44)
   let tail := fun n (r : ℚ) ↦ (2 * r) ^ n / (n.factorial : ℚ) / (1 - 2 * r / (n.succ : ℚ))
   let approximation := Model.series offsetTerms (fun m ↦
-    let c := Model.horner (shortMomentCenterCoefficients j (k + m) centerTerms center) H
+    let c := evalSpacing (shortMomentCenterCoefficients j (k + m) centerTerms center)
     let enclosed := c.widen (mass (k + m) * tail centerTerms |center|)
     enclosed.mul (Model.ofRat (1 / (m.factorial : ℚ)))) Offset
   approximation.widen (mass k * bound * tail offsetTerms r)
 
-theorem shiftedShortMidpointMomentModel_sound {p k centerTerms offsetTerms : ℕ} (hp : 11 ≤ p)
+private theorem shiftedShortMidpointMomentModelUsing_sound {p k centerTerms offsetTerms : ℕ}
+    {evalSpacing : List ℚ → Model} (hp : 11 ≤ p)
     (hcTerms : 2 ≤ centerTerms) (hoTerms : 2 ≤ offsetTerms) (j : Fin 4)
-    {s t z offset : ℝ} {Offset H : Model} {center r bound : ℚ}
-    (hb : InBox s t z) (hh : H.Encloses s t z (3 / (p : ℝ))) (hoff : Offset.Encloses s t z offset)
+    {s t z offset : ℝ} {Offset : Model} {center r bound : ℚ}
+    (hb : InBox s t z)
+    (hh : ∀ cs, (evalSpacing cs).Encloses s t z (momentHorner (3 / (p : ℝ)) cs))
+    (hoff : Offset.Encloses s t z offset)
     (hr : |offset| ≤ (r : ℝ)) (hcenter : 2 * |(center : ℝ)| / (centerTerms.succ : ℝ) < 1)
     (hsmall : 2 * (r : ℝ) / (offsetTerms.succ : ℝ) < 1)
     (hbound : Real.exp (2 * |(center : ℝ)|) ≤ (bound : ℝ)) :
-    (shiftedShortMidpointMomentModel j k centerTerms offsetTerms center r bound Offset H).Encloses
-      s t z (shortMidpointMoment p j k (center + offset)) := by
+    (shiftedShortMidpointMomentModelUsing evalSpacing j k centerTerms offsetTerms center r bound
+      Offset).Encloses s t z (shortMidpointMoment p j k (center + offset)) := by
   apply Model.widen_sound (g := shiftedShortMomentTaylor p j k offsetTerms center offset)
   · unfold shiftedShortMomentTaylor
     have he : ∀ m : ℕ, shortMidpointMoment p j (k + m) center * offset ^ m / (m.factorial : ℝ) =
@@ -356,8 +377,8 @@ theorem shiftedShortMidpointMomentModel_sound {p k centerTerms offsetTerms : ℕ
         Model.ofRat_sound (1 / (m.factorial : ℚ)) s t z
     apply Model.mul_sound hb _ hfact
     apply Model.widen_sound (g := shortMomentTaylor (3 / (p : ℝ)) j (k + m) centerTerms center)
-    · rw [← shortMomentCenterCoefficients_eval]
-      exact Model.horner_sound hb hh _
+    · rw [← shortMomentCenterCoefficients_eval (show 0 < p by omega)]
+      exact hh _
     · push_cast
       have htail := shortMidpointMoment_sub_taylor_le hp j (k + m) centerTerms hcTerms
         (w := (center : ℝ)) le_rfl hcenter
@@ -369,6 +390,45 @@ theorem shiftedShortMidpointMomentModel_sound {p k centerTerms offsetTerms : ℕ
     exact htail.trans_eq (by
       rw [Nat.cast_succ, add_comm (offsetTerms : ℝ) 1]
       ring)
+
+/-- Recenter the short-gap moment before enclosing it. The center coefficients are evaluated
+with a univariate polynomial in the spacing, and the box expansion uses small offsets. -/
+def shiftedShortMidpointMomentModel (j : Fin 4) (k centerTerms offsetTerms : ℕ)
+    (center r bound : ℚ) (Offset H : Model) : Model :=
+  shiftedShortMidpointMomentModelUsing (fun cs => Model.horner cs H)
+    j k centerTerms offsetTerms center r bound Offset
+
+theorem shiftedShortMidpointMomentModel_sound {p k centerTerms offsetTerms : ℕ} (hp : 11 ≤ p)
+    (hcTerms : 2 ≤ centerTerms) (hoTerms : 2 ≤ offsetTerms) (j : Fin 4)
+    {s t z offset : ℝ} {Offset H : Model} {center r bound : ℚ}
+    (hb : InBox s t z) (hh : H.Encloses s t z (3 / (p : ℝ))) (hoff : Offset.Encloses s t z offset)
+    (hr : |offset| ≤ (r : ℝ)) (hcenter : 2 * |(center : ℝ)| / (centerTerms.succ : ℝ) < 1)
+    (hsmall : 2 * (r : ℝ) / (offsetTerms.succ : ℝ) < 1)
+    (hbound : Real.exp (2 * |(center : ℝ)|) ≤ (bound : ℝ)) :
+    (shiftedShortMidpointMomentModel j k centerTerms offsetTerms center r bound Offset H).Encloses
+      s t z (shortMidpointMoment p j k (center + offset)) :=
+  shiftedShortMidpointMomentModelUsing_sound (evalSpacing := fun cs => Model.horner cs H)
+    hp hcTerms hoTerms j hb (Model.horner_sound hb hh) hoff hr hcenter hsmall hbound
+
+/-- The centered short-gap moment for the short box's exact spacing coordinate. -/
+def shortAffineMidpointMomentModel (j : Fin 4) (k centerTerms offsetTerms : ℕ)
+    (center r bound : ℚ) (Offset : Model) : Model :=
+  shiftedShortMidpointMomentModelUsing Model.shortSpacing j k centerTerms offsetTerms
+    center r bound Offset
+
+theorem shortAffineMidpointMomentModel_sound {p k centerTerms offsetTerms : ℕ} (hp : 11 ≤ p)
+    (hcTerms : 2 ≤ centerTerms) (hoTerms : 2 ≤ offsetTerms) (j : Fin 4)
+    {s t z offset : ℝ} {Offset : Model} {center r bound : ℚ}
+    (hb : InBox s t z) (hh : 3 / (p : ℝ) = (3 / 22 : ℝ) + (3 / 22 : ℝ) * z)
+    (hoff : Offset.Encloses s t z offset)
+    (hr : |offset| ≤ (r : ℝ)) (hcenter : 2 * |(center : ℝ)| / (centerTerms.succ : ℝ) < 1)
+    (hsmall : 2 * (r : ℝ) / (offsetTerms.succ : ℝ) < 1)
+    (hbound : Real.exp (2 * |(center : ℝ)|) ≤ (bound : ℝ)) :
+    (shortAffineMidpointMomentModel j k centerTerms offsetTerms center r bound Offset).Encloses
+      s t z (shortMidpointMoment p j k (center + offset)) :=
+  shiftedShortMidpointMomentModelUsing_sound (evalSpacing := Model.shortSpacing)
+    hp hcTerms hoTerms j hb (fun cs => Model.shortSpacing_sound cs hb.2.2 hh)
+    hoff hr hcenter hsmall hbound
 
 end CompactTaylorModel
 

@@ -208,7 +208,107 @@ theorem middleJetModels_sound {W X Y G K C Fd Fv invFd EllD EllV E Q R Eu T T₁
       (Model.mul_sound hb (Model.mul_sound hb hw ha)
         (Model.sub_sound (Model.mul_sound hb hb' hy) (Model.mul_sound hb ha hx)))
 
-def middleScoreModels (X Y W DX DY E J C M R Margin : Model) : Model × Model :=
+/-- The three jet coefficients multiplied by the upper gap. The cleared
+upper slope is evaluated as a polynomial in the gap and the rate. -/
+def middleClearedJetModels (H W X Y G K C Fd Fv invFd EllD E Q R Eu T T₁ Alpha Beta : Model) :
+    Model × Model × Model :=
+  let one := Model.ofRat 1
+  let two := Model.ofRat 2
+  let dSlope := one.sub EllD
+  let vSlope := ((one.add H).mul Fv).sub one
+  let u := dSlope.add Alpha
+  let v := vSlope.add ((dSlope.sub Beta).mul Fv)
+  let curvature := EllD.mul invFd
+  let j := (Fv.mul curvature).add (u.mul v)
+  let m := (K.mul Fd).sub one
+  let a := dSlope.add ((C.mul Fd).mul E)
+  let b := (Q.mul vSlope).add ((((C.mul Fv).mul E).mul Eu).mul Fv)
+  let k := (curvature.sub (two.mul (dSlope.pow 2))).sub ((C.mul E).mul m)
+  let wv := E.mul (G.add (m.mul T))
+  let wu := (Model.zero.sub E).mul (((Fd.mul T₁).add G).add (m.mul T))
+  let wuv := E.mul (((m.mul T₁).add (G.pow 2)).sub ((G.sub (K.mul m)).mul T))
+  let main := (Fv.mul ((wuv.sub (u.mul wv)).sub ((Alpha.mul Beta).mul R))).add (v.mul wu)
+  let first := (((Fv.mul (k.add (u.mul a))).add (v.mul a)).mul Y).mul X
+  let radical := (first.add ((u.mul b).mul (Y.pow 2))).add
+    ((W.mul a).mul ((b.mul Y).sub ((Fv.mul a).mul X)))
+  (j, main, radical)
+
+/-- The cleared jet coefficients enclose the original replay coefficients
+scaled by the upper gap. The upper slope occurs only in the real identities. -/
+theorem middleClearedJetModels_sound
+    {H W X Y G K C Fd Fv invFd EllD E Q R Eu T T₁ Alpha Beta : Model}
+    {s t z h w x y g κ c fd fv idf ℓd ℓv e q r eu τ τ₁ α β : ℝ}
+    (hb : InBox s t z) (hh : H.Encloses s t z h)
+    (hw : W.Encloses s t z w) (hx : X.Encloses s t z x) (hy : Y.Encloses s t z y)
+    (hg : G.Encloses s t z g) (hκ : K.Encloses s t z κ) (hc : C.Encloses s t z c)
+    (hFd : Fd.Encloses s t z fd) (hFv : Fv.Encloses s t z fv) (hId : invFd.Encloses s t z idf)
+    (hld : EllD.Encloses s t z ℓd) (he : E.Encloses s t z e)
+    (hq : Q.Encloses s t z q) (hr : R.Encloses s t z r)
+    (heu : Eu.Encloses s t z eu) (hτ : T.Encloses s t z τ) (hτ₁ : T₁.Encloses s t z τ₁)
+    (hα : Alpha.Encloses s t z α) (hβ : Beta.Encloses s t z β)
+    (hSlope : fv * (1 - ℓv) = (1 + h) * fv - 1) :
+    let dSlope := 1 - ℓd
+    let vSlope := 1 - ℓv
+    let u := dSlope + α
+    let v := vSlope + dSlope - β
+    let curvature := ℓd * idf
+    let m := κ * fd - 1
+    let a := dSlope + c * fd * e
+    let b := q * vSlope + c * fv * e * eu
+    let k := curvature - 2 * dSlope ^ 2 - c * e * m
+    let wv := e * (g + m * τ)
+    let wu := -e * (fd * τ₁ + g + m * τ)
+    let wuv := e * (m * τ₁ + g ^ 2 - (g - κ * m) * τ)
+    let parts := middleClearedJetModels H W X Y G K C Fd Fv invFd EllD E Q R Eu T T₁ Alpha Beta
+    parts.1.Encloses s t z (fv * (curvature + u * v)) ∧
+      parts.2.1.Encloses s t z (fv * (wuv - u * wv + v * wu - α * β * r)) ∧
+      parts.2.2.Encloses s t z
+        (fv * ((k + (u + v) * a) * y * x + u * b * y ^ 2 + w * a * (b * y - a * x))) := by
+  have hOne : (Model.ofRat 1).Encloses s t z (1 : ℝ) := by simpa using Model.ofRat_sound 1 s t z
+  have hTwo : (Model.ofRat 2).Encloses s t z (2 : ℝ) := by simpa using Model.ofRat_sound 2 s t z
+  have hD := Model.sub_sound hOne hld
+  have hV : ((((Model.ofRat 1).add H).mul Fv).sub (Model.ofRat 1)).Encloses s t z
+      (fv * (1 - ℓv)) := by
+    rw [hSlope]
+    exact Model.sub_sound (Model.mul_sound hb (Model.add_sound hOne hh) hFv) hOne
+  have hu := Model.add_sound hD hα
+  have hv := Model.add_sound hV (Model.mul_sound hb (Model.sub_sound hD hβ) hFv)
+  have hCurv := Model.mul_sound hb hld hId
+  have hm := Model.sub_sound (Model.mul_sound hb hκ hFd) hOne
+  have ha := Model.add_sound hD (Model.mul_sound hb (Model.mul_sound hb hc hFd) he)
+  have hb' := Model.add_sound (Model.mul_sound hb hq hV)
+    (Model.mul_sound hb (Model.mul_sound hb (Model.mul_sound hb (Model.mul_sound hb hc hFv) he)
+      heu) hFv)
+  have hk := Model.sub_sound (Model.sub_sound hCurv (Model.mul_sound hb hTwo (Model.pow_sound hb hD 2)))
+    (Model.mul_sound hb (Model.mul_sound hb hc he) hm)
+  have hwv := Model.mul_sound hb he (Model.add_sound hg (Model.mul_sound hb hm hτ))
+  have hwu := Model.mul_sound hb (Model.sub_sound (Model.zero_sound s t z) he)
+    (Model.add_sound (Model.add_sound (Model.mul_sound hb hFd hτ₁) hg) (Model.mul_sound hb hm hτ))
+  simp only [zero_sub] at hwu
+  have hwuv := Model.mul_sound hb he
+    (Model.sub_sound (Model.add_sound (Model.mul_sound hb hm hτ₁) (Model.pow_sound hb hg 2))
+      (Model.mul_sound hb (Model.sub_sound hg (Model.mul_sound hb hκ hm)) hτ))
+  have hj := Model.add_sound (Model.mul_sound hb hFv hCurv) (Model.mul_sound hb hu hv)
+  have hmain := Model.add_sound
+    (Model.mul_sound hb hFv (Model.sub_sound (Model.sub_sound hwuv (Model.mul_sound hb hu hwv))
+      (Model.mul_sound hb (Model.mul_sound hb hα hβ) hr))) (Model.mul_sound hb hv hwu)
+  have hfirst := Model.add_sound
+    (Model.mul_sound hb hFv (Model.add_sound hk (Model.mul_sound hb hu ha)))
+    (Model.mul_sound hb hv ha)
+  have hradical := Model.add_sound
+    (Model.add_sound (Model.mul_sound hb (Model.mul_sound hb hfirst hy) hx)
+      (Model.mul_sound hb (Model.mul_sound hb hu hb') (Model.pow_sound hb hy 2)))
+    (Model.mul_sound hb (Model.mul_sound hb hw ha)
+      (Model.sub_sound (Model.mul_sound hb hb' hy)
+        (Model.mul_sound hb (Model.mul_sound hb hFv ha) hx)))
+  dsimp only [middleClearedJetModels]
+  refine ⟨?_, ?_, ?_⟩
+  · convert hj using 1 <;> first | rfl | ring
+  · convert hmain using 1 <;> first | rfl | ring
+  · convert hradical using 1 <;> first | rfl | ring
+
+/-- The zero-margin test and the upper test with its outer gap weight removed. -/
+def middleScoreCoreModels (X Y W DX DY E J C M R : Model) : Model × Model :=
   let half := Model.ofRat (1 / 2)
   let quarter := Model.ofRat (1 / 4)
   let sum := X.add Y
@@ -216,10 +316,52 @@ def middleScoreModels (X Y W DX DY E J C M R Margin : Model) : Model × Model :=
   let correction := (W.mul ((DY.sub DX).pow 2)).mul quarter
   let majorant := ((sum.pow 2).mul half).sub (W.mul correction)
   let offset := ((E.sub ((DX.add DY).mul half)).mul sum).sub correction
-  let zeroScore := ((W.mul M).sub (J.mul C)).add Margin
-  let upperScore := (W.mul ((denominator.mul ((sum.mul M).add (offset.mul J))).add
-    (majorant.mul R))).add (((denominator.mul sum).mul Margin))
+  let zeroScore := (W.mul M).sub (J.mul C)
+  let upperScore := (denominator.mul ((sum.mul M).add (offset.mul J))).add (majorant.mul R)
   (zeroScore, upperScore)
+
+/-- A common factor in the three coefficients is a common factor in both
+zero-margin scores. -/
+theorem middleScoreCoreModels_sound {X Y W DX DY E J C M R : Model}
+    {s t z x y w δx δy e j c m r factor : ℝ}
+    (hb : InBox s t z)
+    (hx : X.Encloses s t z x) (hy : Y.Encloses s t z y) (hw : W.Encloses s t z w)
+    (hdx : DX.Encloses s t z δx) (hdy : DY.Encloses s t z δy) (he : E.Encloses s t z e)
+    (hj : J.Encloses s t z (factor * j)) (hc : C.Encloses s t z c)
+    (hm : M.Encloses s t z (factor * m)) (hr : R.Encloses s t z (factor * r)) :
+    let S := x + y
+    let H := y ^ 2 * x
+    let B := (e - (δx + δy) / 2) * S - w * (δy - δx) ^ 2 / 4
+    let A := S ^ 2 / 2 - w ^ 2 * (δy - δx) ^ 2 / 4
+    let scores := middleScoreCoreModels X Y W DX DY E J C M R
+    scores.1.Encloses s t z (factor * (w * m - j * c)) ∧
+      scores.2.Encloses s t z (factor * (H * (S * m + B * j) + A * r)) := by
+  have hhalf : (Model.ofRat (1 / 2)).Encloses s t z (1 / 2 : ℝ) := by
+    simpa using Model.ofRat_sound (1 / 2) s t z
+  have hquarter : (Model.ofRat (1 / 4)).Encloses s t z (1 / 4 : ℝ) := by
+    simpa using Model.ofRat_sound (1 / 4) s t z
+  have hsum := Model.add_sound hx hy
+  have hdenominator := Model.mul_sound hb (Model.pow_sound hb hy 2) hx
+  have hcorrection := Model.mul_sound hb
+    (Model.mul_sound hb hw (Model.pow_sound hb (Model.sub_sound hdy hdx) 2)) hquarter
+  have hmajorant := Model.sub_sound (Model.mul_sound hb (Model.pow_sound hb hsum 2) hhalf)
+    (Model.mul_sound hb hw hcorrection)
+  have hoffset := Model.sub_sound (Model.mul_sound hb
+    (Model.sub_sound he (Model.mul_sound hb (Model.add_sound hdx hdy) hhalf)) hsum) hcorrection
+  dsimp only [middleScoreCoreModels]
+  refine ⟨?_, ?_⟩
+  · convert Model.sub_sound (Model.mul_sound hb hw hm) (Model.mul_sound hb hj hc) using 1
+    <;> first | rfl | ring
+  · convert Model.add_sound
+      (Model.mul_sound hb hdenominator
+        (Model.add_sound (Model.mul_sound hb hsum hm) (Model.mul_sound hb hoffset hj)))
+      (Model.mul_sound hb hmajorant hr) using 1 <;> first | rfl | ring
+
+def middleScoreModels (X Y W DX DY E J C M R Margin : Model) : Model × Model :=
+  let scores := middleScoreCoreModels X Y W DX DY E J C M R
+  let sum := X.add Y
+  let denominator := (Y.pow 2).mul X
+  (scores.1.add Margin, (W.mul scores.2).add ((denominator.mul sum).mul Margin))
 
 /-- Certified elementary inputs enclose both endpoint scores in the same box. -/
 theorem middleScoreModels_sound {X Y W DX DY E J C M R Margin : Model}
@@ -236,26 +378,13 @@ theorem middleScoreModels_sound {X Y W DX DY E J C M R Margin : Model}
     let scores := middleScoreModels X Y W DX DY E J C M R Margin
     scores.1.Encloses s t z (w * m - j * c + μ) ∧
       scores.2.Encloses s t z (w * (H * (S * m + B * j) + A * r) + H * S * μ) := by
-  have hhalf : (Model.ofRat (1 / 2)).Encloses s t z (1 / 2 : ℝ) := by
-    simpa using Model.ofRat_sound (1 / 2) s t z
-  have hquarter : (Model.ofRat (1 / 4)).Encloses s t z (1 / 4 : ℝ) := by
-    simpa using Model.ofRat_sound (1 / 4) s t z
-  have hsum := Model.add_sound hx hy
+  have hcore := middleScoreCoreModels_sound (J := J) (M := M) (R := R)
+    (j := j) (m := m) (r := r) (factor := 1) hb hx hy hw hdx hdy he
+    (by simpa only [one_mul] using hj) hc
+    (by simpa only [one_mul] using hm) (by simpa only [one_mul] using hr)
+  simp only [one_mul] at hcore
   have hdenominator := Model.mul_sound hb (Model.pow_sound hb hy 2) hx
-  have hcorrection := Model.mul_sound hb
-    (Model.mul_sound hb hw (Model.pow_sound hb (Model.sub_sound hdy hdx) 2)) hquarter
-  have hmajorant := Model.sub_sound (Model.mul_sound hb (Model.pow_sound hb hsum 2) hhalf)
-    (Model.mul_sound hb hw hcorrection)
-  have hoffset := Model.sub_sound (Model.mul_sound hb
-    (Model.sub_sound he (Model.mul_sound hb (Model.add_sound hdx hdy) hhalf)) hsum) hcorrection
-  refine ⟨Model.add_sound (Model.sub_sound (Model.mul_sound hb hw hm)
-    (Model.mul_sound hb hj hc)) hμ, ?_⟩
-  convert Model.add_sound
-    (Model.mul_sound hb hw
-      (Model.add_sound (Model.mul_sound hb hdenominator
-          (Model.add_sound (Model.mul_sound hb hsum hm) (Model.mul_sound hb hoffset hj)))
-        (Model.mul_sound hb hmajorant hr)))
-    (Model.mul_sound hb (Model.mul_sound hb hdenominator hsum) hμ) using 1
-  <;> (try rfl) <;> ring
+  exact ⟨Model.add_sound hcore.1 hμ, Model.add_sound (Model.mul_sound hb hw hcore.2)
+    (Model.mul_sound hb (Model.mul_sound hb hdenominator (Model.add_sound hx hy)) hμ)⟩
 
 end RefinedBMV.PositiveCenter.CompactTaylorModel

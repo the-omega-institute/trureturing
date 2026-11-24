@@ -96,6 +96,142 @@ private theorem gridAverage_pow_eq {p : ℕ} (hp : 0 < p) (n : ℕ) :
       field_simp [(gaps_length_pos p).ne', hfac.ne', hvar.ne']
       norm_num
 
+private theorem grid_second_difference_sum (p : ℕ) (f : ℕ → ℝ) :
+    (∑ i ∈ Finset.range (p + 1),
+      ((p + 1 - i : ℕ) : ℝ) * (f i - 2 * f (i + 1) + f (i + 2))) =
+      ((p : ℝ) + 1) * f 0 - ((p : ℝ) + 2) * f 1 + f (p + 2) := by
+  let F (i : ℕ) := ((p : ℝ) + 1 - i) * (f i - f (i + 1)) - f (i + 1)
+  calc
+    _ = ∑ i ∈ Finset.range (p + 1), (F i - F (i + 1)) := by
+      refine Finset.sum_congr rfl fun i hi ↦ ?_
+      rw [Nat.cast_sub (Finset.mem_range.mp hi).le]
+      simp only [F, Nat.cast_add, Nat.cast_one]
+      ring
+    _ = F 0 - F (p + 1) := Finset.sum_range_sub' F (p + 1)
+    _ = _ := by
+      simp only [F, Nat.cast_zero, Nat.cast_add, Nat.cast_one]
+      ring
+
+private theorem centered_second_difference (x h : ℝ) (m : ℕ) :
+    x ^ (m + 2) - 2 * (x - h) ^ (m + 2) + (x - 2 * h) ^ (m + 2) =
+      2 * h ^ 2 * ∑ j ∈ Finset.range (m + 1),
+        ((m + 2).choose (j + 2) : ℝ) * (-h) ^ j * ((2 : ℝ) ^ (j + 1) - 1) *
+          x ^ (m - j) := by
+  have expand (a : ℝ) :
+      (a + x) ^ (m + 2) = x ^ (m + 2) + a * x ^ (m + 1) * ((m + 2 : ℕ) : ℝ) +
+        ∑ j ∈ Finset.range (m + 1),
+          a ^ (j + 2) * x ^ (m - j) * ((m + 2).choose (j + 2) : ℝ) := by
+    let f (k : ℕ) := a ^ k * x ^ (m + 2 - k) * ((m + 2).choose k : ℝ)
+    rw [add_pow]
+    change (∑ k ∈ Finset.range (m + 2 + 1), f k) = _
+    rw [show m + 2 + 1 = 2 + (m + 1) by omega, Finset.sum_range_add f 2 (m + 1)]
+    have hfirst : (∑ k ∈ Finset.range 2, f k) =
+        x ^ (m + 2) + a * x ^ (m + 1) * ((m + 2 : ℕ) : ℝ) := by
+      rw [Finset.sum_range_succ f 1, Finset.sum_range_one]
+      simp [f, show m + 2 - 1 = m + 1 by omega]
+    rw [hfirst]
+    congr 1
+    refine Finset.sum_congr rfl fun j _ ↦ ?_
+    simp only [f, Nat.add_comm 2 j, show m + 2 - (j + 2) = m - j by omega]
+  rw [show x - h = -h + x by ring, show x - 2 * h = 2 * (-h) + x by ring,
+    expand (-h), expand (2 * (-h))]
+  calc
+    _ = (∑ j ∈ Finset.range (m + 1),
+          (2 * (-h)) ^ (j + 2) * x ^ (m - j) * ((m + 2).choose (j + 2) : ℝ)) -
+        2 * ∑ j ∈ Finset.range (m + 1),
+          (-h) ^ (j + 2) * x ^ (m - j) * ((m + 2).choose (j + 2) : ℝ) := by ring
+    _ = _ := by
+      simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
+      refine Finset.sum_congr rfl fun j _ ↦ ?_
+      rw [mul_pow, pow_succ (2 : ℝ) (j + 1), pow_add (-h) j 2]
+      ring
+
+/-- The moments of the negated grid point satisfy a triangular recurrence at the grid spacing.
+The cross-multiplied form allows checking integer polynomial coefficients by multiplication. -/
+private theorem compact_centered_moment_recurrence {p : ℕ} (hp : 0 < p) (m : ℕ) :
+    let h := 3 / (p : ℝ)
+    let M (n : ℕ) := (-1 : ℝ) ^ n * compactCenteredMomentPolynomial h n
+    h * (3 + h) * (3 + 2 * h) *
+        (((m + 2).choose 2 : ℝ) * M m +
+          ∑ j ∈ Finset.range m,
+            ((m + 2).choose (j + 3) : ℝ) * (-h) ^ (j + 1) * ((2 : ℝ) ^ (j + 2) - 1) *
+              M (m - (j + 1))) =
+      (3 + h) - (3 + 2 * h) * (1 - h) ^ (m + 2) + h * (-2 - 2 * h) ^ (m + 2) := by
+  intro h M
+  let C (j : ℕ) := ((m + 2).choose (j + 2) : ℝ) * (-h) ^ j * ((2 : ℝ) ^ (j + 1) - 1)
+  let F (x : ℝ) := (-x) ^ (m + 2) - 2 * (-x - h) ^ (m + 2) + (-x - 2 * h) ^ (m + 2)
+  have hscale : h * (p : ℝ) = 3 :=
+    div_mul_cancel₀ _ (by exact_mod_cast hp.ne')
+  have hmoment (n : ℕ) : gridAverage p (fun x ↦ (-x) ^ n) = M n := by
+    calc
+      _ = gridAverage p (fun x ↦ (-1 : ℝ) ^ n * x ^ n) := by
+        apply congrArg (gridAverage p)
+        funext x
+        rw [show -x = (-1) * x by ring, mul_pow]
+      _ = _ := by simp only [gridAverage_const_mul, gridAverage_pow_eq hp, M, h]
+  have havg : gridAverage p F =
+      2 * h ^ 2 * ∑ j ∈ Finset.range (m + 1), C j * M (m - j) := by
+    calc
+      _ = gridAverage p (fun x ↦ 2 * h ^ 2 * ∑ j ∈ Finset.range (m + 1),
+          C j * (-x) ^ (m - j)) :=
+        congrArg (gridAverage p) (funext fun x ↦ centered_second_difference (-x) h m)
+      _ = _ := by
+        rw [gridAverage_const_mul, gridAverage_sum]
+        apply congrArg (2 * h ^ 2 * ·)
+        refine Finset.sum_congr rfl fun j _ ↦ ?_
+        rw [gridAverage_const_mul, hmoment]
+  have hshift (i k : ℕ) : -gridPoint p (i + k) = -gridPoint p i - h * k := by
+    simp only [gridPoint, h, Nat.cast_add]
+    ring
+  have htel : ((gaps p).length : ℝ) * gridAverage p F =
+      ((p : ℝ) + 1) - ((p : ℝ) + 2) * (1 - h) ^ (m + 2) + (-2 - 2 * h) ^ (m + 2) := by
+    have hterm (i : ℕ) : F (gridPoint p i) =
+        (-gridPoint p i) ^ (m + 2) - 2 * (-gridPoint p (i + 1)) ^ (m + 2) +
+          (-gridPoint p (i + 2)) ^ (m + 2) := by
+      simp only [F, hshift i 1, hshift i 2, Nat.cast_one, Nat.cast_ofNat, mul_one] <;> ring
+    have hzero : -gridPoint p 0 = 1 := by simp [gridPoint]
+    have hone : -gridPoint p 1 = 1 - h := by
+      simp only [gridPoint, h, Nat.cast_one, mul_one]
+      ring
+    have hend : -gridPoint p (p + 2) = -2 - 2 * h := by
+      simp only [gridPoint, Nat.cast_add, Nat.cast_ofNat]
+      change -(h * ((p : ℝ) + 2) - 1) = _
+      linear_combination -hscale
+    rw [gridAverage, mul_div_cancel₀ _ (gaps_length_pos p).ne']
+    simp_rw [hterm]
+    rw [grid_second_difference_sum p (fun i ↦ (-gridPoint p i) ^ (m + 2)),
+      hzero, hone, hend, one_pow, mul_one]
+  have hcountNat : 2 * (gaps p).length = (p + 1) * (p + 2) := by
+    rw [DimThree.gaps_length_eq_choose, Nat.mul_comm 2, Nat.mul_comm (p + 1) (p + 2)]
+    simpa only [Nat.choose_one_right] using (Nat.add_one_mul_choose_eq (p + 1) 1).symm
+  have hcount : 2 * ((gaps p).length : ℝ) = ((p : ℝ) + 1) * ((p : ℝ) + 2) := by
+    exact_mod_cast hcountNat
+  have hleft : ((p : ℝ) + 1) * h = 3 + h := by linear_combination hscale
+  have hright : ((p : ℝ) + 2) * h = 3 + 2 * h := by linear_combination hscale
+  have hnorm :
+      h * (3 + h) * (3 + 2 * h) = h * (((gaps p).length : ℝ) * (2 * h ^ 2)) := by
+    rw [← hleft, ← hright]
+    calc
+      _ = h ^ 3 * (((p : ℝ) + 1) * ((p : ℝ) + 2)) := by ring
+      _ = _ := by rw [← hcount]; ring
+  have hsplit : (∑ j ∈ Finset.range (m + 1), C j * M (m - j)) =
+      ((m + 2).choose 2 : ℝ) * M m +
+        ∑ j ∈ Finset.range m, C (j + 1) * M (m - (j + 1)) := by
+    have hhead : C 0 * M (m - 0) = ((m + 2).choose 2 : ℝ) * M m := by norm_num [C]
+    rw [Finset.sum_range_succ', hhead, add_comm]
+  change h * (3 + h) * (3 + 2 * h) *
+      (((m + 2).choose 2 : ℝ) * M m + ∑ j ∈ Finset.range m, C (j + 1) * M (m - (j + 1))) = _
+  calc
+    _ = h * (((gaps p).length : ℝ) * gridAverage p F) := by
+      rw [← hsplit, havg, hnorm]
+      ring
+    _ = _ := by
+      rw [htel]
+      calc
+        _ = ((p : ℝ) + 1) * h - ((p : ℝ) + 2) * h * (1 - h) ^ (m + 2) +
+            h * (-2 - 2 * h) ^ (m + 2) := by ring
+        _ = _ := by rw [hleft, hright]
+
 /-- The unscaled Taylor coefficient of order `n`, before division by `n!`. -/
 def compactPositiveMomentCoefficient (h : ℝ) (j n : ℕ) : ℝ :=
   ∑ l ∈ Finset.range (j + 1),
