@@ -557,10 +557,11 @@ set_option maxHeartbeats 3000000 in
 private theorem packedClassWord_eq : packedClassWord = Nat.ofDigits 128 classDigits := by
   decide +kernel
 
+set_option maxRecDepth 4000 in
 private theorem packedClass_eq (p : Boundary) :
     packedClass (finFunctionFinEquiv p).val = exhaustedClass p := by
   let j : Fin 729 := finFunctionFinEquiv p
-  have hj : j.val < classDigits.length := by simpa [classDigits] using j.isLt
+  have hj : j.val < classDigits.length := by simpa only [classDigits, List.length_ofFn] using j.isLt
   have hd (a : ℕ) (ha : a ∈ classDigits) : a < 128 := by
     obtain ⟨i, rfl⟩ := List.mem_ofFn.mp ha
     exact (exhaustedClass (HardinA229635State.rowEquiv i)).isLt.trans (by decide)
@@ -866,8 +867,8 @@ private theorem oldExits_representative (j : Fin 96) (hj : 72 ≤ (exitRead j).v
   fin_cases j <;> revert hj <;> decide +kernel
 
 private theorem inheritedSource_index (i : Fin 72) (k : Fin 16)
-    (h : inheritedSource i = some k) : i = k.castAdd 56 := by
-  have hc : (inheritedSource i).all (fun l => decide (i = l.castAdd 56)) = true := by
+    (h : inheritedSource i = some k) : i = HardinA229585StripData.zeroBudgetClass k := by
+  have hc : (inheritedSource i).all (fun l => decide (i = HardinA229585StripData.zeroBudgetClass l)) = true := by
     fin_cases i <;> decide +kernel
   simpa only [h, Option.all_some, decide_eq_true_eq] using hc
 
@@ -876,15 +877,18 @@ set_option maxHeartbeats 6000000 in
 private theorem oldExits_copied_check (j : Fin 96) (hj : (exitRead j).val < 72) :
     let k := Fin.ofNat 72 (exitRead j).val
     ((List.finRange 16).all (fun i =>
-        oldExits (i.castAdd 56) j == HardinA229585StripData.T (i.castAdd 56) k) &&
+        oldExits (i.castAdd 56) j == HardinA229585StripData.T (HardinA229585StripData.zeroBudgetClass i) k) &&
       (List.finRange 56).all (fun i => oldExits (i.natAdd 16) j == 0) &&
       (List.finRange 72).all (fun i => decide (0 ≤ HardinA229585StripData.T i k))) = true := by
   fin_cases j <;> revert hj <;> decide +kernel
 
+set_option maxRecDepth 4000 in
 theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
     T i (j.natAdd 72) = T i (Fin.castAdd 96 (⟨(exitRead j).val, hj⟩ : Fin 72)) := by
-  have hk : Fin.ofNat 72 (exitRead j).val = (⟨_, hj⟩ : Fin 72) :=
-    Fin.ext (Nat.mod_eq_of_lt hj)
+  let r : Fin 72 := ⟨(exitRead j).val, hj⟩
+  change T i (j.natAdd 72) = T i (r.castAdd 96)
+  have hk : Fin.ofNat 72 (exitRead j).val = r := Fin.ext (Nat.mod_eq_of_lt hj)
+  have hread : exitRead j = r.castAdd 36 := Fin.ext rfl
   have hc := oldExits_copied_check j hj
   dsimp only at hc
   rw [hk, Bool.and_eq_true, Bool.and_eq_true] at hc
@@ -895,7 +899,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
       Matrix.of_apply]
     cases hi : inheritedSource i with
     | none =>
-      simp only [activeWeight, show exitRead j = (⟨_, hj⟩ : Fin 72).castAdd 36 from Fin.ext rfl,
+      simp only [activeWeight, hread,
         Fin.append_left]
       exact Int.toNat_of_nonneg
         (of_decide_eq_true (List.all_eq_true.mp hc.2 i (List.mem_finRange i)))
@@ -912,7 +916,7 @@ theorem copied_column (j : Fin 96) (hj : (exitRead j).val < 72) (i : Fin 168) :
       exact beq_iff_eq.mp (List.all_eq_true.mp hc.1.2 i (List.mem_finRange i))
     | right i =>
       simp only [Fin.append_right, exhaustedWeight,
-        show exitRead j = (⟨_, hj⟩ : Fin 72).castAdd 36 from Fin.ext rfl, Fin.append_left,
+        hread, Fin.append_left,
         Pi.zero_apply, Nat.cast_zero]
 
 theorem new_column_congr (j k : Fin 96) (hj : 72 ≤ (exitRead j).val)
