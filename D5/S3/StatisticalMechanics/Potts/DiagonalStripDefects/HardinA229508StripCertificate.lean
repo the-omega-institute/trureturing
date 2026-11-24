@@ -147,8 +147,8 @@ private theorem representative_counts (i j : Fin 15) :
 theorem one_counts (p : Row 3 6) (j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r = 1 ∧ boundary r = j
       then (1 : ℤ) else 0) = costOne (boundary p) j := by
-  exact ((HardinA203981StripCertificate.lift_counts_iff p (representatives (boundary p))).2
-    (boundary_at_rep (boundary p)).symm 1 j).trans (representative_counts (boundary p) j)
+  exact (HardinA203981StripSymmetry.lift_counts 1 p (representatives (boundary p)) j
+    (boundary_at_rep (boundary p)).symm).trans (representative_counts (boundary p) j)
 
 theorem transition_counts (p : Row 3 6) (d : Fin 2) (s : Fin 15 ⊕ Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) p r ≤ d.val ∧
