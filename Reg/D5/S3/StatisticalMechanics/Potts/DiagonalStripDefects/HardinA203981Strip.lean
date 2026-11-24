@@ -7,6 +7,10 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.Core
+import LeanInformationAuditInterface.Contract.Implementation
+import Init.Core
+import Init.Data.List.OfFn
 import Init.Data.Int.Basic
 import Init.Data.Nat.Basic
 import Init.Prelude
@@ -14,6 +18,7 @@ import Mathlib.Algebra.Group.Monoid
 import Mathlib.Algebra.Group.Semigroup
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.Matrix.Mul
@@ -271,6 +276,85 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace General
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    (Σ w : ℕ, ℕ × Finset (Fin (w + 1) × Fin (w + 1)) × Finset (Fin (w + 1) × Fin (w + 1)))
+    (fun _ => ℕ) (fun _ => ℕ)
+
+def readout : Realization signature := realize signature
+  (fun _ ⟨_, d, H, V⟩ m => literalCount (q := 3) H V d (m + 1)) (fun e => nomatch e)
+
+def rejected : Realization signature := realize signature
+  (fun _ x m => readout.readout () x m + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (w m d : ℕ) (H V : Finset (Fin (w + 1) × Fin (w + 1))),
+      r.readout () ⟨w, d, H, V⟩ m + (if d = H.card + m * (V.card + H.card) then 3 else 0) =
+        6 * (Finset.univ.filter fun f : Fin (m + 1) × Fin (w + 1) → Fin 3 =>
+          defects H V (List.ofFn fun i j => f (i, j)) = d ∧
+          (@Canonical (Fin (m + 1) × Fin (w + 1))
+            (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f)).card
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have rejectAt (w m d : ℕ) (H V : Finset (Fin (w + 1) × Fin (w + 1))) : False := by
+    let count := literalCount (q := 3) H V d (m + 1)
+    let correction := if d = H.card + m * (V.card + H.card) then 3 else 0
+    have hx := h w m d H V
+    change count + 1 + correction = _ at hx
+    exact Nat.succ_ne_self _ ((Nat.add_right_comm count correction 1).trans
+      (hx.trans (scale_count_of_bonds w m d H V).symm))
+  exact rejectAt 5 1 0 ∅ (betw 6)
+
+def family : Registration arena (type_of% @scale_count_of_bonds) where
+  actual := readout
+  bridge := Iff.rfl
+  variation := ⟨scale_count_of_bonds, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law readout rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨⟨5, 0, ∅, betw 6⟩, 1, 2, literal_ne_of_count_ne 1 2 le_rfl (by decide)
+      Recurrence.count_distinct⟩
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0}
+    (@scale_count_of_bonds) (Realization signature) Type Unit where
+  unitName := `Reg.AHardinA203981Strip.Scale.General.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := Contract.ArenaRef.source.{0, 0, 0, 0, 0, 0, 0, 0, 0} ⟨arena⟩
+  objectArena := Contract.ArenaRef.source.{0, 0, 0, 0, 0, 0, 0, 0, 0} ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := Contract.Implementation.source.{0, 0, 0, 0, 0, 0, 0, 0, 0} arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+  (fun _ ⟨_, d, H, V⟩ m => literalCount (q := 3) H V d (m + 1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981Strip
+    definition := none
+    coordinates := #[0, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := some #["arg", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end General
 
 end Scale
 

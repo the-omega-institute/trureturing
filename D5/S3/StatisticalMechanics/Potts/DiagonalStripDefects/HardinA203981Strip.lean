@@ -38,6 +38,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Monoid
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Empty
 import Mathlib.Data.Finset.Filter
 import Mathlib.Data.Finset.Insert

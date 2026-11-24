@@ -23,14 +23,13 @@ forward_one: proof_shape=content; consumers=finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
-budget_cut: proof_shape=bind-only; consumers=one_exact._proof_1, HardinA229683StripCertificate.two_exact._proof_1, HardinA229683StripCertificate.cut_terminal
+budget_cut: proof_shape=bind-only; consumers=one_exact, HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.two_exact
 one_exact: proof_shape=bind-only; consumers=HardinA229683StripCertificate.representative_counts, representative_counts
 halfForwardOne: proof_shape=bind-only; consumers=HardinA229683StripCertificate.W, W
 -/
 
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Data.Fintype.Defs
-import Mathlib.Order.Basic
 import Mathlib.Order.Fin.Basic
 import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Data.Finset.NatAntidiagonal
@@ -38,6 +37,7 @@ import Mathlib.Algebra.Order.Antidiag.Prod
 import Mathlib.Basic.Logic.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
+import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic

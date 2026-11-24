@@ -33,6 +33,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
+import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
