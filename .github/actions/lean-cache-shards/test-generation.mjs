@@ -178,3 +178,44 @@ print(json.dumps({"result": {"verified": len(verified)}}), flush=True)
   assert.match(corrupt.stdout, /"verified":0/);
   assert.doesNotMatch(await requests(), /^put /m);
 });
+
+test('handover drains legacy workflow versions and recovers the original dev pin', async t => {
+  const { root } = await fixture(t);
+  const tip = 'b'.repeat(40);
+  const earlier = 'a'.repeat(40);
+  const old = Buffer.from("concurrency: {group: old-producer}\n").toString('base64');
+  const current = Buffer.from("concurrency: {group: lean-cache-release-publisher}\n").toString('base64');
+  await writeFile(join(root, 'bin/gh'), `#!/bin/sh
+case "$*" in
+  *status=queued*) echo '[{"workflow_runs":[{"id":4,"head_sha":"old"},{"id":5,"head_sha":"new"}]}]' ;;
+  *status=in_progress*) echo '[{"workflow_runs":[{"id":4,"head_sha":"old"}]}]' ;;
+  *status=*) echo '[{"workflow_runs":[]}]' ;;
+  *contents/*ref=old*) echo '{"content":"${old}"}' ;;
+  *contents/*ref=new*) echo '{"content":"${current}"}' ;;
+  'run watch 4 '*) echo watch >> watched ;;
+  *actions/runs/7/artifacts*) if test -f pin-exists; then echo '[{"artifacts":[{"name":"generation-pin-7","expired":false}]}]'; else echo '[{"artifacts":[]}]'; fi ;;
+  *actions/runs/7/jobs*) if test -f pin-was-successful; then echo '[{"jobs":[{"name":"pin","conclusion":"success"}]}]'; else echo '[{"jobs":[{"name":"pin","conclusion":"failure"}]}]'; fi ;;
+  *branches/dev*) echo '{"protected":true,"commit":{"sha":"${tip}"}}' ;;
+  'run download 7 '*) echo '${earlier}' > pin/source ;;
+  *compare/*) echo '${earlier}' ;;
+  *) echo "Unexpected request $*" >&2; exit 2 ;;
+esac
+`, { mode: 0o755 });
+  const command = fileURLToPath(new URL('handover.py', import.meta.url));
+  const invoke = () => spawnSync('python3', ['-B', command], { cwd: root, encoding: 'utf8', env: {
+    ...process.env, PATH: join(root, 'bin') + ':' + process.env.PATH,
+    GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: '2', GITHUB_REPOSITORY: 'owner/repo',
+    RUNNER_TEMP: root, GITHUB_OUTPUT: join(root, 'outputs'),
+  }});
+  // The first attempt failed before it could upload its pin.
+  const retry = invoke();
+  assert.equal(retry.status, 0, retry.stderr);
+  assert.equal(await readFile(join(root, 'watched'), 'utf8'), 'watch\n');
+  assert.equal(await readFile(join(root, 'outputs'), 'utf8'), 'source=' + tip + '\nupload=true\n');
+  await writeFile(join(root, 'pin-was-successful'), '');
+  assert.equal(invoke().status, 1);
+  await writeFile(join(root, 'pin-exists'), '');
+  const resume = invoke();
+  assert.equal(resume.status, 0, resume.stderr);
+  assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
+});

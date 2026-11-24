@@ -102,6 +102,12 @@ jobs:
           CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Verify the changed generation transport
+        shell: bash
+        run: |
+          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|workflows/(ci-current|ci-lean-generation-compile|lean-cache-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
+            node --test .github/actions/lean-cache-shards/test-generation.mjs
+          fi
       - name: Cache the tools used by the protected base snapshot
         env:
           BASE: ${{ needs.detect.outputs.base }}
