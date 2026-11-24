@@ -26,10 +26,12 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {ι : Type u} [Fintype ι] (c : ι → ℝ) {C a : ℝ}
-      (_ : ∃ j, c j = C) (_ : a ≤ C),
+      (hC : ∃ j, c j = C) (_ : a ≤ C),
     let positivePart := V.readout () ()
     let mean := (∑ i, c i) / Fintype.card ι
-    ∃ t : ℝ, 0 ≤ t ∧ t ≤ (∑ i, max 0 (C - c i)⁻¹) ∧ (a ≤ mean → t = 0) ∧
+    let cutoff := univ.sup' (by obtain ⟨j, _⟩ := hC; exact ⟨j, mem_univ j⟩)
+      (fun i => max 0 (C - c i)⁻¹)
+    ∃ t : ℝ, 0 ≤ t ∧ t ≤ cutoff ∧ (a ≤ mean → t = 0) ∧
       let u := fun i : ι => positivePart (1 - t * (C - c i))
       let v := fun i : ι => u i / ∑ j, u j
       (∀ i, 0 ≤ v i) ∧ (∑ i, v i) = 1 ∧ (∑ i, v i * c i) = max mean a ∧

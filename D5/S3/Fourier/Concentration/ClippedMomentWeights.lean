@@ -45,11 +45,20 @@ private theorem clippedWeight_sum_eq_one {ι : Type*} [Fintype ι] (c : ι → �
 private theorem exists_clippedWeight_moment {ι : Type*} [Fintype ι] (c : ι → ℝ)
     {C a : ℝ} (hC : ∃ j, c j = C) (hAC : a ≤ C) :
     let mean := (∑ i, c i) / Fintype.card ι
-    ∃ t : ℝ, 0 ≤ t ∧ t ≤ (∑ i, max 0 (C - c i)⁻¹) ∧ (a ≤ mean → t = 0) ∧
+    let cutoff := univ.sup' (by obtain ⟨j, _⟩ := hC; exact ⟨j, mem_univ j⟩)
+      (fun i => max 0 (C - c i)⁻¹)
+    ∃ t : ℝ, 0 ≤ t ∧ t ≤ cutoff ∧ (a ≤ mean → t = 0) ∧
       ∑ i, clippedWeight c C t i * c i = max mean a := by
   dsimp only
-  let upper := ∑ i : ι, max 0 (C - c i)⁻¹
-  have hupper : 0 ≤ upper := sum_nonneg fun _ _ => le_max_left _ _
+  have hnonempty : (univ : Finset ι).Nonempty := by
+    obtain ⟨j, _⟩ := hC
+    exact ⟨j, mem_univ j⟩
+  let upper := univ.sup' hnonempty (fun i => max 0 (C - c i)⁻¹)
+  have hle (i : ι) : max 0 (C - c i)⁻¹ ≤ upper :=
+    le_sup' (fun j => max 0 (C - c j)⁻¹) (mem_univ i)
+  have hupper : 0 ≤ upper := by
+    obtain ⟨j, _⟩ := hC
+    exact (le_max_left _ _).trans (hle j)
   let moment (t : ℝ) := ∑ i, clippedWeight c C t i * c i
   have hzero : moment 0 = (∑ i, c i) / Fintype.card ι := by
     simp [moment, clippedWeight, clipped, mul_comm, ← sum_mul, div_eq_mul_inv]
@@ -70,12 +79,9 @@ private theorem exists_clippedWeight_moment {ι : Type*} [Fintype ι] (c : ι �
         rw [← sum_mul, clippedWeight_sum_eq_one c hC, one_mul]
       _ ≤ _ := by
         apply sum_le_sum
-        intro i hi
+        intro i _
         by_cases hlt : c i < C
-        · have hb : (C - c i)⁻¹ ≤ upper :=
-            (le_max_right _ _).trans
-              (single_le_sum (f := fun j => max 0 (C - c j)⁻¹)
-                (fun _ _ => le_max_left _ _) hi)
+        · have hb : (C - c i)⁻¹ ≤ upper := (le_max_right _ _).trans (hle i)
           have hz : (1 : ℝ) ≤ upper * (C - c i) :=
             (inv_le_iff_one_le_mul₀ (sub_pos.mpr hlt)).mp hb
           simp [clippedWeight, clipped, max_eq_left (sub_nonpos.mpr hz)]
@@ -145,7 +151,9 @@ theorem exists_clipped_moment_minimizer {ι : Type*} [Fintype ι] (c : ι → �
     {C a : ℝ} (hC : ∃ j, c j = C) (hAC : a ≤ C) :
     let positivePart := fun x : ℝ => max 0 x
     let mean := (∑ i, c i) / Fintype.card ι
-    ∃ t : ℝ, 0 ≤ t ∧ t ≤ (∑ i, max 0 (C - c i)⁻¹) ∧ (a ≤ mean → t = 0) ∧
+    let cutoff := univ.sup' (by obtain ⟨j, _⟩ := hC; exact ⟨j, mem_univ j⟩)
+      (fun i => max 0 (C - c i)⁻¹)
+    ∃ t : ℝ, 0 ≤ t ∧ t ≤ cutoff ∧ (a ≤ mean → t = 0) ∧
       let u := fun i : ι => positivePart (1 - t * (C - c i))
       let v := fun i : ι => u i / ∑ j, u j
       (∀ i, 0 ≤ v i) ∧ (∑ i, v i) = 1 ∧ (∑ i, v i * c i) = max mean a ∧
@@ -156,8 +164,8 @@ theorem exists_clipped_moment_minimizer {ι : Type*} [Fintype ι] (c : ι → �
           ∑ i, max 0 (t * (C - c i) - 1) * w i
         gap = distance + 2 * correction / (∑ i, u i) ∧
           ((∀ i, 0 ≤ w i) → a ≤ (∑ i, w i * c i) → distance ≤ gap) := by
-  obtain ⟨t, ht, hupper, hbecause, hmoment⟩ := exists_clippedWeight_moment c hC hAC
-  refine ⟨t, ht, hupper, hbecause, clippedWeight_nonneg c hC t,
+  obtain ⟨t, ht, hupper, hzero, hmoment⟩ := exists_clippedWeight_moment c hC hAC
+  refine ⟨t, ht, hupper, hzero, clippedWeight_nonneg c hC t,
     clippedWeight_sum_eq_one c hC t, hmoment, ?_⟩
   intro w hws
   dsimp only
@@ -171,7 +179,7 @@ theorem exists_clipped_moment_minimizer {ι : Type*} [Fintype ι] (c : ι → �
   apply div_nonneg (mul_nonneg (by norm_num) ?_) (clipped_sum_pos c hC t).le
   apply add_nonneg ?_ (sum_nonneg fun i _ => mul_nonneg (le_max_left _ _) (hw i))
   by_cases hmean : a ≤ (∑ i, c i) / Fintype.card ι
-  · rw [hbecause hmean, zero_mul]
+  · rw [hzero hmean, zero_mul]
   · rw [hmoment, max_eq_right (le_of_not_ge hmean)]
     exact mul_nonneg ht (sub_nonneg.mpr hwa)
 

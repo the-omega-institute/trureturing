@@ -11,7 +11,10 @@ internal sealed class ClippedMomentWeightsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A normalized positive part minimizes squared mass with a lower bound on one real moment.",
         H("Minimum squared mass with one lower moment bound"),
-        Blocks(Describe.Lean(
+        Blocks(Paragraph(Text(
+            "For a finite index set I and real values cᵢ, let C be any attained value and a ≤ C. "
+            + "Write μ for the uniform mean, M for the real moment and E for the squared mass.")),
+        Describe.Lean(
             DescribeId.Create("clipped-moment-minimizer"),
             DeclarationHandle.Create(Owner + ".exists_clipped_moment_minimizer"),
             H("Exact optimizer for one real lower moment bound"),
@@ -23,7 +26,7 @@ internal sealed class ClippedMomentWeightsDocument : IScribeDocumentDefinition
                     "Let I be a finite set, let c be a real readout on I, and take a target a "
                     + "at most an attained value C. Write μ for the uniform mean of c, "
                     + "M(w) for the weighted moment, E(w) for the sum of squared weights, "
-                    + "and Z for the sum of the raw clipped weights u. The energy identity "
+                    + "and Z for the sum of the raw clipped weights u. All sums range over I. The identity "
                     + "holds for any real w of sum one. The inequality applies when w is "
                     + "also nonnegative and M(w) is at least a.")),
                 Paragraph(Text(
@@ -33,8 +36,8 @@ internal sealed class ClippedMomentWeightsDocument : IScribeDocumentDefinition
                     + "affine form for this objective.")),
                 Paragraph(Text(
                     "At t = 0 the weights are uniform. Every index attaining C has raw "
-                    + "weight one for all t, so the denominator stays positive. At the sum "
-                    + "of the reciprocals of positive gaps C − cᵢ, the weights below C have "
+                    + "weight one for all t, so the denominator stays positive. At the largest "
+                    + "reciprocal of a positive gap C − cᵢ, or zero if there are no such gaps, all weights below C have "
                     + "vanished. The normalized moment is then at least C. Continuity gives "
                     + "a finite parameter for the required moment.")),
                 Paragraph(Text(
@@ -65,22 +68,29 @@ internal sealed class ClippedMomentWeightsDocument : IScribeDocumentDefinition
         var sum = new Formula.Subscript(Sum, i);
         var mean = Mu;
         var z = F.Id("Z");
+        var upper = F.Id("T");
+        var readout = F.Id("w");
+        var energyDistance = Seq(sum, new Formula.Power(Seq(Open, w, Minus, v, Close), D(2)));
         var gap = Seq(Call("E", F.Id("w")), Minus, Call("E", F.Id("v")));
         var momentGap = Seq(Call("M", F.Id("w")), Minus, Call("M", F.Id("v")));
         var offset = Seq(t, Open, cap, Minus, c, Close, Minus, D(1));
         var positive = new Formula.Subscript(Seq(Open, offset, Close), Plus);
         return Disp(new Formula.Aligned([
-            Seq(Amp, D(0), Sp, Le, Sp, t, Sp, Le, Sp, sum,
-                Max, Open, D(0), Comma, Frac, Grp(D(1)), Grp(cap, Minus, c), Close,
+            Seq(Amp, upper, Eq, Max, Open, OpenBrace, D(0), CloseBrace, Sp, Cup, Sp, OpenBrace,
+                Frac, Grp(D(1)), Grp(cap, Minus, c), Sp, Mid, Sp, c, Lt, cap, CloseBrace, Close, Comma),
+            Seq(Amp, Exists, Sp, t, Sp, InMacro, Sp, OpenBracket, D(0), Comma, upper, CloseBracket,
                 Comma, Quad, Sp, a, Sp, Le, Sp, mean, Sp, Longrightarrow, Sp, t, Eq, D(0), Comma),
             Seq(Amp, u, Eq, Max, Open, D(0), Comma, D(1), Minus, t, Open, cap, Minus, c, Close, Close,
                 Comma, Quad, Sp, v, Eq, Frac, Grp(u), Grp(z), Comma,
                 Quad, Sp, z, Eq, new Formula.Subscript(Sum, j), uj, Comma),
             Seq(Amp, v, Sp, Ge, D(0), Comma, Quad, Sp, sum, v, Eq, D(1), Comma, Quad, Sp,
                 Call("M", F.Id("v")), Eq, Max, Open, mean, Comma, a, Close, Comma),
-            Seq(Amp, gap, Eq, sum, new Formula.Power(Seq(Open, w, Minus, v, Close), D(2)),
-                Plus, Frac, Grp(D(2)), Grp(z), Open, t, Open, momentGap, Close, Plus, sum, positive, w, Close, Comma),
-            Seq(Amp, sum, new Formula.Power(Seq(Open, w, Minus, v, Close), D(2)), Sp, Le, Sp, gap, Dot)
+            Seq(Amp, Forall, Sp, readout, Colon, Sp, F.Id("I"), Sp, To, Sp, Mathbb, Grp(F.Id("R")), Comma,
+                Quad, Sp, sum, w, Eq, D(1), Sp, Longrightarrow, Sp),
+            Seq(Amp, gap, Eq, energyDistance, Plus, Frac, Grp(D(2)), Grp(z), Open,
+                t, Open, momentGap, Close, Plus, sum, positive, w, Close, Comma),
+            Seq(Amp, Open, Open, Forall, Sp, i, Comma, Sp, w, Sp, Ge, D(0), Close, Sp, Land, Sp, a, Sp,
+                Le, Sp, Call("M", readout), Close, Sp, Longrightarrow, Sp, energyDistance, Sp, Le, Sp, gap, Dot)
         ]));
     }
 }
