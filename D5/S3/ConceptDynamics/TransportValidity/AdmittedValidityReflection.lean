@@ -6,6 +6,7 @@
    digest: Surjectivity on admitted states reflects validity of pulled-back predicates. -/
 
 import D5.S3.ConceptDynamics.TransportValidity.OldLanguageValidityConservativity
+import Mathlib.Tactic.TypeStar
 
 /- Library-search audit trail (2026-08-25):
    * `OldLanguageValidityConservativity` is a nearby stronger iff that also
