@@ -13,9 +13,9 @@ internal sealed class EqualBlockProjectionDocument : IScribeDocumentDefinition
             H("Exact attained coordinate pinching gain"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Quantum/aberg2006superposition"),
-                LibraryNoteRef.Create("D5/L/Quantum/lipoon2003principalsubmatrices"),
-                LibraryNoteRef.Create("D5/L/Quantum/massey2010noncommutativeschurhorn")),
+                LibraryNoteRef.Create("D5/L/Entropy/aberg2006superposition"),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/lipoon2003principalsubmatrices"),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/massey2010noncommutativeschurhorn")),
             Blocks(
                 Paragraph(Text("Fix three coordinate fibers each of size m > 0. Optimize the von Neumann entropy gain of their coordinate pinching channel over P/r, where P is a Hermitian projection of rank 1 ≤ r ≤ 3m and every diagonal entry is r/(3m).")),
                 Paragraph(Text("Let d = min(r, 3m − r), ℓ = max(d − m, 0), and b = d − 3ℓ. When 2r ≤ 3m the attained gain is (3ℓ log 2 + b log 3)/r. When 2r > 3m it is (3ℓ log 2 + 2b log(3/2))/r. In particular the gain is zero at full rank.")),
