@@ -290,7 +290,7 @@ class Transport:
     def volume(self, digest, size): return Path(digest)
     def blocks(self, path, start, size): yield path.read_bytes()[start:start + size]
 cli.GitHub = Transport
-cli.checkout_plan = lambda root: read("plan")
+cli.checkout_plan = lambda root, index: read("plan")
 sys.exit(cli.main())
 `);
     env.INPUT_TARGETS = 'B';

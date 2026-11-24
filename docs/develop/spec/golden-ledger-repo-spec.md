@@ -496,7 +496,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 `ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再由同一预算 owner 初始化 job 本地余额文件，用一次 GNU `timeout` 调用包住所选 test/command；`timeout-minutes` 输入为 1..360 的整数，默认 120；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通 PR 和 push 缺少兼容种子时仍构建选中目标。报告阶段沿用 PR 的 `current.report_paths`，目前为 `*`。路径未选中 current 时跳过整个 current；命中 current 的纯理论路径沿用同一准备和定向检查，定向清单没有 Lean 目标时不运行 Lean 构建。
 
-平台 360m 上限涵盖准备、计算、上传和清理。长 producer 与定时 Release 各有独立的 360m job 上限。
+平台 360m 上限涵盖准备、计算、上传和清理。独占发布任务中的分片编译与汇总作业各有 360m job 上限。
 
 工具仓 CI 在固定主仓样例上运行声明模板测试、Fourier 证据测试和 compiled judge 测试。
 
@@ -517,17 +517,19 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 **状态与决策。** 每个普通 CI 作业固定一份可见的完整索引。首发切换前从受保护 dev 的完整 seed 恢复。命中、未命中和 post-job 均只读共享 Project、NuGet、judge、elan 与依赖缓存。恢复失败时由本地构建及 required checks 给出结果。旧代与新代均可独立读取。
 
-**键、格式及归属。** 以下标识分别承担各自契约，报告格式与容器/manifest 代际不得混用：
+**版本与存储地址**
 
-| 标识 | 归属与复用边界 |
+| 标识 | 用途 |
 | --- | --- |
-| `lean-project-push-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>` | Actions project 地址；`lean_actions.actions_keys` 单源生成，ref 另由 Actions scope 限定，只恢复此 project 前缀。 |
-| `lean-dependency-v4-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>`、`elan-pinned-<OS>-<arch>-<pin-sha256>` | 既有 dependency 和钉版 elan 运输键；elan miss 由 `install-lean-toolchain.sh` 安装，保存前列出工具链，不删恢复的工具链。 |
-| `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-<execution12>-<publication-id>` | Release buildDir 容器地址；前缀选候选后，manifest 必须匹配完整 `cache_key` 的报告格式和完整 execution SHA256 才下载构建归档。 |
-| `stratalint-raw-lean-report-v3` | `lean-report-selection.py:REPORT_FORMAT` 单源报告线格式。 |
-| Release manifest `lean-release-seed-v4`、build-work `schema_version=1` | 前者管理运输资产与来源，后者是当前调用在恢复树之外的工作量控制证据。 |
+| `refs/heads/lean-cache-published` | 指向最近完成双端校验的版本。标记携带源码提交和完整索引摘要，其父链保留历史版本。 |
+| `lean-generation-v1-<索引 SHA256>` | Actions 索引键和对应的完整 Release 标签。CI 索引遭驱逐或损坏时可按同一摘要恢复 Release 索引。 |
+| `lean-cache-objects-v1` 及其摘要前缀分桶 | 持久保存多个版本共享的物理卷。索引中的卷摘要、偏移、帧长度和 SHA256 支持定向下载。 |
+| `lean-checkpoint-v1-<环境摘要>-<检查点摘要>` | 发现可跨运行续用的已验证批次。mathlib 修订变化后按新环境的目标键选择批次。 |
+| `lean-generation-bootstrap-v1` | 固定首发使用的完整旧 CI 索引及其生产者。 |
+| `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
+| `stratalint-raw-lean-report-v3` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
-Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、归一化平台族与声明环境值；名字中的 12 位摘要不替代 manifest 全值校验。`publication-id` 是 `ci-<run>-<attempt>` 或 `local-<HEAD12>-<UTC>`，HEAD 只在这个唯一后缀中，不决定复用；报告模块/配置全集摘要与生产程序字节不进入 Release 名字。Actions 按 OS/arch 隔离；Release 跨平台共享仅限 A14.9 已声明的 arm64 族，原生产物仍由 Lake retrace。详细键生成与容器清单以 `lean_actions.py`、`lean_cache_release.py` 为源，不增设版本清单。
+编译键绑定工具链、依赖锁定、平台族、显式环境、源码、有效 Lake 配置与直接依赖键。声明式库配置按目标归属投影，无法分解的可执行 Lake 配置按所属包核对。跨平台共享限于 A14.9 登记的兼容族。原生程序另按实际平台取键。
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
