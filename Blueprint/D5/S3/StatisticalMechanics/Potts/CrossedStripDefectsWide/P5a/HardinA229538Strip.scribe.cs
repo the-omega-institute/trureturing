@@ -14,7 +14,7 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
             Node("canonicalCount",CanonicalCount(),false,"The filter counts arrays of height k and width n with exactly D monochromatic bonds for the cuts H and V and row-major canonical colour introduction."),
             Node("a",Count(),false,"The column-sweep count uses defect budget one."),
             Node("residual",Residual(),false,"Budgets zero and one select the right and left summands respectively."),
-            Node("transition_entry",TransitionEntry(),true,"For a budget above one and a positive cost within that budget, the difference of the entries is +1 at the affordable residual successor and −1 at the exhausted successor when the cost is one. The difference is zero in all other cases."),
+            Node("transition_entry",TransitionEntry(),true,"For budget zero or one, the indicator of an affordable cut with the specified residual successor equals the corresponding guarded transfer entry."),
             Node("labelled_scale",LabelledScale(),true,"The subscript 3 on the literal count is the palette parameter q := 3. The nonconstant arrays contribute six labelled representatives per canonical array. At positive height and width, the three constant arrays contribute one canonical class at budget H.card plus (n − 1) times the sum of the cut cardinalities. At height or width zero, the unique empty array contributes one labelled and one canonical representative at budget zero. The correction is three in the former case and five in the latter."),
             Paragraph(Text("Continuation counts are resolved by the number of remaining monochromatic bonds. Zero-defect continuations follow the five-row proper-colouring transfer.")),
             Node("edges",Edges(),false,"The oriented cut contains the pairs of rows at distance at most one across consecutive columns. It is the disjoint union of the straight pairs and the two orientations of adjacent-row pairs."),
@@ -164,11 +164,8 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
         var cost=Own("cost",p,q);
         var left=If(And(Le(cost,d),Eq(Own("residual",q,Sub(d,cost)),s)),N(1),N(0));
         var rhs=If(Eq(Call("Sum.elim",Q("id"),Q("id"),s),q),Own("transfer",Own("residual",p,d),s),N(0));
-        var affordable = And(Lt(N(1), d), And(Lt(N(0), cost), Le(cost, d)));
-        var residualEntry = If(Eq(s, Own("residual", q, Sub(d, cost))), N(1), N(0));
-        var exhaustedEntry = If(And(Eq(cost, N(1)), Eq(s, Call("Sum.inr", q))), N(1), N(0));
         return All("p", Column(), All("q", Column(), All("d", Q("Nat"), All("s", Columns(),
-            Eq(Sub(AsInt(left), rhs), If(affordable, Sub(residualEntry, exhaustedEntry), N(0)))))));
+            Imp(Le(d, N(1)), Eq(AsInt(left), rhs)))));
     }
 
     private static Formula LabelledScale() {

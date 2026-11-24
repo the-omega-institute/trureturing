@@ -803,20 +803,19 @@ private theorem transfer_count (n : ℕ) :
       cases x with
       | inl x => simp [col, cl, transfer, Matrix.fromBlocks, hd', bound]
       | inr x =>
-        have entry := transition_entry p q d x
-        simp only [Nat.not_lt_of_ge hd', false_and, if_false, sub_eq_zero] at entry
-        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using entry
+        simpa [col, cl, transfer, Matrix.fromBlocks, hd', bound] using
+          transition_entry p q d hd' x
     · have hd₂ : d = 2 := Nat.le_antisymm hd (Nat.lt_of_not_ge hd')
       subst d
       rcases x with x | x
-      · by_cases hq : x = q
-        · subst x
-          by_cases h0 : cost p q = 0 <;> by_cases h1 : cost p q = 1 <;>
-            by_cases h2 : cost p q = 2 <;>
-              simp [col, cl, transfer, Matrix.fromBlocks, ← zero_cost_entry, cutoff, h0, h1, h2]
-        · by_cases h0 : cost p q = 0 <;> by_cases h1 : cost p q = 1 <;>
-            by_cases h2 : cost p q = 2 <;>
-              simp [col, cl, transfer, Matrix.fromBlocks, ← zero_cost_entry, cutoff, h0, h1, h2, hq, Ne.symm hq]
+      · calc
+          _ = (if cost p q ≤ 0 ∧ HardinA229538Strip.residual q (0 - cost p q) = Sum.inr x
+              then (1 : ℤ) else 0) := by
+            by_cases hz : cost p q = 0
+            · simp [cl, HardinA229538Strip.residual, hz]
+            · have bound : 2 - cost p q ≤ 1 := Nat.sub_le_sub_left (Nat.pos_of_ne_zero hz) 2
+              simp [cl, bound, hz]
+          _ = _ := transition_entry p q 0 (Nat.zero_le _) (Sum.inr x)
       · rcases x with x | x <;> by_cases hq : x = q
         all_goals
           by_cases h0 : cost p q = 0 <;> by_cases h1 : cost p q = 1 <;>

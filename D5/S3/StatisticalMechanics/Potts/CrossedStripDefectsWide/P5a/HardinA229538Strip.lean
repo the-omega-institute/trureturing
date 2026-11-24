@@ -725,56 +725,16 @@ def a (n : ℕ) : ℕ := canonicalCount ∅ edges 1 n
 def residual {C : Type*} (p : C) (d : ℕ) : C ⊕ C :=
     if d = 0 then Sum.inr p else Sum.inl p
 
-theorem transition_entry (p q : Column) (d : ℕ) (s : Column ⊕ Column) :
-    (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) -
-      (if Sum.elim id id s = q then transfer (residual p d) s else 0) =
-    if 1 < d ∧ 0 < cost p q ∧ cost p q ≤ d then
-      (if s = residual q (d - cost p q) then 1 else 0) -
-        (if cost p q = 1 ∧ s = Sum.inr q then 1 else 0)
-    else 0 := by
-  have pending (hd : d ≤ 1) (s : Column ⊕ Column) :
-      (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
-        (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
-    have zero := zero_cost_entry p q
-    have cutoff : cost p q ≤ 1 ↔ cost p q = 0 ∨ cost p q = 1 :=
-      Nat.le_one_iff_eq_zero_or_eq_one
-    have hd' : d = 0 ∨ d = 1 := Nat.le_one_iff_eq_zero_or_eq_one.mp hd
-    rcases hd' with rfl | rfl <;> rcases s with x | x <;>
-      by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1 <;> by_cases hq : x = q <;>
-      simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, @eq_comm _ q x]
-  have agree (allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q) (s : Column ⊕ Column) :
-      (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
-        (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
-    rcases allowed with hd | hz | ht
-    · exact pending hd s
-    · rcases s with x | x <;> by_cases hq : x = q <;> by_cases hd : d = 0 <;>
-        simp [residual, transfer, ← zero_cost_entry, oneDefect, hz, hd, hq, @eq_comm _ q x]
-    · by_cases hd : d ≤ 1
-      · exact pending hd s
-      have hd0 : d ≠ 0 := by omega
-      have hc0 : cost p q ≠ 0 := by omega
-      have hc1 : cost p q ≠ 1 := by omega
-      rcases s with x | x <;> by_cases hq : x = q <;>
-        simp [residual, transfer, ← zero_cost_entry, oneDefect, hd0, hc0, hc1,
-          Nat.not_le_of_lt ht, hq]
-  have complement : (¬ (d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q)) ↔
-      1 < d ∧ 0 < cost p q ∧ cost p q ≤ d := by
-    simp only [not_or, Nat.not_le, Nat.not_lt, ← Nat.le_zero]
-  by_cases allowed : d ≤ 1 ∨ cost p q = 0 ∨ d < cost p q
-  · rw [agree allowed s, sub_self, if_neg (fun h => (complement.mpr h) allowed)]
-  · obtain ⟨hd, hc, hle⟩ := complement.mp allowed
-    have hd0 : d ≠ 0 := by omega
-    have hcz : cost p q ≠ 0 := by omega
-    by_cases h1 : cost p q = 1
-    · have hres : d - 1 ≠ 0 := by omega
-      have hd1 : 1 ≤ d := by omega
-      rcases s with x | x <;> by_cases hq : x = q <;>
-        simp [residual, transfer, oneDefect, ← zero_cost_entry,
-          hd, hd0, hc, hcz, hle, h1, hres, hq, @eq_comm _ q x, hd1]
-    · by_cases hres : d - cost p q = 0 <;>
-        rcases s with x | x <;> by_cases hq : x = q <;>
-        simp [residual, transfer, oneDefect, ← zero_cost_entry,
-          hd, hd0, hc, hcz, hle, h1, hres, hq, @eq_comm _ q x]
+theorem transition_entry (p q : Column) (d : ℕ) (hd : d ≤ 1) (s : Column ⊕ Column) :
+    (if cost p q ≤ d ∧ residual q (d - cost p q) = s then (1 : ℤ) else 0) =
+      (if Sum.elim id id s = q then transfer (residual p d) s else 0) := by
+  have zero := zero_cost_entry p q
+  have cutoff : cost p q ≤ 1 ↔ cost p q = 0 ∨ cost p q = 1 :=
+    Nat.le_one_iff_eq_zero_or_eq_one
+  have hd' : d = 0 ∨ d = 1 := Nat.le_one_iff_eq_zero_or_eq_one.mp hd
+  rcases hd' with rfl | rfl <;> rcases s with x | x <;>
+    by_cases h₀ : cost p q = 0 <;> by_cases h₁ : cost p q = 1 <;> by_cases hq : x = q <;>
+    simp [residual, transfer, oneDefect, ← zero, cutoff, h₀, h₁, hq, @eq_comm _ q x]
 
 private theorem transfer_count (n : ℕ) :
     (literalCount (q := 3) ∅ edges 1 (n + 1) : ℤ) =
@@ -789,8 +749,7 @@ private theorem transfer_count (n : ℕ) :
   · intro p d hd r _; exact (Nat.sub_le _ _).trans hd
   · intro p d hd s
     rw [← columnEquiv.sum_comp]
-    have entry (q : Column) := transition_entry p q d s
-    simp only [Nat.not_lt_of_ge hd, false_and, if_false, sub_eq_zero] at entry
+    have entry (q : Column) := transition_entry p q d hd s
     simp_rw [bondDefects_empty, Nat.add_zero, ctr, columnEquiv.symm_apply_apply, entry]
     simp [Finset.sum_ite_eq']
   · intro r _; exact Nat.sub_le _ _
