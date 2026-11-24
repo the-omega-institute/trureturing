@@ -174,7 +174,7 @@ The nonzero pair has positive squared norm. Its strict circle identity transport
 
 **Theorem 1.15 (The real overlap is between zero and one).**
 
-$$\forall p \in OmegaInt, q \in OmegaInt,\; \operatorname{Nonzero}\left(p, q\right) \Rightarrow \left(0 \le \operatorname{toReal}\left(\operatorname{kappa}\left(p, q\right)\right) \land \operatorname{toReal}\left(\operatorname{kappa}\left(p, q\right)\right) \le 1\right)$$
+$$\forall p \in OmegaInt, q \in OmegaInt,\; 0 \le \operatorname{toReal}\left(\operatorname{kappa}\left(p, q\right)\right) \land \operatorname{toReal}\left(\operatorname{kappa}\left(p, q\right)\right) \le 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/OmegaShadowBridge.kappa_unit_interval` (`✓ std3`). ∎
 
@@ -182,7 +182,7 @@ $$\forall p \in OmegaInt, q \in OmegaInt,\; \operatorname{Nonzero}\left(p, q\rig
 
 *Commentary.*
 
-Positive denominators transport both signed cross-product inequalities into the rational order, which the real inclusion preserves.
+At the origin the undefined overlap has shadow zero. Elsewhere positive denominators transport the signed cross-product inequalities to the rationals and then to the reals.
 
 ## References
 

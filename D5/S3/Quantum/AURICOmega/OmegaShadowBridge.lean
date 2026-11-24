@@ -259,8 +259,7 @@ public theorem cayley_circle_unit (p q : Omega.Int) (h : Nonzero p q) :
   have mapped := congrArg (fun x : ℚ => (x : ℝ)) rational
   simpa only [Rat.cast_add, Rat.cast_pow, Rat.cast_one] using mapped
 
-/-- The real reading of rational overlap stays in the closed unit interval. -/
-public theorem kappa_unit_interval (p q : Omega.Int) (h : Nonzero p q) :
+private theorem kappa_unit_interval_of_nonzero (p q : Omega.Int) (h : Nonzero p q) :
     0 ≤ toReal (kappa p q) ∧ toReal (kappa p q) ≤ 1 := by
   have bounds := (Omega.Projective.Circle.kappa_spread_unit_interval p q h).left
   have lower : (0 : ℚ) ≤ toRat (kappa p q) := by
@@ -272,5 +271,18 @@ public theorem kappa_unit_interval (p q : Omega.Int) (h : Nonzero p q) :
   unfold toReal
   exact ⟨by simpa only [Rat.cast_zero] using (Rat.cast_le (K := ℝ)).mpr lower,
     by simpa only [Rat.cast_one] using (Rat.cast_le (K := ℝ)).mpr upper⟩
+
+/-- The real reading of overlap lies in the closed unit interval, including at the origin. -/
+public theorem kappa_unit_interval (p q : Omega.Int) :
+    0 ≤ toReal (kappa p q) ∧ toReal (kappa p q) ≤ 1 := by
+  by_cases hp : p = Omega.Int.zero
+  · subst p
+    by_cases hq : q = Omega.Int.zero
+    · subst q
+      change 0 ≤ ((0 : ℚ) : ℝ) ∧ ((0 : ℚ) : ℝ) ≤ 1
+      simp
+    · exact kappa_unit_interval_of_nonzero _ _
+        (Omega.Or.inr (fun e => False.elim (hq (ofOmegaEq e))))
+  · exact kappa_unit_interval_of_nonzero _ _ (Omega.Or.inl (fun e => False.elim (hp (ofOmegaEq e))))
 
 end D5.S3.Quantum.AURICOmega.OmegaShadowBridge

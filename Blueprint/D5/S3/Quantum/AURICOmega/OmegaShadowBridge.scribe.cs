@@ -58,8 +58,8 @@ internal sealed class OmegaShadowBridgeDocument : IScribeDocumentDefinition
                         ("p", integer), ("q", integer)),
                     "The nonzero pair has positive squared norm. Its strict circle identity transports first to the rationals and then to the reals."),
                 Law("kappa_unit_interval", "The real overlap is between zero and one",
-                    All(If(nonzero, And(Le(D(0), overlap), Le(overlap, D(1)))), ("p", integer), ("q", integer)),
-                    "Positive denominators transport both signed cross-product inequalities into the rational order, which the real inclusion preserves."))));
+                    All(And(Le(D(0), overlap), Le(overlap, D(1))), ("p", integer), ("q", integer)),
+                    "At the origin the undefined overlap has shadow zero. Elsewhere positive denominators transport the signed cross-product inequalities to the rationals and then to the reals."))));
     }
 
     private static Formula BinaryLaw(string bridge, Func<Formula, Formula, Formula> op,
