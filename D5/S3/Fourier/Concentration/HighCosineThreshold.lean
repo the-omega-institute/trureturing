@@ -24,9 +24,9 @@ noncomputable section
 
 namespace D5.S3.Fourier.Concentration.HighCosineThreshold
 
-private def second (x : ℝ) : ℝ := 2 * x ^ 2 - 1
+def second (x : ℝ) : ℝ := 2 * x ^ 2 - 1
 
-private def difference (x : ℝ) : ℝ := x - second x
+def difference (x : ℝ) : ℝ := x - second x
 
 /-- The fraction of the noncentral mass placed at the upper off-center level. -/
 def upperFraction (u l : ℝ) : ℝ := -difference l / (difference u - difference l)
@@ -35,7 +35,7 @@ def upperFraction (u l : ℝ) : ℝ := -difference l / (difference u - differenc
 def tailMoment (u l : ℝ) : ℝ :=
   upperFraction u l * u + (1 - upperFraction u l) * l
 
-private def count {ι : Type*} [Fintype ι] (c : ι → ℝ) (x : ℝ) : ℝ := by
+def count {ι : Type*} [Fintype ι] (c : ι → ℝ) (x : ℝ) : ℝ := by
   classical
   exact ((univ.filter (fun i => c i = x)).card : ℝ)
 
@@ -125,27 +125,27 @@ private theorem weights_moments {ι : Type*} [Fintype ι] {c : ι → ℝ} {z : 
     linear_combination r * hbal - hra
   exact ⟨hmass, hfirst, hsecond⟩
 
-private def topCoeff (u l r : ℝ) : ℝ := (1 - r) / ((1 - u) * (1 - l))
+def topCoeff (u l r : ℝ) : ℝ := (1 - r) / ((1 - u) * (1 - l))
 
-private def upperCoeff (u l nu r : ℝ) : ℝ :=
+def upperCoeff (u l nu r : ℝ) : ℝ :=
   (r * upperFraction u l / nu) / ((u - 1) * (u - l))
 
-private def lowerCoeff (u l nl r : ℝ) : ℝ :=
+def lowerCoeff (u l nl r : ℝ) : ℝ :=
   (r * (1 - upperFraction u l) / nl) / ((l - 1) * (l - u))
 
-private def polynomial (u l nu nl r x : ℝ) : ℝ :=
+def polynomial (u l nu nl r x : ℝ) : ℝ :=
   topCoeff u l r * (x - u) * (x - l) +
     upperCoeff u l nu r * (x - 1) * (x - l) +
     lowerCoeff u l nl r * (x - 1) * (x - u)
 
-private def firstMultiplier (u l nu nl r : ℝ) : ℝ :=
+def firstMultiplier (u l nu nl r : ℝ) : ℝ :=
   -(topCoeff u l r * (u + l) + upperCoeff u l nu r * (1 + l) +
     lowerCoeff u l nl r * (1 + u))
 
-private def secondMultiplier (u l nu nl r : ℝ) : ℝ :=
+def secondMultiplier (u l nu nl r : ℝ) : ℝ :=
   (topCoeff u l r + upperCoeff u l nu r + lowerCoeff u l nl r) / 2
 
-private theorem polynomial_expand (u l nu nl r x : ℝ) :
+theorem polynomial_expand (u l nu nl r x : ℝ) :
     polynomial u l nu nl r x =
       (topCoeff u l r * u * l + upperCoeff u l nu r * l + lowerCoeff u l nl r * u +
         secondMultiplier u l nu nl r) +
@@ -153,7 +153,7 @@ private theorem polynomial_expand (u l nu nl r x : ℝ) :
   unfold polynomial firstMultiplier secondMultiplier second
   ring
 
-private theorem polynomial_values {u l : ℝ} (hu : u < 1) (hl : l < u) (nu nl r : ℝ) :
+theorem polynomial_values {u l : ℝ} (hu : u < 1) (hl : l < u) (nu nl r : ℝ) :
     polynomial u l nu nl r 1 = 1 - r ∧
     polynomial u l nu nl r u = r * upperFraction u l / nu ∧
     polynomial u l nu nl r l = r * (1 - upperFraction u l) / nl := by
@@ -165,9 +165,9 @@ private theorem polynomial_values {u l : ℝ} (hu : u < 1) (hl : l < u) (nu nl r
   · simp only [polynomial, lowerCoeff, sub_self, mul_zero, zero_add, add_zero]
     field_simp [sub_ne_zero.mpr (hl.trans hu).ne, sub_ne_zero.mpr hl.ne]
 
-private def slope (atZero atOne : ℝ) : ℝ := 1 - atOne / atZero
+def slope (atZero atOne : ℝ) : ℝ := 1 - atOne / atZero
 
-private def certificateSlopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) : Finset ℝ := by
+def certificateSlopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) : Finset ℝ := by
   classical
   let β := firstMultiplier u l (count c u) (count c l)
   let γ := secondMultiplier u l (count c u) (count c l)
@@ -176,12 +176,12 @@ private def certificateSlopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : 
     ((univ.filter (fun i => l < c i ∧ c i < u)).image
       (fun i => slope (P 0 (c i)) (P 1 (c i))))))
 
-private theorem one_mem_slopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) :
+theorem one_mem_slopes {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) :
     1 ∈ certificateSlopes c u l := by
   classical
   simp [certificateSlopes]
 
-private def slopeBound {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) : ℝ :=
+def slopeBound {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) : ℝ :=
   (certificateSlopes c u l).sup' ⟨1, one_mem_slopes c u l⟩ id
 
 private theorem one_le_bound {ι : Type*} [Fintype ι] (c : ι → ℝ) (u l : ℝ) :
@@ -263,7 +263,7 @@ private theorem signs_iff {ι : Type*} [Fintype ι] (c : ι → ℝ) {u l r : �
   · rintro ⟨h₁, h₂, h₃, h₄⟩
     exact ⟨h₁, h₂, h₃, fun {i} hi => (hP i hi.1 hi.2).mp (h₄ i hi.1 hi.2)⟩
 
-private theorem weights_eq_max {ι : Type*} [Fintype ι] (c : ι → ℝ)
+theorem weights_eq_max {ι : Type*} [Fintype ι] (c : ι → ℝ)
     {u l r : ℝ} (hu : u < 1) (hl : l < u)
     (hlevels : ∀ i, c i = 1 ∨ (l ≤ c i ∧ c i ≤ u))
     (hr : 0 ≤ r) (hr₁ : r ≤ 1) (hp : 0 ≤ upperFraction u l)
@@ -711,6 +711,22 @@ def cyclicUpper (q : ℕ) : ℝ := Real.cos (2 * Real.pi / q)
 /-- The smallest cosine level, attained at the integer part of half the modulus. -/
 def cyclicLower (q : ℕ) : ℝ := Real.cos (2 * Real.pi * ((q / 2 : ℕ) : ℝ) / q)
 
+/-- A nonzero residue folds into the positive half of the cosine grid. -/
+theorem cyclic_fold {q : ℕ} (k : Fin q) (hk : k.val ≠ 0) :
+    ∃ n : ℕ, 1 ≤ n ∧ n ≤ q / 2 ∧
+      cyclicReadout q k = Real.cos (2 * Real.pi * (n : ℝ) / q) ∧
+      (n = k.val ∨ n = q - k.val) := by
+  have hbound := k.isLt
+  by_cases h : k.val ≤ q / 2
+  · exact ⟨k.val, by omega, h, rfl, Or.inl rfl⟩
+  · refine ⟨q - k.val, by omega, by omega, ?_, Or.inr rfl⟩
+    have hqR : (q : ℝ) ≠ 0 := by exact_mod_cast (show q ≠ 0 by omega)
+    have hangle : 2 * Real.pi * ((q - k.val : ℕ) : ℝ) / q =
+        2 * Real.pi - 2 * Real.pi * (k.val : ℝ) / q := by
+      rw [Nat.cast_sub hbound.le]
+      field_simp
+    rw [cyclicReadout, hangle, Real.cos_two_pi_sub]
+
 /-- On every cycle of modulus at least four, the three-level law uniquely minimizes
 squared mass for joint first- and second-cosine thresholds sufficiently close to one. -/
 theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
@@ -767,15 +783,8 @@ theorem cyclic_high_threshold_certificate {q : ℕ} (hq : 4 ≤ q) :
     rw [div_mul_eq_mul_div]
   have hfold (k : Fin q) (hk : k ≠ z) :
       ∃ n : ℕ, 1 ≤ n ∧ n ≤ q / 2 ∧ cyclicReadout q k = Real.cos (θ n) := by
-    have hk' : k.val ≠ 0 := fun h => hk (Fin.ext h)
-    have hbound := k.isLt
-    by_cases h : k.val ≤ q / 2
-    · exact ⟨k.val, by omega, h, hread k⟩
-    · refine ⟨q - k.val, by omega, by omega, ?_⟩
-      have hangle : θ (q - k.val) = 2 * Real.pi - θ k.val := by
-        unfold θ
-        rw [Nat.cast_sub hbound.le, mul_sub, hstepq]
-      rw [hread, hangle, Real.cos_two_pi_sub]
+    obtain ⟨n, hn, hh, he, _⟩ := cyclic_fold k (fun h => hk (Fin.ext h))
+    exact ⟨n, hn, hh, by simpa only [θ, step, div_mul_eq_mul_div] using he⟩
   have htop : cyclicUpper q < 1 := by
     rw [hu, ← Real.cos_zero]
     exact Real.cos_lt_cos_of_nonneg_of_le_pi le_rfl
