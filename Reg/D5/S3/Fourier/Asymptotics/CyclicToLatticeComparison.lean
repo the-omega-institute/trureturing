@@ -112,7 +112,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   have h := law (q := 1) 0 (fun _ => 1)
-  simp [cosineMoment, rejected, realize, ZMod.card] at h
+  simp [cosineMoment, D5.S3.Fourier.Concentration.AggregateCosineBalance.mode, rejected, realize] at h
 
 def evidence : Registration arena (type_of% @cosineMoment_eq_centered) where
   actual := actual
