@@ -42,7 +42,7 @@ private theorem card_band (p q : ℕ) (hq : q ≤ Fintype.card n) :
     (band (n := n) p q hq).card = q - p := by
   simp [band, Nat.card_Ico]
 
-private theorem eigenvalues_mem_unit {A : Matrix n n ℂ} (hA : A.PosSemidef)
+theorem eigenvalues_mem_unit {A : Matrix n n ℂ} (hA : A.PosSemidef)
     (hA1 : A ≤ 1) (i : n) : hA.isHermitian.eigenvalues i ∈ Set.Icc (0 : ℝ) 1 := by
   exact ⟨hA.eigenvalues_nonneg i,
     (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hA.isHermitian 1).mpr
@@ -68,7 +68,7 @@ private theorem eigenvalues_zero_off {A : Matrix n n ℂ} (hA : A.PosSemidef)
   omega
 
 omit [Fintype n] in
-private theorem effect_le_one (A : Fin 3 → Matrix n n ℂ)
+theorem effect_le_one (A : Fin 3 → Matrix n n ℂ)
     (hp : ∀ j, (A j).PosSemidef) (hs : ∑ j, A j = 1) (j : Fin 3) : A j ≤ 1 := by
   apply Matrix.le_iff.mpr
   rw [← hs, ← Finset.sum_erase_add _ _ (Finset.mem_univ j), add_sub_cancel_right]
@@ -83,7 +83,7 @@ private theorem trace_conjugate (U : Matrix.unitaryGroup n ℂ) (A : Matrix n n 
     trace (Unitary.conjStarAlgAut ℂ _ U A) = trace A := by
   rw [Unitary.conjStarAlgAut_apply, trace_mul_cycle, Unitary.coe_star_mul_self, one_mul]
 
-private theorem projector_apply (S : Submodule ℂ (EuclideanSpace ℂ n))
+theorem projector_apply (S : Submodule ℂ (EuclideanSpace ℂ n))
     (x : EuclideanSpace ℂ n) :
     toEuclideanLin (HermitianMat.projector S).mat x = S.starProjection x := by
   change toEuclideanLin
@@ -384,7 +384,7 @@ private theorem sum_witness_function {ell b : ℕ} (f : ℝ → ℝ) (hf : f 0 =
   fin_cases j <;>
     simp [Fin.sum_univ_three, diagonalWitness, hf, nsmul_eq_mul, Nat.cast_mul] <;> ring
 
-private theorem diagonal_entropy (f : ℝ → ℝ) (v : n → ℝ)
+theorem diagonal_entropy (f : ℝ → ℝ) (v : n → ℝ)
     (h : (diagonal fun i => (v i : ℂ)).IsHermitian) :
     (∑ i, f (h.eigenvalues i)) = ∑ i, f (v i) := by
   have hdiag : (diagonal (fun i => (v i : ℂ))).charpoly.roots =
