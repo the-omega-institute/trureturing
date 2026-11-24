@@ -47,7 +47,7 @@ noncomputable section
 
 variable {D : LatticeData} {hu : IsUnit D.G.det} {s : Bool}
 
-local instance (D : LatticeData) (hu : IsUnit D.G.det) (t : Bool) :
+local instance quadraticTopAddCommGroup (D : LatticeData) (hu : IsUnit D.G.det) (t : Bool) :
     AddCommGroup (twistedTop D hu t) :=
   @Submodule.addCommGroup ℂ (Twisted D hu t) _ _ _ (twistedTop D hu t)
 
