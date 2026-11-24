@@ -45,7 +45,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Quantum.Recovery.NoncommutingQubit.PetzRotatedBKM
 
-abbrev Qubit := Matrix (Fin 2) (Fin 2) ℂ
+local notation "Qubit" => Matrix (Fin 2) (Fin 2) ℂ
 abbrev Joint (ι : Type*) := Matrix (Fin 2 × ι) (Fin 2 × ι) ℂ
 
 local notation "Λ" => logMean
