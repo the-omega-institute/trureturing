@@ -920,9 +920,11 @@ theorem faithful_weighted_tangent [Nonempty E]
   have hsum :
       (∑ i, ∑ j, ∫ s in (0 : ℝ)..1, f i j s) =
         (Hᴴ * logDeriv Z H).trace.re - (Mᴴ * logDeriv P M).trace.re := by
-    rw [hpair Z H hZ, hpair P M hP, ← intervalIntegral.integral_sub
-      (arithmetic_inverse_pairing_intervalIntegrable Z H hZ)
-      (arithmetic_inverse_pairing_intervalIntegrable P M hP)]
+    have hJoint : IntervalIntegrable (q Z H) volume 0 1 :=
+      arithmetic_inverse_pairing_intervalIntegrable Z H hZ
+    have hMarginal : IntervalIntegrable (q P M) volume 0 1 :=
+      arithmetic_inverse_pairing_intervalIntegrable P M hP
+    rw [hpair Z H hZ, hpair P M hP, ← intervalIntegral.integral_sub hJoint hMarginal]
     have hs (i : Fin 2 × E) :
         (∫ s in (0 : ℝ)..1, ∑ j, f i j s) = ∑ j, ∫ s in (0 : ℝ)..1, f i j s :=
       intervalIntegral.integral_finsetSum (fun j _ => hf i j)
