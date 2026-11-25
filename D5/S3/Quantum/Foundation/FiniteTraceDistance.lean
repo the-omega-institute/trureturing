@@ -233,6 +233,7 @@ D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:12ad034b5758446e6
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17573
 -/
 
+import D5.S3.Quantum.Matrix.Spectral.TraceNorm
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -268,10 +269,6 @@ private lemma unitary_row_sum_norm_sq {d : Type*} [Fintype d] [DecidableEq d]
   exact_mod_cast hC
 
 variable {m n R : Type*} [Fintype m] [Fintype n] [RCLike R]
-/-- The trace norm of a matrix: Tr[√(A† A)]. -/
-def traceNorm (A : Matrix m n R) : ℝ :=
-  open MatrixOrder in
-  RCLike.re (CFC.sqrt (Aᴴ * A)).trace
 
 
 /-- The trace norm of the negative is equal to the trace norm. -/
@@ -496,11 +493,6 @@ theorem traceDistance_le_one (rho sigma : DensityState ι) : traceDistance rho s
   rw [sub_eq_add_neg]
   linarith
 
-theorem trace_norm_jordan_mass (A : Matrix ι ι ℂ) (hA : A.IsHermitian) :
-    traceNorm A = (Matrix.trace (posPart A)).re + (Matrix.trace (negPart A)).re := by
-  have h := congrArg (fun B : Matrix ι ι ℂ => (Matrix.trace B).re)
-    (CFC.posPart_add_negPart A hA)
-  simpa [Matrix.trace_add, CFC.abs, Matrix.star_eq_conjTranspose, traceNorm] using h.symm
 
 theorem traceDistance_contract (channel : QuantumChannel ι ι) (rho sigma : DensityState ι) :
     traceDistance (channel.mapState rho) (channel.mapState sigma) ≤
