@@ -48,7 +48,9 @@ internal sealed class HardinA235281DiagonalRecurrenceDocument : IScribeDocumentD
                         + "by one. The full diagonal is therefore annihilated by "
                         + "(E−1)(E^2−2)(E^2−3)(E^2−4). Expanding this polynomial gives the displayed "
                         + "coefficients."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235281-diagonal-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula RecurrenceStatement()
     {

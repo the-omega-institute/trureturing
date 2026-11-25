@@ -10,6 +10,10 @@ $$\forall m: Nat, ((1 \le m) \implies (\operatorname{T}\left(m + 7, m + 7\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235281DiagonalRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235281-diagonal-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235281DiagonalRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235281-diagonal-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235281DiagonalRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235281 — Constant-stress square arrays*. URL: <https://oeis.org/A235281>.
