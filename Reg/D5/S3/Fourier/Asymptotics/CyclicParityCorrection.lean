@@ -39,7 +39,7 @@ abbrev arena : Arena where
     sample ((↑(q / 2) : ℤ) : ZMod q) = C ∧
     (∀ i, C ≤ sample i ∧ p i = H * (sample i - C) * (sample i - ρ) / Z ∧
       (0 < clip (p i) ↔ C < sample i ∧ ρ < sample i)) ∧
-    ∀ v ∈ feasible q a,
+    ∀ v : ZMod q → ℝ, (∑ i, v i) = 1 →
       energy v =
         (2 * (t - (H / 2 + β) * (1 - a)) / Z - ∑ i, (clip (p i)) ^ 2) +
         (∑ i, (v i - clip (p i)) ^ 2) +
@@ -112,7 +112,8 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (q : ℕ) [NeZero q] (_hq : 4 ≤ q)
-    (w : ZMod q → ℝ) (A : ℝ) (_hw : ∀ i, 0 ≤ w i) (_hmass : ∑ i, w i = 1),
+    (w : ZMod q → ℝ) (A : ℝ)
+    (_hw : ∀ i, i ≠ 0 → i ≠ 1 → i ≠ -1 → i ≠ ((↑(q / 2) : ℤ) : ZMod q) → 0 ≤ w i) (_hmass : ∑ i, w i = 1),
     let splitMass := R.readout () ()
     let C := -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q)
     let D₁ := 1 - cosineMoment 1 w
@@ -123,7 +124,8 @@ abbrev arena : Arena where
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
+    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ →
+    0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A
 
@@ -137,12 +139,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hM (r : ℕ) : cosineMoment r w = 1 := by
     unfold cosineMoment
     simp [w, Pi.single_apply, ite_mul, D5.S3.Fourier.Concentration.AggregateCosineBalance.mode]
-  have hh := h 8 (by decide) w 0 hw hm
+  have hh := h 8 (by decide) w 0 (fun i _ _ _ _ => hw i) hm
   have hh' : adjusted w 0 0 1 ∈ feasible 8 1 ∧
       cosineMoment 1 (adjusted w 0 0 1) = 1 ∧ cosineMoment 2 (adjusted w 0 0 1) = 1 := by
     have h1 : 0 ≤ w 1 + 1 := by linarith only [hw 1]
     have hneg : 0 ≤ w (-1) + 1 := by linarith only [hw (-1)]
-    simpa [hM, rejected, realize, show w 0 = 1 by simp [w], h1, hneg] using hh
+    simpa [hM, rejected, realize, show w 0 = 1 by simp [w], h1, hneg, hw] using hh
   have hsum : ∑ i, adjusted w 0 0 1 i = 3 := by
     norm_num [adjusted, w, Pi.single_apply, sum_add_distrib]
   linarith only [hh'.1.2.1, hsum]

@@ -6,7 +6,7 @@ Answerability of old questions is reflected and preserved by surjective pullback
 
 **Theorem 1.1 (Surjective pullback preserves and reflects answerability).**
 
-$$\forall X, Y, Cval, Tval: \operatorname{Type},\ p: Y \to X, C: \operatorname{Concept}(X, Cval), T: \operatorname{Concept}(X, Tval),\ \operatorname{Surjective}\left(p\right) \Rightarrow (\operatorname{Refines}\left(T, C\right) \iff \operatorname{Refines}\left(T \circ p, C \circ p\right)).$$
+$$\forall X, Y, Cval, Tval: \operatorname{Type},\ p: Y \to X, C: X \to Cval, T: X \to Tval,\ \operatorname{Surjective}\left(p\right) \Rightarrow (\operatorname{Refines}\left(T, C\right) \iff \operatorname{Refines}\left(T \circ p, C \circ p\right)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.answerability_transports_along_surjection` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\forall X, Y, Cval, Tval: \operatorname{Type},\ p: Y \to X, C: \operatorname{C
 
 *Commentary.*
 
-Let a new state space project surjectively onto an old state space. An old target readout factors through an old concept exactly when their pullbacks along the projection have the same factorization.
+Let a new state space project surjectively onto an old state space. An old target readout factors through an old concept exactly when their pullbacks along the projection have the same pointwise factorization.
 
 The forward direction reuses the old factor map after pullback. For the reverse direction, surjectivity ensures that equality on all new states reflects equality on every old state. Thus the extension neither loses an old answer nor creates a spurious one.
 
@@ -36,4 +36,3 @@ On the full old state space, the Boolean identity cannot factor through that con
 
 - Truth anchor: `D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.answerability_transports_along_surjection`
 - Truth anchor: `D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.nonsurjective_pullback_can_hide_unanswerability`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

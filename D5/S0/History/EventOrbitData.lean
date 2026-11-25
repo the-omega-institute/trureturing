@@ -6,6 +6,7 @@
    digest: The event sequence uniquely determines the state orbit, and the history component records that sequence step by step. -/
 
 import D5.S0.History.HistoryCarrier
+import OmegaMath.Data.SnocList
 
 namespace D5.S0.History.EventOrbitData
 
@@ -15,25 +16,33 @@ def eventPrefix (events : Nat -> Event) : Nat -> EventHistory
   | 0 => 1
   | n + 1 => generate (eventPrefix events n) (events n)
 
+/-- The finite prefix of an event sequence in the strict list representation. -/
+noncomputable def strictEventPrefix {EventType : Type v}
+    (events : Omega.Nat → EventType) : Omega.Nat → Omega.SnocList EventType :=
+  Omega.Nat.rec .empty (fun index history => history.pushBack (events index))
+
+/-- The recurrence determines the orbit at every index and records its event prefix. -/
 theorem event_sequence_determines_orbit_and_history
-    {State : Type*} (step : State -> Event -> State)
-    (history : State -> EventHistory) (initial : State) (events : Nat -> Event)
-    (left right : Nat -> State)
-    (left_zero : left 0 = initial) (right_zero : right 0 = initial)
-    (left_step : forall n, left (n + 1) = step (left n) (events n))
-    (right_step : forall n, right (n + 1) = step (right n) (events n))
-    (history_zero : history initial = 1)
-    (history_step : forall state event,
-      history (step state event) = generate (history state) event) :
-    left = right ∧ forall n, history (left n) = eventPrefix events n := by
-  constructor
-  · funext n
-    induction n with
-    | zero => exact left_zero.trans right_zero.symm
-    | succ n ih => rw [left_step, right_step, ih]
-  · intro n
-    induction n with
-    | zero => simpa [eventPrefix, left_zero] using history_zero
-    | succ n ih => rw [left_step, history_step, eventPrefix, ih]
+    {State : Type u} {EventType : Type v} (step : State → EventType → State)
+    (history : State → Omega.SnocList EventType) (initial : State) (events : Omega.Nat → EventType)
+    (left right : Omega.Nat → State)
+    (leftZero : Omega.Eq (left .zero) initial) (rightZero : Omega.Eq (right .zero) initial)
+    (leftStep : ∀ n, Omega.Eq (left n.succ) (step (left n) (events n)))
+    (rightStep : ∀ n, Omega.Eq (right n.succ) (step (right n) (events n)))
+    (historyZero : Omega.Eq (history initial) .empty)
+    (historyStep : ∀ state event,
+      Omega.Eq (history (step state event)) ((history state).pushBack event)) :
+    Omega.And (∀ n, Omega.Eq (left n) (right n))
+      (∀ n, Omega.Eq (history (left n)) (strictEventPrefix events n)) :=
+  Omega.And.intro
+    (Omega.Nat.rec (motive := fun n => Omega.Eq (left n) (right n))
+      (leftZero.trans rightZero.symm)
+      (fun n previous => (leftStep n).trans
+        ((Omega.congrArg (fun state => step state (events n)) previous).trans (rightStep n).symm)))
+    (Omega.Nat.rec (motive := fun n => Omega.Eq (history (left n)) (strictEventPrefix events n))
+      ((Omega.congrArg history leftZero).trans historyZero)
+      (fun n previous => (Omega.congrArg history (leftStep n)).trans
+        ((historyStep (left n) (events n)).trans
+          (Omega.congrArg (fun prefixHistory => prefixHistory.pushBack (events n)) previous))))
 
 end D5.S0.History.EventOrbitData

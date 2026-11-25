@@ -7,6 +7,8 @@ doi: null
 url: https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf
 claim: Spectral functional calculus, partial trace, isometric entropy invariance and the definition of mutual information give the coherent-copy marginals, Gibbs logarithm, uniform-reference entropy identity and unbiased-pinching account by explicit standard substitutions.
 strata_touched:
+  - D5/S3/Quantum/Measurement/Auric/ProjectiveRecord
+  - D5/S3/Quantum/Measurement/Auric/CompleteRecordBudget
   - D5/S3/Quantum/Information/CoherentCopyCorrelationTax
   - D5/S3/Quantum/Information/PartialTraceMutualInformation
   - D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity
@@ -86,6 +88,27 @@ of a function of one joint state, not three independent entropy parameters.
 The repository's proof obtains this equality by subtracting two previously
 proved pinching identities; that implementation choice does not change the
 standard mathematical statement or attribute that proof route to the book.
+
+## Coherent projective records with prescribed probabilities
+
+For a complete finite PVM with projections E_j, the recording isometry is
+Wψ = Σ_j E_jψ ⊗ |j⟩. Corollary 2.27, p. 89 (PDF 97), equations
+(2.129)–(2.130), gives the finite-dimensional channel dilation in which the
+E_j are a complete Kraus family. With input ρ the joint state is WρW†.
+Its system marginal is the unread PVM pinching and its record marginal
+is diagonal with q_j = Tr(E_j ρ). The partial trace calculation uses
+orthogonality and cyclicity for the off-diagonal record entries.
+Proposition 5.19 gives the joint entropy S(ρ).
+
+For the fixed-law AURIC problem the input is a rank-r projection divided
+by r and has constant diagonal on each coordinate fiber. The project
+derives the sharp pinching gain B/r with the original record law q
+held fixed, including in the corank calculation. The same input gives
+mutual information H(q) + B/r and conditional entropy −B/r for the
+coherent joint state. The optimization uses rank-capped effects,
+Fourier factors and the trace certificates for the resulting three
+effects. Li–Poon and Massey give the prescribed-block spectral context.
+[Li–Poon](../HilbertOperators/lipoon2003principalsubmatrices.md) · [Massey](../HilbertOperators/massey2010noncommutativeschurhorn.md)
 
 ## Gibbs logarithm and the uniform reference
 

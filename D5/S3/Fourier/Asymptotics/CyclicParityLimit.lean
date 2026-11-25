@@ -321,7 +321,7 @@ private theorem pAt_certificate (t Z a : ℝ) (hz : 0 < Z) (k : ℕ) (hc : CAt o
     (∀ i, CAt odd k ≤ sample i ∧
       pAt odd t Z k i = (sAt odd k)⁻¹ * (sample i - CAt odd k) * (sample i - ρ) / Z ∧
       (0 < max 0 (pAt odd t Z k i) ↔ CAt odd k < sample i ∧ ρ < sample i)) ∧
-    ∀ v ∈ feasible (qAt odd k) a,
+    ∀ v : ZMod (qAt odd k) → ℝ, (∑ i, v i) = 1 →
       energy v =
         (2 * (t - ((sAt odd k)⁻¹ / 2 + β) * (1 - a)) / Z -
           ∑ i, (max 0 (pAt odd t Z k i)) ^ 2) +
@@ -635,14 +635,16 @@ private theorem vAt_feasible {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     simpa using front 0 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrep1 : u 1 = w 1 := by simpa using front 1 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrepn : u (-1) = w (-1) := by simpa using front (-1) (mem_Icc.mpr ⟨by omega, by omega⟩)
-  have hv := adjusted_matches_moments q hq.le u A (fun i => act.nonneg _) (embedded_mass odd act hk)
+  have hv := adjusted_matches_moments q hq.le u A (fun i _ _ _ _ => act.nonneg _)
+    (embedded_mass odd act hk)
   simp only [q, parity_offset] at hv
   have hv' := hv
   change 0 ≤ u 0 - _ - _ → _ at hv'
   change 0 ≤ u 0 - ((A - (1 - cosineMoment 2 u) - V *
     (A - (1 - cosineMoment 1 u)) / U) / (G - V * F / U)) - _ → _ at hv'
   rw [hδ, hmu, hrep0, hrep1, hrepn] at hv'
-  exact hv' hk0.le hk1.le hkn.le (mul_nonneg (sAt_pos odd k).le hμ.le)
+  exact hv' hk0.le hk1.le hkn.le
+    (add_nonneg (act.nonneg _) (mul_nonneg (sAt_pos odd k).le hμ.le))
 
 private theorem transfer_sq_bound {q : ℕ} [NeZero q] (w : ZMod q → ℝ) (δ μ : ℝ) :
     (∑ i, (adjusted w δ μ (δ / 2) i - w i) ^ 2) ≤
@@ -839,8 +841,8 @@ private theorem minimum_between {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     field_simp [hs]
     ring
   have hcert := (pAt_certificate odd t Z a act.normalizer_pos k hC).2.2
-  have hcert₁ := hcert v hv
-  have hcert₂ := hcert v₀ hv₀.1
+  have hcert₁ := hcert v hv.2.1
+  have hcert₂ := hcert v₀ hv₀.1.2.1
   change energy v = (2 * (t - (s⁻¹ / 2 + β) * (1 - a)) / Z - _) + _ + _ + _ + _ at hcert₁
   change energy v₀ = (2 * (t - (s⁻¹ / 2 + β) * (1 - a)) / Z - _) + _ + _ + _ + _ at hcert₂
   rw [hB] at hcert₁ hcert₂

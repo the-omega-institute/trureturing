@@ -84,4 +84,73 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+namespace FixedMass
+
+abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit
+  (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ m => Fintype.card (Vertex m)) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (m : ℕ) (S : Generator m) (z : Vertex m → ℝ), IsPhysical S z →
+    totalMass z = totalMass ground → moment S 1 = moment generator 1 →
+    moment S 2 = moment generator 2 → moment S 3 = moment generator 3 →
+    6 ≤ R.readout () () m
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  exact (by decide : ¬ 6 ≤ 0)
+    (h 4 generator ground exact_order_gap.1 rfl rfl rfl rfl)
+
+def family : Registration arena (type_of% fixed_total_mass_moment_obstruction) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨fixed_total_mass_moment_obstruction, rejected, rejected_fails⟩
+  sensitivity := sensitivity arena.Law actual rejected rejected_fails
+  dependence := by
+    change ObservationalDependence signature actual
+    intro role
+    refine ⟨(), (0 : ℕ), (1 : ℕ), ?_⟩
+    change Fintype.card (Vertex 0) ≠ Fintype.card (Vertex 1)
+    decide
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    fixed_total_mass_moment_obstruction (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.SpectralGraph.TwoPortHeatRealization.FixedMass.unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.TwoPortHeatRealization.FixedMass.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ m => Fintype.card (Vertex m)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.SpectralGraph.TwoPortHeatRealization
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FixedMass
+
 end Reg.D5.S3.Combinatorics.SpectralGraph.TwoPortHeatRealization
