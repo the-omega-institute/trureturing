@@ -161,4 +161,3 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Ratio
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionEqualRimMinimax
-
