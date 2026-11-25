@@ -23,27 +23,6 @@ namespace D5.S3.Fourier.Asymptotics.CyclicActivationShift
 
 set_option autoImplicit false
 
-private theorem boundary_moment_elimination {ι : Type*} [Fintype ι]
-    (x : ι → ℝ) (T a b g : ℝ)
-    (hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0) :
-    let n : ℝ := Fintype.card ι
-    let s₁ := ∑ i, x i
-    let s₂ := ∑ i, x i ^ 2
-    let s₃ := ∑ i, x i ^ 3
-    let K := ∑ i, x i * (a + b * x i + g * x i ^ 2)
-    (n * s₂ - s₁ ^ 2) * (a + b * T + g * T ^ 2) =
-      (n * T - s₁) * K +
-        g * ((n * T - s₁) * (s₂ * T - s₃) - (s₁ * T - s₂) ^ 2) := by
-  intro n s₁ s₂ s₃ K
-  have hs₀ : n * a + s₁ * b + s₂ * g = 0 := by
-    simpa [n, s₁, s₂, sum_add_distrib, ← mul_sum, mul_comm] using hmass
-  have hs₁ : s₁ * a + s₂ * b + s₃ * g = K := by
-    have term (i : ι) : x i * (a + b * x i + g * x i ^ 2) =
-        x i * a + x i ^ 2 * b + x i ^ 3 * g := by ring
-    simp [K, term, sum_add_distrib, ← sum_mul, s₁, s₂, s₃]
-  rw [← hs₁]
-  linear_combination (s₂ - s₁ * T) * hs₀
-
 private theorem switch_coefficient {ι : Type*} [Fintype ι] (x : ι → ℝ)
     (T a b a' b' m m₄ K : ℝ)
     (hZ : 0 < ∑ i, (T - x i))
@@ -102,12 +81,16 @@ private theorem sum_sixth_rat (n : ℕ) :
     (∑ j ∈ range (n + 1), (j : ℚ) ^ 6) =
       (n : ℚ) * (n + 1) * (2 * n + 1) *
         (3 * (n : ℚ) ^ 4 + 6 * (n : ℚ) ^ 3 - 3 * n + 1) / 42 := by
-  induction n with
-  | zero => norm_num
-  | succ n ih =>
-      rw [Finset.sum_range_succ, ih]
-      push_cast
-      ring
+  have h5 : bernoulli' 5 = 0 := bernoulli'_eq_zero_of_odd (by decide) (by decide)
+  have h6 : bernoulli' 6 = 1 / 42 := by
+    rw [bernoulli'_def]
+    norm_num [Finset.sum_range_succ, bernoulli'_zero, bernoulli'_one, bernoulli'_two,
+      bernoulli'_three, bernoulli'_four, h5, Nat.choose]
+  rw [sum_range_pow]
+  norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two,
+    bernoulli_eq_bernoulli'_of_ne_one, bernoulli'_three, bernoulli'_four,
+    h5, h6, Nat.choose]
+  ring
 
 private theorem sum_centered_sixth (n : ℕ) :
     (∑ k ∈ Icc (-(n : ℤ)) (n : ℤ), (k : ℝ) ^ 6) =

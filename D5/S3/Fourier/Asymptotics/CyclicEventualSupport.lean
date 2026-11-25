@@ -615,6 +615,12 @@ theorem grid_mem {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
           change ((backRep true k j : ℤ) : ZMod _) = i
           rw [hj, ZMod.coe_valMinAbs]
 
+theorem back_grid_natAbs {n k : ℕ} {odd : Bool} (hk : n < k) (j : Back odd) :
+    (gridEmbedding hk (Sum.inr j)).valMinAbs.natAbs = parityModulus odd k / 2 := by
+  have hj := gridRep_centered (n := n) hk (Sum.inr j)
+  change (gridEmbedding hk (Sum.inr j)).valMinAbs = backRep odd k j at hj
+  rw [hj, natAbs_backRep]
+
 private theorem grid_sample {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : Front n ⊕ Back odd) :
     sample (gridEmbedding hk i) = i.elim
@@ -627,18 +633,9 @@ private theorem grid_sample {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     rw [sample, centeredAngle_eq_mesh, hj]
     rfl
   | inr j =>
-    have h : (gridEmbedding hk (.inr j)).valMinAbs.natAbs = parityModulus odd k / 2 := by
-      have hj := gridRep_centered (n := n) hk (Sum.inr j)
-      change (gridEmbedding hk (Sum.inr j)).valMinAbs = backRep odd k j at hj
-      rw [hj, natAbs_backRep]
+    have h := back_grid_natAbs hk j
     rw [(sample_antipode_iff _).mpr h, sample_antipode, parity_offset]
     rfl
-
-theorem back_grid_natAbs {n k : ℕ} {odd : Bool} (hk : n < k) (j : Back odd) :
-    (gridEmbedding hk (Sum.inr j)).valMinAbs.natAbs = parityModulus odd k / 2 := by
-  have hj := gridRep_centered (n := n) hk (Sum.inr j)
-  change (gridEmbedding hk (Sum.inr j)).valMinAbs = backRep odd k j at hj
-  rw [hj, natAbs_backRep]
 
 theorem sample_between {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : ZMod (parityModulus odd k))

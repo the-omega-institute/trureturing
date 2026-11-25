@@ -39,6 +39,27 @@ private theorem moment_det_nonneg {ι : Type*} [Fintype ι] (a x : ι → ℝ)
       mul_nonneg (mul_nonneg (ha i) (ha j)) (sq_nonneg _)
   linarith only [hn, pair_moment a x]
 
+theorem boundary_moment_elimination {ι : Type*} [Fintype ι]
+    (x : ι → ℝ) (T a b g : ℝ)
+    (hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0) :
+    let n : ℝ := Fintype.card ι
+    let s₁ := ∑ i, x i
+    let s₂ := ∑ i, x i ^ 2
+    let s₃ := ∑ i, x i ^ 3
+    let K := ∑ i, x i * (a + b * x i + g * x i ^ 2)
+    (n * s₂ - s₁ ^ 2) * (a + b * T + g * T ^ 2) =
+      (n * T - s₁) * K +
+        g * ((n * T - s₁) * (s₂ * T - s₃) - (s₁ * T - s₂) ^ 2) := by
+  intro n s₁ s₂ s₃ K
+  have hs₀ : n * a + s₁ * b + s₂ * g = 0 := by
+    simpa [n, s₁, s₂, sum_add_distrib, ← mul_sum, mul_comm] using hmass
+  have hs₁ : s₁ * a + s₂ * b + s₃ * g = K := by
+    have term (i : ι) : x i * (a + b * x i + g * x i ^ 2) =
+        x i * a + x i ^ 2 * b + x i ^ 3 * g := by ring
+    simp [K, term, sum_add_distrib, ← sum_mul, s₁, s₂, s₃]
+  rw [← hs₁]
+  linear_combination (s₂ - s₁ * T) * hs₀
+
 /-- A quadratic with nonnegative leading coefficient, zero total variation, and positive
 first-moment variation is strictly positive at the largest sampled level. -/
 theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : ι)
@@ -64,12 +85,6 @@ theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : �
   let s₃ : ℝ := ∑ i, x i ^ 3
   let T := x j
   let K := ∑ i, x i * (a + b * x i + g * x i ^ 2)
-  have h0 : count * a + s₁ * b + s₂ * g = 0 := by
-    simpa [count, s₁, s₂, sum_add_distrib, ← mul_sum, mul_comm] using hmass
-  have h1 : s₁ * a + s₂ * b + s₃ * g = K := by
-    have key (i : ι) : x i * (a + b * x i + g * x i ^ 2) =
-        x i * a + x i ^ 2 * b + x i ^ 3 * g := by ring
-    simp [K, key, sum_add_distrib, ← sum_mul, s₁, s₂, s₃]
   have he₀ : (∑ i, (T - x i)) = count * T - s₁ := by
     rw [sum_sub_distrib]
     congr 1
@@ -93,8 +108,8 @@ theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : �
   have hidentity :
       (count * s₂ - s₁ ^ 2) * (a + b * T + g * T ^ 2) =
         (count * T - s₁) * K + g * ((count * T - s₁) * (s₂ * T - s₃) - (s₁ * T - s₂) ^ 2) := by
-    rw [← h1]
-    linear_combination (s₂ - s₁ * T) * h0
+    simpa only [count, sum_const, card_univ, nsmul_eq_mul, mul_one, s₁, s₂, s₃, T, K]
+      using boundary_moment_elimination x T a b g hmass
   change 0 < K at hmoment
   by_contra! h
   have hl := mul_nonpos_of_nonneg_of_nonpos hdet h
