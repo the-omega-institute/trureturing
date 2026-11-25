@@ -64,7 +64,8 @@ code or substantial article text is reproduced.
 In the paragraph following equation (1.6), Bennett and Oh attribute to Finner
 an equality classification for the balanced inequality (1.5). Write
 M_i = {j : i belongs to S_j}. When M_i differs from M_k for distinct
-coordinates i and k, equality holds precisely when there are positive constants
+coordinates i and k, the positive finite norm branch relevant here has equality
+precisely when there are positive constants
 c_j and one common family of nonnegative coordinate functions H_i such that
 
     g_j(P_j x)^{q_j} = c_j product_{i in S_j} H_i(x_i)
@@ -146,6 +147,45 @@ representation, every support is empty, and the representation reduces to the
 constant-mass identities above. If J is empty and I is nonempty, balance is
 inconsistent. If both are empty, the two products and the integral equal one
 and the profile family is empty. Duplicate rows S_j remain allowed throughout.
+
+The support-intersection step can be expressed directly in the actual product
+model. If f and g are almost everywhere equal, f depends on S, and g is
+measurable and depends on T, then h = lmarginal(mu,S-complement,g) is a
+measurable representative of f depending on S intersect T. Indeed,
+marginalizing a function that depends on S over its complement leaves it
+pointwise fixed, since the integrated law is a probability measure. Fubini
+transports the almost-everywhere equality to almost every complementary
+slice, so the marginals of f and g agree almost everywhere. Integrating the
+S-complement coordinates also removes them from g's possible dependencies,
+leaving exactly T intersect S. This argument applies to measurable ENNReal
+functions without an integrability or positivity assumption.
+
+For a fixed coordinate i, incomparability of incidence sets gives
+intersection_{j in M_i} S_j = {i}. Thus a common measurable representative
+of normalized conditional slices, on one and the same product probability
+law, can be reduced by support intersections to a function of x_i alone.
+The missing hypothesis at this step is actual almost-everywhere equality of
+those conditional slices under that law. Equality information only where a
+product of marginal masses is positive does not supply it globally. A change
+to a law with normalized coordinate densities also needs an explicit recovery
+argument for each original row on the original product law.
+
+There is also an explicit normalized candidate family without a slice-positivity
+assumption. Choose j(i) in M_i, which exists by balance, and an anchor a in the
+full product. For each i define
+
+    h_i(t) = m_{j(i)}^{-1}
+      lmarginal(mu,I-minus-{i},f_{j(i)})(update(a,i,t)).
+
+Measurability follows from measurable marginal integration and measurable
+coordinate insertion. The marginal insertion identity, followed by integration
+over i, gives the original full-product mass m_{j(i)}. Multiplying by its
+inverse therefore gives integral_mu_i h_i = 1, using exactly its positive
+finite mass. To close the target, equality in Finner must still imply, for
+every original j, the almost-everywhere identity
+f_j = m_j product_{i in S_j} h_i for this simultaneously chosen family.
+Unit integrals and the support-intersection bridge alone do not give that
+identity.
 
 The remaining formal obligation is the forward implication from saturation of
 the actual ENNReal marginal inequality chain to a simultaneously measurable,
