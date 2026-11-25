@@ -126,12 +126,14 @@ private def testLibrary (selected : List String) : IO Unit := do
 def main (args : List String) : IO Unit := do
   if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
-    if clients.isEmpty then throw <| IO.userError "consumer comparison requires at least one module"
     let modules := clients.toArray.map String.toName
     let ports := (names.drop (clients.length + 1)).toArray.map String.toName
+    if modules.isEmpty && ports.isEmpty then
+      throw <| IO.userError "consumer comparison requires at least one module or standard port"
     unless ports.all OmegaChecks.ModuleSurface.isBasis do throw <| IO.userError "invalid standard port"
     let imports := (modules ++ ports).map fun moduleName => { module := moduleName : Import }
-    searchPathRef.set (System.SearchPath.parse strictPath)
+    let strictSearchPath := System.SearchPath.parse strictPath
+    searchPathRef.set strictSearchPath
     let strict ← importModules imports {}
     -- Public visibility is needed for the foundation equations. Consumers may also
     -- use Lean's legacy format, which cannot be imported in an exported context.
@@ -144,7 +146,15 @@ def main (args : List String) : IO Unit := do
       if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
         unless data.constants.isEmpty do
           throw <| IO.userError s!"official import adapter {owner} contains declarations"
-    OmegaChecks.Interface.checkConsumers strict publicStrict official modules
+    let inventory : Array OmegaChecks.Interface.FrozenInventory ←
+      if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
+        -- Strict foundation modules may not be official alias facades.
+        checkLayers strict
+        IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
+      else pure #[]
+    let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
+    if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
+      IO.FS.writeFile path ((toJson certified).compress ++ "\n")
     if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
       reportOfficialAxioms strict official modules report
   else if let "--exact-roots" :: path :: names := args then
