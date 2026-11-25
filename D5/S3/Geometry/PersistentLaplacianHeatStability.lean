@@ -30,7 +30,7 @@ open FiniteSimplicialSingularHomology
 
 variable {V : Type} [Fintype V] [LinearOrder V]
 
-private def coordinates (L : PreAbstractSimplicialComplex V) (p : ℕ) :
+def coordinates (L : PreAbstractSimplicialComplex V) (p : ℕ) :
     orderedGroup L p →ₗ[ℤ] (Face L p → ℤ) := by
   classical
   exact (DirectSum.linearEquivFunOnFintype ℤ (Face L p) (fun _ => ℤ)).toLinearMap.comp
