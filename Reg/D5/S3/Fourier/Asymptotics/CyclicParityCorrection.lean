@@ -123,7 +123,8 @@ abbrev arena : Arena where
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
+    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ →
+    0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A
 
@@ -142,7 +143,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       cosineMoment 1 (adjusted w 0 0 1) = 1 ∧ cosineMoment 2 (adjusted w 0 0 1) = 1 := by
     have h1 : 0 ≤ w 1 + 1 := by linarith only [hw 1]
     have hneg : 0 ≤ w (-1) + 1 := by linarith only [hw (-1)]
-    simpa [hM, rejected, realize, show w 0 = 1 by simp [w], h1, hneg] using hh
+    simpa [hM, rejected, realize, show w 0 = 1 by simp [w], h1, hneg, hw] using hh
   have hsum : ∑ i, adjusted w 0 0 1 i = 3 := by
     norm_num [adjusted, w, Pi.single_apply, sum_add_distrib]
   linarith only [hh'.1.2.1, hsum]

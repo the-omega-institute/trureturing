@@ -24,7 +24,24 @@ In cyclic order [x,y,Py,Px], the actual Gram has diagonals at most 4, cyclic ent
 
 The rational witness and order calculation are from the two-port-exact-order research note. The conserved-ground argument uses the fourth-moment obstruction in the short-time research note. The cycle-width proof is reused from FourPortHeatRealization, which credits Shaked-Monderer for the classical support argument.
 
+**Theorem 1.2 (With fixed total mass, moments through degree three force six physical vertices).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/TwoPortHeatRealization.fixed_total_mass_moment_obstruction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TwoPortHeatRealization.fixed_total_mass_moment_obstruction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Suppose a physical network matches the target's total mass and its first three calibrated port moments. Write B=[X,g] for the hidden frame formed by the two port coupling columns and the hidden ground. Since the port masses are one, the hidden ground has squared norm equal to the total mass minus two. The first moment gives C, the second gives XᵀX, and the ground equation Xᵀg=C1 gives the mixed block of BᵀB. Thus BᵀB agrees with the target's rank-three Gram matrix.
+
+The third moment determines XᵀDX. The other blocks of BᵀDB follow from Dg=X1 and Xᵀg=C1, so this form also agrees with the target's. Among candidates with at most five vertices, the rank of B forces exactly three hidden coordinates and makes Bᵀ injective. Consequently DX has the same coordinates in B as the target's hidden action on its two coupling columns has in the target frame.
+
+The hidden block of S²E is −(XC+DX). Its Gram therefore agrees with the target's, and the common upper block U₂ gives the fourth moment via (S²E)ᵀ(S²E). The zeroth moment is the identity for both networks. The fourth-moment order bound then requires at least six vertices.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TwoPortHeatRealization.exact_order_gap`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TwoPortHeatRealization.fixed_total_mass_moment_obstruction`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/FourPortHeatRealization](FourPortHeatRealization.md)

@@ -650,6 +650,201 @@ theorem exact_order_gap : ExactOrderGap (momentWindow generator) := by
 
 #print axioms exact_order_gap
 
+/-- The total mass is the squared norm of the physical ground vector. -/
+def totalMass {m : ℕ} (z : Vertex m → ℝ) : ℝ := ∑ i, z i ^ 2
+
+private theorem totalMass_eq_hidden {m : ℕ} (z : Vertex m → ℝ)
+    (hz : ∀ i : Port, z (.inl i) = 1) :
+    totalMass z = 2 + ((column (z ∘ Sum.inr))ᵀ * column (z ∘ Sum.inr)) () () := by
+  norm_num [totalMass, Fintype.sum_sum_type, Fin.sum_univ_two, hz, column,
+    Matrix.mul_apply, Function.comp_def, pow_two]
+
+private theorem port_moment_blocks {m : ℕ} (S : Generator m) (hs : S.IsSymm) :
+    let C := moment S 1
+    let X := -S.toBlocks₂₁
+    let D := S.toBlocks₂₂
+    let K := X * C + D * X
+    moment S 2 = Cᵀ * C + Xᵀ * X ∧
+    moment S 3 = (Cᵀ * moment S 2 + (Xᵀ * X) * C) + Xᵀ * (D * X) ∧
+    moment S 4 = (moment S 2)ᵀ * moment S 2 + Kᵀ * K := by
+  intro C X D K
+  have h21 : -X = S.toBlocks₂₁ := neg_neg _
+  have h₁ : S ^ 1 * ports m = Matrix.fromRows C (-X) := by
+    rw [ports_power, pow_one, h21]
+  have hlow : (S ^ 2).toBlocks₂₁ = S.toBlocks₂₁ * C + D * S.toBlocks₂₁ := by
+    change (S ^ 2).toBlocks₂₁ =
+      S.toBlocks₂₁ * moment S 1 + S.toBlocks₂₂ * S.toBlocks₂₁
+    rw [moment_eq_block, pow_one, pow_two]
+    conv_lhs => rw [← Matrix.fromBlocks_toBlocks S, Matrix.fromBlocks_multiply,
+      Matrix.toBlocks_fromBlocks₂₁]
+  have h₂ : S ^ 2 * ports m = Matrix.fromRows (moment S 2) (-K) := by
+    change S ^ 2 * ports m = Matrix.fromRows (moment S 2) (-(X * C + D * X))
+    rw [ports_power, hlow, ← h21]
+    simp only [Matrix.neg_mul, Matrix.mul_neg]
+    congr 1
+    abel
+  have gram (a b : ℕ) : (S ^ a * ports m)ᵀ * (S ^ b * ports m) = moment S (a + b) := by
+    rw [moment, Matrix.transpose_mul, Matrix.transpose_pow, hs.eq, pow_add]
+    simp only [Matrix.mul_assoc]
+  refine ⟨?_, ?_, ?_⟩
+  · simpa only [h₁, Matrix.transpose_fromRows, Matrix.fromCols_mul_fromRows,
+      Matrix.transpose_neg, Matrix.neg_mul, Matrix.mul_neg, neg_neg] using (gram 1 1).symm
+  · have h : moment S 3 = Cᵀ * moment S 2 + Xᵀ * K := by
+      simpa only [h₁, h₂, Matrix.transpose_fromRows, Matrix.fromCols_mul_fromRows,
+        Matrix.transpose_neg, Matrix.neg_mul, Matrix.mul_neg, neg_neg] using (gram 1 2).symm
+    simpa only [K, Matrix.mul_add, Matrix.mul_assoc, add_assoc] using h
+  · simpa only [h₂, Matrix.transpose_fromRows, Matrix.fromCols_mul_fromRows,
+      Matrix.transpose_neg, Matrix.neg_mul, Matrix.mul_neg, neg_neg] using (gram 2 2).symm
+
+private theorem ground_frame_forms {m : ℕ} (X : Matrix (Fin m) Port ℝ)
+    (D : Matrix (Fin m) (Fin m) ℝ) (C : PortMatrix) (g : Fin m → ℝ) (hs : D.IsSymm)
+    (hg₁ : Xᵀ *ᵥ g = C *ᵥ (fun _ => 1)) (hg₂ : D *ᵥ g = X *ᵥ (fun _ => 1)) :
+    let G := column g
+    let B := Matrix.fromCols X G
+    let e : Matrix Port Unit ℝ := column (fun _ => 1)
+    let Q := Xᵀ * X
+    Bᵀ * B = Matrix.fromBlocks Q (C * e) (C * e)ᵀ (Gᵀ * G) ∧
+    Bᵀ * (D * B) =
+      Matrix.fromBlocks (Xᵀ * (D * X)) (Q * e) (Q * e)ᵀ ((C * e)ᵀ * e) := by
+  intro G B e Q
+  have he₁ : Xᵀ * G = C * e := by
+    change Xᵀ * column g = C * column (fun _ => 1)
+    rw [mul_column, mul_column, hg₁]
+  have he₂ : D * G = X * e := by
+    change D * column g = X * column (fun _ => 1)
+    rw [mul_column, mul_column, hg₂]
+  have hGX : Gᵀ * X = (C * e)ᵀ := by
+    rw [← he₁, Matrix.transpose_mul, Matrix.transpose_transpose]
+  have hXDG : Xᵀ * (D * G) = Q * e := by
+    rw [he₂, ← Matrix.mul_assoc]
+  have hGDX : Gᵀ * (D * X) = (Q * e)ᵀ := by
+    rw [← hXDG]
+    simp only [Matrix.transpose_mul, Matrix.transpose_transpose, hs.eq, Matrix.mul_assoc]
+  have hGDG : Gᵀ * (D * G) = (C * e)ᵀ * e := by
+    rw [he₂, ← Matrix.mul_assoc, hGX]
+  constructor
+  · change (Matrix.fromCols X G)ᵀ * Matrix.fromCols X G = _
+    rw [Matrix.transpose_fromCols, Matrix.fromRows_mul_fromCols, he₁, hGX]
+  · change (Matrix.fromCols X G)ᵀ * (D * Matrix.fromCols X G) = _
+    rw [Matrix.mul_fromCols, Matrix.transpose_fromCols, Matrix.fromRows_mul_fromCols,
+      hXDG, hGDX, hGDG]
+
+private theorem targetBasis_eq : targetBasis = Matrix.fromCols cross (column hiddenGround) :=
+  hiddenBasis_apply cross hidden
+
+-- The coordinates of the two columns of D X on the target frame [X, g].
+private def targetHiddenAction : Matrix HiddenBasis Port ℝ :=
+  let q : ℝ := 1001 / 250000
+  Matrix.fromRows !![4 - q, 1 - q; 1 - q, 4 - q]
+    (column (fun _ : Port => 4 * q - 2))ᵀ
+
+private theorem target_hidden_action : hidden * cross = targetBasis * targetHiddenAction := by
+  rw [targetBasis_eq, hiddenGround_exact]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [targetHiddenAction, hidden, shift, cross, hiddenFactor, column,
+      Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.one_apply,
+      Fintype.sum_sum_type, Fin.sum_univ_two,
+      Fin.sum_univ_four, Fintype.sum_unique]
+
+/-- A physical realization matching the target's total mass and its calibrated
+moments of degrees one through three has at least six vertices. -/
+theorem fixed_total_mass_moment_obstruction (m : ℕ) (S : Generator m) (z : Vertex m → ℝ)
+    (hp : IsPhysical S z) (hmass : totalMass z = totalMass ground)
+    (hm₁ : moment S 1 = moment generator 1) (hm₂ : moment S 2 = moment generator 2)
+    (hm₃ : moment S 3 = moment generator 3) : 6 ≤ Fintype.card (Vertex m) := by
+  by_contra! hsmall
+  let X : Matrix (Fin m) Port ℝ := -S.toBlocks₂₁
+  let D := S.toBlocks₂₂
+  let g := z ∘ Sum.inr
+  let B := Matrix.fromCols X (column g)
+  let K := X * moment S 1 + D * X
+  let K₀ := cross * moment generator 1 + hidden * cross
+  have ⟨hS₂, hS₃, hS₄⟩ := port_moment_blocks S hp.1
+  have ⟨hT₂, hT₃, hT₄⟩ := port_moment_blocks generator generator_symm
+  simp only [generator, Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂,
+    neg_neg] at hT₂ hT₃ hT₄
+  have hXX : Xᵀ * X = crossᵀ * cross := by
+    have h := hS₂.symm.trans (hm₂.trans hT₂)
+    rw [hm₁] at h
+    exact add_left_cancel h
+  have hXDX : Xᵀ * (D * X) = crossᵀ * (hidden * cross) := by
+    have h := hS₃.symm.trans (hm₃.trans hT₃)
+    rw [hm₁, hm₂, hXX] at h
+    exact add_left_cancel h
+  have hmass_hidden : (column g)ᵀ * column g = (column hiddenGround)ᵀ * column hiddenGround := by
+    rw [totalMass_eq_hidden z hp.2.2.1,
+      totalMass_eq_hidden ground generator_physical.2.2.1] at hmass
+    ext i j
+    cases i
+    cases j
+    exact add_left_cancel hmass
+  have hS := ground_frame_forms X D (moment S 1) g (hidden_symm S hp.1)
+    (ground_blocks S z hp).1 (ground_blocks S z hp).2
+  have hT := ground_frame_forms cross hidden (moment generator 1) hiddenGround
+    (hidden_symm generator generator_symm) target_ground_blocks.1 target_ground_blocks.2
+  have hgram : Bᵀ * B = targetBasisᵀ * targetBasis := by
+    rw [targetBasis_eq, hS.1, hT.1, hm₁, hXX, hmass_hidden]
+  have hform : Bᵀ * (D * B) = targetBasisᵀ * (hidden * targetBasis) := by
+    rw [targetBasis_eq, hS.2, hT.2, hm₁, hXX, hXDX]
+  have hB : B.rank = 3 := by
+    rw [← Matrix.rank_transpose_mul_self, hgram, Matrix.rank_transpose_mul_self, targetBasis_rank]
+  have hr := B.rank_le_card_height
+  simp only [hB, Fintype.card_fin] at hr
+  -- Below six total vertices the rank-three frame spans the hidden space.
+  have hthree : m = 3 := by
+    simp only [Fintype.card_sum, Fintype.card_fin] at hsmall
+    omega
+  have honto : Function.Surjective B.mulVec :=
+    Matrix.mulVec_surjective_iff_rank_eq_card.mpr (by simp [hB, hthree])
+  obtain ⟨R, hR⟩ := Matrix.mulVec_surjective_iff_exists_right_inverse.mp honto
+  let J : Matrix HiddenBasis Port ℝ := Matrix.fromRows 1 0
+  have hBJ : B * J = X := by simp [B, J, Matrix.fromCols_mul_fromRows]
+  have htJ : targetBasis * J = cross := by simp [targetBasis_eq, J, Matrix.fromCols_mul_fromRows]
+  have hDX : D * X = B * targetHiddenAction := by
+    have hread : Bᵀ * (D * X) = targetBasisᵀ * (hidden * cross) := by
+      simpa only [Matrix.mul_assoc, hBJ, htJ] using
+        congrArg (fun M : Matrix HiddenBasis HiddenBasis ℝ => M * J) hform
+    rw [target_hidden_action, ← Matrix.mul_assoc targetBasisᵀ targetBasis targetHiddenAction,
+      ← hgram, Matrix.mul_assoc] at hread
+    simpa only [← Matrix.mul_assoc Rᵀ Bᵀ, ← Matrix.transpose_mul, hR,
+      Matrix.transpose_one, Matrix.one_mul] using
+      congrArg (fun M : Matrix HiddenBasis Port ℝ => Rᵀ * M) hread
+  -- The shared coefficients give the Gram of the hidden block of S² applied to the ports.
+  let L := J * moment generator 1 + targetHiddenAction
+  have hK : K = B * L := by
+    change X * moment S 1 + D * X = B * (J * moment generator 1 + targetHiddenAction)
+    rw [hm₁, hDX, Matrix.mul_add, ← Matrix.mul_assoc B J, hBJ]
+  have htK : K₀ = targetBasis * L := by
+    change cross * moment generator 1 + hidden * cross =
+      targetBasis * (J * moment generator 1 + targetHiddenAction)
+    rw [target_hidden_action, Matrix.mul_add, ← Matrix.mul_assoc targetBasis J, htJ]
+  have hKK : Kᵀ * K = K₀ᵀ * K₀ := by
+    rw [hK, htK]
+    simp only [Matrix.transpose_mul, Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc Bᵀ, ← Matrix.mul_assoc targetBasisᵀ, hgram]
+  have hm₄ : moment S 4 = moment generator 4 := by
+    refine hS₄.trans ?_
+    change (moment S 2)ᵀ * moment S 2 + Kᵀ * K = moment generator 4
+    rw [hm₂, hKK]
+    exact hT₄.symm
+  have hm₀ : moment S 0 = moment generator 0 := by
+    ext i j
+    simp [moment_eq_block, Matrix.toBlocks₁₁, Matrix.one_apply]
+  have gap := exact_order_gap
+  unfold ExactOrderGap at gap
+  obtain ⟨_, _, _, _, _, _, hwidth, _⟩ := gap
+  refine (not_le_of_gt hsmall) (hwidth m S z hp ?_)
+  intro k
+  fin_cases k
+  · exact hm₀
+  · exact hm₁
+  · exact hm₂
+  · exact hm₃
+  · exact hm₄
+
+#print axioms fixed_total_mass_moment_obstruction
+
 end
 
 end D5.S3.Combinatorics.SpectralGraph.TwoPortHeatRealization

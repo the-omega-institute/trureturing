@@ -95,5 +95,26 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                     "At zero middle occupation the whole coupling row vanishes in every "
                     + "positive state. The Schur residual inequalities then have no dependence "
                     + "on z."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-pure-zero-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff"),
+                H("Pure extensions at zero middle occupation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At zero middle occupation, a pure extension exists exactly when all "
+                    + "four couplings vanish and both endpoint matrices are positive "
+                    + "semidefinite with trace one and equal determinants.")),
+                    Paragraph(Text(
+                    "Arrange the four endpoint amplitudes into a two-by-two matrix M. "
+                    + "The reductions are M times its adjoint and the transpose of the "
+                    + "product in reverse order. These matrices have the same characteristic "
+                    + "polynomial. Two-by-two matrices have equal characteristic polynomials "
+                    + "exactly when they have equal traces and determinants.")),
+                    Paragraph(Text(
+                    "For sufficiency, diagonalize both positive matrices with their common "
+                    + "eigenvalue list. Insert the square roots of those eigenvalues between "
+                    + "the left eigenvector unitary and the transpose of the right one. "
+                    + "The resulting amplitude matrix has the two specified reductions."))),
                 DescribeRole.Theorem))));
 }

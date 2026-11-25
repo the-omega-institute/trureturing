@@ -82,7 +82,7 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
                         "G=1−cos(2h), U=1−C and V=2(1−C²). For target deficit A, take " +
                         "δ=(A−D₂−V(A−D₁)/U)/(G−VF/U) and μ=(A−D₁−Fδ)/U. Both denominators are positive for q≥4.")),
                     Paragraph(Text(
-                        "Assume w(0)−δ−μ≥0, w(1)+δ/2≥0, w(−1)+δ/2≥0 and μ≥0. " +
+                        "Assume w(0)−δ−μ≥0, w(1)+δ/2≥0, w(−1)+δ/2≥0 and w(floor(q/2))+μ≥0. " +
                         "The transfer gives a feasible v at threshold 1−A, with equality in both moments. " +
                         "The moment increments in deficit coordinates are Fδ+Uμ and Gδ+Vμ. " +
                         "Both equations follow by substitution, and the four increments sum to zero."))),

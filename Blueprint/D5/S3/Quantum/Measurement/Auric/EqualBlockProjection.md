@@ -37,5 +37,5 @@ To realize the maximum, factor each attaining effect through m rows, assign its 
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../../Information/OrthogonalRecordEntropy.md)
 - Dependency: [D5/S3/Quantum/Measurement/Auric/CoordinatePinching](CoordinatePinching.md)
 - Dependency: [D5/S3/Quantum/Measurement/Auric/EqualBlockEffects](EqualBlockEffects.md)
-- Dependency: [D5/S3/Quantum/Measurement/Auric/ProjectionFrames](ProjectionFrames.md)
+- Dependency: [D5/S3/Quantum/Measurement/Auric/ProjectionSpectralTransport](ProjectionSpectralTransport.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity](../../QuantumChannels/TomiyamaDiagonalKPositivity.md)

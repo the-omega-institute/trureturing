@@ -642,7 +642,8 @@ private theorem vAt_feasible {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
   change 0 ≤ u 0 - ((A - (1 - cosineMoment 2 u) - V *
     (A - (1 - cosineMoment 1 u)) / U) / (G - V * F / U)) - _ → _ at hv'
   rw [hδ, hmu, hrep0, hrep1, hrepn] at hv'
-  exact hv' hk0.le hk1.le hkn.le (mul_nonneg (sAt_pos odd k).le hμ.le)
+  exact hv' hk0.le hk1.le hkn.le
+    (add_nonneg (act.nonneg _) (mul_nonneg (sAt_pos odd k).le hμ.le))
 
 private theorem transfer_sq_bound {q : ℕ} [NeZero q] (w : ZMod q → ℝ) (δ μ : ℝ) :
     (∑ i, (adjusted w δ μ (δ / 2) i - w i) ^ 2) ≤

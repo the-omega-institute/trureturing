@@ -41,10 +41,9 @@ internal sealed class ConditionalComplexityFloorDocument : IScribeDocumentDefini
                         + "most the program length plus c. Applying it to the extracted witness and then "
                         + "using the budget gives the displayed floor inequality.")),
                     Paragraph(Text(
-                        "Pinned Mathlib was searched before proving. It has no conditional-description "
-                        + "complexity abstraction matching this statement. The proof reuses "
-                        + "Nat.sub_le_iff_le_add for the final natural-number subtraction step; the "
-                        + "realization and compiler semantics remain explicit parameters."))),
+                        "The bound on the witness program lifts to the bound after adding the "
+                        + "overhead. Subtracting that allowance by the natural-number subtraction "
+                        + "lemma gives the floor inequality."))),
                 DescribeRole.Theorem)),
         []));
 }
