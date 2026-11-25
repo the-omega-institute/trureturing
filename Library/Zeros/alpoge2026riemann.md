@@ -16,16 +16,13 @@ triage: anchor
 
 # Riemann hypothesis formalization in Lean
 
-The source is Levent Alpöge's formalization, distributed in this repository:
-https://github.com/the-omega-institute/riemann-hypothesis
+## Verified locator
 
-The exact source revision is `c7d25b3bfd7906388bb8eb0774e027a2b756a7b6`.
+- URL: https://github.com/the-omega-institute/riemann-hypothesis
+- Revision: `c7d25b3bfd7906388bb8eb0774e027a2b756a7b6`
+- Directory: `src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/`
 
-The pinned local checkout was read without network access. Its HEAD matches this
-revision. The source directory is
-`src/Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/`.
-This note attests the following source declarations and their proof structure;
-it does not claim a fresh build of the external formalization.
+## Source declarations
 
 - `LandauGrowthContra.lean`, `Deduction.landau_growth_contra`: for positive c,d
   and d<e, there are positive eta and a cutoff U0 such that for all U>=U0 and
