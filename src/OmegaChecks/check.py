@@ -509,13 +509,24 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 def check_generated_init():
     with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
         product = Path(directory) / "port"
-        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, "Init.Prelude")
+        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
+            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop")
+        environment = {**ENV, "LEAN_PATH": str(product / "lib")}
         # The upstream addition helper must preserve the strict seed's definitional reduction.
         source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
                   "attribute [local semireducible] Omega.Nat.add\n"
                   "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
-                       env={**ENV, "LEAN_PATH": str(product / "lib")})
+                       env=environment)
+        # These two official modules prove the same public equations with different private helpers.
+        names = ("Omega.List.take.eq_def", "Omega.List.takeWhile.eq_def")
+        for module in ("OmegaInit.Data.List.Impl", "OmegaInit.Data.List.TakeDrop"):
+            probe = f"module\nprelude\nimport {module}\n" + "".join(f"#print axioms {n}\n" for n in names)
+            result = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment,
+                                    text=True, input=probe, stdout=subprocess.PIPE, check=True)
+            for name in names:
+                if f"'{name}' does not depend on any axioms" not in result.stdout:
+                    raise RuntimeError(f"{module}: {result.stdout}")
 
 
 def full_check(incremental=False):

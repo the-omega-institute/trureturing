@@ -34,6 +34,11 @@ def declaredIn (env : Environment) (name owner : Name) : Bool := Id.run do
   let some expected := env.getModuleIdx? owner | return false
   let some info := env.find? name | return false
   let some entry := env.header.moduleData[expected]!.constants.find? (·.name == name) | return false
+  if let .thmInfo a := entry then
+    let .thmInfo b := info | return false
+    -- Structural equality includes binder names and annotations. The kernel identifies
+    -- proofs of the same proposition, including distinct compiler-generated proofs.
+    return a.levelParams == b.levelParams && a.type.equal b.type
   unless entry == info && entry.type.equal info.type do return false
   if let .recInfo a := entry then
     let .recInfo b := info | return false

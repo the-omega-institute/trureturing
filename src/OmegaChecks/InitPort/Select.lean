@@ -52,7 +52,8 @@ def main (args : List String) : IO Unit := do
   let standard ← importModules (official.push {module := `OmegaChecks.Interface.Equations}) {}
   let log ← IO.FS.Handle.mk report .write
   -- A downstream import can select a different copy of a generated upstream name.
-  -- Keep a single relocated copy only when the official records agree across owners.
+  -- Computational entries must agree in full. Theorems may have distinct proofs
+  -- of a structurally identical proposition at each definition site.
   let candidateNames := NameSet.ofList (candidates.toList.map (·.replacePrefix `Omega .anonymous))
   let mut encountered : NameSet := {}
   let mut duplicated : NameSet := {}

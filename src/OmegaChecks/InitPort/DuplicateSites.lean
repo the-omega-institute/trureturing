@@ -14,8 +14,8 @@ private def reachable (graph : ModuleGraph) (root : Name) : NameSet := Id.run do
       todo := todo ++ graph.getD n #[]
   return seen
 
-/-- Independent modules can generate a theorem with the same name. Each physical
-definition must agree with the active upstream declaration, including its proof term. -/
+/-- Independent modules can generate the same theorem with different proofs.
+Each defining site must expose the same proposition and binders. -/
 private def duplicateSites (strict source surface : Environment) : IO (NameMap (Array Name)) := do
   let mut sites : NameMap (Array Name) := {}
   for (owner, data) in surface.header.moduleNames.zip surface.header.moduleData do
@@ -100,7 +100,9 @@ private def checkCopies (owner : Name) (names : Array Name) : IO Unit := do
     unless visible.header.moduleData[idx]!.constNames.contains n &&
         OmegaChecks.Interface.declaredIn localEnv n owner do
       throw <| IO.userError s!"missing exported definition of {n} in {owner}"
-    let some (.thmInfo thm) := localEnv.find? n | throw <| IO.userError s!"missing proof of {n}"
+    let home := (localEnv.getModuleIdx? owner).get!
+    let some (.thmInfo thm) := localEnv.header.moduleData[home]!.constants.find? (·.name == n)
+      | throw <| IO.userError s!"missing local proof of {n} in {owner}"
     let .ok inferred := Kernel.check localEnv {} thm.value
       | throw <| IO.userError s!"could not kernel-check the local proof of {n} in {owner}"
     unless Kernel.isDefEqGuarded localEnv {} inferred thm.type do
@@ -131,4 +133,4 @@ def main (args : List String) : IO Unit := do
   searchPathRef.set [dir]
   for (owner, names) in copies.toList do checkCopies owner names
   IO.FS.writeFile path <| (toJson (modules.map fun n => (n, graph.getD n #[]))).compress
-  IO.println s!"Distributed {count} identical public theorem occurrences to {copies.size} official module sites."
+  IO.println s!"Distributed and kernel-checked {count} public theorem occurrences in {copies.size} official modules."
