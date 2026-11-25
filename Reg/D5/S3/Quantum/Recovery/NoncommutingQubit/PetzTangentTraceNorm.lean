@@ -97,10 +97,10 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
