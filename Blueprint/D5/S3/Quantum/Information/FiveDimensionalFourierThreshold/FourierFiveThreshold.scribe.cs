@@ -27,7 +27,7 @@ internal sealed class FourierFiveThresholdDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Qian, Qutrit),
                 Blocks(Paragraph(Text("The radical bound gives D ≥ 53682/933125 > 23/400 for the harmonic deficit and S = 4 − 4D. Thus S < 377/100 for every pair of unit vectors. The orthonormal pairs in Qian §11(3) meet these hypotheses."))), DescribeRole.Theorem),
             Paragraph(Text("Qian Theorem 6.14 exhibits an orthonormal pair with S = (14 + 2√5)/5. "
-                + "Qian's witness supplies an attained lower bound on the maximum. The sharp maximum remains open. "
+                + "Qian's witness supplies the attained value. The sharp upper bound for all unit pairs is established in SharpBorn. "
                 + "The separately deposited qutrit certificate at Zenodo DOI 10.5281/zenodo.23933731 establishes the sharp dimension-three bound and leaves the dimension-five upper bound open."))),
         []));
 }
