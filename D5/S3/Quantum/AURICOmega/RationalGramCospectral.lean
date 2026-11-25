@@ -718,4 +718,148 @@ theorem five_seven_on_conic (u v : ℚ) (hu : u ≠ 0) (h : 5 * u ^ 2 + 4 * v ^ 
     (triangle_same_square_classes (1/6) t u v hu hv h₁ h₂ n).trans
       (thresholds_at_one_sixth n).2⟩
 
+private theorem no_seventy_under_fixed_frame
+    (z : Fin 6 → ℚ)
+    (h0 : (![1,0,0,0,0,0] : Fin 6 → ℚ) ⬝ᵥ z = 0)
+    (h1 : (![0,2,1,0,0,0] : Fin 6 → ℚ) ⬝ᵥ z = 0)
+    (h2 : (![0,0,0,3,5,6] : Fin 6 → ℚ) ⬝ᵥ z = 0) :
+    z ⬝ᵥ z ≠ 70 := by
+  intro hn
+  norm_num [dotProduct, Fin.sum_univ_succ] at h0 h1 h2 hn
+  have hc : z 2 = -2 * z 1 := by linear_combination h1
+  rw [h0, hc] at hn
+  have split : z 3 ^ 2 + z 4 ^ 2 + z 5 ^ 2 =
+      34 * ((5 * z 3 - 3 * z 4) / 34) ^ 2 +
+      2380 * ((18 * z 3 + 30 * z 4 - 34 * z 5) / 2380) ^ 2 := by
+    linear_combination (1 / 70 : ℚ) * (congrArg (· ^ 2) h2)
+  have equation :
+      11900 * ((18 * z 3 + 30 * z 4 - 34 * z 5) / 2380) ^ 2 +
+        (5 * z 1) ^ 2 + 170 * ((5 * z 3 - 3 * z 4) / 34) ^ 2 = 350 := by
+    linear_combination 5 * hn - 5 * split
+  apply modular_ternary_rational_descent 7 1700 170 50 (by decide) (by decide) (by decide)
+    ((18 * z 3 + 30 * z 4 - 34 * z 5) / 2380) (5 * z 1) ((5 * z 3 - 3 * z 4) / 34)
+  norm_num
+  exact equation
+
+
+private theorem negative_one_fifth_matching_diagonal (n : ℕ) :
+    RealizableIn (pairedEdges (-(1/5))) n ↔ RealizableIn (diagonal ![1,5,70,70]) n := by
+  refine (fits_congr _ _ aCongr aCongrInv aCongr_mul_inv (decompose_first _) n).trans ?_
+  apply diag_scaling ![1, 5/2, 5/2, 5/2]
+  · intro i
+    fin_cases i <;> norm_num
+  · intro i
+    fin_cases i <;> norm_num
+
+private theorem negative_one_fifth_triangle_diagonal (n : ℕ) :
+    RealizableIn (triangleBlock (-(1/5))) n ↔ RealizableIn (diagonal ![15,1,70,210]) n := by
+  refine (fits_congr _ _ bBasis bInv bBasis_mul_inv (decompose_second _) n).trans ?_
+  apply diag_scaling ![5, 1, 5, 5]
+  · intro i
+    fin_cases i <;> norm_num
+  · intro i
+    fin_cases i <;> norm_num
+
+private theorem negative_one_fifth_matching_not_six :
+    ¬ RealizableIn (pairedEdges (-(1/5))) 6 := by
+  intro he
+  obtain ⟨X, hX⟩ := (negative_one_fifth_matching_diagonal 6).mp he
+  have entry (i j : Fin 4) : X i ⬝ᵥ X j =
+      (diagonal ![1,5,70,70] : Matrix (Fin 4) (Fin 4) ℚ) i j :=
+    congrFun (congrFun hX i) j
+  let earlier : Fin 3 → Fin 6 → ℚ := fun i => X i.castSucc
+  let standard : Fin 3 → Fin 6 → ℚ :=
+    ![![1,0,0,0,0,0], ![0,2,1,0,0,0], ![0,0,0,3,5,6]]
+  have hgram (i j : Fin 3) : earlier i ⬝ᵥ earlier j = standard i ⬝ᵥ standard j := by
+    have heij := entry i.castSucc j.castSucc
+    fin_cases i <;> fin_cases j <;>
+      norm_num [earlier, standard, Matrix.diagonal_apply, dotProduct, Fin.sum_univ_succ] at heij ⊢ <;> exact heij
+  obtain ⟨f, hfit, hf⟩ := fin_frame_isometry earlier standard hgram
+  have preserve_left (i : Fin 3) : standard i ⬝ᵥ f (X 3) = earlier i ⬝ᵥ X 3 := by
+    rw [← hfit i, hf]
+  exact no_seventy_under_fixed_frame (f (X 3))
+    ((preserve_left 0).trans (by simpa [earlier, diagonal_apply] using entry 0 3))
+    ((preserve_left 1).trans (by simpa [earlier, diagonal_apply] using entry 1 3))
+    ((preserve_left 2).trans (by simpa [earlier, diagonal_apply] using entry 2 3))
+    ((hf _ _).trans (by simpa [diagonal_apply] using entry 3 3))
+
+private theorem negative_one_fifth_triangle_not_four :
+    ¬ RealizableIn (triangleBlock (-(1/5))) 4 := by
+  intro h
+  obtain ⟨X, hX⟩ := (negative_one_fifth_triangle_diagonal 4).mp h
+  have he := congrArg Matrix.det hX
+  rw [Matrix.det_mul, Matrix.det_transpose, Matrix.det_diagonal] at he
+  norm_num [Fin.prod_univ_succ] at he
+  have hs : IsSquare (5 : ℚ) := ⟨X.det / 210, by
+    rw [← sq]
+    rw [div_pow, sq, he]
+    norm_num⟩
+  exact Nat.prime_five.not_isSquare (Rat.isSquare_natCast_iff.mp hs)
+
+private theorem negative_one_fifth_matching_seven :
+    RealizableIn (pairedEdges (-(1/5))) 7 := by
+  apply (negative_one_fifth_matching_diagonal 7).mpr
+  refine ⟨!![1,0,0,0,0,0,0; 0,2,1,0,0,0,0; 0,0,0,3,5,6,0; 0,-3,6,0,0,0,5], ?_⟩
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.diagonal_apply, Matrix.transpose_apply, Matrix.mul_apply, Fin.sum_univ_succ]
+
+private theorem negative_one_fifth_triangle_five :
+    RealizableIn (triangleBlock (-(1/5))) 5 := by
+  apply (negative_one_fifth_triangle_diagonal 5).mpr
+  refine ⟨!![0,3,2,1,1; 1,0,0,0,0; 0,-5,4,2,5; 0,-3,8,4,-11], ?_⟩
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.diagonal_apply, Matrix.transpose_apply, Matrix.mul_apply, Fin.sum_univ_succ]
+
+private theorem thresholds_negative_one_fifth (n : ℕ) :
+    (RealizableIn (pairedEdges (-(1/5))) n ↔ 7 ≤ n) ∧
+    (RealizableIn (triangleBlock (-(1/5))) n ↔ 5 ≤ n) := by
+  constructor
+  · refine ⟨fun h => ?_, fun hn => fits_mono hn negative_one_fifth_matching_seven⟩
+    by_contra hn
+    exact negative_one_fifth_matching_not_six (fits_mono (by omega) h)
+  · refine ⟨fun h => ?_, fun hn => fits_mono hn negative_one_fifth_triangle_five⟩
+    by_contra hn
+    exact negative_one_fifth_triangle_not_four (fits_mono (by omega) h)
+
+
+/-- The conic through (1, 1) gives a family with rational coordinate minima seven and five. -/
+theorem seven_five_on_conic (u v : ℚ) (h : u ^ 2 + 14 * v ^ 2 = 15) (n : ℕ) :
+    let t := (u ^ 2 / 5 - 1) / 4
+    (RealizableIn (pairedEdges t) n ↔ 7 ≤ n) ∧
+      (RealizableIn (triangleBlock t) n ↔ 5 ≤ n) := by
+  have fifteen_not_square : ¬ IsSquare (15 : ℤ) := by
+    rintro ⟨m, hm⟩
+    have modFour := congrArg (fun x : ℤ => (x : ZMod 4)) hm
+    push_cast at modFour
+    exact (by decide : ∀ x : ZMod 4, (15 : ZMod 4) ≠ x * x) _ modFour
+  have hu : u ≠ 0 := by
+    intro hz
+    rw [hz] at h
+    have hs : IsSquare (15 / 14 : ℚ) := ⟨v, by
+      rw [← sq]
+      linear_combination - h / 14⟩
+    have hnum : (15 / 14 : ℚ).num = 15 :=
+      Rat.num_div_eq_of_coprime (a := 15) (b := 14) (by decide) (by decide)
+    exact fifteen_not_square (hnum ▸ (Rat.isSquare_iff.mp hs).1)
+  have hv : v ≠ 0 := by
+    intro hz
+    rw [hz] at h
+    have hs : IsSquare (15 : ℚ) := ⟨u, by
+      rw [← sq]
+      linear_combination -h⟩
+    exact fifteen_not_square (by simpa using (Rat.isSquare_iff.mp hs).1)
+  let t := (u ^ 2 / 5 - 1) / 4
+  have h₁ : 1 + 4 * t = (1 + 4 * (-(1/5) : ℚ)) * u ^ 2 := by
+    dsimp [t]
+    ring
+  have h₂ : 1 - 2 * t = (1 - 2 * (-(1/5) : ℚ)) * v ^ 2 := by
+    dsimp [t]
+    linear_combination -h / 10
+  exact ⟨(matching_same_square_classes (-(1/5)) t u v hu hv h₁ h₂ n).trans
+      (thresholds_negative_one_fifth n).1,
+    (triangle_same_square_classes (-(1/5)) t u v hu hv h₁ h₂ n).trans
+      (thresholds_negative_one_fifth n).2⟩
+
 end D5.S3.Quantum.AURICOmega.RationalGramCospectral
