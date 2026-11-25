@@ -149,6 +149,7 @@ theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : �
     cosineMoment 2 v = threshold →
     v ∈ feasible q threshold ∧
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
         ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
   intro clip p v hpos hoff hmass hM₁ hM₂
@@ -165,8 +166,8 @@ theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : �
         (g / s) * (w i * (1 - sample i ^ 2)) := by dsimp [p]; ring
     simp_rw [key, sum_add_distrib, ← mul_sum, hw, mul_one,
       (sum_sample_deficits hw).1, (sum_sample_deficits hw).2]
-  have hstrict (w) (hw : w ∈ feasible q threshold) (hne : w ≠ v) :
-      energy v < energy w := by
+  have hstability (w) (hw : w ∈ feasible q threshold) :
+      energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w := by
     have hdotDiff : (∑ i, v i * p i) ≤ ∑ i, w i * p i := by
       rw [hdot v hmass, hdot w hw.2.1, hM₁, hM₂]
       have h₁ : 1 - cosineMoment 1 w ≤ 1 - threshold := by linarith only [hw.2.2.1]
@@ -180,11 +181,6 @@ theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : �
       rcases le_total 0 (p i) with h | h
       · rw [max_eq_right h, pow_two]
       · simp [max_eq_left h]
-    have hd : 0 < ∑ i, (w i - v i) ^ 2 := by
-      obtain ⟨i, hi⟩ : ∃ i, w i ≠ v i := by
-        by_contra! h
-        exact hne (funext h)
-      exact sum_pos' (fun _ _ => sq_nonneg _) ⟨i, mem_univ _, sq_pos_of_ne_zero (sub_ne_zero.mpr hi)⟩
     have hex : energy w = energy v + (∑ i, (w i - v i) ^ 2) +
         2 * (∑ i, w i * (v i - p i)) + 2 * ((∑ i, w i * p i) - ∑ i, v i * p i) := by
       have key (i) : w i ^ 2 = v i ^ 2 + (w i - v i) ^ 2 +
@@ -192,8 +188,16 @@ theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : �
       unfold energy
       conv_lhs => arg 2; ext i; rw [key]
       simp only [sum_add_distrib, sum_sub_distrib, ← mul_sum]
-    linarith only [hex, hd, hclip, hdotDiff]
-  refine ⟨hvf, hstrict, fun w hw hmin i => ?_⟩
+    linarith only [hex, hclip, hdotDiff]
+  have hstrict (w) (hw : w ∈ feasible q threshold) (hne : w ≠ v) :
+      energy v < energy w := by
+    have hd : 0 < ∑ i, (w i - v i) ^ 2 := by
+      obtain ⟨i, hi⟩ : ∃ i, w i ≠ v i := by
+        by_contra! h
+        exact hne (funext h)
+      exact sum_pos' (fun _ _ => sq_nonneg _) ⟨i, mem_univ _, sq_pos_of_ne_zero (sub_ne_zero.mpr hi)⟩
+    linarith only [hd, hstability w hw]
+  refine ⟨hvf, hstrict, hstability, fun w hw hmin i => ?_⟩
   have he : w = v := by
     by_contra h
     exact (not_lt_of_ge (hmin hvf)) (hstrict w hw h)
@@ -217,6 +221,7 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     cosineMoment 2 v = threshold →
     v ∈ feasible q threshold ∧
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
         ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
   intro clip p v hpos hmass hM₁ hM₂
