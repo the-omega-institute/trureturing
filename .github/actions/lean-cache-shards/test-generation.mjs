@@ -246,7 +246,7 @@ esac
 
 test('the same readable module key retrieves either version and readers cannot publish', async t => {
   const { root, requests, env } = await fixture(t);
-  const key = 'a'.repeat(40) + '-D5.S3.Foo';
+  const key = 'v4.35.0-D5.S0.tar.gz';
   const entry = (event, operation, hash, path) => spawnSync(process.execPath, [action, operation, key, hash, path], {
     cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: event },
   });
@@ -284,6 +284,7 @@ command = sys.argv[1]
 args = dict(zip(sys.argv[2::2], sys.argv[3::2]))
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
 if command == "plan":
+    assert "--prepare-release" in sys.argv
     assert args["--capacity"] == str(32 * 1024**2)
     Path(args["--output"]).write_text("planned")
 elif command == "worker":
@@ -300,6 +301,7 @@ else:
 `);
   env.SHARD_MIB = '32';
   env.MODULE_LANE = '2';
+  assert.equal(run('push', 'module-plan').status, 1);
   for (const operation of ['module-plan', 'module-worker', 'module-finish']) {
     const result = run('workflow_dispatch', operation);
     assert.equal(result.status, 0, result.stderr);

@@ -422,11 +422,12 @@ async function runModuleCache() {
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
   } else if (operation === 'module-plan') {
+    requirePublisher();
     const capacity = Number(process.env.SHARD_MIB || 256);
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
       throw new Error('shard_mib must be between 1 and 2047');
     }
-    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints'];
+    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
   } else {
     requirePublisher();
     if (operation === 'module-worker') {
