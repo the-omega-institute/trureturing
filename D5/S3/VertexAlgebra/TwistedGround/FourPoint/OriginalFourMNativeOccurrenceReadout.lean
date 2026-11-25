@@ -43,10 +43,6 @@ private theorem restricted_embDomain (D : LatticeData) (F : Finset (Index D))
   change d.embDomain (supportLabel D F) (supportLabel D F i) = d i
   simp
 
-private theorem weight_sumElim {I J : Type*} (d : I →₀ ℕ) (h : J →₀ ℕ) :
-    weight (d.sumElim h) = weight d * weight h := by
-  simp only [weight, Finsupp.prod_sumElim, Function.comp_def]
-
 /-- Count each surviving native letter in its own input or output slot,
 then forget the proof that its oscillator index belongs to the finite support. -/
 def slotOccupation (D : LatticeData) (F : Finset (Index D))
@@ -91,8 +87,7 @@ theorem native_occurrence_readout {X : Type*} [Fintype X] (D : LatticeData)
     ((weight (slotOccupation D F (R.filterMap Sum.getLeft?)) : ℂ) *
       (weight (slotOccupation D F (R.filterMap Sum.getRight?)) : ℂ)) * _
   rw [ho]
-  simp only [externalOccupation, weight_sumElim, Nat.cast_mul, slotOccupation,
-    restricted_embDomain, embedded_weight]
-  rfl
+  simp only [externalOccupation, slotOccupation, restricted_embDomain, embedded_weight]
+  simp only [weight, Finsupp.prod_sumElim, Function.comp_def, Nat.cast_mul] <;> rfl
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMNativeOccurrenceReadout
