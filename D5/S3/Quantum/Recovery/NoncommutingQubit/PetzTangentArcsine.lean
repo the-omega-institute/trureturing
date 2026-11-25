@@ -393,4 +393,7 @@ theorem arcsine_odd_node_moment (x g : ℝ) (hx : 0 < x) (hg : 0 < g) :
   rw [quadratic_product_integral hx hg]
   field_simp [Real.pi_ne_zero, hx.ne', hg.ne', (add_pos hx hg).ne'] <;> ring
 
+#print axioms arcsine_even_moment
+#print axioms arcsine_odd_node_moment
+
 end D5.S3.Quantum.Recovery.PetzTangentArcsine

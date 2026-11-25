@@ -4,17 +4,19 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: An entrywise qubit Petz tangent bound for the actual partial trace and square-root sandwich. -/
+   digest: Qubit Petz tangent entries for partial trace and the square-root sandwich. -/
 
 import D5.S3.Quantum.Recovery.NoncommutingQubit.PetzTangentArcsine
 import D5.S3.Quantum.Recovery.NoncommutingQubit.PetzTangentReciprocalGram
 import D5.S3.Quantum.Divergence.UmegakiConditionalBKM
 import D5.S3.Quantum.Recovery.BKMFlagRefinementPetz
+/-! The parity estimate applied to both coherences of the physical marginal. -/
+
 set_option autoImplicit false
 noncomputable section
 
 open MeasureTheory Set Filter Matrix
-open scoped BigOperators Kronecker
+open scoped BigOperators Kronecker ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Recovery.PetzTangentPhysical
 
@@ -54,11 +56,12 @@ private lemma arc_cmul (a : ℂ) (f : ℝ → ℂ) :
   apply integral_const_mul
 
 private lemma arc_cmul_ofReal (a : ℂ) (f : ℝ → ℝ) :
-    arcIntegral (fun z => a * (f z : ℂ)) = a * (arcIntegral f : ℂ) := by
+    arcIntegral (fun z => a * (f z : ℂ)) = a * ((arcIntegral (E := ℝ) f : ℝ) : ℂ) := by
   rw [arc_cmul]
   congr 1
-  simp only [arcIntegral, Complex.real_smul, smul_eq_mul, ← Complex.ofReal_mul,
-    integral_complex_ofReal]
+  change (∫ z in Ioo (-1 : ℝ) 1, (arcsineDensity z : ℂ) * (f z : ℂ)) =
+    ((∫ z in Ioo (-1 : ℝ) 1, arcsineDensity z * f z : ℝ) : ℂ)
+  simp only [← Complex.ofReal_mul, integral_complex_ofReal]
 
 private def profile (δ : ℝ) (v₁ vδ : ℂ) (z : ℝ) : ℂ :=
   v₁ * (kernel 1 z : ℂ) + vδ * (kernel δ z : ℂ)
@@ -75,13 +78,12 @@ private lemma profile_even (δ : ℝ) (v₁ vδ : ℂ) (z : ℝ) :
 
 private lemma arc_even_profile {δ : ℝ} (hδ : 0 < δ) (e₁ eδ : ℂ) :
     arcIntegral (profile δ e₁ eδ) = e₁ + eδ / (δ : ℂ) := by
+  have hc (x : ℝ) (hx : 0 < x) (v : ℂ) :
+      ContinuousOn (fun z => v * (kernel x z : ℂ)) (Icc (-1 : ℝ) 1) :=
+    continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn (continuousOn_kernel hx))
   unfold profile
-  rw [arc_add
-      (continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn
-        (continuousOn_kernel one_pos)))
-      (continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn
-        (continuousOn_kernel hδ))),
-    arc_cmul_ofReal, arc_cmul_ofReal, arcsine_even_moment 1 one_pos, arcsine_even_moment δ hδ]
+  rw [arc_add (hc 1 one_pos e₁) (hc δ hδ eδ), arc_cmul_ofReal, arc_cmul_ofReal,
+    arcsine_even_moment 1 one_pos, arcsine_even_moment δ hδ]
   simp [div_eq_mul_inv]
 
 private lemma arc_odd_profile {δ g : ℝ} (hδ : 0 < δ) (hg : 0 < g) (w₁ wδ : ℂ) :
@@ -98,9 +100,10 @@ private lemma arc_odd_profile {δ g : ℝ} (hδ : 0 < δ) (hg : 0 < g) (w₁ wδ
     simp only [profile, f, Complex.ofReal_mul]
     ring
   simp_rw [hfun]
-  rw [arc_add
-      (continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn (hc 1 one_pos)))
-      (continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn (hc δ hδ))),
+  have hm (x : ℝ) (hx : 0 < x) (v : ℂ) :
+      ContinuousOn (fun z => v * (f x z : ℂ)) (Icc (-1 : ℝ) 1) :=
+    continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn (hc x hx))
+  rw [arc_add (hm 1 one_pos w₁) (hm δ hδ wδ),
     arc_cmul_ofReal, arc_cmul_ofReal, mul_add]
   rw [mul_left_comm (g : ℂ) w₁, mul_left_comm (g : ℂ) wδ, ← Complex.ofReal_mul,
     ← Complex.ofReal_mul, arcsine_odd_node_moment 1 g one_pos hg,
@@ -149,7 +152,9 @@ private lemma arcsine_affine_moment (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     have hden : D ≠ 0 := (kernelDen_pos hk hz').ne'
     have hL := (affine_ab_pos ha hb hz').ne'
     have hR := (affine_ab_pos ha hb hn).ne'
-    simp only [kernel, neg_sq]
+    change (affine a b z)⁻¹ + (affine a b (-z))⁻¹ =
+      2/(a+b)*kernel k z + 2/(a+b)*kernel k (-z)
+    rw [show kernel k (-z) = kernel k z by simp [kernel]]
     change (affine a b z)⁻¹ + (affine a b (-z))⁻¹ =
       2/(a+b)*D⁻¹ + 2/(a+b)*D⁻¹
     calc
@@ -191,10 +196,13 @@ private lemma arc_response {p q : ℝ} (hp : 0 < p) (hq : 0 < q) (c₀₀ c₁�
       ContinuousOn (fun z => c * ((affine a b z)⁻¹ : ℝ)) (Icc (-1 : ℝ) 1) :=
     continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn
       (continuousOn_affine_inv ha hb))
+  let f := fun a b : ℝ => fun c : ℂ => fun z : ℝ => c * ((affine a b z)⁻¹ : ℝ)
+  have h₀ : ContinuousOn (fun z => f p p c₀₀ z + f q q c₁₁ z) (Icc (-1 : ℝ) 1) :=
+    (hc p p hp hp c₀₀).add (hc q q hq hq c₁₁)
+  have h₁ : ContinuousOn (fun z => f p p c₀₀ z + f q q c₁₁ z + f p q c₀₁ z)
+      (Icc (-1 : ℝ) 1) := h₀.add (hc p q hp hq c₀₁)
   unfold response
-  rw [arc_add (((hc p p hp hp c₀₀).add (hc q q hq hq c₁₁)).add (hc p q hp hq c₀₁))
-      (hc q p hq hp c₁₀),
-    arc_add ((hc p p hp hp c₀₀).add (hc q q hq hq c₁₁)) (hc p q hp hq c₀₁),
+  rw [arc_add h₁ (hc q p hq hp c₁₀), arc_add h₀ (hc p q hp hq c₀₁),
     arc_add (hc p p hp hp c₀₀) (hc q q hq hq c₁₁)]
   simp_rw [arc_cmul_ofReal, arcsine_affine_moment _ _ hp hp, arcsine_affine_moment _ _ hq hq,
     arcsine_affine_moment _ _ hp hq, arcsine_affine_moment _ _ hq hp]
@@ -251,9 +259,12 @@ private theorem pair_petz_arcsine (p q u g β : ℝ) (X c₀₀ c₁₁ c₀₁ 
         (u : ℂ) * response p q c₀₀ c₁₁ c₀₁ c₁₀ z) by
     apply setIntegral_congr_fun measurableSet_Ioo
     intro z hz
-    rw [hpoint hz]]
-  rw [arc_sub (continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn hC))
-      (continuousOn_const.mul (response_continuous hp hq _ _ _ _)),
+    exact congrArg (arcsineDensity z • ·) (hpoint hz)]
+  have hL : ContinuousOn (fun z => X * ((1-β*z)⁻¹ : ℝ)) (Icc (-1 : ℝ) 1) :=
+    continuousOn_const.mul (Complex.continuous_ofReal.comp_continuousOn hC)
+  have hR : ContinuousOn (fun z => (u : ℂ) * response p q c₀₀ c₁₁ c₀₁ c₁₀ z)
+      (Icc (-1 : ℝ) 1) := continuousOn_const.mul (response_continuous hp hq _ _ _ _)
+  rw [arc_sub hL hR,
     arc_cmul_ofReal, hM, arc_cmul, arc_response hp hq]
   have hgc : (g : ℂ) ≠ 0 := by exact_mod_cast hg.ne'
   simp only [pairPetzResidual, Complex.ofReal_mul, Complex.ofReal_inv]
@@ -304,9 +315,15 @@ private theorem paired_profile_bound (g β δ : ℝ) (e₁ eδ w₁ wδ : ℂ)
       dsimp [F, B, e, w]
       rw [profile_even δ e₁ eδ z, profile_even δ w₁ wδ z]
       simp only [kernel, hge, neg_sq, Complex.ofReal_mul, Complex.ofReal_inv]
-      push_cast at *
-      field_simp [hAne z hz', hAne (-z) hn, hKn] <;> ring
-    rw [hs, arc_add he (continuousOn_const.mul hB), arc_cmul, mul_add,
+      push_cast
+      simp only [mul_neg, sub_neg_eq_add]
+      have hL : 1 - (β : ℂ) * (z : ℂ) ≠ 0 := by simpa using hAne z hz'
+      have hR : 1 + (β : ℂ) * (z : ℂ) ≠ 0 := by simpa using hAne (-z) hn
+      push_cast at hKn
+      field_simp [hL, hR, hKn] <;> ring
+    have hc : ContinuousOn (fun z => (β : ℂ) * B z) (Icc (-1 : ℝ) 1) :=
+      continuousOn_const.mul hB
+    rw [hs, arc_add (f := e) he hc, arc_cmul, mul_add,
       arc_even_profile hδ e₁ eδ, mul_left_comm (g : ℂ) (β : ℂ),
       arc_odd_profile hδ hg w₁ wδ]
   let en := fun z : ℝ => Complex.normSq (e z)
@@ -338,7 +355,9 @@ private theorem paired_profile_bound (g β δ : ℝ) (e₁ eδ w₁ wδ : ℂ)
       simp only [kernel, hge, Complex.normSq_apply, Complex.add_re, Complex.add_im,
         Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
         mul_zero, zero_mul, sub_zero, zero_add]
-      field_simp [(affine_pos hβ hz').ne', (affine_pos hβ hn).ne', hKn] <;> ring
+      simp only [mul_neg, sub_neg_eq_add]
+      have hR : 1 + β * z ≠ 0 := by simpa using (affine_pos hβ hn).ne'
+      field_simp [(affine_pos hβ hz').ne', hR, hKn] <;> ring
     rw [setIntegral_congr_fun measurableSet_Ioo hp,
       integral_add ((hen.integrableOn_compact isCompact_Icc).mono_set
         (show Ioo (0 : ℝ) 1 ⊆ Icc (-1 : ℝ) 1 from fun z hz => ⟨by linarith [hz.1], hz.2.le⟩))
@@ -346,7 +365,7 @@ private theorem paired_profile_bound (g β δ : ℝ) (e₁ eδ w₁ wδ : ℂ)
         (show Ioo (0 : ℝ) 1 ⊆ Icc (-1 : ℝ) 1 from fun z hz => ⟨by linarith [hz.1], hz.2.le⟩))]
     rw [reciprocal_change en, reciprocal_change od]
     have hroot (t : ℝ) (ht : 0 < t) :
-        jacobian t * (1+t)^2 = Real.sqrt (1+t)/2 := by
+        jacobian t * ((1+t)*(1+t)) = Real.sqrt (1+t)/2 := by
       unfold jacobian
       have hS := Real.sq_sqrt (show 0 ≤ 1+t by positivity)
       have hne : Real.sqrt (1+t) ≠ 0 := (Real.sqrt_pos.2 (by positivity)).ne'
@@ -397,8 +416,9 @@ private theorem paired_profile_bound (g β δ : ℝ) (e₁ eδ w₁ wδ : ℂ)
         field_simp [show 1+t ≠ 0 by positivity, show g^2+t ≠ 0 by positivity]
       simp only [smul_eq_mul, od, hq, hp₂ t ht0, Complex.normSq_mul, Complex.normSq_ofReal,
         oddComplexEnergy]
-      rw [show ∀ v : ℝ, jacobian t * ((g^2+t)⁻¹ * ((1+t)^2 * v)) =
-        (jacobian t * (1+t)^2) * ((g^2+t)⁻¹ * v) by intro v; ring, hroot t ht0]
+      rw [show ∀ v : ℝ, jacobian t * ((g^2+t)⁻¹ * (((1+t)*(1+t)) * v)) =
+        (jacobian t * ((1+t)*(1+t))) * ((g^2+t)⁻¹ * v) by intro v; ring, hroot t ht0]
+      simp only [div_eq_mul_inv, mul_inv]
       ring
   change Complex.normSq ((g : ℂ) * arcIntegral (fun z => F z / ((1-β*z : ℝ) : ℂ))) ≤
     parityMultiplier δ * (∫ z in Ioo (-1 : ℝ) 1, Complex.normSq (F z) / (1-β*z) / 2)
@@ -497,6 +517,7 @@ private theorem pair_bound (p q u g β : ℝ) (X c₀₀ c₁₁ c₀₁ c₁₀
       ∫ z in Ioo (-1 : ℝ) 1, Complex.normSq (F' z) / (1-β*z) / 2 := by
     apply setIntegral_congr_fun measurableSet_Ioo
     intro z hz
+    dsimp only
     rw [show F z = F' z from hprofile z hz]
   rw [pair_petz_arcsine p q u g β X c₀₀ c₁₁ c₀₁ c₁₀ hp hq hg hgb]
   change Complex.normSq ((g : ℂ) * arcIntegral (fun z => F z / ((1-β*z : ℝ) : ℂ))) ≤
@@ -506,7 +527,6 @@ private theorem pair_bound (p q u g β : ℝ) (X c₀₀ c₁₁ c₀₁ c₁₀
 
 section PhysicalEntries
 
-open D5.S3.Quantum.Divergence.UmegakiConditionalBKM (residual)
 open D5.S3.Quantum.Divergence.UmegakiConditionalKernel
   (arithmetic inverseMatrix arithmetic_inverseMatrix)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
@@ -514,7 +534,7 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open BKMFlagRefinement (partialTracePetz lift)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
-variable {E : Type*} [Fintype E] [DecidableEq E]
+variable {E : Type} [Fintype E] [DecidableEq E]
 
 private abbrev coordinates (U : Matrix.unitaryGroup n ℂ) (A : Matrix n n ℂ) :=
   U.valᴴ * A * U.val
@@ -608,7 +628,7 @@ private theorem pair_entry_representations
     let C := fun a b : Fin 2 => coordinates V (partialTraceRight H) a b *
       coordinates U ((V.val * Matrix.single a b (1 : ℂ) * V.valᴴ) ⊗ₖ (1 : Matrix E E ℂ)) i j
     (∀ z ∈ Ioo (-1 : ℝ) 1,
-      coordinates U (UmegakiConditionalBKM.residual Z H ((z+1)/2)) i j =
+      coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H ((z+1)/2)) i j =
         pairResidual (p 0) (p 1) u β X (C 0 0) (C 1 1) (C 0 1) (C 1 0) z) ∧
       coordinates U (H - BKMFlagRefinement.partialTracePetz Z (partialTraceRight H)) i j =
         pairPetzResidual (p 0) (p 1) u g X (C 0 0) (C 1 1) (C 0 1) (C 1 0) := by
@@ -642,7 +662,7 @@ private theorem pair_entry_representations
         (eigenvalues i+eigenvalues j)/2 * (1-((eigenvalues i-eigenvalues j)/(eigenvalues i+eigenvalues j))*z) := by
       dsimp [s]
       field_simp [(add_pos hi hj).ne'] <;> ring
-    unfold residual pairResidual response
+    unfold D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual pairResidual response
     simp only [coordinates_sub, Matrix.sub_apply]
     change coordinates U H i j -
       coordinates U (arithmetic Z (R ⊗ₖ (1 : Matrix E E ℂ)) s) i j = _
@@ -654,7 +674,8 @@ private theorem pair_entry_representations
     have hS : coordinates U S = diagReal (fun k => Real.sqrt (eigenvalues k)) := by
       simp only [S, mpow_spectral U hZ hZD, ← Real.sqrt_eq_rpow, coordinates_spectral]
     have hT : coordinates V T = diagReal (fun a => (Real.sqrt (p a))⁻¹) := by
-      rw [T, mpow_spectral V hP.isHermitian hPD, coordinates_spectral]
+      dsimp only [T]
+      rw [mpow_spectral V hP.isHermitian hPD, coordinates_spectral]
       congr 1
       funext a
       rw [Real.rpow_neg (hp a).le, ← Real.sqrt_eq_rpow]
@@ -698,7 +719,7 @@ theorem physical_entry_arcsine_and_bound
     let u := (eigenvalues i + eigenvalues j)/2
     let β := (eigenvalues i - eigenvalues j)/(eigenvalues i + eigenvalues j)
     let g := Real.sqrt (eigenvalues i * eigenvalues j) / u
-    let F := fun z : ℝ => (U.valᴴ * UmegakiConditionalBKM.residual Z H ((z+1)/2) * U.val) i j
+    let F := fun z : ℝ => (U.valᴴ * D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H ((z+1)/2) * U.val) i j
     let Y := (U.valᴴ * (H - BKMFlagRefinement.partialTracePetz Z (partialTraceRight H)) * U.val) i j
     Y = (g : ℂ) * arcIntegral (fun z => F z / ((1-β*z : ℝ) : ℂ)) ∧
       Complex.normSq Y ≤ parityMultiplier (2*Real.sqrt (p 0 * p 1)) *
@@ -709,7 +730,7 @@ theorem physical_entry_arcsine_and_bound
   let X := coordinates U H i j
   let C := fun a b : Fin 2 => coordinates V (partialTraceRight H) a b *
     coordinates U ((V.val * Matrix.single a b (1 : ℂ) * V.valᴴ) ⊗ₖ (1 : Matrix E E ℂ)) i j
-  let F := fun z : ℝ => coordinates U (residual Z H ((z+1)/2)) i j
+  let F := fun z : ℝ => coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H ((z+1)/2)) i j
   let Y := coordinates U (H-partialTracePetz Z (partialTraceRight H)) i j
   change Y = (g : ℂ) * arcIntegral (fun z => F z / ((1-β*z : ℝ) : ℂ)) ∧
     Complex.normSq Y ≤ parityMultiplier (2*Real.sqrt (p 0*p 1)) *
@@ -735,10 +756,13 @@ theorem physical_entry_arcsine_and_bound
       ∫ z in Ioo (-1 : ℝ) 1, Complex.normSq (F' z) / (1-β*z) / 2 := by
     apply setIntegral_congr_fun measurableSet_Ioo
     intro z hz
+    dsimp only
     rw [show F z = F' z from hF hz]
   rw [hY, hArc, hEnergy]
   exact ⟨pair_petz_arcsine _ _ u g β _ _ _ _ _ (hp 0) (hp 1) hg hgb,
     pair_bound _ _ u g β _ _ _ _ _ (hp 0) (hp 1) hpq hg hgb⟩
+
+#print axioms physical_entry_arcsine_and_bound
 
 end PhysicalEntries
 
