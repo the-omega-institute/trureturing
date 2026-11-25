@@ -40,7 +40,7 @@ private theorem kernel_cos_integral {η : ℝ} (hη : 0 < η) (d : ℝ) :
   simp only [he,mul_zero,Real.cos_zero,mul_one] at h
   exact h
 
-private theorem kernel_pair_integrable {I : Type*} (s : Finset I) (x c : I → ℝ)
+theorem kernel_pair_integrable {I : Type*} (s : Finset I) (x c : I → ℝ)
     {η : ℝ} (hη : 0 < η) :
     Integrable (fun t => K η t * pairCosineScore s x c t) := by
   simp_rw [pairCosineScore,mul_sum]

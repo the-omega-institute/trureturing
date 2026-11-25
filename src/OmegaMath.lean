@@ -13,6 +13,7 @@ public import OmegaMath.Algebra.Quaternion
 public import OmegaMath.Arithmetic.ContinuedFraction
 public import OmegaMath.Arithmetic.DepthBudget
 public import OmegaMath.Arithmetic.Euclidean
+public import OmegaMath.Arithmetic.Fibonacci.AlternatingSum
 public import OmegaMath.Arithmetic.WDigits.Codec
 public import OmegaMath.Arithmetic.WDigits.Geometric
 public import OmegaMath.Arithmetic.WDigits.Interchange
@@ -55,6 +56,7 @@ public import OmegaMath.Logic.Function.Basic
 public import OmegaMath.Logic.Function.Defs
 public import OmegaMath.Matrix.LagrangeSchur
 public import OmegaMath.Matrix.Mat2
+public import OmegaMath.Matrix.Mat2.Discriminant
 public import OmegaMath.Matrix.Mat2.Hurwitz
 public import OmegaMath.Projective
 public import OmegaMath.Projective.Basic

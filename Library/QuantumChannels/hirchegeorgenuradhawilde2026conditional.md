@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
@@ -29,7 +31,7 @@ No DOI or journal reference is listed in the arXiv metadata. The text was read f
 - p. 8, Definition 2, Eqs. (2.12)–(2.14);
 - p. 9, Remark 2;
 - p. 37, §5, Eqs. (5.1)–(5.2);
-- p. 40, Proposition 8;
+- p. 40, Proposition 8 and Remark 6;
 - p. 72, §9, the first open problem.
 - p. 72, §9, the second open problem (faithful-divergence separation).
 
@@ -58,6 +60,31 @@ The repository proves two statements:
 - S_γ(N) = S_δ(N) for all γ, δ ≥ 1, so η^Δ_{E_γ}(N) does not depend on γ ≥ 1.
 
 In the formal numerator, the subtracted reference marginals are taken of the output states (id ⊗ N)ρ and (id ⊗ N)σ; they equal ρ_R and σ_R because N is trace preserving.
+
+## Complete hockey-stick contraction
+
+`CompleteHockeyStickRefutation.refutes_monotonicity_and_orthogonal_reduction`
+gives a binary measure-and-prepare channel with complete coefficient at most
+$3/5$ at $\gamma=1$ and at least $9/10$ at $\gamma=2$. The orthogonal-input
+complete coefficient is at most $3/5$ for every $\gamma\ge 1$. This answers
+Remark 6 on $[1,\infty)$ and the complete-coefficient case of the first
+question in §9. Both upper bounds quantify over all finite quantum references.
+The lower bound uses two-dimensional input, output and reference systems.
+
+Eriksson, *Common support and complete contraction with quantum side information*,
+v3, §6.4, gives an earlier complete Umegaki ratio above its trace endpoint for
+a different channel. Integrating the two ordered hockey-stick divergences
+gives the qualitative failure of endpoint monotonicity as a consequence of
+that earlier result. The Lean theorem gives an explicit rational witness at
+$\gamma=2$ with no relative-entropy step. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickBasisSupport.result` gives a sufficient condition for a
+unit complete coefficient at every fixed $\gamma>1$. For a finite channel with
+at least two computational basis states, intersect the supports of their
+outputs. If the intersection is zero, equal-marginal witnesses approach
+retention one with a reference of input dimension. The simplex uses Eriksson's
+common-support construction in §6 with input blocks calibrated directly for
+the fixed hockey-stick parameter. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
 
 ## Faithful-divergence separation
 

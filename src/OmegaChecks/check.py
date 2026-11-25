@@ -9,6 +9,8 @@ import subprocess
 import sys
 import tempfile
 
+import portable
+import scope as affected_scope
 from portable import BASIS, closure, import_graph, root
 from strict_lake import BUILD, COMMON_SRC, lake_layout, strict_config
 
@@ -126,6 +128,9 @@ def check_consumer_exports():
              "public def B.item : Prop := ∀ p q : Prop, p → q → p\n")
     alias = "namespace Visible\nexport A (item)\nend Visible\n"
     generated = "public inductive Choice where | first | second\n"
+    size_of = ("public import Init\npublic import OmegaInit.Prelude\n"
+               "public structure Wrapper where value : Omega.Nat\n"
+               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Nat.zero.succ)\n")
     field = ("public import OmegaInit.Prelude\npublic section\n"
              "abbrev FieldReceiver := Omega.Nat\n"
              "def Omega.Nat.projectField (value : FieldReceiver) := value\n")
@@ -151,6 +156,8 @@ def check_consumer_exports():
              "public import OmegaInit.Prelude\nnamespace Public\nexport Omega.And (left)\nend Public",
              False, "1 roots"),
             (generated, generated, False, "Choice.casesOn"),
+            (size_of + "example : derivedSize = 1 := rfl\n",
+             size_of + "example : derivedSize = 2 := rfl\n", True, "Wrapper"),
             (local, "public import Lean\n" + local + "public section\nrun_meta do\n"
              "  discard <| Lean.Meta.getEqnsFor? `Nat.mul\n"
              "  discard <| Lean.Meta.getUnfoldEqnFor? `Nat.mul", False, "Nat.mul.eq_1"),
@@ -400,7 +407,7 @@ def check_standard_admission():
                                 "/-! Omega original. -/\n"
                                 "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\n")
         lean("-R", tmp, "-o", always_prime.with_suffix(".olean"), always_prime)
-        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "missing computation correspondence for Omega.Nat.Prime")
+        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "certificate statement mismatch for Omega.Nat.Prime")
         fib = "OmegaMathlib.Data.Nat.Fib.Basic"
         altered = tmp / "OmegaMathlib/Data/Nat/Fib/Basic.lean"
         altered.parent.mkdir(parents=True)
@@ -485,20 +492,9 @@ def check_incremental():
             build(targets)
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--incremental", action="store_true")
-    parser.add_argument("--library", nargs="*", metavar="MODULE",
-                        help="build selected Omega modules and audit their strict import closure")
-    args = parser.parse_args()
-    ENV.update(lake_environment())
-    if args.library is not None:
-        check_library(args.library)
-        sys.exit(0)
-    manifest = ROOT / "lake-manifest.json"
-    initial = manifest.read_bytes()
+def check_ordinary_importer():
     # A fresh ordinary importer must be able to apply project declarations to official types.
-    run("lake", "build", "+OmegaMath", "+OmegaChecks.Portable.Common")
+    run("lake", "build", *("+" + name for name in sorted(affected_scope.IMPORTER_INPUTS)))
     subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, check=True, text=True, input="""
 import OmegaMath
 import OmegaChecks.Portable.Common
@@ -508,13 +504,80 @@ example (n : Nat) : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) :=
   OmegaChecks.Portable.Common.fibonacciRecurrence n
 example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLeft h
 """)
+
+
+def full_check(incremental=False):
+    manifest = ROOT / "lake-manifest.json"
+    initial = manifest.read_bytes()
+    check_ordinary_importer()
     # The compiled driver runs the current Audit.lean without elaborating it for every audit.
     run("lake", "build", "omegaAudit")
     check_audits()
     run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
     check_fibonacci_reduction()
-    if args.incremental:
+    if incremental:
         check_incremental()
     if manifest.read_bytes() != initial:
         raise RuntimeError("Lake manifest changed")
     print("manifest SHA-256:", hashlib.sha256(initial).hexdigest())
+
+
+def scoped_check(scope):
+    if scope["shared"]:
+        print(f"Shared Omega inputs changed: {' '.join(scope['shared'])}", flush=True)
+        ENV.update(lake_environment())
+        full_check()
+        return
+    if not affected_scope.cache_targets(scope):
+        print("No affected Omega modules", flush=True)
+        return
+    print(f"Affected Omega library and witness targets: {' '.join(scope['library'])}", flush=True)
+    if scope["library"]:
+        ENV.update(lake_environment())
+        run("lake", "build", "omegaAudit")
+        check_library(scope["library"])
+    if affected_scope.importer_affected(scope):
+        check_ordinary_importer()
+    if affected_scope.report_file(scope):
+        portable.check(scope["consumers"], "both", basis_roots=scope["basis"], common_roots=scope["common"])
+    if affected_scope.FIBONACCI in scope["basis"]:
+        check_fibonacci_reduction()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--incremental", action="store_true")
+    modes.add_argument("--library", nargs="*", metavar="MODULE",
+                       help="build selected Omega modules and audit their strict import closure")
+    modes.add_argument("--full", action="store_true", help="run the complete audit and regression probes")
+    modes.add_argument("--write-scope", type=Path, help="plan from the CI changed-path manifest")
+    parser.add_argument("--changed", type=Path, default=os.environ.get("CI_CHANGED_PATHS_FILE"))
+    parser.add_argument("--scope", type=Path, default=os.environ.get("OMEGA_SCOPE_FILE"))
+    parser.add_argument("--cache-targets", type=Path, help="write the cache restore roots during planning")
+    args = parser.parse_args()
+    if args.write_scope:
+        if not args.changed or not args.cache_targets or args.scope:
+            parser.error("--write-scope requires --changed and --cache-targets")
+        scope = affected_scope.discover(args.changed)
+        args.write_scope.write_text(json.dumps(scope) + "\n")
+        targets = affected_scope.cache_targets(scope)
+        args.cache_targets.write_text("".join(name + "\n" for name in targets))
+        report = affected_scope.report_file(scope)
+        if output := os.environ.get("GITHUB_OUTPUT"):
+            with open(output, "a") as stream:
+                if targets:
+                    print(f"targets-file={args.cache_targets}", file=stream)
+                if report:
+                    print(f"report-file={report}", file=stream)
+        print(f"Omega scope: {len(targets)} cache roots, {len(scope['consumers'])} consumer targets, "
+              f"{len(scope['common'])} common targets", flush=True)
+    elif args.library is not None:
+        ENV.update(lake_environment())
+        check_library(args.library)
+    elif args.full or args.incremental or not (args.scope or args.changed):
+        ENV.update(lake_environment())
+        full_check(args.incremental)
+    else:
+        scope = json.loads(args.scope.read_text()) if args.scope else affected_scope.discover(args.changed)
+        scoped_check(scope)

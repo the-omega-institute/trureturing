@@ -3,6 +3,7 @@ module
 public import OmegaChecks.Interface.Equations.Logic
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Prime.Defs
 
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
@@ -65,5 +66,10 @@ public theorem Int.subNatNat (m n : Nat) : difference m n = _root_.Int.subNatNat
     cases n with
     | zero => simp [difference, _root_.Int.subNatNat]
     | succ n => simpa [difference, _root_.Int.subNatNat] using ih n
+
+/-- The divisor characterization computes the pinned prime predicate at every input. -/
+public theorem Nat.Prime (p : Nat) :
+    (2 ≤ p ∧ ∀ m, (∃ k, p = m * k) → m = 1 ∨ m = p) = _root_.Nat.Prime p :=
+  propext _root_.Nat.prime_def.symm
 
 end OmegaChecks.Interface.Equations
