@@ -7,6 +7,8 @@
    digest: Classify rational three-point unit Gram realizations in five coordinates. -/
 
 import D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
+import D5.S3.Quantum.AURICOmega.OmegaShadowBridge
+import D5.S3.Quantum.Entanglement.Marginals.FibRationalBoundary
 import D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint
 import Mathlib.Algebra.Quaternion
 import Mathlib.Algebra.Order.Field.Rat
@@ -19,12 +21,15 @@ import OmegaMath.Algebra.Quaternion
 open scoped Quaternion
 open Quaternion
 open D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex (rational_unit_reflection)
+open D5.S3.Quantum.AURICOmega.OmegaShadowBridge
+  (toStdInt toStdInt_add toStdInt_mul toStdInt_neg)
+open D5.S3.Quantum.Entanglement.Marginals.FibRationalBoundary (fromInt to_fromInt)
 open D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint (four_rational_squares)
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
 private def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
-  ⟨(x.w : ℤ), (x.x : ℤ), (x.y : ℤ), (x.z : ℤ)⟩
+  ⟨toStdInt x.w, toStdInt x.x, toStdInt x.y, toStdInt x.z⟩
 
 private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
     ∃ a : Omega.Quaternion, ∃ d : ℚ, x = d⁻¹ • readQuaternion a := by
@@ -32,13 +37,13 @@ private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
   have nz (q : ℚ) : (q.den : ℚ) ≠ 0 := by exact_mod_cast q.den_ne_zero
   let d := m x.re * m x.imI * m x.imJ * m x.imK
   let a : Omega.Quaternion :=
-    ⟨x.re.num * x.imI.den * x.imJ.den * x.imK.den,
-     x.imI.num * x.re.den * x.imJ.den * x.imK.den,
-     x.imJ.num * x.re.den * x.imI.den * x.imK.den,
-     x.imK.num * x.re.den * x.imI.den * x.imJ.den⟩
+    ⟨fromInt (x.re.num * x.imI.den * x.imJ.den * x.imK.den),
+     fromInt (x.imI.num * x.re.den * x.imJ.den * x.imK.den),
+     fromInt (x.imJ.num * x.re.den * x.imI.den * x.imK.den),
+     fromInt (x.imK.num * x.re.den * x.imI.den * x.imJ.den)⟩
   refine ⟨a, d, ?_⟩
   ext <;> simp only [readQuaternion, Quaternion.re_smul, Quaternion.imI_smul,
-    Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, a, Int.cast_mul,
+    Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, a, to_fromInt, Int.cast_mul,
     Int.cast_natCast] <;> dsimp only [d, m]
   · conv_lhs => rw [← Rat.num_div_den x.re]
     field_simp [nz]
@@ -50,14 +55,14 @@ private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
     field_simp [nz]
 
 private theorem readQuaternion_dot (a b : Omega.Quaternion) :
-    ((a.dot b : ℤ) : ℚ) = (star (readQuaternion a) * readQuaternion b).re := by
-  change (((a.w * b.w + a.x * b.x) + (a.y * b.y + a.z * b.z) : ℤ) : ℚ) = _
+    (toStdInt (a.dot b) : ℚ) = (star (readQuaternion a) * readQuaternion b).re := by
+  simp only [Omega.Quaternion.dot, toStdInt_add, toStdInt_mul]
   push_cast
   simp [readQuaternion]
   ring
 
 private theorem readQuaternion_norm (a : Omega.Quaternion) :
-    ((a.dot a : ℤ) : ℚ) = normSq (readQuaternion a) := by
+    (toStdInt (a.dot a) : ℚ) = normSq (readQuaternion a) := by
   rw [readQuaternion_dot, star_mul_self, re_coe]
 
 private theorem scaledQuaternion_dot (d e : ℚ) (x y : ℍ[ℚ]) :
@@ -70,13 +75,14 @@ private theorem rationalQuaternionGramDet (x y : ℍ[ℚ]) :
   obtain ⟨a, d, hx⟩ := clearQuaternionDenominators x
   obtain ⟨b, e, hy⟩ := clearQuaternionDenominators y
   let q := a.conj.mul b
-  have hz : a.dot a * b.dot b - a.dot b * a.dot b =
-      q.x * q.x + q.y * q.y + q.z * q.z :=
-    Omega.Quaternion.gramDet_eq_imaginary_squares a b
-  have h := congrArg (fun z : ℤ => (z : ℚ)) hz
-  push_cast at h
+  have hz : ((a.dot a).mul (b.dot b)).sub (Omega.Int.square (a.dot b)) =
+      ((Omega.Int.square q.x).add (Omega.Int.square q.y)).add (Omega.Int.square q.z) :=
+    Omega.Eq.rec rfl (Omega.Quaternion.gramDet_eq_imaginary_squares a b)
+  have h := congrArg (fun z : Omega.Int => (toStdInt z : ℚ)) hz
+  simp only [Omega.Int.sub, Omega.Int.square, toStdInt_add, toStdInt_mul,
+    toStdInt_neg, Int.cast_add, Int.cast_mul, Int.cast_neg, ← sub_eq_add_neg] at h
   rw [readQuaternion_norm, readQuaternion_norm, readQuaternion_dot] at h
-  refine ⟨d⁻¹ * e⁻¹ * (q.x : ℤ), d⁻¹ * e⁻¹ * (q.y : ℤ), d⁻¹ * e⁻¹ * (q.z : ℤ), ?_⟩
+  refine ⟨d⁻¹ * e⁻¹ * toStdInt q.x, d⁻¹ * e⁻¹ * toStdInt q.y, d⁻¹ * e⁻¹ * toStdInt q.z, ?_⟩
   rw [hx, hy, normSq_smul, normSq_smul, scaledQuaternion_dot]
   linear_combination d⁻¹ ^ 2 * e⁻¹ ^ 2 * h
 

@@ -37,5 +37,9 @@ internal sealed class RationalUnitTripleGramDocument : IScribeDocumentDefinition
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex")),
          DocumentEdge.Dependency.Create(GidRef.Create(
+            "D5/S3/Quantum/AURICOmega/OmegaShadowBridge")),
+         DocumentEdge.Dependency.Create(GidRef.Create(
+            "D5/S3/Quantum/Entanglement/Marginals/FibRationalBoundary")),
+         DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Quantum/Entanglement/Marginals/RationalQubitMixedEndpoint"))]));
 }
