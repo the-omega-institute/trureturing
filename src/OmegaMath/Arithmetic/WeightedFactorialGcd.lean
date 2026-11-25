@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Arithmetic.SimultaneousFloor
 
 /-! Omega original.
@@ -8,6 +9,8 @@ Nonnegative weighted finite profiles. Saturating the unweighted lower bound
 gives one common minimizer for every natural weight vector. Complementary
 weights partition the same profile exactly.
 -/
+
+noncomputable section
 
 @[expose] public section
 
@@ -32,12 +35,12 @@ private theorem sumBelow_add (n : Nat) (f g : Nat → Nat) :
       ((sumBelow n f).add (sumBelow n g)) :=
   Nat.rec (motive := fun n =>
       Eq (sumBelow n (fun i => (f i).add (g i)))
-        ((sumBelow n f).add (sumBelow n g))) rfl
-    (fun i ih => (congrArg (fun x => x.add ((f i).add (g i))) ih).trans
+        ((sumBelow n f).add (sumBelow n g))) (Nat.add_zero Nat.zero).symm
+    (fun i ih => (congrArg (fun x : Nat => x.add ((f i).add (g i))) ih).trans
       ((Nat.add_assoc _ _ _).trans
         ((congrArg (Nat.add (sumBelow i f))
           ((Nat.add_assoc _ _ _).symm.trans
-            ((congrArg (fun x => x.add (g i)) (Nat.add_comm (sumBelow i g) (f i))).trans
+            ((congrArg (fun x : Nat => x.add (g i)) (Nat.add_comm (sumBelow i g) (f i))).trans
               (Nat.add_assoc _ _ _)))).trans (Nat.add_assoc _ _ _).symm))) n
 
 /-- The two weights split the same finite profile, including zero coefficients. -/

@@ -11,12 +11,15 @@ module
 public import D5.S3.Arith.FactorialRatio.RankOneLCMGcd
 public import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
 public import OmegaMath.Arithmetic.WeightedFactorialGcd
+public import OmegaChecks.NatCorrespondence
 public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.Algebra.CharZero.Infinite
 public import Mathlib.Data.Nat.Prime.Factorial
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Mathlib.NumberTheory.RamificationInertia.Basic
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Ring
 
 /-!
 For a prime p, equality in the ordinary factorial valuation lower bound
@@ -35,24 +38,99 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
 
 open Finset
-open scoped Nat
+open scoped Nat NumberField
 open RankOneLCMGcd
 
 namespace SF
 open Omega.Arithmetic.SimultaneousFloor
+open OmegaChecks.NatCorrespondence
 
-private theorem sumBelow_eq_sum_range (n : ℕ) (f : ℕ → ℕ) :
-    sumBelow n f = ∑ i ∈ range n, f i := by
+private theorem sumBelow_eq_sum_range (n : ℕ) (f : Omega.Nat → Omega.Nat) :
+    toStd (sumBelow (fromStd n) f) = ∑ i ∈ range n, toStd (f (fromStd i)) := by
   induction n with
   | zero => rfl
-  | succ n ih => simpa [sumBelow, Finset.sum_range_succ] using congrArg (· + f n) ih
+  | succ n ih =>
+    change toStd ((sumBelow (fromStd n) f).add (f (fromStd n))) = _
+    rw [toStd_add, ih, Finset.sum_range_succ]
+
+private noncomputable def liftProfile (f : ℕ → ℕ) (i : Omega.Nat) : Omega.Nat :=
+  fromStd (f (toStd i))
+
+private theorem sumBelow_lift (n : ℕ) (f : ℕ → ℕ) :
+    toStd (sumBelow (fromStd n) (liftProfile f)) = ∑ i ∈ range n, f i := by
+  simp only [sumBelow_eq_sum_range, liftProfile, toStd_fromStd]
+
+private theorem eq_of_toStd_eq {a b : Omega.Nat} (h : toStd a = toStd b) : Omega.Eq a b := by
+  have hab : a = b := (fromStd_toStd a).symm.trans
+    ((congrArg fromStd h).trans (fromStd_toStd b))
+  cases hab
+  exact Omega.Eq.refl a
+
+private theorem lt_toStd {n : ℕ} {i : Omega.Nat}
+    (hi : Omega.Nat.lt i (fromStd n)) : toStd i < n := by
+  have h := (toStd_le_iff i.succ (fromStd n)).mpr hi
+  change (toStd i).succ ≤ toStd (fromStd n) at h
+  exact Nat.lt_of_succ_le (by simpa only [toStd_fromStd] using h)
+
+private theorem lt_fromStd {i n : ℕ} (hi : i < n) :
+    Omega.Nat.lt (fromStd i) (fromStd n) := by
+  apply (toStd_le_iff (fromStd i).succ (fromStd n)).mp
+  change (toStd (fromStd i)).succ ≤ toStd (fromStd n)
+  simpa only [toStd_fromStd] using Nat.succ_le_of_lt hi
+
+private theorem lift_order (n : ℕ) (f g : ℕ → ℕ) (h : ∀ i < n, f i ≤ g i) :
+    ∀ i, Omega.Nat.lt i (fromStd n) → Omega.Nat.le (liftProfile f i) (liftProfile g i) := by
+  intro i hi
+  apply (toStd_le_iff _ _).mp
+  simpa only [liftProfile, toStd_fromStd] using h (toStd i) (lt_toStd hi)
+
+private theorem toStd_mul (a b : Omega.Nat) : toStd (a.mul b) = toStd a * toStd b := by
+  induction b using Omega.Nat.rec with
+  | zero =>
+    have hz : a.mul Omega.Nat.zero = Omega.Nat.zero := by
+      simpa only [Nat.mul_eq] using fromOmegaEq (Omega.Nat.mul_zero a)
+    rw [hz]
+    change 0 = toStd a * 0
+    exact (Nat.mul_zero _).symm
+  | succ b ih =>
+    have hm : a.mul b.succ = (a.mul b).add a := by
+      simpa only [Nat.mul_eq, Nat.add_eq] using fromOmegaEq (Omega.Nat.mul_succ a b)
+    rw [hm, toStd_add, ih]
+    change toStd a * toStd b + toStd a = toStd a * (toStd b).succ
+    exact (Nat.mul_succ _ _).symm
+
+private theorem weightedTotal_eq_sum_range (n : ℕ) (c f : Omega.Nat → Omega.Nat) :
+    toStd (Omega.Arithmetic.WeightedFactorialGcd.weightedTotal (fromStd n) c f) =
+      ∑ i ∈ range n, toStd (c (fromStd i)) * toStd (f (fromStd i)) := by
+  simp only [Omega.Arithmetic.WeightedFactorialGcd.weightedTotal,
+    sumBelow_eq_sum_range, toStd_mul]
 
 /-- The strict finite-saturation theorem interpreted on the ordinary natural numbers. -/
 private theorem saturation_range (n : ℕ) (f g : ℕ → ℕ)
     (h : ∀ i < n, f i ≤ g i) (hs : (∑ i ∈ range n, f i) = ∑ i ∈ range n, g i) :
     ∀ i < n, f i = g i := by
-  apply saturation n f g h
-  simpa only [sumBelow_eq_sum_range] using hs
+  have heq := saturation (fromStd n) (liftProfile f) (liftProfile g) (lift_order n f g h)
+    (eq_of_toStd_eq (by rw [sumBelow_lift, sumBelow_lift]; exact hs))
+  intro i hi
+  have hh := congrArg toStd (fromOmegaEq (heq (fromStd i) (lt_fromStd hi)))
+  simpa only [liftProfile, toStd_fromStd] using hh
+
+private theorem weighted_saturation_range (n : ℕ) (f g c : ℕ → ℕ)
+    (h : ∀ i < n, f i ≤ g i) (hs : (∑ i ∈ range n, f i) = ∑ i ∈ range n, g i) :
+    (∑ i ∈ range n, c i * f i) = ∑ i ∈ range n, c i * g i := by
+  have hw := Omega.Arithmetic.WeightedFactorialGcd.saturation_weighted
+    (fromStd n) (liftProfile f) (liftProfile g) (lift_order n f g h)
+    (eq_of_toStd_eq (by rw [sumBelow_lift, sumBelow_lift]; exact hs)) (liftProfile c)
+  have hh := congrArg toStd (fromOmegaEq hw)
+  simpa only [weightedTotal_eq_sum_range, liftProfile, toStd_fromStd] using hh
+
+private theorem weighted_partition_range (n : ℕ) (c d f : ℕ → ℕ) :
+    (∑ i ∈ range n, (c i + d i) * f i) =
+      (∑ i ∈ range n, c i * f i) + ∑ i ∈ range n, d i * f i := by
+  have hw := Omega.Arithmetic.WeightedFactorialGcd.weightedTotal_partition
+    (fromStd n) (liftProfile c) (liftProfile d) (liftProfile f)
+  have hh := congrArg toStd (fromOmegaEq hw)
+  simpa only [toStd_add, weightedTotal_eq_sum_range, liftProfile, toStd_fromStd] using hh
 
 end SF
 
@@ -82,7 +160,9 @@ private theorem floor_lower {H M q : ℕ} (hq : 0 < q) (hMH : M ≤ H)
         Finset.sum_le_sum fun i _ => by have := Nat.mod_lt (a i) hq; omega
       _ = _ := by simp
   have hcap : (M + 1) * (q - 1) + (M + 1) = (M + 1) * q := by
-    rw [← Nat.mul_add, Nat.sub_add_cancel hq]
+    calc
+      _ = (M + 1) * ((q - 1) + 1) := by ring
+      _ = _ := by rw [Nat.sub_add_cancel hq]
   have hmul : q * (floorProfile q a + M + 1) =
       q * floorProfile q a + ((M + 1) * (q - 1) + (M + 1)) := by
     rw [hcap]
@@ -276,13 +356,12 @@ private theorem saturated_weighted_profile {H M p : ℕ}
       ∑ j ∈ range (H + 1), floorProfile (p ^ (j + 1)) a := by
     rw [← tail_profile_sum hp, ← factorial_profile_sum hp hMH a ha]
     exact heq.symm
-  have hw := Omega.Arithmetic.WeightedFactorialGcd.saturation_weighted (H + 1)
+  exact SF.weighted_saturation_range (H + 1)
     (fun j => floorMinimum H M (p ^ (j + 1)))
     (fun j => floorProfile (p ^ (j + 1)) a)
+    (c p)
     (fun j _ => floor_lower (pow_pos hp.pos _) hMH a ha)
-    (by simpa only [SF.sumBelow_eq_sum_range] using hs) (c p)
-  simpa only [Omega.Arithmetic.WeightedFactorialGcd.weightedTotal,
-    SF.sumBelow_eq_sum_range] using hw
+    hs
 
 private theorem tail_ne_zero (H M : ℕ) : tailLCM H M ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun k _ => Nat.lcmUpto_ne_zero (H / k)
@@ -530,10 +609,8 @@ private theorem weightedValue_add (H : ℕ) (c c' : ℕ → ℕ → ℕ) (n : �
   intro p _
   rw [← pow_add]
   apply congrArg (p ^ ·)
-  have h := Omega.Arithmetic.WeightedFactorialGcd.weightedTotal_partition
-    (H + 1) (c p) (c' p) (fun j => n / p ^ (j + 1))
-  simpa only [Omega.Arithmetic.WeightedFactorialGcd.weightedTotal,
-    SF.sumBelow_eq_sum_range] using h.symm
+  exact (SF.weighted_partition_range (H + 1) (c p) (c' p)
+    (fun j => n / p ^ (j + 1))).symm
 
 private theorem weightedTail_add (H M : ℕ) (c c' : ℕ → ℕ → ℕ) :
     weightedTail H M c * weightedTail H M c' =
@@ -544,10 +621,8 @@ private theorem weightedTail_add (H M : ℕ) (c c' : ℕ → ℕ → ℕ) :
   intro p _
   rw [← pow_add]
   apply congrArg (p ^ ·)
-  have h := Omega.Arithmetic.WeightedFactorialGcd.weightedTotal_partition
-    (H + 1) (c p) (c' p) (fun j => floorMinimum H M (p ^ (j + 1)))
-  simpa only [Omega.Arithmetic.WeightedFactorialGcd.weightedTotal,
-    SF.sumBelow_eq_sum_range] using h.symm
+  exact (SF.weighted_partition_range (H + 1) (c p) (c' p)
+    (fun j => floorMinimum H M (p ^ (j + 1)))).symm
 
 private theorem residue_power_reindex {p f H n : ℕ} (hp : p.Prime)
     (hf : 0 < f) (hn : n ≤ H) :
@@ -576,11 +651,11 @@ private theorem residue_power_reindex {p f H n : ℕ} (hp : p.Prime)
       by_contra h
       simp [h] at hnonzero
     have hmul : f * ((k + 1) / f) = k + 1 := Nat.mul_div_cancel' hdiv
-    have hqpos : 0 < (k + 1) / f := by
-      by_contra h
-      have hz : (k + 1) / f = 0 := by omega
+    have hqpos : (0 : ℕ) < (k + 1) / f := by
+      apply Nat.pos_of_ne_zero
+      intro hz
       rw [hz, mul_zero] at hmul
-      omega
+      exact (Nat.succ_ne_zero k) hmul.symm
     let j := (k + 1) / f - 1
     have hj : j ∈ range (H + 1) := by
       have hkbound := Finset.mem_range.mp hk
@@ -603,6 +678,9 @@ private theorem residue_power_reindex {p f H n : ℕ} (hp : p.Prime)
 namespace NumberFieldNorm
 
 variable (K : Type*) [Field K] [NumberField K]
+
+local instance ringOfIntegersInfinite : Infinite (𝓞 K) :=
+  Module.Free.infinite ℤ (𝓞 K)
 
 /-- The rational prime ideal generated by p. -/
 @[expose] public def rationalPrimeIdeal (p : ℕ) : Ideal ℤ := Ideal.span {(p : ℤ)}
@@ -630,12 +708,12 @@ variable (K : Type*) [Field K] [NumberField K]
 @[expose] public noncomputable def normComplement (n : ℕ) : ℕ :=
   (n !) ^ Module.finrank ℚ K / (fullRingFactorialIdeal K n).absNorm
 
-private theorem rationalPrimeIdeal_ne_bot {p : ℕ} (hp : p.Prime) :
+public theorem rationalPrimeIdeal_ne_bot {p : ℕ} (hp : p.Prime) :
     rationalPrimeIdeal p ≠ ⊥ := by
   simpa [rationalPrimeIdeal, Ideal.span_singleton_eq_bot] using
     (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero)
 
-private theorem rationalPrimeIdeal_isPrime {p : ℕ} (hp : p.Prime) :
+public theorem rationalPrimeIdeal_isPrime {p : ℕ} (hp : p.Prime) :
     (rationalPrimeIdeal p).IsPrime := by
   apply (Ideal.span_singleton_prime (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero)).mpr
   exact Nat.prime_iff_prime_int.mp hp
@@ -661,7 +739,7 @@ private theorem normWeight_le_degree {p : ℕ} (hp : p.Prime) (j : ℕ) :
       letI : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (rationalPrimeIdeal p)
       rw [Ideal.inertiaDeg'_eq_inertiaDeg]
       exact Nat.le_mul_of_pos_left _ (Nat.pos_of_ne_zero
-        (IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver P (rationalPrimeIdeal_ne_bot hp)))
+        (Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver P (rationalPrimeIdeal_ne_bot hp)))
     _ = Module.finrank ℚ K := hsum
 
 private theorem residueFactorialIdeal_norm (H n : ℕ) :
@@ -686,6 +764,8 @@ private theorem residueFactorialIdeal_norm (H n : ℕ) :
         (IsDedekindDomain.mem_primesOverFinset_iff (rationalPrimeIdeal_ne_bot hpprime) (𝓞 K)).mp hP
       letI : P.IsPrime := hprime
       letI : P.LiesOver (rationalPrimeIdeal p) := hover
+      letI : P.LiesOver (Ideal.span {(p : ℤ)}) := by
+        simpa only [rationalPrimeIdeal] using hover
       rw [map_pow, ← Ideal.pow_inertiaDeg p P, pow_mul]
     _ = p ^ (∑ P ∈ primesAbove K p, P.inertiaDeg ℤ *
         (∑ j ∈ range (H + 1), if P.inertiaDeg ℤ ∣ j + 1 then n / p ^ (j + 1) else 0)) :=
@@ -719,6 +799,8 @@ private theorem residueFactorialIdeal_eq_normEuler (H n : ℕ) (hn : n ≤ H) :
     (IsDedekindDomain.mem_primesOverFinset_iff (rationalPrimeIdeal_ne_bot hpprime) (𝓞 K)).mp hP
   letI : P.IsPrime := hprime
   letI : P.LiesOver (rationalPrimeIdeal p) := hover
+  letI : P.LiesOver (Ideal.span {(p : ℤ)}) := by
+    simpa only [rationalPrimeIdeal] using hover
   rw [← Ideal.pow_inertiaDeg p P]
   exact congrArg (P ^ ·) (residue_power_reindex hpprime (P.inertiaDeg_pos ℤ) hn).symm
 

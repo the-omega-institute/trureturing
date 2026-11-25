@@ -54,7 +54,8 @@ private theorem factorial_remainder (n s : ℕ) (hns : n ≤ s) :
   by_cases hn : n = 0
   · simp only [hn, Nat.factorial_zero, Nat.cast_one, Real.log_one, mainTerm,
       xlog, Nat.cast_zero, zero_mul, sub_zero, sub_self]
-    linarith [Real.log_nonneg (show (1 : ℝ) ≤ (s : ℝ) + 1 by positivity)]
+    have hs0 : (0 : ℝ) ≤ (s : ℝ) := Nat.cast_nonneg s
+    linarith [Real.log_nonneg (show (1 : ℝ) ≤ (s : ℝ) + 1 by linarith)]
   · have hnR : (1 : ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n by omega)
     have hhi := Real.sum_log_le (x := (n : ℝ)) hnR
     rw [Nat.floor_natCast, Real.sum_log_eq_log_factorial] at hhi
@@ -107,7 +108,8 @@ private theorem finite_stirling_bound (r s b : ℕ) (hb : r * b ≤ s) :
             (log ((s - i * b)! : ℝ) - mainTerm (s - i * b)) := by ring
       rw [heq]
       have hB : 0 ≤ log ((s : ℝ) + 1) + 1 := by
-        linarith [Real.log_nonneg (show (1 : ℝ) ≤ (s : ℝ) + 1 by positivity)]
+        have hs0 : (0 : ℝ) ≤ (s : ℝ) := Nat.cast_nonneg s
+        linarith [Real.log_nonneg (show (1 : ℝ) ≤ (s : ℝ) + 1 by linarith)]
       apply abs_le.mpr
       constructor
       · linarith only [ha.1, hb'.2, hd.1, hB]
@@ -119,7 +121,7 @@ private theorem entropy_cell (a s : ℕ) (has : a ≤ s) (hs : 0 < s) :
       (s : ℝ) * log s - (s : ℝ) * Real.binEntropy ((a : ℝ) / s) := by
   have hsR : (s : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hs.ne'
   have ha : (s : ℝ) * ((a : ℝ) / s) = a := by field_simp
-  have hd : (s : ℝ) * (1 - (a : ℝ) / s) = s - a := by field_simp; ring
+  have hd : (s : ℝ) * (1 - (a : ℝ) / s) = s - a := by field_simp
   have h := congrArg₂ (· + ·)
     (xlog_mul (s : ℝ) ((a : ℝ) / s))
     (xlog_mul (s : ℝ) (1 - (a : ℝ) / s))
@@ -145,15 +147,15 @@ private theorem finite_energy_identity (r s b : ℕ) (hb : r * b ≤ s) :
     have h := Finset.sum_range_succ' (fun i => xlog ((i * b : ℕ) : ℝ)) r
     rw [Finset.sum_range_succ] at h
     simpa [xlog] using h.symm
-  have hmass : (∑ i ∈ range r,
-      (((i + 1) * b : ℕ) : ℝ) - (b : ℝ) + ((s - i * b : ℕ) : ℝ)) = r * s := by
+  have hmass : (Finset.sum (range r) (fun i => (((i + 1) * b : ℕ) : ℝ) -
+      (b : ℝ) + ((s - i * b : ℕ) : ℝ))) = r * s := by
     calc
-      _ = ∑ _i ∈ range r, (s : ℝ) := by
+      _ = Finset.sum (range r) (fun _ => (s : ℝ)) := by
         apply Finset.sum_congr rfl
-        intro i hi
-        have hib : i * b ≤ s :=
-          (Nat.mul_le_mul_right b (Finset.mem_range.mp hi).le).trans hb
-        rw [Nat.cast_sub hib]
+        intro j hj
+        have hjb : j * b ≤ s :=
+          (Nat.mul_le_mul_right b (Finset.mem_range.mp hj).le).trans hb
+        rw [Nat.cast_sub hjb]
         push_cast
         ring
       _ = _ := by simp

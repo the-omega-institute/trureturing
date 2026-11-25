@@ -8,11 +8,23 @@ families of compact parameters and prime-power weights. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+noncomputable section
+
 namespace Reg.D5.S3.Arith.FactorialRatio.Compression.SharpLoss
 
 open _root_.D5.S3.Arith.FactorialRatio.Compression.SharpLoss
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+
+private theorem prime_loss_separates :
+    (compactExcess 3 5).factorization 5 ≠ (compactExcess 3 7).factorization 5 := by
+  have hsmall : compactExcess 3 5 = 2 := by decide
+  have hlarge : compactExcess 3 7 = 15 := by decide
+  rw [hsmall, hlarge, Nat.factorization_eq_zero_of_lt (by decide : 2 < 5)]
+  have hpos : 0 < (15 : ℕ).factorization 5 :=
+    Nat.Prime.factorization_pos_of_dvd (by decide : Nat.Prime 5)
+      (by decide : (15 : ℕ) ≠ 0) (by decide : (5 : ℕ) ∣ 15)
+  exact (ne_of_gt hpos).symm
 
 namespace Local
 
@@ -44,15 +56,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 3 8 5 1 (by decide) (by decide) (by decide)
     (by decide) (by decide) (by decide)
-  change (1000 : ℝ) ≤ 2 * 1 + 2 * 3 ^ 2 / (1 * 5) at hh
-  norm_num at hh
+  norm_num [arena, rejected, realize] at hh
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
   cases role
-  refine ⟨(3, 2, 1), 0, 8, ?_⟩
-  change (compactExcess 3 0).factorization 2 ≠ (compactExcess 3 8).factorization 2
-  decide
+  refine ⟨(3, 5, 1), 5, 7, ?_⟩
+  exact prime_loss_separates
 
 def family : Registration arena (type_of% @local_prime_excess_bound) where
   actual := actual
@@ -95,7 +105,7 @@ def localAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 2, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg"]
@@ -106,6 +116,100 @@ def localAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace Factorization
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z s => (compactExcess z.1 s).factorization z.2)
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1000) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (r s p : ℕ), 2 ≤ r → s < r ^ 2 →
+    R.readout () (r, p) s =
+      (D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd r s).factorization p -
+        (D5.S3.Arith.FactorialRatio.RankOneLCMGcd.tailLCM
+          (r * s + r - 1) (r - 1)).factorization p
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 2 0 2 (by decide) (by decide)
+  have hG : D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd 2 0 = 1 := by decide
+  have hT : D5.S3.Arith.FactorialRatio.RankOneLCMGcd.tailLCM
+      (2 * 0 + 2 - 1) (2 - 1) = 1 := by decide
+  norm_num [arena, rejected, realize, hG, hT] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  cases role
+  refine ⟨(3, 5), 5, 7, ?_⟩
+  exact prime_loss_separates
+
+def family : Registration arena (type_of% @compactExcess_factorization) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@compactExcess_factorization, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro i hi
+      cases role
+      cases i
+      exact (hi rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end Factorization
+
+def factorizationAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@compactExcess_factorization) (Realization Factorization.signature) Unit Unit where
+  unitName :=
+    `D5.S3.Arith.FactorialRatio.Compression.SharpLoss.compactExcess_factorization.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Compression.SharpLoss.Factorization.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Factorization.arena⟩
+  objectArena := .source ⟨Factorization.arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source Factorization.arena ⟨Factorization.family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Factorization.signature
+    (fun _ z s => (compactExcess z.1 s).factorization z.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 
 namespace Shared
 
@@ -199,7 +303,7 @@ def sharedAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1, 2, 5]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
           "fn", "arg", "fn", "arg"]

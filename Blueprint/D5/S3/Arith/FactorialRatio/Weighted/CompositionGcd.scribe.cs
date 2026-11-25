@@ -74,6 +74,22 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The ideal (p) of the integers."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("rational-prime-ideal-nonzero"),
+                DeclarationHandle.Create(Prefix + "NumberFieldNorm.rationalPrimeIdeal_ne_bot"),
+                H("A rational prime generates a nonzero ideal"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If p is a rational prime, its integer cast is nonzero, so the principal ideal (p) is nonzero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rational-prime-ideal-prime"),
+                DeclarationHandle.Create(Prefix + "NumberFieldNorm.rationalPrimeIdeal_isPrime"),
+                H("The rational prime ideal is prime"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Primality of p in the natural numbers gives primality of its integer cast and hence of the ideal (p). These facts identify the actual primes above p."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("primes-above"),
                 DeclarationHandle.Create(Prefix + "NumberFieldNorm.primesAbove"),
                 H("Primes over a rational prime"),

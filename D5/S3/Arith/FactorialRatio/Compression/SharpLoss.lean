@@ -6,9 +6,8 @@
    utility: none
    digest: Local residue counts and common-parameter transfer of compact factorial excess. -/
 
-module
 
-public import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
+import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
 import OmegaMath.Arithmetic.CompactFloor
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Tactic.Linarith
@@ -35,11 +34,11 @@ open D5.S3.Arith.FactorialRatio.RankOneLCMGcd (tailLCM)
 open D5.S3.Arith.FactorialRatio.CompactFactorialGcd
 
 /-- The nonnegative excess of the compact gcd over the tail product. -/
-@[expose] public def compactExcess (r s : ℕ) : ℕ :=
+def compactExcess (r s : ℕ) : ℕ :=
   selbergGcd r s / tailLCM (r * s + r - 1) (r - 1)
 
 /-- Excess at one modulus and one legal compact parameter. -/
-@[expose] public def floorDefect (q r s b : ℕ) : ℕ :=
+def floorDefect (q r s b : ℕ) : ℕ :=
   floorSum q r s b - ((r * s + (r - 1)) / q - (r - 1))
 
 private theorem residue_band_card {p b u : ℕ} (hb : 0 < b)
@@ -63,10 +62,15 @@ private theorem residue_band_card {p b u : ℕ} (hb : 0 < b)
       rw [← Nat.add_mul, Nat.sub_add_cancel (hlow i hi)]
     have hmul : (i - m) * b ≤ u :=
       Omega.Arithmetic.CompactFloor.band_span Nat.add Nat.le
+        (gap := (i - m) * b) (lower := m * b) (base := p * j) (cap := u)
         (fun h h' => Nat.le_trans h h')
         (fun a _ _ h => Nat.add_le_add_left h a)
         (fun h => Nat.le_of_add_le_add_right h)
-        (by omega) (by omega)
+        (by
+          change (i - m) * b + m * b ≤ u + p * j
+          omega) (by
+          change p * j ≤ m * b
+          omega)
     have hdiv := (Nat.le_div_iff_mul_le hb).mpr hmul
     omega
   have hc := Finset.card_le_card_of_injOn (fun i => i - m)
@@ -75,6 +79,7 @@ private theorem residue_band_card {p b u : ℕ} (hb : 0 < b)
     (fun i hi i' hi' heq => by
       have := hlow i hi
       have := hlow i' hi'
+      dsimp only at heq
       omega)
   simpa using hc
 
@@ -123,10 +128,17 @@ private theorem floorSum_eq_mark_count {p r s b : ℕ} (hp : 0 < p) (hb : b < p)
       _ = ∑ i ∈ Ico 1 (r + 1), if (i * b) % p ≤ (s + b) % p then 1 else 0 := by
         rw [Finset.sum_Ico_eq_sum_range]
         simp [add_comm]
-      _ = _ := by rw [Nat.Ico_succ_right_eq_Icc, ← Finset.sum_filter]; simp
+      _ = _ := by
+        have hsets : Ico 1 (r + 1) = Icc 1 r := by
+          ext i
+          simp only [mem_Ico, mem_Icc]
+          omega
+        rw [hsets, ← Finset.sum_filter]
+        simp
   rw [hcount]
   simp
 
+set_option maxHeartbeats 800000 in
 /-- A count using `k` residue bands. The conclusion has no primality
 assumption; `r*b < k*p` is the strict endpoint condition. -/
 private theorem local_floor_defect_bound {p r s b k : ℕ}
@@ -141,9 +153,13 @@ private theorem local_floor_defect_bound {p r s b k : ℕ}
   have hvl : v < p := Nat.mod_lt s hp0
   have hk : 1 ≤ s / p := Nat.div_pos hps hp0
   have hmul : r * (s / p) = r * (s / p - 1) + r := by
-    rw [← Nat.mul_add, Nat.sub_add_cancel hk]
-  have hhead : (r * s + (r - 1)) / p = r * (s / p) + B := head_div hp0
-  have hQ : Q = r * (s / p - 1) + B + 1 := by dsimp [Q]; omega
+    calc
+      _ = r * ((s / p - 1) + 1) := by rw [Nat.sub_add_cancel hk]
+      _ = _ := by ring
+  have hQ : Q = r * (s / p - 1) + B + 1 := by
+    have htail := compactTail_floor_add hp0 hps hr
+    change Q + r = r * (s / p) + B + 1 at htail
+    omega
   have hlower : Q ≤ floorSum p r s b := selberg_floor_lower hp hr hbs
   have hB := Nat.div_add_mod (r * v + (r - 1)) p
   have hBlt := Nat.mod_lt (r * v + (r - 1)) hp0
@@ -179,7 +195,7 @@ private theorem local_floor_defect_bound {p r s b k : ℕ}
       nlinarith
     have hprodR : (p : ℝ) * b * floorDefect p r s b ≤
         2 * k * p * b + r * p := by exact_mod_cast hprod
-    apply (mul_le_mul_right hbr).mp
+    apply (mul_le_mul_iff_left₀ hbr).mp
     have hpR : 0 < (p : ℝ) := by exact_mod_cast hp0
     rw [add_mul, div_mul_cancel₀ _ (ne_of_gt hbr)]
     nlinarith
@@ -199,11 +215,13 @@ private theorem local_floor_defect_bound {p r s b k : ℕ}
       simp only [add_zero, Nat.add_sub_cancel] at hf
       omega
     have hBge : r ≤ B + k := by
-      have hfloor : r * v + (r - 1) < p * (B + 1) := by nlinarith
+      have hfloor : r * v + (r - 1) < p * (B + 1) := by
+        dsimp only [B]
+        nlinarith only [hB, hBlt]
       by_contra h
       have hmul' := Nat.mul_le_mul_left p (show B + k + 1 ≤ r by omega)
       have hmulv := Nat.mul_le_mul_left r hvlower
-      nlinarith
+      nlinarith only [hfloor, hmul', hmulv, hspan]
     have hDk : floorDefect p r s b ≤ 2 * k := by
       unfold floorDefect
       change floorSum p r s b - Q ≤ 2 * k
@@ -212,8 +230,7 @@ private theorem local_floor_defect_bound {p r s b k : ℕ}
     have hnon : 0 ≤ (r : ℝ) / b := by positivity
     exact hcast.trans (le_add_of_nonneg_right hnon)
 
-private theorem compactExcess_factorization {r s p : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
-    (hp : p.Prime) :
+theorem compactExcess_factorization {r s p : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2) :
     (compactExcess r s).factorization p = (selbergGcd r s).factorization p -
       (tailLCM (r * s + r - 1) (r - 1)).factorization p := by
   unfold compactExcess
@@ -221,7 +238,7 @@ private theorem compactExcess_factorization {r s p : ℕ} (hr : 2 ≤ r) (hs : s
 
 /-- The legal parameter `floor(kp/r)` gives the local large-prime estimate.
 Only the first prime power contributes because `r < p` and `s < r^2`. -/
-public theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
+theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
     (hs : s < r ^ 2) (hp : p.Prime) (hrp : r < p) (hkp : k * p ≤ s)
     (hk : 1 ≤ k) :
     ((compactExcess r s).factorization p : ℝ) ≤
@@ -261,12 +278,13 @@ public theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
   have hone : Ico (1 : ℕ) 2 = {1} := Nat.Ico_succ_singleton 1
   rw [hone, Finset.sum_singleton, pow_one] at htail hterm
   have hD : (compactExcess r s).factorization p ≤ floorDefect p r s b := by
-    rw [compactExcess_factorization hr hs hp]
+    rw [compactExcess_factorization hr hs]
     rw [Nat.add_sub_assoc (by omega : 1 ≤ r), htail]
     unfold floorDefect
     omega
   have hbr : 0 < (b : ℝ) := by exact_mod_cast hb0
-  have hkpR : 0 < (k : ℝ) * p := by positivity
+  have hkpR : 0 < (k : ℝ) * p :=
+    mul_pos (by exact_mod_cast (show 0 < k by omega)) (by exact_mod_cast hp.pos)
   have hhalf : (k : ℝ) * p ≤ 2 * r * b := by
     have hnat : k * p ≤ 2 * r * b := by
       have hge : r ≤ r * b := Nat.le_mul_of_pos_right r hb0
@@ -277,7 +295,7 @@ public theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
     have h := mul_le_mul_of_nonneg_left hhalf (show 0 ≤ (r : ℝ) by positivity)
     nlinarith
   exact (show ((compactExcess r s).factorization p : ℝ) ≤ floorDefect p r s b
-    by exact_mod_cast hD).trans (hlocal.trans (add_le_add_left hquot _))
+    by exact_mod_cast hD).trans (by linarith only [hlocal, hquot])
 
 private def legalParameters (r s : ℕ) : Finset ℕ := range (s / r + 1)
 
@@ -297,7 +315,7 @@ private theorem minimum_attained (r s : ℕ) (f : ℕ → ℕ) :
 
 /-- The least weighted sum of the prime-power defects, with the same
 compact parameter for every power of this rational prime. -/
-@[expose] public noncomputable def weightedPrimeLoss
+noncomputable def weightedPrimeLoss
     (r s p K : ℕ) (c : ℕ → ℕ) : ℕ :=
   minimum r s (fun b => ∑ j ∈ Ico 1 K, c j * floorDefect (p ^ j) r s b)
 
@@ -360,12 +378,12 @@ private theorem ordinary_prime_loss {r s p : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2
       rw [hminG] at h
       rw [← hamin, hcost a ha]
       exact Nat.sub_le_sub_right h _
-  simpa only [weightedPrimeLoss, one_mul, K, compactExcess_factorization hr hs hp, T, G]
+  simpa only [weightedPrimeLoss, one_mul, K, compactExcess_factorization hr hs, T, G]
     using hEq
 
 /-- A finite weighted compact excess. All weights are nonnegative natural
 numbers, and each prime uses its own common parameter across its powers. -/
-@[expose] public noncomputable def weightedExcess (r s : ℕ)
+noncomputable def weightedExcess (r s : ℕ)
     (P : Finset ℕ) (c : ℕ → ℕ → ℕ) : ℕ :=
   ∏ p ∈ P, p ^ weightedPrimeLoss r s p (Nat.log p s + 1) (c p)
 
@@ -410,7 +428,7 @@ private theorem prime_prod_factorization (P : Finset ℕ) (e : ℕ → ℕ)
 ordinary compact budget. The hypotheses concern the sum of the two weights
 at each prime power, so independently selected minimizing parameters are
 never identified with one another. -/
-public theorem weighted_shared_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
+theorem weighted_shared_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
     (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime) (c d : ℕ → ℕ → ℕ)
     (hc : ∀ p ∈ P, ∀ j ∈ Ico 1 (Nat.log p s + 1), c p j + d p j ≤ C) :
     weightedExcess r s P c * weightedExcess r s P d ∣ compactExcess r s ^ C := by
@@ -430,7 +448,7 @@ public theorem weighted_shared_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^
   rw [prime_prod_factorization P _ hP, prime_prod_factorization P _ hP]
   by_cases hpP : p ∈ P
   · rw [if_pos hpP, if_pos hpP]
-    have h := prime_loss_shared (c p) (d p) (hc p hpP)
+    have h := prime_loss_shared (r := r) (s := s) (p := p) (c p) (d p) (hc p hpP)
     rw [ordinary_prime_loss hr hs hp] at h
     exact h
   · simp [hpP]

@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Arithmetic.Euclidean.Division
 
 /-! Omega original.
@@ -8,6 +9,8 @@ Finite profile saturation. If every coordinate is bounded below and the
 sum attains the sum of those bounds, every coordinate attains its bound.
 This is the finite arithmetic step used to obtain simultaneous floor minima.
 -/
+
+noncomputable section
 
 @[expose] public section
 
@@ -26,7 +29,7 @@ theorem sumBelow_congr (n : Nat) (f g : Nat → Nat)
       Eq (sumBelow n f) (sumBelow n g))
     (fun _ => rfl)
     (fun n ih h =>
-      (congrArg (fun s => s.add (f n)) (ih (fun i hi => h i (Nat.le.step hi)))).trans
+      (congrArg (fun s : Nat => s.add (f n)) (ih (fun i hi => h i (Nat.le.step hi)))).trans
         (congrArg (Nat.add (sumBelow n g)) (h n (Nat.le_refl n.succ)))) n) h
 
 theorem sumBelow_mono (n : Nat) (f g : Nat → Nat)
@@ -41,7 +44,11 @@ theorem sumBelow_mono (n : Nat) (f g : Nat → Nat)
 private theorem le_cancel_right (a b c : Nat) :
     Nat.le (a.add c) (b.add c) → Nat.le a b :=
   Nat.rec (motive := fun c => Nat.le (a.add c) (b.add c) → Nat.le a b)
-    (fun h => h) (fun _ ih h => ih (Nat.le_of_succ_le_succ h)) c
+    (fun h => Eq.subst (motive := fun x => Nat.le x b) (Nat.add_zero a)
+      (Eq.subst (motive := Nat.le (a.add Nat.zero)) (Nat.add_zero b) h))
+    (fun c ih h => ih (Nat.le_of_succ_le_succ
+      (Eq.subst (motive := fun x => Nat.le x (b.add c).succ) (Nat.add_succ a c)
+        (Eq.subst (motive := Nat.le (a.add c.succ)) (Nat.add_succ b c) h)))) c
 
 private theorem add_saturation (a b c d : Nat)
     (hab : Nat.le a b) (hcd : Nat.le c d)
@@ -50,7 +57,7 @@ private theorem add_saturation (a b c d : Nat)
     (Eq.subst (motive := Nat.le (b.add c)) h.symm (Nat.add_le_add_left hcd b))
   have e : Eq a b := Nat.le_antisymm hab hba
   And.intro e (Nat.add_left_cancel
-    ((congrArg (fun x => x.add c) e).symm.trans h))
+    ((congrArg (fun x : Nat => x.add c) e).symm.trans h))
 
 /-- Equality of finite sums with coordinatewise lower bounds is simultaneous equality. -/
 theorem saturation (n : Nat) (f g : Nat → Nat)

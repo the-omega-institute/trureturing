@@ -165,7 +165,7 @@ public theorem pairedFloor_carry {q s b i : ℕ} (hq : 0 < q) (hi : i * b ≤ s)
     rw [Nat.mul_mod (i + 1) b q, Nat.mul_mod (i + 1) (b % q) q, Nat.mod_mod]
   simpa only [hsum, hmod] using two_floor_carry ((i + 1) * b) (s - i * b) hq
 
-public theorem head_div {q r s : ℕ} (hq : 0 < q) :
+private theorem head_div {q r s : ℕ} (hq : 0 < q) :
     (r * s + (r - 1)) / q = r * (s / q) + (r * (s % q) + (r - 1)) / q := by
   have heq : r * s + (r - 1) = (r * (s % q) + (r - 1)) + q * (r * (s / q)) := calc
     r * s + (r - 1) = r * (q * (s / q) + s % q) + (r - 1) := by rw [Nat.div_add_mod]

@@ -15,7 +15,8 @@ open _root_.D5.S3.Arith.FactorialRatio.Compression.StirlingBarrier
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ) (fun _ => ℕ) (fun _ => ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℕ)
+    (fun _ => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
   realize signature (fun _ p b => selbergFactorial p.1 p.2 b) (fun e => nomatch e)
@@ -26,7 +27,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (r s b : ℕ), r * b ≤ s →
-    |log (R.readout () (r, s) b : ℝ) -
+    |log (R.readout () ⟨r, s⟩ b : ℝ) -
       ((r : ℝ) * s * (log s - 1) + (r : ℝ) * b * log r -
         (s : ℝ) * ∑ i ∈ range r, Real.binEntropy (((i * b : ℕ) : ℝ) / s))| ≤
       2 * (r : ℝ) * (log ((s : ℝ) + 1) + 1)
@@ -48,7 +49,7 @@ def family : Registration arena (type_of% @compact_stirling_entropy_bound) where
   dependence := by
     intro role
     cases role
-    refine ⟨(2, 3), 0, 1, ?_⟩
+    refine ⟨⟨2, 3⟩, 0, 1, ?_⟩
     change selbergFactorial 2 3 0 ≠ selbergFactorial 2 3 1
     decide
 
@@ -77,9 +78,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg", "arg", "fn"]
+      path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg", "arg"]
       stateBinder := 2
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

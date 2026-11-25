@@ -27,6 +27,19 @@ internal sealed class SharpLossDocument : IScribeDocumentDefinition
                     + "Under r>=2 and s<r^2 this division is exact."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("compact-excess-factorization"),
+                DeclarationHandle.Create(Prefix + "compactExcess_factorization"),
+                H("The exponent of the exact quotient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For natural r,s,p with r>=2 and s<r^2, the factorization coefficient "
+                    + "at p in compactExcess(r,s) equals its coefficient in G(r,s) "
+                    + "minus its coefficient in T(r,s). The exact divisibility "
+                    + "T(r,s)|G(r,s) makes this the actual nonnegative difference. "
+                    + "This identity connects the local floor estimates to the integer quotient."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("floor-defect"),
                 DeclarationHandle.Create(Prefix + "floorDefect"),
                 H("The defect at one modulus"),

@@ -91,8 +91,8 @@ private theorem log_shifted_ratio :
   filter_upwards [] with n
   have h1 : (n : ℝ) + 1 ≠ 0 := by positivity
   have h2 : (n : ℝ) + 2 ≠ 0 := by positivity
+  dsimp [Function.comp_def, id]
   field_simp [h1, h2]
-  <;> ring
 
 private def factorialError (n : ℕ) : ℝ := log (n ! : ℝ) - n * log n + n
 
@@ -100,8 +100,12 @@ private theorem factorial_error_scaled :
     Tendsto (fun n : ℕ => factorialError n / ((n : ℝ) + 1)) atTop (𝓝 0) := by
   have hupper : Tendsto
       (fun n : ℕ => (log ((n : ℝ) + 2) + 1) / ((n : ℝ) + 1)) atTop (𝓝 0) := by
-    simpa only [add_div, add_zero] using
-      log_shifted_ratio.add ((shifted_atTop 1).const_div_atTop 1)
+    have hbase := log_shifted_ratio.add ((shifted_atTop 1).const_div_atTop 1)
+    simp only [add_zero] at hbase
+    apply hbase.congr'
+    filter_upwards [] with n
+    field_simp
+    ring
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hupper
   · filter_upwards [] with n
     apply div_nonneg _ (by positivity)
@@ -144,8 +148,8 @@ private theorem tail_error_scaled :
     filter_upwards [] with n
     have h1 : (n : ℝ) + 1 ≠ 0 := by positivity
     have h2 : (n : ℝ) + 2 ≠ 0 := by positivity
+    dsimp [Function.comp_def]
     field_simp [h1, h2]
-    <;> ring
   have he : Tendsto (fun n : ℕ =>
       (U ((n : ℝ) + 2) - D (n + 2) n) / ((n : ℝ) + 1)) atTop (𝓝 0) := by
     apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
@@ -166,7 +170,9 @@ private theorem tail_error_scaled :
         calc
           _ ≤ C * ((n : ℝ) + 2) := hp
           _ ≤ _ := by nlinarith only [hC, hnR]
-      exact div_le_div_of_nonneg_right (h.trans hb) (by positivity)
+      simpa only [Nat.cast_one] using
+        (div_le_div_of_nonneg_right (h.trans hb)
+          (by positivity : (0 : ℝ) ≤ (n : ℝ) + 1))
   have h := hu.sub he
   simp only [sub_zero] at h
   convert h using 1
@@ -218,9 +224,19 @@ theorem endpoint_loss_tendsto :
       have h2 : (n : ℝ) + 2 ≠ 0 := by positivity
       field_simp [h1, h2]
       <;> ring
-    rw [heq] at h
-    simpa only [Real.log_one] using
-      (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp h
+    have h' : Tendsto (fun n : ℕ =>
+        ((n : ℝ) / ((n : ℝ) + 1)) /
+          (((n : ℝ) + 2) / ((n : ℝ) + 1))) atTop (𝓝 1) := by
+      apply h.congr'
+      filter_upwards [] with n
+      dsimp
+    have h'' : Tendsto (fun n : ℕ => (n : ℝ) / ((n : ℝ) + 2))
+        atTop (𝓝 1) := by
+      apply h'.congr'
+      filter_upwards [] with n
+      exact congrFun heq n
+    simpa only [Function.comp_def, Real.log_one] using
+      (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp h''
   have h := (((factorial_error_scaled.add (hn.mul hlog)).sub
       (hn.mul log_shifted_ratio)).add
       (((tendsto_const_nhds (x := Real.eulerMascheroniConstant)).mul hn).mul
@@ -230,6 +246,6 @@ theorem endpoint_loss_tendsto :
   simp only [mul_zero, mul_one, add_zero, zero_add, sub_zero] at hfinal
   apply hfinal.congr'
   filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
-  exact (endpoint_expansion n (by omega)).symm
+  convert (endpoint_expansion n (by omega)).symm using 1 <;> norm_num
 
 end D5.S3.Arith.FactorialRatio.Compression.OptimalLoss
