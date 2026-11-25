@@ -52,7 +52,7 @@ theorem exists_of_mem_map {A : Type u} {B : Type v} (f : A → B)
       (fun inPrefix => (earlier inPrefix).elim (fun original found =>
         Exists.intro original (And.intro (Or.inl found.left) found.right)))
       (fun equalsLast =>
-        Exists.intro (last True.intro) (And.intro (Or.inr Eq.refl) equalsLast))) values) member
+        Exists.intro (last True.intro) (And.intro (Or.inr rfl) equalsLast))) values) member
 
 end SnocList
 end Omega

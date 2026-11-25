@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8fb3816d01b9628a6809df775e5f5a1cf02916558be99b58d03fcf2544878fcb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),18:SingleEyeInvariant),12:IsSingleEyed)","kind":"def","libraries":["OmegaInit"],"axioms":[]}]}
+{"statement_id":"sha256:4a76f63fd16cd615a23dbdaf5994821c8ca3bae8a246c6c412bf689560e0276d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),18:SingleEyeInvariant),12:IsSingleEyed)","kind":"def","libraries":["Init"],"axioms":[]}]}

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.QuadraticExt.Polynomial
 
 /-!
@@ -32,13 +33,13 @@ def second (p : Bool → A) : A := p .true
 def linear (t a b : A) (n : Nat) : A :=
   first (Nat.rec (pair a b) (fun _ p => pair (second p) (r.sub (r.mul t (second p)) (first p))) n)
 
-theorem linear_zero (t a b : A) : Eq (linear r t a b .zero) a := Eq.refl
+theorem linear_zero (t a b : A) : Eq (linear r t a b .zero) a := Omega.rfl
 
-theorem linear_one (t a b : A) : Eq (linear r t a b (.succ .zero)) b := Eq.refl
+theorem linear_one (t a b : A) : Eq (linear r t a b (.succ .zero)) b := Omega.rfl
 
 theorem linear_step (t a b : A) (n : Nat) :
     Eq (linear r t a b n.succ.succ)
-      (r.sub (r.mul t (linear r t a b n.succ)) (linear r t a b n)) := Eq.refl
+      (r.sub (r.mul t (linear r t a b n.succ)) (linear r t a b n)) := Omega.rfl
 
 include law in
 /-- Uniqueness of a second-order recurrence, up to the ring congruence. -/
@@ -79,24 +80,24 @@ def E (κ : A) (n : Nat) : A :=
 
 open Polynomial
 
-theorem T_zero (x : A) : Eq (T r x .zero) r.one := Eq.refl
+theorem T_zero (x : A) : Eq (T r x .zero) r.one := Omega.rfl
 
-theorem V_zero (x : A) : Eq (V r x .zero) r.zero := Eq.refl
+theorem V_zero (x : A) : Eq (V r x .zero) r.zero := Omega.rfl
 
 theorem T_succ (x : A) (n : Nat) :
     Eq (T r x n.succ)
-      (r.add (r.mul x (T r x n)) (r.mul (r.sub (r.square x) r.one) (V r x n))) := Eq.refl
+      (r.add (r.mul x (T r x n)) (r.mul (r.sub (r.square x) r.one) (V r x n))) := Omega.rfl
 
 theorem V_succ (x : A) (n : Nat) :
-    Eq (V r x n.succ) (r.add (T r x n) (r.mul x (V r x n))) := Eq.refl
+    Eq (V r x n.succ) (r.add (T r x n) (r.mul x (V r x n))) := Omega.rfl
 
 include law
 
 theorem T_one (x : A) : r.eqv (T r x (.succ .zero)) x :=
-  prove r law (.cons x (Variables.nil r)) ((e0.mul .one).add (((e0.square).sub .one).mul .zero)) e0 Eq.refl
+  prove r law (.cons x (Variables.nil r)) ((e0.mul .one).add (((e0.square).sub .one).mul .zero)) e0 rfl
 
 theorem V_one (x : A) : r.eqv (V r x (.succ .zero)) r.one :=
-  prove r law (.cons x (Variables.nil r)) (.add .one (e0.mul .zero)) .one Eq.refl
+  prove r law (.cons x (Variables.nil r)) (.add .one (e0.mul .zero)) .one rfl
 
 theorem T_step (x : A) (n : Nat) :
     r.eqv (T r x n.succ.succ) (r.sub (r.mul (r.mul r.two x) (T r x n.succ)) (T r x n)) :=
@@ -104,7 +105,7 @@ theorem T_step (x : A) (n : Nat) :
   let a := (e0.mul e1).add (d.mul e2)
   let b := e1.add (e0.mul e2)
   prove r law (.cons x (.cons (T r x n) (.cons (V r x n) (Variables.nil r))))
-    ((e0.mul a).add (d.mul b)) (((Expr.two.mul e0).mul a).sub e1) Eq.refl
+    ((e0.mul a).add (d.mul b)) (((Expr.two.mul e0).mul a).sub e1) rfl
 
 theorem V_step (x : A) (n : Nat) :
     r.eqv (V r x n.succ.succ) (r.sub (r.mul (r.mul r.two x) (V r x n.succ)) (V r x n)) :=
@@ -112,7 +113,7 @@ theorem V_step (x : A) (n : Nat) :
   let a := (e0.mul e1).add (d.mul e2)
   let b := e1.add (e0.mul e2)
   prove r law (.cons x (.cons (T r x n) (.cons (V r x n) (Variables.nil r))))
-    (a.add (e0.mul b)) (((Expr.two.mul e0).mul b).sub e2) Eq.refl
+    (a.add (e0.mul b)) (((Expr.two.mul e0).mul b).sub e2) rfl
 
 theorem U_zero (x : A) : r.eqv (U r x .zero) r.one := V_one r law x
 
@@ -120,7 +121,7 @@ theorem U_one (x : A) : r.eqv (U r x (.succ .zero)) (r.mul r.two x) :=
   law.trans (V_step r law x .zero)
     (law.trans (law.sub_congr (law.mul_congr (law.refl (r.mul r.two x)) (V_one r law x)) (law.refl r.zero))
       (prove r law (.cons x (Variables.nil r)) (((Expr.two.mul e0).mul .one).sub .zero) (Expr.two.mul e0)
-        Eq.refl))
+        rfl))
 
 theorem U_step (x : A) (n : Nat) :
     r.eqv (U r x n.succ.succ) (r.sub (r.mul (r.mul r.two x) (U r x n.succ)) (U r x n)) :=
@@ -133,13 +134,13 @@ private theorem norm_state (x : A) (n : Nat) :
     r.eqv (r.sub (r.square (T r x n)) (r.mul (r.sub (r.square x) r.one)
       (r.square (V r x n)))) r.one)
     (prove r law (.cons x (Variables.nil r)) (Expr.one.square.sub ((e0.square.sub .one).mul Expr.zero.square))
-      .one Eq.refl)
+      .one rfl)
     (fun k ih =>
       let d := e0.square.sub .one
       let a := (e0.mul e1).add (d.mul e2)
       let b := e1.add (e0.mul e2)
       law.trans (prove r law (.cons x (.cons (T r x k) (.cons (V r x k) (Variables.nil r))))
-        (a.square.sub (d.mul b.square)) (e1.square.sub (d.mul e2.square)) Eq.refl) ih) n
+        (a.square.sub (d.mul b.square)) (e1.square.sub (d.mul e2.square)) rfl) ih) n
 
 theorem pell (x : A) (n : Nat) :
     r.eqv (r.sub (r.square (T r x n.succ)) (r.mul (r.sub (r.square x) r.one) (r.square (U r x n))))
@@ -157,12 +158,12 @@ theorem add_indices (x : A) (m n : Nat) :
   let b := V r x m
   let f := fun k => r.add (r.mul a (T r x k)) (r.mul d (r.mul b (V r x k)))
   let g := fun k => r.add (r.mul a (V r x k)) (r.mul b (T r x k))
-  Nat.rec (motive := fun n => And (r.eqv (T r x (m.add n)) (f n))
-      (r.eqv (V r x (m.add n)) (g n)))
-    (And.intro
+  let P := fun k j => And (r.eqv (T r x j) (f k)) (r.eqv (V r x j) (g k))
+  Nat.rec (motive := fun n => P n (m.add n))
+    (Eq.subst (motive := P .zero) (Nat.add_zero m).symm (And.intro
       (prove r law (.cons a (.cons b (.cons d (Variables.nil r)))) e0
-        ((e0.mul .one).add (e2.mul (e1.mul .zero))) Eq.refl)
-      (prove r law (.cons a (.cons b (Variables.nil r))) e1 ((e0.mul .zero).add (e1.mul .one)) Eq.refl))
+        ((e0.mul .one).add (e2.mul (e1.mul .zero))) rfl)
+      (prove r law (.cons a (.cons b (Variables.nil r))) e1 ((e0.mul .zero).add (e1.mul .one)) rfl)))
     (fun k ih =>
       let c := T r x k
       let v := V r x k
@@ -171,12 +172,12 @@ theorem add_indices (x : A) (m n : Nat) :
       let nextV := e4.add (e0.mul e5)
       let fk := (e2.mul e4).add (e1.mul (e3.mul e5))
       let gk := (e2.mul e5).add (e3.mul e4)
-      And.intro
+      Eq.subst (motive := P k.succ) (Nat.add_succ m k).symm (And.intro
         (law.trans (law.add_congr (law.mul_congr (law.refl x) ih.left) (law.mul_congr (law.refl d) ih.right))
           (prove r law vars ((e0.mul fk).add (e1.mul gk))
-            ((e2.mul nextT).add (e1.mul (e3.mul nextV))) Eq.refl))
+            ((e2.mul nextT).add (e1.mul (e3.mul nextV))) rfl))
         (law.trans (law.add_congr ih.left (law.mul_congr (law.refl x) ih.right))
-          (prove r law vars (fk.add (e0.mul gk)) ((e2.mul nextV).add (e3.mul nextT)) Eq.refl))) n
+          (prove r law vars (fk.add (e0.mul gk)) ((e2.mul nextV).add (e3.mul nextT)) rfl)))) n
 
 theorem T_double (x : A) (n : Nat) :
     r.eqv (T r x (n.add n)) (r.sub (r.mul r.two (r.square (T r x n))) r.one) :=
@@ -186,44 +187,45 @@ theorem T_double (x : A) (n : Nat) :
   law.trans (add_indices r law x n n).left
     (law.trans (prove r law (.cons a (.cons b (.cons d (Variables.nil r))))
         (e0.square.add (e2.mul e1.square))
-        ((Expr.two.mul e0.square).sub (e0.square.sub (e2.mul e1.square))) Eq.refl)
+        ((Expr.two.mul e0.square).sub (e0.square.sub (e2.mul e1.square))) rfl)
       (law.sub_congr (law.refl (r.mul r.two (r.square a))) (norm_state r law x n)))
 
 theorem V_double (x : A) (n : Nat) :
     r.eqv (V r x (n.add n)) (r.mul r.two (r.mul (T r x n) (V r x n))) :=
   law.trans (add_indices r law x n n).right
     (prove r law (.cons (T r x n) (.cons (V r x n) (Variables.nil r)))
-      ((e0.mul e1).add (e1.mul e0)) (Expr.two.mul (e0.mul e1)) Eq.refl)
+      ((e0.mul e1).add (e1.mul e0)) (Expr.two.mul (e0.mul e1)) rfl)
 
 theorem U_add (x : A) (m n : Nat) :
     r.eqv (U r x (m.add n).succ)
       (r.add (r.mul (T r x m.succ) (U r x n)) (r.mul (U r x m) (T r x n.succ))) :=
-  Eq.subst (fun k => r.eqv (V r x k)
+  Eq.subst (motive := fun k => r.eqv (V r x k)
       (r.add (r.mul (T r x m.succ) (U r x n)) (r.mul (U r x m) (T r x n.succ))))
-    (congrArg Nat.succ (Nat.succ_add m n)) (add_indices r law x m.succ n.succ).right
+    ((Nat.add_succ m.succ n).trans (congrArg Nat.succ (Nat.succ_add m n)))
+    (add_indices r law x m.succ n.succ).right
 
 theorem U_double_odd (x : A) (n : Nat) :
     r.eqv (U r x (n.add n).succ) (r.mul r.two (r.mul (T r x n.succ) (U r x n))) :=
-  Eq.subst (fun k => r.eqv (V r x k) (r.mul r.two (r.mul (T r x n.succ) (U r x n))))
-    (congrArg Nat.succ (Nat.succ_add n n)) (V_double r law x n.succ)
+  Eq.subst (motive := fun k => r.eqv (V r x k) (r.mul r.two (r.mul (T r x n.succ) (U r x n))))
+    ((Nat.add_succ n.succ n).trans (congrArg Nat.succ (Nat.succ_add n n))) (V_double r law x n.succ)
 
 theorem U_bridge (x : A) (n : Nat) :
     r.eqv (T r x n.succ) (r.sub (r.mul x (U r x n)) (V r x n)) :=
   let d := e0.square.sub .one
   prove r law (.cons x (.cons (T r x n) (.cons (V r x n) (Variables.nil r))))
-    ((e0.mul e1).add (d.mul e2)) ((e0.mul (e1.add (e0.mul e2))).sub e2) Eq.refl
+    ((e0.mul e1).add (d.mul e2)) ((e0.mul (e1.add (e0.mul e2))).sub e2) rfl
 
 omit law in
-theorem E_zero (κ : A) : Eq (E r κ .zero) r.one := Eq.refl
+theorem E_zero (κ : A) : Eq (E r κ .zero) r.one := Omega.rfl
 
 omit law in
 theorem E_one (κ : A) :
-    Eq (E r κ (.succ .zero)) (r.sub (r.mul (r.square r.two) κ) r.one) := Eq.refl
+    Eq (E r κ (.succ .zero)) (r.sub (r.mul (r.square r.two) κ) r.one) := Omega.rfl
 
 omit law in
 theorem E_step (κ : A) (n : Nat) :
     Eq (E r κ n.succ.succ) (r.sub (r.mul (evenCoefficient r κ) (E r κ n.succ)) (E r κ n)) :=
-  Eq.refl
+  Omega.rfl
 
 /-- Four, eight and sixteen are obtained by repeated doubling. -/
 theorem E_two (κ : A) :
@@ -235,14 +237,14 @@ theorem E_two (κ : A) :
   let eight := Expr.two.mul four
   let q := four.mul e0
   prove r law (.cons κ (Variables.nil r)) (((q.sub Expr.two).mul (q.sub .one)).sub .one)
-    (((four.square.mul e0.square).sub ((eight.add four).mul e0)).add .one) Eq.refl
+    (((four.square.mul e0.square).sub ((eight.add four).mul e0)).add .one) rfl
 
 omit law in
 def double (n : Nat) : Nat := n.add n
 
 omit law in
 private theorem double_succ (n : Nat) : Eq (double n.succ) (double n).succ.succ :=
-  congrArg Nat.succ (Nat.succ_add n n)
+  (Nat.add_succ n.succ n).trans (congrArg Nat.succ (Nat.succ_add n n))
 
 private theorem U_two_steps (x : A) (n : Nat) :
     r.eqv (r.sub (r.mul (evenCoefficient r (r.square x)) (U r x n.succ.succ)) (U r x n))
@@ -261,9 +263,11 @@ private theorem U_two_steps (x : A) (n : Nat) :
   let p₃ := (tExpr.mul p₂).sub e2
   law.trans (law.sub_congr (law.mul_congr (law.refl (evenCoefficient r (r.square x))) h₂) (law.refl a))
     (law.trans (prove r law (.cons x (.cons a (.cons b (Variables.nil r))))
-        ((qExpr.mul p₂).sub e1) ((tExpr.mul p₃).sub p₂) Eq.refl)
+        ((qExpr.mul p₂).sub e1) ((tExpr.mul p₃).sub p₂) rfl)
       (law.symm (law.trans (U_step r law x n.succ.succ) (law.sub_congr (law.mul_congr (law.refl t) h₃) h₂))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem even_character (c : A) (n : Nat) :
     r.eqv (E r (r.square c) n) (U r c (n.add n)) :=
   let κ := r.square c
@@ -273,13 +277,13 @@ theorem even_character (c : A) (n : Nat) :
     law.symm (law.trans (U_step r law c .zero)
       (law.trans (law.sub_congr (law.mul_congr (law.refl t) (U_one r law c)) (U_zero r law c))
         (prove r law (.cons c (Variables.nil r)) (((Expr.two.mul e0).square).sub .one)
-          ((Expr.two.square.mul e0.square).sub .one) Eq.refl)))
+          ((Expr.two.square.mul e0.square).sub .one) rfl)))
   linear_unique r law q r.one (r.sub (r.mul (r.square r.two) κ) r.one)
     (fun k => U r c (double k)) (law.symm (U_zero r law c)) base
     (fun k =>
-      Eq.subst (fun j => r.eqv (r.sub (r.mul q (U r c (double k.succ))) (U r c (double k)))
+      Eq.subst (motive := fun j => r.eqv (r.sub (r.mul q (U r c (double k.succ))) (U r c (double k)))
         (U r c j)) (double_succ k.succ).symm
-        (Eq.subst (fun j => r.eqv (r.sub (r.mul q (U r c j)) (U r c (double k)))
+        (Eq.subst (motive := fun j => r.eqv (r.sub (r.mul q (U r c j)) (U r c (double k)))
           (U r c j.succ.succ)) (double_succ k).symm (U_two_steps r law c (double k)))) n
 
 omit law in
@@ -288,6 +292,8 @@ def oddFactor (κ : A) (n : Nat) : A :=
   let q := evenCoefficient r κ
   linear r q r.two (r.mul r.two q) n
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem odd_character (c : A) (n : Nat) :
     r.eqv (r.mul c (oddFactor r (r.square c) n)) (U r c (n.add n).succ) :=
   let κ := r.square c
@@ -301,26 +307,26 @@ theorem odd_character (c : A) (n : Nat) :
     let qExpr := (Expr.two.square.mul e0.square).sub Expr.two
     have even := even_character r law c (.succ .zero)
     law.trans (prove r law (.cons c (Variables.nil r)) (e0.mul (Expr.two.mul qExpr))
-        ((tExpr.mul (qExpr.add .one)).sub tExpr) Eq.refl)
+        ((tExpr.mul (qExpr.add .one)).sub tExpr) rfl)
       (law.symm (law.trans (U_step r law c (.succ .zero))
         (law.trans (law.sub_congr (law.mul_congr (law.refl t) (law.symm even)) (U_one r law c))
           (prove r law (.cons c (Variables.nil r))
             ((tExpr.mul ((Expr.two.square.mul e0.square).sub .one)).sub tExpr)
-            ((tExpr.mul (qExpr.add .one)).sub tExpr) Eq.refl))))
+            ((tExpr.mul (qExpr.add .one)).sub tExpr) rfl))))
   (Nat.rec (motive := fun k => And (r.eqv (f k) (g k)) (r.eqv (f k.succ) (g k.succ)))
     (And.intro first second)
     (fun k ih =>
       let s := oddFactor r κ k
       let v := oddFactor r κ k.succ
       have factor := prove r law (.cons c (.cons q (.cons s (.cons v (Variables.nil r)))))
-        (e0.mul ((e1.mul e3).sub e2)) ((e1.mul (e0.mul e3)).sub (e0.mul e2)) Eq.refl
+        (e0.mul ((e1.mul e3).sub e2)) ((e1.mul (e0.mul e3)).sub (e0.mul e2)) rfl
       have recurrence : r.eqv (r.sub (r.mul q (g k.succ)) (g k)) (g k.succ.succ) :=
         have firstIndex := congrArg Nat.succ (double_succ k)
         have secondIndex := (congrArg Nat.succ (double_succ k.succ)).trans
           (congrArg (fun j : Nat => j.succ.succ.succ) (double_succ k))
-        Eq.subst (fun j : Nat => r.eqv (r.sub (r.mul q (g k.succ)) (g k)) (U r c j))
+        Eq.subst (motive := fun j : Nat => r.eqv (r.sub (r.mul q (g k.succ)) (g k)) (U r c j))
           secondIndex.symm
-          (Eq.subst (fun j : Nat => r.eqv (r.sub (r.mul q (U r c j)) (g k))
+          (Eq.subst (motive := fun j : Nat => r.eqv (r.sub (r.mul q (U r c j)) (g k))
             (U r c (double k).succ.succ.succ.succ.succ))
             firstIndex.symm (U_two_steps r law c (double k).succ))
       And.intro ih.right (law.trans factor

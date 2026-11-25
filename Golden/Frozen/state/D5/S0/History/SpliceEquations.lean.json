@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f4338189a3bfe772073ae26c5d792f3ae26bc8d8e7a153622e29947db9e7790d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),7:History),26:splice_recursion_equations)","kind":"theorem","libraries":["OmegaInit","OmegaMath"],"axioms":[]}]}
+{"statement_id":"sha256:06d36cad9fb3dad4d3c040e440457500fe1117d51f5ddc84b806ae18dad6f1cf","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),7:History),26:splice_recursion_equations)","kind":"theorem","libraries":["Init","OmegaMath"],"axioms":[]}]}

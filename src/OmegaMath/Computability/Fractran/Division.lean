@@ -26,7 +26,7 @@ theorem some_inj {a b : Nat} (h : Eq (some a) (some b)) : Eq a b :=
   congrArg (Result.rec (motive := fun _ => Nat) Nat.zero (fun n => n)) h
 
 theorem none_ne_some (n : Nat) : Not (Eq none (some n)) :=
-  fun h => Eq.subst (Result.rec (motive := fun _ => Prop) True (fun _ => False)) h True.intro
+  fun h => Eq.subst (motive := Result.rec (motive := fun _ => Prop) True (fun _ => False)) h True.intro
 
 end Result
 
@@ -48,24 +48,28 @@ private def advanceBy (d k : Nat) (s : Division) : Division :=
 private theorem advanceBy_succ_last (d k : Nat) (s : Division) :
     Eq (advanceBy d k.succ s) (advanceDivision d (advanceBy d k s)) :=
   Nat.rec (motive := fun k => ∀ s, Eq (advanceBy d k.succ s) (advanceDivision d (advanceBy d k s)))
-    (fun _ => Eq.refl) (fun _ ih s => ih (advanceDivision d s)) k s
+    (fun _ => rfl) (fun _ ih s => ih (advanceDivision d s)) k s
 
 private theorem divide_add (d n k : Nat) :
     Eq (divide d (n.add k)) (advanceBy d k (divide d n)) :=
   Nat.rec (motive := fun k => Eq (divide d (n.add k)) (advanceBy d k (divide d n)))
-    Eq.refl (fun k ih => (congrArg (advanceDivision d) ih).trans (advanceBy_succ_last d k (divide d n)).symm)
-    k
+    (congrArg (divide d) (Nat.add_zero n))
+    (fun k ih => (congrArg (divide d) (Nat.add_succ n k)).trans
+      ((congrArg (advanceDivision d) ih).trans (advanceBy_succ_last d k (divide d n)).symm)) k
 
 private theorem advance_until_carry (d q r c : Nat) :
     Eq (advanceBy d c ⟨q, r, c⟩) ⟨q, r.add c, Nat.zero⟩ :=
   Nat.rec (motive := fun c => ∀ r, Eq (advanceBy d c ⟨q, r, c⟩) ⟨q, r.add c, Nat.zero⟩)
-    (fun _ => Eq.refl) (fun c ih r => (ih r.succ).trans
-      (congrArg (fun x => Division.mk q x Nat.zero) (Nat.succ_add r c))) c r
+    (fun r => congrArg (fun x => Division.mk q x Nat.zero) (Nat.add_zero r).symm)
+    (fun c ih r => (ih r.succ).trans (congrArg (fun x => Division.mk q x Nat.zero)
+      ((Nat.succ_add r c).trans (Nat.add_succ r c).symm))) c r
 
 private theorem divide_mul (d q : Nat) :
     Eq (divide d (d.succ.mul q)) ⟨q, Nat.zero, d⟩ :=
-  Nat.rec (motive := fun q => Eq (divide d (d.succ.mul q)) ⟨q, Nat.zero, d⟩) Eq.refl
-    (fun q ih => (divide_add d (d.succ.mul q) d.succ).trans
+  Nat.rec (motive := fun q => Eq (divide d (d.succ.mul q)) ⟨q, Nat.zero, d⟩)
+    (congrArg (divide d) (Nat.mul_zero d.succ))
+    (fun q ih => ((congrArg (divide d) (Nat.mul_succ d.succ q)).trans
+      (divide_add d (d.succ.mul q) d.succ)).trans
       ((congrArg (advanceBy d d.succ) ih).trans
         ((advanceBy_succ_last d d ⟨q, Nat.zero, d⟩).trans
           (congrArg (advanceDivision d)
@@ -81,13 +85,18 @@ private theorem advance_invariant (d n : Nat) (s : Division) :
     (fun q r c =>
       Nat.rec (motive := fun c => DigitInvariant d n ⟨q, r, c⟩ →
           DigitInvariant d n.succ (advanceDivision d ⟨q, r, c⟩))
-        (fun h => And.intro (Nat.zero_add d)
-          (congrArg Nat.succ ((congrArg (d.succ.mul q).add h.left.symm).trans h.right)))
-        (fun c _ h => And.intro ((Nat.succ_add r c).trans h.left) (congrArg Nat.succ h.right)) c) s
+        (fun h =>
+          have hr : Eq r d := (Nat.add_zero r).symm.trans h.left
+          have hn : Eq ((d.succ.mul q).add d) n :=
+            (congrArg (d.succ.mul q).add hr.symm).trans h.right
+          And.intro (Nat.zero_add d) ((Nat.add_zero _).trans ((Nat.mul_succ d.succ q).trans
+            ((Nat.add_succ _ d).trans (congrArg Nat.succ hn)))))
+        (fun c _ h => And.intro ((Nat.succ_add r c).trans ((Nat.add_succ r c).symm.trans h.left))
+          ((Nat.add_succ _ r).trans (congrArg Nat.succ h.right))) c) s
 
 private theorem divide_invariant (d n : Nat) : DigitInvariant d n (divide d n) :=
   Nat.rec (motive := fun n => DigitInvariant d n (divide d n))
-    (And.intro (Nat.zero_add d) Eq.refl) (fun n => advance_invariant d n (divide d n)) n
+    (And.intro (Nat.zero_add d) ((Nat.add_zero _).trans (Nat.mul_zero d.succ))) (fun n => advance_invariant d n (divide d n)) n
 
 def select (s : Division) : Result :=
   Nat.rec (.some s.quotient) (fun _ _ => .none) s.remainder
@@ -105,7 +114,7 @@ private theorem select_sound (d n q : Nat) (s : Division) :
       Eq (select s) (.some q) → Eq (d.succ.mul q) n)
     (fun t r c => Nat.rec (motive := fun r => Eq ((d.succ.mul t).add r) n →
         Eq (select ⟨t, r, c⟩) (.some q) → Eq (d.succ.mul q) n)
-      (fun hn hq => (congrArg d.succ.mul (Result.some_inj hq).symm).trans hn)
+      (fun hn hq => (congrArg d.succ.mul (Result.some_inj hq).symm).trans ((Nat.add_zero _).symm.trans hn))
       (fun _ _ _ h => False.elim (Result.none_ne_some q h)) r) s
 
 theorem exactQuotient_spec (n d q : Nat) :

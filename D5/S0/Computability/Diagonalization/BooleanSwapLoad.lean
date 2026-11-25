@@ -26,7 +26,7 @@ public theorem boolean_swap_carries_diagonal_escape (sigma : Bool → Bool) :
         Not (Eq ((fun b : Bool => b) (V h h)) (V h h)))) :=
   let swap := Bool.rec (motive := fun _ => Bool) .true .false
   have falseNeTrue : Not (Eq Bool.false Bool.true) :=
-    fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
   have swapNeSelf : ∀ b, Not (Eq (swap b) b) :=
     Bool.rec (fun h => falseNeTrue h.symm) falseNeTrue
   And.intro
@@ -36,12 +36,12 @@ public theorem boolean_swap_carries_diagonal_escape (sigma : Bool → Bool) :
         Bool.rec
           (motive := fun value => Not (Eq (sigma value) value) → Eq (sigma value) (swap value))
           (Bool.rec (motive := fun value => Not (Eq value Bool.false) → Eq value Bool.true)
-            (fun h => False.elim (h Eq.refl)) (fun _ => Eq.refl) (sigma .false))
+            (fun h => False.elim (h rfl)) (fun _ => rfl) (sigma .false))
           (Bool.rec (motive := fun value => Not (Eq value Bool.true) → Eq value Bool.false)
-            (fun _ => Eq.refl) (fun h => False.elim (h Eq.refl)) (sigma .true))
+            (fun _ => rfl) (fun h => False.elim (h rfl)) (sigma .true))
           b changes)
       (fun agrees _ V h same => swapNeSelf (V h h) ((agrees (V h h)).symm.trans same)))
-    (fun identityEscapes => identityEscapes Bool (fun _ _ => .false) .false Eq.refl)
+    (fun identityEscapes => identityEscapes Bool (fun _ _ => .false) .false rfl)
 
 /-- The minimal binary carrier is inhabited. -/
 example : Bool := .false
@@ -52,6 +52,6 @@ example :
     ∀ (History : Type) (V : History → History → Bool) (h : History),
       Not (Eq (swap (V h h)) (V h h)) :=
   (boolean_swap_carries_diagonal_escape
-    (Bool.rec (motive := fun _ => Bool) .true .false)).left.mpr (fun _ => Eq.refl)
+    (Bool.rec (motive := fun _ => Bool) .true .false)).left.mpr (fun _ => rfl)
 
 end D5.S0.Computability.Diagonalization.BooleanSwapLoad

@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Ternion.Heap.Fidelity
 
 /-!
@@ -36,23 +38,32 @@ open Quaternion Polynomial
 def radius (p : PythSpinor) : Nat := p.radiusPred.succ
 
 theorem radius_positive (p : PythSpinor) : Int.zero.lt (Int.ofNat p.radius) :=
-  Nat.rec (motive := fun n => Int.zero.lt (Int.ofNat n.succ))
-    True.intro (fun _ _ => True.intro) p.radiusPred
+  Int.ofNat_succ_pos p.radiusPred
 
 theorem normSq_eq (p : PythSpinor) : Eq p.num.normSq (p.radius.mul p.radius) :=
-  Pythagorean.rec (motive := fun n _ => Eq p.num.normSq n) Eq.refl p.pythagorean
+  Pythagorean.rec (motive := fun n _ => Eq p.num.normSq n) rfl p.pythagorean
 
 def ofNumerator (q : Quaternion) (r : Nat) (h : Eq q.normSq (r.succ.mul r.succ)) : PythSpinor :=
   ⟨q, r, Eq.rec (motive := fun n _ => Pythagorean q.normSq n) Pythagorean.same h⟩
 
-def one : PythSpinor := ofNumerator Quaternion.one Nat.zero Eq.refl
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem one_norm : Eq Quaternion.one.normSq (Nat.one.mul Nat.one) := Omega.rfl
 
-def antipode : PythSpinor := ofNumerator (scalar Int.one.neg) Nat.zero Eq.refl
+def one : PythSpinor := ofNumerator Quaternion.one Nat.zero one_norm
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem neg_one_norm : Eq (scalar Int.one.neg).normSq (Nat.one.mul Nat.one) := Omega.rfl
+
+def antipode : PythSpinor := ofNumerator (scalar Int.one.neg) Nat.zero neg_one_norm
 
 def conj (p : PythSpinor) : PythSpinor :=
   ofNumerator p.num.conj p.radiusPred ((normSq_conj p.num).trans p.normSq_eq)
 
-def mul (p q : PythSpinor) : PythSpinor :=
+theorem mul_norm (p q : PythSpinor) :
+    let k := (IntRatio.mulDenPred p.radiusPred q.radiusPred).succ
+    Eq (p.num.mul q.num).normSq (k.mul k) :=
   let r := p.radius
   let s := q.radius
   have combine : Eq ((r.mul r).mul (s.mul s)) ((r.mul s).mul (r.mul s)) :=
@@ -60,8 +71,13 @@ def mul (p q : PythSpinor) : PythSpinor :=
       ((congrArg r.mul (((Nat.mul_assoc r s s).symm.trans
         (congrArg (fun n : Nat => n.mul s) (Nat.mul_comm r s))).trans
         (Nat.mul_assoc s r s))).trans (Nat.mul_assoc r s (r.mul s)).symm)
-  ofNumerator (p.num.mul q.num) (IntRatio.mulDenPred p.radiusPred q.radiusPred)
-    ((normSq_mul p.num q.num).trans ((Eq.map₂ Nat.mul p.normSq_eq q.normSq_eq).trans combine))
+  have denominator : Eq (r.mul s) (IntRatio.mulDenPred p.radiusPred q.radiusPred).succ :=
+    Int.ofNat_inj.mp (IntRatio.denominator_mul p.radiusPred q.radiusPred).symm
+  (normSq_mul p.num q.num).trans ((Eq.map₂ Nat.mul p.normSq_eq q.normSq_eq).trans
+    (combine.trans (congrArg (fun n : Nat => n.mul n) denominator)))
+
+def mul (p q : PythSpinor) : PythSpinor :=
+  ofNumerator (p.num.mul q.num) (IntRatio.mulDenPred p.radiusPred q.radiusPred) (mul_norm p q)
 
 def triad (p q r : PythSpinor) : PythSpinor := (p.mul q.conj).mul r
 
@@ -76,6 +92,8 @@ theorem nonzero (p : PythSpinor) : p.num.Nonzero :=
   nonzero_of_normSq_ne_zero (fun h =>
     Ternion.nat_mul_ne_zero (radius_ne_zero p) (radius_ne_zero p) (p.normSq_eq.symm.trans h))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem cayley_lift_identity (a s : Int) :
     Eq ((Int.square ((Int.square a).sub s)).add ((Int.two.mul Int.two).mul ((Int.square a).mul s)))
       (Int.square ((Int.square a).add s)) :=
@@ -83,8 +101,10 @@ theorem cayley_lift_identity (a s : Int) :
   let S := Expr.var Nat.zero.succ
   let two := Expr.one.double
   (((A.sq.sub S).sq).add ((two.mul two).mul (A.sq.mul S))).sound
-    ((A.sq.add S).sq) (.cons a (.cons s .nil)) Eq.refl
+    ((A.sq.add S).sq) (.cons a (.cons s .nil)) rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The three squared imaginary coordinates factor through the sum of three squares. -/
 private theorem scaled_imaginary_norm (a b c d : Int) :
     Eq ((Int.square ((Int.two.mul a).mul b)).add
@@ -100,7 +120,7 @@ private theorem scaled_imaginary_norm (a b c d : Int) :
   let square := fun t => ((two.mul A).mul t).sq
   ((square B).add ((square C).add (square D))).sound
     ((two.mul two).mul (A.sq.mul (B.sq.add (C.sq.add D.sq))))
-      (.cons a (.cons b (.cons c (.cons d .nil)))) Eq.refl
+      (.cons a (.cons b (.cons c (.cons d .nil)))) rfl
 
 def liftRadius (a b c d : Int) : Nat :=
   let sq := fun (t : Int) => t.natAbs.mul t.natAbs
@@ -132,7 +152,7 @@ theorem lift_radius_ne_zero (a b c d : Int) (h : (Quaternion.mk a b c d).Nonzero
 def ofRadius (p : Quaternion) (r : Nat) (h : Not (Eq r Nat.zero))
     (e : Eq p.normSq (r.mul r)) : PythSpinor :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Eq p.normSq (n.mul n) → PythSpinor)
-    (fun h _ => False.elim (h Eq.refl)) (fun n _ _ h => ofNumerator p n h) r) h e
+    (fun h _ => False.elim (h rfl)) (fun n _ _ h => ofNumerator p n h) r) h e
 
 /-- Homogeneous Cayley lift. Its only excluded input is the zero quadruple. -/
 def Phi (a b c d : Int) (h : (Quaternion.mk a b c d).Nonzero) : PythSpinor :=
@@ -146,7 +166,7 @@ theorem phi_coordinates (a b c d : Int) (h : (Quaternion.mk a b c d).Nonzero) :
   let r := liftRadius a b c d
   (Nat.rec (motive := fun n => ∀ (h : Not (Eq n Nat.zero)) (e : Eq p.normSq (n.mul n)),
     And (Eq (ofRadius p n h e).num p) (Eq (ofRadius p n h e).radius n))
-    (fun h _ => False.elim (h Eq.refl)) (fun _ _ _ _ => And.intro Eq.refl Eq.refl) r)
+    (fun h _ => False.elim (h rfl)) (fun _ _ _ _ => And.intro rfl rfl) r)
     (lift_radius_ne_zero a b c d h) (lift_normSq a b c d)
 
 /-- Signed affine fidelity, equal to one at a spinor and zero at its antipode. -/
@@ -156,12 +176,14 @@ def kappa_spin (p q : PythSpinor) : IntRatio :=
 
 def kappa_proj (p q : PythSpinor) : IntRatio := Ternion.kappa p.num q.num
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem affine_difference (r d : Int) :
     Eq ((Int.two.mul (r.add d)).add (r.mul Int.two).neg) (d.mul Int.two) :=
   let R := Expr.var Nat.zero
   let D := Expr.var Nat.zero.succ
   let T := Expr.one.double
-  ((T.mul (R.add D)).sub (R.mul T)).sound (D.mul T) (.cons r (.cons d .nil)) Eq.refl
+  ((T.mul (R.add D)).sub (R.mul T)).sound (D.mul T) (.cons r (.cons d .nil)) rfl
 
 theorem spin_affine (p q : PythSpinor) :
     IntRatio.Equivalent
@@ -178,11 +200,11 @@ theorem spin_affine (p q : PythSpinor) :
     (IntRatio.value_mul Int.two ((Int.ofNat r).add d) Nat.zero.succ n).trans
       (congrArg (IntRatio.value x) (Nat.one_mul n))
   have compare := IntRatio.add_congr
-    (Eq.subst (fun f => IntRatio.Equivalent f (IntRatio.value x n)) twice.symm
+    (Eq.subst (motive := fun f => IntRatio.Equivalent f (IntRatio.value x n)) twice.symm
       (IntRatio.equivalent_refl (IntRatio.value x n)))
     (IntRatio.value_neg_self n hn).symm
   compare.trans ((IntRatio.value_add_same x (Int.ofNat n).neg n).trans
-    (Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t n) (IntRatio.value d r))
+    (Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t n) (IntRatio.value d r))
       (affine_difference (Int.ofNat r) d).symm (IntRatio.value_scale d r Nat.zero.succ)))
 
 theorem quadratic_kernel (p q : PythSpinor) :
@@ -202,26 +224,36 @@ theorem quadratic_kernel (p q : PythSpinor) :
   have id : Eq (kappa_proj p q) (f.mul f) :=
     (congrArg (IntRatio.value (Int.square d)) e).trans
       (IntRatio.value_mul d d (r.mul s) (r.mul s)).symm
-  Eq.subst (fun x => IntRatio.Equivalent x _) id.symm
+  Eq.subst (motive := fun x => IntRatio.Equivalent x _) id.symm
     (IntRatio.mul_congr (spin_affine p q).symm (spin_affine p q).symm)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem g120_norm :
+    Eq (Quaternion.mk Int.one Int.one Int.one Int.one).normSq (Nat.one.succ.mul Nat.one.succ) :=
+  Omega.rfl
+
 def g120_spin : PythSpinor :=
-  ofNumerator ⟨Int.one, Int.one, Int.one, Int.one⟩ Nat.zero.succ Eq.refl
+  ofNumerator ⟨Int.one, Int.one, Int.one, Int.one⟩ Nat.zero.succ g120_norm
 
 def pow (p : PythSpinor) (n : Nat) : PythSpinor :=
   Nat.rec one (fun _ t => t.mul p) n
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem g120_third_beat :
     let beat := g120_spin.pow Nat.zero.succ.succ.succ
     And (Equivalent beat antipode)
       (IntRatio.Equivalent (kappa_spin one beat) (IntRatio.ofInt Int.zero)) :=
-  And.intro Eq.refl (IntRatio.value_zero _ (Nat.succ_ne_zero _))
+  And.intro rfl (IntRatio.value_zero _ (Nat.succ_ne_zero _))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem g120_sixth_beat :
     let beat := g120_spin.pow Nat.zero.succ.succ.succ.succ.succ.succ
     And (Equivalent beat one)
       (IntRatio.Equivalent (kappa_spin one beat) (IntRatio.ofInt Int.one)) :=
-  And.intro Eq.refl (IntRatio.value_self _ (Nat.succ_ne_zero _))
+  And.intro rfl (IntRatio.value_self _ (Nat.succ_ne_zero _))
 
 end PythSpinor
 end Omega

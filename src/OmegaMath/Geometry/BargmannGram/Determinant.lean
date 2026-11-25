@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram.Identities
 import OmegaMath.Geometry.BargmannGram.Fractions
 
@@ -44,21 +46,21 @@ theorem detGram3_value (a b c : Quad4) (ha : Not (Eq a Quad4.zero))
   have h1 : IntRatio.Equivalent (IntRatio.ofInt Int.one)
       (IntRatio.value (((a.dot a).mul (b.dot b)).mul (c.dot c)) D) :=
     (value_const Int.one D hD).trans (Eq.subst
-      (fun n => IntRatio.Equivalent (IntRatio.value (Int.one.mul (Int.ofNat D)) D)
+      (motive := fun n => IntRatio.Equivalent (IntRatio.value (Int.one.mul (Int.ofNat D)) D)
         (IntRatio.value n D)) ((Int.one_mul (Int.ofNat D)).trans castD)
       (IntRatio.equivalent_refl _))
   have h2 : IntRatio.Equivalent ((IntRatio.ofInt Int.two).mul (bargmann3 a b c))
       (IntRatio.value (Int.two.mul u) D) :=
-    Eq.subst (fun y => IntRatio.Equivalent y (IntRatio.value (Int.two.mul u) D))
+    Eq.subst (motive := fun y => IntRatio.Equivalent y (IntRatio.value (Int.two.mul u) D))
       (value_mul_int Int.two u D).symm (IntRatio.equivalent_refl _)
   have liftRatio := fun (n : Int) (d k : Nat) (hk : Not (Eq k Nat.zero)) (s : Int)
       (hs : Eq (Int.ofNat k) s) (hd : Eq (d.mul k) D) =>
-    Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value n d) (IntRatio.value (n.mul t) D)) hs
-      (Eq.subst (fun e => IntRatio.Equivalent (IntRatio.value n d)
+    Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value n d) (IntRatio.value (n.mul t) D)) hs
+      (Eq.subst (motive := fun e => IntRatio.Equivalent (IntRatio.value n d)
         (IntRatio.value (n.mul (Int.ofNat k)) e)) hd
         (IntRatio.value_scale_of_ne_zero n d k hk).symm)
   have h3 : IntRatio.Equivalent (kappa a b) (IntRatio.value v D) :=
-    liftRatio (Int.square p) (A.mul B) C hC (c.dot c) c.normSq_cast Eq.refl
+    liftRatio (Int.square p) (A.mul B) C hC (c.dot c) c.normSq_cast rfl
   have h4 : IntRatio.Equivalent (kappa b c) (IntRatio.value w D) :=
     liftRatio (Int.square q) (B.mul C) A hA (a.dot a) a.normSq_cast
       ((Nat.mul_comm (B.mul C) A).trans (Nat.mul_assoc A B C).symm)
@@ -80,8 +82,11 @@ theorem detGram3_nonneg (a b c : Quad4) (ha : Not (Eq a Quad4.zero))
 
 private theorem triad_nonzero (a b : Quad4) (ha : Not (Eq a Quad4.zero))
     (hb : Not (Eq b Quad4.zero)) : Not (Eq (triad b a b) Quad4.zero) :=
+  have sq := Nat.mul_zero Nat.zero
+  have pair := (Eq.map₂ Nat.add sq sq).trans (Nat.add_zero Nat.zero)
+  have zeroNorm : Eq Quad4.zero.normSq Nat.zero := (Eq.map₂ Nat.add pair pair).trans (Nat.add_zero _)
   fun h => nat_mul_ne_zero (nat_mul_ne_zero (a.normSq_ne_zero ha) (b.normSq_ne_zero hb))
-    (b.normSq_ne_zero hb) ((normSq_triad a b).symm.trans (congrArg Quad4.normSq h))
+    (b.normSq_ne_zero hb) ((normSq_triad a b).symm.trans ((congrArg Quad4.normSq h).trans zeroNorm))
 
 theorem geodesic_doubling_detGram3_zero (a b : Quad4) (ha : Not (Eq a Quad4.zero))
     (hb : Not (Eq b Quad4.zero)) :
@@ -104,15 +109,17 @@ theorem geodesic_doubling_detGram3_zero (a b : Quad4) (ha : Not (Eq a Quad4.zero
           ((c.dot_comm a).trans (dot_triad_left a b))))).trans
       (gram_triad_vanishes (a.dot a) (b.dot b) (a.dot b))
   (detGram3_value a b c ha hb hc).trans (Eq.subst
-    (fun n => IntRatio.Equivalent (IntRatio.value n (gramDenominator a b c)) (IntRatio.ofInt Int.zero))
+    (motive := fun n => IntRatio.Equivalent (IntRatio.value n (gramDenominator a b c)) (IntRatio.ofInt Int.zero))
     vanishes.symm (IntRatio.value_zero _ (nat_mul_ne_zero
       (nat_mul_ne_zero (a.normSq_ne_zero ha) (b.normSq_ne_zero hb)) (c.normSq_ne_zero hc))))
 
 def pHalf : Quad4 := ⟨Int.one, Int.one, Int.zero, Int.zero⟩
 def qHalf : Quad4 := ⟨Int.one, Int.zero, Int.one, Int.zero⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem orthogonal_triad_excess :
     IntRatio.Equivalent (detGram3 Quad4.one pHalf qHalf)
-      (IntRatio.value Int.one Nat.zero.succ.succ.succ.succ) := Eq.refl
+      (IntRatio.value Int.one Nat.zero.succ.succ.succ.succ) := Omega.rfl
 
 end Omega.Geometry.BargmannGram

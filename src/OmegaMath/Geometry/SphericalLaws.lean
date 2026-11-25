@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram
 import OmegaMath.Geometry.BargmannGram.Fractions
 import OmegaMath.Geometry.BargmannGram.Polynomial
@@ -40,7 +42,7 @@ private theorem spread_value (a b : Quad4) (hd : Not (Eq (edgeDenominator a b) N
   let p := Int.square (a.dot b)
   (IntRatio.sub_congr one (IntRatio.equivalent_refl (kappa a b))).trans
     ((value_sub_same (Int.ofNat d) p d).trans
-      (Eq.subst (fun n : Int => IntRatio.Equivalent (IntRatio.value ((Int.ofNat d).sub p) d)
+      (Eq.subst (motive := fun n : Int => IntRatio.Equivalent (IntRatio.value ((Int.ofNat d).sub p) d)
         (IntRatio.value (n.sub p) d)) cast (IntRatio.equivalent_refl _)))
 
 private theorem spread_mul_value (a b c : Quad4)
@@ -50,7 +52,7 @@ private theorem spread_mul_value (a b c : Quad4)
       (IntRatio.value ((spreadNumerator a b).mul (spreadNumerator c a))
         ((edgeDenominator a b).mul (edgeDenominator c a))) :=
   (IntRatio.mul_congr (spread_value a b hab) (spread_value c a hca)).trans
-    (Eq.subst (fun x => IntRatio.Equivalent _ x) (IntRatio.value_mul _ _ _ _)
+    (Eq.subst (motive := fun x => IntRatio.Equivalent _ x) (IntRatio.value_mul _ _ _ _)
       (IntRatio.equivalent_refl _))
 
 private theorem spread_numerator_ne_zero (a b : Quad4)
@@ -58,7 +60,7 @@ private theorem spread_numerator_ne_zero (a b : Quad4)
     (hs : Not (IntRatio.Equivalent (spread a b) (IntRatio.ofInt Int.zero))) :
     Not (Eq (spreadNumerator a b) Int.zero) :=
   fun h => hs ((spread_value a b hd).trans
-    (Eq.subst (fun n => IntRatio.Equivalent (IntRatio.value n (edgeDenominator a b))
+    (Eq.subst (motive := fun n => IntRatio.Equivalent (IntRatio.value n (edgeDenominator a b))
       (IntRatio.ofInt Int.zero)) h.symm (IntRatio.value_zero _ hd)))
 
 private theorem value_mul_inv_cancel {x : IntRatio} {n : Int} {d : Nat}
@@ -69,7 +71,7 @@ private theorem value_mul_inv_cancel {x : IntRatio} {n : Int} {d : Nat}
     ((Nat.rec (motive := fun d =>
         Not (Eq d Nat.zero) → IntRatio.Equivalent
           ((IntRatio.value n d).mul (IntRatio.value n d).inv) (IntRatio.ofInt Int.one))
-      (fun h => False.elim (h Eq.refl))
+      (fun h => False.elim (h rfl))
       (fun k _ _ => IntRatio.mul_inv_cancel n k hn) d) hd)
 
 private theorem spread_mul_unit (a b c : Quad4)
@@ -108,6 +110,8 @@ private def bindGram (a b c : Quad4) : Nat → Int :=
   Expr.bind (a.dot a) (Expr.bind (b.dot b) (Expr.bind (c.dot c)
     (Expr.bind (a.dot b) (Expr.bind (b.dot c) (Expr.bind (c.dot a) (fun _ => Int.zero))))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 private theorem detGram3_cyclic (a b c : Quad4) (ha : Not (Eq a Quad4.zero))
     (hb : Not (Eq b Quad4.zero)) (hc : Not (Eq c Quad4.zero)) :
     IntRatio.Equivalent (detGram3 a b c) (detGram3 b c a) :=
@@ -118,11 +122,11 @@ private theorem detGram3_cyclic (a b c : Quad4) (ha : Not (Eq a Quad4.zero))
   let q := Expr.var Nat.zero.succ.succ.succ.succ
   let r := Expr.var Nat.zero.succ.succ.succ.succ.succ
   have num : Eq (gramNumeratorOf a b c) (gramNumeratorOf b c a) :=
-    Expr.certify (bindGram a b c) (gramExpr A B C p q r) (gramExpr B C A q r p) Eq.refl
+    Expr.certify (bindGram a b c) (gramExpr A B C p q r) (gramExpr B C A q r p) rfl
   have den : Eq (gramDenominator a b c) (gramDenominator b c a) :=
     (Nat.mul_assoc a.normSq b.normSq c.normSq).trans (Nat.mul_comm _ _)
   (detGram3_value a b c ha hb hc).trans
-    ((Eq.subst (fun x => IntRatio.Equivalent _ x) (Eq.map₂ IntRatio.value num den)
+    ((Eq.subst (motive := fun x => IntRatio.Equivalent _ x) (Eq.map₂ IntRatio.value num den)
       (IntRatio.equivalent_refl _)).trans (detGram3_value b c a hb hc ha).symm)
 
 private theorem sine_cyclic (a b c : Quad4)
@@ -215,8 +219,10 @@ theorem rational_spherical_pythagorean (a b c : Quad4)
     (nat_mul_ne_zero hB hC) (nat_mul_ne_zero (nat_mul_ne_zero hA hB) (nat_mul_ne_zero hC hA))).mpr cross
   have product := IntRatio.value_mul (Int.square p) (Int.square r)
     (edgeDenominator a b) (edgeDenominator c a)
-  Eq.subst (fun x => IntRatio.Equivalent (kappa b c) x) product.symm comparison
+  Eq.subst (motive := fun x => IntRatio.Equivalent (kappa b c) x) product.symm comparison
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The Schur complement at `a` expresses the Gram deficit as an integer square. -/
 private theorem gram_deficit (a b c : Quad4) :
     Eq (((spreadNumerator a b).mul (spreadNumerator c a)).sub
@@ -230,14 +236,14 @@ private theorem gram_deficit (a b c : Quad4) :
   let r := Expr.var Nat.zero.succ.succ.succ.succ.succ
   Expr.certify (bindGram a b c)
     ((((A.mul B).sub p.sq).mul ((C.mul A).sub r.sq)).sub ((gramExpr A B C p q r).mul A))
-    (((A.mul q).sub (p.mul r)).sq) Eq.refl
+    (((A.mul q).sub (p.mul r)).sq) rfl
 
 private theorem value_eq_iff {n m : Int} {d : Nat} (hd : Not (Eq d Nat.zero)) :
     Iff (IntRatio.Equivalent (IntRatio.value n d) (IntRatio.value m d)) (Eq n m) :=
   Iff.intro
     (fun h => Int.eq_of_mul_eq_mul_right (fun h => hd (Int.ofNat_inj.mp h))
       ((IntRatio.value_cross_iff n m d d hd hd).mp h))
-    (fun h => Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value n d) (IntRatio.value t d))
+    (fun h => Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value n d) (IntRatio.value t d))
       h (IntRatio.equivalent_refl _))
 
 /-- A right vertex has spread one, and spread one forces the right-angle dot identity.
@@ -266,7 +272,7 @@ theorem right_iff_vertexSpread_one (a b c : Quad4)
     Eq.map₂ IntRatio.value (congrArg (gramNumeratorOf a b c).mul a.normSq_cast)
       (vertex_denominator a b c).symm
   have gramValue := (detGram3_value a b c ha hb hc).trans
-    (scale.trans (Eq.subst (fun t => IntRatio.Equivalent _ t) change (IntRatio.equivalent_refl _)))
+    (scale.trans (Eq.subst (motive := fun t => IntRatio.Equivalent _ t) change (IntRatio.equivalent_refl _)))
   have spreadValue := spread_mul_value a b c hab hca
   have sameDen := value_eq_iff (n := n) (m := m) (nat_mul_ne_zero hab hca)
   have flip := congrArg (a.dot b).mul (a.dot_comm c)
@@ -274,7 +280,7 @@ theorem right_iff_vertexSpread_one (a b c : Quad4)
     (fun right =>
       have residual := Int.sub_eq_zero.mpr (right.trans flip)
       have equal := (Int.sub_eq_zero.mp ((gram_deficit a b c).trans
-        (congrArg Int.square residual))).symm
+        ((congrArg Int.square residual).trans (Int.mul_zero Int.zero)))).symm
       quotient.mpr (gramValue.trans ((sameDen.mpr equal).trans
         (spreadValue.symm.trans oneMul.symm))))
     (fun unit =>

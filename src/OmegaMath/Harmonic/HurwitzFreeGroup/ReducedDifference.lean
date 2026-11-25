@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.HurwitzFreeGroup
 
 /-!
@@ -21,39 +22,39 @@ noncomputable section
 namespace Omega.Hurwitz.FreeGroup
 
 private theorem Word.cons_ne_nil (g : Generator) (tail : Word) : Not (Eq (Word.cons g tail) .nil) :=
-  fun h => Eq.subst (Word.rec (motive := fun _ => Prop) False (fun _ _ _ => True)) h True.intro
+  fun h => Eq.subst (motive := Word.rec (motive := fun _ => Prop) False (fun _ _ _ => True)) h True.intro
 
 private theorem opposite_conj (g : Generator) :
     Eq (generatorQuat g.opposite) (generatorQuat g).conj :=
-  Generator.rec Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl g
+  Generator.rec rfl rfl rfl rfl rfl rfl g
 
 private theorem opposite_reversed (g h : Generator) :
     Eq (h.opposite.isOpposite g.opposite) (g.isOpposite h) :=
   let check := fun (g h : Generator) => Eq (h.opposite.isOpposite g.opposite) (g.isOpposite h)
   (Generator.rec (motive := fun g => ∀ h, check g h)
-    (Generator.rec (motive := check .iPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-    (Generator.rec (motive := check .iNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-    (Generator.rec (motive := check .jPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-    (Generator.rec (motive := check .jNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-    (Generator.rec (motive := check .kPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-    (Generator.rec (motive := check .kNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl) g) h
+    (Generator.rec (motive := check .iPos) rfl rfl rfl rfl rfl rfl)
+    (Generator.rec (motive := check .iNeg) rfl rfl rfl rfl rfl rfl)
+    (Generator.rec (motive := check .jPos) rfl rfl rfl rfl rfl rfl)
+    (Generator.rec (motive := check .jNeg) rfl rfl rfl rfl rfl rfl)
+    (Generator.rec (motive := check .kPos) rfl rfl rfl rfl rfl rfl)
+    (Generator.rec (motive := check .kNeg) rfl rfl rfl rfl rfl rfl) g) h
 
 private theorem head_comparison (g h : Generator) :
     Or (Eq g h) (Eq (g.opposite.isOpposite h) .false) :=
   let check := fun (g h : Generator) => Or (Eq g h) (Eq (g.opposite.isOpposite h) .false)
   (Generator.rec (motive := fun g => ∀ h, check g h)
     (Generator.rec (motive := check .iPos)
-      (Or.inl Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl))
+      (Or.inl rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl))
     (Generator.rec (motive := check .iNeg)
-      (Or.inr Eq.refl) (Or.inl Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl))
+      (Or.inr rfl) (Or.inl rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl))
     (Generator.rec (motive := check .jPos)
-      (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inl Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl))
+      (Or.inr rfl) (Or.inr rfl) (Or.inl rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl))
     (Generator.rec (motive := check .jNeg)
-      (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inl Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl))
+      (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inl rfl) (Or.inr rfl) (Or.inr rfl))
     (Generator.rec (motive := check .kPos)
-      (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inl Eq.refl) (Or.inr Eq.refl))
+      (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inl rfl) (Or.inr rfl))
     (Generator.rec (motive := check .kNeg)
-      (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inr Eq.refl) (Or.inl Eq.refl))
+      (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inr rfl) (Or.inl rfl))
     g) h
 
 private def reverseOppositeAppend (u v : Word) : Word :=
@@ -125,8 +126,8 @@ private theorem scalar_of_scale_five {q : Quaternion} {k : Int}
     Eq q (Quaternion.scalar q.w) :=
   let recover := fun (t : Int) (e : Eq ((Int.ofNat five).mul t) Int.zero) =>
     (Int.mul_eq_zero.mp e).elim
-      (fun zero => False.elim (Int.ofNat_succ_ne_zero five.pred zero)) (fun h => h)
-  Quaternion.ext Eq.refl (recover q.x (congrArg Quaternion.x h))
+      (fun zero => False.elim (Int.ofNat_succ_ne_zero _ zero)) (fun h => h)
+  Quaternion.ext rfl (recover q.x (congrArg Quaternion.x h))
     (recover q.y (congrArg Quaternion.y h)) (recover q.z (congrArg Quaternion.z h))
 
 /-- Distinct reduced words have a nonscalar relative quaternion. -/
@@ -137,7 +138,7 @@ theorem reduced_words_eq_of_relative_scalar (u v : Word) (hu : IsReduced u) (hv 
     ∀ k : Int, Eq ((evalQuat u).conj.mul (evalQuat v)) (Quaternion.scalar k) → Eq u v
   (Word.rec (motive := fun u => ∀ v, statement u v)
     (Word.rec (motive := statement .nil)
-      (fun _ _ _ _ => Eq.refl)
+      (fun _ _ _ _ => rfl)
       (fun g v _ hu hv k scalar => False.elim
         (joined_not_scalar .nil (.cons g v) hu hv True.intro (Word.cons_ne_nil g v) k scalar)))
     (fun g u ih => Word.rec (motive := statement (.cons g u))
@@ -154,7 +155,7 @@ theorem reduced_words_eq_of_relative_scalar (u v : Word) (hu : IsReduced u) (hv 
                 let q := evalQuat v
                 have inner := scalar_of_scale_five ((common_head_factor g p q).symm.trans scalar)
                 congrArg (Word.cons g) (ih v hu.right hv.right (p.conj.mul q).w inner)
-            Eq.subst (fun h => statement (.cons g u) (.cons h v)) same solve hu hv k scalar)
+            Eq.subst (motive := fun h => statement (.cons g u) (.cons h v)) same solve hu hv k scalar)
           (fun allowed => False.elim
             (joined_not_scalar (.cons g u) (.cons h v) hu hv allowed
               (reverseOppositeAppend_ne_nil_right (.cons g u) (.cons h v) (Word.cons_ne_nil h v))

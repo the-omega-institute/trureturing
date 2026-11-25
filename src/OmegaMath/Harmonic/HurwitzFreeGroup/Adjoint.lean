@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.HurwitzFreeGroup.ReducedDifference
 public import OmegaMath.Geometry.Cayley3D.Adjoint
 
@@ -20,7 +22,7 @@ noncomputable section
 
 namespace Omega.Hurwitz.FreeGroup
 
-open Geometry.Cayley3D (Ad adjointNum adjointDen_eq adjointQuaternion adjoint_pure)
+open Geometry.Cayley3D (Ad ad_den adjointNum adjointQuaternion adjoint_pure)
 open Quaternion.Polynomial (Expr Values)
 
 def axisX : Vec3 := ⟨Int.one, Int.zero, Int.zero⟩
@@ -28,10 +30,10 @@ def axisY : Vec3 := ⟨Int.zero, Int.one, Int.zero⟩
 
 private theorem denominator_of_int (q : Quaternion) (hq : q.Nonzero) (v : Vec3) :
     Eq (Ad q (RatVec3.ofInt v)).den q.normSq :=
-  (congrArg Nat.succ (Nat.zero_add q.normSq.pred)).trans (adjointDen_eq q hq)
+  (ad_den q (RatVec3.ofInt v) hq).trans (Nat.mul_one q.normSq)
 
 private theorem evalQuat_nonzero (w : Word) : (evalQuat w).Nonzero :=
-  have five_ne_zero : Not (Eq five Nat.zero) := Nat.succ_ne_zero five.pred
+  have five_ne_zero : Not (Eq five Nat.zero) := Nat.succ_ne_zero _
   have powers : ∀ n : Nat, Not (Eq (powFive n) Nat.zero) :=
     Nat.rec (motive := fun n => Not (Eq (powFive n) Nat.zero))
       (Nat.succ_ne_zero Nat.zero)
@@ -40,7 +42,7 @@ private theorem evalQuat_nonzero (w : Word) : (evalQuat w).Nonzero :=
 
 private theorem pure_scale (k : Int) (v : Vec3) :
     Eq (Vec3.scale k v).pure (Quaternion.scale k v.pure) :=
-  Quaternion.ext (Int.mul_zero k).symm Eq.refl Eq.refl Eq.refl
+  Quaternion.ext (Int.mul_zero k).symm rfl rfl rfl
 
 private theorem adjoint_cross (p q : Quaternion) (hp : p.Nonzero) (hq : q.Nonzero) (v : Vec3)
     (same : RatVec3.Equiv (Ad p (RatVec3.ofInt v)) (Ad q (RatVec3.ofInt v))) :
@@ -113,6 +115,8 @@ private theorem relative_commutes (p q : Quaternion) (hp : p.Nonzero) (hq : q.No
     Quaternion.normSq_ne_zero hr (Int.ofNat_inj.mp h)
   Quaternion.scale_cancel (Int.mul_ne_zero (ne p hp) (ne q hq)) scale_eq
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem scalar_of_commutes (q : Quaternion)
     (commX : Eq (q.mul axisX.pure) (axisX.pure.mul q))
     (commY : Eq (q.mul axisY.pure) (axisY.pure.mul q)) : Eq q (Quaternion.scalar q.w) :=
@@ -124,13 +128,13 @@ private theorem scalar_of_commutes (q : Quaternion)
   let cancel := fun (t : Int) (h : Eq (Int.two.mul t) Int.zero) =>
     (Int.mul_eq_zero.mp h).elim
       (fun h => False.elim (Int.ofNat_succ_ne_zero Nat.one h)) (fun h => h)
-  have x := (((P.mul Y).z.sub (Y.mul P).z).sound (two.mul P.x) values Eq.refl).symm.trans
+  have x := (((P.mul Y).z.sub (Y.mul P).z).sound (two.mul P.x) values rfl).symm.trans
     (Int.sub_eq_zero.mpr (congrArg Quaternion.z commY))
-  have y := (((X.mul P).z.sub (P.mul X).z).sound (two.mul P.y) values Eq.refl).symm.trans
+  have y := (((X.mul P).z.sub (P.mul X).z).sound (two.mul P.y) values rfl).symm.trans
     (Int.sub_eq_zero.mpr (congrArg Quaternion.z commX.symm))
-  have z := (((P.mul X).y.sub (X.mul P).y).sound (two.mul P.z) values Eq.refl).symm.trans
+  have z := (((P.mul X).y.sub (X.mul P).y).sound (two.mul P.z) values rfl).symm.trans
     (Int.sub_eq_zero.mpr (congrArg Quaternion.y commX))
-  Quaternion.ext Eq.refl (cancel q.x x) (cancel q.y y) (cancel q.z z)
+  Quaternion.ext rfl (cancel q.x x) (cancel q.y y) (cancel q.z z)
 
 /-- Agreement on two coordinate axes identifies the reduced word. -/
 theorem reduced_words_adjoint_injective (u v : Word) (hu : IsReduced u) (hv : IsReduced v)
@@ -153,7 +157,8 @@ private theorem ad_one_int (v : Vec3) :
   have right := (Quaternion.mul_scalar Int.one v.pure).trans (Quaternion.scale_one v.pure)
   have product : Eq (adjointQuaternion Quaternion.one v) v.pure :=
     (congrArg (fun q : Quaternion => q.mul Quaternion.one) left).trans right
-  RatVec3.eq_of_num_den (congrArg Vec3.imaginary product) Eq.refl
+  RatVec3.eq_of_num_den (congrArg Vec3.imaginary product)
+    ((denominator_of_int Quaternion.one (evalQuat_nonzero .nil) v).trans (reduced_word_normSq .nil))
 
 /-- The Cayley adjoint representation has trivial kernel on reduced Hurwitz words. -/
 theorem reduced_word_adjoint_faithful (w : Word) (hr : IsReduced w)
@@ -162,7 +167,7 @@ theorem reduced_word_adjoint_faithful (w : Word) (hr : IsReduced w)
     Eq w .nil :=
   have fix := fun (v : Vec3) (h : RatVec3.Equiv
       (Ad (evalQuat w) (RatVec3.ofInt v)) (RatVec3.ofInt v)) =>
-    Eq.subst (fun r => RatVec3.Equiv (Ad (evalQuat w) (RatVec3.ofInt v)) r)
+    Eq.subst (motive := fun r => RatVec3.Equiv (Ad (evalQuat w) (RatVec3.ofInt v)) r)
       (ad_one_int v).symm h
   reduced_words_adjoint_injective w .nil hr True.intro (fix axisX fixedX) (fix axisY fixedY)
 

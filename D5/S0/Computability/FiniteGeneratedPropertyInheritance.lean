@@ -36,6 +36,12 @@ open D5.S0.Computability.PropertyObject
 
 universe uObject
 
+/-- Count the constructors of an index when deriving the size of the generation system. -/
+@[instance_reducible] private noncomputable def indexSize : SizeOf Omega.Nat :=
+  ⟨Omega.Nat.rec 0 (fun _ n => n.succ)⟩
+
+attribute [local instance] indexSize
+
 /-- A finite collection of generators and construction rules. Each rule has a
 finite, rule-dependent arity. -/
 structure FiniteGenerationSystem (Object : Type uObject) where

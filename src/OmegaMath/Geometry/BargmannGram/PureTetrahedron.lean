@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram.Identities
 import OmegaMath.Arithmetic.Euclidean.SquareObstruction
 import OmegaMath.Geometry.BargmannGram.Polynomial
@@ -27,6 +29,8 @@ private abbrev fortyEight : Nat := three.mul sixteen
 private def gramSize (a b c : Quad4) : Int :=
   gramNumerator (a.dot a) (b.dot b) (c.dot c) (a.dot b) (b.dot c) (c.dot a)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem gram_of_equal_negative_pairing (t : Nat) :
     Eq (gramNumerator (Int.ofNat (three.mul t)) (Int.ofNat (three.mul t))
       (Int.ofNat (three.mul t)) (Int.ofNat t).neg (Int.ofNat t).neg (Int.ofNat t).neg)
@@ -38,8 +42,10 @@ private theorem gram_of_equal_negative_pairing (t : Nat) :
     ((off.mul off).mul off))).sub
       (((off.sq.mul diag).add (off.sq.mul diag)).add (off.sq.mul diag))
   Expr.certify (Expr.bind (Int.ofNat t) (fun _ => Int.zero)) gram
-    ((Expr.const (Int.ofNat sixteen)).mul (value.sq.mul value)) Eq.refl
+    ((Expr.const (Int.ofNat sixteen)).mul (value.sq.mul value)) rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem square_relation (determinant scale denominator : Nat)
     (hgram : Eq (determinant.mul determinant) (sixteen.mul ((scale.mul scale).mul scale)))
     (hscale : Eq (denominator.mul denominator) (three.mul scale)) :
@@ -56,11 +62,11 @@ private theorem square_relation (determinant scale denominator : Nat)
   let fortyEightExpr := Expr.const (Int.ofNat fortyEight)
   let environment := Expr.bind (Int.ofNat determinant)
     (Expr.bind (Int.ofNat scale) (Expr.bind (Int.ofNat denominator) (fun _ => Int.zero)))
-  have left := Expr.certify environment ((threeExpr.mul d).sq) (nineExpr.mul d.sq) Eq.refl
+  have left := Expr.certify environment ((threeExpr.mul d).sq) (nineExpr.mul d.sq) rfl
   have right := Expr.certify environment (threeExpr.mul (((fourExpr.mul t).mul n).sq))
-    ((fortyEightExpr.mul t.sq).mul n.sq) Eq.refl
+    ((fortyEightExpr.mul t.sq).mul n.sq) rfl
   have cubic := Expr.certify environment (nineExpr.mul (sixteenExpr.mul (t.sq.mul t)))
-    ((fortyEightExpr.mul t.sq).mul (threeExpr.mul t)) Eq.refl
+    ((fortyEightExpr.mul t.sq).mul (threeExpr.mul t)) rfl
   Int.ofNat_inj.mp (left.trans ((congrArg (Int.mul (Int.ofNat nine))
     (congrArg Int.ofNat hgram)).trans (cubic.trans
       ((congrArg (Int.mul (Int.ofNat (fortyEight.mul (scale.mul scale))))
@@ -88,7 +94,7 @@ theorem no_pure_tetrahedral_gram (a b c : Quad4) (denominator : Nat)
     ((Int.natAbs_neg (Int.ofNat (denominator.mul denominator))).symm.trans
       ((congrArg Int.natAbs hab).symm.trans (Int.natAbs_mul (Int.ofNat three) (a.dot b))))
   have hscale_ne : Not (Eq scale Nat.zero) := fun h =>
-    (Nat.mul_eq_zero.mp (hscale.trans (congrArg (Nat.mul three) h))).elim hden hden
+    (Nat.mul_eq_zero.mp (hscale.trans ((congrArg (Nat.mul three) h).trans (Nat.mul_zero three)))).elim hden hden
   have hoff : Eq ((Int.ofNat three).mul off) (Int.ofNat (denominator.mul denominator)).neg :=
     (Int.mul_neg (Int.ofNat three) (Int.ofNat scale)).trans
       (congrArg (fun n => (Int.ofNat n).neg) hscale.symm)
