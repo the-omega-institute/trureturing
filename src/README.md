@@ -158,7 +158,7 @@ import OmegaInit.Data.List.Basic
 #check Omega.List.reverse
 ```
 
-输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。生成库中的计算定义可以用 Lean 内核做归约。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，定义体依赖官方可展开而严格库封装的实现的路径。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
 
 ## 严格库与可替换接口
 

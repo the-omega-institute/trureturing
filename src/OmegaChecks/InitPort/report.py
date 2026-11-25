@@ -69,6 +69,15 @@ def report(product):
                 writer.writerow([row["module"], name, row["kind"], str(row["unsafe"]).lower(),
                                  str(row["partial"]).lower(), ",".join(row["axioms"]), row["impliesAxiom"],
                                  " -> ".join(path), " ".join(reason.splitlines())])
+        reductions = stage / "init-public-reductions.tsv"
+        with reductions.open("w", newline="") as f:
+            writer = csv.writer(f, delimiter="\t", lineterminator="\n")
+            writer.writerow(["module", "declaration", "sealedDefinition", "strictDependencyPath"])
+            for row in official["declarations"]:
+                path = row["publicReductionBoundary"]
+                if path:
+                    writer.writerow([row["module"], row["name"], path[-1], " -> ".join(path)])
+        reductions.replace(product / reductions.name)
         inventory.replace(product / inventory.name)
         output.replace(product / output.name)
 

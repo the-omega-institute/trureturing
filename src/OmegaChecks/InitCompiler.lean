@@ -77,6 +77,18 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       | _ => throwError "this proof needs a constructive implementation"
     if isProtected src info.name then modifyEnv (addProtected · target.name)
 
+@[command_parser, builtin_command_parser] def portDefinition := leading_parser "port_definition " >> ident
+
+@[builtin_command_elab portDefinition] def elabPortDefinition : CommandElab := fun stx => do
+  let (src, .defnInfo defn) ← officialDeclaration stx[1] | throwError "expected a safe definition"
+  liftCoreM <| withExporting do
+    let value ← ofExcept (translateProofTerm src defn.value)
+    let type ← ofExcept (translateProofTerm src defn.type)
+    let name := omegaName defn.name
+    Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
+    setReducibilityStatus name (getReducibilityStatusCore src defn.name)
+    if isProtected src defn.name then modifyEnv (addProtected · name)
+
 @[command_parser, builtin_command_parser] def portInductive := leading_parser "port_inductive " >> ident
 
 @[builtin_command_elab portInductive] def elabPortInductive : CommandElab := fun stx => do
@@ -84,7 +96,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   let name := info.name
   let owner := (← getMainModule).replacePrefix `OmegaInit `Init
   liftCoreM <| withExporting do
-    if (getStructureInfo? src name).isSome then throwError "expected an inductive datatype, got structure {name}"
+    if let some record := getStructureInfo? src name then
+      if !record.parentInfo.isEmpty || isClass src name then
+        throwError "expected an inductive or a flat non-class record"
     let (decl, ctors) ← sourceGroup src owner name
     let .inductDecl _ _ types _ := decl | unreachable!
     Lean.addDecl decl

@@ -4,7 +4,7 @@ public import Init.Prelude
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega
-export _root_ (And Bool Empty Eq False HEq List Nat Nonempty Not Option Or PEmpty PUnit ReaderT ReaderT.adapt ReaderT.mk ReaderT.run True Unit Unit.unit absurd cast cond congr congrArg congrFun congrFun' eq_of_heq heq_of_eq id id_eq inferInstance namedPattern optParam outParam rfl semiOutParam «inferInstanceAs»)
+export _root_ (And Bool Empty Eq False HEq List List.brecOn.go Nat Nonempty Not Option Or PEmpty PProd PUnit ReaderT ReaderT.adapt ReaderT.mk ReaderT.run True Unit Unit.unit absurd cast cond congr congrArg congrFun congrFun' eq_of_heq heq_of_eq id id_eq inferInstance namedPattern optParam outParam rfl semiOutParam «inferInstanceAs»)
 end Omega
 namespace Omega.And
 export _root_.And (casesOn intro left rec recOn right)
@@ -31,7 +31,7 @@ namespace Omega.HEq
 export _root_.HEq (casesOn rec recOn refl rfl)
 end Omega.HEq
 namespace Omega.List
-export _root_.List (casesOn cons length nil rec recOn)
+export _root_.List (below brecOn casesOn cons length nil rec recOn)
 end Omega.List
 namespace Omega.Nat
 export _root_.Nat (add beq ble div le le_antisymm le_of_succ_le_succ le_refl le_trans lt mod mod_lt mul not_succ_le_zero pow pred rec recOn sub succ succ_le_succ succ_sub_succ_eq_sub zero zero_le)
@@ -51,6 +51,9 @@ end Omega.Or
 namespace Omega.PEmpty
 export _root_.PEmpty (casesOn noConfusion noConfusionType rec recOn)
 end Omega.PEmpty
+namespace Omega.PProd
+export _root_.PProd (casesOn fst mk rec recOn snd)
+end Omega.PProd
 namespace Omega.PUnit
 export _root_.PUnit (casesOn rec recOn unit)
 end Omega.PUnit

@@ -11,6 +11,9 @@ noncomputable section
 
 port_inductive Option
 port_inductive List
+port_inductive PProd
+port_definition PProd.fst
+port_definition PProd.snd
 
 namespace Omega
 
@@ -466,11 +469,15 @@ attribute [irreducible] beq ble Nat.div Nat.mod
 
 end Omega.Nat
 
+port_definition List.below
+port_definition List.brecOn.go
+port_definition List.brecOn
+
 namespace Omega.List
 
-@[no_expose] def length {α : Type u} : List α → Nat :=
-  List.rec Nat.zero (fun _ _ n => Nat.succ n)
-
-attribute [irreducible] length
+@[instance_reducible] def length {α : Type u} : List α → Nat := fun xs =>
+  List.brecOn (motive := fun _ : List α => Nat) xs (fun ys below =>
+    List.casesOn (motive := fun ys => List.below (motive := fun _ : List α => Nat) ys → Nat)
+      ys (fun _ => Nat.zero) (fun _ _ prior => Nat.succ prior.fst) below)
 
 end Omega.List

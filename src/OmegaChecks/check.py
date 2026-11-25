@@ -518,6 +518,13 @@ def check_generated_init():
                   "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
                        env=environment)
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment, text=True, check=True,
+                       input="""module
+prelude
+import OmegaInit.Data.List.Basic
+example {α : Type} (a : α) :
+    Omega.Eq (Omega.List.reverse (Omega.List.cons a .nil)) (Omega.List.cons a .nil) := Omega.rfl
+""")
         # These two official modules prove the same public equations with different private helpers.
         names = ("Omega.List.take.eq_def", "Omega.List.takeWhile.eq_def")
         for module in ("OmegaInit.Data.List.Impl", "OmegaInit.Data.List.TakeDrop"):

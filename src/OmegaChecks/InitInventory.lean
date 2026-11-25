@@ -93,9 +93,36 @@ private def declarationKind : ConstantInfo → String
   | .ctorInfo _ => "constructor"
   | .recInfo _ => "recursor"
 
-private def inventory (lib : System.FilePath) (visible strict : Environment) (modules : Array Name)
+/-- One shortest implementation-body dependency path to a strict definition sealed
+under ordinary import whose official implementation is publicly visible. -/
+private def reductionPaths (official strict full : Environment) : NameMap (List Name) := Id.run do
+  let mut users : NameMap (Array Name) := {}
+  let mut paths : NameMap (List Name) := {}
+  let mut todo := #[]
+  for (n, info) in full.constants.toList do
+    let .defnInfo value := info | continue
+    if !(strict.find? n).any (· matches .defnInfo _) then
+      if (official.find? (n.replacePrefix `Omega .anonymous)).any (· matches .defnInfo _) then
+        paths := paths.insert n [n]
+        todo := todo.push n
+    else
+      for dep in value.value.getUsedConstantsAsSet do
+        users := users.insert dep ((users.getD dep #[]).push n)
+  todo := todo.qsort Name.lt
+  let mut i := 0
+  while h : i < todo.size do
+    let dependency := todo[i]
+    i := i + 1
+    for n in (users.getD dependency #[]).qsort Name.lt do
+      unless paths.contains n do
+        paths := paths.insert n (n :: paths.getD dependency [])
+        todo := todo.push n
+  return paths
+
+private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) : CoreM Json := do
   let official ← getEnv
+  let reductions := reductionPaths visible strict full
   let boundaries : NameMap Name := OmegaChecks.InitBoundaries.reductions.foldl
     (init := {}) fun acc (name, target, _) => acc.insert name target
   let mut names : NameSet := {}
@@ -153,10 +180,12 @@ private def inventory (lib : System.FilePath) (visible strict : Environment) (mo
       if !axioms.isEmpty then
         withAxioms := withAxioms + 1
         withAxiomsUnique := withAxiomsUnique.insert name
+      let reduction := if matched then (reductions.getD strictName []).map Name.toString else []
       rows := rows.push <| Json.mkObj [
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
         ("matchingNameAndModule", toJson matched),
+        ("publicReductionBoundary", toJson reduction),
         ("axioms", toJson (axioms.map Name.toString)),
         ("impliesAxiom", toJson ((boundaries.get? name).map Name.toString)),
         ("strictModule", toJson (strictOwner.map Name.toString))]
@@ -189,10 +218,12 @@ def main (args : List String) : IO Unit := do
   let official ← importModules imports {} (loadExts := true)
   searchPathRef.set [strictDir]
   let basis ← installedModules strictDir `OmegaInit
-  let strict ← importModules (basis.map fun mod => {module := mod}) {} (level := .exported)
+  let strictImports := basis.map fun mod => {module := mod : Import}
+  let strict ← importModules strictImports {} (level := .exported)
+  let full ← importModules strictImports {} (level := .private)
   for owner in strict.allImportedModuleNames do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
-  let result ← (inventory lib visible strict modules gaps).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let result ← (inventory lib visible strict full modules gaps).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

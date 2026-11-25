@@ -124,19 +124,6 @@ public theorem Nat.ble (a b : Nat) :
     | zero => rfl
     | succ b => exact ih b
 
-public theorem List.length {α : Type u} (xs : List α) :
-    List.rec (motive := fun _ => Nat) 0 (fun _ _ n => n.succ) xs = xs.length := by
-  induction xs with
-  | nil => rfl
-  | cons _ xs ih => exact congrArg Nat.succ ih
-
-public theorem List.reverseAux {α : Type u} (xs acc : List α) :
-    List.rec (motive := fun _ => List α → List α) (fun r => r)
-      (fun a _ rec r => rec (a :: r)) xs acc = xs.reverseAux acc := by
-  induction xs generalizing acc with
-  | nil => rfl
-  | cons a xs ih => exact ih (a :: acc)
-
 @[expose] public noncomputable def divisionSteps (d : Nat) : Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat) (fun _ => 0)
     (fun _ previous x => Bool.rec 0 ((previous (x - d.succ)).succ) (_root_.Nat.ble d.succ x))
