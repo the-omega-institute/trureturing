@@ -9,12 +9,14 @@ LIBRARIES = BASIS | {"OmegaMath"}
 CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
-CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
+CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.ProtectedUses",
+                "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",
           "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
           "src/OmegaChecks/test_qualified_references.py", "src/OmegaChecks/protected_objects.py",
-          "src/OmegaChecks/test_protected_objects.py"}
+          "src/OmegaChecks/test_protected_objects.py", "src/OmegaChecks/protected_uses.py",
+          "src/OmegaChecks/test_protected_uses.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
 IMPORTER_INPUTS = {"OmegaMath", "OmegaChecks.Portable.Common"}

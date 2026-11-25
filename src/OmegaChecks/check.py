@@ -126,6 +126,7 @@ def check_audits():
             audit(name, ["OmegaInit.Prelude", name], [tmp, LIB], reason)
     check_publication_layers()
     run(sys.executable, "-B", SRC / "OmegaChecks/test_protected_objects.py")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_protected_uses.py")
     check_standard_admission()
     run(sys.executable, "-B", SRC / "OmegaChecks/test_qualified_references.py")
     check_module_surface()
