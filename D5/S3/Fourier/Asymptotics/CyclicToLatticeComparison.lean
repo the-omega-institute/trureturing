@@ -65,7 +65,7 @@ theorem cosineMoment_eq_centered {q : ℕ} [NeZero q] (r : ℕ) (v : ZMod q → 
         unfold centeredAngle
         field_simp, Real.cos_add_nat_mul_two_pi]
 
-private theorem abs_centeredAngle_le_pi {q : ℕ} [NeZero q] (i : ZMod q) :
+theorem abs_centeredAngle_le_pi {q : ℕ} [NeZero q] (i : ZMod q) :
     |centeredAngle i| ≤ Real.pi := by
   have hq : 0 < (q : ℝ) := by exact_mod_cast (Nat.pos_of_ne_zero (NeZero.ne q))
   have hl : -(q : ℝ) < (i.valMinAbs : ℝ) * 2 := by
@@ -151,7 +151,7 @@ private theorem dual_positive_part_le {q : ℕ} [NeZero q] {m t Z : ℝ} {n : �
 def latticeSupportRadius (n : ℕ) (m : ℝ) : ℕ :=
   if m = ((n : ℝ) ^ 2 - 1) / 5 then n - 1 else n
 
-private theorem activation_zero_outside {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
+theorem activation_zero_outside {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     (A : Activation m n t Z w) {k : ℤ}
     (hk : k ∉ Icc (-(latticeSupportRadius n m : ℤ)) (latticeSupportRadius n m : ℤ)) :
     w k = 0 := by
@@ -164,7 +164,7 @@ private theorem activation_zero_outside {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ
   · rw [ite_eq_right (fun ht => hm (A.lower_endpoint.mpr ht))] at hs
     exact hk (by simpa [latticeSupportRadius, hm] using hs)
 
-private theorem sum_centered_eq_tsum {q n : ℕ} [NeZero q] (hq : 2 * n < q) (f : ℤ → ℝ)
+theorem sum_centered_eq_tsum {q n : ℕ} [NeZero q] (hq : 2 * n < q) (f : ℤ → ℝ)
     (hf : ∀ k, k ∉ Icc (-(n : ℤ)) (n : ℤ) → f k = 0) :
     (∑ i : ZMod q, f i.valMinAbs) = ∑' k : ℤ, f k := by
   let reps := (univ : Finset (ZMod q)).map ⟨ZMod.valMinAbs, ZMod.injective_valMinAbs⟩
@@ -181,7 +181,7 @@ private theorem sum_centered_eq_tsum {q n : ℕ} [NeZero q] (hq : 2 * n < q) (f 
     univ.map (⟨ZMod.valMinAbs, ZMod.injective_valMinAbs⟩ : ZMod q ↪ ℤ) from rfl, sum_map]
   rfl
 
-private theorem lattice_energy_eq {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
+theorem lattice_energy_eq {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     (A : Activation m n t Z w) : (∑' k : ℤ, w k ^ 2) = (t - m) / Z := by
   have hp (k : ℤ) : w k ^ 2 = (t * w k - (k : ℝ) ^ 2 * w k) / Z := by
     rw [A.law k]
