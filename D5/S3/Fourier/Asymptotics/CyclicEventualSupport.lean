@@ -814,7 +814,8 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
       exact le_rfl
     · exact (hopt u hu heq').le
   · intro u hu hmin i
-    rw [hsupp u hu hmin, grid_mem hk i, ← window_iff act.radius_lower hhi]
+    have hsupport : 0 < u i ↔ i ∈ sites := hsupp u hu hmin i
+    rw [hsupport, grid_mem hk i, ← window_iff act.radius_lower hhi]
     refine or_congr Iff.rfl ?_
     constructor
     · intro hsame j

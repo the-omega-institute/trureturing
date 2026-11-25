@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Asymptotics;
 
@@ -13,7 +14,7 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("cyclic-eventual-exact-support"),
                 DeclarationHandle.Create(Owner + ".cyclic_eventual_exact_support"),
                 H("Eventual support for both parities and all activation levels"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -41,4 +42,57 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
                         "so convexity gives the strict sign throughout the complement. Exact moments and the squared-distance " +
                         "identity certify the positive part as the unique minimizer."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Statement()
+    {
+        var lambda = F.LambdaLower;
+        var m = F.Id("m");
+        var n = F.Id("n");
+        var t = F.Id("t");
+        var Z = F.Id("Z");
+        var w = F.Id("w");
+        var q = F.Id("q");
+        var Q = F.Id("Q");
+        var a = Subtract(F.D(1), new Formula.Fraction(lambda, Sq(q)));
+        var v = F.Id("v");
+        var i = F.Id("i");
+        var j = F.Id("j");
+        var residues = Call("ZMod", q);
+        var weights = Call("Feasible", q, a);
+        var minimum = Call("IsMinOn", F.Id("E"), weights, v);
+        var antipode = Bind(FormulaQuantifier.ForAll, "j", residues,
+            Le(Call("c", i), Call("c", j)));
+        var support = Logic(Lt(F.D(0), Call("v", i)), FormulaLogicOperator.Iff,
+            Logic(Le(Sq(Call("Centered", i)), t), FormulaLogicOperator.Or, antipode));
+        var exists = Bind(FormulaQuantifier.Exists, "v", weights, And(minimum,
+            And(Eq(Call("M", F.D(1), v), a), Eq(Call("M", F.D(2), v), a))));
+        var every = Bind(FormulaQuantifier.ForAll, "v", weights,
+            Logic(minimum, FormulaLogicOperator.Implies,
+                Bind(FormulaQuantifier.ForAll, "i", residues, support)));
+        var eventual = Bind(FormulaQuantifier.Exists, "Q", F.Id("Nat"),
+            Bind(FormulaQuantifier.ForAll, "q", F.Id("Nat"),
+                Logic(And(Lt(F.D(0), q), Le(Q, q)), FormulaLogicOperator.Implies,
+                    And(exists, every))));
+        var budgets = And(Le(new Formula.Fraction(Subtract(Sq(n), F.D(1)), F.D(5)), m),
+            Lt(m, new Formula.Fraction(Multiply(n, Add(n, F.D(2))), F.D(5))));
+        var activation = And(Lt(F.D(0), n), And(budgets, Call("Activation", m, n, t, Z, w)));
+        var data = Bind(FormulaQuantifier.Exists, "n", F.Id("Nat"),
+            Bind(FormulaQuantifier.Exists, "t", F.Id("Real"),
+                Bind(FormulaQuantifier.Exists, "Z", F.Id("Real"),
+                    Bind(FormulaQuantifier.Exists, "w", Call("LatticeWeights"),
+                        And(activation, eventual)))));
+        return F.Disp(F.Seq(F.Forall, F.Sp, lambda, F.Comma, F.Sp, Lt(F.D(0), lambda), F.Comma, F.Sp,
+            Eq(m, new Formula.Fraction(lambda, Multiply(F.D(8), Sq(F.Pi)))),
+            F.Comma, F.Sp, data));
+    }
+
+    private static Formula Bind(FormulaQuantifier kind, string name, Formula domain, Formula body) =>
+        new Formula.BindMany(kind, [new Formula.BoundVariable(FormulaIdentifier.Create(name), domain)], body);
+
+    private static Formula Sq(Formula a) => new Formula.Power(a, F.D(2));
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) => new Formula.Logic(a, op, b);
 }
