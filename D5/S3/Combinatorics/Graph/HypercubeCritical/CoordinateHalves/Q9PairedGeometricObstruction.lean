@@ -18,7 +18,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedG
 
 open scoped BigOperators
 open Finset
-open EightCubeBits (Vertex Word cube toggle cube_toggle toggle_injective shell shell_symm parity)
+open EightCubeBits (Vertex Word cube toggle cube_toggle toggle_injective shell_card shell shell_symm parity)
 open Q9PairedWeightSixteenSyndrome (pairedSyndrome)
 open BalancedCriticalSpectrum (Q flip)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedAxialFold (transverse)
@@ -86,9 +86,6 @@ theorem pairedShell_exterior_capacity (x : Vertex) (hodd : parity x = 1)
 private theorem pairedSyndrome_card : pairedSyndrome.card = 16 := by
   decide +kernel
 
-private theorem shell_card (x : Vertex) : (shell x).card = 8 := by
-  rw [shell, card_image_of_injective _ (toggle_injective x), card_univ, Fintype.card_fin]
-
 private theorem transverse_cast (f : Q 8 → ℤ) (x : Q 8) :
     (transverse f x : ℝ) = (huangMatrix 8).mulVec (fun y => (f y : ℝ)) x := by
   rw [matrix_row]
@@ -101,7 +98,7 @@ private theorem transverse_energy (f : Q 8 → ℤ) :
   simpa only [Int.cast_sum, Int.cast_pow, Int.cast_mul, Int.cast_ofNat, transverse_cast,
     Nat.cast_ofNat] using huang_energy 8 (fun x => (f x : ℝ))
 
-private theorem transverse_square (f : Q 8 → ℤ) (x : Q 8) :
+theorem transverse_square (f : Q 8 → ℤ) (x : Q 8) :
     transverse (transverse f) x = 8 * f x := by
   have hmatrix (z : Q 8 → ℝ) :
       (huangMatrix 8).mulVec ((huangMatrix 8).mulVec z) = (8 : ℝ) • z := by
@@ -116,10 +113,10 @@ private theorem transverse_square (f : Q 8 → ℤ) (x : Q 8) :
   simp only [Pi.smul_apply, smul_eq_mul, Int.cast_mul, Int.cast_ofNat]
 
 /-- The repository transverse operator in the existing little-endian cube chart. -/
-private def bitRow (f : Vertex → ℤ) (x : Vertex) : ℤ :=
+def bitRow (f : Vertex → ℤ) (x : Vertex) : ℤ :=
   transverse (f ∘ cube.symm) (cube x)
 
-private theorem bitRow_sum (f : Vertex → ℤ) (x : Vertex) :
+theorem bitRow_sum (f : Vertex → ℤ) (x : Vertex) :
     bitRow f x = ∑ i : Fin 8, flipSign i (cube x) * f (toggle x i) := by
   unfold bitRow transverse
   apply sum_congr rfl
@@ -139,7 +136,7 @@ private theorem bitRow_energy (f : Vertex → ℤ) :
       congr 1
       exact Equiv.sum_comp cube.symm (fun x => f x ^ 2)
 
-private theorem flipSign_unit {n : ℕ} (i : Fin n) (x : Q n) :
+theorem flipSign_unit {n : ℕ} (i : Fin n) (x : Q n) :
     flipSign i x = 1 ∨ flipSign i x = -1 := by
   induction n with
   | zero => exact Fin.elim0 i
