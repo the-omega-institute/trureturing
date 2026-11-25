@@ -37,10 +37,25 @@ def build(targets):
     run("lake", "-f", strict_config(), "build", *("+" + target for target in targets))
 
 
+def strict_import_graph(lean, targets=()):
+    _, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+    # A witness can reach a marked project module through the public umbrella.
+    # Read the requested project branches without scanning every unrelated D5 source.
+    pending = set(targets).union(*graph.values())
+    while project := sorted(name for name in pending - graph.keys() if root(name) in {"D5", "Trureturing"}):
+        paths = [name.replace(".", "/") + ".lean" for name in project]
+        # Lake's default D5 library glob can expand beyond the OS argument limit.
+        if len(paths) > 1000:
+            paths = ["D5/*.lean", "Trureturing.lean"]
+        _, extra = import_graph(lean, paths)
+        graph.update(extra)
+        pending = set().union(*extra.values())
+    return graph
+
+
 @cache
 def library_graph():
-    # Lake's source roots agree in both configurations except for the basis facades.
-    return import_graph(ENV["LEAN"], ("strict/*.lean", "src/*.lean"))[1]
+    return strict_import_graph(ENV["LEAN"])
 
 
 def terminal_modules(graph, names):
@@ -48,23 +63,56 @@ def terminal_modules(graph, names):
     return sorted(set(names) - imported)
 
 
+def library_backend_candidates(graph, names):
+    # Mixed witnesses can use the concrete strict implementation. Only resolve
+    # their official artifacts if the command is reachable.
+    reachable = {"OmegaBuild.Commands"}
+    for name in names:
+        if graph[name] & reachable:
+            reachable.add(name)
+    return [name for name in names if name in reachable and root(name) != "OmegaBuild"]
+
+
+def library_mathlib_only(graph, targets):
+    candidates = library_backend_candidates(graph, closure(graph, targets))
+    if not candidates:
+        return {}
+    run("lake", "build", *("+" + name for name in terminal_modules(graph, candidates)))
+    official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+    return portable.backend_plan(official_path, candidates)["mathlibOnly"]
+
+
 def check_library(selected=()):
     graph = library_graph()
     for name in selected:
-        if name not in graph or root(name) not in STRICT | {"OmegaChecks"}:
+        if name not in graph or root(name) not in STRICT | {"OmegaChecks", "OmegaBuild"}:
             raise ValueError(f"unknown Omega module {name}")
+    # The current check passes every changed program under src to the Lake test
+    # driver. The command frontend and planner run in the official environment.
+    support = {name for name in selected if root(name) == "OmegaBuild"}
+    if support:
+        run("lake", "build", *("+" + name for name in terminal_modules(graph, support)))
+        selected = [name for name in selected if name not in support]
+        if not selected:
+            return
     # Imported-only modules and new modules outside an umbrella are both in scope.
     if not selected or "OmegaChecks.Audit" in selected:
         modules = sorted(name for name in graph if root(name) in STRICT)
     else:
         modules = [name for name in closure(graph, selected) if root(name) in STRICT]
-    roots = terminal_modules(graph, modules)
-    targets = set(roots) | set(selected)
+    targets = set(modules) | set(selected)
     if not selected:
         # Build every external witness against the actual strict implementation.
-        external = [name for name in graph if root(name) == "OmegaChecks"]
-        targets.update(terminal_modules(graph, external))
-    build(sorted(targets))
+        targets.update(name for name in graph if root(name) == "OmegaChecks")
+    dependencies = closure(graph, targets)
+    skipped = library_mathlib_only(graph, targets)
+    if skipped:
+        modules = [name for name in modules if name not in skipped]
+        targets.update(name for name in dependencies if root(name) != "OmegaBuild")
+        targets.difference_update(skipped)
+    if targets:
+        build(terminal_modules(graph, targets))
+    roots = terminal_modules(graph, modules)
     if roots:
         subprocess.run([AUDIT, "--exact-roots", LIB, *roots, "--", *modules],
                        cwd=ROOT, env=audit_environment(), check=True)
@@ -435,8 +483,10 @@ def versions(artifacts):
 def check_incremental():
     graph = library_graph()
     # Track the strict libraries and every mathematical check importing them.
-    imports = {name: set(closure(graph, [name])) for name in graph}
+    imports = {name: set(closure(graph, [name])) for name in graph if root(name) in STRICT | {"OmegaChecks"}}
     modules = sorted(name for name, deps in imports.items() if any(root(dep) in STRICT for dep in deps))
+    skipped = library_mathlib_only(graph, modules)
+    modules = [name for name in modules if name not in skipped]
     targets = terminal_modules(graph, modules)
     build(targets)
     artifacts = {name: LIB / (name.replace(".", "/") + ".olean") for name in modules}
@@ -514,6 +564,8 @@ def full_check(incremental=False):
     run("lake", "build", "omegaAudit")
     check_audits()
     run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_plan.py")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_scheduling.py")
     check_fibonacci_reduction()
     if incremental:
         check_incremental()
