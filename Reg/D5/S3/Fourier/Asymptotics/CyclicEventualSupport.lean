@@ -15,18 +15,18 @@ open _root_.Reg.Support
 
 noncomputable section
 
-abbrev signature := UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+abbrev signature := UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 < x) (fun e => nomatch e)
+  realize signature (fun _ _ x => max 0 x) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (lam : ℝ) (_hlam : 0 < lam),
-    let positive := R.readout () ()
+    let clip := R.readout () ()
     let m := lam / (8 * Real.pi ^ 2)
     ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
       ((n : ℝ) ^ 2 - 1) / 5 ≤ m ∧ m < (n : ℝ) * (n + 2) / 5 ∧
@@ -38,7 +38,7 @@ abbrev arena : Arena where
           cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2) ∧
         ∀ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v → ∀ i : ZMod q,
-            positive (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j
+            0 < clip (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -48,7 +48,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨⟨v, hv, hm, _, _⟩, hs⟩ := hQ q (by omega)
   have ht : 0 ≤ t := (sq_nonneg _).trans act.radius_lower
   have hcenter : ((0 : ZMod q).valMinAbs : ℝ) ^ 2 ≤ t := by simpa using ht
-  exact (hs v hv hm 0).mpr (Or.inl hcenter)
+  exact (lt_irrefl _) ((hs v hv hm 0).mpr (Or.inl hcenter))
 
 def evidence : Registration arena (type_of% @cyclic_eventual_exact_support) where
   actual := actual
@@ -58,9 +58,7 @@ def evidence : Registration arena (type_of% @cyclic_eventual_exact_support) wher
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    intro h
-    change ((0 : ℝ) < 0) = ((0 : ℝ) < 1) at h
-    exact (lt_irrefl _) (h.mpr (by norm_num))
+    norm_num [actual, realize]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}

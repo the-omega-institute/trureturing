@@ -46,9 +46,9 @@ theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : �
     (a b g : ℝ) (hg : 0 ≤ g)
     (hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0)
     (hmoment : 0 < ∑ i, x i * (a + b * x i + g * x i ^ 2)) :
-    let positive := fun y : ℝ => 0 < y
-    positive (a + b * x j + g * x j ^ 2) := by
-  change 0 < a + b * x j + g * x j ^ 2
+    let clip := fun y : ℝ => max 0 y
+    0 < clip (a + b * x j + g * x j ^ 2) := by
+  simp only [lt_max_iff, lt_irrefl, false_or]
   let count : ℝ := ∑ _ : ι, (1 : ℝ)
   let s₁ : ℝ := ∑ i, x i
   let s₂ : ℝ := ∑ i, x i ^ 2
@@ -141,7 +141,7 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
     (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
     (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
-    let positive := fun y : ℝ => 0 < y
+    let clip := fun y : ℝ => max 0 y
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
     let v := fun i : ZMod q => if i ∈ sites then p i else 0
     (∀ i ∈ sites, 0 < p i) →
@@ -151,8 +151,8 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     v ∈ feasible q threshold ∧
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
-        ∀ i, positive (w i) ↔ i ∈ sites := by
-  intro positive p v hpos hmass hM₁ hM₂
+        ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
+  intro clip p v hpos hmass hM₁ hM₂
   have hv (i) : v i = max 0 (p i) := by
     by_cases hi' : i ∈ sites
     · simp [v, hi', max_eq_right (hpos i hi').le]
@@ -201,6 +201,6 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     by_contra h
     exact (not_lt_of_ge (hmin hvf)) (hstrict w hw h)
   rw [he]
-  by_cases hi' : i ∈ sites <;> simp [positive, v, hi', hpos]
+  by_cases hi' : i ∈ sites <;> simp [clip, v, hi', hpos, lt_max_iff]
 
 end D5.S3.Fourier.Asymptotics.CyclicSupportCertificate

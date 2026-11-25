@@ -15,13 +15,13 @@ open _root_.Reg.Support
 
 noncomputable section
 
-abbrev signature := UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+abbrev signature := UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 < x) (fun e => nomatch e)
+  realize signature (fun _ _ x => max 0 x) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 namespace Boundary
 
@@ -34,8 +34,8 @@ abbrev arena : Arena where
     (a b g : ℝ) (_hg : 0 ≤ g)
     (_hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0)
     (_hmoment : 0 < ∑ i, x i * (a + b * x i + g * x i ^ 2)),
-    let positive := R.readout () ()
-    positive (a + b * x j + g * x j ^ 2)
+    let clip := R.readout () ()
+    0 < clip (a + b * x j + g * x j ^ 2)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -55,7 +55,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hmoment : 0 < ∑ i, x i * (-1 + 2 * x i + 0 * x i ^ 2) := by
     rw [hsum (fun z => z * (-1 + 2 * z + 0 * z ^ 2))]
     norm_num
-  exact h (ι := ULift.{u} (Fin 2)) x last hmax ⟨ULift.up 0, hbelow⟩ (-1) 2 0 le_rfl hmass hmoment
+  exact (lt_irrefl _) (h (ι := ULift.{u} (Fin 2)) x last hmax
+    ⟨ULift.up 0, hbelow⟩ (-1) 2 0 le_rfl hmass hmoment)
 
 def evidence : Registration arena.{u} (type_of% @boundary_variation_pos.{u}) where
   actual := actual
@@ -65,9 +66,7 @@ def evidence : Registration arena.{u} (type_of% @boundary_variation_pos.{u}) whe
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    intro h
-    change ((0 : ℝ) < 0) = ((0 : ℝ) < 1) at h
-    exact (lt_irrefl _) (h.mpr (by norm_num))
+    norm_num [actual, realize]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
@@ -114,7 +113,7 @@ abbrev arena : Arena where
     (_hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
     (_hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
     (_hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi),
-    let positive := R.readout () ()
+    let clip := R.readout () ()
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
     let v := fun i : ZMod q => if i ∈ sites then p i else 0
     (∀ i ∈ sites, 0 < p i) →
@@ -124,7 +123,7 @@ abbrev arena : Arena where
     v ∈ feasible q threshold ∧
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
-        ∀ i, positive (w i) ↔ i ∈ sites
+        ∀ i, 0 < clip (w i) ↔ i ∈ sites
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -164,7 +163,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · have hlt := hraw.2.1 w hw (by rwa [hv])
       rw [hv] at hlt
       exact hlt.le
-  exact (hraw.2.2 v hfit hmin 0).mpr (mem_univ _)
+  exact (lt_irrefl _) ((hraw.2.2 v hfit hmin 0).mpr (mem_univ _))
 
 def evidence : Registration arena (type_of% @exact_support_of_dual) where
   actual := actual
@@ -174,9 +173,7 @@ def evidence : Registration arena (type_of% @exact_support_of_dual) where
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    intro h
-    change ((0 : ℝ) < 0) = ((0 : ℝ) < 1) at h
-    exact (lt_irrefl _) (h.mpr (by norm_num))
+    norm_num [actual, realize]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}

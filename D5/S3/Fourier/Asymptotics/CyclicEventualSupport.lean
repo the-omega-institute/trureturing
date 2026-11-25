@@ -358,7 +358,7 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
     have hsign := boundary_variation_pos (fun j => x j ^ 2) i hmax hbelow A B G
       (by dsimp [G]; positivity) hzero hmoment
     rw [hvar, show W i = 0 by simp [W, hi], mul_zero, add_zero] at hsign
-    exact hsign
+    simpa only [lt_max_iff, lt_irrefl, false_or] using hsign
   let Ft := fun k => F₀ + s k • E k
   let rAt := fun k => E k *ᵥ a₀ + Ft k *ᵥ u k
   have hFt : Tendsto Ft l (𝓝 F₀) := by
@@ -705,8 +705,8 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
     have hn' : 2 ≤ n := by
       by_contra! h
       have he' : n = 1 := by omega
-      simp [he'] at hbudget
-      exact hlam.ne' hbudget
+      apply hm.ne'
+      simpa only [he', Nat.cast_one, one_pow, sub_self, zero_div] using hbudget
     have hn'' : (2 : ℝ) ≤ n := by exact_mod_cast hn'
     have hs := (sq_le_sq₀ (by norm_num : (0 : ℝ) ≤ 2) (Nat.cast_nonneg n)).mpr hn''
     linarith only [hbudget, hs, hd]
@@ -814,7 +814,8 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
       exact le_rfl
     · exact (hopt u hu heq').le
   · intro u hu hmin i
-    have hsupport : 0 < u i ↔ i ∈ sites := hsupp u hu hmin i
+    have hsupport : 0 < u i ↔ i ∈ sites := by
+      simpa only [lt_max_iff, lt_irrefl, false_or] using hsupp u hu hmin i
     rw [hsupport, grid_mem hk i, ← window_iff act.radius_lower hhi]
     refine or_congr Iff.rfl ?_
     constructor
@@ -828,7 +829,7 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
 positive sites of every minimizer are exactly the closed lattice front window and all
 residues attaining the least first cosine. Both moment constraints are attained. -/
 theorem cyclic_eventual_exact_support (lam : ℝ) (hlam : 0 < lam) :
-    let positive := fun x : ℝ => 0 < x
+    let clip := fun x : ℝ => max 0 x
     let m := lam / (8 * Real.pi ^ 2)
     ∃ (n : ℕ) (t Z : ℝ) (w : ℤ → ℝ), 0 < n ∧
       ((n : ℝ) ^ 2 - 1) / 5 ≤ m ∧ m < (n : ℝ) * (n + 2) / 5 ∧
@@ -840,7 +841,7 @@ theorem cyclic_eventual_exact_support (lam : ℝ) (hlam : 0 < lam) :
           cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2) ∧
         ∀ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v → ∀ i : ZMod q,
-            positive (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j := by
+            0 < clip (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j := by
   dsimp only
   let m := lam / (8 * Real.pi ^ 2)
   have hm : 0 ≤ m := (div_pos hlam (by positivity)).le
@@ -852,6 +853,7 @@ theorem cyclic_eventual_exact_support (lam : ℝ) (hlam : 0 < lam) :
   obtain ⟨K₁, h₁⟩ := eventually_atTop.mp (solve_on_parity lam hlam hn act hhi true)
   refine ⟨n, t, Z, w, hn, hi.1, hi.2, act, 2 * (K₀ + K₁) + 2, ?_⟩
   intro q hq _
+  simp only [lt_max_iff, lt_irrefl, false_or]
   change supportStatement q (1 - lam / (q : ℝ) ^ 2) t
   by_cases he : q % 2 = 0
   · have hq' : q = parityModulus false (q / 2 - 1) := by simp [parityModulus]; omega
