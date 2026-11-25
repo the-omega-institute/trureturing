@@ -16,7 +16,8 @@ triage: anchor
 
 ## Verified locator
 
-DOI https://doi.org/10.48550/arXiv.2605.12268. Version 1, 12 May 2026.
+Version 1 of 12 May 2026 is available at https://arxiv.org/abs/2605.12268v1.
+The DOI is https://doi.org/10.48550/arXiv.2605.12268.
 
 ## Scope
 
