@@ -8,6 +8,7 @@
 module
 
 public import D5.S3.Geometry.SimplicialPersistence.OrderedChains
+public import OmegaMath.Topology.PersistentHodge
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 public import Mathlib.Analysis.InnerProductSpace.ProdL2
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
@@ -89,6 +90,78 @@ theorem weighted_inner (x y : WeightedModule basis weight positive) :
 
 end WeightedMetric
 
+/- The mixed interpretation keeps native carriers, operations and scalar action. -/
+private theorem strictEq {A : Sort _} {x y : A} (h : x = y) : Omega.Eq x y := by
+  cases h
+  exact .refl
+
+private theorem nativeEq {A : Sort _} {x y : A} (h : Omega.Eq x y) : x = y :=
+  Omega.Eq.rec rfl h
+
+private def strictGroup (A : Type) [AddCommGroup A] : Omega.AddCommGroup A :=
+  .ofOperations 0 (· + ·) (- ·)
+
+private theorem strictGroup_laws (A : Type) [AddCommGroup A] : (strictGroup A).Laws :=
+  Omega.AddCommGroup.Laws.intro _
+    (fun _ _ _ => strictEq (add_assoc _ _ _)) (fun _ _ => strictEq (add_comm _ _))
+    (fun _ => strictEq (zero_add _)) (fun _ => strictEq (neg_add_cancel _))
+
+private def strictSpace (A : Type) [AddCommGroup A] [Module ℝ A] :
+    Omega.PersistentHodge.Space ℝ A := ⟨strictGroup A, (· • ·)⟩
+
+private theorem strictSpace_laws (A : Type) [AddCommGroup A] [Module ℝ A] :
+    Omega.PersistentHodge.SpaceLaws (strictSpace A) := by
+  refine Omega.PersistentHodge.SpaceLaws.intro _ (strictGroup_laws A) ?_ ?_
+  · intro a b c d
+    apply strictEq
+    change (a + b) + -(c + d) = (a + -c) + (b + -d)
+    abel
+  · intro t a b
+    exact strictEq (smul_sub t a b)
+
+private def strictLinear {A B : Type} [AddCommGroup A] [Module ℝ A]
+    [AddCommGroup B] [Module ℝ B] (f : A →ₗ[ℝ] B) :
+    Omega.PersistentHodge.Linear (strictSpace A) (strictSpace B) := ⟨f⟩
+
+private theorem strictLinear_laws {A B : Type} [AddCommGroup A] [Module ℝ A]
+    [AddCommGroup B] [Module ℝ B] (f : A →ₗ[ℝ] B) :
+    Omega.PersistentHodge.LinearLaws (strictLinear f) :=
+  Omega.PersistentHodge.LinearLaws.intro _ (strictEq f.map_zero)
+    (fun _ _ => strictEq (f.map_add _ _)) (fun _ _ => strictEq (f.map_sub _ _))
+    (fun _ _ => strictEq (f.map_smul _ _))
+
+private def strictWindow {S R : ShortComplex (ModuleCat ℝ)} (φ : S ⟶ R) :
+    Omega.PersistentHodge.Window ℝ S.X₂ S.X₃ R.X₁ R.X₂ R.X₃ where
+  scalar := strictGroup ℝ
+  source := strictSpace S.X₂
+  lower := strictSpace S.X₃
+  incoming := strictSpace R.X₁
+  target := strictSpace R.X₂
+  targetLower := strictSpace R.X₃
+  d := strictLinear S.g.hom
+  b := strictLinear R.f.hom
+  e := strictLinear R.g.hom
+  i := strictLinear φ.τ₂.hom
+  j := strictLinear φ.τ₃.hom
+
+private theorem strictWindow_laws {S R : ShortComplex (ModuleCat ℝ)} (φ : S ⟶ R)
+    (hi : Function.Injective φ.τ₂) :
+    Omega.PersistentHodge.WindowLaws (strictWindow φ) (fun x => 0 ≤ x) := by
+  refine Omega.PersistentHodge.WindowLaws.intro _ _ (strictGroup_laws ℝ)
+    (strictSpace_laws _) (strictSpace_laws _) (strictSpace_laws _)
+    (strictSpace_laws _) (strictSpace_laws _)
+    (strictLinear_laws _) (strictLinear_laws _) (strictLinear_laws _)
+    (strictLinear_laws _) (strictLinear_laws _) ?_ ?_ ?_ ?_
+  · intro a b ha hb hab
+    have hab' : a + b = 0 := nativeEq hab
+    exact Omega.And.intro (strictEq (by linarith)) (strictEq (by linarith))
+  · intro x y h
+    exact strictEq (hi (nativeEq h))
+  · intro x
+    exact strictEq (R.moduleCat_zero_apply x)
+  · intro x
+    exact strictEq (congrArg (fun f => f x) φ.comm₂₃).symm
+
 section Algebraic
 
 variable (S : ShortComplex (ModuleCat ℝ))
@@ -157,14 +230,30 @@ private theorem inclusion_restrictedBoundary (hi : Function.Injective φ.τ₂)
   exact congrArg Subtype.val ((LinearEquiv.ofInjective φ.τ₂.hom hi).apply_symm_apply
     ⟨R.f x, x.property⟩)
 
+/-- Full coherent pairs and the existing inverse-image domain have inverse maps. -/
+private def strictPair (hi : Function.Injective φ.τ₂) (x : FillingDomain φ) :
+    Omega.PersistentHodge.Pullback (strictWindow φ) :=
+  .pair x.val (restrictedBoundary φ hi x)
+
+private theorem strictPair_coherent (hi : Function.Injective φ.τ₂) (x : FillingDomain φ) :
+    (strictPair φ hi x).Coherent :=
+  strictEq (inclusion_restrictedBoundary φ hi x).symm
+
+private def nativeFilling (u : Omega.PersistentHodge.Pullback (strictWindow φ))
+    (hu : u.Coherent) : FillingDomain φ :=
+  ⟨u.filling, ⟨u.boundary, (nativeEq hu).symm⟩⟩
+
+private theorem nativeFilling_boundary (hi : Function.Injective φ.τ₂)
+    (u : Omega.PersistentHodge.Pullback (strictWindow φ)) (hu : u.Coherent) :
+    restrictedBoundary φ hi (nativeFilling φ u hu) = u.boundary := by
+  apply hi
+  exact (inclusion_restrictedBoundary φ hi _).trans (nativeEq hu)
+
 private theorem restrictedBoundary_cycle (hi : Function.Injective φ.τ₂)
     (h₃ : Function.Injective φ.τ₃)
-    (x : FillingDomain φ) : S.g (restrictedBoundary φ hi x) = 0 := by
-  have h := congrArg (fun z => R.g z) (inclusion_restrictedBoundary φ hi x)
-  rw [R.moduleCat_zero_apply] at h
-  have hc := congrArg (fun f => f (restrictedBoundary φ hi x)) φ.comm₂₃
-  apply h₃
-  simpa using hc.symm.trans h
+    (x : FillingDomain φ) : S.g (restrictedBoundary φ hi x) = 0 :=
+  nativeEq ((strictWindow φ).T_cycle (strictWindow_laws φ hi)
+    (fun _ _ h => strictEq (h₃ (nativeEq h))) (strictPair φ hi x) (strictPair_coherent φ hi x))
 
 private def boundaryToCycles (hi : Function.Injective φ.τ₂)
     (h₃ : Function.Injective φ.τ₃) : FillingDomain φ →ₗ[ℝ] S.g.hom.ker :=
@@ -177,13 +266,16 @@ private theorem range_boundaryToCycles (hi : Function.Injective φ.τ₂)
   rw [LinearMap.mem_ker, imageClass, LinearMap.comp_apply, cycleClass_eq_zero]
   constructor
   · rintro ⟨u, rfl⟩
-    refine ⟨u.val, Subtype.ext ?_⟩
-    exact (inclusion_restrictedBoundary φ hi u).symm
+    have hn := ((strictWindow φ).range_T (restrictedBoundary φ hi u)).mpr
+      (Omega.Exists.intro (strictPair φ hi u)
+        (Omega.And.intro (strictPair_coherent φ hi u) Omega.Eq.refl))
+    exact hn.elim fun c hc => ⟨c, Subtype.ext (nativeEq hc)⟩
   · rintro ⟨u, hu⟩
-    have hv : R.f u = φ.τ₂ x.val := congrArg Subtype.val hu
-    let v : FillingDomain φ := ⟨u, ⟨x.val, hv.symm⟩⟩
-    refine ⟨v, Subtype.ext (hi ?_)⟩
-    exact (inclusion_restrictedBoundary φ hi v).trans hv
+    have hn : (strictWindow φ).Null x.val :=
+      Omega.Exists.intro u (strictEq (congrArg Subtype.val hu))
+    exact (((strictWindow φ).range_T x.val).mp hn).elim fun v hv =>
+      ⟨nativeFilling φ v hv.left,
+        Subtype.ext ((nativeFilling_boundary φ hi v hv.left).trans (nativeEq hv.right))⟩
 
 end Algebraic
 
