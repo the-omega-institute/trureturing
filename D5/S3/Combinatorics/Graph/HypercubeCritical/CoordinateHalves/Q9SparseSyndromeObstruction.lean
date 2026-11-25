@@ -304,9 +304,10 @@ private theorem small_sparse_syndrome_eq_empty {S B : Word}
     rw [hS, inter_self, shell_card] at hs
     split at hs <;> omega
 
-/-- An order-72 signed fold with twelve dimers admits no nonempty syndrome
-with zero or two neighbors per row and exterior capacity at most seven. -/
-theorem sparse_syndrome_empty_at_order_72
+/-- In the order-72 signed fold, a nonempty syndrome with zero or two
+neighbors per row has weight sixteen and an exterior residual site all of
+whose neighbors are rows with two syndrome neighbors. -/
+theorem sparse_syndrome_at_order_72
     (d e o : Q 8 → ℤ) (S B : Word)
     (hd : (∑ x, d x ^ 2) = 12)
     (hdisj : ∀ x, d x * e x = 0)
@@ -314,10 +315,9 @@ theorem sparse_syndrome_empty_at_order_72
     (hsum : ∀ x, transverse (fun y => 2 * d y + e y) x = 4 * o x)
     (hfold : ∀ x, transverse o x = 4 * d x + 2 * e x)
     (hdegree : ∀ x, (shell x ∩ S).card = if x ∈ B then 2 else 0)
-    (hcapacity : ∀ x, transverse d (cube x) - 2 * o (cube x) ≠ 0 →
-      x ∉ S → (shell x ∩ B).card ≤ 7)
     (hsyndrome : ∀ x, (transverse d (cube x) - 2 * o (cube x)) % 2 = 1 ↔ x ∈ S) :
-    S = ∅ := by
+    S = ∅ ∨ (S.card = 16 ∧ ∃ x : Vertex,
+      transverse d (cube x) - 2 * o (cube x) ≠ 0 ∧ x ∉ S ∧ shell x ⊆ B) := by
   let v : Q 8 → ℤ := fun x => transverse d x - 2 * o x
   have hrow (x : Q 8) : transverse v x = -4 * e x := by
     have hlinear : transverse v x = transverse (transverse d) x - 2 * transverse o x := by
@@ -334,10 +334,6 @@ theorem sparse_syndrome_empty_at_order_72
       simp
     rw [he, hrow]
     exact ⟨-e (cube x), by ring⟩
-  have hbound := sparse_syndrome_energy S B (v ∘ cube) 7 (by norm_num)
-    hdegree (fun x hx hout => by exact_mod_cast hcapacity x hx hout) hsyndrome hdiv
-  change 8 * (S.card : ℤ) ≤ 7 * ((∑ x : Vertex, v (cube x) ^ 2) - _) at hbound
-  rw [Equiv.sum_comp cube (fun x => v x ^ 2)] at hbound
   have henergy₁ := transverse_energy v
   simp_rw [hrow] at henergy₁
   have henergy₂ := transverse_energy (fun x => 2 * d x + e x)
@@ -354,10 +350,36 @@ theorem sparse_syndrome_empty_at_order_72
     norm_num
   rw [hin] at henergy₂
   norm_num at henergy₁ henergy₂
-  exact small_sparse_syndrome_eq_empty hdegree (by omega)
+  have hnorm : (∑ x, v x ^ 2) = 32 := by omega
+  have hbound (c : ℤ) (hc : 4 ≤ c)
+      (hcap : ∀ x : Vertex, v (cube x) ≠ 0 → x ∉ S → ((shell x ∩ B).card : ℤ) ≤ c) :
+      8 * (S.card : ℤ) ≤ c * (32 - (S.card : ℤ)) := by
+    have h := sparse_syndrome_energy S B (v ∘ cube) c hc hdegree hcap hsyndrome hdiv
+    change 8 * (S.card : ℤ) ≤ c * ((∑ x : Vertex, v (cube x) ^ 2) - _) at h
+    rw [Equiv.sum_comp cube (fun x => v x ^ 2), hnorm] at h
+    exact h
+  by_cases hsmall : S.card ≤ 15
+  · exact Or.inl (small_sparse_syndrome_eq_empty hdegree hsmall)
+  · have h8 := hbound 8 (by norm_num) (fun x _ _ => by
+      have h := (card_le_card (inter_subset_left : shell x ∩ B ⊆ shell x)).trans
+        (shell_card x).le
+      exact_mod_cast h)
+    refine Or.inr ⟨by omega, ?_⟩
+    by_contra hnone
+    have hcap (x : Vertex) (hx : v (cube x) ≠ 0) (hout : x ∉ S) :
+        ((shell x ∩ B).card : ℤ) ≤ 7 := by
+      have hproper : shell x ∩ B ⊂ shell x := by
+        refine ssubset_iff_subset_ne.mpr ⟨inter_subset_left, ?_⟩
+        intro heq
+        exact hnone ⟨x, hx, hout, heq ▸ (inter_subset_right : shell x ∩ B ⊆ B)⟩
+      have hlt := card_lt_card hproper
+      rw [shell_card] at hlt
+      omega
+    have h7 := hbound 7 (by norm_num) hcap
+    omega
 
 #print axioms sparse_syndrome_energy
-#print axioms sparse_syndrome_empty_at_order_72
+#print axioms sparse_syndrome_at_order_72
 
 end Q9SparseSyndromeObstruction
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves
