@@ -14,7 +14,6 @@ admission_basis: open-problem-resolution (#34236; Proved)
 Direct frozen dependencies: none.
 -/
 
-import Mathlib.Data.Fintype.BigOperators
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.IntervalCases
