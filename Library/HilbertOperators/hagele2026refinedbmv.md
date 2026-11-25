@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/ElevenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TwelveFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/SixteenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
@@ -157,6 +158,18 @@ the exponential comparison with `exp(12H + 4K)`.
 
 Independent rational checks matched all 116 cyclic classes and verified
 both positive factorizations. Historical priority remains unverified.
+
+## Sixteen copies of the first factor
+
+At (16,4), the mean real trace of the 4845 ordered words dominates
+the real trace of `(A^4 B)^4` for positive semidefinite A and Hermitian B
+in every finite complex dimension. Two rational Gram blocks weighted
+by the identity and A bound the fourth trace of the mean of
+`A^2 B A^2` and `A^3 B A`. Trace cyclicity centers this mean at the
+Hermitian part of a product with A. The comparison includes singular A.
+
+The exact certificate matches all 245 cyclic classes. Its two blocks
+have 32 and 23 positive pivots. Historical priority remains unverified.
 
 ## Four copies of the second factor near the identity
 
