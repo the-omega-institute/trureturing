@@ -16,15 +16,22 @@ private def standardName? (stx : Syntax) : Option Name := do
   return name
 
 private partial def declarationNames (stx : Syntax) (inSignature := false) (inValue := false)
+    (inferredResult := false)
     (acc : Array (Syntax × Bool) := #[]) : Array (Syntax × Bool) := Id.run do
   let kind := stx.getKind
   let signature := inSignature || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
     ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
   let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
     ``Parser.Command.whereStructInst].contains kind
-  if (signature && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
-    return acc.push (stx, signature)
-  return stx.getArgs.foldl (fun a c => declarationNames c signature value a) acc
+  let inferred := inferredResult || stx.getArgs.any fun child =>
+    child.isOfKind ``Parser.Command.optDeclSig && child[1].isNone
+  -- An omitted result exposes the type elaborated from the RHS. A direct object reference
+  -- also publishes its target when the author writes the type of the alias explicitly.
+  let objectUse := signature || (value && inferred) ||
+    (kind == ``Parser.Command.declValSimple && stx[1].isIdent)
+  if (objectUse && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
+    return acc.push (stx, objectUse)
+  return stx.getArgs.foldl (fun a c => declarationNames c objectUse value inferred a) acc
 
 /-- `resolveName'` indexes a qualified constant and any trailing field projections at separate
 source ranges. Recover those same prefixes, longest first, without splitting escaped names. -/
@@ -76,6 +83,70 @@ private def matchingPort? (env catalog : Environment) (ports : Ports) (spelling 
     guard (Kernel.isDefEqGuarded env {} project.type type)
     return port.alias
 
+/-- Follow direct project aliases to their admitted constant, including aliases of aliases. -/
+private partial def underlyingPort? (catalog : Environment) (ports : Ports) (project : NameSet)
+    (name : Name) : Option Name := do
+  if let some port := ports.objects.find? name then return port.alias
+  let idx ← catalog.getModuleIdxFor? name
+  guard (project.contains catalog.header.moduleNames[idx]!)
+  let .defnInfo info ← catalog.find? name | none
+  let .const target _ := info.value | none
+  underlyingPort? catalog ports project target
+
+private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSet)
+    (name : Name) : Option Name := do
+  if let some port := underlyingPort? catalog ports project name then return port
+  let idx ← catalog.getModuleIdxFor? name
+  guard (project.contains catalog.header.moduleNames[idx]!)
+  matchingPort? catalog catalog ports name name
+
+private def publicUses (data : ModuleData) (catalog : Environment) (ports : Ports)
+    (project : NameSet) : Array Name := Id.run do
+  let mut names := #[]
+  for info in data.constants do
+    if isPrivateName info.name || info.name.isInternalOrNum || info.name.hasMacroScopes then continue
+    if info.type.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome) ||
+        (info.value?.bind (·.constName?) |>.bind (sensitive? catalog ports project)).isSome then
+      names := names.push info.name
+  return names
+
+/-- A fresh transparent identity tags exactly the references authenticated by the compiler index.
+Inspect the resulting expression, so a genuine occurrence cannot pay for a different use. -/
+private def checkElaborated (source : System.FilePath) (text : String) (start : String.Pos.Raw)
+    (env : Environment) (opts : Options) (names : Array Name) (isModule : Bool)
+    (marks : Array Lean.Syntax.Range) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
+  let marker := s!"OmegaCheckedReference{← IO.rand 1 4294967295}".toName
+  if text.contains marker.toString || env.contains marker then throw <| IO.userError "fresh reference marker collision"
+  let mut marked := text
+  for span in marks.toList.eraseDups.mergeSort (fun a b => b.start.byteIdx ≤ a.start.byteIdx) do
+    marked := (0 : String.Pos.Raw).extract marked span.start ++ s!"({marker} " ++
+      span.start.extract marked span.stop ++ ")" ++ span.stop.extract marked marked.rawEndPos
+  let intro := if isModule then "public " else ""
+  marked := (0 : String.Pos.Raw).extract marked start ++
+    (s!"\n{intro}noncomputable abbrev {marker}" ++ ".{u} {α : Sort u} (x : α) : α := x\n") ++ start.extract marked marked.rawEndPos
+  let ictx := Parser.mkInputContext marked source.toString
+  let (_, parserState, messages) ← Parser.parseHeader ictx
+  let state ← Elab.IO.processCommands ictx parserState (Elab.Command.mkState env messages opts)
+  for msg in state.commandState.messages.toList do
+    if msg.severity == .error then throw <| IO.userError s!"cannot verify source identity in {source}: {← msg.toString}"
+  for name in names do
+    let some info := state.commandState.env.find? name | throw <| IO.userError s!"missing source declaration {name}"
+    let check (expr original : Expr) := do
+      let markedHead := fun (e : Expr) => e.isApp && e.getAppNumArgs == 2 && e.getAppFn.isConstOf marker
+      let restored := expr.replace fun e => if markedHead e then some e.appArg! else none
+      unless restored == original do
+        throw <| IO.userError s!"{source}: could not recover the compiled expression of {name} after checking its reference positions"
+      let unmarked := expr.replace fun node => if markedHead node then some (.sort .zero) else none
+      for n in unmarked.getUsedConstants do
+        if let some standard := sensitive? catalog ports project n then
+          throw <| IO.userError s!"{source}: {name} exposes {n} without an explicit source reference to {standard} or its qualified project identity at that occurrence"
+    let some original := catalog.find? name | throw <| IO.userError s!"missing compiled declaration {name}"
+    check info.type original.type
+    if let some value := original.value? then
+      if value.isConst then
+        let some markedValue := info.value? | throw <| IO.userError s!"missing marked value for {name}"
+        check markedValue value
+
 /-- The parsed declaration syntax excludes imports, comments and string contents.
 The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
 private def checkFile (moduleName : Name) (source index : System.FilePath)
@@ -97,7 +168,9 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       let raw := range.start.extract text range.stop
       let .str _ leaf := raw.toName | return false
       return ports.byLeaf.contains leaf
-  if !relevantRefs && !(parserState.pos.extract text text.rawEndPos).contains "OmegaMathlib" then
+  let (data, _) ← readModuleData (← findOLean moduleName)
+  let published := publicUses data catalog ports project
+  if published.isEmpty && !relevantRefs && !(parserState.pos.extract text text.rawEndPos).contains "OmegaMathlib" then
     return 0
   let opts := ({} : Options).setBool `relaxedAutoImplicit false
   let (env, messages) ← Elab.processHeader header opts messages ictx (mainModule := moduleName) (leakEnv := true)
@@ -108,13 +181,15 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     for msg in state.commandState.messages.toList do
       if msg.severity == .error then throw <| IO.userError (← msg.toString)
     throw <| IO.userError s!"failed to recover declaration syntax for {moduleName}"
-  let tokens := state.commands.foldl (fun acc c => declarationNames c false false acc) #[]
+  let tokens := state.commands.foldl (fun acc c => declarationNames c false false false acc) #[]
   let key := fun (r : Lsp.Range) => (r.start.line, r.start.character, r.end.line, r.end.character)
   let mut locations : Std.HashMap (Nat × Nat × Nat × Nat) (List (Lsp.RefIdent × String)) := {}
   for (id, info) in refs.references.toList do
     for loc in info.usages do
       locations := locations.alter (key loc.range) (fun entries => some ((id, loc.parentDecl) :: entries.getD []))
   let mut count := 0
+  let mut marks := #[]
+  let sourceEnv := env
   let env := state.commandState.env
   for (token, signature) in tokens do
     -- The compiler indexes dot notation at the field token as well as the receiver.
@@ -131,6 +206,11 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
             if port.owner == owner.toName then
               throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {actual} from {owner}; qualify this identifier as {port.alias}"
           let spelling := part.getId.eraseMacroScopes
+          if signature && project.contains owner.toName &&
+              (spelling == `_root_ ++ actual || (spelling == actual && !actual.getPrefix.isAnonymous)) &&
+              (matchingPort? env catalog ports spelling actual).isSome &&
+              (underlyingPort? catalog ports project actual).isNone then
+            if let some span := part.getRange? then marks := marks.push span
           if project.contains owner.toName && spelling != `_root_ ++ actual &&
               !(spelling == actual && !actual.getPrefix.isAnonymous) then
             if let some candidate := matchingPort? env catalog ports spelling actual then
@@ -139,10 +219,14 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     count := count + 1
     let resolved := parts.findSome? fun (stx, pos) => do
       let name ← standardName? stx
-      return (← ports.aliases.find? name, pos)
-    let some (port, pos) := resolved | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
+      return (← ports.aliases.find? name, pos, stx)
+    let some (port, pos, id) := resolved | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
     unless (locations.getD (key pos) []).map Prod.fst == [.const port.owner.toString port.target.toString] do
       throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {alias} requires {port.target} in {port.owner} at this occurrence"
+    if signature && ports.objects.contains port.target then
+      if let some span := id.getRange? then marks := marks.push span
+  unless published.isEmpty do
+    checkElaborated source text parserState.pos sourceEnv opts published data.isModule marks catalog ports project
   return count
 
 end OmegaChecks.QualifiedReferences
@@ -155,7 +239,8 @@ unsafe def main (args : List String) : IO Unit := do
   let files : Array (Array String) ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
   let mut count := 0
   enableInitializersExecution
-  let catalog ← importModules (portModules.toArray.map fun name => {module := name.toName}) {}
+  let modules := (portModules ++ files.toList.filterMap (·[0]?)).eraseDups
+  let catalog ← importModules (modules.toArray.map fun name => {module := name.toName}) {}
   let ports ← admittedPorts catalog (backend == "official")
   let project := files.foldl (init := ({} : NameSet)) fun names row =>
     if let some name := row[0]? then names.insert name.toName else names

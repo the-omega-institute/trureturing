@@ -51,6 +51,22 @@ def cases():
                    "namespace Shadow\npublic theorem claim (p : Omega.Nat) : "
                    "OmegaMathlib.Nat.Prime p := Omega.True.intro\n"), [
                        "OmegaMathlib.Nat.Prime requires", "at this occurrence"]
+    for body in ["public def D5.standardPrime := REF",
+                 "public def D5.typedPrime : Omega.Nat → Prop := REF",
+                 "public def D5.standardProof := fun (p : Omega.Nat) (h : REF p) => h"]:
+        yield module, head + body.replace("REF", "Omega.Nat.Prime") + "\n", [
+            "qualify this identifier as OmegaMathlib.Nat.Prime"]
+        yield module, head + body.replace("REF", "OmegaMathlib.Nat.Prime") + "\n", []
+    local_head = head.replace("prelude\n", "prelude\nimport Lean\n")
+    for target, local in [("Omega.Nat.Prime", ""),
+                          ("D5.Project.Prime", "public def D5.Project.Prime (_ : Omega.Nat) := Omega.True\n")]:
+        hidden = local_head + local + f'local notation "Prime〚" p "〛" => {target} p\n'
+        yield module, hidden + ("public theorem D5.claim (p : Omega.Nat) (_ : OmegaMathlib.Nat.Prime p) "
+                                "(h : Prime〚p〛) : Prime〚p〛 := h\n"), [
+                                    "without an explicit source reference", "OmegaMathlib.Nat.Prime"]
+    yield module, (head + "public abbrev D5.localPredicate := OmegaMathlib.Nat.Prime\n"
+                   "public theorem D5.claim (p : Omega.Nat) (h : D5.localPredicate p) : "
+                   "D5.localPredicate p := h\n"), ["D5.localPredicate", "explicit source reference"]
     notation = head.replace("prelude\n", "prelude\nimport Lean\n") + (
         'local notation "OmegaMathlib.Nat.Prime" => fun (_ : Omega.Nat) => Omega.True\n')
     yield module, notation + ("public theorem D5.forged (p : Omega.Nat) : "
@@ -73,7 +89,7 @@ def check():
                 file.parent.mkdir(parents=True, exist_ok=True)
                 file.write_text(source)
                 index = file.with_suffix(".ilean")
-                subprocess.run([lean, "-R", temp, "-i", index, file], cwd=ROOT,
+                subprocess.run([lean, "-R", temp, "-o", file.with_suffix(".olean"), "-i", index, file], cwd=ROOT,
                                env={**os.environ, "LEAN_PATH": search}, check=True)
                 request = directory / "request.json"
                 request.write_text(json.dumps([[module, str(file), str(index)]]))
