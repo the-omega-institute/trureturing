@@ -61,7 +61,7 @@ private theorem latticeFeatures_bounds {x : ℝ} (hx : |x| ≤ 1) (i : Fin 2) :
   rw [sq_abs, one_pow] at hsq
   fin_cases i <;> simp [latticeFeatures, sq_nonneg, hsq]
 
-private theorem frontFeatures_bounds {u x : ℝ} (hx : |x| ≤ 1) (i : Fin 2) :
+theorem frontFeatures_bounds {u x : ℝ} (hx : |x| ≤ 1) (i : Fin 2) :
     0 ≤ frontFeatures u x i ∧ frontFeatures u x i ≤ 1 := by
   fin_cases i
   · change 0 ≤ (1 + Real.cos (x * u)) / 2 ∧ (1 + Real.cos (x * u)) / 2 ≤ 1
