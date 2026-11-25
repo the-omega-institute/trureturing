@@ -83,12 +83,14 @@ def main (args : List String) : IO Unit := do
       let key := nameKey name
       let protectedDecl := selected.any (·.contains key)
       let mut refs := occurrences info.type
-      if let some (.defnInfo d) := env.find? name then
-        let relevant := selectedBodies.any (·.contains key) || (d.value.getUsedConstants.any fun n =>
+      let value? := (env.find? name).bind fun decl =>
+        if decl.isTheorem then none else decl.value? (allowOpaque := true)
+      if let some value := value? then
+        let relevant := selectedBodies.any (·.contains key) || (value.getUsedConstants.any fun n =>
           (env.getModuleIdxFor? n).any fun idx => env.header.moduleNames[idx]!.getRoot == `Mathlib)
         if relevant then
           let pos := if info matches .defnInfo _ then `value else `implementation
-          let positions ← (bodyOccurrences d.value pos).run' |>.toIO'
+          let positions ← (bodyOccurrences value pos).run' |>.toIO'
             {fileName := "<published definition>", fileMap := default} {env}
           refs := refs ++ positions
       let mut uses := #[]

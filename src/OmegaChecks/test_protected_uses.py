@@ -80,11 +80,16 @@ def check():
         from strict_lake import strict_config
         strict_path = output("lake", "-f", strict_config(), "env", "printenv", "LEAN_PATH").strip()
         old = compile_source("old", header + "public theorem D5.other : True := True.intro\n")
-        valid = compile_source("new", header + "public theorem D5.test (h : OmegaMathlib.Nat.Prime 2) : True := True.intro\n")
+        valid_source = header + ("public theorem D5.test (h : OmegaMathlib.Nat.Prime 2) : True := True.intro\n"
+                                 "public opaque D5.primality (n : Omega.Nat) : Prop := OmegaMathlib.Nat.Prime n\n")
+        valid = compile_source("new", valid_source)
+        compile_source("strict", header + "public opaque D5.primality (n : Omega.Nat) : Prop := OmegaMathlib.Nat.Prime n\n",
+                       strict_path)
         compare(ROOT, [], [module], old, valid)
         for body in ("public theorem D5.measure (n : Nat) : Nat.minFac n = Nat.minFac n := rfl\n",
                      "@[expose] public def D5.measure (n : Nat) := Nat.minFac n\n",
-                     "public def D5.measure (n : Nat) := Nat.minFac n\n"):
+                     "public def D5.measure (n : Nat) := Nat.minFac n\n",
+                     "public opaque D5.measure (n : Nat) : Nat := Nat.minFac n\n"):
             compile_source("strict", header + body, strict_path)
             new = compile_source("new", header + body)
             for previous in ([], [module]):
