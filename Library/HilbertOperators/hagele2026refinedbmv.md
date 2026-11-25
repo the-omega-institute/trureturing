@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -278,6 +279,17 @@ coordinates with lower coordinate at least four. Short gaps through two
 and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
+
+## Quantitative degree-three gap for finite traces
+
+In a unital C*-algebra with a positive finite trace, let the gap be the
+mean trace of the twenty words with three copies of each positive factor
+minus the trace of the cube of their product. The repository theorem
+`wordMean_three_trace_gap` bounds three times the square of the trace
+of the commutator's adjoint times the commutator by forty times the trace
+of the product times the gap. A rank-one term of the centered cubic
+kernel survives approximation by positive functions of the first factor.
+Under a faithful trace, the bound forces the factors to commute at equality.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

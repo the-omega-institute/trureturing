@@ -150,6 +150,7 @@ jobs:
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Complete report and executable targets and publish both indexes
         env:
+          FULL_BUILD: '1'
           STRATALINT_ACCEPT_COLD_BUILD: '1'
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         uses: ./.github/actions/lean-cache-shards

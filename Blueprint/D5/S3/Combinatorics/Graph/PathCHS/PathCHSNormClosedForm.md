@@ -44,7 +44,7 @@ Page 2, Theorem 1.4: “Suppose d ≥ 2 is even. The following function defines 
 
 **Definition 1.4 (Finite second-difference expression).**
 
-$$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{pathFormula}\left(n, m\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, n + 1\right) + 1\right)} ((\operatorname{D5}.\operatorname{S0}.\operatorname{Conventions}.\operatorname{IntegerIndexBinomial}.\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right)\right):\mathbb{Z}) - 2 \cdot (\operatorname{D5}.\operatorname{S0}.\operatorname{Conventions}.\operatorname{IntegerIndexBinomial}.\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right) - 1\right):\mathbb{Z}) + (\operatorname{D5}.\operatorname{S0}.\operatorname{Conventions}.\operatorname{IntegerIndexBinomial}.\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right) - 2\right):\mathbb{Z}))$$
+$$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{pathFormula}\left(n, m\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, n + 1\right) + 1\right)} ((\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right)\right):\mathbb{Z}) - 2 \cdot (\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right) - 1\right):\mathbb{Z}) + (\operatorname{binom}\left(2 \cdot m + n - 1, (m:\mathbb{Z}) - (k:\mathbb{Z}) \cdot \left((n:\mathbb{Z}) + 1\right) - 2\right):\mathbb{Z}))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.pathFormula` (`✓ std3`).
 
@@ -54,7 +54,7 @@ $$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{pathForm
 
 *Commentary.*
 
-The upper index is 2m+n−1. Nat.div is natural-number quotient. Each binomial value is cast to ℤ before subtraction.
+The upper index is 2m+n−1. Nat.div is natural-number quotient. Each binomial value is cast to ℤ before subtraction. The displayed binom is the standard Lean definition binom_std.
 
 **Definition 1.5 (Problem 1 for path norms).**
 

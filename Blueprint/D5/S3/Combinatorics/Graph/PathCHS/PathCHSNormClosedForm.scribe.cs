@@ -15,7 +15,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
             Node("hermitian", "The path matrix is Hermitian", HermitianFormula(), "pathAdjHermitian", "The entry with indices i and j equals the entry with indices j and i. The matrix is the adjacency matrix of the path with vertices Fin n.", DescribeRole.Theorem, false),
             Node("chs", "Complete homogeneous symmetric value", ChsFormula(), "chs", "Page 2, Equation (1.1): “∑_{d=0}^{∞} h_d(x₁, x₂, …, x_n) t^d = ∏_{i=1}^{n} 1/(1 − x_i t).” The polynomial hsymm is evaluated at the real eigenvalues of the path adjacency matrix.", DescribeRole.Definition, true),
             Node("norm", "The complete homogeneous symmetric norm", NormFormula(), "chsNorm", "Page 2, Theorem 1.4: “Suppose d ≥ 2 is even. The following function defines a norm on H_n: ‖A‖_d = h_d(λ₁, λ₂, …, λ_n)^{1/d}.” Natural d is cast to ℝ in the reciprocal exponent.", DescribeRole.Definition, true),
-            Node("formula", "Finite second-difference expression", PathFormula(), "pathFormula", "The upper index is 2m+n−1. Nat.div is natural-number quotient. Each binomial value is cast to ℤ before subtraction.", DescribeRole.Definition, false),
+            Node("formula", "Finite second-difference expression", PathFormula(), "pathFormula", "The upper index is 2m+n−1. Nat.div is natural-number quotient. Each binomial value is cast to ℤ before subtraction. The displayed binom is the standard Lean definition binom_std.", DescribeRole.Definition, false),
             Node("claim", "Problem 1 for path norms", ClaimFormula(), "claim", "Page 14, Section 5, Problem 1: “The path of order n has m = n − 1 edges. Proposition 5.14 (a) therefore implies that ‖P_n‖₂ = √(n − 1). However, computing ‖P_n‖_d for d ≥ 4 seems unattainable at the moment. We leave this is an interesting open problem. Problem 1. Compute ‖P_n‖_d for d ≥ 4.” Here n ≥ 1 and d=2m with m ≥ 2; both the symmetric polynomial and its real root are specified.", DescribeRole.Definition, false),
             Node("geometric", "A geometric series times its denominator", GeometricFormula(), "geometric_mul_linear", "Rescaling the geometric series gives the inverse of 1−aX over any commutative ring.", DescribeRole.Theorem, false),
             Node("symmetricseries", "The symmetric-polynomial generating function", HsymmFormula(), "hsymm_series_product", "Equation (1.1), page 2, gives the generating function. Grouping monomials by total degree gives the reciprocal product of the linear factors over a commutative ring.", DescribeRole.Theorem, true),
@@ -81,7 +81,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
         Formula n = V("n"), m = V("m"), k = V("k");
         var l = S(A(M(D(2), m), n), D(1));
         var r = S(Cast(m, Int()), M(Cast(k, Int()), A(Cast(n, Int()), D(1))));
-        var value = A(S(Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, r), Int()), M(D(2), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, S(r, D(1))), Int()))), Cast(C("D5.S0.Conventions.IntegerIndexBinomial.binom", l, S(r, D(2))), Int()));
+        var value = A(S(Cast(C("binom", l, r), Int()), M(D(2), Cast(C("binom", l, S(r, D(1))), Int()))), Cast(C("binom", l, S(r, D(2))), Int()));
         var sum = SumOver("k", C("Finset.range", A(C("Nat.div", m, A(n, D(1))), D(1))), value);
         return Disp(Naturals(["n", "m"], Eq(C("pathFormula", n, m), sum)));
     }

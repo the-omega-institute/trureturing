@@ -80,4 +80,22 @@ theorem eq_zero_or_ne_zero (a : Int) : Or (Eq a zero) (Not (Eq a zero)) :=
       (Or.inl Eq.refl) (fun k _ => Or.inr (ofNat_succ_ne_zero k)) n)
     (fun k => Or.inr (negSucc_ne_zero k)) a
 
+/-- The larger of two integers, selected by the sign of their difference. -/
+noncomputable def max (a b : Int) : Int :=
+  Int.rec (motive := fun _ => Int) (fun _ => b) (fun _ => a) (b.sub a)
+
+/-- A common translation commutes with the integer maximum. -/
+theorem max_add_right (a b c : Int) :
+    Eq (max (a.add c) (b.add c)) ((max a b).add c) :=
+  have sameDifference : Eq ((b.add c).sub (a.add c)) (b.sub a) :=
+    (congrArg (b.add c).add (Int.neg_add (a := a) (b := c))).trans
+      ((add_add_add_comm b c a.neg c.neg).trans
+        ((congrArg (b.sub a).add (Int.add_right_neg c)).trans (Int.add_zero (b.sub a))))
+  let choose (left right : Int) : Int → Int :=
+    Int.rec (motive := fun _ => Int) (fun _ => right) (fun _ => left)
+  have sameSelection := Int.rec (motive := fun difference =>
+    Eq (choose (a.add c) (b.add c) difference) ((choose a b difference).add c))
+    (fun _ => Eq.refl) (fun _ => Eq.refl) (b.sub a)
+  (congrArg (choose (a.add c) (b.add c)) sameDifference).trans sameSelection
+
 end Omega.Int

@@ -34,11 +34,6 @@ internal sealed class StrategicResponseObstructionDocument : IScribeDocumentDefi
                         + "strategic hypothesis. Universal correctness identifies the response with "
                         + "the prediction there, while strategic response identifies it with the "
                         + "twisted prediction. Their equality makes that prediction a fixed point of "
-                        + "the twist, contradicting the fixed-point-free hypothesis.")),
-                    Paragraph(Text(
-                        "Pinned Mathlib, Loogle, and D5 were searched before proving. Mathlib's "
-                        + "Function.IsFixedPt supplies the standard fixed-point predicate, but no "
-                        + "library theorem has this predictor-dependent response hypothesis and "
-                        + "universal-correctness conclusion."))),
+                        + "the twist, contradicting the fixed-point-free hypothesis."))),
                 DescribeRole.Theorem))));
 }
