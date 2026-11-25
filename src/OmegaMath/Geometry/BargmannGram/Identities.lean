@@ -160,8 +160,10 @@ private def withoutScalar (a : Quad4) : Quad4 := ⟨Int.zero, a.x, a.y, a.z⟩
 
 private theorem withoutScalar_eq (a : Quad4) (h : Eq a.w Int.zero) :
     Eq (withoutScalar a) a :=
-  Quad4.ext h.symm Eq.refl Eq.refl Eq.refl
+  Quad4.ext h.symm rfl rfl rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 set_option maxRecDepth 2048 in
 /-- A three-vector Gram determinant in the pure-imaginary subspace is an integer square. -/
 theorem pure_gram_numerator_is_square (a b c : Quad4)
@@ -181,7 +183,7 @@ theorem pure_gram_numerator_is_square (a b c : Quad4)
   let form := fun x y z : Quad4 =>
     gramNumerator (x.dot x) (y.dot y) (z.dot z) (x.dot y) (y.dot z) (z.dot x)
   let gram := gramExpr (u.dot u) (v.dot v) (w.dot w) (u.dot v) (v.dot w) (w.dot u)
-  have certificate : Eq gram.normalize determinant.sq.normalize := Eq.refl
+  have certificate : Eq gram.normalize determinant.sq.normalize := rfl
   have square : Eq (form a₀ b₀ c₀) (Int.square (determinant.eval values)) :=
     Expr.certify values gram determinant.sq certificate
   have restore := (congrArg (fun x => form x b₀ c₀) (withoutScalar_eq a ha)).trans
