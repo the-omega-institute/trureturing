@@ -718,7 +718,7 @@ private theorem bounded_mul_zero {f g : ℕ → ℝ}
     simpa only [one_mul] using hf.mul (isBigO_refl g atTop)
   exact ht.trans_tendsto hg
 
-private theorem scaled_coefficient_error {h : ℕ → ℝ}
+theorem scaled_coefficient_error {h : ℕ → ℝ}
     (hB : (fun n : ℕ => (n : ℝ)^5 * (h n)^2) =O[atTop] (fun _ => (1 : ℝ)))
     (S : Finset ℝ) (hS : S.Nonempty) (i : Fin 2) :
     Tendsto (fun n : ℕ => (n : ℝ)^2 *

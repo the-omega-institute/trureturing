@@ -379,25 +379,72 @@ async function generationIndex(digest, file) {
   if (!put && resolve(file) !== resolve(path)) await copyFile(path, file);
 }
 
-async function restorePublished() {
-  const directory = join(stage, 'reader');
-  await mkdir(directory, { recursive: true });
-  const index = join(directory, 'index.json');
-  const tool = 'tools/scripts/worktree/lean_cache_generation.py';
+async function moduleCacheEntry(key, digest, file) {
+  const put = operation === 'module-put';
+  if (put) requirePublisher();
+  if (!key || key.length > 512 || /[,\r\n]/.test(key) || !/^[0-9a-f]{64}$/.test(digest) || !file) {
+    throw new Error('invalid module cache address');
+  }
+  // The user-visible key stays stable. The Actions SDK binds the content-specific
+  // relative path into its cache version so two revisions of a shard can coexist.
+  const path = join('build/lean-cache/modules', digest, 'payload');
+  const { cache } = await loadCacheClient();
+  await mkdir(dirname(path), { recursive: true });
   try {
-    execFileSync('python3', ['-B', tool, 'latest', '--transport', 'ci', '--output', index], { stdio: 'inherit' });
+    if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
+      if (await digestFile(file) !== digest) throw new Error('module cache upload checksum mismatch');
+      await copyFile(file, path);
+      await cache.saveCache([path], key);
+    }
+    await rm(path, { force: true });
+    if (await cache.restoreCache([path], key, []) !== key) {
+      process.exitCode = 4;
+      throw new Error('module cache entry unavailable');
+    }
+    if (await digestFile(path) !== digest) {
+      process.exitCode = 5;
+      throw new Error('module cache entry checksum mismatch');
+    }
+    if (!put) await copyFile(path, file);
+  } finally {
+    await rm(path, { force: true });
+  }
+}
+
+async function runModuleCache() {
+  const temp = process.env.RUNNER_TEMP;
+  const plan = join(temp, 'module-plan.json');
+  const tool = 'tools/scripts/worktree/lean_module_cache.py';
+  let args;
+  if (operation === 'restore-published') {
+    if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
+    args = ['restore'];
+    if (targetsFile) args.push('--targets-file', targetsFile);
+    else if (targets.length) args.push('--targets', ...targets);
+  } else if (operation === 'module-plan') {
+    const capacity = Number(process.env.SHARD_MIB || 256);
+    if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
+      throw new Error('shard_mib must be between 1 and 2047');
+    }
+    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints'];
+  } else {
+    requirePublisher();
+    if (operation === 'module-worker') {
+      const lane = process.env.MODULE_LANE;
+      if (!/^(0|[1-9][0-9]*)$/.test(lane)) throw new Error('invalid module lane');
+      args = ['worker', '--plan', plan, '--lane', lane, '--output', join(temp, 'module-worker')];
+    } else {
+      args = ['finish', '--plan', plan, '--output', join(temp, 'module-index.json')];
+    }
+  }
+  try {
+    execFileSync('python3', ['-B', tool, ...args], {
+      stdio: 'inherit', env: { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' },
+    });
   } catch (error) {
-    if (error.status !== 3) throw error;
-    execFileSync(process.execPath, [fileURLToPath(import.meta.url), 'restore-seed'], { stdio: 'inherit' });
-    return;
+    if (operation !== 'restore-published' || error.status !== 3) throw error;
+    console.log('No published module cache yet. Continuing with the local Lean build.');
   }
-  let selection = targetsFile;
-  if (!selection && targets.length) {
-    selection = join(directory, 'targets');
-    await writeFile(selection, targets.join('\n') + '\n');
-  }
-  execFileSync('python3', ['-B', tool, 'restore', '--index', index,
-    ...(selection ? ['--targets-file', selection] : [])], { stdio: 'inherit' });
 }
 
 async function save(cache, cacheVersion, identity, packageFile) {
@@ -594,59 +641,9 @@ async function saveContinuation() {
   }
 }
 
-async function runPublisher() {
-  requirePublisher();
-  const temp = process.env.RUNNER_TEMP;
-  const run = (command, args) => execFileSync(command, args, { stdio: 'inherit' });
-  // Hosted runners supply the cache service identity to JavaScript actions.
-  // Keep that identity in this action's subprocesses throughout the operation.
-  if (operation === 'compile-generation') {
-    const stage = process.env.STAGE;
-    if (!/^(common|0|[1-9][0-9]*)$/.test(stage)) throw new Error('invalid generation worker stage');
-    const output = join(temp, 'generation-layer');
-    await mkdir(output, { recursive: true });
-    run('bash', ['.github/actions/lean-compile-layer/measure.sh', '--compile', 'python3',
-      'tools/scripts/worktree/lean_generation_plan.py', 'worker', '--plan', join(temp, 'generation-plan/plan.json'),
-      '--base', join(temp, 'generation-plan/hits.json'), '--common', join(temp, 'generation-common/common.json'),
-      '--stage', stage, '--output', join(output, stage + '.json')]);
-    return;
-  }
-  const receipts = join(temp, 'receipts');
-  const base = join(temp, 'base/base.json');
-  const facetPlan = join(temp, 'facet-plan.json');
-  const facets = 'tools/scripts/worktree/lean_generation_facets.py';
-  if (operation === 'plan-reports') {
-    await mkdir(receipts, { recursive: true });
-    await copyFile(join(temp, 'plan/hits.json'), join(receipts, 'compiler-hits.json'));
-    run('python3', [facets, '--stage', 'plan', '--plan', join(temp, 'plan/plan.json'),
-      '--base', base, '--receipts', receipts, '--output', facetPlan]);
-    return;
-  }
-  if (operation === 'build-reports') {
-    const shard = process.env.REPORT_SHARD;
-    if (!/^(0|[1-9][0-9]*)$/.test(shard)) throw new Error('invalid report shard');
-    run('python3', [facets, '--stage', 'worker', '--plan', facetPlan, '--shard', shard,
-      '--output', join(temp, 'report-' + shard + '.json')]);
-    return;
-  }
-  const plan = join(temp, 'complete-plan.json');
-  const expected = join(temp, 'base/expected-marker');
-  await mkdir(receipts, { recursive: true });
-  if (operation === 'publish-generation') {
-    // Queued workflows can pin a newer dev checkout while retaining the single-job layout.
-    await copyFile(join(temp, 'plan/hits.json'), join(receipts, 'compiler-hits.json'));
-    run('python3', [facets, '--plan', join(temp, 'plan/plan.json'), '--base', base,
-      '--receipts', receipts, '--output', plan]);
-  } else {
-    run('python3', [facets, '--stage', 'finish', '--plan', facetPlan, '--receipts', receipts, '--output', plan]);
-  }
-  const prior = (await stat(expected)).size ? ['--base', base] : [];
-  run('python3', ['tools/scripts/worktree/lean_cache_generation.py', 'commit', '--plan', plan,
-    ...prior, '--receipts', receipts, '--expected-marker', expected]);
-}
-
 async function main() {
-  if (['compile-generation', 'plan-reports', 'build-reports', 'commit-generation', 'publish-generation'].includes(operation)) return runPublisher();
+  if (['module-plan', 'module-worker', 'module-finish', 'restore-published'].includes(operation)) return runModuleCache();
+  if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);
   }
@@ -669,7 +666,6 @@ async function main() {
     if (selectSeed(join(directory, 'index.json'), selected)) await restorePayloads(io.cache, io.cacheVersion, [seed.prefix], selected);
     return;
   }
-  if (operation === 'restore-published') return restorePublished();
   if (operation === 'save') requirePublisher();
   if (operation === 'save-continuation' && state === 'resume') return saveContinuation();
   if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {

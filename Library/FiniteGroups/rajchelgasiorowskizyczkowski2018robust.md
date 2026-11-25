@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Combinatorics/Permutation/StronglyComplementaryPermutationMaximum
   - D5/S3/Quantum/Measurements/ThreeDistinguishabilityCubic
   - D5/S3/Quantum/Measurements/ThreeDistinguishabilityMixedPurity
+  - D5/S3/Quantum/Matrix/Unistochastic/FourGram
 license: citation-only
 triage: anchor
 ---
@@ -45,6 +46,14 @@ holds on the full simplex, the repeated-column problem and its exact cubic
 criterion also decide the mixed region.
 
 - Appendix A, Eqs. (7.1)–(7.5) and the one-entry modulus test. [arXiv v2 PDF](https://arxiv.org/pdf/1804.10715v2)
+
+The order-four coupled Gram criterion characterizes membership by the
+existence of two real PSD matrices of rank at most two with a prescribed
+difference. Its sufficiency proof reconstructs the complementary row pair
+via a unit Bloch readout axis. The equivalent algebraic test is a common
+real zero of a cubic and a conic under six principal-minor inequalities.
+These formulations and their reconstruction cover all order-four
+bistochastic matrices, including zeros and degenerate Gram ranks.
 
 ## Verified locator
 

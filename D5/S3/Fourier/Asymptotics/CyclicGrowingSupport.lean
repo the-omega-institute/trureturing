@@ -206,7 +206,7 @@ private theorem front_features_match {q n : ℕ} [NeZero q] (hn : 0<n) (j : ℤ)
       if u=0 then x^2 else (1-Real.cos (x*u)^2)/u^2
     rw [if_neg hu, he,sample_int_cast]
 
-private theorem rear_moment_eq {h : ℝ} (hh : h ≠ 0) (r : ℝ) :
+theorem rear_moment_eq {h : ℝ} (hh : h ≠ 0) (r : ℝ) :
     rearMoment h r = (1-Real.cos (r*h)^2)/h^2 := by
   rw [← Real.sin_sq]
   by_cases hr : r=0
@@ -551,18 +551,20 @@ private theorem eventually_wide_cycle (q : ℕ → ℕ) (hq : ∀ n, q n≠0)
   have hlt' : 4*n < q n := by exact_mod_cast hlt
   omega
 
-private theorem rear_offsets_nonempty (e l : ℕ) : (rearRealOffsets e l).Nonempty := by
+theorem rear_offsets_nonempty (e l : ℕ) : (rearRealOffsets e l).Nonempty := by
   refine ⟨-((e%2 : ℕ) : ℝ)/2, Finset.mem_image.mpr ⟨0,?_,?_⟩⟩
   · exact mem_Icc.mpr ⟨by omega,by omega⟩
   · norm_num <;> ring
 
 
-private theorem eventual_strict_window_support
+theorem eventual_window_support_of_signs
     (q : ℕ → ℕ) (hq : ∀ n, q n ≠ 0) (e l : ℕ)
     (hpar : ∀ᶠ n in atTop, q n % 2 = e) {K : ℝ}
     (hK : Tendsto (fun n : ℕ => (n : ℝ)^5 * (mesh (q n))^2) atTop (𝓝 K))
-    (hposR : 3*((l : ℝ)+(e : ℝ)/2)^2/4 < limitCoefficients (rearRealOffsets e l) K 2)
-    (hnegR : limitCoefficients (rearRealOffsets e l) K 2 < 3*((l : ℝ)+1+(e : ℝ)/2)^2/4) :
+    (hR0pos : ∀ᶠ n : ℕ in atTop, 0<(n : ℝ)^3*
+      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+(e : ℝ)/2))
+    (hR1neg : ∀ᶠ n : ℕ in atTop, (n : ℝ)^3*
+      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+1+(e : ℝ)/2)<0) :
     ∀ᶠ n : ℕ in atTop,
       letI : NeZero (q n) := ⟨hq n⟩
       let v : ZMod (q n) → ℝ := windowLaw n l (coefficientFit (rearRealOffsets e l) n (mesh (q n)))
@@ -602,12 +604,6 @@ private theorem eventual_strict_window_support
     hF1.eventually (gt_mem_nhds (by norm_num))
   let r0 := (l : ℝ)+(e : ℝ)/2
   let r1 := (l : ℝ)+1+(e : ℝ)/2
-  have hR0 := scaled_rear_value hK S hS r0
-  have hR1 := scaled_rear_value hK S hS r1
-  have hR0pos : ∀ᶠ n : ℕ in atTop, 0<(n : ℝ)^3*rearValue S n (h n) r0 :=
-    hR0.eventually (lt_mem_nhds (by dsimp [r0,S]; linarith only [hposR]))
-  have hR1neg : ∀ᶠ n : ℕ in atTop, (n : ℝ)^3*rearValue S n (h n) r1<0 :=
-    hR1.eventually (gt_mem_nhds (by dsimp [r1,S]; linarith only [hnegR]))
   have hdet := coupledMatrix_eventually_det_ne_zero hscale hS
   filter_upwards [hwide,hpar,eventually_ge_atTop (1:ℕ),hCneg,hApos,hBsmall,hF0pos,hF1neg,
     hR0pos,hR1neg,hdet] with n hnwide hnpar hn hc ha0 hb hf0 hf1 hr0 hr1 hd
@@ -656,6 +652,33 @@ private theorem eventual_strict_window_support
     exact hneg.le
   exact window_optimizer hn hnwide (budget n) (a n) hc.le hBineq hrows
     hpF hnF hpR hnR'
+
+private theorem eventual_strict_window_support
+    (q : ℕ → ℕ) (hq : ∀ n, q n ≠ 0) (e l : ℕ)
+    (hpar : ∀ᶠ n in atTop, q n % 2 = e) {K : ℝ}
+    (hK : Tendsto (fun n : ℕ => (n : ℝ)^5 * (mesh (q n))^2) atTop (𝓝 K))
+    (hposR : 3*((l : ℝ)+(e : ℝ)/2)^2/4 < limitCoefficients (rearRealOffsets e l) K 2)
+    (hnegR : limitCoefficients (rearRealOffsets e l) K 2 < 3*((l : ℝ)+1+(e : ℝ)/2)^2/4) :
+    ∀ᶠ n : ℕ in atTop,
+      letI : NeZero (q n) := ⟨hq n⟩
+      let v : ZMod (q n) → ℝ := windowLaw n l (coefficientFit (rearRealOffsets e l) n (mesh (q n)))
+      let threshold := 1-2*budget n*(mesh (q n))^2
+      cosineMoment 1 v = threshold ∧ cosineMoment 2 v = threshold ∧
+      v ∈ feasible (q n) threshold ∧
+        (∀ w ∈ feasible (q n) threshold, w ≠ v → energy v < energy w) ∧
+        (∀ w ∈ feasible (q n) threshold, energy v + (∑ i,(w i-v i)^2) ≤ energy w) ∧
+        ∀ w ∈ feasible (q n) threshold, IsMinOn energy (feasible (q n) threshold) w →
+          ∀ i, 0 < max 0 (w i) ↔ i ∈ frontSites (q n) n ∪ rearSites (q n) l := by
+  let S := rearRealOffsets e l
+  have hS := rear_offsets_nonempty e l
+  have hp := (scaled_rear_value hK S hS ((l : ℝ)+(e : ℝ)/2)).eventually
+    (lt_mem_nhds (by dsimp [S]; linarith only [hposR] :
+      0 < limitCoefficients S K 2 - 3*((l:ℝ)+(e:ℝ)/2)^2/4))
+  have hn := (scaled_rear_value hK S hS ((l : ℝ)+1+(e : ℝ)/2)).eventually
+    (gt_mem_nhds (by dsimp [S]; linarith only [hnegR] :
+      limitCoefficients S K 2 - 3*((l:ℝ)+1+(e:ℝ)/2)^2/4 < 0))
+  exact eventual_window_support_of_signs q hq e l hpar hK hp hn
+
 
 
 private theorem sum_lattice_linear (l : ℕ) :
@@ -725,18 +748,14 @@ def rearThreshold (e l : ℕ) : ℝ :=
   if e=0 then (l : ℝ)*(2*l-1)*(2*l+1)/4
   else (l : ℝ)*(l+1/2)*(l+1)
 
-private theorem threshold_equiv (e l : ℕ) (he : e<2) (K : ℝ) :
-    (3*((l : ℝ)+(e : ℝ)/2)^2/4 < limitCoefficients (rearRealOffsets e l) K 2 ∧
-      limitCoefficients (rearRealOffsets e l) K 2 < 3*((l : ℝ)+1+(e : ℝ)/2)^2/4) ↔
-      rearThreshold e l < 3*K/20 ∧ 3*K/20 < rearThreshold e (l+1) := by
+/-- Both end levels of the parity window give consecutive threshold polynomials. -/
+theorem rear_threshold_endpoints (e l : ℕ) (he : e<2) :
+    let S := rearRealOffsets e l
+    3*((l : ℝ)+(e : ℝ)/2)^2/4*(S.card : ℝ)-3*(∑ r∈S,r^2)/4 = rearThreshold e l ∧
+    3*((l : ℝ)+1+(e : ℝ)/2)^2/4*(S.card : ℝ)-3*(∑ r∈S,r^2)/4 =
+      rearThreshold e (l+1) := by
   let S := rearRealOffsets e l
-  have hc : (0:ℝ)<S.card := by exact_mod_cast (rear_offsets_nonempty e l).card_pos
   have hCard := rear_offset_card e l he
-  change (3*((l : ℝ)+(e : ℝ)/2)^2/4 <
-        (3*K/20+3*(∑ r∈S,r^2)/4)/(S.card : ℝ) ∧
-      (3*K/20+3*(∑ r∈S,r^2)/4)/(S.card : ℝ) <
-        3*((l : ℝ)+1+(e : ℝ)/2)^2/4) ↔ _
-  rw [lt_div_iff₀ hc,div_lt_iff₀ hc]
   have hlow : 3*((l : ℝ)+(e : ℝ)/2)^2/4*(S.card : ℝ) -
       3*(∑ r∈S,r^2)/4 = rearThreshold e l := by
     change _ = _
@@ -754,13 +773,27 @@ private theorem threshold_equiv (e l : ℕ) (he : e<2) (K : ℝ) :
       rearThreshold,if_pos rfl,if_neg (by decide : (1:ℕ)≠0),Nat.cast_add,ite_true,ite_false]
     · rw [rear_square_sum_even]; ring
     · rw [rear_square_sum_odd]; ring
+  exact ⟨hlow,hhigh⟩
+
+private theorem threshold_equiv (e l : ℕ) (he : e<2) (K : ℝ) :
+    (3*((l : ℝ)+(e : ℝ)/2)^2/4 < limitCoefficients (rearRealOffsets e l) K 2 ∧
+      limitCoefficients (rearRealOffsets e l) K 2 < 3*((l : ℝ)+1+(e : ℝ)/2)^2/4) ↔
+      rearThreshold e l < 3*K/20 ∧ 3*K/20 < rearThreshold e (l+1) := by
+  let S := rearRealOffsets e l
+  have hc : (0:ℝ)<S.card := by exact_mod_cast (rear_offsets_nonempty e l).card_pos
+  change (3*((l : ℝ)+(e : ℝ)/2)^2/4 <
+        (3*K/20+3*(∑ r∈S,r^2)/4)/(S.card : ℝ) ∧
+      (3*K/20+3*(∑ r∈S,r^2)/4)/(S.card : ℝ) <
+        3*((l : ℝ)+1+(e : ℝ)/2)^2/4) ↔ _
+  rw [lt_div_iff₀ hc,div_lt_iff₀ hc]
+  obtain ⟨hlow,hhigh⟩ := rear_threshold_endpoints e l he
   constructor
   · intro h
     exact ⟨by linarith only [h.1,hlow],by linarith only [h.2,hhigh]⟩
   · intro h
     exact ⟨by linarith only [h.1,hlow],by linarith only [h.2,hhigh]⟩
 
-private theorem rearThreshold_strictMono (e : ℕ) (he : e<2) :
+theorem rearThreshold_strictMono (e : ℕ) (he : e<2) :
     StrictMono (rearThreshold e) := by
   apply strictMono_nat_of_lt_succ
   intro l
