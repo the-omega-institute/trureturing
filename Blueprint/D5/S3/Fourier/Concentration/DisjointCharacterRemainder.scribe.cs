@@ -63,23 +63,23 @@ internal sealed class DisjointCharacterRemainderDocument : IScribeDocumentDefini
         var c = Call("C", t);
         var q = F.Id("Q");
         var sign = new Formula.Power(Seq(Open, Minus, D(1), Close), Seq(Bar, t, Bar));
-        var sum = new Formula.Subscript(Sum, Seq(t, Subseteq, F.Id("s"), Comma, Bar, t, Bar, Le, d));
+        var sum = new Formula.Subscript(Sum, Seq(t, Sp, Subseteq, Sp, F.Id("s"), Comma, Bar, t, Bar, Sp, Le, Sp, d));
         return Disp(new Formula.Aligned([
             Seq(Amp, OpenBracket, new Formula.Power(F.Id("x"), d), new Formula.Power(F.Id("y"), d),
                 CloseBracket, q, Eq, sum, sign, new Formula.Power(Seq(Bar, c, Bar), D(2))),
-            Seq(Amp, Forall, Sp, t, Subseteq, F.Id("s"), Comma, Sp, Bar, c, Bar, Le, Call("B", t))]));
+            Seq(Amp, Forall, Sp, t, Sp, Subseteq, Sp, F.Id("s"), Comma, Sp, Bar, c, Bar, Sp, Le, Sp, Call("B", t))]));
     }
 
     private static Formula Remainder()
     {
         var t = F.Id("T");
         var r = F.Id("R");
-        var even = new Formula.Subscript(Sum, Seq(t, InMacro, F.Id("E")));
-        var odd = new Formula.Subscript(Sum, Seq(t, InMacro, F.Id("O")));
+        var even = new Formula.Subscript(Sum, Seq(t, Sp, InMacro, Sp, F.Id("E")));
+        var odd = new Formula.Subscript(Sum, Seq(t, Sp, InMacro, Sp, F.Id("O")));
         var b = new Formula.Power(Call("B", t), D(2));
         var c = new Formula.Power(Seq(Bar, Call("C", t), Bar), D(2));
         return Disp(new Formula.Aligned([
             Seq(Amp, r, Eq, even, c, Minus, odd, c),
-            Seq(Amp, Minus, odd, b, Le, r, Le, even, b)]));
+            Seq(Amp, Minus, odd, b, Sp, Le, Sp, r, Sp, Le, Sp, even, b)]));
     }
 }
