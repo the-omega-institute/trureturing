@@ -4,7 +4,7 @@
 
 An explicit arithmetic witness for a maximally mixed qubit marginal.
 
-**Theorem 1.1 (Rank two for a maximally mixed endpoint and a rational Bloch length).**
+**Theorem 1.1 (Rank two for a maximally mixed endpoint).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Marginals/RationalQubitMixedEndpoint.rational_rank_two_of_maximally_mixed_endpoint`
 
@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Quantum/Entanglement/Marginals/RationalQubitMixedEndpoint
 
 *Commentary.*
 
-Let c be a rational Bloch vector of rational length r with 0 < r < 1. Then half the identity and the trace-one Bloch matrix for c are partial traces of a positive semidefinite joint matrix of rank exactly two whose entries have rational real and imaginary parts.
+Let c be a rational Bloch vector with squared length strictly between zero and one. Then half the identity and the trace-one Bloch matrix for c are partial traces of a positive semidefinite joint matrix of rank exactly two whose entries have rational real and imaginary parts.
 
-Write 1 − r² as four rational squares p² + q² + s² + t² using Lagrange's theorem. Reorder so that D = p² + q² is positive. The vector (D, ps − qt, pt + qs) has squared length D(1 − r²), while (p, q, 0) has squared length D. A rational reflection carries the third coordinate unit vector to c/r. Apply it to (p, q, 0) to obtain v perpendicular to c without changing its squared length. These vectors satisfy the two witness equations of the rational qubit projector construction.
+Lagrange's theorem supplies a rational quaternion H with squared norm one minus the squared length of c. Choose a nonzero rational vector v perpendicular to c and to the imaginary part of H. The product of H with the pure quaternion v has zero real part, and its imaginary part y has squared length equal to the product of the two squared norms. These vectors satisfy the witness equations for the rational qubit projector construction.
 
 ## References
 

@@ -104,7 +104,7 @@ theorem rational_rank_two_of_maximally_mixed_endpoint (c : Fin 3 → ℚ)
       apply (WithLp.equiv 2 _).injective
       funext i
       simp
-    simp [heq]
+    simp [heq, D5.S3.Quantum.Measurement.FourQubitParentConstruction.B]
   simpa only [hzero, add_zero] using
     rational_rank_two_of_quadratic_witness 0 c y v hstrict hy
       (by simp only [zero_dotProduct, hcv]) (by simpa only [hcv, zero_pow (by decide : 2 ≠ 0),
