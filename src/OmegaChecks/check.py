@@ -126,6 +126,9 @@ def check_consumer_exports():
              "public def B.item : Prop := ∀ p q : Prop, p → q → p\n")
     alias = "namespace Visible\nexport A (item)\nend Visible\n"
     generated = "public inductive Choice where | first | second\n"
+    size_of = ("public import Init\npublic import OmegaInit.Prelude\n"
+               "public structure Wrapper where value : Omega.Nat\n"
+               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Nat.zero.succ)\n")
     field = ("public import OmegaInit.Prelude\npublic section\n"
              "abbrev FieldReceiver := Omega.Nat\n"
              "def Omega.Nat.projectField (value : FieldReceiver) := value\n")
@@ -151,6 +154,8 @@ def check_consumer_exports():
              "public import OmegaInit.Prelude\nnamespace Public\nexport Omega.And (left)\nend Public",
              False, "1 roots"),
             (generated, generated, False, "Choice.casesOn"),
+            (size_of + "example : derivedSize = 1 := rfl\n",
+             size_of + "example : derivedSize = 2 := rfl\n", True, "Wrapper"),
             (local, "public import Lean\n" + local + "public section\nrun_meta do\n"
              "  discard <| Lean.Meta.getEqnsFor? `Nat.mul\n"
              "  discard <| Lean.Meta.getUnfoldEqnFor? `Nat.mul", False, "Nat.mul.eq_1"),
