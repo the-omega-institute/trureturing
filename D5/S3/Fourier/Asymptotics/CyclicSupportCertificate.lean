@@ -106,7 +106,7 @@ private theorem dualValue_convex (s a b g : ℝ) (hs : 0 < s) (hg : g ≤ 0) :
   nlinarith only [hsq, congrArg (fun z : ℝ => g * (u * x ^ 2 + v * y ^ 2) * z) huv,
     congrArg (fun z : ℝ => (a * s + b * s + g) * z) huv]
 
-private theorem dualValue_negative_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
+theorem dualValue_negative_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
     (hg : g ≤ 0) (hlo : lo ≤ c) (hhi : c ≤ hi)
     (hl : dualValue s a b g lo < 0) (hh : dualValue s a b g hi < 0) :
     dualValue s a b g c < 0 := by
