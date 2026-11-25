@@ -121,6 +121,7 @@ abbrev arena : Arena where
     cosineMoment 2 v = threshold →
     v ∈ feasible q threshold ∧
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
         ∀ i, 0 < clip (w i) ↔ i ∈ sites
 
@@ -162,7 +163,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · have hlt := hraw.2.1 w hw (by rwa [hv])
       rw [hv] at hlt
       exact hlt.le
-  exact (lt_irrefl _) ((hraw.2.2 v hfit hmin 0).mpr (mem_univ _))
+  exact (lt_irrefl _) ((hraw.2.2.2 v hfit hmin 0).mpr (mem_univ _))
 
 def evidence : Registration arena (type_of% @exact_support_of_dual) where
   actual := actual

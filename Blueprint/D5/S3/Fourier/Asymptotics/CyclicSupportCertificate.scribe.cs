@@ -35,7 +35,7 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
                     "Its values are positive on the candidate set and nonpositive at both endpoints bounding " +
                     "the excluded cosines. Convexity gives nonpositive values at every excluded sample. " +
                     "The candidate equals the positive part of the polynomial and has mass one and the " +
-                    "two exact moments. The squared distance to this candidate is strictly positive for any " +
+                    "two exact moments. Every feasible energy gap is at least the squared distance to the candidate. The distance is strictly positive for any " +
                     "distinct competitor, and the clipping and moment slack terms are nonnegative."))),
                 DescribeRole.Theorem))));
 
@@ -87,6 +87,9 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
         var different = new Formula.Relation(w, FormulaRelationOperator.NotEqual, v);
         var strict = All("w", feasible, Logic(different, FormulaLogicOperator.Implies,
             Lt(Call("E", v), Call("E", w))));
+        var distance = F.Seq(new Formula.Subscript(F.Sum, i),
+            new Formula.Power(F.Seq(F.Open, Subtract(Call("w", i), Call("v", i)), F.Close), F.D(2)));
+        var stability = All("w", feasible, Le(Add(Call("E", v), distance), Call("E", w)));
         var exact = All("w", feasible, Logic(Call("IsMinOn", F.Id("E"), feasible, w),
             FormulaLogicOperator.Implies, All("i", residues,
                 Logic(Lt(F.D(0), Call("w", i)), FormulaLogicOperator.Iff, Mem(i, sites)))));
@@ -94,7 +97,7 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
             And(sign, And(outside, And(pos, And(mass, moments)))));
         return F.Disp(F.Seq(polynomial, F.Comma, F.Sp, Eq(v, Call("Restrict", F.Id("p"), F.Id("c"), sites)),
             F.Comma, F.Sp, Logic(hypotheses, FormulaLogicOperator.Implies,
-                And(Mem(v, feasible), And(strict, exact)))));
+                And(Mem(v, feasible), And(strict, And(stability, exact))))));
     }
 
     private static Formula All(string name, Formula domain, Formula body) =>
