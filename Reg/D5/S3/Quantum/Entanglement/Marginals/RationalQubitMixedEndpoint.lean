@@ -38,7 +38,7 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (c : Fin 3 → ℚ) (r : ℚ), 0 < r → r < 1 → c ⬝ᵥ c = r ^ 2 →
+  Law R := ∀ (c : Fin 3 → ℚ), 0 < c ⬝ᵥ c → c ⬝ᵥ c < 1 →
     ∃ T : Joint, T.PosSemidef ∧ R.readout () () T = 2 ∧
       (∀ i j, RationalEntry (T i j)) ∧
       partialTraceRight T = (1 / 2 : ℂ) • (1 : Matrix Bool Bool ℂ) ∧
@@ -46,8 +46,9 @@ private abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨_, _, hrank, _⟩ := h ![1 / 5, 2 / 5, 2 / 5] (3 / 5)
-    (by norm_num) (by norm_num) (by norm_num [dotProduct, Fin.sum_univ_three])
+  obtain ⟨_, _, hrank, _⟩ := h ![1 / 4, 1 / 4, 0]
+    (by norm_num [dotProduct, Fin.sum_univ_three])
+    (by norm_num [dotProduct, Fin.sum_univ_three])
   exact (by decide : (3 : ℕ) ≠ 2) hrank
 
 def family : Registration arena (type_of% @rational_rank_two_of_maximally_mixed_endpoint) where
