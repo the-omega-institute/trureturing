@@ -1,4 +1,4 @@
-"""Run Lake with the strict foundations in a separate build directory."""
+"""Build eligible targets with the strict foundations. Other Lake commands inspect the raw overlay."""
 import json
 import os
 from pathlib import Path
@@ -86,5 +86,83 @@ def lake_layout(strict, with_reg, common_dir=None):
     return command, libraries
 
 
+def strict_build(args):
+    # Resolve Lake's own module paths and library globs, including package-qualified
+    # targets. Other commands continue to expose the raw overlay for inspection.
+    from check import library_mathlib_only, strict_import_graph, terminal_modules
+    from portable import closure, root
+    from scope import module_path
+
+    lake = ["lake", "-f", strict_config()]
+    config = tomllib.loads((ROOT / "lakefile.toml").read_text())
+    package = config["name"]
+    libraries = {lib["name"] for lib in config["lean_lib"]}
+    executables = {exe["name"]: exe["root"] for exe in config["lean_exe"]}
+    selections = {}
+    options = []
+    remaining = iter(args)
+    for arg in remaining:
+        if arg.startswith("-"):
+            options.append(arg)
+            if arg in {"-o", "--package", "-K"}:
+                value = next(remaining, None)
+                if value is None:
+                    return subprocess.call([*lake, "build", *args], cwd=ROOT)
+                options.append(value)
+        else:
+            selections[arg] = set()
+    if not selections:
+        selections.update((target, set()) for target in config["defaultTargets"])
+    for target in list(selections):
+        if target in {"@", "@/", package, f"@{package}", f"@{package}/"}:
+            del selections[target]
+            selections.update((name, set()) for name in config["defaultTargets"])
+    for target in selections:
+        base = target.partition(":")[0]
+        name = base.rsplit("/", 1)[-1]
+        if name in libraries:
+            result = subprocess.check_output([*lake, "--json", "query", base + ":modules"], cwd=ROOT, text=True)
+            selections[target].update(json.loads(result))
+        elif name in executables:
+            selections[target].add(executables[name])
+        else:
+            query = subprocess.run([*lake, "query", base + ":lean"], cwd=ROOT, text=True, capture_output=True)
+            if query.returncode == 0:
+                source = (ROOT / query.stdout.strip()).resolve()
+                if source.is_relative_to(ROOT) and (name := module_path(str(source.relative_to(ROOT)))):
+                    selections[target].add(name)
+    all_roots = set().union(*selections.values())
+    graph = strict_import_graph("lean", all_roots)
+    skipped = library_mathlib_only(graph, all_roots & graph.keys())
+    if not skipped:
+        return subprocess.call([*lake, "build", *args], cwd=ROOT)
+    targets = []
+    eligible = set()
+    skipped_facets = []
+    for target, names in selections.items():
+        if names.isdisjoint(skipped):
+            targets.append(target)
+        else:
+            if ":" in target:
+                skipped_facets.append(target)
+            eligible.update(name for name in closure(graph, names & graph.keys())
+                            if name not in skipped and root(name) != "OmegaBuild")
+    if skipped_facets:
+        # Have Lake validate explicit facets on the official side even when all
+        # their strict jobs are skipped. --no-build exits 3 for an unbuilt facet.
+        result = subprocess.run(["lake", "--no-build", "build", *skipped_facets],
+                                cwd=ROOT, capture_output=True, text=True)
+        if result.returncode not in (0, 3):
+            sys.stderr.write(result.stdout + result.stderr)
+            return result.returncode
+    targets.extend("+" + name for name in terminal_modules(graph, eligible))
+    return subprocess.call([*lake, "build", *options, *targets], cwd=ROOT) if targets else 0
+
+
 if __name__ == "__main__":
-    sys.exit(subprocess.call(["lake", "-f", strict_config(), *sys.argv[1:]], cwd=ROOT))
+    args = sys.argv[1:]
+    if "build" in args and not {"-h", "--help"}.intersection(args):
+        index = args.index("build")
+        if all(option.startswith("-") for option in args[:index]):
+            sys.exit(strict_build([*args[:index], *args[index + 1:]]))
+    sys.exit(subprocess.call(["lake", "-f", strict_config(), *args], cwd=ROOT))

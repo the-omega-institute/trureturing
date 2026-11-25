@@ -2,8 +2,11 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 import scope
+import check
+from check import library_backend_candidates
 
 
 class ScopeTests(unittest.TestCase):
@@ -56,6 +59,55 @@ class ScopeTests(unittest.TestCase):
         official = dict(self.official, **{"OmegaMathlib.Fib": {"D5.Ordinary"}})
         plan = scope.plan(self.graph, official, {"D5.Ordinary"}, set(), [], [])
         self.assertIn("D5.Direct", plan["consumers"])
+
+    def test_backend_command_inputs_and_ordinary_marked_module_reach_scope(self):
+        for path in ("src/OmegaBuild/Commands.lean", "src/OmegaBuild/Plan.lean"):
+            name = scope.module_path(path)
+            self.assertIn(name, scope.CHECK_INPUTS)
+            plan = scope.plan({**self.graph, name: set()}, self.official, {name}, set(), [], [])
+            self.assertEqual(plan["shared"], [name])
+            self.assertNotIn(name, plan["library"])
+        graph = {**self.graph, "OmegaBuild.Commands": set(),
+                 "D5.Markable": {"OmegaBuild.Commands"}, "Reg.Inherited": {"D5.Markable"}}
+        result = scope.plan(graph, self.official, {"D5.Markable"}, set(), [], [])
+        self.assertEqual(result["consumers"], ["D5.Markable", "Reg.Inherited"])
+
+    def test_strict_witnesses_are_resolved_officially_only_if_they_can_use_a_marker(self):
+        graph = {"OmegaBuild.Commands": set(), "OmegaMath.Base": set(),
+                 "OmegaMath.Optional": {"OmegaBuild.Commands"},
+                 "OmegaChecks.Mixed": {"OmegaMath.Base"},
+                 "OmegaChecks.Optional": {"OmegaMath.Optional"},
+                 "D5.Marked": {"OmegaBuild.Commands"},
+                 "Trureturing": {"D5.Marked"}, "OmegaChecks.D5Witness": {"Trureturing"}}
+        self.assertEqual(library_backend_candidates(graph, graph),
+                         ["OmegaMath.Optional", "OmegaChecks.Optional", "D5.Marked", "Trureturing", "OmegaChecks.D5Witness"])
+
+    def test_full_and_incremental_probes_schedule_only_eligible_strict_roots(self):
+        graph = {"OmegaMath.Base": set(), "OmegaChecks.Marked": {"OmegaMath.Base"},
+                 "OmegaChecks.Inherited": {"OmegaChecks.Marked"}, "OmegaChecks.Sibling": {"OmegaMath.Base"}}
+        skipped = {"OmegaChecks.Marked": ["OmegaChecks.Marked"],
+                   "OmegaChecks.Inherited": ["OmegaChecks.Inherited", "OmegaChecks.Marked"]}
+        with patch.object(check, "library_graph", return_value=graph), \
+             patch.object(check, "library_mathlib_only", return_value=skipped):
+            for entry in (check.check_library, check.check_incremental):
+                with self.subTest(entry=entry), patch.object(check, "build", side_effect=StopIteration) as build:
+                    # Stop at the first build request, before probes modify files or run the auditor.
+                    with self.assertRaises(StopIteration):
+                        entry()
+                    build.assert_called_once_with(["OmegaChecks.Sibling"])
+
+    def test_current_builds_backend_programs_officially_and_tests_mixed_selections(self):
+        graph = {"OmegaBuild.Commands": set(), "OmegaBuild.Plan": {"OmegaBuild.Commands"},
+                 "OmegaChecks.Witness": set()}
+        with patch.object(check, "library_graph", return_value=graph), \
+             patch.object(check, "run") as official, patch.object(check, "build") as strict:
+            check.check_library(["OmegaBuild.Commands", "OmegaBuild.Plan"])
+            official.assert_called_once_with("lake", "build", "+OmegaBuild.Plan")
+            strict.assert_not_called()
+            check.check_library(["OmegaBuild.Commands", "OmegaBuild.Plan", "OmegaChecks.Witness"])
+            strict.assert_called_once_with(["OmegaChecks.Witness"])
+            with self.assertRaisesRegex(ValueError, "unknown Omega module"):
+                check.check_library(["OmegaBuild.Typo"])
 
     def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
         for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):
