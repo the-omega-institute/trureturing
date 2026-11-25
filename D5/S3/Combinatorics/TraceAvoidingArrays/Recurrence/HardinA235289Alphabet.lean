@@ -112,16 +112,11 @@ private theorem uniform {i n k : ℕ} (hi : 1 ≤ i) {a : Grid i (n + 1) (k + 1)
     (h : Mixed a) : Low a ∨ High a := by
   have same (r : Fin (n + 1)) (c : Fin (k + 1)) : block a r c = block a 0 0 := by
     calc
-      block a r c = block a 0 c := by
-        by_cases hr : r = 0
-        · rw [hr]
-        · exact ((Fin.liftFun_iff_succ Eq (f := fun row => block a row c)).2
-            (fun row => vertical hi h row c) (Fin.pos_iff_ne_zero.mpr hr)).symm
-      _ = block a 0 0 := by
-        by_cases hc : c = 0
-        · rw [hc]
-        · exact ((Fin.liftFun_iff_succ Eq (f := block a 0)).2
-            (horizontal hi h 0) (Fin.pos_iff_ne_zero.mpr hc)).symm
+      block a r c = block a 0 c :=
+        HardinA235289Recurrence.fin_constant (fun row => block a row c)
+          (fun row => vertical hi h row c) r
+      _ = block a 0 0 :=
+        HardinA235289Recurrence.fin_constant (block a 0) (horizontal hi h 0) c
   rcases h 0 0 with low | high
   · exact Or.inl fun r c => (same r c).trans low
   · exact Or.inr fun r c => (same r c).trans high

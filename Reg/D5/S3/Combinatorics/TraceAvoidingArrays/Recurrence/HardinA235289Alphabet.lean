@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet
+import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Recurrence
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -6,9 +7,11 @@ import LeanInformationAuditInterface.Contract.Registration
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet
 
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Recurrence (Grid Legal T)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Recurrence (T)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet (literalCount result)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Recurrence
+  (count_eq_literalCard)
 open LeanInformationAudit
 
 noncomputable section
@@ -33,19 +36,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have bad := h 1 1 1 (by decide) (by decide) (Or.inl rfl)
   change T 1 1 = T 1 1 + 1 at bad
   omega
-
-private def legalDecidable (n k : ℕ) (a : Grid n k) : Decidable (Legal a) := by
-  unfold Legal
-  infer_instance
-
-private def literalCard (n k : ℕ) : ℕ :=
-  letI : DecidablePred (@Legal n k) := legalDecidable n k
-  (Finset.univ.filter (@Legal n k)).card
-
-private theorem count_eq_literalCard (n k : ℕ) : T n k = (literalCard n k : ℤ) := by
-  let _ : DecidablePred (@Legal n k) := legalDecidable n k
-  unfold T literalCard
-  rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
 
 set_option maxRecDepth 64000 in
 set_option maxHeartbeats 2000000 in

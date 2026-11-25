@@ -52,7 +52,7 @@ private def literalCard (n k : ℕ) : ℕ :=
   letI : DecidablePred (@Legal n k) := legalDecidable n k
   (Finset.univ.filter (@Legal n k)).card
 
-private theorem count_eq_literalCard (n k : ℕ) : T n k = (literalCard n k : ℤ) := by
+theorem count_eq_literalCard (n k : ℕ) : T n k = (literalCard n k : ℤ) := by
   letI : DecidablePred (@Legal n k) := legalDecidable n k
   unfold T literalCard
   rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
