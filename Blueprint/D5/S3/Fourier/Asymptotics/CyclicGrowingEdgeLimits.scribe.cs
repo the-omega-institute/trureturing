@@ -28,17 +28,17 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("refined-front-coefficients"),
                 DeclarationHandle.Create(Owner + ".refined_coefficients"),
-                H("The front coefficient error vanishes after multiplication by n"),
+                H("Front coefficient errors are bounded at scale n cubed"),
                 StatementSource.FromAuthor(Refinement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The exact lattice reference has radius parameter t=n(n+1)−1/2 and " +
                     "normalizer Z. Its first two coefficients are nt/Z and −n³/Z. " +
-                    "After multiplying by n, the top two rows of the coupled matrix minus " +
-                    "the lattice Gram rows with a zero third column converge to zero. " +
-                    "The target mass perturbation also vanishes under this scaling. " +
+                    "Assume the critical-scale quantity n⁵h² is bounded. After multiplying by n³, the top two rows of the coupled matrix minus " +
+                    "the lattice Gram rows with a zero third column remain bounded. " +
+                    "The scaled target mass perturbation also remains bounded. " +
                     "Holding the rear coefficient fixed, inversion of the first two rows " +
-                    "transfers the scaled residual bound to the two coefficient errors."))),
+                    "transfers the bound to the two coefficient errors, which are O(n⁻³)."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("front-edge-limit"),
                 DeclarationHandle.Create(Owner + ".scaled_boundary_value"),
@@ -46,11 +46,21 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(Front()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "At x=(n+δ)/n the finite signed weight is the dot product of the coefficient " +
+                    "Boundedness of n⁵h² suffices. At x=(n+δ)/n the finite signed weight is the dot product of the coefficient " +
                     "row with a(n). Multiplying by n² gives the limit (3/4)(1−2δ). " +
                     "This gives strictly positive and strictly negative limiting values at δ=0 " +
                     "and δ=1 respectively. The scaled site-feature remainders vanish, including " +
                     "at a fixed offset beyond the fitted window."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("front-midpoint-limit"),
+                DeclarationHandle.Create(Owner + ".boundary_midpoint_value"),
+                H("Signed value at the half-step beyond the front boundary"),
+                StatementSource.FromAuthor(Midpoint()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At δ=1/2 the leading n² limit vanishes. The coefficient and feature " +
+                    "estimates transfer the next-order lattice value, yielding n³ times " +
+                    "the signed weight tending to −9/16. The conclusion requires bounded n⁵h²."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rear-edge-limit"),
                 DeclarationHandle.Create(Owner + ".scaled_rear_value"),
@@ -77,8 +87,8 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
     private static Formula Refinement()
     {
         var n = F.Id("n");
-        return F.Disp(Eq(Call("Limit", Multiply(n,
-            Subtract(Call("FrontCoefficients", n), Call("LatticeCoefficients", n)))), F.D(0)));
+        return F.Disp(Call("BigO", Multiply(new Formula.Power(n, F.D(3)),
+            Subtract(Call("FrontCoefficients", n), Call("LatticeCoefficients", n))), F.D(1)));
     }
 
     private static Formula Front()
@@ -87,6 +97,14 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
         var d = F.Id("delta");
         return F.Disp(Eq(Call("Limit", Multiply(new Formula.Power(n, F.D(2)), Call("FrontValue", n, d))),
             Multiply(Fraction(3, 4), Subtract(F.D(1), Multiply(F.D(2), d)))));
+    }
+
+    private static Formula Midpoint()
+    {
+        var n = F.Id("n");
+        return F.Disp(Eq(Call("Limit", Multiply(new Formula.Power(n, F.D(3)),
+            Call("FrontValue", n, Fraction(1, 2)))), Subtract(F.D(0),
+            new Formula.Fraction(F.D(9), F.Seq(F.D(1), F.D(6))))));
     }
 
     private static Formula Rear()

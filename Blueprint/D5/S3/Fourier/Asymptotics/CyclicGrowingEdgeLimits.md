@@ -18,9 +18,9 @@ $$\operatorname{Limit}\left(\operatorname{Apply}\left(a, n\right)\right) = \oper
 
 The moment target converges to (1,1/5,3K/20). Inverting the limiting coupled matrix gives (3/4,−3/4,B), where B=(3K/20+(3/4)∑_{r∈S}r²)/|S|.
 
-**Theorem 1.2 (The front coefficient error vanishes after multiplication by n).**
+**Theorem 1.2 (Front coefficient errors are bounded at scale n cubed).**
 
-$$\operatorname{Limit}\left(n \cdot \left(\operatorname{FrontCoefficients}\left(n\right) - \operatorname{LatticeCoefficients}\left(n\right)\right)\right) = 0$$
+$$\operatorname{BigO}\left(n^{3} \cdot \left(\operatorname{FrontCoefficients}\left(n\right) - \operatorname{LatticeCoefficients}\left(n\right)\right), 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.refined_coefficients` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\operatorname{Limit}\left(n \cdot \left(\operatorname{FrontCoefficients}\left(
 
 *Commentary.*
 
-The exact lattice reference has radius parameter t=n(n+1)−1/2 and normalizer Z. Its first two coefficients are nt/Z and −n³/Z. After multiplying by n, the top two rows of the coupled matrix minus the lattice Gram rows with a zero third column converge to zero. The target mass perturbation also vanishes under this scaling. Holding the rear coefficient fixed, inversion of the first two rows transfers the scaled residual bound to the two coefficient errors.
+The exact lattice reference has radius parameter t=n(n+1)−1/2 and normalizer Z. Its first two coefficients are nt/Z and −n³/Z. Assume the critical-scale quantity n⁵h² is bounded. After multiplying by n³, the top two rows of the coupled matrix minus the lattice Gram rows with a zero third column remain bounded. The scaled target mass perturbation also remains bounded. Holding the rear coefficient fixed, inversion of the first two rows transfers the bound to the two coefficient errors, which are O(n⁻³).
 
 **Theorem 1.3 (Signed value at the growing front boundary).**
 
@@ -40,9 +40,21 @@ $$\operatorname{Limit}\left(n^{2} \cdot \operatorname{FrontValue}\left(n, delta\
 
 *Commentary.*
 
-At x=(n+δ)/n the finite signed weight is the dot product of the coefficient row with a(n). Multiplying by n² gives the limit (3/4)(1−2δ). This gives strictly positive and strictly negative limiting values at δ=0 and δ=1 respectively. The scaled site-feature remainders vanish, including at a fixed offset beyond the fitted window.
+Boundedness of n⁵h² suffices. At x=(n+δ)/n the finite signed weight is the dot product of the coefficient row with a(n). Multiplying by n² gives the limit (3/4)(1−2δ). This gives strictly positive and strictly negative limiting values at δ=0 and δ=1 respectively. The scaled site-feature remainders vanish, including at a fixed offset beyond the fitted window.
 
-**Theorem 1.4 (Signed value at a fixed rear offset).**
+**Theorem 1.4 (Signed value at the half-step beyond the front boundary).**
+
+$$\operatorname{Limit}\left(n^{3} \cdot \operatorname{FrontValue}\left(n, \frac{1}{2}\right)\right) = 0 - \frac{9}{16}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.boundary_midpoint_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At δ=1/2 the leading n² limit vanishes. The coefficient and feature estimates transfer the next-order lattice value, yielding n³ times the signed weight tending to −9/16. The conclusion requires bounded n⁵h².
+
+**Theorem 1.5 (Signed value at a fixed rear offset).**
 
 $$\operatorname{Limit}\left(n^{3} \cdot \operatorname{RearValue}\left(n, r\right)\right) = B - \frac{3}{4} \cdot r^{2}$$
 
@@ -56,6 +68,7 @@ At every fixed real rear offset r the signed value multiplied by n³ converges t
 
 ## References
 
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.boundary_midpoint_value`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.coefficient_tendsto`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.refined_coefficients`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits.scaled_boundary_value`
