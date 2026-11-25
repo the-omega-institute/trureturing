@@ -102,9 +102,6 @@ runs:
         echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE resumed=$RESUMED"
         python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
           --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-        if [[ "$COMPLETE" == true && "$HANDOFF" != partial ]]; then
-          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
-        fi
     - name: Prepare cold dependencies for the compiled layers
       if: inputs.mode == 'parallel' || inputs.mode == 'release'
       shell: bash
