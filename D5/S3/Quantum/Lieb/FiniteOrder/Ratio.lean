@@ -99,12 +99,17 @@ private theorem normalized_antitone (n : ℕ) (f : ℝ → ℝ)
 of order `n` on positive definite inputs. No value of the quotient at zero is
 used in this assertion. -/
 theorem ratio_monotone_posDef (n : ℕ) (f : ℝ → ℝ)
-    (hf : ContinuousOn f (Set.Ici 0)) (hf0 : 0 ≤ f 0)
+    (hf : ContinuousOn f (Set.Ici 0))
     (hfpos : ∀ t : ℝ, 0 < t → 0 < f t)
     (hmono : ∀ (A B : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ),
       A.PosSemidef → B.PosSemidef → A ≤ B → cfc f A ≤ cfc f B)
     (A B : Matrix (Fin n) (Fin n) ℂ) (hA : A.PosDef) (hB : B.PosDef) (hAB : A ≤ B) :
     cfc (fun t => t / f t) A ≤ cfc (fun t => t / f t) B := by
+  have hf0 : 0 ≤ f 0 := by
+    have ht := ((hf.continuousWithinAt (show (0 : ℝ) ∈ Set.Ici 0 by simp)).mono
+      Set.Ioi_subset_Ici_self).tendsto
+    exact ge_of_tendsto ht (Filter.mem_of_superset self_mem_nhdsWithin
+      (fun t ht => (hfpos t ht).le))
   have hN := normalized_antitone n f hf hf0 hmono A B hA hB hAB
   have hp (X : Matrix (Fin n) (Fin n) ℂ) (hX : X.PosDef) :
       IsStrictlyPositive (cfc (fun t => f t / t) X) := by

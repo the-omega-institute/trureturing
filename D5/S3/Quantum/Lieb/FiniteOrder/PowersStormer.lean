@@ -57,7 +57,7 @@ private theorem quotient_product {n : ℕ} (f : ℝ → ℝ)
 It includes zero dimension, singular noncommuting matrices and `f(0) = 0`.
 No continuity of `t / f(t)` at zero is required. -/
 theorem generalized_powers_stormer (n : ℕ) (f : ℝ → ℝ)
-    (hf : ContinuousOn f (Set.Ici 0)) (hf0 : 0 ≤ f 0)
+    (hf : ContinuousOn f (Set.Ici 0))
     (hfpos : ∀ t : ℝ, 0 < t → 0 < f t)
     (hmono : ∀ (X Y : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ),
       X.PosSemidef → Y.PosSemidef → X ≤ Y → cfc f X ≤ cfc f Y)
@@ -65,6 +65,11 @@ theorem generalized_powers_stormer (n : ℕ) (f : ℝ → ℝ)
     A.trace.re + B.trace.re - traceNorm (A - B) ≤
       2 * (CFC.sqrt (cfc f A) * cfc (fun t => t / f t) B *
         CFC.sqrt (cfc f A)).trace.re := by
+  have hf0 : 0 ≤ f 0 := by
+    have ht := ((hf.continuousWithinAt (show (0 : ℝ) ∈ Set.Ici 0 by simp)).mono
+      Set.Ioi_subset_Ici_self).tendsto
+    exact ge_of_tendsto ht (Filter.mem_of_superset self_mem_nhdsWithin
+      (fun t ht => (hfpos t ht).le))
   let P := posPart (A - B)
   let N := negPart (A - B)
   let C := B + P
@@ -107,8 +112,8 @@ theorem generalized_powers_stormer (n : ℕ) (f : ℝ → ℝ)
     (cfc (fun t => t / f t) C) hfa hgb
     (matrix_monotone_restrict n f hmono A C hA hC hAC)
     (matrix_monotone_restrict n f hmono B C hB hC hBC)
-    (ratio_monotone_posSemidef n f hf hf0 hfpos hmono A C hA hC hAC)
-    (ratio_monotone_posSemidef n f hf hf0 hfpos hmono B C hB hC hBC)
+    (ratio_monotone_posSemidef n f hf hfpos hmono A C hA hC hAC)
+    (ratio_monotone_posSemidef n f hf hfpos hmono B C hB hC hBC)
     (omegaEq_of_eq (congrArg (fun X : Matrix (Fin n) (Fin n) ℂ => X.trace.re)
       (quotient_product f hfpos A hA)))
     (omegaEq_of_eq (congrArg (fun X : Matrix (Fin n) (Fin n) ℂ => X.trace.re)

@@ -86,8 +86,6 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                             + "type gives the original trace. Only the index type is "
                             + "assumed finite; no decidable equality is required."))),
                     DescribeRole.Theorem),
-                Item("traceNorm", "Actual trace norm", NormForAll(Eqn(TN(a),
-                    Call("re", Call("trace", Call("sqrt", Mul(Adjoint(a), a)))))), true),
                 Item("traceNorm_neg", "Negation invariance", NormForAll(Eqn(
                     TN(Sub(Num(0), a)), TN(a)))),
                 Item("traceNorm_nonneg", "Nonnegative trace norm", NormForAll(Le(Num(0), TN(a)))),
@@ -124,11 +122,6 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                                 Implies(Eqn(Mul(a, b), Num(0)),
                                     Eqn(TN(Sub(a, b)), Add(Call("re", Call("trace", a)),
                                         Call("re", Call("trace", b))))))))))),
-                Item("trace_norm_jordan_mass", "Hermitian Jordan mass", All(
-                    [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
-                    Implies(QCall("Matrix", "IsHermitian", a), Eqn(TN(a),
-                        Add(Call("re", Call("trace", Call("posPart", a))),
-                            Call("re", Call("trace", Call("negPart", a)))))))),
                 Item("traceDistance_contract", "Every CPTP channel contracts trace distance", All(
                     [Bound("n", F.Id("FiniteType")), Bound("C", Call("QuantumChannel", n, n)),
                         Bound("rho", state), Bound("sigma", state)],

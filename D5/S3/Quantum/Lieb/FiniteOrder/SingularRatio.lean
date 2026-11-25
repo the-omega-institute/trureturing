@@ -97,7 +97,7 @@ private theorem ratio_regularized_monotone (n : ℕ) (f : ℝ → ℝ)
   apply le_of_tendsto_of_tendsto (shift_cfc_tendsto _ hg A hA)
     (shift_cfc_tendsto _ hg B hB)
   filter_upwards [self_mem_nhdsWithin] with δ hδ
-  exact ratio_monotone_posDef n (fun t => f t + ε) hfε (hfεpos 0 le_rfl).le
+  exact ratio_monotone_posDef n (fun t => f t + ε) hfε
     (fun t ht => hfεpos t ht.le) hmε (A + δ • 1) (B + δ • 1)
     (hshift A hA δ hδ) (hshift B hB δ hδ) (add_le_add hAB le_rfl)
 
@@ -106,13 +106,18 @@ matrix monotone on all positive semidefinite `n` by `n` matrices, including
 singular inputs and functions vanishing at zero. Continuity of the quotient
 at zero is not a hypothesis. -/
 theorem ratio_monotone_posSemidef (n : ℕ) (f : ℝ → ℝ)
-    (hf : ContinuousOn f (Set.Ici 0)) (hf0 : 0 ≤ f 0)
+    (hf : ContinuousOn f (Set.Ici 0))
     (hfpos : ∀ t : ℝ, 0 < t → 0 < f t)
     (hmono : ∀ (A B : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ),
       A.PosSemidef → B.PosSemidef → A ≤ B → cfc f A ≤ cfc f B)
     (A B : Matrix (Fin n) (Fin n) ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
     (hAB : A ≤ B) :
     cfc (fun t => t / f t) A ≤ cfc (fun t => t / f t) B := by
+  have hf0 : 0 ≤ f 0 := by
+    have ht := ((hf.continuousWithinAt (show (0 : ℝ) ∈ Set.Ici 0 by simp)).mono
+      Set.Ioi_subset_Ici_self).tendsto
+    exact ge_of_tendsto ht (Filter.mem_of_superset self_mem_nhdsWithin
+      (fun t ht => (hfpos t ht).le))
   have ht (X : Matrix (Fin n) (Fin n) ℂ) (hX : X.PosSemidef) :
       Tendsto (fun ε : ℝ => cfc (fun t => t / (f t + ε)) X) (𝓝[>] 0)
         (𝓝 (cfc (fun t => t / f t) X)) := by

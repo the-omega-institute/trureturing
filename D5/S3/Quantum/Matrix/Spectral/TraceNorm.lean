@@ -5,6 +5,12 @@
    anchors: []
    utility: none
    digest: The canonical unnormalized finite matrix trace norm and its Hermitian Jordan mass. -/
+/-
+Copyright (c) 2025 Alex Meiburg. All rights reserved.
+Authors: Alex Meiburg.
+Released under Apache 2.0 license as described in the file LICENSE.
+SPDX-License-Identifier: Apache-2.0
+-/
 module
 
 public import Mathlib.Analysis.Matrix.Order

@@ -36,8 +36,9 @@ for f positive on the open half-line, and explicitly defines g(0)=0.
 Its proof uses the single common upper bound B+(A-B)^+=A+(A-B)^-.
 No novelty is claimed for this inequality or this common-roof argument.
 
-The Lean sources retain continuity of f on the closed half-line and
-nonnegativity of f(0), and allow f(0)=0. The endpoint proof first adds a
+The Lean sources retain continuity of f on the closed half-line.
+Positivity on the open half-line implies nonnegativity of f(0) by a
+right-hand limit, and f(0)=0 is allowed. The endpoint proof first adds a
 positive constant to f and uses a positive scalar matrix shift. It then
 passes to the original quotient by pointwise convergence on the fixed
 finite spectra. This argument does not assume continuity of the quotient
