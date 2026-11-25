@@ -121,7 +121,7 @@ abbrev arena : Arena where
           ∀ i, 0 < max 0 (w i) ↔ i ∈ frontSites (q n) n ∪ rearSites (q n) k
 
 private def ideal (n : ℕ) : ℝ := (Real.pi/Real.sqrt 5)*(n:ℝ)^2*Real.sqrt (n:ℝ)
-private def cycles (n : ℕ) : ℕ := if n=0 then 2 else 2*Nat.ceil (ideal n)
+def cycles (n : ℕ) : ℕ := if n=0 then 2 else 2*Nat.ceil (ideal n)
 private def ratio (n : ℕ) : ℝ := (Nat.ceil (ideal n):ℝ)/ideal n
 
 private theorem ideal_pos {n : ℕ} (hn : 0 < n) : 0 < ideal n := by
@@ -129,7 +129,7 @@ private theorem ideal_pos {n : ℕ} (hn : 0 < n) : 0 < ideal n := by
   exact mul_pos (mul_pos (div_pos Real.pi_pos (Real.sqrt_pos.mpr (by norm_num)))
     (pow_pos (by exact_mod_cast hn) _)) (Real.sqrt_pos.mpr (by exact_mod_cast hn))
 
-private theorem cycles_nonzero (n : ℕ) : cycles n≠0 := by
+theorem cycles_nonzero (n : ℕ) : cycles n≠0 := by
   by_cases hn : n=0
   · simp [cycles,hn]
   · have hc := Nat.ceil_pos.mpr (ideal_pos (Nat.pos_of_ne_zero hn))
@@ -195,7 +195,7 @@ private theorem scale_eq {n : ℕ} (hn : 0 < n) :
   rw [hy2]
   <;> ring
 
-private theorem cycles_scale :
+theorem cycles_scale :
     Tendsto (fun n : ℕ => (n:ℝ)^5*(mesh (cycles n))^2) atTop (𝓝 5) := by
   have ht := (tendsto_const_nhds (x:=(5:ℝ))).div (ratio_limit.pow 2) (by norm_num)
   apply (show Tendsto (fun n : ℕ => 5/(ratio n)^2) atTop (𝓝 5) by
@@ -283,6 +283,90 @@ def registration :
   options := #[]
 
 end Support
+
+
+namespace QuadraticRemainders
+
+abbrev signature := CyclicGrowingEdgeLimits.Coefficients.signature
+abbrev actual := CyclicGrowingEdgeLimits.Coefficients.actual
+abbrev rejected := CyclicGrowingEdgeLimits.Coefficients.rejected
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {h : ℕ → ℝ} {K : ℝ},
+    Tendsto (fun n : ℕ => (n:ℝ)^5*(h n)^2) atTop (𝓝 K) →
+    ∀ S : Finset ℝ, S.Nonempty → ∀ r : ℝ,
+    let readout := R.readout () ()
+    Tendsto (fun n : ℕ => (n:ℝ)^2*(target n (h n) 2 -
+       ((∑ s∈S,s^2)*readout ((S,n),h n) 1+(S.card:ℝ)*readout ((S,n),h n) 2)))
+      atTop (𝓝 0) ∧
+    Tendsto (fun n : ℕ => (n:ℝ)^2*((n:ℝ)^3*rearValue S n (h n) r -
+       (r^2*readout ((S,n),h n) 1+readout ((S,n),h n) 2)))
+      atTop (𝓝 0)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hs : Tendsto (fun n : ℕ => (n:ℝ)^5*(0:ℝ)^2) atTop (𝓝 0) := by simp
+  have ht := (h hs {0} (by simp) 1).2
+  have hz : Tendsto (fun n : ℕ => (n:ℝ)^2*((n:ℝ)^3*rearValue {0} n 0 1))
+      atTop (𝓝 0) := by
+    change Tendsto (fun n : ℕ => (n:ℝ)^2*((n:ℝ)^3*rearValue {0} n 0 1 -
+      (1^2*(0:Fin 3 → ℝ) 1+(0:Fin 3 → ℝ) 2))) atTop (𝓝 0) at ht
+    simpa only [Pi.zero_apply,mul_zero,add_zero,sub_zero] using ht
+  have hi : Tendsto (fun n : ℕ => (n:ℝ)⁻¹) atTop (𝓝 0) :=
+    tendsto_inv_atTop_zero.comp tendsto_natCast_atTop_atTop
+  have hzero : Tendsto (fun n : ℕ => (n:ℝ)^3*rearValue {0} n 0 1) atTop (𝓝 0) := by
+    apply (show Tendsto (fun n : ℕ => ((n:ℝ)^2*((n:ℝ)^3*rearValue {0} n 0 1))*(n:ℝ)⁻¹^2)
+      atTop (𝓝 0) by simpa using hz.mul (hi.pow 2)).congr'
+    filter_upwards [eventually_ge_atTop (1:ℕ)] with n hn
+    have hn0 : (n:ℝ)≠0 := by exact_mod_cast (show 0<n from hn).ne'
+    field_simp [hn0]
+  have hneg : Tendsto (fun n : ℕ => (n:ℝ)^3*rearValue {0} n 0 1) atTop (𝓝 (-3/4)) := by
+    convert scaled_rear_value hs {0} (by simp) 1 using 1 <;> norm_num [limitCoefficients]
+  have contra := tendsto_nhds_unique hzero hneg
+  norm_num at contra
+
+def evidence : Registration arena (type_of% @second_order_remainders) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@second_order_remainders, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := CyclicGrowingEdgeLimits.Coefficients.evidence.dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@second_order_remainders) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicGrowingRearFirstOrder.QuadraticRemainders.unit
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicGrowingRearFirstOrder.QuadraticRemainders.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Asymptotics.CyclicGrowingRearFirstOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end QuadraticRemainders
 
 end
 

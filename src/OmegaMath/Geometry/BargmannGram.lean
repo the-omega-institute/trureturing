@@ -1,6 +1,7 @@
 module
 prelude
 public import OmegaMath.Geometry.BargmannGram.Determinant
+public import OmegaMath.Geometry.BargmannGram.PureTetrahedron
 public import OmegaMath.Geometry.BargmannGram.Scaling
 import OmegaMath.Geometry.BargmannGram.Fractions
 

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:7dc372a8e3537adc9b19e80906fe86f8092b6ee32b28100bd2355f3c0b7bc6fb","declarations":[{"declaration_name_key":"ns(n0,25:separated_limsup_isMeagre)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib"]}]}
