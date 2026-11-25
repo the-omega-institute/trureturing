@@ -19,11 +19,11 @@ noncomputable section
 @[expose] public section
 namespace Omega.PersistentHodge
 
-structure Space (F A : Type) where
+structure Space (F : Type _) (A : Type _) where
   group : AddCommGroup A
   smul : F → A → A
 
-def SpaceLaws {F A : Type} (V : Space F A) : Prop :=
+def SpaceLaws {F : Type _} {A : Type _} (V : Space F A) : Prop :=
   ∀ result : Prop,
     ((V.group.Laws) →
      (∀ a b c d, Eq (V.group.sub (V.group.add a b) (V.group.add c d))
@@ -31,31 +31,31 @@ def SpaceLaws {F A : Type} (V : Space F A) : Prop :=
      (∀ t a b, Eq (V.smul t (V.group.sub a b)) (V.group.sub (V.smul t a) (V.smul t b))) → result) → result
 
 namespace SpaceLaws
-theorem intro {F A : Type} (V : Space F A)
+theorem intro {F : Type _} {A : Type _} (V : Space F A)
     (group : V.group.Laws)
     (sub_add : ∀ a b c d, Eq (V.group.sub (V.group.add a b) (V.group.add c d))
     (V.group.add (V.group.sub a c) (V.group.sub b d)))
     (smul_sub : ∀ t a b, Eq (V.smul t (V.group.sub a b)) (V.group.sub (V.smul t a) (V.smul t b))) : SpaceLaws V :=
   fun _ use => use group sub_add smul_sub
 
-theorem group {F A : Type} {V : Space F A} (law : SpaceLaws V) :
+theorem group {F : Type _} {A : Type _} {V : Space F A} (law : SpaceLaws V) :
     V.group.Laws :=
   law _ (fun h0 _ _ => h0)
 
-theorem sub_add {F A : Type} {V : Space F A} (law : SpaceLaws V) :
+theorem sub_add {F : Type _} {A : Type _} {V : Space F A} (law : SpaceLaws V) :
     ∀ a b c d, Eq (V.group.sub (V.group.add a b) (V.group.add c d))
     (V.group.add (V.group.sub a c) (V.group.sub b d)) :=
   law _ (fun _ h1 _ => h1)
 
-theorem smul_sub {F A : Type} {V : Space F A} (law : SpaceLaws V) :
+theorem smul_sub {F : Type _} {A : Type _} {V : Space F A} (law : SpaceLaws V) :
     ∀ t a b, Eq (V.smul t (V.group.sub a b)) (V.group.sub (V.smul t a) (V.smul t b)) :=
   law _ (fun _ _ h2 => h2)
 end SpaceLaws
 
-structure Linear {F A B : Type} (V : Space F A) (W : Space F B) where
+structure Linear {F : Type _} {A : Type _} {B : Type _} (V : Space F A) (W : Space F B) where
   apply : A → B
 
-def LinearLaws {F A B : Type} {V : Space F A} {W : Space F B}
+def LinearLaws {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     (f : Linear V W) : Prop :=
   ∀ result : Prop,
     ((Eq (f.apply V.group.zero) W.group.zero) →
@@ -64,7 +64,7 @@ def LinearLaws {F A B : Type} {V : Space F A} {W : Space F B}
      (∀ t x, Eq (f.apply (V.smul t x)) (W.smul t (f.apply x))) → result) → result
 
 namespace LinearLaws
-theorem intro {F A B : Type} {V : Space F A} {W : Space F B}
+theorem intro {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     (f : Linear V W)
     (zero : Eq (f.apply V.group.zero) W.group.zero)
     (add : ∀ x y, Eq (f.apply (V.group.add x y)) (W.group.add (f.apply x) (f.apply y)))
@@ -72,28 +72,28 @@ theorem intro {F A B : Type} {V : Space F A} {W : Space F B}
     (smul : ∀ t x, Eq (f.apply (V.smul t x)) (W.smul t (f.apply x))) : LinearLaws f :=
   fun _ use => use zero add sub smul
 
-theorem zero {F A B : Type} {V : Space F A} {W : Space F B}
+theorem zero {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     {f : Linear V W} (law : LinearLaws f) :
     Eq (f.apply V.group.zero) W.group.zero :=
   law _ (fun h0 _ _ _ => h0)
 
-theorem add {F A B : Type} {V : Space F A} {W : Space F B}
+theorem add {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     {f : Linear V W} (law : LinearLaws f) :
     ∀ x y, Eq (f.apply (V.group.add x y)) (W.group.add (f.apply x) (f.apply y)) :=
   law _ (fun _ h1 _ _ => h1)
 
-theorem sub {F A B : Type} {V : Space F A} {W : Space F B}
+theorem sub {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     {f : Linear V W} (law : LinearLaws f) :
     ∀ x y, Eq (f.apply (V.group.sub x y)) (W.group.sub (f.apply x) (f.apply y)) :=
   law _ (fun _ _ h2 _ => h2)
 
-theorem smul {F A B : Type} {V : Space F A} {W : Space F B}
+theorem smul {F : Type _} {A : Type _} {B : Type _} {V : Space F A} {W : Space F B}
     {f : Linear V W} (law : LinearLaws f) :
     ∀ t x, Eq (f.apply (V.smul t x)) (W.smul t (f.apply x)) :=
   law _ (fun _ _ _ h3 => h3)
 end LinearLaws
 
-structure Window (F B C X Y Z : Type) where
+structure Window (F : Type _) (B : Type _) (C : Type _) (X : Type _) (Y : Type _) (Z : Type _) where
   scalar : AddCommGroup F
   source : Space F B
   lower : Space F C
@@ -106,7 +106,7 @@ structure Window (F B C X Y Z : Type) where
   i : Linear source target
   j : Linear lower targetLower
 
-variable {F B C X Y Z : Type}
+variable {F : Type _} {B : Type _} {C : Type _} {X : Type _} {Y : Type _} {Z : Type _}
 
 def WindowLaws (W : Window F B C X Y Z) (nonnegative : F → Prop) : Prop :=
   ∀ result : Prop,
@@ -159,18 +159,6 @@ theorem lower {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowL
     SpaceLaws W.lower :=
   law _ (fun _ _ h2 _ _ _ _ _ _ _ _ _ _ _ _ => h2)
 
-theorem incoming {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
-    SpaceLaws W.incoming :=
-  law _ (fun _ _ _ h3 _ _ _ _ _ _ _ _ _ _ _ => h3)
-
-theorem target {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
-    SpaceLaws W.target :=
-  law _ (fun _ _ _ _ h4 _ _ _ _ _ _ _ _ _ _ => h4)
-
-theorem targetLower {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
-    SpaceLaws W.targetLower :=
-  law _ (fun _ _ _ _ _ h5 _ _ _ _ _ _ _ _ _ => h5)
-
 theorem d {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
     LinearLaws W.d :=
   law _ (fun _ _ _ _ _ _ h6 _ _ _ _ _ _ _ _ => h6)
@@ -178,10 +166,6 @@ theorem d {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws 
 theorem b {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
     LinearLaws W.b :=
   law _ (fun _ _ _ _ _ _ _ h7 _ _ _ _ _ _ _ => h7)
-
-theorem e {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
-    LinearLaws W.e :=
-  law _ (fun _ _ _ _ _ _ _ _ h8 _ _ _ _ _ _ => h8)
 
 theorem i {W : Window F B C X Y Z} {nonnegative : F → Prop} (law : WindowLaws W nonnegative) :
     LinearLaws W.i :=
@@ -270,10 +254,10 @@ theorem null_sub (x y : B) (hx : W.Null x) (hy : W.Null y) :
 
 end Window
 
-structure Form {F A : Type} (S : AddCommGroup F) (V : Space F A) where
+structure Form {F : Type _} {A : Type _} (S : AddCommGroup F) (V : Space F A) where
   inner : A → A → F
 
-def FormLaws {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+def FormLaws {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     (form : Form W.scalar V) (nonnegative : F → Prop) : Prop :=
   ∀ result : Prop,
     ((∀ x y z, Eq (form.inner (V.group.add x y) z)
@@ -286,7 +270,7 @@ def FormLaws {W : Window F B C X Y Z} {A : Type} {V : Space F A}
      (∀ x, Eq (form.inner x x) W.scalar.zero → Eq x V.group.zero) → result) → result
 
 namespace FormLaws
-theorem intro {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem intro {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     (form : Form W.scalar V) (nonnegative : F → Prop)
     (add_left : ∀ x y z, Eq (form.inner (V.group.add x y) z)
     (W.scalar.add (form.inner x z) (form.inner y z)))
@@ -298,34 +282,34 @@ theorem intro {W : Window F B C X Y Z} {A : Type} {V : Space F A}
     (definite : ∀ x, Eq (form.inner x x) W.scalar.zero → Eq x V.group.zero) : FormLaws form nonnegative :=
   fun _ use => use add_left sub_right zero_left zero_right positive definite
 
-theorem add_left {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem add_left {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x y z, Eq (form.inner (V.group.add x y) z)
     (W.scalar.add (form.inner x z) (form.inner y z)) :=
   law _ (fun h0 _ _ _ _ _ => h0)
 
-theorem sub_right {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem sub_right {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x y z, Eq (form.inner x (V.group.sub y z))
     (W.scalar.sub (form.inner x y) (form.inner x z)) :=
   law _ (fun _ h1 _ _ _ _ => h1)
 
-theorem zero_left {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem zero_left {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x, Eq (form.inner V.group.zero x) W.scalar.zero :=
   law _ (fun _ _ h2 _ _ _ => h2)
 
-theorem zero_right {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem zero_right {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x, Eq (form.inner x V.group.zero) W.scalar.zero :=
   law _ (fun _ _ _ h3 _ _ => h3)
 
-theorem nonnegative {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem nonnegative {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x, nonnegative (form.inner x x) :=
   law _ (fun _ _ _ _ h4 _ => h4)
 
-theorem definite {W : Window F B C X Y Z} {A : Type} {V : Space F A}
+theorem definite {W : Window F B C X Y Z} {A : Type _} {V : Space F A}
     {form : Form W.scalar V} {nonnegative : F → Prop} (law : FormLaws form nonnegative) :
     ∀ x, Eq (form.inner x x) W.scalar.zero → Eq x V.group.zero :=
   law _ (fun _ _ _ _ _ h5 => h5)

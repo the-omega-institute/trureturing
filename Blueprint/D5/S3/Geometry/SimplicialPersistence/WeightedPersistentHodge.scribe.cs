@@ -52,9 +52,21 @@ internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinitio
             Node("short-equivalence", "harmonicEquivImage", "Canonical harmonic representatives",
                 "In addition assume that φ's component C→Z is injective. Restricted incoming boundaries "
                 + "then lie in ker(d), and their image in this cycle space is exactly ker(imageClass). "
-                + "Orthogonal decomposition of cycles modulo that kernel constructs a real linear "
-                + "equivalence from ker(Delta) to range(ShortComplex.homologyMap φ). The quotient and "
-                + "orthogonal-complement equivalences are the existing finite-dimensional Mathlib results.",
+                + "OmegaMath.Topology.PersistentHodge owns the full pullback witness theorem, energy "
+                + "criterion, harmonic classification and uniqueness, and the linear construction of a "
+                + "harmonic representative of every cycle modulo filling boundaries. The mixed model "
+                + "interprets its carriers and operations in these unchanged real chain spaces. "
+                + "fillingPairEquiv is a linear equivalence from the entire inverse-image domain to "
+                + "coherent pairs; fillingPair_inner preserves its inherited first-component form. "
+                + "strictPullbackEquiv identifies those pairs with the strict representation, while "
+                + "strictAdjoints_laws identifies both adjoints through their actual inner-product "
+                + "identities. Mathlib's starProjection supplies an ordinary orthogonal splitting of "
+                + "the incoming range. The strict representative theorem proves surjectivity and its "
+                + "uniqueness theorem proves injectivity of the canonical harmonic-to-image map. "
+                + "The homology interpretation reuses moduleCatHomologyIso and Quotient.mk_eq_zero; "
+                + "persistent exactness, energy and harmonic representatives are not model premises. "
+                + "Only the single-window core has a strict zero-axiom scope; the real metric, native "
+                + "homology and actual simplicial realization remain mixed consumers.",
                 DescribeRole.Definition),
             Node("equivalence-formula", "harmonicEquivImage_apply", "The included representative",
                 "For all the same data, both injectivity proofs, and every x in ker(Delta), the value "
