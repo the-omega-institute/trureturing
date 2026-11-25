@@ -46,11 +46,19 @@ class ScopeTests(unittest.TestCase):
     def test_last_port_import_removal_keeps_protected_consumer(self):
         plan = scope.plan(self.graph, self.official, {"D5.Ordinary"}, set(), [], [], {"D5.Ordinary"})
         self.assertIn("D5.Ordinary", plan["consumers"])
-        with self.assertRaisesRegex(ValueError, "missing protected retirement consumers"):
+        with self.assertRaisesRegex(ValueError, "missing protected publication consumers"):
             scope.plan(self.graph, self.official, set(), set(), [], [], {"D5.Disappeared"})
 
+    def test_unimported_project_publication_is_a_dual_and_frozen_check_root(self):
+        graph = dict(self.graph, **{'OmegaMath.Orphan': set(), 'D5.UsesProof': {'OmegaMath.Orphan'}})
+        plan = scope.plan(graph, self.official, {'OmegaMath.Orphan'}, set(), [], [])
+        self.assertEqual(plan['library'], ['OmegaMath.Orphan'])
+        self.assertEqual(plan['consumers'], ['D5.UsesProof', 'OmegaMath.Orphan'])
+        self.assertEqual(plan['basis'], [])
+        self.assertTrue(scope.report_file(plan))
+
     def test_ordinary_importer_runs_when_either_input_is_affected(self):
-        graph = dict(self.graph, OmegaMathlib=set())
+        graph = dict(self.graph, OmegaMathlib=set(), OmegaMath=set())
         for name in scope.IMPORTER_INPUTS | {"D5.Direct"}:
             with self.subTest(name=name):
                 plan = scope.plan(graph, dict(self.official, OmegaMathlib=set()), {name}, set(), [], [])

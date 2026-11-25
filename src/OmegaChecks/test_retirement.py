@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from retirement import ROOT, affected_modules, check_publication_layout, compare_standard, lean_path, reconcile, standard_scope, transferred_freezes
+from retirement import ROOT, affected_modules, ownership_scope, compare_standard, lean_path, reconcile, standard_scope, transferred_freezes
 
 
 class RetirementTest(unittest.TestCase):
@@ -67,21 +67,55 @@ class RetirementTest(unittest.TestCase):
             self.assertEqual(rows['stable']['candidateModule'], 'New')
             self.assertIn('compiled type changed', rows['selected']['obligation'])
 
-    def test_retired_name_cannot_reappear_as_a_target_or_unimported_file(self):
-        with tempfile.TemporaryDirectory() as d:
-            project = Path(d)
-            config = project / 'lakefile.toml'
-            config.write_text('name = "project"\nsrcDir = "pkg"\n[[lean_lib]]\nname = "Other"\nsrcDir = "nested"\n')
-            for base in ['src', 'strict', 'pkg/nested']:
-                leaf = project / base / 'OmegaMath' / 'Unused.lean'
-                leaf.parent.mkdir(parents=True)
-                leaf.write_text('import Init\n')
-                with self.assertRaisesRegex(ValueError, 'retired OmegaMath source'):
-                    check_publication_layout(project)
-                leaf.unlink()
-            config.write_text('[[lean_lib]]\nname = "Other"\nroots = ["OmegaMath"]\n')
-            with self.assertRaisesRegex(ValueError, 'retired OmegaMath Lake target'):
-                check_publication_layout(project)
+    def test_proof_publications_and_independent_incremental_comparison(self):
+        graph = {'OmegaMath.A': set(), 'OmegaMath.B': set(), 'D5.A': {'OmegaMath.A'}}
+        inventory = dict(providers=['OmegaMath.A', 'OmegaMath.B'], consumers=['D5.A'], imports=graph, frozen={})
+        self.assertEqual(ownership_scope(inventory, {'README.md'}, False)['providers'], [])
+        selected = ownership_scope(inventory, {'src/OmegaMath/A.lean'}, False)
+        self.assertEqual((selected['providers'], selected['consumers']), (['OmegaMath.A'], ['D5.A']))
+        self.assertEqual(ownership_scope(inventory, set(), True)['providers'], ['OmegaMath.A', 'OmegaMath.B'])
+
+        original = dict(providers=['OmegaMath.A'], consumers=[], frozen={})
+        measurement = [dict(module='OmegaMath.A', declarations=[])]
+        rows = [dict(module='OmegaMath.A', nameKey='proof', candidateModule='OmegaMath.A', candidateTheorem=True,
+                     comparison='checked compiled declaration'),
+                dict(module='OmegaMath.A', nameKey='object', candidateModule='OmegaMath.A', candidateTheorem=False,
+                     comparison='checked compiled declaration')]
+        result = reconcile(original, measurement, rows)
+        self.assertIn('comparison', result[0])
+        self.assertIn('unadmitted owner', result[1]['obligation'])
+
+    def test_publication_alias_resolves_to_the_compiled_upstream_theorem(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            tmp = Path(temporary)
+            for version, proof in [('before', 'theorem add_zero (n : Nat) : n + 0 = n := Nat.add_zero n'),
+                                   ('after', 'export Nat (add_zero)')]:
+                root = tmp / version
+                source = root / 'OmegaMath/Proof.lean'
+                source.parent.mkdir(parents=True)
+                source.write_text('namespace PublicFixture\n' + proof + '\nend PublicFixture\n')
+                subprocess.run(['lean', '-R', root, '-o', source.with_suffix('.olean'), source],
+                               cwd=ROOT, check=True)
+            request, output = tmp / 'request.json', tmp / 'rows.json'
+            request.write_text(json.dumps(dict(protectedPath=str(tmp / 'before'), candidatePath=str(tmp / 'after'),
+                                               protectedModules=['OmegaMath.Proof'], candidateModules=['OmegaMath.Proof'])))
+            subprocess.run(['lake', 'env', 'lean', '--run', 'src/OmegaChecks/RetiredDeclarations.lean',
+                            request, output], cwd=ROOT, check=True)
+            rows = json.loads(output.read_text())
+            row = next(r for r in rows if r['name'] == 'PublicFixture.add_zero')
+            self.assertIn('comparison', row)
+            self.assertTrue(row['standardAlias'])
+            self.assertTrue(row['candidateModule'].startswith('Init.'))
+
+    def test_generated_registration_is_independently_measured_on_both_sides(self):
+        name = 'Reg.Fixture'
+        record = dict(nameKey='unit', kind='def', statementTypeAddress='protected', includeInStatement=True)
+        old = dict(module=name, declarations=[record])
+        protected = dict(providers=[], consumers=[name], frozen={})
+        result = reconcile(protected, [old], [], [old])
+        self.assertEqual(result[0]['comparison'], 'checked generated inspector declaration')
+        candidate = dict(module=name, declarations=[dict(record, statementTypeAddress='changed')])
+        self.assertIn('obligation', reconcile(protected, [old], [], [candidate])[0])
 
     def test_compiler_only_rows_and_wrong_destination_stay_visible(self):
         protected = dict(providers=['OmegaMath.P'], consumers=[], frozen={})

@@ -1,6 +1,7 @@
 import OmegaChecks.Interface
+import OmegaChecks.ObjectOccurrences
 
-/-! Compare old and new official compiled declarations across changes of defining module. -/
+/-! Compare protected and candidate mathematical declarations across changes of defining module. -/
 
 open Lean
 
@@ -19,6 +20,24 @@ private def load (path : String) (modules : Array String) : IO Environment := do
 private def owner? (env : Environment) (name : Name) : Option Name := do
   let index ← env.getModuleIdxFor? name
   return env.header.moduleNames[index]!
+
+/-- Follow old public spellings retained as compiler aliases, including direct upstream
+reuse. The standard target must also be exported by a verified port or belong to Init. -/
+private def publicationAliases (env : Environment) : NameMap Name × NameSet := Id.run do
+  let mut names : NameMap Name := {}
+  let mut conflicts : NameSet := {}
+  let mut standard : NameSet := {}
+  for mod in env.header.modules, i in [:env.header.modules.size] do
+    let owner := mod.module.getRoot
+    if !([`OmegaMath, `OmegaMathlib, `OmegaInit, `D5].contains owner) then continue
+    for (alias, target) in aliasExtension.getModuleEntries env i do
+      if owner == `OmegaMathlib && alias.getRoot == `OmegaMathlib then
+        standard := standard.insert target
+      if let some earlier := names.find? alias then
+        if earlier != target then conflicts := conflicts.insert alias
+      names := names.insert alias target
+  for name in conflicts do names := names.erase name
+  return (names, standard)
 
 /-- Public constants identify the destination of a moved module. Private constants
 include that module in their internal Lean names. -/
@@ -89,11 +108,20 @@ private def findBridges (old new : Environment) (modules : Array Name) (rename :
 /-- A positional check preserves upstream object identity even for definitionally equal
 local wrappers. The interface check separately checks binder visibility and inductive shape. -/
 private def compare (env : Environment) (rename : Name → Name) (old new : ConstantInfo)
-    (bridge : Option (Name × Name)) : IO Unit := do
+    (bridge : Option (Name × Name)) (standardAlias := false) : IO Unit := do
   let fromOld := fun (e : Expr) =>
     translate rename (e.instantiateLevelParams old.levelParams (new.levelParams.map Level.param))
+  if standardAlias then
+    discard <| OmegaChecks.Interface.compare env rename old new
+    return
   unless old.ctorIdx == new.ctorIdx do throw <| IO.userError "declaration kind changed"
-  unless fromOld old.type == new.type do throw <| IO.userError "compiled type changed"
+  unless fromOld old.type == new.type do
+    -- Numeric literals and macro metadata may differ across compilations. Keep every
+    -- mathematical object at its original position and require kernel conversion.
+    unless OmegaChecks.ObjectOrigins.occurrences (fromOld old.type) false ==
+        OmegaChecks.ObjectOrigins.occurrences new.type false &&
+        Kernel.isDefEqGuarded env {} (fromOld old.type) new.type do
+      throw <| IO.userError "compiled type changed"
   if bridge.isSome then return
   match old, new with
   | .defnInfo x, .defnInfo y =>
@@ -111,7 +139,10 @@ def main (args : List String) : IO Unit := do
   let new ← load input.candidatePath input.candidateModules
   let modules := input.protectedModules.map String.toName
   let moves ← ownerMoves old new modules
-  let lookup := translateName old moves
+  let (aliases, ports) := publicationAliases new
+  let lookup := fun n =>
+    let target := translateName old moves n
+    if new.contains target then target else (aliases.find? target).getD target
   let bridges ← findBridges old new modules lookup
   let rename := fun n => (bridges.find? n).map Prod.fst |>.getD (lookup n)
   let mut rows := #[]
@@ -124,10 +155,12 @@ def main (args : List String) : IO Unit := do
         ("name", toJson name.toString), ("candidateKey", toJson (canonicalName dst))]
       let row ← match new.find? dst, owner? new dst with
         | some after, some owner => do
-          let fields := ("candidateModule", toJson owner.toString) :: fields
+          let fields := ("candidateModule", toJson owner.toString) :: ("candidateTheorem", toJson after.isTheorem) :: fields
           try
             let bridge := bridges.find? name
-            compare new rename before after bridge
+            let standardAlias := dst != name && (owner.getRoot == `Init || owner.getRoot == `Mathlib && ports.contains dst)
+            compare new rename before after bridge standardAlias
+            let fields := ("standardAlias", toJson standardAlias) :: fields
             let fields := match bridge with
               | some (target, proof) =>
                 ("upstream", toJson target.toString) :: ("correspondence", toJson proof.toString) :: fields

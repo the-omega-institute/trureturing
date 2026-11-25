@@ -1,4 +1,4 @@
-"""Measure the protected OmegaMath retirement scope independently of the candidate."""
+"""Compare the protected OmegaMath publication with its compiled mathematical owners."""
 import argparse
 from collections import defaultdict, deque
 from functools import lru_cache
@@ -108,8 +108,8 @@ def _protected_inventory(commit, repository):
         path = f'Golden/Frozen/state/{names.get(name)}.json'
         if path in frozen_paths:
             frozen[name] = json.loads(git('show', f'{commit}:{path}'))
-    standard = reverse_closure(graph, {n for n in graph if root(n) in BASIS})
-    clients = sorted(n for n in standard if root(n) in {'D5', 'Reg', 'Trureturing'}
+    standard = reverse_closure(graph, {n for n in graph if root(n) in BASIS or root(n) == 'OmegaMath'})
+    clients = sorted(n for n in standard if root(n) in {'D5', 'Reg', 'Trureturing', 'OmegaMath'}
                      or n.startswith('OmegaChecks.Portable.'))
     selected = set(providers + consumers + clients)
     return dict(commit=commit, providers=providers, consumers=consumers, standardConsumers=clients, frozen=frozen,
@@ -118,14 +118,10 @@ def _protected_inventory(commit, repository):
 
 def protected_omega_consumers(base):
     inventory = protected_inventory(base)
-    return set(inventory['consumers']) | set(inventory['standardConsumers'])
+    return set(inventory['providers']) | set(inventory['consumers']) | set(inventory['standardConsumers'])
 
 
-def legacy_providers(base):
-    return set(protected_inventory(base)['providers'])
-
-
-def reconcile(protected, old_rows, comparisons):
+def reconcile(protected, old_rows, comparisons, generated=()):
     """Reconcile both compiled inventories and every protected frozen key."""
     old_names = set(protected['providers']) | set(protected['consumers'])
     if {row['module'] for row in old_rows} != old_names:
@@ -133,6 +129,7 @@ def reconcile(protected, old_rows, comparisons):
     checked = {(row['module'], row['nameKey']): row for row in comparisons}
     if len(checked) != len(comparisons):
         raise ValueError('duplicate compiled comparison row')
+    generated_rows = {row['module']: declaration_rows(row) for row in generated}
     results = []
     for module in old_rows:
         name = module['module']
@@ -145,7 +142,14 @@ def reconcile(protected, old_rows, comparisons):
         for key, old in original.items():
             row = checked.pop((name, key), None)
             if row is None:
-                row = dict(module=name, nameKey=key, obligation='missing compiled comparison')
+                candidate = generated_rows.get(name, {}).get(key)
+                if root(name) == 'Reg' and candidate is not None and all(
+                        candidate[k] == v for k, v in old.items() if k != 'libraries'):
+                    row = dict(module=name, nameKey=key, candidateKey=key, candidateModule=name,
+                               comparison='checked generated inspector declaration',
+                               protectedLibraries=old.get('libraries', []), candidateLibraries=candidate.get('libraries', []))
+                else:
+                    row = dict(module=name, nameKey=key, obligation='missing compiled comparison')
             results.append(dict(row, kind=old['kind'], protectedStatement=old['statementTypeAddress'],
                                 includeInStatement=old['includeInStatement']))
     # The Lean environment also contains compiler products outside the Inspector's frozen format.
@@ -156,7 +160,9 @@ def reconcile(protected, old_rows, comparisons):
     for row in results:
         if row['module'] in protected['providers'] and 'comparison' in row:
             owner = row['candidateModule']
-            if root(owner) not in {'D5', 'OmegaMathlib'}:
+            proof = root(owner) == 'OmegaMath' and row.get('candidateTheorem', False)
+            upstream = root(owner) in {'Init', 'Mathlib'} and row.get('standardAlias', False)
+            if root(owner) not in {'D5', 'OmegaMathlib', 'OmegaInit'} and not (proof or upstream):
                 row['obligation'] = f'legacy object moved to an unadmitted owner: {owner}'
                 del row['comparison']
     return results
@@ -190,9 +196,21 @@ def publication_candidates(base, original):
         if any((ROOT / prefix / path).is_file() for prefix in ['', 'src']):
             present.add(name)
     for path in paths:
-        if path.endswith('.lean') and path.startswith(('src/OmegaMathlib/', 'D5/', 'Reg/')) and (ROOT / path).is_file():
+        if path.endswith('.lean') and path.startswith(('src/OmegaMath/', 'src/OmegaMathlib/', 'src/OmegaInit/', 'D5/', 'Reg/')) and (ROOT / path).is_file():
             present.add(path.removeprefix('src/').removesuffix('.lean').replace('/', '.'))
     return sorted(present)
+
+
+def ownership_scope(inventory, changed_paths, first_check):
+    """An already governed proof library only needs comparison on its changed publication branches."""
+    from scope import module_path
+    providers = set(inventory['providers'])
+    changed = providers if first_check else providers & {module_path(p) for p in changed_paths}
+    affected = reverse_closure(inventory['imports'], changed)
+    owners = sorted(affected & providers)
+    clients = sorted(affected & set(inventory['consumers']))
+    return dict(inventory, providers=owners, consumers=clients,
+                frozen={n: state for n, state in inventory['frozen'].items() if n in clients})
 
 
 def standard_scope(inventory, changed_paths):
@@ -283,9 +301,8 @@ def verify(inventory, stage, temp, standard=None):
         new = publication_candidates(inventory['commit'], old)
     else:
         old, new = standard
-    # Publication and removal are separate from equality of statements across revisions.
     if standard is None:
-        inventory['retainedProviders'] = [n for n in new if root(n) == 'OmegaMath']
+        inventory['missingPublicationModules'] = sorted(set(inventory['providers']) - set(new))
     build(stage, old)
     build(ROOT, [*new, 'OmegaChecks.Interface', 'OmegaChecks.ObjectOrigins'])
     old_path = lean_path(stage, any(root(n) == 'Reg' for n in old))
@@ -304,13 +321,20 @@ def verify(inventory, stage, temp, standard=None):
                     'reportInspector', '+LeanInformationAudit.TemplateEnrollment'], cwd=ROOT, check=True)
     producer = ROOT / '.lake/build/lean-inspector/producer'
     inspector = producer / 'bin/reportInspector'
-    old_request = temp / 'protected-modules.json'
-    old_measurement = temp / 'protected-objects.json'
-    old_request.write_text(json.dumps(old))
-    subprocess.run([inspector, '--frozen-dependencies-v1', old_request, old_measurement],
-                   cwd=stage, env={**os.environ, 'LEAN_PATH': old_path + os.pathsep + str(producer / 'lib/lean')}, check=True)
-    measured = read_measurement(old_measurement, old)
-    inventory['declarations'] = reconcile(inventory, measured, comparisons)
+    def measure(names, path, directory, prefix):
+        request = temp / (prefix + '-modules.json')
+        destination = temp / (prefix + '-objects.json')
+        request.write_text(json.dumps(names))
+        subprocess.run([inspector, '--frozen-dependencies-v1', request, destination], cwd=directory,
+                       env={**os.environ, 'LEAN_PATH': path + os.pathsep + str(producer / 'lib/lean')}, check=True)
+        return read_measurement(destination, names)
+
+    measured = measure(old, old_path, stage, 'protected')
+    compiled_keys = {(r['module'], r['nameKey']) for r in comparisons}
+    generated_owners = [m['module'] for m in measured if root(m['module']) == 'Reg' and m['module'] in new
+                        and any((m['module'], k) not in compiled_keys for k in declaration_rows(m))]
+    generated = measure(generated_owners, new_path, ROOT, 'candidate') if generated_owners else []
+    inventory['declarations'] = reconcile(inventory, measured, comparisons, generated)
     transferred_freezes(inventory['declarations'], set(inventory['providers']), ROOT / 'Golden/Frozen/state',
                        inventory['frozen'])
     missing_files = set(inventory['frozen']) - set(new)
@@ -364,12 +388,20 @@ def main():
                 raise ValueError('changed paths must be NUL-terminated')
             paths.update(raw.decode().split('\0'))
         standard = standard_scope(inventory, paths)
-        if inventory['providers']:
-            covered = set(inventory['consumers'])
+        first_check = subprocess.run(['git', 'cat-file', '-e',
+                                     inventory['commit'] + ':src/OmegaChecks/RetiredDeclarations.lean'],
+                                    cwd=ROOT, capture_output=True).returncode != 0
+        selected = ownership_scope(inventory, paths, first_check)
+        if selected['providers']:
+            covered = set(selected['providers']) | set(selected['consumers'])
             standard = tuple([n for n in names if n not in covered] for names in standard)
-        if inventory['providers'] or standard[0]:
-            with tempfile.TemporaryDirectory(prefix='omega-migration-') as temporary:
-                verified_snapshot(inventory, Path(temporary), standard)
+        if selected['providers'] or standard[0]:
+            with tempfile.TemporaryDirectory(prefix='omega-publication-') as temporary:
+                verified_snapshot(selected, Path(temporary), standard)
+        inventory['comparedProviders'] = selected['providers']
+        inventory['comparedConsumers'] = selected['consumers']
+        inventory.update({k: selected[k] for k in ('declarations', 'missingPublicationModules', 'missingFrozenModules',
+                                                    'standardObjectMismatches') if k in selected})
     args.output.parent.mkdir(parents=True, exist_ok=True)
     atomic_json(args.output, inventory)
     print(f"{inventory['commit']}: {len(inventory['providers'])} provider modules, "
@@ -380,9 +412,9 @@ def main():
         print(f"{row['module']} {row.get('name', row['nameKey'])}: {row['obligation']}")
     if missing := inventory.get('missingFrozenModules'):
         print(f'missing frozen declarations or module files: {missing}')
-    if remaining := inventory.get('retainedProviders'):
-        print(f'legacy provider modules remain: {remaining}')
-    if pending or inventory.get('missingFrozenModules') or inventory.get('retainedProviders'):
+    if missing := inventory.get('missingPublicationModules'):
+        print(f'missing OmegaMath public import paths: {missing}')
+    if pending or inventory.get('missingFrozenModules') or inventory.get('missingPublicationModules'):
         raise SystemExit(1)
 
 

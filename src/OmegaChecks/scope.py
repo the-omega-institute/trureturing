@@ -6,7 +6,7 @@ from portable import BASIS, ROOT, closure, consumers, import_graph, root
 
 
 LIBRARIES = BASIS
-CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
+CHECK_ROOTS = LIBRARIES | {"OmegaChecks", "OmegaMath"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
 CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.RetiredDeclarations", "OmegaChecks.StandardUses",
@@ -18,7 +18,7 @@ SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/test_object_origins.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
-IMPORTER_INPUTS = {"OmegaMathlib", "OmegaChecks.Portable.Common"}
+IMPORTER_INPUTS = {"OmegaMath", "OmegaMathlib", "OmegaChecks.Portable.Common"}
 REQUIRED_MODULES = CHECK_INPUTS | IMPORTER_INPUTS | {FIBONACCI}
 REPORT_DIR = ".lake/build/omega-checks/"
 
@@ -47,7 +47,7 @@ def plan(graph, official_basis, changed, missing, shared, reg_inputs, protected_
     if unresolved := {name for name in missing if reverse[name] or name in REQUIRED_MODULES}:
         raise ValueError(f"missing changed Omega input still required by an import or check: {sorted(unresolved)}")
     if removed := set(protected_clients) - graph.keys():
-        raise ValueError(f"missing protected retirement consumers: {sorted(removed)}")
+        raise ValueError(f"missing protected publication consumers: {sorted(removed)}")
     strict_basis = {name for name in graph if root(name) in BASIS}
     if mismatch := strict_basis ^ official_basis.keys():
         raise ValueError(f"standard and strict module trees differ: {sorted(mismatch)}")
@@ -93,7 +93,7 @@ def discover(changed_file, base=None):
 
 
 def importer_affected(scope):
-    return not IMPORTER_INPUTS.isdisjoint(scope["library"])
+    return not IMPORTER_INPUTS.isdisjoint(scope["library"] + scope["consumers"])
 
 
 def cache_targets(scope):

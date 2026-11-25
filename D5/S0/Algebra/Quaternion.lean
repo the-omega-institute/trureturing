@@ -17,9 +17,8 @@ import all OmegaInit.Prelude
 public import D5.S0.Algebra.Quaternion.Polynomial
 
 /-!
-Omega original.
-
-Integer Hamilton quaternions with the positive definite squared norm.
+Integral Hamilton multiplication and the natural-valued squared norm on
+the quaternion algebra with parameters `(-1, 0, -1)`.
 -/
 
 noncomputable section
@@ -28,6 +27,7 @@ noncomputable section
 
 namespace Omega
 
+/-- Four observable integer coordinates of the Hamilton quaternion representation. -/
 structure Quaternion where
   w : Int
   x : Int

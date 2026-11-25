@@ -28,8 +28,17 @@ open D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint (four_ratio
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
+/-- Read and reconstruct the four integer coordinates in the Hamilton quaternion algebra. -/
+def integerQuaternionEquiv : Omega.Quaternion ≃
+    _root_.QuaternionAlgebra Omega.Int (.negSucc .zero) (.ofNat .zero) (.negSucc .zero) where
+  toFun q := ⟨q.w, q.x, q.y, q.z⟩
+  invFun q := ⟨q.re, q.imI, q.imJ, q.imK⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
 private noncomputable def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
-  ⟨toStdInt x.w, toStdInt x.x, toStdInt x.y, toStdInt x.z⟩
+  let q := integerQuaternionEquiv x
+  ⟨toStdInt q.re, toStdInt q.imI, toStdInt q.imJ, toStdInt q.imK⟩
 
 private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
     ∃ a : Omega.Quaternion, ∃ d : ℚ, x = d⁻¹ • readQuaternion a := by
@@ -42,7 +51,7 @@ private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
      fromInt (x.imJ.num * x.re.den * x.imI.den * x.imK.den),
      fromInt (x.imK.num * x.re.den * x.imI.den * x.imJ.den)⟩
   refine ⟨a, d, ?_⟩
-  ext <;> simp only [readQuaternion, Quaternion.re_smul, Quaternion.imI_smul,
+  ext <;> simp only [readQuaternion, integerQuaternionEquiv, Equiv.coe_fn_mk, Quaternion.re_smul, Quaternion.imI_smul,
     Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, a, to_fromInt, Int.cast_mul,
     Int.cast_natCast] <;> dsimp only [d, m]
   · conv_lhs => rw [← Rat.num_div_den x.re]
@@ -58,7 +67,7 @@ private theorem readQuaternion_dot (a b : Omega.Quaternion) :
     (toStdInt (a.dot b) : ℚ) = (star (readQuaternion a) * readQuaternion b).re := by
   simp only [Omega.Quaternion.dot, toStdInt_add, toStdInt_mul]
   push_cast
-  simp [readQuaternion]
+  simp [readQuaternion, integerQuaternionEquiv]
   ring
 
 private theorem readQuaternion_norm (a : Omega.Quaternion) :
