@@ -222,7 +222,7 @@ def Null (x : B) : Prop := Exists fun c => Eq (W.b.apply c) (W.i.apply x)
 theorem range_T (x : B) : Iff (W.Null x)
     (Exists fun u : Pullback W => And u.Coherent (Eq (W.T u) x)) :=
   Iff.intro
-    (fun h => h.elim fun c hc => Exists.intro (Pullback.pair c x) (And.intro hc Eq.refl))
+    (fun h => h.elim fun c hc => Exists.intro (Pullback.pair c x) (And.intro hc (Eq.refl _)))
     (fun h => h.elim fun u hu => Exists.intro u.filling
       (hu.left.trans (congrArg W.i.apply hu.right)))
 
@@ -235,7 +235,7 @@ theorem T_cycle (hj : ∀ x y, Eq (W.j.apply x) (W.j.apply y) → Eq x y)
 include law in
 theorem null_cycle (hj : ∀ x y, Eq (W.j.apply x) (W.j.apply y) → Eq x y)
     (x : B) (h : W.Null x) : W.Cycle x :=
-  ((W.range_T x).mp h).elim fun u hu => Eq.subst W.Cycle hu.right (W.T_cycle law hj u hu.left)
+  ((W.range_T x).mp h).elim fun u hu => Eq.subst (motive := W.Cycle) hu.right (W.T_cycle law hj u hu.left)
 
 include law in
 /-- A pullback vector is uniquely determined by its incoming filling. -/
@@ -526,7 +526,7 @@ theorem representative_smul (t : F) (x : B) :
 
 include law pl in
 theorem representative_same_class (x : B) : W.Null (W.source.group.sub x (P.representative x)) :=
-  Eq.subst W.Null
+  Eq.subst (motive := W.Null)
     ((congrArg (fun a => W.source.group.sub a (P.representative x))
         (W.source.group.sub_add_cancel law.source.group x (P.projection.apply x)).symm).trans
       ((congrArg (fun a => W.source.group.sub a (P.representative x))
@@ -557,7 +557,7 @@ theorem unique_representative
   And.intro (P.representative_harmonic law hl pl hj x hx)
     (And.intro (P.representative_same_class law pl x) (fun h hh same =>
       H.harmonic_unique law hl h (P.representative x) hh (P.representative_harmonic law hl pl hj x hx)
-        (Eq.subst W.Null
+        (Eq.subst (motive := W.Null)
           ((congrArg (fun a => W.source.group.sub a (W.source.group.sub x h))
             ((law.source.group.add_comm (W.source.group.sub h (P.representative x))
               (W.source.group.sub x h)).trans

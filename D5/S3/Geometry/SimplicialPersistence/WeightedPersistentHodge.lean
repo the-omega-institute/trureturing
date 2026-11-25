@@ -93,7 +93,7 @@ end WeightedMetric
 /- The mixed interpretation keeps native carriers, operations and scalar action. -/
 private theorem strictEq {A : Sort _} {x y : A} (h : x = y) : Omega.Eq x y := by
   cases h
-  exact .refl
+  exact .refl _
 
 private theorem nativeEq {A : Sort _} {x y : A} (h : Omega.Eq x y) : x = y :=
   Omega.Eq.rec rfl h
@@ -316,7 +316,7 @@ private theorem range_boundaryToCycles (hi : Function.Injective φ.τ₂)
   · rintro ⟨u, rfl⟩
     have hn := ((strictWindow φ).range_T (restrictedBoundary φ hi u)).mpr
       (Omega.Exists.intro (strictPair φ hi u)
-        (Omega.And.intro (strictPair_coherent φ hi u) Omega.Eq.refl))
+        (Omega.And.intro (strictPair_coherent φ hi u) (Omega.Eq.refl _)))
     exact hn.elim fun c hc => ⟨c, Subtype.ext (nativeEq hc)⟩
   · rintro ⟨u, hu⟩
     have hn : (strictWindow φ).Null x.val :=
