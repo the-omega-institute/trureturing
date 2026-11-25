@@ -33,5 +33,20 @@ internal sealed class PetzTangentPhysicalDocument : IScribeDocumentDefinition
                     "which is its arcsine average. The even and odd profiles use the two nodes 1 and δ, " +
                     "with the equal-node case included. The substitution t = z⁻² − 1 in the uniform energy " +
                     "produces the two integrals of the paired reciprocal Gram estimate."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("petztangentphysical-faithful-weighted-tangent"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentPhysical.faithful_weighted_tangent"),
+                H("Sum over the faithful joint spectrum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let Z be positive definite with its qubit marginal P of trace one. Let H be an arbitrary complex tangent " +
+                    "and M its partial trace. In the spectral basis of Z, sum the squared moduli of the Petz residual " +
+                    "entries Yᵢⱼ divided by (λᵢ + λⱼ)/2. The sum is at most K(2 sqrt(p₀ p₁)) times the joint BKM " +
+                    "quadratic form of H minus the marginal BKM quadratic form of M. Each quadratic form is the real " +
+                    "trace pairing of the tangent with its logarithmic derivative. The native conditional identity " +
+                    "identifies the difference with the integral of the residual energy."))),
+                DescribeRole.Theorem))));
 }

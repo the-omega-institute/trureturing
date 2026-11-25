@@ -627,7 +627,7 @@ private theorem pair_entry_representations
     let X := coordinates U H i j
     let C := fun a b : Fin 2 => coordinates V (partialTraceRight H) a b *
       coordinates U ((V.val * Matrix.single a b (1 : ℂ) * V.valᴴ) ⊗ₖ (1 : Matrix E E ℂ)) i j
-    (∀ z ∈ Ioo (-1 : ℝ) 1,
+    (∀ z ∈ Icc (-1 : ℝ) 1,
       coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H ((z+1)/2)) i j =
         pairResidual (p 0) (p 1) u β X (C 0 0) (C 1 1) (C 0 1) (C 1 0) z) ∧
       coordinates U (H - BKMFlagRefinement.partialTracePetz Z (partialTraceRight H)) i j =
@@ -648,7 +648,7 @@ private theorem pair_entry_representations
       change ((affine (p a) (p b) z : ℝ) : ℂ) * coordinates V R a b =
         coordinates V M a b at h
       have hn : ((affine (p a) (p b) z : ℝ) : ℂ) ≠ 0 := by
-        exact_mod_cast (affine_ab_pos (hp a) (hp b) (Ioo_subset_Icc_self hz)).ne'
+        exact_mod_cast (affine_ab_pos (hp a) (hp b) hz).ne'
       rw [Complex.ofReal_inv, ← h]
       field_simp [hn] <;> ring
     have hEmbed : coordinates U (R ⊗ₖ (1 : Matrix E E ℂ)) i j =
@@ -743,7 +743,7 @@ theorem physical_entry_arcsine_and_bound
   obtain ⟨hF,hY⟩ := pair_entry_representations Z H hZ hP U V eigenvalues p hZD hPD hp i j hi hj
   change Y = pairPetzResidual (p 0) (p 1) u g X (C 0 0) (C 1 1) (C 0 1) (C 1 0) at hY
   change EqOn F (pairResidual (p 0) (p 1) u β X (C 0 0) (C 1 1) (C 0 1) (C 1 0))
-    (Ioo (-1 : ℝ) 1) at hF
+    (Icc (-1 : ℝ) 1) at hF
   let F' := pairResidual (p 0) (p 1) u β X (C 0 0) (C 1 1) (C 0 1) (C 1 0)
   have hArc : arcIntegral (fun z => F z / ((1-β*z : ℝ) : ℂ)) =
       arcIntegral (fun z => F' z / ((1-β*z : ℝ) : ℂ)) := by
@@ -751,18 +751,201 @@ theorem physical_entry_arcsine_and_bound
     intro z hz
     change arcsineDensity z • (F z / ((1-β*z : ℝ) : ℂ)) =
       arcsineDensity z • (F' z / ((1-β*z : ℝ) : ℂ))
-    rw [show F z = F' z from hF hz]
+    rw [show F z = F' z from hF (Ioo_subset_Icc_self hz)]
   have hEnergy : (∫ z in Ioo (-1 : ℝ) 1, Complex.normSq (F z) / (1-β*z) / 2) =
       ∫ z in Ioo (-1 : ℝ) 1, Complex.normSq (F' z) / (1-β*z) / 2 := by
     apply setIntegral_congr_fun measurableSet_Ioo
     intro z hz
     dsimp only
-    rw [show F z = F' z from hF hz]
+    rw [show F z = F' z from hF (Ioo_subset_Icc_self hz)]
   rw [hY, hArc, hEnergy]
   exact ⟨pair_petz_arcsine _ _ u g β _ _ _ _ _ (hp 0) (hp 1) hg hgb,
     pair_bound _ _ u g β _ _ _ _ _ (hp 0) (hp 1) hpq hg hgb⟩
 
 #print axioms physical_entry_arcsine_and_bound
+
+
+open D5.S3.Quantum.Divergence.UmegakiConditionalKernel (q)
+open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (partialTraceRight_posDef)
+open D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
+  (hs_pair_spectral arithmetic_inverse_pairing_eq_logDeriv matrixHS)
+open D5.S3.Divergence.LogDerivTrace (logDeriv)
+
+private lemma interval_recenter (f : ℝ → ℝ) :
+    (∫ z in Ioo (-1 : ℝ) 1, f ((z+1)/2) / 2) = ∫ s in (0 : ℝ)..1, f s := by
+  rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le (by norm_num)]
+  simp_rw [div_eq_mul_inv]
+  rw [intervalIntegral.integral_mul_const]
+  have h : (∫ z in (-1 : ℝ)..1, f ((1/2)*z+1/2)) =
+      2 * ∫ s in (0 : ℝ)..1, f s := by
+    convert intervalIntegral.integral_comp_mul_add (f := f) (a := (-1 : ℝ)) (b := 1)
+      (c := (1/2 : ℝ)) (by norm_num) (1/2) using 1 <;> norm_num [smul_eq_mul]
+  have he (z : ℝ) : (z+1) * 2⁻¹ = 2⁻¹ * z + 2⁻¹ := by ring
+  simp_rw [he]
+  simp only [one_div] at h
+  rw [h]
+  ring
+
+/-- On a faithful joint reference, the weighted sum of the squared physical
+Petz residual entries is bounded by the joint-minus-marginal BKM form. -/
+theorem faithful_weighted_tangent [Nonempty E]
+    (Z H : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (hZ : Z.PosDef)
+    (htrace : (partialTraceRight Z).trace.re = 1) :
+    let P := partialTraceRight Z
+    let M := partialTraceRight H
+    let U := hZ.isHermitian.eigenvectorUnitary
+    let lam := hZ.isHermitian.eigenvalues
+    let p := (partialTraceRight_posDef Z hZ).isHermitian.eigenvalues
+    let Y := coordinates U (H - partialTracePetz Z M)
+    ∑ i, ∑ j, Complex.normSq (Y i j) / ((lam i + lam j)/2) ≤
+      parityMultiplier (2*Real.sqrt (p 0*p 1)) *
+        ((Hᴴ * logDeriv Z H).trace.re - (Mᴴ * logDeriv P M).trace.re) := by
+  let P := partialTraceRight Z
+  let M := partialTraceRight H
+  let hP : P.PosDef := partialTraceRight_posDef Z hZ
+  let U := hZ.isHermitian.eigenvectorUnitary
+  let V := hP.isHermitian.eigenvectorUnitary
+  let lam := hZ.isHermitian.eigenvalues
+  let p := hP.isHermitian.eigenvalues
+  let Y := coordinates U (H - partialTracePetz Z M)
+  let K := parityMultiplier (2*Real.sqrt (p 0*p 1))
+  change ∑ i, ∑ j, Complex.normSq (Y i j) / ((lam i + lam j)/2) ≤
+    K * ((Hᴴ * logDeriv Z H).trace.re - (Mᴴ * logDeriv P M).trace.re)
+  have hZD : Z = U.val * diagReal lam * U.valᴴ := hZ.isHermitian.spectral_theorem
+  have hPD : P = V.val * diagReal p * V.valᴴ := hP.isHermitian.spectral_theorem
+  have hp (a : Fin 2) : 0 < p a := hP.eigenvalues_pos a
+  have hpq : p 0 + p 1 = 1 := by
+    have ht : P.trace = (diagReal p).trace := by
+      conv_lhs => rw [hPD]
+      have hV : V.valᴴ * V.val = 1 := Unitary.coe_star_mul_self V
+      rw [Matrix.trace_mul_comm, ← Matrix.mul_assoc, hV, one_mul]
+    change P.trace.re = 1 at htrace
+    simpa [ht, Matrix.trace_diagonal, Fin.sum_univ_two] using htrace
+  let B := fun (i j : Fin 2 × E) (s : ℝ) => (1-s)*lam i+s*lam j
+  let f := fun (i j : Fin 2 × E) (s : ℝ) =>
+    Complex.normSq (coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H s) i j) / B i j s
+  have hscale (i j : Fin 2 × E) (z : ℝ) :
+      B i j ((z+1)/2) = (lam i+lam j)/2 * (1-(lam i-lam j)/(lam i+lam j)*z) := by
+    dsimp [B]
+    have hn : lam i + lam j ≠ 0 := (add_pos (hZ.eigenvalues_pos i) (hZ.eigenvalues_pos j)).ne'
+    field_simp [hn] <;> ring
+  have hentry (i j : Fin 2 × E) :
+      Complex.normSq (Y i j) / ((lam i+lam j)/2) ≤ K * ∫ s in (0 : ℝ)..1, f i j s := by
+    have hu : 0 < (lam i+lam j)/2 := by
+      have := hZ.eigenvalues_pos i
+      have := hZ.eigenvalues_pos j
+      positivity
+    have he := (physical_entry_arcsine_and_bound Z H hZ.isHermitian hP U V lam p
+      hZD hPD hp hpq i j (hZ.eigenvalues_pos i) (hZ.eigenvalues_pos j)).2
+    dsimp only at he
+    have hint :
+        (∫ z in Ioo (-1 : ℝ) 1, Complex.normSq
+          (coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H ((z+1)/2)) i j) /
+          (1-(lam i-lam j)/(lam i+lam j)*z) / 2) =
+        (∫ s in (0 : ℝ)..1, f i j s) * ((lam i+lam j)/2) := by
+      rw [← interval_recenter, ← integral_mul_const]
+      apply setIntegral_congr_fun measurableSet_Ioo
+      intro z hz
+      change _ = f i j ((z+1)/2) / 2 * ((lam i+lam j)/2)
+      unfold f
+      rw [hscale]
+      simp only [div_div]
+      have hβ : ((lam i-lam j)/(lam i+lam j))^2 < 1 := by
+        have hi := hZ.eigenvalues_pos i
+        have hj := hZ.eigenvalues_pos j
+        rw [div_pow, div_lt_iff₀ (sq_pos_of_pos (add_pos hi hj))]
+        nlinarith [mul_pos hi hj]
+      have hn : 1-(lam i-lam j)/(lam i+lam j)*z ≠ 0 :=
+        (affine_pos hβ (Ioo_subset_Icc_self hz)).ne'
+      generalize hr : 1-(lam i-lam j)/(lam i+lam j)*z = r at hn ⊢
+      generalize hv : (lam i+lam j)/2 = v at hu ⊢
+      field_simp [hu.ne', hn]
+    rw [hint, ← mul_assoc] at he
+    exact (div_le_iff₀ hu).2 he
+  have hq (A : Matrix (Fin 2 × E) (Fin 2 × E) ℂ) (s : ℝ)
+      (hs : s ∈ Icc (0 : ℝ) 1) :
+      q Z A s = ∑ i, ∑ j, Complex.normSq (coordinates U A i j) / B i j s := by
+    rw [show q Z A s = _ from hs_pair_spectral Z A hZ s hs]
+    simp only [B, div_eq_mul_inv]
+    rfl
+  have hi {n : Type} [Fintype n] [DecidableEq n]
+      (A X : Matrix n n ℂ) (hA : A.PosDef) :
+      IntervalIntegrable (q A X) volume 0 1 := by
+    let t := fun (i j : n) (s : ℝ) =>
+      Complex.normSq (coordinates hA.isHermitian.eigenvectorUnitary X i j) *
+        ((1-s)*hA.isHermitian.eigenvalues i+s*hA.isHermitian.eigenvalues j)⁻¹
+    have ht (i j : n) : IntervalIntegrable (t i j) volume 0 1 :=
+      (D5.S3.Quantum.Divergence.UmegakiArithmeticBKM.affineKernel_integrable _ _
+        (hA.eigenvalues_pos i) (hA.eigenvalues_pos j)).const_mul _
+    have hsum : IntervalIntegrable (fun s => ∑ i, ∑ j, t i j s) volume 0 1 :=
+      by simpa only [Finset.sum_fn] using
+        (IntervalIntegrable.sum Finset.univ
+          (fun i _ => IntervalIntegrable.sum Finset.univ (fun j _ => ht i j)))
+    apply hsum.congr
+    rw [uIoc_of_le zero_le_one]
+    intro s hs
+    exact (hs_pair_spectral A X hA s (Ioc_subset_Icc_self hs)).symm
+  have hpair {n : Type} [Fintype n] [DecidableEq n]
+      (A X : Matrix n n ℂ) (hA : A.PosDef) :
+      (Xᴴ * logDeriv A X).trace.re = ∫ s in (0 : ℝ)..1, q A X s :=
+    arithmetic_inverse_pairing_eq_logDeriv A X hA
+  have hf (i j : Fin 2 × E) : IntervalIntegrable (f i j) volume 0 1 := by
+    let β := (lam i-lam j)/(lam i+lam j)
+    let u := (lam i+lam j)/2
+    let C := fun a b : Fin 2 => coordinates V M a b *
+      coordinates U ((V.val * Matrix.single a b (1 : ℂ) * V.valᴴ) ⊗ₖ (1 : Matrix E E ℂ)) i j
+    let F := pairResidual (p 0) (p 1) u β (coordinates U H i j)
+      (C 0 0) (C 1 1) (C 0 1) (C 1 0)
+    have hF : ContinuousOn F (Icc (-1 : ℝ) 1) := by
+      unfold F pairResidual
+      exact continuousOn_const.sub ((by fun_prop : Continuous
+        (fun z : ℝ => ((u * (1-β*z) : ℝ) : ℂ))).continuousOn.mul
+        (response_continuous (hp 0) (hp 1) _ _ _ _))
+    have hEquiv := (pair_entry_representations Z H hZ.isHermitian hP U V lam p
+      hZD hPD hp i j (hZ.eigenvalues_pos i) (hZ.eigenvalues_pos j)).1
+    have hmap : MapsTo (fun s : ℝ => 2*s-1) (Icc (0 : ℝ) 1) (Icc (-1 : ℝ) 1) := by
+      intro s hs
+      exact ⟨by linarith [hs.1], by linarith [hs.2]⟩
+    have hden : Continuous (B i j) := by unfold B; fun_prop
+    have hn (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) : B i j s ≠ 0 := by
+      have hh := affine_ab_pos (hZ.eigenvalues_pos i) (hZ.eigenvalues_pos j) (hmap hs)
+      convert hh.ne' using 1
+      unfold B affine
+      ring
+    have hcont : ContinuousOn (fun s => Complex.normSq (F (2*s-1)) / B i j s)
+        (Icc (0 : ℝ) 1) :=
+      (Complex.continuous_normSq.comp_continuousOn (hF.comp (by fun_prop) hmap)).div
+        hden.continuousOn hn
+    apply (hcont.intervalIntegrable_of_Icc (μ := volume) zero_le_one).congr
+    rw [uIoc_of_le zero_le_one]
+    intro s hs
+    have hh := hEquiv (2*s-1) (hmap (Ioc_subset_Icc_self hs))
+    rw [show (2*s-1+1)/2 = s by ring] at hh
+    change coordinates U (D5.S3.Quantum.Divergence.UmegakiConditionalBKM.residual Z H s) i j = F (2*s-1) at hh
+    simp [f, hh]
+  have hsum :
+      (∑ i, ∑ j, ∫ s in (0 : ℝ)..1, f i j s) =
+        (Hᴴ * logDeriv Z H).trace.re - (Mᴴ * logDeriv P M).trace.re := by
+    rw [hpair Z H hZ, hpair P M hP, ← intervalIntegral.integral_sub (hi Z H hZ) (hi P M hP)]
+    have hs (i : Fin 2 × E) :
+        (∫ s in (0 : ℝ)..1, ∑ j, f i j s) = ∑ j, ∫ s in (0 : ℝ)..1, f i j s :=
+      intervalIntegral.integral_finsetSum (fun j _ => hf i j)
+    have hi' (i : Fin 2 × E) : IntervalIntegrable (fun s => ∑ j, f i j s) volume 0 1 := by
+      simpa only [Finset.sum_fn] using (IntervalIntegrable.sum Finset.univ (fun j _ => hf i j))
+    simp_rw [← hs]
+    rw [← intervalIntegral.integral_finsetSum (fun i _ => hi' i)]
+    apply intervalIntegral.integral_congr
+    rw [uIcc_of_le zero_le_one]
+    intro s hs
+    change (∑ i, ∑ j, f i j s) = q Z H s - q (partialTraceRight Z) (partialTraceRight H) s
+    rw [D5.S3.Quantum.Divergence.UmegakiConditionalBKM.quadratic_difference_eq_residual Z H s hZ hs, hq _ _ hs]
+  rw [← hsum, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro i _
+  rw [Finset.mul_sum]
+  exact Finset.sum_le_sum fun j _ => hentry i j
+
+#print axioms faithful_weighted_tangent
 
 end PhysicalEntries
 
