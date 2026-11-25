@@ -7,6 +7,8 @@
    digest: Exact defect and optimal fit of cyclic equal-rim unit-quaternion gains. -/
 
 import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Quaternion
+import Mathlib.Analysis.CStarAlgebra.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
@@ -17,6 +19,7 @@ The ratio of this radius to the triangle defect is maximal at the quarter turn. 
 noncomputable section
 
 open Real
+open scoped InnerProductSpace Quaternion
 
 namespace RoundQuaternionEqualRimMinimax
 
@@ -194,5 +197,122 @@ private theorem arccos_cos_mul_convex {q : ℝ} (hq : 0 ≤ q) (hq₁ : q < 1) :
       ⟨by linarith [hs'.1, pi_pos], hs'.2⟩
     have hq₂ : 0 ≤ 1 - q ^ 2 := by nlinarith [mul_nonneg hq hq₁.le]
     positivity
+
+private theorem imaginary_unit_sq (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) :
+    I * I = -1 := by
+  simpa [pow_two, Quaternion.normSq_eq_norm_mul_self, hN] using
+    Quaternion.sq_eq_neg_normSq.mpr hI
+
+private theorem skew_inner (I x y : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) :
+    ⟪x * I, y⟫_ℝ = -⟪y * I, x⟫_ℝ := by
+  let J : ℍ[ℝ] →ₗᵢ[ℝ] ℍ[ℝ] :=
+    { toLinearMap := LinearMap.mulRight ℝ I
+      norm_map' := fun v => by simp [LinearMap.mulRight_apply, norm_mul, hN] }
+  calc
+    ⟪x * I, y⟫_ℝ = ⟪(x * I) * I, y * I⟫_ℝ := (J.inner_map_map (x * I) y).symm
+    _ = -⟪y * I, x⟫_ℝ := by
+      rw [mul_assoc, imaginary_unit_sq I hI hN, mul_neg, mul_one, inner_neg_left, real_inner_comm]
+
+private theorem cyclic_skew (I x y z : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) :
+    let E := (1 / √2 : ℝ) • (x - y)
+    let H := (1 / √6 : ℝ) • (x + y - (2 : ℝ) • z)
+    ⟪x * I, y⟫_ℝ + ⟪y * I, z⟫_ℝ + ⟪z * I, x⟫_ℝ = √3 * ⟪E * I, H⟫_ℝ := by
+  have hd (v : ℍ[ℝ]) : ⟪v * I, v⟫_ℝ = 0 := by linarith [skew_inner I v v hI hN]
+  have hs : √2 * √6 = 2 * √3 := by
+    apply (sq_eq_sq₀ (by positivity) (by positivity)).mp
+    rw [mul_pow, mul_pow, sq_sqrt (by norm_num : (0 : ℝ) ≤ 2),
+      sq_sqrt (by norm_num : (0 : ℝ) ≤ 6), sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+    norm_num
+  have hcoeff : √3 * (1 / √6 * (1 / √2)) = (1 / 2 : ℝ) := by
+    rw [div_mul_div_comm, one_mul, mul_comm (√6), hs]
+    field_simp
+  dsimp only
+  simp only [smul_mul_assoc, sub_mul, real_inner_smul_left, real_inner_smul_right]
+  rw [← mul_assoc, ← mul_assoc, mul_assoc (√3), hcoeff]
+  simp only [inner_sub_left, inner_sub_right, inner_add_right, real_inner_smul_right, hd,
+    skew_inner I y x hI hN, skew_inner I x z hI hN]
+  ring
+
+private theorem rim_average (I x y z : ℍ[ℝ]) (a : ℝ) (hI : I.re = 0) (hN : ‖I‖ = 1)
+    (ha : a ∈ Set.Icc 0 π) (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) (hz : ‖z‖ = 1) :
+    let m := (1 / 3 : ℝ) • (x + y + z)
+    let A := (cos a : ℍ[ℝ]) + sin a • I
+    (⟪x * A, y⟫_ℝ + ⟪y * A, z⟫_ℝ + ⟪z * A, x⟫_ℝ) / 3 ≤
+      cos a * ‖m‖ ^ 2 + rimEigenvalue a * (1 - ‖m‖ ^ 2) := by
+  let m := (1 / 3 : ℝ) • (x + y + z)
+  let E := (1 / √2 : ℝ) • (x - y)
+  let H := (1 / √6 : ℝ) • (x + y - (2 : ℝ) • z)
+  have hmean :
+      ‖m‖ ^ 2 = (3 + 2 * (⟪x, y⟫_ℝ + ⟪y, z⟫_ℝ + ⟪z, x⟫_ℝ)) / 9 := by
+    simp only [m, norm_smul, Real.norm_eq_abs, mul_pow, sq_abs, ← real_inner_self_eq_norm_sq,
+      inner_add_left, inner_add_right]
+    simp only [real_inner_self_eq_norm_sq, hx, hy, hz, one_pow]
+    rw [real_inner_comm y x, real_inner_comm x z, real_inner_comm z y]
+    ring
+  have henergy : ‖E‖ ^ 2 + ‖H‖ ^ 2 = 3 * (1 - ‖m‖ ^ 2) := by
+    rw [hmean]
+    simp only [E, H, norm_smul, Real.norm_eq_abs, mul_pow, sq_abs, div_pow, one_pow,
+      sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), sq_sqrt (by norm_num : (0 : ℝ) ≤ 6),
+      ← real_inner_self_eq_norm_sq, inner_add_left, inner_add_right,
+      inner_sub_left, inner_sub_right, real_inner_smul_left, real_inner_smul_right]
+    simp only [real_inner_self_eq_norm_sq, hx, hy, hz, one_pow]
+    rw [real_inner_comm y x, real_inner_comm x z, real_inner_comm z y]
+    ring
+  have hsym :
+      (⟪x, y⟫_ℝ + ⟪y, z⟫_ℝ + ⟪z, x⟫_ℝ) / 3 = ‖m‖ ^ 2 - (1 - ‖m‖ ^ 2) / 2 := by
+    linarith
+  have hj : ⟪E * I, H⟫_ℝ ≤ ‖E‖ * ‖H‖ := by
+    simpa [norm_mul, hN] using real_inner_le_norm (E * I) H
+  have hskew : (⟪x * I, y⟫_ℝ + ⟪y * I, z⟫_ℝ + ⟪z * I, x⟫_ℝ) / 3 ≤
+      √3 / 2 * (1 - ‖m‖ ^ 2) := by
+    rw [cyclic_skew I x y z hI hN]
+    have hprod : 2 * ⟪E * I, H⟫_ℝ ≤ ‖E‖ ^ 2 + ‖H‖ ^ 2 :=
+      by nlinarith [sq_nonneg (‖E‖ - ‖H‖)]
+    have hscaled := mul_le_mul_of_nonneg_left hprod (sqrt_nonneg 3)
+    rw [henergy] at hscaled
+    linarith
+  change _ ≤ cos a * ‖m‖ ^ 2 + _
+  have hexpand (u v : ℍ[ℝ]) :
+      ⟪u * ((cos a : ℍ[ℝ]) + sin a • I), v⟫_ℝ =
+        cos a * ⟪u, v⟫_ℝ + sin a * ⟪u * I, v⟫_ℝ := by
+    rw [mul_add, Quaternion.mul_coe_eq_smul, mul_smul_comm,
+      inner_add_left, real_inner_smul_left, real_inner_smul_left]
+  simp only [hexpand]
+  rw [rim_eigenvalue_formula]
+  have hb := mul_le_mul_of_nonneg_left hskew (sin_nonneg_of_nonneg_of_le_pi ha.1 ha.2)
+  linear_combination hb + cos a * hsym
+
+private def angleQuat (I : ℍ[ℝ]) (a : ℝ) : ℍ[ℝ] := (cos a : ℍ[ℝ]) + sin a • I
+
+private theorem angle_quat_mul (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a b : ℝ) :
+    angleQuat I a * angleQuat I b = angleQuat I (a + b) := by
+  simp only [angleQuat, add_mul, mul_add, mul_smul_comm, smul_mul_assoc,
+    imaginary_unit_sq I hI hN, smul_neg, smul_smul, ← Quaternion.coe_mul_eq_smul,
+    ← Quaternion.coe_mul, ← Quaternion.coe_neg, ← Quaternion.coe_add, cos_add, sin_add,
+    add_smul]
+  rw [Quaternion.coe_mul_eq_smul, Quaternion.mul_coe_eq_smul]
+  module
+
+private theorem norm_angle_quat (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
+    ‖angleQuat I a‖ = 1 := by
+  have hl : ⟪(cos a : ℍ[ℝ]), sin a • I⟫_ℝ = 0 := by
+    simp [Quaternion.inner_def, Quaternion.re_mul, hI]
+  have hsq : ‖angleQuat I a‖ ^ 2 = 1 := by
+    simp only [angleQuat, norm_add_sq_real, hl, mul_zero, add_zero, norm_smul,
+      Quaternion.norm_coe, hN, mul_one, Real.norm_eq_abs, sq_abs]
+    exact cos_sq_add_sin_sq a
+  exact (sq_eq_sq₀ (norm_nonneg _) (by norm_num : 0 ≤ (1 : ℝ))).1 (by simpa using hsq)
+
+private def angleGain (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
+    unitary ℍ[ℝ] :=
+  ⟨angleQuat I a, by
+    rw [← SetLike.mem_coe, CStarRing.coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
+    exact norm_angle_quat I hI hN a⟩
+
+/-- The cyclic rim has a common forward gain and identity spokes. -/
+def equalRimGains (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
+    Fin 4 → Fin 4 → unitary ℍ[ℝ] :=
+  let A := angleGain I hI hN a
+  ![![1, 1, 1, 1], ![1, 1, A, A⁻¹], ![1, A⁻¹, 1, A], ![1, A, A⁻¹, 1]]
 
 end RoundQuaternionEqualRimMinimax
