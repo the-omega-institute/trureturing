@@ -4,7 +4,7 @@ authors: Helmut Finner
 year: 1992
 title: A Generalization of Holder's Inequality and Some Probability Inequalities
 doi: 10.1214/aop/1176989534
-claim: Finner's product-measure inequality bounds products of coordinate-supported factors by their marginal norms under fractional incidence constraints.
+claim: Finner's product-measure inequality and its separated-incidence equality classification concern coordinate-supported factors; the normalized ENNReal classification requires additional correspondence proofs.
 strata_touched:
   - D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure
 license: citation-only
@@ -58,3 +58,98 @@ the measurable ENNReal real-power instance, `lintegral_mul_const`, and the
 coordinate induction is supplied by the formalization. This is a formal proof
 of a classical inequality; no mathematical originality is claimed. No source
 code or substantial article text is reproduced.
+
+## Equality in the directly read restatement
+
+In the paragraph following equation (1.6), Bennett and Oh attribute to Finner
+an equality classification for the balanced inequality (1.5). Write
+M_i = {j : i belongs to S_j}. When M_i differs from M_k for distinct
+coordinates i and k, equality holds precisely when there are positive constants
+c_j and one common family of nonnegative coordinate functions H_i such that
+
+    g_j(P_j x)^{q_j} = c_j product_{i in S_j} H_i(x_i)
+
+almost everywhere. The exponents in that restatement are finite real numbers
+q_j >= 1. This paragraph is a secondary-source attribution: the original
+Finner article remains unread. The displayed representation concerns the
+q_j-th powers, rather than the unpowered g_j. Neither this attribution nor
+Theorem 1.1 of Bennett and Oh is a Lean supplier in this repository.
+
+## Correspondence with normalized full-product factors
+
+The normalized equality target uses measurable ENNReal functions f_j on the
+full dependent product, with DependsOn(f_j,S_j), positive real w_j, balanced
+coordinate sums, injective i -> M_i, and masses
+m_j = integral_mu f_j satisfying 0 < m_j < infinity. Its asserted conclusion
+uses a single measurable family h_i with integral_mu_i h_i = 1 and
+
+    f_j(x) = m_j product_{i in S_j} h_i(x_i)
+
+mu-almost everywhere for every j. This is an additional classification target;
+`finner_product_measure` proves the inequality and supplies no equality
+classification.
+
+Several reductions preserve the original target. Balance and positive weights
+imply that M_i cannot be a proper subset of M_k: summing the positive weights
+in the nonempty difference would contradict the two sums being one. Thus
+injectivity makes the distinct M_i incomparable. In particular, if w_j = 1
+and S_j is nonempty, every coordinate in S_j has incidence set {j}; injectivity
+then makes S_j a singleton. If i belongs to a nonempty S_j, its balance equation
+also gives w_j <= 1. Therefore q_j = 1/w_j is finite and at least one for
+nonempty supports, including the endpoint q_j = 1. An empty S_j imposes no
+upper bound on w_j. DependsOn(f_j,empty) makes f_j constant; since mu is a
+probability measure, this constant is exactly m_j. Its powered scalar can be
+extracted before comparison with the finite-q_j formulation.
+
+For the support-space correspondence, choose an anchor in each X_i; probability
+of the coordinate space implies nonemptiness. Extend a point of the S_j product
+by these anchors outside S_j. The extension is measurable coordinate by
+coordinate, so composing f_j with it gives a measurable support-space factor.
+DependsOn gives pointwise recovery after coordinate projection. The projection
+from the full product probability law to the support product preserves measure;
+this is the integral and almost-everywhere transport required by this reduction.
+With g_j = f_j^{w_j} on that support product and q_j = 1/w_j, the identity
+w_j q_j = 1 identifies g_j^{q_j} with f_j and its q_j-power integral with m_j.
+Finite mass permits replacement of infinity values on null sets by finite values
+when comparing with real-valued L^{q_j} factors. This does not assume that f_j
+is positive almost everywhere.
+
+Suppose a measurable common representation f_j = c_j product H_i is already
+available, with each c_j positive and finite. Put a_i = integral_mu_i H_i.
+Tonelli gives m_j = c_j product_{i in S_j} a_i, since all coordinates outside
+S_j carry probability mass one. A positive finite product in ENNReal forces
+every included a_i to be positive and finite: a zero factor makes the product
+zero, and, once zeros are excluded, an infinite factor makes the product
+infinite. Balance covers every coordinate. Consequently h_i = H_i/a_i is
+measurable and has integral one, and cancellation gives exactly the coefficient
+m_j in every row. The normalization uses the same a_i for every incident row,
+so it preserves common profiles. Empty supports give f_j = c_j = m_j.
+
+Conversely, a normalized common representation gives the pointwise identity
+for its representing functions
+
+    product_j (m_j product_{i in S_j} h_i(x_i))^{w_j}
+      = (product_j m_j^{w_j}) product_i h_i(x_i).
+
+Distribute real powers over the finite ENNReal products, interchange the two
+finite products, and combine the positive exponents incident to each i. Their
+sum is one. A coordinate not incident to a particular row contributes the unit
+factor in that row. ENNReal's zero/infinity product convention is retained;
+no cancellation at a point is needed. Tonelli and the unit coordinate integrals
+make the integral of the final coordinate product one. Finite intersections of
+the rowwise full-measure sets transport the original almost-everywhere
+representations through this identity. This direction needs neither incidence
+injectivity nor positive conditional slice integrals.
+
+When I is empty, the product probability space is a singleton up to its Dirac
+representation, every support is empty, and the representation reduces to the
+constant-mass identities above. If J is empty and I is nonempty, balance is
+inconsistent. If both are empty, the two products and the integral equal one
+and the profile family is empty. Duplicate rows S_j remain allowed throughout.
+
+The remaining formal obligation is the forward implication from saturation of
+the actual ENNReal marginal inequality chain to a simultaneously measurable,
+common coordinate family. Pairwise Holder equality alone does not establish
+that compatibility. The support-space transports, normalization, and converse
+identities described here also require compiled correspondence evidence before
+they can be claimed as the full Lean equality classification.
