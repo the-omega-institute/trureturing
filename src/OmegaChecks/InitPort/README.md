@@ -1,8 +1,9 @@
 # 官方 Init 的独立内核移植
 
-从仓库根目录运行，使用 `lean-toolchain` 指定的 Lean 和已编译的严格基础。以下命令生成一个可直接导入的独立模块目录，输出位置须尚未存在。
+从仓库根目录运行，使用 `lean-toolchain` 指定的 Lean。以下命令编译严格基础，然后生成一个可直接导入的模块目录。生成目录须尚未存在。
 
 ```sh
+python3 src/OmegaChecks/strict_lake.py build +OmegaInit
 python3 src/OmegaChecks/InitPort/build.py .lake/init-port Init.Prelude
 LEAN_PATH=.lake/init-port/lib lean Example.lean
 ```
@@ -27,3 +28,5 @@ example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
 `init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。
+全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
+缺口表的 `firstDependencyPath` 和 `reason` 记录本次移植实际遇到的阻塞。只有 `impliesAxiom` 非空的行另有内核证明，从该官方接口可推出所列公理。

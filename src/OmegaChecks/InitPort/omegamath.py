@@ -28,8 +28,10 @@ def build(basis, output, workers, audit_log):
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     sources, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
     graph.update(dict(json.loads((basis / "modules.json").read_text())))
-    modules = closure({name: set(deps) for name, deps in graph.items()}, ["OmegaMath"])
-    clients = [name for name in modules if root(name) in {"OmegaMath", "OmegaMathlib"}]
+    clients = sorted(name for name in sources if root(name) in {"OmegaMath", "OmegaMathlib"})
+    imported = {dep for name in clients for dep in graph[name]}
+    roots = [name for name in clients if name not in imported]
+    modules = closure({name: set(deps) for name, deps in graph.items()}, roots)
     schedule = TopologicalSorter({name: set(graph[name]).intersection(clients) for name in clients})
     schedule.prepare()
     options = tomllib.loads((ROOT / "lakefile.toml").read_text())["leanOptions"]
@@ -61,7 +63,7 @@ def build(basis, output, workers, audit_log):
     audit = ROOT / ".lake/build/bin/omegaAudit"
     subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
     with audit_log.open("w") as log:
-        result = subprocess.run(["lake", "env", audit, "--exact", "OmegaMath", paths, *modules],
+        result = subprocess.run(["lake", "env", audit, "--exact-roots", paths, *roots, "--", *modules],
                                 cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
     print(audit_log.read_text(), end="", flush=True)
     result.check_returncode()
