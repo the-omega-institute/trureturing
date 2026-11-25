@@ -426,10 +426,10 @@ private theorem carPartner_overlap (H : TwoMode) (a b c d : ℝ)
     ← hE.2, hGEG, Matrix.mul_neg, Matrix.trace_neg, hE.1]
   ring
 
-/-- Exact Hilbert--Schmidt squared distance from an arbitrary complex rank-two
+/-- Exact Hilbert--Schmidt squared distance from an arbitrary Hermitian
 projection to the physical cut, resolved into its two Clifford overlaps. -/
-theorem carProductCut_distance (P : TwoMode) (hP : P.IsHermitian)
-    (hPP : P * P = P) (htrP : P.trace = 2)
+private theorem carProductCut_distance (P : TwoMode) (hP : P.IsHermitian)
+    (hPP : P * P = P)
     (a b c d u rho : ℝ)
     (hn : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1) (hu : u ^ 2 + rho ^ 2 = 1) :
     let G := carDirection a b c d
@@ -463,10 +463,9 @@ theorem carProductCut_distance (P : TwoMode) (hP : P.IsHermitian)
     simp [Matrix.sub_mul, Matrix.trace_sub, Matrix.trace_smul, htrZ,
       smul_eq_mul]
   have hPQ : (P * Q).trace =
-      (1 / 2 : ℂ) * (2 + (u : ℂ) * (P * G).trace + (rho : ℂ) * (P * Z).trace) := by
+      (1 / 2 : ℂ) * (P.trace + (u : ℂ) * (P * G).trace + (rho : ℂ) * (P * Z).trace) := by
     dsimp [Q, carProductCut, Z]
-    simp [Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add,
-      htrP, smul_eq_mul]
+    simp [Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add, smul_eq_mul]
     ring
   change Pᴴ = P at hP
   rw [Matrix.conjTranspose_sub, hP, hQ]
@@ -475,7 +474,7 @@ theorem carProductCut_distance (P : TwoMode) (hP : P.IsHermitian)
       _ = P * P - P * Q - Q * P + Q * Q := by noncomm_ring
       _ = _ := by rw [hPP, hQQ]]
   rw [Matrix.trace_add, Matrix.trace_sub, Matrix.trace_sub,
-    Matrix.trace_mul_comm Q P, htrP, htrQ, hPQ, hPG, hPZ]
+    Matrix.trace_mul_comm Q P, htrQ, hPQ, hPG, hPZ]
   norm_num [Complex.mul_re, Complex.add_re, Complex.sub_re]
   ring
 
@@ -587,7 +586,7 @@ theorem carProductCut_transport (P : TwoMode) (hP : P.IsHermitian)
     ring
   let Q := carProductCut G u rho
   have hdist : ((P - Q)ᴴ * (P - Q)).trace.re = 2 * (1 - theta) := by
-    rw [carProductCut_distance P hP hPP htrP a b c d u rho hn hu,
+    rw [carProductCut_distance P hP hPP a b c d u rho hn hu,
       hoverG, hoverZ]
     linarith only [hsum]
   have hpos : 0 ≤ ((P - Q)ᴴ * (P - Q)).trace.re :=

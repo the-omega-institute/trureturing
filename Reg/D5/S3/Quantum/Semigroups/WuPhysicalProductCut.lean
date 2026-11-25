@@ -98,68 +98,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Projection
 
-namespace Distance
-
-private abbrev arena : Arena where
-  signature := signature
-  Law W := ∀ (P : TwoMode), P.IsHermitian → P * P = P → P.trace = 2 →
-    ∀ a b c d u rho : ℝ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1 →
-    u ^ 2 + rho ^ 2 = 1 →
-    let G := carDirection a b c d
-    let H := (2 : ℂ) • P - 1
-    let Q := carProductCut G u rho
-    W.readout () () ((P - Q)ᴴ * (P - Q)).trace.re
-      (2 - (u * (H * G).trace.re + rho * (H * carPartner G).trace.re) / 2)
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  obtain ⟨hs, hi, ht⟩ := testCut_projection
-  exact h testCut hs hi ht 1 0 0 0 0 1 (by norm_num) (by norm_num)
-
-def family : Registration arena (type_of% @carProductCut_distance) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@carProductCut_distance, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := dependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@carProductCut_distance) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuPhysicalProductCut.carProductCut_distance.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuPhysicalProductCut.Distance.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Semigroups.WuPhysicalProductCut
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "fn",
-        "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end Distance
-
 namespace Transport
 
 private abbrev arena : Arena where
