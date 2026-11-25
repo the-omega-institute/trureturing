@@ -147,5 +147,63 @@ def fiveSevenAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+private abbrev sevenFiveArena : Arena where
+  signature := signature
+  Law R := ∀ (u v : ℚ), u ^ 2 + 14 * v ^ 2 = 15 → ∀ n : ℕ,
+    let t := (u ^ 2 / 5 - 1) / 4
+    (RealizableIn (pairedEdges t) n ↔ 7 ≤ R.readout () () n) ∧
+      (RealizableIn (triangleBlock t) n ↔ 5 ≤ n)
+
+private theorem seven_five_rejected_law : ¬ sevenFiveArena.Law rejected := by
+  intro h
+  have acceptsSix : 7 ≤ rejected.readout () () 6 := by decide
+  have trueLaw := seven_five_on_conic 1 1 (by norm_num) 6
+  have badLaw := h 1 1 (by norm_num) 6
+  have impossible := trueLaw.1.mp (badLaw.1.mpr acceptsSix)
+  omega
+
+def sevenFiveFamily : Registration sevenFiveArena (type_of% @seven_five_on_conic) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@seven_five_on_conic, rejected, seven_five_rejected_law⟩
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity
+      sevenFiveArena.Law actual rejected seven_five_rejected_law
+  dependence := fun _ => ⟨(), 6, 7, by
+    change (6 : ℕ) ≠ 7
+    decide⟩
+
+def sevenFiveAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@seven_five_on_conic) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.RationalGramCospectral.sevenFiveUnit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.RationalGramCospectral.sevenFiveFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sevenFiveArena⟩
+  objectArena := .source ⟨sevenFiveArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sevenFiveArena ⟨sevenFiveFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.RationalGramCospectral
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.Quantum.AURICOmega.RationalGramCospectral
