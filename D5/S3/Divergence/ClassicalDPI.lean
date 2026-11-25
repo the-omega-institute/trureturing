@@ -22,6 +22,7 @@
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.Tactic.FieldSimp
 public import Mathlib.Tactic.Ring
 

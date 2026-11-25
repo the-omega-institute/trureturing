@@ -8,6 +8,7 @@
 module
 
 public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.LinearAlgebra.Matrix.Notation
 public import Mathlib.LinearAlgebra.Matrix.Trace
 public import Mathlib.Tactic.FinCases
