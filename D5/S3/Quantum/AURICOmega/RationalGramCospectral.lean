@@ -10,7 +10,6 @@ import D5.S3.Quantum.AURICOmega.RationalGramOddPrime
 import Mathlib.Data.Nat.Prime.Int
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
@@ -304,17 +303,14 @@ private theorem first_one_sixteenth_not_six : ¬ RealizableIn (pairedEdges (1/16
     | simpa [diagonal_apply] using entry 2 3)
 
 private theorem square_mod_four (n : ℕ) : n ^ 2 % 4 = n % 2 := by
-  rw [Nat.pow_mod]
-  have h : n % 4 < 4 := Nat.mod_lt _ (by decide)
-  have h₂ : n % 4 % 2 = n % 2 := Nat.mod_mod_of_dvd n (by decide)
-  rw [← h₂]
-  interval_cases (n % 4) <;> decide
+  exact_mod_cast Int.sq_emod_four (n : ℤ)
 
-private theorem square_mod_eight_odd (n : ℕ) (hodd : n % 2 = 1) : n^2 % 8 = 1 := by
-  rw [Nat.pow_mod]
-  have hr : n % 8 < 8 := Nat.mod_lt _ (by decide)
-  have h₂ : n % 8 % 2 = 1 := (Nat.mod_mod_of_dvd n (by decide : 2 ∣ 8)).trans hodd
-  interval_cases (n % 8) <;> first | decide | contradiction
+private theorem square_mod_eight_odd (n : ℕ) (hodd : n % 2 = 1) : n ^ 2 % 8 = 1 := by
+  have h : Odd (n : ℤ) := Int.odd_iff.mpr (by exact_mod_cast hodd)
+  have hmod : (1 : ℤ) ≡ (n : ℤ) ^ 2 [ZMOD 8] :=
+    Int.modEq_of_dvd (Int.eight_dvd_sq_sub_one_of_odd h)
+  have hm : (n : ℤ) ^ 2 % 8 = 1 := by simpa [Int.ModEq] using hmod.symm
+  exact_mod_cast hm
 
 private theorem square_mod_eight (n : ℕ) : n ^ 2 % 8 = 0 ∨ n ^ 2 % 8 = 1 ∨ n ^ 2 % 8 = 4 := by
   have hs := Nat.pow_mod n 2 8
