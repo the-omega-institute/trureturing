@@ -76,7 +76,8 @@ def check():
 
         native = "D5.NativeFixture"
         inner = "D5.TransitiveFixture"
-        obj = "@[expose] public def D5.naturalObject (n k : Nat) := Nat.choose n k\n"
+        obj = ("@[expose] public def D5.naturalObject (n k : Nat) := Nat.choose n k\n"
+               "@[expose] public def D5.count (n k : Nat) := D5.naturalObject n k\n")
         owner_header = "module\npublic import Mathlib.Data.Nat.Choose.Basic\n"
         old = compile_source("old", owner_header + obj)
         folder = Path(temp) / "new"

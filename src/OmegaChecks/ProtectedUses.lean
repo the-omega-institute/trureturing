@@ -43,10 +43,11 @@ private partial def bodyOccurrences (term : Expr) (pos : Name := `value)
 /-- Follow computational dependencies within the consumer. Imported official modules keep
 their own publication boundary. Each helper is expanded once per published declaration. -/
 private def publicationRefs (env : Environment) (mod : Name) (info : ConstantInfo)
-    (selectedBody : Bool) : MetaM (Array (Name × Name)) := do
+    (moved : NameSet) (selectedBody : Bool) : MetaM (Array (Name × Name)) := do
   let owner? := fun n => (env.getModuleIdxFor? n).map fun idx => env.header.moduleNames[idx]!
+  let localDep := fun n => owner? n == some mod || moved.contains n
   let pertinent := fun (e : Expr) => e.getUsedConstants.any fun n =>
-    (owner? n).any fun owner => owner == mod || owner.getRoot == `Mathlib
+    localDep n || (owner? n).any fun owner => owner.getRoot == `Mathlib
   let mut refs := occurrences info.type
   if let some full := env.find? info.name then
     if !full.isTheorem then
@@ -59,7 +60,7 @@ private def publicationRefs (env : Environment) (mod : Name) (info : ConstantInf
   while next < refs.size do
     let (pos, name) := refs[next]!
     next := next + 1
-    if owner? name != some mod || seen.contains name then continue
+    if !localDep name || seen.contains name then continue
     seen := seen.insert name
     let some helper := env.find? name | continue
     if helper.isTheorem then continue
@@ -145,16 +146,17 @@ def main (args : List String) : IO Unit := do
     -- A module's .olean contains exactly its exported definitions. Legacy modules
     -- store their ordinary client-visible declarations in the same artifact.
     let (publicData, _) ← readModuleData (← findOLean mod.toName)
-    let mut declarations := publicData.constants
+    let mut moved := #[]
     if let some path := input.protectedPath then
       if input.protectedModules.contains mod then
-        declarations := declarations ++ (← movedDeclarations env omega mod.toName publicData path)
-    for info in declarations do
+        moved ← movedDeclarations env omega mod.toName publicData path
+    let movedNames := moved.foldl (init := ({} : NameSet)) fun names info => names.insert info.name
+    for info in publicData.constants ++ moved do
       let name := info.name
       if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
       let key := nameKey name
       let protectedDecl := selected.any (·.contains key)
-      let refs ← (publicationRefs env mod.toName info (selectedBodies.any (·.contains key))).run' |>.toIO'
+      let refs ← (publicationRefs env mod.toName info movedNames (selectedBodies.any (·.contains key))).run' |>.toIO'
         {fileName := "<published declaration>", fileMap := default} {env}
       let mut uses := #[]
       for (pos, obj) in refs do
