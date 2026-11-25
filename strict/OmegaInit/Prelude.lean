@@ -425,7 +425,42 @@ namespace Omega.Nat
       (succ x) x) y
 
 @[no_expose] protected def mod : Nat → Nat → Nat :=
-  fun x y => Nat.sub x (Nat.mul y (Nat.div x y))
+  fun x y => Nat.rec zero (fun k _ =>
+    Nat.rec (succ k) (fun d _ =>
+      Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
+        (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n))
+        (succ (succ k)) (succ k)) y) x
+
+private theorem lt_of_ble_false (a : Nat) : ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b :=
+  Nat.rec (motive := fun a => ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b)
+    (fun b => Nat.rec (motive := fun b => Eq (Nat.ble b zero) Bool.false → Nat.lt zero b)
+      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
+      (fun k _ _ => Nat.succ_le_succ (Nat.zero_le k)) b)
+    (fun a smaller b => Nat.rec (motive := fun b => Eq (Nat.ble b (succ a)) Bool.false → Nat.lt (succ a) b)
+      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
+      (fun k _ h => Nat.succ_le_succ (smaller k h)) b) a
+
+private def remainder (d fuel n : Nat) : Nat :=
+  Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
+    (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n)) fuel n
+
+private theorem remainder_lt (d fuel : Nat) : ∀ x, Nat.lt (remainder d fuel x) (succ d) :=
+  Nat.rec (motive := fun fuel => ∀ x, Nat.lt (remainder d fuel x) (succ d))
+    (fun _ => Nat.succ_le_succ (Nat.zero_le d))
+    (fun fuel smaller x =>
+      let next := remainder d fuel (Nat.sub x (succ d))
+      let branch : ∀ bit : Bool, Eq (Nat.ble (succ d) x) bit →
+          Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d) :=
+        Bool.rec (motive := fun bit => Eq (Nat.ble (succ d) x) bit → Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d))
+          (lt_of_ble_false x (succ d)) (fun _ => smaller _)
+      branch (Nat.ble (succ d) x) Omega.rfl) fuel
+
+theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y :=
+  (Nat.rec (motive := fun x => ∀ y, Nat.lt zero y → Nat.lt (Nat.mod x y) y)
+    (fun _ h => h)
+    (fun k _ y => Nat.rec (motive := fun y => Nat.lt zero y → Nat.lt (Nat.mod (succ k) y) y)
+      (fun h => False.elim (Nat.not_succ_le_zero zero h))
+      (fun d _ _ => remainder_lt d (succ (succ k)) (succ k)) y) x) y hy
 
 attribute [irreducible] beq ble Nat.div Nat.mod
 
