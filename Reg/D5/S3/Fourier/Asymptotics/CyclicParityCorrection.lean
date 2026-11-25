@@ -209,13 +209,13 @@ namespace Positive
 
 abbrev arena : Arena where
   signature := meshSignature
-  Law R := ∀ (q : ℕ) [NeZero q],
+  Law R := ∀ {q : ℕ} [NeZero q],
     let spacing := R.readout () ()
     0 < spacing q
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have h0 : (0 : ℝ) < 0 := by simpa [rejected, realize] using h 1
+  have h0 : (0 : ℝ) < 0 := by simpa [rejected, realize] using h (q := 1)
   exact (lt_irrefl 0) h0
 
 def evidence : Registration arena (type_of% @mesh_pos) where
@@ -267,7 +267,7 @@ namespace Centered
 
 abbrev arena : Arena where
   signature := meshSignature
-  Law R := ∀ (q : ℕ) (i : ZMod q),
+  Law R := ∀ {q : ℕ} (i : ZMod q),
     let spacing := R.readout () ()
     centeredAngle i = (i.valMinAbs : ℝ) * spacing q
 
@@ -275,7 +275,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hi : (1 : ZMod 4).valMinAbs = 1 := by decide
   have hangle : centeredAngle (1 : ZMod 4) = 0 := by
-    simpa [rejected, realize] using h 4 (1 : ZMod 4)
+    simpa [rejected, realize] using h (q := 4) (1 : ZMod 4)
   unfold centeredAngle at hangle
   norm_num [hi] at hangle
 
