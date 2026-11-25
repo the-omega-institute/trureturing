@@ -18,6 +18,28 @@ set_option maxRecDepth 4096
 noncomputable section
 open scoped BigOperators
 
+namespace D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeDetectorTranslation
+
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
+open LatticeSugawaraConformal (translation)
+
+/-- Divided translation when the two detector weights select the signed mode. -/
+theorem selected_detector_divided_translation (D : LatticeData) (hu : IsUnit D.G.det)
+    (mR mS F : ℤ) (R S : ActualTensor D hu) (a : Carrier D) (h : ℕ) :
+    (h.factorial : ℂ)⁻¹ * detector D hu (mS - mR - 2 * (F + (h : ℤ))) R S
+      ((translation D ^ h) a) =
+      Ring.choose (((mS : ℂ) - (mR : ℂ)) / 2 - (F : ℂ)) h *
+        detector D hu (mS - mR - 2 * F) R S a := by
+  rw [show mS - mR - 2 * (F + (h : ℤ)) = (mS - mR - 2 * F) - 2 * (h : ℤ) by omega,
+    detector_divided_translation]
+  have hx : (((mS - mR - 2 * F : ℤ) : ℂ) / 2) =
+      ((mS : ℂ) - (mR : ℂ)) / 2 - (F : ℂ) := by
+    push_cast
+    ring
+  rw [hx]
+
+end D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeDetectorTranslation
+
 namespace D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedIterateSlot12Coefficient
 
 open ActualLeechHyperbolic (leechData)
