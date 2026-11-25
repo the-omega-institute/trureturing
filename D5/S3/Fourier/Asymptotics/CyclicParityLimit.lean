@@ -24,13 +24,13 @@ namespace D5.S3.Fourier.Asymptotics.CyclicParityLimit
 
 set_option autoImplicit false
 
-private def cosineFourth (x h : ℝ) : ℝ :=
+def cosineFourth (x h : ℝ) : ℝ :=
   (Real.cos (x * h) - (1 - (x * h) ^ 2 / 2)) / h ^ 4
 
-private def cosineSecond (x h : ℝ) : ℝ :=
+def cosineSecond (x h : ℝ) : ℝ :=
   x ^ 2 / 2 - h ^ 2 * cosineFourth x h
 
-private theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
+theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
     1 - Real.cos (x * h) = h ^ 2 * cosineSecond x h := by
   unfold cosineSecond cosineFourth
   field_simp [hn]
@@ -52,7 +52,7 @@ private theorem cos_fourth_remainder (x : ℝ) (hx : |x| ≤ 1) :
   norm_num at h
   exact hr.trans (by linarith only [h])
 
-private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
+theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineFourth x (h i)) l (𝓝 (x ^ 4 / 24)) := by
   have hxh : Tendsto (fun i => |x * h i|) l (𝓝 0) := by
@@ -80,7 +80,7 @@ private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → �
         ring
   · simpa using (hh.pow 2).const_mul (|x| ^ 6 / 360)
 
-private theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
+theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineSecond x (h i)) l (𝓝 (x ^ 2 / 2)) := by
   simpa [cosineSecond] using
@@ -119,14 +119,14 @@ private theorem clip_sq_correction {ι : Type*} {l : Filter ι} {s r : ι → �
     field_simp [hi.ne']
     ring
 
-private def parityModulus (odd : Bool) (k : ℕ) : ℕ := 2 * k + if odd then 1 else 2
+def parityModulus (odd : Bool) (k : ℕ) : ℕ := 2 * k + if odd then 1 else 2
 
-private instance parityNeZero (odd : Bool) (k : ℕ) : NeZero (parityModulus odd k) :=
+instance parityNeZero (odd : Bool) (k : ℕ) : NeZero (parityModulus odd k) :=
   ⟨by cases odd <;> simp [parityModulus]⟩
 
-private def parityOffset (odd : Bool) : ℝ := if odd then 1 / 2 else 0
+def parityOffset (odd : Bool) : ℝ := if odd then 1 / 2 else 0
 
-private theorem parity_offset (odd : Bool) (k : ℕ) :
+theorem parity_offset (odd : Bool) (k : ℕ) :
     (↑(parityModulus odd k % 2) : ℝ) / 2 = parityOffset odd := by
   cases odd <;> simp [parityModulus, parityOffset, Nat.add_mod]
 
@@ -136,7 +136,7 @@ private theorem parity_modulus_eventually_gt (odd : Bool) (M : ℕ) :
   unfold parityModulus
   omega
 
-private theorem mesh_tendsto (odd : Bool) :
+theorem mesh_tendsto (odd : Bool) :
     Tendsto (fun k => mesh (parityModulus odd k)) atTop (𝓝 0) := by
   have hq : Tendsto (fun k => parityModulus odd k) atTop atTop :=
     tendsto_atTop.2 fun M => (parity_modulus_eventually_gt odd M).mono fun _ h => h.le
@@ -222,7 +222,7 @@ private theorem centered_sum_window {q : ℕ} [NeZero q] (K : ℕ) (hq : 2 * K <
       rw [(hasSum_sum_of_ne_finset_zero hg).tsum_eq]
       exact sum_congr rfl fun j hj => if_pos hj
 
-private theorem valMinAbs_of_window {q : ℕ} [NeZero q] {K : ℕ} (hq : 2 * K < q)
+theorem valMinAbs_of_window {q : ℕ} [NeZero q] {K : ℕ} (hq : 2 * K < q)
     {j : ℤ} (hj : j ∈ Icc (-(K : ℤ)) (K : ℤ)) :
     (j : ZMod q).valMinAbs = j := by
   have := mem_Icc.mp hj
