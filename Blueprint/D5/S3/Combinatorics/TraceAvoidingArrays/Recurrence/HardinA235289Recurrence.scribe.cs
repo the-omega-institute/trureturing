@@ -26,7 +26,7 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
                 Blocks(
                     Paragraph(Text("OEIS A235289 proposes a common recurrence for every row and every column. The pair d gives the row and column indices of the table. Either varying index starts at seven, since the smallest lagged index in each displayed identity is positive.")),
                     Paragraph(Text("Complementing every cell on one checkerboard color converts the diagonal difference into a block sum of two or ten. Adjacent blocks share two cells. Their sums can differ by at most six, so every block has the same sum. Complementing all cells exchanges the two classes.")),
-                    Paragraph(Text("For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. Each profile and its complement have at most four row choices in total, since the first cell determines a row from its adjacent sums. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second."))),
+                    Paragraph(Text("For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. If the first edge sum is s, the initial entry can range from 0 to s, giving at most s+1 choices. The complement has first edge sum 2−s, giving at most 3−s initial choices. The initial entry determines the row from its adjacent sums, so the profile and its complement have at most four row choices in total. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235289-common-recurrence"),
                     ResolutionKind.Proved)))));
@@ -43,7 +43,7 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
         var k = V("k");
         var grid = Seq(Call("Fin", PlusOf(n, D(1))), Sp, To, Sp,
             Call("Fin", PlusOf(k, D(1))), Sp, To, Sp, Call("Fin", D(4)));
-        return Dimensions(Eq(Call("Grid", n, k), grid));
+        return Dimensions(Eq(Call("Grid", n, k), Parenthesized(grid)));
     }
 
     private static Formula LegalDefinition()

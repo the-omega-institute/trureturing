@@ -6,7 +6,7 @@ Hardin's common six-lag recurrence for constant-stress rectangular arrays.
 
 **Definition 1.1 (Rectangular arrays).**
 
-$$\forall n: Nat, (\forall k: Nat, (\operatorname{Grid}\left(n, k\right) = \operatorname{Fin}\left(n + 1\right) \to \operatorname{Fin}\left(k + 1\right) \to \operatorname{Fin}\left(4\right)))$$
+$$\forall n: Nat, (\forall k: Nat, (\operatorname{Grid}\left(n, k\right) = (\operatorname{Fin}\left(n + 1\right) \to \operatorname{Fin}\left(k + 1\right) \to \operatorname{Fin}\left(4\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.Grid` (`✓ std3`).
 
@@ -60,7 +60,7 @@ OEIS A235289 proposes a common recurrence for every row and every column. The pa
 
 Complementing every cell on one checkerboard color converts the diagonal difference into a block sum of two or ten. Adjacent blocks share two cells. Their sums can differ by at most six, so every block has the same sum. Complementing all cells exchanges the two classes.
 
-For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. Each profile and its complement have at most four row choices in total, since the first cell determines a row from its adjacent sums. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second.
+For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. If the first edge sum is s, the initial entry can range from 0 to s, giving at most s+1 choices. The complement has first edge sum 2−s, giving at most 3−s initial choices. The initial entry determines the row from its adjacent sums, so the profile and its complement have at most four row choices in total. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second.
 
 ## References
 
