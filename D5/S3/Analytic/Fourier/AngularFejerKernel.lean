@@ -94,7 +94,7 @@ lemma K_cap {b : ℝ} (hb : 0 < b) (v : ℝ) : K b v ≤ b / (2 * Real.pi) := by
   unfold K
   nlinarith [div_pos hb (mul_pos (by norm_num : (0:ℝ)<2) Real.pi_pos)]
 
-private lemma K_bound {b : ℝ} (hb : 0 < b) {v : ℝ} (hv : v ≠ 0) :
+lemma K_bound {b : ℝ} (hb : 0 < b) {v : ℝ} (hv : v ≠ 0) :
     K b v ≤ 2 / (Real.pi * b * v ^ 2) := by
   have ha : b * v / 2 ≠ 0 := by positivity
   have he : K b v = 2 * Real.sin (b * v / 2) ^ 2 / (Real.pi * b * v ^ 2) := by
