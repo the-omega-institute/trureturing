@@ -18,7 +18,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedW
 open Finset
 open scoped symmDiff
 local notation "flip" => BalancedCriticalSpectrum.flip
-open EightCubeBits (Vertex Word cube toggle cube_toggle toggle_injective shell
+open EightCubeBits (Vertex Word cube toggle cube_toggle toggle_injective shell_card shell
   coeff row IsKernel oddRows distance relabel asFunction asFunction_symmDiff
   row_symmDiff row_singleton)
 open EightCubeBits (relabel_distance)
@@ -93,9 +93,6 @@ theorem oddRows_one_exchange {K : Word} (hK : IsKernel K) {u v : Vertex} (huv : 
     simpa only [asFunction, Pi.add_apply, Equiv.symm_apply_apply] using h.symm
   ext r
   by_cases hr : r ∈ shell u ∆ shell v <;> simp [oddRows, hrow, coeff, hr]
-
-private theorem shell_card (x : Vertex) : (shell x).card = 8 := by
-  rw [shell, card_image_of_injective _ (toggle_injective x), card_univ, Fintype.card_fin]
 
 private theorem distance_two_of_mem_shell {c x y : Vertex} (hx : x ∈ shell c)
     (hy : y ∈ shell c) (hxy : x ≠ y) : distance x y = 2 := by

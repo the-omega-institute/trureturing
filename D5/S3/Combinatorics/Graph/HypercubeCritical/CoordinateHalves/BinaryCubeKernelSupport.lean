@@ -53,7 +53,7 @@ theorem add_sites_card_add_twice_inter {α : Type*} [Fintype α] [DecidableEq α
   rw [← hd] at hs
   omega
 
-private def cubeFinsetEquiv (n : ℕ) : Q n ≃ Finset (Fin n) where
+def cubeFinsetEquiv (n : ℕ) : Q n ≃ Finset (Fin n) where
   toFun x := univ.filter fun i => x i = true
   invFun s i := decide (i ∈ s)
   left_inv x := by
@@ -65,7 +65,7 @@ private def cubeFinsetEquiv (n : ℕ) : Q n ≃ Finset (Fin n) where
     change i ∈ univ.filter (fun j => decide (j ∈ s) = true) ↔ i ∈ s
     simp
 
-private theorem cubeFinsetEquiv_flip {n : ℕ} (x : Q n) (i : Fin n) :
+theorem cubeFinsetEquiv_flip {n : ℕ} (x : Q n) (i : Fin n) :
     cubeFinsetEquiv n (flip x i) = cubeFinsetEquiv n x ∆ {i} := by
   ext j
   change j ∈ univ.filter (fun k => flip x i k = true) ↔
