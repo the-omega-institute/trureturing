@@ -47,7 +47,7 @@ private theorem ramp_right_eq (r d δ : ℝ) (hδ : 0 < δ)
 
 /-- Left and right increments of the ramp bracket the closed-band collision mass. -/
 theorem collision_ramp_secants {I : Type*} (s : Finset I) (x c : I → ℝ)
-    (hc : ∀ i ∈ s, 0 ≤ c i) (r : ℝ) {δ : ℝ} (hδ : 0 < δ) :
+    (hc : ∀ i ∈ s, ∀ j ∈ s, 0 ≤ c i*c j) (r : ℝ) {δ : ℝ} (hδ : 0 < δ) :
     let ramp := fun z : ℝ × ℝ => max 0 (z.1-z.2)
     let L := fun t => ∑ i ∈ s, ∑ j ∈ s, c i*c j*ramp (t,|x i-x j|)
     L r-L (r-δ) ≤ δ*nearCollisionMass s x c r ∧
@@ -63,23 +63,40 @@ theorem collision_ramp_secants {I : Type*} (s : Finset I) (x c : I → ℝ)
     apply sum_le_sum
     intro j hj
     have h := mul_le_mul_of_nonneg_left (ramp_left_le r |x i-x j| δ hδ)
-      (mul_nonneg (hc i hi) (hc j hj))
+      (hc i hi j hj)
     simpa only [mul_ite,ite_mul,mul_zero,zero_mul,mul_comm δ] using h
   · apply sum_le_sum
     intro i hi
     apply sum_le_sum
     intro j hj
     have h := mul_le_mul_of_nonneg_left (ramp_right_ge r |x i-x j| δ hδ)
-      (mul_nonneg (hc i hi) (hc j hj))
+      (hc i hi j hj)
     simpa only [mul_ite,ite_mul,mul_zero,zero_mul,mul_comm δ] using h
 
 /-- Finiteness gives a nonzero interval on which the right quotient is exact, even for signed weights. -/
 theorem collision_ramp_exact_right {I : Type*} (s : Finset I) (x c : I → ℝ) (r : ℝ) :
     let ramp := fun z : ℝ × ℝ => max 0 (z.1-z.2)
     let L := fun t => ∑ i ∈ s, ∑ j ∈ s, c i*c j*ramp (t,|x i-x j|)
-    ∃ δ₀ : ℝ, 0 < δ₀ ∧ ∀ δ : ℝ, 0 < δ → δ ≤ δ₀ →
-      L (r+δ)-L r = δ*nearCollisionMass s x c r := by
+    (∀ δ : ℝ, 0 < δ → (∀ i ∈ s, ∀ j ∈ s, |x i-x j|≤r ∨ r+δ≤|x i-x j|) →
+      L (r+δ)-L r = δ*nearCollisionMass s x c r) ∧
+    (∃ δ₀ : ℝ, 0 < δ₀ ∧ ∀ δ : ℝ, 0 < δ → δ ≤ δ₀ →
+      L (r+δ)-L r = δ*nearCollisionMass s x c r) := by
   intro ramp L
+  have shellFree (δ : ℝ) (hδ : 0 < δ)
+      (hgap : ∀ i ∈ s, ∀ j ∈ s, |x i-x j|≤r ∨ r+δ≤|x i-x j|) :
+      L (r+δ)-L r = δ*nearCollisionMass s x c r := by
+    change rampCollisionMass s x c (r+δ)-rampCollisionMass s x c r =
+      δ*nearCollisionMass s x c r
+    unfold rampCollisionMass nearCollisionMass
+    simp_rw [← sum_sub_distrib,← mul_sub,mul_sum]
+    apply sum_congr rfl
+    intro i hi
+    apply sum_congr rfl
+    intro j hj
+    have h := congrArg (fun v : ℝ => c i*c j*v)
+      (ramp_right_eq r |x i-x j| δ hδ (hgap i hi j hj))
+    simpa only [mul_ite,ite_mul,mul_zero,zero_mul,mul_comm δ] using h
+  refine ⟨shellFree,?_⟩
   classical
   let outer := (s ×ˢ s).filter (fun ij => r < |x ij.1-x ij.2|)
   let gaps := outer.image (fun ij => |x ij.1-x ij.2|-r)
@@ -96,24 +113,15 @@ theorem collision_ramp_exact_right {I : Type*} (s : Finset I) (x c : I → ℝ) 
       exact sub_pos.mpr (mem_filter.mp hij).2
   refine ⟨δ₀,hδ₀,?_⟩
   intro δ hδ hδle
-  change rampCollisionMass s x c (r+δ)-rampCollisionMass s x c r =
-    δ*nearCollisionMass s x c r
-  unfold rampCollisionMass nearCollisionMass
-  simp_rw [← sum_sub_distrib,← mul_sub,mul_sum]
-  apply sum_congr rfl
-  intro i hi
-  apply sum_congr rfl
-  intro j hj
-  have hgap : |x i-x j|≤r ∨ r+δ≤|x i-x j| := by
-    by_cases hd : |x i-x j|≤r
-    · exact Or.inl hd
-    · right
-      have hm : |x i-x j|-r ∈ D := mem_insert_of_mem
-        (mem_image.mpr ⟨(i,j),mem_filter.mpr ⟨mem_product.mpr ⟨hi,hj⟩,lt_of_not_ge hd⟩,rfl⟩)
-      have hmin : δ₀ ≤ |x i-x j|-r := D.min'_le _ hm
-      linarith
-  have h := congrArg (fun v : ℝ => c i*c j*v) (ramp_right_eq r |x i-x j| δ hδ hgap)
-  simpa only [mul_ite,ite_mul,mul_zero,zero_mul,mul_comm δ] using h
+  apply shellFree δ hδ
+  intro i hi j hj
+  by_cases hd : |x i-x j|≤r
+  · exact Or.inl hd
+  · right
+    have hm : |x i-x j|-r ∈ D := mem_insert_of_mem
+      (mem_image.mpr ⟨(i,j),mem_filter.mpr ⟨mem_product.mpr ⟨hi,hj⟩,lt_of_not_ge hd⟩,rfl⟩)
+    have hmin : δ₀ ≤ |x i-x j|-r := D.min'_le _ hm
+    linarith
 
 #print axioms collision_ramp_secants
 #print axioms collision_ramp_exact_right

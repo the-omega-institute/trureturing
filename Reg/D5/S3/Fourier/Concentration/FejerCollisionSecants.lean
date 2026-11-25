@@ -33,7 +33,7 @@ namespace Secants
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {I : Type u} (s : Finset I) (x c : I → ℝ),
-    (∀ i ∈ s, 0 ≤ c i) → ∀ (r : ℝ) {δ : ℝ}, 0 < δ →
+    (∀ i ∈ s, ∀ j ∈ s, 0 ≤ c i*c j) → ∀ (r : ℝ) {δ : ℝ}, 0 < δ →
     let ramp := R.readout () ()
     let L := fun t => ∑ i ∈ s, ∑ j ∈ s, c i*c j*ramp (t,|x i-x j|)
     L r-L (r-δ) ≤ δ*nearCollisionMass s x c r ∧
@@ -43,7 +43,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro law
   let i := ULift.up.{u} ()
   have hz := (law {i} (fun _ => 0) (fun _ => 1)
-    (fun _ _ => zero_le_one) 1 (δ := 1) zero_lt_one).2
+    (fun _ _ _ _ => by norm_num) 1 (δ := 1) zero_lt_one).2
   norm_num [rejected,realize,nearCollisionMass] at hz
 
 def evidence : Registration arena.{u} (type_of% @collision_ramp_secants.{u}) where
@@ -95,13 +95,15 @@ abbrev arena : Arena where
   Law R := ∀ {I : Type u} (s : Finset I) (x c : I → ℝ) (r : ℝ),
     let ramp := R.readout () ()
     let L := fun t => ∑ i ∈ s, ∑ j ∈ s, c i*c j*ramp (t,|x i-x j|)
-    ∃ δ₀ : ℝ, 0 < δ₀ ∧ ∀ δ : ℝ, 0 < δ → δ ≤ δ₀ →
-      L (r+δ)-L r = δ*nearCollisionMass s x c r
+    (∀ δ : ℝ, 0 < δ → (∀ i ∈ s, ∀ j ∈ s, |x i-x j|≤r ∨ r+δ≤|x i-x j|) →
+      L (r+δ)-L r = δ*nearCollisionMass s x c r) ∧
+    (∃ δ₀ : ℝ, 0 < δ₀ ∧ ∀ δ : ℝ, 0 < δ → δ ≤ δ₀ →
+      L (r+δ)-L r = δ*nearCollisionMass s x c r)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro law
   let i := ULift.up.{u} ()
-  obtain ⟨δ₀,hδ₀,h⟩ := law {i} (fun _ => 0) (fun _ => 1) 1
+  obtain ⟨δ₀,hδ₀,h⟩ := (law {i} (fun _ => 0) (fun _ => 1) 1).2
   have he := h δ₀ hδ₀ le_rfl
   have hz : (0:ℝ) = δ₀ := by
     simpa [rejected,realize,nearCollisionMass] using he
