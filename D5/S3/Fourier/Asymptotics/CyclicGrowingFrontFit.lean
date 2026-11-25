@@ -23,7 +23,7 @@ noncomputable section
 
 set_option autoImplicit false
 
-private theorem scaled_sin_sq_error (x u : ℝ) (hu : u ≠ 0) :
+theorem scaled_sin_sq_error (x u : ℝ) (hu : u ≠ 0) :
     |(1 - Real.cos (x * u) ^ 2) / u ^ 2 - x ^ 2| ≤ x ^ 4 * u ^ 2 / 3 := by
   let z := x * u
   have hs : |Real.sin z - z| ≤ |z| ^ 3 / 6 :=
