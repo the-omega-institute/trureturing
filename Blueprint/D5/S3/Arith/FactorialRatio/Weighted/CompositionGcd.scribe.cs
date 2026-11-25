@@ -67,7 +67,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("full-ring-factorial-norm"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.fullRingFactorialIdeal_norm"),
+                DeclarationHandle.Create(Prefix + "fullRingFactorialIdeal_norm"),
                 H("The actual Euler ideal norm at a finite cutoff"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -75,7 +75,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("norm-complement-weighted-value"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.complement_eq_weightedValue"),
+                DeclarationHandle.Create(Prefix + "complement_eq_weightedValue"),
                 H("The actual integer complement"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -131,7 +131,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("rational-prime-ideal"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.rationalPrimeIdeal"),
+                DeclarationHandle.Create(Prefix + "rationalPrimeIdeal"),
                 H("Rational prime ideal"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -139,7 +139,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("rational-prime-ideal-nonzero"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.rationalPrimeIdeal_ne_bot"),
+                DeclarationHandle.Create(Prefix + "rationalPrimeIdeal_ne_bot"),
                 H("A rational prime generates a nonzero ideal"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -147,7 +147,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("rational-prime-ideal-prime"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.rationalPrimeIdeal_isPrime"),
+                DeclarationHandle.Create(Prefix + "rationalPrimeIdeal_isPrime"),
                 H("The rational prime ideal is prime"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -155,7 +155,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("primes-above"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.primesAbove"),
+                DeclarationHandle.Create(Prefix + "primesAbove"),
                 H("Primes over a rational prime"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -163,7 +163,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("norm-weight"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.normWeight"),
+                DeclarationHandle.Create(Prefix + "normWeight"),
                 H("Residue-degree norm weights"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -171,7 +171,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("residue-factorial-ideal"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.residueFactorialIdeal"),
+                DeclarationHandle.Create(Prefix + "residueFactorialIdeal"),
                 H("Euler ideal in rational coordinates"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -179,7 +179,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("full-ring-factorial-ideal"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.fullRingFactorialIdeal"),
+                DeclarationHandle.Create(Prefix + "fullRingFactorialIdeal"),
                 H("Full-ring Euler factorial ideal"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -187,7 +187,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("norm-complement"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.normComplement"),
+                DeclarationHandle.Create(Prefix + "normComplement"),
                 H("Integral norm complement"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -227,7 +227,7 @@ internal sealed class CompositionGcdDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("number-field-norm-and-complement"),
-                DeclarationHandle.Create(Prefix + "NumberFieldNorm.number_field_norm_and_complement"),
+                DeclarationHandle.Create(Prefix + "number_field_norm_and_complement"),
                 H("Actual ideal norms and complementary composition gcds"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
