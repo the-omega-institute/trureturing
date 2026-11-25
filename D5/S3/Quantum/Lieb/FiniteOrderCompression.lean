@@ -141,7 +141,7 @@ namespace D5.S3.Quantum.Lieb.FiniteOrderCompression
 open LownerHeinzTheorem JensenOperatorInequality
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
-def matrixCoordinates {ι : Type*} [Fintype ι] [DecidableEq ι]
+private def matrixCoordinates {ι : Type*} [Fintype ι] [DecidableEq ι]
     {K : Type*} [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteSpace K]
     (b : OrthonormalBasis ι ℂ K) : L K ≃⋆ₐ[ℂ] Matrix ι ι ℂ :=
   b.repr.conjStarAlgEquiv.trans Matrix.toEuclideanCLM.symm
@@ -160,19 +160,51 @@ private theorem coordinates_cfc {ι : Type*} [Fintype ι] [DecidableEq ι] [None
   rw [StarAlgEquiv.symm_apply_apply]
   simpa only [StarAlgEquiv.symm_apply_apply] using h.symm
 
-def doubledBasis (n : ℕ) :
+private def doubledBasis (n : ℕ) :
     OrthonormalBasis (Fin (2 * n)) ℂ (HSum (EuclideanSpace ℂ (Fin n))) :=
   (Pi.orthonormalBasis (fun _ : Fin 2 => EuclideanSpace.basisFun (Fin n) ℂ)).reindex
     ((Equiv.sigmaEquivProd (Fin 2) (Fin n)).trans finProdFinEquiv)
 
 /-- The matrix obtained by compressing the actual operator represented by `X`
 to the first copy of `ℂⁿ`, using the orthonormal doubled coordinate basis. -/
-def firstCorner (n : ℕ) (X : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ) :
+private def firstCorner (n : ℕ) (X : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
   (Matrix.toEuclideanCLM (n := Fin n) (𝕜 := ℂ)).symm
     (hsumProj (EuclideanSpace ℂ (Fin n)) 0 ∘L
       (matrixCoordinates (doubledBasis n)).symm X ∘L
       hsumIncl (EuclideanSpace ℂ (Fin n)) 0)
+
+private theorem coordinates_entry {ι : Type*} [Fintype ι] [DecidableEq ι]
+    {K : Type*} [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteSpace K]
+    (b : OrthonormalBasis ι ℂ K) (X : L K) (i j : ι) :
+    matrixCoordinates b X i j = inner ℂ (b i) (X (b j)) := by
+  simp [matrixCoordinates, Matrix.toEuclideanCLM,
+    LinearMap.toMatrixOrthonormal_apply_apply, EuclideanSpace.basisFun,
+    LinearIsometryEquiv.conjStarAlgEquiv_apply_apply,
+    ← OrthonormalBasis.repr_apply_apply]
+  change inner ℂ (EuclideanSpace.single i 1)
+    (b.repr (X (b.repr.symm (EuclideanSpace.single j 1)))) = _
+  rw [b.repr_symm_single, EuclideanSpace.inner_single_left]
+  simpa only [map_one, one_mul] using (b.repr_apply_apply (X (b j)) i)
+
+private theorem firstCorner_eq (n : ℕ)
+    (X : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ) :
+    firstCorner n X = X.submatrix (fun i => finProdFinEquiv (0, i))
+      (fun i => finProdFinEquiv (0, i)) := by
+  ext i j
+  let Y := (matrixCoordinates (doubledBasis n)).symm X
+  change matrixCoordinates (EuclideanSpace.basisFun (Fin n) ℂ)
+    (hsumProj (EuclideanSpace ℂ (Fin n)) 0 ∘L Y ∘L
+      hsumIncl (EuclideanSpace ℂ (Fin n)) 0) i j = _
+  rw [coordinates_entry]
+  have hX := coordinates_entry (doubledBasis n) Y
+    (finProdFinEquiv (0, i)) (finProdFinEquiv (0, j))
+  rw [StarAlgEquiv.apply_symm_apply] at hX
+  change _ = X (finProdFinEquiv (0, i)) (finProdFinEquiv (0, j))
+  rw [hX]
+  simp [doubledBasis, OrthonormalBasis.reindex_apply, Pi.orthonormalBasis_apply,
+    hsumIncl, hsumEquiv, hsumProj, ContinuousLinearMap.comp_apply,
+    EuclideanSpace.basisFun_apply, PiLp.inner_apply]
 
 /-- Finite matrix order of exactly `2n` suffices for the first-corner inequality.
 This assertion includes the zero-dimensional and singular blocks. -/
@@ -181,7 +213,11 @@ theorem matrix_monotone_corner (n : ℕ) (f : ℝ → ℝ)
     (hmono : ∀ (A B : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ),
       A.PosSemidef → B.PosSemidef → A ≤ B → cfc f A ≤ cfc f B)
     (X : Matrix (Fin (2 * n)) (Fin (2 * n)) ℂ) (hX : X.PosSemidef) :
-    firstCorner n (cfc f X) ≤ cfc f (firstCorner n X) := by
+    (cfc f X).submatrix (fun i : Fin n => finProdFinEquiv (0, i))
+        (fun i : Fin n => finProdFinEquiv (0, i)) ≤
+      cfc f (X.submatrix (fun i : Fin n => finProdFinEquiv (0, i))
+        (fun i : Fin n => finProdFinEquiv (0, i))) := by
+  rw [← firstCorner_eq n (cfc f X), ← firstCorner_eq n X]
   classical
   by_cases hn : n = 0
   · subst n
