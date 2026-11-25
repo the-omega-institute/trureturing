@@ -18,10 +18,11 @@ import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables01.Table145
 
 set_option maxRecDepth 200000
 set_option maxHeartbeats 0
+set_option Elab.async false
 
 namespace D5.S3.Arith.PrimitiveRoot.SmallPrimes
 
-private def b0318c00 : List Row := [
+private noncomputable def b0318c00 : List Row := [
   .c 3, .c 71, .c 17, .c 3, .c 1429, .c 43, .c 3, .p pv3 [pv2,pv23,pv7079], .c 5, .c 3, .c 1481,
   .p pv7 [pv2,pv3,pv5,pv17,pv1277], .c 3, .c 5, .p pv5 [pv2,pv3,pv11,pv59,pv223], .c 3,
   .p pv13 [pv2,pv5,pv19,pv13711], .c 101, .c 3, .c 11, .c 7, .c 3, .p pv5 [pv2,pv113,pv11527],
@@ -41,7 +42,7 @@ private def b0318c00 : List Row := [
 private theorem h0318c00 : checkBlock 2605059 128 b0318c00 = true := by
   decide +kernel
 
-private def b0318c01 : List Row := [
+private noncomputable def b0318c01 : List Row := [
   .c 5, .c 3, .p pv13 [pv2,pv17,pv19,pv37,pv109], .c 53, .c 3, .c 5, .c 43, .c 3, .c 29, .c 31,
   .c 3, .c 7, .c 11, .c 3, .c 13, .c 5, .c 3, .p pv2 [pv2,pv23,pv28319], .c 7, .c 3, .c 5, .c 457,
   .c 3, .c 11, .p pv2 [pv2,pv3,pv67,pv6481], .c 3, .c 167, .c 13, .c 3,
@@ -60,7 +61,7 @@ private def b0318c01 : List Row := [
 private theorem h0318c01 : checkBlock 2605315 128 b0318c01 = true := by
   decide +kernel
 
-private def b0318c02 : List Row := [
+private noncomputable def b0318c02 : List Row := [
   .c 509, .c 17, .c 3, .c 13, .p pv7 [pv2,pv3,pv23,pv79,pv239], .c 3, .c 1019, .c 5, .c 3, .c 7,
   .c 41, .c 3, .c 5, .c 1217, .c 3, .c 23, .c 7, .c 3, .c 17, .p pv7 [pv2,pv3,pv4021], .c 3,
   .p pv2 [pv2,pv31,pv21013], .c 5, .c 3, .c 83, .c 29, .c 3, .c 5, .p pv2 [pv2,pv3,pv144757],
@@ -78,7 +79,7 @@ private def b0318c02 : List Row := [
 private theorem h0318c02 : checkBlock 2605571 128 b0318c02 = true := by
   decide +kernel
 
-private def b0318c03 : List Row := [
+private noncomputable def b0318c03 : List Row := [
   .c 3, .c 31, .c 19, .c 3, .c 5, .c 13, .c 3, .c 7, .c 43, .c 3, .p pv5 [pv2,pv353,pv3691],
   .p pv59 [pv2,pv3,pv7,pv15511], .c 3, .c 29, .c 5, .c 3, .c 61, .c 149, .c 3, .c 5, .c 11, .c 3,
   .p pv7 [pv2,pv5,pv260587], .c 37, .c 3, .c 23, .c 17, .c 3, .c 7, .c 5, .c 3, .c 11, .c 31,
@@ -97,7 +98,7 @@ private def b0318c03 : List Row := [
 private theorem h0318c03 : checkBlock 2605827 128 b0318c03 = true := by
   decide +kernel
 
-private def b0318c04 : List Row := [
+private noncomputable def b0318c04 : List Row := [
   .c 17, .c 3, .c 11, .c 59, .c 3, .c 7, .c 5, .c 3, .c 67, .c 43, .c 3, .c 5, .c 7, .c 3, .c 139,
   .c 197, .c 3, .c 17, .c 113, .c 3, .c 13, .c 5, .c 3, .p pv3 [pv2,pv7,pv23269], .c 11, .c 3,
   .c 5, .c 857, .c 3, .c 769, .c 29, .c 3, .c 283, .c 7, .c 3, .c 11, .c 5, .c 3, .c 149,
@@ -116,7 +117,7 @@ private def b0318c04 : List Row := [
 private theorem h0318c04 : checkBlock 2606083 128 b0318c04 = true := by
   decide +kernel
 
-private def b0318c05 : List Row := [
+private noncomputable def b0318c05 : List Row := [
   .c 71, .c 269, .c 3, .c 5, .c 61, .c 3, .c 11, .p pv41 [pv2,pv3,pv7,pv7757], .c 3, .c 13, .c 7,
   .c 3, .c 19, .c 5, .c 3, .c 167, .c 911, .c 3, .c 5, .p pv5 [pv2,pv3,pv131,pv829], .c 3, .c 53,
   .c 13, .c 3, .c 7, .c 17, .c 3, .p pv3 [pv2,pv73,pv4463], .c 5, .c 3, .c 1091, .c 7, .c 3, .c 5,
@@ -135,7 +136,7 @@ private def b0318c05 : List Row := [
 private theorem h0318c05 : checkBlock 2606339 128 b0318c05 = true := by
   decide +kernel
 
-private def b0318c06 : List Row := [
+private noncomputable def b0318c06 : List Row := [
   .c 3, .c 7, .c 419, .c 3, .p pv2 [pv2,pv1019,pv1279], .c 5, .c 3, .c 619, .c 7, .c 3, .c 5,
   .c 13, .c 3, .c 103, .c 71, .c 3, .c 17, .c 19, .c 3, .p pv5 [pv2,pv7,pv89,pv523], .c 5, .c 3,
   .c 7, .c 227, .c 3, .c 5, .c 223, .c 3, .p pv2 [pv2,pv5,pv37,pv1409], .c 7, .c 3, .c 41, .c 11,
@@ -153,7 +154,7 @@ private def b0318c06 : List Row := [
 private theorem h0318c06 : checkBlock 2606595 128 b0318c06 = true := by
   decide +kernel
 
-private def b0318c07 : List Row := [
+private noncomputable def b0318c07 : List Row := [
   .c 13, .c 3, .c 5, .c 11, .c 3, .c 1129, .c 7, .c 3, .c 587, .c 1367, .c 3,
   .p pv3 [pv2,pv37,pv8807], .c 5, .c 3, .c 11, .p pv11 [pv2,pv3,pv5,pv5431], .c 3, .c 5,
   .p pv19 [pv2,pv3,pv251,pv577], .c 3, .c 7, .c 887, .c 3, .c 29, .c 17, .c 3, .c 13, .c 5, .c 3,
@@ -172,7 +173,7 @@ private def b0318c07 : List Row := [
 private theorem h0318c07 : checkBlock 2606851 128 b0318c07 = true := by
   decide +kernel
 
-private def b0318c08 : List Row := [
+private noncomputable def b0318c08 : List Row := [
   .p pv2 [pv2,pv1303553], .p pv2 [pv2,pv3,pv7,pv41,pv757], .c 3, .c 83, .c 5, .c 3, .c 23, .c 11,
   .c 3, .c 5, .c 677, .c 3, .c 31, .c 43, .c 3, .c 13, .p pv3 [pv2,pv3,pv241,pv601], .c 3, .c 7,
   .c 5, .c 3, .c 41, .c 59, .c 3, .c 5, .c 7, .c 3, .c 19, .c 13, .c 3,
@@ -191,7 +192,7 @@ private def b0318c08 : List Row := [
 private theorem h0318c08 : checkBlock 2607107 128 b0318c08 = true := by
   decide +kernel
 
-private def b0318c09 : List Row := [
+private noncomputable def b0318c09 : List Row := [
   .c 3, .c 5, .c 7, .c 3, .c 13, .p pv2 [pv2,pv3,pv23,pv47,pv67], .c 3, .p pv3 [pv2,pv107,pv1523],
   .c 31, .c 3, .p pv5 [pv2,pv263,pv4957], .c 5, .c 3, .c 19, .c 43, .c 3, .c 5, .c 13, .c 3,
   .c 277, .p pv3 [pv2,pv3,pv7,pv62081], .c 3, .c 11, .c 7, .c 3, .p pv2 [pv2,pv651853], .c 5,
@@ -211,7 +212,7 @@ private def b0318c09 : List Row := [
 private theorem h0318c09 : checkBlock 2607363 128 b0318c09 = true := by
   decide +kernel
 
-private def b0318c10 : List Row := [
+private noncomputable def b0318c10 : List Row := [
   .c 7, .c 3, .c 59, .c 5, .c 3, .c 173, .c 13, .c 3, .c 5, .p pv11 [pv2,pv3,pv19,pv11437], .c 3,
   .c 41, .c 373, .c 3, .c 7, .c 11, .c 3, .c 53, .c 5, .c 3, .p pv2 [pv2,pv31,pv137,pv307], .c 7,
   .c 3, .c 5, .c 181, .c 3, .c 11, .p pv5 [pv2,pv3,pv179,pv607], .c 3, .p pv2 [pv2,pv479,pv1361],
@@ -229,7 +230,7 @@ private def b0318c10 : List Row := [
 private theorem h0318c10 : checkBlock 2607619 128 b0318c10 = true := by
   decide +kernel
 
-private def b0318c11 : List Row := [
+private noncomputable def b0318c11 : List Row := [
   .c 5, .c 461, .c 3, .c 1279, .c 19, .c 3, .c 41, .c 47, .c 3, .c 397, .c 5, .c 3, .c 7, .c 23,
   .c 3, .c 5, .c 43, .c 3, .c 107, .c 7, .c 3, .c 13, .c 17, .c 3, .c 631, .c 5, .c 3,
   .p pv3 [pv2,pv41,pv7951], .c 739, .c 3, .c 5, .c 31, .c 3, .c 7, .c 13, .c 3, .c 23, .c 331,
@@ -248,7 +249,7 @@ private def b0318c11 : List Row := [
 private theorem h0318c11 : checkBlock 2607875 128 b0318c11 = true := by
   decide +kernel
 
-private def b0318c12 : List Row := [
+private noncomputable def b0318c12 : List Row := [
   .c 3, .c 11, .c 5, .c 3, .p pv2 [pv2,pv13,pv100313], .c 251, .c 3, .c 5,
   .p pv2 [pv2,pv3,pv48299], .c 3, .c 7, .c 113, .c 3, .c 17, .p pv3 [pv2,pv3,pv7,pv62099], .c 3,
   .c 163, .c 5, .c 3, .p pv3 [pv2,pv19,pv17159], .c 47, .c 3, .c 5, .c 11, .c 3,
@@ -267,7 +268,7 @@ private def b0318c12 : List Row := [
 private theorem h0318c12 : checkBlock 2608131 128 b0318c12 = true := by
   decide +kernel
 
-private def b0318c13 : List Row := [
+private noncomputable def b0318c13 : List Row := [
   .p pv3 [pv2,pv3,pv11,pv39521], .c 3, .c 181, .p pv5 [pv2,pv3,pv251,pv433], .c 3, .c 11, .c 347,
   .c 3, .c 7, .c 5, .c 3, .p pv3 [pv2,pv11,pv29641], .c 13, .c 3, .c 5, .c 7, .c 3, .c 61, .c 43,
   .c 3, .c 97, .c 17, .c 3, .c 31, .c 5, .c 3, .p pv7 [pv2,pv7,pv186317], .c 11, .c 3, .c 5,
@@ -286,7 +287,7 @@ private def b0318c13 : List Row := [
 private theorem h0318c13 : checkBlock 2608387 128 b0318c13 = true := by
   decide +kernel
 
-private def b0318c14 : List Row := [
+private noncomputable def b0318c14 : List Row := [
   .c 19, .c 5, .c 3, .p pv3 [pv2,pv7,pv37,pv1259], .c 643, .c 3, .c 5, .c 379, .c 3, .c 11,
   .p pv3 [pv2,pv3,pv7,pv19,pv467], .c 3, .c 17, .c 7, .c 3, .c 743, .c 5, .c 3, .c 89, .c 19,
   .c 3, .c 5, .c 397, .c 3, .c 199, .p pv5 [pv2,pv3,pv149,pv1459], .c 3, .c 7,
@@ -305,7 +306,7 @@ private def b0318c14 : List Row := [
 private theorem h0318c14 : checkBlock 2608643 128 b0318c14 = true := by
   decide +kernel
 
-private def b0318c15 : List Row := [
+private noncomputable def b0318c15 : List Row := [
   .c 3, .c 233, .c 11, .c 3, .c 7, .c 19, .c 3, .c 23, .c 5, .c 3, .p pv11 [pv2,pv13,pv100343],
   .c 7, .c 3, .c 5, .c 29, .c 3, .c 13, .p pv5 [pv2,pv3,pv217411], .c 3, .c 421, .c 17, .c 3,
   .p pv5 [pv2,pv7,pv331,pv563], .c 5, .c 3, .c 7, .p pv7 [pv2,pv3,pv5,pv17393], .c 3, .c 5, .c 13,
@@ -323,7 +324,7 @@ private def b0318c15 : List Row := [
 private theorem h0318c15 : checkBlock 2608899 128 b0318c15 = true := by
   decide +kernel
 
-private def b0318c16 : List Row := [
+private noncomputable def b0318c16 : List Row := [
   .c 5, .c 3, .c 7, .c 1249, .c 3, .c 5, .c 11, .c 3, .p pv2 [pv2,pv5,pv113,pv2309], .c 7, .c 3,
   .c 17, .c 71, .c 3, .c 157, .c 5, .c 3, .c 11, .c 13, .c 3, .c 5, .c 43, .c 3, .c 7, .c 37,
   .c 3, .p pv5 [pv2,pv1304603], .p pv23 [pv2,pv3,pv7,pv31,pv167], .c 3, .c 19, .c 5, .c 3,
@@ -343,7 +344,7 @@ private def b0318c16 : List Row := [
 private theorem h0318c16 : checkBlock 2609155 128 b0318c16 = true := by
   decide +kernel
 
-private def b0318c17 : List Row := [
+private noncomputable def b0318c17 : List Row := [
   .c 7, .p pv2 [pv2,pv3,pv13,pv43,pv389], .c 3, .p pv3 [pv2,pv439,pv743], .c 23, .c 3,
   .p pv5 [pv2,pv19,pv68669], .c 5, .c 3, .c 1069, .c 11, .c 3, .c 5, .c 83, .c 3, .c 19,
   .p pv3 [pv2,pv3,pv11,pv23,pv191], .c 3, .c 139, .c 17, .c 3, .c 7, .c 5, .c 3, .c 271, .c 1031,
@@ -362,7 +363,7 @@ private def b0318c17 : List Row := [
 private theorem h0318c17 : checkBlock 2609411 128 b0318c17 = true := by
   decide +kernel
 
-private def b0318c18 : List Row := [
+private noncomputable def b0318c18 : List Row := [
   .c 3, .c 19, .p pv11 [pv2,pv3,pv5,pv7,pv17,pv43], .c 3, .c 5, .c 7, .c 3, .c 29,
   .p pv2 [pv2,pv3,pv434947], .c 3, .c 17, .c 521, .c 3, .p pv2 [pv2,pv787,pv829], .c 5, .c 3,
   .p pv2 [pv2,pv7,pv13,pv1103], .p pv2 [pv2,pv3,pv5,pv8699], .c 3, .c 5, .c 19, .c 3, .c 13,
@@ -380,7 +381,7 @@ private def b0318c18 : List Row := [
 private theorem h0318c18 : checkBlock 2609667 128 b0318c18 = true := by
   decide +kernel
 
-private def b0318c19 : List Row := [
+private noncomputable def b0318c19 : List Row := [
   .c 79, .c 3, .c 457, .c 7, .c 3, .c 967, .c 5, .c 3, .c 193, .c 101, .c 3, .c 5,
   .p pv2 [pv2,pv3,pv61,pv2377], .c 3, .c 419, .p pv7 [pv2,pv3,pv31,pv877], .c 3, .c 7, .c 11,
   .c 3, .p pv2 [pv2,pv1304981], .c 5, .c 3, .c 73, .c 7, .c 3, .c 5, .c 127, .c 3, .c 11, .c 31,
@@ -398,7 +399,7 @@ private def b0318c19 : List Row := [
 private theorem h0318c19 : checkBlock 2609923 128 b0318c19 = true := by
   decide +kernel
 
-private def b0318c20 : List Row := [
+private noncomputable def b0318c20 : List Row := [
   .c 11, .c 7, .c 3, .c 5, .c 113, .c 3, .p pv11 [pv2,pv5,pv11,pv61,pv389],
   .p pv5 [pv2,pv3,pv13,pv47,pv89], .c 3, .c 17, .p pv3 [pv2,pv3,pv48337], .c 3, .c 29, .c 5, .c 3,
   .c 7, .p pv3 [pv2,pv3,pv5,pv167,pv521], .c 3, .c 5, .c 1489, .c 3, .p pv2 [pv2,pv5,pv19,pv6869],
@@ -417,7 +418,7 @@ private def b0318c20 : List Row := [
 private theorem h0318c20 : checkBlock 2610179 128 b0318c20 = true := by
   decide +kernel
 
-private def b0318c21 : List Row := [
+private noncomputable def b0318c21 : List Row := [
   .c 3, .c 131, .c 13, .c 3, .c 11, .c 5, .c 3, .p pv3 [pv2,pv19,pv31,pv277],
   .p pv41 [pv2,pv3,pv5,pv5801], .c 3, .c 5, .c 71, .c 3, .c 7, .p pv3 [pv2,pv3,pv53,pv8209], .c 3,
   .c 19, .c 17, .c 3, .p pv3 [pv2,pv326309], .c 5, .c 3, .c 31, .c 347, .c 3, .c 5, .c 11, .c 3,
@@ -437,7 +438,7 @@ private def b0318c21 : List Row := [
 private theorem h0318c21 : checkBlock 2610435 128 b0318c21 = true := by
   decide +kernel
 
-private def b0318c22 : List Row := [
+private noncomputable def b0318c22 : List Row := [
   .c 59, .c 3, .c 5, .c 1021, .c 3, .p pv2 [pv2,pv5,pv26107], .c 211, .c 3, .c 11, .c 47, .c 3,
   .c 7, .c 5, .c 3, .p pv11 [pv2,pv11,pv118669], .p pv43 [pv2,pv3,pv5,pv7,pv37], .c 3, .c 5, .c 7,
   .c 3, .c 521, .c 19, .c 3, .p pv3 [pv2,pv163171], .c 61, .c 3, .c 173, .c 5, .c 3, .c 101,
@@ -456,7 +457,7 @@ private def b0318c22 : List Row := [
 private theorem h0318c22 : checkBlock 2610691 128 b0318c22 = true := by
   decide +kernel
 
-private def b0318c23 : List Row := [
+private noncomputable def b0318c23 : List Row := [
   .c 103, .c 11, .c 3, .p pv3 [pv2,pv326369], .c 5, .c 3, .c 13, .c 19, .c 3, .c 5,
   .p pv5 [pv2,pv3,pv435161], .c 3, .c 11, .p pv17 [pv2,pv3,pv7,pv13,pv797], .c 3,
   .p pv3 [pv2,pv139,pv587], .c 7, .c 3, .c 23, .c 5, .c 3, .p pv2 [pv2,pv652747], .c 47, .c 3,
@@ -476,7 +477,7 @@ private def b0318c23 : List Row := [
 private theorem h0318c23 : checkBlock 2610947 128 b0318c23 = true := by
   decide +kernel
 
-private def b0318c24 : List Row := [
+private noncomputable def b0318c24 : List Row := [
   .c 3, .c 5, .p pv5 [pv2,pv3,pv13,pv11159], .c 3, .p pv2 [pv2,pv5,pv7,pv73], .c 11, .c 3, .c 7,
   .c 13, .c 3, .c 31, .c 5, .c 3, .p pv2 [pv2,pv107,pv6101], .c 7, .c 3, .c 5,
   .p pv11 [pv2,pv3,pv23,pv9461], .c 3, .c 283, .c 151, .c 3, .c 29, .c 41, .c 3, .c 907, .c 5,
@@ -494,7 +495,7 @@ private def b0318c24 : List Row := [
 private theorem h0318c24 : checkBlock 2611203 128 b0318c24 = true := by
   decide +kernel
 
-private def b0318c25 : List Row := [
+private noncomputable def b0318c25 : List Row := [
   .c 67, .c 3, .c 421, .c 5, .c 3, .c 7, .c 31, .c 3, .c 5, .c 11, .c 3, .p pv3 [pv2,pv5,pv65287],
   .c 7, .c 3, .p pv5 [pv2,pv1305743], .c 17, .c 3, .c 19, .c 5, .c 3, .c 11, .c 127, .c 3, .c 5,
   .p pv2 [pv2,pv3,pv17,pv25603], .c 3, .c 7, .p pv5 [pv2,pv3,pv19,pv23,pv83], .c 3, .c 59, .c 43,
@@ -513,7 +514,7 @@ private def b0318c25 : List Row := [
 private theorem h0318c25 : checkBlock 2611459 128 b0318c25 = true := by
   decide +kernel
 
-private def b0318c26 : List Row := [
+private noncomputable def b0318c26 : List Row := [
   .c 5, .c 241, .c 3, .c 7, .p pv3 [pv2,pv3,pv435287], .c 3, .c 17, .p pv11 [pv2,pv3,pv7,pv2591],
   .c 3, .p pv2 [pv2,pv652933], .c 5, .c 3, .c 13, .c 11, .c 3, .c 5, .c 131, .c 3,
   .p pv7 [pv2,pv5,pv31,pv337], .c 59, .c 3, .c 563, .c 19, .c 3, .c 7, .c 5, .c 3, .c 29, .c 103,
@@ -532,7 +533,7 @@ private def b0318c26 : List Row := [
 private theorem h0318c26 : checkBlock 2611715 128 b0318c26 = true := by
   decide +kernel
 
-private def b0318c27 : List Row := [
+private noncomputable def b0318c27 : List Row := [
   .c 3, .c 7, .c 5, .c 3, .p pv2 [pv2,pv37,pv47,pv751], .p pv2 [pv2,pv3,pv5,pv7,pv691], .c 3,
   .c 5, .c 7, .c 3, .p pv13 [pv2,pv5,pv269,pv971], .c 613, .c 3, .p pv2 [pv2,pv652999], .c 13,
   .c 3, .p pv2 [pv2,pv1306001], .c 5, .c 3, .c 127, .c 181, .c 3, .c 5,
@@ -551,7 +552,7 @@ private def b0318c27 : List Row := [
 private theorem h0318c27 : checkBlock 2611971 128 b0318c27 = true := by
   decide +kernel
 
-private def b0318c28 : List Row := [
+private noncomputable def b0318c28 : List Row := [
   .c 139, .c 3, .c 811, .c 13, .c 3, .c 17, .c 7, .c 3, .p pv2 [pv2,pv1306121], .c 5, .c 3,
   .p pv3 [pv2,pv23,pv14197], .p pv11 [pv2,pv3,pv5,pv43], .c 3, .c 5, .p pv11 [pv2,pv3,pv27211],
   .c 3, .c 809, .c 67, .c 3, .c 7, .c 11, .c 3, .c 199, .c 5, .c 3, .c 569, .c 7, .c 3, .c 5,
@@ -572,7 +573,7 @@ private def b0318c28 : List Row := [
 private theorem h0318c28 : checkBlock 2612227 128 b0318c28 = true := by
   decide +kernel
 
-private def b0318c29 : List Row := [
+private noncomputable def b0318c29 : List Row := [
   .p pv2 [pv2,pv1306241], .c 5, .c 3, .c 11, .c 7, .c 3, .c 5, .p pv5 [pv2,pv3,pv37,pv1471], .c 3,
   .c 23, .p pv3 [pv2,pv3,pv145139], .c 3, .p pv2 [pv2,pv13,pv89,pv1129], .c 17, .c 3, .c 761,
   .c 5, .c 3, .c 7, .p pv17 [pv2,pv3,pv5,pv41,pv59], .c 3, .c 5, .c 1013, .c 3, .c 67, .c 7, .c 3,
@@ -590,7 +591,7 @@ private def b0318c29 : List Row := [
 private theorem h0318c29 : checkBlock 2612483 128 b0318c29 = true := by
   decide +kernel
 
-private def b0318c30 : List Row := [
+private noncomputable def b0318c30 : List Row := [
   .c 3, .c 53, .c 7, .c 3, .c 17, .p pv2 [pv2,pv3,pv239,pv911], .c 3, .c 11, .c 5, .c 3,
   .p pv7 [pv2,pv593,pv2203], .c 337, .c 3, .c 5, .c 79, .c 3, .c 7, .c 31, .c 3, .c 23, .c 13,
   .c 3, .c 139, .c 5, .c 3, .p pv2 [pv2,pv653197], .p pv3 [pv2,pv3,pv5,pv9677], .c 3, .c 5, .c 11,
@@ -609,7 +610,7 @@ private def b0318c30 : List Row := [
 private theorem h0318c30 : checkBlock 2612739 128 b0318c30 = true := by
   decide +kernel
 
-private def b0318c31 : List Row := [
+private noncomputable def b0318c31 : List Row := [
   .c 5, .c 3, .p pv7 [pv2,pv1306499], .c 137, .c 3, .c 5, .c 23, .c 3, .p pv2 [pv2,pv5,pv261301],
   .c 13, .c 3, .c 11, .c 17, .c 3, .c 7, .c 5, .c 3, .p pv2 [pv2,pv11,pv59387], .c 317, .c 3,
   .c 5, .c 7, .c 3, .p pv3 [pv2,pv5,pv89,pv367], .p pv2 [pv2,pv3,pv179,pv811], .c 3, .c 107,
@@ -628,11 +629,39 @@ private def b0318c31 : List Row := [
 private theorem h0318c31 : checkBlock 2612995 128 b0318c31 = true := by
   decide +kernel
 
-def rows0318 : List Row :=
-  b0318c00 ++ b0318c01 ++ b0318c02 ++ b0318c03 ++ b0318c04 ++ b0318c05 ++ b0318c06 ++ b0318c07 ++
-  b0318c08 ++ b0318c09 ++ b0318c10 ++ b0318c11 ++ b0318c12 ++ b0318c13 ++ b0318c14 ++ b0318c15 ++
-  b0318c16 ++ b0318c17 ++ b0318c18 ++ b0318c19 ++ b0318c20 ++ b0318c21 ++ b0318c22 ++ b0318c23 ++
-  b0318c24 ++ b0318c25 ++ b0318c26 ++ b0318c27 ++ b0318c28 ++ b0318c29 ++ b0318c30 ++ b0318c31
+noncomputable def rows0318 : List Row :=
+  b0318c00 ++ (
+  b0318c01 ++ (
+  b0318c02 ++ (
+  b0318c03 ++ (
+  b0318c04 ++ (
+  b0318c05 ++ (
+  b0318c06 ++ (
+  b0318c07 ++ (
+  b0318c08 ++ (
+  b0318c09 ++ (
+  b0318c10 ++ (
+  b0318c11 ++ (
+  b0318c12 ++ (
+  b0318c13 ++ (
+  b0318c14 ++ (
+  b0318c15 ++ (
+  b0318c16 ++ (
+  b0318c17 ++ (
+  b0318c18 ++ (
+  b0318c19 ++ (
+  b0318c20 ++ (
+  b0318c21 ++ (
+  b0318c22 ++ (
+  b0318c23 ++ (
+  b0318c24 ++ (
+  b0318c25 ++ (
+  b0318c26 ++ (
+  b0318c27 ++ (
+  b0318c28 ++ (
+  b0318c29 ++ (
+  b0318c30 ++ (
+  b0318c31)))))))))))))))))))))))))))))))
 
 attribute [local irreducible] checkBlock checkRows checkPrime
 

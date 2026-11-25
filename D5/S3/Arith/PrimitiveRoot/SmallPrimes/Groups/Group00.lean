@@ -6,6 +6,7 @@
    utility: kind=checker; basis=consumer=D5/S3/Arith/PrimitiveRoot/Erdos985.erdos985_of_GRH; instance=D5/S3/Arith/PrimitiveRoot/SmallPrimes/Blocks00/Block0000.checked0000
    digest: Adjacent checker successes cover a complete interval of odd slots. -/
 
+import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Checker
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks00.Block0000
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks00.Block0001
 import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks00.Block0002

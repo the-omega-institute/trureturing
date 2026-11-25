@@ -29,6 +29,7 @@ import D5.S3.Arith.PrimitiveRoot.SmallPrimes.Tables02.Table237
 
 set_option maxRecDepth 200000
 set_option maxHeartbeats 0
+set_option Elab.async false
 
 namespace D5.S3.Arith.PrimitiveRoot.SmallPrimes
 
