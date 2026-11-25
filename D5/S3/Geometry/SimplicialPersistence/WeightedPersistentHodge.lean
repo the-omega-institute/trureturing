@@ -351,6 +351,7 @@ variable (φ : ShortComplex.moduleCatMk f d hfd ⟶ ShortComplex.moduleCatMk b e
 private def strictForm (E : Type _) [NormedAddCommGroup E] [InnerProductSpace ℝ E] :
     Omega.PersistentHodge.Form (strictGroup ℝ) (strictSpace E) := ⟨inner ℝ⟩
 
+omit [FiniteDimensional ℝ B] [FiniteDimensional ℝ C] [FiniteDimensional ℝ X] in
 private theorem strictForm_laws (E : Type _) [NormedAddCommGroup E] [InnerProductSpace ℝ E] :
     Omega.PersistentHodge.FormLaws (W := strictWindow φ) (strictForm E) (fun x => 0 ≤ x) := by
   refine Omega.PersistentHodge.FormLaws.intro _ _ ?_ ?_ ?_ ?_ ?_ ?_
@@ -376,6 +377,7 @@ private def strictAdjoints (hi : Function.Injective φ.τ₂) :
   star := fun x => (strictPullbackEquiv φ hi ((restrictedBoundary φ hi).adjoint x)).val
   dstar := d.adjoint
 
+omit [FiniteDimensional ℝ B] [FiniteDimensional ℝ C] [FiniteDimensional ℝ X] in
 private theorem fillingPair_inner (hi : Function.Injective φ.τ₂) (x y : FillingDomain φ) :
     ⟪(fillingPairEquiv φ hi x).val.1, (fillingPairEquiv φ hi y).val.1⟫_ℝ = ⟪x, y⟫_ℝ := rfl
 
@@ -416,6 +418,7 @@ theorem laplacian_eq_zero (hi : Function.Injective φ.τ₂) (x : B) :
     exact nativeEq (criterion.mpr (Omega.And.intro
       (strictEq (congrArg Subtype.val ht)) (strictEq hd)))
 
+omit [FiniteDimensional ℝ B] [FiniteDimensional ℝ C] [FiniteDimensional ℝ X] in
 private theorem strictNull_range (hi : Function.Injective φ.τ₂) (x : B) :
     (strictWindow φ).Null x ↔ x ∈ (restrictedBoundary φ hi).range := by
   constructor
