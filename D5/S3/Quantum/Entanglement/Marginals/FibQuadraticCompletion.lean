@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: A rank-three completion of coherent Fibonacci marginals over one real quadratic radical. -/
+   digest: Rank-three Fibonacci completion with one real square root. -/
 
 import D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks
 import D5.S3.Quantum.Entanglement.Marginals.FibCoherentRank
@@ -31,7 +31,6 @@ private theorem scaled_edge_eq_block (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w
       block (b*(L false false).re - normSq u - normSq w)
         (b*(L true true).re - normSq v - normSq z)
         ((b : ℂ)*L false true - conj u * v - conj w * z) := by
-  let G := L - partialTraceRight (correction b (middleRow u v w z))
   have hdiag (i : Bool) : (↑(L i i).re : ℂ) = L i i := by
     apply Complex.ext
     · simp
@@ -42,7 +41,7 @@ private theorem scaled_edge_eq_block (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w
   ext i j
   have hb0 : (b : ℂ) ≠ 0 := by exact_mod_cast hb.ne'
   fin_cases i <;> fin_cases j <;>
-    simp [G, block, finTwoEquiv, Matrix.vecMulVec_apply, correction, partialTraceRight,
+    simp [block, finTwoEquiv, Matrix.vecMulVec_apply, correction, partialTraceRight,
       middleRow, Complex.ofReal_mul, Complex.ofReal_inv, hdiag, hc,
       ← Complex.mul_conj, Complex.ofReal_sub] <;>
     field_simp <;> ring
@@ -385,7 +384,10 @@ theorem quadratic_rank_le_three (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : 
     linarith
   obtain ⟨ρ₀, _, _, _, _, hcoupling, qρ₀⟩ :=
     (rational_coherent_extendible_iff b L R u v w qL qR qu qv qw).mp he
-  have qz : RationalEntry z₀ := hcoupling ▸ qρ₀ (.inl 0) (.inr true)
+  have qz : RationalEntry z₀ := by
+    dsimp only [z₀]
+    rw [← hcoupling]
+    exact qρ₀ (.inl 0) (.inr true)
   have hc : (correction b (middleRow u v w z₀)).PosSemidef := by
     unfold correction
     exact (posSemidef_vecMulVec_star_self _).smul (inv_nonneg.mpr hb.le)
