@@ -55,7 +55,7 @@ private theorem posTrace_mono {X Y : Matrix n n ℂ} (hX : X.IsHermitian)
   rw [hmass, rtrace_sub] at ht
   linarith [twice_posTrace X hX, twice_posTrace Y hY]
 
-private theorem effect_le_posTrace {X M : Matrix n n ℂ} (hX : X.IsHermitian)
+theorem effect_le_posTrace {X M : Matrix n n ℂ} (hX : X.IsHermitian)
     (hM : 0 ≤ M) (hI : M ≤ 1) : rtrace (M * X) ≤ posTrace X := by
   have h₁ := trace_mul_nonneg_of_posSemidef
     (sub_nonneg.mpr hI).posSemidef (CFC.posPart_nonneg X).posSemidef
@@ -86,7 +86,7 @@ def completeCoefficient {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) : ℝ :=
   sSup (insert 0 (completeRatios N γ orth))
 
-private theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ}
     (hX : X.PosSemidef) : (amp N X).PosSemidef := by
@@ -96,7 +96,7 @@ private theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
   rw [hzero] at hm
   exact hm.posSemidef
 
-private theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (γ : ℝ) {ρ σ : Matrix (R × A) (R × A) ℂ}
     (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) : E γ (amp N ρ) (amp N σ) ≤ E γ ρ σ := by
@@ -124,7 +124,7 @@ private theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
   unfold E
   linarith
 
-private theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
+theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) :
     BddAbove (insert 0 (completeRatios N γ orth)) := by
   refine ⟨1, ?_⟩

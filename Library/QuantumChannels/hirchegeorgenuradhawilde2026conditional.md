@@ -77,6 +77,14 @@ gives the qualitative failure of endpoint monotonicity as a consequence of
 that earlier result. The Lean theorem gives an explicit rational witness at
 $\gamma=2$ with no relative-entropy step. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
 
+`CompleteHockeyStickBasisSupport.result` gives a sufficient condition for a
+unit complete coefficient at every fixed $\gamma>1$. For a finite channel with
+at least two computational basis states, intersect the supports of their
+outputs. If the intersection is zero, equal-marginal witnesses approach
+retention one with a reference of input dimension. The simplex uses Eriksson's
+common-support construction in §6 with input blocks calibrated directly for
+the fixed hockey-stick parameter. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
 ## Faithful-divergence separation
 
 The second bullet of §9, printed p. 72, asks:
