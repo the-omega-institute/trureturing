@@ -118,7 +118,9 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 SubstFormula(),
                 "For every indexed formula φ and substitution vector w:Fin(n1)→Semiterm(L,ξ,n2), "
                     + "the abbreviation subst(φ,w) is exactly app(Rew.subst(w),φ) through the "
-                    + "Rewriting action.",
+                    + "Rewriting action. Under [LCWQ S] and [SyntacticRewriting L S S], φ/[t] expands "
+                    + "to φ ⇜ ![t], which applies subst to φ and the one-entry vector ![t]. For t = &0, "
+                    + "this vector is Matrix.vecCons(fvar(0), Matrix.vecEmpty).",
                 DescribeRole.Definition),
             DescribeEntry(
                 "rewriting-shift",
@@ -145,41 +147,31 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             DescribeEntry(
                 "rewriting-shifts-nil",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_nil",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts_nil",
                 "Shifting an empty formula list stays empty",
                 ShiftsNilFormula(),
-                "The ASCII compatibility selector forwards the source shifts_nil theorem, including its exact LCWQ and Rewriting assumptions.",
+                "Mapping the shift over an empty list returns the empty list.",
                 DescribeRole.Lemma),
             DescribeEntry(
                 "rewriting-shifts-cons",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_cons",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts_cons",
                 "Shifting a cons list shifts its head and tail",
                 ShiftsConsFormula(),
-                "The ASCII compatibility selector forwards the source shifts_cons theorem pointwise over the head and tail.",
+                "The head is shifted once and the list shift is applied recursively to the tail.",
                 DescribeRole.Lemma),
             DescribeEntry(
                 "rewriting-shifts-neg",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_neg",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts_neg",
                 "Shifting a negated formula list commutes with negation",
                 ShiftsNegFormula(),
-                "The ASCII compatibility selector forwards the source shifts_neg theorem for list negation.",
+                "The shift commutes with negation on each member of the list.",
                 DescribeRole.Lemma),
             DescribeEntry(
                 "rewriting-emb",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.emb",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.emb",
                 "Empty-label formulas embed as connective homomorphisms",
                 EmbFormula(),
-                "The ASCII compatibility selector exposes the source emb connective homomorphism from an empty-label family O to a ξ-labelled family F.",
-                DescribeRole.Definition),
-            DescribeEntry(
-                "subst-notation",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation",
-                "Typed substitution selector agrees with slash-vector syntax",
-                SubstNotationFormula(),
-                "Under [LCWQ S] and [SyntacticRewriting L S S], the typed compatibility selector "
-                    + "substNotation(φ,w) forwards Rewriting.subst(φ,w). The source slash syntax "
-                    + "φ/[t] expands to φ ⇜ ![t]. For the one-entry vector used below, ![&0] is "
-                    + "Matrix.vecCons(fvar(0), Matrix.vecEmpty).",
+                "The empty-label embedding is a connective homomorphism from the family O to the ξ-labelled family F.",
                 DescribeRole.Definition),
             DescribeEntry(
                 "reflective-rewriting",
@@ -225,7 +217,7 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 DescribeRole.Lemma),
             DescribeEntry(
                 "app-subst-fbar-zero-comp-shift-eq-free",
-                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.app_subst_fbar_zero_comp_shift_eq_free",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.app_subst_fbar_zero_comp_shift_eq_free",
                 "Substituting the first free variable after shifting is free",
                 AppSubstFormula(),
                 "For a one-variable formula, shifting and substituting the zero free variable agrees "
@@ -428,13 +420,6 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
             F.Id("emb"), Colon, Sp,
             Call("Hom", Call("O", F.Id("n")), Call("F", F.Id("n"))),
             Sp, Eq, Sp, Call("app", F.Id("RewEmb")), Dot));
-
-    private static Formula SubstNotationFormula() =>
-        Disp(Seq(
-            Forall, Sp, F.Id("phi"), Colon, Sp, Call("S", D(1)), Comma, Sp,
-            Call("substNotation", F.Id("phi"), VectorZero()), Sp, Eq, Sp,
-            F.Id("phi"), Slash, OpenBracket, Call("fvar", D(0)), CloseBracket,
-            Sp, Eq, Sp, Call("subst", F.Id("phi"), VectorZero()), Dot));
 
     private static Formula EmptyList() => Seq(OpenBracket, CloseBracket);
 
