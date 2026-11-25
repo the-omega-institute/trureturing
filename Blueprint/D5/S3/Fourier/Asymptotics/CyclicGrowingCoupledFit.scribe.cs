@@ -19,7 +19,7 @@ internal sealed class CyclicGrowingCoupledFitDocument : IScribeDocumentDefinitio
                 "For positive n and nonzero h the rear feature is sin²(rh)/(nh)². " +
                 "The coefficient row is (F/n,X/n,W/n³) and the moment row is (F,X,n³W²). " +
                 "The coupled matrix M is the sum of the outer products of the moment and coefficient rows, " +
-                "over both windows, for positive n. Assume h→0, nh→0 and n³(nh)⁴→0.")),
+                "over both windows, for positive n. Assume n³(nh)⁴→0. Since n≥1 eventually, this implies nh→0 and h→0.")),
             Describe.Lean(DescribeId.Create("coupled-moment-limit"),
                 DeclarationHandle.Create(Owner + ".coupledMatrix_tendsto"),
                 H("Limit of the three scaled moment rows"),

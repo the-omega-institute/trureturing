@@ -267,14 +267,45 @@ private theorem frontMatrix_tendsto {u : ℕ → ℝ}
 def coupledMomentMatrix (S : Finset ℝ) (n : ℕ) (h : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   frontMatrix n ((n : ℝ) * h) + ∑ r ∈ S, rearMatrix n h r
 
+private theorem mesh_limits {h : ℕ → ℝ}
+    (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0)) :
+    Tendsto h atTop (𝓝 0) ∧ Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) := by
+  have hfour : Tendsto (fun n : ℕ => ((n : ℝ) * h n)^4) atTop (𝓝 0) := by
+    refine squeeze_zero' (Eventually.of_forall fun _ => by positivity) ?_ hscale
+    filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
+    have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    have hpow : (1 : ℝ) ≤ (n : ℝ)^3 := one_le_pow₀ hnR
+    simpa only [one_mul] using mul_le_mul_of_nonneg_right hpow
+      (show 0 ≤ ((n : ℝ) * h n)^4 by positivity)
+  have hs : Tendsto (fun n : ℕ => ((n : ℝ) * h n)^2) atTop (𝓝 0) := by
+    have ht := Real.continuous_sqrt.continuousAt.tendsto.comp hfour
+    change Tendsto (fun n : ℕ => Real.sqrt (((n : ℝ) * h n)^4)) atTop
+      (𝓝 (Real.sqrt 0)) at ht
+    simpa only [show (4 : ℕ) = 2 * 2 by decide, pow_mul, Real.sqrt_sq (sq_nonneg _),
+      Real.sqrt_zero] using ht
+  have hu : Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) := by
+    apply tendsto_zero_iff_norm_tendsto_zero.mpr
+    have ht := Real.continuous_sqrt.continuousAt.tendsto.comp hs
+    change Tendsto (fun n : ℕ => Real.sqrt (((n : ℝ) * h n)^2)) atTop
+      (𝓝 (Real.sqrt 0)) at ht
+    simpa only [Real.sqrt_sq_eq_abs, Real.sqrt_zero, Real.norm_eq_abs] using ht
+  refine ⟨?_, hu⟩
+  apply tendsto_zero_iff_norm_tendsto_zero.mpr
+  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_
+    (tendsto_zero_iff_norm_tendsto_zero.mp hu)
+  filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
+  have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  simp only [Real.norm_eq_abs, abs_mul, abs_of_nonneg (Nat.cast_nonneg n : 0 ≤ (n : ℝ))]
+  simpa only [one_mul] using mul_le_mul_of_nonneg_right hnR (abs_nonneg (h n))
+
 /-- The limiting coupled moment matrix on a growing front and a fixed rear support. -/
-theorem coupledMatrix_tendsto {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝 0))
-    (hu : Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0))
+theorem coupledMatrix_tendsto {h : ℕ → ℝ}
     (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0))
     (S : Finset ℝ) :
     let readout := fun state : (Finset ℝ × ℕ) × ℝ =>
       coupledMomentMatrix state.1.1 state.1.2 state.2
     Tendsto (fun n : ℕ => readout ((S, n), h n)) atTop (𝓝 !![(2 : ℝ), 2/3, 0; 2/3, 2/5, 0; 0, ∑ r ∈ S, r^2, (S.card : ℝ)]) := by
+  obtain ⟨hh, hu⟩ := mesh_limits hscale
   dsimp only [coupledMomentMatrix]
   have hr := tendsto_finsetSum S (fun r _ => rearMatrix_tendsto hh hu r)
   have hf := frontMatrix_tendsto hu hscale
@@ -325,13 +356,12 @@ private theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
     field_simp [hn]
 
 private theorem coupledMatrix_eventually_det_ne_zero {h : ℕ → ℝ}
-    (hh : Tendsto h atTop (𝓝 0)) (hu : Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0))
     (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0))
     {S : Finset ℝ} (hS : S.Nonempty) :
     ∀ᶠ n : ℕ in atTop,
       (frontMatrix n ((n : ℝ) * h n) + ∑ r ∈ S, rearMatrix n (h n) r).det ≠ 0 := by
   have hdet := continuous_id.matrix_det.continuousAt.tendsto.comp
-    (coupledMatrix_tendsto hh hu hscale S)
+    (coupledMatrix_tendsto hscale S)
   have hne :
       (!![(2 : ℝ), 2/3, 0; 2/3, 2/5, 0; 0, ∑ r ∈ S, r^2, (S.card : ℝ)]).det ≠ 0 := by
     rw [coupledLimit_det]
@@ -386,8 +416,7 @@ private theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < 
   rw [hrear, sum_outer_mulVec]
 
 /-- For every prescribed three-moment right side, the joint finite fit exists uniquely eventually. -/
-theorem coupledFit_eventually {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝 0))
-    (hu : Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0))
+theorem coupledFit_eventually {h : ℕ → ℝ}
     (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0))
     {S : Finset ℝ} (hS : S.Nonempty) (rhs : ℕ → Fin 3 → ℝ) :
     let readout := fun state : ((Finset ℝ × ℕ) × ℝ) × (Fin 3 → ℝ) =>
@@ -396,7 +425,7 @@ theorem coupledFit_eventually {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝 0))
   classical
   dsimp only
   filter_upwards [eventually_ge_atTop (1 : ℕ),
-    coupledMatrix_eventually_det_ne_zero hh hu hscale hS] with n hn hdet
+    coupledMatrix_eventually_det_ne_zero hscale hS] with n hn hdet
   let M := coupledMomentMatrix S n (h n)
   have hpos : 0 < n := hn
   have hM (v : Fin 3 → ℝ) : M *ᵥ v = coupledMoments S n (h n) v :=

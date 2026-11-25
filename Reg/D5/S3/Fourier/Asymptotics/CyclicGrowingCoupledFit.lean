@@ -28,22 +28,18 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {h : ℕ → ℝ}, Tendsto h atTop (𝓝 0) →
-    Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) →
+  Law R := ∀ {h : ℕ → ℝ},
     Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0) →
     ∀ S : Finset ℝ, let readout := R.readout () ()
     Tendsto (fun n : ℕ => readout ((S, n), h n)) atTop
       (𝓝 !![(2 : ℝ), 2/3, 0; 2/3, 2/5, 0; 0, ∑ r ∈ S, r^2, (S.card : ℝ)])
-
-private theorem zero_mesh :
-    Tendsto (fun n : ℕ => (n : ℝ) * (0 : ℝ)) atTop (𝓝 0) := by simp
 
 private theorem zero_scale :
     Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * (0 : ℝ))^4) atTop (𝓝 0) := by simp
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := h (h := fun _ => 0) tendsto_const_nhds zero_mesh zero_scale ∅
+  have hh := h (h := fun _ => 0) zero_scale ∅
   have ht := tendsto_pi_nhds.1 (tendsto_pi_nhds.1 hh (0 : Fin 3)) (0 : Fin 3)
   change Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 2) at ht
   have he := tendsto_nhds_unique tendsto_const_nhds ht
@@ -93,7 +89,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -118,8 +114,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {h : ℕ → ℝ}, Tendsto h atTop (𝓝 0) →
-    Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) →
+  Law R := ∀ {h : ℕ → ℝ},
     Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0) →
     ∀ {S : Finset ℝ}, S.Nonempty → ∀ rhs : ℕ → Fin 3 → ℝ,
       let readout := R.readout () ()
@@ -127,7 +122,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hf := h (h := fun _ => 0) tendsto_const_nhds Limit.zero_mesh Limit.zero_scale
+  have hf := h (h := fun _ => 0) Limit.zero_scale
     (S := {0}) (by simp) (fun _ => 1)
   obtain ⟨n, hn⟩ := eventually_atTop.mp hf
   obtain ⟨v, hv, _⟩ := hn n le_rfl
@@ -137,10 +132,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem observed_values_differ :
     ∃ a b, actual.readout () () a ≠ actual.readout () () b := by
-  have hzero := coupledFit_eventually (h := fun _ => 0) tendsto_const_nhds
-    Limit.zero_mesh Limit.zero_scale (S := {0}) (by simp) (fun _ => 0)
-  have hone := coupledFit_eventually (h := fun _ => 0) tendsto_const_nhds
-    Limit.zero_mesh Limit.zero_scale (S := {0}) (by simp) (fun _ => 1)
+  have hzero := coupledFit_eventually (h := fun _ => 0) Limit.zero_scale (S := {0}) (by simp) (fun _ => 0)
+  have hone := coupledFit_eventually (h := fun _ => 0) Limit.zero_scale (S := {0}) (by simp) (fun _ => 1)
   obtain ⟨n, hn⟩ := eventually_atTop.mp (hzero.and hone)
   obtain ⟨⟨v, hv, _⟩, ⟨w, hw, _⟩⟩ := hn n le_rfl
   refine ⟨((({0}, n), 0), v), ((({0}, n), 0), w), ?_⟩
@@ -186,7 +179,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
