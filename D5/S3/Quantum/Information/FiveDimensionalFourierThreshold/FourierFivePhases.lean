@@ -27,10 +27,10 @@ namespace D5.S3.Quantum.Information.FiveDimensionalFourierThreshold
 
 abbrev pentagonPhase := ZMod.stdAddChar (N := 5)
 
-private theorem pentagonPhase_norm (a : ZMod 5) : ‖pentagonPhase a‖ = 1 := by
+theorem pentagonPhase_norm (a : ZMod 5) : ‖pentagonPhase a‖ = 1 := by
   rw [ZMod.stdAddChar_apply, Circle.norm_coe]
 
-private theorem pentagonPhase_re (a : ZMod 5) :
+theorem pentagonPhase_re (a : ZMod 5) :
     (pentagonPhase a).re = Real.cos (2 * Real.pi * (a.val : ℝ) / 5) := by
   rw [ZMod.stdAddChar_apply, ZMod.toCircle_apply, ← Complex.exp_ofReal_mul_I_re]
   congr 2
@@ -77,7 +77,7 @@ theorem pentagonPhase_pair_norm (a b : ZMod 5) (hab : a ≠ b) :
   have h := pentagon_cos_le (b - a) (sub_ne_zero.mpr hab.symm)
   linarith only [h]
 
-private theorem sum_pentagonPhase : ∑ a : ZMod 5, pentagonPhase a = 0 := by
+theorem sum_pentagonPhase : ∑ a : ZMod 5, pentagonPhase a = 0 := by
   apply AddChar.sum_eq_zero_of_ne_one
   intro h
   have hvalue : pentagonPhase 1 = pentagonPhase 0 := by rw [h]; simp
