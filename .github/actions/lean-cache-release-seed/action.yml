@@ -7,9 +7,6 @@ inputs:
   previous-base:
     description: Release identity selected for an incremental publication
     default: ''
-  publication-mode:
-    description: Protected production or integration verification
-    default: production
   cache-keys:
     description: JSON outputs from the Actions cache key selector
     required: true
@@ -118,7 +115,6 @@ runs:
       uses: ./.github/actions/lean-release-base
       with:
         operation: install-base
-        mode: ${{ inputs.publication-mode }}
         tag: ${{ fromJSON(inputs.previous-base || '{}').tag }}
         producer: ${{ fromJSON(inputs.previous-base || '{}').producer }}
         manifest: ${{ fromJSON(inputs.previous-base || '{}').manifest }}

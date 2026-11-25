@@ -2,33 +2,19 @@ import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { once } from 'node:events';
 import { createReadStream } from 'node:fs';
-import { copyFile, mkdir, mkdtemp, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
-import { performance } from 'node:perf_hooks';
+import { copyFile, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline';
-import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const workspace = process.env.GITHUB_WORKSPACE;
 process.chdir(workspace);
 
-const stage = 'build/lean-cache/shards';
 const operation = process.argv[2] || process.env.INPUT_OPERATION;
 const targets = (process.env.INPUT_TARGETS || '').trim().split(/\s+/).filter(Boolean);
 const targetsFile = process.env['INPUT_TARGETS-FILE'];
 // A nested JavaScript action may inherit the enclosing composite's action path.
 const actionPath = dirname(fileURLToPath(import.meta.url));
-const pythonTool = 'tools/scripts/worktree/lean_actions_shards.py';
-
-function python(command, extra = []) {
-  const output = execFileSync('python3', ['-B', pythonTool, command, '--state', 'complete', ...extra], {
-    encoding: 'utf8',
-    maxBuffer: 40 * 1024 * 1024,
-    stdio: ['ignore', 'pipe', 'inherit'],
-  }).trimEnd().split('\n');
-  for (const line of output.slice(0, -1)) console.log(line);
-  return JSON.parse(output.at(-1));
-}
 
 async function loadCacheClient() {
   const manifests = ['package.json', 'package-lock.json'];
@@ -59,130 +45,7 @@ async function loadCacheClient() {
     }
   }
   const library = join(install, 'node_modules/@actions/cache/lib');
-  const cache = await import(pathToFileURL(join(library, 'cache.js')).href);
-  const utils = await import(pathToFileURL(join(library, 'internal/cacheUtils.js')).href);
-  const compression = await utils.getCompressionMethod();
-  return { cache, cacheVersion: path => utils.getCacheVersion([path], compression) };
-}
-
-function payloadPath(digest) {
-  if (!/^[0-9a-f]{64}$/.test(digest)) throw new Error('invalid shard payload address');
-  return join(stage, 'payload', digest + '.tar.gz');
-}
-
-function payloadKey(prefix, digest) {
-  return prefix + 'material-' + digest;
-}
-
-async function paced(items, parallelism, perMinute, invoke) {
-  const interval = 60000 / perMinute;
-  let next = performance.now();
-  let position = 0;
-  let failure;
-  await Promise.all(Array.from({ length: Math.min(items.length, parallelism) }, async () => {
-    while (!failure && position < items.length) {
-      const item = items[position++];
-      const now = performance.now();
-      const scheduled = Math.max(now, next);
-      next = scheduled + interval;
-      if (scheduled > now) await delay(scheduled - now);
-      if (failure) return;
-      try {
-        await invoke(item);
-      } catch (error) {
-        failure ??= error;
-      }
-    }
-  }));
-  if (failure) throw failure;
-}
-
-function waitForCacheQuota() {
-  return delay(60000 + Math.floor(Math.random() * 10000));
-}
-
-async function visibleMaterial(prefix, index, cacheVersion) {
-  const { owner } = JSON.parse(await readFile(index, 'utf8'));
-  const visible = new Set(optionalInventory(owner.ref, prefix + 'material-').map(row => row.key + '/' + row.version));
-  return digest => visible.has(payloadKey(prefix, digest) + '/' + cacheVersion(payloadPath(digest)));
-}
-
-async function restorePreparation(preparation) {
-  const { cache, cacheVersion } = await loadCacheClient();
-  const { prefix } = python('identity');
-  const index = join(preparation, 'project.json');
-  const started = performance.now();
-  const needed = python('restore-plan', ['--index', index]);
-  const digests = [...new Set(Object.values(needed))];
-  const bundled = new Set(await readdir(join(preparation, 'shards')).catch(error => {
-    if (error.code === 'ENOENT') return [];
-    throw error;
-  }));
-  let transferred = 0;
-  const remote = digests.filter(digest => !bundled.has(digest + '.tar.gz'));
-  const downloaded = new Set();
-  const download = async digest => {
-    const path = payloadPath(digest);
-    try {
-      await rm(path, { force: true });
-      const key = payloadKey(prefix, digest);
-      if (await cache.restoreCache([path], key, []) === key) {
-        const { size } = await stat(path);
-        transferred += size;
-        downloaded.add(digest);
-      }
-    } catch (error) {
-      console.log('LEAN_ACTIONS_SHARDS restore failed for ' + digest + ': ' + error.message);
-    }
-  };
-  try {
-    let pending = remote;
-    let retries = 0;
-    for (const rate of [600, 300, 150]) {
-      if (pending.length === 0) break;
-      if (retries > 0) {
-        console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-          operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
-        }));
-        await waitForCacheQuota();
-      }
-      await paced(pending, 24, rate, download);
-      pending = pending.filter(digest => !downloaded.has(digest));
-      if (pending.length === 0 || retries === 2) break;
-      if (retries === 0) {
-        pending = pending.filter(await visibleMaterial(prefix, index, cacheVersion));
-      }
-      retries += 1;
-    }
-    const result = python('install', ['--index', index, '--preparation', preparation, '--require-complete']);
-    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-      operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
-      restored: result.available, missing: result.missing.length,
-      bytes: transferred, seconds: (performance.now() - started) / 1000,
-    }));
-    if (!result.complete) process.exitCode = 3;
-  } finally {
-    await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
-  }
-}
-
-function visibleEntries(ref, prefix) {
-  const repository = process.env.GITHUB_REPOSITORY;
-  if (!process.env.GH_TOKEN || !repository) throw new Error('Actions cache inventory credentials are missing');
-  const listing = execFileSync('gh', [
-    'api', '--paginate', '--method', 'GET', 'repos/' + repository + '/actions/caches',
-    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version, created_at}',
-  ], { encoding: 'utf8', timeout: 300000, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
-  return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
-}
-
-function optionalInventory(ref, prefix) {
-  try {
-    return visibleEntries(ref, prefix);
-  } catch (error) {
-    console.log('LEAN_ACTIONS_SHARDS inventory unavailable for ' + ref + ': ' + error.message);
-    return [];
-  }
+  return import(pathToFileURL(join(library, 'cache.js')).href);
 }
 
 async function digestFile(path) {
@@ -212,7 +75,7 @@ async function generationIndex(digest, file) {
   // operations must use this workspace-relative name, regardless of caller.
   const path = 'build/lean-cache/generation/index.json';
   const key = 'lean-generation-v1-' + digest;
-  const { cache } = await loadCacheClient();
+  const cache = await loadCacheClient();
   await mkdir(dirname(path), { recursive: true });
   if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
     if (resolve(file) !== resolve(path)) await copyFile(file, path);
@@ -239,7 +102,7 @@ async function moduleCacheEntry(key, digest, file) {
   // The user-visible key stays stable. The Actions SDK binds the content-specific
   // relative path into its cache version so two revisions of a shard can coexist.
   const path = join('build/lean-cache/modules', digest, 'payload');
-  const { cache } = await loadCacheClient();
+  const cache = await loadCacheClient();
   await mkdir(dirname(path), { recursive: true });
   try {
     if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
@@ -320,7 +183,6 @@ async function main() {
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);
   }
-  if (operation === 'restore-preparation') return restorePreparation(process.argv[3]);
   throw new Error('invalid Actions shard operation');
 }
 

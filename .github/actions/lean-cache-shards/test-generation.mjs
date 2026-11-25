@@ -18,7 +18,7 @@ async function fixture(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   const bin = join(root, 'bin');
   const sdk = join(bin, 'sdk');
-  await mkdir(join(sdk, 'internal'), { recursive: true });
+  await mkdir(sdk, { recursive: true });
   // Install a recording cache SDK at exactly the path resolved by the action.
   await writeFile(join(bin, 'npm'), `#!/bin/sh
 set -eu
@@ -26,8 +26,6 @@ echo install >> "$(dirname "$0")/installs"
 mkdir -p node_modules/@actions/cache
 cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 `, { mode: 0o755 });
-  await writeFile(join(sdk, 'internal/cacheUtils.js'),
-    'exports.getCompressionMethod = async () => "zstd"; exports.getCacheVersion = () => "sdk-version";\n');
   await writeFile(join(sdk, 'cache.js'), `
 const fs = require("node:fs");
 const assert = require("node:assert/strict");
@@ -40,13 +38,11 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
     if (!options?.lookupOnly) fs.copyFileSync(storage, paths[0]);
     return key;
   }
-  const path = key.startsWith("lean-shard-index-")
-    ? "build/lean-cache/shards/payload/" + key.split("-").pop() + ".tar.gz" : wire;
-  assert.deepEqual(paths, [path]);
+  assert.deepEqual(paths, [wire]);
   assert.deepEqual(prefixes, []);
   fs.appendFileSync("requests", "get " + key + "\\n");
   if (!fs.existsSync(key)) return undefined;
-  if (!options?.lookupOnly) { fs.mkdirSync(require("node:path").dirname(path), {recursive: true}); fs.copyFileSync(key, path); }
+  if (!options?.lookupOnly) fs.copyFileSync(key, wire);
   return key;
 };
 exports.saveCache = async function(paths, key) {
@@ -164,43 +160,6 @@ esac
   const resume = invoke('2');
   assert.equal(resume.status, 0, resume.stderr);
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
-});
-
-test('preparation artifacts read missing payloads from the current shard prefix', async t => {
-  const { root, requests, run } = await fixture(t);
-  const scripts = join(root, 'tools/scripts/worktree');
-  const preparation = join(root, 'preparation');
-  const prefix = 'lean-shard-index-v2-' + 'b'.repeat(64) + '-';
-  const material = prefix + 'material-' + digest;
-  await mkdir(scripts, { recursive: true });
-  await mkdir(preparation);
-  await writeFile(join(preparation, 'project.json'), JSON.stringify({ owner: { ref: 'refs/heads/dev' } }));
-  await writeFile(join(root, 'bin/gh'), '#!/bin/sh\nexit 0\n', { mode: 0o755 });
-  await writeFile(join(scripts, 'lean_actions_shards.py'), `
-import json, sys
-from pathlib import Path
-cmd = sys.argv[1]
-if cmd == "identity":
-    print(json.dumps({"prefix": "${prefix}"}))
-elif cmd == "restore-plan":
-    print(json.dumps({"A": "${digest}"}))
-elif cmd == "install":
-    assert "--require-complete" in sys.argv
-    payload = Path("build/lean-cache/shards/payload/${digest}.tar.gz")
-    hit = payload.is_file()
-    if hit:
-        assert payload.read_text() == '${bytes}'
-    print(json.dumps({"complete": hit, "available": int(hit), "missing": [] if hit else ["A"]}))
-else:
-    raise AssertionError(cmd)
-`);
-  await writeFile(join(root, material), bytes);
-  const hit = run('push', 'restore-preparation', preparation);
-  assert.equal(hit.status, 0, hit.stderr);
-  await rm(join(root, material));
-  const miss = run('push', 'restore-preparation', preparation);
-  assert.equal(miss.status, 3, miss.stderr);
-  assert.deepEqual((await requests()).trim().split('\n'), ['get ' + material, 'get ' + material]);
 });
 
 test('the same readable module key retrieves either version and readers cannot publish', async t => {

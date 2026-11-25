@@ -44,7 +44,6 @@ jobs:
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
       strategy: parallel
-      publication-mode: verification
 
   parallel-compile:
     if: github.event_name == 'workflow_dispatch' && contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests')
@@ -54,7 +53,6 @@ jobs:
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
       strategy: ${{ inputs.mode }}
-      publication-mode: verification
       sparse-volume: ${{ inputs.sparse_release && inputs.volume_test_id || '' }}
       indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name }}
 
@@ -223,7 +221,6 @@ jobs:
         with:
           mode: ${{ env.SHARD_HANDOFF }}
           previous-base: ${{ needs.parallel-compile.outputs.base }}
-          publication-mode: verification
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
@@ -232,8 +229,6 @@ jobs:
         if: steps.entry.outputs.hit == 'true' && steps.release_seed.outputs.cache-prepared != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          LEAN_CACHE_INDEXED: '1'
-          LEAN_CACHE_MODE: verification
         run: bash .github/actions/lean-cache-release-seed/prepare-compiler.sh
       - id: publish
         if: steps.entry.outputs.hit == 'true'

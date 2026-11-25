@@ -7,14 +7,6 @@ on:
         description: Automatic, previous Release, or parallel cold build
         type: string
         default: auto
-      publication-mode:
-        description: Protected production or integration verification
-        type: string
-        default: production
-      sparse-release:
-        description: Prefer the protected production volume namespace
-        type: boolean
-        default: false
       sparse-volume:
         description: Named verification volume namespace to probe before Actions caches
         type: string
@@ -30,9 +22,6 @@ on:
       sparse:
         description: A matching checked Release volume was selected for sparse installation
         value: ${{ jobs.common.outputs.sparse }}
-      history-depth:
-        description: Checkout depth covering the selected predecessor and publication source
-        value: ${{ jobs.common.outputs.history-depth }}
       base:
         description: Selected Release tag, producer and manifest digest
         value: ${{ jobs.common.outputs.base }}
@@ -49,7 +38,6 @@ jobs:
     outputs:
       seed: ${{ steps.route.outputs.seed }}
       sparse: ${{ steps.sparse.outputs.found || 'false' }}
-      history-depth: ${{ steps.ancestry.outputs.depth }}
       base: ${{ steps.sparse.outputs.found == 'true' && toJSON(steps.sparse.outputs) || steps.previous.outputs.found == 'true' && toJSON(steps.previous.outputs) || '' }}
     steps:
       - uses: actions/checkout@v5
@@ -61,35 +49,15 @@ jobs:
           [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
           python3 .github/scripts/install-tools.py
       - id: sparse
-        if: >-
-          (inputs.publication-mode == 'production' && inputs.sparse-release && inputs.strategy == 'auto') ||
-          (inputs.publication-mode == 'verification' && inputs.sparse-volume != '' && contains(fromJSON('["auto","release"]'), inputs.strategy))
+        if: inputs.sparse-volume != '' && contains(fromJSON('["auto","release"]'), inputs.strategy)
         uses: ./.github/actions/lean-release-base
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_RELEASE_SPARSE_ONLY: '1'
-          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.publication-mode == 'verification' && inputs.sparse-volume || '' }}
+          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.sparse-volume }}
         with:
           operation: select-base
           previous-commit-only: ${{ inputs.strategy == 'release' }}
-          mode: ${{ inputs.publication-mode }}
-      - id: ancestry
-        if: inputs.publication-mode == 'production' && steps.sparse.outputs.found == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          BASE: ${{ steps.sparse.outputs.producer }}
-          SOURCE: ${{ github.sha }}
-        run: |
-          [[ "$BASE" =~ ^[0-9a-f]{40}$ && "$(git rev-parse HEAD)" == "$SOURCE" ]]
-          if [[ "$BASE" == "$SOURCE" ]]; then
-            depth=2
-          else
-            ahead="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$SOURCE?per_page=1" \
-              --jq 'select(.status == "ahead" and .behind_by == 0) | .ahead_by')"
-            [[ "$ahead" =~ ^[1-9][0-9]*$ ]]
-            depth="$((10#$ahead + 1))"
-          fi
-          echo "depth=$depth" >> "$GITHUB_OUTPUT"
       - name: Install the pinned Lean header parser for the cache lookup
         if: inputs.indexed && steps.sparse.outputs.found != 'true' && inputs.strategy == 'auto'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
@@ -124,7 +92,6 @@ jobs:
         with:
           operation: select-base
           previous-commit-only: ${{ inputs.strategy == 'release' }}
-          mode: ${{ inputs.publication-mode }}
       - id: route
         env:
           INDEXED: ${{ steps.indexed.outputs.complete }}
