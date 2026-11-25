@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.DFiniteJet
 import OmegaMath.Arithmetic.Euclidean.Division
 
@@ -43,11 +44,11 @@ private theorem finite_mul_zero_prefix {f g : JetSeq} (hg : Finite g) (n : Nat)
   (Nat.rec (motive := fun n => ∀ f : JetSeq,
     (∀ i, Nat.le i n → IntRatio.Equivalent (f i) IntRatio.zero) →
     IntRatio.Equivalent (mul f g n) IntRatio.zero)
-    (fun _ h => (IntRatio.mul_congr_left (h Nat.zero True.intro) _).trans
+    (fun _ h => (IntRatio.mul_congr_left (h Nat.zero (Nat.zero_le _)) _).trans
       (IntRatio.zero_mul (hg Nat.zero)))
     (fun n ih f h =>
       (IntRatio.add_congr
-        ((IntRatio.mul_congr_left (h Nat.zero True.intro) _).trans (IntRatio.zero_mul (hg n.succ)))
+        ((IntRatio.mul_congr_left (h Nat.zero (Nat.zero_le _)) _).trans (IntRatio.zero_mul (hg n.succ)))
         (ih (tail f) (fun i hi => h i.succ (Nat.succ_le_succ hi)))).trans
         (IntRatio.add_zero IntRatio.zero)) n) f vanishes
 
@@ -64,7 +65,7 @@ private theorem power_vanishes {g : JetSeq} (hg : Finite g)
           (IntRatio.mul_zero (finite_power hg k Nat.zero)))
         (fun j _ hj =>
           have lower := finite_mul_zero_prefix (f := power g k) (g := tail g)
-            (fun i => hg i.succ) j (fun i hi => ih i (Nat.le_trans (Nat.succ_le_succ hi) hj))
+            (fun i => hg i.succ) j (fun i hi => ih i (Nat.le_trans (Nat.succ_le_succ hi) (Nat.le_of_succ_le_succ hj)))
           have last := (IntRatio.mul_congr (IntRatio.equivalent_refl _) g0).trans
             (IntRatio.mul_zero (finite_power hg k j.succ))
           (mul_succ_right (power g k) g j).trans
@@ -79,7 +80,7 @@ private theorem partial_agrees {f g : JetSeq} (hf : Finite f) (hg : Finite g)
     (fun n h => False.elim (Nat.not_succ_le_zero n h))
     (fun k ih n h =>
       (Arithmetic.le_or_lt k n).elim
-        (fun hk => Eq.subst (fun t : Nat => IntRatio.Equivalent (partialCompose f g t.succ n) (compose f g n))
+        (fun hk => Eq.subst (motive := fun t : Nat => IntRatio.Equivalent (partialCompose f g t.succ n) (compose f g n))
           (Nat.le_antisymm hk (Nat.le_of_succ_le_succ h)).symm (IntRatio.equivalent_refl (compose f g n)))
         (fun hn =>
           have extra := (IntRatio.mul_congr (IntRatio.equivalent_refl _)
@@ -91,8 +92,8 @@ private theorem ofNat_succ_smul (k : Nat) (f : JetSeq) :
   fun n =>
     have expand := (IntRatio.add_mul (IntRatio.ofNat k) IntRatio.one (f n)).trans
       (IntRatio.add_congr (IntRatio.equivalent_refl _) (IntRatio.one_mul (f n)))
-    Eq.subst (fun a : IntRatio => IntRatio.Equivalent (add (smul (IntRatio.ofNat k) f) f n) (a.mul (f n)))
-      (IntRatio.ofNat_add k Nat.one) expand.symm
+    Eq.subst (motive := fun a : IntRatio => IntRatio.Equivalent (add (smul (IntRatio.ofNat k) f) f n) (a.mul (f n)))
+      ((IntRatio.ofNat_add k Nat.one).trans (congrArg IntRatio.ofNat (Nat.add_one k))) expand.symm
 
 private theorem deriv_power {g : JetSeq} (hg : Finite g) (k : Nat) :
     Equivalent (deriv (power g k.succ))
@@ -155,11 +156,11 @@ theorem deriv_compose_equivAt (N : Nat) (f g : JetSeq) (hf : Finite f) (hg : Fin
     EquivalentAt N (deriv (compose f g)) (mul (compose (deriv f) g) (deriv g)) :=
   fun n _ =>
     have left := IntRatio.mul_congr (IntRatio.equivalent_refl (IntRatio.ofNat n.succ))
-      (partial_agrees hf hg g0 n.succ.succ n.succ (Nat.le.refl _)).symm
+      (partial_agrees hf hg g0 n.succ.succ n.succ (Nat.le_refl _)).symm
     have right : EquivalentAt n (partialCompose (deriv f) g n.succ) (compose (deriv f) g) :=
       fun j hj => partial_agrees (finite_deriv hf) hg g0 n.succ j (Nat.succ_le_succ hj)
     left.trans ((deriv_partial hf hg n.succ n).trans
-      (mul_congr_at n right ((equivalent_refl (deriv g)).at n) n (Nat.le.refl n)))
+      (mul_congr_at n right ((equivalent_refl (deriv g)).at n) n (Nat.le_refl n)))
 
 private theorem compose_congr_outer {f h : JetSeq} (g : JetSeq) (same : Equivalent f h) :
     Equivalent (compose f g) (compose h g) :=
@@ -195,7 +196,7 @@ private theorem clear_twoAtan_derivative (f : JetSeq) (hf : Finite f) :
   let u := compose (deriv f) twoAtan
   have chain : Equivalent (deriv (compose f twoAtan)) (mul u (deriv twoAtan)) :=
     fun n => deriv_compose_equivAt n f twoAtan hf (finite_smul (a := IntRatio.two) True.intro atan_finite)
-      twoAtan_zero n (Nat.le.refl n)
+      twoAtan_zero n (Nat.le_refl n)
   have finiteU : Finite u :=
     fun n => (Nat.rec (motive := fun k => Finite (partialCompose (deriv f) twoAtan k))
       finite_zero (fun k ih => finite_add ih

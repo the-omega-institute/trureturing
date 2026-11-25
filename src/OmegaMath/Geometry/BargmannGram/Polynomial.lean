@@ -34,8 +34,8 @@ private theorem eval_cons (v : Nat → Int) (m : Monomial) (c : Int) (p : Terms)
     (fun n => Nat.rec (motive := fun n =>
       Eq (eval v (cons m (Int.ofNat n) p)) (((Int.ofNat n).mul (m.eval v)).add (eval v p)))
       ((congrArg (fun c : Int => c.add (eval v p)) (Int.zero_mul (m.eval v))).trans
-        (Int.zero_add (eval v p))).symm (fun _ _ => Eq.refl) n)
-    (fun _ => Eq.refl) c
+        (Int.zero_add (eval v p))).symm (fun _ _ => rfl) n)
+    (fun _ => rfl) c
 
 def insert (m : Monomial) (c : Int) (p : Terms) : Terms :=
   Terms.rec (cons m c .zero)
@@ -66,7 +66,7 @@ theorem eval_insert (v : Nat → Int) (m : Monomial) (c : Int) (p : Terms) :
         (fun _ => (congrArg B.add ih).trans
           ((Int.add_assoc B A R).symm.trans
             ((congrArg (fun x : Int => x.add R) (Int.add_comm B A)).trans (Int.add_assoc A B R))))
-        (m.compare n)) Eq.refl) p
+        (m.compare n)) rfl) p
 
 def add (p q : Terms) : Terms :=
   Terms.rec q (fun m c _ r => insert m c r) p

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 
 public import OmegaMath.Data.Nat.Fib.Basic
 
@@ -22,11 +23,18 @@ namespace Omega.Arithmetic.WDigits
 /-- The weight of zero-based W position `index` is `F_(index + 2)`. -/
 def wValue (index : Nat) : Nat := Nat.fib index.succ.succ
 
-theorem wValue_zero : Eq (wValue .zero) Nat.one := Eq.refl
+theorem wValue_zero : Eq (wValue .zero) Nat.one := Nat.fib_two
 
-theorem wValue_one : Eq (wValue Nat.one) Nat.one.succ := Eq.refl
+private theorem one_add (n : Nat) : Eq (Nat.one.add n) n.succ :=
+  (Nat.succ_add Nat.zero n).trans (congrArg Nat.succ (Nat.zero_add n))
 
-theorem wValue_two : Eq (wValue Nat.one.succ) Nat.one.succ.succ := Eq.refl
+theorem wValue_one : Eq (wValue Nat.one) Nat.one.succ :=
+  Nat.fib_add_two.trans ((congrArg (fun x : Nat => x.add (Nat.fib Nat.one.succ)) Nat.fib_one).trans
+    ((congrArg (Nat.add Nat.one) Nat.fib_two).trans (one_add Nat.one)))
+
+theorem wValue_two : Eq (wValue Nat.one.succ) Nat.one.succ.succ :=
+  Nat.fib_add_two.trans ((congrArg (fun x : Nat => x.add (wValue Nat.one)) Nat.fib_two).trans
+    ((congrArg (Nat.add Nat.one) wValue_one).trans (one_add Nat.one.succ)))
 
 theorem wValue_add_two (index : Nat) :
     Eq (wValue index.succ.succ) ((wValue index).add (wValue index.succ)) :=
@@ -37,7 +45,8 @@ theorem wValue_lt_succ (index : Nat) : Nat.lt (wValue index) (wValue index.succ)
 
 /-- W position `n` has weight at least `n+1`, giving finite search bounds. -/
 theorem succ_le_wValue (index : Nat) : Nat.le index.succ (wValue index) :=
-  Nat.rec (motive := fun n => Nat.le n.succ (wValue n)) (Nat.le.refl Nat.one)
+  Nat.rec (motive := fun n => Nat.le n.succ (wValue n))
+    (Eq.subst (motive := Nat.le Nat.one) wValue_zero.symm (Nat.le_refl Nat.one))
     (fun n ih => Nat.le_trans (Nat.succ_le_succ ih) (wValue_lt_succ n)) index
 
 end Omega.Arithmetic.WDigits

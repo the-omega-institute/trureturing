@@ -29,7 +29,7 @@ def evenCharProductSum (m n : Nat) : CoefficientList :=
 /-- Character multiplication, with omitted coefficients interpreted as zero. -/
 theorem evenChar_product_sum (m n : Nat) :
     Poly.RatioSame ((evenCharPoly m).mul (evenCharPoly n)) (evenCharProductSum m n) :=
-  Eq.subst (fun p => Poly.RatioSame p (evenCharProductSum m n))
+  Eq.subst (motive := fun p => Poly.RatioSame p (evenCharProductSum m n))
     (Poly.ratios_mul (Characters.character m) (Characters.character n))
     (Poly.ratio_same (Characters.product m n))
 
@@ -74,7 +74,7 @@ private theorem sum_expectation (start span : Nat) :
 /-- All-degree even-character orthonormality for the rational Haar functional. -/
 theorem all_degree_peter_weyl_orthonormal (m n : Nat) :
     Equivalent (haarInner (evenCharPoly m) (evenCharPoly n)) (degreeDelta m n) :=
-  Eq.subst (fun p => Equivalent (haarKappaPoly p) (degreeDelta m n))
+  Eq.subst (motive := fun p => Equivalent (haarKappaPoly p) (degreeDelta m n))
     (Poly.ratios_mul (Characters.character m) (Characters.character n))
     ((Integration.integral_congr (Characters.product m n) Nat.zero).trans
       (sum_expectation (Characters.gap m n) (Characters.span m n)))

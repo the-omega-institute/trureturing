@@ -45,6 +45,13 @@ def leafScore (record : ℤ × ℕ) : ℤ := record.1 + (record.2 : ℤ)
 def leafScores (tree : CompleteBinaryTree) : List ℤ :=
   (leafData tree).map leafScore
 
+/-- The size of a signed leaf time counts its sign constructor and natural payload. -/
+@[instance_reducible] private noncomputable def timeSize : SizeOf Omega.Int :=
+  let signedBranch := fun count : Omega.Nat => 1 + Omega.Nat.rec (motive := fun _ => ℕ) 0 (fun _ n => n.succ) count
+  ⟨Omega.Int.rec signedBranch signedBranch⟩
+
+attribute [local instance] timeSize
+
 /-- A complete binary tree with leaf times in the strict integer representation. -/
 inductive StrictCompleteBinaryTree where
   | leaf (time : Omega.Int)
@@ -64,20 +71,21 @@ noncomputable def strictLeafMaximumFrom (tree : StrictCompleteBinaryTree) :
 
 private theorem map_bumpDepth_leafScore (time : Omega.Int) (depth : Omega.Nat) :
     Omega.Eq (time.add (.ofNat depth.succ)) ((time.add Omega.Int.one).add (.ofNat depth)) :=
-  (Omega.congrArg time.add (Omega.Int.add_comm (.ofNat depth) Omega.Int.one)).trans
-    (Omega.Int.add_assoc time Omega.Int.one (.ofNat depth)).symm
+  (Omega.congrArg (fun n => time.add (.ofNat n)) (Omega.Nat.add_one depth).symm).trans
+    ((Omega.congrArg time.add (Omega.Int.add_comm (.ofNat depth) Omega.Int.one)).trans
+      (Omega.Int.add_assoc time Omega.Int.one (.ofNat depth)).symm)
 
 private theorem maximum_map_add (tree : StrictCompleteBinaryTree) :
     ∀ depth, Omega.Eq (strictLeafMaximumFrom tree depth)
       ((strictRootTime tree).add (.ofNat depth)) :=
   StrictCompleteBinaryTree.rec (motive := fun tree => ∀ depth,
     Omega.Eq (strictLeafMaximumFrom tree depth) ((strictRootTime tree).add (.ofNat depth)))
-    (fun _ _ => Omega.Eq.refl)
+    (fun _ _ => Omega.rfl)
     (fun left right leftAgreement rightAgreement depth =>
       let leftTime := strictRootTime left
       let rightTime := strictRootTime right
       (Omega.Eq.map₂ Omega.Int.max (leftAgreement depth.succ) (rightAgreement depth.succ)).trans
-        ((Omega.Int.max_add_right leftTime rightTime (.ofNat depth.succ)).trans
+        ((Omega.Int.max_add_common_right leftTime rightTime (.ofNat depth.succ)).trans
           (map_bumpDepth_leafScore (Omega.Int.max leftTime rightTime) depth)))
     tree
 

@@ -18,9 +18,11 @@ The coefficients are arbitrary complex numbers. For the arcsine functionals, the
 
 The unweighted odd Gram splits into a common even lower Gram and a positive correction with unsquared reciprocal nodes. The cross entries are bounded below by δ in the weighted even and unweighted odd Grams. For real coefficients of the same sign, completing the square gives the rational factor in the displayed maximum. For coefficients of opposite signs, the common even lower Gram gives the factor two. The real estimates apply to the real and imaginary parts of each profile. At δ=1 the even diagonal equals one and the unweighted odd diagonal is at least one. The multiplier one is sharp there.
 
-The physical common-reference tangent application remains pending. It requires the arcsine evaluations and substitution back to the affine spectral variable, followed by identification with the arithmetic BKM residual and the ordinary Petz sandwich for the same physical reference and tangent.
+The physical entry theorem `D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentPhysical.physical_entry_arcsine_and_bound` uses this bound for a positive joint spectral pair and a faithful qubit marginal. It identifies the entry of the ordinary Petz residual with an arcsine average of the arithmetic BKM residual at the same reference and tangent. `D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentTraceNorm.faithful_traceNorm_tangent` uses the resulting weighted sum to bound the squared full trace norm by the same multiplier times the conditional BKM form for a positive definite joint reference of trace one. The aggregate estimate at a singular reference, including the support and kernel cross terms, and the recovery bound with this multiplier in terms of finite Umegaki entropy loss remain open in this formalization.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentPhysical.physical_entry_arcsine_and_bound`
 - Truth anchor: `D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentReciprocalGram.paired_parity_bound`
+- Truth anchor: `D5/S3/Quantum/Recovery/NoncommutingQubit/PetzTangentTraceNorm.faithful_traceNorm_tangent`
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiRareFlagBKM](../../Divergence/UmegakiRareFlagBKM.md)

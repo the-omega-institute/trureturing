@@ -32,7 +32,8 @@ open BalancedCubeGirth (adjacent_exists_flip)
 open BalancedCubeComponentBoundary (directions mem_directions regular_directions flip_injective)
 open CoordinateHalves.Q9DominantAxisBoundary (PairedRows emptyFibreBoundary)
 open Q9PositivePairedKernel (pairedVertex pairedGraph dropAxis occupiedContact
-  occupiedContact_iff_projected_adj)
+  occupiedContact_iff_projected_adj occupied occupiedMatrix emptyMatrix vertex_injective
+  occupied_entry occupied_entry_zero split_gram empty_boundary_iff switch_twice)
 open Q9EightStarRigidity (SwitchingCoherent switchedEntry occupiedAxes mem_occupiedAxes
   occupied_common_row_unique occupied_edge_triangle_unique occupiedK44_star)
 open PrimeContactCubeOrders (rowContacts mem_rowContacts)
@@ -49,9 +50,6 @@ open private flip_cons_succ from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
 open private reindex reindex_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
-open private occupied occupiedMatrix emptyMatrix vertex_injective
-  occupied_entry occupied_entry_zero split_gram empty_boundary_iff switch_twice from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9PositivePairedKernel
 
 attribute [local instance] Classical.propDecidable
 

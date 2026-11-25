@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Data.IntRatio
 
 /-!
@@ -121,7 +123,7 @@ theorem haarMonomial_symm (permutation : CoordinatePermutation) (e : Exponents) 
     Eq (haarMonomial p.a p.b p.c p.d) (haarMonomial e.a e.b e.c e.d) :=
   let moment := fun (p : Exponents) => haarMonomial p.a p.b p.c p.d
   CoordinatePermutation.rec (motive := fun perm => Eq (moment (perm.apply e)) (moment e))
-    Eq.refl
+    rfl
     (fun rest ih =>
       let p := rest.apply e
       (haarMonomial_swap01 p.a p.b p.c p.d).symm.trans ih)
@@ -143,8 +145,13 @@ private def axisDenominator (k : Nat) : Nat :=
 
 private theorem haarKappaMoment_axis (k : Nat) :
     Eq (haarKappaMoment k) (IntRatio.value (Int.ofNat (fact (two.mul k))) (axisDenominator k)) :=
-  Eq.map₂ IntRatio.value (congrArg Int.ofNat (product4_axis (fact (two.mul k))))
-    (congrArg (fun n => (pow4 k).mul ((fact k.succ).mul n)) (product4_axis (fact k)))
+  let a := fact (two.mul k)
+  have numerator := (congrArg (fun t => product4 a (fact t) (fact t) (fact t))
+    (Nat.mul_zero two)).trans (product4_axis a)
+  have index : Eq (sum4 k .zero .zero .zero) k :=
+    (Nat.add_zero _).trans ((Nat.add_zero _).trans (Nat.add_zero k))
+  Eq.map₂ IntRatio.value (congrArg Int.ofNat numerator)
+    (Eq.map₂ (fun j p => (pow4 j).mul ((fact j.succ).mul p)) index (product4_axis (fact k)))
 
 private theorem mul_interchange (a b c d : Nat) :
     Eq ((a.mul b).mul (c.mul d)) ((a.mul c).mul (b.mul d)) :=
@@ -162,9 +169,13 @@ private theorem axisDenominator_succ (k : Nat) :
   let b := fact k
   let c := k.succ
   let d := k.succ.succ
+  have four_eq : Eq four (two.mul two) :=
+    ((Nat.mul_succ two Nat.one).trans ((congrArg (fun x : Nat => x.add two) (Nat.mul_one two)).trans
+      ((Nat.add_succ two Nat.one).trans (congrArg Nat.succ (Nat.add_one two))))).symm
   (congrArg (fun n => (p.mul four).mul n) (mul_interchange a d b c)).trans
     ((mul_interchange p four (a.mul b) (d.mul c)).trans
-      ((congrArg (fun n => (axisDenominator k).mul n) (mul_interchange two two d c)).trans
+      ((congrArg (fun n => (axisDenominator k).mul n)
+        ((congrArg (fun t : Nat => t.mul (d.mul c)) four_eq).trans (mul_interchange two two d c))).trans
         (Nat.mul_assoc (axisDenominator k) (two.mul d) (two.mul c)).symm))
 
 /-- The ratio `(2k+1)/(2(k+2))` between consecutive scalar-coordinate moments. -/
@@ -179,15 +190,21 @@ theorem haarKappaMoment_succ (k : Nat) :
   let numerator := (Int.ofNat (fact (two.mul k))).mul (Int.ofNat odd)
   let denominator := (axisDenominator k).mul stepDen
   let scaled := IntRatio.value (numerator.mul (Int.ofNat scale)) (denominator.mul scale)
+  have doubleStep : Eq scale odd.succ :=
+    (Nat.mul_succ two k).trans ((Nat.add_succ _ Nat.one).trans (congrArg Nat.succ (Nat.add_one _)))
+  have factorial : Eq (fact scale) (((fact (two.mul k)).mul odd).mul scale) :=
+    (congrArg fact doubleStep).trans (congrArg (Nat.mul ((fact (two.mul k)).mul odd)) doubleStep.symm)
   have left : Eq (haarKappaMoment k.succ) scaled :=
     (haarKappaMoment_axis k.succ).trans
-      (congrArg (IntRatio.value (numerator.mul (Int.ofNat scale))) (axisDenominator_succ k))
+      (Eq.map₂ IntRatio.value (congrArg Int.ofNat factorial) (axisDenominator_succ k))
   have right : Eq ((haarKappaMoment k).mul (haarKappaStep k)) (IntRatio.value numerator denominator) :=
     (congrArg (fun r : IntRatio => r.mul (haarKappaStep k)) (haarKappaMoment_axis k)).trans
       (IntRatio.value_mul (Int.ofNat (fact (two.mul k))) (Int.ofNat odd) (axisDenominator k) stepDen)
-  Eq.subst (fun r => Equivalent (haarKappaMoment k.succ) r) right.symm
-    (Eq.subst (fun r => Equivalent r (IntRatio.value numerator denominator)) left.symm
-      (IntRatio.value_scale numerator denominator (two.mul k).succ))
+  Eq.subst (motive := fun r => Equivalent (haarKappaMoment k.succ) r) right.symm
+    (Eq.subst (motive := fun r => Equivalent r (IntRatio.value numerator denominator)) left.symm
+      (Eq.subst (motive := fun s => Equivalent
+        (IntRatio.value (numerator.mul (Int.ofNat s)) (denominator.mul s)) (IntRatio.value numerator denominator))
+        doubleStep.symm (IntRatio.value_scale numerator denominator odd)))
 
 private theorem moment_step {k : Nat} {m result : IntRatio}
     (hm : Equivalent (haarKappaMoment k) m)
@@ -196,20 +213,30 @@ private theorem moment_step {k : Nat} {m result : IntRatio}
   (haarKappaMoment_succ k).trans
     ((IntRatio.mul_congr_left hm (haarKappaStep k)).trans hr)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem haarKappaMoment_0 : Equivalent (haarKappaMoment Nat.zero) (IntRatio.ofInt Int.one) :=
-  Eq.refl
+  Omega.rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem haarKappaMoment_1 : Equivalent (haarKappaMoment Nat.one) (IntRatio.value Int.one four) :=
   moment_step (k := Nat.zero) haarKappaMoment_0 (IntRatio.equivalent_refl (IntRatio.value Int.one four))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem haarKappaMoment_2 : Equivalent (haarKappaMoment two) (IntRatio.value Int.one eight) :=
   moment_step (k := Nat.one) haarKappaMoment_1 (IntRatio.value_scale Int.one eight two)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem haarKappaMoment_3 :
     Equivalent (haarKappaMoment three) (IntRatio.value (Int.ofNat five) sixtyFour) :=
   moment_step (k := two) haarKappaMoment_2
     (IntRatio.equivalent_refl (IntRatio.value (Int.ofNat five) sixtyFour))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem haarKappaMoment_4 :
     Equivalent (haarKappaMoment four) (IntRatio.value (Int.ofNat seven) oneTwentyEight) :=
   have product := IntRatio.value_mul (Int.ofNat five) (Int.ofNat seven) sixtyFour (two.mul five)
@@ -220,7 +247,7 @@ theorem haarKappaMoment_4 :
   have scaled := product.trans
     (Eq.map₂ IntRatio.value (congrArg Int.ofNat (Nat.mul_comm five seven)) regroup)
   moment_step (k := three) (m := IntRatio.value (Int.ofNat five) sixtyFour) haarKappaMoment_3
-    (Eq.subst (fun r => Equivalent r (IntRatio.value (Int.ofNat seven) oneTwentyEight))
+    (Eq.subst (motive := fun r => Equivalent r (IntRatio.value (Int.ofNat seven) oneTwentyEight))
       scaled.symm (IntRatio.value_scale (Int.ofNat seven) oneTwentyEight four))
 
 /-- A finite list of rational coefficients in ascending degree order. -/
@@ -275,7 +302,7 @@ private theorem weighted_multiple (q n : Int) (d : Nat) :
   have product := (IntRatio.value_mul (q.mul denominator) n Nat.one d.succ).trans
     (congrArg (fun a => IntRatio.value a (Nat.one.mul d.succ))
       (Int.mul_right_comm q denominator n))
-  Eq.subst (fun r => Equivalent r (IntRatio.ofInt (q.mul n))) product.symm
+  Eq.subst (motive := fun r => Equivalent r (IntRatio.ofInt (q.mul n))) product.symm
     (IntRatio.value_scale (q.mul n) Nat.one d)
 
 private theorem integrate_multiple (k : Nat) (q n : Int) (d : Nat)
@@ -296,37 +323,47 @@ private theorem integrate_product {p q product : CoefficientList} {r : IntRatio}
     (integral : Equivalent (haarKappaPoly product) r)
     (coefficients : Eq (p.mul q) product) :
     Equivalent (haarInner p q) r :=
-  Eq.subst (fun cs => Equivalent (haarKappaPoly cs) r) coefficients.symm integral
+  Eq.subst (motive := fun cs => Equivalent (haarKappaPoly cs) r) coefficients.symm integral
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem haarInner_chi00 :
     Equivalent (haarInner chi0 chi0) (IntRatio.ofInt Int.one) :=
   integrate_product
     (integrate_multiple Nat.zero Int.one Int.one Nat.zero haarKappaMoment_0 (integrate_nil Nat.one))
-    Eq.refl
+    rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat Omega.Nat.pred in
 theorem haarInner_chi01 :
     Equivalent (haarInner chi0 chi1) (IntRatio.ofInt Int.zero) :=
   integrate_product
     (integrate_multiple Nat.zero Int.one.neg Int.one Nat.zero haarKappaMoment_0
       (integrate_multiple Nat.one Int.one Int.one four.pred haarKappaMoment_1 (integrate_nil two)))
-    Eq.refl
+    rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat Omega.Nat.pred in
 theorem haarInner_chi02 :
     Equivalent (haarInner chi0 chi2) (IntRatio.ofInt Int.zero) :=
   integrate_product
     (integrate_multiple Nat.zero Int.one Int.one Nat.zero haarKappaMoment_0
       (integrate_multiple Nat.one (Int.ofNat three).neg Int.one four.pred haarKappaMoment_1
         (integrate_multiple two Int.two Int.one eight.pred haarKappaMoment_2 (integrate_nil three))))
-    Eq.refl
+    rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat Omega.Nat.pred in
 theorem haarInner_chi11 :
     Equivalent (haarInner chi1 chi1) (IntRatio.ofInt Int.one) :=
   integrate_product
     (integrate_multiple Nat.zero Int.one Int.one Nat.zero haarKappaMoment_0
       (integrate_multiple Nat.one Int.two.neg Int.one four.pred haarKappaMoment_1
         (integrate_multiple two Int.two Int.one eight.pred haarKappaMoment_2 (integrate_nil three))))
-    Eq.refl
+    rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat Omega.Nat.pred in
 theorem haarInner_chi12 :
     Equivalent (haarInner chi1 chi2) (IntRatio.ofInt Int.zero) :=
   integrate_product
@@ -335,9 +372,11 @@ theorem haarInner_chi12 :
         (integrate_multiple two (Int.ofNat eight).neg Int.one eight.pred haarKappaMoment_2
           (integrate_multiple three Int.one (Int.ofNat five) sixtyFour.pred haarKappaMoment_3
             (integrate_nil four)))))
-    Eq.refl
+    rfl
 
 set_option maxRecDepth 1024 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat Omega.Nat.pred in
 theorem haarInner_chi22 :
     Equivalent (haarInner chi2 chi2) (IntRatio.ofInt Int.one) :=
   integrate_product
@@ -347,22 +386,28 @@ theorem haarInner_chi22 :
           (integrate_multiple three (Int.ofNat five.succ).neg (Int.ofNat five) sixtyFour.pred haarKappaMoment_3
             (integrate_multiple four Int.two (Int.ofNat seven) oneTwentyEight.pred haarKappaMoment_4
               (integrate_nil five))))))
-    Eq.refl
+    rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem haarInner_chi10 :
     Equivalent (haarInner chi1 chi0) (IntRatio.ofInt Int.zero) :=
-  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
-    (congrArg haarKappaPoly (Eq.refl : Eq (chi0.mul chi1) (chi1.mul chi0))) haarInner_chi01
+  Eq.subst (motive := fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (rfl : Eq (chi0.mul chi1) (chi1.mul chi0))) haarInner_chi01
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem haarInner_chi20 :
     Equivalent (haarInner chi2 chi0) (IntRatio.ofInt Int.zero) :=
-  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
-    (congrArg haarKappaPoly (Eq.refl : Eq (chi0.mul chi2) (chi2.mul chi0))) haarInner_chi02
+  Eq.subst (motive := fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (rfl : Eq (chi0.mul chi2) (chi2.mul chi0))) haarInner_chi02
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem haarInner_chi21 :
     Equivalent (haarInner chi2 chi1) (IntRatio.ofInt Int.zero) :=
-  Eq.subst (fun r => Equivalent r (IntRatio.ofInt Int.zero))
-    (congrArg haarKappaPoly (Eq.refl : Eq (chi1.mul chi2) (chi2.mul chi1))) haarInner_chi12
+  Eq.subst (motive := fun r => Equivalent r (IntRatio.ofInt Int.zero))
+    (congrArg haarKappaPoly (rfl : Eq (chi1.mul chi2) (chi2.mul chi1))) haarInner_chi12
 
 /-- The six entries on and above the diagonal of the character Gram matrix. -/
 theorem peter_weyl_chi012_orthonormal :

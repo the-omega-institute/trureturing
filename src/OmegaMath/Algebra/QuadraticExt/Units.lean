@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.QuadraticExt.Operations
 
 /-!
@@ -64,9 +66,10 @@ private theorem nat_eq_one_of_mul_eq_one {a b : Nat}
     (fun b h => False.elim (Nat.succ_ne_zero .zero ((Nat.zero_mul b).symm.trans h).symm))
     (fun a _ b => Nat.rec
       (motive := fun b => Eq (a.succ.mul b) (.succ .zero) → Eq a.succ (.succ .zero))
-      (fun h => False.elim (Nat.succ_ne_zero .zero h.symm))
-      (fun _ _ h => congrArg Nat.succ
-        (Nat.eq_zero_of_add_eq_zero (Nat.succ.inj h)).right) b) a) b h
+      (fun h => False.elim (Nat.succ_ne_zero .zero (h.symm.trans (Nat.mul_zero a.succ))))
+      (fun j _ h =>
+        have eq := (Nat.mul_succ a.succ j).trans (Nat.add_succ _ a)
+        congrArg Nat.succ (Nat.eq_zero_of_add_eq_zero (Nat.succ.inj (eq.symm.trans h))).right) b) a) b h
 
 private theorem int_natAbs_eq_one_iff (a : Int) :
     Iff (Eq a.natAbs (.succ .zero)) (Or (Eq a Int.one) (Eq a Int.one.neg)) :=
@@ -79,7 +82,8 @@ private theorem int_natAbs_eq_one_iff (a : Int) :
 
 private theorem int_mul_self_eq_one_of_natAbs_eq_one {a : Int}
     (h : Eq a.natAbs (.succ .zero)) : Eq (a.mul a) Int.one :=
-  Int.natAbs_mul_self.symm.trans (congrArg (fun (n : Nat) => Int.ofNat (n.mul n)) h)
+  Int.natAbs_mul_self.symm.trans
+    ((congrArg (fun (n : Nat) => Int.ofNat (n.mul n)) h).trans (congrArg Int.ofNat (Nat.mul_one Nat.one)))
 
 /-- The absolute norm detects units in every integral quadratic algebra. -/
 theorem isUnit_iff_norm_natAbs_eq_one {b c : Int} (z : IntQuadPoly b c) :
@@ -100,11 +104,13 @@ theorem isUnit_iff_norm_eq_one_or_neg_one {b c : Int} (z : IntQuadPoly b c) :
   Iff.intro (fun h => signCriterion.mp (absCriterion.mp h))
     (fun h => absCriterion.mpr (signCriterion.mpr h))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The golden generator has inverse minus its conjugate. -/
 theorem golden_alpha_mul_neg_conj :
     let phi : IntQuadPoly Int.one Int.one := alpha intRing
     Equivalent intRing (mul intRing phi (neg intRing (conj intRing phi))) (one intRing) :=
-  And.intro Eq.refl Eq.refl
+  And.intro rfl rfl
 
 /-- Compute `±φ^n` from the two constructors of the integer exponent. -/
 def signedGoldenPower (negative : Bool) (n : Int) : IntQuadPoly Int.one Int.one :=

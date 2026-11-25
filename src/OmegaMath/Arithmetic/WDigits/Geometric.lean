@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 
 public import OmegaMath.Algebra.QuadraticExt.Ring
 public import OmegaMath.Arithmetic.WDigits
@@ -36,9 +37,19 @@ private theorem two_squared_ne_three :
     Not (FiniteRatio.Equivalent ((FiniteRatio.ofInt Int.two).mul (FiniteRatio.ofInt Int.two))
       (FiniteRatio.ofInt (Int.ofNat Nat.one.succ.succ))) :=
   fun h =>
-    have e : Eq (Nat.succ .zero) Nat.zero :=
-      Nat.succ.inj (Nat.succ.inj (Nat.succ.inj (congrArg Int.natAbs h)))
-    Nat.succ_ne_zero .zero e
+    let two := Nat.one.succ
+    let three := two.succ
+    have product : Eq (two.mul two) three.succ :=
+      (Nat.mul_succ two Nat.one).trans ((congrArg (fun x : Nat => x.add two)
+        (Nat.mul_one two)).trans ((Nat.add_succ two Nat.one).trans
+          (congrArg Nat.succ (Nat.add_one two))))
+    have den : Eq (IntRatio.denominator (IntRatio.mulDenPred .zero .zero)) Int.one :=
+      (IntRatio.denominator_mul .zero .zero).trans (Int.mul_one Int.one)
+    have e : Eq (Int.two.mul Int.two) (Int.ofNat three) :=
+      (Int.mul_one _).symm.trans (Eq.trans h
+        ((congrArg (Int.ofNat three).mul den).trans (Int.mul_one _)))
+    have impossible := product.symm.trans (Int.ofNat_inj.mp e)
+    Nat.succ_ne_zero .zero (Nat.succ.inj (Nat.succ.inj (Nat.succ.inj impossible)))
 
 /-- A nonzero scaling cannot make the weights `1`, `2`, and `3` geometric. -/
 theorem no_geometric_first_three (w ratio scale : FiniteRatio)
@@ -68,8 +79,12 @@ theorem no_scaled_geometric_weights :
       Exists fun scale : FiniteRatio =>
         And (Not (Eq scale.num Int.zero)) (MatchesScaledWeights first ratio scale)) :=
   fun witnesses => witnesses.elim fun first ratios => ratios.elim fun ratio scales =>
-    scales.elim fun scale h => no_geometric_first_three first ratio scale h.left
-      (rationalRingLaws.trans (h.right .zero) (rationalRingLaws.mul_one scale))
-      (h.right Nat.one) (h.right Nat.one.succ)
+    scales.elim fun scale h =>
+      let atWeight (k w : Nat) (hw : Eq (wValue k) w) :=
+        Eq.subst (motive := fun n => FiniteRatio.Equivalent (geometricWeight first ratio k)
+          (scale.mul (FiniteRatio.ofInt (Int.ofNat n)))) hw (h.right k)
+      no_geometric_first_three first ratio scale h.left
+        (rationalRingLaws.trans (atWeight _ _ wValue_zero) (rationalRingLaws.mul_one scale))
+        (atWeight _ _ wValue_one) (atWeight _ _ wValue_two)
 
 end Omega.Arithmetic.WDigits

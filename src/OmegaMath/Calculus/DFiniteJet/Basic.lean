@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 
 public import OmegaMath.Calculus.Jet2.Scalar
 
@@ -82,11 +83,11 @@ def oneAddEtaSq : JetSeq := add one (mul eta eta)
 
 theorem mul_zero (f g : JetSeq) :
     Eq (mul f g Nat.zero) ((f Nat.zero).mul (g Nat.zero)) :=
-  Eq.refl
+  Omega.rfl
 
 theorem mul_succ (f g : JetSeq) (k : Nat) :
     Eq (mul f g k.succ) (((f Nat.zero).mul (g k.succ)).add (mul (tail f) g k)) :=
-  Eq.refl
+  Omega.rfl
 
 theorem add_congr {f g h i : JetSeq} (hf : Equivalent f h) (hg : Equivalent g i) :
     Equivalent (add f g) (add h i) :=
@@ -114,7 +115,7 @@ theorem mul_congr_at {f g h i : JetSeq} (N : Nat)
         (hg Nat.zero (Nat.zero_le _)))
       (fun k ih _ _ _ _ hf hg =>
         IntRatio.add_congr
-          (IntRatio.mul_congr (hf Nat.zero (Nat.zero_le _)) (hg k.succ (Nat.le.refl _)))
+          (IntRatio.mul_congr (hf Nat.zero (Nat.zero_le _)) (hg k.succ (Nat.le_refl _)))
           (ih _ _ _ _ (fun j hj => hf j.succ (Nat.succ_le_succ hj))
             (fun j hj => hg j (Nat.le.step hj)))) k
   fun k hk => coefficient k f g h i
@@ -122,7 +123,7 @@ theorem mul_congr_at {f g h i : JetSeq} (N : Nat)
 
 theorem mul_congr {f g h i : JetSeq} (hf : Equivalent f h) (hg : Equivalent g i) :
     Equivalent (mul f g) (mul h i) :=
-  fun k => mul_congr_at k (hf.at k) (hg.at k) k (Nat.le.refl k)
+  fun k => mul_congr_at k (hf.at k) (hg.at k) k (Nat.le_refl k)
 
 theorem finite_zero : Finite zero :=
   fun _ => IntRatio.finite_ofNat Nat.zero
@@ -311,8 +312,8 @@ private theorem ofNat_succ_mul (n : Nat) (x : IntRatio) :
       (((IntRatio.ofNat n).mul x).add x) :=
     (IntRatio.add_mul (IntRatio.ofNat n) IntRatio.one x).trans
       (IntRatio.add_congr (IntRatio.equivalent_refl _) (IntRatio.one_mul x))
-  Eq.subst (fun a : IntRatio => IntRatio.Equivalent (a.mul x) (((IntRatio.ofNat n).mul x).add x))
-    (IntRatio.ofNat_add n Nat.one) expand
+  Eq.subst (motive := fun a : IntRatio => IntRatio.Equivalent (a.mul x) (((IntRatio.ofNat n).mul x).add x))
+    ((IntRatio.ofNat_add n Nat.one).trans (congrArg IntRatio.ofNat (Nat.add_one n))) expand
 
 private theorem tail_deriv (f : JetSeq) :
     Equivalent (tail (deriv f)) (add (deriv (tail f)) (tail (tail f))) :=

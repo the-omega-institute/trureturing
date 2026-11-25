@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.PiFreeHaar.Moments
 import OmegaMath.Algebra.Quaternion.Polynomial
 
@@ -43,30 +45,25 @@ open expected (odd fall rise numerator)
 private def scaled (moment : IntRatio) (n : Int) (d : Nat) : IntRatio :=
   moment.mul (value n d)
 
-private theorem ofNat_sub (j r : Nat) :
-    Eq ((Int.ofNat j).sub (Int.ofNat r)) (Int.subNatNat j r) :=
-  Nat.rec (motive := fun r => Eq ((Int.ofNat j).sub (Int.ofNat r)) (Int.subNatNat j r))
-    ((Int.subNatNat_add_left Nat.zero j).symm.trans
-      (congrArg (fun n => Int.subNatNat n Nat.zero) (Nat.zero_add j)))
-    (fun _ _ => Eq.refl) r
-
 private theorem fall_shift (j r : Nat) :
     Eq (fall j.succ r.succ) ((Int.ofNat j.succ).mul (fall j r)) :=
   Nat.rec (motive := fun r => Eq (fall j.succ r.succ) ((Int.ofNat j.succ).mul (fall j r)))
-    ((Int.one_mul (Int.ofNat j.succ)).trans (Int.mul_one (Int.ofNat j.succ)).symm)
+    ((Int.one_mul _).trans ((Int.add_zero _).trans (Int.mul_one (Int.ofNat j.succ)).symm))
     (fun r ih =>
-      have difference := (ofNat_sub j.succ r.succ).trans
-        ((Int.subNatNat_add_add j r Nat.one).trans (ofNat_sub j r).symm)
+      have difference := (Int.subNatNat_eq_coe (m := j.succ) (n := r.succ)).symm.trans
+        ((Eq.map₂ Int.subNatNat (Nat.add_one j).symm (Nat.add_one r).symm).trans
+          ((Int.subNatNat_add_add j r Nat.one).trans (Int.subNatNat_eq_coe (m := j) (n := r))))
       (Eq.map₂ Int.mul ih difference).trans
         (Int.mul_assoc (Int.ofNat j.succ) (fall j r) ((Int.ofNat j).sub (Int.ofNat r)))) r
 
 private theorem rise_shift (j r : Nat) :
     Eq ((rise j.succ r).mul j.succ.succ) (rise j r.succ) :=
   Nat.rec (motive := fun r => Eq ((rise j.succ r).mul j.succ.succ) (rise j r.succ))
-    Eq.refl
+    (congrArg (fun t : Nat => Nat.one.mul t.succ.succ) (Nat.add_zero j).symm)
     (fun r ih =>
       (Nat.mul_right_comm (rise j.succ r) (j.succ.add r).succ.succ j.succ.succ).trans
-        (Eq.map₂ Nat.mul ih (congrArg (fun n : Nat => n.succ.succ) (Nat.succ_add j r)))) r
+        (Eq.map₂ Nat.mul ih (congrArg (fun n : Nat => n.succ.succ)
+          ((Nat.succ_add j r).trans (Nat.add_succ j r).symm)))) r
 
 private theorem mul_ne_zero {a b : Nat} (ha : Not (Eq a Nat.zero)) (hb : Not (Eq b Nat.zero)) :
     Not (Eq (a.mul b) Nat.zero) :=
@@ -77,7 +74,7 @@ private theorem rise_ne_zero (j r : Nat) : Not (Eq (rise j r) Nat.zero) :=
     (Nat.succ_ne_zero Nat.zero) (fun k ih => mul_ne_zero ih (Nat.succ_ne_zero (j.add k).succ)) r
 
 private theorem equivalent_of_eq {x y : IntRatio} (h : Eq x y) : Equivalent x y :=
-  Eq.subst (Equivalent x) h (equivalent_refl x)
+  Eq.subst (motive := Equivalent x) h (equivalent_refl x)
 
 private theorem scaled_mul (m : IntRatio) (a b : Int) (d e : Nat) :
     Equivalent ((scaled m a d).mul (value b e)) (scaled m (a.mul b) (d.mul e)) :=
@@ -97,10 +94,10 @@ private theorem scaled_rescale (m : IntRatio) (n : Int) (d k : Nat) (hk : Not (E
 private theorem scaled_neg (m : IntRatio) (n : Int) (d : Nat) :
     Eq (scaled m n.neg d) (scaled m n d).neg :=
   IntRatio.rec (motive := fun m => Eq (scaled m n.neg d) (scaled m n d).neg)
-    Eq.refl
+    rfl
     (fun a b => Nat.rec (motive := fun d =>
         Eq (scaled (IntRatio.fraction a b) n.neg d) (scaled (IntRatio.fraction a b) n d).neg)
-      Eq.refl
+      rfl
       (fun d _ => congrArg (fun x => IntRatio.fraction x (IntRatio.mulDenPred b d))
         (Int.mul_neg a n)) d) m
 
@@ -111,6 +108,8 @@ private theorem scaled_sub_same (m : IntRatio) (a b : Int) (d : Nat) :
     ((IntRatio.mul_add m (value a d) (value b.neg d)).symm.trans
       (IntRatio.mul_congr (equivalent_refl m) (IntRatio.value_add_same a b.neg d)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 /-- Four times the next scalar moment absorbs the scalar recurrence factor. -/
 private theorem four_mul_next (j : Nat) (n : Int) (d : Nat) :
     Equivalent ((ofInt four).mul (scaled (haarKappaMoment j.succ) n d))
@@ -132,18 +131,22 @@ private theorem four_mul_next (j : Nat) (n : Int) (d : Nat) :
     (multiply.trans ((equivalent_of_eq (Eq.map₂ (scaled m) numEq denEq)).trans
       (scaled_rescale m a b two (Nat.succ_ne_zero Nat.one)).symm))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem base (j : Nat) : Equivalent (haarKappaMoment j) (expected j Nat.zero) :=
   (IntRatio.mul_one (haarKappaMoment j)).symm
 
 open Quaternion.Polynomial (Expr Values)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem first_numerator (j : Nat) :
     Eq (((Int.two.mul (odd j)).mul Int.one).sub (Int.ofNat j.succ.succ)) (numerator j Nat.one) :=
   let x := Expr.var Nat.zero
   let two := Expr.one.double
   let three := two.add Expr.one
   Expr.sound (((two.mul ((two.mul x).add .one)).mul .one).sub (x.add two))
-    (three.mul (Expr.one.mul x)) (.cons (Int.ofNat j) .nil) Eq.refl
+    (three.mul (Expr.one.mul x)) (.cons (Int.ofNat j) .nil) rfl
 
 theorem first (j : Nat) :
     Equivalent (((ofInt four).mul (haarKappaMoment j.succ)).sub (haarKappaMoment j))
@@ -159,8 +162,11 @@ theorem first (j : Nat) :
       (equivalent_of_eq (Eq.map₂ (scaled m) (Int.one_mul (Int.ofNat d)) (Nat.one_mul d))))
   (IntRatio.sub_congr (left.trans leftDen) right).trans
     ((scaled_sub_same m a (Int.ofNat d) d).trans
-      (equivalent_of_eq (Eq.map₂ (scaled m) (first_numerator j) (Nat.one_mul d).symm)))
+      (equivalent_of_eq (Eq.map₂ (scaled m) (first_numerator j) ((Nat.one_mul d).symm.trans
+        (congrArg (fun t : Nat => Nat.one.mul t.succ.succ) (Nat.add_zero j).symm)))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The numerator identity after moving all four terms to the rising product in degree `r+2`. -/
 private theorem step_numerator (j r : Nat) :
     let p := (j.add r).succ.succ
@@ -191,7 +197,7 @@ private theorem step_numerator (j r : Nat) :
   (congrArg (fun t : Int => (((Int.two.mul (odd j)).mul
     ((odd r.succ).mul t)).sub b).sub c) (fall_shift j r)).trans
     (Expr.sound ((aExpr.sub bExpr).sub cExpr) ((oddExpr y2).mul fall2)
-      (.cons (Int.ofNat j) (.cons (Int.ofNat r) (.cons (fall j r) .nil))) Eq.refl)
+      (.cons (Int.ofNat j) (.cons (Int.ofNat r) (.cons (fall j r) .nil))) rfl)
 
 theorem step (j r : Nat) :
     Equivalent ((((ofInt four).mul (expected j.succ r.succ)).sub
@@ -208,21 +214,27 @@ theorem step (j r : Nat) :
   let c' := c.mul (Int.ofNat (p.mul q))
   have left := (four_mul_next j (numerator j.succ r.succ) (rise j.succ r.succ)).trans
     (equivalent_of_eq (congrArg (scaled m a) (rise_shift j r.succ)))
+  have lastFactor := congrArg (fun t : Nat => (rise j r.succ).mul t.succ.succ) (Nat.add_succ j r).symm
   have middle := (scaled_int_mul m Int.two (numerator j r.succ) (rise j r.succ)).trans
-    (scaled_rescale m b (rise j r.succ) q (Nat.succ_ne_zero p))
+    ((scaled_rescale m b (rise j r.succ) q (Nat.succ_ne_zero p)).trans
+      (equivalent_of_eq (congrArg (scaled m b') lastFactor)))
   have right := (scaled_rescale m c (rise j r) (p.mul q)
     (mul_ne_zero (Nat.succ_ne_zero (j.add r).succ) (Nat.succ_ne_zero p))).trans
-      (equivalent_of_eq (congrArg (scaled m c') (Nat.mul_assoc (rise j r) p q).symm))
+      (equivalent_of_eq (congrArg (scaled m c') ((Nat.mul_assoc (rise j r) p q).symm.trans lastFactor)))
   (IntRatio.sub_congr ((IntRatio.sub_congr left middle).trans (scaled_sub_same m a b' d)) right).trans
     ((scaled_sub_same m (a.sub b') c' d).trans
       (equivalent_of_eq (congrArg (fun n => scaled m n d) (step_numerator j r))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 private theorem fall_axis (r : Nat) : Eq (fall Nat.zero r.succ) Int.zero :=
-  Nat.rec (motive := fun r => Eq (fall Nat.zero r.succ) Int.zero) Eq.refl
+  Nat.rec (motive := fun r => Eq (fall Nat.zero r.succ) Int.zero) rfl
     (fun r ih =>
       let diff := Int.zero.sub (Int.ofNat r.succ)
       (congrArg (fun t : Int => t.mul diff) ih).trans (Int.zero_mul diff)) r
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem axis (r : Nat) :
     Equivalent (expected Nat.zero r)
       (Nat.rec (motive := fun _ => IntRatio) (ofInt Int.one) (fun _ _ => ofInt Int.zero) r) :=

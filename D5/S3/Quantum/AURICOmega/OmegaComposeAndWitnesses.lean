@@ -8,6 +8,7 @@
 
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.DFiniteCompose
 public import OmegaMath.Witnesses.FlagshipWitnesses
 
@@ -64,7 +65,7 @@ private theorem running_before_trace_end (prog : Program) (states : Arithmetic.N
         (fun j _ hj halted =>
           have stepped := (run_succ_first prog j n).trans
             (congrArg (run prog j) (advance_of_step trace.left))
-          ih next j trace.right hj (Eq.subst (Halts prog) stepped halted)) k) states
+          ih next j trace.right (Nat.le_of_succ_le_succ hj) (Eq.subst (motive := Halts prog) stepped halted)) k) states
 
 /-- The listed fifteen transitions reach 22, the first state at which every guard fails. -/
 public theorem p_omega_halts_at_22 :
@@ -72,9 +73,15 @@ public theorem p_omega_halts_at_22 :
       (And (Eq (run pOmega (appendDigit Nat.one five) pOmegaStart) pOmegaFinal)
         (And (Halts pOmega pOmegaFinal)
           (∀ k, Nat.lt k (appendDigit Nat.one five) → Not (Halts pOmega (run pOmega k pOmegaStart))))) :=
+  have fifteen : Eq (appendDigit Nat.one five) (traceLength pOmegaTrace) :=
+    (congrArg (fun n : Nat => n.add five) (Nat.one_mul ten)).trans
+      ((Nat.add_succ ten four).trans (congrArg Nat.succ ((Nat.add_succ ten three).trans
+        (congrArg Nat.succ ((Nat.add_succ ten two).trans (congrArg Nat.succ
+          ((Nat.add_succ ten Nat.one).trans (congrArg Nat.succ (Nat.add_one ten)))))))))
   have runWitness := Fractran.p_omega_halts_at_22
   And.intro runWitness.left (And.intro runWitness.right.left
     (And.intro runWitness.right.right
-      (fun k hk => running_before_trace_end pOmega pOmegaTrace pOmegaStart k runWitness.left hk)))
+      (fun k hk => running_before_trace_end pOmega pOmegaTrace pOmegaStart k runWitness.left
+        (Eq.subst (motive := Nat.lt k) fifteen hk))))
 
 end D5.S3.Quantum.AURICOmega.OmegaComposeAndWitnesses

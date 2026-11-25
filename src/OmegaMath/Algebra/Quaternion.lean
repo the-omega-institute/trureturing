@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.Quaternion.Polynomial
 
 /-!
@@ -67,12 +69,18 @@ theorem ext {a b : Quaternion} (hw : Eq a.w b.w) (hx : Eq a.x b.x)
     (Eq.map₂ (Quaternion.mk b.w b.x) hy hz)
 
 theorem conj_conj (a : Quaternion) : Eq a.conj.conj a :=
-  ext Eq.refl (Int.neg_neg a.x) (Int.neg_neg a.y) (Int.neg_neg a.z)
+  ext rfl (Int.neg_neg a.x) (Int.neg_neg a.y) (Int.neg_neg a.z)
 
 theorem normSq_cast (a : Quaternion) : Eq (Int.ofNat a.normSq) (a.dot a) :=
   Eq.map₂ Int.add
     (Eq.map₂ Int.add Int.natAbs_mul_self Int.natAbs_mul_self)
     (Eq.map₂ Int.add Int.natAbs_mul_self Int.natAbs_mul_self)
+
+theorem scalar_normSq (k : Int) : Eq (scalar k).normSq (k.natAbs.mul k.natAbs) :=
+  have z := Nat.mul_zero Nat.zero
+  have pair := (Eq.map₂ Nat.add z z).trans (Nat.add_zero Nat.zero)
+  (Eq.map₂ Nat.add (congrArg (k.natAbs.mul k.natAbs).add z) pair).trans
+    ((Nat.add_zero _).trans (Nat.add_zero _))
 
 theorem normSq_eq_zero_iff (a : Quaternion) : Iff (Eq a.normSq Nat.zero) (Eq a zero) :=
   Iff.intro
@@ -85,7 +93,7 @@ theorem normSq_eq_zero_iff (a : Quaternion) : Iff (Eq a.normSq Nat.zero) (Eq a z
       have yz := other.mp ((Eq.map₂ Int.add Int.natAbs_mul_self Int.natAbs_mul_self).symm.trans
         (congrArg Int.ofNat sums.right))
       ext wx.left wx.right yz.left yz.right)
-    (fun h => congrArg normSq h)
+    (fun h => (congrArg normSq h).trans ((scalar_normSq Int.zero).trans (Nat.mul_zero Nat.zero)))
 
 theorem nonzero_iff_ne_zero (a : Quaternion) : Iff a.Nonzero (Not (Eq a zero)) :=
   Iff.intro
@@ -113,6 +121,8 @@ private def inputs (a : Quaternion) (rest : Polynomial.Values) : Polynomial.Valu
 
 private def four : Nat := Nat.succ Nat.zero.succ.succ.succ
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem mul_assoc (a b c : Quaternion) : Eq ((a.mul b).mul c) (a.mul (b.mul c)) :=
   let values := inputs a (inputs b (inputs c .nil))
   let A := Polynomial.Coordinates.variables Nat.zero
@@ -120,46 +130,54 @@ theorem mul_assoc (a b c : Quaternion) : Eq ((a.mul b).mul c) (a.mul (b.mul c)) 
   let C := Polynomial.Coordinates.variables (four.add four)
   let lhs := (A.mul B).mul C
   let rhs := A.mul (B.mul C)
-  ext (lhs.w.sound rhs.w values Eq.refl) (lhs.x.sound rhs.x values Eq.refl)
-    (lhs.y.sound rhs.y values Eq.refl) (lhs.z.sound rhs.z values Eq.refl)
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem conj_mul (a b : Quaternion) : Eq (a.mul b).conj (b.conj.mul a.conj) :=
   let values := inputs a (inputs b .nil)
   let A := Polynomial.Coordinates.variables Nat.zero
   let B := Polynomial.Coordinates.variables four
   let lhs := (A.mul B).conj
   let rhs := B.conj.mul A.conj
-  ext (lhs.w.sound rhs.w values Eq.refl) (lhs.x.sound rhs.x values Eq.refl)
-    (lhs.y.sound rhs.y values Eq.refl) (lhs.z.sound rhs.z values Eq.refl)
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem mul_conj_eq_normSq (a : Quaternion) : Eq (a.mul a.conj) (scalar (Int.ofNat a.normSq)) :=
   let values := inputs a .nil
   let A := Polynomial.Coordinates.variables Nat.zero
   let P := A.mul A.conj
-  ext ((P.w.sound (A.dot A) values Eq.refl).trans a.normSq_cast.symm)
-    (P.x.sound .zero values Eq.refl) (P.y.sound .zero values Eq.refl) (P.z.sound .zero values Eq.refl)
+  ext ((P.w.sound (A.dot A) values rfl).trans a.normSq_cast.symm)
+    (P.x.sound .zero values rfl) (P.y.sound .zero values rfl) (P.z.sound .zero values rfl)
 
 theorem conj_mul_eq_normSq (a : Quaternion) : Eq (a.conj.mul a) (scalar (Int.ofNat a.normSq)) :=
   (congrArg a.conj.mul (conj_conj a)).symm.trans
     ((mul_conj_eq_normSq a.conj).trans (congrArg (fun n => scalar (Int.ofNat n)) (normSq_conj a)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem scalar_mul (k : Int) (a : Quaternion) : Eq ((scalar k).mul a) (scale k a) :=
   let values := Polynomial.Values.cons k (inputs a .nil)
   let K := Polynomial.Expr.var Nat.zero
   let A := Polynomial.Coordinates.variables Nat.zero.succ
   let lhs := (Polynomial.Coordinates.scalar K).mul A
   let rhs := A.scale K
-  ext (lhs.w.sound rhs.w values Eq.refl) (lhs.x.sound rhs.x values Eq.refl)
-    (lhs.y.sound rhs.y values Eq.refl) (lhs.z.sound rhs.z values Eq.refl)
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem mul_scalar (k : Int) (a : Quaternion) : Eq (a.mul (scalar k)) (scale k a) :=
   let values := Polynomial.Values.cons k (inputs a .nil)
   let K := Polynomial.Expr.var Nat.zero
   let A := Polynomial.Coordinates.variables Nat.zero.succ
   let lhs := A.mul (Polynomial.Coordinates.scalar K)
   let rhs := A.scale K
-  ext (lhs.w.sound rhs.w values Eq.refl) (lhs.x.sound rhs.x values Eq.refl)
-    (lhs.y.sound rhs.y values Eq.refl) (lhs.z.sound rhs.z values Eq.refl)
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
 
 theorem scale_one (a : Quaternion) : Eq (scale Int.one a) a :=
   ext (Int.one_mul a.w) (Int.one_mul a.x) (Int.one_mul a.y) (Int.one_mul a.z)
@@ -179,32 +197,52 @@ theorem scale_mul_right (k : Int) (a b : Quaternion) :
     ((mul_assoc a b (scalar k)).symm.trans (mul_scalar k (a.mul b)))
 
 theorem conj_scale (k : Int) (a : Quaternion) : Eq (scale k a).conj (scale k a.conj) :=
-  ext Eq.refl (Int.mul_neg k a.x).symm (Int.mul_neg k a.y).symm (Int.mul_neg k a.z).symm
+  ext rfl (Int.mul_neg k a.x).symm (Int.mul_neg k a.y).symm (Int.mul_neg k a.z).symm
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem dot_scale (k : Int) (a b : Quaternion) : Eq ((scale k a).dot b) (k.mul (a.dot b)) :=
   let values := Polynomial.Values.cons k (inputs a (inputs b .nil))
   let K := Polynomial.Expr.var Nat.zero
   let A := Polynomial.Coordinates.variables Nat.zero.succ
   let B := Polynomial.Coordinates.variables four.succ
-  ((A.scale K).dot B).sound (K.mul (A.dot B)) values Eq.refl
+  ((A.scale K).dot B).sound (K.mul (A.dot B)) values rfl
 
 theorem dot_conj (a b : Quaternion) : Eq (a.conj.dot b.conj) (a.dot b) :=
   Eq.map₂ Int.add (congrArg (a.w.mul b.w).add (Int.neg_mul_neg a.x b.x))
     (Eq.map₂ Int.add (Int.neg_mul_neg a.y b.y) (Int.neg_mul_neg a.z b.z))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem dot_mul_left (p a b : Quaternion) :
     Eq ((p.mul a).dot (p.mul b)) ((p.dot p).mul (a.dot b)) :=
   let values := inputs p (inputs a (inputs b .nil))
   let P := Polynomial.Coordinates.variables Nat.zero
   let A := Polynomial.Coordinates.variables four
   let B := Polynomial.Coordinates.variables (four.add four)
-  ((P.mul A).dot (P.mul B)).sound ((P.dot P).mul (A.dot B)) values Eq.refl
+  ((P.mul A).dot (P.mul B)).sound ((P.dot P).mul (A.dot B)) values rfl
 
 theorem dot_mul_right (p a b : Quaternion) :
     Eq ((a.mul p).dot (b.mul p)) ((p.dot p).mul (a.dot b)) :=
   (dot_conj (a.mul p) (b.mul p)).symm.trans
     ((Eq.map₂ dot (conj_mul a p) (conj_mul b p)).trans
       ((dot_mul_left p.conj a.conj b.conj).trans (Eq.map₂ Int.mul (dot_conj p p) (dot_conj a b))))
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+/-- The two-vector Gram determinant equals the sum of the three squared imaginary
+coordinates of the product of the first conjugate with the second quaternion. -/
+theorem gramDet_eq_imaginary_squares (a b : Quaternion) :
+    let q := a.conj.mul b
+    Eq (((a.dot a).mul (b.dot b)).sub (Int.square (a.dot b)))
+      (((Int.square q.x).add (Int.square q.y)).add (Int.square q.z)) :=
+  let values := inputs a (inputs b .nil)
+  let A := Polynomial.Coordinates.variables Nat.zero
+  let B := Polynomial.Coordinates.variables four
+  let Q := A.conj.mul B
+  let determinant := ((A.dot A).mul (B.dot B)).sub ((A.dot B).mul (A.dot B))
+  let imaginary := ((Q.x.mul Q.x).add (Q.y.mul Q.y)).add (Q.z.mul Q.z)
+  determinant.sound imaginary values rfl
 
 /-- Euler–Lagrange four-square multiplicativity over the integers. -/
 theorem normSq_mul (a b : Quaternion) : Eq (a.mul b).normSq (a.normSq.mul b.normSq) :=
@@ -213,7 +251,8 @@ theorem normSq_mul (a b : Quaternion) : Eq (a.mul b).normSq (a.normSq.mul b.norm
 
 theorem normSq_scale (k : Int) (a : Quaternion) :
     Eq (scale k a).normSq (a.normSq.mul (k.natAbs.mul k.natAbs)) :=
-  (congrArg normSq (mul_scalar k a).symm).trans (normSq_mul a (scalar k))
+  (congrArg normSq (mul_scalar k a).symm).trans
+    ((normSq_mul a (scalar k)).trans (congrArg a.normSq.mul (scalar_normSq k)))
 
 theorem scale_cancel {a b : Quaternion} {k : Int} (hk : Not (Eq k Int.zero))
     (h : Eq (scale k a) (scale k b)) : Eq a b :=

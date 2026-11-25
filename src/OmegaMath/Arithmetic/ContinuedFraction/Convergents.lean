@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 
 public import OmegaMath.Arithmetic.Euclidean.Division
 public import OmegaMath.Data.Nat.Fib.Basic
@@ -73,7 +75,7 @@ private theorem run_append (coeffs : NatList) (a : Nat) :
   NatList.rec (motive := fun coeffs => ∀ pair : ConvergentPair,
     Eq (ConvergentPair.run (appendCoefficient coeffs a) pair)
       ((ConvergentPair.run coeffs pair).step a))
-    (fun _ => Eq.refl) (fun b _ ih pair => ih (pair.step b)) coeffs
+    (fun _ => rfl) (fun b _ ih pair => ih (pair.step b)) coeffs
 
 theorem convergentPair_appendCoefficient (coeffs : NatList) (a : Nat) :
     Eq (convergentPair (appendCoefficient coeffs a)) ((convergentPair coeffs).step a) :=
@@ -83,7 +85,7 @@ private theorem count_append (coeffs : NatList) (a : Nat) :
     Eq (coefficientCount (appendCoefficient coeffs a)) (coefficientCount coeffs).succ :=
   NatList.rec (motive := fun coeffs =>
     Eq (coefficientCount (appendCoefficient coeffs a)) (coefficientCount coeffs).succ)
-    Eq.refl (fun _ _ ih => congrArg Nat.succ ih) coeffs
+    rfl (fun _ _ ih => congrArg Nat.succ ih) coeffs
 
 private theorem append_induction (P : NatList → Prop) (empty : P .nil)
     (append : ∀ coeffs a, P coeffs → P (appendCoefficient coeffs a))
@@ -107,8 +109,9 @@ private theorem subNatNat_swap (m n : Nat) :
   Int.subNatNat_elim m n (fun m n diff => Eq (Int.subNatNat n m) diff.neg)
     (fun i n => Nat.rec (motive := fun i =>
       Eq (Int.subNatNat n (n.add i)) (Int.ofNat i).neg)
-      (Int.subNatNat_self n) (fun j _ => Int.subNatNat_add_right n j) i)
-    (fun i m => Int.subNatNat_add_left m i.succ)
+      ((congrArg (Int.subNatNat n) (Nat.add_zero n)).trans (Int.subNatNat_self n))
+      (fun j _ => @Int.subNatNat_add_right n j) i)
+    (fun i m => @Int.subNatNat_add_left m i.succ)
 
 private theorem scaled_cross (a x y z : Nat) :
     Eq (((a.mul x).add z).mul y) ((z.mul y).add (a.mul (x.mul y))) :=
@@ -141,7 +144,10 @@ theorem eulerWallis (coeffs : NatList) :
     Eq (convergentPair coeffs).determinant (alternatingSign (coefficientCount coeffs)) :=
   append_induction
     (fun xs => Eq (convergentPair xs).determinant (alternatingSign (coefficientCount xs)))
-    Eq.refl
+    ((congrArg (fun x => Int.subNatNat x (Nat.zero.mul Nat.zero)) (Nat.mul_one Nat.one)).trans
+      ((congrArg (Int.subNatNat Nat.one) (Nat.mul_zero Nat.zero)).trans
+        ((congrArg (fun x => Int.subNatNat x Nat.zero) (Nat.zero_add Nat.one).symm).trans
+          (@Int.subNatNat_add_left Nat.zero Nat.one))))
     (fun xs a ih =>
       (congrArg ConvergentPair.determinant (convergentPair_appendCoefficient xs a)).trans
         ((determinant_step (convergentPair xs) a).trans
@@ -158,7 +164,7 @@ theorem eulerWallis_next (head : Nat) (tail : NatList) (a : Nat) :
       (Int.neg_neg (alternatingSign (coefficientCount tail))))
 
 private theorem alternatingSign_abs (n : Nat) : Eq (alternatingSign n).natAbs Nat.one :=
-  Nat.rec (motive := fun n => Eq (alternatingSign n).natAbs Nat.one) Eq.refl
+  Nat.rec (motive := fun n => Eq (alternatingSign n).natAbs Nat.one) rfl
     (fun n ih => (Int.natAbs_neg (alternatingSign n)).trans ih) n
 
 /-- Every common divisor of the numerator and denominator divides one. -/
@@ -210,7 +216,7 @@ private theorem positive_append (coeffs : NatList) (a : Nat) :
 
 private theorem le_positive_mul (q : Nat) {a : Nat} (ha : Nat.lt Nat.zero a) :
     Nat.le q (a.mul q) :=
-  Eq.subst (fun x => Nat.le x (a.mul q)) (Nat.one_mul q) (mul_le_mul_right ha q)
+  Eq.subst (motive := fun x => Nat.le x (a.mul q)) (Nat.one_mul q) (mul_le_mul_right ha q)
 
 /-- Appending a positive coefficient weakly increases the denominator. -/
 theorem denominator_le_next (coeffs : NatList) (a : Nat) (ha : Nat.lt Nat.zero a) :
@@ -219,20 +225,21 @@ theorem denominator_le_next (coeffs : NatList) (a : Nat) (ha : Nat.lt Nat.zero a
   let pair := convergentPair coeffs
   let q := pair.current.denominator
   let previous := pair.previous.denominator
-  Eq.subst (fun p : ConvergentPair => Nat.le q p.current.denominator)
+  Eq.subst (motive := fun p : ConvergentPair => Nat.le q p.current.denominator)
     (convergentPair_appendCoefficient coeffs a).symm
     (Nat.le_trans (le_positive_mul q ha)
-      (Nat.add_le_add_left (Nat.zero_le previous) (a.mul q)))
+      (Eq.subst (motive := fun x => Nat.le x ((a.mul q).add previous)) (Nat.add_zero _)
+        (Nat.add_le_add_left (Nat.zero_le previous) (a.mul q))))
 
 /-- The Fibonacci numbers, starting with zero and one. -/
 def fibonacci (n : Nat) : Nat := Nat.fib n
 
 theorem fibonacci_step (n : Nat) :
     Eq (fibonacci n.succ.succ) ((fibonacci n.succ).add (fibonacci n)) :=
-  Eq.refl
+  Nat.fib_add_two.trans (Nat.add_comm _ _)
 
 private theorem fibonacci_succ_pos (n : Nat) : Nat.lt Nat.zero (fibonacci n.succ) :=
-  Nat.fib_pos.mpr (Nat.zero_le n)
+  Nat.fib_pos.mpr (Nat.succ_le_succ (Nat.zero_le n))
 
 private def DenominatorBounds (head : Nat) (tail : NatList) : Prop :=
   let pair := convergentPair (.cons head tail)
@@ -243,7 +250,12 @@ private def DenominatorBounds (head : Nat) (tail : NatList) : Prop :=
 private theorem denominator_bounds (head : Nat) (tail : NatList)
     (h : PositiveCoefficients tail) : DenominatorBounds head tail :=
   append_induction (fun xs => PositiveCoefficients xs → DenominatorBounds head xs)
-    (fun _ => And.intro (Nat.le.refl Nat.one) (Nat.le.refl Nat.zero))
+    (fun _ => And.intro
+      (Eq.subst (motive := fun n => Nat.le (fibonacci Nat.one) n)
+        ((congrArg (fun n => Nat.add n Nat.one) (Nat.mul_zero head)).trans
+          (Nat.zero_add Nat.one)).symm
+        (Eq.subst (motive := fun n => Nat.le n Nat.one) Nat.fib_one.symm (Nat.le_refl Nat.one)))
+      (Eq.subst (motive := fun n => Nat.le n Nat.zero) Nat.fib_zero.symm (Nat.le_refl Nat.zero)))
     (fun xs a ih h =>
       let positive := positive_append xs a h
       let pair := convergentPair (.cons head xs)
@@ -252,17 +264,19 @@ private theorem denominator_bounds (head : Nat) (tail : NatList)
       let n := coefficientCount xs
       have old := ih positive.left
       have currentBound : Nat.le (fibonacci n.succ.succ) ((a.mul q).add previous) :=
-        Nat.le_trans (add_le_add_right (Nat.le_trans old.left (le_positive_mul q positive.right))
-          (fibonacci n))
-          (Nat.add_le_add_left old.right (a.mul q))
+        Eq.subst (motive := fun k => Nat.le k ((a.mul q).add previous)) (fibonacci_step n).symm
+          (Nat.le_trans (add_le_add_right (Nat.le_trans old.left (le_positive_mul q positive.right))
+            (fibonacci n))
+            (Nat.add_le_add_left old.right (a.mul q)))
       have shifted : And (Nat.le (fibonacci n.succ.succ) (pair.step a).current.denominator)
           (Nat.le (fibonacci n.succ) (pair.step a).previous.denominator) :=
         And.intro currentBound old.left
-      Eq.subst (fun p : ConvergentPair =>
-        And (Nat.le (fibonacci (coefficientCount (appendCoefficient xs a)).succ) p.current.denominator)
+      Eq.subst (motive := fun p : ConvergentPair =>
+        And (Nat.le (fibonacci (coefficientCount (appendCoefficient xs a)).succ)
+            p.current.denominator)
           (Nat.le (fibonacci (coefficientCount (appendCoefficient xs a))) p.previous.denominator))
         (convergentPair_appendCoefficient (.cons head xs) a).symm
-        (Eq.subst (fun k : Nat =>
+        (Eq.subst (motive := fun k : Nat =>
           And (Nat.le (fibonacci k.succ) (pair.step a).current.denominator)
             (Nat.le (fibonacci k) (pair.step a).previous.denominator))
           (count_append xs a).symm shifted))
@@ -294,8 +308,9 @@ theorem denominator_lt_next (head second : Nat) (tail : NatList) (a : Nat)
       (denominator_bounds head (.cons second tail) h).right
   have increases : Nat.lt q ((a.mul q).add previous) :=
     Nat.le_trans (Nat.succ_le_succ (le_positive_mul q ha))
-      (Nat.add_le_add_left previousPositive (a.mul q))
-  Eq.subst (fun p : ConvergentPair => Nat.lt q p.current.denominator)
+      (Eq.subst (motive := fun x => Nat.le x ((a.mul q).add previous)) (Nat.add_one _)
+        (Nat.add_le_add_left previousPositive (a.mul q)))
+  Eq.subst (motive := fun p : ConvergentPair => Nat.lt q p.current.denominator)
     (convergentPair_appendCoefficient coeffs a).symm increases
 
 end Omega.Arithmetic.ContinuedFraction
