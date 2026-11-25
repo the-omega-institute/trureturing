@@ -123,7 +123,7 @@ theorem partialTraceLeft_sub {A C : Type*} [Fintype A]
   ext i j
   simp [partialTraceLeft, Finset.sum_sub_distrib]
 
-private theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
+theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C]
     (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
     (htr : L.trace = R.trace) :

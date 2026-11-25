@@ -24,7 +24,7 @@ open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 namespace D5.S3.Quantum.Entanglement.Marginals.FibCoherentRank
 
-private theorem assemble_rank {n : Type} [Fintype n]
+theorem assemble_rank {n : Type} [Fintype n]
     (b : ℝ) (hb : b ≠ 0) (v : n → ℂ) (T : Matrix n n ℂ) :
     (assemble b v T).rank = (T - correction b v).rank + 1 := by
   classical
@@ -165,7 +165,7 @@ private theorem rational_rank_at_iff (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v
       rfl
     · exact fun i j => rationalComplex.add_mem (hq i j) (qC i j)
 
-private theorem rankOneDensity_of_rank_le_one {n : Type*} [Fintype n] [DecidableEq n]
+theorem rankOneDensity_of_rank_le_one {n : Type*} [Fintype n] [DecidableEq n]
     {S : Matrix n n ℂ} (hS : S.PosSemidef) (ht : S.trace = 1) (hr : S.rank ≤ 1) :
     ∃ ψ : n → ℂ, S = rankOneDensity ψ := by
   let h := hS.isHermitian

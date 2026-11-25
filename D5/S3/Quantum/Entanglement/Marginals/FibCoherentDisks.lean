@@ -94,7 +94,7 @@ private theorem diskPoint_iff (p q : ℂ) (r s : ℝ) :
   constructor <;> nlinarith only [hsum, heq, hbalance, congrArg (fun a => t*a) heq]
 
 
-private def block (a d : ℝ) (x : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+def block (a d : ℝ) (x : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![↑a, x; conj x, ↑d]
 
 private def scalarBlock (a : ℝ) : Matrix Unit Unit ℂ := fun _ _ => a
@@ -111,7 +111,7 @@ private theorem scalar_psd (a : ℝ) : (scalarBlock a).PosSemidef ↔ 0 ≤ a :=
   rw [hm, posSemidef_diagonal_iff]
   simp [Complex.nonneg_iff]
 
-private theorem block_criterion (a d : ℝ) (x : ℂ) :
+theorem block_criterion (a d : ℝ) (x : ℂ) :
     (block a d x).PosSemidef ↔ 0 ≤ a ∧ (a = 0 → x = 0) ∧ 0 ≤ d - normSq x / a := by
   rw [← Matrix.posSemidef_submatrix_equiv split]
   have hm : (block a d x).submatrix split split =
@@ -127,7 +127,7 @@ private theorem block_criterion (a d : ℝ) (x : ℂ) :
   rw [hm, block_psd, hc, scalar_psd]
   simp [funext_iff]
 
-private theorem completing_square (a e : ℝ) (c k z : ℂ) :
+theorem completing_square (a e : ℝ) (c k z : ℂ) :
     let h := a + normSq k
     let p := k * c / (h : ℂ)
     h ≠ 0 →
@@ -160,7 +160,7 @@ private theorem completing_square (a e : ℝ) (c k z : ℂ) :
   linarith only [hcross]
 
 
-private noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
+noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
   let h := a + normSq k
   let p := k * c / (h : ℂ)
   if 0 < a then
@@ -239,12 +239,12 @@ private theorem disk_spec (a e : ℝ) (c k z : ℂ) :
       linarith [normSq_nonneg (z-0)]
 
 
-private noncomputable def edgeDisk (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ) : ℂ × ℝ :=
+noncomputable def edgeDisk (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ) : ℂ × ℝ :=
   disk (b*(L false false).re - normSq u - normSq w)
     (b*(L true true).re - normSq v)
     ((b : ℂ)*L false true - conj u*v) w
 
-private theorem edgeDisk_spec (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
+theorem edgeDisk_spec (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
     (hb : 0 < b) (hL : L.IsHermitian) :
     (L - partialTraceRight (correction b (middleRow u v w z))).PosSemidef ↔
       normSq (z-(edgeDisk b L u v w).1) ≤ (edgeDisk b L u v w).2 := by
@@ -279,7 +279,7 @@ private theorem edgeDisk_spec (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : �
   rw [hm]
   exact disk_spec _ _ _ _ _
 
-private theorem swapped_trace (b : ℝ) (u v w z : ℂ) :
+theorem swapped_trace (b : ℝ) (u v w z : ℂ) :
     partialTraceLeft (correction b (middleRow u v w z)) =
       partialTraceRight (correction b (middleRow u w v z)) := by
   ext i j
@@ -332,9 +332,9 @@ theorem extendible_iff_selected (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : 
 
 open FibRationalPureExtension
 
-private def RationalReal (x : ℝ) : Prop := ∃ a : ℚ, (a : ℝ) = x
+def RationalReal (x : ℝ) : Prop := ∃ a : ℚ, (a : ℝ) = x
 
-private theorem realMk {x : ℝ} (h : RationalReal x) : RationalEntry (x : ℂ) := by
+theorem realMk {x : ℝ} (h : RationalReal x) : RationalEntry (x : ℂ) := by
   obtain ⟨q, hq⟩ := h
   exact ⟨q, 0, hq, by simp⟩
 
@@ -364,7 +364,7 @@ private theorem rational_selected (p q : ℂ) (r s : ℝ)
   obtain ⟨w, hw⟩ := hs
   exact ⟨(u+v-w)/(2*u), by simp [hu, hv, hw]⟩
 
-private theorem rreal {z : ℂ} (h : RationalEntry z) : RationalReal z.re := by
+theorem rreal {z : ℂ} (h : RationalEntry z) : RationalReal z.re := by
   obtain ⟨a, _, ha, _⟩ := h
   exact ⟨a, ha⟩
 
@@ -374,13 +374,13 @@ private theorem rradd {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
   obtain ⟨yq, hyq⟩ := hy
   exact ⟨xq+yq, by simp [hxq, hyq]⟩
 
-private theorem rrsub {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+theorem rrsub {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
     RationalReal (x-y) := by
   obtain ⟨xq, hxq⟩ := hx
   obtain ⟨yq, hyq⟩ := hy
   exact ⟨xq-yq, by simp [hxq, hyq]⟩
 
-private theorem rrmul {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
+theorem rrmul {x y : ℝ} (hx : RationalReal x) (hy : RationalReal y) :
     RationalReal (x*y) := by
   obtain ⟨xq, hxq⟩ := hx
   obtain ⟨yq, hyq⟩ := hy
@@ -414,7 +414,7 @@ private theorem diskRational (a e : ℝ) (c k : ℂ) (ha : RationalReal a)
         · exact ⟨-1, by simp⟩
     · exact ⟨rationalComplex.zero_mem, ⟨-1, by simp⟩⟩
 
-private theorem edgeDiskRational (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ)
+theorem edgeDiskRational (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w : ℂ)
     (hb : RationalReal b) (hl : ∀ i j, RationalEntry (L i j))
     (hu : RationalEntry u) (hv : RationalEntry v) (hw : RationalEntry w) :
     RationalEntry (edgeDisk b L u v w).1 ∧ RationalReal (edgeDisk b L u v w).2 :=
