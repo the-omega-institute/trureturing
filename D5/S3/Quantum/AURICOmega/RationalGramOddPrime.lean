@@ -102,7 +102,8 @@ private theorem three_not_six_square_add_two_squares (x y z : ℚ) :
     exact_mod_cast hi
   exact no_scaled_three d hd _ _ _ (Int.ofNat_inj.mp hn)
 
-private theorem rational_reflection_with_fixed_vectors {ι : Type} [Fintype ι]
+/-- Map equal-length rational vectors by a dot-product isometry fixing their common bisector. -/
+theorem rational_reflection_with_fixed_vectors {ι : Type} [Fintype ι]
     (a b : ι → ℚ) (hab : a ⬝ᵥ a = b ⬝ᵥ b) :
     ∃ f : (ι → ℚ) → (ι → ℚ), f a = b ∧ (∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y) ∧
       ∀ x, a ⬝ᵥ x = b ⬝ᵥ x → f x = x := by

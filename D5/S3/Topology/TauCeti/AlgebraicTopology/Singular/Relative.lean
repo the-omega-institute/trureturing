@@ -6,13 +6,17 @@
    utility: none
    digest: TauCeti port: Relative singular chains and exact sequences; sphere-homology support. -/
 
-import Mathlib.AlgebraicTopology.SimplicialSet.Homology.Relative
-import Mathlib.Topology.Category.TopCat.EpiMono
-import Mathlib.Topology.Category.TopPair
-import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.Relative.Basic
-import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Restrict
-import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Basic
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialSet.Homology.Relative
+public import Mathlib.Topology.Category.TopCat.EpiMono
+public import Mathlib.Topology.Category.TopPair
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.Relative.Basic
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Restrict
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Basic
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -24,6 +28,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
