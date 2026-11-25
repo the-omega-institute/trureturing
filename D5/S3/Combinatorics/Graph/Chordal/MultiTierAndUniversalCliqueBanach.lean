@@ -10,8 +10,11 @@ import D5.S3.Combinatorics.Graph.Chordal.TwoStepBFSAndBarycenterObstructions
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Data.Set.Card
+
 /-! # Multi-tier and universal-core gain potentials -/
+
 open scoped BigOperators
+
 namespace SimpleGraph
 
 universe u v
@@ -66,7 +69,7 @@ private theorem average_marked_bound [DecidableEq V] {s : Finset V} {w : V → �
       rw [← s.sum_erase_add (fun b => w b * (if b = p then A else B)) hp]
       simp only [ite_true]
       congr 1
-      exact Finset.sum_congr rfl fun b hb => by rw [if_neg (Finset.mem_erase.mp hb).1]
+      exact Finset.sum_congr rfl fun b hb => by rw [ite_eq_right (Finset.mem_erase.mp hb).1]
     _ = B - (B - A) * w p := by rw [← Finset.sum_mul, hs]; ring
 private noncomputable def denominator (k : ℕ) : ℝ := (k : ℝ)^2 - 3 * k + 3
 private noncomputable def bottomWeight (k : ℕ) : ℝ := ((k : ℝ) - 3) / denominator k
@@ -108,12 +111,12 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
     ring_nf
     linarith
   have hsmall {n : ℕ} (hn : n ≤ k - 2) : low ≤ profile k n := by
-    rw [profile, if_neg (by omega : n ≠ k), if_neg (by omega : n ≠ k - 1)]
+    rw [profile, ite_eq_right (by omega : n ≠ k), ite_eq_right (by omega : n ≠ k - 1)]
     have hc : (1 : ℝ) ≤ (k : ℝ) - 2 := by linarith
     by_cases h : n = 0
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       exact inv_le_one_of_one_le₀ hc
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       exact (inv_le_inv₀ (by linarith) (Nat.cast_pos.mpr (Nat.pos_of_ne_zero h))).2
         (by
           have h := (Nat.cast_le (α := ℝ)).2 hn
@@ -122,7 +125,7 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
     by_cases h : n = k
     · simp [profile, h, x]
     by_cases h' : n = k - 1
-    · simpa [profile, h, h', y] using hxy.le
+    · simpa [profile, h', y, show k - 1 ≠ k by omega] using hxy.le
     exact (show x ≤ low by dsimp [θ] at hzlow; linarith).trans (hsmall (by omega))
   have hmiddle : profile k (k - 1) = y := by simp [profile, y, show k - 1 ≠ k by omega]
   have hbottom : profile k k = x := by simp [profile, x]
@@ -135,38 +138,40 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
     let high := (P a).filter (fun b => k - 1 ≤ (P b).card)
     have ht : top.card ≤ 1 := by
       by_cases h : top.Nonempty
-      · have := hstairs a k h
+      · have hs : top.card + k ≤ k + 1 := hstairs a k h
         omega
       · simp [Finset.not_nonempty_iff_eq_empty.mp h]
     have hh : high.card ≤ 2 := by
       by_cases h : high.Nonempty
-      · have := hstairs a (k - 1) h
+      · have hs : high.card + (k - 1) ≤ k + 1 := hstairs a (k - 1) h
         omega
       · simp [Finset.not_nonempty_iff_eq_empty.mp h]
     have bump (s : ℕ) {t : ℝ} (ht : 0 ≤ t) (hc : ((P a).filter (fun b => s ≤ (P b).card)).card ≤ 1) :
         ∑ b ∈ P a, (if s ≤ (P b).card then t else 0) ≤ t := by
       rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
-      exact (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hc) ht).trans_eq (one_mul _)
+      simpa using mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hc : (_ : ℝ) ≤ ↑(1 : ℕ)) ht
     by_cases hsmallrow : m ≤ k - 2
     · have hw (b : V) : w₀ a b = (m : ℝ)⁻¹ := by
-        apply (max_eq_left ?_).trans
-        · exact (show θ - profile k (P b).card ≤ θ - x by linarith [hfloor (hcard b)]).trans
-            (hzlow.le.trans (hsmall hsmallrow))
-        · simp [profile, m, show m ≠ k by omega, show m ≠ k - 1 by omega,
-            show m ≠ 0 by omega]
+        change max (profile k m) (θ - profile k (P b).card) = _
+        rw [max_eq_left ((show θ - profile k (P b).card ≤ θ - x by
+          linarith [hfloor (hcard b)]).trans (hzlow.le.trans (hsmall hsmallrow)))]
+        rw [profile, ite_eq_right (by omega : m ≠ k), ite_eq_right (by omega : m ≠ k - 1),
+          ite_eq_right (by omega : m ≠ 0)]
       simp only [hw, Finset.sum_const, nsmul_eq_mul]
       exact (mul_inv_cancel₀ (Nat.cast_ne_zero.mpr hm.ne')).le
     · have hk1 : (k : ℝ) - 1 = (↑(k - 1) : ℝ) := by rw [Nat.cast_sub (by omega), Nat.cast_one]
       have hrow₁ : ((k : ℝ) - 1) * y + (y - x) = 1 := by
-        dsimp [x, y, bottomWeight, middleWeight]
-        field_simp [ne_of_gt hD]
-        dsimp [denominator]
-        <;> ring
+        change ((k : ℝ) - 1) * (((k : ℝ) - 2) / D) +
+          (((k : ℝ) - 2) / D - ((k : ℝ) - 3) / D) = 1
+        rw [← sub_div, ← mul_div_assoc, ← add_div, div_eq_iff hD.ne']
+        dsimp [D, denominator]
+        ring
       have hrow₂ : (k : ℝ) * x + 3 * (y - x) = 1 := by
-        dsimp [x, y, bottomWeight, middleWeight]
-        field_simp [ne_of_gt hD]
-        dsimp [denominator]
-        <;> ring
+        change (k : ℝ) * (((k : ℝ) - 3) / D) +
+          3 * (((k : ℝ) - 2) / D - ((k : ℝ) - 3) / D) = 1
+        rw [← sub_div, ← mul_div_assoc, ← mul_div_assoc, ← add_div, div_eq_iff hD.ne']
+        dsimp [D, denominator]
+        ring
       have hbump : 0 ≤ y - x := sub_nonneg.mpr hxy.le
       have htSum := bump k hbump ht
       by_cases hmiddleRow : m = k - 1
@@ -175,11 +180,11 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
           change max (profile k m) (θ - profile k (P b).card) = _
           rw [hmiddleRow, hmiddle]
           by_cases h : k ≤ (P b).card
-          · rw [if_pos h, show (P b).card = k by have := hcard b; omega, hbottom,
+          · rw [ite_eq_left h, show (P b).card = k by have := hcard b; omega, hbottom,
               max_eq_right (by dsimp [θ]; linarith)]
             dsimp [θ]
             ring
-          · rw [if_neg h, add_zero, max_eq_left]
+          · rw [ite_eq_right h, add_zero, max_eq_left]
             have hf : y ≤ profile k (P b).card := by
               by_cases hb : (P b).card = k - 1
               · rw [hb, hmiddle]
@@ -189,8 +194,8 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
             linarith
         simp only [hw, Finset.sum_add_distrib, Finset.sum_const, nsmul_eq_mul]
         change (m : ℝ) * y + _ ≤ 1
-        rw [hmiddleRow, ← hk1, ← hrow₁]
-        exact add_le_add_left htSum _
+        rw [hmiddleRow, ← hk1]
+        linarith
       · have hlargeRow : m = k := by omega
         have hhSum : ∑ b ∈ P a, (if k - 1 ≤ (P b).card then y - x else 0) ≤ 2 * (y - x) := by
           rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
@@ -201,18 +206,18 @@ private theorem profile_distributions {k : ℕ} (hk : 4 ≤ k) (P : V → Finset
           change max (profile k m) (θ - profile k (P b).card) = _
           rw [hlargeRow, hbottom]
           by_cases h : k ≤ (P b).card
-          · rw [if_pos h, if_pos (by omega : k - 1 ≤ (P b).card),
+          · rw [ite_eq_left h, ite_eq_left (by omega : k - 1 ≤ (P b).card),
               show (P b).card = k by have := hcard b; omega, hbottom,
               max_eq_right (by dsimp [θ]; linarith)]
             dsimp [θ]
             ring
-          · rw [if_neg h, add_zero]
+          · rw [ite_eq_right h, add_zero]
             by_cases h' : k - 1 ≤ (P b).card
-            · rw [if_pos h', show (P b).card = k - 1 by omega, hmiddle,
+            · rw [ite_eq_left h', show (P b).card = k - 1 by omega, hmiddle,
                 max_eq_right (by dsimp [θ]; linarith)]
               dsimp [θ]
               ring
-            · rw [if_neg h', add_zero, max_eq_left]
+            · rw [ite_eq_right h', add_zero, max_eq_left]
               linarith [hsmall (n := (P b).card) (by omega)]
         simp only [hw, Finset.sum_add_distrib, Finset.sum_const, nsmul_eq_mul]
         change (m : ℝ) * x + _ + _ ≤ 1
@@ -260,11 +265,8 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
     | i + 1, C => anchor i C
   have firstPred {x : V} (hx : G.dist o x = 1) : P x = {o} := by
     obtain ⟨b, hb⟩ := inhabitedP hx
-    have root {b : V} (hb : b ∈ P x) : b = o := by
-      symm
-      apply hconn.dist_eq_zero_iff.mp
-      have := (memP.mp hb).2
-      omega
+    have root {b : V} (hb : b ∈ P x) : b = o :=
+      (hconn.dist_eq_zero_iff.mp (by have := (memP.mp hb).2; omega)).symm
     ext b'
     simp only [Finset.mem_singleton]
     exact ⟨root, fun h => (h.trans (root hb).symm).symm ▸ hb⟩
@@ -274,9 +276,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
   have cardP {x : V} : (P x).card ≤ k := by
     cases hx : G.dist o x with
     | zero =>
-      have he : P x = ∅ := by
-        apply Finset.eq_empty_iff_forall_notMem.mpr
-        intro b hb
+      have he : P x = ∅ := Finset.eq_empty_iff_forall_notMem.mpr fun b hb => by
         have := (memP.mp hb).2
         omega
       simp [he]
@@ -321,7 +321,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have := (memP.mp (Finset.mem_filter.mp hb).1).2
       omega
     have hS {b d : V} (hb : b ∈ S) (hd : d ∈ S) (hne : b ≠ d) : G.Adj b d :=
-      predNear hv (Finset.mem_filter.mp hb).1 (Finset.mem_filter.mp hd).1 hne
+      predNear hv.symm (Finset.mem_filter.mp hb).1 (Finset.mem_filter.mp hd).1 hne
     by_cases hroot : G.dist o u = 0
     · have hzero : (P u).card = 0 := by
         apply Finset.card_eq_zero.mpr
@@ -330,7 +330,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have := (memP.mp hb).2
         omega
       have hcard := cardP (x := v)
-      have hsub := Finset.card_le_card (Finset.filter_subset (fun b => s ≤ (P b).card) (P v))
+      have hsub : S.card ≤ (P v).card := Finset.card_le_card (Finset.filter_subset _ _)
       change S.card + s ≤ k + 1
       omega
     obtain ⟨i, hi⟩ : ∃ i, G.dist o u = i + 1 := ⟨G.dist o u - 1, by omega⟩
@@ -516,8 +516,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         have h := average_marked_bound (f := path c y) (z := path c x b + g x y) hb'
           (wnonneg hy) (wsum hy) (A := ε) (B := 3 * ε) (by rwa [_root_.dist_comm])
         refine (h ?_).trans ?_
-        ·
-          intro d hd
+        · intro d hd
           have hd' := (Finset.mem_erase.mp hd).2
           have ds : d ∈ Shadow G o C := hC.symm ▸ inShadow hy hd'
           have two : Dist.dist (path c y d) (path c y b) ≤ 2 * ε :=
@@ -561,7 +560,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
 end MultiTierBanach
 
 /-- On a finite chordal graph with clique size at most `k + 1`, triangle defects of at most
-`ε` give one real-vector-space potential with the multi-tier predecessor error bound on every edge. -/
+`ε` give a potential with the multi-tier predecessor error bound on every edge. -/
 theorem IsChordal.exists_multitier_clique_banach_gain_potential
     {V : Type u} [Finite V] {G : SimpleGraph V} (hG : G.IsChordal)
     (k : ℕ) (hk : 4 ≤ k)
@@ -597,13 +596,11 @@ theorem IsChordal.exists_multitier_clique_banach_gain_potential
   have hj := ConnectedComponent.connectedComponentMk_eq_of_adj hij.symm
   rw [φ_eq j _ hj]
   exact hψ (G.connectedComponentMk i) ⟨i, rfl⟩ ⟨j, hj⟩ hij
-
-
 /-- Averaging over the universal vertices of the core and then over each attachment
 clique gives a gain potential on the whole graph. -/
 theorem exists_universal_core_simplicial_banach_potential
     {V : Type u} [Finite V] (G : SimpleGraph V) (H U : Set V)
-    (hUH : U ⊆ H) (hU : U.Nonempty)
+    (_hUH : U ⊆ H) (hU : U.Nonempty)
     (huniv : ∀ u ∈ U, ∀ h ∈ H, u ≠ h → G.Adj u h)
     (hind : G.IsIndepSet Hᶜ) (m : ℕ) (hm : 1 ≤ m)
     (hattach : ∀ o ∉ H, {a : V | G.Adj o a} ⊆ H ∧ G.IsClique {a : V | G.Adj o a} ∧
@@ -617,10 +614,9 @@ theorem exists_universal_core_simplicial_banach_potential
   classical
   let anchors := U.toFinite.toFinset
   have anchor_mem {z : V} : z ∈ anchors ↔ z ∈ U := Set.Finite.mem_toFinset _
-  have anchors_pos : 0 < anchors.card := Finset.card_pos.mpr (by
+  have anchors_posR : (0 : ℝ) < anchors.card := by
     obtain ⟨z, hz⟩ := hU
-    exact ⟨z, anchor_mem.mpr hz⟩)
-  have anchors_posR : (0 : ℝ) < anchors.card := by exact_mod_cast anchors_pos
+    exact_mod_cast (Finset.card_pos.mpr ⟨z, anchor_mem.mpr hz⟩ : 0 < anchors.card)
   let w : V → ℝ := fun _ => (anchors.card : ℝ)⁻¹
   have wsum : ∑ z ∈ anchors, w z = 1 := by
     simp [w, nsmul_eq_mul, mul_inv_cancel₀ anchors_posR.ne']
@@ -639,11 +635,9 @@ theorem exists_universal_core_simplicial_banach_potential
     rw [dist_zero_right]
     have hzU := anchor_mem.mp hz
     by_cases hza : z = a
-    · subst z
-      simpa [CliqueBoundedBanach.diagonal_zero hrev a] using hε
+    · simpa [hza, CliqueBoundedBanach.diagonal_zero hrev a] using hε
     by_cases hzb : z = b
-    · subst z
-      simpa [hrev a b, CliqueBoundedBanach.diagonal_zero hrev b] using hε
+    · simpa [hzb, hrev a b, CliqueBoundedBanach.diagonal_zero hrev b] using hε
     exact htri z a b (huniv z hzU a ha hza) hab (huniv z hzU b hb hzb)
   let neighbors (o : V) := ({a : V | G.Adj o a} : Set V).toFinite.toFinset
   have mem_neighbors {o a : V} : a ∈ neighbors o ↔ G.Adj o a := Set.Finite.mem_toFinset _
@@ -673,9 +667,11 @@ theorem exists_universal_core_simplicial_banach_potential
       exact (norm_sub_le _ _).trans (by linarith [core_bound hbH haH hba, htri b a o hba hao hbo])
     have bound := MultiTierBanach.average_marked_bound (f := candidate o) (z := candidate o a)
       (A := 0) (B := 2 * ε) haS (fun _ _ => inv_nonneg.mpr hs.le) sw (by simp) comparison
-    have hratio : 2 / (m : ℝ) ≤ 2 / (S.card : ℝ) :=
-      div_le_div_of_nonneg_left (by norm_num) hs hs_le
-    simp only [φ, if_pos haH, if_neg ho]
+    have hratio : 2 / (m : ℝ) ≤ 2 / (S.card : ℝ) := by
+      have hmR : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+      rw [div_le_div_iff₀ hmR hs]
+      linarith
+    simp only [φ, ite_eq_left haH, ite_eq_right ho]
     change ‖candidate o a - MultiTierBanach.average S (w' o) (candidate o)‖ ≤ _
     rw [← dist_eq_norm, _root_.dist_comm]
     refine bound.trans ?_
@@ -686,15 +682,13 @@ theorem exists_universal_core_simplicial_banach_potential
       ((sub_le_sub_left hratio 2).trans (le_max_right _ _)) hε
   refine ⟨φ, fun a b hab => ?_⟩
   rw [show g a b - (φ b - φ a) = φ a + g a b - φ b by abel]
-  by_cases ha : a ∈ H
-  · by_cases hb : b ∈ H
-    · simp only [φ, if_pos ha, if_pos hb]
-      exact (core_bound ha hb hab).trans (le_mul_of_one_le_left hε (le_max_left _ _))
-    · exact attach_bound hb hab
-  · by_cases hb : b ∈ H
-    · rw [hrev b a, show φ a + -g b a - φ b = -(φ b + g b a - φ a) by abel, norm_neg]
-      exact attach_bound ha hab.symm
-    · exact (hind ha hb hab.ne hab).elim
+  by_cases ha : a ∈ H <;> by_cases hb : b ∈ H
+  · simp only [φ, ite_eq_left ha, ite_eq_left hb]
+    exact (core_bound ha hb hab).trans (le_mul_of_one_le_left hε (le_max_left _ _))
+  · exact attach_bound hb hab
+  · rw [hrev b a, show φ a + -g b a - φ b = -(φ b + g b a - φ a) by abel, norm_neg]
+    exact attach_bound ha hab.symm
+  · exact (hind ha hb hab.ne hab).elim
 
 /-- The local potentials on the gadget copies can be translated so that every
 bridge is fitted exactly. -/
@@ -713,9 +707,8 @@ theorem bridgedGadget_banach_upper_bound
   let U : Set (GadgetVertex m) := Set.range GadgetVertex.u
   let A : Set (GadgetVertex m) := Set.range GadgetVertex.a
   have hUH : U ⊆ H := by
-    rintro x ⟨i, rfl⟩
-    intro h
-    exact GadgetVertex.noConfusion h
+    rintro x ⟨i, rfl⟩ h
+    cases h
   have hU : U.Nonempty := ⟨.u ⟨0, by omega⟩, _, rfl⟩
   have huniv (k : Fin N) : ∀ u ∈ U, ∀ x ∈ H, u ≠ x → (C k).Adj u x := by
     rintro u ⟨i, rfl⟩ x hx hne
@@ -749,13 +742,13 @@ theorem bridgedGadget_banach_upper_bound
     subst o
     rw [root_neighbors k]
     refine ⟨?_, ?_, ?_⟩
-    · rintro x ⟨j, rfl⟩
-      exact fun h => GadgetVertex.noConfusion h
+    · rintro x ⟨j, rfl⟩ h
+      cases h
     · rintro x ⟨i, rfl⟩ y ⟨j, rfl⟩ hne
       exact Or.inl ⟨rfl, fun hij => hne (congrArg GadgetVertex.a hij)⟩
     · have hinj : Function.Injective (GadgetVertex.a : Fin m → GadgetVertex m) :=
         fun i j hij => GadgetVertex.a.inj hij
-      simp [A, Set.ncard_range_of_injective hinj, Nat.card_fin]
+      simp [A, Set.ncard_range_of_injective hinj]
   have hmR : (2 : ℝ) ≤ m := by exact_mod_cast hm
   have hcoeff : 1 ≤ 2 - 2 / (m : ℝ) := by
     have hm_pos : (0 : ℝ) < m := by linarith
@@ -769,24 +762,25 @@ theorem bridgedGadget_banach_upper_bound
         (fun a b => hrev (k, a) (k, b)) (fun a b c => htri (k, a) (k, b) (k, c))
   choose p hp using local_bound
   let first : Fin N := ⟨0, by omega⟩
-  let rec shift : (j : ℕ) → j < N → E
-    | 0, _ => p first .root
-    | j + 1, hj =>
-      shift j (by omega) + g (⟨j, by omega⟩, .root) (⟨j + 1, hj⟩, .root)
+  let shift : (j : ℕ) → j < N → E := Nat.rec (motive := fun j => j < N → E)
+    (fun _ => p first .root)
+    (fun j prev hj => prev (by omega) + g (⟨j, by omega⟩, .root) (⟨j + 1, hj⟩, .root))
   let φ (z : Fin N × GadgetVertex m) :=
     p z.1 z.2 - p z.1 .root + shift z.1.val z.1.isLt
   have root_value (k : Fin N) : φ (k, .root) = shift k.val k.isLt := by simp [φ]
   have bridge_step (k l : Fin N) (hkl : k.val + 1 = l.val) :
       φ (l, .root) - φ (k, .root) = g (k, .root) (l, .root) := by
     rw [root_value, root_value]
-    have hl : l = ⟨k.val + 1, by have := l.isLt; omega⟩ := Fin.ext hkl.symm
+    rcases l with ⟨l, hl⟩
+    change k.val + 1 = l at hkl
     subst l
     change shift k.val k.isLt + g (k, .root) (⟨k.val + 1, _⟩, .root) -
       shift k.val k.isLt = _
     abel
   refine ⟨φ, ?_⟩
   rintro ⟨k, a⟩ ⟨l, b⟩ (⟨hkl, h⟩ | ⟨rfl, rfl, hb⟩)
-  · subst l
+  · change k = l at hkl
+    subst l
     have same_shift : φ (k, b) - φ (k, a) = p k b - p k a := by
       dsimp [φ]
       abel

@@ -72,14 +72,16 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   exact impossibleNorm _ hv
 
 example : ∃ φ : TwoVertices → ℝ, ‖(0 : ℝ) - (φ rightVertex - φ leftVertex)‖ ≤ 0 := by
-  obtain ⟨φ, hφ⟩ := IsChordal.exists_multitier_clique_banach_gain_potential twoVertexChordal 4 (by decide)
-    (fun s _ => twoVertexClique s) (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
+  obtain ⟨φ, hφ⟩ := IsChordal.exists_multitier_clique_banach_gain_potential
+    twoVertexChordal 4 (by decide) (fun s _ => twoVertexClique s) (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
   exact ⟨φ, by simpa using hφ leftVertex rightVertex adjacentVertices⟩
 
-def family : Registration arena.{u, v} (type_of% (@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v})) where
+def family : Registration arena.{u, v}
+    (type_of% (@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v}, rejected, rejected_law⟩
+  variation := ⟨@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v},
+    rejected, rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
@@ -87,9 +89,11 @@ def family : Registration arena.{u, v} (type_of% (@IsChordal.exists_multitier_cl
     norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v}) (Realization signature) Unit Unit where
+    (@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v})
+    (Realization signature) Unit Unit where
   unitName := `SimpleGraph.IsChordal.exists_multitier_clique_banach_gain_potential.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.MultiTier.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.MultiTier.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -161,11 +165,13 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
 example : ∃ φ : TwoVertices → ℝ, ‖(0 : ℝ) - (φ rightVertex - φ leftVertex)‖ ≤ 0 := by
   obtain ⟨φ, hφ⟩ := exists_universal_core_simplicial_banach_potential
     (⊤ : SimpleGraph TwoVertices) Set.univ Set.univ Set.Subset.rfl
-    ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp [Set.Pairwise]) 2 (by decide) (by simp)
+    ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp [Set.Pairwise])
+    2 (by decide) (by simp)
     (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
   exact ⟨φ, by simpa using hφ leftVertex rightVertex adjacentVertices⟩
 
-def family : Registration arena.{u, v} (type_of% (@exists_universal_core_simplicial_banach_potential.{u, v})) where
+def family : Registration arena.{u, v}
+    (type_of% (@exists_universal_core_simplicial_banach_potential.{u, v})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@exists_universal_core_simplicial_banach_potential.{u, v}, rejected, rejected_law⟩
@@ -178,7 +184,8 @@ def family : Registration arena.{u, v} (type_of% (@exists_universal_core_simplic
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@exists_universal_core_simplicial_banach_potential.{u, v}) (Realization signature) Unit Unit where
   unitName := `SimpleGraph.exists_universal_core_simplicial_banach_potential.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.UniversalCore.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.UniversalCore.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -267,7 +274,8 @@ def family : Registration arena.{v} (type_of% (@bridgedGadget_banach_upper_bound
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@bridgedGadget_banach_upper_bound.{v}) (Realization signature) Unit Unit where
   unitName := `SimpleGraph.bridgedGadget_banach_upper_bound.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.BridgedGadget.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.BridgedGadget.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
