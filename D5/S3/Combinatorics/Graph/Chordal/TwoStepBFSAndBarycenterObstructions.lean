@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Chordal towers and bridged gadgets obstruct two BFS reconstruction schemes. -/
-import D5.S3.Combinatorics.Graph.Chordal.Characterization
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.WeightedTwoStepBFS
 import Mathlib.Analysis.SpecificLimits.Basic
 /-! # Obstructions for BFS reconstruction on chordal graphs -/
@@ -80,13 +80,34 @@ private theorem refinedRank_injective [Fintype V] (key : V → ℕ) :
   unfold refinedRank at h
   rw [hk] at h
   omega
-private theorem chordal_of_weak_order [Fintype V] {G : SimpleGraph V} (key : V → ℕ)
-    (h : ∀ v, G.IsClique {u | key v ≤ key u ∧ G.Adj v u}) : G.IsChordal :=
-  (show G.IsPEO (refinedRank key) from ⟨refinedRank_injective key, fun v x hx y hy hxy =>
-    h v (show key v ≤ key x ∧ G.Adj v x from
-      ⟨le_of_not_gt fun hl => (not_lt_of_gt (refinedRank_lt hl)) hx.1, hx.2⟩)
-      (show key v ≤ key y ∧ G.Adj v y from
-      ⟨le_of_not_gt fun hl => (not_lt_of_gt (refinedRank_lt hl)) hy.1, hy.2⟩) hxy⟩).isChordal
+private theorem chordal_of_weak_order {G : SimpleGraph V} (key : V → ℕ)
+    (h : ∀ v, G.IsClique {u | key v ≤ key u ∧ G.Adj v u}) : G.IsChordal := by
+  classical
+  intro v c hc hl
+  obtain ⟨z, hz, hmin⟩ := Finset.exists_min_image c.support.toFinset key ⟨v, by simp⟩
+  have hzs : z ∈ c.support := by simpa using hz
+  let d := c.rotate z hzs
+  have hd : d.IsCycle := hc.rotate hzs
+  have hn : 4 ≤ d.length := by simpa [d] using hl
+  have support (x : V) (hx : x ∈ d.support) : x ∈ c.support := by
+    rw [← Walk.cons_tail_support] at hx
+    rcases List.mem_cons.mp hx with rfl | hx
+    · exact hzs
+    · exact List.mem_of_mem_tail ((c.support_rotate z hzs).mem_iff.mp hx)
+  have hs := support d.snd (d.getVert_mem_support 1)
+  have hp := support d.penultimate (d.getVert_mem_support (d.length - 1))
+  refine ⟨d.snd, d.penultimate, hs, hp, h z
+    ⟨hmin _ (by simpa using hs), d.adj_snd hd.not_nil⟩
+    ⟨hmin _ (by simpa using hp), (d.adj_penultimate hd.not_nil).symm⟩
+    hd.snd_ne_penultimate, ?_⟩
+  intro edge
+  have mem := Walk.adj_toSubgraph_iff_mem_edges.mpr ((c.rotate_edges z hzs).mem_iff.mpr edge)
+  change d.getVert (d.length - 1) ∈ d.toSubgraph.neighborSet (d.getVert 1) at mem
+  rw [hd.neighborSet_toSubgraph_internal (by omega) (by omega)] at mem
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Nat.sub_self] at mem
+  rcases mem with hm | hm <;>
+    have eq := hd.getVert_injOn' (by simp : d.length - 1 ∈ {n | n ≤ d.length - 1})
+      (by simp <;> omega) hm <;> omega
 private theorem height_le_walk {G : SimpleGraph V} {h : V → ℕ}
     (hlip : ∀ a b, G.Adj a b → h b ≤ h a + 1) {a b : V} (p : G.Walk a b) :
     h b ≤ h a + p.length := by
@@ -162,21 +183,18 @@ private theorem tower_dist {m n : ℕ} (u : BarycenterVertex m n) :
   · simp [towerHeight]
   obtain ⟨p, hp⟩ := tower_walk i j
   obtain ⟨q, hq⟩ := p.reachable.exists_walk_length_eq_dist
-  apply le_antisymm
-  · exact (dist_le p).trans_eq hp
-  · simpa [hq, towerHeight] using height_le_walk (fun _ _ => tower_adj_height) q
+  apply le_antisymm ((dist_le p).trans_eq hp)
+  simpa [hq, towerHeight] using height_le_walk (fun _ _ => tower_adj_height) q
 private theorem tower_connected (m n : ℕ) : (barycenterTower m n).Connected := by
-  have reach (x : BarycenterVertex m n) : (barycenterTower m n).Reachable none x := by
-    rcases x with _ | ⟨i, j⟩
-    · exact Reachable.rfl
-    · exact (tower_walk i j).choose.reachable
-  exact { preconnected := fun x y => (reach x).symm.trans (reach y), nonempty := ⟨none⟩ }
+  refine (connected_iff_exists_forall_reachable (G := barycenterTower m n)).2 ⟨none, ?_⟩
+  rintro (_ | ⟨i, j⟩)
+  · exact Reachable.rfl
+  · exact (tower_walk i j).choose.reachable
 private def towerForward {m n : ℕ} (x y : BarycenterVertex m n) : ℝ :=
   match x, y with
   | none, some (_, j) => if j.val = 0 then 0 else 1
   | some (_, j), some (_, l) => if l.val = 0 then 0 else if j.val = 0 then 1 else 2
   | _, _ => 0
-
 /-- Incoming gains are zero into the distinguished column and one or two into its complement. -/
 def barycenterGain (m n : ℕ) (x y : BarycenterVertex m n) : ℝ :=
   if towerHeight x < towerHeight y then towerForward x y
@@ -308,7 +326,6 @@ private theorem tower_eval {m n : ℕ} (hm : 0 < m) {φ : BarycenterVertex m n �
     intro j
     have hstep := tower_step hm φ i j hφ.1 (fun k hk => ih k.val (by omega) k rfl)
     exact (hφ.2 _ (by simp) hstep.1).trans hstep.2
-
 /-- The exact tower values give arbitrarily large residuals for pure predecessor averaging. -/
 theorem pure_predecessor_barycenter_unbounded :
     (∀ m n : ℕ, 2 ≤ m → 1 ≤ n →
@@ -418,26 +435,18 @@ private theorem gadget_local_walk {m N : ℕ} (hm : 0 < m) (k : Fin N) (x : Gadg
   cases x with
   | root => exact ⟨.nil, rfl⟩
   | a j => exact ⟨(ra j).toWalk, rfl⟩
-  | u i =>
-    have e := adjacent_local k (show gadgetLocalAdj (.a z) (.u i) from trivial)
-    exact ⟨.cons (ra z) e.toWalk, rfl⟩
-  | v j =>
-    have e := adjacent_local k (show gadgetLocalAdj (.a j) (.v j) from rfl)
-    exact ⟨.cons (ra j) e.toWalk, rfl⟩
+  | u i => exact ⟨.cons (ra z) (adjacent_local k (x := .a z) (y := .u i) trivial).toWalk, rfl⟩
+  | v j => exact ⟨.cons (ra j) (adjacent_local k (x := .a j) (y := .v j) rfl).toWalk, rfl⟩
   | y j =>
-    have e := adjacent_local k (show gadgetLocalAdj (.a z) (.u z) from trivial)
-    have f := adjacent_local k (show gadgetLocalAdj (.u z) (.y j) from trivial)
-    exact ⟨.cons (ra z) (.cons e f.toWalk), rfl⟩
+    exact ⟨.cons (ra z) (.cons (adjacent_local k (y := .u z) trivial)
+      (adjacent_local k (x := .u z) (y := .y j) trivial).toWalk), rfl⟩
 private theorem gadget_connected {m N : ℕ} (hm : 0 < m) (hN : 0 < N) :
     (bridgedGadget m N).Connected := by
   let o : Fin N := ⟨0, hN⟩
   have reach (k : Fin N) : (bridgedGadget m N).Reachable (o, .root) (k, .root) := by
     generalize hk : k.val = d
     induction d generalizing k with
-    | zero =>
-      have he : k = o := Fin.ext hk
-      subst k
-      exact Reachable.rfl
+    | zero => exact (show o = k from Fin.ext hk.symm) ▸ Reachable.rfl
     | succ d ih =>
       let l : Fin N := ⟨d, by omega⟩
       have he : (bridgedGadget m N).Adj (l, .root) (k, .root) :=
@@ -647,10 +656,7 @@ private theorem average_indicator [DecidableEq V] {s : Finset V} {w f : V → �
   have he : ∀ b ∈ s, w b * f b = w b * c - (if b = a then w a * c else 0) := by
     intro b hb
     rw [hf b hb]
-    split_ifs with h
-    · subst b
-      ring
-    · ring
+    by_cases e : b = a <;> simp [e]
   rw [Finset.sum_congr rfl he, Finset.sum_sub_distrib, ← Finset.sum_mul, hs]
   simp [ha]
   ring
@@ -732,7 +738,6 @@ private theorem gadget_signed_residual {m N : ℕ} {r : GadgetVertices m N}
       norm_num [gadgetFamily, u, ht]
   rw [hs₁, hs₂, pos (by simp [rank, obstructionRank, u, y]), pos (by simp [rank, obstructionRank, o, c])]
   ring
-
 /-- Averaging two-step potentials over roots still permits a residual approaching four. -/
 theorem twoStepBFS_root_averaging_lower_bound (m N : ℕ) (hm : 2 ≤ m) (hN : 2 ≤ N) :
     let G := bridgedGadget m N
@@ -827,11 +832,9 @@ theorem twoStepBFS_root_averaging_lower_bound (m N : ℕ) (hm : 2 ≤ m) (hN : 2
       _ ≤ _ := Finset.sum_le_sum fun r _ => mul_le_mul_of_nonneg_left
         (abs_le.mp (two_step_residual_bound (gadget_chordal m N) hc (ha r) (hw r)
           (ranked_gain (refinedRank_injective _)) huv)).1 (hμ r)
-  have he : ∑ r, μ r * residual r = g u v - (∑ r, μ r * φ r v) + ∑ r, μ r * φ r u := by
+  have he : ∑ r, μ r * residual r = g u v - ((∑ r, μ r * φ r v) - ∑ r, μ r * φ r u) := by
     simp only [residual, mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hmass, one_mul]
-    ring
-  have h₁ : 0 ≤ mass k := Finset.sum_nonneg fun r _ => hμ r
-  have h₂ : 0 ≤ 4 / (m : ℝ) * mass k := by positivity
+  have h₂ : 0 ≤ 4 / (m : ℝ) * mass k := mul_nonneg (by positivity) (Finset.sum_nonneg fun r _ => hμ r)
   have hfinal : 4 - 4 / (m : ℝ) - 8 / (N : ℝ) ≤ ∑ r, μ r * residual r := by
     rw [← split]
     have hx := congrArg (fun z : ℝ => (4 / (m : ℝ)) * z) hS
@@ -840,10 +843,6 @@ theorem twoStepBFS_root_averaging_lower_bound (m N : ℕ) (hm : 2 ≤ m) (hN : 2
       simpa only [mul_one_div] using mul_le_mul_of_nonneg_left hk (by norm_num : (0 : ℝ) ≤ 8)
     rw [show 2 * (2 / (m : ℝ) * S) = 4 / (m : ℝ) * S by ring] at ho
     linarith only [hi, ho, hS, hk', h₂, hx]
-  dsimp only
-  rw [he] at hfinal
-  exact (by linarith : 4 - 4 / (m : ℝ) - 8 / (N : ℝ) ≤
-    g u v - ((∑ r, μ r * φ r v) - ∑ r, μ r * φ r u)).trans (le_abs_self _)
-
+  exact (he ▸ hfinal).trans (le_abs_self _)
 end
 end SimpleGraph

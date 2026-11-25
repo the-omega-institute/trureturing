@@ -42,5 +42,4 @@ Summing the two distinguished predecessor weights over all pairs of u and y give
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/TwoStepBFSAndBarycenterObstructions.pure_predecessor_barycenter_unbounded`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/TwoStepBFSAndBarycenterObstructions.twoStepBFS_root_averaging_lower_bound`
-- Dependency: [D5/S3/Combinatorics/Graph/Chordal/Characterization](Characterization.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/Reconstruction/WeightedTwoStepBFS](Reconstruction/WeightedTwoStepBFS.md)
