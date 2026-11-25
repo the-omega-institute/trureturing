@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry.EuclideanSimp
 
 internal sealed class RationalUnitSimplexDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/kominers2026rationaledges");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The arithmetic classification of regular simplices on rational unit spheres.",
         H("Regular simplices on rational unit spheres"),
@@ -11,12 +14,13 @@ internal sealed class RationalUnitSimplexDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(
                 "D5/S3/Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex.rational_unit_simplex_iff"),
             H("A square criterion for rational regular simplex vertices"),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
                     "Let n be positive. The rational unit sphere in n coordinates contains n+1 "
                     + "distinct points with a common pairwise inner product if and only if the odd "
-                    + "member of the pair n, n+1 is a square.")),
+                    + "member of the pair n, n+1 is a square. This is the unit-circumradius "
+                    + "specialization of Kominers's squared-edge-length classification.")),
                 Paragraph(Text(
                     "The square Gram matrix of all n+1 points is singular, forcing the common "
                     + "off-diagonal entry to be minus one divided by n. The Gram determinant of "

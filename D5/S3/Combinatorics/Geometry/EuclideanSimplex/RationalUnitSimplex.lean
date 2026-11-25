@@ -25,7 +25,6 @@ import Mathlib.Tactic.LinearCombination
 
 namespace D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
 
-
 open Matrix
 open scoped Quaternion
 
@@ -66,7 +65,6 @@ private theorem saturated_gram_determinant (n : ℕ) (hn : 0 < n) :
   rw [ratio]
   exact (div_eq_mul_one_div _ _).symm
 
-
 private theorem support_square_obstruction (n : ℕ) (hn : 0 < n)
     (V : Matrix (Fin n) (Fin n) ℚ)
     (h : Vᵀ * V = constantGram n (-(1 : ℚ) / n)) :
@@ -105,7 +103,6 @@ private theorem support_square_obstruction (n : ℕ) (hn : 0 < n)
       field_simp [hv]
     exact Rat.isSquare_natCast_iff.mp (by
       simpa using cancel ▸ (IsSquare.sq value).div hs)
-
 
 private theorem normalized_saturated_gram (n : ℕ) (hn : 0 < n) (c : ℚ) (hc : c ≠ 1)
     (V : Matrix (Fin n) (Fin (n + 1)) ℚ) (h : Vᵀ * V = constantGram (n + 1) c) :
@@ -170,45 +167,43 @@ private theorem rational_unit_reflection {ι : Type} [Fintype ι]
     field_simp [hd]
     ring
 
+private def centerVertex {n : ℕ} (j i : Fin (n + 1)) : ℚ :=
+  (if i = j then 1 else 0) - 1 / ((n : ℚ) + 1)
 
-
-private def centerVertex {n : ℕ} (j i : Fin (n+1)) : ℚ :=
-  (if i = j then 1 else 0) - 1/((n:ℚ)+1)
-
-private theorem center_dot_ones (n : ℕ) (j : Fin (n+1)) :
+private theorem center_dot_ones (n : ℕ) (j : Fin (n + 1)) :
     (centerVertex j) ⬝ᵥ (fun _ => 1) = 0 := by
-  have hp : (n:ℚ)+1 ≠ 0 := by positivity
+  have hp : (n : ℚ) + 1 ≠ 0 := by positivity
   simp [dotProduct, centerVertex, Finset.sum_sub_distrib]
   field_simp
   exact sub_self _
 
-private theorem center_dot_center (n : ℕ) (j k : Fin (n+1)) :
+private theorem center_dot_center (n : ℕ) (j k : Fin (n + 1)) :
     centerVertex j ⬝ᵥ centerVertex k =
-      (if j = k then (1:ℚ) else 0) - 1/((n:ℚ)+1) := by
-  have hp : (n:ℚ)+1 ≠ 0 := by positivity
-  let t := 1/((n:ℚ)+1)
-  let u : Fin (n+1) → ℚ := fun i => if i = j then 1 else 0
-  let v : Fin (n+1) → ℚ := fun i => if i = k then 1 else 0
+      (if j = k then (1 : ℚ) else 0) - 1 / ((n : ℚ) + 1) := by
+  have hp : (n : ℚ) + 1 ≠ 0 := by positivity
+  let t := 1 / ((n : ℚ) + 1)
+  let u : Fin (n + 1) → ℚ := fun i => if i = j then 1 else 0
+  let v : Fin (n + 1) → ℚ := fun i => if i = k then 1 else 0
   have hu : u ⬝ᵥ (fun _ => t) = t := by simp [u, dotProduct, ite_mul]
   have hv : (fun _ => t) ⬝ᵥ v = t := by simp [v, dotProduct, mul_ite]
   have huv : u ⬝ᵥ v = if j = k then 1 else 0 := by
     simp [u, v, dotProduct, eq_comm]
-  have ht : (fun _ : Fin (n+1) => t) ⬝ᵥ (fun _ => t) = t := by
+  have ht : (fun _ : Fin (n + 1) => t) ⬝ᵥ (fun _ => t) = t := by
     simp [dotProduct, t]
     field_simp
   change (u - fun _ => t) ⬝ᵥ (v - fun _ => t) = _
   simp only [dotProduct_sub, sub_dotProduct, hu, hv, huv, ht]
   ring
 
-private def firstAxis (n : ℕ) (i : Fin (n+1)) : ℚ :=
+private def firstAxis (n : ℕ) (i : Fin (n + 1)) : ℚ :=
   if i = 0 then 1 else 0
 
-private theorem strip_normal (n : ℕ) (a : Fin (n+1) → ℚ) (ha : a ⬝ᵥ a = 1) :
-    ∃ g : (Fin (n+1) → ℚ) → (Fin n → ℚ),
+private theorem strip_normal (n : ℕ) (a : Fin (n + 1) → ℚ) (ha : a ⬝ᵥ a = 1) :
+    ∃ g : (Fin (n + 1) → ℚ) → (Fin n → ℚ),
       ∀ x y, x ⬝ᵥ a = 0 → y ⬝ᵥ a = 0 → g x ⬝ᵥ g y = x ⬝ᵥ y := by
   have hAxis : firstAxis n ⬝ᵥ firstAxis n = 1 := by simp [firstAxis, dotProduct]
   obtain ⟨f, hf, hpreserve⟩ := rational_unit_reflection a (firstAxis n) ha hAxis
-  have hcoord (x : Fin (n+1) → ℚ) (hx : x ⬝ᵥ a = 0) : f x 0 = 0 := by
+  have hcoord (x : Fin (n + 1) → ℚ) (hx : x ⬝ᵥ a = 0) : f x 0 = 0 := by
     have h := hpreserve x a
     rw [hf, hx] at h
     simpa [firstAxis, dotProduct, mul_ite] using h
@@ -217,30 +212,29 @@ private theorem strip_normal (n : ℕ) (a : Fin (n+1) → ℚ) (ha : a ⬝ᵥ a 
   have h := hpreserve x y
   rwa [dotProduct, Fin.sum_univ_succ, hcoord x hx, zero_mul, zero_add] at h
 
-
 private theorem restrict_scaled (n : ℕ) (hn : 0 < n)
-    (g : (Fin (n+1) → ℚ) → (Fin n → ℚ))
+    (g : (Fin (n + 1) → ℚ) → (Fin n → ℚ))
     (hg : ∀ x y, (fun _ => 1) ⬝ᵥ x = 0 → (fun _ => 1) ⬝ᵥ y = 0 →
-      g x ⬝ᵥ g y = ((n:ℚ)+1)/n * (x ⬝ᵥ y)) :
-    ∃ p : Fin (n+1) → Fin n → ℚ, ∀ j k,
-      p j ⬝ᵥ p k = if j = k then 1 else -(1:ℚ)/n := by
+      g x ⬝ᵥ g y = ((n : ℚ) + 1)/n * (x ⬝ᵥ y)) :
+    ∃ p : Fin (n + 1) → Fin n → ℚ, ∀ j k,
+      p j ⬝ᵥ p k = if j = k then 1 else -(1 : ℚ)/n := by
   refine ⟨fun j => g (centerVertex j), ?_⟩
   intro j k
   rw [hg _ _ ((dotProduct_comm _ _).trans (center_dot_ones n j))
     ((dotProduct_comm _ _).trans (center_dot_ones n k)), center_dot_center]
-  have hcast : (n:ℚ) ≠ 0 := by exact_mod_cast hn.ne'
-  have hsucc : (n:ℚ)+1 ≠ 0 := by positivity
+  have hcast : (n : ℚ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hsucc : (n : ℚ) + 1 ≠ 0 := by positivity
   split <;> field_simp <;> ring
 
-private theorem remove_axis_from_similarity (n : ℕ) (hn : 0 < n) (s : ℚ) (hs : s ≠ 0)
-    (f : (Fin (n+1) → ℚ) → (Fin (n+1) → ℚ))
-    (hf : ∀ x y, f x ⬝ᵥ f y = (s ^ 2 / ((n:ℚ)+1)) * (x ⬝ᵥ y)) :
-    ∃ g : (Fin (n+1) → ℚ) → (Fin n → ℚ),
+private theorem remove_axis_from_similarity (n : ℕ) (s : ℚ) (hs : s ≠ 0)
+    (f : (Fin (n + 1) → ℚ) → (Fin (n + 1) → ℚ))
+    (hf : ∀ x y, f x ⬝ᵥ f y = (s ^ 2 / ((n : ℚ) + 1)) * (x ⬝ᵥ y)) :
+    ∃ g : (Fin (n + 1) → ℚ) → (Fin n → ℚ),
       ∀ x y, (fun _ => 1) ⬝ᵥ x = 0 → (fun _ => 1) ⬝ᵥ y = 0 →
-      g x ⬝ᵥ g y = (s ^ 2 / ((n:ℚ)+1)) * (x ⬝ᵥ y) := by
-  let ones : Fin (n+1) → ℚ := fun _ => 1
+      g x ⬝ᵥ g y = (s ^ 2 / ((n : ℚ) + 1)) * (x ⬝ᵥ y) := by
+  let ones : Fin (n + 1) → ℚ := fun _ => 1
   let a := s⁻¹ • f ones
-  have hsucc : (n:ℚ)+1 ≠ 0 := by positivity
+  have hsucc : (n : ℚ) + 1 ≠ 0 := by positivity
   have ha : a ⬝ᵥ a = 1 := by
     rw [show a = s⁻¹ • f ones from rfl, smul_dotProduct, dotProduct_smul, hf]
     simp [smul_eq_mul, ones, dotProduct]
@@ -252,7 +246,6 @@ private theorem remove_axis_from_similarity (n : ℕ) (hn : 0 < n) (s : ℚ) (hs
   obtain ⟨g, hg⟩ := strip_normal n a ha
   exact ⟨fun x => g (f x), fun x y hx hy => (hg _ _ (ha₀ x hx) (ha₀ y hy)).trans (hf _ _)⟩
 
-
 private theorem block_similarity {ι : Type} [Fintype ι] (k d : ℕ)
     (hcard : Fintype.card ι = k * d) (scale : ℚ)
     (f : (Fin d → ℚ) → (Fin d → ℚ))
@@ -260,89 +253,88 @@ private theorem block_similarity {ι : Type} [Fintype ι] (k d : ℕ)
     ∃ g : (ι → ℚ) → (ι → ℚ), ∀ x y, g x ⬝ᵥ g y = scale * (x ⬝ᵥ y) := by
   let e : ι ≃ Fin k × Fin d := Fintype.equivOfCardEq (by simpa using hcard)
   let G : (Fin k × Fin d → ℚ) → (Fin k × Fin d → ℚ) :=
-    fun x p => f (fun i => x (p.1,i)) p.2
+    fun x p => f (fun i => x (p.1, i)) p.2
   have hG (x y : Fin k × Fin d → ℚ) : G x ⬝ᵥ G y = scale * (x ⬝ᵥ y) := by
     simp only [dotProduct, Fintype.sum_prod_type, G]
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro j _
-    exact hf (fun i => x (j,i)) (fun i => y (j,i))
+    exact hf (fun i => x (j, i)) (fun i => y (j, i))
   refine ⟨fun x => G (x ∘ e.symm) ∘ e, ?_⟩
   intro x y
   rw [comp_equiv_dotProduct_comp_equiv, hG, comp_equiv_dotProduct_comp_equiv]
 
 private theorem two_similarity (r : ℚ) :
     ∃ f : (Fin 2 → ℚ) → (Fin 2 → ℚ),
-      ∀ x y, f x ⬝ᵥ f y = (r^2+1) * (x ⬝ᵥ y) := by
-  refine ⟨fun x => ![r*x 0 - x 1, x 0 + r*x 1], ?_⟩
+      ∀ x y, f x ⬝ᵥ f y = (r ^ 2 + 1) * (x ⬝ᵥ y) := by
+  refine ⟨fun x => ![r * x 0 - x 1, x 0 + r * x 1], ?_⟩
   intro x y
   simp [dotProduct, Fin.sum_univ_two]
   ring
 
 private theorem four_similarity (n : ℕ) :
     ∃ f : (Fin 4 → ℚ) → (Fin 4 → ℚ),
-      ∀ x y, f x ⬝ᵥ f y = (n:ℚ) * (x ⬝ᵥ y) := by
-  obtain ⟨r,s,t,u,hu⟩ := Nat.sum_four_squares n
-  let a : ℍ[ℚ] := ⟨r,s,t,u⟩
-  have ha : Quaternion.normSq a = (n:ℚ) := by
-    have hcast := congrArg (fun v : ℕ => (v:ℚ)) hu
+      ∀ x y, f x ⬝ᵥ f y = (n : ℚ) * (x ⬝ᵥ y) := by
+  obtain ⟨r, s, t, u, hu⟩ := Nat.sum_four_squares n
+  let a : ℍ[ℚ] := ⟨r, s, t, u⟩
+  have ha : Quaternion.normSq a = (n : ℚ) := by
+    have hcast := congrArg (fun v : ℕ => (v : ℚ)) hu
     push_cast at hcast
     simpa [a, Quaternion.normSq_def'] using hcast
-  let Q : (Fin 4 → ℚ) → ℍ[ℚ] := fun x => ⟨x 0,x 1,x 2,x 3⟩
-  let coords : ℍ[ℚ] → (Fin 4 → ℚ) := fun x => ![x.re,x.imI,x.imJ,x.imK]
+  let Q : (Fin 4 → ℚ) → ℍ[ℚ] := fun x => ⟨x 0, x 1, x 2, x 3⟩
+  let coords : ℍ[ℚ] → (Fin 4 → ℚ) := fun x => ![x.re, x.imI, x.imJ, x.imK]
   let f : (Fin 4 → ℚ) → (Fin 4 → ℚ) := fun x => coords (a * Q x)
   have hnorm (x : ℍ[ℚ]) : coords x ⬝ᵥ coords x = Quaternion.normSq x := by
     simp [dotProduct, coords, Fin.sum_univ_four, Quaternion.normSq_def', pow_two]
   have hinput (x : Fin 4 → ℚ) : Quaternion.normSq (Q x) = x ⬝ᵥ x := by
     simp [dotProduct, Q, Fin.sum_univ_four, Quaternion.normSq_def', pow_two]
-  have hs (x : Fin 4 → ℚ) : f x ⬝ᵥ f x = (n:ℚ) * (x ⬝ᵥ x) := by
+  have hs (x : Fin 4 → ℚ) : f x ⬝ᵥ f x = (n : ℚ) * (x ⬝ᵥ x) := by
     rw [show f x = coords (a * Q x) from rfl, hnorm, map_mul, ha, hinput]
-  have hadd (x y : Fin 4 → ℚ) : f (x+y) = f x + f y := by
-    have hQ : Q (x+y) = Q x + Q y := by rfl
-    change coords (a * Q (x+y)) = coords (a * Q x) + coords (a * Q y)
+  have hadd (x y : Fin 4 → ℚ) : f (x + y) = f x + f y := by
+    have hQ : Q (x + y) = Q x + Q y := by rfl
+    change coords (a * Q (x + y)) = coords (a * Q x) + coords (a * Q y)
     rw [hQ, mul_add]
     funext i
     fin_cases i <;> rfl
   refine ⟨f, fun x y => ?_⟩
-  have h := hs (x+y)
+  have h := hs (x + y)
   rw [hadd] at h
   simp only [dotProduct_add, add_dotProduct, dotProduct_comm (f y) (f x),
     dotProduct_comm y x, hs] at h
   linarith only [h]
 
-
 private theorem rational_simplex_of_odd_square (n : ℕ) (hn : 0 < n) (ho : Odd n)
     (hs : IsSquare n) :
-    ∃ p : Fin (n+1) → Fin n → ℚ, ∀ j k,
-      p j ⬝ᵥ p k = if j = k then 1 else -(1:ℚ)/n := by
+    ∃ p : Fin (n + 1) → Fin n → ℚ, ∀ j k,
+      p j ⬝ᵥ p k = if j = k then 1 else -(1 : ℚ)/n := by
   obtain ⟨m, hm⟩ := hs
   rw [← pow_two] at hm
   obtain ⟨k, hk⟩ := ho
-  have hc : Fintype.card (Fin (n+1)) = k.succ * 2 := by
+  have hc : Fintype.card (Fin (n + 1)) = k.succ * 2 := by
     simp only [Fintype.card_fin]
     omega
-  obtain ⟨T, hT⟩ := two_similarity (m:ℚ)
-  obtain ⟨F, hF⟩ := block_similarity k.succ 2 hc ((m:ℚ)^2+1) T hT
-  have hmQ : (n:ℚ) = (m:ℚ)^2 := by exact_mod_cast hm
-  have hn₀ : (n:ℚ) ≠ 0 := by exact_mod_cast hn.ne'
-  have hm₀ : (m:ℚ) ≠ 0 := by
+  obtain ⟨T, hT⟩ := two_similarity (m : ℚ)
+  obtain ⟨F, hF⟩ := block_similarity k.succ 2 hc ((m : ℚ) ^ 2 + 1) T hT
+  have hmQ : (n : ℚ) = (m : ℚ)^2 := by exact_mod_cast hm
+  have hn₀ : (n : ℚ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hm₀ : (m : ℚ) ≠ 0 := by
     intro hz
     exact hn₀ (by simp [hmQ, hz])
-  have hF' (x y : Fin (n+1) → ℚ) :
-      ((m:ℚ)⁻¹ • F x) ⬝ᵥ ((m:ℚ)⁻¹ • F y) =
-      (((n:ℚ)+1)^2/((n:ℚ)+1)) * (x ⬝ᵥ y) / n := by
+  have hF' (x y : Fin (n + 1) → ℚ) :
+      ((m : ℚ)⁻¹ • F x) ⬝ᵥ ((m : ℚ)⁻¹ • F y) =
+      (((n : ℚ) + 1)^2/((n : ℚ) + 1)) * (x ⬝ᵥ y) / n := by
     rw [smul_dotProduct, dotProduct_smul, hF]
     simp only [smul_eq_mul]
     rw [hmQ]
     field_simp
-  let normalized : (Fin (n+1) → ℚ) → (Fin (n+1) → ℚ) := fun x => (m:ℚ)⁻¹ • F x
+  let normalized : (Fin (n + 1) → ℚ) → (Fin (n + 1) → ℚ) := fun x => (m : ℚ)⁻¹ • F x
   have hF'' : ∀ x y, normalized x ⬝ᵥ normalized y =
-      (((n:ℚ)+1)/(m:ℚ))^2 / ((n:ℚ)+1) * (x ⬝ᵥ y) := by
+      (((n : ℚ) + 1)/(m : ℚ))^2 / ((n : ℚ) + 1) * (x ⬝ᵥ y) := by
     intro x y
     rw [show normalized x ⬝ᵥ normalized y = _ from hF' x y, hmQ]
     field_simp
-  have hnormal : (n:ℚ)+1 ≠ 0 := by positivity
-  obtain ⟨G,hG⟩ := remove_axis_from_similarity n hn (((n:ℚ)+1)/(m:ℚ))
+  have hnormal : (n : ℚ) + 1 ≠ 0 := by positivity
+  obtain ⟨G, hG⟩ := remove_axis_from_similarity n (((n : ℚ) + 1)/(m : ℚ))
     (div_ne_zero hnormal hm₀) normalized hF''
   apply restrict_scaled n hn G
   intro x y hx hy
@@ -352,36 +344,36 @@ private theorem rational_simplex_of_odd_square (n : ℕ) (hn : 0 < n) (ho : Odd 
   field_simp
 
 private theorem rational_simplex_of_even_successor_square (n : ℕ) (hn : 0 < n) (he : Even n)
-    (hs : IsSquare (n+1)) :
-    ∃ p : Fin (n+1) → Fin n → ℚ, ∀ j k,
-      p j ⬝ᵥ p k = if j = k then 1 else -(1:ℚ)/n := by
-  obtain ⟨m,hm⟩ := hs
+    (hs : IsSquare (n + 1)) :
+    ∃ p : Fin (n + 1) → Fin n → ℚ, ∀ j k,
+      p j ⬝ᵥ p k = if j = k then 1 else -(1 : ℚ)/n := by
+  obtain ⟨m, hm⟩ := hs
   rw [← pow_two] at hm
   have hmOdd : Odd m := by
-    have hodd : Odd (n+1) := he.add_odd (by decide)
+    have hodd : Odd (n + 1) := he.add_odd (by decide)
     rw [hm, pow_two] at hodd
     by_contra hnot
     have hmEven : Even m := (Nat.even_or_odd m).resolve_right hnot
-    exact (Nat.not_odd_iff_even.mpr (hmEven.mul_right m)) hodd 
+    exact (Nat.not_odd_iff_even.mpr (hmEven.mul_right m)) hodd
   obtain ⟨a, ha⟩ := hmOdd
-  have hprod : n = (a*(a+1))*4 := by
+  have hprod : n = (a * (a + 1)) * 4 := by
     rw [ha] at hm
     nlinarith only [hm]
-  have hc : Fintype.card (Fin n) = (a*(a+1))*4 := by simpa using hprod
-  obtain ⟨T,hT⟩ := four_similarity n
-  obtain ⟨F,hF⟩ := block_similarity (a*(a+1)) 4 hc (n:ℚ) T hT
-  have hmQ : (n:ℚ)+1 = (m:ℚ)^2 := by exact_mod_cast hm
-  have hn₀ : (n:ℚ) ≠ 0 := by exact_mod_cast hn.ne'
-  have hnormal : (n:ℚ)+1 ≠ 0 := by positivity
-  have h1 : ∀ x y : Fin (n+1) → ℚ, id x ⬝ᵥ id y = (m:ℚ)^2 / ((n:ℚ)+1) * (x ⬝ᵥ y) := by
+  have hc : Fintype.card (Fin n) = (a * (a + 1)) * 4 := by simpa using hprod
+  obtain ⟨T, hT⟩ := four_similarity n
+  obtain ⟨F, hF⟩ := block_similarity (a * (a + 1)) 4 hc (n : ℚ) T hT
+  have hmQ : (n : ℚ) + 1 = (m : ℚ)^2 := by exact_mod_cast hm
+  have hn₀ : (n : ℚ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hnormal : (n : ℚ) + 1 ≠ 0 := by positivity
+  have h1 : ∀ x y : Fin (n + 1) → ℚ, id x ⬝ᵥ id y = (m : ℚ)^2 / ((n : ℚ) + 1) * (x ⬝ᵥ y) := by
     intro x y
     rw [← hmQ, div_self hnormal, one_mul]
     rfl
-  have hm₀ : (m:ℚ) ≠ 0 := by
+  have hm₀ : (m : ℚ) ≠ 0 := by
     intro hmzero
     exact hnormal (by simp [hmQ, hmzero])
-  obtain ⟨G,hG⟩ := remove_axis_from_similarity n hn m hm₀ id h1
-  apply restrict_scaled n hn (fun x => ((m:ℚ)/n) • F (G x))
+  obtain ⟨G, hG⟩ := remove_axis_from_similarity n m hm₀ id h1
+  apply restrict_scaled n hn (fun x => ((m : ℚ)/n) • F (G x))
   intro x y hx hy
   rw [smul_dotProduct, dotProduct_smul, hF, hG x y hx hy, ← hmQ, div_self hnormal, one_mul]
   simp only [smul_eq_mul]
@@ -391,13 +383,13 @@ private theorem rational_simplex_of_even_successor_square (n : ℕ) (hn : 0 < n)
 /-- The Euclidean unit sphere over the rationals contains a full regular simplex
 exactly when the odd member of the pair n, n + 1 is a square. -/
 theorem rational_unit_simplex_iff (n : ℕ) (hn : 0 < n) :
-    (∃ c : ℚ, c ≠ 1 ∧ ∃ p : Fin (n+1) → Fin n → ℚ, ∀ j k,
+    (∃ c : ℚ, c ≠ 1 ∧ ∃ p : Fin (n + 1) → Fin n → ℚ, ∀ j k,
       p j ⬝ᵥ p k = if j = k then 1 else c) ↔
-    (Odd n ∧ IsSquare n) ∨ (Even n ∧ IsSquare (n+1)) := by
+    (Odd n ∧ IsSquare n) ∨ (Even n ∧ IsSquare (n + 1)) := by
   constructor
   · rintro ⟨c, hc, p, hp⟩
-    let V : Matrix (Fin n) (Fin (n+1)) ℚ := Matrix.of fun i j => p j i
-    have H : Vᵀ * V = constantGram (n+1) c := by
+    let V : Matrix (Fin n) (Fin (n + 1)) ℚ := Matrix.of fun i j => p j i
+    have H : Vᵀ * V = constantGram (n + 1) c := by
       ext j k
       exact hp j k
     obtain ⟨hodd, heven⟩ := rational_full_simplex_necessary n hn c hc V H
@@ -405,11 +397,10 @@ theorem rational_unit_simplex_iff (n : ℕ) (hn : 0 < n) :
     · exact Or.inr ⟨he, heven he⟩
     · exact Or.inl ⟨ho, hodd ho⟩
   · intro hs
-    have hpos : (0:ℚ) < n := by exact_mod_cast hn
-    refine ⟨-(1:ℚ)/n, ne_of_lt (div_neg_of_neg_of_pos (by norm_num) hpos |>.trans zero_lt_one), ?_⟩
+    have hpos : (0 : ℚ) < n := by exact_mod_cast hn
+    refine ⟨-(1 : ℚ)/n, ne_of_lt (div_neg_of_neg_of_pos (by norm_num) hpos |>.trans zero_lt_one), ?_⟩
     rcases hs with ⟨ho, hs⟩ | ⟨he, hs⟩
     · exact rational_simplex_of_odd_square n hn ho hs
     · exact rational_simplex_of_even_successor_square n hn he hs
-
 
 end D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex

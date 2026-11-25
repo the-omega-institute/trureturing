@@ -1,14 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
-import Mathlib.Data.Nat.Sqrt
 
 /-! The successor dimension in the even-dimensional simplex criterion. -/
 
 namespace Reg.D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex (rational_unit_simplex_iff)
+open _root_.D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
+  (rational_unit_simplex_iff)
 open LeanInformationAudit
 
 set_option autoImplicit false
@@ -48,7 +48,9 @@ def family : Registration arena (type_of% @rational_unit_simplex_iff) where
   variation := ⟨@rational_unit_simplex_iff, rejected, rejected_law⟩
   sensitivity :=
     Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
-  dependence := fun _ => ⟨(), 1, 2, by decide⟩
+  dependence := fun _ => ⟨(), 1, 2, by
+    change (2 : ℕ) ≠ 3
+    decide⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@rational_unit_simplex_iff) (Realization signature) Unit Unit where
