@@ -17,7 +17,7 @@ noncomputable section
 
 namespace D5.S3.Fourier.Concentration.DisjointCharacterEnvelope
 
-private def axis (z : ℂ) : ℂ⟦X⟧ := rescale z (PowerSeries.exp ℂ)
+def axis (z : ℂ) : ℂ⟦X⟧ := rescale z (PowerSeries.exp ℂ)
 
 private def coeffMass (P : ℂ⟦X⟧) : ℝ := ∑' n : ℕ, ‖coeff n P‖
 
@@ -61,7 +61,7 @@ private theorem Budget.mul {P Q : ℂ⟦X⟧} {a b : ℝ} (hP : Budget P a)
   · simpa only [coeff_mul] using hs
   · exact mul_le_mul hP.2 hQ.2 (tsum_nonneg fun _ => norm_nonneg _) hP.nonneg
 
-private theorem axis_norm_coeff (z : ℂ) (n : ℕ) :
+theorem axis_norm_coeff (z : ℂ) (n : ℕ) :
     ‖coeff n (axis z)‖ = ‖z‖ ^ n / n.factorial := by
   rw [axis, coeff_rescale, coeff_exp, norm_mul, norm_pow]
   simp [div_eq_mul_inv]
@@ -129,7 +129,7 @@ private theorem split_factor (a b : ℂ) :
 private def onBoth (P Q : ℂ⟦X⟧) : BiSeries :=
   PowerSeries.map (PowerSeries.C (R := ℂ)) P * PowerSeries.C Q
 
-private theorem coeff_onBoth (m n : ℕ) (P Q : ℂ⟦X⟧) :
+theorem coeff_onBoth (m n : ℕ) (P Q : ℂ⟦X⟧) :
     coeff n (coeff m (onBoth P Q)) = coeff m P * coeff n Q := by
   simp [onBoth, coeff_mul_C, coeff_map, coeff_C_mul]
 
@@ -164,7 +164,7 @@ noncomputable def overlapSubsets {J : Type*} (s : Finset J) (m n : ℕ) : Finset
 /-- The coefficient norm for an exponential with the given norm and degree. -/
 def expTermNorm (zd : ℝ × ℕ) : ℝ := zd.1 ^ zd.2 / (zd.2.factorial : ℝ)
 
-private theorem split_product {J : Type*} (s : Finset J) (a b : J → ℂ) :
+theorem split_product {J : Type*} (s : Finset J) (a b : J → ℂ) :
     disjointSeries s a b =
       ∑ t ∈ s.powerset,
         onBoth (axis (∑ j ∈ s, a j) * ∏ j ∈ t, (axis (-a j) - 1))
