@@ -82,10 +82,25 @@ Take rational u and v such that the square of u plus fourteen times the square o
 
 At u = v = 1 the paired-edge form has an orthogonal basis with squared lengths 1, 5, 70, and 70. Align the first three directions in a putative six-coordinate realization. The remaining three-dimensional orthogonal complement has a rational orthogonal basis with squared lengths 5, 34, and 2380. Its squared length 70 is excluded by descent modulo seven. The triangle-block form reduces to squared lengths 15, 1, 70, and 210. Their product is five times a rational square, excluding a four-coordinate factor. Explicit Gram factors attain both bounds. Rational rescaling preserves the two varying eigenvalue square classes along the conic.
 
+**Theorem 1.7 (The exact four-coordinate criterion for both families).**
+
+Lean statement: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.four_coordinate_criterion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/RationalGramCospectral.four_coordinate_criterion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For rational t, either matrix is realizable in four rational coordinates exactly when t is one half or the following two arithmetic conditions hold. One plus four times t must be a rational square, and twice one minus twice t must be a sum of two rational squares.
+
+Away from the two singular endpoints, a square Gram factor forces the common determinant to be a square. Dividing by the square of the repeated eigenvalue gives the first condition. When it holds away from the endpoints, the forms are rationally congruent. After aligning two unit axes, the remaining directions require the second condition. A pair of orthogonal vectors in two coordinates gives the converse. At t equal to minus one quarter both forms require five coordinates. At t equal to one half the paired-edge matrix requires four and the triangle-block matrix two.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.RealizableIn`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.five_seven_on_conic`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.four_coordinate_criterion`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.pairedEdges`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.seven_five_on_conic`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.spectrum_and_thresholds`
