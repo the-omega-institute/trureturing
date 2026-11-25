@@ -407,7 +407,7 @@ def check_standard_admission():
                                 "/-! Omega original. -/\n"
                                 "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\n")
         lean("-R", tmp, "-o", always_prime.with_suffix(".olean"), always_prime)
-        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "missing computation correspondence for Omega.Nat.Prime")
+        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "certificate statement mismatch for Omega.Nat.Prime")
         fib = "OmegaMathlib.Data.Nat.Fib.Basic"
         altered = tmp / "OmegaMathlib/Data/Nat/Fib/Basic.lean"
         altered.parent.mkdir(parents=True)
