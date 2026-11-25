@@ -22,11 +22,6 @@ variable {V : Type*}
 abbrev bfsPred [Fintype V] (G : SimpleGraph V) (o u : V) : Finset V :=
   @predecessors V G o u _ (Classical.decPred _)
 
-private theorem mem_bfsPred [Fintype V] {G : SimpleGraph V} {o b u : V} :
-    b ∈ bfsPred G o u ↔ G.Adj b u ∧ G.dist o b + 1 = G.dist o u := by
-  classical
-  simp [bfsPred, predecessors]
-
 /-- A skew gain with triangle defect bounded by one. -/
 def IsTriangleOneGain (G : SimpleGraph V) (g : V → V → ℝ) : Prop :=
   (∀ a b, g b a = -g a b) ∧ ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
@@ -67,19 +62,14 @@ def twoStepBFSPotential [Fintype V] (G : SimpleGraph V) (o : V)
     (a : (k : ℕ) → Component G o (k + 1) → V)
     (w g : V → V → ℝ) (u : V) : ℝ := potentialAt G o a w g u (G.dist o u) rfl
 
-private theorem potential_at [Fintype V] {G : SimpleGraph V} {o u : V}
-    {a : (k : ℕ) → Component G o (k + 1) → V} {w g : V → V → ℝ} {d : ℕ}
-    (h : G.dist o u = d) : twoStepBFSPotential G o a w g u = potentialAt G o a w g u d h := by
-  subst d
-  rfl
-
 private theorem potential_eval [Fintype V] {G : SimpleGraph V} {o u : V} {k : ℕ}
     {a : (k : ℕ) → Component G o (k + 1) → V} {w g : V → V → ℝ}
     (h : G.dist o u = k + 1) :
     let C := componentOf G o (k + 1) u h.ge
     twoStepBFSPotential G o a w g u =
-      transport g a k C + ∑ b ∈ bfsPred G o u, w u b * (g (a k C) b + g b u) :=
-  potential_at h
+      transport g a k C + ∑ b ∈ bfsPred G o u, w u b * (g (a k C) b + g b u) := by
+  change potentialAt G o a w g u (G.dist o u) rfl = potentialAt G o a w g u (k + 1) h
+  congr 1
 
 private theorem average_interval {s : Finset V} {w f : V → ℝ} {l h : ℝ}
     (hw : ∀ b ∈ s, 0 ≤ w b) (hs : ∑ b ∈ s, w b = 1)
@@ -146,7 +136,8 @@ theorem two_step_residual_bound [Fintype V] {G : SimpleGraph V} (hG : G.IsChorda
     (eq_or_ne b t).imp_right (shadow_clique hG hconn C hb ht)
   have predecessor {x b : V} {k : ℕ} (hx : G.dist r x = k + 1) (hb : b ∈ bfsPred G r x) :
       G.Adj b x ∧ b ∈ Shadow G r (componentOf G r (k + 1) x hx.ge) := by
-    obtain ⟨hb, hd⟩ := mem_bfsPred.mp hb
+    simp only [bfsPred, predecessors, Finset.mem_filter, Finset.mem_univ, true_and] at hb
+    obtain ⟨hb, hd⟩ := hb
     exact ⟨hb, mem_shadow_of_adj (by omega) hx.ge hb⟩
   have forward {x y : V} (hxy : G.Adj x y) (hle : G.dist r x ≤ G.dist r y) :
       |g x y - (φ y - φ x)| ≤ 4 := by
@@ -158,13 +149,17 @@ theorem two_step_residual_bound [Fintype V] {G : SimpleGraph V} (hG : G.IsChorda
       have hp : bfsPred G r y = {r} := by
         classical
         ext b
-        simp only [mem_bfsPred, hy, Nat.add_eq_right, hconn.dist_eq_zero_iff, Finset.mem_singleton]
+        simp only [bfsPred, predecessors, Finset.mem_filter, Finset.mem_univ, true_and,
+          hy, Nat.add_eq_right, hconn.dist_eq_zero_iff, Finset.mem_singleton]
         refine ⟨fun h => h.2.symm, fun hb => ?_⟩
         subst b
         exact ⟨hxy, rfl⟩
       have hs := hw.2.2 y hxy.ne.symm
       rw [hp, Finset.sum_singleton] at hs
-      rw [show φ r = 0 from potential_at hx, eval hy, hp, Finset.sum_singleton, ha.1, hs,
+      have hroot : φ r = 0 := by
+        change potentialAt G r a w g r (G.dist r r) rfl = potentialAt G r a w g r 0 hx
+        congr 1
+      rw [hroot, eval hy, hp, Finset.sum_singleton, ha.1, hs,
         diagonal_zero hg.1]
       change |g r y - ((0 : ℝ) + 1 * (0 + g r y) - 0)| ≤ 4
       simp
