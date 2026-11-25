@@ -228,6 +228,8 @@ theorem dot_mul_right (p a b : Quaternion) :
     ((Eq.map₂ dot (conj_mul a p) (conj_mul b p)).trans
       ((dot_mul_left p.conj a.conj b.conj).trans (Eq.map₂ Int.mul (dot_conj p p) (dot_conj a b))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The two-vector Gram determinant equals the sum of the three squared imaginary
 coordinates of the product of the first conjugate with the second quaternion. -/
 theorem gramDet_eq_imaginary_squares (a b : Quaternion) :
@@ -240,7 +242,7 @@ theorem gramDet_eq_imaginary_squares (a b : Quaternion) :
   let Q := A.conj.mul B
   let determinant := ((A.dot A).mul (B.dot B)).sub ((A.dot B).mul (A.dot B))
   let imaginary := ((Q.x.mul Q.x).add (Q.y.mul Q.y)).add (Q.z.mul Q.z)
-  determinant.sound imaginary values Eq.refl
+  determinant.sound imaginary values rfl
 
 /-- Euler–Lagrange four-square multiplicativity over the integers. -/
 theorem normSq_mul (a b : Quaternion) : Eq (a.mul b).normSq (a.normSq.mul b.normSq) :=
