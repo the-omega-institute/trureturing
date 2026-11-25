@@ -419,7 +419,6 @@ async function runModuleCache() {
   if (operation === 'restore-published') {
     if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
     args = ['restore'];
-    if (process.env.INPUT_VERSION) args.push('--version', process.env.INPUT_VERSION);
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
   } else if (operation === 'module-plan') {

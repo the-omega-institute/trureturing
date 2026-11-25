@@ -356,14 +356,79 @@ jobs:
           (( ${#reports[@]} == 0 ))
 
   cache-shards:
-    name: Check scoped Lean cache recovery and cold fallback
+    name: Verify read-only Lean cache recovery
     if: github.event_name == 'push' && github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
     permissions:
       contents: read
       actions: read
-    uses: ./.github/workflows/ci-lean-module-verify.yml
-    with:
-      source: ${{ github.sha }}
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+      CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Validate source and select cache transport changes
+        env:
+          CI_HIT_PATHS: |
+            .github/actions/lean-cache-shards/*
+            .github/workflows/ci-publication-verify.yml
+            .github/scripts/install-tools.py
+            Meta/tools-release.json
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check read-only cache requests on hits and misses
+        run: node --test .github/actions/lean-cache-shards/test-generation.mjs
+      - if: steps.entry.outputs.hit == 'true'
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.entry.outputs.hit == 'true'
+        id: dependency
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Restore Lean dependencies
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - if: steps.entry.outputs.hit == 'true'
+        name: Restore the selected module through the CI reader
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore-published
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Build the selected module with any recovered inputs
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
+          lake --no-build build "$CACHE_SCOPE"
 
   scribe:
     name: verify Scribe publication and fetch
