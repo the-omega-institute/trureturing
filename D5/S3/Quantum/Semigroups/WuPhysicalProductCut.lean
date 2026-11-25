@@ -1,0 +1,177 @@
+/- GID: D5/S3/Quantum/Semigroups/WuPhysicalProductCut
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Semigroups/WuPhysicalProductCut
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Physical two-mode Clifford cuts have exact rank and imbalance. -/
+
+import D5.S3.Quantum.Semigroups.WuRankOneEndpointClifford
+
+noncomputable section
+
+open Matrix Kronecker
+open D5.S3.Quantum.FiniteDimensional
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+open scoped Matrix
+
+namespace WuRankOneEndpointFloor
+
+/-- The four degree-one quadratures of the signed two-mode CAR representation. -/
+def carDirection (a b c d : ℝ) : TwoMode :=
+  (a : ℂ) • pauliWord .I .X + (b : ℂ) • pauliWord .I .Y +
+    (c : ℂ) • pauliWord .X .Z + (d : ℂ) • pauliWord .Y .Z
+
+/-- Occupation imbalance in the physical order 00, 01, 10, 11. -/
+def carImbalance : TwoMode :=
+  (1 / 2 : ℂ) • (pauliWord .Z .I + pauliWord .I .Z)
+
+/-- Paired occupation observable associated with a normalized Clifford direction. -/
+def carPartner (G : TwoMode) : TwoMode :=
+  carImbalance - G * carImbalance * G
+
+/-- Projection onto one physical occupation or coherent one-mode line. -/
+def carProductCut (G : TwoMode) (u rho : ℝ) : TwoMode :=
+  (1 / 2 : ℂ) • (1 + (u : ℂ) • G + (rho : ℂ) • carPartner G)
+
+private theorem carDirection_hermitian (a b c d : ℝ) :
+    (carDirection a b c d)ᴴ = carDirection a b c d := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [carDirection, pauliWord, pauliMatrix, qubitX, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.conjTranspose_apply, Matrix.one_apply, Complex.I_mul_I]
+
+private theorem carDirection_square (a b c d : ℝ)
+    (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1) :
+    carDirection a b c d * carDirection a b c d = 1 := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    apply Complex.ext <;>
+    norm_num [carDirection, pauliWord, pauliMatrix, qubitX, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.one_apply, Complex.mul_re, Complex.mul_im,
+      Complex.add_re, Complex.add_im, Complex.neg_re, Complex.neg_im] <;>
+    first | ring | nlinarith only [h]
+
+private theorem carImbalance_hermitian : carImbalanceᴴ = carImbalance := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [carImbalance, pauliWord, pauliMatrix, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.conjTranspose_apply, Matrix.one_apply]
+
+private theorem carDirection_even (a b c d : ℝ) :
+    carImbalance * carDirection a b c d * carImbalance = 0 := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [carDirection, carImbalance, pauliWord, pauliMatrix, qubitX, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.one_apply]
+
+private theorem carDirection_parity (a b c d : ℝ) :
+    carDirection a b c d * (carImbalance * carImbalance) =
+      (1 - carImbalance * carImbalance) * carDirection a b c d := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [carDirection, carImbalance, pauliWord, pauliMatrix, qubitX, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.one_apply]
+
+private theorem carDirection_trace (a b c d : ℝ) :
+    (carDirection a b c d).trace = 0 ∧
+      (carImbalance * carDirection a b c d).trace = 0 := by
+  constructor <;>
+    norm_num [Matrix.trace, Matrix.diag, carDirection, carImbalance, pauliWord,
+      pauliMatrix, qubitX, qubitZ, Matrix.kroneckerMap_apply, Matrix.mul_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.one_apply]
+
+private theorem carImbalance_trace :
+    carImbalance.trace = 0 ∧ (carImbalance * carImbalance).trace = 2 := by
+  constructor <;>
+    norm_num [Matrix.trace, Matrix.diag, carImbalance, pauliWord, pauliMatrix, qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.one_apply]
+
+set_option maxHeartbeats 2000000 in
+/-- Every unit Clifford direction and unit real pair give a rank-two Hermitian
+projection with the exact physical imbalance. -/
+theorem carProductCut_projection (a b c d u rho : ℝ)
+    (hn : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1) (hu : u ^ 2 + rho ^ 2 = 1) :
+    let P := carProductCut (carDirection a b c d) u rho
+    P.IsHermitian ∧ P * P = P ∧ P.trace = 2 ∧
+      (carImbalance * P).trace.re = rho := by
+  dsimp only
+  let G := carDirection a b c d
+  let F := carImbalance
+  let Z := carPartner G
+  have hG : Gᴴ = G := carDirection_hermitian _ _ _ _
+  have hF : Fᴴ = F := carImbalance_hermitian
+  have hGG : G * G = 1 := carDirection_square _ _ _ _ hn
+  have hFGF : F * G * F = 0 := carDirection_even _ _ _ _
+  have hGF : G * (F * F) = (1 - F * F) * G := carDirection_parity _ _ _ _
+  have hZ : Zᴴ = Z := by
+    simp [Z, carPartner, ← hF, Matrix.conjTranspose_mul, hG, Matrix.mul_assoc]
+  have hGZ : G * Z + Z * G = 0 := by
+    dsimp [Z, carPartner]
+    rw [Matrix.mul_sub, Matrix.sub_mul, ← Matrix.mul_assoc G G, hGG, Matrix.one_mul,
+      Matrix.mul_assoc (G * F) G G, hGG, Matrix.mul_one]
+    abel
+  have hZZ : Z * Z = 1 := by
+    dsimp [Z, carPartner]
+    calc
+      (F - G * F * G) * (F - G * F * G) =
+          F * F - (F * G * F) * G - G * (F * G * F) +
+            G * F * (G * G) * F * G := by noncomm_ring
+      _ = 1 := by
+        rw [hFGF, hGG]
+        simp only [Matrix.zero_mul, Matrix.mul_zero, sub_zero, Matrix.mul_one]
+        rw [show G * F * F * G = (G * (F * F)) * G by noncomm_ring,
+          hGF, Matrix.mul_assoc, hGG, Matrix.mul_one]
+        abel
+  have htrG : G.trace = 0 := (carDirection_trace _ _ _ _).1
+  have htrFG : (F * G).trace = 0 := (carDirection_trace _ _ _ _).2
+  have htrF : F.trace = 0 := carImbalance_trace.1
+  have htrFF : (F * F).trace = 2 := carImbalance_trace.2
+  have htrZ : Z.trace = 0 := by
+    dsimp [Z, carPartner]
+    rw [Matrix.trace_sub, Matrix.trace_mul_comm (G * F) G, ← Matrix.mul_assoc,
+      hGG, Matrix.one_mul, sub_self]
+  have htrFZ : (F * Z).trace = 2 := by
+    dsimp [Z, carPartner]
+    rw [Matrix.mul_sub, Matrix.trace_sub,
+      show F * (G * F * G) = (F * G * F) * G by noncomm_ring, hFGF]
+    simp [htrFF]
+  let H := (u : ℂ) • G + (rho : ℂ) • Z
+  have hH : Hᴴ = H := by
+    simp [H, Matrix.conjTranspose_add, Matrix.conjTranspose_smul, hG, hZ]
+  have hHH : H * H = 1 := by
+    dsimp [H]
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, hGG, hZZ]
+    rw [mul_comm (rho : ℂ) (u : ℂ)]
+    have hc : (u : ℂ) * u + (rho : ℂ) * rho = 1 := by
+      exact_mod_cast (by nlinarith only [hu] : u * u + rho * rho = 1)
+    rw [add_assoc, ← add_assoc ((u : ℂ) • _), ← smul_add, hGZ, smul_zero, add_zero,
+      ← add_smul, hc, one_smul]
+  change ((1 / 2 : ℂ) • (1 + H)).IsHermitian ∧
+    ((1 / 2 : ℂ) • (1 + H)) * ((1 / 2 : ℂ) • (1 + H)) =
+      (1 / 2 : ℂ) • (1 + H) ∧
+    ((1 / 2 : ℂ) • (1 + H)).trace = 2 ∧
+    (F * ((1 / 2 : ℂ) • (1 + H))).trace.re = rho
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · change ((1 / 2 : ℂ) • (1 + H))ᴴ = _
+    simp [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, hH]
+  · simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.add_mul,
+      Matrix.mul_add, Matrix.one_mul, Matrix.mul_one, hHH]
+    rw [show (1 : TwoMode) + H + (H + 1) = (2 : ℂ) • (1 + H) by
+      rw [show (2 : ℂ) = 1 + 1 by norm_num, add_smul, one_smul]
+      abel, smul_smul]
+    norm_num
+  · simp [H, Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, htrG, htrZ]
+    norm_num
+  · simp [H, Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add,
+      htrF, htrFG, htrFZ, Complex.mul_re]
+
+#print axioms carProductCut_projection
+
+end WuRankOneEndpointFloor
