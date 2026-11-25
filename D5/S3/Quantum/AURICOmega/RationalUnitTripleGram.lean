@@ -28,7 +28,7 @@ private def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
 private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
     ∃ a : Omega.Quaternion, ∃ d : ℚ, x = d⁻¹ • readQuaternion a := by
   let m (q : ℚ) : ℚ := q.den
-  have nz (q : ℚ) : m q ≠ 0 := by exact_mod_cast q.den_ne_zero
+  have nz (q : ℚ) : (q.den : ℚ) ≠ 0 := by exact_mod_cast q.den_ne_zero
   let d := m x.re * m x.imI * m x.imJ * m x.imK
   let a : Omega.Quaternion :=
     ⟨x.re.num * x.imI.den * x.imJ.den * x.imK.den,
@@ -39,24 +39,20 @@ private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
   ext <;> simp only [readQuaternion, Quaternion.re_smul, Quaternion.imI_smul,
     Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, a, Int.cast_mul,
     Int.cast_natCast] <;> dsimp only [d, m]
-  · rw [← Rat.num_div_den x.re]
-    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
-      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
-  · rw [← Rat.num_div_den x.imI]
-    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
-      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
-  · rw [← Rat.num_div_den x.imJ]
-    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
-      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
-  · rw [← Rat.num_div_den x.imK]
-    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
-      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
+  · conv_lhs => rw [← Rat.num_div_den x.re]
+    field_simp [nz]
+  · conv_lhs => rw [← Rat.num_div_den x.imI]
+    field_simp [nz]
+  · conv_lhs => rw [← Rat.num_div_den x.imJ]
+    field_simp [nz]
+  · conv_lhs => rw [← Rat.num_div_den x.imK]
+    field_simp [nz]
 
 private theorem readQuaternion_dot (a b : Omega.Quaternion) :
     ((a.dot b : ℤ) : ℚ) = (star (readQuaternion a) * readQuaternion b).re := by
   change (((a.w * b.w + a.x * b.x) + (a.y * b.y + a.z * b.z) : ℤ) : ℚ) = _
   push_cast
-  simp [readQuaternion, Quaternion.re_mul]
+  simp [readQuaternion]
   ring
 
 private theorem readQuaternion_norm (a : Omega.Quaternion) :
