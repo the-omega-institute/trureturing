@@ -139,29 +139,30 @@ end Block
 
 namespace Primality
 abbrev signature := Reg.Support.SingleDependentReadout.signature Unit
-  (fun _ => ℕ) (fun _ => Bool)
+  (fun _ => ℕ) (fun _ => Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ p => decide p.Prime) (fun e => nomatch e)
+  realize signature (fun _ _ p => p.Prime) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {p : ℕ} {q : PrimeValue} {ls : List PrimeValue},
-    checkPrime p q ls = true → R.readout () () p = true
+    checkPrime p q ls = true → R.readout () () p
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (p := 3) (q := two) (ls := [two]) (by decide)
-  change false = true at hh
-  cases hh
+  change False at hh
+  exact hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
-  change decide (Nat.Prime 0) ≠ decide (Nat.Prime 2)
-  decide
+  change (Nat.Prime 0) ≠ (Nat.Prime 2)
+  intro h
+  exact Nat.not_prime_zero (Eq.mpr h Nat.prime_two)
 def family : Registration arena (type_of% @checkPrime_prime) where
   actual := actual
-  bridge := by simp [actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using @checkPrime_prime,
+  bridge := Iff.rfl
+  variation := ⟨@checkPrime_prime,
     rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -180,7 +181,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => decide p.Prime) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ p => p.Prime) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -194,7 +195,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
