@@ -23,6 +23,56 @@ namespace RefinedBMV.Tracial
 variable {A ι : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
   [Fintype ι]
 
+/-- After summing the two lower slots, the fourth-order mixed trace is
+controlled by the compressed product and the outer fourth moments. -/
+theorem exceptional_residue_sq_le
+    (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
+    (C E F Z S : A) :
+    let R := S * S
+    let Y := E * R * F * S
+    ‖τ (C * E * R * F * R * star Z)‖ ^ 2 ≤
+      (τ (star Y * Y)).re * (‖S‖ ^ 2 *
+        (Real.sqrt (τ ((Z * star Z) ^ 2)).re *
+          Real.sqrt (τ ((C * star C) ^ 2)).re)) := by
+  dsimp only
+  let R := S * S
+  let Y := E * R * F * S
+  let W := star Z * C
+  have hnorm {a : A} (ha : 0 ≤ a) : ‖τ a‖ = (τ a).re := by
+    simpa only [Complex.ofReal_re] using
+      (congrArg Complex.re (Complex.eq_coe_norm_of_nonneg (τ.map_nonneg ha))).symm
+  have hrotate : τ (Y * (S * W)) = τ (C * E * R * F * R * star Z) := by
+    simpa only [W, Y, R, mul_assoc] using (hτ C (Y * S * star Z)).symm
+  have hY : τ (Y * star Y) = τ (star Y * Y) := hτ _ _
+  have hcs := PositiveLinearMap.norm_map_star_mul_sq_le τ (star Y) (S * W)
+  rw [star_star, hrotate, hY, hnorm (star_mul_self_nonneg Y),
+    hnorm (star_mul_self_nonneg (S * W))] at hcs
+  have hideal : (τ (star (S * W) * (S * W))).re ≤ ‖S‖ ^ 2 * (τ (star W * W)).re := by
+    have h := Complex.re_le_re (τ.monotone
+      (star_left_conjugate_le_conjugate (CStarAlgebra.star_mul_le_algebraMap_norm_sq S) W))
+    change (τ (star W * (star S * S) * W)).re ≤
+      (τ (star W * algebraMap ℝ A (‖S‖ ^ 2) * W)).re at h
+    simpa only [star_mul, mul_assoc, Algebra.algebraMap_eq_smul_one, smul_mul_assoc,
+      mul_smul_comm, one_mul, ← Complex.coe_smul, map_smul, smul_eq_mul,
+      Complex.re_ofReal_mul] using h
+  have hW : τ (star W * W) = τ ((Z * star Z) * (C * star C)) := by
+    simpa only [W, star_mul, star_star, mul_assoc] using
+      (hτ (star C) (Z * star Z * C))
+  have hZsa : star (Z * star Z) = Z * star Z := by simp
+  have hCsa : star (C * star C) = C * star C := by simp
+  have hZpos : 0 ≤ (Z * star Z) ^ 2 := by
+    simpa only [hZsa, ← pow_two] using star_mul_self_nonneg (Z * star Z)
+  have hCpos : 0 ≤ (C * star C) ^ 2 := by
+    simpa only [hCsa, ← pow_two] using star_mul_self_nonneg (C * star C)
+  have hgram := PositiveLinearMap.norm_map_star_mul_le τ (Z * star Z) (C * star C)
+  rw [hZsa, hCsa, ← hW, hnorm (star_mul_self_nonneg W)] at hgram
+  have hgram' : (τ (star W * W)).re ≤
+      Real.sqrt (τ ((Z * star Z) ^ 2)).re * Real.sqrt (τ ((C * star C) ^ 2)).re := by
+    simpa only [← pow_two, hnorm hZpos, hnorm hCpos] using hgram
+  exact hcs.trans (mul_le_mul_of_nonneg_left
+    (hideal.trans (mul_le_mul_of_nonneg_left hgram' (sq_nonneg _)))
+    (τ.map_nonneg (star_mul_self_nonneg Y)).1)
+
 /-- A single centered cubic trace is nonnegative for a real Gram factorization. -/
 theorem centeredTrace_nonneg_of_factor
     {κ : Type*} [Fintype κ]
