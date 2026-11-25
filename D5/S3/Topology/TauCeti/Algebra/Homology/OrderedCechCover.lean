@@ -7,16 +7,18 @@
    digest: The actual ordered free cover augmentation has a chosen-vertex chain contraction. -/
 
 
-import D5.S3.Topology.TauCeti.Algebra.BigOperators.AlternatingSum
-import Mathlib.Data.Finset.Sort
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Algebra.Homology.Single
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.CategoryTheory.Category.Preorder
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.CategoryTheory.Preadditive.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Data.Fintype.BigOperators
+module
+
+public import D5.S3.Topology.TauCeti.Algebra.BigOperators.AlternatingSum
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Algebra.Homology.Single
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.CategoryTheory.Category.Preorder
+public import Mathlib.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.CategoryTheory.Preadditive.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Data.Fintype.BigOperators
 
 /-!
 # The ordered free complex of a set cover
@@ -62,7 +64,7 @@ private lemma erase_enumeration {s : Finset ι} {n : ℕ} (hs : #s = n + 1) (i :
   · exact fun h ↦ Fin.succAbove_ne i j ((s.orderEmbOfFin hs).injective h)
   · exact orderEmbOfFin_mem s hs _
 
-private lemma rank_enumeration {s : Finset ι} {n : ℕ} (hs : #s = n) (i : Fin n) :
+lemma rank_enumeration {s : Finset ι} {n : ℕ} (hs : #s = n) (i : Fin n) :
     #{a ∈ s | a < s.orderEmbOfFin hs i} = (i : ℕ) := by
   have himage : (Finset.Iio i).image (s.orderEmbOfFin hs) =
       {a ∈ s | a < s.orderEmbOfFin hs i} := by
@@ -93,7 +95,7 @@ private lemma signed_sum_reindex {G : Type v} [AddCommGroup G] {s : Finset ι} {
   rw [rank_enumeration hs i]
 
 
-private lemma double_deletion {s : Finset ι} {n : ℕ} (hs : #s = n + 3)
+lemma double_deletion {s : Finset ι} {n : ℕ} (hs : #s = n + 3)
     (i j : Fin (n + 2)) (hij : i ≤ j) :
     (s.erase (s.orderEmbOfFin hs j.succ)).erase
       ((s.erase (s.orderEmbOfFin hs j.succ)).orderEmbOfFin
@@ -131,7 +133,7 @@ private theorem neg_one_pow_card_filter_lt_mul_insert {α R : Type*} [LinearOrde
 variable {C : Type u} [Category.{v} C] [HasCoproducts.{w} C]
   {ι : Type w} {A : Type w} (R : C) (P : ι → Set A)
 
-def freeFunctor : (Finset ι)ᵒᵖ ⥤ C :=
+@[expose] def freeFunctor : (Finset ι)ᵒᵖ ⥤ C :=
   { obj s := {a : A // ∀ i ∈ s.unop, a ∈ P i}
     map f := TypeCat.ofHom fun a ↦ ⟨a.1, fun i hi ↦ a.2 i (leOfHom f.unop hi)⟩ } ⋙
     sigmaConst.obj R
@@ -149,14 +151,14 @@ private lemma pointι_map {s t : Finset ι} (f : op s ⟶ op t) (a : A)
 
 variable [Preadditive C] [LinearOrder ι]
 
-private abbrev X (p : ℕ) : C :=
+abbrev X (p : ℕ) : C :=
   ∐ fun s : {s : Finset ι // #s = p + 1} ↦ (freeFunctor R P).obj (op s.1)
 
 private def single (p : ℕ) (s : Finset ι) (a : A) (ha : ∀ i ∈ s, a ∈ P i) : R ⟶ X R P p :=
   if hs : #s = p + 1 then pointι R P a ha ≫
     Sigma.ι (fun t : {t : Finset ι // #t = p + 1} ↦ (freeFunctor R P).obj (op t.1)) ⟨s, hs⟩ else 0
 
-private def d (p : ℕ) : X R P (p + 1) ⟶ X R P p :=
+def d (p : ℕ) : X R P (p + 1) ⟶ X R P p :=
   Sigma.desc fun s ↦ ∑ i ∈ s.1, ((-1 : ℤ) ^ #{j ∈ s.1 | j < i}) •
     (if hs : #(s.1.erase i) = p + 1 then
       (freeFunctor R P).map (homOfLE (s.1.erase_subset i)).op ≫
@@ -274,7 +276,7 @@ private lemma hom_ext {p : ℕ} {Y : C} {f g : X R P p ⟶ Y}
   refine Sigma.hom_ext _ _ fun s ↦ Sigma.hom_ext _ _ fun a ↦ ?_
   simpa only [single, dite_eq_left s.2, pointι, Category.assoc] using h s.1 s.2 a.1 a.2
 
-private lemma d_squared (n : ℕ) : d R P (n + 1) ≫ d R P n = 0 := by
+lemma d_squared (n : ℕ) : d R P (n + 1) ≫ d R P n = 0 := by
   apply hom_ext R P
   intro s hs a ha
   rw [← Category.assoc, single_d R P hs, Preadditive.sum_comp]

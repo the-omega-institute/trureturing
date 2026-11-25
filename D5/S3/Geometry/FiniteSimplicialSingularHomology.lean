@@ -6,12 +6,17 @@
    utility: none
    digest: Ordered integer H1 of a finite coordinate complex compares with its actual singular H1. -/
 
-import D5.S3.Geometry.FiniteSimplicialOpenCover
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.OrderedCech
-import Mathlib.Algebra.Homology.SingleHomology
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+module
+
+public import D5.S3.Geometry.SimplicialPersistence.OrderedChains
+public import D5.S3.Geometry.FiniteSimplicialOpenCover
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.OrderedCech
+public import Mathlib.Algebra.Homology.SingleHomology
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+
+set_option backward.privateInPublic true
 
 /-!
 The carrier throughout this file is `FiniteConeCollapse.realization K`, with
@@ -20,6 +25,8 @@ positivity of every coordinate indexed by the finite set. In particular these
 are open vertex stars, and are not closed stars of faces.
 
 -/
+
+@[expose] public section
 
 set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false
@@ -53,22 +60,6 @@ section OrderedChains
 
 open TauCeti.OrderedCechSingular
 
-
-abbrev Z : ModuleCat ℤ := ModuleCat.of ℤ ℤ
-
-/-- Actual increasing faces: no truncation or dimension bound is imposed on `K`. -/
-abbrev Face (p : ℕ) := {s : Finset V // s ∈ K ∧ s.card = p + 1}
-
-instance (p : ℕ) : Fintype (Face K p) := by
-  classical
-  unfold Face
-  infer_instance
-
-/-- The free integer module on the actual ordered `p`-faces. -/
-abbrev orderedGroup (p : ℕ) : ModuleCat ℤ := ∐ fun _ : Face K p => Z
-
-def faceι {p : ℕ} (s : Face K p) : Z ⟶ orderedGroup K p :=
-  Sigma.ι (fun _ : Face K p => Z) s
 
 abbrev smallSet : SSet := small (TopCat.of (Space K)) (vertexOpen K)
 
@@ -179,19 +170,6 @@ private theorem coefficientSection_coefficientSum (p : ℕ) :
 instance coefficientSum_epi (p : ℕ) : Epi (coefficientSum K p) :=
   epi_of_epi_fac (coefficientSection_coefficientSum K p)
 
-def eraseFace {p : ℕ} (s : Face K (p + 1)) (v : s.val) : Face K p := by
-  have hc : (s.val.erase v.val).card = p + 1 := by
-    rw [card_erase_of_mem v.property, s.property.2]
-    omega
-  exact ⟨s.val.erase v.val,
-    (K.isRelLowerSet_faces s.property.1).2 (s.val.erase_subset v.val)
-      (Finset.card_pos.mp (by omega)), hc⟩
-
-/-- Increasing-face deletion, with the ordinary rank sign. -/
-def orderedBoundary (p : ℕ) : orderedGroup K (p + 1) ⟶ orderedGroup K p :=
-  Sigma.desc fun s => ∑ v : s.val,
-    ((-1 : ℤ) ^ (s.val.filter (fun w => w < v.val)).card) • faceι K (eraseFace K s v)
-
 @[reassoc]
 theorem coefficientSum_horizontal (p : ℕ) :
     coefficientSum K (p + 1) ≫ orderedBoundary K p =
@@ -206,17 +184,6 @@ theorem coefficientSum_horizontal (p : ℕ) :
   rw [Preadditive.zsmul_comp, cechι_coefficientSum]
   rfl
 
-/-- Boundary squared is inherited from the actual row differential through the surjection. -/
-theorem orderedBoundary_squared (p : ℕ) :
-    orderedBoundary K (p + 1) ≫ orderedBoundary K p = 0 := by
-  apply (cancel_epi (coefficientSum K (p + 2))).1
-  rw [← Category.assoc, coefficientSum_horizontal, Category.assoc,
-    coefficientSum_horizontal, ← Category.assoc,
-    HomologicalComplex₂.d_f_comp_d_f, zero_comp, comp_zero]
-
-/-- The full ordered integer chain complex; faces in degrees above two are retained. -/
-def orderedChainComplex : ChainComplex (ModuleCat ℤ) ℕ :=
-  ChainComplex.of (orderedGroup K) (orderedBoundary K) (orderedBoundary_squared K)
 
 theorem coefficientSum_vertical :
     ∀ p, ((cechSingular K).X p).d 1 0 ≫ coefficientSum K p = 0 := by

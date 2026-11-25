@@ -154,7 +154,7 @@ private theorem goodBlocks_density {q a w : ℕ} (ha : a ≤ q)
 private def pairedFloor (q s b i : ℕ) : ℕ :=
   (i + 1) * b / q + (s - i * b) / q - b / q
 
-private def floorSum (q r s b : ℕ) : ℕ := ∑ i ∈ range r, pairedFloor q s b i
+public def floorSum (q r s b : ℕ) : ℕ := ∑ i ∈ range r, pairedFloor q s b i
 
 private theorem pairedFloor_carry {q s b i : ℕ} (hq : 0 < q) (hi : i * b ≤ s) :
     (i + 1) * b / q + (s - i * b) / q +
@@ -286,7 +286,7 @@ private theorem selbergFactorial_ne_zero (r s b : ℕ) : selbergFactorial r s b 
   exact Finset.prod_ne_zero_iff.mpr fun i _ =>
     mul_ne_zero (quotient_ne_zero i b) (Nat.factorial_ne_zero _)
 
-private theorem selbergGcd_ne_zero (r s : ℕ) : selbergGcd r s ≠ 0 := by
+public theorem selbergGcd_ne_zero (r s : ℕ) : selbergGcd r s ≠ 0 := by
   unfold selbergGcd
   exact Finset.gcd_ne_zero_iff.mpr ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ _),
     selbergFactorial_ne_zero r s 0⟩
@@ -297,7 +297,7 @@ private theorem selbergGcd_dvd {r s b : ℕ} (hr : 0 < r) (hb : r * b ≤ s) :
   have hle : b ≤ s / r := (Nat.le_div_iff_mul_le hr).mpr (by simpa [mul_comm] using hb)
   exact Finset.gcd_dvd (Finset.mem_range.mpr (by omega))
 
-private theorem tail_nonzero (H M : ℕ) : tailLCM H M ≠ 0 := by
+public theorem tail_nonzero (H M : ℕ) : tailLCM H M ≠ 0 := by
   unfold tailLCM
   exact Finset.prod_ne_zero_iff.mpr fun k _ => Nat.lcmUpto_ne_zero (H / k)
 
@@ -305,6 +305,62 @@ private theorem sum_indicator {α : Type} (A B : Finset α) (P : α → Prop) [D
     (h : A.filter P = B) : (∑ i ∈ A, if P i then 1 else 0) = B.card := by
   rw [← Finset.sum_filter P (fun _ => (1 : ℕ)), h]
   exact (Finset.card_eq_sum_ones B).symm
+
+/-- The paired floors telescope, leaving one residue count at modulus `q`. -/
+public theorem floorSum_telescoping {q r s b : ℕ} (hq : 0 < q) (hb : r * b ≤ s) :
+    floorSum q r s b + r * (b / q) + r =
+      r * (s / q) + r * b / q + ((range r).filter (fun i => (i * b) % q ≤ s % q)).card := by
+  let hit : ℕ → ℕ := fun i => if (i * b) % q ≤ s % q then 1 else 0
+  have hterm (i : ℕ) (hi : i < r) :
+      pairedFloor q s b i + b / q + 1 + i * b / q =
+        s / q + hit i + (i + 1) * b / q := by
+    have his : i * b ≤ s := (Nat.mul_le_mul_right b hi.le).trans hb
+    have hcarry := two_floor_carry (i * b) (s - i * b) hq
+    rw [Nat.add_sub_of_le his] at hcarry
+    have hquo : b / q ≤ (i + 1) * b / q := Nat.div_le_div_right (b_le_index_mul i b)
+    have hsub : pairedFloor q s b i + b / q =
+        (i + 1) * b / q + (s - i * b) / q :=
+      Nat.sub_add_cancel (hquo.trans (Nat.le_add_right _ _))
+    rw [hsub]
+    by_cases h : (i * b) % q ≤ s % q
+    · rw [ite_eq_left h] at hcarry
+      simp only [hit, ite_eq_left h]
+      omega
+    · rw [ite_eq_right h] at hcarry
+      simp only [hit, ite_eq_right h]
+      omega
+  have hsum (m : ℕ) (hm : m ≤ r) :
+      floorSum q m s b + m * (b / q) + m =
+        m * (s / q) + m * b / q + ∑ i ∈ range m, hit i := by
+    induction m with
+    | zero => simp [floorSum]
+    | succ m ih =>
+      have hi := ih (show m ≤ r by omega)
+      have ht := hterm m (by omega)
+      unfold floorSum at hi ⊢
+      rw [Finset.sum_range_succ, Finset.sum_range_succ,
+        Nat.succ_mul m (b / q), Nat.succ_mul m (s / q)]
+      omega
+  rw [hsum r le_rfl]
+  exact congrArg (fun c => r * (s / q) + r * b / q + c)
+    (sum_indicator (range r) _ (fun i => (i * b) % q ≤ s % q) rfl)
+
+/-- The tail floor has no truncation at a modulus in `[1,s]`. -/
+public theorem compactTail_floor_add {q r s : ℕ} (hq : 0 < q) (hqs : q ≤ s)
+    (hr : 1 ≤ r) :
+    ((r * s + (r - 1)) / q - (r - 1)) + r =
+      r * (s / q) + (r * (s % q) + (r - 1)) / q + 1 := by
+  rw [head_div hq]
+  have h : r ≤ r * (s / q) := by
+    simpa using Nat.mul_le_mul_left r (Nat.div_pos hqs hq)
+  have hle : r - 1 ≤ r * (s / q) + (r * (s % q) + (r - 1)) / q :=
+    (Nat.sub_le r 1).trans (h.trans (Nat.le_add_right _ _))
+  let v := r * (s / q) + (r * (s % q) + (r - 1)) / q
+  change v - (r - 1) + r = v + 1
+  calc
+    _ = v - (r - 1) + (r - 1) + 1 := by
+      rw [Nat.add_assoc, show r - 1 + 1 = r by omega]
+    _ = _ := by rw [Nat.sub_add_cancel hle]
 
 /-- Count each prime power in the tail by exchanging the order of the
 sum over powers and the sum over the tail indices. -/
@@ -348,7 +404,7 @@ private theorem tail_factorization_sum {p H M K : ℕ} (hp : p.Prime) (hK : H / 
         omega
       simpa using sum_indicator (Ioc M H) _ (fun k => k ≤ H / p ^ j) hfilt
 
-private theorem compact_tail_factorization {p r s K : ℕ} (hp : p.Prime) (hr : 1 ≤ r)
+public theorem compact_tail_factorization {p r s K : ℕ} (hp : p.Prime) (hr : 1 ≤ r)
     (hK : s < p ^ K) :
     (tailLCM (r * s + (r - 1)) (r - 1)).factorization p =
       ∑ j ∈ Ico 1 K, ((r * s + (r - 1)) / p ^ j - (r - 1)) := by
@@ -364,7 +420,7 @@ private theorem factorial_factorization {p n K : ℕ} (hp : p.Prime) (hK : Nat.l
   let _ : Fact p.Prime := ⟨hp⟩
   rw [Nat.factorization_def _ hp, padicValNat_factorial hK]
 
-private theorem selberg_factorization {p r s b K : ℕ} (hp : p.Prime)
+public theorem selberg_factorization {p r s b K : ℕ} (hp : p.Prime)
     (hb : r * b ≤ s) (hK : Nat.log p s < K) :
     (selbergFactorial r s b).factorization p = ∑ j ∈ Ico 1 K, floorSum (p ^ j) r s b := by
   rw [selbergFactorial_eq_paired]
@@ -406,7 +462,7 @@ private theorem tail_dvd_selberg {r s b : ℕ} (hr : 1 ≤ r) (hb : r * b ≤ s)
       _ ≤ p ^ j := Nat.pow_le_pow_right hp.pos hjpos
   exact selberg_floor_lower hpow hr hb
 
-private theorem gcd_factorization_le {p r s b : ℕ} (hp : p.Prime) (hr : 0 < r)
+public theorem gcd_factorization_le {p r s b : ℕ} (hp : p.Prime) (hr : 0 < r)
     (hb : r * b ≤ s) :
     (selbergGcd r s).factorization p ≤ (selbergFactorial r s b).factorization p :=
   (Nat.factorization_prime_le_iff_dvd (selbergGcd_ne_zero _ _)
@@ -414,6 +470,13 @@ private theorem gcd_factorization_le {p r s b : ℕ} (hp : p.Prime) (hr : 0 < r)
 
 private theorem floorSum_zero (q r s : ℕ) : floorSum q r s 0 = r * (s / q) := by
   simp [floorSum, pairedFloor]
+
+/-- At parameter zero the excess at a single modulus is at most `r - 1`. -/
+private theorem floorSum_zero_le {q r s : ℕ} (hq : 0 < q) :
+    floorSum q r s 0 ≤ ((r * s + (r - 1)) / q - (r - 1)) + (r - 1) := by
+  rw [floorSum_zero, head_div hq]
+  generalize (r * (s % q) + (r - 1)) / q = remainder
+  omega
 
 /-- Legendre's sum contains the first-power contribution. The cutoff is
 always at least two, including at factorial arguments below `p`. -/
@@ -482,6 +545,20 @@ private theorem small_prime_power_bound {p r K : ℕ} (hp : 2 ≤ p) (hpr : p �
     _ ≤ 4 * r ^ 2 := Nat.mul_le_mul_left _ hK.le
     _ = (2 * r) ^ 2 := by ring
 
+/-- Using parameter zero costs at most `r - 1` per relevant prime power. -/
+public theorem selberg_zero_factorization_le_log {p r s : ℕ} (hp : p.Prime) (hr : 1 ≤ r) :
+    (selbergFactorial r s 0).factorization p ≤
+      (tailLCM (r * s + (r - 1)) (r - 1)).factorization p + Nat.log p s * (r - 1) := by
+  let K := Nat.log p s
+  have hsK : s < p ^ (K + 1) := Nat.lt_pow_succ_log_self hp.one_lt s
+  have hlog : Nat.log p s < K + 1 := Nat.lt_succ_self K
+  rw [selberg_factorization hp (by simp : r * 0 ≤ s) hlog,
+    compact_tail_factorization hp hr hsK]
+  calc
+    _ ≤ ∑ j ∈ Ico 1 (K + 1), (((r * s + (r - 1)) / p ^ j - (r - 1)) + (r - 1)) := by
+      exact Finset.sum_le_sum fun j _ => floorSum_zero_le (pow_pos hp.pos j)
+    _ = _ := by simp [Finset.sum_add_distrib, K]
+
 private theorem small_prime_upper {p r s : ℕ} (hp : p.Prime) (hr : 2 ≤ r)
     (hpr : p ≤ r) (hps : p ≤ s) (hs : s < r ^ 2) :
     (selbergFactorial r s 0).factorization p ≤
@@ -498,21 +575,8 @@ private theorem small_prime_upper {p r s : ℕ} (hp : p.Prime) (hr : 2 ≤ r)
       _ ≤ (2 * r) * (r - 1) := Nat.mul_le_mul_right _ hpK
       _ ≤ (2 * r) * r := Nat.mul_le_mul_left _ (Nat.sub_le r 1)
       _ = 2 * r ^ 2 := by ring
-  have hbound : (selbergFactorial r s 0).factorization p ≤
-      (tailLCM (r * s + (r - 1)) (r - 1)).factorization p + K * (r - 1) := by
-    have hsK : s < p ^ (K + 1) := Nat.lt_pow_succ_log_self hp.one_lt s
-    have hlog : Nat.log p s < K + 1 := Nat.lt_succ_self K
-    rw [selberg_factorization hp (by simp : r * 0 ≤ s) hlog,
-      compact_tail_factorization hp hr1 hsK]
-    calc
-      _ ≤ ∑ j ∈ Ico 1 (K + 1), (((r * s + (r - 1)) / p ^ j - (r - 1)) + (r - 1)) := by
-        apply Finset.sum_le_sum
-        intro j _
-        rw [floorSum_zero, head_div (pow_pos hp.pos j)]
-        generalize (r * (s % p ^ j) + (r - 1)) / p ^ j = remainder
-        omega
-      _ = _ := by simp [Finset.sum_add_distrib]
-  exact hbound.trans (Nat.add_le_add_left (hbudget.trans (first_floor_le_factorial hp _)) _)
+  exact (selberg_zero_factorization_le_log hp hr1).trans
+    (Nat.add_le_add_left (hbudget.trans (first_floor_le_factorial hp _)) _)
 
 private theorem large_prime_floor_sum {p r s b : ℕ} (hp : 0 < p) (hr : 1 ≤ r)
     (hb : 0 < b) (hbp : r * b < p) (hps : p ≤ s) :

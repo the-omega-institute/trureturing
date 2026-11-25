@@ -24,8 +24,60 @@ In J, the positive Hermitian representative of g can be diagonalized by a unitar
 
 This supplies the local binary-intersection step for the carrier dimension seventeen route to XIII160.34. Its scope is static state geometry and quotient reconstruction. Global incidence, topology, dynamical laws, physical clocks, energy, and thermodynamic cost require separate results.
 
+**Definition 1.2 (Hermitian reindexing).**
+
+$$\forall iota \in Type,\; \forall kappa \in Type,\; \forall sigma \in \mathrm{Equiv}\left(iota, kappa\right),\; \mathrm{LinearEquiv}\left(\mathbb{R}, \mathrm{HermitianMat}\left(iota, \mathbb{C}\right), \mathrm{HermitianMat}\left(kappa, \mathbb{C}\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/QutritSchurPlane.reindexEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An equivalence of index types induces a real-linear equivalence on complex Hermitian matrices. Its forward map reindexes rows and columns by the given equivalence, and its inverse reindexes by the inverse equivalence.
+
+**Definition 1.3 (Unitary congruence).**
+
+$$\forall iota \in Type,\; [\mathrm{Fintype}\left(iota\right)] [\mathrm{DecidableEq}\left(iota\right)] \forall U \in \mathrm{unitaryGroup}\left(iota, \mathbb{C}\right),\; \mathrm{LinearEquiv}\left(\mathbb{R}, \mathrm{HermitianMat}\left(iota, \mathbb{C}\right), \mathrm{HermitianMat}\left(iota, \mathbb{C}\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/QutritSchurPlane.unitaryEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unitary matrix U on a finite index type with decidable equality, the map X ↦ U X U* is a real-linear equivalence of complex Hermitian matrices. Its inverse is X ↦ U* X U.
+
+**Theorem 1.4 (The diagonal trace pairing).**
+
+$$\forall iota \in Type,\; [\mathrm{Fintype}\left(iota\right)] [\mathrm{DecidableEq}\left(iota\right)] \forall d \in \mathrm{functions}\left(iota, \mathbb{R}\right),\; \forall X \in \mathrm{HermitianMat}\left(iota, \mathbb{C}\right),\; \mathrm{inner}\left(\mathbb{R}, \mathrm{diagonal}\left(\mathbb{C}, d\right), X\right) = \mathrm{sum}\left(iota, j\mapsto \mathrm{mul}\left(d\left(j\right), \mathrm{re}\left(\mathrm{entry}\left(X, j, j\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/QutritSchurPlane.diagonal_read` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Pairing a complex Hermitian matrix X with the real diagonal d gives the sum of d(i) times the real part of X(i,i), over the finite index type.
+
+**Theorem 1.5 (Rank-one projectors lift to original pure states).**
+
+$$\forall V \in Type,\; [\mathrm{NormedAddCommGroup}\left(V\right)] [\mathrm{NormedSpace}\left(\mathbb{R}, V\right)] \forall iota \in Type,\; [\mathrm{Fintype}\left(iota\right)] [\mathrm{DecidableEq}\left(iota\right)] \forall C \in \mathrm{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \mathrm{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall J \in \mathrm{Face}\left(C\right),\; \forall I \in \mathrm{LinearMap}\left(\mathbb{R}, \mathrm{HermitianMat}\left(iota, \mathbb{C}\right), V\right),\; \left(\mathrm{Injective}\left(I\right) \land \left(\left(\forall y \in V,\; y \in J \Rightarrow y \in \mathrm{range}\left(I\right)\right) \land \left(\left(\forall X \in \mathrm{HermitianMat}\left(iota, \mathbb{C}\right),\; I\left(X\right) \in J \Leftrightarrow 0 \le X\right) \land \left(\forall X \in \mathrm{HermitianMat}\left(iota, \mathbb{C}\right),\; u\left(I\left(X\right)\right) = \mathrm{trace}\left(X\right)\right)\right)\right)\right) \Rightarrow \left(\forall v \in \mathrm{EuclideanSpace}\left(\mathbb{C}, iota\right),\; \mathrm{norm}\left(v\right) = 1 \Rightarrow I\left(\mathrm{rankOne}\left(v\right)\right) \in \mathrm{pure}\left(C, u\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/QutritSchurPlane.unit_rankOne_original` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let J be a face of the cone C. An injective real-linear map I from complex Hermitian matrices on a finite index type with decidable equality has J in its range, sends a matrix into J exactly when it is positive semidefinite, and satisfies u(I(X)) = trace(X) for every X. For each unit vector v, I sends its rank-one projector to an extreme point of the ambient u = 1 base.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Foundation/QutritSchurPlane.diagonal_read`
 - Truth anchor: `D5/S3/Quantum/Foundation/QutritSchurPlane.original_qutrit_quotient_affine_plane`
+- Truth anchor: `D5/S3/Quantum/Foundation/QutritSchurPlane.reindexEquiv`
+- Truth anchor: `D5/S3/Quantum/Foundation/QutritSchurPlane.unit_rankOne_original`
+- Truth anchor: `D5/S3/Quantum/Foundation/QutritSchurPlane.unitaryEquiv`
 - Dependency: [D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition](../Entanglement/BipartiteSectorDecomposition.md)
 - Dependency: [D5/S3/Quantum/Foundation/QutritPureLift](QutritPureLift.md)
