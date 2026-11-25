@@ -1,8 +1,13 @@
 """Regression fixtures for affected Omega targets."""
+import os
 from pathlib import Path
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
+import check
 import scope
 
 
@@ -67,6 +72,28 @@ class ScopeTests(unittest.TestCase):
         self.assertEqual(plan["library"], ["OmegaMath.Standalone", "OmegaMathlib.Standalone"])
         self.assertEqual(plan["basis"], ["OmegaMathlib.Standalone"])
         self.assertIn("OmegaMath.Standalone", plan["consumers"])
+
+    def test_library_and_scoped_admission_check_a_standalone_module_on_both_backends(self):
+        leaf = "OmegaMath.Standalone"
+        graph = {**self.graph, leaf: {"OmegaMathlib.Fib"}}
+        plan = scope.plan(graph, self.official, {leaf}, set(), [], [])
+        with patch.object(check, "run"), patch.object(check, "lake_environment", return_value={}), \
+                patch.object(check, "library_graph", return_value=graph), \
+                patch.object(check, "check_library", return_value=["OmegaMathlib.Fib", leaf]), \
+                patch.object(check.portable, "check") as portable:
+            check.check_selected_library([leaf])
+            portable.assert_called_once_with([leaf], "both", basis_roots=[])
+            portable.reset_mock()
+            check.scoped_check(plan)
+            portable.assert_called_once_with([leaf], "both", basis_roots=[], common_roots=[])
+
+    def test_missing_protected_base_fails_local_admission(self):
+        with TemporaryDirectory() as directory:
+            env = {k: v for k, v in os.environ.items() if k not in {"CI", "CI_BASE"}}
+            result = subprocess.run([sys.executable, "-B", Path(check.__file__), "--library", "OmegaMath"],
+                                    env={**env, "GIT_DIR": directory}, text=True, capture_output=True)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn("requires --protected-base or CI_BASE", result.stderr)
 
     def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
         for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):

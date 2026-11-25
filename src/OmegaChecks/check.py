@@ -75,6 +75,16 @@ def check_library(selected=()):
         run("lake", "build", *("+" + name for name in modules))
         official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
         run(AUDIT, "--publication-layers", official_path, *modules)
+    return targets
+
+
+def check_selected_library(selected):
+    targets = check_library(selected)
+    graph = library_graph()
+    clients = sorted(set(closure(graph, targets)) & set(portable.consumers(graph)))
+    if clients:
+        # The staged compiler references include ports absent from the clients' import closures.
+        portable.check(clients, "both", basis_roots=[])
 
 
 def lake_environment():
@@ -613,11 +623,8 @@ if __name__ == "__main__":
                 base = result.stdout.strip()
         if base:
             check_protected(base)
-        elif args.protected_base is not None or os.environ.get("CI"):
-            parser.error("compiled publication comparison requires --protected-base or CI_BASE")
         else:
-            print("Protected revision unavailable. Supply --protected-base to compare historical declarations.",
-                  flush=True)
+            parser.error("compiled publication comparison requires --protected-base or CI_BASE when origin/dev is unavailable")
     if args.write_scope:
         if not args.changed or not args.cache_targets or args.scope:
             parser.error("--write-scope requires --changed and --cache-targets")
@@ -637,7 +644,7 @@ if __name__ == "__main__":
     elif args.library is not None:
         run("lake", "build", "omegaAudit")
         ENV.update(lake_environment())
-        check_library(args.library)
+        check_selected_library(args.library)
     elif args.full or args.incremental or not (args.scope or args.changed):
         ENV.update(lake_environment())
         full_check(args.incremental)
