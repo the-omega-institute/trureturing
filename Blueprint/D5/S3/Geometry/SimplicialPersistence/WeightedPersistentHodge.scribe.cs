@@ -84,6 +84,9 @@ internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinitio
                 + "naturalHodgeEquiv(x), regarded in target homology, equals includedClass(x). "
                 + "includedClass takes the actual included cycle, forms its ordinary short-complex "
                 + "homology class and applies the inverse of the canonical homology comparison. "
+                + "The middle component of windowIso and its inverse is the identity on q-chains. "
+                + "Naturality of cycleClass therefore identifies includedClass with the actual short-complex "
+                + "cycle projection in the target realComplex at the unchanged included chain i(q)(x). "
                 + "This is the class [i(q)(x)] in the actual target chain-complex homology.",
                 DescribeRole.Theorem),
             Node("chains", "Chain", "Real chains on every actual face",

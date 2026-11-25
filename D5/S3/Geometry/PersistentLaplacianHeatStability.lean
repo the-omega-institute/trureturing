@@ -29,13 +29,6 @@ namespace D5.S3.Geometry.PersistentLaplacianHeatStability
 open FiniteSimplicialSingularHomology
 
 variable {V : Type} [Fintype V] [LinearOrder V]
-
-def coordinates (L : PreAbstractSimplicialComplex V) (p : ℕ) :
-    orderedGroup L p →ₗ[ℤ] (Face L p → ℤ) := by
-  classical
-  exact (DirectSum.linearEquivFunOnFintype ℤ (Face L p) (fun _ => ℤ)).toLinearMap.comp
-    (ModuleCat.coprodIsoDirectSum (fun _ : Face L p => Z)).hom.hom
-
 /-- Real incidence entries obtained from the integer ordered simplicial boundary. -/
 def edgeIncidence (L : PreAbstractSimplicialComplex V) :
     Matrix (Face L 0) (Face L 1) ℝ :=

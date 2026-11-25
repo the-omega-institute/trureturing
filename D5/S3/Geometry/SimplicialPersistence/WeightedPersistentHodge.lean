@@ -5,16 +5,15 @@
    anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Adjoint]
    utility: none
    digest: Weighted harmonic simplicial chains represent the actual persistent homology image. -/
+module
 
-
-
-import D5.S3.Geometry.PersistentLaplacianHeatStability
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.ProdL2
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import D5.S3.Geometry.SimplicialPersistence.OrderedChains
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.ProdL2
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
 
 /-! Weighted simplicial chains and canonical representatives in the actual homology image. -/
 
@@ -22,9 +21,10 @@ set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
+public section
 noncomputable section
 
-open CategoryTheory
+open CategoryTheory Limits
 open scoped InnerProductSpace TensorProduct
 
 namespace D5.S3.Geometry.SimplicialPersistence.WeightedPersistentHodge
@@ -35,7 +35,7 @@ variable {ι M : Type} [Fintype ι] [AddCommGroup M] [Module ℤ M]
   (basis : Module.Basis ι ℤ M) (weight : ι → ℝ) (positive : ∀ i, 0 < weight i)
 
 /-- Real chains in a specified integer basis, with the reciprocal-weight metric. -/
-def WeightedModule (_basis : Module.Basis ι ℤ M)
+@[expose] def WeightedModule (_basis : Module.Basis ι ℤ M)
     (_weight : ι → ℝ) (_positive : ∀ i, 0 < _weight i) := ℝ ⊗[ℤ] M
 
 instance : AddCommGroup (WeightedModule basis weight positive) :=
@@ -44,11 +44,11 @@ instance : Module ℝ (WeightedModule basis weight positive) :=
   inferInstanceAs (Module ℝ (ℝ ⊗[ℤ] M))
 
 /-- Ordinary face coefficients, before normalization by square roots of weights. -/
-def weightedCoefficients :
+@[expose] def weightedCoefficients :
     WeightedModule basis weight positive ≃ₗ[ℝ] (ι → ℝ) :=
   (basis.baseChange ℝ).equivFun
 
-def weightedOrthonormalCoordinates :
+@[expose] def weightedOrthonormalCoordinates :
     WeightedModule basis weight positive ≃ₗ[ℝ] EuclideanSpace ℝ ι := by
   classical
   let scale : (ι → ℝ) ≃ₗ[ℝ] (ι → ℝ) :=
@@ -94,7 +94,7 @@ section Algebraic
 variable (S : ShortComplex (ModuleCat ℝ))
 
 /-- The ordinary homology class of a genuine cycle, in categorical homology. -/
-def cycleClass : S.g.hom.ker →ₗ[ℝ] S.homology :=
+@[expose] def cycleClass : S.g.hom.ker →ₗ[ℝ] S.homology :=
   (S.moduleCatCyclesIso.inv ≫ S.homologyπ).hom
 
 private theorem cycleClass_surjective : Function.Surjective (cycleClass S) := by
@@ -113,7 +113,7 @@ private theorem cycleClass_eq_zero (x : S.g.hom.ker) :
 variable {S} {R : ShortComplex (ModuleCat ℝ)} (φ : S ⟶ R)
 
 /-- The chain map on the actual cycle kernels. -/
-def cycleMap : S.g.hom.ker →ₗ[ℝ] R.g.hom.ker :=
+@[expose] def cycleMap : S.g.hom.ker →ₗ[ℝ] R.g.hom.ker :=
   (φ.τ₂.hom.comp S.g.hom.ker.subtype).codRestrict _ (by
     intro x
     change R.g (φ.τ₂ x.val) = 0
@@ -135,7 +135,7 @@ private theorem cycleClass_naturality :
     rw [← Category.assoc, h, Category.assoc, ShortComplex.homologyπ_naturality])
 
 /-- The map taking a cycle to the homology class of its included chain. -/
-def imageClass : S.g.hom.ker →ₗ[ℝ] R.homology :=
+@[expose] def imageClass : S.g.hom.ker →ₗ[ℝ] R.homology :=
   (cycleClass R).comp (cycleMap φ)
 
 private theorem range_imageClass :
@@ -148,7 +148,7 @@ abbrev FillingDomain : Submodule ℝ R.X₁ :=
   φ.τ₂.hom.range.comap R.f.hom
 
 /-- The uniquely restricted incoming boundary. -/
-def restrictedBoundary (hi : Function.Injective φ.τ₂) : FillingDomain φ →ₗ[ℝ] S.X₂ :=
+@[expose] def restrictedBoundary (hi : Function.Injective φ.τ₂) : FillingDomain φ →ₗ[ℝ] S.X₂ :=
   (LinearEquiv.ofInjective φ.τ₂.hom hi).symm.toLinearMap.comp
     ((R.f.hom.comp (FillingDomain φ).subtype).codRestrict _ (fun x => x.property))
 
@@ -204,7 +204,7 @@ variable {A B C X Y Z : Type}
 variable (φ : ShortComplex.moduleCatMk f d hfd ⟶ ShortComplex.moduleCatMk b e hbe)
 
 /-- The incoming term uses the inherited metric on the entire filling domain. -/
-def laplacian (hi : Function.Injective φ.τ₂) : B →ₗ[ℝ] B :=
+@[expose] def laplacian (hi : Function.Injective φ.τ₂) : B →ₗ[ℝ] B :=
   (restrictedBoundary φ hi).comp (restrictedBoundary φ hi).adjoint + d.adjoint.comp d
 
 
@@ -297,7 +297,7 @@ variable {P Q : ℕ → Type}
   [∀ n, FiniteDimensional ℝ (Q n)]
 
 /-- The unaugmented outgoing differential has a zero map in degree zero. -/
-def outgoing (d : ∀ n, P (n + 1) →ₗ[ℝ] P n) :
+@[expose] def outgoing (d : ∀ n, P (n + 1) →ₗ[ℝ] P n) :
     ∀ q, P q →ₗ[ℝ] P (q - 1)
   | 0 => 0
   | q + 1 => d q
@@ -311,18 +311,18 @@ private theorem outgoing_squared (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
   | succ q => exact sq q
 
 /-- The standard short complex computing homology in degree q. -/
-def window (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
+@[expose] def window (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
     (sq : ∀ n, (d n).comp (d (n + 1)) = 0) (q : ℕ) : ShortComplex (ModuleCat ℝ) :=
   ShortComplex.moduleCatMk (d q) (outgoing d q) (by exact outgoing_squared d sq q)
 
 /-- The actual real chain complex with the given successive differentials. -/
-def realComplex (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
+@[expose] def realComplex (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
     (sq : ∀ n, (d n).comp (d (n + 1)) = 0) : ChainComplex (ModuleCat ℝ) ℕ :=
   ChainComplex.of (fun q => ModuleCat.of ℝ (P q))
     (fun q => ModuleCat.ofHom (d q)) (fun q => ModuleCat.hom_ext (sq q))
 
 /-- The comparison uses the actual chain-complex homology, including degree zero. -/
-def windowIso (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
+@[expose] def windowIso (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
     (sq : ∀ n, (d n).comp (d (n + 1)) = 0) (q : ℕ) :
     (realComplex d sq).sc q ≅ window d sq q := by
   cases q with
@@ -347,7 +347,7 @@ variable (d : ∀ n, P (n + 1) →ₗ[ℝ] P n)
   (comm : ∀ n, (b n).comp (i (n + 1)) = (i n).comp (d n))
 
 /-- The short-complex map is induced by the actual degreewise chain map. -/
-def windowMap (q : ℕ) : window d sq q ⟶ window b bsq q where
+@[expose] def windowMap (q : ℕ) : window d sq q ⟶ window b bsq q where
   τ₁ := ModuleCat.ofHom (i (q + 1))
   τ₂ := ModuleCat.ofHom (i q)
   τ₃ := ModuleCat.ofHom (i (q - 1))
@@ -358,7 +358,7 @@ def windowMap (q : ℕ) : window d sq q ⟶ window b bsq q where
     | succ q => exact ModuleCat.hom_ext (comm q)
 
 /-- The chain map on the full, untruncated natural-number complex. -/
-def realChainMap : realComplex d sq ⟶ realComplex b bsq :=
+@[expose] def realChainMap : realComplex d sq ⟶ realComplex b bsq :=
   ChainComplex.ofHom (fun q => ModuleCat.ofHom (i q)) (by
     intro q
     simpa only [realComplex, ChainComplex.of_d] using ModuleCat.hom_ext (comm q))
@@ -409,7 +409,7 @@ set_option allowUnsafeReducibility true in
 attribute [local reducible] window ShortComplex.moduleCatMk
 
 /-- The persistent operator on an arbitrary finite real chain inclusion. -/
-def naturalLaplacian (hi : ∀ q, Function.Injective (i q)) (q : ℕ) :
+@[expose] def naturalLaplacian (hi : ∀ q, Function.Injective (i q)) (q : ℕ) :
     P q →ₗ[ℝ] P q :=
   laplacian (windowMap d sq b bsq i comm q) (hi q)
 
@@ -461,11 +461,11 @@ structure Weights (K : PreAbstractSimplicialComplex V) where
   positive : ∀ q s, 0 < value q s
 
 /-- The same increasing face regarded as a face of the larger complex. -/
-def faceInclusion {K L : PreAbstractSimplicialComplex V} (h : K ≤ L) (q : ℕ)
+@[expose] def faceInclusion {K L : PreAbstractSimplicialComplex V} (h : K ≤ L) (q : ℕ)
     (s : Face K q) : Face L q := ⟨s.val, h s.property.1, s.property.2⟩
 
 /-- The metric on the smaller complex is the restriction of the larger weights. -/
-def Weights.restrict {K L : PreAbstractSimplicialComplex V} (w : Weights L) (h : K ≤ L) :
+@[expose] def Weights.restrict {K L : PreAbstractSimplicialComplex V} (w : Weights L) (h : K ≤ L) :
     Weights K where
   value q s := w.value q (faceInclusion h q s)
   positive q s := w.positive q (faceInclusion h q s)
@@ -501,14 +501,14 @@ private theorem integerInclusion_boundary {K L : PreAbstractSimplicialComplex V}
   intro v hv
   rfl
 
-def integerCoordinates (K : PreAbstractSimplicialComplex V) (q : ℕ) :
+@[expose] def integerCoordinates (K : PreAbstractSimplicialComplex V) (q : ℕ) :
     orderedGroup K q ≃ₗ[ℤ] (Face K q → ℤ) :=
   LinearEquiv.ofBijective (PersistentLaplacianHeatStability.coordinates K q) (by
     classical
     exact (DirectSum.linearEquivFunOnFintype ℤ (Face K q) (fun _ => ℤ)).bijective.comp
       (ModuleCat.coprodIsoDirectSum (fun _ : Face K q => Z)).toLinearEquiv.bijective)
 
-def integerBasis (K : PreAbstractSimplicialComplex V) (q : ℕ) :
+@[expose] def integerBasis (K : PreAbstractSimplicialComplex V) (q : ℕ) :
     Module.Basis (Face K q) ℤ (orderedGroup K q) :=
   Module.Basis.ofEquivFun (integerCoordinates K q)
 
@@ -532,7 +532,7 @@ private theorem integerBasis_face (K : PreAbstractSimplicialComplex V) (q : ℕ)
   rw [LinearEquiv.apply_symm_apply, integerCoordinates_face]
 
 /-- Scalar extension on chains, with the exact positive-weight metric. -/
-def Chain (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :=
+@[expose] def Chain (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :=
   WeightedModule (integerBasis K q) (w.value q) (w.positive q)
 
 instance (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
@@ -552,12 +552,12 @@ instance (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
       (WeightedModule (integerBasis K q) (w.value q) (w.positive q)))
 
 /-- The coefficients identify chains with all real functions on actual faces. -/
-def coefficients (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
+@[expose] def coefficients (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
     Chain K w q ≃ₗ[ℝ] (Face K q → ℝ) :=
   weightedCoefficients (integerBasis K q) (w.value q) (w.positive q)
 
 /-- The ordinary signed boundary, extended on chains from integers to reals. -/
-def boundary (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
+@[expose] def boundary (K : PreAbstractSimplicialComplex V) (w : Weights K) (q : ℕ) :
     Chain K w (q + 1) →ₗ[ℝ] Chain K w q :=
   (orderedBoundary K q).hom.baseChange ℝ
 
@@ -568,7 +568,7 @@ private theorem boundary_squared (K : PreAbstractSimplicialComplex V) (w : Weigh
   simpa using congrArg (LinearMap.baseChange ℝ) h
 
 /-- The real ordered simplicial chain complex, before taking its actual homology. -/
-def chainComplex (K : PreAbstractSimplicialComplex V) (w : Weights K) :
+@[expose] def chainComplex (K : PreAbstractSimplicialComplex V) (w : Weights K) :
     ChainComplex (ModuleCat ℝ) ℕ :=
   realComplex (boundary K w) (by exact boundary_squared K w)
 
@@ -649,13 +649,13 @@ private theorem inclusion_boundary {K L : PreAbstractSimplicialComplex V}
     congrArg (fun f => f.hom.baseChange ℝ) (integerInclusion_boundary h q)
 
 /-- A genuine map of full real ordered simplicial chain complexes. -/
-def chainInclusion {K L : PreAbstractSimplicialComplex V} (h : K ≤ L) (w : Weights L) :
+@[expose] def chainInclusion {K L : PreAbstractSimplicialComplex V} (h : K ≤ L) (w : Weights L) :
     chainComplex K (w.restrict h) ⟶ chainComplex L w :=
   realChainMap (boundary K (w.restrict h)) (by exact boundary_squared K (w.restrict h))
     (boundary L w) (by exact boundary_squared L w) (inclusion h w) (by exact inclusion_boundary h w)
 
 /-- The persistent operator uses the full inverse image of the included chain space. -/
-def persistentLaplacian {K L : PreAbstractSimplicialComplex V}
+@[expose] def persistentLaplacian {K L : PreAbstractSimplicialComplex V}
     (h : K ≤ L) (w : Weights L) (q : ℕ) :
     Chain K (w.restrict h) q →ₗ[ℝ] Chain K (w.restrict h) q :=
   naturalLaplacian (boundary K (w.restrict h))
@@ -663,7 +663,7 @@ def persistentLaplacian {K L : PreAbstractSimplicialComplex V}
     (inclusion h w) (by exact inclusion_boundary h w) (by exact inclusion_injective h w) q
 
 /-- The canonical harmonic representative equivalence for an actual finite simplicial pair. -/
-def persistentHodgeEquiv {K L : PreAbstractSimplicialComplex V}
+@[expose] def persistentHodgeEquiv {K L : PreAbstractSimplicialComplex V}
     (h : K ≤ L) (w : Weights L) (q : ℕ) :
     (persistentLaplacian h w q).ker ≃ₗ[ℝ]
       (HomologicalComplex.homologyMap (chainInclusion h w) q).hom.range :=
@@ -672,7 +672,7 @@ def persistentHodgeEquiv {K L : PreAbstractSimplicialComplex V}
     (inclusion h w) (by exact inclusion_boundary h w) (by exact inclusion_injective h w) q
 
 /-- The homology class of the actual included harmonic chain. -/
-def harmonicClass {K L : PreAbstractSimplicialComplex V}
+@[expose] def harmonicClass {K L : PreAbstractSimplicialComplex V}
     (h : K ≤ L) (w : Weights L) (q : ℕ) (x : (persistentLaplacian h w q).ker) :
     (chainComplex L w).homology q :=
   includedClass (boundary K (w.restrict h))
