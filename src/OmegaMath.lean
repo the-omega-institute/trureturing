@@ -56,6 +56,7 @@ public import OmegaMath.Logic.Function.Basic
 public import OmegaMath.Logic.Function.Defs
 public import OmegaMath.Matrix.LagrangeSchur
 public import OmegaMath.Matrix.Mat2
+public import OmegaMath.Matrix.Mat2.Discriminant
 public import OmegaMath.Matrix.Mat2.Hurwitz
 public import OmegaMath.Projective
 public import OmegaMath.Projective.Basic
