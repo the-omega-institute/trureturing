@@ -28,7 +28,7 @@ open D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint (four_ratio
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
-private def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
+private noncomputable def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
   ⟨toStdInt x.w, toStdInt x.x, toStdInt x.y, toStdInt x.z⟩
 
 private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
@@ -75,12 +75,17 @@ private theorem rationalQuaternionGramDet (x y : ℍ[ℚ]) :
   obtain ⟨a, d, hx⟩ := clearQuaternionDenominators x
   obtain ⟨b, e, hy⟩ := clearQuaternionDenominators y
   let q := a.conj.mul b
-  have hz : ((a.dot a).mul (b.dot b)).sub (Omega.Int.square (a.dot b)) =
-      ((Omega.Int.square q.x).add (Omega.Int.square q.y)).add (Omega.Int.square q.z) :=
-    Omega.Eq.rec rfl (Omega.Quaternion.gramDet_eq_imaginary_squares a b)
+  let determinant := ((a.dot a).mul (b.dot b)).sub (Omega.Int.square (a.dot b))
+  have hz : determinant =
+      ((Omega.Int.square q.x).add (Omega.Int.square q.y)).add (Omega.Int.square q.z) := by
+    exact Omega.Eq.rec (motive := fun result _ => determinant = result) rfl
+      (Omega.Quaternion.gramDet_eq_imaginary_squares a b)
   have h := congrArg (fun z : Omega.Int => (toStdInt z : ℚ)) hz
-  simp only [Omega.Int.sub, Omega.Int.square, toStdInt_add, toStdInt_mul,
-    toStdInt_neg, Int.cast_add, Int.cast_mul, Int.cast_neg, ← sub_eq_add_neg] at h
+  have readSub (u v : Omega.Int) : toStdInt (u.sub v) = toStdInt u - toStdInt v := by
+    change toStdInt (u.add v.neg) = _
+    rw [toStdInt_add, toStdInt_neg, sub_eq_add_neg]
+  simp only [determinant, Omega.Int.square, readSub, toStdInt_add, toStdInt_mul,
+    Int.cast_add, Int.cast_mul, Int.cast_sub] at h
   rw [readQuaternion_norm, readQuaternion_norm, readQuaternion_dot] at h
   refine ⟨d⁻¹ * e⁻¹ * toStdInt q.x, d⁻¹ * e⁻¹ * toStdInt q.y, d⁻¹ * e⁻¹ * toStdInt q.z, ?_⟩
   rw [hx, hy, normSq_smul, normSq_smul, scaledQuaternion_dot]
