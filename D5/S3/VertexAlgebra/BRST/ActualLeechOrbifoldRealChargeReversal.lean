@@ -98,6 +98,26 @@ theorem coefficientConjugationMomentum_chargeReversal (x : MomentumH1) :
 
 namespace RelativeBracket
 
+private local instance (priority := 2000) chargeReversalRealAddCommMonoid :
+    AddCommMonoid momentumRealLie := inferInstance
+
+private local instance (priority := 2000) chargeReversalRealModule :
+    Module ℝ momentumRealLie := inferInstance
+
+@[reducible] private def chargeReversalWeightMem (p : Momentum) (x : momentumRealLie) : Prop :=
+  x ∈ realMomentumWeightSpace p
+
+@[reducible] private def chargeReversalWeightCarrier (p : Momentum) : Type :=
+  {x : momentumRealLie // chargeReversalWeightMem p x}
+
+private local instance (priority := 2000) chargeReversalWeightAddCommMonoid (p : Momentum) :
+    AddCommMonoid (chargeReversalWeightCarrier p) :=
+  Submodule.addCommMonoid (realMomentumWeightSpace p).toSubmodule
+
+private local instance (priority := 2000) chargeReversalWeightModule (p : Momentum) :
+    Module ℝ (chargeReversalWeightCarrier p) :=
+  Submodule.module (realMomentumWeightSpace p).toSubmodule
+
 private def realChargeReversal (x : momentumRealLie) : momentumRealLie :=
   ⟨chargeReversalLieEquiv (momentumRealValue x), by
     change coefficientConjugationMomentum (chargeReversalLieEquiv (momentumRealValue x)) =
@@ -146,7 +166,7 @@ theorem realChargeReversalLieEquiv_mem_weightSpace {p : Momentum} {x : momentumR
 
 /-- The actual root spaces at opposite momenta are linearly equivalent by plane reversal. -/
 def realChargeReversalWeightSpaceEquiv (p : Momentum) :
-    realMomentumWeightSpace p ≃ₗ[ℝ] realMomentumWeightSpace (-p) where
+    chargeReversalWeightCarrier p ≃ₗ[ℝ] chargeReversalWeightCarrier (-p) where
   toFun x := ⟨realChargeReversalLieEquiv x, realChargeReversalLieEquiv_mem_weightSpace x.property⟩
   invFun y := ⟨realChargeReversalLieEquiv y, by
     simpa only [neg_neg] using realChargeReversalLieEquiv_mem_weightSpace y.property⟩
@@ -156,13 +176,12 @@ def realChargeReversalWeightSpaceEquiv (p : Momentum) :
   map_smul' r x := Subtype.ext (map_smul realChargeReversalLieEquiv _ _)
 
 @[simp] theorem realChargeReversalWeightSpaceEquiv_apply (p : Momentum)
-    (x : realMomentumWeightSpace p) :
-    (realChargeReversalWeightSpaceEquiv p x : momentumRealLie) = realChargeReversalLieEquiv x := rfl
+    (x : chargeReversalWeightCarrier p) :
+    (realChargeReversalWeightSpaceEquiv p x).val = realChargeReversalLieEquiv x.val := rfl
 
 @[simp] theorem realChargeReversalWeightSpaceEquiv_symm_apply (p : Momentum)
-    (y : realMomentumWeightSpace (-p)) :
-    ((realChargeReversalWeightSpaceEquiv p).symm y : momentumRealLie) =
-      realChargeReversalLieEquiv y := rfl
+    (y : chargeReversalWeightCarrier (-p)) :
+    ((realChargeReversalWeightSpaceEquiv p).symm y).val = realChargeReversalLieEquiv y.val := rfl
 
 end RelativeBracket
 

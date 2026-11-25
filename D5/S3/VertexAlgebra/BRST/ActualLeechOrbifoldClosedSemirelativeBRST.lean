@@ -226,6 +226,12 @@ abbrev ClosedState := ComplexState ⊗[ℂ] ComplexState
 local instance : AddCommGroup ClosedState :=
   TensorProduct.addCommGroup (R := ℂ) (M := ComplexState) (N := ComplexState)
 
+private local instance (priority := 2000) closedStateAddCommMonoid :
+    AddCommMonoid ClosedState := inferInstance
+
+private local instance (priority := 2000) closedStateModule : Module ℂ ClosedState :=
+  inferInstance
+
 private abbrev ChiralEnd := Module.End ℂ ComplexState
 private abbrev ClosedEnd := Module.End ℂ ClosedState
 
@@ -329,7 +335,7 @@ theorem B_plus_mem_semirelative {x : ClosedState} (hx : x ∈ Semirelative) :
   exact ⟨h, h'.symm⟩
 
 /-- Semirelative closed strings of prescribed eigenvalue of the sum of chiral energies. -/
-abbrev EnergySpace (m : ℂ) : Submodule ℂ ClosedState := Semirelative ⊓ L_plus.eigenspace m
+def EnergySpace (m : ℂ) : Submodule ℂ ClosedState := Semirelative ⊓ L_plus.eigenspace m
 
 private theorem preserves_total_energy {A : ClosedEnd} (hA : A * L_plus = L_plus * A)
     {m : ℂ} {x : ClosedState} (hx : x ∈ L_plus.eigenspace m) :

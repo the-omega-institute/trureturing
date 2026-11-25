@@ -32,43 +32,49 @@ open RealRootBracket (positiveRoot monsterSimpleMomentum)
 
 local notation "Momentum" => Charge hyperbolicPlane
 local notation "H" => GradedCohomology planeFrame planeBasis
-local notation "incl" => DirectSum.lof ℂ Momentum (fun p => H p 1)
-local notation "proj" => DirectSum.component ℂ Momentum (fun p => H p 1)
 local notation "W" => realMomentumGrade
+local notation "C" => realMomentumGradeCarrier
 
 attribute [local instance] realCartanStateAddCommGroup realCartanShellAddCommGroup
   realCartanCyclesAddCommGroup
 
-private def sumRealParts (p : Momentum) : W p × W p →ₗ[ℝ] MomentumH1 where
-  toFun x := momentumRealValue x.1.val + Complex.I • momentumRealValue x.2.val
-  map_add' x y := by
-    change (momentumRealValue x.1.val + momentumRealValue y.1.val) +
-      Complex.I • (momentumRealValue x.2.val + momentumRealValue y.2.val) =
-        (momentumRealValue x.1.val + Complex.I • momentumRealValue x.2.val) +
-        (momentumRealValue y.1.val + Complex.I • momentumRealValue y.2.val)
-    rw [smul_add]
-    abel
-  map_smul' r x := by
-    change (r : ℂ) • momentumRealValue x.1.val +
-      Complex.I • ((r : ℂ) • momentumRealValue x.2.val) =
-      (r : ℂ) • (momentumRealValue x.1.val + Complex.I • momentumRealValue x.2.val)
-    rw [smul_add, smul_comm Complex.I (r : ℂ)]
+private local instance (priority := 2000) rootGradeAddCommMonoid (p : Momentum) :
+    AddCommMonoid (C p) := Submodule.addCommMonoid (W p)
 
-private theorem sumRealParts_mem (p : Momentum) (x : W p × W p) :
+private local instance (priority := 2000) rootGradeModule (p : Momentum) :
+    Module ℝ (C p) := Submodule.module (W p)
+
+private def rootIncl (p : Momentum) : H p 1 →ₗ[ℂ] MomentumH1 :=
+  DirectSum.lof ℂ Momentum (fun q => H q 1) p
+
+private def rootProj (p : Momentum) : MomentumH1 →ₗ[ℂ] H p 1 :=
+  DirectSum.component ℂ Momentum (fun q => H q 1) p
+
+local notation "incl" => rootIncl
+local notation "proj" => rootProj
+
+private def sumRealParts (p : Momentum) : C p × C p →ₗ[ℝ] MomentumH1 :=
+  let includeGrade : C p →ₗ[ℝ] MomentumH1 :=
+    momentumRealLie.toSubmodule.subtype.comp (realMomentumGradeIncl p)
+  let mulI := (LinearMap.lsmul ℂ MomentumH1 Complex.I).restrictScalars ℝ
+  includeGrade.coprod (mulI.comp includeGrade)
+
+private theorem sumRealParts_mem (p : Momentum) (x : C p × C p) :
     sumRealParts p x ∈ LinearMap.range (incl p) :=
   Submodule.add_mem _ ((mem_realMomentumWeightSpace p _).mp x.1.property)
     (Submodule.smul_mem _ _ ((mem_realMomentumWeightSpace p _).mp x.2.property))
 
-private theorem incl_proj_sumRealParts (p : Momentum) (x : W p × W p) :
+private theorem incl_proj_sumRealParts (p : Momentum) (x : C p × C p) :
     incl p (proj p (sumRealParts p x)) = sumRealParts p x := by
   obtain ⟨a, ha⟩ := sumRealParts_mem p x
-  rw [← ha, DirectSum.component.lof_self]
+  rw [← ha, rootIncl, rootProj, DirectSum.component.lof_self]
 
 /-- The actual real Cartan eigenspace has the complex BRST multiplicity. -/
 theorem realMomentumGrade_finrank (p : Momentum) :
     Module.finrank ℝ (W p) = Module.finrank ℂ (H p 1) := by
-  let : FiniteDimensional ℝ (W p) := realMomentumWeightSpace_finiteDimensional p
-  let f : W p × W p →ₗ[ℝ] H p 1 :=
+  change Module.finrank ℝ (C p) = Module.finrank ℂ (H p 1)
+  let : FiniteDimensional ℝ (C p) := realMomentumWeightSpace_finiteDimensional p
+  let f : C p × C p →ₗ[ℝ] H p 1 :=
     (proj p).restrictScalars ℝ ∘ₗ sumRealParts p
   have hbij : Function.Bijective f := by
     constructor
@@ -82,7 +88,7 @@ theorem realMomentumGrade_finrank (p : Momentum) :
       let z := incl p a
       have hconj : coefficientConjugationMomentum z ∈ LinearMap.range (incl p) := by
         change coefficientConjugationMomentum (incl p a) ∈ _
-        rw [coefficientConjugationMomentum_incl]
+        rw [rootIncl, coefficientConjugationMomentum_incl]
         exact ⟨_, rfl⟩
       have hre : momentumRealPart z ∈ W p := by
         apply (mem_realMomentumWeightSpace p _).mpr
@@ -93,7 +99,9 @@ theorem realMomentumGrade_finrank (p : Momentum) :
       refine ⟨(⟨_, hre⟩, ⟨_, him⟩), ?_⟩
       change proj p (momentumRealValue (momentumRealPart z) +
         Complex.I • momentumRealValue (momentumImaginaryPart z)) = a
-      rw [← momentumH1_real_decomposition, DirectSum.component.lof_self]
+      rw [← momentumH1_real_decomposition]
+      change proj p (incl p a) = a
+      rw [rootIncl, rootProj, DirectSum.component.lof_self]
 
   have h := (LinearEquiv.ofBijective f hbij).finrank_eq
   rw [Module.finrank_prod, finrank_real_of_complex] at h

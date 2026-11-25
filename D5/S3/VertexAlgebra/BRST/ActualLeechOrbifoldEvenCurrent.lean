@@ -142,7 +142,16 @@ local instance (p : Momentum) (g : ℤ) :
 /-- Relative ghost-one BRST cohomology, summed over the plane momenta. -/
 abbrev MomentumH1 := ⨁ p : Momentum, H p
 
-local notation "incl" => DirectSum.lof ℂ Momentum H
+private local instance (priority := 2000) momentumH1AddCommMonoid :
+    AddCommMonoid MomentumH1 := inferInstance
+
+private local instance (priority := 2000) momentumH1Module :
+    Module ℂ MomentumH1 := inferInstance
+
+private def momentumIncl (p : Momentum) : H p →ₗ[ℂ] MomentumH1 :=
+  DirectSum.lof ℂ Momentum H p
+
+local notation "incl" => momentumIncl
 
 /-- Bilinear extension of the native quotient bracket to the momentum direct sum. -/
 def momentumBracket : MomentumH1 →ₗ[ℂ] MomentumH1 →ₗ[ℂ] MomentumH1 :=
@@ -152,12 +161,13 @@ def momentumBracket : MomentumH1 →ₗ[ℂ] MomentumH1 →ₗ[ℂ] MomentumH1 :
         (bracket p q)).flip).flip
 
 @[simp] theorem momentumBracket_incl (p q : Momentum) (x : H p) (y : H q) :
-    momentumBracket (incl p x) (incl q y) = incl (p+q) (bracket p q x y) := by
-  simp only [momentumBracket, DirectSum.toModule_lof, LinearMap.flip_apply,
+    momentumBracket (DirectSum.lof ℂ Momentum H p x) (DirectSum.lof ℂ Momentum H q y) =
+      DirectSum.lof ℂ Momentum H (p+q) (bracket p q x y) := by
+  simp only [momentumBracket, momentumIncl, DirectSum.toModule_lof, LinearMap.flip_apply,
     LinearMap.comp_apply, LinearMap.llcomp_apply]
 
 private def inclCycle (p : Momentum) : Cycles p →ₗ[ℂ] MomentumH1 :=
-  (incl p).comp (Boundaries p).mkQ
+  (DirectSum.lof ℂ Momentum H p).comp (Boundaries p).mkQ
 
 private theorem inclCycle_congr {p q : Momentum} (h : p = q) (x : Cycles p) (y : Cycles q)
     (he : nativeValue x = nativeValue y) : inclCycle p x = inclCycle q y := by
@@ -173,7 +183,7 @@ private theorem momentum_skew_incl (p q : Momentum) (x : H p) (y : H q) :
     momentumBracket (incl p x) (incl q y) + momentumBracket (incl q y) (incl p x) = 0 := by
   refine Submodule.Quotient.induction_on _ x fun x => ?_
   refine Submodule.Quotient.induction_on _ y fun y => ?_
-  simp only [momentumBracket_incl, bracket_mk]
+  simp only [momentumIncl, momentumBracket_incl, bracket_mk]
   change inclCycle (p+q) (cycleCurrent x y) + inclCycle (q+p) (cycleCurrent y x) = 0
   let h : q+p = p+q := add_comm q p
   let v : Cycles (p+q) := h ▸ cycleCurrent y x
@@ -191,7 +201,7 @@ private theorem momentum_leibniz_incl (p q r : Momentum) (x : H p) (y : H q) (z 
   refine Submodule.Quotient.induction_on _ x fun x => ?_
   refine Submodule.Quotient.induction_on _ y fun y => ?_
   refine Submodule.Quotient.induction_on _ z fun z => ?_
-  simp only [momentumBracket_incl, bracket_mk]
+  simp only [momentumIncl, momentumBracket_incl, bracket_mk]
   change inclCycle (p+(q+r)) (cycleCurrent x (cycleCurrent y z)) =
     inclCycle ((p+q)+r) (cycleCurrent (cycleCurrent x y) z) +
       inclCycle (q+(p+r)) (cycleCurrent y (cycleCurrent x z))

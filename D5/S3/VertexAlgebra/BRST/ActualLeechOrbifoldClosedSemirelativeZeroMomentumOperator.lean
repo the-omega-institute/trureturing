@@ -712,6 +712,14 @@ def DoubleZeroGhostSpace (g : ℤ) : Submodule ℂ (EnergySpace 0) :=
 local instance (g : ℤ) : AddCommGroup (DoubleZeroGhostSpace g) :=
   Submodule.addCommGroup (DoubleZeroGhostSpace g)
 
+private local instance (priority := 2000) doubleZeroGhostAddCommMonoid
+    (g : ℤ) : AddCommMonoid (DoubleZeroGhostSpace g) :=
+  Submodule.addCommMonoid (DoubleZeroGhostSpace g)
+
+private local instance (priority := 2000) doubleZeroGhostModule
+    (g : ℤ) : Module ℂ (DoubleZeroGhostSpace g) :=
+  Submodule.module (DoubleZeroGhostSpace g)
+
 theorem mem_doubleZeroGhostSpace_iff (g : ℤ) (x : EnergySpace 0) :
     x ∈ DoubleZeroGhostSpace g ↔
       x ∈ doubleZeroConeInclusion.range ∧ x.val ∈ GhostSpace g := by
@@ -736,21 +744,29 @@ def doubleZeroDifferential (g : ℤ) :
     DoubleZeroGhostSpace g →ₗ[ℂ] DoubleZeroGhostSpace (g + 1) :=
   (differential 0).restrict fun _ => D_mem_doubleZeroGhostSpace g
 
-abbrev DoubleZeroCycles (g : ℤ) := (doubleZeroDifferential g).ker
+def DoubleZeroCycles (g : ℤ) := (doubleZeroDifferential g).ker
 
 local instance (g : ℤ) : AddCommGroup (DoubleZeroCycles g) :=
   Submodule.addCommGroup (DoubleZeroCycles g)
 
-private def doubleZeroBoundary (g : ℤ) :
-    DoubleZeroGhostSpace (g - 1) →ₗ[ℂ] DoubleZeroCycles g where
-  toFun x :=
-    ⟨⟨differential 0 x.val, by
-      simpa only [sub_add_cancel] using D_mem_doubleZeroGhostSpace (g - 1) x.property⟩,
-      Subtype.ext (LinearMap.congr_fun (differential_square 0) x.val)⟩
-  map_add' x y := Subtype.ext (Subtype.ext (map_add (differential 0) x.val y.val))
-  map_smul' a x := Subtype.ext (Subtype.ext (map_smul (differential 0) a x.val))
+private local instance (priority := 2000) doubleZeroCyclesAddCommMonoid
+    (g : ℤ) : AddCommMonoid (DoubleZeroCycles g) :=
+  Submodule.addCommMonoid (DoubleZeroCycles g)
 
-abbrev DoubleZeroBoundaries (g : ℤ) := (doubleZeroBoundary g).range
+private local instance (priority := 2000) doubleZeroCyclesModule
+    (g : ℤ) : Module ℂ (DoubleZeroCycles g) :=
+  Submodule.module (DoubleZeroCycles g)
+
+private def doubleZeroBoundary (g : ℤ) :
+    DoubleZeroGhostSpace (g - 1) →ₗ[ℂ] DoubleZeroCycles g :=
+  ((differential 0).comp (DoubleZeroGhostSpace (g - 1)).subtype).codRestrict
+    (DoubleZeroGhostSpace g) (fun x => by
+      change differential 0 x.val ∈ DoubleZeroGhostSpace g
+      simpa only [sub_add_cancel] using D_mem_doubleZeroGhostSpace (g - 1) x.property)
+    |>.codRestrict (DoubleZeroCycles g) (fun x =>
+      Subtype.ext (LinearMap.congr_fun (differential_square 0) x.val))
+
+def DoubleZeroBoundaries (g : ℤ) := (doubleZeroBoundary g).range
 
 /-- Cohomology of the native differential on the graded double-zero-momentum image. -/
 abbrev DoubleZeroCohomology (g : ℤ) := DoubleZeroCycles g ⧸ DoubleZeroBoundaries g

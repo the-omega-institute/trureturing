@@ -191,8 +191,8 @@ private theorem sectorCycles_iff (g : ℤ) (z : V) :
     rw [← e.map_eq_zero_iff, he, Prod.mk_eq_zero, neg_eq_zero]
   change (z ∈ G g ∧ δ z = 0) ↔ _
   rw [hg, hz]
-  exact ⟨fun ⟨⟨ha, hb⟩, ⟨hc, hh⟩⟩ => ⟨⟨ha, hc⟩, ⟨hb, hh⟩⟩,
-    fun ⟨⟨ha, hc⟩, ⟨hb, hh⟩⟩ => ⟨⟨ha, hb⟩, ⟨hc, hh⟩⟩⟩
+  exact ⟨fun h => ⟨⟨h.1.1, h.2.1⟩, ⟨h.1.2, h.2.2⟩⟩,
+    fun h => ⟨⟨h.1.1, h.2.1⟩, ⟨h.1.2, h.2.2⟩⟩⟩
 
 include he hg in
 private def sectorCyclesEquiv (g : ℤ) :
@@ -311,6 +311,14 @@ local instance : AddCommGroup (EnergySpace 0) := Submodule.addCommGroup _
 local instance (q r : Charge hyperbolicPlane) : AddCommGroup (MomentumEnergySpace q r) :=
   Submodule.addCommGroup _
 
+private local instance (priority := 2000) momentumEnergyAddCommMonoid
+    (q r : Charge hyperbolicPlane) : AddCommMonoid (MomentumEnergySpace q r) :=
+  Submodule.addCommMonoid (MomentumEnergySpace q r)
+
+private local instance (priority := 2000) momentumEnergyModule
+    (q r : Charge hyperbolicPlane) : Module ℂ (MomentumEnergySpace q r) :=
+  Submodule.module (MomentumEnergySpace q r)
+
 /-- The native differential on the jointly fixed, level-matched momentum sector. -/
 def momentumDifferential : Module.End ℂ (MomentumEnergySpace pL pR) :=
   (differential 0).restrict fun _ hx => differential_mem_momentumEnergySpace pL pR hx
@@ -328,15 +336,23 @@ private theorem momentumDifferential_degree (g : ℤ) (z : (MomentumEnergySpace 
     (momentumDifferential pL pR) z ∈ (MomentumGhostSpace pL pR) (g + 1) := D_degree hz
 
 /-- Actual degree-`g` cycles on the fixed native sector. -/
-abbrev MomentumCycles (g : ℤ) : Submodule ℂ (MomentumEnergySpace pL pR) := sectorCycles (momentumDifferential pL
+def MomentumCycles (g : ℤ) : Submodule ℂ (MomentumEnergySpace pL pR) := sectorCycles (momentumDifferential pL
   pR) (MomentumGhostSpace pL pR) g
 
 
 local instance (q r : Charge hyperbolicPlane) (g : ℤ) : AddCommGroup (MomentumCycles q r g) :=
   Submodule.addCommGroup _
 
+private local instance (priority := 2000) momentumCyclesAddCommMonoid
+    (q r : Charge hyperbolicPlane) (g : ℤ) : AddCommMonoid (MomentumCycles q r g) :=
+  Submodule.addCommMonoid (MomentumCycles q r g)
+
+private local instance (priority := 2000) momentumCyclesModule
+    (q r : Charge hyperbolicPlane) (g : ℤ) : Module ℂ (MomentumCycles q r g) :=
+  Submodule.module (MomentumCycles q r g)
+
 /-- Images of the native differential from degree `g - 1`, viewed in the cycles. -/
-abbrev MomentumBoundaries (g : ℤ) : Submodule ℂ (MomentumCycles pL pR g) :=
+def MomentumBoundaries (g : ℤ) : Submodule ℂ (MomentumCycles pL pR g) :=
   sectorBoundaries (momentumDifferential pL pR) (MomentumGhostSpace pL pR) (momentumDifferential_sq pL pR)
     (momentumDifferential_degree pL pR) g
 
@@ -402,39 +418,39 @@ def momentumGhostThreeEquiv : MomentumCohomology pL pR 3 ≃ₗ[ℂ] Physical pL
   exact ((momentumCohomologySplit pL pR FL FR BL BR hL hR) 3).trans (LinearEquiv.uniqueProd.trans
     (ClosedRelative.ghostTwoCohomologyEquiv FL FR BL BR pL pR hL hR))
 
+private def momentumCyclesEquiv (g : ℤ) :
+    MomentumCycles pL pR g ≃ₗ[ℂ] GradedCycles pL pR g × GradedCycles pL pR (g - 1) :=
+  sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR)
+    (momentumDiagonal pL pR FL FR BL BR hL hR)
+    (momentumDiagonal_differential pL pR FL FR BL BR hL hR)
+    (momentumDiagonal_degree_iff pL pR FL FR BL BR hL hR) g
+
 /-- The degree-two representative is the corrected relative representative in the first slot. -/
 def momentumGhostTwoRepresentative (u : Physical pL pR) : MomentumCycles pL pR 2 :=
-  ((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR) (momentumDiagonal pL pR FL FR
-    BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR) (momentumDiagonal_degree_iff pL pR FL FR
-    BL BR hL hR)) 2).symm ((ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR) u, 0)
+  (momentumCyclesEquiv pL pR FL FR BL BR hL hR 2).symm
+    (ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR u, 0)
 
 /-- The degree-three representative is the corrected representative in the shifted slot
 with its first slot determined by the inverse shear. -/
 def momentumGhostThreeRepresentative (u : Physical pL pR) : MomentumCycles pL pR 3 :=
-  ((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR) (momentumDiagonal pL pR FL FR
-    BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR) (momentumDiagonal_degree_iff pL pR FL FR
-    BL BR hL hR)) 3).symm (0, (ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR) u)
+  (momentumCyclesEquiv pL pR FL FR BL BR hL hR 3).symm
+    (0, ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR u)
+
+private def relativeClasses (g : ℤ) (z : GradedCycles pL pR g × GradedCycles pL pR (g - 1)) :
+    GradedCohomology pL pR g × GradedCohomology pL pR (g - 1) :=
+  ((GradedBoundaries pL pR g).mkQ z.1, (GradedBoundaries pL pR (g - 1)).mkQ z.2)
 
 private theorem momentumCohomologySplit_mk (g : ℤ) (z : MomentumCycles pL pR g) :
     (momentumCohomologySplit pL pR FL FR BL BR hL hR) g (Submodule.Quotient.mk z) =
-      (Submodule.Quotient.mk (((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR)
-        (momentumDiagonal pL pR FL FR BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR)
-        (momentumDiagonal_degree_iff pL pR FL FR BL BR hL hR)) g z).1),
-        Submodule.Quotient.mk (((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR)
-          (momentumDiagonal pL pR FL FR BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR)
-          (momentumDiagonal_degree_iff pL pR FL FR BL BR hL hR)) g z).2)) := rfl
+      relativeClasses pL pR g (momentumCyclesEquiv pL pR FL FR BL BR hL hR g z) := rfl
 
 private theorem momentumCyclesEquiv_symm_val (g : ℤ)
     (z : GradedCycles pL pR g × GradedCycles pL pR (g - 1)) :
-    (((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR) (momentumDiagonal pL pR FL
-      FR BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR) (momentumDiagonal_degree_iff pL pR
-      FL FR BL BR hL hR)) g).symm z).val = (momentumDiagonal pL pR FL FR BL BR hL hR).symm (z.1.val, z.2.val) :=
-      by
+    ((momentumCyclesEquiv pL pR FL FR BL BR hL hR g).symm z).val =
+      (momentumDiagonal pL pR FL FR BL BR hL hR).symm (z.1.val, z.2.val) := by
   apply (momentumDiagonal pL pR FL FR BL BR hL hR).injective
   rw [(momentumDiagonal pL pR FL FR BL BR hL hR).apply_symm_apply]
-  have h := ((sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR) (momentumDiagonal pL
-    pR FL FR BL BR hL hR) (momentumDiagonal_differential pL pR FL FR BL BR hL hR) (momentumDiagonal_degree_iff pL
-    pR FL FR BL BR hL hR)) g).apply_symm_apply z
+  have h := (momentumCyclesEquiv pL pR FL FR BL BR hL hR g).apply_symm_apply z
   exact congrArg (fun w : GradedCycles pL pR g × GradedCycles pL pR (g - 1) =>
     (w.1.val, w.2.val)) h
 
@@ -465,10 +481,7 @@ theorem momentumGhostTwoEquiv_symm_apply (u : Physical pL pR) :
   let P := ClosedRelative.ghostTwoCohomologyEquiv FL FR BL BR pL pR hL hR
   let z := momentumGhostTwoRepresentative pL pR FL FR BL BR hL hR u
   let r := ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR u
-  let c := sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR)
-    (momentumDiagonal pL pR FL FR BL BR hL hR)
-    (momentumDiagonal_differential pL pR FL FR BL BR hL hR)
-    (momentumDiagonal_degree_iff pL pR FL FR BL BR hL hR) 2
+  let c := momentumCyclesEquiv pL pR FL FR BL BR hL hR 2
   let q := momentumCohomologySplit pL pR FL FR BL BR hL hR 2
   have hc : c z = (r, 0) := c.apply_symm_apply (r, 0)
   have hq := congrArg Prod.fst (momentumCohomologySplit_mk pL pR FL FR BL BR hL hR 2 z)
@@ -490,10 +503,7 @@ theorem momentumGhostThreeEquiv_symm_apply (u : Physical pL pR) :
   let P := ClosedRelative.ghostTwoCohomologyEquiv FL FR BL BR pL pR hL hR
   let z := momentumGhostThreeRepresentative pL pR FL FR BL BR hL hR u
   let r := ClosedRelative.ghostTwoRepresentative FL FR BL BR pL pR hL hR u
-  let c := sectorCyclesEquiv pL pR (momentumDifferential pL pR) (MomentumGhostSpace pL pR)
-    (momentumDiagonal pL pR FL FR BL BR hL hR)
-    (momentumDiagonal_differential pL pR FL FR BL BR hL hR)
-    (momentumDiagonal_degree_iff pL pR FL FR BL BR hL hR) 3
+  let c := momentumCyclesEquiv pL pR FL FR BL BR hL hR 3
   let q := momentumCohomologySplit pL pR FL FR BL BR hL hR 3
   have hc : c z = (0, r) := c.apply_symm_apply (0, r)
   have hq := congrArg Prod.snd (momentumCohomologySplit_mk pL pR FL FR BL BR hL hR 3 z)

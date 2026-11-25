@@ -356,7 +356,7 @@ private def chiralRetraction (F : NullFrame hyperbolicPlane)
   let c := input F B p hp
   let hn := nilpotent F B p hp
   let e := groundEquiv F B p hp
-  obtain ⟨_, _, _, _, hom, sq, hi, ph⟩ := locally_nilpotent_perturbation c hn
+  have retraction := (locally_nilpotent_perturbation c hn).2.2.2.2
   refine
     { d0 := relativeQ F B p
       h := RelativeCohomology.primitive F B p hp
@@ -368,7 +368,7 @@ private def chiralRetraction (F : NullFrame hyperbolicPlane)
       di := LinearMap.ext (RelativeCohomology.representative_closed F B p hp)
       pd := LinearMap.ext (coefficient_differential F B p hp)
       contraction := ?_
-      hh := sq
+      hh := retraction.2.1
       hi := ?_
       ph := ?_
       perturbed_sq := by simpa only [add_zero, pow_two] using relativeQ_squared F B p }
@@ -379,18 +379,18 @@ private def chiralRetraction (F : NullFrame hyperbolicPlane)
     let P := LocallyNilpotentPerturbation.P c hn
     change relativeQ F B p (H x) + H (relativeQ F B p x) = x - I (e.symm (e (P x)))
     rw [e.symm_apply_apply]
-    have he : c.D (H x) + H (c.D x) = x - I (P x) := LinearMap.congr_fun hom x
+    have he : c.D (H x) + H (c.D x) = x - I (P x) := LinearMap.congr_fun retraction.1 x
     have hD : c.D = relativeQ F B p := input_D F B p hp
     rwa [hD] at he
   · apply LinearMap.ext
     intro u
-    exact LinearMap.congr_fun hi (e.symm u)
+    exact LinearMap.congr_fun retraction.2.2.1 (e.symm u)
   · apply LinearMap.ext
     intro x
     let H := LocallyNilpotentPerturbation.H c hn
     let P := LocallyNilpotentPerturbation.P c hn
     change e (P (H x)) = 0
-    have h : P (H x) = 0 := LinearMap.congr_fun ph x
+    have h : P (H x) = 0 := LinearMap.congr_fun retraction.2.2.2 x
     rw [h, e.map_zero]
 
 private theorem projection_parity (F : NullFrame hyperbolicPlane)

@@ -36,6 +36,12 @@ namespace D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeBracket
 attribute [local instance] realLieStateAddCommGroup realLieShellAddCommGroup
   realLieCyclesAddCommGroup
 
+private local instance (priority := 2000) momentumRealAddCommMonoid :
+    AddCommMonoid momentumRealLie := inferInstance
+
+private local instance (priority := 2000) momentumRealModule :
+    Module ℝ momentumRealLie := inferInstance
+
 private def momentumComplexificationLift :
     (ℂ ⊗[ℝ] momentumRealLie) →ₗ[ℝ] RestrictScalars ℝ ℂ MomentumH1 :=
   TensorProduct.lift
@@ -125,10 +131,15 @@ theorem momentumRealComplexification_symm_apply (x : MomentumH1) :
   simpa only [map_add, momentumRealComplexification_tmul, one_smul] using
     momentumH1_real_decomposition x
 
+private def momentumRealBPZComplexExtension :
+    LinearMap.BilinForm ℂ (ℂ ⊗[ℝ] momentumRealLie) :=
+  momentumRealBPZ.baseChange ℂ
+
 /-- The native signed relative BPZ form is the scalar extension of the real BPZ form. -/
 theorem momentumRealComplexification_preserves_BPZ (t u : ℂ ⊗[ℝ] momentumRealLie) :
     nativeRelativeBPZ (momentumRealComplexification t) (momentumRealComplexification u) =
-      momentumRealBPZ.baseChange ℂ t u := by
+      momentumRealBPZComplexExtension t u := by
+  unfold momentumRealBPZComplexExtension
   induction t using TensorProduct.inductionOn with
   | tmul z x =>
     induction u using TensorProduct.inductionOn with

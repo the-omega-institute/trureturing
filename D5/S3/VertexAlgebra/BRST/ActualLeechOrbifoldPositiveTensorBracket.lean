@@ -31,20 +31,44 @@ namespace D5.S3.VertexAlgebra.ActualLeechOrbifoldBRST.RelativeBracket
 local notation "Momentum" => (Fin 2 → ℤ)
 local notation "L" => momentumRealLie
 local notation "W" => realMomentumGrade
+local notation "C" => realMomentumGradeCarrier
 local notation "B" => momentumRealBPZ
 
 open D5.S3.VertexAlgebra.GradedLieSplitBracketIdentity (paired_split_bracket)
+
+private local instance (priority := 2000) positiveRealAddCommMonoid :
+    AddCommMonoid L := inferInstance
+
+private local instance (priority := 2000) positiveRealModule :
+    Module ℝ L := inferInstance
+
+private local instance (priority := 2000) positiveGradeAddCommMonoid (p : Momentum) :
+    AddCommMonoid (C p) := Submodule.addCommMonoid (W p)
+
+private local instance (priority := 2000) positiveGradeModule (p : Momentum) :
+    Module ℝ (C p) := Submodule.module (W p)
 
 section RealCoefficient
 
 local notation "sum" => DirectSum.coeLinearMap W
 
+private abbrev RealMomentumComponents := ⨁ p : Momentum, C p
+
+private local instance (priority := 2000) componentsAddCommMonoid :
+    AddCommMonoid RealMomentumComponents := inferInstance
+
+private local instance (priority := 2000) componentsModule :
+    Module ℝ RealMomentumComponents := inferInstance
+
 /-- The inverse of the internal direct sum of the native real momentum spaces. -/
-def realMomentumDecompose : L ≃ₗ[ℝ] ⨁ p : Momentum, W p :=
+def realMomentumDecompose : L ≃ₗ[ℝ] RealMomentumComponents :=
   (LinearEquiv.ofBijective sum realMomentumWeightSpace_isInternal).symm
 
-theorem realMomentumDecompose_coe (p : Momentum) (x : W p) :
-    realMomentumDecompose (x : L) = DirectSum.lof ℝ Momentum (fun q => ↥(W q)) p x := by
+private def realMomentumLof (p : Momentum) : C p →ₗ[ℝ] RealMomentumComponents :=
+  DirectSum.lof ℝ Momentum C p
+
+theorem realMomentumDecompose_coe (p : Momentum) (x : C p) :
+    realMomentumDecompose x.val = realMomentumLof p x := by
   apply realMomentumDecompose.symm.injective
   rw [LinearEquiv.symm_apply_apply]
   exact (DirectSum.coeLinearMap_lof W p x).symm
@@ -60,7 +84,7 @@ private theorem realMomentumSum_surjective : Function.Surjective sum :=
 theorem projectMomentumReal_weight (keep : Momentum → Prop) (p : Momentum) (x : W p) :
     projectMomentumReal keep (x : L) = if keep p then (x : L) else 0 := by
   simp only [projectMomentumReal, LinearMap.comp_apply, LinearEquiv.coe_coe,
-    realMomentumDecompose_coe, DirectSum.toModule_lof]
+    realMomentumDecompose_coe, realMomentumLof, DirectSum.toModule_lof]
   split_ifs <;> rfl
 
 /-- The first-coordinate negative projection on the native real Lie algebra. -/
@@ -135,13 +159,17 @@ private theorem projectMomentumReal_zero_lie (p q : Momentum) (x : W p) (y : W q
 /-- The exact real BPZ split bracket coefficient for native homogeneous inputs. -/
 theorem momentumRealBPZ_split_bracket_of_weights (p q r s : Momentum)
     (x : W p) (y : W q) (u : W r) (v : W s) :
-    B ⁅(x : L), (y : L)⁆ ⁅(u : L), (v : L)⁆ =
-      (B (negPart ⁅(x : L), (u : L)⁆) ⁅(y : L), (v : L)⁆ +
-        B ⁅(x : L), (u : L)⁆ (negPart ⁅(y : L), (v : L)⁆)) -
-      (B ⁅(y : L), (u : L)⁆ (negPart ⁅(x : L), (v : L)⁆) +
-        B (negPart ⁅(y : L), (u : L)⁆) ⁅(x : L), (v : L)⁆) +
+    let a := x.val
+    let b := y.val
+    let c := u.val
+    let d := v.val
+    let pair : L → L → ℝ := fun x y => B x y
+    let neg : L → L := fun x => negPart x
+    pair ⁅a, b⁆ ⁅c, d⁆ =
+      (pair (neg ⁅a, c⁆) ⁅b, d⁆ + pair ⁅a, c⁆ (neg ⁅b, d⁆)) -
+      (pair ⁅b, c⁆ (neg ⁅a, d⁆) + pair (neg ⁅b, c⁆) ⁅a, d⁆) +
       ((p 0 : ℝ) * (q 1 : ℝ) + (p 1 : ℝ) * (q 0 : ℝ)) *
-        (B x u * B y v - B x v * B y u) := by
+        (pair a c * pair b d - pair a d * pair b c) := by
   have hNeg : ∀ a b, B (negPart a) (negPart b) = 0 := by
     apply momentumRealBPZ_project_eq_zero (fun p => p 0 < 0) (fun p => p 0 < 0)
     intro i j hi hj h
@@ -197,7 +225,7 @@ theorem realPositiveMomentumIncl_injective : Function.Injective ι₊ := by
     change realPositiveMomentumProject (ι₊ (lof p x)) = lof p x
     rw [realPositiveMomentumIncl_lof]
     simp only [realPositiveMomentumProject, LinearMap.comp_apply, LinearEquiv.coe_coe,
-      realMomentumDecompose_coe, DirectSum.toModule_lof, dite_eq_left p.property]
+      realMomentumDecompose_coe, realMomentumLof, DirectSum.toModule_lof, dite_eq_left p.property]
   exact Function.LeftInverse.injective (g := realPositiveMomentumProject)
     (fun x => LinearMap.congr_fun h x)
 
@@ -355,9 +383,11 @@ def realPositiveTensorCartanCoefficient (p q : Momentum) : ℝ :=
 
 private theorem realPositiveTensorEval_ad_split (p q r s : RealPositiveMomentum)
     (x : W p.1) (y : W q.1) (u : W (-r.1)) (v : W (-s.1)) :
-    eval u v (realPositiveTensorAd (lof p x) (Δ (lof q y))) =
-      B (projectNegativeMomentumRealByGrade ⁅(x : L), (u : L)⁆) ⁅(y : L), (v : L)⁆ -
-        B ⁅(y : L), (u : L)⁆ (projectNegativeMomentumRealByGrade ⁅(x : L), (v : L)⁆) := by
+    let pair : L → L → ℝ := fun x y => B x y
+    let neg : L → L := fun x => projectNegativeMomentumRealByGrade x
+    eval u.val v.val (realPositiveTensorAd (lof p x) (Δ (lof q y))) =
+      pair (neg ⁅x.val, u.val⁆) ⁅y.val, v.val⁆ -
+        pair ⁅y.val, u.val⁆ (neg ⁅x.val, v.val⁆) := by
   let a := projectNegativeMomentumRealByGrade ⁅(x : L), (u : L)⁆
   let b := projectNegativeMomentumRealByGrade ⁅(x : L), (v : L)⁆
   calc
@@ -394,24 +424,38 @@ theorem realPositiveSplitTensor_lie_pair (p q r s : RealPositiveMomentum)
         realSplitTensor_pair _ _ r s u v]
       rfl
     _ = _ := by
-      simp only [map_add, map_sub, map_smul, smul_eq_mul, realPositiveTensorEval_ad_split,
+      have hxy := realPositiveTensorEval_ad_split p q r s x y u v
+      have hyx := realPositiveTensorEval_ad_split q p r s y x u v
+      dsimp only at hxy hyx
+      simp only [map_add, map_sub, map_smul, smul_eq_mul, hxy, hyx,
         realPositiveTensorEval_tmul, realPositiveMomentumIncl_lof, realPositiveTensorCartanCoefficient]
       exact (momentumRealBPZ_split_bracket_of_weights p.1 q.1 (-r.1) (-s.1) x y u v).trans
         (by ring)
 
 private abbrev positiveTensorBlock (i : RealPositiveMomentum × RealPositiveMomentum) :=
-  W i.1.1 ⊗[ℝ] W i.2.1
+  C i.1.1 ⊗[ℝ] C i.2.1
 
-private def realPositiveTensorDecompose :
-    T ≃ₗ[ℝ] ⨁ i : RealPositiveMomentum × RealPositiveMomentum, positiveTensorBlock i :=
-  TensorProduct.directSum ℝ ℝ (fun r : RealPositiveMomentum => ↥(W r.1))
-    (fun s : RealPositiveMomentum => ↥(W s.1))
+private abbrev PositiveTensorBlocks :=
+  ⨁ i : RealPositiveMomentum × RealPositiveMomentum, positiveTensorBlock i
+
+private local instance (priority := 2000) tensorBlocksAddCommMonoid :
+    AddCommMonoid PositiveTensorBlocks := inferInstance
+
+private local instance (priority := 2000) tensorBlocksModule :
+    Module ℝ PositiveTensorBlocks := inferInstance
+
+private def realPositiveTensorDecompose : T ≃ₗ[ℝ] PositiveTensorBlocks :=
+  TensorProduct.directSum ℝ ℝ (fun r : RealPositiveMomentum => C r.1)
+    (fun s : RealPositiveMomentum => C s.1)
+
+private def realPositiveTensorBlockEval (r s : RealPositiveMomentum)
+    (u : W (-r.1)) (v : W (-s.1)) (z : positiveTensorBlock (r, s)) : ℝ :=
+  oppositeTensorDual (realOppositeBPZ r.1) (realOppositeBPZ s.1) z (u ⊗ₜ[ℝ] v)
 
 private theorem realPositiveTensorEval_decompose (r s : RealPositiveMomentum)
-    (u : W (-r.1)) (v : W (-s.1))
-    (d : ⨁ i : RealPositiveMomentum × RealPositiveMomentum, positiveTensorBlock i) :
-    eval u v (realPositiveTensorDecompose.symm d) =
-      oppositeTensorDual (realOppositeBPZ r.1) (realOppositeBPZ s.1) (d (r, s)) (u ⊗ₜ[ℝ] v) := by
+    (u : C (-r.1)) (v : C (-s.1)) (d : PositiveTensorBlocks) :
+    eval u.val v.val (realPositiveTensorDecompose.symm d) =
+      realPositiveTensorBlockEval r s u v (d (r, s)) := by
   let ev : Module.Dual ℝ (W (-r.1) ⊗[ℝ] W (-s.1)) →ₗ[ℝ] ℝ :=
     LinearMap.applyₗ (R := ℝ) (u ⊗ₜ[ℝ] v)
   suffices h : (eval u v).comp realPositiveTensorDecompose.symm.toLinearMap =

@@ -147,6 +147,18 @@ local instance splitBracketCyclesAddCommGroup (p : Momentum) :
     AddCommGroup (GradedCycles planeFrame planeBasis p 1) :=
   Submodule.addCommGroup _
 
+private local instance (priority := 2000) splitMomentumAddCommMonoid :
+    AddCommMonoid MomentumH1 := inferInstance
+
+private local instance (priority := 2000) splitMomentumModule :
+    Module ℂ MomentumH1 := inferInstance
+
+private local instance (priority := 2000) splitRealAddCommMonoid :
+    AddCommMonoid momentumRealLie := inferInstance
+
+private local instance (priority := 2000) splitRealModule :
+    Module ℝ momentumRealLie := inferInstance
+
 /-- Keep the homogeneous summands selected by a predicate on native momenta. -/
 def projectMomentum (keep : Momentum → Prop) : MomentumH1 →ₗ[ℂ] MomentumH1 := by
   classical
@@ -236,14 +248,15 @@ def momentumCartanCoefficient (p q : Momentum) : ℂ :=
 In particular, the tests can be any vectors in negative momentum summands. -/
 theorem nativeRelativeBPZ_split_bracket (p q r s : Momentum)
     (x : H p) (y : H q) (u : H r) (v : H s) :
-    B ⁅incl p x, incl q y⁆ ⁅incl r u, incl s v⁆ =
-      (B (negPart ⁅incl p x, incl r u⁆) ⁅incl q y, incl s v⁆ +
-        B ⁅incl p x, incl r u⁆ (negPart ⁅incl q y, incl s v⁆)) -
-      (B ⁅incl q y, incl r u⁆ (negPart ⁅incl p x, incl s v⁆) +
-        B (negPart ⁅incl q y, incl r u⁆) ⁅incl p x, incl s v⁆) +
-      momentumCartanCoefficient p q *
-        (B (incl p x) (incl r u) * B (incl q y) (incl s v) -
-          B (incl p x) (incl s v) * B (incl q y) (incl r u)) := by
+    let a := incl p x
+    let b := incl q y
+    let c := incl r u
+    let d := incl s v
+    let pair : MomentumH1 → MomentumH1 → ℂ := fun x y => B x y
+    pair ⁅a, b⁆ ⁅c, d⁆ =
+      (pair (negPart ⁅a, c⁆) ⁅b, d⁆ + pair ⁅a, c⁆ (negPart ⁅b, d⁆)) -
+      (pair ⁅b, c⁆ (negPart ⁅a, d⁆) + pair (negPart ⁅b, c⁆) ⁅a, d⁆) +
+      momentumCartanCoefficient p q * (pair a c * pair b d - pair a d * pair b c) := by
   have hNeg : ∀ a b, B (negPart a) (negPart b) = 0 := by
     intro a b
     refine nativeRelativeBPZ_projectMomentum_eq_zero Negative Negative ?_ a b
@@ -312,7 +325,9 @@ theorem nativeRelativeBPZ_split_bracket_tensor_block (p q r s : Momentum) (x : H
   simp only [nativeSplitBracketDefect, nativeBPZTensorCoefficient, LinearMap.comp_apply,
     LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, TensorProduct.map_tmul,
     TensorProduct.lift.tmul, LinearMap.mul'_apply, smul_eq_mul, momentumBracket_eq_lie]
-  rw [nativeRelativeBPZ_split_bracket p q r s x y u v]
+  have h := nativeRelativeBPZ_split_bracket p q r s x y u v
+  dsimp only at h
+  rw [h]
   ring
 
 /-- The coefficient of the dual negative bracket vanishes in first coordinate one. -/
@@ -371,13 +386,13 @@ theorem momentumRealBPZ_split_bracket (p q r s : Momentum)
     (x y u v : momentumRealLie) (a : H p) (b : H q) (c : H r) (d : H s)
     (hx : momentumRealValue x = incl p a) (hy : momentumRealValue y = incl q b)
     (hu : momentumRealValue u = incl r c) (hv : momentumRealValue v = incl s d) :
-    momentumRealBPZ ⁅x, y⁆ ⁅u, v⁆ =
-      (momentumRealBPZ (projectNegativeMomentumReal ⁅x, u⁆) ⁅y, v⁆ +
-        momentumRealBPZ ⁅x, u⁆ (projectNegativeMomentumReal ⁅y, v⁆)) -
-      (momentumRealBPZ ⁅y, u⁆ (projectNegativeMomentumReal ⁅x, v⁆) +
-        momentumRealBPZ (projectNegativeMomentumReal ⁅y, u⁆) ⁅x, v⁆) +
+    let pair : momentumRealLie → momentumRealLie → ℝ := fun a b => momentumRealBPZ a b
+    let neg : momentumRealLie → momentumRealLie := fun a => projectNegativeMomentumReal a
+    pair ⁅x, y⁆ ⁅u, v⁆ =
+      (pair (neg ⁅x, u⁆) ⁅y, v⁆ + pair ⁅x, u⁆ (neg ⁅y, v⁆)) -
+      (pair ⁅y, u⁆ (neg ⁅x, v⁆) + pair (neg ⁅y, u⁆) ⁅x, v⁆) +
       ((p firstCoord : ℝ) * (q secondCoord : ℝ) + (p secondCoord : ℝ) * (q firstCoord : ℝ)) *
-        (momentumRealBPZ x u * momentumRealBPZ y v - momentumRealBPZ x v * momentumRealBPZ y u) := by
+        (pair x u * pair y v - pair x v * pair y u) := by
   apply Complex.ofReal_injective
   simpa only [Complex.ofReal_add, Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_intCast,
     ofReal_momentumRealBPZ, momentumRealValue_projectNegative, momentumRealValue_lie,
