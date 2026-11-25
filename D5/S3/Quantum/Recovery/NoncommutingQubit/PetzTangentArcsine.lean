@@ -27,16 +27,6 @@ abbrev arcIntegral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 def kernel (x z : ℝ) : ℝ := (1 - (1 - x ^ 2) * z ^ 2)⁻¹
 
-lemma affine_pos {b z : ℝ} (hb : b ^ 2 < 1) (hz : z ∈ Icc (-1 : ℝ) 1) :
-    0 < 1 - b * z := by
-  have hL : 0 ≤ 1 + z := by linarith [hz.1]
-  have hR : 0 ≤ 1 - z := sub_nonneg.mpr hz.2
-  have hz2 : z ^ 2 ≤ 1 := by nlinarith [mul_nonneg hR hL]
-  have hbz : (b*z)^2 < 1 := by
-    rw [mul_pow]
-    exact (mul_le_of_le_one_right (sq_nonneg b) hz2).trans_lt hb
-  nlinarith
-
 lemma kernelDen_pos {x z : ℝ} (hx : 0 < x) (hz : z ∈ Icc (-1 : ℝ) 1) :
     0 < 1 - (1 - x ^ 2) * z ^ 2 := by
   have hL : 0 ≤ 1 + z := by linarith [hz.1]
@@ -62,7 +52,7 @@ lemma reciprocal_sq {r : ℝ} (hr : 0 < r) :
     reciprocal r ^ 2 = (1+r)⁻¹ := by
   rw [reciprocal, inv_pow, Real.sq_sqrt (by positivity : 0 ≤ 1+r)]
 
-lemma reciprocal_pos {r : ℝ} (hr : 0 < r) : 0 < reciprocal r :=
+private lemma reciprocal_pos {r : ℝ} (hr : 0 < r) : 0 < reciprocal r :=
   inv_pos.mpr (Real.sqrt_pos.2 (by positivity))
 
 private lemma reciprocal_image : reciprocal '' Ioi (0 : ℝ) = Ioo (0 : ℝ) 1 := by

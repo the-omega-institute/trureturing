@@ -24,6 +24,16 @@ open PetzTangentReciprocalGram
 
 open PetzTangentArcsine
 
+private lemma affine_pos {b z : ℝ} (hb : b ^ 2 < 1) (hz : z ∈ Icc (-1 : ℝ) 1) :
+    0 < 1 - b * z := by
+  have hL : 0 ≤ 1 + z := by linarith [hz.1]
+  have hR : 0 ≤ 1 - z := sub_nonneg.mpr hz.2
+  have hz2 : z ^ 2 ≤ 1 := by nlinarith [mul_nonneg hR hL]
+  have hbz : (b*z)^2 < 1 := by
+    rw [mul_pow]
+    exact (mul_le_of_le_one_right (sq_nonneg b) hz2).trans_lt hb
+  nlinarith
+
 private lemma arc_congr_symm {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [CompleteSpace E] {f h : ℝ → E}
     (hf : ContinuousOn f (Icc (-1 : ℝ) 1)) (hh : ContinuousOn h (Icc (-1 : ℝ) 1))
@@ -765,6 +775,7 @@ theorem physical_entry_arcsine_and_bound
 #print axioms physical_entry_arcsine_and_bound
 
 
+open D5.S3.Quantum.Divergence.UmegakiConditionalBKM (arithmetic_inverse_pairing_intervalIntegrable)
 open D5.S3.Quantum.Divergence.UmegakiConditionalKernel (q)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (partialTraceRight_posDef)
 open D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
@@ -868,23 +879,6 @@ theorem faithful_weighted_tangent [Nonempty E]
     rw [show q Z A s = _ from hs_pair_spectral Z A hZ s hs]
     simp only [B, div_eq_mul_inv]
     rfl
-  have hi {n : Type} [Fintype n] [DecidableEq n]
-      (A X : Matrix n n ℂ) (hA : A.PosDef) :
-      IntervalIntegrable (q A X) volume 0 1 := by
-    let t := fun (i j : n) (s : ℝ) =>
-      Complex.normSq (coordinates hA.isHermitian.eigenvectorUnitary X i j) *
-        ((1-s)*hA.isHermitian.eigenvalues i+s*hA.isHermitian.eigenvalues j)⁻¹
-    have ht (i j : n) : IntervalIntegrable (t i j) volume 0 1 :=
-      (D5.S3.Quantum.Divergence.UmegakiArithmeticBKM.affineKernel_integrable _ _
-        (hA.eigenvalues_pos i) (hA.eigenvalues_pos j)).const_mul _
-    have hsum : IntervalIntegrable (fun s => ∑ i, ∑ j, t i j s) volume 0 1 :=
-      by simpa only [Finset.sum_fn] using
-        (IntervalIntegrable.sum Finset.univ
-          (fun i _ => IntervalIntegrable.sum Finset.univ (fun j _ => ht i j)))
-    apply hsum.congr
-    rw [uIoc_of_le zero_le_one]
-    intro s hs
-    exact (hs_pair_spectral A X hA s (Ioc_subset_Icc_self hs)).symm
   have hpair {n : Type} [Fintype n] [DecidableEq n]
       (A X : Matrix n n ℂ) (hA : A.PosDef) :
       (Xᴴ * logDeriv A X).trace.re = ∫ s in (0 : ℝ)..1, q A X s :=
@@ -926,7 +920,9 @@ theorem faithful_weighted_tangent [Nonempty E]
   have hsum :
       (∑ i, ∑ j, ∫ s in (0 : ℝ)..1, f i j s) =
         (Hᴴ * logDeriv Z H).trace.re - (Mᴴ * logDeriv P M).trace.re := by
-    rw [hpair Z H hZ, hpair P M hP, ← intervalIntegral.integral_sub (hi Z H hZ) (hi P M hP)]
+    rw [hpair Z H hZ, hpair P M hP, ← intervalIntegral.integral_sub
+      (arithmetic_inverse_pairing_intervalIntegrable Z H hZ)
+      (arithmetic_inverse_pairing_intervalIntegrable P M hP)]
     have hs (i : Fin 2 × E) :
         (∫ s in (0 : ℝ)..1, ∑ j, f i j s) = ∑ j, ∫ s in (0 : ℝ)..1, f i j s :=
       intervalIntegral.integral_finsetSum (fun j _ => hf i j)

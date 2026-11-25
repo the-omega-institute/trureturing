@@ -86,11 +86,12 @@ def source_registration : Registration arena (type_of% @physical_entry_arcsine_a
     arena.Law actual rejected rejected_law
   dependence := by
     intro role
-    refine ⟨(), (fun _ => 1/2), (fun _ => 1/8), ?_⟩
+    refine ⟨(), (fun _ => 1/2), ![1/5, 4/5], ?_⟩
     change parityMultiplier (2*Real.sqrt ((1/2)*(1/2))) ≠
-      parityMultiplier (2*Real.sqrt ((1/8)*(1/8)))
+      parityMultiplier (2*Real.sqrt ((1/5)*(4/5)))
+    have hprod : (1/5 : ℝ) * (4/5) = (2/5)^2 := by norm_num
     rw [← Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 1/2),
-      ← Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 1/8)]
+      hprod, Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2/5)]
     norm_num [parityMultiplier, max_def]
 
 def registration :
