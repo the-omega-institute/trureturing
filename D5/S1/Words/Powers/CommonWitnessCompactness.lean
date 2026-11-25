@@ -36,8 +36,6 @@ universe u
 variable {α : Type u}
 
 
-
-
 private def Inner (p : List α × List α) (z : List α) : Prop :=
   p.1 ++ z = z ++ p.2
 
@@ -51,16 +49,6 @@ private theorem wordPower_add (m n : Nat) (w : List α) :
     wordPower (m + n) w = wordPower m w ++ wordPower n w := by
   unfold wordPower
   rw [List.replicate_add, List.flatten_append]
-
-private theorem prefix_eq_of_length_eq {x y : List α}
-    (hxy : x <+: y) (hlen : x.length = y.length) : x = y := by
-  rcases hxy with ⟨r, hr⟩
-  have hlen' := congrArg List.length hr
-  have : r.length = 0 := by
-    rw [List.length_append] at hlen'
-    omega
-  have hrnil : r = [] := List.eq_nil_of_length_eq_zero this
-  simpa [hrnil] using hr
 
 private theorem inner_solution_prefix_or_prefix
     {a b z₁ z₂ : List α} (ha : a ≠ [])
@@ -200,11 +188,6 @@ private theorem residual_commutes_right
       _ = (z ++ t) ++ b := h'
       _ = z ++ (t ++ b) := by simp only [List.append_assoc]
   exact List.append_cancel_left h₁
-
-private theorem residual_commutes_left
-    {a b z t : List α} (h : a ++ z = z ++ b)
-    (h' : a ++ (z ++ t) = (z ++ t) ++ b) :
-    b ++ t = t ++ b := residual_commutes_right h h'
 
 private theorem nonempty_right_of_inner
     {a b z : List α} (ha : a ≠ []) (h : a ++ z = z ++ b) : b ≠ [] := by

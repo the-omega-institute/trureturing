@@ -35,14 +35,14 @@ internal sealed class CommonWitnessCompactnessDocument : IScribeDocumentDefiniti
                     + "Set result, with no infinite-word or group-element endpoint.")),
                 Paragraph(Text(
                     "For the inner orientation, a nonempty first component is selected from G. "
-                    + "The copied constructive short-cut normal form gives prefix comparability "
+                    + "The single-equation theorem in ConjugacyNormalForm gives prefix comparability "
                     + "of any two anchor witnesses. Two distinct shared witnesses transport a "
                     + "third row through the cyclic centralizer: residuals commute with the "
                     + "anchor right word, and the frozen centralizer classification transfers "
                     + "commutation to the row under test. If a row has at most one shared anchor "
                     + "witness, a finite three-row union forces all such unique candidates to "
                     + "agree. Rows with empty first component are neutral by length cancellation. "
-                    + "The outer case is the same proof after swapping each pair.")),
+                    + "The outer case follows after swapping each pair. For the global disjunction, either every finite subset admits an inner witness, or a finite inner obstruction exists. In the latter case adjoining that obstruction to any finite subset forces an outer witness, so outer finite character applies.")),
                 Paragraph(Text(
                     "Aiswarya, Manuel and Sunny, arXiv:2307.06777v4, Definition 5 and Lemma 6, "
                     + "p. 25, gives the finite-alphabet common-witness principle. The cited "
