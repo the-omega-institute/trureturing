@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.QuadraticExt.Operations
 
 /-!
@@ -29,9 +30,11 @@ def delta : QSqrt2 := alpha rationalRing
 def halfDelta : QSqrt2 := pair FiniteRatio.zero ⟨Int.one, .succ .zero⟩
 def half : QSqrt2 := ofScalar rationalRing ⟨Int.one, .succ .zero⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem halfDelta_sq :
     scalarRing.eqv (scalarRing.square halfDelta) half :=
-  And.intro Eq.refl Eq.refl
+  And.intro rfl rfl
 
 abbrev Spinor := QuadPoly QSqrt2 scalarRing.zero (scalarRing.neg scalarRing.one)
 
@@ -45,9 +48,11 @@ def i : Spinor := alpha scalarRing
 def normSq (z : Spinor) : QSqrt2 :=
   scalarRing.add (scalarRing.square z.scalar) (scalarRing.square z.linear)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem u90_normSq : scalarRing.eqv (normSq u90) scalarRing.one :=
   scalarRingLaws.trans (scalarRingLaws.add_congr halfDelta_sq halfDelta_sq)
-    (And.intro Eq.refl Eq.refl)
+    (And.intro rfl rfl)
 
 private theorem same_coordinates_square (h : QSqrt2) :
     Equivalent scalarRing (square scalarRing (pair h h : Spinor))
@@ -58,8 +63,8 @@ private theorem same_coordinates_square (h : QSqrt2) :
   let z := Polynomial.Expr.zero
   let o := Polynomial.Expr.one
   And.intro
-    (Polynomial.prove scalarRing scalarRingLaws vars (s.add (o.neg.mul s)) z Eq.refl)
-    (Polynomial.prove scalarRing scalarRingLaws vars ((s.add s).add (z.mul s)) (s.add s) Eq.refl)
+    (Polynomial.prove scalarRing scalarRingLaws vars (s.add (o.neg.mul s)) z rfl)
+    (Polynomial.prove scalarRing scalarRingLaws vars ((s.add s).add (z.mul s)) (s.add s) rfl)
 
 theorem u90_sq : spinorRing.eqv (spinorRing.square u90) i :=
   spinorRingLaws.trans (same_coordinates_square halfDelta)
@@ -72,7 +77,7 @@ private theorem i_sq : spinorRing.eqv (spinorRing.square i) (spinorRing.neg spin
 private theorem neg_one_sq :
     spinorRing.eqv (spinorRing.square (spinorRing.neg spinorRing.one)) spinorRing.one :=
   Polynomial.prove spinorRing spinorRingLaws (Polynomial.Variables.nil spinorRing)
-    Polynomial.Expr.one.neg.square Polynomial.Expr.one Eq.refl
+    Polynomial.Expr.one.neg.square Polynomial.Expr.one rfl
 
 def twoNat : Nat := .succ (.succ .zero)
 def fourNat : Nat := twoNat.add twoNat
@@ -94,10 +99,12 @@ theorem u90_pow_eight :
 
 def bell : QSqrt2 := scalarRing.add delta delta
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem bell_square :
     scalarRing.eqv (scalarRing.square bell)
       (ofScalar rationalRing (FiniteRatio.ofInt (Int.two.mul (Int.two.mul Int.two)))) :=
-  And.intro Eq.refl Eq.refl
+  And.intro rfl rfl
 
 end QSqrt2
 end Omega

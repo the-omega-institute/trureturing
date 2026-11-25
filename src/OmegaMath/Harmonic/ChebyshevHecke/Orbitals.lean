@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Data.IntRatio
 
 /-!
@@ -74,17 +76,19 @@ def diagonalIs (o : Orbital) (x y z : Int) : Prop :=
       (IntRatio.Equivalent (diagonal o .z) (seventh z)))
 
 set_option maxRecDepth 4000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem diagonal_quadrupoles :
     And (diagonalIs .dz2 Int.two.neg Int.two.neg (Int.ofNat four))
       (And (diagonalIs .dxz Int.two (Int.ofNat four).neg Int.two)
         (And (diagonalIs .dyz (Int.ofNat four).neg Int.two Int.two)
           (And (diagonalIs .dxy Int.two Int.two (Int.ofNat four).neg)
             (diagonalIs .dx2SubY2 Int.two Int.two (Int.ofNat four).neg)))) :=
-  And.intro (And.intro Eq.refl (And.intro Eq.refl Eq.refl))
-    (And.intro (And.intro Eq.refl (And.intro Eq.refl Eq.refl))
-      (And.intro (And.intro Eq.refl (And.intro Eq.refl Eq.refl))
-        (And.intro (And.intro Eq.refl (And.intro Eq.refl Eq.refl))
-          (And.intro Eq.refl (And.intro Eq.refl Eq.refl)))))
+  And.intro (And.intro rfl (And.intro rfl rfl))
+    (And.intro (And.intro rfl (And.intro rfl rfl))
+      (And.intro (And.intro rfl (And.intro rfl rfl))
+        (And.intro (And.intro rfl (And.intro rfl rfl))
+          (And.intro rfl (And.intro rfl rfl)))))
 
 def occupiedFour (a : Axis) : IntRatio :=
   let q := (diagonal .dz2 a).add (diagonal .dxz a)
@@ -114,25 +118,33 @@ private theorem sumFour (a : Axis) (p q r s : Int)
     ((IntRatio.add_congr hr hs).trans (seventh_add r s))).trans
       (seventh_add (p.add q) (r.add s))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem fourX : IntRatio.Equivalent (occupiedFour .x) (seventh Int.two.neg) :=
   let h := diagonal_quadrupoles
   sumFour .x _ _ _ _ h.left.left h.right.left.left h.right.right.left.left
     h.right.right.right.left.left
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem fourY : IntRatio.Equivalent (occupiedFour .y) (seventh Int.two.neg) :=
   let h := diagonal_quadrupoles
   sumFour .y _ _ _ _ h.left.right.left h.right.left.right.left h.right.right.left.right.left
     h.right.right.right.left.right.left
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem fourZ : IntRatio.Equivalent (occupiedFour .z) (seventh (Int.ofNat four)) :=
   let h := diagonal_quadrupoles
   sumFour .z _ _ _ _ h.left.right.right h.right.left.right.right h.right.right.left.right.right
     h.right.right.right.left.right.right
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 private theorem doubleSeventh {source : IntRatio} {a : Int}
     (h : IntRatio.Equivalent source (seventh a)) :
     IntRatio.Equivalent ((IntRatio.ofInt Int.two).mul source) (seventh (Int.two.mul a)) :=
-  (IntRatio.mul_congr (IntRatio.equivalent_refl (IntRatio.ofInt Int.two)) h).trans Eq.refl
+  (IntRatio.mul_congr (IntRatio.equivalent_refl (IntRatio.ofInt Int.two)) h).trans rfl
 
 theorem full_shell_zero (a : Axis) :
     IntRatio.Equivalent (fullShell a) (IntRatio.ofInt Int.zero) :=
@@ -143,22 +155,29 @@ theorem full_shell_zero (a : Axis) :
     (hu : IntRatio.Equivalent (diagonal .dx2SubY2 b) (seventh u))
     (hz : Eq (t.add u) Int.zero) =>
       ((IntRatio.add_congr ht hu).trans (seventh_add t u)).trans
-        (Eq.subst (fun v => IntRatio.Equivalent (seventh v) (IntRatio.ofInt Int.zero)) hz.symm zero)
+        (Eq.subst (motive := fun v => IntRatio.Equivalent (seventh v) (IntRatio.ofInt Int.zero)) hz.symm zero)
   Axis.rec (motive := fun a => IntRatio.Equivalent (fullShell a) (IntRatio.ofInt Int.zero))
-    (cancel .x _ _ fourX h.left Eq.refl) (cancel .y _ _ fourY h.right.left Eq.refl)
-    (cancel .z _ _ fourZ h.right.right Eq.refl) a
+    (cancel .x _ _ fourX h.left (Int.add_left_neg _))
+    (cancel .y _ _ fourY h.right.left (Int.add_left_neg _))
+    (cancel .z _ _ fourZ h.right.right (Int.add_right_neg _)) a
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem closed_shell_zero (a : Axis) :
     IntRatio.Equivalent (closedShell a) (IntRatio.ofInt Int.zero) :=
   (IntRatio.mul_congr (IntRatio.equivalent_refl (IntRatio.ofInt Int.two))
-    (full_shell_zero a)).trans Eq.refl
+    (full_shell_zero a)).trans rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem deleted_shell_diagonal :
     And (IntRatio.Equivalent (deletedShell .x) (seventh (Int.ofNat four).neg))
       (And (IntRatio.Equivalent (deletedShell .y) (seventh (Int.ofNat four).neg))
         (IntRatio.Equivalent (deletedShell .z) (seventh (Int.ofNat (four.add four))))) :=
   And.intro (doubleSeventh fourX) (And.intro (doubleSeventh fourY) (doubleSeventh fourZ))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem deleted_shell_trace_zero :
     IntRatio.Equivalent (((deletedShell .x).add (deletedShell .y)).add (deletedShell .z))
       (IntRatio.ofInt Int.zero) :=

@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.Quaternion
 public import OmegaMath.Data.IntRatio
 
@@ -44,7 +46,8 @@ theorem scale_mul (a : Vec3) (k l : Int) : Eq (scale k (scale l a)) (scale (k.mu
   ext (Int.mul_assoc k l a.x).symm (Int.mul_assoc k l a.y).symm (Int.mul_assoc k l a.z).symm
 
 theorem dot_pure (a b : Vec3) : Eq (a.pure.dot b.pure) (dot3 a b) :=
-  congrArg (fun t : Int => t.add ((a.y.mul b.y).add (a.z.mul b.z))) (Int.zero_add (a.x.mul b.x))
+  congrArg (fun t : Int => t.add ((a.y.mul b.y).add (a.z.mul b.z)))
+    ((congrArg (fun n : Int => n.add (a.x.mul b.x)) (Int.zero_mul Int.zero)).trans (Int.zero_add _))
 
 end Vec3
 
@@ -68,7 +71,7 @@ theorem eq_of_num_den {u v : RatVec3} (hn : Eq u.num v.num) (hd : Eq u.den v.den
   Eq.map₂ RatVec3.mk hn (Nat.succ.inj hd)
 
 theorem equiv_of_eq {u v : RatVec3} (h : Eq u v) : Equiv u v :=
-  Eq.subst (Equiv u) h Eq.refl
+  Eq.subst (motive := Equiv u) h rfl
 
 theorem equiv_scale (u v : RatVec3) (k : Nat)
     (hn : Eq u.num (Vec3.scale (Int.ofNat k) v.num)) (hd : Eq u.den (v.den.mul k)) :
@@ -78,7 +81,7 @@ theorem equiv_scale (u v : RatVec3) (k : Nat)
       (congrArg (fun n => Vec3.scale (Int.ofNat n) v.num) hd.symm))
 
 theorem dot3_ofInt (u v : Vec3) : Eq (dot3 (ofInt u) (ofInt v)) (IntRatio.ofInt (u.dot3 v)) :=
-  Eq.refl
+  congrArg (IntRatio.value (u.dot3 v)) (Nat.mul_one Nat.one)
 
 end RatVec3
 
@@ -96,12 +99,20 @@ def adjointDen (p : Quaternion) : Nat := p.normSq.pred.succ
 
 theorem adjointDen_eq (p : Quaternion) (hp : p.Nonzero) : Eq (adjointDen p) p.normSq :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Eq n.pred.succ n)
-    (fun h => False.elim (h Eq.refl)) (fun _ _ _ => Eq.refl) p.normSq) (Quaternion.normSq_ne_zero hp)
+    (fun h => False.elim (h rfl)) (fun k _ _ => congrArg Nat.succ (Nat.pred_succ k)) p.normSq)
+    (Quaternion.normSq_ne_zero hp)
 
 /-- The rational adjoint rotation for a nonzero quaternion, acting on homogeneous vectors. -/
 def Ad (p : Quaternion) (v : RatVec3) : RatVec3 :=
   ⟨adjointNum p v.num, IntRatio.mulDenPred p.normSq.pred v.denPred⟩
 
+theorem ad_den (p : Quaternion) (v : RatVec3) (hp : p.Nonzero) :
+    Eq (Ad p v).den (p.normSq.mul v.den) :=
+  (Int.ofNat_inj.mp (IntRatio.denominator_mul p.normSq.pred v.denPred)).trans
+    (congrArg (fun n : Nat => n.mul v.den) (adjointDen_eq p hp))
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem adjoint_pure (p : Quaternion) (v : Vec3) :
     Eq (adjointNum p v).pure (adjointQuaternion p v) :=
   let i := Nat.zero
@@ -110,8 +121,8 @@ theorem adjoint_pure (p : Quaternion) (v : Vec3) :
   let V : Coordinates := ⟨.zero, .var j, .var j.succ, .var j.succ.succ⟩
   let values := Values.cons p.w (.cons p.x (.cons p.y (.cons p.z
     (.cons v.x (.cons v.y (.cons v.z .nil))))))
-  Quaternion.ext (((P.mul V).mul P.conj).w.sound .zero values Eq.refl).symm
-    Eq.refl Eq.refl Eq.refl
+  Quaternion.ext (((P.mul V).mul P.conj).w.sound .zero values rfl).symm
+    rfl rfl rfl
 
 theorem adjointNum_dot (p : Quaternion) (u v : Vec3) :
     Eq ((adjointNum p u).dot3 (adjointNum p v))
@@ -133,15 +144,14 @@ theorem ad_dot (p : Quaternion) (hp : p.Nonzero) (u v : RatVec3) :
   let d := u.den
   let e := v.den
   have den : Eq ((Ad p u).den.mul (Ad p v).den) ((d.mul e).mul (n.mul n)) :=
-    (Eq.map₂ Nat.mul (congrArg (fun k : Nat => k.mul d) (adjointDen_eq p hp))
-      (congrArg (fun k : Nat => k.mul e) (adjointDen_eq p hp))).trans
+    (Eq.map₂ Nat.mul (ad_den p u hp) (ad_den p v hp)).trans
       ((Eq.map₂ Nat.mul (Nat.mul_comm n d) (Nat.mul_comm n e)).trans
         ((Nat.mul_assoc d n (e.mul n)).trans
           ((congrArg d.mul ((Nat.mul_assoc n e n).symm.trans
             ((congrArg (fun k : Nat => k.mul n) (Nat.mul_comm n e)).trans
               (Nat.mul_assoc e n n)))).trans (Nat.mul_assoc d e (n.mul n)).symm)))
   have h := Quaternion.normSq_ne_zero hp
-  Eq.subst (fun r => IntRatio.Equivalent r (u.dot3 v))
+  Eq.subst (motive := fun r => IntRatio.Equivalent r (u.dot3 v))
     (Eq.map₂ IntRatio.value (adjointNum_dot p u.num v.num) den).symm
     (IntRatio.value_scale_of_ne_zero (u.num.dot3 v.num) (d.mul e) (n.mul n)
       (fun e => (Nat.mul_eq_zero.mp e).elim h h))
@@ -163,10 +173,9 @@ theorem ad_scale (p : Quaternion) (hp : p.Nonzero) (k : Int) (hk : Not (Eq k Int
   let q := Quaternion.scale k p
   have hq := Quaternion.nonzero_scale hp hk
   have den : Eq (Ad q v).den ((Ad p v).den.mul d) :=
-    (congrArg (fun n : Nat => n.mul v.den) ((adjointDen_eq q hq).trans
-      (Quaternion.normSq_scale k p))).trans
+    (ad_den q v hq).trans ((congrArg (fun n : Nat => n.mul v.den) (Quaternion.normSq_scale k p)).trans
       ((Nat.mul_right_comm p.normSq d v.den).trans
-        (congrArg (fun n : Nat => (n.mul v.den).mul d) (adjointDen_eq p hp).symm))
+        (congrArg (fun n : Nat => n.mul d) (ad_den p v hp).symm)))
   RatVec3.equiv_scale (Ad q v) (Ad p v) d
     ((adjointNum_scale p k v.num).trans
       (congrArg (fun s => Vec3.scale s (adjointNum p v.num)) Int.natAbs_mul_self.symm)) den
@@ -186,11 +195,9 @@ theorem ad_hom_eq (p q : Quaternion) (hp : p.Nonzero) (hq : q.Nonzero) (v : RatV
     Eq (Ad (p.mul q) v) (Ad p (Ad q v)) :=
   have h := Quaternion.nonzero_mul hp hq
   have t : Eq (Ad (p.mul q) v).den (Ad p (Ad q v)).den :=
-    (congrArg (fun n : Nat => n.mul v.den)
-      ((adjointDen_eq (p.mul q) h).trans (Quaternion.normSq_mul p q))).trans
+    (ad_den (p.mul q) v h).trans ((congrArg (fun n : Nat => n.mul v.den) (Quaternion.normSq_mul p q)).trans
       ((Nat.mul_assoc p.normSq q.normSq v.den).trans
-        (Eq.map₂ Nat.mul (adjointDen_eq p hp).symm
-          (congrArg (fun n : Nat => n.mul v.den) (adjointDen_eq q hq).symm)))
+        ((congrArg p.normSq.mul (ad_den q v hq).symm).trans (ad_den p (Ad q v) hp).symm)))
   RatVec3.eq_of_num_den (adjointNum_hom p q v.num) t
 
 theorem ad_hom (p q : Quaternion) (hp : p.Nonzero) (hq : q.Nonzero) (v : RatVec3) :

@@ -26,7 +26,7 @@ theorem no_correct_public_predictor
   fun correct =>
     strategic_response_precludes_universal_predictor react
       (fun candidate state => actual candidate react state) fixedPointFree
-      (fun _ => stateExists.elim (fun state _ => Omega.Exists.intro state Omega.Eq.refl))
+      (fun _ => stateExists.elim (fun state _ => Omega.Exists.intro state Omega.rfl))
       (Omega.Exists.intro predict (fun state => (correct state).symm))
 
 /-- The state space for the Boolean example has one state. -/
@@ -40,7 +40,7 @@ theorem bool_not_no_correct_public_predictor (predict : OneState → Omega.Bool)
   let negate := Omega.Bool.rec (motive := fun _ => Omega.Bool) .true .false
   have distinct : Omega.Not (Omega.Eq Omega.Bool.false Omega.Bool.true) :=
     fun equal => Omega.Eq.subst
-      (Omega.Bool.rec (motive := fun _ => Prop) Omega.True Omega.False) equal Omega.True.intro
+      (motive := Omega.Bool.rec (motive := fun _ => Prop) Omega.True Omega.False) equal Omega.True.intro
   have fixedPointFree : ∀ value, Omega.Not (Omega.Eq (negate value) value) :=
     Omega.Bool.rec (fun equal => distinct equal.symm) distinct
   no_correct_public_predictor predict negate fixedPointFree (Omega.Exists.intro .only Omega.True.intro)

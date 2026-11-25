@@ -300,12 +300,13 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 ## Strict Omega mathematics
 
-The `trureturing` Lake package also provides `OmegaInit` and `OmegaMath` under
-`src/`. A strict Lean file starts with `prelude` and imports the module it uses.
-For the chapter 39 projective overlap, import `OmegaMath.Projective.Basic` to
-compute the reading or `OmegaMath.Projective` to use the scaling theorem.
-The audit replays each strict import closure in the Lean kernel and checks every
-declaration for axiom dependencies. [Module diagram, audit and rebuild measurements](src/README.md)
+The `trureturing` Lake package builds `OmegaMath` against pinned Lean Init and
+Mathlib by default. For the chapter 39 projective overlap, import
+`OmegaMath.Projective.Basic` to compute the reading or `OmegaMath.Projective`
+to use the scaling theorem. Admission recompiles the same source against
+`OmegaInit` and `OmegaMathlib`, compares the exported mathematics, and replays
+the strict library in an empty Lean kernel with zero axioms.
+[Build commands and interface checks](src/README.md)
 
 ## Take part
 

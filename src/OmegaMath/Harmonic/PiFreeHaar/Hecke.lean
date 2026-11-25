@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram.Fractions
 import OmegaMath.Geometry.BargmannGram.Identities
 import OmegaMath.Geometry.BargmannGram.Polynomial
@@ -60,7 +62,11 @@ private def chi1Numerator (scalar denominator : Int) : Int :=
 private theorem dot_one (q : Quad4) : Eq (q.dot Quad4.one) q.w :=
   have left := (Eq.map₂ Int.add (Int.mul_one q.w) (Int.mul_zero q.x)).trans (Int.add_zero q.w)
   have right := Eq.map₂ Int.add (Int.mul_zero q.y) (Int.mul_zero q.z)
-  (Eq.map₂ Int.add left right).trans (Int.add_zero q.w)
+  (Eq.map₂ Int.add left (right.trans (Int.add_zero Int.zero))).trans (Int.add_zero q.w)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
+private theorem normSq_one : Eq Quad4.one.normSq Nat.one := Omega.rfl
 
 private theorem evalChi1_value (q : Quad4) (d : Nat) (hd : Not (Eq d Nat.zero))
     (hnorm : Eq q.normSq d) :
@@ -68,9 +74,9 @@ private theorem evalChi1_value (q : Quad4) (d : Nat) (hd : Not (Eq d Nat.zero))
   let a := chi1Linear.mul (Int.square q.w)
   have hk : Eq (kappa q Quad4.one) (IntRatio.value (Int.square q.w) d) :=
     Eq.map₂ IntRatio.value (congrArg Int.square (dot_one q))
-      ((Nat.mul_one q.normSq).trans hnorm)
+      ((congrArg q.normSq.mul normSq_one).trans ((Nat.mul_one q.normSq).trans hnorm))
   have hm := (congrArg (IntRatio.ofInt chi1Linear).mul hk).trans (value_mul_int chi1Linear (Int.square q.w) d)
-  Eq.subst (fun v : IntRatio => Equivalent (v.sub (IntRatio.ofInt Int.one))
+  Eq.subst (motive := fun v : IntRatio => Equivalent (v.sub (IntRatio.ofInt Int.one))
       (IntRatio.value (chi1Numerator q.w (Int.ofNat d)) d)) hm.symm
     ((IntRatio.sub_congr (IntRatio.equivalent_refl (IntRatio.value a d))
       (IntRatio.value_self d hd).symm).trans
@@ -81,6 +87,8 @@ private theorem add_values {d : Nat} {x y : IntRatio} {a b : Int}
     Equivalent (x.add y) (IntRatio.value (a.add b) d) :=
   (IntRatio.add_congr hx hy).trans (IntRatio.value_add_same a b d)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem sum_numerators (q : Quad4) :
     Eq (sumSpinors Int.add (fun r => chi1Numerator (q.mul r).w (Int.ofNat (five.mul q.normSq))))
       (Int.two.neg.mul (chi1Numerator q.w (Int.ofNat q.normSq))) :=
@@ -95,11 +103,13 @@ private theorem sum_numerators (q : Quad4) :
   let numerator := fun (s d : Expr) => ((Expr.const chi1Linear).mul s.sq).sub d
   have cancel := Expr.certify values
     (sumSpinors Expr.add (fun r => numerator (scalar r) ((Expr.const (Int.ofNat five)).mul norm)))
-    ((Expr.const Int.two.neg).mul (numerator w norm)) Eq.refl
-  Eq.subst (fun n => Eq (sumSpinors Int.add (fun r =>
+    ((Expr.const Int.two.neg).mul (numerator w norm)) rfl
+  Eq.subst (motive := fun n => Eq (sumSpinors Int.add (fun r =>
       chi1Numerator (q.mul r).w ((Int.ofNat five).mul n)))
     (Int.two.neg.mul (chi1Numerator q.w n))) q.normSq_cast.symm cancel
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem heckeT5_chi1_eigenvalue (q : Quad4) (hq : Not (Eq q Quad4.zero)) :
     Equivalent (heckeT5Chi1 q)
       ((IntRatio.value Int.two.neg Nat.one.succ.succ.succ.succ).mul (evalChi1 q)) :=
@@ -111,17 +121,19 @@ theorem heckeT5_chi1_eigenvalue (q : Quad4) (hq : Not (Eq q Quad4.zero)) :
     evalChi1_value (q.mul r) d hd ((Quad4.normSq_mul q r).trans
       ((congrArg q.normSq.mul hr).trans (Nat.mul_comm q.normSq five)))
   have sum := add_values
-    (add_values (add_values (term spinorXPos Eq.refl) (term spinorXNeg Eq.refl))
-      (add_values (term spinorYPos Eq.refl) (term spinorYNeg Eq.refl)))
-    (add_values (term spinorZPos Eq.refl) (term spinorZNeg Eq.refl))
+    (add_values (add_values (term spinorXPos rfl) (term spinorXNeg rfl))
+      (add_values (term spinorYPos rfl) (term spinorYNeg rfl)))
+    (add_values (term spinorZPos rfl) (term spinorZNeg rfl))
   let a := chi1Numerator q.w (Int.ofNat q.normSq)
   have hscale := IntRatio.value_mul Int.two.neg a five q.normSq
-  (Eq.subst (fun n => Equivalent (heckeT5Chi1 q) (IntRatio.value n d)) (sum_numerators q) sum).trans
-    (Eq.subst (fun v => Equivalent v ((IntRatio.value Int.two.neg five).mul (evalChi1 q))) hscale
+  (Eq.subst (motive := fun n => Equivalent (heckeT5Chi1 q) (IntRatio.value n d)) (sum_numerators q) sum).trans
+    (Eq.subst (motive := fun v => Equivalent v ((IntRatio.value Int.two.neg five).mul (evalChi1 q))) hscale
       (IntRatio.mul_congr (IntRatio.equivalent_refl (IntRatio.value Int.two.neg five))
-        (evalChi1_value q q.normSq hn Eq.refl).symm))
+        (evalChi1_value q q.normSq hn rfl).symm))
 
 set_option maxRecDepth 2048 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem heckeT5_ramanujan_margin :
     let four := Nat.one.succ.succ.succ
     let five := four.succ
@@ -132,6 +144,6 @@ theorem heckeT5_ramanujan_margin :
     let margin := IntRatio.value (Int.ofNat fourNinetySix) (five.mul five)
     And (Equivalent ((IntRatio.ofInt (Int.ofNat (four.mul five))).sub (eigenvalue.mul eigenvalue)) margin)
       (IntRatio.Lt (IntRatio.ofInt Int.zero) margin) :=
-  And.intro Eq.refl (And.intro True.intro (fun h => Int.ofNat_succ_ne_zero _ h.symm))
+  And.intro rfl (And.intro (Int.NonNeg.mk _) (fun h => Int.ofNat_succ_ne_zero _ h.symm))
 
 end Omega.Harmonic.PiFreeHaar

@@ -64,7 +64,7 @@ private theorem translate_derivation {Base : Type u} {Extended : Type v}
       (fun premises conclusion evidence derive =>
         includeRule (premises.map expand) (expand conclusion) evidence (fun premise member =>
           (premises.exists_of_mem_map expand premise member).elim (fun original found =>
-            Omega.Eq.subst family found.right (derive original found.left))))
+            Omega.Eq.subst (motive := family) found.right (derive original found.left))))
 
 /-- Expanding the axioms and rules of a definitional extension preserves old
 sentences derivable in the extension. -/
@@ -75,7 +75,7 @@ theorem definitional_conservativity {Base : Type u} {Extended : Type v}
     (extended : StrictDerivation (fun s => axioms (expand s))
       (fun premises s => rule (premises.map expand) (expand s)) (embed sentence)) :
     StrictDerivation axioms rule sentence :=
-  Omega.Eq.subst (StrictDerivation axioms rule) (sectionLaw sentence)
+  Omega.Eq.subst (motive := StrictDerivation axioms rule) (sectionLaw sentence)
     (translate_derivation axioms rule expand extended)
 
 end D5.S3.ConceptDynamics.Transport.DefinitionalConservativity

@@ -83,8 +83,8 @@ theorem terminal_value_unique {Grade : Type u} {start : Omega.Nat} {grades : Ome
     rightTerminal.elim (fun rightCutoff rightTail =>
       (Omega.Nat.le_total leftCutoff rightCutoff).elim
         (fun h => (leftTail.right rightCutoff h).symm.trans
-          (rightTail.right rightCutoff (Omega.Nat.le.refl rightCutoff)))
-        (fun h => (leftTail.right leftCutoff (Omega.Nat.le.refl leftCutoff)).symm.trans
+          (rightTail.right rightCutoff (Omega.Nat.le_refl rightCutoff)))
+        (fun h => (leftTail.right leftCutoff (Omega.Nat.le_refl leftCutoff)).symm.trans
           (rightTail.right leftCutoff h))))
 
 private noncomputable def toStdNat : Omega.Nat → Nat := Omega.Nat.rec 0 (fun _ n => n.succ)
@@ -102,13 +102,13 @@ private theorem toStdNat_le {a b : Omega.Nat} (h : Omega.Nat.le a b) :
   | zero => exact Nat.zero_le _
   | succ a ih =>
       induction b with
-      | zero => exact Omega.False.elim h
-      | succ b _ => exact Nat.succ_le_succ (ih h)
+      | zero => exact Omega.False.elim (Omega.Nat.not_succ_le_zero a h)
+      | succ b _ => exact Nat.succ_le_succ (ih (Omega.Nat.le_of_succ_le_succ h))
 
 private theorem toStrictNat_le {a b : Nat} (h : a ≤ b) :
     Omega.Nat.le (toStrictNat a) (toStrictNat b) := by
   induction h with
-  | refl => exact Omega.Nat.le.refl _
+  | refl => exact Omega.Nat.le_refl _
   | step _ ih => exact Omega.Nat.le.step ih
 
 private theorem strictTerminalValue_of_standard {Grade : Type*} {start : Nat}
@@ -119,7 +119,7 @@ private theorem strictTerminalValue_of_standard {Grade : Type*} {start : Nat}
   refine Omega.Exists.intro (toStrictNat cutoff) (Omega.And.intro (toStrictNat_le enrolled) ?_)
   intro t ht
   have bound : cutoff ≤ toStdNat t := by simpa only [toStdNat_toStrictNat] using toStdNat_le ht
-  exact (tail (toStdNat t) bound) ▸ Omega.Eq.refl
+  exact (tail (toStdNat t) bound) ▸ Omega.rfl
 
 /-- Theorem 7.2: for a countable ledger graded in a finite partial order, the
 repair clause determines a unique terminal grading on all eventually enrolled
@@ -161,7 +161,7 @@ noncomputable def strictAlternatingGrade : Omega.Nat → Omega.Bool :=
 private theorem alternatingGrade_changes (t : Omega.Nat) :
     Omega.Not (Omega.Eq (strictAlternatingGrade t.succ) (strictAlternatingGrade t)) :=
   have trueNeFalse : Omega.Not (Omega.Eq Omega.Bool.true Omega.Bool.false) :=
-    fun h => Omega.Eq.subst (Omega.Bool.rec Omega.False Omega.True) h Omega.True.intro
+    fun h => Omega.Eq.subst (motive := Omega.Bool.rec Omega.False Omega.True) h Omega.True.intro
   Omega.Bool.rec (motive := fun b => Omega.Not (Omega.Eq (flipGrade b) b))
     trueNeFalse (fun h => trueNeFalse h.symm) (strictAlternatingGrade t)
 
@@ -171,8 +171,8 @@ theorem alternating_grade_has_no_terminal_value :
     Omega.Not (Omega.Exists (StrictTerminalValueAfter .zero strictAlternatingGrade)) :=
   fun terminal => terminal.elim (fun _ stability =>
     stability.elim (fun cutoff tail => alternatingGrade_changes cutoff
-      ((tail.right cutoff.succ (Omega.Nat.le.step (Omega.Nat.le.refl cutoff))).trans
-        (tail.right cutoff (Omega.Nat.le.refl cutoff)).symm)))
+      ((tail.right cutoff.succ (Omega.Nat.le.step (Omega.Nat.le_refl cutoff))).trans
+        (tail.right cutoff (Omega.Nat.le_refl cutoff)).symm)))
 
 private def toStrictBool : Bool → Omega.Bool := Bool.rec .false .true
 

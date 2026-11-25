@@ -28,6 +28,6 @@ public theorem misleading_impossible {State : Type u} {Message : Type v} {Target
       Eq (decode message) (correctDecode message)) :
     ∀ state, Not (Misleading messageOf targetOf decode state) :=
   fun state misleading => misleading
-    ((agreement (messageOf state) (Exists.intro state Eq.refl)).trans (factorization state).symm)
+    ((agreement (messageOf state) (Exists.intro state rfl)).trans (factorization state).symm)
 
 end D5.S3.ConceptDynamics.Transport.MisleadingReceiverExclusion

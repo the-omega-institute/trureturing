@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Data.IntRatio
 
 /-!
@@ -51,14 +53,18 @@ def Quaternion.normSq (q : Quaternion) : Int :=
 def Quaternion.kappa (q : Quaternion) : IntRatio :=
   IntRatio.value q.w.square q.normSq.natAbs
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem norm_five (g : Generator) : Eq g.coordinates.normSq i5 :=
   Generator.rec (motive := fun g => Eq g.coordinates.normSq i5)
-    Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl g
+    rfl rfl rfl rfl rfl rfl g
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem kappa_one_fifth (g : Generator) :
     Eq g.coordinates.kappa (IntRatio.value Int.one n5) :=
   Generator.rec (motive := fun g => Eq g.coordinates.kappa (IntRatio.value Int.one n5))
-    Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl g
+    rfl rfl rfl rfl rfl rfl g
 
 structure Gaussian where
   re : Int
@@ -92,6 +98,8 @@ def DefiningMatrix.determinant (m : DefiningMatrix) : Gaussian :=
   let y := m.b.mul m.c
   ⟨x.re.sub y.re, x.im.sub y.im⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Each generating matrix has characteristic polynomial (z^2-2z+5). -/
 theorem defining_trace_det (g : Generator) :
     And (Eq g.coordinates.definingMatrix.trace (Gaussian.ofInt Int.two))
@@ -99,8 +107,8 @@ theorem defining_trace_det (g : Generator) :
   Generator.rec (motive := fun g =>
     And (Eq g.coordinates.definingMatrix.trace (Gaussian.ofInt Int.two))
       (Eq g.coordinates.definingMatrix.determinant (Gaussian.ofInt i5)))
-    (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl)
-    (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) g
+    (And.intro rfl rfl) (And.intro rfl rfl) (And.intro rfl rfl)
+    (And.intro rfl rfl) (And.intro rfl rfl) (And.intro rfl rfl) g
 
 /-- Coefficient array of a polynomial in the ratio of the second variable to the first. -/
 def Polynomial := Nat → Gaussian

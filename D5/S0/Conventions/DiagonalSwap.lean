@@ -20,7 +20,7 @@ public theorem swap_changes_self_diagonal {Index : Type u} (assignment : Index â
       (assignment index index)) :=
   fun index =>
     have distinct : Not (Eq Bool.false Bool.true) :=
-      fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+      fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
     Bool.rec (motive := fun b => Not (Eq (Bool.rec (motive := fun _ => Bool) .true .false b) b))
       (fun h => distinct h.symm) distinct (assignment index index)
 

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.Nat
 
 /-!
@@ -45,10 +46,17 @@ theorem scale (n d k : Nat) :
     Equivalent (value (Nat.mul n (Nat.succ k)) (Nat.mul d (Nat.succ k))) (value n d) :=
   Nat.rec (motive := fun d =>
     Equivalent (value (Nat.mul n (Nat.succ k)) (Nat.mul d (Nat.succ k))) (value n d))
-    (Eq.subst (fun x => Equivalent (value (Nat.mul n (Nat.succ k)) x) undefined)
+    (Eq.subst (motive := fun x => Equivalent (value (Nat.mul n (Nat.succ k)) x) undefined)
       (Nat.zero_mul (Nat.succ k)).symm True.intro)
-    (fun p _ => (Nat.mul_right_comm n (Nat.succ k) (Nat.succ p)).trans
-      (Nat.mul_assoc n (Nat.succ p) (Nat.succ k))) d
+    (fun p _ =>
+      let den := (Nat.succ_mul p k.succ).trans (Nat.add_succ (p.mul k.succ) k)
+      let cross := (Nat.mul_right_comm n k.succ p.succ).trans (Nat.mul_assoc n p.succ k.succ)
+      Eq.subst (motive := fun d => Equivalent (value (n.mul k.succ) d) (value n p.succ))
+        den.symm (cross.trans (congrArg (Nat.mul n) den))) d
 
 end Ratio
 end Omega
+
+namespace Eq
+export _root_.Omega.Eq (map₂)
+end Eq

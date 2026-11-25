@@ -201,7 +201,7 @@ theorem prove (r : CommRingOps A rel) (law : r.Laws) (vars : Variables A) (a b :
   let aNeg := (normalize a).negatives.eval r vars
   let bNeg := (normalize b).negatives.eval r vars
   have balanceEq := congrArg (Words.eval r vars) h
-  have identity := Eq.subst (fun t => r.eqv ((balance a b).eval r vars) t)
+  have identity := Eq.subst (motive := fun t => r.eqv ((balance a b).eval r vars) t)
     balanceEq (law.refl ((balance a b).eval r vars))
   have sums := law.trans (law.symm (eval_balance (vars := vars) law a b))
     (law.trans identity (eval_balance (vars := vars) law b a))
