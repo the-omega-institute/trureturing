@@ -600,20 +600,20 @@ private def shiftedDet (B : RealFour) (x y : ℝ) : ℝ :=
   determinantForm (p B 0) (p B 1) (p B 2)
     (x + coupling B 0 1) (y + coupling B 0 2) (thirdOffdiag B x y + coupling B 1 2)
 
-def conic (B : RealFour) (x y : ℝ) : ℝ := shiftedDet B x y - cubic B x y
+/-- The quadratic obtained by cancelling the cubic monomial in the determinant difference. -/
+def conic (B : RealFour) (x y : ℝ) : ℝ :=
+  let z := thirdOffdiag B x y
+  let A := coupling B 0 1
+  let D := coupling B 0 2
+  let E := coupling B 1 2
+  p B 0 * p B 1 * p B 2 - q B 0 * q B 1 * q B 2 +
+    2 * (A * y * z + D * x * z + E * x * y + A * D * z + A * E * y +
+      D * E * x + A * D * E) -
+    p B 0 * (z + E) ^ 2 - p B 1 * (y + D) ^ 2 - p B 2 * (x + A) ^ 2 +
+    q B 0 * z ^ 2 + q B 1 * y ^ 2 + q B 2 * x ^ 2
 
-/-- Cancellation of the cubic monomial in the determinant difference. -/
-theorem conic_expansion (B : RealFour) (x y : ℝ) :
-    conic B x y =
-      let z := thirdOffdiag B x y
-      let A := coupling B 0 1
-      let D := coupling B 0 2
-      let E := coupling B 1 2
-      p B 0 * p B 1 * p B 2 - q B 0 * q B 1 * q B 2 +
-        2 * (A * y * z + D * x * z + E * x * y + A * D * z + A * E * y +
-          D * E * x + A * D * E) -
-        p B 0 * (z + E) ^ 2 - p B 1 * (y + D) ^ 2 - p B 2 * (x + A) ^ 2 +
-        q B 0 * z ^ 2 + q B 1 * y ^ 2 + q B 2 * x ^ 2 := by
+private lemma conic_eq_shiftedDet_sub_cubic (B : RealFour) (x y : ℝ) :
+    conic B x y = shiftedDet B x y - cubic B x y := by
   dsimp [conic, shiftedDet, cubic, determinantForm]
   ring
 
@@ -724,7 +724,8 @@ private lemma coupling_isHermitian (B : RealFour) : (coupling B).IsHermitian := 
   · simp [Matrix.conjTranspose_apply, coupling_offdiag B hij,
       coupling_offdiag B (Ne.symm hij), mul_comm]
 
-/-- Equations (8)–(12), with all six minor constraints. -/
+/-- The two leading determinant equations and six principal-minor inequalities
+characterize feasibility of the coupled planar Grams. -/
 theorem coupledPlanarGrams_iff_cubicConicFeasible {B : RealFour}
     (hB : B ∈ doublyStochastic ℝ (Fin 4)) :
     CoupledPlanarGrams B ↔ CubicConicFeasible B := by
@@ -761,8 +762,10 @@ theorem coupledPlanarGrams_iff_cubicConicFeasible {B : RealFour}
       (psd_rank_two_iff (hq 0) (hq 1) (hq 2)).mp ⟨hs₃, hsr⟩
     obtain ⟨hg, hxy', hxz', hyz'⟩ :=
       (psd_rank_two_iff (hp 0) (hp 1) (hp 2)).mp ⟨ht₃, htr⟩
-    exact ⟨x, y, hf, sub_eq_zero.mpr (hg.trans hf.symm), hxy, hxz, hyz, hxy', hxz', hyz'⟩
+    exact ⟨x, y, hf, (conic_eq_shiftedDet_sub_cubic B x y).trans
+      (sub_eq_zero.mpr (hg.trans hf.symm)), hxy, hxz, hyz, hxy', hxz', hyz'⟩
   · rintro ⟨x, y, hf, hg, hxy, hxz, hyz, hxy', hxz', hyz'⟩
+    rw [conic_eq_shiftedDet_sub_cubic] at hg
     have hg' : shiftedDet B x y = 0 := (sub_eq_zero.mp hg).trans hf
     let M := symmetricThree (q B 0) (q B 1) (q B 2) x y (thirdOffdiag B x y)
     let N := symmetricThree (p B 0) (p B 1) (p B 2)

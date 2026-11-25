@@ -152,21 +152,9 @@ Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.conic`
 
 *Commentary.*
 
-Set A = C₀₁, D = C₀₂ and E = C₁₂. The conic is the determinant with diagonal p₀, p₁, p₂ and off-diagonals x + A, y + D, z + E, minus F.
+Set A = C₀₁, D = C₀₂ and E = C₁₂. The conic is defined by p₀p₁p₂ − q₀q₁q₂ + 2(Ayz + Dxz + Exy + ADz + AEy + DEx + ADE) − p₀(z + E)² − p₁(y + D)² − p₂(x + A)² + q₀z² + q₁y² + q₂x². This is the determinant with diagonal p₀, p₁, p₂ and off-diagonals x + A, y + D, z + E, minus F. Since z is affine in x and y, the degree in those two variables is at most two.
 
-**Theorem 1.13 (Cancellation of the cubic part).**
-
-Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.conic_expansion`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/Unistochastic/FourGram.conic_expansion` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For all B, x and y the difference expands to p₀p₁p₂ − q₀q₁q₂ + 2(Ayz + Dxz + Exy + ADz + AEy + DEx + ADE) − p₀(z + E)² − p₁(y + D)² − p₂(x + A)² + q₀z² + q₁y² + q₂x². Since z is affine in x and y, the degree in those two variables is at most two.
-
-**Definition 1.14 (Two equations with six minor inequalities).**
+**Definition 1.13 (Two equations with six minor inequalities).**
 
 Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.CubicConicFeasible`
 
@@ -178,7 +166,7 @@ Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.CubicConicFeasible`
 
 There are real x and y for which the cubic and conic vanish and x² ≤ q₀q₁, y² ≤ q₀q₂, z² ≤ q₁q₂, (x + A)² ≤ p₀p₁, (y + D)² ≤ p₀p₂, and (z + E)² ≤ p₁p₂.
 
-**Theorem 1.15 (The leading blocks determine the full Grams).**
+**Theorem 1.14 (The leading blocks determine the full Grams).**
 
 Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.coupledPlanarGrams_iff_cubicConicFeasible`
 
@@ -190,7 +178,7 @@ Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.coupledPlanarGrams_
 
 For every order-four bistochastic B, the coupled Gram criterion is equivalent to the cubic and conic feasibility criterion. With nonnegative diagonals, zero determinant and the three principal minors of order two characterize positive semidefiniteness and rank at most two in each leading block. The proof treats a zero pivot separately. Augmenting the blocks by zero row and column sums preserves positivity and the rank bound, and the last diagonal entry of S is fixed by the definition of z.
 
-**Theorem 1.16 (The guarded cubic and conic criterion).**
+**Theorem 1.15 (The guarded cubic and conic criterion).**
 
 Lean statement: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.unistochastic_iff_cubicConicFeasible`
 
@@ -207,7 +195,6 @@ Every order-four bistochastic B is unistochastic exactly when CubicConicFeasible
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.CoupledPlanarGrams`
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.CubicConicFeasible`
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.conic`
-- Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.conic_expansion`
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.coupledPlanarGrams_iff_cubicConicFeasible`
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.coupledPlanarGrams_of_unitary`
 - Truth anchor: `D5/S3/Quantum/Matrix/Unistochastic/FourGram.coupling`

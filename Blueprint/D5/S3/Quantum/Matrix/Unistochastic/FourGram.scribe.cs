@@ -67,12 +67,10 @@ internal sealed class UnistochasticFourGramDocument : IScribeDocumentDefinition
                 "F = q₀q₁q₂ + 2xyz − q₀z² − q₁y² − q₂x² is the determinant of the leading "
                 + "three-by-three block of S."),
             Definition("conic", "conic", "The difference of leading determinants",
-                "Set A = C₀₁, D = C₀₂ and E = C₁₂. The conic is the determinant with diagonal "
-                + "p₀, p₁, p₂ and off-diagonals x + A, y + D, z + E, minus F."),
-            Theorem("conic-expansion", "conic_expansion", "Cancellation of the cubic part",
-                "For all B, x and y the difference expands to p₀p₁p₂ − q₀q₁q₂ "
+                "Set A = C₀₁, D = C₀₂ and E = C₁₂. The conic is defined by p₀p₁p₂ − q₀q₁q₂ "
                 + "+ 2(Ayz + Dxz + Exy + ADz + AEy + DEx + ADE) − p₀(z + E)² "
-                + "− p₁(y + D)² − p₂(x + A)² + q₀z² + q₁y² + q₂x². Since z "
+                + "− p₁(y + D)² − p₂(x + A)² + q₀z² + q₁y² + q₂x². This is the determinant "
+                + "with diagonal p₀, p₁, p₂ and off-diagonals x + A, y + D, z + E, minus F. Since z "
                 + "is affine in x and y, the degree in those two variables is at most two."),
             Definition("cubic-conic-feasible", "CubicConicFeasible", "Two equations with six minor inequalities",
                 "There are real x and y for which the cubic and conic vanish and "
