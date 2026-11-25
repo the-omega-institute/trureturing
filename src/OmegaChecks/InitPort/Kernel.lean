@@ -166,6 +166,15 @@ partial def visit (n : Name) : M Bool := do
   if let some generated := (← get).env.find? dest then
     if agrees (← get).env (expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "target name collision")
+  if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
+    if c.base.contains (portName c.source n.getPrefix) then
+      return ← record n (.blocked "smart unfolding belongs to a different implementation" (some n.getPrefix))
+    if let some body := ci.value? then
+      let missing := body.find? fun expr => Id.run do
+        let some m := Meta.smartUnfoldingMatch? expr | return false
+        let some matcher := m.getAppFn.constName? | return true
+        return (Meta.getMatcherInfoCore? c.base (portName c.source matcher)).isNone
+      if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if c.excluded.contains n then return ← record n (.blocked "no computation correspondence")
   if ci.isAxiom then return ← record n (.blocked "axiom")
   if ci.isUnsafe || ci.isPartial then return ← record n (.blocked "unsafe/partial")

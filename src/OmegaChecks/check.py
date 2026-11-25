@@ -506,6 +506,18 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 """)
 
 
+def check_generated_init():
+    with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
+        product = Path(directory) / "port"
+        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, "Init.Prelude")
+        # The upstream addition helper must preserve the strict seed's definitional reduction.
+        source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
+                  "attribute [local semireducible] Omega.Nat.add\n"
+                  "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
+                       env={**ENV, "LEAN_PATH": str(product / "lib")})
+
+
 def full_check(incremental=False):
     manifest = ROOT / "lake-manifest.json"
     initial = manifest.read_bytes()
@@ -513,6 +525,7 @@ def full_check(incremental=False):
     # The compiled driver runs the current Audit.lean without elaborating it for every audit.
     run("lake", "build", "omegaAudit")
     check_audits()
+    check_generated_init()
     run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
     check_fibonacci_reduction()
     if incremental:
