@@ -51,7 +51,7 @@ jobs:
     needs: pin
     runs-on: ubuntu-24.04-arm
     permissions:
-      contents: read
+      contents: write
       actions: read
     outputs:
       matrix: ${{ steps.shards.outputs.matrix }}
@@ -75,6 +75,7 @@ jobs:
       - name: Plan changes by module prefix
         id: shards
         env:
+          STRATALINT_CACHE_WRITES: 'true'
           GH_TOKEN: ${{ github.token }}
           SHARD_MIB: ${{ inputs.shard_mib || vars.LEAN_MODULE_SHARD_MIB || 256 }}
         uses: ./.github/actions/lean-cache-shards

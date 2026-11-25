@@ -1,0 +1,1 @@
+{"statement_id":"sha256:e254ad274521e90a88ba570b078bb8642cfe40ceb88eeebe26200b48e2da926b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),10:AURICOmega),24:RationalBlochTetrahedron),38:no_rational_bloch_tetrahedral_triangle)","kind":"theorem","libraries":["OmegaInit","OmegaMath"],"axioms":[]}]}

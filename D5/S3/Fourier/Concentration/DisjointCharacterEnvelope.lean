@@ -99,10 +99,10 @@ private def xAxis (a : ℂ) : BiSeries :=
 private def yAxis (a : ℂ) : BiSeries :=
   PowerSeries.C (axis a)
 
-private theorem axis_add (a b : ℂ) : axis (a + b) = axis a * axis b :=
+theorem axis_add (a b : ℂ) : axis (a + b) = axis a * axis b :=
   (exp_mul_exp_eq_exp_add a b).symm
 
-private theorem axis_zero : axis 0 = 1 := by
+theorem axis_zero : axis 0 = 1 := by
   simp [axis]
 
 private theorem xAxis_add (a b : ℂ) : xAxis (a + b) = xAxis a * xAxis b := by

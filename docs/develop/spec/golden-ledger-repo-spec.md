@@ -521,7 +521,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | --- | --- |
 | `refs/heads/lean-modules-published` | 指向最近发布完整模块索引的源码提交。 |
 | `lean-modules-<源码提交>` | Release 版本标签。版本索引将每个模块映射到分片及实际持有它的 Release。 |
-| `<mathlib revision>-<模块前缀>` | Actions 缓存键，对应 Release 文件名为同名加 `.tar.gz`。父子前缀可共存，按模块归属读取。 |
+| `<mathlib 版本号>-<模块前缀>.tar.gz` | Actions 缓存键与 Release 资产使用完全相同的名字。版本号取自 mathlib 锁定的 `inputRev`，例如 `v4.35.0-D5.S0.tar.gz`。父子前缀可共存，按模块归属读取。 |
 | `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
 | `stratalint-raw-lean-report-v4` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
