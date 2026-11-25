@@ -466,7 +466,8 @@ frozen D5 consumers of the Omega interface, deposit and refresh also check the
 compiled exports from the two backends and record the strict dependencies under
 `strict_omega`. Its two statement fingerprints identify the compared declarations.
 Read each backend’s `libraries` and `axioms` together. An absent `strict_omega`
-means no strict measurement was recorded. An explicit `axioms: []` records a
+means no strict measurement was recorded. This includes verified auxiliary
+declarations generated only by the official compiler. An explicit `axioms: []` records a
 measured empty closure on that backend.
 
 A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
