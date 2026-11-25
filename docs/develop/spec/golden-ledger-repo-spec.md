@@ -476,11 +476,9 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 
 
 <a id="a22-ci-cache-flow"></a>
-**缓存角色与数据流。** 全库共用一个已发布代引用。普通 push 在事件提交、PR 在 merge candidate 上计算目标键。CI 从 Actions 索引恢复所需产物，本地取回入口从 Release 索引恢复。两个索引绑定同一目标提交、有效输入、依赖键、帧摘要与卷区间。未命中项目在当前作业补建，检查沿用原有准入条件。
+**缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块的编译输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。缺失的编译产物在当前作业按需构建。
 
-受保护 dev 上的 Cache Release Publish 由定时或授权手动触发。它在整个运行期间持有同一并发组，选定 dev 提交与基线。首发直接选取并固定完整 Actions seed 的来源提交、run、attempt 与索引摘要。编译器产物按目标比较有效 Lake 配置、源码、兼容环境与依赖键。报告与原生程序有各自的输入与平台条件。
-
-公共前置集中构建，独立分片使用独立 runner。报告计划按缺失目标划分互不重叠的分片；汇总任务校验每个分片覆盖其分配的报告。一个批次完成时上传新卷并保存经校验的检查点。后续运行可以接续已完成批次。每一代有完整索引，继承行直接引用旧卷的地址和字节区间。汇总任务按目标清单校验依赖、帧和卷，回读 CI 与 Release 两个入口，最后按预期前值更新公共引用。在途读者继续使用其固定的索引。检查点与历史版本引用的卷保留在共享存储中。
+定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
 
 **本机 Lake 缓存与定向构建。** 干净的主 `dev` 经 `make warm-donor FULL_BUILD=1` 完成各 workspace 的预热。Lake 将可缓存的产物和输入映射写入本机原生 artifact cache，并在开发检出保留可供现有消费者使用的产物。定向构建和报告准备按各目标的依赖 trace 在本工作树中恢复或编译。定向报告只读取或恢复与 trace 相符的编译产物；Git 源码使用 manifest 钉版。定向入口在私有写锁下核对 pin 和探针，项目层为空时也可运行。独立全量缓存准备显式调用 `make lean-cache-ensure FULL_BUILD=1`，仅全量路径允许 donor clonefile。Release 与 Actions 恢复使用各自的入口。
 
@@ -502,7 +500,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 准备登记模块的原生报告。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 发布数学库的编译产物，消费者按检查范围生成模块报告。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -515,17 +513,15 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 普通 PR 和 push 的 `check-source` 执行 SL-003 容量检查、SL-015 路径策略和适用的基线诊断。命中定向准入时，`check-current` 和适用的 `check-delta` 共用变更路径与经验证的局部报告。Lean 规则检查选中模块及其依赖闭包，delta 按本次变更执行适用规则，包括测试拓扑及 SL-030/031/032。选中范围没有 Lean 目标时，可以使用零份报告。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
-**状态与决策。** 每个普通 CI 作业固定一份可见的完整索引。首发切换前从受保护 dev 的完整 seed 恢复。命中、未命中和 post-job 均只读共享 Project、NuGet、judge、elan 与依赖缓存。恢复失败时由本地构建及 required checks 给出结果。旧代与新代均可独立读取。
+**状态与决策。** 每个普通 CI 作业固定一份可见的完整索引。首次发布前，缺项在当前作业按需编译。命中、未命中和 post-job 均只读共享 Project、NuGet、judge、elan 与依赖缓存。恢复失败时由本地构建及 required checks 给出结果。旧代与新代均可独立读取。
 
 **版本与存储地址**
 
 | 标识 | 用途 |
 | --- | --- |
-| `refs/heads/lean-cache-published` | 指向最近完成双端校验的版本。标记携带源码提交和完整索引摘要，其父链保留历史版本。 |
-| `lean-generation-v1-<索引 SHA256>` | Actions 索引键和对应的完整 Release 标签。CI 索引遭驱逐或损坏时可按同一摘要恢复 Release 索引。 |
-| `lean-cache-objects-v1` 及其摘要前缀分桶 | 持久保存多个版本共享的物理卷。索引中的卷摘要、偏移、帧长度和 SHA256 支持定向下载。 |
-| `lean-checkpoint-v1-<环境摘要>-<检查点摘要>` | 发现可跨运行续用的已验证批次。mathlib 修订变化后按新环境的目标键选择批次。 |
-| `lean-generation-bootstrap-v1` | 固定首发使用的完整旧 CI 索引及其生产者。 |
+| `refs/heads/lean-modules-published` | 指向最近发布完整模块索引的源码提交。 |
+| `lean-modules-<源码提交>` | Release 版本标签。版本索引将每个模块映射到分片及实际持有它的 Release。 |
+| `<mathlib revision>-<模块前缀>` | Actions 缓存键，对应 Release 文件名为同名加 `.tar.gz`。父子前缀可共存，按模块归属读取。 |
 | `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
 | `stratalint-raw-lean-report-v4` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
@@ -533,7 +529,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
-**模块报告重产。** 本地显式入口为 `make lean-cache-prepare FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。常规发布依据报告输入、utility 与登记的提取程序确定要准备的目标。编译与报告恢复均保留 Lean、utility/audit 与报告验证要求。
+**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。模块报告由定向检查或冻结入口按需产生。
 
 [普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
 
