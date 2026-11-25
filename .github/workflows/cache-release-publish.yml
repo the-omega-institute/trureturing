@@ -62,6 +62,8 @@ jobs:
           ref: ${{ needs.pin.outputs.source }}
           persist-credentials: false
       - run: python3 .github/scripts/install-tools.py
+      - name: Install the pinned Lean header parser
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Plan changes by module prefix
         id: shards
         env:
