@@ -191,15 +191,21 @@ private theorem action_smul (N : QuantumChannel A B) (z : ℂ) (X : Matrix A A �
     matrixAction N (z • X) = z • matrixAction N X :=
   map_smul N.toCompletelyPositiveMap _ _
 
+/-- A finite Kraus family with the trace-preserving normalization. -/
+abbrev NormalizedKraus (I B A : Type*) [Fintype I] [Fintype B] [DecidableEq A] :=
+  { K : I → Matrix B A ℂ // (∑ i, (K i)ᴴ * K i) = 1 }
+
 /-- For arbitrary input matrices, the composed ordinary Petz decoder agrees
 with the ordinary decoder of the forward composite, with fixed reference reset. -/
-theorem completed_petz_transitivity (K : I → Matrix B A ℂ) (L : J → Matrix C B ℂ)
-    (hK : (∑ i, (K i)ᴴ * K i) = 1) (hL : (∑ j, (L j)ᴴ * L j) = 1)
-    (σ : DensityState A) (X : Matrix C C ℂ) :
-    let sequential := matrixAction (completedPetz K hK σ)
-      (matrixAction (completedPetz L hL ((krausChannel K hK).mapState σ)) X)
-    matrixAction (compositePetz K L hK hL σ) X = sequential := by
+theorem completed_petz_transitivity (first : NormalizedKraus I B A)
+    (second : NormalizedKraus J C B) (σ : DensityState A) (X : Matrix C C ℂ) :
+    let sequential := matrixAction (completedPetz first.1 first.2 σ)
+      (matrixAction (completedPetz second.1 second.2
+        ((krausChannel first.1 first.2).mapState σ)) X)
+    matrixAction (compositePetz first.1 second.1 first.2 second.2 σ) X = sequential := by
   classical
+  obtain ⟨K, hK⟩ := first
+  obtain ⟨L, hL⟩ := second
   dsimp only
   let τ := (krausChannel K hK).mapState σ
   let υ := (krausChannel L hL).mapState τ
@@ -352,8 +358,9 @@ theorem compression_recovers_benchmark (K : I → Matrix (R × F) (R × E) ℂ)
       partialTraceRight X)
     (ρ σ : DensityState (R × E)) :
     let N := krausChannel K hK
+    let original := benchmark ρ σ
     (completedPetz K hK σ).mapState (benchmark (N.mapState ρ) (N.mapState σ)) =
-      benchmark ρ σ := by
+      original := by
   dsimp only
   let L := actual_kraus_representation (retainedErasure (R := R) (E := F))
   let L₀ := actual_kraus_representation (retainedErasure (R := R) (E := E))
@@ -370,7 +377,7 @@ theorem compression_recovers_benchmark (K : I → Matrix (R × F) (R × E) ℂ)
     (matrixAction (completedPetz L.kraus L.hkraus ((krausChannel K hK).mapState σ))
       (raw (marginalRight ((krausChannel K hK).mapState ρ)))) =
     matrixAction (completedPetz L₀.kraus L₀.hkraus σ) (raw (marginalRight ρ))
-  rw [hmarg, ← completed_petz_transitivity]
+  rw [hmarg, ← completed_petz_transitivity ⟨K, hK⟩ ⟨L.kraus, L.hkraus⟩ σ]
   change matrixAction (completedPetz (compositeKraus K L.kraus)
     (composite_complete K L.kraus hK L.hkraus) σ) (raw (marginalRight ρ)) = _
   rw [decoder_of_partialTrace _ _ hcomp, decoder_of_partialTrace _ _ krausErasure_apply]
@@ -418,8 +425,9 @@ theorem strict_score_of_decoder_residual (K : I → Matrix (R × F) (R × E) ℂ
     let ρ' := N.mapState ρ
     let σ' := N.mapState σ
     let decoded := (completedPetz K hK σ).mapState ρ'
+    let budget := Real.sqrt (threshold * loss ρ σ)
     traceNorm (raw ρ - raw decoded) ≤ ε →
-    ε + Real.sqrt (threshold * loss ρ σ) < traceNorm (raw ρ - raw (benchmark ρ σ)) →
+    ε + budget < traceNorm (raw ρ - raw (benchmark ρ σ)) →
     0 < loss ρ' σ' ∧ threshold < compressionScore ρ' σ' := by
   classical
   dsimp only

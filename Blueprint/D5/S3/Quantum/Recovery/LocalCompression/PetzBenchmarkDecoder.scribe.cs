@@ -35,7 +35,7 @@ internal sealed class PetzBenchmarkDecoderDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The score divides the squared unhalved trace norm of the source-to-benchmark difference by the supported entropy loss of the retained partial trace. Exact benchmark reconstruction and trace-norm contraction bound the compressed contrast below by the original contrast minus the measured source reconstruction error.")),
+                    Paragraph(Text("The source support lies in the reference support, and the score threshold is nonnegative. The score divides the squared unhalved trace norm of the source-to-benchmark difference by the supported entropy loss of the retained partial trace. Exact benchmark reconstruction and trace-norm contraction bound the compressed contrast below by the original contrast minus the measured source reconstruction error.")),
                     Paragraph(Text("The retained marginals are fixed, so supported data processing bounds the compressed entropy loss by the original loss. If the reconstruction error plus the square root of the threshold times the original loss is strictly smaller than the original contrast, the compressed contrast is positive. The supported equality criterion gives positive compressed loss and the compressed score strictly exceeds the threshold."))),
                 DescribeRole.Theorem))));
 }
