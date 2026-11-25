@@ -325,6 +325,18 @@ theorem cleared_gap_two_one_one (p : ℕ) (a b c : ℝ) :
   rw [show pole a 1 * (pole a 1 * (pole b 1 * pole c 1)) = pole a 2 * (pole b 1 * pole c 1) by
     rw [pole_add a 1 1, mul_assoc], hcoeff]
 
+/-- The contribution of each node to the scalar word deficit with four
+distinct spectral slots, after clearing the common denominator. -/
+theorem cleared_gap_one_one_one_one (p : ℕ) (a b c d : ℝ) :
+    ((a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)) * FourCopyGap.gapDefect p a b c d =
+      a^3*(b-c)*(b-d)*(c-d)*a^p - b^3*(a-c)*(a-d)*(c-d)*b^p +
+      c^3*(a-b)*(a-d)*(b-d)*c^p - d^3*(a-b)*(a-c)*(b-c)*d^p -
+      ((a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)) *
+        ((FourCopyGap.gaps p).card * FourCopyGap.balanced p a b c d) := by
+  have hcoeff := congrArg (PowerSeries.coeff p) (pole_one_one_one_one a b c d)
+  simp only [PowerSeries.coeff_C_mul, map_add, map_sub, coeff_pole_one] at hcoeff
+  rw [gapDefect_eq_coeff_poles, mul_sub, hcoeff]
+
 end
 
 end RefinedBMV.ThreeBlockGram.PositiveSpectrum
