@@ -13,11 +13,11 @@ escape_witness: form (2), the public conclusion `result` itself: both sides sati
   the k = 0 case is proved by induction on n with an integer induction in r from the anchor r = 1
   (`mainK0`), and the general case by induction on k (`mainAll`)
 admission_basis: open-problem-resolution (issue #10170)
-Direct frozen dependencies: D5/S0/Conventions/IntegerIndexBinomial (`binom_std`, the shared integer-lower-index
+Direct frozen dependencies: D5/S0/Conventions/IntegerIndexBinomial/Native (`binom_std`, the shared integer-lower-index
   binomial coefficient, moved there from D5/S0/Certificates/ShankarQStieltjesRefutation)
 -/
 
-import D5.S0.Conventions.IntegerIndexBinomial
+import D5.S0.Conventions.IntegerIndexBinomial.Native
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Int.Interval
 import Mathlib.RingTheory.Binomial

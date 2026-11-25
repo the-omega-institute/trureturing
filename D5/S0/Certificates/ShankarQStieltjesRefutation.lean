@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=terminal=gid:D5/S0/Certificates/ShankarQStieltjesRefutation.closed_form_not_stieltjes
    digest: An exact negative shifted moment form refutes the Shankar Q Stieltjes claim. -/
 
-import D5.S0.Conventions.IntegerIndexBinomial
+import D5.S0.Conventions.IntegerIndexBinomial.Native
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
 import Mathlib.Data.Fin.VecNotation

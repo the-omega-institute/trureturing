@@ -31,7 +31,7 @@ Shared owner: D5/S0/Conventions/IntegerIndexBinomial.ballotE_std.
 ballotE_eq -> coeff_eq, row_sum_q, sum_eval_even.
 -/
 
-import D5.S0.Conventions.IntegerIndexBinomial
+import D5.S0.Conventions.IntegerIndexBinomial.Native
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
 

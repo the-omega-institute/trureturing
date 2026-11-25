@@ -5,7 +5,7 @@
    anchors: []
    digest: A traceable semantic entry shifts losslessly to an open entry at the next layer. -/
 
-import D5.S0.History.ResidualLedger
+import D5.S0.History.ResidualLedger.Native
 import Mathlib.Logic.Equiv.Basic
 
 /- Provenance: the source atom supplies the typed layer transition. Pinned

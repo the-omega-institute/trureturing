@@ -45,7 +45,7 @@ Declaration proof_shape (same-delivery helpers expanded):
   chebS_degree: bind-only; consumers: PathCHSNormBCSRemark43.nodal_eq_S, AndersonDefectFamily.discriminant_attains, AndersonDefectFamily.rational_discriminant_degree.
 -/
 
-import D5.S0.Conventions.IntegerIndexBinomial
+import D5.S0.Conventions.IntegerIndexBinomial.Native
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 import D5.S3.Combinatorics.NarayanaStrip.CiglerStripProductContinuants
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant

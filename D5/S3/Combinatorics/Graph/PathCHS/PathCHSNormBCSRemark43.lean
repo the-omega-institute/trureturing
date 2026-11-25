@@ -38,7 +38,7 @@ Declaration proof_shape (same-delivery helpers expanded):
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
-import D5.S0.Conventions.IntegerIndexBinomial
+import D5.S0.Conventions.IntegerIndexBinomial.Native
 import D5.S3.Combinatorics.NarayanaStrip.CiglerStripProductContinuants
 import D5.S3.QuantumBounds.ReferenceFrame.TopEigenspace
 import D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
