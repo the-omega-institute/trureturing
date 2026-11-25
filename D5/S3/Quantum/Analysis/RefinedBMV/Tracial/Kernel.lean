@@ -12,6 +12,7 @@ import Mathlib.Analysis.Matrix.Order
 import Mathlib.Basic.Complex.BigOperators
 import D5.S3.Quantum.Analysis.RefinedBMV43Kernel
 import D5.S3.Quantum.Analysis.RefinedBMVDimThreeInteger
+import D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap
 
 /-! Positivity of the cubic trace with a centered scalar Gram kernel. -/
 
@@ -226,6 +227,155 @@ theorem mixedMomentTrace
     Finset.sum_congr rfl fun k _ => ?_
   ring
 
+open private DimThree.runBeforeB from D5.S3.Quantum.Analysis.RefinedBMVUniformWords
+open private FourCopyGap.sum_words_cyclic FourCopyGap.rotate FourCopyGap.word_count
+  FourCopyGap.count_relation FourCopyGap.gaps_card_pos
+  from D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap
+
+/-- In a tracial algebra, the mean over ordered words with four second
+factors equals the mean over their four cyclic gaps. -/
+theorem fourthWordMean_eq_gapMean
+    (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
+    (a b : A) (p : ℕ) :
+    ((balancedWords p 4).map fun w =>
+        τ ((w.map fun letter => if letter then a else b).prod)).sum /
+        ((balancedWords p 4).length : ℂ) =
+      (∑ g ∈ FourCopyGap.gaps p,
+        τ ((a ^ g.1 * b) * (a ^ g.2.1 * b) * (a ^ g.2.2.1 * b) * (a ^ g.2.2.2 * b))) /
+        ((FourCopyGap.gaps p).card : ℂ) := by
+  let v (w : List Bool) : ℂ := τ ((w.map fun letter => if letter then a else b).prod)
+  let F (g : FourCopyGap.Gap) : ℂ :=
+    τ ((a ^ g.1 * b) * (a ^ g.2.1 * b) * (a ^ g.2.2.1 * b) * (a ^ g.2.2.2 * b))
+  have hcut (i j k l m : ℕ) : v (DimThree.runBeforeB i (DimThree.runBeforeB j
+      (DimThree.runBeforeB k (DimThree.runBeforeB l (List.replicate m true))))) =
+        F (j, k, l, m + i) := by
+    simpa only [v, F, DimThree.runBeforeB, List.map_append, List.map_replicate,
+      List.map_cons, List.map_nil, Bool.false_eq_true, if_false, if_true,
+      List.prod_append, List.prod_replicate, List.prod_cons, List.prod_nil,
+      mul_one, pow_add, mul_assoc] using
+        hτ (a ^ i * b) (a ^ j * b * a ^ k * b * a ^ l * b * a ^ m)
+  have hcycle (g : FourCopyGap.Gap) : F (FourCopyGap.rotate g) = F g := by
+    simpa only [F, FourCopyGap.rotate, mul_assoc] using
+      hτ ((a ^ g.2.1 * b) * (a ^ g.2.2.1 * b) * (a ^ g.2.2.2 * b)) (a ^ g.1 * b)
+  have hs := FourCopyGap.sum_words_cyclic p v F hcut hcycle
+  have hwNat : (balancedWords p 4).length ≠ 0 := by
+    rw [FourCopyGap.word_count]
+    exact (Nat.choose_pos (show 4 ≤ p + 4 by omega)).ne'
+  have hw : ((balancedWords p 4).length : ℂ) ≠ 0 := by exact_mod_cast hwNat
+  have hg : ((FourCopyGap.gaps p).card : ℂ) ≠ 0 :=
+    by exact_mod_cast (FourCopyGap.gaps_card_pos p).ne'
+  change ((balancedWords p 4).map v).sum / (balancedWords p 4).length =
+    (∑ g ∈ FourCopyGap.gaps p, F g) / (FourCopyGap.gaps p).card
+  apply (div_eq_div_iff hw hg).mpr
+  linear_combination ((FourCopyGap.gaps p).card : ℂ) / 4 * hs -
+    (∑ g ∈ FourCopyGap.gaps p, F g) / 4 * FourCopyGap.count_relation p
+
+private theorem weightedFourthTrace (τ : A →P[ℂ] ℂ) (P : ι → A) (B : A)
+    (u v w z : ι → ℂ) :
+    τ (((∑ i, u i • P i) * B) * ((∑ j, v j • P j) * B) *
+      ((∑ k, w k • P k) * B) * ((∑ l, z l • P l) * B)) =
+      ∑ i, ∑ j, ∑ k, ∑ l, u i * v j * w k * z l *
+        τ ((P i * B) * (P j * B) * (P k * B) * (P l * B)) := by
+  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm,
+    map_sum, map_smul, smul_eq_mul, mul_assoc]
+  let f (i j k l : ι) :=
+    u i * v j * w k * z l * τ ((P i * B) * (P j * B) * (P k * B) * (P l * B))
+  calc
+    _ = ∑ l, ∑ k, ∑ j, ∑ i, f i j k l := by
+      refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ =>
+        Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
+      simp only [f, mul_assoc]
+      <;> ring
+    _ = ∑ l, ∑ k, ∑ i, ∑ j, f i j k l := by
+      exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => Finset.sum_comm
+    _ = ∑ l, ∑ i, ∑ k, ∑ j, f i j k l := by
+      exact Finset.sum_congr rfl fun l _ => Finset.sum_comm
+    _ = ∑ i, ∑ l, ∑ k, ∑ j, f i j k l := Finset.sum_comm
+    _ = ∑ i, ∑ l, ∑ j, ∑ k, f i j k l := by
+      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => Finset.sum_comm
+    _ = ∑ i, ∑ j, ∑ l, ∑ k, f i j k l := by
+      exact Finset.sum_congr rfl fun i _ => Finset.sum_comm
+    _ = ∑ i, ∑ j, ∑ k, ∑ l, f i j k l := by
+      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_comm
+    _ = _ := by simp only [f, mul_assoc]
+
+open private FourCopyGap.monomial FourCopyGap.balanced
+  from D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap in
+/-- Four moments in a tracial algebra contract against the same deficit
+kernel as the finite matrix comparison. This applies to arbitrary finite
+spectral families and to positive moment approximants. -/
+theorem fourthMomentTrace_defect_eq
+    (τ : A →P[ℂ] ℂ) (P : ι → A) (B : A) (x : ι → ℝ) (p : ℕ) :
+    (∑ g ∈ FourCopyGap.gaps p,
+      τ ((moment x P g.1 * B) * (moment x P g.2.1 * B) *
+        (moment x P g.2.2.1 * B) * (moment x P g.2.2.2 * B))) -
+      ((FourCopyGap.gaps p).card : ℂ) *
+        τ (((∑ i, ((x i ^ ((p : ℝ) / 4) : ℝ) : ℂ) • P i) * B) ^ 4) =
+      ∑ i, ∑ j, ∑ k, ∑ l, (FourCopyGap.gapDefect p (x i) (x j) (x k) (x l) : ℂ) *
+        τ ((P i * B) * (P j * B) * (P k * B) * (P l * B)) := by
+  let walk : (ι → ι → ι → ι → ℂ) →ₗ[ℂ] ℂ :=
+    { toFun := fun f => ∑ i, ∑ j, ∑ k, ∑ l,
+        f i j k l * τ ((P i * B) * (P j * B) * (P k * B) * (P l * B))
+      map_add' := by simp [Pi.add_apply, add_mul, Finset.sum_add_distrib]
+      map_smul' := by simp [Pi.smul_apply, smul_eq_mul, mul_assoc, Finset.mul_sum] }
+  have hgap (g : FourCopyGap.Gap) :
+      τ ((moment x P g.1 * B) * (moment x P g.2.1 * B) *
+        (moment x P g.2.2.1 * B) * (moment x P g.2.2.2 * B)) =
+      walk (fun i j k l ↦ (FourCopyGap.monomial (x i) (x j) (x k) (x l) g : ℂ)) := by
+    simpa only [walk, moment, FourCopyGap.monomial, Complex.ofReal_mul, LinearMap.coe_mk,
+      AddHom.coe_mk] using weightedFourthTrace τ P B
+        (fun i ↦ (x i ^ g.1 : ℝ)) (fun j ↦ (x j ^ g.2.1 : ℝ))
+        (fun k ↦ (x k ^ g.2.2.1 : ℝ)) (fun l ↦ (x l ^ g.2.2.2 : ℝ))
+  let q (i : ι) : ℂ := (x i ^ ((p : ℝ) / 4) : ℝ)
+  have hroot : τ (((∑ i, q i • P i) * B) ^ 4) =
+      walk (fun i j k l ↦ (FourCopyGap.balanced p (x i) (x j) (x k) (x l) : ℂ)) := by
+    simpa only [q, walk, FourCopyGap.balanced, Complex.ofReal_mul, LinearMap.coe_mk, AddHom.coe_mk,
+      pow_succ, pow_zero, one_mul] using weightedFourthTrace τ P B q q q q
+  simp_rw [hgap]
+  change _ - ((FourCopyGap.gaps p).card : ℂ) * τ (((∑ i, q i • P i) * B) ^ 4) =
+    walk (fun i j k l ↦ (FourCopyGap.gapDefect p (x i) (x j) (x k) (x l) : ℂ))
+  rw [hroot, ← map_sum]
+  change walk _ - ((FourCopyGap.gaps p).card : ℂ) • walk _ = _
+  rw [← map_smul, ← map_sub]
+  congr 1
+  funext i j k l
+  simp only [FourCopyGap.gapDefect, Complex.ofReal_sub, Complex.ofReal_mul,
+    Complex.ofReal_natCast, Complex.ofReal_sum, Pi.sub_apply, Pi.smul_apply,
+    Finset.sum_apply, smul_eq_mul]
+
+/-- The actual four-copy word deficit of a finite spectral decomposition
+is the contraction of the scalar gap kernel in a tracial algebra. -/
+theorem fourthWordDefect_eq_of_orthogonal
+    (τ : A →P[ℂ] ℂ) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
+    (P : ι → A) (B : A) (x : ι → ℝ) (p : ℕ) [DecidableEq ι]
+    (hsum : ∑ i, P i = 1)
+    (horth : ∀ i j, P i * P j = if i = j then P i else 0) :
+    let A₁ := moment x P 1
+    let A₂ := ∑ i, ((x i ^ ((p : ℝ) / 4) : ℝ) : ℂ) • P i
+    ((FourCopyGap.gaps p).card : ℂ) *
+      (((balancedWords p 4).map fun w =>
+        τ ((w.map fun letter => if letter then A₁ else B).prod)).sum /
+        ((balancedWords p 4).length : ℂ) - τ ((A₂ * B) ^ 4)) =
+      ∑ i, ∑ j, ∑ k, ∑ l, (FourCopyGap.gapDefect p (x i) (x j) (x k) (x l) : ℂ) *
+        τ ((P i * B) * (P j * B) * (P k * B) * (P l * B)) := by
+  dsimp only
+  have hmul (r s : ℕ) : moment x P r * moment x P s = moment x P (r+s) := by
+    simp only [moment, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [Finset.sum_eq_single j]
+    · rw [horth, if_pos rfl, smul_smul, ← Complex.ofReal_mul, ← pow_add, Nat.add_comm]
+    · intro i _ hij
+      rw [horth, if_neg hij, smul_zero]
+    · simp
+  have hpow (k : ℕ) : (moment x P 1)^k = moment x P k := by
+    induction k with
+    | zero => simp [moment, hsum]
+    | succ k ih => rw [pow_succ, ih, hmul]
+  have hn : ((FourCopyGap.gaps p).card : ℂ) ≠ 0 :=
+    by exact_mod_cast (FourCopyGap.gaps_card_pos p).ne'
+  rw [fourthWordMean_eq_gapMean τ hτ, mul_sub, mul_div_cancel₀ _ hn]
+  simp_rw [hpow]
+  exact fourthMomentTrace_defect_eq τ P B x p
 
 open DimThree (gaps defect)
 

@@ -337,6 +337,41 @@ theorem cleared_gap_one_one_one_one (p : ℕ) (a b c d : ℝ) :
   simp only [PowerSeries.coeff_C_mul, map_add, map_sub, coeff_pole_one] at hcoeff
   rw [gapDefect_eq_coeff_poles, mul_sub, hcoeff]
 
+/-- The scalar gap deficit at four distinct nodes is the sum of their
+simple-pole contributions minus the balanced monomial. -/
+theorem gapDefect_eq_simple_poles (p : ℕ) (a b c d : ℝ)
+    (hab : a ≠ b) (hac : a ≠ c) (had : a ≠ d)
+    (hbc : b ≠ c) (hbd : b ≠ d) (hcd : c ≠ d) :
+    FourCopyGap.gapDefect p a b c d =
+      a^3 / ((a-b)*(a-c)*(a-d)) * a^p +
+      b^3 / ((b-a)*(b-c)*(b-d)) * b^p +
+      c^3 / ((c-a)*(c-b)*(c-d)) * c^p +
+      d^3 / ((d-a)*(d-b)*(d-c)) * d^p -
+      ((FourCopyGap.gaps p).card : ℝ) * FourCopyGap.balanced p a b c d := by
+  let Δ := (a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)
+  have hΔ : Δ ≠ 0 := by
+    simp [Δ, mul_ne_zero_iff, sub_ne_zero, hab, hac, had, hbc, hbd, hcd]
+  have scale (f t k g : ℝ) (ht : t ≠ 0) (he : Δ = t*k) :
+      Δ * (f / t * g) = k*f*g := by
+    rw [he]
+    calc
+      _ = k * (t * (f / t)) * g := by ring
+      _ = _ := by rw [mul_div_cancel₀ _ ht]
+  have ha := scale (a^3) ((a-b)*(a-c)*(a-d)) ((b-c)*(b-d)*(c-d)) (a^p)
+    (by simp [mul_ne_zero_iff, sub_ne_zero, hab, hac, had]) (by dsimp [Δ]; ring)
+  have hb := scale (b^3) ((b-a)*(b-c)*(b-d)) (-(a-c)*(a-d)*(c-d)) (b^p)
+    (by simp [mul_ne_zero_iff, sub_ne_zero, hab.symm, hbc, hbd]) (by dsimp [Δ]; ring)
+  have hc := scale (c^3) ((c-a)*(c-b)*(c-d)) ((a-b)*(a-d)*(b-d)) (c^p)
+    (by simp [mul_ne_zero_iff, sub_ne_zero, hac.symm, hbc.symm, hcd]) (by dsimp [Δ]; ring)
+  have hd := scale (d^3) ((d-a)*(d-b)*(d-c)) (-(a-b)*(a-c)*(b-c)) (d^p)
+    (by simp [mul_ne_zero_iff, sub_ne_zero, had.symm, hbd.symm, hcd.symm]) (by dsimp [Δ]; ring)
+  have hcoeff := cleared_gap_one_one_one_one p a b c d
+  change Δ * _ = _ at hcoeff
+  apply mul_left_cancel₀ hΔ
+  rw [hcoeff, mul_sub Δ, mul_add Δ, mul_add Δ, mul_add Δ, ha, hb, hc, hd]
+  dsimp [Δ]
+  ring
+
 end
 
 end RefinedBMV.ThreeBlockGram.PositiveSpectrum
