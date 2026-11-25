@@ -47,9 +47,9 @@ def source_registration : Registration arena (type_of% @paired_parity_bound) whe
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), (1 : ℝ), (1/2 : ℝ), ?_⟩
-    change parityMultiplier 1 ≠ parityMultiplier (1/2)
-    norm_num [parityMultiplier]
+    refine ⟨(), (1 : ℝ), (1/4 : ℝ), ?_⟩
+    change parityMultiplier 1 ≠ parityMultiplier (1/4)
+    norm_num [parityMultiplier, max_def]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

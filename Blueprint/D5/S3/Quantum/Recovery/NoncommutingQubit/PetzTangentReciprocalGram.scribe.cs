@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.NoncommutingQubit;
 internal sealed class PetzTangentReciprocalGramDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The two parity sectors of the qubit tangent residual obey the common marginal-dependent reciprocal Gram bound.",
+        "The normalized even and odd scalar reciprocal profiles obey a common node-dependent Gram bound.",
         H("Paired reciprocal Gram bounds for the Petz tangent"),
         Blocks(
             Describe.Lean(
@@ -15,9 +15,9 @@ internal sealed class PetzTangentReciprocalGramDocument : IScribeDocumentDefinit
                 H("Combined reciprocal parity estimate"),
                 StatementSource.FromAuthor(ParityFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive g, 0<δ≤1, and real β satisfying g²+β²≤1, the displayed estimate holds for arbitrary complex coefficients. For the arcsine functionals, the even coefficients are normalized by 1/x and the odd coefficients by 1/(x(x+g)), for nodes x in {1,δ}. At δ=1, the multiplier equals the sharp uniform value one.")),
-                    Paragraph(Text("The unweighted odd Gram splits into a common even lower Gram and a positive correction with unsquared reciprocal nodes. The even estimate uses the square-root chord bound. At coincident nodes, the even diagonal equals one and the unweighted odd diagonal is at least one. Both sector estimates retain the two-node cross terms.")),
-                    Paragraph(Text("The physical common-reference tangent application requires the arcsine evaluations and substitution back to the affine spectral variable, followed by identification with the actual arithmetic BKM residual and ordinary Petz sandwich."))),
+                Blocks(Paragraph(Text("The coefficients are arbitrary complex numbers. For the arcsine functionals, the even coefficients are normalized by 1/x and the odd coefficients by 1/(x(x+g)), for nodes x in {1,δ}. Positivity of g and δ keeps the reciprocal nodes positive for the integral identities and makes both coefficient normalizations invertible. The physical range δ≤1 corresponds to taking the positive ratio of the smaller node to the larger one. In the proof this ordering bounds the cross-entry denominators and gives the square-root chord estimate. The disk condition g²+β²≤1 makes the final linear combination a contraction and gives g≤1 for comparison of the odd kernels.")),
+                    Paragraph(Text("The unweighted odd Gram splits into a common even lower Gram and a positive correction with unsquared reciprocal nodes. The cross entries are bounded below by δ in the weighted even and unweighted odd Grams. For real coefficients of the same sign, completing the square gives the rational factor in the displayed maximum. For coefficients of opposite signs, the common even lower Gram gives the factor two. The real estimates apply to the real and imaginary parts of each profile. At δ=1 the even diagonal equals one and the unweighted odd diagonal is at least one. The multiplier one is sharp there.")),
+                    Paragraph(Text("The physical common-reference tangent application remains pending. It requires the arcsine evaluations and substitution back to the affine spectral variable, followed by identification with the arithmetic BKM residual and the ordinary Petz sandwich for the same physical reference and tangent."))),
                 DescribeRole.Theorem))));
 
     private static Formula ParityFormula()
@@ -52,7 +52,8 @@ internal sealed class PetzTangentReciprocalGramDocument : IScribeDocumentDefinit
         Formula k = F.Seq(F.Id("K"), Par(delta));
         Formula cases = F.Seq(F.Begin, F.Grp(F.Id("cases")),
             one, F.Amp, delta, F.Eq, one, F.RowBreak,
-            Add(one, Rat(two, Add(one, Sq(delta)))),
+            F.Max, Par(F.Seq(two, F.Comma,
+                Rat(F.Seq(F.D(3), F.Minus, delta), Add(one, delta)))),
             F.Amp, delta, F.Neq, one,
             F.End, F.Grp(F.Id("cases")));
 
