@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The explicit order floor(640a) suppresses the absolute Laplace moment outside the critical multiplicative window. -/
+   digest: Explicit gamma moments suppress mass outside a multiplicative window. -/
 
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
@@ -17,19 +17,19 @@ noncomputable section
 open MeasureTheory Real Set
 namespace D5.S3.Analytic.Laplace.CriticalGammaWindow
 
-private def moment (k : ℕ) (rate u : ℝ) := u ^ k * exp (-(rate * u)) / k.factorial
+def moment (k : ℕ) (rate u : ℝ) := u ^ k * exp (-(rate * u)) / k.factorial
 
 private lemma moment_nonneg (k : ℕ) (r : ℝ) {u : ℝ} (hu : 0 ≤ u) :
     0 ≤ moment k r u := by unfold moment; positivity
 
-private lemma moment_integrable (k : ℕ) {r : ℝ} (hr : 0 < r) :
+lemma moment_integrable (k : ℕ) {r : ℝ} (hr : 0 < r) :
     IntegrableOn (moment k r) (Ioi 0) := by
   have hi := integrableOn_rpow_mul_exp_neg_mul_rpow (s := (k : ℝ)) (p := 1) (b := r)
     (by linarith [Nat.cast_nonneg (α := ℝ) k] : -1 < (k : ℝ)) (by norm_num) hr
   unfold moment IntegrableOn
   simpa only [rpow_one, Real.rpow_natCast, neg_mul] using hi.div_const (k.factorial : ℝ)
 
-private lemma moment_integral (k : ℕ) {r : ℝ} (hr : 0 < r) :
+lemma moment_integral (k : ℕ) {r : ℝ} (hr : 0 < r) :
     (∫ u in Ioi 0, moment k r u) = r⁻¹ ^ (k+1) := by
   have h := Real.integral_rpow_mul_exp_neg_mul_Ioi (a := (k : ℝ)+1) (by positivity) hr
   simp only [add_sub_cancel_right, Real.rpow_natCast, Real.Gamma_nat_eq_factorial, one_div,
@@ -61,7 +61,8 @@ private lemma variable_tilt {g : ℝ → ℝ} (hg : Measurable g) {M : ℝ}
   have hi : IntegrableOn (fun u => |g u| * moment k σ u) S := by
     refine (hmajor.mono_set hpos).mono' hmeas.aestronglyMeasurable ?_
     filter_upwards [ae_restrict_mem hS] with u hu
-    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (abs_nonneg _) (moment_nonneg k _ (show 0 < u from hpos hu).le))]
+    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (abs_nonneg _)
+      (moment_nonneg k _ (show 0 < u from hpos hu).le))]
     exact hp u hu
   refine ⟨hi, ?_⟩
   calc
@@ -265,8 +266,10 @@ holds for every positive cutoff and every measurable input bounded by `M * exp (
 theorem adjustable_window_off_mass {h b : ℝ} (hh : 1 < h) (hb : h < b) :
     let L := fun σ : ℝ => σ*(h*log h-h+1)-2
     let R := fun σ : ℝ => σ*(b-h-h*log (b/h))-2*b
-    (∀ T : ℝ, ∀ᶠ σ : ℝ in Filter.atTop, 2 < σ*(1-h/b) ∧ T < L σ ∧ T < R σ) ∧
-    ∀ {σ : ℝ}, 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
+    (∀ T : ℝ, ∀ᶠ σ : ℝ in Filter.atTop,
+      2 < σ*(1-h/b) ∧ T < L σ ∧ T < R σ) ∧
+    ∀ {σ : ℝ}, 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a →
+      ∀ {g : ℝ → ℝ}, Measurable g →
       ∀ {M : ℝ}, (∀ u, 0 ≤ u → |g u| ≤ M * exp (2*u)) →
       let k := ⌊σ*h*a⌋₊
       let f := fun u : ℝ => |g u| * (u ^ k * exp (-(σ*u)) / k.factorial)
