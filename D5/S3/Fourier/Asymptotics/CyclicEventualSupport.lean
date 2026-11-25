@@ -546,7 +546,7 @@ def gridEmbedding {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k) :
         omega
       | inr j => exact congrArg Sum.inr (backRep_inj (by omega) h)
 
-private theorem sample_eq_abs {q : ℕ} [NeZero q] (i : ZMod q) :
+theorem sample_eq_abs {q : ℕ} [NeZero q] (i : ZMod q) :
     sample i = Real.cos ((i.valMinAbs.natAbs : ℝ) * mesh q) := by
   rw [sample, centeredAngle_eq_mesh, ← Real.cos_abs ((i.valMinAbs : ℝ) * mesh q), abs_mul,
     abs_of_pos mesh_pos, ← Int.cast_abs, Int.abs_eq_natAbs, Int.cast_natCast]

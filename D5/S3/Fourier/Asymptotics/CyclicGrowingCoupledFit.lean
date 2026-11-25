@@ -407,7 +407,7 @@ def coupledMoments (S : Finset ℝ) (n : ℕ) (h : ℝ) (v : Fin 3 → ℝ) : Fi
     momentRow n (rf r) (rx r) (rw r))
 
 /-- The assembled matrix represents the same weighted moments at each site. -/
-private theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
+theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
     (h : ℝ) (v : Fin 3 → ℝ) :
     coupledMomentMatrix S n h *ᵥ v = coupledMoments S n h v := by
   classical

@@ -87,7 +87,7 @@ private theorem target_tendsto {h : ℕ → ℝ} {K : ℝ}
   · exact hb1
   · exact hrear
 
-private theorem critical_bound_mesh_limits {h : ℕ → ℝ}
+theorem critical_bound_mesh_limits {h : ℕ → ℝ}
     (hB : (fun n : ℕ => (n : ℝ)^5 * (h n)^2) =O[atTop] (fun _ => (1 : ℝ))) :
     Tendsto h atTop (𝓝 0) ∧
       Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) ∧
