@@ -1,4 +1,4 @@
-import Lean
+import OmegaChecks.ModuleSurface
 
 /-! Snapshot public uses of mathematical constants with the compiler that built the publication. -/
 
@@ -89,6 +89,28 @@ private def nameKey : Name → String
   | .str parent s => s!"ns({nameKey parent},{s.utf8ByteSize}:{s})"
   | .num parent n => s!"nn({nameKey parent},{n})"
 
+/-- Lean-generated universe binders can include the module name. Match them by
+their argument position while retaining the entire kernel declaration. -/
+private def sameMovedDefinition (before : DefinitionVal) (after : ConstantInfo) : Bool := Id.run do
+  let .defnInfo candidate := after | return false
+  if before.levelParams.length != candidate.levelParams.length then return false
+  let rename := fun (e : Expr) =>
+    e.instantiateLevelParams candidate.levelParams (before.levelParams.map Level.param)
+  let aligned := { candidate with levelParams := before.levelParams,
+                                  type := rename candidate.type, value := rename candidate.value }
+  return ConstantInfo.defnInfo before == ConstantInfo.defnInfo aligned
+
+/-- Load the view of an ordinary client of this one facade. Its imports determine
+what it can see and which global reducibility attributes are active. -/
+private def clientEnvironment (path : System.SearchPath) (mod : Name) (isModule : Bool) : IO Environment := do
+  searchPathRef.set path
+  let level := if isModule then OLeanLevel.exported else .private
+  let mut client ← importModules #[{module := mod}] {} (level := level)
+  for i in [:client.header.moduleNames.size] do
+    for entry in reducibilityExtraExt.ext.getModuleEntries client i do
+      if let .global value := entry then client := reducibilityExtraExt.addEntry client value
+  return client.setExporting isModule
+
 /-- A directly re-exported D5 definition may retain an old public spelling if its new
 owner is independent of all Omega libraries and its compiled declaration is identical. -/
 private def movedDeclarations (env : Environment) (omega : NameSet) (mod : Name)
@@ -114,8 +136,19 @@ private def movedDeclarations (env : Environment) (omega : NameSet) (mod : Name)
       owners := owners.insert owner publicData
     let some after := (owners.find? owner).bind (·.constants.find? (·.name == before.name))
       | throw <| IO.userError s!"moved definition {before.name} is not publicly exposed by {owner}"
-    unless before == after do throw <| IO.userError s!"moved definition {before.name} changed in {owner}"
+    unless sameMovedDefinition defn after do throw <| IO.userError s!"moved definition {before.name} changed in {owner}"
     moved := moved.push after
+  unless moved.isEmpty do
+    let currentPath ← searchPathRef.get
+    let lib ← getLibDir (← findSysroot)
+    let oldClient ← clientEnvironment (System.SearchPath.parse previousPath ++ [lib]) mod previous.isModule
+    let newClient ← clientEnvironment currentPath mod previous.isModule
+    for info in moved do
+      let some before := oldClient.find? info.name | throw <| IO.userError s!"missing public declaration {info.name}"
+      let some after := newClient.find? info.name | throw <| IO.userError s!"moved definition {info.name} is hidden from {mod} clients"
+      unless before.isDefinition && after.isDefinition &&
+          (← OmegaChecks.ModuleSurface.keepsReduction oldClient newClient before after) do
+        throw <| IO.userError s!"public unfolding changed for moved definition {info.name} in {mod}"
   return moved
 
 def main (args : List String) : IO Unit := do

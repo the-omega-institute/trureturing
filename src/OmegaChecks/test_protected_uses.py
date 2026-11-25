@@ -76,16 +76,23 @@ def check():
 
         native = "D5.NativeFixture"
         inner = "D5.TransitiveFixture"
-        obj = ("@[expose] public def D5.naturalObject (n k : Nat) := Nat.choose n k\n"
+        obj = ("public inductive D5.FixtureStatus where | yes | no\n"
+               "@[expose] public def D5.naturalObject (n k : Nat) := Nat.choose n k\n"
                "@[expose] public def D5.count (n k : Nat) := D5.naturalObject n k\n")
         owner_header = "module\npublic import Mathlib.Data.Nat.Choose.Basic\n"
         old = compile_source("old", owner_header + obj)
         folder = Path(temp) / "new"
         search_new = os.pathsep.join([str(folder), search])
         facade = f"module\npublic import {native}\n"
+        client = f"import {module}\nexample (n k : Nat) : D5.naturalObject n k = Nat.choose n k := rfl\n"
+        subprocess.run([lean, "--stdin"], input=client, cwd=ROOT, text=True,
+                       env={**os.environ, "LEAN_PATH": old}, check=True)
         for owner_source, outer, passing in [
             (owner_header + obj, facade, True),
-            (owner_header + obj, f"import {native}\n", True),
+            (owner_header + obj, f"import {native}\n", False),
+            (owner_header + obj + "attribute [irreducible] D5.naturalObject\n", facade, False),
+            (owner_header + obj, facade + "set_option allowUnsafeReducibility true\n"
+                                  "attribute [irreducible] D5.naturalObject\n", False),
             (owner_header + obj.replace(" := ", " := Nat.succ <| "), facade, False),
             (owner_header + obj.replace("k : Nat)", "k : Nat) (_ : Unit)"), facade, False),
             (owner_header + obj, f"module\nimport {native}\n", False),
@@ -96,17 +103,28 @@ def check():
             compile_source("new", facade, search_new, inner)
             new = compile_source("new", outer, search_new)
             if passing:
-                client = f"import {module}\nexample (n k : Nat) : D5.naturalObject n k = Nat.choose n k := rfl\n"
                 subprocess.run([lean, "--stdin"], input=client, cwd=ROOT, text=True,
                                env={**os.environ, "LEAN_PATH": new}, check=True)
                 compare(ROOT, [module], [module], old, new)
             else:
+                if "attribute [irreducible]" in owner_source + outer:
+                    failed = subprocess.run([lean, "--stdin"], input=client, cwd=ROOT, text=True,
+                                            env={**os.environ, "LEAN_PATH": new}, capture_output=True)
+                    assert failed.returncode and "rfl" in failed.stdout + failed.stderr
                 try:
                     compare(ROOT, [module], [module], old, new)
                 except subprocess.CalledProcessError:
                     pass
                 else:
                     raise AssertionError("accepted a changed definition, invalid owner, or non-public direct import")
+
+        # Ordinary imports re-export declarations from legacy files to their legacy clients.
+        legacy_body = ("import Mathlib.Data.Nat.Choose.Basic\n"
+                       + obj.replace("@[expose] public ", "").replace("public inductive", "inductive"))
+        legacy = compile_source("old", legacy_body)
+        compile_source("new", legacy_body, search_new, native)
+        new = compile_source("new", f"import {native}\n", search_new)
+        compare(ROOT, [module], [module], legacy, new)
 
         # New leaves and new positions in existing consumers need a compiled, admitted port.
         header = ("module\npublic import OmegaMathlib.Data.Nat.Prime.Defs\n"

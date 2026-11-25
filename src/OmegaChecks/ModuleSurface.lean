@@ -5,6 +5,24 @@ open Lean
 
 namespace OmegaChecks.ModuleSurface
 
+/-- Preserve the weakest transparency mode in which an ordinary client could unfold the
+old declaration, including any intermediate definitions in the new public representation. -/
+def keepsReduction (old new : Environment) (before after : ConstantInfo) : IO Bool := do
+  let levels := after.levelParams.map Level.param
+  let expected := before.value!.instantiateLevelParams before.levelParams levels
+  let sameBody := expected == after.value!
+  if sameBody && getReducibilityStatusCore old before.name == getReducibilityStatusCore new after.name then
+    return true
+  let context : Core.Context := {fileName := "<public reduction>", fileMap := default}
+  for mode in #[Meta.TransparencyMode.reducible, .instances, .implicit, .default, .all] do
+    let cfg : Meta.Config := {transparency := mode}
+    if ← (Meta.canUnfoldDefault cfg before).toIO' context {env := old} then
+      unless ← (Meta.canUnfoldDefault cfg after).toIO' context {env := new} do return false
+      if sameBody then return true
+      let check := Meta.withTransparency mode <| Meta.isDefEq (mkConst after.name levels) expected
+      return ← check.run' |>.toIO' context {env := new}
+  return false
+
 def isBasis (owner : Name) : Bool :=
   owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib
 

@@ -87,7 +87,7 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
                                                protectedModules=old_modules,
                                                protectedPath=old_path if selected is not None else None)))
             subprocess.run(["lean", "--run", script, request, output], cwd=stage,
-                           env={**os.environ, "LEAN_PATH": ""}, check=True)
+                           env={**os.environ, "LEAN_PATH": str(ROOT / ".lake/build/lib/lean")}, check=True)
             return json.loads(output.read_text())
 
         old = snapshot(before, old_modules, old_path)
