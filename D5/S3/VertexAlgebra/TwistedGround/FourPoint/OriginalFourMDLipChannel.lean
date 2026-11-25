@@ -48,12 +48,14 @@ private theorem dLipMeanEntry_analyticAt (upperA l e : Bool) (p : ℕ) {t : ℝ}
         (f := fun z : ℂ × ℂ => z.2) analyticAt_snd rfl) (dPeriod_ne_zero upperA ht)
   exact analytic_coefficient_slice hf p
 
-private def dLipCovarianceEntry (D : LatticeData) (upperA l k : Bool)
+/-- The Gram-weighted Taylor entry of the covariance on the selected D lip. -/
+def dLipCovarianceEntry (D : LatticeData) (upperA l k : Bool)
     (x y : External D) (r : ℂ) : ℂ :=
   coefficient y.2.2 (fun v => coefficient x.2.2 (fun u =>
     gramComplex D x.2.1 y.2.1 * dLipCovariance upperA l k x.1 y.1 u v r))
 
-private theorem dLipCovarianceEntry_analyticAt (D : LatticeData) (upperA l k : Bool)
+/-- The D-lip covariance entry is analytic at the real boundary parameter. -/
+theorem dLipCovarianceEntry_analyticAt (D : LatticeData) (upperA l k : Bool)
     (x y : External D) {t : ℝ} (ht : 1 < t) :
     AnalyticAt ℂ (dLipCovarianceEntry D upperA l k x y) (t : ℂ) := by
   have hf : AnalyticAt ℂ (fun p : ℂ × ℂ × ℂ =>
@@ -70,7 +72,8 @@ private theorem dLipMeanEntry_eq_slit (upperA l e : Bool) (p : ℕ) {r : ℂ}
   filter_upwards [dLipMean_eventuallyEq upperA e hr] with u hu
   rw [hu, dPeriod_eq_slit hr]
 
-private theorem dLipCovarianceEntry_eq_slit (D : LatticeData) (upperA l k : Bool)
+/-- On the open D lip its covariance entry agrees with the slit entry. -/
+theorem dLipCovarianceEntry_eq_slit (D : LatticeData) (upperA l k : Bool)
     (x y : External D) {r : ℂ} (hr : r ∈ dLip upperA) :
     dLipCovarianceEntry D upperA l k x y r = slitCovarianceEntry D l k x y r := by
   unfold dLipCovarianceEntry slitCovarianceEntry

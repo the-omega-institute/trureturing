@@ -129,7 +129,8 @@ open LatticeTwistedGroundRealization.SignQuotient
 
 open private leg from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSectorContinuation
 
-private theorem slit_matrix_symm (D : LatticeData) {Y : Type*} (e : Y → External D)
+/-- The tagged slit covariance is symmetric on the radial disk. -/
+theorem slit_matrix_symm (D : LatticeData) {Y : Type*} (e : Y → External D)
     {t : ℂ} (ht : ‖t‖ < 1) (a b : Y ⊕ Y) : slitMatrix D e t a b = slitMatrix D e t b a := by
   let w := t ^ (1 / 2 : ℂ)
   have hw2 : w ^ 2 = t := by dsimp [w]; rw [← Complex.cpow_mul_nat]; norm_num

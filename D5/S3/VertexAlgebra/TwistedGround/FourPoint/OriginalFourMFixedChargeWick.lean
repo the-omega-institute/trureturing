@@ -39,7 +39,8 @@ open AffineOccurrenceWick (wick)
 open AffineWickConvolution (partitions)
 open AffineWickAssignments (assign wick_transport)
 open NativeAffineTransport (transportCovariance transportMean)
-open private dLipCovarianceEntry dLipMeanEntry from
+open OriginalFourMSectorContinuation (dLipCovarianceEntry)
+open private dLipMeanEntry from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 
 variable {X : Type*}
