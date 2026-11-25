@@ -111,13 +111,17 @@ jobs:
     with:
       source: ${{ needs.pin.outputs.source }}
 
-  publish:
+  plan-reports:
     needs: [pin, compile]
+    outputs:
+      plan_attempt: ${{ steps.identity.outputs.attempt }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+      has_reports: ${{ steps.plan.outputs.has_reports }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
       contents: write
-      actions: write
+      actions: read
     env:
       GH_TOKEN: ${{ github.token }}
       STRATALINT_CACHE_WRITES: 'true'
@@ -148,11 +152,108 @@ jobs:
           global-json-file: global.json
           cache: false
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - name: Complete report and executable targets and publish both indexes
+      - id: identity
+        run: echo "attempt=$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+      - id: plan
+        name: Prepare native programs and assign missing reports
         env:
           FULL_BUILD: '1'
           STRATALINT_ACCEPT_COLD_BUILD: '1'
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         uses: ./.github/actions/lean-cache-shards
         with:
-          operation: publish-generation
+          operation: plan-reports
+      - uses: actions/upload-artifact@v6
+        with:
+          name: lean-facet-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}/facet-plan.json
+          if-no-files-found: error
+          overwrite: true
+
+  build-reports:
+    needs: [pin, plan-reports]
+    if: needs.plan-reports.outputs.has_reports == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan-reports.outputs.matrix) }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-facet-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Build and checkpoint assigned reports
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          FULL_BUILD: '1'
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          REPORT_SHARD: ${{ matrix.shard }}
+        with:
+          operation: build-reports
+      - uses: actions/upload-artifact@v6
+        with:
+          name: lean-report-shard-${{ github.run_id }}-${{ needs.plan-reports.outputs.plan_attempt }}-${{ matrix.shard }}
+          path: ${{ runner.temp }}/report-${{ matrix.shard }}.json
+          if-no-files-found: error
+          overwrite: true
+
+  publish:
+    needs: [pin, plan-reports, build-reports]
+    if: >-
+      !cancelled() && needs.plan-reports.result == 'success' &&
+      ((needs.plan-reports.outputs.has_reports == 'false' && needs.build-reports.result == 'skipped') ||
+      (needs.plan-reports.outputs.has_reports == 'true' && needs.build-reports.result == 'success'))
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-generation-base-${{ github.run_id }}
+          path: ${{ runner.temp }}/base
+          digest-mismatch: error
+      - uses: actions/download-artifact@v8
+        with:
+          name: lean-facet-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - if: needs.plan-reports.outputs.has_reports == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          pattern: lean-report-shard-${{ github.run_id }}-${{ needs.plan-reports.outputs.plan_attempt }}-*
+          path: ${{ runner.temp }}/receipts
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Verify and publish the complete CI and Release indexes
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: commit-generation
