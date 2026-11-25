@@ -15,53 +15,15 @@ from unittest.mock import patch
 import portable
 
 
-PREFIX = "OmegaChecks.Portable"
-MIXED = PREFIX + ".FrozenMeasurementMixedFixture"
-OFFICIAL = PREFIX + ".FrozenMeasurementOfficialFixture"
+MIXED = "OmegaChecks.Portable.FrozenDependencies"
+OFFICIAL = "D5.S0.Computability.KernelComponentPayload"
 TETRAHEDRON = "D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron"
-MIXED_SOURCE = """module
-prelude
-public import OmegaMathlib.Data.Nat.Fib.Basic
-public import Init.Classical
-
-/-! Exercise direct common-interface imports together with an official axiom. -/
-
-namespace OmegaChecks.Portable.FrozenMeasurementMixedFixture
-
-private theorem privateFib :
-    Omega.Eq (Omega.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
-  Omega.Nat.fib_zero
-
-public theorem mixedFib :
-    Omega.Eq (Omega.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
-  Classical.choice (Nonempty.intro privateFib)
-
-end OmegaChecks.Portable.FrozenMeasurementMixedFixture
-"""
-OFFICIAL_SOURCE = """module
-public theorem frozenMeasurementOfficialFixture : True := True.intro
-"""
 
 
 class FrozenMeasurement(unittest.TestCase):
     def test_compiled_pair(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
         self.assertTrue(inspector.is_file(), "prepare reportInspector before running this test")
-        fixtures = {
-            portable.SRC / (name.replace(".", "/") + ".lean"): source
-            for name, source in [(MIXED, MIXED_SOURCE), (OFFICIAL, OFFICIAL_SOURCE)]
-        }
-        for file in fixtures:
-            self.assertFalse(file.exists(), str(file))
-        try:
-            for file, source in fixtures.items():
-                file.write_text(source)
-            self.check_compiled_pair(inspector)
-        finally:
-            for file in fixtures:
-                file.unlink(missing_ok=True)
-
-    def check_compiled_pair(self, inspector):
         names = [OFFICIAL, MIXED, TETRAHEDRON]
         subprocess.run(["lake", "build", *("+" + name for name in names)],
                        cwd=portable.ROOT, check=True)
@@ -108,21 +70,29 @@ class FrozenMeasurement(unittest.TestCase):
 
     def check_source_mutation(self, request, official, inspector, result, published):
         source = portable.SRC / (MIXED.replace(".", "/") + ".lean")
-        before = source.read_bytes()
-        real_measure = portable.measure_staged
+        original_fingerprint = portable.source_fingerprint
+        # Change a private copy between measurements. Concurrent Lake builds can
+        # continue to use the actual source and its compiled artifacts.
+        with tempfile.TemporaryDirectory() as directory:
+            copy_path = Path(directory) / source.name
+            copy_path.write_bytes(source.read_bytes())
 
-        def changed_source(*args, **kwargs):
-            measured = real_measure(*args, **kwargs)
-            source.write_bytes(before + b"\n")
-            return measured
+            def fingerprint(path):
+                return original_fingerprint(copy_path if path == source else path)
 
-        try:
-            with patch.object(portable, "measure_staged", side_effect=changed_source):
+            real_measure = portable.measure_staged
+
+            def changed_source(*args, **kwargs):
+                measured = real_measure(*args, **kwargs)
+                with copy_path.open("ab") as stream:
+                    stream.write(b"\n")
+                return measured
+
+            with patch.object(portable, "source_fingerprint", side_effect=fingerprint), \
+                 patch.object(portable, "measure_staged", side_effect=changed_source):
                 with self.assertRaisesRegex(RuntimeError, "source changed during the backend check"):
                     portable.frozen_measurement(request, official, inspector, result)
             self.assertEqual(result.read_bytes(), published)
-        finally:
-            source.write_bytes(before)
 
     def check_crossed_artifacts(self, tmp):
         name = MIXED
