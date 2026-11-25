@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.basi
 
 *Commentary.*
 
-Store the first site and record the basis outcome of the remaining two factors. Each rectangular encoder matrix is a coisometry onto the stored site, and its adjoint products sum to the input identity. The normalized reverse therefore uses the adjoint in each outcome block. Each composite product has rank m. Its squared mass is m on the first site and one on the second site, so the summed bound is attained.
+Store the first site and record the basis outcome of the remaining two factors in an orthogonal classical flag block. Each rectangular encoder matrix is a coisometry onto the stored site, and its adjoint products sum to the input identity. The Petz reverse for the tracial input reference therefore uses the adjoint in each orthogonal outcome block. Each composite product has rank m. Its squared mass is m on the first site and one on the second site, so the summed bound is attained.
 
 ## References
 
