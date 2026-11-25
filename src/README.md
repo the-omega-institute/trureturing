@@ -119,6 +119,33 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入 `OmegaMath`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
 
+### 查看移植覆盖和缺口
+
+下面的命令核验当前严格基础库，并扫描钉版工具链中可独立导入的每个 `Init` 模块。JSON 包含每个公开声明的官方名称、所属模块、声明种类、官方实现的传递公理和严格端的对应模块。TSV 逐行列出尚无同名同模块对应项的非公理声明。[清单生成器](OmegaChecks/InitInventory.lean)
+
+```sh
+lake test -- OmegaInit
+mkdir -p .lake/build/omega-checks
+lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean \
+  .lake/build/omega-checks/init-inventory.json .lake/build/omega-checks/init-gaps.tsv
+```
+
+表中的 `impliesAxiom` 记录已验证的归约。例如，给定原类型的 `Classical.choose` 实现，就能构造 `Classical.choice`。空值表示尚未登记此类归约。`upstreamAxioms` 记录官方实现使用的公理。同一类型有构造性证明时，严格库仍可收录。语法、别名和私有实现不计入公开声明数。[`Classical.choose` 的官方定义](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Classical.lean)
+
+严格构建为 `Option`、`List` 和 `Sum` 读取钉版的归纳声明，并生成构造器布局。Lean 编译器和官方环境只在构建时使用。生成的严格模块可以独立导入，审计会检查其全部依赖并在空内核重放声明。[严格构建配置](OmegaChecks/strict_lake.py) · [归纳声明移植](OmegaInitCompiler.lean)
+
+### 批量构建官方 Init 对象
+
+从已编译的严格源码库出发，下列命令遍历工具链中所有已安装的 `Init` 模块。生成器按官方归属创建编译模块，由内核检查声明，再由仓库的接口审计核对整个依赖闭包。构建成功后，可以用该基础库重新编译项目的 `OmegaMath` 源码。两个输出目录应使用尚未占用的路径。[生成器](OmegaChecks/InitPort/build.py) · [OmegaMath 下游构建](OmegaChecks/InitPort/omegamath.py)
+
+```sh
+lake test -- OmegaInit
+python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all
+python3 src/OmegaChecks/InitPort/omegamath.py .lake/init-port-all .lake/omegamath-init-port
+```
+
+构建完成后，`init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。生成库中的计算定义可以用 Lean 内核做归约。批量生成器只复制源码库已有的原生编译数据。交互编译下游时，将 `.lake/omegamath-init-port/lib` 和 `.lake/init-port-all/lib` 加入 `LEAN_PATH`，即可使用 `prelude` 与 `import OmegaMath`。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+
 ## 严格库与可替换接口
 
 `OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。`OmegaMath` 可以导入三个严格库。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)

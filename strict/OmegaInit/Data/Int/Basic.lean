@@ -48,6 +48,14 @@ protected def mul : Int → Int → Int := fun a b =>
 
 def natAbs : Int → Nat := fun a => Int.rec (fun n => n) Nat.succ a
 
+/-- The sign of an integer, with the zero case distinguished. -/
+def sign : Int → Int :=
+  Int.rec (fun n => Nat.rec (ofNat Nat.zero) (fun _ _ => ofNat Nat.zero.succ) n)
+    (fun _ => negSucc Nat.zero)
+
+/-- Discard a negative input and retain the magnitude of a nonnegative input. -/
+def toNat : Int → Nat := Int.rec (fun n => n) (fun _ => Nat.zero)
+
 inductive NonNeg : Int → Prop where
   | mk (n : Nat) : NonNeg (ofNat n)
 

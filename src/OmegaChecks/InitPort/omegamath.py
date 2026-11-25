@@ -1,0 +1,89 @@
+"""Build the repository's OmegaMath sources against an audited generated OmegaInit library."""
+import argparse
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+from graphlib import TopologicalSorter
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import tomllib
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from portable import ROOT, closure, import_graph, root, source_fingerprint
+
+
+def lean_options(options, prefix=""):
+    for key, value in options.items():
+        name = prefix + key
+        if isinstance(value, dict):
+            yield from lean_options(value, name + ".")
+        else:
+            setting = str(value).lower() if isinstance(value, bool) else str(value)
+            yield f"-D{name}={setting}"
+
+
+def build(basis, output, workers):
+    lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
+    sources, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+    graph.update(dict(json.loads((basis / "modules.json").read_text())))
+    modules = closure({name: set(deps) for name, deps in graph.items()}, ["OmegaMath"])
+    clients = [name for name in modules if root(name) in {"OmegaMath", "OmegaMathlib"}]
+    schedule = TopologicalSorter({name: set(graph[name]).intersection(clients) for name in clients})
+    schedule.prepare()
+    options = tomllib.loads((ROOT / "lakefile.toml").read_text())["leanOptions"]
+    args = list(lean_options(options))
+    paths = os.pathsep.join(map(str, (output, basis / "lib")))
+    env = {**os.environ, "LEAN_PATH": paths}
+    before = {name: source_fingerprint(sources[name]) for name in clients}
+
+    def compile_module(name):
+        project = ROOT / ("strict" if root(name) == "OmegaMathlib" else "src")
+        target = output.joinpath(*name.split(".")).with_suffix(".olean")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run([lean, "-j1", *args, "-R", project, "-o", target, sources[name]],
+                       cwd=ROOT, env=env, check=True)
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        running = {}
+        while schedule.is_active():
+            for name in schedule.get_ready():
+                running[pool.submit(compile_module, name)] = name
+            completed, _ = wait(running, return_when=FIRST_COMPLETED)
+            for job in completed:
+                job.result()
+                schedule.done(running.pop(job))
+    if any(before[name] != source_fingerprint(sources[name]) for name in clients):
+        raise RuntimeError("consumer sources changed during compilation")
+    audit = ROOT / ".lake/build/bin/omegaAudit"
+    subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
+    with (output.parent / "audit.txt").open("w") as log:
+        result = subprocess.run(["lake", "env", audit, "--exact", "OmegaMath", paths, *modules],
+                                cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+    print((output.parent / "audit.txt").read_text(), end="", flush=True)
+    result.check_returncode()
+    print(f"Rebuilt {len(clients)} OmegaMath and OmegaMathlib modules against {basis / 'lib'}")
+
+
+def main():
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument("basis", type=Path, help="output directory of InitPort/build.py")
+    cli.add_argument("output", type=Path, help="new directory for compiled consumer modules")
+    cli.add_argument("-j", type=int, default=4, help="number of parallel Lean modules")
+    args = cli.parse_args()
+    target, basis = args.output.resolve(), args.basis.resolve()
+    if target.exists() or args.j < 1:
+        cli.error("expected a new output directory and a positive job count")
+    if not (basis / "lib/OmegaInit.olean.private").is_file():
+        cli.error("the generated library must include OmegaInit")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=target.parent, prefix=".omegamath-") as stage:
+        product = Path(stage) / "product"
+        (product / "lib").mkdir(parents=True)
+        build(basis, product / "lib", args.j)
+        product.rename(target)
+
+
+if __name__ == "__main__":
+    main()

@@ -42,6 +42,12 @@ public theorem Nat.add (a b : Nat) :
   | zero => rfl
   | succ b ih => exact congrArg Nat.succ ih
 
+public theorem Nat.pow (m n : Nat) :
+    Nat.rec 1 (fun _ p => _root_.Nat.mul p m) n = _root_.Nat.pow m n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => exact congrArg (fun p => _root_.Nat.mul p m) ih
+
 public theorem Nat.le (a b : Nat) :
     Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
       (fun _ smaller n => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) n) a b
@@ -71,5 +77,33 @@ public theorem Int.subNatNat (m n : Nat) : difference m n = _root_.Int.subNatNat
 public theorem Nat.Prime (p : Nat) :
     (2 ≤ p ∧ ∀ m, (∃ k, p = m * k) → m = 1 ∨ m = p) = _root_.Nat.Prime p :=
   propext _root_.Nat.prime_def.symm
+
+public theorem Ordering.«then» (a b : Ordering) :
+    _root_.Ordering.rec a b a a = a.then b := by
+  cases a <;> rfl
+
+public theorem Ordering.isEq (o : Ordering) :
+    _root_.Ordering.rec false true false o = o.isEq := by
+  cases o <;> rfl
+
+public theorem Ordering.isNe (o : Ordering) :
+    _root_.Ordering.rec true false true o = o.isNe := by
+  cases o <;> rfl
+
+public theorem Ordering.isLE (o : Ordering) :
+    _root_.Ordering.rec true true false o = o.isLE := by
+  cases o <;> rfl
+
+public theorem Ordering.isLT (o : Ordering) :
+    _root_.Ordering.rec true false false o = o.isLT := by
+  cases o <;> rfl
+
+public theorem Ordering.isGT (o : Ordering) :
+    _root_.Ordering.rec false false true o = o.isGT := by
+  cases o <;> rfl
+
+public theorem Ordering.isGE (o : Ordering) :
+    _root_.Ordering.rec false true true o = o.isGE := by
+  cases o <;> rfl
 
 end OmegaChecks.Interface.Equations

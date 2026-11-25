@@ -1,0 +1,26 @@
+# 官方 Init 的独立内核移植
+
+从仓库根目录运行，使用 `lean-toolchain` 指定的 Lean 和已编译的严格基础。以下命令生成一个可直接导入的独立模块目录，输出位置须尚未存在。
+
+```sh
+python3 src/OmegaChecks/InitPort/build.py .lake/init-port Init.Prelude
+LEAN_PATH=.lake/init-port/lib lean Example.lean
+```
+
+`Example.lean` 可以直接使用新生成的积类型与投影。
+
+```lean
+prelude
+import OmegaInit.Prelude
+open Omega
+
+example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
+```
+
+位置参数接受一个或多个官方模块名。省略这些参数会扫描钉版工具链的所有 `Init` 模块，包括需要单独导入的模块。构建整个库可运行 `python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all`。加上 `--seed PATH` 可选择另一个已编译的严格种子，默认读取 `.lake/build/omega-strict/lib/lean`。工具把种子的编译文件复制到独立临时目录，随后从钉版官方模块逐个翻译依赖、证明项、定义、归纳族和递归器。每个候选声明都在 Lean 内核中检查。环境变量 `OMEGA_PORT_HEARTBEATS` 为每个候选声明指定原始心跳预算，默认 5000。
+
+`inventory.jsonl` 按顺序记下官方模块名、声明名、公开标记、移植结果和直接阻塞依赖。`added` 包含内核生成的构造子、递归器、私有及编译器内部声明。`existing` 表示复用种子中的声明。`interface-rejections.jsonl` 保存无法通过仓库官方对应检查的候选。公理、商原语、unsafe 或 partial 声明、未支持的表达式和依赖缺失均有逐项记录。
+
+`lib/` 保存按官方定义模块组织的编译文件。程序对最终的所有输出模块运行仓库的 `omegaAudit --exact-roots`，检查模块闭包、公开归属和可计算对应，逐声明检查公理并从空环境重放内核。成功后输出目录才会出现，审计读数保存在 `audit.txt`。
+
+这个独立制品用于内核类型检查、证明和定义归约。新生成声明的原生可执行代码、语法扩展、实例搜索和结构字段语法均不在移植覆盖范围内。

@@ -445,6 +445,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     tracked = set()
     if backend != "mathlib":
         tracked.update(strict_sources.values())
+        tracked.update(sources[name] for name in closure(graph, ["OmegaInitCompiler"]))
     if backend != "strict":
         tracked.update(official_sources.values())
     tracked.update(ROOT / file for file in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"))
