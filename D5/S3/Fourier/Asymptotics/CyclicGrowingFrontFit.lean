@@ -125,7 +125,9 @@ def frontGram (n : ℕ) (u : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := fun i j =>
 
 /-- The per-entry perturbation is uniform in the number of front sites. -/
 theorem frontGram_sub_le (n : ℕ) (hn : 0 < n) (u : ℝ) (i j : Fin 2) :
-    |frontGram n u i j - frontGram n 0 i j| ≤ 2 * u ^ 2 := by
+    let readout := fun state : ℕ × ℝ => frontGram state.1 state.2
+    |readout (n, u) i j - readout (n, 0) i j| ≤ 2 * u ^ 2 := by
+  dsimp only
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn
   have hone : (1 : ℝ) ≤ n := by exact_mod_cast hn
   have hzero (x : ℝ) : frontFeatures 0 x = latticeFeatures x := by
@@ -180,8 +182,7 @@ private theorem frontGram_zero_symmetric (n : ℕ) : frontGram n 0 1 0 = frontGr
   unfold frontGram
   simp_rw [mul_comm (frontFeatures 0 _ 1)]
 
-/-- The normalized lattice moments have the uniform-window limit. -/
-theorem frontGram_zero_tendsto :
+private theorem frontGram_zero_tendsto :
     Tendsto (fun n : ℕ => frontGram n 0) atTop
       (𝓝 !![(2 : ℝ), 2/3; 2/3, 2/5]) := by
   have hInv : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (𝓝 0) :=
@@ -211,13 +212,38 @@ theorem frontGram_zero_tendsto :
   · apply h11.congr'
     filter_upwards [hpos] with n hn using (frontGram_zero_fourth n hn).symm
 
+/-- Front moment matrices on vanishing scaled meshes converge to the lattice moment limit. -/
+theorem frontGram_tendsto {u : ℕ → ℝ} (hu : Tendsto u atTop (𝓝 0)) :
+    let readout := fun state : ℕ × ℝ => frontGram state.1 state.2
+    Tendsto (fun n : ℕ => readout (n, u n)) atTop
+      (𝓝 !![(2 : ℝ), 2/3; 2/3, 2/5]) := by
+  dsimp only
+  apply tendsto_pi_nhds.2
+  intro i
+  apply tendsto_pi_nhds.2
+  intro j
+  have hzero := tendsto_pi_nhds.1 (tendsto_pi_nhds.1 frontGram_zero_tendsto i) j
+  have hlim : Tendsto (fun n : ℕ => 2 * u n ^ 2) atTop (𝓝 0) := by
+    simpa only [zero_pow two_ne_zero, mul_zero] using (hu.pow 2).const_mul 2
+  have hdiff : Tendsto (fun n : ℕ => frontGram n (u n) i j - frontGram n 0 i j)
+      atTop (𝓝 0) := by
+    rw [tendsto_zero_iff_norm_tendsto_zero]
+    refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ hlim
+    filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
+    simpa only [Real.norm_eq_abs] using frontGram_sub_le n hn (u n) i j
+  convert hdiff.add hzero using 1
+  · funext n
+    simp
+  · simp
+
 /-- The exact lattice fit has the prescribed mass and normalized second moment. -/
 theorem frontGram_reference_fit (n : ℕ) (hn : 0 < n) :
+    let readout := fun state : ℕ × ℝ => frontGram state.1 state.2
     let m := (n : ℝ) * (n + 1) / 5
     let t := (n : ℝ) * (n + 1) - 1 / 2
     let Z := normalizer n t
-    frontGram n 0 *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z] = ![1, m / (n : ℝ) ^ 2] := by
-  intro m t Z
+    readout (n, 0) *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z] = ![1, m / (n : ℝ) ^ 2] := by
+  intro readout m t Z
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn
   have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
   have hrad : (n : ℝ) ^ 2 ≤ t := by dsimp [t]; nlinarith only [hn1]
