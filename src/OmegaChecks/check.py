@@ -72,8 +72,16 @@ def library_mathlib_only(graph, targets):
 def check_library(selected=()):
     graph = library_graph()
     for name in selected:
-        if name not in graph or root(name) not in STRICT | {"OmegaChecks"}:
+        if name not in graph or root(name) not in STRICT | {"OmegaChecks", "OmegaBuild"}:
             raise ValueError(f"unknown Omega module {name}")
+    # The current check passes every changed program under src to the Lake test
+    # driver. The command frontend and planner run in the official environment.
+    support = {name for name in selected if root(name) == "OmegaBuild"}
+    if support:
+        run("lake", "build", *("+" + name for name in terminal_modules(graph, support)))
+        selected = [name for name in selected if name not in support]
+        if not selected:
+            return
     # Imported-only modules and new modules outside an umbrella are both in scope.
     if not selected or "OmegaChecks.Audit" in selected:
         modules = sorted(name for name in graph if root(name) in STRICT)

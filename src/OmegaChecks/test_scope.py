@@ -95,6 +95,19 @@ class ScopeTests(unittest.TestCase):
                         entry()
                     build.assert_called_once_with(["OmegaChecks.Sibling"])
 
+    def test_current_builds_backend_programs_officially_and_tests_mixed_selections(self):
+        graph = {"OmegaBuild.Commands": set(), "OmegaBuild.Plan": {"OmegaBuild.Commands"},
+                 "OmegaChecks.Witness": set()}
+        with patch.object(check, "library_graph", return_value=graph), \
+             patch.object(check, "run") as official, patch.object(check, "build") as strict:
+            check.check_library(["OmegaBuild.Commands", "OmegaBuild.Plan"])
+            official.assert_called_once_with("lake", "build", "+OmegaBuild.Plan")
+            strict.assert_not_called()
+            check.check_library(["OmegaBuild.Commands", "OmegaBuild.Plan", "OmegaChecks.Witness"])
+            strict.assert_called_once_with(["OmegaChecks.Witness"])
+            with self.assertRaisesRegex(ValueError, "unknown Omega module"):
+                check.check_library(["OmegaBuild.Typo"])
+
     def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
         for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):
             with self.subTest(missing=missing), self.assertRaisesRegex(ValueError, "still required"):
