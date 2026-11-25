@@ -8,7 +8,7 @@ internal sealed class CyclicGrowingFrontFitDocument : IScribeDocumentDefinition
     private const string Owner = "D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The front moment matrix admits a uniform mesh error and an exact lattice reference solution.",
+        "The front moment matrix admits a uniform mesh error and a residual bound at the exact lattice reference.",
         H("Moment matrices on growing cyclic windows"),
         Blocks(
             Describe.Lean(DescribeId.Create("uniform-front-gram-error"),
@@ -34,15 +34,15 @@ internal sealed class CyclicGrowingFrontFitDocument : IScribeDocumentDefinition
                     "The uniform bound makes the difference tend to zero for every real sequence u tending to zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("growing-front-reference-fit"),
-                DeclarationHandle.Create(Owner + ".frontGram_reference_fit"),
-                H("The reference fit at the interior lattice budget"),
+                DeclarationHandle.Create(Owner + ".frontGram_reference_residual_le"),
+                H("Residual at the interior lattice reference"),
                 StatementSource.FromAuthor(Fit()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For each positive integer n, put m=n(n+1)/5 and t=n(n+1)−1/2. " +
-                    "The normalizer Z is the sum of t−j² over the window. The stated matrix equation " +
-                    "certifies mass one and normalized second moment m/n² for the lattice parabola. " +
-                    "Using the exact finite reference retains the boundary margin lost in the limiting parabola."))),
+                    "The normalizer Z is the sum of t−j² over the window. At zero mesh the two normalized " +
+                    "moments are exactly 1 and m/n². Multiply the difference of the two matrices by the " +
+                    "reference vector a to bound the residual in each moment."))),
                 DescribeRole.Theorem))));
 
     private static Formula Error()
@@ -75,9 +75,15 @@ internal sealed class CyclicGrowingFrontFitDocument : IScribeDocumentDefinition
         var z = F.Id("Z");
         var reference = Call("Column", new Formula.Fraction(Multiply(n, t), z),
             new Formula.Fraction(Subtract(F.D(0), new Formula.Power(n, F.D(3))), z));
-        return F.Disp(F.Seq(Lt(F.D(0), n), F.Comma, F.Sp,
-            Eq(Multiply(Call("G", n, F.D(0)), reference),
-                Call("Column", F.D(1), new Formula.Fraction(m, Sq(n))))));
+        var u = F.Id("u");
+        var i = F.Id("i");
+        var a = F.Id("a");
+        var target = Call("Column", F.D(1), new Formula.Fraction(m, Sq(n)));
+        var residual = Call("Abs", Subtract(Call("Entry", Multiply(Call("G", n, u), a), i),
+            Call("Entry", target, i)));
+        var size = Add(Call("Abs", Call("a", F.D(0))), Call("Abs", Call("a", F.D(1))));
+        return F.Disp(F.Seq(Lt(F.D(0), n), F.Comma, F.Sp, Eq(a, reference), F.Comma, F.Sp,
+            Le(residual, Multiply(Multiply(F.D(2), Sq(u)), size))));
     }
 
     private static Formula Sq(Formula a) => new Formula.Power(a, F.D(2));

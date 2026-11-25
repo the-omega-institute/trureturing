@@ -155,23 +155,24 @@ namespace Reference
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ), 0 < n →
+  Law R := ∀ (n : ℕ), 0 < n → ∀ (u : ℝ) (i : Fin 2),
     let readout := R.readout () ()
     let m := (n : ℝ) * (n + 1) / 5
     let t := (n : ℝ) * (n + 1) - 1 / 2
     let Z := normalizer n t
-    readout (n, 0) *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z] = ![1, m / (n : ℝ) ^ 2]
+    let a : Fin 2 → ℝ := ![n * t / Z, -(n : ℝ) ^ 3 / Z]
+    |(readout (n, u) *ᵥ a) i - (![1, m / (n : ℝ) ^ 2] : Fin 2 → ℝ) i| ≤
+      2 * u ^ 2 * (|a 0| + |a 1|)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := h 1 (by decide)
-  have he := congrArg (fun v : Fin 2 → ℝ => v 0) hh
-  norm_num [rejected, realize, mulVec, dotProduct] at he
+  have hh := h 1 (by decide) 0 0
+  norm_num [rejected, realize, mulVec, dotProduct] at hh
 
-def evidence : Registration arena (type_of% @frontGram_reference_fit) where
+def evidence : Registration arena (type_of% @frontGram_reference_residual_le) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@frontGram_reference_fit, rejected, rejected_law⟩
+  variation := ⟨@frontGram_reference_residual_le, rejected, rejected_law⟩
   sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro i
@@ -180,7 +181,7 @@ def evidence : Registration arena (type_of% @frontGram_reference_fit) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@frontGram_reference_fit) (Realization signature) Unit Unit where
+      (@frontGram_reference_residual_le) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicGrowingFrontFit.Reference.unit
   realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicGrowingFrontFit.Reference.evidence
   realizationSource := none
@@ -202,7 +203,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "value"]
+      path := #["body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

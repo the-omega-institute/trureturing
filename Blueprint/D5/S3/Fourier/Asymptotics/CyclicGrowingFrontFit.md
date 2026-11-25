@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The front moment matrix admits a uniform mesh error and an exact lattice reference solution.
+The front moment matrix admits a uniform mesh error and a residual bound at the exact lattice reference.
 
 **Theorem 1.1 (Uniform error in each matrix entry).**
 
@@ -28,21 +28,21 @@ $$\operatorname{Limit}\left(\operatorname{u}\left(n\right)\right) = 0 \Rightarro
 
 At zero mesh the normalized sums of 1, x², and x⁴ give the three matrix entries. The uniform bound makes the difference tend to zero for every real sequence u tending to zero.
 
-**Theorem 1.3 (The reference fit at the interior lattice budget).**
+**Theorem 1.3 (Residual at the interior lattice reference).**
 
-$$0 < n, \operatorname{G}\left(n, 0\right) \cdot \operatorname{Column}\left(\frac{n \cdot t}{Z}, \frac{0 - n^{3}}{Z}\right) = \operatorname{Column}\left(1, \frac{m}{n^{2}}\right)$$
+$$0 < n, a = \operatorname{Column}\left(\frac{n \cdot t}{Z}, \frac{0 - n^{3}}{Z}\right), \operatorname{Abs}\left(\operatorname{Entry}\left(\operatorname{G}\left(n, u\right) \cdot a, i\right) - \operatorname{Entry}\left(\operatorname{Column}\left(1, \frac{m}{n^{2}}\right), i\right)\right) \le 2 \cdot u^{2} \cdot \left(\operatorname{Abs}\left(\operatorname{a}\left(0\right)\right) + \operatorname{Abs}\left(\operatorname{a}\left(1\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_reference_fit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_reference_residual_le` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For each positive integer n, put m=n(n+1)/5 and t=n(n+1)−1/2. The normalizer Z is the sum of t−j² over the window. The stated matrix equation certifies mass one and normalized second moment m/n² for the lattice parabola. Using the exact finite reference retains the boundary margin lost in the limiting parabola.
+For each positive integer n, put m=n(n+1)/5 and t=n(n+1)−1/2. The normalizer Z is the sum of t−j² over the window. At zero mesh the two normalized moments are exactly 1 and m/n². Multiply the difference of the two matrices by the reference vector a to bound the residual in each moment.
 
 ## References
 
-- Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_reference_fit`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_reference_residual_le`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_sub_le`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit.frontGram_tendsto`
 - Dependency: [D5/S3/Fourier/Asymptotics/LatticeSquareMomentActivation](LatticeSquareMomentActivation.md)

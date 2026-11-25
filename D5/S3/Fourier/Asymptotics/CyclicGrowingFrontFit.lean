@@ -236,8 +236,7 @@ theorem frontGram_tendsto {u : ℕ → ℝ} (hu : Tendsto u atTop (𝓝 0)) :
     simp
   · simp
 
-/-- The exact lattice fit has the prescribed mass and normalized second moment. -/
-theorem frontGram_reference_fit (n : ℕ) (hn : 0 < n) :
+private theorem frontGram_reference_fit (n : ℕ) (hn : 0 < n) :
     let readout := fun state : ℕ × ℝ => frontGram state.1 state.2
     let m := (n : ℝ) * (n + 1) / 5
     let t := (n : ℝ) * (n + 1) - 1 / 2
@@ -269,6 +268,32 @@ theorem frontGram_reference_fit (n : ℕ) (hn : 0 < n) :
     field_simp [hnR.ne', hZ.ne']
     rw [hnorm]
     ring
+
+/-- The two cyclic front moments of the exact lattice reference have a uniform residual. -/
+theorem frontGram_reference_residual_le (n : ℕ) (hn : 0 < n) (u : ℝ) (i : Fin 2) :
+    let readout := fun state : ℕ × ℝ => frontGram state.1 state.2
+    let m := (n : ℝ) * (n + 1) / 5
+    let t := (n : ℝ) * (n + 1) - 1 / 2
+    let Z := normalizer n t
+    let a : Fin 2 → ℝ := ![n * t / Z, -(n : ℝ) ^ 3 / Z]
+    |(readout (n, u) *ᵥ a) i - (![1, m / (n : ℝ) ^ 2] : Fin 2 → ℝ) i| ≤
+      2 * u ^ 2 * (|a 0| + |a 1|) := by
+  intro readout m t Z a
+  have href : frontGram n 0 *ᵥ a = ![1, m / (n : ℝ) ^ 2] :=
+    frontGram_reference_fit n hn
+  rw [← href]
+  change |(frontGram n u *ᵥ a) i - (frontGram n 0 *ᵥ a) i| ≤ _
+  let D := frontGram n u - frontGram n 0
+  rw [← Pi.sub_apply, ← sub_mulVec]
+  change |(D *ᵥ a) i| ≤ _
+  rw [mulVec, dotProduct, Fin.sum_univ_two]
+  calc
+    _ ≤ |D i 0 * a 0| + |D i 1 * a 1| := abs_add_le _ _
+    _ = |D i 0| * |a 0| + |D i 1| * |a 1| := by rw [abs_mul, abs_mul]
+    _ ≤ 2 * u ^ 2 * |a 0| + 2 * u ^ 2 * |a 1| :=
+      add_le_add (mul_le_mul_of_nonneg_right (frontGram_sub_le n hn u i 0) (abs_nonneg _))
+        (mul_le_mul_of_nonneg_right (frontGram_sub_le n hn u i 1) (abs_nonneg _))
+    _ = _ := by ring
 
 end
 
