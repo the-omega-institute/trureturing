@@ -57,23 +57,45 @@ private theorem bBasis_mul_inv : bBasis * bInv = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
+private theorem paired_eigenbasis (t : ℚ) :
+    pairedEdges t * aBasis = aBasis * spectralDiagonal t := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [pairedEdges, aBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
+      Fin.sum_univ_succ] <;> ring
+
+private theorem triangle_eigenbasis (t : ℚ) :
+    triangleBlock t * bBasis = bBasis * spectralDiagonal t := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [triangleBlock, bBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
+      Fin.sum_univ_succ] <;> ring
+
+private theorem simultaneous_similarity :
+    ∃ P : GramMatrix, P.det ≠ 0 ∧ ∀ t : ℚ, pairedEdges t * P = P * triangleBlock t := by
+  have hb_inv : bInv * bBasis = 1 := mul_eq_one_comm.mp bBasis_mul_inv
+  have hP : (aBasis * bInv) * (bBasis * aInv) = 1 := by
+    rw [mul_assoc aBasis, ← mul_assoc bInv, hb_inv, one_mul, aBasis_mul_inv]
+  refine ⟨aBasis * bInv, Matrix.det_ne_zero_of_right_inverse hP, fun t => ?_⟩
+  have hb : spectralDiagonal t * bInv = bInv * triangleBlock t := by
+    have h := congrArg (fun X : GramMatrix => bInv * X * bInv) (triangle_eigenbasis t)
+    have lhs : bInv * (triangleBlock t * bBasis) * bInv = bInv * triangleBlock t := by
+      rw [Matrix.mul_assoc bInv, Matrix.mul_assoc (triangleBlock t),
+        bBasis_mul_inv, Matrix.mul_one]
+    have rhs : bInv * (bBasis * spectralDiagonal t) * bInv = spectralDiagonal t * bInv := by
+      rw [← Matrix.mul_assoc bInv, hb_inv, Matrix.one_mul]
+    exact rhs.symm.trans (h.symm.trans lhs)
+  rw [← mul_assoc, paired_eigenbasis, mul_assoc, hb, mul_assoc]
+
 private theorem gram_pair_cospectral (t : ℚ) :
     (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
       (pairedEdges t).charpoly =
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2 := by
-  have hA : (pairedEdges t).charpoly = (spectralDiagonal t).charpoly := by
-    apply Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse aBasis_mul_inv)
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [pairedEdges, aBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
-        Fin.sum_univ_succ] <;> ring
-  have hB : (triangleBlock t).charpoly = (spectralDiagonal t).charpoly := by
-    apply Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse bBasis_mul_inv)
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [triangleBlock, bBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
-        Fin.sum_univ_succ] <;> ring
+  have hA := Matrix.charpoly_eq_of_mul_eq_mul
+    (Matrix.det_ne_zero_of_right_inverse aBasis_mul_inv) (paired_eigenbasis t)
+  have hB := Matrix.charpoly_eq_of_mul_eq_mul
+    (Matrix.det_ne_zero_of_right_inverse bBasis_mul_inv) (triangle_eigenbasis t)
   refine ⟨hA.trans hB.symm, hA.trans ?_⟩
   simp [spectralDiagonal, Matrix.charpoly_diagonal, Fin.prod_univ_succ, pow_two, mul_assoc]
 
@@ -513,17 +535,18 @@ private theorem second_family_fit (t u v : ℚ) (hu : u ≠ 0) (hv : v ≠ 0)
   · intro i
     fin_cases i <;> simp [htu, htv] <;> field_simp <;> ring
 
-/-- The matrices have the same characteristic polynomial for every rational parameter.
-On the conic, their minimum rational coordinate counts are seven and six respectively. -/
+/-- One rational similarity works for the whole family and preserves the displayed
+characteristic polynomial. On the conic the coordinate minima are seven and six. -/
 theorem spectrum_and_thresholds :
-    (∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+    ((∃ P : GramMatrix, P.det ≠ 0 ∧ ∀ t : ℚ, pairedEdges t * P = P * triangleBlock t) ∧
+    ∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
       (pairedEdges t).charpoly =
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
     ∀ (u v : ℚ), 5*u^2 + 7*v^2 = 3 → ∀ n : ℕ,
       let t := (5*u^2-1)/4
       (RealizableIn (pairedEdges t) n ↔ 7 ≤ n) ∧ (RealizableIn (triangleBlock t) n ↔ 6 ≤ n) := by
-  refine ⟨gram_pair_cospectral, ?_⟩
+  refine ⟨⟨simultaneous_similarity, gram_pair_cospectral⟩, ?_⟩
   intro u v h n
   dsimp only
   have hu : u ≠ 0 := by

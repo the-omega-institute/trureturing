@@ -24,7 +24,9 @@ internal sealed class RationalGramCospectralDocument : IScribeDocumentDefinition
                 H("Common characteristic polynomial and rational coordinate thresholds"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For every rational parameter, the two matrices have identical "
+                    Paragraph(Text("One invertible rational matrix conjugates the paired-edge matrix "
+                        + "to the triangle-block matrix for every rational parameter. "
+                        + "The two matrices have identical "
                         + "characteristic polynomials. The roots counted with repetitions are one plus four "
                         + "times the parameter, one, and two copies of one minus twice the parameter. "
                         + "Take rational numbers u and v with five times the square of u plus "

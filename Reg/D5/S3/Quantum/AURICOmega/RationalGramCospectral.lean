@@ -26,7 +26,9 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R :=
-    (∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+    ((∃ P : Matrix (Fin 4) (Fin 4) ℚ, P.det ≠ 0 ∧
+        ∀ t : ℚ, pairedEdges t * P = P * triangleBlock t) ∧
+    ∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
       (pairedEdges t).charpoly =
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
