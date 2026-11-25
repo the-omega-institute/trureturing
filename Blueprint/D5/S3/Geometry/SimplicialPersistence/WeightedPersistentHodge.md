@@ -10,7 +10,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.We
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.WeightedModule` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -22,7 +24,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.we
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.weighted_inner` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -34,7 +38,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.cy
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.cycleClass` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -46,7 +52,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.Fi
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.FillingDomain` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -58,7 +66,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.la
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.laplacian` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -70,7 +80,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.la
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.laplacian_eq_zero` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -82,7 +94,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.ha
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.harmonicEquivImage` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -94,7 +108,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.ha
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.harmonicEquivImage_apply` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -106,7 +122,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.re
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.realComplex` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -118,7 +136,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.na
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.naturalHodgeEquiv` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -130,7 +150,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.na
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.naturalHodge_cycle` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -142,7 +164,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.na
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.naturalHodgeEquiv_apply` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -154,7 +178,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.Ch
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.Chain` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -178,7 +204,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.ch
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.chainInclusion` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -202,7 +230,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.pe
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.persistentHodgeEquiv` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -214,7 +244,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.ha
 
 *Formalization.* `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.harmonicClass` (`✓ std3`).
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 
@@ -226,7 +258,9 @@ Lean statement: `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.we
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.weighted_persistent_hodge` (`✓ std3`). ∎
 
-*Citation.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Facundo Mémoli, Zhengchao Wan and Yusu Wang (2022). *Persistent Laplacians — Properties, Algorithms and Implications*. DOI: [10.1137/21M1435471](https://doi.org/10.1137/21M1435471). URL: <https://arxiv.org/html/2012.02808v3>.
 
 *Commentary.*
 

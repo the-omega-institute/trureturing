@@ -8,6 +8,8 @@ internal sealed class FiniteSimplicialSingularHomologyDocument : IScribeDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordered and singular integer H1 of a finite coordinate complex.", H("Ordered and singular integer H1 of a finite coordinate complex"), Blocks(
+            Paragraph(Text("Let V be a finite linearly ordered vertex type and K a pre-abstract "
+                + "simplicial complex on V. All chains in this comparison have integer coefficients.")),
             Node("intersectionsimplexequiv", "intersectionSimplexEquiv", "Actual intersection simplices",
                 "Continuous singular simplices in a positive-coordinate face intersection correspond to small singular simplices carried by every selected star. The maps are the actual subspace inclusion and its pointwise subtype lift, and commute with singular faces.", DescribeRole.Definition),
             Node("columncoproductiso", "columnCoproductIso", "Intersection chain identification",

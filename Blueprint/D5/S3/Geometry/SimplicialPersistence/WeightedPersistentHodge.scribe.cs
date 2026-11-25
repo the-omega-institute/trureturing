@@ -164,6 +164,8 @@ internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(DescribeId.Create(id),
         DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromLiterature(Source),
+        declaration is "Weights" or "persistentLaplacian"
+            ? AssessedProvenance.FromLiterature(Source)
+            : AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), role);
 }

@@ -4,6 +4,8 @@
 
 Ordered and singular integer H1 of a finite coordinate complex.
 
+Let V be a finite linearly ordered vertex type and K a pre-abstract simplicial complex on V. All chains in this comparison have integer coefficients.
+
 **Definition 1.1 (Actual intersection simplices).**
 
 Lean statement: `D5/S3/Geometry/FiniteSimplicialSingularHomology.intersectionSimplexEquiv`
