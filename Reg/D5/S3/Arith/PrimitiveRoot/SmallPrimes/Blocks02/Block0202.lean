@@ -58,7 +58,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some rows0202
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.PrimitiveRoot.SmallPrimes.Blocks02.Block0202
     definition := none

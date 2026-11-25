@@ -14,8 +14,8 @@ internal sealed class SmallPrimeCheckerDocument : IScribeDocumentDefinition
                 H("Soundness of a primitive-root slot"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "A successful checkPrime certificate supplies a prime q below p whose " +
-                    "multiplicative order in ZMod p is exactly p−1. Primality proofs for q " +
-                    "and the supplied factors are shared kernel-checked constants. No " +
+                    "multiplicative order in ZMod p is exactly p−1. Primality of q and its " +
+                    "factors follows by induction on shared finite certificate trees. No " +
                     "primality assumption on p is needed for this order statement.")),
                 Paragraph(Text(
                     "Repeated division ending at one proves that every prime divisor of " +
@@ -35,12 +35,15 @@ internal sealed class SmallPrimeCheckerDocument : IScribeDocumentDefinition
                     "A successful checkPrime certificate also proves p prime. The full " +
                     "returning power and the prime-divisor power exclusions meet " +
                     "Mathlib's Lucas primality criterion. This conclusion supplies " +
-                    "primality proofs for larger shared literal prime constants from " +
-                    "already certified smaller factors, so each factor's primality " +
-                    "need not be checked again at every occurrence."))),
+                    "the mathematical soundness of finite literal certificate trees. " +
+                    "Their nodes retain checked returning powers, complete factor " +
+                    "support, and recursive certificates for the root and factors. " +
+                    "Literal tables import the natural-number checker; this module " +
+                    "provides its Lucas and exact-order interpretation."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("small-prime-block-append"),
-                DeclarationHandle.Create(Prefix + "checkBlock_append"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/PrimitiveRoot/SmallPrimes/Kernel.checkBlock_append"),
                 H("Concatenation preserves certified coverage"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
@@ -63,7 +66,7 @@ internal sealed class SmallPrimeCheckerDocument : IScribeDocumentDefinition
                     "nor an empty list can certify a positive-length interval.")),
                 Paragraph(Text(
                     "The independent obligation is the finite premise of Erdős #985: " +
-                    "every prime between three and 3483482 has a smaller prime primitive " +
+                    "every prime between three and 5000000 has a smaller prime primitive " +
                     "root. Literal block-success theorems are checking-success proofs, " +
                     "and their conclusions are consumed by the finite-range theorem, " +
                     "which is in turn consumed by erdos985_of_finiteHeight. They are checker " +

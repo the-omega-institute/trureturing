@@ -43,6 +43,17 @@ namespace D5.S3.Arith.PrimitiveRoot.SmallPrimes
 
 attribute [local irreducible] checkBlock checkRows checkPrime
 
+private theorem block_at {base start off count : ℕ} {rows : List Row}
+    (h : checkBlock start count rows = true) (hst : start = base + 2 * off)
+    {k : ℕ} (hlo : off ≤ k) (hhi : k < off + count) (hp : (base + 2 * k).Prime) :
+    ∃ q, q.Prime ∧ q < base + 2 * k ∧
+      orderOf (q : ZMod (base + 2 * k)) = base + 2 * k - 1 := by
+  have hindex : k - off < count := by omega
+  have heq : start + 2 * (k - off) = base + 2 * k := by omega
+  have ht := checkBlock_sound h (k - off) hindex
+  rw [heq] at ht
+  exact ht hp
+
 /-- Complete prime-root coverage of this consecutive group of checked odd slots. -/
 theorem group05_sound :
     ∀ (k : ℕ), k < 103340 → (3276803 + 2 * k).Prime →
@@ -50,159 +61,81 @@ theorem group05_sound :
         orderOf (q : ZMod (3276803 + 2 * k)) = 3276803 + 2 * k - 1 := by
   intro k hk hp
   by_cases h00 : k < 4096
-  · have hindex : k - 0 < 4096 := by omega
-    have heq : 3276803 + 2 * (k - 0) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0400 (k - 0) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 0) checked0400 rfl
+      (Nat.zero_le k) h00 hp
   by_cases h01 : k < 8192
-  · have hindex : k - 4096 < 4096 := by omega
-    have heq : 3284995 + 2 * (k - 4096) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0401 (k - 4096) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 4096) checked0401 rfl
+      (Nat.le_of_not_gt h00) h01 hp
   by_cases h02 : k < 12288
-  · have hindex : k - 8192 < 4096 := by omega
-    have heq : 3293187 + 2 * (k - 8192) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0402 (k - 8192) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 8192) checked0402 rfl
+      (Nat.le_of_not_gt h01) h02 hp
   by_cases h03 : k < 16384
-  · have hindex : k - 12288 < 4096 := by omega
-    have heq : 3301379 + 2 * (k - 12288) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0403 (k - 12288) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 12288) checked0403 rfl
+      (Nat.le_of_not_gt h02) h03 hp
   by_cases h04 : k < 20480
-  · have hindex : k - 16384 < 4096 := by omega
-    have heq : 3309571 + 2 * (k - 16384) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0404 (k - 16384) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 16384) checked0404 rfl
+      (Nat.le_of_not_gt h03) h04 hp
   by_cases h05 : k < 24576
-  · have hindex : k - 20480 < 4096 := by omega
-    have heq : 3317763 + 2 * (k - 20480) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0405 (k - 20480) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 20480) checked0405 rfl
+      (Nat.le_of_not_gt h04) h05 hp
   by_cases h06 : k < 28672
-  · have hindex : k - 24576 < 4096 := by omega
-    have heq : 3325955 + 2 * (k - 24576) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0406 (k - 24576) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 24576) checked0406 rfl
+      (Nat.le_of_not_gt h05) h06 hp
   by_cases h07 : k < 32768
-  · have hindex : k - 28672 < 4096 := by omega
-    have heq : 3334147 + 2 * (k - 28672) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0407 (k - 28672) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 28672) checked0407 rfl
+      (Nat.le_of_not_gt h06) h07 hp
   by_cases h08 : k < 36864
-  · have hindex : k - 32768 < 4096 := by omega
-    have heq : 3342339 + 2 * (k - 32768) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0408 (k - 32768) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 32768) checked0408 rfl
+      (Nat.le_of_not_gt h07) h08 hp
   by_cases h09 : k < 40960
-  · have hindex : k - 36864 < 4096 := by omega
-    have heq : 3350531 + 2 * (k - 36864) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0409 (k - 36864) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 36864) checked0409 rfl
+      (Nat.le_of_not_gt h08) h09 hp
   by_cases h10 : k < 45056
-  · have hindex : k - 40960 < 4096 := by omega
-    have heq : 3358723 + 2 * (k - 40960) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0410 (k - 40960) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 40960) checked0410 rfl
+      (Nat.le_of_not_gt h09) h10 hp
   by_cases h11 : k < 49152
-  · have hindex : k - 45056 < 4096 := by omega
-    have heq : 3366915 + 2 * (k - 45056) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0411 (k - 45056) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 45056) checked0411 rfl
+      (Nat.le_of_not_gt h10) h11 hp
   by_cases h12 : k < 53248
-  · have hindex : k - 49152 < 4096 := by omega
-    have heq : 3375107 + 2 * (k - 49152) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0412 (k - 49152) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 49152) checked0412 rfl
+      (Nat.le_of_not_gt h11) h12 hp
   by_cases h13 : k < 57344
-  · have hindex : k - 53248 < 4096 := by omega
-    have heq : 3383299 + 2 * (k - 53248) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0413 (k - 53248) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 53248) checked0413 rfl
+      (Nat.le_of_not_gt h12) h13 hp
   by_cases h14 : k < 61440
-  · have hindex : k - 57344 < 4096 := by omega
-    have heq : 3391491 + 2 * (k - 57344) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0414 (k - 57344) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 57344) checked0414 rfl
+      (Nat.le_of_not_gt h13) h14 hp
   by_cases h15 : k < 65536
-  · have hindex : k - 61440 < 4096 := by omega
-    have heq : 3399683 + 2 * (k - 61440) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0415 (k - 61440) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 61440) checked0415 rfl
+      (Nat.le_of_not_gt h14) h15 hp
   by_cases h16 : k < 69632
-  · have hindex : k - 65536 < 4096 := by omega
-    have heq : 3407875 + 2 * (k - 65536) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0416 (k - 65536) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 65536) checked0416 rfl
+      (Nat.le_of_not_gt h15) h16 hp
   by_cases h17 : k < 73728
-  · have hindex : k - 69632 < 4096 := by omega
-    have heq : 3416067 + 2 * (k - 69632) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0417 (k - 69632) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 69632) checked0417 rfl
+      (Nat.le_of_not_gt h16) h17 hp
   by_cases h18 : k < 77824
-  · have hindex : k - 73728 < 4096 := by omega
-    have heq : 3424259 + 2 * (k - 73728) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0418 (k - 73728) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 73728) checked0418 rfl
+      (Nat.le_of_not_gt h17) h18 hp
   by_cases h19 : k < 81920
-  · have hindex : k - 77824 < 4096 := by omega
-    have heq : 3432451 + 2 * (k - 77824) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0419 (k - 77824) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 77824) checked0419 rfl
+      (Nat.le_of_not_gt h18) h19 hp
   by_cases h20 : k < 86016
-  · have hindex : k - 81920 < 4096 := by omega
-    have heq : 3440643 + 2 * (k - 81920) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0420 (k - 81920) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 81920) checked0420 rfl
+      (Nat.le_of_not_gt h19) h20 hp
   by_cases h21 : k < 90112
-  · have hindex : k - 86016 < 4096 := by omega
-    have heq : 3448835 + 2 * (k - 86016) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0421 (k - 86016) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 86016) checked0421 rfl
+      (Nat.le_of_not_gt h20) h21 hp
   by_cases h22 : k < 94208
-  · have hindex : k - 90112 < 4096 := by omega
-    have heq : 3457027 + 2 * (k - 90112) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0422 (k - 90112) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 90112) checked0422 rfl
+      (Nat.le_of_not_gt h21) h22 hp
   by_cases h23 : k < 98304
-  · have hindex : k - 94208 < 4096 := by omega
-    have heq : 3465219 + 2 * (k - 94208) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0423 (k - 94208) hindex
-    rw [heq] at h
-    exact h hp
+  · exact block_at (base := 3276803) (off := 94208) checked0423 rfl
+      (Nat.le_of_not_gt h22) h23 hp
   by_cases h24 : k < 102400
-  · have hindex : k - 98304 < 4096 := by omega
-    have heq : 3473411 + 2 * (k - 98304) = 3276803 + 2 * k := by omega
-    have h := checkBlock_sound checked0424 (k - 98304) hindex
-    rw [heq] at h
-    exact h hp
-  have hindex : k - 102400 < 940 := by omega
-  have heq : 3481603 + 2 * (k - 102400) = 3276803 + 2 * k := by omega
-  have h := checkBlock_sound checked0425 (k - 102400) hindex
-  rw [heq] at h
-  exact h hp
+  · exact block_at (base := 3276803) (off := 98304) checked0424 rfl
+      (Nat.le_of_not_gt h23) h24 hp
+  exact block_at (base := 3276803) (off := 102400) checked0425 rfl
+      (Nat.le_of_not_gt h24) hk hp
 
 end D5.S3.Arith.PrimitiveRoot.SmallPrimes
