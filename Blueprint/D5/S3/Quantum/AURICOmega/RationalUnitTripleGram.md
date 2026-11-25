@@ -24,3 +24,6 @@ For positive determinant the residual binary quadratic form is the rational vers
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalUnitTripleGram.rationalFiveCoordinateUnitTriple`
 - Dependency: [D5/S3/Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex](../../Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex.md)
+- Dependency: [D5/S3/Quantum/AURICOmega/OmegaShadowBridge](OmegaShadowBridge.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalBoundary](../Entanglement/Marginals/FibRationalBoundary.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Marginals/RationalQubitMixedEndpoint](../Entanglement/Marginals/RationalQubitMixedEndpoint.md)
