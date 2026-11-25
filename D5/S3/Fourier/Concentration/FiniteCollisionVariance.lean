@@ -47,13 +47,13 @@ private theorem exponentialSum_pow {J : Type*} [Fintype J] [DecidableEq J]
   congr 2
   ring
 
-private theorem sum_monomialWeight {J : Type*} [Fintype J] [DecidableEq J]
+theorem sum_monomialWeight {J : Type*} [Fintype J] [DecidableEq J]
     (w : J → ℝ) (p : ℕ) :
     (∑ m ∈ piAntidiag univ p, monomialWeight w m) = (∑ j, w j) ^ p := by
   have h := exponentialSum_pow (fun _ => 0 : J → ℝ) w p 0
   simpa [exponentialSum] using h.symm
 
-private theorem centered_second_moment {J : Type*} [Fintype J] [DecidableEq J]
+theorem centered_second_moment {J : Type*} [Fintype J] [DecidableEq J]
     (x w : J → ℝ) (p : ℕ) (hcenter : ∑ j, w j * x j = 0) :
     (∑ m ∈ piAntidiag univ p, monomialWeight w m * monomialFrequency x m ^ 2) =
       (p : ℝ) * (∑ j, w j) ^ (p - 1) * ∑ j, w j * x j ^ 2 := by
