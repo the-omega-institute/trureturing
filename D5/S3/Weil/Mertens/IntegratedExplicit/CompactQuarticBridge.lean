@@ -7,6 +7,7 @@
    digest: Exact tail LCM and compact factorial gcd bounds for quartic RH tests. -/
 
 import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
+import D5.S3.Arith.FactorialRatio.QuarticCompactLog
 import D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling
 
 /-! Fourth-power RH tests using exact finite LCM and factorial products. -/
@@ -401,6 +402,15 @@ def compactD (n : ℕ) : ℝ :=
     (n : ℝ)^4 * Real.log ((n : ℝ)^4) +
       (1 + Real.eulerMascheroniConstant) * (n : ℝ)^4
 
+private theorem compactD_sub_D_eq_log_gap (n : ℕ) :
+    compactD n - D (n^4) (n^2) =
+      (Real.log (quarticFactorialGcd n : ℝ) -
+        Real.log (tailLCM (n^2 * n^4) (n^2) : ℝ)) / (n : ℝ)^2 := by
+  unfold compactD D
+  push_cast
+  rw [sub_div]
+  ring
+
 private theorem compactD_sub_D_bounds (n : ℕ) (hn : 0 < n) :
     0 ≤ compactD n - D (n^4) (n^2) ∧
       compactD n - D (n^4) (n^2) ≤
@@ -412,14 +422,7 @@ private theorem compactD_sub_D_bounds (n : ℕ) (hn : 0 < n) :
   have hdvd := quarticFactorialGcd_divisibility n hn
   have hlog := log_gap_of_dvd hA hdvd.1 hdvd.2
   have hn0 : (0 : ℝ) < n := by exact_mod_cast hn
-  have hcancel : compactD n - D (n^4) (n^2) =
-      (Real.log (quarticFactorialGcd n : ℝ) -
-        Real.log (tailLCM (n^2 * n^4) (n^2) : ℝ)) / (n : ℝ)^2 := by
-    unfold compactD D
-    push_cast
-    rw [sub_div]
-    ring
-  rw [hcancel]
+  rw [compactD_sub_D_eq_log_gap]
   push_cast at hlog
   exact ⟨div_nonneg hlog.1 (by positivity),
     div_le_div_of_nonneg_right hlog.2 (by positivity)⟩
@@ -497,5 +500,74 @@ theorem rh_iff_compact_factorial_gcd_quartic_integer_blocks :
       mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (by linarith) hs) hlog
     _ ≤ _ := mul_le_mul_of_nonneg_left (by linarith) (by positivity)
   exact abs_le.mpr ⟨by linarith only [h.1, hfloor], h.2.trans hfactorial⟩
+
+/-- The exact compact quartic bridge at the square-root scale. -/
+theorem compactD_U_quadratic_bounds (n : ℕ) (hn : 3 ≤ n) :
+    -(Real.log 4 + 4) * (n : ℝ)^2 ≤ compactD n - U ((n : ℝ)^4) ∧
+      compactD n - U ((n : ℝ)^4) ≤ 18 * (Real.log 4 + 4) * (n : ℝ)^2 := by
+  let M := n^2
+  have hM4 : 4 ≤ M := (show 4 ≤ (3 : ℕ)^2 by decide).trans (Nat.pow_le_pow_left hn 2)
+  have hMr : 8 ≤ M + 1 := by
+    have h := Nat.pow_le_pow_left hn 2
+    change (3 : ℕ)^2 ≤ M at h
+    omega
+  have hM1 : 1 ≤ M := by omega
+  have hsub : M + 1 - 2 = M - 1 := by omega
+  have hdeg : (M + 1) * (M * (M - 1)) + M = M * n^4 := by
+    rw [quartic_degree M hM1]
+    congr 1
+    dsimp [M]
+    ring
+  have hgap := quartic_compact_log_gap (M + 1) hMr
+  dsimp only at hgap
+  rw [Nat.add_sub_cancel, hsub, hdeg] at hgap
+  change 0 ≤ Real.log (quarticFactorialGcd n : ℝ) -
+      Real.log (tailLCM (n^2 * n^4) (n^2) : ℝ) ∧
+    Real.log (quarticFactorialGcd n : ℝ) -
+      Real.log (tailLCM (n^2 * n^4) (n^2) : ℝ) ≤
+      11 * (Real.log 4 + 4) * ((M + 1 : ℕ) : ℝ)^2 at hgap
+  have hC : 0 ≤ Real.log 4 + 4 := by
+    linarith [Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 4)]
+  have hM4R : (4 : ℝ) ≤ M := by exact_mod_cast hM4
+  have hMpos : (0 : ℝ) < M := by linarith
+  have hMeq : (M : ℝ) = (n : ℝ)^2 := by simp [M]
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  have hsq : 11 * ((M + 1 : ℕ) : ℝ)^2 ≤ 18 * (M : ℝ)^2 := calc
+    _ ≤ 11 * ((5 / 4 : ℝ) * M)^2 := by
+      rw [Nat.cast_add, Nat.cast_one]
+      exact mul_le_mul_of_nonneg_left
+        (pow_le_pow_left₀ (by positivity) (by linarith) 2) (by norm_num)
+    _ ≤ _ := by nlinarith only [sq_nonneg (M : ℝ)]
+  have hcompact :
+      0 ≤ compactD n - D (n^4) (n^2) ∧
+      compactD n - D (n^4) (n^2) ≤ 18 * (Real.log 4 + 4) * (n : ℝ)^2 := by
+    rw [compactD_sub_D_eq_log_gap]
+    refine ⟨div_nonneg hgap.1 (by positivity), (div_le_iff₀ (pow_pos hnpos 2)).mpr ?_⟩
+    calc
+      _ ≤ 11 * (Real.log 4 + 4) * ((M + 1 : ℕ) : ℝ)^2 := hgap.2
+      _ ≤ 18 * (Real.log 4 + 4) * (M : ℝ)^2 := by
+        simpa only [mul_left_comm (Real.log 4 + 4), mul_assoc] using
+          mul_le_mul_of_nonneg_left hsq hC
+      _ = _ := by rw [hMeq]; ring
+  have hfloor := quartic_U_sub_D_bounds n (by omega)
+  exact ⟨by linarith only [hcompact.1, hfloor.2], by linarith only [hcompact.2, hfloor.1]⟩
+
+/-- RH is equivalent to an eventual bound for the explicit compact factorial gcd
+with a prescribed constant at the square-root scale. -/
+theorem rh_iff_eventually_compact_factorial_gcd :
+    RiemannHypothesis ↔ ∀ᶠ n : ℕ in atTop,
+      compactD n ≤ (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2 := by
+  constructor
+  · intro rh
+    filter_upwards [rh_iff_eventually_quartic_samples.mp rh,
+      eventually_ge_atTop (3 : ℕ)] with n hU hn
+    have h := (compactD_U_quadratic_bounds n hn).2
+    linarith only [hU, h, show (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2 =
+        (n : ℝ)^2 + 18 * (Real.log 4 + 4) * (n : ℝ)^2 by ring]
+  · intro he
+    apply rh_iff_eventually_tailLCM_quartic_constant.mpr
+    refine ⟨1 + 18 * (Real.log 4 + 4), ?_⟩
+    filter_upwards [he, eventually_ge_atTop (1 : ℕ)] with n hn hn1
+    exact (sub_nonneg.mp (compactD_sub_D_bounds n (by omega)).1).trans hn
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.CompactQuarticBridge
