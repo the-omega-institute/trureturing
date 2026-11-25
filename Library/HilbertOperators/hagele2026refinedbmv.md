@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/ElevenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
@@ -130,6 +131,18 @@ Independent rational review checked all 73 cyclic coefficients and the
 three Gram factorizations. Historical priority remains unverified after
 bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
 2610.31851 and 2611.23122.
+
+## Eleven copies of the first factor
+
+At (11,4), the mean of the 1365 ordered word traces dominates the
+real trace of `(A^(11/4) B)^4` for positive semidefinite A and Hermitian B
+in every finite complex dimension. A rational Gram matrix on the 21
+half-words, weighted by A, compares the word mean with the cyclic word
+whose first-factor gaps are (3,3,2,3). The coefficient check covers 56
+classes under cyclic rotation and reversal. The Gram matrix has fourteen
+positive LDL pivots. Two trace inequalities give the fractional-power
+comparison, and Hägele's Lemma 2 gives the exponential bound with
+exponents 11H and 4K.
 
 ## Four copies of the second factor near the identity
 
