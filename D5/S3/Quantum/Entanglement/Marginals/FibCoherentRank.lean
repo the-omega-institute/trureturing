@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
 import D5.S3.Quantum.Entanglement.Marginals.RationalQubitPurity
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Mixed.MState
 
 /-! Rank transport across scalar Schur elimination and rational residual purity. -/
 
@@ -169,28 +168,47 @@ private theorem rational_rank_at_iff (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v
 private theorem rankOneDensity_of_rank_le_one {n : Type*} [Fintype n] [DecidableEq n]
     {S : Matrix n n ℂ} (hS : S.PosSemidef) (ht : S.trace = 1) (hr : S.rank ≤ 1) :
     ∃ ψ : n → ℂ, S = rankOneDensity ψ := by
-  classical
-  have hrank : 0 < S.rank := by
-    have h := hS.isHermitian
-    rw [h.rank_eq_card_non_zero_eigs, Fintype.card_pos_iff]
-    have hnz : h.eigenvalues ≠ 0 := fun he =>
-      one_ne_zero (ht.symm.trans (by simp [h.eigenvalues_eq_zero_iff.mp he]))
-    obtain ⟨j, hj⟩ := Function.ne_iff.mp hnz
-    exact ⟨⟨j, hj⟩⟩
-  let H : HermitianMat n ℂ := ⟨S, hS.isHermitian⟩
-  have hH : H.trace = 1 := by
-    rw [HermitianMat.trace_eq_re_trace]
-    change S.trace.re = 1
-    rw [ht, Complex.one_re]
-  let state : MState n := ⟨H, HermitianMat.zero_le_iff.mpr hS, hH⟩
-  obtain ⟨ψ, hψ⟩ := (MState.pure_iff_rank_eq_one state).mpr (le_antisymm hr hrank)
-  refine ⟨⇑ψ, ?_⟩
-  have he := congrArg MState.m hψ
-  change S = (MState.pure ψ).m at he
-  rw [he]
-  ext i j
-  change ψ i * ((ψ : Bra n) : n → ℂ) j = ψ i * star (ψ j)
-  simp [Bra.eq_conj]
+  let h := hS.isHermitian
+  let U : Matrix n n ℂ := h.eigenvectorUnitary
+  have hnz : h.eigenvalues ≠ 0 := fun he =>
+    one_ne_zero (ht.symm.trans (by simp [h.eigenvalues_eq_zero_iff.mp he]))
+  obtain ⟨j, hj⟩ := Function.ne_iff.mp hnz
+  have hc : Fintype.card {i // h.eigenvalues i ≠ 0} ≤ 1 := by
+    rwa [← h.rank_eq_card_non_zero_eigs]
+  let := Fintype.card_le_one_iff_subsingleton.mp hc
+  have hdiag (i : n) : h.eigenvalues i = if i = j then h.eigenvalues j else 0 := by
+    split_ifs with hij
+    · rw [hij]
+    · by_contra hi
+      exact hij (congrArg Subtype.val (Subsingleton.elim
+        (⟨i, hi⟩ : {i // h.eigenvalues i ≠ 0}) ⟨j, hj⟩))
+  let c := Real.sqrt (h.eigenvalues j)
+  let ψ : n → ℂ := fun i => (c : ℂ) * U i j
+  have hsquare : c * c = h.eigenvalues j := Real.mul_self_sqrt (hS.eigenvalues_nonneg j)
+  have hd : diagonal (RCLike.ofReal ∘ h.eigenvalues : n → ℂ) =
+      diagonal (fun i => if i = j then (h.eigenvalues j : ℂ) else 0) := by
+    congr 1
+    funext i
+    rw [Function.comp_apply, hdiag i]
+    split_ifs <;> rfl
+  refine ⟨ψ, ?_⟩
+  rw [h.spectral_theorem, hd, Unitary.conjStarAlgAut_apply]
+  change U * diagonal (fun i => if i = j then (h.eigenvalues j : ℂ) else 0) * Uᴴ =
+    rankOneDensity ψ
+  ext i k
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+  rw [Finset.sum_eq_single j]
+  · simp only [ite_eq_left rfl, if_true, rankOneDensity, vecMulVec_apply, Pi.star_apply, ψ,
+      star_mul, Complex.star_def, Complex.conj_ofReal]
+    calc
+      _ = ((↑c : ℂ) * ↑c) * (U i j * conj (U k j)) := by
+        rw [← Complex.ofReal_mul, hsquare]
+        ring
+      _ = _ := by ring
+  · intro l _ hlj
+    simp [hlj]
+  · simp
 
 private theorem partialTraceRight_smul (c : ℂ) (S : Matrix (Bool × Bool) (Bool × Bool) ℂ) :
     partialTraceRight (c • S) = c • partialTraceRight S := by
