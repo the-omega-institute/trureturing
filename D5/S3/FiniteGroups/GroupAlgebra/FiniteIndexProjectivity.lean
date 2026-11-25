@@ -22,8 +22,6 @@ No literature novelty or computational utility is claimed.
 -/
 
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency.instanceSearchTypes false
-set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
