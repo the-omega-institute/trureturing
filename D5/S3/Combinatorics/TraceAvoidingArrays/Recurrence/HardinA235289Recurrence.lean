@@ -8,6 +8,7 @@
 
 /-
 result: proof_shape: content
+fin_constant: proof_shape=bind-only; consumers=mixed_uniform
 escape_witness: low_count counts sum-two rectangles by independent row fibers
   alternating between a first-row edge-sum profile and its complement.
 admission_basis: open-problem-resolution (#34236; Proved)
@@ -83,9 +84,12 @@ private def checkerEquiv (n k : ℕ) : {a : Grid n k // Legal a} ≃ {a : Grid n
 
 private theorem fin_constant {n : ℕ} {α : Type} (f : Fin (n + 1) → α)
     (adj : ∀ i : Fin n, f i.castSucc = f i.succ) (i : Fin (n + 1)) : f i = f 0 := by
-  induction i using Fin.induction with
-  | zero => rfl
-  | succ i ih => exact (adj i).symm.trans ih
+  by_cases hi : i = 0
+  · subst i
+    rfl
+  · have h : f 0 = f i :=
+      (Fin.liftFun_iff_succ (Eq : α → α → Prop) (f := f)).2 adj (Fin.pos_iff_ne_zero.mpr hi)
+    exact h.symm
 
 private theorem block_vertical {n k : ℕ} {a : Grid (n + 1) k} (h : Mixed a)
     (i : Fin n) (j : Fin k) : block a i.castSucc j = block a i.succ j := by
