@@ -363,7 +363,7 @@ private theorem trace_four_le_symmetrized_of_triangular (M : Mat) (hM : M.IsUppe
       exact pow_le_pow_left₀ hnonneg (Complex.re_le_norm _) 2
     _ ≤ _ := sq_diag_le_gram_diag (X ^ 2) i
 
-private theorem trace_four_le_symmetrized_of_posDef (A B : Mat) (hA : A.PosSemidef)
+private theorem trace_four_le_symmetrized_of_posDef (A B : Mat) (hA : A.IsHermitian)
     (hB : B.PosDef) :
     (trace ((A * B) ^ 4)).re ≤ (trace (((1 / 2 : ℝ) • (A * B + (A * B)ᴴ)) ^ 4)).re := by
   let S := CFC.sqrt B
@@ -374,7 +374,8 @@ private theorem trace_four_le_symmetrized_of_posDef (A B : Mat) (hA : A.PosSemid
   have hdS := (Matrix.isUnit_iff_isUnit_det S).mp hSu
   let P := S * A * S
   have hP : P.IsHermitian := by
-    simpa only [P, hS] using (hA.conjTranspose_mul_mul_same S).isHermitian
+    change Pᴴ = P
+    simp only [P, conjTranspose_mul, hA.eq, hS, mul_assoc]
   let V := hP.eigenvectorUnitary
   let d : Fin n → ℂ := fun i ↦ (hP.eigenvalues i : ℂ)
   let W := S⁻¹ * (V : Mat)
@@ -431,8 +432,9 @@ private theorem trace_four_le_symmetrized_of_posDef (A B : Mat) (hA : A.PosSemid
   have hftrace (Y : Mat) : trace (f Y) = trace Y := trace_conjugation (star U) Y
   rwa [← map_pow, ← map_pow, hftrace, hftrace] at h
 
-/-- The Hermitian part of a product of two PSD matrices controls its fourth trace moment. -/
-private theorem trace_four_le_symmetrized44 (A B : Mat) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+/-- The Hermitian part of a product of a Hermitian factor and a PSD factor
+controls its fourth trace moment. -/
+theorem trace_four_le_hermitian_part (A B : Mat) (hA : A.IsHermitian) (hB : B.PosSemidef) :
     (trace ((A * B) ^ 4)).re ≤ (trace (((1 / 2 : ℝ) • (A * B + (A * B)ᴴ)) ^ 4)).re := by
   let C (t : ℝ) : Mat := B + t • (1 : Mat)
   let f (t : ℝ) : ℝ := (trace ((A * C t) ^ 4)).re
@@ -451,6 +453,11 @@ private theorem trace_four_le_symmetrized44 (A B : Mat) (hA : A.PosSemidef) (hB 
         rw [show C t = t • (1 : Mat) + B by simp [C, add_comm]]
         exact hshift.add_posSemidef hB))
   simpa [f, g, C] using h
+
+/-- The two-PSD-factor instance of the fourth trace comparison. -/
+private theorem trace_four_le_symmetrized44 (A B : Mat) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    (trace ((A * B) ^ 4)).re ≤ (trace (((1 / 2 : ℝ) • (A * B + (A * B)ᴴ)) ^ 4)).re :=
+  trace_four_le_hermitian_part A B hA.isHermitian hB
 
 end RefinedBMV
 
