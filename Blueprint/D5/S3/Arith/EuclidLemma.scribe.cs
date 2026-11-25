@@ -25,14 +25,9 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                     + "factor. This is the classical Euclid lemma and the first building block "
                     + "of the two-axis norm reading exemplar; the source volume derives it from "
                     + "the additivity of the prime-exponent valuation on the free commutative "
-                    + "monoid of the prime axis. The formal statement fixes the natural-number "
-                    + "carrier and the standard divisibility relation, so the hypothesis is "
-                    + "genuine primality and a genuine product divisibility, not a hollow or "
-                    + "vacuous premise. The proof discharges the claim through Mathlib's "
-                    + "Nat.Prime.dvd_mul, which supplies the equivalence for a prime; the "
-                    + "deposited atom asserts the truth of the statement, and the proof route "
-                    + "may differ from the source's valuation-additivity derivation. Original "
-                    + "numerical-certificate disposition: the source lemma is a purely logical "
-                    + "divisibility implication and contains no numerical certificate."))),
+                    + "monoid of the prime axis. The proof reads Mathlib primality through the "
+                    + "D5 divisor characterization. Since gcd(p,a) divides p, it equals one or "
+                    + "p. In the first case Bézout's identity gives divisibility of b. In the "
+                    + "second case p divides a."))),
                 DescribeRole.Lemma))));
 }

@@ -25,7 +25,7 @@ namespace Omega.Arithmetic
 abbrev IsPrime := OmegaMathlib.Nat.Prime
 
 /-- The divisor characterization over strict arithmetic is equivalent to natural primality. -/
-theorem isPrime_iff_prime (p : Nat) :
+private theorem isPrime_iff_prime (p : Nat) :
     Iff (And (Nat.lt Nat.one p) (∀ d, Dvd d p → Or (Eq d Nat.one) (Eq d p)))
       (OmegaMathlib.Nat.Prime p) :=
   Iff.intro (fun h => OmegaMathlib.Nat.prime_def.mpr h)

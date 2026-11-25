@@ -7,7 +7,7 @@
 
 import Mathlib.Logic.Equiv.Prod
 import OmegaMath.Data.Product
-import OmegaMath.Logic.Function.Defs
+import OmegaMathlib.Logic.Function.Defs
 
 /-! The typed components and lossless encodings of a residual-ledger entry. -/
 

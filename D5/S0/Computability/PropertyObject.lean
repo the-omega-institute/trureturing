@@ -7,7 +7,7 @@
 
 import Mathlib.Logic.Equiv.Prod
 import OmegaMath.Data.Product
-import OmegaMath.Logic.Function.Defs
+import OmegaMathlib.Logic.Function.Defs
 
 namespace D5.S0.Computability.PropertyObject
 

@@ -9,6 +9,7 @@
 module
 prelude
 public import OmegaMath.Arithmetic.Euclidean
+public import OmegaMathlib.Data.Nat.Prime.Defs
 public import OmegaMath.Arithmetic.ContinuedFraction
 public import OmegaMath.Arithmetic.DepthBudget
 
