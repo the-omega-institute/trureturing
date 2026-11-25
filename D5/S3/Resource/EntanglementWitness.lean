@@ -7,7 +7,9 @@
 
 module
 
-public import Mathlib
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
 public import D5.S3.Resource.CompositeCones
 public import D5.S3.Resource.CompositeConeDuality
 

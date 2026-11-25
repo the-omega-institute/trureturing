@@ -25,6 +25,7 @@
 module
 
 public import D5.S3.Divergence.ClassicalDPI
+public import Mathlib.InformationTheory.KullbackLeibler.KLFun
 
 set_option backward.privateInPublic true
 @[expose] public section

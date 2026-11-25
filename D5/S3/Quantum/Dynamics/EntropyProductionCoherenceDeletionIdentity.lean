@@ -11,6 +11,7 @@ public import D5.S3.Divergence.GrandmotherTheorem
 public import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 public import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Pi
+public import Mathlib.Algebra.Algebra.Spectrum.Pi
 public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 
 set_option backward.privateInPublic true

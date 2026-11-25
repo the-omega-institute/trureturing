@@ -45,6 +45,12 @@ matrix_form_nonnegative: proof_shape: bind-only; escape_witness: none; consumer:
 module
 
 public import D5.S3.Quantum.Entanglement.OccupancyWordSectors
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.Positive
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+public import Mathlib.LinearAlgebra.Matrix.Module
+import Mathlib.RingTheory.Binomial
 
 set_option backward.privateInPublic true
 @[expose] public section

@@ -231,7 +231,8 @@ module
 public import D5.S3.Quantum.Recovery.RetainedLocalProtocol
 public import Mathlib.Analysis.Matrix.PosDef
 public import Mathlib.LinearAlgebra.Matrix.Trace
-public import Mathlib.Tactic
+public import Mathlib.Tactic.Common
+public import Mathlib.Tactic.Ring
 public import Mathlib.Analysis.Matrix.Order
 
 set_option backward.privateInPublic true

@@ -108,6 +108,7 @@ public import D5.S3.Quantum.Information.PartialTraceMutualInformation
 public import D5.S3.Weil.ZetaLinear.RankTrace
 public import D5.S1.Words.AdmissibleWords.FibonacciGrayPath
 public import D5.S3.Analytic.Hunter.NCHunterPositivity
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute
 
 set_option backward.privateInPublic true
 @[expose] public section

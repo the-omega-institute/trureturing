@@ -24,7 +24,8 @@ established here and no witness is exhibited. -/
 
 module
 
-public import Mathlib
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 set_option backward.privateInPublic true
 @[expose] public section

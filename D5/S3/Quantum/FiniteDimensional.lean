@@ -7,7 +7,11 @@
 
 module
 
-public import Mathlib
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.LinearCombination
 
 set_option backward.privateInPublic true
 @[expose] public section

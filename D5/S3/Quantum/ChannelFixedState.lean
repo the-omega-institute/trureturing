@@ -32,7 +32,8 @@ public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
 public import Mathlib.Dynamics.BirkhoffSum.NormedSpace
-public import Mathlib.Tactic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
 
 set_option backward.privateInPublic true
 @[expose] public section

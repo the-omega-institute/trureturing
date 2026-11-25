@@ -8,7 +8,15 @@
 
 module
 
-public import Mathlib
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Data.List.Range
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Mathlib.Tactic.Ring
 
 set_option backward.privateInPublic true
 @[expose] public section

@@ -8,7 +8,13 @@
 
 module
 
-public import Mathlib
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Aesop
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 public import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
 public import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 public import D5.S3.Resource.EntanglementWitness

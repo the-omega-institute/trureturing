@@ -15,7 +15,9 @@ public import Mathlib.Analysis.SpecialFunctions.Sqrt
 public import Mathlib.Data.Complex.BigOperators
 public import Mathlib.Data.Nat.Choose.Multinomial
 public import Mathlib.Data.Finsupp.Multiset
-public import Mathlib.Tactic
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Mathlib.Tactic.Ring
 public import D5.S1.Ledger.BoundedTimeSlice
 
 set_option backward.privateInPublic true

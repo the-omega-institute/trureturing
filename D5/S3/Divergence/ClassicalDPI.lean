@@ -21,7 +21,9 @@
 
 module
 
-public import Mathlib
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
 
 set_option backward.privateInPublic true
 @[expose] public section

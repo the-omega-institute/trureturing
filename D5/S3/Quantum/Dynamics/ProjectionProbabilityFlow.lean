@@ -20,6 +20,7 @@ public import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 public import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 public import D5.S3.Quantum.FiniteDimensional
 public import Mathlib.Analysis.Calculus.Deriv.Star
+public import Mathlib.Analysis.Calculus.Deriv.Comp
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Analysis.CStarAlgebra.Projection
 public import Mathlib.Analysis.SpecialFunctions.Exponential

@@ -10,6 +10,7 @@ module
 public import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 public import D5.S3.Quantum.Tomography.RankOneContextCommutator
 public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.Analysis.Matrix.Order
 
 set_option backward.privateInPublic true
 @[expose] public section

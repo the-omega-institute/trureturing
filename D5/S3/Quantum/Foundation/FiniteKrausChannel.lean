@@ -224,7 +224,10 @@ module
 
 public import D5.S3.Quantum.Foundation.FiniteStateChannel
 public import Mathlib.LinearAlgebra.TensorProduct.Matrix
-public import Mathlib.Tactic
+public import Mathlib.Tactic.Common
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.SplitIfs
+public import Mathlib.Tactic.Tauto
 
 set_option backward.privateInPublic true
 @[expose] public section
