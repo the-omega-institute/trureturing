@@ -3,9 +3,12 @@
    mirror-B: D5/B/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Simulator error bounds statewise risk for every bounded-loss decision rule. -/
 
-import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
+module
+
+public import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 
 /- Library-search audit trail (2026-08-25):
    * All existing `Estimation/DecisionRisk` modules were checked. The Blackwell
@@ -19,6 +22,10 @@ import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
    * Pinned Mathlib searches for bounded expectations against total variation
      and decision-risk stability found no exact whole-theorem hit. The proof
      applies `total_variation_eq_sum_positive` and finite-sum order lemmas. -/
+
+/-! Finite stochastic simulators transport uniformly bounded decision losses. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -76,7 +83,7 @@ private theorem bounded_expectation_le_add_total_variation
   linarith [splitDifference, discardNonpositive.trans
     (positivePart.trans_eq positivePartIsVariation)]
 
-private theorem row_stochastic_channel_comp
+theorem row_stochastic_channel_comp
     {Input Middle Output : Type*} [Fintype Middle] [Fintype Output]
     (first : Input → Middle → Real) (second : Middle → Output → Real)
     (firstStochastic : IsRowStochastic first)
@@ -107,7 +114,7 @@ private theorem row_stochastic_channel_comp
         rw [secondStochastic.2 middle, mul_one]
       _ = 1 := firstStochastic.2 input
 
-private theorem channel_output_comp
+theorem channel_output_comp
     {Input Middle Output : Type*} [Fintype Input] [Fintype Middle]
     (first : Input → Middle → Real) (second : Middle → Output → Real)
     (mass : Input → Real) :

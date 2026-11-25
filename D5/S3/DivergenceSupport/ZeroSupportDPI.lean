@@ -20,7 +20,13 @@
      output mass into pointwise zero joint masses.
 -/
 
-import D5.S3.Divergence.ClassicalDPI
+module
+
+public import D5.S3.Divergence.ClassicalDPI
+
+/-! Finite KL chain identities with zero weights and absolute continuity. -/
+
+@[expose] public section
 
 namespace D5.S3.DivergenceSupport.ZeroSupportDPI
 

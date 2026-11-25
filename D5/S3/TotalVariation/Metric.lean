@@ -19,7 +19,13 @@
      unit bound, or event variational characterization was found under another name.
 -/
 
-import D5.S3.TotalVariation.Pinsker
+module
+
+public import D5.S3.TotalVariation.Pinsker
+
+/-! Metric and finite-event variational laws for finite total variation. -/
+
+@[expose] public section
 
 namespace D5.S3.TotalVariation.Metric
 
