@@ -25,27 +25,28 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (u v : ℚ), 5 * u ^ 2 + 7 * v ^ 2 = 3 → ∀ n : ℕ,
-    let t := (5 * u ^ 2 - 1) / 4
-    ((pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+  Law R :=
+    (∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
       (pairedEdges t).charpoly =
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
+    ∀ (u v : ℚ), 5 * u ^ 2 + 7 * v ^ 2 = 3 → ∀ n : ℕ,
+      let t := (5 * u ^ 2 - 1) / 4
       (RealizableIn (pairedEdges t) n ↔ 7 ≤ R.readout () () n) ∧
       (RealizableIn (triangleBlock t) n ↔ 6 ≤ n)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h₆ : 7 ≤ rejected.readout () () 6 := by decide
-  have trueLaw := thresholds_on_conic (1 / 2) (1 / 2) (by norm_num) 6
-  have badLaw := h (1 / 2) (1 / 2) (by norm_num) 6
-  have impossible := trueLaw.2.1.mp (badLaw.2.1.mpr h₆)
+  have trueLaw := spectrum_and_thresholds.2 (1 / 2) (1 / 2) (by norm_num) 6
+  have badLaw := h.2 (1 / 2) (1 / 2) (by norm_num) 6
+  have impossible := trueLaw.1.mp (badLaw.1.mpr h₆)
   omega
 
-def family : Registration arena (type_of% @thresholds_on_conic) where
+def family : Registration arena (type_of% @spectrum_and_thresholds) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@thresholds_on_conic, rejected, rejected_law⟩
+  variation := ⟨@spectrum_and_thresholds, rejected, rejected_law⟩
   sensitivity :=
     Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := fun _ => ⟨(), 6, 7, by
@@ -53,7 +54,7 @@ def family : Registration arena (type_of% @thresholds_on_conic) where
     decide⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@thresholds_on_conic) (Realization signature) Unit Unit where
+    (@spectrum_and_thresholds) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.AURICOmega.RationalGramCospectral.unit
   realizationName := `Reg.D5.S3.Quantum.AURICOmega.RationalGramCospectral.family
   realizationSource := none
@@ -75,8 +76,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body",
-        "arg", "fn", "arg", "arg", "arg"]
+      path := #["arg", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none

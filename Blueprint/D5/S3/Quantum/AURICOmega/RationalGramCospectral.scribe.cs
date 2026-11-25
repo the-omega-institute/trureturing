@@ -19,20 +19,21 @@ internal sealed class RationalGramCospectralDocument : IScribeDocumentDefinition
             Definition("realizable-in", "RealizableIn", "Exact rational Gram realization",
                 "The matrix is the product of a rational rectangular matrix with its transpose. "
                 + "The number of columns is the ambient dimension."),
-            Describe.Lean(DescribeId.Create("thresholds-on-conic"),
-                DeclarationHandle.Create(Module + ".thresholds_on_conic"),
-                H("Six- and seven-coordinate thresholds on a conic"),
+            Describe.Lean(DescribeId.Create("spectrum-and-thresholds"),
+                DeclarationHandle.Create(Module + ".spectrum_and_thresholds"),
+                H("Common characteristic polynomial and rational coordinate thresholds"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Take rational numbers u and v with five times the "
-                        + "square of u plus seven times the square of v equal to three. Set the "
-                        + "parameter to one quarter of the difference between five times the "
-                        + "square of u and one. The two Gram matrices have identical characteristic "
-                        + "polynomials with eigenvalues one plus four times the parameter, one, "
-                        + "and one minus twice the parameter with multiplicity two. "
-                        + "The paired-edge matrix fits in n rational coordinates "
-                        + "exactly when n is at least seven. The triangle-block matrix fits "
-                        + "exactly when n is at least six.")),
+                    Paragraph(Text("For every rational parameter, the two matrices have identical "
+                        + "characteristic polynomials. The roots counted with repetitions are one plus four "
+                        + "times the parameter, one, and two copies of one minus twice the parameter. "
+                        + "Take rational numbers u and v with five times the square of u plus "
+                        + "seven times the square of v equal to three. Set the parameter to one "
+                        + "quarter of the difference between five times the square of u and one. "
+                        + "The paired-edge matrix fits in n rational coordinates exactly when n "
+                        + "is at least seven. The triangle-block matrix fits exactly when n is "
+                        + "at least six. At parameter zero, both matrices are the identity and "
+                        + "have a four-coordinate realization.")),
                     Paragraph(Text("Rational eigenbases give the common characteristic polynomial. "
                         + "The conic allows rational rescaling to fixed quadratic forms. At the "
                         + "base point both examples have explicit orthogonal Gram factors at "

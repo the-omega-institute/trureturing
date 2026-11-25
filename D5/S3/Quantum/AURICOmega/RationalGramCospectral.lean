@@ -6,10 +6,11 @@
    utility: none
    digest: A conic family of cospectral unit Gram matrices with distinct rational dimension bounds. -/
 
+import D5.S3.Quantum.AURICOmega.RationalGramOddPrime
+import Mathlib.Data.Nat.Prime.Int
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.RootSystem.OfBilinear
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
@@ -28,11 +29,11 @@ open Matrix
 
 local notation "GramMatrix" => Matrix (Fin 4) (Fin 4) ℚ
 
-/-- Unit Gram matrix with weight twice the other off-diagonal entries on a matching. -/
+/-- Unit-diagonal matrix with weight twice the other off-diagonal entries on a matching. -/
 def pairedEdges (t : ℚ) : GramMatrix :=
   !![1,t,t,2*t; t,1,2*t,t; t,2*t,1,t; 2*t,t,t,1]
 
-/-- Unit Gram matrix of one isolated direction and a constant-inner-product triple. -/
+/-- Unit-diagonal matrix with an isolated direction and a constant-weight triangle. -/
 def triangleBlock (t : ℚ) : GramMatrix :=
   !![1,0,0,0; 0,1,2*t,2*t; 0,2*t,1,2*t; 0,2*t,2*t,1]
 
@@ -47,13 +48,15 @@ private def bBasis : GramMatrix := !![0,1,0,0; 1,0,1,1; 1,0,-1,1; 1,0,0,-2]
 private def bInv : GramMatrix := !![0,1/3,1/3,1/3; 1,0,0,0;
   0,1/2,-1/2,0; 0,1/6,1/6,-1/3]
 
-private theorem charpoly_of_factor (A D U V : GramMatrix) (hu : U * V = 1)
-    (hv : V * U = 1) (h : A * U = U * D) : A.charpoly = D.charpoly := by
-  have hA : A = U * (D * V) := by
-    calc
-      A = (A * U) * V := by rw [mul_assoc, hu, mul_one]
-      _ = U * (D * V) := by rw [h, mul_assoc]
-  rw [hA, charpoly_mul_comm, mul_assoc, hv, mul_one]
+private theorem aBasis_mul_inv : aBasis * aInv = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [aBasis, aInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
+
+private theorem bBasis_mul_inv : bBasis * bInv = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
 private theorem gram_pair_cospectral (t : ℚ) :
     (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
@@ -61,29 +64,17 @@ private theorem gram_pair_cospectral (t : ℚ) :
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2 := by
   have hA : (pairedEdges t).charpoly = (spectralDiagonal t).charpoly := by
-    apply charpoly_of_factor _ _ aBasis aInv
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [aBasis, aInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [aBasis, aInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [pairedEdges, aBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
-          Fin.sum_univ_succ] <;> ring
+    apply Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse aBasis_mul_inv)
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [pairedEdges, aBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
+        Fin.sum_univ_succ] <;> ring
   have hB : (triangleBlock t).charpoly = (spectralDiagonal t).charpoly := by
-    apply charpoly_of_factor _ _ bBasis bInv
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
-    · ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [triangleBlock, bBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
-          Fin.sum_univ_succ] <;> ring
+    apply Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse bBasis_mul_inv)
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [triangleBlock, bBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
+        Fin.sum_univ_succ] <;> ring
   refine ⟨hA.trans hB.symm, hA.trans ?_⟩
   simp [spectralDiagonal, Matrix.charpoly_diagonal, Fin.prod_univ_succ, pow_two, mul_assoc]
 
@@ -228,59 +219,22 @@ private theorem modular_ternary_rational_descent
     exact hi
   exact modular_ternary_descent p a b c hp reduce_yz reduce_xd d hd _ _ _ (Int.ofNat_inj.mp hn)
 
-namespace GramIsometry
-variable {K ι : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K] [Fintype ι]
-
-private theorem reflection_with_fixed_vectors
-    (a b : ι → K) (hab : a ⬝ᵥ a = b ⬝ᵥ b) :
-    ∃ f : (ι → K) ≃ₗ[K] (ι → K), f a = b ∧ (∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y) ∧
-      ∀ x, a ⬝ᵥ x = b ⬝ᵥ x → f x = x := by
-  by_cases h : a = b
-  · exact ⟨LinearEquiv.refl K (ι → K), h, fun _ _ => rfl, fun _ _ => rfl⟩
-  let u := a - b
-  let B : (ι → K) →ₗ[K] (ι → K) →ₗ[K] K := dotProductBilin K K
-  have hd : B u u ≠ 0 := fun hz => h (sub_eq_zero.mp (dotProduct_self_eq_zero.mp hz))
-  have hu : B.IsReflective u := .of_dvd_two B ⟨2 / B u u, by field_simp⟩
-  have hsymm : B.IsSymm := ⟨fun x y => dotProduct_comm x y⟩
-  let f := Module.reflection (hu.coroot_apply_self B)
-  have fix_of_perp (x : ι → K) (hx : B u x = 0) : f x = x := by
-    have hcoef : hu.coroot B x = 0 :=
-      mul_left_cancel₀ hd (by rw [hu.apply_self_mul_coroot_apply, hx, mul_zero, mul_zero])
-    simp [f, Module.reflection_apply, hcoef]
-  have fixed_sum : f (a + b) = a + b := by
-    apply fix_of_perp
-    change (a - b) ⬝ᵥ (a + b) = 0
-    simp [sub_dotProduct, dotProduct_add, hab, dotProduct_comm a b, add_comm]
-  have negated_difference : f (a - b) = -(a - b) := Module.reflection_apply_self _
-  have hsum : f a + f b = a + b := by simpa only [map_add] using fixed_sum
-  have hdiff : f a - f b = -(a - b) := by simpa only [map_sub] using negated_difference
-  have hdouble : f a + f a = b + b := by
-    calc
-      _ = (f a + f b) + (f a - f b) := by abel
-      _ = (a + b) + -(a - b) := by rw [hsum, hdiff]
-      _ = _ := by abel
-  refine ⟨f, ?_, hu.isOrthogonal_reflection B hsymm, ?_⟩
-  · funext i
-    have hi : f a i + f a i = b i + b i := congrFun hdouble i
-    linear_combination hi / 2
-  · intro x hx
-    exact fix_of_perp x (by change (a - b) ⬝ᵥ x = 0; rw [sub_dotProduct, hx, sub_self])
-
-/-- Finite families with the same Gram data are related by a rational linear isometry. -/
-private theorem fin_frame_isometry {n : ℕ} (a b : Fin n → ι → K)
+/-- Finite families with the same Gram data are related by a rational dot-product isometry. -/
+private theorem fin_frame_isometry {ι : Type} [Fintype ι] {n : ℕ} (a b : Fin n → ι → ℚ)
     (h : ∀ i j, a i ⬝ᵥ a j = b i ⬝ᵥ b j) :
-    ∃ f : (ι → K) ≃ₗ[K] (ι → K),
+    ∃ f : (ι → ℚ) → (ι → ℚ),
       (∀ i, f (a i) = b i) ∧ ∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y := by
   induction n with
   | zero =>
-    exact ⟨LinearEquiv.refl K (ι → K), fun i => Fin.elim0 i, fun _ _ => rfl⟩
+    exact ⟨id, fun i => Fin.elim0 i, fun _ _ => rfl⟩
   | succ n ih =>
     obtain ⟨f, hfit, hf⟩ :=
       ih (a ∘ Fin.castSucc) (b ∘ Fin.castSucc) (fun i j => h i.castSucc j.castSucc)
     let j := Fin.last n
     obtain ⟨g, hlast, hg, hfix⟩ :=
-      reflection_with_fixed_vectors (f (a j)) (b j) ((hf _ _).trans (h j j))
-    refine ⟨f.trans g, ?_, fun x y => (hg _ _).trans (hf x y)⟩
+      RationalGramOddPrime.rational_reflection_with_fixed_vectors (f (a j)) (b j)
+        ((hf _ _).trans (h j j))
+    refine ⟨g ∘ f, ?_, fun x y => (hg _ _).trans (hf x y)⟩
     intro i
     refine Fin.lastCases ?_ (fun k => ?_) i
     · exact hlast
@@ -291,18 +245,6 @@ private theorem fin_frame_isometry {n : ℕ} (a b : Fin n → ι → K)
     calc
       _ = f (a j) ⬝ᵥ f (a k.castSucc) := congrArg (fun y => f (a j) ⬝ᵥ y) hk.symm
       _ = _ := (hf _ _).trans (h j k.castSucc)
-
-private theorem gram_frame_isometry {κ : Type*} [Fintype κ] (a b : κ → ι → K)
-    (h : ∀ i j, a i ⬝ᵥ a j = b i ⬝ᵥ b j) :
-    ∃ f : (ι → K) ≃ₗ[K] (ι → K),
-      (∀ i, f (a i) = b i) ∧ ∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y := by
-  classical
-  let e := Fintype.equivFin κ
-  obtain ⟨f, hfit, hf⟩ := fin_frame_isometry (a ∘ e.symm) (b ∘ e.symm)
-    (fun i j => h (e.symm i) (e.symm j))
-  exact ⟨f, fun i => by simpa [Function.comp_apply] using hfit (e i), hf⟩
-
-end GramIsometry
 
 private theorem no_seven_under_fixed_frame (z : Fin 6 → ℚ)
     (h0 : (![1,0,0,0,0,0] : Fin 6 → ℚ) ⬝ᵥ z = 0)
@@ -335,7 +277,7 @@ private theorem no_orthogonal_1577 (u v w z : Fin 6 → ℚ)
     norm_num [dotProduct, Fin.sum_univ_succ] at hu hv hw huv huw hvw hvu hwu hwv
     fin_cases i <;> fin_cases j <;>
       norm_num [earlier, standard, b₀, b₁, b₂, dotProduct, Fin.sum_univ_succ] <;> assumption
-  obtain ⟨f, hfit, hf⟩ := GramIsometry.gram_frame_isometry earlier standard hgram
+  obtain ⟨f, hfit, hf⟩ := fin_frame_isometry earlier standard hgram
   have preserve_left (i : Fin 3) : standard i ⬝ᵥ f z = earlier i ⬝ᵥ z := by
     rw [← hfit i, hf]
   have h0 : b₀ ⬝ᵥ f z = 0 := (preserve_left 0).trans huz
@@ -463,7 +405,7 @@ private theorem no_orthogonal_117_in_five (u v w : Fin 5 → ℚ)
     norm_num [dotProduct, Fin.sum_univ_succ] at hu hv huv hvu
     fin_cases i <;> fin_cases j <;>
       norm_num [earlier, standard, b₀, b₁, dotProduct, Fin.sum_univ_succ] <;> assumption
-  obtain ⟨f, hfit, hf⟩ := GramIsometry.gram_frame_isometry earlier standard hgram
+  obtain ⟨f, hfit, hf⟩ := fin_frame_isometry earlier standard hgram
   let y := f w
   have preserve_left (i : Fin 2) : standard i ⬝ᵥ y = earlier i ⬝ᵥ w := by
     rw [← hfit i, show y = f w from rfl, hf]
@@ -568,32 +510,25 @@ private theorem first_family_fit (t u v : ℚ) (hu : u ≠ 0) (hv : v ≠ 0)
 private theorem second_family_fit (t u v : ℚ) (hu : u ≠ 0) (hv : v ≠ 0)
     (htu : 1+4*t = 5*u^2) (htv : 1-2*t = 7/2*v^2) (n : ℕ) :
     RealizableIn (triangleBlock t) n ↔ RealizableIn (diagonal ![15,1,7,21]) n := by
-  refine (fits_congr _ _ bBasis bInv ?_ (decompose_second t) n).trans ?_
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
-  · apply diag_scaling ![u⁻¹,1,v⁻¹,v⁻¹]
-    · intro i
-      fin_cases i <;> simp [hu, hv]
-    · intro i
-      fin_cases i <;> simp [htu, htv] <;> field_simp <;> ring
+  refine (fits_congr _ _ bBasis bInv bBasis_mul_inv (decompose_second t) n).trans ?_
+  apply diag_scaling ![u⁻¹,1,v⁻¹,v⁻¹]
+  · intro i
+    fin_cases i <;> simp [hu, hv]
+  · intro i
+    fin_cases i <;> simp [htu, htv] <;> field_simp <;> ring
 
-private theorem three_not_int_square : ¬ IsSquare (3 : ℤ) := by
-  rintro ⟨a, ha⟩
-  have hmod : (a : ZMod 4) * (a : ZMod 4) = 3 := by
-    simpa only [Int.cast_mul, Int.cast_ofNat] using congrArg (fun x : ℤ => (x : ZMod 4)) ha.symm
-  exact (by decide : ∀ a : ZMod 4, a * a ≠ 3) _ hmod
-
-/-- The two unit Gram matrices have equal characteristic polynomials throughout the
-conic family. Their minimum rational coordinate counts are seven and six respectively. -/
-theorem thresholds_on_conic (u v : ℚ)
-    (h : 5*u^2 + 7*v^2 = 3) (n : ℕ) :
-    let t := (5*u^2-1)/4
-    ((pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+/-- The matrices have the same characteristic polynomial for every rational parameter.
+On the conic, their minimum rational coordinate counts are seven and six respectively. -/
+theorem spectrum_and_thresholds :
+    (∀ t : ℚ, (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
       (pairedEdges t).charpoly =
         (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
           (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
+    ∀ (u v : ℚ), 5*u^2 + 7*v^2 = 3 → ∀ n : ℕ,
+      let t := (5*u^2-1)/4
       (RealizableIn (pairedEdges t) n ↔ 7 ≤ n) ∧ (RealizableIn (triangleBlock t) n ↔ 6 ≤ n) := by
+  refine ⟨gram_pair_cospectral, ?_⟩
+  intro u v h n
   dsimp only
   have hu : u ≠ 0 := by
     intro hz
@@ -603,7 +538,7 @@ theorem thresholds_on_conic (u v : ℚ)
     have hs : IsSquare (3 / 7 : ℚ) := ⟨v, by rw [← he, pow_two]⟩
     have hn : (3 / 7 : ℚ).num = 3 :=
       Rat.num_div_eq_of_coprime (a := 3) (b := 7) (by decide) (by decide)
-    exact three_not_int_square (hn ▸ (Rat.isSquare_iff.mp hs).1)
+    exact Int.prime_three.not_isSquare (hn ▸ (Rat.isSquare_iff.mp hs).1)
   have hv : v ≠ 0 := by
     intro hz
     have he : u ^ 2 = 3 / 5 := by
@@ -612,15 +547,14 @@ theorem thresholds_on_conic (u v : ℚ)
     have hs : IsSquare (3 / 5 : ℚ) := ⟨u, by rw [← he, pow_two]⟩
     have hn : (3 / 5 : ℚ).num = 3 :=
       Rat.num_div_eq_of_coprime (a := 3) (b := 5) (by decide) (by decide)
-    exact three_not_int_square (hn ▸ (Rat.isSquare_iff.mp hs).1)
+    exact Int.prime_three.not_isSquare (hn ▸ (Rat.isSquare_iff.mp hs).1)
   let t := (5*u^2-1)/4
   have h₁ : 1+4*t = 5*u^2 := by dsimp [t]; ring
   have h₂ : 1-2*t = 7/2*v^2 := by dsimp [t]; linear_combination -h/2
   have bb : RealizableIn (triangleBlock (1/16)) n ↔ RealizableIn (diagonal ![15,1,7,21]) n :=
     second_family_fit (1/16) (1/2) (1/2) (by norm_num) (by norm_num) (by norm_num)
       (by norm_num) n
-  exact ⟨gram_pair_cospectral t,
-    (first_family_fit t u v hu hv h₁ h₂ n).trans
+  exact ⟨(first_family_fit t u v hu hv h₁ h₂ n).trans
       ((first_one_sixteenth_fit n).symm.trans (thresholds_at_base n).1),
     (second_family_fit t u v hu hv h₁ h₂ n).trans (bb.symm.trans (thresholds_at_base n).2)⟩
 
