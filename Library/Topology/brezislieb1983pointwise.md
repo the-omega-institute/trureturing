@@ -70,8 +70,8 @@ is asserted.
 
 Let j map the complex numbers continuously to the complex numbers, with
 j(0) = 0. Fix epsilon0 > 0. For every 0 < epsilon < epsilon0, let
-phi(epsilon) and psi(epsilon) be continuous nonnegative real functions on
-the complex numbers, satisfying
+phi(epsilon) be continuous and nonnegative, and let psi(epsilon) be a
+nonnegative real function on the complex numbers, satisfying
 
     norm(j(a+b) - j(a)) <= epsilon phi(epsilon,a) + psi(epsilon,b).
 
@@ -93,8 +93,10 @@ its integral need not tend to zero with epsilon.
 
 The declaration
 `D5.S3.Topology.Measures.BrezisLiebNonlinearDefect.brezis_lieb_nonlinear_defect`
-formalizes this full Theorem 2 statement and the strong L1 interpretation
-in Remark (ii). The real integral-control declaration
+implies the full Theorem 2 statement and the strong L1 interpretation
+in Remark (ii). The paper also assumes continuity of psi(epsilon); the formal
+theorem omits that unused premise and retains integrability of psi(epsilon)
+composed with g. The real integral-control declaration
 `D5.S3.Topology.Measures.IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination`
 isolates the proof's epsilon truncation principle. For nonnegative
 integrable f(n) converging almost everywhere to zero, it permits bounds

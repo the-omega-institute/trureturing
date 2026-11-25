@@ -36,7 +36,7 @@ theorem brezis_lieb_nonlinear_defect {Ω : Type u} [MeasurableSpace Ω]
     (μ : Measure Ω) (j : ℂ → ℂ) (hj : Continuous j) (hj0 : j 0 = 0)
     (ε₀ : ℝ) (hε₀ : 0 < ε₀) (φ ψ : ℝ → ℂ → ℝ)
     (hφ : ∀ ε, 0 < ε → ε < ε₀ → Continuous (φ ε) ∧ ∀ z, 0 ≤ φ ε z)
-    (hψ : ∀ ε, 0 < ε → ε < ε₀ → Continuous (ψ ε) ∧ ∀ z, 0 ≤ ψ ε z)
+    (hψ : ∀ ε, 0 < ε → ε < ε₀ → ∀ z, 0 ≤ ψ ε z)
     (hincrement : ∀ ε, 0 < ε → ε < ε₀ → ∀ a b : ℂ,
       ‖j (a + b) - j a‖ ≤ ε * φ ε a + ψ ε b)
     (M : ℝ≥0) (g : Ω → ℂ) (v : ℕ → Ω → ℂ)
@@ -104,7 +104,7 @@ theorem brezis_lieb_nonlinear_defect {Ω : Type u} [MeasurableSpace Ω]
     refine ⟨(fun n x => φ δ (v n x)), (fun x => ψ δ (g x) + ‖j (g x)‖),
       (fun n => hφi δ hδ hδlt n), (hψg δ hδ hδlt).add hjg.norm,
       (fun n x => (hφ δ hδ hδlt).2 (v n x)),
-      (fun x => add_nonneg ((hψ δ hδ hδlt).2 (g x)) (norm_nonneg _)),
+      (fun x => add_nonneg (hψ δ hδ hδlt (g x)) (norm_nonneg _)),
       (fun n => henergy δ hδ hδlt n), ?_⟩
     intro n x
     change ‖A n x - j (g x)‖ ≤ ε * φ δ (v n x) + (ψ δ (g x) + ‖j (g x)‖)

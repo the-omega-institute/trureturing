@@ -45,7 +45,7 @@ internal sealed class BrezisLiebNonlinearDefectDocument : IScribeDocumentDefinit
         Seq(Open, All("epsilon", V("Real")), Admissible, Sp, Rightarrow,
             Call("Continuous", Phi), Sp, Land, Sp, Nonnegative(Phi), Close, Sp, Rightarrow),
         Seq(Open, All("epsilon", V("Real")), Admissible, Sp, Rightarrow,
-            Call("Continuous", Psi), Sp, Land, Sp, Nonnegative(Psi), Close, Sp, Rightarrow),
+            Nonnegative(Psi), Close, Sp, Rightarrow),
         Seq(Open, All("epsilon", V("Real")), Admissible, Sp, Rightarrow,
             All("a", V("Complex")), All("b", V("Complex"))),
         Seq(Le(Norm(Sub(At(V("j"), Add(V("a"), V("b"))), At(V("j"), V("a")))),
@@ -84,7 +84,7 @@ internal sealed class BrezisLiebNonlinearDefectDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/brezislieb1983pointwise")),
                 Blocks(
                     Paragraph(Text("The function j is continuous and vanishes at zero. For every admissible epsilon, "
-                        + "phi(epsilon) and psi(epsilon) are continuous and nonnegative, and their increment inequality "
+                        + "phi(epsilon) is continuous and nonnegative, psi(epsilon) is nonnegative, and their increment inequality "
                         + "holds for every pair of complex a and b. The same finite M bounds the nonnegative integrals "
                         + "of phi(epsilon,v(n)) for every admitted epsilon and every n. The function j(g) is integrable, "
                         + "as is each psi(epsilon,g). Both g and every v(n) are almost-everywhere strongly measurable, "
