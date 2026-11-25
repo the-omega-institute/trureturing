@@ -15,7 +15,8 @@ SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
-REQUIRED_MODULES = CHECK_INPUTS | {"OmegaMath", "OmegaChecks.Portable.Common", FIBONACCI}
+IMPORTER_INPUTS = {"OmegaMath", "OmegaChecks.Portable.Common"}
+REQUIRED_MODULES = CHECK_INPUTS | IMPORTER_INPUTS | {FIBONACCI}
 REPORT_DIR = ".lake/build/omega-checks/"
 
 
@@ -84,8 +85,14 @@ def discover(changed_file):
     return plan(graph, official_basis, set(changed.values()), missing, shared, reg_inputs)
 
 
+def importer_affected(scope):
+    return not IMPORTER_INPUTS.isdisjoint(scope["library"])
+
+
 def cache_targets(scope):
     targets = set(scope["library"] + scope["basis"] + scope["consumers"] + scope["common"])
+    if importer_affected(scope):
+        targets.update(IMPORTER_INPUTS)
     if targets:
         targets.update({AUDIT, CERTIFICATE})
     return sorted(targets)

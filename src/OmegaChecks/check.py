@@ -492,11 +492,9 @@ def check_incremental():
             build(targets)
 
 
-def full_check(incremental=False):
-    manifest = ROOT / "lake-manifest.json"
-    initial = manifest.read_bytes()
+def check_ordinary_importer():
     # A fresh ordinary importer must be able to apply project declarations to official types.
-    run("lake", "build", "+OmegaMath", "+OmegaChecks.Portable.Common")
+    run("lake", "build", *("+" + name for name in sorted(affected_scope.IMPORTER_INPUTS)))
     subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, check=True, text=True, input="""
 import OmegaMath
 import OmegaChecks.Portable.Common
@@ -506,6 +504,12 @@ example (n : Nat) : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) :=
   OmegaChecks.Portable.Common.fibonacciRecurrence n
 example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLeft h
 """)
+
+
+def full_check(incremental=False):
+    manifest = ROOT / "lake-manifest.json"
+    initial = manifest.read_bytes()
+    check_ordinary_importer()
     # The compiled driver runs the current Audit.lean without elaborating it for every audit.
     run("lake", "build", "omegaAudit")
     check_audits()
@@ -532,6 +536,8 @@ def scoped_check(scope):
         ENV.update(lake_environment())
         run("lake", "build", "omegaAudit")
         check_library(scope["library"])
+    if affected_scope.importer_affected(scope):
+        check_ordinary_importer()
     if affected_scope.report_file(scope):
         portable.check(scope["consumers"], "both", basis_roots=scope["basis"], common_roots=scope["common"])
     if affected_scope.FIBONACCI in scope["basis"]:

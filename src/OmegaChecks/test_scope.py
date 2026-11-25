@@ -27,7 +27,7 @@ class ScopeTests(unittest.TestCase):
                                              "Reg.Observation"])
         self.assertEqual(plan["common"], ["OmegaChecks.Portable.Common", "OmegaMathlib.Fib"])
         self.assertEqual(set(scope.cache_targets(plan)), set(plan["library"] + plan["consumers"]) |
-                         {scope.AUDIT, scope.CERTIFICATE})
+                         {scope.AUDIT, scope.CERTIFICATE} | scope.IMPORTER_INPUTS)
 
     def test_project_and_shared_inputs_select_their_dependents(self):
         for changed, shared, reg_inputs, expected in [
@@ -42,6 +42,15 @@ class ScopeTests(unittest.TestCase):
                 plan = scope.plan(self.graph, self.official, changed, set(), shared, reg_inputs)
                 self.assertEqual(plan["consumers"], expected)
                 self.assertEqual(plan["shared"], shared)
+
+    def test_ordinary_importer_runs_when_either_input_is_affected(self):
+        graph = dict(self.graph, OmegaMath=set())
+        for name in scope.IMPORTER_INPUTS | {"D5.Direct"}:
+            with self.subTest(name=name):
+                plan = scope.plan(graph, self.official, {name}, set(), [], [])
+                self.assertEqual(scope.importer_affected(plan), name in scope.IMPORTER_INPUTS)
+                self.assertEqual(scope.IMPORTER_INPUTS <= set(scope.cache_targets(plan)),
+                                 name in scope.IMPORTER_INPUTS)
 
     def test_official_import_edge_affects_port_and_its_clients(self):
         official = dict(self.official, **{"OmegaMathlib.Fib": {"D5.Ordinary"}})
