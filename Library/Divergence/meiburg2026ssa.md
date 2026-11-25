@@ -8,6 +8,7 @@ url: https://github.com/leanprover-community/physlib/blob/2725b6f621901d4cd33086
 claim: Attributed finite-dimensional strong subadditivity, including singular density states, supplies the actual-density bridge used by the repository's AD-classical conditional-copy Zhang-Yeung derivation.
 strata_touched:
   - D5/S3/Quantum/Foundation/QutritPureLift
+  - D5/S3/Quantum/Foundation/QutritSchurPlane
   - D5/S3/Quantum/Foundation/FiniteDensityPurification
   - D5/S3/Quantum/Information/StrongSubadditivity
   - D5/S3/Quantum/Information/ClassicalConditionalCopy
@@ -49,6 +50,22 @@ The actual qutrit face quotient proof also uses the retained Physlib
 The spectral expansion uses the repository's
 `D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum`. The signed
 crossing and unique-lift argument are repository-derived.
+
+The affine quotient plane also uses the retained Hermitian trace pairing,
+unitary congruence, and reindexing to choose a positive support pivot in the
+second actual qutrit. The dimension of the shared binary face identifies the
+lower Hermitian block. Original pure lifts come from the rank-one Schur
+completions using `SectionROGFrame.whole_pure_carrier` and faciality. Their
+quotient injectivity uses `QutritPureLift.unique_original_pure_lift`. The
+adapted overlap and the entire affine quotient slice are repository-derived.
+
+The classical support-face correspondence and the projective coordinates for
+complex pure states provide background for this geometric calculation.
+See [Alfsen and Shultz, §II](https://doi.org/10.1063/1.3399808) for matrix-state
+faces and [Bengtsson, Brännlund, and Życzkowski, §2](https://arxiv.org/abs/quant-ph/0108064)
+for the rank-one projective coordinates.
+
+
 
 There are 32 local supplier modules. In this table local paths are relative to
 `D5/S3/Quantum/Information/StrongSubadditivity/Physlib/`; upstream paths are
