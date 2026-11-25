@@ -9,6 +9,7 @@ claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -110,6 +111,22 @@ The bounded search found no earlier proof of the unrestricted (9,4)
 lower bound. It located lower bounds for small p or restricted dimension
 (arXiv:2611.00129), results on upper-bound failure (arXiv:2603.19927 and
 arXiv:2605.17782), and work on the Stieltjes transform (arXiv:2611.03208).
+
+## Ten copies of the first factor
+
+At (10,4), the mean of the 1001 word traces dominates the trace of
+(A^(5/2) B)^4 for PSD A and B in every finite complex dimension,
+including singular A and B. Three rational positive semidefinite Gram
+blocks, of sizes 21, 15 and 6 with weights I/I, A/A and B/B, compare
+the mean with the trace of (A^3 B A^2 B)^2, with cyclic gaps (3,2,3,2).
+Trace Cauchy–Schwarz gives the fractional-power bound. Hägele's Lemma 2
+gives the lower bound by the trace of exp(10H + 4K) for the same word
+mean on exp H and exp K with Hermitian H and K.
+
+Independent rational review checked all 73 cyclic coefficients and the
+three Gram factorizations. Historical priority remains unverified after
+bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
+2610.31851 and 2611.23122.
 
 ## Scope and conventions
 

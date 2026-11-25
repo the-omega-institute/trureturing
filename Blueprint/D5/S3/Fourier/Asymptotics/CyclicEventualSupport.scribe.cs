@@ -40,7 +40,7 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
                         "The two first excluded cosine levels are −cos((d+1)h) and cos((N+1)h), with N the front radius. " +
                         "Their polynomial readings have strictly negative limits. Every excluded cosine lies between them, " +
                         "so convexity gives the strict sign throughout the complement. Exact moments and the squared-distance " +
-                        "identity certify the positive part as the unique minimizer."))),
+                        "identity certify the positive part as the unique minimizer. Every feasible energy gap is at least the squared distance to the minimizer."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -68,8 +68,12 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
         var distinct = new Formula.Relation(u, FormulaRelationOperator.NotEqual, v);
         var strict = Bind(FormulaQuantifier.ForAll, "u", weights,
             Logic(distinct, FormulaLogicOperator.Implies, Lt(Call("E", v), Call("E", u))));
+        var distance = F.Seq(new Formula.Subscript(F.Sum, i),
+            Sq(F.Seq(F.Open, Subtract(Call("u", i), Call("v", i)), F.Close)));
+        var stability = Bind(FormulaQuantifier.ForAll, "u", weights,
+            Le(Add(Call("E", v), distance), Call("E", u)));
         var exists = Bind(FormulaQuantifier.Exists, "v", weights, And(minimum,
-            And(Eq(Call("M", F.D(1), v), a), And(Eq(Call("M", F.D(2), v), a), strict))));
+            And(Eq(Call("M", F.D(1), v), a), And(Eq(Call("M", F.D(2), v), a), And(strict, stability)))));
         var every = Bind(FormulaQuantifier.ForAll, "v", weights,
             Logic(minimum, FormulaLogicOperator.Implies,
                 Bind(FormulaQuantifier.ForAll, "i", residues, support)));

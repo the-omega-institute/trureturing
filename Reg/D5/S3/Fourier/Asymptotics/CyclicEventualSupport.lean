@@ -36,7 +36,9 @@ abbrev arena : Arena where
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v ∧
           cosineMoment 1 v = 1 - lam / (q : ℝ) ^ 2 ∧
           cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2 ∧
-          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), u ≠ v → energy v < energy u)) ∧
+          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), u ≠ v → energy v < energy u) ∧
+          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
+            energy v + (∑ i, (u i - v i) ^ 2) ≤ energy u)) ∧
         ∀ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v → ∀ i : ZMod q,
             0 < clip (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j

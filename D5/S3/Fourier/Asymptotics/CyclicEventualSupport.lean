@@ -661,7 +661,8 @@ private theorem lattice_window_sums {n : ℕ} {t Z m : ℝ} {w : ℤ → ℝ}
 private def supportStatement (q : ℕ) [NeZero q] (a t : ℝ) : Prop :=
   (∃ v ∈ feasible q a, IsMinOn energy (feasible q a) v ∧
     cosineMoment 1 v = a ∧ cosineMoment 2 v = a ∧
-    (∀ u ∈ feasible q a, u ≠ v → energy v < energy u)) ∧
+    (∀ u ∈ feasible q a, u ≠ v → energy v < energy u) ∧
+    (∀ u ∈ feasible q a, energy v + (∑ i, (u i - v i) ^ 2) ≤ energy u)) ∧
   ∀ v ∈ feasible q a, IsMinOn energy (feasible q a) v → ∀ i : ZMod q,
     0 < v i ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j
 
@@ -793,10 +794,10 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
     linarith only [hd₂, hD₂, hscale]
   have hbet : ∀ i ∉ sites, signedCos true (d + 1) (h k) ≤ sample i ∧
       sample i ≤ signedCos false ((n : ℝ) + 1) (h k) := fun i hi => sample_between hk i hi
-  obtain ⟨hv, hopt, hsupp⟩ := exact_support_of_dual
+  obtain ⟨hv, hopt, hdist, hsupp⟩ := exact_support_of_dual
     (threshold := threshold) (sq_pos_of_pos (mesh_pos (q := q)))
     hkB.le hkG.le hLo.le hHi.le hbet hposSite hvMass hv₁ hv₂
-  refine ⟨⟨v, hv, ?_, hv₁, hv₂, hopt⟩, ?_⟩
+  refine ⟨⟨v, hv, ?_, hv₁, hv₂, hopt, hdist⟩, ?_⟩
   · intro u hu
     by_cases heq' : u = v
     · subst u
@@ -829,7 +830,9 @@ theorem cyclic_eventual_exact_support (lam : ℝ) (hlam : 0 < lam) :
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v ∧
           cosineMoment 1 v = 1 - lam / (q : ℝ) ^ 2 ∧
           cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2 ∧
-          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), u ≠ v → energy v < energy u)) ∧
+          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), u ≠ v → energy v < energy u) ∧
+          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
+            energy v + (∑ i, (u i - v i) ^ 2) ≤ energy u)) ∧
         ∀ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v → ∀ i : ZMod q,
             0 < clip (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j := by
