@@ -39,9 +39,26 @@ def main (args : List String) : IO Unit := do
   searchPathRef.set (original ++ [lib])
   let standard ← importModules (official.push {module := `OmegaChecks.Interface.Equations}) {}
   let log ← IO.FS.Handle.mk report .write
+  -- A downstream import can select a different copy of a generated upstream name.
+  -- Keep a single relocated copy only when the official records agree across owners.
+  let candidateNames := NameSet.ofList (candidates.toList.map (·.replacePrefix `Omega .anonymous))
+  let mut encountered : NameSet := {}
+  let mut duplicated : NameSet := {}
+  for data in standard.header.moduleData do
+    for n in data.constNames do
+      if candidateNames.contains n then
+        if encountered.contains n then duplicated := duplicated.insert n
+        encountered := encountered.insert n
+  let mut conflicts : NameSet := {}
+  for (owner, data) in standard.header.moduleNames.zip standard.header.moduleData do
+    for n in data.constNames do
+      if duplicated.contains n && !conflicts.contains n && !OmegaChecks.Interface.declaredIn standard n owner then
+        conflicts := conflicts.insert n
+        log.putStrLn (toJson #[n.toString, s!"distinct official declarations under the same name in {owner} and other modules"]).compress
   let mut rows := #[]
   for n in candidates do
     if isPrivateName n || n.isInternal then continue
+    if conflicts.contains (n.replacePrefix `Omega .anonymous) then continue
     let some idx := strict.getModuleIdxFor? n | throw <| IO.userError s!"no owner for {n}"
     rows := rows.push (n, strict.header.moduleNames[idx]!.replacePrefix `OmegaInit `Init)
   let pending := (System.FilePath.mk report).withExtension "pending"
