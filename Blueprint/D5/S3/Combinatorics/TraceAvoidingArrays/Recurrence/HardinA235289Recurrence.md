@@ -46,6 +46,10 @@ $$\forall d: Nat \times Nat, ((0 < d.1) \implies ((0 < d.2) \implies ((\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235289-common-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235289-common-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235289 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235289>.

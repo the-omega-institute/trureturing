@@ -27,7 +27,9 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
                     Paragraph(Text("OEIS A235289 proposes a common recurrence for every row and every column. The pair d gives the row and column indices of the table. Either varying index starts at seven, since the smallest lagged index in each displayed identity is positive.")),
                     Paragraph(Text("Complementing every cell on one checkerboard color converts the diagonal difference into a block sum of two or ten. Adjacent blocks share two cells. Their sums can differ by at most six, so every block has the same sum. Complementing all cells exchanges the two classes.")),
                     Paragraph(Text("For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. Each profile and its complement have at most four row choices in total, since the first cell determines a row from its adjacent sums. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235289-common-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
