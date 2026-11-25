@@ -461,6 +461,14 @@ optional fields. The fields describe the last measurement. A proof edit can
 change dependencies while preserving the statement pin. Review the resulting
 state-file diff before committing. [Frozen state specification, A14](develop/spec/golden-ledger-repo-spec.md)
 
+The primary declaration records the official Lean Init and Mathlib build. For
+frozen D5 consumers of the Omega interface, deposit and refresh also check the
+compiled exports from the two backends and record the strict dependencies under
+`strict_omega`. Its two statement fingerprints identify the compared declarations.
+Read each backend’s `libraries` and `axioms` together. An absent `strict_omega`
+means no strict measurement was recorded. An explicit `axioms: []` records a
+measured empty closure on that backend.
+
 A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
 a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
 claim applies to the compiled declaration at measurement time. Published DAGs
