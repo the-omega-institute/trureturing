@@ -51,7 +51,7 @@ private theorem maskSynthesis_basisFun (b f : OrthonormalBasis ι ℂ H)
   change (∑ j : s, EuclideanSpace.basisFun s ℂ i j • _) = _
   simp [EuclideanSpace.basisFun_apply, PiLp.single_apply, Finset.sum_ite_eq']
 
-private theorem maskMass_eq_norm_adjoint (b f : OrthonormalBasis ι ℂ H)
+theorem maskMass_eq_norm_adjoint (b f : OrthonormalBasis ι ℂ H)
     (s : Finset (ι ⊕ ι)) (z : H) :
     maskMass (basisLaw b f z) s = ‖(LinearMap.adjoint (maskSynthesis b f s)) z‖ ^ 2 := by
   rw [← (EuclideanSpace.basisFun s ℂ).sum_sq_norm_inner_right]
@@ -62,7 +62,7 @@ private theorem maskMass_eq_norm_adjoint (b f : OrthonormalBasis ι ℂ H)
   intro i _
   cases i <;> rfl
 
-private theorem adjoint_upper_of_sq_bound {κ : Type*} [Fintype κ]
+theorem adjoint_upper_of_sq_bound {κ : Type*} [Fintype κ]
     (B : EuclideanSpace ℂ κ →ₗ[ℂ] H)
     {K : ℝ} (hK : 0 ≤ K) (hB : ∀ w, ‖B w‖ ^ 2 ≤ K * ‖w‖ ^ 2)
     (z : H) (hz : ‖z‖ = 1) : ‖(LinearMap.adjoint B) z‖ ^ 2 ≤ K := by
@@ -81,7 +81,7 @@ private theorem adjoint_upper_of_sq_bound {κ : Type*} [Fintype κ]
       _ ≤ _ := hsq.trans (hB w)
   exact le_of_mul_le_mul_right hmul (sq_pos_of_ne_zero hw)
 
-private theorem adjoint_lower_of_sq_bound {κ : Type*} [Fintype κ]
+theorem adjoint_lower_of_sq_bound {κ : Type*} [Fintype κ]
     (B : EuclideanSpace ℂ κ →ₗ[ℂ] H)
     {K : ℝ} (hK : 0 < K) (hB : ∀ w, K * ‖w‖ ^ 2 ≤ ‖B w‖ ^ 2)
     (hrank : Fintype.card κ = Module.finrank ℂ H)
