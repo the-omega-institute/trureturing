@@ -27,7 +27,7 @@ open scoped BigOperators ComplexOrder Kronecker Matrix Matrix.Norms.Frobenius
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (exists_svd_sqrt_eigenvalues)
 open D5.S3.Quantum.GNSMatrix (frobenius_norm_sq_eq_trace)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
-  (partialTraceLeft partialTraceLeft_add partialTraceLeft_kronecker)
+  (partialTraceLeft partialTraceLeft_kronecker)
 
 private theorem frobenius_sq_entries {r c : Type*} [Fintype r] [Fintype c]
     (X : Matrix r c ℂ) : ‖X‖ ^ 2 = ∑ i, ∑ j, ‖X i j‖ ^ 2 := by
@@ -49,28 +49,7 @@ private theorem unitary_column_sq_sum {n : Type*} [Fintype n] [DecidableEq n]
     RCLike.star_def, Complex.conj_mul', Complex.ofReal_sum, Complex.ofReal_pow,
     Complex.ofReal_one] using hii
 
-private theorem frobenius_sq_mul_unitaries {n : Type*} [Fintype n] [DecidableEq n]
-    (U V : Matrix.unitaryGroup n ℂ) (D : Matrix n n ℂ) :
-    ‖U.val * D * V.valᴴ‖ ^ 2 = ‖D‖ ^ 2 := by
-  have hU : U.valᴴ * U.val = 1 := Matrix.mem_unitaryGroup_iff'.mp U.prop
-  have hV : V.valᴴ * V.val = 1 := Matrix.mem_unitaryGroup_iff'.mp V.prop
-  apply Complex.ofReal_injective
-  rw [frobenius_norm_sq_eq_trace, frobenius_norm_sq_eq_trace]
-  calc
-    _ = (V.val * (Dᴴ * (U.valᴴ * U.val) * D) * V.valᴴ).trace := by
-      simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-    _ = (V.val * (Dᴴ * D) * V.valᴴ).trace := by rw [hU, Matrix.mul_one]
-    _ = (Dᴴ * D).trace := by rw [Matrix.trace_mul_cycle, hV, Matrix.one_mul]
-
 variable {A B : Type*} [Fintype A] [Fintype B]
-
-private def partialTraceLeftLinear :
-    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix B B ℂ where
-  toFun := partialTraceLeft
-  map_add' := partialTraceLeft_add
-  map_smul' z X := by
-    ext b c
-    simp [partialTraceLeft, Finset.mul_sum]
 
 /-- The partial trace of the outer product is the product of the reshaped
 vectors. The columns of these rectangular matrices are indexed by `A`. -/
@@ -128,13 +107,15 @@ theorem frobenius_sq_partialTraceLeft_le_rank_mul
       Matrix.rank_mul_eq_right_of_isUnit_det _ _ (Matrix.UnitaryGroup.det_isUnit U), hD_rank]
   have hF : ‖K‖ ^ 2 = ∑ i ∈ support, (s i) ^ 2 := by
     calc
-      ‖K‖ ^ 2 = ‖D‖ ^ 2 := by rw [hK, frobenius_sq_mul_unitaries]
+      ‖K‖ ^ 2 = ∑ i, H.eigenvalues i := by
+        apply Complex.ofReal_injective
+        rw [Complex.ofReal_sum]
+        exact (frobenius_norm_sq_eq_trace K).trans H.trace_eq_sum_eigenvalues
       _ = ∑ i, (s i) ^ 2 := by
-        change ‖Matrix.diagonal (fun i => (s i : ℂ))‖ ^ 2 = _
-        rw [frobenius_sq_diagonal]
         apply Finset.sum_congr rfl
         intro i _
-        rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hs_nonneg i)]
+        exact (Real.sq_sqrt
+          (Matrix.eigenvalues_conjTranspose_mul_self_nonneg K i)).symm
       _ = ∑ i ∈ support, (s i) ^ 2 := by
         symm
         apply Finset.sum_subset (Finset.subset_univ support)
@@ -158,10 +139,12 @@ theorem frobenius_sq_partialTraceLeft_le_rank_mul
         simp [hzero i hi]
   have htraceSum : partialTraceLeft K =
       ∑ i ∈ support, (s i : ℂ) • partialTraceLeft (outer i) := by
-    change partialTraceLeftLinear K =
-      ∑ i ∈ support, (s i : ℂ) • partialTraceLeftLinear (outer i)
-    rw [hsum, map_sum]
-    simp only [map_smul]
+    apply Matrix.ext
+    intro b c
+    rw [hsum]
+    simp only [partialTraceLeft, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.mul_sum]
+    exact Finset.sum_comm
   have houter (i : A × B) : ‖partialTraceLeft (outer i)‖ ≤ 1 :=
     frobenius_partialTraceLeft_outer_le_one _ _
       (unitary_column_sq_sum U i) (unitary_column_sq_sum V i)
