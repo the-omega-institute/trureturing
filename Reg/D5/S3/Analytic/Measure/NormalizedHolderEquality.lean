@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Measure.NormalizedHolderEquality
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
+
+set_option Elab.async false
 
 open _root_.D5.S3.Analytic.Measure.NormalizedHolderEquality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -11,9 +13,15 @@ namespace Reg.D5.S3.Analytic.Measure.NormalizedHolderEquality
 noncomputable section
 universe u v
 
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => ℝ≥0∞) (fun _ => ℝ≥0∞ → Prop)
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ≥0∞
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ _ a b => a = b) (fun e => nomatch e)
@@ -42,8 +50,14 @@ def family : Registration arena.{u,v} (type_of% @lintegral_prod_rpow_eq_one_iff.
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lintegral_prod_rpow_eq_one_iff.{u,v}, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
