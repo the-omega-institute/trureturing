@@ -21,6 +21,5 @@ The invertible Schur elimination preserves rank and leaves a one-dimensional piv
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentRank.rational_rank_le_two_at_iff`
-- Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](../ChoiKiemKye/ConstructionReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension](FibCoherentExtension.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/RationalQubitPurity](RationalQubitPurity.md)
