@@ -55,7 +55,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   let i : Fin 2 × Fin 2 := (0, 0)
   let j : Fin 2 × Fin 2 := (0, 1)
-  let Z : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := Matrix.diagonal (fun _ => 1/4)
+  let Z : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := Matrix.diagonal (fun _ => ((1/4 : ℝ) : ℂ))
   let H : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := Matrix.single i j (1 : ℂ)
   let p : Fin 2 → ℝ := fun _ => 1/2
   let eig : Fin 2 × Fin 2 → ℝ := fun _ => 1/4
@@ -66,11 +66,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     simp [Z, eig]
   have hPD : partialTraceRight Z = Matrix.diagonal (fun a => (p a : ℂ)) := by
     ext a b
-    simp [Z, p, partialTraceRight, Fin.sum_univ_two, Matrix.diagonal_apply, Prod.ext_iff]
+    simp [Z, p, partialTraceRight, Matrix.diagonal_apply, Prod.ext_iff]
     split <;> norm_num
   have hH : partialTraceRight H = 0 := by
     ext a b
-    simp [H, i, j, partialTraceRight, Fin.sum_univ_two, Matrix.single_apply, Prod.ext_iff]
+    simp [H, i, j, partialTraceRight, Matrix.single_apply, Prod.ext_iff]
   have h := (law Z H hZ.isHermitian (partialTraceRight_posDef Z hZ) 1 1 eig p hZD
     (by simpa using hPD) (fun _ => by norm_num [p]) (by norm_num [p])
     i j (by norm_num [eig]) (by norm_num [eig])).2
