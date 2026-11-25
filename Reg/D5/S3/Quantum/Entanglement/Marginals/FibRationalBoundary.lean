@@ -17,6 +17,7 @@ open _root_.D5.S3.Quantum.Entanglement.Marginals.FibRationalBoundary
 open _root_.D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension (Word)
 open _root_.D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
+open private disk from D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks
 open scoped ComplexOrder
 
 noncomputable section
@@ -72,8 +73,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have q0 : RationalEntry 0 := rationalComplex.zero_mem
   have qL (i j : Bool) : RationalEntry ((0 : Matrix Bool Bool ℂ) i j) := q0
   have hzero : edgeDisk 1 0 0 0 0 = (0, 0) := by
-    simp [edgeDisk]
-    decide +kernel
+    simp [edgeDisk, disk]
   have hcriterion : RationalBoundaryCriterion (edgeDisk 1 0 0 0 0).1 (edgeDisk 1 0 0 0 0).1
       (edgeDisk 1 0 0 0 0).2 (edgeDisk 1 0 0 0 0).2 := by
     rw [hzero]
