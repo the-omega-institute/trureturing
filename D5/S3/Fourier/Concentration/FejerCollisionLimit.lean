@@ -74,7 +74,7 @@ universe u v
 theorem collision_ramp_tendsto_hard {ι : Type u} {l : Filter ι} {I : ι → Type v}
     (s : ∀ n, Finset (I n)) (x c : ∀ n, I n → ℝ)
     (hc : ∀ᶠ n in l, ∀ i ∈ s n, ∀ j ∈ s n, 0 ≤ c n i*c n j)
-    (B η : ι → ℝ) (hB : ∀ᶠ n in l, 0 ≤ B n) (hη : ∀ᶠ n in l, 0 < η n)
+    (B η : ι → ℝ) (hB : ∀ᶠ n in l, 0 ≤ B n)
     (f : ℝ → ℝ) (a d R : ℝ) (hR : 0 < R) (hd : HasDerivAt f d a) :
     let ramp := fun z : ℝ × ℝ => max 0 (z.1-z.2)
     let L := fun n t => ∑ i ∈ s n, ∑ j ∈ s n, c n i*c n j*ramp (t,|x n i-x n j|)
@@ -85,23 +85,40 @@ theorem collision_ramp_tendsto_hard {ι : Type u} {l : Filter ι} {I : ι → Ty
   let C := fun n => (B n*η n)*nearCollisionMass (s n) (x n) (c n) (a*η n)
   apply secant_tendsto_of_hasDerivAt F C f a d R hR hd hF
   intro δ hδ hδR
-  filter_upwards [hB,hη,hc] with n hbn hn hcn
-  have h := collision_ramp_secants (s n) (x n) (c n) hcn (a*η n) (mul_pos hδ hn)
-  change rampCollisionMass _ _ _ (a*η n)-rampCollisionMass _ _ _ (a*η n-δ*η n) ≤
-      (δ*η n)*nearCollisionMass _ _ _ (a*η n) ∧
-    (δ*η n)*nearCollisionMass _ _ _ (a*η n) ≤
-      rampCollisionMass _ _ _ (a*η n+δ*η n)-rampCollisionMass _ _ _ (a*η n) at h
-  dsimp [F,C]
-  rw [sub_mul,add_mul]
-  constructor
-  · have hL := mul_le_mul_of_nonneg_left h.1 hbn
-    rw [← mul_sub]
-    convert hL using 1
-    ring
-  · have hU := mul_le_mul_of_nonneg_left h.2 hbn
-    rw [← mul_sub]
-    convert hU using 1
-    ring
+  filter_upwards [hB,hc] with n hbn hcn
+  rcases lt_trichotomy (η n) 0 with hn | hn | hn
+  · have hs : 0 < -(δ*η n) := neg_pos.mpr (mul_neg_of_pos_of_neg hδ hn)
+    have h := collision_ramp_secants (s n) (x n) (c n) hcn (a*η n) hs
+    change rampCollisionMass _ _ _ (a*η n)-rampCollisionMass _ _ _ (a*η n- -(δ*η n)) ≤
+        (-(δ*η n))*nearCollisionMass _ _ _ (a*η n) ∧
+      (-(δ*η n))*nearCollisionMass _ _ _ (a*η n) ≤
+        rampCollisionMass _ _ _ (a*η n+ -(δ*η n))-rampCollisionMass _ _ _ (a*η n) at h
+    rw [sub_neg_eq_add, ← sub_eq_add_neg] at h
+    dsimp [F,C]
+    rw [sub_mul,add_mul]
+    have hL := mul_le_mul_of_nonneg_left h.2 hbn
+    have hU := mul_le_mul_of_nonneg_left h.1 hbn
+    have hm : B n * (-(δ*η n) * nearCollisionMass (s n) (x n) (c n) (a*η n)) =
+        -(δ * ((B n*η n) * nearCollisionMass (s n) (x n) (c n) (a*η n))) := by ring
+    rw [hm, mul_sub] at hL hU
+    exact ⟨by linarith only [hL], by linarith only [hU]⟩
+  · simp [F,C,hn]
+  · have h := collision_ramp_secants (s n) (x n) (c n) hcn (a*η n) (mul_pos hδ hn)
+    change rampCollisionMass _ _ _ (a*η n)-rampCollisionMass _ _ _ (a*η n-δ*η n) ≤
+        (δ*η n)*nearCollisionMass _ _ _ (a*η n) ∧
+      (δ*η n)*nearCollisionMass _ _ _ (a*η n) ≤
+        rampCollisionMass _ _ _ (a*η n+δ*η n)-rampCollisionMass _ _ _ (a*η n) at h
+    dsimp [F,C]
+    rw [sub_mul,add_mul]
+    constructor
+    · have hL := mul_le_mul_of_nonneg_left h.1 hbn
+      rw [← mul_sub]
+      convert hL using 1
+      ring
+    · have hU := mul_le_mul_of_nonneg_left h.2 hbn
+      rw [← mul_sub]
+      convert hU using 1
+      ring
 
 #print axioms collision_ramp_tendsto_hard
 

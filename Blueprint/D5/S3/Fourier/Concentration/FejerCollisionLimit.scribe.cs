@@ -13,7 +13,7 @@ internal sealed class FejerCollisionLimitDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "Let the data vary over an arbitrary filter ell on an index type. At each index n, let S(n) be a finite set of real-frequency data with frequencies x(n,i) and real weights c(n,i). Write L_n(r) for the finite weighted collision ramp and E_n(r) for the ordered closed-band mass. Let B and eta be real-valued normalizing factors and radius scales. " +
-                "EventualPairNonnegative(ell,c) means eventually all pair products c(n,i)c(n,j) are nonnegative for i,j in S(n). EventuallyNonnegative(ell,B) and EventuallyPositive(ell,eta) mean eventually B(n)>=0 and eta(n)>0, respectively. " +
+                "EventualPairNonnegative(ell,c) means eventually all pair products c(n,i)c(n,j) are nonnegative for i,j in S(n). EventuallyNonnegative(ell,B) means eventually B(n)>=0. The radius scales eta(n) can be arbitrary real numbers. " +
                 "Set F(t) to the function n -> B(n)L_n(t eta(n)) and H(a) to the function n -> B(n)eta(n)E_n(a eta(n)). Let f be a real profile, a and d real numbers and R a positive neighborhood radius. HasDerivAt(f,d,a) means that f is differentiable at a with derivative d.")),
             Describe.Lean(DescribeId.Create("hard-band-limit"),
                 DeclarationHandle.Create(Owner + ".collision_ramp_tendsto_hard"),
@@ -22,9 +22,9 @@ internal sealed class FejerCollisionLimitDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For fixed 0<delta<R, apply the finite collision secants at radius a eta(n) with spacing delta eta(n) and multiply by B(n). Eventually the resulting left and right differences of F bracket delta H(a). Differentiability provides, for each lower or upper comparison with d, a fixed spacing for which the corresponding limiting secant is strictly beyond that comparison. Pointwise convergence at the two endpoints transfers this strict bound to the finite data eventually. These bounds characterize convergence of H(a) to d. The spacings are chosen independently of n.")),
+                        "For fixed 0<delta<R, apply the finite collision secants at radius a eta(n) with spacing |delta eta(n)| and multiply by B(n). Negative eta exchanges and negates the secants, while zero eta makes both increments vanish. Eventually the resulting left and right differences of F bracket delta H(a). Differentiability provides, for each lower or upper comparison with d, a fixed spacing for which the corresponding limiting secant is strictly beyond that comparison. Pointwise convergence at the two endpoints transfers this strict bound to the finite data eventually. These bounds characterize convergence of H(a) to d. The spacings are chosen independently of n.")),
                     Paragraph(Text(
-                        "For varying degree-n frequency families with nonnegative original weights, positive eta(n) eventually and B(n)>=0 eventually, the Fourier identity identifies L_n(r) for r>0 with r times the whole-line angular Fejer moment. If for every fixed t>0 the normalized ramp at radius t eta(n) tends to k t², take a=1, R=1 and f(t)=k t². Then B(n)eta(n)E_n(eta(n)) tends to 2k. In particular, with B(n)=sqrt(n V(n))/(eta(n)^2 W(n)^(2n)) where the total mass W(n), resolution and variance budget are positive eventually, k=1/(2 sqrt(pi)) yields the normalized hard-band coefficient 1/sqrt(pi). The actual zeta-tail upper estimate and control of noncentral contributions at neighboring radii are additional arithmetic obligations."))),
+                        "For varying degree-n frequency families with nonnegative original weights, positive eta(n) eventually and B(n)>=0 eventually, FejerCollisionVariance.fejer_collision_comparison identifies L_n(r) for r>0 with r times the whole-line angular Fejer moment. If for every fixed t>0 the normalized ramp at radius t eta(n) tends to k t², take a=1, R=1 and f(t)=k t². Then B(n)eta(n)E_n(eta(n)) tends to 2k. In particular, with B(n)=sqrt(n V(n))/(eta(n)^2 W(n)^(2n)) where the total mass W(n), resolution and variance budget are positive eventually, k=1/(2 sqrt(pi)) yields the normalized hard-band coefficient 1/sqrt(pi). The actual zeta-tail upper estimate and control of noncentral contributions at neighboring radii are additional arithmetic obligations."))),
                 DescribeRole.Theorem))));
 
     private static Formula I(string name) => F.Id(name);
@@ -42,8 +42,7 @@ internal sealed class FejerCollisionLimitDocument : IScribeDocumentDefinition
             Imp(Lt(Call("Abs", Subtract(t, a)), R), Tends(Call("F", t), Call("f", t))));
         Formula assumptions = And(Call("EventualPairNonnegative", ell, I("c")),
             And(Call("EventuallyNonnegative", ell, I("B")),
-            And(Call("EventuallyPositive", ell, I("eta")),
-            And(Lt(F.D(0), R), And(Call("HasDerivAt", I("f"), I("d"), a), pointwise)))));
+            And(Lt(F.D(0), R), And(Call("HasDerivAt", I("f"), I("d"), a), pointwise))));
         return F.Disp(Imp(assumptions, Tends(Call("H", a), I("d"))));
     }
 }

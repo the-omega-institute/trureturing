@@ -32,7 +32,7 @@ abbrev arena : Arena where
   Law R := ∀ {ι : Type u} {l : Filter ι} {I : ι → Type v}
     (s : ∀ n, Finset (I n)) (x c : ∀ n, I n → ℝ),
     (∀ᶠ n in l, ∀ i ∈ s n, ∀ j ∈ s n, 0 ≤ c n i*c n j) →
-    ∀ (B η : ι → ℝ), (∀ᶠ n in l, 0 ≤ B n) → (∀ᶠ n in l, 0 < η n) →
+    ∀ (B η : ι → ℝ), (∀ᶠ n in l, 0 ≤ B n) →
     ∀ (f : ℝ → ℝ) (a d ρ : ℝ), 0 < ρ → HasDerivAt f d a →
     let ramp := R.readout () ()
     let L := fun n t => ∑ i ∈ s n, ∑ j ∈ s n, c n i*c n j*ramp (t,|x n i-x n j|)
@@ -45,7 +45,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   let j := ULift.up.{v} ()
   have h := law (ι := ULift.{u} Unit) (l := pure i) (I := fun _ => ULift.{v} Unit)
     (fun _ => {j}) (fun _ _ => 0) (fun _ _ => 1)
-    (by simp) (fun _ => 1) (fun _ => 1) (by simp) (by simp)
+    (by simp) (fun _ => 1) (fun _ => 1) (by simp)
     (fun _ => 0) 1 0 1 zero_lt_one (hasDerivAt_const 1 0)
     (by intro t ht; simp [rejected,realize])
   simp [nearCollisionMass] at h
@@ -82,7 +82,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","value"]
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
