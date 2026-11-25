@@ -28,21 +28,7 @@ $$\forall Omega \in \mathit{Type}, m \in \operatorname{MeasurableSpace}\left(\ma
 
 The coordinate is the real value of the measure of the corresponding strict ordering event. The two strict inequalities exclude all ties. In the theorem the measure is a probability measure and the coordinate functions are measurable.
 
-**Definition 1.3 (The fifteen-label cubic test).**
-
-$$\forall v \in (\operatorname{Fin}\left(6\right) \to \mathbb{R}),\; v \in \mathit{finiteTest15} \Leftrightarrow \left(\exists p \in (\operatorname{Fin}\left(3\right) \to (\operatorname{Fin}\left(15\right) \to \mathbb{R})),\; \left(\forall r \in \operatorname{Fin}\left(3\right),\; \left(\left(\forall i \in \operatorname{Fin}\left(15\right),\; 0 \le p\left(r, i\right)\right) \land \sum_{i:\operatorname{Fin}\left(15\right)} (p\left(r, i\right)) = 1\right) \land \operatorname{card}\left(\{i \mid 0 < p\left(r, i\right)\}\right) \le 5\right) \land \left(\forall t \in \operatorname{Fin}\left(6\right),\; v\left(t\right) = \sum_{i:\operatorname{Fin}\left(15\right),j:\operatorname{Fin}\left(15\right),k:\operatorname{Fin}\left(15\right), k < j,j < i} (p\left(\operatorname{rankOrder}\left(t, 0\right), i\right) \cdot p\left(\operatorname{rankOrder}\left(t, 1\right), j\right) \cdot p\left(\operatorname{rankOrder}\left(t, 2\right), k\right))\right)\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/Dice/RankingProfileRealization.finiteTest15` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Sándor Bozóki, László Csató, József Temesi (2026). *Condorcet’s nontransitive dice: A minimal realization of a complete ranking profile*. DOI: [10.48550/arXiv.2611.23308](https://doi.org/10.48550/arXiv.2611.23308). URL: <https://arxiv.org/abs/2611.23308v1>.
-
-*Commentary.*
-
-There are three weight vectors, each on the same fifteen ordered labels. For each role the weights are nonnegative, sum to one, and have at most five positive entries. All six equations are unconditional strict ranking probabilities.
-
-**Theorem 1.4 (Exact criterion for Problem 5).**
+**Theorem 1.3 (Exact criterion for Problem 5).**
 
 $$\forall v \in (\operatorname{Fin}\left(6\right) \to \mathbb{R}),\; \left(\left(\forall t \in \operatorname{Fin}\left(6\right),\; 0 \le v\left(t\right)\right) \land \sum_{t:\operatorname{Fin}\left(6\right)} (v\left(t\right)) = 1\right) \Rightarrow \left(\left(\forall Omega \in \mathit{Type}, m \in \operatorname{MeasurableSpace}\left(\mathit{Omega}\right), mu \in \operatorname{Measure}\left(\mathit{Omega}\right), X \in (\operatorname{Fin}\left(3\right) \to (\mathit{Omega} \to \mathbb{R})),\; \left(\operatorname{IsProbabilityMeasure}\left(\mathit{mu}\right) \land \left(\left(\left(\forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{Measurable}\left(X\left(i\right)\right)\right) \land \operatorname{iIndepFun}\left(X, \mathit{mu}\right)\right) \land \operatorname{realRankProfile}\left(\mathit{mu}, X\right) = v\right)\right) \Rightarrow v \in \mathit{finiteTest15}\right) \land \left(v \in \mathit{finiteTest15} \Rightarrow \left(\exists mu \in \operatorname{Measure}\left((\operatorname{Fin}\left(3\right) \to \operatorname{Fin}\left(15\right))\right), X \in (\operatorname{Fin}\left(3\right) \to ((\operatorname{Fin}\left(3\right) \to \operatorname{Fin}\left(15\right)) \to \mathbb{R})),\; \operatorname{IsProbabilityMeasure}\left(\mathit{mu}\right) \land \left(\left(\left(\forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{Measurable}\left(X\left(i\right)\right)\right) \land \operatorname{iIndepFun}\left(X, \mathit{mu}\right)\right) \land \operatorname{realRankProfile}\left(\mathit{mu}, X\right) = v\right)\right)\right)\right)$$
 
@@ -66,7 +52,7 @@ For sufficiency take the product law on triples of ordered labels. Evaluating it
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Dice/RankingProfileRealization.finiteTest15`
 - Truth anchor: `D5/S3/Combinatorics/Dice/RankingProfileRealization.problem_five`
 - Truth anchor: `D5/S3/Combinatorics/Dice/RankingProfileRealization.rankOrder`
 - Truth anchor: `D5/S3/Combinatorics/Dice/RankingProfileRealization.realRankProfile`
+- Dependency: [D5/S3/Combinatorics/Dice/RankingProfileFiniteGrid](RankingProfileFiniteGrid.md)
