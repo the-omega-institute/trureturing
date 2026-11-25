@@ -23,7 +23,7 @@ open HardinA233177Canonical (Canonical canonical_pattern_card)
 set_option Elab.async false
 
 private theorem same_horizontal : horiz 6 = horizontal := by decide +kernel
-private theorem same_between : betw 6 = between := by decide +kernel
+theorem same_between : betw 6 = between := by decide +kernel
 
 private def ExactTwo {n : ℕ} (A : Fin n × Fin 6 → Fin 3) : Prop :=
   defects horizontal between (List.ofFn fun i j => A (i, j)) = 2
