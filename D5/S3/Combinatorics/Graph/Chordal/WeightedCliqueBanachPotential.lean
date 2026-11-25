@@ -78,18 +78,19 @@ private noncomputable def bias (k : ℕ) : ℝ :=
 private noncomputable def floorWeight (δ : ℝ) (m : ℕ) : ℝ :=
   if m ≤ 1 then 1 else 1 / (m : ℝ) - δ / ((m : ℝ) - 1)
 
-private theorem bias_bounds {k : ℕ} (hk : 3 ≤ k) : 0 ≤ bias k ∧ bias k ≤ 1 / 4 := by
+private theorem bias_bounds {k : ℕ} (hk : 3 ≤ k) : 0 < bias k ∧ bias k ≤ 1 / 4 := by
   have h : (3 : ℝ) ≤ k := by exact_mod_cast hk
   have hp : (0 : ℝ) < k := by linarith
   have hs : 4 ≤ ((k : ℝ) - 1)^2 := by nlinarith
+  have hq : (0 : ℝ) < (k : ℝ) - 1 := by linarith
+  have hden := mul_pos hp (pow_pos hq 2)
   constructor
+  · exact div_pos (by linarith [h]) hden
   · unfold bias
-    positivity
-  · unfold bias
-    apply (div_le_iff₀ (by positivity : 0 < (k : ℝ) * ((k : ℝ) - 1)^2)).2
+    apply (div_le_iff₀ hden).2
     nlinarith [mul_le_mul_of_nonneg_left hs hp.le]
 
-private theorem floorWeight_pos {δ : ℝ} (hδ : δ ≤ 1 / 4) {m : ℕ} (hm : 1 ≤ m) :
+private theorem floorWeight_pos {δ : ℝ} (hδ : δ ≤ 1 / 4) {m : ℕ} :
     0 < floorWeight δ m := by
   unfold floorWeight
   split
@@ -133,7 +134,7 @@ private theorem floorWeight_le {δ : ℝ} (hd : 0 ≤ δ) (hδ : δ ≤ 1 / 4)
           nlinarith [mul_le_mul (show (m : ℝ) / 2 ≤ (m : ℝ) - 1 by linarith)
             (show (n : ℝ) / 2 ≤ (n : ℝ) - 1 by linarith) (by positivity) mq.le]
     have h := mul_nonneg (sub_nonneg.mpr mn) (sub_nonneg.mpr hprod)
-    field_simp [ne_of_gt mp, ne_of_gt np, ne_of_gt mq, ne_of_gt nq]
+    field_simp (disch := positivity)
     nlinarith
 
 private noncomputable def weight (s : Finset V) (sat : V → Prop) [DecidablePred sat]
@@ -160,9 +161,8 @@ private theorem weight_sum [DecidableEq V] {s : Finset V} {sat : V → Prop} [De
     {δ : ℝ} (hs : s.Nonempty) (hu : ∀ a ∈ s, ∀ b ∈ s, sat a → sat b → a = b) :
     ∑ b ∈ s, weight s sat δ b = 1 := by
   have hn : (0 : ℝ) < s.card := by exact_mod_cast hs.card_pos
-  unfold weight
-  split
-  · rename_i h
+  by_cases h : 2 ≤ s.card ∧ ∃ a ∈ s, sat a
+  · simp only [weight, if_pos h]
     obtain ⟨hm, a, ha, hsa⟩ := h
     have h' : (2 : ℝ) ≤ s.card := by exact_mod_cast hm
     have hc : ((s.erase a).card : ℝ) + 1 = s.card := by
@@ -179,7 +179,7 @@ private theorem weight_sum [DecidableEq V] {s : Finset V} {sat : V → Prop} [De
     rw [show ((s.erase a).card : ℝ) = s.card - 1 by linarith]
     field_simp [ne_of_gt hn, show (s.card : ℝ) - 1 ≠ 0 by linarith]
     <;> ring
-  · rw [Finset.sum_const, nsmul_eq_mul]
+  · simp only [weight, if_neg h, Finset.sum_const, nsmul_eq_mul]
     field_simp [ne_of_gt hn]
 
 set_option maxHeartbeats 1600000 in
@@ -308,7 +308,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       hsx] at h
     omega
   let δ := bias k
-  have hd : 0 ≤ δ := (bias_bounds hk).1
+  have hd : 0 ≤ δ := (bias_bounds hk).1.le
   have hd' : δ ≤ 1 / 4 := (bias_bounds hk).2
   let w (x : V) := weight (P x) (fun b => (P b).card = k) δ
   have wsum {x : V} {i : ℕ} (hx : G.dist o x = i + 1) : ∑ b ∈ P x, w x b = 1 :=
@@ -317,7 +317,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       floorWeight δ (P x).card ≤ w x b := weight_lower hd (inhabitedP hx) b
   have wnonneg {x : V} {i : ℕ} (hx : G.dist o x = i + 1) (b : V) (_ : b ∈ P x) :
       0 ≤ w x b :=
-    (floorWeight_pos hd' (inhabitedP hx).card_pos).le.trans (wfloor hx b)
+    (floorWeight_pos hd' (m := (P x).card)).le.trans (wfloor hx b)
   have wmin {x : V} {i : ℕ} (hx : G.dist o x = i + 1) (b : V) :
       floorWeight δ k ≤ w x b :=
     (floorWeight_le hd hd' (inhabitedP hx).card_pos cardP).trans (wfloor hx b)
@@ -400,9 +400,10 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have h : 2 * δ ≤ ((k : ℝ) - 2) / (k : ℝ) := by
         dsimp [δ, bias]
         have hs : 2 ≤ ((k : ℝ) - 1)^2 := by nlinarith
-        rw [div_mul_eq_div_div]
-        apply (div_le_iff₀ (by positivity : 0 < ((k : ℝ) - 1)^2)).2
-        exact (mul_comm _ _).le.trans (mul_le_mul_of_nonneg_left hs (by positivity))
+        rw [div_mul_eq_div_div, ← mul_div_assoc]
+        apply (div_le_iff₀ (pow_pos hkone 2)).2
+        have hq : 0 ≤ ((k : ℝ) - 2) / (k : ℝ) := div_nonneg hktwo.le hkpos.le
+        nlinarith [mul_le_mul_of_nonneg_left hs hq]
       rw [sub_div, div_self (ne_of_gt hkpos)] at h
       exact h
     have he : δ / ((k : ℝ) - 1) + δ * ((k : ℝ) - 2) / ((k : ℝ) - 1) = δ := by
@@ -423,7 +424,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have he := hconn.dist_eq_zero_iff.mp hx
       subst x
       rw [eval o 0 (by simp), atSucc hy, firstPred hy]
-      simpa [atLevel, Q, anchorGain, a, average, w, weight, path, diagonal_zero hrev] using nonnegBound
+      simpa [atLevel, Q, anchorGain, a, average, w, weight, firstPred hy, path, diagonal_zero hrev] using nonnegBound
     | succ i =>
       let C := componentOf G o (i + 2) y hy.ge
       let D := parent G o C
