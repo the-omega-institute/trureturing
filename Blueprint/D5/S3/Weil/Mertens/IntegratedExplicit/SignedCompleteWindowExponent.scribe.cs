@@ -23,6 +23,40 @@ internal sealed class SignedCompleteWindowExponentDocument : IScribeDocumentDefi
                     + "the positive and negative parts of −Q respectively."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("signed-mass-window-upper"),
+                DeclarationHandle.Create(Module + "signedMass_le_of_window_bound"),
+                H("Mass bound from a one-sided window estimate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For Y > 2, b > 1, θ ≥ 1/2 and C ≥ 0, assume eU(x) ≤ Cx^θ throughout [Y,Y^b]. The pointwise bound "
+                    + "bounds its positive part because the power majorant is nonnegative. "
+                    + "The identity −Q(x)=U(x)/x bounds the density by C Y^(b(θ−1/2))/x. "
+                    + "Integrating the reciprocal gives (b−1) log Y."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("signed-mass-exact-power-integral"),
+                DeclarationHandle.Create(Module + "signed_interval_mass_le_of_positive_loss"),
+                H("Exact power integral on arbitrary closed intervals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For 2 < A ≤ B, κ > 0 and C ≥ 0, assume eU(x) ≤ Cx^(1/2+κ) throughout [A,B]. The signed density is at most "
+                    + "Cx^(κ−1). Integrating this density on the same endpoints gives "
+                    + "(C/κ)(B^κ−A^κ)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cofinal-signed-window-abscissa"),
+                DeclarationHandle.Create(Module + "zeroAbscissa_le_iff_frequently_window_bound"),
+                H("A fixed one-sided exponent determines a zero bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For b > 1, θ ≥ 1/2 and e = 1 or e = −1, Θ ≤ θ holds exactly when some fixed C ≥ 0 bounds eU(x) by Cx^θ on arbitrarily late whole windows [Y,Y^b]. "
+                    + "If Θ≤θ, the absolute zero expansion yields a single constant on every late window. "
+                    + "If Θ>θ, choose an exponent strictly between b(θ−1/2) and b(Θ−1/2). "
+                    + "The eventual mass lower bound has this exponent while the local estimate "
+                    + "bounds the mass on cofinally many windows by C(b−1)Y^(b(θ−1/2)) log Y. "
+                    + "The strict exponent gap absorbs the logarithm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("signed-window-log-growth"),
                 DeclarationHandle.Create(Module + "tendsto_log_one_add_signedMass"),
                 H("Exact exponent for either sign"),

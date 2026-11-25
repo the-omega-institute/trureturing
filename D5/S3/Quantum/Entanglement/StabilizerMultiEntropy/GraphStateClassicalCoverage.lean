@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.GraphStateConcentratableEntanglement
 import D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.BinaryProjectiveRankPolynomial
+import D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.CompactProjectiveGraphWalsh
 import Mathlib.Algebra.Group.AddChar
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -731,5 +732,30 @@ theorem physical_graph_coverage_iff (K : ℝ) (hK : 1 < K) :
       congr 6 <;> first | (congr 1; exact Subsingleton.elim _ _) | (ext i; simp [Finset.mem_sdiff])
     simp_rw [eq]
     exact average_transform_eq_nonhit S hp
+
+open scoped BigOperators
+open D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.CompactProjectiveGraphWalsh
+
+/-- The actual full Walsh coefficient is the binary projective characteristic
+product. Each open dyadic band has a fixed graph whose full coefficient is
+negative, so no common probability law of hits represents its observations. -/
+theorem compact_projective_characteristic (K : ℝ) (hK : 1 < K) :
+    let observed := compactMomentFamily K
+    (∀ n : ℕ, (∑ U : Finset (Fin (2^(n+1))), (-1:ℝ)^U.card * observed n U) =
+        2 * ∏ j : Fin (n+1), (1 - (2:ℝ)^j.val / (2:ℝ)^(K-1))) ∧
+      (∀ m : ℕ, (2:ℝ)^m < (2:ℝ)^(K-1) → (2:ℝ)^(K-1) < (2:ℝ)^(m+1) →
+        ¬ ∃ p : Word (Fin (2^(m+2))) → ℝ, Weight p ∧
+          ∀ S : Finset (Fin (2^(m+2))),
+          1 - (∑ U ∈ S.powerset, observed (m+1) U) / (2:ℝ)^S.card = hit S p) := by
+  dsimp only
+  constructor
+  · exact (compact_projective_walsh K hK).1
+  · intro m hlo hhi
+    rintro ⟨p,hp,hrep⟩
+    have hneg := (compact_projective_walsh K hK).2 m hlo hhi
+    have he := coverage_determines_moments (compactMomentFamily K (m+1)) hp hrep
+    have hpos := signed_transform_sum_nonneg (Finset.univ : Finset (Fin (2^(m+2)))) hp
+    rw [he, ← Finset.powerset_univ] at hneg
+    exact (not_lt_of_ge hpos) hneg
 
 end D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.GraphStateClassicalCoverage

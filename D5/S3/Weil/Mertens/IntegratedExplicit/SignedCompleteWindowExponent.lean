@@ -101,15 +101,10 @@ private theorem density_continuousAt (e : ℝ) {x : ℝ} (hx : 2 < x) :
     Real.continuous_sqrt.continuousAt (Real.sqrt_pos.mpr hx0).ne')
 
 private theorem density_le_inv_bound {θ C e Y b x : ℝ} (hθ : 1 / 2 ≤ θ) (hC : 0 ≤ C)
-    (he : e = 1 ∨ e = -1) (hx : 2 ≤ x) (hxb : x ≤ Y ^ b)
-    (hY : 0 < Y) (hU : |U x| ≤ C * x ^ θ) :
+    (hx : 2 ≤ x) (hxb : x ≤ Y ^ b) (hY : 0 < Y)
+    (hU : max (e * U x) 0 ≤ C * x ^ θ) :
     massDensity e x ≤ (C * Y ^ (b * (θ - 1 / 2))) * x⁻¹ := by
   have hx0 : 0 < x := by linarith
-  have hsign : max (e * U x) 0 ≤ |U x| := by
-    refine max_le ?_ (abs_nonneg _)
-    rcases he with rfl | rfl
-    · simpa only [one_mul] using le_abs_self (U x)
-    · simpa only [neg_one_mul] using neg_le_abs (U x)
   have hweight : x ^ θ / Real.sqrt x = x ^ (θ - 1 / 2) := by
     rw [Real.sqrt_eq_rpow, Real.rpow_sub hx0]
   have hpow : x ^ (θ - 1 / 2) ≤ Y ^ (b * (θ - 1 / 2)) := by
@@ -122,17 +117,17 @@ private theorem density_le_inv_bound {θ C e Y b x : ℝ} (hθ : 1 / 2 ≤ θ) (
   calc
     _ ≤ (C * x ^ θ / x) / Real.sqrt x :=
       div_le_div_of_nonneg_right
-        (div_le_div_of_nonneg_right (hsign.trans hU) hx0.le) (Real.sqrt_nonneg _)
+        (div_le_div_of_nonneg_right hU hx0.le) (Real.sqrt_nonneg _)
     _ = (C * x ^ (θ - 1 / 2)) * x⁻¹ := by
       rw [div_right_comm, mul_div_assoc, hweight, div_eq_mul_inv]
     _ ≤ _ := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hpow hC)
       (inv_nonneg.mpr hx0.le)
 
-/-- A pointwise power envelope for the ramp yields a uniform mass bound for
-both signs, with a single logarithmic factor at the endpoint power. -/
-private theorem signedMass_le_of_ramp_bound {θ C b Y : ℝ} (hθ : 1 / 2 ≤ θ) (hC : 0 ≤ C)
-    (hU : ∀ x : ℝ, 2 ≤ x → |U x| ≤ C * x ^ θ)
-    (hb : 1 < b) (hY : 2 < Y) {e : ℝ} (he : e = 1 ∨ e = -1) :
+/-- A one-sided pointwise power bound on a closed window controls the mass
+of that sign on the same window. -/
+theorem signedMass_le_of_window_bound {θ C b Y e : ℝ} (hθ : 1 / 2 ≤ θ) (hC : 0 ≤ C)
+    (hb : 1 < b) (hY : 2 < Y)
+    (hU : ∀ x ∈ Icc Y (Y ^ b), e * U x ≤ C * x ^ θ) :
     signedMass e b Y ≤ (C * (b - 1)) * Y ^ (b * (θ - 1 / 2)) * Real.log Y := by
   have hY1 : 1 ≤ Y := by linarith
   have hY0 : 0 < Y := by linarith
@@ -154,11 +149,59 @@ private theorem signedMass_le_of_ramp_bound {θ C b Y : ℝ} (hθ : 1 / 2 ≤ θ
   calc
     _ ≤ ∫ x in Y..Y ^ b, (C * Y ^ (b * (θ - 1 / 2))) * x⁻¹ :=
       intervalIntegral.integral_mono_on hYY hint (hinv.const_mul _) (fun x hx =>
-        density_le_inv_bound hθ hC he (hY.le.trans hx.1) hx.2 hY0
-          (hU x (hY.le.trans hx.1)))
+        density_le_inv_bound hθ hC (hY.le.trans hx.1) hx.2 hY0
+          (max_le (hU x hx) (mul_nonneg hC (Real.rpow_nonneg (hY0.le.trans hx.1) _))))
     _ = _ := by
       rw [intervalIntegral.integral_const_mul, integral_inv_of_pos hY0 hYb,
         Real.log_div hYb.ne' hY0.ne', Real.log_rpow hY0]
+      ring
+
+/-- The exact power integral controls the signed mass between arbitrary
+positive endpoints above the Chebyshev tail identity threshold. -/
+theorem signed_interval_mass_le_of_positive_loss {A B κ C e : ℝ}
+    (hA : 2 < A) (hAB : A ≤ B) (hκ : 0 < κ) (hC : 0 ≤ C)
+    (hU : ∀ x ∈ Icc A B, e * U x ≤ C * x ^ ((1 : ℝ) / 2 + κ)) :
+    (∫ x in A..B, max (e * (-Q x)) 0 / Real.sqrt x) ≤
+      (C / κ) * (B ^ κ - A ^ κ) := by
+  have hpos {x : ℝ} (hx : x ∈ Icc A B) : 0 < x :=
+    (by linarith : 0 < A).trans_le hx.1
+  have hupper (x : ℝ) (hx : x ∈ Icc A B) : massDensity e x ≤ C * x ^ (κ - 1) := by
+    have hx0 := hpos hx
+    have hcap : max (e * U x) 0 ≤ C * x ^ ((1 : ℝ) / 2 + κ) :=
+      max_le (hU x hx) (mul_nonneg hC (Real.rpow_nonneg hx0.le _))
+    have hsplit : max (e * (U x / x)) 0 = max (e * U x) 0 / x := by
+      rw [← mul_div_assoc, ← max_div_div_right hx0.le (e * U x) 0, zero_div]
+    change max (e * (-Q x)) 0 / Real.sqrt x ≤ _
+    rw [← primitive_eq_negative_tail (hA.le.trans hx.1), hsplit]
+    calc
+      _ ≤ (C * x ^ ((1 : ℝ) / 2 + κ) / x) / Real.sqrt x :=
+        div_le_div_of_nonneg_right (div_le_div_of_nonneg_right hcap hx0.le)
+          (Real.sqrt_nonneg _)
+      _ = C * (x ^ ((1 : ℝ) / 2 + κ) / Real.sqrt x) / x := by
+        rw [div_right_comm, mul_div_assoc]
+      _ = C * x ^ κ / x := by
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_sub hx0,
+          show (1 : ℝ) / 2 + κ - 1 / 2 = κ by ring]
+      _ = C * (x ^ κ / x ^ (1 : ℝ)) := by rw [Real.rpow_one, mul_div_assoc]
+      _ = _ := by rw [← Real.rpow_sub hx0]
+  have hlint : IntervalIntegrable (massDensity e) volume A B := by
+    apply ContinuousOn.intervalIntegrable
+    intro x hx
+    rw [uIcc_of_le hAB] at hx
+    exact (density_continuousAt e (hA.trans_le hx.1)).continuousWithinAt
+  have hrint : IntervalIntegrable (fun x : ℝ => C * x ^ (κ - 1)) volume A B := by
+    apply ContinuousOn.intervalIntegrable
+    intro x hx
+    rw [uIcc_of_le hAB] at hx
+    exact ((Real.continuousAt_rpow_const x _ (Or.inl (hpos hx).ne')).const_mul
+      C).continuousWithinAt
+  calc
+    _ ≤ ∫ x in A..B, C * x ^ (κ - 1) :=
+      intervalIntegral.integral_mono_on hAB hlint hrint hupper
+    _ = _ := by
+      rw [intervalIntegral.integral_const_mul,
+        integral_rpow (Or.inl (by linarith : -1 < κ - 1)),
+        show κ - 1 + 1 = κ by ring]
       ring
 
 /-- The abscissa gives the upper power envelope without any zero-free-strip
@@ -171,8 +214,11 @@ private theorem eventually_signedMass_le (b : ℝ) (hb : 1 < b) :
     (fun _ hρ => zero_re_le_abscissa hρ)
   refine ⟨C * (b - 1), mul_nonneg hC (sub_nonneg.mpr hb.le), ?_⟩
   filter_upwards [eventually_gt_atTop (2 : ℝ)] with Y hY e he
-  exact signedMass_le_of_ramp_bound half_le_abscissa hC
-    (fun x hx => hU x (one_le_two.trans hx)) hb hY he
+  refine signedMass_le_of_window_bound half_le_abscissa hC hb hY fun x hx => ?_
+  have h := hU x ((by linarith : 1 ≤ Y).trans hx.1)
+  rcases he with rfl | rfl
+  · simpa only [one_mul] using (le_abs_self (U x)).trans h
+  · simpa only [neg_one_mul] using (neg_le_abs (U x)).trans h
 
 /-- If the abscissa is above the critical line, each subterminal exponent is a
 lower power bound on every sufficiently late window, simultaneously for both signs. -/
@@ -199,8 +245,53 @@ private theorem signedMass_nonneg {b Y : ℝ} (hb : 1 < b) (hY : 1 ≤ Y) (e : �
     simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le hY hb.le
   exact intervalIntegral.integral_nonneg_of_forall hYY (density_nonneg e)
 
+
+/-- At every exponent at or above one half, a fixed one-sided bound on cofinally
+many complete power windows detects the zero abscissa. Either sign suffices. -/
+theorem zeroAbscissa_le_iff_frequently_window_bound {θ b e : ℝ}
+    (hθ : 1 / 2 ≤ θ) (hb : 1 < b) (he : e = 1 ∨ e = -1) :
+    zeroAbscissa ≤ θ ↔ ∃ C : ℝ, 0 ≤ C ∧
+      ∃ᶠ Y : ℝ in atTop, ∀ x ∈ Icc Y (Y ^ b), e * U x ≤ C * x ^ θ := by
+  constructor
+  · intro habs
+    obtain ⟨C, hC, hU⟩ := abs_U_le_mul_rpow_of_zero_bound (by linarith)
+      (fun _ hρ => (zero_re_le_abscissa hρ).trans habs)
+    refine ⟨C, hC, ((eventually_ge_atTop (1 : ℝ)).mono fun Y hY x hx => ?_).frequently⟩
+    have h := hU x (hY.trans hx.1)
+    rcases he with rfl | rfl
+    · simpa only [one_mul] using (le_abs_self (U x)).trans h
+    · simpa only [neg_one_mul] using (neg_le_abs (U x)).trans h
+  · rintro ⟨C, hC, hwindow⟩
+    by_contra! hfail
+    let p := b * (θ - 1 / 2)
+    let q := b * (zeroAbscissa - 1 / 2)
+    have hpq : p < q := mul_lt_mul_of_pos_left (sub_lt_sub_right hfail _) (by linarith)
+    let δ := (q - p) / 3
+    have hδ : 0 < δ := div_pos (sub_pos.mpr hpq) (by norm_num)
+    have hδq : p + 2 * δ < q := by dsimp [δ]; linarith
+    have hlow := eventually_rpow_le_signedMass hb (hθ.trans_lt hfail) hδq
+    have hlog := ((isLittleO_log_rpow_atTop hδ).const_mul_left (C * (b - 1))).bound
+      (by norm_num : (0 : ℝ) < 1)
+    obtain ⟨Y, hw, hY, hlower, hl⟩ := (hwindow.and_eventually
+      ((eventually_gt_atTop (2 : ℝ)).and (hlow.and hlog))).exists
+    have hY1 : 1 < Y := by linarith
+    have hY0 := zero_lt_one.trans hY1
+    have hlogY : C * (b - 1) * Real.log Y ≤ Y ^ δ := by
+      simpa only [Real.norm_eq_abs, one_mul, abs_of_nonneg (Real.rpow_nonneg hY0.le _),
+        abs_of_nonneg (mul_nonneg (mul_nonneg hC (sub_nonneg.mpr hb.le))
+          (Real.log_nonneg hY1.le))] using hl
+    have hupper := signedMass_le_of_window_bound hθ hC hb hY hw
+    have hmass : signedMass e b Y ≤ Y ^ (p + δ) := by
+      calc
+        _ ≤ (C * (b - 1)) * Y ^ p * Real.log Y := hupper
+        _ = Y ^ p * (C * (b - 1) * Real.log Y) := by ring
+        _ ≤ Y ^ p * Y ^ δ := mul_le_mul_of_nonneg_left hlogY (Real.rpow_nonneg hY0.le _)
+        _ = Y ^ (p + δ) := (Real.rpow_add hY0 p δ).symm
+    exact (not_lt_of_ge ((hlower e he).trans hmass))
+      (Real.rpow_lt_rpow_of_exponent_lt hY1 (by linarith))
+
 /-- For either sign, the complete arithmetic power-window mass has exact
-logarithmic growth exponent determined by the rightmost zeta zero abscissa. -/
+logarithmic growth exponent determined by the supremum of the real parts of nontrivial zeta zeros. -/
 theorem tendsto_log_one_add_signedMass {b e : ℝ} (hb : 1 < b) (he : e = 1 ∨ e = -1) :
     Tendsto (fun Y : ℝ => Real.log (1 + signedMass e b Y) / Real.log Y)
       atTop (𝓝 (b * (zeroAbscissa - 1 / 2))) := by

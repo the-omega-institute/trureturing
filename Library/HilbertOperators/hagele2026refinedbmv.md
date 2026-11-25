@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
+  - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -93,6 +94,22 @@ Hermitian part of A^(3/2) B A^(1/2) by three rational Gram blocks.
 The fourth trace of that Hermitian part bounds the trace of (A^2 B)^4.
 The proof treats singular A and B directly. The dyadic trace-power
 comparison from Lemma 2 gives the corresponding exponential bound.
+
+## Nine copies of the first factor
+
+At (9,4), the mean of the 715 word traces dominates the trace of
+(A^(9/4) B)^4 for PSD A and Hermitian B in every finite complex
+dimension, including singular A. One rational positive semidefinite
+Gram matrix on 15 half-words, weighted by A, compares the mean with
+the word trace with cyclic gaps (3,2,2,2). Two trace Cauchy–Schwarz
+inequalities give the balanced bound. The dyadic comparison from
+Hägele's Lemma 2 gives the lower bound by the trace of exp(9H + 4K)
+for the same word mean on exp H and exp K.
+
+The bounded search found no earlier proof of the unrestricted (9,4)
+lower bound. It located lower bounds for small p or restricted dimension
+(arXiv:2611.00129), results on upper-bound failure (arXiv:2603.19927 and
+arXiv:2605.17782), and work on the Stieltjes transform (arXiv:2611.03208).
 
 ## Scope and conventions
 
