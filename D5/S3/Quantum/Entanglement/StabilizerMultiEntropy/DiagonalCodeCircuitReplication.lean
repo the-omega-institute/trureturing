@@ -30,40 +30,6 @@ set_option relaxedAutoImplicit false
 
 section
 namespace D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.DiagonalCodeCircuitReplication
-
-/-- A uniformly explicit open interval of negative three-hit coefficients
-for a circuit on n distinct nonparallel columns. This sign lemma does not
-assume that the coefficient is a genuine probability. -/
-theorem three_hit_negative (n : ℕ) (hn : 3≤n) (x : ℝ) (hx : x<1)
-    (hδ : 1-x ≤ (1/2:ℝ)^n) :
-    (1-x)^3*(1+x)^(n-3)-x^(n-1)*(1-x)<0 := by
-  have hhalf : (1/2:ℝ) ≤ x := by
-    have hpow : (1/2:ℝ)^n ≤ (1/2:ℝ)^1 :=
-      pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
-    norm_num at hpow
-    linarith
-  have hnorm : ((1/2:ℝ)^n)^2 * (2:ℝ)^n = (1/2:ℝ)^n := by
-    rw [← pow_mul, Nat.mul_comm, pow_mul, ← mul_pow]
-    norm_num
-  have hfirst : (1-x)^2*(1+x)^(n-3) ≤ (1/2:ℝ)^n := by
-    rw [← hnorm]
-    refine mul_le_mul ?_ ?_ (by positivity) (by positivity)
-    · exact pow_le_pow_left₀ (by linarith) hδ _
-    · exact (pow_le_pow_left₀ (by linarith) (by linarith) _).trans
-        (pow_le_pow_right₀ (by norm_num) (by omega))
-  have hmiddle : (1/2:ℝ)^n < (1/2:ℝ)^(n-1) :=
-    pow_lt_pow_right_of_lt_one₀ (by norm_num) (by norm_num) (by omega)
-  have hlast : (1/2:ℝ)^(n-1) ≤ x^(n-1) :=
-    pow_le_pow_left₀ (by norm_num) hhalf _
-  rw [show (1-x)^3*(1+x)^(n-3)-x^(n-1)*(1-x) =
-    (1-x)*((1-x)^2*(1+x)^(n-3)-x^(n-1)) by ring]
-  exact mul_neg_of_pos_of_neg (by linarith) (sub_neg.mpr (hfirst.trans_lt (hmiddle.trans_le hlast)))
-
-end D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.DiagonalCodeCircuitReplication
-end
-
-section
-namespace D5.S3.Quantum.Entanglement.StabilizerMultiEntropy.DiagonalCodeCircuitReplication
 open Finset
 open scoped BigOperators
 
@@ -94,34 +60,6 @@ private theorem independent_walsh (T : Finset I) (x : ℝ) :
 
 def oneCircuitMoment (x : ℝ) (S : Finset I) : ℝ :=
   if S=univ then x^(Fintype.card I-1) else x^S.card
-
-theorem one_circuit_walsh_three (x : ℝ) (T : Finset I) (hT : T.card=3) :
-    (∑ S : Finset I, (-1:ℝ)^(T∩S).card * oneCircuitMoment x S) =
-      (1-x)^3*(1+x)^(Fintype.card I-3) - x^(Fintype.card I-1)*(1-x) := by
-  have hn : 3≤Fintype.card I := hT ▸ Finset.card_le_univ T
-  have hpow : x^(Fintype.card I) = x^(Fintype.card I-1)*x := by
-    conv_lhs => rw [show Fintype.card I = (Fintype.card I-1)+1 by omega, pow_succ]
-  have step (S : Finset I) :
-      (-1:ℝ)^(T∩S).card * oneCircuitMoment x S =
-      (-1:ℝ)^(T∩S).card*x^S.card -
-        if S=univ then x^(Fintype.card I-1)*(1-x) else 0 := by
-    by_cases hS : S=univ
-    · subst S
-      simp [oneCircuitMoment,hT,hpow]
-      ring
-    · simp [oneCircuitMoment,hS]
-  simp only [step,sum_sub_distrib,independent_walsh,hT]
-  congr 1
-  rw [sum_eq_single univ]
-  · simp
-  · intro S _ hS; simp [hS]
-  · simp
-
-theorem one_circuit_negative_three (x : ℝ) (T : Finset I) (hT : T.card=3)
-    (hx : x<1) (hδ : 1-x≤(1/2:ℝ)^Fintype.card I) :
-    (∑ S : Finset I, (-1:ℝ)^(T∩S).card * oneCircuitMoment x S)<0 := by
-  rw [one_circuit_walsh_three _ _ hT]
-  exact three_hit_negative _ (hT ▸ Finset.card_le_univ T) _ hx hδ
 
 /-- The exact unnormalised Walsh coefficient for every labelled subset. -/
 theorem one_circuit_walsh (x : ℝ) (T : Finset I) (hn : 1≤Fintype.card I) :
@@ -656,33 +594,6 @@ private theorem moment_of_rank_circuit (v : I → V)
   · subst S
     simp [oneCircuitMoment,hfull]
   · simp [oneCircuitMoment,hproper S he,he]
-
-/-- The nonnegativity obstruction concerns actual reduced density moments. The
-rank hypothesis is the intrinsically checkable proper/full circuit identity. -/
-theorem actual_circuit_no_hit (v : I → V)
-    (hfull : Module.finrank F (columns (F:=F) v (univ : Finset I)) = Fintype.card I-1)
-    (hproper : ∀ S : Finset I, S ≠ univ → Module.finrank F (columns (F:=F) v S) = S.card)
-    (T : Finset I) (hT : T.card=3) {K : ℝ} (hK : 1<K)
-    (hδ : 1-(Fintype.card F:ℝ)^(1-K) ≤ (1/2:ℝ)^Fintype.card I) :
-    ¬ hitLaw (fun S => (((mixedMarginal (F:=F) v S)^K).trace).re) := by
-  let x : ℝ := (Fintype.card F:ℝ)^(1-K)
-  have hF : 1 < (Fintype.card F:ℝ) := by exact_mod_cast Fintype.one_lt_card (α:=F)
-  have hx : x<1 := Real.rpow_lt_one_of_one_lt_of_neg hF (by linarith)
-  rw [moment_of_rank_circuit v hfull hproper (by linarith)]
-  have hnonempty : (univ : Finset I) ≠ ∅ := by
-    have : 3 ≤ Fintype.card I := hT ▸ Finset.card_le_univ T
-    intro e
-    have he := congrArg Finset.card e
-    simp at he
-    omega
-  have h0 : oneCircuitMoment x (∅ : Finset I)=1 := by
-    simp [oneCircuitMoment,Ne.symm hnonempty]
-  intro h
-  have hm := (hitLaw_iff _ h0).mp h T
-  rw [inverse] at hm
-  simp only [sign_as_power,mul_comm (oneCircuitMoment x _)] at hm
-  have hn := one_circuit_negative_three x T hT hx hδ
-  exact (div_neg_of_neg_of_pos hn (by unfold walshNorm; positivity)).not_ge hm
 
 /-- Exact positivity criterion, checking only the largest odd label, for
 the actual finite-field diagonal density of any circuit. -/
