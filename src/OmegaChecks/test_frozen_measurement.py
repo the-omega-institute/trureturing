@@ -16,6 +16,7 @@ import portable
 
 
 MIXED = "OmegaChecks.Portable.FrozenDependencies"
+MATHLIB_FACTORIAL = "OmegaChecks.Portable.MathlibFactorial"
 OFFICIAL = "D5.S0.Computability.KernelComponentPayload"
 PRIVATE_INDUCTIVE = "D5.S0.Computability.ConditionalComplexityFloor"
 TETRAHEDRON = "D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron"
@@ -25,7 +26,7 @@ class FrozenMeasurement(unittest.TestCase):
     def test_compiled_pair(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
         self.assertTrue(inspector.is_file(), "prepare reportInspector before running this test")
-        names = [OFFICIAL, MIXED, TETRAHEDRON, PRIVATE_INDUCTIVE]
+        names = [OFFICIAL, MIXED, TETRAHEDRON, PRIVATE_INDUCTIVE, MATHLIB_FACTORIAL]
         subprocess.run(["lake", "build", *("+" + name for name in names)],
                        cwd=portable.ROOT, check=True)
         with tempfile.TemporaryDirectory(prefix="omega-frozen-test-") as temporary:
@@ -36,8 +37,14 @@ class FrozenMeasurement(unittest.TestCase):
                            cwd=portable.ROOT, check=True)
             portable.frozen_measurement(request, official, inspector, result)
             published = result.read_bytes()
-            ordinary, mixed, tetrahedron, private_inductive = json.loads(published)
+            ordinary, mixed, tetrahedron, private_inductive, factorial = json.loads(published)
+            self.assertFalse(factorial["strictEligible"])
+            self.assertEqual(factorial["mathlibOnly"], [MATHLIB_FACTORIAL])
+            self.assertTrue(any("mathlibFactorial" in row["nameKey"] and "Mathlib" in row["libraries"]
+                                for row in factorial["declarations"] if row["includeInStatement"]))
+            self.assertTrue(all("strict_omega" not in row for row in factorial["declarations"]))
             self.assertFalse(ordinary["strictEligible"])
+            self.assertNotIn("mathlibOnly", ordinary)
             self.assertTrue(mixed["strictEligible"])
             self.assertTrue(tetrahedron["strictEligible"])
             self.assertTrue(all("strict_omega" not in row for row in ordinary["declarations"]))
