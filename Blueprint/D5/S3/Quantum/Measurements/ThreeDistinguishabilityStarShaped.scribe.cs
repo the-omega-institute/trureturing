@@ -8,7 +8,7 @@ internal sealed class ThreeDistinguishabilityStarShapedDocument : IScribeDocumen
     private static readonly LibraryNoteRef Distinguishability =
         LibraryNoteRef.Create("D5/L/HilbertOperators/korzekwaetal2019distinguishing");
     private static readonly LibraryNoteRef CentralRay =
-        LibraryNoteRef.Create("D5/L/HilbertOperators/bengtssonetal2005birkhoffunistochastic");
+        LibraryNoteRef.Create("D5/L/Convexity/bengtssonericssonkustadejzyczkowski2004unistochastic");
     private static readonly LibraryNoteRef HaagerupMethod =
         LibraryNoteRef.Create("D5/L/FiniteGroups/rajchelgasiorowskizyczkowski2018robust");
     private static readonly LibraryNoteRef CirculantStarShape =

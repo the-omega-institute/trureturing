@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityStarShaped.in
 
 *Acknowledgement.* Korzekwa, Kamil; Czachórski, Stanisław; Puchała, Zbigniew; Życzkowski, Karol (2019). *Distinguishing classically indistinguishable states and channels*. DOI: [10.1088/1751-8121/ab30f7](https://doi.org/10.1088/1751-8121/ab30f7). URL: <https://arxiv.org/abs/1812.09083v3>.
 
-*Acknowledgement.* Ingemar Bengtsson, Åsa Ericsson, Marek Kuś, Wojciech Tadej, Karol Życzkowski (2005). *Birkhoff's Polytope and Unistochastic Matrices, N = 3 and N = 4*. DOI: [10.1007/s00220-005-1392-8](https://doi.org/10.1007/s00220-005-1392-8). URL: <https://arxiv.org/abs/math/0402325v2>.
+*Acknowledgement.* Ingemar Bengtsson, Åsa Ericsson, Marek Kuś, Wojciech Tadej, Karol Życzkowski (2004). *Birkhoff's polytope and unistochastic matrices, N = 3 and N = 4*. DOI: [10.1007/s00220-005-1392-8](https://doi.org/10.1007/s00220-005-1392-8). URL: <https://arxiv.org/abs/math/0402325v2>.
 
 *Acknowledgement.* Grzegorz Rajchel; Adam Gąsiorowski; Karol Życzkowski (2018). *Robust Hadamard Matrices, Unistochastic Rays in Birkhoff Polytope and Equi-Entangled Bases in Composite Spaces*. DOI: [10.1007/s11786-018-0384-y](https://doi.org/10.1007/s11786-018-0384-y). URL: <https://arxiv.org/abs/1804.10715v2>.
 
