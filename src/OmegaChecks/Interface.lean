@@ -307,8 +307,35 @@ private def replayUpstreamEquations (reference : Environment) (names : Array Nam
     for name in results do matched := matched.insert name
   return matched
 
-/-- Check both export sets and their mathematical content after isolated downstream builds. -/
-def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name) : IO Unit := do
+/-- Canonical name spelling used by the frozen dependency Inspector. -/
+private def frozenNameKey : Name → String
+  | .anonymous => "n0"
+  | .str parent value => s!"ns({frozenNameKey parent},{value.utf8ByteSize}:{value})"
+  | .num parent value => s!"nn({frozenNameKey parent},{value})"
+
+/-- Resolve the exact frozen inventory from the compiled module, including private declarations. -/
+private def frozenRoots (env : Environment) (modules : Array Name)
+    (inventory : Array (String × Array String)) : IO (Array Name) := do
+  let mut roots := #[]
+  for (moduleName, requested) in inventory do
+    let owner := moduleName.toName
+    unless modules.contains owner do
+      throw <| IO.userError s!"frozen inventory outside consumer comparison: {moduleName}"
+    let some idx := env.getModuleIdx? owner
+      | throw <| IO.userError s!"missing frozen consumer module: {moduleName}"
+    let mut byKey : Std.HashMap String Name := {}
+    for name in env.header.moduleData[idx]!.constNames do
+      byKey := byKey.insert (frozenNameKey name) name
+    for key in requested do
+      let some name := byKey[key]?
+        | throw <| IO.userError s!"frozen declaration missing from compiled comparison: {moduleName}:{key}"
+      roots := roots.push name
+  return roots
+
+/-- Check both export sets and their mathematical content after isolated downstream builds.
+The frozen inventory additionally requires correspondence for every included declaration. -/
+def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name)
+    (inventory : Array (String × Array String) := #[]) : IO Unit := do
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
@@ -316,6 +343,7 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
     return name
   let mut pending := consumerExports strict modules
   let expected := NameSet.ofList (pending.toList.map rename)
+  pending := pending ++ (← frozenRoots strict modules inventory)
   -- Equal references to a private helper do not establish that its implementations agree.
   let mut seen : NameSet := {}
   let mut basis := #[]

@@ -144,7 +144,13 @@ def main (args : List String) : IO Unit := do
       if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
         unless data.constants.isEmpty do
           throw <| IO.userError s!"official import adapter {owner} contains declarations"
-    OmegaChecks.Interface.checkConsumers strict publicStrict official modules
+    let inventory : Array (String × Array String) ←
+      if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
+        -- Strict foundation modules may not be official alias facades.
+        checkLayers strict
+        IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
+      else pure #[]
+    OmegaChecks.Interface.checkConsumers strict publicStrict official modules inventory
     if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
       reportOfficialAxioms strict official modules report
   else if let "--exact-roots" :: path :: names := args then
