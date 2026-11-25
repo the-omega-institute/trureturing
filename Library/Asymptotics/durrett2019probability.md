@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Analytic/Probability/FirstMomentWeakLimit
   - D5/S3/Analytic/Probability/BirkhoffPointwise
   - D5/S3/Analytic/Probability/BirkhoffCondexp
+  - D5/S3/Analytic/Probability/BirkhoffBanachCondexp
   - D5/S3/Analytic/Probability/KingmanEstimates
   - D5/S3/Analytic/Probability/KingmanPointwise
 license: citation-only
@@ -130,6 +131,43 @@ convergence of min(A_n,E_mu[g | I]) and equality of integrals yield L1
 convergence; the positive and negative parts give the general real case.
 This is a classical theorem with attributed proof reuse, without a new
 package dependency or a claim of mathematical originality.
+
+## Banach-valued conditional-expectation limits
+
+`BirkhoffBanachCondexp.birkhoff_conditional_expectation` concerns an arbitrary
+finite measure, including zero, and an integrable function with values in a
+complete real normed space. The carrier and value types have independent
+universes. Every finite average and every norm error against invariant
+conditional expectation is integrable, including at time zero. The averages
+converge almost everywhere in norm, and the integral of the norm error tends
+to zero. No ergodicity, invertibility, global separability, reflexivity or
+standard-Borel hypothesis is imposed.
+
+Durrett's Section 6.2 is the scalar mathematical reference, rather than a
+verbatim source for this Banach-valued statement. The Banach approximation
+argument comes from the NormedAddCommGroup section of the same Reis--Butterley
+PR 42078 source cited above, revision
+`ebc0f703f74bec1576e2ca3b078fb173ba11039f`, source SHA-256
+`ffa9688080e52c2cf2b7b87047605255f494bc695fb091c232d2651ff1063d6d`.
+Its complete Apache-2.0 license is the existing
+[mathlib-PR42078-LICENSE.txt](../../docs/reports/licenses/birkhoff-condexp/mathlib-PR42078-LICENSE.txt).
+The source's probability-space scalar calls are replaced by direct applications
+of `BirkhoffCondexp.birkhoff_conditional_expectation`; the finite-measure
+exceptional-set estimate uses the same scalar norm-residual argument. Integrable
+indicator functions times fixed vectors, addition, L1 closure and
+almost-everywhere transport establish the pointwise Banach result.
+
+The mean-convergence synthesis uses $d_n=\|A_n g-C\|$,
+$r_n=|A_n\|g\|-c|$, $c=\mathbb E_\mu[\|g\|\mid I]$, and
+$b=|c|+\|C\|$. The pointwise estimate $d_n\le r_n+b$ gives
+$0\le F_n=\max(d_n-r_n,0)\le b$ and $F_n\le d_n$.
+Every function in this estimate is integrable. The pointwise Banach limit
+and dominated convergence give $\int F_n\to0$; the existing real L1 theorem
+applied to $\|g\|$ gives $\int r_n\to0$. Integrating
+$0\le d_n\le F_n+r_n$ yields the required L1 limit. This uses the pinned
+Bochner dominated-convergence theorem directly, without a probability
+normalization or a global dominating function for the original averages.
+No mathematical originality or added package dependency is claimed.
 
 ## Nonnegative subadditive cocycles
 

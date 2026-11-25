@@ -22,6 +22,46 @@ def rearWeight (h r : ℝ) : ℝ := (1 + Real.cos (r * h)) / 2
 
 def rearMoment (h r : ℝ) : ℝ := r ^ 2 * Real.sinc (r * h) ^ 2
 
+/-- The two unscaled rear features converge at each fixed offset. -/
+theorem rearFeatures_tendsto {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝 0)) (r : ℝ) :
+    Tendsto (fun n => rearWeight (h n) r) atTop (𝓝 1) ∧
+      Tendsto (fun n => rearMoment (h n) r) atTop (𝓝 (r ^ 2)) := by
+  let w := fun n => rearWeight (h n) r
+  let x := fun n => rearMoment (h n) r
+  have ha : Tendsto (fun n => r * h n) atTop (𝓝 0) := by
+    simpa only [mul_zero] using tendsto_const_nhds.mul hh (a := r)
+  have hc : Tendsto (fun n => Real.cos (r * h n)) atTop (𝓝 1) := by
+    rw [← Real.cos_zero]
+    exact Real.continuous_cos.continuousAt.tendsto.comp ha
+  have hw : Tendsto w atTop (𝓝 1) := by
+    simpa [w, rearWeight] using (tendsto_const_nhds.add hc (a := 1)).div_const (2 : ℝ)
+  have hsin : Tendsto (fun n => Real.sinc (r * h n)) atTop (𝓝 1) := by
+    rw [← Real.sinc_zero]
+    exact Real.continuous_sinc.continuousAt.tendsto.comp ha
+  have hx : Tendsto x atTop (𝓝 (r^2)) := by
+    simpa [x, rearMoment] using (hsin.pow 2).const_mul (r^2)
+  exact ⟨hw, hx⟩
+
+/-- The absolute rear cosine deficit with its quadratic window scaling. -/
+theorem rearDeficit_scaled_tendsto {h : ℕ → ℝ}
+    (hu : Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0)) (r : ℝ) :
+    Tendsto (fun n : ℕ => (n : ℝ)^2 * (1 - rearWeight (h n) r)) atTop (𝓝 0) := by
+  have hb : Tendsto (fun n : ℕ => (r^2/4)*((n : ℝ)*h n)^2) atTop (𝓝 0) := by
+    simpa using (hu.pow 2).const_mul (r^2/4)
+  apply squeeze_zero _ _ hb
+  · intro n
+    apply mul_nonneg (sq_nonneg _)
+    unfold rearWeight
+    linarith [Real.cos_le_one (r*h n)]
+  · intro n
+    have hle : 1 - rearWeight (h n) r ≤ (r*h n)^2/4 := by
+      unfold rearWeight
+      linarith [Real.one_sub_sq_div_two_le_cos (x := r*h n)]
+    calc
+      _ ≤ (n : ℝ)^2*((r*h n)^2/4) :=
+        mul_le_mul_of_nonneg_left hle (sq_nonneg _)
+      _ = _ := by ring
+
 private def rearMatrix (n h r : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   let w := rearWeight h r
   let f := 1 - w
@@ -37,48 +77,18 @@ private theorem rearMatrix_tendsto {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝
   let w := fun n => rearWeight (h n) r
   let f := fun n => 1 - w n
   let x := fun n => rearMoment (h n) r
-  have ha : Tendsto (fun n => r * h n) atTop (𝓝 0) := by
-    simpa only [mul_zero] using tendsto_const_nhds.mul hh (a := r)
-  have hc : Tendsto (fun n => Real.cos (r * h n)) atTop (𝓝 1) := by
-    rw [← Real.cos_zero]
-    exact Real.continuous_cos.continuousAt.tendsto.comp ha
-  have hw : Tendsto w atTop (𝓝 1) := by
-    simpa [w, rearWeight] using (tendsto_const_nhds.add hc (a := 1)).div_const (2 : ℝ)
+  obtain ⟨hw, hx⟩ := rearFeatures_tendsto hh r
   have hf : Tendsto f atTop (𝓝 0) := by
-    simpa only [sub_self] using (tendsto_const_nhds.sub hw (a := 1))
-  have hsin : Tendsto (fun n => Real.sinc (r * h n)) atTop (𝓝 1) := by
-    rw [← Real.sinc_zero]
-    exact Real.continuous_sinc.continuousAt.tendsto.comp ha
-  have hx : Tendsto x atTop (𝓝 (r^2)) := by
-    simpa [x, rearMoment] using (hsin.pow 2).const_mul (r^2)
+    simpa only [sub_self] using tendsto_const_nhds.sub hw (a := (1 : ℝ))
   have hn : Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop := tendsto_natCast_atTop_atTop
   have hInv : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (𝓝 0) :=
     tendsto_inv_atTop_zero.comp hn
   have hA : Tendsto (fun n : ℕ => (n : ℝ)^2 * w n^2 * f n) atTop (𝓝 0) := by
-    have hh0 : Tendsto (fun n : ℕ => r^2 / 4 * ((n : ℝ) * h n)^2) atTop (𝓝 0) := by
-      simpa using (hu.pow 2).const_mul (r^2 / 4)
-    apply squeeze_zero _ _ hh0
-    · intro n
-      have h : 0 ≤ f n := by
-        dsimp [f, w, rearWeight]
-        linarith [Real.cos_le_one (r * h n)]
-      positivity
-    · intro n
-      have hw0 : 0 ≤ w n := by
-        dsimp [w, rearWeight]
-        linarith [Real.neg_one_le_cos (r * h n)]
-      have hw1 : w n ≤ 1 := by
-        dsimp [w, rearWeight]
-        linarith [Real.cos_le_one (r * h n)]
-      have hf0 : 0 ≤ f n := sub_nonneg.mpr hw1
-      have hf1 : f n ≤ (r * h n)^2 / 4 := by
-        dsimp [f, w, rearWeight]
-        linarith [Real.one_sub_sq_div_two_le_cos (x := r * h n)]
-      calc
-        _ ≤ (n : ℝ)^2 * (1^2 * ((r * h n)^2 / 4)) := by
-          rw [mul_assoc]
-          gcongr
-        _ = _ := by ring
+    have ht := (rearDeficit_scaled_tendsto hu r).mul (hw.pow 2)
+    apply (show Tendsto (fun n : ℕ => ((n : ℝ)^2 * f n) * w n^2) atTop (𝓝 0)
+      by simpa only [zero_mul] using ht).congr
+    intro n
+    ring
   apply tendsto_pi_nhds.mpr
   intro i
   apply tendsto_pi_nhds.mpr
@@ -109,7 +119,7 @@ private theorem rearMatrix_tendsto {h : ℕ → ℝ} (hh : Tendsto h atTop (𝓝
 open D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation
 open D5.S3.Fourier.Asymptotics.CyclicGrowingFrontFit
 
-private theorem front_site_bounds (n : ℕ) (hn : 0 < n) (u : ℝ) {j : ℤ}
+theorem front_site_bounds (n : ℕ) (hn : 0 < n) (u : ℝ) {j : ℤ}
     (hj : j ∈ latticeInterval n) (i : Fin 2) :
     let x := (j : ℝ) / n
     let w := (1 - Real.cos (x * u)) / 2
@@ -133,7 +143,7 @@ private theorem front_site_bounds (n : ℕ) (hn : 0 < n) (u : ℝ) {j : ℤ}
   exact ⟨hw, frontFeatures_bounds hxAbs i⟩
 
 /-- Bounds for the mixed entries of the three scaled rows of the front matrix. -/
-private theorem front_mixed_block (n : ℕ) (hn : 0 < n) (u : ℝ) (i : Fin 2) :
+theorem front_mixed_block (n : ℕ) (hn : 0 < n) (u : ℝ) (i : Fin 2) :
     let w := fun j : ℤ => (1 - Real.cos ((j : ℝ) / n * u)) / 2
     let f := fun j : ℤ => frontFeatures u ((j : ℝ) / n) i
     ((∑ j ∈ latticeInterval n, f j * w j) / (n : ℝ) ^ 3 ≤ 3 * u ^ 2 / (4 * (n : ℝ) ^ 2)) ∧
@@ -267,7 +277,7 @@ private theorem frontMatrix_tendsto {u : ℕ → ℝ}
 def coupledMomentMatrix (S : Finset ℝ) (n : ℕ) (h : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   frontMatrix n ((n : ℝ) * h) + ∑ r ∈ S, rearMatrix n h r
 
-private theorem mesh_limits {h : ℕ → ℝ}
+theorem mesh_limits {h : ℕ → ℝ}
     (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0)) :
     Tendsto h atTop (𝓝 0) ∧ Tendsto (fun n : ℕ => (n : ℝ) * h n) atTop (𝓝 0) := by
   have hfour : Tendsto (fun n : ℕ => ((n : ℝ) * h n)^4) atTop (𝓝 0) := by
@@ -313,7 +323,7 @@ theorem coupledMatrix_tendsto {h : ℕ → ℝ}
   ext i j
   fin_cases i <;> fin_cases j <;> simp [Matrix.add_apply, Matrix.sum_apply]
 
-private theorem coupledLimit_det (S : Finset ℝ) :
+theorem coupledLimit_det (S : Finset ℝ) :
     (!![(2 : ℝ), 2/3, 0; 2/3, 2/5, 0; 0, ∑ r ∈ S, r^2, (S.card : ℝ)]).det =
       16 * (S.card : ℝ) / 45 := by
   rw [Matrix.det_fin_three]
@@ -355,7 +365,7 @@ private theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
     simp [rearMatrix, vecMulVec_apply, momentRow, coefficientRow, F, X, W] <;>
     field_simp [hn]
 
-private theorem coupledMatrix_eventually_det_ne_zero {h : ℕ → ℝ}
+theorem coupledMatrix_eventually_det_ne_zero {h : ℕ → ℝ}
     (hscale : Tendsto (fun n : ℕ => (n : ℝ)^3 * ((n : ℝ) * h n)^4) atTop (𝓝 0))
     {S : Finset ℝ} (hS : S.Nonempty) :
     ∀ᶠ n : ℕ in atTop,
@@ -397,7 +407,7 @@ def coupledMoments (S : Finset ℝ) (n : ℕ) (h : ℝ) (v : Fin 3 → ℝ) : Fi
     momentRow n (rf r) (rx r) (rw r))
 
 /-- The assembled matrix represents the same weighted moments at each site. -/
-private theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
+theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
     (h : ℝ) (v : Fin 3 → ℝ) :
     coupledMomentMatrix S n h *ᵥ v = coupledMoments S n h v := by
   classical
