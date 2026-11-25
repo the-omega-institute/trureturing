@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.RobinLogClockWeightedTail
+import D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
 import Reg.D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
 import Reg.Support.SingleDependentReadout
 
@@ -13,12 +13,12 @@ noncomputable section
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.CompleteMertensPeak (psiErrorKernel)
-open _root_.D5.S3.Arith.Robin.RobinLogClockWeightedTail (weightedTail_lt_robinLogMargin)
+open _root_.D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail (weightedTail_lt_robinLogMargin)
 open _root_.D5.S3.Weil.Mertens.WeightedTailTransport (weightedTail)
 open _root_.D5.S3.Weil.GronwallLowerEnvelope (robinLogMargin)
 open _root_.Reg.D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff (signature actual family)
 
-namespace Reg.D5.S3.Arith.Robin.RobinLogClockWeightedTail
+namespace Reg.D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
 
 private def rejected : Realization signature :=
   realize signature (fun _ _ n => weightedTail psiErrorKernel (Real.log (n : ℝ)))
@@ -44,8 +44,8 @@ def evidence : Registration arena (type_of% @weightedTail_lt_robinLogMargin) whe
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@weightedTail_lt_robinLogMargin) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.Robin.RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin.__information_unit
-  realizationName := `Reg.D5.S3.Arith.Robin.RobinLogClockWeightedTail.evidence
+  unitName := `D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin.__information_unit
+  realizationName := `Reg.D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -62,7 +62,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.RobinLogClockWeightedTail
+    owner := `D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -77,5 +77,5 @@ def registration :
 
 #print axioms registration
 
-end Reg.D5.S3.Arith.Robin.RobinLogClockWeightedTail
+end Reg.D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
 end

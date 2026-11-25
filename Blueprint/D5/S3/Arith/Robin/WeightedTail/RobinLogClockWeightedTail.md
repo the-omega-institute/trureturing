@@ -8,7 +8,7 @@ The weighted Mangoldt tail at the logarithm of an integer
 
 $$\operatorname{J}\left(\operatorname{log}\left(n\right)\right) < \operatorname{robinLogMargin}\left(n\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/WeightedTail/RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Subtract the same cost per unit from each divisor's benefit. The signed terms ar
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin`
-- Dependency: [D5/S3/Arith/Robin/CompleteMertensPeak](CompleteMertensPeak.md)
-- Dependency: [D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus](PriceRecord/FullPrimePowerArithmeticSurplus.md)
-- Dependency: [D5/S3/Weil/GronwallLowerEnvelope](../../Weil/GronwallLowerEnvelope.md)
+- Truth anchor: `D5/S3/Arith/Robin/WeightedTail/RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin`
+- Dependency: [D5/S3/Arith/Robin/CompleteMertensPeak](../CompleteMertensPeak.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus](../PriceRecord/FullPrimePowerArithmeticSurplus.md)
+- Dependency: [D5/S3/Weil/GronwallLowerEnvelope](../../../Weil/GronwallLowerEnvelope.md)

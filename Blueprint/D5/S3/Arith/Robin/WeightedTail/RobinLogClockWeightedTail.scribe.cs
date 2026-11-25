@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.WeightedTail;
 
 internal sealed class RobinLogClockWeightedTailDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Arith/Robin/RobinLogClockWeightedTail.";
+    private const string Module = "D5/S3/Arith/Robin/WeightedTail/RobinLogClockWeightedTail.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The weighted Mangoldt tail at the logarithm of an integer",

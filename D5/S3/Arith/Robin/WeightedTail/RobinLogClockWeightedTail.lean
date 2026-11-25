@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/RobinLogClockWeightedTail
+/- GID: D5/S3/Arith/Robin/WeightedTail/RobinLogClockWeightedTail
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/RobinLogClockWeightedTail
+   mirror-B: D5/B/S3/Arith/Robin/WeightedTail/RobinLogClockWeightedTail
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
@@ -18,7 +18,7 @@ import D5.S3.Weil.GronwallLowerEnvelope
 set_option autoImplicit false
 
 noncomputable section
-namespace D5.S3.Arith.Robin.RobinLogClockWeightedTail
+namespace D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
 
 open Finset
 open scoped BigOperators
@@ -241,6 +241,6 @@ theorem weightedTail_lt_robinLogMargin {n : ℕ} (hn : 5040 < n) :
     Real.eulerMascheroniConstant + Real.log (Real.log y) - logAbundancy n
   linarith only [hlocal, hbudget, hledger]
 
-end D5.S3.Arith.Robin.RobinLogClockWeightedTail
+end D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail
 
-#print axioms D5.S3.Arith.Robin.RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin
+#print axioms D5.S3.Arith.Robin.WeightedTail.RobinLogClockWeightedTail.weightedTail_lt_robinLogMargin
