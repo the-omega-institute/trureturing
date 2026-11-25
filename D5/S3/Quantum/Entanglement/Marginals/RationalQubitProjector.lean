@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
 import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import D5.S3.Quantum.Measurement.FourQubitParentConstruction
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
 
 /-! Hermitian qubit matrices in rational Bloch coordinates. -/
 
@@ -19,7 +19,7 @@ open D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment (idempotent_tr
 open D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
-  (B B_formula_core B_real_smul B_sum trace_B_mul)
+  (B B_formula_core)
 
 set_option autoImplicit false
 
@@ -51,22 +51,20 @@ private theorem spin_selfAdjoint (a : Bloch) : (spin a)ᴴ = spin a := by
 private theorem spin_trace (a : Bloch) : (spin a).trace = 0 := by
   simp [Matrix.trace, spin_apply]
 
-private theorem spin_mul_trace (a b : Bloch) :
-    (spin a * spin b).trace = (2 : ℂ) * (pairing a b : ℂ) := by
-  unfold spin rationalBlochMatrix
-  rw [Matrix.submatrix_mul_equiv _ _ finTwoEquiv.symm finTwoEquiv.symm finTwoEquiv.symm]
-  have htrace (A : Matrix (Fin 2) (Fin 2) ℂ) :
-      (A.submatrix finTwoEquiv.symm finTwoEquiv.symm).trace = A.trace := by
-    simp [Matrix.trace, Fin.sum_univ_two, finTwoEquiv, add_comm]
-  rw [htrace, trace_B_mul]
-  simp [PiLp.inner_apply, dotProduct, Fin.sum_univ_three, Rat.cast_add, Rat.cast_mul, mul_comm]
-
 private theorem spin_anticomm (a b : Bloch) :
     spin a * spin b + spin b * spin a = ((2 : ℂ) * (pairing a b : ℂ)) • 1 := by
   ext i j
   cases i <;> cases j <;>
     simp [Matrix.mul_apply, spin_apply, dotProduct, Fin.sum_univ_three, Rat.cast_add,
       Rat.cast_mul] <;> ring_nf <;> simp
+
+private theorem spin_mul_trace (a b : Bloch) :
+    (spin a * spin b).trace = (2 : ℂ) * (pairing a b : ℂ) := by
+  have h := congrArg Matrix.trace (spin_anticomm a b)
+  rw [Matrix.trace_add, Matrix.trace_mul_comm (spin b) (spin a),
+    Matrix.trace_smul, Matrix.trace_one] at h
+  norm_num at h
+  linear_combination (1 / 2 : ℂ) * h
 
 private theorem spin_square (a : Bloch) :
     spin a * spin a = (pairing a a : ℂ) • 1 := by
@@ -75,27 +73,14 @@ private theorem spin_square (a : Bloch) :
 
 private theorem spin_smul (t : ℚ) (a : Bloch) :
     spin (t • a) = (t : ℂ) • spin a := by
-  let x : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (a i : ℝ)
-  have heq : (WithLp.toLp 2 fun i => ((t • a) i : ℝ)) = (t : ℝ) • x := by
-    apply (WithLp.equiv 2 _).injective
-    funext i
-    simp [x, Rat.cast_mul]
-  unfold spin rationalBlochMatrix
-  rw [heq, B_real_smul, RCLike.real_smul_eq_coe_smul (K := ℂ)]
-  rfl
+  ext i j
+  cases i <;> cases j <;>
+    simp [spin_apply, Pi.smul_apply, smul_eq_mul, Rat.cast_mul] <;> ring
 
 private theorem spin_add (a b : Bloch) : spin (a + b) = spin a + spin b := by
-  let x : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (a i : ℝ)
-  let y : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (b i : ℝ)
-  have heq : (WithLp.toLp 2 fun i => ((a + b) i : ℝ)) = x + y := by
-    apply (WithLp.equiv 2 _).injective
-    funext i
-    simp [x, y, Rat.cast_add]
-  have hadd : B (x + y) = B x + B y := by
-    simp [← B_sum (Finset.univ : Finset (Fin 2)) ![x, y], Fin.sum_univ_two]
-  unfold spin rationalBlochMatrix
-  rw [heq, hadd]
-  rfl
+  ext i j
+  cases i <;> cases j <;>
+    simp [spin_apply, Pi.add_apply, Rat.cast_add] <;> ring
 
 private theorem spin_rational (a : Bloch) (i j : Bool) : RationalEntry (spin a i j) := by
   have hq (x : ℚ) : RationalEntry (x : ℂ) := SubfieldClass.ratCast_mem rationalComplex x

@@ -26,4 +26,4 @@ On this eigenspace the two components of a determine a Hermitian correction. Its
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/ContractionAttainment](../AbsolutePPT/ContractionAttainment.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
-- Dependency: [D5/S3/Quantum/Measurement/FourQubitParentConstruction](../../Measurement/FourQubitParentConstruction.md)
+- Dependency: [D5/S3/Quantum/Measurement/Bloch/QubitBloch](../../Measurement/Bloch/QubitBloch.md)
