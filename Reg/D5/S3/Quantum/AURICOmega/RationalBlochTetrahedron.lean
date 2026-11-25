@@ -49,23 +49,43 @@ private def axis : Quad4 := ⟨Omega.Int.zero, Omega.Int.ofNat three, Omega.Int.
 private def neighbor : Quad4 :=
   ⟨Omega.Int.zero, Omega.Int.one.neg, Omega.Int.two, Omega.Int.two⟩
 
+private theorem nativeEq {α : Type} {a b : α} (h : Omega.Eq a b) : a = b :=
+  Omega.Eq.rec rfl h
+
+private theorem omegaEq {α : Type} {a b : α} (h : a = b) : Omega.Eq a b :=
+  h ▸ Omega.rfl
+
+private theorem native_add_ofNat (a b : Omega.Nat) :
+    (Omega.Int.ofNat a).add (Omega.Int.ofNat b) = Omega.Int.ofNat (a.add b) := rfl
+
+private theorem native_mul_ofNat (a b : Omega.Nat) :
+    (Omega.Int.ofNat a).mul (Omega.Int.ofNat b) = Omega.Int.ofNat (a.mul b) := rfl
+
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have impossible := h axis neighbor three axis (Omega.Nat.succ_ne_zero _)
-    Omega.Eq.refl Omega.Eq.refl Omega.Eq.refl Omega.Eq.refl Omega.Eq.refl Omega.Eq.refl
-    Omega.Eq.refl Omega.Eq.refl Omega.Eq.refl
-  exact Omega.False.elim impossible
+  apply Omega.False.elim
+  apply h axis neighbor three axis (Omega.Nat.succ_ne_zero _)
+  all_goals
+    apply omegaEq
+    simp only [axis, neighbor, rejected, realize, Quad4.dot, Omega.Int.zero, Omega.Int.one, Omega.Int.two,
+      nativeEq (Omega.Int.neg_mul_neg _ _), nativeEq (Omega.Int.mul_neg _ _),
+      nativeEq (Omega.Int.neg_mul _ _), nativeEq (Omega.Int.mul_zero _),
+      nativeEq (Omega.Int.zero_mul _), nativeEq (Omega.Int.add_zero _),
+      nativeEq (Omega.Int.zero_add _), native_mul_ofNat, native_add_ofNat,
+      three, Omega.Nat.one, nativeEq (Omega.Nat.mul_zero _), nativeEq (Omega.Nat.mul_succ _ _),
+      nativeEq (Omega.Nat.add_zero _), nativeEq (Omega.Nat.add_succ _ _)] <;> rfl
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨⟨axis, ⟨neighbor, three⟩⟩, axis, Quad4.zero, ?_⟩
+  refine ⟨⟨Quad4.one, ⟨neighbor, three⟩⟩, Quad4.one, Quad4.zero, ?_⟩
   intro heq
-  have absEq : Omega.Nat.succ (three.mul (three.mul three)).pred = Omega.Nat.zero :=
-    congrArg Omega.Int.natAbs heq
-  have impossible : Omega.Nat.lt Omega.Nat.zero Omega.Nat.zero :=
-    Eq.mp (congrArg (Omega.Nat.lt Omega.Nat.zero) absEq) Omega.True.intro
-  exact Omega.False.elim impossible
+  change (Omega.Int.ofNat three).mul (Quad4.one.dot Quad4.one) =
+    (Omega.Int.ofNat three).mul (Quad4.zero.dot Quad4.one) at heq
+  simp only [Quad4.one, Quad4.zero, Quad4.dot, Omega.Int.zero, Omega.Int.one,
+    nativeEq (Omega.Int.mul_one _), nativeEq (Omega.Int.mul_zero _),
+    nativeEq (Omega.Int.zero_mul _), nativeEq (Omega.Int.add_zero _)] at heq
+  exact Omega.False.elim (Omega.Nat.succ_ne_zero _ (Omega.Int.ofNat_inj.mp (omegaEq heq)))
 
 def family : Registration arena (type_of% @no_rational_bloch_tetrahedral_triangle) where
   actual := actual
