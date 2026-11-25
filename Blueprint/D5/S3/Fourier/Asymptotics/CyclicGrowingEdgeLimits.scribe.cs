@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Asymptotics;
 
@@ -18,7 +19,7 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("critical-coefficient-limit"),
                 DeclarationHandle.Create(Owner + ".coefficient_tendsto"),
                 H("The three fitted coefficients converge"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Coefficients()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The moment target converges to (1,1/5,3K/20). Inverting the limiting " +
@@ -28,7 +29,7 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("refined-front-coefficients"),
                 DeclarationHandle.Create(Owner + ".refined_coefficients"),
                 H("The front coefficient error vanishes after multiplication by n"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Refinement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The exact lattice reference has radius parameter t=n(n+1)−1/2 and " +
@@ -42,7 +43,7 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("front-edge-limit"),
                 DeclarationHandle.Create(Owner + ".scaled_boundary_value"),
                 H("Signed value at the growing front boundary"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Front()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At x=(n+δ)/n the finite signed weight is the dot product of the coefficient " +
@@ -54,7 +55,7 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("rear-edge-limit"),
                 DeclarationHandle.Create(Owner + ".scaled_rear_value"),
                 H("Signed value at a fixed rear offset"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Rear()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At every fixed real rear offset r the signed value multiplied by n³ " +
@@ -63,4 +64,46 @@ internal sealed class CyclicGrowingEdgeLimitsDocument : IScribeDocumentDefinitio
                     "moment fit on the stated windows. Certification of the full cyclic optimizer " +
                     "also requires the cyclic grid correspondence and complement signs."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Coefficients()
+    {
+        var a = F.Id("a");
+        var n = F.Id("n");
+        var b = F.Id("B");
+        return F.Disp(Eq(Call("Limit", Call("Apply", a, n)),
+            Call("VectorThree", Fraction(3, 4), Subtract(F.D(0), Fraction(3, 4)), b)));
+    }
+
+    private static Formula Refinement()
+    {
+        var n = F.Id("n");
+        return F.Disp(Eq(Call("Limit", Multiply(n,
+            Subtract(Call("FrontCoefficients", n), Call("LatticeCoefficients", n)))), F.D(0)));
+    }
+
+    private static Formula Front()
+    {
+        var n = F.Id("n");
+        var d = F.Id("delta");
+        return F.Disp(Eq(Call("Limit", Multiply(new Formula.Power(n, F.D(2)), Call("FrontValue", n, d))),
+            Multiply(Fraction(3, 4), Subtract(F.D(1), Multiply(F.D(2), d)))));
+    }
+
+    private static Formula Rear()
+    {
+        var n = F.Id("n");
+        var r = F.Id("r");
+        return F.Disp(Eq(Call("Limit", Multiply(new Formula.Power(n, F.D(3)), Call("RearValue", n, r))),
+            Subtract(F.Id("B"), Multiply(Fraction(3, 4), new Formula.Power(r, F.D(2))))));
+    }
+
+    private static Formula Fraction(byte numerator, byte denominator) =>
+        new Formula.Fraction(F.D(numerator), F.D(denominator));
+
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Multiply(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Subtract(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
 }
