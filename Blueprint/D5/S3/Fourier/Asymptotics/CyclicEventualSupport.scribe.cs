@@ -20,7 +20,7 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Fix a positive budget λ, set m = λ/(8π²), and take the integer-lattice activation data at m. " +
                         "The lattice weight at j is (t−j²)₊/Z. For all sufficiently large positive moduli q, " +
-                        "a cyclic minimizer exists and both cosine moments equal 1−λ/q². The positive sites " +
+                        "the unique cyclic minimizer has both cosine moments equal to 1−λ/q². The positive sites " +
                         "of every minimizer are exactly those with centered j² ≤ t and those attaining " +
                         "the smallest sampled first cosine. The cutoff applies to even and odd moduli.")),
                     Paragraph(Text(
@@ -64,8 +64,12 @@ internal sealed class CyclicEventualSupportDocument : IScribeDocumentDefinition
             Le(Call("c", i), Call("c", j)));
         var support = Logic(Lt(F.D(0), Call("v", i)), FormulaLogicOperator.Iff,
             Logic(Le(Sq(Call("Centered", i)), t), FormulaLogicOperator.Or, antipode));
+        var u = F.Id("u");
+        var distinct = new Formula.Relation(u, FormulaRelationOperator.NotEqual, v);
+        var strict = Bind(FormulaQuantifier.ForAll, "u", weights,
+            Logic(distinct, FormulaLogicOperator.Implies, Lt(Call("E", v), Call("E", u))));
         var exists = Bind(FormulaQuantifier.Exists, "v", weights, And(minimum,
-            And(Eq(Call("M", F.D(1), v), a), Eq(Call("M", F.D(2), v), a))));
+            And(Eq(Call("M", F.D(1), v), a), And(Eq(Call("M", F.D(2), v), a), strict))));
         var every = Bind(FormulaQuantifier.ForAll, "v", weights,
             Logic(minimum, FormulaLogicOperator.Implies,
                 Bind(FormulaQuantifier.ForAll, "i", residues, support)));

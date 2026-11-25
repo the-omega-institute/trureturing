@@ -30,7 +30,7 @@ universe u
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] (x : ι → ℝ) (j : ι)
-    (_hmax : ∀ i, x i ≤ x j) (_hbelow : ∃ i, x i < x j)
+    (_hmax : ∀ i, x i ≤ x j)
     (a b g : ℝ) (_hg : 0 ≤ g)
     (_hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0)
     (_hmoment : 0 < ∑ i, x i * (a + b * x i + g * x i ^ 2)),
@@ -44,7 +44,6 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hmax (i : ULift.{u} (Fin 2)) : x i ≤ x last := by
     rcases i with ⟨i⟩
     fin_cases i <;> norm_num [x, last]
-  have hbelow : x ⟨0⟩ < x last := by norm_num [x, last]
   have hsum (f : ℝ → ℝ) : (∑ i, f (x i)) = f 0 + f 1 := by
     rw [Fintype.sum_equiv Equiv.ulift (fun i => f (x i)) (fun i : Fin 2 => f i.val)
       (fun _ => rfl), Fin.sum_univ_two]
@@ -56,7 +55,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     rw [hsum (fun z => z * (-1 + 2 * z + 0 * z ^ 2))]
     norm_num
   exact (lt_irrefl _) (h (ι := ULift.{u} (Fin 2)) x last hmax
-    ⟨ULift.up 0, hbelow⟩ (-1) 2 0 le_rfl hmass hmoment)
+    (-1) 2 0 le_rfl hmass hmoment)
 
 def evidence : Registration arena.{u} (type_of% @boundary_variation_pos.{u}) where
   actual := actual
@@ -92,7 +91,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
@@ -110,8 +109,8 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
     {sites : Finset (ZMod q)} (_hs : 0 < s) (_hb : b ≤ 0) (_hg : g ≤ 0)
-    (_hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
-    (_hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
+    (_hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) ≤ 0)
+    (_hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) ≤ 0)
     (_hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi),
     let clip := R.readout () ()
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)

@@ -42,13 +42,22 @@ private theorem moment_det_nonneg {ι : Type*} [Fintype ι] (a x : ι → ℝ)
 /-- A quadratic with nonnegative leading coefficient, zero total variation, and positive
 first-moment variation is strictly positive at the largest sampled level. -/
 theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : ι)
-    (hmax : ∀ i, x i ≤ x j) (hbelow : ∃ i, x i < x j)
+    (hmax : ∀ i, x i ≤ x j)
     (a b g : ℝ) (hg : 0 ≤ g)
     (hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0)
     (hmoment : 0 < ∑ i, x i * (a + b * x i + g * x i ^ 2)) :
     let clip := fun y : ℝ => max 0 y
     0 < clip (a + b * x j + g * x j ^ 2) := by
   simp only [lt_max_iff, lt_irrefl, false_or]
+  have hbelow : ∃ i, x i < x j := by
+    by_contra! h
+    have heq (i : ι) : x i = x j := le_antisymm (hmax i) (h i)
+    have hz : (∑ i, x i * (a + b * x i + g * x i ^ 2)) = 0 := by
+      calc
+        _ = ∑ i, x j * (a + b * x i + g * x i ^ 2) :=
+          sum_congr rfl fun i _ => by nth_rw 1 [heq i]
+        _ = 0 := by rw [← mul_sum, hmass, mul_zero]
+    exact (ne_of_gt hmoment) hz
   let count : ℝ := ∑ _ : ι, (1 : ℝ)
   let s₁ : ℝ := ∑ i, x i
   let s₂ : ℝ := ∑ i, x i ^ 2
@@ -106,10 +115,10 @@ private theorem dualValue_convex (s a b g : ℝ) (hs : 0 < s) (hg : g ≤ 0) :
   nlinarith only [hsq, congrArg (fun z : ℝ => g * (u * x ^ 2 + v * y ^ 2) * z) huv,
     congrArg (fun z : ℝ => (a * s + b * s + g) * z) huv]
 
-theorem dualValue_negative_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
+theorem dualValue_nonpos_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
     (hg : g ≤ 0) (hlo : lo ≤ c) (hhi : c ≤ hi)
-    (hl : dualValue s a b g lo < 0) (hh : dualValue s a b g hi < 0) :
-    dualValue s a b g c < 0 := by
+    (hl : dualValue s a b g lo ≤ 0) (hh : dualValue s a b g hi ≤ 0) :
+    dualValue s a b g c ≤ 0 := by
   rcases eq_or_lt_of_le (hlo.trans hhi) with he | hlt
   · rw [le_antisymm hhi (he ▸ hlo), ← he]
     exact hl
@@ -123,15 +132,8 @@ theorem dualValue_negative_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
   have h := (dualValue_convex s a b g hs hg).2
     (Set.mem_univ lo) (Set.mem_univ hi) hu hv huv
   simp only [smul_eq_mul, hc] at h
-  refine h.trans_lt ?_
-  have hmax := max_lt_iff.mpr ⟨hl, hh⟩
-  calc
-    _ ≤ u * max (dualValue s a b g lo) (dualValue s a b g hi) +
-        v * max (dualValue s a b g lo) (dualValue s a b g hi) :=
-      add_le_add (mul_le_mul_of_nonneg_left (le_max_left _ _) hu)
-        (mul_le_mul_of_nonneg_left (le_max_right _ _) hv)
-    _ = _ := by rw [← add_mul, huv, one_mul]
-    _ < 0 := hmax
+  exact h.trans (add_nonpos (mul_nonpos_of_nonneg_of_nonpos hu hl)
+    (mul_nonpos_of_nonneg_of_nonpos hv hh))
 
 /-- Exact moments and the signs of a quadratic dual certify the unique optimizer.
 A zero dual value off the support is allowed at a support transition. -/
@@ -199,12 +201,12 @@ theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : �
   by_cases hi' : i ∈ sites <;> simp [clip, v, hi', hpos, lt_max_iff]
 
 /-- The clipped quadratic with exact moment constraints uniquely minimizes squared mass.
-If its two bounding excluded levels have negative values, every other excluded level
-between them has negative value as well. -/
+Nonpositive readings at the two bounding excluded levels imply nonpositive readings
+throughout the intervening interval. -/
 theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
     {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0)
-    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
-    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
+    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) ≤ 0)
+    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) ≤ 0)
     (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
     let clip := fun y : ℝ => max 0 y
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
@@ -221,6 +223,6 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
   refine exact_support_of_dual_nonpos hs hb hg hpos ?_ hmass hM₁ hM₂
   intro i hi
   obtain ⟨hl, hh⟩ := hbetween i hi
-  exact (dualValue_negative_of_between hs hg hl hh hlo hhi).le
+  exact dualValue_nonpos_of_between hs hg hl hh hlo hhi
 
 end D5.S3.Fourier.Asymptotics.CyclicSupportCertificate

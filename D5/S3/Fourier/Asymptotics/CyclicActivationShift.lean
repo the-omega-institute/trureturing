@@ -371,13 +371,8 @@ private theorem phase_root {ι η κ : Type*} [Fintype ι] [Fintype η] [Nonempt
   change ∀ i : η, (F₀ *ᵥ b₀) (Sum.inr i) = 0 at hbback
   change (∑ i, (b₀ 0 + b₀ 2 * x i ^ 2)) = 0 at hbm
   change (∑ i, x i ^ 2 * (b₀ 0 + b₀ 2 * x i ^ 2)) = 1 at hbx
-  have hbelow : x i₀ ^ 2 < x j ^ 2 := by
-    have hh := hx i₁
-    rw [h₀, hj, h₁] at *
-    norm_num at *
-    linarith only [hh]
   have hSlope : 0 < b₀ 0 + b₀ 2 * t := by
-    have hh := boundary_variation_pos (fun i => x i ^ 2) j (hj ▸ hx) ⟨i₀, hbelow⟩
+    have hh := boundary_variation_pos (fun i => x i ^ 2) j (hj ▸ hx)
       (b₀ 0) (b₀ 2) 0 le_rfl
       (by simpa only [zero_mul, add_zero] using hbm)
       (by simpa only [zero_mul, add_zero, hbx] using (zero_lt_one : (0 : ℝ) < 1))
@@ -529,7 +524,7 @@ private theorem grid_root_certificate {n k : ℕ} (odd : Bool) (hk : n < k)
   have hs : 0 < h ^ 2 := sq_pos_of_pos mesh_pos
   have hoff (i : ZMod q) (hi : i ∉ wide) : p (sample i) ≤ 0 := by
     obtain ⟨hlo', hhi'⟩ := sample_between (odd := odd) hk i hi
-    exact (dualValue_negative_of_between hs hg hlo' hhi' hlo hhi).le
+    exact dualValue_nonpos_of_between hs hg hlo' hhi' hlo.le hhi.le
   have hnonneg (i : ZMod q) (hi : i ∈ wide) : 0 ≤ p (sample i) := by
     obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hi
     rw [← hrow]
@@ -841,7 +836,7 @@ private theorem fixed_budget_fit (odd : Bool) (n : ℕ) (hn : 0 < n) {m : ℝ}
   let u := fun i : ZMod q => if i ∈ S then fitValue s a i else 0
   have hneg (i : ZMod q) (hi : i ∉ S) : fitValue s a i ≤ 0 := by
     obtain ⟨hl, hh⟩ := sample_between (odd := odd) hk i hi
-    exact (dualValue_negative_of_between (sq_pos_of_pos mesh_pos) hg.le hl hh hLeft hRight).le
+    exact dualValue_nonpos_of_between (sq_pos_of_pos mesh_pos) hg.le hl hh hLeft.le hRight.le
   change ∀ i ∈ S, 0 < fitValue s a i at hpos
   have he : u = clippedFit s a := by
     funext i
