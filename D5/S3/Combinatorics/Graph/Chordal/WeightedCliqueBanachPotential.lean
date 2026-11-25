@@ -28,10 +28,12 @@ variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
 
 open CliqueBoundedBanach (diagonal_zero predecessors)
 
-private noncomputable def average (s : Finset V) (w : V → ℝ) (f : V → E) : E :=
+/-- The weighted sum of a finite family of vectors. -/
+noncomputable def average (s : Finset V) (w : V → ℝ) (f : V → E) : E :=
   ∑ b ∈ s, w b • f b
 
-private theorem average_add (s : Finset V) (w : V → ℝ) (f : V → E) (z : E)
+/-- A common translation passes through a normalized weighted average. -/
+theorem average_add (s : Finset V) (w : V → ℝ) (f : V → E) (z : E)
     (hw : ∑ b ∈ s, w b = 1) :
     average s w (fun b => f b + z) = average s w f + z := by
   simp only [average, smul_add, Finset.sum_add_distrib, ← Finset.sum_smul, hw, one_smul]
@@ -45,7 +47,8 @@ private theorem dist_average_le (s : Finset V) (w : V → ℝ) (f : V → E) (z 
   intro b hb
   rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (hn b hb), dist_eq_norm, sub_eq_add_neg]
 
-private theorem average_bound {s : Finset V} {w : V → ℝ} {f : V → E} {z : E} {B : ℝ}
+/-- A normalized nonnegative weighted average lies within a common distance bound. -/
+theorem average_bound {s : Finset V} {w : V → ℝ} {f : V → E} {z : E} {B : ℝ}
     (hn : ∀ b ∈ s, 0 ≤ w b) (hw : ∑ b ∈ s, w b = 1)
     (h : ∀ b ∈ s, Dist.dist (f b) z ≤ B) : Dist.dist (average s w f) z ≤ B := by
   calc
@@ -54,7 +57,8 @@ private theorem average_bound {s : Finset V} {w : V → ℝ} {f : V → E} {z : 
       mul_le_mul_of_nonneg_left (h b hb) (hn b hb)
     _ = B := by rw [← Finset.sum_mul, hw, one_mul]
 
-private theorem average_bound_at [DecidableEq V] {s : Finset V} {w : V → ℝ} {f : V → E}
+/-- A distinguished term may use its own distance bound in a weighted average. -/
+theorem average_bound_at [DecidableEq V] {s : Finset V} {w : V → ℝ} {f : V → E}
     {z : E} {a : V} {A B : ℝ} (ha : a ∈ s)
     (hn : ∀ b ∈ s, 0 ≤ w b) (hw : ∑ b ∈ s, w b = 1)
     (hsmall : Dist.dist (f a) z ≤ A)

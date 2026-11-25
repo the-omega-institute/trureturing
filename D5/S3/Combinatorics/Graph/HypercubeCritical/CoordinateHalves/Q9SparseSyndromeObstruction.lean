@@ -20,7 +20,7 @@ namespace Q9SparseSyndromeObstruction
 open scoped BigOperators symmDiff
 open Finset
 open BalancedCriticalSpectrum (Q)
-open EightCubeBits (Vertex Word cube toggle toggle_injective shell shell_symm
+open EightCubeBits (Vertex Word cube toggle toggle_injective shell_card shell shell_symm
   asFunction coeff row_eq_card isKernel_iff_adjacency asFunction_symmDiff distance relabel)
 open BinaryCubeKernelSupport (binarySites four_dvd_binarySites_card)
 open BinaryCubeAnalyticWeightTwelve (weight_less_twelve_one_shell weight_twelve_two_shells)
@@ -29,13 +29,11 @@ open Q9PairedGeometricObstruction (card_le_weighted_cover)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedAxialFold (transverse)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang (flipSign)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency)
-open private activeDirections bitRow bitRow_sum bitRow_energy flipSign_unit shell_card
-  transverse_square transverse_energy from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedGeometricObstruction (bitRow bitRow_sum flipSign_unit transverse_square)
+open private activeDirections bitRow_energy transverse_energy from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedGeometricObstruction
-open private shell_asFunction relabel_center relabel_shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.EightCubeBits
-open private adjacency_add from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel
+open D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.EightCubeBits (shell_asFunction relabel_center relabel_shell)
+open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency_add)
 
 private theorem active_card_eq_inter (S : Word) (x : Vertex) :
     (activeDirections S x).card = (shell x ∩ S).card := by
@@ -380,17 +378,17 @@ private theorem sparse_syndrome_at_order_72
     have h7 := hbound 7 (by norm_num) hcap
     omega
 
-private def weightLayer (k : ℕ) : Word :=
+def weightLayer (k : ℕ) : Word :=
   univ.filter fun x => distance 0 x = k
 
-private theorem mem_weightLayer {x : Vertex} {k : ℕ} :
+theorem mem_weightLayer {x : Vertex} {k : ℕ} :
     x ∈ weightLayer k ↔ distance 0 x = k := by
   simp [weightLayer]
 
 set_option maxRecDepth 32768 in
 set_option maxHeartbeats 4000000 in
 -- Kernel evaluation checks all rows of the fixed eight-cube.
-private theorem level_counts :
+theorem level_counts :
     weightLayer 1 = shell 0 ∧
     ∀ x : Vertex, (x ∈ weightLayer 1 → shell x ⊆ insert 0 (weightLayer 2)) ∧
       (x ∈ weightLayer 2 → (shell x ∩ weightLayer 1).card = 2 ∧
@@ -404,7 +402,7 @@ private theorem level_counts :
 set_option maxRecDepth 32768 in
 set_option maxHeartbeats 8000000 in
 -- Kernel evaluation checks pairs of lower neighbors in the two fixed layers.
-private theorem common_lower_row_of_two {k : ℕ} (hk : k = 2 ∨ k = 4)
+theorem common_lower_row_of_two {k : ℕ} (hk : k = 2 ∨ k = 4)
     (t x y : Vertex) (ht : t ∈ weightLayer (k + 1))
     (hx : x ∈ shell t ∩ weightLayer k) (hy : y ∈ shell t ∩ weightLayer k)
     (hne : x ≠ y) :
@@ -424,7 +422,7 @@ private theorem common_lower_row_of_two {k : ℕ} (hk : k = 2 ∨ k = 4)
       decide +kernel
     exact h t ht x hx y hy hne
 
-private theorem sum_shell_inter_comm (U V : Word) :
+theorem sum_shell_inter_comm (U V : Word) :
     (∑ u ∈ U, (shell u ∩ V).card) = ∑ v ∈ V, (shell v ∩ U).card := by
   have h₁ (u : Vertex) :
       V.bipartiteAbove (fun u v : Vertex => v ∈ shell u) u = shell u ∩ V := by

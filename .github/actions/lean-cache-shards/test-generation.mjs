@@ -295,7 +295,11 @@ elif command == "finish":
     Path(args["--output"]).write_text("published")
 elif command == "restore":
     assert Path(args["--targets-file"]).read_text() == "D5.A\\n"
-    sys.exit(3)
+    if "--version" in args:
+        assert args["--version"] == "lean-modules-" + "b" * 40
+        Path("pinned-restore").write_text(args["--version"])
+    else:
+        sys.exit(3)
 else:
     raise AssertionError(command)
 `);
@@ -312,6 +316,31 @@ else:
   const restored = run('push', 'restore-published');
   assert.equal(restored.status, 0, restored.stderr);
   assert.match(restored.stdout, /No published module cache yet/);
+  env.INPUT_VERSION = 'lean-modules-' + 'b'.repeat(40);
+  const pinned = run('push', 'restore-published');
+  assert.equal(pinned.status, 0, pinned.stderr);
+  assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
   const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
   assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
+  const truthRelease = await readFile(new URL('../../workflows/truth-release-publish.yml', import.meta.url), 'utf8');
+  assert.deepEqual([...truthRelease.matchAll(/^[ ]+operation: ([^\s]+)$/gm)].map(match => match[1]), ['restore-published']);
+  assert.match(truthRelease, /operation: restore-published[\s\S]*make lean-cache-prepare FULL_BUILD=1/);
+  const truthRestore = truthRelease.split('      - name: Restore published module shards with their Lean reports')[1];
+  assert.match(truthRestore.split('      - name:')[0], /continue-on-error: true/);
+  assert.doesNotMatch(truthRestore.split(`      - name: Prepare the source's Lean module reports`)[1].split('      - name:')[0], /continue-on-error: true/);
+  assert.match(publisher, /needs: \[pin, publish\][\s\S]*uses: .\/\.github\/workflows\/ci-lean-module-verify.yml[\s\S]*published: true/);
+});
+
+test('the published module reader requires the restored report before invoking Lake', async () => {
+  const verification = await readFile(new URL('../../workflows/ci-lean-module-verify.yml', import.meta.url), 'utf8');
+  const restore = verification.indexOf('operation: restore-published');
+  const validate = verification.indexOf('name: Verify the report delivered by the published shard');
+  const prepare = verification.indexOf('make lean-report-prepare');
+  assert.ok(restore >= 0 && validate > restore && prepare > validate);
+  assert.match(verification.slice(restore, validate), /version:.*lean-modules-\{0\}.*inputs.source/);
+  const files = verification.slice(validate, prepare);
+  for (const suffix of ['', '.hash', '.trace']) {
+    assert.ok(files.includes('test -s "$report' + suffix + '"'), suffix);
+  }
+  assert.match(verification.slice(prepare), /make lean-report-scoped[\s\S]*extracted_modules == 0/);
 });
