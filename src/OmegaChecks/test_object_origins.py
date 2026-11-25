@@ -108,6 +108,28 @@ def check():
                      + "private def D5.hidden := MadeUp\npublic def D5.wrapped := D5.hidden\n")
         compare(["NewProvider", "D5.Wrapper"], ["D5.Wrapper"], "D5.wrapped", "MadeUp", "NewProvider")
 
+        proof_head = f"module\nprelude\npublic import {ports[0]}\n"
+        compile_case("OmegaMath.Valid", proof_head
+                     + "public abbrev Published.Prime := OmegaMathlib.Nat.Prime\n"
+                     + "public theorem Published.idPrime {p : Omega.Nat} (h : OmegaMathlib.Nat.Prime p) : OmegaMathlib.Nat.Prime p := h\n"
+                     + "public def Published.proof : Omega.True := Omega.True.intro\n")
+        compare(["OmegaMath.Valid"], ["OmegaMath.Valid"])
+        compile_case("D5.Original", head + "public def D5.original (_ : Omega.Nat) := Omega.True\n")
+        compile_case("OmegaMath.WithOriginal", "module\nprelude\npublic import D5.Original\n"
+                     + "public abbrev Published.project := D5.original\n"
+                     + "namespace Published\nexport D5 (original)\nend Published\n")
+        compare(["OmegaMath.WithOriginal", "D5.Original"], ["OmegaMath.WithOriginal"])
+        for ordinal, body in enumerate([
+            "private def disguised (_ : Omega.Nat) : Prop := Omega.True",
+            "public abbrev computed := fun p : Omega.Nat => OmegaMathlib.Nat.Prime p",
+            "public structure Fresh where\n  val : Omega.Nat",
+            "public opaque Published.hidden (_ : Omega.Nat) : Prop := Omega.True",
+            "public axiom unchecked : Omega.True",
+        ]):
+            module = f"OmegaMath.Probe{ordinal}"
+            compile_case(module, proof_head + "noncomputable section\n" + body + "\n")
+            compare([module], [module], "introduces a mathematical object", module)
+
 
 if __name__ == "__main__":
     check()

@@ -8,7 +8,10 @@ open Lean
 /-- Check every import edge, including private and transitive imports of the selected roots. -/
 private def checkLayers (env : Environment) : IO Unit := do
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
-    if owner.getRoot == `OmegaMath then throw <| IO.userError s!"retired OmegaMath module {owner}"
+    if owner.getRoot == `OmegaMath then
+      for dep in data.imports do
+        unless #[`OmegaInit, `OmegaMathlib, `OmegaMath, `D5].contains dep.module.getRoot do
+          throw <| IO.userError s!"forbidden proof publication import: {owner} imports {dep.module}"
     if OmegaChecks.ModuleSurface.isBasis owner then
       let allowed := if owner.getRoot == `OmegaInit then [`OmegaInit]
         else [`OmegaInit, `OmegaMathlib]
@@ -66,6 +69,7 @@ private def audit (roots : List String) (path label : String)
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
   let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
   checkLayers env
+  discard <| OmegaChecks.ObjectOrigins.proofReferences env false
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do

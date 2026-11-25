@@ -11,6 +11,39 @@ private def ownerOf (env : Environment) (n : Name) : IO Name := do
   let some i := env.getModuleIdxFor? n | throw <| IO.userError s!"missing compiled object {n}"
   return env.header.moduleNames[i]!
 
+/-- All declarations, including private and compiler-generated ones, in a proof publication
+must be proofs or direct references. Export aliases are recorded independently by Lean. -/
+def proofReferences (env : Environment) (official : Bool) : IO (NameMap Name) := do
+  let mut references := {}
+  for mod in env.header.modules, data in env.header.moduleData do
+    let owner := mod.module
+    unless owner.getRoot == `OmegaMath do continue
+    let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing proof module {owner}"
+    for name in data.constNames do
+      let some decl := env.find? name | throw <| IO.userError s!"missing proof declaration {name}"
+      let reject := IO.userError s!"{owner}: {name} introduces a mathematical object; define it in D5 or use an admitted port"
+      if decl.isUnsafe || decl.isAxiom then throw reject
+      unless decl matches .thmInfo _ | .defnInfo _ | .opaqueInfo _ do throw reject
+      let ctx : Core.Context := {fileName := "<proof publication>", fileMap := default}
+      let state : Core.State := {env}
+      if ← (Meta.isProp decl.type).run' |>.toIO' ctx state then
+        let axioms ← (collectAxioms name : CoreM _).toIO' ctx state
+        unless axioms.all (#[`Classical.choice, `Quot.sound, `propext].contains ·) do
+          throw <| IO.userError s!"{owner}: unverified proof {name} depends on {axioms}"
+        continue
+      let .defnInfo d := decl | throw reject
+      let .const target levels := d.value.consumeMData | throw reject
+      unless levels == d.levelParams.map Level.param do throw reject
+      references := references.insert name target
+    for (alias, target) in aliasExtension.getModuleEntries env idx do
+      references := references.insert alias target
+  for (name, target) in references.toList do
+    let owner ← ownerOf env target
+    let allowed := if official then [`Init, `Mathlib, `D5, `OmegaMath] else [`OmegaInit, `OmegaMathlib, `D5, `OmegaMath]
+    unless allowed.contains owner.getRoot do
+      throw <| IO.userError s!"{name}: reference to {target} from unverified owner {owner}"
+  return references
+
 structure Result where
   /-- Supplied to the same semantic correspondence checker as public port declarations. -/
   bindings : NameMap Name := {}
@@ -55,7 +88,7 @@ private def checkUse (strict publicStrict official : Environment) (decl pos lhs 
       ("strictName", toJson lhs.toString), ("strictModule", toJson src.toString),
       ("upstreamName", toJson rhs.toString), ("upstreamModule", toJson dst.toString)]
     return { uses, bindings := s.bindings.insert lhs owner }
-  if modules.contains src && src.getRoot != `D5 && !registration && !(strict.find? lhs).any (·.isTheorem) then
+  if modules.contains src && !(src.getRoot == `D5 || src.getRoot == `OmegaMath) && !registration && !(strict.find? lhs).any (·.isTheorem) then
     throw <| IO.userError s!"{decl} at {pos}: mathematical object {lhs} in {src} requires a D5 owner or an admitted port"
   unless lhs == rhs && src == dst do
     throw <| IO.userError s!"{decl} at {pos}: {lhs} in {src} resolves to {rhs} in {dst}"
@@ -79,7 +112,7 @@ private def checkDefinitions (env : Environment) (project : NameSet) (roots : Ar
       let owner ← ownerOf env dep
       if project.contains owner then
         let next := dep :: path
-        unless owner.getRoot == `D5 || (env.find? dep).any (·.isTheorem) do
+        unless owner.getRoot == `D5 || owner.getRoot == `OmegaMath || (env.find? dep).any (·.isTheorem) do
           let chain := String.intercalate " → " (next.reverse.map Name.toString)
           throw <| IO.userError s!"{chain}: mathematical object {dep} in {owner} requires a D5 owner or an admitted port"
         pending := pending.push next
@@ -90,10 +123,16 @@ which publication roots are selected. External dependencies are pinned by the wo
 def check (strict publicStrict official : Environment) (modules roots : Array Name)
     (report : Bool) : IO Result := do
   let mut result : Result := {}
-  if roots.isEmpty then return result
+  if roots.isEmpty && !strict.allImportedModuleNames.any (·.getRoot == `OmegaMath) then return result
   checkReserved strict false
   checkReserved official true
   let project := NameSet.ofList modules.toList
+  let refs ← proofReferences strict false
+  let officialRefs ← proofReferences official true
+  unless refs.size == officialRefs.size do throw <| IO.userError "proof publication references differ between backends"
+  for (alias, target) in refs.toList do
+    let some actual := officialRefs.find? alias | throw <| IO.userError s!"missing official proof publication reference {alias}"
+    result := ← checkUse strict publicStrict official alias `reference target actual project false result report
   let mut visible : NameSet := {}
   let mut declarations := #[]
   for root in roots do

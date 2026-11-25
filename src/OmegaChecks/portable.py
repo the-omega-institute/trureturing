@@ -30,7 +30,8 @@ def output(*args, **kwargs):
 
 
 def check_publication_layout(directory):
-    sources = {directory, directory / "src", directory / "strict"}
+    sources = {directory, directory / "strict"}
+    canonical = (directory / "src").resolve()
     configs = [directory / "lakefile.toml"]
     if (reg := directory / "Reg/lakefile.toml").is_file():
         configs.append(reg)
@@ -41,12 +42,14 @@ def check_publication_layout(directory):
         for target in config.get("lean_lib", []) + config.get("lean_exe", []):
             names = [target["name"], target.get("root", target["name"]),
                      *target.get("roots", []), *target.get("globs", [])]
-            if any(root(name) == "OmegaMath" for name in names):
-                raise ValueError(f"retired OmegaMath Lake target in {config_path}: {target['name']}")
-            sources.add(package_root / target.get("srcDir", "."))
+            location = package_root / target.get("srcDir", ".")
+            if any(root(name) == "OmegaMath" for name in names) and location.resolve() != canonical:
+                raise ValueError(f"OmegaMath publication must use the shared src directory: {target['name']}")
+            sources.add(location)
     for source in sources:
-        if (source / "OmegaMath.lean").is_file() or any((source / "OmegaMath").rglob("*.lean")):
-            raise ValueError(f"retired OmegaMath source in {source}")
+        if source.resolve() != canonical and ((source / "OmegaMath.lean").is_file()
+                or any((source / "OmegaMath").rglob("*.lean"))):
+            raise ValueError(f"OmegaMath publication outside its shared source directory: {source}")
 
 
 def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
@@ -86,7 +89,8 @@ def consumers(graph, protected=()):
     touched = {}
     for name in TopologicalSorter(graph).static_order():
         deps = graph.get(name, ())
-        touched[name] = (root(name) in BASIS or name in protected) or any(touched[dep] for dep in deps)
+        touched[name] = (root(name) == "OmegaMath" or root(name) in BASIS or name in protected
+                         or any(touched[dep] for dep in deps))
     # Correspondence proofs import both bases deliberately. The Portable modules are clients.
     return sorted(n for n in graph if touched[n] and root(n) not in BASIS
                   and (root(n) != "OmegaChecks" or n.startswith("OmegaChecks.Portable.")))

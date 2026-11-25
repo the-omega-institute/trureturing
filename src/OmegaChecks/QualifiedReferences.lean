@@ -15,16 +15,16 @@ private def standardName? (stx : Syntax) : Option Name := do
   guard (name.getRoot == `OmegaMathlib && name != `OmegaMathlib)
   return name
 
-private partial def declarationNames (stx : Syntax) (inSignature := false) (inValue := false)
+private partial def declarationNames (stx : Syntax) (qualifyProofs : Bool) (inSignature := false) (inValue := false)
     (acc : Array Syntax := #[]) : Array Syntax := Id.run do
   let kind := stx.getKind
   let signature := inSignature || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
     ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
   let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
     ``Parser.Command.whereStructInst].contains kind
-  if (signature && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
+  if ((signature || (qualifyProofs && value)) && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
     return acc.push stx
-  return stx.getArgs.foldl (fun a c => declarationNames c signature value a) acc
+  return stx.getArgs.foldl (fun a c => declarationNames c qualifyProofs signature value a) acc
 
 /-- `resolveName'` indexes a qualified constant and any trailing field projections at separate
 source ranges. Recover those same prefixes, longest first, without splitting escaped names. -/
@@ -56,7 +56,7 @@ def checkFile (moduleName : Name) (source index : System.FilePath) (official : B
     for msg in state.commandState.messages.toList do
       if msg.severity == .error then throw <| IO.userError (← msg.toString)
     throw <| IO.userError s!"failed to recover declaration syntax for {moduleName}"
-  let tokens := state.commands.foldl (fun acc c => declarationNames c false false acc) #[]
+  let tokens := state.commands.foldl (fun acc c => declarationNames c (moduleName.getRoot == `OmegaMath) false false acc) #[]
   let key := fun (r : Lsp.Range) => (r.start.line, r.start.character, r.end.line, r.end.character)
   let mut locations : Std.HashMap (Nat × Nat × Nat × Nat) (List (Lsp.RefIdent × String)) := {}
   for (id, info) in refs.references.toList do
