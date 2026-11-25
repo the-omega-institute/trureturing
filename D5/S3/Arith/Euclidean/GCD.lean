@@ -140,4 +140,28 @@ theorem bezout_identity (a b : Nat) :
   Exists.intro (extendedGcd a b).leftCoeff
     (Exists.intro (extendedGcd a b).rightCoeff (bezout_coefficients a b))
 
+/-- A divisor relatively prime to the left factor of a product divides the right factor. -/
+theorem dvd_of_dvd_mul_of_gcd_eq_one {p a b : Nat}
+    (hg : Eq (gcd p a) Nat.one) (h : Dvd p (a.mul b)) : Dvd p b :=
+  h.elim (fun k hk =>
+    let P := Int.ofNat p
+    let A := Int.ofNat a
+    let B := Int.ofNat b
+    let K := Int.ofNat k
+    let x := (extendedGcd p a).leftCoeff
+    let y := (extendedGcd p a).rightCoeff
+    let z := (x.mul B).add (K.mul y)
+    have linear : Eq ((P.mul x).add (A.mul y)) Int.one :=
+      (bezout_coefficients p a).trans (congrArg Int.ofNat hg)
+    have scaled : Eq B (((P.mul x).add (A.mul y)).mul B) :=
+      (Int.one_mul B).symm.trans (congrArg (fun t : Int => t.mul B) linear.symm)
+    have product : Eq ((A.mul y).mul B) (P.mul (K.mul y)) :=
+      (Int.mul_right_comm A y B).trans
+        ((congrArg (fun t : Int => t.mul y) (congrArg Int.ofNat hk)).trans (Int.mul_assoc P K y))
+    have factor : Eq B (P.mul z) :=
+      scaled.trans ((Int.add_mul (P.mul x) (A.mul y) B).trans
+        ((Eq.map₂ Int.add (Int.mul_assoc P x B) product).trans
+          (Int.mul_add P (x.mul B) (K.mul y)).symm))
+    Exists.intro z.natAbs ((congrArg Int.natAbs factor).trans (Int.natAbs_mul P z)))
+
 end Omega.Arithmetic
