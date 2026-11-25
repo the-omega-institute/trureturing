@@ -23,7 +23,7 @@ namespace D5.S3.Quantum.Entanglement.Marginals.FibQuadraticCompletion
 open FibRationalPureExtension
 open FibMarginalExtension (Word)
 
-private theorem edge_singular_at_boundary (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
+theorem edge_singular_at_boundary (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
     (hb : 0 < b) (hL : L.IsHermitian)
     (hz : normSq (z - (edgeDisk b L u v w).1) = (edgeDisk b L u v w).2) :
     (L - partialTraceRight (correction b (middleRow u v w z))).det = 0 := by
@@ -226,7 +226,7 @@ private theorem rank_singular_product (X Y : Matrix Bool Bool ℂ) (hX : X.PosSe
     rw [hs, Matrix.rank_submatrix, h]
     exact rank_kronecker_of_outer_left _ _ _
 
-private theorem boundary_state (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : ℂ)
+theorem boundary_state (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : ℂ)
     (hb : 0 < b) (ht : L.trace + (b : ℂ) = 1) (hr : R.trace = L.trace)
     (F : Subfield ℂ) (qF : (rationalComplex : Set ℂ) ⊆ F)
     (qL : ∀ i j, RationalEntry (L i j)) (qR : ∀ i j, RationalEntry (R i j))
