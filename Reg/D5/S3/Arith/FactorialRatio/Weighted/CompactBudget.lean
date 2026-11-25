@@ -212,14 +212,28 @@ abbrev arena : Arena where
   Law R := ∀ {r s C : ℕ}, 2 ≤ r → s < r ^ 2 → ∀ (c d : Weights),
     (∀ p ∈ Nat.primesLE (compactHeight r s),
       ∀ j ∈ Finset.Ico 1 (Nat.log p s + 1), c p j + d p j ≤ C) →
-      R.readout false (r, s, C) (c, d) * R.readout true (r, s, C) (c, d) ∣
-        compactExcess r s ^ C
+      (R.readout false (r, s, C) (c, d) * R.readout true (r, s, C) (c, d) ∣
+        compactExcess r s ^ C) ∧
+      ((∀ p ∈ Nat.primesLE (compactHeight r s),
+        ∀ j ∈ Finset.Ico 1 (compactHeight r s + 2), c p j + d p j = C) →
+        compactWeightedGcd r s c ≠ 0 ∧
+        compactWeightedGcd r s c ∣
+          _root_.D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd r s ^ C ∧
+        _root_.D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd r s ^ C /
+          compactWeightedGcd r s c ≠ 0 ∧
+        compositionWeightedTail r s d ∣ compactWeightedGcd r s d ∧
+        compactWeightedGcd r s d ∣
+          _root_.D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd r s ^ C /
+            compactWeightedGcd r s c ∧
+        _root_.D5.S3.Arith.FactorialRatio.CompactFactorialGcd.selbergGcd r s ^ C /
+          compactWeightedGcd r s c ∣ compositionWeightedTail r s d * compactExcess r s ^ C)
 
 private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
   intro h
   have hh := h (r := 2) (s := 0) (C := 1) (by decide) (by decide)
     (fun _ _ => 0) (fun _ _ => 0)
     (by simp)
+  have hh := hh.1
   cases role <;>
     change 0 ∣ compactExcess 2 0 ^ 1 at hh <;>
     exact (by decide : ¬ 0 ∣ compactExcess 2 0 ^ 1) hh
@@ -277,13 +291,13 @@ def sharedAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 1, 2]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body",
-          "fn", "arg", "fn", "arg"]
+          "fn", "arg", "fn", "arg", "fn", "arg"]
         stateBinder := 5
         functionOperand := false
         stateOperand := none
         booleanPredicate := false },
       { path := #["body", "body", "body", "body", "body", "body", "body", "body",
-          "fn", "arg", "arg"]
+          "fn", "arg", "fn", "arg", "arg"]
         stateBinder := 6
         functionOperand := false
         stateOperand := none

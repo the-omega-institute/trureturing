@@ -297,19 +297,19 @@ theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
   exact (show ((compactExcess r s).factorization p : ℝ) ≤ floorDefect p r s b
     by exact_mod_cast hD).trans (by linarith only [hlocal, hquot])
 
-private def legalParameters (r s : ℕ) : Finset ℕ := range (s / r + 1)
+def legalParameters (r s : ℕ) : Finset ℕ := range (s / r + 1)
 
 private theorem legalParameters_nonempty (r s : ℕ) : (legalParameters r s).Nonempty :=
   ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ _)⟩
 
-private noncomputable def minimum (r s : ℕ) (f : ℕ → ℕ) : ℕ :=
+noncomputable def minimum (r s : ℕ) (f : ℕ → ℕ) : ℕ :=
   ((legalParameters r s).image f).min' ((legalParameters_nonempty r s).image f)
 
-private theorem minimum_le {r s b : ℕ} (f : ℕ → ℕ)
+theorem minimum_le {r s b : ℕ} (f : ℕ → ℕ)
     (hb : b ∈ legalParameters r s) : minimum r s f ≤ f b :=
   Finset.min'_le _ _ (Finset.mem_image.mpr ⟨b, hb, rfl⟩)
 
-private theorem minimum_attained (r s : ℕ) (f : ℕ → ℕ) :
+theorem minimum_attained (r s : ℕ) (f : ℕ → ℕ) :
     ∃ b ∈ legalParameters r s, f b = minimum r s f := by
   exact Finset.mem_image.mp (Finset.min'_mem _ _)
 

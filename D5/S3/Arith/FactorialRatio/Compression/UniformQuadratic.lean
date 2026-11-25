@@ -79,7 +79,7 @@ private theorem log_excess_eq_sum {r s : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2) :
 private theorem excess_le_zero_parameter {r s p : ℕ} (hr : 2 ≤ r)
     (hs : s < r ^ 2) (hp : p.Prime) :
     (compactExcess r s).factorization p ≤ Nat.log p s * (r - 1) := by
-  have hbound := selberg_zero_factorization_le_log hp (by omega : 1 ≤ r)
+  have hbound := selberg_zero_factorization_le_log (s := s) hp (by omega : 1 ≤ r)
   have hg := gcd_factorization_le hp (by omega : 0 < r) (by simp : r * 0 ≤ s)
   rw [compactExcess_factorization hr hs,
     Nat.add_sub_assoc (by omega : 1 ≤ r)]

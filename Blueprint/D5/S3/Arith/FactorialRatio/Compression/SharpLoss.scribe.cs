@@ -17,6 +17,38 @@ internal sealed class SharpLossDocument : IScribeDocumentDefinition
                 + "floor sum subtracts r-1 from floor((rs+r-1)/q), truncated at zero. "
                 + "The difference is nonnegative at every legal compact parameter.")),
             Describe.Lean(
+                DescribeId.Create("legal-parameters"),
+                DeclarationHandle.Create(Prefix + "legalParameters"),
+                H("All legal compact parameters"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The finite family is range(floor(s/r)+1), so b=0 is always included."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("compact-minimum"),
+                DeclarationHandle.Create(Prefix + "minimum"),
+                H("A minimum over the whole legal family"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any natural-valued function f, minimum(r,s,f) is the minimum of its values over all legal b. The legal family is nonempty."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("minimum-lower"),
+                DeclarationHandle.Create(Prefix + "minimum_le"),
+                H("The minimum bounds each legal value"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any r,s,b and f, membership of b in legalParameters(r,s) implies minimum(r,s,f)<=f(b)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("minimum-attained"),
+                DeclarationHandle.Create(Prefix + "minimum_attained"),
+                H("One legal parameter attains the minimum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all r,s and f, there is a legal b for which f(b)=minimum(r,s,f). The same b evaluates the entire weighted prime-power cost."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("compact-excess"),
                 DeclarationHandle.Create(Prefix + "compactExcess"),
                 H("The ordinary excess"),

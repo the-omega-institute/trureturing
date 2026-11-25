@@ -66,10 +66,6 @@ private theorem compositionWeightedTail_eq (r s : ℕ) (c : ℕ → ℕ → ℕ)
 def compactWeightedExcess (r s : ℕ) (c : ℕ → ℕ → ℕ) : ℕ :=
   compactWeightedGcd r s c / compositionWeightedTail r s c
 
-private theorem compactParameters_nonempty (r s : ℕ) :
-    (compactParameters r s).Nonempty :=
-  ⟨0, mem_range.mpr (Nat.zero_lt_succ _)⟩
-
 private theorem legal_parameter_bound {r s b : ℕ} (hr : 0 < r)
     (hb : b ∈ compactParameters r s) : r * b ≤ s := by
   have h := mem_range.mp hb
@@ -80,24 +76,6 @@ private theorem height_eq {r s : ℕ} (hr : 1 ≤ r) :
     compactHeight r s = r * s + (r - 1) := by
   unfold compactHeight
   omega
-
-private theorem prime_product_factorization (P : Finset ℕ) (e : ℕ → ℕ)
-    (hP : ∀ p ∈ P, p.Prime) (p : ℕ) :
-    (∏ q ∈ P, q ^ e q).factorization p = if p ∈ P then e p else 0 := by
-  classical
-  rw [Nat.factorization_prod_apply (fun q hq => pow_ne_zero _ (hP q hq).ne_zero)]
-  calc
-    _ = ∑ q ∈ P, if q = p then e q else 0 := by
-      apply sum_congr rfl
-      intro q hq
-      simp [(hP q hq).factorization_pow, Finsupp.single_apply, eq_comm]
-    _ = _ := by simp
-
-private theorem value_ne_zero (H : ℕ) (c : ℕ → ℕ → ℕ) (n : ℕ) :
-    weightedValue H c n ≠ 0 := by
-  unfold weightedValue
-  exact prod_ne_zero_iff.mpr fun p hp =>
-    pow_ne_zero _ (Nat.mem_primesLE.mp hp).2.ne_zero
 
 private theorem value_mono_dvd (H : ℕ) (c : ℕ → ℕ → ℕ)
     {m n : ℕ} (h : m ≤ n) : weightedValue H c m ∣ weightedValue H c n := by
@@ -119,10 +97,10 @@ private theorem product_ne_zero (r s : ℕ) (c : ℕ → ℕ → ℕ) (b : ℕ) 
   unfold compactWeightedProduct
   apply prod_ne_zero_iff.mpr
   intro i _
-  apply mul_ne_zero _ (value_ne_zero _ _ _)
-  exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (value_ne_zero _ _ _))
+  apply mul_ne_zero _ (weightedValue_ne_zero _ _ _)
+  exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))
     (value_mono_dvd _ _ (b_le_index_mul i b)))
-      (Nat.pos_of_ne_zero (value_ne_zero _ _ _))).ne'
+      (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))).ne'
 
 private theorem gcd_ne_zero (r s : ℕ) (c : ℕ → ℕ → ℕ) :
     compactWeightedGcd r s c ≠ 0 :=
@@ -131,9 +109,7 @@ private theorem gcd_ne_zero (r s : ℕ) (c : ℕ → ℕ → ℕ) :
 private theorem tail_ne_zero (r s : ℕ) (c : ℕ → ℕ → ℕ) :
     compositionWeightedTail r s c ≠ 0 := by
   rw [compositionWeightedTail_eq]
-  unfold weightedTail
-  exact prod_ne_zero_iff.mpr fun p hp =>
-    pow_ne_zero _ (Nat.mem_primesLE.mp hp).2.ne_zero
+  exact weightedTail_ne_zero _ _ _
 
 private theorem product_factorization (r s : ℕ) (c : ℕ → ℕ → ℕ)
     (b p : ℕ) (hp : p ∈ Nat.primesLE (compactHeight r s)) :
@@ -151,9 +127,9 @@ private theorem product_factorization (r s : ℕ) (c : ℕ → ℕ → ℕ)
           (b_le_index_mul i b)
         have hquot : weightedValue (compactHeight r s) (shiftedWeights c)
               ((i + 1) * b) / weightedValue (compactHeight r s) (shiftedWeights c) b ≠ 0 :=
-          (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (value_ne_zero _ _ _)) hd)
-            (Nat.pos_of_ne_zero (value_ne_zero _ _ _))).ne'
-        rw [Nat.factorization_mul hquot (value_ne_zero _ _ _), Finsupp.add_apply,
+          (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _)) hd)
+            (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))).ne'
+        rw [Nat.factorization_mul hquot (weightedValue_ne_zero _ _ _), Finsupp.add_apply,
           Nat.factorization_div hd, Finsupp.tsub_apply]
         simp only [value_factorization, if_pos hp, weightedExponent, shiftedWeights]
         have hle (j : ℕ) : b / p ^ (j + 1) ≤ (i + 1) * b / p ^ (j + 1) :=
@@ -172,10 +148,10 @@ private theorem product_factorization (r s : ℕ) (c : ℕ → ℕ → ℕ)
         rw [floorSum, mul_sum]
   · intro i _
     exact mul_ne_zero
-      (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (value_ne_zero _ _ _))
+      (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))
         (value_mono_dvd _ _ (b_le_index_mul i b)))
-          (Nat.pos_of_ne_zero (value_ne_zero _ _ _))).ne'
-      (value_ne_zero _ _ _)
+          (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))).ne'
+      (weightedValue_ne_zero _ _ _)
 
 private theorem tail_factorization (r s : ℕ) (c : ℕ → ℕ → ℕ)
     {p : ℕ} (hp : p ∈ Nat.primesLE (compactHeight r s)) :
@@ -183,9 +159,7 @@ private theorem tail_factorization (r s : ℕ) (c : ℕ → ℕ → ℕ)
       ∑ j ∈ range (compactHeight r s + 1),
         c p (j + 1) * floorMinimum (compactHeight r s) (r - 1) (p ^ (j + 1)) := by
   rw [compositionWeightedTail_eq]
-  unfold weightedTail
-  rw [prime_product_factorization _ _ (fun p hp => (Nat.mem_primesLE.mp hp).2), if_pos hp]
-  rfl
+  exact weightedTail_factorization _ _ _ hp
 
 private theorem product_factorization_outside (r s : ℕ) (c : ℕ → ℕ → ℕ)
     (b p : ℕ) (hp : p ∉ Nat.primesLE (compactHeight r s)) :
@@ -198,15 +172,15 @@ private theorem product_factorization_outside (r s : ℕ) (c : ℕ → ℕ → �
       Nat.factorization_div (value_mono_dvd _ _ (b_le_index_mul i b)),
       Finsupp.tsub_apply]
     · simp only [value_factorization, if_neg hp, Nat.sub_self, zero_add]
-    · exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (value_ne_zero _ _ _))
+    · exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))
         (value_mono_dvd _ _ (b_le_index_mul i b)))
-          (Nat.pos_of_ne_zero (value_ne_zero _ _ _))).ne'
-    · exact value_ne_zero _ _ _
+          (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))).ne'
+    · exact weightedValue_ne_zero _ _ _
   · intro i _
     exact mul_ne_zero
-      (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (value_ne_zero _ _ _))
+      (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))
         (value_mono_dvd _ _ (b_le_index_mul i b)))
-          (Nat.pos_of_ne_zero (value_ne_zero _ _ _))).ne' (value_ne_zero _ _ _)
+          (Nat.pos_of_ne_zero (weightedValue_ne_zero _ _ _))).ne' (weightedValue_ne_zero _ _ _)
 
 private theorem tail_factorization_outside (r s : ℕ) (c : ℕ → ℕ → ℕ)
     (p : ℕ) (hp : p ∉ Nat.primesLE (compactHeight r s)) :
@@ -305,20 +279,6 @@ private theorem product_minus_tail {r s b p : ℕ} (hr : 2 ≤ r)
       rfl
     _ = _ := defect_cutoff (Nat.mem_primesLE.mp hp).2 (legal_parameter_bound (by omega) hb) c hr
 
-private theorem loss_le {r s p b : ℕ} (c : ℕ → ℕ → ℕ)
-    (hb : b ∈ compactParameters r s) :
-    weightedPrimeLoss r s p (Nat.log p s + 1) (c p) ≤
-      ∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b := by
-  exact min'_le _ _ (mem_image.mpr ⟨b, hb, rfl⟩)
-
-private theorem loss_attained (r s p : ℕ) (c : ℕ → ℕ → ℕ) :
-    ∃ b ∈ compactParameters r s,
-      (∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b) =
-        weightedPrimeLoss r s p (Nat.log p s + 1) (c p) := by
-  let f := fun b => ∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b
-  exact mem_image.mp (min'_mem ((compactParameters r s).image f)
-    ((compactParameters_nonempty r s).image f))
-
 /-- The actual compact gcd quotient has precisely the weighted floor-defect minima. -/
 theorem compactWeightedExcess_factorization {r s p : ℕ} (hr : 2 ≤ r)
     (c : ℕ → ℕ → ℕ) (hp : p ∈ Nat.primesLE (compactHeight r s)) :
@@ -337,12 +297,16 @@ theorem compactWeightedExcess_factorization {r s p : ℕ} (hr : 2 ≤ r)
     intro b hb
     have hd : T ∣ compactWeightedProduct r s c b := tail_dvd_product hr hb c
     have hle := (Nat.factorization_prime_le_iff_dvd hT (product_ne_zero _ _ _ _)).mpr hd p hpprime
-    have hlo := loss_le (p := p) c hb
+    have hlo := minimum_le
+      (fun b => ∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b) hb
+    change L ≤ ∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b at hlo
     rw [← product_minus_tail hr hb hp c] at hlo
     exact (hpprime.pow_dvd_iff_le_factorization (product_ne_zero _ _ _ _)).mpr (by
       dsimp only [T, L] at hle ⊢
       omega)
-  obtain ⟨b, hb, heq⟩ := loss_attained r s p c
+  obtain ⟨b, hb, heq⟩ := minimum_attained r s
+    (fun b => ∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b)
+  change (∑ j ∈ Ico 1 (Nat.log p s + 1), c p j * floorDefect (p ^ j) r s b) = L at heq
   have hGle := (Nat.factorization_prime_le_iff_dvd hG (product_ne_zero _ _ _ _)).mpr
     (gcd_dvd hb) p hpprime
   have hcost := product_minus_tail hr hb hp c
@@ -390,15 +354,68 @@ theorem compactWeightedExcess_eq_weightedExcess {r s : ℕ} (hr : 2 ≤ r)
       omega
     · exact Nat.factorization_eq_zero_of_not_prime _ hpprime
 
-/-- Two actual weighted compact quotients share one ordinary compact budget. -/
+/-- The shared budget, and the exact quotient chain when the two weights partition C. -/
 theorem actual_weighted_shared_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
     (c d : ℕ → ℕ → ℕ)
     (hc : ∀ p ∈ Nat.primesLE (compactHeight r s),
       ∀ j ∈ Ico 1 (Nat.log p s + 1), c p j + d p j ≤ C) :
-    compactWeightedExcess r s c * compactWeightedExcess r s d ∣ compactExcess r s ^ C := by
-  rw [compactWeightedExcess_eq_weightedExcess hr c,
-    compactWeightedExcess_eq_weightedExcess hr d]
-  exact weighted_shared_budget hr hs _ (fun p hp => (Nat.mem_primesLE.mp hp).2) c d hc
+    (compactWeightedExcess r s c * compactWeightedExcess r s d ∣ compactExcess r s ^ C) ∧
+    ((∀ p ∈ Nat.primesLE (compactHeight r s),
+      ∀ j ∈ Ico 1 (compactHeight r s + 2), c p j + d p j = C) →
+      compactWeightedGcd r s c ≠ 0 ∧
+      compactWeightedGcd r s c ∣ selbergGcd r s ^ C ∧
+      selbergGcd r s ^ C / compactWeightedGcd r s c ≠ 0 ∧
+      compositionWeightedTail r s d ∣ compactWeightedGcd r s d ∧
+      compactWeightedGcd r s d ∣ selbergGcd r s ^ C / compactWeightedGcd r s c ∧
+      selbergGcd r s ^ C / compactWeightedGcd r s c ∣
+        compositionWeightedTail r s d * compactExcess r s ^ C) := by
+  have hbudget : compactWeightedExcess r s c * compactWeightedExcess r s d ∣
+      compactExcess r s ^ C := by
+    rw [compactWeightedExcess_eq_weightedExcess hr c,
+      compactWeightedExcess_eq_weightedExcess hr d]
+    exact weighted_shared_budget hr hs _ (fun p hp => (Nat.mem_primesLE.mp hp).2) c d hc
+  refine ⟨hbudget, ?_⟩
+  intro hpartition
+  have htprod : compositionWeightedTail r s c * compositionWeightedTail r s d =
+      tailLCM (compactHeight r s) (r - 1) ^ C := by
+    rw [compositionWeightedTail_eq, compositionWeightedTail_eq, weightedTail_add,
+      ← weightedTail_constant (compactHeight r s) (r - 1) C]
+    unfold weightedTail
+    apply prod_congr rfl
+    intro p hp
+    congr 1
+    apply sum_congr rfl
+    intro j hj
+    exact congrArg
+      (· * floorMinimum (compactHeight r s) (r - 1) (p ^ (j + 1)))
+      (hpartition p hp (j + 1)
+        (mem_Ico.mpr ⟨by omega, by have := mem_range.mp hj; omega⟩))
+  have hdec (w : ℕ → ℕ → ℕ) :
+      compositionWeightedTail r s w * compactWeightedExcess r s w =
+        compactWeightedGcd r s w := Nat.mul_div_cancel' (tail_dvd_gcd hr w)
+  have ht : tailLCM (compactHeight r s) (r - 1) ∣ selbergGcd r s :=
+    (compact_factorial_gcd r s hr hs).1
+  have hordinary : tailLCM (compactHeight r s) (r - 1) * compactExcess r s =
+      selbergGcd r s := Nat.mul_div_cancel' ht
+  have hpair : compactWeightedGcd r s c * compactWeightedGcd r s d ∣
+      selbergGcd r s ^ C := by
+    obtain ⟨k, hk⟩ := hbudget
+    refine ⟨k, ?_⟩
+    rw [← hordinary, mul_pow, hk, ← htprod, ← hdec c, ← hdec d]
+    ring
+  have hdiv : compactWeightedGcd r s c ∣ selbergGcd r s ^ C :=
+    (dvd_mul_right _ _).trans hpair
+  refine ⟨gcd_ne_zero _ _ _, hdiv, ?_, tail_dvd_gcd hr d, ?_, ?_⟩
+  · exact (Nat.div_pos (Nat.le_of_dvd
+      (pow_pos (Nat.pos_of_ne_zero (selbergGcd_ne_zero r s)) C) hdiv)
+      (Nat.pos_of_ne_zero (gcd_ne_zero _ _ _))).ne'
+  · exact (Nat.dvd_div_iff_mul_dvd hdiv).mpr hpair
+  · have hq := Nat.div_dvd_div_left hdiv (tail_dvd_gcd hr c)
+    have heq : selbergGcd r s ^ C / compositionWeightedTail r s c =
+        compositionWeightedTail r s d * compactExcess r s ^ C := by
+      rw [← hordinary, mul_pow, ← htprod, mul_assoc,
+        Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero (tail_ne_zero _ _ _))]
+    exact hq.trans (dvd_of_eq heq)
 
 /-- Bounded weights give the exact ordinary compact compression budget to the same power. -/
 theorem actual_weighted_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
@@ -406,8 +423,8 @@ theorem actual_weighted_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
     (hc : ∀ p ∈ Nat.primesLE (compactHeight r s),
       ∀ j ∈ Ico 1 (Nat.log p s + 1), c p j ≤ C) :
     compactWeightedExcess r s c ∣ compactExcess r s ^ C := by
-  have h := actual_weighted_shared_budget hr hs c (fun _ _ => 0)
-    (by simpa only [add_zero] using hc)
+  have h := (actual_weighted_shared_budget hr hs c (fun _ _ => 0)
+    (by simpa only [add_zero] using hc)).1
   exact (dvd_mul_right (compactWeightedExcess r s c)
     (compactWeightedExcess r s (fun _ _ => 0))).trans h
 

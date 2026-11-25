@@ -21,7 +21,8 @@ internal sealed class OptimizedEntropyDocument : IScribeDocumentDefinition
                 + "rs(log s-1+I(rb/s))+rb log r, with error "
                 + "2r(log(s+1)+1)+2s log 2. The minimum property of I gives the lower "
                 + "bound for every legal parameter. To obtain an upper bound choose "
-                + "b=floor(t*s/r). Then rb<=s and 0<=t*-rb/s<r/s. Convexity along "
+                + "b as the floor of t* times s/r, where t* is the continuous minimizer. "
+                + "Then rb<=s and 0<=t*-rb/s<r/s. Convexity along "
                 + "the segment from zero to t* gives I(rb/s)-I(t*)<=kappa r/(s t*). "
                 + "Consequently some legal term is at most rs(log s-1-kappa) plus "
                 + "the same error, s log r and (kappa/t*)r^2.")),

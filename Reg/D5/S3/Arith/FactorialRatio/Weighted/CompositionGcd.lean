@@ -492,4 +492,707 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end NumberFieldGcd
 
+namespace ValueNonzero
+
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := (ℕ → ℕ → ℕ) × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ H z => weightedValue H z.1 z.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H : ℕ) (c : ℕ → ℕ → ℕ) (n : ℕ), R.readout () H (c, n) ≠ 0
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 0 (fun _ _ => 0) 0 rfl
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨2, ((fun _ _ => 0), 2), ((fun _ _ => 1), 2), ?_⟩
+  change weightedValue 2 (fun _ _ => 0) 2 ≠ weightedValue 2 (fun _ _ => 1) 2
+  decide
+
+def family : Registration arena (type_of% @weightedValue_ne_zero) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weightedValue_ne_zero, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weightedValue_ne_zero) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedValue_ne_zero.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ValueNonzero.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ H z => weightedValue H z.1 z.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ValueNonzero
+
+namespace TailNonzero
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ → ℕ → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z c => weightedTail z.1 z.2 c) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H M : ℕ) (c : ℕ → ℕ → ℕ), R.readout () (H, M) c ≠ 0
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 0 0 (fun _ _ => 0) rfl
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  obtain ⟨z, c, d, h⟩ := weightDependence role
+  exact ⟨(z.1, z.2), c, d, h⟩
+
+def family : Registration arena (type_of% @weightedTail_ne_zero) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weightedTail_ne_zero, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weightedTail_ne_zero) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_ne_zero.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailNonzero.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z c => weightedTail z.1 z.2 c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end TailNonzero
+
+namespace PrimeProduct
+
+abbrev signature : Signature where
+  Params := Finset ℕ × (ℕ → ℕ)
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z p => (∏ q ∈ z.1, q ^ z.2 q).factorization p) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (P : Finset ℕ) (e : ℕ → ℕ), (∀ p ∈ P, p.Prime) → ∀ p : ℕ,
+    R.readout () (P, e) p = if p ∈ P then e p else 0
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h ∅ (fun _ => 0) (by simp) 0
+  norm_num [rejected, realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨({2}, (fun _ => 1)), 2, 3, ?_⟩
+  change (∏ q ∈ ({2} : Finset ℕ), q ^ 1).factorization 2 ≠
+    (∏ q ∈ ({2} : Finset ℕ), q ^ 1).factorization 3
+  simp only [Finset.prod_singleton, pow_one]
+  rw [Nat.prime_two.factorization_self,
+    Nat.factorization_eq_zero_of_lt (by decide : 2 < 3)]
+  decide
+
+def family : Registration arena (type_of% @prime_product_factorization) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@prime_product_factorization, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@prime_product_factorization) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.prime_product_factorization.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.PrimeProduct.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z p => (∏ q ∈ z.1, q ^ z.2 q).factorization p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PrimeProduct
+
+namespace TailFactorization
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := (ℕ → ℕ → ℕ) × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z w => (weightedTail z.1 z.2 w.1).factorization w.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H M : ℕ) (c : ℕ → ℕ → ℕ) {p : ℕ}, p ∈ Nat.primesLE H →
+    R.readout () (H, M) (c, p) =
+      ∑ j ∈ range (H + 1), c p j * floorMinimum H M (p ^ (j + 1))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 2 0 (fun _ _ => 0) (p := 2) (by decide)
+  norm_num [rejected, realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(2, 0), ((fun _ _ => 1), 2), ((fun _ _ => 1), 3), ?_⟩
+  change (weightedTail 2 0 (fun _ _ => 1)).factorization 2 ≠
+    (weightedTail 2 0 (fun _ _ => 1)).factorization 3
+  rw [show weightedTail 2 0 (fun _ _ => 1) = 2 from by decide,
+    Nat.prime_two.factorization_self,
+    Nat.factorization_eq_zero_of_lt (by decide : 2 < 3)]
+  decide
+
+def family : Registration arena (type_of% @weightedTail_factorization) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weightedTail_factorization, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weightedTail_factorization) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_factorization.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailFactorization.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z w => (weightedTail z.1 z.2 w.1).factorization w.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end TailFactorization
+
+namespace TailConstant
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z d => weightedTail z.1 z.2 (fun _ _ => d)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H M d : ℕ), R.readout () (H, M) d = tailLCM H M ^ d
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 0 0 0
+  norm_num [rejected, realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(2, 0), 0, 1, ?_⟩
+  change weightedTail 2 0 (fun _ _ => 0) ≠ weightedTail 2 0 (fun _ _ => 1)
+  decide
+
+def family : Registration arena (type_of% @weightedTail_constant) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weightedTail_constant, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weightedTail_constant) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_constant.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailConstant.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z d => weightedTail z.1 z.2 (fun _ _ => d)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end TailConstant
+
+namespace TailAdd
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := (ℕ → ℕ → ℕ) × (ℕ → ℕ → ℕ)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z w => weightedTail z.1 z.2 (fun p j => w.1 p j + w.2 p j)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H M : ℕ) (c d : ℕ → ℕ → ℕ),
+    weightedTail H M c * weightedTail H M d = R.readout () (H, M) (c, d)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 0 0 (fun _ _ => 0) (fun _ _ => 0)
+  norm_num [rejected, realize, weightedTail] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(2, 0), ((fun _ _ => 0), (fun _ _ => 0)),
+    ((fun _ _ => 1), (fun _ _ => 0)), ?_⟩
+  change weightedTail 2 0 (fun _ _ => 0 + 0) ≠ weightedTail 2 0 (fun _ _ => 1 + 0)
+  decide
+
+def family : Registration arena (type_of% @weightedTail_add) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weightedTail_add, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weightedTail_add) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_add.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailAdd.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z w => weightedTail z.1 z.2 (fun p j => w.1 p j + w.2 p j)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end TailAdd
+
+namespace FullNorm
+universe u
+
+abbrev signature : Signature where
+  Params := _root_.Reg.D5.S3.Arith.FactorialRatio.Weighted.IdealTail.Params.{u}
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ z n => by
+    letI := z.field
+    letI := z.numberField
+    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (K : Type u) [F : Field K] [N : NumberField K] (H n : ℕ), n ≤ H →
+    R.readout () ⟨K, F, N, H⟩ n = weightedValue H (NumberFieldNorm.normWeight K) n
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (ULift.{u} ℚ) 0 0 (by decide)
+  change 0 = weightedValue 0 (NumberFieldNorm.normWeight (ULift.{u} ℚ)) 0 at hh
+  norm_num [weightedValue] at hh
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro role
+  obtain ⟨z, x, y, hxy⟩ :=
+    _root_.Reg.D5.S3.Arith.FactorialRatio.Weighted.IdealTail.dependence.{u} ()
+  letI := z.field
+  letI := z.numberField
+  refine ⟨z, 0, z.head, ?_⟩
+  change (NumberFieldNorm.fullRingFactorialIdeal z.carrier 0).absNorm ≠
+    (NumberFieldNorm.fullRingFactorialIdeal z.carrier z.head).absNorm
+  intro heq
+  rw [NumberFieldNorm.fullRingFactorialIdeal_norm z.carrier z.head 0 (Nat.zero_le _),
+    NumberFieldNorm.fullRingFactorialIdeal_norm z.carrier z.head z.head le_rfl] at heq
+  have hz : weightedValue z.head (NumberFieldNorm.normWeight z.carrier) 0 = 1 := by
+    simp [weightedValue, weightedExponent]
+  have hone := heq.symm.trans hz
+  have htail (M : ℕ) : weightedTail z.head M (NumberFieldNorm.normWeight z.carrier) = 1 := by
+    apply Nat.eq_one_of_dvd_one
+    rw [← hone]
+    unfold weightedTail weightedValue
+    apply Finset.prod_dvd_prod_of_dvd
+    intro p hp
+    apply pow_dvd_pow
+    unfold weightedExponent
+    apply Finset.sum_le_sum
+    intro j hj
+    exact Nat.mul_le_mul_left _ (Nat.sub_le _ _)
+  apply hxy
+  change weightedTail z.head x (NumberFieldNorm.normWeight z.carrier) =
+    weightedTail z.head y (NumberFieldNorm.normWeight z.carrier)
+  rw [htail, htail]
+
+def family : Registration arena.{u} (type_of% @NumberFieldNorm.fullRingFactorialIdeal_norm.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@NumberFieldNorm.fullRingFactorialIdeal_norm.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      have heq : j = i := @Subsingleton.elim Unit inferInstance j i
+      exact (hji heq).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@NumberFieldNorm.fullRingFactorialIdeal_norm.{u}) (Realization signature.{u}) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.fullRingFactorialIdeal_norm.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.FullNorm.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z n => by
+    letI := z.field
+    letI := z.numberField
+    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FullNorm
+
+namespace ComplementValue
+universe u
+
+abbrev signature : Signature where
+  Params := _root_.Reg.D5.S3.Arith.FactorialRatio.Weighted.IdealTail.Params.{u}
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ z n => by
+    letI := z.field
+    letI := z.numberField
+    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (K : Type u) [F : Field K] [N : NumberField K] (H n : ℕ), n ≤ H →
+    (n !) ^ Module.finrank ℚ K / R.readout () ⟨K, F, N, H⟩ n =
+      weightedValue H (fun p j => Module.finrank ℚ K - NumberFieldNorm.normWeight K p j) n
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (ULift.{u} ℚ) 0 0 (by decide)
+  change (0 !) ^ Module.finrank ℚ (ULift.{u} ℚ) / 0 =
+    weightedValue 0 (fun p j => Module.finrank ℚ (ULift.{u} ℚ) -
+      NumberFieldNorm.normWeight (ULift.{u} ℚ) p j) 0 at hh
+  norm_num [weightedValue] at hh
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  exact FullNorm.dependence
+
+def family : Registration arena.{u} (type_of% @NumberFieldNorm.complement_eq_weightedValue.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@NumberFieldNorm.complement_eq_weightedValue.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      have heq : j = i := @Subsingleton.elim Unit inferInstance j i
+      exact (hji heq).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@NumberFieldNorm.complement_eq_weightedValue.{u}) (Realization signature.{u}) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.complement_eq_weightedValue.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ComplementValue.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z n => by
+    letI := z.field
+    letI := z.numberField
+    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+    definition := some { owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd, name := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.normComplement, path := #["body", "body", "body", "body"] }
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ComplementValue
+
 end Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd

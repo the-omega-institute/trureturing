@@ -1,6 +1,6 @@
 import D5.S3.Arith.FactorialRatio.Compression.SharpLoss
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 /-! The primewise loss and the two weighted losses are readouts on whole
 families of compact parameters and prime-power weights. -/
@@ -320,5 +320,171 @@ def sharedAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace MinimumLower
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z f => minimum z.1 z.2 f) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {r s b : ℕ} (f : ℕ → ℕ), b ∈ legalParameters r s →
+    R.readout () (r, s) f ≤ f b
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (r := 1) (s := 0) (b := 0) (fun _ => 0) (by decide)
+  change 1 ≤ 0 at hh
+  exact (by decide : ¬ (1 : ℕ) ≤ 0) hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(1, 0), (fun _ => 0), (fun _ => 1), ?_⟩
+  change minimum 1 0 (fun _ => 0) ≠ minimum 1 0 (fun _ => 1)
+  decide
+
+def family : Registration arena (type_of% @minimum_le) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@minimum_le, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@minimum_le) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss.minimum_le.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Compression.SharpLoss.MinimumLower.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z f => minimum z.1 z.2 f) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end MinimumLower
+
+namespace MinimumAttained
+
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℕ → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ z f => minimum z.1 z.2 f) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (r s : ℕ) (f : ℕ → ℕ),
+    ∃ b ∈ legalParameters r s, f b = R.readout () (r, s) f
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨b, hb, hh⟩ := h 1 0 (fun _ => 0)
+  change 0 = 1 at hh
+  omega
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(1, 0), (fun _ => 0), (fun _ => 1), ?_⟩
+  change minimum 1 0 (fun _ => 0) ≠ minimum 1 0 (fun _ => 1)
+  decide
+
+def family : Registration arena (type_of% @minimum_attained) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@minimum_attained, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@minimum_attained) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss.minimum_attained.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Compression.SharpLoss.MinimumAttained.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ z f => minimum z.1 z.2 f) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FactorialRatio.Compression.SharpLoss
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "arg", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end MinimumAttained
 
 end Reg.D5.S3.Arith.FactorialRatio.Compression.SharpLoss

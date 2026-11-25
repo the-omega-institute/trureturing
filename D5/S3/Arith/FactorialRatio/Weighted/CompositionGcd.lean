@@ -252,7 +252,7 @@ public theorem simultaneous_floor_minimum (H M p : ℕ) (hMH : M ≤ H) (hp : p.
   ∏ p ∈ Nat.primesLE H,
     p ^ (∑ j ∈ range (H + 1), c p j * floorMinimum H M (p ^ (j + 1)))
 
-private theorem weightedValue_ne_zero (H : ℕ) (c : ℕ → ℕ → ℕ) (n : ℕ) :
+public theorem weightedValue_ne_zero (H : ℕ) (c : ℕ → ℕ → ℕ) (n : ℕ) :
     weightedValue H c n ≠ 0 := by
   apply Finset.prod_ne_zero_iff.mpr
   intro p hp
@@ -262,13 +262,13 @@ private theorem weightedProduct_ne_zero {r : ℕ} (H : ℕ) (c : ℕ → ℕ →
     (a : Fin r → ℕ) : weightedProduct H c a ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun i _ => weightedValue_ne_zero H c (a i)
 
-private theorem weightedTail_ne_zero (H M : ℕ) (c : ℕ → ℕ → ℕ) :
+public theorem weightedTail_ne_zero (H M : ℕ) (c : ℕ → ℕ → ℕ) :
     weightedTail H M c ≠ 0 := by
   apply Finset.prod_ne_zero_iff.mpr
   intro p hp
   exact pow_ne_zero _ (Nat.mem_primesLE.mp hp).2.ne_zero
 
-private theorem prime_product_factorization (P : Finset ℕ) (e : ℕ → ℕ)
+public theorem prime_product_factorization (P : Finset ℕ) (e : ℕ → ℕ)
     (hP : ∀ p ∈ P, p.Prime) (p : ℕ) :
     (∏ q ∈ P, q ^ e q).factorization p = if p ∈ P then e p else 0 := by
   rw [Nat.factorization_prod_apply (fun q hq => pow_ne_zero _ (hP q hq).ne_zero)]
@@ -300,7 +300,7 @@ private theorem weightedProduct_factorization {r : ℕ} (H : ℕ) (c : ℕ → �
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun j _ => (Finset.mul_sum _ _ _).symm
 
-private theorem weightedTail_factorization (H M : ℕ) (c : ℕ → ℕ → ℕ)
+public theorem weightedTail_factorization (H M : ℕ) (c : ℕ → ℕ → ℕ)
     {p : ℕ} (hp : p ∈ Nat.primesLE H) :
     (weightedTail H M c).factorization p =
       ∑ j ∈ range (H + 1), c p j * floorMinimum H M (p ^ (j + 1)) := by
@@ -573,7 +573,7 @@ private theorem weightedValue_constant (H n d : ℕ) (hn : n ≤ H) :
         Nat.factorization_pow, Nat.factorization_eq_zero_of_not_dvd hnot]
   · simp [Nat.factorization_eq_zero_of_not_prime _ hp]
 
-private theorem weightedTail_constant (H M d : ℕ) :
+public theorem weightedTail_constant (H M d : ℕ) :
     weightedTail H M (fun _ _ => d) = (tailLCM H M) ^ d := by
   apply Nat.eq_of_factorization_eq (weightedTail_ne_zero _ _ _)
     (pow_ne_zero _ (tail_ne_zero _ _))
@@ -612,7 +612,7 @@ private theorem weightedValue_add (H : ℕ) (c c' : ℕ → ℕ → ℕ) (n : �
   exact (SF.weighted_partition_range (H + 1) (c p) (c' p)
     (fun j => n / p ^ (j + 1))).symm
 
-private theorem weightedTail_add (H M : ℕ) (c c' : ℕ → ℕ → ℕ) :
+public theorem weightedTail_add (H M : ℕ) (c c' : ℕ → ℕ → ℕ) :
     weightedTail H M c * weightedTail H M c' =
       weightedTail H M (fun p j => c p j + c' p j) := by
   unfold weightedTail
@@ -854,7 +854,7 @@ private theorem fullRingFactorialIdeal_eq_residue (H n : ℕ) (hn : n ≤ H) :
     residueFactorialIdeal_eq_normEuler K n n (Nat.le_refl n)]
   rfl
 
-private theorem fullRingFactorialIdeal_norm (H n : ℕ) (hn : n ≤ H) :
+public theorem fullRingFactorialIdeal_norm (H n : ℕ) (hn : n ≤ H) :
     (fullRingFactorialIdeal K n).absNorm = weightedValue H (normWeight K) n := by
   rw [fullRingFactorialIdeal_eq_residue K n n (Nat.le_refl n), residueFactorialIdeal_norm]
   exact (weightedValue_cutoff H n (normWeight K) hn).symm
@@ -876,7 +876,7 @@ private theorem norm_times_complement (H n : ℕ) (hn : n ≤ H) :
   exact Finset.sum_congr rfl fun j _ => congrArg (· * (n / p ^ (j + 1)))
     (weight_complement K H p hp j)
 
-private theorem complement_eq_weightedValue (H n : ℕ) (hn : n ≤ H) :
+public theorem complement_eq_weightedValue (H n : ℕ) (hn : n ≤ H) :
     normComplement K n =
       weightedValue H (fun p j => Module.finrank ℚ K - normWeight K p j) n := by
   unfold normComplement
