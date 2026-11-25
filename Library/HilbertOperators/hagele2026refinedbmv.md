@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -127,6 +128,23 @@ Independent rational review checked all 73 cyclic coefficients and the
 three Gram factorizations. Historical priority remains unverified after
 bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
 2610.31851 and 2611.23122.
+
+## Four copies of the second factor near the identity
+
+For every natural number `p` and every finite complex dimension, take
+Hermitian `H`, positive semidefinite `B`, and `A = exp H`. If
+`p ‖H‖op ≤ 1/100000`, the mean of `Re Tr(w)` over all ordered words `w`
+with `p` copies of `A` and four copies of `B`, minus
+`Re Tr((A^(p/4) B)^4)`, is at least `p² ‖B(HB − BH)‖F² / 25`.
+Here `Tr` is the unnormalized matrix trace, `A^(p/4)` is the real spectral
+power, and `‖·‖op` and `‖·‖F` denote the operator and Frobenius norms.
+For `p > 0` the sufficient radius for `‖H‖op` is `1/(100000 p)`, independent
+of the dimension. At `p = 0` the smallness condition is automatic and
+the lower bound for the gap is zero.
+
+The repository theorem `wordMean_sub_balanced_ge` proves this sufficient
+neighborhood of the identity for the four-copy product lower comparison
+in [Hägele, arXiv:2611.00129](https://arxiv.org/abs/2611.00129v1).
 
 ## Scope and conventions
 
