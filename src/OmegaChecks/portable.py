@@ -538,9 +538,11 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                                cwd=ROOT, env={**environment, "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
                                check=True)
                 report_data = json.loads(staged_report.read_text())
-            report_data["mathlibOnly"] = skipped
-            report_data["declarations"].extend(plan["declarations"])
-            report_data["consumerModules"].extend(skipped)
+            # Supplemental common-interface checks may cover unrelated consumers.
+            reported = {name: skipped[name] for name in modules if name in skipped}
+            report_data["mathlibOnly"] = reported
+            report_data["declarations"].extend(row for row in plan["declarations"] if row["module"] in reported)
+            report_data["consumerModules"].extend(reported)
             atomic_json(staged_report, report_data)
         if frozen is not None:
             canonical, inspector, response = frozen
@@ -557,8 +559,10 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             canonical_by_name = {module["module"]: module for module in canonical}
             for measured in official_rows:
                 name = measured["module"]
-                if name in skipped and not same_measurement(measured, canonical_by_name[name]):
-                    raise RuntimeError(f"staged official measurement differs from canonical measurement: {name}")
+                if name in skipped:
+                    if not same_measurement(measured, canonical_by_name[name]):
+                        raise RuntimeError(f"staged official measurement differs from canonical measurement: {name}")
+                    canonical_by_name[name]["mathlibOnly"] = skipped[name]
             inventory, strict_rows, certified = [], [], []
             if eligible:
                 request.write_text(json.dumps(eligible))

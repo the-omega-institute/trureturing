@@ -33,7 +33,8 @@ class BackendScheduling(unittest.TestCase):
             use_factorial = "def answer (n : Omega.Nat) : Nat := Nat.factorial n\n"
             b.write_text(header + marker + use_factorial)
 
-            scope = {"shared": [], "library": [], "basis": [], "common": [], "consumers": ["D5.All"]}
+            supplemental = "OmegaChecks.Portable.MathlibFactorial"
+            scope = {"shared": [], "library": [], "basis": [], "common": [supplemental], "consumers": ["D5.All"]}
             scope_file = project / "scope.json"
             scope_file.write_text(json.dumps(scope))
             def check(expected_error=None):
@@ -51,6 +52,8 @@ class BackendScheduling(unittest.TestCase):
             self.assertEqual(reported["mathlibOnly"], {"D5.B": ["D5.B"], "D5.C": ["D5.C", "D5.B"],
                                                         "D5.All": ["D5.All", "D5.C", "D5.B"]})
             self.assertIn("answer", [row["name"] for row in reported["declarations"]])
+            self.assertNotIn(supplemental, reported["consumerModules"])
+            self.assertNotIn(supplemental, {row["module"] for row in reported["declarations"]})
             self.assertEqual({p.stem for p in strict_artifacts.glob("*.olean")}, {"A", "D"})
 
             # A previous official success must not bypass the next strict build.

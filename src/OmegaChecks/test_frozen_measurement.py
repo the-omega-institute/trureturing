@@ -39,10 +39,12 @@ class FrozenMeasurement(unittest.TestCase):
             published = result.read_bytes()
             ordinary, mixed, tetrahedron, private_inductive, factorial = json.loads(published)
             self.assertFalse(factorial["strictEligible"])
+            self.assertEqual(factorial["mathlibOnly"], [MATHLIB_FACTORIAL])
             self.assertTrue(any("mathlibFactorial" in row["nameKey"] and "Mathlib" in row["libraries"]
                                 for row in factorial["declarations"] if row["includeInStatement"]))
             self.assertTrue(all("strict_omega" not in row for row in factorial["declarations"]))
             self.assertFalse(ordinary["strictEligible"])
+            self.assertNotIn("mathlibOnly", ordinary)
             self.assertTrue(mixed["strictEligible"])
             self.assertTrue(tetrahedron["strictEligible"])
             self.assertTrue(all("strict_omega" not in row for row in ordinary["declarations"]))
