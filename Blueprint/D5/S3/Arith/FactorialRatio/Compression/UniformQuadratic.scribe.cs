@@ -32,8 +32,8 @@ internal sealed class UniformQuadraticDocument : IScribeDocumentDefinition
                         + "threshold and no unproved analytic hypothesis.")),
                     Paragraph(Text(
                         "For p<=r, the parameter b=0 bounds the exponent of p "
-                        + "in E by (r-1)floor(log_p(s)). Because s<r^2 and p<=r, "
-                        + "floor(log_p(s))<=3 floor(log_p(r)). Summing against "
+                        + "in E by (r-1)Nat.log(p,s), with Nat.log(p,0)=0. Because s<r^2 and p<=r, "
+                        + "Nat.log(p,s)<=3 Nat.log(p,r). Summing against "
                         + "log p gives a small-prime contribution at most "
                         + "3(r-1)psi(r). The elementary bound "
                         + "psi(r)<=(log 4+4)r therefore makes this contribution "

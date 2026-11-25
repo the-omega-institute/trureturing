@@ -415,7 +415,7 @@ public theorem compact_tail_factorization {p r s K : ℕ} (hp : p.Prime) (hr : 1
   have hdiv := (Nat.div_lt_iff_lt_mul (pow_pos hp.pos _)).mpr hlt
   omega
 
-private theorem factorial_factorization {p n K : ℕ} (hp : p.Prime) (hK : Nat.log p n < K) :
+public theorem factorial_factorization {p n K : ℕ} (hp : p.Prime) (hK : Nat.log p n < K) :
     (n !).factorization p = ∑ j ∈ Ico 1 K, n / p ^ j := by
   let _ : Fact p.Prime := ⟨hp⟩
   rw [Nat.factorization_def _ hp, padicValNat_factorial hK]

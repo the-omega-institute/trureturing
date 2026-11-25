@@ -53,7 +53,7 @@ open scoped Nat
 private theorem tailLCM_ne_zero (H M : ℕ) : tailLCM H M ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun k _ => Nat.lcmUpto_ne_zero (H / k)
 
-private theorem factorialProduct_ne_zero {r : ℕ} (a : Fin r → ℕ) :
+public theorem factorialProduct_ne_zero {r : ℕ} (a : Fin r → ℕ) :
     factorialProduct a ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun i _ => Nat.factorial_ne_zero (a i)
 

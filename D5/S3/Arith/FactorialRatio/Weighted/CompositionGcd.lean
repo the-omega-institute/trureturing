@@ -183,7 +183,6 @@ private theorem factorial_profile_sum {H M p : ℕ} (hp : p.Prime) (hMH : M ≤ 
     (a : Fin (M + 1) → ℕ) (ha : (∑ i, a i) = H - M) :
     (factorialProduct a).factorization p =
       ∑ j ∈ range (H + 1), floorProfile (p ^ (j + 1)) a := by
-  let _ : Fact p.Prime := ⟨hp⟩
   unfold factorialProduct floorProfile
   rw [Nat.factorization_prod_apply (fun i _ => Nat.factorial_ne_zero (a i))]
   calc
@@ -192,7 +191,7 @@ private theorem factorial_profile_sum {H M p : ℕ} (hp : p.Prime) (hMH : M ≤ 
       have hlog : Nat.log p (a i) < H + 2 :=
         lt_of_le_of_lt ((Nat.log_le_self p (a i)).trans (part_le_head hMH a ha i))
           (by omega)
-      rw [Nat.factorization_def _ hp, padicValNat_factorial hlog,
+      rw [CompactFactorialGcd.factorial_factorization (K := H + 2) hp hlog,
         Finset.sum_Ico_eq_sum_range]
       simp [Nat.add_comm]
     _ = _ := Finset.sum_comm
@@ -363,13 +362,6 @@ private theorem saturated_weighted_profile {H M p : ℕ}
     (fun j _ => floor_lower (pow_pos hp.pos _) hMH a ha)
     hs
 
-private theorem tail_ne_zero (H M : ℕ) : tailLCM H M ≠ 0 :=
-  Finset.prod_ne_zero_iff.mpr fun k _ => Nat.lcmUpto_ne_zero (H / k)
-
-private theorem factorialProduct_ne_zero {r : ℕ} (a : Fin r → ℕ) :
-    factorialProduct a ≠ 0 :=
-  Finset.prod_ne_zero_iff.mpr fun i _ => Nat.factorial_ne_zero (a i)
-
 private theorem certificate_attainment {H M : ℕ}
     (C : Finset (Fin (M + 1) → ℕ)) (heq : C.gcd factorialProduct = tailLCM H M)
     {p : ℕ} (hp : p.Prime) :
@@ -380,14 +372,14 @@ private theorem certificate_attainment {H M : ℕ}
   have hd : p ^ ((tailLCM H M).factorization p + 1) ∣ C.gcd factorialProduct := by
     apply Finset.dvd_gcd
     intro a ha
-    apply (hp.pow_dvd_iff_le_factorization (factorialProduct_ne_zero a)).mpr
+    apply (hp.pow_dvd_iff_le_factorization (RankOneLCMGcd.factorialProduct_ne_zero a)).mpr
     have hdiv : tailLCM H M ∣ factorialProduct a := heq ▸ Finset.gcd_dvd ha
-    have hle := (Nat.factorization_prime_le_iff_dvd (tail_ne_zero H M)
-      (factorialProduct_ne_zero a)).mpr hdiv p hp
+    have hle := (Nat.factorization_prime_le_iff_dvd (CompactFactorialGcd.tail_nonzero H M)
+      (RankOneLCMGcd.factorialProduct_ne_zero a)).mpr hdiv p hp
     have hne := hn a ha
     omega
   rw [heq] at hd
-  have hbad := (hp.pow_dvd_iff_le_factorization (tail_ne_zero H M)).mp hd
+  have hbad := (hp.pow_dvd_iff_le_factorization (CompactFactorialGcd.tail_nonzero H M)).mp hd
   omega
 
 /-- Exact weighted factorial gcd over all weak compositions, including H=M=0. -/
@@ -423,7 +415,7 @@ public theorem exact_certificate_is_universal (H M : ℕ) (hMH : M ≤ H)
   have hnonempty : C.Nonempty := by
     by_contra hn
     rw [Finset.not_nonempty_iff_eq_empty.mp hn, Finset.gcd_empty] at hordinary
-    exact tail_ne_zero H M hordinary.symm
+    exact CompactFactorialGcd.tail_nonzero H M hordinary.symm
   have hG : C.gcd (weightedProduct H c) ≠ 0 := by
     obtain ⟨a, ha⟩ := hnonempty
     exact Finset.gcd_ne_zero_iff.mpr ⟨a, ha, weightedProduct_ne_zero H c a⟩
@@ -480,7 +472,8 @@ public theorem exists_small_universal_certificate (H M : ℕ) (hMH : M ≤ H) :
       _ ≤ (Nat.primesLE t).card + 1 := Nat.add_le_add_right (Finset.card_image_le) _
       _ = _ := by rw [Nat.primesLE_card_eq_primeCounting]
   have hG : C.gcd factorialProduct ≠ 0 :=
-    Finset.gcd_ne_zero_iff.mpr ⟨balanced, Finset.mem_insert_self _ _, factorialProduct_ne_zero _⟩
+    Finset.gcd_ne_zero_iff.mpr ⟨balanced, Finset.mem_insert_self _ _,
+      RankOneLCMGcd.factorialProduct_ne_zero _⟩
   have htail : tailLCM H M ∣ C.gcd factorialProduct := by
     apply Finset.dvd_gcd
     intro a ha
@@ -488,12 +481,12 @@ public theorem exists_small_universal_certificate (H M : ℕ) (hMH : M ≤ H) :
     exact Finset.gcd_dvd (Finset.Nat.mem_antidiagonalTuple.mpr (hC a ha))
   have hexact : C.gcd factorialProduct = tailLCM H M := by
     apply Nat.dvd_antisymm _ htail
-    apply (Nat.factorization_prime_le_iff_dvd hG (tail_ne_zero H M)).mp
+    apply (Nat.factorization_prime_le_iff_dvd hG (CompactFactorialGcd.tail_nonzero H M)).mp
     intro p hp
     by_cases hpt : p ≤ t
     · have hmem : witness p ∈ C := Finset.mem_insert_of_mem
         (Finset.mem_image.mpr ⟨p, Nat.mem_primesLE.mpr ⟨hpt, hp⟩, rfl⟩)
-      exact ((Nat.factorization_prime_le_iff_dvd hG (factorialProduct_ne_zero _)).mpr
+      exact ((Nat.factorization_prime_le_iff_dvd hG (RankOneLCMGcd.factorialProduct_ne_zero _)).mpr
         (Finset.gcd_dvd hmem) p hp).trans_eq (hwitness p hp).2
     · have hzero : (factorialProduct balanced).factorization p = 0 := by
         unfold factorialProduct
@@ -503,7 +496,7 @@ public theorem exists_small_universal_certificate (H M : ℕ) (hMH : M ≤ H) :
         exact Nat.factorization_eq_zero_of_not_dvd (fun hd =>
           hpt ((hp.dvd_factorial.mp hd).trans (hbound i)))
       have hle := (Nat.factorization_prime_le_iff_dvd hG
-        (factorialProduct_ne_zero balanced)).mpr
+        (RankOneLCMGcd.factorialProduct_ne_zero balanced)).mpr
         (Finset.gcd_dvd (Finset.mem_insert_self balanced _)) p hp
       rw [hzero] at hle
       exact hle.trans (Nat.zero_le _)
@@ -511,10 +504,9 @@ public theorem exists_small_universal_certificate (H M : ℕ) (hMH : M ≤ H) :
 
 private theorem factorial_factorization_sum {H n p : ℕ} (hp : p.Prime) (hn : n ≤ H) :
     (n !).factorization p = ∑ j ∈ range (H + 1), n / p ^ (j + 1) := by
-  let _ : Fact p.Prime := ⟨hp⟩
   have hlog : Nat.log p n < H + 2 :=
     lt_of_le_of_lt ((Nat.log_le_self p n).trans hn) (by omega)
-  rw [Nat.factorization_def _ hp, padicValNat_factorial hlog,
+  rw [CompactFactorialGcd.factorial_factorization (K := H + 2) hp hlog,
     Finset.sum_Ico_eq_sum_range]
   simp [Nat.add_comm]
 
@@ -576,7 +568,7 @@ private theorem weightedValue_constant (H n d : ℕ) (hn : n ≤ H) :
 public theorem weightedTail_constant (H M d : ℕ) :
     weightedTail H M (fun _ _ => d) = (tailLCM H M) ^ d := by
   apply Nat.eq_of_factorization_eq (weightedTail_ne_zero _ _ _)
-    (pow_ne_zero _ (tail_ne_zero _ _))
+    (pow_ne_zero _ (CompactFactorialGcd.tail_nonzero _ _))
   intro p
   by_cases hp : p.Prime
   · by_cases hpH : p ≤ H
