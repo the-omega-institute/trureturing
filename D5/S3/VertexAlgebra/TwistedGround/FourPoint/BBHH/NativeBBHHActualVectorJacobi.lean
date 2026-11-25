@@ -41,9 +41,9 @@ open private aModeLinear aModeLinear_apply from
 open private energySum from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedIterateSlot12Analytic
 open private fusedNumeratorSeries_eq_support from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBFormalFusedIota
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBFormalFusedIota
 open private finsum_eq_sum_modePairs from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBGradedModeBridge
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBGradedModeBridge
 open private fixed_parity_preserved from
   D5.S3.VertexAlgebra.HalfFock.LatticeHalfFockParityField
 

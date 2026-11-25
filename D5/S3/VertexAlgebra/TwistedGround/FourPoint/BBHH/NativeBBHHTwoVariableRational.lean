@@ -23,7 +23,7 @@ open CollisionLaurentKernels.LaurentCollision (Bivariate Rational)
 open NativeHHBBTwoVariableRational (homogenizedNumerator evalAt evalAt_homogenizedNumerator)
 
 open private evalAt_homogenizedNumerator_div scale_modes from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBTwoVariableRational
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBTwoVariableRational
 open private b_inner_energy b_outer_pairing_off_grid from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedUpperProductCusp
 open private fixed_a_off_diagonal fixed_odd_mode_zero aJointTerm_neg_outer_root from

@@ -91,7 +91,7 @@ open NativeHHBBPolynomialFromInfinity (hhbb_marked_upper_common_rational)
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (ball_subset_slitDomain)
 
 open private sqrt_ne_zero from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBNormalizedGlobalMeromorphic
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBNormalizedGlobalMeromorphic
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 4000000 in

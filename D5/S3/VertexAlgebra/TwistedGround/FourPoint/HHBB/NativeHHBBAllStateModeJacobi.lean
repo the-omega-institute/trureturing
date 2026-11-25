@@ -36,7 +36,7 @@ open private occupationGrade_eq from
 open private wordAt_grade from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedUpperProductCusp
 open private cast_occupation from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBModeResidue
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBModeResidue
 
 local notation "ℒ" => leechData
 

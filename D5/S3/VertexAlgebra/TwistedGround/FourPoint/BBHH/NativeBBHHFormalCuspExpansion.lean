@@ -32,13 +32,13 @@ open NativeHHBBFormalInfinityExpansion (paddedReverse eventually_eq_paddedRevers
 open OriginalGaussianSewnAnalytic (coefficient)
 
 open private sqrt_ne_zero from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBNormalizedGlobalMeromorphic
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBNormalizedGlobalMeromorphic
 open private energySum from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedIterateSlot12Analytic
 open private hasFPowerSeriesAt_of_energy_sum numerator_hasFPowerSeriesAt from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBFormalIterateExpansion
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBFormalIterateExpansion
 open private mk_eq_mul_invOneSubPow from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBFormalInfinityExpansion
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBFormalInfinityExpansion
 
 /-- The exact numerator of the actual BBHH common rational function, read from
 the signed swapped B series at infinity. -/

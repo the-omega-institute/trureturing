@@ -20,9 +20,9 @@ open NativeHHBBFormalFusedIota (swapRational fusedLaurent fusedLaurent_coeff
 open NativeHHBBModeResidue (modePairs weighted swapped_commonRational_weighted_collision
   coefficient_jacobi)
 open private swapRational_algebraMap from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBFormalFusedIota
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBFormalFusedIota
 open private iotaZX_swapRational from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBActualThreeIota
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBActualThreeIota
 
 local notation "xPoly" => (Polynomial.C (Polynomial.X : Polynomial ℂ))
 

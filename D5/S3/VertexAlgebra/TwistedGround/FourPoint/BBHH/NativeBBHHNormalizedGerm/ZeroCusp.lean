@@ -43,7 +43,7 @@ open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
 open NativeMixedProductSlot23PhysicalRoots (b_joint_product_hasSum_scale)
 
 open private physical_roots eval_translation_inverse from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeBBHHUpperCrossing
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.BBHH.NativeBBHHUpperCrossing
 open private source_roots reversal_roots from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeBHBHCanonicalContinuation
 open private bEnergyTerm bEnergy_hasSum_iff bModeLinear bModeLinear_apply opposite_grade_parities from

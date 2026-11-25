@@ -76,11 +76,11 @@ open private mem_slitDomain from
 open OriginalFourPointChartGluing (U_D U_D_eq)
 open OriginalGaussianSewnAnalytic (coefficient)
 open private entire_eq_reversed_taylor from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBPolynomialFromInfinity
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBPolynomialFromInfinity
 open private isPreconnected_U_D U_D_subset_puncturedPlane from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourPointChartGluing
 open private slit_right_preconnected meromorphic_order_of_cusp from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBNormalizedGlobalMeromorphic
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBNormalizedGlobalMeromorphic
 
 local notation "ℒ" => leechData
 local notation "L₁" => lowering ℒ leechUnit
