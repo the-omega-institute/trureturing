@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import tempfile
 import tomllib
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, foundation_config, lake_layout, strict_config
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,13 +30,21 @@ def output(*args, **kwargs):
 
 
 def check_publication_layout(directory):
-    config = tomllib.loads((directory / "lakefile.toml").read_text())
-    for library in config.get("lean_lib", []):
-        names = [library["name"], *library.get("roots", []), *library.get("globs", [])]
-        if any(root(name) == "OmegaMath" for name in names):
-            raise ValueError(f"retired OmegaMath Lake target in {library['name']}")
-    # Check every configured source root, including a formerly unused umbrella or leaf.
-    for source in {directory / lib.get("srcDir", ".") for lib in config.get("lean_lib", [])}:
+    sources = {directory, directory / "src", directory / "strict"}
+    configs = [directory / "lakefile.toml"]
+    if (reg := directory / "Reg/lakefile.toml").is_file():
+        configs.append(reg)
+    for config_path in configs:
+        config = tomllib.loads(config_path.read_text())
+        package_root = config_path.parent / config.get("srcDir", ".")
+        sources.add(package_root)
+        for target in config.get("lean_lib", []) + config.get("lean_exe", []):
+            names = [target["name"], target.get("root", target["name"]),
+                     *target.get("roots", []), *target.get("globs", [])]
+            if any(root(name) == "OmegaMath" for name in names):
+                raise ValueError(f"retired OmegaMath Lake target in {config_path}: {target['name']}")
+            sources.add(package_root / target.get("srcDir", "."))
+    for source in sources:
         if (source / "OmegaMath.lean").is_file() or any((source / "OmegaMath").rglob("*.lean")):
             raise ValueError(f"retired OmegaMath source in {source}")
 
@@ -134,14 +142,24 @@ def standard_aliases(module, exports, *, strict):
 
 
 STRICT_EXPORT_MARKER = "-- Generated standard references (portable.py --regenerate-facades)."
+STRICT_EXPORT_END = "-- End generated standard references."
 
 
 def strict_alias_source(module, content, exports):
-    original = content.split("\n" + STRICT_EXPORT_MARKER + "\n", 1)[0]
+    before, marker, rest = content.partition(STRICT_EXPORT_MARKER + "\n")
+    if marker:
+        _, end, after = rest.partition(STRICT_EXPORT_END + "\n")
+        if not end or STRICT_EXPORT_MARKER in after or STRICT_EXPORT_END in after:
+            raise ValueError(f"invalid generated alias section in {module}")
+    else:
+        if STRICT_EXPORT_END in content:
+            raise ValueError(f"unmatched end of generated aliases in {module}")
+        after = ""
     lines = alias_sections(standard_aliases(module, exports, strict=True))
     if not lines:
-        return original
-    return original.rstrip() + "\n\n" + STRICT_EXPORT_MARKER + "\npublic section\n" + "\n".join(lines) + "\n"
+        return before + after
+    block = "\n".join([STRICT_EXPORT_MARKER, "public section", *lines, "end", STRICT_EXPORT_END])
+    return before.rstrip() + "\n\n" + block + "\n" + after
 
 
 def official_basis_source(module, deps, exports, seals):
@@ -171,42 +189,65 @@ def regenerate_facades():
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
-                   cwd=ROOT, check=True)
-    imports, exports, _ = namespace_exports(lean, str(ROOT / BUILD / "lib/lean"), basis,
-                                           output("lake", "env", "printenv", "LEAN_PATH").strip())
-    generated = {name: official_basis_source(name, imports[name], exports[name], []).encode() for name in basis}
-    for name in basis:
-        if root(name) == "OmegaMathlib":
-            path = sources[name]
-            before = path.read_text()
-            after = strict_alias_source(name, before, exports[name])
-            if before != after:
-                with tempfile.NamedTemporaryFile(dir=path.parent, mode="w", delete=False) as temp:
-                    temp.write(after)
-                updated = Path(temp.name)
-                updated.chmod(path.stat().st_mode)
-                updated.replace(path)
-    changed = []
-    with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
-        for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
-            target = SRC / relative
-            if target.resolve() != target:
-                raise ValueError(f"refusing to write a facade through a symlink: {target}")
-            if target.exists() and target.read_bytes() == content:
-                continue
-            staged = Path(temporary) / relative
-            staged.parent.mkdir(parents=True, exist_ok=True)
-            staged.write_bytes(content)
-            if target.exists():
-                staged.chmod(target.stat().st_mode)
-            changed.append((staged, target))
-        for staged, target in changed:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            staged.replace(target)
-            print(f"Updated {target.relative_to(ROOT)}")
-    print(f"Updated {len(changed)} of {len(basis)} official facade modules")
+    official_path = output("lake", "env", "printenv", "LEAN_PATH").strip()
+    upstream = [official_module(n) for n in basis if root(n) == "OmegaMathlib" and official_module(n)]
+    subprocess.run(["lake", "build", *("+" + n + ":olean" for n in upstream)], cwd=ROOT, check=True)
+    # Build author sources without their previous generated exports. A removed or renamed
+    # declaration cannot leave a stale export that prevents the generator itself from running.
+    with tempfile.TemporaryDirectory(dir=ROOT / ".lake", prefix="port-exports-") as temporary:
+        stage = Path(temporary)
+        inputs, build_dir = stage / "sources", stage / "build"
+        config = foundation_config(str(inputs), str(build_dir), stage.name)
+        pending = {}
+        originals = {}
+        try:
+            for name in basis:
+                path = sources[name]
+                if path.resolve() != path:
+                    raise ValueError(f"refusing to regenerate a linked port: {path}")
+                original = path.read_text()
+                originals[path] = original
+                staged = inputs / path.relative_to(ROOT / "strict")
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(strict_alias_source(name, original, {}))
+            # Install prerequisite aliases before compiling the next level of strict imports.
+            sorter = TopologicalSorter({n: graph[n].intersection(basis) for n in basis})
+            sorter.prepare()
+            while sorter.is_active():
+                ready = sorted(sorter.get_ready())
+                subprocess.run(["lake", "-f", config, "build", *("+" + n for n in ready)],
+                               cwd=ROOT, check=True)
+                imports, exports, _ = namespace_exports(lean, str(build_dir / "lib/lean"), ready, official_path)
+                for name in ready:
+                    path = sources[name]
+                    relative = path.relative_to(ROOT / "strict")
+                    if root(name) == "OmegaMathlib":
+                        updated = strict_alias_source(name, originals[path], exports[name])
+                        (inputs / relative).write_text(updated)
+                        pending[path] = updated
+                    pending[SRC / relative] = official_basis_source(name, imports[name], exports[name], [])
+                sorter.done(*ready)
+            for path, original in originals.items():
+                if path.read_text() != original:
+                    raise RuntimeError(f"strict source changed during generation: {path}")
+            count = 0
+            for target, content in pending.items():
+                if target.resolve() != target:
+                    raise ValueError(f"refusing to update a linked facade: {target}")
+                if target.exists() and target.read_text() == content:
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                staged = stage / "output" / target.relative_to(ROOT)
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(content)
+                if target.exists():
+                    staged.chmod(target.stat().st_mode)
+                staged.replace(target)
+                count += 1
+                print(f"Updated {target.relative_to(ROOT)}")
+            print(f"Updated {count} port source files")
+        finally:
+            config.unlink(missing_ok=True)
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
@@ -235,7 +276,7 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
             raise RuntimeError(f"dependency shadows project module {name}")
         trace = json.loads((lib / base.with_suffix(".trace")).read_text())["outputs"]
         parts = [*trace["o"], *(trace[key] for key in ("rs", "r") if key in trace)]
-        if root(name) == "D5":
+        if root(name) not in BASIS:
             parts.append(trace["i"])
         for part in parts:
             digest, suffix = part.split(".", 1)
@@ -477,7 +518,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     modules = closure(graph, roots)
     basis = [n for n in modules if root(n) in BASIS]
     downstream = [n for n in modules if root(n) not in BASIS]
-    object_roots = [n for n in downstream if root(n) == "D5"]
+    object_roots = [n for n in downstream if root(n) != "LeanInformationAuditInterface"]
     # The admission-only profile covers the designated portable clients and the entire basis.
     if not scoped and backend == "both" and frozen is None:
         common_roots = [*all_basis, *portable_clients]
@@ -501,7 +542,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if with_reg:
         tracked.update(directory / file for directory in (ROOT / "Reg", INSPECTOR)
                        for file in ("lakefile.toml", "lake-manifest.json"))
-    tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
+    tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
+                    SRC / "OmegaChecks/QualifiedReferences.lean"])
     if backend == "both":
         tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
     if frozen is not None:
@@ -554,11 +596,11 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 records = [(name, str(sources[name]), str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
                            for name in object_roots]
                 request.write_text(json.dumps(records))
-                subprocess.run([AUDIT, "--qualified", label, search, request], cwd=ROOT,
+                subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean", label, search, request], cwd=ROOT,
                                env=environment, check=True)
         if common_modules:
             subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis,
-                            "--object-roots", *(n for n in common_downstream if root(n) == "D5")], cwd=ROOT,
+                            "--object-roots", *(n for n in common_downstream if root(n) != "LeanInformationAuditInterface")], cwd=ROOT,
                            env=environment, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)

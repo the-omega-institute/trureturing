@@ -22,3 +22,5 @@ public section
 namespace OmegaMathlib.Function
 export _root_.Omega.Function (Bijective)
 end OmegaMathlib.Function
+end
+-- End generated standard references.

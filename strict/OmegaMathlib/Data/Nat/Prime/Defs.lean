@@ -46,3 +46,5 @@ end OmegaMathlib.Nat
 namespace OmegaMathlib.Nat.Prime
 export _root_.Omega.Nat.Prime (eq_one_or_self_of_dvd one_lt two_le)
 end OmegaMathlib.Nat.Prime
+end
+-- End generated standard references.

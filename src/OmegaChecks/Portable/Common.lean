@@ -11,8 +11,8 @@ public theorem projectLeft {p q : Prop} (h : Omega.And p q) : p :=
   Omega.And.left h
 
 public theorem fibonacciRecurrence (n : Omega.Nat) :
-    Omega.Eq (Omega.Nat.fib n.succ.succ)
-      ((Omega.Nat.fib n).add (Omega.Nat.fib n.succ)) :=
+    Omega.Eq (OmegaMathlib.Nat.fib n.succ.succ)
+      ((OmegaMathlib.Nat.fib n).add (OmegaMathlib.Nat.fib n.succ)) :=
   Omega.Nat.fib_add_two
 
 public theorem natSquareMul (a k : Omega.Nat) :

@@ -2,7 +2,6 @@ import Lean
 import Lean.Replay
 import OmegaChecks.Interface
 import OmegaChecks.ObjectOrigins
-import OmegaChecks.QualifiedReferences
 
 open Lean
 
@@ -121,10 +120,8 @@ private def testLibrary (selected : List String) : IO Unit := do
   let proc ← IO.Process.spawn { cmd := "python3", args }
   unless (← proc.wait) == 0 do throw <| IO.userError "Omega library test failed"
 
-unsafe def main (args : List String) : IO Unit := do
-  if let ["--qualified", backend, path, request] := args then
-    OmegaChecks.QualifiedReferences.run backend path request
-  else if let "--consumer" :: strictPath :: officialPath :: names := args then
+def main (args : List String) : IO Unit := do
+  if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
     let modules := clients.toArray.map String.toName
     let tailArgs := names.drop (clients.length + 1)

@@ -58,7 +58,7 @@ private def checkReserved (env : Environment) (official : Bool) : IO Unit := do
           throw <| IO.userError s!"reserved standard alias {alias} in {owner} targets {target}, expected an admitted port"
 
 private def checkUse (strict publicStrict official : Environment) (decl pos lhs rhs : Name)
-    (modules : NameSet) (s : Result) (report : Bool) : IO Result := do
+    (modules : NameSet) (registration : Bool) (s : Result) (report : Bool) : IO Result := do
   let src ← ownerOf strict lhs
   let dst ← ownerOf official rhs
   if ModuleSurface.isBasis src then
@@ -72,7 +72,7 @@ private def checkUse (strict publicStrict official : Environment) (decl pos lhs 
       ("strictName", toJson lhs.toString), ("strictModule", toJson src.toString),
       ("upstreamName", toJson rhs.toString), ("upstreamModule", toJson dst.toString)]
     return { uses, bindings := s.bindings.insert lhs owner }
-  if modules.contains src && src.getRoot != `D5 && !(strict.find? lhs).any (·.isTheorem) then
+  if modules.contains src && src.getRoot != `D5 && !registration && !(strict.find? lhs).any (·.isTheorem) then
     throw <| IO.userError s!"{decl} at {pos}: mathematical object {lhs} in {src} requires a D5 owner or an admitted port"
   unless lhs == rhs && src == dst do
     throw <| IO.userError s!"{decl} at {pos}: {lhs} in {src} resolves to {rhs} in {dst}"
@@ -120,27 +120,29 @@ def check (strict publicStrict official : Environment) (modules roots : Array Na
   for owner in visible.toList.mergeSort Name.lt do
     let some i := strict.getModuleIdx? owner | throw <| IO.userError s!"missing strict module {owner}"
     let some j := official.getModuleIdx? owner | throw <| IO.userError s!"missing official module {owner}"
+    -- Registration artifacts are compared by the frozen inventory and its typed inspector.
+    let registration := owner.getRoot == `Reg || owner.getRoot == `LeanInformationAuditInterface
     let aliases := aliasExtension.getModuleEntries official j
     for (alias, target) in aliasExtension.getModuleEntries strict i do
       unless isPrivateName alias do
         let targetOwner ← ownerOf strict target
         let up := if ModuleSurface.isBasis targetOwner then target.replacePrefix `Omega .anonymous else target
         unless aliases.contains (alias, up) do throw <| IO.userError s!"{owner}: alias {alias} differs for {up}"
-        result := ← checkUse strict publicStrict official alias `export target up project result report
-        if project.contains targetOwner then declarations := declarations.push target
+        result := ← checkUse strict publicStrict official alias `export target up project registration result report
+        if !registration && project.contains targetOwner then declarations := declarations.push target
     for decl in strict.header.moduleData[i]!.constNames do
       if isPrivateName decl || decl.isInternalOrNum || decl.hasMacroScopes then continue
       let some a := strict.find? decl | throw <| IO.userError s!"missing strict declaration {decl}"
       let some b := official.find? decl | throw <| IO.userError s!"missing official declaration {decl}"
-      result := ← checkUse strict publicStrict official decl `export decl decl project result report
-      declarations := declarations.push decl
+      result := ← checkUse strict publicStrict official decl `export decl decl project registration result report
+      if !registration then declarations := declarations.push decl
       let left := occurrences a.type
       let right := occurrences b.type
       unless left.size == right.size do
         throw <| IO.userError s!"{decl}: different numbers of object occurrences ({left.size} vs {right.size})"
       for (pos, lhs) in left, (at_, rhs) in right do
         unless pos == at_ do throw <| IO.userError s!"{decl}: object {lhs} at {pos} moved to {at_} ({rhs})"
-        result := ← checkUse strict publicStrict official decl pos lhs rhs project result report
+        result := ← checkUse strict publicStrict official decl pos lhs rhs project registration result report
   checkDefinitions strict project declarations
   return result
 

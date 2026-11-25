@@ -45,7 +45,7 @@ private theorem pos_of_one_lt {n : Nat} (h : Nat.lt Nat.one n) : Nat.lt Nat.zero
 private theorem prime_of_no_proper_factor {p : Nat} (hp : Nat.lt Nat.one p)
     (absent : ∀ d, Nat.lt Nat.one d → Nat.lt d p → Not (Dvd d p)) : OmegaMathlib.Nat.Prime p :=
   have positiveP := pos_of_one_lt hp
-  OmegaMathlib.Nat.prime_def.mpr <| And.intro hp (fun d hd =>
+  OmegaMathlib.Nat.prime_def.mpr (And.intro hp (fun d hd =>
     (le_or_lt d Nat.one).elim
       (fun hle =>
         have nonzeroD : Not (Eq d Nat.zero) := fun hz => hd.elim (fun k hk =>
@@ -55,7 +55,7 @@ private theorem prime_of_no_proper_factor {p : Nat} (hp : Nat.lt Nat.one p)
       (fun hlarge =>
         (le_or_lt p d).elim
           (fun hle => Or.inr (Nat.le_antisymm (le_of_dvd_of_pos hd positiveP) hle))
-          (fun hlt => False.elim (absent d hlarge hlt hd))))
+          (fun hlt => False.elim (absent d hlarge hlt hd)))))
 
 private def IsLeastProperFactor (n bound d : Nat) : Prop :=
   And (Nat.lt Nat.one d) (And (Nat.lt d bound)

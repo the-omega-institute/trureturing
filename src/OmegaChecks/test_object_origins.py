@@ -30,7 +30,8 @@ def check():
                 path = backend[i].joinpath(*module.split(".")).with_suffix(".lean")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(source)
-                subprocess.run([lean, "-R", backend[i], "-o", path.with_suffix(".olean"), path],
+                subprocess.run([lean, "-R", backend[i], "-o", path.with_suffix(".olean"),
+                                "-i", path.with_suffix(".ilean"), path],
                                cwd=ROOT, env={**os.environ, "LEAN_PATH": search[i]}, check=True)
 
         def compare(modules, roots, *errors):
@@ -42,6 +43,23 @@ def check():
             if bool(proc.returncode) != bool(errors) or any(error not in output for error in errors):
                 raise AssertionError(f"expected {errors or 'success'}, got exit {proc.returncode}: {output}")
 
+        def qualified(module, error=None, labels=("strict", "official")):
+            for label in labels:
+                i = ("strict", "official").index(label)
+                base = backend[i].joinpath(*module.split("."))
+                request = temp / "qualified.json"
+                request.write_text(json.dumps([[module, str(base.with_suffix(".lean")),
+                                                str(base.with_suffix(".ilean"))]]))
+                proc = subprocess.run([lean, "--run", ROOT / "src/OmegaChecks/QualifiedReferences.lean",
+                                       label, search[i], request], cwd=ROOT,
+                                      capture_output=True, text=True)
+                output = proc.stdout + proc.stderr
+                if error:
+                    if not proc.returncode or error not in output:
+                        raise AssertionError(f"expected {error} on {label}: {output}")
+                elif proc.returncode or "Verified 1 qualified" not in output:
+                    raise AssertionError(f"expected qualified identifier on {label}: {output}")
+
         for port, name, args in [(ports[0], "Nat.Prime", "p"), (ports[1], "Nat.choose", "p p")]:
             module = "D5.ObjectTest"
             head = f"module\nprelude\npublic import {port}\n"
@@ -50,6 +68,7 @@ def check():
                       + f"public theorem D5.claim (p : Omega.Nat) : Omega.Eq {term} (D5.localObject p) := Omega.rfl\n")
             compile_case(module, source)
             compare([module], [module])
+            qualified(module)
             rows = json.loads(report.read_text())["standardObjectUses"]
             if not any(row["declaration"] == "D5.claim" and row["upstreamName"] == name and
                        row["upstreamModule"] == port.replace("OmegaMathlib", "Mathlib", 1) for row in rows):
@@ -61,6 +80,15 @@ def check():
             compile_case(module, source, replaced)
             compare([module], [module], "D5.claim", name, "D5.localObject")
 
+        compile_case("D5.Legacy", f"module\nprelude\npublic import {ports[0]}\n"
+                     + "public theorem D5.legacy (p : Omega.Nat) (h : Omega.Nat.Prime p) : Omega.True := Omega.True.intro\n")
+        qualified("D5.Legacy", "qualify this identifier as OmegaMathlib.Nat.Prime", labels=("strict",))
+
+        # An identifier-shaped notation can disappear entirely from the compiled type.
+        compile_case("D5.BadNotation", f"module\nprelude\nimport Lean\npublic import {ports[0]}\n"
+                     + "local notation \"OmegaMathlib.Nat.Prime\" => fun (_ : Omega.Nat) => Omega.True\n"
+                     + "public theorem D5.bogus (p : Omega.Nat) : OmegaMathlib.Nat.Prime p := Omega.True.intro\n")
+        qualified("D5.BadNotation", "OmegaMathlib.Nat.Prime requires")
         head = "module\nprelude\npublic import OmegaInit.Prelude\n"
         compile_case("D5.Hidden", head + "private def D5.OmegaMathlib.Nat.Prime (_ : Omega.Nat) := Omega.True\n")
         compile_case("D5.ImportHidden", "module\nprelude\nimport D5.Hidden\n")
@@ -72,7 +100,7 @@ def check():
 
         compile_case("NewProvider", head + "public def MadeUp (_ : Omega.Nat) := Omega.True\n")
         compare(["NewProvider"], ["NewProvider"], "MadeUp", "NewProvider", "requires a D5 owner")
-        compile_case("D5.Wrapper", "module\nprelude\nimport all NewProvider\n"
+        compile_case("D5.Wrapper", "module\nprelude\npublic import OmegaInit.Prelude\nimport all NewProvider\n"
                      + "private def D5.hidden := MadeUp\npublic def D5.wrapped := D5.hidden\n")
         compare(["NewProvider", "D5.Wrapper"], ["D5.Wrapper"], "D5.wrapped", "MadeUp", "NewProvider")
 

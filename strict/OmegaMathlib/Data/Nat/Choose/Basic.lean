@@ -42,3 +42,5 @@ public section
 namespace OmegaMathlib.Nat
 export _root_.Omega.Nat (choose choose_succ_succ choose_zero_right choose_zero_succ)
 end OmegaMathlib.Nat
+end
+-- End generated standard references.
