@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves;
 
 internal sealed class BinaryCubeSwapConjugationDocument : IScribeDocumentDefinition
 {
