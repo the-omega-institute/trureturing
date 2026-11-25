@@ -7,7 +7,7 @@
 
 module
 prelude
-public import D5.S0.CategoryTheory.Naturality
+public import OmegaMath.CategoryTheory.Naturality
 
 namespace D5.S0.Computability.LayerShiftNaturality
 

@@ -96,15 +96,13 @@ If an ambiguity cannot be resolved without weakening the claim, stop and report 
 
 Postcondition: every source clause has one intended Lean counterpart or is recorded as removed, strengthened or corrected under `CLAUDE.md` §3.10, or the task has ended as `open` with the ambiguity named.
 
-When the echoed Omega claim uses a standard object, pinned Mathlib fixes its meaning. Record the actual upstream declaration in the disputed hypothesis or conclusion. Write `hp : OmegaMathlib.Nat.Prime p` for standard primality. A local predicate of the same name may accept 1. Port a missing standard object before proving the claim. [Worked Lean example](../../src/README.md#标准数学对象的写法)
-
 ### 3. Search the library before proving
 
-Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and reuse existing D5 proofs. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
+Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and prefer `src/OmegaMath/` for a constructive proof. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
 
 For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
 
-Freeze new project objects in their D5 topic. OmegaMath can publish theorems, proofs and references to verified objects. Place verified standard ports under the corresponding `strict/OmegaMathlib/` module, following the [library guide](../../src/README.md). Consumers can spell the pinned object as `OmegaMathlib.<upstream name>`. Read the individual frozen declaration to determine its measured axiom closure.
+For a standard object, use its admitted OmegaMathlib reference at the occurrence in the statement. A prime hypothesis uses `OmegaMathlib.Nat.Prime p`. Port missing declarations from their pinned defining module in `strict/OmegaMathlib/`. New project objects and their bridges belong in D5. Existing callers can import `OmegaMath.Projective` to use the positive-scaling proof `Omega.Projective.kappa_scale`. [Library guide](../../src/README.md#标准数学对象)
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
@@ -423,7 +421,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
-- Identify the applicable first-freeze admission basis in `CLAUDE.md` §3.2. For a book citation of an existing D5 theorem, apply the publication rule in §3.2 and record the actual book location, the missing D5 GID and the original proof. Otherwise a wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
+- Identify the applicable first-freeze admission basis in `CLAUDE.md` §3.2. For a book citation of an existing OmegaMath theorem, apply the publication rule in §3.2 and record the actual book location, the missing D5 GID and the original proof. Otherwise a wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
 
 ## What this skill does not own

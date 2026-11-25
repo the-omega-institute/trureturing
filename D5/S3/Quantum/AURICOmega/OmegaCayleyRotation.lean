@@ -8,8 +8,7 @@
 
 module
 prelude
-public import D5.S3.Geometry.Cayley3D.Matrix
-public import D5.S3.Geometry.Cayley3D.Recurrence
+public import OmegaMath.Geometry.Cayley3D
 
 namespace D5.S3.Quantum.AURICOmega.OmegaCayleyRotation
 

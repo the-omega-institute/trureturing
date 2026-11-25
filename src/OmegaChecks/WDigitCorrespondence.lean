@@ -7,7 +7,7 @@ module
 import all OmegaInit.Prelude
 public import Mathlib.Data.Nat.Fib.Zeckendorf
 public import OmegaChecks.NatCorrespondence
-public import D5.S0.Conventions.CanonicalDigits.Codec
+public import OmegaMath.Arithmetic.WDigits.Codec
 
 /-! Conversion between zero-based W positions and Mathlib's occupied Fibonacci indices. -/
 

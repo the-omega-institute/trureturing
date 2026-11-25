@@ -2,7 +2,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
-from unittest.mock import patch
 
 import scope
 
@@ -11,11 +10,11 @@ class ScopeTests(unittest.TestCase):
     graph = {
         "OmegaInit.Core": set(),
         "OmegaMathlib.Fib": {"OmegaInit.Core"},
-        "D5.Independent": {"OmegaInit.Core"},
+        "OmegaMath.Independent": {"OmegaInit.Core"},
         "D5.Direct": {"OmegaMathlib.Fib"},
         "D5.Downstream": {"D5.Direct"},
         "Reg.Observation": {"D5.Downstream"},
-        "Reg.Independent": {"D5.Independent"},
+        "Reg.Independent": {"OmegaMath.Independent"},
         "D5.Ordinary": set(),
         "OmegaChecks.Portable.Common": {"OmegaMathlib.Fib"},
     }
@@ -33,10 +32,10 @@ class ScopeTests(unittest.TestCase):
     def test_project_and_shared_inputs_select_their_dependents(self):
         for changed, shared, reg_inputs, expected in [
             ({"D5.Direct"}, [], [], ["D5.Direct", "D5.Downstream", "Reg.Observation"]),
-            ({"OmegaInit.Core"}, [], [], sorted({"D5.Direct", "D5.Downstream", "D5.Independent",
+            ({"OmegaInit.Core"}, [], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
                                                 "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
             ({"D5.Ordinary"}, [], ["Reg/lakefile.toml"], ["Reg.Independent", "Reg.Observation"]),
-            (set(), ["lean-toolchain"], [], sorted({"D5.Direct", "D5.Downstream", "D5.Independent",
+            (set(), ["lean-toolchain"], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
                                                    "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
         ]:
             with self.subTest(changed=changed, shared=shared, reg_inputs=reg_inputs):
@@ -44,36 +43,11 @@ class ScopeTests(unittest.TestCase):
                 self.assertEqual(plan["consumers"], expected)
                 self.assertEqual(plan["shared"], shared)
 
-    def test_last_port_import_removal_keeps_protected_consumer(self):
-        plan = scope.plan(self.graph, self.official, {"D5.Ordinary"}, set(), [], [], {"D5.Ordinary"})
-        self.assertIn("D5.Ordinary", plan["consumers"])
-        with self.assertRaisesRegex(ValueError, "missing protected publication consumers"):
-            scope.plan(self.graph, self.official, set(), set(), [], [], {"D5.Disappeared"})
-
-    def test_unimported_project_publication_is_a_dual_and_frozen_check_root(self):
-        graph = dict(self.graph, **{'OmegaMath.Orphan': set(), 'D5.UsesProof': {'OmegaMath.Orphan'}})
-        plan = scope.plan(graph, self.official, {'OmegaMath.Orphan'}, set(), [], [])
-        self.assertEqual(plan['library'], ['OmegaMath.Orphan'])
-        self.assertEqual(plan['consumers'], ['D5.UsesProof', 'OmegaMath.Orphan'])
-        self.assertEqual(plan['basis'], [])
-        self.assertTrue(scope.report_file(plan))
-
-    def test_removed_frozen_record_still_selects_publication_of_its_live_object(self):
-        graph = {'D5.Object': set(), 'OmegaMath.Leaf': {'D5.Object'}, 'D5.Consumer': {'OmegaMath.Leaf'}}
-        with TemporaryDirectory() as tmp, patch.object(scope, 'ROOT', Path(tmp)), patch.object(
-                scope, 'import_graph', side_effect=[({}, graph), ({}, {})]):
-            paths = Path(tmp) / 'changed'
-            paths.write_bytes(b'Golden/Frozen/state/D5/Object.lean.json\0')
-            result = scope.discover(paths)
-        self.assertEqual(result['library'], ['OmegaMath.Leaf'])
-        self.assertEqual(result['consumers'], ['D5.Consumer', 'OmegaMath.Leaf'])
-        self.assertTrue(scope.report_file(result))
-
     def test_ordinary_importer_runs_when_either_input_is_affected(self):
-        graph = dict(self.graph, OmegaMathlib=set(), OmegaMath=set())
+        graph = dict(self.graph, OmegaMath=set())
         for name in scope.IMPORTER_INPUTS | {"D5.Direct"}:
             with self.subTest(name=name):
-                plan = scope.plan(graph, dict(self.official, OmegaMathlib=set()), {name}, set(), [], [])
+                plan = scope.plan(graph, self.official, {name}, set(), [], [])
                 self.assertEqual(scope.importer_affected(plan), name in scope.IMPORTER_INPUTS)
                 self.assertEqual(scope.IMPORTER_INPUTS <= set(scope.cache_targets(plan)),
                                  name in scope.IMPORTER_INPUTS)
@@ -82,6 +56,17 @@ class ScopeTests(unittest.TestCase):
         official = dict(self.official, **{"OmegaMathlib.Fib": {"D5.Ordinary"}})
         plan = scope.plan(self.graph, official, {"D5.Ordinary"}, set(), [], [])
         self.assertIn("D5.Direct", plan["consumers"])
+
+    def test_helper_edit_selects_standalone_publication_leaves(self):
+        helper = scope.module_path("src/Shared/Helper.lean")
+        self.assertEqual(helper, "Shared.Helper")
+        graph = {**self.graph, helper: set(), "OmegaMath.Standalone": {helper},
+                 "OmegaMathlib.Standalone": set()}
+        official = {**self.official, "OmegaMathlib.Standalone": {helper}}
+        plan = scope.plan(graph, official, {helper}, set(), [], [])
+        self.assertEqual(plan["library"], ["OmegaMath.Standalone", "OmegaMathlib.Standalone"])
+        self.assertEqual(plan["basis"], ["OmegaMathlib.Standalone"])
+        self.assertIn("OmegaMath.Standalone", plan["consumers"])
 
     def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
         for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):

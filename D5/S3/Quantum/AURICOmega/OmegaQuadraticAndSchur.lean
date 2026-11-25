@@ -8,10 +8,10 @@
 
 module
 prelude
-public import D5.S0.Carrier.QuadraticExtension.Fibonacci
-public import D5.S0.Carrier.QuadraticExtension.Spinor
-public import D5.S3.Geometry.Matrices.LagrangeSchur.Gram
-public import D5.S3.Geometry.Matrices.LagrangeSchur.Schur
+public import OmegaMath.Algebra.QuadraticExt.Fibonacci
+public import OmegaMath.Algebra.QuadraticExt.Spinor
+public import OmegaMath.Matrix.LagrangeSchur.Gram
+public import OmegaMath.Matrix.LagrangeSchur.Schur
 
 namespace D5.S3.Quantum.AURICOmega.OmegaQuadraticAndSchur
 

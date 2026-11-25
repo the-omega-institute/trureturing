@@ -352,7 +352,7 @@ private def replayUpstreamEquations (reference : Environment) (names : Array Nam
   return matched
 
 /-- Canonical name spelling used by the frozen dependency Inspector. -/
-def frozenNameKey : Name → String
+private def frozenNameKey : Name → String
   | .anonymous => "n0"
   | .str parent value => s!"ns({frozenNameKey parent},{value.utf8ByteSize}:{value})"
   | .num parent value => s!"nn({frozenNameKey parent},{value})"
@@ -416,8 +416,7 @@ private def sharedConsumerNames (env other : Environment) (modules : Array Name)
 The frozen inventory requires correspondence for every included shared declaration and
 compiler provenance for every one-sided declaration. -/
 def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name)
-    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[])
-    (objectBindings : Array (Name × Name) := #[]) : IO (Array (String × String)) := do
+    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[]) : IO (Array (String × String)) := do
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
@@ -436,7 +435,7 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
   pending := pending ++ (← frozenRoots strict modules inventory (·.paired))
   -- Equal references to a private helper do not establish that its implementations agree.
   let mut seen : NameSet := {}
-  let mut basis := objectBindings
+  let mut basis := #[]
   for target in ← checkConsumerAliases strict reference rename modules do
     let owner ← ownerOf strict target
     match owner.getRoot with
@@ -444,7 +443,7 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
     | `OmegaMathlib => basis := basis.push (target, owner.replacePrefix `OmegaMathlib `Mathlib)
     | _ =>
       if modules.contains owner then pending := pending.push target
-      else if owner.getRoot == `D5 then
+      else if owner.getRoot == `OmegaMath || owner.getRoot == `D5 then
         throw <| IO.userError s!"project alias target missing from isolated consumer check: {owner}"
   while let some name := pending.back? do
     pending := pending.pop
@@ -462,7 +461,7 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
         | `OmegaMathlib => basis := basis.push (dep, depOwner.replacePrefix `OmegaMathlib `Mathlib)
         | _ =>
           if modules.contains depOwner then pending := pending.push dep
-          else if depOwner.getRoot == `D5 then
+          else if depOwner.getRoot == `OmegaMath || depOwner.getRoot == `D5 then
             throw <| IO.userError s!"project dependency missing from isolated consumer check: {depOwner}"
   check strict publicStrict reference basis
   let mut generated ← checkDerived reference expected <|

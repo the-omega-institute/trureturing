@@ -8,7 +8,7 @@
 module
 prelude
 public import OmegaInit.Data.Int
-public import D5.S0.FiniteGeometry.Simplicial.Coboundary
+public import OmegaMath.Topology.SimplicialCoboundary
 
 namespace D5.S0.Conventions.AmbientComplementDependence
 

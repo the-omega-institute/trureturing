@@ -300,10 +300,9 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 ## Strict Omega mathematics
 
-`OmegaMath` publishes proofs and references to verified objects. Project objects are frozen in D5.
-The `trureturing` Lake package builds D5 mathematics against pinned Lean Init and
+The `trureturing` Lake package builds `OmegaMath` against pinned Lean Init and
 Mathlib by default. For the chapter 39 projective overlap, import
-`D5.S3.Geometry.ProjectiveCoordinates.Basic` to compute the reading or `D5.S3.Geometry.ProjectiveCoordinates.Scaling`
+`OmegaMath.Projective.Basic` to compute the reading or `OmegaMath.Projective`
 to use the scaling theorem. Admission recompiles the same source against
 `OmegaInit` and `OmegaMathlib`, compares the exported mathematics, and replays
 the strict library in an empty Lean kernel with zero axioms.

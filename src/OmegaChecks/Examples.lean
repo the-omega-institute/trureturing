@@ -1,5 +1,5 @@
 prelude
-import D5.S3.Geometry.ProjectiveCoordinates.Basic
+import OmegaMath.Projective.Basic
 
 open Omega
 

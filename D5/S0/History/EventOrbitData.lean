@@ -6,7 +6,7 @@
    digest: The event sequence uniquely determines the state orbit, and the history component records that sequence step by step. -/
 
 import D5.S0.History.HistoryCarrier
-import D5.S0.Computability.FiniteData.SnocList
+import OmegaMath.Data.SnocList
 
 namespace D5.S0.History.EventOrbitData
 

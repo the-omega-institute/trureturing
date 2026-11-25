@@ -8,9 +8,9 @@
 
 module
 prelude
-public import D5.S3.Arith.QuadraticExtension.SpecialValues
-public import D5.S3.Fourier.ChebyshevHecke.Orbitals
-public import D5.S3.Fourier.ChebyshevHecke.Traces
+public import OmegaMath.Algebra.QuadraticExt.SpecialValues
+public import OmegaMath.Harmonic.ChebyshevHecke.Orbitals
+public import OmegaMath.Harmonic.ChebyshevHecke.Traces
 
 namespace D5.S3.Quantum.AURICOmega.OmegaChebyshevHecke
 

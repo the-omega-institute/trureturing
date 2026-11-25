@@ -11,7 +11,7 @@ import Mathlib.Data.List.MinMax
 import Mathlib.Algebra.Order.Group.MinMax
 import Mathlib.Algebra.Order.Monoid.Unbundled.Basic
 import Mathlib.Algebra.Order.Monoid.WithTop
-import D5.S0.Arithmetic.Exact.Int
+import OmegaMath.Data.Int
 
 /-! Root times of complete binary trees with unit edge delays. -/
 

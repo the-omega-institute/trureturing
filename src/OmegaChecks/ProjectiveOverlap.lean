@@ -1,6 +1,6 @@
 module
 prelude
-public import D5.S3.Geometry.ProjectiveCoordinates.Scaling
+public import OmegaMath.Projective
 
 public section
 

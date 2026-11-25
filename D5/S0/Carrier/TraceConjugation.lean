@@ -7,7 +7,7 @@
 
 module
 prelude
-public import D5.S0.Carrier.QuadraticExtension.Basic
+public import OmegaMath.Algebra.QuadraticExt.Basic
 
 namespace D5.S0.Carrier
 

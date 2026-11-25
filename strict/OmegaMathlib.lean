@@ -1,7 +1,6 @@
 module
 prelude
 
-public import OmegaMathlib.Data.Fin.Fin2
 public import OmegaMathlib.Data.Nat.Choose.Basic
 public import OmegaMathlib.Data.Nat.Fib.Basic
 public import OmegaMathlib.Data.Nat.Prime.Defs

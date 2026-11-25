@@ -1,20 +1,37 @@
 import Lean
 import Lean.Replay
 import OmegaChecks.Interface
-import OmegaChecks.ObjectOrigins
+import OmegaChecks.ProtectedObjects
+import OmegaChecks.ModuleSurface
 
 open Lean
+
+private def isStrict (name : Name) : Bool :=
+  [`OmegaInit, `OmegaMathlib, `OmegaMath].contains name.getRoot
+
+/-- Lean loads imports before importers. Propagate a D5 path along every compiled import,
+including private imports, while allowing D5 modules to consume the publication. -/
+private def checkPublicationLayers (env : Environment) : IO Unit := do
+  let mut paths : NameMap (List Name) := {}
+  for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    if owner.getRoot == `D5 then
+      paths := paths.insert owner [owner]
+    else
+      for dep in data.imports do
+        if let some path := paths.find? dep.module then
+          let path := owner :: path
+          if [`OmegaMath, `OmegaMathlib].contains owner.getRoot then
+            throw <| IO.userError s!"forbidden D5 dependency: {String.intercalate " -> " (path.map Name.toString)}"
+          paths := paths.insert owner path
+          break
 
 /-- Check every import edge, including private and transitive imports of the selected roots. -/
 private def checkLayers (env : Environment) : IO Unit := do
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
-    if owner.getRoot == `OmegaMath then
-      for dep in data.imports do
-        unless #[`OmegaInit, `OmegaMathlib, `OmegaMath, `D5].contains dep.module.getRoot do
-          throw <| IO.userError s!"forbidden proof publication import: {owner} imports {dep.module}"
-    if OmegaChecks.ModuleSurface.isBasis owner then
+    if isStrict owner then
       let allowed := if owner.getRoot == `OmegaInit then [`OmegaInit]
-        else [`OmegaInit, `OmegaMathlib]
+        else if owner.getRoot == `OmegaMathlib then [`OmegaInit, `OmegaMathlib]
+        else [`OmegaInit, `OmegaMathlib, `OmegaMath]
       for dep in data.imports do
         unless allowed.contains dep.module.getRoot do
           throw <| IO.userError s!"forbidden strict import: {owner} imports {dep.module}"
@@ -28,9 +45,10 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
   for (name, _) in strict.constants.toList do
     let some idx := strict.getModuleIdxFor? name | continue
     let owner := strict.header.moduleNames[idx]!
-    if !OmegaChecks.ModuleSurface.isBasis owner || isPrivateName name || name.isInternal then continue
+    if !isStrict owner || isPrivateName name || name.isInternal then continue
     unless name.getRoot == `Omega do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
+    if owner.getRoot == `OmegaMath then continue
     let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
     let official := owner.replacePrefix owner.getRoot upstream
     bindings := bindings.push (name, official)
@@ -46,7 +64,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
   owners := owners.push `OmegaChecks.Interface.Equations
   let reference ← importModules (owners.map fun moduleName => {module := moduleName}) {}
   for owner in reference.allImportedModuleNames do
-    if OmegaChecks.ModuleSurface.isBasis owner then
+    if isStrict owner then
       throw <| IO.userError s!"standard interface evidence imports a strict implementation: {owner}"
   for (name, owner) in bindings do
     let counterpart := name.replacePrefix `Omega Name.anonymous
@@ -68,15 +86,15 @@ private def audit (roots : List String) (path label : String)
   -- Each basis module is independently importable, including privately imported dependencies.
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
   let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+  checkPublicationLayers env
   checkLayers env
-  discard <| OmegaChecks.ObjectOrigins.proofReferences env false
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do
       throw <| IO.userError s!"module closure differs: found {actual}, expected {modules}"
   else
     for name in actual do
-      unless OmegaChecks.ModuleSurface.isBasis name.toName do
+      unless isStrict name.toName do
         throw <| IO.userError s!"unexpected strict library import {name}"
   let check : CoreM Nat := do
     let mut count := 0
@@ -95,8 +113,7 @@ private def audit (roots : List String) (path label : String)
   return actual
 
 /-- Measure the published declarations in the official environment, including proof dependencies. -/
-private def reportOfficialAxioms (strict official : Environment) (modules : Array Name)
-    (objectUses : Array Json) (path : String) : IO Unit := do
+private def reportOfficialAxioms (strict official : Environment) (modules : Array Name) (path : String) : IO Unit := do
   let mut names : NameSet := {}
   for owner in official.header.modules, data in official.header.moduleData do
     if modules.contains owner.module then
@@ -114,7 +131,7 @@ private def reportOfficialAxioms (strict official : Environment) (modules : Arra
         ("module", toJson official.header.moduleNames[idx]!.toString),
         ("axioms", toJson ((← collectAxioms name).map Name.toString))]
     return Json.mkObj [("backend", "mathlib"), ("consumerModules", toJson (modules.map Name.toString)),
-      ("declarations", toJson rows), ("standardObjectUses", toJson objectUses)]
+      ("declarations", toJson rows)]
   let report ← collect.toIO' {fileName := "<official axiom dependencies>", fileMap := default} {env := official}
   IO.FS.writeFile path (report.compress ++ "\n")
   IO.println s!"Measured official axiom dependencies for {names.size} declarations."
@@ -128,10 +145,7 @@ def main (args : List String) : IO Unit := do
   if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
     let modules := clients.toArray.map String.toName
-    let tailArgs := names.drop (clients.length + 1)
-    let basisArgs := tailArgs.takeWhile (· != "--object-roots")
-    let ports := basisArgs.toArray.map String.toName
-    let objectRoots := (tailArgs.drop (basisArgs.length + 1)).toArray.map String.toName
+    let ports := (names.drop (clients.length + 1)).toArray.map String.toName
     if modules.isEmpty && ports.isEmpty then
       throw <| IO.userError "consumer comparison requires at least one module or standard port"
     unless ports.all OmegaChecks.ModuleSurface.isBasis do throw <| IO.userError "invalid standard port"
@@ -139,7 +153,7 @@ def main (args : List String) : IO Unit := do
     let strictSearchPath := System.SearchPath.parse strictPath
     searchPathRef.set strictSearchPath
     let strict ← importModules imports {}
-    checkLayers strict
+    checkPublicationLayers strict
     -- Public visibility is needed for the foundation equations. Consumers may also
     -- use Lean's legacy format, which cannot be imported in an exported context.
     let basis := strict.allImportedModuleNames.filter fun name =>
@@ -147,22 +161,37 @@ def main (args : List String) : IO Unit := do
     let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
     searchPathRef.set (System.SearchPath.parse officialPath)
     let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
+    checkPublicationLayers official
     for (owner, data) in official.header.moduleNames.zip official.header.moduleData do
       if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
         unless data.constants.isEmpty do
           throw <| IO.userError s!"official import adapter {owner} contains declarations"
     let inventory : Array OmegaChecks.Interface.FrozenInventory ←
       if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
+        -- Strict foundation modules may not be official alias facades.
+        checkLayers strict
         IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
       else pure #[]
-    let reportPath ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT"
-    let objects ← OmegaChecks.ObjectOrigins.check strict publicStrict official modules objectRoots reportPath.isSome
-    let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath
-      inventory objects.bindings.toList.toArray
+    let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
     if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
       IO.FS.writeFile path ((toJson certified).compress ++ "\n")
-    if let some report := reportPath then
-      reportOfficialAxioms strict official modules objects.uses report
+    if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
+      reportOfficialAxioms strict official modules report
+  else if let "--protected-objects" :: basePath :: candidatePath :: modules := args then
+    let base := modules.takeWhile (· != "--")
+    let "--" :: candidate := modules.drop base.length | throw <| IO.userError "missing candidate module list"
+    let load (path : String) (roots : List String) := do
+      searchPathRef.set (System.SearchPath.parse path)
+      importModules (roots.toArray.map fun name => {module := name.toName}) {}
+    let old ← load basePath base
+    let new ← load candidatePath candidate
+    OmegaChecks.ProtectedObjects.check old new (base.toArray.map String.toName) (candidate.toArray.map String.toName)
+  else if let "--publication-layers" :: path :: roots := args then
+    if roots.isEmpty then throw <| IO.userError "expected publication modules"
+    searchPathRef.set (System.SearchPath.parse path)
+    let env ← importModules (roots.toArray.map fun n => {module := n.toName}) {}
+    checkPublicationLayers env
+    IO.println s!"D5 isolation passed for {roots.length} compiled roots."
   else if let "--exact-roots" :: path :: names := args then
     let roots := names.takeWhile (· != "--")
     let "--" :: expected := names.drop roots.length | throw <| IO.userError "missing expected module closure"

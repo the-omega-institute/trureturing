@@ -8,9 +8,9 @@
 
 module
 prelude
-public import D5.S3.Geometry.Matrices.Mat2
-public import D5.S3.Geometry.Matrices.Mat2.Hurwitz
-public import D5.S0.Computability.FractionPrograms.Fractran
+public import OmegaMath.Matrix.Mat2
+public import OmegaMath.Matrix.Mat2.Hurwitz
+public import OmegaMath.Computability.Fractran
 
 namespace D5.S3.Quantum.AURICOmega.OmegaMatrixAndFractran
 

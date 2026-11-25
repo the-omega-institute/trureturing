@@ -8,14 +8,9 @@
 
 module
 prelude
-public import D5.S3.Arith.Euclidean.GCD
-public import D5.S3.Arith.Euclidean.Prime
-public import D5.S3.Arith.Euclidean.SquareObstruction
-public import D5.S3.Arith.ContinuedFractions.Convergents
-public import D5.S3.Arith.ContinuedFractions.Tangent
-public import D5.S1.Depth.ArithmeticBudget
-
-/-! Prime escape, continued fractions, and integer decay. -/
+public import OmegaMath.Arithmetic.Euclidean
+public import OmegaMath.Arithmetic.ContinuedFraction
+public import OmegaMath.Arithmetic.DepthBudget
 
 namespace D5.S3.Quantum.AURICOmega.OmegaArithmeticHorizon
 

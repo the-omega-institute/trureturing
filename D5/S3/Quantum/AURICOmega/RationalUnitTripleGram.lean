@@ -16,7 +16,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.Tactic.LinearCombination
-import D5.S0.Algebra.Quaternion
+import OmegaMath.Algebra.Quaternion
 
 open scoped Quaternion
 open Quaternion
@@ -28,22 +28,8 @@ open D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint (four_ratio
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
-/-- Read and reconstruct the four integer coordinates in the Hamilton quaternion algebra. -/
-def integerQuaternionEquiv : Omega.Quaternion ≃
-    _root_.QuaternionAlgebra Omega.Int (.negSucc .zero) (.ofNat .zero) (.negSucc .zero) where
-  toFun q := ⟨q.w, q.x, q.y, q.z⟩
-  invFun q := ⟨q.re, q.imI, q.imJ, q.imK⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
-
 private noncomputable def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
   ⟨toStdInt x.w, toStdInt x.x, toStdInt x.y, toStdInt x.z⟩
-
-/-- Extending the four integer coordinates to rationals commutes with the Hamilton quaternion equivalence. -/
-theorem readQuaternion_eq_integerQuaternionEquiv (x : Omega.Quaternion) :
-    readQuaternion x =
-      let q := integerQuaternionEquiv x
-      (⟨toStdInt q.re, toStdInt q.imI, toStdInt q.imJ, toStdInt q.imK⟩ : ℍ[ℚ]) := rfl
 
 private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
     ∃ a : Omega.Quaternion, ∃ d : ℚ, x = d⁻¹ • readQuaternion a := by

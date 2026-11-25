@@ -52,7 +52,7 @@ class FrozenMeasurement(unittest.TestCase):
             row, = tetrahedron["declarations"]
             self.assertEqual(row["axioms"], ["propext"])
             self.assertEqual(row["strict_omega"]["axioms"], [])
-            self.assertEqual(row["strict_omega"]["libraries"], ["OmegaInit"])
+            self.assertEqual(row["strict_omega"]["libraries"], ["OmegaInit", "OmegaMath"])
             self.assertNotEqual(row["strict_omega"]["statement_type_address"], row["statementTypeAddress"])
             generated = [row for row in private_inductive["declarations"] if row.get("officialDerivedOnly")]
             self.assertTrue(any("noConfusion" in row["nameKey"] for row in generated))

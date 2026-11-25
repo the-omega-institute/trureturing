@@ -8,7 +8,7 @@
 
 module
 prelude
-public import D5.S3.Geometry.ProjectiveCoordinates.Circle
+public import OmegaMath.Projective.Circle
 
 namespace D5.S3.Quantum.AURICOmega.OmegaCircleClosure
 

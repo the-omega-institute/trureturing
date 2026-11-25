@@ -8,7 +8,7 @@
 
 module
 prelude
-public import D5.S0.FiniteGeometry.Simplicial.Coboundary
+public import OmegaMath.Topology.SimplicialCoboundary
 
 namespace D5.S3.Quantum.AURICOmega.OmegaSimplicialExactness
 

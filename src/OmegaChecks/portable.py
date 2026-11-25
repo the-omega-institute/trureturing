@@ -10,7 +10,6 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-import tomllib
 from strict_lake import BUILD, COMMON_SRC, INSPECTOR, foundation_config, lake_layout, strict_config
 
 
@@ -29,32 +28,8 @@ def output(*args, **kwargs):
     return subprocess.check_output(args, cwd=ROOT, text=True, **kwargs)
 
 
-def check_publication_layout(directory):
-    sources = {directory, directory / "strict"}
-    canonical = (directory / "src").resolve()
-    configs = [directory / "lakefile.toml"]
-    if (reg := directory / "Reg/lakefile.toml").is_file():
-        configs.append(reg)
-    for config_path in configs:
-        config = tomllib.loads(config_path.read_text())
-        package_root = config_path.parent / config.get("srcDir", ".")
-        sources.add(package_root)
-        for target in config.get("lean_lib", []) + config.get("lean_exe", []):
-            names = [target["name"], target.get("root", target["name"]),
-                     *target.get("roots", []), *target.get("globs", [])]
-            location = package_root / target.get("srcDir", ".")
-            if any(root(name) == "OmegaMath" for name in names) and location.resolve() != canonical:
-                raise ValueError(f"OmegaMath publication must use the shared src directory: {target['name']}")
-            sources.add(location)
-    for source in sources:
-        if source.resolve() != canonical and ((source / "OmegaMath.lean").is_file()
-                or any((source / "OmegaMath").rglob("*.lean"))):
-            raise ValueError(f"OmegaMath publication outside its shared source directory: {source}")
-
-
 def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
                  with_reg=False, official_basis=False):
-    check_publication_layout(ROOT)
     if with_reg:
         pathspecs = (*pathspecs, "Reg/*.lean")
     files = output("git", "ls-files", "-co", "--exclude-standard", "-z", "--",
@@ -85,12 +60,11 @@ def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "T
     return sources, graph
 
 
-def consumers(graph, protected=()):
+def consumers(graph):
     touched = {}
     for name in TopologicalSorter(graph).static_order():
         deps = graph.get(name, ())
-        touched[name] = (root(name) == "OmegaMath" or root(name) in BASIS or name in protected
-                         or any(touched[dep] for dep in deps))
+        touched[name] = root(name) in {"OmegaInit", "OmegaMathlib", "OmegaMath"} or any(touched[dep] for dep in deps)
     # Correspondence proofs import both bases deliberately. The Portable modules are clients.
     return sorted(n for n in graph if touched[n] and root(n) not in BASIS
                   and (root(n) != "OmegaChecks" or n.startswith("OmegaChecks.Portable.")))
@@ -498,13 +472,13 @@ def frozen_measurement(request, official_path, inspector, destination):
 
 
 def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=None,
-          basis_roots=None, common_roots=(), protected=()):
+          basis_roots=None, common_roots=()):
     lean = output("lake", "env", "printenv", "LEAN").strip()
     scoped = basis_roots is not None
     with_reg = ((backend == "both" and frozen is None and not scoped)
                 or any(root(name) == "Reg" for name in only))
     sources, graph = discovered if discovered is not None else import_graph(lean, with_reg=with_reg)
-    selected = consumers(graph, protected)
+    selected = consumers(graph)
     portable_clients = [name for name in selected if name.startswith("OmegaChecks.Portable.")]
     if only or scoped:
         if set(only) - set(selected):
@@ -522,12 +496,14 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     modules = closure(graph, roots)
     basis = [n for n in modules if root(n) in BASIS]
     downstream = [n for n in modules if root(n) not in BASIS]
-    object_roots = [n for n in downstream if root(n) != "LeanInformationAuditInterface"]
     # The admission-only profile covers the designated portable clients and the entire basis.
     if not scoped and backend == "both" and frozen is None:
         common_roots = [*all_basis, *portable_clients]
     common_modules = closure(graph, common_roots)
-    compiled = dict.fromkeys([*modules, *common_modules])
+    checked_refs = [n for n in downstream if root(n) != "LeanInformationAuditInterface"]
+    # A project can reuse a short name without importing the matching port.
+    catalog = sorted(n for n in all_basis if root(n) == "OmegaMathlib") if backend == "both" and checked_refs else []
+    compiled = dict.fromkeys([*modules, *common_modules, *closure(graph, catalog)])
     with_reg = any(root(n) in {"Reg", "LeanInformationAuditInterface"} for n in compiled)
     strict_sources = {name: sources[name] for name in compiled}
     official_sources = {name: facades[name] if root(name) in BASIS else sources[name]
@@ -546,10 +522,9 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if with_reg:
         tracked.update(directory / file for directory in (ROOT / "Reg", INSPECTOR)
                        for file in ("lakefile.toml", "lake-manifest.json"))
-    tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
-                    SRC / "OmegaChecks/QualifiedReferences.lean"])
+    tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
     if backend == "both":
-        tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+        tracked.update([SRC / "OmegaChecks/Portable/Exports.lean", SRC / "OmegaChecks/QualifiedReferences.lean"])
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
@@ -593,25 +568,24 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_reg = any(root(name) in {"Reg", "LeanInformationAuditInterface"} for name in common_sources)
             common_path = backend_artifacts(False, common_reg, common_sources, Path(temp) / "common", packages,
                                             lean, environment, COMMON_SRC)
-        if backend == "both":
-            subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+        if catalog:
             for label, stage, search in [("strict", strict, strict_path), ("official", official, official_path)]:
-                request = Path(temp) / f"{label}-qualified.json"
                 records = [(name, str(sources[name]), str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
-                           for name in object_roots]
+                           for name in checked_refs]
+                request = Path(temp) / f"{label}-references.json"
                 request.write_text(json.dumps(records))
-                subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean", label, search, request], cwd=ROOT,
-                               env=environment, check=True)
+                subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean",
+                                label, search, request, *catalog], cwd=ROOT, env=environment, check=True)
+        if backend == "both" and frozen is None:
+            subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
-            subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis,
-                            "--object-roots", *(n for n in common_downstream if root(n) != "LeanInformationAuditInterface")], cwd=ROOT,
+            subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
                            env=environment, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
             staged_report = Path(temp) / "official-axioms.json"
-            subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis,
-                            "--object-roots", *object_roots], cwd=ROOT,
+            subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis], cwd=ROOT,
                            env={**environment, "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)}, check=True)
         if frozen is not None:
             canonical, inspector, response = frozen
@@ -630,8 +604,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             inventory_path = Path(temp) / "frozen-inventory.json"
             certificate_path = Path(temp) / "frozen-certificate.json"
             inventory_path.write_text(json.dumps(inventory))
-            subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis,
-                            "--object-roots", *object_roots],
+            subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+            subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
                            cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
                                 "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)},
                            check=True)
@@ -659,6 +633,13 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 for artifact in base.parent.glob(base.name + ".*"):
                     if artifact.is_file():
                         artifact.unlink()
+            if backend != "both":
+                subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+                publication = [n for n in modules if root(n) in {"OmegaMath", "OmegaMathlib"}]
+                if publication:
+                    path = strict_path if backend == "strict" else official_path
+                    subprocess.run([AUDIT, "--publication-layers", path, *publication], cwd=ROOT,
+                                   env=environment, check=True)
             publish(strict if backend == "strict" else official, destination)
         if backend == "both":
             report_name = "selected-official-axioms.json" if only or scoped else "official-axioms.json"

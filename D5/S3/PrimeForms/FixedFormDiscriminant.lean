@@ -7,7 +7,7 @@
 
 module
 prelude
-public import D5.S3.Geometry.Matrices.Mat2.Discriminant
+public import OmegaMath.Matrix.Mat2.Discriminant
 
 /-! The fixed-form discriminant for determinant minus one and the trace-twelve specialization. -/
 

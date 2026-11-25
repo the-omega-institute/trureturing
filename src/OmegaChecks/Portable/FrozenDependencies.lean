@@ -9,7 +9,7 @@ namespace OmegaChecks.Portable.FrozenDependencies
 
 private theorem privateFib :
     Omega.Eq (OmegaMathlib.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
-  Omega.Nat.fib_zero
+  OmegaMathlib.Nat.fib_zero
 
 public theorem mixedFib :
     Omega.Eq (OmegaMathlib.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=

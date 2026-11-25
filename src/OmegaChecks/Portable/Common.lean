@@ -1,6 +1,6 @@
 module
 prelude
-public import D5.S0.Arithmetic.Exact.Int
+public import OmegaMath.Data.Int
 public import OmegaMathlib.Data.Nat.Fib.Basic
 
 /-! Public consumers of the conjunction and Fibonacci interfaces. -/
@@ -13,7 +13,7 @@ public theorem projectLeft {p q : Prop} (h : Omega.And p q) : p :=
 public theorem fibonacciRecurrence (n : Omega.Nat) :
     Omega.Eq (OmegaMathlib.Nat.fib n.succ.succ)
       ((OmegaMathlib.Nat.fib n).add (OmegaMathlib.Nat.fib n.succ)) :=
-  Omega.Nat.fib_add_two
+  OmegaMathlib.Nat.fib_add_two
 
 public theorem natSquareMul (a k : Omega.Nat) :
     Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k.mul k)) :=

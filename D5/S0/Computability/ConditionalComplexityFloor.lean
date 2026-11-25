@@ -8,7 +8,7 @@
 module
 prelude
 import all OmegaInit.Prelude
-public import D5.S0.Arithmetic.Euclidean.Division
+public import OmegaMath.Arithmetic.Euclidean.Division
 
 namespace D5.S0.Computability.ConditionalComplexityFloor
 

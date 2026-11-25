@@ -1,44 +1,116 @@
 # Omega 数学模块的架构与验证
 
-`OmegaMath` 对外提供定理、证明和已核验对象的引用。可以继续导入 `OmegaMath` 或对应的专题模块。新增的项目数学对象和可观察的原始表示在 D5 按专题冻结。标准对象由 `OmegaMathlib` 提供，Lean 基础对象由 `OmegaInit` 提供。普通 Lake 构建使用钉版官方 Init 和 Mathlib，准入还会用严格端口编译同一份项目源码。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
-## 标准数学对象的写法
+普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
-证明者先按题意定位钉版 Mathlib 的声明，再写公开陈述。下面的假设直接指定标准素数。
+## 标准数学对象
+
+写标准素数假设时，导入 `OmegaMathlib.Data.Nat.Prime.Defs`，并在陈述中指定素性来自已核验的标准接口。
 
 ```lean
 module
 prelude
 public import OmegaMathlib.Data.Nat.Prime.Defs
 
-public theorem prime_lower_bound {p : Omega.Nat} (hp : OmegaMathlib.Nat.Prime p) :
+example (p : Omega.Nat) (hp : OmegaMathlib.Nat.Prime p) :
     Omega.Nat.le Omega.Nat.zero.succ.succ p :=
   OmegaMathlib.Nat.Prime.two_le hp
 ```
 
-若把假设写成自定义的 `Prime p`，并令这个谓词对所有数恒真，它连 1 都会接受。对这种谓词完成的证明不能作为素数定理交付。遇到尚未移植的标准对象，先查钉版源码的全名、所属模块和类型，在 `strict/OmegaMathlib/` 实现端口并再生官方接口，随后运行 `lake test -- OmegaMathlib.<模块路径>`。如果项目研究另一种性质，在 D5 说明其定义并冻结，借已证的对应关系连接标准陈述。
+官方端把这个引用解析到钉版 Mathlib 的 `Nat.Prime`，严格端核验对应实现。自定义谓词即使也叫 `Prime`，也可能接受 1。若证明声称标准素性，核对发生在声明的实际假设或结论处。新增的项目谓词以自身的数学含义在 D5 定义；使用它与标准对象的关系时，引用 D5 中的对应定理。
 
-例如，导入 `OmegaMathlib.Data.Nat.Prime.Defs` 后，陈述中的 `OmegaMathlib.Nat.Prime p` 指向官方 `Nat.Prime p`，严格端则使用已核验的端口。两个命名空间中的引用由编译产物生成。项目自己的谓词可以作为 D5 定义冻结；来源审计会区分其实际声明与标准对象。[标准端口](../strict/OmegaMathlib/Data/Nat/Prime/Defs.lean) · [D5 素因子定理](../D5/S3/Arith/Euclidean/Prime.lean)
+普通本地准入使用 `HEAD` 与 `origin/dev` 的共同祖先作为受保护版本。要重现某次 PR 的核验，可运行 `python3 -B src/OmegaChecks/check.py --protected-base <commit> --library OmegaMath.Arithmetic.Euclidean.Prime`。核验器独立编译受保护源码，在两个后端比较现有声明、新增对象、公开导出以及替换为标准引用时的对应证明。
 
-## 六卷的数学入口
+## 六卷与模块树
 
-| 卷 | 主题 | 实际定义与证明 |
+| 卷 | 内容 | 定义与定理的入口 |
 | --- | --- | --- |
-| I | 逻辑、自然数、整数与精确比值 | [严格基础](../strict/OmegaInit) · [精确算术](../D5/S0/Arithmetic/Exact) |
-| II | 射影坐标、带符号有理单位圆、Cayley 参数 | [射影坐标](../D5/S3/Geometry/ProjectiveCoordinates) |
-| III | 整数四元数、三元数堆与三维旋转 | [四元数](../D5/S0/Algebra/Quaternion.lean) · [三元数](../D5/S3/Geometry/Ternion) · [Cayley 旋转](../D5/S3/Geometry/Cayley3D) |
-| IV | 微分 jet 与单纯上边界 | [微积分](../D5/S3/Calculus) · [上边界](../D5/S0/FiniteGeometry/Simplicial/Coboundary.lean) |
-| V | 二次扩张、Schur 恒等式、Bargmann 行列式、Haar 矩 | [二次扩张](../D5/S0/Carrier/QuadraticExtension) · [矩阵](../D5/S3/Geometry/Matrices) · [Bargmann](../D5/S3/Geometry/BargmannGram) · [Fourier](../D5/S3/Fourier) |
-| VI | 欧几里得算法、连分数、深度预算和 FRACTRAN | [欧几里得算法](../D5/S3/Arith/Euclidean) · [连分数](../D5/S3/Arith/ContinuedFractions) · [深度](../D5/S1/Depth/ArithmeticBudget.lean) · [FRACTRAN](../D5/S0/Computability/FractionPrograms) |
+| I | 逻辑、自然数、整数与精确比值 | `OmegaInit`、`OmegaMath.Data.{Nat,Ratio,Int,IntRatio}` |
+| II | 射影坐标、带符号的有理单位圆、Cayley 参数与旋转合成 | `OmegaMath.Projective`、`OmegaMath.Projective.Circle` |
+| III | 整数四元数、射影三元数堆、PythSpinor 与三维 Cayley 旋转 | `OmegaMath.Algebra.Quaternion`、`OmegaMath.Ternion.Heap`、`OmegaMath.Geometry.Cayley3D` |
+| IV | 二阶与有限阶 jet、单纯上边界与正合性 | `OmegaMath.Calculus.{Jet2,DFiniteJet}`、`OmegaMath.Topology.SimplicialCoboundary` |
+| V | 二次扩张、Lagrange–Gram 与 Schur 恒等式、Bargmann 行列式、Haar 矩与 Chebyshev–Hecke 算子 | `OmegaMath.Algebra.QuadraticExt`、`OmegaMath.Matrix.LagrangeSchur`、`OmegaMath.Geometry.BargmannGram`、`OmegaMath.Harmonic.{ChebyshevHecke,PiFreeHaar}` |
+| VI | 欧几里得算法、连分数、深度预算、整数矩阵、Hurwitz 分裂与 FRACTRAN | `OmegaMath.Arithmetic.{Euclidean,ContinuedFraction,DepthBudget}`、`OmegaMath.Matrix.Mat2`、`OmegaMath.Matrix.Mat2.Hurwitz`、`OmegaMath.Computability.{Fractran,QuaternionFractran}` |
+
+下列树以模块名表示源文件。带子项的节点也可以是模块，例如 `OmegaMath.Projective` 和 `OmegaMath.Algebra.QuadraticExt.Polynomial`。同层模块用逗号列出。
+
+```text
+OmegaInit
+├── Prelude, Core
+└── Data
+    ├── Nat
+    │   └── Basic, Lemmas
+    └── Int
+        └── Basic, Lemmas, Order
+OmegaMath
+├── Algebra
+│   ├── QuadraticExt
+│   │   ├── Basic, Fibonacci, Operations, Ring, SpecialValues, Spinor
+│   │   └── Polynomial
+│   │       └── Monomials
+│   └── Quaternion
+│       └── Polynomial
+├── Arithmetic
+│   ├── ContinuedFraction
+│   │   └── Convergents, Tangent
+│   ├── DepthBudget
+│   └── Euclidean
+│       └── Division, GCD, Prime
+├── Calculus
+│   ├── DFiniteCompose
+│   ├── DFiniteJet
+│   │   └── Basic, Cayley, Coefficients, Identities
+│   ├── Jet2
+│   │   └── Basic, Fidelity, Operations, Scalar, Secant
+│   └── MidpointDrift
+├── Computability
+│   ├── Fractran
+│   │   └── Division
+│   └── QuaternionFractran
+├── Data
+│   └── Int, IntRatio, Nat, Ratio
+├── Geometry
+│   ├── BargmannGram
+│   │   └── Coordinates, Determinant, Fractions, Identities, Monomial, Polynomial, Scaling
+│   ├── Cayley3D
+│   │   └── Adjoint, Matrix, Recurrence
+│   └── DualChartCayley, LieTriple, SphericalLaws
+├── Harmonic
+│   ├── AllDegreeHaar
+│   │   └── Characters, Coefficients, Integration, MomentTable
+│   ├── ChebyshevHecke
+│   │   └── Character, Orbitals, Recurrence, S5, SpinShells, Traces
+│   ├── HurwitzFreeGroup
+│   │   └── Adjoint, ReducedDifference, Residue, Split5
+│   └── PiFreeHaar
+│       └── Hecke, Moments
+├── Matrix
+│   ├── LagrangeSchur
+│   │   └── Diagonal, Gram, Order, Schur, Sequence, Vector
+│   └── Mat2
+│       └── Hurwitz
+├── Projective
+│   ├── Basic
+│   └── Circle
+│       └── Identity
+├── Ternion
+│   └── Heap
+│       └── Core, Fidelity, Spinor
+├── Topology
+│   └── SimplicialCoboundary
+└── Witnesses
+    └── FlagshipWitnesses
+```
 
 ## 导入与来源
 
-严格模块使用 `module` 和 `prelude`，后者关闭隐式官方 `Init` 导入。D5 直接导入所需专题。带符号的齐次坐标位于 `D5.S3.Geometry.ProjectiveCoordinates.Circle`。有限 `IntRatio` 用正分母的前驱存储分母，以交叉相乘定义等价，并将未定义值传递到运算结果。加法逆元律适用于有限分数，乘法逆元律还要求分子非零。[有理单位圆](../D5/S3/Geometry/ProjectiveCoordinates/Circle.lean) · [精确比值](../D5/S0/Arithmetic/Exact/IntRatio.lean)
+严格模块使用 `module` 和 `prelude`，后者关闭隐式官方 `Init` 导入。可直接导入总入口，也可只导入所需专题。带符号的齐次坐标位于 `OmegaMath.Projective.Circle`。有限 `IntRatio` 用正分母的前驱存储分母，以交叉相乘定义等价，并将未定义值传递到运算结果。加法逆元律适用于有限分数，乘法逆元律还要求分子非零。[有理单位圆](OmegaMath/Projective/Circle.lean) · [精确比值](OmegaMath/Data/IntRatio.lean)
 
 对于整数齐次坐标 `[P:Q]`，第 39 章的重叠度是 `Q²/(P²+Q²)`。两坐标均为零时读数未定义。比如 `[1:1]` 和 `[2:2]` 的读数都等价于 1/2。
 
-- 计算读数时，导入 `D5.S3.Geometry.ProjectiveCoordinates.Basic`。这个模块定义 `Omega.Projective.kappa`，输入是坐标的绝对值。[定义](../D5/S3/Geometry/ProjectiveCoordinates/Basic.lean) · [边界算例](OmegaChecks/Examples.lean)
-- 证明同比例放大坐标保持读数时，导入 `D5.S3.Geometry.ProjectiveCoordinates.Scaling`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](../D5/S3/Geometry/ProjectiveCoordinates/Scaling.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
+- 计算读数时，导入 `OmegaMath.Projective.Basic`。这个模块定义 `Omega.Projective.kappa`，输入是坐标的绝对值。[定义](OmegaMath/Projective/Basic.lean) · [边界算例](OmegaChecks/Examples.lean)
+- 证明同比例放大坐标保持读数时，导入 `OmegaMath.Projective`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](OmegaMath/Projective.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
 - 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下文的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
 
 ## 官方 Lean 的模块与名称
@@ -63,13 +135,13 @@ open Omega
 example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 ```
 
-审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入相应 D5 专题。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
+审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入 `OmegaMath`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
 
 ## 严格库与可替换接口
 
-`OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。D5 数学可导入这些端口及相应地层的 D5 模块。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)
+`OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。`OmegaMath` 可以导入三个严格库。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)
 
-`OmegaMathlib` 按上游模块路径组织，例如 `OmegaMathlib.Data.Nat.Fib.Basic` 对应 `Mathlib.Data.Nat.Fib.Basic`。每个公开移植声明都须指向钉版上游的同名声明，核对声明所属模块、类型、公开参数和运算含义。使用另一种算法实现函数时，需要一个针对实际函数体、对全部输入成立的对应证明，并限定公开接口可观察的计算规则。项目自有接口位于 D5。例如 D5 的群减法模块显式接收运算和群公理。[声明检查](OmegaChecks/Interface.lean) · [群接口](../D5/S0/Algebra/Groups/Basic.lean)
+`OmegaMathlib` 按上游模块路径组织，例如 `OmegaMathlib.Data.Nat.Fib.Basic` 对应 `Mathlib.Data.Nat.Fib.Basic`。每个公开移植声明都须指向钉版上游的同名声明，核对声明所属模块、类型、公开参数和运算含义。使用另一种算法实现函数时，需要一个针对实际函数体、对全部输入成立的对应证明，并限定公开接口可观察的计算规则。项目自有接口位于 `OmegaMath`。例如群减法模块显式接收运算和群公理，保留在项目数学层。[声明检查](OmegaChecks/Interface.lean) · [群接口](OmegaMath/Algebra/Group/Basic.lean)
 
 `OmegaChecks.NatCorrespondence` 证明严格自然数与标准自然数之间的双向转换、加法保持、序关系双向等价，以及 Fibonacci 数和二项式系数对任意输入的逐点一致。[自然数对应](OmegaChecks/NatCorrespondence.lean)
 
@@ -77,10 +149,10 @@ Zeckendorf 核验将零基权位 `i` 映射为 Fibonacci 下标 `i + 2`。Lean �
 
 ## 下游核验
 
-在仓库根目录执行以下命令。第一个入口检查两个严格基础库的联合闭包。第二个入口执行完整审计及拒绝用例。CI 根据候选变更和导入图选取受影响的库、见证模块和下游消费者，用同一范围恢复模块缓存、构建适用的环境并比较导出。共享的工具链、构建配置和核验逻辑变更触发完整审计。[审计入口](OmegaChecks/check.py) · [双环境编译](OmegaChecks/portable.py)
+在仓库根目录执行以下命令。第一个入口检查三个严格库的联合闭包。第二个入口执行完整审计及拒绝用例。CI 根据候选变更和导入图选取受影响的库、见证模块和下游消费者，用同一范围恢复模块缓存、构建适用的环境并比较导出。共享的工具链、构建配置和核验逻辑变更触发完整审计。[审计入口](OmegaChecks/check.py) · [双环境编译](OmegaChecks/portable.py)
 
 ```sh
-lake test -- OmegaInit OmegaMathlib
+lake test -- OmegaInit OmegaMathlib OmegaMath
 python3 src/OmegaChecks/check.py --full
 ```
 
@@ -94,7 +166,7 @@ python3 src/OmegaChecks/check.py --full
 python3 src/OmegaChecks/portable.py --regenerate-facades
 ```
 
-下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`OmegaMathlib.Nat.fib` 由编译后的公开名自动解析到 `Nat.fib`。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
+下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`Omega.Nat.fib` 由编译后的公开名自动解析到 `Nat.fib`。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
 
 
 所有入选消费者均以原始官方环境和严格环境编译。准入还为严格端口的共同公开计算规则生成一份独立的官方构建配置，在其中限制已封装实现的展开，并编译仓内的共同接口用例。以 Fibonacci 为例，普通官方发布允许用 `rfl` 计算 `fib 0`，严格环境和共同接口用例可用公开定理 `fib_zero`。下列双端核验命令同时准备这份配置。随后可用 `lake -f .lake/omega-common.toml env lean <文件>` 检查其他消费者是否只用到了共同计算规则。

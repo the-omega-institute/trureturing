@@ -8,7 +8,7 @@
 module
 
 public import D5.S3.Geometry.SimplicialPersistence.OrderedChains
-public import D5.S3.Topology.Simplicial.PersistentHodge
+public import OmegaMath.Topology.PersistentHodge
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 public import Mathlib.Analysis.InnerProductSpace.ProdL2
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat

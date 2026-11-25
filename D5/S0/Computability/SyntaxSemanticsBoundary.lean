@@ -7,7 +7,7 @@
 
 module
 prelude
-public import OmegaMathlib.Logic.Function.Basic
+public import OmegaMath.Logic.Function.Basic
 
 universe u
 

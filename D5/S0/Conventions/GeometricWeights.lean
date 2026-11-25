@@ -7,7 +7,7 @@
 
 module
 prelude
-public import D5.S0.Conventions.CanonicalDigits.Geometric
+public import OmegaMath.Arithmetic.WDigits.Geometric
 
 namespace D5.S0.Conventions.GeometricWeights
 

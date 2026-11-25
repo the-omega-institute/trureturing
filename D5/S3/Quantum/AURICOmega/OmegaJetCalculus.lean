@@ -8,9 +8,8 @@
 
 module
 prelude
-public import D5.S3.Calculus.Jet2.Secant
-public import D5.S3.Calculus.DFiniteJet.Cayley
-public import D5.S3.Calculus.DFiniteJet.Identities
+public import OmegaMath.Calculus.Jet2
+public import OmegaMath.Calculus.DFiniteJet
 
 namespace D5.S3.Quantum.AURICOmega.OmegaJetCalculus
 

@@ -1,6 +1,6 @@
 # Adversary Charter
 
-审 Omega 数学陈述时，在公开假设或结论的实际位置核对钉版 Mathlib 声明与严格端口。题意中的素数应解析到 `Nat.Prime`。把假谓词也取名为 `Prime`、在证明中另引真素数或给出项目等价定理，都不能替代该位置的标准对象。记录出错的声明、位置、实际对象及预期上游对象。[证明者示例](../src/README.md#标准数学对象的写法)
+审查“素数”时，核对实际假设或结论中引用的 `OmegaMathlib.Nat.Prime`。检查同名谓词会不会接受 1，以及同一定理其他位置的真实素性是否掩盖了替换。 [Author example](../src/README.md#标准数学对象)
 
 Goal: test statement fidelity, proofs, experiments, and paper claims.
 

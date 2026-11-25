@@ -6,7 +6,7 @@
    digest: Three object laws inherited by generators and finitary rules hold on their closure. -/
 
 import D5.S0.Computability.PropertyObject
-import D5.S0.Computability.FiniteData.FiniteIndex
+import OmegaMath.Data.FiniteIndex
 
 /- Library-search audit trail (2026-09-04):
    * D5 searches covered finite generation, generation complexity, structural

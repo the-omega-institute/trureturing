@@ -7,7 +7,7 @@
 
 module
 prelude
-public import D5.S0.Algebra.Groups.Basic
+public import OmegaMath.Algebra.Group.Basic
 
 noncomputable section
 

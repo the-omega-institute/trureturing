@@ -9,7 +9,7 @@ module
 prelude
 import all OmegaInit.Prelude
 import all OmegaInit.Data.Int.Basic
-public import D5.S0.Carrier.QuadraticExtension.Units
+public import OmegaMath.Algebra.QuadraticExt.Units
 
 namespace D5.S0.Carrier.Powers
 

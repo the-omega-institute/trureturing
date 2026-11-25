@@ -366,11 +366,11 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-check OmegaMath theorems, frozen D5 declarations and the admitted Omega ports.
-OmegaMath can publish theorems, proofs and references to verified objects.
-Place new project objects and observable legacy representations in their D5 domain and freeze them. Preserve
-the owning module and full upstream name when porting a pinned Mathlib object.
-Refer to it explicitly as `OmegaMathlib.<upstream name>` in mathematical statements.
+reuse existing public results and use the pinned Mathlib declaration for standard mathematics.
+For a natural prime hypothesis write `hp : OmegaMathlib.Nat.Prime p`. Put a missing
+standard port under `strict/OmegaMathlib/` at its upstream module path, regenerate its
+aliases and verify both backends. Put new project objects and their correspondence
+proofs in D5. Keep OmegaMath and OmegaMathlib independent of D5.
 D5 imports the specific module for its book-facing theorem. For example,
 `Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
 See the [module placement examples](../src/README.md).
@@ -378,7 +378,7 @@ Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
 defined external open-problem exception. A book that needs a frozen GID for
-an existing D5 theorem may use one direct D5 citation entry when the
+an existing OmegaMath theorem may use one direct D5 citation entry when the
 ledger has no matching item. Identify the book location and original proof
 in the PR and classify the entry as bind-only.
 
@@ -483,7 +483,7 @@ label qualifying declarations **仅 Omega · 零公理**. The Truth Release carr
 the corresponding evidence on each annotated declaration in the truth export. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
-`lake test -- OmegaMathlib` checks the standard ports.
+`lake test -- OmegaMath.Projective` checks the projective topic.
 [Strict library audit](../src/OmegaChecks/Audit.lean)
 
 ## Open a pull request

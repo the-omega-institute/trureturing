@@ -41,7 +41,7 @@ internal sealed class SyntaxSemanticsBoundaryDocument : IScribeDocumentDefinitio
                             + "programming language or claim that a higher-level semantics "
                             + "has already been constructed.")),
                         Paragraph(Text(
-                            "The declaration applies the OmegaMathlib port of "
+                            "The declaration applies the Omega Math port of "
                             + "Function.cantor_surjective. Surjectivity would supply a code for "
                             + "the diagonal predicate. Evaluating the resulting equality at "
                             + "that code identifies its predicate value with its negation, "

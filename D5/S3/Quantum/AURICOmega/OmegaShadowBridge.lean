@@ -13,7 +13,7 @@ import all OmegaInit.Data.Int.Basic
 public import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Rat.Cast.Lemmas
 import Mathlib.Data.Rat.Cast.Order
-public import D5.S3.Geometry.ProjectiveCoordinates.Circle
+public import OmegaMath.Projective.Circle
 
 /-! Exact transport of Omega arithmetic and circle identities into Mathlib. -/
 
@@ -172,57 +172,6 @@ public theorem toRat_equivalent {x y : IntRatio} (h : IntRatio.Equivalent x y) :
       have cross := congrArg (fun z : Omega.Int => (toStdInt z : ℚ)) (ofOmegaEq h)
       simp only [toStdInt_mul, Int.cast_mul] at cross
       exact (div_eq_div_iff (denominator_pos b).ne' (denominator_pos d).ne').2 cross
-
-
-/-- Read a signed fraction in ℚ while retaining its undefined state. -/
-@[expose] public def toPartialRat : IntRatio → Option ℚ :=
-  IntRatio.rec none (fun a d => some (toRat (.fraction a d)))
-
-private def ofStdNat : ℕ → Omega.Nat := Nat.rec Omega.Nat.zero (fun _ => Omega.Nat.succ)
-
-private theorem ofStdNat_toStdNat (a : Omega.Nat) : ofStdNat (toStdNat a) = a := by
-  induction a using Omega.Nat.rec with
-  | zero => rfl
-  | succ _ ih => exact congrArg Omega.Nat.succ ih
-
-private def ofStdInt : ℤ → Omega.Int
-  | .ofNat n => Omega.Int.ofNat (ofStdNat n)
-  | .negSucc n => Omega.Int.negSucc (ofStdNat n)
-
-private theorem ofStdInt_toStdInt (a : Omega.Int) : ofStdInt (toStdInt a) = a := by
-  induction a using Omega.Int.rec with
-  | ofNat n => exact congrArg Omega.Int.ofNat (ofStdNat_toStdNat n)
-  | negSucc n => exact congrArg Omega.Int.negSucc (ofStdNat_toStdNat n)
-
-/-- Cross multiplication agrees exactly with equality of the optional rational readings. -/
-public theorem toPartialRat_eq_iff (x y : IntRatio) :
-    toPartialRat x = toPartialRat y ↔ IntRatio.Equivalent x y := by
-  induction x using IntRatio.rec with
-  | undefined =>
-    induction y using IntRatio.rec with
-    | undefined => exact ⟨fun _ => Omega.True.intro, fun _ => rfl⟩
-    | fraction c d => exact ⟨(fun h => by cases h), fun h => Omega.False.elim h⟩
-  | fraction a b =>
-    induction y using IntRatio.rec with
-    | undefined => exact ⟨(fun h => by cases h), fun h => Omega.False.elim h⟩
-    | fraction c d =>
-      constructor
-      · intro h
-        have values := Option.some.inj h
-        change (toStdInt a : ℚ) / (toStdInt (IntRatio.denominator b) : ℚ) =
-          (toStdInt c : ℚ) / (toStdInt (IntRatio.denominator d) : ℚ) at values
-        have cross := (div_eq_div_iff (denominator_pos b).ne' (denominator_pos d).ne').1 values
-        have ints : toStdInt (a.mul (IntRatio.denominator d)) =
-            toStdInt (c.mul (IntRatio.denominator b)) := by
-          rw [toStdInt_mul, toStdInt_mul]
-          exact_mod_cast cross
-        have original := congrArg ofStdInt ints
-        rw [ofStdInt_toStdInt, ofStdInt_toStdInt] at original
-        change Omega.Eq (a.mul (IntRatio.denominator d)) (c.mul (IntRatio.denominator b))
-        exact Eq.rec (motive := fun value _ => Omega.Eq (a.mul (IntRatio.denominator d)) value)
-          Omega.rfl original
-      · intro h
-        exact congrArg some (toRat_equivalent h)
 
 public theorem toRat_add (a c : Omega.Int) (b d : Omega.Nat) :
     toRat ((IntRatio.fraction a b).add (IntRatio.fraction c d)) =
