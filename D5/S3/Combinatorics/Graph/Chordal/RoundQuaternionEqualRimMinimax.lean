@@ -315,4 +315,122 @@ def equalRimGains (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
   let A := angleGain I hI hN a
   ![![1, 1, 1, 1], ![1, 1, A, A⁻¹], ![1, A⁻¹, 1, A], ![1, A, A⁻¹, 1]]
 
+private def quarterScore : ℝ := 1 / √3
+
+private theorem quarter_score_pos : 0 < quarterScore := by
+  unfold quarterScore
+  positivity
+
+private theorem quarter_score_sq : quarterScore ^ 2 = 1 / 3 := by
+  simp [quarterScore, div_pow, sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+
+private theorem quarter_score_lt_one : quarterScore < 1 := by
+  have h := quarter_score_pos
+  by_contra! hq
+  nlinarith [quarter_score_sq, mul_nonneg (sub_nonneg.2 hq) (show 0 ≤ quarterScore + 1 by linarith)]
+
+private theorem latitude_rim_score (a : ℝ) :
+    cos a * quarterScore ^ 2 + rimEigenvalue a * (1 - quarterScore ^ 2) =
+      quarterScore * sin a := by
+  have hs : √3 / 3 = quarterScore := by
+    unfold quarterScore
+    field_simp [ne_of_gt (sqrt_pos.2 (by norm_num : (0 : ℝ) < 3))]
+    nlinarith [sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+  rw [quarter_score_sq, rim_eigenvalue_formula, ← hs]
+  ring
+
+private theorem radius_le_fixed_latitude {a : ℝ} (h : π / 3 < a) (ha : a ≤ π) :
+    equalRimOptRadius a ≤ arccos (quarterScore * sin a) := by
+  have ha₀ : 0 ≤ a := by linarith [pi_pos]
+  let u := quarterScore * sin a
+  have hu₀ : 0 ≤ u := mul_nonneg quarter_score_pos.le (sin_nonneg_of_nonneg_of_le_pi ha₀ ha)
+  have hu₁ : u ≤ quarterScore := by
+    simpa [u] using mul_le_mul_of_nonneg_left (sin_le_one a) quarter_score_pos.le
+  have hd := (cos_lt_eigenvalue h ha).le
+  have hb := mul_le_mul_of_nonneg_left ((sq_le_sq₀ hu₀ quarter_score_pos.le).2 hu₁) (sub_nonneg.2 hd)
+  have hu : u ≤ rimEigenvalue a - (rimEigenvalue a - cos a) * u ^ 2 := by
+    have he : cos a * quarterScore ^ 2 + rimEigenvalue a * (1 - quarterScore ^ 2) = u :=
+      latitude_rim_score a
+    linarith
+  rw [equalRimOptRadius, if_neg h.not_ge]
+  exact arccos_le_arccos (score_le_optimal h ha hu)
+
+private theorem quarter_radius_eq :
+    equalRimOptRadius (π / 2) = arccos quarterScore := by
+  have ha₁ : π / 3 < π / 2 := by linarith [pi_pos]
+  have ha₂ : π / 2 ≤ π := by linarith [pi_pos]
+  have hq := latitude_rim_score (π / 2)
+  rw [cos_pi_div_two, sin_pi_div_two, zero_mul, zero_add, mul_one] at hq
+  have hh := score_unique ha₁ ha₂ quarter_score_pos (by rw [cos_pi_div_two]; linarith)
+  rw [equalRimOptRadius, if_neg ha₁.not_ge, ← hh]
+
+private theorem quarter_ratio_gt_half : (1 / 2 : ℝ) < (2 / π) * arccos quarterScore := by
+  have hsq : (√2 / 2) ^ 2 = (1 / 2 : ℝ) := by
+    rw [div_pow, sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+    norm_num
+  have hlt : quarterScore < √2 / 2 := by
+    apply (sq_lt_sq₀ quarter_score_pos.le (by positivity)).1
+    rw [quarter_score_sq, hsq]
+    norm_num
+  have hc : π / 4 < arccos quarterScore := by
+    exact lt_of_not_ge (fun h => hlt.not_ge (arccos_le_pi_div_four.mp h))
+  rw [div_mul_eq_mul_div, lt_div_iff₀ pi_pos]
+  linarith
+
+private theorem fixed_latitude_secant (s : ℝ) (hs : s ∈ Set.Icc 0 (π / 2)) :
+    arccos (quarterScore * cos s) ≤ arccos quarterScore +
+      (1 - (2 / π) * arccos quarterScore) * s := by
+  have hpi : 0 < π / 2 := by positivity
+  let b := s / (π / 2)
+  have hb : 0 ≤ b := div_nonneg hs.1 hpi.le
+  have hb₁ : b ≤ 1 := (div_le_one hpi).2 hs.2
+  have hmul : b * (π / 2) = s := div_mul_cancel₀ _ hpi.ne'
+  have hc := (arccos_cos_mul_convex quarter_score_pos.le quarter_score_lt_one).2
+    (show (0 : ℝ) ∈ Set.Icc 0 (π / 2) from ⟨le_rfl, hpi.le⟩)
+    (show π / 2 ∈ Set.Icc 0 (π / 2) from ⟨hpi.le, le_rfl⟩)
+    (sub_nonneg.2 hb₁) hb (sub_add_cancel 1 b)
+  simp only [smul_eq_mul, mul_zero, zero_add, hmul, cos_zero, mul_one,
+    cos_pi_div_two, arccos_zero] at hc
+  calc
+    _ ≤ (1 - b) * arccos quarterScore + b * (π / 2) := hc
+    _ = _ := by dsimp [b]; field_simp [pi_pos.ne']; ring
+
+private theorem strict_ratio_away_from_quarter (a : ℝ) (ha : a ∈ Set.Ioc 0 π)
+    (hne : a ≠ π / 2) :
+    equalRimOptRadius a / equalRimDefect a < (2 / π) * arccos quarterScore := by
+  let c := (2 / π) * arccos quarterScore
+  have hc : 1 / 2 < c := quarter_ratio_gt_half
+  by_cases h : a ≤ π / 3
+  · rw [equalRimDefect, equalRimOptRadius, if_pos h, if_pos h]
+    rw [div_lt_iff₀ (by linarith [ha.1] : 0 < 3 * a)]
+    change a < c * (3 * a)
+    nlinarith [mul_pos (show 0 < 3 * c - 1 by linarith) ha.1]
+  let s := |a - π / 2|
+  have hs : 0 < s := abs_pos.2 (sub_ne_zero.2 hne)
+  have hsπ : s ≤ π / 2 := abs_le.2 ⟨by linarith [ha.1], by linarith [ha.2]⟩
+  have hdef : π / 2 + s ≤ equalRimDefect a := by
+    rw [equalRimDefect, if_neg h]
+    by_cases ha₁ : a ≤ π / 2
+    · rw [if_pos ha₁, show s = -(a - π / 2) from abs_of_nonpos (sub_nonpos.2 ha₁)]
+      linarith
+    · rw [if_neg ha₁, show s = a - π / 2 from abs_of_nonneg (sub_nonneg.2 (le_of_not_ge ha₁))]
+      linarith
+  have hr := radius_le_fixed_latitude (lt_of_not_ge h) ha.2
+  rw [← cos_sub_pi_div_two, ← cos_abs] at hr
+  have hR := hr.trans (fixed_latitude_secant s ⟨hs.le, hsπ⟩)
+  have h₀ : arccos quarterScore = c * (π / 2) := by dsimp [c]; field_simp [pi_pos.ne']; ring
+  change equalRimOptRadius a / equalRimDefect a < c
+  rw [div_lt_iff₀ (by linarith [pi_pos] : 0 < equalRimDefect a)]
+  calc
+    _ ≤ arccos quarterScore + (1 - c) * s := hR
+    _ < c * (π / 2 + s) := by rw [h₀]; nlinarith [mul_pos (show 0 < 2 * c - 1 by linarith) hs]
+    _ ≤ c * equalRimDefect a := mul_le_mul_of_nonneg_left hdef (by linarith)
+
+private theorem ratio_at_quarter :
+    equalRimOptRadius (π / 2) / equalRimDefect (π / 2) =
+      (2 / π) * arccos quarterScore := by
+  rw [quarter_radius_eq, equalRimDefect, if_neg (by linarith [pi_pos]), if_pos le_rfl]
+  field_simp [pi_pos.ne']
+  ring
+
 end RoundQuaternionEqualRimMinimax
