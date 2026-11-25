@@ -7,6 +7,8 @@ description: 在 trureturing 的 fork 中贡献 Lean、Blueprint Scribe、逃逸
 
 本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的工具和贡献适配器由 fork 的 `Meta/tools-release.json` 锁定。
 
+贡献 Omega 证明时以钉版 Mathlib 为标准数学的准绳。题意中的素数写作 `OmegaMathlib.Nat.Prime p`。缺少端口时先补端口并运行双端核验。自定义谓词在 D5 以项目语义冻结，公开陈述涉及标准对象时使用已核验的引用。[可编译示例](../../src/README.md#标准数学对象的写法)
+
 无需准备主检出的项目缓存、下载项目 Release cache 或编译全库。首次执行仍需 Lean 工具链、钉版 Mathlib 源码与依赖缓存、`global.json` 指定的 .NET SDK、Python ≥3.12、Git、Make 和冻结命令所需的 jq。现有依赖准备执行 `lake exe cache get`，不保证只下载所选模块的 Mathlib 缓存，也不保证零下载。项目模块只编译所选目标及其 import/utility 闭包。
 
 ## 准备 fork 和基线

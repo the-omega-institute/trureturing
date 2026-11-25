@@ -2,6 +2,22 @@
 
 `OmegaMath` 对外提供定理、证明和已核验对象的引用。可以继续导入 `OmegaMath` 或对应的专题模块。新增的项目数学对象和可观察的原始表示在 D5 按专题冻结。标准对象由 `OmegaMathlib` 提供，Lean 基础对象由 `OmegaInit` 提供。普通 Lake 构建使用钉版官方 Init 和 Mathlib，准入还会用严格端口编译同一份项目源码。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
+## 标准数学对象的写法
+
+证明者先按题意定位钉版 Mathlib 的声明，再写公开陈述。下面的假设直接指定标准素数。
+
+```lean
+module
+prelude
+public import OmegaMathlib.Data.Nat.Prime.Defs
+
+public theorem prime_lower_bound {p : Omega.Nat} (hp : OmegaMathlib.Nat.Prime p) :
+    Omega.Nat.le Omega.Nat.zero.succ.succ p :=
+  OmegaMathlib.Nat.Prime.two_le hp
+```
+
+若把假设写成自定义的 `Prime p`，并令这个谓词对所有数恒真，它连 1 都会接受。对这种谓词完成的证明不能作为素数定理交付。遇到尚未移植的标准对象，先查钉版源码的全名、所属模块和类型，在 `strict/OmegaMathlib/` 实现端口并再生官方接口，随后运行 `lake test -- OmegaMathlib.<模块路径>`。如果项目研究另一种性质，在 D5 说明其定义并冻结，借已证的对应关系连接标准陈述。
+
 例如，导入 `OmegaMathlib.Data.Nat.Prime.Defs` 后，陈述中的 `OmegaMathlib.Nat.Prime p` 指向官方 `Nat.Prime p`，严格端则使用已核验的端口。两个命名空间中的引用由编译产物生成。项目自己的谓词可以作为 D5 定义冻结；来源审计会区分其实际声明与标准对象。[标准端口](../strict/OmegaMathlib/Data/Nat/Prime/Defs.lean) · [D5 素因子定理](../D5/S3/Arith/Euclidean/Prime.lean)
 
 ## 六卷的数学入口

@@ -96,6 +96,8 @@ If an ambiguity cannot be resolved without weakening the claim, stop and report 
 
 Postcondition: every source clause has one intended Lean counterpart or is recorded as removed, strengthened or corrected under `CLAUDE.md` §3.10, or the task has ended as `open` with the ambiguity named.
 
+When the echoed Omega claim uses a standard object, pinned Mathlib fixes its meaning. Record the actual upstream declaration in the disputed hypothesis or conclusion. Write `hp : OmegaMathlib.Nat.Prime p` for standard primality. A local predicate of the same name may accept 1. Port a missing standard object before proving the claim. [Worked Lean example](../../src/README.md#标准数学对象的写法)
+
 ### 3. Search the library before proving
 
 Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and reuse existing D5 proofs. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
