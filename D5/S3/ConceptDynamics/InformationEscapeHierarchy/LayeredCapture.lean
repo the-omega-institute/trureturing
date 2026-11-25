@@ -347,16 +347,6 @@ structure DesignatedRootCatalogSuite where
 def SystemCatalogIrredundant (suite : DesignatedRootCatalogSuite.{u, v, w, z}) : Prop :=
   ∀ index, CatalogIrredundant (suite.catalogAt index).catalog
 
-/-- Compatibility name for the same single-root universal catalog verdict. -/
-abbrev SystemWidePositive (suite : DesignatedRootCatalogSuite.{u, v, w, z}) : Prop :=
-  SystemCatalogIrredundant suite
-
-/-- IE-039: system-wide positivity is exactly designated-root catalog irredundancy. -/
-theorem systemWidePositive_iff_systemCatalogIrredundant
-    (suite : DesignatedRootCatalogSuite.{u, v, w, z}) :
-    SystemWidePositive suite ↔ SystemCatalogIrredundant suite :=
-  Iff.rfl
-
 private def Catalog.GeneratedKernel.toDecidableKernel
     {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (node : catalog.GeneratedKernel) : DecidableKernel arena.State where
