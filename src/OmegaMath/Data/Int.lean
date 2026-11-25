@@ -24,7 +24,7 @@ def two : Int := ofNat (Nat.succ (Nat.succ Nat.zero))
 noncomputable def square (a : Int) : Int := a.mul a
 
 theorem square_nonneg (a : Int) : NonNeg (square a) :=
-  Eq.subst NonNeg natAbs_mul_self (NonNeg.mk (a.natAbs.mul a.natAbs))
+  Eq.subst (motive := NonNeg) natAbs_mul_self (NonNeg.mk (a.natAbs.mul a.natAbs))
 
 theorem sum_of_two_squares_eq_zero (a b : Int) :
     Iff (Eq ((square a).add (square b)) zero) (And (Eq a zero) (Eq b zero)) :=
@@ -35,16 +35,37 @@ theorem sum_of_two_squares_eq_zero (a b : Int) :
       have vanish : ∀ n : Nat, Eq (n.mul n) Nat.zero → Eq n Nat.zero :=
         fun _ hz => (Nat.mul_eq_zero.mp hz).elim (fun h => h) (fun h => h)
       And.intro (natAbs_eq_zero.mp (vanish _ h.left)) (natAbs_eq_zero.mp (vanish _ h.right)))
-    (fun h => (Eq.map₂ (fun (x y : Int) => (square x).add (square y)) h.left h.right))
+    (fun h =>
+      have zeroSquare : Eq (square zero) zero := congrArg ofNat (Nat.mul_zero Nat.zero)
+      (Eq.map₂ (fun (x y : Int) => (square x).add (square y)) h.left h.right).trans
+        ((Eq.map₂ Int.add zeroSquare zeroSquare).trans (Int.add_zero zero)))
 
 theorem ofNat_succ_ne_zero (k : Nat) : Not (Eq (ofNat k.succ) zero) :=
   fun e => Nat.succ_ne_zero k (ofNat_inj.mp e)
 
+theorem nonneg_add {a b : Int} (ha : NonNeg a) (hb : NonNeg b) : NonNeg (a.add b) :=
+  NonNeg.rec (motive := fun x _ => NonNeg (x.add b))
+    (fun m => NonNeg.rec (motive := fun y _ => NonNeg ((ofNat m).add y))
+      (fun n => NonNeg.mk (m.add n)) hb) ha
+
+theorem nonneg_mul {a b : Int} (ha : NonNeg a) (hb : NonNeg b) : NonNeg (a.mul b) :=
+  NonNeg.rec (motive := fun x _ => NonNeg (x.mul b))
+    (fun m => NonNeg.rec (motive := fun y _ => NonNeg ((ofNat m).mul y))
+      (fun n => NonNeg.mk (m.mul n)) hb) ha
+
+theorem not_nonneg_negSucc (n : Nat) (h : NonNeg (negSucc n)) : False :=
+  NonNeg.rec (motive := fun z _ => Int.rec (motive := fun _ => Prop)
+    (fun _ => True) (fun _ => False) z) (fun _ => True.intro) h
+
 theorem nonneg_mul_ofNat_succ (a : Int) (k : Nat) :
     Iff (NonNeg (a.mul (ofNat k.succ))) (NonNeg a) :=
   Int.rec (motive := fun a => Iff (NonNeg (a.mul (ofNat k.succ))) (NonNeg a))
-    (fun _ => Iff.intro (fun h => h) (fun h => h))
-    (fun _ => Iff.intro (fun h => h) (fun h => h)) a
+    (fun n => Iff.intro (fun _ => NonNeg.mk n) (fun _ => NonNeg.mk (n.mul k.succ)))
+    (fun n => Iff.intro
+      (fun h =>
+        have product := (Nat.succ_mul n k.succ).trans (Nat.add_succ (n.mul k.succ) k)
+        False.elim (not_nonneg_negSucc _ (Eq.subst (motive := NonNeg) (congrArg negOfNat product) h)))
+      (fun h => False.elim (not_nonneg_negSucc n h))) a
 
 theorem le_mul_ofNat_succ (a b : Int) (k : Nat) :
     Iff ((a.mul (ofNat k.succ)).le (b.mul (ofNat k.succ))) (a.le b) :=
@@ -52,8 +73,8 @@ theorem le_mul_ofNat_succ (a b : Int) (k : Nat) :
   have same := Int.sub_mul b a f
   have equiv := nonneg_mul_ofNat_succ (b.sub a) k
   Iff.intro
-    (fun h => equiv.mp (Eq.subst NonNeg same.symm h))
-    (fun h => Eq.subst NonNeg same (equiv.mpr h))
+    (fun h => equiv.mp (Eq.subst (motive := NonNeg) same.symm h))
+    (fun h => Eq.subst (motive := NonNeg) same (equiv.mpr h))
 
 theorem square_mul (a k : Int) : Eq (square (a.mul k)) ((square a).mul (square k)) :=
   (Int.mul_assoc (a.mul k) a k).symm.trans
@@ -77,7 +98,7 @@ theorem add_add_add_comm (a b c d : Int) :
 theorem eq_zero_or_ne_zero (a : Int) : Or (Eq a zero) (Not (Eq a zero)) :=
   Int.rec (motive := fun a => Or (Eq a zero) (Not (Eq a zero)))
     (fun n => Nat.rec (motive := fun n => Or (Eq (ofNat n) zero) (Not (Eq (ofNat n) zero)))
-      (Or.inl Eq.refl) (fun k _ => Or.inr (ofNat_succ_ne_zero k)) n)
+      (Or.inl rfl) (fun k _ => Or.inr (ofNat_succ_ne_zero k)) n)
     (fun k => Or.inr (negSucc_ne_zero k)) a
 
 /-- The larger of two integers, selected by the sign of their difference. -/
@@ -85,7 +106,7 @@ noncomputable def max (a b : Int) : Int :=
   Int.rec (motive := fun _ => Int) (fun _ => b) (fun _ => a) (b.sub a)
 
 /-- A common translation commutes with the integer maximum. -/
-theorem max_add_right (a b c : Int) :
+theorem max_add_common_right (a b c : Int) :
     Eq (max (a.add c) (b.add c)) ((max a b).add c) :=
   have sameDifference : Eq ((b.add c).sub (a.add c)) (b.sub a) :=
     (congrArg (b.add c).add (Int.neg_add (a := a) (b := c))).trans
@@ -95,7 +116,13 @@ theorem max_add_right (a b c : Int) :
     Int.rec (motive := fun _ => Int) (fun _ => right) (fun _ => left)
   have sameSelection := Int.rec (motive := fun difference =>
     Eq (choose (a.add c) (b.add c) difference) ((choose a b difference).add c))
-    (fun _ => Eq.refl) (fun _ => Eq.refl) (b.sub a)
+    (fun _ => rfl) (fun _ => rfl) (b.sub a)
   (congrArg (choose (a.add c) (b.add c)) sameDifference).trans sameSelection
 
 end Omega.Int
+
+namespace Int
+export _root_.Omega.Int (square square_nonneg sum_of_two_squares_eq_zero nonneg_add nonneg_mul
+  nonneg_mul_ofNat_succ le_mul_ofNat_succ square_mul mul_mul_mul_comm add_add_add_comm
+  eq_zero_or_ne_zero max max_add_common_right)
+end Int

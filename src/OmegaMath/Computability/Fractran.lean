@@ -48,7 +48,7 @@ def Step (prog : Program) (n m : Nat) : Prop :=
 
 theorem Step.fire {rule : Rule} {rest : Program} {n q : Nat} (h : Eq (rule.denominator.mul q) n) :
     Step (.cons rule rest) n (q.mul rule.numerator) :=
-  Or.inl (Exists.intro q (And.intro h Eq.refl))
+  Or.inl (Exists.intro q (And.intro h rfl))
 
 theorem Step.skip {rule : Rule} {rest : Program} {n m : Nat} (h : Not (Divides rule n))
     (later : Step rest n m) : Step (.cons rule rest) n m :=
@@ -65,9 +65,9 @@ private theorem no_quotient (rule : Rule) (n : Nat) :
       Result.none_ne_some q (none.symm.trans ((exactQuotient_spec n _ q).mpr h))))
     (fun bad =>
       (Result.rec (motive := fun r => Eq (exactQuotient n rule.denominatorPred) r → Eq r .none)
-        (fun _ => Eq.refl)
+        (fun _ => rfl)
         (fun q h => False.elim (bad (Exists.intro q ((exactQuotient_spec n _ q).mp h))))
-        (exactQuotient n rule.denominatorPred) Eq.refl))
+        (exactQuotient n rule.denominatorPred) rfl))
 
 theorem step_deterministic (prog : Program) (n m₁ m₂ : Nat)
     (h₁ : Eq (step prog n) (.some m₁)) (h₂ : Eq (step prog n) (.some m₂)) : Eq m₁ m₂ :=
@@ -95,9 +95,9 @@ theorem step_complete (prog : Program) (n m : Nat) (h : Eq (step prog n) (.some 
       Result.rec (motive := fun r => Eq (exactQuotient n rule.denominatorPred) r →
           Eq (select r) (.some m) → Step (.cons rule rest) n m)
         (fun none stepEq => Step.skip ((no_quotient rule n).mp none) (ih stepEq))
-        (fun q exact stepEq => Eq.subst (Step (.cons rule rest) n) (Result.some_inj stepEq)
+        (fun q exact stepEq => Eq.subst (motive := Step (.cons rule rest) n) (Result.some_inj stepEq)
           (Step.fire ((exactQuotient_spec n rule.denominatorPred q).mp exact)))
-        (exactQuotient n rule.denominatorPred) Eq.refl) prog) h
+        (exactQuotient n rule.denominatorPred) rfl) prog) h
 
 theorem step_iff (prog : Program) (n m : Nat) :
     Iff (Eq (step prog n) (.some m)) (Step prog n m) :=
@@ -109,7 +109,7 @@ theorem Step.deterministic {prog : Program} {n m₁ m₂ : Nat} (h₁ : Step pro
 
 theorem halts_iff (prog : Program) (n : Nat) : Iff (Halts prog n) (Eq (step prog n) .none) :=
   Program.rec (motive := fun prog => Iff (Halts prog n) (Eq (step prog n) .none))
-    (Iff.intro (fun _ => Eq.refl) (fun _ => True.intro))
+    (Iff.intro (fun _ => rfl) (fun _ => True.intro))
     (fun rule rest ih =>
       let select := fireOrElse rule (step rest n)
       Result.rec (motive := fun r => Eq (exactQuotient n rule.denominatorPred) r →
@@ -119,12 +119,12 @@ theorem halts_iff (prog : Program) (n : Nat) : Iff (Halts prog n) (Eq (step prog
         (fun q exact => Iff.intro
           (fun h => False.elim (h.left (Exists.intro q ((exactQuotient_spec n _ q).mp exact))))
           (fun h => False.elim (Result.none_ne_some _ h.symm)))
-        (exactQuotient n rule.denominatorPred) Eq.refl) prog
+        (exactQuotient n rule.denominatorPred) rfl) prog
 
 private theorem positive_iff (n : Nat) : Iff (Nat.lt Nat.zero n) (Not (Eq n Nat.zero)) :=
   Nat.rec (motive := fun n => Iff (Nat.lt Nat.zero n) (Not (Eq n Nat.zero)))
-    (Iff.intro (fun h => False.elim h) (fun h => h Eq.refl))
-    (fun n _ => Iff.intro (fun _ => Nat.succ_ne_zero n) (fun _ => Nat.zero_le n)) n
+    (Iff.intro (fun h => False.elim (Nat.not_succ_le_zero Nat.zero h)) (fun h => False.elim (h rfl)))
+    (fun n _ => Iff.intro (fun _ => Nat.succ_ne_zero n) (fun _ => Nat.succ_le_succ (Nat.zero_le n))) n
 
 theorem Step.positive {prog : Program} {n m : Nat} (h : Step prog n m) :
     Nat.lt Nat.zero n → Nat.lt Nat.zero m :=
@@ -132,7 +132,7 @@ theorem Step.positive {prog : Program} {n m : Nat} (h : Step prog n m) :
     (fun h => False.elim h)
     (fun rule _ ih branch positive => branch.elim
       (fun enabled => enabled.elim (fun q exact =>
-        Eq.subst (Nat.lt Nat.zero) exact.right
+        Eq.subst (motive := Nat.lt Nat.zero) exact.right
           ((positive_iff (q.mul rule.numerator)).mpr (fun zero => (Nat.mul_eq_zero.mp zero).elim
             (fun quotientZero => (positive_iff n).mp positive (exact.left.symm.trans
               ((congrArg rule.denominator.mul quotientZero).trans (Nat.mul_zero _))))
@@ -151,19 +151,21 @@ theorem run_positive (prog : Program) (k n : Nat) (h : Nat.lt Nat.zero n) :
       let s := run prog k n
       (Result.rec (motive := fun r => Eq (step prog s) r →
           Nat.lt Nat.zero (Result.rec (motive := fun _ => Nat) s (fun m => m) r))
-        (fun _ => ih) (fun m eq => (step_complete prog s m eq).positive ih) (step prog s)) Eq.refl) k
+        (fun _ => ih) (fun m eq => (step_complete prog s m eq).positive ih) (step prog s)) rfl) k
 
 theorem run_fixed_of_halts (prog : Program) (n : Nat) (h : Halts prog n) (k : Nat) :
     Eq (run prog k n) n :=
   have fixed : Eq (advance prog n) n := congrArg (Result.rec (motive := fun _ => Nat) n (fun m => m)) ((halts_iff prog n).mp h)
-  Nat.rec (motive := fun k => Eq (run prog k n) n) Eq.refl
+  Nat.rec (motive := fun k => Eq (run prog k n) n) rfl
     (fun _ ih => (congrArg (advance prog) ih).trans fixed) k
 
 theorem run_stable (prog : Program) (k n : Nat) (h : Halts prog (run prog k n)) (extra : Nat) :
     Eq (run prog (k.add extra) n) (run prog k n) :=
   have append : Eq (run prog (k.add extra) n) (run prog extra (run prog k n)) :=
     Nat.rec (motive := fun t => Eq (run prog (k.add t) n) (run prog t (run prog k n)))
-      Eq.refl (fun _ => congrArg (advance prog)) extra
+      (congrArg (fun t => run prog t n) (Nat.add_zero k))
+      (fun t ih => (congrArg (fun s => run prog s n) (Nat.add_succ k t)).trans
+        (congrArg (advance prog) ih)) extra
   append.trans (run_fixed_of_halts prog (run prog k n) h extra)
 
 end Omega.Fractran

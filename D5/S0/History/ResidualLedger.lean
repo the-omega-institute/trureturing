@@ -77,8 +77,8 @@ theorem residual_ledger_components_bijective (Source Detector NextAction : Type*
       (Source := Source) (Detector := Detector) (NextAction := NextAction)) :=
   Omega.And.intro
     (Omega.Function.LeftInverse.injective (g := decodeResidualLedgerComponents)
-      (fun _ => Omega.Eq.refl))
+      (fun _ => Omega.rfl))
     (Omega.Function.RightInverse.surjective (g := decodeResidualLedgerComponents)
-      (fun _ => Omega.Eq.refl))
+      (fun _ => Omega.rfl))
 
 end D5.S0.History.ResidualLedger

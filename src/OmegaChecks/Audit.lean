@@ -1,50 +1,54 @@
 import Lean
 import Lean.Replay
+import OmegaChecks.Interface
+import OmegaChecks.ModuleSurface
 
 open Lean
 
 private def isStrict (name : Name) : Bool :=
-  name.getRoot == `OmegaMath || name.getRoot == `OmegaInit
+  [`OmegaInit, `OmegaMathlib, `OmegaMath].contains name.getRoot
 
-private def isOriginalMath (env : Environment) (owner : Name) : Bool := Id.run do
-  unless owner.getRoot == `OmegaMath do return false
-  let some docs := getModuleDoc? env owner | return false
-  let some first := docs[0]? | return false
-  return (first.doc.splitOn "\n").head!.trimAscii == "Omega original."
+/-- Check every import edge, including private and transitive imports of the selected roots. -/
+private def checkLayers (env : Environment) : IO Unit := do
+  for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    if isStrict owner then
+      let allowed := if owner.getRoot == `OmegaInit then [`OmegaInit]
+        else if owner.getRoot == `OmegaMathlib then [`OmegaInit, `OmegaMathlib]
+        else [`OmegaInit, `OmegaMathlib, `OmegaMath]
+      for dep in data.imports do
+        unless allowed.contains dep.module.getRoot do
+          throw <| IO.userError s!"forbidden strict import: {owner} imports {dep.module}"
 
 /-- Compare public names and defining modules in a separate upstream environment. -/
-private def checkUpstreamNames (strict : Environment) : IO Unit := do
+private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := do
   let sysroot ← findSysroot
   let lib ← getLibDir sysroot
-  let foundation := strict.allImportedModuleNames.filter (·.getRoot == `OmegaInit)
-  for owner in foundation do
-    let official := owner.replacePrefix `OmegaInit `Init
-    unless ← (modToFilePath lib official "olean").pathExists do
-      throw <| IO.userError s!"no official module {official} for {owner}"
   let mut bindings := #[]
-  let mut owners := #[]
-  let originals := strict.allImportedModuleNames.filter (isOriginalMath strict)
+  let mut owners ← OmegaChecks.ModuleSurface.officialModules strict lib
   for (name, _) in strict.constants.toList do
     let some idx := strict.getModuleIdxFor? name | continue
     let owner := strict.header.moduleNames[idx]!
     if !isStrict owner || isPrivateName name || name.isInternal then continue
     unless name.getRoot == `Omega do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
-    if originals.contains owner then continue
+    if owner.getRoot == `OmegaMath then continue
     let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
     let official := owner.replacePrefix owner.getRoot upstream
     bindings := bindings.push (name, official)
     if !owners.contains official then owners := owners.push official
-  if owners.isEmpty then return
-  let mathlib := owners.filter (·.getRoot == `Mathlib)
-  if mathlib.isEmpty then
-    searchPathRef.set [lib]
-  else
-    let targets := mathlib.map fun name => s!"@mathlib/+{name}:olean"
-    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ targets }
-    unless (← proc.wait) == 0 do throw <| IO.userError s!"failed to build upstream modules {mathlib}"
+  if owners.isEmpty then
     initSearchPath sysroot [lib]
+    discard <| OmegaChecks.ModuleSurface.check publicStrict
+    return
+  let targets := (owners.filter (·.getRoot == `Mathlib)).map fun name => s!"@mathlib/+{name}:olean"
+  let proc ← IO.Process.spawn { cmd := "lake", args := #["build", "+OmegaChecks.Interface.Equations"] ++ targets }
+  unless (← proc.wait) == 0 do throw <| IO.userError s!"failed to build upstream interfaces {owners}"
+  initSearchPath sysroot [lib]
+  owners := owners.push `OmegaChecks.Interface.Equations
   let reference ← importModules (owners.map fun moduleName => {module := moduleName}) {}
+  for owner in reference.allImportedModuleNames do
+    if isStrict owner then
+      throw <| IO.userError s!"standard interface evidence imports a strict implementation: {owner}"
   for (name, owner) in bindings do
     let counterpart := name.replacePrefix `Omega Name.anonymous
     let some idx := reference.getModuleIdxFor? counterpart
@@ -52,13 +56,20 @@ private def checkUpstreamNames (strict : Environment) : IO Unit := do
     let actual := reference.header.moduleNames[idx]!
     unless actual == owner do
       throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
+  let reexports ← OmegaChecks.ModuleSurface.check publicStrict
+  OmegaChecks.Interface.check strict publicStrict reference (bindings ++ reexports)
   IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String)
     (expected : Option (List String)) : IO (List String) := do
   searchPathRef.set (System.SearchPath.parse path)
-  let env ← importModules (roots.toArray.map fun name => { module := name.toName }) {}
+  let imports := roots.toArray.map fun name => { module := name.toName : Import }
+  let env ← importModules imports {}
+  -- Each basis module is independently importable, including privately imported dependencies.
+  let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
+  let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+  checkLayers env
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do
@@ -79,30 +90,69 @@ private def audit (roots : List String) (path label : String)
     return count
   let count ← check.toIO' {fileName := "<audit>", fileMap := default} {env}
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
-  checkUpstreamNames env
+  checkUpstreamNames env publicStrict
   IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
   return actual
 
+/-- Measure the published declarations in the official environment, including proof dependencies. -/
+private def reportOfficialAxioms (strict official : Environment) (modules : Array Name) (path : String) : IO Unit := do
+  let mut names : NameSet := {}
+  for owner in official.header.modules, data in official.header.moduleData do
+    if modules.contains owner.module then
+      for n in data.constNames do
+        unless n.isInternal || isPrivateName n do names := names.insert n
+  for owner in strict.header.modules, data in strict.header.moduleData do
+    if [`OmegaInit, `OmegaMathlib].contains owner.module.getRoot then
+      for n in data.constNames do
+        unless n.isInternal || isPrivateName n do names := names.insert (n.replacePrefix `Omega .anonymous)
+  let collect : CoreM Json := do
+    let mut rows := #[]
+    for name in names.toList.mergeSort Name.lt do
+      let some idx := official.getModuleIdxFor? name | throwError "missing official declaration {name}"
+      rows := rows.push <| Json.mkObj [("name", toJson name.toString),
+        ("module", toJson official.header.moduleNames[idx]!.toString),
+        ("axioms", toJson ((← collectAxioms name).map Name.toString))]
+    return Json.mkObj [("backend", "mathlib"), ("consumerModules", toJson (modules.map Name.toString)),
+      ("declarations", toJson rows)]
+  let report ← collect.toIO' {fileName := "<official axiom dependencies>", fileMap := default} {env := official}
+  IO.FS.writeFile path (report.compress ++ "\n")
+  IO.println s!"Measured official axiom dependencies for {names.size} declarations."
+
 private def testLibrary (selected : List String) : IO Unit := do
-  if selected.isEmpty then
-    throw <| IO.userError "pass a module scope, for example: lake test -- OmegaMath.Projective"
-  let strict := selected.filter fun name => isStrict name.toName
-  let roots := if strict.isEmpty && selected.contains "OmegaChecks.Audit" then ["OmegaInit.Prelude"] else strict
-  let modules ← if roots.isEmpty then pure [] else do
-    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ roots.toArray.map ("+" ++ ·) }
-    unless (← proc.wait) == 0 do throw <| IO.userError "strict library build failed"
-    audit roots ".lake/build/lib/lean" "Omega" none
-  let checks := [
-    ("OmegaChecks.NatCorrespondence", ["OmegaMath.Data.Nat.Fib.Basic", "OmegaMath.Data.Nat.Choose.Basic"]),
-    ("OmegaChecks.WDigitCorrespondence", ["OmegaMath.Arithmetic.WDigits", "OmegaMath.Arithmetic.WDigits.Codec"])]
-  let targets := checks.filterMap fun (check, dependencies) =>
-    if selected.contains check || dependencies.any modules.contains then some ("+" ++ check) else none
-  unless targets.isEmpty do
-    let proc ← IO.Process.spawn { cmd := "lake", args := #["build"] ++ targets.toArray }
-    unless (← proc.wait) == 0 do throw <| IO.userError "Mathlib correspondence check failed"
+  let args := #["-B", "src/OmegaChecks/check.py", "--library"] ++ selected.toArray
+  let proc ← IO.Process.spawn { cmd := "python3", args }
+  unless (← proc.wait) == 0 do throw <| IO.userError "Omega library test failed"
 
 def main (args : List String) : IO Unit := do
-  if let "--exact" :: root :: path :: expected := args then
+  if let "--consumer" :: strictPath :: officialPath :: names := args then
+    let clients := names.takeWhile (· != "--basis")
+    if clients.isEmpty then throw <| IO.userError "consumer comparison requires at least one module"
+    let modules := clients.toArray.map String.toName
+    let ports := (names.drop (clients.length + 1)).toArray.map String.toName
+    unless ports.all OmegaChecks.ModuleSurface.isBasis do throw <| IO.userError "invalid standard port"
+    let imports := (modules ++ ports).map fun moduleName => { module := moduleName : Import }
+    searchPathRef.set (System.SearchPath.parse strictPath)
+    let strict ← importModules imports {}
+    -- Public visibility is needed for the foundation equations. Consumers may also
+    -- use Lean's legacy format, which cannot be imported in an exported context.
+    let basis := strict.allImportedModuleNames.filter fun name =>
+      name.getRoot == `OmegaInit || name.getRoot == `OmegaMathlib
+    let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+    searchPathRef.set (System.SearchPath.parse officialPath)
+    let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
+    for (owner, data) in official.header.moduleNames.zip official.header.moduleData do
+      if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
+        unless data.constants.isEmpty do
+          throw <| IO.userError s!"official import adapter {owner} contains declarations"
+    OmegaChecks.Interface.checkConsumers strict publicStrict official modules
+    if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
+      reportOfficialAxioms strict official modules report
+  else if let "--exact-roots" :: path :: names := args then
+    let roots := names.takeWhile (· != "--")
+    let "--" :: expected := names.drop roots.length | throw <| IO.userError "missing expected module closure"
+    if roots.isEmpty then throw <| IO.userError "expected at least one audit root"
+    discard <| audit roots path "Omega" (some expected)
+  else if let "--exact" :: root :: path :: expected := args then
     discard <| audit [root] path root (some expected)
   else
     testLibrary args

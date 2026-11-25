@@ -122,7 +122,7 @@ private theorem diagonal_form_at_min (a x : FiniteRatio) (xs : Sequence Diagonal
   let vars := Variables.cons a (.cons correction (.cons x (Variables.nil rationalRing)))
   rationalRingLaws.trans (rationalRingLaws.add_congr (rationalRingLaws.refl (a.mul x.square)) sums)
     (prove rationalRing rationalRingLaws vars (.add (.mul e0 e2.square) (.mul (.neg e1) e2.square))
-      (.mul (.sub e0 e1) e2.square) Eq.refl)
+      (.mul (.sub e0 e1) e2.square) rfl)
 
 /-- With positive pivots the residual bounds every choice of coordinates and
 is attained at the simultaneous coordinatewise shifts. -/
@@ -139,11 +139,11 @@ theorem diagonal_schur_min (a x : FiniteRatio) (xs : Sequence DiagonalCoordinate
   have squares := Sequence.all_imp positive (fun p => RatioNonneg (term p))
     (fun p => schur_square_nonneg p.b p.c x p.y) xs hp
   have nonneg : RatioNonneg s :=
-    Sequence.sum_closed rationalRing RatioNonneg True.intro ratio_nonneg_add term xs squares
+    Sequence.sum_closed rationalRing RatioNonneg (Int.NonNeg.mk Nat.zero) ratio_nonneg_add term xs squares
   have subtract := rationalRingLaws.sub_congr (diagonal_schur_complete a x xs hn)
     (rationalRingLaws.refl m)
   have cancel := prove rationalRing rationalRingLaws (.cons m (.cons s (Variables.nil rationalRing)))
-    (.sub (.add e0 e1) e0) e1 Eq.refl
+    (.sub (.add e0 e1) e0) e1 rfl
   have gap := rationalRingLaws.trans subtract cancel
   And.intro (ratio_le_of_gap m (diagonalForm a x xs) s gap nonneg)
     (diagonal_form_at_min a x xs hn)

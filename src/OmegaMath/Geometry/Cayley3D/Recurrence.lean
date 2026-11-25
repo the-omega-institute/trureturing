@@ -31,7 +31,7 @@ def heapAt (a b : PythSpinor) (n : Nat) : PythSpinor :=
 theorem heap_step (a b : PythSpinor) (n : Nat) :
     Eq (heapAt a b n.succ.succ)
       ((heapAt a b n.succ).triad (heapAt a b n) (heapAt a b n.succ)) :=
-  Eq.refl
+  Omega.rfl
 
 def spinorNormSq (p : PythSpinor) : IntRatio :=
   IntRatio.value (Int.ofNat p.num.normSq) (p.radius.mul p.radius)
@@ -41,7 +41,7 @@ theorem heap_norm_preserved (a b : PythSpinor) (n : Nat) :
   let p := heapAt a b n
   let r := p.radius
   have positive := Nat.succ_ne_zero p.radiusPred
-  Eq.subst (fun q => IntRatio.Equivalent (IntRatio.value (Int.ofNat q) (r.mul r)) (IntRatio.ofInt Int.one))
+  Eq.subst (motive := fun q => IntRatio.Equivalent (IntRatio.value (Int.ofNat q) (r.mul r)) (IntRatio.ofInt Int.one))
     p.normSq_eq.symm (IntRatio.value_self (r.mul r) (Ternion.nat_mul_ne_zero positive positive))
 
 end Omega.Geometry.Cayley3D

@@ -86,7 +86,7 @@ theorem property_object_components_bijective
         (Reading := Reading) (Ledger := Ledger) (SelfCode := SelfCode) (Update := Update)
         (Certificate := Certificate)) :=
   Omega.And.intro
-    (Omega.Function.LeftInverse.injective (g := decodePropertyComponents) (fun _ => Omega.Eq.refl))
-    (Omega.Function.RightInverse.surjective (g := decodePropertyComponents) (fun _ => Omega.Eq.refl))
+    (Omega.Function.LeftInverse.injective (g := decodePropertyComponents) (fun _ => Omega.rfl))
+    (Omega.Function.RightInverse.surjective (g := decodePropertyComponents) (fun _ => Omega.rfl))
 
 end D5.S0.Computability.PropertyObject

@@ -40,7 +40,7 @@ example :
     And (∀ y, targetAdmissible y → P y)
       (Not (∀ x, sourceAdmissible x → P (transport x))) :=
   And.intro (fun _ h => h) (fun valid =>
-    Eq.subst (Bool.rec (motive := fun _ => Prop) True False)
+    Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False)
       (valid .false True.intro) True.intro)
 
 /-- Admission preservation can hold while the target predicate is false everywhere. -/

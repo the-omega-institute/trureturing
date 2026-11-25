@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram.Coordinates
 import OmegaMath.Geometry.BargmannGram.Polynomial
 
@@ -49,12 +51,14 @@ theorem dot_comm (a b : Quad4) : Eq (a.dot b) (b.dot a) :=
   Eq.map₂ Int.add (Eq.map₂ Int.add (Int.mul_comm _ _) (Int.mul_comm _ _))
     (Eq.map₂ Int.add (Int.mul_comm _ _) (Int.mul_comm _ _))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem dot_scale_left (k : Int) (a b : Quad4) : Eq ((scale k a).dot b) (k.mul (a.dot b)) :=
   let v := Expr.bind k (bindQuad a (bindQuad b (fun _ => Int.zero)))
   let scale := Expr.var Nat.zero
   let α := variables Nat.zero.succ
   let β := variables Nat.zero.succ.succ.succ.succ.succ
-  Expr.certify v ((α.scale scale).dot β) (scale.mul (α.dot β)) Eq.refl
+  Expr.certify v ((α.scale scale).dot β) (scale.mul (α.dot β)) rfl
 
 theorem dot_scale_right (k : Int) (a b : Quad4) : Eq (a.dot (scale k b)) (k.mul (a.dot b)) :=
   (dot_comm a (scale k b)).trans ((dot_scale_left k b a).trans (congrArg k.mul (dot_comm b a)))
@@ -68,13 +72,15 @@ theorem normSq_scale (k : Int) (a : Quad4) :
           (Eq.map₂ Int.mul Int.natAbs_mul_self.symm (normSq_cast a).symm |>.trans
             (congrArg Int.ofNat (Nat.mul_assoc k.natAbs k.natAbs a.normSq)))))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem dot_mul_self (a b : Quad4) :
     Eq ((a.mul b).dot (a.mul b)) ((a.dot a).mul (b.dot b)) :=
   let v := bindQuad a (bindQuad b (fun _ => Int.zero))
   let α := variables Nat.zero
   let β := variables Nat.zero.succ.succ.succ.succ
   let product := α.mul β
-  Expr.certify v (product.dot product) ((α.dot α).mul (β.dot β)) Eq.refl
+  Expr.certify v (product.dot product) ((α.dot α).mul (β.dot β)) rfl
 
 theorem normSq_mul (a b : Quad4) : Eq (a.mul b).normSq (a.normSq.mul b.normSq) :=
   Int.ofNat_inj.mp ((normSq_cast (a.mul b)).trans
@@ -82,6 +88,8 @@ theorem normSq_mul (a b : Quad4) : Eq (a.mul b).normSq (a.normSq.mul b.normSq) :
 
 end Quad4
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem triad_span (a b : Quad4) :
     Eq (triad b a b) ((Quad4.scale (Int.two.mul (a.dot b)) b).add
       (Quad4.scale (b.dot b).neg a)) :=
@@ -92,10 +100,10 @@ theorem triad_span (a b : Quad4) :
   let ab := (Expr.const Int.two).mul (α.dot β)
   let bb := (β.dot β).neg
   Quad4.ext
-    (Expr.certify v product.w ((ab.mul β.w).add (bb.mul α.w)) Eq.refl)
-    (Expr.certify v product.x ((ab.mul β.x).add (bb.mul α.x)) Eq.refl)
-    (Expr.certify v product.y ((ab.mul β.y).add (bb.mul α.y)) Eq.refl)
-    (Expr.certify v product.z ((ab.mul β.z).add (bb.mul α.z)) Eq.refl)
+    (Expr.certify v product.w ((ab.mul β.w).add (bb.mul α.w)) rfl)
+    (Expr.certify v product.x ((ab.mul β.x).add (bb.mul α.x)) rfl)
+    (Expr.certify v product.y ((ab.mul β.y).add (bb.mul α.y)) rfl)
+    (Expr.certify v product.z ((ab.mul β.z).add (bb.mul α.z)) rfl)
 
 
 private theorem dot_add_right (a b c : Quad4) : Eq (a.dot (b.add c)) ((a.dot b).add (a.dot c)) :=
@@ -115,12 +123,14 @@ theorem dot_triad_left (a b : Quad4) :
         ((Quad4.dot_scale_right _ a b).trans (Int.mul_assoc Int.two (a.dot b) (a.dot b)))
         ((Quad4.dot_scale_right _ a a).trans (Int.neg_mul (b.dot b) (a.dot a)))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem dot_triad_middle (a b : Quad4) : Eq (b.dot (triad b a b)) ((b.dot b).mul (a.dot b)) :=
   let v := Expr.bind (b.dot b) (Expr.bind (a.dot b) (fun _ => Int.zero))
   let B := Expr.var Nat.zero
   let p := Expr.var Nat.zero.succ
   have numerator := Expr.certify v
-    ((((Expr.const Int.two).mul p).mul B).add (B.neg.mul p)) (B.mul p) Eq.refl
+    ((((Expr.const Int.two).mul p).mul B).add (B.neg.mul p)) (B.mul p) rfl
   (congrArg b.dot (triad_span a b)).trans
     ((dot_add_right b _ _).trans
       ((Eq.map₂ Int.add (Quad4.dot_scale_right _ b b)
@@ -179,6 +189,8 @@ theorem pure_gram_numerator_is_square (a b c : Quad4)
       (congrArg (form a b) (withoutScalar_eq c hc)))
   Exists.intro (determinant.eval values) (restore.symm.trans square)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 set_option maxRecDepth 2048 in
 /-- Cauchy–Binet for three rows in four columns, with the four maximal minors. -/
 theorem gram_squares_nonneg (a b c : Quad4) :
@@ -192,15 +204,17 @@ theorem gram_squares_nonneg (a b c : Quad4) :
   let o := detMinorExpr α.w α.y α.z β.w β.y β.z γ.w γ.y γ.z
   let p := detMinorExpr α.x α.y α.z β.x β.y β.z γ.x γ.y γ.z
   have sums := Expr.certify v (gramExpr (α.dot α) (β.dot β) (γ.dot γ)
-    (α.dot β) (β.dot γ) (γ.dot α)) ((m.sq.add n.sq).add (o.sq.add p.sq)) Eq.refl
+    (α.dot β) (β.dot γ) (γ.dot α)) ((m.sq.add n.sq).add (o.sq.add p.sq)) rfl
   let square := fun (x : Int) => x.natAbs.mul x.natAbs
   let cast := fun (x y : Int) => Eq.map₂ Int.add (Int.natAbs_mul_self (a := x))
     (Int.natAbs_mul_self (a := y))
   have squares := Eq.map₂ Int.add (cast (m.eval v) (n.eval v)) (cast (o.eval v) (p.eval v))
-  Eq.subst Int.NonNeg (squares.trans sums.symm)
+  Eq.subst (motive := Int.NonNeg) (squares.trans sums.symm)
     (Int.NonNeg.mk (((square (m.eval v)).add (square (n.eval v))).add
       ((square (o.eval v)).add (square (p.eval v)))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem gram_triad_vanishes (A B p : Int) :
     Eq (gramNumerator A B ((A.mul B).mul B) p (B.mul p)
       ((Int.two.mul (Int.square p)).sub (B.mul A))) Int.zero :=
@@ -210,6 +224,6 @@ theorem gram_triad_vanishes (A B p : Int) :
   let u := Expr.var Nat.zero.succ.succ
   let two := Expr.const Int.two
   Expr.certify v (gramExpr a b ((a.mul b).mul b) u (b.mul u)
-    ((two.mul u.sq).sub (b.mul a))) (Expr.const Int.zero) Eq.refl
+    ((two.mul u.sq).sub (b.mul a))) (Expr.const Int.zero) rfl
 
 end Omega.Geometry.BargmannGram
