@@ -11,6 +11,8 @@
       ".lake/build/ir/**/*.bc*",
       ".lake/build/lean-inspector",
       ".lake/build/reg",
+      ".lake/build/omega-strict",
+      ".lake/build/omega-common",
       ".lake/build/stratalint/raw-lean-report.json*",
       ".lake/build/declared-template-evidence.json"
     ]

@@ -429,6 +429,12 @@ comparison when their representations differ. Keep imports, names, links and
 migration notes directed from the consumers to the library. Follow the scoped
 report and frozen-state procedure in the [migration skill](../skills/omega-math-migration/SKILL.md).
 
+The ordinary Lean module shard stores the official outputs and the strict
+Omega and common-interface outputs built for its members under the same cache
+key. CI uses the affected modules to select both the shards to restore and the
+checks to run. Changes to shared compiler or audit inputs can affect the full
+Omega check.
+
 ### D5 publication references
 
 These frozen declarations supply references for the strict mathematics volumes.
@@ -460,6 +466,15 @@ and declaration identities against current compiler evidence before updating the
 optional fields. The fields describe the last measurement. A proof edit can
 change dependencies while preserving the statement pin. Review the resulting
 state-file diff before committing. [Frozen state specification, A14](develop/spec/golden-ledger-repo-spec.md)
+
+The primary declaration records the official Lean Init and Mathlib build. For
+frozen D5 consumers of the Omega interface, deposit and refresh also check the
+compiled exports from the two backends and record the strict dependencies under
+`strict_omega`. Its two statement fingerprints identify the compared declarations.
+Read each backend’s `libraries` and `axioms` together. An absent `strict_omega`
+means no strict measurement was recorded. This includes verified auxiliary
+declarations generated only by the official compiler. An explicit `axioms: []` records a
+measured empty closure on that backend.
 
 A row supports an Omega-only, zero-axiom claim when its measured `libraries` is
 a nonempty subset of `{OmegaInit, OmegaMath}` and its `axioms` is `[]`. That
