@@ -122,7 +122,10 @@ def check():
         for body in ("public theorem D5.measure (n : Nat) : Nat.minFac n = Nat.minFac n := rfl\n",
                      "@[expose] public def D5.measure (n : Nat) := Nat.minFac n\n",
                      "public def D5.measure (n : Nat) := Nat.minFac n\n",
-                     "public opaque D5.measure (n : Nat) : Nat := Nat.minFac n\n"):
+                     "public opaque D5.measure (n : Nat) : Nat := Nat.minFac n\n",
+                     "private def fixtureMinFac (n : Nat) := Nat.minFac n\n"
+                     "private opaque inner (n : Nat) : Nat := fixtureMinFac n\n"
+                     "public def D5.measure (n : Nat) := inner n + inner n\n"):
             compile_source("strict", header + body, strict_path)
             new = compile_source("new", header + body)
             for previous in ([], [module]):

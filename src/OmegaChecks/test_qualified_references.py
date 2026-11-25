@@ -72,6 +72,19 @@ def cases():
     yield module, (head + "public abbrev etaPrime := fun p : Omega.Nat => OmegaMathlib.Nat.Prime p\n"
                    "public theorem D5.etaClaim (p : Omega.Nat) (h : etaPrime p) : etaPrime p := h\n"), [
                        "etaPrime", "explicit source reference", "OmegaMathlib.Nat.Prime"]
+    # The public body reaches a private opaque computation through a second helper.
+    for ref, errors in [("OmegaMathlib.Nat.Prime", []),
+                        ("Omega.Nat.Prime", ["OmegaMathlib.Nat.Prime"])]:
+        yield module, (head + f"private opaque helper (p : Omega.Nat) : Prop := {ref} p.succ\n"
+                       "private def middle (p : Omega.Nat) := helper p\n"
+                       "public def D5.claim (p : Omega.Nat) : Prop := middle p\n"), errors
+    yield module, (head + "private def unused (p : Omega.Nat) : Prop := Omega.Nat.Prime p.succ\n"
+                   "public def D5.claim (_ : Omega.Nat) : Prop := Omega.True\n"), []
+    # A proof inside a public data field cannot expose a computation used only to build the proof.
+    yield module, (head.replace("prelude\n", "") +
+                   "private def privatePredicate (p : Omega.Nat) : Prop := Omega.Nat.Prime p.succ\n"
+                   "public def D5.pair : {n : Nat // True} := "
+                   "⟨0, (fun (_ : Prop) => True.intro) (privatePredicate Omega.Nat.zero)⟩\n"), []
     local_head = head.replace("prelude\n", "prelude\nimport Lean\n")
     for target, local in [("Omega.Nat.Prime", ""),
                           ("D5.Project.Prime", "public def D5.Project.Prime (_ : Omega.Nat) := Omega.True\n")]:

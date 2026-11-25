@@ -101,16 +101,46 @@ private def objectValue? (env : Environment) (info : ConstantInfo) : Option Expr
   guard (!info.isTheorem && !(Kernel.check env {} info.type).toOption.any (Kernel.isDefEqGuarded env {} (mkSort .zero)))
   info.value? (allowOpaque := true)
 
-private def publicUses (data : ModuleData) (catalog : Environment) (ports : Ports)
-    (project : NameSet) : Array Name := Id.run do
-  let mut names := #[]
-  for name in data.constNames do
+/-- Proof arguments do not make their private implementation dependencies observable. -/
+private def computationalRefs (value : Expr) : MetaM (Array Name) := do
+  let (_, refs) ← StateT.run (s := #[]) <| Meta.transform (m := StateT (Array Name) MetaM) value
+    (pre := fun e => do
+      if ← Meta.isProof e then return .done e
+      match e with
+      | .const n _ | .proj n .. => modify (·.push n)
+      | _ => pure ()
+      return .continue)
+  return refs
+
+/-- The source declaration for a public computation can be private or compiler-generated.
+Follow non-proof implementations in this module once, including hidden opaque bodies. -/
+private def publicUses (moduleName : Name) (data : ModuleData) (catalog : Environment) (ports : Ports)
+    (project : NameSet) : MetaM (Array Name × NameSet) := do
+  let mut pending := data.constNames.filter fun n => !isPrivateName n && !n.isInternalOrNum && !n.hasMacroScopes
+  let roots := pending.foldl (init := ({} : NameSet)) fun names n => names.insert n
+  let hiddenLocal := fun n => !roots.contains n &&
+    (catalog.getModuleIdxFor? n).any (fun idx => catalog.header.moduleNames[idx]! == moduleName)
+  let mut reachable : NameSet := {}
+  let mut sensitive := #[]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if reachable.contains name then continue
+    reachable := reachable.insert name
     let some info := catalog.find? name | continue
-    if isPrivateName info.name || info.name.isInternalOrNum || info.name.hasMacroScopes then continue
-    let usesPort := fun (e : Expr) => e.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome)
-    if usesPort info.type || (objectValue? catalog info).any usesPort then
-      names := names.push info.name
-  return names
+    let mut refs := info.type.getUsedConstants
+    if let some value := objectValue? catalog info then refs := refs ++ value.getUsedConstants
+    if refs.any (fun n => (sensitive? catalog ports project n).isSome) then
+      sensitive := sensitive.push name
+    unless refs.any hiddenLocal do continue
+    let mut deps := info.type.getUsedConstants
+    if let some value := objectValue? catalog info then
+      if value.getUsedConstants.any hiddenLocal then deps := deps ++ (← computationalRefs value)
+    for n in deps do
+      if !hiddenLocal n || reachable.contains n then continue
+      let some dep := catalog.find? n | continue
+      if (objectValue? catalog dep).isSome then pending := pending.push n
+  return (sensitive, reachable)
 
 /-- Replace only authenticated identifier tokens with fresh references to the same objects.
 A named reference preserves Lean's explicit application, universe and projection syntax. -/
@@ -185,7 +215,8 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       let .str _ leaf := raw.toName | return false
       return ports.byLeaf.contains leaf
   let (data, _) ← readModuleData (← findOLean moduleName)
-  let published := publicUses data catalog ports project
+  let (published, reachable) ← (publicUses moduleName data catalog ports project).run' |>.toIO'
+    {fileName := source.toString, fileMap := ictx.fileMap} {env := catalog}
   if published.isEmpty && !relevantRefs && !(parserState.pos.extract text text.rawEndPos).contains "OmegaMathlib" then
     return 0
   let opts := ({} : Options).setBool `relaxedAutoImplicit false
@@ -216,7 +247,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       for (part, pos) in parts do
         for (id, parent) in locations.getD (key pos) [] do
           let .const owner name := id | continue
-          if isPrivateName parent.toName then continue
+          if isPrivateName parent.toName && !reachable.contains parent.toName then continue
           unless signature || (env.find? parent.toName).any (fun info => (objectValue? env info).isSome) do continue
           let actual := name.toName
           if let some port := ports.objects.find? actual then
@@ -241,7 +272,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     unless (locations.getD (key pos) []).map Prod.fst == [.const port.owner.toString port.target.toString] do
       throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {alias} requires {port.target} in {port.owner} at this occurrence"
     let inObject := (locations.getD (key pos) []).any fun (_, p) =>
-      (env.find? p.toName).any (fun info => !isPrivateName info.name && (objectValue? env info).isSome)
+      (env.find? p.toName).any (fun info => reachable.contains info.name && (objectValue? env info).isSome)
     if (signature || inObject) && ports.objects.contains port.target then
       if let some span := id.getRange? then marks := marks.push (span, port.target)
   unless published.isEmpty do

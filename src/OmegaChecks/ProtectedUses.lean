@@ -40,6 +40,38 @@ private partial def bodyOccurrences (term : Expr) (pos : Name := `value)
   | .mdata _ body => bodyOccurrences body pos acc
   | _ => return acc
 
+/-- Follow computational dependencies within the consumer. Imported official modules keep
+their own publication boundary. Each helper is expanded once per published declaration. -/
+private def publicationRefs (env : Environment) (mod : Name) (info : ConstantInfo)
+    (selectedBody : Bool) : MetaM (Array (Name × Name)) := do
+  let owner? := fun n => (env.getModuleIdxFor? n).map fun idx => env.header.moduleNames[idx]!
+  let pertinent := fun (e : Expr) => e.getUsedConstants.any fun n =>
+    (owner? n).any fun owner => owner == mod || owner.getRoot == `Mathlib
+  let mut refs := occurrences info.type
+  if let some full := env.find? info.name then
+    if !full.isTheorem then
+      if let some value := full.value? (allowOpaque := true) then
+        if selectedBody || pertinent value then
+          let pos := if info matches .defnInfo _ then `value else `implementation
+          refs := refs ++ (← bodyOccurrences value pos)
+  let mut seen : NameSet := ({} : NameSet).insert info.name
+  let mut next := 0
+  while next < refs.size do
+    let (pos, name) := refs[next]!
+    next := next + 1
+    if owner? name != some mod || seen.contains name then continue
+    seen := seen.insert name
+    let some helper := env.find? name | continue
+    if helper.isTheorem then continue
+    let some value := helper.value? (allowOpaque := true) | continue
+    if ← Meta.isProof (mkConst name (helper.levelParams.map Level.param)) then continue
+    let helperPos := Name.str pos "helper"
+    if pertinent helper.type then
+      refs := refs ++ (occurrences helper.type).map fun (p, n) => (helperPos ++ p, n)
+    if pertinent value then
+      refs := refs ++ (← bodyOccurrences value (.str helperPos "value"))
+  return refs
+
 private structure Request where
   path : String
   modules : Array String
@@ -90,7 +122,7 @@ def main (args : List String) : IO Unit := do
   let input : Request ← IO.ofExcept <| Json.parse (← IO.FS.readFile request) >>= fromJson?
   searchPathRef.set (System.SearchPath.parse input.path ++ [← getLibDir (← findSysroot)])
   let imports := if input.checkPorts then input.modules.push "OmegaMathlib" else input.modules
-  let env ← importModules (imports.map fun mod => {module := mod.toName}) {}
+  let env ← importModules (imports.map fun mod => {module := mod.toName, importAll := true}) {}
   let mut admitted : NameSet := {}
   if input.checkPorts then
     for owner in env.header.moduleNames, i in [:env.header.moduleNames.size] do
@@ -122,17 +154,8 @@ def main (args : List String) : IO Unit := do
       if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
       let key := nameKey name
       let protectedDecl := selected.any (·.contains key)
-      let mut refs := occurrences info.type
-      let value? := (env.find? name).bind fun decl =>
-        if decl.isTheorem then none else decl.value? (allowOpaque := true)
-      if let some value := value? then
-        let relevant := selectedBodies.any (·.contains key) || (value.getUsedConstants.any fun n =>
-          (env.getModuleIdxFor? n).any fun idx => env.header.moduleNames[idx]!.getRoot == `Mathlib)
-        if relevant then
-          let pos := if info matches .defnInfo _ then `value else `implementation
-          let positions ← (bodyOccurrences value pos).run' |>.toIO'
-            {fileName := "<published definition>", fileMap := default} {env}
-          refs := refs ++ positions
+      let refs ← (publicationRefs env mod.toName info (selectedBodies.any (·.contains key))).run' |>.toIO'
+        {fileName := "<published declaration>", fileMap := default} {env}
       let mut uses := #[]
       for (pos, obj) in refs do
         let some j := env.getModuleIdxFor? obj | throw <| IO.userError s!"unknown compiled object {obj}"
