@@ -80,8 +80,10 @@ internal sealed class MovingFejerCollisionDocument : IScribeDocumentDefinition
         Formula left = Multiply(Multiply(coefficient, Call("eta",N)),
             new Formula.Power(F.Id("W"), Multiply(F.D(2), N)));
         Formula right = Multiply(Call("s",N), Call("E",N));
-        return F.Disp(F.Seq(F.Forall, F.Sp, F.Varepsilon, F.Sp, F.Gt, F.Sp, F.D(0),
-            F.Comma, F.Sp, Call("EventuallyForAllData",
-                new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right))));
+        return F.Disp(new Formula.Logic(Equal(AtInfinity(Call("r",N)), F.D(0)),
+            FormulaLogicOperator.Implies,
+            F.Seq(F.Forall, F.Sp, F.Varepsilon, F.Sp, F.Gt, F.Sp, F.D(0),
+                F.Comma, F.Sp, Call("EventuallyForAllData",
+                    new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right)))));
     }
 }

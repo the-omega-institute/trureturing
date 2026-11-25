@@ -20,7 +20,7 @@ If r(n) tends to zero, choose A(n)=1/(s(n)sqrt(r(n))). Eventually all factors ar
 
 **Theorem 1.2 (Uniform Gaussian lower coefficient).**
 
-$$\forall \varepsilon > 0, \operatorname{EventuallyForAllData}\left(\left(\frac{1}{2 \cdot \sqrt{\pi}} - \varepsilon\right) \cdot \operatorname{eta}\left(n\right) \cdot W^{2 \cdot n} \le \operatorname{s}\left(n\right) \cdot \operatorname{E}\left(n\right)\right)$$
+$$\lim_{n \to \infty} \operatorname{r}\left(n\right) = 0 \Rightarrow \forall \varepsilon > 0, \operatorname{EventuallyForAllData}\left(\left(\frac{1}{2 \cdot \sqrt{\pi}} - \varepsilon\right) \cdot \operatorname{eta}\left(n\right) \cdot W^{2 \cdot n} \le \operatorname{s}\left(n\right) \cdot \operatorname{E}\left(n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/MovingFejerCollision.moving_fejer_uniform_lower` (`✓ std3`). ∎
 
