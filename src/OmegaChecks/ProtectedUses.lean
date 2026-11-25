@@ -46,6 +46,7 @@ private structure Request where
   /-- On the candidate, measure the protected declarations, including references to local substitutes. -/
   selected : Option (Array String) := none
   selectedBodies : Option (Array String) := none
+  checkPorts : Bool := false
   deriving FromJson
 
 private def nameKey : Name → String
@@ -57,7 +58,18 @@ def main (args : List String) : IO Unit := do
   let [request, output] := args | throw <| IO.userError "expected a standard identity request and result path"
   let input : Request ← IO.ofExcept <| Json.parse (← IO.FS.readFile request) >>= fromJson?
   searchPathRef.set (System.SearchPath.parse input.path ++ [← getLibDir (← findSysroot)])
-  let env ← importModules (input.modules.map fun mod => {module := mod.toName}) {}
+  let imports := if input.checkPorts then input.modules.push "OmegaMathlib" else input.modules
+  let env ← importModules (imports.map fun mod => {module := mod.toName}) {}
+  let mut admitted : NameSet := {}
+  if input.checkPorts then
+    for owner in env.header.moduleNames, i in [:env.header.moduleNames.size] do
+      unless owner.getRoot == `OmegaMathlib do continue
+      for (alias, target) in aliasExtension.getModuleEntries env i do
+        unless alias.getRoot == `OmegaMathlib do continue
+        let some j := env.getModuleIdxFor? target | throw <| IO.userError s!"missing owner for {target}"
+        if target == alias.replacePrefix `OmegaMathlib .anonymous &&
+            env.header.moduleNames[j]! == owner.replacePrefix `OmegaMathlib `Mathlib then
+          admitted := admitted.insert target
   let selected := input.selected.map Std.HashSet.ofArray
   let selectedBodies := input.selectedBodies.map Std.HashSet.ofArray
   let mut records := #[]
@@ -69,22 +81,24 @@ def main (args : List String) : IO Unit := do
       let name := info.name
       if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
       let key := nameKey name
-      if selected.any (!·.contains key) then continue
+      let protectedDecl := selected.any (·.contains key)
       let mut refs := occurrences info.type
-      if let .defnInfo d := info then
-        let relevant := (selectedBodies.map (·.contains key)).getD (d.value.getUsedConstants.any fun n =>
+      if let some (.defnInfo d) := env.find? name then
+        let relevant := selectedBodies.any (·.contains key) || (d.value.getUsedConstants.any fun n =>
           (env.getModuleIdxFor? n).any fun idx => env.header.moduleNames[idx]!.getRoot == `Mathlib)
         if relevant then
-          let positions ← (bodyOccurrences d.value).run' |>.toIO'
+          let pos := if info matches .defnInfo _ then `value else `implementation
+          let positions ← (bodyOccurrences d.value pos).run' |>.toIO'
             {fileName := "<published definition>", fileMap := default} {env}
           refs := refs ++ positions
       let mut uses := #[]
       for (pos, obj) in refs do
         let some j := env.getModuleIdxFor? obj | throw <| IO.userError s!"unknown compiled object {obj}"
         let owner := env.header.moduleNames[j]!
-        if selected.isNone && owner.getRoot != `Mathlib then continue
+        unless protectedDecl || owner.getRoot == `Mathlib do continue
         uses := uses.push <| Json.mkObj [("position", toJson pos.toString), ("object", toJson obj.toString),
-          ("objectKey", toJson (nameKey obj)), ("owner", toJson owner.toString)]
+          ("objectKey", toJson (nameKey obj)), ("owner", toJson owner.toString),
+          ("ported", toJson (admitted.contains obj))]
       unless uses.isEmpty do
         records := records.push <| Json.mkObj [("module", toJson mod), ("name", toJson name.toString),
           ("nameKey", toJson key), ("uses", Json.arr uses)]

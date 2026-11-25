@@ -43,7 +43,7 @@ def affected(old, new, changed):
         seen.update(dependents)
         pending.extend(dependents)
     portable = set(consumers(old)) | set(consumers(new))
-    return sorted(name for name in old if root(name) == "D5" and name in seen and name in portable)
+    return sorted(name for name in seen & portable if root(name) == "D5")
 
 
 def targets(commit, before):
@@ -55,7 +55,7 @@ def targets(commit, before):
     new_files = paths("ls-files", "--others", "--exclude-standard", "-z", "--", *directories)
     changed = {module_name(p) for p in [*modified, *new_files] if module_name(p)}
     if not changed:
-        return [], [], [], []
+        return [], [], [], [], []
     old_files = paths("ls-tree", "-rz", "--name-only", commit, "--", *directories)
     present = paths("ls-files", "-co", "--exclude-standard", "-z", "--", *directories)
     old = import_graph(before, old_files)
@@ -66,36 +66,56 @@ def targets(commit, before):
     owners = sorted(n for n in consumers(new)
                     if root(n) == "D5" and (ROOT / "Golden/Frozen/state").joinpath(
                         *n.split(".")).with_suffix(".lean.json").is_file())
-    return selected, [n for n in selected if n in new], sorted(set(owners) & changed), owners
+    active = set(consumers(new))
+    return ([n for n in selected if n in old], [n for n in selected if n in new],
+            sorted(active.intersection(selected)), sorted(set(owners) & changed), owners)
 
 
-def compare(before, old_modules, new_modules, old_path, new_path):
-    if not old_modules:
+def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=None):
+    active = set(new_modules if omega_modules is None else omega_modules)
+    if not old_modules and not active:
         return
     script = ROOT / "src/OmegaChecks/ProtectedUses.lean"
     with tempfile.TemporaryDirectory(prefix="omega-signatures-") as temp:
         request, output = (Path(temp) / name for name in ("request.json", "uses.json"))
 
-        def snapshot(stage, modules, search, selected=None, selected_bodies=None):
+        def snapshot(stage, modules, search, selected=None, selected_bodies=None, check_ports=False):
+            if not modules:
+                return []
             request.write_text(json.dumps(dict(path=search, modules=modules, selected=selected,
-                                               selectedBodies=selected_bodies)))
+                                               selectedBodies=selected_bodies, checkPorts=check_ports)))
             subprocess.run(["lean", "--run", script, request, output], cwd=stage,
                            env={**os.environ, "LEAN_PATH": ""}, check=True)
             return json.loads(output.read_text())
 
         old = snapshot(before, old_modules, old_path)
         bodies = [d["nameKey"] for d in old if any(u["position"].split(".", 1)[0] == "value" for u in d["uses"])]
-        new = snapshot(ROOT, new_modules, new_path, [d["nameKey"] for d in old], bodies)
+        new = snapshot(ROOT, new_modules, new_path, [d["nameKey"] for d in old], bodies, bool(active))
     current = {(d["module"], d["nameKey"]): {u["position"]: u for u in d["uses"]} for d in new}
+    protected = set()
     verified = 0
     for declaration in old:
         positions = current.get((declaration["module"], declaration["nameKey"]), {})
         for previous in declaration["uses"]:
             pos = previous["position"]
             actual = positions.get(pos, {})
+            protected.add((declaration["module"], declaration["nameKey"], pos, previous["objectKey"], previous["owner"]))
+            if pos.split(".", 1)[0] == "implementation":
+                continue
             if (previous["objectKey"], previous["owner"]) != (actual.get("objectKey"), actual.get("owner")):
                 raise ValueError(f"{declaration['module']} {declaration['name']} at {pos}: expected "
                                  f"{previous['object']} from {previous['owner']}, found "
                                  f"{actual.get('object', '<missing>')} from {actual.get('owner', '<missing>')}")
             verified += 1
+    for declaration in new:
+        mod, key = declaration["module"], declaration["nameKey"]
+        if mod not in active:
+            continue
+        for use in declaration["uses"]:
+            owner, pos = use["owner"], use["position"]
+            if owner.split(".", 1)[0] != "Mathlib" or use["ported"]:
+                continue
+            if (mod, key, pos, use["objectKey"], owner) not in protected:
+                raise ValueError(f"{mod} {declaration['name']} at {pos}: new Mathlib object "
+                                 f"{use['object']} from {owner} requires a verified OmegaMathlib port")
     print(f"Verified {verified} protected Mathlib occurrences in {len(old_modules)} affected D5 modules.", flush=True)
