@@ -232,7 +232,7 @@ theorem denominator_le_next (coeffs : NatList) (a : Nat) (ha : Nat.lt Nat.zero a
         (Nat.add_le_add_left (Nat.zero_le previous) (a.mul q))))
 
 /-- The Fibonacci numbers, starting with zero and one. -/
-def fibonacci (n : Nat) : Nat := Nat.fib n
+def fibonacci (n : Nat) : Nat := OmegaMathlib.Nat.fib n
 
 theorem fibonacci_step (n : Nat) :
     Eq (fibonacci n.succ.succ) ((fibonacci n.succ).add (fibonacci n)) :=

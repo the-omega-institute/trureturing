@@ -8,7 +8,8 @@ import tempfile
 from strict_lake import ROOT, strict_config
 
 
-PORTS = ["OmegaMathlib.Data.Nat.Prime.Defs", "OmegaMathlib.Data.Nat.Choose.Basic"]
+PORTS = ["OmegaMathlib.Data.Nat.Prime.Defs", "OmegaMathlib.Data.Nat.Choose.Basic",
+         "OmegaMathlib.Logic.Function.Defs"]
 CHECKER = ROOT / "src/OmegaChecks/QualifiedReferences.lean"
 
 
@@ -51,7 +52,17 @@ def cases():
                    "namespace Shadow\npublic theorem claim (p : Omega.Nat) : "
                    "OmegaMathlib.Nat.Prime p := Omega.True.intro\n"), [
                        "OmegaMathlib.Nat.Prime requires", "at this occurrence"]
+    function_head = f"module\nprelude\npublic import {PORTS[2]}\n"
+    for name in ["@OmegaMathlib.Function.Bijective", "@OmegaMathlib.Function.Bijective.{1,1}"]:
+        yield module, (function_head + f"public def D5.explicitArgs : {name} Omega.Nat Omega.Nat "
+                       "(fun n => n) → Prop := fun _ => Omega.True\n"), []
+    yield module, (function_head + "universe u v\n"
+                   "public def D5.explicitLevels {α : Sort u} {β : Sort v} (f : α → β) : Prop := "
+                   "OmegaMathlib.Function.Bijective.{u,v} f\n"), []
+    yield module, (choose + "public noncomputable def D5.projectedValue (a b : Omega.Nat) : Omega.Nat := "
+                   "(OmegaMathlib.Nat.choose a b).succ\n"), []
     for body in ["public def D5.standardPrime := REF",
+                 "public def D5.explicitValue : Omega.Nat → Prop := fun p => REF p",
                  "public def D5.typedPrime : Omega.Nat → Prop := REF",
                  "public def D5.standardProof := fun (p : Omega.Nat) (h : REF p) => h"]:
         yield module, head + body.replace("REF", "Omega.Nat.Prime") + "\n", [
@@ -64,6 +75,8 @@ def cases():
         yield module, hidden + ("public theorem D5.claim (p : Omega.Nat) (_ : OmegaMathlib.Nat.Prime p) "
                                 "(h : Prime〚p〛) : Prime〚p〛 := h\n"), [
                                     "without an explicit source reference", "OmegaMathlib.Nat.Prime"]
+        yield module, hidden + ("public def D5.opaquePredicate : Omega.Nat → Prop := fun p => Prime〚p〛\n"), [
+            "without an explicit source reference", "OmegaMathlib.Nat.Prime"]
     yield module, (head + "public abbrev D5.localPredicate := OmegaMathlib.Nat.Prime\n"
                    "public theorem D5.claim (p : Omega.Nat) (h : D5.localPredicate p) : "
                    "D5.localPredicate p := h\n"), ["D5.localPredicate", "explicit source reference"]

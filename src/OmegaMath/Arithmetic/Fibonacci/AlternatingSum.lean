@@ -21,7 +21,7 @@ noncomputable section
 namespace Omega.Arithmetic.Fibonacci
 
 /-- Fibonacci numbers indexed from the first 1. -/
-def shiftedFib (k : Nat) : Int := Int.ofNat (Nat.fib k.succ)
+def shiftedFib (k : Nat) : Int := Int.ofNat (OmegaMathlib.Nat.fib k.succ)
 
 /-- Sum of the positive indices of the same parity, up to and including `k`. -/
 def alternatingSum (k : Nat) : Int :=

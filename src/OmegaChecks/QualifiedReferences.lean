@@ -16,22 +16,18 @@ private def standardName? (stx : Syntax) : Option Name := do
   return name
 
 private partial def declarationNames (stx : Syntax) (inSignature := false) (inValue := false)
-    (inferredResult := false)
+    (fromValue := false)
     (acc : Array (Syntax × Bool) := #[]) : Array (Syntax × Bool) := Id.run do
   let kind := stx.getKind
   let signature := inSignature || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
     ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
   let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
     ``Parser.Command.whereStructInst].contains kind
-  let inferred := inferredResult || stx.getArgs.any fun child =>
+  if (signature || value) && (stx.isIdent || (standardName? stx).isSome) then
+    return acc.push (stx, signature || fromValue)
+  let inferred := stx.getArgs.any fun child =>
     child.isOfKind ``Parser.Command.optDeclSig && child[1].isNone
-  -- An omitted result exposes the type elaborated from the RHS. A direct object reference
-  -- also publishes its target when the author writes the type of the alias explicitly.
-  let objectUse := signature || (value && inferred) ||
-    (kind == ``Parser.Command.declValSimple && stx[1].isIdent)
-  if (objectUse && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
-    return acc.push (stx, objectUse)
-  return stx.getArgs.foldl (fun a c => declarationNames c objectUse value inferred a) acc
+  return stx.getArgs.foldl (fun a c => declarationNames c signature value (fromValue || inferred) a) acc
 
 /-- `resolveName'` indexes a qualified constant and any trailing field projections at separate
 source ranges. Recover those same prefixes, longest first, without splitting escaped names. -/
@@ -100,30 +96,51 @@ private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSe
   guard (project.contains catalog.header.moduleNames[idx]!)
   matchingPort? catalog catalog ports name name
 
+/-- Proof definitions are governed by their statements. Inspect the complete value of data and predicates. -/
+private def objectValue? (env : Environment) (info : ConstantInfo) : Option Expr := do
+  guard (!info.isTheorem && !(Kernel.check env {} info.type).toOption.any (Kernel.isDefEqGuarded env {} (mkSort .zero)))
+  info.value? (allowOpaque := true)
+
 private def publicUses (data : ModuleData) (catalog : Environment) (ports : Ports)
     (project : NameSet) : Array Name := Id.run do
   let mut names := #[]
-  for info in data.constants do
+  for name in data.constNames do
+    let some info := catalog.find? name | continue
     if isPrivateName info.name || info.name.isInternalOrNum || info.name.hasMacroScopes then continue
-    if info.type.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome) ||
-        (info.value?.bind (·.constName?) |>.bind (sensitive? catalog ports project)).isSome then
+    let usesPort := fun (e : Expr) => e.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome)
+    if usesPort info.type || (objectValue? catalog info).any usesPort then
       names := names.push info.name
   return names
 
-/-- A fresh transparent identity tags exactly the references authenticated by the compiler index.
-Inspect the resulting expression, so a genuine occurrence cannot pay for a different use. -/
-private def checkElaborated (source : System.FilePath) (text : String) (start : String.Pos.Raw)
-    (env : Environment) (opts : Options) (names : Array Name) (isModule : Bool)
-    (marks : Array Lean.Syntax.Range) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
-  let marker := s!"OmegaCheckedReference{← IO.rand 1 4294967295}".toName
-  if text.contains marker.toString || env.contains marker then throw <| IO.userError "fresh reference marker collision"
+/-- Replace only authenticated identifier tokens with fresh references to the same objects.
+A named reference preserves Lean's explicit application, universe and projection syntax. -/
+private def checkElaborated (source : System.FilePath) (text : String)
+    (commands : Array Syntax) (env : Environment) (opts : Options) (names : Array Name) (isModule : Bool)
+    (marks : Array (Lean.Syntax.Range × Name)) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
+  let prefixName := s!"OmegaCheckedReference{← IO.rand 1 4294967295}".toName
+  if text.contains prefixName.toString then throw <| IO.userError "fresh reference marker collision"
+  let mut edits : Array (Lean.Syntax.Range × String) := #[]
+  let mut markers : NameMap Name := {}
+  let mut targets : NameMap Name := {}
+  for (span, target) in marks.toList.eraseDups.mergeSort (fun a b => a.1.start.byteIdx ≤ b.1.start.byteIdx) do
+    let marker := (targets.find? target).getD (.str prefixName s!"ref{markers.toList.length}")
+    unless targets.contains target do
+      if env.contains marker || catalog.contains marker then throw <| IO.userError "fresh reference marker collision"
+      let some cmd := commands.find? (fun c => c.getRange?.any fun r => r.start ≤ span.start && span.stop ≤ r.stop)
+        | throw <| IO.userError s!"unlocated source reference to {target}"
+      let some pos := cmd.getPos? | throw <| IO.userError s!"unlocated declaration for {target}"
+      let some obj := catalog.find? target | throw <| IO.userError s!"missing compiled object {target}"
+      let levels := (List.range obj.numLevelParams).map fun i => s!"omegaLevel{i}"
+      let univs := if levels.isEmpty then "" else ".{" ++ String.intercalate "," levels ++ "}"
+      let vis := if isModule then "public " else ""
+      let decl := s!"\n{vis}noncomputable abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
+      edits := edits.push (⟨pos, pos⟩, decl)
+      markers := markers.insert marker target
+      targets := targets.insert target marker
+    edits := edits.push (span, s!"_root_.{marker}")
   let mut marked := text
-  for span in marks.toList.eraseDups.mergeSort (fun a b => b.start.byteIdx ≤ a.start.byteIdx) do
-    marked := (0 : String.Pos.Raw).extract marked span.start ++ s!"({marker} " ++
-      span.start.extract marked span.stop ++ ")" ++ span.stop.extract marked marked.rawEndPos
-  let intro := if isModule then "public " else ""
-  marked := (0 : String.Pos.Raw).extract marked start ++
-    (s!"\n{intro}noncomputable abbrev {marker}" ++ ".{u} {α : Sort u} (x : α) : α := x\n") ++ start.extract marked marked.rawEndPos
+  for (span, replacement) in edits.toList.mergeSort (fun a b => b.1.start.byteIdx ≤ a.1.start.byteIdx) do
+    marked := (0 : String.Pos.Raw).extract marked span.start ++ replacement ++ span.stop.extract marked marked.rawEndPos
   let ictx := Parser.mkInputContext marked source.toString
   let (_, parserState, messages) ← Parser.parseHeader ictx
   let state ← Elab.IO.processCommands ictx parserState (Elab.Command.mkState env messages opts)
@@ -132,20 +149,19 @@ private def checkElaborated (source : System.FilePath) (text : String) (start : 
   for name in names do
     let some info := state.commandState.env.find? name | throw <| IO.userError s!"missing source declaration {name}"
     let check (expr original : Expr) := do
-      let markedHead := fun (e : Expr) => e.isApp && e.getAppNumArgs == 2 && e.getAppFn.isConstOf marker
-      let restored := expr.replace fun e => if markedHead e then some e.appArg! else none
+      let restored := expr.replace fun e => do
+        let .const n levels := e | none
+        return .const (← markers.find? n) levels
       unless restored == original do
         throw <| IO.userError s!"{source}: could not recover the compiled expression of {name} after checking its reference positions"
-      let unmarked := expr.replace fun node => if markedHead node then some (.sort .zero) else none
-      for n in unmarked.getUsedConstants do
+      for n in expr.getUsedConstants do
         if let some standard := sensitive? catalog ports project n then
           throw <| IO.userError s!"{source}: {name} exposes {n} without an explicit source reference to {standard} or its qualified project identity at that occurrence"
     let some original := catalog.find? name | throw <| IO.userError s!"missing compiled declaration {name}"
     check info.type original.type
-    if let some value := original.value? then
-      if value.isConst then
-        let some markedValue := info.value? | throw <| IO.userError s!"missing marked value for {name}"
-        check markedValue value
+    if let some value := objectValue? catalog original then
+      let some markedValue := info.value? (allowOpaque := true) | throw <| IO.userError s!"missing marked value for {name}"
+      check markedValue value
 
 /-- The parsed declaration syntax excludes imports, comments and string contents.
 The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
@@ -200,17 +216,18 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       for (part, pos) in parts do
         for (id, parent) in locations.getD (key pos) [] do
           let .const owner name := id | continue
-          if !signature || isPrivateName parent.toName then continue
+          if isPrivateName parent.toName then continue
+          unless signature || (env.find? parent.toName).any (fun info => (objectValue? env info).isSome) do continue
           let actual := name.toName
           if let some port := ports.objects.find? actual then
             if port.owner == owner.toName then
               throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {actual} from {owner}; qualify this identifier as {port.alias}"
           let spelling := part.getId.eraseMacroScopes
-          if signature && project.contains owner.toName &&
+          if project.contains owner.toName &&
               (spelling == `_root_ ++ actual || (spelling == actual && !actual.getPrefix.isAnonymous)) &&
               (matchingPort? env catalog ports spelling actual).isSome &&
               (underlyingPort? catalog ports project actual).isNone then
-            if let some span := part.getRange? then marks := marks.push span
+            if let some span := part.getRange? then marks := marks.push (span, actual)
           if project.contains owner.toName && spelling != `_root_ ++ actual &&
               !(spelling == actual && !actual.getPrefix.isAnonymous) then
             if let some candidate := matchingPort? env catalog ports spelling actual then
@@ -223,10 +240,12 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     let some (port, pos, id) := resolved | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
     unless (locations.getD (key pos) []).map Prod.fst == [.const port.owner.toString port.target.toString] do
       throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {alias} requires {port.target} in {port.owner} at this occurrence"
-    if signature && ports.objects.contains port.target then
-      if let some span := id.getRange? then marks := marks.push span
+    let inObject := (locations.getD (key pos) []).any fun (_, p) =>
+      (env.find? p.toName).any (fun info => !isPrivateName info.name && (objectValue? env info).isSome)
+    if (signature || inObject) && ports.objects.contains port.target then
+      if let some span := id.getRange? then marks := marks.push (span, port.target)
   unless published.isEmpty do
-    checkElaborated source text parserState.pos sourceEnv opts published data.isModule marks catalog ports project
+    checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
   return count
 
 end OmegaChecks.QualifiedReferences
@@ -240,7 +259,7 @@ unsafe def main (args : List String) : IO Unit := do
   let mut count := 0
   enableInitializersExecution
   let modules := (portModules ++ files.toList.filterMap (·[0]?)).eraseDups
-  let catalog ← importModules (modules.toArray.map fun name => {module := name.toName}) {}
+  let catalog ← importModules (modules.toArray.map fun name => {module := name.toName, importAll := true}) {}
   let ports ← admittedPorts catalog (backend == "official")
   let project := files.foldl (init := ({} : NameSet)) fun names row =>
     if let some name := row[0]? then names.insert name.toName else names

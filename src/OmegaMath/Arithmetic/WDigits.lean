@@ -21,7 +21,7 @@ noncomputable section
 namespace Omega.Arithmetic.WDigits
 
 /-- The weight of zero-based W position `index` is `F_(index + 2)`. -/
-def wValue (index : Nat) : Nat := Nat.fib index.succ.succ
+def wValue (index : Nat) : Nat := OmegaMathlib.Nat.fib index.succ.succ
 
 theorem wValue_zero : Eq (wValue .zero) Nat.one := Nat.fib_two
 
