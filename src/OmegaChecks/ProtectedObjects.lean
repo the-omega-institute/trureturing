@@ -27,9 +27,30 @@ private def portTargets (env : Environment) : NameSet := Id.run do
         if alias.getRoot == `OmegaMathlib then targets := targets.insert target
   return targets
 
+/-- Check the objects that appear in a newly published statement. If it uses another
+proof as an index, follow the type of that proof. Proof implementations remain private. -/
+private def checkStatement (env : Environment) (ports : NameSet) (published : Name)
+    (type : Expr) : IO Unit := do
+  let mut pending := type.getUsedConstants
+  let mut seen : NameSet := {}
+  while let some name := pending.back? do
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.insert name
+    let some owner := env.getModuleIdxFor? name | throw <| IO.userError s!"missing owner of {name}"
+    let moduleName := env.header.moduleNames[owner]!
+    if [`Init, `Mathlib].contains moduleName.getRoot || ports.contains name ||
+        (moduleName.getRoot == `OmegaInit && !isPrivateName name && !name.isInternal) then continue
+    let some info := env.find? name | throw <| IO.userError s!"missing statement object {name}"
+    if directPort env ports info then continue
+    if proof env info then
+      pending := pending ++ info.type.getUsedConstants
+    else
+      throw <| IO.userError s!"publish {published} in D5: statement uses project object {name} from {moduleName}"
+
 /-- A bridge is a theorem about the old compiled body and the new port, quantified over
 all inputs. Strict proofs use the independently checked strict versions of Eq and Iff. -/
-private def checkBridge (env : Environment) (before after : ConstantInfo) (decls : Array Name) : IO Unit := do
+private def checkBridge (env : Environment) (before after : ConstantInfo) (decls : Array Name) : IO Name := do
   unless before.numLevelParams == after.numLevelParams &&
       Kernel.isDefEqGuarded env {} (before.type.instantiateLevelParams before.levelParams
         (after.levelParams.map Level.param)) after.type do
@@ -52,7 +73,7 @@ private def checkBridge (env : Environment) (before after : ConstantInfo) (decls
     let typ := cert.type.instantiateLevelParams cert.levelParams (after.levelParams.map Level.param)
     if expected.any (Kernel.isDefEqGuarded env {} typ) then
       let axioms ← (collectAxioms name : CoreM _).toIO' {fileName := "<protected object>", fileMap := default} {env}
-      if axioms.all (fun ax => !strict && #[`propext, `Quot.sound, `Classical.choice].contains ax) then return
+      if axioms.all (fun ax => !strict && #[`propext, `Quot.sound, `Classical.choice].contains ax) then return name
   throw <| IO.userError s!"missing all-input correspondence for protected object {before.name}"
 
 private def aliases (env : Environment) (idx : ModuleIdx) : List (Name × Name) :=
@@ -76,6 +97,7 @@ def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit :=
           if dep.isExported && dep.module.getRoot == `OmegaMath && !visible.contains dep.module then
             throw <| IO.userError s!"{m} no longer re-exports protected module {dep.module}"
     let oldNames := oldIdx.map (fun i => old.header.moduleData[i]!.constNames) |>.getD #[]
+    let mut bridges : NameSet := {}
     for name in oldNames do
       let some before := old.find? name | throw <| IO.userError s!"missing protected declaration {name}"
       let some after := new.find? name | do
@@ -87,22 +109,26 @@ def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit :=
       if before.ctorIdx != after.ctorIdx then
         throw <| IO.userError s!"protected declaration kind changed: {name}"
       if directPort new ports after && before.value? != after.value? then
-        checkBridge new before after newNames
+        bridges := bridges.insert (← checkBridge new before after newNames)
       else
         discard <| Interface.compare new id before after
     let known := NameSet.ofList oldNames.toList
     for name in newNames do
       if known.contains name then continue
       let some info := new.find? name | throw <| IO.userError s!"missing declaration {name}"
-      unless proof new info || directPort new ports info do
+      if proof new info then
+        if !isPrivateName name && !bridges.contains name then checkStatement new ports name info.type
+      else unless directPort new ports info do
         throw <| IO.userError s!"new OmegaMath object {name} in {m}"
     let before := oldIdx.map (aliases old) |>.getD []
     let after := aliases new idx
     for entry in before do
       unless after.contains entry do throw <| IO.userError s!"changed protected export {entry.1}"
     for (alias, target) in after do
-      unless before.contains (alias, target) || ports.contains target || (new.find? target).any (proof new) do
-        throw <| IO.userError s!"new OmegaMath export {alias} has an unverified target {target}"
+      if before.contains (alias, target) || ports.contains target then continue
+      let some info := new.find? target | throw <| IO.userError s!"missing export target {target}"
+      unless proof new info do throw <| IO.userError s!"new OmegaMath export {alias} has an unverified target {target}"
+      checkStatement new ports alias info.type
   IO.println s!"Protected objects checked in {newRoots.size} OmegaMath modules."
 
 end OmegaChecks.ProtectedObjects
