@@ -6,9 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Powers;
 
 internal sealed class ConjugacyNormalFormDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Automata/karhumaki2004words");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Classify every conjugating word by a unique literal exponent and short cut.",
         H("The Unique Short-Cut Normal Form for Word Conjugacy"),
@@ -70,7 +67,7 @@ internal sealed class ConjugacyNormalFormDocument : IScribeDocumentDefinition
                     + "fixed-z unique short-cut normalization. The arbitrary-alphabet scope "
                     + "and whole-triple uniqueness are proved here. The linked source note "
                     + "records that boundary; no original mathematical novelty is claimed.")),
-                Paragraph(Cite(Source))),
+                Paragraph(Ref("D5/L/Automata/karhumaki2004words"))),
             DescribeRole.Theorem))));
 
     private static Formula ClassificationFormula()
