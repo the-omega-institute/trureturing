@@ -21,8 +21,9 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9Adjace
 
 open BalancedCriticalSpectrum (Q flip)
 open scoped Matrix
-open Q9IsotropicHuang (weightedLinear weightedAction flipSign)
-open private weightedLinear_apply weightedLinear_square flipSign_cast from
+open Q9IsotropicHuang
+  (weightedLinear weightedAction flipSign weightedLinear_apply weightedLinear_square)
+open private flipSign_cast from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 open private weight_flip trueDirections from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.WeightLayerParity

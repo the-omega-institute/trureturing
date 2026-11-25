@@ -254,3 +254,4 @@ For every natural c and positive natural m, A(c,m)=-m^2*w(c,m)-sum_{q<c} primeWe
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_envelope`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_floor`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_nonneg`
+- Dependency: [D5/S3/Analytic/Resolvent/PoissonKernelTail](../../Analytic/Resolvent/PoissonKernelTail.md)

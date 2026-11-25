@@ -124,5 +124,106 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+private abbrev LayerParams := Σ V : Type u, Σ _ : Fintype V, Σ _ : DecidableEq V,
+  Σ _ : V → ℕ, Σ _ : V, Σ _ : ℕ, ℕ
+
+private abbrev layerSignature : Signature where
+  Params := LayerParams.{u}
+  State p := p.1 → p.1 → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def layerDiagonal (p : LayerParams.{u}) (e : p.1 → p.1 → ℕ) : ℕ :=
+  letI : Fintype p.1 := p.2.1
+  ∑ a ∈ univ.filter (fun a => p.2.2.2.1 a = p.2.2.2.2.2.1), e a a
+
+private def layerActual : Realization layerSignature.{u} :=
+  realize layerSignature (fun _ p e => layerDiagonal p e) (fun a => nomatch a)
+
+private def zeroDiagonal : Realization layerSignature.{u} :=
+  realize layerSignature (fun _ _ _ => 0) (fun a => nomatch a)
+
+private abbrev layerArena : Arena where
+  signature := layerSignature.{u}
+  Law S := ∀ {V : Type u} [f : Fintype V] [de : DecidableEq V] (rank : V → ℕ)
+    (top : V) (r k : ℕ) (e : V → V → ℕ),
+    r < rank top →
+    (∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b) →
+    (∀ a ≠ top, 1 ≤ ∑ b, e a b) →
+    (∀ b ≠ top, 1 ≤ ∑ a, e a b) →
+    (∀ a ≠ top, (∑ b, e a b) ≤ k) →
+    (∀ b ≠ top, (∑ a, e a b) ≤ k) →
+    max ((univ.filter fun a => rank a ≤ r).card -
+        ((univ.filter fun a => rank a < r).card * k +
+          ∑ b ∈ univ.filter (fun b => rank b ≤ r), e top b))
+        ((univ.filter fun a => r ≤ rank a ∧ a ≠ top).card -
+        (((univ.filter fun a => r < rank a).erase top).card * k +
+          ∑ a ∈ univ.filter (fun a => r ≤ rank a ∧ a ≠ top), e a top))
+      ≤ S.readout () ⟨V, f, de, rank, top, r, k⟩ e
+
+private theorem zero_diagonal_fails : ¬ layerArena.{u}.Law zeroDiagonal.{u} := by
+  intro law
+  have failure := law testRank ⟨true⟩ 1 1 testEdges (by decide) (by decide)
+    (by decide) (by decide) (by decide) (by decide)
+  change (1 : ℕ) ≤ 0 at failure
+  omega
+
+def layerFamily : Registration layerArena.{u} (type_of% @two_sided_rank_capacity.{u}) where
+  actual := layerActual
+  bridge := Iff.rfl
+  variation := ⟨two_sided_rank_capacity, zeroDiagonal, zero_diagonal_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      exact ⟨zeroDiagonal, fun other h => (h (Subsingleton.elim other role)).elim,
+        rfl, zero_diagonal_fails⟩
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro role
+    let sample : LayerParams.{u} :=
+      ⟨ULift.{u} Bool, inferInstance, inferInstance, testRank, ⟨true⟩, 1, 1⟩
+    refine ⟨sample, fun _ _ => 0, testEdges, ?_⟩
+    change layerDiagonal sample (fun _ _ => 0) ≠ layerDiagonal sample testEdges
+    decide
+
+def layerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@two_sided_rank_capacity.{u}) (Realization layerSignature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity.layerCharge
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity.layerFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨layerArena⟩
+  objectArena := .source ⟨layerArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source layerArena ⟨layerFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize layerSignature (fun _ p e => layerDiagonal p e) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 5, 6]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity

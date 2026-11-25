@@ -7,7 +7,14 @@ doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
+  - D5/S3/Quantum/Analysis/RefinedBMV84
+  - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV67
+  - D5/S3/Quantum/Analysis/RefinedBMV54
+  - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -18,7 +25,11 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricIntervalSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
@@ -40,6 +51,82 @@ Theorem 1 and Lemma 2 give the known low-dimensional cases and the reduction
 from a stronger trace-power comparison. Section 7(iii), page 8, identifies
 the higher-dimensional cases with word counts `(3,3)` and `(4,3)`. Sections 3–5 derive the
 closed-walk trace expansion and the three-dimensional comparison.
+
+## Four copies of each factor
+
+Section 7(iii) identifies the three-dimensional (4,4) case. For every
+finite complex PSD pair A and B, the repository proof bounds the mean of
+the seventy word traces below by the trace of (AB)^4. The fourth moment
+of the Hermitian part of AB and the cyclic word counts combine to express
+the trace gap as a sum of nonnegative terms. Ando, Hiai and Okubo's
+Corollary 2.2(ii) gives the two weighted word comparisons used in the
+sum. Their Corollary 2.4 gives the upper word bound.
+The dyadic comparison from Hägele's Lemma 2 gives the exponential result.
+
+## Five copies of the first factor
+
+For the (5,4) comparison, the mean of the 126 word traces dominates
+the trace of A(AB)^4 by a sum of four Frobenius squares weighted by A.
+Three further Frobenius squares compare this intermediate trace to
+the trace of (A^(5/4) B)^4. The product proof permits a singular PSD
+first factor and an arbitrary Hermitian second factor. The dyadic
+comparison in Hägele's Lemma 2 gives the exponential lower bound.
+Burgdorf's Theorem 1.5 and Example 2.1(b) in arXiv:0802.1153v2
+give cyclic square decompositions for the classical coefficient bound.
+
+## Six and seven copies of the first factor
+
+The lower comparisons at (6,4) and (7,4) hold in every finite complex
+dimension. The mean of the 210 words at (6,4) dominates the trace of
+`(A^(3/2) B)^4` for PSD A and B. The mean of the 330 words at (7,4)
+dominates the trace of `(A^(7/4) B)^4` for PSD A and Hermitian B.
+Both results include singular A. The cyclic coefficient identities
+compare the means with balanced integer words. Three rational Gram
+blocks give the six-copy comparison, including one weighted by B on
+both sides. The seven-copy comparison uses a Gram block weighted by A.
+The dyadic comparison gives the exponential bounds with exponents
+`6H + 4K` and `7H + 4K`.
+
+## Eight copies of the first factor
+
+The (8,4) product comparison holds for every finite complex PSD pair.
+The mean of the 495 word traces dominates the fourth trace of the
+Hermitian part of A^(3/2) B A^(1/2) by three rational Gram blocks.
+The fourth trace of that Hermitian part bounds the trace of (A^2 B)^4.
+The proof treats singular A and B directly. The dyadic trace-power
+comparison from Lemma 2 gives the corresponding exponential bound.
+
+## Nine copies of the first factor
+
+At (9,4), the mean of the 715 word traces dominates the trace of
+(A^(9/4) B)^4 for PSD A and Hermitian B in every finite complex
+dimension, including singular A. One rational positive semidefinite
+Gram matrix on 15 half-words, weighted by A, compares the mean with
+the word trace with cyclic gaps (3,2,2,2). Two trace Cauchy–Schwarz
+inequalities give the balanced bound. The dyadic comparison from
+Hägele's Lemma 2 gives the lower bound by the trace of exp(9H + 4K)
+for the same word mean on exp H and exp K.
+
+The bounded search found no earlier proof of the unrestricted (9,4)
+lower bound. It located lower bounds for small p or restricted dimension
+(arXiv:2611.00129), results on upper-bound failure (arXiv:2603.19927 and
+arXiv:2605.17782), and work on the Stieltjes transform (arXiv:2611.03208).
+
+## Ten copies of the first factor
+
+At (10,4), the mean of the 1001 word traces dominates the trace of
+(A^(5/2) B)^4 for PSD A and B in every finite complex dimension,
+including singular A and B. Three rational positive semidefinite Gram
+blocks, of sizes 21, 15 and 6 with weights I/I, A/A and B/B, compare
+the mean with the trace of (A^3 B A^2 B)^2, with cyclic gaps (3,2,3,2).
+Trace Cauchy–Schwarz gives the fractional-power bound. Hägele's Lemma 2
+gives the lower bound by the trace of exp(10H + 4K) for the same word
+mean on exp H and exp K with Hermitian H and K.
+
+Independent rational review checked all 73 cyclic coefficients and the
+three Gram factorizations. Historical priority remains unverified after
+bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
+2610.31851 and 2611.23122.
 
 ## Scope and conventions
 
@@ -206,6 +293,37 @@ from one half to four, the same mixed sign holds from gap four. A sharper
 bound couples the linear correction to the leading square, and a
 divided-difference average bounds the radical contribution. When the gap
 is greater than eleven, the sign holds for all positive lower coordinates.
+
+For first degrees at least eleven, the original logarithmic kernel also
+has strictly negative mixed derivative when the lower coordinate is in
+(0, 1/2] and the log gap is in (0, 1]. Factoring the marginal zeros gives
+a continued integrand. For upper coordinates up to one, the low-strip
+enclosure gives its strict sign. From one to three halves, exact interval
+bounds on the marginal Taylor polynomials and the tilted joint moments
+give strict positivity at every integration point in the derivative identity.
+
+On the same range of lower coordinates, the mixed derivative is also
+strictly negative for gaps in [1, 3/2]. Three closed scalar bands cover
+the interval [1, 2], which contains every shifted gap in the geometric
+endpoint comparison.
+
+For first degrees at least eleven, the repository also proves strict
+negativity of the mixed derivative for every ordered pair of logarithmic
+coordinates with lower coordinate at least four. Short gaps through two
+and gaps from four have separate bounds. Between two and four, a finite
+cover and dyadic Taylor enclosures preserve the sign in the original
+normalized kernel.
+
+## Quantitative degree-three gap for finite traces
+
+In a unital C*-algebra with a positive finite trace, let the gap be the
+mean trace of the twenty words with three copies of each positive factor
+minus the trace of the cube of their product. The repository theorem
+`wordMean_three_trace_gap` bounds three times the square of the trace
+of the commutator's adjoint times the commutator by forty times the trace
+of the product times the gap. A rank-one term of the centered cubic
+kernel survives approximation by positive functions of the first factor.
+Under a faithful trace, the bound forces the factors to commute at equality.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

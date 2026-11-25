@@ -354,4 +354,134 @@ theorem rh_iff_quartic_integer_blocks :
       (pow_le_pow_right₀ hk1 (by decide : 3 ≤ 4)) hends
     exact hblock n hlo hhi
 
+/-- For ordered powers of an integer base, the left endpoint condition is exactly
+the natural ceiling condition. The upper endpoint is included. -/
+private theorem integer_power_block_subset_iff {v Z : ℝ} (hv : 0 ≤ v)
+    {p q k : ℕ} (hp : p ≠ 0) (hpq : p ≤ q) (hk : 1 ≤ k) :
+    Icc ((k : ℝ) ^ p) ((k : ℝ) ^ q) ⊆ Icc (v ^ p) Z ↔
+      ⌈v⌉₊ ≤ k ∧ (k : ℝ) ^ q ≤ Z := by
+  have hk1 : (1 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  rw [Set.Icc_subset_Icc_iff (pow_le_pow_right₀ hk1 hpq),
+    pow_le_pow_iff_left₀ hv (Nat.cast_nonneg k) hp, Nat.ceil_le]
+
+/-- Round the twelfth root up. At root scale at least five, the additive ceiling
+error fits in the gap between the sixteenth and eighteenth powers. -/
+theorem exists_quartic_block_in_power_window (A : ℕ) {Y : ℝ}
+    (hY : ((max A 5 : ℕ) : ℝ) ^ 12 ≤ Y) :
+    ∃ k ≥ max A 2,
+      Icc ((k : ℝ) ^ 12) ((k : ℝ) ^ 16) ⊆ Icc Y (Y ^ (3 / 2 : ℝ)) := by
+  let v : ℝ := Y ^ (1 / 12 : ℝ)
+  let k : ℕ := ⌈v⌉₊
+  have hB0 : 0 ≤ ((max A 5 : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hY0 : 0 ≤ Y := (pow_nonneg hB0 12).trans hY
+  have hv0 : 0 ≤ v := Real.rpow_nonneg hY0 _
+  have hv12 : v ^ 12 = Y := by
+    simpa only [v, one_div, Nat.cast_ofNat] using
+      (Real.rpow_inv_natCast_pow (n := 12) hY0 (by decide))
+  have hv18 : v ^ 18 = Y ^ (3 / 2 : ℝ) := by
+    rw [← hv12, ← Real.rpow_natCast_mul hv0 12 (3 / 2 : ℝ)]
+    rw [show (↑(12 : ℕ) : ℝ) * (3 / 2) = 18 by norm_num, Real.rpow_ofNat v 18]
+  have hB : ((max A 5 : ℕ) : ℝ) ≤ v := by
+    apply le_of_pow_le_pow_left₀ (by decide : (12 : ℕ) ≠ 0) hv0
+    simpa only [hv12] using hY
+  have h5B : (5 : ℝ) ≤ ((max A 5 : ℕ) : ℝ) := by
+    exact_mod_cast (le_max_right A 5)
+  have hv5 : (5 : ℝ) ≤ v := h5B.trans hB
+  have hkB : max A 5 ≤ k := by
+    exact_mod_cast (hB.trans (Nat.le_ceil v))
+  have hk : max A 2 ≤ k := (max_le_max_left A (by decide : (2 : ℕ) ≤ 5)).trans hkB
+  have hk1 : 1 ≤ k := by omega
+  have hround : (k : ℝ) ≤ (6 / 5 : ℝ) * v :=
+    (Nat.ceil_lt_add_one hv0).le.trans (by linarith only [hv5])
+  have hscale : (6 / 5 : ℝ) ^ 16 ≤ v ^ 2 := calc
+    _ ≤ (5 : ℝ) ^ 2 := by norm_num
+    _ ≤ _ := pow_le_pow_left₀ (by norm_num) hv5 2
+  have hupper : (k : ℝ) ^ 16 ≤ v ^ 18 := calc
+    _ ≤ ((6 / 5 : ℝ) * v) ^ 16 := pow_le_pow_left₀ (Nat.cast_nonneg k) hround 16
+    _ = (6 / 5 : ℝ) ^ 16 * v ^ 16 := mul_pow _ _ _
+    _ ≤ v ^ 2 * v ^ 16 := mul_le_mul_of_nonneg_right hscale (pow_nonneg hv0 16)
+    _ = v ^ 18 := by rw [← pow_add]
+  refine ⟨k, hk, ?_⟩
+  rw [← hv18, ← hv12]
+  exact (integer_power_block_subset_iff hv0 (by decide : (12 : ℕ) ≠ 0)
+    (by decide : (12 : ℕ) ≤ 16) hk1).2 ⟨le_rfl, hupper⟩
+
+private theorem fourth_power_mem_block {k n : ℕ} (hlo : k ^ 3 ≤ n) (hhi : n ≤ k ^ 4) :
+    (n : ℝ) ^ 4 ∈ Icc ((k : ℝ) ^ 12) ((k : ℝ) ^ 16) := by
+  have hlo' : (k : ℝ) ^ 3 ≤ (n : ℝ) := by exact_mod_cast hlo
+  have hhi' : (n : ℝ) ≤ (k : ℝ) ^ 4 := by exact_mod_cast hhi
+  refine Set.mem_Icc.mpr ⟨?_, ?_⟩
+  · calc
+      (k : ℝ) ^ 12 = ((k : ℝ) ^ 3) ^ 4 := by rw [← pow_mul]
+      _ ≤ (n : ℝ) ^ 4 := pow_le_pow_left₀ (pow_nonneg (Nat.cast_nonneg k) 3) hlo' 4
+  · calc
+      (n : ℝ) ^ 4 ≤ ((k : ℝ) ^ 4) ^ 4 := pow_le_pow_left₀ (Nat.cast_nonneg n) hhi' 4
+      _ = (k : ℝ) ^ 16 := by rw [← pow_mul]
+
+/-- Restrict each cofinal pointwise estimate to all the samples of one integer block. -/
+theorem quartic_integer_blocks_of_pointwise_windows
+    (h : ∀ κ : ℝ, 0 < κ → ∀ R : ℝ, ∃ Y : ℝ, R ≤ Y ∧
+      ∀ x ∈ Icc Y (Y ^ (3 / 2 : ℝ)), U x ≤ x ^ ((1 : ℝ) / 2 + κ)) :
+    ∀ κ : ℝ, 0 < κ → ∀ A : ℕ, ∃ k ≥ max A 2,
+      ∀ n : ℕ, k ^ 3 ≤ n → n ≤ k ^ 4 → U ((n : ℝ) ^ 4) ≤ ((n : ℝ) ^ 4) ^ (1 / 2 + κ) := by
+  intro κ hκ A
+  obtain ⟨Y, hY, hwindow⟩ := h κ hκ (((max A 5 : ℕ) : ℝ) ^ 12)
+  obtain ⟨k, hk, hsubset⟩ := exists_quartic_block_in_power_window A hY
+  refine ⟨k, hk, ?_⟩
+  intro n hlo hhi
+  exact hwindow ((n : ℝ) ^ 4) (hsubset (fourth_power_mem_block hlo hhi))
+
+/-- The width exponent only has to exceed the ratio 16/12 of the block endpoints. -/
+theorem eventually_exists_quartic_block {b : ℝ} (hb : (4 : ℝ) / 3 < b) (A : ℕ) :
+    ∀ᶠ Y : ℝ in atTop, ∃ k ≥ max A 2,
+      Icc ((k : ℝ) ^ 12) ((k : ℝ) ^ 16) ⊆ Icc Y (Y ^ b) := by
+  have hgap : 0 < b - (4 : ℝ) / 3 := sub_pos.mpr hb
+  filter_upwards [eventually_ge_atTop (((max A 2 : ℕ) : ℝ) ^ 12),
+    (tendsto_rpow_atTop hgap).eventually_ge_atTop ((2 : ℝ) ^ 16)] with Y hY hgapY
+  let v : ℝ := Y ^ (1 / 12 : ℝ)
+  let k : ℕ := ⌈v⌉₊
+  have hB2 : (2 : ℝ) ≤ ((max A 2 : ℕ) : ℝ) := by exact_mod_cast (le_max_right A 2)
+  have hY0 : 0 < Y := (pow_pos (by linarith : 0 < ((max A 2 : ℕ) : ℝ)) 12).trans_le hY
+  have hv0 : 0 ≤ v := Real.rpow_nonneg hY0.le _
+  have hv12 : v ^ 12 = Y := by
+    simpa only [v, one_div, Nat.cast_ofNat] using
+      (Real.rpow_inv_natCast_pow (n := 12) hY0.le (by decide))
+  have hv16 : v ^ 16 = Y ^ ((4 : ℝ) / 3) := by
+    change (Y ^ (1 / 12 : ℝ)) ^ (16 : ℕ) = Y ^ ((4 : ℝ) / 3)
+    rw [← Real.rpow_natCast _ 16, ← Real.rpow_mul hY0.le]
+    norm_num
+  have hB : ((max A 2 : ℕ) : ℝ) ≤ v := by
+    apply le_of_pow_le_pow_left₀ (by decide : (12 : ℕ) ≠ 0) hv0
+    simpa only [hv12] using hY
+  have hk : max A 2 ≤ k := by exact_mod_cast (hB.trans (Nat.le_ceil v))
+  have hround : (k : ℝ) ≤ 2 * v :=
+    (Nat.ceil_lt_add_one hv0).le.trans (by linarith only [hB2.trans hB])
+  have hupper : (k : ℝ) ^ 16 ≤ Y ^ b := calc
+    _ ≤ (2 * v) ^ 16 := pow_le_pow_left₀ (Nat.cast_nonneg k) hround 16
+    _ = (2 : ℝ) ^ 16 * Y ^ ((4 : ℝ) / 3) := by rw [mul_pow, hv16]
+    _ ≤ Y ^ (b - (4 : ℝ) / 3) * Y ^ ((4 : ℝ) / 3) :=
+      mul_le_mul_of_nonneg_right hgapY (Real.rpow_nonneg hY0.le _)
+    _ = _ := by rw [← Real.rpow_add hY0]; congr 1; ring
+  refine ⟨k, hk, ?_⟩
+  have hleft : v ^ 12 ≤ (k : ℝ) ^ 12 := pow_le_pow_left₀ hv0 (Nat.le_ceil v) 12
+  exact Set.Icc_subset_Icc (by simpa only [hv12] using hleft) hupper
+
+/-- At the limiting width, containing a full block forces alignment at its left endpoint. -/
+theorem quartic_block_subset_exact_width_iff {Y : ℝ} {k : ℕ}
+    (hY : 0 < Y) (hk : 1 ≤ k) :
+    Icc ((k : ℝ) ^ 12) ((k : ℝ) ^ 16) ⊆ Icc Y (Y ^ ((4 : ℝ) / 3)) ↔
+      Y = (k : ℝ) ^ 12 := by
+  have hk1 : (1 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hpow : ((k : ℝ) ^ 12) ^ ((4 : ℝ) / 3) = (k : ℝ) ^ 16 := by
+    rw [← Real.rpow_natCast_mul (Nat.cast_nonneg k) 12 ((4 : ℝ) / 3)]
+    rw [show (↑(12 : ℕ) : ℝ) * (4 / 3) = 16 by norm_num, Real.rpow_ofNat (k : ℝ) 16]
+  rw [Set.Icc_subset_Icc_iff (pow_le_pow_right₀ hk1 (by decide : (12 : ℕ) ≤ 16))]
+  constructor
+  · intro h
+    refine le_antisymm h.1 (le_of_not_gt fun hlt => ?_)
+    have hpowlt := Real.rpow_lt_rpow hY.le hlt (by norm_num : (0 : ℝ) < 4 / 3)
+    exact (not_lt_of_ge h.2) (hpow ▸ hpowlt)
+  · rintro rfl
+    exact ⟨le_rfl, hpow.ge⟩
+
 end D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling

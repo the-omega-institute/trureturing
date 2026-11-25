@@ -381,7 +381,7 @@ private theorem weighted_sine_abs_le_mass (hRH : RiemannHypothesis) (T v : ℝ) 
   rw [abs_mul, abs_of_nonneg hw]
   exact mul_le_of_le_one_right hw (Real.abs_sin_le_one _)
 
-private theorem weighted_sine_bddAbove (hRH : RiemannHypothesis) (T : ℝ) :
+theorem weighted_sine_bddAbove (hRH : RiemannHypothesis) (T : ℝ) :
     BddAbove (range (weightedSine hRH T)) :=
   ⟨harmonicMass hRH T, fun _ ⟨v, hv⟩ => hv ▸
     (le_abs_self (weightedSine hRH T v)).trans (weighted_sine_abs_le_mass hRH T v)⟩

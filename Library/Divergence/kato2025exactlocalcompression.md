@@ -11,6 +11,11 @@ strata_touched:
   - D5/S3/Quantum/Recovery/LocalCompression/KatoRankRefutation
   - D5/S3/Quantum/Recovery/LocalCompression/JointMarginalRank
   - D5/S3/Quantum/Measurements/FiniteLabelRecordDilation
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalReset
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetDistortion
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetOptimum
+  - D5/S3/Quantum/Recovery/LocalCompression/SignedTestRecordDimension
 license: citation-only
 triage: anchor
 ---
@@ -80,3 +85,41 @@ coordinates through the corresponding joint eigenvalue sum.
 [Fan, Theorem 1](https://doi.org/10.1073/pnas.35.11.652). Li, Poon and Wang
 study rank constraints when the marginals are prescribed.
 [Li–Poon–Wang](https://arxiv.org/abs/1710.11416v2)
+
+## Approximate pure-qutrit compression
+
+Section VII proposes approximate local compression as a direction for further
+work. The pure-qutrit increment keeps the normalized Bell source and its
+reference, and measures half the joint trace norm of the reconstruction error.
+For output in a fixed two-dimensional subspace the minimum is 2/3. Projection
+with reset attains it. A fixed encoder and decoder through a qubit attain at
+most 10189/15750 using a decoder with two Kraus operators. [Primary text, §VII](https://arxiv.org/abs/2309.07434v2)
+
+For plane-preserving encoders with diagonal reset, the companion
+*Exact Bell-source distortion with a reversible encoder on a hyperplane*
+manuscript gives a matched-coordinate comparison for arbitrary CPTP decoders.
+In dimension three, the lower block uses the square root of the weaker matched
+probability. Its entries follow from the decoder's Choi positivity and trace
+preservation, and the pure reset with a two-Kraus attenuating decoder realizes
+that block. The local manuscript is the source of this comparison. Kato
+Section VII supplies the approximate-compression setting.
+
+The companion isotropic-compression manuscript also supplies the stationary
+characteristic polynomial and the exact rational enclosure for the pure
+diagonal-reset minimum. The optimal amplitude lies strictly between
+0.80680296 and 0.80680298, and the attained error is one third of the
+stationary spectral parameter. The minimum uses the joint Bell-state error
+and permits any decoder after a plane-preserving diagonal reset. Kato §VII
+provides the research direction. Farber–Gour Theorem 5 optimizes purification
+fidelity, and Cha–Park–Lee Proposition 3.7 gives a nonisometric decoding
+advantage for average ensemble fidelity.
+[Farber–Gour](https://arxiv.org/abs/2610.14785) ·
+[Cha–Park–Lee](https://arxiv.org/abs/2605.01258)
+
+## Finite signed-test dimension bound
+
+Section VII motivates a static one-shot bound for a fixed finite experiment.
+The signed-test certificate compares density-weighted label loss to exact sign
+leakage and uses the spectral packing of each auxiliary label to bound the
+full trace-norm reconstruction error. The prescribed pure environment is
+part of the encoder isometry on the specified whole input space.

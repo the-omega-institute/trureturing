@@ -224,7 +224,11 @@ describes a wider design whose implementation remains incomplete.
 
 Mathematical reuse rests on the statements, checked proof terms and axiom
 dependencies in the [Lean source](D5/). The
-[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities. A declaration
+row can also show the libraries and axioms measured from its compiled statement
+and proof. An omitted library field leaves provenance unknown. An omitted axiom
+field gives the standard three-axiom upper bound, and an empty array records
+a measurement of zero axioms. [Reading and refreshing frozen evidence](docs/CONTRIBUTING.md#refresh-frozen-declaration-evidence)
 [Theory prose](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev/docs/develop/theory/) supplies research input, and
 [experiments](Evidence/) supply observations within their declared scope;
 neither substitutes for a Lean proof. The C# harness checks repository rules,
@@ -293,6 +297,15 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 [Read the explanation](Blueprint/D5/S0/Conventions/WDigits.md).
 `make help` lists the repository's command entry points.
+
+## Strict Omega mathematics
+
+The `trureturing` Lake package also provides `OmegaInit` and `OmegaMath` under
+`src/`. A strict Lean file starts with `prelude` and imports the module it uses.
+For the chapter 39 projective overlap, import `OmegaMath.Projective.Basic` to
+compute the reading or `OmegaMath.Projective` to use the scaling theorem.
+The audit replays each strict import closure in the Lean kernel and checks every
+declaration for axiom dependencies. [Module diagram, audit and rebuild measurements](src/README.md)
 
 ## Take part
 

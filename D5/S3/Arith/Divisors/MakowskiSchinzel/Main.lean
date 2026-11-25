@@ -23,11 +23,6 @@ namespace D5.S3.Arith.MakowskiSchinzel
 
 open Finset UniqueFactorizationMonoid
 
-/-- At an odd integer, adjoining the prime two halves the ratio exactly. -/
-theorem alpha_two_mul {m : ℕ} (hm : Odd m) : alpha (2 * m) = alpha m / 2 := by
-  simp only [alpha, Nat.totient_two_mul_of_odd hm, Nat.cast_mul, Nat.cast_ofNat]
-  ring
-
 /-- The non-Fermat count is unchanged on passing to the radical. -/
 theorem eta_radical (n : ℕ) : eta (radical n) = eta n := by
   classical
@@ -46,51 +41,74 @@ theorem eta_two_mul (m : ℕ) : eta (2 * m) = eta m := by
   simp only [mem_filter, mem_union, mem_singleton]
   tauto
 
+/-- The two sigma-totient bounds are equivalent to their odd squarefree restriction.
+The closure assumption asks only for the odd squarefree core of each nonzero input:
+its radical if odd, or its radical with the single factor two removed. Closure under
+arbitrary divisors is unnecessary. Omitting either core case would leave the corresponding
+parity of the radical outside the hypothesis of the restricted inequality. -/
+theorem lift_odd_squarefree_iff (P : ℕ → Prop)
+    (hP : ∀ n : ℕ, n ≠ 0 → P n → ∀ m : ℕ, Odd m →
+      radical n = m ∨ radical n = 2 * m → P m) :
+    (∀ m : ℕ, Odd m → Squarefree m → P m → 1 ≤ alpha m) ↔
+      ∀ n : ℕ, P n → n ≤ 2 * ArithmeticFunction.sigma 1 n.totient ∧
+        (Odd n → n ≤ ArithmeticFunction.sigma 1 n.totient) := by
+  constructor
+  · intro hodd n hnP
+    by_cases hn0 : n = 0
+    · subst n
+      simp
+    have hnq : (0 : ℚ) < n := by exact_mod_cast Nat.pos_of_ne_zero hn0
+    let d := radical n
+    have hdsq : Squarefree d := squarefree_radical
+    have hlift : alpha d ≤ alpha n := alpha_radical_le hn0
+    have hhalf : (1 / 2 : ℚ) ≤ alpha d := by
+      rcases Nat.even_or_odd d with heven | hdo
+      · obtain ⟨m, hm⟩ := heven
+        have hdm : d = 2 * m := by omega
+        have hmsq : Squarefree m := Squarefree.squarefree_of_dvd
+          (by rw [hdm]; exact dvd_mul_left m 2) hdsq
+        have hmo : Odd m := by
+          rcases Nat.even_or_odd m with ⟨k, hk⟩ | ho
+          · exfalso
+            apply Nat.squarefree_iff_prime_squarefree.mp hdsq 2 Nat.prime_two
+            exact ⟨k, by omega⟩
+          · exact ho
+        have hh := hodd m hmo hmsq (hP n hn0 hnP m hmo (Or.inr hdm))
+        rw [hdm, alpha_two_mul hmo]
+        linarith
+      · have hh := hodd d hdo hdsq (hP n hn0 hnP d hdo (Or.inl rfl))
+        linarith
+    constructor
+    · have hh := hhalf.trans hlift
+      rw [alpha, le_div_iff₀ hnq] at hh
+      have h' : (n : ℚ) ≤ 2 * (ArithmeticFunction.sigma 1 n.totient : ℚ) := by
+        linarith
+      exact_mod_cast h'
+    · intro hnodd
+      have hdo : Odd d := hnodd.of_dvd_nat radical_dvd_self
+      have hh := (hodd d hdo hdsq (hP n hn0 hnP d hdo (Or.inl rfl))).trans hlift
+      rw [alpha, le_div_iff₀ hnq] at hh
+      norm_num at hh
+      exact_mod_cast hh
+  · intro h m hm hsq hmP
+    have hle := (h m hmP).2 hm
+    have hmq : (0 : ℚ) < m := by exact_mod_cast Nat.pos_of_ne_zero hsq.ne_zero
+    rw [alpha, le_div_iff₀ hmq, one_mul]
+    exact_mod_cast hle
+
 /-- A strong inequality on odd squarefree integers lifts to all multiplicities and parities. -/
 theorem lift_odd_squarefree (T : ℕ)
     (hodd : ∀ m : ℕ, Odd m → Squarefree m → eta m ≤ T → 1 ≤ alpha m)
     (n : ℕ) (heta : eta n ≤ T) :
     n ≤ 2 * ArithmeticFunction.sigma 1 n.totient ∧
       (Odd n → n ≤ ArithmeticFunction.sigma 1 n.totient) := by
-  by_cases hn0 : n = 0
-  · subst n
-    simp
-  have hnq : (0 : ℚ) < n := by exact_mod_cast Nat.pos_of_ne_zero hn0
-  let d := radical n
-  have hd0 : d ≠ 0 := (Nat.radical_pos n).ne'
-  have hdsq : Squarefree d := squarefree_radical
-  have hdeta : eta d ≤ T := by simpa [d, eta_radical] using heta
-  have hlift : alpha d ≤ alpha n := alpha_radical_le hn0
-  have hhalf : (1 / 2 : ℚ) ≤ alpha d := by
-    rcases Nat.even_or_odd d with heven | hdo
-    · obtain ⟨m, hm⟩ := heven
-      have hdm : d = 2 * m := by omega
-      have hmsq : Squarefree m := Squarefree.squarefree_of_dvd
-        (by rw [hdm]; exact dvd_mul_left m 2) hdsq
-      have hmo : Odd m := by
-        rcases Nat.even_or_odd m with ⟨k, hk⟩ | ho
-        · exfalso
-          apply Nat.squarefree_iff_prime_squarefree.mp hdsq 2 Nat.prime_two
-          exact ⟨k, by omega⟩
-        · exact ho
-      have hmeta : eta m ≤ T := by simpa [hdm, eta_two_mul] using hdeta
-      have hh := hodd m hmo hmsq hmeta
-      rw [hdm, alpha_two_mul hmo]
-      linarith
-    · have hh := hodd d hdo hdsq hdeta
-      linarith
-  constructor
-  · have h := hhalf.trans hlift
-    rw [alpha, le_div_iff₀ hnq] at h
-    have h' : (n : ℚ) ≤ 2 * (ArithmeticFunction.sigma 1 n.totient : ℚ) := by
-      linarith
-    exact_mod_cast h'
-  · intro hnodd
-    have hdo : Odd d := hnodd.of_dvd_nat radical_dvd_self
-    have h := (hodd d hdo hdsq hdeta).trans hlift
-    rw [alpha, le_div_iff₀ hnq] at h
-    norm_num at h
-    exact_mod_cast h
+  apply (lift_odd_squarefree_iff (fun k => eta k ≤ T) ?_).mp hodd n heta
+  intro k _ hk m _ hcore
+  rcases hcore with hcore | hcore
+  · simpa only [← hcore, eta_radical] using hk
+  · have he : eta m = eta k := by
+      rw [← eta_two_mul m, ← hcore, eta_radical]
+    simpa only [he] using hk
 
 /-- An odd predecessor divisor greater than one forces a non-Fermat prime factor. -/
 theorem primeSources_subset_nonFermat (m : ℕ) {r : ℕ} (hr : 1 < r) (hro : Odd r) :
@@ -147,11 +165,6 @@ theorem source_certificate_obstruction {m r : ℕ} (hm : m ≠ 0) (hr : r.Prime)
   rw [hcancel] at hh
   simpa only [geom, one_div, Certificate.lowerProduct_sort] using hh
 
-#print axioms primeSources_subset_nonFermat
-#print axioms primeSources_card_le_eta
-#print axioms predecessor_dvd_totient
-#print axioms primeSources_nonempty_iff
-#print axioms source_certificate_obstruction
 
 
 
@@ -232,11 +245,5 @@ theorem makowski_schinzel_eta_le_42 (n : ℕ) (heta : eta n ≤ 42) :
       (Odd n → n ≤ ArithmeticFunction.sigma 1 n.totient) := by
   exact lift_odd_squarefree 42 (fun m hmo _ hme => odd_alpha_eta_le_42 m hmo hme) n heta
 
-#print axioms alpha_two_mul
-#print axioms eta_radical
-#print axioms eta_two_mul
-#print axioms lift_odd_squarefree
-#print axioms odd_alpha_eta_le_42
-#print axioms makowski_schinzel_eta_le_42
 
 end D5.S3.Arith.MakowskiSchinzel

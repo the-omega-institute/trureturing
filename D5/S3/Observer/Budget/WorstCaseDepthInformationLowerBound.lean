@@ -236,7 +236,7 @@ def adaptiveProtocol {State : Type u} (B : Nat) :
       .query (fun state => code state (Fin.last depth)) fun _answer =>
         adaptiveProtocol B depth fun state coordinate => code state coordinate.castSucc
 
-private theorem adaptiveTranscript_adaptiveProtocol_eq_iff
+theorem adaptiveTranscript_adaptiveProtocol_eq_iff
     {State : Type u} {B depth : Nat} (code : State -> Fin depth -> Fin B)
     (left right : State) :
     adaptiveTranscript (adaptiveProtocol B depth code) left =

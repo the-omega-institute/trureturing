@@ -16,6 +16,14 @@ internal sealed class MakowskiSchinzelMainDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sigma-totient inequality for eta at most forty-two",
         H("The sigma-totient inequality for eta at most forty-two"), Blocks(
+            Node("lift_odd_squarefree_iff", "The exact odd squarefree reduction", GeneralLift(),
+                "For a predicate P closed under taking the odd squarefree core of a " +
+                "nonzero integer, the inequality alpha(m)>=1 on odd squarefree inputs " +
+                "satisfying P is equivalent to both sigma-totient bounds on all inputs " +
+                "satisfying P. The core is the radical when odd, and half the radical " +
+                "when even. No closure under other divisors is required. Both parity " +
+                "cases are needed to apply the restricted bound to their respective " +
+                "cores. Zero needs no closure assumption because both bounds vanish."),
             Node("lift_odd_squarefree", "Lifting from odd squarefree integers", Lift(),
                 "A support-bounded inequality for odd squarefree integers implies the " +
                 "factor-two inequality for all natural integers and the stronger " +
@@ -50,6 +58,22 @@ internal sealed class MakowskiSchinzelMainDocument : IScribeDocumentDefinition
         AssessedProvenance.FromRepo(Source, Cohen, Pomerance),
         Blocks(Paragraph(Text(prose))),
         definition ? DescribeRole.Definition : DescribeRole.Theorem);
+    private static Formula GeneralLift()
+    {
+        var n = V("n"); var m = V("m");
+        var rad = Call("radical", n);
+        var cores = Or(Eq(rad, m), Eq(rad, Mul(D(2), m)));
+        var closed = All("n", Nat(), Imp(Ne(n, D(0)), Imp(Call("P", n),
+            All("m", Nat(), Imp(Call("Odd", m), Imp(cores, Call("P", m)))))));
+        var restricted = All("m", Nat(), Imp(Call("Odd", m), Imp(Call("Squarefree", m),
+            Imp(Call("P", m), Le(D(1), Call("alpha", m))))));
+        var sigma = Call("sigma", D(1), Call("totient", n));
+        var bounds = All("n", Nat(), Imp(Call("P", n),
+            And(Le(n, Mul(D(2), sigma)), Imp(Call("Odd", n), Le(n, sigma)))));
+        return All("P", Call("Function", Nat(), Call("Prop")),
+            Imp(closed, new Formula.Logic(restricted, FormulaLogicOperator.Iff, bounds)));
+    }
+
     private static Formula Lift()
     {
         var t = V("T"); var n = V("n"); var m = V("m");
@@ -74,6 +98,12 @@ internal sealed class MakowskiSchinzelMainDocument : IScribeDocumentDefinition
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Or, b);
     private static Formula Le(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Imp(Formula a, Formula b) =>

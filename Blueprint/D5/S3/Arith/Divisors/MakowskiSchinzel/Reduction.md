@@ -60,7 +60,21 @@ $$\forall n \in \mathbb{N},\; n \ne 0 \Rightarrow \operatorname{alpha}\left(\ope
 
 Passing to the radical preserves the prime support and decreases the totient's abundancy index by divisibility. The result compares the normalized ratios independently of the prime exponents. The nonzero condition is necessary: radical(0)=1, alpha(1)=1 and alpha(0)=0.
 
-**Theorem 1.5 (A squarefree minimal counterexample).**
+**Theorem 1.5 (Adjoining the factor two).**
+
+$$\forall m \in \mathbb{N},\; \operatorname{Odd}\left(m\right) \Rightarrow \operatorname{alpha}\left(2 \cdot m\right) = \frac{\operatorname{alpha}\left(m\right)}{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.alpha_two_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* A. Mąkowski and A. Schinzel (1964). *Mąkowski–Schinzel, Colloquium Mathematicum 13, 95–99*. DOI: [10.4064/cm-13-1-95-99](https://doi.org/10.4064/cm-13-1-95-99). URL: <https://doi.org/10.4064/cm-13-1-95-99>.
+
+*Commentary.*
+
+For odd m, adjoining two preserves the totient and halves the normalized sigma-totient ratio. The oddness premise cannot be dropped: at m=2 the two sides are 3/4 and 1/4. The identity also holds at m=0.
+
+**Theorem 1.6 (A squarefree minimal counterexample).**
 
 $$\forall P \in \mathbb{N} \to Prop,\; \left(\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \operatorname{Odd}\left(b\right) \Rightarrow \left(a \mid b \Rightarrow \left(P\left(b\right) \Rightarrow P\left(a\right)\right)\right)\right) \Rightarrow \left(\left(\exists n \in \mathbb{N},\; \operatorname{Odd}\left(n\right) \land \left(P\left(n\right) \land \operatorname{alpha}\left(n\right) < 1\right)\right) \Rightarrow \left(\exists m \in \mathbb{N},\; \operatorname{Odd}\left(m\right) \land \left(P\left(m\right) \land \left(\operatorname{Squarefree}\left(m\right) \land \left(\operatorname{alpha}\left(m\right) < 1 \land \left(\left(\forall d \in \mathbb{N},\; d \mid m \Rightarrow \left(d < m \Rightarrow 1 \le \operatorname{alpha}\left(d\right)\right)\right) \land \left(\forall d \in \mathbb{N},\; \operatorname{Odd}\left(d\right) \Rightarrow \left(P\left(d\right) \Rightarrow \left(d < m \Rightarrow 1 \le \operatorname{alpha}\left(d\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -79,5 +93,6 @@ For a class P closed under divisors of odd members, an odd counterexample yields
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.alpha`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.alpha_factorization`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.alpha_radical_le`
+- Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.alpha_two_mul`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.eta`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction.exists_minimal_odd_counterexample`

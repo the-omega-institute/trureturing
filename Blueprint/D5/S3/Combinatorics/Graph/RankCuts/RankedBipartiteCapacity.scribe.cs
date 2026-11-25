@@ -9,7 +9,31 @@ internal sealed class RankedBipartiteCapacityDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Use degree capacities to bound the charge in an ordered bipartite graph.",
         H("Capacity bounds for ranked bipartite graphs"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("two-sided-capacity-by-rank"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteCapacity.two_sided_rank_capacity"),
+                H("Two-sided capacity at each rank"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Call("CapacityDeficit", F.Id("r")),
+                    FormulaRelationOperator.LessThanOrEqual,
+                    Call("DiagonalMultiplicity", F.Id("r"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Use two copies of a finite vertex set ranked by natural numbers "
+                        + "and natural-valued edge multiplicities. Fix an exceptional vertex t of "
+                        + "rank above r. Ordinary positive rows are diagonal or go up in rank. Each "
+                        + "ordinary row and column has total multiplicity between one and k.")),
+                    Paragraph(Text("The lower deficit subtracts k times the number of rows below r and "
+                        + "the exceptional row's actual inflow to the columns at or below r from the "
+                        + "number of those columns. The upper deficit uses the ordinary rows at or above "
+                        + "r, the number of ordinary columns strictly above r multiplied by k, and the "
+                        + "actual outflow from ordinary rows of rank at least r to the exceptional column. "
+                        + "Both differences are truncated at "
+                        + "zero. Their maximum is CapacityDeficit(r), and DiagonalMultiplicity(r) sums "
+                        + "the diagonal at rank r."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("odd-rank-diagonal-capacity"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteCapacity.paid_edges_ge_rank_capacity"),
             H("Summed capacity deficits bound the odd-rank edge charge"),

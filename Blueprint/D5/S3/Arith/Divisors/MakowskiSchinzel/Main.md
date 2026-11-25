@@ -4,7 +4,25 @@
 
 The sigma-totient inequality for eta at most forty-two
 
-**Theorem 1.1 (Lifting from odd squarefree integers).**
+**Theorem 1.1 (The exact odd squarefree reduction).**
+
+$$\forall P \in \operatorname{Function}\left(\mathbb{N}, \operatorname{Prop}\left(\right)\right),\; \left(\forall n \in \mathbb{N},\; n \ne 0 \Rightarrow \left(\operatorname{P}\left(n\right) \Rightarrow \left(\forall m \in \mathbb{N},\; \operatorname{Odd}\left(m\right) \Rightarrow \left(\left(\operatorname{radical}\left(n\right) = m \lor \operatorname{radical}\left(n\right) = 2 \cdot m\right) \Rightarrow \operatorname{P}\left(m\right)\right)\right)\right)\right) \Rightarrow \left(\left(\forall m \in \mathbb{N},\; \operatorname{Odd}\left(m\right) \Rightarrow \left(\operatorname{Squarefree}\left(m\right) \Rightarrow \left(\operatorname{P}\left(m\right) \Rightarrow 1 \le \operatorname{alpha}\left(m\right)\right)\right)\right) \Leftrightarrow \left(\forall n \in \mathbb{N},\; \operatorname{P}\left(n\right) \Rightarrow \left(n \le 2 \cdot \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right) \land \left(\operatorname{Odd}\left(n\right) \Rightarrow n \le \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/MakowskiSchinzel/Main.lift_odd_squarefree_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* A. Mąkowski and A. Schinzel (1964). *Mąkowski–Schinzel, Colloquium Mathematicum 13, 95–99*. DOI: [10.4064/cm-13-1-95-99](https://doi.org/10.4064/cm-13-1-95-99). URL: <https://doi.org/10.4064/cm-13-1-95-99>.
+
+*Acknowledgement.* Graeme Cohen (1997). *On a conjecture of Mąkowski and Schinzel*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
+
+*Acknowledgement.* Carl Pomerance (2026). *A bound for the Mąkowski–Schinzel conjecture concerning the arithmetic functions σ and ϕ*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
+
+*Commentary.*
+
+For a predicate P closed under taking the odd squarefree core of a nonzero integer, the inequality alpha(m)>=1 on odd squarefree inputs satisfying P is equivalent to both sigma-totient bounds on all inputs satisfying P. The core is the radical when odd, and half the radical when even. No closure under other divisors is required. Both parity cases are needed to apply the restricted bound to their respective cores. Zero needs no closure assumption because both bounds vanish.
+
+**Theorem 1.2 (Lifting from odd squarefree integers).**
 
 $$\forall T \in \mathbb{N},\; \left(\forall m \in \mathbb{N},\; \operatorname{Odd}\left(m\right) \Rightarrow \left(\operatorname{Squarefree}\left(m\right) \Rightarrow \left(\operatorname{eta}\left(m\right) \le T \Rightarrow 1 \le \operatorname{alpha}\left(m\right)\right)\right)\right) \Rightarrow \left(\forall n \in \mathbb{N},\; \operatorname{eta}\left(n\right) \le T \Rightarrow \left(n \le 2 \cdot \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right) \land \left(\operatorname{Odd}\left(n\right) \Rightarrow n \le \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right)\right)\right)\right)$$
 
@@ -14,15 +32,15 @@ $$\forall T \in \mathbb{N},\; \left(\forall m \in \mathbb{N},\; \operatorname{Od
 
 *Acknowledgement.* A. Mąkowski and A. Schinzel (1964). *Mąkowski–Schinzel, Colloquium Mathematicum 13, 95–99*. DOI: [10.4064/cm-13-1-95-99](https://doi.org/10.4064/cm-13-1-95-99). URL: <https://doi.org/10.4064/cm-13-1-95-99>.
 
-*Acknowledgement.* Cohen (1997). *Cohen, Colloquium Mathematicum 74, 1–8*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
+*Acknowledgement.* Graeme Cohen (1997). *On a conjecture of Mąkowski and Schinzel*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
 
-*Acknowledgement.* Carl Pomerance (2026). *Pomerance, Mąkowski–Schinzel conjecture preprint*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
+*Acknowledgement.* Carl Pomerance (2026). *A bound for the Mąkowski–Schinzel conjecture concerning the arithmetic functions σ and ϕ*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
 
 *Commentary.*
 
 A support-bounded inequality for odd squarefree integers implies the factor-two inequality for all natural integers and the stronger inequality for odd ones. Radical reduction removes all multiplicities; adjoining a single factor of 2 halves the ratio. Zero is included because both natural-number inequalities then have zero on both sides.
 
-**Theorem 1.2 (The stronger odd-integer inequality).**
+**Theorem 1.3 (The stronger odd-integer inequality).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Odd}\left(n\right) \Rightarrow \left(\operatorname{eta}\left(n\right) \le 42 \Rightarrow 1 \le \operatorname{alpha}\left(n\right)\right)$$
 
@@ -32,15 +50,15 @@ $$\forall n \in \mathbb{N},\; \operatorname{Odd}\left(n\right) \Rightarrow \left
 
 *Acknowledgement.* A. Mąkowski and A. Schinzel (1964). *Mąkowski–Schinzel, Colloquium Mathematicum 13, 95–99*. DOI: [10.4064/cm-13-1-95-99](https://doi.org/10.4064/cm-13-1-95-99). URL: <https://doi.org/10.4064/cm-13-1-95-99>.
 
-*Acknowledgement.* Cohen (1997). *Cohen, Colloquium Mathematicum 74, 1–8*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
+*Acknowledgement.* Graeme Cohen (1997). *On a conjecture of Mąkowski and Schinzel*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
 
-*Acknowledgement.* Carl Pomerance (2026). *Pomerance, Mąkowski–Schinzel conjecture preprint*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
+*Acknowledgement.* Carl Pomerance (2026). *A bound for the Mąkowski–Schinzel conjecture concerning the arithmetic functions σ and ϕ*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
 
 *Commentary.*
 
 Every odd n with at most forty-two distinct non-Fermat odd prime divisors has alpha(n)>=1. The least odd prime divisor of the totient is either excluded by the finite support inequalities or contradicted by the geometric tail bound. A power-of-two totient is handled separately.
 
-**Theorem 1.3 (Both inequalities with unbounded multiplicity).**
+**Theorem 1.4 (Both inequalities with unbounded multiplicity).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{eta}\left(n\right) \le 42 \Rightarrow \left(n \le 2 \cdot \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right) \land \left(\operatorname{Odd}\left(n\right) \Rightarrow n \le \operatorname{sigma}\left(1, \operatorname{totient}\left(n\right)\right)\right)\right)$$
 
@@ -50,9 +68,9 @@ $$\forall n \in \mathbb{N},\; \operatorname{eta}\left(n\right) \le 42 \Rightarro
 
 *Acknowledgement.* A. Mąkowski and A. Schinzel (1964). *Mąkowski–Schinzel, Colloquium Mathematicum 13, 95–99*. DOI: [10.4064/cm-13-1-95-99](https://doi.org/10.4064/cm-13-1-95-99). URL: <https://doi.org/10.4064/cm-13-1-95-99>.
 
-*Acknowledgement.* Cohen (1997). *Cohen, Colloquium Mathematicum 74, 1–8*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
+*Acknowledgement.* Graeme Cohen (1997). *On a conjecture of Mąkowski and Schinzel*. DOI: [10.4064/cm-74-1-1-8](https://doi.org/10.4064/cm-74-1-1-8). URL: <https://doi.org/10.4064/cm-74-1-1-8>.
 
-*Acknowledgement.* Carl Pomerance (2026). *Pomerance, Mąkowski–Schinzel conjecture preprint*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
+*Acknowledgement.* Carl Pomerance (2026). *A bound for the Mąkowski–Schinzel conjecture concerning the arithmetic functions σ and ϕ*. URL: <https://math.dartmouth.edu/~carlp/msconj2.pdf>.
 
 *Commentary.*
 
@@ -61,6 +79,7 @@ For every natural n with eta(n)<=42, n<=2 sigma(phi(n)); when n is odd, n<=sigma
 ## References
 
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Main.lift_odd_squarefree`
+- Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Main.lift_odd_squarefree_iff`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Main.makowski_schinzel_eta_le_42`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Main.odd_alpha_eta_le_42`
 - Dependency: [D5/S3/Arith/Divisors/MakowskiSchinzel/Deletion](Deletion.md)

@@ -93,7 +93,7 @@ private theorem part_power (m : ℕ) (μ : YoungDiagram) (hmary : IsMAry m μ)
     (YoungDiagram.mem_iff_lt_colLen.mpr (List.mem_range.mp hi))))
 
 
-private theorem square_modulus (m : ℕ) (μ : YoungDiagram)
+theorem square_modulus (m : ℕ) (μ : YoungDiagram)
     (hcmp : IsCMP m μ) (hne : 0 < μ.rowLen 0) (hself : μ.transpose = μ) :
     ((m : ℤ) - 1) ^ 2 ∣ (μ.card : ℤ) - (2 * (μ.rowLen 0 : ℤ) - 1) := by
   classical

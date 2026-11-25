@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 internal sealed class ArcherCyclicPadovanCountDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/ArcherCyclicPadovanCount.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/archer2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/archer2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The good-word counts satisfy a recurrence involving the auxiliary classes.",
