@@ -264,6 +264,17 @@ private lemma odd_entry_nonneg (g x y : ℝ) (hg : 0 < g) (hx : 0 < x) (hy : 0 <
   unfold oddGram
   positivity
 
+/-- The common marginal-dependent coefficient, sharpened at coincident nodes. -/
+def parityMultiplier (δ : ℝ) : ℝ :=
+  if δ = 1 then 1 else 1 + 2 / (1 + δ^2)
+
+private lemma odd_gram_one_le (g : ℝ) (hg : 0 < g) (hg1 : g ≤ 1) :
+    1 ≤ oddGram g 1 1 := by
+  have h1 : (0 : ℝ) < 1 := by norm_num
+  rw [oddGram_eq _ _ _ hg h1 h1, even_diag _ h1]
+  have h := correction_diag g 1 hg h1 hg1 le_rfl
+  linarith
+
 /-- The unweighted odd reciprocal Gram already controls the paired
 arcsine functional with the reviewed marginal-dependent coefficient.
 The statement includes `δ = 1` and `g = δ` without a rank assumption. -/
@@ -279,10 +290,7 @@ private theorem paired_odd_bound (g δ a b : ℝ) (hg : 0 < g) (hg1 : g ≤ 1)
     have he : δ^2 ≤ 1 := by nlinarith [mul_nonneg hδ.le (sub_nonneg.mpr hδ1)]
     have hf : 1 ≤ 2/(1+δ^2) := (le_div_iff₀ (by positivity)).2 (by linarith)
     linarith
-  have hq1 : 1 ≤ oddGram g 1 1 := by
-    rw [oddGram_eq _ _ _ hg h1 h1, even_diag _ h1]
-    have h := correction_diag g 1 hg h1 hg1 le_rfl
-    linarith
+  have hq1 := odd_gram_one_le g hg hg1
   have hqδ : (1+δ^2)/2 ≤ oddGram g δ δ := by
     rw [oddGram_eq _ _ _ hg hδ hδ, even_diag _ hδ]
     linarith only [correction_diag g δ hg hδ hg1 hδ1]
@@ -409,9 +417,9 @@ private lemma odd_energy_integral (g δ a b : ℝ) (hg : 0 < g) (hδ : 0 < δ) :
 
 /-- The actual square-root-weighted reciprocal integral in the odd parity
 sector. Both signed coefficients occur in the same square before integration. -/
-private theorem weighted_odd_bound (g δ a b : ℝ) (hg : 0 < g) (hg1 : g ≤ 1)
-    (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
-    (a+b)^2 ≤ (1+2/(1+δ^2)) *
+private theorem weighted_odd_bound (g δ a b : ℝ)
+    (hg : 0 < g) (hg1 : g ≤ 1) (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
+    (a+b)^2 ≤ parityMultiplier δ *
       (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*oddEnergy g δ a b t) := by
   have hmono : (∫ t in Ioi (0:ℝ), oddEnergy g δ a b t) ≤
       ∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*oddEnergy g δ a b t := by
@@ -421,11 +429,25 @@ private theorem weighted_odd_bound (g δ a b : ℝ) (hg : 0 < g) (hg1 : g ≤ 1)
     have ht0 : 0 < t := ht
     have hs : 1 ≤ Real.sqrt (1+t) := by
       simpa using Real.sqrt_le_sqrt (show 1 ≤ 1+t by linarith)
-    have he : 0 ≤ oddEnergy g δ a b t := by unfold oddEnergy; positivity
+    have he : 0 ≤ oddEnergy g δ a b t := by
+      unfold oddEnergy
+      positivity
     simpa using mul_le_mul_of_nonneg_right hs he
   rw [odd_energy_integral g δ a b hg hδ] at hmono
-  exact (paired_odd_bound g δ a b hg hg1 hδ hδ1).trans
-    (mul_le_mul_of_nonneg_left hmono (by positivity))
+  by_cases hδeq : δ = 1
+  · subst δ
+    rw [parityMultiplier, ite_eq_left (show (1 : ℝ) = 1 from rfl), one_mul]
+    calc
+      (a+b)^2 ≤ (a+b)^2 * oddGram g 1 1 := by
+        simpa only [mul_one] using
+          mul_le_mul_of_nonneg_left
+            (odd_gram_one_le g hg hg1) (sq_nonneg (a+b))
+      _ = a^2*oddGram g 1 1 + 2*a*b*oddGram g 1 1 +
+          b^2*oddGram g 1 1 := by ring
+      _ ≤ _ := hmono
+  · rw [parityMultiplier, ite_eq_right hδeq]
+    exact (paired_odd_bound g δ a b hg hg1 hδ hδ1).trans
+      (mul_le_mul_of_nonneg_left hmono (by positivity))
 
 private lemma root_tail (a : ℝ) (ha : 0 < a) :
     IntegrableOn (fun t : ℝ => 1/(Real.sqrt (a+t)*(a+t))) (Ioi 0) ∧
@@ -489,6 +511,23 @@ private lemma weighted_pair_integrable (x y : ℝ) (hx : 0 < x) (hx1 : x ≤ 1)
 /-- The normalized even Gram with its original change-of-variables weight. -/
 private def evenGram (x y : ℝ) : ℝ :=
   x*y/2 * ∫ t in Ioi (0:ℝ), Real.sqrt (1+t) * (1/((x^2+t)*(y^2+t)))
+
+private lemma even_gram_one : evenGram 1 1 = 1 := by
+  have he :
+      (∫ t in Ioi (0 : ℝ),
+        Real.sqrt (1+t) * (1 / ((1+t)*(1+t)))) =
+      (∫ t in Ioi (0 : ℝ),
+        1 / (Real.sqrt (1+t)*(1+t))) := by
+    apply integral_congr_ae
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    have ht0 : 0 < t := ht
+    calc
+      _ = Real.sqrt (1+t) / ((1+t)*(1+t)) := by
+        simp only [div_eq_mul_inv, one_mul]
+      _ = _ := sqrt_div_sq _ (by positivity)
+  simp only [evenGram, one_pow, one_mul]
+  rw [he, (root_tail 1 (by norm_num)).2]
+  norm_num
 
 private lemma even_gram_nonneg (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     0 ≤ evenGram x y := by
@@ -574,8 +613,9 @@ private lemma even_energy_eval (w : ℝ → ℝ) (δ a b : ℝ)
 
 /-- The even parity sector has the same coefficient as the odd sector, with
 no distinction between equal and distinct marginal eigenvalues. -/
-private theorem weighted_even_bound (δ a b : ℝ) (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
-    (a+b)^2 ≤ (1+2/(1+δ^2)) *
+private theorem weighted_even_bound (δ a b : ℝ)
+    (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
+    (a+b)^2 ≤ parityMultiplier δ *
       (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenEnergy δ a b t) := by
   have h1 : (0:ℝ) < 1 := by norm_num
   have hd2 := sq_pos_of_pos hδ
@@ -598,48 +638,54 @@ private theorem weighted_even_bound (δ a b : ℝ) (hδ : 0 < δ) (hδ1 : δ ≤
     rw [hL]
     simp only [evenLowerGram, pair, one_pow]
     ring
-  let Q := a^2*evenGram 1 1 + 2*a*b*evenGram 1 δ + b^2*evenGram δ δ
-  let C := 1+2/(1+δ^2)
-  have hc : 2 ≤ C := by
-    dsimp [C]
-    have he : δ^2 ≤ 1 := by nlinarith [mul_nonneg hδ.le (sub_nonneg.mpr hδ1)]
-    have hf : 1 ≤ 2/(1+δ^2) := (le_div_iff₀ (by positivity)).2 (by linarith)
-    linarith
-  have hq1 : 1 ≤ evenGram 1 1 := by simpa using even_gram_diag 1 h1 le_rfl
-  have hqδ := even_gram_diag δ hδ hδ1
-  rw [hE']
-  change (a+b)^2 ≤ C*Q
-  rcases le_or_gt (a*b) 0 with hab | hab
-  · have hcross := even_cross_le 1 δ h1 hδ
-    have hmono : (∫ t in Ioi (0:ℝ), evenEnergy δ a b t) ≤
-        (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenEnergy δ a b t) := by
-      apply integral_mono_ae hj hi
-      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-      have ht0 : 0 < t := ht
-      have hs : 1 ≤ Real.sqrt (1+t) := by
-        simpa using Real.sqrt_le_sqrt (show 1 ≤ 1+t by linarith)
-      have he : 0 ≤ evenEnergy δ a b t := by unfold evenEnergy; positivity
-      simpa using mul_le_mul_of_nonneg_right hs he
-    rw [hL', hE', even_diag _ h1, even_diag _ hδ] at hmono
-    have hq : (a+b)^2/2 ≤ Q := by
-      dsimp [Q]
-      nlinarith only [hmono, mul_nonneg (sub_nonneg.mpr hcross) (neg_nonneg.mpr hab)]
-    have hQ : 0 ≤ Q := le_trans (by positivity) hq
-    nlinarith only [hq, mul_le_mul_of_nonneg_right hc hQ]
-  · have hcross := even_gram_nonneg 1 δ h1 hδ
-    have hq : a^2 + ((1+δ^2)/2)*b^2 ≤ Q := by
-      dsimp [Q]
-      nlinarith only [mul_le_mul_of_nonneg_left hq1 (sq_nonneg a),
-        mul_le_mul_of_nonneg_left hqδ (sq_nonneg b), mul_nonneg hab.le hcross]
-    let d := (1+δ^2)/2
-    have hd : 0 < d := by dsimp [d]; positivity
-    have hC : C = 1+1/d := by dsimp [C,d]; field_simp
-    have hCS : (a+b)^2 ≤ C*(a^2+d*b^2) := by
-      rw [hC]
-      apply le_of_sub_nonneg
-      rw [show (1+1/d)*(a^2+d*b^2)-(a+b)^2 = (a-d*b)^2/d by field_simp [hd.ne']; ring]
-      positivity
-    exact hCS.trans (mul_le_mul_of_nonneg_left hq (by linarith : 0 ≤ C))
+  by_cases hδeq : δ = 1
+  · subst δ
+    rw [parityMultiplier, ite_eq_left (show (1 : ℝ) = 1 from rfl), one_mul, hE',
+      even_gram_one]
+    nlinarith only []
+  · rw [parityMultiplier, ite_eq_right hδeq]
+    let Q := a^2*evenGram 1 1 + 2*a*b*evenGram 1 δ + b^2*evenGram δ δ
+    let C := 1+2/(1+δ^2)
+    have hc : 2 ≤ C := by
+      dsimp [C]
+      have he : δ^2 ≤ 1 := by nlinarith [mul_nonneg hδ.le (sub_nonneg.mpr hδ1)]
+      have hf : 1 ≤ 2/(1+δ^2) := (le_div_iff₀ (by positivity)).2 (by linarith)
+      linarith
+    have hq1 : 1 ≤ evenGram 1 1 := even_gram_one.ge
+    have hqδ := even_gram_diag δ hδ hδ1
+    rw [hE']
+    change (a+b)^2 ≤ C*Q
+    rcases le_or_gt (a*b) 0 with hab | hab
+    · have hcross := even_cross_le 1 δ h1 hδ
+      have hmono : (∫ t in Ioi (0:ℝ), evenEnergy δ a b t) ≤
+          (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenEnergy δ a b t) := by
+        apply integral_mono_ae hj hi
+        filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+        have ht0 : 0 < t := ht
+        have hs : 1 ≤ Real.sqrt (1+t) := by
+          simpa using Real.sqrt_le_sqrt (show 1 ≤ 1+t by linarith)
+        have he : 0 ≤ evenEnergy δ a b t := by unfold evenEnergy; positivity
+        simpa using mul_le_mul_of_nonneg_right hs he
+      rw [hL', hE', even_diag _ h1, even_diag _ hδ] at hmono
+      have hq : (a+b)^2/2 ≤ Q := by
+        dsimp [Q]
+        nlinarith only [hmono, mul_nonneg (sub_nonneg.mpr hcross) (neg_nonneg.mpr hab)]
+      have hQ : 0 ≤ Q := le_trans (by positivity) hq
+      nlinarith only [hq, mul_le_mul_of_nonneg_right hc hQ]
+    · have hcross := even_gram_nonneg 1 δ h1 hδ
+      have hq : a^2 + ((1+δ^2)/2)*b^2 ≤ Q := by
+        dsimp [Q]
+        nlinarith only [mul_le_mul_of_nonneg_left hq1 (sq_nonneg a),
+          mul_le_mul_of_nonneg_left hqδ (sq_nonneg b), mul_nonneg hab.le hcross]
+      let d := (1+δ^2)/2
+      have hd : 0 < d := by dsimp [d]; positivity
+      have hC : C = 1+1/d := by dsimp [C,d]; field_simp
+      have hCS : (a+b)^2 ≤ C*(a^2+d*b^2) := by
+        rw [hC]
+        apply le_of_sub_nonneg
+        rw [show (1+1/d)*(a^2+d*b^2)-(a+b)^2 = (a-d*b)^2/d by field_simp [hd.ne']; ring]
+        positivity
+      exact hCS.trans (mul_le_mul_of_nonneg_left hq (by linarith : 0 ≤ C))
 
 private lemma weighted_even_energy_integrable (δ a b : ℝ) (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
     IntegrableOn (fun t => Real.sqrt (1+t)*evenEnergy δ a b t) (Ioi 0) := by
@@ -661,7 +707,7 @@ def oddComplexEnergy (g δ : ℝ) (a b : ℂ) (t : ℝ) : ℝ :=
 
 /-- Even dual energy bound for fully complex coefficients. -/
 private theorem weighted_even_complex_bound (δ : ℝ) (a b : ℂ) (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
-    Complex.normSq (a+b) ≤ (1+2/(1+δ^2)) *
+    Complex.normSq (a+b) ≤ parityMultiplier δ *
       (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenComplexEnergy δ a b t) := by
   have hR := weighted_even_bound δ a.re b.re hδ hδ1
   have hI := weighted_even_bound δ a.im b.im hδ hδ1
@@ -680,7 +726,7 @@ private theorem weighted_even_complex_bound (δ : ℝ) (a b : ℂ) (hδ : 0 < δ
 /-- Odd dual energy bound for fully complex coefficients. -/
 private theorem weighted_odd_complex_bound (g δ : ℝ) (a b : ℂ) (hg : 0 < g) (hg1 : g ≤ 1)
     (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
-    Complex.normSq (a+b) ≤ (1+2/(1+δ^2)) *
+    Complex.normSq (a+b) ≤ parityMultiplier δ *
       (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*oddComplexEnergy g δ a b t) := by
   have hR := weighted_odd_bound g δ a.re b.re hg hg1 hδ hδ1
   have hI := weighted_odd_bound g δ a.im b.im hg hg1 hδ hδ1
@@ -696,29 +742,39 @@ private theorem weighted_odd_complex_bound (g δ : ℝ) (a b : ℂ) (hg : 0 < g)
   simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, ← pow_two]
   exact add_le_add hR hI
 
-/-- The paired parity estimate, in normalized reciprocal coordinates.
+/-- The paired parity estimate in normalized reciprocal coordinates.
 For the arcsine residual, the first two coefficients are scaled by `1/x`
-and the last two by `1/(x*(x+g))`, where `x` ranges over `1, δ`. -/
+and the last two by `1/(x*(x+g))`, where `x` ranges over `1, δ`.
+At coincident marginal nodes the uniform multiplier is one. -/
 theorem paired_parity_bound (g β δ : ℝ) (a b c d : ℂ)
-    (hg : 0 < g) (hg1 : g ≤ 1) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
-    (hgb : g^2+β^2 = 1) :
-    Complex.normSq ((g : ℂ)*(a+b)+(β : ℂ)*(c+d)) ≤ (1+2/(1+δ^2)) *
+    (hg : 0 < g) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
+    (hgb : g^2+β^2 ≤ 1) :
+    Complex.normSq ((g : ℂ)*(a+b)+(β : ℂ)*(c+d)) ≤
+      parityMultiplier δ *
       ((∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenComplexEnergy δ a b t) +
         (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*oddComplexEnergy g δ c d t)) := by
+  have hg1 : g ≤ 1 := by
+    nlinarith only [hgb, sq_nonneg β, sq_nonneg (g-1)]
   have hE := weighted_even_complex_bound δ a b hδ hδ1
   have hO := weighted_odd_complex_bound g δ c d hg hg1 hδ hδ1
-  have hrot (z w : ℂ) : Complex.normSq ((g : ℂ)*z+(β : ℂ)*w) +
-      Complex.normSq ((β : ℂ)*z-(g : ℂ)*w) =
+  have hrot (z w : ℂ) :
+      Complex.normSq ((g : ℂ)*z+(β : ℂ)*w) +
+        Complex.normSq ((β : ℂ)*z-(g : ℂ)*w) =
       (g^2+β^2)*(Complex.normSq z+Complex.normSq w) := by
-    simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re,
-      Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+    simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im,
       zero_mul, sub_zero, add_zero]
     ring
   have h := hrot (a+b) (c+d)
-  rw [hgb, one_mul] at h
   have hn := Complex.normSq_nonneg ((β : ℂ)*(a+b)-(g : ℂ)*(c+d))
+  have hs : 0 ≤ Complex.normSq (a+b) + Complex.normSq (c+d) :=
+    add_nonneg (Complex.normSq_nonneg _) (Complex.normSq_nonneg _)
+  have hc := mul_le_mul_of_nonneg_right hgb hs
+  simp only [one_mul] at hc
   calc
-    _ ≤ Complex.normSq (a+b) + Complex.normSq (c+d) := by linarith only [h, hn]
+    _ ≤ Complex.normSq (a+b) + Complex.normSq (c+d) := by
+      linarith only [h, hn, hc]
     _ ≤ _ := by simpa only [mul_add] using add_le_add hE hO
 
 #print axioms paired_parity_bound

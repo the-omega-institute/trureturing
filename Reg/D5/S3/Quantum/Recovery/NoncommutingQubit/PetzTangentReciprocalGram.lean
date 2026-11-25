@@ -18,7 +18,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ δ => 1 + 2 / (1 + δ^2)) (fun e => nomatch e)
+  realize signature (fun _ _ δ => parityMultiplier δ) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -27,16 +27,16 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (g β δ : ℝ) (a b c d : ℂ)
-    (_hg : 0 < g) (_hg1 : g ≤ 1) (_hδ : 0 < δ) (_hδ1 : δ ≤ 1)
-    (_hgb : g^2+β^2 = 1),
+    (_hg : 0 < g) (_hδ : 0 < δ) (_hδ1 : δ ≤ 1)
+    (_hgb : g^2+β^2 ≤ 1),
     Complex.normSq ((g : ℂ)*(a+b)+(β : ℂ)*(c+d)) ≤ R.readout () () δ *
       ((∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*evenComplexEnergy δ a b t) +
         (∫ t in Ioi (0:ℝ), Real.sqrt (1+t)*oddComplexEnergy g δ c d t))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  have h := law 1 0 1 1 0 0 0 (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num)
+  have h := law 1 0 1 1 0 0 0
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   norm_num [rejected, realize] at h
 
 def source_registration : Registration arena (type_of% @paired_parity_bound) where
@@ -48,7 +48,8 @@ def source_registration : Registration arena (type_of% @paired_parity_bound) whe
   dependence := by
     intro i
     refine ⟨(), (1 : ℝ), (1/2 : ℝ), ?_⟩
-    norm_num [actual, realize]
+    change parityMultiplier 1 ≠ parityMultiplier (1/2)
+    norm_num [parityMultiplier]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -65,7 +66,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ δ => 1 + 2 / (1 + δ^2)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ δ => parityMultiplier δ) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -75,7 +76,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
