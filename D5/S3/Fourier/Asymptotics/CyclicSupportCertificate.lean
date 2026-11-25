@@ -133,18 +133,15 @@ private theorem dualValue_negative_of_between {s a b g lo hi c : ℝ} (hs : 0 < 
     _ = _ := by rw [← add_mul, huv, one_mul]
     _ < 0 := hmax
 
-/-- The clipped quadratic with exact moment constraints uniquely minimizes squared mass.
-If its two bounding excluded levels have negative values, every other excluded level
-between them has negative value as well. -/
-theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
-    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0)
-    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
-    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
-    (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
+/-- Exact moments and the signs of a quadratic dual certify the unique optimizer.
+A zero dual value off the support is allowed at a support transition. -/
+theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : ℝ}
+    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0) :
     let clip := fun y : ℝ => max 0 y
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
     let v := fun i : ZMod q => if i ∈ sites then p i else 0
     (∀ i ∈ sites, 0 < p i) →
+    (∀ i ∉ sites, p i ≤ 0) →
     (∑ i, v i) = 1 →
     cosineMoment 1 v = threshold →
     cosineMoment 2 v = threshold →
@@ -152,13 +149,11 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
       (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
         ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
-  intro clip p v hpos hmass hM₁ hM₂
+  intro clip p v hpos hoff hmass hM₁ hM₂
   have hv (i) : v i = max 0 (p i) := by
-    by_cases hi' : i ∈ sites
-    · simp [v, hi', max_eq_right (hpos i hi').le]
-    · have ⟨hl, hh⟩ := hbetween i hi'
-      have hn : p i < 0 := dualValue_negative_of_between hs hg hl hh hlo hhi
-      simp [v, hi', max_eq_left hn.le]
+    by_cases hi : i ∈ sites
+    · simp [v, hi, max_eq_right (hpos i hi).le]
+    · simp [v, hi, max_eq_left (hoff i hi)]
   have hvf : v ∈ feasible q threshold :=
     ⟨fun i => hv i ▸ le_max_left _ _, hmass, hM₁.ge, hM₂.ge⟩
   have hdot (w : ZMod q → ℝ) (hw : ∑ i, w i = 1) :
@@ -202,5 +197,30 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     exact (not_lt_of_ge (hmin hvf)) (hstrict w hw h)
   rw [he]
   by_cases hi' : i ∈ sites <;> simp [clip, v, hi', hpos, lt_max_iff]
+
+/-- The clipped quadratic with exact moment constraints uniquely minimizes squared mass.
+If its two bounding excluded levels have negative values, every other excluded level
+between them has negative value as well. -/
+theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
+    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0)
+    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) < 0)
+    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) < 0)
+    (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
+    let clip := fun y : ℝ => max 0 y
+    let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
+    let v := fun i : ZMod q => if i ∈ sites then p i else 0
+    (∀ i ∈ sites, 0 < p i) →
+    (∑ i, v i) = 1 →
+    cosineMoment 1 v = threshold →
+    cosineMoment 2 v = threshold →
+    v ∈ feasible q threshold ∧
+      (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
+        ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
+  intro clip p v hpos hmass hM₁ hM₂
+  refine exact_support_of_dual_nonpos hs hb hg hpos ?_ hmass hM₁ hM₂
+  intro i hi
+  obtain ⟨hl, hh⟩ := hbetween i hi
+  exact (dualValue_negative_of_between hs hg hl hh hlo hhi).le
 
 end D5.S3.Fourier.Asymptotics.CyclicSupportCertificate

@@ -32,7 +32,7 @@ namespace D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation
 
 set_option autoImplicit false
 
-private def latticeInterval (n : ℕ) : Finset ℤ :=
+def latticeInterval (n : ℕ) : Finset ℤ :=
   Icc (-(n : ℤ)) (n : ℤ)
 
 private theorem sum_latticeInterval_even (n : ℕ) (f : ℤ → ℝ)
@@ -72,7 +72,7 @@ private theorem sum_lattice_square (n : ℕ) :
   rw [D5.S3.Fourier.Concentration.CyclicPrefixFourthMoment.sum_square_rank]
   ring
 
-private theorem sum_lattice_fourth (n : ℕ) :
+theorem sum_lattice_fourth (n : ℕ) :
     (∑ k ∈ latticeInterval n, (k : ℝ) ^ 4) =
       (n : ℝ) * (n + 1) * (2 * n + 1) * (3 * (n : ℝ) ^ 2 + 3 * n - 1) / 15 := by
   rw [sum_latticeInterval_even n _ (by simp) (by intro k; push_cast; ring)]
@@ -82,13 +82,13 @@ private theorem sum_lattice_fourth (n : ℕ) :
   rw [h]
   ring
 
-private def normalizer (n : ℕ) (t : ℝ) : ℝ :=
+def normalizer (n : ℕ) (t : ℝ) : ℝ :=
   ∑ k ∈ latticeInterval n, (t - (k : ℝ) ^ 2)
 
 private def momentNumerator (n : ℕ) (t : ℝ) : ℝ :=
   ∑ k ∈ latticeInterval n, (k : ℝ) ^ 2 * (t - (k : ℝ) ^ 2)
 
-private theorem normalizer_formula (n : ℕ) (t : ℝ) :
+theorem normalizer_formula (n : ℕ) (t : ℝ) :
     normalizer n t = (2 * (n : ℝ) + 1) * t - (n : ℝ) * (n + 1) * (2 * n + 1) / 3 := by
   rw [normalizer, sum_sub_distrib, sum_const, nsmul_eq_mul, card_latticeInterval,
     sum_lattice_square]
@@ -129,7 +129,7 @@ private theorem sq_lt_succ_iff_mem (k : ℤ) (n : ℕ) :
   rw [hl, hr]
   omega
 
-private theorem normalizer_pos (n : ℕ) (hn : 0 < n) {t : ℝ} (ht : (n : ℝ) ^ 2 ≤ t) :
+theorem normalizer_pos (n : ℕ) (hn : 0 < n) {t : ℝ} (ht : (n : ℝ) ^ 2 ≤ t) :
     0 < normalizer n t := by
   have hn' : 0 < (n : ℝ) := by exact_mod_cast hn
   have hzero : (0 : ℤ) ∈ latticeInterval n := by simp [latticeInterval]
