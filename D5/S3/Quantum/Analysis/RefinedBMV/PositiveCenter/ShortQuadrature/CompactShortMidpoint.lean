@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortMidpoint
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortMidpoint
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -7,7 +7,7 @@
    digest: The joint term of the actual logarithmic kernel as a finite tilted average. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapNormalization
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortEvenTails
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortEvenTails
 import Batteries.Tactic.OpenPrivate
 
 /-! The midpoint form of the compact short-gap joint contribution. -/
@@ -24,7 +24,7 @@ open private centeredExponent from
 open private compositionMoment_marginal_smooth reflectedHalfLogSlope_nonneg from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapNormalization
 open private short_midpoint_pair from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortEvenTails
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortEvenTails
 
 private abbrev ShortGap := ℕ × ℕ × ℕ
 

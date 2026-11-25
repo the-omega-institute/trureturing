@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortQuadratureHighSpacing
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortQuadratureHighSpacing
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Short-gap quadrature sign on the high-spacing half of the first rectangle. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureBox
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureFirstBox
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureBox
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureFirstBox
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorReplay
 import Lean.Elab.Tactic.Cbv
 
@@ -36,7 +36,7 @@ open private coeffAdd coeffScale from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 
 open private quadratureParameterRow quadratureShiftBound from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortJointLower
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortJointLower
 
 local cbv_simproc cbv_eval stageParameterRow (quadratureParameterRow _ _ _ _) :=
   stageLiteral (List Rat) (limitStatementSize := true)

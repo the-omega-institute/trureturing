@@ -7,14 +7,14 @@
    digest: Kernel replay for short-gap quadrature row 1. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureCover.Replay
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureHighSpacing
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureHighSpacing
 
 /-! Kernel replay for short-gap quadrature row 1. -/
 
 namespace RefinedBMV.PositiveCenter.CompactShortQuadratureCover
 
 open private box orders checks scoreLower from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureHighSpacing
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureHighSpacing
 
 /-- The upper spacing half of row 1, using the existing kernel certificate. -/
 theorem row01_high : CheckedSubbox (row 0) (3 / 22) (3 / 11) := by

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortQuadratureScore
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortQuadratureScore
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Taylor model enclosure of the exact refined BMV short-gap score. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortJointLower
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortJointLower
 
 /-! The Taylor arithmetic of the short-gap comparison after enclosure of its inputs. -/
 

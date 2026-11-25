@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortQuadratureBox
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortQuadratureBox
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,10 +6,10 @@
    utility: none
    digest: Conditional Taylor-model soundness for rational short-gap quadrature subboxes. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureScore
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortIntegratedMeshError
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortTangentGrid
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureScore
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortBox
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortIntegratedMeshError
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortTangentGrid
 
 /-! The first-subbox quadrature proof with rational geometry and Taylor orders as inputs. -/
 
@@ -20,7 +20,7 @@ open CompactTaylorModel.CompactShortBox (lowerCheck lowerCheck_sound)
 open CompactTaylorModel.ShortTangentGrid (Rectangle)
 
 open private neg neg_sound inverse inverse_sound from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortBox
 open private CompactTaylorModel.Model.center from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortIntegratedMeshError
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortIntegratedMeshError
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Integrated Taylor bounds for the refined BMV marginal quadrature errors. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMarginalBoxError
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMarginalBoxError
 
 /-! Integrated Taylor bounds for the absolute moments in the short-gap marginal mesh error. -/
 

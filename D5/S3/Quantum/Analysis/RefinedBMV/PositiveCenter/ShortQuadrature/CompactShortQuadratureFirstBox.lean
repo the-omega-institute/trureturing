@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortQuadratureFirstBox
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortQuadratureFirstBox
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,9 +6,9 @@
    utility: none
    digest: Exact joint enclosure on the first compact short-gap subbox. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureScore
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMarginalBoxError
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureScore
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortBox
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMarginalBoxError
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorReplay
 import Lean.Elab.Tactic.Cbv
 
@@ -20,7 +20,7 @@ open CompactTaylorModel (Model InBox)
 open CompactTaylorModel.Replay
 
 open private neg neg_sound inverse inverse_sound from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortBox
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortBox
 open private CompactTaylorModel.Model.center CompactTaylorModel.Model.expHalvings from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 open private coeffAdd coeffScale from

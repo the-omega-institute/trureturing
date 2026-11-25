@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortJointCore
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortJointCore
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Fourth-order joint quadrature and exact arithmetic of the refined BMV short-gap score. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMomentEnclosure
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortComparison
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMoments
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadrature
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.HalfGapSlope
@@ -24,14 +24,14 @@ open scoped BigOperators
 noncomputable section
 
 open private shortJointAverage_add shortJointAverage_mul shortJointAverage_le
-  shortJointAverage_swap from D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMidpoint
+  shortJointAverage_swap from D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMidpoint
 open private cosh_quartic_lower from D5.S3.Quantum.Recovery.BKMSpectralVariance
 open private shortMidpointMoment_eq_gridAverage from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMomentEnclosure
 open private gridAverage gridPoint from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMomentTails
 open private compactMixedT_eq_cutoff from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortComparison
 
 /-- The lower fourth-order approximation at center `s` and gap `d`. -/
 def shortJointMomentFourth (p : ℕ) (s d : ℝ) : ℝ :=

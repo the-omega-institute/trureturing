@@ -6,7 +6,7 @@
    utility: none
    digest: Uniform logarithmic slope bounds for the short-gap normalization from ten thirds. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortEvenTails
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortEvenTails
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapMoments
 import Batteries.Tactic.OpenPrivate
 
@@ -18,7 +18,7 @@ open Set
 namespace RefinedBMV.PositiveCenter
 
 open private stride_tail_bound from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortEvenTails
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortEvenTails
 open private hasDerivAt_shortGapWeight from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortGapMoments
 open private hasDerivAt_exp_decay from

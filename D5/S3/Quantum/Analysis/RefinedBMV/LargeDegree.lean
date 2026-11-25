@@ -7,7 +7,7 @@
    digest: The refined BMV lower bounds with three copies of the second factor in every finite dimension. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ClearedMiddleSign
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortQuadratureCover
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortQuadratureCover
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripGeometricSign
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripWideSign
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MiddleGapReplay

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortBox
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortBox
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -7,8 +7,8 @@
    digest: Soundness of rational boxes for the fourth-order short-gap tangent comparison. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMiddleBox
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentEnclosure
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortComparison
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMomentEnclosure
 
 /-! A rational cell certificate for the compact short-gap mixed derivative. -/
 
@@ -20,7 +20,7 @@ open private Model.center from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 
 open private shortRootMultiplierReal from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortComparison
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortComparison
 
 /-- The rational endpoints, tangent point, and Taylor orders for one short-gap cell.
 The spacing coordinate always covers `[0, 3/11]`. -/

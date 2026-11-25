@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortJointLower
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortJointLower
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -7,7 +7,7 @@
    digest: Exact Taylor models of the short-gap joint and marginal quadratures. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactMarginalQuadratureParameter
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortJointCore
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortJointCore
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorElementary
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.HalfGapSlope
 import D5.S3.Weil.ZetaPntBase.EulerMaclaurinSixth

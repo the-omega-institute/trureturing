@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortMomentEnclosure
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortMomentEnclosure
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: One-dimensional moment formulas for the compact short-gap certificate. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMidpoint
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMomentTable
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMidpoint
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMomentTable
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorMoments
 import Mathlib.Tactic.FinCases
 

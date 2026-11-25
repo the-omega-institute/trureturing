@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CompactShortComparison
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortQuadrature/CompactShortComparison
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactTaylorModel
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactRegularizedRadical
 import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactPositiveMoments
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMidpoint
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMidpoint
 import Batteries.Tactic.OpenPrivate
 
 /-! The mixed comparison computed from the elementary enclosures. -/
@@ -101,7 +101,7 @@ theorem shortRootMultiplier_sound {p : ℕ} {s t z u v : ℝ}
     using 1 <;> first | rfl | (simp only [div_eq_mul_inv]; ring)
 
 open private shortWeightedMoment from
-  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CompactShortMidpoint
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortMidpoint
 
 /-- The scalar fourth-order score after taking a tangent upper bound for the square root. -/
 noncomputable def shortMidpointTangentScore (p : ℕ) (u v radius root : ℝ) : ℝ :=
