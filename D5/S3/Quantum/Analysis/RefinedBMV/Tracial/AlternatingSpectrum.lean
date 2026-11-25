@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
 import D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap
+import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 /-! A spectral block sent by the Hermitian second factor to one paired
 block contributes a positive fourth moment to the four-copy comparison. -/
@@ -49,7 +50,7 @@ variable {A ι : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A] [F
 /-- If the second factor couples each spectral block only to its involutive
 partner, the four-copy deficit is a sum of nonnegative alternating traces. -/
 theorem alternating_spectral_contraction_nonneg
-    (τ : A →P[ℂ] ℂ) (hτ : ∀ X Y : A, τ (X * Y) = τ (Y * X))
+    (τ : A →ₚ[ℂ] ℂ) (hτ : ∀ X Y : A, τ (X * Y) = τ (Y * X))
     (P : ι → A) (B : A) (x : ι → ℝ) (p : ℕ) (σ : ι → ι)
     (hσ : Function.Involutive σ) (hx : ∀ i, 0 ≤ x i)
     (hP : ∀ i, star (P i) = P i) (hPP : ∀ i, P i * P i = P i)
@@ -115,5 +116,81 @@ theorem alternating_spectral_contraction_nonneg
   · intro j _ hj
     simp only [term, hzero hj, zero_mul, map_zero, mul_zero, Finset.sum_const_zero]
   · simp
+
+open Matrix FourCopyGap
+open scoped MatrixOrder Matrix.Norms.L2Operator
+
+open private spectralMask_mul_self trace_mask_product contract diagonal_gap_scaled
+  eigenDiagonal rootDiagonal gaps_card_pos wordMean_conjugation
+  from D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap
+
+/-- The actual ordered-word comparison in an eigenbasis when the second
+factor couples each spectral fiber only to its involutive partner. -/
+theorem diagonal_word_bound_of_involutive_support
+    {n s : Type*} [Fintype n] [DecidableEq n] [Fintype s] [DecidableEq s]
+    (p : ℕ) (label : n → s) (x : s → ℝ) (hx : ∀ i, 0 ≤ x i)
+    (B : Matrix n n ℂ) (hB : B.IsHermitian) (σ : s → s) (hσ : Function.Involutive σ)
+    (hsupport : ∀ i j, j ≠ σ i → spectralBlock label B i j = 0) :
+    trace ((rootDiagonal label x p * B) ^ 4) ≤
+      FourCopyGap.wordMean p (eigenDiagonal label x) B := by
+  have hstar (i : s) : star (spectralMask label i) = spectralMask label i := by
+    rw [Matrix.star_eq_conjTranspose, spectralMask, diagonal_conjTranspose]
+    congr 1
+    funext a
+    by_cases ha : label a = i <;> simp [ha]
+  have hBstar : star B = B := by rw [Matrix.star_eq_conjTranspose, hB.eq]
+  have hn := alternating_spectral_contraction_nonneg (tracePositiveLinearMap n ℂ ℂ)
+    (fun X Y ↦ trace_mul_comm X Y) (spectralMask label) B x p σ hσ hx
+    hstar (spectralMask_mul_self label) hBstar hsupport
+  have hs : 0 ≤ ((gaps p).card : ℂ) *
+      (FourCopyGap.wordMean p (eigenDiagonal label x) B - trace ((rootDiagonal label x p * B) ^ 4)) := by
+    rw [diagonal_gap_scaled]
+    simpa only [tracePositiveLinearMap_apply, trace_mask_product label B, contract,
+      LinearMap.coe_mk, AddHom.coe_mk] using hn
+  have hc : (0 : ℝ) < (gaps p).card := by exact_mod_cast gaps_card_pos p
+  obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hs
+  simp only [Complex.mul_re, Complex.mul_im, Complex.natCast_re, Complex.natCast_im,
+    Complex.sub_re, Complex.sub_im, zero_mul, sub_zero, add_zero] at hre him
+  exact Complex.le_def.mpr ⟨sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hc).mp hre),
+    (sub_eq_zero.mp ((mul_eq_zero.mp him.symm).resolve_left hc.ne')).symm⟩
+
+/-- Four-copy product comparison for a Hermitian second factor with
+involutive support in a spectral decomposition of the first. -/
+theorem product_bound_of_involutive_support
+    {n s : Type*} [Fintype n] [DecidableEq n] [Fintype s] [DecidableEq s]
+    (p : ℕ) (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.IsHermitian)
+    (label : n → s) (x : s → ℝ) (hx : ∀ i, 0 ≤ x i)
+    (U : Matrix.unitaryGroup n ℂ)
+    (hdiag : Unitary.conjStarAlgAut ℂ _ U A = eigenDiagonal label x)
+    (σ : s → s) (hσ : Function.Involutive σ)
+    (hsupport : ∀ i j, j ≠ σ i →
+      spectralBlock label (Unitary.conjStarAlgAut ℂ _ U B) i j = 0) :
+    trace (((A ^ ((p : ℝ) / 4)) * B) ^ 4) ≤ FourCopyGap.wordMean p A B := by
+  let φ := Unitary.conjStarAlgAut ℂ _ U
+  have hB' : (φ B).IsHermitian := by
+    change star (φ B) = φ B
+    rw [← map_star, Matrix.star_eq_conjTranspose, hB.eq]
+  have hr : φ (A ^ ((p : ℝ) / 4)) = rootDiagonal label x p := by
+    let f : ℝ → ℝ := fun y ↦ y ^ ((p : ℝ) / 4)
+    have hf : φ (cfc f A) = cfc f (φ A) :=
+      StarAlgHomClass.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint) φ f A
+        (hf := (Set.toFinite (spectrum ℝ A)).continuousOn f)
+        (hφ := φ.toAlgEquiv.toLinearMap.continuous_of_finiteDimensional)
+        (ha := hA.isHermitian) (hφa := by
+          have hSelf : IsSelfAdjoint A := hA.isHermitian
+          exact hSelf.map φ)
+    rw [CFC.rpow_eq_cfc_real hA.nonneg, hf, show φ A = _ from hdiag]
+    exact D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal
+      f (fun a ↦ x (label a))
+  have hm : FourCopyGap.wordMean p (eigenDiagonal label x) (φ B) =
+      FourCopyGap.wordMean p A B := by
+    rw [← hdiag]
+    exact wordMean_conjugation p U A B
+  have ht : trace ((rootDiagonal label x p * φ B) ^ 4) =
+      trace (((A ^ ((p : ℝ) / 4)) * B) ^ 4) := by
+    rw [← hr, ← map_mul φ, ← map_pow φ]
+    exact trace_conjugation U _
+  simpa only [ht, hm] using
+    diagonal_word_bound_of_involutive_support p label x hx (φ B) hB' σ hσ hsupport
 
 end RefinedBMV.Tracial

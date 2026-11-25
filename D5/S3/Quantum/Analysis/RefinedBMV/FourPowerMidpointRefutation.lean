@@ -12,10 +12,11 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Data.Real.StarOrdered
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
-/-! A positive diagonal first factor and a scaled symmetric involution give
+/-! A positive diagonal first factor and a symmetric involution give
 a negative average over the 81 splits with both opposite totals equal to eight.
-Scaling the involution leaves the sign of the comparison unchanged. -/
+The sign is verified using integral matrices before normalizing the involution. -/
 
 namespace RefinedBMV.FourPowerMidpointRefutation
 
@@ -81,9 +82,9 @@ private theorem x_posDef : (toReal x).PosDef := by
   fin_cases i <;> norm_num
 
 /-- The four-copy midpoint comparison at fixed equal opposite totals for
-positive definite first factors and scaled self-adjoint involutions. -/
+positive definite first factors and self-adjoint involutions. -/
 def claim : Prop :=
-  ∀ A B : RMat, A.PosDef → B.IsHermitian → (∃ r : ℝ, 0 < r ∧ B ^ 2 = r • 1) →
+  ∀ A B : RMat, A.PosDef → B.IsHermitian → B ^ 2 = 1 →
     81 * trace ((A ^ 4 * B) ^ 4) ≤ splitSum A B
 
 /-- Even averaging both splits with fixed opposite totals can miss the midpoint. -/
@@ -92,8 +93,7 @@ theorem result : ¬ claim := by
   have hsym : (toReal y).IsHermitian := by
     change (toReal y)ᴴ = toReal y
     rw [← toReal_transpose, symmetric_witness]
-  have hsq : ∃ r : ℝ, 0 < r ∧ (toReal y) ^ 2 = r • 1 := by
-    refine ⟨(665857 : ℝ) ^ 2, by norm_num, ?_⟩
+  have hsq : (toReal y) ^ 2 = ((665857 : ℝ) ^ 2) • 1 := by
     rw [← map_pow, square_witness, toReal_diagonal]
     ext i j
     by_cases h : i = j
@@ -108,6 +108,29 @@ theorem result : ¬ claim := by
       81 * trace ((toReal x ^ 4 * toReal y) ^ 4) := by
     rw [toReal_splitSum, hright]
     exact_mod_cast integer_trace_gap
-  exact (not_le_of_gt hlt) (h (toReal x) (toReal y) x_posDef hsym hsq)
+  let c : ℝ := (665857 : ℝ)⁻¹
+  let B : RMat := c • toReal y
+  have hBstar : B.IsHermitian := by
+    change (c • toReal y)ᴴ = c • toReal y
+    rw [conjTranspose_smul, star_trivial, hsym.eq]
+  have hBsq : B ^ 2 = 1 := by
+    dsimp only [B]
+    rw [smul_pow, hsq, smul_smul, ← mul_pow]
+    norm_num [c]
+  have hscale : splitSum (toReal x) B = c ^ 4 * splitSum (toReal x) (toReal y) := by
+    unfold splitSum
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ ↦ ?_
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ ↦ ?_
+    simp only [B, Matrix.mul_smul, Matrix.smul_mul, smul_smul, trace_smul, smul_eq_mul]
+    ring
+  have hscaleRoot : trace ((toReal x ^ 4 * B) ^ 4) =
+      c ^ 4 * trace ((toReal x ^ 4 * toReal y) ^ 4) := by
+    simp only [B, Matrix.mul_smul, smul_pow, trace_smul, smul_eq_mul]
+  have hlt' := mul_lt_mul_of_pos_left hlt (show 0 < c ^ 4 by norm_num [c])
+  have hge := h (toReal x) B x_posDef hBstar hBsq
+  rw [hscaleRoot, hscale] at hge
+  exact (not_le_of_gt hlt') (by simpa only [mul_left_comm (81 : ℝ)] using hge)
 
 end RefinedBMV.FourPowerMidpointRefutation
