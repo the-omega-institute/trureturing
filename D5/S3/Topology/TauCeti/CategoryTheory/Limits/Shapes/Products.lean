@@ -6,13 +6,17 @@
    utility: none
    digest: TauCeti port: Split coproduct maps and their kernels and cokernels; sphere support. -/
 
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroMorphisms
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.Algebra.Group.End
-import Mathlib.Algebra.Order.Interval.Finset.SuccPred
-import Mathlib.Data.Int.Interval
-import Mathlib.Order.SuccPred.Int
+module
+
+public import Mathlib.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroMorphisms
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Order.SuccPred.Int
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -24,6 +28,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
