@@ -235,7 +235,7 @@ theorem denominator_le_next (coeffs : NatList) (a : Nat) (ha : Nat.lt Nat.zero a
 def fibonacci (n : Nat) : Nat := OmegaMathlib.Nat.fib n
 
 theorem fibonacci_step (n : Nat) :
-    Eq (fibonacci n.succ.succ) ((fibonacci n.succ).add (fibonacci n)) :=
+    Eq (OmegaMathlib.Nat.fib n.succ.succ) ((OmegaMathlib.Nat.fib n.succ).add (OmegaMathlib.Nat.fib n)) :=
   Nat.fib_add_two.trans (Nat.add_comm _ _)
 
 private theorem fibonacci_succ_pos (n : Nat) : Nat.lt Nat.zero (fibonacci n.succ) :=
@@ -284,7 +284,7 @@ private theorem denominator_bounds (head : Nat) (tail : NatList)
 
 /-- A list of length `n + 1` with positive tail has denominator at least `F_(n + 1)`. -/
 theorem fibonacci_le_denominator (head : Nat) (tail : NatList) (h : PositiveCoefficients tail) :
-    Nat.le (fibonacci (coefficientCount (.cons head tail)))
+    Nat.le (OmegaMathlib.Nat.fib (coefficientCount (.cons head tail)))
       (convergentPair (.cons head tail)).current.denominator :=
   (denominator_bounds head tail h).left
 

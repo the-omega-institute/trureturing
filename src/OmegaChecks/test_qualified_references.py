@@ -64,10 +64,14 @@ def cases():
     for body in ["public def D5.standardPrime := REF",
                  "public def D5.explicitValue : Omega.Nat → Prop := fun p => REF p",
                  "public def D5.typedPrime : Omega.Nat → Prop := REF",
+                 "public abbrev D5.parenthesized : Omega.Nat → Prop := (REF)",
                  "public def D5.standardProof := fun (p : Omega.Nat) (h : REF p) => h"]:
         yield module, head + body.replace("REF", "Omega.Nat.Prime") + "\n", [
             "qualify this identifier as OmegaMathlib.Nat.Prime"]
         yield module, head + body.replace("REF", "OmegaMathlib.Nat.Prime") + "\n", []
+    yield module, (head + "public abbrev etaPrime := fun p : Omega.Nat => OmegaMathlib.Nat.Prime p\n"
+                   "public theorem D5.etaClaim (p : Omega.Nat) (h : etaPrime p) : etaPrime p := h\n"), [
+                       "etaPrime", "explicit source reference", "OmegaMathlib.Nat.Prime"]
     local_head = head.replace("prelude\n", "prelude\nimport Lean\n")
     for target, local in [("Omega.Nat.Prime", ""),
                           ("D5.Project.Prime", "public def D5.Project.Prime (_ : Omega.Nat) := Omega.True\n")]:

@@ -79,14 +79,14 @@ private def matchingPort? (env catalog : Environment) (ports : Ports) (spelling 
     guard (Kernel.isDefEqGuarded env {} project.type type)
     return port.alias
 
-/-- Follow direct project aliases to their admitted constant, including aliases of aliases. -/
+/-- Follow aliases through their compiled constants and eta-expanded definitions. -/
 private partial def underlyingPort? (catalog : Environment) (ports : Ports) (project : NameSet)
     (name : Name) : Option Name := do
   if let some port := ports.objects.find? name then return port.alias
   let idx ← catalog.getModuleIdxFor? name
   guard (project.contains catalog.header.moduleNames[idx]!)
   let .defnInfo info ← catalog.find? name | none
-  let .const target _ := info.value | none
+  let .const target _ := info.value.eta | none
   underlyingPort? catalog ports project target
 
 private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSet)
