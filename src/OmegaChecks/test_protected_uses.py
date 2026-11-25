@@ -157,6 +157,29 @@ def check():
             compare(ROOT, [module], [module], new, new)
             compare(ROOT, [], [module], old, new, omega_modules=[])
 
+        # Unexposed definitions and opaque declarations still compute for external clients.
+        for kind in ("def", "opaque"):
+            header = "module\npublic import OmegaMathlib.Data.Nat.Choose.Basic\n"
+            def observe(body):
+                return (header + f"private opaque helper (n k : Nat) : Nat := {body}\n"
+                        + f"public {kind} D5.observed (n k : Nat) : Nat := helper n k\n")
+            client = f"import {module}\n#eval D5.observed 5 2\n"
+            old = compile_source("old", observe("OmegaMathlib.Nat.choose n k"))
+            for expr, expected in (("OmegaMathlib.Nat.choose n k", "10"), ("n", "5")):
+                new = compile_source("new", observe(expr))
+                result = subprocess.check_output([lean, "--stdin"], input=client, cwd=ROOT, text=True,
+                                                 env={**os.environ, "LEAN_PATH": new})
+                assert result.strip() == expected, result
+                if expected == "10":
+                    compare(ROOT, [module], [module], old, new)
+                else:
+                    try:
+                        compare(ROOT, [module], [module], old, new)
+                    except ValueError as error:
+                        assert "D5.observed at implementation." in str(error) and "Nat.choose" in str(error), error
+                    else:
+                        raise AssertionError(f"accepted changed runtime behavior for public {kind}")
+
         # Both a theorem and a proof packaged inside computational data can change proof methods.
         header = "module\npublic import OmegaMathlib.Data.Nat.Prime.Defs\n"
         before = ("public theorem D5.witness : True := (fun (_ : Nat.Prime 2) => True.intro) Nat.prime_two\n"

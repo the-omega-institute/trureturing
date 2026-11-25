@@ -91,7 +91,8 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
             return json.loads(output.read_text())
 
         old = snapshot(before, old_modules, old_path)
-        bodies = [d["nameKey"] for d in old if any(u["position"].split(".", 1)[0] == "value" for u in d["uses"])]
+        bodies = [d["nameKey"] for d in old if any(u["position"].split(".", 1)[0] in {"value", "implementation"}
+                                                    for u in d["uses"])]
         new = snapshot(ROOT, new_modules, new_path, [d["nameKey"] for d in old], bodies, bool(active))
     current = {(d["module"], d["nameKey"]): {u["position"]: u for u in d["uses"]} for d in new}
     protected = set()
@@ -101,13 +102,15 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
         for previous in declaration["uses"]:
             pos = previous["position"]
             actual = positions.get(pos, {})
-            protected.add((declaration["module"], declaration["nameKey"], pos, previous["objectKey"], previous["owner"]))
-            if pos.split(".", 1)[0] == "implementation":
-                continue
+            if not actual and pos.split(".", 1)[0] == "implementation":
+                # A formerly hidden executable body can become publicly reducible.
+                actual = positions.get("value" + pos.removeprefix("implementation"), {})
             if (previous["objectKey"], previous["owner"]) != (actual.get("objectKey"), actual.get("owner")):
                 raise ValueError(f"{declaration['module']} {declaration['name']} at {pos}: expected "
                                  f"{previous['object']} from {previous['owner']}, found "
                                  f"{actual.get('object', '<missing>')} from {actual.get('owner', '<missing>')}")
+            protected.add((declaration["module"], declaration["nameKey"], actual["position"],
+                           previous["objectKey"], previous["owner"]))
             verified += 1
     for declaration in new:
         mod, key = declaration["module"], declaration["nameKey"]
