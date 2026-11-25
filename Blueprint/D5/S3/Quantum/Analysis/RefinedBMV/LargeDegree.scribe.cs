@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis.RefinedBMV;
 
-internal sealed class RefinedBMVLargeDegreeDocument : IScribeDocumentDefinition
+internal sealed class LargeDegreeDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Quantum/Analysis/RefinedBMVLargeDegree.";
+    private const string Module = "D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/HilbertOperators/hagele2026refinedbmv");
 

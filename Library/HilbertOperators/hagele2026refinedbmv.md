@@ -12,7 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
-  - D5/S3/Quantum/Analysis/RefinedBMVLargeDegree
+  - D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -24,6 +24,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricIntervalSign
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
@@ -298,6 +299,12 @@ coordinates with lower coordinate at least four. Short gaps through two
 and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
+
+For first degrees at least eleven and lower coordinate in \( (0,1/2] \),
+the logarithmic kernel has strictly negative mixed derivative at all
+gaps at least one. Geometric reduction controls the scaled scalar
+through integration gap seven halves with exact Taylor enclosures. The
+analytic tail estimate supplies the sign past that threshold.
 
 For first degrees at least eleven, the short-gap result extends to lower
 coordinate at least ten thirds and all positive gaps through two. The

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVLargeDegree
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
    generality: G
-   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMVLargeDegree
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMV/LargeDegree
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

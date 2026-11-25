@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Analysis.RefinedBMVLargeDegree
+import D5.S3.Quantum.Analysis.RefinedBMV.LargeDegree
 import Reg.Support.DependentFamily
 
 /-! The two bounds both read the trace of a matrix on the left-hand side. -/
 
-namespace Reg.D5.S3.Quantum.Analysis.RefinedBMVLargeDegree
+namespace Reg.D5.S3.Quantum.Analysis.RefinedBMV.LargeDegree
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.RefinedBMV
@@ -113,7 +113,7 @@ def productRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.RefinedBMVLargeDegree
+    owner := `D5.S3.Quantum.Analysis.RefinedBMV.LargeDegree
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -147,7 +147,7 @@ def exponentialRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.RefinedBMVLargeDegree
+    owner := `D5.S3.Quantum.Analysis.RefinedBMV.LargeDegree
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -164,4 +164,4 @@ def exponentialRegistration :
 #print axioms exponentialRegistration
 
 end
-end Reg.D5.S3.Quantum.Analysis.RefinedBMVLargeDegree
+end Reg.D5.S3.Quantum.Analysis.RefinedBMV.LargeDegree
