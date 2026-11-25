@@ -154,7 +154,7 @@ private theorem cost_lift {r p : ℕ} (hp : p.Prime) (b c : Fin r → ℕ)
     Nat.add_comm]
 
 /-- Every integer between zero and the total capacity has a bounded tuple. -/
-private theorem exists_bounded_tuple (r cap d : ℕ) (hd : d ≤ r * cap) :
+public theorem exists_bounded_tuple (r cap d : ℕ) (hd : d ≤ r * cap) :
     ∃ c : Fin r → ℕ, (∑ i, c i) = d ∧ ∀ i, c i ≤ cap := by
   induction r generalizing d with
   | zero =>
@@ -323,7 +323,7 @@ private theorem tailLCM_dvd_factorialProduct (H M : ℕ) (hMH : M ≤ H)
   simpa only [Nat.sub_add_cancel hMH] using h
 
 /-- Exact primewise attainment. The optimizing tuple may depend on p. -/
-private theorem exists_factorization_eq (H M p : ℕ) (hMH : M ≤ H) (hp : p.Prime) :
+public theorem exists_factorization_eq (H M p : ℕ) (hMH : M ≤ H) (hp : p.Prime) :
     ∃ a : Fin (M + 1) → ℕ, (∑ i, a i) = H - M ∧
       (factorialProduct a).factorization p = (tailLCM H M).factorization p := by
   obtain ⟨a, ha, hval⟩ := (factorial_cost_min p M (H - M) hp).2

@@ -79,7 +79,7 @@ theorem chebyshev_error_kernel_integrable :
       _ ≤ Chebyshev.psi B + B := add_le_add (Chebyshev.psi_mono hu.2) hu.2
   simpa only [Ioc_union_Ioi_eq_Ioi (by linarith : (1 : ℝ) ≤ B)] using hlocal.union htail
 
-private lemma relative_chebyshev_error_tendsto :
+lemma relative_chebyshev_error_tendsto :
     Tendsto (fun t : ℝ => (Chebyshev.psi t - t) / t) atTop (𝓝 0) := by
   obtain ⟨c, hc, hO⟩ := MediumPNT
   have hexp : Tendsto

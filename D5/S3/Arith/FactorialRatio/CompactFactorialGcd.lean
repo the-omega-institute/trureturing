@@ -29,7 +29,7 @@ open Finset
 open scoped Nat
 open D5.S3.Arith.FactorialRatio.RankOneLCMGcd (tailLCM)
 
-private theorem div_mod_of_eq {n q d u : ℕ} (hq : 0 < q)
+public theorem div_mod_of_eq {n q d u : ℕ} (hq : 0 < q)
     (hn : n = q * d + u) (hu : u < q) : n / q = d ∧ n % q = u := by
   have hdiv : n / q = d := calc
     n / q = (u + q * d) / q := by rw [hn, add_comm (q * d) u]
@@ -40,7 +40,7 @@ private theorem div_mod_of_eq {n q d u : ℕ} (hq : 0 < q)
   exact ⟨hdiv, by omega⟩
 
 /-- The residue sum is the only source of a carry in the quotient of a sum. -/
-private theorem div_mod_add (x y : ℕ) {q : ℕ} (hq : 0 < q) :
+public theorem div_mod_add (x y : ℕ) {q : ℕ} (hq : 0 < q) :
     (x + y) / q = x / q + y / q + (x % q + y % q) / q ∧
     (x + y) % q = (x % q + y % q) % q := by
   let u := x % q + y % q
@@ -151,12 +151,12 @@ private theorem goodBlocks_density {q a w : ℕ} (ha : a ≤ q)
     _ ≤ q * (w * goodBlocks q a w r) := Nat.mul_le_mul_left _ (marks_le_goodBlocks ha hwq r)
     _ = (q * goodBlocks q a w r) * w := by ring
 
-private def pairedFloor (q s b i : ℕ) : ℕ :=
+@[expose] public def pairedFloor (q s b i : ℕ) : ℕ :=
   (i + 1) * b / q + (s - i * b) / q - b / q
 
-private def floorSum (q r s b : ℕ) : ℕ := ∑ i ∈ range r, pairedFloor q s b i
+@[expose] public def floorSum (q r s b : ℕ) : ℕ := ∑ i ∈ range r, pairedFloor q s b i
 
-private theorem pairedFloor_carry {q s b i : ℕ} (hq : 0 < q) (hi : i * b ≤ s) :
+public theorem pairedFloor_carry {q s b i : ℕ} (hq : 0 < q) (hi : i * b ≤ s) :
     (i + 1) * b / q + (s - i * b) / q +
       (if ((i + 1) * (b % q)) % q ≤ (s + b) % q then 0 else 1) = (s + b) / q := by
   have hmul : (i + 1) * b = i * b + b := by rw [Nat.add_mul, Nat.one_mul]
@@ -165,7 +165,7 @@ private theorem pairedFloor_carry {q s b i : ℕ} (hq : 0 < q) (hi : i * b ≤ s
     rw [Nat.mul_mod (i + 1) b q, Nat.mul_mod (i + 1) (b % q) q, Nat.mod_mod]
   simpa only [hsum, hmod] using two_floor_carry ((i + 1) * b) (s - i * b) hq
 
-private theorem head_div {q r s : ℕ} (hq : 0 < q) :
+public theorem head_div {q r s : ℕ} (hq : 0 < q) :
     (r * s + (r - 1)) / q = r * (s / q) + (r * (s % q) + (r - 1)) / q := by
   have heq : r * s + (r - 1) = (r * (s % q) + (r - 1)) + q * (r * (s / q)) := calc
     r * s + (r - 1) = r * (q * (s / q) + s % q) + (r - 1) := by rw [Nat.div_add_mod]
@@ -182,7 +182,7 @@ private theorem remainder_head_le {q r v : ℕ} (hq : 0 < q) (hr : 1 ≤ r) (hv 
 
 /-- The compact tail count is bounded by the paired floor sum at any
 modulus `q ≥ 2`. This holds throughout the admissible parameter range. -/
-private theorem selberg_floor_lower {q r s b : ℕ} (hq : 2 ≤ q) (hr : 1 ≤ r)
+public theorem selberg_floor_lower {q r s b : ℕ} (hq : 2 ≤ q) (hr : 1 ≤ r)
     (hb : r * b ≤ s) : (r * s + (r - 1)) / q - (r - 1) ≤ floorSum q r s b := by
   have hqpos : 0 < q := by omega
   have hv := Nat.mod_lt s hqpos
@@ -258,7 +258,7 @@ The intended range is `r * b ≤ s`. -/
 @[expose] public def selbergFactorial (r s b : ℕ) : ℕ :=
   ∏ i ∈ range r, ((i + 1) * b)! / b ! * (s - (r - (i + 1)) * b)!
 
-private theorem selbergFactorial_eq_paired (r s b : ℕ) :
+public theorem selbergFactorial_eq_paired (r s b : ℕ) :
     selbergFactorial r s b = ∏ i ∈ range r, ((i + 1) * b)! / b ! * (s - i * b)! := by
   have hreverse : (∏ i ∈ range r, (s - (r - (i + 1)) * b)!) =
       ∏ i ∈ range r, (s - i * b)! := calc
@@ -273,20 +273,20 @@ private theorem selbergFactorial_eq_paired (r s b : ℕ) :
 @[expose] public def selbergGcd (r s : ℕ) : ℕ :=
   (range (s / r + 1)).gcd (selbergFactorial r s)
 
-private theorem b_le_index_mul (i b : ℕ) : b ≤ (i + 1) * b := by
+public theorem b_le_index_mul (i b : ℕ) : b ≤ (i + 1) * b := by
   simpa using Nat.mul_le_mul_right b (show 1 ≤ i + 1 by omega)
 
-private theorem quotient_ne_zero (i b : ℕ) : ((i + 1) * b)! / b ! ≠ 0 :=
+public theorem quotient_ne_zero (i b : ℕ) : ((i + 1) * b)! / b ! ≠ 0 :=
   (Nat.div_pos
     (Nat.le_of_dvd (Nat.factorial_pos _) (Nat.factorial_dvd_factorial (b_le_index_mul i b)))
     (Nat.factorial_pos _)).ne'
 
-private theorem selbergFactorial_ne_zero (r s b : ℕ) : selbergFactorial r s b ≠ 0 := by
+public theorem selbergFactorial_ne_zero (r s b : ℕ) : selbergFactorial r s b ≠ 0 := by
   rw [selbergFactorial_eq_paired]
   exact Finset.prod_ne_zero_iff.mpr fun i _ =>
     mul_ne_zero (quotient_ne_zero i b) (Nat.factorial_ne_zero _)
 
-private theorem selbergGcd_ne_zero (r s : ℕ) : selbergGcd r s ≠ 0 := by
+public theorem selbergGcd_ne_zero (r s : ℕ) : selbergGcd r s ≠ 0 := by
   unfold selbergGcd
   exact Finset.gcd_ne_zero_iff.mpr ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ _),
     selbergFactorial_ne_zero r s 0⟩
@@ -297,7 +297,7 @@ private theorem selbergGcd_dvd {r s b : ℕ} (hr : 0 < r) (hb : r * b ≤ s) :
   have hle : b ≤ s / r := (Nat.le_div_iff_mul_le hr).mpr (by simpa [mul_comm] using hb)
   exact Finset.gcd_dvd (Finset.mem_range.mpr (by omega))
 
-private theorem tail_nonzero (H M : ℕ) : tailLCM H M ≠ 0 := by
+public theorem tail_nonzero (H M : ℕ) : tailLCM H M ≠ 0 := by
   unfold tailLCM
   exact Finset.prod_ne_zero_iff.mpr fun k _ => Nat.lcmUpto_ne_zero (H / k)
 
@@ -308,7 +308,7 @@ private theorem sum_indicator {α : Type} (A B : Finset α) (P : α → Prop) [D
 
 /-- Count each prime power in the tail by exchanging the order of the
 sum over powers and the sum over the tail indices. -/
-private theorem tail_factorization_sum {p H M K : ℕ} (hp : p.Prime) (hK : H / p ^ K ≤ M) :
+public theorem tail_factorization_sum {p H M K : ℕ} (hp : p.Prime) (hK : H / p ^ K ≤ M) :
     (tailLCM H M).factorization p = ∑ j ∈ Ico 1 K, (H / p ^ j - M) := by
   have hpow (j : ℕ) : 0 < p ^ j := pow_pos hp.pos _
   have hpowers {k j : ℕ} (hk : 0 < k) : p ^ j ≤ H / k ↔ k ≤ H / p ^ j := by
@@ -348,7 +348,7 @@ private theorem tail_factorization_sum {p H M K : ℕ} (hp : p.Prime) (hK : H / 
         omega
       simpa using sum_indicator (Ioc M H) _ (fun k => k ≤ H / p ^ j) hfilt
 
-private theorem compact_tail_factorization {p r s K : ℕ} (hp : p.Prime) (hr : 1 ≤ r)
+public theorem compact_tail_factorization {p r s K : ℕ} (hp : p.Prime) (hr : 1 ≤ r)
     (hK : s < p ^ K) :
     (tailLCM (r * s + (r - 1)) (r - 1)).factorization p =
       ∑ j ∈ Ico 1 K, ((r * s + (r - 1)) / p ^ j - (r - 1)) := by
@@ -364,7 +364,7 @@ private theorem factorial_factorization {p n K : ℕ} (hp : p.Prime) (hK : Nat.l
   let _ : Fact p.Prime := ⟨hp⟩
   rw [Nat.factorization_def _ hp, padicValNat_factorial hK]
 
-private theorem selberg_factorization {p r s b K : ℕ} (hp : p.Prime)
+public theorem selberg_factorization {p r s b K : ℕ} (hp : p.Prime)
     (hb : r * b ≤ s) (hK : Nat.log p s < K) :
     (selbergFactorial r s b).factorization p = ∑ j ∈ Ico 1 K, floorSum (p ^ j) r s b := by
   rw [selbergFactorial_eq_paired]
@@ -406,7 +406,7 @@ private theorem tail_dvd_selberg {r s b : ℕ} (hr : 1 ≤ r) (hb : r * b ≤ s)
       _ ≤ p ^ j := Nat.pow_le_pow_right hp.pos hjpos
   exact selberg_floor_lower hpow hr hb
 
-private theorem gcd_factorization_le {p r s b : ℕ} (hp : p.Prime) (hr : 0 < r)
+public theorem gcd_factorization_le {p r s b : ℕ} (hp : p.Prime) (hr : 0 < r)
     (hb : r * b ≤ s) :
     (selbergGcd r s).factorization p ≤ (selbergFactorial r s b).factorization p :=
   (Nat.factorization_prime_le_iff_dvd (selbergGcd_ne_zero _ _)
