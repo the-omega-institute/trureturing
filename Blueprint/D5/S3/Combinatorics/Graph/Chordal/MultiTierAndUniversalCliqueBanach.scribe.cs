@@ -144,4 +144,3 @@ internal sealed class MultiTierAndUniversalCliqueBanachDocument : IScribeDocumen
             Imp(Le(D(2), m), Imp(Le(D(1), n), Reconstruction(vertices, graph, coefficient))))));
     }
 }
-
