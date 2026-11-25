@@ -61,7 +61,7 @@ internal sealed class CompleteAndCliqueSumBanachDocument : IScribeDocumentDefini
         Formula result = Some("phi",Arrow(v,e),All("i",v,All("j",v,
             Imp(Ne(i,j),Le(Error(g,p,i,j),Mul(Coeff(Call("real",card)),eps))))));
         result = All("g",Arrow(v,Arrow(v,e)),All("epsilon",Reals,
-            Imp(Le(D(0),eps),Imp(Call("skew",v,g),Imp(Call("triangle",v,g,eps),result)))));
+            Imp(Call("skew",v,g),Imp(Call("triangle",v,g,eps),result))));
         return U(All("V",Call("Type",V("u")),Seq(Instance("Finite",v),Comma,Sp,
             Imp(Le(D(2),card),All("E",Call("Type",V("v")),Space(e,result))))));
     }

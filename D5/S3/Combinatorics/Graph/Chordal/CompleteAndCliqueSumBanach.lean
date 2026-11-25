@@ -26,7 +26,7 @@ universe u v w
 /-- Averaging all star potentials gives the optimal universal complete graph radius. -/
 theorem completeGraph_banach_upper_bound {V : Type u} [Finite V]
     (hm : 2 ≤ Nat.card V) {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
-    (g : V → V → E) (ε : ℝ) (_hε : 0 ≤ ε)
+    (g : V → V → E) (ε : ℝ)
     (hrev : ∀ i j, g j i = -g i j)
     (htri : ∀ i j l, i ≠ j → j ≠ l → i ≠ l → ‖g i j + g j l - g i l‖ ≤ ε) :
     ∃ φ : V → E, ∀ u v, u ≠ v →

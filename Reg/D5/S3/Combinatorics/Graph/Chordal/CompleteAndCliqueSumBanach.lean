@@ -34,7 +34,7 @@ abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} [Finite V] (_hm : 2 ≤ Nat.card V)
     {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
-    (g : V → V → E) (ε : ℝ) (_hε : 0 ≤ ε)
+    (g : V → V → E) (ε : ℝ)
     (_hrev : ∀ i j, g j i = -g i j)
     (_htri : ∀ i j l, i ≠ j → j ≠ l → i ≠ l → ‖g i j + g j l - g i l‖ ≤ ε),
     ∃ φ : V → E, ∀ i j, i ≠ j → ‖g i j - (φ j - φ i)‖ ≤ R.readout () V ε
@@ -44,7 +44,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   let V := ULift.{u} (Fin 2)
   have hm : 2 ≤ Nat.card V := by simp [V, Nat.card_eq_fintype_card]
-  obtain ⟨φ,hφ⟩ := h (V := V) hm (E := ULift.{v} ℝ) (fun _ _ => 0) 0 le_rfl
+  obtain ⟨φ,hφ⟩ := h (V := V) hm (E := ULift.{v} ℝ) (fun _ _ => 0) 0
     (by simp) (by simp)
   let a : V := ⟨0⟩
   let b : V := ⟨1⟩
@@ -96,7 +96,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "body", "body", "body", "body", "arg"]
+        "body", "arg", "body", "body", "body", "body", "arg"]
       stateBinder := 7
       functionOperand := false
       stateOperand := none
