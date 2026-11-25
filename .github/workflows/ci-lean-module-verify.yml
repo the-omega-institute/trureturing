@@ -49,7 +49,7 @@ jobs:
         run: node --test .github/actions/lean-cache-shards/test-generation.mjs
       - if: inputs.published || steps.entry.outputs.hit == 'true'
         id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - if: inputs.published || steps.entry.outputs.hit == 'true'
         uses: actions/cache/restore@v5
         with:
