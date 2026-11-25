@@ -31,8 +31,7 @@ open private eigen_norm_six_dvd from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeFourCut
 open private diff diff_of_adj_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 open Classical in
 private theorem parts_eigen_pos (h : Q9 → ℤ)

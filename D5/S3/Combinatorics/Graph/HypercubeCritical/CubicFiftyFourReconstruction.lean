@@ -38,8 +38,7 @@ open private paritySide parity_union parity_bipartite coordinate_slice_degree_ca
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cubeParity cubeParity_ne_of_adj huangMatrix from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private even_diff_of_parity_eq from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
 
