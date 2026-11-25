@@ -273,7 +273,7 @@ Path("committed").touch()
   const worker = run('workflow_dispatch', 'build-reports');
   assert.equal(worker.status, 0, worker.stderr);
   await writeFile(join(root, 'receipts/report-2.json'), await readFile(join(root, 'report-2.json')));
-  const commit = run('workflow_dispatch', 'publish-generation');
+  const commit = run('workflow_dispatch', 'commit-generation');
   assert.equal(commit.status, 0, commit.stderr);
   assert.equal(await readFile(join(root, 'committed'), 'utf8'), '');
 });

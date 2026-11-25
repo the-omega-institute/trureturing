@@ -256,4 +256,4 @@ jobs:
       - name: Verify and publish the complete CI and Release indexes
         uses: ./.github/actions/lean-cache-shards
         with:
-          operation: publish-generation
+          operation: commit-generation

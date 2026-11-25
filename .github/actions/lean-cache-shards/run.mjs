@@ -632,14 +632,21 @@ async function runPublisher() {
   const plan = join(temp, 'complete-plan.json');
   const expected = join(temp, 'base/expected-marker');
   await mkdir(receipts, { recursive: true });
-  run('python3', [facets, '--stage', 'finish', '--plan', facetPlan, '--receipts', receipts, '--output', plan]);
+  if (operation === 'publish-generation') {
+    // Queued workflows can pin a newer dev checkout while retaining the single-job layout.
+    await copyFile(join(temp, 'plan/hits.json'), join(receipts, 'compiler-hits.json'));
+    run('python3', [facets, '--plan', join(temp, 'plan/plan.json'), '--base', base,
+      '--receipts', receipts, '--output', plan]);
+  } else {
+    run('python3', [facets, '--stage', 'finish', '--plan', facetPlan, '--receipts', receipts, '--output', plan]);
+  }
   const prior = (await stat(expected)).size ? ['--base', base] : [];
   run('python3', ['tools/scripts/worktree/lean_cache_generation.py', 'commit', '--plan', plan,
     ...prior, '--receipts', receipts, '--expected-marker', expected]);
 }
 
 async function main() {
-  if (['compile-generation', 'plan-reports', 'build-reports', 'publish-generation'].includes(operation)) return runPublisher();
+  if (['compile-generation', 'plan-reports', 'build-reports', 'commit-generation', 'publish-generation'].includes(operation)) return runPublisher();
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);
   }
