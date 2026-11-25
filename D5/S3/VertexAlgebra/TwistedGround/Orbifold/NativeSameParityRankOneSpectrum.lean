@@ -40,7 +40,7 @@ open private neutralLift neutralLift_apply neutralTransport_lift rankOne_abe_lif
     leechRankOneScale_contract from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddZhuTopBalance
 open private theta_omega_fixed from D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
-open private x inverseGram from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+open private x inverseGram from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 
 noncomputable section
 

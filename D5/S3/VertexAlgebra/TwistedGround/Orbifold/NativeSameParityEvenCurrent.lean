@@ -39,7 +39,7 @@ open private oddPart oddPart_on_odd oddResidue_nat neutralLift neutralLift_apply
     neutralTransport_grade rankOne_odd_lift leechAbeOddTransport_val
   from D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddZhuTopBalance
 open private x inverseGram normalization normalization_mul sum_rank_one abeState_grade
-  from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+  from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 open private rankOneOmega rankOneOmega_polynomial rankOneOmega_fixed scale_gram
   from D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeSameParityRankOneSpectrum
 

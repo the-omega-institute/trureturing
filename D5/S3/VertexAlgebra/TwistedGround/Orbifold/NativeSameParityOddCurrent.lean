@@ -329,7 +329,7 @@ open LatticeLightConeCoordinates (a_single polynomialCurrent_negative polynomial
   polynomialCurrent_positive oldDerivative oldDerivative_lin)
 open Lattice.ActualZhuRankOneOdd (L abe_zhu_identity oddCurrent_parity)
 open private normalization normalization_mul inverseGram abeState_grade sum_rank_one
-  from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+  from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 open private rankOne_abe_lift rankOne_odd_lift neutralLift neutralLift_apply oddResidue_nat
   neutral_derivative_lift
   from D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddZhuTopBalance
@@ -523,7 +523,7 @@ private theorem transport_pair_mode (i : FrameIndex) (j k : Index R) (n : ℤ)
     change transport i ((A[[m]]) v) = scale • (A'[[m]]) (transport i v) at hA
     rw [hq, transport_jet, ← hq, hA, map_smul, smul_smul, scale_sq]
 
-open private x from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+open private x from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 open private theta_omega_fixed from D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
 open private antisymmetrize from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddSourceRestriction

@@ -33,7 +33,7 @@ open StateFieldResidueReconstruction (integerBinomial)
 open ActualLeechHyperbolic (leechData)
 open private antisymmetrize from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddSourceRestriction
-open private abeState_grade from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+open private abeState_grade from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 open private theta_gradeProjection ambientGradeReadout_self lowering_kills_top topReadout_raising_zero
     fixedAction_equal_degree_top from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddTopDetection
@@ -389,7 +389,7 @@ open LatticeSugawaraCurrents LatticeActualAnnihilation
 open private multiplication_recursion from D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 open private derivative_modes from D5.S3.VertexAlgebra.LatticeAllStateField
 open private abeState_eq oddCurrent_eq normalization lift x
-  from D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+  from D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 
 local instance rankOneRankNeZero : NeZero (R₁).rank := ⟨by decide⟩
 
