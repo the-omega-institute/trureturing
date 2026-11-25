@@ -33,7 +33,7 @@ private theorem continuous_phase (v : ℝ) : Continuous (phase v) := by
   unfold phase
   fun_prop
 
-private theorem norm_phase (v t : ℝ) : ‖phase v t‖ = 1 := by
+theorem norm_phase (v t : ℝ) : ‖phase v t‖ = 1 := by
   simp [phase, Complex.norm_exp]
 
 private theorem phase_mul_conj (x y t : ℝ) :
