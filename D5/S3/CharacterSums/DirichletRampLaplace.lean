@@ -22,7 +22,7 @@ open D5.S3.CharacterSums.DirichletRampEndpoint
 
 namespace D5.S3.CharacterSums.DirichletRampLaplace
 
-private theorem characterRamp_eq_range {N : ℕ} (χ : DirichletCharacter ℂ N) (x : ℝ) :
+theorem characterRamp_eq_range {N : ℕ} (χ : DirichletCharacter ℂ N) (x : ℝ) :
     characterRamp χ x =
       ∑ n ∈ Finset.range (⌊x⌋₊ + 1), (mangoldtRamp n x : ℂ) * χ (n : ZMod N) := by
   unfold characterRamp
@@ -35,7 +35,7 @@ private theorem characterRamp_eq_range {N : ℕ} (χ : DirichletCharacter ℂ N)
     subst n
     simp [mangoldtRamp]
 
-private theorem weighted_ramps_hasSum {N : ℕ} (χ : DirichletCharacter ℂ N) (t y : ℝ) :
+theorem weighted_ramps_hasSum {N : ℕ} (χ : DirichletCharacter ℂ N) (t y : ℝ) :
     HasSum (fun n : ℕ => Complex.exp (-transformLine t * y) *
       (mangoldtRamp n (Real.exp y) : ℂ) * χ (n : ZMod N))
       (Complex.exp (-transformLine t * y) * characterRamp χ (Real.exp y)) := by
@@ -96,7 +96,8 @@ theorem characterRamp_line_laplace {N : ℕ} [NeZero N] (χ : DirichletCharacter
       ∫ y : ℝ in Ioi 0, ‖Complex.exp (-s * y) * (mangoldtRamp n (Real.exp y) : ℂ)‖
     simp only [f, norm_mul]
     rw [integral_mul_const]
-    exact mul_le_of_le_one_right (integral_nonneg fun y => mul_nonneg (norm_nonneg _) (norm_nonneg _))
+    exact mul_le_of_le_one_right
+      (integral_nonneg fun y => mul_nonneg (norm_nonneg _) (norm_nonneg _))
       (χ.norm_le_one _)
   have hsum := hasSum_integral_of_summable_integral_norm hi hnorm
   have hL := (χ.LSeriesSummable_twist_vonMangoldt hs).hasSum.div_const (s * (s - 1))

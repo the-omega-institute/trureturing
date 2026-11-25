@@ -43,8 +43,8 @@ private def aBasis : GramMatrix := !![1,1,1,0; 1,-1,0,1; 1,-1,0,-1; 1,1,-1,0]
 private def aInv : GramMatrix := !![1/4,1/4,1/4,1/4; 1/4,-1/4,-1/4,1/4;
   1/2,0,0,-1/2; 0,1/2,-1/2,0]
 
-private def bBasis : GramMatrix := !![0,1,0,0; 1,0,1,1; 1,0,-1,1; 1,0,0,-2]
-private def bInv : GramMatrix := !![0,1/3,1/3,1/3; 1,0,0,0;
+def bBasis : GramMatrix := !![0,1,0,0; 1,0,1,1; 1,0,-1,1; 1,0,0,-2]
+def bInv : GramMatrix := !![0,1/3,1/3,1/3; 1,0,0,0;
   0,1/2,-1/2,0; 0,1/6,1/6,-1/3]
 
 private theorem aBasis_mul_inv : aBasis * aInv = 1 := by
@@ -52,7 +52,7 @@ private theorem aBasis_mul_inv : aBasis * aInv = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [aBasis, aInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
-private theorem bBasis_mul_inv : bBasis * bInv = 1 := by
+theorem bBasis_mul_inv : bBasis * bInv = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [bBasis, bInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
@@ -103,7 +103,7 @@ private theorem gram_pair_cospectral (t : ℚ) :
 def RealizableIn (G : GramMatrix) (n : ℕ) : Prop :=
   ∃ X : Matrix (Fin 4) (Fin n) ℚ, X * Xᵀ = G
 
-private theorem fits_congr (G D P Q : GramMatrix) (hpq : P * Q = 1)
+theorem fits_congr (G D P Q : GramMatrix) (hpq : P * Q = 1)
     (h : Pᵀ * G * P = D) (n : ℕ) : RealizableIn G n ↔ RealizableIn D n := by
   have hqp : Qᵀ * Pᵀ = 1 := by rw [← Matrix.transpose_mul, hpq, Matrix.transpose_one]
   constructor
@@ -120,11 +120,11 @@ private theorem fits_congr (G D P Q : GramMatrix) (hpq : P * Q = 1)
       _ = (Qᵀ * Pᵀ) * G * (P * Q) := by simp only [Matrix.mul_assoc]
       _ = G := by rw [hqp, hpq, Matrix.one_mul, Matrix.mul_one]
 
-private def aCongr : GramMatrix := !![1/2,1,2,0; -1/2,1,0,2; -1/2,1,0,-2; 1/2,1,-2,0]
-private def aCongrInv : GramMatrix := !![1/2,-1/2,-1/2,1/2; 1/4,1/4,1/4,1/4;
+def aCongr : GramMatrix := !![1/2,1,2,0; -1/2,1,0,2; -1/2,1,0,-2; 1/2,1,-2,0]
+def aCongrInv : GramMatrix := !![1/2,-1/2,-1/2,1/2; 1/4,1/4,1/4,1/4;
   1/4,0,0,-1/4; 0,1/4,-1/4,0]
 
-private theorem aCongr_mul_inv : aCongr * aCongrInv = 1 := by
+theorem aCongr_mul_inv : aCongr * aCongrInv = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [aCongr, aCongrInv, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
@@ -240,7 +240,7 @@ private theorem weighted_ternary_rational_obstruction (a b c : ℕ)
     exact hi
   exact integer_obstruction d hd _ _ _ (Int.ofNat_inj.mp hn)
 
-private theorem modular_ternary_rational_descent
+theorem modular_ternary_rational_descent
     (p a b c : ℕ) (hp : 1 < p)
     (reduce_yz : ∀ y z : ZMod p, y ^ 2 + b * z ^ 2 = 0 → y = 0 ∧ z = 0)
     (reduce_xd : ∀ x d : ZMod p, a * x ^ 2 = c * d ^ 2 → x = 0 ∧ d = 0)
@@ -250,7 +250,7 @@ private theorem modular_ternary_rational_descent
     (modular_ternary_descent p a b c hp reduce_yz reduce_xd) x y z
 
 /-- Finite families with the same Gram data are related by a rational dot-product isometry. -/
-private theorem fin_frame_isometry {ι : Type} [Fintype ι] {n : ℕ} (a b : Fin n → ι → ℚ)
+theorem fin_frame_isometry {ι : Type} [Fintype ι] {n : ℕ} (a b : Fin n → ι → ℚ)
     (h : ∀ i j, a i ⬝ᵥ a j = b i ⬝ᵥ b j) :
     ∃ f : (ι → ℚ) → (ι → ℚ),
       (∀ i, f (a i) = b i) ∧ ∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y := by
@@ -433,7 +433,7 @@ private theorem second_one_sixteenth_not_five : ¬ RealizableIn (triangleBlock (
     | simpa [diagonal_apply] using entry 0 2
     | simpa [diagonal_apply] using entry 1 2)
 
-private theorem fits_mono {G : GramMatrix} {m n : ℕ} (hmn : m ≤ n) (hG : RealizableIn G m) :
+theorem fits_mono {G : GramMatrix} {m n : ℕ} (hmn : m ≤ n) (hG : RealizableIn G m) :
     RealizableIn G n := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hmn
   obtain ⟨X, hX⟩ := hG
@@ -468,21 +468,21 @@ private theorem thresholds_at_base (n : ℕ) :
     fin_cases i <;> fin_cases j <;>
       norm_num [Matrix.diagonal_apply, Matrix.transpose_apply, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private theorem decompose_first (t : ℚ) :
+theorem decompose_first (t : ℚ) :
     aCongrᵀ * pairedEdges t * aCongr = diagonal ![1,4*(1+4*t),8*(1-2*t),8*(1-2*t)] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [pairedEdges, aCongr, Matrix.diagonal_apply, Matrix.transpose_apply,
       Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
 
-private theorem decompose_second (t : ℚ) :
+theorem decompose_second (t : ℚ) :
     bBasisᵀ * triangleBlock t * bBasis = diagonal ![3*(1+4*t),1,2*(1-2*t),6*(1-2*t)] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [triangleBlock, bBasis, Matrix.diagonal_apply, Matrix.transpose_apply,
       Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
 
-private theorem diag_scaling (e f g : Fin 4 → ℚ) (hn : ∀ i, e i ≠ 0)
+theorem diag_scaling (e f g : Fin 4 → ℚ) (hn : ∀ i, e i ≠ 0)
     (h : ∀ i, e i ^ 2 * f i = g i) (n : ℕ) :
     RealizableIn (diagonal f) n ↔ RealizableIn (diagonal g) n := by
   apply fits_congr _ _ (diagonal e) (diagonal fun i => (e i)⁻¹) _ _ n
@@ -558,7 +558,7 @@ theorem spectrum_and_thresholds :
       ((first_one_sixteenth_fit n).symm.trans (thresholds_at_base n).1),
     (second_family_fit t u v hu hv h₁ h₂ n).trans (bb.symm.trans (thresholds_at_base n).2)⟩
 
-private theorem three_not_five_sq_add_two_sq (x y z : ℚ) :
+theorem three_not_five_sq_add_two_sq (x y z : ℚ) :
     5 * x ^ 2 + y ^ 2 + z ^ 2 ≠ 3 := by
   have odd_obstruction (X Y Z : ℕ) : (5 * X ^ 2 + Y ^ 2 + 1 * Z ^ 2) % 8 ≠ 3 % 8 := by
     intro he
