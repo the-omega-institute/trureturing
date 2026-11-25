@@ -57,7 +57,7 @@ private theorem separated_paths (hG : G.IsChordal) {x y : V} (hxy : x ≠ y)
     by_contra! h
     exact (hsep a (hps a ha) b (hqt b hb) h.1.1 h.1.2 h.2.1 h.2.2).2 hab
 
-private theorem four_cycle_diagonal (hG : G.IsChordal) {a b c d : V}
+theorem four_cycle_diagonal (hG : G.IsChordal) {a b c d : V}
     (hab : G.Adj a b) (hbc : G.Adj b c) (hcd : G.Adj c d) (hda : G.Adj d a)
     (hac : a ≠ c) (hbd : b ≠ d) : G.Adj a c ∨ G.Adj b d := by
   let p : G.Walk a a := .cons hab (.cons hbc (.cons hcd hda.toWalk))
@@ -79,14 +79,14 @@ section Layers
 
 variable (G) (o : V)
 
-private abbrev Tail (k : ℕ) : Set V := {x | k ≤ G.dist o x}
-private abbrev Component (k : ℕ) := (G.induce (Tail G o k)).ConnectedComponent
+abbrev Tail (k : ℕ) : Set V := {x | k ≤ G.dist o x}
+abbrev Component (k : ℕ) := (G.induce (Tail G o k)).ConnectedComponent
 
-private abbrev componentOf (k : ℕ) (x : V) (hx : k ≤ G.dist o x) :
+abbrev componentOf (k : ℕ) (x : V) (hx : k ≤ G.dist o x) :
     Component G o k :=
   (G.induce (Tail G o k)).connectedComponentMk ⟨x, hx⟩
 
-private def parent {k : ℕ} (C : Component G o (k + 1)) : Component G o k :=
+def parent {k : ℕ} (C : Component G o (k + 1)) : Component G o k :=
   C.map (G.induceHomOfLE (s := Tail G o (k + 1)) (s' := Tail G o k)
     (fun _ h => Nat.le_of_succ_le h)).toHom
 
@@ -94,12 +94,12 @@ private theorem parent_componentOf {k : ℕ} {x : V} (hx : k + 1 ≤ G.dist o x)
     parent G o (componentOf G o (k + 1) x hx) =
       componentOf G o k x (Nat.le_of_succ_le hx) := rfl
 
-private def Shadow {k : ℕ} (C : Component G o (k + 1)) : Set V :=
+def Shadow {k : ℕ} (C : Component G o (k + 1)) : Set V :=
   {x | G.dist o x = k ∧ ∃ y : Tail G o (k + 1), y ∈ C.supp ∧ G.Adj x y.val}
 
 variable {G o}
 
-private theorem exists_predecessor {x : V} {k : ℕ} (hx : G.dist o x = k + 1) :
+theorem exists_predecessor {x : V} {k : ℕ} (hx : G.dist o x = k + 1) :
     ∃ y, G.Adj y x ∧ G.dist o y = k := by
   have hn : G.dist x o ≠ 0 := by rw [dist_comm, hx]; omega
   obtain ⟨p, hp⟩ := exists_walk_of_dist_ne_zero hn
@@ -130,7 +130,7 @@ private theorem walk_to_root (hconn : G.Connected) (x : V) :
     · have := hp z hz
       omega
 
-private theorem componentOf_adj {k : ℕ} {x y : V} (hx : k ≤ G.dist o x)
+theorem componentOf_adj {k : ℕ} {x y : V} (hx : k ≤ G.dist o x)
     (hy : k ≤ G.dist o y) (h : G.Adj x y) :
     componentOf G o k x hx = componentOf G o k y hy :=
   ConnectedComponent.connectedComponentMk_eq_of_adj (G := G.induce (Tail G o k)) h
@@ -159,12 +159,12 @@ private theorem shadow_nonempty {k : ℕ} (C : Component G o (k + 1)) :
   obtain ⟨y, hyx, hy⟩ := exists_predecessor hlevel
   exact ⟨y, hy, x, hx, hyx⟩
 
-private theorem mem_shadow_of_adj {k : ℕ} {x y : V} (hx : G.dist o x = k)
+theorem mem_shadow_of_adj {k : ℕ} {x y : V} (hx : G.dist o x = k)
     (hy : k + 1 ≤ G.dist o y) (hxy : G.Adj x y) :
     x ∈ Shadow G o (componentOf G o (k + 1) y hy) :=
   ⟨hx, ⟨y, hy⟩, ConnectedComponent.connectedComponentMk_mem, hxy⟩
 
-private theorem shadow_parent {k : ℕ} {C : Component G o (k + 1)} {x : V}
+theorem shadow_parent {k : ℕ} {C : Component G o (k + 1)} {x : V}
     (hx : x ∈ Shadow G o C) :
     parent G o C = componentOf G o k x hx.1.ge := by
   obtain ⟨y, hy, hxy⟩ := hx.2
@@ -173,7 +173,7 @@ private theorem shadow_parent {k : ℕ} {C : Component G o (k + 1)} {x : V}
     (parent_componentOf G o y.property).trans
       (componentOf_adj (Nat.le_of_succ_le y.property) hx.1.ge hxy.symm)
 
-private theorem shadow_clique (hG : G.IsChordal) (hconn : G.Connected)
+theorem shadow_clique (hG : G.IsChordal) (hconn : G.Connected)
     {k : ℕ} (C : Component G o (k + 1)) : G.IsClique (Shadow G o C) := by
   intro x hx y hy hxy
   by_contra hn
@@ -219,7 +219,7 @@ private theorem shadow_clique (hG : G.IsChordal) (hconn : G.Connected)
   have := hadj.diff_dist_adj (u := o)
   omega
 
-private theorem exists_shadow_anchor [Finite V] (hG : G.IsChordal) (hconn : G.Connected)
+theorem exists_shadow_anchor [Finite V] (hG : G.IsChordal) (hconn : G.Connected)
     {k : ℕ} (C : Component G o (k + 2)) :
     ∃ a ∈ Shadow G o (parent G o C), ∀ x ∈ Shadow G o C, G.Adj a x := by
   classical
@@ -272,16 +272,16 @@ section Gains
 
 variable {H : Type v} [Group H]
 
-private def gain [DecidableEq V] (g : V → V → H) (x y : V) : H :=
+def gain [DecidableEq V] (g : V → V → H) (x y : V) : H :=
   if x = y then 1 else g x y
 
-private theorem gain_adj [DecidableEq V] (g : V → V → H) {x y : V} (h : G.Adj x y) :
+theorem gain_adj [DecidableEq V] (g : V → V → H) {x y : V} (h : G.Adj x y) :
     gain g x y = g x y := ite_eq_right h.ne
 
 variable [PseudoMetricSpace H] [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H]
 
 omit [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H] in
-private theorem gain_triangle [DecidableEq V] {g : V → V → H} {ε : ℝ} (hε : 0 ≤ ε)
+theorem gain_triangle [DecidableEq V] {g : V → V → H} {ε : ℝ} (hε : 0 ≤ ε)
     (hrev : ∀ i j, G.Adj i j → g j i = (g i j)⁻¹)
     (htri : ∀ i j k, G.Adj i j → G.Adj j k → G.Adj i k →
       Dist.dist (g i j * g j k) (g i k) ≤ ε)
@@ -296,7 +296,7 @@ private theorem gain_triangle [DecidableEq V] {g : V → V → H} {ε : ℝ} (h�
   · simpa [gain, hab.ne, hab.ne.symm, hrev _ _ hab] using hε
   simpa only [gain_adj g hab, gain_adj g hbc, gain_adj g hac] using htri _ _ _ hab hbc hac
 
-private theorem two_triangle_comparisons (γ : V → V → H) {a b c d : V} {ε : ℝ}
+theorem two_triangle_comparisons (γ : V → V → H) {a b c d : V} {ε : ℝ}
     (habc : Dist.dist (γ a b * γ b c) (γ a c) ≤ ε)
     (hbcd : Dist.dist (γ b c * γ c d) (γ b d) ≤ ε) :
     Dist.dist (γ a b * γ b d) (γ a c * γ c d) ≤ 2 * ε := by
@@ -308,7 +308,7 @@ private theorem two_triangle_comparisons (γ : V → V → H) {a b c d : V} {ε 
     exact habc
   linarith [_root_.dist_triangle (γ a b * γ b d) (γ a b * (γ b c * γ c d)) (γ a c * γ c d)]
 
-private def anchorGain {o : V} (γ : V → V → H) (a : (k : ℕ) → Component G o (k + 1) → V) :
+def anchorGain {o : V} (γ : V → V → H) (a : (k : ℕ) → Component G o (k + 1) → V) :
     (k : ℕ) → Component G o (k + 1) → H
   | 0, _ => 1
   | k + 1, C => anchorGain γ a k (parent G o C) * γ (a k (parent G o C)) (a (k + 1) C)
