@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/QuantumChannels/FibonacciBathObservation
   - D5/S3/Quantum/Decoherence/FourLevelBathObserver
   - D5/S3/Quantum/Decoherence/FourLevelBathObserverFourier
+  - D5/S3/Quantum/Decoherence/FourLevelBathEntropyBudget
 license: citation-only
 triage: anchor
 ---
@@ -72,3 +73,16 @@ who uses the corresponding phase-adjusted projectors. Each k occurs
 with probability 1/4, and the conditional bath readout gives the input
 label with certainty. Testing that result against j yields the same
 yes-or-no answer.
+
+## Information of the measured label
+
+The same apparatus question can be asked after an arbitrary qutrit
+density evolves with the bath and its spectator reference. Measuring the
+qutrit in its coordinate basis gives a classical label X with Born law
+aᵢ = ρᵢᵢ. Each local record density is independent of this label.
+The phase-sensitive measurement on BR identifies the label exactly,
+as does the one-way Fourier protocol above. The repository computes
+I(X:B) = I(X:R) = 0 and I(X:BR) = H(a) for the corresponding
+classical–quantum record state. Section 19.2 supplies historical context
+for the yes-or-no question about X.
+[Section 19.2](https://cqi.inf.usi.ch/qic/wheeler.pdf#page=2)
