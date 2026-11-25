@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry.EuclideanSimp
 internal sealed class RationalUnitSimplexDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/kominers2026rationaledges");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/kominers2026rationaledges");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The arithmetic classification of regular simplices on rational unit spheres.",
