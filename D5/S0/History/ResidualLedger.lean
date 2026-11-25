@@ -73,7 +73,7 @@ private noncomputable def decodeResidualLedgerComponents {Source Detector NextAc
 
 /-- The four-component representation of a residual-ledger record is lossless. -/
 theorem residual_ledger_components_bijective (Source Detector NextAction : Type*) :
-    Omega.Function.Bijective (encodeResidualLedgerComponents
+    OmegaMathlib.Function.Bijective (encodeResidualLedgerComponents
       (Source := Source) (Detector := Detector) (NextAction := NextAction)) :=
   Omega.And.intro
     (Omega.Function.LeftInverse.injective (g := decodeResidualLedgerComponents)

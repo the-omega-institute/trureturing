@@ -8,7 +8,7 @@ namespace OmegaChecks.ModuleSurface
 def isBasis (owner : Name) : Bool :=
   owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib
 
-private def counterpart (owner : Name) : Name :=
+def counterpart (owner : Name) : Name :=
   owner.replacePrefix owner.getRoot (if owner.getRoot == `OmegaInit then `Init else `Mathlib)
 
 /-- Include modules independently of the presence of local mathematical declarations. -/
@@ -165,8 +165,13 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
           throw <| IO.userError s!"unmatched elab_as_elim attribute for {name} in {official}"
         roots := roots.insert name expected
       for (alias, target) in aliasExtension.getModuleEntries strict idx do
-        let officialAlias := alias.replacePrefix `Omega .anonymous
+        let standardRef := alias.getRoot == `OmegaMathlib
+        let officialAlias := alias.replacePrefix (if standardRef then `OmegaMathlib else `Omega) .anonymous
         let officialTarget := target.replacePrefix `Omega .anonymous
+        if standardRef then
+          unless owner.getRoot == `OmegaMathlib && target == `Omega ++ officialAlias &&
+              strict.getModuleIdxFor? target == some idx do
+            throw <| IO.userError s!"invalid reserved standard reference {alias} for {target} in {owner}"
         let resolved := ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias
         unless resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"

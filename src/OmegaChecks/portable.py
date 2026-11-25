@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, foundation_config, lake_layout, strict_config
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -109,6 +109,37 @@ def alias_sections(exports):
     return lines
 
 
+# These namespace aliases are elaborated to their target constants. Neither backend
+# gains a second definition for a mathematical object.
+def standard_aliases(module, exports, *, strict):
+    if root(module) != "OmegaMathlib":
+        return {}
+    return {(namespace.replace("Omega", "OmegaMathlib", 1),
+             "_root_." + namespace if strict else original): leaves
+            for (namespace, original), leaves in exports.items()}
+
+
+STRICT_EXPORT_MARKER = "-- Generated standard references (portable.py --regenerate-facades)."
+STRICT_EXPORT_END = "-- End generated standard references."
+
+
+def strict_alias_source(module, content, exports):
+    before, marker, rest = content.partition(STRICT_EXPORT_MARKER + "\n")
+    if marker:
+        _, end, after = rest.partition(STRICT_EXPORT_END + "\n")
+        if not end or STRICT_EXPORT_MARKER in after or STRICT_EXPORT_END in after:
+            raise ValueError(f"invalid generated alias section in {module}")
+    else:
+        if STRICT_EXPORT_END in content:
+            raise ValueError(f"unmatched end of generated aliases in {module}")
+        after = ""
+    lines = alias_sections(standard_aliases(module, exports, strict=True))
+    if not lines:
+        return before + after
+    block = "\n".join([STRICT_EXPORT_MARKER, "public section", *lines, "end", STRICT_EXPORT_END])
+    return before.rstrip() + "\n\n" + block + "\n" + after
+
+
 def official_basis_source(module, deps, exports, seals):
     upstream = official_module(module)
     imports = set(deps)
@@ -116,7 +147,7 @@ def official_basis_source(module, deps, exports, seals):
         imports.add(upstream)
     lines = ["module", *("public import " + n for n in sorted(imports)), "",
              "/-! Namespace aliases to the pinned public interface. -/", "public section",
-             *alias_sections(exports)]
+             *alias_sections(exports), *alias_sections(standard_aliases(module, exports, strict=False))]
     if seals:
         lines.extend(["", "set_option allowUnsafeReducibility true in",
                       "attribute [irreducible] " + " ".join("_root_." + name for name in sorted(seals))])
@@ -136,30 +167,65 @@ def regenerate_facades():
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
-                   cwd=ROOT, check=True)
-    generated, _ = derived_facades(lean, ROOT / BUILD / "lib/lean", basis,
-                                output("lake", "env", "printenv", "LEAN_PATH").strip())
-    changed = []
-    with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
-        for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
-            target = SRC / relative
-            if target.resolve() != target:
-                raise ValueError(f"refusing to write a facade through a symlink: {target}")
-            if target.exists() and target.read_bytes() == content:
-                continue
-            staged = Path(temporary) / relative
-            staged.parent.mkdir(parents=True, exist_ok=True)
-            staged.write_bytes(content)
-            if target.exists():
-                staged.chmod(target.stat().st_mode)
-            changed.append((staged, target))
-        for staged, target in changed:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            staged.replace(target)
-            print(f"Updated {target.relative_to(ROOT)}")
-    print(f"Updated {len(changed)} of {len(basis)} official facade modules")
+    official_path = output("lake", "env", "printenv", "LEAN_PATH").strip()
+    upstream = [official_module(n) for n in basis if root(n) == "OmegaMathlib" and official_module(n)]
+    subprocess.run(["lake", "build", *("+" + n + ":olean" for n in upstream)], cwd=ROOT, check=True)
+    # Build author sources without their previous generated exports. A removed or renamed
+    # declaration cannot leave a stale export that prevents the generator itself from running.
+    with tempfile.TemporaryDirectory(dir=ROOT / ".lake", prefix="port-exports-") as temporary:
+        stage = Path(temporary)
+        inputs, build_dir = stage / "sources", stage / "build"
+        config = foundation_config(str(inputs), str(build_dir), stage.name)
+        pending = {}
+        originals = {}
+        try:
+            for name in basis:
+                path = sources[name]
+                if path.resolve() != path:
+                    raise ValueError(f"refusing to regenerate a linked port: {path}")
+                original = path.read_text()
+                originals[path] = original
+                staged = inputs / path.relative_to(ROOT / "strict")
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(strict_alias_source(name, original, {}))
+            # Install prerequisite aliases before compiling the next level of strict imports.
+            sorter = TopologicalSorter({n: graph[n].intersection(basis) for n in basis})
+            sorter.prepare()
+            while sorter.is_active():
+                ready = sorted(sorter.get_ready())
+                subprocess.run(["lake", "-f", config, "build", *("+" + n for n in ready)],
+                               cwd=ROOT, check=True)
+                imports, exports, _ = namespace_exports(lean, str(build_dir / "lib/lean"), ready, official_path)
+                for name in ready:
+                    path = sources[name]
+                    relative = path.relative_to(ROOT / "strict")
+                    if root(name) == "OmegaMathlib":
+                        updated = strict_alias_source(name, originals[path], exports[name])
+                        (inputs / relative).write_text(updated)
+                        pending[path] = updated
+                    pending[SRC / relative] = official_basis_source(name, imports[name], exports[name], [])
+                sorter.done(*ready)
+            for path, original in originals.items():
+                if path.read_text() != original:
+                    raise RuntimeError(f"strict source changed during generation: {path}")
+            count = 0
+            for target, content in pending.items():
+                if target.resolve() != target:
+                    raise ValueError(f"refusing to update a linked facade: {target}")
+                if target.exists() and target.read_text() == content:
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                staged = stage / "output" / target.relative_to(ROOT)
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(content)
+                if target.exists():
+                    staged.chmod(target.stat().st_mode)
+                staged.replace(target)
+                count += 1
+                print(f"Updated {target.relative_to(ROOT)}")
+            print(f"Updated {count} port source files")
+        finally:
+            config.unlink(missing_ok=True)
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
@@ -188,9 +254,11 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
             raise RuntimeError(f"dependency shadows project module {name}")
         trace = json.loads((lib / base.with_suffix(".trace")).read_text())["outputs"]
         parts = [*trace["o"], *(trace[key] for key in ("rs", "r") if key in trace)]
+        if root(name) not in BASIS:
+            parts.append(trace["i"])
         for part in parts:
             digest, suffix = part.split(".", 1)
-            if suffix not in {"olean", "olean.server", "olean.private", "ir", "ir.sig"}:
+            if suffix not in {"olean", "olean.server", "olean.private", "ir", "ir.sig", "ilean"}:
                 raise ValueError(f"unexpected import artifact {part} for {name}")
             relative = base.with_suffix("." + suffix)
             staged = stage / relative
@@ -432,7 +500,10 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if not scoped and backend == "both" and frozen is None:
         common_roots = [*all_basis, *portable_clients]
     common_modules = closure(graph, common_roots)
-    compiled = dict.fromkeys([*modules, *common_modules])
+    checked_refs = [n for n in downstream if root(n) != "LeanInformationAuditInterface"]
+    # A project can reuse a short name without importing the matching port.
+    catalog = sorted(n for n in all_basis if root(n) == "OmegaMathlib") if backend == "both" and checked_refs else []
+    compiled = dict.fromkeys([*modules, *common_modules, *closure(graph, catalog)])
     with_reg = any(root(n) in {"Reg", "LeanInformationAuditInterface"} for n in compiled)
     strict_sources = {name: sources[name] for name in compiled}
     official_sources = {name: facades[name] if root(name) in BASIS else sources[name]
@@ -453,7 +524,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                        for file in ("lakefile.toml", "lake-manifest.json"))
     tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
     if backend == "both":
-        tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+        tracked.update([SRC / "OmegaChecks/Portable/Exports.lean", SRC / "OmegaChecks/QualifiedReferences.lean"])
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
@@ -497,6 +568,14 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_reg = any(root(name) in {"Reg", "LeanInformationAuditInterface"} for name in common_sources)
             common_path = backend_artifacts(False, common_reg, common_sources, Path(temp) / "common", packages,
                                             lean, environment, COMMON_SRC)
+        if catalog:
+            for label, stage, search in [("strict", strict, strict_path), ("official", official, official_path)]:
+                records = [(name, str(sources[name]), str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
+                           for name in checked_refs]
+                request = Path(temp) / f"{label}-references.json"
+                request.write_text(json.dumps(records))
+                subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean",
+                                label, search, request, *catalog], cwd=ROOT, env=environment, check=True)
         if backend == "both" and frozen is None:
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
@@ -554,6 +633,13 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 for artifact in base.parent.glob(base.name + ".*"):
                     if artifact.is_file():
                         artifact.unlink()
+            if backend != "both":
+                subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+                publication = [n for n in modules if root(n) in {"OmegaMath", "OmegaMathlib"}]
+                if publication:
+                    path = strict_path if backend == "strict" else official_path
+                    subprocess.run([AUDIT, "--publication-layers", path, *publication], cwd=ROOT,
+                                   env=environment, check=True)
             publish(strict if backend == "strict" else official, destination)
         if backend == "both":
             report_name = "selected-official-axioms.json" if only or scoped else "official-axioms.json"

@@ -1,12 +1,29 @@
 import Lean
 import Lean.Replay
 import OmegaChecks.Interface
+import OmegaChecks.ProtectedObjects
 import OmegaChecks.ModuleSurface
 
 open Lean
 
 private def isStrict (name : Name) : Bool :=
   [`OmegaInit, `OmegaMathlib, `OmegaMath].contains name.getRoot
+
+/-- Lean loads imports before importers. Propagate a D5 path along every compiled import,
+including private imports, while allowing D5 modules to consume the publication. -/
+private def checkPublicationLayers (env : Environment) : IO Unit := do
+  let mut paths : NameMap (List Name) := {}
+  for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    if owner.getRoot == `D5 then
+      paths := paths.insert owner [owner]
+    else
+      for dep in data.imports do
+        if let some path := paths.find? dep.module then
+          let path := owner :: path
+          if [`OmegaMath, `OmegaMathlib].contains owner.getRoot then
+            throw <| IO.userError s!"forbidden D5 dependency: {String.intercalate " -> " (path.map Name.toString)}"
+          paths := paths.insert owner path
+          break
 
 /-- Check every import edge, including private and transitive imports of the selected roots. -/
 private def checkLayers (env : Environment) : IO Unit := do
@@ -69,6 +86,7 @@ private def audit (roots : List String) (path label : String)
   -- Each basis module is independently importable, including privately imported dependencies.
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
   let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+  checkPublicationLayers env
   checkLayers env
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
@@ -135,6 +153,7 @@ def main (args : List String) : IO Unit := do
     let strictSearchPath := System.SearchPath.parse strictPath
     searchPathRef.set strictSearchPath
     let strict ← importModules imports {}
+    checkPublicationLayers strict
     -- Public visibility is needed for the foundation equations. Consumers may also
     -- use Lean's legacy format, which cannot be imported in an exported context.
     let basis := strict.allImportedModuleNames.filter fun name =>
@@ -142,6 +161,7 @@ def main (args : List String) : IO Unit := do
     let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
     searchPathRef.set (System.SearchPath.parse officialPath)
     let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
+    checkPublicationLayers official
     for (owner, data) in official.header.moduleNames.zip official.header.moduleData do
       if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
         unless data.constants.isEmpty do
@@ -157,6 +177,21 @@ def main (args : List String) : IO Unit := do
       IO.FS.writeFile path ((toJson certified).compress ++ "\n")
     if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
       reportOfficialAxioms strict official modules report
+  else if let "--protected-objects" :: basePath :: candidatePath :: modules := args then
+    let base := modules.takeWhile (· != "--")
+    let "--" :: candidate := modules.drop base.length | throw <| IO.userError "missing candidate module list"
+    let load (path : String) (roots : List String) := do
+      searchPathRef.set (System.SearchPath.parse path)
+      importModules (roots.toArray.map fun name => {module := name.toName}) {}
+    let old ← load basePath base
+    let new ← load candidatePath candidate
+    OmegaChecks.ProtectedObjects.check old new (base.toArray.map String.toName) (candidate.toArray.map String.toName)
+  else if let "--publication-layers" :: path :: roots := args then
+    if roots.isEmpty then throw <| IO.userError "expected publication modules"
+    searchPathRef.set (System.SearchPath.parse path)
+    let env ← importModules (roots.toArray.map fun n => {module := n.toName}) {}
+    checkPublicationLayers env
+    IO.println s!"D5 isolation passed for {roots.length} compiled roots."
   else if let "--exact-roots" :: path :: names := args then
     let roots := names.takeWhile (· != "--")
     let "--" :: expected := names.drop roots.length | throw <| IO.userError "missing expected module closure"

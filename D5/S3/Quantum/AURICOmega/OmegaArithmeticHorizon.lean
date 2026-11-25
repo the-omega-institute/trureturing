@@ -18,7 +18,8 @@ open Omega Omega.Arithmetic Omega.Arithmetic.ContinuedFraction
 
 /-- A finite list with positive product admits an escaping prime divisor. -/
 public theorem euclid_prime_escape (s : NatList) (hs : Nat.lt Nat.zero s.prod) :
-    Exists (fun p => And (IsPrime p) (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p)
+      (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
   Omega.Arithmetic.prime_escape s hs
 
 /-- Every pair of natural numbers admits signed Bézout coefficients. -/

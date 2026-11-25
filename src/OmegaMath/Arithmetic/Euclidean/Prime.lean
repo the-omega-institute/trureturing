@@ -7,6 +7,7 @@ prelude
 import all OmegaInit.Prelude
 
 public import OmegaMath.Arithmetic.Euclidean.Division
+public import OmegaMathlib.Data.Nat.Prime.Defs
 
 /-!
 Omega original.
@@ -20,17 +21,23 @@ noncomputable section
 
 namespace Omega.Arithmetic
 
-/-- A prime is greater than one and has only one and itself as divisors. -/
-def IsPrime (p : Nat) : Prop :=
-  And (Nat.lt Nat.one p) (∀ d, Dvd d p → Or (Eq d Nat.one) (Eq d p))
+/-- The arithmetic spelling of primality refers to the Mathlib prime predicate. -/
+abbrev IsPrime := OmegaMathlib.Nat.Prime
+
+/-- The divisor characterization over strict arithmetic is equivalent to natural primality. -/
+theorem isPrime_iff_prime (p : Nat) :
+    Iff (And (Nat.lt Nat.one p) (∀ d, Dvd d p → Or (Eq d Nat.one) (Eq d p)))
+      (OmegaMathlib.Nat.Prime p) :=
+  Iff.intro (fun h => OmegaMathlib.Nat.prime_def.mpr h)
+    (fun h => OmegaMathlib.Nat.prime_def.mp h)
 
 private theorem pos_of_one_lt {n : Nat} (h : Nat.lt Nat.one n) : Nat.lt Nat.zero n :=
   lt_of_le_of_lt (Nat.zero_le Nat.one) h
 
 private theorem prime_of_no_proper_factor {p : Nat} (hp : Nat.lt Nat.one p)
-    (absent : ∀ d, Nat.lt Nat.one d → Nat.lt d p → Not (Dvd d p)) : IsPrime p :=
+    (absent : ∀ d, Nat.lt Nat.one d → Nat.lt d p → Not (Dvd d p)) : OmegaMathlib.Nat.Prime p :=
   have positiveP := pos_of_one_lt hp
-  And.intro hp (fun d hd =>
+  (isPrime_iff_prime p).mp (And.intro hp (fun d hd =>
     (le_or_lt d Nat.one).elim
       (fun hle =>
         have nonzeroD : Not (Eq d Nat.zero) := fun hz => hd.elim (fun k hk =>
@@ -40,7 +47,7 @@ private theorem prime_of_no_proper_factor {p : Nat} (hp : Nat.lt Nat.one p)
       (fun hlarge =>
         (le_or_lt p d).elim
           (fun hle => Or.inr (Nat.le_antisymm (le_of_dvd_of_pos hd positiveP) hle))
-          (fun hlt => False.elim (absent d hlarge hlt hd))))
+          (fun hlt => False.elim (absent d hlarge hlt hd)))))
 
 private def IsLeastProperFactor (n bound d : Nat) : Prop :=
   And (Nat.lt Nat.one d) (And (Nat.lt d bound)
@@ -108,10 +115,10 @@ private theorem properFactorCases (n : Nat) (hn : Nat.lt Nat.one n) :
 /-- Every natural number greater than one has a prime divisor that is least among
 all its divisors greater than one. -/
 theorem exists_min_prime_dvd_of_one_lt (n : Nat) (hn : Nat.lt Nat.one n) :
-    Exists (fun p => And (IsPrime p) (And (Dvd p n)
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p) (And (Dvd p n)
       (∀ d, Nat.lt Nat.one d → Dvd d n → Nat.le p d))) :=
   strongInduction (P := fun n => Nat.lt Nat.one n →
-    Exists (fun p => And (IsPrime p) (And (Dvd p n)
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p) (And (Dvd p n)
       (∀ d, Nat.lt Nat.one d → Dvd d n → Nat.le p d))))
     (fun n ih hn => (properFactorCases n hn).elim
       (fun found => found.elim (fun d hd =>
@@ -126,10 +133,10 @@ theorem exists_min_prime_dvd_of_one_lt (n : Nat) (hn : Nat.lt Nat.one n) :
 
 /-- Zero is included, with two as its least divisor greater than one. -/
 theorem exists_min_prime_dvd (n : Nat) (hn : Not (Eq n Nat.one)) :
-    Exists (fun p => And (IsPrime p) (And (Dvd p n)
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p) (And (Dvd p n)
       (∀ d, Nat.lt Nat.one d → Dvd d n → Nat.le p d))) :=
   Nat.rec (motive := fun n => Not (Eq n Nat.one) →
-    Exists (fun p => And (IsPrime p) (And (Dvd p n)
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p) (And (Dvd p n)
       (∀ d, Nat.lt Nat.one d → Dvd d n → Nat.le p d))))
     (fun _ =>
       have htwo : Nat.lt Nat.one Nat.one.succ := Nat.le_refl Nat.one.succ
@@ -140,7 +147,7 @@ theorem exists_min_prime_dvd (n : Nat) (hn : Not (Eq n Nat.one)) :
       (Nat.succ_le_succ (pos_of_ne_zero (fun hz => hn (congrArg Nat.succ hz))))) n hn
 
 theorem exists_prime_dvd (n : Nat) (hn : Not (Eq n Nat.one)) :
-    Exists (fun p => And (IsPrime p) (Dvd p n)) :=
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p) (Dvd p n)) :=
   (exists_min_prime_dvd n hn).elim (fun p hp => Exists.intro p (And.intro hp.left hp.right.left))
 
 namespace NatList
@@ -179,20 +186,22 @@ end NatList
 
 /-- The successor of a positive list product has a prime divisor outside the list. -/
 theorem prime_escape (s : NatList) (hs : Nat.lt Nat.zero s.prod) :
-    Exists (fun p => And (IsPrime p) (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p)
+      (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
   have hlarge : Nat.lt Nat.one s.prod.succ := Nat.succ_le_succ hs
   (exists_prime_dvd s.prod.succ (fun h => ne_of_lt hlarge h.symm)).elim (fun p hp =>
     Exists.intro p (And.intro hp.left (And.intro hp.right
-      (fun hm => s.not_dvd_succ_prod hp.left.left hm hp.right))))
+      (fun hm => s.not_dvd_succ_prod (OmegaMathlib.Nat.Prime.one_lt hp.left) hm hp.right))))
 
 theorem prime_escape_iff_prod_pos (s : NatList) :
-    Iff (Exists (fun p => And (IsPrime p) (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))))
+    Iff (Exists (fun p => And (OmegaMathlib.Nat.Prime p)
+      (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))))
       (Nat.lt Nat.zero s.prod) :=
   Iff.intro
     (fun escape => natEq_cases s.prod Nat.zero (fun _ => Nat.lt Nat.zero s.prod)
       (fun hz => escape.elim (fun p hp =>
         have hdiv : Dvd p Nat.one := Eq.subst (motive := Dvd p) (congrArg Nat.succ hz) hp.right.left
-        False.elim (ne_of_lt hp.left.left (dvd_one hdiv).symm)))
+        False.elim (ne_of_lt (OmegaMathlib.Nat.Prime.one_lt hp.left) (dvd_one hdiv).symm)))
       (fun hz => pos_of_ne_zero hz))
     (prime_escape s)
 

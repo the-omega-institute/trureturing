@@ -7,3 +7,6 @@ public section
 namespace Omega.Function
 export _root_.Function (Bijective)
 end Omega.Function
+namespace OmegaMathlib.Function
+export _root_.Function (Bijective)
+end OmegaMathlib.Function

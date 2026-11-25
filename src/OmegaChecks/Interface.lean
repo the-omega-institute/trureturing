@@ -72,7 +72,7 @@ private def checkEquation (env : Environment) (src dst : ConstantInfo) (body : E
     unless #[`propext, `Classical.choice, `Quot.sound].contains ax do
       throw <| IO.userError s!"inadmissible axiom {ax} in {certName}"
 
-private def compare (reference : Environment) (rename : Name → Name) (src dst : ConstantInfo)
+def compare (reference : Environment) (rename : Name → Name) (src dst : ConstantInfo)
     (foundation : Option (Environment × Environment) := none) :
     IO (Array Name) := do
   let liftTerm := fun (e : Expr) =>

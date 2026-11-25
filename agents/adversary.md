@@ -1,5 +1,7 @@
 # Adversary Charter
 
+审查“素数”时，核对实际假设或结论中引用的 `OmegaMathlib.Nat.Prime`。检查同名谓词会不会接受 1，以及同一定理其他位置的真实素性是否掩盖了替换。 [Author example](../src/README.md#标准数学对象)
+
 Goal: test statement fidelity, proofs, experiments, and paper claims.
 
 Permission: produce verdicts and counterexamples; never merge.

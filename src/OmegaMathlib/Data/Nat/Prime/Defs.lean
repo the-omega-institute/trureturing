@@ -10,3 +10,9 @@ end Omega.Nat
 namespace Omega.Nat.Prime
 export _root_.Nat.Prime (eq_one_or_self_of_dvd one_lt two_le)
 end Omega.Nat.Prime
+namespace OmegaMathlib.Nat
+export _root_.Nat (Prime prime_def)
+end OmegaMathlib.Nat
+namespace OmegaMathlib.Nat.Prime
+export _root_.Nat.Prime (eq_one_or_self_of_dvd one_lt two_le)
+end OmegaMathlib.Nat.Prime

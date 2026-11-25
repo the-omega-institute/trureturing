@@ -57,6 +57,17 @@ class ScopeTests(unittest.TestCase):
         plan = scope.plan(self.graph, official, {"D5.Ordinary"}, set(), [], [])
         self.assertIn("D5.Direct", plan["consumers"])
 
+    def test_helper_edit_selects_standalone_publication_leaves(self):
+        helper = scope.module_path("src/Shared/Helper.lean")
+        self.assertEqual(helper, "Shared.Helper")
+        graph = {**self.graph, helper: set(), "OmegaMath.Standalone": {helper},
+                 "OmegaMathlib.Standalone": set()}
+        official = {**self.official, "OmegaMathlib.Standalone": {helper}}
+        plan = scope.plan(graph, official, {helper}, set(), [], [])
+        self.assertEqual(plan["library"], ["OmegaMath.Standalone", "OmegaMathlib.Standalone"])
+        self.assertEqual(plan["basis"], ["OmegaMathlib.Standalone"])
+        self.assertIn("OmegaMath.Standalone", plan["consumers"])
+
     def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
         for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):
             with self.subTest(missing=missing), self.assertRaisesRegex(ValueError, "still required"):

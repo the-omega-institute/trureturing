@@ -4,6 +4,24 @@
 
 普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
+## 标准数学对象
+
+写标准素数假设时，导入 `OmegaMathlib.Data.Nat.Prime.Defs`，并在陈述中指定素性来自已核验的标准接口。
+
+```lean
+module
+prelude
+public import OmegaMathlib.Data.Nat.Prime.Defs
+
+example (p : Omega.Nat) (hp : OmegaMathlib.Nat.Prime p) :
+    Omega.Nat.le Omega.Nat.zero.succ.succ p :=
+  OmegaMathlib.Nat.Prime.two_le hp
+```
+
+官方端把这个引用解析到钉版 Mathlib 的 `Nat.Prime`，严格端核验对应实现。自定义谓词即使也叫 `Prime`，也可能接受 1。若证明声称标准素性，核对发生在声明的实际假设或结论处。新增的项目谓词以自身的数学含义在 D5 定义；使用它与标准对象的关系时，引用 D5 中的对应定理。
+
+普通本地准入使用 `HEAD` 与 `origin/dev` 的共同祖先作为受保护版本。要重现某次 PR 的核验，可运行 `python3 -B src/OmegaChecks/check.py --protected-base <commit> --library OmegaMath.Arithmetic.Euclidean.Prime`。核验器独立编译受保护源码，在两个后端比较现有声明、新增对象、公开导出以及替换为标准引用时的对应证明。
+
 ## 六卷与模块树
 
 | 卷 | 内容 | 定义与定理的入口 |

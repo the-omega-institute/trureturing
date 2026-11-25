@@ -57,7 +57,10 @@ def check_library(selected=()):
     if not selected or "OmegaChecks.Audit" in selected:
         modules = sorted(name for name in graph if root(name) in STRICT)
     else:
-        modules = [name for name in closure(graph, selected) if root(name) in STRICT]
+        # A requested library includes new leaves even before its umbrella imports them.
+        libraries = set(selected) & STRICT
+        inputs = set(selected) | {name for name in graph if root(name) in libraries}
+        modules = [name for name in closure(graph, inputs) if root(name) in STRICT]
     roots = terminal_modules(graph, modules)
     targets = set(roots) | set(selected)
     if not selected:
@@ -68,6 +71,10 @@ def check_library(selected=()):
     if roots:
         subprocess.run([AUDIT, "--exact-roots", LIB, *roots, "--", *modules],
                        cwd=ROOT, env=audit_environment(), check=True)
+        # Official facade imports may differ from the strict graph. Load every selected module.
+        run("lake", "build", *("+" + name for name in modules))
+        official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+        run(AUDIT, "--publication-layers", official_path, *modules)
 
 
 def lake_environment():
@@ -117,9 +124,46 @@ def check_audits():
             source_file.write_text(source)
             lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
             audit(name, ["OmegaInit.Prelude", name], [tmp, LIB], reason)
+    check_publication_layers()
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_protected_objects.py")
     check_standard_admission()
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_qualified_references.py")
     check_module_surface()
     check_consumer_exports()
+
+
+def check_publication_layers():
+    # Each backend can independently acquire an unused private edge. An ordinary D5
+    # importer is valid even when the same environment contains its upstream library.
+    direct = "OmegaMathlib.LayerFixture"
+    transitive = "OmegaMath.IsolatedLayerFixture"
+    downstream = "D5.LayerConsumer"
+    seed = "D5.LayerSeed"
+    helper = "LayerFixture.Helper"
+    official = audit_environment()
+    with tempfile.TemporaryDirectory(prefix="omega-layers-") as directory:
+        paths = {}
+        for clean in (True, False):
+            base = Path(directory) / ("clean" if clean else "bad")
+            for name, deps in [(seed, []), (helper, [seed]), (direct, [] if clean else [seed]),
+                               (transitive, [] if clean else [helper]), (downstream, [seed, transitive])]:
+                file = base.joinpath(*name.split(".")).with_suffix(".lean")
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text("module\nprelude\n" + "".join(f"import {dep}\n" for dep in deps))
+                subprocess.run([ENV["LEAN"], "-R", base, "-o", file.with_suffix(".olean"), file],
+                               cwd=ROOT, env={**ENV, "LEAN_PATH": str(base)}, check=True)
+            paths[clean] = str(base) + os.pathsep
+        good_strict = paths[True] + ENV["LEAN_PATH"]
+        good_official = paths[True] + official["LEAN_PATH"]
+        run(AUDIT, "--consumer", good_strict, good_official, downstream)
+        for name, expected in [(direct, f"{direct} -> {seed}"),
+                               (transitive, f"{transitive} -> {helper} -> {seed}")]:
+            for strict, standard in [(paths[False] + ENV["LEAN_PATH"], good_official),
+                                     (good_strict, paths[False] + official["LEAN_PATH"])]:
+                result = subprocess.run([AUDIT, "--consumer", strict, standard, name], cwd=ROOT,
+                                        text=True, capture_output=True)
+                if result.returncode == 0 or f"forbidden D5 dependency: {expected}" not in result.stderr:
+                    raise RuntimeError(f"Expected D5 isolation failure {expected}: {result.stdout}{result.stderr}")
 
 
 def check_consumer_exports():
@@ -549,13 +593,30 @@ if __name__ == "__main__":
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--incremental", action="store_true")
     modes.add_argument("--library", nargs="*", metavar="MODULE",
-                       help="build selected Omega modules and audit their strict import closure")
+                       help="audit selected Omega modules on the strict and official backends")
     modes.add_argument("--full", action="store_true", help="run the complete audit and regression probes")
     modes.add_argument("--write-scope", type=Path, help="plan from the CI changed-path manifest")
     parser.add_argument("--changed", type=Path, default=os.environ.get("CI_CHANGED_PATHS_FILE"))
     parser.add_argument("--scope", type=Path, default=os.environ.get("OMEGA_SCOPE_FILE"))
     parser.add_argument("--cache-targets", type=Path, help="write the cache restore roots during planning")
+    parser.add_argument("--protected-base", default=os.environ.get("CI_BASE"),
+                        help="compare the compiled OmegaMath objects with this protected Git revision")
     args = parser.parse_args()
+    if not args.write_scope:
+        from protected_objects import check as check_protected
+        base = args.protected_base
+        if base is None:
+            result = subprocess.run(["git", "merge-base", "HEAD", "origin/dev"], cwd=ROOT,
+                                    capture_output=True, text=True)
+            if result.returncode == 0:
+                base = result.stdout.strip()
+        if base:
+            check_protected(base)
+        elif args.protected_base is not None or os.environ.get("CI"):
+            parser.error("compiled publication comparison requires --protected-base or CI_BASE")
+        else:
+            print("Protected revision unavailable. Supply --protected-base to compare historical declarations.",
+                  flush=True)
     if args.write_scope:
         if not args.changed or not args.cache_targets or args.scope:
             parser.error("--write-scope requires --changed and --cache-targets")
@@ -573,6 +634,7 @@ if __name__ == "__main__":
         print(f"Omega scope: {len(targets)} cache roots, {len(scope['consumers'])} consumer targets, "
               f"{len(scope['common'])} common targets", flush=True)
     elif args.library is not None:
+        run("lake", "build", "omegaAudit")
         ENV.update(lake_environment())
         check_library(args.library)
     elif args.full or args.incremental or not (args.scope or args.changed):

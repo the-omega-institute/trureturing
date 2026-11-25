@@ -81,7 +81,7 @@ private noncomputable def decodePropertyComponents
 /-- The seven-component representation of an internal property object is lossless. -/
 theorem property_object_components_bijective
     (History Encoding Reading Ledger SelfCode Update Certificate : Type*) :
-    Omega.Function.Bijective
+    OmegaMathlib.Function.Bijective
       (encodePropertyComponents (History := History) (Encoding := Encoding)
         (Reading := Reading) (Ledger := Ledger) (SelfCode := SelfCode) (Update := Update)
         (Certificate := Certificate)) :=

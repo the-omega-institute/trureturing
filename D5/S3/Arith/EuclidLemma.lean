@@ -18,10 +18,10 @@ open Omega Omega.Arithmetic
 
 /-- Euclid's lemma: if a prime `p` divides the product `a * b` of two natural
 numbers, then `p` divides `a` or `p` divides `b`. -/
-public theorem euclid_prime_dvd_mul {p a b : Nat} (hp : Nat.Prime p)
+public theorem euclid_prime_dvd_mul {p a b : Nat} (hp : OmegaMathlib.Nat.Prime p)
     (h : Exists (fun k => Eq (a.mul b) (p.mul k))) :
     Or (Exists (fun k => Eq a (p.mul k))) (Exists (fun k => Eq b (p.mul k))) :=
-  (hp.eq_one_or_self_of_dvd (gcd p a) (gcd_dvd_left p a)).elim
+  (OmegaMathlib.Nat.Prime.eq_one_or_self_of_dvd hp (gcd p a) (gcd_dvd_left p a)).elim
     (fun hg => Or.inr (dvd_of_dvd_mul_of_gcd_eq_one hg h))
     (fun hg => Or.inl (Eq.subst (motive := fun d => Dvd d a) hg (gcd_dvd_right p a)))
 

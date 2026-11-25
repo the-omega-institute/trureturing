@@ -461,6 +461,7 @@ jobs:
         name: Check Omega admission and downstream substitution
         env:
           CI: 'true'
+          CI_BASE: ${{ needs.detect.outputs.base }}
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
         run: python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies

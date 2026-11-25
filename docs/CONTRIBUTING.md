@@ -366,11 +366,11 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-check the D5 frozen ledger for the result and prefer OmegaMath when constructing
-the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
-For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
-root and prefix the original declaration name with `Omega.`. Place original
-results near their mathematical topic and mark the module `Omega original.`.
+reuse existing public results and use the pinned Mathlib declaration for standard mathematics.
+For a natural prime hypothesis write `hp : OmegaMathlib.Nat.Prime p`. Put a missing
+standard port under `strict/OmegaMathlib/` at its upstream module path, regenerate its
+aliases and verify both backends. Put new project objects and their correspondence
+proofs in D5. Keep OmegaMath and OmegaMathlib independent of D5.
 D5 imports the specific module for its book-facing theorem. For example,
 `Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
 See the [module placement examples](../src/README.md).
