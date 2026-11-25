@@ -169,4 +169,78 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end CompactBlocks
 
+namespace CompactConstant
+
+def arena : Arena where
+  signature := signature
+  Law V := RiemannHypothesis ↔ ∀ᶠ n : ℕ in atTop,
+    V.readout () () n ≤ (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2
+
+private def rejected : Realization signature := by
+  classical
+  exact realize signature (fun _ _ n =>
+    (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2 +
+      (if RiemannHypothesis then 1 else 0)) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  change ¬ (RiemannHypothesis ↔ ∀ᶠ n : ℕ in atTop,
+    (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2 +
+      (if RiemannHypothesis then 1 else 0) ≤ (1 + 18 * (Real.log 4 + 4)) * (n : ℝ)^2)
+  intro h
+  by_cases rh : RiemannHypothesis
+  · obtain ⟨n, hn⟩ := (h.mp rh).exists
+    simp only [rh, ite_true] at hn
+    linarith only [hn]
+  · apply rh
+    apply h.mpr
+    filter_upwards with n
+    simp [rh]
+
+def evidence : Registration arena (type_of% @rh_iff_eventually_compact_factorial_gcd) where
+  actual := compactActual
+  bridge := Iff.rfl
+  variation := ⟨rh_iff_eventually_compact_factorial_gcd, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law compactActual rejected rejected_law
+  dependence := compact_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@rh_iff_eventually_compact_factorial_gcd) (Realization signature) Unit Unit where
+  unitName :=
+    .str
+      `D5.S3.Weil.Mertens.IntegratedExplicit.CompactQuarticBridge.rh_iff_eventually_compact_factorial_gcd
+      "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.CompactQuarticBridge.CompactConstant.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => compactD n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.CompactQuarticBridge
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "fn", "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CompactConstant
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.CompactQuarticBridge

@@ -136,18 +136,45 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_i
 
 For every positive real kappa and natural A there must exist k>=max(A,2) such that every integer n in [k^3,k^4] satisfies the centered log gcd bound (n^4)^(1/2+kappa). The gcd ranges over the explicit factorial family with r=n^2+1 and s=n^2(n^2-1). The quantitative error in either direction is eventually absorbed by any positive quartic power loss. Choose the threshold for this absorption before selecting the block at half the requested loss. The canonical quartic criterion gives the equivalence.
 
+**Theorem 1.12 (Explicit square-root scale comparison).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.compactD_U_quadratic_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.compactD_U_quadratic_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At n>=3 divide the logarithmic gcd excess by M=n^2. The bound 11(log 4+4)(M+1)^2/M is at most 18(log 4+4)M. The one-sided tail rounding bound gives the lower error -(log 4+4)M and preserves the upper bound.
+
+**Theorem 1.13 (RH equivalence with a prescribed constant).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_eventually_compact_factorial_gcd`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_eventually_compact_factorial_gcd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under RH the eventual upper bound U(n^4)<n^2 yields compactD(n)<=(1+18(log 4+4))n^2. In the reverse direction tail divisibility transfers the same eventual bound to the centered tail logarithm. The tail LCM criterion gives RH.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.D`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.U_sub_D_bounds`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.compactD`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.compactD_U_bounds`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.compactD_U_quadratic_bounds`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.log_tailLCM_eq_sum_vonMangoldt`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.quarticFactorialGcd`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.quarticFactorialGcd_family_size`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_compact_factorial_gcd_quartic_integer_blocks`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_eventually_compact_factorial_gcd`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_eventually_tailLCM_quartic_constant`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_eventually_tailLCM_quartic_of_mass_lt`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompactQuarticBridge.rh_iff_tailLCM_quartic_integer_blocks`
 - Dependency: [D5/S3/Arith/FactorialRatio/CompactFactorialGcd](../../../Arith/FactorialRatio/CompactFactorialGcd.md)
+- Dependency: [D5/S3/Arith/FactorialRatio/QuarticCompactLog](../../../Arith/FactorialRatio/QuarticCompactLog.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling](QuarticSampling.md)
