@@ -41,6 +41,8 @@ open private sum_projectedBasis from
 
 local notation "ℒ" => leechData
 local notation "U" => leechUnit
+local notation "βₒ" => sourcePairing ℒ
+
 private theorem mode_tail (s : Bool) (a : A) (x : State s) (m : ℤ) :
     ∃ N : ℕ, ∀ k : ℕ, N ≤ k → fixMode s a (m+k) x = 0 := by
   let F := fixedParitySlice ℒ U (paritySign s) a
