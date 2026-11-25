@@ -26,7 +26,8 @@ namespace D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint
 
 private abbrev Bloch := Fin 3 → ℚ
 
-private theorem four_rational_squares (q : ℚ) (hq : 0 ≤ q) :
+/-- Every nonnegative rational is a sum of four rational squares. -/
+theorem four_rational_squares (q : ℚ) (hq : 0 ≤ q) :
     ∃ p r s t : ℚ, p ^ 2 + r ^ 2 + s ^ 2 + t ^ 2 = q := by
   have hnum : 0 ≤ q.num := Rat.num_nonneg.mpr hq
   have hden : (q.den : ℚ) ≠ 0 := by exact_mod_cast q.den_ne_zero
