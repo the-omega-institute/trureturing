@@ -52,7 +52,7 @@ def terminal_modules(graph, names):
 def check_library(selected=()):
     graph = library_graph()
     for name in selected:
-        if name not in graph or root(name) not in STRICT | {"OmegaChecks"}:
+        if name not in graph or root(name) not in STRICT | {"OmegaChecks", "OmegaMath"}:
             raise ValueError(f"unknown Omega module {name}")
     # Imported-only modules and new modules outside an umbrella are both in scope.
     if not selected or "OmegaChecks.Audit" in selected:
@@ -496,13 +496,10 @@ def check_incremental():
 
 def check_ordinary_importer():
     # A fresh ordinary importer must be able to apply project declarations to official types.
-    for name in ("OmegaMath", "OmegaMath.Arithmetic.Euclidean.Prime"):
-        result = subprocess.run(["lake", "query", f"+{name}:lean"], cwd=ROOT, text=True,
-                                capture_output=True)
-        if not result.returncode or f"unknown module `{name}`" not in result.stderr:
-            raise RuntimeError(f"retired import {name} is still available or could not be tested: {result.stderr}")
-    run("lake", "build", *("+" + name for name in sorted(affected_scope.IMPORTER_INPUTS)))
+    run("lake", "build", *("+" + name for name in sorted(affected_scope.IMPORTER_INPUTS | {"OmegaMath", "OmegaMath.Arithmetic.Euclidean.Prime"})))
     subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, check=True, text=True, input="""
+import OmegaMath
+import OmegaMath.Arithmetic.Euclidean.Prime
 import OmegaMathlib
 import OmegaChecks.Portable.Common
 example : Nat.fib 0 = 0 := rfl
@@ -590,6 +587,12 @@ if __name__ == "__main__":
     elif args.library is not None:
         ENV.update(lake_environment())
         check_library(args.library)
+        publications = [n for n in args.library if root(n) == "OmegaMath"]
+        if publications:
+            graph = library_graph()
+            if "OmegaMath" in publications:
+                publications = sorted(n for n in graph if root(n) == "OmegaMath")
+            portable.check(publications, "both")
     elif args.full or args.incremental or not (args.scope or args.changed):
         ENV.update(lake_environment())
         full_check(args.incremental)

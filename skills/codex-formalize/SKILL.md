@@ -102,7 +102,7 @@ Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations 
 
 For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
 
-Freeze original mathematical objects and proofs in their D5 topic. Place verified standard ports under the corresponding `strict/OmegaMathlib/` module, following the [library guide](../../src/README.md). Consumers can spell the pinned object as `OmegaMathlib.<upstream name>`. Read the individual frozen declaration to determine its measured axiom closure.
+Freeze new project objects in their D5 topic. OmegaMath can publish theorems, proofs and references to verified objects. Place verified standard ports under the corresponding `strict/OmegaMathlib/` module, following the [library guide](../../src/README.md). Consumers can spell the pinned object as `OmegaMathlib.<upstream name>`. Read the individual frozen declaration to determine its measured axiom closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 

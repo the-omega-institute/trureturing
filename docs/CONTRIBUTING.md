@@ -366,8 +366,9 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-check the frozen D5 declarations and the admitted Omega ports. Place original
-objects and proofs in their D5 domain and freeze their declarations. Preserve
+check OmegaMath theorems, frozen D5 declarations and the admitted Omega ports.
+OmegaMath can publish theorems, proofs and references to verified objects.
+Place new project objects and observable legacy representations in their D5 domain and freeze them. Preserve
 the owning module and full upstream name when porting a pinned Mathlib object.
 Refer to it explicitly as `OmegaMathlib.<upstream name>` in mathematical statements.
 D5 imports the specific module for its book-facing theorem. For example,

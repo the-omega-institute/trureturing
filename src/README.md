@@ -1,6 +1,6 @@
 # Omega 数学模块的架构与验证
 
-D5 按专题存放并冻结项目自己的数学对象和定理。标准对象由 `OmegaMathlib` 提供，Lean 基础对象由 `OmegaInit` 提供。普通 Lake 构建使用钉版官方 Init 和 Mathlib，准入还会用严格端口编译同一份项目源码。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+`OmegaMath` 对外提供定理、证明和已核验对象的引用。可以继续导入 `OmegaMath` 或对应的专题模块。新增的项目数学对象和可观察的原始表示在 D5 按专题冻结。标准对象由 `OmegaMathlib` 提供，Lean 基础对象由 `OmegaInit` 提供。普通 Lake 构建使用钉版官方 Init 和 Mathlib，准入还会用严格端口编译同一份项目源码。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
 例如，导入 `OmegaMathlib.Data.Nat.Prime.Defs` 后，陈述中的 `OmegaMathlib.Nat.Prime p` 指向官方 `Nat.Prime p`，严格端则使用已核验的端口。两个命名空间中的引用由编译产物生成。项目自己的谓词可以作为 D5 定义冻结；来源审计会区分其实际声明与标准对象。[标准端口](../strict/OmegaMathlib/Data/Nat/Prime/Defs.lean) · [D5 素因子定理](../D5/S3/Arith/Euclidean/Prime.lean)
 

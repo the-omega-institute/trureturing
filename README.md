@@ -300,6 +300,7 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 ## Strict Omega mathematics
 
+`OmegaMath` publishes proofs and references to verified objects. Project objects are frozen in D5.
 The `trureturing` Lake package builds D5 mathematics against pinned Lean Init and
 Mathlib by default. For the chapter 39 projective overlap, import
 `D5.S3.Geometry.ProjectiveCoordinates.Basic` to compute the reading or `D5.S3.Geometry.ProjectiveCoordinates.Scaling`

@@ -34,6 +34,10 @@ name = "OmegaMathlib"
 srcDir = "src"
 
 [[lean_lib]]
+name = "OmegaMath"
+srcDir = "src"
+
+[[lean_lib]]
 name = "OmegaChecks"
 srcDir = "src"
 
