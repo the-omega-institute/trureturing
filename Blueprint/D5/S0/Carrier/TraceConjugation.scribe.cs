@@ -17,7 +17,6 @@ internal sealed class TraceConjugationDocument : IScribeDocumentDefinition
                     Call("trace", Id("x")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Conjugating a golden integer preserves its integral trace. In coordinates, conjugation sends `(a,b)` to `(a+b,-b)`, and both traces simplify to `2a+b`."))),
-                DescribeRole.Theorem)),
-        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Conj"))]));
+                    "Conjugating a golden integer preserves its integral trace. In coordinates, conjugation sends `(a,b)` to `(a+b,-b)`, and both traces simplify to `2a+b`. The formal proof specializes the strict quadratic trace identity to the golden parameters."))),
+                DescribeRole.Theorem))));
 }

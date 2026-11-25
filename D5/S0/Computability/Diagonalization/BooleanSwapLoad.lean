@@ -5,37 +5,53 @@
    anchors: []
    digest: Boolean negation is exactly the operation that carries universal self-diagonal escape. -/
 
-import Mathlib.Data.Bool.Basic
+module
+prelude
+public import OmegaInit.Core
 
 namespace D5.S0.Computability.Diagonalization.BooleanSwapLoad
 
-/-- On the minimal binary carrier, Boolean negation is exactly the operation that disagrees
-with every value encountered on every self-application diagonal. Removing the swap means using
-the identity operation, which fails the same condition on a constant diagonal. -/
-theorem boolean_swap_carries_diagonal_escape (sigma : Bool -> Bool) :
-    ((forall (History : Type) (V : History -> History -> Bool) (h : History),
-        Ne (sigma (V h h)) (V h h)) <-> sigma = Bool.not) /\
-      Not (forall (History : Type) (V : History -> History -> Bool) (h : History),
-        Ne (id (V h h)) (V h h)) := by
-  constructor
-  · constructor
-    · intro hescape
-      funext b
-      have hdiagonal := hescape Unit (fun _ _ => b) ()
-      cases b <;> cases hsigma : sigma _ <;> simp_all
-    · rintro rfl History V h
-      exact Bool.not_ne_self (V h h)
-  · intro hidentity
-    exact hidentity Unit (fun _ _ => false) () rfl
+open Omega
+
+/-- An operation disagrees with every Boolean self-diagonal value exactly when it agrees
+pointwise with Boolean negation. The identity operation fails on a constant diagonal. -/
+public theorem boolean_swap_carries_diagonal_escape (sigma : Bool → Bool) :
+    let swap := Bool.rec (motive := fun _ => Bool) .true .false
+    And
+      (Iff
+        (∀ (History : Type) (V : History → History → Bool) (h : History),
+          Not (Eq (sigma (V h h)) (V h h)))
+        (∀ b, Eq (sigma b) (swap b)))
+      (Not (∀ (History : Type) (V : History → History → Bool) (h : History),
+        Not (Eq ((fun b : Bool => b) (V h h)) (V h h)))) :=
+  let swap := Bool.rec (motive := fun _ => Bool) .true .false
+  have falseNeTrue : Not (Eq Bool.false Bool.true) :=
+    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
+  have swapNeSelf : ∀ b, Not (Eq (swap b) b) :=
+    Bool.rec (fun h => falseNeTrue h.symm) falseNeTrue
+  And.intro
+    (Iff.intro
+      (fun escape b =>
+        have changes : Not (Eq (sigma b) b) := escape Bool (fun _ _ => b) .false
+        Bool.rec
+          (motive := fun value => Not (Eq (sigma value) value) → Eq (sigma value) (swap value))
+          (Bool.rec (motive := fun value => Not (Eq value Bool.false) → Eq value Bool.true)
+            (fun h => False.elim (h rfl)) (fun _ => rfl) (sigma .false))
+          (Bool.rec (motive := fun value => Not (Eq value Bool.true) → Eq value Bool.false)
+            (fun _ => rfl) (fun h => False.elim (h rfl)) (sigma .true))
+          b changes)
+      (fun agrees _ V h same => swapNeSelf (V h h) ((agrees (V h h)).symm.trans same)))
+    (fun identityEscapes => identityEscapes Bool (fun _ _ => .false) .false rfl)
 
 /-- The minimal binary carrier is inhabited. -/
-example : Bool := false
+example : Bool := .false
 
-/-- Boolean negation supplies a concrete operation satisfying the theorem's diagonal premise. -/
+/-- Boolean negation satisfies the universal diagonal premise. -/
 example :
-    forall (History : Type) (V : History -> History -> Bool) (h : History),
-      Ne (Bool.not (V h h)) (V h h) := by
-  intro History V h
-  exact Bool.not_ne_self (V h h)
+    let swap := Bool.rec (motive := fun _ => Bool) .true .false
+    ∀ (History : Type) (V : History → History → Bool) (h : History),
+      Not (Eq (swap (V h h)) (V h h)) :=
+  (boolean_swap_carries_diagonal_escape
+    (Bool.rec (motive := fun _ => Bool) .true .false)).left.mpr (fun _ => rfl)
 
 end D5.S0.Computability.Diagonalization.BooleanSwapLoad

@@ -1,0 +1,14 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Transportation;
+internal sealed class SupportedBooleanCycleEquivalenceDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "For arbitrary Boolean tables A and B on finite labeled carriers R and C in independent universes u and v, a target-conformal supported cycle chain from A to B with n at most distance A B divided by four exists if and only if both tables are supported by E and their individual row and column margins agree.", H("SupportedBooleanCycleEquivalence"), Blocks(
+        Describe.Lean(DescribeId.Create("bounded-chain-iff"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Transportation/SupportedBooleanCycleEquivalence.bounded_conformal_chain_iff"),
+            H("Exact endpoint classification for bounded cycle chains"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The exact Lean statement is (exists n : Nat, Chain E B A n and n <= distance A B / 4) if and only if (Supported E A and Supported E B and SameMargins A B). Supported requires every true cell to lie in the arbitrary relation E. SameMargins equates each labeled row true-count and each labeled column true-count separately; distance counts the disagreeing cells."))), DescribeRole.Theorem),
+        Paragraph(Text("Necessity is a local induction on Chain. The done constructor supplies the common endpoint support and reflexive margins. The step constructor supplies the initial support and margins, and the induction hypothesis for its tail supplies the final support. Necessity uses no length-bound assumption. Sufficiency directly applies D5/S3/Combinatorics/Transportation/SupportedBooleanCycles.bounded_conformal_chain with the three endpoint conditions.")),
+        Paragraph(Text("The owning construction is SupportedBooleanCycles: correcting_step uses SupportedCycleSupplier.simple_cycle to obtain an actual alternating simple cycle, with injective row and column maps and length k at least two. Its legal Boolean flip stays inside E, preserves each margin, corrects every changed cell to its target value, and leaves every other cell fixed. Its exact distance decrease is twice k, hence at least four. Strong induction on distance gives n <= distance A B / 4, and a corrected cell never changes again.")),
+        Paragraph(Text("The classification has no hypotheses beyond Fintype R and Fintype C: it requires no nonempty carriers, decidable equality instance, ordering, nesting, positivity or supplied cycle decomposition. Equal endpoints admit the zero-step chain exactly when supported. If either carrier is empty, the tables coincide, support and margins are vacuous, and the zero-step case applies. Support of both endpoints and equal labeled margins are necessary by the reverse implication.")))));
+}

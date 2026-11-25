@@ -414,7 +414,7 @@ theorem prefixH_atTop : Tendsto prefixH atTop atTop := by
   filter_upwards [eventually_gt_atTop (0 : ℕ)] with P hP
   exact div_mul_cancel₀ _ (by exact_mod_cast hP.ne')
 
-private theorem prefixEll_atTop : Tendsto prefixEll atTop atTop :=
+theorem prefixEll_atTop : Tendsto prefixEll atTop atTop :=
   Real.tendsto_log_atTop.comp prefixH_atTop
 
 private theorem prefixC_atTop : Tendsto prefixC atTop atTop := by

@@ -13,7 +13,7 @@ escape_witness: form (2), the public conclusion `result` itself: both sides sati
   the k = 0 case is proved by induction on n with an integer induction in r from the anchor r = 1
   (`mainK0`), and the general case by induction on k (`mainAll`)
 admission_basis: open-problem-resolution (issue #10170)
-Direct frozen dependencies: D5/S0/Conventions/IntegerIndexBinomial (`binom`, the shared integer-lower-index
+Direct frozen dependencies: D5/S0/Conventions/IntegerIndexBinomial (`binom_std`, the shared integer-lower-index
   binomial coefficient, moved there from D5/S0/Certificates/ShankarQStieltjesRefutation)
 -/
 
@@ -30,7 +30,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.FockSpace.BosonOrderingStirlingClosedForm
 
 open Polynomial Finset
-open D5.S0.Conventions.IntegerIndexBinomial (binom)
+open D5.S0.Conventions.IntegerIndexBinomial (binom_std)
 
 /-!
 Maier, *Boson Operator Ordering Identities from Generalized Stirling and Eulerian Numbers*,
@@ -61,7 +61,7 @@ def claim : Prop :=
 
 /-- The summand `C(n - j, n - k) C(n + 1, 2j + r - 1)` over all integers `j`. -/
 private noncomputable def fB (n k : ℕ) (r j : ℤ) : ℤ :=
-  Ring.choose ((n : ℤ) - j) (n - k) * binom (n + 1) (2 * j + r - 1)
+  Ring.choose ((n : ℤ) - j) (n - k) * binom_std (n + 1) (2 * j + r - 1)
 
 /-- The finite sum over all integers `j` of the summand. -/
 private noncomputable def B (n k : ℕ) (r : ℤ) : ℤ := ∑ᶠ j : ℤ, fB n k r j
@@ -70,9 +70,9 @@ private noncomputable def B (n k : ℕ) (r : ℤ) : ℤ := ∑ᶠ j : ℤ, fB n 
 satisfy `f_{n+1}(r) - f_{n+1}(r - 1) = (n + 1) f_n(r)` up to the factor `n!`, with the common
 value `n!` at `r = 1`; induction on `n`, on `r` and then on `k` identifies them. -/
 theorem result : claim := by
-  have hbinom : ∀ (a : ℕ) (m : ℤ), binom a m = if 0 ≤ m then (a.choose m.toNat : ℤ) else 0 := by
+  have hbinom : ∀ (a : ℕ) (m : ℤ), binom_std a m = if 0 ≤ m then (a.choose m.toNat : ℤ) else 0 := by
     intro a m
-    unfold binom
+    unfold binom_std
     split_ifs <;> first | rfl | omega
   have shatK : ∀ (n k : ℕ) (r : ℤ),
       stirlingHat n (k + 1) r = stirlingHat n k (r + 2) - stirlingHat n k r := by
@@ -104,7 +104,7 @@ theorem result : claim := by
       eval_X, eval_one, sub_add_cancel]
     ring
   have binom_succ : ∀ (a : ℕ) (m : ℤ),
-      binom (a + 1) m = binom a m + binom a (m - 1) := by
+      binom_std (a + 1) m = binom_std a m + binom_std a (m - 1) := by
     intro a m
     simp only [hbinom]
     rcases lt_trichotomy m 0 with hm | rfl | hm
@@ -115,7 +115,7 @@ theorem result : claim := by
       rw [show ((t : ℤ) + 1).toNat = t + 1 by omega, show ((t : ℤ) + 1 - 1).toNat = t by omega,
         Nat.choose_succ_succ']
       push_cast; ring
-  have binom_ne : ∀ (a : ℕ) (m : ℤ) (h : binom a m ≠ 0),
+  have binom_ne : ∀ (a : ℕ) (m : ℤ) (h : binom_std a m ≠ 0),
       0 ≤ m ∧ m ≤ a := by
     intro a m h
     rw [hbinom] at h
@@ -127,7 +127,7 @@ theorem result : claim := by
   have fB_supp : ∀ (n k : ℕ) (r : ℤ),
       Function.support (fB n k r) ⊆ ↑(Icc ((2 - r) / 2) (((n : ℤ) + 2 - r) / 2)) := by
     intro n k r j hj
-    have h : binom (n + 1) (2 * j + r - 1) ≠ 0 := by
+    have h : binom_std (n + 1) (2 * j + r - 1) ≠ 0 := by
       intro h0; exact hj (by simp [fB, h0])
     obtain ⟨h1, h2⟩ := binom_ne _ _ h
     simp only [coe_Icc, Set.mem_Icc]
@@ -142,11 +142,11 @@ theorem result : claim := by
     simp only [fB, hbinom, if_pos (show (0 : ℤ) ≤ 2 * j + r - 1 by omega)]
     ring
   have supp_binom : ∀ (n : ℕ) (r : ℤ) (c : ℤ → ℤ),
-      (Function.support fun j : ℤ => c j * binom (n + 1) (2 * j + r - 1)).Finite := by
+      (Function.support fun j : ℤ => c j * binom_std (n + 1) (2 * j + r - 1)).Finite := by
     intro n r c
     refine (Finset.finite_toSet (Icc ((2 - r) / 2) (((n : ℤ) + 2 - r) / 2))).subset ?_
     intro j hj
-    have h : binom (n + 1) (2 * j + r - 1) ≠ 0 := by
+    have h : binom_std (n + 1) (2 * j + r - 1) ≠ 0 := by
       intro h0; exact hj (by simp [h0])
     obtain ⟨h1, h2⟩ := binom_ne _ _ h
     simp only [coe_Icc, Set.mem_Icc]
@@ -156,7 +156,7 @@ theorem result : claim := by
       B n (k + 1) r = B n k (r + 2) - B n k r := by
     intro n k hk r
     have hs : B n k (r + 2) =
-        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) - j + 1) (n - k) * binom (n + 1) (2 * j + r - 1) := by
+        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) - j + 1) (n - k) * binom_std (n + 1) (2 * j + r - 1) := by
       rw [B, ← finsum_comp_equiv (Equiv.subRight (1 : ℤ))]
       refine finsum_congr fun j => ?_
       simp only [fB, Equiv.subRight_apply]
@@ -172,8 +172,8 @@ theorem result : claim := by
       B (n + 1) 0 r - B (n + 1) 0 (r - 1) = B n 0 r := by
     intro n r
     have e1 : ∀ t : ℤ, B (n + 1) 0 t =
-        ∑ᶠ j : ℤ, (Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom (n + 1) (2 * j + t - 1) +
-          Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom (n + 1) (2 * j + (t - 1) - 1)) := by
+        ∑ᶠ j : ℤ, (Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom_std (n + 1) (2 * j + t - 1) +
+          Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom_std (n + 1) (2 * j + (t - 1) - 1)) := by
       intro t
       rw [B]
       refine finsum_congr fun j => ?_
@@ -185,8 +185,8 @@ theorem result : claim := by
     rw [e1, e1, finsum_add_distrib (supp_binom n r _) (supp_binom n (r - 1) _),
       finsum_add_distrib (supp_binom n (r - 1) _) (supp_binom n (r - 1 - 1) _)]
     have hshift :
-        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom (n + 1) (2 * j + (r - 1 - 1) - 1) =
-        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) - j) (n + 1) * binom (n + 1) (2 * j + r - 1) := by
+        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) + 1 - j) (n + 1) * binom_std (n + 1) (2 * j + (r - 1 - 1) - 1) =
+        ∑ᶠ j : ℤ, Ring.choose ((n : ℤ) - j) (n + 1) * binom_std (n + 1) (2 * j + r - 1) := by
       rw [← finsum_comp_equiv (Equiv.addRight (1 : ℤ))]
       refine finsum_congr fun j => ?_
       simp only [Equiv.coe_addRight]
@@ -212,7 +212,7 @@ theorem result : claim := by
         · have : (n : ℤ) - j = ((n - j.toNat : ℕ) : ℤ) := by omega
           rw [this, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (by omega)]
           simp
-        · have hc : binom (n + 1) (2 * j + 1 - 1) = 0 := by
+        · have hc : binom_std (n + 1) (2 * j + 1 - 1) = 0 := by
             simp only [hbinom, if_pos (show (0 : ℤ) ≤ 2 * j + 1 - 1 by omega)]
             rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
           rw [hc, mul_zero]

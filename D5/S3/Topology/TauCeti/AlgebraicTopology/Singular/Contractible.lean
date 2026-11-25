@@ -6,10 +6,14 @@
    utility: none
    digest: TauCeti port: Vanishing homology of contractible spaces; sphere-homology support. -/
 
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.ReducedRelative
-import Mathlib.Topology.Homotopy.Contractible
-import D5.S3.Topology.TauCeti.Topology.Category.TopPair
-import Mathlib.LinearAlgebra.Dimension.Finite
+module
+
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.ReducedRelative
+public import Mathlib.Topology.Homotopy.Contractible
+public import D5.S3.Topology.TauCeti.Topology.Category.TopPair
+public import Mathlib.LinearAlgebra.Dimension.Finite
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -21,6 +25,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.

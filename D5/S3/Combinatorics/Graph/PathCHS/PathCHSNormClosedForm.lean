@@ -12,7 +12,7 @@ escape_witness: continuant_change_variable
 Escape audit unfinished, including the published supplier
 CompositionalIterateCongruence.geometric_inverse:
 https://github.com/the-omega-institute/trureturing/issues/18981.
-The zero-extended binomial coefficient uses IntegerIndexBinomial.binom;
+The zero-extended binomial coefficient uses IntegerIndexBinomial.binom_std;
 constant-weight continuants use CiglerStripProductAlgebra.cont.
 The Chebyshev degree lemma supplies the degree comparison at the path spectral nodes.
 Declaration proof_shape (same-delivery helpers expanded):
@@ -76,9 +76,9 @@ noncomputable def chsNorm (n d : ℕ) : ℝ := chs n d ^ ((1 : ℝ) / d)
 `∑_{k=0}^{⌊m/(n+1)⌋} [C(2m+n-1, m-k(n+1)) - 2 C(2m+n-1, m-k(n+1)-1) + C(2m+n-1, m-k(n+1)-2)]`. -/
 def pathFormula (n m : ℕ) : ℤ :=
   ∑ k ∈ Finset.range (m / (n + 1) + 1),
-    ((D5.S0.Conventions.IntegerIndexBinomial.binom (2 * m + n - 1) ((m : ℤ) - k * (n + 1)) : ℤ) -
-      2 * D5.S0.Conventions.IntegerIndexBinomial.binom (2 * m + n - 1) ((m : ℤ) - k * (n + 1) - 1) +
-      D5.S0.Conventions.IntegerIndexBinomial.binom (2 * m + n - 1) ((m : ℤ) - k * (n + 1) - 2))
+    ((D5.S0.Conventions.IntegerIndexBinomial.binom_std (2 * m + n - 1) ((m : ℤ) - k * (n + 1)) : ℤ) -
+      2 * D5.S0.Conventions.IntegerIndexBinomial.binom_std (2 * m + n - 1) ((m : ℤ) - k * (n + 1) - 1) +
+      D5.S0.Conventions.IntegerIndexBinomial.binom_std (2 * m + n - 1) ((m : ℤ) - k * (n + 1) - 2))
 
 /-- Problem 1 (Chávez et al., arXiv:2311.04689): compute `‖P_n‖_d` for even `d ≥ 4`; answered by
 `‖P_n‖_{2m} = (pathFormula n m)^{1/(2m)}` for all `n ≥ 1`, `m ≥ 2`. -/
@@ -352,27 +352,27 @@ private theorem coeff_mul_inverse_one_sub_X_pow (A : (PowerSeries ℚ)) (N : ℕ
 
 private theorem second_difference (L j : ℕ) :
     coeff j ((1-X)^2 * (1+X)^L : (PowerSeries ℚ)) =
-      (D5.S0.Conventions.IntegerIndexBinomial.binom L (j : ℤ) : ℚ) - 2*(D5.S0.Conventions.IntegerIndexBinomial.binom L ((j : ℤ)-1) : ℚ) +
-        (D5.S0.Conventions.IntegerIndexBinomial.binom L ((j : ℤ)-2) : ℚ) := by
+      (D5.S0.Conventions.IntegerIndexBinomial.binom_std L (j : ℤ) : ℚ) - 2*(D5.S0.Conventions.IntegerIndexBinomial.binom_std L ((j : ℤ)-1) : ℚ) +
+        (D5.S0.Conventions.IntegerIndexBinomial.binom_std L ((j : ℤ)-2) : ℚ) := by
   have he : ((1-X)^2 * (1+X)^L : (PowerSeries ℚ)) =
       (1+X)^L - 2*(X*(1+X)^L) + X*(X*(1+X)^L) := by ring
   rw [he]
   cases j with
-  | zero => simp [D5.S0.Conventions.IntegerIndexBinomial.binom]
+  | zero => simp [D5.S0.Conventions.IntegerIndexBinomial.binom_std]
   | succ j =>
     cases j with
     | zero =>
       simp only [map_add, map_sub, coeff_ofNat_mul, coeff_succ_X_mul,
         coeff_zero_eq_constantCoeff, map_pow, map_add, constantCoeff_one,
         constantCoeff_X, add_zero, one_pow, map_mul, mul_zero, sub_zero]
-      norm_num [D5.S0.Conventions.IntegerIndexBinomial.binom, P13CatalanLagrangeBridge.binomialCoefficient]
+      norm_num [D5.S0.Conventions.IntegerIndexBinomial.binom_std, P13CatalanLagrangeBridge.binomialCoefficient]
     | succ j =>
       simp only [map_add, map_sub, coeff_ofNat_mul, coeff_succ_X_mul,
         P13CatalanLagrangeBridge.binomialCoefficient]
       have h1 : (↑(j+1+1) : ℤ) - 1 = (j+1 : ℕ) := Int.sub_eq_iff_eq_add.mpr rfl
       have h2 : (↑(j+1+1) : ℤ) - 2 = (j : ℤ) := Int.sub_eq_iff_eq_add.mpr rfl
       rw [h1, h2]
-      have hb (r : ℕ) : (D5.S0.Conventions.IntegerIndexBinomial.binom L (r : ℤ) : ℚ) =
+      have hb (r : ℕ) : (D5.S0.Conventions.IntegerIndexBinomial.binom_std L (r : ℤ) : ℚ) =
           (Nat.choose L r : ℚ) := Rat.ext rfl rfl
       rw [hb, hb, hb]
 
@@ -449,7 +449,7 @@ private theorem reciprocal_closed_coefficient (n m : ℕ) (hm : 1 ≤ m) :
 theorem chs_formula (n m : ℕ) : chs n (2*m) = (pathFormula n m : ℝ) := by
   by_cases hm : m = 0
   · subst m
-    simp [chs, pathFormula, D5.S0.Conventions.IntegerIndexBinomial.binom]
+    simp [chs, pathFormula, D5.S0.Conventions.IntegerIndexBinomial.binom_std]
   · rw [chs_even_coeff, reciprocal_closed_coefficient n m (by omega)]
     norm_cast
 

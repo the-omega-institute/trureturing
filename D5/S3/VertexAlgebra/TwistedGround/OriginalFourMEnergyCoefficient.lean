@@ -153,7 +153,7 @@ def chargeSeries (D : LatticeData) (q : Charge D)
         coefficient (2*n) (sewn D q (compactExternal D F)
           (externalOccupation D F betaL gammaL betaR gammaR))))
 
-private theorem chargeScalar_pair (D : LatticeData) (q : Charge D) :
+theorem chargeScalar_pair (D : LatticeData) (q : Charge D) :
     chargeScalar D q * chargeScalar D (-q) = (16 : ℂ)^(-chargeEnergy D q) := by
   rw [chargeScalar_neg, chargeScalar, ← zpow_add₀ (by norm_num : (2 : ℂ) ≠ 0)]
   rw [show (16 : ℂ) = 2 ^ (4 : ℤ) by norm_num, ← zpow_mul]

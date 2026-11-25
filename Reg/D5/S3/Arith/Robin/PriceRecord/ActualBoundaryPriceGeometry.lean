@@ -1,11 +1,8 @@
 import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
-/- Full-telescope actual laws and definitional source bridges.
-Four-slot registration is unfinished: lawful enrolled-template application,
-compiler occurrence/sourceSelection binding, whole-family intervention,
-fixed-coordinate sensitivity and observational dependence remain unproved. -/
+/-! The least-optimizer registration and source bridges for the boundary-price estimates. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -13,12 +10,103 @@ namespace Reg.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
 open Real Filter Finset
 open scoped Topology BigOperators
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
+open _root_.D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
+  (golden_layer_marginal_one_eq_log_one_add_inv)
+open _root_.D5.S3.Arith.Robin.ActualTwoPriceDefect
+  (strictInteger strict_layer_iff)
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+
+namespace StrictIntegerFullRecord
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ q => strictInteger q) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {q : ℝ}, 0 < q → FullRecord (V.readout () () q) q
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have htwo : FullRecord 2 1 := h (q := 1) (by norm_num)
+  have hcmp := htwo 1 (by norm_num) (by norm_num)
+  have hlog : log (3 / 2 : ℝ) < log 2 :=
+    log_lt_log (by norm_num) (by norm_num)
+  norm_num [goldenResourceObjective, Nat.prime_two.divisors] at hcmp
+  linarith only [hcmp, hlog]
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  let b := goldenLayerMarginal 2 1
+  have hb : 0 < b := by
+    dsimp [b]
+    rw [golden_layer_marginal_one_eq_log_one_add_inv Nat.prime_two]
+    exact div_pos (log_pos (by norm_num)) (log_pos (by norm_num))
+  refine ⟨(), b / 2, b, ?_⟩
+  change strictInteger (b / 2) ≠ strictInteger b
+  have hfirst := strict_layer_iff (by positivity : 0 < b / 2) Nat.prime_two
+    (by norm_num : 1 ≤ (1 : ℕ))
+  have hle := hfirst.mpr (by linarith : b / 2 < b)
+  intro heq
+  rw [heq] at hle
+  exact (lt_irrefl b) ((strict_layer_iff hb Nat.prime_two le_rfl).mp hle)
+
+def family : Registration arena (type_of% (@strictInteger_fullRecord)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨strictInteger_fullRecord, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual
+    rejected rejected_law
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@strictInteger_fullRecord) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization.strictInteger_fullRecord.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry.StrictIntegerFullRecord.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ q => strictInteger q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end StrictIntegerFullRecord
+
+/- Full-telescope actual laws and definitional source bridges.
+Four-slot registration is unfinished: lawful enrolled-template application,
+compiler occurrence/sourceSelection binding, whole-family intervention,
+fixed-coordinate sensitivity and observational dependence remain unproved. -/
 
 namespace priceLip_nonneg
 abbrev signature : Signature where

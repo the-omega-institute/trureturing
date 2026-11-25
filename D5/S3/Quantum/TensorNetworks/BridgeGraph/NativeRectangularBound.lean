@@ -513,7 +513,7 @@ private theorem native_two_bound {a b c d : ℕ} (hab : 3 * a < 2 * b)
   rw [hconcat, hI, Matrix.rank_one] at hr
   simpa only [Fintype.card_prod, Fintype.card_fin] using hr
 
-private theorem reduce_left {a b c d n : ℕ}
+theorem reduce_left {a b c d n : ℕ}
     (A : Fin (n + 1) → Matrix (Fin a) (Fin b) ℂ) (D : Fin (n + 1) → Matrix (Fin d) (Fin c) ℂ)
     (g : Fin (n + 1) → ℂ) (i : Fin (n + 1))
     (hg : g i ≠ 0) (hrel : (∑ j, g j • A j) = 0) :

@@ -60,7 +60,8 @@ private lemma qubit_trace (x z : ℝ) : (qubitMatrix x z).trace = 1 := by
   simp [qubitMatrix, Matrix.trace, Fin.sum_univ_two]
   ring
 
-private lemma qubit_det (x z : ℝ) : (qubitMatrix x z).det.re = (1 - x ^ 2 - z ^ 2) / 4 := by
+/-- The determinant of the qubit normal form in Bloch coordinates. -/
+lemma qubit_det (x z : ℝ) : (qubitMatrix x z).det.re = (1 - x ^ 2 - z ^ 2) / 4 := by
   simp [qubitMatrix, Matrix.det_fin_two, Complex.mul_re, Complex.div_re]
   ring
 

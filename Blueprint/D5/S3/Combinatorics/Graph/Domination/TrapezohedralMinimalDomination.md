@@ -66,7 +66,19 @@ $$\forall (V : Type*), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \
 
 This restates the inclusion-minimal definition in Mynhardt and Roux, section 1.1: every proper subset fails to dominate, without restricting those subsets to be connected. The Lean equivalence applies to arbitrary vertex types.
 
-**Definition 1.6 (The source counting sequence).**
+**Theorem 1.6 (Two-step rotation exclusion).**
+
+$$\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\forall (i : \operatorname{Fin}\left(n\right)), \operatorname{finRotate}\left(n, \operatorname{finRotate}\left(n, i\right)\right) \ne i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.rotate_twice_ne` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n at least three, applying the cyclic successor twice to any index does not return that index.
+
+**Definition 1.7 (The source counting sequence).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.actualCount`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomina
 
 OEIS A381190 defines the count of connected minimal dominating sets in the n-trapezohedral graph, with offset three. Here this is the cardinality of all admissible labelled vertex subsets when n>=3, with a zero formal-series prefix for n<3. Auxiliary paths of small orders are not trapezohedral graph cases.
 
-**Theorem 1.7 (Exact fixed-tag correspondence).**
+**Theorem 1.8 (Exact fixed-tag correspondence).**
 
 $$\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\forall (j : \operatorname{Fin}\left(n\right)), \forall (C : \operatorname{Set}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Admissible}\left(\operatorname{alphaSet}\left(j, C\right)\right)) \Leftrightarrow ((\operatorname{MinimalCutCover}\left(j, C\right)) \land ((j \in C) \lor (\operatorname{finRotate}\left(n, j\right) \in C))))$$
 
@@ -103,4 +115,5 @@ For n>=3, S={alpha,b(j)} together with selected a-labels C is admissible exactly
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.graph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.minimalDominating_iff_private`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.minimalDominating_iff_proper`
-- Dependency: [D5/S3/Combinatorics/Graph/DominatingSetAverage](../DominatingSetAverage.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.rotate_twice_ne`
+- Dependency: [D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination](../../../ConceptDynamics/GraphColoring/GraphCoverDomination.md)

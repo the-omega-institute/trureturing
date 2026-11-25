@@ -47,7 +47,7 @@ private theorem geom_pos {p : ℕ} (hp : p.Prime) (a : ℕ) :
     exact (pow_pos (inv_pos.mpr hpR) i).le
   · exact ⟨0, by simp, by simp⟩
 
-private theorem geom_mono {p a b : ℕ} (hab : a ≤ b) :
+theorem geom_mono {p a b : ℕ} (hab : a ≤ b) :
     reciprocalGeomSum p a ≤ reciprocalGeomSum p b := by
   apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (by omega))
   intro i _ _

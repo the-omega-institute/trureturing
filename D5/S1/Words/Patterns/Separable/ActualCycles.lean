@@ -202,7 +202,7 @@ private theorem state_cast {state n m} (eq : n = m) (h : EndpointHistory state n
   cases eq
   rfl
 
-private theorem remaining {K H sign state} (c : Cycle K sign H)
+theorem remaining {K H sign state} (c : Cycle K sign H)
     (compatible : state = none ∨ state = some (!sign)) (n : ℕ) (large : H * K < n) :
     (history (c.stable compatible) n large).remaining = n - c.size ∧
     (history (c.stable compatible) n large).remainingState = none := by
@@ -412,12 +412,12 @@ def erase {K H} : {k : ℕ} → Tuple K H k → UnboundedTuple k
   | 0, _ => ()
   | _ + 1, pair => (⟨pair.1.1, pair.1.2.erase⟩, pair.2.erase)
 
-private theorem erase_size {K H k} (tuple : Tuple K H k) : tuple.erase.size = tuple.size := by
+theorem erase_size {K H k} (tuple : Tuple K H k) : tuple.erase.size = tuple.size := by
   induction k with
   | zero => rfl
   | succ k ih => simp only [erase, UnboundedTuple.size, size, Family.size, Cycle.erase_size, ih]
 
-private theorem size_bound {K H k} (tuple : Tuple K H k) : tuple.size ≤ k * (H * K) := by
+theorem size_bound {K H k} (tuple : Tuple K H k) : tuple.size ≤ k * (H * K) := by
   induction k with
   | zero => simp [size]
   | succ k ih =>
@@ -428,14 +428,14 @@ private theorem size_bound {K H k} (tuple : Tuple K H k) : tuple.size ≤ k * (H
 
 def threshold (K H k : ℕ) : ℕ := k * (H * K) + max (2 * K) 1
 
-private theorem child_bound {K H k n} (tuple : Tuple K H (k + 1))
+theorem child_bound {K H k n} (tuple : Tuple K H (k + 1))
     (large : threshold K H (k + 1) < n) :
     threshold K H k < n - tuple.1.size := by
   have := tuple.1.size_bound
   simp only [threshold, Nat.succ_mul] at *
   omega
 
-private theorem first_bound {K H k n} (large : threshold K H (k + 1) < n) :
+theorem first_bound {K H k n} (large : threshold K H (k + 1) < n) :
     H * K + max (2 * K) 1 < n := by
   simp only [threshold, Nat.succ_mul] at large
   omega

@@ -298,3 +298,4 @@ The expanded definition is g(n)=tau(n)/log(1+n), as stated in Switkay's 2022-09-
 - Truth anchor: `D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.tau_M`
 - Truth anchor: `D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.tau_N`
 - Truth anchor: `D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.tau_lt_N_bound`
+- Dependency: [D5/S3/Arith/PrimitiveRoot/SievePrimeFactors](../Arith/PrimitiveRoot/SievePrimeFactors.md)

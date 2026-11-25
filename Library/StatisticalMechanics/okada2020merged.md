@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2003.02112v2"
 claim: "The paper introduces merged-log-concavity of rational functions, constructs parcels and pre-merged determinants from Gaussian binomial coefficients, relates them to phase transitions of ideal boson-fermion gases, and conjectures that width-three pre-merged determinants with unit weights and base shifts are not almost palindromic."
 strata_touched:
   - D5/S3/Combinatorics/GaussianQuotient/OkadaPreMergedNonPalindromic
+  - D5/S3/Combinatorics/GaussianQuotient/CoefficientListInvariance
 license: citation-only
 triage: anchor
 ---
@@ -26,3 +27,12 @@ With these parameters the polynomial is $\prod_i{b_i\brack a_i}_q-\prod_i{b_i\br
 
 - DOI: https://doi.org/10.48550/arXiv.2003.02112
 - Source: https://arxiv.org/abs/2003.02112v2
+
+## Invariance of almost palindromicity
+
+Definition 9.52 (v2, printed page 94) lists the nonzero coefficients
+$f_{\lambda_1},\dots,f_{\lambda_\kappa}$ of $f\in\mathbb Q[z]$ by increasing exponent
+and calls $f$ almost palindromic when $f_{\lambda_i}=f_{\lambda_{\kappa-i+1}}$. The repository
+proves that multiplying by $z^s$ ($s\ge0$) or substituting $z\mapsto z^k$ ($k\ge1$) leaves
+this ordered list unchanged, for polynomials over any semiring (any commutative semiring
+for the substitution), so both operations preserve almost palindromicity over $\mathbb Z$.

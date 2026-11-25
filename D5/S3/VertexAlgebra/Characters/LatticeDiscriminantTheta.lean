@@ -463,7 +463,7 @@ private lemma pairRaw_mod_left (D : LatticeData) (hD : (gramReal D).PosDef)
 def pairing (D : LatticeData) (a c : Discriminant D) : QmodZ :=
   (pairRaw D (representative D a) (representative D c) : QmodZ)
 
-private lemma pairing_mk (D : LatticeData) (hD : (gramReal D).PosDef)
+lemma pairing_mk (D : LatticeData) (hD : (gramReal D).PosDef)
     (r s : Charge D) : pairing D (classOf D r) (classOf D s) = (pairRaw D r s : QmodZ) := by
   unfold pairing
   rw [pairRaw_mod_left D hD _ r _ (class_representative D _), pairRaw_symm,
@@ -614,7 +614,7 @@ private lemma quadratic_shift_expansion (D : LatticeData) (hD : (gramReal D).Pos
   push_cast
   ring
 
-private lemma term_T (D : LatticeData) (hD : (gramReal D).PosDef)
+lemma term_T (D : LatticeData) (hD : (gramReal D).PosDef)
     (r n : Charge D) (τ : ℂ) :
     Complex.exp (Real.pi * Complex.I * (τ+1) *
       (quadratic (gramReal D) ((fun i => (n i : ℝ)) + shift D r) : ℂ)) =

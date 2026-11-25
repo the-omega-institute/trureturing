@@ -49,7 +49,7 @@ theorem actual_coefficient_mass :
   change HasSum (fun k => 1 / (actualZero k * (1 - actualZero k))) (firstLiMass : ℂ) at h
   simpa only [one_div, hm] using h
 
-private def actualCompleteSpectrum : CountableSpectrum where
+def actualCompleteSpectrum : CountableSpectrum where
   zero := actualZero
   coeff := actualCoeff
   strip := fun k => (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2
@@ -64,7 +64,7 @@ private def actualCompleteSpectrum : CountableSpectrum where
         (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)) actual_coefficient_mass
     simpa only [ZeroCoefficientBudget.coefficient, actualCoeff, one_div] using hm.le
 
-private def actualCompleteCorrection : BoundedCorrection where
+def actualCompleteCorrection : BoundedCorrection where
   value := trivialT
   measurable := (trivialT_continuousOn.mono Ioi_subset_Ici_self).aestronglyMeasurable
     measurableSet_Ioi
@@ -89,7 +89,7 @@ private lemma Q_exp_neg_U {v : ℝ} (hv : log 2 ≤ v) :
   field_simp [(exp_pos v).ne']
   <;> ring
 
-private lemma actual_complete_representation {v : ℝ} (hv : log 2 ≤ v) :
+lemma actual_complete_representation {v : ℝ} (hv : log 2 ≤ v) :
     Q (exp v) = signedQ actualCompleteSpectrum actualCompleteCorrection v := by
   have hv0 : 0 < v := (log_pos (by norm_num : (1 : ℝ) < 2)).trans_le hv
   have hreal : (actualH v).re = U (exp v) - log (2 * Real.pi) + trivialT v := by

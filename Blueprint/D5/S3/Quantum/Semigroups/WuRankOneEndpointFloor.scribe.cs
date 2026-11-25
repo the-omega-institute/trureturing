@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Semigroups;
 
@@ -16,5 +17,10 @@ internal sealed class WuRankOneEndpointFloorDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("A diagonal entry uses the four input entries with respective weights 25/36, 5/36, 5/36 and 1/36. If precisely the second bit changes, the mixed weights are 5λ/6 and λ/6. If precisely the first bit changes, they are 5λ/6 and −λ/6. If both bits change, the entry is multiplied by 2/3."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("local-map"), DeclarationHandle.Create(Owner + "localMap"),
                 H("Local mixing map"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The diagonal pair is averaged with weights 5/6 and 1/6. Off-diagonal entries are scaled by λ."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("The diagonal pair is averaged with weights 5/6 and 1/6. Off-diagonal entries are scaled by λ."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("damping-square"), DeclarationHandle.Create(Owner + "lambda_sq"),
+                H("Square of the damping coefficient"),
+                StatementSource.FromAuthor(Seq(new Formula.Power(LambdaLower, D(2)), Sp, Eq, Sp,
+                    new Formula.Fraction(D(2), D(3)))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The real square-root identity applies because 2/3 is nonnegative."))), DescribeRole.Theorem))));
 }

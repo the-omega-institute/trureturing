@@ -122,7 +122,7 @@ private theorem pairWeight_conj (rho : ℂ) : pairWeight (conj rho) = pairWeight
   unfold pairWeight
   rw [← hc, Complex.conj_re]
 
-private theorem firstLiMass_pos : 0 < firstLiMass := by
+theorem firstLiMass_pos : 0 < firstLiMass := by
   have h := first_li_coefficient_pos
   unfold firstLiMass
   linarith

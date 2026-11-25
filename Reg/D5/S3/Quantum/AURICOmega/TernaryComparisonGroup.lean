@@ -2,7 +2,11 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import Reg.Support.DependentFamily
 
-/-! Source-bound audits of the transfer and reading theorems for ternary comparison structures. -/
+/-! Source-bound audits of the transfer and reading theorems for ternary comparison structures.
+
+Two constructions are shared with the audits of the modules built on comparison structures: the
+two-point structure, and the discrete reading of a structure, which keeps the transfer and reads
+one exactly on the diagonal and zero elsewhere. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 
@@ -66,6 +70,67 @@ theorem twoPoint_commutes : ¬ twoPoint.{u}.Noncommutative := by
   apply h
   cases x with | up x => cases y with | up y => cases z with | up z =>
   cases x <;> cases y <;> cases z <;> rfl
+
+/-! The discrete reading: the same transfer, reading one on the diagonal and zero elsewhere. -/
+
+open Classical in
+/-- The Gram form of the discrete reading is a sum of squares over the values of the family. -/
+theorem discrete_gram_nonneg {X : Type*} (n : ℕ) (x : Fin n → X) (c : Fin n → ℝ) :
+    0 ≤ ∑ i, ∑ j, c i * c j * (if x i = x j then (1 : ℝ) else 0) := by
+  let A : Fin n → X → ℝ := fun i a => if x i = a then 1 else 0
+  have key : ∀ i j, (if x i = x j then (1 : ℝ) else 0) =
+      ∑ a ∈ Finset.univ.image x, A i a * A j a := by
+    intro i j
+    simp only [A, boole_mul]
+    rw [Finset.sum_ite_eq]
+    simp only [Finset.mem_image_of_mem x (Finset.mem_univ i), ↓reduceIte]
+    by_cases h : x i = x j
+    · simp [h]
+    · simp [h, Ne.symm h]
+  have expand : ∑ a ∈ Finset.univ.image x, (∑ i, c i * A i a) * (∑ j, c j * A j a) =
+      ∑ i, ∑ j, c i * c j * (if x i = x j then (1 : ℝ) else 0) := by
+    simp_rw [Finset.sum_mul_sum]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [key, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    ring
+  rw [← expand]
+  exact Finset.sum_nonneg fun a _ => mul_self_nonneg _
+
+/-- The transfer cancels its first argument against equal outer arguments. -/
+theorem tri_right_inj {M : Type*} (C : TernaryComparison M) (x y u v : M) :
+    C.tri x u v = C.tri y u v ↔ x = y := by
+  refine ⟨fun h => ?_, fun h => h ▸ rfl⟩
+  have h' := congrArg (fun z => C.tri z v u) h
+  simpa only [C.tri_assoc, C.tri_self_left, C.tri_self_right] using h'
+
+/-- The transfer cancels its last argument against equal inner arguments. -/
+theorem tri_left_inj {M : Type*} (C : TernaryComparison M) (u v x y : M) :
+    C.tri u v x = C.tri u v y ↔ x = y := by
+  refine ⟨fun h => ?_, fun h => h ▸ rfl⟩
+  have h' := congrArg (fun z => C.tri v u z) h
+  simpa only [← C.tri_assoc, C.tri_self_left, C.tri_self_right] using h'
+
+open Classical in
+/-- The same transfer with the discrete reading. -/
+def discrete {M : Type*} (C : TernaryComparison M) : TernaryComparison M where
+  tri := C.tri
+  kappa x y := if x = y then 1 else 0
+  tri_self_left := C.tri_self_left
+  tri_self_right := C.tri_self_right
+  tri_assoc := C.tri_assoc
+  kappa_symm x y := by
+    by_cases h : x = y
+    · simp [h]
+    · simp [h, Ne.symm h]
+  kappa_eq_one_iff x y := by by_cases h : x = y <;> simp [h]
+  kappa_nonneg x y := by split_ifs <;> norm_num
+  kappa_tri_right x y u v := by simp only [tri_right_inj]
+  kappa_tri_left u v x y := by simp only [tri_left_inj]
+  kappa_gram_nonneg n x c := discrete_gram_nonneg n x c
 
 /-! The reading against a fixed first argument, for `kappa_self`. -/
 namespace Reading

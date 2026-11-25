@@ -1,0 +1,135 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Concentration;
+
+internal sealed class FiniteSincCollisionMomentDocument : IScribeDocumentDefinition
+{
+    private const string Owner = "D5/S3/Fourier/Concentration/FiniteSincCollisionMoment";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Weighted near-collisions control finite-time moments and bound the start of a missing window.",
+        H("Finite Tail Moments from Weighted Near-Collisions"),
+        Blocks(
+            Paragraph(Text(
+                "For a finite index type J, write Z(t) for the weighted sum of exp(i g(j)t). "
+                + "A degree-p count vector m has frequency G(m) equal to the sum of m(j)g(j), "
+                + "and coefficient c(m) equal to the multinomial coefficient times the product "
+                + "of w(j) to the power m(j). E(p,r) is the ordered sum of c(m)c(n) over "
+                + "degree-p pairs with absolute frequency difference at most r. "
+                + "M(p,L,s) averages the 2p-th power of the norm of Z(s+u+t) over two "
+                + "independent uniform offsets u and t in the closed interval from -L/2 to L/2.")),
+            Describe.Lean(
+                DescribeId.Create("tail-moment-comparison"),
+                DeclarationHandle.Create(Owner + ".tail_moment_comparison"),
+                H("The averaging radius determines the near-collision scale"),
+                StatementSource.FromAuthor(Comparison()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The power expansion reduces the moment to an ordered pair sum. "
+                    + "Each pair contributes a squared sinc at its scaled frequency difference. "
+                    + "The cosine factor is at most one, so the moment is maximal at center zero. "
+                    + "At that center concavity of sine on [0,1] gives a squared factor of at "
+                    + "least sin²(1) for pairs within distance 2/L. For the upper bound, group "
+                    + "frequencies into bins of width 2/L. The reciprocal-square majorant has "
+                    + "full row sum 3 + π²/3. The shared bin energy estimate bounds the quadratic "
+                    + "form by this constant times the sum of squared bin masses. Each same-bin "
+                    + "pair lies within the collision radius, including coincident frequencies."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("bounded-tail-window"),
+                DeclarationHandle.Create(Owner + ".exists_bounded_tail_window"),
+                H("The near-collision budget confines the window start"),
+                StatementSource.FromAuthor(Window()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Average the sum of the grid moments over candidate starts centered "
+                        + "at A+L. The weighted bound is uniform in the center, including every "
+                        + "grid offset. If each start in the open interval had a bad grid node, "
+                        + "the averaged sum would be at least the power of the threshold. "
+                        + "The strict budget therefore gives a common good start in that interval. "
+                        + "The complex modulus bounds the absolute imaginary part at grid nodes. "
+                        + "For a positive window length, use the midpoints of N equal subintervals. "
+                        + "Every point of the closed window is within H/(2N) of one midpoint, "
+                        + "including the right endpoint. The slope allowance is H B/(2N). "
+                        + "For H equal to zero each node coincides with the start.")),
+                    Paragraph(Text(
+                        "This result gives a finite search interval when an estimate of the "
+                        + "weighted collision mass is supplied at the corresponding resolution. "
+                        + "It applies to repeated frequencies. For a tail of actual zeta "
+                        + "ordinates at moment order growing with the cutoff, the necessary "
+                        + "arithmetic estimate remains open.")),
+                    Paragraph(Ref("D5/S3/Fourier/Concentration/FiniteTailMomentMissingWindow"))),
+                DescribeRole.Theorem))));
+
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+
+    private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
+
+    private static Formula TailParameters() => Seq(
+        Forall, Sp, F.Id("J"), Colon, Sp, Operatorname, Grp(F.Id("FiniteType")), Comma, Quad, Sp,
+        F.Id("g"), Comma, F.Id("w"), Colon, Sp, F.Id("J"), To, Reals, Comma, Quad, Sp,
+        F.Id("p"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma);
+
+    private static Formula NonnegativeWeights() => Seq(
+        Open, Forall, Sp, F.Id("j"), Sp, InMacro, Sp, F.Id("J"), Comma, Sp,
+        Call("w", F.Id("j")), Ge, D(0), Close);
+
+    private static Formula Collision(Formula radius) => Call("E", F.Id("p"), radius);
+
+    private static Formula RowSum() =>
+        Seq(Open, Add(D(3), new Formula.Fraction(new Formula.Power(Pi, D(2)), D(3))), Close);
+
+    private static Formula Comparison()
+    {
+        var length = F.Id("L");
+        var center = F.Id("s");
+        var collision = Collision(new Formula.Fraction(D(2), length));
+        var centeredMoment = Call("M", F.Id("p"), length, D(0));
+        var sineSquare = new Formula.Power(Call("sin", D(1)), D(2));
+        return Disp(new Formula.Aligned([
+            TailParameters(),
+            Seq(length, Comma, center, Colon, Sp, Reals, Comma),
+            Seq(NonnegativeWeights(), Quad, Sp, Land, Sp, length, Gt, D(0), Quad, Sp, Longrightarrow),
+            Seq(Multiply(collision, sineSquare), Le, centeredMoment, Quad, Sp, Land),
+            Seq(Call("M", F.Id("p"), length, center), Le, centeredMoment,
+                Quad, Sp, Land, Quad, Sp, centeredMoment, Le, Multiply(RowSum(), collision)),
+        ]));
+    }
+
+    private static Formula Window()
+    {
+        var a = F.Id("A");
+        var b = F.Id("b");
+        var nodes = F.Id("N");
+        var horizon = F.Id("H");
+        var length = F.Id("L");
+        var t = F.Id("t");
+        var j = F.Id("j");
+        var w = Call("w", j);
+        var g = Call("g", j);
+        var slope = Seq(Sum, Underscore, Grp(j, Sp, InMacro, Sp, F.Id("J")), Sp,
+            Multiply(w, new Formula.Absolute(g)));
+        var score = Seq(Sum, Underscore, Grp(j, Sp, InMacro, Sp, F.Id("J")), Sp,
+            Multiply(w, Call("sin", Multiply(g, t))));
+        var window = Seq(OpenBracket, b, Comma, Add(b, horizon), CloseBracket);
+        var budget = Multiply(Multiply(RowSum(), nodes),
+            Collision(new Formula.Fraction(D(2), length)));
+        return Disp(new Formula.Aligned([
+            TailParameters(),
+            Seq(nodes, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Quad, Sp,
+                length, Comma, horizon, Comma, DeltaLower, Comma, a, Colon, Sp, Reals, Comma),
+            Seq(NonnegativeWeights(), Quad, Sp, Land, Sp, length, Gt, D(0),
+                Quad, Sp, Land, Sp, nodes, Gt, D(0), Quad, Sp, Land, Sp, DeltaLower, Ge, D(0), Quad, Sp, Land),
+            Seq(budget, Lt, new Formula.Power(DeltaLower, Multiply(D(2), F.Id("p"))),
+                Quad, Sp, Longrightarrow),
+            Seq(Exists, Sp, b, Colon, Sp, Reals, Comma, Sp, a, Lt, b, Lt, Add(a, Multiply(D(2), length)),
+                Quad, Sp, Land, Sp, Forall, Sp, t, Sp, InMacro, Sp, window, Comma),
+            Seq(new Formula.Absolute(score), Lt, Add(DeltaLower, Multiply(new Formula.Fraction(horizon, Multiply(D(2), nodes)),
+                Seq(Open, slope, Close)))),
+        ]));
+    }
+}

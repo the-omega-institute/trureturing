@@ -22,6 +22,42 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                 + "actualCoeff and actualH of ActualZeroLaplace. Every natural index is an actual analytic "
                 + "zero occurrence through actualOccurrenceEquiv, including its multiplicity. Both conjugate signs are included.")),
             Describe.Lean(
+                DescribeId.Create("on-line"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line"),
+                H("The real part of each actual zero under RH"),
+                StatementSource.FromAuthor(OnLineClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Apply the critical-line theorem to the zero selected by actualOccurrenceEquiv."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coeff-real"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real"),
+                H("The actual zero coefficient under RH"),
+                StatementSource.FromAuthor(CoefficientClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Here ofReal denotes the real embedding into the complex numbers. "
+                    + "The critical-line identity gives the positive real denominator."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coeff-norm-has-sum"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum"),
+                H("The complete coefficient norm series under RH"),
+                StatementSource.FromAuthor(CoefficientMassClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under RH each coefficient's norm is its real part. "
+                    + "Taking real parts in actualCoeff_hasSum gives the stated HasSum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("abs-g-sub-normalized-actual-h-le"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le"),
+                H("The pointwise explicit-formula residual"),
+                StatementSource.FromAuthor(ResidualClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The exact explicit formula splits G into the normalized real zero series and "
+                    + "exp(-y/2)*(log(2*pi)-trivialT(y)). Continuity on the closed half-axis "
+                    + "extends the split to y=0. The trivial-zero mass bound keeps the signed "
+                    + "residual positive, and the first trivial-zero summand is strictly positive at "
+                    + "each finite y, giving the strict upper bound. The trivial-zero sum is at most "
+                    + "exp(-2*y)*(1-log(2)), so log(2*pi) is the least uniform coefficient."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("actual-g-control"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control"),
                 H("Eventual absolute control and arbitrarily late values near the positive mass"),
@@ -51,7 +87,7 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                         + "contains F(g^n) for arbitrarily large natural n. This requires neither linear independence "
                         + "nor a rate or shrinking target.")),
                     Paragraph(Text(
-                        "WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, "
+                        "The signed split gives G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>=0, "
                         + "where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds "
                         + "0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm "
                         + "controls the real phase error directly. Eventual control follows from the norm bound. "
@@ -75,6 +111,32 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Equal(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula UnderRh(Formula body) =>
+        Disp(ImpliesClaim(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))), body));
+
+    private static Formula OnLineClaim()
+    {
+        var zero = Call("actualZero", F.Id("k"));
+        return UnderRh(All("k", Nat, Equal(Call("Re", zero), new Formula.Fraction(D(1), D(2)))));
+    }
+
+    private static Formula CoefficientClaim()
+    {
+        var k = F.Id("k");
+        var ordinate = Call("Im", Call("actualZero", k));
+        var denominator = Add(new Formula.Fraction(D(1), D(4)), new Formula.Power(ordinate, D(2)));
+        return UnderRh(All("k", Nat, Equal(Call("actualCoeff", k),
+            Call("ofReal", new Formula.Fraction(D(1), denominator)))));
+    }
+
+    private static Formula CoefficientMassClaim()
+    {
+        var norm = new Formula.Norm(Call("actualCoeff", F.Id("k")));
+        var series = Seq(LambdaLower, Sp, F.Id("k"), Sp, Colon, Sp, Nat, Comma, Sp, norm);
+        return UnderRh(Call("HasSum", series, F.Id("firstLiMass")));
+    }
 
     private static Formula GDefinition()
     {
@@ -83,6 +145,16 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
             FormulaRelationOperator.Equal,
             Multiply(Call("exp", new Formula.Fraction(new Formula.Negate(y), D(2))),
                 Call("U", Call("exp", y))))));
+    }
+
+    private static Formula ResidualClaim()
+    {
+        var y = F.Id("y");
+        var scale = Call("exp", new Formula.Fraction(new Formula.Negate(y), D(2)));
+        var normalized = Multiply(scale, Call("Re", Call("actualH", y)));
+        var size = Call("log", Multiply(D(2), F.Pi));
+        return Disp(All("y", Real, ImpliesClaim(Le(D(0), y),
+            Less(new Formula.Absolute(Subtract(Call("G", y), normalized)), Multiply(scale, size)))));
     }
 
     private static Formula ControlClaim()
@@ -99,7 +171,6 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         var recurrence = All("epsilon", Real, ImpliesClaim(Less(D(0), e),
             All("Y", Real, ExistsOne("n", Nat, And(Le(threshold, n),
                 Less(new Formula.Absolute(Subtract(Call("G", n), mass)), e))))));
-        return Disp(ImpliesClaim(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))),
-            And(envelope, recurrence)));
+        return UnderRh(And(envelope, recurrence));
     }
 }

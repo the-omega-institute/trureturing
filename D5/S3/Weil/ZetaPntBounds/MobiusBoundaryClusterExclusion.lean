@@ -38,7 +38,7 @@ open scoped BigOperators
 
 /-- The normal form of the quotient by the selected zero factor is analytic on
 the whole domain and agrees with the quotient away from the selected zeros. -/
-private theorem analyticOnNhd_selectedZeroQuotient {U : Set ℂ} {f : ℂ → ℂ}
+theorem analyticOnNhd_selectedZeroQuotient {U : Set ℂ} {f : ℂ → ℂ}
     {D : Function.locallyFinsuppWithin U ℤ}
     (hf : AnalyticOnNhd ℂ f U) (hFinite : D.support.Finite)
     (hNonneg : 0 ≤ D) (hLe : D ≤ MeromorphicOn.divisor f U)
@@ -178,9 +178,9 @@ open D5.S3.Weil.ZetaPntBounds.MobiusDyadicBoundary
   (weighted_reciprocal_zeta_sq_bound_of_mobiusDyadicEnergy)
 open Zeta23 (riemannZeta_analyticOnNhd_compl_one analyticOrderAt_riemannZeta_ne_top)
 
-private def boundaryPoint (θ y : ℝ) : ℂ := (θ : ℂ) + (y : ℂ) * I
+def boundaryPoint (θ y : ℝ) : ℂ := (θ : ℂ) + (y : ℂ) * I
 
-private noncomputable def boundaryDensity (θ y : ℝ) : ℝ :=
+noncomputable def boundaryDensity (θ y : ℝ) : ℝ :=
   1 / ((1 + |y|) ^ 2 * ‖riemannZeta (boundaryPoint θ y)‖ ^ 2)
 
 /-- A cluster of selected zeta zeros gives a lower bound for the reciprocal mass
@@ -471,7 +471,7 @@ private theorem norm_riemannZeta_le_rpow_on_right_disks
 
 /-- Zeta has subpower growth on fixed small disks crossing a zero-free edge
 strictly between the critical line and the pole. -/
-private theorem norm_riemannZeta_le_rpow_on_boundary_disks
+theorem norm_riemannZeta_le_rpow_on_boundary_disks
     {θ eps : ℝ} (hθhalf : 1 / 2 < θ) (hθone : θ < 1)
     (heps : 0 < eps) (hzero : ∀ z : ℂ, θ < z.re → z ≠ 1 → riemannZeta z ≠ 0) :
     ∃ δ C T : ℝ, 0 < δ ∧ 0 < C ∧ 0 < T ∧ ∀ t : ℝ, T ≤ |t| →

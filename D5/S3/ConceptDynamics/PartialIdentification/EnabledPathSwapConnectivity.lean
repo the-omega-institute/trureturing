@@ -6,10 +6,13 @@
    utility: none
    digest: Finite-poset enabled paths are linear extensions connected by legal adjacent swaps. -/
 
-import Mathlib.Data.Finset.Sort
-import Mathlib.Order.Extension.Linear
-import Mathlib.Order.UpperLower.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Order.Extension.Linear
+public import Mathlib.Order.UpperLower.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

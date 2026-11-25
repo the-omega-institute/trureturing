@@ -45,4 +45,7 @@ For every n>=3, the type of original admissible labelled subsets is equivalent t
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralTaggedCover.CoverData`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralTaggedCover.actualTaggedEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralTaggedCover.turn`
+- Dependency: [D5/S3/Combinatorics/Graph/DominatingSetAverage](../DominatingSetAverage.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Domination/TrapezohedralApexClassification](TrapezohedralApexClassification.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination](TrapezohedralMinimalDomination.md)
+- Dependency: [D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination](../../../ConceptDynamics/GraphColoring/GraphCoverDomination.md)

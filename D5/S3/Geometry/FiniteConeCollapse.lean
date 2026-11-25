@@ -5,11 +5,13 @@
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic, mathlib/module/Mathlib.Topology.Homotopy.Equiv]
    utility: none
    digest: Coordinate truncation and cone contraction give a based equivalence for the actual cone quotient. -/
-import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
-import Mathlib.Analysis.Convex.Combination
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Tactic
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
+public import Mathlib.Analysis.Convex.Combination
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Topology.Homotopy.Equiv
+public import Mathlib.Tactic
 
 /-!
 # Collapsing a finite cone subcomplex
@@ -23,6 +25,9 @@ The constructive coordinate truncation is followed by a linear cone contraction.
 No homotopy extension property or cofibration hypothesis is used.
 -/
 
+set_option backward.privateInPublic true
+
+@[expose] public section
 noncomputable section
 
 open Set Finset Topology

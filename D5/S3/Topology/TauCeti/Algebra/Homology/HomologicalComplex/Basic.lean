@@ -6,11 +6,15 @@
    utility: none
    digest: TauCeti port: Cycles, coproducts and homology maps of complexes; sphere support. -/
 
-import Mathlib.Algebra.Homology.HomologicalComplex
-import Mathlib.Algebra.Homology.HomologicalComplexLimits
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.Preadditive
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+module
+
+public import Mathlib.Algebra.Homology.HomologicalComplex
+public import Mathlib.Algebra.Homology.HomologicalComplexLimits
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.Preadditive
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -22,6 +26,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.

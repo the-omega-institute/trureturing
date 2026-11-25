@@ -26,7 +26,13 @@ internal sealed class GramRankFeatureMapDocument : IScribeDocumentDefinition
                     + "A linearly independent family of kernel functions has an invertible Gram matrix, so by the rank bound it has at most r members. "
                     + "A maximal such family therefore exists, spans every kernel function, and spans a subspace of dimension at most r. "
                     + "Coordinates of the kernel functions in an orthonormal basis of that subspace, padded by zero coordinates up to dimension r, give the map f.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Node("has-feature-rank-mono", "hasFeatureRank_mono",
+                "Feature rank is monotone",
+                StatementSource.FromAuthor(MonotoneFormula()), AssessedProvenance.FromRepo(),
+                "Let C be a ternary comparison structure on M and r <= s natural numbers. If the reading of C is the Gram kernel of a map into Euclidean r-space, it is also the Gram kernel of a map into Euclidean s-space. "
+                    + "By the equivalence above, feature rank r means that every finite Gram matrix of the reading has rank at most r, hence at most s, which is feature rank s.",
+                DescribeRole.Lemma))));
 
     private static DocumentBlock Node(
         string id, string selector, string title, StatementSource statement,
@@ -52,5 +58,16 @@ internal sealed class GramRankFeatureMapDocument : IScribeDocumentDefinition
         return Disp(ForAll("M", TypeStar, ForAll("C", Call("TernaryComparison", M),
             ForAll("r", Naturals,
                 Logic(Call("GramRankLE", C, r), FormulaLogicOperator.Iff, Call("HasFeatureRank", C, r))))));
+    }
+
+    private static Formula MonotoneFormula()
+    {
+        Formula r = F.Id("r"), s = F.Id("s");
+        return Disp(ForAll("M", TypeStar, ForAll("C", Call("TernaryComparison", M),
+            ForAll("r", Naturals, ForAll("s", Naturals,
+                Logic(new Formula.Relation(r, FormulaRelationOperator.LessThanOrEqual, s),
+                    FormulaLogicOperator.Implies,
+                    Logic(Call("HasFeatureRank", C, r), FormulaLogicOperator.Implies,
+                        Call("HasFeatureRank", C, s))))))));
     }
 }

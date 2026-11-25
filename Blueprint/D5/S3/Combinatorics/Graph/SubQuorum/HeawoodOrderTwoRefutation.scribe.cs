@@ -27,7 +27,10 @@ internal sealed class HeawoodOrderTwoRefutationDocument : IScribeDocumentDefinit
                     + "Each side has the nonzero three-bit labels in increasing numeric order. Opposite-side vertices are "
                     + "incident when their binary dot product is zero. This graph is cubic and two distinct vertices share at "
                     + "most one neighbor, so there is no four-cycle. The six singletons are {1, 2, 3, 11, 12, 13} and "
-                    + "the one matching edge is (0, 8). Each singleton has at most one neighbor among the occupied vertices. "
-                    + "The general cubic threshold gives maximum objective seven, attained by this pair. The singletons at "
-                    + "1 and 11 lie on opposite sides, which refutes the one-side conclusion at q=2."))), DescribeRole.Theorem))));
+                    + "the matching is {(0, 8)}. The matching is disjoint from the singletons, and each singleton has at most one "
+                    + "neighbor among the occupied vertices, so the pair is feasible. The point side has singletons {1, 2, 3} "
+                    + "and the line side has singletons {11, 12, 13}, three on each side. "
+                    + "C4RepresentativeBounds.threshold_parameters at degree three and side size seven gives "
+                    + "beta(H,2)=psiSq(H)=Omega(H)=7. The pair attains objective seven and refutes the one-side "
+                    + "conclusion at q=2."))), DescribeRole.Theorem))));
 }

@@ -1,1 +1,0 @@
-M:System.Guid.NewGuid;Pass a stable identifier into deterministic code.

@@ -33,18 +33,19 @@ open D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity.API
 open scoped BigOperators TensorProduct
 
 /-- The actual selected finite ground, in its existing function coordinates. -/
-private def coordinates (D : LatticeData) (hu : IsUnit D.G.det) :
+def coordinates (D : LatticeData) (hu : IsUnit D.G.det) :
     ActualTensor D hu ≃ₗ[ℂ] (Half (groundRank D hu) → Oscillator D) :=
   TensorProduct.piScalarRight ℂ ℂ (Oscillator D) (Half (groundRank D hu))
 
-private theorem coordinates_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+/-- A pure tensor has its oscillator polynomial scaled by each ground coordinate. -/
+theorem coordinates_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     (p : Oscillator D) (g : ActualGround D hu) (b : Half (groundRank D hu)) :
     coordinates D hu (p ⊗ₜ[ℂ] g) b = g b • p := by
   simp only [coordinates, TensorProduct.piScalarRight_apply,
     TensorProduct.piScalarRightHom_tmul]
 
-/-- This is a coordinate identity, not an assertion of projection stability. -/
-private theorem coordinates_tensorEnd (D : LatticeData) (hu : IsUnit D.G.det)
+/-- The tensor endomorphism acts coordinatewise on the finite ground coordinates. -/
+theorem coordinates_tensorEnd (D : LatticeData) (hu : IsUnit D.G.det)
     (A : Module.End ℂ (Oscillator D)) (v : ActualTensor D hu)
     (b : Half (groundRank D hu)) :
     coordinates D hu (LatticeHalfFock.tensorEnd D (ActualGround D hu) A v) b =
@@ -57,11 +58,13 @@ private theorem coordinates_tensorEnd (D : LatticeData) (hu : IsUnit D.G.det)
   | add v w hv hw =>
     simp only [map_add, Pi.add_apply, hv, hw]
 
-private def partialEnd (D : LatticeData) (hu : IsUnit D.G.det) (x : Index D) :
+/-- The oscillator partial derivative tensored with the identity on the actual ground. -/
+def partialEnd (D : LatticeData) (hu : IsUnit D.G.det) (x : Index D) :
     Module.End ℂ (ActualTensor D hu) :=
   LatticeHalfFock.tensorEnd D (ActualGround D hu) (pderiv x).toLinearMap
 
-private theorem coordinates_partialEnd (D : LatticeData) (hu : IsUnit D.G.det)
+/-- Tensor partial differentiation acts on each oscillator coordinate. -/
+theorem coordinates_partialEnd (D : LatticeData) (hu : IsUnit D.G.det)
     (x : Index D) (v : ActualTensor D hu) (b : Half (groundRank D hu)) :
     coordinates D hu (partialEnd D hu x v) b =
       pderiv x (coordinates D hu v b) := by
@@ -143,15 +146,14 @@ private theorem ground_intersection_of_partials
     rw [hw, hz, TensorProduct.tmul_zero]
   exact ⟨g, hg, hw ▸ hwS⟩
 
-/-- Nonnegative actual currents imply every individual tensor partial preserves S.
-The row of the inverse matrix is H x.1 i (not H i x.1). -/
-private theorem partialEnd_mem_of_currents
-    (D : LatticeData) (hu : IsUnit D.G.det)
-    (S : Submodule ℂ (ActualTensor D hu))
-    (hpos : ∀ (i : Fin D.rank) (k : ℕ) (v : ActualTensor D hu),
-      v ∈ S → LatticeHalfFock.tensorCurrent D (ActualGround D hu) i (k : ℤ) v ∈ S)
-    (x : Index D) (v : ActualTensor D hu) (hv : v ∈ S) :
-    partialEnd D hu x v ∈ S := by
+/-- The inverse Gram row and reciprocal frequency recover the actual tensor partial
+as a finite linear combination of nonnegative tensor currents. -/
+theorem partialEnd_eq_sum_currents
+    (D : LatticeData) (hu : IsUnit D.G.det) (x : Index D) (v : ActualTensor D hu) :
+    partialEnd D hu x v =
+      ∑ i : Fin D.rank, ((D.G⁻¹).map (Int.castRingHom ℂ)) x.1 i •
+        (LatticeHalfFock.frequency (x.2 : ℤ))⁻¹ •
+          LatticeHalfFock.tensorCurrent D (ActualGround D hu) i (x.2 : ℤ) v := by
   classical
   let H : Matrix (Fin D.rank) (Fin D.rank) ℂ := (D.G⁻¹).map (Int.castRingHom ℂ)
   have hHG : H * LatticeHalfFock.gramComplex D = 1 := by
@@ -177,8 +179,9 @@ private theorem partialEnd_mem_of_currents
     simp [LatticeHalfFock.current, LatticeActualAnnihilation.annihilate,
       show ¬ (x.2 : ℤ) < 0 by omega]
   have hweighted (i : Fin D.rank) :
-      LatticeHalfFock.tensorEnd D (ActualGround D hu) (weightedPartial D i x.2) v ∈ S := by
-    have hs := S.smul_mem (LatticeHalfFock.frequency (x.2 : ℤ))⁻¹ (hpos i x.2 v hv)
+      (LatticeHalfFock.frequency (x.2 : ℤ))⁻¹ •
+          LatticeHalfFock.tensorCurrent D (ActualGround D hu) i (x.2 : ℤ) v =
+        LatticeHalfFock.tensorEnd D (ActualGround D hu) (weightedPartial D i x.2) v := by
     have ht : LatticeHalfFock.tensorCurrent D (ActualGround D hu) i (x.2 : ℤ) v =
         LatticeHalfFock.frequency (x.2 : ℤ) •
           LatticeHalfFock.tensorEnd D (ActualGround D hu) (weightedPartial D i x.2) v := by
@@ -186,8 +189,7 @@ private theorem partialEnd_mem_of_currents
         (LatticeHalfFock.current D i (x.2 : ℤ)) v = _
       simp only [hcurrent, map_smul, LinearMap.smul_apply]
       rfl
-    rw [ht, smul_smul, inv_mul_cancel₀ hf, one_smul] at hs
-    exact hs
+    rw [ht, smul_smul, inv_mul_cancel₀ hf, one_smul]
   have reconstruct : (∑ i : Fin D.rank, H x.1 i • weightedPartial D i x.2) =
       (pderiv x).toLinearMap := by
     apply LinearMap.ext
@@ -211,7 +213,20 @@ private theorem partialEnd_mem_of_currents
     simp only [map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     rfl
   rw [transported]
-  exact S.sum_mem fun i _ => S.smul_mem _ (hweighted i)
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [hweighted] <;> rfl
+
+/-- A submodule stable under nonnegative actual currents is stable under tensor partials. -/
+private theorem partialEnd_mem_of_currents
+    (D : LatticeData) (hu : IsUnit D.G.det)
+    (S : Submodule ℂ (ActualTensor D hu))
+    (hpos : ∀ (i : Fin D.rank) (k : ℕ) (v : ActualTensor D hu),
+      v ∈ S → LatticeHalfFock.tensorCurrent D (ActualGround D hu) i (k : ℤ) v ∈ S)
+    (x : Index D) (v : ActualTensor D hu) (hv : v ∈ S) :
+    partialEnd D hu x v ∈ S := by
+  rw [partialEnd_eq_sum_currents]
+  exact S.sum_mem fun i _ => S.smul_mem _ (S.smul_mem _ (hpos i x.2 v hv))
 
 /-- Nonnegative actual currents extract a nonzero actual ground vector. -/
 theorem nonzero_current_stable_submodule_meets_ground

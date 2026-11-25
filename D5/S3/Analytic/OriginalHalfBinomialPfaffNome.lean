@@ -235,7 +235,7 @@ private lemma nome_eq_negativeChartNome {r : ℂ} (hr : r.im ≠ 0) :
   · rw [tau_pfaff_upper hp, mul_add, mul_one, Complex.exp_add, hπ]
     simp [negativeChartNome]
 
-private lemma tau_analyticAt {r : ℂ} (hr : r ∈ doubleSlit) : AnalyticAt ℂ tau r := by
+lemma tau_analyticAt {r : ℂ} (hr : r ∈ doubleSlit) : AnalyticAt ℂ tau r := by
   have hc : 1 - r ∈ slitDomain := by simpa [slitDomain] using hr.2
   have h := (slitPeriod_analyticOnNhd _ hc).comp (analyticAt_const.sub analyticAt_id)
   exact (analyticAt_const.mul h).div (slitPeriod_analyticOnNhd _ hr.1) (slitPeriod_ne_zero hr.1)

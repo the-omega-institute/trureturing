@@ -5,14 +5,28 @@ year: 2021
 title: On the Total Number of Prime Factors of an Odd Perfect Number
 doi: null
 url: https://math.colgate.edu/~integers/v76/v76.pdf
-claim: "Section 7 defines the Euler-form set E and relative strong properties; Theorem 9 asserts that OR(alpha,beta) is strong for every alpha > 2 and real beta, and Conjecture 1 asserts that OR(alpha1,beta1) is substantially stronger than OR(alpha2,beta2) whenever alpha1 > alpha2 > 2, where OR(alpha,beta)(n) means Omega(n) >= alpha*omega(n)+beta."
+claim: "Section 5, Question 5 asks whether a(n+1)-a(n) takes every positive integer value; Section 7 defines Euler-form relative strong properties and states Theorem 9 and Conjecture 1 for OR(alpha,beta)."
 strata_touched:
   - D5/S3/Arith/Abundancy/ZelinskyOmegaRatioDensity
+  - D5/S3/Arith/Abundancy/ZelinskyNortonFirstDifference
 license: citation-only
 triage: anchor
 ---
 
 # Prime-factor restrictions measured inside Euler forms
+
+## Norton first differences
+
+Section 5, Question 5 asks:
+
+> Does a(n+1) − a(n) take on every positive integer value?
+
+Here p_n is the n-th prime, with p_1=2, and a(n) is the least positive
+integer k for which the product of p_r/(p_r−1), over n≤r≤n+k−1, exceeds 2.
+The difference is between consecutive starting indices, not consecutive
+prime arguments.
+
+## Euler-form density assertions
 
 Joshua Zelinsky, *On the Total Number of Prime Factors of an Odd Perfect
 Number*, Integers 21 (2021), article A76, Section 7, printed pages 47--48.
@@ -49,5 +63,6 @@ its density assertions over all of E.
 
 - URL: https://math.colgate.edu/~integers/v76/v76.pdf
 - Publication: Integers 21 (2021), article A76.
+- Locator: Section 5, Question 5, Norton threshold first differences.
 - Locator: Section 7, printed page 47, definition of E and strong/weak properties.
 - Locator: Section 7, printed page 48, OR(alpha,beta), Theorem 9, substantially stronger, and Conjecture 1.

@@ -33,15 +33,13 @@ internal sealed class DiagonalSwapDocument : IScribeDocumentDefinition
                         + "that value.")),
                     Paragraph(Text(
                         "The Index quantifier is fully general, including an empty type where the "
-                        + "pointwise conclusion is vacuous. The module therefore compiles PUnit as a "
-                        + "nonempty index witness and a constant-false PUnit assignment, making the "
+                        + "pointwise conclusion is vacuous. The module compiles Bool as a "
+                        + "nonempty index witness and a constant-false assignment, making the "
                         + "self-application diagonal concrete without weakening the theorem.")),
                     Paragraph(Text(
-                        "Pinned Mathlib was searched before proving. Bool.not_ne_self was an exact "
-                        + "hit for the fixed-point-free swap primitive; Bool.not_eq_iff and "
-                        + "Bool.not_ne_id were related hits. Repository searches found no existing "
-                        + "declaration for the self-diagonal family statement, so the proof is the "
-                        + "thin wrapper obtained by applying Bool.not_ne_self to P(i,i).")),
+                        "The proof computes the swap using the two Boolean constructors in OmegaInit. "
+                        + "Transporting the proposition that is true at false and false at true "
+                        + "along a hypothetical equality of the two constructors yields a contradiction.")),
                     Paragraph(Text(
                         "This remains a partial closure of the source theorem. The present declaration "
                         + "proves only the shared swap-on-self-diagonal engine. It does not yet prove "

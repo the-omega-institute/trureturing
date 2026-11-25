@@ -20,12 +20,9 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-open private ThreeBitSource.mask_labels ThreeBitSource.mask_labels_bound
-  ThreeBitSource.mask_labels_disjoint ThreeBitSource.mask_labels_sum
-  ThreeBitSource.labelled_permutation
+open private ThreeBitSource.mask_labels_disjoint
   from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private ThreeNegativeEqualOuterJointLift.label ThreeNegativeEqualOuterJointLift.lift_order
-  ThreeNegativeEqualOuterJointLift.marked_word ThreeNegativeEqualOuterJointLift.schedule_from_tail
+open private ThreeNegativeEqualOuterJointLift.schedule_from_tail
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma

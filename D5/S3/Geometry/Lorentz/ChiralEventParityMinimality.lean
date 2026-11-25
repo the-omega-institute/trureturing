@@ -66,7 +66,7 @@ private theorem hemisphere_boundary_neg (z : Circle) :
   fin_cases i <;> simp [hemisphere.eq_1, diskBoundary.eq_1, Circle.norm_coe]
 
 /-- The planar Borsuk--Ulam theorem in the form used by the chiral-event argument. -/
-private theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
+theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
     (hf : ContinuousOn f (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
     (hodd : ∀ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, f (-v) = -f v) :
     ∃ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, f v = 0 := by
