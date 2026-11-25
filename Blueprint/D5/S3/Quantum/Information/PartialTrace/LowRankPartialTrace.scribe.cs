@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information.PartialTrace;
 
 internal sealed class LowRankPartialTraceDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class LowRankPartialTraceDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("partial-trace-rank-bound"),
-                DeclarationHandle.Create("D5/S3/Quantum/Information/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul"),
                 H("Partial trace under an actual matrix rank bound"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -24,7 +24,7 @@ internal sealed class LowRankPartialTraceDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("two-site-mass-bound"),
-                DeclarationHandle.Create("D5/S3/Quantum/Information/LowRankPartialTrace.two_site_mass_sum_le"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.two_site_mass_sum_le"),
                 H("Projection mass on two alternative sites"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -42,7 +42,7 @@ internal sealed class LowRankPartialTraceDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("basis-encoder-attainment"),
-                DeclarationHandle.Create("D5/S3/Quantum/Information/LowRankPartialTrace.basis_encoder_attains"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.basis_encoder_attains"),
                 H("Attainment by storing the first site"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

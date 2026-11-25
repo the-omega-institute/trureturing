@@ -6,9 +6,9 @@ Two alternative tensor sites share the same rank-constrained projection mass.
 
 **Theorem 1.1 (Partial trace under an actual matrix rank bound).**
 
-Lean statement: `D5/S3/Quantum/Information/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul`
+Lean statement: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ For every finite complex matrix on a tensor product, the Frobenius norm square o
 
 **Theorem 1.2 (Projection mass on two alternative sites).**
 
-Lean statement: `D5/S3/Quantum/Information/LowRankPartialTrace.two_site_mass_sum_le`
+Lean statement: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.two_site_mass_sum_le`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/LowRankPartialTrace.two_site_mass_sum_le` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.two_site_mass_sum_le` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ Let the two disjoint sites have the same positive dimension m, with any finite r
 
 **Theorem 1.3 (Attainment by storing the first site).**
 
-Lean statement: `D5/S3/Quantum/Information/LowRankPartialTrace.basis_encoder_attains`
+Lean statement: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.basis_encoder_attains`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/LowRankPartialTrace.basis_encoder_attains` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.basis_encoder_attains` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ Store the first site and record the basis outcome of the remaining two factors. 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Information/LowRankPartialTrace.basis_encoder_attains`
-- Truth anchor: `D5/S3/Quantum/Information/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul`
-- Truth anchor: `D5/S3/Quantum/Information/LowRankPartialTrace.two_site_mass_sum_le`
-- Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
-- Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
-- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
+- Truth anchor: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.basis_encoder_attains`
+- Truth anchor: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.frobenius_sq_partialTraceLeft_le_rank_mul`
+- Truth anchor: `D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace.two_site_mass_sum_le`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../../Foundation/FiniteTraceDistance.md)
+- Dependency: [D5/S3/Quantum/GNSMatrix](../../GNSMatrix.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../PartialTraceMutualInformation.md)

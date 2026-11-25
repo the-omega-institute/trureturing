@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Information/LowRankPartialTrace
+/- GID: D5/S3/Quantum/Information/PartialTrace/LowRankPartialTrace
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/LowRankPartialTrace
+   mirror-B: D5/B/S3/Quantum/Information/PartialTrace/LowRankPartialTrace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
