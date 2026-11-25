@@ -3,6 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Signed sixth-derivative Euler–Maclaurin remainder on a uniform mesh. -/
 
 module
