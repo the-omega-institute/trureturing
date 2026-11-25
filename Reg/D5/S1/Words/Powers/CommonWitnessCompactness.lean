@@ -2,51 +2,74 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Powers.CommonWitnessCompactness
 import Reg.Support.DependentFamily
 
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
-namespace RegAttempt
+namespace Reg.D5.S1.Words.Powers.CommonWitnessCompactness
 open _root_.D5.S1.Words.Powers.CommonWitnessCompactness
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
 
 abbrev signature : Signature where
-  Params := Type
+  Params := Type u
   State A := Set (List A × List A)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-abbrev claim (A : Type) (G : Set (List A × List A)) : Prop :=
-  CommonWitness G ↔
-    ∀ T : Set (List A × List A), T ⊆ G → T.Finite → CommonWitness T
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ G => CommonWitness G) (fun e => nomatch e)
 
-noncomputable def actual : Realization signature := realize signature
-  (fun _ A G => decide (claim A G)) (fun e => nomatch e)
-
-noncomputable def rejected : Realization signature := realize signature
-  (fun _ _ _ => false) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ (A : Type) (G : Set (List A × List A)),
-    R.readout () A G = true ↔ claim A G
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} (G : Set (List A × List A)),
+    R.readout () A G ↔
+      ∀ T : Set (List A × List A), T ⊆ G → T.Finite → CommonWitness T
 
-theorem actual_law : arena.Law actual := by
-  intro A G
-  simp [actual, claim, commonWitness_iff_finite]
+theorem actual_law : arena.{u}.Law actual := @commonWitness_iff_finite.{u}
 
-theorem rejected_law : ¬ arena.Law rejected := by
+theorem empty_witness (A : Type u) : CommonWitness (∅ : Set (List A × List A)) := by
+  refine ⟨[], Or.inl ?_⟩
+  intro p hp
+  exact hp.elim
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have bad := (h Empty (∅ : Set (List Empty × List Empty))).mp
-  simp [rejected, claim] at bad
+  have bad := (h (A := ULift.{u} Empty) ∅).mpr
+    ((commonWitness_iff_finite ∅).mp (empty_witness _))
+  exact bad
 
-def evidence : Registration arena (∀ (A : Type) (G : Set (List A × List A)), claim A G) where
+theorem no_witness (a : ULift.{u} Unit) :
+    ¬ CommonWitness ({([], [a])} : Set (List (ULift.{u} Unit) × List (ULift.{u} Unit))) := by
+  rintro ⟨z, h | h⟩
+  · have e := h ([], [a]) (by simp)
+    change [] ++ z = z ++ [a] at e
+    have l := congrArg List.length e
+    simp only [List.length_append, List.length_nil, List.length_cons] at l
+    omega
+  · have e := h ([], [a]) (by simp)
+    change z ++ [] = [a] ++ z at e
+    have l := congrArg List.length e
+    simp only [List.length_append, List.length_nil, List.length_cons] at l
+    omega
+
+theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨ULift.{u} Unit, ∅, {([], [ULift.up ()])}, ?_⟩
+  intro equal
+  exact no_witness (ULift.up ()) (equal ▸ empty_witness _)
+
+def source_registration : Registration arena.{u}
+    (type_of% @commonWitness_iff_finite.{u}) where
   actual := actual
-  bridge := by simp [arena, actual, claim, commonWitness_iff_finite]
+  bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -56,10 +79,42 @@ def evidence : Registration arena (∀ (A : Type) (G : Set (List A × List A)), 
       exact (ne (Subsingleton.elim j i)).elim
     · intro i
       exact nomatch i
-  dependence := by
-    intro i
-    cases i
-    refine ⟨Empty, (∅ : Set (List Empty × List Empty)), (∅ : Set (List Empty × List Empty)), ?_⟩
-    rfl
+  dependence := dependence
 
-end RegAttempt
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@commonWitness_iff_finite.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S1.Words.Powers.CommonWitnessCompactness.unit
+  realizationName := `Reg.D5.S1.Words.Powers.CommonWitnessCompactness.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ G => CommonWitness G) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.Powers.CommonWitnessCompactness
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+end
+end Reg.D5.S1.Words.Powers.CommonWitnessCompactness
