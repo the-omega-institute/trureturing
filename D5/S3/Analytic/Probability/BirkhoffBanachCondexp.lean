@@ -52,6 +52,7 @@ infinitely many `n`. -/
 private def birkhoffExceptionalSet (μ : Measure α) (f : α → α) (g : α → E) (ε : ℝ) : Set α :=
   {x | ∃ᶠ n in atTop, ε ≤ dist (birkhoffAverage ℝ f g n x) (μ[g|invariants f] x)}
 
+omit [MeasurableSpace α] [CompleteSpace E] in
 private lemma norm_birkhoffAverage_le (f : α → α) (e : α → E) (n : ℕ) (x : α) :
     ‖birkhoffAverage ℝ f e n x‖ ≤ birkhoffAverage ℝ f (fun y ↦ ‖e y‖) n x := by
   unfold birkhoffAverage
