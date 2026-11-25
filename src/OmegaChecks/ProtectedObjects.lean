@@ -48,10 +48,28 @@ private def checkStatement (env : Environment) (ports : NameSet) (published : Na
     else
       throw <| IO.userError s!"publish {published} in D5: statement uses project object {name} from {moduleName}"
 
+/-- Preserve the weakest transparency mode in which an ordinary client could unfold the
+old declaration, including any intermediate definitions in the new public representation. -/
+private def keepsReduction (old new : Environment) (before after : ConstantInfo) : IO Bool := do
+  let levels := after.levelParams.map Level.param
+  let expected := before.value!.instantiateLevelParams before.levelParams levels
+  let sameBody := expected == after.value!
+  if sameBody && getReducibilityStatusCore old before.name == getReducibilityStatusCore new after.name then
+    return true
+  let context : Core.Context := {fileName := "<public reduction>", fileMap := default}
+  for mode in #[Meta.TransparencyMode.reducible, .instances, .implicit, .default, .all] do
+    let cfg : Meta.Config := {transparency := mode}
+    if ← (Meta.canUnfoldDefault cfg before).toIO' context {env := old} then
+      unless ← (Meta.canUnfoldDefault cfg after).toIO' context {env := new} do return false
+      if sameBody then return true
+      let check := Meta.withTransparency mode <| Meta.isDefEq (mkConst after.name levels) expected
+      return ← check.run' |>.toIO' context {env := new}
+  return false
+
 /-- A client can unfold an exposed historical definition. Locate that same
 computational representation in a frozen D5 module, together with a kernel
 proof relating its public name to the new upstream object at all inputs. -/
-private def checkLegacy (env publicEnv : Environment) (owners : Array Name)
+private def checkLegacy (env oldPublic publicEnv : Environment) (owners : Array Name)
     (before after : ConstantInfo) : IO Unit := do
   let levels := after.levelParams.map Level.param
   let prior := fun (e : Expr) => e.instantiateLevelParams before.levelParams levels
@@ -60,7 +78,7 @@ private def checkLegacy (env publicEnv : Environment) (owners : Array Name)
     throw <| IO.userError s!"protected type changed: {before.name}"
   let oldValue := prior before.value!
   let target := after.value!
-  if Kernel.isDefEqGuarded publicEnv {} oldValue target then return
+  if Kernel.isDefEqGuarded publicEnv {} oldValue target && (← keepsReduction oldPublic publicEnv before after) then return
   let mut legacy : NameSet := {}
   let mut decls := #[]
   for owner in owners do
@@ -75,7 +93,8 @@ private def checkLegacy (env publicEnv : Environment) (owners : Array Name)
       | .defnInfo _, .defnInfo d =>
         if d.safety == .safe &&
             Kernel.isDefEqGuarded env {} (d.type.instantiateLevelParams d.levelParams levels) after.type &&
-            Kernel.isDefEqGuarded publicEnv {} (d.value.instantiateLevelParams d.levelParams levels) oldValue then
+            Kernel.isDefEqGuarded publicEnv {} (d.value.instantiateLevelParams d.levelParams levels) oldValue &&
+            (← keepsReduction oldPublic publicEnv before visible) then
           legacy := legacy.insert n
       | .thmInfo t, _ => decls := decls.push t
       | _, _ => pure ()
@@ -122,7 +141,8 @@ def check (old new publicOld publicNew : Environment) (baseRoots newRoots : Arra
       if previous != current then
         let visible ← ModuleSurface.publicClosure new m
         for dep in previous do
-          if dep.isExported && dep.module.getRoot == `OmegaMath && !visible.contains dep.module then
+          if dep.isExported && (dep.module.getRoot == `OmegaMath || ModuleSurface.isBasis dep.module) &&
+              !visible.contains dep.module then
             throw <| IO.userError s!"{m} no longer re-exports protected module {dep.module}"
     let oldNames := oldIdx.map (fun i => old.header.moduleData[i]!.constNames) |>.getD #[]
     for name in oldNames do
@@ -138,6 +158,8 @@ def check (old new publicOld publicNew : Environment) (baseRoots newRoots : Arra
         if exposed matches .defnInfo _ then
           unless visible matches .defnInfo _ do
             throw <| IO.userError s!"protected definition no longer exposes its body: {name}"
+          unless directPort new ports after || (← keepsReduction publicOld publicNew exposed visible) do
+            throw <| IO.userError s!"protected public unfolding changed: {name}"
           unless directPort new ports after || Kernel.isDefEqGuarded publicNew {}
               (exposed.value!.instantiateLevelParams exposed.levelParams (visible.levelParams.map Level.param))
               visible.value! do
@@ -146,7 +168,7 @@ def check (old new publicOld publicNew : Environment) (baseRoots newRoots : Arra
       if before.ctorIdx != after.ctorIdx then
         throw <| IO.userError s!"protected declaration kind changed: {name}"
       if directPort new ports after && before.value? != after.value? then
-        checkLegacy comparison publicComparison legacyOwners before after
+        checkLegacy comparison publicOld publicComparison legacyOwners before after
       else
         discard <| Interface.compare new id before after
     let known := NameSet.ofList oldNames.toList

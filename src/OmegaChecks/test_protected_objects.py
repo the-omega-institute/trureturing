@@ -39,7 +39,12 @@ def check():
             check_client(lean, base, MODULE, client, True)
             hidden = compile_source(lean, search, Path(temp) / "candidate", "@[no_expose] " + OBJECT + THEOREM)
             check_client(lean, hidden, MODULE, client, False)
+            irreducible = OBJECT + THEOREM + "attribute [irreducible] Subject\n"
+            sealed = compile_source(lean, search, Path(temp) / "candidate", irreducible)
+            check_client(lean, sealed, MODULE, client, False)
             for body, marker in [
+                (irreducible, "protected public unfolding changed"),
+                (OBJECT + THEOREM + "attribute [reducible] Subject\n", ""),
                 ("@[no_expose] " + OBJECT + THEOREM, "no longer exposes its body"),
                 (OBJECT + THEOREM + "theorem extra (p : Prop) : p → p := fun x => x\n", ""),
                 (OBJECT + THEOREM + "private def hiddenPrime (p : Prop) : Prop := p\n", "new OmegaMath object"),
@@ -60,16 +65,17 @@ def check():
                                     cwd=ROOT, capture_output=True, text=True)
             if not result.returncode or "removed protected OmegaMath module" not in result.stderr:
                 raise RuntimeError(f"Expected missing module: {result.stdout}{result.stderr}")
-            for folder, modifier in [("base", "public "), ("candidate", "")]:
-                directory = Path(temp) / folder
-                file = directory / "OmegaMath.lean"
-                file.write_text(f"module\nprelude\n{modifier}import {MODULE}\n")
-                subprocess.run([lean, "-R", directory, "-o", file.with_suffix(".olean"), file], cwd=ROOT,
-                               env={**os.environ, "LEAN_PATH": str(directory) + os.pathsep + search}, check=True)
-            result = subprocess.run([AUDIT, "--protected-objects", base, new, "OmegaMath", "--", "OmegaMath"],
-                                    cwd=ROOT, capture_output=True, text=True)
-            if not result.returncode or "no longer re-exports protected module" not in result.stderr:
-                raise RuntimeError(f"Expected hidden public import: {result.stdout}{result.stderr}")
+            for reexport in (MODULE, "OmegaMathlib.Data.Nat.Prime.Defs", "OmegaInit.Prelude"):
+                for folder, modifier in [("base", "public "), ("candidate", "")]:
+                    directory = Path(temp) / folder
+                    file = directory / "OmegaMath.lean"
+                    file.write_text(f"module\nprelude\n{modifier}import {reexport}\n")
+                    subprocess.run([lean, "-R", directory, "-o", file.with_suffix(".olean"), file], cwd=ROOT,
+                                   env={**os.environ, "LEAN_PATH": str(directory) + os.pathsep + search}, check=True)
+                result = subprocess.run([AUDIT, "--protected-objects", base, new, "OmegaMath", "--", "OmegaMath"],
+                                        cwd=ROOT, capture_output=True, text=True)
+                if not result.returncode or "no longer re-exports protected module" not in result.stderr:
+                    raise RuntimeError(f"Expected hidden public import: {result.stdout}{result.stderr}")
             legacy = ("inductive Carrier where | one\n"
                       "def Predicate (_ : Nat) : Prop := True\n"
                       "theorem Helper (n : Nat) : Predicate n := True.intro\n")
@@ -103,6 +109,8 @@ def check():
                         "Omega.Iff.intro Omega.And.left (fun h => Omega.And.intro h Omega.True.intro)\n")
             for body, d5_source, expected in [
                 (alias, representation + relation, ""),
+                (alias, representation + relation + "attribute [irreducible] D5.old\n",
+                 "missing observable D5 representation"),
                 (alias, representation.replace("@[expose]", "@[no_expose]") + relation,
                  "missing observable D5 representation"),
                 (old_object + "abbrev direct := OmegaMathlib.Nat.Prime\n", None, ""),
@@ -125,7 +133,7 @@ def check():
                                    cwd=ROOT, env={**os.environ, "LEAN_PATH": new}, check=True)
                     check_client(lean, new, d5, "example (n : Omega.Nat) : Omega.Eq (D5.old n) "
                                  "(Omega.Historical (OmegaMathlib.Nat.Prime n)) := Omega.Eq.refl _",
-                                 "@[no_expose]" not in d5_source)
+                                 "@[no_expose]" not in d5_source and "[irreducible]" not in d5_source)
                     owners.append(d5)
                 result = subprocess.run([AUDIT, "--protected-objects", base, new, MODULE, "--", MODULE,
                                          "--legacy", *owners], cwd=ROOT, capture_output=True, text=True)
