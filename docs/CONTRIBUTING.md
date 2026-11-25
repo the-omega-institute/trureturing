@@ -374,6 +374,13 @@ proofs in D5. Keep OmegaMath and OmegaMathlib independent of D5.
 D5 imports the specific module for its book-facing theorem. For example,
 `Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
 See the [module placement examples](../src/README.md).
+For the old transparent divisor characterization, import
+`D5.S3.Arith.Primes.DivisorCharacterization`. Its `IsPrime` unfolds to the
+historical divisor conditions, and its `isPrime_iff_prime` theorem relates them
+to `OmegaMathlib.Nat.Prime` for every natural number. An existing Omega consumer
+that drops its final Omega import still has its protected standard uses checked.
+D5 modules using official Mathlib directly follow the ordinary Mathlib workflow.
+
 Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly

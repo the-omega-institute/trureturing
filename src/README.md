@@ -20,9 +20,7 @@ example (p : Omega.Nat) (hp : OmegaMathlib.Nat.Prime p) :
 
 官方端把这个引用解析到钉版 Mathlib 的 `Nat.Prime`，严格端核验对应实现。自定义谓词即使也叫 `Prime`，也可能接受 1。若证明声称标准素性，核对发生在声明的实际假设或结论处。新增的项目谓词以自身的数学含义在 D5 定义；使用它与标准对象的关系时，引用 D5 中的对应定理。
 
-需要按旧定义展开素数时，显式导入 `D5.S3.Arith.Primes.DivisorCharacterization`。其中的 `IsPrime` 保留原来的整除条件，`isPrime_iff_prime` 把它与 `OmegaMathlib.Nat.Prime` 对应到每个自然数。受保护版本的定义和 D5 冻结对象在双后端核对。已有的 `Omega.Projective.kappa_scale` 仍可从 `OmegaMath.Projective` 导入，它的陈述使用项目定义的 `Ratio.Equivalent`。
-
-此准入覆盖 Omega 系列及其消费模块。只用官方 Mathlib 的普通 D5 模块按官方声明编译。在已有 Omega 消费者删去最后一个 Omega 导入时，历史比较仍会核对其原有的标准对象。
+已有的 `Omega.Projective.kappa_scale` 仍可从 `OmegaMath.Projective` 导入，它的陈述使用项目定义的 `Ratio.Equivalent`。
 
 普通本地准入使用 `HEAD` 与 `origin/dev` 的共同祖先作为受保护版本。要重现某次 PR 的核验，可运行 `python3 -B src/OmegaChecks/check.py --protected-base <commit> --library OmegaMath.Arithmetic.Euclidean.Prime`。核验器独立编译受保护源码，在两个后端比较现有声明、新增对象、公开导出以及替换为标准引用时的对应证明。
 
