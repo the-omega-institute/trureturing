@@ -62,7 +62,7 @@ theorem rearDeficit_scaled_tendsto {h : ℕ → ℝ}
         mul_le_mul_of_nonneg_left hle (sq_nonneg _)
       _ = _ := by ring
 
-private def rearMatrix (n h r : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+def rearMatrix (n h r : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   let w := rearWeight h r
   let f := 1 - w
   let x := rearMoment h r
@@ -191,7 +191,7 @@ theorem front_mixed_block (n : ℕ) (hn : 0 < n) (u : ℝ) (i : Fin 2) :
         exact pow_le_pow_left₀ hw0 hw 3
       _ = _ := by ring
 
-private def frontMatrix (n : ℕ) (u : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+def frontMatrix (n : ℕ) (u : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   let w := fun j : ℤ => (1 - Real.cos ((j : ℝ) / n * u)) / 2
   let f := fun i j => frontFeatures u ((j : ℝ) / n) i
   let upper := fun i => (∑ j ∈ latticeInterval n, f i j * w j) / (n : ℝ)^3
@@ -407,7 +407,7 @@ def coupledMoments (S : Finset ℝ) (n : ℕ) (h : ℝ) (v : Fin 3 → ℝ) : Fi
     momentRow n (rf r) (rx r) (rw r))
 
 /-- The assembled matrix represents the same weighted moments at each site. -/
-private theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
+theorem coupledMomentMatrix_mulVec (S : Finset ℝ) (n : ℕ) (hn : 0 < n)
     (h : ℝ) (v : Fin 3 → ℝ) :
     coupledMomentMatrix S n h *ᵥ v = coupledMoments S n h v := by
   classical
