@@ -1,7 +1,21 @@
+/- GID: D5/S3/Analytic/Probability/BirkhoffBanachCondexp
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Probability/BirkhoffBanachCondexp
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Banach-valued time averages converge almost everywhere and in L1 over finite measures. -/
+
 /-
 Copyright (c) 2025 Lua Viana Reis. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
+Released under Apache 2.0 license as described in
+ docs/reports/licenses/birkhoff-condexp/mathlib-PR42078-LICENSE.txt.
 Authors: Lua Viana Reis, Oliver Butterley
+
+Adapted from lua-vr/mathlib4 revision ebc0f703f74bec1576e2ca3b078fb173ba11039f,
+Mathlib/Dynamics/BirkhoffSum/Pointwise.lean.
+Modifications: finite measures, independent carrier and value universes, reuse of
+scalar conditional-expectation limits, and Banach-valued L1 convergence.
 -/
 module
 
@@ -12,10 +26,12 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-!
-# Banach-valued Birkhoff pointwise convergence over finite measures
+# Banach-valued Birkhoff convergence over finite measures
 
 This module ports the pinned Banach approximation argument and reuses the
-repository's finite-measure scalar conditional-expectation theorem.
+repository's finite-measure scalar conditional-expectation theorem. The norm
+error is split into a scalar L1 error and a remainder with a fixed integrable
+bound, yielding convergence in L1 as well as almost everywhere.
 -/
 
 set_option autoImplicit false
@@ -33,10 +49,10 @@ variable {α : Type u} {E : Type v} [MeasurableSpace α] {μ : Measure α} [IsFi
 
 /-- The set of points where the Birkhoff average is `ε`-away from the conditional expectation for
 infinitely many `n`. -/
-def birkhoffExceptionalSet (μ : Measure α) (f : α → α) (g : α → E) (ε : ℝ) : Set α :=
+private def birkhoffExceptionalSet (μ : Measure α) (f : α → α) (g : α → E) (ε : ℝ) : Set α :=
   {x | ∃ᶠ n in atTop, ε ≤ dist (birkhoffAverage ℝ f g n x) (μ[g|invariants f] x)}
 
-lemma norm_birkhoffAverage_le (f : α → α) (e : α → E) (n : ℕ) (x : α) :
+private lemma norm_birkhoffAverage_le (f : α → α) (e : α → E) (n : ℕ) (x : α) :
     ‖birkhoffAverage ℝ f e n x‖ ≤ birkhoffAverage ℝ f (fun y ↦ ‖e y‖) n x := by
   unfold birkhoffAverage
   rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (by positivity : 0 ≤ (n : ℝ)⁻¹)]
@@ -47,7 +63,7 @@ lemma norm_birkhoffAverage_le (f : α → α) (e : α → E) (n : ℕ) (x : α) 
 
 /-- The exceptional set for a fixed `ε` has measure at most `2 * δ / ε` whenever `g` is within `L¹`
 distance `δ` of a function `s` already satisfying the theorem. -/
-lemma measure_limsup_birkhoffAverage_sub_condExp_le (hf : MeasurePreserving f μ μ)
+private lemma measure_limsup_birkhoffAverage_sub_condExp_le (hf : MeasurePreserving f μ μ)
     (g_integrable : Integrable g μ) {s : α → E} (s_integrable : Integrable s μ)
     (s_tendsto : ∀ᵐ x ∂μ, Tendsto (birkhoffAverage ℝ f s · x) atTop (𝓝 (μ[s | invariants f] x)))
     {ε δ : ℝ} (hε : 0 < ε) (hs_close : ∫ y, ‖g y - s y‖ ∂μ < δ) :
@@ -94,7 +110,7 @@ lemma measure_limsup_birkhoffAverage_sub_condExp_le (hf : MeasurePreserving f μ
 /-- The set of functions satisfying the pointwise theorem is closed in `L¹`: if for every `δ > 0`,
 there is an integrable `s` satisfying the theorem with `∫ ‖g - s‖ < δ`, then `g` satisfies the
 theorem. -/
-lemma ae_tendsTo_birkhoffAverage_condExp_of_approx (hf : MeasurePreserving f μ μ)
+private lemma ae_tendsTo_birkhoffAverage_condExp_of_approx (hf : MeasurePreserving f μ μ)
     (hg : Integrable g μ)
     (h : ∀ δ : ℝ, 0 < δ → ∃ s : α → E, Integrable s μ ∧
       (∀ᵐ x ∂μ, Tendsto (birkhoffAverage ℝ f s · x) atTop (𝓝 (μ[s|invariants f] x))) ∧
@@ -141,7 +157,7 @@ lemma ae_tendsTo_birkhoffAverage_condExp_of_approx (hf : MeasurePreserving f μ 
 For an integrable function `g` with values in a Banach space, the time averages converge almost
 everywhere to the conditional expectation of `g` with respect to the σ-algebra of invariant
 sets. -/
-public theorem ae_tendsTo_birkhoffAverage_condExp (hf : MeasurePreserving f μ μ)
+private theorem ae_tendsTo_birkhoffAverage_condExp (hf : MeasurePreserving f μ μ)
     (hg : Integrable g μ) :
     ∀ᵐ x ∂μ, Tendsto (birkhoffAverage ℝ f g · x) atTop (𝓝 (μ[g|invariants f] x)) := by
   apply hg.induction (P := _)
@@ -206,14 +222,82 @@ public theorem ae_tendsTo_birkhoffAverage_condExp (hf : MeasurePreserving f μ �
     conv in birkhoffAverage .. => rw [← hx₁]
     rwa [← hx₂]
 
-section Invariant
 
 omit [IsFiniteMeasure μ] [CompleteSpace E] in
-public lemma comp_eq_condExp_invariants : μ[g | invariants f] ∘ f = μ[g | invariants f] := by
-  borelize E
-  exact comp_eq_of_measurable_invariants stronglyMeasurable_condExp.measurable
+private lemma integrable_average (hf : MeasurePreserving f μ μ) (hg : Integrable g μ)
+    (n : ℕ) : Integrable (birkhoffAverage ℝ f g n) μ := by
+  unfold birkhoffAverage birkhoffSum
+  exact (integrable_finsetSum _ fun j _ ↦
+    (hf.iterate j).integrable_comp_of_integrable hg).smul ((n : ℝ)⁻¹)
 
-end Invariant
+/-- The finite-measure Banach-valued pointwise and mean ergodic limits, with integrability
+of every finite average and every norm error, including time zero. -/
+public theorem birkhoff_conditional_expectation (hf : MeasurePreserving f μ μ)
+    (hg : Integrable g μ) :
+    (∀ n : ℕ, Integrable (birkhoffAverage ℝ f g n) μ ∧
+      Integrable (fun x ↦ ‖birkhoffAverage ℝ f g n x - μ[g|invariants f] x‖) μ) ∧
+    (∀ᵐ x ∂μ, Tendsto (birkhoffAverage ℝ f g · x) atTop (𝓝 (μ[g|invariants f] x))) ∧
+    Tendsto (fun n ↦ ∫ x, ‖birkhoffAverage ℝ f g n x - μ[g|invariants f] x‖ ∂μ)
+      atTop (𝓝 0) := by
+  let C := μ[g|invariants f]
+  let c := μ[(fun x ↦ ‖g x‖)|invariants f]
+  let d : ℕ → α → ℝ := fun n x ↦ ‖birkhoffAverage ℝ f g n x - C x‖
+  let r : ℕ → α → ℝ := fun n x ↦ |birkhoffAverage ℝ f (fun y ↦ ‖g y‖) n x - c x|
+  let b : α → ℝ := fun x ↦ |c x| + ‖C x‖
+  let F : ℕ → α → ℝ := fun n x ↦ max (d n x - r n x) 0
+  have hAi (n : ℕ) := integrable_average hf hg n
+  have hdi (n : ℕ) : Integrable (d n) μ := (hAi n |>.sub integrable_condExp).norm
+  have hri (n : ℕ) : Integrable (r n) μ :=
+    ((integrable_average hf hg.norm n).sub integrable_condExp).abs
+  have hbi : Integrable b μ := integrable_condExp.abs.add integrable_condExp.norm
+  have hFi (n : ℕ) : Integrable (F n) μ := ((hdi n).sub (hri n)).pos_part
+  have hd_nonneg (n : ℕ) (x : α) : 0 ≤ d n x := norm_nonneg _
+  have hr_nonneg (n : ℕ) (x : α) : 0 ≤ r n x := abs_nonneg _
+  have hF_nonneg (n : ℕ) (x : α) : 0 ≤ F n x := le_max_right _ _
+  have hF_le_d (n : ℕ) (x : α) : F n x ≤ d n x := by
+    apply max_le
+    · linarith [hr_nonneg n x]
+    · exact hd_nonneg n x
+  have hd_le (n : ℕ) (x : α) : d n x ≤ r n x + b x := by
+    have hnorm := norm_sub_le (birkhoffAverage ℝ f g n x) (C x)
+    have hA := norm_birkhoffAverage_le f g n x
+    have hr := le_abs_self (birkhoffAverage ℝ f (fun y ↦ ‖g y‖) n x - c x)
+    have hc := le_abs_self (c x)
+    dsimp [d, r, b]
+    linarith
+  have hF_bound (n : ℕ) (x : α) : F n x ≤ b x := by
+    apply max_le
+    · linarith [hd_le n x]
+    · exact add_nonneg (abs_nonneg _) (norm_nonneg _)
+  have hae := ae_tendsTo_birkhoffAverage_condExp hf hg
+  refine ⟨fun n ↦ ⟨hAi n, hdi n⟩, hae, ?_⟩
+  have hdlim : ∀ᵐ x ∂μ, Tendsto (fun n ↦ d n x) atTop (𝓝 0) := by
+    filter_upwards [hae] with x hx
+    simpa only [d, C, sub_self, norm_zero] using (hx.sub_const (C x)).norm
+  have hFlim : ∀ᵐ x ∂μ, Tendsto (fun n ↦ F n x) atTop (𝓝 0) := by
+    filter_upwards [hdlim] with x hx
+    exact squeeze_zero (fun n ↦ hF_nonneg n x) (fun n ↦ hF_le_d n x) hx
+  have hFint : Tendsto (fun n ↦ ∫ x, F n x ∂μ) atTop (𝓝 0) := by
+    have ht := tendsto_integral_of_dominated_convergence b
+      (fun n ↦ (hFi n).aestronglyMeasurable) hbi
+      (fun n ↦ ae_of_all μ (fun x ↦ by
+        rw [Real.norm_of_nonneg (hF_nonneg n x)]
+        exact hF_bound n x)) hFlim
+    simpa only [integral_zero] using ht
+  have hrint : Tendsto (fun n ↦ ∫ x, r n x ∂μ) atTop (𝓝 0) :=
+    (D5.S3.Analytic.Probability.BirkhoffCondexp.birkhoff_conditional_expectation μ hf hg.norm).2
+  apply squeeze_zero (fun n ↦ integral_nonneg (hd_nonneg n)) _
+    (by simpa only [add_zero] using hFint.add hrint)
+  intro n
+  rw [← integral_add (hFi n) (hri n)]
+  apply integral_mono (hdi n) ((hFi n).add (hri n))
+  intro x
+  have hmax := le_max_left (d n x - r n x) 0
+  change d n x ≤ F n x + r n x
+  dsimp [F]
+  linarith
+
+#print axioms birkhoff_conditional_expectation
 
 end NormedAddCommGroup
 
