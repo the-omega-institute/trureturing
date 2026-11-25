@@ -1,1 +1,1 @@
-{"statement_id":"sha256:50bd688729b03857307dd9bb4251a66fb4b74aa3eb64933cd0a19eb2efec7da5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),28:canonical_interchangeability)","kind":"theorem","libraries":["OmegaInit","OmegaMath"],"axioms":[]}]}
+{"statement_id":"sha256:1ed51527fd4fcda8663dfc98d7bb31a8d77ead911259a8d249fe2de54555ae27","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),28:canonical_interchangeability)","kind":"theorem","libraries":["Init","Mathlib","OmegaMath"]}]}

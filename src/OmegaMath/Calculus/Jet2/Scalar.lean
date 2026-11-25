@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.IntRatio
 
 /-!
@@ -57,7 +58,7 @@ theorem finite_inv {x : IntRatio} (hx : Unit x) : Finite x.inv :=
     (fun a b => Int.rec (motive := fun a => Unit (fraction a b) → Finite (fraction a b).inv)
       (fun n => Nat.rec (motive := fun n => Unit (fraction (Int.ofNat n) b) →
         Finite (fraction (Int.ofNat n) b).inv)
-        (fun h => h Eq.refl) (fun _ _ _ => True.intro) n)
+        (fun h => h rfl) (fun _ _ _ => True.intro) n)
       (fun _ _ => True.intro) a) x) hx
 
 theorem mul_inv {x : IntRatio} (hx : Unit x) : Equivalent (x.mul x.inv) one :=
@@ -82,7 +83,7 @@ theorem mul_zero {x : IntRatio} (hx : Finite x) : Equivalent (x.mul zero) zero :
   (IntRatio.rec (motive := fun x => Finite x → Equivalent (x.mul zero) zero)
     (fun h => h) (fun a b _ =>
       (congrArg (fun t : Int => t.mul Int.one) (Int.mul_zero a)).trans
-        ((Int.mul_zero Int.zero).trans (Int.zero_mul (denominator (mulDenPred b Nat.zero))).symm)) x) hx
+        ((Int.zero_mul Int.one).trans (Int.zero_mul (denominator (mulDenPred b Nat.zero))).symm)) x) hx
 
 theorem zero_mul {x : IntRatio} (hx : Finite x) : Equivalent (zero.mul x) zero :=
   (mul_comm zero x).trans (mul_zero hx)
@@ -140,15 +141,20 @@ theorem mul_mul_mul_comm (w x y z : IntRatio) :
   (mul_assoc (w.mul x) y z).symm.trans
     ((mul_congr (mul_right_comm w x y) (equivalent_refl z)).trans (mul_assoc (w.mul y) x z))
 
+private theorem unitDenominator : Eq (mulDenPred Nat.zero Nat.zero) Nat.zero :=
+  (Nat.add_zero _).trans (Nat.mul_zero Nat.zero.succ)
+
 theorem ofNat_add (m n : Nat) : Eq ((ofNat m).add (ofNat n)) (ofNat (m.add n)) :=
-  congrArg (fun t : Int => fraction t Nat.zero)
-    (Eq.map₂ Int.add (Int.mul_one (Int.ofNat m)) (Int.mul_one (Int.ofNat n)))
+  Eq.map₂ fraction (Eq.map₂ Int.add (Int.mul_one (Int.ofNat m)) (Int.mul_one (Int.ofNat n))) unitDenominator
 
 theorem ofNat_mul (m n : Nat) : Eq ((ofNat m).mul (ofNat n)) (ofNat (m.mul n)) :=
-  Eq.refl
+  congrArg (fraction (Int.ofNat (m.mul n))) unitDenominator
 
 theorem two_mul (x : IntRatio) : Equivalent (two.mul x) (x.add x) :=
-  (add_mul one one x).trans (add_congr (one_mul x) (one_mul x))
+  have sum := (ofNat_add Nat.zero.succ Nat.zero.succ).trans
+    (congrArg ofNat (Nat.add_one Nat.zero.succ))
+  Eq.subst (motive := fun t : IntRatio => Equivalent (t.mul x) (x.add x)) sum
+    ((add_mul one one x).trans (add_congr (one_mul x) (one_mul x)))
 
 
 theorem unit_mul {x y : IntRatio} (hx : Unit x) (hy : Unit y) : Unit (x.mul y) :=

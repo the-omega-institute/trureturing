@@ -31,6 +31,6 @@ public theorem old_language_validity_conservative
       extensionAdmissible oldAdmissible project P oldValid admissionPreserving)
     (fun extensionValid x oldAdmission =>
       (admissionSurjective x oldAdmission).elim (fun extended evidence =>
-        Eq.subst P evidence.right (extensionValid extended evidence.left)))
+        Eq.subst (motive := P) evidence.right (extensionValid extended evidence.left)))
 
 end D5.S3.ConceptDynamics.TransportValidity.OldLanguageValidityConservativity

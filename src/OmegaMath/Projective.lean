@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Projective.Basic
 
 /-!
@@ -25,7 +26,10 @@ theorem kappa_scale (p q k : Nat) :
   have hd := (Eq.map₂ Nat.add (Nat.square_mul p s) hq).trans
     (Nat.add_mul (Nat.mul p p) (Nat.mul q q) (Nat.mul s s)).symm
   have he := Eq.map₂ Ratio.value hq hd
-  Eq.subst (fun r => Ratio.Equivalent r (kappa p q)) he.symm
-    (Ratio.scale (Nat.mul q q) denom (Nat.add (Nat.mul s k) k))
+  have hs := (Nat.mul_succ s k).trans (Nat.add_succ (s.mul k) k)
+  Eq.subst (motive := fun r => Ratio.Equivalent r (kappa p q)) he.symm
+    (Eq.subst (motive := fun factor =>
+      Ratio.Equivalent (Ratio.value ((q.mul q).mul factor) (denom.mul factor)) (kappa p q))
+      hs.symm (Ratio.scale (q.mul q) denom ((s.mul k).add k)))
 
 end Omega.Projective

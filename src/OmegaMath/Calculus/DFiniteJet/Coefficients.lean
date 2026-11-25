@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.DFiniteJet.Basic
 
 /-!
@@ -27,7 +28,7 @@ def factorialPred : Nat → Nat := Nat.rec Nat.zero (fun n d => mulDenPred n d)
 def factorial (n : Nat) : Nat := (factorialPred n).succ
 
 theorem factorial_succ (n : Nat) : Eq (factorial n.succ) (n.succ.mul (factorial n)) :=
-  Eq.refl
+  (nat_denominator_mul n (factorialPred n)).symm
 
 /-- Powers of a scalar, with constant term one even at parameter zero. -/
 def scalarPow (a : IntRatio) : Nat → IntRatio := Nat.rec IntRatio.one (fun _ power => a.mul power)
@@ -63,7 +64,7 @@ private theorem trig_even (k : Nat) :
   Nat.rec (motive := fun k =>
     And (Eq (trigNumerator (evenDegree k)).cos (alternatingSign k))
       (Eq (trigNumerator (evenDegree k)).sin Int.zero))
-    (And.intro Eq.refl Eq.refl)
+    (And.intro rfl rfl)
     (fun _ ih => And.intro (congrArg Int.neg ih.left) (congrArg Int.neg ih.right)) k
 
 theorem cos_even (k : Nat) :
@@ -76,13 +77,13 @@ theorem sin_odd (k : Nat) :
   congrArg (fun v => fraction v (factorialPred (evenDegree k).succ)) (trig_even k).left
 
 theorem cos_odd (k : Nat) : IntRatio.Equivalent (Cos (evenDegree k).succ) IntRatio.zero :=
-  Eq.subst (fun v => IntRatio.Equivalent
+  Eq.subst (motive := fun v => IntRatio.Equivalent
     (fraction v (factorialPred (evenDegree k).succ)) IntRatio.zero)
     (congrArg Int.neg (trig_even k).right).symm
     (IntRatio.value_zero _ (Nat.succ_ne_zero _))
 
 theorem sin_even (k : Nat) : IntRatio.Equivalent (Sin (evenDegree k)) IntRatio.zero :=
-  Eq.subst (fun v => IntRatio.Equivalent
+  Eq.subst (motive := fun v => IntRatio.Equivalent
     (fraction v (factorialPred (evenDegree k))) IntRatio.zero) (trig_even k).right.symm
     (IntRatio.value_zero _ (Nat.succ_ne_zero _))
 
@@ -93,8 +94,11 @@ theorem atan_odd (k : Nat) :
 theorem atan_even (k : Nat) : IntRatio.Equivalent (Atan (evenDegree k)) IntRatio.zero :=
   Nat.rec (motive := fun k => IntRatio.Equivalent (Atan (evenDegree k)) IntRatio.zero)
     (IntRatio.equivalent_refl _) (fun k _ =>
-      Eq.subst (fun v => IntRatio.Equivalent (fraction v (evenDegree k).succ) IntRatio.zero)
+      Eq.subst (motive := fun v => IntRatio.Equivalent (fraction v (evenDegree k).succ) IntRatio.zero)
         (trig_even k.succ).right.symm (IntRatio.value_zero _ (Nat.succ_ne_zero _))) k
+
+private theorem mulDenPred_zero_left (n : Nat) : Eq (mulDenPred Nat.zero n) n :=
+  (Nat.add_zero (Nat.one.mul n)).trans (Nat.one_mul n)
 
 private theorem factorial_cancel (a : Int) (n : Nat) :
     IntRatio.Equivalent ((IntRatio.ofNat n.succ).mul (fraction a (factorialPred n.succ)))
@@ -102,20 +106,23 @@ private theorem factorial_cancel (a : Int) (n : Nat) :
   let d := factorialPred n
   have reduced := IntRatio.value_scale a (factorial n) n
   have cancel : IntRatio.Equivalent
-      (fraction (a.mul (Int.ofNat n.succ)) (mulDenPred d n)) (fraction a d) := reduced
+      (fraction (a.mul (Int.ofNat n.succ)) (mulDenPred d n)) (fraction a d) :=
+    Eq.subst (motive := fun k => IntRatio.Equivalent (value (a.mul (denominator n)) k) (fraction a d))
+      (nat_denominator_mul d n) reduced
   have numer := Int.mul_comm (Int.ofNat n.succ) a
-  have denom := Nat.mul_comm (factorial n) n.succ
+  have denom := (nat_denominator_mul d n).symm.trans
+    ((Nat.mul_comm (factorial n) n.succ).trans (factorial_succ n).symm)
   have ratio : IntRatio.Equivalent
       (fraction ((Int.ofNat n.succ).mul a) (mulDenPred d n)) (fraction a d) :=
-    Eq.subst (fun v => IntRatio.Equivalent (fraction v (mulDenPred d n)) (fraction a d))
+    Eq.subst (motive := fun v => IntRatio.Equivalent (fraction v (mulDenPred d n)) (fraction a d))
       numer.symm cancel
   have denRatio : IntRatio.Equivalent
       (fraction ((Int.ofNat n.succ).mul a) (factorialPred n.succ)) (fraction a d) :=
-    Eq.subst (fun v => IntRatio.Equivalent (fraction ((Int.ofNat n.succ).mul a) v) (fraction a d))
-      (congrArg Nat.pred denom) ratio
-  Eq.subst (fun v => IntRatio.Equivalent
+    Eq.subst (motive := fun v => IntRatio.Equivalent (fraction ((Int.ofNat n.succ).mul a) v) (fraction a d))
+      (Nat.succ.inj denom) ratio
+  Eq.subst (motive := fun v => IntRatio.Equivalent
       (fraction ((Int.ofNat n.succ).mul a) v) (fraction a d))
-    (Nat.zero_add (factorialPred n.succ)).symm denRatio
+    (mulDenPred_zero_left (factorialPred n.succ)).symm denRatio
 
 theorem scalarPow_finite {a : IntRatio} (ha : IntRatio.Finite a) (n : Nat) :
     IntRatio.Finite (scalarPow a n) :=
@@ -132,13 +139,14 @@ theorem sin_finite : Finite Sin := fun _ => True.intro
 theorem atan_finite : Finite Atan :=
   fun n => Nat.rec (motive := fun k => IntRatio.Finite (Atan k)) True.intro (fun _ _ => True.intro) n
 
-theorem exp_zero (a : IntRatio) : Eq (Exp a Nat.zero) IntRatio.one := Eq.refl
+theorem exp_zero (a : IntRatio) : Eq (Exp a Nat.zero) IntRatio.one :=
+  Eq.map₂ fraction (Int.mul_one Int.one) (mulDenPred_zero_left Nat.zero)
 
-theorem cos_zero : Eq (Cos Nat.zero) IntRatio.one := Eq.refl
+theorem cos_zero : Eq (Cos Nat.zero) IntRatio.one := Omega.rfl
 
-theorem sin_zero : Eq (Sin Nat.zero) IntRatio.zero := Eq.refl
+theorem sin_zero : Eq (Sin Nat.zero) IntRatio.zero := Omega.rfl
 
-theorem atan_zero : Eq (Atan Nat.zero) IntRatio.zero := Eq.refl
+theorem atan_zero : Eq (Atan Nat.zero) IntRatio.zero := Omega.rfl
 
 /-- The exponential solves `E' = a E` at every coefficient. -/
 theorem deriv_exp (a : IntRatio) : Equivalent (deriv (Exp a)) (smul a (Exp a)) :=
@@ -165,8 +173,8 @@ theorem deriv_atan (n : Nat) :
     IntRatio.Equivalent (deriv Atan n) (IntRatio.ofInt (trigNumerator n).cos) :=
   let a := (trigNumerator n).cos
   let d := Int.ofNat n.succ
-  Eq.subst (fun k =>
+  Eq.subst (motive := fun k =>
     Eq (((d.mul a).mul Int.one)) (a.mul (IntRatio.denominator k)))
-    (Nat.zero_add n).symm ((Int.mul_one (d.mul a)).trans (Int.mul_comm d a))
+    (mulDenPred_zero_left n).symm ((Int.mul_one (d.mul a)).trans (Int.mul_comm d a))
 
 end Omega.JetSeq

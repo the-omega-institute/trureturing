@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.ChebyshevHecke.S5
 public import OmegaMath.Algebra.QuadraticExt.Polynomial
 
@@ -62,6 +64,8 @@ def MatrixMatches (shell : Shell) : Prop :=
 
 set_option maxRecDepth 8000 in
 set_option maxHeartbeats 1000000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem matrices_match (shell : Shell) : MatrixMatches shell :=
   have row2 {p q : Prop} (hp : p) (hq : q) : And (And True p) q :=
     And.intro (And.intro True.intro hp) hq
@@ -74,17 +78,17 @@ theorem matrices_match (shell : Shell) : MatrixMatches shell :=
       And (And (And (And (And True p) q) r) s) t :=
     And.intro (row4 hp hq hr hs) ht
   Shell.rec (motive := MatrixMatches)
-    (And.intro (row2 Eq.refl Eq.refl) (row2 Eq.refl Eq.refl))
-    (And.intro (row3 Eq.refl Eq.refl Eq.refl)
-      (And.intro (row3 Eq.refl Eq.refl Eq.refl) (row3 Eq.refl Eq.refl Eq.refl)))
-    (And.intro (row4 Eq.refl Eq.refl Eq.refl Eq.refl)
-      (And.intro (row4 Eq.refl Eq.refl Eq.refl Eq.refl)
-        (And.intro (row4 Eq.refl Eq.refl Eq.refl Eq.refl) (row4 Eq.refl Eq.refl Eq.refl Eq.refl))))
-    (And.intro (row5 Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-      (And.intro (row5 Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-        (And.intro (row5 Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-          (And.intro (row5 Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl)
-            (row5 Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl))))) shell
+    (And.intro (row2 rfl rfl) (row2 rfl rfl))
+    (And.intro (row3 rfl rfl rfl)
+      (And.intro (row3 rfl rfl rfl) (row3 rfl rfl rfl)))
+    (And.intro (row4 rfl rfl rfl rfl)
+      (And.intro (row4 rfl rfl rfl rfl)
+        (And.intro (row4 rfl rfl rfl rfl) (row4 rfl rfl rfl rfl))))
+    (And.intro (row5 rfl rfl rfl rfl rfl)
+      (And.intro (row5 rfl rfl rfl rfl rfl)
+        (And.intro (row5 rfl rfl rfl rfl rfl)
+          (And.intro (row5 rfl rfl rfl rfl rfl)
+            (row5 rfl rfl rfl rfl rfl))))) shell
 
 /-- The diagonal values in the eigenbasis. The negative branch only
 distinguishes an additional eigenvalue in degree four. -/
@@ -111,13 +115,15 @@ private theorem positiveFraction (num den : Nat) :
     fun h => Int.ofNat_succ_ne_zero num
       ((Int.mul_one a).symm.trans (h.symm.trans (Int.zero_mul d)))
   have nn : Int.NonNeg ((a.mul Int.one).sub (Int.zero.mul d)) :=
-    Eq.subst Int.NonNeg
+    Eq.subst (motive := Int.NonNeg)
       (Eq.map₂ Int.sub (Int.mul_one a) (Int.zero_mul d)).symm
-      (Eq.subst Int.NonNeg (Int.add_zero a).symm (Int.NonNeg.mk num.succ))
+      (Eq.subst (motive := Int.NonNeg) (Int.add_zero a).symm (Int.NonNeg.mk num.succ))
   And.intro nn nz
 
 set_option maxRecDepth 25000 in
 set_option maxHeartbeats 2000000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem margin_positive (shell : Shell) (negativeBranch : Bool) :
     IntRatio.Lt (IntRatio.ofInt Int.zero) (margin shell negativeBranch) :=
   Shell.rec (motive := fun shell => IntRatio.Lt (IntRatio.ofInt Int.zero) (margin shell negativeBranch))
@@ -157,13 +163,15 @@ def DegreeFourLine.negativeBranch : DegreeFourLine → Bool :=
   DegreeFourLine.rec .false .false .true .true .true
 
 set_option maxRecDepth 4000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem degree_four_eigenline (line : DegreeFourLine) :
     Eq (degreeFourAction line.vector)
       (line.vector.scale (scaledEigenvalue .degreeFour line.negativeBranch)) :=
   DegreeFourLine.rec (motive := fun line =>
     Eq (degreeFourAction line.vector)
       (line.vector.scale (scaledEigenvalue .degreeFour line.negativeBranch)))
-    Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl line
+    rfl rfl rfl rfl rfl line
 
 /-- Replace the outer two coordinates by their sum and difference. The three
 interior coordinates are doubled so the two basis changes compose to (2I). -/
@@ -176,6 +184,8 @@ sum and difference coefficients at slots 0 and 4. -/
 def fromEigenCoordinates (v : DegreeFourVector) : DegreeFourVector :=
   ⟨v.at0.add v.at4, v.at1, v.at2, v.at3, v.at0.sub v.at4⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem degree_four_basis_change (v : DegreeFourVector) :
     And (Eq (fromEigenCoordinates (doubledEigenCoordinates v)) (v.scale Int.two))
       (Eq (doubledEigenCoordinates (fromEigenCoordinates v)) (v.scale Int.two)) :=
@@ -185,10 +195,10 @@ theorem degree_four_basis_change (v : DegreeFourVector) :
     (.cons v.at4 (Polynomial.Variables.nil intRing))
   have left : Eq ((v.at0.add v.at4).add (v.at0.sub v.at4)) (Int.two.mul v.at0) :=
     Polynomial.prove intRing intRingLaws vars ((a.add b).add (a.sub b))
-      (Polynomial.Expr.two.mul a) Eq.refl
+      (Polynomial.Expr.two.mul a) rfl
   have right : Eq ((v.at0.add v.at4).sub (v.at0.sub v.at4)) (Int.two.mul v.at4) :=
     Polynomial.prove intRing intRingLaws vars ((a.add b).sub (a.sub b))
-      (Polynomial.Expr.two.mul b) Eq.refl
+      (Polynomial.Expr.two.mul b) rfl
   have h : Eq (fromEigenCoordinates (doubledEigenCoordinates v)) (v.scale Int.two) :=
     (congrArg (fun x => DegreeFourVector.mk x (Int.two.mul v.at1) (Int.two.mul v.at2)
       (Int.two.mul v.at3) ((v.at0.add v.at4).sub (v.at0.sub v.at4))) left).trans
@@ -200,9 +210,10 @@ private theorem value_sub_ofInt (z a : Int) (d : Nat) :
     Eq ((IntRatio.ofInt z).sub (IntRatio.value a d))
       (IntRatio.value ((z.mul (Int.ofNat d)).sub a) d) :=
   Nat.rec (motive := fun d => Eq ((IntRatio.ofInt z).sub (IntRatio.value a d))
-      (IntRatio.value ((z.mul (Int.ofNat d)).sub a) d)) Eq.refl
+      (IntRatio.value ((z.mul (Int.ofNat d)).sub a) d)) rfl
     (fun k _ => Eq.map₂ IntRatio.fraction
-      (congrArg ((z.mul (Int.ofNat k.succ)).add) (Int.mul_one a.neg)) (Nat.one_mul k)) d
+      (congrArg ((z.mul (Int.ofNat k.succ)).add) (Int.mul_one a.neg))
+      ((Nat.add_zero _).trans (Nat.one_mul k))) d
 
 theorem margin_eq_difference (shell : Shell) (negativeBranch : Bool) :
     Eq (margin shell negativeBranch)

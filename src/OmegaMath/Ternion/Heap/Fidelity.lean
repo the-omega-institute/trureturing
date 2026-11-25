@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
+import all OmegaInit.Data.Int.Basic
 public import OmegaMath.Ternion.Heap.Core
 public import OmegaMath.Data.IntRatio
 
@@ -32,12 +34,12 @@ theorem kappa_refl (a : Quaternion) (ha : a.Nonzero) :
   let n := a.normSq
   have h : Eq (Int.square (a.dot a)) (Int.ofNat (n.mul n)) :=
     congrArg Int.square a.normSq_cast.symm
-  Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t (n.mul n)) (IntRatio.ofInt Int.one))
+  Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t (n.mul n)) (IntRatio.ofInt Int.one))
     h.symm (IntRatio.value_self (n.mul n)
       (fun e => (Nat.mul_eq_zero.mp e).elim (normSq_ne_zero ha) (normSq_ne_zero ha)))
 
 theorem kappa_symm (a b : Quaternion) : IntRatio.Equivalent (kappa a b) (kappa b a) :=
-  Eq.subst (IntRatio.Equivalent (kappa a b))
+  Eq.subst (motive := IntRatio.Equivalent (kappa a b))
     (Eq.map₂ IntRatio.value (congrArg Int.square (dot_comm a b)) (Nat.mul_comm a.normSq b.normSq))
     (IntRatio.equivalent_refl (kappa a b))
 
@@ -45,7 +47,7 @@ private theorem kappa_common_factor (p q a b : Quaternion) (d : Nat) (hd : Not (
     (hNum : Eq (Int.square (p.dot q)) ((Int.square (a.dot b)).mul (Int.ofNat d)))
     (hDen : Eq (p.normSq.mul q.normSq) ((a.normSq.mul b.normSq).mul d)) :
     IntRatio.Equivalent (kappa p q) (kappa a b) :=
-  Eq.subst (fun t => IntRatio.Equivalent t (kappa a b)) (Eq.map₂ IntRatio.value hNum hDen).symm
+  Eq.subst (motive := fun t => IntRatio.Equivalent t (kappa a b)) (Eq.map₂ IntRatio.value hNum hDen).symm
     (IntRatio.value_scale_of_ne_zero (Int.square (a.dot b)) (a.normSq.mul b.normSq) d hd)
 
 theorem nat_mul_ne_zero {a b : Nat} (ha : Not (Eq a Nat.zero)) (hb : Not (Eq b Nat.zero)) :
@@ -77,7 +79,7 @@ theorem kappa_congr {a b c d : Quaternion} (h : RayEquiv a b) (g : RayEquiv c d)
   h.right.right.elim (fun i witness => witness.elim (fun j left =>
     g.right.right.elim (fun k witness => witness.elim (fun l right =>
       (kappa_scale i k a c left.left right.left).symm.trans
-        (Eq.subst (fun t => IntRatio.Equivalent t (kappa b d))
+        (Eq.subst (motive := fun t => IntRatio.Equivalent t (kappa b d))
           (Eq.map₂ kappa left.right.right right.right.right).symm
           (kappa_scale j l b d left.right.left right.right.left))))))
 
@@ -88,6 +90,8 @@ def minorSquares (a b : Quaternion) : Int :=
     (((m a.w a.z b.w b.z).add (m a.x a.y b.x b.y)).add
       ((m a.x a.z b.x b.z).add (m a.y a.z b.y b.z)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem lagrange_identity (a b : Quaternion) :
     Eq ((Int.ofNat (a.normSq.mul b.normSq)).sub (Int.square (a.dot b))) (minorSquares a b) :=
   let start := Nat.zero
@@ -111,33 +115,27 @@ theorem lagrange_identity (a b : Quaternion) :
     (((m w z r u).add (m x y s t)).add ((m x z s u).add (m y z t u)))
   (congrArg (fun k : Int => k.sub (Int.square (a.dot b)))
     (Eq.map₂ Int.mul a.normSq_cast b.normSq_cast)).trans
-      (((N.mul M).sub dot.sq).sound minors values Eq.refl)
-
-private theorem nonneg_add {a b : Int} (ha : a.NonNeg) (hb : b.NonNeg) : (a.add b).NonNeg :=
-  (Int.rec (motive := fun a => ∀ b : Int, a.NonNeg → b.NonNeg → (a.add b).NonNeg)
-    (fun n b => Int.rec (motive := fun b => (Int.ofNat n).NonNeg → b.NonNeg →
-      ((Int.ofNat n).add b).NonNeg) (fun _ _ _ => True.intro) (fun _ _ h => False.elim h) b)
-    (fun _ _ h _ => False.elim h) a) b ha hb
+      (((N.mul M).sub dot.sq).sound minors values rfl)
 
 theorem minorSquares_nonneg (a b : Quaternion) : (minorSquares a b).NonNeg :=
-  nonneg_add (nonneg_add (Int.square_nonneg _) (Int.square_nonneg _))
-    (nonneg_add (nonneg_add (Int.square_nonneg _) (Int.square_nonneg _))
-      (nonneg_add (Int.square_nonneg _) (Int.square_nonneg _)))
+  Int.nonneg_add (Int.nonneg_add (Int.square_nonneg _) (Int.square_nonneg _))
+    (Int.nonneg_add (Int.nonneg_add (Int.square_nonneg _) (Int.square_nonneg _))
+      (Int.nonneg_add (Int.square_nonneg _) (Int.square_nonneg _)))
 
 private theorem value_le_one (a : Int) (n : Nat) (hn : Not (Eq n Nat.zero))
     (h : a.le (Int.ofNat n)) :
     IntRatio.Le (IntRatio.value a n) (IntRatio.ofInt Int.one) :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → a.le (Int.ofNat n) →
     IntRatio.Le (IntRatio.value a n) (IntRatio.ofInt Int.one))
-    (fun h _ => False.elim (h Eq.refl))
-    (fun n _ _ h => Eq.subst (fun b => (a.mul Int.one).le b) (Int.one_mul (Int.ofNat n.succ)).symm
-      (Eq.subst (fun k : Int => k.le (Int.ofNat n.succ)) (Int.mul_one a).symm h)) n) hn h
+    (fun h _ => False.elim (h rfl))
+    (fun n _ _ h => Eq.subst (motive := fun b => (a.mul Int.one).le b) (Int.one_mul (Int.ofNat n.succ)).symm
+      (Eq.subst (motive := fun k : Int => k.le (Int.ofNat n.succ)) (Int.mul_one a).symm h)) n) hn h
 
 theorem kappa_le_one (a b : Quaternion) (ha : a.Nonzero) (hb : b.Nonzero) :
     IntRatio.Le (kappa a b) (IntRatio.ofInt Int.one) :=
   value_le_one (Int.square (a.dot b)) (a.normSq.mul b.normSq)
     (nat_mul_ne_zero (normSq_ne_zero ha) (normSq_ne_zero hb))
-    (Eq.subst Int.NonNeg (lagrange_identity a b).symm (minorSquares_nonneg a b))
+    (Eq.subst (motive := Int.NonNeg) (lagrange_identity a b).symm (minorSquares_nonneg a b))
 
 theorem kappa_mul_right (p a b : Quaternion) (hp : p.Nonzero) :
     IntRatio.Equivalent (kappa (a.mul p) (b.mul p)) (kappa a b) :=
@@ -160,7 +158,7 @@ theorem kappa_heap_invariant (a b u v : Quaternion) (hu : u.Nonzero) (hv : v.Non
     IntRatio.Equivalent (kappa (triad a u v) (triad b u v)) (kappa a b) :=
   have h : u.conj.Nonzero := nonzero_of_normSq_ne_zero
     (fun e => normSq_ne_zero hu ((normSq_conj u).symm.trans e))
-  Eq.subst (fun k => IntRatio.Equivalent k (kappa a b))
+  Eq.subst (motive := fun k => IntRatio.Equivalent k (kappa a b))
     (Eq.map₂ kappa (mul_assoc a u.conj v) (mul_assoc b u.conj v)).symm
     (kappa_mul_right (u.conj.mul v) a b (nonzero_mul h hv))
 

@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.PiFreeHaar
 
 /-!
@@ -50,7 +51,7 @@ theorem Same.trans {p q r : Poly} (h : Same p q) (g : Same q r) : Same p r :=
 theorem Same.symm {p q : Poly} (h : Same p q) : Same q p :=
   fun k => (h k).symm
 
-theorem same_refl (p : Poly) : Same p p := fun _ => Eq.refl
+theorem same_refl (p : Poly) : Same p p := fun _ => rfl
 
 theorem cons_same {a b : Int} {p q : Poly} (h : Eq a b) (g : Same p q) :
     Same (.cons a p) (.cons b q) :=
@@ -64,7 +65,7 @@ theorem get_add (p q : Poly) (k : Nat) : Eq ((p.add q).get k) ((p.get k).add (q.
     (fun a p ih q => Poly.rec (motive := fun q => ∀ k, law (.cons a p) q k)
       (fun k => (Int.add_zero ((Poly.cons a p).get k)).symm)
       (fun b q _ k => Nat.rec (motive := law (.cons a p) (.cons b q))
-        Eq.refl (fun k _ => ih q k) k) q) p) q k
+        rfl (fun k _ => ih q k) k) q) p) q k
 
 theorem get_scale (a : Int) (p : Poly) (k : Nat) :
     Eq ((scale a p).get k) (a.mul (p.get k)) :=
@@ -72,7 +73,7 @@ theorem get_scale (a : Int) (p : Poly) (k : Nat) :
   (Poly.rec (motive := fun p => ∀ k, law p k)
     (fun _ => (Int.mul_zero a).symm)
     (fun b p ih k => Nat.rec (motive := law (.cons b p))
-      Eq.refl (fun k _ => ih k) k) p) k
+      rfl (fun k _ => ih k) k) p) k
 
 theorem get_neg (p : Poly) (k : Nat) : Eq (p.neg.get k) (p.get k).neg :=
   (get_scale Int.one.neg p k).trans
@@ -91,7 +92,7 @@ theorem scale_congr (a : Int) {p q : Poly} (h : Same p q) :
   fun k => (get_scale a p k).trans ((congrArg a.mul (h k)).trans (get_scale a q k).symm)
 
 theorem shift_congr {p q : Poly} (h : Same p q) : Same p.shift q.shift :=
-  cons_same Eq.refl h
+  cons_same rfl h
 
 theorem sub_congr {p q r s : Poly} (h : Same p q) (g : Same r s) :
     Same (p.sub r) (q.sub s) := add_congr h (scale_congr Int.one.neg g)
@@ -140,10 +141,10 @@ theorem scale_scale (a b : Int) (p : Poly) :
 
 theorem shift_nil : Same (shift .nil) .nil :=
   fun k => Nat.rec (motive := fun k => Eq ((shift .nil).get k) Int.zero)
-    Eq.refl (fun _ _ => Eq.refl) k
+    rfl (fun _ _ => rfl) k
 
 theorem shift_add (p q : Poly) : Same (shift (p.add q)) ((shift p).add (shift q)) :=
-  cons_same Eq.refl (same_refl _)
+  cons_same (Int.add_zero Int.zero).symm (same_refl _)
 
 theorem scale_shift (a : Int) (p : Poly) : Same (scale a (shift p)) (shift (scale a p)) :=
   cons_same (Int.mul_zero a) (same_refl _)
@@ -204,23 +205,27 @@ theorem shift_mul_right (p q : Poly) : Same (p.mul q.shift) (p.mul q).shift :=
 def ratios (p : Poly) : CoefficientList :=
   Poly.rec .nil (fun a _ q => .cons (IntRatio.ofInt a) q) p
 
+private theorem integral_denominator : Eq Nat.zero (IntRatio.mulDenPred .zero .zero) :=
+  ((Nat.add_zero _).trans (Nat.mul_zero Nat.one)).symm
+
 theorem ratios_add (p q : Poly) : Eq (ratios (p.add q)) ((ratios p).add (ratios q)) :=
   (Poly.rec (motive := fun p => ∀ q, Eq (ratios (p.add q)) ((ratios p).add (ratios q)))
-    (fun _ => Eq.refl)
+    (fun _ => rfl)
     (fun a p ih q => Poly.rec
       (motive := fun q => Eq (ratios ((cons a p).add q)) ((ratios (cons a p)).add (ratios q)))
-      Eq.refl
+      rfl
       (fun b q _ => Eq.map₂ CoefficientList.cons
-        (congrArg IntRatio.ofInt (Eq.map₂ Int.add (Int.mul_one a).symm (Int.mul_one b).symm))
+        (Eq.map₂ IntRatio.fraction (Eq.map₂ Int.add (Int.mul_one a).symm (Int.mul_one b).symm)
+          integral_denominator)
         (ih q)) q) p) q
 
 theorem ratios_scale (a : Int) (p : Poly) :
     Eq (ratios (scale a p)) ((ratios p).scale (IntRatio.ofInt a)) :=
   Poly.rec (motive := fun p => Eq (ratios (scale a p)) ((ratios p).scale (IntRatio.ofInt a)))
-    Eq.refl (fun _ _ ih => congrArg (CoefficientList.cons _) ih) p
+    rfl (fun b _ ih => Eq.map₂ CoefficientList.cons (congrArg (IntRatio.fraction (a.mul b)) integral_denominator) ih) p
 
 theorem ratios_mul (p q : Poly) : Eq (ratios (p.mul q)) ((ratios p).mul (ratios q)) :=
-  Poly.rec (motive := fun p => Eq (ratios (p.mul q)) ((ratios p).mul (ratios q))) Eq.refl
+  Poly.rec (motive := fun p => Eq (ratios (p.mul q)) ((ratios p).mul (ratios q))) rfl
     (fun a p ih => (ratios_add (scale a q) (shift (p.mul q))).trans
       (Eq.map₂ CoefficientList.add (ratios_scale a q) (congrArg (CoefficientList.cons _) ih))) p
 
@@ -234,16 +239,16 @@ def RatioSame (p q : CoefficientList) : Prop :=
 theorem ratios_coeff (p : Poly) (k : Nat) :
     Eq (ratioCoeff (ratios p) k) (IntRatio.ofInt (p.get k)) :=
   (Poly.rec (motive := fun p => ∀ k, Eq (ratioCoeff (ratios p) k) (IntRatio.ofInt (p.get k)))
-    (fun _ => Eq.refl)
+    (fun _ => rfl)
     (fun a p ih k => Nat.rec
       (motive := fun k => Eq (ratioCoeff (ratios (.cons a p)) k)
         (IntRatio.ofInt ((Poly.cons a p).get k)))
-      Eq.refl (fun k _ => ih k) k) p) k
+      rfl (fun k _ => ih k) k) p) k
 
 theorem ratio_same {p q : Poly} (h : Same p q) : RatioSame (ratios p) (ratios q) :=
-  fun k => Eq.subst (fun a => IntRatio.Equivalent a (ratioCoeff (ratios q) k))
+  fun k => Eq.subst (motive := fun a => IntRatio.Equivalent a (ratioCoeff (ratios q) k))
     (ratios_coeff p k).symm (Eq.subst
-      (fun b => IntRatio.Equivalent (IntRatio.ofInt (p.get k)) b) (ratios_coeff q k).symm
+      (motive := fun b => IntRatio.Equivalent (IntRatio.ofInt (p.get k)) b) (ratios_coeff q k).symm
       (IntRatio.ofInt_congr (h k)))
 
 end Poly

@@ -35,7 +35,7 @@ theorem complement_encoding {A : Type*}
         ((Omega.congrArg (fun operation => operation group.zero) equal).trans (atZero total)))))
 
 private theorem toOmegaEq {A : Sort*} {x y : A} (h : x = y) : Omega.Eq x y :=
-  h ▸ Omega.Eq.refl
+  h ▸ Omega.rfl
 
 private theorem toStdEq {A : Sort*} {x y : A} (h : Omega.Eq x y) : x = y :=
   Omega.Eq.rec rfl h
