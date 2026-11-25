@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.SimplicialPersistence;
 internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Topology/memoliwanwang2022persistentlaplacians");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Weighted persistent Hodge representatives for actual finite simplicial homology.",
         H("The weighted persistent Hodge theorem"),
@@ -162,6 +164,6 @@ internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(DescribeId.Create(id),
         DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromLiterature("memoliwanwang2022persistentlaplacians"),
+        AssessedProvenance.FromLiterature(Source),
         Blocks(Paragraph(Text(prose))), role);
 }
