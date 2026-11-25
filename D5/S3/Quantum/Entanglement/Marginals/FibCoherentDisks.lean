@@ -94,7 +94,7 @@ private theorem diskPoint_iff (p q : ℂ) (r s : ℝ) :
   constructor <;> nlinarith only [hsum, heq, hbalance, congrArg (fun a => t*a) heq]
 
 
-def block (a d : ℝ) (x : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+private def block (a d : ℝ) (x : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![↑a, x; conj x, ↑d]
 
 private def scalarBlock (a : ℝ) : Matrix Unit Unit ℂ := fun _ _ => a
@@ -111,7 +111,7 @@ private theorem scalar_psd (a : ℝ) : (scalarBlock a).PosSemidef ↔ 0 ≤ a :=
   rw [hm, posSemidef_diagonal_iff]
   simp [Complex.nonneg_iff]
 
-theorem block_criterion (a d : ℝ) (x : ℂ) :
+private theorem block_criterion (a d : ℝ) (x : ℂ) :
     (block a d x).PosSemidef ↔ 0 ≤ a ∧ (a = 0 → x = 0) ∧ 0 ≤ d - normSq x / a := by
   rw [← Matrix.posSemidef_submatrix_equiv split]
   have hm : (block a d x).submatrix split split =
@@ -127,7 +127,7 @@ theorem block_criterion (a d : ℝ) (x : ℂ) :
   rw [hm, block_psd, hc, scalar_psd]
   simp [funext_iff]
 
-theorem completing_square (a e : ℝ) (c k z : ℂ) :
+private theorem completing_square (a e : ℝ) (c k z : ℂ) :
     let h := a + normSq k
     let p := k * c / (h : ℂ)
     h ≠ 0 →
@@ -160,7 +160,7 @@ theorem completing_square (a e : ℝ) (c k z : ℂ) :
   linarith only [hcross]
 
 
-noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
+private noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
   let h := a + normSq k
   let p := k * c / (h : ℂ)
   if 0 < a then

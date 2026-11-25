@@ -68,7 +68,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have qL (i j : Bool) : RationalEntry ((0 : Matrix Bool Bool ℂ) i j) := q0
   obtain ⟨_, _, _, _, _, _, hrank, _⟩ := h 1 0 0 0 0 0 zero_lt_one qL qL q0 q0 q0 occupiedMiddle
   change 4 ≤ 3 at hrank
-  omega
+  exact (by decide : ¬ (4 : ℕ) ≤ 3) hrank
 
 def family : Registration arena (type_of% @quadratic_rank_le_three) where
   actual := actual
@@ -96,7 +96,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ ρ => ρ.rank) (fun anchor => nomatch anchor))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

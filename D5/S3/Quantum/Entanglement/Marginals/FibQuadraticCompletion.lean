@@ -16,7 +16,6 @@ open D5.S3.Quantum.Entanglement.Marginals.FibCoherentExtension
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Entanglement.Marginals.FibCoherentRank
 open D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks
-open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 set_option autoImplicit false
 namespace D5.S3.Quantum.Entanglement.Marginals.FibQuadraticCompletion
@@ -24,66 +23,45 @@ namespace D5.S3.Quantum.Entanglement.Marginals.FibQuadraticCompletion
 open FibRationalPureExtension
 open FibMarginalExtension (Word)
 
-private theorem scaled_edge_eq_block (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
-    (hb : 0 < b) (hL : L.IsHermitian) :
-    ((b : ℂ) • (L - partialTraceRight (correction b (middleRow u v w z)))).submatrix
-      finTwoEquiv finTwoEquiv =
-      block (b*(L false false).re - normSq u - normSq w)
-        (b*(L true true).re - normSq v - normSq z)
-        ((b : ℂ)*L false true - conj u * v - conj w * z) := by
-  have hdiag (i : Bool) : (↑(L i i).re : ℂ) = L i i := by
-    apply Complex.ext
-    · simp
-    · have hh := congrArg Complex.im (hL.apply i i)
-      simp at hh ⊢
-      linarith
-  have hc : conj (L false true) = L true false := hL.apply _ _
-  ext i j
-  have hb0 : (b : ℂ) ≠ 0 := by exact_mod_cast hb.ne'
-  fin_cases i <;> fin_cases j <;>
-    simp [block, finTwoEquiv, Matrix.vecMulVec_apply, correction, partialTraceRight,
-      middleRow, Complex.ofReal_mul, Complex.ofReal_inv, hdiag, hc,
-      ← Complex.mul_conj, Complex.ofReal_sub] <;>
-    field_simp <;> ring
-
-private theorem block_singular_at_boundary (a e : ℝ) (c k z : ℂ)
-    (h : (block a (e - normSq z) (c - conj k * z)).PosSemidef)
-    (hboundary : normSq (z - (disk a e c k).1) = (disk a e c k).2) :
-    (block a (e - normSq z) (c - conj k * z)).det = 0 := by
-  obtain ⟨ha, hcross, _⟩ := (block_criterion _ _ _).mp h
-  by_cases hzero : a = 0
-  · simp [Matrix.det_fin_two, block, hzero, hcross hzero]
-  have hap : 0 < a := lt_of_le_of_ne ha (Ne.symm hzero)
-  let hscale := a + normSq k
-  let p := k * c / (hscale : ℂ)
-  have hp : 0 < hscale := add_pos_of_pos_of_nonneg hap (normSq_nonneg _)
-  simp only [disk, ite_eq_left hap] at hboundary
-  change normSq (z - p) = (a * e - normSq c + hscale * normSq p) / hscale at hboundary
-  have he := completing_square a e c k z hp.ne'
-  change a * (e - normSq z) - normSq (c - conj k * z) =
-    a * e - normSq c + hscale * normSq p - hscale * normSq (z - p) at he
-  have hzero' : a * (e - normSq z) - normSq (c - conj k * z) = 0 := by
-    rw [he, hboundary, mul_div_cancel₀ _ hp.ne', sub_self]
-  rw [Matrix.det_fin_two]
-  change (a : ℂ) * (↑(e - normSq z) : ℂ) -
-    (c - conj k * z) * conj (c - conj k * z) = 0
-  rw [Complex.mul_conj, ← Complex.ofReal_mul, ← Complex.ofReal_sub, hzero',
-    Complex.ofReal_zero]
-
 private theorem edge_singular_at_boundary (b : ℝ) (L : Matrix Bool Bool ℂ) (u v w z : ℂ)
     (hb : 0 < b) (hL : L.IsHermitian)
     (hz : normSq (z - (edgeDisk b L u v w).1) = (edgeDisk b L u v w).2) :
     (L - partialTraceRight (correction b (middleRow u v w z))).det = 0 := by
-  let G := L - partialTraceRight (correction b (middleRow u v w z))
-  have hp := (edgeDisk_spec b L u v w z hb hL).mpr hz.le
-  have hb' : (0 : ℂ) ≤ (b : ℂ) := by exact_mod_cast hb.le
-  have hscaled := (hp.smul hb').submatrix finTwoEquiv
-  rw [scaled_edge_eq_block b L u v w z hb hL] at hscaled
-  have hd := block_singular_at_boundary _ _ _ _ _ hscaled hz
-  rw [← scaled_edge_eq_block b L u v w z hb hL, Matrix.det_submatrix_equiv_self,
-    Matrix.det_smul] at hd
-  have hb0 : (b : ℂ) ≠ 0 := by exact_mod_cast hb.ne'
-  exact (mul_eq_zero.mp hd).resolve_left (pow_ne_zero _ hb0)
+  let F := fun y => L - partialTraceRight (correction b (middleRow u v w y))
+  let p := (edgeDisk b L u v w).1
+  let r := (edgeDisk b L u v w).2
+  change normSq (z - p) = r at hz
+  have hF : Continuous F := (residual_continuous b L 0 u v w).1
+  have hH (y : ℂ) : (F y).IsHermitian :=
+    (residuals_hermitian (z := y) hb hL Matrix.isHermitian_zero).1
+  have hp : (F z).PosSemidef := (edgeDisk_spec b L u v w z hb hL).mpr hz.le
+  change (F z).det = 0
+  by_contra hd
+  obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.mp (locally_feasible hF hH hp hd)
+  let s := if z.re < p.re then -(ε / 2) else ε / 2
+  let y := z + (s : ℂ)
+  have habs : |s| = ε / 2 := by
+    by_cases h : z.re < p.re <;> simp [s, h, abs_of_nonneg (show 0 ≤ ε / 2 by positivity)]
+  have hy : y ∈ Metric.ball z ε := by
+    change dist y z < ε
+    rw [dist_eq_norm, show y - z = (s : ℂ) by dsimp [y]; ring,
+      Complex.norm_real, Real.norm_eq_abs, habs]
+    linarith
+  have hin : normSq (y - p) ≤ r := (edgeDisk_spec b L u v w y hb hL).mp (hball hy)
+  have hn : s ≠ 0 := by
+    intro h
+    rw [h, abs_zero] at habs
+    linarith
+  have hsq : 0 < s * s := mul_self_pos.mpr hn
+  have hs : 0 ≤ (z.re - p.re) * s := by
+    by_cases h : z.re < p.re
+    · rw [show s = -(ε / 2) by simp [s, h]]
+      exact mul_nonneg_of_nonpos_of_nonpos (sub_nonpos.mpr h.le) (by linarith)
+    · rw [show s = ε / 2 by simp [s, h]]
+      exact mul_nonneg (sub_nonneg.mpr (le_of_not_gt h)) (by linarith)
+  rw [Complex.normSq_apply, Complex.sub_re, Complex.sub_im] at hz hin
+  simp only [y, Complex.add_re, Complex.add_im, ofReal_re, ofReal_im, add_zero] at hin
+  nlinarith only [hz, hin, hsq, hs]
 
 private theorem disk_slice_right_endpoint (z p : ℂ) (r : ℝ)
     (hz : Complex.normSq (z - p) ≤ r) :
@@ -178,43 +156,6 @@ private theorem rank_kronecker_of_outer_left (x y : Bool → ℂ) (R : Matrix Bo
   exact (Matrix.rank_mul_le_left _ _).trans (by
     simpa using Matrix.rank_le_card_width (A ⊗ₖ (1 : Matrix Bool Bool ℂ)))
 
-private theorem qubit_rank_le_one_of_singular {A : Matrix Bool Bool ℂ}
-    (hA : A.IsHermitian) (hd : A.det = 0) : A.rank ≤ 1 := by
-  rw [hA.rank_eq_card_non_zero_eigs]
-  have hprod := hA.det_eq_prod_eigenvalues
-  rw [hd, Fintype.prod_bool] at hprod
-  have hz : hA.eigenvalues false = 0 ∨ hA.eigenvalues true = 0 := by
-    rcases mul_eq_zero.mp hprod.symm with hf | ht
-    · right
-      change RCLike.ofReal (K := ℂ) (hA.eigenvalues true) = 0 at hf
-      exact (RCLike.ofReal_eq_zero.mp hf)
-    · left
-      change RCLike.ofReal (K := ℂ) (hA.eigenvalues false) = 0 at ht
-      exact (RCLike.ofReal_eq_zero.mp ht)
-  apply Fintype.card_le_one_iff_subsingleton.mpr
-  constructor
-  rintro ⟨i, hi⟩ ⟨j, hj⟩
-  apply Subtype.ext
-  rcases hz with hf | ht
-  · have hi' : i = true := by
-      cases i
-      · exact (hi hf).elim
-      · rfl
-    have hj' : j = true := by
-      cases j
-      · exact (hj hf).elim
-      · rfl
-    exact hi'.trans hj'.symm
-  · have hi' : i = false := by
-      cases i
-      · rfl
-      · exact (hi ht).elim
-    have hj' : j = false := by
-      cases j
-      · rfl
-      · exact (hj ht).elim
-    exact hi'.trans hj'.symm
-
 private theorem disk_endpoint_field (z p : ℂ) (r : ℝ)
     (qz : RationalEntry z) (qp : RationalEntry p) (qr : RationalReal r)
     (hz : normSq (z - p) ≤ r) :
@@ -265,8 +206,7 @@ private theorem rank_singular_product (X Y : Matrix Bool Bool ℂ) (hX : X.PosSe
     have htW : W.trace = 1 := by
       rw [show W = X.trace⁻¹ • X from rfl, Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hz]
     have hdW : W.det = 0 := by simp [W, hx]
-    obtain ⟨x, h⟩ := rankOneDensity_of_rank_le_one hW htW
-      (qubit_rank_le_one_of_singular hW.isHermitian hdW)
+    obtain ⟨x, _, h⟩ := pure_of_singular W hW hdW htW
     change (W ⊗ₖ Y).rank ≤ 2
     rw [h]
     exact rank_kronecker_of_outer_left _ _ _
@@ -276,8 +216,7 @@ private theorem rank_singular_product (X Y : Matrix Bool Bool ℂ) (hX : X.PosSe
       rw [show W = X.trace⁻¹ • Y from rfl, Matrix.trace_smul, smul_eq_mul, ← ht,
         inv_mul_cancel₀ hz]
     have hdW : W.det = 0 := by simp [W, hy]
-    obtain ⟨x, h⟩ := rankOneDensity_of_rank_le_one hW htW
-      (qubit_rank_le_one_of_singular hW.isHermitian hdW)
+    obtain ⟨x, _, h⟩ := pure_of_singular W hW hdW htW
     have hs : (X.trace⁻¹ • X) ⊗ₖ Y =
         (W ⊗ₖ X).submatrix (Equiv.prodComm Bool Bool) (Equiv.prodComm Bool Bool) := by
       ext i j
