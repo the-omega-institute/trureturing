@@ -14,6 +14,17 @@ triage: anchor
 
 # The four-square representation of a binary quadratic form
 
+## Verified locator
+
+DOI: 10.4064/aa-19-4-321-325
+
+URL: https://doi.org/10.4064/aa-19-4-321-325
+
+The criterion appears on p. 321, §1, in the opening paragraph of the article.
+[Digitized issue scan](https://matwbn.icm.edu.pl/ksiazki/aa/aa19/aa1942.pdf)
+
+## Rational Gram realization
+
 Section 1, p. 321, attributes to Mordell the criterion for writing a positive
 definite primitive integral form $pX^2+2rXY+qY^2$ as four squares of integral
 linear forms. Its determinant $pq-r^2$ must avoid $4^k(8m+7)$, which is
