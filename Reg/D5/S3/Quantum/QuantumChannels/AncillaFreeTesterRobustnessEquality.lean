@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
 import Reg.Support.DependentFamily
+import Reg.Support.UniverseSingleReadout
 
 /-! Source-bound audit of the equality between tester and canonical POVM robustness. -/
 
@@ -215,3 +216,101 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.RankPosOfTraceOne
+
+namespace Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.PartialTraceSum
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open _root_.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality (partialTraceRight_sum)
+open LeanInformationAudit
+open scoped BigOperators
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+universe u v w
+
+private abbrev Params := Σ y : Type u, Σ x : Type v, Fintype x
+
+private abbrev traceSignature : Signature :=
+  Reg.Support.UniverseSingleReadout.signature Params.{u,v}
+    (fun p => Matrix (p.1 × p.2.1) (p.1 × p.2.1) ℂ)
+    (fun p => Matrix p.1 p.1 ℂ)
+
+private def traceActual : Realization traceSignature.{u,v} :=
+  realize traceSignature (fun _ p => @partialTraceRight p.1 p.2.1 p.2.2)
+    (fun e => nomatch e)
+
+private def traceRejected : Realization traceSignature.{u,v} :=
+  realize traceSignature (fun _ p A => @partialTraceRight p.1 p.2.1 p.2.2 A + Matrix.of (fun _ _ => (1 : ℂ)))
+    (fun e => nomatch e)
+
+private abbrev traceArena : Arena where
+  signature := traceSignature.{u,v}
+  Law r := ∀ {y : Type u} {x : Type v} {j : Type w} [Fintype x] [Fintype j]
+      (t : j → Matrix (y × x) (y × x) ℂ),
+    r.readout () ⟨y, x, inferInstance⟩ (∑ a, t a) = ∑ a, partialTraceRight (t a)
+
+private theorem traceRejectedLaw : ¬ traceArena.{u,v,w}.Law traceRejected := by
+  intro h
+  let t : ULift.{w} Unit → Matrix (ULift.{u} Unit × ULift.{v} Unit)
+      (ULift.{u} Unit × ULift.{v} Unit) ℂ := fun _ => 0
+  have h' := congrFun (congrFun (h t) ⟨()⟩) ⟨()⟩
+  let q : ULift.{u} Unit := ⟨()⟩
+  let ones : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ := Matrix.of (fun _ _ => 1)
+  change (partialTraceRight (∑ i, t i) + ones : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)
+    q q = (∑ i, partialTraceRight (t i)) q q at h'
+  norm_num [t, ones, Matrix.add_apply, Matrix.of_apply, partialTraceRight] at h'
+
+private theorem traceDependence : ObservationalDependence traceSignature.{u,v} traceActual := by
+  intro _
+  refine ⟨⟨ULift.{u} Unit, ULift.{v} Unit, inferInstance⟩, 0, fun _ _ => 1, ?_⟩
+  intro h
+  have h' := congrFun (congrFun h ⟨()⟩) ⟨()⟩
+  norm_num [traceActual, realize, partialTraceRight] at h'
+
+def traceSource :
+    Registration traceArena.{u,v,w} (type_of% @partialTraceRight_sum.{u,v,w}) where
+  actual := traceActual
+  bridge := Iff.rfl
+  variation := ⟨@partialTraceRight_sum, traceRejected, traceRejectedLaw⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ traceRejectedLaw
+  dependence := traceDependence
+
+def traceRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@partialTraceRight_sum.{u,v,w}) (Realization traceSignature.{u,v}) Unit Unit := {
+  unitName := .str ``traceSource "unit"
+  realizationName := ``traceSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨traceArena.{u,v,w}⟩
+  objectArena := .source ⟨traceArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source traceArena.{u,v,w} ⟨traceSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize traceSignature (fun _ p => @partialTraceRight p.1 p.2.1 p.2.2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end
+end Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.PartialTraceSum

@@ -5,12 +5,17 @@
    anchors: []
    digest: The golden trace is invariant under Galois conjugation. -/
 
-import D5.S0.Carrier.Conj
+module
+prelude
+public import OmegaMath.Algebra.QuadraticExt.Basic
 
 namespace D5.S0.Carrier
 
-@[simp] theorem trace_conj (x : GoldenInt) : trace (conj x) = trace x := by
-  simp [trace]
-  ring
+open Omega Omega.QuadPoly
+
+/-- Conjugation preserves the integral trace of a golden integer. -/
+public theorem trace_conj (x : IntQuadPoly Int.one Int.one) :
+    Eq (trace intRing (conj intRing x)) (trace intRing x) :=
+  QuadPoly.trace_conj intRingLaws x
 
 end D5.S0.Carrier

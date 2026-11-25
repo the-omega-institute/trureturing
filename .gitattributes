@@ -1,0 +1,2 @@
+# Treat a tools pin as one lock generation. Competing edits must conflict.
+/Meta/tools-release.json -merge

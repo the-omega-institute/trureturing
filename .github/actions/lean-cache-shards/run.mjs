@@ -1,7 +1,8 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { latestSeed, migrateSeed, selectSeed } from './legacy-seed.mjs';
 import { createReadStream } from 'node:fs';
-import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { performance } from 'node:perf_hooks';
 import { dirname, join, resolve } from 'node:path';
@@ -44,20 +45,39 @@ function python(command, extra = []) {
 }
 
 async function loadCacheClient() {
-  const install = resolve(stage, 'client');
-  await mkdir(install, { recursive: true });
-  for (const file of ['package.json', 'package-lock.json']) {
-    await copyFile(join(actionPath, file), join(install, file));
+  const manifests = ['package.json', 'package-lock.json'];
+  const hash = createHash('sha256').update([process.version, process.platform, process.arch].join('/'));
+  for (const manifest of manifests) hash.update('\0').update(await readFile(join(actionPath, manifest)));
+  const parent = join(process.env.RUNNER_TEMP, 'lean-actions-sdk');
+  const install = join(parent, hash.digest('hex'));
+  await mkdir(parent, { recursive: true });
+  try {
+    await stat(install);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    const temporary = await mkdtemp(join(parent, 'install-'));
+    try {
+      for (const file of manifests) await copyFile(join(actionPath, file), join(temporary, file));
+      execFileSync('npm', ['ci', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], {
+        cwd: temporary, env: { PATH: process.env.PATH, HOME: process.env.HOME }, stdio: 'inherit', timeout: 120000,
+      });
+      // A completed installation becomes visible in a single rename. Other
+      // processes can only observe an intact tree from the same package lock.
+      try {
+        await rename(temporary, install);
+      } catch (error) {
+        if (!['EEXIST', 'ENOTEMPTY'].includes(error.code)) throw error;
+      }
+    } finally {
+      await rm(temporary, { recursive: true, force: true });
+    }
   }
-  const env = { PATH: process.env.PATH, HOME: process.env.HOME };
-  execFileSync('npm', ['ci', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], {
-    cwd: install, env, stdio: 'inherit', timeout: 120000,
-  });
   const library = join(install, 'node_modules/@actions/cache/lib');
   const cache = await import(pathToFileURL(join(library, 'cache.js')).href);
   const utils = await import(pathToFileURL(join(library, 'internal/cacheUtils.js')).href);
   const compression = await utils.getCompressionMethod();
-  return { cache, cacheVersion: path => utils.getCacheVersion([path], compression) };
+  return { cache, packageFile: join(install, 'node_modules/@actions/cache/package.json'),
+    cacheVersion: path => utils.getCacheVersion([path], compression) };
 }
 
 function payloadPath(digest) {
@@ -282,8 +302,8 @@ function visibleEntries(ref, prefix) {
   if (!process.env.GH_TOKEN || !repository) throw new Error('Actions cache inventory credentials are missing');
   const listing = execFileSync('gh', [
     'api', '--paginate', '--method', 'GET', 'repos/' + repository + '/actions/caches',
-    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version}',
-  ], { encoding: 'utf8', timeout: 90000, maxBuffer: 4 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version, created_at}',
+  ], { encoding: 'utf8', timeout: 300000, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
   return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
 }
 
@@ -320,10 +340,118 @@ async function digestFile(path) {
   return hash.digest('hex');
 }
 
-async function save(cache, cacheVersion, identity) {
+function requirePublisher() {
+  const env = process.env;
+  if (!['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)
+      || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
+      || env.STRATALINT_CACHE_WRITES !== 'true'
+      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/cache-release-publish.yml@refs/heads/dev') {
+    throw new Error('shared cache writes require the protected dev Release publisher');
+  }
+}
+
+async function generationIndex(digest, file) {
+  if (!/^[0-9a-f]{64}$/.test(digest) || !file) throw new Error('invalid generation index arguments');
+  const put = operation === 'generation-put';
+  if (put) {
+    requirePublisher();
+    if (await digestFile(file) !== digest) throw new Error('generation index digest mismatch');
+  }
+  // The Actions cache version includes the literal path. Every run and both
+  // operations must use this workspace-relative name, regardless of caller.
+  const path = 'build/lean-cache/generation/index.json';
+  const key = 'lean-generation-v1-' + digest;
+  const { cache } = await loadCacheClient();
+  await mkdir(dirname(path), { recursive: true });
+  if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
+    if (resolve(file) !== resolve(path)) await copyFile(file, path);
+    await cache.saveCache([path], key);
+  }
+  await rm(path, { force: true });
+  if (await cache.restoreCache([path], key, []) !== key) {
+    if (!put) process.exitCode = 4;
+    throw new Error('missing Actions generation index ' + digest);
+  }
+  if (await digestFile(path) !== digest) {
+    if (!put) process.exitCode = 5;
+    throw new Error('corrupt Actions generation index ' + digest);
+  }
+  if (!put && resolve(file) !== resolve(path)) await copyFile(path, file);
+}
+
+async function moduleCacheEntry(key, digest, file) {
+  const put = operation === 'module-put';
+  if (put) requirePublisher();
+  if (!key || key.length > 512 || /[,\r\n]/.test(key) || !/^[0-9a-f]{64}$/.test(digest) || !file) {
+    throw new Error('invalid module cache address');
+  }
+  // The user-visible key stays stable. The Actions SDK binds the content-specific
+  // relative path into its cache version so two revisions of a shard can coexist.
+  const path = join('build/lean-cache/modules', digest, 'payload');
+  const { cache } = await loadCacheClient();
+  await mkdir(dirname(path), { recursive: true });
+  try {
+    if (put && await cache.restoreCache([path], key, [], { lookupOnly: true }) !== key) {
+      if (await digestFile(file) !== digest) throw new Error('module cache upload checksum mismatch');
+      await copyFile(file, path);
+      await cache.saveCache([path], key);
+    }
+    await rm(path, { force: true });
+    if (await cache.restoreCache([path], key, []) !== key) {
+      process.exitCode = 4;
+      throw new Error('module cache entry unavailable');
+    }
+    if (await digestFile(path) !== digest) {
+      process.exitCode = 5;
+      throw new Error('module cache entry checksum mismatch');
+    }
+    if (!put) await copyFile(path, file);
+  } finally {
+    await rm(path, { force: true });
+  }
+}
+
+async function runModuleCache() {
+  const temp = process.env.RUNNER_TEMP;
+  const plan = join(temp, 'module-plan.json');
+  const tool = 'tools/scripts/worktree/lean_module_cache.py';
+  let args;
+  if (operation === 'restore-published') {
+    if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
+    args = ['restore'];
+    if (targetsFile) args.push('--targets-file', targetsFile);
+    else if (targets.length) args.push('--targets', ...targets);
+  } else if (operation === 'module-plan') {
+    requirePublisher();
+    const capacity = Number(process.env.SHARD_MIB || 256);
+    if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
+      throw new Error('shard_mib must be between 1 and 2047');
+    }
+    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
+  } else {
+    requirePublisher();
+    if (operation === 'module-worker') {
+      const lane = process.env.MODULE_LANE;
+      if (!/^(0|[1-9][0-9]*)$/.test(lane)) throw new Error('invalid module lane');
+      args = ['worker', '--plan', plan, '--lane', lane, '--output', join(temp, 'module-worker')];
+    } else {
+      args = ['finish', '--plan', plan, '--output', join(temp, 'module-index.json')];
+    }
+  }
+  try {
+    execFileSync('python3', ['-B', tool, ...args], {
+      stdio: 'inherit', env: { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' },
+    });
+  } catch (error) {
+    if (operation !== 'restore-published' || error.status !== 3) throw error;
+    console.log('No published module cache yet. Continuing with the local Lean build.');
+  }
+}
+
+async function save(cache, cacheVersion, identity, packageFile) {
   // The pinned SDK reports both a denied reservation and a race as -1.
   // Observe its original diagnostic for this write operation only.
-  const sdkRequire = createRequire(resolve(stage, 'client/node_modules/@actions/cache/package.json'));
+  const sdkRequire = createRequire(packageFile);
   const core = sdkRequire('@actions/core');
   const warning = core.warning;
   const writes = new AbortController();
@@ -515,6 +643,31 @@ async function saveContinuation() {
 }
 
 async function main() {
+  if (['module-plan', 'module-worker', 'module-finish', 'restore-published'].includes(operation)) return runModuleCache();
+  if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
+  if (operation === 'generation-get' || operation === 'generation-put') {
+    return generationIndex(process.argv[3], process.argv[4]);
+  }
+  if (['latest-seed', 'restore-seed', 'migrate-seed'].includes(operation)) {
+    const io = { ...await loadCacheClient(), visibleEntries, restoreIndex, payloadPath, indexPath, digestFile, paced };
+    const directory = join(process.env.RUNNER_TEMP, 'lean-generation-base');
+    if (operation === 'migrate-seed') return migrateSeed(io, directory);
+    if (operation === 'latest-seed') requirePublisher();
+    const seed = await latestSeed(io, directory, operation === 'latest-seed');
+    if (!seed) {
+      if (operation === 'latest-seed') throw new Error('no complete protected dev seed found');
+      console.log('LEAN_GENERATION_SEED no complete seed available');
+      return;
+    }
+    if (operation === 'latest-seed') {
+      await setOutputs({ key: seed.key, producer: seed.commit });
+      return;
+    }
+    const selected = join(directory, 'selected.json');
+    if (selectSeed(join(directory, 'index.json'), selected)) await restorePayloads(io.cache, io.cacheVersion, [seed.prefix], selected);
+    return;
+  }
+  if (operation === 'save') requirePublisher();
   if (operation === 'save-continuation' && state === 'resume') return saveContinuation();
   if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {
     throw new Error('resume-after-attempt requires a continuation restore and a nonnegative attempt number');
@@ -545,16 +698,16 @@ async function main() {
     throw new Error('invalid Actions shard operation or state');
   }
   if (operation === 'save' && !anchor) throw new Error('Actions cache writes require a pinned history anchor');
-  const { cache, cacheVersion } = await loadCacheClient();
+  const { cache, cacheVersion, packageFile } = await loadCacheClient();
   const identity = python('identity');
   await mkdir(stage, { recursive: true });
-  if (operation === 'save') await save(cache, cacheVersion, identity);
+  if (operation === 'save') await save(cache, cacheVersion, identity, packageFile);
   else await restore(cache, cacheVersion, identity);
 }
 
 try {
   await main();
 } catch (error) {
-  process.exitCode = 1;
+  process.exitCode ||= 1;
   console.error('LEAN_ACTIONS_SHARDS ' + error.message);
 }

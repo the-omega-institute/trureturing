@@ -6,6 +6,9 @@
    digest: A finitely revised ledger has a unique pointwise terminal grading. -/
 
 import Mathlib.Order.Filter.Cofinite
+import OmegaInit.Data.Nat.Basic
+
+/-! Terminal values and pointwise limits of finitely revised ledger histories. -/
 
 namespace D5.S0.History.LedgerLimit
 
@@ -65,19 +68,58 @@ theorem finite_revisions_have_terminal_value {Grade : Type*}
         · exact ⟨(le_max_left start bound).trans (Nat.le_add_right cutoff offset), changed⟩
       exact hstep.trans ih
 
+/-- The strict clock and equality formulation of stabilization to a specified value. -/
+noncomputable def StrictTerminalValueAfter {Grade : Type u}
+    (start : Omega.Nat) (grades : Omega.Nat → Grade) (terminal : Grade) : Prop :=
+  Omega.Exists (fun cutoff => Omega.And (Omega.Nat.le start cutoff)
+    (∀ t, Omega.Nat.le cutoff t → Omega.Eq (grades t) terminal))
+
 /-- An eventually constant grade track has only one possible terminal value. -/
-theorem terminal_value_unique {Grade : Type*} {start : Nat} {grades : Nat -> Grade}
+theorem terminal_value_unique {Grade : Type u} {start : Omega.Nat} {grades : Omega.Nat → Grade}
     {left right : Grade}
-    (leftTerminal : exists cutoff, start <= cutoff /\
-      forall t, cutoff <= t -> grades t = left)
-    (rightTerminal : exists cutoff, start <= cutoff /\
-      forall t, cutoff <= t -> grades t = right) :
-    left = right := by
-  obtain ⟨leftCutoff, _, leftStable⟩ := leftTerminal
-  obtain ⟨rightCutoff, _, rightStable⟩ := rightTerminal
-  let cutoff := max leftCutoff rightCutoff
-  exact (leftStable cutoff (le_max_left _ _)).symm.trans
-    (rightStable cutoff (le_max_right _ _))
+    (leftTerminal : StrictTerminalValueAfter start grades left)
+    (rightTerminal : StrictTerminalValueAfter start grades right) : Omega.Eq left right :=
+  leftTerminal.elim (fun leftCutoff leftTail =>
+    rightTerminal.elim (fun rightCutoff rightTail =>
+      (Omega.Nat.le_total leftCutoff rightCutoff).elim
+        (fun h => (leftTail.right rightCutoff h).symm.trans
+          (rightTail.right rightCutoff (Omega.Nat.le.refl rightCutoff)))
+        (fun h => (leftTail.right leftCutoff (Omega.Nat.le.refl leftCutoff)).symm.trans
+          (rightTail.right leftCutoff h))))
+
+private noncomputable def toStdNat : Omega.Nat → Nat := Omega.Nat.rec 0 (fun _ n => n.succ)
+
+private def toStrictNat : Nat → Omega.Nat := Nat.rec .zero (fun _ n => n.succ)
+
+private theorem toStdNat_toStrictNat (n : Nat) : toStdNat (toStrictNat n) = n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => exact congrArg Nat.succ ih
+
+private theorem toStdNat_le {a b : Omega.Nat} (h : Omega.Nat.le a b) :
+    toStdNat a ≤ toStdNat b := by
+  induction a generalizing b with
+  | zero => exact Nat.zero_le _
+  | succ a ih =>
+      induction b with
+      | zero => exact Omega.False.elim h
+      | succ b _ => exact Nat.succ_le_succ (ih h)
+
+private theorem toStrictNat_le {a b : Nat} (h : a ≤ b) :
+    Omega.Nat.le (toStrictNat a) (toStrictNat b) := by
+  induction h with
+  | refl => exact Omega.Nat.le.refl _
+  | step _ ih => exact Omega.Nat.le.step ih
+
+private theorem strictTerminalValue_of_standard {Grade : Type*} {start : Nat}
+    {grades : Nat → Grade} {terminal : Grade}
+    (h : ∃ cutoff, start ≤ cutoff ∧ ∀ t, cutoff ≤ t → grades t = terminal) :
+    StrictTerminalValueAfter (toStrictNat start) (fun t => grades (toStdNat t)) terminal := by
+  obtain ⟨cutoff, enrolled, tail⟩ := h
+  refine Omega.Exists.intro (toStrictNat cutoff) (Omega.And.intro (toStrictNat_le enrolled) ?_)
+  intro t ht
+  have bound : cutoff ≤ toStdNat t := by simpa only [toStdNat_toStrictNat] using toStdNat_le ht
+  exact (tail (toStdNat t) bound) ▸ Omega.Eq.refl
 
 /-- Theorem 7.2: for a countable ledger graded in a finite partial order, the
 repair clause determines a unique terminal grading on all eventually enrolled
@@ -101,35 +143,64 @@ theorem ledger_limit_exists_unique
     ⟨cutoff statement, enrolled statement, stable statement⟩, ?_⟩
   intro other otherStable
   funext statement
-  exact terminal_value_unique
-    (leftTerminal := otherStable statement)
-    (rightTerminal :=
-      ⟨cutoff statement, enrolled statement, stable statement⟩)
+  have same := terminal_value_unique (strictTerminalValue_of_standard (otherStable statement))
+    (strictTerminalValue_of_standard ⟨cutoff statement, enrolled statement, stable statement⟩)
+  exact Omega.Eq.rec rfl same
 
 /-- A two-grade track that changes at every clock tick. -/
 def alternatingGrade : Nat -> Bool
   | 0 => false
   | t + 1 => !(alternatingGrade t)
 
-private theorem alternatingGrade_changes (t : Nat) :
-    alternatingGrade (t + 1) ≠ alternatingGrade t := by
-  cases value : alternatingGrade t <;> simp [alternatingGrade, value]
+private noncomputable def flipGrade : Omega.Bool → Omega.Bool := Omega.Bool.rec .true .false
+
+/-- A strict Boolean track obtained by flipping the preceding grade at each successor. -/
+noncomputable def strictAlternatingGrade : Omega.Nat → Omega.Bool :=
+  Omega.Nat.rec .false (fun _ grade => flipGrade grade)
+
+private theorem alternatingGrade_changes (t : Omega.Nat) :
+    Omega.Not (Omega.Eq (strictAlternatingGrade t.succ) (strictAlternatingGrade t)) :=
+  have trueNeFalse : Omega.Not (Omega.Eq Omega.Bool.true Omega.Bool.false) :=
+    fun h => Omega.Eq.subst (Omega.Bool.rec Omega.False Omega.True) h Omega.True.intro
+  Omega.Bool.rec (motive := fun b => Omega.Not (Omega.Eq (flipGrade b) b))
+    trueNeFalse (fun h => trueNeFalse h.symm) (strictAlternatingGrade t)
 
 /-- The repair clause cannot be dropped: permanent two-grade oscillation has
 no terminal value. -/
 theorem alternating_grade_has_no_terminal_value :
-    ¬ HasTerminalValueAfter 0 alternatingGrade := by
-  rintro ⟨terminal, cutoff, _, stable⟩
-  apply alternatingGrade_changes cutoff
-  exact (stable (cutoff + 1) (Nat.le_succ cutoff)).trans
-    (stable cutoff le_rfl).symm
+    Omega.Not (Omega.Exists (StrictTerminalValueAfter .zero strictAlternatingGrade)) :=
+  fun terminal => terminal.elim (fun _ stability =>
+    stability.elim (fun cutoff tail => alternatingGrade_changes cutoff
+      ((tail.right cutoff.succ (Omega.Nat.le.step (Omega.Nat.le.refl cutoff))).trans
+        (tail.right cutoff (Omega.Nat.le.refl cutoff)).symm)))
+
+private def toStrictBool : Bool → Omega.Bool := Bool.rec .false .true
+
+private theorem strictAlternatingGrade_eq (n : Omega.Nat) :
+    strictAlternatingGrade n = toStrictBool (alternatingGrade (toStdNat n)) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      change flipGrade (strictAlternatingGrade n) =
+        toStrictBool (!(alternatingGrade (toStdNat n)))
+      rw [ih]
+      cases alternatingGrade (toStdNat n) <;> rfl
 
 /-- Equivalently, the alternating counterexample has infinitely many revision
 times, so it lies exactly outside the repair clause. -/
 theorem alternating_revision_times_infinite :
     (revisionTimesFrom 0 alternatingGrade).Infinite := by
   intro finiteRevisions
-  exact alternating_grade_has_no_terminal_value
-    (finite_revisions_have_terminal_value 0 alternatingGrade finiteRevisions)
+  obtain ⟨terminal, cutoff, enrolled, stable⟩ :=
+    finite_revisions_have_terminal_value 0 alternatingGrade finiteRevisions
+  have strictTail := strictTerminalValue_of_standard
+    (grades := fun t => toStrictBool (alternatingGrade t)) (terminal := toStrictBool terminal)
+    ⟨cutoff, enrolled, fun t ht => congrArg toStrictBool (stable t ht)⟩
+  apply Omega.False.elim
+  apply alternating_grade_has_no_terminal_value
+  refine Omega.Exists.intro (toStrictBool terminal) (strictTail.elim fun strictCutoff tail => ?_)
+  refine Omega.Exists.intro strictCutoff (Omega.And.intro tail.left fun t ht => ?_)
+  rw [strictAlternatingGrade_eq]
+  exact tail.right t ht
 
 end D5.S0.History.LedgerLimit

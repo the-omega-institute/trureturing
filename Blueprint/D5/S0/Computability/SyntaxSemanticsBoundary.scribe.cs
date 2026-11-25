@@ -41,16 +41,10 @@ internal sealed class SyntaxSemanticsBoundaryDocument : IScribeDocumentDefinitio
                             + "programming language or claim that a higher-level semantics "
                             + "has already been constructed.")),
                         Paragraph(Text(
-                            "The library was searched before proving. Pinned Mathlib already "
-                            + "contains the exact result as Function.cantor_surjective in its "
-                            + "basic function theory; the neighboring declarations "
-                            + "Function.exists_fixed_point_of_surjective and "
-                            + "Function.cantor_injective were also checked. The Lean theorem "
-                            + "is consequently a declared thin honest wrapper that applies "
-                            + "the upstream result without reproducing its diagonal proof. "
-                            + "A repository search found computability-restricted closure "
-                            + "results and finite diagonal escape results, but no existing "
-                            + "formal declaration of this unrestricted predicate-enumeration "
-                            + "boundary."))),
+                            "The declaration applies the Omega Math port of "
+                            + "Function.cantor_surjective. Surjectivity would supply a code for "
+                            + "the diagonal predicate. Evaluating the resulting equality at "
+                            + "that code identifies its predicate value with its negation, "
+                            + "and equality transport yields a contradiction."))),
                     DescribeRole.Theorem))));
 }

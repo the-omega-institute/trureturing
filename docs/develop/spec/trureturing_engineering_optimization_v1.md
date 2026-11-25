@@ -108,7 +108,7 @@ statement-v1 编码通过有界字节缓冲写入 spool；名称、universe、�
 
 ### 5.3 当前报告与复用
 
-模块报告使用 `stratalint-raw-lean-report-v3`，定向汇总使用 `stratalint-scoped-lean-report-v1`。读取器分别校验对应格式。
+模块报告使用 `stratalint-raw-lean-report-v4`，定向汇总使用 `stratalint-scoped-lean-report-v2`。读取器分别校验对应格式。
 提取语义或公开格式改变须更新格式标识并全部重提取。
 模块 facet 以编译器产物闭包、utility 输入及格式标识决定 ZIP 复用；
 判官程序必须构建成功，其字节不进入报告 trace。

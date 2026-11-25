@@ -337,4 +337,10 @@ theorem trace_posPart_contrast_isGreatest_opposite_phase (a : Fin 3 → ℝ) (θ
 #print axioms phase_minimum
 #print axioms trace_posPart_contrast_isGreatest_opposite_phase
 
+namespace Pairing
+
+export _root_.D5.S3.Quantum.Divergence.Qubit.SignedProfile (trace_pair)
+
+end Pairing
+
 end D5.S3.Quantum.Divergence.Qubit.SignedProfile

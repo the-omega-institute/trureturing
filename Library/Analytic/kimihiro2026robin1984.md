@@ -15,6 +15,17 @@ triage: anchor
 
 # Robin's criterion with upstream proof acceptance
 
+## Verified locator
+
+Source repository at the pinned revision.
+https://github.com/kimihiro64/Robin1984/tree/acab1a31f31e0499518a4416b63281e0b4838f9c
+
+The Row 01 certificate is in `Robin1984/Finite/Certificates/Row01.lean`.
+Its Git blob is `4390475cb05061f3ec36bcf3c325ee5f2c9c307b` at both the
+catalogued revision and the revision cited by the Row 01 formalization.
+
+## Authorship
+
 Source repository [kimihiro64/Robin1984](https://github.com/kimihiro64/Robin1984/tree/acab1a31f31e0499518a4416b63281e0b4838f9c),
 immutable main commit `acab1a31f31e0499518a4416b63281e0b4838f9c`.
 The pinned [CITATION.cff](https://github.com/kimihiro64/Robin1984/blob/acab1a31f31e0499518a4416b63281e0b4838f9c/CITATION.cff)

@@ -5,23 +5,26 @@
    anchors: []
    digest: Integral powers of the golden unit have the corresponding signed norm. -/
 
-import D5.S0.Carrier.Units
+module
+prelude
+public import OmegaMath.Algebra.QuadraticExt.Units
 
 namespace D5.S0.Carrier.Powers
 
-open D5.S0.Carrier
+open Omega Omega.QuadPoly
 
-/-- The norm parity law for `phiUnit` extends `norm_phi_pow` to all integer powers. -/
-theorem norm_phiUnit_zpow (n : ℤ) :
-    norm ((phiUnit ^ n : GoldenIntˣ).val) = (((-1 : ℤˣ) ^ n : ℤˣ) : ℤ) := by
-  have hmap := (Units.map normMonoidHom).map_zpow phiUnit n
-  have hval := congrArg Units.val hmap
-  exact hval
+/-- The norm of a golden integer power is the corresponding power of minus one. -/
+public theorem norm_phiUnit_zpow (n : Int) :
+    Eq (norm intRing (signedGoldenPower .false n)) (intRing.powNat Int.one.neg n.natAbs) :=
+  let generator : IntQuadPoly Int.one Int.one := alpha intRing
+  let inverse := neg intRing (conj intRing generator)
+  Int.rec (motive := fun k =>
+    Eq (norm intRing (signedGoldenPower .false k)) (intRing.powNat Int.one.neg k.natAbs))
+    (fun k => QuadPoly.norm_pow intRingLaws generator k)
+    (fun k => QuadPoly.norm_pow intRingLaws inverse k.succ)
+    n
 
-example :
-    norm ((phiUnit ^ (0 : ℤ) : GoldenIntˣ).val) = (((-1 : ℤˣ) ^ (0 : ℤ) : ℤˣ) : ℤ) := by
-  exact norm_phiUnit_zpow 0
-
-#print axioms norm_phiUnit_zpow
+example : Eq (norm intRing (signedGoldenPower .false Int.zero)) Int.one :=
+  norm_phiUnit_zpow Int.zero
 
 end D5.S0.Carrier.Powers

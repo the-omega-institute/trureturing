@@ -20,7 +20,7 @@ A nonempty state space supplies such a state. The resulting action is a fixed po
 
 **Lemma 1.2 (Boolean negation defeats every public predictor).**
 
-$$\begin{gathered}\forall predict: Unit \to Bool,\\{}\neg \forall state: Unit, predict\left(state\right) = \operatorname{actual}\left(predict, Bool.not, state\right).\end{gathered}$$
+$$\begin{gathered}\forall predict: OneState \to Bool,\\{}\neg \forall state: OneState, predict\left(state\right) = \operatorname{actual}\left(predict, Bool.not, state\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Prediction/PublicPredictionDiagonal.bool_not_no_correct_public_predictor` (`✓ std3`). ∎
 

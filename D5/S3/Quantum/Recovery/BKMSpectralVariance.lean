@@ -22,15 +22,15 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 namespace D5.S3.Quantum.Recovery.BKMSpectralVariance
 
 /-- The scalar integral occurring in a diagonal spectral entry of BKM omega. -/
-private def logMean (x y : ℝ) : ℝ :=
+def logMean (x y : ℝ) : ℝ :=
   ∫ s : ℝ in 0..1, x ^ s * y ^ (1 - s)
 
-private theorem logMean_self {x : ℝ} (hx : 0 < x) : logMean x x = x := by
+theorem logMean_self {x : ℝ} (hx : 0 < x) : logMean x x = x := by
   have h (s : ℝ) : x ^ s * x ^ (1 - s) = x := by
     rw [← Real.rpow_add hx, show s + (1 - s) = 1 by ring, Real.rpow_one]
   simp [logMean, h, intervalIntegral.integral_const]
 
-private theorem logMean_mul_logRatio {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
+theorem logMean_mul_logRatio {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     logMean x y * Real.log (x / y) = x - y := by
   let r := Real.log (x / y)
   have hr : Real.exp r = x / y := Real.exp_log (div_pos hx hy)
@@ -168,7 +168,7 @@ abbrev fromEigenbasis {a : Matrix n n ℂ} (ha : a.PosDef) :
 
 /-- In the spectral basis of a positive definite matrix, the actual BKM integral
 multiplies entry `i,j` by the logarithmic mean of the corresponding eigenvalues. -/
-private theorem omega_eigenbasis_entry {a : Matrix n n ℂ} (ha : a.PosDef)
+theorem omega_eigenbasis_entry {a : Matrix n n ℂ} (ha : a.PosDef)
     (X : Matrix n n ℂ) (i j : n) :
     ((fromEigenbasis ha).symm (omega a X)) i j =
       (logMean (ha.isHermitian.eigenvalues i) (ha.isHermitian.eigenvalues j) : ℂ) *

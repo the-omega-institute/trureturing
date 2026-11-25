@@ -15,7 +15,7 @@ noncomputable section
 
 universe u v p s
 
-private abbrev oneRole (P : Type p) (State : P → Type s) : Signature where
+abbrev oneRole (P : Type p) (State : P → Type s) : Signature where
   Params := P
   State := State
   Role := Unit
@@ -25,7 +25,7 @@ private abbrev oneRole (P : Type p) (State : P → Type s) : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private theorem sensitivity {P : Type p} {State : P → Type s}
+theorem sensitivity {P : Type p} {State : P → Type s}
     (law : Realization (oneRole P State) → Prop)
     (actual rejected : Realization (oneRole P State)) (h : ¬ law rejected) :
     Sensitivity ⟨oneRole P State, law⟩ actual := by

@@ -6,10 +6,10 @@
    digest: Residual ledger entries are losslessly equivalent to their four typed components. -/
 
 import Mathlib.Logic.Equiv.Prod
+import OmegaMath.Data.Product
+import OmegaMath.Logic.Function.Defs
 
-/- Provenance: pinned Mathlib supplies the standard equivalence bijectivity
-   theorem (`Equiv.bijective`). The four-state residual workflow and its typed
-   ledger entry are the source atom's additional data. -/
+/-! The typed components and lossless encodings of a residual-ledger entry. -/
 
 namespace D5.S0.History.ResidualLedger
 
@@ -52,12 +52,33 @@ def residualLedgerEquivComponents
     rcases components with ⟨source, detector, status, nextAction⟩
     rfl
 
-/-- The typed residual-ledger record contains exactly its source, detector,
-four-state status, and next-action components. -/
-theorem residual_ledger_components_bijective
-    (Source Detector NextAction : Type*) :
-    Function.Bijective
-      (residualLedgerEquivComponents Source Detector NextAction) :=
-  (residualLedgerEquivComponents Source Detector NextAction).bijective
+/-- The four entry fields in the strict product representation. -/
+abbrev StrictResidualLedgerComponents (Source Detector NextAction : Type*) :=
+  Omega.Product Source (Omega.Product Detector (Omega.Product ResidualStatus NextAction))
+
+/-- Read the four fields in order. -/
+noncomputable def encodeResidualLedgerComponents {Source Detector NextAction : Type*}
+    (entry : ResidualLedgerEntry Source Detector NextAction) :
+    StrictResidualLedgerComponents Source Detector NextAction :=
+  Omega.Product.ofValues entry.source (Omega.Product.ofValues entry.detector
+    (Omega.Product.ofValues entry.status entry.nextAction))
+
+private noncomputable def decodeResidualLedgerComponents {Source Detector NextAction : Type*}
+    (parts : StrictResidualLedgerComponents Source Detector NextAction) :
+    ResidualLedgerEntry Source Detector NextAction where
+  source := parts.fst
+  detector := parts.snd.fst
+  status := parts.snd.snd.fst
+  nextAction := parts.snd.snd.snd
+
+/-- The four-component representation of a residual-ledger record is lossless. -/
+theorem residual_ledger_components_bijective (Source Detector NextAction : Type*) :
+    Omega.Function.Bijective (encodeResidualLedgerComponents
+      (Source := Source) (Detector := Detector) (NextAction := NextAction)) :=
+  Omega.And.intro
+    (Omega.Function.LeftInverse.injective (g := decodeResidualLedgerComponents)
+      (fun _ => Omega.Eq.refl))
+    (Omega.Function.RightInverse.surjective (g := decodeResidualLedgerComponents)
+      (fun _ => Omega.Eq.refl))
 
 end D5.S0.History.ResidualLedger
