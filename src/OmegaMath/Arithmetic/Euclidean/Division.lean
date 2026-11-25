@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.Nat
 
 /-! Omega original.
@@ -28,7 +29,7 @@ theorem natEq_cases (a b : Nat) (P : Bool → Prop)
     (Eq a b → P Bool.true) → (Not (Eq a b) → P Bool.false) → P (natEq a b))
     (fun b => Nat.rec (motive := fun b => ∀ (P : Bool → Prop),
       (Eq Nat.zero b → P Bool.true) → (Not (Eq Nat.zero b) → P Bool.false) → P (natEq Nat.zero b))
-      (fun _ same _ => same Eq.refl)
+      (fun _ same _ => same rfl)
       (fun b _ _ _ different => different (fun h => Nat.succ_ne_zero b h.symm)) b)
     (fun a ih b => Nat.rec (motive := fun b => ∀ (P : Bool → Prop),
       (Eq a.succ b → P Bool.true) → (Not (Eq a.succ b) → P Bool.false) → P (natEq a.succ b))
@@ -41,16 +42,16 @@ theorem le_or_lt (a b : Nat) : Or (Nat.le a b) (Nat.lt b a) :=
   (Nat.rec (motive := fun x => ∀ y, Or (Nat.le x y) (Nat.lt y x))
     (fun b => Or.inl (Nat.zero_le b))
     (fun a ih b => Nat.rec (motive := fun y => Or (Nat.le a.succ y) (Nat.lt y a.succ))
-      (Or.inr (Nat.zero_le a)) (fun b _ =>
+      (Or.inr (Nat.succ_le_succ (Nat.zero_le a))) (fun b _ =>
         (ih b).elim (fun h => Or.inl (Nat.succ_le_succ h))
           (fun h => Or.inr (Nat.succ_le_succ h))) b) a) b
 
 theorem pos_of_ne_zero {n : Nat} (h : Not (Eq n Nat.zero)) : Nat.lt Nat.zero n :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Nat.lt Nat.zero n)
-    (fun h => False.elim (h Eq.refl)) (fun n _ _ => Nat.zero_le n) n) h
+    (fun h => False.elim (h rfl)) (fun n _ _ => Nat.succ_le_succ (Nat.zero_le n)) n) h
 
 theorem le_of_lt {a b : Nat} (h : Nat.lt a b) : Nat.le a b :=
-  Nat.le_trans (Nat.le.step (Nat.le.refl a)) h
+  Nat.le_trans (Nat.le.step (Nat.le_refl a)) h
 
 theorem lt_of_le_of_lt {a b c : Nat} (h : Nat.le a b) (g : Nat.lt b c) : Nat.lt a c :=
   Nat.le_trans (Nat.succ_le_succ h) g
@@ -59,18 +60,18 @@ theorem lt_of_lt_of_le {a b c : Nat} (h : Nat.lt a b) (g : Nat.le b c) : Nat.lt 
   Nat.le_trans h g
 
 theorem lt_irrefl (a : Nat) : Not (Nat.lt a a) :=
-  Nat.rec (motive := fun n => Not (Nat.lt n n)) (fun h => h) (fun _ ih h => ih h) a
+  Nat.rec (motive := fun n => Not (Nat.lt n n)) (Nat.not_succ_le_zero Nat.zero) (fun _ ih h => ih (Nat.le_of_succ_le_succ h)) a
 
 theorem ne_of_lt {a b : Nat} (h : Nat.lt a b) : Not (Eq a b) :=
-  fun e => lt_irrefl a (Eq.subst (Nat.lt a) e.symm h)
+  fun e => lt_irrefl a (Eq.subst (motive := Nat.lt a) e.symm h)
 
 theorem lt_of_le_of_ne {a b : Nat} (h : Nat.le a b) (hne : Not (Eq a b)) : Nat.lt a b :=
   (le_or_lt b a).elim (fun g => False.elim (hne (Nat.le_antisymm h g))) (fun g => g)
 
 theorem add_le_add_right {a b : Nat} (h : Nat.le a b) (c : Nat) :
     Nat.le (a.add c) (b.add c) :=
-  Eq.subst (fun x => Nat.le x (b.add c)) (Nat.add_comm c a)
-    (Eq.subst (Nat.le (c.add a)) (Nat.add_comm c b) (Nat.add_le_add_left h c))
+  Eq.subst (motive := fun x => Nat.le x (b.add c)) (Nat.add_comm c a)
+    (Eq.subst (motive := Nat.le (c.add a)) (Nat.add_comm c b) (Nat.add_le_add_left h c))
 
 theorem add_le_add {a b c d : Nat} (h : Nat.le a b) (g : Nat.le c d) :
     Nat.le (a.add c) (b.add d) :=
@@ -78,40 +79,42 @@ theorem add_le_add {a b c d : Nat} (h : Nat.le a b) (g : Nat.le c d) :
 
 theorem add_lt_add_right {a b : Nat} (h : Nat.lt a b) (c : Nat) :
     Nat.lt (a.add c) (b.add c) :=
-  Eq.subst (fun x => Nat.le x (b.add c)) (Nat.succ_add a c) (add_le_add_right h c)
+  Eq.subst (motive := fun x => Nat.le x (b.add c)) (Nat.succ_add a c) (add_le_add_right h c)
 
 theorem add_lt_add_left {a b : Nat} (h : Nat.lt a b) (c : Nat) :
     Nat.lt (c.add a) (c.add b) :=
-  Nat.add_le_add_left h c
+  Eq.subst (motive := fun x => Nat.le x (c.add b)) (Nat.add_succ c a) (Nat.add_le_add_left h c)
 
 theorem mul_le_mul_right {a b : Nat} (h : Nat.le a b) (c : Nat) :
     Nat.le (a.mul c) (b.mul c) :=
-  Nat.rec (motive := fun c => Nat.le (a.mul c) (b.mul c)) True.intro
-    (fun _ ih => add_le_add ih h) c
+  Nat.rec (motive := fun c => Nat.le (a.mul c) (b.mul c))
+    (Eq.subst (motive := fun x => Nat.le x (b.mul Nat.zero)) (Nat.mul_zero a).symm (Nat.zero_le _))
+    (fun k ih => Eq.subst (motive := fun x => Nat.le x (b.mul k.succ)) (Nat.mul_succ a k).symm
+      (Eq.subst (motive := Nat.le ((a.mul k).add a)) (Nat.mul_succ b k).symm (add_le_add ih h))) c
 
 theorem mul_le_mul_left {a b : Nat} (h : Nat.le a b) (c : Nat) :
     Nat.le (c.mul a) (c.mul b) :=
-  Eq.subst (fun x => Nat.le x (c.mul b)) (Nat.mul_comm a c)
-    (Eq.subst (Nat.le (a.mul c)) (Nat.mul_comm b c) (mul_le_mul_right h c))
+  Eq.subst (motive := fun x => Nat.le x (c.mul b)) (Nat.mul_comm a c)
+    (Eq.subst (motive := Nat.le (a.mul c)) (Nat.mul_comm b c) (mul_le_mul_right h c))
 
 theorem mul_pos {a b : Nat} (ha : Nat.lt Nat.zero a) (hb : Nat.lt Nat.zero b) :
     Nat.lt Nat.zero (a.mul b) :=
-  Nat.le_trans ha (Eq.subst (fun x => Nat.le x (a.mul b)) (Nat.mul_one a) (mul_le_mul_left hb a))
+  Nat.le_trans ha (Eq.subst (motive := fun x => Nat.le x (a.mul b)) (Nat.mul_one a) (mul_le_mul_left hb a))
 
 /-- Strong induction using only the natural recursor. -/
 theorem strongInduction {P : Nat → Prop}
     (step : ∀ n, (∀ m, Nat.lt m n → P m) → P n) (n : Nat) : P n :=
   step n (fun m => Nat.rec (motive := fun n => ∀ m, Nat.lt m n → P m)
-    (fun _ h => False.elim h)
+    (fun m h => False.elim (Nat.not_succ_le_zero m h))
     (fun n ih m h => (le_or_lt n m).elim
-      (fun g => Eq.subst P (Nat.le_antisymm g h) (step n ih)) (ih m)) n m)
+      (fun g => Eq.subst (motive := P) (Nat.le_antisymm g (Nat.le_of_succ_le_succ h)) (step n ih)) (ih m)) n m)
 
 def Dvd (a b : Nat) : Prop := Exists (fun k : Nat => Eq b (a.mul k))
 
 theorem dvd_refl (a : Nat) : Dvd a a :=
   Exists.intro Nat.one (Nat.mul_one a).symm
 
-theorem dvd_zero (a : Nat) : Dvd a Nat.zero := Exists.intro Nat.zero Eq.refl
+theorem dvd_zero (a : Nat) : Dvd a Nat.zero := Exists.intro Nat.zero (Nat.mul_zero a).symm
 
 theorem dvd_trans {a b c : Nat} (hab : Dvd a b) (hbc : Dvd b c) : Dvd a c :=
   hab.elim (fun x hx => hbc.elim (fun y hy =>
@@ -121,13 +124,13 @@ theorem dvd_trans {a b c : Nat} (hab : Dvd a b) (hbc : Dvd b c) : Dvd a c :=
 theorem le_of_dvd_of_pos {a b : Nat} (hab : Dvd a b) (hb : Nat.lt Nat.zero b) : Nat.le a b :=
   hab.elim (fun k hk =>
     have hn : Not (Eq k Nat.zero) := fun e =>
-      ne_of_lt hb (hk.trans (congrArg (Nat.mul a) e)).symm
-    Eq.subst (Nat.le a) hk.symm
-      (Eq.subst (fun x => Nat.le x (a.mul k)) (Nat.mul_one a)
+      ne_of_lt hb (hk.trans ((congrArg (Nat.mul a) e).trans (Nat.mul_zero a))).symm
+    Eq.subst (motive := Nat.le a) hk.symm
+      (Eq.subst (motive := fun x => Nat.le x (a.mul k)) (Nat.mul_one a)
         (mul_le_mul_left (pos_of_ne_zero hn) a)))
 
 theorem dvd_one {d : Nat} (h : Dvd d Nat.one) : Eq d Nat.one :=
-  have hle := le_of_dvd_of_pos h (Nat.le.refl Nat.one)
+  have hle := le_of_dvd_of_pos h (Nat.le_refl Nat.one)
   have hne : Not (Eq d Nat.zero) := fun e =>
     h.elim (fun k hk => Nat.succ_ne_zero Nat.zero (hk.trans
       ((congrArg (fun x : Nat => x.mul k) e).trans (Nat.zero_mul k))))
@@ -169,11 +172,12 @@ private theorem divModStep_spec (n d : Nat) (s : DivMod)
     let next := Bool.rec (motive := fun _ => DivMod) (DivMod.mk s.quotient s.remainder.succ) (DivMod.mk s.quotient.succ Nat.zero) t
     And (Eq n.succ ((d.mul next.quotient).add next.remainder)) (Nat.lt next.remainder d))
     (fun e => And.intro
-      (show Eq n.succ ((d.mul s.quotient).add d) from
-        (congrArg Nat.succ heq).trans (congrArg (Nat.add (d.mul s.quotient)) e))
+      ((congrArg Nat.succ heq).trans ((Nat.add_succ _ _).symm.trans
+        ((congrArg (Nat.add (d.mul s.quotient)) e).trans
+          ((Nat.mul_succ d s.quotient).symm.trans (Nat.add_zero _).symm))))
       (Nat.le_trans (pos_of_ne_zero (Nat.succ_ne_zero s.remainder)) hr))
     (fun ne => And.intro
-      (show Eq n.succ ((d.mul s.quotient).add s.remainder.succ) from congrArg Nat.succ heq)
+      ((congrArg Nat.succ heq).trans (Nat.add_succ _ _).symm)
       (lt_of_le_of_ne hr ne))
 
 
@@ -183,7 +187,7 @@ theorem divMod_spec (n d : Nat) (hd : Nat.lt Nat.zero d) :
   Nat.rec (motive := fun n =>
     And (Eq n ((d.mul (divMod n d).quotient).add (divMod n d).remainder))
       (Nat.lt (divMod n d).remainder d))
-    (And.intro Eq.refl hd)
+    (And.intro ((Nat.mul_zero d).symm.trans (Nat.add_zero _).symm) hd)
     (fun n ih => divModStep_spec n d (divMod n d) ih.left ih.right) n
 
 /-- Two representations with remainders below the divisor have the same remainder. -/
@@ -193,14 +197,16 @@ theorem divMod_remainder_unique {d q r q' r' : Nat}
   let incompatible := fun (q r q' r' : Nat)
       (h : Eq ((d.mul q).add r) ((d.mul q').add r'))
       (hr : Nat.lt r d) (hlt : Nat.lt q q') =>
-    have first : Nat.lt ((d.mul q).add r) (d.mul q.succ) := add_lt_add_left hr (d.mul q)
+    have first : Nat.lt ((d.mul q).add r) (d.mul q.succ) :=
+      Eq.subst (motive := Nat.lt ((d.mul q).add r)) (Nat.mul_succ d q).symm (add_lt_add_left hr _)
     have second := Nat.le_trans (mul_le_mul_left hlt d)
-      (Nat.le_trans (Nat.le.refl (d.mul q')) (Nat.add_le_add_left (Nat.zero_le r') (d.mul q')))
-    lt_irrefl _ (Eq.subst (fun n => Nat.lt ((d.mul q).add r) n) h.symm (lt_of_lt_of_le first second))
+      (Eq.subst (motive := fun x => Nat.le x ((d.mul q').add r')) (Nat.add_zero _)
+        (Nat.add_le_add_left (Nat.zero_le r') (d.mul q')))
+    lt_irrefl _ (Eq.subst (motive := fun n => Nat.lt ((d.mul q).add r) n) h.symm (lt_of_lt_of_le first second))
   (le_or_lt q q').elim
     (fun l => (le_or_lt q' q).elim
       (fun l' => Nat.add_left_cancel (Eq.subst
-        (fun t => Eq ((d.mul q).add r) ((d.mul t).add r')) (Nat.le_antisymm l l').symm h))
+        (motive := fun t => Eq ((d.mul q).add r) ((d.mul t).add r')) (Nat.le_antisymm l l').symm h))
       (fun g => False.elim (incompatible q r q' r' h hr g)))
     (fun g => False.elim (incompatible q' r' q r h.symm hr' g))
 
@@ -208,8 +214,9 @@ theorem dvd_iff_remainder_zero (n d : Nat) (hd : Nat.lt Nat.zero d) :
     Iff (Dvd d n) (Eq (divMod n d).remainder Nat.zero) :=
   let spec := divMod_spec n d hd
   Iff.intro
-    (fun h => h.elim (fun k hk => divMod_remainder_unique (q' := k) (spec.left.symm.trans hk) spec.right hd))
+    (fun h => h.elim (fun k hk => divMod_remainder_unique (q' := k)
+      (spec.left.symm.trans (hk.trans (Nat.add_zero _).symm)) spec.right hd))
     (fun e => Exists.intro (divMod n d).quotient
-      (spec.left.trans (congrArg (Nat.add (d.mul (divMod n d).quotient)) e)))
+      (spec.left.trans ((congrArg (Nat.add (d.mul (divMod n d).quotient)) e).trans (Nat.add_zero _))))
 
 end Omega.Arithmetic

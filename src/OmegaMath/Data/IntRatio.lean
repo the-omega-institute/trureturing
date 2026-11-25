@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.Int
 
 /-!
@@ -36,8 +37,13 @@ def denominator (pred : Nat) : Int := Int.ofNat pred.succ
 /-- The predecessor of the product of two positive denominators. -/
 def mulDenPred (a b : Nat) : Nat := (a.succ.mul b).add a
 
+theorem nat_denominator_mul (a b : Nat) :
+    Eq (a.succ.mul b.succ) (mulDenPred a b).succ :=
+  (Nat.mul_succ a.succ b).trans (Nat.add_succ (a.succ.mul b) a)
+
 theorem denominator_mul (a b : Nat) :
-    Eq (denominator (mulDenPred a b)) ((denominator a).mul (denominator b)) := Eq.refl
+    Eq (denominator (mulDenPred a b)) ((denominator a).mul (denominator b)) :=
+  congrArg Int.ofNat (nat_denominator_mul a b).symm
 
 /-- Cross multiplication on finite fractions. The undefined value agrees only with itself. -/
 def Equivalent (x y : IntRatio) : Prop :=
@@ -46,8 +52,18 @@ def Equivalent (x y : IntRatio) : Prop :=
     (fun a b => IntRatio.rec (motive := fun _ => Prop) False
       (fun c d => Eq (a.mul (denominator d)) (c.mul (denominator b))) y) x
 
+private theorem product_denominator {b d : Nat} {B D : Int}
+    (hb : Eq (denominator b) B) (hd : Eq (denominator d) D) :
+    Eq (denominator (mulDenPred b d)) (B.mul D) :=
+  (denominator_mul b d).trans (Eq.map₂ Int.mul hb hd)
+
+private theorem equivalent_of_cross {a c : Int} {b d : Nat} {B D : Int}
+    (hb : Eq (denominator b) B) (hd : Eq (denominator d) D)
+    (cross : Eq (a.mul D) (c.mul B)) : Equivalent (fraction a b) (fraction c d) :=
+  (congrArg a.mul hd).trans (cross.trans (congrArg c.mul hb).symm)
+
 theorem equivalent_refl (x : IntRatio) : Equivalent x x :=
-  IntRatio.rec (motive := fun x => Equivalent x x) True.intro (fun _ _ => Eq.refl) x
+  IntRatio.rec (motive := fun x => Equivalent x x) True.intro (fun _ _ => rfl) x
 
 theorem Equivalent.symm {x y : IntRatio} (h : Equivalent x y) : Equivalent y x :=
   let P := fun x y => Equivalent x y → Equivalent y x
@@ -113,21 +129,24 @@ theorem value_undefined_iff (a : Int) (n : Nat) :
     Iff (Eq (value a n) undefined) (Eq n Nat.zero) :=
   Iff.intro
     (Nat.rec (motive := fun n => Eq (value a n) undefined → Eq n Nat.zero)
-      (fun _ => Eq.refl)
+      (fun _ => rfl)
       (fun _ _ h => False.elim (Eq.subst
-        (fun x => IntRatio.rec (motive := fun _ => Prop) False (fun _ _ => True) x)
+        (motive := fun x => IntRatio.rec (motive := fun _ => Prop) False (fun _ _ => True) x)
         h True.intro)) n)
-    (fun h => Eq.subst (fun n => Eq (value a n) undefined) h.symm Eq.refl)
+    (fun h => Eq.subst (motive := fun n => Eq (value a n) undefined) h.symm rfl)
 
 theorem value_scale (a : Int) (d k : Nat) :
     Equivalent (value (a.mul (denominator k)) (d.mul k.succ)) (value a d) :=
   Nat.rec (motive := fun d =>
     Equivalent (value (a.mul (denominator k)) (d.mul k.succ)) (value a d))
-    (Eq.subst (fun d => Equivalent (value (a.mul (denominator k)) d) undefined)
+    (Eq.subst (motive := fun d => Equivalent (value (a.mul (denominator k)) d) undefined)
       (Nat.zero_mul k.succ).symm True.intro)
     (fun d _ =>
-      (Int.mul_right_comm a (denominator k) (denominator d)).trans
-        (Int.mul_assoc a (denominator d) (denominator k))) d
+      let cross := (Int.mul_right_comm a (denominator k) (denominator d)).trans
+        (Int.mul_assoc a (denominator d) (denominator k))
+      Eq.subst (motive := fun n => Equivalent (value (a.mul (denominator k)) n) (value a d.succ))
+        (nat_denominator_mul d k).symm
+        (equivalent_of_cross (denominator_mul d k) Omega.rfl cross)) d
 
 theorem ofInt_congr {a b : Int} (h : Eq a b) : Equivalent (ofInt a) (ofInt b) :=
   congrArg (fun t : Int => t.mul Int.one) h
@@ -146,29 +165,33 @@ theorem add_comm (x y : IntRatio) : Equivalent (x.add y) (y.add x) :=
   IntRatio.rec (motive := fun x => P x y)
     (IntRatio.rec (motive := fun y => P undefined y) True.intro (fun _ _ => True.intro) y)
     (fun a b => IntRatio.rec (motive := fun y => P (fraction a b) y)
-      True.intro (fun c d => Eq.map₂ Int.mul
+      True.intro (fun c d => equivalent_of_cross (denominator_mul b d) (denominator_mul d b)
+        (Eq.map₂ Int.mul
         (Int.add_comm (a.mul (denominator d)) (c.mul (denominator b)))
-        (Int.mul_comm (denominator d) (denominator b))) y) x
+        (Int.mul_comm (denominator d) (denominator b)))) y) x
 
 theorem mul_comm (x y : IntRatio) : Equivalent (x.mul y) (y.mul x) :=
   let P := fun (x y : IntRatio) => Equivalent (x.mul y) (y.mul x)
   IntRatio.rec (motive := fun x => P x y)
     (IntRatio.rec (motive := fun y => P undefined y) True.intro (fun _ _ => True.intro) y)
     (fun a b => IntRatio.rec (motive := fun y => P (fraction a b) y)
-      True.intro (fun c d => Eq.map₂ Int.mul (Int.mul_comm a c)
-        (Int.mul_comm (denominator d) (denominator b))) y) x
+      True.intro (fun c d => equivalent_of_cross (denominator_mul b d) (denominator_mul d b)
+        (Eq.map₂ Int.mul (Int.mul_comm a c)
+        (Int.mul_comm (denominator d) (denominator b)))) y) x
 
 theorem add_zero (x : IntRatio) : Equivalent (x.add (ofInt Int.zero)) x :=
   IntRatio.rec (motive := fun x => Equivalent (x.add (ofInt Int.zero)) x)
     True.intro (fun a b =>
       let d := denominator b
-      Eq.map₂ Int.mul
+      equivalent_of_cross (denominator_mul b Nat.zero) Omega.rfl (Eq.map₂ Int.mul
         ((Eq.map₂ Int.add (Int.mul_one a) (Int.zero_mul d)).trans (Int.add_zero a))
-        (Int.mul_one d).symm) x
+        (Int.mul_one d).symm)) x
 
 theorem mul_one (x : IntRatio) : Equivalent (x.mul (ofInt Int.one)) x :=
   IntRatio.rec (motive := fun x => Equivalent (x.mul (ofInt Int.one)) x)
-    True.intro (fun a b => Eq.map₂ Int.mul (Int.mul_one a) (Int.mul_one (denominator b)).symm) x
+    True.intro (fun a b =>
+      equivalent_of_cross (denominator_mul b Nat.zero) Omega.rfl
+        (Eq.map₂ Int.mul (Int.mul_one a) (Int.mul_one (denominator b)).symm)) x
 
 private theorem map₂_congr_left (f : Int → Nat → Int → Nat → IntRatio)
     (finite : ∀ (a c t : Int) (b d u : Nat), Equivalent (fraction a b) (fraction c d) →
@@ -198,7 +221,8 @@ theorem add_congr_left {x y : IntRatio} (h : Equivalent x y) (z : IntRatio) :
     Equivalent (x.add z) (y.add z) :=
   map₂_congr_left
     (fun a b c d => fraction ((a.mul (denominator d)).add (c.mul (denominator b))) (mulDenPred b d))
-    (fun a c t b d u => add_cross_left a (denominator b) c (denominator d) t (denominator u))
+    (fun a c t b d u eq => equivalent_of_cross (denominator_mul b u) (denominator_mul d u)
+      (add_cross_left a (denominator b) c (denominator d) t (denominator u) eq))
     h z
 
 theorem add_congr {x y z w : IntRatio} (h : Equivalent x y) (g : Equivalent z w) :
@@ -212,9 +236,10 @@ theorem mul_congr_left {x y : IntRatio} (h : Equivalent x y) (z : IntRatio) :
     Equivalent (x.mul z) (y.mul z) :=
   map₂_congr_left (fun a b c d => fraction (a.mul c) (mulDenPred b d))
     (fun a c t b d u eq =>
+      equivalent_of_cross (denominator_mul b u) (denominator_mul d u) (
       (Int.mul_mul_mul_comm a t (denominator d) (denominator u)).trans
         ((congrArg (fun k : Int => k.mul (t.mul (denominator u))) eq).trans
-          (Int.mul_mul_mul_comm c t (denominator b) (denominator u)).symm))
+          (Int.mul_mul_mul_comm c t (denominator b) (denominator u)).symm)))
     h z
 
 theorem mul_congr {x y z w : IntRatio} (h : Equivalent x y) (g : Equivalent z w) :
@@ -270,20 +295,38 @@ theorem add_assoc (x y z : IntRatio) : Equivalent ((x.add y).add z) (x.add (y.ad
     (fun y z => IntRatio.rec (motive := fun y => P undefined y z) True.intro (fun _ _ => True.intro) y)
     (fun _ _ _ => True.intro)
     (fun _ _ _ _ => True.intro)
-    (fun a b c d e f => Eq.map₂ Int.mul
-      (finite_add_assoc a (denominator b) c (denominator d) e (denominator f))
-      (Int.mul_assoc (denominator b) (denominator d) (denominator f)).symm) x y z
+    (fun a b c d e f =>
+      let B := denominator b
+      let D := denominator d
+      let F := denominator f
+      have lhs := congrArg (fun v => (((a.mul D).add (c.mul B)).mul F).add (e.mul v)) (denominator_mul b d)
+      have rhs := congrArg (fun v => (a.mul v).add (((c.mul F).add (e.mul D)).mul B)) (denominator_mul d f)
+      equivalent_of_cross (product_denominator (denominator_mul b d) (Omega.rfl (a := F)))
+        (product_denominator (Omega.rfl (a := B)) (denominator_mul d f))
+        (Eq.map₂ Int.mul (lhs.trans ((finite_add_assoc a B c D e F).trans rhs.symm))
+          (Int.mul_assoc B D F).symm)) x y z
 
 theorem mul_assoc (x y z : IntRatio) : Equivalent ((x.mul y).mul z) (x.mul (y.mul z)) :=
   let P := fun (x y z : IntRatio) => Equivalent ((x.mul y).mul z) (x.mul (y.mul z))
   on_triples P (fun _ _ => True.intro) (fun _ _ _ => True.intro) (fun _ _ _ _ => True.intro)
-    (fun a b c d e f => Eq.map₂ Int.mul (Int.mul_assoc a c e)
-      (Int.mul_assoc (denominator b) (denominator d) (denominator f)).symm) x y z
+    (fun a b c d e f =>
+      equivalent_of_cross (product_denominator (denominator_mul b d) (Omega.rfl (a := denominator f)))
+        (product_denominator (Omega.rfl (a := denominator b)) (denominator_mul d f))
+        (Eq.map₂ Int.mul (Int.mul_assoc a c e)
+          (Int.mul_assoc (denominator b) (denominator d) (denominator f)).symm)) x y z
 
 theorem mul_add (x y z : IntRatio) : Equivalent (x.mul (y.add z)) ((x.mul y).add (x.mul z)) :=
   let P := fun (x y z : IntRatio) => Equivalent (x.mul (y.add z)) ((x.mul y).add (x.mul z))
   on_triples P (fun _ _ => True.intro) (fun _ _ _ => True.intro) (fun _ _ _ _ => True.intro)
-    (fun a b c d e f => mul_add_cross a (denominator b) c (denominator d) e (denominator f)) x y z
+    (fun a b c d e f =>
+      let B := denominator b
+      let D := denominator d
+      let F := denominator f
+      have num := Eq.map₂ Int.add (congrArg (a.mul c).mul (denominator_mul b f))
+        (congrArg (a.mul e).mul (denominator_mul b d))
+      equivalent_of_cross (product_denominator (Omega.rfl (a := B)) (denominator_mul d f))
+        (product_denominator (denominator_mul b d) (denominator_mul b f))
+        ((mul_add_cross a B c D e F).trans (congrArg (fun t : Int => t.mul (B.mul (D.mul F))) num.symm))) x y z
 
 /-- Additive inverses for each finite ratio. -/
 theorem add_neg (a : Int) (b : Nat) :
@@ -291,7 +334,7 @@ theorem add_neg (a : Int) (b : Nat) :
   let d := denominator b
   have cancel := (congrArg ((a.mul d).add) (Int.neg_mul a d)).trans (Int.add_right_neg (a.mul d))
   (congrArg (fun t : Int => t.mul Int.one) cancel).trans
-    ((Int.zero_mul Int.one).trans (Int.zero_mul (d.mul d)).symm)
+    ((Int.zero_mul Int.one).trans (Int.zero_mul (denominator (mulDenPred b b))).symm)
 
 theorem mul_inv_cancel (a : Int) (b : Nat) (ha : Not (Eq a Int.zero)) :
     Equivalent ((fraction a b).mul (fraction a b).inv) (ofInt Int.one) :=
@@ -299,17 +342,17 @@ theorem mul_inv_cancel (a : Int) (b : Nat) (ha : Not (Eq a Int.zero)) :
     Equivalent ((fraction a b).mul (fraction a b).inv) (ofInt Int.one)
   (Int.rec (motive := P)
     (fun n => Nat.rec (motive := fun n => P (Int.ofNat n))
-      (fun h => False.elim (h Eq.refl))
+      (fun h => False.elim (h rfl))
       (fun n _ _ =>
         let p := (denominator n).mul (denominator b)
         (Int.mul_one p).trans
           ((Int.mul_comm (denominator n) (denominator b)).trans
-            (Int.one_mul ((denominator b).mul (denominator n))).symm)) n)
+            ((denominator_mul b n).symm.trans (Int.one_mul (denominator (mulDenPred b n))).symm))) n)
     (fun n _ =>
       let d := denominator b
       let v := denominator n
       (Int.mul_one (v.neg.mul d.neg)).trans
-        ((Int.neg_mul_neg v d).trans ((Int.mul_comm v d).trans (Int.one_mul (d.mul v)).symm))) a) ha
+        ((Int.neg_mul_neg v d).trans ((Int.mul_comm v d).trans ((denominator_mul b n).symm.trans (Int.one_mul (denominator (mulDenPred b n))).symm)))) a) ha
 
 theorem inv_congr {x y : IntRatio} (h : Equivalent x y) : Equivalent x.inv y.inv :=
   let P := fun (x y : IntRatio) => Equivalent x y → Equivalent x.inv y.inv
@@ -326,8 +369,8 @@ theorem inv_congr {x y : IntRatio} (h : Equivalent x y) : Equivalent x.inv y.inv
             have hc : Eq c Int.zero := Int.eq_of_mul_eq_mul_right (Int.ofNat_succ_ne_zero b)
               (eq.symm.trans ((congrArg (fun t : Int => t.mul (denominator d)) ha).trans
                 ((Int.zero_mul (denominator d)).trans (Int.zero_mul (denominator b)).symm)))
-            Eq.subst (fun a => Equivalent (fraction a b).inv (fraction c d).inv) ha.symm
-              (Eq.subst (fun c => Equivalent (fraction Int.zero b).inv (fraction c d).inv)
+            Eq.subst (motive := fun a => Equivalent (fraction a b).inv (fraction c d).inv) ha.symm
+              (Eq.subst (motive := fun c => Equivalent (fraction Int.zero b).inv (fraction c d).inv)
                 hc.symm True.intro))
           (fun ha =>
             have hc : Not (Eq c Int.zero) := fun hc => ha
@@ -352,7 +395,8 @@ theorem value_mul (a b : Int) (c d : Nat) :
     (congrArg (value (a.mul b)) (Nat.zero_mul d).symm)
     (fun c _ => Nat.rec (motive := fun d =>
       Eq ((value a c.succ).mul (value b d)) (value (a.mul b) (c.succ.mul d)))
-      Eq.refl (fun _ _ => Eq.refl) d) c
+      (congrArg (value (a.mul b)) (Nat.mul_zero c.succ).symm)
+      (fun d _ => congrArg (value (a.mul b)) (nat_denominator_mul c d).symm) d) c
 
 theorem value_add_same (a b : Int) (d : Nat) :
     Equivalent ((value a d).add (value b d)) (value (a.add b) d) :=
@@ -360,20 +404,21 @@ theorem value_add_same (a b : Int) (d : Nat) :
     Equivalent ((value a d).add (value b d)) (value (a.add b) d))
     True.intro (fun d _ =>
       let v := denominator d
+      equivalent_of_cross (denominator_mul d d) Omega.rfl (
       (congrArg (fun t : Int => t.mul v) (Int.add_mul a b v).symm).trans
-        (Int.mul_assoc (a.add b) v v)) d
+        (Int.mul_assoc (a.add b) v v))) d
 
 theorem value_self (n : Nat) (h : Not (Eq n Nat.zero)) :
     Equivalent (value (Int.ofNat n) n) (ofInt Int.one) :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) →
     Equivalent (value (Int.ofNat n) n) (ofInt Int.one))
-    (fun h => False.elim (h Eq.refl))
+    (fun h => False.elim (h rfl))
     (fun d _ _ => (Int.mul_one (denominator d)).trans (Int.one_mul (denominator d)).symm) n) h
 
 theorem value_zero (n : Nat) (h : Not (Eq n Nat.zero)) :
     Equivalent (value Int.zero n) (ofInt Int.zero) :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Equivalent (value Int.zero n) (ofInt Int.zero))
-    (fun h => False.elim (h Eq.refl))
+    (fun h => False.elim (h rfl))
     (fun d _ _ => (Int.zero_mul Int.one).trans (Int.zero_mul (denominator d)).symm) n) h
 
 private theorem le_of_equal_scalings (a b c d : Int) (k l : Nat)
@@ -383,10 +428,10 @@ private theorem le_of_equal_scalings (a b c d : Int) (k l : Nat)
   let first := Int.le_mul_ofNat_succ a b k
   let second := Int.le_mul_ofNat_succ c d l
   Iff.intro
-    (fun h => second.mp (Eq.subst (fun t : Int => t.le (d.mul (denominator l))) ha
-      (Eq.subst (Int.le (a.mul (denominator k))) hb (first.mpr h))))
-    (fun h => first.mp (Eq.subst (fun t : Int => t.le (b.mul (denominator k))) ha.symm
-      (Eq.subst (Int.le (c.mul (denominator l))) hb.symm (second.mpr h))))
+    (fun h => second.mp (Eq.subst (motive := fun t : Int => t.le (d.mul (denominator l))) ha
+      (Eq.subst (motive := Int.le (a.mul (denominator k))) hb (first.mpr h))))
+    (fun h => first.mp (Eq.subst (motive := fun t : Int => t.le (b.mul (denominator k))) ha.symm
+      (Eq.subst (motive := Int.le (c.mul (denominator l))) hb.symm (second.mpr h))))
 
 private theorem le_congr_one {x y : IntRatio} (h : Equivalent x y) (z : IntRatio) :
     And (Iff (Le x z) (Le y z)) (Iff (Le z x) (Le z y)) :=
@@ -429,13 +474,13 @@ theorem value_scale_of_ne_zero (a : Int) (d k : Nat) (hk : Not (Eq k Nat.zero)) 
     Equivalent (value (a.mul (Int.ofNat k)) (d.mul k)) (value a d) :=
   (Nat.rec (motive := fun k => Not (Eq k Nat.zero) →
     Equivalent (value (a.mul (Int.ofNat k)) (d.mul k)) (value a d))
-    (fun h => False.elim (h Eq.refl)) (fun k _ _ => value_scale a d k) k) hk
+    (fun h => False.elim (h rfl)) (fun k _ _ => value_scale a d k) k) hk
 
 theorem value_neg_self (n : Nat) (h : Not (Eq n Nat.zero)) :
     Equivalent (value (Int.ofNat n).neg n) (ofInt Int.one.neg) :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) →
     Equivalent (value (Int.ofNat n).neg n) (ofInt Int.one.neg))
-    (fun h => False.elim (h Eq.refl))
+    (fun h => False.elim (h rfl))
     (fun d _ _ => (Int.mul_one (denominator d).neg).trans
       ((Int.neg_mul Int.one (denominator d)).trans
         (congrArg Int.neg (Int.one_mul (denominator d)))).symm) n) h
@@ -446,9 +491,9 @@ theorem value_cross_iff (a b : Int) (c d : Nat)
   let P := fun c d => Not (Eq c Nat.zero) → Not (Eq d Nat.zero) →
     Iff (Equivalent (value a c) (value b d)) (Eq (a.mul (Int.ofNat d)) (b.mul (Int.ofNat c)))
   (Nat.rec (motive := fun c => P c d)
-    (fun h _ => False.elim (h Eq.refl))
+    (fun h _ => False.elim (h rfl))
     (fun c _ => Nat.rec (motive := fun d => P c.succ d)
-      (fun _ h => False.elim (h Eq.refl))
+      (fun _ h => False.elim (h rfl))
       (fun _ _ _ _ => Iff.intro (fun h => h) (fun h => h)) d) c) hc hd
 
 end IntRatio

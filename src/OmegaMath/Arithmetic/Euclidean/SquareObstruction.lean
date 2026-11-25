@@ -22,12 +22,13 @@ private theorem below_three (r : Nat) (hr : Nat.lt r three) :
     Or (Eq r .zero) (Or (Eq r Nat.one) (Eq r two)) :=
   let P := fun value => Nat.lt value three →
     Or (Eq value .zero) (Or (Eq value Nat.one) (Eq value two))
-  Nat.rec (motive := P) (fun _ => Or.inl Eq.refl)
+  Nat.rec (motive := P) (fun _ => Or.inl rfl)
     (fun n _ => Nat.rec (motive := fun k => P k.succ)
-      (fun _ => Or.inr (Or.inl Eq.refl))
+      (fun _ => Or.inr (Or.inl rfl))
       (fun m _ => Nat.rec (motive := fun k => P k.succ.succ)
-        (fun _ => Or.inr (Or.inr Eq.refl))
-        (fun _ _ h => False.elim h) m) n) r hr
+        (fun _ => Or.inr (Or.inr rfl))
+        (fun k _ h => False.elim (Nat.not_succ_le_zero k
+          (Nat.le_of_succ_le_succ (Nat.le_of_succ_le_succ (Nat.le_of_succ_le_succ h))))) m) n) r hr
 
 private theorem square_of_three_mul_add (q r : Nat) :
     Eq (((three.mul q).add r).mul ((three.mul q).add r))
@@ -50,22 +51,33 @@ private theorem three_dvd_of_three_dvd_square (a : Nat) (h : Dvd three (a.mul a)
   let r := division.remainder
   let q := division.quotient
   let quotient := (q.mul ((three.mul q).add r)).add (q.mul r)
-  have hpos : Nat.lt Nat.zero three := True.intro
+  have hpos : Nat.lt Nat.zero three := Nat.succ_le_succ (Nat.zero_le two)
   have spec := divMod_spec a three hpos
   have expand : Eq (a.mul a) ((three.mul quotient).add (r.mul r)) :=
     (congrArg (fun t : Nat => t.mul t) spec.left).trans (square_of_three_mul_add q r)
   have impossible (k : Nat) (hk : Eq (a.mul a) ((three.mul k).add Nat.one)) : False :=
-    h.elim fun _ eqMultiple =>
+    h.elim fun multiple eqMultiple =>
       Nat.succ_ne_zero .zero
-        (divMod_remainder_unique (r := Nat.one) (r' := Nat.zero) (hk.symm.trans eqMultiple)
-          (show Nat.lt Nat.one three from True.intro) hpos)
+        (divMod_remainder_unique (r := Nat.one) (r' := Nat.zero) (hk.symm.trans (eqMultiple.trans (Nat.add_zero (three.mul multiple)).symm))
+          (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le Nat.one))) hpos)
+  have twoSquared : Eq (two.mul two) (three.add Nat.one) :=
+    have twice := (Nat.succ_mul Nat.one two).trans
+      (congrArg (fun t : Nat => t.add two) (Nat.one_mul two))
+    have four := (Nat.add_succ two Nat.one).trans (congrArg Nat.succ (Nat.add_one two))
+    twice.trans (four.trans (Nat.add_one three).symm)
   (below_three r spec.right).elim
-    (fun hz => Exists.intro q (spec.left.trans (congrArg (Nat.add (three.mul q)) hz)))
+    (fun hz => Exists.intro q (spec.left.trans
+      ((congrArg (Nat.add (three.mul q)) hz).trans (Nat.add_zero (three.mul q)))))
     (fun nonzero => nonzero.elim
-      (fun h1 => False.elim (impossible quotient
-        (expand.trans (congrArg (fun t : Nat => (three.mul quotient).add (t.mul t)) h1))))
-      (fun h2 => False.elim (impossible quotient.succ
-        (expand.trans (congrArg (fun t : Nat => (three.mul quotient).add (t.mul t)) h2)))))
+      (fun h1 => False.elim (impossible quotient (expand.trans
+        (congrArg (Nat.add (three.mul quotient))
+          ((congrArg (fun t : Nat => t.mul t) h1).trans (Nat.one_mul Nat.one))))))
+      (fun h2 =>
+        have rem := congrArg (Nat.add (three.mul quotient))
+          ((congrArg (fun t : Nat => t.mul t) h2).trans twoSquared)
+        have carry := (Nat.add_assoc (three.mul quotient) three Nat.one).symm.trans
+          (congrArg (fun t : Nat => t.add Nat.one) (Nat.mul_succ three quotient).symm)
+        False.elim (impossible quotient.succ (expand.trans (rem.trans carry)))))
 
 private theorem cancel_square_factor {a b q : Nat} (ha : Eq a (three.mul q))
     (h : Eq (a.mul a) (three.mul (b.mul b))) : Eq (b.mul b) (three.mul (q.mul q)) :=
@@ -89,12 +101,13 @@ theorem no_square_eq_three_mul_square (a b : Nat) (hb : Not (Eq b .zero))
         have swapped := cancel_square_factor hq hnm
         (three_dvd_of_three_dvd_square n (Exists.intro (q.mul q) swapped)).elim fun r hr =>
           have hrne : Not (Eq r .zero) := fun hz =>
-            hn (hr.trans (congrArg (Nat.mul three) hz))
+            hn (hr.trans ((congrArg (Nat.mul three) hz).trans (Nat.mul_zero three)))
           have hgrowth : Nat.lt r (three.mul r) :=
-            Eq.subst (Nat.lt r) ((Nat.add_comm r (two.mul r)).trans (Nat.succ_mul two r).symm)
-              (add_lt_add_left (mul_pos (show Nat.lt .zero two from True.intro)
-                (pos_of_ne_zero hrne)) r)
-          have hlt : Nat.lt r n := Eq.subst (Nat.lt r) hr.symm hgrowth
+            Eq.subst (motive := Nat.lt r) ((Nat.add_comm r (two.mul r)).trans (Nat.succ_mul two r).symm)
+              (Eq.subst (motive := fun k => Nat.lt k (r.add (two.mul r))) (Nat.add_zero r)
+                (add_lt_add_left (mul_pos (Nat.succ_le_succ (Nat.zero_le Nat.one))
+                  (pos_of_ne_zero hrne)) r))
+          have hlt : Nat.lt r n := Eq.subst (motive := Nat.lt r) hr.symm hgrowth
           smaller r hlt q hrne (cancel_square_factor hr swapped)) b a hb h
 
 end Omega.Arithmetic

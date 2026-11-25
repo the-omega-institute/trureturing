@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.Jet2.Operations
 
 /-!
@@ -22,12 +24,14 @@ def kappa (x : IntRatio) : IntRatio := (fidelityDen x).inv
 def fidelityDenJet (x : IntRatio) : Jet2 :=
   ⟨fidelityDen x, IntRatio.two.mul x, IntRatio.one⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Evaluating the fidelity denominator at x + η gives exactly its three coefficients. -/
 theorem fidelityDenJet_eval (x : IntRatio) (hx : x.Finite) :
     Equivalent (one.add (((const x).add var).mul ((const x).add var))) (fidelityDenJet x) :=
   let atPoint : Jet2 := ⟨x, IntRatio.one, IntRatio.zero⟩
   have coordinate : Equivalent ((const x).add var) atPoint :=
-    And.intro (IntRatio.add_zero x) (And.intro Eq.refl Eq.refl)
+    And.intro (IntRatio.add_zero x) (And.intro rfl rfl)
   have linear := (IntRatio.add_congr (IntRatio.mul_one x) (IntRatio.one_mul x)).trans
     (IntRatio.two_mul x).symm
   have quadratic := (IntRatio.add_congr
@@ -52,6 +56,8 @@ theorem sub_add (a b c : IntRatio) :
   (IntRatio.add_congr (IntRatio.equivalent_refl a) (IntRatio.neg_add b c)).trans
     (IntRatio.add_assoc a b.neg c.neg).symm
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem b_sq_sub_den (x : IntRatio) (hx : x.Finite) :
     IntRatio.Equivalent (((IntRatio.two.mul x).mul (IntRatio.two.mul x)).sub (fidelityDen x))
       ((IntRatio.three.mul (x.mul x)).sub IntRatio.one) :=
@@ -120,12 +126,14 @@ theorem kappa_jet (x : IntRatio) :
     (And.intro True.intro (And.intro True.intro True.intro))
     (fun a b => kappa_jet_finite (IntRatio.fraction a b) True.intro) x
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- At x = 1, the coefficient triple is (1/2, −1/2, 1/4). -/
 theorem kappa_jet_one :
     Equivalent (kappaJetAt IntRatio.one)
       ⟨IntRatio.fraction Int.one Nat.zero.succ,
         IntRatio.fraction Int.one.neg Nat.zero.succ,
         IntRatio.fraction Int.one Nat.zero.succ.succ.succ⟩ :=
-  And.intro Eq.refl (And.intro Eq.refl Eq.refl)
+  And.intro rfl (And.intro rfl rfl)
 
 end Omega.Jet2

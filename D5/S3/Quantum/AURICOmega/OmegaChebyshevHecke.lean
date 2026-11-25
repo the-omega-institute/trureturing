@@ -25,7 +25,10 @@ public theorem pell_chebyshev (x : Int) (n : Nat) :
 /-- Doubling the index of the first-kind polynomial uses a single square. -/
 public theorem chebyshev_doubling (x : Int) (n : Nat) :
     Eq (T intRing x (n.add n)) ((Int.two.mul (Int.square (T intRing x n))).sub Int.one) :=
-  T_double intRing intRingLaws x n
+  have two : Eq intRing.two Int.two :=
+    congrArg Int.ofNat ((Nat.add_succ Nat.one Nat.zero).trans (congrArg Nat.succ (Nat.add_zero Nat.one)))
+  (T_double intRing intRingLaws x n).trans
+    (congrArg (fun t : Int => (t.mul (Int.square (T intRing x n))).sub Int.one) two)
 
 /-- Every even-degree character evaluates as a polynomial of the squared argument. -/
 public theorem even_chebyshev (x : Int) (n : Nat) :
@@ -92,7 +95,7 @@ public theorem lps_ramanujan_margins (shell : S5.Shell) (branch : Bool) :
       (IntRatio.Lt (IntRatio.ofInt Int.zero)
         ((IntRatio.ofInt S5.i20).sub (S5.squaredEigenvalue shell branch))) :=
   And.intro (S5.matrices_match shell)
-    (Eq.subst (IntRatio.Lt (IntRatio.ofInt Int.zero)) (S5.margin_eq_difference shell branch)
+    (Eq.subst (motive := IntRatio.Lt (IntRatio.ofInt Int.zero)) (S5.margin_eq_difference shell branch)
       (S5.margin_positive shell branch))
 
 /-- The five degree-four eigenlines and the two basis-change compositions. -/

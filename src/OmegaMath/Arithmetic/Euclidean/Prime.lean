@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 
 public import OmegaMath.Arithmetic.Euclidean.Division
 
@@ -59,8 +60,8 @@ private theorem extendFactorExclusion {n bound : Nat}
     (le_or_lt bound d).elim
       (fun hle =>
         have heq := Nat.le_antisymm (Nat.le_of_succ_le_succ hbelow) hle
-        excludeBound (Eq.subst (Nat.lt Nat.one) heq hlarge)
-          (Eq.subst (fun a => Dvd a n) heq hdiv))
+        excludeBound (Eq.subst (motive := Nat.lt Nat.one) heq hlarge)
+          (Eq.subst (motive := fun a => Dvd a n) heq hdiv))
       (fun hlt => exclude d hlarge hlt hdiv)
 
 /-- Scan the candidates from two up to, but excluding, the given number of steps plus two. -/
@@ -84,11 +85,11 @@ private theorem searchProperFactor_cases (n steps : Nat) (P : Bool → Prop)
         (fun found => found.elim (fun p hp => yes (Exists.intro p
           (And.intro hp.left (And.intro (Nat.le.step hp.right.left) hp.right.right)))))
         (fun exclude =>
-          let spec := dvd_iff_remainder_zero n d (Nat.zero_le step.succ)
+          let spec := dvd_iff_remainder_zero n d (Nat.succ_le_succ (Nat.zero_le step.succ))
           natEq_cases remainder Nat.zero P
             (fun eq => yes (Exists.intro d
               (And.intro (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le step)))
-                (And.intro (Nat.le.refl d.succ) (And.intro (spec.mpr eq)
+                (And.intro (Nat.le_refl d.succ) (And.intro (spec.mpr eq)
                   (fun e he hdiv => (le_or_lt d e).elim (fun h => h)
                     (fun h => False.elim (exclude e he h hdiv))))))))
             (fun ne => no (extendFactorExclusion exclude (fun _ hdiv => ne (spec.mp hdiv))))))
@@ -98,10 +99,10 @@ private theorem properFactorCases (n : Nat) (hn : Nat.lt Nat.one n) :
     Or (Exists (IsLeastProperFactor n n)) (NoProperFactor n n) :=
   Nat.rec (motive := fun n => Nat.lt Nat.one n →
       Or (Exists (IsLeastProperFactor n n)) (NoProperFactor n n))
-    (fun h => False.elim h)
+    (fun h => False.elim (Nat.not_succ_le_zero Nat.one h))
     (fun k _ => Nat.rec (motive := fun k => Nat.lt Nat.one k.succ →
         Or (Exists (IsLeastProperFactor k.succ k.succ)) (NoProperFactor k.succ k.succ))
-      (fun h => False.elim h)
+      (fun h => False.elim (lt_irrefl Nat.one h))
       (fun k _ _ => searchProperFactor_cases k.succ.succ k (fun _ => _) Or.inl Or.inr) k) n hn
 
 /-- Every natural number greater than one has a prime divisor that is least among
@@ -131,12 +132,12 @@ theorem exists_min_prime_dvd (n : Nat) (hn : Not (Eq n Nat.one)) :
     Exists (fun p => And (IsPrime p) (And (Dvd p n)
       (∀ d, Nat.lt Nat.one d → Dvd d n → Nat.le p d))))
     (fun _ =>
-      have htwo : Nat.lt Nat.one Nat.one.succ := Nat.le.refl Nat.one.succ
+      have htwo : Nat.lt Nat.one Nat.one.succ := Nat.le_refl Nat.one.succ
       have primeTwo := prime_of_no_proper_factor htwo (noProperFactorBelowTwo Nat.one.succ)
       Exists.intro Nat.one.succ
         (And.intro primeTwo (And.intro (dvd_zero Nat.one.succ) (fun _ hlarge _ => hlarge))))
     (fun n _ hn => exists_min_prime_dvd_of_one_lt n.succ
-      (pos_of_ne_zero (fun hz => hn (congrArg Nat.succ hz)))) n hn
+      (Nat.succ_le_succ (pos_of_ne_zero (fun hz => hn (congrArg Nat.succ hz))))) n hn
 
 theorem exists_prime_dvd (n : Nat) (hn : Not (Eq n Nat.one)) :
     Exists (fun p => And (IsPrime p) (Dvd p n)) :=
@@ -147,15 +148,15 @@ namespace NatList
 theorem dvd_prod_of_mem {p : Nat} {s : NatList} (hm : Mem p s) : Dvd p s.prod :=
   NatList.rec (motive := fun s => Mem p s → Dvd p s.prod) (fun h => False.elim h)
     (fun head tail ih h => h.elim
-      (fun he => Eq.subst (fun d => Dvd d (head.mul tail.prod)) he.symm
-        (Exists.intro tail.prod Eq.refl))
+      (fun he => Eq.subst (motive := fun d => Dvd d (head.mul tail.prod)) he.symm
+        (Exists.intro tail.prod rfl))
       (fun ht => dvd_trans (ih ht) (Exists.intro head (Nat.mul_comm head tail.prod)))) s hm
 
 theorem prod_pos {s : NatList} (h : ∀ p, Mem p s → Nat.lt Nat.zero p) :
     Nat.lt Nat.zero s.prod :=
   NatList.rec (motive := fun s => (∀ p, Mem p s → Nat.lt Nat.zero p) → Nat.lt Nat.zero s.prod)
-    (fun _ => Nat.le.refl Nat.one)
-    (fun head _ ih h => mul_pos (h head (Or.inl Eq.refl))
+    (fun _ => Nat.le_refl Nat.one)
+    (fun head _ ih h => mul_pos (h head (Or.inl rfl))
       (ih (fun p hm => h p (Or.inr hm)))) s h
 
 /-- Every list member greater than one leaves remainder one, even for a zero product. -/
@@ -163,7 +164,8 @@ theorem remainder_succ_prod_eq_one (s : NatList) {p : Nat}
     (hp : Nat.lt Nat.one p) (hm : Mem p s) : Eq (divMod s.prod.succ p).remainder Nat.one :=
   have spec := divMod_spec s.prod.succ p (pos_of_one_lt hp)
   (dvd_prod_of_mem hm).elim (fun k hk =>
-    divMod_remainder_unique (q' := k) (spec.left.symm.trans (congrArg Nat.succ hk)) spec.right hp)
+    divMod_remainder_unique (q' := k)
+      (spec.left.symm.trans ((congrArg Nat.succ hk).trans (Nat.add_one _).symm)) spec.right hp)
 
 /-- In particular, no member greater than one divides the successor of the product. -/
 theorem not_dvd_succ_prod (s : NatList) {p : Nat}
@@ -178,7 +180,7 @@ end NatList
 /-- The successor of a positive list product has a prime divisor outside the list. -/
 theorem prime_escape (s : NatList) (hs : Nat.lt Nat.zero s.prod) :
     Exists (fun p => And (IsPrime p) (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
-  have hlarge : Nat.lt Nat.one s.prod.succ := hs
+  have hlarge : Nat.lt Nat.one s.prod.succ := Nat.succ_le_succ hs
   (exists_prime_dvd s.prod.succ (fun h => ne_of_lt hlarge h.symm)).elim (fun p hp =>
     Exists.intro p (And.intro hp.left (And.intro hp.right
       (fun hm => s.not_dvd_succ_prod hp.left.left hm hp.right))))
@@ -189,7 +191,7 @@ theorem prime_escape_iff_prod_pos (s : NatList) :
   Iff.intro
     (fun escape => natEq_cases s.prod Nat.zero (fun _ => Nat.lt Nat.zero s.prod)
       (fun hz => escape.elim (fun p hp =>
-        have hdiv : Dvd p Nat.one := Eq.subst (Dvd p) (congrArg Nat.succ hz) hp.right.left
+        have hdiv : Dvd p Nat.one := Eq.subst (motive := Dvd p) (congrArg Nat.succ hz) hp.right.left
         False.elim (ne_of_lt hp.left.left (dvd_one hdiv).symm)))
       (fun hz => pos_of_ne_zero hz))
     (prime_escape s)

@@ -1,8 +1,11 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.BargmannGram.Coordinates
 import OmegaMath.Geometry.BargmannGram.Polynomial
 import OmegaMath.Geometry.BargmannGram.Identities
+import OmegaMath.Arithmetic.Euclidean.Division
 
 /-!
 Omega original.
@@ -54,22 +57,30 @@ def gateUnwindY : Quad4 := psiY.conj
 
 def unwindDenominator : Nat := Nat.one.succ.succ.succ.succ
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem psiXY_step : Step psiXY gateUnwindY unwindDenominator psiX :=
-  And.intro (Nat.succ_ne_zero _) Eq.refl
+  And.intro (Nat.succ_ne_zero _) rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem five_mul_ne_six (n : Nat) :
     Not (Eq (unwindDenominator.mul n) unwindDenominator.succ) :=
   let five := unwindDenominator
   let six := five.succ
   let ten := five.add five
   Nat.rec (motive := fun n => Not (Eq (five.mul n) six))
-    (fun h => Eq.subst (Nat.le six) h.symm (Nat.le.refl six))
-    (fun n _ =>
-      Nat.rec (motive := fun n => Not (Eq (five.mul n.succ) six))
-        (fun h => Eq.subst (Nat.le six) h.symm (Nat.le.refl six))
-        -- Five times (k + 2) is ten successors of five times k.
-        (fun k _ h => Eq.subst (Nat.le ten) h (Nat.zero_le (five.mul k))) n) n
+    (fun h => Nat.succ_ne_zero five h.symm)
+    (fun n _ => Nat.rec (motive := fun n => Not (Eq (five.mul n.succ) six))
+      (fun h => Arithmetic.ne_of_lt (Nat.le_refl six) h)
+      (fun k _ h =>
+        have bound : Nat.le ten (five.mul k.succ.succ) :=
+          Arithmetic.mul_le_mul_left (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le k))) five
+        have below : Nat.lt six ten := Nat.le.step (Nat.le.step (Nat.le.step (Nat.le_refl six.succ)))
+        Arithmetic.lt_irrefl six (Nat.le_trans below (Eq.subst (motive := Nat.le ten) h bound))) n) n
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem psiYX_blocked : Not (Enabled psiYX gateUnwindY unwindDenominator) :=
   fun enabled => enabled.elim (fun q h =>
     have hx : Eq ((Int.ofNat unwindDenominator).mul q.x) (Int.negSucc unwindDenominator) :=
@@ -77,11 +88,13 @@ theorem psiYX_blocked : Not (Enabled psiYX gateUnwindY unwindDenominator) :=
     five_mul_ne_six q.x.natAbs
       ((Int.natAbs_mul (Int.ofNat unwindDenominator) q.x).symm.trans (congrArg Int.natAbs hx)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem quaternion_fractran_order_separation :
     And (Eq psiXY.normSq (unwindDenominator.mul unwindDenominator))
       (And (Eq psiYX.normSq (unwindDenominator.mul unwindDenominator))
         (And (Step psiXY gateUnwindY unwindDenominator psiX)
           (Not (Enabled psiYX gateUnwindY unwindDenominator)))) :=
-  And.intro Eq.refl (And.intro Eq.refl (And.intro psiXY_step psiYX_blocked))
+  And.intro rfl (And.intro rfl (And.intro psiXY_step psiYX_blocked))
 
 end Omega.Computability.QuaternionFractran

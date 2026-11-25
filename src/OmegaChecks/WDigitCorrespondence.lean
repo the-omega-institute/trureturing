@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 
+import all OmegaInit.Prelude
 public import Mathlib.Data.Nat.Fib.Zeckendorf
 public import OmegaChecks.NatCorrespondence
 public import OmegaMath.Arithmetic.WDigits.Codec
@@ -44,7 +45,9 @@ private theorem rep_cons_iff (head : Nat) (tail : List Nat) :
 
 private theorem toStd_pred (index : Omega.Nat) :
     toStd index.pred = toStd index - 1 := by
-  induction index using Omega.Nat.rec <;> rfl
+  induction index using Omega.Nat.rec with
+  | zero => exact congrArg toStd (fromOmegaEq Omega.Nat.pred_zero)
+  | succ n _ => exact congrArg toStd (fromOmegaEq (Omega.Nat.pred_succ n))
 
 private theorem tail_bound (index : Omega.Nat) (tail : NatList) :
     (indices tail).headD 0 ≤ toStd index.pred + 1 ↔

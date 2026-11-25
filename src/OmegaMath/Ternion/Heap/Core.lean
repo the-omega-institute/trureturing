@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.Quaternion
 
 /-!
@@ -34,7 +36,7 @@ theorem RayEquiv.intro {a b : Quaternion} (ha : a.Nonzero) (hb : b.Nonzero)
   And.intro ha (And.intro hb (Exists.intro k (Exists.intro l (And.intro hk (And.intro hl h)))))
 
 theorem RayEquiv.refl {a : Quaternion} (ha : a.Nonzero) : RayEquiv a a :=
-  RayEquiv.intro ha ha Int.one Int.one int_one_ne_zero int_one_ne_zero Eq.refl
+  RayEquiv.intro ha ha Int.one Int.one int_one_ne_zero int_one_ne_zero rfl
 
 theorem RayEquiv.symm {a b : Quaternion} (h : RayEquiv a b) : RayEquiv b a :=
   h.right.right.elim (fun k witness => witness.elim (fun l e =>
@@ -75,7 +77,7 @@ namespace ProjTernion
 
 def ofNonzero (q : Quaternion) (h : q.Nonzero) : ProjTernion :=
   ⟨q, (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → PositiveNorm n)
-    (fun h => False.elim (h Eq.refl)) (fun n _ _ => PositiveNorm.succ n) q.normSq)
+    (fun h => False.elim (h rfl)) (fun n _ _ => PositiveNorm.succ n) q.normSq)
       (normSq_ne_zero h)⟩
 
 theorem nonzero (p : ProjTernion) : p.rep.Nonzero :=
@@ -121,7 +123,7 @@ theorem triad_left_absorption (x z : Quaternion) (hx : x.Nonzero) (hz : z.Nonzer
   let d := Int.ofNat x.normSq
   have h := (congrArg (fun a : Quaternion => a.mul z) (mul_conj_eq_normSq x)).trans (scalar_mul d z)
   have hd : Not (Eq d Int.zero) := fun e => normSq_ne_zero hx (Int.ofNat_inj.mp e)
-  Eq.subst (fun a => RayEquiv a z) h.symm (ray_scale z hz d hd)
+  Eq.subst (motive := fun a => RayEquiv a z) h.symm (ray_scale z hz d hd)
 
 theorem triad_right_absorption (x z : Quaternion) (hx : x.Nonzero) (hz : z.Nonzero) :
     RayEquiv (triad x z z) x :=
@@ -129,7 +131,7 @@ theorem triad_right_absorption (x z : Quaternion) (hx : x.Nonzero) (hz : z.Nonze
   have h := (mul_assoc x z.conj z).trans
     ((congrArg x.mul (conj_mul_eq_normSq z)).trans (mul_scalar d x))
   have hd : Not (Eq d Int.zero) := fun e => normSq_ne_zero hz (Int.ofNat_inj.mp e)
-  Eq.subst (fun a => RayEquiv a x) h.symm (ray_scale x hx d hd)
+  Eq.subst (motive := fun a => RayEquiv a x) h.symm (ray_scale x hx d hd)
 
 theorem triad_assoc_eq (x y z u v : Quaternion) :
     Eq (triad (triad x y z) u v) (triad x y (triad z u v)) :=
@@ -140,7 +142,7 @@ theorem triad_assoc_eq (x y z u v : Quaternion) :
 theorem triad_assoc (x y z u v : Quaternion) (hx : x.Nonzero) (hy : y.Nonzero)
     (hz : z.Nonzero) (hu : u.Nonzero) (hv : v.Nonzero) :
     RayEquiv (triad (triad x y z) u v) (triad x y (triad z u v)) :=
-  Eq.subst (RayEquiv (triad (triad x y z) u v)) (triad_assoc_eq x y z u v)
+  Eq.subst (motive := RayEquiv (triad (triad x y z) u v)) (triad_assoc_eq x y z u v)
     (RayEquiv.refl (triad_closed (triad_closed hx hy hz) hu hv))
 
 def p0 : Quaternion := Quaternion.one
@@ -149,6 +151,8 @@ def pHalf : Quaternion := ⟨Int.one, Int.one, Int.zero, Int.zero⟩
 
 def qHalf : Quaternion := ⟨Int.one, Int.zero, Int.one, Int.zero⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem triad_noncommutative :
     Not (RayEquiv (triad pHalf p0 qHalf) (triad qHalf p0 pHalf)) :=
   fun h => h.right.right.elim (fun k witness => witness.elim (fun l e =>
@@ -161,9 +165,11 @@ theorem triad_noncommutative :
     have zero : Eq l Int.zero :=
       (Int.rec (motive := fun n => Eq n n.neg → Eq n Int.zero)
         (fun n => Nat.rec (motive := fun n => Eq (Int.ofNat n) (Int.ofNat n).neg →
-          Eq (Int.ofNat n) Int.zero) (fun _ => Eq.refl)
-          (fun d _ sign => False.elim (Eq.subst Int.NonNeg sign (Int.NonNeg.mk d.succ))) n)
-        (fun d sign => False.elim (Eq.subst Int.NonNeg sign.symm (Int.NonNeg.mk d.succ))) l) sign
+          Eq (Int.ofNat n) Int.zero) (fun _ => rfl)
+          (fun d _ sign => False.elim (Int.not_nonneg_negSucc d
+            (Eq.subst (motive := Int.NonNeg) sign (Int.NonNeg.mk d.succ)))) n)
+        (fun d sign => False.elim (Int.not_nonneg_negSucc d
+          (Eq.subst (motive := Int.NonNeg) sign.symm (Int.NonNeg.mk d.succ)))) l) sign
     e.right.left zero))
 
 end Omega.Ternion
