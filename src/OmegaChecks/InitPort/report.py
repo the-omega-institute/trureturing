@@ -26,6 +26,13 @@ def report(product):
                 owners[name].append(owner)
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
+        # Incompatible copies are rejected together. Transfer visits one active
+        # name, while every physical Init definition site needs that explanation.
+        conflicts = {n: [] for n, reason in rejected.items()
+                     if reason.startswith("distinct official declarations under the same name")}
+        for row in official["declarations"]:
+            if row["name"] in conflicts:
+                conflicts[row["name"]].append(row["module"])
         output = stage / "init-gaps.tsv"
         with output.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
@@ -54,6 +61,9 @@ def report(product):
                     key = (dep_owners[0], dep)
                     why, dep = attempts[key]
                 reason = rejected.get(path[-1], why) if why == "no computation correspondence" else why
+                if path[-1] in conflicts:
+                    reason = (rejected[path[-1]] + ". Public Init definition sites: "
+                              + ", ".join(sorted(conflicts[path[-1]])))
                 if dep in path:
                     reason = f"dependency cycle through {dep}"
                 writer.writerow([row["module"], name, row["kind"], str(row["unsafe"]).lower(),
