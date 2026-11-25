@@ -510,6 +510,12 @@ private theorem assocE_decomposition :
   | add y z hy hz =>
     rw [TensorProduct.tmul_add, map_add assocE, map_add (_ + rightLift _), hy, hz]
 
+private local instance (priority := 2000) assocStateAddCommMonoid : AddCommMonoid AssocState :=
+  inferInstance
+
+private local instance (priority := 2000) assocStateModule : Module ℂ AssocState :=
+  inferInstance
+
 /-- The literal reassociated relative shell at fixed plane momentum. -/
 def relativeShell (p : Charge hyperbolicPlane) : Submodule ℂ AssocState :=
   (rightLift (chargeProject p) - 1).ker ⊓ (assocB0.ker ⊓ assocE.ker)

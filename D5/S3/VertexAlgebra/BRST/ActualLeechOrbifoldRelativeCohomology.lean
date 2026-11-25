@@ -806,7 +806,7 @@ private theorem coefficient_differential (x : relativeShell p) :
   exact (groundEquiv F B p hp).toLinearMap.map_zero
 
 /-- The degree g cycles are the actual relative cycles in the N eigenspace. -/
-abbrev GradedCycles (g : ℤ) : Submodule ℂ (relativeShell p) :=
+def GradedCycles (g : ℤ) : Submodule ℂ (relativeShell p) :=
   GhostSpace p g ⊓ LinearMap.ker (relativeQ F B p)
 
 local instance (g : ℤ) : AddCommGroup (GradedCycles F B p g) :=
@@ -824,7 +824,7 @@ private def gradedBoundaryMap (g : ℤ) : GhostSpace p (g - 1) →ₗ[ℂ] Grade
         LinearMap.congr_fun (relativeQ_squared F B p) y.val)
 
 /-- The boundaries come from the actual preceding ghost-number eigenspace. -/
-abbrev GradedBoundaries (g : ℤ) := LinearMap.range (gradedBoundaryMap F B p g)
+def GradedBoundaries (g : ℤ) := LinearMap.range (gradedBoundaryMap F B p g)
 
 /-- The actual graded kernel/image quotient. -/
 abbrev GradedCohomology (g : ℤ) := GradedCycles F B p g ⧸ GradedBoundaries F B p g

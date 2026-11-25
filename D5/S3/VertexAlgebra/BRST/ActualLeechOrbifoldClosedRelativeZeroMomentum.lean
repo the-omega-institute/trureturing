@@ -47,7 +47,7 @@ section Graded
 variable (pL pR : Charge hyperbolicPlane)
 
 /-- Closed cycles of a fixed total ghost degree in the literal tensor complex. -/
-abbrev GradedCycles (g : ℤ) : Submodule ℂ (Shell pL pR) :=
+def GradedCycles (g : ℤ) : Submodule ℂ (Shell pL pR) :=
   TotalGhostSpace pL pR g ⊓ LinearMap.ker (differential pL pR)
 
 local instance (p q : Charge hyperbolicPlane) (g : ℤ) :
@@ -64,7 +64,7 @@ private def gradedBoundaryMap (g : ℤ) :
       exact LinearMap.congr_fun (differential_square pL pR) y.val)
 
 /-- Boundaries in degree `g` are images of actual cochains in degree `g - 1`. -/
-abbrev GradedBoundaries (g : ℤ) : Submodule ℂ (GradedCycles pL pR g) :=
+def GradedBoundaries (g : ℤ) : Submodule ℂ (GradedCycles pL pR g) :=
   LinearMap.range (gradedBoundaryMap pL pR g)
 
 /-- The degreewise kernel/image quotient for the signed closed differential. -/
