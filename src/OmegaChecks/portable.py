@@ -479,6 +479,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 or any(root(name) == "Reg" for name in only))
     sources, graph = discovered if discovered is not None else import_graph(lean, with_reg=with_reg)
     selected = consumers(graph)
+    omega_consumers = set(selected)
     portable_clients = [name for name in selected if name.startswith("OmegaChecks.Portable.")]
     if only or scoped:
         if set(only) - set(selected):
@@ -500,7 +501,9 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if not scoped and backend == "both" and frozen is None:
         common_roots = [*all_basis, *portable_clients]
     common_modules = closure(graph, common_roots)
-    checked_refs = [n for n in downstream if root(n) != "LeanInformationAuditInterface"]
+    # Ordinary Mathlib dependencies compile in the closure. Only modules consuming
+    # an Omega layer publish statements under its source-qualification contract.
+    checked_refs = [n for n in downstream if n in omega_consumers]
     # A project can reuse a short name without importing the matching port.
     catalog = sorted(n for n in all_basis if root(n) == "OmegaMathlib") if backend == "both" and checked_refs else []
     compiled = dict.fromkeys([*modules, *common_modules, *closure(graph, catalog)])
