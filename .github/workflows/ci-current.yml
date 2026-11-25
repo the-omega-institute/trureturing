@@ -473,6 +473,14 @@ jobs:
           path: ${{ steps.omega_scope.outputs.report-file }}
           include-hidden-files: true
           if-no-files-found: error
+      - name: Publish protected declaration comparison
+        if: ${{ !cancelled() && hashFiles('.lake/build/omega-checks/retirement.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: omega-protected-declarations
+          path: .lake/build/omega-checks/retirement.json
+          include-hidden-files: true
+          if-no-files-found: error
 
   # The one required check. It always runs, so a failed or cancelled unit, or a
   # failed detection, is red rather than skipped.

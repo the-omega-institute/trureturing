@@ -1,4 +1,4 @@
-/- GID: D5/S3/Geometry/DualChartCayley
+/- GID: D5/S3/Geometry/Cayley3D/DualChart
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:algebraically-proved)

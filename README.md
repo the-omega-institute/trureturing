@@ -302,7 +302,7 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 The `trureturing` Lake package builds D5 mathematics against pinned Lean Init and
 Mathlib by default. For the chapter 39 projective overlap, import
-`D5.S3.Geometry.ProjectiveCoordinates.Basic` to compute the reading or `D5.S3.Geometry.ProjectiveCoordinates`
+`D5.S3.Geometry.ProjectiveCoordinates.Basic` to compute the reading or `D5.S3.Geometry.ProjectiveCoordinates.Scaling`
 to use the scaling theorem. Admission recompiles the same source against
 `OmegaInit` and `OmegaMathlib`, compares the exported mathematics, and replays
 the strict library in an empty Lean kernel with zero axioms.

@@ -9,11 +9,13 @@ LIBRARIES = BASIS
 CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
-CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
+CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.RetiredDeclarations",
+                "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",
           "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
-          "src/OmegaChecks/retirement.py", "src/OmegaChecks/test_object_origins.py"}
+          "src/OmegaChecks/retirement.py", "src/OmegaChecks/test_retirement.py",
+          "src/OmegaChecks/test_object_origins.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
 IMPORTER_INPUTS = {"OmegaMathlib", "OmegaChecks.Portable.Common"}
@@ -29,7 +31,7 @@ def module_path(path):
     if path.startswith(("src/", "strict/")):
         directory, _, relative = path.partition("/")
         name = relative.removesuffix(".lean").replace("/", ".")
-        if directory == "src" or root(name) in BASIS:
+        if directory == "src" or root(name) in BASIS | {"OmegaMath"}:
             return name
     return None
 

@@ -8,7 +8,7 @@
 
 module
 prelude
-public import D5.S3.Geometry.BargmannGram
+public import D5.S3.Geometry.BargmannGram.Invariants
 public import D5.S3.Fourier.PiFreeHaar.Moments
 public import D5.S3.Fourier.PiFreeHaar.Hecke
 public import D5.S3.Quantum.AURICOmega.FractionPrograms.QuaternionFractran

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Geometry/BargmannGram
+/- GID: D5/S3/Geometry/BargmannGram/Invariants
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:algebraically-proved)

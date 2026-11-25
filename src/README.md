@@ -22,7 +22,7 @@ D5 按专题存放并冻结项目自己的数学对象和定理。标准对象�
 对于整数齐次坐标 `[P:Q]`，第 39 章的重叠度是 `Q²/(P²+Q²)`。两坐标均为零时读数未定义。比如 `[1:1]` 和 `[2:2]` 的读数都等价于 1/2。
 
 - 计算读数时，导入 `D5.S3.Geometry.ProjectiveCoordinates.Basic`。这个模块定义 `Omega.Projective.kappa`，输入是坐标的绝对值。[定义](../D5/S3/Geometry/ProjectiveCoordinates/Basic.lean) · [边界算例](OmegaChecks/Examples.lean)
-- 证明同比例放大坐标保持读数时，导入 `D5.S3.Geometry.ProjectiveCoordinates`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](../D5/S3/Geometry/ProjectiveCoordinates.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
+- 证明同比例放大坐标保持读数时，导入 `D5.S3.Geometry.ProjectiveCoordinates.Scaling`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](../D5/S3/Geometry/ProjectiveCoordinates/Scaling.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
 - 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下文的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
 
 ## 官方 Lean 的模块与名称

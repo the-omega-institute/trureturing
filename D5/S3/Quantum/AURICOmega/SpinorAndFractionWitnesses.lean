@@ -12,7 +12,7 @@ import all OmegaInit.Prelude
 import all OmegaInit.Data.Int.Basic
 public import D5.S3.Geometry.Matrices.Mat2
 public import D5.S3.Geometry.Ternion.Heap.Spinor
-public import D5.S3.Geometry.BargmannGram
+public import D5.S3.Geometry.BargmannGram.Invariants
 public import D5.S0.Computability.FractionPrograms.Fractran
 public import D5.S0.Arithmetic.Euclidean.Division
 

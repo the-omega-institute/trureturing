@@ -8,8 +8,8 @@
 
 module
 prelude
-public import D5.S3.Geometry.LieTriple
-public import D5.S3.Geometry.DualChartCayley
+public import D5.S3.Geometry.Cayley3D.LieTriple
+public import D5.S3.Geometry.Cayley3D.DualChart
 public import D5.S3.Fourier.HurwitzFreeGroup.Adjoint
 
 namespace D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup

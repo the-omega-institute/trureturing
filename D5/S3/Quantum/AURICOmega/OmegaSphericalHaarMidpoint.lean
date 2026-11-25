@@ -9,7 +9,7 @@
 module
 prelude
 public import D5.S3.Fourier.AllDegreeHaar
-public import D5.S3.Geometry.SphericalLaws
+public import D5.S3.Geometry.BargmannGram.SphericalLaws
 public import D5.S3.Calculus.MidpointDrift
 
 namespace D5.S3.Quantum.AURICOmega.OmegaSphericalHaarMidpoint

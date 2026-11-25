@@ -21,7 +21,7 @@ SRC = ROOT / "src"
 
 
 STRICT = BASIS
-TOPIC = "D5.S3.Geometry.ProjectiveCoordinates"
+TOPIC = "D5.S3.Geometry.ProjectiveCoordinates.Scaling"
 AUDIT = ROOT / ".lake/build/bin/omegaAudit"
 # Resolved once: each `lake env` call re-reads the workspace configuration.
 ENV = {}
@@ -122,6 +122,7 @@ def check_audits():
     check_module_surface()
     check_consumer_exports()
     run(sys.executable, "-B", SRC / "OmegaChecks/test_object_origins.py")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_retirement.py")
 
 
 def check_consumer_exports():
@@ -454,8 +455,8 @@ def check_incremental():
     probes = [
         ("D5/S3/Geometry/SeparateTopicProbe.lean", None,
          "module\nprelude\npublic import OmegaInit\n", set()),
-        ("D5/S3/Geometry/ProjectiveCoordinates.lean", "he.symm\n", "he.symm.symm.symm\n", {TOPIC}),
-        ("D5/S3/Geometry/ProjectiveCoordinates.lean", None,
+        ("D5/S3/Geometry/ProjectiveCoordinates/Scaling.lean", "he.symm\n", "he.symm.symm.symm\n", {TOPIC}),
+        ("D5/S3/Geometry/ProjectiveCoordinates/Scaling.lean", None,
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.rfl\n",
          dependents(TOPIC)),
         ("strict/OmegaInit/Prelude.lean", None,

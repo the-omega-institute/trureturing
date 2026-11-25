@@ -1,4 +1,4 @@
-/- GID: D5/S3/Geometry/ProjectiveCoordinates
+/- GID: D5/S3/Geometry/ProjectiveCoordinates/Scaling
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:algebraically-proved)

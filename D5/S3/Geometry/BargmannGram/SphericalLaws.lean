@@ -1,4 +1,4 @@
-/- GID: D5/S3/Geometry/SphericalLaws
+/- GID: D5/S3/Geometry/BargmannGram/SphericalLaws
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:algebraically-proved)
@@ -10,7 +10,7 @@ module
 prelude
 import all OmegaInit.Data.Int.Basic
 import all OmegaInit.Prelude
-public import D5.S3.Geometry.BargmannGram
+public import D5.S3.Geometry.BargmannGram.Invariants
 import D5.S3.Geometry.BargmannGram.Fractions
 import D5.S3.Geometry.BargmannGram.Polynomial
 
