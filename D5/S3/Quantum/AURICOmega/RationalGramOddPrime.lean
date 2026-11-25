@@ -12,6 +12,8 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.Algebra.Order.Field.Rat
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.RootSystem.OfBilinear
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
@@ -107,30 +109,27 @@ private theorem rational_reflection_with_fixed_vectors {ι : Type} [Fintype ι]
   by_cases h : a = b
   · exact ⟨id, h, fun _ _ => rfl, fun _ _ => rfl⟩
   let u := a - b
-  let d := u ⬝ᵥ u
-  have hd : d ≠ 0 := fun hz => h (sub_eq_zero.mp (dotProduct_self_eq_zero.mp hz))
-  let coef := fun x : ι → ℚ => 2 * (u ⬝ᵥ x) / d
-  let reflect := fun x : ι → ℚ => x - coef x • u
-  have hdouble : d = 2 * (u ⬝ᵥ a) := by
-    simp only [d, u, dotProduct_sub, sub_dotProduct, ← hab, dotProduct_comm a b]
-    ring
-  refine ⟨reflect, ?_, ?_, ?_⟩
-  · have hc : coef a = 1 := by
-      dsimp only [coef]
-      rw [← hdouble, div_self hd]
-    rw [show reflect a = a - coef a • u from rfl, hc, one_smul]
-    simp [u]
-  · intro x y
-    change (x - coef x • u) ⬝ᵥ (y - coef y • u) = x ⬝ᵥ y
-    simp only [dotProduct_sub, sub_dotProduct, smul_dotProduct, dotProduct_smul, smul_eq_mul,
-      dotProduct_comm x u]
-    change x ⬝ᵥ y - coef x * (u ⬝ᵥ y) - coef y * (u ⬝ᵥ x - coef x * d) = x ⬝ᵥ y
-    dsimp only [coef]
-    field_simp [hd]
-    ring
+  let B : (ι → ℚ) →ₗ[ℚ] (ι → ℚ) →ₗ[ℚ] ℚ := dotProductBilin ℚ ℚ
+  have hd : B u u ≠ 0 := fun hz => h (sub_eq_zero.mp (dotProduct_self_eq_zero.mp hz))
+  have hu : B.IsReflective u := .of_dvd_two B ⟨2 / B u u, by field_simp⟩
+  have hsymm : B.IsSymm := ⟨fun x y => dotProduct_comm x y⟩
+  let coef := hu.coroot B
+  have hcoef (x : ι → ℚ) : B u u * coef x = 2 * (u ⬝ᵥ x) :=
+    hu.apply_self_mul_coroot_apply B
+  have ha : coef a = 1 := by
+    have hd' : B u u = 2 * (u ⬝ᵥ a) := by
+      change u ⬝ᵥ u = _
+      simp only [u, dotProduct_sub, sub_dotProduct, ← hab, dotProduct_comm a b]
+      ring
+    exact mul_left_cancel₀ hd ((hcoef a).trans (by rw [← hd', mul_one]))
+  refine ⟨Module.reflection (hu.coroot_apply_self B), ?_,
+    hu.isOrthogonal_reflection B hsymm, ?_⟩
+  · simp [Module.reflection_apply, show hu.coroot B a = 1 from ha, u]
   · intro x hx
-    change x - coef x • u = x
-    simp [coef, u, sub_dotProduct, hx]
+    have hux : u ⬝ᵥ x = 0 := by simp [u, sub_dotProduct, hx]
+    have hc : coef x = 0 :=
+      mul_left_cancel₀ hd ((hcoef x).trans (by simp [hux]))
+    simp [Module.reflection_apply, show hu.coroot B x = 0 from hc]
 
 private theorem no_vector_in_six_with_frame
     (v : Fin 6 → ℚ)
