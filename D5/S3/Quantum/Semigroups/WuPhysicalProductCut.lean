@@ -34,6 +34,23 @@ def carPartner (G : TwoMode) : TwoMode :=
 def carProductCut (G : TwoMode) (u rho : ℝ) : TwoMode :=
   (1 / 2 : ℂ) • (1 + (u : ℂ) • G + (rho : ℂ) • carPartner G)
 
+/-- Normalized trace coordinates of a two-mode matrix in the physical Pauli frame. -/
+def carCoordinate (H : TwoMode) (p q : Pauli) : ℝ :=
+  (H * pauliWord p q).trace.re / 4
+
+/-- The magnitude of the degree-one Clifford component. -/
+def carFirstNorm (H : TwoMode) : ℝ :=
+  Real.sqrt ((carCoordinate H .I .X) ^ 2 + (carCoordinate H .I .Y) ^ 2 +
+    (carCoordinate H .X .Z) ^ 2 + (carCoordinate H .Y .Z) ^ 2)
+
+private theorem carDirection_overlap (H : TwoMode) (a b c d : ℝ) :
+    (H * carDirection a b c d).trace.re =
+      4 * (a * carCoordinate H .I .X + b * carCoordinate H .I .Y +
+        c * carCoordinate H .X .Z + d * carCoordinate H .Y .Z) := by
+  simp [carDirection, carCoordinate, Matrix.mul_add, Matrix.mul_smul,
+    Matrix.trace_add, Matrix.trace_smul, smul_eq_mul, Complex.mul_re, Complex.add_re]
+  ring
+
 private theorem carDirection_hermitian (a b c d : ℝ) :
     (carDirection a b c d)ᴴ = carDirection a b c d := by
   ext ⟨i,k⟩ ⟨j,l⟩
@@ -110,12 +127,16 @@ theorem carProductCut_projection (a b c d u rho : ℝ)
   have hFGF : F * G * F = 0 := carDirection_even _ _ _ _
   have hGF : G * (F * F) = (1 - F * F) * G := carDirection_parity _ _ _ _
   have hZ : Zᴴ = Z := by
-    simp [Z, carPartner, ← hF, Matrix.conjTranspose_mul, hG, Matrix.mul_assoc]
+    change (F - G * F * G)ᴴ = _
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, hF, hG]
+    simp [Z, carPartner, Matrix.mul_assoc]
   have hGZ : G * Z + Z * G = 0 := by
     dsimp [Z, carPartner]
-    rw [Matrix.mul_sub, Matrix.sub_mul, ← Matrix.mul_assoc G G, hGG, Matrix.one_mul,
-      Matrix.mul_assoc (G * F) G G, hGG, Matrix.mul_one]
-    abel
+    calc
+      G * (F - G * F * G) + (F - G * F * G) * G =
+          G * F - (G * G) * F * G + (F * G - G * F * (G * G)) := by
+        noncomm_ring
+      _ = 0 := by rw [hGG]; simp
   have hZZ : Z * Z = 1 := by
     dsimp [Z, carPartner]
     calc
@@ -151,8 +172,10 @@ theorem carProductCut_projection (a b c d u rho : ℝ)
     rw [mul_comm (rho : ℂ) (u : ℂ)]
     have hc : (u : ℂ) * u + (rho : ℂ) * rho = 1 := by
       exact_mod_cast (by nlinarith only [hu] : u * u + rho * rho = 1)
-    rw [add_assoc, ← add_assoc ((u : ℂ) • _), ← smul_add, hGZ, smul_zero, add_zero,
-      ← add_smul, hc, one_smul]
+    calc
+      _ = ((u : ℂ) * u) • (1 : TwoMode) + ((rho : ℂ) * rho) • (1 : TwoMode) +
+          (((u : ℂ) * rho) • (G * Z) + ((u : ℂ) * rho) • (Z * G)) := by abel
+      _ = 1 := by rw [← add_smul, hc, one_smul, ← smul_add, hGZ, smul_zero, add_zero]
   change ((1 / 2 : ℂ) • (1 + H)).IsHermitian ∧
     ((1 / 2 : ℂ) • (1 + H)) * ((1 / 2 : ℂ) • (1 + H)) =
       (1 / 2 : ℂ) • (1 + H) ∧
@@ -167,11 +190,263 @@ theorem carProductCut_projection (a b c d u rho : ℝ)
       rw [show (2 : ℂ) = 1 + 1 by norm_num, add_smul, one_smul]
       abel, smul_smul]
     norm_num
-  · simp [H, Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, htrG, htrZ]
+  · norm_num [H, Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, htrG, htrZ]
+  · norm_num [H, Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add,
+      htrF, htrFG, htrFZ, smul_eq_mul, Complex.mul_re]
+
+/-- The parity-preserving component, in the actual two-mode occupation order. -/
+private def carEvenPart (H : TwoMode) : TwoMode :=
+  Matrix.of fun i j => if (i.1 = i.2 ↔ j.1 = j.2) then H i j else 0
+
+set_option maxHeartbeats 3000000 in
+private theorem carFirst_even_anticommutes (H : TwoMode)
+    (hH : H.IsHermitian) (hHH : H * H = 1) (htr : H.trace = 0) :
+    let G := carDirection (carCoordinate H .I .X) (carCoordinate H .I .Y)
+      (carCoordinate H .X .Z) (carCoordinate H .Y .Z)
+    carEvenPart H * G + G * carEvenPart H = 0 := by
+  dsimp only
+  have hreal (i j : Mode) : (H j i).re = (H i j).re := by
+    simpa using congrArg Complex.re (hH.apply i j)
+  have himag (i j : Mode) : -(H j i).im = (H i j).im := by
+    simpa using congrArg Complex.im (hH.apply i j)
+  have hi (i j : Mode) : (H j i).im = -(H i j).im := by
+    linarith only [himag i j]
+  have hd (i : Mode) : (H i i).im = 0 := by
+    linarith only [himag i i]
+  have hsum := congrArg Complex.re htr
+  norm_num [Matrix.trace, Matrix.diag, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Complex.add_re] at hsum
+  have hlast : (H (1,1) (1,1)).re =
+      -(H (0,0) (0,0)).re - (H (0,1) (0,1)).re - (H (1,0) (1,0)).re := by
+    linarith only [hsum]
+  have hzero (i j : Mode) (h : i ≠ j) : (H * H) i j = 0 := by
+    rw [hHH, Matrix.one_apply_ne h]
+  have h01r := congrArg Complex.re (hzero (0,0) (0,1) (by decide))
+  have h01i := congrArg Complex.im (hzero (0,0) (0,1) (by decide))
+  have h02r := congrArg Complex.re (hzero (0,0) (1,0) (by decide))
+  have h02i := congrArg Complex.im (hzero (0,0) (1,0) (by decide))
+  have h31r := congrArg Complex.re (hzero (1,1) (0,1) (by decide))
+  have h31i := congrArg Complex.im (hzero (1,1) (0,1) (by decide))
+  have h32r := congrArg Complex.re (hzero (1,1) (1,0) (by decide))
+  have h32i := congrArg Complex.im (hzero (1,1) (1,0) (by decide))
+  simp only [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+    Complex.zero_re, Complex.zero_im] at h01r h01i h02r h02i h31r h31i h32r h32i
+  simp only [hreal (0,0) (0,1), hreal (0,0) (1,0), hreal (0,0) (1,1),
+    hreal (0,1) (1,0), hreal (0,1) (1,1), hreal (1,0) (1,1),
+    hi (0,0) (0,1), hi (0,0) (1,0), hi (0,0) (1,1),
+    hi (0,1) (1,0), hi (0,1) (1,1), hi (1,0) (1,1), hd, hlast] at
+    h01r h01i h02r h02i h31r h31i h32r h32i
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    apply Complex.ext <;>
+    norm_num [carEvenPart, carDirection, carCoordinate, pauliWord, pauliMatrix,
+      qubitX, qubitZ, Matrix.kroneckerMap_apply, Matrix.trace, Matrix.diag,
+      Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.one_apply,
+      Matrix.of_apply, Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im,
+      Complex.neg_re, Complex.neg_im, hreal (0,0) (0,1), hreal (0,0) (1,0),
+      hreal (0,0) (1,1), hreal (0,1) (1,0), hreal (0,1) (1,1),
+      hreal (1,0) (1,1), hi (0,0) (0,1), hi (0,0) (1,0), hi (0,0) (1,1),
+      hi (0,1) (1,0), hi (0,1) (1,1), hi (1,0) (1,1), hd, hlast] <;>
+    first | ring | linarith only [h01r, h01i, h02r, h02i, h31r, h31i, h32r, h32i]
+
+private theorem carDirection_scale (a b c d t : ℝ) :
+    carDirection (t * a) (t * b) (t * c) (t * d) =
+      (t : ℂ) • carDirection a b c d := by
+  simp [carDirection, smul_add, smul_smul]
+
+private theorem carEven_trace (H : TwoMode) (a b c d : ℝ) :
+    let G := carDirection a b c d
+    (carImbalance * carEvenPart H).trace = (carImbalance * H).trace ∧
+    (carImbalance * (G * carEvenPart H * G)).trace =
+      (carImbalance * (G * H * G)).trace := by
+  dsimp only
+  constructor <;>
+    norm_num [carEvenPart, carDirection, carImbalance, pauliWord, pauliMatrix,
+      qubitX, qubitZ, Matrix.kroneckerMap_apply, Matrix.trace, Matrix.diag,
+      Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+      Matrix.one_apply, Matrix.of_apply]
+
+private theorem carPartner_overlap (H : TwoMode) (a b c d : ℝ)
+    (hn : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1)
+    (hanti : carEvenPart H * carDirection a b c d +
+      carDirection a b c d * carEvenPart H = 0) :
+    (H * carPartner (carDirection a b c d)).trace =
+      2 * (carImbalance * H).trace := by
+  let G := carDirection a b c d
+  let E := carEvenPart H
+  let F := carImbalance
+  have hGG : G * G = 1 := carDirection_square _ _ _ _ hn
+  have hEG : E * G = -(G * E) := eq_neg_of_add_eq_zero_left hanti
+  have hGEG : G * E * G = -E := by
+    rw [Matrix.mul_assoc, hEG, Matrix.mul_neg, ← Matrix.mul_assoc, hGG, Matrix.one_mul]
+  have hE := carEven_trace H a b c d
+  change (F * E).trace = (F * H).trace ∧
+    (F * (G * E * G)).trace = (F * (G * H * G)).trace at hE
+  have hcyc : (H * (G * F * G)).trace = (F * (G * H * G)).trace := by
+    calc
+      _ = ((H * G * F) * G).trace := by simp only [Matrix.mul_assoc]
+      _ = (G * (H * G * F)).trace := Matrix.trace_mul_comm _ _
+      _ = ((G * H * G) * F).trace := by simp only [Matrix.mul_assoc]
+      _ = _ := Matrix.trace_mul_comm _ _
+  change (H * (F - G * F * G)).trace = _
+  rw [Matrix.mul_sub, Matrix.trace_sub, Matrix.trace_mul_comm H F, hcyc,
+    ← hE.2, hGEG, Matrix.mul_neg, Matrix.trace_neg, hE.1]
+  ring
+
+/-- Exact Hilbert--Schmidt squared distance from an arbitrary complex rank-two
+projection to the physical cut, resolved into its two Clifford overlaps. -/
+theorem carProductCut_distance (P : TwoMode) (hP : P.IsHermitian)
+    (hPP : P * P = P) (htrP : P.trace = 2)
+    (a b c d u rho : ℝ)
+    (hn : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1) (hu : u ^ 2 + rho ^ 2 = 1) :
+    let G := carDirection a b c d
+    let H := (2 : ℂ) • P - 1
+    let Q := carProductCut G u rho
+    ((P - Q)ᴴ * (P - Q)).trace.re =
+      2 - (u * (H * G).trace.re + rho * (H * carPartner G).trace.re) / 2 := by
+  dsimp only
+  let G := carDirection a b c d
+  let H := (2 : ℂ) • P - 1
+  let Z := carPartner G
+  let Q := carProductCut G u rho
+  change ((P - Q)ᴴ * (P - Q)).trace.re =
+    2 - (u * (H * G).trace.re + rho * (H * Z).trace.re) / 2
+  obtain ⟨hQ, hQQ, htrQ, _⟩ := carProductCut_projection a b c d u rho hn hu
+  change Qᴴ = Q at hQ
+  change Q * Q = Q at hQQ
+  change Q.trace = 2 at htrQ
+  have htrG : G.trace = 0 := (carDirection_trace _ _ _ _).1
+  have htrZ : Z.trace = 0 := by
+    have hGG : G * G = 1 := carDirection_square _ _ _ _ hn
+    dsimp [Z, carPartner]
+    rw [Matrix.trace_sub, Matrix.trace_mul_comm (G * carImbalance) G,
+      ← Matrix.mul_assoc, hGG, Matrix.one_mul, sub_self]
+  have hPG : (H * G).trace = 2 * (P * G).trace := by
+    dsimp [H]
+    simp [Matrix.sub_mul, Matrix.smul_mul, Matrix.trace_sub, Matrix.trace_smul, htrG,
+      smul_eq_mul]
+  have hPZ : (H * Z).trace = 2 * (P * Z).trace := by
+    dsimp [H]
+    simp [Matrix.sub_mul, Matrix.smul_mul, Matrix.trace_sub, Matrix.trace_smul, htrZ,
+      smul_eq_mul]
+  have hPQ : (P * Q).trace =
+      (1 / 2 : ℂ) * (2 + (u : ℂ) * (P * G).trace + (rho : ℂ) * (P * Z).trace) := by
+    dsimp [Q, carProductCut, Z]
+    simp [Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add,
+      htrP, smul_eq_mul]
+  change Pᴴ = P at hP
+  rw [Matrix.conjTranspose_sub, hP, hQ]
+  rw [show (P - Q) * (P - Q) = P - P * Q - Q * P + Q by
+    calc
+      _ = P * P - P * Q - Q * P + Q * Q := by noncomm_ring
+      _ = _ := by rw [hPP, hQQ]]
+  rw [Matrix.trace_add, Matrix.trace_sub, Matrix.trace_sub,
+    Matrix.trace_mul_comm Q P, htrP, htrQ, hPQ, hPG, hPZ]
+  simp [Complex.mul_re, Complex.add_re, Complex.sub_re]
+  ring
+
+/-- Transport to the physical cut with normalized nonzero degree-one component.
+The distance and the signed imbalance use ordinary trace. -/
+theorem carProductCut_transport_of_nonzero (P : TwoMode) (hP : P.IsHermitian)
+    (hPP : P * P = P) (htrP : P.trace = 2) :
+    let H := (2 : ℂ) • P - 1
+    let k := carFirstNorm H
+    let R := (carImbalance * P).trace.re
+    let theta := Real.sqrt (k ^ 2 + R ^ 2)
+    0 < k →
+    ∃ a b c d u rho : ℝ,
+      a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1 ∧ u ^ 2 + rho ^ 2 = 1 ∧
+      theta ≤ 1 ∧ theta * u = k ∧ theta * rho = R ∧
+      (let Q := carProductCut (carDirection a b c d) u rho
+       Q.IsHermitian ∧ Q * Q = Q ∧ Q.trace = 2 ∧
+       (carImbalance * Q).trace.re = rho ∧
+       ((P - Q)ᴴ * (P - Q)).trace.re = 2 * (1 - theta)) := by
+  dsimp only
+  let H := (2 : ℂ) • P - 1
+  let k := carFirstNorm H
+  let R := (carImbalance * P).trace.re
+  let theta := Real.sqrt (k ^ 2 + R ^ 2)
+  intro hk
+  change 0 < k at hk
+  have hH : H.IsHermitian := by
+    change ((2 : ℂ) • P - 1)ᴴ = _
+    simp [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, hP.eq]
+  have hHH : H * H = 1 := by
+    change ((2 : ℂ) • P - 1) * ((2 : ℂ) • P - 1) = _
+    simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, hPP, Matrix.one_mul, Matrix.mul_one]
     norm_num
-  · simp [H, Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add,
-      htrF, htrFG, htrFZ, Complex.mul_re]
+    module
+  have htrH : H.trace = 0 := by
+    norm_num [H, Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_one, htrP]
+  let x := carCoordinate H .I .X
+  let y := carCoordinate H .I .Y
+  let z := carCoordinate H .X .Z
+  let w := carCoordinate H .Y .Z
+  have hk2 : k ^ 2 = x ^ 2 + y ^ 2 + z ^ 2 + w ^ 2 :=
+    Real.sq_sqrt (by positivity)
+  have htheta : 0 < theta := Real.sqrt_pos.2 (by positivity)
+  have htheta2 : theta ^ 2 = k ^ 2 + R ^ 2 := Real.sq_sqrt (by positivity)
+  let a := x / k
+  let b := y / k
+  let c := z / k
+  let d := w / k
+  let u := k / theta
+  let rho := R / theta
+  let G := carDirection a b c d
+  have hn : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1 := by
+    dsimp [a, b, c, d]
+    field_simp
+    nlinarith only [hk2]
+  have hu : u ^ 2 + rho ^ 2 = 1 := by
+    dsimp [u, rho]
+    field_simp
+    nlinarith only [htheta2]
+  have huu : theta * u = k := by dsimp [u]; field_simp
+  have hur : theta * rho = R := by dsimp [rho]; field_simp
+  have hnorm : G = ((1 / k : ℝ) : ℂ) • carDirection x y z w := by
+    dsimp [G, a, b, c, d]
+    rw [← carDirection_scale]
+    congr 1 <;> ring
+  have hanti : carEvenPart H * G + G * carEvenPart H = 0 := by
+    rw [hnorm, Matrix.mul_smul, Matrix.smul_mul, ← smul_add]
+    change ((1 / k : ℝ) : ℂ) •
+      (carEvenPart H * carDirection x y z w + carDirection x y z w * carEvenPart H) = 0
+    rw [carFirst_even_anticommutes H hH hHH htrH, smul_zero]
+  have hoverG : (H * G).trace.re = 4 * k := by
+    rw [carDirection_overlap]
+    change 4 * (a * x + b * y + c * z + d * w) = _
+    dsimp [a, b, c, d]
+    field_simp
+    nlinarith only [hk2]
+  have hoverZ : (H * carPartner G).trace.re = 4 * R := by
+    rw [carPartner_overlap H a b c d hn hanti]
+    change (2 * (carImbalance * ((2 : ℂ) • P - 1)).trace).re = _
+    simp [Matrix.mul_sub, Matrix.mul_smul, Matrix.trace_sub, Matrix.trace_smul,
+      carImbalance_trace.1, R, smul_eq_mul, Complex.mul_re]
+    ring
+  let Q := carProductCut G u rho
+  have hdist : ((P - Q)ᴴ * (P - Q)).trace.re = 2 * (1 - theta) := by
+    rw [carProductCut_distance P hP hPP htrP a b c d u rho hn hu,
+      hoverG, hoverZ]
+    have hsum : u * k + rho * R = theta := by
+      dsimp [u, rho]
+      field_simp
+      nlinarith only [htheta2]
+    linarith only [hsum]
+  have hpos : 0 ≤ ((P - Q)ᴴ * (P - Q)).trace.re := by
+    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Complex.re_sum]
+    exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun j _ => by
+      simp [Complex.mul_re, Complex.normSq_apply]
+      positivity))
+  have hle : theta ≤ 1 := by linarith only [hpos, hdist]
+  obtain ⟨hQ, hQQ, htrQ, hR⟩ := carProductCut_projection a b c d u rho hn hu
+  exact ⟨a, b, c, d, u, rho, hn, hu, hle, huu, hur, hQ, hQQ, htrQ, hR, hdist⟩
 
 #print axioms carProductCut_projection
+#print axioms carProductCut_distance
+#print axioms carProductCut_transport_of_nonzero
 
 end WuRankOneEndpointFloor
