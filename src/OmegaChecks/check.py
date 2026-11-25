@@ -37,10 +37,25 @@ def build(targets):
     run("lake", "-f", strict_config(), "build", *("+" + target for target in targets))
 
 
+def strict_import_graph(lean, targets=()):
+    _, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+    # A witness can reach a marked project module through the public umbrella.
+    # Read the requested project branches without scanning every unrelated D5 source.
+    pending = set(targets).union(*graph.values())
+    while project := sorted(name for name in pending - graph.keys() if root(name) in {"D5", "Trureturing"}):
+        paths = [name.replace(".", "/") + ".lean" for name in project]
+        # Lake's default D5 library glob can expand beyond the OS argument limit.
+        if len(paths) > 1000:
+            paths = ["D5/*.lean", "Trureturing.lean"]
+        _, extra = import_graph(lean, paths)
+        graph.update(extra)
+        pending = set().union(*extra.values())
+    return graph
+
+
 @cache
 def library_graph():
-    # Lake's source roots agree in both configurations except for the basis facades.
-    return import_graph(ENV["LEAN"], ("strict/*.lean", "src/*.lean"))[1]
+    return strict_import_graph(ENV["LEAN"])
 
 
 def terminal_modules(graph, names):
@@ -50,14 +65,12 @@ def terminal_modules(graph, names):
 
 def library_backend_candidates(graph, names):
     # Mixed witnesses can use the concrete strict implementation. Only resolve
-    # their official artifacts if the command is reachable. A D5 import crosses
-    # the boundary of this library graph and can bring compiled markers with it.
+    # their official artifacts if the command is reachable.
     reachable = {"OmegaBuild.Commands"}
     for name in names:
-        deps = graph[name]
-        if deps & reachable or any(root(dep) == "D5" for dep in deps):
+        if graph[name] & reachable:
             reachable.add(name)
-    return [name for name in names if name in reachable and root(name) in STRICT | {"OmegaChecks"}]
+    return [name for name in names if name in reachable and root(name) != "OmegaBuild"]
 
 
 def library_mathlib_only(graph, targets):
@@ -95,7 +108,7 @@ def check_library(selected=()):
     skipped = library_mathlib_only(graph, targets)
     if skipped:
         modules = [name for name in modules if name not in skipped]
-        targets.update(name for name in dependencies if root(name) == "OmegaChecks")
+        targets.update(name for name in dependencies if root(name) != "OmegaBuild")
         targets.difference_update(skipped)
     if targets:
         build(terminal_modules(graph, targets))
@@ -470,7 +483,7 @@ def versions(artifacts):
 def check_incremental():
     graph = library_graph()
     # Track the strict libraries and every mathematical check importing them.
-    imports = {name: set(closure(graph, [name])) for name in graph}
+    imports = {name: set(closure(graph, [name])) for name in graph if root(name) in STRICT | {"OmegaChecks"}}
     modules = sorted(name for name, deps in imports.items() if any(root(dep) in STRICT for dep in deps))
     skipped = library_mathlib_only(graph, modules)
     modules = [name for name in modules if name not in skipped]

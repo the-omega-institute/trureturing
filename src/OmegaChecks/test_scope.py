@@ -77,9 +77,10 @@ class ScopeTests(unittest.TestCase):
                  "OmegaMath.Optional": {"OmegaBuild.Commands"},
                  "OmegaChecks.Mixed": {"OmegaMath.Base"},
                  "OmegaChecks.Optional": {"OmegaMath.Optional"},
-                 "OmegaChecks.D5Witness": {"D5.Other"}}
+                 "D5.Marked": {"OmegaBuild.Commands"},
+                 "Trureturing": {"D5.Marked"}, "OmegaChecks.D5Witness": {"Trureturing"}}
         self.assertEqual(library_backend_candidates(graph, graph),
-                         ["OmegaMath.Optional", "OmegaChecks.Optional", "OmegaChecks.D5Witness"])
+                         ["OmegaMath.Optional", "OmegaChecks.Optional", "D5.Marked", "Trureturing", "OmegaChecks.D5Witness"])
 
     def test_full_and_incremental_probes_schedule_only_eligible_strict_roots(self):
         graph = {"OmegaMath.Base": set(), "OmegaChecks.Marked": {"OmegaMath.Base"},

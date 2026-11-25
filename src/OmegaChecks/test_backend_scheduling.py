@@ -32,6 +32,9 @@ class BackendScheduling(unittest.TestCase):
             marker = "compile_only_with_mathlib\n"
             use_factorial = "def answer (n : Omega.Nat) : Nat := Nat.factorial n\n"
             b.write_text(header + marker + use_factorial)
+            (project / "Trureturing.lean").write_text("import D5.All\n")
+            (project / "src/OmegaChecks/ReviewBridge.lean").write_text(
+                "import Trureturing\nexample (n : Nat) : answer n = Nat.factorial n := rfl\n")
 
             supplemental = "OmegaChecks.Portable.MathlibFactorial"
             scope = {"shared": [], "library": [], "basis": [], "common": [supplemental], "consumers": ["D5.All"]}
@@ -55,6 +58,18 @@ class BackendScheduling(unittest.TestCase):
             self.assertNotIn(supplemental, reported["consumerModules"])
             self.assertNotIn(supplemental, {row["module"] for row in reported["declarations"]})
             self.assertEqual({p.stem for p in strict_artifacts.glob("*.olean")}, {"A", "D"})
+
+            # Every supported entry must also build the portable sibling from a cold overlay.
+            for cmd in (["lake", "test", "--", "OmegaChecks.ReviewBridge"],
+                        [sys.executable, "src/OmegaChecks/strict_lake.py", "build", "+Trureturing",
+                         "@trureturing/+D5.B:olean", "D5/C.lean:olean"],
+                        [sys.executable, "src/OmegaChecks/strict_lake.py", "build"]):
+                shutil.rmtree(strict_artifacts.parent.parent.parent)
+                result = subprocess.run(cmd, cwd=project, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual({p.stem for p in strict_artifacts.glob("*.olean")}, {"A", "D"})
+                for skipped in ("Trureturing.olean", "OmegaChecks/ReviewBridge.olean"):
+                    self.assertFalse((strict_artifacts.parent / skipped).exists())
 
             # A previous official success must not bypass the next strict build.
             b.write_text(header + use_factorial)
