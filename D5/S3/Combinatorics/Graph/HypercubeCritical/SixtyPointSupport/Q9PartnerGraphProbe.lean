@@ -26,8 +26,7 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
   (directions regular_directions exterior_even)
 open BalancedCubeComponentBoundary (mem_directions directions_card)
 open BalancedCubeGirth (flip_comm)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private diff_symm from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport

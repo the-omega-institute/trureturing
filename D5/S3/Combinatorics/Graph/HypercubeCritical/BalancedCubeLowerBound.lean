@@ -25,8 +25,7 @@ open BalancedCriticalSpectrum (Q flip_adj flip_flip IsBalanced directionEdges
   direction_edge_count)
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open GirthSliceCounting (degreeTwo degreeThree)
 open private degree_parts_union degree_parts_disjoint sum_degree_parts from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting

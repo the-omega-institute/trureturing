@@ -33,8 +33,7 @@ open private highWithHigh high_neighbor_deficit from
   D5.S3.Combinatorics.Graph.HypercubeCritical.EighteenPointSlice
 open private SideHigh compressed compressed_degree compressed_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 /-- A twenty-vertex half has twelve cut endpoints and eight cubic vertices.
 Every edge joins different degree classes, so suppressing the degree-two
