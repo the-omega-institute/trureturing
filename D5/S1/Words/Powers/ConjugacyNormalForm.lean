@@ -39,7 +39,8 @@ private theorem toStd_injective {m n : Omega.Nat} (h : toStd m = toStd n) : m = 
   (fromStd_toStd m).symm.trans ((congrArg fromStd h).trans (fromStd_toStd n))
 
 private def listLength (w : List α) : Omega.Nat := fromStd w.length
-private def listPower (n : Omega.Nat) (w : List α) : List α := wordPower (toStd n) w
+private noncomputable def listPower (n : Omega.Nat) (w : List α) : List α :=
+  wordPower (toStd n) w
 
 private theorem length_le_iff (a b : Nat) :
     Omega.Nat.le (fromStd a) (fromStd b) ↔ a ≤ b := by
@@ -52,16 +53,24 @@ private theorem length_lt_iff (a b : Nat) :
     toStd_fromStd] using
     (toStd_le_iff (Omega.Nat.succ (fromStd a)) (fromStd b)).symm
 
-private def listLaws : G.Laws ([] : List α) List.append listLength listPower where
-  assoc a b c := toOmegaEq (List.append_assoc a b c)
-  empty_left a := toOmegaEq (List.nil_append a)
-  cancel_left a b c h := toOmegaEq (List.append_cancel_left (fromOmegaEq h))
-  length_append a b := toOmegaEq (toStd_injective (by
-    change toStd (fromStd (a ++ b).length) = toStd ((fromStd a.length).add (fromStd b.length))
-    rw [toStd_add, toStd_fromStd, toStd_fromStd, toStd_fromStd, List.length_append]))
-  power_zero a := toOmegaEq (wordPower_zero a)
-  power_succ n a := toOmegaEq (wordPower_succ (toStd n) a)
-  split a b c d h hlen := by
+private theorem listLaws : G.Laws ([] : List α) List.append listLength listPower := by
+  refine Omega.And.intro ?_ (Omega.And.intro ?_ (Omega.And.intro ?_
+    (Omega.And.intro ?_ (Omega.And.intro ?_ (Omega.And.intro ?_ ?_)))))
+  · intro a b c
+    exact toOmegaEq (List.append_assoc a b c)
+  · intro a
+    exact toOmegaEq (List.nil_append a)
+  · intro a b c h
+    exact toOmegaEq (List.append_cancel_left (fromOmegaEq h))
+  · intro a b
+    exact toOmegaEq (toStd_injective (by
+      change toStd (fromStd (a ++ b).length) = toStd ((fromStd a.length).add (fromStd b.length))
+      rw [toStd_add, toStd_fromStd, toStd_fromStd, toStd_fromStd, List.length_append]))
+  · intro a
+    exact toOmegaEq (wordPower_zero a)
+  · intro n a
+    exact toOmegaEq (wordPower_succ (toStd n) a)
+  · intro a b c d h hlen
     have hstd := fromOmegaEq h
     have hle : a.length ≤ c.length := (length_le_iff _ _).mp hlen
     rcases List.append_eq_append_iff.mp hstd with ⟨r, hc, hb⟩ | ⟨r, ha, hd⟩
