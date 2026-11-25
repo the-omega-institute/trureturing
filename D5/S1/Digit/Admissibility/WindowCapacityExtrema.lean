@@ -84,7 +84,7 @@ theorem maximizer_has_extremal_shape {k B : ℕ} (hk : 1 ≤ k) (L : Fin k → �
     obtain ⟨n, hn⟩ : ∃ n, L j = n + 2 := ⟨L j - 2, by omega⟩
     apply improve i j hij 1 (n + 1)
     · omega
-    · rw [hi, hn, wValue_zero, wValue_one, one_mul]
+    · rw [hi, hn, wValue_zero_nat, wValue_one_nat, one_mul]
       unfold wValue
       have hrec := Nat.fib_add_two (n := n + 2)
       have hstrict := Nat.fib_lt_fib_succ (n := n + 2) (by omega)
@@ -95,7 +95,7 @@ theorem maximizer_has_extremal_shape {k B : ℕ} (hk : 1 ≤ k) (L : Fin k → �
     obtain ⟨b, hb⟩ : ∃ b, L j = b + 1 := ⟨L j - 1, by omega⟩
     apply improve i j hij (a + b + 1) 1
     · omega
-    · rw [ha, hb, wValue_one]
+    · rw [ha, hb, wValue_one_nat]
       have hid : 2 * wValue (a + b + 1) =
           wValue (a + 1) * wValue (b + 1) + Nat.fib a * Nat.fib b := by
         unfold wValue
@@ -184,7 +184,7 @@ theorem capacity_isGreatest_and_eq_iff {k B : ℕ} (hk : 1 ≤ k) :
         calc
           _ = ∏ _j ∈ Finset.univ.erase i, (2 : ℕ) :=
             Finset.prod_congr rfl fun j hj => by
-              rw [hrest j (Finset.mem_erase.mp hj).1, wValue_one]
+              rw [hrest j (Finset.mem_erase.mp hj).1, wValue_one_nat]
           _ = 2 ^ (k - 1) := by simp
       unfold windowProduct
       rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i), hi, htail]

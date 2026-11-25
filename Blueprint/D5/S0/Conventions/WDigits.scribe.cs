@@ -26,8 +26,8 @@ internal sealed class WDigitsDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Paragraph(
                 Ref("D5/S0/Conventions/WDigits"),
-                Text(" fixes the zero-based weights `W(k)=F(k+2)`, hence `1,2,3,5,...`. A digit string is represented by its occupied Fibonacci indices.")),
+                Text(" fixes the zero-based weights `W(k)=F(k+2)`, hence `1,2,3,5,...`. Omega Math supplies the three initial weights and the recurrence. The Mathlib codec stores occupied Fibonacci indices.")),
             Paragraph(
-                Text("The module delegates the canonical algorithm and proof to mathlib's Zeckendorf development. It exposes the three repository-facing facts: indices are nonadjacent, decoding returns the original natural number, and no other canonical list decodes to the same value."))),
+                Text("The canonical algorithm in this interface uses Mathlib's Zeckendorf development. The occupied indices are nonadjacent, decoding returns the original natural number, and no other canonical list decodes to the same value."))),
         anchors: [Anchor.ParseCanonical("mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf")]));
 }

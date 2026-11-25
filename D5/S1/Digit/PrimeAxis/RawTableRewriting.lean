@@ -263,7 +263,7 @@ theorem table_rewriting_terminates :
           u p j ≠ 0 → wValue j ≤ V t ∧ j ≤ J := by
     have hn : (weightIndices (V t)).Nonempty := by
       refine ⟨0, (mem_weightIndices 0 (V t)).mpr ?_⟩
-      simpa only [wValue_zero] using (show 1 ≤ V t by omega)
+      simpa only [wValue_zero_nat] using (show 1 ≤ V t by omega)
     let J := (weightIndices (V t)).max' hn
     have hJ : wValue J ≤ V t :=
       (mem_weightIndices J (V t)).mp (Finset.max'_mem _ hn)

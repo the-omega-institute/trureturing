@@ -41,9 +41,9 @@ inductive CarryStep : RawDigits → RawDigits → Prop where
 /-- The general repeated-digit identity `2 W_(i+2) = W_i + W_(i+3)`. -/
 theorem two_mul_wValue_add_two (i : ℕ) :
     2 * wValue (i + 2) = wValue i + wValue (i + 3) := by
-  rw [show i + 3 = (i + 1) + 2 by omega, wValue_add_two,
-    wValue_add_two]
-  rw [show i + 1 + 1 = i + 2 by omega, wValue_add_two]
+  rw [show i + 3 = (i + 1) + 2 by omega, wValue_add_two_nat,
+    wValue_add_two_nat]
+  rw [show i + 1 + 1 = i + 2 by omega, wValue_add_two_nat]
   omega
 
 /-- The adjacent-pair carry preserves raw value. -/
@@ -51,7 +51,7 @@ theorem rawValue_carry_adjacent (rest : RawDigits) (i : ℕ) :
     rawValue (rest + Finsupp.single i 1 + Finsupp.single (i + 1) 1) =
       rawValue (rest + Finsupp.single (i + 2) 1) := by
   simp only [rawValue_add, rawValue_single, one_mul]
-  rw [wValue_add_two]
+  rw [wValue_add_two_nat]
   omega
 
 /-- The exceptional lowest repeated digit `2 W_0 = W_1` preserves raw value. -/
