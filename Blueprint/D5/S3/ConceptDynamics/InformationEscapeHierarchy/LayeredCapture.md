@@ -264,31 +264,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 Every maximal catalog in the designated root must be irredundant.
 
-**Definition 1.22 (System-wide positivity).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemWidePositive`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemWidePositive` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The compatibility name denotes the same one-root universal proposition.
-
-**Theorem 1.23 (System positivity is designated-root irredundancy).**
-
-$$\operatorname{SystemWidePositive}(S) \Leftrightarrow \operatorname{SystemCatalogIrredundant}(S).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.systemWidePositive_iff_systemCatalogIrredundant` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate follows from the typed chain data and finite kernel-set algebra.
-
-**Definition 1.24 (Generated schedule layer chain).**
+**Definition 1.22 (Generated schedule layer chain).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.toLayerChain`
 
@@ -300,7 +276,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 A classified generator schedule yields a certified general kernel chain.
 
-**Theorem 1.25 (Generated layered captures are schedule increments).**
+**Theorem 1.23 (Generated layered captures are schedule increments).**
 
 $$\operatorname{layeredCapturePairs}(\operatorname{toLayerChain}(G), \operatorname{succ}(r)) = \operatorname{increment}(G, r).$$
 
@@ -321,7 +297,6 @@ The certificate follows from the typed chain data and finite kernel-set algebra.
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.LayerChain`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.PackedCatalog`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemCatalogIrredundant`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemWidePositive`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.cumulativeChain_coarser_uniqueCapture_zero`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCaptureCount`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapturePairs`
@@ -333,7 +308,6 @@ The certificate follows from the typed chain data and finite kernel-set algebra.
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_zero_nonempty_iff_not_subset`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.maximalCatalog`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.strictRefinement_iff_layeredCapture_nonempty`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.systemWidePositive_iff_systemCatalogIrredundant`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.toLayerChain`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.toLayerChain_layeredCapture_succ_eq_increment`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.unresolvedCount`

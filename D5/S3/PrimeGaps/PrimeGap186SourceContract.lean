@@ -27,13 +27,9 @@ namespace D5.S3.PrimeGaps.PrimeGap186SourceContract
 
 open D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
 
-/-- Admissibility in the exact form used by the upstream `DHL[40,2]` theorem. The generic
-owner is `DirectTupleAdmissible`; this fixed-source name is only a compatibility alias. -/
-abbrev AdmissibleIntegerTuple := DirectTupleAdmissible
-
 /-- The exact theorem-level `DHL[40,2]` proposition exported by the upstream source. -/
 def DHL40Two : Prop :=
-  ∀ H : Finset Int, H.card = 40 → AdmissibleIntegerTuple H →
+  ∀ H : Finset Int, H.card = 40 → DirectTupleAdmissible H →
     Set.Infinite {n : Int | 2 ≤ (H.filter fun h => (n + h).toNat.Prime).card}
 
 /-- The extended-real lower limit of consecutive prime gaps used by the source. -/
@@ -48,7 +44,6 @@ repository axiom. -/
 def PrimeGapLiminfAtMost186 : Prop :=
   primeGapLiminf ≤ (186 : EReal)
 
-#print axioms AdmissibleIntegerTuple
 #print axioms DHL40Two
 #print axioms primeGapLiminf
 #print axioms PrimeGapLiminfAtMost186
