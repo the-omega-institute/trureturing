@@ -25,7 +25,7 @@ open BalancedCriticalSpectrum (Q flip)
 def adjacency {n : ℕ} (f : Q n → ZMod 2) (x : Q n) : ZMod 2 :=
   ∑ i : Fin n, f (flip x i)
 
-private theorem adjacency_add {n : ℕ} (f g : Q n → ZMod 2) :
+theorem adjacency_add {n : ℕ} (f g : Q n → ZMod 2) :
     adjacency (f + g) = adjacency f + adjacency g := by
   funext x
   simp only [adjacency, Pi.add_apply, Finset.sum_add_distrib]
