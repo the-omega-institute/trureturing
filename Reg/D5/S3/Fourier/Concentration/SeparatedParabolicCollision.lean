@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
 import D5.S3.Fourier.Concentration.SeparatedParabolicCollision
 
-/-! Dependence of the exact separated collision construction on mass and resolution. -/
+/-! Dependence of the exact separated collision construction on mass and relative variance. -/
 
 namespace Reg.D5.S3.Fourier.Concentration.SeparatedParabolicCollision
 
@@ -28,7 +28,7 @@ def actual : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ), 0 < n → ∀ η : ℝ, 0 ≤ η → η < 1 →
+  Law R := ∀ (n : ℕ), 0 < n → ∀ η : ℝ,
     let mass := R.readout () ()
     let c := fun k : ℤ => (n : ℝ)^2 - (k : ℝ)^2
     let W := mass n
@@ -36,12 +36,12 @@ abbrev arena : Arena where
     0 < W ∧
     (∑ k ∈ latticeInterval n, c k) = W ∧
     (∑ k ∈ latticeInterval n, c k * (k : ℝ)^2) = W * ((n : ℝ)^2 - 1)/5 ∧
-    nearCollisionMass (latticeInterval n) (fun k : ℤ => (k : ℝ)) c η =
-      W * (4 * (n : ℝ)^2 + 1)/5
+    (nearCollisionMass (latticeInterval n) (fun k : ℤ => (k : ℝ)) c η =
+      W * (4 * (n : ℝ)^2 + 1)/5 ↔ 0 ≤ η ∧ (n = 1 ∨ η < 1))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hz := (h 1 (by decide) 0 (by norm_num) (by norm_num)).2.1
+  have hz := (h 1 (by decide) 0).2.1
   change (0 : ℝ) < 0 at hz
   exact (lt_irrefl _ hz)
 
@@ -79,7 +79,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -93,33 +93,37 @@ end Finite
 namespace Limit
 
 def actual : Realization signature :=
-  realize signature (fun _ _ n => (n : ℝ)/((n : ℝ)+1)) (fun e => nomatch e)
+  realize signature (fun _ _ n => ((n : ℝ)^2 - 1)/5) (fun e => nomatch e)
+
+def rejectedVariance : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R :=
-    let V := fun n : ℕ => ((n : ℝ)^2 - 1)/5
-    let η := R.readout () ()
+  Law R := ∀ (η : ℕ → ℝ) (L : ℝ), 0 < L →
+    (∀ᶠ n in atTop, 0 < η n ∧ η n < 1) → Tendsto η atTop (𝓝 L) →
+    let V := R.readout () ()
     let W := fun n : ℕ => (n : ℝ) * (4 * (n : ℝ)^2 - 1)/3
     let E := fun n : ℕ => nearCollisionMass (latticeInterval n)
       (fun k : ℤ => (k : ℝ)) (fun k => (n : ℝ)^2 - (k : ℝ)^2) (η n)
     Tendsto (fun n => η n / Real.sqrt (V n)) atTop (𝓝 0) ∧
     Tendsto (fun n => E n * Real.sqrt (V n) / (W n ^ 2 * η n)) atTop
-      (𝓝 (3 / (5 * Real.sqrt 5)))
+      (𝓝 (3 / (5 * Real.sqrt 5 * L)))
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.Law rejectedVariance := by
   intro h
-  have hz : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 (3 / (5 * Real.sqrt 5))) := by
-    simpa [arena, rejected, realize] using h.2
-  have he := tendsto_nhds_unique tendsto_const_nhds hz
-  have hp : 0 < (3 : ℝ) / (5 * Real.sqrt 5) := by positivity
-  linarith
+  have hz := (h (fun _ => 1/2) (1/2) (by norm_num)
+    (Filter.Eventually.of_forall (fun _ => by norm_num)) tendsto_const_nhds).1
+  have hbad : Tendsto (fun _ : ℕ => (1/2 : ℝ)) atTop (𝓝 0) := by
+    simpa [rejectedVariance, realize] using hz
+  have he : (1/2 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds hbad
+  norm_num at he
 
 def evidence : Registration arena (type_of% @parabolic_collision_ratio_limit) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@parabolic_collision_ratio_limit, rejected, rejected_law⟩
-  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  variation := ⟨@parabolic_collision_ratio_limit, rejectedVariance, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejectedVariance rejected_law
   dependence := by
     intro i
     refine ⟨(), 1, 2, ?_⟩
@@ -149,7 +153,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "value"]
+      path := #["body", "body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
