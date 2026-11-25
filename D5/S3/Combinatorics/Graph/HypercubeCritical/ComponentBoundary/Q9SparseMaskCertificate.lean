@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SparseMaskCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.BitVec]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData.listed_support_not_universal; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData.records
    digest: A bit-vector contact count certifies the absence of a universally sharp boundary. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SparseOccupiedGram
@@ -22,10 +22,8 @@ open Finset
 open BalancedCriticalSpectrum (Q flip flip_flip IsSwitching)
 open CoordinateHalves.CubeBitMoves (toggle)
 open CoordinateHalves.Q9DominantAxisBoundary (PairedRows boundary)
-open Q9PositivePairedKernel (pairedVertex)
+open Q9PositivePairedKernel (pairedVertex vertex_injective)
 open Q9SparseOccupiedGram (maskContact not_universal_boundary_of_sparse_mask)
-open private vertex_injective from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9PositivePairedKernel
 
 private abbrev Word := BitVec 9
 private def words : List Word := (List.finRange 512).map BitVec.ofFin

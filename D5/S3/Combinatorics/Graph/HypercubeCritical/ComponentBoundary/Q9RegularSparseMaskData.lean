@@ -3,13 +3,13 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.BitVec]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData.claim; result=D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData.result; claim=D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9RegularSparseMaskData.claim
    digest: Thirty-two regular order-ninety lift supports have certified sparse masks. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SparseMaskCertificate
 
-/-! The thirty-two connected cubic lifts of the regular twelve-plus-three fold
-census, with their three-direction sparse occupied masks. The input support
+/-! Thirty-two listed regular twelve-plus-three fold lifts with their
+three-direction sparse occupied masks. The input support
 lists are from q9-90-regular-twelve-plus-three-complete.log; masks are from
 regular-census-audit/small-witness.log. This checks the listed supports. -/
 
@@ -70,5 +70,17 @@ theorem listed_support_not_universal (p : ℕ × Fin 9 × Finset (Fin 9)) (hp : 
     ¬ (∀ w : Fin 9 → ℝ, ∃ f ≠ 0, boundary (support p.1) b w *ᵥ f = 0) :=
   not_universal_of_sparseMaskCheck (List.all_eq_true.mp checks p hp) hs b
 
+/-- Survival of a listed support under universal weighted boundary sharpness
+for some coherent switching and retained parity. -/
+noncomputable def claim : Prop :=
+  ∃ p ∈ records, ∃ σ : Q 9 → ℝ, IsSwitching (support p.1) σ ∧
+    ∃ b : Bool, ∀ w : Fin 9 → ℝ, ∃ f ≠ 0, boundary (support p.1) b w *ᵥ f = 0
+
+/-- No support in the literal list survives this weighted boundary condition. -/
+theorem result : ¬ claim := by
+  rintro ⟨p, hp, σ, hs, b, hw⟩
+  exact listed_support_not_universal p hp hs b hw
+
 #print axioms listed_support_not_universal
+#print axioms result
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9RegularSparseMaskData

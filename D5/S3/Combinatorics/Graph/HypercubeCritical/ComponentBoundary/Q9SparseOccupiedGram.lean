@@ -55,10 +55,8 @@ theorem eq_zero_of_sparse_occupied_gram {ι ρ ε : Type*} [Fintype ι] [Decidab
 open BalancedCriticalSpectrum (Q flip IsSwitching)
 open CoordinateHalves.Q9DominantAxisBoundary (PairedRows emptyFibreBoundary boundary
   exists_emptyFibreBoundary_kernel)
-open Q9PositivePairedKernel (pairedVertex occupiedContact)
-open private split_gram occupiedMatrix emptyMatrix occupied_entry occupied_entry_zero
-  empty_boundary_iff switch_twice from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9PositivePairedKernel
+open Q9PositivePairedKernel (pairedVertex occupiedContact split_gram occupiedMatrix emptyMatrix
+  occupied_entry occupied_entry_zero empty_boundary_iff switch_twice)
 open BalancedCubeComponentBoundary (flip_injective)
 
 attribute [local instance] Classical.propDecidable
