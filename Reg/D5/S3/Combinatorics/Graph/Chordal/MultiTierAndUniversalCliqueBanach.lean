@@ -73,7 +73,8 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
 
 example : ∃ φ : TwoVertices → ℝ, ‖(0 : ℝ) - (φ rightVertex - φ leftVertex)‖ ≤ 0 := by
   obtain ⟨φ, hφ⟩ := IsChordal.exists_multitier_clique_banach_gain_potential
-    twoVertexChordal 4 (by decide) (fun s _ => twoVertexClique s) (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
+    twoVertexChordal 4 (by decide) (fun s _ => twoVertexClique s)
+    (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
   exact ⟨φ, by simpa using hφ leftVertex rightVertex adjacentVertices⟩
 
 def family : Registration arena.{u, v}
@@ -91,7 +92,8 @@ def family : Registration arena.{u, v}
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@IsChordal.exists_multitier_clique_banach_gain_potential.{u, v})
     (Realization signature) Unit Unit where
-  unitName := `SimpleGraph.IsChordal.exists_multitier_clique_banach_gain_potential.__information_unit
+  unitName :=
+    `SimpleGraph.IsChordal.exists_multitier_clique_banach_gain_potential.__information_unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.MultiTier.family
   realizationSource := none
@@ -155,7 +157,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   obtain ⟨φ, hφ⟩ := h (⊤ : SimpleGraph TwoVertices.{u}) Set.univ Set.univ
-    Set.Subset.rfl ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp [Set.Pairwise])
+    Set.Subset.rfl ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp)
     2 (by decide) (by simp) (E := ULift.{v} ℝ)
     (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
   have hv := hφ leftVertex rightVertex adjacentVertices
@@ -165,7 +167,7 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
 example : ∃ φ : TwoVertices → ℝ, ‖(0 : ℝ) - (φ rightVertex - φ leftVertex)‖ ≤ 0 := by
   obtain ⟨φ, hφ⟩ := exists_universal_core_simplicial_banach_potential
     (⊤ : SimpleGraph TwoVertices) Set.univ Set.univ Set.Subset.rfl
-    ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp [Set.Pairwise])
+    ⟨leftVertex, Set.mem_univ _⟩ (fun _ _ _ _ hne => hne) (by simp)
     2 (by decide) (by simp)
     (fun _ _ => (0 : ℝ)) 0 le_rfl (by simp) (by simp)
   exact ⟨φ, by simpa using hφ leftVertex rightVertex adjacentVertices⟩
@@ -182,7 +184,8 @@ def family : Registration arena.{u, v}
     norm_num [actual, realize, max_def]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@exists_universal_core_simplicial_banach_potential.{u, v}) (Realization signature) Unit Unit where
+    (@exists_universal_core_simplicial_banach_potential.{u, v})
+    (Realization signature) Unit Unit where
   unitName := `SimpleGraph.exists_universal_core_simplicial_banach_potential.__information_unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Graph.Chordal.MultiTierAndUniversalCliqueBanach.UniversalCore.family
@@ -313,7 +316,9 @@ example (k : ℕ) (hk : 4 ≤ k) :
   let K : ℝ := k
   let D := K^2 - 3 * K + 3
   let t := K - 4
-  have hK : 4 ≤ K := by exact_mod_cast hk
+  have hK : 4 ≤ K := by
+    dsimp [K]
+    exact_mod_cast hk
   have hKpos : 0 < K := by linarith
   have h₁ : 0 < K - 1 := by linarith
   have hD : 0 < D := by
