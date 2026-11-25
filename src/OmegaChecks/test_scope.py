@@ -10,11 +10,11 @@ class ScopeTests(unittest.TestCase):
     graph = {
         "OmegaInit.Core": set(),
         "OmegaMathlib.Fib": {"OmegaInit.Core"},
-        "OmegaMath.Independent": {"OmegaInit.Core"},
+        "D5.Independent": {"OmegaInit.Core"},
         "D5.Direct": {"OmegaMathlib.Fib"},
         "D5.Downstream": {"D5.Direct"},
         "Reg.Observation": {"D5.Downstream"},
-        "Reg.Independent": {"OmegaMath.Independent"},
+        "Reg.Independent": {"D5.Independent"},
         "D5.Ordinary": set(),
         "OmegaChecks.Portable.Common": {"OmegaMathlib.Fib"},
     }
@@ -32,10 +32,10 @@ class ScopeTests(unittest.TestCase):
     def test_project_and_shared_inputs_select_their_dependents(self):
         for changed, shared, reg_inputs, expected in [
             ({"D5.Direct"}, [], [], ["D5.Direct", "D5.Downstream", "Reg.Observation"]),
-            ({"OmegaInit.Core"}, [], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
+            ({"OmegaInit.Core"}, [], [], sorted({"D5.Direct", "D5.Downstream", "D5.Independent",
                                                 "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
             ({"D5.Ordinary"}, [], ["Reg/lakefile.toml"], ["Reg.Independent", "Reg.Observation"]),
-            (set(), ["lean-toolchain"], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
+            (set(), ["lean-toolchain"], [], sorted({"D5.Direct", "D5.Downstream", "D5.Independent",
                                                    "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
         ]:
             with self.subTest(changed=changed, shared=shared, reg_inputs=reg_inputs):
@@ -43,11 +43,17 @@ class ScopeTests(unittest.TestCase):
                 self.assertEqual(plan["consumers"], expected)
                 self.assertEqual(plan["shared"], shared)
 
+    def test_last_port_import_removal_keeps_protected_consumer(self):
+        plan = scope.plan(self.graph, self.official, {"D5.Ordinary"}, set(), [], [], {"D5.Ordinary"})
+        self.assertIn("D5.Ordinary", plan["consumers"])
+        with self.assertRaisesRegex(ValueError, "missing protected retirement consumers"):
+            scope.plan(self.graph, self.official, set(), set(), [], [], {"D5.Disappeared"})
+
     def test_ordinary_importer_runs_when_either_input_is_affected(self):
-        graph = dict(self.graph, OmegaMath=set())
+        graph = dict(self.graph, OmegaMathlib=set())
         for name in scope.IMPORTER_INPUTS | {"D5.Direct"}:
             with self.subTest(name=name):
-                plan = scope.plan(graph, self.official, {name}, set(), [], [])
+                plan = scope.plan(graph, dict(self.official, OmegaMathlib=set()), {name}, set(), [], [])
                 self.assertEqual(scope.importer_affected(plan), name in scope.IMPORTER_INPUTS)
                 self.assertEqual(scope.IMPORTER_INPUTS <= set(scope.cache_targets(plan)),
                                  name in scope.IMPORTER_INPUTS)

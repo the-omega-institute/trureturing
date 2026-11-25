@@ -7,7 +7,7 @@
 
 module
 prelude
-public import OmegaMath.Arithmetic.Fibonacci.AlternatingSum
+public import D5.S1.Recurrence.Fibonacci.AlternatingSum
 
 noncomputable section
 @[expose] public section

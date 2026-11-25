@@ -54,7 +54,7 @@ internal sealed class WeightedPersistentHodgeDocument : IScribeDocumentDefinitio
             Node("short-equivalence", "harmonicEquivImage", "Canonical harmonic representatives",
                 "In addition assume that φ's component C→Z is injective. Restricted incoming boundaries "
                 + "then lie in ker(d), and their image in this cycle space is exactly ker(imageClass). "
-                + "OmegaMath.Topology.PersistentHodge owns the full pullback witness theorem, energy "
+                + "D5.S3.Topology.Simplicial.PersistentHodge owns the full pullback witness theorem, energy "
                 + "criterion, harmonic classification and uniqueness, and the linear construction of a "
                 + "harmonic representative of every cycle modulo filling boundaries. The mixed model "
                 + "interprets its carriers and operations in these unchanged real chain spaces. "

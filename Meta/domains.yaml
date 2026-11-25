@@ -1,4 +1,7 @@
 domains:
+  Algebra:
+    stratum: S0
+    definition: Explicit algebraic operations and their laws on coefficient carriers used in D5.
   Aliabadi:
     stratum: S3
     definition: Cyclic subgroup constructions and right-quotient realizations in finite groups.
@@ -11,6 +14,9 @@ domains:
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
+  Arithmetic:
+    stratum: S0
+    definition: Natural and signed integer operations, exact ratios, finite sums and constructive Euclidean division.
   ArithSums:
     stratum: S3
     definition: Finite sums and closed forms over integer index ranges, including sums whose summands are sorted by a divisibility or residue classifier.
@@ -26,9 +32,15 @@ domains:
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
+  Calculus:
+    stratum: S3
+    definition: Exact differential jets, composition identities and secant calculus over D5 carriers.
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
+  CategoryTheory:
+    stratum: S0
+    definition: Categories, functors and natural transformations on the layers used by D5.
   CayleyGrowth:
     stratum: S0
     definition: Word metrics and diameters of Cayley graphs of finite permutation groups, and whether the resulting integer sequences are eventually quasipolynomial in the rank.

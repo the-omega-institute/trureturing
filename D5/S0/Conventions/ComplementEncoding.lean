@@ -6,7 +6,7 @@
    digest: Subtraction complement is involutive and determines its total. -/
 
 import Mathlib.Algebra.Group.Basic
-import OmegaMath.Topology.SimplicialCoboundary
+import D5.S0.FiniteGeometry.Simplicial.Coboundary
 
 namespace D5.S0.Conventions.ComplementEncoding
 

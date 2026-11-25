@@ -6,8 +6,8 @@
    digest: Residual ledger entries are losslessly equivalent to their four typed components. -/
 
 import Mathlib.Logic.Equiv.Prod
-import OmegaMath.Data.Product
-import OmegaMath.Logic.Function.Defs
+import D5.S0.Computability.FiniteData.Product
+import OmegaMathlib.Logic.Function.Defs
 
 /-! The typed components and lossless encodings of a residual-ledger entry. -/
 

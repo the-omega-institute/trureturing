@@ -1,6 +1,6 @@
 module
 prelude
-public import OmegaMath.Data.Int
+public import D5.S0.Arithmetic.Exact.Int
 public import OmegaMathlib.Data.Nat.Fib.Basic
 
 /-! Public consumers of the conjunction and Fibonacci interfaces. -/

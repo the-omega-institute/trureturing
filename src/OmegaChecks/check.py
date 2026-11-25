@@ -1,6 +1,7 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
 from functools import cache
+from graphlib import TopologicalSorter
 import hashlib
 import json
 import os
@@ -19,8 +20,8 @@ LIB = ROOT / BUILD / "lib/lean"
 SRC = ROOT / "src"
 
 
-STRICT = BASIS | {"OmegaMath"}
-TOPIC = "OmegaMath.Projective"
+STRICT = BASIS
+TOPIC = "D5.S3.Geometry.ProjectiveCoordinates"
 AUDIT = ROOT / ".lake/build/bin/omegaAudit"
 # Resolved once: each `lake env` call re-reads the workspace configuration.
 ENV = {}
@@ -40,7 +41,7 @@ def build(targets):
 @cache
 def library_graph():
     # Lake's source roots agree in both configurations except for the basis facades.
-    return import_graph(ENV["LEAN"], ("strict/*.lean", "src/*.lean"))[1]
+    return import_graph(ENV["LEAN"])[1]
 
 
 def terminal_modules(graph, names):
@@ -120,6 +121,7 @@ def check_audits():
     check_standard_admission()
     check_module_surface()
     check_consumer_exports()
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_object_origins.py")
 
 
 def check_consumer_exports():
@@ -368,7 +370,6 @@ def check_standard_admission():
     # Compile the negative fixtures against the same upstream artifacts as the admitted library.
     init = "OmegaInit.Data.Nat.Basic"
     prime = "OmegaMathlib.Data.Nat.Prime.Defs"
-    original = "OmegaMath.Projective.Local"
     with tempfile.TemporaryDirectory(prefix="omega-pred-") as directory:
         tmp = Path(directory)
         prelude = "OmegaInit.Prelude"
@@ -389,14 +390,10 @@ def check_standard_admission():
             (prime, "def Omega.Nat.Prime", "public binder mismatch for Omega.Nat.Prime"),
             (prime, "def Omega.Nat.unknownMathlibName", "missing official declaration Nat.unknownMathlibName"),
             (prime, "def Omega.Nat.add", "official owner of Nat.add is Init.Prelude"),
-            (original, "def Omega.Projective.localValue", None),
-            (original, "axiom Omega.Projective.unused", "inadmissible declaration Omega.Projective.unused"),
         ]:
             source = tmp / (name.replace(".", "/") + ".lean")
             source.parent.mkdir(parents=True, exist_ok=True)
-            marker = "/-! Omega original. -/\n" if name == original else ""
-            body = "" if declaration.startswith("axiom ") else " := ∀ p : Prop, p → p"
-            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n")
+            source.write_text(f"module\nprelude\npublic {declaration} : Prop := ∀ p : Prop, p → p\n")
             lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             audit(name, [name], [tmp], error)
     with tempfile.TemporaryDirectory(prefix="omega-interface-") as directory:
@@ -407,7 +404,7 @@ def check_standard_admission():
                                 "/-! Omega original. -/\n"
                                 "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\n")
         lean("-R", tmp, "-o", always_prime.with_suffix(".olean"), always_prime)
-        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "missing computation correspondence for Omega.Nat.Prime")
+        audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "certificate statement mismatch for Omega.Nat.Prime")
         fib = "OmegaMathlib.Data.Nat.Fib.Basic"
         altered = tmp / "OmegaMathlib/Data/Nat/Fib/Basic.lean"
         altered.parent.mkdir(parents=True)
@@ -422,9 +419,9 @@ def check_standard_admission():
               "legacy importer can unfold the hidden implementation of Omega.Nat.fib")
         # A transitive dependency on project-specific mathematics invalidates a standard port.
         reverse = tmp / "OmegaMathlib/Reverse.lean"
-        reverse.write_text("module\nprelude\nimport OmegaMath.Data.Nat\n")
+        reverse.write_text("module\nprelude\nimport D5.S0.Arithmetic.Exact.Nat\n")
         lean("-R", tmp, "-o", reverse.with_suffix(".olean"), reverse)
-        audit("OmegaMathlib.Reverse", [*closure(library_graph(), ["OmegaMath.Data.Nat"]), "OmegaMathlib.Reverse"],
+        audit("OmegaMathlib.Reverse", [*closure(library_graph(), ["D5.S0.Arithmetic.Exact.Nat"]), "OmegaMathlib.Reverse"],
               [tmp, LIB], "forbidden strict import")
 
 
@@ -435,8 +432,12 @@ def versions(artifacts):
 def check_incremental():
     graph = library_graph()
     # Track the strict libraries and every mathematical check importing them.
-    imports = {name: set(closure(graph, [name])) for name in graph}
-    modules = sorted(name for name, deps in imports.items() if any(root(dep) in STRICT for dep in deps))
+    imports = {}
+    for name in TopologicalSorter(graph).static_order():
+        deps = graph.get(name, ())
+        if root(name) in STRICT or any(dep in imports for dep in deps):
+            imports[name] = {name}.union(*(imports[dep] for dep in deps if dep in imports))
+    modules = sorted(imports)
     targets = terminal_modules(graph, modules)
     build(targets)
     artifacts = {name: LIB / (name.replace(".", "/") + ".olean") for name in modules}
@@ -451,10 +452,10 @@ def check_incremental():
         return {name for name in modules if module in imports[name]}
 
     probes = [
-        ("src/OmegaMath/SeparateTopicProbe.lean", None,
+        ("D5/S3/Geometry/SeparateTopicProbe.lean", None,
          "module\nprelude\npublic import OmegaInit\n", set()),
-        ("src/OmegaMath/Projective.lean", "he.symm\n", "he.symm.symm.symm\n", {TOPIC}),
-        ("src/OmegaMath/Projective.lean", None,
+        ("D5/S3/Geometry/ProjectiveCoordinates.lean", "he.symm\n", "he.symm.symm.symm\n", {TOPIC}),
+        ("D5/S3/Geometry/ProjectiveCoordinates.lean", None,
          "\npublic theorem Omega.Projective.probe (p : Omega.Nat) : Omega.Eq p p := Omega.rfl\n",
          dependents(TOPIC)),
         ("strict/OmegaInit/Prelude.lean", None,
@@ -494,9 +495,14 @@ def check_incremental():
 
 def check_ordinary_importer():
     # A fresh ordinary importer must be able to apply project declarations to official types.
+    for name in ("OmegaMath", "OmegaMath.Arithmetic.Euclidean.Prime"):
+        result = subprocess.run(["lake", "query", f"+{name}:lean"], cwd=ROOT, text=True,
+                                capture_output=True)
+        if not result.returncode or f"unknown module `{name}`" not in result.stderr:
+            raise RuntimeError(f"retired import {name} is still available or could not be tested: {result.stderr}")
     run("lake", "build", *("+" + name for name in sorted(affected_scope.IMPORTER_INPUTS)))
     subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, check=True, text=True, input="""
-import OmegaMath
+import OmegaMathlib
 import OmegaChecks.Portable.Common
 example : Nat.fib 0 = 0 := rfl
 example : Nat.fib 5 = 5 := rfl
@@ -506,14 +512,14 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 """)
 
 
-def full_check(incremental=False):
+def full_check(incremental=False, protected=()):
     manifest = ROOT / "lake-manifest.json"
     initial = manifest.read_bytes()
     check_ordinary_importer()
     # The compiled driver runs the current Audit.lean without elaborating it for every audit.
     run("lake", "build", "omegaAudit")
     check_audits()
-    run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
+    portable.check([], "both", protected=protected)
     check_fibonacci_reduction()
     if incremental:
         check_incremental()
@@ -526,7 +532,7 @@ def scoped_check(scope):
     if scope["shared"]:
         print(f"Shared Omega inputs changed: {' '.join(scope['shared'])}", flush=True)
         ENV.update(lake_environment())
-        full_check()
+        full_check(protected=scope["consumers"])
         return
     if not affected_scope.cache_targets(scope):
         print("No affected Omega modules", flush=True)
@@ -539,7 +545,8 @@ def scoped_check(scope):
     if affected_scope.importer_affected(scope):
         check_ordinary_importer()
     if affected_scope.report_file(scope):
-        portable.check(scope["consumers"], "both", basis_roots=scope["basis"], common_roots=scope["common"])
+        portable.check(scope["consumers"], "both", basis_roots=scope["basis"], common_roots=scope["common"],
+                       protected=scope["consumers"])
     if affected_scope.FIBONACCI in scope["basis"]:
         check_fibonacci_reduction()
 
@@ -555,11 +562,17 @@ if __name__ == "__main__":
     parser.add_argument("--changed", type=Path, default=os.environ.get("CI_CHANGED_PATHS_FILE"))
     parser.add_argument("--scope", type=Path, default=os.environ.get("OMEGA_SCOPE_FILE"))
     parser.add_argument("--cache-targets", type=Path, help="write the cache restore roots during planning")
+    parser.add_argument("--protected-base", default=os.environ.get("CI_BASE"),
+                        help="protected revision supplied by the PR or push selection")
     args = parser.parse_args()
+    if args.protected_base and not (args.library is not None or args.write_scope):
+        run(sys.executable, "-B", SRC / "OmegaChecks/retirement.py", "--verify",
+            "--protected-base", args.protected_base,
+            "--output", ROOT / ".lake/build/omega-checks/retirement.json")
     if args.write_scope:
         if not args.changed or not args.cache_targets or args.scope:
             parser.error("--write-scope requires --changed and --cache-targets")
-        scope = affected_scope.discover(args.changed)
+        scope = affected_scope.discover(args.changed, args.protected_base)
         args.write_scope.write_text(json.dumps(scope) + "\n")
         targets = affected_scope.cache_targets(scope)
         args.cache_targets.write_text("".join(name + "\n" for name in targets))
@@ -579,5 +592,5 @@ if __name__ == "__main__":
         ENV.update(lake_environment())
         full_check(args.incremental)
     else:
-        scope = json.loads(args.scope.read_text()) if args.scope else affected_scope.discover(args.changed)
+        scope = json.loads(args.scope.read_text()) if args.scope else affected_scope.discover(args.changed, args.protected_base)
         scoped_check(scope)

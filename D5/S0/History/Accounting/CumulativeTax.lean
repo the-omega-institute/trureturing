@@ -7,8 +7,8 @@
 
 module
 prelude
-public import OmegaMath.Algebra.BigOperators.Range
-public import OmegaMath.Topology.SimplicialCoboundary
+public import D5.S0.Arithmetic.FiniteSums.Range
+public import D5.S0.FiniteGeometry.Simplicial.Coboundary
 
 namespace D5.S0.History.Accounting.CumulativeTax
 

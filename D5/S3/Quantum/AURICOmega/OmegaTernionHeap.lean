@@ -8,7 +8,7 @@
 
 module
 prelude
-public import OmegaMath.Ternion.Heap
+public import D5.S3.Geometry.Ternion.Heap.Spinor
 
 namespace D5.S3.Quantum.AURICOmega.OmegaTernionHeap
 

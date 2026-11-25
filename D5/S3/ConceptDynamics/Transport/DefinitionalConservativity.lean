@@ -16,7 +16,7 @@
 -/
 
 import Mathlib.Data.List.Basic
-import OmegaMath.Data.SnocList
+import D5.S0.Computability.FiniteData.SnocList
 
 /-! Conservativity under expansion of axioms and inference rules. -/
 

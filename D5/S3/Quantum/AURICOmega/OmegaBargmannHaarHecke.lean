@@ -8,9 +8,10 @@
 
 module
 prelude
-public import OmegaMath.Geometry.BargmannGram
-public import OmegaMath.Harmonic.PiFreeHaar
-public import OmegaMath.Computability.QuaternionFractran
+public import D5.S3.Geometry.BargmannGram
+public import D5.S3.Fourier.PiFreeHaar.Moments
+public import D5.S3.Fourier.PiFreeHaar.Hecke
+public import D5.S3.Quantum.AURICOmega.FractionPrograms.QuaternionFractran
 
 namespace D5.S3.Quantum.AURICOmega.OmegaBargmannHaarHecke
 

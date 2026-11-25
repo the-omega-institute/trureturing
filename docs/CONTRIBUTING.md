@@ -366,11 +366,10 @@ classifications for `README.md` and this guide do not themselves require
 separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
-check the D5 frozen ledger for the result and prefer OmegaMath when constructing
-the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
-For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
-root and prefix the original declaration name with `Omega.`. Place original
-results near their mathematical topic and mark the module `Omega original.`.
+check the frozen D5 declarations and the admitted Omega ports. Place original
+objects and proofs in their D5 domain and freeze their declarations. Preserve
+the owning module and full upstream name when porting a pinned Mathlib object.
+Refer to it explicitly as `OmegaMathlib.<upstream name>` in mathematical statements.
 D5 imports the specific module for its book-facing theorem. For example,
 `Omega.Projective.kappa_scale` supplies the general positive-scaling proof.
 See the [module placement examples](../src/README.md).
@@ -378,7 +377,7 @@ Do not add a theorem whose only contribution is renaming, specializing or
 repackaging an existing one. The rules describe the existing settlement path
 for such source claims, the requirements for new content and the narrowly
 defined external open-problem exception. A book that needs a frozen GID for
-an existing OmegaMath theorem may use one direct D5 citation entry when the
+an existing D5 theorem may use one direct D5 citation entry when the
 ledger has no matching item. Identify the book location and original proof
 in the PR and classify the entry as bind-only.
 
@@ -483,7 +482,7 @@ label qualifying declarations **仅 Omega · 零公理**. The Truth Release carr
 the corresponding evidence on each annotated declaration in the truth export. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
-`lake test -- OmegaMath.Projective` checks the projective topic.
+`lake test -- OmegaMathlib` checks the standard ports.
 [Strict library audit](../src/OmegaChecks/Audit.lean)
 
 ## Open a pull request

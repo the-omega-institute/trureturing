@@ -8,9 +8,9 @@
 
 module
 prelude
-public import OmegaMath.Geometry.LieTriple
-public import OmegaMath.Geometry.DualChartCayley
-public import OmegaMath.Harmonic.HurwitzFreeGroup.Adjoint
+public import D5.S3.Geometry.LieTriple
+public import D5.S3.Geometry.DualChartCayley
+public import D5.S3.Fourier.HurwitzFreeGroup.Adjoint
 
 namespace D5.S3.Quantum.AURICOmega.OmegaLieTripleAndFreeGroup
 

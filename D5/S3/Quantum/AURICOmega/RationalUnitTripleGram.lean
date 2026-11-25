@@ -16,7 +16,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.Tactic.LinearCombination
-import OmegaMath.Algebra.Quaternion
+import D5.S0.Algebra.Quaternion
 
 open scoped Quaternion
 open Quaternion

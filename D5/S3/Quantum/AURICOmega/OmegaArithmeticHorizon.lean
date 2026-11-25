@@ -8,9 +8,14 @@
 
 module
 prelude
-public import OmegaMath.Arithmetic.Euclidean
-public import OmegaMath.Arithmetic.ContinuedFraction
-public import OmegaMath.Arithmetic.DepthBudget
+public import D5.S3.Arith.Euclidean.GCD
+public import D5.S3.Arith.Euclidean.Prime
+public import D5.S3.Arith.Euclidean.SquareObstruction
+public import D5.S3.Arith.ContinuedFractions.Convergents
+public import D5.S3.Arith.ContinuedFractions.Tangent
+public import D5.S1.Depth.ArithmeticBudget
+
+/-! Prime escape, continued fractions, and integer decay. -/
 
 namespace D5.S3.Quantum.AURICOmega.OmegaArithmeticHorizon
 
@@ -18,7 +23,8 @@ open Omega Omega.Arithmetic Omega.Arithmetic.ContinuedFraction
 
 /-- A finite list with positive product admits an escaping prime divisor. -/
 public theorem euclid_prime_escape (s : NatList) (hs : Nat.lt Nat.zero s.prod) :
-    Exists (fun p => And (IsPrime p) (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
+    Exists (fun p => And (OmegaMathlib.Nat.Prime p)
+      (And (Dvd p s.prod.succ) (Not (NatList.Mem p s)))) :=
   Omega.Arithmetic.prime_escape s hs
 
 /-- Every pair of natural numbers admits signed Bézout coefficients. -/

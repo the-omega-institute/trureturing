@@ -7,3 +7,6 @@ public section
 namespace Omega.Function
 export _root_.Function (cantor_surjective)
 end Omega.Function
+namespace OmegaMathlib.Function
+export _root_.Function (cantor_surjective)
+end OmegaMathlib.Function

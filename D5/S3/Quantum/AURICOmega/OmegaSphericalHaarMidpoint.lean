@@ -8,9 +8,9 @@
 
 module
 prelude
-public import OmegaMath.Harmonic.AllDegreeHaar
-public import OmegaMath.Geometry.SphericalLaws
-public import OmegaMath.Calculus.MidpointDrift
+public import D5.S3.Fourier.AllDegreeHaar
+public import D5.S3.Geometry.SphericalLaws
+public import D5.S3.Calculus.MidpointDrift
 
 namespace D5.S3.Quantum.AURICOmega.OmegaSphericalHaarMidpoint
 

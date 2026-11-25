@@ -13,7 +13,7 @@ import all OmegaInit.Data.Int.Basic
 public import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Rat.Cast.Lemmas
 import Mathlib.Data.Rat.Cast.Order
-public import OmegaMath.Projective.Circle
+public import D5.S3.Geometry.ProjectiveCoordinates.Circle
 
 /-! Exact transport of Omega arithmetic and circle identities into Mathlib. -/
 

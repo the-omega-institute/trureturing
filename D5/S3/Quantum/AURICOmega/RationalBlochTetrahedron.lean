@@ -8,7 +8,7 @@
 
 module
 prelude
-public import OmegaMath.Geometry.BargmannGram.PureTetrahedron
+public import D5.S3.Geometry.BargmannGram.PureTetrahedron
 
 namespace D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
 

@@ -7,7 +7,7 @@
 
 module
 prelude
-public import OmegaMath.Arithmetic.WDigits.Interchange
+public import D5.S0.Conventions.CanonicalDigits.Interchange
 
 namespace D5.S0.Conventions
 

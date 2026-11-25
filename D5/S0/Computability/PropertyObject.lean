@@ -6,8 +6,8 @@
    digest: Property objects are losslessly equivalent to their seven typed components. -/
 
 import Mathlib.Logic.Equiv.Prod
-import OmegaMath.Data.Product
-import OmegaMath.Logic.Function.Defs
+import D5.S0.Computability.FiniteData.Product
+import OmegaMathlib.Logic.Function.Defs
 
 namespace D5.S0.Computability.PropertyObject
 

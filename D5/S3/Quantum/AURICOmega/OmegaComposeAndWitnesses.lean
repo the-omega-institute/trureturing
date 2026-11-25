@@ -9,8 +9,8 @@
 module
 prelude
 import all OmegaInit.Prelude
-public import OmegaMath.Calculus.DFiniteCompose
-public import OmegaMath.Witnesses.FlagshipWitnesses
+public import D5.S3.Calculus.DFiniteCompose
+public import D5.S3.Quantum.AURICOmega.SpinorAndFractionWitnesses
 
 namespace D5.S3.Quantum.AURICOmega.OmegaComposeAndWitnesses
 

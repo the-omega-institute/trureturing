@@ -7,7 +7,7 @@
 
 module
 prelude
-public import OmegaMath.Data.SnocList
+public import D5.S0.Computability.FiniteData.SnocList
 
 namespace D5.S0.History.Generation
 

@@ -426,7 +426,8 @@ jobs:
         if: steps.toolchain.outcome == 'success'
         run: |
           python3 -B src/OmegaChecks/test_scope.py
-          python3 -B src/OmegaChecks/check.py --changed "$RUNNER_TEMP/changed-paths" \
+          python3 -B src/OmegaChecks/check.py --protected-base "${{ needs.detect.outputs.base }}" \
+            --changed "$RUNNER_TEMP/changed-paths" \
             --write-scope "$RUNNER_TEMP/omega-scope.json" --cache-targets "$RUNNER_TEMP/omega-cache-targets"
       - id: dependency
         if: steps.omega_scope.outputs.targets-file != '' && steps.keys.outputs.dependency_key != ''
@@ -461,6 +462,7 @@ jobs:
         name: Check Omega admission and downstream substitution
         env:
           CI: 'true'
+          CI_BASE: ${{ needs.detect.outputs.base }}
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
         run: python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies

@@ -1,9 +1,0 @@
-/-
-Copyright (c) 2026 The Omega Institute. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
-module
-prelude
-
-public import OmegaMath.Data.Nat
-public import OmegaMathlib.Data.Nat.Choose.Basic

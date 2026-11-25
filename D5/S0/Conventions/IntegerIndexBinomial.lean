@@ -7,8 +7,9 @@
    digest: The binomial coefficient with a natural upper index and an integer lower index, zero when the lower index is negative. -/
 
 import Mathlib.Data.Nat.Choose.Basic
-import OmegaMath.Data.Int
-import OmegaMath.Data.Nat.Choose.Basic
+import D5.S0.Arithmetic.Exact.Int
+import D5.S0.Arithmetic.Exact.Nat
+import OmegaMathlib.Data.Nat.Choose.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

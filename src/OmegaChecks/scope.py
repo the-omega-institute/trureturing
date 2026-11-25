@@ -5,17 +5,18 @@ from pathlib import Path
 from portable import BASIS, ROOT, closure, consumers, import_graph, root
 
 
-LIBRARIES = BASIS | {"OmegaMath"}
+LIBRARIES = BASIS
 CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
 CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",
-          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py"}
+          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
+          "src/OmegaChecks/retirement.py", "src/OmegaChecks/test_object_origins.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
-IMPORTER_INPUTS = {"OmegaMath", "OmegaChecks.Portable.Common"}
+IMPORTER_INPUTS = {"OmegaMathlib", "OmegaChecks.Portable.Common"}
 REQUIRED_MODULES = CHECK_INPUTS | IMPORTER_INPUTS | {FIBONACCI}
 REPORT_DIR = ".lake/build/omega-checks/"
 
@@ -28,12 +29,12 @@ def module_path(path):
     if path.startswith(("src/", "strict/")):
         directory, _, relative = path.partition("/")
         name = relative.removesuffix(".lean").replace("/", ".")
-        if root(name) in (CHECK_ROOTS if directory == "src" else BASIS):
+        if directory == "src" or root(name) in BASIS:
             return name
     return None
 
 
-def plan(graph, official_basis, changed, missing, shared, reg_inputs):
+def plan(graph, official_basis, changed, missing, shared, reg_inputs, protected_clients=()):
     # Both sides can import a changed module, including a deleted target that
     # is still named by an import in the candidate.
     reverse = defaultdict(set)
@@ -43,6 +44,8 @@ def plan(graph, official_basis, changed, missing, shared, reg_inputs):
                 reverse[dep].add(name)
     if unresolved := {name for name in missing if reverse[name] or name in REQUIRED_MODULES}:
         raise ValueError(f"missing changed Omega input still required by an import or check: {sorted(unresolved)}")
+    if removed := set(protected_clients) - graph.keys():
+        raise ValueError(f"missing protected retirement consumers: {sorted(removed)}")
     strict_basis = {name for name in graph if root(name) in BASIS}
     if mismatch := strict_basis ^ official_basis.keys():
         raise ValueError(f"standard and strict module trees differ: {sorted(mismatch)}")
@@ -61,12 +64,12 @@ def plan(graph, official_basis, changed, missing, shared, reg_inputs):
 
     library = sorted(name for name in affected if root(name) in CHECK_ROOTS)
     basis = sorted(affected & strict_basis)
-    downstream = sorted(affected & set(consumers(graph)))
+    downstream = sorted(affected & set(consumers(graph, protected_clients)))
     common = sorted(set(basis) | {name for name in downstream if name.startswith("OmegaChecks.Portable.")})
     return dict(shared=shared, library=library, basis=basis, consumers=downstream, common=common)
 
 
-def discover(changed_file):
+def discover(changed_file, base=None):
     raw = changed_file.read_bytes()
     if raw and not raw.endswith(b"\0"):
         raise ValueError(f"invalid NUL-separated changed paths: {changed_file}")
@@ -76,13 +79,15 @@ def discover(changed_file):
     reg_inputs = paths & REG_INPUTS
     if not (changed or shared or reg_inputs):
         return plan({}, {}, set(), set(), [], [])
+    from retirement import protected_omega_consumers
+    protected = protected_omega_consumers(base) if base else ()
     _, graph = import_graph("lean", with_reg=True)
     _, official_basis = import_graph("lean", ("src/OmegaInit*.lean", "src/OmegaMathlib*.lean"),
                                      official_basis=True)
     missing = {name for path, name in changed.items() if not (ROOT / path).is_file()}
     if missing:
         print(f"Removed Omega scope inputs: {' '.join(sorted(missing))}", flush=True)
-    return plan(graph, official_basis, set(changed.values()), missing, shared, reg_inputs)
+    return plan(graph, official_basis, set(changed.values()), missing, shared, reg_inputs, protected)
 
 
 def importer_affected(scope):

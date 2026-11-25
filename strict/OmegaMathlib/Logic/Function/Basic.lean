@@ -25,3 +25,9 @@ public theorem cantor_surjective {α : Type u} (f : α → α → Prop) :
       refute (Eq.subst (motive := fun p : Prop => p) pointwise.symm refute)
 
 end Omega.Function
+
+-- Generated standard references (portable.py --regenerate-facades).
+public section
+namespace OmegaMathlib.Function
+export _root_.Omega.Function (cantor_surjective)
+end OmegaMathlib.Function

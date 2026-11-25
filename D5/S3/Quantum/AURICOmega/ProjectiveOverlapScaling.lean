@@ -8,7 +8,7 @@
 
 module
 prelude
-public import OmegaMath.Projective
+public import D5.S3.Geometry.ProjectiveCoordinates
 
 namespace D5.S3.Quantum.AURICOmega.ProjectiveOverlapScaling
 
