@@ -73,7 +73,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "arg", "body", "arg", "body",
-        "arg", "body", "fun", "arg", "arg"]
+        "arg", "body", "fn", "arg", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
