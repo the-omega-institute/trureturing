@@ -7,7 +7,6 @@ doi: 10.1137/21M1435471
 url: https://arxiv.org/html/2012.02808v3
 claim: The nullity of the weighted persistent q-Laplacian equals the q-th persistent Betti number for every finite simplicial pair and every nonnegative degree.
 strata_touched:
-  - D5/S3/Geometry/SimplicialPersistence/HomologyImage
   - D5/S3/Geometry/SimplicialPersistence/WeightedPersistentHodge
 license: citation-only
 triage: anchor

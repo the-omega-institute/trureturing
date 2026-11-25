@@ -12,6 +12,18 @@ internal sealed class PersistentLaplacianHeatStabilityDocument : IScribeDocument
         "Pairwise heat stability of the degree-zero weighted persistent Laplacian.",
         H("Degree-zero persistent heat stability"),
         Blocks(
+            Describe.Lean(DescribeId.Create("integer-face-coordinates"),
+                DeclarationHandle.Create(Prefix + "coordinates"),
+                H("Integer coordinates in every face degree"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every finite linearly ordered vertex type, every pre-abstract simplicial "
+                    + "complex L and every natural degree p, coordinates maps the ordered integer "
+                    + "face module to all integer functions on its actual p-faces. It is the "
+                    + "canonical coproduct-to-direct-sum isomorphism followed by the finite direct-sum "
+                    + "coordinate equivalence. A face generator has coefficient one at that same "
+                    + "face and zero elsewhere. This coordinate supplier includes empty face sets "
+                    + "and every degree."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("weighted-persistent-laplacian"),
                 DeclarationHandle.Create(Prefix + "persistentLaplacian"),
                 H("The weighted persistent vertex operator"),
