@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0c79a9270994c2e92afa03924c2a6c23349853c576efa3ae72cc57c82dc93bf8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),7:Carrier),10:trace_conj)","kind":"theorem","libraries":["OmegaInit","OmegaMath"],"axioms":[]}]}
+{"statement_id":"sha256:af20dc9d4216c4ca665bf6e14930b024dcb0211907b8849c70b4224436a27e72","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S0),7:Carrier),10:trace_conj)","kind":"theorem","libraries":["Init","OmegaMath"],"axioms":["propext"]}]}

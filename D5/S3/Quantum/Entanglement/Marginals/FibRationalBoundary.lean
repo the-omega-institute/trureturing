@@ -87,9 +87,11 @@ private theorem phase_normSq (t : ℚ) : normSq (phase t) = 1 := by
       (t.num : ℝ)^2 + (t.den : ℝ)^2 := by
     have h := congrArg (fun k : ℤ => (k : ℝ)) (toStd_normSq p q)
     simpa only [hp, hq, Int.cast_natCast, Int.cast_add, Int.cast_mul, pow_two] using h
-  simp only [cayleyX, cayleyY, value_read, Omega.Int.square, Omega.Int.sub, toStdInt_add,
-    toStdInt_mul, toStdInt_neg, hp, hq, Int.cast_add, Int.cast_mul, Int.cast_neg,
-    Int.cast_natCast, hD] at h
+  have hsub (a b : Omega.Int) : toStdInt (a.sub b) = toStdInt a - toStdInt b := by
+    change toStdInt (Omega.Int.add a (Omega.Int.neg b)) = _
+    rw [toStdInt_add, toStdInt_neg, sub_eq_add_neg]
+  simp only [cayleyX, cayleyY, value_read, Omega.Int.square, hsub, toStdInt_add,
+    toStdInt_mul, hp, hq, Int.cast_add, Int.cast_mul, Int.cast_sub, Int.cast_natCast, hD] at h
   have ht : (t : ℝ) = (t.num : ℝ) / (t.den : ℝ) := Rat.cast_def t
   rw [phase, Complex.normSq_mk]
   change (((1 - (t : ℝ)^2)/(1 + (t : ℝ)^2)) *

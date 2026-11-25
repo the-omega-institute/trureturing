@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.Int
 
 /-!
@@ -70,7 +71,7 @@ def Compare.IsSame (c : Compare) : Prop :=
 private theorem index_eq_of_same (a b : Nat) (h : (compareIndex a b).IsSame) : Eq a b :=
   (Nat.rec (motive := fun a => ∀ b, (compareIndex a b).IsSame → Eq a b)
     (fun b => Nat.rec (motive := fun b => (compareIndex Nat.zero b).IsSame → Eq Nat.zero b)
-      (fun _ => Eq.refl) (fun _ _ h => False.elim h) b)
+      (fun _ => rfl) (fun _ _ h => False.elim h) b)
     (fun a prev b => Nat.rec (motive := fun b => (compareIndex a.succ b).IsSame → Eq a.succ b)
       (fun h => False.elim h) (fun b _ h => congrArg Nat.succ (prev b h)) b) a) b h
 
@@ -83,7 +84,7 @@ def compareFactors (a b : Factors) : Compare :=
 private theorem factors_eq_of_same (a b : Factors) (h : (compareFactors a b).IsSame) : Eq a b :=
   (Factors.rec (motive := fun a => ∀ b, (compareFactors a b).IsSame → Eq a b)
     (fun b => Factors.rec (motive := fun b => (compareFactors Factors.nil b).IsSame → Eq Factors.nil b)
-      (fun _ => Eq.refl) (fun _ _ _ h => False.elim h) b)
+      (fun _ => rfl) (fun _ _ _ h => False.elim h) b)
     (fun i a prev b => Factors.rec
       (motive := fun b => (compareFactors (Factors.cons i a) b).IsSame → Eq (Factors.cons i a) b)
       (fun h => False.elim h)
@@ -93,8 +94,8 @@ private theorem factors_eq_of_same (a b : Factors) (h : (compareFactors a b).IsS
           (Eq c order) → Eq (Factors.cons i a) (Factors.cons j b))
           (fun h _ => False.elim h)
           (fun h ij => Eq.map₂ Factors.cons
-            (index_eq_of_same i j (Eq.subst Compare.IsSame ij True.intro)) (prev b h))
-          (fun h _ => False.elim h) order) hs Eq.refl) b) a) b h
+            (index_eq_of_same i j (Eq.subst (motive := Compare.IsSame) ij True.intro)) (prev b h))
+          (fun h _ => False.elim h) order) hs rfl) b) a) b h
 
 def insertFactor (n : Nat) (p : Factors) : Factors :=
   Factors.rec (motive := fun _ => Factors) (.cons n .nil)
@@ -105,14 +106,14 @@ def insertFactor (n : Nat) (p : Factors) : Factors :=
 private theorem eval_insertFactor (n : Nat) (p : Factors) (v : Values) :
     Eq ((insertFactor n p).eval v) ((v.get n).mul (p.eval v)) :=
   Factors.rec (motive := fun p => Eq ((insertFactor n p).eval v) ((v.get n).mul (p.eval v)))
-    Eq.refl
+    rfl
     (fun m p ih => Compare.rec
       (motive := fun c => Eq
         ((Compare.rec (motive := fun _ => Factors)
           (.cons n (.cons m p)) (.cons n (.cons m p))
           (.cons m (insertFactor n p)) c).eval v)
         ((v.get n).mul ((v.get m).mul (p.eval v))))
-      Eq.refl Eq.refl
+      rfl rfl
       ((congrArg (v.get m).mul ih).trans
         (((Int.mul_assoc (v.get m) (v.get n) (p.eval v)).symm.trans
           (congrArg (fun t : Int => t.mul (p.eval v)) (Int.mul_comm (v.get m) (v.get n)))).trans
@@ -151,8 +152,8 @@ private theorem eval_withCoeff (m : Factors) (a : Int) (p : Normal) (v : Values)
     (fun n => Nat.rec (motive := fun n => motive (Int.ofNat n))
       (((congrArg (fun z : Int => z.add (p.eval v)) (Int.zero_mul (m.eval v))).trans
         (Int.zero_add (p.eval v))).symm)
-      (fun _ _ => Eq.refl) n)
-    (fun _ => Eq.refl) a
+      (fun _ _ => rfl) n)
+    (fun _ => rfl) a
 
 def insert (m : Factors) (a : Int) (p : Normal) : Normal :=
   Normal.rec (motive := fun _ => Normal) (withCoeff m a .zero)
@@ -173,7 +174,7 @@ private theorem eval_insert (m : Factors) (a : Int) (p : Normal) (v : Values) :
       (Compare.rec (motive := fun c => Eq c order → Eq ((lhs c).eval v) (A.add (B.add Q)))
         (fun _ => eval_withCoeff m a (.term n b q) v)
         (fun h =>
-          have mn := factors_eq_of_same m n (Eq.subst Compare.IsSame h True.intro)
+          have mn := factors_eq_of_same m n (Eq.subst (motive := Compare.IsSame) h True.intro)
           (eval_withCoeff n (a.add b) q v).trans
             ((congrArg (fun t : Int => t.add Q) (Int.add_mul a b (n.eval v))).trans
               ((Int.add_assoc (a.mul (n.eval v)) B Q).trans
@@ -181,7 +182,7 @@ private theorem eval_insert (m : Factors) (a : Int) (p : Normal) (v : Values) :
         (fun _ => (congrArg B.add ih).trans
           (((Int.add_assoc B A Q).symm.trans
             (congrArg (fun t : Int => t.add Q) (Int.add_comm B A))).trans
-              (Int.add_assoc A B Q))) order) Eq.refl) p
+              (Int.add_assoc A B Q))) order) rfl) p
 
 def plus (a b : Normal) : Normal :=
   Normal.rec b (fun m c _ r => insert m c r) a
@@ -225,7 +226,7 @@ def negative (a : Normal) : Normal :=
 
 private theorem eval_negative (a : Normal) (v : Values) :
     Eq ((negative a).eval v) (a.eval v).neg :=
-  Normal.rec (motive := fun a => Eq ((negative a).eval v) (a.eval v).neg) Eq.refl
+  Normal.rec (motive := fun a => Eq ((negative a).eval v) (a.eval v).neg) rfl
     (fun m c _ ih => (Eq.map₂ Int.add (Int.neg_mul c (m.eval v)) ih).trans Int.neg_add.symm) a
 
 def Expr.normalize (e : Expr) : Normal :=
@@ -237,7 +238,7 @@ private theorem eval_normalize (e : Expr) (v : Values) : Eq (e.normalize.eval v)
   Expr.rec (motive := fun e => Eq (e.normalize.eval v) (e.eval v))
     (fun n => (Int.add_zero (Int.one.mul ((v.get n).mul Int.one))).trans
       ((Int.one_mul ((v.get n).mul Int.one)).trans (Int.mul_one (v.get n))))
-    Eq.refl Eq.refl
+    ((Int.add_zero _).trans (Int.one_mul Int.one)) rfl
     (fun e ih => (eval_negative e.normalize v).trans (congrArg Int.neg ih))
     (fun e f ih jh => (eval_plus e.normalize f.normalize v).trans (Eq.map₂ Int.add ih jh))
     (fun e f ih jh => (eval_times e.normalize f.normalize v).trans (Eq.map₂ Int.mul ih jh)) e

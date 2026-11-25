@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Geometry.Cayley3D.Adjoint
 
 /-!
@@ -74,6 +76,9 @@ def one : RatMat3 := ⟨Mat3.one, Nat.zero⟩
 def transpose (a : RatMat3) : RatMat3 := ⟨a.num.transpose, a.denPred⟩
 
 def mul (a b : RatMat3) : RatMat3 := ⟨a.num.mul b.num, IntRatio.mulDenPred a.denPred b.denPred⟩
+
+private theorem mul_den (a b : RatMat3) : Eq (a.mul b).den (a.den.mul b.den) :=
+  Int.ofNat_inj.mp (IntRatio.denominator_mul a.denPred b.denPred)
 
 def apply (a : RatMat3) (v : RatVec3) : RatVec3 :=
   ⟨a.num.apply v.num, IntRatio.mulDenPred a.denPred v.denPred⟩
@@ -176,6 +181,8 @@ private def reifiedCayley (q : Coordinates) : ExprMat :=
 private def inputs (d : Int) (v : Vec3) (rest : Values) : Values :=
   .cons d (.cons v.x (.cons v.y (.cons v.z rest)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem cayleyNum_apply (d : Int) (s v : Vec3) :
     Eq ((cayleyNum d s).apply v) (adjointNum ⟨d, s.x, s.y, s.z⟩ v) :=
   let p := Coordinates.variables Nat.zero
@@ -187,13 +194,15 @@ theorem cayleyNum_apply (d : Int) (s v : Vec3) :
   let matrix := reifiedCayley p
   let r := (p.mul v').mul p.conj
   let values := inputs d s (.cons v.x (.cons v.y (.cons v.z .nil)))
-  Vec3.ext ((matrix.row1.dot ⟨a, b, c⟩).sound r.x values Eq.refl)
-    ((matrix.row2.dot ⟨a, b, c⟩).sound r.y values Eq.refl)
-    ((matrix.row3.dot ⟨a, b, c⟩).sound r.z values Eq.refl)
+  Vec3.ext ((matrix.row1.dot ⟨a, b, c⟩).sound r.x values rfl)
+    ((matrix.row2.dot ⟨a, b, c⟩).sound r.y values rfl)
+    ((matrix.row3.dot ⟨a, b, c⟩).sound r.z values rfl)
 
 theorem cayley_action (s v : RatVec3) : Eq ((Cayley s).apply v) (Ad (cayleyQuaternion s) v) :=
-  RatVec3.eq_of_num_den (cayleyNum_apply (Int.ofNat s.den) s.num v.num) Eq.refl
+  RatVec3.eq_of_num_den (cayleyNum_apply (Int.ofNat s.den) s.num v.num) rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem cayley_integer_identity (d : Int) (v : Vec3) :
     Eq ((skewPlusNum d v).transpose.mul (cayleyNum d v))
       (Mat3.scale (Quaternion.dot ⟨d, v.x, v.y, v.z⟩ ⟨d, v.x, v.y, v.z⟩) (skewPlusNum d v)) :=
@@ -206,12 +215,12 @@ private theorem cayley_integer_identity (d : Int) (v : Vec3) :
   let r2 := plus.row2.scale n
   let r3 := plus.row3.scale n
   Mat3.ext
-    (Vec3.ext (lhs.row1.x.sound r1.x values Eq.refl) (lhs.row1.y.sound r1.y values Eq.refl)
-      (lhs.row1.z.sound r1.z values Eq.refl))
-    (Vec3.ext (lhs.row2.x.sound r2.x values Eq.refl) (lhs.row2.y.sound r2.y values Eq.refl)
-      (lhs.row2.z.sound r2.z values Eq.refl))
-    (Vec3.ext (lhs.row3.x.sound r3.x values Eq.refl) (lhs.row3.y.sound r3.y values Eq.refl)
-      (lhs.row3.z.sound r3.z values Eq.refl))
+    (Vec3.ext (lhs.row1.x.sound r1.x values rfl) (lhs.row1.y.sound r1.y values rfl)
+      (lhs.row1.z.sound r1.z values rfl))
+    (Vec3.ext (lhs.row2.x.sound r2.x values rfl) (lhs.row2.y.sound r2.y values rfl)
+      (lhs.row2.z.sound r2.z values rfl))
+    (Vec3.ext (lhs.row3.x.sound r3.x values rfl) (lhs.row3.y.sound r3.y values rfl)
+      (lhs.row3.z.sound r3.z values rfl))
 
 theorem cayley_identity (s : RatVec3) :
     RatMat3.Equiv ((skewMinus s).mul (Cayley s)) (skewPlus s) :=
@@ -220,8 +229,10 @@ theorem cayley_identity (s : RatVec3) :
   let h := (congrArg Int.ofNat (adjointDen_eq q (cayleyQuaternion_nonzero s))).trans q.normSq_cast
   RatMat3.equiv_scaled ((skewMinus s).mul (Cayley s)) (skewPlus s) n
     ((cayley_integer_identity (Int.ofNat s.den) s.num).trans
-      (congrArg (fun k => Mat3.scale k (skewPlus s).num) h.symm)) Eq.refl
+      (congrArg (fun k => Mat3.scale k (skewPlus s).num) h.symm)) (RatMat3.mul_den _ _)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem cayley_integer_orthogonal (d : Int) (v : Vec3) :
     Eq ((cayleyNum d v).transpose.mul (cayleyNum d v))
       (Mat3.diagonal (Int.square (Quaternion.dot ⟨d, v.x, v.y, v.z⟩ ⟨d, v.x, v.y, v.z⟩))) :=
@@ -231,12 +242,12 @@ private theorem cayley_integer_orthogonal (d : Int) (v : Vec3) :
   let lhs := a.transpose.mul a
   let n := (q.dot q).sq
   Mat3.ext
-    (Vec3.ext (lhs.row1.x.sound n values Eq.refl) (lhs.row1.y.sound .zero values Eq.refl)
-      (lhs.row1.z.sound .zero values Eq.refl))
-    (Vec3.ext (lhs.row2.x.sound .zero values Eq.refl) (lhs.row2.y.sound n values Eq.refl)
-      (lhs.row2.z.sound .zero values Eq.refl))
-    (Vec3.ext (lhs.row3.x.sound .zero values Eq.refl) (lhs.row3.y.sound .zero values Eq.refl)
-      (lhs.row3.z.sound n values Eq.refl))
+    (Vec3.ext (lhs.row1.x.sound n values rfl) (lhs.row1.y.sound .zero values rfl)
+      (lhs.row1.z.sound .zero values rfl))
+    (Vec3.ext (lhs.row2.x.sound .zero values rfl) (lhs.row2.y.sound n values rfl)
+      (lhs.row2.z.sound .zero values rfl))
+    (Vec3.ext (lhs.row3.x.sound .zero values rfl) (lhs.row3.y.sound .zero values rfl)
+      (lhs.row3.z.sound n values rfl))
 
 private theorem scaled_identity (k : Int) : Eq (Mat3.diagonal k) (Mat3.scale k Mat3.one) :=
   (Mat3.ext
@@ -253,15 +264,17 @@ theorem cayley_orthogonal (s : RatVec3) :
   RatMat3.equiv_scaled ((Cayley s).transpose.mul (Cayley s)) RatMat3.one (n.mul n)
     ((cayley_integer_orthogonal (Int.ofNat s.den) s.num).trans
       ((congrArg (fun t => Mat3.diagonal (Int.square t)) h.symm).trans
-        (scaled_identity (Int.ofNat (n.mul n))))) (Nat.one_mul (n.mul n)).symm
+        (scaled_identity (Int.ofNat (n.mul n))))) ((RatMat3.mul_den _ _).trans (Nat.one_mul (n.mul n)).symm)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem cayley_integer_det (d : Int) (v : Vec3) :
     Eq (cayleyNum d v).det
       (let n := Quaternion.dot ⟨d, v.x, v.y, v.z⟩ ⟨d, v.x, v.y, v.z⟩
        (n.mul n).mul n) :=
   let q := Coordinates.variables Nat.zero
   let n := q.dot q
-  (reifiedCayley q).det.sound ((n.mul n).mul n) (inputs d v .nil) Eq.refl
+  (reifiedCayley q).det.sound ((n.mul n).mul n) (inputs d v .nil) rfl
 
 theorem cayley_det (s : RatVec3) : IntRatio.Equivalent (Cayley s).det (IntRatio.ofInt Int.one) :=
   let n := (Cayley s).den
@@ -272,12 +285,12 @@ theorem cayley_det (s : RatVec3) : IntRatio.Equivalent (Cayley s).det (IntRatio.
   have hn : Not (Eq n Nat.zero) := Nat.succ_ne_zero (Cayley s).denPred
   have nonzero : Not (Eq ((n.mul n).mul n) Nat.zero) :=
     fun e => (Nat.mul_eq_zero.mp e).elim (fun e => (Nat.mul_eq_zero.mp e).elim hn hn) hn
-  Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t ((n.mul n).mul n)) (IntRatio.ofInt Int.one))
+  Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t ((n.mul n).mul n)) (IntRatio.ofInt Int.one))
     h.symm (IntRatio.value_self ((n.mul n).mul n) nonzero)
 
 theorem cayley_dot (s u v : RatVec3) :
     IntRatio.Equivalent (((Cayley s).apply u).dot3 ((Cayley s).apply v)) (u.dot3 v) :=
-  Eq.subst (fun t => IntRatio.Equivalent t (u.dot3 v))
+  Eq.subst (motive := fun t => IntRatio.Equivalent t (u.dot3 v))
     (Eq.map₂ RatVec3.dot3 (cayley_action s u) (cayley_action s v)).symm
     (ad_dot (cayleyQuaternion s) (cayleyQuaternion_nonzero s) u v)
 

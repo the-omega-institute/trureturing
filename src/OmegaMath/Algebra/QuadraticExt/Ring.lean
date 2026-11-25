@@ -188,7 +188,7 @@ def intRing : CommRingOps Int Eq where
 
 theorem intRingLaws : intRing.Laws :=
   CommRingOps.Laws.intro
-    (fun _ => Eq.refl)
+    (fun _ => rfl)
     (Eq.symm)
     (Eq.trans)
     (Eq.map₂ Int.add)
@@ -240,12 +240,12 @@ theorem inv_toRatio (x : FiniteRatio) (h : Not (Eq x.num Int.zero)) :
     Eq (inv ⟨a, d⟩).toRatio (toRatio ⟨a, d⟩).inv
   (Int.rec (motive := P)
     (fun n => Nat.rec (motive := fun n => P (Int.ofNat n))
-      (fun _ h => False.elim (h Eq.refl)) (fun _ _ _ _ => Eq.refl) n)
-    (fun _ _ _ => Eq.refl) x.num) x.denPred h
+      (fun _ h => False.elim (h rfl)) (fun _ _ _ _ => rfl) n)
+    (fun _ _ _ => rfl) x.num) x.denPred h
 
 theorem mul_inv_cancel (x : FiniteRatio) (h : Not (Eq x.num Int.zero)) :
     Equivalent (x.mul x.inv) one :=
-  Eq.subst (fun y => IntRatio.Equivalent (x.toRatio.mul y) one.toRatio)
+  Eq.subst (motive := fun y => IntRatio.Equivalent (x.toRatio.mul y) one.toRatio)
     (x.inv_toRatio h).symm (IntRatio.mul_inv_cancel x.num x.denPred h)
 
 theorem mul_zero (x : FiniteRatio) : Equivalent (x.mul zero) zero :=

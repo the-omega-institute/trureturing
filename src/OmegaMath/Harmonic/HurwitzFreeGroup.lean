@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.HurwitzFreeGroup.Split5
 
 /-!
@@ -40,9 +41,11 @@ def evalQuat : Word → Quaternion :=
 def evalSplit5 : Word → Matrix5 :=
   Word.rec matrixOne (fun g _ A => (split5 g.coordinates).mul A)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem evalSplit5_eq (w : Word) : Eq (evalSplit5 w) (quaternionSplit5 (evalQuat w)) :=
   Word.rec (motive := fun w => Eq (evalSplit5 w) (quaternionSplit5 (evalQuat w)))
-    Eq.refl
+    rfl
     (fun g w ih =>
       (congrArg (split5 g.coordinates).mul ih).trans
         (quaternionSplit5_mul (generatorQuat g) (evalQuat w)).symm) w
@@ -54,8 +57,8 @@ private theorem residue_zero_or_ne (r : Residue) : Or (Eq r .zero) (Not (Eq r .z
   let ne := fun (r : Residue) (nonzero : Eq r.isZero .false) (h : Eq r .zero) =>
     Residue.false_ne_true (nonzero.symm.trans (congrArg Residue.isZero h))
   Residue.rec (motive := fun r => Or (Eq r .zero) (Not (Eq r .zero)))
-    (Or.inl Eq.refl) (Or.inr (ne .one Eq.refl)) (Or.inr (ne .two Eq.refl)) (Or.inr (ne .three Eq.refl))
-    (Or.inr (ne .four Eq.refl)) r
+    (Or.inl rfl) (Or.inr (ne .one rfl)) (Or.inr (ne .two rfl)) (Or.inr (ne .three rfl))
+    (Or.inr (ne .four rfl)) r
 
 private theorem factor_row_nonzero (g : Generator) : RowNonzero g.factors.s g.factors.t :=
   let f := g.factors
@@ -120,8 +123,8 @@ private theorem reduced_outer (w : Word) :
 
 private theorem factor_column_one (g : Generator) :
     Or (Eq g.factors.u .one) (Eq g.factors.v .one) :=
-  Generator.rec (Or.inr Eq.refl) (Or.inl Eq.refl) (Or.inl Eq.refl)
-    (Or.inl Eq.refl) (Or.inl Eq.refl) (Or.inl Eq.refl) g
+  Generator.rec (Or.inr rfl) (Or.inl rfl) (Or.inl rfl)
+    (Or.inl rfl) (Or.inl rfl) (Or.inl rfl) g
 
 private theorem outer_nonzero (g : Generator) {s t : Residue} (hrow : RowNonzero s t) :
     Eq (Matrix5.outer g.factors.u g.factors.v s t).isZero .false :=
@@ -141,23 +144,27 @@ private theorem outer_nonzero (g : Generator) {s t : Residue} (hrow : RowNonzero
 theorem reduced_word_split5_nonzero (w : Word) (hr : IsReduced w) :
     Eq (evalSplit5 w).isZero .false :=
   (Word.rec (motive := fun w => IsReduced w → Eq (evalSplit5 w).isZero .false)
-    (fun _ => Eq.refl)
+    (fun _ => rfl)
     (fun g tail _ hr => (reduced_outer tail g hr).elim fun _ hs => hs.elim fun _ ht =>
       (congrArg Matrix5.isZero ht.left).trans (outer_nonzero g ht.right)) w) hr
 
 /-- Natural powers of five, iterated over the word length. -/
 def powFive : Nat → Nat := Nat.rec Nat.one (fun _ n => five.mul n)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem generator_normSq (g : Generator) : Eq (generatorQuat g).normSq five :=
   let q := generatorQuat g
   Int.ofNat_inj.mp (q.normSq_cast.trans
     ((Int.add_assoc (q.w.square.add q.x.square) q.y.square q.z.square).symm.trans
       (generator_norm g)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 /-- The squared Hamilton norm is five to the word length, for any word. -/
 theorem reduced_word_normSq (w : Word) : Eq (evalQuat w).normSq (powFive w.length) :=
   Word.rec (motive := fun w => Eq (evalQuat w).normSq (powFive w.length))
-    Eq.refl
+    rfl
     (fun g tail ih =>
       (Quaternion.normSq_mul (generatorQuat g) (evalQuat tail)).trans
         (Eq.map₂ Nat.mul (generator_normSq g) ih)) w
@@ -180,7 +187,7 @@ private theorem quat_split_zero_of_coord_residues {q : Quaternion}
   have d := sum q.w (Int.two.mul q.x).neg hw (minus _ (double q.x hx))
   (congrArg Matrix5.isZero
     ((Eq.map₂ (fun a b => Matrix5.mk a b (quaternionSplit5 q).c (quaternionSplit5 q).d) a b).trans
-      (Eq.map₂ (Matrix5.mk .zero .zero) c d))).trans Eq.refl
+      (Eq.map₂ (Matrix5.mk .zero .zero) c d))).trans rfl
 
 /-- All four integer coordinates are divisible by five. -/
 def AllDivisibleByFive (q : Quaternion) : Prop :=
@@ -206,7 +213,7 @@ private theorem norm_residue_zero (w : Word) (hn : Not (Eq w .nil)) :
   (congrArg (fun n => Residue.ofInt (Int.ofNat n)) (reduced_word_normSq w)).trans
     ((Word.rec (motive := fun w => Not (Eq w .nil) →
         Eq (Residue.ofInt (Int.ofNat (powFive w.length))) .zero)
-      (fun hn => False.elim (hn Eq.refl))
+      (fun hn => False.elim (hn rfl))
       (fun _ tail _ _ => residue_five_mul (Int.ofNat (powFive tail.length))) w) hn)
 
 /-- No nonempty reduced word evaluates to an integer scalar. -/
@@ -216,15 +223,14 @@ theorem reduced_word_ne_scalar (w : Word) (hr : IsReduced w) (hn : Not (Eq w .ni
     have norm := (congrArg (fun q : Quaternion => Residue.ofInt (Int.ofNat q.normSq)) h).symm.trans
       (norm_residue_zero w hn)
     have scalarNorm : Eq (Int.ofNat (Quaternion.scalar k).normSq) (k.mul k) :=
-      (Quaternion.normSq_cast (Quaternion.scalar k)).trans
-        ((Int.add_zero ((k.mul k).add Int.zero)).trans (Int.add_zero (k.mul k)))
+      (congrArg Int.ofNat (Quaternion.scalar_normSq k)).trans Int.natAbs_mul_self
     have square : Eq ((Residue.ofInt k).mul (Residue.ofInt k)) .zero :=
       (Residue.ofInt_mul k k).symm.trans ((congrArg Residue.ofInt scalarNorm).symm.trans norm)
     have scalarZero : Eq (Residue.ofInt k) .zero :=
       (residue_zero_or_ne (Residue.ofInt k)).elim (fun h => h)
         (fun h => False.elim (Residue.mul_ne_zero h h square))
     have splitZero := quat_split_zero_of_coord_residues (q := Quaternion.scalar k)
-      scalarZero Eq.refl Eq.refl Eq.refl
+      scalarZero rfl rfl rfl
     Residue.false_ne_true
       ((reduced_word_split5_nonzero w hr).symm.trans
         ((congrArg Matrix5.isZero ((evalSplit5_eq w).trans (congrArg quaternionSplit5 h))).trans

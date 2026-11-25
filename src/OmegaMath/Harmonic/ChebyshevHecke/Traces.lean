@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.ChebyshevHecke.Character
 public import OmegaMath.Harmonic.ChebyshevHecke.SpinShells
 
@@ -50,31 +52,33 @@ private theorem traceStep (n : Nat) :
     (IntRatio.value_mul i6.neg (traceNumerator n.succ) n5 (powFive n.succ)).trans
       (congrArg (IntRatio.value a) denom)
   have right : IntRatio.Equivalent (traceRepresentative n) (IntRatio.value b d₂) :=
-    Eq.subst (fun v => IntRatio.Equivalent (traceRepresentative n) (IntRatio.value b v))
+    Eq.subst (motive := fun v => IntRatio.Equivalent (traceRepresentative n) (IntRatio.value b v))
       scale (IntRatio.value_scale_of_ne_zero (traceNumerator n) d (n5.mul n5)
-        (Nat.succ_ne_zero _)).symm
+        (fun hz => (Nat.mul_eq_zero.mp hz).elim (Nat.succ_ne_zero _) (Nat.succ_ne_zero _))).symm
   have out : Eq (a.add b.neg) (traceNumerator n.succ.succ) :=
     congrArg (fun t => a.sub t) (Int.mul_comm (traceNumerator n) i5.square)
-  (IntRatio.sub_congr (Eq.subst (fun u => IntRatio.Equivalent u (IntRatio.value a d₂))
+  (IntRatio.sub_congr (Eq.subst (motive := fun u => IntRatio.Equivalent u (IntRatio.value a d₂))
       left.symm (IntRatio.equivalent_refl _)) right).trans
-    (Eq.subst (fun u => IntRatio.Equivalent ((IntRatio.value a d₂).sub (IntRatio.value b d₂))
+    (Eq.subst (motive := fun u => IntRatio.Equivalent ((IntRatio.value a d₂).sub (IntRatio.value b d₂))
         (IntRatio.value u d₂)) out
-      (Eq.subst (fun u => IntRatio.Equivalent ((IntRatio.value a d₂).add u)
+      (Eq.subst (motive := fun u => IntRatio.Equivalent ((IntRatio.value a d₂).add u)
         (IntRatio.value (a.add b.neg) d₂)) (value_neg b d₂).symm
         (IntRatio.value_add_same a b.neg d₂)))
 where
   value_neg (b : Int) (d : Nat) : Eq (IntRatio.value b d).neg (IntRatio.value b.neg d) :=
     Nat.rec (motive := fun d => Eq (IntRatio.value b d).neg (IntRatio.value b.neg d))
-      Eq.refl (fun _ _ => Eq.refl) d
+      rfl (fun _ _ => rfl) d
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem average_character_eq_trace (n : Nat) :
     IntRatio.Equivalent (averageCharacter n).toRatio (traceRepresentative n) :=
   let κ : FiniteRatio := ⟨Int.one, n4⟩
   let q := evenCoefficient rationalRing κ
   let P := fun (n : Nat) => IntRatio.Equivalent (averageCharacter n).toRatio (traceRepresentative n)
-  have hq : IntRatio.Equivalent q.toRatio (IntRatio.value i6.neg n5) := Eq.refl
+  have hq : IntRatio.Equivalent q.toRatio (IntRatio.value i6.neg n5) := Omega.rfl
   (Nat.rec (motive := fun n => And (P n) (P n.succ))
-    (And.intro Eq.refl Eq.refl)
+    (And.intro rfl rfl)
     (fun k ih => And.intro ih.right
       ((IntRatio.sub_congr (IntRatio.mul_congr hq ih.right) ih.left).trans (traceStep k))) n).left
 
@@ -101,9 +105,11 @@ def traceTable : Prop :=
 
 set_option maxRecDepth 50000 in
 set_option maxHeartbeats 6000000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem trace_table : traceTable :=
-  And.intro Eq.refl
-    (And.intro Eq.refl (And.intro Eq.refl (And.intro Eq.refl (And.intro Eq.refl Eq.refl))))
+  And.intro rfl
+    (And.intro rfl (And.intro rfl (And.intro rfl (And.intro rfl rfl))))
 
 /-- Exact margins in the four finite shells, ordered by increasing degree.
 The final pair has multiplicities two and three, respectively. -/
@@ -125,7 +131,9 @@ def MarginTable : Prop :=
 
 set_option maxRecDepth 25000 in
 set_option maxHeartbeats 2000000 in
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem margin_table : MarginTable :=
-  And.intro Eq.refl (And.intro Eq.refl (And.intro Eq.refl (And.intro Eq.refl Eq.refl)))
+  And.intro rfl (And.intro rfl (And.intro rfl (And.intro rfl rfl)))
 
 end Omega.Chebyshev.S5

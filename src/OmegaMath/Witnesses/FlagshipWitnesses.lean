@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Prelude
+import all OmegaInit.Data.Int.Basic
 public import OmegaMath.Matrix.Mat2
 public import OmegaMath.Ternion.Heap
 public import OmegaMath.Geometry.BargmannGram
@@ -21,6 +23,21 @@ namespace Omega
 
 namespace PythSpinor
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem second_norm :
+    Eq (Quaternion.mk Int.one.neg Int.one Int.one Int.one).normSq (Nat.one.succ.mul Nat.one.succ) := Omega.rfl
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem fourth_norm :
+    Eq (Quaternion.mk Int.one.neg Int.one.neg Int.one.neg Int.one.neg).normSq (Nat.one.succ.mul Nat.one.succ) := Omega.rfl
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+theorem fifth_norm :
+    Eq (Quaternion.mk Int.one Int.one.neg Int.one.neg Int.one.neg).normSq (Nat.one.succ.mul Nat.one.succ) := Omega.rfl
+
 /-- The six homogeneous signed spinors, with the third and sixth given by the
 radius-one antipode and identity. -/
 def SixBeatOrbit : Prop :=
@@ -31,9 +48,9 @@ def SixBeatOrbit : Prop :=
   let six := five.succ
   let pos := Int.one
   let neg := Int.one.neg
-  let second := ofNumerator ⟨neg, pos, pos, pos⟩ Nat.one Eq.refl
-  let fourth := ofNumerator ⟨neg, neg, neg, neg⟩ Nat.one Eq.refl
-  let fifth := ofNumerator ⟨pos, neg, neg, neg⟩ Nat.one Eq.refl
+  let second := ofNumerator ⟨neg, pos, pos, pos⟩ Nat.one second_norm
+  let fourth := ofNumerator ⟨neg, neg, neg, neg⟩ Nat.one fourth_norm
+  let fifth := ofNumerator ⟨pos, neg, neg, neg⟩ Nat.one fifth_norm
   And (Equivalent (g120_spin.pow Nat.one) g120_spin)
     (And (Equivalent (g120_spin.pow two) second)
       (And (Equivalent (g120_spin.pow three) antipode)
@@ -43,12 +60,14 @@ def SixBeatOrbit : Prop :=
               (And (IntRatio.Equivalent (kappa_spin one (g120_spin.pow three)) (IntRatio.ofInt Int.zero))
                    (IntRatio.Equivalent (kappa_spin one (g120_spin.pow six)) (IntRatio.ofInt Int.one))))))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem g120_spin_six_beat_orbit : SixBeatOrbit :=
-  And.intro Eq.refl
-    (And.intro Eq.refl
+  And.intro rfl
+    (And.intro rfl
       (And.intro g120_third_beat.left
-        (And.intro Eq.refl
-          (And.intro Eq.refl
+        (And.intro rfl
+          (And.intro rfl
             (And.intro g120_sixth_beat.left
               (And.intro g120_third_beat.right g120_sixth_beat.right))))))
 
@@ -94,7 +113,7 @@ private theorem divideDigits_sound (d : Nat) (hd : Nat.lt Nat.zero d) (digits : 
       (decimalValue digits) :=
   NatList.rec (motive := fun ds =>
     Eq ((d.mul (divideDigits d ds).quotient).add (divideDigits d ds).remainder) (decimalValue ds))
-    Eq.refl
+    ((Nat.add_zero _).trans (Nat.mul_zero d))
     (fun digit ds ih =>
       let old := divideDigits d ds
       let next := Arithmetic.divMod (appendDigit old.remainder digit) d
@@ -105,17 +124,21 @@ private theorem divideDigits_sound (d : Nat) (hd : Nat.lt Nat.zero d) (digits : 
 private theorem exact_decimalQuotient (d : Nat) (hd : Nat.lt Nat.zero d) (digits : NatList)
     (exact : Eq (divideDigits d digits).remainder Nat.zero) :
     Eq (d.mul (divideDigits d digits).quotient) (decimalValue digits) :=
-  (congrArg (Nat.add (d.mul (divideDigits d digits).quotient)) exact.symm).trans
-    (divideDigits_sound d hd digits)
+  (Nat.add_zero _).symm.trans ((congrArg (Nat.add (d.mul (divideDigits d digits).quotient)) exact.symm).trans
+    (divideDigits_sound d hd digits))
 
 private theorem skip_decimal (rule : Rule) (digits : NatList)
-    (nonzero : Not (Eq (divideDigits rule.denominator digits).remainder Nat.zero))
-    (bound : Nat.lt (divideDigits rule.denominator digits).remainder rule.denominator) :
+    (nonzero : Not (Eq (divideDigits rule.denominator digits).remainder Nat.zero)) :
     Not (Divides rule (decimalValue digits)) :=
+  let d := rule.denominator
+  have positive : Nat.lt Nat.zero d := Nat.succ_le_succ (Nat.zero_le rule.denominatorPred)
+  have bound : Nat.lt (divideDigits d digits).remainder d :=
+    NatList.rec (motive := fun ds => Nat.lt (divideDigits d ds).remainder d) positive
+      (fun digit ds _ =>
+        (Arithmetic.divMod_spec (appendDigit (divideDigits d ds).remainder digit) d positive).right) digits
   fun h => h.elim (fun _ eq =>
     nonzero (Arithmetic.divMod_remainder_unique
-      ((divideDigits_sound rule.denominator (Nat.zero_le rule.denominatorPred) digits).trans eq.symm)
-      bound (Nat.zero_le rule.denominatorPred)))
+      ((divideDigits_sound d positive digits).trans (eq.symm.trans (Nat.add_zero _).symm)) bound positive))
 
 private theorem fire_decimal (rule : Rule) (rest : Program) (input output : NatList)
     (inputExact : Eq (divideDigits rule.denominator input).remainder Nat.zero)
@@ -124,10 +147,10 @@ private theorem fire_decimal (rule : Rule) (rest : Program) (input output : NatL
       (divideDigits rule.numerator output).quotient) :
     Step (.cons rule rest) (decimalValue input) (decimalValue output) :=
   Or.inl (Exists.intro (divideDigits rule.denominator input).quotient
-    (And.intro (exact_decimalQuotient rule.denominator (Nat.zero_le rule.denominatorPred) input inputExact)
+    (And.intro (exact_decimalQuotient rule.denominator (Nat.succ_le_succ (Nat.zero_le rule.denominatorPred)) input inputExact)
       ((Nat.mul_comm rule.numerator _).symm.trans
         ((congrArg rule.numerator.mul sameQuotient).trans
-          (exact_decimalQuotient rule.numerator (Nat.zero_le rule.numeratorPred) output outputExact)))))
+          (exact_decimalQuotient rule.numerator (Nat.succ_le_succ (Nat.zero_le rule.numeratorPred)) output outputExact)))))
 
 def rule11Over49 : Rule := ⟨appendDigit Nat.one Nat.zero, appendDigit four eight⟩
 def rule7Over25 : Rule := ⟨six, appendDigit two four⟩
@@ -174,100 +197,92 @@ def pOmegaTrace : NatList :=
   .cons (decimalValue d350) (.cons (decimalValue d98) (.cons (decimalValue d22) (
   .nil)))))))))))))))
 
-set_option maxRecDepth 4096 in
+section
+-- Check the closed decimal divisions for the transitions of the concrete program.
+set_option maxRecDepth 4096
+set_option allowUnsafeReducibility true
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul
+
 private theorem transition_1 : Step pOmega (decimalValue d131072) (decimalValue d98304) :=
-  Step.skip (skip_decimal rule11Over49 d131072 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d131072 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d131072 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d131072 d98304 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d131072 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d131072 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d131072 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d131072 d98304 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_2 : Step pOmega (decimalValue d98304) (decimalValue d73728) :=
-  Step.skip (skip_decimal rule11Over49 d98304 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d98304 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d98304 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d98304 d73728 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d98304 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d98304 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d98304 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d98304 d73728 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_3 : Step pOmega (decimalValue d73728) (decimalValue d40960) :=
-  Step.skip (skip_decimal rule11Over49 d73728 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d73728 (Nat.succ_ne_zero _) True.intro)
-      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d73728 d40960 Eq.refl Eq.refl Eq.refl))
+  Step.skip (skip_decimal rule11Over49 d73728 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d73728 (Nat.succ_ne_zero _))
+      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d73728 d40960 rfl rfl rfl))
 
-set_option maxRecDepth 4096 in
 private theorem transition_4 : Step pOmega (decimalValue d40960) (decimalValue d30720) :=
-  Step.skip (skip_decimal rule11Over49 d40960 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d40960 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d40960 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d40960 d30720 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d40960 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d40960 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d40960 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d40960 d30720 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_5 : Step pOmega (decimalValue d30720) (decimalValue d23040) :=
-  Step.skip (skip_decimal rule11Over49 d30720 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d30720 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d30720 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d30720 d23040 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d30720 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d30720 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d30720 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d30720 d23040 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_6 : Step pOmega (decimalValue d23040) (decimalValue d12800) :=
-  Step.skip (skip_decimal rule11Over49 d23040 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d23040 (Nat.succ_ne_zero _) True.intro)
-      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d23040 d12800 Eq.refl Eq.refl Eq.refl))
+  Step.skip (skip_decimal rule11Over49 d23040 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d23040 (Nat.succ_ne_zero _))
+      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d23040 d12800 rfl rfl rfl))
 
-set_option maxRecDepth 4096 in
 private theorem transition_7 : Step pOmega (decimalValue d12800) (decimalValue d3584) :=
-  Step.skip (skip_decimal rule11Over49 d12800 (Nat.succ_ne_zero _) True.intro)
-    (fire_decimal rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil)) d12800 d3584 Eq.refl Eq.refl Eq.refl)
+  Step.skip (skip_decimal rule11Over49 d12800 (Nat.succ_ne_zero _))
+    (fire_decimal rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil)) d12800 d3584 rfl rfl rfl)
 
-set_option maxRecDepth 4096 in
 private theorem transition_8 : Step pOmega (decimalValue d3584) (decimalValue d2688) :=
-  Step.skip (skip_decimal rule11Over49 d3584 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d3584 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d3584 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d3584 d2688 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d3584 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d3584 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d3584 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d3584 d2688 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_9 : Step pOmega (decimalValue d2688) (decimalValue d2016) :=
-  Step.skip (skip_decimal rule11Over49 d2688 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d2688 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d2688 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d2688 d2016 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d2688 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d2688 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d2688 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d2688 d2016 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_10 : Step pOmega (decimalValue d2016) (decimalValue d1120) :=
-  Step.skip (skip_decimal rule11Over49 d2016 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d2016 (Nat.succ_ne_zero _) True.intro)
-      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d2016 d1120 Eq.refl Eq.refl Eq.refl))
+  Step.skip (skip_decimal rule11Over49 d2016 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d2016 (Nat.succ_ne_zero _))
+      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d2016 d1120 rfl rfl rfl))
 
-set_option maxRecDepth 4096 in
 private theorem transition_11 : Step pOmega (decimalValue d1120) (decimalValue d840) :=
-  Step.skip (skip_decimal rule11Over49 d1120 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d1120 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d1120 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d1120 d840 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d1120 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d1120 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d1120 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d1120 d840 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_12 : Step pOmega (decimalValue d840) (decimalValue d630) :=
-  Step.skip (skip_decimal rule11Over49 d840 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d840 (Nat.succ_ne_zero _) True.intro)
-      (Step.skip (skip_decimal rule5Over9 d840 (Nat.succ_ne_zero _) True.intro)
-        (fire_decimal rule3Over4 .nil d840 d630 Eq.refl Eq.refl Eq.refl)))
+  Step.skip (skip_decimal rule11Over49 d840 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d840 (Nat.succ_ne_zero _))
+      (Step.skip (skip_decimal rule5Over9 d840 (Nat.succ_ne_zero _))
+        (fire_decimal rule3Over4 .nil d840 d630 rfl rfl rfl)))
 
-set_option maxRecDepth 4096 in
 private theorem transition_13 : Step pOmega (decimalValue d630) (decimalValue d350) :=
-  Step.skip (skip_decimal rule11Over49 d630 (Nat.succ_ne_zero _) True.intro)
-    (Step.skip (skip_decimal rule7Over25 d630 (Nat.succ_ne_zero _) True.intro)
-      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d630 d350 Eq.refl Eq.refl Eq.refl))
+  Step.skip (skip_decimal rule11Over49 d630 (Nat.succ_ne_zero _))
+    (Step.skip (skip_decimal rule7Over25 d630 (Nat.succ_ne_zero _))
+      (fire_decimal rule5Over9 (.cons rule3Over4 .nil) d630 d350 rfl rfl rfl))
 
-set_option maxRecDepth 4096 in
 private theorem transition_14 : Step pOmega (decimalValue d350) (decimalValue d98) :=
-  Step.skip (skip_decimal rule11Over49 d350 (Nat.succ_ne_zero _) True.intro)
-    (fire_decimal rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil)) d350 d98 Eq.refl Eq.refl Eq.refl)
+  Step.skip (skip_decimal rule11Over49 d350 (Nat.succ_ne_zero _))
+    (fire_decimal rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil)) d350 d98 rfl rfl rfl)
 
-set_option maxRecDepth 4096 in
 private theorem transition_15 : Step pOmega (decimalValue d98) (decimalValue d22) :=
-  fire_decimal rule11Over49 (.cons rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil))) d98 d22 Eq.refl Eq.refl Eq.refl
+  fire_decimal rule11Over49 (.cons rule7Over25 (.cons rule5Over9 (.cons rule3Over4 .nil))) d98 d22 rfl rfl rfl
 
+end
 
 def traceLength (states : NatList) : Nat :=
   NatList.rec Nat.zero (fun _ _ length => length.succ) states
@@ -277,7 +292,7 @@ def traceFinal (states : NatList) : Nat → Nat :=
 
 theorem run_succ_first (prog : Program) (k n : Nat) :
     Eq (run prog k.succ n) (run prog k (advance prog n)) :=
-  Nat.rec (motive := fun i => Eq (run prog i.succ n) (run prog i (advance prog n))) Eq.refl
+  Nat.rec (motive := fun i => Eq (run prog i.succ n) (run prog i (advance prog n))) rfl
     (fun _ ih => congrArg (advance prog) ih) k
 
 theorem advance_of_step {prog : Program} {n m : Nat} (h : Step prog n m) :
@@ -288,12 +303,14 @@ theorem run_follows (prog : Program) (states : NatList) (n : Nat) (h : Follows p
     Eq (run prog (traceLength states) n) (traceFinal states n) :=
   (NatList.rec (motive := fun states => ∀ current, Follows prog states current →
     Eq (run prog (traceLength states) current) (traceFinal states current))
-    (fun _ _ => Eq.refl)
+    (fun _ _ => rfl)
     (fun next rest ih current h =>
       (run_succ_first prog (traceLength rest) current).trans
         ((congrArg (run prog (traceLength rest)) (advance_of_step h.left)).trans
           (ih next h.right))) states) n h
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem p_omega_halts_at_22 :
     And (Follows pOmega pOmegaTrace pOmegaStart)
       (And (Eq (run pOmega (appendDigit Nat.one five) pOmegaStart) pOmegaFinal)
@@ -306,10 +323,10 @@ theorem p_omega_halts_at_22 :
     And.intro transition_13 (And.intro transition_14 (And.intro transition_15 (True.intro)))))))))))))))
 
   have halted : Halts pOmega pOmegaFinal :=
-    And.intro (skip_decimal rule11Over49 d22 (Nat.succ_ne_zero _) True.intro)
-      (And.intro (skip_decimal rule7Over25 d22 (Nat.succ_ne_zero _) True.intro)
-        (And.intro (skip_decimal rule5Over9 d22 (Nat.succ_ne_zero _) True.intro)
-          (And.intro (skip_decimal rule3Over4 d22 (Nat.succ_ne_zero _) True.intro) True.intro)))
+    And.intro (skip_decimal rule11Over49 d22 (Nat.succ_ne_zero _))
+      (And.intro (skip_decimal rule7Over25 d22 (Nat.succ_ne_zero _))
+        (And.intro (skip_decimal rule5Over9 d22 (Nat.succ_ne_zero _))
+          (And.intro (skip_decimal rule3Over4 d22 (Nat.succ_ne_zero _)) True.intro)))
   And.intro trace (And.intro (run_follows pOmega pOmegaTrace pOmegaStart trace) halted)
 
 end Fractran

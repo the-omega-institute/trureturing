@@ -58,8 +58,8 @@ theorem transport_bijective {A : Type u} {B : Type v} (source : NumberEncoding A
 theorem transport_predicate {A : Type u} {B : Type v} (source : NumberEncoding A)
     (destination : NumberEncoding B) (hd : destination.Faithful) (predicate : Nat → Prop) (w : A) :
     Iff (predicate (source.decode w)) (predicate (destination.decode (source.transport destination w))) :=
-  Iff.intro (Eq.subst predicate (source.transport_decode destination hd w).symm)
-    (Eq.subst predicate (source.transport_decode destination hd w))
+  Iff.intro (Eq.subst (motive := predicate) (source.transport_decode destination hd w).symm)
+    (Eq.subst (motive := predicate) (source.transport_decode destination hd w))
 
 end NumberEncoding
 
