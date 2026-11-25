@@ -302,4 +302,3 @@ end Gluing
 
 end
 end Reg.D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
-

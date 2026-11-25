@@ -490,4 +490,3 @@ example : ∃ g : Fin 2 → Fin 2 → ℝ, (∀ i j, g j i = -g i j) ∧
 #print axioms separatedCliqueSum_banach_gain_potential
 
 end SimpleGraph
-

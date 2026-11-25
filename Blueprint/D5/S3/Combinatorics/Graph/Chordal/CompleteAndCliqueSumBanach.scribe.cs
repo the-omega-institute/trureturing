@@ -94,4 +94,3 @@ internal sealed class CompleteAndCliqueSumBanachDocument : IScribeDocumentDefini
                 All("E",Call("Type",V("v")),Space(e,result)))))));
     }
 }
-
