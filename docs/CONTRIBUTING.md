@@ -429,6 +429,12 @@ comparison when their representations differ. Keep imports, names, links and
 migration notes directed from the consumers to the library. Follow the scoped
 report and frozen-state procedure in the [migration skill](../skills/omega-math-migration/SKILL.md).
 
+The ordinary Lean module shard stores the official outputs and the strict
+Omega and common-interface outputs built for its members under the same cache
+key. CI uses the affected modules to select both the shards to restore and the
+checks to run. Changes to shared compiler or audit inputs can affect the full
+Omega check.
+
 ### D5 publication references
 
 These frozen declarations supply references for the strict mathematics volumes.
