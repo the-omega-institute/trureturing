@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
 AUDIT = ROOT / ".lake/build/bin/omegaAudit"
 BASIS = {"OmegaInit", "OmegaMathlib"}
+STANDARD_AXIOMS = {"Classical.choice", "Quot.sound", "propext"}
 
 
 def root(name):
@@ -291,9 +292,8 @@ def read_measurement(path, names):
     return rows
 
 
-def declaration_rows(module, included_only=False):
-    return {row["nameKey"]: row for row in module["declarations"]
-            if not included_only or row["includeInStatement"]}
+def declaration_rows(module):
+    return {row["nameKey"]: row for row in module["declarations"]}
 
 
 def normalize_row(row):
@@ -301,7 +301,7 @@ def normalize_row(row):
             for key, value in row.items()}
 
 
-def attach_strict_measurement(official, staged_official, strict, eligible):
+def paired_inventory(official, staged_official, strict, eligible):
     official_by_module = {module["module"]: module for module in staged_official}
     strict_by_module = {module["module"]: module for module in strict}
     if set(official_by_module) != eligible or set(strict_by_module) != eligible:
@@ -309,7 +309,6 @@ def attach_strict_measurement(official, staged_official, strict, eligible):
     inventory = []
     for module in official:
         name = module["module"]
-        module["strictEligible"] = name in eligible
         if name not in eligible:
             continue
         original = declaration_rows(module)
@@ -317,15 +316,44 @@ def attach_strict_measurement(official, staged_official, strict, eligible):
         if ({key: normalize_row(row) for key, row in original.items()} !=
                 {key: normalize_row(row) for key, row in staged.items()}):
             raise RuntimeError(f"staged official measurement differs from canonical measurement: {name}")
-        included = declaration_rows(module, included_only=True)
-        counterpart = declaration_rows(strict_by_module[name], included_only=True)
-        if included.keys() != counterpart.keys():
-            raise RuntimeError(f"strict frozen inventory differs for {name}: "
-                               f"{sorted(included.keys() ^ counterpart.keys())}")
-        for key, row in included.items():
-            other = counterpart[key]
+        counterpart = declaration_rows(strict_by_module[name])
+        for key, row in counterpart.items():
+            invalid_axioms = set(row["axioms"]) - STANDARD_AXIOMS
+            if invalid_axioms:
+                raise RuntimeError(f"inadmissible strict axioms for {name}:{key}: {sorted(invalid_axioms)}")
+        shared = original.keys() & counterpart.keys()
+        for key in sorted(shared):
+            row, other = original[key], counterpart[key]
             if row["kind"] != other["kind"]:
                 raise RuntimeError(f"strict declaration kind differs for {name}:{key}")
+            if row["includeInStatement"] != other["includeInStatement"]:
+                raise RuntimeError(f"strict declaration inclusion differs for {name}:{key}")
+        inventory.append({
+            "moduleName": name,
+            "paired": sorted(key for key in shared if original[key]["includeInStatement"]),
+            "officialOnly": sorted(original.keys() - counterpart.keys()),
+            "strictOnly": sorted(counterpart.keys() - original.keys()),
+        })
+    return inventory
+
+
+def attach_strict_measurement(official, strict, inventory, certified):
+    eligible = {entry["moduleName"]: entry for entry in inventory}
+    strict_by_module = {module["module"]: declaration_rows(module) for module in strict}
+    expected = [[entry["moduleName"], key] for entry in inventory for key in entry["officialOnly"]]
+    if certified != expected:
+        raise RuntimeError("compiled comparison did not certify the official-only inventory")
+    for module in official:
+        name = module["module"]
+        module["strictEligible"] = name in eligible
+        if name not in eligible:
+            continue
+        rows = declaration_rows(module)
+        for key in eligible[name]["officialOnly"]:
+            if rows[key]["includeInStatement"]:
+                rows[key]["officialDerivedOnly"] = True
+        for key in eligible[name]["paired"]:
+            row, other = rows[key], strict_by_module[name][key]
             row["strict_omega"] = {
                 "declaration_name_key": key,
                 "kind": other["kind"],
@@ -334,8 +362,6 @@ def attach_strict_measurement(official, staged_official, strict, eligible):
                 "libraries": sorted(other["libraries"]),
                 "axioms": sorted(other["axioms"]),
             }
-        inventory.append([name, sorted(included)])
-    return inventory
 
 
 def measure_staged(inspector, request, names, search_path, destination, environment):
@@ -369,7 +395,7 @@ def frozen_measurement(request, official_path, inspector, destination):
         raise RuntimeError(f"frozen module outside source discovery: {sorted(missing)}")
     eligible = set(consumers(graph)) & set(names)
     if not eligible:
-        attach_strict_measurement(original, [], [], eligible)
+        attach_strict_measurement(original, [], [], [])
         atomic_json(destination, original)
         return
     check(sorted(eligible), "both", frozen=(original, inspector, destination),
@@ -429,7 +455,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     packages = {(ROOT / manifest["packagesDir"] / p["name"] / ".lake/build/lib/lean").resolve()
                 for p in manifest["packages"]}
     environment = {k: v for k, v in os.environ.items()
-                   if k not in {"LEAN_PATH", "LEAN_SRC_PATH", "OMEGA_FROZEN_INVENTORY",
+                   if k not in {"LEAN_PATH", "LEAN_SRC_PATH", "OMEGA_FROZEN_INVENTORY", "OMEGA_FROZEN_CERTIFICATE",
                                 "OMEGA_OFFICIAL_AXIOM_REPORT"}}
     if destination:
         destination = Path(destination).absolute()
@@ -485,16 +511,19 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                                          Path(temp) / "strict-dependencies.json", environment)
             official_rows = measure_staged(inspector, request, selected, official_path,
                                            Path(temp) / "official-dependencies.json", environment)
-            inventory = attach_strict_measurement(canonical, official_rows, strict_rows, set(selected))
+            inventory = paired_inventory(canonical, official_rows, strict_rows, set(selected))
             inventory_path = Path(temp) / "frozen-inventory.json"
+            certificate_path = Path(temp) / "frozen-certificate.json"
             inventory_path.write_text(json.dumps(inventory))
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
             subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                           cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path)},
+                           cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
+                                "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)},
                            check=True)
             for tree, before in snapshots.items():
                 if artifact_snapshot(tree) != before:
                     raise RuntimeError(f"staged compiler artifacts changed during measurement: {tree}")
+            attach_strict_measurement(canonical, strict_rows, inventory, json.loads(certificate_path.read_text()))
         for path, original in source_hashes.items():
             if source_fingerprint(path) != original:
                 raise RuntimeError(f"source changed during the backend check: {path}")

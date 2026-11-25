@@ -88,24 +88,19 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     -- identifies inhabitants once both declaration types are the same proposition.
     unless (Kernel.check reference {} dst.type).toOption.any (same reference (.sort .zero)) do
       throw <| IO.userError s!"official declaration is not a proof for {src.name}"
+  | .defnInfo x, .defnInfo y =>
+    unless x.safety == y.safety do
+      throw <| IO.userError s!"definition safety mismatch for {src.name}"
+    if x.safety != .safe then
+      -- A partial or unsafe implementation may refer to itself. Compare the compiled
+      -- bodies directly, since Kernel.check checks expressions in the safe fragment.
+      unless same reference (liftTerm x.value) y.value do
+        throw <| IO.userError s!"partial or unsafe definition body mismatch for {src.name}"
+      return deps ++ x.value.getUsedConstants
+    deps := deps ++ x.value.getUsedConstants
+    compareDefinitionBody
   | .defnInfo _, _ | .opaqueInfo _, _ =>
-    let body := liftTerm (src.value! (allowOpaque := true))
-    if let .error _ := Kernel.check reference {} body then
-      throw <| IO.userError s!"ill-typed translated definition for {src.name}"
-    let target := mkConst dst.name (dst.levelParams.map Level.param)
-    let mut hidden := false
-    if let some (_, publicStrict) := foundation then
-      let exposed ← lookup publicStrict src.name
-      hidden := exposed.isAxiom || exposed matches .opaqueInfo _
-    if !same reference body target then
-      unless hidden do
-        throw <| IO.userError s!"computed definition mismatch for {src.name}"
-      checkEquation reference src dst body
-    -- Legacy importers load the private olean, including bodies convertible in the kernel.
-    if let some (strict, _) := foundation then
-      if src matches .defnInfo _ then
-        if hidden && getReducibilityStatusCore strict src.name != .irreducible then
-          throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
+    compareDefinitionBody
     deps := deps ++ (src.value! (allowOpaque := true)).getUsedConstants
   | .inductInfo x, .inductInfo y =>
     unless x.numParams == y.numParams && x.numIndices == y.numIndices &&
@@ -130,6 +125,26 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       deps := deps ++ a.rhs.getUsedConstants ++ #[a.ctor]
   | _, _ => throw <| IO.userError s!"unsupported or different declaration kind for {src.name}"
   return deps
+where
+  compareDefinitionBody : IO Unit := do
+    let value := src.value! (allowOpaque := true)
+    let body := translate rename (value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
+    if let .error _ := Kernel.check reference {} body then
+      throw <| IO.userError s!"ill-typed translated definition for {src.name}"
+    let target := mkConst dst.name (dst.levelParams.map Level.param)
+    let mut hidden := false
+    if let some (_, publicStrict) := foundation then
+      let exposed ← lookup publicStrict src.name
+      hidden := exposed.isAxiom || exposed matches .opaqueInfo _
+    if !same reference body target then
+      unless hidden do
+        throw <| IO.userError s!"computed definition mismatch for {src.name}"
+      checkEquation reference src dst body
+    -- Legacy importers load the private olean, including bodies convertible in the kernel.
+    if let some (strict, _) := foundation then
+      if src matches .defnInfo _ then
+        if hidden && getReducibilityStatusCore strict src.name != .irreducible then
+          throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
 
 /-- Compare every binding and every strict foundation dependency exposed by its interface. -/
 def check (strict publicStrict reference : Environment) (bindings : Array (Name × Name)) : IO Unit := do
@@ -229,6 +244,22 @@ private def derivedConsumerExport (expected : NameSet) (name : Name) : CoreM Boo
       [Meta.mkInjectiveTheoremNameFor parent, Meta.mkInjectiveEqTheoremNameFor parent,
         Meta.mkSizeOfSpecLemmaName parent].contains name
   if let .inductInfo i := parentInfo then
+    -- The SizeOf generator names its functions by the corresponding kernel recursor.
+    -- The compiled constructor application ties even a private instance to its generated function.
+    let bodyUses := fun (constant : ConstantInfo) dep =>
+      constant.value?.any fun body => body.getUsedConstants.contains dep
+    let instName := parent ++ `_sizeOf_inst
+    if let some (.defnInfo inst) := env.find? instName then
+      if inst.hints == .abbrev && inst.type.getUsedConstants.contains parent &&
+          inst.type.getUsedConstants.contains `SizeOf && inst.value.getUsedConstants.contains `SizeOf.mk then
+        let base := i.all.head! ++ `_sizeOf
+        for (family, index) in i.all.zipIdx do
+          let fn := base.appendIndexAfter (index + 1)
+          if let some (.defnInfo fnInfo) := env.find? fn then
+            if fnInfo.hints == .abbrev && inst.value.getUsedConstants.contains fn &&
+                bodyUses (.defnInfo fnInfo) (mkRecName family) && (name == instName || name == fn) &&
+                (← findDeclarationRangesCore? instName).isNone && (← findDeclarationRangesCore? fn).isNone then
+              return true
     if name == mkCtorIdxName family then
       return (info.value?.any (fun body => body.getUsedConstants.contains (mkCasesOnName family))) ||
         (i.ctors.length == 1 && info.type.getUsedConstants.contains family &&
@@ -269,12 +300,19 @@ private def sameEquationProof (reference replay : Environment) (owner name : Nam
 /-- Recreate the upstream equations in a clean module of the same name. Lean uses the
 consumer's module name in private helpers belonging to the generated proof term. -/
 private def replayUpstreamEquations (reference : Environment) (names : Array Name) : IO NameSet := do
+  -- The isolated import does not initialize extension state. Read the owning
+  -- module's compiled matcher entries rather than inferring provenance from spelling.
+  let isMatcher := fun parent =>
+    (reference.getModuleIdxFor? parent).any fun idx =>
+      (Meta.Match.Extension.extension.getModuleEntries reference idx).any (·.name == parent)
   let mut groups : NameMap (Array (Name × Name × Name)) := {}
   for name in names do
-    let some (parent, _) := Meta.declFromEqLikeName reference name | continue
+    let parent? := (Meta.declFromEqLikeName reference name).map Prod.fst <|> do
+      let parent ← privateToUserName? name.getPrefix
+      if isMatcher parent then some parent else none
+    let some parent := parent? | continue
     let upstream ← ownerOf reference parent
-    unless [`Init, `Std, `Mathlib].contains upstream.getRoot do continue
-    let some (.thmInfo _) := reference.find? name | continue
+    unless [`Init, `Std, `Mathlib, `OmegaInit, `OmegaMathlib].contains upstream.getRoot do continue
     let range ← (findDeclarationRangesCore? name : CoreM _).toIO'
       {fileName := "<consumer>", fileMap := default} {env := reference}
     if range.isSome then continue
@@ -285,11 +323,17 @@ private def replayUpstreamEquations (reference : Environment) (names : Array Nam
   for (owner, candidates) in groups do
     let parents := NameSet.ofList (candidates.toList.map (·.2.1))
     let upstream := NameSet.ofList (candidates.toList.map (·.2.2))
-    let imports := upstream.toList.map fun n => s!"import {n}"
+    let imports := upstream.toList.map fun n =>
+      if [`OmegaInit, `OmegaMathlib].contains n.getRoot then s!"import all {n}" else s!"import {n}"
     let calls := parents.toList.flatMap fun parent =>
-      [s!"  discard <| Lean.Meta.getEqnsFor? `{parent}",
-       s!"  discard <| Lean.Meta.getUnfoldEqnFor? `{parent} (nonRec := true)"]
-    let source := String.intercalate "\n" (["import Lean"] ++ imports ++ ["run_meta do"] ++ calls)
+      if isMatcher parent then
+        [s!"  discard <| Lean.Meta.Match.getEquationsForImpl `{parent}"]
+      else
+        [s!"  discard <| Lean.Meta.getEqnsFor? `{parent}",
+         s!"  discard <| Lean.Meta.getUnfoldEqnFor? `{parent} (nonRec := true)"]
+    let source := String.intercalate "\n"
+      (["module", "import Lean", "public meta import Lean.Meta.Match.MatchEqs"] ++ imports ++
+        ["public section", "run_meta do"] ++ calls)
     let results ← IO.FS.withTempDir fun dir => do
       let base := modToFilePath dir owner "lean"
       IO.FS.createDirAll base.parent.get!
@@ -313,11 +357,19 @@ private def frozenNameKey : Name → String
   | .str parent value => s!"ns({frozenNameKey parent},{value.utf8ByteSize}:{value})"
   | .num parent value => s!"nn({frozenNameKey parent},{value})"
 
+structure FrozenInventory where
+  moduleName : String
+  paired : Array String
+  officialOnly : Array String
+  strictOnly : Array String
+  deriving FromJson
+
 /-- Resolve the exact frozen inventory from the compiled module, including private declarations. -/
 private def frozenRoots (env : Environment) (modules : Array Name)
-    (inventory : Array (String × Array String)) : IO (Array Name) := do
+    (inventory : Array FrozenInventory) (keys : FrozenInventory → Array String) : IO (Array Name) := do
   let mut roots := #[]
-  for (moduleName, requested) in inventory do
+  for entry in inventory do
+    let moduleName := entry.moduleName
     let owner := moduleName.toName
     unless modules.contains owner do
       throw <| IO.userError s!"frozen inventory outside consumer comparison: {moduleName}"
@@ -326,24 +378,61 @@ private def frozenRoots (env : Environment) (modules : Array Name)
     let mut byKey : Std.HashMap String Name := {}
     for name in env.header.moduleData[idx]!.constNames do
       byKey := byKey.insert (frozenNameKey name) name
-    for key in requested do
+    for key in keys entry do
       let some name := byKey[key]?
         | throw <| IO.userError s!"frozen declaration missing from compiled comparison: {moduleName}:{key}"
       roots := roots.push name
   return roots
 
+private def checkDerived (env : Environment) (matched : NameSet) (names : Array Name)
+    (other : Option Environment := none) : IO (Array Name) := do
+  let mut generated := #[]
+  let mut unexpected := #[]
+  for name in names do
+    if other.any (·.contains name) then
+      throw <| IO.userError s!"one-sided declaration has an opposite compiled counterpart: {name}"
+    let isDerived ← (derivedConsumerExport matched name).toIO'
+      {fileName := "<consumer>", fileMap := default} {env}
+    if isDerived then generated := generated.push name else unexpected := unexpected.push name
+  let equations ← replayUpstreamEquations env unexpected
+  generated := generated ++ unexpected.filter equations.contains
+  unexpected := unexpected.filter (!equations.contains ·)
+  unless unexpected.isEmpty do
+    let side := if other.isSome then "one-sided frozen declaration" else "additional official-side consumer export"
+    throw <| IO.userError <| String.intercalate "\n"
+      (unexpected.toList.map fun name => s!"{side} {name}")
+  return generated
+
+private def sharedConsumerNames (env other : Environment) (modules : Array Name) : NameSet := Id.run do
+  let mut shared : NameSet := {}
+  for owner in env.header.modules, data in env.header.moduleData do
+    if modules.contains owner.module then
+      for name in data.constNames do
+        if (other.getModuleIdxFor? name).any (fun i => other.header.moduleNames[i]! == owner.module) then
+          shared := shared.insert name
+  return shared
+
 /-- Check both export sets and their mathematical content after isolated downstream builds.
-The frozen inventory additionally requires correspondence for every included declaration. -/
+The frozen inventory requires correspondence for every included shared declaration and
+compiler provenance for every one-sided declaration. -/
 def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name)
-    (inventory : Array (String × Array String) := #[]) : IO Unit := do
+    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[]) : IO (Array (String × String)) := do
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
     if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then return official name
     return name
-  let mut pending := consumerExports strict modules
+  let officialOnly ← frozenRoots reference modules inventory (·.officialOnly)
+  let strictOnly ← frozenRoots strict modules inventory (·.strictOnly)
+  unless strictOnly.isEmpty do
+    let officialSearchPath ← searchPathRef.get
+    searchPathRef.set strictSearchPath
+    try
+      discard <| checkDerived strict (sharedConsumerNames strict reference modules) strictOnly (some reference)
+    finally searchPathRef.set officialSearchPath
+  let mut pending := (consumerExports strict modules).filter fun name => !strictOnly.contains name
   let expected := NameSet.ofList (pending.toList.map rename)
-  pending := pending ++ (← frozenRoots strict modules inventory)
+  pending := pending ++ (← frozenRoots strict modules inventory (·.paired))
   -- Equal references to a private helper do not establish that its implementations agree.
   let mut seen : NameSet := {}
   let mut basis := #[]
@@ -375,22 +464,16 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
           else if depOwner.getRoot == `OmegaMath || depOwner.getRoot == `D5 then
             throw <| IO.userError s!"project dependency missing from isolated consumer check: {depOwner}"
   check strict publicStrict reference basis
-  let mut generated := #[]
-  let mut unexpected := #[]
-  for name in consumerExports reference modules do
-    if !expected.contains name then
-      let isDerived ← (derivedConsumerExport expected name).toIO'
-        {fileName := "<consumer>", fileMap := default} {env := reference}
-      if isDerived then generated := generated.push name else unexpected := unexpected.push name
-  let equations ← replayUpstreamEquations reference unexpected
-  generated := generated ++ unexpected.filter equations.contains
-  unexpected := unexpected.filter (!equations.contains ·)
-  unless unexpected.isEmpty do
-    throw <| IO.userError <| String.intercalate "\n"
-      (unexpected.toList.map fun name => s!"additional official-side consumer export {name}")
+  let mut generated ← checkDerived reference expected <|
+    (consumerExports reference modules).filter fun name => !expected.contains name && !officialOnly.contains name
+  unless officialOnly.isEmpty do
+    generated := generated ++ (← checkDerived reference (sharedConsumerNames reference strict modules)
+      officialOnly (some strict))
   unless generated.isEmpty do
     IO.println s!"Additional declarations generated by the official compiler ({generated.size}): {generated.qsort Name.quickLt}"
 
   IO.println s!"Compared {expected.size} public consumer declarations and {seen.size} declarations in their closure."
+  return ← officialOnly.mapM fun name => do
+    return ((← ownerOf reference name).toString, frozenNameKey name)
 
 end OmegaChecks.Interface

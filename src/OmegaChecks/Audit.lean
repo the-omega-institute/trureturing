@@ -131,7 +131,8 @@ def main (args : List String) : IO Unit := do
     let ports := (names.drop (clients.length + 1)).toArray.map String.toName
     unless ports.all OmegaChecks.ModuleSurface.isBasis do throw <| IO.userError "invalid standard port"
     let imports := (modules ++ ports).map fun moduleName => { module := moduleName : Import }
-    searchPathRef.set (System.SearchPath.parse strictPath)
+    let strictSearchPath := System.SearchPath.parse strictPath
+    searchPathRef.set strictSearchPath
     let strict ← importModules imports {}
     -- Public visibility is needed for the foundation equations. Consumers may also
     -- use Lean's legacy format, which cannot be imported in an exported context.
@@ -144,13 +145,15 @@ def main (args : List String) : IO Unit := do
       if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
         unless data.constants.isEmpty do
           throw <| IO.userError s!"official import adapter {owner} contains declarations"
-    let inventory : Array (String × Array String) ←
+    let inventory : Array OmegaChecks.Interface.FrozenInventory ←
       if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
         -- Strict foundation modules may not be official alias facades.
         checkLayers strict
         IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
       else pure #[]
-    OmegaChecks.Interface.checkConsumers strict publicStrict official modules inventory
+    let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
+    if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
+      IO.FS.writeFile path ((toJson certified).compress ++ "\n")
     if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
       reportOfficialAxioms strict official modules report
   else if let "--exact-roots" :: path :: names := args then

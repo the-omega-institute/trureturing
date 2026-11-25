@@ -17,6 +17,7 @@ import portable
 
 MIXED = "OmegaChecks.Portable.FrozenDependencies"
 OFFICIAL = "D5.S0.Computability.KernelComponentPayload"
+PRIVATE_INDUCTIVE = "D5.S0.Computability.ConditionalComplexityFloor"
 TETRAHEDRON = "D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron"
 
 
@@ -24,7 +25,7 @@ class FrozenMeasurement(unittest.TestCase):
     def test_compiled_pair(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
         self.assertTrue(inspector.is_file(), "prepare reportInspector before running this test")
-        names = [OFFICIAL, MIXED, TETRAHEDRON]
+        names = [OFFICIAL, MIXED, TETRAHEDRON, PRIVATE_INDUCTIVE]
         subprocess.run(["lake", "build", *("+" + name for name in names)],
                        cwd=portable.ROOT, check=True)
         with tempfile.TemporaryDirectory(prefix="omega-frozen-test-") as temporary:
@@ -35,7 +36,7 @@ class FrozenMeasurement(unittest.TestCase):
                            cwd=portable.ROOT, check=True)
             portable.frozen_measurement(request, official, inspector, result)
             published = result.read_bytes()
-            ordinary, mixed, tetrahedron = json.loads(published)
+            ordinary, mixed, tetrahedron, private_inductive = json.loads(published)
             self.assertFalse(ordinary["strictEligible"])
             self.assertTrue(mixed["strictEligible"])
             self.assertTrue(tetrahedron["strictEligible"])
@@ -53,6 +54,11 @@ class FrozenMeasurement(unittest.TestCase):
             self.assertEqual(row["strict_omega"]["axioms"], [])
             self.assertEqual(row["strict_omega"]["libraries"], ["OmegaInit", "OmegaMath"])
             self.assertNotEqual(row["strict_omega"]["statement_type_address"], row["statementTypeAddress"])
+            generated = [row for row in private_inductive["declarations"] if row.get("officialDerivedOnly")]
+            self.assertTrue(any("noConfusion" in row["nameKey"] for row in generated))
+            self.assertTrue(all(row["includeInStatement"] and "strict_omega" not in row for row in generated))
+            self.assertTrue(all("strict_omega" in row for row in private_inductive["declarations"]
+                                if row["includeInStatement"] and row not in generated))
 
             # A stale canonical measurement must never replace an existing response.
             stale = json.loads(official.read_text())
@@ -135,10 +141,53 @@ class FrozenMeasurement(unittest.TestCase):
         row = {"nameKey": "name", "kind": "theorem", "statementTypeAddress": "sha256:" + "a" * 64,
                "includeInStatement": True, "axioms": [], "libraries": []}
         official = [{"module": "D5.Fixture", "declarations": [row]}]
-        for declarations in ([], [{**row, "nameKey": "extra"}], [{**row, "kind": "def"}]):
-            with self.assertRaisesRegex(RuntimeError, "inventory differs|kind differs"):
-                portable.attach_strict_measurement(copy.deepcopy(official), copy.deepcopy(official),
-                    [{"module": "D5.Fixture", "declarations": declarations}], {"D5.Fixture"})
+        def inventory(*declarations):
+            return portable.paired_inventory(official, copy.deepcopy(official),
+                [{"module": "D5.Fixture", "declarations": declarations}], {"D5.Fixture"})
+
+        with self.assertRaisesRegex(RuntimeError, "kind differs"):
+            inventory({**row, "kind": "def"})
+        with self.assertRaisesRegex(RuntimeError, "did not certify"):
+            portable.attach_strict_measurement(copy.deepcopy(official), [], inventory(), [])
+        for axiom in ("sorryAx", "Fixture.unauthorized"):
+            for included in (True, False):
+                with self.subTest(axiom=axiom, included=included):
+                    with self.assertRaisesRegex(RuntimeError, "inadmissible strict axioms"):
+                        inventory({**row, "nameKey": "strictOnly", "includeInStatement": included, "axioms": [axiom]})
+
+    def test_rejects_unmatched_private_source_declaration(self):
+        inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
+        subprocess.run(["lake", "build", "omegaAudit"], cwd=portable.ROOT, check=True)
+        lean = portable.output("lake", "env", "printenv", "LEAN").strip()
+        official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+        name = "FrozenProvenanceProbe"
+        with tempfile.TemporaryDirectory(prefix="omega-frozen-private-") as directory:
+            tmp = Path(directory)
+            request, inventory = (tmp / path for path in ("request.json", "inventory.json"))
+            request.write_text(json.dumps([name]))
+            artifacts, measurements = [], []
+            for private in (False, True):
+                stage = tmp / str(private)
+                stage.mkdir()
+                source = stage / (name + ".lean")
+                source.write_text("module\npublic theorem common {p : Prop} (h : p) : p := h\n"
+                                  + ("private theorem Choice.ctorIdx {p : Prop} (h : p) : p := h\n"
+                                     if private else ""))
+                search = os.pathsep.join([str(stage), official_path])
+                subprocess.run([lean, "-R", stage, "-o", source.with_suffix(".olean"), source],
+                               env={**os.environ, "LEAN_PATH": search}, check=True)
+                artifacts.append(search)
+                measurements.append(portable.measure_staged(inspector, request, [name], search,
+                                                            stage / "measurement.json", os.environ))
+            for strict, official in ((0, 1), (1, 0)):
+                rows = measurements[official]
+                inventory.write_text(json.dumps(portable.paired_inventory(rows, rows, measurements[strict], {name})))
+                result = subprocess.run([portable.AUDIT, "--consumer", artifacts[strict], artifacts[official], name],
+                                        env={**os.environ, "OMEGA_FROZEN_INVENTORY": str(inventory)},
+                                        capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("one-sided frozen declaration", result.stderr)
+                self.assertIn("Choice.ctorIdx", result.stderr)
 
 
 if __name__ == "__main__":
