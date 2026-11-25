@@ -7,7 +7,7 @@
    digest: All-state Borcherds and locality for the original two-sector field. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.OriginalOrbifoldJacobi
-import D5.S3.VertexAlgebra.TwistedGround.OriginalFourMJacobi
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.Occupation.OriginalFourMJacobi
 import D5.S3.VertexAlgebra.BinomialKernelDelta
 import Batteries.Tactic.OpenPrivate
 

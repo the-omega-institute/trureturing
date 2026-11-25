@@ -8,7 +8,7 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldNativeBPZRadical
-import D5.S3.VertexAlgebra.TwistedGround.ActualLeechFixedTwistedModeRealForm
+import D5.S3.VertexAlgebra.TwistedGround.RealForm.ActualLeechFixedTwistedModeRealForm
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.OriginalMixedBPZ
 
 /-! Coefficient conjugation on the original Leech orbifold field. -/

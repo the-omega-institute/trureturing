@@ -7,7 +7,7 @@
    digest: Native BHHB transport of the normalized HHBB amplitude with finite detector translation. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeBHHBArbitrarySewing
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBTwoVariableRational
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBTwoVariableRational
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

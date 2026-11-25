@@ -7,7 +7,7 @@
    digest: Zhu residues of the actual parity-changing mixed coefficients on the literal twisted tops. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeOddTopDetection
-import D5.S3.VertexAlgebra.Lattice.ActualZhuRankOneOdd
+import D5.S3.VertexAlgebra.Lattice.Zhu.ActualZhuRankOneOdd
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
 import D5.S3.VertexAlgebra.LatticeActualAnnihilation
 

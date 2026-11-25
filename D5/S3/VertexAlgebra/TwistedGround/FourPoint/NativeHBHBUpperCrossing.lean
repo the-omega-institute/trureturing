@@ -6,7 +6,7 @@
    utility: none
    digest: Marked native Leech HBHB crossing on the upper oriented overlap. -/
 
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeHHBBUpperHalfPlaneBD
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.HHBB.NativeHHBBUpperHalfPlaneBD
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedCrossedProductToIterate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.NativeMixedProductSlot23Analytic
 

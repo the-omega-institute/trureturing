@@ -8,7 +8,7 @@
 
 import D5.S3.VertexAlgebra.Characters.ActualLeechOrbifoldTraceSeries
 import D5.S3.VertexAlgebra.Characters.LeechTwiningTraceModularity
-import D5.S3.VertexAlgebra.Lattice.ActualLeechTheta
+import D5.S3.VertexAlgebra.Lattice.Theta.ActualLeechTheta
 
 /-! The actual Leech character from its four trace series and the resulting
 coefficient recursion for nonzero relative BRST root spaces. -/

@@ -10,7 +10,7 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldAbsoluteQTranspose
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldModeRealForm
 import D5.S3.VertexAlgebra.BRST.ActualLeechOrbifoldEvenCurrent
-import D5.S3.VertexAlgebra.Lattice.ActualCoefficientRealForm
+import D5.S3.VertexAlgebra.Lattice.RealForm.ActualCoefficientRealForm
 
 /-!
 The conjugation fixes each plane charge, commutes with the original differential
