@@ -233,7 +233,7 @@ private def choices (h : Fin 5 → Fin 4) : Finset (Fin 4) :=
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-private theorem choices_card : ∀ h : Fin 5 → Fin 4,
+theorem choices_card : ∀ h : Fin 5 → Fin 4,
     (∀ j, h j ≠ 0) → (∃ v, v ≠ 0 ∧ ∀ j, h j ≠ v) →
     (choices h).card = if ∀ j, h j = h 0 then 2 else 1 := by
   intro h
@@ -276,7 +276,11 @@ def zones (n : ℕ) : Set ((Fin n → Fin 4) × (Fin 6 → Fin 4)) := fun z =>
       z.1 ⟨i,by omega⟩ ^^^ z.1 ⟨i+1,hi⟩)
 
 theorem xor_shift : ∀ a b c : Fin 4,
-    (a ^^^ b) ^^^ (a ^^^ c) = b ^^^ c := by decide +kernel
+    (a ^^^ b) ^^^ (a ^^^ c) = b ^^^ c := by
+  intro a b c
+  rw [← Fin.xor_assoc (show 4 = 2^2 from rfl) (a ^^^ b) a c,
+    Fin.xor_comm a b, Fin.xor_assoc (show 4 = 2^2 from rfl) b a a,
+    Fin.xor_self, Fin.xor_zero]
 
 private theorem adjacent_delta {m : ℕ} (u : Fin m → Fin 4) (i r : Fin m)
     (hir : i.val ≤ r.val + 1) (hri : r.val ≤ i.val + 1) :
@@ -352,7 +356,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 open private first_occurrence First firstEquiv canonical_unique from
   D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
-private def colourEquiv8 : Fin 8 ≃ Fin 4 × Bool where
+def colourEquiv8 : Fin 8 ≃ Fin 4 × Bool where
   toFun x := (beta x, decide (4 ≤ x.val))
   invFun p := if p.2 then ⟨7 - p.1.val, by have := p.1.isLt; omega⟩
     else ⟨p.1.val, by have := p.1.isLt; omega⟩
@@ -973,3 +977,23 @@ theorem result : claim := by
     _ = _ := congrArg (fun t : PowerSeries ℚ => t*D⁻¹) hc
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+
+open scoped BigOperators
+namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.SignedFibres
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip (beta)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip (colourEquiv8)
+
+/-- Each complementary-pair row has two independent sign choices in every column. -/
+theorem sum_beta {k : ℕ} (w : (Fin k → Fin 4) → ℤ) :
+    (∑ c : Fin k → Fin 8, w (beta ∘ c)) = (2 : ℤ)^k * ∑ r, w r := by
+  let E := (Equiv.piCongrRight (fun _ : Fin k => colourEquiv8)).trans
+    (Equiv.arrowProdEquivProdArrow (Fin k) (fun _ => Fin 4) (fun _ => Bool))
+  have hf (x : Fin k → Fin 8) : (E x).1 = beta ∘ x := rfl
+  calc
+    (∑ c : Fin k → Fin 8, w (beta ∘ c)) = ∑ x :
+        (Fin k → Fin 4) × (Fin k → Bool), w x.1 := by
+      simpa only [hf] using E.sum_comp (fun x => w x.1)
+    _ = (2 : ℤ)^k * ∑ r, w r := by
+      simp [Fintype.sum_prod_type, Finset.mul_sum, mul_comm]
+
+end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.SignedFibres

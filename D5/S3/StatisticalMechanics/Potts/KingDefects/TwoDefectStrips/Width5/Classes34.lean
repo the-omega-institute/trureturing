@@ -1,0 +1,39 @@
+/- GID: D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Classes34
+   generality: G
+   mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Classes34
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Certificate.transition_counts; premises=D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/Classes34.class_successors
+   digest: Width-five exact-budget transfer measurement. -/
+
+/-
+admission_basis: escape-witness
+escape_witness: class_successors verifies the sorted successor multiplicities of every valid canonical width-five source in class 34. The decision checks every indexed width-five row and transports the result through finFunctionFinEquiv. Certificate.canonical_successors substitutes the list into the transfer sum.
+class_successors: proof_shape=content; consumers=Width5.Certificate.canonical_successors
+-/
+
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+/-! A single output class of the canonical-boundary defect transfer. -/
+namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes34
+open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
+open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+private local instance (p : Row) : Decidable
+    (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical p) := by
+  unfold D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+  infer_instance
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
+theorem class_successors : ∀ p (d : Fin 3), Valid p d.val →
+    D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical p →
+    cl p d.val = (34 : Fin 43) → successors p d.val = classList 34 := by
+  have h : ∀ i : Fin (4^5), ∀ d : Fin 3,
+      Valid (finFunctionFinEquiv.symm i) d.val →
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+        (finFunctionFinEquiv.symm i) →
+      cl (finFunctionFinEquiv.symm i) d.val = (34 : Fin 43) →
+      successors (finFunctionFinEquiv.symm i) d.val = classList 34 := by
+    decide +kernel
+  intro p
+  simpa only [Equiv.symm_apply_apply] using h (finFunctionFinEquiv p)
+end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes34

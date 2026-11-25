@@ -13,7 +13,7 @@ Row: proof_shape=bind-only; consumers=result
 horizontal: proof_shape=bind-only; consumers=result
 between: proof_shape=bind-only; consumers=result
 Valid: proof_shape=bind-only; consumers=result
-decidableValid: proof_shape=bind-only; consumers=result
+decidableValid: proof_shape=bind-only; consumers=finite_certificate._proof_2
 cl: proof_shape=bind-only; consumers=result
 T: proof_shape=bind-only; consumers=result
 initial: proof_shape=bind-only; consumers=result
@@ -72,7 +72,7 @@ private def T : Matrix (Fin 9) (Fin 9) ℤ :=
         ![1, 0, 0, 0]]))
 private def initial : Fin 9 → ℤ :=
   Fin.append HardinA229529Strip.initial (![0, 0, 3, 0])
-private def terminal : Fin 9 → ℤ := ![0, 0, 0, 0, 0, 1, 1, 1, 1]
+def terminal : Fin 9 → ℤ := ![0, 0, 0, 0, 0, 1, 1, 1, 1]
 private def W : Fin 8 → Fin 9 → ℤ :=
   Fin.append (fun i => Fin.append (HardinA229529Strip.W i)
       ((![![0, 0, 3, 0],

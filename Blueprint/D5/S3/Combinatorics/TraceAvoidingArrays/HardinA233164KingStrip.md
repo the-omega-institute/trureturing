@@ -8,7 +8,7 @@ OEIS A233164, revision 8, defines literal n by four arrays with colours zero thr
 
 **Definition 1.1 (An independent literal count).**
 
-$$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(\lambda A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right))) \to \operatorname{Fin}\left(8\right) \mapsto ((\exists i: \operatorname{Fin}\left(n\right), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, 0)\right) = 0))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall j: \operatorname{Fin}\left(3\right), ((A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right) \neq A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) \neq 7)))) \land (((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\forall j: \operatorname{Fin}\left(4\right), ((A\left((i, j)\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, j)\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right)\right) \neq 7))))) \land (\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\forall j: \operatorname{Fin}\left(3\right), (((A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) \neq 7)) \land ((A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) \neq 7))))))) \land (\forall p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor ((A\left(p\right) = 4) \lor ((A\left(p\right) = 5) \lor (A\left(p\right) = 6))))) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((((A\left(p\right) = 3) \lor ((A\left(p\right) = 4) \lor (A\left(p\right) = 5))) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 2)))) \land ((A\left(p\right) = 4) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 3)))))))))), \operatorname{Finset}.\operatorname{univ}\left(\right)\right)\right))$$
+$$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(\lambda A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right))) \to (\operatorname{Fin}\left(8\right)) \mapsto ((\exists i: \operatorname{Fin}\left(n\right), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, 0)\right) = 0))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall j: \operatorname{Fin}\left(3\right), ((A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right) \neq A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) \neq 7)))) \land (((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\forall j: \operatorname{Fin}\left(4\right), ((A\left((i, j)\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, j)\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right)\right) \neq 7))))) \land (\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\forall j: \operatorname{Fin}\left(3\right), (((A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) \neq 7)) \land ((A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) \neq 7))))))) \land (\forall p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor ((A\left(p\right) = 4) \lor ((A\left(p\right) = 5) \lor (A\left(p\right) = 6))))) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((((A\left(p\right) = 3) \lor ((A\left(p\right) = 4) \lor (A\left(p\right) = 5))) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 2)))) \land ((A\left(p\right) = 4) \implies (\exists q: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(4\right)), ((4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right) < 4 \cdot \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right) + \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right)) \land (A\left(q\right) = 3)))))))))), \operatorname{Finset}.\operatorname{univ}\left(\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.a` (`✓ std3`).
 
@@ -18,9 +18,163 @@ $$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset}.\opera
 
 Finset.univ ranges over every function on the displayed finite cell domain. Fin.val gives the natural coordinate. Fin.castSucc and Fin.succ are the two endpoints in adjacent columns; Fin.mk constructs the next row with its displayed bound proof. The rank 4 times row plus column is strictly row-major. The first-cell existential is false when n is zero, so the added constant coefficient is zero. The source counting problem concerns every positive n.
 
-**Theorem 1.2 (The complete rational formal power series).**
+**Definition 1.2 (Row).**
 
-$$(\operatorname{a}\left(1\right) = 11) \land ((\operatorname{a}\left(2\right) = 64) \land ((\operatorname{a}\left(3\right) = 1280) \land ((\forall n: Nat, ((1 < n) \implies (\operatorname{a}\left(n\right) = (4)^{2 \cdot n - 3} \cdot \left((2)^{n} + 12\right)))) \land ((\forall n: Nat, ((3 < n) \implies (\operatorname{a}\left(n\right): Int = 48 \cdot \operatorname{a}\left(n - 1\right) - 512 \cdot \operatorname{a}\left(n - 2\right)))) \land (\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = X \cdot \left(11 - 464 \cdot X + 3840 \cdot (X)^{2}\right) \cdot ((\left(1 - 16 \cdot X\right) \cdot \left(1 - 32 \cdot X\right)))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right))))))$$
+$$\operatorname{Row}\left(\right) = (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.Row` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+Signed colours on the ordered row.
+
+**Definition 1.3 (Boundary).**
+
+$$\operatorname{Boundary}\left(\right) = (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.Boundary` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+Complementary-pair colours on the same row.
+
+**Definition 1.4 (rowLegal).**
+
+$$\forall c: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right)), ((\operatorname{rowLegal}\left(c\right)) \iff (\forall j: \operatorname{Fin}\left(3\right), ((c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \neq c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)) \land (\operatorname{Fin}.\operatorname{val}\left(c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)\right) + \operatorname{Fin}.\operatorname{val}\left(c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right) \neq 7))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.rowLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+Adjacent signed colours exclude equality and complementarity.
+
+**Definition 1.5 (pairs).**
+
+$$\forall c: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right)), (\forall j: \operatorname{Fin}\left(4\right), (\operatorname{pairs}\left(c\right)\left(j\right) = \operatorname{HardinA233196Strip}.\operatorname{beta}\left(c\left(j\right)\right)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.pairs` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+The pair map is applied in each column.
+
+**Definition 1.6 (compatible).**
+
+$$\forall p: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), (\forall c: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right)), ((\operatorname{compatible}\left(p, c\right)) \iff ((\forall j: \operatorname{Fin}\left(4\right), (p\left(j\right) \neq \operatorname{HardinA233196Strip}.\operatorname{beta}\left(c\left(j\right)\right))) \land (\forall j: \operatorname{Fin}\left(3\right), ((p\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \neq \operatorname{HardinA233196Strip}.\operatorname{beta}\left(c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right)) \land (p\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right) \neq \operatorname{HardinA233196Strip}.\operatorname{beta}\left(c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)\right)))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.compatible` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+Vertical and both diagonal pair colours differ.
+
+**Definition 1.7 (step).**
+
+$$\forall w: ((Bool) \times ((Bool) \times (Bool))) \to (((\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right))) \to (Int)), (\forall t: (Bool) \times ((Bool) \times (Bool)), (\forall p: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), (\operatorname{step}\left(w, t, p\right) = \sum_{(c: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right)))} ((\operatorname{if} ((\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{compatible}\left(p, c\right)) \land (\operatorname{HardinA233196Strip}.\operatorname{good}\left(t, c\right)))) \operatorname{then} w\left(\operatorname{HardinA233196Strip}.\operatorname{finish}\left(t, c\right), \operatorname{pairs}\left(c\right)\right) \operatorname{else} (0: Int))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.step` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+The scanner-weighted sum ranges over every signed next row.
+
+**Definition 1.8 (saturated).**
+
+$$\operatorname{saturated}\left(\right) = (true, (true, true))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.saturated` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+All three precedence flags are true.
+
+**Definition 1.9 (proper).**
+
+$$\forall p: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), ((\operatorname{proper}\left(p\right)) \iff ((\forall j: \operatorname{Fin}\left(3\right), (p\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \neq p\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right))) \land (p\left(0\right) \neq p\left(3\right))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.proper` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+The productive pair-boundary predicate.
+
+**Definition 1.10 (kind).**
+
+$$\forall p: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), (\operatorname{kind}\left(p\right) = \operatorname{decide}\left(((p\left(0\right) = p\left(2\right)) \land (p\left(1\right) = p\left(3\right)))\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.kind` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+The alternating equality pattern determines the two rates.
+
+**Definition 1.11 (rate).**
+
+$$\forall b: Bool, (\operatorname{rate}\left(b\right) = (\operatorname{if} (b = true) \operatorname{then} (32: Int) \operatorname{else} (16: Int)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.rate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+The signed continuation count is integer valued.
+
+**Theorem 1.12 (saturated_certificate).**
+
+$$\forall p: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), ((\operatorname{proper}\left(p\right)) \implies ((\forall c: (\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(8\right)), (((\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{compatible}\left(p, c\right)) \land (\operatorname{HardinA233196Strip}.\operatorname{good}\left(\operatorname{saturated}\left(\right), c\right)))) \implies ((\operatorname{HardinA233196Strip}.\operatorname{finish}\left(\operatorname{saturated}\left(\right), c\right) = \operatorname{saturated}\left(\right)) \land ((\operatorname{proper}\left(\operatorname{pairs}\left(c\right)\right)) \land (\operatorname{kind}\left(\operatorname{pairs}\left(c\right)\right) = \operatorname{kind}\left(p\right)))))) \land (\operatorname{step}\left(\operatorname{Function}.\operatorname{const}\left((Bool) \times ((Bool) \times (Bool)), \operatorname{Function}.\operatorname{const}\left((\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\left(4\right)), (1: Int)\right)\right), \operatorname{saturated}\left(\right), p\right) = \operatorname{rate}\left(\operatorname{kind}\left(p\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.saturated_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233164: normalized eight-colour four-column king strips*. URL: <https://oeis.org/A233164>.
+
+*Commentary.*
+
+Every admissible signed continuation preserves saturation, properness and kind; the unweighted sum equals the displayed rate.
+
+**Theorem 1.13 (The complete rational formal power series).**
+
+$$(\operatorname{a}\left(1\right) = 11) \land ((\operatorname{a}\left(2\right) = 64) \land ((\operatorname{a}\left(3\right) = 1280) \land ((\forall n: Nat, ((1 < n) \implies (\operatorname{a}\left(n\right) = (4)^{2 \cdot n - 3} \cdot \left((2)^{n} + 12\right)))) \land ((\forall n: Nat, ((3 < n) \implies ((\operatorname{a}\left(n\right): Int) = 48 \cdot \operatorname{Int}.\operatorname{ofNat}\left(\operatorname{a}\left(n - 1\right)\right) - 512 \cdot \operatorname{Int}.\operatorname{ofNat}\left(\operatorname{a}\left(n - 2\right)\right)))) \land (\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = X \cdot \left(11 - 464 \cdot X + 3840 \cdot (X)^{2}\right) \cdot ((\left(1 - 16 \cdot X\right) \cdot \left(1 - 32 \cdot X\right)))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.result` (`✓ std3`). ∎
 
@@ -40,6 +194,17 @@ The literal Normal predicate uses strict rank 4 times row plus column. Its equiv
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.Boundary`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.Row`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.compatible`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.kind`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.pairs`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.proper`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.rate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.rowLegal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.saturated`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.saturated_certificate`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233164KingStrip.step`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip](HardinA233196Strip.md)

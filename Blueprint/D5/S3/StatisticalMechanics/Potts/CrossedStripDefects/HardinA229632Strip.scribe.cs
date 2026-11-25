@@ -9,6 +9,11 @@ internal sealed class HardinA229632StripDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal HDA colourings and exact defect transfer.", H("Hardin A229632: exact defect recurrence"),
         Blocks(Paragraph(Text("The literal array has n rows, 3 columns and exactly 2 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 9 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. The active leading sector, initial vector and cached prefix are a block extension of HardinA229529Strip. Its original certificate supplies the inherited active successor and initial projections. Only the appended sectors and rows are stored here.")),
+            Describe.Lean(DescribeId.Create("terminal"), DeclarationHandle.Create(Prefix + "terminal"),
+                H("The terminal vector"),
+                StatementSource.FromAuthor(Disp(Eq(Parenthesized(Seq(Call("HardinA229632Strip.terminal"), Colon, Sp, Arrow(Call("Fin", Num("9")), Call("Int")))), TerminalVector()))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Entries at indices 0 through 8 are 0, 0, 0, 0, 0, 1, 1, 1, 1."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a"),
                 DeclarationHandle.Create(Prefix + "a"), H("The literal canonical array count"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("HardinA229632Strip.a", V("n")), Call("Finset.card", Call("Finset.filter", Fn("A", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("3"))), Call("Fin", Num("3"))), And(Eq(Call("DefectTransfer.defects", Call("HardinA229581Strip.horizontal"), Call("HardinA229529Strip.between"), Call("List.ofFn", Fn("i", Call("Fin", V("n")), Fn("j", Call("Fin", Num("3")), App(V("A"), Pair(V("i"), V("j"))))))), Num("2")), All("p", Product(Call("Fin", V("n")), Call("Fin", Num("3"))), All("c", Call("Fin", Num("3")), Imp(Lt(V("c"), App(V("A"), V("p"))), Ex("q", Product(Call("Fin", V("n")), Call("Fin", Num("3"))), And(Lt(Add(Mul(Call("Fin.val", Call("Prod.fst", V("q"))), Num("3")), Call("Fin.val", Call("Prod.snd", V("q")))), Add(Mul(Call("Fin.val", Call("Prod.fst", V("p"))), Num("3")), Call("Fin.val", Call("Prod.snd", V("p"))))), Eq(App(V("A"), V("q")), V("c"))))))))), Call("Finset.univ"))))))),
@@ -43,5 +48,13 @@ internal sealed class HardinA229632StripDocument : IScribeDocumentDefinition
     private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));
 
     private static Formula AsInt(Formula value) => Parenthesized(Seq(value, Colon, Sp, Call("Int")));
+
+    private static Formula TerminalVector()
+    {
+        Formula tail = Call("Matrix.vecEmpty");
+        for (var i = 8; i >= 0; --i)
+            tail = Call("Matrix.vecCons", AsInt(Num(i < 5 ? "0" : "1")), tail);
+        return tail;
+    }
 
 }
