@@ -17,7 +17,6 @@ open _root_.D5.S3.Quantum.Entanglement.Marginals.FibRationalBoundary
 open _root_.D5.S3.Quantum.Entanglement.Marginals.FibMarginalExtension (Word)
 open _root_.D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
-open private disk from D5.S3.Quantum.Entanglement.Marginals.FibCoherentDisks
 open scoped ComplexOrder
 
 noncomputable section
