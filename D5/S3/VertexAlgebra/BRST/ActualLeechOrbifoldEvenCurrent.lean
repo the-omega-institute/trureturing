@@ -225,13 +225,15 @@ private theorem momentum_skew_sum (x y : MomentumH1) :
       simp only [momentumBracket_add_left, momentumBracket_add_right]
       calc
         _ = (momentumBracket (incl p x) y + momentumBracket y (incl p x)) +
-            (momentumBracket (incl p x) z + momentumBracket z (incl p x)) := by abel
+            (momentumBracket (incl p x) z + momentumBracket z (incl p x)) :=
+          add_add_add_comm _ _ _ _
         _ = 0 := (congrArg₂ (· + ·) hy hz).trans (zero_add 0)
   | add x z hx hz =>
     simp only [momentumBracket_add_left, momentumBracket_add_right]
     calc
       _ = (momentumBracket x y + momentumBracket y x) +
-          (momentumBracket z y + momentumBracket y z) := by abel
+          (momentumBracket z y + momentumBracket y z) :=
+        add_add_add_comm _ _ _ _
       _ = 0 := (congrArg₂ (· + ·) hx hz).trans (zero_add 0)
 
 private theorem momentum_leibniz (x y z : MomentumH1) :
@@ -252,13 +254,15 @@ private theorem momentum_leibniz (x y z : MomentumH1) :
       induction z using DirectSum.induction_on with
       | zero => simp
       | of r z => exact momentum_leibniz_incl p q r x y z
-      | add z w hz hw => simp only [momentumBracket_add_right, hz, hw]; abel
+      | add z w hz hw =>
+        simp only [momentumBracket_add_right, hz, hw]
+        exact add_add_add_comm _ _ _ _
     | add y w hy hw =>
       simp only [momentumBracket_add_left, momentumBracket_add_right, hy, hw]
-      abel
+      exact add_add_add_comm _ _ _ _
   | add x w hx hw =>
     simp only [momentumBracket_add_left, momentumBracket_add_right, hx, hw]
-    abel
+    exact add_add_add_comm _ _ _ _
 
 instance momentumLieRing : LieRing MomentumH1 where
   bracket x y := momentumBracket x y

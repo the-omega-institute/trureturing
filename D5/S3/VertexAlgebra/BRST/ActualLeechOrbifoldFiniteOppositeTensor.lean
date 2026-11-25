@@ -32,8 +32,35 @@ abbrev realMomentumGrade (p : Momentum) : Submodule ℝ L :=
 
 local notation "W" => realMomentumGrade
 
-local instance (p : Momentum) : FiniteDimensional ℝ (W p) :=
+/-- Membership in the native real momentum grade, shared by its carrier type. -/
+@[reducible] def realMomentumGradeMem (p : Momentum) (x : L) : Prop :=
+  x ∈ W p
+
+/-- The carrier of the native real momentum grade as a named type. -/
+@[reducible] def realMomentumGradeCarrier (p : Momentum) : Type :=
+  {x : L // realMomentumGradeMem p x}
+
+local notation "C" => realMomentumGradeCarrier
+
+-- Share the native submodule instances across tensor and linear-map types.
+private instance (priority := 2000) finiteOppositeGradeAddCommGroup (p : Momentum) :
+    AddCommGroup (C p) := Submodule.addCommGroup (W p)
+
+private instance (priority := 2000) finiteOppositeGradeAddCommMonoid (p : Momentum) :
+    AddCommMonoid (C p) := (finiteOppositeGradeAddCommGroup p).toAddCommMonoid
+
+private instance (priority := 2000) finiteOppositeGradeModule (p : Momentum) :
+    Module ℝ (C p) := Submodule.module (W p)
+
+local instance (p : Momentum) : FiniteDimensional ℝ (C p) :=
   realMomentumWeightSpace_finiteDimensional p
+
+/-- The native submodule inclusion of a real momentum grade. -/
+def realMomentumGradeIncl (p : Momentum) : C p →ₗ[ℝ] L :=
+  (W p).subtype
+
+@[simp] theorem realMomentumGradeIncl_apply (p : Momentum) (x : C p) :
+    realMomentumGradeIncl p x = (x : L) := rfl
 
 /-- The real BPZ form pairs a homogeneous vector only with its opposite momentum. -/
 theorem momentumRealBPZ_momentum_selection {p q : Momentum} {x y : L}
@@ -46,12 +73,12 @@ theorem momentumRealBPZ_momentum_selection {p q : Momentum} {x y : L}
   exact nativeRelativeBPZ_momentum_selection p q a b hq
 
 /-- The restricted BPZ pairing between the real weight spaces at `p` and `-p`. -/
-def realOppositeBPZ (p : Momentum) : W p →ₗ[ℝ] W (-p) →ₗ[ℝ] ℝ :=
-  momentumRealBPZ.compl₁₂ (W p).subtype (W (-p)).subtype
+def realOppositeBPZ (p : Momentum) : C p →ₗ[ℝ] C (-p) →ₗ[ℝ] ℝ :=
+  momentumRealBPZ.compl₁₂ (realMomentumGradeIncl p) (realMomentumGradeIncl (-p))
 
 set_option synthInstance.maxHeartbeats 100000 in
 private theorem realWeight_eq_zero_of_oppositeBPZ {p q : Momentum} (hq : q = -p)
-    (x : W p) (hx : ∀ y : W q, momentumRealBPZ x y = 0) : x = 0 := by
+    (x : C p) (hx : ∀ y : C q, momentumRealBPZ x y = 0) : x = 0 := by
   apply Subtype.ext
   apply momentumRealBPZ_nondegenerate.1
   intro y
@@ -130,40 +157,47 @@ theorem oppositeTensorDual_symm_eq_sum {ι κ : Type*} [Fintype ι] [Fintype κ]
 
 end TensorReconstruction
 
+/-- The opposite tensor dual specialized to the native real momentum carriers. -/
+@[reducible] private def realOppositeTensorDual (r s : Momentum) :
+    C r ⊗[ℝ] C s ≃ₗ[ℝ] Module.Dual ℝ (C (-r) ⊗[ℝ] C (-s)) :=
+  oppositeTensorDual (A := C r) (B := C s) (U := C (-r)) (V := C (-s))
+    (realOppositeBPZ r) (realOppositeBPZ s)
+
 attribute [local instance 100] LieRing.ofAssociativeRing in
-private def realBracketTensor (r s : Momentum) : W r ⊗[ℝ] W s →ₗ[ℝ] L :=
+private def realBracketTensor (r s : Momentum) : C r ⊗[ℝ] C s →ₗ[ℝ] L :=
   TensorProduct.lift
-    ((LieAlgebra.ad ℝ L).toLinearMap.compl₁₂ (W r).subtype (W s).subtype)
+    ((LieAlgebra.ad ℝ L).toLinearMap.compl₁₂ (realMomentumGradeIncl r) (realMomentumGradeIncl s))
 
 /-- The tensor block dual to the native bracket on the two opposite real weight spaces. -/
-def realSplitTensorBlock (p r s : Momentum) : W p →ₗ[ℝ] W r ⊗[ℝ] W s :=
-  (oppositeTensorDual (realOppositeBPZ r) (realOppositeBPZ s)).symm.toLinearMap.comp
+def realSplitTensorBlock (p r s : Momentum) : C p →ₗ[ℝ] C r ⊗[ℝ] C s :=
+  (realOppositeTensorDual r s).symm.toLinearMap.comp
     ((LinearMap.lcomp ℝ ℝ (realBracketTensor (-r) (-s))).comp
-      (LinearMap.comp momentumRealBPZ (W p).subtype))
+      (LinearMap.comp momentumRealBPZ (realMomentumGradeIncl p)))
 
 /-- The block pairs with every pure opposite tensor by BPZ against the bracket. -/
-theorem realSplitTensorBlock_pair (p r s : Momentum) (x : W p) (u : W (-r)) (v : W (-s)) :
-    oppositeTensorDual (realOppositeBPZ r) (realOppositeBPZ s)
+theorem realSplitTensorBlock_pair (p r s : Momentum) (x : C p) (u : C (-r)) (v : C (-s)) :
+    realOppositeTensorDual r s
       (realSplitTensorBlock p r s x) (u ⊗ₜ[ℝ] v) = momentumRealBPZ x ⁅(u : L), (v : L)⁆ := by
-  change (oppositeTensorDual (realOppositeBPZ r) (realOppositeBPZ s))
-    ((oppositeTensorDual (realOppositeBPZ r) (realOppositeBPZ s)).symm
+  change (realOppositeTensorDual r s)
+    ((realOppositeTensorDual r s).symm
       ((momentumRealBPZ x).comp (realBracketTensor (-r) (-s)))) (u ⊗ₜ[ℝ] v) = _
   rw [LinearEquiv.apply_symm_apply]
   rfl
 
 /-- Coefficients of the native block in the two transported dual bases. -/
-theorem realSplitTensorBlock_eq_sum (p r s : Momentum) (x : W p)
+theorem realSplitTensorBlock_eq_sum (p r s : Momentum) (x : C p)
     {ι κ : Type*} [Fintype ι] [Fintype κ]
-    (b : Module.Basis ι ℝ (W (-r))) (c : Module.Basis κ ℝ (W (-s))) :
+    (b : Module.Basis ι ℝ (C (-r))) (c : Module.Basis κ ℝ (C (-s))) :
     realSplitTensorBlock p r s x =
       ∑ i, ∑ j, momentumRealBPZ x ⁅(b i : L), (c j : L)⁆ •
         ((realOppositeBPZ r).toPerfPair.symm (b.dualBasis i) ⊗ₜ[ℝ]
           (realOppositeBPZ s).toPerfPair.symm (c.dualBasis j)) := by
-  exact oppositeTensorDual_symm_eq_sum (realOppositeBPZ r) (realOppositeBPZ s) b c
+  exact oppositeTensorDual_symm_eq_sum (A := C r) (B := C s) (U := C (-r)) (V := C (-s))
+    (realOppositeBPZ r) (realOppositeBPZ s) b c
     ((momentumRealBPZ x).comp (realBracketTensor (-r) (-s)))
 
 /-- The real Lie bracket is homogeneous for the Cartan momentum grading. -/
-theorem realWeight_lie_mem_add (r s : Momentum) (x : W r) (y : W s) :
+theorem realWeight_lie_mem_add (r s : Momentum) (x : C r) (y : C s) :
     ⁅(x : L), (y : L)⁆ ∈ realMomentumWeightSpace (r + s) := by
   have hx : (x : L) ∈ realMomentumWeightSpace r := x.property
   have hy : (y : L) ∈ realMomentumWeightSpace s := y.property
@@ -240,20 +274,31 @@ instance (p : Momentum) : Finite (RealPositiveSplit p) := by
 noncomputable instance (p : Momentum) : Fintype (RealPositiveSplit p) := Fintype.ofFinite _
 
 /-- The direct sum of the positive real momentum summands. -/
-abbrev RealPositiveMomentumSum := ⨁ r : RealPositiveMomentum, W r.1
+abbrev RealPositiveMomentumSum := ⨁ r : RealPositiveMomentum, C r.1
 
 local notation "L₊" => RealPositiveMomentumSum
+
+-- Share the induced direct-sum instances in the ambient positive tensor product.
+private local instance (priority := 2000) finiteOppositePositiveAddCommGroup :
+    AddCommGroup L₊ := inferInstance
+
+private local instance (priority := 2000) finiteOppositePositiveAddCommMonoid :
+    AddCommMonoid L₊ := finiteOppositePositiveAddCommGroup.toAddCommMonoid
+
+private local instance (priority := 2000) finiteOppositePositiveModule :
+    Module ℝ L₊ := inferInstance
+
 /-- The summand injection at a positive momentum. -/
-abbrev realPositiveMomentumLof (r : RealPositiveMomentum) : W r.1 →ₗ[ℝ] L₊ :=
-  DirectSum.lof ℝ RealPositiveMomentum (fun r : RealPositiveMomentum => ↥(W r.1)) r
+abbrev realPositiveMomentumLof (r : RealPositiveMomentum) : C r.1 →ₗ[ℝ] L₊ :=
+  DirectSum.lof ℝ RealPositiveMomentum (fun r : RealPositiveMomentum => C r.1) r
 
 /-- The inclusion from the positive momentum sum into the native real algebra. -/
 def realPositiveMomentumIncl : L₊ →ₗ[ℝ] L :=
-  DirectSum.toModule ℝ RealPositiveMomentum L (fun r => (W r.1).subtype)
+  DirectSum.toModule ℝ RealPositiveMomentum L (fun r => realMomentumGradeIncl r.1)
 
 /-- Place the homogeneous tensor block at `(r,s)` into the positive tensor product. -/
 def realPositiveBlockIncl (r s : RealPositiveMomentum) :
-    W r.1 ⊗[ℝ] W s.1 →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
+    C r.1 ⊗[ℝ] C s.1 →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
   TensorProduct.map (realPositiveMomentumLof r) (realPositiveMomentumLof s)
 
 /-- Evaluate a positive tensor against two arbitrary native real vectors, using product BPZ. -/
@@ -264,7 +309,7 @@ def realPositiveTensorEval (u v : L) : L₊ ⊗[ℝ] L₊ →ₗ[ℝ] ℝ :=
 
 @[simp]
 theorem realPositiveTensorEval_block_tmul (r s : RealPositiveMomentum)
-    (x : W r.1) (y : W s.1) (u v : L) :
+    (x : C r.1) (y : C s.1) (u v : L) :
     realPositiveTensorEval u v (realPositiveBlockIncl r s (x ⊗ₜ[ℝ] y)) =
       momentumRealBPZ x u * momentumRealBPZ y v := by
   simp [realPositiveTensorEval, realPositiveBlockIncl, realPositiveMomentumIncl,
@@ -276,7 +321,7 @@ private theorem realWeight_opposite_ne {r a : Momentum} (h : r ≠ a) : -a ≠ -
   simpa only [neg_neg] using (congrArg Neg.neg hneg).symm
 
 private theorem realPositiveTensorEval_block_off (r s a b : RealPositiveMomentum)
-    (h : (r, s) ≠ (a, b)) (z : W r.1 ⊗[ℝ] W s.1) (u : W (-a.1)) (v : W (-b.1)) :
+    (h : (r, s) ≠ (a, b)) (z : C r.1 ⊗[ℝ] C s.1) (u : C (-a.1)) (v : C (-b.1)) :
     realPositiveTensorEval u v (realPositiveBlockIncl r s z) = 0 := by
   suffices heq : (realPositiveTensorEval u v).comp (realPositiveBlockIncl r s) = 0 by
     exact LinearMap.congr_fun heq z
@@ -294,27 +339,28 @@ private theorem realPositiveTensorEval_block_off (r s a b : RealPositiveMomentum
       zero_mul]
 
 private theorem realPositiveTensorEval_block_self (r s : RealPositiveMomentum)
-    (z : W r.1 ⊗[ℝ] W s.1) (u : W (-r.1)) (v : W (-s.1)) :
+    (z : C r.1 ⊗[ℝ] C s.1) (u : C (-r.1)) (v : C (-s.1)) :
     realPositiveTensorEval u v (realPositiveBlockIncl r s z) =
-      oppositeTensorDual (realOppositeBPZ r.1) (realOppositeBPZ s.1) z (u ⊗ₜ[ℝ] v) := by
-  let ev : Module.Dual ℝ (W (-r.1) ⊗[ℝ] W (-s.1)) →ₗ[ℝ] ℝ :=
+      realOppositeTensorDual r.1 s.1 z (u ⊗ₜ[ℝ] v) := by
+  let ev : Module.Dual ℝ (C (-r.1) ⊗[ℝ] C (-s.1)) →ₗ[ℝ] ℝ :=
     LinearMap.applyₗ (R := ℝ) (u ⊗ₜ[ℝ] v)
   suffices heq : (realPositiveTensorEval u v).comp (realPositiveBlockIncl r s) =
-      ev.comp (oppositeTensorDual (realOppositeBPZ r.1) (realOppositeBPZ s.1)).toLinearMap by
+      ev.comp (realOppositeTensorDual r.1 s.1).toLinearMap by
     exact LinearMap.congr_fun heq z
   apply TensorProduct.ext'
   intro x y
   change realPositiveTensorEval u v (realPositiveBlockIncl r s (x ⊗ₜ[ℝ] y)) =
-    oppositeTensorDual (realOppositeBPZ r.1) (realOppositeBPZ s.1) (x ⊗ₜ[ℝ] y) (u ⊗ₜ[ℝ] v)
+    realOppositeTensorDual r.1 s.1 (x ⊗ₜ[ℝ] y) (u ⊗ₜ[ℝ] v)
   calc
     _ = momentumRealBPZ x u * momentumRealBPZ y v :=
       realPositiveTensorEval_block_tmul r s x y u v
     _ = realOppositeBPZ r.1 x u * realOppositeBPZ s.1 y v := rfl
-    _ = _ := (oppositeTensorDual_tmul (realOppositeBPZ r.1) (realOppositeBPZ s.1) x y u v).symm
+    _ = _ := (oppositeTensorDual_tmul (A := C r.1) (B := C s.1)
+      (U := C (-r.1)) (V := C (-s.1)) (realOppositeBPZ r.1) (realOppositeBPZ s.1) x y u v).symm
 
 /-- Assemble a family of supported ordered blocks as an algebraic tensor. -/
 def realPositiveTensorAssemble (p : Momentum) :
-    (∀ i : RealPositiveSplit p, W i.1.1.1 ⊗[ℝ] W i.1.2.1) →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
+    (∀ i : RealPositiveSplit p, C i.1.1.1 ⊗[ℝ] C i.1.2.1) →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
   ∑ i : RealPositiveSplit p, (realPositiveBlockIncl i.1.1 i.1.2).comp (LinearMap.proj i)
 
 /-- The homogeneous total-degree `p` submodule of supported positive tensors. -/
@@ -322,16 +368,16 @@ def realPositiveTensorSupport (p : Momentum) : Submodule ℝ (L₊ ⊗[ℝ] L₊
   (realPositiveTensorAssemble p).range
 
 private theorem realPositiveTensorEval_assemble (p : Momentum)
-    (d : ∀ i : RealPositiveSplit p, W i.1.1.1 ⊗[ℝ] W i.1.2.1)
-    (r s : RealPositiveMomentum) (u : W (-r.1)) (v : W (-s.1)) :
+    (d : ∀ i : RealPositiveSplit p, C i.1.1.1 ⊗[ℝ] C i.1.2.1)
+    (r s : RealPositiveMomentum) (u : C (-r.1)) (v : C (-s.1)) :
     realPositiveTensorEval u v (realPositiveTensorAssemble p d) =
       ∑ i : RealPositiveSplit p, realPositiveTensorEval u v (realPositiveBlockIncl i.1.1 i.1.2 (d i)) :=
   by simp only [realPositiveTensorAssemble, LinearMap.sum_apply, LinearMap.comp_apply,
     LinearMap.proj_apply, map_sum]
 
 private theorem realPositiveTensorEval_assemble_single (p : Momentum)
-    (d : ∀ i : RealPositiveSplit p, W i.1.1.1 ⊗[ℝ] W i.1.2.1) (i : RealPositiveSplit p)
-    (u : W (-i.1.1.1)) (v : W (-i.1.2.1)) :
+    (d : ∀ i : RealPositiveSplit p, C i.1.1.1 ⊗[ℝ] C i.1.2.1) (i : RealPositiveSplit p)
+    (u : C (-i.1.1.1)) (v : C (-i.1.2.1)) :
     realPositiveTensorEval u v (realPositiveTensorAssemble p d) =
       realPositiveTensorEval u v (realPositiveBlockIncl i.1.1 i.1.2 (d i)) := by
   rw [realPositiveTensorEval_assemble, Finset.sum_eq_single i]
@@ -343,23 +389,26 @@ private theorem realPositiveTensorEval_assemble_single (p : Momentum)
 /-- Oppositely homogeneous pure tensors detect equality in the supported total degree. -/
 theorem realPositiveTensorSupport_ext (p : Momentum) {z z' : L₊ ⊗[ℝ] L₊}
     (hz : z ∈ realPositiveTensorSupport p) (hz' : z' ∈ realPositiveTensorSupport p)
-    (h : ∀ (i : RealPositiveSplit p) (u : W (-i.1.1.1)) (v : W (-i.1.2.1)),
+    (h : ∀ (i : RealPositiveSplit p) (u : C (-i.1.1.1)) (v : C (-i.1.2.1)),
       realPositiveTensorEval u v z = realPositiveTensorEval u v z') : z = z' := by
   obtain ⟨d, rfl⟩ := hz
   obtain ⟨e, rfl⟩ := hz'
   apply congrArg (realPositiveTensorAssemble p)
   funext i
-  apply oppositeTensorDual_ext (realOppositeBPZ i.1.1.1) (realOppositeBPZ i.1.2.1)
+  apply oppositeTensorDual_ext (A := C i.1.1.1) (B := C i.1.2.1)
+    (U := C (-i.1.1.1)) (V := C (-i.1.2.1))
+    (realOppositeBPZ i.1.1.1) (realOppositeBPZ i.1.2.1)
   intro u v
-  simpa only [realPositiveTensorEval_assemble_single, realPositiveTensorEval_block_self] using h i u v
+  simpa only [realPositiveTensorEval_assemble_single, realPositiveTensorEval_block_self,
+    realOppositeTensorDual] using h i u v
 
 /-- The homogeneous native split tensor, assembled from the finitely many positive ordered blocks. -/
-def realSplitTensor (p : Momentum) : W p →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
+def realSplitTensor (p : Momentum) : C p →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
   (realPositiveTensorAssemble p).comp
     (LinearMap.pi fun i : RealPositiveSplit p => realSplitTensorBlock p i.1.1.1 i.1.2.1)
 
 /-- The native split tensor has total degree `p` with positive bidegrees. -/
-theorem realSplitTensor_mem_support (p : Momentum) (x : W p) :
+theorem realSplitTensor_mem_support (p : Momentum) (x : C p) :
     realSplitTensor p x ∈ realPositiveTensorSupport p :=
   ⟨fun i => realSplitTensorBlock p i.1.1.1 i.1.2.1 x, rfl⟩
 
@@ -370,8 +419,8 @@ theorem realSplitTensor_eq_zero_of_first_eq_one (p : Momentum) (hp : p 0 = 1) :
     ⟨fun i => by have := (realPositiveSplit_bounds i).1; omega⟩
   simp [realSplitTensor, realPositiveTensorAssemble]
 
-private theorem realSplitTensor_pair_on_split (p : Momentum) (x : W p) (i : RealPositiveSplit p)
-    (u : W (-i.1.1.1)) (v : W (-i.1.2.1)) :
+private theorem realSplitTensor_pair_on_split (p : Momentum) (x : C p) (i : RealPositiveSplit p)
+    (u : C (-i.1.1.1)) (v : C (-i.1.2.1)) :
     realPositiveTensorEval u v (realSplitTensor p x) = momentumRealBPZ x ⁅(u : L), (v : L)⁆ := by
   change realPositiveTensorEval u v
     (realPositiveTensorAssemble p (fun i => realSplitTensorBlock p i.1.1.1 i.1.2.1 x)) = _
@@ -380,7 +429,7 @@ private theorem realSplitTensor_pair_on_split (p : Momentum) (x : W p) (i : Real
 
 set_option synthInstance.maxHeartbeats 100000 in
 private theorem realOppositeWeight_eq_zero_of_one_lt_second (r : RealPositiveMomentum)
-    (hr : 1 < r.1 1) (u : W (-r.1)) : u = 0 := by
+    (hr : 1 < r.1 1) (u : C (-r.1)) : u = 0 := by
   have hbot := realMomentumWeightSpace_eq_bot_of_one_lt_second r.1 r.property hr
   apply realWeight_eq_zero_of_oppositeBPZ (p := -r.1) (q := r.1) (neg_neg r.1).symm u
   intro y
@@ -391,8 +440,8 @@ private theorem realOppositeWeight_eq_zero_of_one_lt_second (r : RealPositiveMom
 set_option synthInstance.maxHeartbeats 100000 in
 /-- The finite tensor represents BPZ against the bracket for every pair of negative homogeneous
 tests. The labels `r,s` are the positives opposite to the actual test weights. -/
-theorem realSplitTensor_pair (p : Momentum) (x : W p) (r s : RealPositiveMomentum)
-    (u : W (-r.1)) (v : W (-s.1)) :
+theorem realSplitTensor_pair (p : Momentum) (x : C p) (r s : RealPositiveMomentum)
+    (u : C (-r.1)) (v : C (-s.1)) :
     realPositiveTensorEval u v (realSplitTensor p x) = momentumRealBPZ x ⁅(u : L), (v : L)⁆ := by
   by_cases hsum : r.1 + s.1 = p
   · by_cases hr : r.1 1 ≤ 1
@@ -418,9 +467,9 @@ theorem realSplitTensor_pair (p : Momentum) (x : W p) (r s : RealPositiveMomentu
     exact (congrArg (fun j : RealPositiveMomentum × RealPositiveMomentum => j.1.1 + j.2.1) h).symm.trans i.property.1
 
 /-- Characterize the split tensor uniquely by its supported bidegrees and bracket evaluation. -/
-theorem realSplitTensor_unique (p : Momentum) (x : W p) {z : L₊ ⊗[ℝ] L₊}
+theorem realSplitTensor_unique (p : Momentum) (x : C p) {z : L₊ ⊗[ℝ] L₊}
     (hz : z ∈ realPositiveTensorSupport p)
-    (h : ∀ (r s : RealPositiveMomentum) (u : W (-r.1)) (v : W (-s.1)),
+    (h : ∀ (r s : RealPositiveMomentum) (u : C (-r.1)) (v : C (-s.1)),
       realPositiveTensorEval u v z = momentumRealBPZ x ⁅(u : L), (v : L)⁆) :
     z = realSplitTensor p x :=
   realPositiveTensorSupport_ext p hz (realSplitTensor_mem_support p x)
@@ -431,7 +480,7 @@ def realPositiveSplitTensor : L₊ →ₗ[ℝ] L₊ ⊗[ℝ] L₊ :=
   DirectSum.toModule ℝ RealPositiveMomentum (L₊ ⊗[ℝ] L₊) (fun p => realSplitTensor p.1)
 
 @[simp]
-theorem realPositiveSplitTensor_lof (p : RealPositiveMomentum) (x : W p.1) :
+theorem realPositiveSplitTensor_lof (p : RealPositiveMomentum) (x : C p.1) :
     realPositiveSplitTensor (realPositiveMomentumLof p x) = realSplitTensor p.1 x := by
   rw [realPositiveSplitTensor, realPositiveMomentumLof, DirectSum.toModule_lof]
 
