@@ -294,7 +294,7 @@ private theorem small_sparse_syndrome_eq_empty {S B : Word}
       rw [hS]
       ext z
       simp only [mem_inter, mem_symmDiff, mem_sdiff]
-      tauto
+      by_cases hx : z ∈ shell x <;> by_cases hy : z ∈ shell y <;> simp [hx, hy]
     have hs := hdegree x
     rw [heq, card_sdiff, inter_comm, shell_card, hinter] at hs
     split at hs <;> omega
@@ -371,7 +371,7 @@ private theorem sparse_syndrome_at_order_72
     have hcap (x : Vertex) (hx : v (cube x) ≠ 0) (hout : x ∉ S) :
         ((shell x ∩ B).card : ℤ) ≤ 7 := by
       have hproper : shell x ∩ B ⊂ shell x := by
-        refine ssubset_iff_subset_ne.mpr ⟨inter_subset_left, ?_⟩
+        refine Finset.ssubset_iff_subset_ne.mpr ⟨inter_subset_left, ?_⟩
         intro heq
         exact hnone ⟨x, hx, hout, heq ▸ (inter_subset_right : shell x ∩ B ⊆ B)⟩
       have hlt := card_lt_card hproper
@@ -483,7 +483,7 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
         ∑ _x ∈ L, (2 : ℕ) from sum_congr rfl
           (fun x hx => ((level_counts.2 x).2.1 (hLlevel hx)).1)] at h
     rw [level_counts.1] at h
-    simp only [sum_const, nsmul_eq_mul, shell_card] at h
+    simp only [sum_const, Nat.nsmul_eq_mul, shell_card] at h
     omega
   let r := fun u t : Vertex => shell u ∩ L ⊆ shell t ∩ L
   have hcoverD (t : Vertex) (ht : t ∈ D) : ∃ u ∈ weightLayer 1, r u t := by
@@ -539,7 +539,7 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
     rw [show (∑ x ∈ L, (shell x ∩ weightLayer 3).card) =
         ∑ _x ∈ L, (6 : ℕ) from sum_congr rfl
           (fun x hx => ((level_counts.2 x).2.1 (hLlevel hx)).2)] at h
-    simp only [sum_const, nsmul_eq_mul, hLcard] at h
+    simp only [sum_const, Nat.nsmul_eq_mul, hLcard] at h
     have heq (x : Vertex) (hx : x ∈ weightLayer 3) :
         (shell x ∩ L).card = (if (shell x ∩ L).card = 1 then 1 else 0) +
           2 * (if (shell x ∩ L).card = 2 then 1 else 0) := by
@@ -551,7 +551,7 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
     rw [sum_congr rfl heq, sum_add_distrib, ← mul_sum, ← sum_filter, ← sum_filter] at h
     change (∑ _x ∈ T, (1 : ℕ)) + 2 * (∑ _x ∈ D, (1 : ℕ)) = _ at h
     have hcount : T.card + 2 * D.card = 48 := by
-      simpa only [sum_const, nsmul_eq_mul, mul_one] using h
+      simpa only [sum_const, Nat.nsmul_eq_mul, mul_one] using h
     calc
       32 = 48 - 2 * 8 := by decide
       _ ≤ 48 - 2 * D.card := Nat.sub_le_sub_left (Nat.mul_le_mul_left 2 hDcard) 48
