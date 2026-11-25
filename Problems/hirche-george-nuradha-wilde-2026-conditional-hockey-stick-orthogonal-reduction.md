@@ -25,7 +25,7 @@ Issue [#17637](https://github.com/the-omega-institute/trureturing/issues/17637) 
 - (i), the question asked: S_γ(N) = S^⊥_γ(N);
 - (ii), a strengthening: S_γ(N) = S_δ(N) for all γ, δ ≥ 1.
 
-Both are proved in this reading. The complete coefficient η^c_{E_γ} is not addressed.
+Both are proved in this reading. A binary-channel counterexample settles the corresponding questions for the complete coefficient.
 
 ## Motivation
 
@@ -114,12 +114,11 @@ Every other public declaration is a definition used by a public statement. The b
 - *Consistency.* Proposition 10 gives η^Δ_{E_γ}(BSC_p) ≥ 1 − 2p for the binary symmetric channel with (1 − p)/p = γ. With the theorem, this becomes a lower bound on η^Δ_Tr(BSC_p).
 
 **Open.**
-- The complete coefficient η^c_{E_γ}: whether its optimization reduces to orthogonal states, and whether it is monotone in γ.
 - Whether the orthogonal pairs can be taken pure; the source notes this is unclear already for the trace distance.
 
 **Effect on the paper.**
 - The first open problem of §9 is answered affirmatively for the conditional coefficient.
-- The monotonicity question of Remark 6 is answered for η^Δ: it holds, and the coefficient is constant on γ ≥ 1. Numerical non-monotonicity with reference systems, if observed for η^Δ, would contradict the theorem; for η^c it remains possible.
+- The conditional coefficient is constant on γ ≥ 1. For the complete coefficient, `CompleteHockeyStickRefutation.refutes_monotonicity_and_orthogonal_reduction` proves a strict increase from γ = 1 to γ = 2 and a strict gap between unrestricted and orthogonal optimization at γ = 2. The [literature note](../Library/QuantumChannels/hirchegeorgenuradhawilde2026conditional.md#complete-hockey-stick-contraction) records the bounds and the prior Umegaki implication.
 
 ## ASSUMED-UNVERIFIED
 
