@@ -194,6 +194,18 @@ $$\forall n: Nat, (\forall k: Nat, (\operatorname{T}\left(n, k\right) = \operato
 
 Transposition swaps the grid dimensions and preserves the contiguous block condition. The count identity holds at all natural indices.
 
+**Lemma 1.16 (The sum-two rectangular count).**
+
+$$\forall n: Nat, (\forall k: Nat, (\operatorname{T}\left(n + 1, k + 1\right) = 2 \cdot (\operatorname{Nat.card}\left(\{A: \operatorname{Fin}\left(n + 1 + 1\right) \to \left(\operatorname{Fin}\left(k + 1 + 1\right) \to \operatorname{Fin}\left(4\right)\right) \mid \forall i: \operatorname{Fin}\left(n + 1\right), (\forall j: \operatorname{Fin}\left(k + 1\right), (\operatorname{Fin.val}\left(A\left(\operatorname{Fin.castSucc}\left(i\right), \operatorname{Fin.castSucc}\left(j\right)\right)\right) + \operatorname{Fin.val}\left(A\left(\operatorname{Fin.castSucc}\left(i\right), \operatorname{Fin.succ}\left(j\right)\right)\right) + \operatorname{Fin.val}\left(A\left(\operatorname{Fin.succ}\left(i\right), \operatorname{Fin.castSucc}\left(j\right)\right)\right) + \operatorname{Fin.val}\left(A\left(\operatorname{Fin.succ}\left(i\right), \operatorname{Fin.succ}\left(j\right)\right)\right) = 2))\}\right): \mathbb{Z})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.original_eq_twice_low` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The n+2 by k+2 arrays use the alphabet 0 through 3. The four entry values in every contiguous block sum to two in the naturals. The natural cardinality is cast to an integer before multiplication by two.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.Fiber`
@@ -207,6 +219,7 @@ Transposition swaps the grid dimensions and preserves the contiguous block condi
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.fin_constant`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.flip`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.literal_sum`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.original_eq_twice_low`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.profileCount`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.profileCount_eq_pow`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence.profileCount_two_step`
