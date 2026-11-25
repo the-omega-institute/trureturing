@@ -17,7 +17,7 @@ triage: anchor
 
 # The last exception for two-colour Rado numbers
 
-## Verified primary sources
+## Verified locator
 
 The formal source is the immutable public revision
 [mathdiscoveries@82a9a73903a9f68b476818a37e20b10405aa8b53](https://github.com/mathdiscoveries/rado-numbers-last-exception/tree/82a9a73903a9f68b476818a37e20b10405aa8b53),
