@@ -169,18 +169,18 @@ open private Retained Environment source reference marginal_one source_loss_pos
   source_reference_ne from
   Reg.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 
-universe ui u
+universe u ui
 
 private abbrev Joint := Retained.{u} × Environment.{u}
 
 private def identityKraus : PUnit.{ui+1} → Matrix Joint.{u} Joint.{u} ℂ := fun _ => 1
 
 private theorem identity_complete :
-    (∑ i, (identityKraus.{ui,u} i)ᴴ * identityKraus.{ui,u} i) = 1 := by
+    (∑ i, (identityKraus.{u,ui} i)ᴴ * identityKraus.{u,ui} i) = 1 := by
   simp [identityKraus]
 
 private theorem identity_retained (X : Matrix Joint.{u} Joint.{u} ℂ) :
-    partialTraceRight (matrixAction (krausChannel identityKraus.{ui,u} identity_complete) X) =
+    partialTraceRight (matrixAction (krausChannel identityKraus.{u,ui} identity_complete) X) =
       partialTraceRight X := by
   rw [krausChannel_apply]
   simp [identityKraus]
@@ -229,17 +229,17 @@ private abbrev arena : Arena where
       ⟨R, E, inferInstance, inferInstance, inferInstance, inferInstance, ρ⟩ σ
     (completedPetz K hK σ).mapState (benchmark (N.mapState ρ) (N.mapState σ)) = original
 
-private theorem source_fails : ¬ arena.{ui,u}.Law sourceReadout := by
+private theorem source_fails : ¬ arena.{u,ui}.Law sourceReadout := by
   intro h
-  have bad := h identityKraus.{ui,u} identity_complete identity_retained source.{u} reference.{u}
-  have good := compression_recovers_benchmark identityKraus.{ui,u} identity_complete identity_retained
+  have bad := h identityKraus.{u,ui} identity_complete identity_retained source.{u} reference.{u}
+  have good := compression_recovers_benchmark identityKraus.{u,ui} identity_complete identity_retained
     source.{u} reference.{u}
   change _ = source.{u} at bad
   change _ = benchmark source.{u} reference.{u} at good
   exact source_reference_ne (congrArg raw (bad.symm.trans
     (good.trans (singleton_benchmark source.{u} reference.{u}))))
 
-def family : Registration arena.{ui,u} (type_of% @compression_recovers_benchmark.{u,ui}) where
+def family : Registration arena.{u,ui} (type_of% @compression_recovers_benchmark.{u,ui}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@compression_recovers_benchmark.{u,ui}, sourceReadout, source_fails⟩
@@ -327,26 +327,26 @@ private abbrev arena : Arena where
     ε + budget < traceNorm (raw ρ - raw (benchmark ρ σ)) →
     0 < loss ρ' σ' ∧ threshold < compressionScore ρ' σ'
 
-private theorem negative_fails : ¬ arena.{ui,u}.Law negativeReadout := by
+private theorem negative_fails : ¬ arena.{u,ui}.Law negativeReadout := by
   intro h
   let σ := reference.{u}
-  let N := krausChannel identityKraus.{ui,u} identity_complete
-  let D := completedPetz identityKraus.{ui,u} identity_complete σ
+  let N := krausChannel identityKraus.{u,ui} identity_complete
+  let D := completedPetz identityKraus.{u,ui} identity_complete σ
   have hrec : raw (D.mapState (N.mapState σ)) = raw σ :=
-    completedPetz_reference identityKraus.{ui,u} identity_complete σ
+    completedPetz_reference identityKraus.{u,ui} identity_complete σ
   have hres : traceNorm (raw σ - raw (D.mapState (N.mapState σ))) ≤ 0 := by
     rw [hrec, sub_self]
     simp [_root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm]
   have hmargin : 0 + (-1 : ℝ) < traceNorm (raw σ - raw (benchmark σ σ)) := by
     exact (by norm_num : (0 : ℝ) + -1 < 0).trans_le (traceNorm_nonneg _)
-  have bad := h identityKraus.{ui,u} identity_complete identity_retained σ σ
+  have bad := h identityKraus.{u,ui} identity_complete identity_retained σ σ
     (fun _ hv => hv) 0 le_rfl 0 hres hmargin
   have hp : 0 < loss (N.mapState σ) (N.mapState σ) := bad.1
   rw [loss, finiteTraceLogRelativeEntropy_self (N.mapState σ),
     finiteTraceLogRelativeEntropy_self (marginalRight (N.mapState σ)), sub_self] at hp
   exact (lt_irrefl 0) hp
 
-def family : Registration arena.{ui,u} (type_of% @strict_score_of_decoder_residual.{u,ui}) where
+def family : Registration arena.{u,ui} (type_of% @strict_score_of_decoder_residual.{u,ui}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@strict_score_of_decoder_residual.{u,ui}, negativeReadout, negative_fails⟩
