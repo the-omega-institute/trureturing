@@ -24,11 +24,13 @@ internal sealed class RationalGramCospectralDocument : IScribeDocumentDefinition
                 H("Six- and seven-coordinate thresholds on a conic"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Take nonzero rational numbers u and v with five times the "
+                    Paragraph(Text("Take rational numbers u and v with five times the "
                         + "square of u plus seven times the square of v equal to three. Set the "
                         + "parameter to one quarter of the difference between five times the "
                         + "square of u and one. The two Gram matrices have identical characteristic "
-                        + "polynomials. The paired-edge matrix fits in n rational coordinates "
+                        + "polynomials with eigenvalues one plus four times the parameter, one, "
+                        + "and one minus twice the parameter with multiplicity two. "
+                        + "The paired-edge matrix fits in n rational coordinates "
                         + "exactly when n is at least seven. The triangle-block matrix fits "
                         + "exactly when n is at least six.")),
                     Paragraph(Text("Rational eigenbases give the common characteristic polynomial. "

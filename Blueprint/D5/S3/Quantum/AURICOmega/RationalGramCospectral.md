@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.thresholds_on_c
 
 *Commentary.*
 
-Take nonzero rational numbers u and v with five times the square of u plus seven times the square of v equal to three. Set the parameter to one quarter of the difference between five times the square of u and one. The two Gram matrices have identical characteristic polynomials. The paired-edge matrix fits in n rational coordinates exactly when n is at least seven. The triangle-block matrix fits exactly when n is at least six.
+Take rational numbers u and v with five times the square of u plus seven times the square of v equal to three. Set the parameter to one quarter of the difference between five times the square of u and one. The two Gram matrices have identical characteristic polynomials with eigenvalues one plus four times the parameter, one, and one minus twice the parameter with multiplicity two. The paired-edge matrix fits in n rational coordinates exactly when n is at least seven. The triangle-block matrix fits exactly when n is at least six.
 
 Rational eigenbases give the common characteristic polynomial. The conic allows rational rescaling to fixed quadratic forms. At the base point both examples have explicit orthogonal Gram factors at their respective thresholds. Aligning a partial frame with the same Gram data reduces both dimension lower bounds to ternary equations. A descent modulo seven excludes the paired-edge form in six coordinates. The three-square obstruction excludes the triangle-block form in five. Appending zero coordinates preserves each realization.
 

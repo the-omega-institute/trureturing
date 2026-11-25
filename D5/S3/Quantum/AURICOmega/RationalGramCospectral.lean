@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: A conic family of cospectral rank-four unit Gram matrices has different rational dimension thresholds. -/
+   digest: A conic family of cospectral unit Gram matrices with distinct rational dimension bounds. -/
 
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.DotProduct
@@ -55,7 +55,11 @@ private theorem charpoly_of_factor (A D U V : GramMatrix) (hu : U * V = 1)
       _ = U * (D * V) := by rw [h, mul_assoc]
   rw [hA, charpoly_mul_comm, mul_assoc, hv, mul_one]
 
-private theorem gram_pair_cospectral (t : ℚ) : (pairedEdges t).charpoly = (triangleBlock t).charpoly := by
+private theorem gram_pair_cospectral (t : ℚ) :
+    (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+      (pairedEdges t).charpoly =
+        (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
+          (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2 := by
   have hA : (pairedEdges t).charpoly = (spectralDiagonal t).charpoly := by
     apply charpoly_of_factor _ _ aBasis aInv
     · ext i j
@@ -80,7 +84,8 @@ private theorem gram_pair_cospectral (t : ℚ) : (pairedEdges t).charpoly = (tri
       fin_cases i <;> fin_cases j <;>
         norm_num [triangleBlock, bBasis, spectralDiagonal, Matrix.diagonal_apply, Matrix.mul_apply,
           Fin.sum_univ_succ] <;> ring
-  exact hA.trans hB.symm
+  refine ⟨hA.trans hB.symm, hA.trans ?_⟩
+  simp [spectralDiagonal, Matrix.charpoly_diagonal, Fin.prod_univ_succ, pow_two, mul_assoc]
 
 /-- An exact rational Gram factorization with the specified number of columns. -/
 def RealizableIn (G : GramMatrix) (n : ℕ) : Prop :=
@@ -237,23 +242,29 @@ private theorem reflection_with_fixed_vectors
   have hd : B u u ≠ 0 := fun hz => h (sub_eq_zero.mp (dotProduct_self_eq_zero.mp hz))
   have hu : B.IsReflective u := .of_dvd_two B ⟨2 / B u u, by field_simp⟩
   have hsymm : B.IsSymm := ⟨fun x y => dotProduct_comm x y⟩
-  let coef := hu.coroot B
-  have hcoef (x : ι → K) : B u u * coef x = 2 * (u ⬝ᵥ x) :=
-    hu.apply_self_mul_coroot_apply B
-  have ha : coef a = 1 := by
-    have hd' : B u u = 2 * (u ⬝ᵥ a) := by
-      change u ⬝ᵥ u = _
-      simp only [u, dotProduct_sub, sub_dotProduct, ← hab, dotProduct_comm a b]
-      ring
-    exact mul_left_cancel₀ hd ((hcoef a).trans (by rw [← hd', mul_one]))
-  refine ⟨Module.reflection (hu.coroot_apply_self B), ?_,
-    hu.isOrthogonal_reflection B hsymm, ?_⟩
-  · simp [Module.reflection_apply, show hu.coroot B a = 1 from ha, u]
+  let f := Module.reflection (hu.coroot_apply_self B)
+  have fix_of_perp (x : ι → K) (hx : B u x = 0) : f x = x := by
+    have hcoef : hu.coroot B x = 0 :=
+      mul_left_cancel₀ hd (by rw [hu.apply_self_mul_coroot_apply, hx, mul_zero, mul_zero])
+    simp [f, Module.reflection_apply, hcoef]
+  have fixed_sum : f (a + b) = a + b := by
+    apply fix_of_perp
+    change (a - b) ⬝ᵥ (a + b) = 0
+    simp [sub_dotProduct, dotProduct_add, hab, dotProduct_comm a b, add_comm]
+  have negated_difference : f (a - b) = -(a - b) := Module.reflection_apply_self _
+  have hsum : f a + f b = a + b := by simpa only [map_add] using fixed_sum
+  have hdiff : f a - f b = -(a - b) := by simpa only [map_sub] using negated_difference
+  have hdouble : f a + f a = b + b := by
+    calc
+      _ = (f a + f b) + (f a - f b) := by abel
+      _ = (a + b) + -(a - b) := by rw [hsum, hdiff]
+      _ = _ := by abel
+  refine ⟨f, ?_, hu.isOrthogonal_reflection B hsymm, ?_⟩
+  · funext i
+    have hi : f a i + f a i = b i + b i := congrFun hdouble i
+    linear_combination hi / 2
   · intro x hx
-    have hux : u ⬝ᵥ x = 0 := by simp [u, sub_dotProduct, hx]
-    have hc : coef x = 0 :=
-      mul_left_cancel₀ hd ((hcoef x).trans (by simp [hux]))
-    simp [Module.reflection_apply, show hu.coroot B x = 0 from hc]
+    exact fix_of_perp x (by change (a - b) ⬝ᵥ x = 0; rw [sub_dotProduct, hx, sub_self])
 
 /-- Finite families with the same Gram data are related by a rational linear isometry. -/
 private theorem fin_frame_isometry {n : ℕ} (a b : Fin n → ι → K)
@@ -567,14 +578,41 @@ private theorem second_family_fit (t u v : ℚ) (hu : u ≠ 0) (hv : v ≠ 0)
     · intro i
       fin_cases i <;> simp [htu, htv] <;> field_simp <;> ring
 
+private theorem three_not_int_square : ¬ IsSquare (3 : ℤ) := by
+  rintro ⟨a, ha⟩
+  have hmod : (a : ZMod 4) * (a : ZMod 4) = 3 := by
+    simpa only [Int.cast_mul, Int.cast_ofNat] using congrArg (fun x : ℤ => (x : ZMod 4)) ha.symm
+  exact (by decide : ∀ a : ZMod 4, a * a ≠ 3) _ hmod
+
 /-- The two unit Gram matrices have equal characteristic polynomials throughout the
 conic family. Their minimum rational coordinate counts are seven and six respectively. -/
-theorem thresholds_on_conic (u v : ℚ) (hu : u ≠ 0) (hv : v ≠ 0)
+theorem thresholds_on_conic (u v : ℚ)
     (h : 5*u^2 + 7*v^2 = 3) (n : ℕ) :
     let t := (5*u^2-1)/4
-    (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+    ((pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+      (pairedEdges t).charpoly =
+        (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
+          (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
       (RealizableIn (pairedEdges t) n ↔ 7 ≤ n) ∧ (RealizableIn (triangleBlock t) n ↔ 6 ≤ n) := by
   dsimp only
+  have hu : u ≠ 0 := by
+    intro hz
+    have he : v ^ 2 = 3 / 7 := by
+      rw [hz] at h
+      linear_combination h / 7
+    have hs : IsSquare (3 / 7 : ℚ) := ⟨v, by rw [← he, pow_two]⟩
+    have hn : (3 / 7 : ℚ).num = 3 :=
+      Rat.num_div_eq_of_coprime (a := 3) (b := 7) (by decide) (by decide)
+    exact three_not_int_square (hn ▸ (Rat.isSquare_iff.mp hs).1)
+  have hv : v ≠ 0 := by
+    intro hz
+    have he : u ^ 2 = 3 / 5 := by
+      rw [hz] at h
+      linear_combination h / 5
+    have hs : IsSquare (3 / 5 : ℚ) := ⟨u, by rw [← he, pow_two]⟩
+    have hn : (3 / 5 : ℚ).num = 3 :=
+      Rat.num_div_eq_of_coprime (a := 3) (b := 5) (by decide) (by decide)
+    exact three_not_int_square (hn ▸ (Rat.isSquare_iff.mp hs).1)
   let t := (5*u^2-1)/4
   have h₁ : 1+4*t = 5*u^2 := by dsimp [t]; ring
   have h₂ : 1-2*t = 7/2*v^2 := by dsimp [t]; linear_combination -h/2

@@ -25,17 +25,20 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (u v : ℚ), u ≠ 0 → v ≠ 0 → 5 * u ^ 2 + 7 * v ^ 2 = 3 → ∀ n : ℕ,
+  Law R := ∀ (u v : ℚ), 5 * u ^ 2 + 7 * v ^ 2 = 3 → ∀ n : ℕ,
     let t := (5 * u ^ 2 - 1) / 4
-    (pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+    ((pairedEdges t).charpoly = (triangleBlock t).charpoly ∧
+      (pairedEdges t).charpoly =
+        (Polynomial.X - Polynomial.C (1 + 4 * t)) * (Polynomial.X - 1) *
+          (Polynomial.X - Polynomial.C (1 - 2 * t)) ^ 2) ∧
       (RealizableIn (pairedEdges t) n ↔ 7 ≤ R.readout () () n) ∧
       (RealizableIn (triangleBlock t) n ↔ 6 ≤ n)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h₆ : 7 ≤ rejected.readout () () 6 := by decide
-  have trueLaw := thresholds_on_conic (1 / 2) (1 / 2) (by norm_num) (by norm_num) (by norm_num) 6
-  have badLaw := h (1 / 2) (1 / 2) (by norm_num) (by norm_num) (by norm_num) 6
+  have trueLaw := thresholds_on_conic (1 / 2) (1 / 2) (by norm_num) 6
+  have badLaw := h (1 / 2) (1 / 2) (by norm_num) 6
   have impossible := trueLaw.2.1.mp (badLaw.2.1.mpr h₆)
   omega
 
@@ -72,9 +75,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body",
         "arg", "fn", "arg", "arg", "arg"]
-      stateBinder := 5
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
