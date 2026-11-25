@@ -35,7 +35,7 @@ example :
   relative_diagonal_escape (fun _ _ : OneIndex => Bool.false)
     (Bool.rec (motive := fun _ => Bool) .true .false)
     (have distinct : Not (Eq Bool.false Bool.true) :=
-      fun equal => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) equal True.intro
+      fun equal => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) equal True.intro
      Bool.rec (fun equal => distinct equal.symm) distinct)
 
 end D5.S0.Diagonal.Naturality.RelativeDiagonalEscape

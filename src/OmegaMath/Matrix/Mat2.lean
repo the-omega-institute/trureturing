@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.Int
 
 /-!
@@ -42,8 +43,8 @@ def adj (A : Mat2) : Mat2 := ⟨A.d, A.b.neg, A.c.neg, A.a⟩
 
 theorem ext {A B : Mat2} (a : Eq A.a B.a) (b : Eq A.b B.b)
     (c : Eq A.c B.c) (d : Eq A.d B.d) : Eq A B :=
-  have etaA : Eq A (mk A.a A.b A.c A.d) := Eq.refl
-  have etaB : Eq (mk B.a B.b B.c B.d) B := Eq.refl
+  have etaA : Eq A (mk A.a A.b A.c A.d) := Omega.rfl
+  have etaB : Eq (mk B.a B.b B.c B.d) B := Omega.rfl
   etaA.trans ((Eq.map₂ (fun x y => mk x y A.c A.d) a b).trans
     ((Eq.map₂ (mk B.a B.b) c d).trans etaB))
 
@@ -122,7 +123,7 @@ private theorem expand (a b c d : Int) :
     Eq ((a.add b).mul (c.add d)) (((a.mul c).add (b.mul d)).add ((a.mul d).add (b.mul c))) :=
   (Int.add_mul a b (c.add d)).trans
     ((Eq.map₂ Int.add (Int.mul_add a c d) (Int.mul_add b c d)).trans
-      ((Eq.map₂ Int.add Eq.refl (Int.add_comm (b.mul c) (b.mul d))).trans
+      ((Eq.map₂ Int.add rfl (Int.add_comm (b.mul c) (b.mul d))).trans
         (Int.add_add_add_comm _ _ _ _)))
 
 theorem det_mul (A B : Mat2) : Eq (det (A.mul B)) (A.det.mul B.det) :=
@@ -152,7 +153,7 @@ theorem det_mul (A B : Mat2) : Eq (det (A.mul B)) (A.det.mul B.det) :=
   have factor := (Int.sub_mul ad bc (eh.sub fg)).trans
     ((Eq.map₂ Int.sub (Int.mul_sub ad eh fg) (Int.mul_sub bc eh fg)).trans
       ((congrArg ((ad.mul eh).sub (ad.mul fg)).add (Int.neg_add (a := (bc.mul eh)) (b := (bc.mul fg).neg))).trans
-        ((Eq.map₂ Int.add Eq.refl (Int.add_comm (bc.mul eh).neg (bc.mul fg).neg.neg)).trans
+        ((Eq.map₂ Int.add rfl (Int.add_comm (bc.mul eh).neg (bc.mul fg).neg.neg)).trans
           ((Int.add_add_add_comm _ _ _ _).trans
             (Eq.map₂ Int.add (congrArg (ad.mul eh).add (Int.neg_neg (bc.mul fg)))
               (Int.neg_add (a := (ad.mul fg)) (b := (bc.mul eh))).symm)))))
@@ -172,7 +173,7 @@ theorem mul_adj (A : Mat2) : Eq (A.mul A.adj) (scale A.det one) :=
     (((Eq.map₂ Int.add (Int.mul_comm A.c A.d) (Int.mul_neg A.d A.c)).trans
       (Int.add_right_neg (A.d.mul A.c))).trans off.symm)
     (((Eq.map₂ Int.add (Int.mul_neg A.c A.b) (Int.mul_comm A.d A.a)).trans
-      ((Eq.map₂ Int.add (congrArg Int.neg (Int.mul_comm A.c A.b)) Eq.refl).trans
+      ((Eq.map₂ Int.add (congrArg Int.neg (Int.mul_comm A.c A.b)) rfl).trans
         (Int.add_comm (A.b.mul A.c).neg (A.a.mul A.d)))).trans diag.symm)
 
 theorem adj_mul (A : Mat2) : Eq (A.adj.mul A) (scale A.det one) :=
@@ -184,7 +185,7 @@ theorem adj_mul (A : Mat2) : Eq (A.adj.mul A) (scale A.det one) :=
     (((Eq.map₂ Int.add (Int.neg_mul A.c A.a) (Int.mul_comm A.a A.c)).trans
       (Int.add_left_neg (A.c.mul A.a))).trans off.symm)
     (((Eq.map₂ Int.add ((Int.neg_mul A.c A.b).trans (congrArg Int.neg (Int.mul_comm A.c A.b)))
-        Eq.refl).trans (Int.add_comm (A.b.mul A.c).neg (A.a.mul A.d))).trans diag.symm)
+        rfl).trans (Int.add_comm (A.b.mul A.c).neg (A.a.mul A.d))).trans diag.symm)
 
 private theorem cayley_diag (a d t : Int) :
     Eq ((((a.mul a).add t).sub ((a.add d).mul a)).add ((a.mul d).sub t)) Int.zero :=
@@ -203,7 +204,7 @@ private theorem cayley_off (a b d det : Int) :
     (congrArg (a.mul b).add (Int.mul_comm d b))
   (Eq.map₂ Int.add
     ((congrArg (fun n => ((a.mul b).add (b.mul d)).sub n) expandTrace).trans (Int.sub_self _))
-    (Int.mul_zero det)).trans Eq.refl
+    (Int.mul_zero det)).trans (Int.add_zero Int.zero)
 
 /-- Every integer matrix satisfies its monic quadratic characteristic polynomial. -/
 theorem cayley_hamilton (A : Mat2) :
@@ -213,7 +214,7 @@ theorem cayley_hamilton (A : Mat2) :
     (cayley_off A.a A.b A.d A.det)
     ((Eq.map₂ Int.add
       (Eq.map₂ Int.sub (Eq.map₂ Int.add (Int.mul_comm A.c A.a) (Int.mul_comm A.d A.c))
-        Eq.refl) Eq.refl).trans (cayley_off A.a A.c A.d A.det))
+        rfl) rfl).trans (cayley_off A.a A.c A.d A.det))
     ((Eq.map₂ Int.add
       (Eq.map₂ Int.sub
         ((Int.add_comm (A.c.mul A.b) (A.d.mul A.d)).trans

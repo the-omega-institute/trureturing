@@ -6,31 +6,4 @@ module
 prelude
 
 public import OmegaMath.Data.Nat
-
-/-!
-The strict binomial coefficient and its computation rules from
-`Mathlib.Data.Nat.Choose.Basic`.
--/
-
-noncomputable section
-@[expose] public section
-
-namespace Omega.Nat
-
-/-- Binomial coefficients computed by Pascal's recurrence. -/
-def choose (upper lower : Nat) : Nat :=
-  Nat.rec (motive := fun _ => Nat → Nat) (Nat.rec one (fun _ _ => zero))
-    (fun _ previous => Nat.rec one (fun k _ => (previous k).add (previous k.succ)))
-    upper lower
-
-theorem choose_zero_right (n : Nat) : Eq (choose n zero) one :=
-  Nat.rec (motive := fun n => Eq (choose n zero) one) Eq.refl (fun _ _ => Eq.refl) n
-
-theorem choose_zero_succ (k : Nat) : Eq (choose zero k.succ) zero :=
-  Eq.refl
-
-theorem choose_succ_succ (n k : Nat) :
-    Eq (choose n.succ k.succ) ((choose n k).add (choose n k.succ)) :=
-  Eq.refl
-
-end Omega.Nat
+public import OmegaMathlib.Data.Nat.Choose.Basic

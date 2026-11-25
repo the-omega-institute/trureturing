@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Data.IntRatio
 public import OmegaMath.Projective.Circle.Identity
 
@@ -76,7 +77,7 @@ private theorem ratio_scale (p q k old scaled : Int) (hk : Not (Eq k Int.zero))
   let K := k.natAbs.mul k.natAbs
   have absNonzero : Not (Eq k.natAbs Nat.zero) := fun e => hk (Int.natAbs_eq_zero.mp e)
   have nonzero : Not (Eq K Nat.zero) := fun e => (Nat.mul_eq_zero.mp e).elim absNonzero absNonzero
-  Eq.subst (fun v => IntRatio.Equivalent v (IntRatio.value old (normSq p q)))
+  Eq.subst (motive := fun v => IntRatio.Equivalent v (IntRatio.value old (normSq p q)))
     (Eq.map₂ IntRatio.value numerators (normSq_scale p q k)).symm
     (IntRatio.value_scale_of_ne_zero old (normSq p q) K nonzero)
 
@@ -95,7 +96,7 @@ theorem kappa_add_spread_eq_one (p q : Int) (h : Nonzero p q) :
   have numerator := (Int.add_comm (Int.square q) (Int.square p)).trans
     (Coordinates.normSq_cast (Coordinates.mk p q)).symm
   (IntRatio.value_add_same (Int.square q) (Int.square p) d).trans
-    (Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t d) (IntRatio.ofInt Int.one))
+    (Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) (IntRatio.ofInt Int.one))
       numerator.symm (IntRatio.value_self d (normSq_nonzero h)))
 
 theorem cayley_scale (p q k : Int) (hk : Not (Eq k Int.zero)) :
@@ -142,9 +143,9 @@ theorem cayley_circle_unit (p q : Int) (h : Nonzero p q) :
   have hd : Not (Eq d Nat.zero) :=
     fun e => (Nat.mul_eq_zero.mp e).elim (normSq_nonzero h) (normSq_nonzero h)
   have combine := (IntRatio.value_add_same (Int.square a.q) (Int.square a.p) d).trans
-    (Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t d) (IntRatio.ofInt Int.one))
+    (Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) (IntRatio.ofInt Int.one))
       norm (IntRatio.value_self d hd))
-  Eq.subst (fun t => IntRatio.Equivalent t (IntRatio.ofInt Int.one))
+  Eq.subst (motive := fun t => IntRatio.Equivalent t (IntRatio.ofInt Int.one))
     (Eq.map₂ IntRatio.add
       (IntRatio.value_mul a.q a.q (normSq p q) (normSq p q))
       (IntRatio.value_mul a.p a.p (normSq p q) (normSq p q))).symm combine
@@ -160,38 +161,52 @@ theorem cayley_antipodal_closure (p : Int) (hp : Not (Eq p Int.zero)) :
   let one := IntRatio.ofInt Int.one
   let minusOne := IntRatio.ofInt Int.one.neg
   have hd := normSq_nonzero (p := p) (q := Int.zero) (Or.inl hp)
-  have square : Eq (Int.ofNat d) (Int.square p) := Int.natAbs_mul_self
+  let pp := p.natAbs.mul p.natAbs
+  have norm := (congrArg pp.add (Nat.mul_zero Nat.zero)).trans (Nat.add_zero pp)
+  have square : Eq (Int.ofNat d) (Int.square p) :=
+    (congrArg Int.ofNat norm).trans Int.natAbs_mul_self
+  have zeroSquare : Eq (Int.square Int.zero) Int.zero := Int.mul_zero Int.zero
   have spreadOne : IntRatio.Equivalent (spread p Int.zero) one :=
-    Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t d) one)
+    Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) one)
       square (IntRatio.value_self d hd)
   have xMinusOne : IntRatio.Equivalent (cayleyX p Int.zero) minusOne :=
-    Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t d) minusOne)
-      ((congrArg Int.neg square).trans (Int.zero_add (Int.square p).neg).symm)
+    Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) minusOne)
+      ((congrArg Int.neg square).trans ((Int.zero_add (Int.square p).neg).symm.trans
+        (congrArg (fun t : Int => t.add (Int.square p).neg) zeroSquare.symm)))
       (IntRatio.value_neg_self d hd)
   have yZero : IntRatio.Equivalent (cayleyY p Int.zero) zero :=
-    Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value t d) zero)
-      ((Eq.map₂ Int.add (Int.mul_zero p) (Int.zero_mul p)).symm)
+    Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) zero)
+      ((Int.zero_add Int.zero).symm.trans (Eq.map₂ Int.add (Int.mul_zero p) (Int.zero_mul p)).symm)
       (IntRatio.value_zero d hd)
-  And.intro (IntRatio.value_zero d hd) (And.intro spreadOne (And.intro xMinusOne yZero))
+  And.intro (Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value t d) zero)
+    zeroSquare.symm (IntRatio.value_zero d hd)) (And.intro spreadOne (And.intro xMinusOne yZero))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Nat.add Nat.mul in
 /-- At the three causal anchors, spread reads zero, one half and one. -/
 theorem spread_causal_anchors :
     And (IntRatio.Equivalent (spread Int.zero Int.one) (IntRatio.ofInt Int.zero))
       (And (IntRatio.Equivalent (spread Int.one Int.one) (IntRatio.fraction Int.one Nat.one))
         (IntRatio.Equivalent (spread Int.one Int.zero) (IntRatio.ofInt Int.one))) :=
-  And.intro Eq.refl (And.intro Eq.refl Eq.refl)
+  And.intro rfl (And.intro rfl rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Nat.add Nat.mul in
 /-- At the three causal anchors, overlap reads one, one half and zero. -/
 theorem kappa_causal_anchors :
     And (IntRatio.Equivalent (kappa Int.zero Int.one) (IntRatio.ofInt Int.one))
       (And (IntRatio.Equivalent (kappa Int.one Int.one) (IntRatio.fraction Int.one Nat.one))
         (IntRatio.Equivalent (kappa Int.one Int.zero) (IntRatio.ofInt Int.zero))) :=
-  And.intro Eq.refl (And.intro Eq.refl Eq.refl)
+  And.intro rfl (And.intro rfl rfl)
+
+private theorem one_add_one : Eq (Int.one.add Int.one) Int.two :=
+  congrArg Int.ofNat (Nat.add_one Nat.zero.succ)
 
 theorem cayley_y_numerator (p q : Int) : Eq ((p.mul q).add (q.mul p)) ((Int.two.mul p).mul q) :=
   (congrArg (p.mul q).add (Int.mul_comm q p)).trans
     ((Eq.map₂ Int.add (Int.one_mul (p.mul q)).symm (Int.one_mul (p.mul q)).symm).trans
-      ((Int.add_mul Int.one Int.one (p.mul q)).symm.trans (Int.mul_assoc Int.two p q).symm))
+      ((Int.add_mul Int.one Int.one (p.mul q)).symm.trans
+        ((congrArg (fun t : Int => t.mul (p.mul q)) one_add_one).trans (Int.mul_assoc Int.two p q).symm)))
 
 /-- Multiplication of homogeneous pairs realizes the exact rational rotation law. -/
 theorem cayley_compose (p₁ q₁ p₂ q₂ : Int) :
@@ -215,7 +230,7 @@ theorem cayley_compose (p₁ q₁ p₂ q₂ : Int) :
   have negValue : Eq (IntRatio.value (sa.p.mul sb.p).neg d)
       (IntRatio.value (sa.p.mul sb.p) d).neg :=
     Nat.rec (motive := fun d => Eq (IntRatio.value (sa.p.mul sb.p).neg d)
-      (IntRatio.value (sa.p.mul sb.p) d).neg) Eq.refl (fun _ _ => Eq.refl) d
+      (IntRatio.value (sa.p.mul sb.p) d).neg) rfl (fun _ _ => rfl) d
   have realOps := Eq.map₂ IntRatio.add
     (IntRatio.value_mul sa.q sb.q a.normSq b.normSq)
     ((congrArg IntRatio.neg (IntRatio.value_mul sa.p sb.p a.normSq b.normSq)).trans negValue.symm)
@@ -224,8 +239,8 @@ theorem cayley_compose (p₁ q₁ p₂ q₂ : Int) :
     (IntRatio.value_mul sa.q sb.p a.normSq b.normSq)
   have compose := fun (x y : IntRatio) (z w : Int) (hn : Eq z w)
       (ho : Eq y x) (he : IntRatio.Equivalent x (IntRatio.value w d)) =>
-    Eq.subst (fun t => IntRatio.Equivalent t y) (Eq.map₂ IntRatio.value hn denominator).symm
-      (Eq.subst (fun t => IntRatio.Equivalent (IntRatio.value w d) t) ho.symm he.symm)
+    Eq.subst (motive := fun t => IntRatio.Equivalent t y) (Eq.map₂ IntRatio.value hn denominator).symm
+      (Eq.subst (motive := fun t => IntRatio.Equivalent (IntRatio.value w d) t) ho.symm he.symm)
   And.intro (compose _ _ _ _ numeratorX realOps real) (compose _ _ _ _ numeratorY imagOps imaginary)
 
 private theorem sub_eq_of_add_eq (x y z : Int) (h : Eq (x.add y) z) : Eq (z.sub y) x :=
@@ -240,14 +255,14 @@ private theorem ratio_unit_interval (a : Int) (d : Nat) (hd : Not (Eq d Nat.zero
   let P := fun d => Not (Eq d Nat.zero) → Int.NonNeg ((Int.ofNat d).sub a) →
     And (IntRatio.Le (IntRatio.ofInt Int.zero) (IntRatio.value a d))
       (IntRatio.Le (IntRatio.value a d) (IntRatio.ofInt Int.one))
-  (Nat.rec (motive := P) (fun h _ => False.elim (h Eq.refl))
+  (Nat.rec (motive := P) (fun h _ => False.elim (h rfl))
     (fun k _ _ upper =>
       let d := Int.ofNat k.succ
       have lo : Eq ((a.mul Int.one).sub (Int.zero.mul d)) a :=
         (Eq.map₂ Int.sub (Int.mul_one a) (Int.zero_mul d)).trans (Int.add_zero a)
       have hi : Eq ((Int.one.mul d).sub (a.mul Int.one)) (d.sub a) :=
         Eq.map₂ Int.sub (Int.one_mul d) (Int.mul_one a)
-      And.intro (Eq.subst Int.NonNeg lo.symm lower) (Eq.subst Int.NonNeg hi.symm upper)) d) hd upper
+      And.intro (Eq.subst (motive := Int.NonNeg) lo.symm lower) (Eq.subst (motive := Int.NonNeg) hi.symm upper)) d) hd upper
 
 /-- Overlap and spread both lie in the unit interval at every projective point. -/
 theorem kappa_spread_unit_interval (p q : Int) (h : Nonzero p q) :
@@ -266,9 +281,9 @@ theorem kappa_spread_unit_interval (p q : Int) (h : Nonzero p q) :
   let positive := normSq_nonzero h
   And.intro
     (ratio_unit_interval Q d positive (Int.square_nonneg q)
-      (Eq.subst Int.NonNeg upperKappa.symm (Int.square_nonneg p)))
+      (Eq.subst (motive := Int.NonNeg) upperKappa.symm (Int.square_nonneg p)))
     (ratio_unit_interval P d positive (Int.square_nonneg p)
-      (Eq.subst Int.NonNeg upperSpread.symm (Int.square_nonneg q)))
+      (Eq.subst (motive := Int.NonNeg) upperSpread.symm (Int.square_nonneg q)))
 
 private theorem sub_add_sub (a b c d : Int) :
     Eq ((a.add b).sub (c.add d)) ((a.sub c).add (b.sub d)) :=
@@ -279,7 +294,7 @@ private theorem difference_squares (a b : Int) :
     Eq ((a.sub b).mul (a.add b)) ((Int.square a).sub (Int.square b)) :=
   (Int.sub_mul a b (a.add b)).trans
     ((Eq.map₂ Int.sub (Int.mul_add a a b) (Int.mul_add b a b)).trans
-      ((Eq.map₂ Int.sub Eq.refl
+      ((Eq.map₂ Int.sub rfl
         (Int.add_comm (b.mul a) (Int.square b))).trans
         ((sub_add_sub (Int.square a) (a.mul b) (Int.square b) (b.mul a)).trans
           ((congrArg ((Int.square a).sub (Int.square b)).add
@@ -288,7 +303,7 @@ private theorem difference_squares (a b : Int) :
 
 private theorem sum_double (a : Int) : Eq (a.add a) (Int.two.mul a) :=
   (Eq.map₂ Int.add (Int.one_mul a).symm (Int.one_mul a).symm).trans
-    (Int.add_mul Int.one Int.one a).symm
+    ((Int.add_mul Int.one Int.one a).symm.trans (congrArg (fun t : Int => t.mul a) one_add_one))
 
 private theorem chord_factor (a b : Int) :
     And (Eq ((a.add b).add (a.sub b)) (Int.two.mul a))
@@ -332,9 +347,9 @@ private theorem cayley_of_common_denominator (a b : Int) (n : Nat)
       have hb : Eq b Int.zero := (Int.mul_eq_zero.mp hbSq).elim (fun h => h) (fun h => h)
       have ha : Eq a d.neg := (Int.neg_eq_of_add_eq_zero ht).symm
       have antipode := cayley_antipodal_closure Int.one (Int.ofNat_succ_ne_zero Nat.zero)
-      have x := Eq.subst (fun x => IntRatio.Equivalent (cayleyX Int.one Int.zero) (IntRatio.value x n))
+      have x := Eq.subst (motive := fun x => IntRatio.Equivalent (cayleyX Int.one Int.zero) (IntRatio.value x n))
         ha.symm (antipode.right.right.left.trans (IntRatio.value_neg_self n hn).symm)
-      have y := Eq.subst (fun y => IntRatio.Equivalent (cayleyY Int.one Int.zero) (IntRatio.value y n))
+      have y := Eq.subst (motive := fun y => IntRatio.Equivalent (cayleyY Int.one Int.zero) (IntRatio.value y n))
         hb.symm (antipode.right.right.right.trans (IntRatio.value_zero n hn).symm)
       Exists.intro Int.one (Exists.intro Int.zero
         (show result Int.one Int.zero from And.intro (Or.inl (Int.ofNat_succ_ne_zero Nat.zero)) (And.intro x y))))
@@ -376,10 +391,11 @@ theorem cayley_surjective (x y : IntRatio)
         let n := b.succ.mul d.succ
         let A := a.mul (IntRatio.denominator d)
         let B := c.mul (IntRatio.denominator b)
-        have hn : Not (Eq n Nat.zero) := Nat.succ_ne_zero (IntRatio.mulDenPred b d)
+        have hn : Not (Eq n Nat.zero) := fun h =>
+          Nat.succ_ne_zero (IntRatio.mulDenPred b d) ((IntRatio.nat_denominator_mul b d).symm.trans h)
         have xa : IntRatio.Equivalent (IntRatio.value A n) x := IntRatio.value_scale a b.succ d
         have yb : IntRatio.Equivalent (IntRatio.value B n) y :=
-          Eq.subst (fun k => IntRatio.Equivalent (IntRatio.value B k) y)
+          Eq.subst (motive := fun k => IntRatio.Equivalent (IntRatio.value B k) y)
             (Nat.mul_comm d.succ b.succ) (IntRatio.value_scale c d.succ b)
         have squares := IntRatio.add_congr (IntRatio.mul_congr xa xa) (IntRatio.mul_congr yb yb)
         have combine := Eq.map₂ IntRatio.add
@@ -388,7 +404,7 @@ theorem cayley_surjective (x y : IntRatio)
         have cross := (IntRatio.value_cross_iff ((Int.square A).add (Int.square B)) Int.one
           (n.mul n) Nat.one N (Nat.succ_ne_zero Nat.zero)).mp
           ((IntRatio.value_add_same (Int.square A) (Int.square B) (n.mul n)).symm.trans
-            (Eq.subst (fun r => IntRatio.Equivalent r (IntRatio.ofInt Int.one)) combine (squares.trans h)))
+            (Eq.subst (motive := fun r => IntRatio.Equivalent r (IntRatio.ofInt Int.one)) combine (squares.trans h)))
         have unit : Eq ((Int.square A).add (Int.square B)) (Int.square (Int.ofNat n)) :=
           (Int.mul_one ((Int.square A).add (Int.square B))).symm.trans
             (cross.trans (Int.one_mul (Int.square (Int.ofNat n))))
@@ -448,7 +464,8 @@ theorem cayley_equivalent_iff (p q r s : Int) (h₁ : Nonzero p q) (h₂ : Nonze
           have squareZero : Eq (Int.square s) Int.zero :=
             Int.eq_of_mul_eq_mul_right dNonzero
               (squared.symm.trans ((congrArg (fun x : Int => (Int.square x).mul E) hq).trans
-                ((Int.zero_mul E).trans (Int.zero_mul D).symm)))
+                ((congrArg (fun t : Int => t.mul E) (Int.mul_zero Int.zero)).trans
+                  ((Int.zero_mul E).trans (Int.zero_mul D).symm))))
           have hs : Eq s Int.zero := (Int.mul_eq_zero.mp squareZero).elim (fun h => h) (fun h => h)
           (congrArg p.mul hs).trans
             ((Int.mul_zero p).trans ((Int.mul_zero r).symm.trans (congrArg r.mul hq.symm))))
@@ -457,7 +474,8 @@ theorem cayley_equivalent_iff (p q r s : Int) (h₁ : Nonzero p q) (h₂ : Nonze
             have squareZero : Eq (Int.square q) Int.zero :=
               Int.eq_of_mul_eq_mul_right eNonzero
                 (squared.trans ((congrArg (fun x : Int => (Int.square x).mul D) hs).trans
-                  ((Int.zero_mul D).trans (Int.zero_mul E).symm)))
+                  ((congrArg (fun t : Int => t.mul D) (Int.mul_zero Int.zero)).trans
+                  ((Int.zero_mul D).trans (Int.zero_mul E).symm))))
             (Int.mul_eq_zero.mp squareZero).elim hq hq
           have product : Eq ((p.mul q).mul (Int.square s)) ((r.mul s).mul (Int.square q)) :=
             Int.eq_of_mul_eq_mul_right eNonzero
@@ -485,8 +503,8 @@ theorem cayley_equivalent_iff (p q r s : Int) (h₁ : Nonzero p q) (h₂ : Nonze
             fun hr => h₂.elim (fun nr => nr hr) (fun ns => ns hs)
           let a := (cayley_antipodal_closure p hp).right.right
           let b := (cayley_antipodal_closure r hr).right.right
-          Eq.subst (fun q => circleAgreement p q r s) hq.symm
-            (Eq.subst (circleAgreement p Int.zero r) hs.symm
+          Eq.subst (motive := fun q => circleAgreement p q r s) hq.symm
+            (Eq.subst (motive := circleAgreement p Int.zero r) hs.symm
               (And.intro (a.left.trans b.left.symm) (a.right.trans b.right.symm)))
       (Int.eq_zero_or_ne_zero q).elim zeroLeft (fun hq =>
         have hs : Not (Eq s Int.zero) := fun hs =>
@@ -498,9 +516,9 @@ theorem cayley_equivalent_iff (p q r s : Int) (h₁ : Nonzero p q) (h₂ : Nonze
         have a := cayley_scale p q s hs
         have b := cayley_scale r s q hq
         And.intro
-          (a.left.symm.trans (Eq.subst (fun t => IntRatio.Equivalent t (cayleyX r s))
+          (a.left.symm.trans (Eq.subst (motive := fun t => IntRatio.Equivalent t (cayleyX r s))
             (Eq.map₂ cayleyX first second).symm b.left))
-          (a.right.symm.trans (Eq.subst (fun t => IntRatio.Equivalent t (cayleyY r s))
+          (a.right.symm.trans (Eq.subst (motive := fun t => IntRatio.Equivalent t (cayleyY r s))
             (Eq.map₂ cayleyY first second).symm b.right))))
 
 end Omega.Projective.Circle

@@ -40,8 +40,11 @@ example :
   let one := Int.ofNat Nat.zero.succ
   let two := Int.ofNat Nat.zero.succ.succ
   have distinct : Not (Eq (group.sub one group.zero) (group.sub two group.zero)) :=
-    fun h => Eq.subst (Nat.rec (motive := fun _ => Prop) True (fun _ _ => False))
-      (Nat.succ.inj (congrArg Int.natAbs h)) True.intro
+    fun h =>
+      have h' : Eq one two :=
+        (Int.add_zero one).symm.trans (h.trans (Int.add_zero two))
+      Eq.subst (motive := Nat.rec (motive := fun _ => Prop) True (fun _ _ => False))
+        (Nat.succ.inj (congrArg Int.natAbs h')) True.intro
   And.intro distinct
     (fun h => distinct (congrArg (fun operation : Int → Int => operation group.zero) h))
 

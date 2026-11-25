@@ -17,7 +17,7 @@ theorem sub_eq_zero {A : Type u} (G : AddGroup A) (laws : G.Laws) {a b : A} :
   Iff.intro
     (fun vanishes => (AddGroup.subAddCancel laws a b).symm.trans
       ((congrArg (fun value => G.add value b) vanishes).trans (laws.right.left b)))
-    (fun equal => Eq.subst (fun value => Eq (G.sub a value) G.zero) equal
+    (fun equal => Eq.subst (motive := fun value => Eq (G.sub a value) G.zero) equal
       (AddGroup.addNegCancel laws a))
 
 /-- A difference in an additive group is nonzero exactly when its terms differ. -/

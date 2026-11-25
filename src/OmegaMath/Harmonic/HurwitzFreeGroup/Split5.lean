@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.HurwitzFreeGroup.Residue
 public import OmegaMath.Algebra.Quaternion
 
@@ -48,6 +50,8 @@ private def correction (p q : Quaternion) : Mat2 :=
 
 open Quaternion.Polynomial (Expr Values)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The integer split products have an explicit entrywise defect divisible by five. -/
 private theorem split_mul_defect (p q : Quaternion) :
     Eq ((split (coordinates p)).mul (split (coordinates q)))
@@ -67,10 +71,10 @@ private theorem split_mul_defect (p q : Quaternion) :
   let diag := (P.x.mul Q.x).add (P.z.mul Q.z)
   let off := (P.x.mul Q.z).sub (P.z.mul Q.x)
   Mat2.ext
-    ((dot (A P) (B P) (A Q) (C Q)).sound ((A R).add (fiveExpr.mul diag)) values Eq.refl)
-    ((dot (A P) (B P) (B Q) (D Q)).sound ((B R).add (fiveExpr.mul off)) values Eq.refl)
-    ((dot (C P) (D P) (A Q) (C Q)).sound ((C R).add (fiveExpr.mul off.neg)) values Eq.refl)
-    ((dot (C P) (D P) (B Q) (D Q)).sound ((D R).add (fiveExpr.mul diag)) values Eq.refl)
+    ((dot (A P) (B P) (A Q) (C Q)).sound ((A R).add (fiveExpr.mul diag)) values rfl)
+    ((dot (A P) (B P) (B Q) (D Q)).sound ((B R).add (fiveExpr.mul off)) values rfl)
+    ((dot (C P) (D P) (A Q) (C Q)).sound ((C R).add (fiveExpr.mul off.neg)) values rfl)
+    ((dot (C P) (D P) (B Q) (D Q)).sound ((D R).add (fiveExpr.mul diag)) values rfl)
 
 theorem residue_five_mul (z : Int) : Eq (Residue.ofInt ((Int.ofNat five).mul z)) .zero :=
   (Residue.ofInt_mul (Int.ofNat five) z).trans (Residue.zero_mul (Residue.ofInt z))
@@ -95,9 +99,9 @@ def matrixOne : Matrix5 := ⟨.one, .zero, .zero, .one⟩
 
 theorem matrix_mul_one (A : Matrix5) : Eq (A.mul matrixOne) A :=
   let left := fun a b : Residue =>
-    Eq.map₂ Residue.add (Residue.mul_one a) (Eq.refl : Eq (b.mul .zero) .zero)
+    Eq.map₂ Residue.add (Residue.mul_one a) (rfl : Eq (b.mul .zero) .zero)
   let right := fun a b : Residue =>
-    (Eq.map₂ Residue.add (Eq.refl : Eq (a.mul .zero) .zero) (Residue.mul_one b)).trans
+    (Eq.map₂ Residue.add (rfl : Eq (a.mul .zero) .zero) (Residue.mul_one b)).trans
       (Residue.zero_add b)
   matrixExt (left A.a A.b) (right A.a A.b) (left A.c A.d) (right A.c A.d)
 
@@ -121,14 +125,14 @@ theorem outer_mul (u v s t u' v' s' t' : Residue) :
     (outer_entry v s t u' v' s') (outer_entry v s t u' v' t')
 
 theorem outer_zero_row (u v : Residue) : Eq (Matrix5.outer u v .zero .zero).isZero .true :=
-  Eq.refl
+  Omega.rfl
 
 private def both (a b : Bool) : Bool := Bool.rec (motive := fun _ => Bool) .false b a
 
 private theorem both_true (a b : Bool) (h : Eq (both a b) .true) :
     And (Eq a .true) (Eq b .true) :=
   (Bool.rec (motive := fun a => Eq (both a b) .true → And (Eq a .true) (Eq b .true))
-    (fun h => False.elim (Residue.false_ne_true h)) (fun h => And.intro Eq.refl h) a) h
+    (fun h => False.elim (Residue.false_ne_true h)) (fun h => And.intro rfl h) a) h
 
 theorem entries_zero {A : Matrix5} (h : Eq A.isZero .true) :
     And (Eq A.a .zero) (And (Eq A.b .zero) (And (Eq A.c .zero) (Eq A.d .zero))) :=
@@ -141,6 +145,6 @@ theorem entries_zero {A : Matrix5} (h : Eq A.isZero .true) :
 
 theorem bool_false_of_not_true (b : Bool) (h : Not (Eq b .true)) : Eq b .false :=
   (Bool.rec (motive := fun b => Not (Eq b .true) → Eq b .false)
-    (fun _ => Eq.refl) (fun h => False.elim (h Eq.refl)) b) h
+    (fun _ => rfl) (fun h => False.elim (h rfl)) b) h
 
 end Omega.Hurwitz.FreeGroup
