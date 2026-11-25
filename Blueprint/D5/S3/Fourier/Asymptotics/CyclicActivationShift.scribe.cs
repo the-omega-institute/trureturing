@@ -39,7 +39,8 @@ internal sealed class CyclicActivationShiftDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "At the switch the vanishing boundary readings allow the same fit on " +
                         "both windows. The bounding excluded cosine levels have strict negative " +
-                        "signs, which extend by convexity to the complement. Interpolating the " +
+                        "signs, which extend by convexity to the complement of the inclusive window and closest " +
+                        "antipodal sites. Interpolating the " +
                         "switch certificate with fixed certified budgets on the two sides gives " +
                         "the optimizer throughout the neighborhood."))),
                 DescribeRole.Theorem))));
@@ -57,7 +58,9 @@ internal sealed class CyclicActivationShiftDocument : IScribeDocumentDefinition
         var v = F.Id("v");
         var i = F.Id("i");
         var absJ = Call("Abs", Call("Centered", i));
-        var r = Call("r", F.Id("k"));
+        var k = F.Id("k");
+        var r = Call("r", k);
+        var epsilon = F.Id("eps");
         var cMin = Call("AntipodalCosine", q);
         var threshold = Subtract(F.D(1), Multiply(Multiply(F.D(2), m),
             new Formula.Power(h, F.D(2))));
@@ -72,9 +75,28 @@ internal sealed class CyclicActivationShiftDocument : IScribeDocumentDefinition
                 new Formula.Logic(And(Lt(r, m), Eq(absJ, n)), FormulaLogicOperator.Or,
                     Eq(Call("c", i), cMin))));
         var moments = And(Eq(Call("M", F.D(1), v), threshold), Eq(Call("M", F.D(2), v), threshold));
-        return F.Disp(And(Eq(Call("Limit", scaled), coefficient),
-            And(Call("Feasible", q, threshold, v), And(moments, support))));
+        var weights = Call("Feasible", q, threshold);
+        var w = F.Id("w");
+        var different = new Formula.Relation(w, FormulaRelationOperator.NotEqual, v);
+        var strict = Bind(FormulaQuantifier.ForAll, "w", weights,
+            Implies(different, Lt(Call("E", v), Call("E", w))));
+        var residues = Call("ZMod", q);
+        var optimizer = Bind(FormulaQuantifier.Exists, "v", weights,
+            And(moments, And(strict, Bind(FormulaQuantifier.ForAll, "i", residues, support))));
+        var lower = Subtract(m0, epsilon);
+        var upper = Add(m0, epsilon);
+        var near = Bind(FormulaQuantifier.ForAll, "m", Call("ClosedInterval", lower, upper), optimizer);
+        var eventual = Call("EventuallyAtTop", k, And(And(Lt(lower, r), Lt(r, upper)), near));
+        return F.Disp(Bind(FormulaQuantifier.Exists, "eps", F.Id("Real"),
+            Bind(FormulaQuantifier.Exists, "r", Call("RealSequences"),
+                And(Lt(F.D(0), epsilon), And(Eq(Call("Limit", scaled), coefficient), eventual)))));
     }
+    private static Formula Bind(FormulaQuantifier kind, string name, Formula domain, Formula body) =>
+        new Formula.BindMany(kind, [new Formula.BoundVariable(FormulaIdentifier.Create(name), domain)], body);
+
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
 
