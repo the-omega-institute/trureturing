@@ -98,7 +98,7 @@ internal sealed class RationalGramCospectralDocument : IScribeDocumentDefinition
                     Paragraph(Text("For rational t, either matrix is realizable in four rational "
                         + "coordinates exactly when t is one half or the following two arithmetic "
                         + "conditions hold. One plus four times t must be a rational square, "
-                        + "and twice one minus twice t must be a sum of two rational squares.")),
+                        + "and double the difference between one and twice t must be a sum of two rational squares.")),
                     Paragraph(Text("Away from the two singular endpoints, a square Gram factor "
                         + "forces the common determinant to be a square. Dividing by the square "
                         + "of the repeated eigenvalue gives the first condition. When it holds away from the endpoints, "

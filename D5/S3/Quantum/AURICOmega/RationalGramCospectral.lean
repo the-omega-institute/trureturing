@@ -1023,7 +1023,7 @@ private theorem no_norm_three_under_unit_and_three (z : Fin 4 → ℚ)
   linear_combination 2*hn
 
 private theorem three_not_two_rational_squares (x y : ℚ) : x ^ 2 + y ^ 2 ≠ 3 := by
-  simpa using modular_ternary_rational_descent 3 2 1 1 (by decide) (by decide) (by decide) 0 x y
+  simpa using three_not_five_sq_add_two_sq 0 x y
 
 private theorem no_norm_three_under_two_units (z : Fin 4 → ℚ)
     (h0 : (![1,0,0,0] : Fin 4 → ℚ) ⬝ᵥ z = 0)
