@@ -4,10 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Biased predecessor averaging strictly improves the clique-bounded chordal gain estimate. -/
+   digest: Biased predecessor averaging improves the clique-bounded chordal gain estimate. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.CliqueBoundedBanachPotential
 import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Algebra.Module.BigOperators
 
 /-! # Biased predecessor averaging on chordal graphs
 
@@ -107,8 +108,7 @@ private theorem floorWeight_le {δ : ℝ} (hd : 0 ≤ δ) (hδ : δ ≤ 1 / 4)
     {m n : ℕ} (hm : 1 ≤ m) (hmn : m ≤ n) :
     floorWeight δ n ≤ floorWeight δ m := by
   by_cases h₁ : m ≤ 1
-  · rw [floorWeight, if_pos h₁]
-    unfold floorWeight
+  · simp only [floorWeight, ite_eq_left h₁]
     split
     · exact le_rfl
     · rename_i hn
@@ -118,7 +118,7 @@ private theorem floorWeight_le {δ : ℝ} (hd : 0 ≤ δ) (hδ : δ ≤ 1 / 4)
       have h : 1 / (n : ℝ) ≤ 1 := (div_le_iff₀ hp).2 (by linarith)
       linarith [div_nonneg hd hq]
   · have h₂ : ¬ n ≤ 1 := by omega
-    rw [floorWeight, if_neg h₂, floorWeight, if_neg h₁]
+    rw [floorWeight, ite_eq_right h₂, floorWeight, ite_eq_right h₁]
     have M : (2 : ℝ) ≤ m := by exact_mod_cast (show 2 ≤ m by omega)
     have N : (2 : ℝ) ≤ n := by exact_mod_cast (show 2 ≤ n by omega)
     have mn : (m : ℝ) ≤ n := by exact_mod_cast hmn
@@ -151,18 +151,21 @@ private theorem weight_lower {s : Finset V} {sat : V → Prop} [DecidablePred sa
   by_cases hm : 2 ≤ s.card
   · have h : (2 : ℝ) ≤ s.card := by exact_mod_cast hm
     have hq : 0 ≤ δ / ((s.card : ℝ) - 1) := div_nonneg hd (by linarith)
-    rw [floorWeight, if_neg (by omega)]
-    unfold weight
-    split <;> try split <;> linarith
-  · have hc : s.card = 1 := by omega
+    rw [floorWeight, ite_eq_right (by omega)]
+    by_cases hsat : 2 ≤ s.card ∧ ∃ a ∈ s, sat a
+    · by_cases hb : sat b <;> simp [weight, hsat, hb] <;> linarith
+    · simp [weight, hsat, sub_le_self _ hq]
+  · have hpos := hs.card_pos
+    have hc : s.card = 1 := by omega
     simp [floorWeight, weight, hc]
 
-private theorem weight_sum [DecidableEq V] {s : Finset V} {sat : V → Prop} [DecidablePred sat]
+private theorem weight_sum {s : Finset V} {sat : V → Prop} [DecidablePred sat]
     {δ : ℝ} (hs : s.Nonempty) (hu : ∀ a ∈ s, ∀ b ∈ s, sat a → sat b → a = b) :
     ∑ b ∈ s, weight s sat δ b = 1 := by
+  classical
   have hn : (0 : ℝ) < s.card := by exact_mod_cast hs.card_pos
   by_cases h : 2 ≤ s.card ∧ ∃ a ∈ s, sat a
-  · simp only [weight, if_pos h]
+  · simp only [weight, ite_eq_left h]
     obtain ⟨hm, a, ha, hsa⟩ := h
     have h' : (2 : ℝ) ≤ s.card := by exact_mod_cast hm
     have hc : ((s.erase a).card : ℝ) + 1 = s.card := by
@@ -173,13 +176,13 @@ private theorem weight_sum [DecidableEq V] {s : Finset V} {sat : V → Prop} [De
         ∑ _b ∈ s.erase a, (1 / (s.card : ℝ) - δ / ((s.card : ℝ) - 1)) := by
       apply Finset.sum_congr rfl
       intro b hb
-      rw [if_neg (fun hsb => (Finset.mem_erase.mp hb).1
+      rw [ite_eq_right (fun hsb => (Finset.mem_erase.mp hb).1
         (hu b (Finset.mem_erase.mp hb).2 a ha hsb hsa))]
-    rw [he, if_pos hsa, Finset.sum_const, nsmul_eq_mul]
+    rw [he, ite_eq_left hsa, Finset.sum_const, nsmul_eq_mul]
     rw [show ((s.erase a).card : ℝ) = s.card - 1 by linarith]
     field_simp [ne_of_gt hn, show (s.card : ℝ) - 1 ≠ 0 by linarith]
-    <;> ring
-  · simp only [weight, if_neg h, Finset.sum_const, nsmul_eq_mul]
+    ring
+  · simp only [weight, ite_eq_right h, Finset.sum_const, nsmul_eq_mul]
     field_simp [ne_of_gt hn]
 
 set_option maxHeartbeats 1600000 in
@@ -380,8 +383,9 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
   have floorK : floorWeight δ k = 1 / (k : ℝ) - δ / ((k : ℝ) - 1) := by
     simp [floorWeight, show ¬ k ≤ 1 by omega]
   have massEq : floorWeight δ k + floorWeight δ (k - 1) = targetMass := by
-    rw [floorK, floorWeight, if_neg (by omega : ¬ k - 1 ≤ 1), Nat.cast_sub (by omega : 1 ≤ k)]
+    rw [floorK, floorWeight, ite_eq_right (by omega : ¬ k - 1 ≤ 1), Nat.cast_sub (by omega : 1 ≤ k)]
     dsimp [targetMass, δ, bias]
+    rw [Nat.cast_one, show (k : ℝ) - 1 - 1 = (k : ℝ) - 2 by ring]
     field_simp [ne_of_gt hkpos, ne_of_gt hkone, ne_of_gt hktwo]
     <;> ring
   have massSat : floorWeight δ k + (1 / (k : ℝ) + δ) = targetMass := by
@@ -473,9 +477,9 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         · by_cases hyk : (P y).card = k
           · have hboost : w y x = 1 / (k : ℝ) + δ := by
               dsimp [w, weight]
-              rw [if_pos ⟨by omega, x, xp, hxk⟩, if_pos hxk, hyk]
+              rw [ite_eq_left ⟨by omega, x, xp, hxk⟩, ite_eq_left hxk, hyk]
             rw [← massSat, hboost]
-            exact add_le_add_right (wmin hx c) _
+            exact add_le_add (wmin hx c) le_rfl
           · rw [← massEq]
             exact add_le_add (wmin hx c) (wminSmall hy (by have := cardP (x := y); omega) x)
         · rw [← massEq, add_comm]
@@ -553,7 +557,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
 end WeightedCliqueBanach
 
 /-- On a finite chordal graph with clique size at most `k + 1`, triangle defects of at most
-`ε` give one real-vector-space potential with error at most the biased predecessor coefficient times `ε` on every edge. -/
+`ε` give one real-vector-space potential with the biased predecessor error bound on every edge. -/
 theorem IsChordal.exists_biased_clique_banach_gain_potential
     {V : Type u} [Finite V] {G : SimpleGraph V} (hG : G.IsChordal)
     (k : ℕ) (hk : 3 ≤ k)
@@ -563,11 +567,13 @@ theorem IsChordal.exists_biased_clique_banach_gain_potential
     (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
       ‖g i j + g j l - g i l‖ ≤ ε) :
     ∃ φ : V → E, ∀ u v, G.Adj u v →
-      ‖g u v - (φ v - φ u)‖ ≤ (4 - 4 / (k : ℝ) - 2 * ((k : ℝ) - 2)^2 / ((k : ℝ) * ((k : ℝ) - 1)^3)) * ε := by
+      ‖g u v - (φ v - φ u)‖ ≤
+        (4 - 4 / (k : ℝ) - 2 * ((k : ℝ) - 2)^2 / ((k : ℝ) * ((k : ℝ) - 1)^3)) * ε := by
   classical
   have hcomp (c : G.ConnectedComponent) :
       ∃ ψ : c → E, ∀ i j, c.toSimpleGraph.Adj i j →
-        ‖g i.val j.val - (ψ j - ψ i)‖ ≤ (4 - 4 / (k : ℝ) - 2 * ((k : ℝ) - 2)^2 / ((k : ℝ) * ((k : ℝ) - 1)^3)) * ε := by
+        ‖g i.val j.val - (ψ j - ψ i)‖ ≤
+          (4 - 4 / (k : ℝ) - 2 * ((k : ℝ) - 2)^2 / ((k : ℝ) * ((k : ℝ) - 1)^3)) * ε := by
     obtain ⟨o, ho⟩ := c.nonempty_supp
     have hc (s : Finset c) (hs : c.toSimpleGraph.IsClique (s : Set c)) : s.card ≤ k + 1 := by
       let e : c ↪ V := ⟨Subtype.val, Subtype.val_injective⟩
