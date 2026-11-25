@@ -139,7 +139,9 @@ private theorem rational_full_simplex_necessary (n : ℕ) (hn : 0 < n) (c : ℚ)
     simpa [Fin.castSucc_inj, hc'] using hij
   exact support_square_obstruction n hn W hW
 
-private theorem rational_unit_reflection {ι : Type} [Fintype ι]
+/-- Unit rational vectors in the same coordinate space are related by a
+dot-product preserving map over the rationals. -/
+theorem rational_unit_reflection {ι : Type} [Fintype ι]
     (a b : ι → ℚ) (ha : a ⬝ᵥ a = 1) (hb : b ⬝ᵥ b = 1) :
     ∃ f : (ι → ℚ) → (ι → ℚ), f a = b ∧ ∀ x y, f x ⬝ᵥ f y = x ⬝ᵥ y := by
   by_cases hab : a = b
