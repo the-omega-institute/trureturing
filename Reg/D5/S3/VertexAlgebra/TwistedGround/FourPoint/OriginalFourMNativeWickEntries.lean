@@ -24,7 +24,8 @@ open OriginalFourMSpatialWickPartition (nativeTaylor)
 open OriginalFourMInverseJets (inverseJetWeight)
 open OriginalFourMSlitMean (slitMeanEntry slitCovarianceEntry)
 open OriginalGaussianSewnAnalytic (coefficient)
-open private dLipCovarianceEntry dLipMeanEntry from
+open OriginalFourMSectorContinuation (dLipCovarianceEntry)
+open private dLipMeanEntry from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 open OriginalFourMNativeWickEntries
 open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric

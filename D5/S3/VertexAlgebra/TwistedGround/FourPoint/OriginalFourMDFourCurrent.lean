@@ -42,7 +42,8 @@ open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitPeriod tau)
 open private currentExponent marks four_mark_rescale spatial_zero slot currentSupport
   taggedCurrent current_occupation project_four_currents mark_occupation coefficient_zero
   from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAFourCurrent
-open private dDeterminant dMatrix dLinear dLipCovarianceEntry dLipMeanEntry from
+open OriginalFourMSectorContinuation (dLipCovarianceEntry)
+open private dDeterminant dMatrix dLinear dLipMeanEntry from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 open private dW dCorrection from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipCovariance
