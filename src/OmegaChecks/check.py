@@ -27,8 +27,9 @@ DATA = [*FOUNDATION, "OmegaMath.Data.Nat", "OmegaMath.Data.Ratio"]
 BASIC = "OmegaMath.Projective.Basic"
 TOPIC = "OmegaMath.Projective"
 CONSUMER = "OmegaChecks.ProjectiveOverlap"
+CORRESPONDENCES = ["OmegaChecks.NatCorrespondence", "OmegaChecks.WDigitCorrespondence"]
 LEGACY = "D5.S1.Digit.Admissibility.SquarePrependOneAppendTwentyFive"
-TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+TARGETS = ["OmegaInit", "OmegaMath", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", *CORRESPONDENCES, LEGACY]
 AUDIT = ROOT / ".lake/build/bin/omegaAudit"
 # Resolved once: each `lake env` call re-reads the workspace configuration.
 ENV = {}
@@ -130,7 +131,7 @@ example (p q k : Omega.Nat) :
 
 
 def versions():
-    modules = [*MATH, "OmegaInit", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", LEGACY]
+    modules = [*MATH, "OmegaInit", CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", *CORRESPONDENCES, LEGACY]
     files = {m: LIB / (m.replace(".", "/") + ".olean") for m in modules}
     files["Mathlib.Data.Nat.Prime.Basic"] = (
         ROOT / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime/Basic.olean")
@@ -147,7 +148,7 @@ def check_incremental():
          {TOPIC, "OmegaMath", CONSUMER, "OmegaChecks.Mixed"}),
         ("src/OmegaInit/Prelude.lean", None,
          "\npublic theorem Omega.congrFun' {α β : Sort u} {f g : α → β} (h : Omega.Eq f g) (a : α) : Omega.Eq (f a) (g a) := Omega.congrArg (fun k : α → β => k a) h\n",
-         {*INIT, *MATH, CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed"}),
+         {*INIT, *MATH, CONSUMER, "OmegaChecks.Examples", "OmegaChecks.Mixed", *CORRESPONDENCES}),
     ]
     for filename, replace, text, expected in probes:
         path = ROOT / filename

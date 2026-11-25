@@ -27,13 +27,13 @@ def fiveEntry (i j : Idx) : ℂ := scale 5 * kernel 5 i j
 private theorem fiveEntry_symm (i j : Idx) : fiveEntry i j = fiveEntry j i := by
   rw [fiveEntry, fiveEntry, kernel_symm]
 
-private theorem scale_five_sq_re : ‖scale 5‖ ^ 2 = (1 / 5 : ℝ) := by
+theorem scale_five_sq_re : ‖scale 5‖ ^ 2 = (1 / 5 : ℝ) := by
   unfold scale
   simp only [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _),
     inv_pow, Real.sq_sqrt (by positivity : (0 : ℝ) ≤ ↑(5 : ℕ))]
   norm_num
 
-private theorem fiveEntry_sq (i j : Idx) : ‖fiveEntry i j‖ ^ 2 = (1 / 5 : ℝ) := by
+theorem fiveEntry_sq (i j : Idx) : ‖fiveEntry i j‖ ^ 2 = (1 / 5 : ℝ) := by
   simp [fiveEntry, kernel, scale_five_sq_re]
 
 private theorem fiveEntry_gram (u v : Idx) (T : Finset Idx)
@@ -66,7 +66,7 @@ def coeffEnergy (I : Finset Idx) (a : Idx → ℂ) : ℝ := ∑ i ∈ I, ‖a i�
 def crossForm (I J : Finset Idx) (a b : Idx → ℂ) : ℂ :=
   ∑ j ∈ J, (∑ i ∈ I, a i * fiveEntry i j) * b j
 
-private theorem crossForm_flip (I J : Finset Idx) (a b : Idx → ℂ) :
+theorem crossForm_flip (I J : Finset Idx) (a b : Idx → ℂ) :
     crossForm I J a b = crossForm J I b a := by
   unfold crossForm
   simp_rw [Finset.sum_mul]
@@ -80,7 +80,7 @@ private theorem crossForm_flip (I J : Finset Idx) (a b : Idx → ℂ) :
 
 def crossCap (n : ℕ) : ℝ := ((n : ℝ) - 2 + Real.goldenRatio) / 5
 
-private theorem coeffEnergy_nonneg (I : Finset Idx) (a : Idx → ℂ) :
+theorem coeffEnergy_nonneg (I : Finset Idx) (a : Idx → ℂ) :
     0 ≤ coeffEnergy I a := Finset.sum_nonneg fun _ _ => sq_nonneg _
 
 private theorem cross_restricted_energy (I J : Finset Idx) (a : Idx → ℂ) {n : ℕ}

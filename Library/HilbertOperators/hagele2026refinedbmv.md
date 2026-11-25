@@ -8,11 +8,15 @@ url: https://arxiv.org/abs/2611.00129v1
 claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
+  - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -113,6 +117,55 @@ Gram argument on arbitrary finite samples. Continuity includes zero
 centers, and the centered Schur walks give the product comparison. A dyadic
 trace-power comparison gives the exponential bound by the implication
 in Lemma 2. For 3 ≤ p ≤ 10 the theorem uses the existing finite-degree proofs.
+
+## Nine copies of the first factor
+
+At (9,4), the mean of the 715 word traces dominates the trace of
+(A^(9/4) B)^4 for PSD A and Hermitian B in every finite complex
+dimension, including singular A. One rational positive semidefinite
+Gram matrix on 15 half-words, weighted by A, compares the mean with
+the word trace with cyclic gaps (3,2,2,2). Two trace Cauchy–Schwarz
+inequalities give the balanced bound. The dyadic comparison from
+Hägele's Lemma 2 gives the lower bound by the trace of exp(9H + 4K)
+for the same word mean on exp H and exp K.
+
+The bounded search found no earlier proof of the unrestricted (9,4)
+lower bound. It located lower bounds for small p or restricted dimension
+(arXiv:2611.00129), results on upper-bound failure (arXiv:2603.19927 and
+arXiv:2605.17782), and work on the Stieltjes transform (arXiv:2611.03208).
+
+## Ten copies of the first factor
+
+At (10,4), the mean of the 1001 word traces dominates the trace of
+(A^(5/2) B)^4 for PSD A and B in every finite complex dimension,
+including singular A and B. Three rational positive semidefinite Gram
+blocks, of sizes 21, 15 and 6 with weights I/I, A/A and B/B, compare
+the mean with the trace of (A^3 B A^2 B)^2, with cyclic gaps (3,2,3,2).
+Trace Cauchy–Schwarz gives the fractional-power bound. Hägele's Lemma 2
+gives the lower bound by the trace of exp(10H + 4K) for the same word
+mean on exp H and exp K with Hermitian H and K.
+
+Independent rational review checked all 73 cyclic coefficients and the
+three Gram factorizations. Historical priority remains unverified after
+bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
+2610.31851 and 2611.23122.
+
+## Four copies of the second factor near the identity
+
+For every natural number `p` and every finite complex dimension, take
+Hermitian `H`, positive semidefinite `B`, and `A = exp H`. If
+`p ‖H‖op ≤ 1/100000`, the mean of `Re Tr(w)` over all ordered words `w`
+with `p` copies of `A` and four copies of `B`, minus
+`Re Tr((A^(p/4) B)^4)`, is at least `p² ‖B(HB − BH)‖F² / 25`.
+Here `Tr` is the unnormalized matrix trace, `A^(p/4)` is the real spectral
+power, and `‖·‖op` and `‖·‖F` denote the operator and Frobenius norms.
+For `p > 0` the sufficient radius for `‖H‖op` is `1/(100000 p)`, independent
+of the dimension. At `p = 0` the smallness condition is automatic and
+the lower bound for the gap is zero.
+
+The repository theorem `wordMean_sub_balanced_ge` proves this sufficient
+neighborhood of the identity for the four-copy product lower comparison
+in [Hägele, arXiv:2611.00129](https://arxiv.org/abs/2611.00129v1).
 
 ## Scope and conventions
 
@@ -300,7 +353,7 @@ and gaps from four have separate bounds. Between two and four, a finite
 cover and dyadic Taylor enclosures preserve the sign in the original
 normalized kernel.
 
-For first degrees at least eleven and lower coordinate in \( (0,1/2] \),
+For first degrees at least eleven and lower coordinate in \((0,1/2]\),
 the logarithmic kernel has strictly negative mixed derivative at all
 gaps at least one. Geometric reduction controls the scaled scalar
 through integration gap seven halves with exact Taylor enclosures. The
@@ -311,6 +364,17 @@ coordinate at least ten thirds and all positive gaps through two. The
 proof combines the certified curvature and slope of the short-gap profile
 with an analytic bound for the radical derivative. The fourth moment
 improves the marginal slope bound for gaps at least one.
+
+## Quantitative degree-three gap for finite traces
+
+In a unital C*-algebra with a positive finite trace, let the gap be the
+mean trace of the twenty words with three copies of each positive factor
+minus the trace of the cube of their product. The repository theorem
+`wordMean_three_trace_gap` bounds three times the square of the trace
+of the commutator's adjoint times the commutator by forty times the trace
+of the product times the gap. A rank-one term of the centered cubic
+kernel survives approximation by positive functions of the first factor.
+Under a faithful trace, the bound forces the factors to commute at equality.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

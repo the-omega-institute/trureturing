@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurement
   - D5/S3/Quantum/Information/ComplementaryCorrelations/QubitQutritAnchorConvexity
   - D5/S3/Quantum/Information/FiveDimensionalFourierThreshold/FourierFiveThreshold
+  - D5/S3/Quantum/Information/FiveDimensionalFourierThreshold/SharpBorn
 license: citation-only
 triage: anchor
 ---
@@ -66,11 +67,15 @@ $D\ge 2E-2E^2/A\ge 53682/933125>23/400$.
 Simultaneous conjugation gives the same bound in the opposite Fourier
 convention. The unit norm hypotheses alone suffice.
 
-Theorem 6.14 and the upper bound give
-`(14+2√5)/5 ≤ M₅ ≤ 4−8E+8E²/A < 377/100`
-for the orthonormal-pair maximum $M_5$. The same interval holds for the
-maximum over all unit pairs. The exact maximum remains open. The
-analytic lower endpoint is credited to Qian's witness.
+The sharp upper bound is the Lean theorem `positiveFourierScore_le_sharp` in
+`SharpBorn.lean`. It proves $S\le (14+2\sqrt 5)/5$ for every pair of
+complex unit vectors, including common-zero rows with the score convention
+above. The proof uses critical sign-mask reduction and centered Fourier
+spectra, followed by row-selective weighted Hermitian estimates on the
+reflection-even and odd parts. Qian's Theorem 6.14 and Eqs. (33)–(36)
+prove the prior orthonormal attainment at the same value. Together these
+results identify the orthonormal-pair and all-unit-pair maxima as
+$M_5=(14+2\sqrt 5)/5$. The attainment is credited to Qian's witness.
 
 - [Two-ray family in Eq. (8)](https://arxiv.org/html/2608.14806v2#S6.E8)
 - [Score in Eq. (9)](https://arxiv.org/html/2608.14806v2#S6.E9)

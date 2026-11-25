@@ -48,11 +48,11 @@ internal sealed class EffectiveImageNaturalitySurjectiveLiftDocument
     private static Formula At(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
-    private static Formula Compose(Formula left, Formula right) =>
-        Seq(left, Sp, Circ, Sp, right);
+    private static Formula FunctionType(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
 
-    private static Formula Concept(Formula domain, Formula codomain) =>
-        Call("Concept", domain, codomain);
+    private static Formula Pointwise(Formula point, Formula left, Formula right) =>
+        Seq(Open, Forall, Sp, point, Comma, Sp, left, Sp, Eq, Sp, right, Close);
 
     private static Formula TheoremFormula()
     {
@@ -72,6 +72,7 @@ internal sealed class EffectiveImageNaturalitySurjectiveLiftDocument
         Formula readoutMap = F.Id("Bmap");
         Formula targetMap = F.Id("Ymap");
         Formula value = F.Id("y");
+        Formula point = F.Id("x");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula equation = Seq(
             At(targetMap, At(factor, value)), Sp, Eq, Sp,
@@ -88,22 +89,22 @@ internal sealed class EffectiveImageNaturalitySurjectiveLiftDocument
             Forall, Sp, source, Comma, Sp, sourcePrime, Comma, Sp,
             readout, Comma, Sp, readoutPrime, Comma, Sp,
             target, Comma, Sp, targetPrime, Colon, Sp, type, Comma, RowBreak, Grp(),
-            c, Colon, Sp, Concept(source, readout), Comma, Sp,
-            cPrime, Colon, Sp, Concept(sourcePrime, readoutPrime), Comma, RowBreak, Grp(),
-            t, Colon, Sp, Concept(source, target), Comma, Sp,
-            tPrime, Colon, Sp, Concept(sourcePrime, targetPrime), Comma, RowBreak, Grp(),
-            factor, Colon, Sp, Concept(readout, target), Comma, Sp,
-            factorPrime, Colon, Sp, Concept(readoutPrime, targetPrime), Comma,
+            c, Colon, Sp, FunctionType(source, readout), Comma, Sp,
+            cPrime, Colon, Sp, FunctionType(sourcePrime, readoutPrime), Comma, RowBreak, Grp(),
+            t, Colon, Sp, FunctionType(source, target), Comma, Sp,
+            tPrime, Colon, Sp, FunctionType(sourcePrime, targetPrime), Comma, RowBreak, Grp(),
+            factor, Colon, Sp, FunctionType(readout, target), Comma, Sp,
+            factorPrime, Colon, Sp, FunctionType(readoutPrime, targetPrime), Comma,
             RowBreak, Grp(),
-            sourceMap, Colon, Sp, Concept(source, sourcePrime), Comma, Sp,
-            readoutMap, Colon, Sp, Concept(readout, readoutPrime), Comma, Sp,
-            targetMap, Colon, Sp, Concept(target, targetPrime), Comma, RowBreak, Grp(),
-            Compose(tPrime, sourceMap), Sp, Eq, Sp, Compose(targetMap, t), Sp,
+            sourceMap, Colon, Sp, FunctionType(source, sourcePrime), Comma, Sp,
+            readoutMap, Colon, Sp, FunctionType(readout, readoutPrime), Comma, Sp,
+            targetMap, Colon, Sp, FunctionType(target, targetPrime), Comma, RowBreak, Grp(),
+            Pointwise(point, At(tPrime, At(sourceMap, point)), At(targetMap, At(t, point))), Sp,
             Land, RowBreak, Grp(),
-            Compose(cPrime, sourceMap), Sp, Eq, Sp, Compose(readoutMap, c), Sp,
+            Pointwise(point, At(cPrime, At(sourceMap, point)), At(readoutMap, At(c, point))), Sp,
             Land, RowBreak, Grp(),
-            t, Sp, Eq, Sp, Compose(factor, c), Sp, Land, RowBreak, Grp(),
-            tPrime, Sp, Eq, Sp, Compose(factorPrime, cPrime), Sp,
+            Pointwise(point, At(t, point), At(factor, At(c, point))), Sp, Land, RowBreak, Grp(),
+            Pointwise(point, At(tPrime, point), At(factorPrime, At(cPrime, point))), Sp,
             Rightarrow, RowBreak, Grp(),
             Open, imageClause, Close, Sp, Land, RowBreak, Grp(),
             Open, globalClause, Close, Dot,
