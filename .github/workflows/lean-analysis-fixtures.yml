@@ -132,6 +132,11 @@ jobs:
           mkdir -p "${OUTPUT_ROOT}"
           make lean LEAN_TARGETS="regInspector/LeanInformationAuditRegAnalysis" 2>&1 | tee "${OUTPUT_ROOT}/run.log"
 
+      - name: Verify paired frozen declaration measurements
+        run: |
+          make lean-report-prepare LEAN_TARGETS=D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
+          python3 -B src/OmegaChecks/test_frozen_measurement.py
+
       - name: Upload the analysis build log
         if: always() && steps.fixtures.outcome != 'skipped'
         uses: actions/upload-artifact@v6

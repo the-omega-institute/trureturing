@@ -37,7 +37,8 @@ private def phase (t : ℝ) : ℂ :=
 private def fromNat (n : ℕ) : Omega.Nat :=
   n.rec Omega.Nat.zero (fun _ q => q.succ)
 
-private def fromInt : ℤ → Omega.Int
+/-- Encode a standard integer in Omega arithmetic. -/
+def fromInt : ℤ → Omega.Int
   | .ofNat n => .ofNat (fromNat n)
   | .negSucc n => .negSucc (fromNat n)
 
@@ -46,7 +47,8 @@ private theorem to_fromNat (n : ℕ) : toStdNat (fromNat n) = n := by
   | zero => rfl
   | succ n ih => exact congrArg Nat.succ ih
 
-private theorem to_fromInt (n : ℤ) : toStdInt (fromInt n) = n := by
+/-- Reading the Omega encoding recovers the standard integer. -/
+theorem to_fromInt (n : ℤ) : toStdInt (fromInt n) = n := by
   cases n with
   | ofNat n => exact congrArg Int.ofNat (to_fromNat n)
   | negSucc n => exact congrArg Int.negSucc (to_fromNat n)

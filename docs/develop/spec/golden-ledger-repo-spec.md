@@ -272,18 +272,19 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。删除状态片与改 pin 同为合法的成员变更:该模块退出冻结成员,其已验证陈述的数学真值不变,历史由 git 查证;删除不产生判词,合法性与模块源码是否仍在无关。此后 SL-008 不再检查该模块,重新登记按首次冻结判定。
 
-**A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`，状态片路径恰为 `Golden/Frozen/state/M.lean.json`，移除固定前缀和 `.json` 后缀即可反解模块路径，两者双射。文件为单行规范 JSON 加恰一个 LF，顶层闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明。每项必填 `declaration_name_key` 与 `kind`，另可独立包含 `libraries` 与 `axioms`。声明按名称键、种类的 Ordinal 顺序排列且唯一，须完整对应报告中的声明身份。
+**A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`，状态片路径恰为 `Golden/Frozen/state/M.lean.json`，移除固定前缀和 `.json` 后缀即可反解模块路径，两者双射。文件为单行规范 JSON 加恰一个 LF，顶层闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明。每项必填 `declaration_name_key` 与 `kind`，另可包含官方测量的 `libraries`、`axioms` 和配对的 `strict_omega`。声明按名称键、种类的 Ordinal 顺序排列且唯一，须完整对应报告中的声明身份。
 
 - `libraries` 是该声明最近一次测量得到的完整库根名称数组。缺省表示库来源未知，`[]` 表示测量所得的库根集合为空。测量从编译后的声明类型与定义值或证明项出发，递归遍历实际引用的声明及其编译依赖，涵盖私有、隐藏和其他未进入状态片的辅助声明，也涵盖仅在类型中出现的引用。库根取自所达声明的编译模块归属。测量穿过仓内 `D5`、`Reg`、`Trureturing` 和 `OmegaChecks` 根下的声明，将其依赖归入实际使用的数学库。`OmegaInit` 与 `OmegaMath` 虽与 D5 共用 Lake package，仍各以自身库根报告；来自其他库的可达声明也计入，包括官方 Lean 库和其他外部库。实际声明依赖决定库集合，源码 import 清单、声明命名空间和同一模块中的其他行均不提供库归属证据。
-- `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。规范 writer 在测得真子集时写出其完整名称数组，包括代表已核验零公理的 `[]`。缺省只提供这三个标准公理的许可上界，覆盖历史上未记录测量的行以及测得全许可集合的行。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
+- `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。writer 写出测得的完整名称数组，包括全许可集合和代表实测零公理的 `[]`。历史行缺省时只提供三个标准公理的许可上界。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
+- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。对照器核验为官方编译器单独派生的辅助声明可仅保留官方测量。其余应有的严格声明缺失即拒绝更新。
 
 可选字段记录写入时的测量。证明项、依赖或工具链变化后，陈述 pin 仍可相同，此时旧注记仍可读取。对当前编译结果的依赖断言须取当前证据。只有 `libraries` 明示非空且其全部成员属于 `{OmegaInit, OmegaMath}`，并且 `axioms` 明示为 `[]` 时，才可将该行描述为「仅依赖 Omega 库、零公理」（截至该次测量）。`libraries: []` 可支持空库依赖的读数，无 Omega 归属。严格模块审计的范围是整个编译导入闭包，包括未被该声明引用的模块和声明；其零公理及严格导入边界由独立的空内核重放与模块校验建立。
 
-`statement_id` 是 `sha256:<64 lowercase hex>` 形的模块陈述摘要。`FrozenContentAddress.ComputeModuleStatementId` 与 `CanonicalStatementWriter.WriteModule` 对 `module-statement-v1` 的规范前像作域分离哈希。前像含模块路径与全部参与陈述声明的名称、种类、逐声明陈述摘要。`libraries` 与 `axioms` 均在摘要输入之外。状态片省略逐声明摘要、依赖边、事件字段、时间和动作历史。
+`statement_id` 是 `sha256:<64 lowercase hex>` 形的模块陈述摘要。`FrozenContentAddress.ComputeModuleStatementId` 与 `CanonicalStatementWriter.WriteModule` 对 `module-statement-v1` 的规范前像作域分离哈希。前像含模块路径与全部参与陈述声明的名称、种类、逐声明陈述摘要。陈述 pin 取官方编译结果。两套后端的依赖注记与配对字段均在摘要输入之外。
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
-首次 deposit 从当前编译证据写出逐声明注记。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新都须编译对应源码、核对两个后端的产物归属与翻译后的导出，并将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
@@ -478,7 +479,7 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 <a id="a22-ci-cache-flow"></a>
 **缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块的编译输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。缺失的编译产物在当前作业按需构建。
 
-定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
+定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
 
 **本机 Lake 缓存与定向构建。** 干净的主 `dev` 经 `make warm-donor FULL_BUILD=1` 完成各 workspace 的预热。Lake 将可缓存的产物和输入映射写入本机原生 artifact cache，并在开发检出保留可供现有消费者使用的产物。定向构建和报告准备按各目标的依赖 trace 在本工作树中恢复或编译。定向报告只读取或恢复与 trace 相符的编译产物；Git 源码使用 manifest 钉版。定向入口在私有写锁下核对 pin 和探针，项目层为空时也可运行。独立全量缓存准备显式调用 `make lean-cache-ensure FULL_BUILD=1`，仅全量路径允许 donor clonefile。Release 与 Actions 恢复使用各自的入口。
 
@@ -525,7 +526,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
 | `stratalint-raw-lean-report-v4` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
-编译键绑定工具链、依赖锁定、平台族、显式环境、源码、有效 Lake 配置与直接依赖键。声明式库配置按目标归属投影，无法分解的可执行 Lake 配置按所属包核对。跨平台共享限于 A14.9 登记的兼容族。原生程序另按实际平台取键。
+编译键绑定工具链、依赖锁定、平台族、显式环境、源码、有效 Lake 配置与直接依赖键。Omega 模块沿用同一模块键及命名分片，追加严格后端源码和配置输入；common 后端还绑定生成 facade 所用严格库、官方 facade 及生成程序。存在多个后端时，同一模块成员同时包含各后端隔离 buildDir 中的产物和 Lake trace，并核验完整路径及各后端输出清单。只有用户检出的模块键及产物路径均匹配时才恢复该成员。声明式库配置按目标归属投影，无法分解的可执行 Lake 配置按所属包核对。跨平台共享限于 A14.9 登记的兼容族。原生程序另按实际平台取键。
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 

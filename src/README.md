@@ -131,14 +131,14 @@ Zeckendorf 核验将零基权位 `i` 映射为 Fibonacci 下标 `i + 2`。Lean �
 
 ## 下游核验
 
-在仓库根目录执行以下命令。第一个入口检查三个严格库的联合闭包。CI 使用第二个入口，检查错误声明的拒绝结果，并在隔离的严格环境与官方环境中重新编译所选下游的相同正文。核验报告列出实际选择的模块，便于追溯结果适用于哪些消费者。[审计入口](OmegaChecks/check.py) · [双环境编译](OmegaChecks/portable.py)
+在仓库根目录执行以下命令。第一个入口检查三个严格库的联合闭包。第二个入口执行完整审计及拒绝用例。CI 根据候选变更和导入图选取受影响的库、见证模块和下游消费者，用同一范围恢复模块缓存、构建适用的环境并比较导出。共享的工具链、构建配置和核验逻辑变更触发完整审计。[审计入口](OmegaChecks/check.py) · [双环境编译](OmegaChecks/portable.py)
 
 ```sh
 lake test -- OmegaInit OmegaMathlib OmegaMath
-python3 src/OmegaChecks/check.py
+python3 src/OmegaChecks/check.py --full
 ```
 
-完整双编通过后，`.lake/build/omega-checks/official-axioms.json` 列出每个官方端口和已核验消费者的公开声明、所属模块及传递公理依赖。CI 将该文件作为 `omega-official-axioms` 上传。指定消费者的局部双编把测量结果写入同目录的 `selected-official-axioms.json`。
+完整双编把官方侧公开声明、所属模块及传递公理依赖写入 `.lake/build/omega-checks/official-axioms.json`，局部双编写入同目录的 `selected-official-axioms.json`。CI 将本次比较生成的报告作为 `omega-official-axioms` 上传。
 
 完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。两端各用对应的主库及检查器接口编译这些模块，普通数学发布仍从主包构建。
 
