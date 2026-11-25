@@ -33,6 +33,13 @@ const fs = require("node:fs");
 const assert = require("node:assert/strict");
 const wire = 'build/lean-cache/generation/index.json';
 exports.restoreCache = async function(paths, key, prefixes, options) {
+  if (paths[0].startsWith("build/lean-cache/modules/")) {
+    const storage = key + "." + paths[0].split("/")[3];
+    fs.appendFileSync("requests", "get " + key + "\\n");
+    if (!fs.existsSync(storage)) return undefined;
+    if (!options?.lookupOnly) fs.copyFileSync(storage, paths[0]);
+    return key;
+  }
   const path = key.startsWith("lean-shard-index-")
     ? (key.includes("-snapshot-") ? "build/lean-cache/shards/index.json"
       : "build/lean-cache/shards/payload/" + key.split("-").pop() + ".tar.gz") : wire;
@@ -44,6 +51,11 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
   return key;
 };
 exports.saveCache = async function(paths, key) {
+  if (paths[0].startsWith("build/lean-cache/modules/")) {
+    fs.appendFileSync("requests", "put " + key + "\\n");
+    fs.copyFileSync(paths[0], key + "." + paths[0].split("/")[3], fs.constants.COPYFILE_EXCL);
+    return 1;
+  }
   assert.deepEqual(paths, [wire]);
   fs.appendFileSync("requests", "put " + key + "\\n");
   fs.copyFileSync(wire, key, fs.constants.COPYFILE_EXCL);
@@ -232,107 +244,72 @@ esac
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
 });
 
-test('report stages hand the planner and worker outputs to the final commit', async t => {
-  const { root, run, env } = await fixture(t);
-  const dir = join(root, 'tools/scripts/worktree');
-  await mkdir(dir, { recursive: true });
-  await mkdir(join(root, 'base'));
-  await mkdir(join(root, 'plan'));
-  await writeFile(join(root, 'plan/hits.json'), 'compiler hit');
-  await writeFile(join(root, 'base/expected-marker'), '');
-  await writeFile(join(dir, 'lean_generation_facets.py'), `
-import os, sys
-from pathlib import Path
-args = dict(zip(sys.argv[1::2], sys.argv[2::2]))
-stage = args["--stage"]
-output = Path(args["--output"])
-if stage == "plan":
-    assert Path(args["--receipts"], "compiler-hits.json").read_text() == "compiler hit"
-    output.write_text("plan")
-    Path(os.environ["GITHUB_OUTPUT"]).write_text("has_reports=true\\n")
-elif stage == "worker":
-    assert Path(args["--plan"]).read_text() == "plan" and args["--shard"] == "2"
-    output.write_text("shard 2")
-elif stage == "finish":
-    assert Path(args["--receipts"], "report-2.json").read_text() == "shard 2"
-    output.write_text("complete")
-else:
-    raise AssertionError(stage)
-`);
-  await writeFile(join(dir, 'lean_cache_generation.py'), `
-import sys
-from pathlib import Path
-assert sys.argv[1] == "commit" and "--base" not in sys.argv
-assert Path(sys.argv[sys.argv.index("--plan") + 1]).read_text() == "complete"
-Path("committed").touch()
-`);
-  const plan = run('workflow_dispatch', 'plan-reports');
-  assert.equal(plan.status, 0, plan.stderr);
-  assert.equal(await readFile(join(root, 'outputs'), 'utf8'), 'has_reports=true\n');
-  env.REPORT_SHARD = '2';
-  const worker = run('workflow_dispatch', 'build-reports');
-  assert.equal(worker.status, 0, worker.stderr);
-  await writeFile(join(root, 'receipts/report-2.json'), await readFile(join(root, 'report-2.json')));
-  const commit = run('workflow_dispatch', 'commit-generation');
-  assert.equal(commit.status, 0, commit.stderr);
-  assert.equal(await readFile(join(root, 'committed'), 'utf8'), '');
+test('the same readable module key retrieves either version and readers cannot publish', async t => {
+  const { root, requests, env } = await fixture(t);
+  const key = 'a'.repeat(40) + '-D5.S3.Foo';
+  const entry = (event, operation, hash, path) => spawnSync(process.execPath, [action, operation, key, hash, path], {
+    cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: event },
+  });
+  const versions = new Map();
+  for (const body of ['first archive', 'updated archive']) {
+    const hash = createHash('sha256').update(body).digest('hex');
+    versions.set(hash, body);
+    await writeFile(join(root, 'shard.tar.gz'), body);
+    const saved = entry('workflow_dispatch', 'module-put', hash, 'shard.tar.gz');
+    assert.equal(saved.status, 0, saved.stderr);
+    const repeated = entry('workflow_dispatch', 'module-put', hash, 'shard.tar.gz');
+    assert.equal(repeated.status, 0, repeated.stderr);
+  }
+  for (const [hash, body] of versions) {
+    const lookup = entry('pull_request', 'module-get', hash, 'restored');
+    assert.equal(lookup.status, 0, lookup.stderr);
+    assert.equal(await readFile(join(root, 'restored'), 'utf8'), body);
+    assert.equal(entry('push', 'module-put', hash, 'restored').status, 1);
+  }
+  assert.equal(entry('push', 'module-get', '0'.repeat(64), 'restored').status, 4);
+  assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 2);
+  const [hash] = versions.keys();
+  await writeFile(join(root, key + '.' + hash), 'damaged');
+  assert.equal(entry('push', 'module-get', hash, 'restored').status, 5);
 });
 
-test('ordinary push and PR restore a scoped generation from cold workspaces', async t => {
-  for (const [event, evict] of [['push', false], ['pull_request', true]]) {
-    const { root, requests, run, env } = await fixture(t);
-    const dir = join(root, 'tools/scripts/worktree');
-    await mkdir(dir, { recursive: true });
-    const prepare = spawnSync('python3', ['-B', '-c', `
+test('the publication plan feeds compiler lanes and publishes directly from completed shards', async t => {
+  const { root, env, run } = await fixture(t);
+  const dir = join(root, 'tools/scripts/worktree');
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, 'lean_module_cache.py'), `
+import os, sys
 from pathlib import Path
-from lean_generation_index import encode
-from test_lean_cache_generation import Generations
-generation = Generations()
-generation.setUp()
-try:
-    generation.commit(generation.plan, None, [generation.receipt])
-    store = generation.remote
-    Path("plan").write_bytes(encode(generation.plan))
-    Path("marker").write_bytes(encode(store.marker))
-    digest = store.marker["index"]
-    Path("release-index").write_bytes(store.indexes["release"][digest])
-    Path("lean-generation-v1-" + digest).write_bytes(store.indexes["ci"][digest])
-    for address, data in store.volumes.items():
-        Path(address).write_bytes(data)
-finally:
-    generation.doCleanups()
-`], { cwd: root, env, encoding: 'utf8' });
-    assert.equal(prepare.status, 0, prepare.stderr);
-    const marker = JSON.parse(await readFile(join(root, 'marker')));
-    if (evict) await rm(join(root, 'lean-generation-v1-' + marker.index));
-    await writeFile(join(dir, 'lean_cache_generation.py'), `
-import os, subprocess, sys
-from pathlib import Path
-sys.path.insert(0, os.environ["PYTHONPATH"])
-import lean_cache_generation as cli
-from lean_generation_index import read, sha
-class Transport:
-    deadline = None
-    def __init__(self, root, deadline): pass
-    def current(self): return "verified", read("marker")
-    def get_index(self, digest, output, transport):
-        if transport == "ci":
-            subprocess.run(["node", ${JSON.stringify(action)}, "generation-get", digest, str(output)], check=True)
-        else:
-            output.write_bytes(Path("release-index").read_bytes())
-        assert sha(output.read_bytes()) == digest
-        return read(output)
-    def volume(self, digest, size): return Path(digest)
-    def blocks(self, path, start, size): yield path.read_bytes()[start:start + size]
-cli.GitHub = Transport
-cli.checkout_plan = lambda root, index: read("plan")
-sys.exit(cli.main())
+command = sys.argv[1]
+args = dict(zip(sys.argv[2::2], sys.argv[3::2]))
+assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
+if command == "plan":
+    assert args["--capacity"] == str(32 * 1024**2)
+    Path(args["--output"]).write_text("planned")
+elif command == "worker":
+    assert Path(args["--plan"]).read_text() == "planned" and args["--lane"] == "2"
+    Path("shard").write_text("compiler outputs")
+elif command == "finish":
+    assert Path(args["--plan"]).read_text() == "planned" and Path("shard").is_file()
+    Path(args["--output"]).write_text("published")
+elif command == "restore":
+    assert Path(args["--targets-file"]).read_text() == "D5.A\\n"
+    sys.exit(3)
+else:
+    raise AssertionError(command)
 `);
-    env.INPUT_TARGETS = 'B';
-    const recovered = run(event, 'restore-published');
-    assert.equal(recovered.status, 0, recovered.stderr);
-    assert.equal(await readFile(join(root, '.lake/build/lib/lean/A.olean'), 'utf8'), 'library');
-    assert.equal(await readFile(join(root, '.lake/build/lib/lean/B.olean'), 'utf8'), 'consumer');
-    assert.equal(await requests(), 'get lean-generation-v1-' + marker.index + '\n');
+  env.SHARD_MIB = '32';
+  env.MODULE_LANE = '2';
+  for (const operation of ['module-plan', 'module-worker', 'module-finish']) {
+    const result = run('workflow_dispatch', operation);
+    assert.equal(result.status, 0, result.stderr);
   }
+  assert.equal(await readFile(join(root, 'module-index.json'), 'utf8'), 'published');
+  await writeFile(join(root, 'target-list'), 'D5.A\n');
+  env['INPUT_TARGETS-FILE'] = join(root, 'target-list');
+  const restored = run('push', 'restore-published');
+  assert.equal(restored.status, 0, restored.stderr);
+  assert.match(restored.stdout, /No published module cache yet/);
+  const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
+  assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
 });
