@@ -14,7 +14,7 @@ internal sealed class SeparatedLimsupMeagreDocument : IScribeDocumentDefinition
     private static Formula Statement => Disp(new Formula.Aligned([
         Seq(All("u", Call("Universe")), All("X", Call("Type", V("u"))),
             OpenBracket, Call("TopologicalSpace", V("X")), CloseBracket),
-        Seq(All("U", Call("Function", V("Nat"), Call("Function", V("X"), V("Real")))),
+        Seq(All("U", Call("Function", V("Nat"), Call("Function", V("X"), V("Real"))))),
         Seq(All("A", Call("Set", V("X"))), All("B", Call("Set", V("X"))),
             All("a", V("Real")), All("b", V("Real"))),
         Seq(All("n", V("Nat")), Call("Continuous", Call("U", V("n")))),
