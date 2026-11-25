@@ -72,6 +72,16 @@ def cases():
     yield module, (head + "public abbrev etaPrime := fun p : Omega.Nat => OmegaMathlib.Nat.Prime p\n"
                    "public theorem D5.etaClaim (p : Omega.Nat) (h : etaPrime p) : etaPrime p := h\n"), [
                        "etaPrime", "explicit source reference", "OmegaMathlib.Nat.Prime"]
+    for body in ["let m := n; OmegaMathlib.Nat.Prime m",
+                 "(fun f => fun m => f m) (fun k => let j := k; OmegaMathlib.Nat.Prime j) n"]:
+        definition = f"public abbrev D5.reviewPrime (n : Omega.Nat) : Prop := {body}\n"
+        claim = "public theorem D5.review (n : Omega.Nat) (h : REF n) : REF n := h\n"
+        yield module, head + definition + claim.replace("REF", "_root_.D5.reviewPrime"), [
+            "D5.reviewPrime", "explicit source reference", "OmegaMathlib.Nat.Prime"]
+        yield module, head + definition + claim.replace("REF", "OmegaMathlib.Nat.Prime"), []
+    yield module, (head + "public abbrev D5.Prime (n : Omega.Nat) : Prop := "
+                   "let m := n; OmegaMathlib.Nat.Prime m.succ\n"
+                   "public theorem D5.shifted (n : Omega.Nat) (h : D5.Prime n) : D5.Prime n := h\n"), []
     # The public body reaches a private opaque computation through a second helper.
     for ref, errors in [("OmegaMathlib.Nat.Prime", []),
                         ("Omega.Nat.Prime", ["OmegaMathlib.Nat.Prime"])]:

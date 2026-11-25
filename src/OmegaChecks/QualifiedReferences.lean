@@ -45,6 +45,7 @@ private structure Ports where
   aliases : NameMap Port := {}
   objects : NameMap Port := {}
   byLeaf : Std.HashMap String (Array Port) := {}
+  equivalents : NameMap Name := {}
 
 /-- Only alias entries owned by compiled, admitted port modules can confer standard identity. -/
 private def admittedPorts (env : Environment) (official : Bool) : IO Ports := do
@@ -79,19 +80,35 @@ private def matchingPort? (env catalog : Environment) (ports : Ports) (spelling 
     guard (Kernel.isDefEqGuarded env {} project.type type)
     return port.alias
 
-/-- Follow aliases through their compiled constants and eta-expanded definitions. -/
-private partial def underlyingPort? (catalog : Environment) (ports : Ports) (project : NameSet)
-    (name : Name) : Option Name := do
-  if let some port := ports.objects.find? name then return port.alias
-  let idx ← catalog.getModuleIdxFor? name
-  guard (project.contains catalog.header.moduleNames[idx]!)
-  let .defnInfo info ← catalog.find? name | none
-  let .const target _ := info.value.eta | none
-  underlyingPort? catalog ports project target
+/-- Instantiate universes from the compiled type, then let the kernel decide whether the
+transparent project definition and the admitted constant are definitionally equal. -/
+private def indexEquivalentObjects (env : Environment) (ports : Ports) (project : NameSet) : MetaM Ports := do
+  let mut equivalents := ports.objects.foldl (init := ({} : NameMap Name)) fun map name port => map.insert name port.alias
+  let mut byType : Std.HashMap Expr (Array (Expr × Name)) := {}
+  for owner in env.header.moduleNames, data in env.header.moduleData do
+    unless project.contains owner || [`OmegaMath, `D5].contains owner.getRoot do continue
+    for name in data.constNames do
+      let some (.defnInfo info) := env.find? name | continue
+      unless byType.contains info.type do
+        let mut candidates := #[]
+        for (_, port) in ports.objects.toList do
+          let candidate? ← withoutModifyingState do
+            let candidate ← Meta.mkConstWithFreshMVarLevels port.target
+            unless ← Meta.withTransparency .all <| Meta.isDefEq info.type (← Meta.inferType candidate) do return none
+            let candidate ← instantiateMVars candidate
+            if candidate.hasMVar then return none
+            return some candidate
+          if let some candidate := candidate? then candidates := candidates.push (candidate, port.alias)
+        byType := byType.insert info.type candidates
+      for (candidate, alias) in byType[info.type]! do
+        if Kernel.isDefEqGuarded env {} info.value candidate then
+          equivalents := equivalents.insert name alias
+          break
+  return {ports with equivalents}
 
 private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSet)
     (name : Name) : Option Name := do
-  if let some port := underlyingPort? catalog ports project name then return port
+  if let some port := ports.equivalents.find? name then return port
   let idx ← catalog.getModuleIdxFor? name
   guard (project.contains catalog.header.moduleNames[idx]!)
   matchingPort? catalog catalog ports name name
@@ -257,7 +274,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
           if project.contains owner.toName &&
               (spelling == `_root_ ++ actual || (spelling == actual && !actual.getPrefix.isAnonymous)) &&
               (matchingPort? env catalog ports spelling actual).isSome &&
-              (underlyingPort? catalog ports project actual).isNone then
+              !ports.equivalents.contains actual then
             if let some span := part.getRange? then marks := marks.push (span, actual)
           if project.contains owner.toName && spelling != `_root_ ++ actual &&
               !(spelling == actual && !actual.getPrefix.isAnonymous) then
@@ -294,6 +311,8 @@ unsafe def main (args : List String) : IO Unit := do
   let ports ← admittedPorts catalog (backend == "official")
   let project := files.foldl (init := ({} : NameSet)) fun names row =>
     if let some name := row[0]? then names.insert name.toName else names
+  let ports ← (indexEquivalentObjects catalog ports project).run' |>.toIO'
+    {fileName := "<standard object identity>", fileMap := default} {env := catalog}
   for row in files do
     let #[name, source, refs] := row | throw <| IO.userError "expected module, source and ilean paths"
     enableInitializersExecution
