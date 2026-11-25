@@ -50,21 +50,7 @@ Fix a nonnegative middle occupation, rational observed entries, and a rational v
 
 Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates.
 
-**Theorem 1.4 (Rational rank at most two at a prescribed coupling).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_rank_le_two_at_iff`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_rank_le_two_at_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Fix positive middle occupation, normalized rational edge data and a rational unobserved coupling. A rational positive semidefinite trace-one extension of rank at most two exists exactly when both Schur residual marginals are positive semidefinite, their determinants agree and the common determinant is a sum of two rational squares.
-
-The invertible Schur elimination preserves rank and leaves a one-dimensional pivot beside the joint endpoint residual. Elimination and restoration both preserve rational entries. When the common residual trace is positive, dividing by that trace reduces rank one of the joint residual to the rational two-qubit purity criterion. The determinants scale by a rational square, so the arithmetic test can use the unnormalized residuals. At trace zero both residuals vanish and restoring the pivot gives rank one.
-
-**Theorem 1.5 (When the edge marginals determine the state).**
+**Theorem 1.4 (When the edge marginals determine the state).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff`
 
@@ -80,7 +66,7 @@ Every feasible coupling gives an extension. If both residuals at a feasible coup
 
 At zero middle occupation the whole coupling row vanishes in every positive state. The Schur residual inequalities then have no dependence on z.
 
-**Theorem 1.6 (Pure extensions at zero middle occupation).**
+**Theorem 1.5 (Pure extensions at zero middle occupation).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 
@@ -102,13 +88,9 @@ For sufficiency, diagonalize both positive matrices with their common eigenvalue
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_rank_le_two_at_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff`
 - Dependency: [D5/S3/Quantum/Decoherence/LabelResetSupport](../../Decoherence/LabelResetSupport.md)
-- Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](../ChoiKiemKye/ConstructionReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibMarginalExtension](FibMarginalExtension.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Marginals/FibRationalPureExtension](FibRationalPureExtension.md)
-- Dependency: [D5/S3/Quantum/Entanglement/Marginals/RationalQubitPurity](RationalQubitPurity.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
-- Dependency: [D5/S3/Quantum/Measurements/ThreeDistinguishabilitySupportCount](../../Measurements/ThreeDistinguishabilitySupportCount.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../../PureState/PureStateHandshake.md)
