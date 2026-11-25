@@ -34,7 +34,7 @@ def transport {A : Type u} {B : Type v} (source : NumberEncoding A)
   destination.encode (source.decode w)
 
 theorem decode_bijective {Word : Type u} (encoding : NumberEncoding Word) (h : encoding.Faithful) :
-    Bijective encoding.decode :=
+    _root_.Omega.Arithmetic.WDigits.Bijective encoding.decode :=
   And.intro
     (fun a b hEq => (h.left a).symm.trans
       ((congrArg encoding.encode hEq).trans (h.left b)))
@@ -46,7 +46,8 @@ theorem transport_decode {A : Type u} {B : Type v} (source : NumberEncoding A)
   h.right (source.decode w)
 
 theorem transport_bijective {A : Type u} {B : Type v} (source : NumberEncoding A)
-    (destination : NumberEncoding B) (hs : source.Faithful) (hd : destination.Faithful) : Bijective (source.transport destination) :=
+    (destination : NumberEncoding B) (hs : source.Faithful) (hd : destination.Faithful) :
+    _root_.Omega.Arithmetic.WDigits.Bijective (source.transport destination) :=
   And.intro
     (fun a b h => (source.decode_bijective hs).left a b
       ((source.transport_decode destination hd a).symm.trans

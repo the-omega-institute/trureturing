@@ -18,7 +18,7 @@ public theorem canonical_interchangeability :
     And
       (∀ {Word₁ Word₂ : Type} (source : NumberEncoding Word₁) (destination : NumberEncoding Word₂),
         source.Faithful → destination.Faithful →
-        And (Bijective (source.transport destination))
+        And (_root_.Omega.Arithmetic.WDigits.Bijective (source.transport destination))
           (And (∀ w, Eq (destination.decode (source.transport destination w)) (source.decode w))
             (∀ (predicate : Nat → Prop) w,
               Iff (predicate (source.decode w))
