@@ -30,8 +30,10 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedAxial
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang (flipSign)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency)
 open private activeDirections bitRow bitRow_sum bitRow_energy flipSign_unit shell_card
-  transverse_square transverse_energy from Q9PairedGeometricObstruction
-open private shell_asFunction relabel_center relabel_shell from EightCubeBits
+  transverse_square transverse_energy from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedGeometricObstruction
+open private shell_asFunction relabel_center relabel_shell from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.EightCubeBits
 open private adjacency_add from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel
 
@@ -198,12 +200,12 @@ theorem sparse_syndrome_energy (S B : Word) (v : Vertex → ℤ) (c : ℤ)
     by_cases hs : z ∈ S
     · have hb : (shell z ∩ B).card ≤ 8 := by
         exact (card_le_card inter_subset_left).trans (shell_card z).le
-      simp only [cap, if_pos hs]
+      simp only [cap, ite_eq_left hs]
       exact_mod_cast (hle.trans hb)
     · have hv : v z ≠ 0 := by
         have hn : v z ≠ g z := (mem_filter.mp hz).2
         simpa [hg_zero z hs] using hn
-      simp only [cap, if_neg hs]
+      simp only [cap, ite_eq_right hs]
       have hleInt : ((T.bipartiteAbove (fun z t : Vertex => t ∈ shell z) z).card : ℤ) ≤
           ((shell z ∩ B).card : ℤ) := by exact_mod_cast hle
       exact hleInt.trans (hcapacity z hv hs)
@@ -217,10 +219,10 @@ theorem sparse_syndrome_energy (S B : Word) (v : Vertex → ℤ) (c : ℤ)
         intro z hz
         have h := hcost z hz
         by_cases hs : z ∈ S
-        · simp only [cap, if_pos hs] at h ⊢
+        · simp only [cap, ite_eq_left hs] at h ⊢
           exact (mul_le_mul_of_nonneg_right hc (by norm_num : (0 : ℤ) ≤ 8)).trans
             (mul_le_mul_of_nonneg_left h (by omega))
-        · simp only [cap, if_neg hs] at h ⊢
+        · simp only [cap, ite_eq_right hs] at h ⊢
           rw [mul_comm 4 c]
           exact mul_le_mul_of_nonneg_left h (by omega)
       _ = c * ∑ z ∈ Z, w z := (mul_sum ..).symm
@@ -387,6 +389,7 @@ private theorem mem_weightLayer {x : Vertex} {k : ℕ} :
 
 set_option maxRecDepth 32768 in
 set_option maxHeartbeats 4000000 in
+-- Kernel evaluation checks all rows of the fixed eight-cube.
 private theorem level_counts :
     weightLayer 1 = shell 0 ∧
     ∀ x : Vertex, (x ∈ weightLayer 1 → shell x ⊆ insert 0 (weightLayer 2)) ∧
@@ -400,6 +403,7 @@ private theorem level_counts :
 
 set_option maxRecDepth 32768 in
 set_option maxHeartbeats 8000000 in
+-- Kernel evaluation checks pairs of lower neighbors in the two fixed layers.
 private theorem common_lower_row_of_two {k : ℕ} (hk : k = 2 ∨ k = 4)
     (t x y : Vertex) (ht : t ∈ weightLayer (k + 1))
     (hx : x ∈ shell t ∩ weightLayer k) (hy : y ∈ shell t ∩ weightLayer k)
@@ -470,7 +474,7 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
         rcases mem_insert.mp h with rfl | h
         · exact False.elim (hz hyS)
         · exact mem_inter.mpr ⟨hyx, mem_inter.mpr ⟨hyS, h⟩⟩
-    rw [heq, hdegree, if_pos hb]
+    rw [heq, hdegree, ite_eq_left hb]
   have hLcard : L.card = 8 := by
     have h := sum_shell_inter_comm (weightLayer 1) L
     rw [show (∑ x ∈ weightLayer 1, (shell x ∩ L).card) =
@@ -528,7 +532,7 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
   have hDcard : D.card ≤ 8 := by
     have h := card_le_weighted_cover (weightLayer 1) D r (fun _ => 1) hcoverD hcapD
     rw [level_counts.1] at h
-    simp only [sum_const, nsmul_eq_mul, shell_card, Nat.cast_ofNat, mul_one] at h
+    simp only [sum_const, nsmul_eq_mul, shell_card, mul_one] at h
     omega
   have hTcard : 32 ≤ T.card := by
     have h := sum_shell_inter_comm (weightLayer 3) L
@@ -546,8 +550,12 @@ private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
       split at hle <;> split <;> split <;> omega
     rw [sum_congr rfl heq, sum_add_distrib, ← mul_sum, ← sum_filter, ← sum_filter] at h
     change (∑ _x ∈ T, (1 : ℕ)) + 2 * (∑ _x ∈ D, (1 : ℕ)) = _ at h
-    simp only [sum_const, nsmul_eq_mul, mul_one] at h
-    omega
+    have hcount : T.card + 2 * D.card = 48 := by
+      simpa only [sum_const, nsmul_eq_mul, mul_one] using h
+    calc
+      32 = 48 - 2 * 8 := by decide
+      _ ≤ 48 - 2 * D.card := Nat.sub_le_sub_left (Nat.mul_le_mul_left 2 hDcard) 48
+      _ = T.card := by rw [← hcount, Nat.add_sub_cancel]
   have hProw (x : Vertex) (hx : x ∈ T) : (shell x ∩ P).card = 1 := by
     obtain ⟨hx₃, hx₁⟩ := mem_filter.mp hx
     have heq : shell x ∩ S = (shell x ∩ L) ∪ (shell x ∩ P) := by
@@ -656,7 +664,8 @@ private theorem no_full_exterior_shell_at_weight_sixteen {S B : Word} (hsize : S
   apply no_full_shell_at_zero hS hzero hshell0
   intro x
   obtain ⟨y, rfl⟩ := e.surjective x
-  rw [← hshell, ← map_inter, card_map, mem_map_equiv, Equiv.symm_apply_apply]
+  rw [← hshell, ← map_inter, card_map]
+  simp only [mem_map_equiv, Equiv.symm_apply_apply]
   exact hdegree y
 
 /-- The residual of an order-72 signed fold with twelve dimers has empty odd
