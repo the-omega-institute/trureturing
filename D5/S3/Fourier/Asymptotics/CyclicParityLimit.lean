@@ -6,15 +6,14 @@
    utility: none
    digest: The parity-dependent correction to the two-cosine cyclic minimum. -/
 
-import D5.S3.Analytic.Certified.TrigEnvelopePhaseReduction
 import D5.S3.Fourier.Asymptotics.CyclicParityCorrection
+import Mathlib.Analysis.Complex.Trigonometric
 
 /-! The finite certificates squeeze the minimum to second order in the mesh.
 Only a fixed front window contributes to the clipped quadratic. -/
 
 open Finset Filter
 open scoped Topology
-open D5.S3.Analytic.Certified.TrigEnvelopePhaseReduction
 open D5.S3.Fourier.Asymptotics.CyclicToLatticeComparison
 open D5.S3.Fourier.Asymptotics.LatticeSquareMomentActivation
 open D5.S3.Fourier.Asymptotics.CyclicParityCorrection
@@ -37,18 +36,33 @@ private theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
   field_simp [hn]
   ring
 
+private theorem cos_fourth_remainder (x : ℝ) (hx : |x| ≤ 1) :
+    |Real.cos x - (1 - x ^ 2 / 2 + x ^ 4 / 24)| ≤ |x| ^ 6 / 360 := by
+  let z := (x : ℂ) * Complex.I
+  have hz : ‖z‖ = |x| := by simp [z, Complex.norm_mul]
+  have h := Complex.exp_bound' (x := z) (n := 6) (by rw [hz]; linarith)
+  have ht : (∑ m ∈ range 6, z ^ m / (m.factorial : ℂ)).re =
+      1 - x ^ 2 / 2 + x ^ 4 / 24 := by
+    norm_num [z, sum_range_succ, mul_pow, pow_succ, Complex.mul_re, Complex.mul_im,
+      Complex.div_re, Complex.normSq_apply]
+    ring
+  have hr := Complex.abs_re_le_norm (Complex.exp z - ∑ m ∈ range 6, z ^ m / (m.factorial : ℂ))
+  rw [Complex.sub_re, ht, show (Complex.exp z).re = Real.cos x from Complex.exp_ofReal_mul_I_re x] at hr
+  rw [hz] at h
+  norm_num at h
+  exact hr.trans (by linarith only [h])
+
 private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineFourth x (h i)) l (𝓝 (x ^ 4 / 24)) := by
   have hxh : Tendsto (fun i => |x * h i|) l (𝓝 0) := by
     simpa using (hh.const_mul x).abs
   rw [tendsto_iff_dist_tendsto_zero]
-  refine squeeze_zero' (g := fun i => |x| ^ 6 / 720 * h i ^ 2)
+  refine squeeze_zero' (g := fun i => |x| ^ 6 / 360 * h i ^ 2)
     (Eventually.of_forall fun _ => dist_nonneg) ?_ ?_
   · filter_upwards [hn, hxh.eventually (eventually_lt_nhds (by norm_num : (0 : ℝ) < 1))]
       with i hi hx
-    have hr := abs_cos_sub_partial_le (x * h i) hx.le 3
-    norm_num [sum_range_succ] at hr
+    have hr := cos_fourth_remainder (x * h i) hx.le
     have hid : cosineFourth x (h i) - x ^ 4 / 24 =
         (Real.cos (x * h i) - (1 - (x * h i) ^ 2 / 2 + (x * h i) ^ 4 / 24)) / h i ^ 4 := by
       unfold cosineFourth
@@ -60,15 +74,11 @@ private theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → �
       exact pow_pos (sq_pos_of_ne_zero hi) 2
     apply (div_le_iff₀ hpow).mpr
     calc
-      _ ≤ |x * h i| ^ 6 / 720 := by
-        rw [abs_mul]
-        convert hr using 1
-        congr 1
-        ring
-      _ = (|x| ^ 6 / 720 * h i ^ 2) * h i ^ 4 := by
+      _ ≤ |x * h i| ^ 6 / 360 := hr
+      _ = (|x| ^ 6 / 360 * h i ^ 2) * h i ^ 4 := by
         rw [abs_mul, mul_pow, ← abs_pow (h i), abs_of_nonneg (by positivity : 0 ≤ h i ^ 6)]
         ring
-  · simpa using (hh.pow 2).const_mul (|x| ^ 6 / 720)
+  · simpa using (hh.pow 2).const_mul (|x| ^ 6 / 360)
 
 private theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :

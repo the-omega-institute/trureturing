@@ -29,7 +29,7 @@ internal sealed class CyclicParityLimitDocument : IScribeDocumentDefinition
                     "within that tolerance for all sufficiently large k.")),
                 Paragraph(Text(
                     "Set h=2π/q. The quadratic vanishes at C=−cos(dh). Its other root confines its " +
-                    "positive part to a fixed front window for large q. The sharp cosine remainder " +
+                    "positive part to a fixed front window for large q. The sixth-order cosine remainder " +
                     "gives the fourth-order deficit expansion on this window and the order-h² " +
                     "change of the quadratic. At a zero of the lattice weight the perturbed squared " +
                     "positive part is bounded by a constant times h⁴.")),
