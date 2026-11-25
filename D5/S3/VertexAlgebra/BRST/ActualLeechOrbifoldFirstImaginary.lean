@@ -32,7 +32,7 @@ open RelativeCohomology
 def firstImaginaryMomentum : Charge hyperbolicPlane :=
   Fin.cases 1 (fun _ => -1)
 
-local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
+private local instance (p : Charge hyperbolicPlane) : AddCommGroup (relativeShell p) :=
   Submodule.addCommGroup (relativeShell p)
 
 local instance (g : ℤ) :
