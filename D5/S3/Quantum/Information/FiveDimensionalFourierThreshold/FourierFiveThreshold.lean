@@ -70,7 +70,7 @@ theorem five_radical_lt_377_div_100 :
   rw [mul_div_assoc]
   linarith only [hcert, hdiv, hmono]
 
-private theorem norm_sq_basis_sum (b : OrthonormalBasis Idx ℂ CoordinateFive)
+theorem norm_sq_basis_sum (b : OrthonormalBasis Idx ℂ CoordinateFive)
     (I : Finset Idx) (a : Idx → ℂ) :
     ‖∑ i ∈ I, a i • b i‖ ^ 2 = coeffEnergy I a := by
   let v : EuclideanSpace ℂ Idx := WithLp.toLp 2 fun i => if i ∈ I then a i else 0
@@ -91,7 +91,7 @@ private theorem norm_sq_basis_sum (b : OrthonormalBasis Idx ℂ CoordinateFive)
       exact Finset.sum_subset (Finset.subset_univ I) (fun i _ hi => by simp [hi])
     _ = _ := Finset.sum_congr rfl (fun i hi => by simp [hi])
 
-private theorem inner_basis_sums (I J : Finset Idx) (a b : Idx → ℂ) :
+theorem inner_basis_sums (I J : Finset Idx) (a b : Idx → ℂ) :
     ⟪(∑ i ∈ I, a i • coordinateBasisFive i), ∑ j ∈ J, b j • fourierBasisFive j⟫_ℂ =
       crossForm I J (fun i => conj (a i)) b := by
   unfold crossForm
