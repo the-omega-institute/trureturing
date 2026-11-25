@@ -314,4 +314,7 @@ else:
   assert.match(restored.stdout, /No published module cache yet/);
   const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
   assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
+  const truthRelease = await readFile(new URL('../../workflows/truth-release-publish.yml', import.meta.url), 'utf8');
+  assert.deepEqual([...truthRelease.matchAll(/^[ ]+operation: ([^\s]+)$/gm)].map(match => match[1]), ['restore-published']);
+  assert.match(truthRelease, /operation: restore-published[\s\S]*make lean-cache-prepare FULL_BUILD=1/);
 });
