@@ -106,4 +106,82 @@ public theorem Ordering.isGE (o : Ordering) :
     _root_.Ordering.rec false true true o = o.isGE := by
   cases o <;> rfl
 
+public theorem Nat.beq (a b : Nat) :
+    Nat.rec (motive := fun _ => Nat → Bool) (Nat.rec true (fun _ _ => false))
+      (fun _ smaller => Nat.rec false (fun k _ => smaller k)) a b = _root_.Nat.beq a b := by
+  induction a generalizing b with
+  | zero => cases b <;> rfl
+  | succ a ih => cases b with
+    | zero => rfl
+    | succ b => exact ih b
+
+public theorem Nat.ble (a b : Nat) :
+    Nat.rec (motive := fun _ => Nat → Bool) (fun _ => true)
+      (fun _ smaller => Nat.rec false (fun k _ => smaller k)) a b = _root_.Nat.ble a b := by
+  induction a generalizing b with
+  | zero => cases b <;> rfl
+  | succ a ih => cases b with
+    | zero => rfl
+    | succ b => exact ih b
+
+public theorem List.length {α : Type u} (xs : List α) :
+    List.rec (motive := fun _ => Nat) 0 (fun _ _ n => n.succ) xs = xs.length := by
+  induction xs with
+  | nil => rfl
+  | cons _ xs ih => exact congrArg Nat.succ ih
+
+public theorem List.reverseAux {α : Type u} (xs acc : List α) :
+    List.rec (motive := fun _ => List α → List α) (fun r => r)
+      (fun a _ rec r => rec (a :: r)) xs acc = xs.reverseAux acc := by
+  induction xs generalizing acc with
+  | nil => rfl
+  | cons a xs ih => exact ih (a :: acc)
+
+@[expose] public noncomputable def divisionSteps (d : Nat) : Nat → Nat → Nat :=
+  Nat.rec (motive := fun _ => Nat → Nat) (fun _ => 0)
+    (fun _ previous x => Bool.rec 0 ((previous (x - d.succ)).succ) (_root_.Nat.ble d.succ x))
+
+private theorem divisionSteps_eq (d fuel x : Nat) (h : x < fuel) :
+    divisionSteps d fuel x = x / d.succ := by
+  induction fuel generalizing x with
+  | zero => exact False.elim ((Nat.not_lt_zero x) h)
+  | succ fuel ih =>
+    change Bool.rec 0 ((divisionSteps d fuel (x - d.succ)).succ)
+      (_root_.Nat.ble d.succ x) = x / d.succ
+    rw [Nat.div_eq_ite x d.succ]
+    by_cases le : d.succ ≤ x
+    · rw [Nat.ble_eq_true_of_le le, ite_eq_left ⟨Nat.succ_pos _, le⟩]
+      have smaller := Nat.sub_lt_of_pos_le (Nat.succ_pos d) le
+      exact congrArg Nat.succ (ih _ (Nat.lt_of_lt_of_le smaller (Nat.le_of_lt_succ h)))
+    · have hb : _root_.Nat.ble d.succ x = false :=
+        Bool.eq_false_of_ne_true (fun ht => le (Nat.le_of_ble_eq_true ht))
+      rw [hb, ite_eq_right (fun both => le both.2)]
+
+public theorem Nat.div (x y : Nat) :
+    Nat.rec 0 (fun d _ => divisionSteps d x.succ x) y = _root_.Nat.div x y := by
+  cases y with
+  | zero => exact (Nat.div_zero x).symm
+  | succ d => exact divisionSteps_eq d _ x (Nat.lt_succ_self x)
+
+public theorem Nat.mod (x y : Nat) : x - y * (x / y) = _root_.Nat.mod x y :=
+  Nat.mod_eq_sub_mul_div.symm
+
+@[expose] public noncomputable def euclideanSteps : Nat → Nat → Nat → Nat :=
+  Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ n => n)
+    (fun _ smaller m n => Nat.rec n (fun d _ => smaller (n % d.succ) d.succ) m)
+
+private theorem euclideanSteps_eq (fuel m n : Nat) (h : m < fuel) :
+    euclideanSteps fuel m n = _root_.Nat.gcd m n := by
+  induction fuel generalizing m n with
+  | zero => exact False.elim ((Nat.not_lt_zero m) h)
+  | succ fuel ih =>
+    cases m with
+    | zero => exact (Nat.gcd_zero_left n).symm
+    | succ m =>
+      rw [Nat.gcd_succ]
+      exact ih _ _ (Nat.lt_of_lt_of_le (Nat.mod_lt n (Nat.succ_pos m)) (Nat.le_of_lt_succ h))
+
+public theorem Nat.gcd (m n : Nat) : euclideanSteps m.succ m n = _root_.Nat.gcd m n :=
+  euclideanSteps_eq _ m n (Nat.lt_succ_self m)
+
 end OmegaChecks.Interface.Equations

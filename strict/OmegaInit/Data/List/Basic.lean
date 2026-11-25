@@ -83,3 +83,15 @@ end Omega.List
 
 port_proof List.modifyHead.eq_1 by_reflexivity
 port_proof List.modifyHead.eq_2 by_reflexivity
+
+namespace Omega.List
+
+@[no_expose] def reverseAux {α : Type u} : List α → List α → List α :=
+  List.rec (motive := fun _ => List α → List α) (fun acc => acc)
+    (fun a _ reverseTail acc => reverseTail (cons a acc))
+
+def reverse {α : Type u} (as : List α) : List α := reverseAux as nil
+
+attribute [irreducible] reverseAux
+
+end Omega.List

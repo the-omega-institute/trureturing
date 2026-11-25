@@ -31,10 +31,10 @@ namespace Omega.HEq
 export _root_.HEq (casesOn rec recOn refl rfl)
 end Omega.HEq
 namespace Omega.List
-export _root_.List (casesOn cons nil rec recOn)
+export _root_.List (casesOn cons length nil rec recOn)
 end Omega.List
 namespace Omega.Nat
-export _root_.Nat (add le le_antisymm le_of_succ_le_succ le_refl le_trans lt mul not_succ_le_zero pow pred rec recOn sub succ succ_le_succ succ_sub_succ_eq_sub zero zero_le)
+export _root_.Nat (add beq ble div le le_antisymm le_of_succ_le_succ le_refl le_trans lt mod mul not_succ_le_zero pow pred rec recOn sub succ succ_le_succ succ_sub_succ_eq_sub zero zero_le)
 end Omega.Nat
 namespace Omega.Nat.le
 export _root_.Nat.le (casesOn rec recOn refl step)

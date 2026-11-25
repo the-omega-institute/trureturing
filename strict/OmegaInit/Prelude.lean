@@ -406,3 +406,36 @@ def getD {α : Type u} (opt : Option α) (dflt : α) : α :=
   Option.casesOn (motive := fun _ => α) opt dflt (fun a => a)
 
 end Omega.Option
+
+namespace Omega.Nat
+
+@[no_expose] def beq : Nat → Nat → Bool :=
+  Nat.rec (motive := fun _ => Nat → Bool) (Nat.rec Bool.true (fun _ _ => Bool.false))
+    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
+
+@[no_expose] def ble : Nat → Nat → Bool :=
+  Nat.rec (motive := fun _ => Nat → Bool) (fun _ => Bool.true)
+    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
+
+/-- Subtract a positive divisor at most once per remaining fuel unit. -/
+@[no_expose] protected def div (x y : Nat) : Nat :=
+  Nat.rec zero (fun d _ =>
+    Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
+      (fun _ previous n => Bool.rec zero (succ (previous (Nat.sub n (succ d)))) (Nat.ble (succ d) n))
+      (succ x) x) y
+
+@[no_expose] protected def mod : Nat → Nat → Nat :=
+  fun x y => Nat.sub x (Nat.mul y (Nat.div x y))
+
+attribute [irreducible] beq ble Nat.div Nat.mod
+
+end Omega.Nat
+
+namespace Omega.List
+
+@[no_expose] def length {α : Type u} : List α → Nat :=
+  List.rec Nat.zero (fun _ _ n => Nat.succ n)
+
+attribute [irreducible] length
+
+end Omega.List

@@ -24,7 +24,7 @@ def lean_options(options, prefix=""):
             yield f"-D{name}={setting}"
 
 
-def build(basis, output, workers):
+def build(basis, output, workers, audit_log):
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     sources, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
     graph.update(dict(json.loads((basis / "modules.json").read_text())))
@@ -34,7 +34,7 @@ def build(basis, output, workers):
     schedule.prepare()
     options = tomllib.loads((ROOT / "lakefile.toml").read_text())["leanOptions"]
     args = list(lean_options(options))
-    paths = os.pathsep.join(map(str, (output, basis / "lib")))
+    paths = os.pathsep.join(map(str, dict.fromkeys((output, basis / "lib"))))
     env = {**os.environ, "LEAN_PATH": paths}
     before = {name: source_fingerprint(sources[name]) for name in clients}
 
@@ -56,12 +56,14 @@ def build(basis, output, workers):
                 schedule.done(running.pop(job))
     if any(before[name] != source_fingerprint(sources[name]) for name in clients):
         raise RuntimeError("consumer sources changed during compilation")
+    subprocess.run([lean, "--stdin"], cwd=ROOT, env=env, check=True, text=True,
+                   input="module\nprelude\nimport OmegaMath\n#check Omega.Nat.fib\n")
     audit = ROOT / ".lake/build/bin/omegaAudit"
     subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
-    with (output.parent / "audit.txt").open("w") as log:
+    with audit_log.open("w") as log:
         result = subprocess.run(["lake", "env", audit, "--exact", "OmegaMath", paths, *modules],
                                 cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
-    print((output.parent / "audit.txt").read_text(), end="", flush=True)
+    print(audit_log.read_text(), end="", flush=True)
     result.check_returncode()
     print(f"Rebuilt {len(clients)} OmegaMath and OmegaMathlib modules against {basis / 'lib'}")
 
@@ -81,7 +83,7 @@ def main():
     with tempfile.TemporaryDirectory(dir=target.parent, prefix=".omegamath-") as stage:
         product = Path(stage) / "product"
         (product / "lib").mkdir(parents=True)
-        build(basis, product / "lib", args.j)
+        build(basis, product / "lib", args.j, product / "audit.txt")
         product.rename(target)
 
 

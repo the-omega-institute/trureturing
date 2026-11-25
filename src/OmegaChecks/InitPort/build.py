@@ -3,6 +3,7 @@ import argparse
 from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
 import json
+import omegamath
 from pathlib import Path
 from report import report
 import shutil
@@ -94,6 +95,7 @@ def generate(stage, product, seed, roots, excluded):
                     print(json.dumps([name, why]), file=rejected)
             omissions.update(new)
             rejected.flush()
+    run("lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],
@@ -111,9 +113,12 @@ def main():
     parser.add_argument("modules", nargs="*", help="official Init roots (default: every installed Init module)")
     parser.add_argument("--seed", type=Path, default=DEFAULT_SEED, help="compiled strict OmegaInit seed")
     parser.add_argument("--exclude", action="append", default=[], help="additional official names to leave out")
+    parser.add_argument("-j", type=int, default=4, help="parallel jobs for the full OmegaMath consumer build")
     args = parser.parse_args()
     seed = args.seed.resolve()
     target = args.output.resolve()
+    if args.j < 1:
+        parser.error("the job count must be positive")
     if target.exists():
         parser.error(f"output directory already exists: {target}")
     if any(name != "Init" and not name.startswith("Init.") for name in args.modules):
@@ -130,6 +135,7 @@ def main():
         generate(stage, product, stage / "seed", roots, args.exclude)
         if not args.modules:
             report(product)
+            omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
         product.rename(target)
 
 

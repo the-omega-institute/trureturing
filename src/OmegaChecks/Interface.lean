@@ -28,6 +28,18 @@ private def ownerOf (env : Environment) (name : Name) : IO Name := do
   let some owner := env.getModuleIdxFor? name | throw <| IO.userError s!"missing owner for {name}"
   return env.header.modules[owner]!.module
 
+/-- Independent official modules can emit the very same kernel declaration.
+Check its complete stored entry in the expected module when import order chose another copy. -/
+def declaredIn (env : Environment) (name owner : Name) : Bool := Id.run do
+  let some expected := env.getModuleIdx? owner | return false
+  let some active := env.getModuleIdxFor? name | return false
+  if active == expected then return true
+  let some info := env.find? name | return false
+  let some body := info.value? (allowOpaque := true) | return false
+  return env.header.moduleData[expected]!.constants.any fun entry =>
+    entry.name == name && entry == info && entry.type.equal info.type &&
+      (entry.value? (allowOpaque := true)).any (·.equal body)
+
 /-- Kernel conversion ignores elaborator binder visibility and named-argument labels. -/
 private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (depth : Nat)
     (src dst : Expr) : Bool := Id.run do
@@ -155,7 +167,7 @@ def check (strict publicStrict reference : Environment) (bindings : Array (Name 
     unless seen.contains name do
       seen := seen.insert name
       let dst := official name
-      unless (← ownerOf reference dst) == owner do
+      unless declaredIn reference dst owner do
         throw <| IO.userError s!"upstream module mismatch for {name}"
       let deps ← compare reference official (← lookup strict name) (← lookup reference dst)
         (some (strict, publicStrict))

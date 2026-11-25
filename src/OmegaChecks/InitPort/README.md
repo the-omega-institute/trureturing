@@ -21,6 +21,6 @@ example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `inventory.jsonl` 按顺序记下官方模块名、声明名、公开标记、移植结果和直接阻塞依赖。`added` 包含内核生成的构造子、递归器、私有及编译器内部声明。`existing` 表示复用种子中的声明。`interface-rejections.jsonl` 保存无法通过仓库官方对应检查的候选。公理、商原语、unsafe 或 partial 声明、未支持的表达式和依赖缺失均有逐项记录。
 
-`lib/` 保存按官方定义模块组织的编译文件。程序对最终的所有输出模块运行仓库的 `omegaAudit --exact-roots`，检查模块闭包、公开归属和可计算对应，逐声明检查公理并从空环境重放内核。成功后输出目录才会出现，审计读数保存在 `audit.txt`。
+`lib/` 保存按官方定义模块组织的编译文件。程序对所选的基础库模块运行仓库的 `omegaAudit --exact-roots`，检查模块闭包、公开归属和可计算对应，逐声明检查公理并从空环境重放内核。全量构建还将 OmegaMath 和 OmegaMathlib 的下游源码编译到同一 `lib/`，验证普通 `import OmegaMath`，并审计其实际导入闭包。成功后输出目录才会出现。两次审计的读数分别保存在 `audit.txt` 和 `omegamath-audit.txt`。全量缺口表位于同一目录的 `init-gaps.tsv`。
 
 这个独立制品用于内核类型检查、证明和定义归约。新生成声明的原生可执行代码、语法扩展、实例搜索和结构字段语法均不在移植覆盖范围内。

@@ -136,15 +136,29 @@ lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean 
 
 ### 批量构建官方 Init 对象
 
-从已编译的严格源码库出发，下列命令遍历工具链中所有已安装的 `Init` 模块。生成器按官方归属创建编译模块，由内核检查声明，再由仓库的接口审计核对整个依赖闭包。构建成功后，可以用该基础库重新编译项目的 `OmegaMath` 源码。两个输出目录应使用尚未占用的路径。[生成器](OmegaChecks/InitPort/build.py) · [OmegaMath 下游构建](OmegaChecks/InitPort/omegamath.py)
+从已编译的严格源码库出发，全量构建会遍历工具链中所有已安装的 `Init` 模块，按官方归属创建编译模块，并用生成的基础库重新编译项目的 `OmegaMath` 源码。基础库和下游均通过接口检查与内核重放后，生成器才发布输出目录。请选择尚未占用的输出路径。[生成器](OmegaChecks/InitPort/build.py) · [OmegaMath 下游构建](OmegaChecks/InitPort/omegamath.py)
 
 ```sh
 lake test -- OmegaInit
 python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all
-python3 src/OmegaChecks/InitPort/omegamath.py .lake/init-port-all .lake/omegamath-init-port
+LEAN_PATH=.lake/init-port-all/lib lean Example.lean
 ```
 
-构建完成后，`init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。生成库中的计算定义可以用 Lean 内核做归约。批量生成器只复制源码库已有的原生编译数据。交互编译下游时，将 `.lake/omegamath-init-port/lib` 和 `.lake/init-port-all/lib` 加入 `LEAN_PATH`，即可使用 `prelude` 与 `import OmegaMath`。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+`Example.lean` 可以通过公开入口使用生成对象。
+
+```lean
+module
+prelude
+import OmegaMath
+import OmegaInit.Data.List.Basic
+
+#check Omega.Nat.fib
+#check Omega.Nat.div
+#check Omega.List.length
+#check Omega.List.reverse
+```
+
+输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。生成库中的计算定义可以用 Lean 内核做归约。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
 
 ## 严格库与可替换接口
 
