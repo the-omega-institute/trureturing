@@ -26,8 +26,8 @@ def actual : Realization signature :=
 private theorem dependence : ObservationalDependence signature actual := by
   intro _
   refine ⟨(), 0, π / 3, ?_⟩
-  simp [actual, realize, equalRimOptRadius, Real.pi_pos.le,
-    show 0 ≤ π / 3 by positivity, Real.pi_pos.ne']
+  simp [actual, realize, equalRimOptRadius, show 0 ≤ π / 3 by positivity]
+  linarith [Real.pi_pos]
 
 namespace Exact
 

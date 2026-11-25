@@ -26,6 +26,7 @@ open Quaternion
 namespace RoundQuaternionEqualRimMinimax
 
 open RoundQuaternionK4Bounds
+open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (coe_unitary_eq_sphere)
 local notation "U" => unitary ℍ[ℝ]
 
 /-- The maximum principal angle of a spoke triangle and the cyclic rim triangle. -/
@@ -46,20 +47,20 @@ def equalRimOptRadius (a : ℝ) : ℝ :=
 private theorem defect_eq_max (a : ℝ) (ha : a ∈ Set.Icc 0 π) :
     equalRimDefect a = max a (arccos (cos (3 * a))) := by
   by_cases h₁ : a ≤ π / 3
-  · rw [equalRimDefect, if_pos h₁, arccos_cos (by linarith [ha.1]) (by linarith),
+  · rw [equalRimDefect, ite_eq_left h₁, arccos_cos (by linarith [ha.1]) (by linarith),
       max_eq_right (by linarith [ha.1])]
-  rw [equalRimDefect, if_neg h₁]
+  rw [equalRimDefect, ite_eq_right h₁]
   by_cases h₂ : a ≤ π / 2
-  · rw [if_pos h₂, ← cos_two_pi_sub, arccos_cos (by linarith [pi_pos])
+  · rw [ite_eq_left h₂, ← cos_two_pi_sub, arccos_cos (by linarith [pi_pos])
       (by linarith), max_eq_right (by linarith)]
-  rw [if_neg h₂]
+  rw [ite_eq_right h₂]
   apply (max_eq_left _).symm
   rcases le_or_gt a (2 * π / 3) with h₃ | h₃
   · rw [← cos_two_pi_sub, arccos_cos (by linarith) (by linarith [pi_pos])]
     linarith
   · rw [show cos (3 * a) = cos (3 * a - 2 * π) by
         rw [← cos_add_two_pi (3 * a - 2 * π)]
-        congr 1 <;> ring,
+        congr 1; ring,
       arccos_cos (by linarith) (by linarith [ha.2])]
     linarith [ha.2]
 
@@ -76,7 +77,7 @@ private theorem eigenvalue_gap (a : ℝ) :
     rimEigenvalue a - cos a = √3 * sin (a - π / 3) := by
   have hs := sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
   rw [rim_eigenvalue_formula, sin_sub, cos_pi_div_three, sin_pi_div_three]
-  nlinarith
+  linear_combination (cos a / 2) * hs
 
 private theorem eigenvalue_le_cos {a : ℝ} (ha : 0 ≤ a) (h : a ≤ π / 3) :
     rimEigenvalue a ≤ cos a := by
@@ -118,20 +119,22 @@ private theorem optimal_score_spec {a : ℝ} (h : π / 3 < a) (ha : a ≤ π) :
   have ht : optimalScore a = (s - 1) / (2 * d) := by
     unfold optimalScore
     dsimp only
-    rw [if_pos hd]
-    congr 1 <;> ring
+    rw [ite_eq_left hd]
+    congr 1; ring
   have htpos : 0 < optimalScore a := by rw [ht]; positivity
   have hroot : d * optimalScore a ^ 2 + optimalScore a = l := by
     rw [ht]
-    field_simp [ne_of_gt hd]
-    nlinarith
+    calc
+      d * ((s - 1) / (2 * d)) ^ 2 + (s - 1) / (2 * d) =
+          (s ^ 2 - 1) / (4 * d) := by field_simp [ne_of_gt hd]; ring
+      _ = l := by rw [hsq]; field_simp [ne_of_gt hd]; ring
   refine ⟨htpos, ?_, hroot⟩
   by_contra! ht
   have hsq₁ : 1 ≤ optimalScore a ^ 2 := by
     nlinarith [mul_nonneg (sub_nonneg.2 ht.le) (show 0 ≤ optimalScore a + 1 by linarith)]
   have hlow := mul_le_mul_of_nonneg_left hsq₁ hd.le
   have hc : cos a ≤ 1 := cos_le_one a
-  dsimp [d] at hlow hroot
+  dsimp [d, l] at hlow hroot
   linarith
 
 private theorem score_le_optimal {a u : ℝ} (h : π / 3 < a) (ha : a ≤ π)
@@ -171,8 +174,9 @@ private theorem arccos_cos_mul_convex {q : ℝ} (hq : 0 ≤ q) (hq₁ : q < 1) :
     have hh := abs_lt.1 (hbound s)
     have hh' := (hasDerivAt_cos s).const_mul q
     convert (hasDerivAt_arccos (ne_of_gt hh.1) (ne_of_lt hh.2)).comp s hh' using 1
-    dsimp [f', d]
-    ring
+    · rfl
+    · dsimp [f', d]
+      ring
   have hf' (s : ℝ) :
       HasDerivAt f' (q * (1 - q ^ 2) * cos s / (√(d s)) ^ 3) s := by
     have hcos := (hasDerivAt_cos s).const_mul q
@@ -181,14 +185,17 @@ private theorem arccos_cos_mul_convex {q : ℝ} (hq : 0 ≤ q) (hq₁ : q < 1) :
     convert hr using 1
     have hss : (√(d s)) ^ 2 = d s := sq_sqrt (hpos s).le
     have hsn := sin_sq_add_cos_sq s
+    have hnum : q * (1 - q ^ 2) * cos s =
+        q * cos s * (√(d s)) ^ 2 - q ^ 3 * (sin s) ^ 2 * cos s := by
+      rw [hss]
+      dsimp [d]
+      linear_combination (q ^ 3 * cos s) * hsn
     change q * (1 - q ^ 2) * cos s / (√(d s)) ^ 3 =
       (q * cos s * √(d s) -
         q * sin s * ((-(2 * (q * cos s) ^ (2 - 1) * (q * -sin s))) / (2 * √(d s)))) /
         (√(d s)) ^ 2
-    field_simp [ne_of_gt (sqrt_pos.2 (hpos s))]
-    linear_combination
-      q * cos s * (√(d s)) ^ 2 * (hss.trans (show d s = 1 - (q * cos s) ^ 2 from rfl)).symm +
-      q ^ 3 * cos s * (√(d s)) ^ 2 * hsn.symm
+    rw [hnum]
+    field_simp [ne_of_gt (sqrt_pos.2 (hpos s))] <;> ring
   have hderiv : deriv f = f' := funext (fun s => (hf s).deriv)
   refine convexOn_of_deriv2_nonneg (convex_Icc 0 _) (by
       exact (continuous_arccos.comp (continuous_const.mul continuous_cos)).continuousOn)
@@ -200,7 +207,8 @@ private theorem arccos_cos_mul_convex {q : ℝ} (hq : 0 ≤ q) (hq₁ : q < 1) :
     have hs' := interior_subset hs
     have hcos : 0 ≤ cos s := cos_nonneg_of_mem_Icc
       ⟨by linarith [hs'.1, pi_pos], hs'.2⟩
-    have hq₂ : 0 ≤ 1 - q ^ 2 := by nlinarith [mul_nonneg hq hq₁.le]
+    have hq₂ : 0 ≤ 1 - q ^ 2 := by
+      nlinarith [mul_nonneg (sub_nonneg.2 hq₁.le) (show 0 ≤ 1 + q by linarith)]
     positivity
 
 private theorem imaginary_unit_sq (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) :
@@ -291,17 +299,17 @@ private def angleQuat (I : ℍ[ℝ]) (a : ℝ) : ℍ[ℝ] := (cos a : ℍ[ℝ]) 
 
 private theorem angle_quat_mul (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a b : ℝ) :
     angleQuat I a * angleQuat I b = angleQuat I (a + b) := by
-  simp only [angleQuat, add_mul, mul_add, mul_smul_comm, smul_mul_assoc,
-    imaginary_unit_sq I hI hN, smul_neg, smul_smul, ← Quaternion.coe_mul_eq_smul,
-    ← Quaternion.coe_mul, ← Quaternion.coe_neg, ← Quaternion.coe_add, cos_add, sin_add,
-    add_smul]
-  rw [Quaternion.coe_mul_eq_smul, Quaternion.mul_coe_eq_smul]
+  have hc (r : ℝ) : (r : ℍ[ℝ]) = r • (1 : ℍ[ℝ]) := by
+    rw [← Quaternion.coe_mul_eq_smul, mul_one]
+  simp only [angleQuat, hc, add_mul, mul_add, smul_mul_assoc, mul_smul_comm,
+    one_mul, mul_one, imaginary_unit_sq I hI hN, smul_neg,
+    cos_add, sin_add, add_smul, sub_smul]
   module
 
 private theorem norm_angle_quat (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
     ‖angleQuat I a‖ = 1 := by
   have hl : ⟪(cos a : ℍ[ℝ]), sin a • I⟫_ℝ = 0 := by
-    simp [Quaternion.inner_def, Quaternion.re_mul, hI]
+    simp [Quaternion.inner_def, hI]
   have hsq : ‖angleQuat I a‖ ^ 2 = 1 := by
     simp only [angleQuat, norm_add_sq_real, hl, mul_zero, add_zero, norm_smul,
       Quaternion.norm_coe, hN, mul_one, Real.norm_eq_abs, sq_abs]
@@ -311,7 +319,7 @@ private theorem norm_angle_quat (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1
 private def angleGain (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a : ℝ) :
     unitary ℍ[ℝ] :=
   ⟨angleQuat I a, by
-    rw [← SetLike.mem_coe, CStarRing.coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
+    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
     exact norm_angle_quat I hI hN a⟩
 
 /-- The cyclic rim has a common forward gain and identity spokes. -/
@@ -327,7 +335,7 @@ private theorem quarter_score_pos : 0 < quarterScore := by
   positivity
 
 private theorem quarter_score_sq : quarterScore ^ 2 = 1 / 3 := by
-  simp [quarterScore, div_pow, sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+  simp [quarterScore, sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
 
 private theorem quarter_score_lt_one : quarterScore < 1 := by
   have h := quarter_score_pos
@@ -357,7 +365,7 @@ private theorem radius_le_fixed_latitude {a : ℝ} (h : π / 3 < a) (ha : a ≤ 
     have he : cos a * quarterScore ^ 2 + rimEigenvalue a * (1 - quarterScore ^ 2) = u :=
       latitude_rim_score a
     linarith
-  rw [equalRimOptRadius, if_neg h.not_ge]
+  rw [equalRimOptRadius, ite_eq_right h.not_ge]
   exact arccos_le_arccos (score_le_optimal h ha hu)
 
 private theorem quarter_radius_eq :
@@ -367,7 +375,7 @@ private theorem quarter_radius_eq :
   have hq := latitude_rim_score (π / 2)
   rw [cos_pi_div_two, sin_pi_div_two, zero_mul, zero_add, mul_one] at hq
   have hh := score_unique ha₁ ha₂ quarter_score_pos (by rw [cos_pi_div_two]; linarith)
-  rw [equalRimOptRadius, if_neg ha₁.not_ge, ← hh]
+  rw [equalRimOptRadius, ite_eq_right ha₁.not_ge, ← hh]
 
 private theorem quarter_ratio_gt_half : (1 / 2 : ℝ) < (2 / π) * arccos quarterScore := by
   have hsq : (√2 / 2) ^ 2 = (1 / 2 : ℝ) := by
@@ -397,7 +405,7 @@ private theorem fixed_latitude_secant (s : ℝ) (hs : s ∈ Set.Icc 0 (π / 2)) 
   simp only [smul_eq_mul, mul_zero, zero_add, hmul, cos_zero, mul_one,
     cos_pi_div_two, arccos_zero] at hc
   calc
-    _ ≤ (1 - b) * arccos quarterScore + b * (π / 2) := hc
+    _ ≤ (1 - b) * arccos quarterScore + b * (π / 2) := by simpa only [hmul] using hc
     _ = _ := by dsimp [b]; field_simp [pi_pos.ne']; ring
 
 private theorem strict_ratio_away_from_quarter (a : ℝ) (ha : a ∈ Set.Ioc 0 π)
@@ -406,7 +414,7 @@ private theorem strict_ratio_away_from_quarter (a : ℝ) (ha : a ∈ Set.Ioc 0 �
   let c := (2 / π) * arccos quarterScore
   have hc : 1 / 2 < c := quarter_ratio_gt_half
   by_cases h : a ≤ π / 3
-  · rw [equalRimDefect, equalRimOptRadius, if_pos h, if_pos h]
+  · rw [equalRimDefect, equalRimOptRadius, ite_eq_left h, ite_eq_left h]
     rw [div_lt_iff₀ (by linarith [ha.1] : 0 < 3 * a)]
     change a < c * (3 * a)
     nlinarith [mul_pos (show 0 < 3 * c - 1 by linarith) ha.1]
@@ -414,16 +422,16 @@ private theorem strict_ratio_away_from_quarter (a : ℝ) (ha : a ∈ Set.Ioc 0 �
   have hs : 0 < s := abs_pos.2 (sub_ne_zero.2 hne)
   have hsπ : s ≤ π / 2 := abs_le.2 ⟨by linarith [ha.1], by linarith [ha.2]⟩
   have hdef : π / 2 + s ≤ equalRimDefect a := by
-    rw [equalRimDefect, if_neg h]
+    rw [equalRimDefect, ite_eq_right h]
     by_cases ha₁ : a ≤ π / 2
-    · rw [if_pos ha₁, show s = -(a - π / 2) from abs_of_nonpos (sub_nonpos.2 ha₁)]
+    · rw [ite_eq_left ha₁, show s = -(a - π / 2) from abs_of_nonpos (sub_nonpos.2 ha₁)]
       linarith
-    · rw [if_neg ha₁, show s = a - π / 2 from abs_of_nonneg (sub_nonneg.2 (le_of_not_ge ha₁))]
+    · rw [ite_eq_right ha₁, show s = a - π / 2 from abs_of_nonneg (sub_nonneg.2 (le_of_not_ge ha₁))]
       linarith
   have hr := radius_le_fixed_latitude (lt_of_not_ge h) ha.2
   rw [← cos_sub_pi_div_two, ← cos_abs] at hr
   have hR := hr.trans (fixed_latitude_secant s ⟨hs.le, hsπ⟩)
-  have h₀ : arccos quarterScore = c * (π / 2) := by dsimp [c]; field_simp [pi_pos.ne']; ring
+  have h₀ : arccos quarterScore = c * (π / 2) := by dsimp [c]; field_simp [pi_pos.ne']
   change equalRimOptRadius a / equalRimDefect a < c
   rw [div_lt_iff₀ (by linarith [pi_pos] : 0 < equalRimDefect a)]
   calc
@@ -434,9 +442,9 @@ private theorem strict_ratio_away_from_quarter (a : ℝ) (ha : a ∈ Set.Ioc 0 �
 private theorem ratio_at_quarter :
     equalRimOptRadius (π / 2) / equalRimDefect (π / 2) =
       (2 / π) * arccos quarterScore := by
-  rw [quarter_radius_eq, equalRimDefect, if_neg (by linarith [pi_pos]), if_pos le_rfl]
+  rw [quarter_radius_eq, equalRimDefect, ite_eq_right (by linarith [pi_pos]), ite_eq_left le_rfl]
+  rw [show 2 * π - 3 * (π / 2) = π / 2 by ring]
   field_simp [pi_pos.ne']
-  ring
 
 private theorem angle_gain_add (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a b : ℝ) :
     angleGain I hI hN a * angleGain I hI hN b = angleGain I hI hN (a + b) := by
@@ -491,8 +499,7 @@ private theorem defect_exact (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (
     rw [defect_eq_max a ha]
     fin_cases i <;> fin_cases j <;> fin_cases k
     all_goals first | exact (hij rfl).elim | exact (hjk rfl).elim | exact (hik rfl).elim |
-      (simp only [g, equalRimGains, Matrix.cons_val_zero, Matrix.cons_val_succ,
-        Matrix.head_cons, Matrix.cons_val_fin_one, one_mul, mul_one]
+      (simp only [g, equalRimGains, Matrix.cons_val_zero', Matrix.cons_val_succ']
        simp only [← angle_gain_zero I hI hN, angle_gain_inv, angle_gain_add, gain_dist,
          add_zero, zero_add, sub_zero, zero_sub, neg_neg, cos_neg]
        first
@@ -503,8 +510,13 @@ private theorem defect_exact (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (
   · intro i; fin_cases i <;> rfl
   · intro ε h
     rw [defect_eq_max a ha, max_le_iff]
-    exact ⟨hspoke ▸ h.2.2 1 2 0 (by decide) (by decide) (by decide),
-      hrim ▸ h.2.2 1 2 3 (by decide) (by decide) (by decide)⟩
+    constructor
+    · have hh := h.2.2 1 2 0 (by decide) (by decide) (by decide)
+      change roundDist (A * 1) 1 ≤ ε at hh
+      rwa [mul_one, hspoke] at hh
+    · have hh := h.2.2 1 2 3 (by decide) (by decide) (by decide)
+      change roundDist (A * A) A⁻¹ ≤ ε at hh
+      rwa [hrim] at hh
 
 private theorem inner_right_unit (x y q : ℍ[ℝ]) (hq : ‖q‖ = 1) :
     ⟪x * q, y * q⟫_ℝ = ⟪x, y⟫_ℝ :=
@@ -531,8 +543,8 @@ private theorem gain_fit_lower (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1)
   have hr : 0 ≤ r := (arccos_nonneg _).trans (hf 0 1 (by decide))
   have hopt : equalRimOptRadius a ≤ π / 2 := by
     by_cases h : a ≤ π / 3
-    · rw [equalRimOptRadius, if_pos h]; linarith [pi_pos]
-    · rw [equalRimOptRadius, if_neg h]
+    · rw [equalRimOptRadius, ite_eq_left h]; linarith [pi_pos]
+    · rw [equalRimOptRadius, ite_eq_right h]
       exact arccos_le_pi_div_two.mpr (optimal_score_spec (lt_of_not_ge h) ha.2).1.le
   by_contra! hbad
   let u := cos r
@@ -574,20 +586,21 @@ private theorem gain_fit_lower (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1)
     have hc := norm_add_le x y
     linarith [hn 1, hn 2, hn 3]
   have havg := rim_average I x y z a hI hN ha (hn 1) (hn 2) (hn 3)
-  change _ ≤ cos a * ‖m‖ ^ 2 + rimEigenvalue a * (1 - ‖m‖ ^ 2) at havg
+  change (⟪x * A, y⟫_ℝ + ⟪y * A, z⟫_ℝ + ⟪z * A, x⟫_ℝ) / 3 ≤
+    cos a * ‖m‖ ^ 2 + rimEigenvalue a * (1 - ‖m‖ ^ 2) at havg
   have hb : u ≤ cos a * ‖m‖ ^ 2 + rimEigenvalue a * (1 - ‖m‖ ^ 2) := by linarith
   by_cases h : a ≤ π / 3
   · have hsq : ‖m‖ ^ 2 ≤ 1 := (sq_le_sq₀ (norm_nonneg _) (by norm_num)).2 hm |>.trans_eq (one_pow 2)
     have hbound := mul_le_mul_of_nonneg_right (eigenvalue_le_cos ha.1 h) (sub_nonneg.2 hsq)
     have hc : u ≤ cos a := by linarith
-    rw [equalRimOptRadius, if_pos h] at hbad
+    rw [equalRimOptRadius, ite_eq_left h] at hbad
     exact (not_le_of_gt (strictAntiOn_cos ⟨hr, by linarith [hopt, hbad]⟩ ha hbad)) hc
   · have hp := optimal_score_spec (lt_of_not_ge h) ha.2
     have hsq := (sq_le_sq₀ hu (norm_nonneg _)).2 hmean
     have hd := (cos_lt_eigenvalue (lt_of_not_ge h) ha.2).le
     have he := mul_le_mul_of_nonneg_left hsq (sub_nonneg.2 hd)
     have hs : u ≤ optimalScore a := score_le_optimal (lt_of_not_ge h) ha.2 (by linarith)
-    rw [equalRimOptRadius, if_neg h] at hbad
+    rw [equalRimOptRadius, ite_eq_right h] at hbad
     have hc := strictAntiOn_cos ⟨hr, by linarith [hbad, arccos_le_pi (optimalScore a)]⟩
       ⟨arccos_nonneg _, arccos_le_pi _⟩ hbad
     rw [cos_arccos (by linarith [hp.1]) hp.2.1] at hc
@@ -609,7 +622,7 @@ private theorem perpendicular_unit (I : ℍ[ℝ]) :
     (Submodule.mem_orthogonal K w).mp w.property (a i)
       (Submodule.subset_span (Set.mem_range_self i))
   refine ⟨‖(w : ℍ[ℝ])‖⁻¹ • (w : ℍ[ℝ]), ?_, ?_, ?_⟩
-  · simp [norm_smul, Real.norm_eq_abs, abs_inv, abs_norm, hn]
+  · simp [norm_smul, hn]
   · rw [real_inner_smul_right, show ⟪(1 : ℍ[ℝ]), (w : ℍ[ℝ])⟫_ℝ = 0 from ho 0, mul_zero]
   · rw [real_inner_smul_right, show ⟪I, (w : ℍ[ℝ])⟫_ℝ = 0 from ho 1, mul_zero]
 
@@ -658,11 +671,12 @@ private theorem cone_fit (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a t 
     simpa only [one_mul, hJ₁] using inner_right_unit (1 : ℍ[ℝ]) J I hN
   have orth (b c : ℝ) : ⟪angleQuat I b, v c⟫_ℝ = 0 := by
     simp only [angleQuat, hc, hv, inner_add_left, inner_add_right, real_inner_smul_left,
-      real_inner_smul_right, hJ₁, hJI, hJ1, hJ2, mul_zero, zero_mul, add_zero]
+      real_inner_smul_right, hJ₁, hJI, hJ1, hJ2, mul_zero, add_zero]
   have orth1 (b : ℝ) : ⟪(1 : ℍ[ℝ]), v b⟫_ℝ = 0 := by
     simpa [angleQuat] using orth 0 b
+  have orth1' (b : ℝ) : ⟪v b, (1 : ℍ[ℝ])⟫_ℝ = 0 := by rw [real_inner_comm, orth1]
   have vv (b c : ℝ) : ⟪v b, v c⟫_ℝ = cos (b - c) := by
-    rw [v, v, inner_left_unit _ _ J hJ, angle_inner I hI hN]
+    simp only [v, inner_left_unit _ _ J hJ, angle_inner I hI hN]
   let x := fun b : ℝ => (t : ℍ[ℝ]) + s • v b
   have htcoe : (t : ℍ[ℝ]) = t • (1 : ℍ[ℝ]) := by
     rw [← Quaternion.coe_mul_eq_smul, mul_one]
@@ -670,13 +684,13 @@ private theorem cone_fit (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a t 
     have hsq : ‖x b‖ ^ 2 = 1 := by
       rw [← real_inner_self_eq_norm_sq]
       simp only [x, htcoe, inner_add_left, inner_add_right, real_inner_smul_left,
-        real_inner_smul_right, orth1, real_inner_comm (v b) 1, mul_zero, zero_mul,
+        real_inner_smul_right, orth1, orth1', mul_zero,
         add_zero, zero_add, real_inner_self_eq_norm_sq (1 : ℍ[ℝ]), norm_one, one_pow,
         mul_one, vv, sub_self, cos_zero]
       nlinarith [hs]
     exact (sq_eq_sq₀ (norm_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)).mp (by simpa using hsq)
   let X := fun b : ℝ => (⟨x b, by
-    rw [← SetLike.mem_coe, CStarRing.coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
+    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
     exact norm_x b⟩ : U)
   have spoke (b : ℝ) : roundDist 1 (X b) = arccos t := by
     unfold roundDist
@@ -693,9 +707,9 @@ private theorem cone_fit (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a t 
     have hor : ⟪v (b + a), (1 : ℍ[ℝ])⟫_ℝ = 0 := by rw [real_inner_comm, orth1]
     have hbase : ⟪angleQuat I a, (1 : ℍ[ℝ])⟫_ℝ = cos a := by
       simpa [angleQuat] using angle_inner I hI hN a 0
-    simp only [x, mul_add, add_mul, htcoe, smul_mul_assoc, one_mul, hvA,
+    simp only [x, add_mul, htcoe, smul_mul_assoc, one_mul, hvA,
       inner_add_left, inner_add_right, real_inner_smul_left, real_inner_smul_right,
-      hbase, orth, hor, vv, mul_zero, zero_mul, add_zero, zero_add]
+      hbase, orth, hor, vv, mul_zero, add_zero, zero_add]
     rw [← hs]
     ring
   let φ : Fin 4 → U := ![1, X 0, X (2 * π / 3), X (4 * π / 3)]
@@ -703,13 +717,13 @@ private theorem cone_fit (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1) (a t 
       roundDist (X b * angleGain I hI hN a) (X c) ≤ arccos t := by
     unfold roundDist
     change arccos ⟪x b * angleQuat I a, x c⟫_ℝ ≤ arccos t
-    rw [score, hc', he]
+    rw [score, hc', mul_comm (1 - t ^ 2), he]
   refine ⟨φ, fit_of_forward I hI hN a φ (arccos t) ?_ ?_ ?_ ?_ ?_ ?_⟩
   · simpa [φ, equalRimGains] using (spoke 0).le
   · simpa [φ, equalRimGains] using (spoke (2 * π / 3)).le
   · simpa [φ, equalRimGains] using (spoke (4 * π / 3)).le
   · exact rim 0 (2 * π / 3) (by simp [rimEigenvalue])
-  · exact rim (2 * π / 3) (4 * π / 3) (by unfold rimEigenvalue; congr 1 <;> ring)
+  · exact rim (2 * π / 3) (4 * π / 3) (by unfold rimEigenvalue; congr 1; ring)
   · exact rim (4 * π / 3) 0 (by rw [rimEigenvalue, show 4 * π / 3 + a - 0 =
         (a - 2 * π / 3) + 2 * π by ring, cos_add_two_pi])
 
@@ -717,14 +731,16 @@ private theorem gain_fit_attain (I : ℍ[ℝ]) (hI : I.re = 0) (hN : ‖I‖ = 1
     (ha : a ∈ Set.Icc 0 π) :
     ∃ φ, Fits (equalRimGains I hI hN a) φ (equalRimOptRadius a) := by
   by_cases h : a ≤ π / 3
-  · rw [equalRimOptRadius, if_pos h]
+  · rw [equalRimOptRadius, ite_eq_left h]
     refine ⟨fun _ => 1, ?_⟩
     have hdist : roundDist (angleGain I hI hN a) 1 = a := by
       rw [← angle_gain_zero I hI hN, gain_dist, sub_zero, arccos_cos ha.1 ha.2]
-    apply fit_of_forward I hI hN a (fun _ => 1) a <;>
-      simp [equalRimGains, roundDist, gain_dist, angleGain, angleQuat, Quaternion.inner_def,
-        hI, ha.1, ha.2, arccos_cos]
-  · rw [equalRimOptRadius, if_neg h]
+    apply fit_of_forward I hI hN a (fun _ => 1) a
+    all_goals first
+      | change roundDist (1 * angleGain I hI hN a) 1 ≤ a
+        simpa only [one_mul] using hdist.le
+      | simpa [equalRimGains, roundDist, Quaternion.inner_def] using ha.1
+  · rw [equalRimOptRadius, ite_eq_right h]
     obtain ⟨ht, ht₁, he⟩ := optimal_score_spec (lt_of_not_ge h) ha.2
     exact cone_fit I hI hN a (optimalScore a) ht ht₁ (by linarith)
 
