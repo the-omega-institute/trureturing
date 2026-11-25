@@ -8,6 +8,7 @@
 
 module
 
+public import D5.S3.Topology.Measures.IntegralEpsilonDomination
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.Analysis.Complex.Norm
 import Mathlib.Tactic.Linarith
@@ -29,6 +30,8 @@ open Set Filter MeasureTheory Topology
 open scoped ENNReal NNReal
 
 namespace D5.S3.Topology.Measures.BrezisLiebPowerDefect
+
+universe u
 
 private theorem power_increment_bound (p : ℝ) (hp : 0 < p) (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ a b : ℂ,
@@ -79,8 +82,6 @@ private theorem power_increment_bound (p : ℝ) (hp : 0 < p) (ε : ℝ) (hε : 0
           by linarith [Real.rpow_nonneg (norm_nonneg (a + b)) p]⟩
       _ ≤ ε * ‖a‖ ^ p + ((A + 1) ^ p + A ^ p) * ‖b‖ ^ p := by
         nlinarith [mul_nonneg hε.le (Real.rpow_nonneg (norm_nonneg a) p)]
-
-universe u
 
 /-- Full L1 Brézis–Lieb power splitting on an arbitrary measure space. -/
 theorem brezis_lieb_power_defect {Ω : Type u} [MeasurableSpace Ω]
@@ -147,66 +148,24 @@ theorem brezis_lieb_power_defect {Ω : Type u} [MeasurableSpace Ω]
     rw [← heq, ← ENNReal.ofReal_coe_nnreal] at hb
     exact (ENNReal.ofReal_le_ofReal_iff M.coe_nonneg).1 hb
   have habs : Tendsto (fun n => ∫ x, |d n x| ∂μ) atTop (𝓝 0) := by
-    apply tendsto_order.2
-    constructor
-    · intro a ha
-      exact Eventually.of_forall fun n => ha.trans_le (integral_nonneg fun x => abs_nonneg _)
-    · intro η hη
-      let ε : ℝ := η / (2 * ((M : ℝ) + 1))
-      have hε : 0 < ε := div_pos hη (by positivity)
+    refine IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination μ
+      (fun n x => |d n x|) (M : ℝ) (fun n => (hdi n).abs) ?_
+      (fun n x => abs_nonneg _) ?_
+    · filter_upwards [hdlim] with x hx
+      simpa only [abs_zero] using hx.abs
+    · intro ε hε
       obtain ⟨C, hC, hbound⟩ := power_increment_bound p hp ε hε
-      let F : ℕ → Ω → ℝ := fun n x => max (|d n x| - ε * ‖f n x‖ ^ p) 0
-      have hFbound : ∀ n x, F n x ≤ (C + 1) * ‖g x‖ ^ p := by
-        intro n x
-        have hb := hbound (f n x) (-g x)
-        simp only [← sub_eq_add_neg, norm_neg] at hb
-        have ht := abs_sub (‖f n x‖ ^ p - ‖f n x - g x‖ ^ p) (‖g x‖ ^ p)
-        rw [abs_of_nonneg (Real.rpow_nonneg (norm_nonneg _) _)] at ht
-        rw [abs_sub_comm] at hb
-        apply max_le
-        · dsimp [d] at *
-          linarith
-        · exact mul_nonneg (by linarith) (Real.rpow_nonneg (norm_nonneg _) _)
-      have hFi : ∀ n, Integrable (F n) μ := by
-        intro n
-        apply (hgi.const_mul (C + 1)).mono'
-        · have hmeas := ((hdi n).norm.sub ((hfi n).const_mul ε)).aestronglyMeasurable
-          simpa only [F, Real.norm_eq_abs, Pi.sub_apply, id_eq] using
-            (continuous_id.max continuous_const).comp_aestronglyMeasurable hmeas
-        · exact ae_of_all μ (fun x => by
-            rw [Real.norm_of_nonneg (le_max_right _ _)]
-            exact hFbound n x)
-      have hFlim : ∀ᵐ x ∂μ, Tendsto (fun n => F n x) atTop (𝓝 0) := by
-        filter_upwards [hdlim, hfg] with x hx hfx
-        have ht := (hx.abs.sub ((hfx.norm.rpow_const (Or.inr hp.le)).const_mul ε)).max
-          (tendsto_const_nhds (x := (0 : ℝ)))
-        simpa only [F, abs_zero, zero_sub, max_eq_right (neg_nonpos.mpr
-          (mul_nonneg hε.le (Real.rpow_nonneg (norm_nonneg _) _)))] using ht
-      have hFint : Tendsto (fun n => ∫ x, F n x ∂μ) atTop (𝓝 0) := by
-        have ht := tendsto_setToFun_of_dominated_convergence
-          (dominatedFinMeasAdditive_weightedSMul μ) (fun x => (C + 1) * ‖g x‖ ^ p)
-          (fun n => (hFi n).aestronglyMeasurable) (hgi.const_mul (C + 1))
-          (fun n => ae_of_all μ (fun x => by
-            rw [Real.norm_of_nonneg (le_max_right _ _)]
-            exact hFbound n x)) hFlim
-        simpa only [← integral_eq_setToFun, integral_zero] using ht
-      have hεM : ε * (M : ℝ) < η / 2 := by
-        dsimp [ε]
-        rw [div_mul_eq_mul_div, div_lt_iff₀ (by positivity : 0 < 2 * ((M : ℝ) + 1))]
-        nlinarith [M.coe_nonneg]
-      filter_upwards [(tendsto_order.1 hFint).2 (η / 2) (by linarith)] with n hn
-      have hle : ∫ x, |d n x| ∂μ ≤ ε * (M : ℝ) + ∫ x, F n x ∂μ := by
-        calc
-          _ ≤ ∫ x, ε * ‖f n x‖ ^ p + F n x ∂μ := by
-            apply integral_mono (hdi n).abs (((hfi n).const_mul ε).add (hFi n))
-            intro x
-            have hm := le_max_left (|d n x| - ε * ‖f n x‖ ^ p) 0
-            dsimp [F]
-            linarith
-          _ = ε * (∫ x, ‖f n x‖ ^ p ∂μ) + ∫ x, F n x ∂μ := by
-            rw [integral_add ((hfi n).const_mul ε) (hFi n), integral_const_mul]
-          _ ≤ ε * (M : ℝ) + ∫ x, F n x ∂μ := by
-            linarith [mul_le_mul_of_nonneg_left (henergy n) hε.le]
+      refine ⟨(fun n x => ‖f n x‖ ^ p), (fun x => (C + 1) * ‖g x‖ ^ p),
+        hfi, hgi.const_mul (C + 1), (fun n x => Real.rpow_nonneg (norm_nonneg _) _),
+        (fun x => mul_nonneg (by linarith) (Real.rpow_nonneg (norm_nonneg _) _)),
+        henergy, ?_⟩
+      intro n x
+      have hb := hbound (f n x) (-g x)
+      simp only [← sub_eq_add_neg, norm_neg] at hb
+      have ht := abs_sub (‖f n x‖ ^ p - ‖f n x - g x‖ ^ p) (‖g x‖ ^ p)
+      rw [abs_of_nonneg (Real.rpow_nonneg (norm_nonneg _) _)] at ht
+      rw [abs_sub_comm] at hb
+      dsimp [d]
       linarith
   refine ⟨hg, hgmass, hgi, fun n => ⟨hfi n, hri n, hdi n⟩, habs, ?_⟩
   have hsigned : Tendsto (fun n => ∫ x, d n x ∂μ) atTop (𝓝 0) := by
