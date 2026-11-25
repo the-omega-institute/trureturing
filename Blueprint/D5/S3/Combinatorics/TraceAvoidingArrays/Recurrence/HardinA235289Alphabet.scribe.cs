@@ -42,7 +42,9 @@ internal sealed class HardinA235289AlphabetDocument : IScribeDocumentDefinition
                         + "Restricting the alphabet to these three entries and embedding it back are inverse. "
                         + "The count at each specified alphabet is twice the cardinality of this same class. "
                         + "The four-symbol baseline has that same count by its checkerboard and complement identity."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235289-alphabet-comparison"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LiteralCountDefinition()
     {

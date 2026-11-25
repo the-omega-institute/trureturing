@@ -22,6 +22,10 @@ $$\forall n: Nat, (\forall k: Nat, (\forall i: Nat, ((1 \le n) \implies ((1 \le 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Alphabet.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235289-alphabet-comparison` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Alphabet.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235289-alphabet-comparison","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Alphabet.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235289 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235289>.
