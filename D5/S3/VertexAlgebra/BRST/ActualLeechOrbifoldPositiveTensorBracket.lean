@@ -204,7 +204,7 @@ local notation "ι₊" => realPositiveMomentumIncl
 local notation "Δ" => realPositiveSplitTensor
 local notation "eval" => realPositiveTensorEval
 
-local instance (p : Momentum) : FiniteDimensional ℝ (W p) :=
+private local instance (p : Momentum) : FiniteDimensional ℝ (W p) :=
   realMomentumWeightSpace_finiteDimensional p
 
 @[simp]
