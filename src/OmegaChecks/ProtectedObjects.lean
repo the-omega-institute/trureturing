@@ -48,38 +48,65 @@ private def checkStatement (env : Environment) (ports : NameSet) (published : Na
     else
       throw <| IO.userError s!"publish {published} in D5: statement uses project object {name} from {moduleName}"
 
-/-- A bridge is a theorem about the old compiled body and the new port, quantified over
-all inputs. Strict proofs use the independently checked strict versions of Eq and Iff. -/
-private def checkBridge (env : Environment) (before after : ConstantInfo) (decls : Array Name) : IO Name := do
+/-- A client can unfold an exposed historical definition. Locate that same
+computational representation in a frozen D5 module, together with a kernel
+proof relating its public name to the new upstream object at all inputs. -/
+private def checkLegacy (env : Environment) (owners : Array Name)
+    (before after : ConstantInfo) : IO Unit := do
+  let levels := after.levelParams.map Level.param
+  let prior := fun (e : Expr) => e.instantiateLevelParams before.levelParams levels
   unless before.numLevelParams == after.numLevelParams &&
-      Kernel.isDefEqGuarded env {} (before.type.instantiateLevelParams before.levelParams
-        (after.levelParams.map Level.param)) after.type do
+      Kernel.isDefEqGuarded env {} (prior before.type) after.type do
     throw <| IO.userError s!"protected type changed: {before.name}"
-  let oldValue := before.value!.instantiateLevelParams before.levelParams (after.levelParams.map Level.param)
+  let oldValue := prior before.value!
+  let target := after.value!
+  if Kernel.isDefEqGuarded env {} oldValue target then return
+  let mut legacy : NameSet := {}
+  let mut decls := #[]
+  for owner in owners do
+    unless owner.getRoot == `D5 do throw <| IO.userError s!"invalid legacy owner {owner}"
+    let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing D5 owner {owner}"
+    for n in env.header.moduleData[idx]!.constNames do
+      if isPrivateName n || n.isInternalOrNum then continue
+      let some info := env.find? n | continue
+      if info.numLevelParams != after.numLevelParams then continue
+      match info with
+      | .defnInfo d =>
+        if d.safety == .safe &&
+            Kernel.isDefEqGuarded env {} (d.type.instantiateLevelParams d.levelParams levels) after.type &&
+            Kernel.isDefEqGuarded env {} (d.value.instantiateLevelParams d.levelParams levels) oldValue then
+          legacy := legacy.insert n
+      | .thmInfo t => decls := decls.push t
+      | _ => pure ()
+  if legacy.isEmpty then
+    throw <| IO.userError s!"missing observable D5 representation for protected object {before.name}"
   let strict := env.contains `Omega.Eq
-  let forms : MetaM (Array Expr) := Meta.forallTelescope after.type fun xs result => do
-    let lhs := mkAppN oldValue xs
-    let rhs := mkAppN after.value! xs
-    let eq ← Meta.mkAppM (if strict then `Omega.Eq else `Eq) #[lhs, rhs]
-    let mut expected := #[← Meta.mkForallFVars xs eq]
-    if result.isProp then
-      expected := expected.push (← Meta.mkForallFVars xs
-        (mkApp2 (mkConst (if strict then `Omega.Iff else `Iff)) lhs rhs))
-    return expected
-  let expected ← forms.run' |>.toIO' {fileName := "<protected object>", fileMap := default} {env}
-  for name in decls do
-    let some (.thmInfo cert) := env.find? name | continue
-    if cert.levelParams.length != after.numLevelParams then continue
-    let typ := cert.type.instantiateLevelParams cert.levelParams (after.levelParams.map Level.param)
-    if expected.any (Kernel.isDefEqGuarded env {} typ) then
-      let axioms ← (collectAxioms name : CoreM _).toIO' {fileName := "<protected object>", fileMap := default} {env}
-      if axioms.all (fun ax => !strict && #[`propext, `Quot.sound, `Classical.choice].contains ax) then return name
-  throw <| IO.userError s!"missing all-input correspondence for protected object {before.name}"
+  for cert in decls do
+    let typ := cert.type.instantiateLevelParams cert.levelParams levels
+    let refs := typ.getUsedConstants
+    unless refs.contains target.constName! do continue
+    for rep in refs.filter legacy.contains do
+      let forms := Meta.forallTelescope after.type fun xs result => do
+        let lhs := mkAppN (mkConst rep levels) xs
+        let rhs := mkAppN target xs
+        let eq ← Meta.mkAppM (if strict then `Omega.Eq else `Eq) #[lhs, rhs]
+        let mut expected := #[← Meta.mkForallFVars xs eq]
+        if result.isProp then
+          expected := expected.push (← Meta.mkForallFVars xs
+            (mkApp2 (mkConst (if strict then `Omega.Iff else `Iff)) lhs rhs))
+        return expected
+      let expected ← (forms : MetaM _).run' |>.toIO' {fileName := "<protected object>", fileMap := default} {env}
+      if expected.any (Kernel.isDefEqGuarded env {} typ) then
+        let axioms ← (collectAxioms cert.name : CoreM _).toIO' {fileName := "<protected object>", fileMap := default} {env}
+        if axioms.all (fun ax => !strict && #[`propext, `Quot.sound, `Classical.choice].contains ax) then
+          return
+  throw <| IO.userError s!"missing all-input correspondence in D5 for protected object {before.name}"
 
 private def aliases (env : Environment) (idx : ModuleIdx) : List (Name × Name) :=
   (aliasExtension.getModuleEntries env idx).toList
 
-def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit := do
+def check (old new : Environment) (baseRoots newRoots : Array Name)
+    (comparison : Environment) (legacyOwners : Array Name) : IO Unit := do
   let ports := portTargets new
   for m in baseRoots do
     unless newRoots.contains m do throw <| IO.userError s!"removed protected OmegaMath module {m}"
@@ -97,7 +124,6 @@ def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit :=
           if dep.isExported && dep.module.getRoot == `OmegaMath && !visible.contains dep.module then
             throw <| IO.userError s!"{m} no longer re-exports protected module {dep.module}"
     let oldNames := oldIdx.map (fun i => old.header.moduleData[i]!.constNames) |>.getD #[]
-    let mut bridges : NameSet := {}
     for name in oldNames do
       let some before := old.find? name | throw <| IO.userError s!"missing protected declaration {name}"
       let some after := new.find? name | do
@@ -109,7 +135,7 @@ def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit :=
       if before.ctorIdx != after.ctorIdx then
         throw <| IO.userError s!"protected declaration kind changed: {name}"
       if directPort new ports after && before.value? != after.value? then
-        bridges := bridges.insert (← checkBridge new before after newNames)
+        checkLegacy comparison legacyOwners before after
       else
         discard <| Interface.compare new id before after
     let known := NameSet.ofList oldNames.toList
@@ -117,7 +143,7 @@ def check (old new : Environment) (baseRoots newRoots : Array Name) : IO Unit :=
       if known.contains name then continue
       let some info := new.find? name | throw <| IO.userError s!"missing declaration {name}"
       if proof new info then
-        if !isPrivateName name && !bridges.contains name then checkStatement new ports name info.type
+        if !isPrivateName name then checkStatement new ports name info.type
       else unless directPort new ports info do
         throw <| IO.userError s!"new OmegaMath object {name} in {m}"
     let before := oldIdx.map (aliases old) |>.getD []

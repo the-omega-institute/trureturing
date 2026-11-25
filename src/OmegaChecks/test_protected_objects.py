@@ -83,19 +83,38 @@ def check():
             witness = ("theorem bridge (n : Nat) : Iff (Historical (OmegaMathlib.Nat.Prime n)) "
                        "(OmegaMathlib.Nat.Prime n) := Iff.intro And.left (fun h => And.intro h True.intro)\n")
             base = compile_source(lean, search, Path(temp) / "base", old_helper + old_object, port_header)
-            for body, expected in [
-                (alias + witness, ""),
-                (old_object + "abbrev direct := OmegaMathlib.Nat.Prime\n", ""),
-                (old_object + "abbrev copy := Subject\n", "new OmegaMath object"),
-                (alias, "missing all-input correspondence"),
-                (alias + "theorem bridge (n : Nat) : Iff (Subject n) (Subject n) := "
-                 "Iff.intro (fun h => h) (fun h => h)\n", "missing all-input correspondence"),
+            d5 = "D5.Preserved"
+            representation = ("public def D5.old (n : Omega.Nat) : Prop := "
+                              "Omega.Historical (OmegaMathlib.Nat.Prime n)\n")
+            relation = ("public theorem D5.bridge (n : Omega.Nat) : "
+                        "Omega.Iff (D5.old n) (OmegaMathlib.Nat.Prime n) := "
+                        "Omega.Iff.intro Omega.And.left (fun h => Omega.And.intro h Omega.True.intro)\n")
+            for body, d5_source, expected in [
+                (alias, representation + relation, ""),
+                (old_object + "abbrev direct := OmegaMathlib.Nat.Prime\n", None, ""),
+                (old_object + "abbrev copy := Subject\n", None, "new OmegaMath object"),
+                (alias, None, "missing observable D5 representation"),
+                (alias + witness, None, "missing observable D5 representation"),
+                (alias, representation, "missing all-input correspondence in D5"),
+                (alias, representation + "public theorem D5.irrelevant (n : Omega.Nat) : "
+                 "Omega.Iff (D5.old n) (D5.old n) := Omega.Iff.intro (fun h => h) (fun h => h)\n",
+                 "missing all-input correspondence in D5"),
             ]:
-                new = compile_source(lean, search, Path(temp) / "candidate", old_helper + body, port_header)
-                result = subprocess.run([AUDIT, "--protected-objects", base, new, MODULE, "--", MODULE],
-                                        cwd=ROOT, capture_output=True, text=True)
+                folder = Path(temp) / "candidate"
+                new = compile_source(lean, search, folder, old_helper + body, port_header)
+                owners = []
+                if d5_source:
+                    file = folder.joinpath(*d5.split(".")).with_suffix(".lean")
+                    file.parent.mkdir(parents=True, exist_ok=True)
+                    file.write_text(f"module\nprelude\npublic import {MODULE}\n" + d5_source)
+                    subprocess.run([lean, "-R", folder, "-o", file.with_suffix(".olean"), file],
+                                   cwd=ROOT, env={**os.environ, "LEAN_PATH": new}, check=True)
+                    owners.append(d5)
+                result = subprocess.run([AUDIT, "--protected-objects", base, new, MODULE, "--", MODULE,
+                                         "--legacy", *owners], cwd=ROOT, capture_output=True, text=True)
                 if bool(result.returncode) != bool(expected) or expected not in result.stderr:
                     raise RuntimeError(f"Expected {expected!r}: {result.stdout}{result.stderr}")
+
 
 
 if __name__ == "__main__":

@@ -55,13 +55,18 @@ def targets(commit, before):
     new_files = paths("ls-files", "--others", "--exclude-standard", "-z", "--", *directories)
     changed = {module_name(p) for p in [*modified, *new_files] if module_name(p)}
     if not changed:
-        return [], []
+        return [], [], [], []
     old_files = paths("ls-tree", "-rz", "--name-only", commit, "--", *directories)
     present = paths("ls-files", "-co", "--exclude-standard", "-z", "--", *directories)
     old = import_graph(before, old_files)
     new = import_graph(ROOT, [p for p in present if (ROOT / p).is_file()])
     selected = affected(old, new, changed)
-    return selected, [n for n in selected if n in new]
+    # Candidate sources that could supply an observable legacy representation or its proof.
+    # Their canonical frozen records are validated by the existing D5 writer and CI.
+    owners = sorted(n for n in consumers(new)
+                    if root(n) == "D5" and (ROOT / "Golden/Frozen/state").joinpath(
+                        *n.split(".")).with_suffix(".lean.json").is_file())
+    return selected, [n for n in selected if n in new], sorted(set(owners) & changed), owners
 
 
 def compare(before, old_modules, new_modules, old_path, new_path):

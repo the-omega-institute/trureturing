@@ -40,7 +40,7 @@ def check(base):
                 archive.extractall(before, filter="data")
             if proc.wait():
                 raise RuntimeError(f"failed to extract the protected Omega sources at {commit}")
-        old_d5, new_d5 = protected_uses.targets(commit, before)
+        old_d5, new_d5, legacy_owners, all_owners = protected_uses.targets(commit, before)
         original = publication_modules(before)
         missing = sorted(set(original) - set(modules))
         if missing:
@@ -53,10 +53,23 @@ def check(base):
         audit = ROOT / ".lake/build/bin/omegaAudit"
         for strict in (False, True):
             protected_path = compiled_path(before, original if strict else [*original, *old_d5], strict)
-            candidate_path = compiled_path(ROOT, modules if strict else [*modules, *new_d5], strict)
+            candidate_roots = set(modules) | set(legacy_owners)
+            if not strict:
+                candidate_roots.update(new_d5)
+            candidate_path = compiled_path(ROOT, sorted(candidate_roots), strict)
             if not strict:
                 protected_uses.compare(before, old_d5, new_d5, protected_path, candidate_path)
             label = "strict" if strict else "official"
             print(f"Comparing {label} OmegaMath declarations against {commit}", flush=True)
-            subprocess.run([audit, "--protected-objects", protected_path, candidate_path,
-                            *original, "--", *modules], cwd=ROOT, check=True)
+            command = [audit, "--protected-objects", protected_path, candidate_path,
+                       *original, "--", *modules, "--legacy"]
+            result = subprocess.run([*command, *legacy_owners], cwd=ROOT, stderr=subprocess.PIPE, text=True)
+            if result.returncode and legacy_owners != all_owners and (
+                    "missing observable D5 representation" in result.stderr or
+                    "missing all-input correspondence in D5" in result.stderr):
+                # An unchanged frozen owner can already provide the old representation or theorem.
+                compiled_path(ROOT, sorted(set(all_owners) - set(legacy_owners)), strict)
+                subprocess.run([*command, *all_owners], cwd=ROOT, check=True)
+            else:
+                sys.stderr.write(result.stderr)
+                result.check_returncode()

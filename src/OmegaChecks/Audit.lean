@@ -179,13 +179,19 @@ def main (args : List String) : IO Unit := do
       reportOfficialAxioms strict official modules report
   else if let "--protected-objects" :: basePath :: candidatePath :: modules := args then
     let base := modules.takeWhile (· != "--")
-    let "--" :: candidate := modules.drop base.length | throw <| IO.userError "missing candidate module list"
+    let "--" :: remaining := modules.drop base.length | throw <| IO.userError "missing candidate module list"
+    let candidate := remaining.takeWhile (· != "--legacy")
+    let witnesses := (remaining.drop candidate.length).drop 1
     let load (path : String) (roots : List String) := do
       searchPathRef.set (System.SearchPath.parse path)
       importModules (roots.toArray.map fun name => {module := name.toName}) {}
     let old ← load basePath base
     let new ← load candidatePath candidate
-    OmegaChecks.ProtectedObjects.check old new (base.toArray.map String.toName) (candidate.toArray.map String.toName)
+    checkPublicationLayers new
+    -- A D5 witness is loaded only in the downstream comparison environment.
+    let comparison ← if witnesses.isEmpty then pure new else load candidatePath (candidate ++ witnesses)
+    OmegaChecks.ProtectedObjects.check old new (base.toArray.map String.toName)
+      (candidate.toArray.map String.toName) comparison (witnesses.toArray.map String.toName)
   else if let "--publication-layers" :: path :: roots := args then
     if roots.isEmpty then throw <| IO.userError "expected publication modules"
     searchPathRef.set (System.SearchPath.parse path)
