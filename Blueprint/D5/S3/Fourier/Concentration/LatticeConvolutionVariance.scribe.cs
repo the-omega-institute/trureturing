@@ -92,7 +92,7 @@ internal sealed class LatticeConvolutionVarianceDocument : IScribeDocumentDefini
     private static Formula Score()
     {
         var t = F.Id("t");
-        var assumptions = Seq(NonnegativeWeights(), Quad, Budget());
+        var assumptions = Seq(NonnegativeWeights(), Quad, Sp, Budget());
         var rhs = Seq(Lvert, Call("S", t), Rvert);
         var margin = Call("max", D(0), Subtract(D(1),
             new Formula.Fraction(Multiply(F.Id("V"), new Formula.Power(t, D(2))), D(2))));
@@ -112,7 +112,7 @@ internal sealed class LatticeConvolutionVarianceDocument : IScribeDocumentDefini
     private static Formula Collision()
     {
         var p = F.Id("p");
-        var assumptions = Seq(NonnegativeWeights(), Quad, Budget(), Comma, Sp,
+        var assumptions = Seq(NonnegativeWeights(), Quad, Sp, Budget(), Comma, Sp,
             D(0), Lt, Sp, F.Id("h"), Comma, Sp, D(0), Leq, Sp, F.Id("eta"));
         var lhs = Multiply(new Formula.Power(F.Id("W"), Multiply(D(2), p)),
             Call("R", p, F.Id("V"), F.Id("A")));
