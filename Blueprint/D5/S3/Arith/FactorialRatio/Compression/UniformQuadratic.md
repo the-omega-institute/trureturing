@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Arith/FactorialRatio/Compression/UniformQuadratic.uniform
 
 For every natural r,s with r>=2 and s<r^2, 0<=log(compactExcess(r,s))<=(12+19 log 4)r^2. All logarithms are natural. Since log 4=2 log 2, the constant is 12+38 log 2. There is no asymptotic threshold and no unproved analytic hypothesis.
 
-For p<=r, the parameter b=0 bounds the exponent of p in E by (r-1)floor(log_p(s)). Because s<r^2 and p<=r, floor(log_p(s))<=3 floor(log_p(r)). Summing against log p gives a small-prime contribution at most 3(r-1)psi(r). The elementary bound psi(r)<=(log 4+4)r therefore makes this contribution at most 3(log 4+4)r^2.
+For p<=r, the parameter b=0 bounds the exponent of p in E by (r-1)Nat.log(p,s), with Nat.log(p,0)=0. Because s<r^2 and p<=r, Nat.log(p,s)<=3 Nat.log(p,r). Summing against log p gives a small-prime contribution at most 3(r-1)psi(r). The elementary bound psi(r)<=(log 4+4)r therefore makes this contribution at most 3(log 4+4)r^2.
 
 For r<p<=s, put a=r/sqrt(p), A=floor(a), and K=floor(s/p). Both A and K are at least one. If A<=K, choose k=A; the inequalities k<=a<=2k turn the local bound 2k+2r^2/(kp) into 6r/sqrt(p). If K<A, choose k=K; then k<=a and s<=2kp give the bound 2r/sqrt(p)+4r^2/s. Thus every large prime has exponent at most 6r/sqrt(p)+4r^2/s. These choices always satisfy 1<=k and kp<=s, so their compact parameters b=floor(kp/r) are legal.
 
