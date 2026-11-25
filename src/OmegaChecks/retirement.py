@@ -2,14 +2,17 @@
 import argparse
 from collections import defaultdict, deque
 from functools import lru_cache
+import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
+import tarfile
 import tempfile
 
-from portable import BASIS, ROOT, atomic_json, consumers, declaration_rows, import_graph, read_measurement, root
+from portable import BASIS, ROOT, atomic_json, check_publication_layout, consumers, declaration_rows, import_graph, read_measurement, root
 
 
 SOURCE_DIRS = ('src', 'strict', 'D5', 'Reg')
@@ -41,18 +44,35 @@ def protected_inventory(base, repository=ROOT):
     return _protected_inventory(commit, repository)
 
 
+def protected_interface(repository, commit, destination):
+    pin = json.loads(subprocess.check_output(['git', 'show', f'{commit}:Meta/tools-release.json'],
+                                             cwd=repository, text=True))
+    installed = repository / 'tools'
+    if (installed / '.release-sha256').read_text().strip() == pin['sha256']:
+        return installed / 'lean-inspector-interface'
+    # The existing installer obtains and verifies the protected release without changing the candidate installation.
+    subprocess.run([sys.executable, '-I', '-B', repository / '.github/scripts/install-tools.py',
+                    '--cache-revision', commit], cwd=repository, check=True)
+    archive = repository / 'build/tools-releases' / (pin['sha256'] + '.tar.gz')
+    with archive.open('rb') as source:
+        if hashlib.file_digest(source, 'sha256').hexdigest() != pin['sha256']:
+            raise ValueError(f'protected tools checksum differs for {commit}')
+        source.seek(0)
+        with tarfile.open(fileobj=source, mode='r:gz') as package:
+            for entry in package:
+                if entry.name.startswith('tools/lean-inspector-interface/') and entry.isfile():
+                    package.extract(entry, destination, filter='data')
+    interface = destination / 'tools/lean-inspector-interface'
+    if not (interface / 'lakefile.toml').is_file():
+        raise ValueError(f'protected tools release lacks its Lean inspector interface at {commit}')
+    return interface
+
+
 @lru_cache(maxsize=4)
 def _protected_inventory(commit, repository):
     def git(*args):
         return subprocess.check_output(['git', *args], cwd=repository, text=True)
 
-    pin = json.loads(git('show', f'{commit}:Meta/tools-release.json'))
-    tools = repository / 'tools'
-    if (tools / '.release-sha256').read_text().strip() != pin['sha256']:
-        raise ValueError(f'need protected inspector interface from tools {pin["version"]} for {commit}')
-    interface = tools / 'lean-inspector-interface'
-    if not (interface / 'lakefile.toml').is_file():
-        raise FileNotFoundError(f'protected inspector interface missing at {interface}')
     with tempfile.TemporaryDirectory(prefix='omega-retirement-') as temp:
         snapshot = Path(temp)
         pathspecs = [f':(glob){path}/**/*.lean' for path in SOURCE_DIRS]
@@ -62,6 +82,7 @@ def _protected_inventory(commit, repository):
             if archive.wait():
                 raise RuntimeError(f'failed to read Lean inputs at {commit}')
         files = [(path, path.relative_to(snapshot)) for path in sorted(snapshot.rglob('*.lean'))]
+        interface = protected_interface(repository, commit, snapshot)
         files.extend((path, path.relative_to(interface)) for path in
                      [*interface.glob('LeanInformationAuditInterface.lean'),
                       *sorted((interface / 'LeanInformationAuditInterface').rglob('*.lean'))])
@@ -105,7 +126,7 @@ def legacy_providers(base):
 
 
 def reconcile(protected, old_rows, comparisons):
-    """Account for every included compiled declaration and every protected frozen key."""
+    """Reconcile both compiled inventories and every protected frozen key."""
     old_names = set(protected['providers']) | set(protected['consumers'])
     if {row['module'] for row in old_rows} != old_names:
         raise ValueError('protected compiled inventory does not cover the protected import graph')
@@ -122,12 +143,22 @@ def reconcile(protected, old_rows, comparisons):
             if not measured or measured['kind'] != entry['kind']:
                 raise ValueError(f"protected frozen declaration missing from {name}: {entry['declaration_name_key']}")
         for key, old in original.items():
-            if not old['includeInStatement']:
-                continue
-            row = checked.get((name, key))
+            row = checked.pop((name, key), None)
             if row is None:
                 row = dict(module=name, nameKey=key, obligation='missing compiled comparison')
-            results.append(dict(row, kind=old['kind'], protectedStatement=old['statementTypeAddress']))
+            results.append(dict(row, kind=old['kind'], protectedStatement=old['statementTypeAddress'],
+                                includeInStatement=old['includeInStatement']))
+    # The Lean environment also contains compiler products outside the Inspector's frozen format.
+    for row in checked.values():
+        if row['module'] not in old_names:
+            raise ValueError(f"comparison outside protected inventory: {row['module']}")
+        results.append(dict(row, includeInStatement=False))
+    for row in results:
+        if row['module'] in protected['providers'] and 'comparison' in row:
+            owner = row['candidateModule']
+            if root(owner) not in {'D5', 'OmegaMathlib'}:
+                row['obligation'] = f'legacy object moved to an unadmitted owner: {owner}'
+                del row['comparison']
     return results
 
 
@@ -165,13 +196,18 @@ def publication_candidates(base, original):
 
 
 def standard_scope(inventory, changed_paths):
-    from scope import module_path
+    from scope import REG_INPUTS, SHARED, module_path
     changed = {name for path in changed_paths if (name := module_path(path))}
-    if not changed:
+    shared = not SHARED.isdisjoint(changed_paths)
+    reg_inputs = not REG_INPUTS.isdisjoint(changed_paths)
+    if not (changed or shared or reg_inputs):
         return [], []
     _, graph = import_graph('lean', with_reg=True)
     protected = set(inventory['standardConsumers'])
-    in_scope = (protected | set(consumers(graph))) & (
+    clients = protected | set(consumers(graph))
+    if reg_inputs:
+        changed.update(n for n in clients if root(n) in {'Reg', 'LeanInformationAuditInterface'})
+    in_scope = clients if shared else clients & (
         reverse_closure(inventory['imports'], changed) | reverse_closure(graph, changed))
     protected_files = set(subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '-z',
                                inventory['commit']], cwd=ROOT, text=True).split('\0'))
@@ -180,11 +216,21 @@ def standard_scope(inventory, changed_paths):
     return old, sorted(n for n in old if n in graph)
 
 
-def transferred_freezes(rows, providers, state_dir):
+def transferred_freezes(rows, providers, state_dir, protected_frozen=None):
     states = {}
+    required = {owner: {r['declaration_name_key'] for r in old['declarations']}
+                for owner, old in (protected_frozen or {}).items()}
     for row in rows:
         owner = row.get('candidateModule', '')
-        if row['module'] not in providers or root(owner) != 'D5' or 'comparison' not in row:
+        if 'comparison' not in row:
+            continue
+        frozen_key = row['nameKey'] in required.get(row['module'], ())
+        if frozen_key and owner != row['module']:
+            row['obligation'] = f"protected frozen declaration changed owner to {owner}"
+            del row['comparison']
+            continue
+        moved = row['module'] in providers and root(owner) == 'D5' and row['includeInStatement']
+        if not (frozen_key or moved):
             continue
         if owner not in states:
             state = state_dir / (owner.replace('.', '/') + '.lean.json')
@@ -195,6 +241,42 @@ def transferred_freezes(rows, providers, state_dir):
             del row['comparison']
 
 
+def standard_snapshot(stage, modules, path, directory, selected=None):
+    """Use the stage's own Lean for its .olean files, including across toolchain upgrades."""
+    directory.mkdir()
+    obj = directory / 'OmegaChecks/ObjectOccurrences.olean'
+    obj.parent.mkdir()
+    src = ROOT / 'src'
+    env = {**os.environ, 'LEAN_PATH': str(directory)}
+    subprocess.run(['lean', '-R', src, '-o', obj, src / 'OmegaChecks/ObjectOccurrences.lean'],
+                   cwd=stage, env=env, check=True)
+    req, out = directory / 'input.json', directory / 'rows.json'
+    req.write_text(json.dumps(dict(path=path, modules=modules, selected=selected)))
+    subprocess.run(['lean', '--run', src / 'OmegaChecks/StandardUses.lean', req, out],
+                   cwd=stage, env=env, check=True)
+    return json.loads(out.read_text())
+
+
+def compare_standard(old_stage, new_stage, old, new, old_path, new_path, directory):
+    before = standard_snapshot(old_stage, old, old_path, directory / 'protected-uses')
+    after = standard_snapshot(new_stage, new, new_path, directory / 'candidate-uses',
+                              [record['nameKey'] for record in before])
+    current = {(r['module'], r['nameKey']): {use['position']: use for use in r['uses']} for r in after}
+    missing = []
+    for declaration in before:
+        positions = current.get((declaration['module'], declaration['nameKey']), {})
+        for use in declaration['uses']:
+            pos = use['position']
+            found = positions.get(pos, {})
+            if (use['objectKey'], use['owner']) != (found.get('objectKey'), found.get('owner')):
+                missing.append(dict(module=declaration['module'], name=declaration['name'], nameKey=declaration['nameKey'],
+                                    position=pos, expected=use['object'], expectedOwner=use['owner'],
+                                    actual=found.get('object'), actualOwner=found.get('owner'),
+                                    obligation=f"{pos}: expected {use['object']} ({use['owner']}), "
+                                               f"found {found.get('object')} ({found.get('owner')})"))
+    return missing
+
+
 def verify(inventory, stage, temp, standard=None):
     if standard is None:
         old = inventory['providers'] + inventory['consumers']
@@ -202,30 +284,35 @@ def verify(inventory, stage, temp, standard=None):
     else:
         old, new = standard
     # Publication and removal are separate from equality of statements across revisions.
-    inventory['retainedProviders'] = [n for n in new if root(n) == 'OmegaMath']
+    if standard is None:
+        inventory['retainedProviders'] = [n for n in new if root(n) == 'OmegaMath']
     build(stage, old)
     build(ROOT, [*new, 'OmegaChecks.Interface', 'OmegaChecks.ObjectOrigins'])
     old_path = lean_path(stage, any(root(n) == 'Reg' for n in old))
     new_path = lean_path(ROOT, any(root(n) == 'Reg' for n in new))
+    if standard is not None:
+        inventory['standardObjectMismatches'] = compare_standard(stage, ROOT, old, new, old_path, new_path, temp)
+        return
     request = temp / 'comparison.json'
     output = temp / 'rows.json'
     request.write_text(json.dumps(dict(protectedPath=old_path, candidatePath=new_path,
-                                       protectedModules=old, candidateModules=new, standardUses=standard is not None)))
+                                       protectedModules=old, candidateModules=new)))
     subprocess.run(['lake', 'env', 'lean', '--run', 'src/OmegaChecks/RetiredDeclarations.lean', request, output],
                    cwd=ROOT, check=True)
     comparisons = json.loads(output.read_text())
-    if standard is not None:
-        inventory['declarations'] = comparisons
-        return
-    inspector = ROOT / '.lake/build/lean-inspector/producer/bin/reportInspector'
+    subprocess.run(['lake', '-d', ROOT / 'tools/lean-inspector', 'build',
+                    'reportInspector', '+LeanInformationAudit.TemplateEnrollment'], cwd=ROOT, check=True)
+    producer = ROOT / '.lake/build/lean-inspector/producer'
+    inspector = producer / 'bin/reportInspector'
     old_request = temp / 'protected-modules.json'
     old_measurement = temp / 'protected-objects.json'
     old_request.write_text(json.dumps(old))
     subprocess.run([inspector, '--frozen-dependencies-v1', old_request, old_measurement],
-                   cwd=stage, env={**os.environ, 'LEAN_PATH': old_path}, check=True)
+                   cwd=stage, env={**os.environ, 'LEAN_PATH': old_path + os.pathsep + str(producer / 'lib/lean')}, check=True)
     measured = read_measurement(old_measurement, old)
     inventory['declarations'] = reconcile(inventory, measured, comparisons)
-    transferred_freezes(inventory['declarations'], set(inventory['providers']), ROOT / 'Golden/Frozen/state')
+    transferred_freezes(inventory['declarations'], set(inventory['providers']), ROOT / 'Golden/Frozen/state',
+                       inventory['frozen'])
     missing_files = set(inventory['frozen']) - set(new)
     for name in inventory['frozen']:
         path = ROOT / 'Golden/Frozen/state' / (name.replace('.', '/') + '.lean.json')
@@ -244,15 +331,18 @@ def verified_snapshot(inventory, temp, standard=None):
         subprocess.run(['tar', '-x', '-C', stage], stdin=archive.stdout, check=True)
         if archive.wait():
             raise RuntimeError('failed to export the protected build')
-    for filename in ['lean-toolchain', 'lake-manifest.json']:
-        if (stage / filename).read_bytes() != (ROOT / filename).read_bytes():
-            raise ValueError(f'prepare the protected version of {filename} before comparing the two builds')
-    (stage / '.lake').mkdir()
-    (stage / '.lake/packages').symlink_to(ROOT / '.lake/packages', target_is_directory=True)
+    pins = ['lean-toolchain', 'lake-manifest.json', 'Reg/lake-manifest.json']
+    if all((stage / pin).read_bytes() == (ROOT / pin).read_bytes() for pin in pins):
+        (stage / '.lake').mkdir()
+        (stage / '.lake/packages').symlink_to(ROOT / '.lake/packages', target_is_directory=True)
+    # Lake realizes different protected dependencies from their own lockfile in the isolated stage.
     # A symlink to the interface directory itself would resolve its local package dependency against the candidate.
-    shutil.copytree(ROOT / 'tools/lean-inspector-interface', stage / 'tools/lean-inspector-interface',
-                    ignore=shutil.ignore_patterns('.lake'))
-    verify(inventory, stage, temp, standard)
+    interface = protected_interface(ROOT, inventory['commit'], temp)
+    shutil.copytree(interface, stage / 'tools/lean-inspector-interface', ignore=shutil.ignore_patterns('.lake'))
+    if inventory['providers']:
+        verify(inventory, stage, temp)
+    if standard and standard[0]:
+        verify(inventory, stage, temp, standard)
 
 
 def main():
@@ -262,6 +352,8 @@ def main():
     parser.add_argument('--verify', action='store_true', help='build and compare old and new publication artifacts')
     parser.add_argument('--changed-paths', type=Path, help='additional NUL-separated changed paths from CI')
     args = parser.parse_args()
+    if args.verify:
+        check_publication_layout(ROOT)
     inventory = dict(protected_inventory(args.protected_base))
     if args.verify:
         paths = set(subprocess.check_output(['git', 'diff', '--name-only', '-z', inventory['commit']],
@@ -271,8 +363,11 @@ def main():
             if raw and not raw.endswith(b'\0'):
                 raise ValueError('changed paths must be NUL-terminated')
             paths.update(raw.decode().split('\0'))
-        standard = None if inventory['providers'] else standard_scope(inventory, paths)
-        if standard is None or standard[0]:
+        standard = standard_scope(inventory, paths)
+        if inventory['providers']:
+            covered = set(inventory['consumers'])
+            standard = tuple([n for n in names if n not in covered] for names in standard)
+        if inventory['providers'] or standard[0]:
             with tempfile.TemporaryDirectory(prefix='omega-migration-') as temporary:
                 verified_snapshot(inventory, Path(temporary), standard)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -280,6 +375,7 @@ def main():
     print(f"{inventory['commit']}: {len(inventory['providers'])} provider modules, "
           f"{len(inventory['consumers'])} consumer modules, {len(inventory['frozen'])} frozen modules")
     pending = [row for row in inventory.get('declarations', []) if 'obligation' in row]
+    pending.extend(inventory.get('standardObjectMismatches', []))
     for row in pending:
         print(f"{row['module']} {row.get('name', row['nameKey'])}: {row['obligation']}")
     if missing := inventory.get('missingFrozenModules'):

@@ -1,5 +1,4 @@
 import OmegaChecks.Interface
-import OmegaChecks.ObjectOrigins
 
 /-! Compare old and new official compiled declarations across changes of defining module. -/
 
@@ -10,7 +9,6 @@ private structure Request where
   candidatePath : String
   protectedModules : Array String
   candidateModules : Array String
-  standardUses : Bool := false
   deriving FromJson
 
 private def load (path : String) (modules : Array String) : IO Environment := do
@@ -106,43 +104,12 @@ private def compare (env : Environment) (rename : Name → Name) (old new : Cons
   | _, _ => pure ()
   discard <| OmegaChecks.Interface.compare env rename old new
 
-/-- Protect only occurrences of pinned mathematical objects in an existing published
-signature. A new conclusion or project helper without a protected occurrence is outside
-this comparison. Paths omit binder names, so ordinary bound-variable renaming is stable. -/
-private def checkStandard (old new : Environment) (modules : Array Name) : IO (Array Json) := do
-  let mut rows := #[]
-  for module in modules do
-    let some idx := old.getModuleIdx? module | throw <| IO.userError s!"missing protected module {module}"
-    for name in old.header.moduleData[idx]!.constNames do
-      if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
-      let some src := old.find? name | throw <| IO.userError s!"missing protected declaration {name}"
-      let uses := (OmegaChecks.ObjectOrigins.occurrences src.type false).filter fun (_, n) =>
-        (owner? old n).any fun owner => owner.getRoot == `Mathlib
-      if uses.isEmpty then continue
-      let mut actual : NameMap Name := {}
-      if let some dst := new.find? name then
-        for (pos, n) in OmegaChecks.ObjectOrigins.occurrences dst.type false do actual := actual.insert pos n
-      for (pos, expected) in uses do
-        let previousOwner := owner? old expected
-        let target := actual.find? pos
-        let foundOwner := target.bind (owner? new)
-        if target != some expected || foundOwner != previousOwner || owner? new name != some module then
-          rows := rows.push <| Json.mkObj [("module", toJson module.toString), ("name", toJson name.toString),
-            ("nameKey", toJson (canonicalName name)), ("position", toJson pos.toString),
-            ("expected", toJson expected.toString), ("expectedOwner", toJson (previousOwner.map Name.toString)),
-            ("actual", toJson (target.map Name.toString)), ("actualOwner", toJson (foundOwner.map Name.toString)),
-            ("obligation", toJson s!"{pos}: expected {expected} ({previousOwner}), found {target} ({foundOwner})")]
-  return rows
-
 def main (args : List String) : IO Unit := do
   let [request, output] := args | throw <| IO.userError "expected comparison request and output paths"
   let input : Request ← IO.ofExcept <| Json.parse (← IO.FS.readFile request) >>= fromJson?
   let old ← load input.protectedPath input.protectedModules
   let new ← load input.candidatePath input.candidateModules
   let modules := input.protectedModules.map String.toName
-  if input.standardUses then
-    IO.FS.writeFile output (Json.arr (← checkStandard old new modules)).compress
-    return
   let moves ← ownerMoves old new modules
   let lookup := translateName old moves
   let bridges ← findBridges old new modules lookup

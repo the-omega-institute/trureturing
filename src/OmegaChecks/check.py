@@ -569,6 +569,7 @@ if __name__ == "__main__":
     if args.protected_base and not (args.library is not None or args.write_scope):
         run(sys.executable, "-B", SRC / "OmegaChecks/retirement.py", "--verify",
             "--protected-base", args.protected_base,
+            *(["--changed-paths", args.changed] if args.changed else []),
             "--output", ROOT / ".lake/build/omega-checks/retirement.json")
     if args.write_scope:
         if not args.changed or not args.cache_targets or args.scope:

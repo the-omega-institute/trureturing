@@ -9,7 +9,7 @@ LIBRARIES = BASIS
 CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
-CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.RetiredDeclarations",
+CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.QualifiedReferences", "OmegaChecks.RetiredDeclarations", "OmegaChecks.StandardUses",
                 "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",

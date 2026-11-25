@@ -463,6 +463,7 @@ jobs:
         env:
           CI: 'true'
           CI_BASE: ${{ needs.detect.outputs.base }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
         run: python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies
