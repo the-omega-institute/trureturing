@@ -35,7 +35,19 @@ def main (args : List String) : IO Unit := do
   let strict ← importModules imports {} (level := .private)
   let visible ← importModules imports {} (level := .exported)
   let owners ← OmegaChecks.ModuleSurface.officialModules strict lib
-  let official := owners.map fun n => {module := n : Import}
+  let mut official := owners.map fun n => {module := n : Import}
+  if roots.contains "OmegaInit" then
+    let sourceDir := System.FilePath.mk "strict"
+    let mut downstream := #[]
+    for file in ← (sourceDir / "OmegaMathlib").walkDir do
+      if file.extension == some "lean" then
+        let name ← moduleNameOfFileName file sourceDir
+        downstream := downstream.push (name.replacePrefix `OmegaMathlib `Mathlib)
+    downstream := downstream.qsort Name.lt
+    let targets := downstream.map fun n => s!"@mathlib/+{n}:olean"
+    let job ← IO.Process.spawn {cmd := "lake", args := #["build"] ++ targets}
+    unless (← job.wait) == 0 do throw <| IO.userError "failed to build the official OmegaMathlib counterparts"
+    official := official ++ downstream.map fun n => {module := n : Import}
   searchPathRef.set (original ++ [lib])
   let standard ← importModules (official.push {module := `OmegaChecks.Interface.Equations}) {}
   let log ← IO.FS.Handle.mk report .write
