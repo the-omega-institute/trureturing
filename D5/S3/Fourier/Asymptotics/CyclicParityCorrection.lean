@@ -28,11 +28,15 @@ def mesh (q : ℕ) : ℝ := 2 * Real.pi / q
 def sample {q : ℕ} (i : ZMod q) : ℝ := Real.cos (centeredAngle i)
 
 theorem centeredAngle_eq_mesh {q : ℕ} (i : ZMod q) :
-    centeredAngle i = (i.valMinAbs : ℝ) * mesh q := by
+    let spacing := mesh
+    centeredAngle i = (i.valMinAbs : ℝ) * spacing q := by
+  dsimp only
   unfold centeredAngle mesh
   ring
 
-theorem mesh_pos {q : ℕ} [NeZero q] : 0 < mesh q :=
+theorem mesh_pos {q : ℕ} [NeZero q] :
+    let spacing := mesh
+    0 < spacing q :=
   div_pos (by positivity) (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q))
 
 private theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
@@ -194,7 +198,7 @@ private theorem adjusted_sum {q : ℕ} [NeZero q] (w : ZMod q → ℝ) (δ μ ne
     · simp
   simp only [adjusted, add_mul, sub_mul, sum_add_distrib, sum_sub_distrib, hs]
 
-private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 < q) :
+private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 ≤ q) :
     sample (0 : ZMod q) = 1 ∧ sample (1 : ZMod q) = Real.cos (mesh q) ∧
       sample (-1 : ZMod q) = Real.cos (mesh q) := by
   constructor
@@ -203,7 +207,7 @@ private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 < q) :
     · simpa using sample_cast (q := q) 1 (by omega) (by omega)
     · simpa using sample_cast (q := q) (-1) (by omega) (by omega)
 
-private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 < q)
+private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
     {w : ZMod q → ℝ} {δ μ : ℝ} (hw : ∀ i, 0 ≤ w i)
     (h0 : 0 ≤ w 0 - δ - μ) (h1 : 0 ≤ w 1 + δ / 2) (hneg : 0 ≤ w (-1) + δ / 2)
     (hμ : 0 ≤ μ) : ∀ i, 0 ≤ adjusted w δ μ (δ / 2) i := by
@@ -250,7 +254,7 @@ private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 < q)
 
 /-- The mass transfer matches both cosine deficits exactly. Nonnegative resulting
 weights give a feasible comparison. -/
-theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
+theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 ≤ q)
     (w : ZMod q → ℝ) (A : ℝ) (hw : ∀ i, 0 ≤ w i) (hmass : ∑ i, w i = 1) :
     let splitMass := fun x : ℝ => x / 2
     let C := -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q)

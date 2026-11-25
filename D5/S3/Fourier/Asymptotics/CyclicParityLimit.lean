@@ -635,7 +635,7 @@ private theorem vAt_feasible {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     simpa using front 0 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrep1 : u 1 = w 1 := by simpa using front 1 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrepn : u (-1) = w (-1) := by simpa using front (-1) (mem_Icc.mpr ⟨by omega, by omega⟩)
-  have hv := adjusted_matches_moments q hq u A (fun i => act.nonneg _) (embedded_mass odd act hk)
+  have hv := adjusted_matches_moments q hq.le u A (fun i => act.nonneg _) (embedded_mass odd act hk)
   simp only [q, parity_offset] at hv
   have hv' := hv
   change 0 ≤ u 0 - _ - _ → _ at hv'

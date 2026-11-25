@@ -111,7 +111,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (q : ℕ) [NeZero q] (_hq : 4 < q)
+  Law R := ∀ (q : ℕ) [NeZero q] (_hq : 4 ≤ q)
     (w : ZMod q → ℝ) (A : ℝ) (_hw : ∀ i, 0 ≤ w i) (_hmass : ∑ i, w i = 1),
     let splitMass := R.readout () ()
     let C := -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q)
@@ -191,6 +191,140 @@ def registration :
   options := #[]
 
 end Primal
+
+namespace Mesh
+
+abbrev meshSignature := UniverseSingleReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization meshSignature :=
+  realize meshSignature (fun _ _ => mesh) (fun e => nomatch e)
+
+def rejected : Realization meshSignature :=
+  realize meshSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem spacing_varies : actual.readout () () 1 ≠ actual.readout () () 2 := by
+  simp [actual, realize, mesh]
+
+namespace Positive
+
+abbrev arena : Arena where
+  signature := meshSignature
+  Law R := ∀ (q : ℕ) [NeZero q],
+    let spacing := R.readout () ()
+    0 < spacing q
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 : (0 : ℝ) < 0 := by simpa [rejected, realize] using h 1
+  exact (lt_irrefl 0) h0
+
+def evidence : Registration arena (type_of% @mesh_pos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@mesh_pos, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    cases role
+    exact ⟨(), 1, 2, spacing_varies⟩
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@mesh_pos) (Realization meshSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicParityCorrection.Mesh.Positive.unit
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicParityCorrection.Mesh.Positive.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize meshSignature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Asymptotics.CyclicParityCorrection
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Positive
+
+namespace Centered
+
+abbrev arena : Arena where
+  signature := meshSignature
+  Law R := ∀ (q : ℕ) (i : ZMod q),
+    let spacing := R.readout () ()
+    centeredAngle i = (i.valMinAbs : ℝ) * spacing q
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hi : (1 : ZMod 4).valMinAbs = 1 := by decide
+  have hangle : centeredAngle (1 : ZMod 4) = 0 := by
+    simpa [rejected, realize] using h 4 (1 : ZMod 4)
+  unfold centeredAngle at hangle
+  norm_num [hi] at hangle
+
+def evidence : Registration arena (type_of% @centeredAngle_eq_mesh) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@centeredAngle_eq_mesh, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    cases role
+    exact ⟨(), 1, 2, spacing_varies⟩
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@centeredAngle_eq_mesh) (Realization meshSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicParityCorrection.Mesh.Centered.unit
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicParityCorrection.Mesh.Centered.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize meshSignature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Asymptotics.CyclicParityCorrection
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Centered
+
+end Mesh
 
 end
 
