@@ -10,7 +10,7 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
-<!-- GID: D5/L/Combinatorics/finner1992holder -->
+<!-- GID: D5/L/Convexity/finner1992holder -->
 # Finner's product-measure inequality
 
 The original article is in *The Annals of Probability* 20(4), 1893–1901.

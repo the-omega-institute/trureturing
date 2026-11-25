@@ -6,7 +6,7 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/finner1992holder");
+        LibraryNoteRef.Create("D5/L/Convexity/finner1992holder");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fractional incidence budgets control products of local measurable factors " +
