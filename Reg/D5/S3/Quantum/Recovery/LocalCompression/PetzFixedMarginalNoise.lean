@@ -1,6 +1,6 @@
 import Batteries.Tactic.OpenPrivate
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+import D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 import D5.S3.Quantum.Divergence.FibonacciQutritBenchmark
 import D5.S3.Quantum.ProcessReconstruction.EdgeRecordQuantum
 import D5.S3.Quantum.Entanglement.PermutationCriteria.BellBlocks
@@ -23,7 +23,7 @@ open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm traceNorm_no
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceRight trace_partialTraceRight marginalRight density_posSemidef)
 open _root_.D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
-open _root_.D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+open _root_.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 open _root_.D5.S3.Quantum.Recovery.BKMFlagRefinement (partialTracePetz lift)
 open _root_.D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open _root_.D5.S3.Quantum.Schatten.TraceNorm (traceNormUINorm)
@@ -33,9 +33,9 @@ open _root_.Reg.Support.UniverseSingleReadout (signature sensitivity)
 
 open private diagonalState from D5.S3.Quantum.ProcessReconstruction.EdgeRecordQuantum
 open private traceLog diagReal diagonal_traceLog from D5.S3.Quantum.Divergence.FibonacciQutritBenchmark
-open private raw finiteTraceLog_eq_raw noiseWithEnvironment from D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+open private raw finiteTraceLog_eq_raw noiseWithEnvironment from D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 
-namespace Reg.D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+namespace Reg.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 
 universe u
 
@@ -205,8 +205,8 @@ def family : Registration arena.{u} (type_of% @noise_loss_contract.{u}) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@noise_loss_contract.{u}) (Realization observation.{u}) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.PetzFixedMarginalNoise.noise_loss_contract.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Recovery.PetzFixedMarginalNoise.Contraction.family
+  unitName := `D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise.noise_loss_contract.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise.Contraction.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -223,7 +223,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+    owner := `D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
     definition := none
     coordinates := #[0, 1, 8, 9]
     readouts := #[{
@@ -297,8 +297,8 @@ def family : Registration arena.{u} (type_of% @exists_strict_score_noise.{u}) wh
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_strict_score_noise.{u}) (Realization observation.{u}) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.PetzFixedMarginalNoise.exists_strict_score_noise.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Recovery.PetzFixedMarginalNoise.StrictScore.family
+  unitName := `D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise.exists_strict_score_noise.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise.StrictScore.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -314,7 +314,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+    owner := `D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
     definition := none
     coordinates := #[0, 1, 9]
     readouts := #[{
@@ -330,4 +330,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end StrictScore
 
-end Reg.D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+end Reg.D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise

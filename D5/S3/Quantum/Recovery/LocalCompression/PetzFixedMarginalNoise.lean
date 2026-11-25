@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Recovery/PetzFixedMarginalNoise
+/- GID: D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise
    generality: I
-   mirror-B: D5/B/S3/Quantum/Recovery/PetzFixedMarginalNoise
+   mirror-B: D5/B/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -51,7 +51,7 @@ open D5.S3.Quantum.Recovery.BKMFlagRefinement (joint lift lift_eq_joint cfc_join
     relativeEntropyOfMatrices)
 open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 
-namespace D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+namespace D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise
 
 universe u
 
@@ -496,4 +496,4 @@ theorem exists_strict_score_noise (X Y : DensityState (R × E))
 
 end PetzScore
 
-end D5.S3.Quantum.Recovery.PetzFixedMarginalNoise
+end D5.S3.Quantum.Recovery.LocalCompression.PetzFixedMarginalNoise

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.LocalCompression;
 
 internal sealed class PetzFixedMarginalNoiseDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class PetzFixedMarginalNoiseDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("noise-loss-contraction"),
-                DeclarationHandle.Create("D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.noise_loss_contract"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.noise_loss_contract"),
                 H("Contraction of the supported entropy loss"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -20,7 +20,7 @@ internal sealed class PetzFixedMarginalNoiseDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("strict-ordinary-petz-score"),
-                DeclarationHandle.Create("D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.exists_strict_score_noise"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.exists_strict_score_noise"),
                 H("Persistence of a strict ordinary Petz score"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

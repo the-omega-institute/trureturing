@@ -6,9 +6,9 @@ Environmental replacement preserves both retained marginals, contracts the suppo
 
 **Theorem 1.1 (Contraction of the supported entropy loss).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.noise_loss_contract`
+Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.noise_loss_contract`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.noise_loss_contract` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.noise_loss_contract` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The replacement pair has exactly the retained entropy. Its uniform environment m
 
 **Theorem 1.2 (Persistence of a strict ordinary Petz score).**
 
-Lean statement: `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.exists_strict_score_noise`
+Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.exists_strict_score_noise`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.exists_strict_score_noise` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.exists_strict_score_noise` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ Fixing the marginals fixes the middle factor of the Petz map. Continuity of the 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.exists_strict_score_noise`
-- Truth anchor: `D5/S3/Quantum/Recovery/PetzFixedMarginalNoise.noise_loss_contract`
-- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
-- Dependency: [D5/S3/Quantum/Divergence/SupportedTraceLog](../Divergence/SupportedTraceLog.md)
-- Dependency: [D5/S3/Quantum/Divergence/UmegakiSupportedNoise](../Divergence/UmegakiSupportedNoise.md)
-- Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinementPetz](BKMFlagRefinementPetz.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.exists_strict_score_noise`
+- Truth anchor: `D5/S3/Quantum/Recovery/LocalCompression/PetzFixedMarginalNoise.noise_loss_contract`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
+- Dependency: [D5/S3/Quantum/Divergence/SupportedTraceLog](../../Divergence/SupportedTraceLog.md)
+- Dependency: [D5/S3/Quantum/Divergence/UmegakiSupportedNoise](../../Divergence/UmegakiSupportedNoise.md)
+- Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinementPetz](../BKMFlagRefinementPetz.md)
