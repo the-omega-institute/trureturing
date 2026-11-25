@@ -7,10 +7,10 @@
    digest: Classify rational three-point unit Gram realizations in five coordinates. -/
 
 import D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex
+import D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint
 import Mathlib.Algebra.Quaternion
 import Mathlib.Algebra.Order.Field.Rat
 import Mathlib.Tactic.FieldSimp
-import Mathlib.NumberTheory.SumFourSquares
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.Tactic.LinearCombination
@@ -19,6 +19,7 @@ import OmegaMath.Algebra.Quaternion
 open scoped Quaternion
 open Quaternion
 open D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex (rational_unit_reflection)
+open D5.S3.Quantum.Entanglement.Marginals.RationalQubitMixedEndpoint (four_rational_squares)
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
@@ -99,19 +100,8 @@ private theorem rationalQuaternionGramExtension (x : ℍ[ℚ]) (hx : x ≠ 0) (u
     · rw [show y = (star x)⁻¹ * q from rfl, ← mul_assoc, mul_inv_cancel₀ hs, one_mul]
 
 private theorem rationalQuaternionNorm (t : ℚ) (ht : 0 ≤ t) : ∃ x : ℍ[ℚ], normSq x = t := by
-  have hn : 0 ≤ t.num := Rat.num_nonneg.mpr ht
-  have hd : (t.den : ℚ) ≠ 0 := by exact_mod_cast t.den_ne_zero
-  obtain ⟨i,j,k,l,h⟩ := Nat.sum_four_squares (t.num.toNat * t.den)
-  let q : ℍ[ℚ] := ⟨i, j, k, l⟩
-  have hq : normSq q = (t.num : ℚ) * (t.den : ℚ) := by
-    have h' := congrArg (fun n : ℕ => (n : ℚ)) h
-    push_cast at h'
-    rw [show ((t.num.toNat : ℕ) : ℚ) = (t.num : ℚ) by exact_mod_cast Int.toNat_of_nonneg hn] at h'
-    simpa [q, normSq_def'] using h'
-  refine ⟨(t.den : ℚ)⁻¹ • q, ?_⟩
-  rw [normSq_smul, hq]
-  conv_rhs => rw [← Rat.num_div_den t]
-  field_simp
+  obtain ⟨a, b, c, d, h⟩ := four_rational_squares t ht
+  exact ⟨⟨a, b, c, d⟩, by simpa only [Quaternion.normSq_def'] using h⟩
 
 private theorem rationalAnchoredUnitTriple (a b c : ℚ) (ha : 0 ≤ 1 - a^2) (hb : 0 ≤ 1 - b^2) :
     (∃ x y : ℍ[ℚ], a^2 + normSq x = 1 ∧ b^2 + normSq y = 1 ∧

@@ -35,5 +35,7 @@ internal sealed class RationalUnitTripleGramDocument : IScribeDocumentDefinition
                     + "Mordell in Hunsucker, Section 1. The rational proof also treats determinant zero."))),
             DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
-            "D5/S3/Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex"))]));
+            "D5/S3/Combinatorics/Geometry/EuclideanSimplex/RationalUnitSimplex")),
+         DocumentEdge.Dependency.Create(GidRef.Create(
+            "D5/S3/Quantum/Entanglement/Marginals/RationalQubitMixedEndpoint"))]));
 }
