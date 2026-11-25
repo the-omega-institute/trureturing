@@ -59,9 +59,8 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
 public def translateProofTerm (env : Environment) (term : Expr) : Except String Expr :=
   (translateTerm env {} term).run' {}
 
-/-- Search the given telescope for an assumption, reflexivity, or the constructor of True.
-Every returned term has been independently type-checked against the full interface. -/
-public partial def elementaryProof? (env : Environment) (type : Expr) : Option Expr :=
+/-- Candidate terms for assumptions and reflexive propositions in a telescope. -/
+public partial def elementaryCandidates (type : Expr) : List Expr :=
   let rec terms (goal : Expr) (depth : Nat) : List Expr := Id.run do
     let mut candidates := (List.range depth).map mkBVar
     if let .const n us := goal.getAppFn then
@@ -74,7 +73,11 @@ public partial def elementaryProof? (env : Environment) (type : Expr) : Option E
     if let .forallE n dom body bi := goal then
       candidates := (terms body (depth + 1)).map (fun b => Expr.lam n dom b bi) ++ candidates
     return candidates
-  (terms type 0).find? (fun e =>
+  terms type 0
+
+/-- Return a candidate that the kernel checks against the full interface. -/
+public def elementaryProof? (env : Environment) (type : Expr) : Option Expr :=
+  (elementaryCandidates type).find? (fun e =>
     (Kernel.check env {} e).toOption.any (Kernel.isDefEqGuarded env {} type))
 
 end OmegaChecks.InitCompiler

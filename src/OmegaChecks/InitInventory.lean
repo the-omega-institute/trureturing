@@ -1,10 +1,13 @@
-import Lean
+module
+public import Lean
+import all Lean.Util.CollectAxioms
+
+public section
 
 /-!
 Inventory of named public declarations in every installed module of the pinned `Init` library,
 including modules importable separately from its umbrella. Constructors, recursors and other
-named generated declarations are included. If several modules emit the same generated name,
-the row uses the owner selected by the combined public environment. The inventory omits syntax,
+named generated declarations are included. Each defining module has its own row for a shared name. The inventory omits syntax,
 aliases and private or internal names. Each row gives the original implementation's transitive
 axioms and the defining module, if any, of its strict `Omega.` counterpart. The strict library
 audit checks the corresponding types, implementations and strict axiom closures.
@@ -90,11 +93,22 @@ private def declarationKind : ConstantInfo → String
   | .ctorInfo _ => "constructor"
   | .recInfo _ => "recursor"
 
-private def inventory (visible strict : Environment) (modules : Array Name)
+private def inventory (lib : System.FilePath) (visible strict : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) : CoreM Json := do
   let official ← getEnv
   let boundaries : NameMap Name := OmegaChecks.InitBoundaries.reductions.foldl
     (init := {}) fun acc (name, target, _) => acc.insert name target
+  let mut names : NameSet := {}
+  let mut duplicateNames : NameSet := {}
+  let publicName := fun (n : Name) => !isPrivateName n && !n.isInternalOrNum && !n.hasMacroScopes
+  for data in visible.header.moduleData do
+    for n in data.constNames do
+      if publicName n then
+        if names.contains n then duplicateNames := duplicateNames.insert n
+        names := names.insert n
+  let mut matchedUnique : NameSet := {}
+  let mut axiomUnique : NameSet := {}
+  let mut withAxiomsUnique : NameSet := {}
   let mut rows := #[]
   let mut matchingNames := 0
   let mut directAxioms := 0
@@ -103,23 +117,42 @@ private def inventory (visible strict : Environment) (modules : Array Name)
     file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
-    for name in visible.header.moduleData[idx]!.constNames.qsort Name.lt do
-      if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
-      if visible.getModuleIdxFor? name != some idx then continue
-      let some info := official.find? name | throwError "missing official declaration {name}"
-      let axioms ← collectAxioms name
+    let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
+    let some privateIdx := official.getModuleIdx? owner | throwError "missing private module {owner}"
+    let infos ← if publicNames.any duplicateNames.contains then do
+      -- Load this defining file directly. The combined environment may select a different
+      -- module's declaration with the same name.
+      let path := modToFilePath lib owner "olean"
+      let parts ← readModuleDataParts #[path, path.addExtension "server", path.addExtension "private"]
+      pure (parts.map (·.1))[2]!.constants
+    else pure official.header.moduleData[privateIdx]!.constants
+    let localDecls : NameMap ConstantInfo := infos.foldl (fun m c => m.insert c.name c) {}
+    let localAxioms := exportedAxiomsExt.getModuleEntries official privateIdx
+    let expected := owner.replacePrefix `Init `OmegaInit
+    let strictNames := (strict.getModuleIdx? expected).map fun i =>
+      NameSet.ofList strict.header.moduleData[i]!.constNames.toList
+    for name in publicNames.qsort Name.lt do
+      let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
+      let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
+        | throwError "missing official axiom closure for {owner}/{name}"
       let strictName := `Omega ++ name
-      let strictOwner := (strict.getModuleIdxFor? strictName).map (strict.header.moduleNames[·]!)
-      let matched := strictOwner == some (owner.replacePrefix `Init `OmegaInit)
-      if matched then matchingNames := matchingNames + 1
+      let matched := strictNames.any (·.contains strictName)
+      let strictOwner := if matched then some expected else none
+      if matched then
+        matchingNames := matchingNames + 1
+        matchedUnique := matchedUnique.insert name
       if !matched && !info.isAxiom then
         if let some file := gaps then
           file.putStrLn <| String.intercalate "\t" [owner.toString, name.toString,
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
             ((boundaries.get? name).map Name.toString).getD ""]
-      if info.isAxiom then directAxioms := directAxioms + 1
-      if !axioms.isEmpty then withAxioms := withAxioms + 1
+      if info.isAxiom then
+        directAxioms := directAxioms + 1
+        axiomUnique := axiomUnique.insert name
+      if !axioms.isEmpty then
+        withAxioms := withAxioms + 1
+        withAxiomsUnique := withAxiomsUnique.insert name
       rows := rows.push <| Json.mkObj [
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
@@ -129,7 +162,9 @@ private def inventory (visible strict : Environment) (modules : Array Name)
         ("strictModule", toJson (strictOwner.map Name.toString))]
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
     ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames)]
-  return Json.mkObj [("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+  let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
+    ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
+  return Json.mkObj [("schemaVersion", toJson 2), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 
 def main (args : List String) : IO Unit := do
@@ -158,6 +193,6 @@ def main (args : List String) : IO Unit := do
   for owner in strict.allImportedModuleNames do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
-  let result ← (inventory visible strict modules gaps).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let result ← (inventory lib visible strict modules gaps).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

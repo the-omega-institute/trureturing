@@ -24,3 +24,6 @@ example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 `lib/` 保存按官方定义模块组织的编译文件。程序对所选的基础库模块运行仓库的 `omegaAudit --exact-roots`，检查模块闭包、公开归属和可计算对应，逐声明检查公理并从空环境重放内核。全量构建还将 OmegaMath 和 OmegaMathlib 的下游源码编译到同一 `lib/`，验证普通 `import OmegaMath`，并审计其实际导入闭包。成功后输出目录才会出现。两次审计的读数分别保存在 `audit.txt` 和 `omegamath-audit.txt`。全量缺口表位于同一目录的 `init-gaps.tsv`。
 
 这个独立制品用于内核类型检查、证明和定义归约。新生成声明的原生可执行代码、语法扩展、实例搜索和结构字段语法均不在移植覆盖范围内。
+
+公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
+`init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。

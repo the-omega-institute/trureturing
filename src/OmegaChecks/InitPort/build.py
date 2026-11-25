@@ -69,12 +69,12 @@ def generate(stage, product, seed, roots, excluded):
     inventory = product / "inventory.jsonl"
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
-    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations")
+    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitCompiler.Proofs")
     with selection.open("w") as rejected:
         while True:
             exclusions = stage / "exclusions.json"
-            exclusions.write_text(json.dumps(sorted(omissions)))
-            run("lean", "--run", HERE / "Kernel.lean", seed, transfer, inventory, exclusions, *roots)
+            exclusions.write_text(json.dumps(sorted(omissions.items())))
+            run("lake", "env", "lean", "--run", HERE / "Kernel.lean", seed, transfer, inventory, exclusions, *roots)
             run("lean", "--run", HERE / "Modules.lean", transfer, seed, artifact, *roots)
             graph = dict(json.loads((product / "modules.json").read_text()))
             try:
@@ -112,7 +112,8 @@ def main():
     parser.add_argument("output", type=Path, help="new directory for the audited module tree and inventory")
     parser.add_argument("modules", nargs="*", help="official Init roots (default: every installed Init module)")
     parser.add_argument("--seed", type=Path, default=DEFAULT_SEED, help="compiled strict OmegaInit seed")
-    parser.add_argument("--exclude", action="append", default=[], help="additional official names to leave out")
+    parser.add_argument("--exclude", action="append", default=[],
+                        help="omit a generated candidate; declarations already in the seed cannot be excluded")
     parser.add_argument("-j", type=int, default=4, help="parallel jobs for the full OmegaMath consumer build")
     args = parser.parse_args()
     seed = args.seed.resolve()

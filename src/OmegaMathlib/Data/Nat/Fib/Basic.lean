@@ -1,6 +1,7 @@
 module
 public import Mathlib.Data.Nat.Fib.Basic
 public import OmegaInit.Data.Nat.Lemmas
+public import OmegaMathlib.Order.RelClasses
 
 /-! Namespace aliases to the pinned public interface. -/
 public section

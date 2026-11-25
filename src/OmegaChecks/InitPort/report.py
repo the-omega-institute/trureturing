@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+from collections import defaultdict
 from pathlib import Path
 import subprocess
 import tempfile
@@ -18,7 +19,11 @@ def report(product):
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
         with (product / "inventory.jsonl").open() as f:
-            attempts = {n: (why, dep) for _, n, _, why, dep in map(json.loads, f)}
+            attempts = {}
+            owners = defaultdict(list)
+            for owner, name, _, why, dep in map(json.loads, f):
+                attempts[owner, name] = (why, dep)
+                owners[name].append(owner)
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
         output = stage / "init-gaps.tsv"
@@ -31,11 +36,24 @@ def report(product):
                     continue
                 name = row["name"]
                 path = [name]
-                why, dep = attempts.get(name, ("outside selected roots", ""))
+                key = (row["module"], name)
+                if key in attempts:
+                    why, dep = attempts[key]
+                elif name in owners:
+                    why, dep = "no candidate at this defining module (attempted in " + ", ".join(owners[name]) + ")", ""
+                else:
+                    why, dep = "outside selected roots", ""
                 while dep and dep not in path:
                     path.append(dep)
-                    why, dep = attempts.get(dep, ("dependency missing from candidate inventory", ""))
-                reason = rejected.get(path[-1], why)
+                    dep_owners = owners.get(dep, [])
+                    if len(dep_owners) != 1:
+                        why = ("ambiguous candidate dependency owner" if dep_owners else
+                               "dependency missing from candidate inventory")
+                        dep = ""
+                        break
+                    key = (dep_owners[0], dep)
+                    why, dep = attempts[key]
+                reason = rejected.get(path[-1], why) if why == "no computation correspondence" else why
                 if dep in path:
                     reason = f"dependency cycle through {dep}"
                 writer.writerow([row["module"], name, row["kind"], str(row["unsafe"]).lower(),

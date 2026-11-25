@@ -1,5 +1,6 @@
 import Lean
 import Lean.Replay
+import OmegaChecks.InitCompiler.Proofs
 
 open Lean
 
@@ -67,7 +68,7 @@ structure Context where
   source : Environment
   base : Environment
   maxHeartbeats : Nat
-  excluded : NameSet
+  excluded : NameMap String
   publicNames : NameSet
   output : IO.FS.Handle
 
@@ -149,6 +150,62 @@ def checkDecl (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
   let task ← work.asTask (prio := .dedicated)
   return task.get
 
+/-- For equations compiled by the pattern matcher, expose at most two Nat or List arguments.
+Each leaf proposes reflexivity. The kernel checks the entire resulting elimination term. -/
+private partial def equationCases? (type : Expr) (fuel := 2) (depth := 0) : Option Expr := do
+  let fresh := fun (n : Name) => mkFVar ⟨Name.num n depth⟩
+  let lam := fun (x : Expr) n domain body bi => Expr.lam n domain (body.abstract #[x]) bi
+  let .forallE n dom body bi := type |
+    let .const `Omega.Eq us := type.getAppFn | none
+    let #[α, lhs, _] := type.getAppArgs | none
+    return mkApp2 (mkConst `Omega.Eq.refl us) α lhs
+  let x := fresh `x
+  let motive := Expr.lam n dom body .default
+  let after := fun y f => equationCases? (body.instantiate1 y) f (depth + 1)
+  if fuel > 0 && dom.isConstOf `Omega.Nat then
+    let zero ← after (mkConst `Omega.Nat.zero) (fuel - 1)
+    let k := fresh `k
+    let step ← after (mkApp (mkConst `Omega.Nat.succ) k) (fuel - 1)
+    let ihType := body.instantiate1 k
+    let succ := lam k `k dom (.lam `ih ihType step .default) .default
+    return lam x n dom (mkApp4 (mkConst `Omega.Nat.rec [.zero]) motive zero succ x) bi
+  if let .app (.const `Omega.List [u]) α := dom then
+    if fuel > 0 then
+      let nil ← after (mkApp (mkConst `Omega.List.nil [u]) α) (fuel - 1)
+      let head := fresh `head
+      let tail := fresh `tail
+      let step ← after (mkApp3 (mkConst `Omega.List.cons [u]) α head tail) (fuel - 1)
+      let ih := Expr.lam `ih (body.instantiate1 tail) step .default
+      let cons := lam head `head α (lam tail `tail dom ih .default) .default
+      return lam x n dom (mkApp5 (mkConst `Omega.List.rec [.zero,u]) α motive nil cons x) bi
+  return lam x n dom (← after x fuel) bi
+
+/-- Search only theorem interfaces with all referenced constants present. Share one kernel
+heartbeat limit across all attempted proofs and keep the original rejection on failure. -/
+private def alternateProof (ci : ConstantInfo) : M Bool := do
+  let .thmInfo th := ci | return false
+  let c ← read
+  let rename := portName c.source
+  let type := translate rename th.type
+  let state ← get
+  if invalidExpr type || type.getUsedConstants.any (fun n => (state.env.find? n).isNone) then return false
+  let base := {th with name := rename th.name, type, all := [rename th.name]}
+  let work : BaseIO (Option Kernel.Environment) := do
+    let stop := (← IO.getNumHeartbeats) + c.maxHeartbeats
+    let mut candidates := OmegaChecks.InitCompiler.elementaryCandidates type
+    if th.name == th.name.getPrefix ++ `eq_def then
+      if let some term := equationCases? type then candidates := term :: candidates
+    for term in candidates do
+      if (← IO.getNumHeartbeats) >= stop then break
+      let decl := Declaration.thmDecl {base with value := term}
+      if let .ok next := state.env.addDeclCore stop.toUSize 1000 decl none then return some next
+    return none
+  let task ← work.asTask (prio := .dedicated)
+  if let some next := task.get then
+    modify fun s => {s with env := next}
+    return ← record ci.name .added
+  return false
+
 partial def visit (n : Name) : M Bool := do
   let c ← read
   if let some result := (← get).results[n]? then
@@ -175,7 +232,7 @@ partial def visit (n : Name) : M Bool := do
         let some matcher := m.getAppFn.constName? | return true
         return (Meta.getMatcherInfoCore? c.base (portName c.source matcher)).isNone
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
-  if c.excluded.contains n then return ← record n (.blocked "no computation correspondence")
+  if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
   if ci.isUnsafe || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
@@ -205,11 +262,18 @@ partial def visit (n : Name) : M Bool := do
   if !(ci matches .thmInfo _ | .defnInfo _ | .opaqueInfo _) then
     return ← record n (.blocked "requires inductive family or primitive")
   modify fun s => {s with visiting := s.visiting.insert n}
-  for dep in ci.getUsedConstantsAsSet do
+  for dep in ci.type.getUsedConstantsAsSet do
     if !(← visit dep) then return ← record n (.blocked "unavailable dependency" (some dep))
-  let .ok decl := translateDecl c.source ci | return ← record n (.blocked "open term or unsupported literal")
+  for dep in ci.getUsedConstantsAsSet do
+    if !(← visit dep) then
+      if ← alternateProof ci then return true
+      return ← record n (.blocked "unavailable dependency" (some dep))
+  let .ok decl := translateDecl c.source ci |
+    if ← alternateProof ci then return true
+    return ← record n (.blocked "open term or unsupported literal")
   match ← checkDecl (← get).env decl c.maxHeartbeats with
   | .error ex =>
+    if ← alternateProof ci then return true
     let msg ← ex.toMessageData {} |>.toString
     return ← record n (.blocked ("kernel: " ++ (msg.take 1200).toString))
   | .ok next =>
@@ -258,8 +322,14 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
       throw <| IO.userError s!"invalid strict seed {ci.name}"
   let initial ← (← mkEmptyEnvironment).toKernelEnv.replay base.constants.map₁
   let output ← IO.FS.Handle.mk outPath .write
-  let exclusions : Array String ← IO.ofExcept <| (Json.parse (← IO.FS.readFile exclude)) >>= fromJson?
-  let excluded := NameSet.ofList (exclusions.toList.map String.toName)
+  let config ← IO.ofExcept <| Json.parse (← IO.FS.readFile exclude)
+  let exclusions : Array (String × String) ← IO.ofExcept <| do
+    if let .ok entries := fromJson? (α := Array (String × String)) config then return entries
+    return (← fromJson? (α := Array String) config).map fun n => (n, "no computation correspondence")
+  for (name, _) in exclusions do
+    if base.contains (portName source name.toName) then
+      throw <| IO.userError s!"cannot exclude {name}: already present in the source seed"
+  let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let ctx := {source,base,publicNames,excluded,output, maxHeartbeats : Context}
   let action : M Unit := do

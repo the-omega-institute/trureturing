@@ -8,6 +8,9 @@ prelude
 
 noncomputable section
 
+port_inductive Acc
+port_inductive WellFounded
+
 namespace Omega
 
 /-- Mark the value of a parameter during well-founded recursion. -/
