@@ -152,6 +152,34 @@ theorem frontGram_sub_le (n : ℕ) (hn : 0 < n) (u : ℝ) (i j : Fin 2) :
     _ ≤ 2 * u ^ 2 * n := by
       nlinarith only [mul_nonneg (sub_nonneg.mpr hone) (sq_nonneg u)]
 
+private theorem frontGram_zero_card (n : ℕ) (hn : 0 < n) : frontGram n 0 0 0 = 2 + (n : ℝ)⁻¹ := by
+  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hz (x : ℝ) : frontFeatures 0 x 0 = 1 := by norm_num [frontFeatures]
+  simp only [frontGram, hz, mul_one, sum_const, nsmul_eq_mul, card_latticeInterval]
+  field_simp
+
+private theorem frontGram_zero_second (n : ℕ) (hn : 0 < n) : frontGram n 0 0 1 =
+    (1 + (n : ℝ)⁻¹) * (2 + (n : ℝ)⁻¹) / 3 := by
+  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have h0 (x : ℝ) : frontFeatures 0 x 0 = 1 := by norm_num [frontFeatures]
+  have h1 (x : ℝ) : frontFeatures 0 x 1 = x ^ 2 := by simp [frontFeatures]
+  simp only [frontGram, h0, h1, one_mul, div_pow, ← sum_div, sum_lattice_square]
+  field_simp
+
+private theorem frontGram_zero_fourth (n : ℕ) (hn : 0 < n) : frontGram n 0 1 1 =
+    (1 + (n : ℝ)⁻¹) * (2 + (n : ℝ)⁻¹) *
+      (3 + 3 * (n : ℝ)⁻¹ - ((n : ℝ)⁻¹) ^ 2) / 15 := by
+  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have h1 (x : ℝ) : frontFeatures 0 x 1 = x ^ 2 := by simp [frontFeatures]
+  simp only [frontGram, h1]
+  simp_rw [show ∀ x : ℝ, x ^ 2 * x ^ 2 = x ^ 4 by intro x; ring,
+    div_pow, ← sum_div, sum_lattice_fourth]
+  field_simp
+
+private theorem frontGram_zero_symmetric (n : ℕ) : frontGram n 0 1 0 = frontGram n 0 0 1 := by
+  unfold frontGram
+  simp_rw [mul_comm (frontFeatures 0 _ 1)]
+
 /-- The normalized lattice moments have the uniform-window limit. -/
 theorem frontGram_zero_tendsto :
     Tendsto (fun n : ℕ => frontGram n 0) atTop
@@ -169,43 +197,52 @@ theorem frontGram_zero_tendsto :
     convert (((hInv.const_add 1).mul (hInv.const_add 2)).mul
       (((hInv.const_mul 3).const_add 3).sub (hInv.pow 2))).div_const 15 using 1 <;> norm_num
   have hpos : ∀ᶠ n : ℕ in atTop, 0 < n := eventually_ge_atTop 1
-  have hcard (n : ℕ) (hn : 0 < n) : frontGram n 0 0 0 = 2 + (n : ℝ)⁻¹ := by
-    have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-    have hz (x : ℝ) : frontFeatures 0 x 0 = 1 := by norm_num [frontFeatures]
-    simp only [frontGram, hz, mul_one, sum_const, nsmul_eq_mul, card_latticeInterval]
-    field_simp
-  have hsq (n : ℕ) (hn : 0 < n) : frontGram n 0 0 1 =
-      (1 + (n : ℝ)⁻¹) * (2 + (n : ℝ)⁻¹) / 3 := by
-    have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-    have h0 (x : ℝ) : frontFeatures 0 x 0 = 1 := by norm_num [frontFeatures]
-    have h1 (x : ℝ) : frontFeatures 0 x 1 = x ^ 2 := by simp [frontFeatures]
-    simp only [frontGram, h0, h1, one_mul, div_pow, ← sum_div, sum_lattice_square]
-    field_simp
-  have hfourth (n : ℕ) (hn : 0 < n) : frontGram n 0 1 1 =
-      (1 + (n : ℝ)⁻¹) * (2 + (n : ℝ)⁻¹) *
-        (3 + 3 * (n : ℝ)⁻¹ - ((n : ℝ)⁻¹) ^ 2) / 15 := by
-    have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-    have h1 (x : ℝ) : frontFeatures 0 x 1 = x ^ 2 := by simp [frontFeatures]
-    simp only [frontGram, h1]
-    simp_rw [show ∀ x : ℝ, x ^ 2 * x ^ 2 = x ^ 4 by intro x; ring,
-      div_pow, ← sum_div, sum_lattice_fourth]
-    field_simp
-  have hsymm (n : ℕ) : frontGram n 0 1 0 = frontGram n 0 0 1 := by
-    unfold frontGram
-    simp_rw [mul_comm (frontFeatures 0 _ 1)]
   apply tendsto_pi_nhds.2
   intro i
   apply tendsto_pi_nhds.2
   intro j
   fin_cases i <;> fin_cases j
   · apply h00.congr'
-    filter_upwards [hpos] with n hn using (hcard n hn).symm
+    filter_upwards [hpos] with n hn using (frontGram_zero_card n hn).symm
   · apply h01.congr'
-    filter_upwards [hpos] with n hn using (hsq n hn).symm
+    filter_upwards [hpos] with n hn using (frontGram_zero_second n hn).symm
   · apply h01.congr'
-    filter_upwards [hpos] with n hn using (hsymm n |>.trans (hsq n hn)).symm
+    filter_upwards [hpos] with n hn using (frontGram_zero_symmetric n |>.trans (frontGram_zero_second n hn)).symm
   · apply h11.congr'
-    filter_upwards [hpos] with n hn using (hfourth n hn).symm
+    filter_upwards [hpos] with n hn using (frontGram_zero_fourth n hn).symm
+
+/-- The exact lattice fit has the prescribed mass and normalized second moment. -/
+theorem frontGram_reference_fit (n : ℕ) (hn : 0 < n) :
+    let m := (n : ℝ) * (n + 1) / 5
+    let t := (n : ℝ) * (n + 1) - 1 / 2
+    let Z := normalizer n t
+    frontGram n 0 *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z] = ![1, m / (n : ℝ) ^ 2] := by
+  intro m t Z
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hrad : (n : ℝ) ^ 2 ≤ t := by dsimp [t]; nlinarith only [hn1]
+  have hZ : 0 < Z := normalizer_pos n hn hrad
+  have hnorm : Z = (2 * (n : ℝ) + 1) * (2 * (n : ℝ) * (n + 1) / 3 - 1 / 2) := by
+    rw [show Z = normalizer n t from rfl, normalizer_formula]
+    dsimp [t]
+    ring
+  funext i
+  fin_cases i
+  · change (frontGram n 0 *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z]) 0 = 1
+    rw [mulVec, dotProduct, Fin.sum_univ_two, frontGram_zero_card n hn, frontGram_zero_second n hn]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+    dsimp only [t]
+    field_simp [hnR.ne', hZ.ne']
+    rw [hnorm]
+    ring
+  · change (frontGram n 0 *ᵥ ![n * t / Z, -(n : ℝ) ^ 3 / Z]) 1 = m / (n : ℝ) ^ 2
+    rw [mulVec, dotProduct, Fin.sum_univ_two, frontGram_zero_symmetric n,
+      frontGram_zero_second n hn, frontGram_zero_fourth n hn]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+    dsimp only [t, m]
+    field_simp [hnR.ne', hZ.ne']
+    rw [hnorm]
+    ring
 
 end
 
