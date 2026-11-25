@@ -3,6 +3,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import Mathlib.Tactic.FinCases
 
+/-! Source-bound observations of complete graph and clique-sum reconstruction radii. -/
+
 namespace Reg.D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.Support
@@ -93,7 +95,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "arg", "body", "body", "body", "body", "arg"]
       stateBinder := 7
       functionOperand := false
       stateOperand := none
@@ -130,7 +133,13 @@ private theorem zero_two (f : ZeroDivSkew 2) : f = 0 := by
   apply Subtype.ext
   funext i j
   change f.val i j = 0
-  fin_cases i <;> fin_cases j <;> first | exact hd _ | linarith
+  fin_cases i <;> fin_cases j
+  · exact hd 0
+  · change f.val (0 : Fin 2) 1 = 0
+    simpa using h0
+  · change f.val (1 : Fin 2) 0 = 0
+    simpa using h1
+  · exact hd 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -173,7 +182,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "arg", "body", "arg", "arg", "body", "arg", "body",
+        "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -214,7 +224,7 @@ abbrev arena : Arena where
     ∃ Φ : V → E, ∀ x y, G.Adj x y →
       ‖g x y - (Φ y - Φ x)‖ ≤ A.readout () m R
 
-private theorem rejected_law : ¬ arena.{w,u,v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   classical
   intro h
   let I := ULift.{w} Unit
@@ -232,7 +242,7 @@ private theorem rejected_law : ¬ arena.{w,u,v}.Law rejected := by
     (fun _ => Set.univ)
     (fun x => ⟨a,Set.mem_univ x⟩)
     (fun x y _ => ⟨a,Set.mem_univ x,Set.mem_univ y⟩)
-    1 (by decide) (by simp) (by simp [Subsingleton.elim _ _]) (by simp)
+    1 (by decide) (by simp) (by intro a b hab _; exact (hab (Subsingleton.elim _ _)).elim) (by simp)
     (fun _ _ => 0) 0 le_rfl (fun _ _ => 0) (by simp)
   have hxy : (⊤ : SimpleGraph V).Adj x y := by
     change x ≠ y
@@ -242,10 +252,11 @@ private theorem rejected_law : ¬ arena.{w,u,v}.Law rejected := by
   change ‖(0 : ULift.{v} ℝ) - (Φ y - Φ x)‖ ≤ -1 at he
   linarith [norm_nonneg ((0 : ULift.{v} ℝ) - (Φ y - Φ x))]
 
-def family : Registration arena.{w,u,v} (type_of% (@separatedCliqueSum_banach_gain_potential.{w,u,v})) where
+def family : Registration arena.{u,v,w}
+    (type_of% (@separatedCliqueSum_banach_gain_potential.{u,v,w})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@separatedCliqueSum_banach_gain_potential.{w,u,v}, rejected, rejected_law⟩
+  variation := ⟨@separatedCliqueSum_banach_gain_potential.{u,v,w}, rejected, rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
@@ -253,7 +264,7 @@ def family : Registration arena.{w,u,v} (type_of% (@separatedCliqueSum_banach_ga
     norm_num [actual,realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@separatedCliqueSum_banach_gain_potential.{w,u,v}) (Realization signature) Unit Unit where
+    (@separatedCliqueSum_banach_gain_potential.{u,v,w}) (Realization signature) Unit Unit where
   unitName := `SimpleGraph.separatedCliqueSum_banach_gain_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach.Gluing.family
   realizationSource := none
@@ -275,7 +286,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[12]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "body", "body", "body", "body",
+        "arg"]
       stateBinder := 18
       functionOperand := false
       stateOperand := none
