@@ -479,7 +479,7 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 <a id="a22-ci-cache-flow"></a>
 **缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块的编译输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。缺失的编译产物在当前作业按需构建。
 
-定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
+定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
 
 **本机 Lake 缓存与定向构建。** 干净的主 `dev` 经 `make warm-donor FULL_BUILD=1` 完成各 workspace 的预热。Lake 将可缓存的产物和输入映射写入本机原生 artifact cache，并在开发检出保留可供现有消费者使用的产物。定向构建和报告准备按各目标的依赖 trace 在本工作树中恢复或编译。定向报告只读取或恢复与 trace 相符的编译产物；Git 源码使用 manifest 钉版。定向入口在私有写锁下核对 pin 和探针，项目层为空时也可运行。独立全量缓存准备显式调用 `make lean-cache-ensure FULL_BUILD=1`，仅全量路径允许 donor clonefile。Release 与 Actions 恢复使用各自的入口。
 
@@ -526,7 +526,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
 | `stratalint-raw-lean-report-v4` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
-编译键绑定工具链、依赖锁定、平台族、显式环境、源码、有效 Lake 配置与直接依赖键。声明式库配置按目标归属投影，无法分解的可执行 Lake 配置按所属包核对。跨平台共享限于 A14.9 登记的兼容族。原生程序另按实际平台取键。
+编译键绑定工具链、依赖锁定、平台族、显式环境、源码、有效 Lake 配置与直接依赖键。Omega 模块沿用同一模块键及命名分片，追加严格后端源码和配置输入；common 后端还绑定生成 facade 所用严格库、官方 facade 及生成程序。存在多个后端时，同一模块成员同时包含各后端隔离 buildDir 中的产物和 Lake trace，并核验完整路径及各后端输出清单。只有用户检出的模块键及产物路径均匹配时才恢复该成员。声明式库配置按目标归属投影，无法分解的可执行 Lake 配置按所属包核对。跨平台共享限于 A14.9 登记的兼容族。原生程序另按实际平台取键。
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 

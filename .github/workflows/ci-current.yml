@@ -435,6 +435,25 @@ jobs:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - id: omega_cache_scope
+        name: Select module shards for the Omega build
+        if: steps.lean_seeds.outcome == 'success'
+        continue-on-error: true
+        run: |
+          targets="$RUNNER_TEMP/omega-cache-targets"
+          python3 tools/scripts/worktree/lean_module_cache.py omega-targets > "$targets"
+          if [[ -s "$targets" ]]; then
+            echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore the published compiler shards for Omega
+        if: steps.omega_cache_scope.outputs.targets-file != ''
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore-published
+          targets-file: ${{ steps.omega_cache_scope.outputs.targets-file }}
       - name: Initialize the Omega compute allowance
         run: |
           budget="$RUNNER_TEMP/unit-compute-seconds"
