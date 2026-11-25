@@ -195,7 +195,7 @@ private theorem expSum_castSucc (u : Fin 3 → ℝ) (j : Fin 3) :
   rw [h]
   exact sum_erase_add _ _ (mem_univ j)
 
-private theorem columnDenominator_castSucc (w : Fin 3 → ℝ) (j : Fin 3) :
+theorem columnDenominator_castSucc (w : Fin 3 → ℝ) (j : Fin 3) :
     columnDenominator w j.castSucc = 1 - w j := by
   fin_cases j <;> rfl
 
@@ -284,7 +284,7 @@ theorem exists_direct_certificate (d : ℕ) (m : Fin 3 → ℕ) (τ : Fin 3 → 
     have hzero := hMin.isLocalMin (by simp)
     exact sub_eq_zero.mp (hD.deriv.symm.trans hzero.deriv_eq_zero)
 
-private theorem weightMass_relabel (e : Equiv.Perm (Fin 3)) (l : Fin 3 → ℕ) (b : ℕ)
+theorem weightMass_relabel (e : Equiv.Perm (Fin 3)) (l : Fin 3 → ℕ) (b : ℕ)
     (w : Fin 3 → ℝ) (j : Fin 3) :
     weightMass (l ∘ e) b (w ∘ e) j = weightMass l b w (e j) := by
   have hlast (v : Fin 3 → ℝ) (i : Fin 3) :
@@ -309,7 +309,7 @@ private theorem feasible_relabel (e : Equiv.Perm (Fin 3)) (m : Fin 3 → ℕ) (�
   ⟨fun j => hA.1 (e j), (Equiv.sum_comp e A).trans hA.2.1, fun j => hA.2.2.1 (e j),
     fun j => hA.2.2.2 (e j)⟩
 
-private theorem spectralValues_relabel (e : Equiv.Perm (Fin 3)) (f : ℝ → ℝ)
+theorem spectralValues_relabel (e : Equiv.Perm (Fin 3)) (f : ℝ → ℝ)
     (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ) :
     {v : ℝ | ∃ A : Fin 3 → Matrix n n ℂ, ∃ hA : Feasible (m ∘ e) (τ ∘ e) A,
       spectralSum f A hA.1 = v} =
@@ -354,19 +354,19 @@ theorem exists_isGreatest_direct (m : Fin 3 → ℕ) (τ : Fin 3 → ℝ)
   rw [spectralValues_relabel, hc] at hm
   exact ⟨e, w ∘ e, he, hm⟩
 
-private def pairWeight (w : Fin 3 → ℝ) (j : Fin 3) : ℝ :=
+def pairWeight (w : Fin 3 → ℝ) (j : Fin 3) : ℝ :=
   ∑ i ∈ (univ : Finset (Fin 3)).erase j, w i
 
-private theorem pairWeight_eq (w : Fin 3 → ℝ) (j : Fin 3) :
+theorem pairWeight_eq (w : Fin 3 → ℝ) (j : Fin 3) :
     pairWeight w j = (∑ i, w i) - w j :=
   eq_sub_iff_add_eq.2 (sum_erase_add _ _ (mem_univ j))
 
-private theorem pairWeight_pos (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (j : Fin 3) :
+theorem pairWeight_pos (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (j : Fin 3) :
     0 < pairWeight w j := by
   apply sum_pos (fun i _ => hw i)
   fin_cases j <;> decide
 
-private def complementScales (w : Fin 3 → ℝ) (c : Fin 4) : ℝ :=
+def complementScales (w : Fin 3 → ℝ) (c : Fin 4) : ℝ :=
   Fin.lastCases
     (max (2 / ∑ i, w i) (univ.sup' univ_nonempty (fun i => (pairWeight w i)⁻¹)))
     (fun i => (pairWeight w i)⁻¹) c
@@ -414,7 +414,7 @@ private theorem clipped_triple {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 <
     rw [max_eq_right hk, max_eq_left h, add_zero]
     exact clipped_pair ha hb
 
-private theorem complement_columns (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (c : Fin 4) :
+theorem complement_columns (w : Fin 3 → ℝ) (hw : ∀ j, 0 < w j) (c : Fin 4) :
     ∑ j, allocation (complementEntries w (complementScales w)) j c = 1 := by
   refine Fin.lastCases ?_ (fun i => ?_) c
   · let e := Tuple.sort w

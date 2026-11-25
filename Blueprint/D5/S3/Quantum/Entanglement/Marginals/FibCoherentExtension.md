@@ -66,10 +66,27 @@ Every feasible coupling gives an extension. If both residuals at a feasible coup
 
 At zero middle occupation the whole coupling row vanishes in every positive state. The Schur residual inequalities then have no dependence on z.
 
+**Theorem 1.5 (Pure extensions at zero middle occupation).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At zero middle occupation, a pure extension exists exactly when all four couplings vanish and both endpoint matrices are positive semidefinite with trace one and equal determinants.
+
+Arrange the four endpoint amplitudes into a two-by-two matrix M. The reductions are M times its adjoint and the transpose of the product in reverse order. These matrices have the same characteristic polynomial. Two-by-two matrices have equal characteristic polynomials exactly when they have equal traces and determinants.
+
+For sufficiency, diagonalize both positive matrices with their common eigenvalue list. Insert the square roots of those eigenvalues between the left eigenvector unitary and the transpose of the right one. The resulting amplitude matrix has the two specified reductions.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.coherent_extendible_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_iff`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff`
 - Dependency: [D5/S3/Quantum/Decoherence/LabelResetSupport](../../Decoherence/LabelResetSupport.md)

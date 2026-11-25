@@ -242,10 +242,10 @@ def entropyBound (complement : Bool) (m d : ℕ) : ℝ :=
   3 * ((2 * ell : ℕ) : ℝ) * entropyIntegrand complement (1 / 2) +
     3 * (b : ℝ) * entropyIntegrand complement (1 / 3)
 
-private theorem integrand_zero (c : Bool) : entropyIntegrand c 0 = 0 := by
+theorem integrand_zero (c : Bool) : entropyIntegrand c 0 = 0 := by
   cases c <;> simp [entropyIntegrand]
 
-private theorem integrand_concave (c : Bool) :
+theorem integrand_concave (c : Bool) :
     ConcaveOn ℝ (Set.Icc (0 : ℝ) 1) (entropyIntegrand c) := by
   cases c
   · exact Real.concaveOn_negMulLog.subset (fun _ hx => hx.1) (convex_Icc _ _)

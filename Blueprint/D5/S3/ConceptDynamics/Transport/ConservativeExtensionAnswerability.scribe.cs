@@ -22,7 +22,8 @@ internal sealed class ConservativeExtensionAnswerabilityDocument : IScribeDocume
                     Paragraph(Text(
                         "Let a new state space project surjectively onto an old state space. "
                             + "An old target readout factors through an old concept exactly when "
-                            + "their pullbacks along the projection have the same factorization.")),
+                            + "their pullbacks along the projection have the same pointwise "
+                            + "factorization.")),
                     Paragraph(Text(
                         "The forward direction reuses the old factor map after pullback. For the "
                             + "reverse direction, surjectivity ensures that equality on all new "
@@ -53,8 +54,8 @@ internal sealed class ConservativeExtensionAnswerabilityDocument : IScribeDocume
     private static Formula Compose(Formula outer, Formula inner) =>
         Seq(outer, Sp, Circ, Sp, inner);
 
-    private static Formula Concept(Formula domain, Formula codomain) =>
-        Seq(Operatorname, Grp(F.Id("Concept")), Open, domain, Comma, Sp, codomain, Close);
+    private static Formula FunctionType(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
 
     private static Formula TransportFormula()
     {
@@ -76,8 +77,8 @@ internal sealed class ConservativeExtensionAnswerabilityDocument : IScribeDocume
             Forall, Sp, oldState, Comma, Sp, newState, Comma, Sp,
             conceptValue, Comma, Sp, targetValue, Colon, Sp, type, Comma, Esc,
             projection, Colon, Sp, newState, Sp, To, Sp, oldState, Comma, Sp,
-            concept, Colon, Sp, Concept(oldState, conceptValue), Comma, Sp,
-            target, Colon, Sp, Concept(oldState, targetValue), Comma, Esc,
+            concept, Colon, Sp, FunctionType(oldState, conceptValue), Comma, Sp,
+            target, Colon, Sp, FunctionType(oldState, targetValue), Comma, Esc,
             Call("Surjective", projection), Sp, Rightarrow, Sp,
             Open, oldAnswerability, Sp, Iff, Sp, pulledBackAnswerability, Close, Dot));
     }

@@ -32,7 +32,19 @@ $$\begin{aligned}&\forall c:I \to \mathbb{R}, \forall z,j,k \in I, \forall u,l \
 
 If u+ℓ=0, the first multiplier has zero intercept and its slope is assigned one, already included in the maximum. When b < a is below the cutoff, all three supporting levels have positive weight. If a moment coefficient is negative, a perturbation within the support increases that moment and preserves the other. If an intermediate value of P is positive, a perturbation adds weight there and uses the three support levels to preserve both moments. A sufficiently small positive step decreases the squared mass in either case. At a = b, the weight at z is zero. A small mixture toward the point mass at z raises both moments and lowers squared mass. For any strict energy decrease, a further small mixture with this point mass preserves the energy inequality and makes both moment constraints strict.
 
-**Theorem 1.3 (The sharp high-threshold interval on a cycle).**
+**Theorem 1.3 (A representative in the positive half of the cycle).**
+
+$$\begin{aligned}&\forall q \in \mathbb{N}, \forall k \in \operatorname{Fin}\left(q\right), \operatorname{K}\left(k\right) \neq 0 \longrightarrow \\&\exists n \in \mathbb{N}, 1 \le n \le \lfloor\frac{q}{2}\rfloor \land \operatorname{c}\left(q, \operatorname{K}\left(k\right)\right)=\operatorname{c}\left(q, n\right) \land (n=\operatorname{K}\left(k\right) \lor n=q - \operatorname{K}\left(k\right))\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_fold` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the residue k, write K(k) for its natural representative and c(q,n)=cos(2πn/q) for a natural index n. When K(k) is nonzero, choose K(k) if it is at most ⌊q/2⌋ and q−K(k) otherwise. Cosine is invariant under reflection of the angle about π.
+
+**Theorem 1.4 (The sharp high-threshold interval on a cycle).**
 
 $$\begin{aligned}&\forall q \in \mathbb{N}, q\ge4 \longrightarrow [b<a_{crit}<1,\\&\forall a \in [a_{crit},1], \operatorname{Certified}(a),\\&\forall a \in [b,a_{crit}), \exists w, \operatorname{StrictlyFeasible}(w,a) \land E(w)<E(v_{a})]\end{aligned}$$
 
@@ -46,6 +58,7 @@ For q at least four use c(k) = cos(2πk/q) on its canonical residue representati
 
 ## References
 
+- Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_fold`
 - Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.cyclic_high_threshold_certificate`
 - Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.exists_smaller_energy_below_threshold`
 - Truth anchor: `D5/S3/Fourier/Concentration/HighCosineThreshold.high_threshold_certificate`

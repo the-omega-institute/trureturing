@@ -28,9 +28,9 @@ internal sealed class CompleteBinaryTreeRootTimeDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "The proof is structural induction. At an internal node, every leaf record "
                         + "receives one additional depth unit, and translation by one commutes with "
-                        + "the finite maximum. Lean compares the integer root time, coerced into "
-                        + "WithBot integers, with List.maximum of the leaf scores. Every such tree "
-                        + "has at least one leaf, so this represents the ordinary finite maximum. "
+                        + "the finite maximum. The root time is computed from the children up, "
+                        + "and leaf scores accumulate depth from the root down. Every complete "
+                        + "tree has at least one leaf. "
                         + "The statement concerns this construction tree only: archived events "
                         + "outside the tree can have later times, so this is not the maximum of "
                         + "the entire archive or a physical time law."))),
