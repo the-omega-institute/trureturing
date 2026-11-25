@@ -21,7 +21,7 @@ open scoped BigOperators symmDiff
 open Finset
 open BalancedCriticalSpectrum (Q)
 open EightCubeBits (Vertex Word cube toggle toggle_injective shell shell_symm
-  asFunction coeff row_eq_card isKernel_iff_adjacency asFunction_symmDiff)
+  asFunction coeff row_eq_card isKernel_iff_adjacency asFunction_symmDiff distance relabel)
 open BinaryCubeKernelSupport (binarySites four_dvd_binarySites_card)
 open BinaryCubeAnalyticWeightTwelve (weight_less_twelve_one_shell weight_twelve_two_shells)
 open BinaryCubeSplitReconstruction (delta)
@@ -31,7 +31,7 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHu
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency)
 open private activeDirections bitRow bitRow_sum bitRow_energy flipSign_unit shell_card
   transverse_square transverse_energy from Q9PairedGeometricObstruction
-open private shell_asFunction from EightCubeBits
+open private shell_asFunction relabel_center relabel_shell from EightCubeBits
 open private adjacency_add from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel
 
@@ -307,7 +307,7 @@ private theorem small_sparse_syndrome_eq_empty {S B : Word}
 /-- In the order-72 signed fold, a nonempty syndrome with zero or two
 neighbors per row has weight sixteen and an exterior residual site all of
 whose neighbors are rows with two syndrome neighbors. -/
-theorem sparse_syndrome_at_order_72
+private theorem sparse_syndrome_at_order_72
     (d e o : Q 8 → ℤ) (S B : Word)
     (hd : (∑ x, d x ^ 2) = 12)
     (hdisj : ∀ x, d x * e x = 0)
@@ -378,8 +378,306 @@ theorem sparse_syndrome_at_order_72
     have h7 := hbound 7 (by norm_num) hcap
     omega
 
+private def weightLayer (k : ℕ) : Word :=
+  univ.filter fun x => distance 0 x = k
+
+private theorem mem_weightLayer {x : Vertex} {k : ℕ} :
+    x ∈ weightLayer k ↔ distance 0 x = k := by
+  simp [weightLayer]
+
+set_option maxRecDepth 32768 in
+set_option maxHeartbeats 4000000 in
+private theorem level_counts :
+    weightLayer 1 = shell 0 ∧
+    ∀ x : Vertex, (x ∈ weightLayer 1 → shell x ⊆ insert 0 (weightLayer 2)) ∧
+      (x ∈ weightLayer 2 → (shell x ∩ weightLayer 1).card = 2 ∧
+        (shell x ∩ weightLayer 3).card = 6) ∧
+      (x ∈ weightLayer 3 → shell x ⊆ weightLayer 2 ∪ weightLayer 4) ∧
+      (x ∈ weightLayer 4 → (shell x ∩ weightLayer 3).card = 4 ∧
+        (shell x ∩ weightLayer 5).Nonempty) ∧
+      (x ∈ weightLayer 5 → Disjoint (shell x) (weightLayer 2)) := by
+  decide +kernel
+
+set_option maxRecDepth 32768 in
+set_option maxHeartbeats 8000000 in
+private theorem common_lower_row_of_two {k : ℕ} (hk : k = 2 ∨ k = 4)
+    (t x y : Vertex) (ht : t ∈ weightLayer (k + 1))
+    (hx : x ∈ shell t ∩ weightLayer k) (hy : y ∈ shell t ∩ weightLayer k)
+    (hne : x ≠ y) :
+    (shell x ∩ shell y ∩ weightLayer (k - 1)).Nonempty ∧
+      shell x ∩ shell y ∩ weightLayer (k + 1) ⊆ {t} := by
+  obtain rfl | rfl := hk
+  · have h : ∀ t : Vertex, t ∈ weightLayer 3 → ∀ x : Vertex, x ∈ shell t ∩ weightLayer 2 →
+        ∀ y : Vertex, y ∈ shell t ∩ weightLayer 2 → x ≠ y →
+        (shell x ∩ shell y ∩ weightLayer 1).Nonempty ∧
+          shell x ∩ shell y ∩ weightLayer 3 ⊆ {t} := by
+      decide +kernel
+    exact h t ht x hx y hy hne
+  · have h : ∀ t : Vertex, t ∈ weightLayer 5 → ∀ x : Vertex, x ∈ shell t ∩ weightLayer 4 →
+        ∀ y : Vertex, y ∈ shell t ∩ weightLayer 4 → x ≠ y →
+        (shell x ∩ shell y ∩ weightLayer 3).Nonempty ∧
+          shell x ∩ shell y ∩ weightLayer 5 ⊆ {t} := by
+      decide +kernel
+    exact h t ht x hx y hy hne
+
+private theorem sum_shell_inter_comm (U V : Word) :
+    (∑ u ∈ U, (shell u ∩ V).card) = ∑ v ∈ V, (shell v ∩ U).card := by
+  have h₁ (u : Vertex) :
+      V.bipartiteAbove (fun u v : Vertex => v ∈ shell u) u = shell u ∩ V := by
+    ext v
+    simp [Finset.bipartiteAbove, and_comm]
+  have h₂ (v : Vertex) :
+      U.bipartiteBelow (fun u v : Vertex => v ∈ shell u) v = shell v ∩ U := by
+    ext u
+    simp only [Finset.bipartiteBelow, mem_filter, mem_inter]
+    rw [shell_symm (x := v) (y := u), and_comm]
+  simpa only [h₁, h₂] using
+    sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow
+      (s := U) (t := V) (fun u v : Vertex => v ∈ shell u)
+
+private theorem no_full_shell_at_zero {S B : Word} (hsize : S.card = 16)
+    (hz : 0 ∉ S) (hfull : shell 0 ⊆ B)
+    (hdegree : ∀ x, (shell x ∩ S).card = if x ∈ B then 2 else 0) : False := by
+  classical
+  let L := S ∩ weightLayer 2
+  let P := S ∩ weightLayer 4
+  let T := (weightLayer 3).filter fun x => (shell x ∩ L).card = 1
+  let D := (weightLayer 3).filter fun x => (shell x ∩ L).card = 2
+  have hLsub : L ⊆ S := inter_subset_left
+  have hPsub : P ⊆ S := inter_subset_left
+  have hLlevel : L ⊆ weightLayer 2 := inter_subset_right
+  have hPlevel : P ⊆ weightLayer 4 := inter_subset_right
+  have hLP : Disjoint L P := by
+    apply disjoint_left.mpr
+    intro x hx hy
+    have h₂ := mem_weightLayer.mp (hLlevel hx)
+    have h₄ := mem_weightLayer.mp (hPlevel hy)
+    omega
+  have hrow_of_pos (x : Vertex) (hx : (shell x ∩ S).Nonempty) :
+      (shell x ∩ S).card = 2 := by
+    have h := hdegree x
+    have hpos := card_pos.mpr hx
+    split at h <;> omega
+  have hLrow (x : Vertex) (hx : x ∈ weightLayer 1) : (shell x ∩ L).card = 2 := by
+    have hb : x ∈ B := hfull (level_counts.1 ▸ hx)
+    have heq : shell x ∩ L = shell x ∩ S := by
+      apply Subset.antisymm
+      · intro y hy
+        exact mem_inter.mpr ⟨(mem_inter.mp hy).1, hLsub (mem_inter.mp hy).2⟩
+      · intro y hy
+        obtain ⟨hyx, hyS⟩ := mem_inter.mp hy
+        have h := (level_counts.2 x).1 hx hyx
+        rcases mem_insert.mp h with rfl | h
+        · exact False.elim (hz hyS)
+        · exact mem_inter.mpr ⟨hyx, mem_inter.mpr ⟨hyS, h⟩⟩
+    rw [heq, hdegree, if_pos hb]
+  have hLcard : L.card = 8 := by
+    have h := sum_shell_inter_comm (weightLayer 1) L
+    rw [show (∑ x ∈ weightLayer 1, (shell x ∩ L).card) =
+        ∑ _x ∈ weightLayer 1, (2 : ℕ) from sum_congr rfl hLrow] at h
+    rw [show (∑ x ∈ L, (shell x ∩ weightLayer 1).card) =
+        ∑ _x ∈ L, (2 : ℕ) from sum_congr rfl
+          (fun x hx => ((level_counts.2 x).2.1 (hLlevel hx)).1)] at h
+    rw [level_counts.1] at h
+    simp only [sum_const, nsmul_eq_mul, shell_card] at h
+    omega
+  let r := fun u t : Vertex => shell u ∩ L ⊆ shell t ∩ L
+  have hcoverD (t : Vertex) (ht : t ∈ D) : ∃ u ∈ weightLayer 1, r u t := by
+    obtain ⟨ht₃, ht₂⟩ := mem_filter.mp ht
+    obtain ⟨x, y, hxy, heq⟩ := card_eq_two.mp ht₂
+    have hx : x ∈ shell t ∩ L := by simp [heq]
+    have hy : y ∈ shell t ∩ L := by simp [heq]
+    obtain ⟨u, hu⟩ := (common_lower_row_of_two (Or.inl rfl) t x y ht₃
+      (mem_inter.mpr ⟨(mem_inter.mp hx).1, hLlevel (mem_inter.mp hx).2⟩)
+      (mem_inter.mpr ⟨(mem_inter.mp hy).1, hLlevel (mem_inter.mp hy).2⟩) hxy).1
+    obtain ⟨huShell, hu₁⟩ := mem_inter.mp hu
+    obtain ⟨hux, huy⟩ := mem_inter.mp huShell
+    have hpair : ({x, y} : Word) ⊆ shell u ∩ L := by
+      intro v hv
+      rcases mem_insert.mp hv with rfl | hv
+      · exact mem_inter.mpr ⟨shell_symm.mp hux, (mem_inter.mp hx).2⟩
+      · rw [mem_singleton] at hv
+        subst v
+        exact mem_inter.mpr ⟨shell_symm.mp huy, (mem_inter.mp hy).2⟩
+    refine ⟨u, hu₁, ?_⟩
+    change shell u ∩ L ⊆ shell t ∩ L
+    rw [heq]
+    exact (eq_of_subset_of_card_le hpair (by rw [hLrow u hu₁, card_pair hxy])).ge
+  have hcapD (u : Vertex) (hu : u ∈ weightLayer 1) :
+      ((D.bipartiteAbove r u).card : ℤ) ≤ 1 := by
+    suffices h : (D.bipartiteAbove r u).card ≤ 1 by exact_mod_cast h
+    apply card_le_one.mpr
+    intro t ht t' ht'
+    obtain ⟨htD, htR⟩ : t ∈ D ∧ r u t := by
+      simpa [Finset.bipartiteAbove] using ht
+    obtain ⟨ht'D, ht'R⟩ : t' ∈ D ∧ r u t' := by
+      simpa [Finset.bipartiteAbove] using ht'
+    obtain ⟨x, y, hxy, heq⟩ := card_eq_two.mp (hLrow u hu)
+    have hx : x ∈ shell u ∩ L := by simp [heq]
+    have hy : y ∈ shell u ∩ L := by simp [heq]
+    have hxt := mem_inter.mp (htR hx)
+    have hyt := mem_inter.mp (htR hy)
+    have hxt' := mem_inter.mp (ht'R hx)
+    have hyt' := mem_inter.mp (ht'R hy)
+    have h := (common_lower_row_of_two (Or.inl rfl) t x y (mem_filter.mp htD).1
+      (mem_inter.mpr ⟨hxt.1, hLlevel hxt.2⟩)
+      (mem_inter.mpr ⟨hyt.1, hLlevel hyt.2⟩) hxy).2
+      (mem_inter.mpr ⟨mem_inter.mpr ⟨shell_symm.mp hxt'.1, shell_symm.mp hyt'.1⟩,
+        (mem_filter.mp ht'D).1⟩)
+    exact (mem_singleton.mp h).symm
+  have hDcard : D.card ≤ 8 := by
+    have h := card_le_weighted_cover (weightLayer 1) D r (fun _ => 1) hcoverD hcapD
+    rw [level_counts.1] at h
+    simp only [sum_const, nsmul_eq_mul, shell_card, Nat.cast_ofNat, mul_one] at h
+    omega
+  have hTcard : 32 ≤ T.card := by
+    have h := sum_shell_inter_comm (weightLayer 3) L
+    rw [show (∑ x ∈ L, (shell x ∩ weightLayer 3).card) =
+        ∑ _x ∈ L, (6 : ℕ) from sum_congr rfl
+          (fun x hx => ((level_counts.2 x).2.1 (hLlevel hx)).2)] at h
+    simp only [sum_const, nsmul_eq_mul, hLcard] at h
+    have heq (x : Vertex) (hx : x ∈ weightLayer 3) :
+        (shell x ∩ L).card = (if (shell x ∩ L).card = 1 then 1 else 0) +
+          2 * (if (shell x ∩ L).card = 2 then 1 else 0) := by
+      have hsub : shell x ∩ L ⊆ shell x ∩ S :=
+        fun y hy => mem_inter.mpr ⟨(mem_inter.mp hy).1, hLsub (mem_inter.mp hy).2⟩
+      have hle := card_le_card hsub
+      rw [hdegree] at hle
+      split at hle <;> split <;> split <;> omega
+    rw [sum_congr rfl heq, sum_add_distrib, ← mul_sum, ← sum_filter, ← sum_filter] at h
+    change (∑ _x ∈ T, (1 : ℕ)) + 2 * (∑ _x ∈ D, (1 : ℕ)) = _ at h
+    simp only [sum_const, nsmul_eq_mul, mul_one] at h
+    omega
+  have hProw (x : Vertex) (hx : x ∈ T) : (shell x ∩ P).card = 1 := by
+    obtain ⟨hx₃, hx₁⟩ := mem_filter.mp hx
+    have heq : shell x ∩ S = (shell x ∩ L) ∪ (shell x ∩ P) := by
+      ext y
+      simp only [mem_inter, mem_union, L, P]
+      constructor
+      · rintro ⟨hyx, hyS⟩
+        rcases mem_union.mp ((level_counts.2 x).2.2.1 hx₃ hyx) with h | h
+        · exact Or.inl ⟨hyx, hyS, h⟩
+        · exact Or.inr ⟨hyx, hyS, h⟩
+      · rintro (⟨hyx, hyS, _⟩ | ⟨hyx, hyS, _⟩) <;> exact ⟨hyx, hyS⟩
+    have hdisj : Disjoint (shell x ∩ L) (shell x ∩ P) :=
+      hLP.mono inter_subset_right inter_subset_right
+    have hne : (shell x ∩ S).Nonempty := by
+      rw [heq]
+      obtain ⟨y, hy⟩ := card_pos.mp (by omega : 0 < (shell x ∩ L).card)
+      exact ⟨y, mem_union_left _ hy⟩
+    have h := hrow_of_pos x hne
+    rw [heq, card_union_of_disjoint hdisj, hx₁] at h
+    omega
+  have hTsum : ∑ x ∈ P, (shell x ∩ T).card = T.card := by
+    rw [sum_shell_inter_comm P T, sum_congr rfl hProw]
+    simp
+  have hboundP (x : Vertex) (hx : x ∈ P) : (shell x ∩ T).card ≤ 4 := by
+    have hsub : shell x ∩ T ⊆ shell x ∩ weightLayer 3 :=
+      fun y hy => mem_inter.mpr ⟨(mem_inter.mp hy).1, (mem_filter.mp (mem_inter.mp hy).2).1⟩
+    exact (card_le_card hsub).trans_eq ((level_counts.2 x).2.2.2.1 (hPlevel hx)).1
+  have hsumle : T.card ≤ 4 * P.card := by
+    have h := sum_le_sum hboundP
+    rw [hTsum] at h
+    simpa [mul_comm] using h
+  have hSsub : L ∪ P ⊆ S := union_subset hLsub hPsub
+  have hsizeLP := card_le_card hSsub
+  rw [card_union_of_disjoint hLP, hLcard, hsize] at hsizeLP
+  have hPcard : P.card = 8 := by omega
+  have hSeq : L ∪ P = S := eq_of_subset_of_card_le hSsub (by
+    rw [card_union_of_disjoint hLP, hLcard, hPcard, hsize])
+  have hlow (p : Vertex) (hp : p ∈ P) : shell p ∩ weightLayer 3 ⊆ T := by
+    have heq : (shell p ∩ T).card = 4 := by
+      by_contra hn
+      have hlt : (shell p ∩ T).card < 4 := by have := hboundP p hp; omega
+      have h := sum_lt_sum hboundP ⟨p, hp, hlt⟩
+      rw [hTsum] at h
+      simp only [sum_const, nsmul_eq_mul, hPcard] at h
+      omega
+    have hsub : shell p ∩ T ⊆ shell p ∩ weightLayer 3 :=
+      fun y hy => mem_inter.mpr ⟨(mem_inter.mp hy).1, (mem_filter.mp (mem_inter.mp hy).2).1⟩
+    have hfull := eq_of_subset_of_card_le hsub (by
+      rw [heq, ((level_counts.2 p).2.2.2.1 (hPlevel hp)).1])
+    intro y hy
+    have hy' : y ∈ shell p ∩ T := by rwa [hfull]
+    exact (mem_inter.mp hy').2
+  obtain ⟨p, hp⟩ := card_pos.mp (by omega : 0 < P.card)
+  obtain ⟨t, ht⟩ := ((level_counts.2 p).2.2.2.1 (hPlevel hp)).2
+  obtain ⟨htp, ht₅⟩ := mem_inter.mp ht
+  have heqTop : shell t ∩ S = shell t ∩ P := by
+    ext y
+    rw [← hSeq, mem_inter, mem_inter, mem_union]
+    constructor
+    · rintro ⟨hyt, hy | hy⟩
+      · exact False.elim (disjoint_left.mp ((level_counts.2 t).2.2.2.2 ht₅)
+          hyt (hLlevel hy))
+      · exact ⟨hyt, hy⟩
+    · exact fun ⟨hyt, hy⟩ => ⟨hyt, Or.inr hy⟩
+  have hpRow : p ∈ shell t ∩ P := mem_inter.mpr ⟨shell_symm.mp htp, hp⟩
+  have htwo : (shell t ∩ P).card = 2 := by
+    rw [← heqTop]
+    exact hrow_of_pos t ⟨p, heqTop.symm ▸ hpRow⟩
+  obtain ⟨x, y, hxy, heq⟩ := card_eq_two.mp htwo
+  have hx : x ∈ shell t ∩ P := by simp [heq]
+  have hy : y ∈ shell t ∩ P := by simp [heq]
+  obtain ⟨u, hu⟩ := (common_lower_row_of_two (Or.inr rfl) t x y ht₅
+    (mem_inter.mpr ⟨(mem_inter.mp hx).1, hPlevel (mem_inter.mp hx).2⟩)
+    (mem_inter.mpr ⟨(mem_inter.mp hy).1, hPlevel (mem_inter.mp hy).2⟩) hxy).1
+  obtain ⟨huxy, hu₃⟩ := mem_inter.mp hu
+  obtain ⟨hux, huy⟩ := mem_inter.mp huxy
+  have huT := hlow x (mem_inter.mp hx).2 (mem_inter.mpr ⟨hux, hu₃⟩)
+  have hpair : ({x, y} : Word) ⊆ shell u ∩ P := by
+    intro v hv
+    rcases mem_insert.mp hv with rfl | hv
+    · exact mem_inter.mpr ⟨shell_symm.mp hux, (mem_inter.mp hx).2⟩
+    · rw [mem_singleton] at hv
+      subst v
+      exact mem_inter.mpr ⟨shell_symm.mp huy, (mem_inter.mp hy).2⟩
+  have hle := card_le_card hpair
+  rw [hProw u huT, card_pair hxy] at hle
+  omega
+
+private theorem no_full_exterior_shell_at_weight_sixteen {S B : Word} (hsize : S.card = 16)
+    (hdegree : ∀ x, (shell x ∩ S).card = if x ∈ B then 2 else 0)
+    (z : Vertex) (hz : z ∉ S) (hfull : shell z ⊆ B) : False := by
+  let σ := Equiv.refl (Fin 8)
+  let e := relabel σ z
+  have he : e z = 0 := relabel_center σ z
+  have hshell (x : Vertex) : (shell x).map e.toEmbedding = shell (e x) :=
+    relabel_shell σ z x
+  have hS : (S.map e.toEmbedding).card = 16 := by rwa [card_map]
+  have hzero : (0 : Vertex) ∉ S.map e.toEmbedding := by
+    rw [← he, mem_map_equiv, Equiv.symm_apply_apply]
+    exact hz
+  have hshell0 : shell 0 ⊆ B.map e.toEmbedding := by
+    rw [← he, ← hshell]
+    intro x hx
+    rw [mem_map_equiv] at hx ⊢
+    exact hfull hx
+  apply no_full_shell_at_zero hS hzero hshell0
+  intro x
+  obtain ⟨y, rfl⟩ := e.surjective x
+  rw [← hshell, ← map_inter, card_map, mem_map_equiv, Equiv.symm_apply_apply]
+  exact hdegree y
+
+/-- The residual of an order-72 signed fold with twelve dimers has empty odd
+support whenever every row meets that support in zero or two neighbors. -/
+theorem sparse_syndrome_empty_at_order_72
+    (d e o : Q 8 → ℤ) (S B : Word)
+    (hd : (∑ x, d x ^ 2) = 12)
+    (hdisj : ∀ x, d x * e x = 0)
+    (hcount : (∑ x, e x ^ 2) + (∑ x, o x ^ 2) = 48)
+    (hsum : ∀ x, transverse (fun y => 2 * d y + e y) x = 4 * o x)
+    (hfold : ∀ x, transverse o x = 4 * d x + 2 * e x)
+    (hdegree : ∀ x, (shell x ∩ S).card = if x ∈ B then 2 else 0)
+    (hsyndrome : ∀ x, (transverse d (cube x) - 2 * o (cube x)) % 2 = 1 ↔ x ∈ S) :
+    S = ∅ := by
+  rcases sparse_syndrome_at_order_72 d e o S B hd hdisj hcount hsum hfold hdegree hsyndrome with
+    h | ⟨hsize, z, _, hz, hshell⟩
+  · exact h
+  · exact (no_full_exterior_shell_at_weight_sixteen hsize hdegree z hz hshell).elim
+
 #print axioms sparse_syndrome_energy
-#print axioms sparse_syndrome_at_order_72
+#print axioms sparse_syndrome_empty_at_order_72
 
 end Q9SparseSyndromeObstruction
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves
