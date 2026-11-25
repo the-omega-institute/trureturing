@@ -210,7 +210,7 @@ private lemma triangular_integral (S : Spectrum) {M : ℝ} (hM : 0 < M) :
     integral_finsetSum _ (fun j _ => hk j)]
   exact (Finset.sum_congr rfl heach).symm
 
-private lemma count_scaled_limit (S : Spectrum) (hN : CountAsymptotic S)
+lemma count_scaled_limit (S : Spectrum) (hN : CountAsymptotic S)
     {u : ℝ} (hu : 0 < u) :
     Tendsto (fun M : ℝ => (S.N (M * u) : ℝ) / (M * Real.log M))
       atTop (nhds ((1 / (2 * Real.pi)) * u)) := by
