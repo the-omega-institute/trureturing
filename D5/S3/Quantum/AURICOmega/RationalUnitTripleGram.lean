@@ -14,6 +14,7 @@ import Mathlib.NumberTheory.SumFourSquares
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.Tactic.LinearCombination
+import OmegaMath.Algebra.Quaternion
 
 open scoped Quaternion
 open Quaternion
@@ -21,17 +22,73 @@ open D5.S3.Combinatorics.Geometry.EuclideanSimplex.RationalUnitSimplex (rational
 
 namespace D5.S3.Quantum.AURICOmega.RationalUnitTripleGram
 
+private def readQuaternion (x : Omega.Quaternion) : ℍ[ℚ] :=
+  ⟨(x.w : ℤ), (x.x : ℤ), (x.y : ℤ), (x.z : ℤ)⟩
+
+private theorem clearQuaternionDenominators (x : ℍ[ℚ]) :
+    ∃ a : Omega.Quaternion, ∃ d : ℚ, x = d⁻¹ • readQuaternion a := by
+  let m (q : ℚ) : ℚ := q.den
+  have nz (q : ℚ) : m q ≠ 0 := by exact_mod_cast q.den_ne_zero
+  let d := m x.re * m x.imI * m x.imJ * m x.imK
+  let a : Omega.Quaternion :=
+    ⟨x.re.num * x.imI.den * x.imJ.den * x.imK.den,
+     x.imI.num * x.re.den * x.imJ.den * x.imK.den,
+     x.imJ.num * x.re.den * x.imI.den * x.imK.den,
+     x.imK.num * x.re.den * x.imI.den * x.imJ.den⟩
+  refine ⟨a, d, ?_⟩
+  ext <;> simp only [readQuaternion, Quaternion.re_smul, Quaternion.imI_smul,
+    Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, a, Int.cast_mul,
+    Int.cast_natCast] <;> dsimp only [d, m]
+  · rw [← Rat.num_div_den x.re]
+    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
+      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
+  · rw [← Rat.num_div_den x.imI]
+    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
+      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
+  · rw [← Rat.num_div_den x.imJ]
+    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
+      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
+  · rw [← Rat.num_div_den x.imK]
+    field_simp [show (x.re.den : ℚ) ≠ 0 from nz x.re, show (x.imI.den : ℚ) ≠ 0 from nz x.imI,
+      show (x.imJ.den : ℚ) ≠ 0 from nz x.imJ, show (x.imK.den : ℚ) ≠ 0 from nz x.imK]
+
+private theorem readQuaternion_dot (a b : Omega.Quaternion) :
+    ((a.dot b : ℤ) : ℚ) = (star (readQuaternion a) * readQuaternion b).re := by
+  change (((a.w * b.w + a.x * b.x) + (a.y * b.y + a.z * b.z) : ℤ) : ℚ) = _
+  push_cast
+  simp [readQuaternion, Quaternion.re_mul]
+  ring
+
+private theorem readQuaternion_norm (a : Omega.Quaternion) :
+    ((a.dot a : ℤ) : ℚ) = normSq (readQuaternion a) := by
+  rw [readQuaternion_dot, star_mul_self, re_coe]
+
+private theorem scaledQuaternion_dot (d e : ℚ) (x y : ℍ[ℚ]) :
+    (star (d • x) * (e • y)).re = d * e * (star x * y).re := by
+  rw [Quaternion.star_smul, smul_mul_assoc, mul_smul_comm, re_smul, re_smul]
+  simp [smul_eq_mul, mul_assoc]
+
+private theorem rationalQuaternionGramDet (x y : ℍ[ℚ]) :
+    ∃ i j k : ℚ, normSq x * normSq y - (star x * y).re^2 = i^2 + j^2 + k^2 := by
+  obtain ⟨a, d, hx⟩ := clearQuaternionDenominators x
+  obtain ⟨b, e, hy⟩ := clearQuaternionDenominators y
+  let q := a.conj.mul b
+  have hz : a.dot a * b.dot b - a.dot b * a.dot b =
+      q.x * q.x + q.y * q.y + q.z * q.z :=
+    Omega.Quaternion.gramDet_eq_imaginary_squares a b
+  have h := congrArg (fun z : ℤ => (z : ℚ)) hz
+  push_cast at h
+  rw [readQuaternion_norm, readQuaternion_norm, readQuaternion_dot] at h
+  refine ⟨d⁻¹ * e⁻¹ * (q.x : ℤ), d⁻¹ * e⁻¹ * (q.y : ℤ), d⁻¹ * e⁻¹ * (q.z : ℤ), ?_⟩
+  rw [hx, hy, normSq_smul, normSq_smul, scaledQuaternion_dot]
+  linear_combination d⁻¹ ^ 2 * e⁻¹ ^ 2 * h
+
 private theorem rationalQuaternionGramExtension (x : ℍ[ℚ]) (hx : x ≠ 0) (u k : ℚ) :
     (∃ y : ℍ[ℚ], normSq y = u ∧ (star x * y).re = k) ↔
     (∃ a b c : ℚ, normSq x * u - k^2 = a^2 + b^2 + c^2) := by
   constructor
   · rintro ⟨y, hy, hk⟩
-    let q := star x * y
-    refine ⟨q.imI, q.imJ, q.imK, ?_⟩
-    have hq : normSq q = normSq x * u := by simp [q, map_mul, hy]
-    change q.re = k at hk
-    rw [Quaternion.normSq_def', hk] at hq
-    linarith only [hq]
+    simpa only [hy, hk] using rationalQuaternionGramDet x y
   · rintro ⟨a, b, c, h⟩
     let q : ℍ[ℚ] := ⟨k, a, b, c⟩
     let y := (star x)⁻¹ * q
@@ -116,7 +173,8 @@ private theorem dot_firstBasisVector (v : Fin 5 → ℚ) : firstBasisVector ⬝�
   rw [vector_dot_formula, firstBasisVector, asQuaternion_fromQuaternion]
   simp [fromQuaternion]
 
-/-- Three rational pairwise inner products are realized by unit vectors in five
+/-- For rational first-anchor inner products with absolute values at most one,
+three rational pairwise inner products are realized by unit vectors in five
 coordinates exactly when their Gram determinant is a sum of three rational squares. -/
 theorem rationalFiveCoordinateUnitTriple (a b c : ℚ) (ha : 0 ≤ 1 - a^2) (hb : 0 ≤ 1 - b^2) :
     (∃ u v w : Fin 5 → ℚ, u ⬝ᵥ u = 1 ∧ v ⬝ᵥ v = 1 ∧ w ⬝ᵥ w = 1 ∧
