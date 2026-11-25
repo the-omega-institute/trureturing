@@ -29,6 +29,10 @@ inputs:
   targets-file:
     description: File of whitespace-delimited Lean modules for a scoped restore
 outputs:
+  matrix:
+    description: Matrix of disjoint report shards selected by the publisher
+  has_reports:
+    description: Whether the release plan requires report workers
   complete:
     description: All requested project shards present for the selected operation
   key:

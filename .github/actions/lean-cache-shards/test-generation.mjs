@@ -232,6 +232,52 @@ esac
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
 });
 
+test('report stages hand the planner and worker outputs to the final commit', async t => {
+  const { root, run, env } = await fixture(t);
+  const dir = join(root, 'tools/scripts/worktree');
+  await mkdir(dir, { recursive: true });
+  await mkdir(join(root, 'base'));
+  await mkdir(join(root, 'plan'));
+  await writeFile(join(root, 'plan/hits.json'), 'compiler hit');
+  await writeFile(join(root, 'base/expected-marker'), '');
+  await writeFile(join(dir, 'lean_generation_facets.py'), `
+import os, sys
+from pathlib import Path
+args = dict(zip(sys.argv[1::2], sys.argv[2::2]))
+stage = args["--stage"]
+output = Path(args["--output"])
+if stage == "plan":
+    assert Path(args["--receipts"], "compiler-hits.json").read_text() == "compiler hit"
+    output.write_text("plan")
+    Path(os.environ["GITHUB_OUTPUT"]).write_text("has_reports=true\\n")
+elif stage == "worker":
+    assert Path(args["--plan"]).read_text() == "plan" and args["--shard"] == "2"
+    output.write_text("shard 2")
+elif stage == "finish":
+    assert Path(args["--receipts"], "report-2.json").read_text() == "shard 2"
+    output.write_text("complete")
+else:
+    raise AssertionError(stage)
+`);
+  await writeFile(join(dir, 'lean_cache_generation.py'), `
+import sys
+from pathlib import Path
+assert sys.argv[1] == "commit" and "--base" not in sys.argv
+assert Path(sys.argv[sys.argv.index("--plan") + 1]).read_text() == "complete"
+Path("committed").touch()
+`);
+  const plan = run('workflow_dispatch', 'plan-reports');
+  assert.equal(plan.status, 0, plan.stderr);
+  assert.equal(await readFile(join(root, 'outputs'), 'utf8'), 'has_reports=true\n');
+  env.REPORT_SHARD = '2';
+  const worker = run('workflow_dispatch', 'build-reports');
+  assert.equal(worker.status, 0, worker.stderr);
+  await writeFile(join(root, 'receipts/report-2.json'), await readFile(join(root, 'report-2.json')));
+  const commit = run('workflow_dispatch', 'commit-generation');
+  assert.equal(commit.status, 0, commit.stderr);
+  assert.equal(await readFile(join(root, 'committed'), 'utf8'), '');
+});
+
 test('ordinary push and PR restore a scoped generation from cold workspaces', async t => {
   for (const [event, evict] of [['push', false], ['pull_request', true]]) {
     const { root, requests, run, env } = await fixture(t);
