@@ -8,7 +8,7 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none, legacy, auto, release, parallel, compile-only]
+        options: [complete, partial, none, auto, release, parallel, compile-only]
         required: true
       volume_test_id:
         description: Shared identifier for two verification snapshots using reusable physical volumes
@@ -43,7 +43,6 @@ jobs:
       actions: read
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
-      source: ${{ github.sha }}
       strategy: parallel
       publication-mode: verification
 
@@ -54,7 +53,6 @@ jobs:
       actions: read
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
-      source: ${{ github.sha }}
       strategy: ${{ inputs.mode }}
       publication-mode: verification
       sparse-volume: ${{ inputs.sparse_release && inputs.volume_test_id || '' }}
@@ -130,9 +128,7 @@ jobs:
             Meta/tools-release.json
             .github/workflows/ci-publication-verify.yml
             .github/workflows/lean-analysis-fixtures.yml
-            .github/workflows/lean-cache-publish.yml
             .github/workflows/cache-release-publish.yml
-            .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/*
             .github/actions/lean-compile-layer/*
             .github/actions/lean-compile-checkpoint/*
@@ -176,7 +172,7 @@ jobs:
         run: |
           [[ -z "$RETIRE_VOLUME_TAG" || -n "$VOLUME_TEST_ID" ]]
           case "$SHARD_HANDOFF" in
-            release|parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            release|parallel|auto|complete) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
               [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
               [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
@@ -205,7 +201,7 @@ jobs:
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - if: steps.entry.outputs.hit == 'true'
         id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - id: elan
         if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -390,7 +386,7 @@ jobs:
         run: node --test .github/actions/lean-cache-shards/test-generation.mjs
       - if: steps.entry.outputs.hit == 'true'
         id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/cache/restore@v5
         with:

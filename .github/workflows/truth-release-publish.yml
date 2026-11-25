@@ -65,12 +65,12 @@ jobs:
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
             --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - name: Restore existing Lean modules and reports
+      - name: Restore published Lean compiler modules
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
-          operation: restore
+          operation: restore-published
       - name: Prepare the source's Lean module reports
         env:
           LEAN_NUM_THREADS: '1'
