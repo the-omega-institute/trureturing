@@ -9,6 +9,7 @@ claim: Attributed finite-dimensional strong subadditivity, including singular de
 strata_touched:
   - D5/S3/Quantum/Foundation/QutritPureLift
   - D5/S3/Quantum/Foundation/QutritSchurPlane
+  - D5/S3/Quantum/Foundation/QutritSingletonIncidence
   - D5/S3/Quantum/Foundation/FiniteDensityPurification
   - D5/S3/Quantum/Information/StrongSubadditivity
   - D5/S3/Quantum/Information/ClassicalConditionalCopy
@@ -182,3 +183,7 @@ nonorthogonal, merely separable, AB-classical or unrestricted quantum case.
 No separate AC extension is claimed. The unrestricted quantum target
 [issue #23764](https://github.com/the-omega-institute/trureturing/issues/23764)
 remains open.
+
+Singleton incidence uses the same retained Hermitian carrier, unitary congruence,
+and rank-one and spectral suppliers. The support-adapted singular representative
+and the two-atom cancellation via the original pure-lift theorem are repository-derived.
