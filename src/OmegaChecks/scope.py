@@ -24,6 +24,8 @@ REPORT_DIR = ".lake/build/omega-checks/"
 
 
 def module_path(path):
+    if path.startswith("Golden/Frozen/state/D5/") and path.endswith(".lean.json"):
+        path = path.removeprefix("Golden/Frozen/state/").removesuffix(".json")
     if not path.endswith(".lean"):
         return None
     if path == "Trureturing.lean" or path.startswith(("D5/", "Reg/")):
@@ -86,7 +88,7 @@ def discover(changed_file, base=None):
     _, graph = import_graph("lean", with_reg=True)
     _, official_basis = import_graph("lean", ("src/OmegaInit*.lean", "src/OmegaMathlib*.lean"),
                                      official_basis=True)
-    missing = {name for path, name in changed.items() if not (ROOT / path).is_file()}
+    missing = {name for path, name in changed.items() if path.endswith(".lean") and not (ROOT / path).is_file()}
     if missing:
         print(f"Removed Omega scope inputs: {' '.join(sorted(missing))}", flush=True)
     return plan(graph, official_basis, set(changed.values()), missing, shared, reg_inputs, protected)

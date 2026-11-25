@@ -35,6 +35,8 @@
     "src/OmegaChecks/*.py",
     "strict/*.lean",
     "D5/*.lean",
+    "Golden/Frozen/state/D5/*.lean.json",
+    "Meta/tools-release.json",
     "Reg/*.lean",
     "Reg/lakefile.toml",
     "Reg/lake-manifest.json",

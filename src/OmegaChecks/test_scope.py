@@ -2,6 +2,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 import scope
 
@@ -56,6 +57,17 @@ class ScopeTests(unittest.TestCase):
         self.assertEqual(plan['consumers'], ['D5.UsesProof', 'OmegaMath.Orphan'])
         self.assertEqual(plan['basis'], [])
         self.assertTrue(scope.report_file(plan))
+
+    def test_removed_frozen_record_still_selects_publication_of_its_live_object(self):
+        graph = {'D5.Object': set(), 'OmegaMath.Leaf': {'D5.Object'}, 'D5.Consumer': {'OmegaMath.Leaf'}}
+        with TemporaryDirectory() as tmp, patch.object(scope, 'ROOT', Path(tmp)), patch.object(
+                scope, 'import_graph', side_effect=[({}, graph), ({}, {})]):
+            paths = Path(tmp) / 'changed'
+            paths.write_bytes(b'Golden/Frozen/state/D5/Object.lean.json\0')
+            result = scope.discover(paths)
+        self.assertEqual(result['library'], ['OmegaMath.Leaf'])
+        self.assertEqual(result['consumers'], ['D5.Consumer', 'OmegaMath.Leaf'])
+        self.assertTrue(scope.report_file(result))
 
     def test_ordinary_importer_runs_when_either_input_is_affected(self):
         graph = dict(self.graph, OmegaMathlib=set(), OmegaMath=set())
