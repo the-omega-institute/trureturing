@@ -6,8 +6,7 @@
    utility: none
    digest: A shared original pure ray determines the homogeneous intersection of actual qutrits. -/
 
-import D5.S3.Quantum.Foundation.QutritPureLift
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Unitary
+import D5.S3.Quantum.Foundation.QutritSchurPlane
 
 /-! Singleton incidence for actual qutrits under original whole-pair-ball geometry.
 
@@ -46,38 +45,6 @@ private theorem pivot_injective : Function.Injective P := by
   rw [P, P, HermitianMat.diagonal_mat, HermitianMat.diagonal_mat] at he
   simp [Pi.single_apply, hij] at he
 
-private def reindexEquiv (σ : Fin 3 ≃ Fin 3) : Mat ≃ₗ[ℝ] Mat where
-  toFun X := X.reindex σ
-  invFun X := X.reindex σ.symm
-  left_inv X := by simp [HermitianMat.reindex_reindex]
-  right_inv X := by simp [HermitianMat.reindex_reindex]
-  map_add' _ _ := (HermitianMat.reindex_add ..).symm
-  map_smul' _ _ := (HermitianMat.reindex_smul ..).symm
-
-private def unitaryEquiv (U : Matrix.unitaryGroup (Fin 3) ℂ) : Mat ≃ₗ[ℝ] Mat :=
-  { HermitianMat.conjLinear ℝ U.val with
-    invFun := HermitianMat.conj (star U).val
-    left_inv := fun X => by
-      change (X.conj U.val).conj (star U).val = X
-      rw [HermitianMat.conj_conj]
-      rw [show (star U).val * U.val = 1 from Unitary.coe_star_mul_self U, HermitianMat.conj_one]
-    right_inv := fun X => by
-      change (X.conj (star U).val).conj U.val = X
-      rw [HermitianMat.conj_conj]
-      rw [show U.val * (star U).val = 1 from Unitary.coe_mul_star_self U, HermitianMat.conj_one] }
-
-private theorem diagonal_read (d : Fin 3 → ℝ) (X : Mat) :
-    ⟪HermitianMat.diagonal ℂ d, X⟫_ℝ = ∑ i, d i * (X.mat i i).re := by
-  rw [HermitianMat.inner_eq_re_trace]
-  simp [Matrix.trace, Matrix.diagonal_mul]
-
-private theorem diag_real (X : Mat) (i : Fin 3) :
-    ((X.mat i i).re : ℂ) = X.mat i i := by
-  have h := congrFun (congrFun X.H i) i
-  change star (X.mat i i) = X.mat i i at h
-  have hi := congrArg Complex.im h
-  apply Complex.ext <;> simp_all
-
 /-- A support-traceless three-by-three Hermitian matrix admits a singular
 representative after addition of a real multiple of the zero-support pivot. -/
 private theorem singular_representative (X : Mat) (a b : ℝ)
@@ -92,7 +59,7 @@ private theorem singular_representative (X : Mat) (a b : ℝ)
   have h21 : X.mat 2 1 = star z := by
     exact (congrFun (congrFun X.H 2) 1).symm
   have hc : X.mat 1 1 * X.mat 2 2 - X.mat 1 2 * X.mat 2 1 = (c : ℂ) := by
-    rw [h21, ← diag_real X 1, ← diag_real X 2]
+    rw [h21, ← X.H.coe_re_apply_self 1, ← X.H.coe_re_apply_self 2]
     change (x : ℂ) * (y : ℂ) - z * star z = (c : ℂ)
     change (x : ℂ) * (y : ℂ) - z * (starRingEnd ℂ) z = (c : ℂ)
     rw [Complex.mul_conj]
@@ -135,8 +102,14 @@ private theorem singular_representative (X : Mat) (a b : ℝ)
     have hy : y = 0 := by
       rw [hx, mul_zero, zero_add] at hxy
       exact (mul_eq_zero.mp hxy).resolve_left hb.ne'
-    have h11 : X.mat 1 1 = 0 := by rw [← diag_real X 1]; exact_mod_cast hx
-    have h22 : X.mat 2 2 = 0 := by rw [← diag_real X 2]; exact_mod_cast hy
+    have h11 : X.mat 1 1 = 0 := by
+      rw [← X.H.coe_re_apply_self 1]
+      change (x : ℂ) = 0
+      simp [hx]
+    have h22 : X.mat 2 2 = 0 := by
+      rw [← X.H.coe_re_apply_self 2]
+      change (y : ℂ) = 0
+      simp [hy]
     have h12 : X.mat 1 2 = 0 := Complex.normSq_eq_zero.mp hz'
     have h21' : X.mat 2 1 = 0 := by
       rw [h21]
@@ -155,39 +128,6 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u g : V →ₗ[ℝ] ℝ}
 
 private abbrev spanFace (F : C.Face) := Submodule.span ℝ (F : Set V)
-
-omit [FiniteDimensional ℝ V] in
-private theorem unit_rankOne_original (J : C.Face) (I : Mat →ₗ[ℝ] V)
-    (hI : Function.Injective I) (hJ : ∀ x ∈ J, x ∈ LinearMap.range I)
-    (hcone : ∀ X, I X ∈ J ↔ 0 ≤ X)
-    (htrace : ∀ X, u (I X) = X.trace)
-    (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1) :
-    I (rankOne v) ∈ pure C u := by
-  let K := SectionROGFrame.base (⊤ : Submodule ℝ Mat)
-  have hK : K = CircuitBalancedConfirmation.base HermitianExclusionKernel.cone
-      HermitianExclusionKernel.unit := by
-    ext X
-    simp [K, SectionROGFrame.base, CircuitBalancedConfirmation.base,
-      HermitianExclusionKernel.cone, HermitianExclusionKernel.unit]
-  have hKconv : Convex ℝ K := hK.symm ▸ CircuitBalancedConfirmation.base_convex _ _
-  have hmem : rankOne v ∈ K.extremePoints ℝ := by
-    change rankOne v ∈ (SectionROGFrame.base ⊤).extremePoints ℝ
-    rw [whole_pure_carrier _ HermitianExclusionBall.whole_rog]
-    exact ⟨v, hv, rfl, Submodule.mem_top⟩
-  have h := affine_extreme_image K hKconv I.toAffineMap
-    (fun _ _ _ _ he => hI he) hmem
-  change I (rankOne v) ∈ (I '' K).extremePoints ℝ at h
-  have himage : I '' K = CircuitBalancedConfirmation.base J.toPointedCone u := by
-    ext x
-    constructor
-    · rintro ⟨X, hX, rfl⟩
-      exact ⟨(hcone X).mpr hX.2.1, (htrace X).trans hX.2.2⟩
-    · intro hx
-      obtain ⟨X, rfl⟩ := hJ x hx.1
-      exact ⟨X, ⟨Submodule.mem_top, (hcone X).mp hx.1,
-        (htrace X).symm.trans hx.2⟩, rfl⟩
-  rw [himage] at h
-  exact (face_base_extreme J).extremePoints_subset_extremePoints h
 
 omit [FiniteDimensional ℝ V] in
 /-- Two pure atoms in the second qutrit cannot produce an additional vector
@@ -282,7 +222,7 @@ private theorem adapted_coordinates
   obtain ⟨G, hG, hrep⟩ := HermitianExclusionKernel.positive_representative (g.comp I₀)
     (fun X hX => hg _ (J.isFaceOf.le ((hI₀ X).mpr hX)))
   let U := G.H.eigenvectorUnitary
-  let E := unitaryEquiv U
+  let E := QutritSchurPlane.unitaryEquiv U
   let I₁ := I₀.comp E.toLinearMap
   let d := G.H.eigenvalues
   have hd (i) : 0 ≤ d i :=
@@ -306,7 +246,8 @@ private theorem adapted_coordinates
     rw [← htrace, e.apply_symm_apply, hEc, HermitianMat.trace_conj_unitary]
   have hread (X : Mat) : g (I₁ X) = ∑ i, d i * (X.mat i i).re := by
     change (g.comp I₀) (E X) = _
-    rw [hrep, hEc, G.eq_conj_diagonal, HermitianMat.inner_conj_unitary, diagonal_read]
+    rw [hrep, hEc, G.eq_conj_diagonal, HermitianMat.inner_conj_unitary,
+      QutritSchurPlane.diagonal_read]
   have hpJ : (p : V) ∈ H ∧ (p : V) ∈ J :=
     (hmeet p).mpr ⟨1, by norm_num, by simp⟩
   have hpg := (hg0 p (pure_mem p).1).mpr hpJ.1
@@ -352,7 +293,7 @@ private theorem adapted_coordinates
     pivot_injective (hI ((hP j hj).trans (hP i hi).symm))
   let σ : Fin 3 ≃ Fin 3 := Equiv.swap i 0
   have hσ : σ i = 0 := by simp [σ]
-  let R := reindexEquiv σ.symm
+  let R := QutritSchurPlane.reindexEquiv σ.symm
   let I := I₁.comp R.toLinearMap
   have hRc (Y : Mat) : R Y = Y.reindex σ.symm := rfl
   have hRrange : LinearMap.range I = spanFace J := by
@@ -440,7 +381,8 @@ theorem original_qutrit_singleton_incidence
     have hi' : Y.H.eigenvalues i = 0 := by exact_mod_cast hi
     let v (j : Fin 3) : EuclideanSpace ℂ (Fin 3) := Y.H.eigenvectorBasis j
     let w (j : Fin 3) : pure C u := ⟨I (rankOne (v j)),
-      unit_rankOne_original J I hI (fun x hx => by rw [hR]; exact Submodule.subset_span hx)
+      QutritSchurPlane.unit_rankOne_original J I hI
+        (fun x hx => by rw [hR]; exact Submodule.subset_span hx)
         hIC hIT (v j) (Y.H.eigenvectorBasis.orthonormal.norm_eq_one j)⟩
     have hw (j : Fin 3) : (w j : V) ∈ J := (hIC _).mpr (rankOne_nonneg _)
     have hs : I Y = ∑ j, Y.H.eigenvalues j • (w j : V) := by

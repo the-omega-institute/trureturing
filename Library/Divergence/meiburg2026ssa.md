@@ -184,6 +184,9 @@ No separate AC extension is claimed. The unrestricted quantum target
 [issue #23764](https://github.com/the-omega-institute/trureturing/issues/23764)
 remains open.
 
-Singleton incidence uses the same retained Hermitian carrier, unitary congruence,
-and rank-one and spectral suppliers. The support-adapted singular representative
-and the two-atom cancellation via the original pure-lift theorem are repository-derived.
+Singleton incidence uses the retained Hermitian carrier and the repository's
+`QutritSchurPlane.reindexEquiv`, `unitaryEquiv`, `diagonal_read`, and
+`unit_rankOne_original`. It applies `Matrix.IsHermitian.coe_re_apply_self`
+from the pinned Mathlib for the reality of Hermitian diagonal entries. The
+support-adapted singular representative and the two-atom cancellation via the
+original pure-lift theorem are repository-derived.

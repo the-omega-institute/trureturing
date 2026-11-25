@@ -116,7 +116,8 @@ private theorem core_eq_of_zero_col (X : HermitianMat Index ℂ)
       rw [hd, hw, map_zero, add_zero]
       rw [show block 0 0 (0 : HermitianMat (Fin 2) ℂ) = 0 from map_zero core, zero_add]
 
-private def reindexEquiv {ι κ : Type*} (σ : ι ≃ κ) :
+/-- Reindex complex Hermitian matrices by an equivalence of their index sets. -/
+def reindexEquiv {ι κ : Type*} (σ : ι ≃ κ) :
     HermitianMat ι ℂ ≃ₗ[ℝ] HermitianMat κ ℂ where
   toFun X := X.reindex σ
   invFun X := X.reindex σ.symm
@@ -125,7 +126,8 @@ private def reindexEquiv {ι κ : Type*} (σ : ι ≃ κ) :
   map_add' _ _ := (HermitianMat.reindex_add ..).symm
   map_smul' _ _ := (HermitianMat.reindex_smul ..).symm
 
-private def unitaryEquiv {ι : Type*} [Fintype ι] [DecidableEq ι]
+/-- Unitary congruence on complex Hermitian matrices, with inverse congruence by the adjoint. -/
+def unitaryEquiv {ι : Type*} [Fintype ι] [DecidableEq ι]
     (U : Matrix.unitaryGroup ι ℂ) : HermitianMat ι ℂ ≃ₗ[ℝ] HermitianMat ι ℂ :=
   { HermitianMat.conjLinear ℝ U.val with
     invFun := HermitianMat.conj (star U).val
@@ -138,7 +140,8 @@ private def unitaryEquiv {ι : Type*} [Fintype ι] [DecidableEq ι]
       rw [HermitianMat.conj_conj]
       rw [show U.val * (star U).val = 1 from Unitary.coe_mul_star_self U, HermitianMat.conj_one] }
 
-private theorem diagonal_read {ι : Type*} [Fintype ι] [DecidableEq ι]
+/-- Pairing with a real diagonal Hermitian matrix reads a weighted sum of the diagonal entries. -/
+theorem diagonal_read {ι : Type*} [Fintype ι] [DecidableEq ι]
     (d : ι → ℝ) (X : HermitianMat ι ℂ) :
     ⟪HermitianMat.diagonal ℂ d, X⟫_ℝ = ∑ i, d i * (X.mat i i).re := by
   rw [HermitianMat.inner_eq_re_trace]
@@ -173,13 +176,16 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 private abbrev spanFace (F : C.Face) := Submodule.span ℝ (F : Set V)
 
 omit [FiniteDimensional ℝ V] in
-private theorem unit_rankOne_original (J : C.Face) (I : HermitianMat Index ℂ →ₗ[ℝ] V)
+/-- A unit rank-one projector in a trace-preserving Hermitian cone chart onto a face
+maps to an extreme point of the ambient normalized cone base. -/
+theorem unit_rankOne_original {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (J : C.Face) (I : HermitianMat ι ℂ →ₗ[ℝ] V)
     (hI : Function.Injective I) (hJ : ∀ x ∈ J, x ∈ LinearMap.range I)
     (hcone : ∀ X, I X ∈ J ↔ 0 ≤ X)
     (htrace : ∀ X, u (I X) = X.trace)
-    (v : EuclideanSpace ℂ Index) (hv : ‖v‖ = 1) :
+    (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) :
     I (rankOne v) ∈ pure C u := by
-  let K := SectionROGFrame.base (⊤ : Submodule ℝ (HermitianMat Index ℂ))
+  let K := SectionROGFrame.base (⊤ : Submodule ℝ (HermitianMat ι ℂ))
   have hK : K = CircuitBalancedConfirmation.base HermitianExclusionKernel.cone
       HermitianExclusionKernel.unit := by
     ext X

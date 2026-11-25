@@ -20,11 +20,11 @@ Let C be a pointed cone in a finite-dimensional real normed vector space V. The 
 
 In J, the positive Hermitian representative of g has exactly one zero eigenvalue. Its trace-one zero-support pivot maps to p. On the remaining two coordinates the weights of the diagonal support are strictly positive. A common-span matrix has weighted complementary diagonal sum zero. The complementary two-by-two determinant is nonpositive. If it is zero, the complementary block vanishes and the matrix is already singular. Otherwise a real multiple of the pivot cancels the three-by-three determinant by its affine dependence on the pivot entry. In both cases the shifted matrix remains in the common span.
 
-A singular Hermitian three-by-three matrix has at most two nonzero spectral atoms. Their unit-normalized rank-one lifts are original pure states by faciality. The atoms of zero support lie on p. When both supports are positive, the zero total support allows the atoms to be scaled to support one and their quotient images agree. QutritPureLift.unique_original_pure_lift forces their equality and hence cancellation. Subtracting the pivot shift proves that every common-span vector belongs to the real line of p.
+A singular Hermitian three-by-three matrix has at most two nonzero spectral atoms. QutritSchurPlane.unit_rankOne_original lifts their unit-normalized rank-one projectors to original pure states. The atoms of zero support lie on p. When both supports are positive, the zero total support allows the atoms to be scaled to support one and their quotient images agree. QutritPureLift.unique_original_pure_lift forces their equality and hence cancellation. Subtracting the pivot shift proves that every common-span vector belongs to the real line of p.
 
 This supplies singleton incidence in the local carrier-dimension sixteen through eighteen arguments. The global carrier-dimension conclusions require the remaining incidence and dimension arguments.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/QutritSingletonIncidence.original_qutrit_singleton_incidence`
-- Dependency: [D5/S3/Quantum/Foundation/QutritPureLift](QutritPureLift.md)
+- Dependency: [D5/S3/Quantum/Foundation/QutritSchurPlane](QutritSchurPlane.md)
