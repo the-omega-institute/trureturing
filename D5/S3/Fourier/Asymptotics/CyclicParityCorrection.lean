@@ -121,8 +121,9 @@ private theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
     ring
 
 /-- On the whole grid the clipped quadratic is positive exactly above both roots.
-The energy separates into the dual bound, a squared distance, and three terms for
-complementary slackness. The terms are nonnegative when the first multiplier is nonnegative. -/
+For any signed weights of mass one, the energy separates into the dual bound, a squared
+distance, and three terms for complementary slackness. For feasible weights these terms
+are nonnegative when the first multiplier is nonnegative. -/
 theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
     (hH : 0 < H) (hZ : 0 < Z)
     (hC : -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) < 1) :
@@ -135,7 +136,7 @@ theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
     sample ((↑(q / 2) : ℤ) : ZMod q) = C ∧
     (∀ i, C ≤ sample i ∧ p i = H * (sample i - C) * (sample i - ρ) / Z ∧
       (0 < clip (p i) ↔ C < sample i ∧ ρ < sample i)) ∧
-    ∀ v ∈ feasible q a,
+    ∀ v : ZMod q → ℝ, (∑ i, v i) = 1 →
       energy v =
         (2 * (t - (H / 2 + β) * (1 - a)) / Z - ∑ i, (clip (p i)) ^ 2) +
         (∑ i, (v i - clip (p i)) ^ 2) +
@@ -166,7 +167,7 @@ theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
         (t - H * ((1 - cosineMoment 2 v) / 2) - β * (1 - cosineMoment 1 v)) / Z := by
       simp_rw [he]
       rw [← sum_div, sum_sub_distrib, sum_sub_distrib, ← mul_sum, ← mul_sum, ← mul_sum,
-        hv.2.1, (sum_sample_deficits hv.2.1).1, (sum_sample_deficits hv.2.1).2, mul_one]
+        hv, (sum_sample_deficits hv).1, (sum_sample_deficits hv).2, mul_one]
     have hterm (i : ZMod q) : v i ^ 2 =
         -(max 0 (p i)) ^ 2 + (v i - max 0 (p i)) ^ 2 +
         2 * (v i * (max 0 (p i) - p i)) + 2 * (v i * p i) := by ring
@@ -208,7 +209,7 @@ private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 ≤ q) :
     · simpa using sample_cast (q := q) (-1) (by omega) (by omega)
 
 private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
-    {w : ZMod q → ℝ} {δ μ : ℝ} (hw : ∀ i, 0 ≤ w i)
+    {w : ZMod q → ℝ} {δ μ : ℝ} (hw : ∀ i, i ≠ 0 → i ≠ 1 → i ≠ -1 → i ≠ ((↑(q / 2) : ℤ) : ZMod q) → 0 ≤ w i)
     (h0 : 0 ≤ w 0 - δ - μ) (h1 : 0 ≤ w 1 + δ / 2) (hneg : 0 ≤ w (-1) + δ / 2)
     (hμ : 0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ) : ∀ i, 0 ≤ adjusted w δ μ (δ / 2) i := by
   have hrep (j : ℤ) (hlo : -(q : ℤ) < j * 2) (hhi : j * 2 ≤ q) :
@@ -269,12 +270,13 @@ private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
   · simp only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl,
       Pi.single_eq_of_ne hi0, Pi.single_eq_of_ne hi1, Pi.single_eq_of_ne hineg,
       Pi.single_eq_of_ne hiA, sub_zero, add_zero]
-    exact hw i
+    exact hw i hi0 hi1 hineg hiA
 
 /-- The mass transfer matches both cosine deficits exactly. Nonnegative resulting
 weights give a feasible comparison. -/
 theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 ≤ q)
-    (w : ZMod q → ℝ) (A : ℝ) (hw : ∀ i, 0 ≤ w i) (hmass : ∑ i, w i = 1) :
+    (w : ZMod q → ℝ) (A : ℝ)
+    (hw : ∀ i, i ≠ 0 → i ≠ 1 → i ≠ -1 → i ≠ ((↑(q / 2) : ℤ) : ZMod q) → 0 ≤ w i) (hmass : ∑ i, w i = 1) :
     let splitMass := fun x : ℝ => x / 2
     let C := -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q)
     let D₁ := 1 - cosineMoment 1 w
