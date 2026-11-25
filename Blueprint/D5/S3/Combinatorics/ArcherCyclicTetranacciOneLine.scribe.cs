@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 internal sealed class ArcherCyclicTetranacciOneLineDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/ArcherCyclicTetranacciOneLine.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/archer2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/archer2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The first four low-arc insertions preserve one-line avoidance of 4123.",
