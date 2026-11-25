@@ -104,18 +104,19 @@ jobs:
 
       - name: Select the compiler inputs of the analysis and measurement fixtures
         run: |
-          PYTHONPATH=tools/scripts/worktree python3 - <<'PYTHON'
+          PYTHONPATH=tools/scripts/worktree:src/OmegaChecks python3 - <<'PYTHON'
           import os
           from pathlib import Path
           from lean_artifact_inventory import workspace_modules
           from lean_compile_layers import scoped_imports
+          from test_frozen_measurement import MIXED, OFFICIAL, PRIVATE_INDUCTIVE, TETRAHEDRON
 
           root = Path.cwd()
           modules = workspace_modules(root)
           fixtures = {name for name in modules if name.split('.')[0] == 'LeanInformationAuditRegAnalysis'}
           if not fixtures:
               raise ValueError('no Lean analysis fixtures in the checkout')
-          fixtures.add('D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron')
+          fixtures.update((MIXED, OFFICIAL, PRIVATE_INDUCTIVE, TETRAHEDRON))
           targets = scoped_imports(root, modules, fixtures)
           (Path(os.environ['RUNNER_TEMP']) / 'analysis-cache-targets').write_text('\n'.join(sorted(targets)) + '\n')
           PYTHON
