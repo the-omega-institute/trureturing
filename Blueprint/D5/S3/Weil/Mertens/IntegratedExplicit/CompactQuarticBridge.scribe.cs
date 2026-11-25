@@ -126,5 +126,27 @@ internal sealed class CompactQuarticBridgeDocument : IScribeDocumentDefinition
                     + "is eventually absorbed by any positive quartic power loss. Choose the "
                     + "threshold for this absorption before selecting the block at half the "
                     + "requested loss. The canonical quartic criterion gives the equivalence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("compact-quartic-quadratic-error"),
+                DeclarationHandle.Create(Prefix + "compactD_U_quadratic_bounds"),
+                H("Explicit square-root scale comparison"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At n>=3 divide the logarithmic gcd excess by M=n^2. "
+                    + "The bound 11(log 4+4)(M+1)^2/M is at most 18(log 4+4)M. "
+                    + "The one-sided tail rounding bound gives the lower error "
+                    + "-(log 4+4)M and preserves the upper bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("compact-quartic-fixed-constant"),
+                DeclarationHandle.Create(Prefix + "rh_iff_eventually_compact_factorial_gcd"),
+                H("RH equivalence with a prescribed constant"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Under RH the eventual upper bound U(n^4)<n^2 yields "
+                    + "compactD(n)<=(1+18(log 4+4))n^2. In the reverse direction "
+                    + "tail divisibility transfers the same eventual bound to the centered "
+                    + "tail logarithm. The tail LCM criterion gives RH."))),
                 DescribeRole.Theorem))));
 }

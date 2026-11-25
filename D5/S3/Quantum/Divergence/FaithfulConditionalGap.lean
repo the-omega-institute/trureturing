@@ -208,11 +208,13 @@ private theorem phase_isometry {r : Type*} [Fintype r] [DecidableEq r] :
   simp only [Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply]
   split_ifs <;> simp_all
 
-private def pinch {r : Type*} [Fintype r] [DecidableEq r]
+/-- Pinching on the computational input basis of a qubit. -/
+def pinch {r : Type*} [Fintype r] [DecidableEq r]
     (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) : Matrix (r × Fin 2) (r × Fin 2) ℂ :=
   (1 / 2 : ℂ) • (X + phase * X * phaseᴴ)
 
-private theorem pinch_entry {r : Type*} [Fintype r] [DecidableEq r]
+/-- The pinching keeps the equal-label blocks of the input. -/
+theorem pinch_entry {r : Type*} [Fintype r] [DecidableEq r]
     (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) (i j : r) (a b : Fin 2) :
     pinch X (i, a) (j, b) = if a = b then X (i, a) (j, b) else 0 := by
   fin_cases a <;> fin_cases b <;>
@@ -220,7 +222,8 @@ private theorem pinch_entry {r : Type*} [Fintype r] [DecidableEq r]
       Matrix.diagonal_conjTranspose, Matrix.smul_apply, Matrix.add_apply]
     <;> ring
 
-private theorem pinch_contract {r : Type*} [Fintype r] [DecidableEq r]
+/-- Computational-basis pinching contracts the trace norm. -/
+theorem pinch_contract {r : Type*} [Fintype r] [DecidableEq r]
     (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) : traceNorm (pinch X) ≤ traceNorm X := by
   unfold pinch
   rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by norm_num,

@@ -16,12 +16,16 @@ Released under Apache 2.0 license; see
 docs/reports/licenses/tauceti-sphere-port-LICENSE.txt in the receiving repository.
 -/
 
-import D5.S3.Topology.TauCeti.Algebra.Homology.OrderedCechCover
-import D5.S3.Topology.TauCeti.Algebra.Homology.FiniteDegreeComparison
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
-import Mathlib.Algebra.Homology.SingleHomology
-import Mathlib.Algebra.Category.ModuleCat.Colimits
+module
+
+public import D5.S3.Topology.TauCeti.Algebra.Homology.OrderedCechCover
+public import D5.S3.Topology.TauCeti.Algebra.Homology.FiniteDegreeComparison
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
+public import Mathlib.Algebra.Homology.SingleHomology
+public import Mathlib.Algebra.Category.ModuleCat.Colimits
+
+set_option backward.privateInPublic true
 
 /-!
 The horizontal direction is the supplied ordered free cover complex, with
@@ -34,6 +38,8 @@ Only the augmentation is natural in the singular direction. No naturality of
 the chosen vertex in the supplied row contraction is requested or used.
 
 -/
+
+@[expose] public section
 
 set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false

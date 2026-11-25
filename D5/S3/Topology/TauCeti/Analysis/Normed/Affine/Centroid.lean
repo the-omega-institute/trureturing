@@ -6,9 +6,13 @@
    utility: none
    digest: TauCeti port: Distances between finite-family centroids; sphere-homology support. -/
 
-import Mathlib.Analysis.Normed.Group.AddTorsor
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.LinearAlgebra.AffineSpace.Centroid
+module
+
+public import Mathlib.Analysis.Normed.Group.AddTorsor
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.LinearAlgebra.AffineSpace.Centroid
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -20,6 +24,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
