@@ -66,6 +66,7 @@ jobs:
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
             --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
       - name: Restore published module shards with their Lean reports
+        continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}

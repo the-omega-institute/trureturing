@@ -131,3 +131,14 @@ jobs:
         uses: ./.github/actions/lean-cache-shards
         with:
           operation: module-finish
+
+  verify:
+    needs: [pin, publish]
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-module-verify.yml
+    with:
+      source: ${{ needs.pin.outputs.source }}
+      published: true
