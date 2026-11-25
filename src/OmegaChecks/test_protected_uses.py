@@ -23,9 +23,9 @@ def check():
     lean = output("lake", "env", "printenv", "LEAN").strip()
     search = output("lake", "env", "printenv", "LEAN_PATH").strip()
     with tempfile.TemporaryDirectory(prefix="omega-positions-") as temp:
-        def compile_source(directory, text, library_path=search):
+        def compile_source(directory, text, library_path=search, name=module):
             directory = Path(temp) / directory
-            source = directory.joinpath(*module.split(".")).with_suffix(".lean")
+            source = directory.joinpath(*name.split(".")).with_suffix(".lean")
             source.parent.mkdir(parents=True, exist_ok=True)
             source.write_text(text)
             subprocess.run([lean, "-R", directory, "-o", source.with_suffix(".olean"), source],
@@ -73,6 +73,39 @@ def check():
                     assert f"D5.published at value: expected {target} from Mathlib." in str(error), error
                 else:
                     raise AssertionError(f"lost exposed body reference to {target} was accepted")
+
+        native = "D5.NativeFixture"
+        inner = "D5.TransitiveFixture"
+        obj = "@[expose] public def D5.naturalObject (n k : Nat) := Nat.choose n k\n"
+        owner_header = "module\npublic import Mathlib.Data.Nat.Choose.Basic\n"
+        old = compile_source("old", owner_header + obj)
+        folder = Path(temp) / "new"
+        search_new = os.pathsep.join([str(folder), search])
+        facade = f"module\npublic import {native}\n"
+        for owner_source, outer, passing in [
+            (owner_header + obj, facade, True),
+            (owner_header + obj, f"import {native}\n", True),
+            (owner_header + obj.replace(" := ", " := Nat.succ <| "), facade, False),
+            (owner_header + obj.replace("k : Nat)", "k : Nat) (_ : Unit)"), facade, False),
+            (owner_header + obj, f"module\nimport {native}\n", False),
+            (owner_header + obj, f"module\npublic import {inner}\n", False),
+            (owner_header + "public import OmegaInit.Prelude\n" + obj, facade, False),
+        ]:
+            compile_source("new", owner_source, search_new, native)
+            compile_source("new", facade, search_new, inner)
+            new = compile_source("new", outer, search_new)
+            if passing:
+                client = f"import {module}\nexample (n k : Nat) : D5.naturalObject n k = Nat.choose n k := rfl\n"
+                subprocess.run([lean, "--stdin"], input=client, cwd=ROOT, text=True,
+                               env={**os.environ, "LEAN_PATH": new}, check=True)
+                compare(ROOT, [module], [module], old, new)
+            else:
+                try:
+                    compare(ROOT, [module], [module], old, new)
+                except subprocess.CalledProcessError:
+                    pass
+                else:
+                    raise AssertionError("accepted a changed definition, invalid owner, or non-public direct import")
 
         # New leaves and new positions in existing consumers need a compiled, admitted port.
         header = ("module\npublic import OmegaMathlib.Data.Nat.Prime.Defs\n"

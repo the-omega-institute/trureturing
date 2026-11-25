@@ -46,6 +46,8 @@ private structure Request where
   /-- On the candidate, measure the protected declarations, including references to local substitutes. -/
   selected : Option (Array String) := none
   selectedBodies : Option (Array String) := none
+  protectedPath : Option String := none
+  protectedModules : Array String := #[]
   checkPorts : Bool := false
   deriving FromJson
 
@@ -53,6 +55,35 @@ private def nameKey : Name → String
   | .anonymous => "n0"
   | .str parent s => s!"ns({nameKey parent},{s.utf8ByteSize}:{s})"
   | .num parent n => s!"nn({nameKey parent},{n})"
+
+/-- A directly re-exported D5 definition may retain an old public spelling if its new
+owner is independent of all Omega libraries and its compiled declaration is identical. -/
+private def movedDeclarations (env : Environment) (omega : NameSet) (mod : Name)
+    (current : ModuleData) (previousPath : String) : IO (Array ConstantInfo) := do
+  let some path ← SearchPath.findWithExt (System.SearchPath.parse previousPath) "olean" mod
+    | throw <| IO.userError s!"missing protected module {mod}"
+  let (previous, _) ← readModuleData path
+  let mut owners : NameMap ModuleData := {}
+  let mut moved := #[]
+  for before in previous.constants do
+    let .defnInfo defn := before | continue
+    if defn.safety != DefinitionSafety.safe || isPrivateName before.name || before.name.isInternalOrNum ||
+        before.name.hasMacroScopes then continue
+    let some idx := env.getModuleIdxFor? before.name | continue
+    let owner := env.header.moduleNames[idx]!
+    if owner == mod then continue
+    -- Legacy files make ordinary imports available to their own importers.
+    unless owner.getRoot == `D5 && !omega.contains owner && current.imports.any
+        (fun dep => dep.module == owner && !dep.isMeta && (!current.isModule || dep.isExported)) do
+      throw <| IO.userError s!"{mod} does not directly re-export {before.name} from a pure official D5 module ({owner})"
+    unless owners.contains owner do
+      let (publicData, _) ← readModuleData (← findOLean owner)
+      owners := owners.insert owner publicData
+    let some after := (owners.find? owner).bind (·.constants.find? (·.name == before.name))
+      | throw <| IO.userError s!"moved definition {before.name} is not publicly exposed by {owner}"
+    unless before == after do throw <| IO.userError s!"moved definition {before.name} changed in {owner}"
+    moved := moved.push after
+  return moved
 
 def main (args : List String) : IO Unit := do
   let [request, output] := args | throw <| IO.userError "expected a standard identity request and result path"
@@ -72,12 +103,21 @@ def main (args : List String) : IO Unit := do
           admitted := admitted.insert target
   let selected := input.selected.map Std.HashSet.ofArray
   let selectedBodies := input.selectedBodies.map Std.HashSet.ofArray
+  let mut omega : NameSet := {}
+  if input.protectedPath.isSome then
+    for owner in env.header.moduleNames, data in env.header.moduleData do
+      if [`OmegaInit, `OmegaMathlib, `OmegaMath].contains owner.getRoot ||
+          data.imports.any (fun dep => omega.contains dep.module) then omega := omega.insert owner
   let mut records := #[]
   for mod in input.modules do
     -- A module's .olean contains exactly its exported definitions. Legacy modules
     -- store their ordinary client-visible declarations in the same artifact.
     let (publicData, _) ← readModuleData (← findOLean mod.toName)
-    for info in publicData.constants do
+    let mut declarations := publicData.constants
+    if let some path := input.protectedPath then
+      if input.protectedModules.contains mod then
+        declarations := declarations ++ (← movedDeclarations env omega mod.toName publicData path)
+    for info in declarations do
       let name := info.name
       if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
       let key := nameKey name

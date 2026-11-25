@@ -83,7 +83,9 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
             if not modules:
                 return []
             request.write_text(json.dumps(dict(path=search, modules=modules, selected=selected,
-                                               selectedBodies=selected_bodies, checkPorts=check_ports)))
+                                               selectedBodies=selected_bodies, checkPorts=check_ports,
+                                               protectedModules=old_modules,
+                                               protectedPath=old_path if selected is not None else None)))
             subprocess.run(["lean", "--run", script, request, output], cwd=stage,
                            env={**os.environ, "LEAN_PATH": ""}, check=True)
             return json.loads(output.read_text())
