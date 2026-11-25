@@ -15,6 +15,18 @@ internal sealed class CyclicGrowingRearFirstOrderDocument : IScribeDocumentDefin
                 "Fix a nonempty finite rear offset set S and mesh sequence h. Write Q_n=3n⁵h(n)²/20, " +
                 "suppose n⁵h(n)²→K, Q=3K/20, and n(Q_n−Q)→L. For a real offset r, define " +
                 "D=|S|r²−∑_{s∈S}s². The signed rear value p_n(r) uses the coupled three-moment fit.")),
+            Describe.Lean(DescribeId.Create("quadratic-remainders"),
+                DeclarationHandle.Create(Owner + ".second_order_remainders"),
+                H("Quadratically amplified moment and point errors"),
+                StatementSource.FromAuthor(Remainders()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a convergent finite critical scale n⁵h(n)², the exact bottom moment " +
+                    "target minus C_n∑_{s∈S}s²+|S|B_n vanishes after multiplication by n². " +
+                    "At any fixed real offset r the error n³p_n(r)−(C_n r²+B_n) also vanishes " +
+                    "after multiplication by n². Uniform front bounds and the quadratic " +
+                    "trigonometric remainder on each fixed rear offset give both limits."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rear-first-order"),
                 DeclarationHandle.Create(Owner + ".scaled_rear_first_order"),
                 H("First-order signed rear value"),
@@ -47,6 +59,17 @@ internal sealed class CyclicGrowingRearFirstOrderDocument : IScribeDocumentDefin
                         "the squared distance to the fitted law. Its exact positive support is the " +
                         "front and selected rear window. The further degeneracy L+5Q/2=0 is excluded."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Remainders()
+    {
+        var n = F.Id("n");
+        var scale = new Formula.Power(n, F.D(2));
+        var moment = new Formula.Relation(Call("Limit", Mul(scale, Call("MomentError", n))),
+            FormulaRelationOperator.Equal, F.D(0));
+        var point = new Formula.Relation(Call("Limit", Mul(scale, Call("PointError", n, F.Id("r")))),
+            FormulaRelationOperator.Equal, F.D(0));
+        return F.Disp(new Formula.Logic(moment, FormulaLogicOperator.And, point));
+    }
 
     private static Formula FirstOrder()
     {

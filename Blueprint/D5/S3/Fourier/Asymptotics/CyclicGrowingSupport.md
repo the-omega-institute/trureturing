@@ -6,7 +6,19 @@ Exact positive support and optimizer certification in the critical growing-windo
 
 Let the positive integer periods q(n) have eventual parity e in {0,1}, write h(n)=2π/q(n), and assume n⁵h(n)² tends to a finite K. The front window is the image in the cyclic group of integers −n through n. The rear window of index l comprises offsets −l−e/2 through l+e/2 in unit steps from the antipodal angle. Fit the three scaled moment equations on these windows.
 
-**Theorem 1.1 (Eventual exact support away from rear activation thresholds).**
+**Theorem 1.1 (Pointwise boundary signs certify the optimizer).**
+
+$$\left(0 < \operatorname{SignedValue}\left(R\right) \land \operatorname{SignedValue}\left(R + 1\right) \le 0\right) \Rightarrow \operatorname{Support}\left(v\right) = \operatorname{TwoWindows}\left(n, l\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicGrowingSupport.eventual_window_support_of_point_signs` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any fixed rear index l, at sufficiently large n the front signs, matrix invertibility and dual coefficient inequalities hold. If the last included rear score is positive and the first omitted rear score is nonpositive at that n, the two-window fit is the unique optimizer, has the stated positive support and satisfies the squared-distance energy bound. The two conditions are imposed pointwise, so the omitted score may vanish.
+
+**Theorem 1.2 (Eventual exact support away from rear activation thresholds).**
 
 $$\operatorname{Threshold}\left(T, e, l\right) < \frac{3 \cdot K}{20} < \operatorname{Threshold}\left(T, e, l + 1\right)$$
 
@@ -25,5 +37,6 @@ For all sufficiently large n the disjoint grid windows realize exactly the coupl
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingSupport.eventual_strict_support_away_from_thresholds`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CyclicGrowingSupport.eventual_window_support_of_point_signs`
 - Dependency: [D5/S3/Fourier/Asymptotics/CyclicEventualSupport](CyclicEventualSupport.md)
 - Dependency: [D5/S3/Fourier/Asymptotics/CyclicGrowingEdgeLimits](CyclicGrowingEdgeLimits.md)

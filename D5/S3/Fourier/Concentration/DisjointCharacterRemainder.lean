@@ -19,16 +19,16 @@ namespace D5.S3.Fourier.Concentration.DisjointCharacterRemainder
 
 open DisjointCharacterEnvelope
 
-private def realAxis (z : ℝ) : ℝ⟦X⟧ := rescale z (PowerSeries.exp ℝ)
+def realAxis (z : ℝ) : ℝ⟦X⟧ := rescale z (PowerSeries.exp ℝ)
 
-private theorem realAxis_coeff (z : ℝ) (n : ℕ) :
+theorem realAxis_coeff (z : ℝ) (n : ℕ) :
     coeff n (realAxis z) = z ^ n / n.factorial := by
   simp [realAxis, coeff_exp, div_eq_mul_inv]
 
-private theorem realAxis_mul (a b : ℝ) : realAxis a * realAxis b = realAxis (a + b) :=
+theorem realAxis_mul (a b : ℝ) : realAxis a * realAxis b = realAxis (a + b) :=
   exp_mul_exp_eq_exp_add a b
 
-private theorem coeff_mul_majorized (P Q : ℂ⟦X⟧) (U V : ℝ⟦X⟧)
+theorem coeff_mul_majorized (P Q : ℂ⟦X⟧) (U V : ℝ⟦X⟧)
     (hP : ∀ n, ‖coeff n P‖ ≤ coeff n U) (hQ : ∀ n, ‖coeff n Q‖ ≤ coeff n V) (n : ℕ) :
     ‖coeff n (P * Q)‖ ≤ coeff n (U * V) := by
   rw [coeff_mul, coeff_mul]

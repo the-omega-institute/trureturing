@@ -112,7 +112,7 @@ section ArithmeticIntegrability
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma arithmetic_inverse_pairing_intervalIntegrable (Z H : Matrix ι ι ℂ)
+lemma arithmetic_inverse_pairing_intervalIntegrable (Z H : Matrix ι ι ℂ)
     (hZ : Z.PosDef) :
     IntervalIntegrable (fun u : ℝ =>
       (inner ℂ (matrixHS H) ((hsArithmeticMap Z u).inverse (matrixHS H))).re)
