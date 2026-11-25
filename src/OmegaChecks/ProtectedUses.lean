@@ -21,11 +21,31 @@ where
     | .mdata _ body => collect body pos acc
     | _ => acc
 
+/-- Traverse the observable expression with its binder context. A proof implementation
+can be replaced by another proof of the same proposition without changing the object. -/
+private partial def bodyOccurrences (term : Expr) (pos : Name := `value)
+    (acc : Array (Name × Name) := #[]) : MetaM (Array (Name × Name)) := do
+  if ← Meta.isProof term then return acc
+  match term with
+  | .const n _ => return acc.push (pos, n)
+  | .proj s i target => bodyOccurrences target (.str pos "target") (acc.push (.num (.str pos "field") i, s))
+  | .app fn arg => bodyOccurrences arg (.str pos "arg") (← bodyOccurrences fn (.str pos "fn") acc)
+  | .forallE n dom body bi | .lam n dom body bi =>
+    let acc ← bodyOccurrences dom (.str pos "binder") acc
+    Meta.withLocalDecl n bi dom fun x => bodyOccurrences (body.instantiate1 x) (.str pos "body") acc
+  | .letE n type value body _ =>
+    let acc ← if ← Meta.isProp type then pure acc else do
+      bodyOccurrences value (.str pos "value") (← bodyOccurrences type (.str pos "letType") acc)
+    Meta.withLetDecl n type value fun x => bodyOccurrences (body.instantiate1 x) (.str pos "body") acc
+  | .mdata _ body => bodyOccurrences body pos acc
+  | _ => return acc
+
 private structure Request where
   path : String
   modules : Array String
   /-- On the candidate, measure the protected declarations, including references to local substitutes. -/
   selected : Option (Array String) := none
+  selectedBodies : Option (Array String) := none
   deriving FromJson
 
 private def nameKey : Name → String
@@ -39,16 +59,27 @@ def main (args : List String) : IO Unit := do
   searchPathRef.set (System.SearchPath.parse input.path ++ [← getLibDir (← findSysroot)])
   let env ← importModules (input.modules.map fun mod => {module := mod.toName}) {}
   let selected := input.selected.map Std.HashSet.ofArray
+  let selectedBodies := input.selectedBodies.map Std.HashSet.ofArray
   let mut records := #[]
   for mod in input.modules do
-    let some i := env.getModuleIdx? mod.toName | throw <| IO.userError s!"missing selected module {mod}"
-    for name in env.header.moduleData[i]!.constNames do
+    -- A module's .olean contains exactly its exported definitions. Legacy modules
+    -- store their ordinary client-visible declarations in the same artifact.
+    let (publicData, _) ← readModuleData (← findOLean mod.toName)
+    for info in publicData.constants do
+      let name := info.name
       if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
       let key := nameKey name
       if selected.any (!·.contains key) then continue
-      let some info := env.find? name | throw <| IO.userError s!"missing compiled declaration {name}"
+      let mut refs := occurrences info.type
+      if let .defnInfo d := info then
+        let relevant := (selectedBodies.map (·.contains key)).getD (d.value.getUsedConstants.any fun n =>
+          (env.getModuleIdxFor? n).any fun idx => env.header.moduleNames[idx]!.getRoot == `Mathlib)
+        if relevant then
+          let positions ← (bodyOccurrences d.value).run' |>.toIO'
+            {fileName := "<published definition>", fileMap := default} {env}
+          refs := refs ++ positions
       let mut uses := #[]
-      for (pos, obj) in occurrences info.type do
+      for (pos, obj) in refs do
         let some j := env.getModuleIdxFor? obj | throw <| IO.userError s!"unknown compiled object {obj}"
         let owner := env.header.moduleNames[j]!
         if selected.isNone && owner.getRoot != `Mathlib then continue

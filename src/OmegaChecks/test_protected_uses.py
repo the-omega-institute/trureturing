@@ -50,6 +50,36 @@ def check():
             else:
                 raise AssertionError("protected identity accepted a transparent alias in its original position")
 
+        for port, signature, target, substitute in [
+            ("Data.Nat.Prime.Defs", "Nat → Prop", "Nat.Prime", "fun _ => True"),
+            ("Data.Nat.Choose.Basic", "Nat → Nat → Nat", "Nat.choose", "fun n _ => n"),
+        ]:
+            port_ref = "OmegaMathlib." + target
+            form = f"@[expose] public def D5.published : {signature} := "
+            old = compile_source("old", f"module\npublic import OmegaMathlib.{port}\n{form}{port_ref}\n")
+            # Direct upstream reuse retains this exact compiled object after the final Omega import disappears.
+            same = compile_source("new", f"module\npublic import Mathlib.{port}\n{form}{target}\n")
+            compare(ROOT, [module], [module], old, same)
+            for body in (f"module\n{form}{substitute}\n",
+                         f"module\npublic import Mathlib.{port}\npublic def D5.published : {signature} := {target}\n"):
+                new = compile_source("new", body)
+                try:
+                    compare(ROOT, [module], [module], old, new)
+                except ValueError as error:
+                    assert f"D5.published at value: expected {target} from Mathlib." in str(error), error
+                else:
+                    raise AssertionError(f"lost exposed body reference to {target} was accepted")
+
+        # Both a theorem and a proof packaged inside computational data can change proof methods.
+        header = "module\npublic import OmegaMathlib.Data.Nat.Prime.Defs\n"
+        before = ("public theorem D5.witness : True := (fun (_ : Nat.Prime 2) => True.intro) Nat.prime_two\n"
+                  "@[expose] public def D5.pair : {n : Nat // True} := ⟨2, D5.witness⟩\n")
+        after = ("public theorem D5.witness : True := True.intro\n"
+                 "@[expose] public def D5.pair : {n : Nat // True} := ⟨2, True.intro⟩\n")
+        old = compile_source("old", header + before)
+        new = compile_source("new", "module\n" + after)
+        compare(ROOT, [module], [module], old, new)
+
 
 if __name__ == "__main__":
     check()

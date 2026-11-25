@@ -1,4 +1,4 @@
-"""Compare the mathematical objects in affected D5 signatures at a protected revision."""
+"""Compare the mathematical objects in affected D5 signatures and exposed mathematical definitions at a protected revision."""
 from collections import defaultdict
 import json
 import os
@@ -76,14 +76,16 @@ def compare(before, old_modules, new_modules, old_path, new_path):
     with tempfile.TemporaryDirectory(prefix="omega-signatures-") as temp:
         request, output = (Path(temp) / name for name in ("request.json", "uses.json"))
 
-        def snapshot(stage, modules, search, selected=None):
-            request.write_text(json.dumps(dict(path=search, modules=modules, selected=selected)))
+        def snapshot(stage, modules, search, selected=None, selected_bodies=None):
+            request.write_text(json.dumps(dict(path=search, modules=modules, selected=selected,
+                                               selectedBodies=selected_bodies)))
             subprocess.run(["lean", "--run", script, request, output], cwd=stage,
                            env={**os.environ, "LEAN_PATH": ""}, check=True)
             return json.loads(output.read_text())
 
         old = snapshot(before, old_modules, old_path)
-        new = snapshot(ROOT, new_modules, new_path, [item["nameKey"] for item in old])
+        bodies = [d["nameKey"] for d in old if any(u["position"].split(".", 1)[0] == "value" for u in d["uses"])]
+        new = snapshot(ROOT, new_modules, new_path, [d["nameKey"] for d in old], bodies)
     current = {(d["module"], d["nameKey"]): {u["position"]: u for u in d["uses"]} for d in new}
     verified = 0
     for declaration in old:
