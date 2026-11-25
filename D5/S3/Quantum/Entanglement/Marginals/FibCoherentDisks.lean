@@ -160,7 +160,7 @@ private theorem completing_square (a e : ℝ) (c k z : ℂ) :
   linarith only [hcross]
 
 
-private noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
+noncomputable def disk (a e : ℝ) (c k : ℂ) : ℂ × ℝ :=
   let h := a + normSq k
   let p := k * c / (h : ℂ)
   if 0 < a then

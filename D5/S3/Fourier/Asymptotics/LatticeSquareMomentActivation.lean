@@ -41,7 +41,7 @@ private theorem sum_latticeInterval_even (n : ℕ) (f : ℤ → ℝ)
   unfold latticeInterval
   rw [Finset.sum_Icc_of_even_eq_range heven, hzero, sub_zero, two_nsmul, two_mul]
 
-private theorem card_latticeInterval (n : ℕ) :
+theorem card_latticeInterval (n : ℕ) :
     ((latticeInterval n).card : ℝ) = 2 * (n : ℝ) + 1 := by
   have h := Int.card_Icc_of_le (a := -(n : ℤ)) (b := (n : ℤ)) (by omega)
   have h' := congrArg (fun z : ℤ => (z : ℝ)) h
@@ -62,7 +62,7 @@ private theorem sum_fourth_rat (n : ℕ) :
   norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two, h3, h4, hc]
   ring
 
-private theorem sum_lattice_square (n : ℕ) :
+theorem sum_lattice_square (n : ℕ) :
     (∑ k ∈ latticeInterval n, (k : ℝ) ^ 2) =
       (n : ℝ) * (n + 1) * (2 * n + 1) / 3 := by
   rw [sum_latticeInterval_even n _ (by simp) (by intro k; push_cast; ring)]
@@ -114,7 +114,7 @@ private theorem upper_moment_difference (n : ℕ) (t : ℝ) :
   rw [normalizer_formula, momentNumerator_formula]
   ring
 
-private theorem sq_le_iff_mem (k : ℤ) (n : ℕ) :
+theorem sq_le_iff_mem (k : ℤ) (n : ℕ) :
     (k : ℝ) ^ 2 ≤ (n : ℝ) ^ 2 ↔ k ∈ latticeInterval n := by
   rw [← sq_abs (k : ℝ), sq_le_sq₀ (abs_nonneg _) (Nat.cast_nonneg _), abs_le,
     latticeInterval, mem_Icc]
