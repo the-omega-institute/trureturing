@@ -65,7 +65,8 @@ private theorem partialTraceLeft_contract (D : Matrix (A × B) (A × B) ℂ)
     exact (partialTraceLeft_posSemidef (Matrix.nonneg_iff_posSemidef.mp hX)).nonneg
   · exact trace_partialTraceLeft
 
-private def tensorLeft : Matrix A A ℂ →⋆ₐ[ℂ] Matrix (A × B) (A × B) ℂ where
+/-- Embed a first-factor operator by tensoring with the identity on the second factor. -/
+def tensorLeft : Matrix A A ℂ →⋆ₐ[ℂ] Matrix (A × B) (A × B) ℂ where
   toFun F := F ⊗ₖ (1 : Matrix B B ℂ)
   map_one' := Matrix.one_kronecker_one
   map_mul' F G := by rw [← Matrix.mul_kronecker_mul, Matrix.one_mul]

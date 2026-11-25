@@ -1,52 +1,99 @@
 # Omega 数学模块的架构与验证
 
-本实验以 trureturing 的 `ff5118d67b7e`、官方 Lean 4.35.0 和 OmegaMath v0.1.2（`ab30975b2029`）为基线。仓库根目录的 `lakefile.toml` 用 `srcDir = "src"` 登记三个库目标，共用 trureturing 的工具链、Mathlib 依赖和锁文件。`OmegaInit` 可以由 Lake 单独构建。文件路径中的 `src/` 由 Lake 解析，Lean 导入仍然写模块名。
+`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
+
+普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+
+## 六卷与模块树
+
+| 卷 | 内容 | 定义与定理的入口 |
+| --- | --- | --- |
+| I | 逻辑、自然数、整数与精确比值 | `OmegaInit`、`OmegaMath.Data.{Nat,Ratio,Int,IntRatio}` |
+| II | 射影坐标、带符号的有理单位圆、Cayley 参数与旋转合成 | `OmegaMath.Projective`、`OmegaMath.Projective.Circle` |
+| III | 整数四元数、射影三元数堆、PythSpinor 与三维 Cayley 旋转 | `OmegaMath.Algebra.Quaternion`、`OmegaMath.Ternion.Heap`、`OmegaMath.Geometry.Cayley3D` |
+| IV | 二阶与有限阶 jet、单纯上边界与正合性 | `OmegaMath.Calculus.{Jet2,DFiniteJet}`、`OmegaMath.Topology.SimplicialCoboundary` |
+| V | 二次扩张、Lagrange–Gram 与 Schur 恒等式、Bargmann 行列式、Haar 矩与 Chebyshev–Hecke 算子 | `OmegaMath.Algebra.QuadraticExt`、`OmegaMath.Matrix.LagrangeSchur`、`OmegaMath.Geometry.BargmannGram`、`OmegaMath.Harmonic.{ChebyshevHecke,PiFreeHaar}` |
+| VI | 欧几里得算法、连分数、深度预算、整数矩阵、Hurwitz 分裂与 FRACTRAN | `OmegaMath.Arithmetic.{Euclidean,ContinuedFraction,DepthBudget}`、`OmegaMath.Matrix.Mat2`、`OmegaMath.Matrix.Mat2.Hurwitz`、`OmegaMath.Computability.{Fractran,QuaternionFractran}` |
+
+下列树以模块名表示源文件。带子项的节点也可以是模块，例如 `OmegaMath.Projective` 和 `OmegaMath.Algebra.QuadraticExt.Polynomial`。同层模块用逗号列出。
 
 ```text
-trureturing/
-  lakefile.toml
-  D5/                           existing proofs
-  src/
-    OmegaInit.lean              strict foundation
-    OmegaInit/
-    OmegaMath.lean              public mathematics
-    OmegaMath/Projective/Basic.lean  chapter 39 overlap
-    OmegaMath/Projective.lean        scaling theorem
-    OmegaChecks/                consumers, audit and experiment
+OmegaInit
+├── Prelude, Core
+└── Data
+    ├── Nat
+    │   └── Basic, Lemmas
+    └── Int
+        └── Basic, Lemmas, Order
+OmegaMath
+├── Algebra
+│   ├── QuadraticExt
+│   │   ├── Basic, Fibonacci, Operations, Ring, SpecialValues, Spinor
+│   │   └── Polynomial
+│   │       └── Monomials
+│   └── Quaternion
+│       └── Polynomial
+├── Arithmetic
+│   ├── ContinuedFraction
+│   │   └── Convergents, Tangent
+│   ├── DepthBudget
+│   └── Euclidean
+│       └── Division, GCD, Prime
+├── Calculus
+│   ├── DFiniteCompose
+│   ├── DFiniteJet
+│   │   └── Basic, Cayley, Coefficients, Identities
+│   ├── Jet2
+│   │   └── Basic, Fidelity, Operations, Scalar, Secant
+│   └── MidpointDrift
+├── Computability
+│   ├── Fractran
+│   │   └── Division
+│   └── QuaternionFractran
+├── Data
+│   └── Int, IntRatio, Nat, Ratio
+├── Geometry
+│   ├── BargmannGram
+│   │   └── Coordinates, Determinant, Fractions, Identities, Monomial, Polynomial, Scaling
+│   ├── Cayley3D
+│   │   └── Adjoint, Matrix, Recurrence
+│   └── DualChartCayley, LieTriple, SphericalLaws
+├── Harmonic
+│   ├── AllDegreeHaar
+│   │   └── Characters, Coefficients, Integration, MomentTable
+│   ├── ChebyshevHecke
+│   │   └── Character, Orbitals, Recurrence, S5, SpinShells, Traces
+│   ├── HurwitzFreeGroup
+│   │   └── Adjoint, ReducedDifference, Residue, Split5
+│   └── PiFreeHaar
+│       └── Hecke, Moments
+├── Matrix
+│   ├── LagrangeSchur
+│   │   └── Diagonal, Gram, Order, Schur, Sequence, Vector
+│   └── Mat2
+│       └── Hurwitz
+├── Projective
+│   ├── Basic
+│   └── Circle
+│       └── Identity
+├── Ternion
+│   └── Heap
+│       └── Core, Fidelity, Spinor
+├── Topology
+│   └── SimplicialCoboundary
+└── Witnesses
+    └── FlagshipWitnesses
 ```
 
-## 依赖与入口
+## 导入与来源
 
-`OmegaInit`、`OmegaMath` 和 `OmegaChecks` 是同一 Lake 包中的三个库目标。前两个公开严格数学声明，第三个容纳消费示例和宿主审计程序。现有 D5 证明位于仓库根目录的 `D5/`，可以直接导入 `src/` 中的模块。定义与消费它的证明可以在同一提交中更新。日常源文件改动使用根包现有的依赖锁定。[Lake 配置](../lakefile.toml)
-
-图中每个箭头表示左侧模块直接导入右侧模块。
-
-```text
-OmegaChecks.Mixed --> Mathlib.Data.Nat.Prime.Basic
-                 +--> OmegaChecks.ProjectiveOverlap --> OmegaMath.Projective
-
-OmegaMath --------------------------------------------> OmegaMath.Projective
-OmegaMath.Projective ---------------------------------> OmegaMath.Projective.Basic
-OmegaChecks.Examples ---------------------------------> OmegaMath.Projective.Basic
-OmegaMath.Projective.Basic --> OmegaMath.Data.Ratio --> OmegaMath.Data.Nat
-                                                             |
-                                                             v
-OmegaInit --> OmegaInit.Data.Nat --> OmegaInit.Data.Nat.Lemmas
-                                              |
-                                              v
-                                    OmegaInit.Data.Nat.Basic
-                                              |
-                                              v
-                                    OmegaInit.Core --> OmegaInit.Prelude
-
-OmegaChecks.Audit --> Lean, Lean.Replay
-```
+严格模块使用 `module` 和 `prelude`，后者关闭隐式官方 `Init` 导入。可直接导入总入口，也可只导入所需专题。带符号的齐次坐标位于 `OmegaMath.Projective.Circle`。有限 `IntRatio` 用正分母的前驱存储分母，以交叉相乘定义等价，并将未定义值传递到运算结果。加法逆元律适用于有限分数，乘法逆元律还要求分子非零。[有理单位圆](OmegaMath/Projective/Circle.lean) · [精确比值](OmegaMath/Data/IntRatio.lean)
 
 对于整数齐次坐标 `[P:Q]`，第 39 章的重叠度是 `Q²/(P²+Q²)`。两坐标均为零时读数未定义。比如 `[1:1]` 和 `[2:2]` 的读数都等价于 1/2。
 
 - 计算读数时，导入 `OmegaMath.Projective.Basic`。这个模块定义 `Omega.Projective.kappa`，输入是坐标的绝对值。[定义](OmegaMath/Projective/Basic.lean) · [边界算例](OmegaChecks/Examples.lean)
 - 证明同比例放大坐标保持读数时，导入 `OmegaMath.Projective`。严格文件用 `prelude` 关闭隐式官方 Init 导入，`open Omega` 后可直接写 `Nat` 和 `Ratio`。[缩放定理](OmegaMath/Projective.lean) · [对角坐标的消费示例](OmegaChecks/ProjectiveOverlap.lean)
-- 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下表的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
+- 混用两套数学时，可写 `open Omega renaming Nat → OmegaNat`，官方类型仍写 `Nat`。混合示例显式引入 Mathlib，审计程序则使用官方 Lean API。零公理承诺覆盖下文的严格入口及其传递依赖。[混用示例](OmegaChecks/Mixed.lean)
 
 ## 官方 Lean 的模块与名称
 
@@ -54,10 +101,13 @@ OmegaChecks.Audit --> Lean, Lean.Replay
 
 | 官方模块 | 官方声明 | 本仓源文件 | 本仓声明 |
 | --- | --- | --- | --- |
-| `Init.Prelude` | `Nat`、`Nat.add` | [Prelude.lean](OmegaInit/Prelude.lean) | `Omega.Nat`、`Omega.Nat.add` |
-| `Init.Core` | `Nat.add_zero` | [Core.lean](OmegaInit/Core.lean) | `Omega.Nat.add_zero` |
-| `Init.Data.Nat.Basic` | `Nat.add_comm` | [Basic.lean](OmegaInit/Data/Nat/Basic.lean) | `Omega.Nat.add_comm` |
-| `Init.Data.Nat.Lemmas` | `Nat.mul_right_comm` | [Lemmas.lean](OmegaInit/Data/Nat/Lemmas.lean) | `Omega.Nat.mul_right_comm` |
+| `Init.Prelude` | `Nat`、`Nat.add` | [Prelude.lean](../strict/OmegaInit/Prelude.lean) | `Omega.Nat`、`Omega.Nat.add` |
+| `Init.Core` | `Nat.add_zero` | [Core.lean](../strict/OmegaInit/Core.lean) | `Omega.Nat.add_zero` |
+| `Init.Data.Nat.Basic` | `Nat.add_comm` | [Basic.lean](../strict/OmegaInit/Data/Nat/Basic.lean) | `Omega.Nat.add_comm` |
+| `Init.Data.Nat.Lemmas` | `Nat.mul_right_comm` | [Lemmas.lean](../strict/OmegaInit/Data/Nat/Lemmas.lean) | `Omega.Nat.mul_right_comm` |
+| `Init.Data.Int.Basic` | `Int`、`Int.mul` | [Basic.lean](../strict/OmegaInit/Data/Int/Basic.lean) | `Omega.Int`、`Omega.Int.mul` |
+| `Init.Data.Int.Lemmas` | `Int.add_assoc`、`Int.mul_eq_zero` | [Lemmas.lean](../strict/OmegaInit/Data/Int/Lemmas.lean) | `Omega.Int.add_assoc`、`Omega.Int.mul_eq_zero` |
+| `Init.Data.Int.Order` | `Int.natAbs_mul` | [Order.lean](../strict/OmegaInit/Data/Int/Order.lean) | `Omega.Int.natAbs_mul` |
 
 ```lean
 prelude
@@ -69,52 +119,41 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 
 审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入 `OmegaMath`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
 
-## OmegaMath 的专题与来源
+## 严格库与可替换接口
 
-按用途选目录。能脱离某个 D5 证明独立使用的定义或定理放在 `OmegaMath` 对应的数学专题下。只为一个 D5 证明服务的辅助结果可以与该证明放在一起。第 39 章的 `kappa` 接受任意一对坐标的绝对值，缩放定理对任意正自然数倍成立，两者都可以直接由其他证明导入，因此保留在 `OmegaMath.Projective`。[读数定义](OmegaMath/Projective/Basic.lean) · [缩放定理](OmegaMath/Projective.lean)
+`OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。`OmegaMath` 可以导入三个严格库。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)
 
-| 来源 | 模块位置 | 公开名称与来源标注 |
-| --- | --- | --- |
-| 从钉版 Mathlib 移植 | 保留上游定义所在模块的路径，把 `Mathlib` 换成 `OmegaMath` | 在上游声明的完整名字前加 `Omega.` |
-| Omega 原创形式化 | 放在相关专题附近，可与移植模块同目录 | 在 `Omega` 命名空间中取名，模块文档第一行写 `Omega original.`，随后说明用途 |
+`OmegaMathlib` 按上游模块路径组织，例如 `OmegaMathlib.Data.Nat.Fib.Basic` 对应 `Mathlib.Data.Nat.Fib.Basic`。每个公开移植声明都须指向钉版上游的同名声明，核对声明所属模块、类型、公开参数和运算含义。使用另一种算法实现函数时，需要一个针对实际函数体、对全部输入成立的对应证明，并限定公开接口可观察的计算规则。项目自有接口位于 `OmegaMath`。例如群减法模块显式接收运算和群公理，保留在项目数学层。[声明检查](OmegaChecks/Interface.lean) · [群接口](OmegaMath/Algebra/Group/Basic.lean)
 
-例如，钉版 Mathlib 的 `Nat.Prime` 定义在 `Mathlib.Data.Nat.Prime.Defs`。移植时应写在 `src/OmegaMath/Data/Nat/Prime/Defs.lean`，声明名为 `Omega.Nat.Prime`。本仓用临时模块测试这条命名规则，当前交付的数学模块只含基础引理、精确比值和射影读数。[上游定义](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Nat/Prime/Defs.lean#L42)
+`OmegaChecks.NatCorrespondence` 证明严格自然数与标准自然数之间的双向转换、加法保持、序关系双向等价，以及 Fibonacci 数和二项式系数对任意输入的逐点一致。[自然数对应](OmegaChecks/NatCorrespondence.lean)
 
-来源标记以文件为单位，描述这份形式化的来源。给移植专题补充原创引理时，将引理放在相邻文件，便于逐模块识别。审计器对移植声明核对上游名字与定义模块，陈述及实现的对应关系由评审确认。只有严格闭包中实际包含 Mathlib 移植声明时，才定向准备上游模块，在独立环境读取其编译产物。原创和移植模块都须通过同一套零公理审计。[审计实现](OmegaChecks/Audit.lean)
+Zeckendorf 核验将零基权位 `i` 映射为 Fibonacci 下标 `i + 2`。Lean 证明两个规范性谓词等价、解码值一致、每个输入的编码等于 Mathlib 的 `Nat.zeckendorf`，并且每个 Mathlib 规范表示都可由严格编码表示。`lake test -- OmegaChecks.WDigitCorrespondence` 可单独运行。[对应证明](OmegaChecks/WDigitCorrespondence.lean)
 
-## 主仓 CI
+## 下游核验
 
-`OmegaInit` 和 `OmegaMath` 是 trureturing 的内部库。主仓的 `current` 检查从改动的 Lean 文件沿 `import` 找出受影响的模块，按根包的模块名构建 `src/` 下的代码，并为引用它的 D5 模块选择常规报告。缓存按同一模块名复用。`src/**/*.lean` 也适用主仓的文件行数检查。
-
-严格库的额外条件由根包的 Lake 测试驱动检查。CI 将受影响的内部模块传给驱动，驱动在空内核中重放严格模块的传递声明，并拒绝公理和严格库范围以外的导入。只有变更包含 `src/` 下的 Lean 源文件时，CI 才选择内部库测试。只改审计器时用 `OmegaInit.Prelude` 做定向回归。在仓库根目录运行 `lake test -- OmegaMath.Projective` 可重放该模块及其传递依赖。驱动本身依赖官方 Lean API。[Lake 配置](../lakefile.toml) · [驱动](OmegaChecks/Audit.lean)
-
-## 严格边界
-
-| 审计入口 | 传递闭包的模块数 | 声明数 | 传递公理数 |
-| --- | ---: | ---: | ---: |
-| `OmegaInit` | 6 | 36 | 0 |
-| `OmegaMath` | 9 | 49 | 0 |
-| `OmegaChecks.ProjectiveOverlap` | 9 | 50 | 0 |
-
-审计从编译产物读取完整导入集合，逐条检查声明，再把整个闭包交给空的 Lean 4.35.0 内核环境重放。三个入口的闭包均无官方 Init 或 Mathlib 模块。两个反例分别检验审计会拒绝未被使用的公理和遗漏 `prelude` 产生的隐式官方导入。信任基础包括官方内核的归纳类型、宇宙与定义相等规则。[审计实现](OmegaChecks/Audit.lean)
-
-## 复现
-
-在已安装主仓钉版工具的 worktree 根目录运行：
+在仓库根目录执行以下命令。第一个入口检查三个严格库的联合闭包。CI 使用第二个入口，检查错误声明的拒绝结果，并在隔离的严格环境与官方环境中重新编译所选下游的相同正文。核验报告列出实际选择的模块，便于追溯结果适用于哪些消费者。[审计入口](OmegaChecks/check.py) · [双环境编译](OmegaChecks/portable.py)
 
 ```sh
-make lean LEAN_TARGETS=OmegaInit
+lake test -- OmegaInit OmegaMathlib OmegaMath
 python3 src/OmegaChecks/check.py
-python3 src/OmegaChecks/check.py --incremental
 ```
 
-最后一条用于独立实验 worktree。它临时创建一个独立专题，分别修改已提交的射影和基础源码，对射影模块分别测试等价改写证明和新增公开定理，逐次定向构建并恢复，再核对原始锁文件字节。测量以被观察模块的 `.olean` 修改时间为准。测试使用匹配的 Mathlib 依赖缓存。[复现脚本](OmegaChecks/check.py)
+完整双编通过后，`.lake/build/omega-checks/official-axioms.json` 列出每个官方端口和已核验消费者的公开声明、所属模块及传递公理依赖。CI 将该文件作为 `omega-official-axioms` 上传。指定消费者的局部双编把测量结果写入同目录的 `selected-official-axioms.json`。
 
-| 临时改动 | 被观察的 16 个模块中哪些重编 |
-| --- | --- |
-| 加入目标均未引用的独立专题 | 0 个 |
-| 仅改写缩放定理的证明项，签名相同 | 1 个，即证明所在的射影模块 |
-| 射影模块增加公开定理 | 4 个，包括射影模块、数学总入口和两个消费模块；只引用读数定义的算例复用 |
-| 基础 Prelude 增加公开定理 | 14 个，包括 6 个基础模块、2 个 Omega 数学数据模块、读数定义、射影与数学入口及 3 个消费模块 |
+完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。两端各用对应的主库及检查器接口编译这些模块，普通数学发布仍从主包构建。
 
-四次实验中，原有 D5 定理和所观察的 `Mathlib.Data.Nat.Prime.Basic` 都复用产物。锁文件 SHA-256 为 `8550e44937f85a9be196a2917a075eeb8c22bf6c15baa83e72017c6fc4437a8e`，与分支起点相同。另在同一 worktree 的临时目录里，以两个互相通过本地路径引用的 Lake 包对照：基础包里添加未导入的文件时观测到 0 个模块重编；修改基础 Prelude 时 6 个模块重编，跨包的射影模块在其中，独立模块复用。实验范围是固定工具链、有缓存的定向本地构建。
+移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/` 下的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
+
+```sh
+python3 src/OmegaChecks/portable.py --regenerate-facades
+```
+
+下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`Omega.Nat.fib` 由编译后的公开名自动解析到 `Nat.fib`。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
+
+
+所有入选消费者均以原始官方环境和严格环境编译。准入还为严格端口的共同公开计算规则生成一份独立的官方构建配置，在其中限制已封装实现的展开，并编译仓内的共同接口用例。以 Fibonacci 为例，普通官方发布允许用 `rfl` 计算 `fib 0`，严格环境和共同接口用例可用公开定理 `fib_zero`。下列双端核验命令同时准备这份配置。随后可用 `lake -f .lake/omega-common.toml env lean <文件>` 检查其他消费者是否只用到了共同计算规则。
+```sh
+python3 src/OmegaChecks/portable.py --backend strict OmegaChecks.Portable.Common
+python3 src/OmegaChecks/portable.py --backend mathlib OmegaChecks.Portable.Common
+python3 src/OmegaChecks/portable.py --backend both OmegaChecks.Portable.Common
+```

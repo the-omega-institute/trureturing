@@ -1,17 +1,9 @@
-/-
-Copyright (c) 2026 The Omega Institute. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 module
-prelude
-
+public import Init.Data.Nat.Lemmas
 public import OmegaInit.Data.Nat.Basic
 
-@[expose] public section
-
+/-! Namespace aliases to the pinned public interface. -/
+public section
 namespace Omega.Nat
-
-theorem mul_right_comm (a b c : Nat) : Eq (mul (mul a b) c) (mul (mul a c) b) :=
-  (mul_assoc a b c).trans ((congrArg (mul a) (mul_comm b c)).trans (mul_assoc a c b).symm)
-
+export _root_.Nat (mul_eq_zero mul_right_comm)
 end Omega.Nat

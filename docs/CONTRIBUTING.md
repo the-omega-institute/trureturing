@@ -119,8 +119,11 @@ For a bug, include the commit, environment, smallest reproducing command or inpu
 expected behavior and observed output or exit code. For a mathematical mismatch,
 quote the statement and identify a missing hypothesis or give a counterexample.
 For a proposal, state the desired outcome and how to verify it. For a question,
-state the exact point that needs an answer. Include necessary diagnostics and
-source links. Keep Issue and PR bodies focused on current results and evidence.
+state the exact point that needs an answer. Keep essential diagnostics in the
+body and link to durable sources, such as a file at a specific commit, for details.
+Keep the body current when editing it. Research and audit Issues retain their
+required statements, evidence and acceptance criteria.
+[Issue body and updates](../CLAUDE.md#53-issue-留痕的判决节点)
 
 Before implementing or delegating the work, record your claim on the matching
 Issue with the current facts and proposed action. A comment is enough. Correct
@@ -417,6 +420,36 @@ Base supplies data only. Use `origin/dev` when that is your project remote.
 Commit and push each logical change; local checks provide early feedback alongside
 remote CI. Report actual commands and exit codes. Local success does not replace
 required checks on the PR.
+
+### Migrate existing proofs to strict Omega mathematics
+
+Migrate the original D5 owner and affected callers to the strict types and
+proofs. Verify the old and new mathematical statements with a consumer-side Lean
+comparison when their representations differ. Keep imports, names, links and
+migration notes directed from the consumers to the library. Follow the scoped
+report and frozen-state procedure in the [migration skill](../skills/omega-math-migration/SKILL.md).
+
+### D5 publication references
+
+These frozen declarations supply references for the strict mathematics volumes.
+
+| Volume | Frozen modules |
+| --- | --- |
+| II | [OmegaCircleClosure](../D5/S3/Quantum/AURICOmega/OmegaCircleClosure.lean) |
+| III | [OmegaTernionHeap](../D5/S3/Quantum/AURICOmega/OmegaTernionHeap.lean) · [OmegaCayleyRotation](../D5/S3/Quantum/AURICOmega/OmegaCayleyRotation.lean) |
+| IV | [OmegaJetCalculus](../D5/S3/Quantum/AURICOmega/OmegaJetCalculus.lean) · [OmegaSimplicialExactness](../D5/S3/Quantum/AURICOmega/OmegaSimplicialExactness.lean) |
+| V | [OmegaQuadraticAndSchur](../D5/S3/Quantum/AURICOmega/OmegaQuadraticAndSchur.lean) · [OmegaChebyshevHecke](../D5/S3/Quantum/AURICOmega/OmegaChebyshevHecke.lean) · [OmegaBargmannHaarHecke](../D5/S3/Quantum/AURICOmega/OmegaBargmannHaarHecke.lean) |
+| VI | [OmegaArithmeticHorizon](../D5/S3/Quantum/AURICOmega/OmegaArithmeticHorizon.lean) · [OmegaMatrixAndFractran](../D5/S3/Quantum/AURICOmega/OmegaMatrixAndFractran.lean) |
+
+| Batch | Frozen module |
+| --- | --- |
+| 3A | [OmegaComposeAndWitnesses](../D5/S3/Quantum/AURICOmega/OmegaComposeAndWitnesses.lean) |
+| 3B | [OmegaSphericalHaarMidpoint](../D5/S3/Quantum/AURICOmega/OmegaSphericalHaarMidpoint.lean) |
+| 3C | [OmegaLieTripleAndFreeGroup](../D5/S3/Quantum/AURICOmega/OmegaLieTripleAndFreeGroup.lean) |
+
+`OmegaShadowBridge` transports exact arithmetic and the projective circle into the
+standard number types. Its frozen record lists `propext` and `Quot.sound`.
+[Bridge](../D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean) · [Frozen evidence](../Golden/Frozen/state/D5/S3/Quantum/AURICOmega/OmegaShadowBridge.lean.json)
 
 ### Refresh frozen declaration evidence
 

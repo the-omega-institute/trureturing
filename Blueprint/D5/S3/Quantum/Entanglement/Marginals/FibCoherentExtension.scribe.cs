@@ -37,5 +37,84 @@ internal sealed class FibCoherentExtensionDocument : IScribeDocumentDefinition
                     + "residual on the endpoints. At trace zero the residual blocks are zero. "
                     + "Restoring the outer product contribution and the middle singleton "
                     + "gives the required common state."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-coherent-pure"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_iff"),
+                H("Pure extensions at a prescribed coupling"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Fix the free coupling z and suppose the middle occupation b is nonzero. "
+                    + "A pure trace-one extension exists exactly when the left endpoint block "
+                    + "has trace one minus b and both Schur residuals at z are zero. In that case "
+                    + "the pure density is the only positive semidefinite extension with the "
+                    + "specified marginals and coupling.")),
+                    Paragraph(Text(
+                    "The middle amplitude x has squared modulus b and the middle row is x "
+                    + "times the conjugate of the endpoint amplitudes. The endpoint block is "
+                    + "therefore the outer product of the conjugated row divided by b. The "
+                    + "trace condition and the left residual equation force b to be positive "
+                    + "because for negative b the correction has nonpositive trace. Take x "
+                    + "to be the positive square root of b and reconstruct the endpoint "
+                    + "amplitudes from the row. Any positive extension with the same data has "
+                    + "a positive semidefinite Schur residual with trace zero, so its endpoint "
+                    + "block equals the same correction.")),
+                    Paragraph(Text(
+                    "At zero middle occupation, an endpoint-only pure state can have "
+                    + "nonzero endpoint blocks. For example, the pure vacuum has two vacuum "
+                    + "projections as endpoint blocks. The positive-pivot formula divides "
+                    + "by b and requires the separate zero-occupation analysis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-rational-prescribed-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.rational_extension_at"),
+                H("Rational extension at a prescribed coupling"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix a nonnegative middle occupation, rational observed entries, and a rational value for the unobserved coupling. Suppose the traces normalize the data, both residual marginals are positive semidefinite, and the row vanishes when the middle occupation is zero. The data admit a positive trace-one extension with rational real and imaginary parts in every entry.")),
+                    Paragraph(Text("Normalization makes the middle occupation rational. Take the tensor product of the two residual blocks divided by their common trace. At trace zero both blocks vanish and the product contribution is zero. Restore the correction and the middle row. Each entry uses sums, products, conjugation and reciprocals of complex numbers with rational coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-unique-coherent-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.unique_coherent_extension_iff"),
+                H("When the edge marginals determine the state"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At positive middle occupation, the two edge marginals determine a unique "
+                    + "positive trace-one state exactly when the traces normalize the data and "
+                    + "there is exactly one coupling z for which both Schur residuals "
+                    + "are positive semidefinite.")),
+                    Paragraph(Text(
+                    "Every feasible coupling gives an extension. If both residuals at a feasible "
+                    + "coupling were positive definite, small variations in z would remain feasible. "
+                    + "A unique feasible coupling therefore gives at least one singular residual. "
+                    + "At trace zero the entire endpoint residual vanishes. At positive trace, "
+                    + "the singular qubit residual has rank one. A joint positive matrix with "
+                    + "a rank-one marginal factors, so its two marginals fix the joint residual. "
+                    + "Restoring the correction gives the only compatible state.")),
+                    Paragraph(Text(
+                    "At zero middle occupation the whole coupling row vanishes in every "
+                    + "positive state. The Schur residual inequalities then have no dependence "
+                    + "on z."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-pure-zero-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/Marginals/FibCoherentExtension.pure_coherent_zero_iff"),
+                H("Pure extensions at zero middle occupation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At zero middle occupation, a pure extension exists exactly when all "
+                    + "four couplings vanish and both endpoint matrices are positive "
+                    + "semidefinite with trace one and equal determinants.")),
+                    Paragraph(Text(
+                    "Arrange the four endpoint amplitudes into a two-by-two matrix M. "
+                    + "The reductions are M times its adjoint and the transpose of the "
+                    + "product in reverse order. These matrices have the same characteristic "
+                    + "polynomial. Two-by-two matrices have equal characteristic polynomials "
+                    + "exactly when they have equal traces and determinants.")),
+                    Paragraph(Text(
+                    "For sufficiency, diagonalize both positive matrices with their common "
+                    + "eigenvalue list. Insert the square roots of those eigenvalues between "
+                    + "the left eigenvector unitary and the transpose of the right one. "
+                    + "The resulting amplitude matrix has the two specified reductions."))),
                 DescribeRole.Theorem))));
 }

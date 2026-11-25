@@ -21,8 +21,10 @@ internal sealed class EmptyLedgerConservationDocument : IScribeDocumentDefinitio
                     F.Id("r"), Close, Rightarrow, Sp, F.Id("r"), InMacro, Sp,
                     Operatorname, Grp(F.Id("OpenLedger")), Open, F.Id("x"), Close,
                     Close, Esc, Land, Esc,
-                    Operatorname, Grp(F.Id("OpenLedger")), Open, F.Id("x"), Close,
-                    Eq, Emptyset, Rightarrow, Sp, Neg, Exists, Sp, F.Id("r"), Comma,
+                    Open, Forall, Sp, F.Id("r"), Comma, Sp, Neg, Open,
+                    F.Id("r"), InMacro, Sp, Operatorname, Grp(F.Id("OpenLedger")),
+                    Open, F.Id("x"), Close, Close, Close,
+                    Rightarrow, Sp, Neg, Exists, Sp, F.Id("r"), Comma,
                     Esc, Operatorname, Grp(F.Id("detectable")), Open, F.Id("x"),
                     Comma, F.Id("r"), Close))),
                 AssessedProvenance.FromRepo(),
@@ -31,16 +33,6 @@ internal sealed class EmptyLedgerConservationDocument : IScribeDocumentDefinitio
                         "Detection discipline requires every residual that can be detected "
                         + "at an object to occur in that object's open ledger. If the open "
                         + "ledger is empty, a detectable residual would therefore supply an "
-                        + "element of the empty set, which is impossible. The conclusion is "
-                        + "conditional on the discipline hypothesis; it does not claim that "
-                        + "all residuals are detectable or that detection is decidable.")),
-                    Paragraph(Text(
-                        "The library search found the exact set-theoretic core in pinned "
-                        + "Mathlib as `Set.eq_empty_iff_forall_notMem`. The formal theorem is "
-                        + "a thin honest wrapper: that equivalence converts the empty-ledger "
-                        + "hypothesis into pointwise non-membership, while discipline turns "
-                        + "a hypothetical detectable residual into the forbidden membership. "
-                        + "No separate ledger implementation or detection algorithm is "
-                        + "introduced."))),
+                        + "element of the empty ledger, contradicting its pointwise emptiness."))),
                 DescribeRole.Theorem))));
 }

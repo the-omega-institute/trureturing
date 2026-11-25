@@ -61,7 +61,40 @@ internal sealed class QuarticSamplingDocument : IScribeDocumentDefinition
                         + "exponent 4/3. Its right end is k¹⁶. The boundary roots are k³ and k⁴, "
                         + "and monotonicity of the fourth power places every interior sample root "
                         + "between them. Such windows start arbitrarily far out, so they satisfy "
-                        + "the closed-window criterion at every positive loss."))), DescribeRole.Theorem))));
+                        + "the closed-window criterion at every positive loss."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quartic-block-containment"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.exists_quartic_block_in_power_window"),
+                H("An integer block inside a wider real power window"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Round the twelfth root v of Y up to the natural k. For v≥5, the ceiling is at most "
+                    + "(6/5)v and (6/5)^16≤v². Thus Y≤k¹² and k¹⁶≤Y^(3/2). "
+                    + "Choosing Y above max(A,5)^12 ensures k≥max(A,2)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("transfer-cofinal-windows-to-quartic-blocks"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_integer_blocks_of_pointwise_windows"),
+                H("Cofinal real windows supply complete fourth-power blocks"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For each exponent loss and natural threshold, use the contained block "
+                    + "of the supplied real window. Every fourth power between the boundary roots "
+                    + "k³ and k⁴ lies in the same closed interval, so the pointwise estimate bounds "
+                    + "all samples of the native integer-block criterion."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quartic-block-width-eventually"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.eventually_exists_quartic_block"),
+                H("Every width above four thirds eventually contains a block"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For any b>4/3 the factor Y^(b−4/3) eventually exceeds the bounded power cost "
+                    + "of rounding. Every sufficiently large starting point then contains a block."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quartic-block-exact-width-alignment"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_block_subset_exact_width_iff"),
+                H("Exact width forces start-point alignment"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "At width 4/3, the upper endpoint of the candidate block is the 4/3 power "
+                    + "of its left endpoint. Monotonicity turns the two containment conditions "
+                    + "into equality of the left endpoints."))), DescribeRole.Theorem))));
 
     private static Formula Window()
     {

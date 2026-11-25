@@ -20,10 +20,10 @@ open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment (monomialWeight_nonne
 
 namespace D5.S3.Fourier.Concentration.FiniteMultinomialOverlap
 
-private def subvectorMultiplicity {J : Type*} [Fintype J] (m l : J → ℕ) : ℝ :=
+def subvectorMultiplicity {J : Type*} [Fintype J] (m l : J → ℕ) : ℝ :=
   ∏ j, (Nat.choose (m j) (l j) : ℝ)
 
-private theorem subvectorMultiplicity_mul_monomialWeight {J : Type*} [Fintype J]
+theorem subvectorMultiplicity_mul_monomialWeight {J : Type*} [Fintype J]
     (w : J → ℝ) (l u : J → ℕ) :
     subvectorMultiplicity (l + u) l * monomialWeight w (l + u) =
       (Nat.choose ((∑ j, l j) + ∑ j, u j) (∑ j, l j) : ℝ) *
@@ -154,7 +154,7 @@ private theorem exists_degree_subvector {J : Type*} [Fintype J] [DecidableEq J]
         · simpa [increment, hi] using hj
         · simpa [increment, hi] using hle i
 
-private theorem one_le_subvectorMultiplicity {J : Type*} [Fintype J]
+theorem one_le_subvectorMultiplicity {J : Type*} [Fintype J]
     {m l : J → ℕ} (hl : l ≤ m) : 1 ≤ subvectorMultiplicity m l := by
   rw [subvectorMultiplicity, ← Nat.cast_prod]
   exact_mod_cast (show 1 ≤ ∏ j, Nat.choose (m j) (l j) from

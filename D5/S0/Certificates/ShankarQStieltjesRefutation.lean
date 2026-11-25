@@ -18,16 +18,16 @@ set_option relaxedAutoImplicit false
 namespace D5.S0.Certificates.ShankarQStieltjesRefutation
 
 open MeasureTheory
-open D5.S0.Conventions.IntegerIndexBinomial (binom)
-open D5.S0.Conventions.IntegerIndexBinomial (ballotE)
+open D5.S0.Conventions.IntegerIndexBinomial (binom_std)
+open D5.S0.Conventions.IntegerIndexBinomial (ballotE_std)
 open scoped BigOperators
 
 set_option maxRecDepth 100000
 set_option maxHeartbeats 2000000
 
 private def ballotH (k b c : Nat) : Int :=
-  binom (2 * k - b - c) ((k : Int) - b) -
-    binom (2 * k - b - c) ((k : Int) - b - 1)
+  binom_std (2 * k - b - c) ((k : Int) - b) -
+    binom_std (2 * k - b - c) ((k : Int) - b - 1)
 
 /-- Theorem 7.1 of arXiv:2608.30002v2, explicitly as a closed form.
 The paper's word-count identification is not formalized or assumed in Lean. -/
@@ -35,7 +35,7 @@ def closedFormQ (k : Nat) : Int :=
   if k = 0 then 1 else (catalan k : Int) +
     ∑ b ∈ Finset.Icc 1 (k - 1), ∑ c ∈ Finset.range (b + 1),
       ballotH k b c * ∑ r ∈ Finset.Icc b (k - 1),
-        ballotE r b * binom (k - 1 - r + c) (c : Int)
+        ballotE_std r b * binom_std (k - 1 - r + c) (c : Int)
 
 /-- Exact coefficients in ascending polynomial degree. -/
 def certificate : Fin 11 → Int := ![
@@ -60,7 +60,7 @@ private def checkedValues : Fin 24 → Int := ![
   1640473066548280308,12666272996480868428]
 
 private theorem values_verified : ∀ n : Fin 24, closedFormQ n = checkedValues n := by
-  unfold closedFormQ ballotH ballotE binom
+  unfold closedFormQ ballotH ballotE_std binom_std
   simp only [catalan_eq_centralBinom_div, Nat.centralBinom, Nat.choose_eq_fast_choose]
   decide +kernel
 
@@ -146,7 +146,7 @@ example : ∃ μ : Measure Real,
     simp
 
 example : closedFormQ 0 = 1 ∧ closedFormQ 1 = 1 := by decide +kernel
-example (r : Nat) : ballotE r 1 = 1 := by simp [ballotE, binom]
+example (r : Nat) : ballotE_std r 1 = 1 := by simp [ballotE_std, binom_std]
 example (k : Nat) :
     (catalan k : Real) = (Nat.choose (2 * k) k : Real) / (k + 1) := by
   apply (eq_div_iff (by positivity : (k : Real) + 1 ≠ 0)).mpr

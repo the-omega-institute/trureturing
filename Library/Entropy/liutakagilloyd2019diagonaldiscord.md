@@ -5,8 +5,9 @@ year: 2019
 title: "Diagonal quantum discord"
 doi: 10.1088/1751-8121/ab0774
 url: https://arxiv.org/abs/1708.09076v2
-claim: "Diagonal discord is the relative-entropy distance of a bipartite state from its pinching pi_A in the eigenbasis of the A marginal. The paper classifies local discord-nongenerating operations into mixed-unitary, isotropic and semiclassical channels, studies which local operations commute with pi_A, derives a qubit criterion for mixed-unitary channels, and conjectures that for qubits exactly the isotropic channels commute with pi_A, so that non-isotropic qubit mixed-unitary channels all fail the commutation condition."
+claim: "Diagonal discord is the minimum entropy gain of pinching a bipartite state in an eigenbasis of the measured marginal. Conjecture 1 asserts monotonicity under local discord-nongenerating channels on the measured qubit. Corollary 6 proves monotonicity for measured dimension greater than two in the nondegenerate-marginal setting of Section III.B. A separate conjecture concerns the isotropic characterization of channels that commute with the marginal pinching."
 strata_touched:
+  - D5/S3/Quantum/Information/DiagonalDiscord/DiagonalDiscordMonotonicity
   - D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation
 license: citation-only
 triage: anchor
@@ -15,6 +16,22 @@ triage: anchor
 # Liu, Takagi and Lloyd, Diagonal quantum discord
 
 Z.-W. Liu, R. Takagi and S. Lloyd, arXiv:1708.09076v2 [quant-ph]; J. Phys. A: Math. Theor. 52(13), 135301 (2019). Quotations are from the v2 TeX source, with the source's macros `\ee` (the channel $\mathcal E$) and `\change{…}` (a revision marker) expanded.
+
+## Conjecture 1 and Corollary 6
+
+The journal version states Conjecture 1 for measured qubits in §3.2.2, p. 9, and arXiv v2 states it in §III.B.2(a), p. 6. Corollary 6 (arXiv v2, §III.B.2(b), p. 8) states “For $d_A>2$, diagonal discord is monotonically nonincreasing under any local discord nongenerating channel.” Section III.B assumes a nondegenerate measured marginal for this analysis. [Journal](https://doi.org/10.1088/1751-8121/ab0774) · [arXiv v2, p. 6](https://arxiv.org/pdf/1708.09076v2#page=6) · [arXiv v2, p. 8](https://arxiv.org/pdf/1708.09076v2#page=8)
+
+The paper's Eqs. (2) and (8) already minimize over all rank-one eigenbasis pinchings of the measured marginal, including choices inside degenerate eigenspaces. The theorem `diagonalDiscord_localChannel_mono_attained` proves the inequality of Conjecture 1 and extends the monotonicity comparison to degenerate measured marginals. It gives minimizing eigenbases for both the input and output and compares their gains for every finite bipartite state, including singular states, under any local CPTP channel preserving classical–quantum states.
+
+Hu and Fan's Eq. (6), arXiv v2, p. 2, already gives the same optimized quantity when the distance is relative entropy, the measured side is swapped, and bits are converted to nats. The fixed-pinching relative-entropy decomposition uses Gour, Marvian and Spekkens, *Measuring the quality of a quantum reference frame*, Theorem 3 and its proof (pp. 3–4, Eqs. (9)–(13), especially Eq. (12) for the trace-log equality). [Hu–Fan](hufan2016extracting.md) · [Gour–Marvian–Spekkens, arXiv v2](https://arxiv.org/abs/0901.0943v2)
+
+The publisher-indexed body passages of Chruściński and Matsuoka, *Quantum Conditional Probability and Measurement Induced Disturbance of a Quantum Channel*, under “Classical-quantum mutual information” and “Relation to quantum discord”, define a classical–quantum reference for their state/channel construction and describe a relative-entropy comparison with the closest classical–quantum state sharing both marginals. Full text was unavailable. The excerpts leave the optimization domain, its applicability to an arbitrary fixed bipartite input, and any further channel monotonicity unverified. [Chruściński–Matsuoka](https://doi.org/10.1016/S0034-4877(20)30060-4)
+
+A focused search of the literature and citation leads found no full prior proof of Conjecture 1. Lean verifies the finite-dimensional monotonicity result above. Publication priority remains unresolved.
+
+## Separate commutation conjecture
+
+The mixed-unitary commutation result addresses the unnumbered conjecture on the same page as Conjecture 1. [PR #23228](https://github.com/the-omega-institute/trureturing/pull/23228)
 
 The channel classes of Section 3.2 ("Classification of discord nongenerating local operations"):
 
@@ -33,5 +50,6 @@ Source: https://arxiv.org/abs/1708.09076v2
 - URL: https://arxiv.org/abs/1708.09076v2. The e-print is a gzipped tar archive; its member `revised_jphysa_clean.tex` has 1479 lines and md5 `3ae0def434187ebe1875d87961e23048`. Locations:
   - Subsection "Theory of discord destroying map $\pi$ and the monotonicity of diagonal discord", l. 318; the channel classes, l. 324–329; the nondegeneracy assumption, l. 339;
   - Subsubsection "$\pi$-commuting local operations and monotonicity", l. 345; Lemma `qubitcondition`, l. 354;
-  - the conjecture, l. 463.
+  - the commutation conjecture, l. 463, and Conjecture 1, ll. 469–471;
+  - Corollary 6, ll. 552–554.
 - The arXiv record lists v1 (30 August 2017) and v2 (25 February 2019) and the journal reference "J. Phys. A: Math. Theor. 52, 135301 (2019)" (arXiv API metadata).

@@ -58,7 +58,7 @@ private theorem short_difference {J : Type*} [Fintype J] [DecidableEq J] {p : �
       rw [sum_add_distrib, ← Nat.cast_sum, ← Nat.cast_sum, hms, hns]
       ring
 
-private theorem character_add (x y t : ℝ) :
+theorem character_add (x y t : ℝ) :
     phase (x + y) t = phase x t * phase y t := by
   unfold phase
   rw [← Complex.exp_add]
@@ -258,7 +258,7 @@ private theorem score_average {J : Type*} [Fintype J] [DecidableEq J]
   simpa only [Function.comp_def, Complex.ofReal_re, ← Complex.ofReal_inv, Complex.re_ofReal_mul,
     intervalIntegral.integral_ofReal] using h
 
-private theorem complexScore_continuous {J : Type*} [Fintype J] (g w : J → ℝ) :
+theorem complexScore_continuous {J : Type*} [Fintype J] (g w : J → ℝ) :
     Continuous (complexScore g w) := by
   unfold complexScore
   apply continuous_finsetSum

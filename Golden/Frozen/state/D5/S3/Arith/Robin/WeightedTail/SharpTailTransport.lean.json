@@ -1,0 +1,1 @@
+{"statement_id":"sha256:7be8d0f6c7d356c43ec0e131e91520c241840658759a3cefa1c9b291e285b817","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),5:Robin),12:WeightedTail),18:SharpTailTransport),25:normalized_tail_transport)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"]}]}

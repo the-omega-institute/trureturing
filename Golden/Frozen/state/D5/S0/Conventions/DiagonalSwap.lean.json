@@ -1,1 +1,1 @@
-{"statement_id":"sha256:21a2ab5ac75d2e8ffed35d006576ad495c03ef917d6740c67dd55f061ab8d93a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),12:DiagonalSwap),26:swap_changes_self_diagonal)","kind":"theorem"}]}
+{"statement_id":"sha256:53b06fae4eb11f351c57053ff3f7f07b3a61ec9b41b4da61a8ffb9af0596f58b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),12:DiagonalSwap),26:swap_changes_self_diagonal)","kind":"theorem","libraries":["Init"],"axioms":[]}]}

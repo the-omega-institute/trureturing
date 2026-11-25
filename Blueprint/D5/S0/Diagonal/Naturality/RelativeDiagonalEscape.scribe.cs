@@ -27,12 +27,7 @@ internal sealed class RelativeDiagonalEscapeDocument : IScribeDocumentDefinition
                         "Assume tau has no fixed point. If the twisted diagonal were a row e(a), "
                             + "then evaluating that row equality at a would make e(a,a) a fixed "
                             + "point of tau. Therefore the twisted diagonal is outside the range "
-                            + "of e, without finiteness assumptions on either type.")),
-                    Paragraph(Text(
-                        "Loogle found Function.exists_fixed_point_of_surjective as a related "
-                            + "surjectivity theorem, while LeanSearch and pinned-Mathlib searches "
-                            + "found no full-statement match. The proof imports and applies the "
-                            + "repository lemma EscapeCount.diagonal_landing_fixed."))),
+                            + "of e, without finiteness assumptions on either type."))),
                 DescribeRole.Theorem))));
 
     private static Formula RelativeDiagonalEscapeFormula()

@@ -1,8 +1,8 @@
-/-
-Copyright (c) 2026 The Omega Institute. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 module
-prelude
-
+public import Init
+public import OmegaInit.Data.Function
+public import OmegaInit.Data.Int
 public import OmegaInit.Data.Nat
+
+/-! Namespace aliases to the pinned public interface. -/
+public section

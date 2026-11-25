@@ -1,16 +1,21 @@
-/-
-Copyright (c) 2026 The Omega Institute. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 module
-prelude
-
+public import Init.Core
 public import OmegaInit.Prelude
 
-@[expose] public section
-
+/-! Namespace aliases to the pinned public interface. -/
+public section
+namespace Omega
+export _root_ (Exists Iff)
+end Omega
+namespace Omega.Exists
+export _root_.Exists (elim intro rec)
+end Omega.Exists
+namespace Omega.Iff
+export _root_.Iff (intro mp mpr rec)
+end Omega.Iff
 namespace Omega.Nat
-
-theorem add_zero (a : Nat) : Eq (add a zero) a := Eq.refl
-
+export _root_.Nat (add_zero)
 end Omega.Nat
+namespace Omega.Nat.succ
+export _root_.Nat.succ (inj)
+end Omega.Nat.succ

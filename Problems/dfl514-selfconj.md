@@ -61,11 +61,11 @@ $$
 \qquad (m-1)^2\mid N-(2L-1).
 $$
 
-These steps are the private `square_modulus`. Its statement assumes only a natural $m$, the two $m$-ary conditions, a positive largest row, and self-conjugacy. It assumes neither $m\ge2$ nor primality.
+These steps are the `square_modulus` theorem. Its statement assumes only a natural $m$, the two $m$-ary conditions, a positive largest row, and self-conjugacy. It assumes neither $m\ge2$ nor primality.
 
 For odd $m$, the private `odd_modulus` uses $2\mid m-1$ and $(m-1)\mid L-1$ to obtain $2(m-1)\mid N-1$. On the other hand, $2(m-1)\mid m^2-1$, so $2(m-1)\mid m^{2s+1}-m$. For $N=m^{2s+1}$ these two divisibilities force $2(m-1)\mid m-1$, contradicting $m\ge2$. This is `result`.
 
-The five private helpers and the endpoint are classified `bind-only` after expansion into existing finite-fiber, divisibility and normalization owners. No independent escape witness or new-content claim is made; the endpoint uses the separately allowed named open-problem resolution basis. The owner publications retain their original statements and proofs.
+The proof helpers and the endpoint are classified `bind-only` after expansion into existing finite-fiber, divisibility and normalization owners. No independent escape witness or new-content claim is made; the endpoint uses the separately allowed named open-problem resolution basis. The owner publications retain their original statements and proofs.
 
 ## Falsifier
 
@@ -89,17 +89,17 @@ The exact integer computation checks 24,992 nonzero multiplicity tuples at bases
 
 | Item | Status and evidence kind | Scope and boundary |
 | --- | --- | --- |
-| Square-modulus obstruction | Proved, kernel-checked: private `square_modulus`. | Every nonempty self-conjugate CMP satisfies $(m-1)^2\mid N-(2L-1)$. The row-multiplicity identities in Route explain its proof. |
-| Generality of the modulus statements | Proved, kernel-checked: private `square_modulus` and `odd_modulus`. | The square statement permits every natural $m$ under its explicit diagram hypotheses, without primality or $m\ge2$. For odd $m$, the latter gives $2(m-1)\mid N-1$. |
+| Square-modulus obstruction | Proved, kernel-checked: `square_modulus`. | Every nonempty self-conjugate CMP satisfies $(m-1)^2\mid N-(2L-1)$. The row-multiplicity identities in Route explain its proof. |
+| Generality of the modulus statements | Proved, kernel-checked: `square_modulus` and `odd_modulus`. | The square statement permits every natural $m$ under its explicit diagram hypotheses, without primality or $m\ge2$. For odd $m$, the latter gives $2(m-1)\mid N-1$. |
 | Universal answer to Question 5.14 | Proved, kernel-checked: `result`. | Every odd natural $m\ge2$ and every odd exponent $2s+1$. |
 | Source definitions and partial-sum criterion | Computed: the exact experiment above, exit 0, with the stated script SHA-256. | The source example has rows $(9,3,3)$ and its stated transpose; 24,992 nonzero multiplicity tuples in $\{0,1,2,3,4\}^5$ are checked at bases 2 through 9. |
 | Explicit geometric transposition | Computed: the same exact experiment, exit 0, with the stated script SHA-256. | All 81,155 partitions of sizes 1 through 35 are checked; 303 are self-conjugate and 70 base/diagram pairs satisfy the CMP hypotheses within bases 2 through 35. |
 | Larger block family | Computed: the same exact experiment, exit 0, with the stated script SHA-256. | 10,731 nonempty exponent-subset diagrams at bases 2 through 22, with exponents 0 through 8; the odd-base obstruction is checked on 5,110 cases. No uniform classification follows from this enumeration. |
 | Necessity of the odd-base restriction | Computed: the exact experiment above, exit 0, with the stated script SHA-256. | Rows $(4,2,1,1)$ give a binary self-conjugate CMP of size $8=2^3$. |
 | Known square construction | Computed: the same exact experiment, exit 0, with the stated script SHA-256. | All 189 pairs $2\le m\le22$, $0\le t\le8$ check $m^t$ rows of length $m^t$ and size $m^{2t}$. The general family is already in source Discussion 5.11; it is not a new Lean theorem here. |
-| Classification and neighboring questions | Open. | No full classification of self-conjugate CMP sizes is supplied. Questions 5.12 and 5.13 about smallest odd-power and nonsquare examples are not settled. |
+| Classification and neighboring questions | Open. | No full classification of self-conjugate CMP sizes is supplied. Question 5.12 has its own [settlement](dfl512-even-odd-power.md). Question 5.13 remains open here. |
 
-The decisive invariant is the modulus-square divisibility and its odd-base consequence. The square family remains compatible with it; the even-base boundary lies outside the endpoint's hypotheses. No change to the source's other results is claimed, and no further question is counted as settled.
+The decisive invariant is the modulus-square divisibility and its odd-base consequence. The square family remains compatible with it; the even-base boundary lies outside the endpoint's hypotheses. No change to the source's other results is claimed, by this result.
 
 ### Literature status
 
