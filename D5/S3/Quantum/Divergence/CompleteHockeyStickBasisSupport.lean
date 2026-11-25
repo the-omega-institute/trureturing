@@ -7,6 +7,9 @@
    digest: Trivial common basis output support implies unit complete hockey-stick coefficient. -/
 
 import D5.S3.Quantum.Divergence.CompleteHockeyStickRefutation
+import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
+import D5.S3.Quantum.Recovery.BKMFlagRefinement
+import Mathlib.Data.Matrix.Basis
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.Analysis.Matrix.Order
@@ -141,10 +144,7 @@ private theorem support_effect {I a : Type*} [Fintype I] [DecidableEq I]
           F *ᵥ (Sum.elim (ε • (x (some pivot) : a → ℂ))
             (fun p => differences S x p.1 p.2)) = 0 := by
   obtain ⟨recover, hrecover⟩ := recover_coordinates S hS
-  let curry : ((I × a) → ℂ) →ₗ[ℂ] (I → a → ℂ) :=
-    { toFun := fun y i j => y (i, j)
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
+  let curry := (LinearEquiv.curry ℂ ℂ I a).toLinearMap
   let L := (recover (some pivot)).comp curry
   refine ⟨‖L.toMatrix'‖ ^ 2, sq_nonneg _, fun ε => ?_⟩
   obtain ⟨F, hF, hF₁, htop, hkill⟩ := graph_effect L.toMatrix' ε
@@ -427,10 +427,8 @@ private theorem simplex_witness (τ : Option I → Matrix a a ℂ)
   let Y (i : Option I) := t • ray (simplexVector pivot ε i)
   have hPtr : P.trace = 1 := by simp [P]
   have hP : P.PosSemidef := by
-    have he : P = ray (Pi.single (none : Option I) (1 : ℂ)) := by
-      ext i j
-      cases i <;> cases j <;> simp [P, ray, Matrix.single, vecMulVec_apply]
-    rw [he]
+    rw [show P = ray (Pi.single (none : Option I) (1 : ℂ)) by
+      simp [P, ray, Pi.star_single, Matrix.single_eq_single_vecMulVec_single]]
     exact Matrix.posSemidef_vecMulVec_self_star _
   have hY (i : Option I) : (Y i).PosSemidef :=
     (Matrix.posSemidef_vecMulVec_self_star (simplexVector pivot ε i)).smul ht.le
@@ -482,102 +480,73 @@ end HockeyStickSupportLinearCore
 
 namespace D5.S3.Quantum.Divergence.CompleteHockeyStickBasisSupport
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder MatrixOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteStateChannel (QuantumChannel)
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance (referenceLinear)
 open ConditionalHockeyStickOrthogonalReduction (act amp E posTrace ptr amp_sub_smul)
 open UmegakiReferenceTransport (amp_kronecker)
-open CompleteHockeyStickRefutation (completeCoefficient completeRatios ratios_bounded
+open CompleteHockeyStickRefutation (completeCoefficient completeRatios ratio_le_one
   amp_psd effect_le_posTrace)
 open RHLinalg (rtrace)
 
 variable {A R B : Type} [Fintype A] [DecidableEq A] [Fintype R] [DecidableEq R]
   [Fintype B] [DecidableEq B]
 
-def basisRay (i : A) : Matrix A A ℂ := Matrix.single i i 1
-
-private theorem basisRay_psd {a : Type} [Finite a] [DecidableEq a] (i : a) :
-    (basisRay i).PosSemidef := by
-  have hr : basisRay i = vecMulVec (Pi.single i 1) (star (Pi.single i 1)) := by
-    ext j k
-    by_cases hj : i = j
-    · subst j
-      by_cases hk : i = k
-      · subst k
-        simp [basisRay, Matrix.single, vecMulVec_apply]
-      · simp [basisRay, Matrix.single, vecMulVec_apply, hk, Ne.symm hk]
-    · simp [basisRay, Matrix.single, vecMulVec_apply, hj, Ne.symm hj]
-  rw [hr]
-  exact Matrix.posSemidef_vecMulVec_self_star _
-
 omit [Fintype R] [DecidableEq R] in
 private theorem block_sum (X : A → Matrix R R ℂ) :
-    blockDiagonal X = ∑ i, X i ⊗ₖ basisRay i := by
+    Matrix.blockDiagonal X = ∑ i, X i ⊗ₖ Matrix.single i i 1 := by
   ext ⟨r, i⟩ ⟨s, j⟩
   by_cases h : i = j
   · subst j
-    simp [Matrix.blockDiagonal_apply, Matrix.sum_apply, basisRay, Matrix.single,
+    simp [Matrix.blockDiagonal_apply, Matrix.sum_apply, Matrix.single,
       mul_ite, eq_comm]
   · have hne (k : A) : ¬(k = i ∧ k = j) := fun hk => h (hk.1.symm.trans hk.2)
-    simp [Matrix.blockDiagonal_apply, Matrix.sum_apply, Matrix.kroneckerMap_apply, basisRay,
+    simp [Matrix.blockDiagonal_apply, Matrix.sum_apply, Matrix.kroneckerMap_apply,
       Matrix.single, h, hne]
 
-private theorem block_psd {a r : Type} [Finite a] [DecidableEq a] [Finite r]
-    (X : a → Matrix r r ℂ) (hX : ∀ i, (X i).PosSemidef) :
-    (blockDiagonal X).PosSemidef := by
-  let _ := Fintype.ofFinite a
-  rw [block_sum]
-  exact Matrix.posSemidef_sum _ fun i _ => (hX i).kronecker (basisRay_psd i)
-
-private theorem block_ptr (X : A → Matrix R R ℂ) : ptr (blockDiagonal X) = ∑ i, X i := by
-  ext r s
-  simp [ptr, D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
-    Matrix.blockDiagonal_apply, Matrix.sum_apply]
+private theorem block_psd (X : A → Matrix R R ℂ) (hX : ∀ i, (X i).PosSemidef) :
+    (Matrix.blockDiagonal X).PosSemidef := by
+  rw [← Matrix.blockDiagonal'_submatrix_eq_blockDiagonal]
+  exact (D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace.positiveBlockDiagonal X hX).submatrix _
 
 private theorem block_posPart (X : A → Matrix R R ℂ) (hX : ∀ i, (X i).IsHermitian) :
-    (blockDiagonal X)⁺ = blockDiagonal (fun i => (X i)⁺) := by
+    (Matrix.blockDiagonal X)⁺ = Matrix.blockDiagonal (fun i => (X i)⁺) := by
   refine (CFC.posPart_negPart_unique
-    (c := blockDiagonal (fun i => (X i)⁻)) ?_ ?_ ?_ ?_).1
+    (c := Matrix.blockDiagonal (fun i => (X i)⁻)) ?_ ?_ ?_ ?_).1
   · rw [← Matrix.blockDiagonal_sub]
     exact congrArg Matrix.blockDiagonal (funext fun i => (CFC.posPart_sub_negPart _ (hX i)).symm)
   · rw [← Matrix.blockDiagonal_mul]
     simp only [CFC.posPart_mul_negPart, ← Pi.zero_def, Matrix.blockDiagonal_zero]
-  · exact (block_psd _ fun i => (CFC.posPart_nonneg (X i)).posSemidef).nonneg
-  · exact (block_psd _ fun i => (CFC.negPart_nonneg (X i)).posSemidef).nonneg
+  · exact (block_psd _ fun i => Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg (X i))).nonneg
+  · exact (block_psd _ fun i => Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg (X i))).nonneg
 
 private theorem block_amp (N : QuantumChannel A B) (X : A → Matrix R R ℂ) :
-    amp N (blockDiagonal X) = ∑ i, X i ⊗ₖ act N (basisRay i) := by
+    amp N (Matrix.blockDiagonal X) = ∑ i, X i ⊗ₖ act N (Matrix.single i i 1) := by
   rw [block_sum]
   let L : Matrix (R × A) (R × A) ℂ →ₗ[ℂ] Matrix (R × B) (R × B) ℂ :=
     CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
       ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)
-  change L (∑ i, X i ⊗ₖ basisRay i) = _
+  change L (∑ i, X i ⊗ₖ Matrix.single i i 1) = _
   rw [map_sum]
-  exact Finset.sum_congr rfl fun i _ => amp_kronecker N (X i) (basisRay i)
+  exact Finset.sum_congr rfl fun i _ => amp_kronecker N (X i) (Matrix.single i i 1)
 
 /-- For any finite channel, trivial intersection of the output supports of the
 computational basis states implies complete hockey-stick coefficient one at every
 parameter strictly greater than one. The witnesses use a reference of input dimension. -/
 theorem result {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
     (N : QuantumChannel (Option I) B) (pivot : I) (γ : ℝ) (hγ : 1 < γ)
-    (hS : (⨅ i, (act N (basisRay i)).mulVecLin.range) = ⊥) :
+    (hS : (⨅ i, (act N (Matrix.single i i 1)).mulVecLin.range) = ⊥) :
     completeCoefficient N γ false = 1 := by
-  let τ (i : Option I) := act N (basisRay i)
+  let τ (i : Option I) := act N (Matrix.single i i 1)
   have htrτ : (τ none).trace = 1 := by
-    exact (N.trace_preserving (CStarMatrix.ofMatrix (basisRay none))).trans
-      (by change (basisRay (none : Option I)).trace = 1; simp [basisRay])
+    exact (N.trace_preserving (CStarMatrix.ofMatrix (Matrix.single (none : Option I) none 1))).trans
+      (by change (Matrix.single (none : Option I) none (1 : ℂ)).trace = 1; simp)
   obtain ⟨C, hC, hWitness⟩ := HockeyStickSupportLinearCore.simplex_witness τ hS htrτ pivot γ hγ
-  have hBound := ratios_bounded N γ false
-  have hUpper : completeCoefficient N γ false ≤ 1 := by
-    apply csSup_le ⟨0, Set.mem_insert _ _⟩
-    intro x hx
-    rcases Set.mem_insert_iff.mp hx with rfl | hx
-    · norm_num
-    · rcases hx with ⟨R, fR, dR, ρ, σ, hρ, _, hσ, _, _, _, hd, rfl⟩
-      let _ := fR
-      let _ := dR
-      exact (div_le_one hd).mpr (CompleteHockeyStickRefutation.E_contract N γ hρ hσ)
+  have hBound : BddAbove (insert 0 (completeRatios N γ false)) :=
+    ⟨1, fun _ h => ratio_le_one N γ false h⟩
+  have hUpper : completeCoefficient N γ false ≤ 1 :=
+    csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ h => ratio_le_one N γ false h
   apply le_antisymm hUpper
   apply le_of_forall_lt_imp_le_of_dense
   intro t ht
@@ -598,17 +567,20 @@ theorem result {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
     nlinarith [mul_nonneg (sub_nonneg.mpr ht.le) (mul_nonneg (sq_nonneg ε) hC)]
   obtain ⟨c, ρ, σ, F, hc, hρ, hσ, hsum, htr, hF, hF₁, hinput, hout⟩ :=
     hWitness ε hε.ne'
-  let P := blockDiagonal ρ
-  let Q := blockDiagonal σ
+  let P := Matrix.blockDiagonal ρ
+  let Q := Matrix.blockDiagonal σ
   have hP := block_psd ρ hρ
   have hQ := block_psd σ hσ
   have hPtr : P.trace = 1 := by rwa [Matrix.trace_blockDiagonal, ← Matrix.trace_sum]
   have hQtr : Q.trace = 1 := by
     rwa [Matrix.trace_blockDiagonal, ← Matrix.trace_sum, ← hsum]
-  have hPQ : ptr P = ptr Q := by simpa only [P, Q, block_ptr] using hsum
+  have hPQ : ptr P = ptr Q := by
+    change D5.S3.Quantum.Recovery.BKMFlagRefinement.marginal ρ =
+      D5.S3.Quantum.Recovery.BKMFlagRefinement.marginal σ
+    simpa only [D5.S3.Quantum.Recovery.BKMFlagRefinement.marginal_eq_sum] using hsum
   let D : Option I → Matrix (Option I) (Option I) ℂ := fun i => ρ i - γ • σ i
-  have hD : P - γ • Q = blockDiagonal D := by
-    change blockDiagonal ρ - γ • blockDiagonal σ = blockDiagonal (ρ - γ • σ)
+  have hD : P - γ • Q = Matrix.blockDiagonal D := by
+    change Matrix.blockDiagonal ρ - γ • Matrix.blockDiagonal σ = Matrix.blockDiagonal (ρ - γ • σ)
     rw [Matrix.blockDiagonal_sub, Matrix.blockDiagonal_smul]
   have hDherm (i : Option I) : (D i).IsHermitian :=
     (hρ i).isHermitian.sub ((hσ i).isHermitian.smul (IsSelfAdjoint.all γ))

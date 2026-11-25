@@ -28,8 +28,8 @@ internal sealed class CompleteHockeyStickBasisSupportDocument : IScribeDocumentD
                     + "negative output terms. Its compression on the distinguished reference "
                     + "coordinate approaches the identity. Positive input blocks are calibrated to "
                     + "give two density states with the same reference marginal. The input divergence "
-                    + "and the tested output divergence have the same normalization, so their ratio "
-                    + "approaches one using a reference of input dimension.")),
+                    + "and the output effect payoff have the same normalization, so the divergence "
+                    + "ratio approaches one using a reference of input dimension.")),
                 Paragraph(Text(
                     "The simplex construction follows the common-support argument of Lluis Eriksson, "
                     + "Common support and complete contraction with quantum side information, v3, "

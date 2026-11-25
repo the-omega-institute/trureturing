@@ -96,7 +96,7 @@ theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
   rw [hzero] at hm
   exact hm.posSemidef
 
-theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
+private theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (γ : ℝ) {ρ σ : Matrix (R × A) (R × A) ℂ}
     (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) : E γ (amp N ρ) (amp N σ) ≤ E γ ρ σ := by
@@ -124,17 +124,20 @@ theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
   unfold E
   linarith
 
-theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
-    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) :
-    BddAbove (insert 0 (completeRatios N γ orth)) := by
-  refine ⟨1, ?_⟩
-  intro x hx
+theorem ratio_le_one {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool)
+    {x : ℝ} (hx : x ∈ insert 0 (completeRatios N γ orth)) : x ≤ 1 := by
   rcases Set.mem_insert_iff.mp hx with rfl | hx
   · norm_num
   · rcases hx with ⟨R, fR, dR, ρ, σ, hρ, _, hσ, _, _, _, hd, rfl⟩
     letI := fR
     letI := dR
     exact (div_le_one hd).mpr (E_contract N γ hρ hσ)
+
+private theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) :
+    BddAbove (insert 0 (completeRatios N γ orth)) :=
+  ⟨1, fun _ h => ratio_le_one N γ orth h⟩
 
 private def ray {n : Type*} (v : n → ℂ) : Matrix n n ℂ := vecMulVec v (star v)
 

@@ -9,6 +9,7 @@ claim: "For a quantum channel N and a generalized divergence D, the conditional 
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
