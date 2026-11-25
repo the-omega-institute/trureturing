@@ -38,7 +38,7 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (b l r : ℚ), 0 < b → 0 < l → 0 < r → l ≠ r →
+  Law R := ∀ (b l r : ℚ), 0 < b → 0 ≤ l → 0 ≤ r → l ≠ r →
     ((∃ z : ℂ, ∃ T : Joint, T.PosSemidef ∧
       MatchesCoherentData b (diagonalEdgeBlock b l) (diagonalEdgeBlock b r) 0 0 0 z T ∧
       R.readout () () T ≤ 2 ∧ ∀ i j, RationalEntry (T i j)) ↔
@@ -98,7 +98,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg",
-        "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

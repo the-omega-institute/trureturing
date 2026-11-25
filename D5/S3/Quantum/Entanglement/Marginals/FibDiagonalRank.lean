@@ -22,8 +22,6 @@ set_option autoImplicit false
 
 namespace D5.S3.Quantum.Entanglement.Marginals.FibDiagonalRank
 
-private abbrev Qubit := Matrix Bool Bool ℂ
-
 /-- The vacuum weight is x and the occupied endpoint has the remaining mass. -/
 def diagonalEdgeBlock (b x : ℚ) : Matrix Bool Bool ℂ :=
   Matrix.diagonal fun i : Bool => ((if i then 1 - b - x else x : ℚ) : ℂ)
@@ -63,7 +61,7 @@ private theorem det_residual (b x : ℚ) (s : ℝ) :
   simp [Matrix.det_diagonal, mul_comm]
 
 private theorem rational_rank_two_fixed (b l r : ℚ) (z : ℂ)
-    (hb : 0 < b) (hl : 0 < l) (hr : 0 < r) (hne : l ≠ r) (qz : RationalEntry z) :
+    (hb : 0 < b) (hl : 0 ≤ l) (hr : 0 ≤ r) (hne : l ≠ r) (qz : RationalEntry z) :
     (∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧
       MatchesCoherentData b (diagonalEdgeBlock b l) (diagonalEdgeBlock b r) 0 0 0 z ρ ∧
       ρ.rank ≤ 2 ∧ ∀ i j, RationalEntry (ρ i j)) ↔
@@ -118,8 +116,8 @@ private theorem rational_rank_two_fixed (b l r : ℚ) (z : ℂ)
     exact ⟨hcoupling.mp hs, w, qw, (Complex.ofReal_injective hw).trans (hdet hs)⟩
   · rintro ⟨hz, w, qw, hw⟩
     have hs := hcoupling.mpr hz
-    have hlR : 0 < (l : ℝ) := by exact_mod_cast hl
-    have hrR : 0 < (r : ℝ) := by exact_mod_cast hr
+    have hlR : 0 ≤ (l : ℝ) := by exact_mod_cast hl
+    have hrR : 0 ≤ (r : ℝ) := by exact_mod_cast hr
     have hswapL : (1 - (b : ℝ) - (l : ℝ) - s) = (r : ℝ) := by rw [hs]; dsimp [t]; ring
     have hswapR : (1 - (b : ℝ) - (r : ℝ) - s) = (l : ℝ) := by rw [hs]; dsimp [t]; ring
     refine ⟨?_, ?_, congrArg Complex.ofReal (heq.mpr hs), w, qw,
@@ -127,22 +125,22 @@ private theorem rational_rank_two_fixed (b l r : ℚ) (z : ℂ)
     · apply Matrix.PosSemidef.diagonal
       intro i
       cases i
-      · exact Complex.zero_le_real.mpr hlR.le
+      · exact Complex.zero_le_real.mpr hlR
       · change 0 ≤ ((1 - (b : ℝ) - (l : ℝ) - s : ℝ) : ℂ)
         rw [hswapL]
-        exact Complex.zero_le_real.mpr hrR.le
+        exact Complex.zero_le_real.mpr hrR
     · apply Matrix.PosSemidef.diagonal
       intro i
       cases i
-      · exact Complex.zero_le_real.mpr hrR.le
+      · exact Complex.zero_le_real.mpr hrR
       · change 0 ≤ ((1 - (b : ℝ) - (r : ℝ) - s : ℝ) : ℂ)
         rw [hswapR]
-        exact Complex.zero_le_real.mpr hlR.le
+        exact Complex.zero_le_real.mpr hlR
 
-/-- For distinct positive diagonal vacuum weights, the rational coupling and
+/-- For distinct nonnegative diagonal vacuum weights, the rational coupling and
 the common residual determinant contribute two separate norm equations. -/
 theorem rational_rank_le_two_diagonal_iff (b l r : ℚ)
-    (hb : 0 < b) (hl : 0 < l) (hr : 0 < r) (hne : l ≠ r) :
+    (hb : 0 < b) (hl : 0 ≤ l) (hr : 0 ≤ r) (hne : l ≠ r) :
     (∃ z : ℂ, ∃ ρ : Matrix Word Word ℂ, ρ.PosSemidef ∧
       MatchesCoherentData b (diagonalEdgeBlock b l) (diagonalEdgeBlock b r) 0 0 0 z ρ ∧
       ρ.rank ≤ 2 ∧ ∀ i j, RationalEntry (ρ i j)) ↔

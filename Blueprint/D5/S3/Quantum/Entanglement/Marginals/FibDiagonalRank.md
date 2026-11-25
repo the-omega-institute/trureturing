@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Quantum/Entanglement/Marginals/FibDiagonalRank.rational_r
 
 *Commentary.*
 
-Let b be a positive rational middle occupation and put t = 1 − b. Set the observed couplings to zero and take diagonal endpoint blocks with entries (l, t − l) and (r, t − r), where l and r are distinct positive rationals. There is a trace-one positive semidefinite joint extension with rational coordinates and rank at most two exactly when b(t − l − r) and lr are both Gaussian norms.
+Let b be a positive rational middle occupation and put t = 1 − b. Set the observed couplings to zero and take diagonal endpoint blocks with entries (l, t − l) and (r, t − r), where l and r are distinct nonnegative rationals. There is a trace-one positive semidefinite joint extension with rational coordinates and rank at most two exactly when b(t − l − r) and lr are both Gaussian norms.
 
-For coupling z, Schur elimination subtracts |z|²/b from the occupied entry of each block. The difference of the two residual determinants is (l − r)(t − l − r − |z|²/b). Equality fixes |z|² and leaves the two positive diagonal residuals (l, r) and (r, l). Their common determinant is lr, which is the second norm in the fixed-coupling criterion.
+For coupling z, Schur elimination subtracts |z|²/b from the occupied entry of each block. The difference of the two residual determinants is (l − r)(t − l − r − |z|²/b). Equality fixes |z|² and leaves the two nonnegative diagonal residuals (l, r) and (r, l). Their common determinant is lr, which is the second norm in the fixed-coupling criterion.
 
 ## References
 
