@@ -31,3 +31,4 @@ The strong L1 statement is the power specialization of Theorem 2, Remark (ii) an
 ## References
 
 - Truth anchor: `D5/S3/Topology/Measures/BrezisLiebPowerDefect.brezis_lieb_power_defect`
+- Dependency: [D5/S3/Topology/Measures/IntegralEpsilonDomination](IntegralEpsilonDomination.md)
