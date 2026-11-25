@@ -38,10 +38,10 @@ private def rejected : Realization signature :=
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b y v : Fin 3 → ℚ),
-    a ⬝ᵥ a < b ⬝ᵥ b → 0 < y ⬝ᵥ y → 0 < v ⬝ᵥ v →
+    a ⬝ᵥ a < b ⬝ᵥ b → 0 < y ⬝ᵥ y →
     a ⬝ᵥ y = b ⬝ᵥ v →
     y ⬝ᵥ y = (1 - b ⬝ᵥ b) * (v ⬝ᵥ v) + (b ⬝ᵥ v) ^ 2 →
-    ∃ T : Joint, T.PosSemidef ∧ R.readout () () T ≤ 2 ∧
+    ∃ T : Joint, T.PosSemidef ∧ R.readout () () T = 2 ∧
       (∀ i j, RationalEntry (T i j)) ∧
       partialTraceRight T = (1 / 2 : ℂ) • (1 + rationalBlochMatrix a) ∧
       partialTraceLeft T = (1 / 2 : ℂ) • (1 + rationalBlochMatrix b)
@@ -53,13 +53,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by norm_num [dotProduct, Fin.sum_univ_three])
     (by norm_num [dotProduct, Fin.sum_univ_three])
     (by norm_num [dotProduct, Fin.sum_univ_three])
-    (by norm_num [dotProduct, Fin.sum_univ_three])
-  exact (by decide : ¬ (3 : ℕ) ≤ 2) hrank
+  exact (by decide : (3 : ℕ) ≠ 2) hrank
 
-def family : Registration arena (type_of% @rational_rank_le_two_of_quadratic_witness) where
+def family : Registration arena (type_of% @rational_rank_two_of_quadratic_witness) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@rational_rank_le_two_of_quadratic_witness, rejected, rejected_law⟩
+  variation := ⟨@rational_rank_two_of_quadratic_witness, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun anchor => nomatch anchor⟩
   dependence := by
@@ -69,9 +68,9 @@ def family : Registration arena (type_of% @rational_rank_le_two_of_quadratic_wit
     simp
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@rational_rank_le_two_of_quadratic_witness) (Realization signature) Unit Unit where
+    (@rational_rank_two_of_quadratic_witness) (Realization signature) Unit Unit where
   unitName := Lean.Name.str
-    `D5.S3.Quantum.Entanglement.Marginals.RationalQubitProjector.rational_rank_le_two_of_quadratic_witness
+    `D5.S3.Quantum.Entanglement.Marginals.RationalQubitProjector.rational_rank_two_of_quadratic_witness
     "audit"
   realizationName := `Reg.D5.S3.Quantum.Entanglement.Marginals.RationalQubitProjector.family
   realizationSource := none
@@ -93,7 +92,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false

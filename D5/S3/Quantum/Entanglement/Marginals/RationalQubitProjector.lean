@@ -6,8 +6,10 @@
    utility: none
    digest: Rational rank-two completions from qubit Bloch coordinates. -/
 
-import D5.S3.Quantum.Entanglement.Marginals.RationalQubitEqualSpectrumRank
-import D5.S3.Quantum.Measurement.Bloch.QubitBloch
+import D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
+import D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 
 /-! Hermitian qubit matrices in rational Bloch coordinates. -/
 
@@ -16,7 +18,8 @@ open scoped ComplexConjugate ComplexOrder Kronecker Matrix
 open D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment (idempotent_trace_rank)
 open D5.S3.Quantum.Entanglement.Marginals.FibRationalPureExtension
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
-open D5.S3.Quantum.Measurement.FourQubitParentConstruction (B B_formula_core)
+open D5.S3.Quantum.Measurement.FourQubitParentConstruction
+  (B B_formula_core B_real_smul B_sum trace_B_mul)
 
 set_option autoImplicit false
 
@@ -50,10 +53,13 @@ private theorem spin_trace (a : Bloch) : (spin a).trace = 0 := by
 
 private theorem spin_mul_trace (a b : Bloch) :
     (spin a * spin b).trace = (2 : ℂ) * (pairing a b : ℂ) := by
-  simp [Matrix.trace, Matrix.mul_apply, spin_apply,
-    dotProduct, Fin.sum_univ_three, Rat.cast_add, Rat.cast_mul]
-  ring_nf
-  simp
+  unfold spin rationalBlochMatrix
+  rw [Matrix.submatrix_mul_equiv _ _ finTwoEquiv.symm finTwoEquiv.symm finTwoEquiv.symm]
+  have htrace (A : Matrix (Fin 2) (Fin 2) ℂ) :
+      (A.submatrix finTwoEquiv.symm finTwoEquiv.symm).trace = A.trace := by
+    simp [Matrix.trace, Fin.sum_univ_two, finTwoEquiv, add_comm]
+  rw [htrace, trace_B_mul]
+  simp [PiLp.inner_apply, dotProduct, Fin.sum_univ_three, Rat.cast_add, Rat.cast_mul, mul_comm]
 
 private theorem spin_anticomm (a b : Bloch) :
     spin a * spin b + spin b * spin a = ((2 : ℂ) * (pairing a b : ℂ)) • 1 := by
@@ -69,12 +75,27 @@ private theorem spin_square (a : Bloch) :
 
 private theorem spin_smul (t : ℚ) (a : Bloch) :
     spin (t • a) = (t : ℂ) • spin a := by
-  ext i j
-  cases i <;> cases j <;> simp [spin_apply, Rat.cast_mul] <;> ring
+  let x : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (a i : ℝ)
+  have heq : (WithLp.toLp 2 fun i => ((t • a) i : ℝ)) = (t : ℝ) • x := by
+    apply (WithLp.equiv 2 _).injective
+    funext i
+    simp [x, Rat.cast_mul]
+  unfold spin rationalBlochMatrix
+  rw [heq, B_real_smul, RCLike.real_smul_eq_coe_smul (K := ℂ)]
+  rfl
 
 private theorem spin_add (a b : Bloch) : spin (a + b) = spin a + spin b := by
-  ext i j
-  cases i <;> cases j <;> simp [spin_apply, Rat.cast_add] <;> ring
+  let x : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (a i : ℝ)
+  let y : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 fun i => (b i : ℝ)
+  have heq : (WithLp.toLp 2 fun i => ((a + b) i : ℝ)) = x + y := by
+    apply (WithLp.equiv 2 _).injective
+    funext i
+    simp [x, y, Rat.cast_add]
+  have hadd : B (x + y) = B x + B y := by
+    simp [← B_sum (Finset.univ : Finset (Fin 2)) ![x, y], Fin.sum_univ_two]
+  unfold spin rationalBlochMatrix
+  rw [heq, hadd]
+  rfl
 
 private theorem spin_rational (a : Bloch) (i j : Bool) : RationalEntry (spin a i j) := by
   have hq (x : ℚ) : RationalEntry (x : ℂ) := SubfieldClass.ratCast_mem rationalComplex x
@@ -100,16 +121,6 @@ private theorem neg_kron (A B : Qubit) : (-A) ⊗ₖ B = -(A ⊗ₖ B) := by
   ext i j
   simp
 
-private theorem traceRight_smul (c : ℂ) (T : Joint) :
-    partialTraceRight (c • T) = c • partialTraceRight T := by
-  ext i j
-  simp [partialTraceRight, mul_add]
-
-private theorem traceLeft_smul (c : ℂ) (T : Joint) :
-    partialTraceLeft (c • T) = c • partialTraceLeft T := by
-  ext i j
-  simp [partialTraceLeft, mul_add]
-
 private theorem traceRight_kron (A B : Qubit) :
     partialTraceRight (A ⊗ₖ B) = B.trace • A :=
   partialTraceRight_kronecker A B
@@ -123,8 +134,8 @@ private theorem rational_completion_of_projector_coordinates
     (hkv : pairing k v = 0) (hum : pairing u m = 0)
     (hunit : pairing k k + pairing u u * pairing v v = 1)
     (hk : 0 < pairing k k)
-    (hbound : c ^ 2 * pairing u u + pairing m m / pairing k k ≤ 1) :
-    ∃ T : Joint, T.PosSemidef ∧ T.rank ≤ 2 ∧ (∀ i j, RationalEntry (T i j)) ∧
+    (hbound : c ^ 2 * pairing u u + pairing m m / pairing k k < 1) :
+    ∃ T : Joint, T.PosSemidef ∧ T.rank = 2 ∧ (∀ i j, RationalEntry (T i j)) ∧
       partialTraceRight T = (1 / 2 : ℂ) • (1 + spin (c • u + m)) ∧
       partialTraceLeft T =
         (1 / 2 : ℂ) • (1 + spin (k + (c * pairing u u) • v)) := by
@@ -192,7 +203,7 @@ private theorem rational_completion_of_projector_coordinates
     have hn : 0 ≤ (1 : ℂ) - (e : ℂ) := by
       simp only [Complex.nonneg_iff, Complex.sub_re, Complex.one_re, Complex.ratCast_re,
         Complex.sub_im, Complex.one_im, Complex.ratCast_im, sub_self, and_true]
-      exact_mod_cast (sub_nonneg.mpr hbound : 0 ≤ (1 : ℚ) - e)
+      exact_mod_cast (sub_nonneg.mpr hbound.le : 0 ≤ (1 : ℚ) - e)
     have hp := hprod.add ((Matrix.PosSemidef.one : (1 : Joint).PosSemidef).smul hn)
     have heq : (1 + E) * (1 + E) + ((1 : ℂ) - (e : ℂ)) • (1 : Joint) =
         (2 : ℂ) • (1 + E) := by
@@ -211,9 +222,26 @@ private theorem rational_completion_of_projector_coordinates
   · have hRank := idempotent_trace_rank P hPP
     rw [hPtrace] at hRank
     have hr : P.rank = 2 := by exact_mod_cast hRank.symm
-    have hmat : T = P * ((1 / 2 : ℂ) • (1 + E)) := by rw [Matrix.mul_smul]
-    rw [hmat, ← hr]
-    exact Matrix.rank_mul_le_left _ _
+    rw [← hr]
+    apply le_antisymm
+    · have hmat : T = P * ((1 / 2 : ℂ) • (1 + E)) := by rw [Matrix.mul_smul]
+      rw [hmat]
+      exact Matrix.rank_mul_le_left _ _
+    · have hfactor : (1 + E) * (1 - E) = (1 - (e : ℂ)) • (1 : Joint) := by
+        simp only [add_mul, mul_sub, one_mul, mul_one, hEE]
+        module
+      have hrecover : T * (1 - E) = ((1 - (e : ℂ)) / 2) • P := by
+        rw [show T = (1 / 2 : ℂ) • (P * (1 + E)) from rfl,
+          Matrix.smul_mul, mul_assoc, hfactor, Matrix.mul_smul, mul_one, smul_smul]
+        congr 1
+        ring
+      have hne : (1 - (e : ℂ)) / 2 ≠ 0 := by
+        exact div_ne_zero (sub_ne_zero.mpr (by exact_mod_cast hbound.ne.symm)) (by norm_num)
+      calc
+        P.rank = (T * (1 - E)).rank := by
+          rw [hrecover, Matrix.rank_smul_of_mem_nonZeroDivisors P
+            (mem_nonZeroDivisors_of_ne_zero hne)]
+        _ ≤ T.rank := Matrix.rank_mul_le_left _ _
   · have hOne {n : Type} [DecidableEq n] (i j : n) :
         RationalEntry ((1 : Matrix n n ℂ) i j) := by
       by_cases h : i = j <;> simp [Matrix.one_apply, h,
@@ -240,27 +268,26 @@ private theorem rational_completion_of_projector_coordinates
     exact rationalComplex.mul_mem hHalf hp
   · rw [spin_add, spin_smul]
     have hTraceOne : (1 : Qubit).trace = 2 := by norm_num [Matrix.trace_one]
-    have hId : partialTraceRight (1 : Joint) = (2 : ℂ) • (1 : Qubit) := by
-      rw [← Matrix.one_kronecker_one, traceRight_kron, hTraceOne]
     have hVKtrace : (spin v * spin k).trace = 0 := by
       rw [Matrix.trace_mul_comm]
       simp [spin_mul_trace, hkv]
     simp only [T, P, F, E, Matrix.smul_mul, Matrix.mul_smul, add_mul, mul_add, one_mul,
-      mul_one, ← Matrix.mul_kronecker_mul, traceRight_smul, partialTraceRight_add,
-      traceRight_kron, hId, hTraceOne, hVKtrace, U, V, K, M,
-      spin_trace, spin_square, Matrix.trace_smul, smul_smul, zero_smul,
-      add_zero, zero_add]
+      mul_one, ← Matrix.mul_kronecker_mul]
+    simp only [← Matrix.one_kronecker_one (m := Bool) (n := Bool) (α := ℂ),
+      smul_add, ← Matrix.smul_kronecker, partialTraceRight_add, traceRight_kron,
+      hTraceOne, hVKtrace, U, V, K, M, spin_trace, spin_square, Matrix.trace_smul,
+      smul_smul]
     dsimp only [s]
     rw [show (pairing k k : ℂ) = d from rfl]
     match_scalars <;> field_simp <;> simp [smul_eq_mul, mul_comm]
   · rw [spin_add, spin_smul]
     have hTraceOne : (1 : Qubit).trace = 2 := by norm_num [Matrix.trace_one]
-    have hId : partialTraceLeft (1 : Joint) = (2 : ℂ) • (1 : Qubit) := by
-      rw [← Matrix.one_kronecker_one, traceLeft_kron, hTraceOne]
     simp only [T, P, F, E, Matrix.smul_mul, Matrix.mul_smul, add_mul, mul_add, one_mul,
-      mul_one, ← Matrix.mul_kronecker_mul, traceLeft_smul, partialTraceLeft_add,
-      traceLeft_kron, hId, hTraceOne, U, V, K, M, spin_trace, spin_mul_trace,
-      hum, Rat.cast_zero, mul_zero, zero_smul, smul_zero, add_zero, zero_add]
+      mul_one, ← Matrix.mul_kronecker_mul]
+    simp only [← Matrix.one_kronecker_one (m := Bool) (n := Bool) (α := ℂ),
+      smul_add, ← Matrix.smul_kronecker, partialTraceLeft_add, traceLeft_kron, hTraceOne,
+      U, V, K, M, spin_trace, spin_mul_trace, Matrix.trace_smul, hum, Rat.cast_zero,
+      mul_zero, zero_smul, smul_zero, add_zero, zero_add]
     push_cast
     dsimp only [s]
     module
@@ -271,14 +298,22 @@ private theorem pairing_self_nonneg (a : Bloch) : 0 ≤ pairing a a := by
 
 /-- A rational zero of the quadratic form on the marginal hyperplane supplies
 a rational positive semidefinite rank-two completion of the two Bloch marginals. -/
-theorem rational_rank_le_two_of_quadratic_witness (a b y v : Fin 3 → ℚ)
-    (hordered : a ⬝ᵥ a < b ⬝ᵥ b) (hy : 0 < y ⬝ᵥ y) (hv : 0 < v ⬝ᵥ v)
+theorem rational_rank_two_of_quadratic_witness (a b y v : Fin 3 → ℚ)
+    (hordered : a ⬝ᵥ a < b ⬝ᵥ b) (hy : 0 < y ⬝ᵥ y)
     (hlinear : a ⬝ᵥ y = b ⬝ᵥ v)
     (hquad : y ⬝ᵥ y = (1 - b ⬝ᵥ b) * (v ⬝ᵥ v) + (b ⬝ᵥ v) ^ 2) :
     ∃ T : Matrix (Bool × Bool) (Bool × Bool) ℂ,
-      T.PosSemidef ∧ T.rank ≤ 2 ∧ (∀ i j, RationalEntry (T i j)) ∧
+      T.PosSemidef ∧ T.rank = 2 ∧ (∀ i j, RationalEntry (T i j)) ∧
       partialTraceRight T = (1 / 2 : ℂ) • (1 + rationalBlochMatrix a) ∧
       partialTraceLeft T = (1 / 2 : ℂ) • (1 + rationalBlochMatrix b) := by
+  have hv : 0 < v ⬝ᵥ v := by
+    refine lt_of_le_of_ne (pairing_self_nonneg v) ?_
+    intro hz
+    obtain rfl := dotProduct_self_eq_zero.mp hz.symm
+    have hyzero : y ⬝ᵥ y = 0 := by
+      simpa only [dotProduct_zero, zero_dotProduct, mul_zero, zero_pow (by decide : 2 ≠ 0),
+        add_zero] using hquad
+    exact hy.ne' hyzero
   let u := (pairing v v)⁻¹ • y
   let g := pairing a u
   let c := g / pairing u u
@@ -342,8 +377,8 @@ theorem rational_rank_le_two_of_quadratic_witness (a b y v : Fin 3 → ℚ)
     rw [hzero] at hb_length hlength
     linarith only [show pairing a a < pairing b b from hordered, ha_length, hb_length,
       hlength, pairing_self_nonneg m]
-  have hbound : c ^ 2 * pairing u u + pairing m m / pairing k k ≤ 1 := by
-    rw [← le_sub_iff_add_le', div_le_iff₀ hk]
+  have hbound : c ^ 2 * pairing u u + pairing m m / pairing k k < 1 := by
+    rw [← lt_sub_iff_add_lt', div_lt_iff₀ hk]
     nlinarith only [show pairing a a < pairing b b from hordered, ha_length, hb_length, hlength]
   obtain ⟨T, hT, hRank, hQ, hR, hL⟩ :=
     rational_completion_of_projector_coordinates u v k m c hkv hum hunit hk hbound
