@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The complete Mangoldt remainder has an absolutely convergent arithmetic Laplace transform throughout the half-plane Re(s)>1. -/
+   digest: The complete Mangoldt Laplace transform converges absolutely on Re(s)>1. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtLaplace
 
@@ -18,7 +18,7 @@ open D5.S3.Arith.Robin.CompleteMertensPeak (U)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtHalfPlane
 
-private theorem ramp_norm_summable {s : ℂ} (hs : 1 < s.re) :
+theorem ramp_norm_summable {s : ℂ} (hs : 1 < s.re) :
     Summable (fun n : ℕ => ∫ y : ℝ in Ioi 0,
       ‖Complex.exp (-s * y) * (mangoldtRamp n (Real.exp y) : ℂ)‖) := by
   let σ : ℂ := s.re
@@ -51,7 +51,7 @@ private theorem weighted_ramps_hasSum (s : ℂ) (y : ℝ) :
 
 /-- Tonelli is paid at the norm level, before the complex integral is exchanged.
 The positive ENNReal sum is finite by the actual Mangoldt LSeries at the real part of s. -/
-private theorem part_integrable {s : ℂ} (hs : 1 < s.re) :
+theorem part_integrable {s : ℂ} (hs : 1 < s.re) :
     IntegrableOn (fun y : ℝ => Complex.exp (-s * y) *
       (mangoldtPart (Real.exp y) : ℂ)) (Ioi 0) := by
   let f : ℕ → ℝ → ℂ := fun n y => Complex.exp (-s * y) *
@@ -171,10 +171,13 @@ private theorem first_moment {s : ℂ} (hs : 1 < s.re) :
           exact mul_le_mul_of_nonneg_left (norm_sub_le _ _) (Real.exp_nonneg _)
         _ = _ := by simp [norm_pow, abs_of_nonneg hy]; ring
     have hl : Tendsto (fun y : ℝ =>
-        (y * Real.exp (-(s.re - 1) * y)) / ‖a‖ + Real.exp (-(s.re - 1) * y) / ‖a‖ ^ 2) atTop (𝓝 0) := by
+        (y * Real.exp (-(s.re - 1) * y)) / ‖a‖ +
+          Real.exp (-(s.re - 1) * y) / ‖a‖ ^ 2) atTop (𝓝 0) := by
       simpa only [Real.rpow_one, Real.rpow_zero, one_mul, zero_div, add_zero] using
-        ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (s.re - 1) (sub_pos.mpr hs)).div_const ‖a‖).add
-          ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 (s.re - 1) (sub_pos.mpr hs)).div_const (‖a‖ ^ 2))
+        ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (s.re - 1)
+          (sub_pos.mpr hs)).div_const ‖a‖).add
+          ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 (s.re - 1)
+            (sub_pos.mpr hs)).div_const (‖a‖ ^ 2))
     exact squeeze_zero' (Eventually.of_forall (fun y => norm_nonneg (p y))) hb hl
   have h := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun y _ => hd y) (first_moment_integrable hs) hlim
