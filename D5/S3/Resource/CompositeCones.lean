@@ -22,7 +22,12 @@ established here and no witness is exhibited. -/
    The import closure is the umbrella `Mathlib` import (generality `G`).
 -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Resource.CompositeCones
 

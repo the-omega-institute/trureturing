@@ -6,18 +6,23 @@
    utility: none
    digest: Finite positive unital matrix-map Jensen via spectral effects and rectangular isometric dilation. -/
 
-import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
-import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
-import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
-import Mathlib.Algebra.Order.Module.PositiveLinearMap
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Data.Matrix.Basis
-import Mathlib.Data.Matrix.ColumnRowPartitioned
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
+public import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
+public import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+public import Mathlib.Algebra.Order.Module.PositiveLinearMap
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Data.Matrix.Basis
+public import Mathlib.Data.Matrix.ColumnRowPartitioned
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 Source candidate; current elaboration, kernel and axiom checks are pending.

@@ -6,11 +6,16 @@
    utility: none
    digest: Finite phase decompositions of contractions yield separable Hermitian scalar shifts. -/
 
-import Mathlib
-import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
-import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
-import D5.S3.Resource.EntanglementWitness
-import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+module
+
+public import Mathlib
+public import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
+public import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+public import D5.S3.Resource.EntanglementWitness
+public import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

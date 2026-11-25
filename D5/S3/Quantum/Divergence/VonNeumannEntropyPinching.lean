@@ -5,8 +5,13 @@
    anchors: []
    digest: Von Neumann entropy is compatible with the existing quantum relative entropy and satisfies the basis-pinching identity when the pinched state's matrix logarithm lies in the measured diagonal subspace; entropy monotonicity, exclusivity collapse, data processing, Maassen--Uffink Renyi bounds, and sharp Pythagoras are not covered. -/
 
-import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
-import D5.S3.Quantum.Measurement.BasisMeasurementProjection
+module
+
+public import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
+public import D5.S3.Quantum.Measurement.BasisMeasurementProjection
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /- Library-search audit trail (2026-08-22):
    * `rg -n -F 'von_neumann_entropy_pinching' D5 Golden/Frozen/accepted`

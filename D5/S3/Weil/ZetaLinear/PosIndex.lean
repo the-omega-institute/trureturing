@@ -20,7 +20,12 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import Mathlib.Analysis.Matrix.PosDef
+module
+
+public import Mathlib.Analysis.Matrix.PosDef
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 # Positive index of a Hermitian matrix

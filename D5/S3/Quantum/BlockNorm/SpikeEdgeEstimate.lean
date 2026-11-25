@@ -39,9 +39,14 @@ adjoint_pairing: bind-only [paired_norm]; paired_norm: bind-only [positive_spike
 block_coefficient2: bind-only [positive_spike_enclosure]; negative_bound: content=positive_spike_enclosure [edge_sum_bound].
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Normed.Module.Normalize
-import D5.S3.Weil.GroundMode.ResidualDrivenProjectiveEnergy
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Normed.Module.Normalize
+public import D5.S3.Weil.GroundMode.ResidualDrivenProjectiveEnergy
+
+set_option backward.privateInPublic true
+@[expose] public section
 open scoped InnerProductSpace Matrix.Norms.L2Operator ComplexOrder MatrixOrder
 set_option backward.isDefEq.respectTransparency false
 noncomputable section

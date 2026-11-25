@@ -25,9 +25,14 @@ projected_pairing: bind-only [trace_square_defect]; sandwich_annihilates: bind-o
 trace_square_defect: bind-only [completion_bound_projected_outer]; edge_symmetry_forces_pairing_zero: content=SpikeEdgeEstimate.positive_spike_enclosure [completion_bound_projected_outer]; completion_bound_projected_outer: content=SpikeEdgeEstimate.positive_spike_enclosure [result].
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
-import D5.S3.Quantum.BlockNorm.SpikeEdgeEstimate
-import Mathlib.Analysis.InnerProductSpace.JointEigenspace
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+module
+
+public import D5.S3.Quantum.BlockNorm.SpikeEdgeEstimate
+public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+
+set_option backward.privateInPublic true
+@[expose] public section
 /-! The normal-operator and normal-matrix diagonalization proofs are adapted from
 the TauCeti contributors, commit 7c8d7117e41432d613582fc600dcb0a3be7dba30,
 under Apache-2.0. Copyright (c) 2026 The Tau Ceti contributors.

@@ -6,10 +6,15 @@
    utility: none
    digest: Finite-dimensional trace bridge for operator-convex matrix inversion. -/
 
-import D5.S3.Quantum.Matrix.Spectral.TraceOrder
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.RingInverseOrder
-import D5.S3.Weil.ZetaLinear.RankTrace
+module
+
+public import D5.S3.Quantum.Matrix.Spectral.TraceOrder
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.RingInverseOrder
+public import D5.S3.Weil.ZetaLinear.RankTrace
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-! Finite-dimensional trace bridge for operator-convex matrix inversion. -/
 

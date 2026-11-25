@@ -13,11 +13,16 @@ Direct frozen dependencies: none (pinned Mathlib only)
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Star.CHSH
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Tactic.IntervalCases
-import Mathlib.InformationTheory.Hamming
+module
+
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Star.CHSH
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.InformationTheory.Hamming
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.QuantumBounds.HybridMerminDepthBound
 

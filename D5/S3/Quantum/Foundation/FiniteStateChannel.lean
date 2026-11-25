@@ -5,9 +5,14 @@
    anchors: []
    digest: Canonical finite density states and completely positive trace-preserving channels. -/
 
-import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
-import Mathlib.Analysis.CStarAlgebra.CStarMatrix
-import Mathlib.Analysis.Matrix.Order
+module
+
+public import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
+public import Mathlib.Analysis.CStarAlgebra.CStarMatrix
+public import Mathlib.Analysis.Matrix.Order
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /- Library-search audit trail (2026-09-01):
    * Pinned Mathlib supplies `CStarMatrix` and bundled completely positive maps,

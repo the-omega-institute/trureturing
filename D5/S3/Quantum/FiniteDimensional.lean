@@ -5,7 +5,12 @@
    anchors: []
    digest: Formalize finite-dimensional complex matrix-algebra and probability skeletons. -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Quantum.FiniteDimensional
 

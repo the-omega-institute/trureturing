@@ -22,7 +22,12 @@
      case separately before simplifying the positive-denominator terms.
 -/
 
-import D5.S3.Divergence.ClassicalDPI
+module
+
+public import D5.S3.Divergence.ClassicalDPI
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Divergence.GrandmotherTheorem
 

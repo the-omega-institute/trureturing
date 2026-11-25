@@ -6,7 +6,12 @@
    utility: kind=certified-instance; basis=terminal=atom:d3af207c13235ebefa554d30155a712ff57b6730d9fa67f63e271edc92df39c0
    digest: Bounded fixed-sum slices saturate the tail box exactly on the plateau; capacities (4;2,1,1) have unique maximum 12 at time 4. -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /- Library search (2026-09-07): D5 bounded-vector/cardinality and 5040 searches,
    pinned Mathlib slice/antidiagonal/product-of-chains searches, and external Lean

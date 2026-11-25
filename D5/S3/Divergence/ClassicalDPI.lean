@@ -19,7 +19,12 @@
      coordinate and then by the output coordinate.
 -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Divergence.ClassicalDPI
 
