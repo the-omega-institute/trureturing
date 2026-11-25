@@ -210,7 +210,7 @@ private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 ≤ q) :
 private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
     {w : ZMod q → ℝ} {δ μ : ℝ} (hw : ∀ i, 0 ≤ w i)
     (h0 : 0 ≤ w 0 - δ - μ) (h1 : 0 ≤ w 1 + δ / 2) (hneg : 0 ≤ w (-1) + δ / 2)
-    (hμ : 0 ≤ μ) : ∀ i, 0 ≤ adjusted w δ μ (δ / 2) i := by
+    (hμ : 0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ) : ∀ i, 0 ≤ adjusted w δ μ (δ / 2) i := by
   have hrep (j : ℤ) (hlo : -(q : ℤ) < j * 2) (hhi : j * 2 ≤ q) :
       (j : ZMod q).valMinAbs = j :=
     (ZMod.valMinAbs_spec _ _).mpr ⟨rfl, hlo, hhi⟩
@@ -229,28 +229,47 @@ private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
     intro he
     rw [he, hrepneg] at hrep1
     omega
-  have hrest (i : ZMod q) : 0 ≤ (Pi.single ((↑(q / 2) : ℤ) : ZMod q) μ : ZMod q → ℝ) i := by
-    simp only [Pi.single_apply]
-    split <;> simp_all
+  let antipode : ZMod q := ((↑(q / 2) : ℤ) : ZMod q)
+  have hrepA : antipode.valMinAbs = (↑(q / 2) : ℤ) :=
+    hrep (↑(q / 2) : ℤ) (by omega) (by omega)
+  have hA0 : antipode ≠ 0 := by
+    intro he
+    rw [he, hrep0] at hrepA
+    omega
+  have hA1 : antipode ≠ 1 := by
+    intro he
+    rw [he, hrep1] at hrepA
+    omega
+  have hAneg : antipode ≠ -1 := by
+    intro he
+    rw [he, hrepneg] at hrepA
+    omega
+  change 0 ≤ w antipode + μ at hμ
   intro i
+  by_cases hiA : i = antipode
+  · subst i
+    simpa only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl,
+      Pi.single_eq_of_ne hA0, Pi.single_eq_of_ne hA1, Pi.single_eq_of_ne hAneg,
+      Pi.single_eq_same, sub_zero, add_zero] using hμ
   by_cases hi0 : i = 0
   · subst i
-    simp only [adjusted, Pi.single_eq_same, Pi.single_eq_of_ne h01,
-      Pi.single_eq_of_ne h0neg, add_zero]
-    linarith only [h0, hrest 0]
+    simp only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl, Pi.single_eq_same, Pi.single_eq_of_ne h01,
+      Pi.single_eq_of_ne h0neg, Pi.single_eq_of_ne hA0.symm, add_zero]
+    simpa only [sub_sub] using h0
   by_cases hi1 : i = 1
   · subst i
-    simp only [adjusted, Pi.single_eq_same, Pi.single_eq_of_ne hi0,
-      Pi.single_eq_of_ne h1neg, sub_zero, add_zero]
-    exact add_nonneg h1 (hrest 1)
+    simp only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl, Pi.single_eq_same, Pi.single_eq_of_ne hi0,
+      Pi.single_eq_of_ne h1neg, Pi.single_eq_of_ne hA1.symm, sub_zero, add_zero]
+    exact h1
   by_cases hineg : i = -1
   · subst i
-    simp only [adjusted, Pi.single_eq_same, Pi.single_eq_of_ne hi0,
-      Pi.single_eq_of_ne hi1, sub_zero, add_zero]
-    exact add_nonneg hneg (hrest (-1))
-  · simp only [adjusted, Pi.single_eq_of_ne hi0, Pi.single_eq_of_ne hi1,
-      Pi.single_eq_of_ne hineg, sub_zero, add_zero]
-    exact add_nonneg (hw i) (hrest i)
+    simp only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl, Pi.single_eq_same, Pi.single_eq_of_ne hi0,
+      Pi.single_eq_of_ne hi1, Pi.single_eq_of_ne hAneg.symm, sub_zero, add_zero]
+    exact hneg
+  · simp only [adjusted, ← show antipode = ((↑(q / 2) : ℤ) : ZMod q) from rfl,
+      Pi.single_eq_of_ne hi0, Pi.single_eq_of_ne hi1, Pi.single_eq_of_ne hineg,
+      Pi.single_eq_of_ne hiA, sub_zero, add_zero]
+    exact hw i
 
 /-- The mass transfer matches both cosine deficits exactly. Nonnegative resulting
 weights give a feasible comparison. -/
@@ -266,7 +285,8 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 ≤ q)
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
+    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ →
+    0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A := by
   dsimp only
@@ -279,7 +299,8 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 ≤ q)
   let V := 2 * (1 - C ^ 2)
   let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
   let μ := (A - D₁ - F * δ) / U
-  change 0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 → 0 ≤ μ → _
+  change 0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 →
+    0 ≤ w ((↑(q / 2) : ℤ) : ZMod q) + μ → _
   intro h0 h1 hneg hμ
   have hhalf : (1 : ℝ) < (↑(q / 2) : ℝ) := by
     exact_mod_cast (show 1 < q / 2 by omega)
