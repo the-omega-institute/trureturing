@@ -148,9 +148,9 @@ theorem brezis_lieb_power_defect {Ω : Type u} [MeasurableSpace Ω]
     rw [← heq, ← ENNReal.ofReal_coe_nnreal] at hb
     exact (ENNReal.ofReal_le_ofReal_iff M.coe_nonneg).1 hb
   have habs : Tendsto (fun n => ∫ x, |d n x| ∂μ) atTop (𝓝 0) := by
-    apply IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination μ
+    refine IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination μ
       (fun n x => |d n x|) (M : ℝ) (fun n => (hdi n).abs) ?_
-      (fun n x => abs_nonneg _) M.coe_nonneg
+      (fun n x => abs_nonneg _) M.coe_nonneg ?_
     · filter_upwards [hdlim] with x hx
       simpa only [abs_zero] using hx.abs
     · intro ε hε
