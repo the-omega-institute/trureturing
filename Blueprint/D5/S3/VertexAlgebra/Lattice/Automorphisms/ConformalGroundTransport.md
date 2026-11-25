@@ -4,7 +4,7 @@
 
 Actual conformal automorphisms recover integral charge isometries and transport charge ground lines.
 
-D is ordinary even integral LatticeData. The physical carrier is the actual finite-support charge direct sum of complex oscillator polynomials. The transport statements assume a real positive-definite Gram matrix hPos and rootlessness hRoot, namely no integral charge has bilinear norm two. For the chosen quadratic state omega(D,H), hHG and hGH state H * gramComplex(D) = 1 and gramComplex(D) * H = 1. A complex-linear automorphism U must preserve every integer vertex mode through hMode and fix omega(D,H) through hOmega.
+D is ordinary even integral LatticeData. The physical carrier is the actual finite-support charge direct sum of complex oscillator polynomials. The transport statements assume a real positive-definite Gram matrix hPos and rootlessness hRoot, namely no integral charge has bilinear norm two. For the chosen quadratic state omega(D,H), hHG states H * gramComplex(D) = 1. The reverse identity follows because H and gramComplex(D) are finite square complex matrices. A complex-linear automorphism U must preserve every integer vertex mode through hMode and fix omega(D,H) through hOmega.
 
 The grade-one current basis is the rootless energy-one basis. The mode-one calculation reduces the product of two canonical currents to the neutral mode coefficient and gives (Y(currentState D i))[[1]] (currentState D j) = (D.G i j : ℂ) • vacuum D. Bilinearity then identifies arbitrary current mode-one products with the complex Gram form. The mode-zero coefficient theorem reads every coefficient of a state by its Gram pairing with that coefficient's charge, so the joint zero-mode eigenvalues determine the transported integral charge.
 
@@ -66,7 +66,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Automorphisms/ConformalGroundTransp
 
 *Commentary.*
 
-Under hPos, hRoot, hHG, hGH, hMode and hOmega, U induces a unique additive equivalence s of the actual charge lattice preserving bilinear. Every occupied coefficient of U(single(a,p)) has charge s(a), so s is recovered by the current zero-mode spectrum on the actual carrier. The nonzero image of each ground state determines the charge at that input.
+Under hPos, hRoot, hHG, hMode and hOmega, U induces a unique additive equivalence s of the actual charge lattice preserving bilinear. Every occupied coefficient of U(single(a,p)) has charge s(a), so s is recovered by the current zero-mode spectrum on the actual carrier. The nonzero image of each ground state determines the charge at that input.
 
 **Theorem 1.5 (Charge ground lines are transported).**
 
