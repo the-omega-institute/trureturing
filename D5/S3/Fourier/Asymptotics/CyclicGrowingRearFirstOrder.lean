@@ -420,10 +420,12 @@ theorem eventual_support_at_threshold
       atTop (𝓝 L))
     (hcrit : 3*K/20=rearThreshold e (l+1))
     (hne : L+3*K/8≠0) :
+    let readout := fun state : (Finset ℝ × ℕ) × ℝ =>
+      coefficientFit state.1.1 state.1.2 state.2
     let k := if 0<L+3*K/8 then l+1 else l
     ∀ᶠ n : ℕ in atTop,
       letI : NeZero (q n) := ⟨hq n⟩
-      let v : ZMod (q n) → ℝ := windowLaw n k (coefficientFit (rearRealOffsets e k) n (mesh (q n)))
+      let v : ZMod (q n) → ℝ := windowLaw n k (readout ((rearRealOffsets e k,n),mesh (q n)))
       let threshold := 1-2*budget n*(mesh (q n))^2
       cosineMoment 1 v = threshold ∧ cosineMoment 2 v = threshold ∧
       v ∈ feasible (q n) threshold ∧
