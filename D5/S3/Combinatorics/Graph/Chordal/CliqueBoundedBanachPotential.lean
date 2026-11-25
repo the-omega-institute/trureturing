@@ -26,11 +26,6 @@ universe u v
 variable {V : Type u} {G : SimpleGraph V} {o : V}
 variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
 
-open private Component componentOf parent Shadow exists_predecessor componentOf_adj
-  mem_shadow_of_adj shadow_parent shadow_clique exists_shadow_anchor four_cycle_diagonal
-  gain gain_triangle two_triangle_comparisons anchorGain from
-  D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
-
 private noncomputable def mean (s : Finset V) (f : V → E) : E :=
   (s.card : ℝ)⁻¹ • ∑ b ∈ s, f b
 
@@ -81,13 +76,13 @@ private theorem mean_bound_at [DecidableEq V] {s : Finset V} {f : V → E} {z : 
     _ ≤ B - (B - A) / (k : ℝ) :=
       sub_le_sub_left (div_le_div_of_nonneg_left (sub_nonneg.mpr hAB) hn hnk) B
 
-private theorem diagonal_zero {g : V → V → E} (hrev : ∀ i j, g j i = -g i j) (x : V) :
+theorem diagonal_zero {g : V → V → E} (hrev : ∀ i j, g j i = -g i j) (x : V) :
     g x x = 0 := by
   apply (smul_eq_zero_iff_right (by norm_num : (2 : ℝ) ≠ 0)).mp
   rw [two_smul]
   exact (add_eq_zero_iff_neg_eq.mpr (hrev x x).symm)
 
-private def predecessors (G : SimpleGraph V) (o : V) (x : V) [Fintype V]
+def predecessors (G : SimpleGraph V) (o : V) (x : V) [Fintype V]
     [DecidablePred fun b : V => G.Adj b x ∧ G.dist o b + 1 = G.dist o x] : Finset V :=
   Finset.univ.filter fun b => G.Adj b x ∧ G.dist o b + 1 = G.dist o x
 
