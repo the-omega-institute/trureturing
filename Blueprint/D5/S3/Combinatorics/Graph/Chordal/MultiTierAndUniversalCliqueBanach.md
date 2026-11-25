@@ -58,3 +58,4 @@ Translate each copy by a common potential increment determined by the gains on t
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/MultiTierAndUniversalCliqueBanach.exists_multitier_clique_banach_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/MultiTierAndUniversalCliqueBanach.exists_universal_core_simplicial_banach_potential`
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/TwoStepBFSAndBarycenterObstructions](TwoStepBFSAndBarycenterObstructions.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/WeightedCliqueBanachPotential](WeightedCliqueBanachPotential.md)

@@ -7,6 +7,7 @@
    digest: Predecessor profiles and universal cores give sharper chordal gain bounds. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.TwoStepBFSAndBarycenterObstructions
+import D5.S3.Combinatorics.Graph.Chordal.WeightedCliqueBanachPotential
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Data.Set.Card
@@ -21,56 +22,11 @@ universe u v
 
 namespace MultiTierBanach
 open CliqueBoundedBanach (diagonal_zero predecessors)
+open WeightedCliqueBanach (average average_add average_bound average_bound_at)
 
 variable {V : Type u} {G : SimpleGraph V}
 variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
 
-private noncomputable def average (s : Finset V) (w : V → ℝ) (f : V → E) : E :=
-  ∑ b ∈ s, w b • f b
-
-private theorem average_shift (s : Finset V) (w : V → ℝ) (f : V → E) (z : E)
-    (hw : ∑ b ∈ s, w b = 1) :
-    average s w (fun b => f b + z) = average s w f + z := by
-  simp only [average, smul_add, Finset.sum_add_distrib, ← Finset.sum_smul, hw, one_smul]
-
-private theorem average_error {s : Finset V} {w : V → ℝ} {f : V → E} {z : E}
-    {B : V → ℝ} (hn : ∀ b ∈ s, 0 ≤ w b) (hw : ∑ b ∈ s, w b = 1)
-    (h : ∀ b ∈ s, Dist.dist (f b) z ≤ B b) :
-    Dist.dist (average s w f) z ≤ ∑ b ∈ s, w b * B b := by
-  rw [dist_eq_norm, sub_eq_add_neg, ← average_shift s w f (-z) hw]
-  apply (norm_sum_le s _).trans
-  apply Finset.sum_le_sum
-  intro b hb
-  rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (hn b hb)]
-  exact mul_le_mul_of_nonneg_left (by simpa [dist_eq_norm, sub_eq_add_neg] using h b hb)
-    (hn b hb)
-private theorem average_const_bound {s : Finset V} {w : V → ℝ} {f : V → E}
-    {z : E} {B : ℝ} (hn : ∀ b ∈ s, 0 ≤ w b) (hw : ∑ b ∈ s, w b = 1)
-    (h : ∀ b ∈ s, Dist.dist (f b) z ≤ B) : Dist.dist (average s w f) z ≤ B := by
-  calc
-    _ ≤ ∑ b ∈ s, w b * B := average_error hn hw h
-    _ = B := by rw [← Finset.sum_mul, hw, one_mul]
-
-private theorem average_marked_bound [DecidableEq V] {s : Finset V} {w : V → ℝ}
-    {f : V → E} {z : E} {p : V} {A B : ℝ} (hp : p ∈ s)
-    (hn : ∀ b ∈ s, 0 ≤ w b) (hw : ∑ b ∈ s, w b = 1)
-    (h₀ : Dist.dist (f p) z ≤ A) (h₁ : ∀ b ∈ s.erase p, Dist.dist (f b) z ≤ B) :
-    Dist.dist (average s w f) z ≤ B - (B - A) * w p := by
-  have hs : ∑ b ∈ s.erase p, w b = 1 - w p := by
-    linarith [s.sum_erase_add w hp]
-  calc
-    _ ≤ ∑ b ∈ s, w b * (if b = p then A else B) := by
-      apply average_error hn hw
-      intro b hb
-      by_cases h : b = p
-      · simpa [h] using h₀
-      · simpa [h] using h₁ b (Finset.mem_erase.mpr ⟨h, hb⟩)
-    _ = (∑ b ∈ s.erase p, w b * B) + w p * A := by
-      rw [← s.sum_erase_add (fun b => w b * (if b = p then A else B)) hp]
-      simp only [ite_true]
-      congr 1
-      exact Finset.sum_congr rfl fun b hb => by rw [ite_eq_right (Finset.mem_erase.mp hb).1]
-    _ = B - (B - A) * w p := by rw [← Finset.sum_mul, hs]; ring
 private noncomputable def denominator (k : ℕ) : ℝ := (k : ℝ)^2 - 3 * k + 3
 private noncomputable def bottomWeight (k : ℕ) : ℝ := ((k : ℝ) - 3) / denominator k
 private noncomputable def middleWeight (k : ℕ) : ℝ := ((k : ℝ) - 2) / denominator k
@@ -456,7 +412,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       have Qstep : Q (i + 1) C = Q i D + g d c := rfl
       let m := Q (i + 1) C + g c x
       have earlier : Dist.dist (average (P x) (w x) (path d x)) (path d x c) ≤ (2 - 2 * w x c) * ε := by
-        have h := average_marked_bound (f := path d x) (z := path d x c) cp
+        have h := average_bound_at (f := path d x) (z := path d x c) cp
           (wnonneg hx) (wsum hx) (A := 0) (B := 2 * ε) (by simp)
         apply (h ?_).trans_eq (by ring)
         intro b hb
@@ -465,7 +421,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
         exact two_triangles (tri (anchorNear bs) (near bs cs) (anchorNear cs))
           (tri (near bs cs) (Or.inr hcx) (Or.inr (memP.mp hb').1))
       have later : Dist.dist (average (P y) (w y) (path c y)) (path c y x) ≤ (2 - 2 * w y x) * ε := by
-        have h := average_marked_bound (f := path c y) (z := path c y x) xp
+        have h := average_bound_at (f := path c y) (z := path c y x) xp
           (wnonneg hy) (wsum hy) (A := 0) (B := 2 * ε) (by simp)
         apply (h ?_).trans_eq (by ring)
         intro b hb
@@ -513,7 +469,7 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
           rw [add_assoc, dist_add_left]
           exact tri (Or.inr (memP.mp hb).1) (Or.inr hxy) (Or.inr (memP.mp hb').1)
         rw [_root_.dist_comm]
-        have h := average_marked_bound (f := path c y) (z := path c x b + g x y) hb'
+        have h := average_bound_at (f := path c y) (z := path c x b + g x y) hb'
           (wnonneg hy) (wsum hy) (A := ε) (B := 3 * ε) (by rwa [_root_.dist_comm])
         refine (h ?_).trans ?_
         · intro d hd
@@ -529,8 +485,8 @@ private theorem connected_bound [Finite V] (hG : G.IsChordal) (hconn : G.Connect
       rw [atSucc hx, atSucc hy, ← hC]
       change Dist.dist ((Q i C + average (P x) (w x) (path c x)) + g x y)
         (Q i C + average (P y) (w y) (path c y)) ≤ _
-      rw [add_assoc, dist_add_left, ← average_shift _ _ _ _ (wsum hx)]
-      exact average_const_bound (wnonneg hx) (wsum hx) perPred
+      rw [add_assoc, dist_add_left, ← average_add _ _ _ _ (wsum hx)]
+      exact average_bound (wnonneg hx) (wsum hx) perPred
     rcases nested hx hy hxy with h | h
     · exact (oriented hx hy hxy h).trans layerTotal
     · rw [← symmError]
@@ -620,17 +576,17 @@ theorem exists_universal_core_simplicial_banach_potential
   let w : V → ℝ := fun _ => (anchors.card : ℝ)⁻¹
   have wsum : ∑ z ∈ anchors, w z = 1 := by
     simp [w, nsmul_eq_mul, mul_inv_cancel₀ anchors_posR.ne']
-  let core (x : V) : E := MultiTierBanach.average anchors w (fun z => g z x)
+  let core (x : V) : E := WeightedCliqueBanach.average anchors w (fun z => g z x)
   have core_bound {a b : V} (ha : a ∈ H) (hb : b ∈ H) (hab : G.Adj a b) :
       ‖core a + g a b - core b‖ ≤ ε := by
     have regroup : core a + g a b - core b =
-        MultiTierBanach.average anchors w (fun z => g z a + g a b - g z b) := by
-      change MultiTierBanach.average anchors w (fun z => g z a) + g a b -
-        MultiTierBanach.average anchors w (fun z => g z b) = _
-      rw [← MultiTierBanach.average_shift _ _ _ _ wsum]
-      simp only [MultiTierBanach.average, smul_sub, Finset.sum_sub_distrib]
+        WeightedCliqueBanach.average anchors w (fun z => g z a + g a b - g z b) := by
+      change WeightedCliqueBanach.average anchors w (fun z => g z a) + g a b -
+        WeightedCliqueBanach.average anchors w (fun z => g z b) = _
+      rw [← WeightedCliqueBanach.average_add _ _ _ _ wsum]
+      simp only [WeightedCliqueBanach.average, smul_sub, Finset.sum_sub_distrib]
     rw [regroup, ← dist_zero_right]
-    apply MultiTierBanach.average_const_bound (fun _ _ => inv_nonneg.mpr anchors_posR.le) wsum
+    apply WeightedCliqueBanach.average_bound (fun _ _ => inv_nonneg.mpr anchors_posR.le) wsum
     intro z hz
     rw [dist_zero_right]
     have hzU := anchor_mem.mp hz
@@ -644,7 +600,7 @@ theorem exists_universal_core_simplicial_banach_potential
   let candidate (o a : V) := core a + g a o
   let w' (o : V) (_ : V) : ℝ := ((neighbors o).card : ℝ)⁻¹
   let φ (x : V) := if x ∈ H then core x
-    else MultiTierBanach.average (neighbors x) (w' x) (candidate x)
+    else WeightedCliqueBanach.average (neighbors x) (w' x) (candidate x)
   have attach_bound {a o : V} (ho : o ∉ H) (hao : G.Adj a o) :
       ‖φ a + g a o - φ o‖ ≤ max 1 (2 - 2 / (m : ℝ)) * ε := by
     let S := neighbors o
@@ -665,14 +621,14 @@ theorem exists_universal_core_simplicial_banach_potential
       rw [dist_eq_norm, show candidate o b - candidate o a =
           (core b + g b a - core a) - (g b a + g a o - g b o) by dsimp [candidate]; abel]
       exact (norm_sub_le _ _).trans (by linarith [core_bound hbH haH hba, htri b a o hba hao hbo])
-    have bound := MultiTierBanach.average_marked_bound (f := candidate o) (z := candidate o a)
+    have bound := WeightedCliqueBanach.average_bound_at (f := candidate o) (z := candidate o a)
       (A := 0) (B := 2 * ε) haS (fun _ _ => inv_nonneg.mpr hs.le) sw (by simp) comparison
     have hratio : 2 / (m : ℝ) ≤ 2 / (S.card : ℝ) := by
       have hmR : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
       rw [div_le_div_iff₀ hmR hs]
       linarith
     simp only [φ, ite_eq_left haH, ite_eq_right ho]
-    change ‖candidate o a - MultiTierBanach.average S (w' o) (candidate o)‖ ≤ _
+    change ‖candidate o a - WeightedCliqueBanach.average S (w' o) (candidate o)‖ ≤ _
     rw [← dist_eq_norm, _root_.dist_comm]
     refine bound.trans ?_
     change (2 * ε - (2 * ε - 0) * (S.card : ℝ)⁻¹) ≤ _
