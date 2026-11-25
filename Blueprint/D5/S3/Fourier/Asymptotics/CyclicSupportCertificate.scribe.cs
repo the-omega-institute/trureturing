@@ -47,7 +47,7 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
         var x = Call("x", i);
         var T = Call("x", j);
         var r = Call("r", x);
-        var atTop = And(All("i", levels, Le(x, T)), Bind(FormulaQuantifier.Exists, "i", levels, Lt(x, T)));
+        var atTop = All("i", levels, Le(x, T));
         var sum = new Formula.Subscript(F.Sum, i);
         return F.Disp(F.Seq(Eq(r, Add(Add(F.Id("a"), Multiply(F.Id("b"), x)),
                 Multiply(F.Id("g"), new Formula.Power(x, F.D(2))))), F.Comma, F.Sp,

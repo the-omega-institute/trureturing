@@ -6,7 +6,7 @@ A boundary variation and a finite dual certificate control which cyclic weights 
 
 **Theorem 1.1 (Strict positivity at the outer level).**
 
-$$\operatorname{r}\left(\operatorname{x}\left(i\right)\right) = a + b \cdot \operatorname{x}\left(i\right) + g \cdot \operatorname{x}\left(i\right)^{2}, \left(\left(\left(\forall i \in I,\; \operatorname{x}\left(i\right) \le \operatorname{x}\left(j\right)\right) \land \left(\exists i \in I,\; \operatorname{x}\left(i\right) < \operatorname{x}\left(j\right)\right)\right) \land \left(0 \le g \land \left(\sum_{i}\operatorname{r}\left(\operatorname{x}\left(i\right)\right) = 0 \land 0 < \sum_{i}\operatorname{x}\left(i\right) \cdot \operatorname{r}\left(\operatorname{x}\left(i\right)\right)\right)\right)\right) \Rightarrow 0 < \operatorname{r}\left(\operatorname{x}\left(j\right)\right)$$
+$$\operatorname{r}\left(\operatorname{x}\left(i\right)\right) = a + b \cdot \operatorname{x}\left(i\right) + g \cdot \operatorname{x}\left(i\right)^{2}, \left(\left(\forall i \in I,\; \operatorname{x}\left(i\right) \le \operatorname{x}\left(j\right)\right) \land \left(0 \le g \land \left(\sum_{i}\operatorname{r}\left(\operatorname{x}\left(i\right)\right) = 0 \land 0 < \sum_{i}\operatorname{x}\left(i\right) \cdot \operatorname{r}\left(\operatorname{x}\left(i\right)\right)\right)\right)\right) \Rightarrow 0 < \operatorname{r}\left(\operatorname{x}\left(j\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CyclicSupportCertificate.boundary_variation_pos` (`✓ std3`). ∎
 
