@@ -1,7 +1,7 @@
 module
 prelude
 
-public import OmegaMath.Arithmetic.Euclidean.Division
+public import OmegaMath.Data.Nat.Order
 
 /-! Omega original.
 
