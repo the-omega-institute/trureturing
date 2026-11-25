@@ -9,7 +9,10 @@
 import D5.S3.Quantum.Foundation.QutritPureLift
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Unitary
 
-/-! Singleton incidence for actual qutrits under original whole-pair-ball geometry. -/
+/-! Singleton incidence for actual qutrits under original whole-pair-ball geometry.
+
+The four-slot escape audit is tracked in issue #34179.
+-/
 
 noncomputable section
 open scoped Matrix ComplexOrder InnerProductSpace RealInnerProductSpace BigOperators
@@ -147,14 +150,6 @@ private theorem singular_representative (X : Mat) (a b : ℝ)
     push_cast
     field_simp [show (c : ℂ) ≠ 0 by exact_mod_cast hz]
     simp
-
-private theorem spectral_sum (A : Mat) :
-    A = ∑ i, A.H.eigenvalues i • rankOne (A.H.eigenvectorBasis i) := by
-  apply HermitianMat.ext
-  change A.mat = (∑ i, A.H.eigenvalues i • rankOne (A.H.eigenvectorBasis i)).mat
-  rw [HermitianMat.mat_finset_sum]
-  simp only [HermitianMat.mat_smul]
-  exact D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum A.mat A.H
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u g : V →ₗ[ℝ] ℝ}
@@ -449,8 +444,13 @@ theorem original_qutrit_singleton_incidence
         hIC hIT (v j) (Y.H.eigenvectorBasis.orthonormal.norm_eq_one j)⟩
     have hw (j : Fin 3) : (w j : V) ∈ J := (hIC _).mpr (rankOne_nonneg _)
     have hs : I Y = ∑ j, Y.H.eigenvalues j • (w j : V) := by
-      have h := congrArg I (spectral_sum Y)
-      simpa [w, v, map_sum, map_smul] using h
+      have hYsum : Y = ∑ j, Y.H.eigenvalues j • rankOne (v j) := by
+        apply HermitianMat.ext
+        change Y.mat = (∑ j, Y.H.eigenvalues j • rankOne (v j)).mat
+        rw [HermitianMat.mat_finset_sum]
+        simp only [HermitianMat.mat_smul]
+        exact D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum Y.mat Y.H
+      simpa [w, map_sum, map_smul] using congrArg I hYsum
     rw [Fin.sum_univ_three] at hs
     fin_cases i
     · change Y.H.eigenvalues 0 = 0 at hi'
