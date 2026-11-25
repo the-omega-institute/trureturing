@@ -68,8 +68,8 @@ internal sealed class ShiftedBinVarianceDocument : IScribeDocumentDefinition
     private static Formula Rounding()
     {
         var u = F.Id("u");
-        return Disp(Seq(Exists, Sp, u, InMacro, Sp, OpenBracket, D(0), Comma,
-            D(1), Close, Quad, Call("B", u), Leq, Add(F.Id("Q"), F.Id("R"))));
+        return Disp(Seq(Exists, Sp, u, Quad, D(0), Leq, Sp, u, Lt, D(1), Comma, Sp,
+            Call("B", u), Leq, Sp, Add(F.Id("Q"), F.Id("R"))));
     }
 
     private static Formula Parabolic()
@@ -80,9 +80,9 @@ internal sealed class ShiftedBinVarianceDocument : IScribeDocumentDefinition
         var eta = F.Id("eta");
         var rsq = new Formula.Power(r, D(2));
         var assumptions = Seq(Forall, Sp, F.Id("i"), InMacro, Sp, F.Id("S"), Comma, Sp,
-            D(0), Leq, Call("c", F.Id("i")), Quad, D(0), Lt, eta, Comma, Sp,
-            F.Id("D"), Leq, Multiply(F.Id("V"), w), Comma, Sp,
-            D(0), Lt, r, Comma, Sp, m, Leq, rsq);
+            D(0), Leq, Sp, Call("c", F.Id("i")), Quad, D(0), Lt, Sp, eta, Comma, Sp,
+            F.Id("D"), Leq, Sp, Multiply(F.Id("V"), w), Comma, Sp,
+            D(0), Lt, Sp, r, Comma, Sp, m, Leq, Sp, rsq);
         var lhs = Multiply(new Formula.Power(w, D(2)),
             new Formula.Power(Seq(Open, Subtract(D(1), new Formula.Fraction(m, rsq)), Close), D(2)));
         var factor = Subtract(new Formula.Fraction(Multiply(D(1, 6), r), D(1, 5)),

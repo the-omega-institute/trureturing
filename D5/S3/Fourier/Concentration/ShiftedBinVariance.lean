@@ -1,7 +1,7 @@
-/- GID: D5 / S3 / Fourier / Concentration / ShiftedBinVariance
+/- GID: D5/S3/Fourier/Concentration/ShiftedBinVariance
    generality: G
-   mirror - B: D5 / B / S3 / Fourier / Concentration / ShiftedBinVariance
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Fourier/Concentration/ShiftedBinVariance
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Common shifted rounding and a parabolic lattice test give a collision lower bound. -/
