@@ -139,26 +139,25 @@ end Block
 
 namespace Primality
 abbrev signature := Reg.Support.SingleDependentReadout.signature Unit
-  (fun _ => ℕ) (fun _ => Prop)
+  (fun _ => ℕ) (fun _ => ℕ)
 def actual : Realization signature :=
-  realize signature (fun _ _ p => p.Prime) (fun e => nomatch e)
+  realize signature (fun _ _ p => p) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {p : ℕ} {q : PrimeValue} {ls : List PrimeValue},
-    checkPrime p q ls = true → R.readout () () p
+    checkPrime p q ls = true → (R.readout () () p).Prime
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (p := 3) (q := two) (ls := [two]) (by decide)
-  change False at hh
-  exact hh
+  change Nat.Prime 0 at hh
+  exact Nat.not_prime_zero hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
-  change (Nat.Prime 0) ≠ (Nat.Prime 2)
-  intro h
-  exact Nat.not_prime_zero (Eq.mpr h Nat.prime_two)
+  change (0 : ℕ) ≠ 2
+  decide
 def family : Registration arena (type_of% @checkPrime_prime) where
   actual := actual
   bridge := Iff.rfl
@@ -181,7 +180,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p.Prime) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -191,10 +190,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
