@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
+  - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -173,6 +174,18 @@ product lower comparison. The related arXiv results 0802.1153,
 positive measures for fixed occurrences and a pinched comparison,
 respectively. Historical priority for the spectral result has not
 been established.
+
+## Sharp conditioning for four-copy Gram blocks
+
+For each positive integer p and each pair of distinct positive spectral
+values, let f and f' be the four-slot deficits with multiplicities
+three and one in the two orders. Let g be the deficit with multiplicities
+two and two. The spectral Gram block has diagonal f, f' and entry g/2
+off the diagonal. The repository proves that g² is strictly less than
+2ff' and that every smaller uniform constant fails for some p and pair
+of strictly positive values. The proof clears the geometric-sum
+denominators and checks the coefficient signs of the resulting
+exponential polynomial after subtracting a strictly positive term.
 
 ## Scope and conventions
 

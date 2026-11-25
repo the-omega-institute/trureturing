@@ -51,7 +51,7 @@ jobs:
     needs: pin
     runs-on: ubuntu-24.04-arm
     permissions:
-      contents: read
+      contents: write
       actions: read
     outputs:
       matrix: ${{ steps.shards.outputs.matrix }}
@@ -62,9 +62,20 @@ jobs:
           ref: ${{ needs.pin.outputs.source }}
           persist-credentials: false
       - run: python3 .github/scripts/install-tools.py
+      - id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean toolchain
+        uses: actions/cache@v5
+        continue-on-error: true
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Ensure the pinned Lean header parser is on PATH
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Plan changes by module prefix
         id: shards
         env:
+          STRATALINT_CACHE_WRITES: 'true'
           GH_TOKEN: ${{ github.token }}
           SHARD_MIB: ${{ inputs.shard_mib || vars.LEAN_MODULE_SHARD_MIB || 256 }}
         uses: ./.github/actions/lean-cache-shards
