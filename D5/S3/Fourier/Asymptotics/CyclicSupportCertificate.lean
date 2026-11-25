@@ -39,6 +39,27 @@ private theorem moment_det_nonneg {ι : Type*} [Fintype ι] (a x : ι → ℝ)
       mul_nonneg (mul_nonneg (ha i) (ha j)) (sq_nonneg _)
   linarith only [hn, pair_moment a x]
 
+theorem boundary_moment_elimination {ι : Type*} [Fintype ι]
+    (x : ι → ℝ) (T a b g : ℝ)
+    (hmass : ∑ i, (a + b * x i + g * x i ^ 2) = 0) :
+    let n : ℝ := Fintype.card ι
+    let s₁ := ∑ i, x i
+    let s₂ := ∑ i, x i ^ 2
+    let s₃ := ∑ i, x i ^ 3
+    let K := ∑ i, x i * (a + b * x i + g * x i ^ 2)
+    (n * s₂ - s₁ ^ 2) * (a + b * T + g * T ^ 2) =
+      (n * T - s₁) * K +
+        g * ((n * T - s₁) * (s₂ * T - s₃) - (s₁ * T - s₂) ^ 2) := by
+  intro n s₁ s₂ s₃ K
+  have hs₀ : n * a + s₁ * b + s₂ * g = 0 := by
+    simpa [n, s₁, s₂, sum_add_distrib, ← mul_sum, mul_comm] using hmass
+  have hs₁ : s₁ * a + s₂ * b + s₃ * g = K := by
+    have term (i : ι) : x i * (a + b * x i + g * x i ^ 2) =
+        x i * a + x i ^ 2 * b + x i ^ 3 * g := by ring
+    simp [K, term, sum_add_distrib, ← sum_mul, s₁, s₂, s₃]
+  rw [← hs₁]
+  linear_combination (s₂ - s₁ * T) * hs₀
+
 /-- A quadratic with nonnegative leading coefficient, zero total variation, and positive
 first-moment variation is strictly positive at the largest sampled level. -/
 theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : ι)
@@ -64,12 +85,6 @@ theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : �
   let s₃ : ℝ := ∑ i, x i ^ 3
   let T := x j
   let K := ∑ i, x i * (a + b * x i + g * x i ^ 2)
-  have h0 : count * a + s₁ * b + s₂ * g = 0 := by
-    simpa [count, s₁, s₂, sum_add_distrib, ← mul_sum, mul_comm] using hmass
-  have h1 : s₁ * a + s₂ * b + s₃ * g = K := by
-    have key (i : ι) : x i * (a + b * x i + g * x i ^ 2) =
-        x i * a + x i ^ 2 * b + x i ^ 3 * g := by ring
-    simp [K, key, sum_add_distrib, ← sum_mul, s₁, s₂, s₃]
   have he₀ : (∑ i, (T - x i)) = count * T - s₁ := by
     rw [sum_sub_distrib]
     congr 1
@@ -93,8 +108,8 @@ theorem boundary_variation_pos {ι : Type*} [Fintype ι] (x : ι → ℝ) (j : �
   have hidentity :
       (count * s₂ - s₁ ^ 2) * (a + b * T + g * T ^ 2) =
         (count * T - s₁) * K + g * ((count * T - s₁) * (s₂ * T - s₃) - (s₁ * T - s₂) ^ 2) := by
-    rw [← h1]
-    linear_combination (s₂ - s₁ * T) * h0
+    simpa only [count, sum_const, card_univ, nsmul_eq_mul, mul_one, s₁, s₂, s₃, T, K]
+      using boundary_moment_elimination x T a b g hmass
   change 0 < K at hmoment
   by_contra! h
   have hl := mul_nonpos_of_nonneg_of_nonpos hdet h
@@ -115,7 +130,7 @@ private theorem dualValue_convex (s a b g : ℝ) (hs : 0 < s) (hg : g ≤ 0) :
   nlinarith only [hsq, congrArg (fun z : ℝ => g * (u * x ^ 2 + v * y ^ 2) * z) huv,
     congrArg (fun z : ℝ => (a * s + b * s + g) * z) huv]
 
-private theorem dualValue_nonpos_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
+theorem dualValue_nonpos_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
     (hg : g ≤ 0) (hlo : lo ≤ c) (hhi : c ≤ hi)
     (hl : dualValue s a b g lo ≤ 0) (hh : dualValue s a b g hi ≤ 0) :
     dualValue s a b g c ≤ 0 := by
@@ -135,18 +150,15 @@ private theorem dualValue_nonpos_of_between {s a b g lo hi c : ℝ} (hs : 0 < s)
   exact h.trans (add_nonpos (mul_nonpos_of_nonneg_of_nonpos hu hl)
     (mul_nonpos_of_nonneg_of_nonpos hv hh))
 
-/-- The clipped quadratic with exact moment constraints uniquely minimizes squared mass.
-Nonpositive readings at the two bounding excluded levels imply nonpositive readings
-throughout the intervening interval. -/
-theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
-    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0)
-    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) ≤ 0)
-    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) ≤ 0)
-    (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
+/-- Exact moments and the signs of a quadratic dual certify the unique optimizer.
+A zero dual value off the support is allowed at a support transition. -/
+theorem exact_support_of_dual_nonpos {q : ℕ} [NeZero q] {threshold s a b g : ℝ}
+    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0) :
     let clip := fun y : ℝ => max 0 y
     let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
     let v := fun i : ZMod q => if i ∈ sites then p i else 0
     (∀ i ∈ sites, 0 < p i) →
+    (∀ i ∉ sites, p i ≤ 0) →
     (∑ i, v i) = 1 →
     cosineMoment 1 v = threshold →
     cosineMoment 2 v = threshold →
@@ -155,13 +167,11 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
       (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
       ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
         ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
-  intro clip p v hpos hmass hM₁ hM₂
+  intro clip p v hpos hoff hmass hM₁ hM₂
   have hv (i) : v i = max 0 (p i) := by
-    by_cases hi' : i ∈ sites
-    · simp [v, hi', max_eq_right (hpos i hi').le]
-    · have ⟨hl, hh⟩ := hbetween i hi'
-      have hn : p i ≤ 0 := dualValue_nonpos_of_between hs hg hl hh hlo hhi
-      simp [v, hi', max_eq_left hn]
+    by_cases hi : i ∈ sites
+    · simp [v, hi, max_eq_right (hpos i hi).le]
+    · simp [v, hi, max_eq_left (hoff i hi)]
   have hvf : v ∈ feasible q threshold :=
     ⟨fun i => hv i ▸ le_max_left _ _, hmass, hM₁.ge, hM₂.ge⟩
   have hdot (w : ZMod q → ℝ) (hw : ∑ i, w i = 1) :
@@ -208,5 +218,31 @@ theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : �
     exact (not_lt_of_ge (hmin hvf)) (hstrict w hw h)
   rw [he]
   by_cases hi' : i ∈ sites <;> simp [clip, v, hi', hpos, lt_max_iff]
+
+/-- The clipped quadratic with exact moment constraints uniquely minimizes squared mass.
+Nonpositive readings at the two bounding excluded levels imply nonpositive readings
+throughout the intervening interval. -/
+theorem exact_support_of_dual {q : ℕ} [NeZero q] {threshold s a b g lo hi : ℝ}
+    {sites : Finset (ZMod q)} (hs : 0 < s) (hb : b ≤ 0) (hg : g ≤ 0)
+    (hlo : a + b * (1 - lo) + g * ((1 - lo ^ 2) / s) ≤ 0)
+    (hhi : a + b * (1 - hi) + g * ((1 - hi ^ 2) / s) ≤ 0)
+    (hbetween : ∀ i ∉ sites, lo ≤ sample i ∧ sample i ≤ hi) :
+    let clip := fun y : ℝ => max 0 y
+    let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
+    let v := fun i : ZMod q => if i ∈ sites then p i else 0
+    (∀ i ∈ sites, 0 < p i) →
+    (∑ i, v i) = 1 →
+    cosineMoment 1 v = threshold →
+    cosineMoment 2 v = threshold →
+    v ∈ feasible q threshold ∧
+      (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
+      ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
+        ∀ i, 0 < clip (w i) ↔ i ∈ sites := by
+  intro clip p v hpos hmass hM₁ hM₂
+  refine exact_support_of_dual_nonpos hs hb hg hpos ?_ hmass hM₁ hM₂
+  intro i hi
+  obtain ⟨hl, hh⟩ := hbetween i hi
+  exact dualValue_nonpos_of_between hs hg hl hh hlo hhi
 
 end D5.S3.Fourier.Asymptotics.CyclicSupportCertificate

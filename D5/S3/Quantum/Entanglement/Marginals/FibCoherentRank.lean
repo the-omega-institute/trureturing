@@ -24,7 +24,7 @@ open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 namespace D5.S3.Quantum.Entanglement.Marginals.FibCoherentRank
 
-private theorem assemble_rank {n : Type} [Fintype n]
+theorem assemble_rank {n : Type} [Fintype n]
     (b : ℝ) (hb : b ≠ 0) (v : n → ℂ) (T : Matrix n n ℂ) :
     (assemble b v T).rank = (T - correction b v).rank + 1 := by
   classical
@@ -79,7 +79,7 @@ private theorem rational_middleRow {u v w z : ℂ}
   · exact qv
   · exact qz
 
-private theorem rational_pivot_of_trace {b : ℝ} {L : Matrix Bool Bool ℂ}
+theorem rational_pivot_of_trace {b : ℝ} {L : Matrix Bool Bool ℂ}
     (ht : L.trace + (b : ℂ) = 1) (qL : ∀ i j, RationalEntry (L i j)) :
     RationalEntry (b : ℂ) := by
   rw [show (b : ℂ) = 1 - L.trace by linear_combination ht]

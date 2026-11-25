@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
+  - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV67
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
@@ -145,6 +146,33 @@ the lower bound for the gap is zero.
 The repository theorem `wordMean_sub_balanced_ge` proves this sufficient
 neighborhood of the identity for the four-copy product lower comparison
 in [Hägele, arXiv:2611.00129](https://arxiv.org/abs/2611.00129v1).
+
+## Four copies of the second factor on singular three-value spectra
+
+For every positive integer `p`, let `A, B` be positive semidefinite
+matrices of any common finite complex size. Suppose the spectrum of
+`A` is contained in `{0, r, t}` for `0 < r < t`. Then the mean trace
+over the ordered words with `p` copies of `A` and four copies of `B`
+is at least `Tr((A^(p/4) B)^4)`. The spectral multiplicities and `B`
+are unrestricted.
+
+The cyclic four-gap expansion groups the difference into contractions
+with three positive semidefinite Gram matrices and nonnegative
+alternating traces. The Gram entries use finite geometric sums and
+balanced spectral powers. Five scalar polynomial inequalities give the
+Schur conditions. After substituting the middle-to-top spectral ratio
+and its `p/8) power as exponentials, each polynomial is a finite
+exponential sum. Exact integer checks certify all coefficients of the
+required initial-value polynomials in `p - 1`. The differential
+equations of the exponential factors propagate those signs for every
+nonnegative log gap.
+
+The argument addresses a spectral class of Hägele's four-copy
+product lower comparison. The related arXiv results 0802.1153,
+2611.12498 and 2610.31851 concern ordinary coefficient positivity,
+positive measures for fixed occurrences and a pinched comparison,
+respectively. Historical priority for the spectral result has not
+been established.
 
 ## Scope and conventions
 

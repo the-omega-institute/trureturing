@@ -211,6 +211,112 @@ def registration :
 
 end Dual
 
+namespace DualWeak
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {q : ℕ} [NeZero q] {threshold s a b g : ℝ}
+    {sites : Finset (ZMod q)} (_hs : 0 < s) (_hb : b ≤ 0) (_hg : g ≤ 0),
+    let clip := R.readout () ()
+    let p := fun i : ZMod q => a + b * (1 - sample i) + g * ((1 - sample i ^ 2) / s)
+    let v := fun i : ZMod q => if i ∈ sites then p i else 0
+    (∀ i ∈ sites, 0 < p i) →
+    (∀ i ∉ sites, p i ≤ 0) →
+    (∑ i, v i) = 1 →
+    cosineMoment 1 v = threshold →
+    cosineMoment 2 v = threshold →
+    v ∈ feasible q threshold ∧
+      (∀ w ∈ feasible q threshold, w ≠ v → energy v < energy w) ∧
+      (∀ w ∈ feasible q threshold, energy v + (∑ i, (w i - v i) ^ 2) ≤ energy w) ∧
+      ∀ w ∈ feasible q threshold, IsMinOn energy (feasible q threshold) w →
+        ∀ i, 0 < clip (w i) ↔ i ∈ sites
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let q := 1
+  have : NeZero q := ⟨by decide⟩
+  let sites : Finset (ZMod q) := univ
+  let v : ZMod q → ℝ := fun _ => 1
+  have hone (i : ZMod q) : i = 0 := Subsingleton.elim _ _
+  have hc (i : ZMod q) : sample i = 1 := by
+    rw [hone i]
+    simp [sample, centeredAngle]
+  have hM (r : ℕ) : cosineMoment r v = 1 := by
+    rw [cosineMoment_eq_centered]
+    have hzero (i : ZMod q) : centeredAngle i = 0 := by rw [hone i]; simp [centeredAngle]
+    simp only [v, hzero, mul_zero, Real.cos_zero, sum_const, nsmul_eq_mul,
+      card_univ, ZMod.card, Nat.cast_one, q, mul_one]
+  let p : ZMod q → ℝ := fun i => 1 + 0 * (1 - sample i) + (-2) * ((1 - sample i ^ 2) / 1)
+  have hp (i : ZMod q) : p i = 1 := by simp [p, hc]
+  have hv : (fun i : ZMod q => if i ∈ sites then p i else 0) = v := by
+    funext i
+    simpa only [sites, mem_univ, ite_true, v] using hp i
+  have hraw := h (q := q) (threshold := 1) (s := 1) (a := 1) (b := 0) (g := -2)
+    (sites := sites) (by norm_num) (by norm_num) (by norm_num)
+    (fun i _ => by change 0 < p i; rw [hp]; exact zero_lt_one)
+    (fun i hi => (hi (mem_univ i)).elim)
+    (by rw [hv]; simp only [v, sum_const, nsmul_eq_mul, card_univ, ZMod.card, q,
+      Nat.cast_one, mul_one]) (by rw [hv]; exact hM 1) (by rw [hv]; exact hM 2)
+  have hfit : v ∈ feasible q 1 := by
+    rw [← hv]
+    exact hraw.1
+  have hmin : IsMinOn energy (feasible q 1) v := by
+    intro w hw
+    by_cases he : w = v
+    · subst w
+      change energy v ≤ energy v
+      exact le_rfl
+    · have hlt := hraw.2.1 w hw (by rwa [hv])
+      rw [hv] at hlt
+      exact hlt.le
+  exact (lt_irrefl _) ((hraw.2.2.2 v hfit hmin 0).mpr (mem_univ _))
+
+def evidence : Registration arena (type_of% @exact_support_of_dual_nonpos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exact_support_of_dual_nonpos, rejected, rejected_law⟩
+  sensitivity := UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@exact_support_of_dual_nonpos) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.Asymptotics.CyclicSupportCertificate.DualWeak.unit
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CyclicSupportCertificate.DualWeak.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.Asymptotics.CyclicSupportCertificate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end DualWeak
+
 end
 
 end Reg.D5.S3.Fourier.Asymptotics.CyclicSupportCertificate

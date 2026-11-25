@@ -29,7 +29,7 @@ namespace D5.S3.Fourier.Asymptotics.CyclicEventualSupport
 
 set_option autoImplicit false
 
-private theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3) ℝ)
+theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3) ℝ)
     (hF : Function.Injective F.mulVec) : (Fᵀ * F).det ≠ 0 := by
   apply isUnit_iff_ne_zero.mp
   apply (isUnit_iff_isUnit_det _).mp
@@ -38,7 +38,7 @@ private theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3
   rw [← LinearMap.ker_eq_bot, ker_mulVecLin_transpose_mul_self, LinearMap.ker_eq_bot]
   exact hF
 
-private theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filter κ}
+theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filter κ}
     {s : κ → ℝ} (hs : Tendsto s l (𝓝 0))
     {E : κ → Matrix ι (Fin 3) ℝ} {E₀ : Matrix ι (Fin 3) ℝ} (hE : Tendsto E l (𝓝 E₀))
     (F₀ : Matrix ι (Fin 3) ℝ) (hF : Function.Injective F₀.mulVec)
@@ -98,20 +98,20 @@ private theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filte
     rw [smul_sub, smul_sub]
     abel
 
-private def signedCos (back : Bool) (z h : ℝ) : ℝ :=
+def signedCos (back : Bool) (z h : ℝ) : ℝ :=
   if back then -Real.cos (z * h) else Real.cos (z * h)
 
-private def baseRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
+def baseRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
   ![1, if back then 2 else 0, z ^ 2]
 
-private def variationRow (back : Bool) (z h : ℝ) : Fin 3 → ℝ :=
+def variationRow (back : Bool) (z h : ℝ) : Fin 3 → ℝ :=
   ![0, if back then -cosineSecond z h else cosineSecond z h,
     -2 * cosineFourth z h - cosineSecond z h ^ 2]
 
-private def limitRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
+def limitRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
   ![0, if back then -z ^ 2 / 2 else z ^ 2 / 2, -z ^ 4 / 3]
 
-private theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
+theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
     (ht : Tendsto h l (𝓝 0)) (hn : ∀ᶠ k in l, h k ≠ 0) (back : Bool) (z : ℝ) :
     Tendsto (fun k => variationRow back z (h k)) l (𝓝 (limitRow back z)) := by
   have hc := cosineSecond_tendsto ht hn z
@@ -129,7 +129,7 @@ private theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → �
     · simpa [variationRow, limitRow, neg_div] using hc.neg
   · simpa [variationRow, limitRow] using hlast
 
-private theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
+theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
     baseRow back z + (h ^ 2) • variationRow back z h =
       ![1, 1 - signedCos back z h, (1 - signedCos back z h ^ 2) / h ^ 2] := by
   have hd := cosineSecond_eq z hn
@@ -145,13 +145,13 @@ private theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
   · cases back <;> simp [baseRow, variationRow, signedCos, he] <;>
       field_simp [hn] <;> linear_combination -2 * h ^ 2 * hx
 
-private theorem dot_three (a b c : ℝ) (v : Fin 3 → ℝ) :
+theorem dot_three (a b c : ℝ) (v : Fin 3 → ℝ) :
     ![a, b, c] ⬝ᵥ v = a * v 0 + b * v 1 + c * v 2 := by
   simp [dotProduct, Fin.sum_univ_succ, add_assoc]
 
-private def leading (t Z d : ℝ) : Fin 3 → ℝ := ![t / Z, -(t - d ^ 2) / (2 * Z), -1 / Z]
+def leading (t Z d : ℝ) : Fin 3 → ℝ := ![t / Z, -(t - d ^ 2) / (2 * Z), -1 / Z]
 
-private theorem base_dot (t Z d z : ℝ) (hZ : Z ≠ 0) (back : Bool) :
+theorem base_dot (t Z d z : ℝ) (hZ : Z ≠ 0) (back : Bool) :
     baseRow back z ⬝ᵥ leading t Z d = if back then (d ^ 2 - z ^ 2) / Z else (t - z ^ 2) / Z := by
   cases back <;> simp [baseRow, leading] <;> field_simp [hZ] <;> ring
 
@@ -161,7 +161,7 @@ private theorem polynomial_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) (
   rw [row_eq back z hn, dot_three]
   ring
 
-private theorem polynomial_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
+theorem polynomial_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
     (ht : Tendsto h l (𝓝 0)) (hn : ∀ᶠ k in l, h k ≠ 0)
     {v : κ → Fin 3 → ℝ} {v₀ : Fin 3 → ℝ} (hv : Tendsto v l (𝓝 v₀)) (back : Bool) (z : ℝ) :
     Tendsto (fun k => v k 0 + v k 1 * (1 - signedCos back z (h k)) +
@@ -175,11 +175,11 @@ private theorem polynomial_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
   filter_upwards [hn] with k hk
   exact polynomial_eq back z hk (v k)
 
-private def phaseRow {ι η : Type*} (x : ι → ℝ) (d : ℝ)
+def phaseRow {ι η : Type*} (x : ι → ℝ) (d : ℝ)
     (f : Bool → ℝ → Fin 3 → ℝ) : Matrix (ι ⊕ η) (Fin 3) ℝ :=
   fun i => i.elim (fun j => f false (x j)) (fun _ => f true d)
 
-private theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (d : ℝ)
+theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (d : ℝ)
     (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1) :
     Function.Injective (phaseRow (η := η) x d baseRow).mulVec := by
   intro a b hab
@@ -210,7 +210,7 @@ private theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (
   · exact e₁
   · exact e₂
 
-private theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
+theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
     (x : ι → ℝ) (d : ℝ) (f : Bool → ℝ → Fin 3 → ℝ) (v : ι ⊕ η → ℝ) (j : Fin 3) :
     ((phaseRow x d f)ᵀ *ᵥ v) j =
       (∑ i : ι, f false (x i) j * v (Sum.inl i)) + ∑ i : η, f true d j * v (Sum.inr i) := by
@@ -218,33 +218,19 @@ private theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
   rw [Fintype.sum_sum_type]
   rfl
 
-private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Nonempty η]
-    {l : Filter κ} {h : κ → ℝ} (ht : Tendsto h l (𝓝 0)) (hp : ∀ᶠ k in l, 0 < h k)
-    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z) (hm : 0 < m)
-    (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1)
-    (hx : ∀ i, x i ^ 2 ≤ t) (hboundary : (∃ i, x i ^ 2 = t) → d ^ 2 < m)
+theorem phase_leading_moments {ι η : Type*} [Fintype ι] [Fintype η]
+    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z)
     (hW : ∑ i, (t - x i ^ 2) / Z = 1)
     (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m) :
-    let F := fun k => phaseRow (η := η) x d fun back z =>
-      ![1, 1 - signedCos back z (h k), (1 - signedCos back z (h k) ^ 2) / h k ^ 2]
-    ∃ a : κ → Fin 3 → ℝ, Tendsto a l (𝓝 (leading t Z d)) ∧
-      ∀ᶠ k in l, (F k)ᵀ *ᵥ (F k *ᵥ a k) = ![1, 2 * m * h k ^ 2, m] ∧
-        ∀ i, 0 < (F k *ᵥ a k) i := by
-  intro F
+    let F₀ := phaseRow (η := η) x d baseRow
+    let w := F₀ *ᵥ leading t Z d
+    let W := fun i => (t - x i ^ 2) / Z
+    (∀ i : ι, w (Sum.inl i) = W i) ∧
+    (∀ i : η, w (Sum.inr i) = 0) ∧ F₀ᵀ *ᵥ w = ![1, 0, m] := by
   let F₀ := phaseRow (η := η) x d baseRow
-  let E := fun k => phaseRow (η := η) x d fun back z => variationRow back z (h k)
-  let E₀ := phaseRow (η := η) x d limitRow
   let a₀ := leading t Z d
   let w := F₀ *ᵥ a₀
-  let s := fun k => h k ^ 2
-  let b₁ : Fin 3 → ℝ := ![0, 2 * m, 0]
   let W := fun i => (t - x i ^ 2) / Z
-  have hn := hp.mono fun _ hk => hk.ne'
-  have hE : Tendsto E l (𝓝 E₀) := by
-    refine tendsto_pi_nhds.mpr fun i => ?_
-    cases i with
-    | inl i => exact variationRow_tendsto ht hn false (x i)
-    | inr i => exact variationRow_tendsto ht hn true d
   have hwf (i : ι) : w (Sum.inl i) = W i := by
     simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inl, a₀, W, Bool.false_eq_true,
       ite_false] using base_dot t Z d (x i) hZ.ne' false
@@ -260,13 +246,33 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
         F₀, phaseRow, baseRow, hwb]
     · simpa [Matrix.mulVec, dotProduct, transpose_apply, Fintype.sum_sum_type,
         F₀, phaseRow, baseRow, hwf, hwb, W] using hX
-  obtain ⟨u, u₀, hu, hlimit, heq⟩ :=
-    gram_variation (ht.pow 2 |>.congr' (Eventually.of_forall fun _ => rfl) |>.trans
-      (by simp)) hE F₀ (phase_injective x d i₀ i₁ h₀ h₁) a₀ b₁
-  let a := fun k => a₀ + s k • u k
-  let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
-  have ha : Tendsto a l (𝓝 a₀) := by
-    simpa [s] using tendsto_const_nhds.add ((ht.pow 2).smul hu)
+  exact ⟨hwf, hwb, hbase⟩
+
+theorem phase_first_variation_moments {ι η : Type*} [Fintype ι] [Fintype η]
+    [Nonempty η] (x : ι → ℝ) (d t Z m : ℝ) (hZ : Z ≠ 0)
+    (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m)
+    (u₀ : Fin 3 → ℝ) :
+    let F₀ := phaseRow (η := η) x d baseRow
+    let E₀ := phaseRow (η := η) x d limitRow
+    let a₀ := leading t Z d
+    let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
+    let w := F₀ *ᵥ a₀
+    let W := fun i => (t - x i ^ 2) / Z
+    let m₄ := ∑ i, (x i ^ 2) ^ 2 * W i
+    F₀ᵀ *ᵥ r = ![0, 2 * m, 0] - E₀ᵀ *ᵥ w →
+    (∀ i : ι, r (Sum.inl i) =
+      u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2) ∧
+    (∑ i : η, r (Sum.inr i)) = 3 * m / 4 ∧
+    (∑ i : ι, r (Sum.inl i)) = -(3 * m / 4) ∧
+    (∑ i : ι, x i ^ 2 * r (Sum.inl i)) = m₄ / 3 - d ^ 2 * (3 * m / 4) ∧
+    (∀ i : η, (Fintype.card η : ℝ) * r (Sum.inr i) = 3 * m / 4) := by
+  intro F₀ E₀ a₀ r w W m₄ hlimit
+  have hwf (i : ι) : w (Sum.inl i) = W i := by
+    simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inl, a₀, W, Bool.false_eq_true,
+      ite_false] using base_dot t Z d (x i) hZ false
+  have hwb (i : η) : w (Sum.inr i) = 0 := by
+    simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inr, a₀, ite_true, sub_self, zero_div]
+      using base_dot t Z d d hZ true
   have hrf (i : ι) : r (Sum.inl i) =
       u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2 := by
     change (![0, x i ^ 2 / 2, -x i ^ 4 / 3] ⬝ᵥ a₀) +
@@ -274,13 +280,10 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
     rw [dot_three, dot_three]
     have ha₂ : a₀ 2 = -1 / Z := rfl
     rw [ha₂]
-    field_simp [hZ.ne']
+    field_simp [hZ]
     ring
   let μ := ∑ i : η, r (Sum.inr i)
-  let m₄ := ∑ i : ι, (x i ^ 2) ^ 2 * W i
-  have hm₄ : 0 ≤ m₄ :=
-    sum_nonneg fun i _ => mul_nonneg (sq_nonneg _) (div_nonneg (sub_nonneg.mpr (hx i)) hZ.le)
-  have hl : F₀ᵀ *ᵥ r = b₁ - E₀ᵀ *ᵥ w := hlimit
+  have hl := hlimit
   have hμ : μ = 3 * m / 4 := by
     have h := congrFun hl (1 : Fin 3)
     change ((phaseRow x d baseRow)ᵀ *ᵥ r) 1 =
@@ -320,11 +323,69 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
       rfl
     rw [he, neg_neg] at h
     exact eq_sub_of_add_eq h
-  have hrb (i : η) : 0 < r (Sum.inr i) := by
+  refine ⟨hrf, hμ, hsum_r.trans (congrArg Neg.neg hμ), ?_, ?_⟩
+  · rw [hmoment_r, hμ]
+  · intro i
     have hconst (j : η) : r (Sum.inr j) = r (Sum.inr i) := rfl
     have h : μ = (Fintype.card η : ℝ) * r (Sum.inr i) := by simp [μ, hconst]
-    have hm' : 0 < μ := by rw [hμ]; positivity
-    exact pos_of_mul_pos_right (h ▸ hm') (Nat.cast_nonneg _)
+    exact h.symm.trans hμ
+
+private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Nonempty η]
+    {l : Filter κ} {h : κ → ℝ} (ht : Tendsto h l (𝓝 0)) (hp : ∀ᶠ k in l, 0 < h k)
+    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z) (hm : 0 < m)
+    (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1)
+    (hx : ∀ i, x i ^ 2 ≤ t) (hboundary : (∃ i, x i ^ 2 = t) → d ^ 2 < m)
+    (hW : ∑ i, (t - x i ^ 2) / Z = 1)
+    (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m) :
+    let F := fun k => phaseRow (η := η) x d fun back z =>
+      ![1, 1 - signedCos back z (h k), (1 - signedCos back z (h k) ^ 2) / h k ^ 2]
+    ∃ a : κ → Fin 3 → ℝ, Tendsto a l (𝓝 (leading t Z d)) ∧
+      ∀ᶠ k in l, (F k)ᵀ *ᵥ (F k *ᵥ a k) = ![1, 2 * m * h k ^ 2, m] ∧
+        ∀ i, 0 < (F k *ᵥ a k) i := by
+  intro F
+  let F₀ := phaseRow (η := η) x d baseRow
+  let E := fun k => phaseRow (η := η) x d fun back z => variationRow back z (h k)
+  let E₀ := phaseRow (η := η) x d limitRow
+  let a₀ := leading t Z d
+  let w := F₀ *ᵥ a₀
+  let s := fun k => h k ^ 2
+  let b₁ : Fin 3 → ℝ := ![0, 2 * m, 0]
+  let W := fun i => (t - x i ^ 2) / Z
+  have hn := hp.mono fun _ hk => hk.ne'
+  have hE : Tendsto E l (𝓝 E₀) := by
+    refine tendsto_pi_nhds.mpr fun i => ?_
+    cases i with
+    | inl i => exact variationRow_tendsto ht hn false (x i)
+    | inr i => exact variationRow_tendsto ht hn true d
+  obtain ⟨hwf, hwb, hbase⟩ := phase_leading_moments (η := η) x d t Z m hZ hW hX
+  change ∀ i : ι, w (Sum.inl i) = W i at hwf
+  change ∀ i : η, w (Sum.inr i) = 0 at hwb
+  change F₀ᵀ *ᵥ w = ![1, 0, m] at hbase
+  obtain ⟨u, u₀, hu, hlimit, heq⟩ :=
+    gram_variation (ht.pow 2 |>.congr' (Eventually.of_forall fun _ => rfl) |>.trans
+      (by simp)) hE F₀ (phase_injective x d i₀ i₁ h₀ h₁) a₀ b₁
+  let a := fun k => a₀ + s k • u k
+  let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
+  have ha : Tendsto a l (𝓝 a₀) := by
+    simpa [s] using tendsto_const_nhds.add ((ht.pow 2).smul hu)
+  let μ := ∑ i : η, r (Sum.inr i)
+  let m₄ := ∑ i : ι, (x i ^ 2) ^ 2 * W i
+  obtain ⟨hrf, hμ, hsum, hmoment, hback⟩ :=
+    phase_first_variation_moments (η := η) x d t Z m hZ.ne' hX u₀ hlimit
+  change ∀ i : ι, r (Sum.inl i) =
+    u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2 at hrf
+  change μ = 3 * m / 4 at hμ
+  change (∑ i : ι, r (Sum.inl i)) = -(3 * m / 4) at hsum
+  change (∑ i : ι, x i ^ 2 * r (Sum.inl i)) = m₄ / 3 - d ^ 2 * (3 * m / 4) at hmoment
+  change ∀ i : η, (Fintype.card η : ℝ) * r (Sum.inr i) = 3 * m / 4 at hback
+  have hsum_r : ∑ i : ι, r (Sum.inl i) = -μ := by rw [hsum, hμ]
+  have hmoment_r : ∑ i : ι, x i ^ 2 * r (Sum.inl i) = m₄ / 3 - d ^ 2 * μ := by
+    rw [hmoment, hμ]
+  have hm₄ : 0 ≤ m₄ :=
+    sum_nonneg fun i _ => mul_nonneg (sq_nonneg _) (div_nonneg (sub_nonneg.mpr (hx i)) hZ.le)
+  have hrb (i : η) : 0 < r (Sum.inr i) := by
+    have h : 0 < (Fintype.card η : ℝ) * r (Sum.inr i) := by rw [hback]; positivity
+    exact pos_of_mul_pos_right h (Nat.cast_nonneg _)
   have hrFront (i : ι) (hi : x i ^ 2 = t) : 0 < r (Sum.inl i) := by
     have hmax (j : ι) : x j ^ 2 ≤ x i ^ 2 := hi ▸ hx j
     have htpos : 0 < t := by have he := hx i₁; rw [h₁] at he; norm_num at he; linarith
@@ -400,11 +461,11 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
   funext j
   fin_cases j <;> simp [b₁, mul_comm, mul_left_comm]
 
-private abbrev Front (n : ℕ) := ↥(Icc (-(n : ℤ)) (n : ℤ))
+abbrev Front (n : ℕ) := ↥(Icc (-(n : ℤ)) (n : ℤ))
 
-private abbrev Back (odd : Bool) := Fin (if odd then 2 else 1)
+abbrev Back (odd : Bool) := Fin (if odd then 2 else 1)
 
-private instance back_nonempty (odd : Bool) : Nonempty (Back odd) :=
+instance back_nonempty (odd : Bool) : Nonempty (Back odd) :=
   ⟨⟨0, by cases odd <;> decide⟩⟩
 
 private def backRep (odd : Bool) (k : ℕ) (i : Back odd) : ℤ :=
@@ -442,7 +503,7 @@ private theorem backRep_inj {odd : Bool} {k : ℕ} (hk : 0 < k) :
 private def gridRep (n : ℕ) (odd : Bool) (k : ℕ) : Front n ⊕ Back odd → ℤ :=
   Sum.elim Subtype.val (backRep odd k)
 
-private theorem gridRep_centered {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
+theorem gridRep_centered {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : Front n ⊕ Back odd) :
     ((gridRep n odd k i : ℤ) : ZMod (parityModulus odd k)).valMinAbs = gridRep n odd k i := by
   cases i with
@@ -454,7 +515,7 @@ private theorem gridRep_centered {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
   | inr i =>
     exact (ZMod.valMinAbs_spec _ _).2 ⟨rfl, backRep_bounds odd k i⟩
 
-private def gridEmbedding {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k) :
+def gridEmbedding {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k) :
     (Front n ⊕ Back odd) ↪ ZMod (parityModulus odd k) where
   toFun i := (gridRep n odd k i : ZMod (parityModulus odd k))
   inj' := by
@@ -485,12 +546,12 @@ private def gridEmbedding {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k) :
         omega
       | inr j => exact congrArg Sum.inr (backRep_inj (by omega) h)
 
-private theorem sample_eq_abs {q : ℕ} [NeZero q] (i : ZMod q) :
+theorem sample_eq_abs {q : ℕ} [NeZero q] (i : ZMod q) :
     sample i = Real.cos ((i.valMinAbs.natAbs : ℝ) * mesh q) := by
   rw [sample, centeredAngle_eq_mesh, ← Real.cos_abs ((i.valMinAbs : ℝ) * mesh q), abs_mul,
     abs_of_pos mesh_pos, ← Int.cast_abs, Int.abs_eq_natAbs, Int.cast_natCast]
 
-private theorem sample_antipode_iff {q : ℕ} [NeZero q] (i : ZMod q) :
+theorem sample_antipode_iff {q : ℕ} [NeZero q] (i : ZMod q) :
     sample i = sample ((↑(q / 2) : ℤ) : ZMod q) ↔ i.valMinAbs.natAbs = q / 2 := by
   have hj := (ZMod.valMinAbs_spec (((q / 2 : ℕ) : ℤ) : ZMod q) ((q / 2 : ℕ) : ℤ)).mpr
     ⟨rfl, by have := NeZero.pos q; omega, by omega⟩
@@ -506,7 +567,7 @@ private theorem sample_antipode_iff {q : ℕ} [NeZero q] (i : ZMod q) :
   · intro h
     rw [h]
 
-private theorem grid_mem {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
+theorem grid_mem {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : ZMod (parityModulus odd k)) :
     i ∈ (univ : Finset (Front n ⊕ Back odd)).map (gridEmbedding hk) ↔
       i.valMinAbs.natAbs ≤ n ∨
@@ -554,6 +615,12 @@ private theorem grid_mem {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
           change ((backRep true k j : ℤ) : ZMod _) = i
           rw [hj, ZMod.coe_valMinAbs]
 
+theorem back_grid_natAbs {n k : ℕ} {odd : Bool} (hk : n < k) (j : Back odd) :
+    (gridEmbedding hk (Sum.inr j)).valMinAbs.natAbs = parityModulus odd k / 2 := by
+  have hj := gridRep_centered (n := n) hk (Sum.inr j)
+  change (gridEmbedding hk (Sum.inr j)).valMinAbs = backRep odd k j at hj
+  rw [hj, natAbs_backRep]
+
 private theorem grid_sample {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : Front n ⊕ Back odd) :
     sample (gridEmbedding hk i) = i.elim
@@ -566,14 +633,11 @@ private theorem grid_sample {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     rw [sample, centeredAngle_eq_mesh, hj]
     rfl
   | inr j =>
-    have h : (gridEmbedding hk (.inr j)).valMinAbs.natAbs = parityModulus odd k / 2 := by
-      have hj := gridRep_centered (n := n) hk (Sum.inr j)
-      change (gridEmbedding hk (Sum.inr j)).valMinAbs = backRep odd k j at hj
-      rw [hj, natAbs_backRep]
+    have h := back_grid_natAbs hk j
     rw [(sample_antipode_iff _).mpr h, sample_antipode, parity_offset]
     rfl
 
-private theorem sample_between {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
+theorem sample_between {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : ZMod (parityModulus odd k))
     (hi : i ∉ (univ : Finset (Front n ⊕ Back odd)).map (gridEmbedding hk)) :
     let h := mesh (parityModulus odd k)
@@ -630,7 +694,7 @@ private theorem window_iff {n : ℕ} {t : ℝ} (hlo : (n : ℝ) ^ 2 ≤ t)
     have h : (j.natAbs : ℝ) ≤ n := by exact_mod_cast hj
     exact ((sq_le_sq₀ (Nat.cast_nonneg j.natAbs) (Nat.cast_nonneg n)).2 h).trans hlo
 
-private theorem lattice_window_sums {n : ℕ} {t Z m : ℝ} {w : ℤ → ℝ}
+theorem lattice_window_sums {n : ℕ} {t Z m : ℝ} {w : ℤ → ℝ}
     (act : Activation m n t Z w) (hhi : t < ((n : ℝ) + 1) ^ 2) :
     (∑ i : Front n, (t - (i.1 : ℝ) ^ 2) / Z) = 1 ∧
       (∑ i : Front n, (i.1 : ℝ) ^ 2 * ((t - (i.1 : ℝ) ^ 2) / Z)) = m := by
@@ -666,17 +730,79 @@ private def supportStatement (q : ℕ) [NeZero q] (a t : ℝ) : Prop :=
   ∀ v ∈ feasible q a, IsMinOn energy (feasible q a) v → ∀ i : ZMod q,
     0 < v i ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j
 
-private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 < n)
-    {t Z : ℝ} {w : ℤ → ℝ}
-    (act : Activation (lam / (8 * Real.pi ^ 2)) n t Z w)
+theorem grid_fit_moments {n k : ℕ} {odd : Bool} (hk : n < k)
+    (a : Fin 3 → ℝ) (m : ℝ) :
+    let q := parityModulus odd k
+    let h := mesh q
+    let emb := gridEmbedding (odd := odd) hk
+    let sites := (univ : Finset (Front n ⊕ Back odd)).map emb
+    let F := phaseRow (η := Back odd) (fun i : Front n => (i.1 : ℝ)) (parityOffset odd)
+      fun back z => ![1, 1 - signedCos back z h, (1 - signedCos back z h ^ 2) / h ^ 2]
+    let p := fun i : ZMod q =>
+      a 0 + a 1 * (1 - sample i) + a 2 * ((1 - sample i ^ 2) / h ^ 2)
+    let v := fun i : ZMod q => if i ∈ sites then p i else 0
+    Fᵀ *ᵥ (F *ᵥ a) = ![1, 2 * m * h ^ 2, m] →
+    (∀ j : Front n ⊕ Back odd, (F *ᵥ a) j = p (emb j)) ∧
+    (∑ i, v i) = 1 ∧ cosineMoment 1 v = 1 - 2 * m * h ^ 2 ∧
+      cosineMoment 2 v = 1 - 2 * m * h ^ 2 := by
+  intro q h emb sites F p v heq
+  have hsite (j : Front n ⊕ Back odd) : emb j ∈ sites := mem_map_of_mem _ (mem_univ _)
+  have hsample (j : Front n ⊕ Back odd) :
+      F j = ![1, 1 - sample (emb j), (1 - sample (emb j) ^ 2) / h ^ 2] := by
+    rw [grid_sample hk j]
+    cases j <;> rfl
+  have hrow (j : Front n ⊕ Back odd) : (F *ᵥ a) j = p (emb j) := by
+    change F j ⬝ᵥ a = p (emb j)
+    rw [hsample, dot_three]
+    dsimp only [p]
+    ring
+  have hsum (f : ZMod q → ℝ) :
+      (∑ i, f i * v i) = ∑ j, f (emb j) * (F *ᵥ a) j := by
+    rw [← sum_subset (subset_univ sites) (by
+      intro i _ hi
+      simp [v, hi])]
+    rw [sum_map]
+    apply sum_congr rfl
+    intro j _
+    simp only [v, hsite, ite_true, hrow]
+  have hmoment (j : Fin 3) :
+      (∑ i : ZMod q, ![1, 1 - sample i, (1 - sample i ^ 2) / h ^ 2] j * v i) =
+        ![1, 2 * m * h ^ 2, m] j := by
+    rw [hsum]
+    exact (sum_congr rfl fun i _ => by rw [← hsample]; rfl).trans (congrFun heq j)
+  have hvMass : ∑ i, v i = 1 := by
+    have hmass := hmoment 0
+    change (∑ i, 1 * v i) = 1 at hmass
+    simpa only [one_mul] using hmass
+  have hd₁ : ∑ i, v i * (1 - sample i) = 2 * m * h ^ 2 := by
+    have he₁ := hmoment 1
+    change (∑ i, (1 - sample i) * v i) = 2 * m * h ^ 2 at he₁
+    simpa only [mul_comm] using he₁
+  have hd₂ : ∑ i, v i * (1 - sample i ^ 2) = m * h ^ 2 := by
+    have he₂ := hmoment 2
+    change (∑ i, ((1 - sample i ^ 2) / h ^ 2) * v i) = m at he₂
+    simp_rw [div_mul_eq_mul_div, mul_comm (1 - sample _ ^ 2), ← sum_div] at he₂
+    exact (div_eq_iff (pow_ne_zero _ (mesh_pos (q := q)).ne')).mp he₂
+  obtain ⟨hD₁, hD₂⟩ := sum_sample_deficits hvMass
+  exact ⟨hrow, hvMass, by linarith only [hd₁, hD₁], by linarith only [hd₂, hD₂]⟩
+
+theorem grid_fit_on_parity (m : ℝ) (hm : 0 < m) {n : ℕ} (hn : 0 < n)
+    {t Z : ℝ} {w : ℤ → ℝ} (act : Activation m n t Z w)
     (hhi : t < ((n : ℝ) + 1) ^ 2) (odd : Bool) :
-    ∀ᶠ k in atTop, supportStatement (parityModulus odd k)
-      (1 - lam / (parityModulus odd k : ℝ) ^ 2) t := by
-  let m := lam / (8 * Real.pi ^ 2)
+    ∀ᶠ k in atTop, ∃ hk : n < k, ∃ a : Fin 3 → ℝ,
+      let h := mesh (parityModulus odd k)
+      let q := parityModulus odd k
+      let d := parityOffset odd
+      let sites := (univ : Finset (Front n ⊕ Back odd)).map (gridEmbedding hk)
+      let p := fun c : ℝ => a 0 + a 1 * (1 - c) + a 2 * ((1 - c ^ 2) / h ^ 2)
+      let v := fun i : ZMod q => if i ∈ sites then p (sample i) else 0
+      a 1 < 0 ∧ a 2 < 0 ∧ p (signedCos true (d + 1) h) < 0 ∧
+      p (signedCos false ((n : ℝ) + 1) h) < 0 ∧
+      (∀ i ∈ sites, 0 < p (sample i)) ∧ (∑ i, v i) = 1 ∧
+      cosineMoment 1 v = 1 - 2 * m * h ^ 2 ∧ cosineMoment 2 v = 1 - 2 * m * h ^ 2 := by
   let d := parityOffset odd
   let h := fun k => mesh (parityModulus odd k)
   let x := fun i : Front n => (i.1 : ℝ)
-  have hm : 0 < m := div_pos hlam (by positivity)
   let i₀ : Front n := ⟨0, mem_Icc.mpr (by omega)⟩
   let i₁ : Front n := ⟨1, mem_Icc.mpr (by omega)⟩
   have hx (i : Front n) : x i ^ 2 ≤ t := by
@@ -729,69 +855,43 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
   have hex₂ := hhi'.eventually (eventually_lt_nhds
     (div_neg_of_neg_of_pos (sub_neg.mpr hhi) act.normalizer_pos))
   filter_upwards [eventually_gt_atTop n, he, hb, hg, hex₁, hex₂] with k hk heq hkB hkG hLo hHi
+  refine ⟨hk, a k, hkB, hkG, hLo, hHi, ?_⟩
+  obtain ⟨hrow, hmass, hM₁, hM₂⟩ := grid_fit_moments (odd := odd) hk (a k) m heq.1
+  refine ⟨?_, hmass, hM₁, hM₂⟩
+  intro i hi
+  obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hi
+  exact (hrow j) ▸ heq.2 j
+
+private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 < n)
+    {t Z : ℝ} {w : ℤ → ℝ}
+    (act : Activation (lam / (8 * Real.pi ^ 2)) n t Z w)
+    (hhi : t < ((n : ℝ) + 1) ^ 2) (odd : Bool) :
+    ∀ᶠ k in atTop, supportStatement (parityModulus odd k)
+      (1 - lam / (parityModulus odd k : ℝ) ^ 2) t := by
+  let m := lam / (8 * Real.pi ^ 2)
+  let d := parityOffset odd
+  let h := fun k => mesh (parityModulus odd k)
+  have hm : 0 < m := div_pos hlam (by positivity)
+  filter_upwards [grid_fit_on_parity m hm hn act hhi odd] with k hfit
+  obtain ⟨hk, a, hkB, hkG, hLo, hHi, hposSite, hvMass, hfit₁, hfit₂⟩ := hfit
   let q := parityModulus odd k
   let threshold := 1 - lam / (q : ℝ) ^ 2
   let emb := gridEmbedding (odd := odd) hk
   let sites := (univ : Finset (Front n ⊕ Back odd)).map emb
-  let F := phaseRow (η := Back odd) x d fun back z =>
-    ![1, 1 - signedCos back z (h k), (1 - signedCos back z (h k) ^ 2) / h k ^ 2]
   let p : ZMod q → ℝ := fun i =>
-    a k 0 + a k 1 * (1 - sample i) + a k 2 * ((1 - sample i ^ 2) / h k ^ 2)
+    a 0 + a 1 * (1 - sample i) + a 2 * ((1 - sample i ^ 2) / h k ^ 2)
   let v : ZMod q → ℝ := fun i => if i ∈ sites then p i else 0
-  have hsite (j : Front n ⊕ Back odd) : emb j ∈ sites := mem_map_of_mem _ (mem_univ _)
-  have hsample (j : Front n ⊕ Back odd) :
-      F j = ![1, 1 - sample (emb j), (1 - sample (emb j) ^ 2) / h k ^ 2] := by
-    rw [grid_sample hk j]
-    cases j <;> rfl
-  have hrow (j : Front n ⊕ Back odd) : (F *ᵥ a k) j = p (emb j) := by
-    change F j ⬝ᵥ a k = p (emb j)
-    rw [hsample, dot_three]
-    dsimp only [p]
-    ring
-  have hposSite (i : ZMod q) (hi : i ∈ sites) : 0 < p i := by
-    obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hi
-    rw [← hrow]
-    exact heq.2 j
-  have hsum (f : ZMod q → ℝ) :
-      (∑ i, f i * v i) = ∑ j, f (emb j) * (F *ᵥ a k) j := by
-    rw [← sum_subset (subset_univ sites) (by
-      intro i _ hi
-      simp [v, hi])]
-    rw [sum_map]
-    apply sum_congr rfl
-    intro j _
-    simp only [v, hsite, ite_true, hrow]
-  have hmoment (j : Fin 3) :
-      (∑ i : ZMod q, ![1, 1 - sample i, (1 - sample i ^ 2) / h k ^ 2] j * v i) =
-        ![1, 2 * m * h k ^ 2, m] j := by
-    rw [hsum]
-    exact (sum_congr rfl fun i _ => by rw [← hsample]; rfl).trans (congrFun heq.1 j)
-  have hvMass : ∑ i, v i = 1 := by
-    have hmass := hmoment 0
-    change (∑ i, 1 * v i) = 1 at hmass
-    simpa only [one_mul] using hmass
-  have hd₁ : ∑ i, v i * (1 - sample i) = 2 * m * h k ^ 2 := by
-    have he₁ := hmoment 1
-    change (∑ i, (1 - sample i) * v i) = 2 * m * h k ^ 2 at he₁
-    simpa only [mul_comm] using he₁
-  have hd₂ : ∑ i, v i * (1 - sample i ^ 2) = m * h k ^ 2 := by
-    have he₂ := hmoment 2
-    change (∑ i, ((1 - sample i ^ 2) / h k ^ 2) * v i) = m at he₂
-    simp_rw [div_mul_eq_mul_div, mul_comm (1 - sample _ ^ 2), ← sum_div] at he₂
-    exact (div_eq_iff (pow_ne_zero _ (mesh_pos (q := q)).ne')).mp he₂
+  change (∑ i, v i) = 1 at hvMass
+  change cosineMoment 1 v = 1 - 2 * m * h k ^ 2 at hfit₁
+  change cosineMoment 2 v = 1 - 2 * m * h k ^ 2 at hfit₂
   have hscale : 2 * m * h k ^ 2 = lam / (q : ℝ) ^ 2 := by
     have hq : (q : ℝ) ≠ 0 := by exact_mod_cast NeZero.ne q
     change 2 * (lam / (8 * Real.pi ^ 2)) * mesh q ^ 2 = _
     unfold mesh
     field_simp [hq, Real.pi_ne_zero]
     ring
-  obtain ⟨hD₁, hD₂⟩ := sum_sample_deficits hvMass
-  have hv₁ : cosineMoment 1 v = threshold := by
-    dsimp only [threshold]
-    linarith only [hd₁, hD₁, hscale]
-  have hv₂ : cosineMoment 2 v = threshold := by
-    dsimp only [threshold]
-    linarith only [hd₂, hD₂, hscale]
+  have hv₁ : cosineMoment 1 v = threshold := by rw [hfit₁, hscale]
+  have hv₂ : cosineMoment 2 v = threshold := by rw [hfit₂, hscale]
   have hbet : ∀ i ∉ sites, signedCos true (d + 1) (h k) ≤ sample i ∧
       sample i ≤ signedCos false ((n : ℝ) + 1) (h k) := fun i hi => sample_between hk i hi
   obtain ⟨hv, hopt, hdist, hsupp⟩ := exact_support_of_dual
