@@ -4,7 +4,7 @@
 
 A growing front window and a fixed rear window admit an invertible joint moment fit.
 
-Let n run through the natural numbers and fix a finite set S of real rear offsets r. At mesh h use u=nh. On the integer front window from −n to n, use x=j/n, F=(1+cos(xu))/2, X=sin²(xu)/u², and W=1−F. At u=0, X=x². At each rear offset r put W=(1+cos(rh))/2, F=1−W, and X=r² sinc²(rh)/n². For positive n and nonzero h the rear feature is sin²(rh)/(nh)². The coefficient row is (F/n,X/n,W/n³) and the moment row is (F,X,n³W²). The coupled matrix M is the sum of the outer products of the moment and coefficient rows, over both windows, for positive n. Assume h→0, nh→0 and n³(nh)⁴→0.
+Let n run through the natural numbers and fix a finite set S of real rear offsets r. At mesh h use u=nh. On the integer front window from −n to n, use x=j/n, F=(1+cos(xu))/2, X=sin²(xu)/u², and W=1−F. At u=0, X=x². At each rear offset r put W=(1+cos(rh))/2, F=1−W, and X=r² sinc²(rh)/n². For positive n and nonzero h the rear feature is sin²(rh)/(nh)². The coefficient row is (F/n,X/n,W/n³) and the moment row is (F,X,n³W²). The coupled matrix M is the sum of the outer products of the moment and coefficient rows, over both windows, for positive n. Assume n³(nh)⁴→0. Since n≥1 eventually, this implies nh→0 and h→0.
 
 **Theorem 1.1 (Limit of the three scaled moment rows).**
 
