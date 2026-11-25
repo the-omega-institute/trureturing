@@ -95,6 +95,9 @@ def generate(stage, product, seed, roots, excluded):
                     print(json.dumps([name, why]), file=rejected)
             omissions.update(new)
             rejected.flush()
+    run("lake", "env", "lean", "--run", HERE / "DuplicateSites.lean", product)
+    graph = dict(json.loads((product / "modules.json").read_text()))
+    closure = list(TopologicalSorter(graph).static_order())
     run("lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
