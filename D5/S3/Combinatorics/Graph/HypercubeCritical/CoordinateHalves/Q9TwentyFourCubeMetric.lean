@@ -21,8 +21,7 @@ open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q)
 local notation "cubeFlip" => BalancedCriticalSpectrum.flip
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private hamming closedNeighborhood oppositeSize from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourEmbeddingCheck
 open private neighborMask reconstructionSize from

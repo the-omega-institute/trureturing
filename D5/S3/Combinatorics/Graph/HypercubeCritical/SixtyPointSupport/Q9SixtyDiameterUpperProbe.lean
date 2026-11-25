@@ -34,8 +34,7 @@ open private word_to_third full_attachment_same_order actual_full_leaf_blocking
   flip_triangle_commute diff_two_flips no_two_steps_to_outside from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9FourthLeafSignProbe
 open BalancedCubeGirth (flip_comm)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 
 private lemma ball_subset_has_degree_at_most_one {C : Finset (Q 9)}
