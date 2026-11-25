@@ -62,7 +62,15 @@ jobs:
           ref: ${{ needs.pin.outputs.source }}
           persist-credentials: false
       - run: python3 .github/scripts/install-tools.py
-      - name: Install the pinned Lean header parser
+      - id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean toolchain
+        uses: actions/cache@v5
+        continue-on-error: true
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Ensure the pinned Lean header parser is on PATH
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Plan changes by module prefix
         id: shards
