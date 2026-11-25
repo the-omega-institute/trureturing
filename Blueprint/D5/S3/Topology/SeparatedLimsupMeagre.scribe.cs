@@ -10,7 +10,7 @@ internal sealed class SeparatedLimsupMeagreDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp);
     private static Formula Upper(string x) =>
-        Call("Filter.limsup", Call("sequenceAt", V("U"), V(x)), V("atTop"));
+        Call("limsup", Call("sequenceAt", V("U"), V(x)), V("atTop"));
     private static Formula Statement => Disp(new Formula.Aligned([
         Seq(All("u", Call("Universe")), All("X", Call("Type", V("u"))),
             OpenBracket, Call("TopologicalSpace", V("X")), CloseBracket),
@@ -18,11 +18,11 @@ internal sealed class SeparatedLimsupMeagreDocument : IScribeDocumentDefinition
         Seq(All("A", Call("Set", V("X"))), All("B", Call("Set", V("X"))),
             All("a", V("Real")), All("b", V("Real"))),
         Seq(All("n", V("Nat")), Call("Continuous", Call("U", V("n")))),
-        Seq(Call("Dense", V("A")), Sp, And, Sp, Call("Dense", V("B")),
-            Sp, And, Sp, Call("Ne", V("a"), V("b"))),
-        Seq(All("x", V("X")), V("x"), Sp, In, Sp, V("A"), Sp, Rightarrow,
+        Seq(Call("Dense", V("A")), Sp, Land, Sp, Call("Dense", V("B")),
+            Sp, Land, Sp, Call("Ne", V("a"), V("b"))),
+        Seq(All("x", V("X")), V("x"), Sp, InMacro, Sp, V("A"), Sp, Rightarrow,
             Sp, Upper("x"), Sp, Eq, Sp, V("a")),
-        Seq(All("x", V("X")), V("x"), Sp, In, Sp, V("B"), Sp, Rightarrow,
+        Seq(All("x", V("X")), V("x"), Sp, InMacro, Sp, V("B"), Sp, Rightarrow,
             Sp, Upper("x"), Sp, Eq, Sp, V("b")),
         Seq(Rightarrow, Sp, Call("IsMeagre", Call("convergenceLocus", V("U"))))
     ]));

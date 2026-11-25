@@ -15,6 +15,13 @@ triage: anchor
 <!-- GID: D5/L/Asymptotics/carvalhovarandas2021historic -->
 # Dense upper-average classes and historic behavior
 
+## Verified locator
+
+https://arxiv.org/html/2107.01200v1, Section 2, Theorem A and
+equations (2.2)–(2.3). DOI: 10.48550/arXiv.2107.01200.
+
+## Scope and correspondence
+
 The primary source is arXiv:2107.01200v1, Section 2, Theorem A,
 with the upper-average function defined in equation (2.3) and the
 observable irregular set defined in equation (2.2). The v1 version is
