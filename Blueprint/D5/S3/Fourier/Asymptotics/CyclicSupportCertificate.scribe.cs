@@ -17,7 +17,7 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(Boundary()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let T be the largest of the sampled levels xᵢ, with at least one smaller level. " +
+                    "Let T be the largest of the sampled levels xᵢ. " +
                     "For a quadratic variation with zero total mass and positive first moment, " +
                     "eliminate the constant and linear coefficients using those two moment equations. " +
                     "The remaining quadratic term at T is proportional to the sum over ordered pairs " +
@@ -32,8 +32,8 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The quadratic has nonpositive coefficients of the two cosine deficits. " +
-                    "Its values are positive on the candidate set and negative at both endpoints bounding " +
-                    "the excluded cosines. Convexity implies strict negativity at every excluded sample. " +
+                    "Its values are positive on the candidate set and nonpositive at both endpoints bounding " +
+                    "the excluded cosines. Convexity gives nonpositive values at every excluded sample. " +
                     "The candidate equals the positive part of the polynomial and has mass one and the " +
                     "two exact moments. The squared distance to this candidate is strictly positive for any " +
                     "distinct competitor, and the clipping and moment slack terms are nonnegative."))),
@@ -77,7 +77,7 @@ internal sealed class CyclicSupportCertificateDocument : IScribeDocumentDefiniti
         var polynomial = Eq(p, Add(Add(a, Multiply(b, Subtract(F.D(1), c))), Multiply(g,
             new Formula.Fraction(Subtract(F.D(1), new Formula.Power(c, F.D(2))), s))));
         var sign = And(Le(b, F.D(0)), And(Le(g, F.D(0)),
-            And(Lt(Call("p", lo), F.D(0)), Lt(Call("p", hi), F.D(0)))));
+            And(Le(Call("p", lo), F.D(0)), Le(Call("p", hi), F.D(0)))));
         var outside = All("i", F.Seq(residues, F.Sp, F.Setminus, F.Sp, sites),
             And(Le(lo, sampled), Le(sampled, hi)));
         var pos = All("i", sites, Lt(F.D(0), Call("p", sampled)));

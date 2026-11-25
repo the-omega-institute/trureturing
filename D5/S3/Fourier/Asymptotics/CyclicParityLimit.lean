@@ -212,7 +212,7 @@ private theorem centered_sum_window {q : ℕ} [NeZero q] (K : ℕ) (hq : 2 * K <
       rw [(hasSum_sum_of_ne_finset_zero hg).tsum_eq]
       exact sum_congr rfl fun j hj => if_pos hj
 
-private theorem valMinAbs_of_window {q : ℕ} [NeZero q] {K : ℕ} (hq : 2 * K < q)
+theorem valMinAbs_of_window {q : ℕ} [NeZero q] {K : ℕ} (hq : 2 * K < q)
     {j : ℤ} (hj : j ∈ Icc (-(K : ℤ)) (K : ℤ)) :
     (j : ZMod q).valMinAbs = j := by
   have := mem_Icc.mp hj

@@ -8,6 +8,7 @@
 
 import D5.S3.Fourier.Asymptotics.CyclicParityLimit
 import D5.S3.Fourier.Asymptotics.CyclicSupportCertificate
+import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.Instances.Matrix
 
 /-! The joint cosine constraints determine a Gram solve on the front window
@@ -33,20 +34,9 @@ private theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3
   apply isUnit_iff_ne_zero.mp
   apply (isUnit_iff_isUnit_det _).mp
   apply mulVec_injective_iff_isUnit.mp
-  intro a b hab
-  have hz : (Fᵀ * F) *ᵥ (a - b) = 0 := by
-    rw [mulVec_sub, hab, sub_self]
-  have hd := dotProduct_transpose_mulVec F (a - b) (F *ᵥ (a - b))
-  rw [mulVec_mulVec, hz, dotProduct_zero] at hd
-  have hsq : (∑ i, (F *ᵥ (a - b)) i ^ 2) = 0 := by
-    simpa only [dotProduct, pow_two] using hd.symm
-  have hf : F *ᵥ (a - b) = 0 := by
-    funext i
-    have hzero := (sum_eq_zero_iff_of_nonneg (fun i _ => sq_nonneg ((F *ᵥ (a - b)) i))).mp hsq
-      i (mem_univ i)
-    exact (sq_eq_zero_iff).mp hzero
-  apply hF
-  rwa [mulVec_sub, sub_eq_zero] at hf
+  change Function.Injective (Fᵀ * F).mulVecLin
+  rw [← LinearMap.ker_eq_bot, ker_mulVecLin_transpose_mul_self, LinearMap.ker_eq_bot]
+  exact hF
 
 private theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filter κ}
     {s : κ → ℝ} (hs : Tendsto s l (𝓝 0))
@@ -338,7 +328,6 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
   have hrFront (i : ι) (hi : x i ^ 2 = t) : 0 < r (Sum.inl i) := by
     have hmax (j : ι) : x j ^ 2 ≤ x i ^ 2 := hi ▸ hx j
     have htpos : 0 < t := by have he := hx i₁; rw [h₁] at he; norm_num at he; linarith
-    have hbelow : ∃ j, x j ^ 2 < x i ^ 2 := ⟨i₀, by simpa [h₀, hi] using htpos⟩
     let A := u₀ 0 + μ * t / Z
     let B := u₀ 2 + a₀ 1 / 2 - μ / Z
     let G := 1 / (3 * Z)
@@ -355,7 +344,7 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
       have hμ' : 0 < μ := by rw [hμ]; positivity
       have hk := mul_pos hμ' (sub_pos.mpr (hboundary ⟨i, hi⟩))
       linarith only [hm₄, hk]
-    have hsign := boundary_variation_pos (fun j => x j ^ 2) i hmax hbelow A B G
+    have hsign := boundary_variation_pos (fun j => x j ^ 2) i hmax A B G
       (by dsimp [G]; positivity) hzero hmoment
     rw [hvar, show W i = 0 by simp [W, hi], mul_zero, add_zero] at hsign
     simpa only [lt_max_iff, lt_irrefl, false_or] using hsign
@@ -456,16 +445,14 @@ private def gridRep (n : ℕ) (odd : Bool) (k : ℕ) : Front n ⊕ Back odd → 
 private theorem gridRep_centered {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k)
     (i : Front n ⊕ Back odd) :
     ((gridRep n odd k i : ℤ) : ZMod (parityModulus odd k)).valMinAbs = gridRep n odd k i := by
-  apply (ZMod.valMinAbs_spec _ _).2
-  refine ⟨rfl, ?_⟩
   cases i with
   | inl i =>
-    have hi := mem_Icc.mp i.2
-    change -(parityModulus odd k : ℤ) < (i.1 : ℤ) * 2 ∧
-      (i.1 : ℤ) * 2 ≤ parityModulus odd k
-    unfold parityModulus
-    omega
-  | inr i => exact backRep_bounds odd k i
+    apply valMinAbs_of_window (K := n)
+    · unfold parityModulus
+      omega
+    · exact i.2
+  | inr i =>
+    exact (ZMod.valMinAbs_spec _ _).2 ⟨rfl, backRep_bounds odd k i⟩
 
 private def gridEmbedding {n : ℕ} {odd : Bool} {k : ℕ} (hk : n < k) :
     (Front n ⊕ Back odd) ↪ ZMod (parityModulus odd k) where
@@ -653,11 +640,13 @@ private theorem lattice_window_sums {n : ℕ} {t Z m : ℝ} {w : ℤ → ℝ}
     have := mem_Icc.mp i.2
     omega
   have hout (j : ℤ) (hj : j ∉ Icc (-(n : ℤ)) (n : ℤ)) : w j = 0 := by
-    have h : ¬ j.natAbs ≤ n := by
-      intro hn
-      exact hj (mem_Icc.mpr (by omega))
-    have hj' := not_le.mp (mt (window_iff act.radius_lower hhi j).1 h)
-    simp [act.law, max_eq_left (sub_nonpos.mpr hj'.le)]
+    apply activation_zero_outside act
+    intro h
+    have hrad : latticeSupportRadius n m ≤ n := by
+      unfold latticeSupportRadius
+      split <;> omega
+    have hs := mem_Icc.mp h
+    exact hj (mem_Icc.mpr (by omega))
   have hsum (f : ℤ → ℝ) : (∑ i : Front n, f i.1 * w i.1) = ∑' j : ℤ, f j * w j := by
     rw [Finset.sum_coe_sort (Icc (-(n : ℤ)) (n : ℤ)) (fun j => f j * w j)]
     exact (hasSum_sum_of_ne_finset_zero (s := Icc (-(n : ℤ)) (n : ℤ))
@@ -671,7 +660,8 @@ private theorem lattice_window_sums {n : ℕ} {t Z m : ℝ} {w : ℤ → ℝ}
 
 private def supportStatement (q : ℕ) [NeZero q] (a t : ℝ) : Prop :=
   (∃ v ∈ feasible q a, IsMinOn energy (feasible q a) v ∧
-    cosineMoment 1 v = a ∧ cosineMoment 2 v = a) ∧
+    cosineMoment 1 v = a ∧ cosineMoment 2 v = a ∧
+    (∀ u ∈ feasible q a, u ≠ v → energy v < energy u)) ∧
   ∀ v ∈ feasible q a, IsMinOn energy (feasible q a) v → ∀ i : ZMod q,
     0 < v i ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j
 
@@ -805,8 +795,8 @@ private theorem solve_on_parity (lam : ℝ) (hlam : 0 < lam) {n : ℕ} (hn : 0 <
       sample i ≤ signedCos false ((n : ℝ) + 1) (h k) := fun i hi => sample_between hk i hi
   obtain ⟨hv, hopt, hsupp⟩ := exact_support_of_dual
     (threshold := threshold) (sq_pos_of_pos (mesh_pos (q := q)))
-    hkB.le hkG.le hLo hHi hbet hposSite hvMass hv₁ hv₂
-  refine ⟨⟨v, hv, ?_, hv₁, hv₂⟩, ?_⟩
+    hkB.le hkG.le hLo.le hHi.le hbet hposSite hvMass hv₁ hv₂
+  refine ⟨⟨v, hv, ?_, hv₁, hv₂, hopt⟩, ?_⟩
   · intro u hu
     by_cases heq' : u = v
     · subst u
@@ -838,7 +828,8 @@ theorem cyclic_eventual_exact_support (lam : ℝ) (hlam : 0 < lam) :
         (∃ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v ∧
           cosineMoment 1 v = 1 - lam / (q : ℝ) ^ 2 ∧
-          cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2) ∧
+          cosineMoment 2 v = 1 - lam / (q : ℝ) ^ 2 ∧
+          (∀ u ∈ feasible q (1 - lam / (q : ℝ) ^ 2), u ≠ v → energy v < energy u)) ∧
         ∀ v ∈ feasible q (1 - lam / (q : ℝ) ^ 2),
           IsMinOn energy (feasible q (1 - lam / (q : ℝ) ^ 2)) v → ∀ i : ZMod q,
             0 < clip (v i) ↔ (i.valMinAbs : ℝ) ^ 2 ≤ t ∨ ∀ j : ZMod q, sample i ≤ sample j := by
