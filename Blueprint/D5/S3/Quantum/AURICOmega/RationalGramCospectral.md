@@ -68,11 +68,26 @@ Take rational u and v with u nonzero and five times the square of u plus four ti
 
 At u = v = 1 the determinant is 20/27. Its numerator is not a square modulo three, so a square rational Gram factor is impossible. The triangle-block matrix reduces to an orthogonal frame with squared lengths 1, 1, 5, and 3. In six coordinates the complement of the first three directions would represent 3 by the form with weights 5, 1, 1. Clearing denominators gives an obstruction modulo eight when the denominator is odd. An even denominator forces all three coordinates even by reduction modulo four. Explicit rational Gram factors attain both bounds. The square classes of the two varying eigenvalues carry the bounds along the conic. At u = 0 the parameter is minus one quarter and the common rank drops to three.
 
+**Theorem 1.6 (A conic with seven and five rational coordinates).**
+
+Lean statement: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.seven_five_on_conic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/RationalGramCospectral.seven_five_on_conic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take rational u and v such that the square of u plus fourteen times the square of v equals fifteen, and set t to one quarter of the difference between one fifth of the square of u and one. The paired-edge matrix is realizable in n rational coordinates exactly when n is at least seven. The triangle-block matrix is realizable exactly when n is at least five. Both matrices have the common spectrum above.
+
+At u = v = 1 the paired-edge form has an orthogonal basis with squared lengths 1, 5, 70, and 70. Align the first three directions in a putative six-coordinate realization. The remaining three-dimensional orthogonal complement has a rational orthogonal basis with squared lengths 5, 34, and 2380. Its squared length 70 is excluded by descent modulo seven. The triangle-block form reduces to squared lengths 15, 1, 70, and 210. Their product is five times a rational square, excluding a four-coordinate factor. Explicit Gram factors attain both bounds. Rational rescaling preserves the two varying eigenvalue square classes along the conic.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.RealizableIn`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.five_seven_on_conic`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.pairedEdges`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.seven_five_on_conic`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.spectrum_and_thresholds`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.triangleBlock`
 - Dependency: [D5/S3/Quantum/AURICOmega/RationalGramOddPrime](RationalGramOddPrime.md)
