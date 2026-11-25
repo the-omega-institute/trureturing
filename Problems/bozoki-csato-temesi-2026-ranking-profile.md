@@ -39,7 +39,7 @@ A simplex profile admitting an independent real realization but failing the weig
 
 ## Evidence
 
-The theorem `D5/S3/Combinatorics/Dice/RankingProfileRealization.problem_five` states necessity on arbitrary measurable probability spaces and sufficiency on triples of finite labels with real-valued coordinate maps. Lean uses zero-based labels with the same strict order. The canonical Blueprint describes the three public definitions and the theorem and identifies this question in its resolution claim.
+The theorem `D5/S3/Combinatorics/Dice/RankingProfileRealization.problem_five` states necessity on arbitrary measurable probability spaces and sufficiency on triples of finite labels with real-valued coordinate maps. Lean uses zero-based labels with the same strict order. The probability Blueprint describes the rank order, real profile and resolution theorem. The finite grid Blueprint describes the cubic test, support compression and closedness used by the theorem.
 
 ## Triage
 
@@ -52,5 +52,7 @@ The theorem `D5/S3/Combinatorics/Dice/RankingProfileRealization.problem_five` pr
 A separate mathematical strengthening gives at most fourteen labels with caps $4,5,5$, where any one prescribed role may take the cap of four. Smooth the other two marginals in disjoint intervals that preserve the original comparisons. The six conditional ranking probabilities then vary continuously with the designated value in an affine subspace of dimension at most four. Path compression reduces its convex representation to four points. Quantization, compression of the other marginals and closedness yield the strengthened criterion. The path-compression sublemma has been checked separately in Lean. The full fourteen-label argument remains outside the formal claim here. [Mathematical proof in issue #34280](https://github.com/the-omega-institute/trureturing/issues/34280)
 
 ## ASSUMED-UNVERIFIED
+
+Four-slot registration is open for `problem_five` and for the finite grid theorems `isClosed_finiteTest15` and `profile_mem_finiteTest15`. The enrolled `existentialWitnessRealization` can read acceptance of a chosen triple of weight vectors at a fixed input. Its law only asserts existence of an accepted state. The compression theorem also quantifies over finite ordered carriers and all three input weights, subject to normalization and support disjointness. A source binding through `DependentFamily.realize` would need a readout tied to the cubic profile in every admissible input fiber. For closedness, it would need to recover the topology of the real profile space and its limit-closure law from the exact `IsClosed` statement. Both bindings still need exact source reconstruction, a law equivalence, and proofs of interventions, sensitivity and actual observational dependence. [Original result registration gap #34292](https://github.com/the-omega-institute/trureturing/issues/34292)
 
 The full fourteen-label criterion has no end-to-end Lean proof in this delivery. The scoped literature checks establish no global priority claim.

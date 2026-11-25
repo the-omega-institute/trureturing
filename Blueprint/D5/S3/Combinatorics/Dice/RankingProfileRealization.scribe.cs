@@ -8,7 +8,7 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
     private const string Prefix = "D5/S3/Combinatorics/Dice/RankingProfileRealization.";
     private const string Slug = "bozoki-csato-temesi-2026-ranking-profile";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/bozokicsatotemesi2026dice");
+        LibraryNoteRef.Create("D5/L/Convexity/bozokicsatotemesi2026dice");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite cubic criterion for the six strict ranking probabilities of three independent real variables.",
@@ -24,11 +24,6 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(F.Disp(RealProfileFormula())), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The coordinate is the real value of the measure of the corresponding strict ordering event. The two strict inequalities exclude all ties. In the theorem the measure is a probability measure and the coordinate functions are measurable."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("ranking-profile-cubic-test"),
-                DeclarationHandle.Create(Prefix + "finiteTest15"), H("The fifteen-label cubic test"),
-                StatementSource.FromAuthor(F.Disp(FiniteTestFormula())), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("There are three weight vectors, each on the same fifteen ordered labels. For each role the weights are nonnegative, sum to one, and have at most five positive entries. All six equations are unconditional strict ranking probabilities."))),
-                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("ranking-profile-problem-five"),
                 DeclarationHandle.Create(Prefix + "problem_five"), H("Exact criterion for Problem 5"),
                 StatementSource.FromAuthor(F.Disp(ProblemFormula())), AssessedProvenance.FromRepo(Source),
@@ -38,7 +33,7 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
                     Paragraph(Text("For sufficiency take the product law on triples of ordered labels. Evaluating its three coordinates as reals gives independent measurable variables, and summing the product masses of all strictly ordered triples gives exactly the six cubic sums."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create(Slug), ResolutionKind.Proved))),
-        []));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Dice/RankingProfileFiniteGrid"))]));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
     private static Formula Roles => Fin(3);
@@ -57,7 +52,6 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
     private static Formula And(params Formula[] formulas) =>
         formulas.Aggregate((a, b) => new Formula.Logic(a, FormulaLogicOperator.And, b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Test(Formula v) =>
@@ -88,23 +82,6 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
         return All(Equal(Call("realRankProfile", mu, x, t), Call("measureReal", mu, rankEvent)),
             B("Omega", Id("Type")), B("m", Call("MeasurableSpace", space)),
             B("mu", Call("Measure", space)), B("X", Values(space)), B("t", Fin(6)));
-    }
-
-    private static Formula FiniteTestFormula()
-    {
-        Formula v = Id("v"), p = Id("p"), r = Id("r"), t = Id("t");
-        Formula i = Id("i"), j = Id("j"), k = Id("k");
-        Formula positive = F.Seq(F.OpenBrace, i, F.Sp, F.Mid, F.Sp, Lt(Num(0), At(p, r, i)), F.CloseBrace);
-        Formula weights = All(And(
-            All(Le(Num(0), At(p, r, i)), B("i", Labels)),
-            Equal(Sum(Index("i", Labels), At(p, r, i)), Num(1)),
-            Le(Call("card", positive), Num(5))), B("r", Roles));
-        Formula monomial = Multiply(Multiply(At(p, Role(t, 0), i), At(p, Role(t, 1), j)), At(p, Role(t, 2), k));
-        Formula orderedIndices = F.Seq(Index("i", Labels), F.Comma, Index("j", Labels), F.Comma,
-            Index("k", Labels), F.Comma, F.Sp, Lt(k, j), F.Comma, Lt(j, i));
-        Formula cubic = All(Equal(At(v, t), Sum(orderedIndices, monomial)), B("t", Fin(6)));
-        return All(Iff(Test(v), Exists(And(weights, cubic), B("p", Arrow(Roles, Arrow(Labels, Real))))),
-            B("v", Profile));
     }
 
     private static Formula ProblemFormula()

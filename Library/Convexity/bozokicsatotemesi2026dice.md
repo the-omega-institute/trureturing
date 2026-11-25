@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2611.23308
 url: https://arxiv.org/abs/2611.23308v1
 claim: "Problem 5 asks which probability simplex points are the six strict ordering probabilities of three independent real-valued random variables."
 strata_touched:
+  - D5/S3/Combinatorics/Dice/RankingProfileFiniteGrid
   - D5/S3/Combinatorics/Dice/RankingProfileRealization
 license: citation-only
 triage: anchor
