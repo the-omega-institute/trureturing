@@ -54,9 +54,24 @@ One invertible rational matrix conjugates the paired-edge matrix to the triangle
 
 Rational eigenbases give the common characteristic polynomial. The conic allows rational rescaling to fixed quadratic forms. At the base point both examples have explicit orthogonal Gram factors at their respective thresholds. Aligning a partial frame with the same Gram data reduces both dimension lower bounds to ternary equations. A descent modulo seven excludes the paired-edge form in six coordinates. The three-square obstruction excludes the triangle-block form in five. Appending zero coordinates preserves each realization.
 
+**Theorem 1.5 (A conic with five and seven rational coordinates).**
+
+Lean statement: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.five_seven_on_conic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/RationalGramCospectral.five_seven_on_conic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take rational u and v with u nonzero and five times the square of u plus four times the square of v equal to nine. Set t to one quarter of the difference between five thirds of the square of u and one. The paired-edge matrix is realizable in n rational coordinates exactly when n is at least five. The triangle-block matrix is realizable exactly when n is at least seven. The same similarity and common spectrum apply.
+
+At u = v = 1 the determinant is 20/27. Its numerator is not a square modulo three, so a square rational Gram factor is impossible. The triangle-block matrix reduces to an orthogonal frame with squared lengths 1, 1, 5, and 3. In six coordinates the complement of the first three directions would represent 3 by the form with weights 5, 1, 1. Clearing denominators gives an obstruction modulo eight when the denominator is odd. An even denominator forces all three coordinates even by reduction modulo four. Explicit rational Gram factors attain both bounds. The square classes of the two varying eigenvalues carry the bounds along the conic. At u = 0 the parameter is minus one quarter and the common rank drops to three.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.RealizableIn`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.five_seven_on_conic`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.pairedEdges`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.spectrum_and_thresholds`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/RationalGramCospectral.triangleBlock`
