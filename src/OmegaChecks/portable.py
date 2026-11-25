@@ -466,6 +466,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         tracked.update(directory / file for directory in (ROOT / "Reg", INSPECTOR)
                        for file in ("lakefile.toml", "lake-manifest.json"))
     tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
+    if backend != "mathlib":
+        tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
     if backend == "both":
         tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
     if frozen is not None:
@@ -500,7 +502,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if common_modules:
             common_basis = [name for name in common_modules if root(name) in BASIS]
             normal, common = derived_facades(lean, strict, common_basis, official_path)
-            common_downstream = [name for name in common_modules if root(name) not in BASIS]
+            common_downstream = [name for name in common_modules if root(name) not in BASIS | {"OmegaBuild"}]
             common_sources = {name: official_sources[name] for name in [*common_modules, *certificates]}
             for name, expected in normal.items():
                 if facades[name].read_bytes() != expected:

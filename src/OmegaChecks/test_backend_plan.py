@@ -14,7 +14,7 @@ def package(directory, name, dependency, modules):
     packages = str(ROOT / ".lake/packages")
     (directory / "lean-toolchain").write_bytes((ROOT / "lean-toolchain").read_bytes())
     (directory / "lakefile.toml").write_text(
-        f'name = "{name}"\npackagesDir = {json.dumps(packages)}\n'
+        f'name = "{name}"\ndefaultTargets = ["{name}"]\npackagesDir = {json.dumps(packages)}\n'
         f'[[require]]\nname = "{dependency_name}"\npath = {json.dumps(str(dependency_dir))}\n'
         f'[[lean_lib]]\nname = "{name}"\nroots = {json.dumps(list(modules))}\n')
     for entry in manifest["packages"]:
@@ -58,7 +58,13 @@ example (a k : Omega.Nat) : Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k
   Omega.Nat.square_mul a k
 """,
         })
-        subprocess.run(["lake", "build", "+UseFactorial", "+UseSquare"], cwd=client, check=True)
+        subprocess.run(["lake", "build"], cwd=client, check=True)
+        outputs = [directory / ".lake/build/lib/lean" / f"{name}.olean" for directory, name in [
+            (library, "FactorialLibrary"), (client, "UseFactorial"), (client, "UseSquare"),
+        ]]
+        timestamps = [path.stat().st_mtime_ns for path in outputs]
+        subprocess.run(["lake", "build"], cwd=client, check=True)
+        assert timestamps == [path.stat().st_mtime_ns for path in outputs], "warm Lake build recompiled an input"
         search = subprocess.check_output(["lake", "env", "printenv", "LEAN_PATH"], cwd=client, text=True).strip()
         report = json.loads(subprocess.check_output([
             ROOT / ".lake/build/bin/omegaBackendPlan", search, "UseFactorial", "UseSquare",
