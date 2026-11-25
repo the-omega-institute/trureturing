@@ -32,7 +32,7 @@ $$\begin{aligned}&R=\sum_{T \in E}|\operatorname{C}\left(T\right)|^{2}-\sum_{T \
 
 For arbitrary natural numbers d and K take the real part of the mixed coefficient and subtract the alternating sum over subsets T with |T|≤min(d,K). Denote the resulting remainder by R. The large subsets satisfy K<|T|≤d. E and O designate their even and odd cardinality classes.
 
-Split the expansion into the retained part and these two classes. The even class contributes positive squares and the odd class contributes negative squares. Their exact difference and the coefficientwise bound give the stated one-sided errors. For K≥d the remainder is zero. For a cyclic character with a(j)=w(j) times the character, the same inequalities can be summed against the nonnegative Fejér weights. Bounds for the remaining weighted character sums of zeta ordinates at the growing degree and time scale require additional arithmetic.
+Split the expansion into the retained part and these two classes. The even class contributes nonnegative squares and the odd class contributes their negations. Their exact difference and the coefficientwise bound give the stated one-sided errors. For K≥d the remainder is zero. For a cyclic character with a(j)=w(j) times the character, the same inequalities can be summed against the nonnegative Fejér weights. Bounds for the remaining weighted character sums of zeta ordinates at the growing degree and time scale require additional arithmetic.
 
 ## References
 

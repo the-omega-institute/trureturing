@@ -40,7 +40,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hz := h (J := ULift.{u} Unit) ∅ (fun _ => 0) 0 
+  have hz := h (J := ULift.{u} Unit) ∅ (fun _ => 0) 0
   norm_num [rejected, realize, disjointSeries] at hz
 
 def evidence : Registration arena.{u} (type_of% @signed_overlap_expansion.{u}) where
