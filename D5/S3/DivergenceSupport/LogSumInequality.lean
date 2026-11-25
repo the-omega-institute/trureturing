@@ -22,6 +22,7 @@
 -/
 
 import D5.S3.Divergence.ClassicalDPI
+import Mathlib.InformationTheory.KullbackLeibler.KLFun
 
 namespace D5.S3.DivergenceSupport.LogSumInequality
 
