@@ -85,7 +85,7 @@ theorem sum_lattice_fourth (n : ℕ) :
 def normalizer (n : ℕ) (t : ℝ) : ℝ :=
   ∑ k ∈ latticeInterval n, (t - (k : ℝ) ^ 2)
 
-private def momentNumerator (n : ℕ) (t : ℝ) : ℝ :=
+def momentNumerator (n : ℕ) (t : ℝ) : ℝ :=
   ∑ k ∈ latticeInterval n, (k : ℝ) ^ 2 * (t - (k : ℝ) ^ 2)
 
 theorem normalizer_formula (n : ℕ) (t : ℝ) :
@@ -102,7 +102,7 @@ private theorem momentNumerator_formula (n : ℕ) (t : ℝ) :
   rw [sum_sub_distrib, ← sum_mul, sum_lattice_square, sum_lattice_fourth]
   ring
 
-private theorem lower_moment_difference (n : ℕ) (t : ℝ) :
+theorem lower_moment_difference (n : ℕ) (t : ℝ) :
     momentNumerator n t - (((n : ℝ) ^ 2 - 1) / 5) * normalizer n t =
       (2 * (n : ℝ) + 1) * (n + 1) * (2 * n + 3) / 15 * (t - (n : ℝ) ^ 2) := by
   rw [normalizer_formula, momentNumerator_formula]

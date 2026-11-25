@@ -354,7 +354,7 @@ private theorem frontMatrix_outer (n : ℕ) (hn : 0 < n) (u : ℝ) :
     intro j hj
     field_simp [hn0]
 
-private theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
+theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
     let F := 1 - rearWeight h r
     let X := rearMoment h r / n^2
     let W := rearWeight h r

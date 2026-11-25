@@ -121,7 +121,7 @@ abbrev arena : Arena where
           ∀ i, 0 < max 0 (w i) ↔ i ∈ frontSites (q n) n ∪ rearSites (q n) k
 
 private def ideal (n : ℕ) : ℝ := (Real.pi/Real.sqrt 5)*(n:ℝ)^2*Real.sqrt (n:ℝ)
-private def cycles (n : ℕ) : ℕ := if n=0 then 2 else 2*Nat.ceil (ideal n)
+def cycles (n : ℕ) : ℕ := if n=0 then 2 else 2*Nat.ceil (ideal n)
 private def ratio (n : ℕ) : ℝ := (Nat.ceil (ideal n):ℝ)/ideal n
 
 private theorem ideal_pos {n : ℕ} (hn : 0 < n) : 0 < ideal n := by
@@ -129,7 +129,7 @@ private theorem ideal_pos {n : ℕ} (hn : 0 < n) : 0 < ideal n := by
   exact mul_pos (mul_pos (div_pos Real.pi_pos (Real.sqrt_pos.mpr (by norm_num)))
     (pow_pos (by exact_mod_cast hn) _)) (Real.sqrt_pos.mpr (by exact_mod_cast hn))
 
-private theorem cycles_nonzero (n : ℕ) : cycles n≠0 := by
+theorem cycles_nonzero (n : ℕ) : cycles n≠0 := by
   by_cases hn : n=0
   · simp [cycles,hn]
   · have hc := Nat.ceil_pos.mpr (ideal_pos (Nat.pos_of_ne_zero hn))
@@ -195,7 +195,7 @@ private theorem scale_eq {n : ℕ} (hn : 0 < n) :
   rw [hy2]
   <;> ring
 
-private theorem cycles_scale :
+theorem cycles_scale :
     Tendsto (fun n : ℕ => (n:ℝ)^5*(mesh (cycles n))^2) atTop (𝓝 5) := by
   have ht := (tendsto_const_nhds (x:=(5:ℝ))).div (ratio_limit.pow 2) (by norm_num)
   apply (show Tendsto (fun n : ℕ => 5/(ratio n)^2) atTop (𝓝 5) by

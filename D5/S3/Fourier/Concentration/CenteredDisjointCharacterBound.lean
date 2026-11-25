@@ -21,12 +21,12 @@ namespace D5.S3.Fourier.Concentration.CenteredDisjointCharacterBound
 
 open DisjointCharacterEnvelope DisjointCharacterRemainder
 
-private def evenPart (a : ℂ) : ℂ⟦X⟧ :=
+def evenPart (a : ℂ) : ℂ⟦X⟧ :=
   expand 2 (by decide) (PowerSeries.mk fun m => (a / 2) ^ (2*m) / ((2*m+1).factorial : ℂ))
 
-private def quadraticAxis (v : ℝ) : ℝ⟦X⟧ := expand 2 (by decide) (realAxis v)
+def quadraticAxis (v : ℝ) : ℝ⟦X⟧ := expand 2 (by decide) (realAxis v)
 
-private theorem axis_coeff (a : ℂ) (n : ℕ) : coeff n (axis a) = a ^ n / n.factorial := by
+theorem axis_coeff (a : ℂ) (n : ℕ) : coeff n (axis a) = a ^ n / n.factorial := by
   simp [axis, coeff_exp, div_eq_mul_inv]
 
 private theorem centered_difference (a : ℂ) :
@@ -56,7 +56,7 @@ private theorem tail_factorization (a : ℂ) :
       rw [mul_sub, ← axis_add, ← axis_add, hneg, hzero, axis_zero]
     _ = _ := by rw [centered_difference]; ring
 
-private theorem centered_product {J : Type*} (t : Finset J) (c : ℂ) (a : J → ℂ) :
+theorem centered_product {J : Type*} (t : Finset J) (c : ℂ) (a : J → ℂ) :
     axis c * ∏ j ∈ t, (axis (-a j) - 1) =
       C (∏ j ∈ t, -a j) * (X ^ t.card *
         (axis (c - (∑ j ∈ t, a j)/2) * ∏ j ∈ t, evenPart (a j))) := by
@@ -101,7 +101,7 @@ private theorem quadraticAxis_mul (u v : ℝ) :
     quadraticAxis u * quadraticAxis v = quadraticAxis (u+v) := by
   rw [quadraticAxis, quadraticAxis, quadraticAxis, ← map_mul, realAxis_mul]
 
-private theorem centered_product_majorized {J : Type*} (t : Finset J) (c : ℂ) (a : J → ℂ) (n : ℕ) :
+theorem centered_product_majorized {J : Type*} (t : Finset J) (c : ℂ) (a : J → ℂ) (n : ℕ) :
     ‖coeff n (axis c * ∏ j ∈ t, evenPart (a j))‖ ≤
       coeff n (realAxis ‖c‖ * quadraticAxis (∑ j ∈ t, ‖a j‖^2/24)) := by
   classical
@@ -119,7 +119,7 @@ private theorem centered_product_majorized {J : Type*} (t : Finset J) (c : ℂ) 
       exact coeff_mul_majorized _ _ _ _ (evenPart_majorized (a j)) ih m
   exact coeff_mul_majorized _ _ _ _ (fun m => by rw [axis_norm_coeff, realAxis_coeff]) hp n
 
-private theorem quadratic_coefficient (u v : ℝ) (n : ℕ) :
+theorem quadratic_coefficient (u v : ℝ) (n : ℕ) :
     coeff n (realAxis u * quadraticAxis v) =
       ∑ m ∈ range (n/2+1), u^(n-2*m) / ((n-2*m).factorial : ℝ) *
         (v^m / (m.factorial : ℝ)) := by

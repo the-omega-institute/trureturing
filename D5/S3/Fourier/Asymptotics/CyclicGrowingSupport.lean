@@ -557,17 +557,17 @@ theorem rear_offsets_nonempty (e l : ℕ) : (rearRealOffsets e l).Nonempty := by
   · norm_num <;> ring
 
 
-theorem eventual_window_support_of_signs
+theorem eventual_window_support_of_point_signs
     (q : ℕ → ℕ) (hq : ∀ n, q n ≠ 0) (e l : ℕ)
     (hpar : ∀ᶠ n in atTop, q n % 2 = e) {K : ℝ}
-    (hK : Tendsto (fun n : ℕ => (n : ℝ)^5 * (mesh (q n))^2) atTop (𝓝 K))
-    (hR0pos : ∀ᶠ n : ℕ in atTop, 0<(n : ℝ)^3*
-      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+(e : ℝ)/2))
-    (hR1neg : ∀ᶠ n : ℕ in atTop, (n : ℝ)^3*
-      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+1+(e : ℝ)/2)<0) :
+    (hK : Tendsto (fun n : ℕ => (n : ℝ)^5 * (mesh (q n))^2) atTop (𝓝 K)) :
+    let readout := fun state : (Finset ℝ × ℕ) × ℝ =>
+      coefficientFit state.1.1 state.1.2 state.2
     ∀ᶠ n : ℕ in atTop,
+      0<(n : ℝ)^3*rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+(e : ℝ)/2) →
+      (n : ℝ)^3*rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+1+(e : ℝ)/2)≤0 →
       letI : NeZero (q n) := ⟨hq n⟩
-      let v : ZMod (q n) → ℝ := windowLaw n l (coefficientFit (rearRealOffsets e l) n (mesh (q n)))
+      let v : ZMod (q n) → ℝ := windowLaw n l (readout ((rearRealOffsets e l,n),mesh (q n)))
       let threshold := 1-2*budget n*(mesh (q n))^2
       cosineMoment 1 v = threshold ∧ cosineMoment 2 v = threshold ∧
       v ∈ feasible (q n) threshold ∧
@@ -606,7 +606,8 @@ theorem eventual_window_support_of_signs
   let r1 := (l : ℝ)+1+(e : ℝ)/2
   have hdet := coupledMatrix_eventually_det_ne_zero hscale hS
   filter_upwards [hwide,hpar,eventually_ge_atTop (1:ℕ),hCneg,hApos,hBsmall,hF0pos,hF1neg,
-    hR0pos,hR1neg,hdet] with n hnwide hnpar hn hc ha0 hb hf0 hf1 hr0 hr1 hd
+    hdet] with n hnwide hnpar hn hc ha0 hb hf0 hf1 hd
+  intro hr0 hr1
   letI : NeZero (q n) := ⟨hq n⟩
   have hnR : (0:ℝ)<n := by exact_mod_cast hn
   have hn0 : (n : ℝ)≠0 := hnR.ne'
@@ -645,13 +646,38 @@ theorem eventual_window_support_of_signs
     exact hpos
   have hnR' : fitPolynomial n (h n) (a n)
       (-Real.cos (((l : ℝ)+1+((q n%2 : ℕ):ℝ)/2)*h n))≤0 := by
-    have hneg : rearValue S n (h n) r1<0 :=
-      neg_of_mul_neg_right hr1 (by positivity)
+    have hneg : rearValue S n (h n) r1≤0 := by
+      by_contra! hp
+      exact hr1.not_gt (mul_pos (pow_pos hnR _) hp)
     rw [rear_poly_eq hn hh S] at hneg
     rw [hnpar]
-    exact hneg.le
+    exact hneg
   exact window_optimizer hn hnwide (budget n) (a n) hc.le hBineq hrows
     hpF hnF hpR hnR'
+
+
+
+theorem eventual_window_support_of_signs
+    (q : ℕ → ℕ) (hq : ∀ n, q n ≠ 0) (e l : ℕ)
+    (hpar : ∀ᶠ n in atTop, q n % 2 = e) {K : ℝ}
+    (hK : Tendsto (fun n : ℕ => (n : ℝ)^5 * (mesh (q n))^2) atTop (𝓝 K))
+    (hR0pos : ∀ᶠ n : ℕ in atTop, 0<(n : ℝ)^3*
+      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+(e : ℝ)/2))
+    (hR1neg : ∀ᶠ n : ℕ in atTop, (n : ℝ)^3*
+      rearValue (rearRealOffsets e l) n (mesh (q n)) ((l : ℝ)+1+(e : ℝ)/2)<0) :
+    ∀ᶠ n : ℕ in atTop,
+      letI : NeZero (q n) := ⟨hq n⟩
+      let v : ZMod (q n) → ℝ := windowLaw n l (coefficientFit (rearRealOffsets e l) n (mesh (q n)))
+      let threshold := 1-2*budget n*(mesh (q n))^2
+      cosineMoment 1 v = threshold ∧ cosineMoment 2 v = threshold ∧
+      v ∈ feasible (q n) threshold ∧
+        (∀ w ∈ feasible (q n) threshold, w ≠ v → energy v < energy w) ∧
+        (∀ w ∈ feasible (q n) threshold, energy v + (∑ i,(w i-v i)^2) ≤ energy w) ∧
+        ∀ w ∈ feasible (q n) threshold, IsMinOn energy (feasible (q n) threshold) w →
+          ∀ i, 0 < max 0 (w i) ↔ i ∈ frontSites (q n) n ∪ rearSites (q n) l := by
+  filter_upwards [eventual_window_support_of_point_signs q hq e l hpar hK,
+    hR0pos,hR1neg] with n hc hp hn
+  exact hc hp hn.le
 
 private theorem eventual_strict_window_support
     (q : ℕ → ℕ) (hq : ∀ n, q n ≠ 0) (e l : ℕ)
