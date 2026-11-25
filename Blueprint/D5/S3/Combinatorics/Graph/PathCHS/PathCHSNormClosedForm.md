@@ -199,7 +199,7 @@ The identity with the second-kind Chebyshev polynomial after scaling the variabl
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.pathFormula`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.path_hsymm_series`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.result`
-- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../../S0/Conventions/IntegerIndexBinomial.md)
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial/Native](../../../../S0/Conventions/IntegerIndexBinomial/Native.md)
 - Dependency: [D5/S1/Recurrence/Invariants/CompositionalIterateCongruence](../../../../S1/Recurrence/Invariants/CompositionalIterateCongruence.md)
 - Dependency: [D5/S3/Combinatorics/NarayanaStrip/CiglerStripProductContinuants](../../NarayanaStrip/CiglerStripProductContinuants.md)
 - Dependency: [D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge](../../Nonnesting/CatalanLagrangeBridge.md)

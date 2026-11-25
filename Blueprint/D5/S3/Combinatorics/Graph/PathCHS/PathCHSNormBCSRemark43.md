@@ -64,7 +64,7 @@ The recurrence identity tⁿ Sₙ(t⁻¹)=cont(t²;1,1;n) for nonzero t identifi
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.result`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.trigForm`
-- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../../S0/Conventions/IntegerIndexBinomial.md)
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial/Native](../../../../S0/Conventions/IntegerIndexBinomial/Native.md)
 - Dependency: [D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm](PathCHSNormClosedForm.md)
 - Dependency: [D5/S3/Combinatorics/NarayanaStrip/CiglerStripProductContinuants](../../NarayanaStrip/CiglerStripProductContinuants.md)
 - Dependency: [D5/S3/QuantumBounds/ReferenceFrame/TopEigenspace](../../../QuantumBounds/ReferenceFrame/TopEigenspace.md)

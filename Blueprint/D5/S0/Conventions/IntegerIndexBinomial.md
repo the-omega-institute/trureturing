@@ -32,3 +32,4 @@ The upper binomial index uses natural subtraction; the lower indices use integer
 
 - Truth anchor: `D5/S0/Conventions/IntegerIndexBinomial.ballotE`
 - Truth anchor: `D5/S0/Conventions/IntegerIndexBinomial.binom`
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial/Native](IntegerIndexBinomial/Native.md)

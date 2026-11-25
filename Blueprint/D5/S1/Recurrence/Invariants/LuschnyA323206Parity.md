@@ -53,5 +53,5 @@ The degree-j coefficient equals one at j=0 and otherwise equals choose(k+j,j)-ch
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.A`
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.claim`
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.result`
-- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../S0/Conventions/IntegerIndexBinomial.md)
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial/Native](../../../S0/Conventions/IntegerIndexBinomial/Native.md)
 - Dependency: [D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity](CatalanCompositionSquareParity.md)

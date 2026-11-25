@@ -64,4 +64,4 @@ Extend the sum to all integers j; the terms outside the range vanish. Both sides
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.conjectureSum`
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.result`
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.stirlingHat`
-- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../S0/Conventions/IntegerIndexBinomial.md)
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial/Native](../../../S0/Conventions/IntegerIndexBinomial/Native.md)

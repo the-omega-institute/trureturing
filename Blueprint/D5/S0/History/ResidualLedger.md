@@ -21,3 +21,4 @@ The encoding reads the four fields in order. The inverse rebuilds the record fro
 ## References
 
 - Truth anchor: `D5/S0/History/ResidualLedger.residual_ledger_components_bijective`
+- Dependency: [D5/S0/History/ResidualLedger/Native](ResidualLedger/Native.md)
