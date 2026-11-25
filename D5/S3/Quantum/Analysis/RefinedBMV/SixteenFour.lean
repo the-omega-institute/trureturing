@@ -121,8 +121,6 @@ noncomputable section
 variable {n : ℕ}
 local notation "Mat" => Matrix (Fin n) (Fin n) ℂ
 
--- Normalize the two phase factors inside the matrix trace.
-set_option maxHeartbeats 6000000 in
 /-- The refined BMV product lower bound at bidegree (16,4). -/
 theorem product_bound164 (A B : Mat) (hA : A.PosSemidef) (hB : B.IsHermitian) :
     4845 * (trace ((A ^ 4 * B) ^ 4)).re ≤
@@ -135,12 +133,15 @@ theorem product_bound164 (A B : Mat) (hA : A.PosSemidef) (hB : B.IsHermitian) :
       trace ((A ^ 3 * J) ^ 4) := by
     rw [hphase, trace_cycle_power (A ^ 2 * J) A 4]
     simp only [pow_succ, pow_zero, one_mul, mul_assoc]
-  have hcmp := fourth_trace_le_centered_power A B hA hB 3 1
-  change (trace ((A ^ 4 * B) ^ 4)).re ≤ (trace ((A ^ 3 * J) ^ 4)).re at hcmp
-  rw [← htrace] at hcmp
-  have hshift := Algebra164.shifted_bound164 A B hA hB
-  simp only [Algebra44.realTrace] at hshift
-  exact le_trans (mul_le_mul_of_nonneg_left hcmp (by norm_num)) hshift
+  have hcenter : (trace ((A ^ 4 * B) ^ 4)).re ≤ (trace ((A ^ 3 * J) ^ 4)).re := by
+    simpa only [J, Nat.reduceAdd, pow_one] using
+      fourth_trace_le_centered_power A B hA hB 3 1
+  have hcmp : (trace ((A ^ 4 * B) ^ 4)).re ≤
+      (trace (((1 / 2 : ℝ) • (A ^ 3 * B * A + A ^ 2 * B * A ^ 2)) ^ 4)).re := by
+    rw [htrace]
+    exact hcenter
+  exact (mul_le_mul_of_nonneg_left hcmp (show 0 ≤ (4845 : ℝ) by norm_num)).trans
+    (Algebra164.shifted_bound164 A B hA hB)
 
 /-- The refined exponential lower bound at bidegree (16,4). -/
 theorem exponential_bound164 (H K : Mat) (hH : H.IsHermitian) (hK : K.IsHermitian) :

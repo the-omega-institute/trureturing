@@ -186,6 +186,68 @@ theorem pole_two_one_one (a b c : ℝ) :
         PowerSeries.C (c^3*(a-b)^2) * (F * A^2 * B) := by ring
     _ = _ := by rw [hBC, hABC, hAC, hAB]
 
+/-- The cleared partial fractions of a product of four simple poles. -/
+theorem pole_one_one_one_one (a b c d : ℝ) :
+    PowerSeries.C ((a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)) *
+        (pole a 1 * (pole b 1 * (pole c 1 * pole d 1))) =
+      PowerSeries.C (a^3*(b-c)*(b-d)*(c-d)) * pole a 1 -
+      PowerSeries.C (b^3*(a-c)*(a-d)*(c-d)) * pole b 1 +
+      PowerSeries.C (c^3*(a-b)*(a-d)*(b-d)) * pole c 1 -
+      PowerSeries.C (d^3*(a-b)*(a-c)*(b-c)) * pole d 1 := by
+  let A := linearDenominator a
+  let B := linearDenominator b
+  let C := linearDenominator c
+  let D := linearDenominator d
+  let F := pole a 1 * (pole b 1 * (pole c 1 * pole d 1))
+  have ha : pole a 1 * A = 1 := by
+    simpa only [A, linearDenominator, pow_one] using pole_mul_denominator a 1
+  have hb : pole b 1 * B = 1 := by
+    simpa only [B, linearDenominator, pow_one] using pole_mul_denominator b 1
+  have hc : pole c 1 * C = 1 := by
+    simpa only [C, linearDenominator, pow_one] using pole_mul_denominator c 1
+  have hd : pole d 1 * D = 1 := by
+    simpa only [D, linearDenominator, pow_one] using pole_mul_denominator d 1
+  have hBCD : F * (B*C*D) = pole a 1 := by
+    calc
+      _ = pole a 1 * ((pole b 1 * B) * (pole c 1 * C) * (pole d 1 * D)) := by
+        dsimp [F]
+        ring
+      _ = _ := by rw [hb, hc, hd]; simp
+  have hACD : F * (A*C*D) = pole b 1 := by
+    calc
+      _ = pole b 1 * ((pole a 1 * A) * (pole c 1 * C) * (pole d 1 * D)) := by
+        dsimp [F]
+        ring
+      _ = _ := by rw [ha, hc, hd]; simp
+  have hABD : F * (A*B*D) = pole c 1 := by
+    calc
+      _ = pole c 1 * ((pole a 1 * A) * (pole b 1 * B) * (pole d 1 * D)) := by
+        dsimp [F]
+        ring
+      _ = _ := by rw [ha, hb, hd]; simp
+  have hABC : F * (A*B*C) = pole d 1 := by
+    calc
+      _ = pole d 1 * ((pole a 1 * A) * (pole b 1 * B) * (pole c 1 * C)) := by
+        dsimp [F]
+        ring
+      _ = _ := by rw [ha, hb, hc]; simp
+  have hpoly : (PowerSeries.C ((a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)) : Series) =
+      PowerSeries.C (a^3*(b-c)*(b-d)*(c-d)) * (B*C*D) -
+      PowerSeries.C (b^3*(a-c)*(a-d)*(c-d)) * (A*C*D) +
+      PowerSeries.C (c^3*(a-b)*(a-d)*(b-d)) * (A*B*D) -
+      PowerSeries.C (d^3*(a-b)*(a-c)*(b-c)) * (A*B*C) := by
+    dsimp [A, B, C, D, linearDenominator]
+    simp only [map_pow, map_mul, map_sub]
+    ring
+  change PowerSeries.C ((a-b)*(a-c)*(a-d)*(b-c)*(b-d)*(c-d)) * F = _
+  rw [hpoly]
+  calc
+    _ = PowerSeries.C (a^3*(b-c)*(b-d)*(c-d)) * (F * (B*C*D)) -
+        PowerSeries.C (b^3*(a-c)*(a-d)*(c-d)) * (F * (A*C*D)) +
+        PowerSeries.C (c^3*(a-b)*(a-d)*(b-d)) * (F * (A*B*D)) -
+        PowerSeries.C (d^3*(a-b)*(a-c)*(b-c)) * (F * (A*B*C)) := by ring
+    _ = _ := by rw [hBCD, hACD, hABD, hABC]
+
 open private FourCopyGap.sum_gaps_nested FourCopyGap.monomial FourCopyGap.balanced
   from D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap in
 /-- The coefficient of the product of four geometric series is the positive
