@@ -207,7 +207,7 @@ private theorem sinc_pair_comparison {I : Type*} (s : Finset I) (x c : I → ℝ
         exact binEnergy_le binKernel binKernel_nonneg binKernel_even binKernel_sum.1 bins mass
       _ ≤ _ := mul_le_mul_of_nonneg_left hdiag (by positivity)
 
-private def intervalMean {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+def intervalMean {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (a : ℝ) (f : ℝ → E) : E :=
   (2 * a)⁻¹ • ∫ t in -a..a, f t
 
@@ -216,7 +216,7 @@ private theorem intervalMean_const_mul (a : ℝ) (c : ℂ) (f : ℝ → ℂ) :
   simp only [intervalMean, intervalIntegral.integral_const_mul, Complex.real_smul]
   ring
 
-private theorem intervalMean_sum {I E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+theorem intervalMean_sum {I E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (a : ℝ) (s : Finset I) (f : I → ℝ → E) (hf : ∀ j ∈ s, Continuous (f j)) :
     intervalMean a (fun t => ∑ j ∈ s, f j t) = ∑ j ∈ s, intervalMean a (f j) := by
   unfold intervalMean
@@ -258,7 +258,7 @@ private theorem intervalMean_re (a : ℝ) (f : ℝ → ℂ) (hf : Continuous f) 
   congr 1
   exact (intervalIntegral.intervalIntegral_re (hf.intervalIntegrable _ _)).symm
 
-private theorem intervalMean_cos {a : ℝ} (ha : 0 < a) (v s : ℝ) :
+theorem intervalMean_cos {a : ℝ} (ha : 0 < a) (v s : ℝ) :
     intervalMean a (fun t => Real.cos (v * (s + t))) =
       Real.cos (v * s) * Real.sinc (a * v) := by
   let mode (t : ℝ) := Complex.exp (Complex.I * (v : ℂ) * ((s + t : ℝ) : ℂ))
@@ -308,7 +308,7 @@ private theorem doubleMean_modes {I : Type*} (s : Finset I) (c v : I → ℝ)
       simp only [add_zero] at hzero
       rw [hzero, sq, mul_assoc, mul_assoc]
 
-private def pairCosineScore {I : Type*} (s : Finset I) (x c : I → ℝ) (t : ℝ) : ℝ :=
+def pairCosineScore {I : Type*} (s : Finset I) (x c : I → ℝ) (t : ℝ) : ℝ :=
   ∑ i ∈ s, ∑ j ∈ s, c i * c j * Real.cos ((x i - x j) * t)
 
 private theorem doubleMean_pairCosineScore {I : Type*} (s : Finset I) (x c : I → ℝ)
@@ -426,13 +426,13 @@ theorem monomialWeight_nonneg {J : Type*} [Fintype J] (w : J → ℝ)
     (hw : ∀ j, 0 ≤ w j) (m : J → ℕ) : 0 ≤ monomialWeight w m := by
   exact mul_nonneg (Nat.cast_nonneg _) (prod_nonneg (fun j _ => pow_nonneg (hw j) _))
 
-private theorem phase_re (g t : ℝ) : (phase g t).re = Real.cos (g * t) := by
+theorem phase_re (g t : ℝ) : (phase g t).re = Real.cos (g * t) := by
   unfold phase
   rw [show (g : ℂ) * Complex.I * (t : ℂ) = ((g * t : ℝ) : ℂ) * Complex.I by
     push_cast
     ring, Complex.exp_ofReal_mul_I_re]
 
-private theorem moment_eq_pair {J : Type*} [Fintype J] [DecidableEq J]
+theorem moment_eq_pair {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (p : ℕ) (t : ℝ) :
     ‖complexScore g w t‖ ^ (2 * p) =
       pairCosineScore (piAntidiag univ p) (monomialFrequency g) (monomialWeight w) t := by
