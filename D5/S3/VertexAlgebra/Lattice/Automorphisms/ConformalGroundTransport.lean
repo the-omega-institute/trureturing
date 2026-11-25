@@ -16,9 +16,9 @@ complex-linear automorphism fixing the inverse-Gram Sugawara vector therefore
 recovers the charge action from the joint current zero-mode spectrum and sends
 each charge ground line to a scalar multiple of the recovered charge line.
 The hypotheses are explicit in the public theorems: hPos is real positive
-definiteness, hRoot excludes norm-two charges, hHG and hGH identify H with the
-inverse Gram matrix, hMode preserves every integer state mode, and hOmega fixes
-the actual conformal vector omega D H. The group projection additionally
+definiteness, hRoot excludes norm-two charges, hHG identifies H with the inverse
+Gram matrix via H * gramComplex D = 1, hMode preserves every integer state mode,
+and hOmega fixes the actual conformal vector omega D H. The group projection additionally
 assumes an injective additive identification mu whose range contains every
 integral bilinear isometry.
 -/
@@ -175,10 +175,11 @@ private theorem vacuum_fixed (D : LatticeData)
 
 private theorem grade_preserved (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     (U : Carrier D ≃ₗ[ℂ] Carrier D) (hMode : PreservesModes D U)
     (hOmega : U (omega D H) = omega D H)
     (n : ℤ) (v : Carrier D) (hv : v ∈ grade D n) : U v ∈ grade D n := by
+  have hGH : gramComplex D * H = 1 := mul_eq_one_comm.mp hHG
   have hL0 : ((Y D (omega D H))[[1]]) = sugawaraMode D H 0 := by
     simpa using omega_modes D H 0
   have h := hMode (omega D H) 1 v
@@ -219,32 +220,32 @@ private theorem currentBasis_equivFun_symm_coe (D : LatticeData)
 
 private theorem grade_one_map (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     (U : Carrier D ≃ₗ[ℂ] Carrier D) (hMode : PreservesModes D U)
     (hOmega : U (omega D H) = omega D H) :
     (grade D 1).map U.toLinearMap = grade D 1 := by
   apply le_antisymm
   · rintro v ⟨u, hu, rfl⟩
-    exact grade_preserved D H hHG hGH U hMode hOmega 1 u hu
+    exact grade_preserved D H hHG U hMode hOmega 1 u hu
   · intro v hv
     have hOmegaInv : U.symm (omega D H) = omega D H := by
       apply U.injective
       rw [U.apply_symm_apply, hOmega]
-    exact ⟨U.symm v, grade_preserved D H hHG hGH U.symm
+    exact ⟨U.symm v, grade_preserved D H hHG U.symm
       (preservesModes_symm D U hMode) hOmegaInv 1 v hv, U.apply_symm_apply v⟩
 
 private theorem current_transport (D : LatticeData)
     (hPos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hRoot : ∀ a : Charge D, bilinear D a a ≠ 2)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     (U : Carrier D ≃ₗ[ℂ] Carrier D) (hMode : PreservesModes D U)
     (hOmega : U (omega D H) = omega D H) :
     ∃ T : Coordinates D ≃ₗ[ℂ] Coordinates D,
       (∀ x, U (current D x) = current D (T x)) ∧
       ∀ x y, gram D (T x) (T y) = gram D x y := by
   let B := (currentBasis D hPos hRoot).equivFun
-  let V := U.ofSubmodules (grade D 1) (grade D 1) (grade_one_map D H hHG hGH U hMode hOmega)
+  let V := U.ofSubmodules (grade D 1) (grade D 1) (grade_one_map D H hHG U hMode hOmega)
   let T := (B.symm.trans V).trans B
   have hCurrent (x : Coordinates D) : U (current D x) = current D (T x) := by
     rw [← currentBasis_equivFun_symm_coe D hPos hRoot x,
@@ -309,7 +310,7 @@ theorem conformal_charge_transport (D : LatticeData)
     (hPos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hRoot : ∀ a : Charge D, bilinear D a a ≠ 2)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     (U : Carrier D ≃ₗ[ℂ] Carrier D)
     (hMode : ∀ u n v, U (((Y D u)[[n]]) v) = ((Y D (U u))[[n]]) (U v))
     (hOmega : U (omega D H) = omega D H) :
@@ -317,7 +318,7 @@ theorem conformal_charge_transport (D : LatticeData)
       (∀ a b, bilinear D (s a) (s b) = bilinear D a b) ∧
       ∀ (a : Charge D) (p : Oscillator D) (q : Label D),
         carrierCoeffEquiv D (U (Finsupp.single a p)) q ≠ 0 → q.1 = s a := by
-  obtain ⟨T, hCurrent, hGram⟩ := current_transport D hPos hRoot H hHG hGH U hMode hOmega
+  obtain ⟨T, hCurrent, hGram⟩ := current_transport D hPos hRoot H hHG U hMode hOmega
   have hForward (a : Charge D) : ∃ b, chargeVector D b = T (chargeVector D a) := by
     obtain ⟨q, hq⟩ := exists_occupied_ground D U a
     exact ⟨q.1, occupied_charge D H hHG U hMode T hCurrent hGram a 1 q hq⟩
@@ -366,7 +367,7 @@ theorem conformal_ground_transport (D : LatticeData)
     (hPos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hRoot : ∀ a : Charge D, bilinear D a a ≠ 2)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     (U : Carrier D ≃ₗ[ℂ] Carrier D)
     (hMode : ∀ u n v, U (((Y D u)[[n]]) v) = ((Y D (U u))[[n]]) (U v))
     (hOmega : U (omega D H) = omega D H) :
@@ -376,17 +377,18 @@ theorem conformal_ground_transport (D : LatticeData)
         (eta a : ℂ) • Finsupp.single (s a) (1 : Oscillator D) := by
   classical
   obtain ⟨s, ⟨hGram, hCharge⟩, _⟩ :=
-    conformal_charge_transport D hPos hRoot H hHG hGH U hMode hOmega
+    conformal_charge_transport D hPos hRoot H hHG U hMode hOmega
   have hLabel (a : Charge D) (q : Label D)
       (hq : carrierCoeffEquiv D (U (ground D a)) q ≠ 0) : q = (s a, 0) := by
     have hFirst := hCharge a 1 q hq
     have hEnergy : chargeEnergy D (s a) = chargeEnergy D a := by
       simp only [chargeEnergy, hGram]
     have hg : ground D a ∈ grade D (chargeEnergy D a) := by
+      have hGH : gramComplex D * H = 1 := mul_eq_one_comm.mp hHG
       rw [ground_eq_basis]
       apply (actualL0_eigen_iff_grade D H hHG hGH _ _).mp
       simpa [energy] using actualL0_basis D H hHG hGH (a, 0)
-    have hgU := grade_preserved D H hHG hGH U hMode hOmega _ _ hg
+    have hgU := grade_preserved D H hHG U hMode hOmega _ _ hg
     have hOccupiedEnergy : energy D q = chargeEnergy D a := by
       by_contra hn
       exact hq ((mem_grade_iff D _ _).mp hgU q hn)
@@ -430,7 +432,7 @@ theorem conformal_ground_projection (D : LatticeData)
     (hPos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hRoot : ∀ a : Charge D, bilinear D a a ≠ 2)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hHG : H * gramComplex D = 1)
     {G K : Type*} [Group G] [Group K]
     (mu : Additive K →+ AddAut (Charge D)) (hInj : Function.Injective mu)
     (hOnto : ∀ s : AddAut (Charge D), (∀ a b, bilinear D (s a) (s b) = bilinear D a b) →
@@ -445,7 +447,7 @@ theorem conformal_ground_projection (D : LatticeData)
   have hLift (g : G) : ∃ (s : Charge D ≃+ Charge D) (eta : Charge D → ℂˣ),
       (∀ a b, bilinear D (s a) (s b) = bilinear D a b) ∧
       ∀ a, U g (ground D a) = (eta a : ℂ) • ground D (s a) :=
-    conformal_ground_transport D hPos hRoot H hHG hGH (U g) (hMode g) (hOmega g)
+    conformal_ground_transport D hPos hRoot H hHG (U g) (hMode g) (hOmega g)
   choose s eta hGram hGround using hLift
   choose k hk using fun g => hOnto (s g) (hGram g)
   have hOne : s 1 = 0 := by
