@@ -36,6 +36,7 @@ For Hermitian H and K and every natural number p at least three, the word mean a
 
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree.exponential_bound_all`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree.product_bound_all`
+- Dependency: [D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign](PositiveCenter/LeftStripGeometricSign.md)
 - Dependency: [D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign](PositiveCenter/LeftStripWideSign.md)
 - Dependency: [D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay](PositiveCenter/MiddleGapReplay.md)
 - Dependency: [D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel](PositiveCenter/SeparatedFourKernel.md)
