@@ -10,7 +10,6 @@ public import Mathlib.Dynamics.BirkhoffSum.NormedSpace
 public import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
 public import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 public import Mathlib.MeasureTheory.Integral.DominatedConvergence
-public import Mathlib.MeasureTheory.Function.SimpleFuncDenseLp
 
 /-!
 # Banach-valued Birkhoff pointwise convergence over finite measures
