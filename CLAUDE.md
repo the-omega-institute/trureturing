@@ -664,11 +664,11 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.3 worktree 与 Lean 缓存入口
 
-**普通 CI 与受保护分支缓存。** PR 和 push 按候选的实际变更编译选定 Lean 目标与依赖，执行对应 Scribe 和测试检查，并只读恢复缓存。受保护的 `dev` 非删除 push 触发独立整库缓存刷新作业，与手动 build 共用仓库级串行队列。用 `make pr-watch PR=<编号> HEAD_SHA=<完整提交 SHA>` 等待固定提交的 required 检查，同一 PR 的同一提交只启动一个等待任务。失败时读取对应 job 的诊断。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
+**普通 CI 与受保护分支缓存。** PR 和 push 按候选的实际变更编译选定 Lean 目标与依赖，执行对应 Scribe 和测试检查，并只读恢复缓存。Cache Release Publish 定时或经授权手动从受保护的 `dev` 发布模块编译分片。用 `make pr-watch PR=<编号> HEAD_SHA=<完整提交 SHA>` 等待固定提交的 required 检查，同一 PR 的同一提交只启动一个等待任务。失败时读取对应 job 的诊断。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
 
-**项目缓存的本地恢复。** dev 主检出使用 `make lean-cache-from-github-without-mathlib` 恢复项目编译产物与原生模块报告。已有私有 build 可显式指定 `REFRESH_STALE=1` 替换。linked worktree 用 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出播种。显式候选 Release 验证按 spec A22 执行。
+**项目缓存的本地恢复。** dev 主检出使用 `make lean-cache-from-github-without-mathlib` 优先从已发布的模块索引恢复编译产物。已有私有 build 可显式指定 `REFRESH_STALE=1` 替换。linked worktree 用 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出播种。显式候选 Release 验证按 spec A22 执行。
 
-普通 PR 和受保护分支 push 的 required CI 为选中的每批目标运行 `lean-report-prepare` 和 `lean-report-scoped`，报告覆盖目标、utility 输入及 import 闭包。独立 Actions producer 和执行构建的 Release publisher 使用 `make lean-cache-prepare FULL_BUILD=1` 编译所需程序和输入，由 Lake 逐模块生成或复用报告。续跑保存未完成的原生工件。完整快照须由成功的准备命令和本次调用的工作量记录确认。
+普通 PR 和受保护分支 push 的 required CI 为选中的每批目标运行 `lean-report-prepare` 和 `lean-report-scoped`，报告覆盖目标、utility 输入及 import 闭包。Truth Release 使用 `make lean-cache-prepare FULL_BUILD=1` 准备发布所需的编译产物和模块报告。
 
 **Start with compatible reuse** according to section 6.1. In particular, observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first. Use `make worktree` with explicit `DEST` when isolation is needed.
 
@@ -756,7 +756,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 **重计依据**:调度重计/重新取得资格前,须有具体 workflow/程序/判据/执行行为变化,或原验收无效的具体证据。在既有 PR 证据中简记改变的行为/失败断言、不可变候选及 run/test 身份、哪些既有义务须重验及哪些证据失效、受影响复验范围与停止条件;不另建账本/模板/工具或过程记录。仅当合格行为版本实际改变,或证据失效覆盖整组资格时,才从该版本真绿起重计 **4/8**;失效仅限部分单位则仅撤销并补足那些单位,保留其余有效证据与计数。不得仅凭失败、状态或 SHA 推定失效。
 **失败处置**:非预期失败必须保留判词、诊断并修复实际问题,重跑成功不抹失败;失败的新 PR 不计数,required checks 未通过不得合入。正确拒绝新增非法内容、无关外部服务/传输故障、实测语义保持的表示修正或采集失败,均不自动抹去有效旧单位,依上述依据界定影响面。原因未明时阻断受影响验收直至诊断,不得据此盲目全量重验;真实候选缺陷不得改称格式/基础设施问题来规避已证影响面。
 **逐 run 事件/版本取源**:分列实际事件、入口 workflow 仓库/路径/不可变 SHA、PR base/head、实际 checkout 候选 SHA(PR 为 M)、protected base(PR 为 B=M^1)、reusable workflow 仓库/路径/解析后 SHA(若有)。同名 check 绿或 M/B 不能代替 workflow 版本;来源记录不扩张第 9.5 条语义检查/固定事件规划输入。
-`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。短/长 CI、Actions/Release 缓存的触发、ref 归属、工作量、写入条件、时限与失败策略统一见 [spec A22 缓存契约](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。普通 PR 与受保护分支 push 的 required CI 按需恢复可见种子、检查选中的变更。受保护分支的非删除 push 与固定受保护提交的手动 build 共用独立长 producer，由其准备编译工件和模块报告，验证项目快照并发布 Actions cache。不得把缓存成功当作 required 成功。workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对；`pull_request_target` 不作为候选 CI 入口，Release 发布使用独立受信任入口。
+`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。短/长 CI、Actions/Release 缓存的触发、ref 归属、工作量、写入条件、时限与失败策略统一见 [spec A22 缓存契约](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。普通 PR 与受保护分支 push 的 required CI 按选中模块的编译输入键恢复分片并检查变更。不得把缓存成功当作 required 成功。workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对；`pull_request_target` 不作为候选 CI 入口，Release 发布使用独立受信任入口。
 **安装后首个真实 run 立即核验**:integration 按实证可达触发方式,最终 dev 再核 dev 触发。未触发记缺口,dev 非预期红按第 7.14 条撤因。hotfix 合前完成可达验证,仅依赖默认分支更新的路径合后立即真跑补记;feature/重构不得借此延后集成。
 **取源差异下继续可达验证**:可用明确事件(如 pull_request 调钉版 reusable)验证候选程序/复用流程,只证明该事件/版本/权限;逐项披露相对拟上线原生事件的语义/权限/其他缺口。未证可达的原生路线不报已存在,旧绿不抵新资格,同 PR 另有旧 run 不使候选 wrapper 成为重复项可取消。继续可达的逐原 PR 覆盖,但 Ready/merge 仍须全部覆盖/性能/条数/真实事件资格;条数不抵原生缺口,不得先搬未达标 CI 到默认分支以使其可选。本款是事实校正,不创验证豁免。
 **清理与最终对应**:专用探针载荷放触发 PR,验后关闭不合;合法镜像改动/历史留 integration,不为整理交付 diff 撤镜像。清理只删已有实验载荷/临时 wrapper,独立 PR 全部 required checks正常合入并分析 push,保留新 CI;复验与重计统一依上述依据及范围。交付前钉原 lane head、已验 integration head/各自基线,列全层候选/修复/优化/安装映射;交付分支改动的每个文件须与已验 integration tip 逐字节相同,或差异仅来自 integration 起点之后的 dev 提交(逐个点名),否则回流补验。不能仅靠标题/数量/patch-id,不要求整树同一,不重放已验历史替代对应核对。基线差异/冲突适配须说明,遗漏或未经验证差异先回流修复并补验影响面,不因清理或对应核对本身重计。
@@ -866,14 +866,14 @@ FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。�
 ### 10.2 Lean 构建成本的两个坐标:缓存与证明项
 
 **构建耗时异常时先读 `LEAN_CACHE` 收据。** `status` 和 `method` 记录缓存准备结果与来源，`project_olean_state` 和 `mathlib_olean_state` 分别记录项目层与依赖层状态，`archive_status` 和 `archive_skip_reason` 记录归档尝试。`project_olean_state: cold` 表示项目层缺少预编译产物。实际编译范围取决于入口与目标，定向冷构建只编译所选目标及必要依赖（第 8.3 条）。归因时同时检查目标范围、缓存收据及实际退出码。引用冷编译耗时须注明测量提交与构建目标。
-**Release 内容层快照供本地 `lean-cache-ensure` 取回；CI 构建使用 Actions 种子，不从 Release 播种。** macOS 与 Linux 的 arm64 按 `tools/scripts/worktree/lean_cache.py` 的 `SHARED_SEED_PLATFORMS` 共用项目 buildDir 中的 `.olean`/`.ilean`/IR；原生产物由 Lake 按平台重新 trace 并重建。取回只在同依赖分区、同报告格式与同显式执行环境的同族快照中按发布时间选最新；发布与五份快照保留清理仍按生产者本平台分区。x64 不在共享族内；新增共享族须先验证相应编译产物与原生重建边界。
-本地与定时 CI 使用同一 `make lean-cache-to-github-without-mathlib FULL_BUILD=1` 入口。入口核验干净工作树、受保护 dev 的提交以及从本地树派生的分区和 key。项目缓存缺失且允许冷构建时，先完成编译产物和模块报告的准备，再验证项目快照；校验和打包共持项目缓存读锁。发布不校验作者、bot、workflow 归属或事件类型。CI run/attempt 和本地 HEAD/UTC 时间只用于唯一后缀，不决定复用。构建失败保留退出码，内容校验失败返回非零；可选传输或清理失败按现有收据报告。显式 integration 验证使用独立命名空间与固定源校验，仅验证本次上传的完整快照，不作为 CI 构建种子。
+**普通 CI 按模块索引恢复编译分片。** Actions 缓存未命中时，从索引指定的 Release 取回同一分片。本地显式内容层快照的兼容范围如下。 macOS 与 Linux 的 arm64 按 `tools/scripts/worktree/lean_cache.py` 的 `SHARED_SEED_PLATFORMS` 共用项目 buildDir 中的 `.olean`/`.ilean`/IR；原生产物由 Lake 按平台重新 trace 并重建。取回只在同依赖分区、同报告格式与同显式执行环境的同族快照中按发布时间选最新；发布与五份快照保留清理仍按生产者本平台分区。x64 不在共享族内；新增共享族须先验证相应编译产物与原生重建边界。
+共享模块索引由 Cache Release Publish 发布。手动集成发布验证以固定的受保护分支提交调用 `make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification`，在独立命名空间验证候选快照及读者。
 **坐标二:缓存正常仍付不起时量证明项,不抬预算**。症状为`LEAN_CACHE` 收据显示两层 `warm`、本地 make lean 成功且远低于10min而 CI `Build candidate Lean project` 失败/被杀,或同类40–44s而该模块数分钟;不能只沿冷缓存诊断。本地绿只报成败,不报 kernel checked 时间/峰值内存,也不证明 runner 能承受。
 先经 `/usr/bin/time -l lake env lean -Dprofiler=true -Dtrace.profiler=true -Dtrace.profiler.threshold=1000 <模块>.lean` 量 checked 秒数与 maximum resident set size,按声明找主成本,每改一处重量,PR 给前后读数(第 2.8 条)。
 
 构建优化的病因、处方、配置比较与负结果读数见 SPEC §11.28（CLAUDE.md §10.2）。
 
-**两条红线**:①**agent 不得擅自抬 `timeout-minutes` 或计算预算，不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);普通 `current` 与 `ci-unit` 依 SPEC A22 使用 120 分钟（2 小时）累计计算预算，缓存/准备包与工具依赖下载准备不计入；外层 job 平台挂钟上限为 360 分钟，不承诺无限下载。独立长 producer 与定时 Release 各有 360 分钟的 job 上限；agent 不得自行抬计算预算或平台上限。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
+**两条红线**:①**agent 不得擅自抬 `timeout-minutes` 或计算预算，不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);普通 `current` 与 `ci-unit` 依 SPEC A22 使用 120 分钟（2 小时）累计计算预算，缓存/准备包与工具依赖下载准备不计入；外层 job 平台挂钟上限为 360 分钟，不承诺无限下载。各发布作业使用其工作流规定的平台上限。agent 不得自行抬计算预算或平台上限。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
 *成熟锚*:先测量再优化、Amdahl 定律(先找真正占大头的那一项)、性能预算(budget 是约束不是可调参数)、开发机与生产环境的资源差异(works on my machine)、数据结构选择决定渐近代价。
 〔守护:**软 + 硬投影,诚实分栏**·「有没有在提交前量过」不可 lint,靠对手官评审与本款。**硬投影两条**:①凡 CI 的 Lean 构建步失败或被杀,其归因**必须引用该模块的 `checked` 秒数与峰值内存读数**,只写「太慢」「太重」者按第 2.9 条判无效;②凡以「优化编译成本」为由改动既有模块,PR 说明须给出**改前改后两组读数**(与第 2.8 条同形),缺失即判该优化未经论证。**诚实边界**:`import Mathlib.Tactic` 词法可 grep,但**不设禁令** —— 确有模块需要多个 tactic,一刀切会误伤(第 7.10 条:防的必须是发生过的事,且付得起自己的代价);峰值内存**当前无任何机器门**,`RESOURCE_OBSERVATION` 只在 report-supervisor 级聚合输出 `rss_peak_kb`,**不分模块**,故本款不得声称已有机器保证。未来若升硬,须由候选判官内的消费者读取逐模块的绑定 HEAD 的成本读数,并以变异证明「成本回升会使具名检查变红」〕
 
