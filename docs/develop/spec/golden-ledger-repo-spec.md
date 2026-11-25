@@ -276,7 +276,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 - `libraries` 是该声明最近一次测量得到的完整库根名称数组。缺省表示库来源未知，`[]` 表示测量所得的库根集合为空。测量从编译后的声明类型与定义值或证明项出发，递归遍历实际引用的声明及其编译依赖，涵盖私有、隐藏和其他未进入状态片的辅助声明，也涵盖仅在类型中出现的引用。库根取自所达声明的编译模块归属。测量穿过仓内 `D5`、`Reg`、`Trureturing` 和 `OmegaChecks` 根下的声明，将其依赖归入实际使用的数学库。`OmegaInit` 与 `OmegaMath` 虽与 D5 共用 Lake package，仍各以自身库根报告；来自其他库的可达声明也计入，包括官方 Lean 库和其他外部库。实际声明依赖决定库集合，源码 import 清单、声明命名空间和同一模块中的其他行均不提供库归属证据。
 - `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。writer 写出测得的完整名称数组，包括全许可集合和代表实测零公理的 `[]`。历史行缺省时只提供三个标准公理的许可上界。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
-- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。对照器核验为官方编译器单独派生的辅助声明可仅保留官方测量。其余应有的严格声明缺失即拒绝更新。
+- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。显式或经导入链选择 `compile_only_with_mathlib` 的消费模块仅记录官方测量。双编模块中，对照器核验为官方编译器单独派生的辅助声明也可仅记录官方测量。其余应有的严格声明缺失即拒绝更新。
 
 可选字段记录写入时的测量。证明项、依赖或工具链变化后，陈述 pin 仍可相同，此时旧注记仍可读取。对当前编译结果的依赖断言须取当前证据。只有 `libraries` 明示非空且其全部成员属于 `{OmegaInit, OmegaMath}`，并且 `axioms` 明示为 `[]` 时，才可将该行描述为「仅依赖 Omega 库、零公理」（截至该次测量）。`libraries: []` 可支持空库依赖的读数，无 Omega 归属。严格模块审计的范围是整个编译导入闭包，包括未被该声明引用的模块和声明；其零公理及严格导入边界由独立的空内核重放与模块校验建立。
 
@@ -284,7 +284,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
-首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新都须编译对应源码、核对两个后端的产物归属与翻译后的导出，并将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新均按当前工具链和官方编译产物中的模块元数据选择后端。模块声明 `compile_only_with_mathlib` 或导入闭包中有此声明时，记录官方端的实测依赖，刷新时移除已失去配对依据的 `strict_omega`。其余入选模块用同一份源码双编，核对两个后端的产物归属与翻译后的导出，再将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 

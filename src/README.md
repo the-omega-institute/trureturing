@@ -2,7 +2,35 @@
 
 `OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
-普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+
+## 选择编译后端
+
+`OmegaMathlib` 是钉版 Mathlib 已移植并核对过的严格子集。有共同接口时，消费模块写一份证明，在官方和严格后端编译。下面的等式使用 `OmegaMath` 的自然数乘法定理。
+
+```lean
+prelude
+import OmegaMath.Data.Nat
+
+example (a k : Omega.Nat) : Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k.mul k)) :=
+  Omega.Nat.square_mul a k
+```
+
+需要完整的官方接口时，导入 `OmegaBuild.Commands`，在所有 import 之后、数学声明之前写一次 `compile_only_with_mathlib`。该模块可以直接组合 Mathlib 的类型、定理、实例、记号和 tactics 与官方端的 OmegaMath 结果。这里的 `Omega.Nat` 在官方端就是 `Nat`，可以直接传给 Mathlib 的阶乘。
+
+```lean
+import OmegaBuild.Commands
+import OmegaMath.Data.Nat
+import Mathlib.Data.Nat.Factorial.Basic
+
+compile_only_with_mathlib
+
+example (n : Omega.Nat) : Nat := Nat.factorial n
+```
+
+任何直接或间接导入阶乘模块的消费者都只走官方后端。它们无需重复标记，共同上游和独立分支仍然双编。移除模块或其依赖上的最后一个标记后，严格端会再次编译这份源码。官方端的编译错误始终失败。对同时支持两端的模块，严格端的编译或导出对照失败也会报告。
+
+本仓定向核验使用 `python3 src/OmegaChecks/portable.py --backend both <消费模块名>`。结果列出只在官方端编译的模块，并给出到显式标记的 import 链。CI 按相同规则选择严格目标。下游 Lake 包中的两个例子由[集成测试](OmegaChecks/test_backend_plan.py)编译。
 
 ## 六卷与模块树
 
@@ -140,7 +168,7 @@ python3 src/OmegaChecks/check.py --full
 
 完整双编把官方侧公开声明、所属模块及传递公理依赖写入 `.lake/build/omega-checks/official-axioms.json`，局部双编写入同目录的 `selected-official-axioms.json`。CI 将本次比较生成的报告作为 `omega-official-axioms` 上传。
 
-完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。两端各用对应的主库及检查器接口编译这些模块，普通数学发布仍从主包构建。
+完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。官方端使用主库及检查器接口编译入选模块，严格端编译其中支持双端的子集。普通数学发布从主包构建。
 
 移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/` 下的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
 
@@ -150,8 +178,7 @@ python3 src/OmegaChecks/portable.py --regenerate-facades
 
 下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`Omega.Nat.fib` 由编译后的公开名自动解析到 `Nat.fib`。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
 
-
-所有入选消费者均以原始官方环境和严格环境编译。准入还为严格端口的共同公开计算规则生成一份独立的官方构建配置，在其中限制已封装实现的展开，并编译仓内的共同接口用例。以 Fibonacci 为例，普通官方发布允许用 `rfl` 计算 `fib 0`，严格环境和共同接口用例可用公开定理 `fib_zero`。下列双端核验命令同时准备这份配置。随后可用 `lake -f .lake/omega-common.toml env lean <文件>` 检查其他消费者是否只用到了共同计算规则。
+支持双端的消费者使用原始官方环境和严格环境分别编译。准入还为严格端口的共同公开计算规则生成一份独立的官方构建配置，在其中限制已封装实现的展开，并编译仓内的共同接口用例。以 Fibonacci 为例，普通官方发布允许用 `rfl` 计算 `fib 0`，严格环境和共同接口用例可用公开定理 `fib_zero`。下列双端核验命令同时准备这份配置。随后可用 `lake -f .lake/omega-common.toml env lean <文件>` 检查其他消费者是否只用到了共同计算规则。
 ```sh
 python3 src/OmegaChecks/portable.py --backend strict OmegaChecks.Portable.Common
 python3 src/OmegaChecks/portable.py --backend mathlib OmegaChecks.Portable.Common
