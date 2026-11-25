@@ -20,7 +20,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-namespace PetzLowRankPartialTrace
+namespace D5.S3.Quantum.Information.LowRankPartialTrace
 
 open Matrix
 open scoped BigOperators ComplexOrder Kronecker Matrix Matrix.Norms.Frobenius
@@ -221,7 +221,7 @@ def expectation {S T : Type*} [Fintype S] [DecidableEq S] :
   map_smul' z X := by
     ext ⟨s,t⟩ ⟨u,v⟩
     simp only [Matrix.smul_apply, Matrix.kronecker_apply, smul_eq_mul, partialTraceLeft,
-      ← Finset.mul_sum]
+      ← Finset.mul_sum, RingHom.id_apply]
     ring
 
 private theorem expectation_apply {S T : Type*} [Fintype S] [DecidableEq S]
@@ -229,13 +229,16 @@ private theorem expectation_apply {S T : Type*} [Fintype S] [DecidableEq S]
     expectation X (s,t) (u,v) =
       if s = u then (Fintype.card S : ℂ)⁻¹ * ∑ a, X (a,t) (a,v) else 0 := by
   by_cases h : s = u <;>
-    simp [expectation, Matrix.one_apply, h, partialTraceLeft]
+    simp [expectation, h, partialTraceLeft]
 
 private theorem expectation_tensor {S T : Type*} [Fintype S] [DecidableEq S] [Nonempty S]
     (Y : Matrix T T ℂ) : expectation ((1 : Matrix S S ℂ) ⊗ₖ Y) = 1 ⊗ₖ Y := by
-  change (Fintype.card S : ℂ)⁻¹ • ((1 : Matrix S S ℂ) ⊗ₖ
-    partialTraceLeft ((1 : Matrix S S ℂ) ⊗ₖ Y)) = _
-  rw [partialTraceLeft_kronecker, Matrix.trace_one, Matrix.kronecker_smul, smul_smul,
+  change (Fintype.card S : ℂ)⁻¹ • Matrix.kronecker (1 : Matrix S S ℂ)
+    (partialTraceLeft (Matrix.kronecker (1 : Matrix S S ℂ) Y)) = _
+  rw [partialTraceLeft_kronecker, Matrix.trace_one]
+  change (Fintype.card S : ℂ)⁻¹ •
+    ((1 : Matrix S S ℂ) ⊗ₖ ((Fintype.card S : ℂ) • Y)) = _
+  rw [Matrix.kronecker_smul, smul_smul,
     inv_mul_cancel₀ (Nat.cast_ne_zero.mpr Fintype.card_ne_zero), one_smul]
 
 private def pairing {S : Type*} [Fintype S] (X Y : Matrix S S ℂ) : ℂ :=
@@ -265,11 +268,6 @@ private theorem pairing_reindex {S T : Type*} [Fintype S] [Fintype T]
   change trace ((Xᴴ.submatrix e e) * (Y.submatrix e e)) = _
   rw [Matrix.submatrix_mul_equiv]
   exact e.sum_comp (fun i => (Xᴴ * Y) i i)
-
-private theorem sq_reindex {S T : Type*} [Fintype S] [Fintype T]
-    (e : T ≃ S) (X : Matrix S S ℂ) : ‖X.submatrix e e‖ ^ 2 = ‖X‖ ^ 2 := by
-  apply Complex.ofReal_injective
-  simpa only [frobenius_norm_sq_eq_trace, pairing] using pairing_reindex e X X
 
 private theorem projection_pythagoras {S : Type*} [Fintype S]
     (P : Matrix S S ℂ →ₗ[ℂ] Matrix S S ℂ)
@@ -315,9 +313,10 @@ private theorem expectationAlong_idem {S T U : Type*} [Fintype S] [DecidableEq S
   rw [map_smul, expectation_tensor]
   rfl
 
-private theorem expectationAlong_adjoint {S T U : Type*} [Fintype S] [Fintype T] [Fintype U]
+private theorem expectationAlong_adjoint {S T U : Type*} [Fintype S] [Finite T] [Fintype U]
     [DecidableEq S] (e : S × T ≃ U) (X Y : Matrix U U ℂ) :
     pairing X (expectationAlong e Y) = pairing (expectationAlong e X) Y := by
+  let : Fintype T := Fintype.ofFinite T
   have h (Z : Matrix U U ℂ) :
       (expectationAlong e Z).submatrix e e = expectation (Z.submatrix e e) := by
     ext i j
@@ -346,27 +345,30 @@ def expectA : TensorMatrix A B C →ₗ[ℂ] TensorMatrix A B C :=
 def expectB : TensorMatrix A B C →ₗ[ℂ] TensorMatrix A B C :=
   expectationAlong (secondSite A B C)
 
+omit [Fintype B] [DecidableEq B] [Fintype C] in
 private theorem expectA_apply (X : TensorMatrix A B C) (a a' : A) (b b' : B) (c c' : C) :
     expectA X ((a,b),c) ((a',b'),c') =
       if a = a' then (Fintype.card A : ℂ)⁻¹ * ∑ i, X ((i,b),c) ((i,b'),c') else 0 :=
   expectation_apply _ a a' (b,c) (b',c')
 
+omit [Fintype A] [DecidableEq A] [Fintype C] in
 private theorem expectB_apply (X : TensorMatrix A B C) (a a' : A) (b b' : B) (c c' : C) :
     expectB X ((a,b),c) ((a',b'),c') =
       if b = b' then (Fintype.card B : ℂ)⁻¹ * ∑ j, X ((a,j),c) ((a',j),c') else 0 :=
   expectation_apply _ b b' (a,c) (a',c')
 
+omit [Fintype C] in
 private theorem expect_union (X : TensorMatrix A B C) :
     expectB (expectA X) = expectation X ∧ expectA (expectB X) = expectation X := by
   constructor <;> ext ⟨⟨a,b⟩,c⟩ ⟨⟨a',b'⟩,c'⟩ <;>
     by_cases ha : a = a' <;> by_cases hb : b = b' <;>
     simp only [expectA_apply, expectB_apply, expectation_apply, Prod.mk.injEq, ha, hb,
-      if_true, if_false, true_and, and_false, false_and, Finset.sum_const_zero, mul_zero,
-      Fintype.card_prod, Nat.cast_mul, mul_inv_rev, Fintype.sum_prod_type, ← Finset.mul_sum,
-      mul_assoc]
-  · congr 1
-    rw [Finset.sum_comm]
-  · rw [mul_left_comm]
+      ite_true, ite_false, and_false, false_and, Finset.sum_const_zero, mul_zero,
+      Fintype.card_prod, Nat.cast_mul, _root_.mul_inv_rev, Fintype.sum_prod_type,
+      ← Finset.mul_sum]
+  · rw [Finset.sum_comm (f := fun j i => X ((i,j),c) ((i,j),c'))]
+    ac_rfl
+  · ac_rfl
 
 private theorem two_site_complement [Nonempty A] [Nonempty B] (X : TensorMatrix A B C) :
     ‖X - expectA X - expectB (X - expectA X)‖ ^ 2 =
@@ -382,6 +384,7 @@ private theorem two_site_complement [Nonempty A] [Nonempty B] (X : TensorMatrix 
   have hOther := projection_pythagoras (expectA : TensorMatrix A B C →ₗ[ℂ] _)
     (expectationAlong_idem _) (expectationAlong_adjoint _) (expectB X)
   rw [(expect_union X).2] at hOther
+  rw [hDiff]
   linarith only [hUnion, hOther]
 
 private theorem two_site_mass_le [Nonempty A] [Nonempty B]
@@ -389,6 +392,7 @@ private theorem two_site_mass_le [Nonempty A] [Nonempty B]
     (hX : X.rank ≤ Fintype.card A) :
     ‖expectA X‖ ^ 2 + ‖expectB X‖ ^ 2 ≤
       (1 + (Fintype.card A : ℝ)⁻¹) * ‖X‖ ^ 2 := by
+  let : DecidableEq C := Classical.decEq C
   have hpos : (Fintype.card A : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
   have hratio : (Fintype.card A : ℝ) / (Fintype.card (A × B) : ℝ) =
       (Fintype.card A : ℝ)⁻¹ := by
@@ -419,23 +423,63 @@ def basisEncoder (q : B × C) : Matrix A ((A × B) × C) ℂ :=
 private theorem basisEncoder_coisometry (q : B × C) :
     (basisEncoder q : Matrix A _ ℂ) * (basisEncoder q : Matrix A _ ℂ)ᴴ = 1 := by
   ext a a'
-  simp [basisEncoder, Matrix.mul_apply, Matrix.one_apply, ← ite_and, eq_comm (a := a)]
+  by_cases h : a = a'
+  · subst a'
+    simp [Matrix.mul_apply, basisEncoder, apply_ite]
+  · rw [Matrix.one_apply_ne h, Matrix.mul_apply]
+    apply Finset.sum_eq_zero
+    intro p _
+    by_cases hp : p = ((a,q.1),q.2)
+    · subst p
+      simpa [basisEncoder] using h
+    · simp [basisEncoder, hp]
 
+omit [Fintype B] [Fintype C] in
 private theorem basisEncoder_projection (q : B × C) :
-    (basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q =
+    ((basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q : TensorMatrix A B C) =
       diagonal (fun p : (A × B) × C => if (p.1.2,p.2) = q then (1 : ℂ) else 0) := by
-  ext p p'
-  rcases p with ⟨⟨a,b⟩,c⟩
-  rcases p' with ⟨⟨a',b'⟩,c'⟩
-  by_cases ha : a = a' <;> by_cases hb : b = q.1 <;> by_cases hc : c = q.2 <;>
-    simp [basisEncoder, Matrix.mul_apply, Matrix.diagonal_apply, Prod.mk.injEq,
-      ← ite_and, ha, hb, hc]
+  ext ⟨⟨a,b⟩,c⟩ ⟨⟨a',b'⟩,c'⟩
+  change (∑ i : A, star (basisEncoder q i ((a,b),c)) * basisEncoder q i ((a',b'),c')) = _
+  rw [Matrix.diagonal_apply]
+  by_cases hq : (b,c) = q
+  · by_cases hp : ((a,b),c) = ((a',b'),c')
+    · have hEntry (i : A) : (basisEncoder q : Matrix A _ ℂ) i ((a,b),c) =
+          if a = i then 1 else 0 := by
+        have hb : b = q.1 := congrArg Prod.fst hq
+        have hc : c = q.2 := congrArg Prod.snd hq
+        simp [basisEncoder, Prod.mk.injEq, hb, hc]
+      simp only [← hp, hEntry, hq, ite_true, apply_ite, star_one, star_zero]
+      simp
+    · simp only [hp, ite_false]
+      apply Finset.sum_eq_zero
+      intro i _
+      by_cases hi : ((a,b),c) = ((i,q.1),q.2)
+      · have hj : ((a',b'),c') ≠ ((i,q.1),q.2) := by
+          intro h
+          exact hp (hi.trans h.symm)
+        simp [basisEncoder, hi, hj]
+      · simp [basisEncoder, hi]
+  · simp only [hq, ite_false, ite_self]
+    apply Finset.sum_eq_zero
+    intro i _
+    have hi : ((a,b),c) ≠ ((i,q.1),q.2) :=
+      fun h => hq (congrArg (fun p : (A × B) × C => (p.1.2,p.2)) h)
+    simp [basisEncoder, hi]
 
 private theorem basisEncoder_complete :
-    (∑ q : B × C, (basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q) = 1 := by
-  ext ⟨⟨a,b⟩,c⟩ ⟨⟨a',b'⟩,c'⟩
-  by_cases h : ((a,b),c) = ((a',b'),c') <;>
-    simp [basisEncoder_projection, Matrix.diagonal_apply, Matrix.one_apply, h]
+    (∑ q : B × C, ((basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q :
+      TensorMatrix A B C)) = 1 := by
+  ext p p'
+  simp only [Matrix.sum_apply, basisEncoder_projection, Matrix.diagonal_apply, Matrix.one_apply]
+  by_cases h : p = p'
+  · simp [h]
+  · simp [h]
+
+private theorem single_sq {S : Type*} [Fintype S] [DecidableEq S] (s : S) :
+    ‖Matrix.single s s (1 : ℂ)‖ ^ 2 = 1 := by
+  apply Complex.ofReal_injective
+  rw [frobenius_norm_sq_eq_trace, Matrix.conjTranspose_single, star_one,
+    Matrix.single_mul_single_same, one_mul, Matrix.trace_single_eq_same, Complex.ofReal_one]
 
 private theorem basisEncoder_masses [Nonempty A] [Nonempty B]
     (h : Fintype.card A = Fintype.card B) (q : B × C) :
@@ -448,29 +492,42 @@ private theorem basisEncoder_masses [Nonempty A] [Nonempty B]
     rw [hK, frobenius_sq_diagonal, Fintype.sum_prod_type, Fintype.sum_prod_type]
     simp only [← Fintype.sum_prod_type (f := fun p : B × C =>
       ‖if p = q then (1 : ℂ) else 0‖ ^ 2)]
-    simp
+    simp only [apply_ite (fun z : ℂ => ‖z‖ ^ 2), norm_one, norm_zero,
+      one_pow, zero_pow (by decide : (2 : ℕ) ≠ 0), Finset.sum_ite_eq',
+      Finset.mem_univ, ite_true, Finset.sum_const, Finset.card_univ, nsmul_one]
   have hFixed : expectA K = K := by
     have hc : (Fintype.card A : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
     rw [hK]
     ext ⟨⟨a,b⟩,c⟩ ⟨⟨a',b'⟩,c'⟩
-    by_cases ha : a = a' <;> by_cases hb : b = b' <;> by_cases hc' : c = c' <;>
-      simp [expectA_apply, Matrix.diagonal_apply, Prod.mk.injEq, ha, hb, hc',
-        ← mul_assoc, inv_mul_cancel₀ hc]
+    simp only [expectA_apply, Matrix.diagonal_apply, Prod.mk.injEq, true_and]
+    by_cases ha : a = a' <;> by_cases hb : b = b' <;> by_cases hcc : c = c' <;>
+      simp only [ha, hb, hcc, and_true, and_false, ite_true, ite_false,
+        Finset.sum_const_zero, mul_zero]
+    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← mul_assoc,
+      inv_mul_cancel₀ hc, one_mul]
   have hTrace : partialTraceLeft K = (Fintype.card A : ℂ) • Matrix.single q.2 q.2 1 := by
     rw [hK]
     ext c c'
-    by_cases hcc : c = c' <;>
-      simp [partialTraceLeft, Matrix.diagonal_apply, Matrix.single, Prod.mk.injEq,
-        Fintype.sum_prod_type, hcc, Finset.sum_ite]
-  have hSingle : ‖Matrix.single q.2 q.2 (1 : ℂ)‖ ^ 2 = 1 := by
-    rw [frobenius_sq_entries]
-    simp [Matrix.single, ← ite_and]
+    by_cases hcc : c = c'
+    · subst c'
+      simp only [partialTraceLeft, Matrix.diagonal_apply_eq, Fintype.sum_prod_type,
+        Matrix.smul_apply, Matrix.single_apply, smul_eq_mul, and_self]
+      simp only [Prod.ext_iff]
+      by_cases hc : c = q.2
+      · subst c
+        simp only [and_true, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
+          Finset.sum_const, Finset.card_univ, nsmul_one, mul_one]
+      · simp only [hc, Ne.symm hc, and_false, ite_false, Finset.sum_const_zero, mul_zero]
+    · have hne (p : A × B) : (p,c) ≠ (p,c') := fun h => hcc (congrArg Prod.snd h)
+      have hq : ¬ (q.2 = c ∧ q.2 = c') := fun h => hcc (h.1.symm.trans h.2)
+      simp [partialTraceLeft, hne, hq]
   have hB : ‖expectB K‖ ^ 2 = 1 := by
-    rw [← hFixed] at *
-    rw [(expect_union K).1]
+    have hBoth : expectB K = expectation K := by
+      rw [← (expect_union K).1, hFixed]
+    rw [hBoth]
     change ‖(Fintype.card (A × B) : ℂ)⁻¹ •
       ((1 : Matrix (A × B) (A × B) ℂ) ⊗ₖ partialTraceLeft K)‖ ^ 2 = _
-    rw [frobenius_sq_normalized_partialTraceLeft, hTrace, norm_smul, mul_pow, hSingle,
+    rw [frobenius_sq_normalized_partialTraceLeft, hTrace, norm_smul, mul_pow, single_sq,
       mul_one, Complex.norm_natCast, Fintype.card_prod, Nat.cast_mul, ← h]
     have hc : (Fintype.card A : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
     field_simp
@@ -484,10 +541,12 @@ theorem basis_encoder_attains [Nonempty A] [Nonempty B]
     let K := fun q => (V q)ᴴ * V q
     (∀ q, V q * (V q)ᴴ = 1) ∧ (∑ q, K q) = 1 ∧
       (∀ q, (K q).rank = Fintype.card A) ∧
+      (∀ q, ‖K q‖ ^ 2 = (Fintype.card A : ℝ) ∧ expectA (K q) = K q ∧
+        ‖expectB (K q)‖ ^ 2 = 1) ∧
       (∑ q, (‖expectA (K q)‖ ^ 2 + ‖expectB (K q)‖ ^ 2)) =
         (1 + (Fintype.card A : ℝ)⁻¹) * ∑ q, ‖K q‖ ^ 2 := by
   intro V K
-  refine ⟨basisEncoder_coisometry, basisEncoder_complete, ?_, ?_⟩
+  refine ⟨basisEncoder_coisometry, basisEncoder_complete, ?_, basisEncoder_masses h, ?_⟩
   · intro q
     change ((V q)ᴴ * V q).rank = _
     rw [Matrix.rank_conjTranspose_mul_self]
@@ -499,13 +558,12 @@ theorem basis_encoder_attains [Nonempty A] [Nonempty B]
     apply Finset.sum_congr rfl
     intro q _
     obtain ⟨hNorm, hA, hB⟩ := basisEncoder_masses (A := A) h q
-    change ‖expectA ((basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q)‖ ^ 2 +
-      ‖expectB ((basisEncoder q : Matrix A _ ℂ)ᴴ * basisEncoder q)‖ ^ 2 = _
-    rw [hA, hB]
-    change ‖K q‖ ^ 2 + 1 = (1 + (Fintype.card A : ℝ)⁻¹) * ‖K q‖ ^ 2
     change ‖K q‖ ^ 2 = _ at hNorm
+    change expectA (K q) = K q at hA
+    change ‖expectB (K q)‖ ^ 2 = 1 at hB
+    rw [hA, hB]
     rw [hNorm, add_mul, one_mul, inv_mul_cancel₀ (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)]
 
 end TwoSites
 
-end PetzLowRankPartialTrace
+end D5.S3.Quantum.Information.LowRankPartialTrace
