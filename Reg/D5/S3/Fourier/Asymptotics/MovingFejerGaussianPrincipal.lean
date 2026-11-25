@@ -51,8 +51,7 @@ abbrev arena : Arena where
     (∀ᶠ n in atTop, ∀ i j, 0≤w n i*w n j) → (∀ᶠ n in atTop, ∑ j,w n j=1) →
     (∀ᶠ n in atTop, 0<pairMoment (g n) (w n) 2) →
     ∀ (ρ A : ℕ → ℝ), Tendsto ρ atTop (𝓝 0) → Tendsto A atTop atTop →
-    ∀ (C : ℝ), C < 6 →
-    (∀ᶠ n in atTop, A n^2*pairMoment (g n) (w n) 4 ≤ C*(n:ℝ)*pairMoment (g n) (w n) 2^2) →
+    (∀ᶠ n in atTop, A n^2*pairMoment (g n) (w n) 4 ≤ 6*(n:ℝ)*pairMoment (g n) (w n) 2^2) →
     let kernel := R.readout () ()
     Tendsto (fun n => (1/(2*Real.pi))*(∫ u in -(A n)..A n,
       kernel (ρ n*u/2) * ‖complexScore (g n) (w n)
@@ -64,7 +63,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hA : Tendsto (fun n : ℕ => Real.sqrt (n:ℝ)) atTop atTop :=
     Real.tendsto_sqrt_atTop.comp (tendsto_natCast_atTop_atTop (R := ℝ))
   have hwin : ∀ᶠ n : ℕ in atTop, (Real.sqrt (n:ℝ))^2*pairMoment g.{u} w.{u} 4 ≤
-      3*(n:ℝ)*pairMoment g.{u} w.{u} 2^2 := by
+      6*(n:ℝ)*pairMoment g.{u} w.{u} 2^2 := by
     apply Eventually.of_forall
     intro n
     rw [Real.sq_sqrt (by positivity),momentTwo,momentFour]
@@ -73,7 +72,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (Eventually.of_forall fun _ i j => by norm_num [w])
     (Eventually.of_forall fun _ => mass.{u})
     (Eventually.of_forall fun _ => by rw [momentTwo]; norm_num)
-    (fun _ => 0) (fun n => Real.sqrt (n:ℝ)) tendsto_const_nhds hA 3 (by norm_num) hwin
+    (fun _ => 0) (fun n => Real.sqrt (n:ℝ)) tendsto_const_nhds hA hwin
   have hz : Tendsto (fun _ : ℕ => (0:ℝ)) atTop (𝓝 (1/(2*Real.sqrt Real.pi))) := by
     simpa [rejected,realize] using h
   have he := tendsto_nhds_unique tendsto_const_nhds hz
@@ -110,7 +109,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts :=  #[{
-      path := #["body","body","body","body","body","body","body","body","body","body","body","body","body","body","value"]
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
