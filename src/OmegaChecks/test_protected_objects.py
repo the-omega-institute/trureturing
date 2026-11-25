@@ -22,13 +22,25 @@ def compile_source(lean, search, folder, body, header=HEADER):
     return os.pathsep.join([str(folder), search])
 
 
+def check_client(lean, search, module, declaration, succeeds):
+    result = subprocess.run([lean, "--stdin"], input=f"module\nprelude\nimport {module}\n{declaration}\n",
+                            cwd=ROOT, env={**os.environ, "LEAN_PATH": search}, text=True, capture_output=True)
+    if (result.returncode == 0) != succeeds:
+        raise RuntimeError(f"Unexpected client reduction: {result.stdout}{result.stderr}")
+
+
 def check():
     lean = output("lake", "env", "printenv", "LEAN").strip()
     for profile in (["-f", strict_config()], []):
         search = output("lake", *profile, "env", "printenv", "LEAN_PATH").strip()
         with tempfile.TemporaryDirectory(prefix="omega-protected-") as temp:
             base = compile_source(lean, search, Path(temp) / "base", OBJECT + THEOREM)
+            client = "example (p : Prop) : Omega.Eq (Omega.Subject p) p := Omega.Eq.refl p"
+            check_client(lean, base, MODULE, client, True)
+            hidden = compile_source(lean, search, Path(temp) / "candidate", "@[no_expose] " + OBJECT + THEOREM)
+            check_client(lean, hidden, MODULE, client, False)
             for body, marker in [
+                ("@[no_expose] " + OBJECT + THEOREM, "no longer exposes its body"),
                 (OBJECT + THEOREM + "theorem extra (p : Prop) : p → p := fun x => x\n", ""),
                 (OBJECT + THEOREM + "private def hiddenPrime (p : Prop) : Prop := p\n", "new OmegaMath object"),
                 (OBJECT + THEOREM + "structure HiddenObject where value : Nat\n", "new OmegaMath object"),
@@ -84,13 +96,15 @@ def check():
                        "(OmegaMathlib.Nat.Prime n) := Iff.intro And.left (fun h => And.intro h True.intro)\n")
             base = compile_source(lean, search, Path(temp) / "base", old_helper + old_object, port_header)
             d5 = "D5.Preserved"
-            representation = ("public def D5.old (n : Omega.Nat) : Prop := "
+            representation = ("@[expose] public def D5.old (n : Omega.Nat) : Prop := "
                               "Omega.Historical (OmegaMathlib.Nat.Prime n)\n")
             relation = ("public theorem D5.bridge (n : Omega.Nat) : "
                         "Omega.Iff (D5.old n) (OmegaMathlib.Nat.Prime n) := "
                         "Omega.Iff.intro Omega.And.left (fun h => Omega.And.intro h Omega.True.intro)\n")
             for body, d5_source, expected in [
                 (alias, representation + relation, ""),
+                (alias, representation.replace("@[expose]", "@[no_expose]") + relation,
+                 "missing observable D5 representation"),
                 (old_object + "abbrev direct := OmegaMathlib.Nat.Prime\n", None, ""),
                 (old_object + "abbrev copy := Subject\n", None, "new OmegaMath object"),
                 (alias, None, "missing observable D5 representation"),
@@ -109,6 +123,9 @@ def check():
                     file.write_text(f"module\nprelude\npublic import {MODULE}\n" + d5_source)
                     subprocess.run([lean, "-R", folder, "-o", file.with_suffix(".olean"), file],
                                    cwd=ROOT, env={**os.environ, "LEAN_PATH": new}, check=True)
+                    check_client(lean, new, d5, "example (n : Omega.Nat) : Omega.Eq (D5.old n) "
+                                 "(Omega.Historical (OmegaMathlib.Nat.Prime n)) := Omega.Eq.refl _",
+                                 "@[no_expose]" not in d5_source)
                     owners.append(d5)
                 result = subprocess.run([AUDIT, "--protected-objects", base, new, MODULE, "--", MODULE,
                                          "--legacy", *owners], cwd=ROOT, capture_output=True, text=True)

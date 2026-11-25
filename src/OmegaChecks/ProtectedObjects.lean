@@ -51,7 +51,7 @@ private def checkStatement (env : Environment) (ports : NameSet) (published : Na
 /-- A client can unfold an exposed historical definition. Locate that same
 computational representation in a frozen D5 module, together with a kernel
 proof relating its public name to the new upstream object at all inputs. -/
-private def checkLegacy (env : Environment) (owners : Array Name)
+private def checkLegacy (env publicEnv : Environment) (owners : Array Name)
     (before after : ConstantInfo) : IO Unit := do
   let levels := after.levelParams.map Level.param
   let prior := fun (e : Expr) => e.instantiateLevelParams before.levelParams levels
@@ -60,7 +60,7 @@ private def checkLegacy (env : Environment) (owners : Array Name)
     throw <| IO.userError s!"protected type changed: {before.name}"
   let oldValue := prior before.value!
   let target := after.value!
-  if Kernel.isDefEqGuarded env {} oldValue target then return
+  if Kernel.isDefEqGuarded publicEnv {} oldValue target then return
   let mut legacy : NameSet := {}
   let mut decls := #[]
   for owner in owners do
@@ -70,14 +70,15 @@ private def checkLegacy (env : Environment) (owners : Array Name)
       if isPrivateName n || n.isInternalOrNum then continue
       let some info := env.find? n | continue
       if info.numLevelParams != after.numLevelParams then continue
-      match info with
-      | .defnInfo d =>
+      let some visible := publicEnv.find? n | continue
+      match info, visible with
+      | .defnInfo _, .defnInfo d =>
         if d.safety == .safe &&
             Kernel.isDefEqGuarded env {} (d.type.instantiateLevelParams d.levelParams levels) after.type &&
-            Kernel.isDefEqGuarded env {} (d.value.instantiateLevelParams d.levelParams levels) oldValue then
+            Kernel.isDefEqGuarded publicEnv {} (d.value.instantiateLevelParams d.levelParams levels) oldValue then
           legacy := legacy.insert n
-      | .thmInfo t => decls := decls.push t
-      | _ => pure ()
+      | .thmInfo t, _ => decls := decls.push t
+      | _, _ => pure ()
   if legacy.isEmpty then
     throw <| IO.userError s!"missing observable D5 representation for protected object {before.name}"
   let strict := env.contains `Omega.Eq
@@ -105,8 +106,8 @@ private def checkLegacy (env : Environment) (owners : Array Name)
 private def aliases (env : Environment) (idx : ModuleIdx) : List (Name × Name) :=
   (aliasExtension.getModuleEntries env idx).toList
 
-def check (old new : Environment) (baseRoots newRoots : Array Name)
-    (comparison : Environment) (legacyOwners : Array Name) : IO Unit := do
+def check (old new publicOld publicNew : Environment) (baseRoots newRoots : Array Name)
+    (comparison publicComparison : Environment) (legacyOwners : Array Name) : IO Unit := do
   let ports := portTargets new
   for m in baseRoots do
     unless newRoots.contains m do throw <| IO.userError s!"removed protected OmegaMath module {m}"
@@ -131,11 +132,21 @@ def check (old new : Environment) (baseRoots newRoots : Array Name)
         throw <| IO.userError s!"removed protected declaration {name}"
       unless new.getModuleIdxFor? name == some idx do
         throw <| IO.userError s!"protected declaration {name} changed owning module"
+      -- The private artifact retains bodies even when ordinary importers cannot reduce them.
+      if let some exposed := publicOld.find? name then
+        let some visible := publicNew.find? name | throw <| IO.userError s!"protected public declaration hidden: {name}"
+        if exposed matches .defnInfo _ then
+          unless visible matches .defnInfo _ do
+            throw <| IO.userError s!"protected definition no longer exposes its body: {name}"
+          unless directPort new ports after || Kernel.isDefEqGuarded publicNew {}
+              (exposed.value!.instantiateLevelParams exposed.levelParams (visible.levelParams.map Level.param))
+              visible.value! do
+            throw <| IO.userError s!"protected public reduction changed: {name}"
       if before == after then continue
       if before.ctorIdx != after.ctorIdx then
         throw <| IO.userError s!"protected declaration kind changed: {name}"
       if directPort new ports after && before.value? != after.value? then
-        checkLegacy comparison legacyOwners before after
+        checkLegacy comparison publicComparison legacyOwners before after
       else
         discard <| Interface.compare new id before after
     let known := NameSet.ofList oldNames.toList

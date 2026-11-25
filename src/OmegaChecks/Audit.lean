@@ -182,16 +182,24 @@ def main (args : List String) : IO Unit := do
     let "--" :: remaining := modules.drop base.length | throw <| IO.userError "missing candidate module list"
     let candidate := remaining.takeWhile (· != "--legacy")
     let witnesses := (remaining.drop candidate.length).drop 1
-    let load (path : String) (roots : List String) := do
+    let load (path : String) (roots : List String) (level := OLeanLevel.private) := do
       searchPathRef.set (System.SearchPath.parse path)
-      importModules (roots.toArray.map fun name => {module := name.toName}) {}
+      importModules (roots.toArray.map fun name => {module := name.toName}) {} (level := level)
     let old ← load basePath base
+    let publicOld ← load basePath base .exported
     let new ← load candidatePath candidate
+    let publicNew ← load candidatePath candidate .exported
     checkPublicationLayers new
     -- A D5 witness is loaded only in the downstream comparison environment.
     let comparison ← if witnesses.isEmpty then pure new else load candidatePath (candidate ++ witnesses)
-    OmegaChecks.ProtectedObjects.check old new (base.toArray.map String.toName)
-      (candidate.toArray.map String.toName) comparison (witnesses.toArray.map String.toName)
+    -- Only module-system D5 roots can be imported by a module-system client.
+    let publicWitnesses := witnesses.filter fun name =>
+      (comparison.getModuleIdx? name.toName).any fun i => comparison.header.moduleData[i]!.isModule
+    let publicComparison ← if publicWitnesses.isEmpty then pure publicNew else
+      load candidatePath (candidate ++ publicWitnesses) .exported
+    OmegaChecks.ProtectedObjects.check old new (publicOld.setExporting true) (publicNew.setExporting true)
+      (base.toArray.map String.toName) (candidate.toArray.map String.toName) comparison
+      (publicComparison.setExporting true) (publicWitnesses.toArray.map String.toName)
   else if let "--publication-layers" :: path :: roots := args then
     if roots.isEmpty then throw <| IO.userError "expected publication modules"
     searchPathRef.set (System.SearchPath.parse path)
