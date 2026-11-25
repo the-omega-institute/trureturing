@@ -57,7 +57,7 @@ def check():
                 if error:
                     if not proc.returncode or error not in output:
                         raise AssertionError(f"expected {error} on {label}: {output}")
-                elif proc.returncode or "Verified 1 qualified" not in output:
+                elif proc.returncode or "Verified 2 qualified" not in output:
                     raise AssertionError(f"expected qualified identifier on {label}: {output}")
 
         for port, name, args in [(ports[0], "Nat.Prime", "p"), (ports[1], "Nat.choose", "p p")]:
@@ -89,6 +89,10 @@ def check():
                      + "local notation \"OmegaMathlib.Nat.Prime\" => fun (_ : Omega.Nat) => Omega.True\n"
                      + "public theorem D5.bogus (p : Omega.Nat) : OmegaMathlib.Nat.Prime p := Omega.True.intro\n")
         qualified("D5.BadNotation", "OmegaMathlib.Nat.Prime requires")
+        compile_case("D5.BadValue", f"module\nprelude\nimport Lean\npublic import {ports[0]}\n"
+                     + "local notation \"OmegaMathlib.Nat.Prime\" => fun (_ : Omega.Nat) => Omega.True\n"
+                     + "public abbrev D5.definedPrime := OmegaMathlib.Nat.Prime\n")
+        qualified("D5.BadValue", "OmegaMathlib.Nat.Prime requires")
         head = "module\nprelude\npublic import OmegaInit.Prelude\n"
         compile_case("D5.Hidden", head + "private def D5.OmegaMathlib.Nat.Prime (_ : Omega.Nat) := Omega.True\n")
         compile_case("D5.ImportHidden", "module\nprelude\nimport D5.Hidden\n")

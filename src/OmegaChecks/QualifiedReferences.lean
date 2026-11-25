@@ -15,18 +15,25 @@ private def standardName? (stx : Syntax) : Option Name := do
   guard (name.getRoot == `OmegaMathlib && name != `OmegaMathlib)
   return name
 
-private partial def signatureNames (stx : Syntax) (inside := false)
-    (acc : Array (Option Name × Syntax.Range) := #[]) : Array (Option Name × Syntax.Range) := Id.run do
+private partial def declarationNames (stx : Syntax) (inSignature := false) (inValue := false)
+    (acc : Array Syntax := #[]) : Array Syntax := Id.run do
   let kind := stx.getKind
-  let signature := inside || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
+  let signature := inSignature || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
     ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
-  if signature then
-    let standard := standardName? stx
-    if standard.isSome || stx.isIdent then
-      if let some range := stx.getRange? then return acc.push (standard, range)
-  return stx.getArgs.foldl (fun a c => signatureNames c signature a) acc
+  let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
+    ``Parser.Command.whereStructInst].contains kind
+  if (signature && stx.isIdent) || ((signature || value) && (standardName? stx).isSome) then
+    return acc.push stx
+  return stx.getArgs.foldl (fun a c => declarationNames c signature value a) acc
 
-/-- The parsed command syntax excludes imports, comments, string contents and theorem proofs.
+/-- `resolveName'` indexes a qualified constant and any trailing field projections at separate
+source ranges. Recover those same prefixes, longest first, without splitting escaped names. -/
+private def prefixes (stx : Syntax) : List Syntax :=
+  if stx.isIdent then
+    (List.range stx.getId.getNumParts).filterMap fun n => (stx.identComponents (some n)).head?
+  else [stx]
+
+/-- The parsed declaration syntax excludes imports, comments and string contents.
 The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
 def checkFile (moduleName : Name) (source index : System.FilePath) (official : Bool) : IO Nat := do
   let text ← IO.FS.readFile source
@@ -49,32 +56,36 @@ def checkFile (moduleName : Name) (source index : System.FilePath) (official : B
     for msg in state.commandState.messages.toList do
       if msg.severity == .error then throw <| IO.userError (← msg.toString)
     throw <| IO.userError s!"failed to recover declaration syntax for {moduleName}"
-  let tokens := state.commands.foldl (fun acc c => signatureNames c false acc) #[]
+  let tokens := state.commands.foldl (fun acc c => declarationNames c false false acc) #[]
   let key := fun (r : Lsp.Range) => (r.start.line, r.start.character, r.end.line, r.end.character)
   let mut locations : Std.HashMap (Nat × Nat × Nat × Nat) (List (Lsp.RefIdent × String)) := {}
   for (id, info) in refs.references.toList do
     for loc in info.usages do
       locations := locations.alter (key loc.range) (fun entries => some ((id, loc.parentDecl) :: entries.getD []))
   let mut count := 0
-  for (standard, range) in tokens do
-    let pos := ictx.fileMap.utf8RangeToLspRange range
-    let refsHere := locations.getD (key pos) []
-    let some alias := standard | do
+  let env := state.commandState.env
+  for token in tokens do
+    let parts := (prefixes token).filterMap fun stx =>
+      stx.getRange?.map fun r => (stx, ictx.fileMap.utf8RangeToLspRange r)
+    let some alias := standardName? token | do
       unless official do
-        for (id, parent) in refsHere do
-          if let .const owner name := id then
-            if owner.toName.getRoot == `OmegaMathlib && !isPrivateName parent.toName then
-              let canonical := name.toName.replacePrefix `Omega `OmegaMathlib
-              throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {name} from {owner}; qualify this identifier as {canonical}"
+        for (_, pos) in parts do
+          for (id, parent) in locations.getD (key pos) [] do
+            if let .const owner name := id then
+              if owner.toName.getRoot == `OmegaMathlib && !isPrivateName parent.toName then
+                let canonical := name.toName.replacePrefix `Omega `OmegaMathlib
+                throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {name} from {owner}; qualify this identifier as {canonical}"
       continue
     count := count + 1
-    let expected := alias.replacePrefix `OmegaMathlib (if official then .anonymous else `Omega)
-    let env := state.commandState.env
-    let some idx := env.getModuleIdxFor? expected | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
+    let resolved := parts.findSome? fun (stx, pos) => do
+      let name ← standardName? stx
+      let expected := name.replacePrefix `OmegaMathlib (if official then .anonymous else `Omega)
+      return (expected, ← env.getModuleIdxFor? expected, pos)
+    let some (expected, idx, pos) := resolved | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
     let owner := env.header.moduleNames[idx]!
     unless owner.getRoot == (if official then `Mathlib else `OmegaMathlib) do
       throw <| IO.userError s!"{moduleName}: {alias} resolves outside its admitted port: {expected} in {owner}"
-    unless refsHere.map Prod.fst == [.const owner.toString expected.toString] do
+    unless (locations.getD (key pos) []).map Prod.fst == [.const owner.toString expected.toString] do
       throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {alias} requires {expected} in {owner} at this occurrence"
   return count
 
