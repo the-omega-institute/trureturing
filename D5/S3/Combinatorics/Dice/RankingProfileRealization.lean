@@ -376,10 +376,6 @@ private theorem tendsto_measure_strict_order_Q [IsFiniteMeasure μ]
       with m h₁ h₂
     exact and_congr h₁ h₂
 
-private theorem iIndepFun_Q (hX : ProbabilityTheory.iIndepFun X μ) (m : ℕ) :
-    ProbabilityTheory.iIndepFun (fun i ω => Q m i (X i ω)) μ :=
-  hX.comp (Q m) (measurable_Q m)
-
 private theorem tendsto_measureReal_strict_order_Q [IsFiniteMeasure μ]
     (hX : ∀ a, Measurable (X a)) {i j k : Fin 3}
     (hij : ∀ᵐ ω ∂μ, X i ω ≠ X j ω) (hjk : ∀ᵐ ω ∂μ, X j ω ≠ X k ω) :

@@ -60,7 +60,8 @@ internal sealed class RankingProfileRealizationDocument : IScribeDocumentDefinit
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Test(Formula v) => new Formula.Relation(v, Id("finiteTest15"), FormulaRelationOperator.MemberOf);
+    private static Formula Test(Formula v) =>
+        new Formula.Relation(v, FormulaRelationOperator.MemberOf, Id("finiteTest15"));
     private static Formula Sum(Formula index, Formula body) =>
         F.Seq(new Formula.Subscript(F.Sum, index), F.Sp, F.Open, body, F.Close);
     private static Formula Index(string name, Formula domain) => F.Seq(Id(name), F.Colon, domain);
