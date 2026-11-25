@@ -82,6 +82,14 @@ def cases():
     yield module, (head + "public abbrev D5.Prime (n : Omega.Nat) : Prop := "
                    "let m := n; OmegaMathlib.Nat.Prime m.succ\n"
                    "public theorem D5.shifted (n : Omega.Nat) (h : D5.Prime n) : D5.Prime n := h\n"), []
+    yield module, (head + "public def wrap (n : Omega.Nat) := (fun m => OmegaMathlib.Nat.Prime m) n\n"
+                   "public abbrev D5.reviewPrime (n : Omega.Nat) : Prop := let m := n; wrap m\n"
+                   "public theorem D5.review (n : Omega.Nat) (h : D5.reviewPrime n) : D5.reviewPrime n := h\n"), [
+                       "explicit source reference", "OmegaMathlib.Nat.Prime"]
+    legacy = "D5.S3.Arith.Primes.DivisorCharacterization"
+    yield "IndependentRepresentation", (head + f"public import {legacy}\npublic theorem D5.review (p : Omega.Nat) : "
+                   f"Omega.Iff ({legacy}.IsPrime p) (OmegaMathlib.Nat.Prime p) := "
+                   f"{legacy}.isPrime_iff_prime p\n"), []
     # The public body reaches a private opaque computation through a second helper.
     for ref, errors in [("OmegaMathlib.Nat.Prime", []),
                         ("Omega.Nat.Prime", ["OmegaMathlib.Nat.Prime"])]:
@@ -116,15 +124,30 @@ def cases():
         "OmegaMathlib.Nat.Prime requires", "at this occurrence"]
 
 
+def computational_cases(backend):
+    header = "module\npublic import OmegaMathlib.Data.Nat.Choose.Basic\n"
+    if backend == "official":
+        header += "meta import Mathlib.Data.Nat.Choose.Basic\n"
+        for kind in ("def", "opaque"):
+            yield "D5.Computation", (header + "private opaque helper (n k : Nat) : Nat := OmegaMathlib.Nat.choose n k\n"
+                                     f"public {kind} D5.observed (n k : Nat) : Nat := helper n k\n"
+                                     "/-- info: 10 -/\n#guard_msgs in\n#eval D5.observed 5 2\n"), []
+    else:
+        yield "D5.Computation", (header + "noncomputable section\n"
+                                 "private opaque helper (n k : Omega.Nat) : Omega.Nat := OmegaMathlib.Nat.choose n k\n"
+                                 "public def D5.observed (n k : Omega.Nat) : Omega.Nat := helper n k\n"), []
+
+
 def check():
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     for label, layout in [("strict", ["lake", "-f", strict_config()]), ("official", ["lake"])]:
-        subprocess.run([*layout, "build", *("+" + port for port in PORTS)], cwd=ROOT, check=True)
+        subprocess.run([*layout, "build", *("+" + port for port in PORTS),
+                        "+D5.S3.Arith.Primes.DivisorCharacterization"], cwd=ROOT, check=True)
         path = subprocess.check_output([*layout, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
-        with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
-            directory = Path(temp)
-            search = os.pathsep.join([temp, path])
-            for module, source, errors in cases():
+        for module, source, errors in (*cases(), *computational_cases(label)):
+            with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
+                directory = Path(temp)
+                search = os.pathsep.join([temp, path])
                 file = directory.joinpath(*module.split(".")).with_suffix(".lean")
                 file.parent.mkdir(parents=True, exist_ok=True)
                 file.write_text(source)

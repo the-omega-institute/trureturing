@@ -80,6 +80,21 @@ private def matchingPort? (env catalog : Environment) (ports : Ports) (spelling 
     guard (Kernel.isDefEqGuarded env {} project.type type)
     return port.alias
 
+/-- An independently implemented representation may reduce to the same expression on
+one backend. A port alias also has a transparent definition dependency on that port. -/
+private def usesPort (env : Environment) (value : Expr) (target : Name) : Bool := Id.run do
+  let mut pending := value.getUsedConstants
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if name == target then return true
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some (.defnInfo info) := env.find? name then
+      pending := pending ++ info.value.getUsedConstants
+  return false
+
 /-- Instantiate universes from the compiled type, then let the kernel decide whether the
 transparent project definition and the admitted constant are definitionally equal. -/
 private def indexEquivalentObjects (env : Environment) (ports : Ports) (project : NameSet) : MetaM Ports := do
@@ -101,7 +116,7 @@ private def indexEquivalentObjects (env : Environment) (ports : Ports) (project 
           if let some candidate := candidate? then candidates := candidates.push (candidate, port.alias)
         byType := byType.insert info.type candidates
       for (candidate, alias) in byType[info.type]! do
-        if Kernel.isDefEqGuarded env {} info.value candidate then
+        if Kernel.isDefEqGuarded env {} info.value candidate && usesPort env info.value candidate.constName! then
           equivalents := equivalents.insert name alias
           break
   return {ports with equivalents}
@@ -180,7 +195,8 @@ private def checkElaborated (source : System.FilePath) (text : String)
       let levels := (List.range obj.numLevelParams).map fun i => s!"omegaLevel{i}"
       let univs := if levels.isEmpty then "" else ".{" ++ String.intercalate "," levels ++ "}"
       let vis := if isModule then "public " else ""
-      let decl := s!"\n{vis}noncomputable abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
+      let comp := if isNoncomputable catalog target then "noncomputable " else ""
+      let decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
       edits := edits.push (⟨pos, pos⟩, decl)
       markers := markers.insert marker target
       targets := targets.insert target marker
