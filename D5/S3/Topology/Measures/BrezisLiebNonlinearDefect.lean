@@ -95,7 +95,7 @@ theorem brezis_lieb_nonlinear_defect {Ω : Type u} [MeasurableSpace Ω]
   have hL1 : Tendsto (fun n => ∫ x, ‖D n x‖ ∂μ) atTop (𝓝 0) := by
     refine IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination μ
       (fun n x => ‖D n x‖) (M : ℝ) (fun n => (hDi n).norm) hnormlim
-      (fun n x => norm_nonneg _) M.coe_nonneg ?_
+      (fun n x => norm_nonneg _) ?_
     intro ε hε
     let δ : ℝ := min ε (ε₀ / 2)
     have hδ : 0 < δ := lt_min hε hhalf

@@ -5,14 +5,14 @@ year: 1983
 title: A relation between pointwise convergence of functions and convergence of functionals
 doi: 10.1090/S0002-9939-1983-0699419-3
 url: https://sites.math.rutgers.edu/~brezis/PUBlications/99-journal.pdf
-claim: Theorem 2, its strong L1 remark and power Example (a) imply full absolute L1 power splitting for complex functions on an arbitrary measure space for every positive real exponent; Theorem 1 states the corresponding signed energy splitting.
+claim: Theorem 2 gives strong L1 cancellation for continuous complex nonlinearities under epsilon increment and uniform mass controls without separate integrability of the two terms; its power example gives full absolute L1 power splitting on arbitrary measures for every positive real exponent.
 strata_touched:
   - D5/S3/Topology/Measures
 license: citation-only
 triage: anchor
 ---
 
-# Positive-power splitting
+# Brézis–Lieb splitting
 
 ## Verified locator
 
@@ -26,7 +26,7 @@ proof of Theorem 2 and power Example (a) are on printed page 488.
 The introductory measure space and complex scalar convention are on
 printed page 486. The PDF includes a cover page before printed page 486.
 
-## Statement and source correspondence
+## Positive-power statement and source correspondence
 
 Let mu be an arbitrary measure on a measurable space Omega, let p > 0,
 and let f(n) be complex functions which are almost-everywhere strongly
@@ -65,6 +65,49 @@ It states no general nonlinear j theorem and no vector-valued extension.
 The increment estimate and truncation argument are classical mathematics;
 no mathematical originality or resolution of an external open problem
 is asserted.
+
+## General nonlinear cancellation
+
+Let j map the complex numbers continuously to the complex numbers, with
+j(0) = 0. Fix epsilon0 > 0. For every 0 < epsilon < epsilon0, let
+phi(epsilon) and psi(epsilon) be continuous nonnegative real functions on
+the complex numbers, satisfying
+
+    norm(j(a+b) - j(a)) <= epsilon phi(epsilon,a) + psi(epsilon,b).
+
+Let g and every v(n) be almost-everywhere strongly measurable on an
+arbitrary measure space, with v(n) tending to zero almost everywhere.
+Assume j(g) is integrable, every admitted psi(epsilon,g) is integrable,
+and the nonnegative integrals of phi(epsilon,v(n)) have one common finite
+bound M, uniform in epsilon and n. Then both
+
+    A(n) = j(g+v(n)) - j(v(n)),
+    D(n) = A(n) - j(g)
+
+are integrable, the integral of norm(D(n)) tends to zero, and the complex
+integral of A(n) tends to the integral of j(g). Individual integrability
+of j(g+v(n)) and j(v(n)) is absent, as required by Remark (i).
+Neither a common dominator on the original sequence nor uniform
+integrability is a premise. The compensation term may vary with epsilon;
+its integral need not tend to zero with epsilon.
+
+The declaration
+`D5.S3.Topology.Measures.BrezisLiebNonlinearDefect.brezis_lieb_nonlinear_defect`
+formalizes this full Theorem 2 statement and the strong L1 interpretation
+in Remark (ii). The real integral-control declaration
+`D5.S3.Topology.Measures.IntegralEpsilonDomination.tendsto_integral_of_epsilon_domination`
+isolates the proof's epsilon truncation principle. For nonnegative
+integrable f(n) converging almost everywhere to zero, it permits bounds
+f(n) <= epsilon a(n) + b with nonnegative integrable controls that may
+depend on epsilon, provided integral(a(n)) <= M with the same finite M
+for all epsilon and n. Both nonlinear cancellation and positive-power
+splitting use this common integral-control inference. It assumes no pointwise limit
+of a(n) and no common choice of b across epsilon.
+
+The nonlinear theorem covers nonhomogeneous integrands once their
+increment and integrability controls are established. It does not by
+itself prove the convex growth estimate in Example (b), the associated
+Orlicz hypotheses, compactness or existence in a variational problem.
 
 ## Moving mass
 

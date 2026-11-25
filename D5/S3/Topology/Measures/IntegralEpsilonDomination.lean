@@ -35,13 +35,16 @@ theorem tendsto_integral_of_epsilon_domination {Ω : Type u} [MeasurableSpace Ω
     (μ : Measure Ω) (f : ℕ → Ω → ℝ) (M : ℝ)
     (hf : ∀ n, Integrable (f n) μ)
     (hlim : ∀ᵐ x ∂μ, Tendsto (fun n => f n x) atTop (𝓝 0))
-    (hf_nonneg : ∀ n x, 0 ≤ f n x) (hM : 0 ≤ M)
+    (hf_nonneg : ∀ n x, 0 ≤ f n x)
     (hcontrol : ∀ ε : ℝ, 0 < ε → ∃ (a : ℕ → Ω → ℝ) (b : Ω → ℝ),
       (∀ n, Integrable (a n) μ) ∧ Integrable b μ ∧
       (∀ n x, 0 ≤ a n x) ∧ (∀ x, 0 ≤ b x) ∧
       (∀ n, ∫ x, a n x ∂μ ≤ M) ∧
       (∀ n x, f n x ≤ ε * a n x + b x)) :
     Tendsto (fun n => ∫ x, f n x ∂μ) atTop (𝓝 0) := by
+  have hM : 0 ≤ M := by
+    obtain ⟨a, _, _, _, ha_nonneg, _, henergy, _⟩ := hcontrol 1 zero_lt_one
+    exact (integral_nonneg (ha_nonneg 0)).trans (henergy 0)
   apply tendsto_order.2
   constructor
   · intro c hc
