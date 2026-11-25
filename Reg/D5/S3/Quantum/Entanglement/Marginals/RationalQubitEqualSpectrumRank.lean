@@ -77,8 +77,7 @@ def family : Registration arena (type_of% @rational_endpoint_rank_le_two_of_equa
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@rational_endpoint_rank_le_two_of_equal_det) (Realization signature) Unit Unit where
   unitName :=
-    (`D5.S3.Quantum.Entanglement.Marginals.RationalQubitEqualSpectrumRank ++
-      `rational_endpoint_rank_le_two_of_equal_det.audit)
+    `D5.S3.Quantum.Entanglement.Marginals.RationalQubitEqualSpectrumRank.rational_endpoint_rank_le_two_of_equal_det.audit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.Marginals.RationalQubitEqualSpectrumRank.family
   realizationSource := none
   generated := false
@@ -89,7 +88,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ x y => x = y) (fun anchor => nomatch anchor))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
