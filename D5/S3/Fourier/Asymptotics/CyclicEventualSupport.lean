@@ -28,7 +28,7 @@ namespace D5.S3.Fourier.Asymptotics.CyclicEventualSupport
 
 set_option autoImplicit false
 
-private theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3) ℝ)
+theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3) ℝ)
     (hF : Function.Injective F.mulVec) : (Fᵀ * F).det ≠ 0 := by
   apply isUnit_iff_ne_zero.mp
   apply (isUnit_iff_isUnit_det _).mp
@@ -48,7 +48,7 @@ private theorem gram_det_ne_zero {ι : Type*} [Fintype ι] (F : Matrix ι (Fin 3
   apply hF
   rwa [mulVec_sub, sub_eq_zero] at hf
 
-private theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filter κ}
+theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filter κ}
     {s : κ → ℝ} (hs : Tendsto s l (𝓝 0))
     {E : κ → Matrix ι (Fin 3) ℝ} {E₀ : Matrix ι (Fin 3) ℝ} (hE : Tendsto E l (𝓝 E₀))
     (F₀ : Matrix ι (Fin 3) ℝ) (hF : Function.Injective F₀.mulVec)
@@ -108,20 +108,20 @@ private theorem gram_variation {ι : Type*} [Fintype ι] {κ : Type*} {l : Filte
     rw [smul_sub, smul_sub]
     abel
 
-private def signedCos (back : Bool) (z h : ℝ) : ℝ :=
+def signedCos (back : Bool) (z h : ℝ) : ℝ :=
   if back then -Real.cos (z * h) else Real.cos (z * h)
 
-private def baseRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
+def baseRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
   ![1, if back then 2 else 0, z ^ 2]
 
-private def variationRow (back : Bool) (z h : ℝ) : Fin 3 → ℝ :=
+def variationRow (back : Bool) (z h : ℝ) : Fin 3 → ℝ :=
   ![0, if back then -cosineSecond z h else cosineSecond z h,
     -2 * cosineFourth z h - cosineSecond z h ^ 2]
 
-private def limitRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
+def limitRow (back : Bool) (z : ℝ) : Fin 3 → ℝ :=
   ![0, if back then -z ^ 2 / 2 else z ^ 2 / 2, -z ^ 4 / 3]
 
-private theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
+theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
     (ht : Tendsto h l (𝓝 0)) (hn : ∀ᶠ k in l, h k ≠ 0) (back : Bool) (z : ℝ) :
     Tendsto (fun k => variationRow back z (h k)) l (𝓝 (limitRow back z)) := by
   have hc := cosineSecond_tendsto ht hn z
@@ -139,7 +139,7 @@ private theorem variationRow_tendsto {κ : Type*} {l : Filter κ} {h : κ → �
     · simpa [variationRow, limitRow, neg_div] using hc.neg
   · simpa [variationRow, limitRow] using hlast
 
-private theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
+theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
     baseRow back z + (h ^ 2) • variationRow back z h =
       ![1, 1 - signedCos back z h, (1 - signedCos back z h ^ 2) / h ^ 2] := by
   have hd := cosineSecond_eq z hn
@@ -155,13 +155,13 @@ private theorem row_eq (back : Bool) (z : ℝ) {h : ℝ} (hn : h ≠ 0) :
   · cases back <;> simp [baseRow, variationRow, signedCos, he] <;>
       field_simp [hn] <;> linear_combination -2 * h ^ 2 * hx
 
-private theorem dot_three (a b c : ℝ) (v : Fin 3 → ℝ) :
+theorem dot_three (a b c : ℝ) (v : Fin 3 → ℝ) :
     ![a, b, c] ⬝ᵥ v = a * v 0 + b * v 1 + c * v 2 := by
   simp [dotProduct, Fin.sum_univ_succ, add_assoc]
 
-private def leading (t Z d : ℝ) : Fin 3 → ℝ := ![t / Z, -(t - d ^ 2) / (2 * Z), -1 / Z]
+def leading (t Z d : ℝ) : Fin 3 → ℝ := ![t / Z, -(t - d ^ 2) / (2 * Z), -1 / Z]
 
-private theorem base_dot (t Z d z : ℝ) (hZ : Z ≠ 0) (back : Bool) :
+theorem base_dot (t Z d z : ℝ) (hZ : Z ≠ 0) (back : Bool) :
     baseRow back z ⬝ᵥ leading t Z d = if back then (d ^ 2 - z ^ 2) / Z else (t - z ^ 2) / Z := by
   cases back <;> simp [baseRow, leading] <;> field_simp [hZ] <;> ring
 
@@ -185,11 +185,11 @@ private theorem polynomial_tendsto {κ : Type*} {l : Filter κ} {h : κ → ℝ}
   filter_upwards [hn] with k hk
   exact polynomial_eq back z hk (v k)
 
-private def phaseRow {ι η : Type*} (x : ι → ℝ) (d : ℝ)
+def phaseRow {ι η : Type*} (x : ι → ℝ) (d : ℝ)
     (f : Bool → ℝ → Fin 3 → ℝ) : Matrix (ι ⊕ η) (Fin 3) ℝ :=
   fun i => i.elim (fun j => f false (x j)) (fun _ => f true d)
 
-private theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (d : ℝ)
+theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (d : ℝ)
     (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1) :
     Function.Injective (phaseRow (η := η) x d baseRow).mulVec := by
   intro a b hab
@@ -220,7 +220,7 @@ private theorem phase_injective {ι η : Type*} [Nonempty η] (x : ι → ℝ) (
   · exact e₁
   · exact e₂
 
-private theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
+theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
     (x : ι → ℝ) (d : ℝ) (f : Bool → ℝ → Fin 3 → ℝ) (v : ι ⊕ η → ℝ) (j : Fin 3) :
     ((phaseRow x d f)ᵀ *ᵥ v) j =
       (∑ i : ι, f false (x i) j * v (Sum.inl i)) + ∑ i : η, f true d j * v (Sum.inr i) := by
@@ -228,33 +228,19 @@ private theorem phase_moment {ι η : Type*} [Fintype ι] [Fintype η]
   rw [Fintype.sum_sum_type]
   rfl
 
-private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Nonempty η]
-    {l : Filter κ} {h : κ → ℝ} (ht : Tendsto h l (𝓝 0)) (hp : ∀ᶠ k in l, 0 < h k)
-    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z) (hm : 0 < m)
-    (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1)
-    (hx : ∀ i, x i ^ 2 ≤ t) (hboundary : (∃ i, x i ^ 2 = t) → d ^ 2 < m)
+theorem phase_leading_moments {ι η : Type*} [Fintype ι] [Fintype η]
+    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z)
     (hW : ∑ i, (t - x i ^ 2) / Z = 1)
     (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m) :
-    let F := fun k => phaseRow (η := η) x d fun back z =>
-      ![1, 1 - signedCos back z (h k), (1 - signedCos back z (h k) ^ 2) / h k ^ 2]
-    ∃ a : κ → Fin 3 → ℝ, Tendsto a l (𝓝 (leading t Z d)) ∧
-      ∀ᶠ k in l, (F k)ᵀ *ᵥ (F k *ᵥ a k) = ![1, 2 * m * h k ^ 2, m] ∧
-        ∀ i, 0 < (F k *ᵥ a k) i := by
-  intro F
+    let F₀ := phaseRow (η := η) x d baseRow
+    let w := F₀ *ᵥ leading t Z d
+    let W := fun i => (t - x i ^ 2) / Z
+    (∀ i : ι, w (Sum.inl i) = W i) ∧
+    (∀ i : η, w (Sum.inr i) = 0) ∧ F₀ᵀ *ᵥ w = ![1, 0, m] := by
   let F₀ := phaseRow (η := η) x d baseRow
-  let E := fun k => phaseRow (η := η) x d fun back z => variationRow back z (h k)
-  let E₀ := phaseRow (η := η) x d limitRow
   let a₀ := leading t Z d
   let w := F₀ *ᵥ a₀
-  let s := fun k => h k ^ 2
-  let b₁ : Fin 3 → ℝ := ![0, 2 * m, 0]
   let W := fun i => (t - x i ^ 2) / Z
-  have hn := hp.mono fun _ hk => hk.ne'
-  have hE : Tendsto E l (𝓝 E₀) := by
-    refine tendsto_pi_nhds.mpr fun i => ?_
-    cases i with
-    | inl i => exact variationRow_tendsto ht hn false (x i)
-    | inr i => exact variationRow_tendsto ht hn true d
   have hwf (i : ι) : w (Sum.inl i) = W i := by
     simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inl, a₀, W, Bool.false_eq_true,
       ite_false] using base_dot t Z d (x i) hZ.ne' false
@@ -270,13 +256,33 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
         F₀, phaseRow, baseRow, hwb]
     · simpa [Matrix.mulVec, dotProduct, transpose_apply, Fintype.sum_sum_type,
         F₀, phaseRow, baseRow, hwf, hwb, W] using hX
-  obtain ⟨u, u₀, hu, hlimit, heq⟩ :=
-    gram_variation (ht.pow 2 |>.congr' (Eventually.of_forall fun _ => rfl) |>.trans
-      (by simp)) hE F₀ (phase_injective x d i₀ i₁ h₀ h₁) a₀ b₁
-  let a := fun k => a₀ + s k • u k
-  let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
-  have ha : Tendsto a l (𝓝 a₀) := by
-    simpa [s] using tendsto_const_nhds.add ((ht.pow 2).smul hu)
+  exact ⟨hwf, hwb, hbase⟩
+
+theorem phase_first_variation_moments {ι η : Type*} [Fintype ι] [Fintype η]
+    [Nonempty η] (x : ι → ℝ) (d t Z m : ℝ) (hZ : Z ≠ 0)
+    (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m)
+    (u₀ : Fin 3 → ℝ) :
+    let F₀ := phaseRow (η := η) x d baseRow
+    let E₀ := phaseRow (η := η) x d limitRow
+    let a₀ := leading t Z d
+    let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
+    let w := F₀ *ᵥ a₀
+    let W := fun i => (t - x i ^ 2) / Z
+    let m₄ := ∑ i, (x i ^ 2) ^ 2 * W i
+    F₀ᵀ *ᵥ r = ![0, 2 * m, 0] - E₀ᵀ *ᵥ w →
+    (∀ i : ι, r (Sum.inl i) =
+      u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2) ∧
+    (∑ i : η, r (Sum.inr i)) = 3 * m / 4 ∧
+    (∑ i : ι, r (Sum.inl i)) = -(3 * m / 4) ∧
+    (∑ i : ι, x i ^ 2 * r (Sum.inl i)) = m₄ / 3 - d ^ 2 * (3 * m / 4) ∧
+    (∀ i : η, (Fintype.card η : ℝ) * r (Sum.inr i) = 3 * m / 4) := by
+  intro F₀ E₀ a₀ r w W m₄ hlimit
+  have hwf (i : ι) : w (Sum.inl i) = W i := by
+    simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inl, a₀, W, Bool.false_eq_true,
+      ite_false] using base_dot t Z d (x i) hZ false
+  have hwb (i : η) : w (Sum.inr i) = 0 := by
+    simpa only [w, Matrix.mulVec, F₀, phaseRow, Sum.elim_inr, a₀, ite_true, sub_self, zero_div]
+      using base_dot t Z d d hZ true
   have hrf (i : ι) : r (Sum.inl i) =
       u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2 := by
     change (![0, x i ^ 2 / 2, -x i ^ 4 / 3] ⬝ᵥ a₀) +
@@ -284,13 +290,10 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
     rw [dot_three, dot_three]
     have ha₂ : a₀ 2 = -1 / Z := rfl
     rw [ha₂]
-    field_simp [hZ.ne']
+    field_simp [hZ]
     ring
   let μ := ∑ i : η, r (Sum.inr i)
-  let m₄ := ∑ i : ι, (x i ^ 2) ^ 2 * W i
-  have hm₄ : 0 ≤ m₄ :=
-    sum_nonneg fun i _ => mul_nonneg (sq_nonneg _) (div_nonneg (sub_nonneg.mpr (hx i)) hZ.le)
-  have hl : F₀ᵀ *ᵥ r = b₁ - E₀ᵀ *ᵥ w := hlimit
+  have hl := hlimit
   have hμ : μ = 3 * m / 4 := by
     have h := congrFun hl (1 : Fin 3)
     change ((phaseRow x d baseRow)ᵀ *ᵥ r) 1 =
@@ -330,11 +333,69 @@ private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Non
       rfl
     rw [he, neg_neg] at h
     exact eq_sub_of_add_eq h
-  have hrb (i : η) : 0 < r (Sum.inr i) := by
+  refine ⟨hrf, hμ, hsum_r.trans (congrArg Neg.neg hμ), ?_, ?_⟩
+  · rw [hmoment_r, hμ]
+  · intro i
     have hconst (j : η) : r (Sum.inr j) = r (Sum.inr i) := rfl
     have h : μ = (Fintype.card η : ℝ) * r (Sum.inr i) := by simp [μ, hconst]
-    have hm' : 0 < μ := by rw [hμ]; positivity
-    exact pos_of_mul_pos_right (h ▸ hm') (Nat.cast_nonneg _)
+    exact h.symm.trans hμ
+
+private theorem phase_solution {ι η κ : Type*} [Fintype ι] [Fintype η] [Nonempty η]
+    {l : Filter κ} {h : κ → ℝ} (ht : Tendsto h l (𝓝 0)) (hp : ∀ᶠ k in l, 0 < h k)
+    (x : ι → ℝ) (d t Z m : ℝ) (hZ : 0 < Z) (hm : 0 < m)
+    (i₀ i₁ : ι) (h₀ : x i₀ = 0) (h₁ : x i₁ = 1)
+    (hx : ∀ i, x i ^ 2 ≤ t) (hboundary : (∃ i, x i ^ 2 = t) → d ^ 2 < m)
+    (hW : ∑ i, (t - x i ^ 2) / Z = 1)
+    (hX : ∑ i, x i ^ 2 * ((t - x i ^ 2) / Z) = m) :
+    let F := fun k => phaseRow (η := η) x d fun back z =>
+      ![1, 1 - signedCos back z (h k), (1 - signedCos back z (h k) ^ 2) / h k ^ 2]
+    ∃ a : κ → Fin 3 → ℝ, Tendsto a l (𝓝 (leading t Z d)) ∧
+      ∀ᶠ k in l, (F k)ᵀ *ᵥ (F k *ᵥ a k) = ![1, 2 * m * h k ^ 2, m] ∧
+        ∀ i, 0 < (F k *ᵥ a k) i := by
+  intro F
+  let F₀ := phaseRow (η := η) x d baseRow
+  let E := fun k => phaseRow (η := η) x d fun back z => variationRow back z (h k)
+  let E₀ := phaseRow (η := η) x d limitRow
+  let a₀ := leading t Z d
+  let w := F₀ *ᵥ a₀
+  let s := fun k => h k ^ 2
+  let b₁ : Fin 3 → ℝ := ![0, 2 * m, 0]
+  let W := fun i => (t - x i ^ 2) / Z
+  have hn := hp.mono fun _ hk => hk.ne'
+  have hE : Tendsto E l (𝓝 E₀) := by
+    refine tendsto_pi_nhds.mpr fun i => ?_
+    cases i with
+    | inl i => exact variationRow_tendsto ht hn false (x i)
+    | inr i => exact variationRow_tendsto ht hn true d
+  obtain ⟨hwf, hwb, hbase⟩ := phase_leading_moments (η := η) x d t Z m hZ hW hX
+  change ∀ i : ι, w (Sum.inl i) = W i at hwf
+  change ∀ i : η, w (Sum.inr i) = 0 at hwb
+  change F₀ᵀ *ᵥ w = ![1, 0, m] at hbase
+  obtain ⟨u, u₀, hu, hlimit, heq⟩ :=
+    gram_variation (ht.pow 2 |>.congr' (Eventually.of_forall fun _ => rfl) |>.trans
+      (by simp)) hE F₀ (phase_injective x d i₀ i₁ h₀ h₁) a₀ b₁
+  let a := fun k => a₀ + s k • u k
+  let r := E₀ *ᵥ a₀ + F₀ *ᵥ u₀
+  have ha : Tendsto a l (𝓝 a₀) := by
+    simpa [s] using tendsto_const_nhds.add ((ht.pow 2).smul hu)
+  let μ := ∑ i : η, r (Sum.inr i)
+  let m₄ := ∑ i : ι, (x i ^ 2) ^ 2 * W i
+  obtain ⟨hrf, hμ, hsum, hmoment, hback⟩ :=
+    phase_first_variation_moments (η := η) x d t Z m hZ.ne' hX u₀ hlimit
+  change ∀ i : ι, r (Sum.inl i) =
+    u₀ 0 + (u₀ 2 + a₀ 1 / 2) * x i ^ 2 + (1 / (3 * Z)) * (x i ^ 2) ^ 2 at hrf
+  change μ = 3 * m / 4 at hμ
+  change (∑ i : ι, r (Sum.inl i)) = -(3 * m / 4) at hsum
+  change (∑ i : ι, x i ^ 2 * r (Sum.inl i)) = m₄ / 3 - d ^ 2 * (3 * m / 4) at hmoment
+  change ∀ i : η, (Fintype.card η : ℝ) * r (Sum.inr i) = 3 * m / 4 at hback
+  have hsum_r : ∑ i : ι, r (Sum.inl i) = -μ := by rw [hsum, hμ]
+  have hmoment_r : ∑ i : ι, x i ^ 2 * r (Sum.inl i) = m₄ / 3 - d ^ 2 * μ := by
+    rw [hmoment, hμ]
+  have hm₄ : 0 ≤ m₄ :=
+    sum_nonneg fun i _ => mul_nonneg (sq_nonneg _) (div_nonneg (sub_nonneg.mpr (hx i)) hZ.le)
+  have hrb (i : η) : 0 < r (Sum.inr i) := by
+    have h : 0 < (Fintype.card η : ℝ) * r (Sum.inr i) := by rw [hback]; positivity
+    exact pos_of_mul_pos_right h (Nat.cast_nonneg _)
   have hrFront (i : ι) (hi : x i ^ 2 = t) : 0 < r (Sum.inl i) := by
     have hmax (j : ι) : x j ^ 2 ≤ x i ^ 2 := hi ▸ hx j
     have htpos : 0 < t := by have he := hx i₁; rw [h₁] at he; norm_num at he; linarith
