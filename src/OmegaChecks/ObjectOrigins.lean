@@ -1,5 +1,6 @@
 import OmegaChecks.ModuleSurface
 import OmegaChecks.ObjectOccurrences
+import OmegaChecks.Interface
 
 /-! Check the object references at their actual positions in each published Lean type. -/
 
@@ -43,6 +44,55 @@ def proofReferences (env : Environment) (official : Bool) : IO (NameMap Name) :=
     unless allowed.contains owner.getRoot do
       throw <| IO.userError s!"{name}: reference to {target} from unverified owner {owner}"
   return references
+
+private structure FrozenObject where
+  declaration_name_key : String
+  kind : String
+  deriving FromJson, BEq, Hashable
+
+/-- Only D5 objects exposed by an OmegaMath public API require a canonical freeze here.
+The repository's SL-008 check independently attests the current contents of each state. -/
+private def checkPublishedFreezes (env : Environment) (references : NameMap Name) : IO Unit := do
+  let mut visible : NameSet := {}
+  for module in env.allImportedModuleNames do
+    if module.getRoot == `OmegaMath then
+      for dep in ← ModuleSurface.publicClosure env module do
+        if dep.getRoot == `D5 || dep.getRoot == `OmegaMath then visible := visible.insert dep
+  let mut objects : NameSet := {}
+  for owner in visible do
+    let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing publication module {owner}"
+    for (alias, target) in aliasExtension.getModuleEntries env idx do
+      unless isPrivateName alias do objects := objects.insert target
+    for name in env.header.moduleData[idx]!.constNames do
+      if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then continue
+      let some decl := env.find? name | throw <| IO.userError s!"missing publication declaration {name}"
+      objects := objects.insert name
+      for dep in decl.type.getUsedConstants do objects := objects.insert dep
+  let mut pending := objects.toList
+  while let name :: rest := pending do
+    pending := rest
+    if let some target := references.find? name then
+      unless objects.contains target do
+        objects := objects.insert target
+        pending := target :: pending
+  let mut states : NameMap (Std.HashSet FrozenObject) := {}
+  for name in objects do
+    let owner ← ownerOf env name
+    unless owner.getRoot == `D5 do continue
+    let some decl := env.find? name | throw <| IO.userError s!"unknown published D5 object {name}"
+    if decl.isTheorem || (← (Meta.isProp decl.type).run' |>.toIO' {fileName := "<publication>", fileMap := default} {env}) then continue
+    let kind := match decl with
+      | .defnInfo _ => "def" | .opaqueInfo _ => "opaque" | .inductInfo _ => "inductive"
+      | .ctorInfo _ => "constructor" | .recInfo _ => "recursor" | .axiomInfo _ => "axiom"
+      | .quotInfo _ => "quotient" | .thmInfo _ => "theorem"
+    let path := modToFilePath "Golden/Frozen/state" owner "lean.json"
+    if !states.contains owner then
+      unless ← path.pathExists do throw <| IO.userError s!"OmegaMath publishes unfrozen D5 object {name} from {owner}: {path} is missing"
+      let json ← IO.ofExcept (Json.parse (← IO.FS.readFile path))
+      let rows : Array FrozenObject ← IO.ofExcept (json.getObjValAs? _ "declarations")
+      states := states.insert owner (Std.HashSet.ofArray rows)
+    unless (states.get! owner).contains ⟨Interface.frozenNameKey name, kind⟩ do
+      throw <| IO.userError s!"OmegaMath publishes unfrozen D5 object {name} from {owner}: missing {kind} declaration key in {path}"
 
 structure Result where
   /-- Supplied to the same semantic correspondence checker as public port declarations. -/
@@ -129,6 +179,7 @@ def check (strict publicStrict official : Environment) (modules roots : Array Na
   let project := NameSet.ofList modules.toList
   let refs ← proofReferences strict false
   let officialRefs ← proofReferences official true
+  checkPublishedFreezes official officialRefs
   unless refs.size == officialRefs.size do throw <| IO.userError "proof publication references differ between backends"
   for (alias, target) in refs.toList do
     let some actual := officialRefs.find? alias | throw <| IO.userError s!"missing official proof publication reference {alias}"

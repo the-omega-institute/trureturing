@@ -352,7 +352,7 @@ private def replayUpstreamEquations (reference : Environment) (names : Array Nam
   return matched
 
 /-- Canonical name spelling used by the frozen dependency Inspector. -/
-private def frozenNameKey : Name → String
+def frozenNameKey : Name → String
   | .anonymous => "n0"
   | .str parent value => s!"ns({frozenNameKey parent},{value.utf8ByteSize}:{value})"
   | .num parent value => s!"nn({frozenNameKey parent},{value})"

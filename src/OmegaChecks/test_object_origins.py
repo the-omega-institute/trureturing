@@ -115,10 +115,20 @@ def check():
                      + "public def Published.proof : Omega.True := Omega.True.intro\n")
         compare(["OmegaMath.Valid"], ["OmegaMath.Valid"])
         compile_case("D5.Original", head + "public def D5.original (_ : Omega.Nat) := Omega.True\n")
-        compile_case("OmegaMath.WithOriginal", "module\nprelude\npublic import D5.Original\n"
-                     + "public abbrev Published.project := D5.original\n"
-                     + "namespace Published\nexport D5 (original)\nend Published\n")
-        compare(["OmegaMath.WithOriginal", "D5.Original"], ["OmegaMath.WithOriginal"])
+        compare(["D5.Original"], ["D5.Original"])
+        compile_case("OmegaMath.Unfrozen", "module\nprelude\npublic import D5.Original\n")
+        compare(["OmegaMath.Unfrozen", "D5.Original"], ["OmegaMath.Unfrozen"], "unfrozen D5 object D5.original")
+
+        frozen = "D5.S0.History.EmptyLedgerConservation"
+        original = ROOT / (frozen.replace(".", "/") + ".lean")
+        compile_case(frozen, original.read_text())
+        publication = f"module\nprelude\npublic import {frozen}\nnamespace Published\nexport {frozen} (LedgerDiscipline)\nend Published\n"
+        compile_case("OmegaMath.WithOriginal", publication)
+        compare(["OmegaMath.WithOriginal", frozen], ["OmegaMath.WithOriginal"])
+        compile_case(frozen, original.read_text() + "\npublic def D5.addedAfterFreeze := Omega.Nat\n")
+        compile_case("OmegaMath.WithOriginal", publication)
+        compare(["OmegaMath.WithOriginal", frozen], ["OmegaMath.WithOriginal"],
+                "unfrozen D5 object D5.addedAfterFreeze", "missing def declaration key")
         for ordinal, body in enumerate([
             "private def disguised (_ : Omega.Nat) : Prop := Omega.True",
             "public abbrev computed := fun p : Omega.Nat => OmegaMathlib.Nat.Prime p",
