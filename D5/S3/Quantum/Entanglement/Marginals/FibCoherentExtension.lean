@@ -123,7 +123,7 @@ theorem partialTraceLeft_sub {A C : Type*} [Fintype A]
   ext i j
   simp [partialTraceLeft, Finset.sum_sub_distrib]
 
-private theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
+theorem product_completion_formula {A C : Type*} [Fintype A] [Fintype C]
     [DecidableEq A] [DecidableEq C]
     (L : Matrix A A ℂ) (R : Matrix C C ℂ) (hL : L.PosSemidef) (hR : R.PosSemidef)
     (htr : L.trace = R.trace) :
@@ -612,7 +612,7 @@ theorem rational_extension_at (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w z : 
 
 open LabelResetBandwidth (pure_marginal_factors)
 
-private theorem pure_of_singular (L : Matrix Bool Bool ℂ) (hL : L.PosSemidef)
+theorem pure_of_singular (L : Matrix Bool Bool ℂ) (hL : L.PosSemidef)
     (hdet : L.det = 0) (ht : L.trace = 1) :
     ∃ x : Bool → ℂ, star x ⬝ᵥ x = 1 ∧ L = LabelResetBandwidth.pure x := by
   classical
@@ -726,7 +726,7 @@ private theorem psd_of_trace_det_pos {K : Matrix Bool Bool ℂ} (h : K.IsHermiti
     · exact ha.le
   · linarith
 
-private theorem locally_feasible {F : ℂ → Matrix Bool Bool ℂ} (hF : Continuous F)
+theorem locally_feasible {F : ℂ → Matrix Bool Bool ℂ} (hF : Continuous F)
     (hH : ∀ z, (F z).IsHermitian) {z : ℂ} (hp : (F z).PosSemidef)
     (hd : (F z).det ≠ 0) : ∀ᶠ y in nhds z, (F y).PosSemidef := by
   have hpos := hp.posDef_iff_det_ne_zero.mpr hd
@@ -753,7 +753,7 @@ private theorem extension_from_residuals {b : ℝ} {L R : Matrix Bool Bool ℂ} 
   · rw [right_read, hTR]
     rfl
 
-private theorem residual_continuous (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) :
+theorem residual_continuous (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v w : ℂ) :
     Continuous (fun z : ℂ => L - partialTraceRight (correction b (middleRow u v w z))) ∧
     Continuous (fun z : ℂ => R - partialTraceLeft (correction b (middleRow u v w z))) := by
   have hrow (i : Bool × Bool) : Continuous (fun z : ℂ => middleRow u v w z i) := by
@@ -775,7 +775,7 @@ private theorem residual_continuous (b : ℝ) (L R : Matrix Bool Bool ℂ) (u v 
     simp only [Matrix.sub_apply, partialTraceLeft, Fintype.sum_bool]
     exact continuous_const.sub ((h _ _).add (h _ _))
 
-private theorem residuals_hermitian {b : ℝ} {L R : Matrix Bool Bool ℂ} {u v w z : ℂ}
+theorem residuals_hermitian {b : ℝ} {L R : Matrix Bool Bool ℂ} {u v w z : ℂ}
     (hb : 0 < b) (hL : L.IsHermitian) (hR : R.IsHermitian) :
     (L - partialTraceRight (correction b (middleRow u v w z))).IsHermitian ∧
     (R - partialTraceLeft (correction b (middleRow u v w z))).IsHermitian := by

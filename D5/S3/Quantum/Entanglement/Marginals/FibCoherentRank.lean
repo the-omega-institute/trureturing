@@ -24,7 +24,7 @@ open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 namespace D5.S3.Quantum.Entanglement.Marginals.FibCoherentRank
 
-private theorem assemble_rank {n : Type} [Fintype n]
+theorem assemble_rank {n : Type} [Fintype n]
     (b : ℝ) (hb : b ≠ 0) (v : n → ℂ) (T : Matrix n n ℂ) :
     (assemble b v T).rank = (T - correction b v).rank + 1 := by
   classical
