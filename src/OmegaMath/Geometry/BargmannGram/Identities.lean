@@ -146,6 +146,39 @@ private def detMinorExpr (a b c d e f g h i : Expr) : Expr :=
   ((a.mul ((e.mul i).sub (f.mul h))).sub (b.mul ((d.mul i).sub (f.mul g)))).add
     (c.mul ((d.mul h).sub (e.mul g)))
 
+private def withoutScalar (a : Quad4) : Quad4 := ⟨Int.zero, a.x, a.y, a.z⟩
+
+private theorem withoutScalar_eq (a : Quad4) (h : Eq a.w Int.zero) :
+    Eq (withoutScalar a) a :=
+  Quad4.ext h.symm Eq.refl Eq.refl Eq.refl
+
+set_option maxRecDepth 2048 in
+/-- A three-vector Gram determinant in the pure-imaginary subspace is an integer square. -/
+theorem pure_gram_numerator_is_square (a b c : Quad4)
+    (ha : Eq a.w Int.zero) (hb : Eq b.w Int.zero) (hc : Eq c.w Int.zero) :
+    Exists fun d : Int => Eq
+      (gramNumerator (a.dot a) (b.dot b) (c.dot c) (a.dot b) (b.dot c) (c.dot a))
+      (Int.square d) :=
+  let a₀ := withoutScalar a
+  let b₀ := withoutScalar b
+  let c₀ := withoutScalar c
+  let values := bindQuad a₀ (bindQuad b₀ (bindQuad c₀ (fun _ => Int.zero)))
+  let u : QuadExpr := { variables Nat.zero with w := Expr.const Int.zero }
+  let v : QuadExpr := { variables Nat.zero.succ.succ.succ.succ with w := Expr.const Int.zero }
+  let w : QuadExpr := { variables Nat.zero.succ.succ.succ.succ.succ.succ.succ.succ
+    with w := Expr.const Int.zero }
+  let determinant := detMinorExpr u.x u.y u.z v.x v.y v.z w.x w.y w.z
+  let form := fun x y z : Quad4 =>
+    gramNumerator (x.dot x) (y.dot y) (z.dot z) (x.dot y) (y.dot z) (z.dot x)
+  let gram := gramExpr (u.dot u) (v.dot v) (w.dot w) (u.dot v) (v.dot w) (w.dot u)
+  have certificate : Eq gram.normalize determinant.sq.normalize := Eq.refl
+  have square : Eq (form a₀ b₀ c₀) (Int.square (determinant.eval values)) :=
+    Expr.certify values gram determinant.sq certificate
+  have restore := (congrArg (fun x => form x b₀ c₀) (withoutScalar_eq a ha)).trans
+    ((congrArg (fun y => form a y c₀) (withoutScalar_eq b hb)).trans
+      (congrArg (form a b) (withoutScalar_eq c hc)))
+  Exists.intro (determinant.eval values) (restore.symm.trans square)
+
 set_option maxRecDepth 2048 in
 /-- Cauchy–Binet for three rows in four columns, with the four maximal minors. -/
 theorem gram_squares_nonneg (a b c : Quad4) :
