@@ -132,7 +132,7 @@ lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean 
 
 表中的 `impliesAxiom` 记录已验证的归约。例如，给定原类型的 `Classical.choose` 实现，就能构造 `Classical.choice`。空值表示尚未登记此类归约。`upstreamAxioms` 记录官方实现使用的公理。同一类型有构造性证明时，严格库仍可收录。语法、别名和私有实现不计入公开声明数。[`Classical.choose` 的官方定义](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Classical.lean)
 
-严格构建为 `Option`、`List` 和 `Sum` 读取钉版的归纳声明，并生成构造器布局。Lean 编译器和官方环境只在构建时使用。生成的严格模块可以独立导入，审计会检查其全部依赖并在空内核重放声明。[严格构建配置](OmegaChecks/strict_lake.py) · [归纳声明移植](OmegaInitCompiler.lean)
+严格构建为 `Option`、`List` 和 `Sum` 读取钉版的归纳声明，并生成构造器布局。Lean 编译器和官方环境只在构建时使用。生成的严格模块可以独立导入，审计会检查其全部依赖并在空内核重放声明。[严格构建配置](OmegaChecks/strict_lake.py) · [归纳声明移植](OmegaChecks/InitCompiler.lean)
 
 ### 批量构建官方 Init 对象
 

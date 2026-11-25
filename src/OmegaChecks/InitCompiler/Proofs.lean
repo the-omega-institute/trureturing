@@ -5,7 +5,7 @@ public import Lean
 /-! Translate proof terms from the pinned Init environment into the strict namespace. -/
 
 open Lean
-namespace OmegaInitCompiler
+namespace OmegaChecks.InitCompiler
 
 private initialize cachedOwner : IO.Ref (Option (Name × Environment)) ← IO.mkRef none
 
@@ -77,4 +77,4 @@ public partial def elementaryProof? (env : Environment) (type : Expr) : Option E
   (terms type 0).find? (fun e =>
     (Kernel.check env {} e).toOption.any (Kernel.isDefEqGuarded env {} type))
 
-end OmegaInitCompiler
+end OmegaChecks.InitCompiler

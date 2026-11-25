@@ -1,11 +1,11 @@
 import Lean
-import OmegaInitCompiler.Layout
-import OmegaInitCompiler.Proofs
+import OmegaChecks.InitCompiler.Layout
+import OmegaChecks.InitCompiler.Proofs
 
 /-! Elaborate pinned Init declarations in strict prelude modules. -/
 
 open Lean Parser Elab Command
-namespace OmegaInitCompiler
+namespace OmegaChecks.InitCompiler
 
 private def omegaName (n : Name) := `Omega ++ n
 
@@ -93,4 +93,4 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       Meta.MetaM.run' <| mkCasesOn typ.name
       Meta.MetaM.run' <| mkRecOn typ.name
 
-end OmegaInitCompiler
+end OmegaChecks.InitCompiler

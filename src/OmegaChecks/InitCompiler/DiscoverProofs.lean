@@ -1,16 +1,16 @@
 import Lean
-import OmegaInitCompiler.Proofs
+import OmegaChecks.InitCompiler.Proofs
 /-!
 Find additional constructive proofs using the compiled strict basis. Rows give the pinned Init
 owner, declaration, proof strategy and direct module dependencies. The ordinary source build
 and interface audit determine whether a proposed addition is available to that module's consumers.
 
 Run with the strict Lake environment after building the basis:
-`lean --run src/OmegaInitCompiler/DiscoverProofs.lean STRICT_OLEAN_DIR OUTPUT.jsonl`.
+`lean --run src/OmegaChecks/InitCompiler/DiscoverProofs.lean STRICT_OLEAN_DIR OUTPUT.jsonl`.
 -/
 
 open Lean
-namespace OmegaInitCompiler.DiscoverProofs
+namespace OmegaChecks.InitCompiler.DiscoverProofs
 
 private def ownerOf (env : Environment) (name : Name) : Option Name := do
   return env.header.moduleNames[(← env.getModuleIdxFor? name)]!
@@ -40,7 +40,7 @@ partial def visit (name : Name) : M Bool := do
   if owner.getRoot != `Init then return false
   for dep in proof.type.getUsedConstants do
     if !isPrivateName dep && !(← visit dep) then return false
-  let .ok type := OmegaInitCompiler.translateProofTerm c.source proof.type | return false
+  let .ok type := OmegaChecks.InitCompiler.translateProofTerm c.source proof.type | return false
   for dep in type.getUsedConstants do
     if !(← visit (dep.replacePrefix `Omega .anonymous)) then return false
   let checked := fun (value : Expr) => do
@@ -51,13 +51,13 @@ partial def visit (name : Name) : M Bool := do
     set {s with kernel := next}
     return true
   let (value, strategy) ← do
-    if let some simple := OmegaInitCompiler.elementaryProof? (.ofKernelEnv (← get).kernel) type then
+    if let some simple := OmegaChecks.InitCompiler.elementaryProof? (.ofKernelEnv (← get).kernel) type then
       if ← checked simple then pure (simple, "by_reflexivity")
       else return false
     else
       for dep in proof.value.getUsedConstants do
         if !isPrivateName dep && !(← visit dep) then return false
-      let .ok value := OmegaInitCompiler.translateProofTerm c.source proof.value | return false
+      let .ok value := OmegaChecks.InitCompiler.translateProofTerm c.source proof.value | return false
       for dep in value.getUsedConstants do
         if !(← visit (dep.replacePrefix `Omega .anonymous)) then return false
       if !(← checked value) then return false
@@ -98,7 +98,7 @@ def run (seed out : System.FilePath) : IO Unit := do
   discard <| (action.run {source,visible,output,ambiguous}).run {kernel := strict.toKernelEnv}
   output.flush
 
-end OmegaInitCompiler.DiscoverProofs
+end OmegaChecks.InitCompiler.DiscoverProofs
 def main (args : List String) : IO Unit := do
   let [seed,out] := args | throw <| IO.userError "expected a strict library and output file"
-  OmegaInitCompiler.DiscoverProofs.run seed out
+  OmegaChecks.InitCompiler.DiscoverProofs.run seed out

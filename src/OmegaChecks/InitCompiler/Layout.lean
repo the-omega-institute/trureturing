@@ -6,7 +6,7 @@ import all Lean.Compiler.LCNF.MonoTypes
 /-! Build-time elaboration of the pinned Init inductives in strict prelude modules. -/
 
 open Lean Parser Elab Command
-namespace OmegaInitCompiler
+namespace OmegaChecks.InitCompiler
 
 open Compiler.LCNF in
 public def compilerLayouts (types ctors : Array Name) : CoreM Unit := do
@@ -28,4 +28,4 @@ where
     let some info := ext.find? layoutEnv n | throwError "missing compiler layout for {n}"
     modifyEnv (ext.insert · n info)
 
-end OmegaInitCompiler
+end OmegaChecks.InitCompiler
