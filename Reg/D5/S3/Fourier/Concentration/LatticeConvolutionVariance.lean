@@ -38,14 +38,17 @@ abbrev arena : Arena where
     ∀ (a V t : ℝ), (∑ j, w j * (g j - a)^2 ≤ V * ∑ j, w j) →
     let W := ∑ j, w j
     let margin := R.readout () ()
-    W * margin (V*t^2) ≤ ‖complexScore g w t‖
+    let B := ∑ j, w j * (g j-a)^2
+    W * margin (V*t^2) ≤ ‖complexScore g w t‖ ∧
+    max 0 (W-B*t^2/2) ≤ ‖complexScore g w t‖ ∧
+    (0 < B → t ≠ 0 → W-B*t^2/2 < ‖complexScore g w t‖)
 
 private theorem rejected_law : ¬ arena.{u}.Law oversized := by
   intro h
   have hz := h (J := ULift.{u} Unit) (fun _ => 0) (fun _ => 1)
     (fun _ => zero_le_one) 0 0 0 (by simp)
   have hb : (2 : ℝ) ≤ 1 := by
-    simpa [oversized, realize, complexScore, phase] using hz
+    simpa [oversized, realize, complexScore, phase] using hz.1
   norm_num at hb
 
 def evidence : Registration arena.{u} (type_of% @score_variance_lower.{u}) where
@@ -102,25 +105,25 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {J : Type u} [Fintype J] [DecidableEq J]
     (a : J → ℤ) (b h : ℝ), 0 < h → ∀ (w : J → ℝ) (p : ℕ)
-    (η : ℝ), 0 ≤ η → η < h →
+    (η : ℝ), 0 ≤ η → η < h → ∀ (k : ℕ), 0 < k → ∀ (s₀ : ℝ),
     let g := fun j => b+h*(a j : ℝ)
     let period := R.readout () ()
-    let A := period h
-    intervalMean A (fun t => ‖complexScore g w t‖^(2*p)) =
+    let A := (k : ℝ)*period h
+    intervalMean A (fun t => ‖complexScore g w (s₀+t)‖^(2*p)) =
       tailCollisionMass g w p η
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let a : ULift.{u} Unit → ℤ := fun _ => 0
   let w : ULift.{u} Unit → ℝ := fun _ => 1
-  have hz := h a 0 1 zero_lt_one w 0 0 le_rfl zero_lt_one
-  have ho := lattice_period_collision a 0 1 zero_lt_one w 0 0 le_rfl zero_lt_one
+  have hz := h a 0 1 zero_lt_one w 0 0 le_rfl zero_lt_one 1 (by decide) 0
+  have ho := lattice_period_collision a 0 1 zero_lt_one w 0 0 le_rfl zero_lt_one 1 (by decide) 0
   have hc : tailCollisionMass (fun j => (0:ℝ)+1*(a j : ℝ)) w 0 0 = 1 := by
     rw [← ho]
     simp only [Nat.mul_zero, pow_zero]
     unfold intervalMean
     rw [intervalIntegral.integral_const]
-    simp only [smul_eq_mul, div_one]
+    simp only [smul_eq_mul, div_one, Nat.cast_one, one_mul]
     field_simp [Real.pi_ne_zero]
     <;> ring
   dsimp only at hz
@@ -166,7 +169,7 @@ def registration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "value"]
+        "body", "body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -189,16 +192,20 @@ abbrev arena : Arena where
     let W := ∑ j, w j
     let A := Real.pi/h
     let margin := R.readout () ()
+    let B := ∑ j, w j * (g j-center)^2
     W^(2*p)*intervalMean A (fun t => (margin (V*t^2))^(2*p)) ≤
-      tailCollisionMass g w p η
+      tailCollisionMass g w p η ∧
+    (0 < B → 0 < p →
+      W^(2*p)*intervalMean A (fun t => (margin (V*t^2))^(2*p)) <
+        tailCollisionMass g w p η)
 
 private theorem rejected_law : ¬ arena.{u}.Law oversized := by
   intro h
   let a : ULift.{u} Unit → ℤ := fun _ => 0
   let w : ULift.{u} Unit → ℝ := fun _ => 1
-  have hz := h a 0 1 zero_lt_one w (by intro j; exact zero_le_one)
-    0 0 1 0 le_rfl (by simp [a, w])
-  have ho := lattice_period_collision a 0 1 zero_lt_one w 1 0 le_rfl zero_lt_one
+  have hz := (h a 0 1 zero_lt_one w (by intro j; exact zero_le_one)
+    0 0 1 0 le_rfl (by simp [a, w])).1
+  have ho := lattice_period_collision a 0 1 zero_lt_one w 1 0 le_rfl zero_lt_one 1 (by decide) 0
   have hc : tailCollisionMass (fun j => (0:ℝ)+1*(a j : ℝ)) w 1 0 = 1 := by
     rw [← ho]
     simp [a, w, complexScore, phase, intervalMean, intervalIntegral.integral_const, smul_eq_mul]
