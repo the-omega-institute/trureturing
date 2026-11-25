@@ -126,9 +126,10 @@ private def testLibrary (selected : List String) : IO Unit := do
 def main (args : List String) : IO Unit := do
   if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
-    if clients.isEmpty then throw <| IO.userError "consumer comparison requires at least one module"
     let modules := clients.toArray.map String.toName
     let ports := (names.drop (clients.length + 1)).toArray.map String.toName
+    if modules.isEmpty && ports.isEmpty then
+      throw <| IO.userError "consumer comparison requires at least one module or standard port"
     unless ports.all OmegaChecks.ModuleSurface.isBasis do throw <| IO.userError "invalid standard port"
     let imports := (modules ++ ports).map fun moduleName => { module := moduleName : Import }
     let strictSearchPath := System.SearchPath.parse strictPath

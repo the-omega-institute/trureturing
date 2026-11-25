@@ -1,0 +1,78 @@
+"""Regression fixtures for affected Omega targets."""
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+
+import scope
+
+
+class ScopeTests(unittest.TestCase):
+    graph = {
+        "OmegaInit.Core": set(),
+        "OmegaMathlib.Fib": {"OmegaInit.Core"},
+        "OmegaMath.Independent": {"OmegaInit.Core"},
+        "D5.Direct": {"OmegaMathlib.Fib"},
+        "D5.Downstream": {"D5.Direct"},
+        "Reg.Observation": {"D5.Downstream"},
+        "Reg.Independent": {"OmegaMath.Independent"},
+        "D5.Ordinary": set(),
+        "OmegaChecks.Portable.Common": {"OmegaMathlib.Fib"},
+    }
+    official = {"OmegaInit.Core": set(), "OmegaMathlib.Fib": {"OmegaInit.Core", "Mathlib.Fib"}}
+
+    def test_port_selects_direct_and_transitive_consumers_and_common(self):
+        plan = scope.plan(self.graph, self.official, {"OmegaMathlib.Fib"}, set(), [], [])
+        self.assertEqual(plan["library"], ["OmegaChecks.Portable.Common", "OmegaMathlib.Fib"])
+        self.assertEqual(plan["consumers"], ["D5.Direct", "D5.Downstream", "OmegaChecks.Portable.Common",
+                                             "Reg.Observation"])
+        self.assertEqual(plan["common"], ["OmegaChecks.Portable.Common", "OmegaMathlib.Fib"])
+        self.assertEqual(set(scope.cache_targets(plan)), set(plan["library"] + plan["consumers"]) |
+                         {scope.AUDIT, scope.CERTIFICATE})
+
+    def test_project_and_shared_inputs_select_their_dependents(self):
+        for changed, shared, reg_inputs, expected in [
+            ({"D5.Direct"}, [], [], ["D5.Direct", "D5.Downstream", "Reg.Observation"]),
+            ({"OmegaInit.Core"}, [], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
+                                                "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
+            ({"D5.Ordinary"}, [], ["Reg/lakefile.toml"], ["Reg.Independent", "Reg.Observation"]),
+            (set(), ["lean-toolchain"], [], sorted({"D5.Direct", "D5.Downstream", "OmegaMath.Independent",
+                                                   "OmegaChecks.Portable.Common", "Reg.Independent", "Reg.Observation"})),
+        ]:
+            with self.subTest(changed=changed, shared=shared, reg_inputs=reg_inputs):
+                plan = scope.plan(self.graph, self.official, changed, set(), shared, reg_inputs)
+                self.assertEqual(plan["consumers"], expected)
+                self.assertEqual(plan["shared"], shared)
+
+    def test_official_import_edge_affects_port_and_its_clients(self):
+        official = dict(self.official, **{"OmegaMathlib.Fib": {"D5.Ordinary"}})
+        plan = scope.plan(self.graph, official, {"D5.Ordinary"}, set(), [], [])
+        self.assertIn("D5.Direct", plan["consumers"])
+
+    def test_deletions_preserve_errors_for_surviving_imports_and_required_inputs(self):
+        for missing in ({"D5.Direct"}, {scope.CERTIFICATE}):
+            with self.subTest(missing=missing), self.assertRaisesRegex(ValueError, "still required"):
+                scope.plan(self.graph, self.official, missing, missing, [], [])
+        with self.assertRaisesRegex(ValueError, "module trees differ"):
+            scope.plan(self.graph, {"OmegaInit.Core": set()}, set(), set(), [], [])
+        removed = {"D5.Removed"}
+        plan = scope.plan(self.graph, self.official, removed, removed, [], [])
+        self.assertEqual(scope.cache_targets(plan), [])
+        self.assertEqual(scope.report_file(plan), "")
+
+    def test_empty_unrelated_and_missing_changed_manifests(self):
+        with TemporaryDirectory() as temporary:
+            paths = Path(temporary) / "changed"
+            with self.assertRaises(FileNotFoundError):
+                scope.discover(paths)
+            for content in (b"", b"README.md\0"):
+                paths.write_bytes(content)
+                plan = scope.discover(paths)
+                self.assertEqual(scope.cache_targets(plan), [])
+                self.assertEqual(scope.report_file(plan), "")
+            paths.write_bytes(b"D5/Unterminated.lean")
+            with self.assertRaisesRegex(ValueError, "NUL-separated"):
+                scope.discover(paths)
+
+
+if __name__ == "__main__":
+    unittest.main()

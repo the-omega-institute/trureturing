@@ -28,7 +28,8 @@ def output(*args, **kwargs):
     return subprocess.check_output(args, cwd=ROOT, text=True, **kwargs)
 
 
-def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *, with_reg=False):
+def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
+                 with_reg=False, official_basis=False):
     if with_reg:
         pathspecs = (*pathspecs, "Reg/*.lean")
     files = output("git", "ls-files", "-co", "--exclude-standard", "-z", "--",
@@ -38,7 +39,7 @@ def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "T
         if file and (ROOT / file).is_file():
             path = file.removeprefix("strict/").removeprefix("src/")
             name = path.removesuffix(".lean").replace("/", ".")
-            if file.startswith("src/") and root(name) in BASIS:
+            if file.startswith("src/") and root(name) in BASIS and not official_basis:
                 continue
             sources[name] = ROOT / file
     if with_reg:
@@ -402,17 +403,20 @@ def frozen_measurement(request, official_path, inspector, destination):
           discovered=(sources, graph))
 
 
-def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=None):
+def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=None,
+          basis_roots=None, common_roots=()):
     lean = output("lake", "env", "printenv", "LEAN").strip()
-    with_reg = (backend == "both" and frozen is None) or any(root(name) == "Reg" for name in only)
+    scoped = basis_roots is not None
+    with_reg = ((backend == "both" and frozen is None and not scoped)
+                or any(root(name) == "Reg" for name in only))
     sources, graph = discovered if discovered is not None else import_graph(lean, with_reg=with_reg)
     selected = consumers(graph)
     portable_clients = [name for name in selected if name.startswith("OmegaChecks.Portable.")]
-    if only:
+    if only or scoped:
         if set(only) - set(selected):
             raise ValueError(f"outside the strict downstream closure: {sorted(set(only) - set(selected))}")
         selected = sorted(set(only))
-    if not selected:
+    if not selected and not basis_roots:
         raise RuntimeError("no downstream consumers selected")
     print(f"Portable consumer targets ({len(selected)}): {' '.join(selected)}", flush=True)
     all_basis = {name for name in graph if root(name) in BASIS}
@@ -420,11 +424,14 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                for prefix in BASIS for path in (*SRC.glob(prefix + ".lean"), *(SRC / prefix).rglob("*.lean"))}
     if backend != "strict" and all_basis != set(facades):
         raise RuntimeError(f"standard and strict module trees differ: {sorted(all_basis ^ set(facades))}")
-    modules = closure(graph, selected if only else [*selected, *all_basis])
+    roots = [*selected, *basis_roots] if scoped else selected if only else [*selected, *all_basis]
+    modules = closure(graph, roots)
     basis = [n for n in modules if root(n) in BASIS]
     downstream = [n for n in modules if root(n) not in BASIS]
     # The admission-only profile covers the designated portable clients and the entire basis.
-    common_modules = closure(graph, [*all_basis, *portable_clients]) if backend == "both" and frozen is None else []
+    if not scoped and backend == "both" and frozen is None:
+        common_roots = [*all_basis, *portable_clients]
+    common_modules = closure(graph, common_roots)
     compiled = dict.fromkeys([*modules, *common_modules])
     with_reg = any(root(n) in {"Reg", "LeanInformationAuditInterface"} for n in compiled)
     strict_sources = {name: sources[name] for name in compiled}
@@ -469,7 +476,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if backend != "strict":
             official_path = backend_artifacts(False, with_reg, official_sources, official, packages,
                                               lean, environment, snapshots=snapshots)
-        if backend == "both" and frozen is None:
+        if common_modules:
             common_basis = [name for name in common_modules if root(name) in BASIS]
             normal, common = derived_facades(lean, strict, common_basis, official_path)
             common_downstream = [name for name in common_modules if root(name) not in BASIS]
@@ -490,11 +497,14 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_reg = any(root(name) in {"Reg", "LeanInformationAuditInterface"} for name in common_sources)
             common_path = backend_artifacts(False, common_reg, common_sources, Path(temp) / "common", packages,
                                             lean, environment, COMMON_SRC)
+        if backend == "both" and frozen is None:
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+        if common_modules:
             subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
                            env=environment, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
-                  f"{len(portable_clients)} portable fixtures", flush=True)
+                  f"{len(common_downstream)} downstream modules", flush=True)
+        if backend == "both" and frozen is None:
             staged_report = Path(temp) / "official-axioms.json"
             subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis], cwd=ROOT,
                            env={**environment, "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)}, check=True)
@@ -546,7 +556,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                         artifact.unlink()
             publish(strict if backend == "strict" else official, destination)
         if backend == "both":
-            report_name = "selected-official-axioms.json" if only else "official-axioms.json"
+            report_name = "selected-official-axioms.json" if only or scoped else "official-axioms.json"
             report = ROOT / ".lake/build/omega-checks" / report_name
             report.parent.mkdir(parents=True, exist_ok=True)
             with tempfile.TemporaryDirectory(dir=report.parent) as report_dir:
