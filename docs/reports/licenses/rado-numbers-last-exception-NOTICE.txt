@@ -1,0 +1,30 @@
+Applicable introductory notice from the adopted Lean Pool source
+==============================================================
+
+Lean Pool
+=========
+
+Copyright the Lean Pool contributors and the respective project authors.
+
+Lean Pool is licensed under the Apache License, Version 2.0. See the LICENSE
+file for the full license text.
+
+Lean Pool is an aggregation of third-party Lean 4 formalizations. Each project
+under LeanPool/ is the work of its original authors, who retain copyright as
+recorded in the per-file headers and in the project registry. This NOTICE file
+records, for every pooled project, the upstream repository it was imported from
+and the license under which it was originally published.
+
+Rado proof source and adaptation
+===============================
+
+Original proof and formalization: Tyler B. Hughes and research agents.
+Primary source: https://github.com/mathdiscoveries/rado-numbers-last-exception/tree/82a9a73903a9f68b476818a37e20b10405aa8b53
+Adopted pool: https://github.com/LeanPool/lean-pool/tree/623ba6c3c0026e133ff75089d66c60040eb05aec
+Files: LeanPool/RadoNumbersLastException/LowerHalf.lean and UpperHalf.lean.
+
+The per-file copyright and authorship notices are retained. The port adapts
+module paths, headers, declaration visibility and endpoint organization.
+No Rado project row occurs in the adopted pool NOTICE; unrelated project
+rows are excluded. The complete Apache License, Version 2.0 is retained in
+rado-numbers-last-exception-LICENSE.txt.
