@@ -190,13 +190,13 @@ variable {C : Finset (Q 9)} {b : Bool} {i : Fin 9}
 /-- The retained lift of a paired column. -/
 abbrev pairedVertex (x : PairedRows C b i) : Q 9 := x.1.1.1
 
-private theorem vertex_injective : Function.Injective (pairedVertex (C := C) (b := b) (i := i)) :=
+theorem vertex_injective : Function.Injective (pairedVertex (C := C) (b := b) (i := i)) :=
   fun _ _ h => Subtype.ext (Subtype.ext (Subtype.ext h))
 
 private theorem vertex_parity (x : PairedRows C b i) : parity (pairedVertex x) = b :=
   (Finset.mem_filter.mp x.1.property).2
 
-private def occupied (C : Finset (Q 9)) (i : Fin 9) (r : Q 9) : Prop :=
+def occupied (C : Finset (Q 9)) (i : Fin 9) (r : Q 9) : Prop :=
   r ∈ C ∨ flip r i ∈ C
 
 /-- A transverse contact from an occupied projected fibre to a paired column.
@@ -310,16 +310,16 @@ private theorem transverse_zero (w : Fin 9 → ℝ) {r y : Q 9}
   · simp [ha]
   · rw [if_neg (fun he => h ⟨a, ha, he⟩)]
 
-private def occupiedMatrix (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (σ : Q 9 → ℝ)
+def occupiedMatrix (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (σ : Q 9 → ℝ)
     (w : Fin 9 → ℝ) : Matrix (Q 9) (PairedRows C b i) ℝ :=
   fun r x => if occupied C i r then rowSign C i σ r * transverse i w r (pairedVertex x) * σ (pairedVertex x)
     else 0
 
-private def emptyMatrix (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (σ : Q 9 → ℝ)
+def emptyMatrix (C : Finset (Q 9)) (b : Bool) (i : Fin 9) (σ : Q 9 → ℝ)
     (w : Fin 9 → ℝ) : Matrix (Q 9) (PairedRows C b i) ℝ :=
   fun r x => if occupied C i r then 0 else transverse i w r (pairedVertex x) * σ (pairedVertex x)
 
-private theorem occupied_entry {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : Fin 9 → ℝ)
+theorem occupied_entry {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : Fin 9 → ℝ)
     {r : Q 9} {x : PairedRows C b i} {a : Fin 9}
     (hr : occupied C i r) (ha : a ≠ i) (he : flip r a = pairedVertex x) :
     occupiedMatrix C b i σ w r x = w a := by
@@ -328,7 +328,7 @@ private theorem occupied_entry {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : F
     _ = w a * (rowSign C i σ r * (edge r a * σ (pairedVertex x))) := by ring
     _ = w a := by rw [coherent_transverse_edge hs hr ha he, ← pow_two, rowSign_sq hs hr, mul_one]
 
-private theorem occupied_entry_zero (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
+theorem occupied_entry_zero (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
     {r : Q 9} {x : PairedRows C b i} (h : ¬ occupiedContact C b i r x) :
     occupiedMatrix C b i σ w r x = 0 := by
   by_cases hr : occupied C i r
@@ -336,7 +336,7 @@ private theorem occupied_entry_zero (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
       mul_zero, zero_mul]
   · simp only [occupiedMatrix, if_neg hr]
 
-private theorem split_gram {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : Fin 9 → ℝ) :
+theorem split_gram {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : Fin 9 → ℝ) :
     (occupiedMatrix C b i σ w)ᵀ * occupiedMatrix C b i σ w +
       (emptyMatrix C b i σ w)ᵀ * emptyMatrix C b i σ w =
       (∑ a : Fin 9, (if a = i then 0 else w a) ^ 2) •
@@ -374,7 +374,7 @@ private theorem split_gram {σ : Q 9 → ℝ} (hs : IsSwitching C σ) (w : Fin 9
       · rw [Matrix.smul_apply, Matrix.one_apply_ne (fun hv => h (vertex_injective hv)),
           Matrix.smul_apply, Matrix.one_apply_ne h, smul_zero, mul_zero]
 
-private theorem empty_boundary_iff (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
+theorem empty_boundary_iff (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
     (f : PairedRows C b i → ℝ) :
     emptyMatrix C b i σ w *ᵥ f = 0 ↔
       emptyFibreBoundary C b i w *ᵥ (fun x => σ (pairedVertex x) * f x) = 0 := by
@@ -412,7 +412,7 @@ private theorem empty_boundary_iff (σ : Q 9 → ℝ) (w : Fin 9 → ℝ)
         have hi : flip r i ∉ C := fun h => hr (Or.inr h)
         exact (hrow r hC hi hb).trans (congrFun hf _)
 
-private theorem switch_twice {σ : Q 9 → ℝ} (hs : IsSwitching C σ)
+theorem switch_twice {σ : Q 9 → ℝ} (hs : IsSwitching C σ)
     (f : PairedRows C b i → ℝ) :
     (fun x => σ (pairedVertex x) * (σ (pairedVertex x) * f x)) = f := by
   funext x

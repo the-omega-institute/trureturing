@@ -19,10 +19,16 @@ symmetry instance is retained. The full Apache-2.0 license is in
 docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
 -/
 
-import D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
-import Mathlib.Algebra.Homology.TotalComplexSymmetry
+module
+
+public import D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
+public import Mathlib.Algebra.Homology.TotalComplexSymmetry
+
+set_option backward.privateInPublic true
 
 /-! # Finite-degree comparison of first-quadrant total complexes -/
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits HomologicalComplex

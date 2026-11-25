@@ -119,8 +119,8 @@ theorem mul_comm (z w : QuadPoly A b c) : Equivalent r (mul r z w) (mul r w z) :
     (Variables.cons w.scalar (Variables.cons w.linear (Variables.cons b
       (Variables.cons c (Variables.nil r))))))
   And.intro
-    (prove r law vars (mulScalar e5 e0 e1 e2 e3) (mulScalar e5 e2 e3 e0 e1) Eq.refl)
-    (prove r law vars (mulLinear e4 e0 e1 e2 e3) (mulLinear e4 e2 e3 e0 e1) Eq.refl)
+    (prove r law vars (mulScalar e5 e0 e1 e2 e3) (mulScalar e5 e2 e3 e0 e1) rfl)
+    (prove r law vars (mulLinear e4 e0 e1 e2 e3) (mulLinear e4 e2 e3 e0 e1) rfl)
 
 theorem mul_assoc (z w u : QuadPoly A b c) :
     Equivalent r (mul r (mul r z w) u) (mul r z (mul r w u)) :=
@@ -133,9 +133,9 @@ theorem mul_assoc (z w u : QuadPoly A b c) :
   let rightLinear := mulLinear e0 e4 e5 e6 e7
   And.intro
     (prove r law vars (mulScalar e1 leftScalar leftLinear e6 e7)
-      (mulScalar e1 e2 e3 rightScalar rightLinear) Eq.refl)
+      (mulScalar e1 e2 e3 rightScalar rightLinear) rfl)
     (prove r law vars (mulLinear e0 leftScalar leftLinear e6 e7)
-      (mulLinear e0 e2 e3 rightScalar rightLinear) Eq.refl)
+      (mulLinear e0 e2 e3 rightScalar rightLinear) rfl)
 
 theorem mul_add (z w u : QuadPoly A b c) :
     Equivalent r (mul r z (add r w u)) (add r (mul r z w) (mul r z u)) :=
@@ -144,28 +144,28 @@ theorem mul_add (z w u : QuadPoly A b c) :
       (Variables.cons u.scalar (Variables.cons u.linear (Variables.nil r))))))))
   And.intro
     (prove r law vars (mulScalar e1 e2 e3 (e4.add e6) (e5.add e7))
-      ((mulScalar e1 e2 e3 e4 e5).add (mulScalar e1 e2 e3 e6 e7)) Eq.refl)
+      ((mulScalar e1 e2 e3 e4 e5).add (mulScalar e1 e2 e3 e6 e7)) rfl)
     (prove r law vars (mulLinear e0 e2 e3 (e4.add e6) (e5.add e7))
-      ((mulLinear e0 e2 e3 e4 e5).add (mulLinear e0 e2 e3 e6 e7)) Eq.refl)
+      ((mulLinear e0 e2 e3 e4 e5).add (mulLinear e0 e2 e3 e6 e7)) rfl)
 
 theorem mul_one (z : QuadPoly A b c) : Equivalent r (mul r z (one r)) z :=
   let vars := Variables.cons z.scalar (Variables.cons z.linear
     (Variables.cons b (Variables.cons c (Variables.nil r))))
   And.intro
-    (prove r law vars (mulScalar e3 e0 e1 .one .zero) e0 Eq.refl)
-    (prove r law vars (mulLinear e2 e0 e1 .one .zero) e1 Eq.refl)
+    (prove r law vars (mulScalar e3 e0 e1 .one .zero) e0 rfl)
+    (prove r law vars (mulLinear e2 e0 e1 .one .zero) e1 rfl)
 
 theorem mul_zero (z : QuadPoly A b c) : Equivalent r (mul r z (zero r)) (zero r) :=
   let vars := Variables.cons z.scalar (Variables.cons z.linear
     (Variables.cons b (Variables.cons c (Variables.nil r))))
   And.intro
-    (prove r law vars (mulScalar e3 e0 e1 .zero .zero) .zero Eq.refl)
-    (prove r law vars (mulLinear e2 e0 e1 .zero .zero) .zero Eq.refl)
+    (prove r law vars (mulScalar e3 e0 e1 .zero .zero) .zero rfl)
+    (prove r law vars (mulLinear e2 e0 e1 .zero .zero) .zero rfl)
 
 theorem conj_conj (z : QuadPoly A b c) : Equivalent r (conj r (conj r z)) z :=
   let vars := Variables.cons b (Variables.cons z.scalar (Variables.cons z.linear (Variables.nil r)))
   And.intro
-    (prove r law vars ((e1.add (e0.mul e2)).add (e0.mul e2.neg)) e1 Eq.refl)
+    (prove r law vars ((e1.add (e0.mul e2)).add (e0.mul e2.neg)) e1 rfl)
     (law.neg_neg z.linear)
 
 /-- Conjugation preserves addition and multiplication while changing the root. -/
@@ -175,7 +175,7 @@ theorem conj_add (z w : QuadPoly A b c) :
     (Variables.cons w.scalar (Variables.cons w.linear (Variables.nil r)))))
   And.intro
     (prove r law vars ((e1.add e3).add (e0.mul (e2.add e4)))
-      ((e1.add (e0.mul e2)).add (e3.add (e0.mul e4))) Eq.refl)
+      ((e1.add (e0.mul e2)).add (e3.add (e0.mul e4))) rfl)
     (law.neg_add z.linear w.linear)
 
 theorem conj_mul (z w : QuadPoly A b c) :
@@ -187,8 +187,8 @@ theorem conj_mul (z w : QuadPoly A b c) :
   let linear := mulLinear e0 e2 e3 e4 e5
   And.intro
     (prove r law vars ((mulScalar e1 e2 e3 e4 e5).add (e0.mul linear))
-      (mulScalar e1 conjZ e3.neg conjW e5.neg) Eq.refl)
-    (prove r law vars linear.neg (mulLinear e0 conjZ e3.neg conjW e5.neg) Eq.refl)
+      (mulScalar e1 conjZ e3.neg conjW e5.neg) rfl)
+    (prove r law vars linear.neg (mulLinear e0 conjZ e3.neg conjW e5.neg) rfl)
 
 /-- Quadratic conjugation preserves the trace. -/
 theorem trace_conj (z : QuadPoly A b c) : r.eqv (trace r (conj r z)) (trace r z) :=
@@ -196,14 +196,14 @@ theorem trace_conj (z : QuadPoly A b c) : r.eqv (trace r (conj r z)) (trace r z)
     (Variables.cons z.linear (Variables.nil r)))
   let conjugateScalar := e1.add (e0.mul e2)
   prove r law vars ((conjugateScalar.add conjugateScalar).add (e0.mul e2.neg))
-    ((e1.add e1).add (e0.mul e2)) Eq.refl
+    ((e1.add e1).add (e0.mul e2)) rfl
 
 theorem add_conj (z : QuadPoly A b c) :
     Equivalent r (add r z (conj r z)) (ofScalar r (trace r z)) :=
   let vars := Variables.cons b (Variables.cons z.scalar
     (Variables.cons z.linear (Variables.nil r)))
   And.intro
-    (prove r law vars (e1.add (e1.add (e0.mul e2))) ((e1.add e1).add (e0.mul e2)) Eq.refl)
+    (prove r law vars (e1.add (e1.add (e0.mul e2))) ((e1.add e1).add (e0.mul e2)) rfl)
     (law.add_neg z.linear)
 
 private def normExpr (b c x y : Expr) : Expr :=
@@ -222,8 +222,8 @@ theorem mul_conj (z : QuadPoly A b c) :
     (Variables.cons z.linear (Variables.nil r))))
   let conjScalar := e2.add (e0.mul e3)
   And.intro
-    (prove r law vars (mulScalar e1 e2 e3 conjScalar e3.neg) (normExpr e0 e1 e2 e3) Eq.refl)
-    (prove r law vars (mulLinear e0 e2 e3 conjScalar e3.neg) .zero Eq.refl)
+    (prove r law vars (mulScalar e1 e2 e3 conjScalar e3.neg) (normExpr e0 e1 e2 e3) rfl)
+    (prove r law vars (mulLinear e0 e2 e3 conjScalar e3.neg) .zero rfl)
 
 theorem norm_mul (z w : QuadPoly A b c) :
     r.eqv (norm r (mul r z w)) (r.mul (norm r z) (norm r w)) :=
@@ -231,7 +231,7 @@ theorem norm_mul (z w : QuadPoly A b c) :
     (Variables.cons z.linear (Variables.cons w.scalar (Variables.cons w.linear (Variables.nil r))))))
   prove r law vars
     (normExpr e0 e1 (mulScalar e1 e2 e3 e4 e5) (mulLinear e0 e2 e3 e4 e5))
-    ((normExpr e0 e1 e2 e3).mul (normExpr e0 e1 e4 e5)) Eq.refl
+    ((normExpr e0 e1 e2 e3).mul (normExpr e0 e1 e4 e5)) rfl
 
 theorem mul_scale (a : A) (z w : QuadPoly A b c) :
     Equivalent r (mul r z (scale r a w)) (scale r a (mul r z w)) :=
@@ -239,9 +239,9 @@ theorem mul_scale (a : A) (z w : QuadPoly A b c) :
     (Variables.cons z.linear (Variables.cons w.scalar (Variables.cons w.linear (Variables.nil r)))))))
   And.intro
     (prove r law vars (mulScalar e1 e3 e4 (e2.mul e5) (e2.mul e6))
-      (e2.mul (mulScalar e1 e3 e4 e5 e6)) Eq.refl)
+      (e2.mul (mulScalar e1 e3 e4 e5 e6)) rfl)
     (prove r law vars (mulLinear e0 e3 e4 (e2.mul e5) (e2.mul e6))
-      (e2.mul (mulLinear e0 e3 e4 e5 e6)) Eq.refl)
+      (e2.mul (mulLinear e0 e3 e4 e5 e6)) rfl)
 
 theorem scale_congr (a : A) {z w : QuadPoly A b c} (h : Equivalent r z w) :
     Equivalent r (scale r a z) (scale r a w) :=

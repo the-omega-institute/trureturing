@@ -37,7 +37,7 @@ public theorem answerability_transports_along_surjection
     (fun h => h.elim (fun factor agrees => Exists.intro factor (fun y => agrees (p y))))
     (fun h => h.elim (fun factor agrees => Exists.intro factor (fun x =>
       (surjective x).elim (fun y preimage =>
-        Eq.subst (fun state => Eq (T state) (factor (C state))) preimage (agrees y)))))
+        Eq.subst (motive := fun state => Eq (T state) (factor (C state))) preimage (agrees y)))))
 
 /-- The one-state pullback hides the conflict between two states with the same
 concept value and distinct Boolean targets. -/
@@ -47,16 +47,16 @@ public theorem nonsurjective_pullback_can_hide_unanswerability :
           (fun state => constantOldConcept (nonSurjectiveProjection state)))
         (Not (StrictRefines (fun x : Bool => x) constantOldConcept))) :=
   have falseNeTrue : Not (Eq Bool.false Bool.true) :=
-    fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
   And.intro
     (fun surjective => (surjective Bool.true).elim (fun _ atTrue => falseNeTrue atTrue))
-    (And.intro (Exists.intro (fun _ => Bool.false) (fun _ => Eq.refl))
+    (And.intro (Exists.intro (fun _ => Bool.false) (fun _ => Omega.rfl))
       (fun h => h.elim (fun _ agrees =>
         falseNeTrue ((agrees Bool.false).trans (agrees Bool.true).symm))))
 
 example : Iff (StrictRefines (fun x : Bool => x) (fun x => x))
     (StrictRefines (fun x : Bool => x) (fun x => x)) :=
   answerability_transports_along_surjection (fun x : Bool => x)
-    (fun x => Exists.intro x Eq.refl) (fun x => x) (fun x => x)
+    (fun x => Exists.intro x Omega.rfl) (fun x => x) (fun x => x)
 
 end D5.S3.ConceptDynamics.Transport.ConservativeExtensionAnswerability

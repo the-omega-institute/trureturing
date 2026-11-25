@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Prelude
+import all OmegaInit.Data.Int.Basic
 public import OmegaMath.Geometry.Cayley3D
 
 /-! Omega original.
@@ -59,6 +61,8 @@ private def PolyVec.triple (u v w : PolyVec) : PolyVec :=
 private def inputs (u : Vec3) (tail : Values) : Values :=
   .cons u.x (.cons u.y (.cons u.z tail))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem lieTriple_antisymm (u v w : Vec3) :
     Eq (lieTriple u v w) (neg (lieTriple v u w)) :=
   let i := Nat.zero
@@ -70,9 +74,11 @@ theorem lieTriple_antisymm (u v w : Vec3) :
   let p := U.triple V W
   let q := (V.triple U W).neg
   let values := inputs u (inputs v (inputs w .nil))
-  Vec3.ext (p.x.sound q.x values Eq.refl) (p.y.sound q.y values Eq.refl)
-    (p.z.sound q.z values Eq.refl)
+  Vec3.ext (p.x.sound q.x values rfl) (p.y.sound q.y values rfl)
+    (p.z.sound q.z values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem lieTriple_jacobi (u v w : Vec3) :
     Eq (add (add (lieTriple u v w) (lieTriple v w u)) (lieTriple w u v)) zero :=
   let i := Nat.zero
@@ -83,9 +89,11 @@ theorem lieTriple_jacobi (u v w : Vec3) :
   let W := PolyVec.variables k
   let p := ((U.triple V W).add (V.triple W U)).add (W.triple U V)
   let values := inputs u (inputs v (inputs w .nil))
-  Vec3.ext (p.x.sound .zero values Eq.refl) (p.y.sound .zero values Eq.refl)
-    (p.z.sound .zero values Eq.refl)
+  Vec3.ext (p.x.sound .zero values rfl) (p.y.sound .zero values rfl)
+    (p.z.sound .zero values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 2000000 in
 theorem lieTriple_derivation (x y u v w : Vec3) :
@@ -106,27 +114,31 @@ theorem lieTriple_derivation (x y u v w : Vec3) :
   let q := ((X.triple Y U).triple V W).add (U.triple (X.triple Y V) W)
   let q := q.add (U.triple V (X.triple Y W))
   let values := inputs x (inputs y (inputs u (inputs v (inputs w .nil))))
-  Vec3.ext (p.x.sound q.x values Eq.refl) (p.y.sound q.y values Eq.refl)
-    (p.z.sound q.z values Eq.refl)
+  Vec3.ext (p.x.sound q.x values rfl) (p.y.sound q.y values rfl)
+    (p.z.sound q.z values rfl)
 
 def gramAreaSq (u v : Vec3) : Int :=
   ((u.dot3 u).mul (v.dot3 v)).sub ((u.dot3 v).square)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The sectional curvature numerator in the convention determined by this bracket. -/
 theorem lieTriple_unit_sectional_curvature (u v : Vec3) :
     Eq ((lieTriple u v u).dot3 v) (gramAreaSq u v) :=
   let U := PolyVec.variables Nat.zero
   let V := PolyVec.variables (PolyVec.next Nat.zero)
   ((U.triple V U).dot V).sound
-    (((U.dot U).mul (V.dot V)).sub (U.dot V).sq) (inputs u (inputs v .nil)) Eq.refl
+    (((U.dot U).mul (V.dot V)).sub (U.dot V).sq) (inputs u (inputs v .nil)) rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Interchanging the last two slots of the curvature contraction changes its sign. -/
 theorem lieTriple_sectional_curvature_reversed (u v : Vec3) :
     Eq ((lieTriple u v v).dot3 u) (gramAreaSq u v).neg :=
   let U := PolyVec.variables Nat.zero
   let V := PolyVec.variables (PolyVec.next Nat.zero)
   ((U.triple V V).dot U).sound
-    (((U.dot U).mul (V.dot V)).sub (U.dot V).sq).neg (inputs u (inputs v .nil)) Eq.refl
+    (((U.dot U).mul (V.dot V)).sub (U.dot V).sq).neg (inputs u (inputs v .nil)) rfl
 
 def areaDenPred (u v : RatVec3) : Nat :=
   let pair := IntRatio.mulDenPred u.denPred v.denPred
@@ -147,7 +159,7 @@ theorem lieTriple_sectional_ratio (u v : RatVec3)
       ((rationalCurvatureNumerator u v).mul (rationalGramAreaSq u v).inv)
       (IntRatio.ofInt Int.one) :=
   let den := areaDenPred u v
-  Eq.subst (fun n => IntRatio.Equivalent
+  Eq.subst (motive := fun n => IntRatio.Equivalent
       ((IntRatio.fraction n den).mul (rationalGramAreaSq u v).inv) (IntRatio.ofInt Int.one))
     (lieTriple_unit_sectional_curvature u.num v.num).symm
     (IntRatio.mul_inv_cancel (gramAreaSq u.num v.num) den h)

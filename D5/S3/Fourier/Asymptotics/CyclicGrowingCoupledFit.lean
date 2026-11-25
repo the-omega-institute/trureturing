@@ -62,7 +62,7 @@ theorem rearDeficit_scaled_tendsto {h : ℕ → ℝ}
         mul_le_mul_of_nonneg_left hle (sq_nonneg _)
       _ = _ := by ring
 
-private def rearMatrix (n h r : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+def rearMatrix (n h r : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   let w := rearWeight h r
   let f := 1 - w
   let x := rearMoment h r
@@ -191,7 +191,7 @@ theorem front_mixed_block (n : ℕ) (hn : 0 < n) (u : ℝ) (i : Fin 2) :
         exact pow_le_pow_left₀ hw0 hw 3
       _ = _ := by ring
 
-private def frontMatrix (n : ℕ) (u : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+def frontMatrix (n : ℕ) (u : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   let w := fun j : ℤ => (1 - Real.cos ((j : ℝ) / n * u)) / 2
   let f := fun i j => frontFeatures u ((j : ℝ) / n) i
   let upper := fun i => (∑ j ∈ latticeInterval n, f i j * w j) / (n : ℝ)^3
@@ -354,7 +354,7 @@ private theorem frontMatrix_outer (n : ℕ) (hn : 0 < n) (u : ℝ) :
     intro j hj
     field_simp [hn0]
 
-private theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
+theorem rearMatrix_outer {n : ℝ} (hn : n ≠ 0) (h r : ℝ) :
     let F := 1 - rearWeight h r
     let X := rearMoment h r / n^2
     let W := rearWeight h r

@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Projective.Circle
 
 /-!
@@ -67,9 +69,9 @@ private theorem chart_neg (p q : Int) :
   let P := fun (q : Int) => Eq (tangentChart ⟨p.neg, q.neg⟩) (tangentChart ⟨p, q⟩)
   Int.rec (motive := P)
     (fun n => Nat.rec (motive := fun n => P (Int.ofNat n))
-      (show Eq IntRatio.undefined IntRatio.undefined from Eq.refl)
+      (show Eq IntRatio.undefined IntRatio.undefined from rfl)
       (fun k _ => congrArg (fun x => IntRatio.fraction x k) (Int.neg_neg p)) n)
-    (fun _ => Eq.refl) q
+    (fun _ => rfl) q
 
 private theorem chart_scale_positive (p q : Int) (k : Nat) :
     IntRatio.Equivalent (tangentChart (scale ⟨p, q⟩ (IntRatio.denominator k)))
@@ -79,34 +81,42 @@ private theorem chart_scale_positive (p q : Int) (k : Nat) :
   Int.rec (motive := P)
     (fun n => IntRatio.value_scale p n k)
     (fun n =>
-      Eq.subst (fun a => IntRatio.Equivalent
-        (IntRatio.value a (n.succ.mul k.succ)) (IntRatio.value p.neg n.succ))
-        (Int.neg_mul p (IntRatio.denominator k))
-        (IntRatio.value_scale p.neg n.succ k)) q
+      have product := IntRatio.nat_denominator_mul n k
+      have positive := IntRatio.value_scale p.neg n.succ k
+      have scaled := Eq.subst (motive := fun a => IntRatio.Equivalent
+          (IntRatio.value a (n.succ.mul k.succ)) (IntRatio.value p.neg n.succ))
+        (Int.neg_mul p (IntRatio.denominator k)) positive
+      have swap : Eq (tangentChart (scale ⟨p, Int.negSucc n⟩ (IntRatio.denominator k)))
+          (IntRatio.value (p.mul (IntRatio.denominator k)).neg (n.succ.mul k.succ)) :=
+        Eq.subst (motive := fun z => Eq
+            (tangentChart ⟨p.mul (IntRatio.denominator k), Int.negOfNat z⟩)
+            (IntRatio.value (p.mul (IntRatio.denominator k)).neg z))
+          product.symm rfl
+      Eq.subst (motive := fun x => IntRatio.Equivalent x (IntRatio.value p.neg n.succ)) swap.symm scaled) q
 
 private theorem chart_scale (a : Coordinates) (k : Int) (hk : Not (Eq k Int.zero)) :
     IntRatio.Equivalent (tangentChart (scale a k)) (tangentChart a) :=
   let P := fun k => Not (Eq k Int.zero) →
     IntRatio.Equivalent (tangentChart (scale a k)) (tangentChart a)
   (Int.rec (motive := P)
-    (fun n => Nat.rec (motive := fun n => P (Int.ofNat n)) (fun h => False.elim (h Eq.refl))
+    (fun n => Nat.rec (motive := fun n => P (Int.ofNat n)) (fun h => False.elim (h rfl))
       (fun n _ _ => chart_scale_positive a.p a.q n) n)
     (fun n _ =>
       let d := IntRatio.denominator n
       have flipped : Eq (scale a (Int.negSucc n)) ⟨(a.p.mul d).neg, (a.q.mul d).neg⟩ :=
         Eq.map₂ Coordinates.mk (Int.mul_neg a.p d) (Int.mul_neg a.q d)
       have charts := (congrArg tangentChart flipped).trans (chart_neg (a.p.mul d) (a.q.mul d))
-      Eq.subst (fun x => IntRatio.Equivalent x (tangentChart a)) charts.symm
+      Eq.subst (motive := fun x => IntRatio.Equivalent x (tangentChart a)) charts.symm
         (chart_scale_positive a.p a.q n)) k) hk
 
 private theorem chart_mul_rescale (a b : Coordinates) (k l : Int)
     (hk : Not (Eq k Int.zero)) (hl : Not (Eq l Int.zero)) :
     IntRatio.Equivalent (tangentChart ((scale a k).mul (scale b l))) (tangentChart (a.mul b)) :=
   let remove := fun (x y : Coordinates) (f : Int) (h : Not (Eq f Int.zero)) =>
-    Eq.subst (fun z => IntRatio.Equivalent (tangentChart z) (tangentChart (x.mul y)))
+    Eq.subst (motive := fun z => IntRatio.Equivalent (tangentChart z) (tangentChart (x.mul y)))
       (scale_mul_left x y f).symm (chart_scale (x.mul y) f h)
   (remove a (scale b l) k hk).trans
-    (Eq.subst (fun z => IntRatio.Equivalent (tangentChart z) (tangentChart (a.mul b)))
+    (Eq.subst (motive := fun z => IntRatio.Equivalent (tangentChart z) (tangentChart (a.mul b)))
       (scale_mul_right a b l).symm (chart_scale (a.mul b) l hl))
 
 private theorem mul_neg_one (p : Int) : Eq (p.mul Int.one.neg) p.neg :=
@@ -121,15 +131,15 @@ private theorem chart_representative (a : Coordinates) (h : Not (Eq a.q Int.zero
       And (Not (Eq k Int.zero)) (And (Eq (tangentChart ⟨a.p, q⟩) (IntRatio.fraction p d))
         (Eq (scale ⟨a.p, q⟩ k) ⟨p, IntRatio.denominator d⟩))
   (Int.rec (motive := P)
-    (fun n => Nat.rec (motive := fun n => P (Int.ofNat n)) (fun h => False.elim (h Eq.refl))
+    (fun n => Nat.rec (motive := fun n => P (Int.ofNat n)) (fun h => False.elim (h rfl))
       (fun d _ _ => Exists.intro a.p (Exists.intro d (Exists.intro Int.one
         (And.intro (Int.ofNat_succ_ne_zero Nat.zero)
-          (And.intro Eq.refl
+          (And.intro rfl
             (Eq.map₂ Coordinates.mk (Int.mul_one a.p) (Int.mul_one (IntRatio.denominator d)))))))) n)
     (fun d _ =>
       Exists.intro a.p.neg (Exists.intro d (Exists.intro Int.one.neg
         (And.intro (Int.negSucc_ne_zero Nat.zero)
-          (And.intro Eq.refl (Eq.map₂ Coordinates.mk (mul_neg_one a.p) (mul_neg_one (Int.negSucc d)))))))) a.q) h
+          (And.intro rfl (Eq.map₂ Coordinates.mk (mul_neg_one a.p) (mul_neg_one (Int.negSucc d)))))))) a.q) h
 
 /-- When both inputs are finite, tangent addition is the chart of their homogeneous
 product, including when that product reaches the pole. -/
@@ -140,7 +150,7 @@ theorem tangentAdd_chart (a b : Coordinates)
     (chart_representative b hb).elim (fun _ hr => hr.elim (fun _ he => he.elim (fun l hl =>
       have inputs := Eq.map₂ tangentAdd hk.right.left hl.right.left
       have product := Eq.map₂ (fun (x y : Coordinates) => tangentChart (x.mul y)) hk.right.right hl.right.right
-      Eq.subst (fun x => IntRatio.Equivalent x (tangentChart (a.mul b)))
+      Eq.subst (motive := fun x => IntRatio.Equivalent x (tangentChart (a.mul b)))
         (product.trans inputs.symm) (chart_mul_rescale a b k l hk.left hl.left)))))))
 
 private theorem tangentAdd_congr_left {x y : IntRatio} (h : IntRatio.Equivalent x y)
@@ -165,15 +175,15 @@ private theorem tangentAdd_congr_left {x y : IntRatio} (h : IntRatio.Equivalent 
           have scaledB := chart_scale (b.mul c) D (Int.ofNat_succ_ne_zero d)
           have middle := (scale_mul_left a c E).symm.trans
             ((congrArg (fun x : Coordinates => x.mul c) same).trans (scale_mul_left b c D))
-          scaledA.trans (Eq.subst (fun x => IntRatio.Equivalent (tangentChart x) (tangentChart (b.mul c)))
+          scaledA.trans (Eq.subst (motive := fun x => IntRatio.Equivalent (tangentChart x) (tangentChart (b.mul c)))
             middle.symm scaledB)) z) y) x) h
 
 private theorem tangentAdd_comm (x y : IntRatio) : Eq (tangentAdd x y) (tangentAdd y x) :=
   let P := fun x y => Eq (tangentAdd x y) (tangentAdd y x)
   IntRatio.rec (motive := fun x => P x y)
-    (IntRatio.rec (motive := fun y => P IntRatio.undefined y) Eq.refl (fun _ _ => Eq.refl) y)
+    (IntRatio.rec (motive := fun y => P IntRatio.undefined y) rfl (fun _ _ => rfl) y)
     (fun p d => IntRatio.rec (motive := fun y => P (IntRatio.fraction p d) y)
-      Eq.refl (fun r e => congrArg tangentChart
+      rfl (fun r e => congrArg tangentChart
         ((Coordinates.mk p (IntRatio.denominator d)).mul_comm
           (Coordinates.mk r (IntRatio.denominator e)))) y) x
 
@@ -182,7 +192,7 @@ theorem tangentAdd_congr {x x' y y' : IntRatio} (hx : IntRatio.Equivalent x x')
     IntRatio.Equivalent (tangentAdd x y) (tangentAdd x' y') :=
   have middle := tangentAdd_congr_left hy x'
   have comm := Eq.map₂ IntRatio.Equivalent (tangentAdd_comm y x') (tangentAdd_comm y' x')
-  (tangentAdd_congr_left hx y).trans (Eq.subst (fun p => p) comm middle)
+  (tangentAdd_congr_left hx y).trans (Eq.subst (motive := fun p => p) comm middle)
 
 theorem tangentSub_congr {x x' y y' : IntRatio} (hx : IntRatio.Equivalent x x')
     (hy : IntRatio.Equivalent y y') :
@@ -203,7 +213,7 @@ private theorem tangentAdd_assoc_fractions (p r t : Int) (d e f : Nat)
   have rightProduct := tangentAdd_chart a (b.mul c) (Int.ofNat_succ_ne_zero d)
     (fun h => rightFinite ((tangentChart_undefined_iff (b.mul c)).mpr h))
   have same := congrArg tangentChart (Coordinates.mul_assoc a b c)
-  (Eq.subst (fun x => IntRatio.Equivalent
+  (Eq.subst (motive := fun x => IntRatio.Equivalent
     (tangentAdd (tangentChart (a.mul b)) (tangentChart c)) x) same leftProduct).trans rightProduct.symm
 
 /-- Associativity holds when the two intermediate sums are finite.
@@ -216,11 +226,11 @@ theorem tangentAdd_assoc (x y z : IntRatio)
     Not (Eq (tangentAdd y z) IntRatio.undefined) →
     IntRatio.Equivalent (tangentAdd (tangentAdd x y) z) (tangentAdd x (tangentAdd y z))
   (IntRatio.rec (motive := fun x => P x y z)
-    (fun h _ => False.elim (h Eq.refl))
+    (fun h _ => False.elim (h rfl))
     (fun p d => IntRatio.rec (motive := fun y => P (IntRatio.fraction p d) y z)
-      (fun h _ => False.elim (h Eq.refl))
+      (fun h _ => False.elim (h rfl))
       (fun r e => IntRatio.rec (motive := fun z => P (IntRatio.fraction p d) (IntRatio.fraction r e) z)
-        (fun _ h => False.elim (h Eq.refl)) (fun t f => tangentAdd_assoc_fractions p r t d e f)
+        (fun _ h => False.elim (h rfl)) (fun t f => tangentAdd_assoc_fractions p r t d e f)
         z) y) x) leftFinite rightFinite
 
 namespace MachinNumerals
@@ -266,34 +276,43 @@ def machinChain : IntRatio :=
   let double := tangentAdd machinFifth machinFifth
   tangentSub (tangentAdd double double) machinCorrection
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- First homogeneous doubling gives (10, 24), twice the pair (5, 12). -/
 theorem machin_first_double_coordinates :
     Eq (projectiveMul Int.one (Int.ofNat five) Int.one (Int.ofNat five))
       ⟨Int.ofNat (five.mul two), Int.ofNat (n12.mul two)⟩ :=
-  Eq.refl
+  Omega.rfl
+
 
 theorem machin_first_double :
     IntRatio.Equivalent (tangentAdd machinFifth machinFifth) machinTwofold :=
-  Eq.subst (fun a => IntRatio.Equivalent (tangentChart a) machinTwofold)
+  Eq.subst (motive := fun a => IntRatio.Equivalent (tangentChart a) machinTwofold)
     machin_first_double_coordinates.symm (IntRatio.value_scale (Int.ofNat five) n12 one)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 set_option maxRecDepth 2048 in
 /-- Doubling the reduced first pair gives (120, 119) as it stands. -/
 theorem machin_second_double_coordinates :
     Eq (projectiveMul (Int.ofNat five) (Int.ofNat n12) (Int.ofNat five) (Int.ofNat n12))
       ⟨Int.ofNat n120, Int.ofNat n119⟩ :=
-  Eq.refl
+  Omega.rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem machin_second_double :
     Eq (tangentAdd machinTwofold machinTwofold) machinFourfold :=
   congrArg tangentChart machin_second_double_coordinates
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Each intermediate representative has an integer linear combination equal to one. -/
 theorem machin_intermediate_bezout :
     And (Eq (((Int.ofNat five).mul (Int.ofNat five)).sub
       ((Int.ofNat two).mul (Int.ofNat n12))) Int.one)
       (Eq ((Int.ofNat n120).sub (Int.ofNat n119)) Int.one) :=
-  And.intro Eq.refl Eq.refl
+  And.intro rfl rfl
 
 private theorem mul_decimal (a b c : Nat) :
     Eq (a.mul (decimal b c)) (decimal (a.mul b) (a.mul c)) :=
@@ -312,6 +331,8 @@ private theorem decimal_add (a b c d : Nat) :
       ((Nat.add_assoc ((a.mul ten).add (c.mul ten)) b d).trans
         (congrArg (fun r : Nat => r.add (b.add d)) (Nat.add_mul a c ten).symm)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 set_option maxRecDepth 4096 in
 /-- Evaluate by decimal places to keep kernel reductions on small unary naturals. -/
 private theorem machin_denominator_calc :
@@ -322,18 +343,18 @@ private theorem machin_denominator_calc :
   let n273 := decimal (decimal two seven) three
   have hi : Eq (n119.mul n23) (decimal n273 seven) :=
     (mul_decimal n119 two three).trans
-      ((Eq.map₂ decimal (show Eq (n119.mul two) n238 from Eq.refl)
-        (show Eq (n119.mul three) (decimal n35 seven) from Eq.refl)).trans
+      ((Eq.map₂ decimal (show Eq (n119.mul two) n238 from rfl)
+        (show Eq (n119.mul three) (decimal n35 seven) from rfl)).trans
         ((decimal_carry n238 n35 seven).trans
-          (congrArg (fun r => decimal r seven) (show Eq (n238.add n35) n273 from Eq.refl))))
+          (congrArg (fun r => decimal r seven) (show Eq (n238.add n35) n273 from rfl))))
   let n99 := decimal nine nine
   have lo : Eq (n119.mul nine) (decimal (decimal ten seven) one) :=
     (Nat.mul_comm n119 nine).trans
       ((mul_decimal nine (decimal one one) nine).trans
-        ((Eq.map₂ decimal (show Eq (nine.mul (decimal one one)) n99 from Eq.refl)
-          (show Eq (nine.mul nine) (decimal eight one) from Eq.refl)).trans
+        ((Eq.map₂ decimal (show Eq (nine.mul (decimal one one)) n99 from rfl)
+          (show Eq (nine.mul nine) (decimal eight one) from rfl)).trans
           ((decimal_carry n99 eight one).trans
-            (congrArg (fun r => decimal r one) (show Eq (n99.add eight) (decimal ten seven) from Eq.refl)))))
+            (congrArg (fun r => decimal r one) (show Eq (n99.add eight) (decimal ten seven) from rfl)))))
   let n2737 := decimal n273 seven
   let n107 := decimal ten seven
   have product : Eq (n119.mul n239) (decimal (n2737.add n107) one) :=
@@ -343,12 +364,14 @@ private theorem machin_denominator_calc :
       ((decimal_add (n273.add ten) (seven.add seven) one two).trans
         ((decimal_carry ((n273.add ten).add one) one six).trans
           (congrArg (fun r => decimal r six)
-            (show Eq (((n273.add ten).add one).add one) (decimal (decimal two eight) five) from Eq.refl))))
+            (show Eq (((n273.add ten).add one).add one) (decimal (decimal two eight) five) from rfl))))
   (congrArg (fun r : Nat => r.add n120) product).trans
     ((Nat.add_right_comm ((n2737.add n107).mul ten) one n120).trans
       ((congrArg (fun r : Nat => r.add one) (Nat.add_mul (n2737.add n107) n12 ten).symm).trans
         (congrArg (fun r => decimal r one) digits)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 set_option maxRecDepth 4096 in
 /-- Subtracting 1/239 from the fourfold pair gives (28561, 28561) before reduction. -/
 theorem machin_raw_coordinates :
@@ -357,7 +380,7 @@ theorem machin_raw_coordinates :
   let cross := n119.mul n239
   have split : Eq (n120.mul n239) (machinDenominator.add n119) :=
     (Nat.succ_mul n119 n239).trans
-      ((congrArg (Nat.add cross) (show Eq n239 (n120.add n119) from Eq.refl)).trans
+      ((congrArg (Nat.add cross) (show Eq n239 (n120.add n119) from rfl)).trans
         ((Nat.add_assoc cross n120 n119).symm.trans
           (congrArg (fun r : Nat => r.add n119) machin_denominator_calc)))
   have imaginary :=
@@ -372,6 +395,8 @@ theorem machin_raw_coordinates :
         (congrArg Int.ofNat machin_denominator_calc))
   Eq.map₂ Coordinates.mk imaginary real
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem machin_raw :
     Eq (tangentSub machinFourfold machinCorrection)
       (IntRatio.value (Int.ofNat machinDenominator) machinDenominator) :=
@@ -383,10 +408,12 @@ theorem machin_chain_to_raw :
   let four := tangentAdd first first
   have doubles := tangentAdd_congr machin_first_double machin_first_double
   have fourfold : IntRatio.Equivalent four machinFourfold :=
-    Eq.subst (IntRatio.Equivalent four) machin_second_double doubles
-  Eq.subst (IntRatio.Equivalent machinChain) machin_raw
+    Eq.subst (motive := IntRatio.Equivalent four) machin_second_double doubles
+  Eq.subst (motive := IntRatio.Equivalent machinChain) machin_raw
     (tangentSub_congr fourfold (IntRatio.equivalent_refl machinCorrection))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add in
 theorem machin_chain_to_one :
     IntRatio.Equivalent machinChain (IntRatio.ofInt Int.one) :=
   machin_chain_to_raw.trans (IntRatio.value_self machinDenominator (Nat.succ_ne_zero _))

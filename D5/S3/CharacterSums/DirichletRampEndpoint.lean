@@ -40,7 +40,7 @@ def gChi {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (x : ℝ) : ℂ :=
       x * (log x - 1 - eulerMascheroniConstant) : ℝ)
   else characterRamp χ x + (x : ℂ) * (deriv χ.LFunction 1 / χ.LFunction 1)
 
-private theorem normalized_ramp {N : ℕ} (χ : DirichletCharacter ℂ N) {x : ℝ} (hx : 0 < x) :
+theorem normalized_ramp {N : ℕ} (χ : DirichletCharacter ℂ N) {x : ℝ} (hx : 0 < x) :
     ‖characterRamp χ x‖ / x ≤
       (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -
         Chebyshev.psi x / x := by
@@ -97,7 +97,8 @@ private theorem kernel_integrable_pos {x : ℝ} (hx : 0 < x) (h2 : x < 2) :
     rw [uIcc_of_le h2.le]
     exact (continuousOn_inv₀.mono (fun u hu => ne_of_gt (hx.trans_le hu.1))).neg
   have hinterval : IntervalIntegrable psiErrorKernel volume x 2 := by
-    rw [intervalIntegrable_congr_uIoo (show (uIoo x 2).EqOn psiErrorKernel (fun u : ℝ => -(u⁻¹)) by
+    rw [intervalIntegrable_congr_uIoo
+      (show (uIoo x 2).EqOn psiErrorKernel (fun u : ℝ => -(u⁻¹)) by
       simpa only [uIoo_of_le h2.le] using kernel_eq_neg_inv hx)]
     exact hrecip
   rw [← Ioc_union_Ioi_eq_Ioi h2.le]
@@ -105,7 +106,8 @@ private theorem kernel_integrable_pos {x : ℝ} (hx : 0 < x) (h2 : x < 2) :
 
 /-- The signed Chebyshev tail gives the exact untwisted envelope at the same real
 endpoint, uniformly in every nonprincipal character of positive modulus. -/
-theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ ≠ 1) {x : ℝ} (hx : 0 < x) :
+theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N)
+    (hχ : χ ≠ 1) {x : ℝ} (hx : 0 < x) :
     ‖deriv χ.LFunction 1 / χ.LFunction 1‖ ≤ ‖gChi χ x‖ / x + log x - 1 -
       eulerMascheroniConstant - ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2 := by
   change _ ≤ _ - ∫ u in Ioi x, psiErrorKernel u

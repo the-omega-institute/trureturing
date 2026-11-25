@@ -8,6 +8,8 @@
 
 module
 prelude
+import all OmegaInit.Prelude
+import all OmegaInit.Data.Int.Basic
 public import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Rat.Cast.Lemmas
 import Mathlib.Data.Rat.Cast.Order
@@ -31,19 +33,24 @@ private theorem ofOmegaEq {α : Sort*} {x y : α} (h : Omega.Eq x y) : x = y :=
 
 public theorem toStdNat_add (a b : Omega.Nat) :
     toStdNat (a.add b) = toStdNat a + toStdNat b := by
-  induction b with
-  | zero => rfl
+  induction b using Omega.Nat.rec with
+  | zero => exact congrArg toStdNat (ofOmegaEq (Omega.Nat.add_zero a))
   | succ b ih =>
-    change (toStdNat (a.add b)).succ = toStdNat a + (toStdNat b).succ
-    rw [ih, Nat.add_succ]
+    calc
+      toStdNat (a.add b.succ) = (toStdNat (a.add b)).succ :=
+        congrArg toStdNat (ofOmegaEq (Omega.Nat.add_succ a b))
+      _ = toStdNat a + toStdNat b.succ := congrArg Nat.succ ih
 
 public theorem toStdNat_mul (a b : Omega.Nat) :
     toStdNat (a.mul b) = toStdNat a * toStdNat b := by
   induction b with
   | zero => simp [toStdNat, Omega.Nat.mul]
   | succ b ih =>
-    change toStdNat ((a.mul b).add a) = toStdNat a * (toStdNat b).succ
-    rw [toStdNat_add, ih, Nat.mul_succ]
+    calc
+      toStdNat (a.mul b.succ) = toStdNat ((a.mul b).add a) :=
+        congrArg toStdNat (ofOmegaEq (Omega.Nat.mul_succ a b))
+      _ = toStdNat a * toStdNat b + toStdNat a := (toStdNat_add _ _).trans (congrArg (· + toStdNat a) ih)
+      _ = toStdNat a * toStdNat b.succ := (Nat.mul_succ _ _).symm
 
 /-- Read the nonnegative and negative-successor branches in the standard integers. -/
 @[expose] public def toStdInt : Omega.Int → ℤ :=
@@ -67,18 +74,16 @@ public theorem toStdInt_neg (a : Omega.Int) :
 
 private theorem toStdInt_subNatNat (m n : Omega.Nat) :
     toStdInt (Omega.Int.subNatNat m n) = (toStdNat m : ℤ) - (toStdNat n : ℤ) := by
-  induction m generalizing n with
-  | zero =>
-    change toStdInt (Omega.Int.negOfNat n) = 0 - (toStdNat n : ℤ)
-    rw [toStdInt_negOfNat, zero_sub]
-  | succ m ih =>
-    induction n using Omega.Nat.rec with
-    | zero => rfl
-    | succ n _ =>
-      change toStdInt (Omega.Int.subNatNat m n) =
-        ((toStdNat m).succ : ℤ) - ((toStdNat n).succ : ℤ)
-      rw [ih]
-      omega
+  apply Omega.Int.subNatNat_elim m n (fun x y z => toStdInt z = (toStdNat x : ℤ) - toStdNat y)
+  · intro i k
+    change (toStdNat i : ℤ) = (toStdNat (k.add i) : ℤ) - toStdNat k
+    rw [toStdNat_add]
+    omega
+  · intro i k
+    change Int.negSucc (toStdNat i) = (toStdNat k : ℤ) - (toStdNat (k.add i.succ) : ℤ)
+    rw [toStdNat_add]
+    change Int.negSucc _ = _ - ((toStdNat k + (toStdNat i).succ : ℕ) : ℤ)
+    omega
 
 public theorem toStdInt_add (a b : Omega.Int) :
     toStdInt (a.add b) = toStdInt a + toStdInt b := by
@@ -180,8 +185,15 @@ public theorem toRat_add (a c : Omega.Int) (b d : Omega.Nat) :
 
 public theorem toRat_mul (x y : IntRatio) :
     toRat (x.mul y) = toRat x * toRat y := by
-  induction x using IntRatio.rec <;> induction y using IntRatio.rec <;>
-    simp [toRat, IntRatio.mul, IntRatio.map₂, toStdInt_mul, denominator_mul, div_mul_div_comm]
+  induction x using IntRatio.rec with
+  | undefined => induction y using IntRatio.rec <;> simp [toRat, IntRatio.mul, IntRatio.map₂]
+  | fraction a b =>
+    induction y using IntRatio.rec with
+    | undefined => simp [toRat, IntRatio.mul, IntRatio.map₂]
+    | fraction c d =>
+      change (toStdInt (a.mul c) : ℚ) / _ = _ * _
+      rw [toStdInt_mul, Int.cast_mul, denominator_mul, ← div_mul_div_comm]
+      rfl
 
 public theorem toRat_inv (x : IntRatio) : toRat x.inv = (toRat x)⁻¹ := by
   induction x using IntRatio.rec with
@@ -206,11 +218,12 @@ private theorem toStdInt_nonneg (a : Omega.Int) :
     Omega.Int.NonNeg a → 0 ≤ toStdInt a := by
   induction a using Omega.Int.rec with
   | ofNat n => exact fun _ => Int.natCast_nonneg _
-  | negSucc _ => exact Omega.False.elim
+  | negSucc n => exact fun h => Omega.False.elim (Omega.Int.not_nonneg_negSucc n h)
 
 private theorem toStdInt_le {a b : Omega.Int} (h : a.le b) : toStdInt a ≤ toStdInt b := by
   have h' := toStdInt_nonneg (b.sub a) h
-  rwa [Omega.Int.sub, toStdInt_add, toStdInt_neg, ← sub_eq_add_neg, sub_nonneg] at h'
+  change 0 ≤ toStdInt (b.add a.neg) at h'
+  rwa [toStdInt_add, toStdInt_neg, ← sub_eq_add_neg, sub_nonneg] at h'
 
 private theorem toRat_le {x y : IntRatio} (h : IntRatio.Le x y) : toRat x ≤ toRat y := by
   induction x using IntRatio.rec with
@@ -242,7 +255,7 @@ public theorem cayley_circle_unit (p q : Omega.Int) (h : Nonzero p q) :
     revert unit
     generalize hden : normSq p q = d at den
     induction d using Omega.Nat.rec with
-    | zero => exact Omega.False.elim (den Omega.Eq.refl)
+    | zero => exact Omega.False.elim (den Omega.rfl)
     | succ d _ =>
       intro unit
       dsimp only [cayleyX, cayleyY] at unit ⊢
@@ -279,6 +292,8 @@ public theorem kappa_unit_interval (p q : Omega.Int) :
   · subst p
     by_cases hq : q = Omega.Int.zero
     · subst q
+      rw [ofOmegaEq ((Omega.Projective.Circle.kappa_undefined_iff _ _).mpr
+        (Omega.And.intro Omega.rfl Omega.rfl))]
       change 0 ≤ ((0 : ℚ) : ℝ) ∧ ((0 : ℚ) : ℝ) ≤ 1
       simp
     · exact kappa_unit_interval_of_nonzero _ _

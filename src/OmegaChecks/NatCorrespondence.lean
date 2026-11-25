@@ -6,8 +6,8 @@ module
 
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Fib.Basic
-public import OmegaMath.Data.Nat.Choose.Basic
-public import OmegaMath.Data.Nat.Fib.Basic
+public import OmegaMathlib.Data.Nat.Choose.Basic
+public import OmegaMathlib.Data.Nat.Fib.Basic
 
 /-! The strict natural numbers and two arithmetic definitions interpreted in Mathlib. -/
 
@@ -33,11 +33,15 @@ public theorem fromStd_toStd (n : Omega.Nat) : fromStd (toStd n) = n := by
   | zero => rfl
   | succ n ih => exact congrArg Omega.Nat.succ ih
 
+public theorem fromOmegaEq {α : Sort u} {a b : α} (h : Omega.Eq a b) : a = b :=
+  Omega.Eq.rec rfl h
+
 public theorem toStd_add (a b : Omega.Nat) :
     toStd (a.add b) = toStd a + toStd b := by
   induction b with
-  | zero => rfl
-  | succ b ih => exact congrArg Nat.succ ih
+  | zero => exact (congrArg toStd (fromOmegaEq (Omega.Nat.add_zero a))).trans rfl
+  | succ b ih =>
+    exact (congrArg toStd (fromOmegaEq (Omega.Nat.add_succ a b))).trans (congrArg Nat.succ ih)
 
 public theorem toStd_le_iff (a b : Omega.Nat) :
     toStd a ≤ toStd b ↔ Omega.Nat.le a b := by
@@ -46,8 +50,10 @@ public theorem toStd_le_iff (a b : Omega.Nat) :
   | succ a ih =>
     induction b using Omega.Nat.rec with
     | zero =>
-      exact ⟨fun h => (Nat.not_succ_le_zero _ h).elim, fun h => Omega.False.elim h⟩
-    | succ b _ => exact Nat.succ_le_succ_iff.trans (ih b)
+      exact ⟨fun h => (Nat.not_succ_le_zero _ h).elim, fun h => Omega.False.elim (Omega.Nat.not_succ_le_zero a h)⟩
+    | succ b _ =>
+      exact Nat.succ_le_succ_iff.trans ((ih b).trans
+        ⟨Omega.Nat.succ_le_succ, Omega.Nat.le_of_succ_le_succ⟩)
 
 /-- Every strict Fibonacci value agrees with the pinned Mathlib definition. -/
 public theorem toStd_fib (n : Omega.Nat) : toStd n.fib = (toStd n).fib := by
@@ -55,11 +61,13 @@ public theorem toStd_fib (n : Omega.Nat) : toStd n.fib = (toStd n).fib := by
       toStd n.succ.fib = (toStd n).succ.fib by
     exact h.1
   induction n with
-  | zero => exact ⟨rfl, rfl⟩
+  | zero =>
+    rw [fromOmegaEq Omega.Nat.fib_zero, fromOmegaEq Omega.Nat.fib_one]
+    exact ⟨rfl, rfl⟩
   | succ n ih =>
     refine ⟨ih.2, ?_⟩
     have recurrence : n.succ.succ.fib = n.fib.add n.succ.fib :=
-      Omega.Eq.rec rfl Omega.Nat.fib_add_two
+      fromOmegaEq (Omega.Nat.fib_add_two (n := n))
     rw [recurrence, toStd_add, ih.1, ih.2]
     exact (Nat.fib_add_two (n := toStd n)).symm
 
@@ -69,14 +77,18 @@ public theorem toStd_choose (n k : Omega.Nat) :
   induction n generalizing k with
   | zero =>
     induction k using Omega.Nat.rec with
-    | zero => rfl
-    | succ k _ => exact (Nat.choose_zero_succ (toStd k)).symm
+    | zero => rw [fromOmegaEq (Omega.Nat.choose_zero_right _)]; rfl
+    | succ k _ =>
+      rw [fromOmegaEq (Omega.Nat.choose_zero_succ k)]
+      exact (Nat.choose_zero_succ (toStd k)).symm
   | succ n ih =>
     induction k using Omega.Nat.rec with
-    | zero => exact (Nat.choose_zero_right (toStd n).succ).symm
+    | zero =>
+      rw [fromOmegaEq (Omega.Nat.choose_zero_right _)]
+      exact (Nat.choose_zero_right (toStd n).succ).symm
     | succ k _ =>
       have recurrence : n.succ.choose k.succ = (n.choose k).add (n.choose k.succ) :=
-        Omega.Eq.rec rfl (Omega.Nat.choose_succ_succ n k)
+        fromOmegaEq (Omega.Nat.choose_succ_succ n k)
       rw [recurrence, toStd_add, ih k, ih k.succ]
       exact (Nat.choose_succ_succ (toStd n) (toStd k)).symm
 

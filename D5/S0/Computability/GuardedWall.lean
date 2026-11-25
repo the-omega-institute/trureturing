@@ -43,10 +43,10 @@ public theorem boolean_guarded_wall_witness :
         (And (∀ t w, wall w → Not (forbidden t w))
           (And (wall .false) (Not (positive True.intro .false))))) :=
   have falseNeTrue : Not (Eq Bool.false Bool.true) :=
-    fun h => Eq.subst (Bool.rec (motive := fun _ => Prop) True False) h True.intro
+    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
   And.intro (fun _ _ gatekeeper => gatekeeper)
     (And.intro (fun _ _ inWall positiveNow _ => And.intro inWall positiveNow)
       (And.intro (fun _ _ _ evidence => falseNeTrue (evidence.left.symm.trans evidence.right))
-        (And.intro Eq.refl falseNeTrue)))
+        (And.intro rfl falseNeTrue)))
 
 end D5.S0.Computability.GuardedWall

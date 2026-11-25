@@ -29,7 +29,20 @@
     "!tools/lean-inspector/README.md",
     "!tools/scripts/agent/openproblem/README.md",
     "!tools/scripts/agent/openproblem/SCREENED-OUT*.md",
-    "!tools/scripts/agent/prime_slabs/CPU.md"
+    "!tools/scripts/agent/prime_slabs/CPU.md",
+    "[omega]",
+    "src/*.lean",
+    "src/OmegaChecks/*.py",
+    "strict/*.lean",
+    "D5/*.lean",
+    "Reg/*.lean",
+    "Reg/lakefile.toml",
+    "Reg/lake-manifest.json",
+    "Trureturing.lean",
+    "lakefile.toml",
+    "lake-manifest.json",
+    "lean-toolchain",
+    "Makefile"
   ],
   "current": {
     "report_paths": "*\n",
@@ -49,6 +62,13 @@
       "project": "",
       "command": "make filemap-conform",
       "cache-dependency-path": "tools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
+    },
+    "omega": {
+      "dotnet": false,
+      "lean": "build",
+      "project": "",
+      "command": "python3 src/OmegaChecks/check.py",
+      "cache-dependency-path": ""
     }
   }
 }

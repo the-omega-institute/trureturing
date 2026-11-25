@@ -6,17 +6,23 @@
    utility: none
    digest: Relative time-scaled edge weights control the degree-zero persistent heat operator. -/
 
-import Mathlib.Algebra.Category.ModuleCat.Products
-import D5.S3.Geometry.FiniteSimplicialSingularHomology
-import Mathlib.Algebra.QuadraticDiscriminant
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.InnerProductSpace.Calculus
-import Mathlib.Analysis.InnerProductSpace.Positive
-import Mathlib.Analysis.InnerProductSpace.Rayleigh
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Products
+public import D5.S3.Geometry.FiniteSimplicialSingularHomology
+public import Mathlib.Algebra.QuadraticDiscriminant
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+public import Mathlib.Analysis.InnerProductSpace.Positive
+public import Mathlib.Analysis.InnerProductSpace.Rayleigh
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+
+set_option backward.privateInPublic true
 
 /-! Degree-zero persistent heat operators from weighted simplicial boundary rows. -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -29,13 +35,6 @@ namespace D5.S3.Geometry.PersistentLaplacianHeatStability
 open FiniteSimplicialSingularHomology
 
 variable {V : Type} [Fintype V] [LinearOrder V]
-
-private def coordinates (L : PreAbstractSimplicialComplex V) (p : ℕ) :
-    orderedGroup L p →ₗ[ℤ] (Face L p → ℤ) := by
-  classical
-  exact (DirectSum.linearEquivFunOnFintype ℤ (Face L p) (fun _ => ℤ)).toLinearMap.comp
-    (ModuleCat.coprodIsoDirectSum (fun _ : Face L p => Z)).hom.hom
-
 /-- Real incidence entries obtained from the integer ordered simplicial boundary. -/
 def edgeIncidence (L : PreAbstractSimplicialComplex V) :
     Matrix (Face L 0) (Face L 1) ℝ :=

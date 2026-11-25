@@ -23,7 +23,7 @@ namespace D5.S3.Fourier.Concentration.DegreeTwoMomentWitness
 private def spectrumA : Fin 5 → ℤ := ![0, 1, 5, 6, 13]
 private def spectrumB : Fin 5 → ℤ := ![0, 2, 3, 7, 13]
 
-private theorem int_near_eq (a b : ℤ) {η : ℝ} (hη : 0 ≤ η) (hη' : η < 1) :
+theorem int_near_eq (a b : ℤ) {η : ℝ} (hη : 0 ≤ η) (hη' : η < 1) :
     |(a : ℝ) - (b : ℝ)| ≤ η ↔ a = b := by
   constructor
   · intro h

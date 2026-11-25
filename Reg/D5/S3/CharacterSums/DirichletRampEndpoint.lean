@@ -88,7 +88,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg",
+        "fn", "arg", "fn", "arg", "arg", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
@@ -174,5 +175,80 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Threshold
+
+namespace Normalized
+
+abbrev sig : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℝ)
+
+def actual : Realization sig :=
+  realize sig (fun _ _ z => ‖z‖) (fun e => nomatch e)
+
+def rejected : Realization sig :=
+  realize sig (fun _ _ z => ‖z‖ + 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := sig
+  Law V := ∀ {N : ℕ} (χ : DirichletCharacter ℂ N) {x : ℝ}, 0 < x →
+    V.readout () () (characterRamp χ x) / x ≤
+      (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -
+        Chebyshev.psi x / x
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  have bad := h (1 : DirichletCharacter ℂ 1) (x := 1) zero_lt_one
+  change (‖characterRamp (1 : DirichletCharacter ℂ 1) 1‖ + 1) / 1 ≤
+    (∑ n ∈ Finset.Ioc 0 ⌊(1 : ℝ)⌋₊,
+      ArithmeticFunction.vonMangoldt n / (n : ℝ)) - Chebyshev.psi 1 / 1 at bad
+  norm_num [characterRamp, mangoldtRamp, Chebyshev.psi] at bad
+
+private theorem dependence : ObservationalDependence sig actual := by
+  intro _
+  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+
+def family : Registration arena (type_of% @normalized_ramp) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@normalized_ramp, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@normalized_ramp) (Realization sig) Unit Unit where
+  unitName := .str
+    `D5.S3.CharacterSums.DirichletRampEndpoint.normalized_ramp
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.CharacterSums.DirichletRampEndpoint.Normalized "family"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.CharacterSums.DirichletRampEndpoint
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Normalized
 
 end Reg.D5.S3.CharacterSums.DirichletRampEndpoint

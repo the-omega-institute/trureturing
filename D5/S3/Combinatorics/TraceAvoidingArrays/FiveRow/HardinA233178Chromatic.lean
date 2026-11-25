@@ -8,22 +8,47 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: moves_eq_filter, table_steps_fast and table_certificate establish computed
-premises. moves_exact reuses moves_eq_filter in step_fast, which also uses moves_nodup.
-The transfer proof composes step_fast, table_steps_fast and table_base in powers_table.
-The public result is content after inlining the computed premises and propagates the
-vector relation to every shift.
-escape_witness: the exact finite vector relation (vector_certificate), consumed by result
-and, through chromatic_recurrence, by HardinA233178Recurrence.result.
+escape_witness: the checked successor lists, continuation steps and finite vector relation feed vector_certificate and result.
+Column: proof_shape=bind-only; consumers=HardinA233178Chromatic.colour
+colour: proof_shape=bind-only; consumers=HardinA233178Chromatic.Bond
+Bond: proof_shape=bind-only; consumers=HardinA233178Chromatic.T
+instDecidableBond: proof_shape=bind-only; consumers=HardinA233178Chromatic.T
+moves: proof_shape=bind-only; consumers=HardinA233178Chromatic.step_fast
+table: proof_shape=bind-only; consumers=HardinA233178Chromatic.powers_table
+T: proof_shape=bind-only; consumers=HardinA233178Chromatic.v
+coefficients: proof_shape=bind-only; consumers=HardinA233178Chromatic.vector_certificate
+moves_eq_filter: proof_shape=content; consumers=HardinA233178Chromatic.moves_exact, HardinA233178Chromatic.moves_nodup
+moves_exact: proof_shape=content; consumers=HardinA233178Chromatic.step_fast._simp_1_2
+moves_nodup: proof_shape=content; consumers=HardinA233178Chromatic.step_fast
+step_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
+table_base: proof_shape=bind-only; consumers=HardinA233178Chromatic.powers_table
+table_steps_fast: proof_shape=content; consumers=HardinA233178Chromatic.table_steps
+table_steps: proof_shape=content; consumers=HardinA233178Chromatic.powers_table
+powers_table: proof_shape=content; consumers=HardinA233178Chromatic.vector_certificate
+table_certificate: proof_shape=content; consumers=HardinA233178Chromatic.vector_certificate
+vector_certificate: proof_shape=content; consumers=HardinA233178Chromatic.result
+v: proof_shape=bind-only; consumers=HardinA233178Chromatic.result
+result: proof_shape=content; consumers=HardinA229538Strip.chromatic_coordinate, HardinA233178Recurrence.chromatic_recurrence
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import Init.Data.Fin.Basic
+import Init.Data.List.Nat.Pairwise
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Algebra.Group.Action.Defs
+import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.GroupWithZero.Defs
+import Mathlib.Algebra.Notation.Defs
+import Mathlib.Algebra.Notation.Pi.Defs
+import Mathlib.Data.Finset.Dedup
+import Mathlib.Data.List.Nodup
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Logic.Equiv.Fin.Basic
-import Lean.Elab.Tactic.Omega
 
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
@@ -35,7 +60,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
 abbrev Column := Fin 243
 
 def colour (p : Column) (r : Fin 5) : Fin 3 :=
-  ⟨(p.val / 3^r.val) % 3, Nat.mod_lt _ (by decide)⟩
+  ⟨(p.val / 3^r.val) % 3, Nat.mod_lt _ (Nat.zero_lt_succ 2)⟩
 
 def Bond (p q : Column) : Prop :=
   ∀ r s : Fin 5, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → colour p r ≠ colour q s
@@ -43,7 +68,7 @@ def Bond (p q : Column) : Prop :=
 instance (p q : Column) : Decidable (Bond p q) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
 
-private def moves : Column → List Column := ![
+def moves : Column → List Column := ![
   [121,122,124,125,130,131,133,134,148,149,151,152,157,158,160,161,202,203,205,206,211,212,214,215,229,230,232,233,238,239,241,242],
   [125,134,152,161,206,215,233,242],
   [121,130,148,157,202,211,229,238],
@@ -288,7 +313,7 @@ private def moves : Column → List Column := ![
   [0,9,27,36,81,90,108,117],
   [0,1,3,4,9,10,12,13,27,28,30,31,36,37,39,40,81,82,84,85,90,91,93,94,108,109,111,112,117,118,120,121]]
 
-private def table : Fin 12 → Column → ℤ := ![
+def table : Fin 12 → Column → ℤ := ![
   ![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   ![32,8,8,4,8,0,4,0,8,4,2,0,2,8,2,0,0,0,4,0,2,0,0,0,2,2,8,4,1,1,1,2,0,0,0,0,2,1,0,2,8,2,0,1,2,0,0,0,0,0,0,0,0,0,4,1,1,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,2,0,1,0,2,1,2,2,8,8,2,2,1,2,0,1,0,2,2,1,0,1,4,1,0,0,0,0,0,0,0,0,0,0,0,0,8,2,2,2,4,0,0,0,0,8,4,0,8,32,8,0,4,8,0,0,0,0,4,2,2,2,8,0,0,0,0,0,0,0,0,0,0,0,0,1,4,1,0,1,2,2,0,1,0,2,1,2,2,8,8,2,2,1,2,0,1,0,2,0,0,0,0,0,0,0,0,0,2,0,1,0,0,0,1,1,4,0,0,0,0,0,0,0,0,0,2,1,0,2,8,2,0,1,2,0,0,0,0,2,1,1,1,4,8,2,2,0,0,0,2,0,4,0,0,0,2,8,2,0,2,4,8,0,4,0,8,4,8,8,32],
   ![178,68,68,52,65,0,52,0,65,50,40,0,40,65,10,0,0,0,50,0,40,0,0,0,40,10,65,52,32,8,32,40,0,0,0,0,40,32,0,36,68,16,0,8,10,0,0,0,0,0,0,0,0,0,52,8,32,0,0,0,32,0,40,0,0,0,0,0,0,0,0,0,40,0,32,0,10,8,36,16,68,68,36,16,32,40,0,8,0,10,40,32,0,32,52,8,0,0,0,0,0,0,0,0,0,0,0,0,65,40,10,40,50,0,0,0,0,65,52,0,68,178,68,0,52,65,0,0,0,0,50,40,10,40,65,0,0,0,0,0,0,0,0,0,0,0,0,8,52,32,0,32,40,10,0,8,0,40,32,16,36,68,68,16,36,8,10,0,32,0,40,0,0,0,0,0,0,0,0,0,40,0,32,0,0,0,32,8,52,0,0,0,0,0,0,0,0,0,10,8,0,16,68,36,0,32,40,0,0,0,0,40,32,8,32,52,65,10,40,0,0,0,40,0,50,0,0,0,10,65,40,0,40,50,65,0,52,0,65,52,68,68,178],
@@ -304,7 +329,7 @@ private def table : Fin 12 → Column → ℤ := ![
 
 def T : Matrix Column Column ℤ := fun p q => if Bond p q then 1 else 0
 
-private def coefficients : Fin 10 → ℤ := ![-36,72,192,-514,93,417,-163,-97,31,6]
+def coefficients : Fin 10 → ℤ := ![-36,72,192,-514,93,417,-163,-97,31,6]
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
@@ -323,23 +348,17 @@ private theorem moves_exact (p q : Column) : q ∈ moves p ↔ Bond p q := by
   rw [moves_eq_filter]
   simp
 
-set_option maxRecDepth 30000 in
-set_option maxHeartbeats 0 in
 private theorem moves_nodup : ∀ p : Column, (moves p).Nodup := by
-  decide +kernel
+  intro p
+  rw [moves_eq_filter]
+  exact (List.nodup_finRange _).filter _
 
-private theorem step_fast (w : Column → ℤ) (p : Column) :
+theorem step_fast (w : Column → ℤ) (p : Column) :
     T.mulVec w p = ((moves p).map w).sum := by
   classical
   simp only [Matrix.mulVec, dotProduct, T, ite_mul, one_mul, zero_mul]
-  simp_rw [← moves_exact]
-  rw [← List.sum_toFinset _ (moves_nodup p)]
-  calc
-    _ = ∑ q ∈ (moves p).toFinset, (if q ∈ moves p then w q else 0) :=
-      Finset.sum_subset (Finset.subset_univ _) (by
-        intro q _ hq
-        exact if_neg (by simpa using hq)) |>.symm
-    _ = _ := Finset.sum_congr rfl (fun q hq => if_pos (by simpa using hq))
+  simp_rw [← moves_exact, ← List.mem_toFinset]
+  rw [Finset.sum_ite_mem_eq, List.sum_toFinset _ (moves_nodup p)]
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
@@ -359,16 +378,18 @@ private theorem table_steps (k : Fin 11) : table k.succ = T.mulVec (table k.cast
   rw [step_fast]
   exact table_steps_fast k p
 
-private theorem powers_table (k : Fin 12) : (T ^ k.val).mulVec (1 : Column → ℤ) = table k :=
+theorem powers_table (k : Fin 12) : (T ^ k.val).mulVec (1 : Column → ℤ) = table k :=
   TransferMatrix.tabulatedPowers T 11 table table_base table_steps k
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
 private theorem table_certificate : ∀ p : Column,
-    table 11 p = ∑ j : Fin 10, coefficients j * table ⟨1+j.val, by omega⟩ p := by
+    table 11 p = ∑ j : Fin 10, coefficients j *
+      table ((Fin.natAdd 1 j).castSucc) p := by
   have checked : ∀ (block : Fin 9) (offset : Fin 27),
       let col := finProdFinEquiv (block, offset)
-      table 11 col = ∑ j : Fin 10, coefficients j * table ⟨1+j.val, by omega⟩ col := by
+      table 11 col = ∑ j : Fin 10, coefficients j *
+        table ((Fin.natAdd 1 j).castSucc) col := by
     intro block
     fin_cases block <;> decide +kernel
   intro p
@@ -381,8 +402,9 @@ private theorem vector_certificate :
   change (T ^ 11).mulVec (1 : Column → ℤ) = _
   have h11 : (T ^ 11).mulVec (1 : Column → ℤ) = table 11 := powers_table (11 : Fin 12)
   rw [h11]
-  have h (j : Fin 10) : (T ^ (1+j.val)).mulVec (1 : Column → ℤ) =
-      table ⟨1+j.val, by omega⟩ := powers_table ⟨1+j.val, by omega⟩
+  have h (j : Fin 10) :
+      (T ^ (1 + j.val)).mulVec (1 : Column → ℤ) = table ((Fin.natAdd 1 j).castSucc) :=
+    powers_table (Fin.natAdd 1 j).castSucc
   simp_rw [h]
   funext p
   simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using table_certificate p

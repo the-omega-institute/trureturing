@@ -27,14 +27,20 @@ augmentation, symmetry and singular-chain material omitted.
 The full Apache-2.0 license is in docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
 -/
 
-import Mathlib.Algebra.Homology.TotalComplex
-import Mathlib.Algebra.Homology.QuasiIso
-import Mathlib.Algebra.Homology.Embedding.HomEquiv
-import Mathlib.Algebra.Homology.Embedding.ExtendHomology
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Mathlib.CategoryTheory.Abelian.DiagramLemmas.Four
-import Mathlib.CategoryTheory.GradedObject.Monoidal
+module
+
+public import Mathlib.Algebra.Homology.TotalComplex
+public import Mathlib.Algebra.Homology.QuasiIso
+public import Mathlib.Algebra.Homology.Embedding.HomEquiv
+public import Mathlib.Algebra.Homology.Embedding.ExtendHomology
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Mathlib.CategoryTheory.Abelian.DiagramLemmas.Four
+public import Mathlib.CategoryTheory.GradedObject.Monoidal
+
+set_option backward.privateInPublic true
+
+@[expose] public section
 noncomputable section
 open CategoryTheory Limits HomologicalComplex
 universe v u
@@ -116,7 +122,7 @@ lemma isIso_homologyMap_extendMap_of_forall_ne {j' : ι'} (hj' : ∀ j, e.f j �
 end HomologicalComplex
 namespace HomologicalComplex₂
 variable {C : Type u} [Category.{v} C] [Preadditive C]
-private instance hasTotal_down_nat [HasFiniteCoproducts C]
+instance hasTotal_down_nat [HasFiniteCoproducts C]
     (K : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)) :
     K.HasTotal (ComplexShape.down ℕ) := fun n ↦
   have : Finite (ComplexShape.π (ComplexShape.down ℕ) (ComplexShape.down ℕ)

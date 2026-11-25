@@ -60,9 +60,6 @@ theorem pathPower_isChordal (n k : ℕ) : (pathPower n k).IsChordal := by
 
 section Gains
 
-open private gain gain_adj gain_triangle two_triangle_comparisons from
-  D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
-
 variable {n k : ℕ} {H : Type*} [Group H] [PseudoMetricSpace H]
   [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H]
 

@@ -37,7 +37,8 @@ private def phase (t : ℝ) : ℂ :=
 private def fromNat (n : ℕ) : Omega.Nat :=
   n.rec Omega.Nat.zero (fun _ q => q.succ)
 
-private def fromInt : ℤ → Omega.Int
+/-- Encode a standard integer in Omega arithmetic. -/
+def fromInt : ℤ → Omega.Int
   | .ofNat n => .ofNat (fromNat n)
   | .negSucc n => .negSucc (fromNat n)
 
@@ -46,7 +47,8 @@ private theorem to_fromNat (n : ℕ) : toStdNat (fromNat n) = n := by
   | zero => rfl
   | succ n ih => exact congrArg Nat.succ ih
 
-private theorem to_fromInt (n : ℤ) : toStdInt (fromInt n) = n := by
+/-- Reading the Omega encoding recovers the standard integer. -/
+theorem to_fromInt (n : ℤ) : toStdInt (fromInt n) = n := by
   cases n with
   | ofNat n => exact congrArg Int.ofNat (to_fromNat n)
   | negSucc n => exact congrArg Int.negSucc (to_fromNat n)
@@ -87,9 +89,11 @@ private theorem phase_normSq (t : ℚ) : normSq (phase t) = 1 := by
       (t.num : ℝ)^2 + (t.den : ℝ)^2 := by
     have h := congrArg (fun k : ℤ => (k : ℝ)) (toStd_normSq p q)
     simpa only [hp, hq, Int.cast_natCast, Int.cast_add, Int.cast_mul, pow_two] using h
-  simp only [cayleyX, cayleyY, value_read, Omega.Int.square, Omega.Int.sub, toStdInt_add,
-    toStdInt_mul, toStdInt_neg, hp, hq, Int.cast_add, Int.cast_mul, Int.cast_neg,
-    Int.cast_natCast, hD] at h
+  have hsub (a b : Omega.Int) : toStdInt (a.sub b) = toStdInt a - toStdInt b := by
+    change toStdInt (Omega.Int.add a (Omega.Int.neg b)) = _
+    rw [toStdInt_add, toStdInt_neg, sub_eq_add_neg]
+  simp only [cayleyX, cayleyY, value_read, Omega.Int.square, hsub, toStdInt_add,
+    toStdInt_mul, hp, hq, Int.cast_add, Int.cast_mul, Int.cast_sub, Int.cast_natCast, hD] at h
   have ht : (t : ℝ) = (t.num : ℝ) / (t.den : ℝ) := Rat.cast_def t
   rw [phase, Complex.normSq_mk]
   change (((1 - (t : ℝ)^2)/(1 + (t : ℝ)^2)) *

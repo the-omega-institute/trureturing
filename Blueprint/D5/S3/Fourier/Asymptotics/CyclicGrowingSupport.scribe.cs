@@ -17,6 +17,19 @@ internal sealed class CyclicGrowingSupportDocument : IScribeDocumentDefinition
                 "The front window is the image in the cyclic group of integers −n through n. " +
                 "The rear window of index l comprises offsets −l−e/2 through l+e/2 in unit steps " +
                 "from the antipodal angle. Fit the three scaled moment equations on these windows.")),
+            Describe.Lean(DescribeId.Create("point-sign-certificate"),
+                DeclarationHandle.Create(Owner + ".eventual_window_support_of_point_signs"),
+                H("Pointwise boundary signs certify the optimizer"),
+                StatementSource.FromAuthor(PointSigns()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any fixed rear index l, at sufficiently large n the front signs, " +
+                    "matrix invertibility and dual coefficient inequalities hold. If the last " +
+                    "included rear score is positive and the first omitted rear score is " +
+                    "nonpositive at that n, the two-window fit is the unique optimizer, has " +
+                    "the stated positive support and satisfies the squared-distance energy bound. " +
+                    "The two conditions are imposed pointwise, so the omitted score may vanish."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("strict-growing-support"),
                 DeclarationHandle.Create(Owner + ".eventual_strict_support_away_from_thresholds"),
                 H("Eventual exact support away from rear activation thresholds"),
@@ -44,6 +57,19 @@ internal sealed class CyclicGrowingSupportDocument : IScribeDocumentDefinition
                         "strictly positive support precisely on the two windows. Equality at a rear " +
                         "threshold is excluded."))),
                 DescribeRole.Theorem))));
+
+    private static Formula PointSigns()
+    {
+        var r = F.Id("R");
+        var at = Call("SignedValue", r);
+        var next = Call("SignedValue", new Formula.Binary(r, FormulaBinaryOperator.Add, F.D(1)));
+        var positive = new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, at);
+        var nonpositive = new Formula.Relation(next, FormulaRelationOperator.LessThanOrEqual, F.D(0));
+        var conclusion = new Formula.Relation(Call("Support", F.Id("v")),
+            FormulaRelationOperator.Equal, Call("TwoWindows", F.Id("n"), F.Id("l")));
+        return F.Disp(new Formula.Logic(new Formula.Logic(positive, FormulaLogicOperator.And, nonpositive),
+            FormulaLogicOperator.Implies, conclusion));
+    }
 
     private static Formula Threshold()
     {
