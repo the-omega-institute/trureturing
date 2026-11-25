@@ -39,7 +39,7 @@ theorem mesh_pos {q : ℕ} [NeZero q] :
     0 < spacing q :=
   div_pos (by positivity) (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q))
 
-private theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
+theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
     (↑(q / 2) : ℝ) * mesh q ≤ Real.pi := by
   have hq : 0 < (q : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
   have hhalf : (2 : ℝ) * (↑(q / 2) : ℝ) ≤ q := by
@@ -54,7 +54,7 @@ private theorem sample_cast {q : ℕ} [NeZero q] (j : ℤ)
   unfold sample
   rw [centeredAngle_eq_mesh, (ZMod.valMinAbs_spec _ _).mpr ⟨rfl, hlo, hhi⟩]
 
-private theorem sample_antipode {q : ℕ} [NeZero q] :
+theorem sample_antipode {q : ℕ} [NeZero q] :
     sample ((↑(q / 2) : ℤ) : ZMod q) = -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) := by
   have hq : 0 < (q : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
   have hqn : 0 < q := NeZero.pos q
@@ -68,7 +68,7 @@ private theorem sample_antipode {q : ℕ} [NeZero q] :
       rw [show 2 * (↑(q / 2) : ℝ) = (q : ℝ) - (↑(q % 2) : ℝ) by linarith only [hhalf]]
     _ = _ := by unfold mesh; field_simp [ne_of_gt hq]
 
-private theorem sample_antipode_le {q : ℕ} [NeZero q] (i : ZMod q) :
+theorem sample_antipode_le {q : ℕ} [NeZero q] (i : ZMod q) :
     sample ((↑(q / 2) : ℤ) : ZMod q) ≤ sample i := by
   have hqn : 0 < q := NeZero.pos q
   rw [sample_cast _ (by omega) (by omega), Int.cast_natCast, sample, centeredAngle_eq_mesh,
@@ -103,7 +103,7 @@ private theorem dual_le_zero_or_positive {c C ρ H Z : ℝ}
   · rintro ⟨hc', hρ⟩
     exact mul_pos (mul_pos hH (sub_pos.mpr hc')) (sub_pos.mpr hρ)
 
-private theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
+theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
     (hmass : ∑ i, v i = 1) :
     (∑ i, v i * (1 - sample i)) = 1 - cosineMoment 1 v ∧
     (∑ i, v i * (1 - sample i ^ 2)) = (1 - cosineMoment 2 v) / 2 := by
