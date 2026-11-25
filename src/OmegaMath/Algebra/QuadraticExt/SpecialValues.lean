@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.QuadraticExt.Spinor
 public import OmegaMath.Harmonic.ChebyshevHecke.Recurrence
 
@@ -28,14 +30,16 @@ def phiSubOneHalf : QPhi := scalarRing.mul half (scalarRing.sub phi scalarRing.o
 def five : Nat := .succ (.succ (.succ (.succ (.succ .zero))))
 def ten : Nat := Nat.add five five
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem two_half : scalarRing.eqv (scalarRing.mul half scalarRing.two) scalarRing.one :=
-  And.intro Eq.refl Eq.refl
+  And.intro rfl rfl
 
 private theorem two_mul_half (a : QPhi) :
     scalarRing.eqv (scalarRing.mul scalarRing.two (scalarRing.mul half a)) a :=
   let vars := Variables.cons half (Variables.cons a (Variables.nil scalarRing))
   laws.trans (prove scalarRing laws vars (Expr.two.mul (e0.mul e1))
-    ((e0.mul Expr.two).mul e1) Eq.refl)
+    ((e0.mul Expr.two).mul e1) rfl)
     (laws.trans (laws.mul_congr two_half (laws.refl a)) (laws.one_mul a))
 
 /-- Evaluate T at half of a using the recurrence with integral initial values 2 and a. -/
@@ -54,19 +58,25 @@ private theorem half_argument (a : QPhi) (n : Nat) :
   have scaled := Chebyshev.linear_unique r laws a r.one x (fun k => r.mul half (g k))
     (laws.symm two_half) (laws.refl x)
     (fun k => prove r laws (.cons a (.cons half (.cons (g k.succ) (.cons (g k) (Variables.nil r)))))
-      ((e0.mul (e1.mul e2)).sub (e1.mul e3)) (e1.mul ((e0.mul e2).sub e3)) Eq.refl) n
+      ((e0.mul (e1.mul e2)).sub (e1.mul e3)) (e1.mul ((e0.mul e2).sub e3)) rfl) n
   laws.trans (laws.symm base) scaled
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem T_five_phi_half :
     scalarRing.eqv (Chebyshev.T scalarRing phiHalf five) (scalarRing.neg scalarRing.one) :=
-  laws.trans (half_argument phi five) (And.intro Eq.refl Eq.refl)
+  laws.trans (half_argument phi five) (And.intro rfl rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem T_ten_phi_half :
     scalarRing.eqv (Chebyshev.T scalarRing phiHalf ten) scalarRing.one :=
-  laws.trans (half_argument phi ten) (And.intro Eq.refl Eq.refl)
+  laws.trans (half_argument phi ten) (And.intro rfl rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem T_five_phi_sub_one_half :
     scalarRing.eqv (Chebyshev.T scalarRing phiSubOneHalf five) scalarRing.one :=
-  laws.trans (half_argument (scalarRing.sub phi scalarRing.one) five) (And.intro Eq.refl Eq.refl)
+  laws.trans (half_argument (scalarRing.sub phi scalarRing.one) five) (And.intro rfl rfl)
 
 end Omega.QPhi

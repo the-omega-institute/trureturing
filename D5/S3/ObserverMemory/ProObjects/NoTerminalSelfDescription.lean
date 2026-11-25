@@ -46,7 +46,7 @@ theorem no_terminal_self_description
       (fixedPointFree value
         (Omega.Eq.rec (motive := fun endpoint _ => twist value = endpoint) rfl h)).elim
   have strictEqual : Omega.Eq (enumeration row) (fun x => twist (enumeration x x)) :=
-    equal ▸ Omega.Eq.refl
+    equal ▸ Omega.rfl
   exact (relative_diagonal_escape enumeration twist strictFixedPointFree
     (Omega.Exists.intro row strictEqual)).elim
 

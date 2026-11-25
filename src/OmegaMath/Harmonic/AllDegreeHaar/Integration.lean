@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Harmonic.AllDegreeHaar.Characters
 import OmegaMath.Calculus.Jet2.Scalar
 
@@ -30,9 +31,14 @@ private theorem finite_equiv {x y : IntRatio} (h : Equivalent x y) (hy : IntRati
     (fun _ _ _ => True.intro) x) h
 
 private theorem moment_finite (k : Nat) : IntRatio.Finite (haarKappaMoment k) :=
-  Nat.rec (motive := fun k => IntRatio.Finite (haarKappaMoment k)) True.intro
-    (fun k ih => finite_equiv (haarKappaMoment_succ k)
-      (IntRatio.finite_mul ih (True.intro : IntRatio.Finite (haarKappaStep k)))) k
+  Nat.rec (motive := fun k => IntRatio.Finite (haarKappaMoment k))
+    (finite_equiv haarKappaMoment_0 True.intro)
+    (fun k ih =>
+      let two := PiFreeHaar.Numerals.two
+      have hd := (Nat.mul_succ two k.succ).trans (Nat.add_succ _ Nat.one)
+      have finite := Eq.subst (motive := fun n =>
+        IntRatio.Finite (IntRatio.value (Int.ofNat (two.mul k).succ) n)) hd.symm True.intro
+      finite_equiv (haarKappaMoment_succ k) (IntRatio.finite_mul ih finite)) k
 
 private theorem ofInt_add (a b : Int) :
     Equivalent (IntRatio.ofInt (a.add b)) ((IntRatio.ofInt a).add (IntRatio.ofInt b)) :=
@@ -40,7 +46,8 @@ private theorem ofInt_add (a b : Int) :
 
 private theorem ofInt_mul (a b : Int) :
     Equivalent (IntRatio.ofInt (a.mul b)) ((IntRatio.ofInt a).mul (IntRatio.ofInt b)) :=
-  IntRatio.equivalent_refl _
+  Eq.subst (motive := fun n => Equivalent (IntRatio.ofInt (a.mul b)) (IntRatio.fraction (a.mul b) n))
+    ((Nat.add_zero _).trans (Nat.mul_zero Nat.one)).symm (IntRatio.equivalent_refl _)
 
 private theorem neg_one_mul (x : IntRatio) :
     Equivalent ((IntRatio.ofInt Int.one.neg).mul x) x.neg :=
@@ -123,7 +130,8 @@ theorem integral_recurrence (k : Nat) (p : Poly) :
   let x := integral k p
   have negTwo : Equivalent ((IntRatio.ofInt Int.two.neg).mul x)
       ((IntRatio.ofInt Int.two).mul x).neg :=
-    (IntRatio.mul_congr_left ((ofInt_mul Int.one.neg Int.two)) x).trans
+    have coeff := (Int.neg_mul Int.one Int.two).trans (congrArg Int.neg (Int.one_mul Int.two))
+    (IntRatio.mul_congr_left ((IntRatio.ofInt_congr coeff.symm).trans (ofInt_mul Int.one.neg Int.two)) x).trans
       ((IntRatio.mul_assoc (IntRatio.ofInt Int.one.neg) (IntRatio.ofInt Int.two) x).trans
         (neg_one_mul ((IntRatio.ofInt Int.two).mul x)))
   (integral_add k (Characters.shiftFour p) (p.scale Int.two.neg)).trans

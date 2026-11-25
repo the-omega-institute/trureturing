@@ -31,8 +31,8 @@ example : IsSingleEyed Nat.zero (fun value : Bool => Eq value .false)
 example : Not (IsSingleEyed Nat.zero (fun value : Bool => Eq value .false)
     (fun _ input => Or (Eq input Nat.zero) (Eq input Nat.zero.succ))) :=
   fun h =>
-    have one_eq_zero := h .false Eq.refl Nat.zero.succ (Or.inr Eq.refl)
-    Eq.subst (Nat.rec (motive := fun _ => Prop) False (fun _ _ => True))
+    have one_eq_zero := h .false rfl Nat.zero.succ (Or.inr rfl)
+    Eq.subst (motive := Nat.rec (motive := fun _ => Prop) False (fun _ _ => True))
       one_eq_zero True.intro
 
 end D5.S0.Conventions.SingleEyeInvariant

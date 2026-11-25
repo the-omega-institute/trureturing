@@ -89,7 +89,7 @@ def bargmann3 (a b c : Quad4) : IntRatio :=
     ((a.normSq.mul b.normSq).mul c.normSq)
 
 def detGram3 (a b c : Quad4) : IntRatio :=
-  ((IntRatio.ofInt Int.one).add ((IntRatio.ofInt (Int.one.add Int.one)).mul (bargmann3 a b c))).sub
+  ((IntRatio.ofInt Int.one).add ((IntRatio.ofInt Int.two).mul (bargmann3 a b c))).sub
     (((kappa a b).add (kappa b c)).add (kappa c a))
 
 end Omega.Geometry.BargmannGram

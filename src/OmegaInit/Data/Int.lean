@@ -1,7 +1,7 @@
-/-
-Copyright (c) 2026 The Omega Institute. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 module
-prelude
+public import Init.Data.Int
+public import OmegaInit.Data.Int.Lemmas
 public import OmegaInit.Data.Int.Order
+
+/-! Namespace aliases to the pinned public interface. -/
+public section

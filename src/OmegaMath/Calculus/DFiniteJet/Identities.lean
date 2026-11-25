@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.DFiniteJet.Coefficients
 
 /-!
@@ -25,11 +26,11 @@ theorem exp_unique_at (N : Nat) {a : IntRatio} {f : JetSeq}
     (solution : ∀ k, Nat.lt k N → IntRatio.Equivalent (deriv f k) (smul a f k)) :
     EquivalentAt N f (Exp a) :=
   Nat.rec (motive := fun k => Nat.le k N → IntRatio.Equivalent (f k) (Exp a k))
-    (fun _ => initial)
+    (fun _ => Eq.subst (motive := IntRatio.Equivalent (f Nat.zero)) (exp_zero a).symm initial)
     (fun k ih hk => IntRatio.mul_cancel_left (IntRatio.unit_ofNat_succ k)
       ((solution k hk).trans
         ((IntRatio.mul_congr (IntRatio.equivalent_refl a) (ih (Nat.le_trans
-          (Nat.le.step (Nat.le.refl k)) hk))).trans (deriv_exp a k).symm)))
+          (Nat.le.step (Nat.le_refl k)) hk))).trans (deriv_exp a k).symm)))
 
 private theorem exp_sum_ode (a b : IntRatio) :
     Equivalent (deriv (mul (Exp a) (Exp b))) (smul (a.add b) (mul (Exp a) (Exp b))) :=
@@ -44,10 +45,12 @@ private theorem exp_sum_ode (a b : IntRatio) :
       ((IntRatio.add_congr (left k) (right k)).trans
         (IntRatio.add_mul a b (mul (Exp a) (Exp b) k)).symm)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 /-- The exponential addition law holds at every coefficient. -/
 theorem exp_add (a b : IntRatio) : Equivalent (mul (Exp a) (Exp b)) (Exp (a.add b)) :=
   fun k => exp_unique_at k (a := a.add b) (f := mul (Exp a) (Exp b))
-    (IntRatio.equivalent_refl IntRatio.one) (fun j _ => exp_sum_ode a b j) k (Nat.le.refl k)
+    (IntRatio.equivalent_refl IntRatio.one) (fun j _ => exp_sum_ode a b j) k (Nat.le_refl k)
 
 private theorem exp_congr {a b : IntRatio} (h : IntRatio.Equivalent a b) :
     Equivalent (Exp a) (Exp b) :=
@@ -57,7 +60,8 @@ private theorem exp_congr {a b : IntRatio} (h : IntRatio.Equivalent a b) :
 
 private theorem exp_zero_parameter : Equivalent (Exp IntRatio.zero) one :=
   Nat.rec (motive := fun k => IntRatio.Equivalent (Exp IntRatio.zero k) (one k))
-    (IntRatio.equivalent_refl _) (fun k _ =>
+    (Eq.subst (motive := fun t => IntRatio.Equivalent t IntRatio.one) (exp_zero IntRatio.zero).symm
+      (IntRatio.equivalent_refl _)) (fun k _ =>
       (IntRatio.mul_congr_left
         (IntRatio.zero_mul (scalarPow_finite (a := IntRatio.zero) True.intro k)) _).trans
         (IntRatio.zero_mul True.intro))
@@ -89,6 +93,8 @@ private theorem deriv_cos_sq_add_sin_sq :
             (IntRatio.add_left_neg (IntRatio.finite_add
               (finite_mul cos_finite sin_finite k) (finite_mul cos_finite sin_finite k))))))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 /-- Pythagoras for the formal sine and cosine. -/
 theorem cos_sq_add_sin_sq : Equivalent (add (mul Cos Cos) (mul Sin Sin)) one :=
   fun k => (constant_of_deriv_zero deriv_cos_sq_add_sin_sq k).trans

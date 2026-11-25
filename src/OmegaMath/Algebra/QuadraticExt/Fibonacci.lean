@@ -21,10 +21,10 @@ def fibPair (n : Nat) : QuadPoly A r.one r.one :=
 
 def fibonacci (n : Nat) : A := (fibPair r n).scalar
 
-theorem fib_zero : Eq (fibonacci r .zero) r.zero := Eq.refl
-theorem fib_one : Eq (fibonacci r (.succ .zero)) r.one := Eq.refl
+theorem fib_zero : Eq (fibonacci r .zero) r.zero := Omega.rfl
+theorem fib_one : Eq (fibonacci r (.succ .zero)) r.one := Omega.rfl
 theorem fib_succ_succ (n : Nat) :
-    Eq (fibonacci r n.succ.succ) (r.add (fibonacci r n) (fibonacci r n.succ)) := Eq.refl
+    Eq (fibonacci r n.succ.succ) (r.add (fibonacci r n) (fibonacci r n.succ)) := Omega.rfl
 
 def negOnePow (n : Nat) : A := Nat.rec r.one (fun _ prev => r.mul (r.neg r.one) prev) n
 
@@ -37,9 +37,9 @@ private theorem phi_times (law : r.Laws) (z : QuadPoly A r.one r.one) :
   let o := Polynomial.Expr.one
   let z := Polynomial.Expr.zero
   And.intro
-    (Polynomial.prove r law vars ((z.mul a).add (o.mul (o.mul b))) b Eq.refl)
+    (Polynomial.prove r law vars ((z.mul a).add (o.mul (o.mul b))) b rfl)
     (Polynomial.prove r law vars (((z.mul b).add (o.mul a)).add (o.mul (o.mul b)))
-      (a.add b) Eq.refl)
+      (a.add b) rfl)
 
 theorem phi_pow (law : r.Laws) (n : Nat) :
     Equivalent r (pow r (alpha (b := r.one) (c := r.one) r) n.succ)
