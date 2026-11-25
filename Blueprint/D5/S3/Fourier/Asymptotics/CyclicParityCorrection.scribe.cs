@@ -60,9 +60,9 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
                         "p(i)=(t−H(1−c(i)²)−β(1−c(i)))/Z. Write p₊ for the positive part. " +
                         "The factorization holds even when the two roots coincide. A sample at C has p₊=0.")),
                     Paragraph(Text(
-                        "The energy identity applies to every feasible v at threshold a. B is the dual bound " +
+                        "The energy identity applies to every real weight v of mass one. B is the dual bound " +
                         "2(t−(H/2+β)(1−a))/Z−Σ p₊², R is Σ(v−p₊)², and J is Σv(p₊−p). " +
-                        "The two moment slacks are M₁(v)−a and M₂(v)−a. The identity gives E(v)≥B when β≥0."))),
+                        "The two moment slacks are M₁(v)−a and M₂(v)−a. For feasible v the identity gives E(v)≥B when β≥0."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("cyclic-antipodal-mass-transfer"),
                 DeclarationHandle.Create(Owner + ".adjusted"), H("Mass transfer"),
@@ -78,7 +78,7 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let q≥4 and let w be nonnegative with mass one. Define Dᵣ=1−Mᵣ(w), F=1−cos(h), " +
+                        "Let q≥4 and let w have mass one. Require w to be nonnegative off 0, 1, −1 and floor(q/2). Define Dᵣ=1−Mᵣ(w), F=1−cos(h), " +
                         "G=1−cos(2h), U=1−C and V=2(1−C²). For target deficit A, take " +
                         "δ=(A−D₂−V(A−D₁)/U)/(G−VF/U) and μ=(A−D₁−Fδ)/U. Both denominators are positive for q≥4.")),
                     Paragraph(Text(
@@ -102,7 +102,7 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
                     Multiply(Div(Multiply(Two, Beta), Z), Subtract(Call("M", One, V), Threshold))),
                 Multiply(Div(Hscale, Z), Subtract(Call("M", Two, V), Threshold))));
         return F.Disp(And(Eq(Call("c", Call("HalfFloor", Q)), C),
-            And(roots, All("v", Call("Feasible", Q, Threshold), energy))));
+            And(roots, All("v", Call("MassOneWeights", Q), energy))));
     }
 
     private static Formula TransferStatement()
