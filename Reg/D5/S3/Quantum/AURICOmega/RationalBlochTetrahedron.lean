@@ -2,10 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
 
+/-! The third off-diagonal Gram entry is a necessary observation in the coordinate obstruction. -/
+
 namespace Reg.D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron (no_rational_bloch_tetrahedral_triangle)
+open _root_.D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
+  (no_rational_bloch_tetrahedral_triangle)
 open LeanInformationAudit
 open Omega.Geometry.BargmannGram (Quad4)
 
@@ -13,7 +16,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-private abbrev Params := Quad4 × Quad4 × Omega.Nat
+private abbrev Params := Σ _ : Quad4, Σ _ : Quad4, Omega.Nat
 
 private abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Params (fun _ => Quad4) (fun _ => Omega.Int)
@@ -39,7 +42,7 @@ private abbrev arena : Arena where
       (_ : Omega.Eq (c.dot c) (Omega.Int.ofNat (d.mul d)))
       (_ : Omega.Eq ((Omega.Int.ofNat three).mul (a.dot b)) (Omega.Int.ofNat (d.mul d)).neg)
       (_ : Omega.Eq ((Omega.Int.ofNat three).mul (b.dot c)) (Omega.Int.ofNat (d.mul d)).neg)
-      (_ : Omega.Eq (R.readout () (a, b, d) c) (Omega.Int.ofNat (d.mul d)).neg), Omega.False
+      (_ : Omega.Eq (R.readout () ⟨a, ⟨b, d⟩⟩ c) (Omega.Int.ofNat (d.mul d)).neg), Omega.False
 
 private def axis : Quad4 := ⟨Omega.Int.zero, Omega.Int.ofNat three, Omega.Int.zero, Omega.Int.zero⟩
 
@@ -56,18 +59,20 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨(axis, neighbor, three), axis, Quad4.zero, ?_⟩
+  refine ⟨⟨axis, ⟨neighbor, three⟩⟩, axis, Quad4.zero, ?_⟩
   intro heq
-  have absEq := congrArg Omega.Int.natAbs heq
-  have reduced : Omega.Nat.succ (Omega.Nat.add (three.mul (three.mul three)) Omega.Nat.zero).pred =
-      Omega.Nat.zero := absEq
-  exact Omega.Nat.succ_ne_zero _ (by cases reduced)
+  have absEq : Omega.Nat.succ (three.mul (three.mul three)).pred = Omega.Nat.zero :=
+    congrArg Omega.Int.natAbs heq
+  have impossible : Omega.Nat.lt Omega.Nat.zero Omega.Nat.zero :=
+    Eq.mp (congrArg (Omega.Nat.lt Omega.Nat.zero) absEq) Omega.True.intro
+  exact Omega.False.elim impossible
 
 def family : Registration arena (type_of% @no_rational_bloch_tetrahedral_triangle) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@no_rational_bloch_tetrahedral_triangle, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
