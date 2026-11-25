@@ -6,16 +6,20 @@
    utility: none
    digest: TauCeti port: Reduced singular homology and augmentation splittings; sphere support. -/
 
-import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.Zero
-import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
-import D5.S3.Topology.TauCeti.CategoryTheory.Limits.Shapes.Products
-import Mathlib.AlgebraicTopology.SingularHomology.HomologyZero
-import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvariance
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Algebra.Category.ModuleCat.Biproducts
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.RingTheory.Finiteness.Prod
+module
+
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.Zero
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
+public import D5.S3.Topology.TauCeti.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.AlgebraicTopology.SingularHomology.HomologyZero
+public import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvariance
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.Topology.Homotopy.Equiv
+public import Mathlib.Algebra.Category.ModuleCat.Biproducts
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.RingTheory.Finiteness.Prod
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -27,6 +31,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.

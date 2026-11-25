@@ -6,10 +6,14 @@
    utility: none
    digest: TauCeti port: Cokernel, iterated and componentwise chain homotopies; sphere support. -/
 
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.CategoryTheory.Limits.Shapes.Kernels
-import D5.S3.Topology.TauCeti.Algebra.Homology.HomologicalComplex.Basic
+module
+
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.CategoryTheory.Limits.Shapes.Kernels
+public import D5.S3.Topology.TauCeti.Algebra.Homology.HomologicalComplex.Basic
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -21,6 +25,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.

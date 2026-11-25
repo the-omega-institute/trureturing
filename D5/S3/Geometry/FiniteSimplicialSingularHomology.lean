@@ -6,13 +6,17 @@
    utility: none
    digest: Ordered integer H1 of a finite coordinate complex compares with its actual singular H1. -/
 
-import D5.S3.Geometry.SimplicialPersistence.OrderedChains
-import D5.S3.Geometry.FiniteSimplicialOpenCover
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.OrderedCech
-import Mathlib.Algebra.Homology.SingleHomology
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+module
+
+public import D5.S3.Geometry.SimplicialPersistence.OrderedChains
+public import D5.S3.Geometry.FiniteSimplicialOpenCover
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
+public import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.OrderedCech
+public import Mathlib.Algebra.Homology.SingleHomology
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+
+set_option backward.privateInPublic true
 
 /-!
 The carrier throughout this file is `FiniteConeCollapse.realization K`, with
@@ -21,6 +25,8 @@ positivity of every coordinate indexed by the finite set. In particular these
 are open vertex stars, and are not closed stars of faces.
 
 -/
+
+@[expose] public section
 
 set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false

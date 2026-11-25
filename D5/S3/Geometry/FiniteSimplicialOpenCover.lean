@@ -6,11 +6,16 @@
    utility: none
    digest: Positive coordinate stars form an open cover with contractible face intersections. -/
 
-import D5.S3.Geometry.FiniteConeCollapse
-import Mathlib.Topology.Homotopy.Contractible
+module
+
+public import D5.S3.Geometry.FiniteConeCollapse
+public import Mathlib.Topology.Homotopy.Contractible
 
 /-! The positive coordinate stars of a finite simplicial realization. -/
 
+set_option backward.privateInPublic true
+
+@[expose] public section
 noncomputable section
 open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
