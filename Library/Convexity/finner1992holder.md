@@ -7,6 +7,7 @@ doi: 10.1214/aop/1176989534
 claim: Finner's product-measure inequality and its separated-incidence equality classification concern coordinate-supported factors; the normalized ENNReal classification requires additional correspondence proofs.
 strata_touched:
   - D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure
+  - D5/S3/Analytic/Measure/NormalizedHolderEquality
 license: citation-only
 triage: anchor
 ---
@@ -193,3 +194,37 @@ common coordinate family. Pairwise Holder equality alone does not establish
 that compatibility. The support-space transports, normalization, and converse
 identities described here also require compiled correspondence evidence before
 they can be claimed as the full Lean equality classification.
+
+## Finite normalized Holder under one arbitrary measure
+
+Let J be any finite type, mu any measure on a measurable space X, and let
+q_j:X->ENNReal be mu-almost-everywhere measurable with integral_mu q_j=1.
+For strictly positive real w_j with sum_j w_j=1,
+
+    integral_mu(product_j q_j(x)^{w_j}) = 1
+      iff q_j = q_k mu-almost everywhere for all j,k.
+
+The declaration `NormalizedHolderEquality.lintegral_prod_rpow_eq_one_iff`
+has exactly these premises. It requires neither probability nor sigma-finiteness.
+The empty index type is included with its inconsistent weight-sum premise;
+the singleton weight is one. Zeros on positive-measure sets and infinity on
+null sets are allowed. Finite unit integrals give finiteness almost everywhere,
+which suffices to combine powers of a common density without pointwise
+positivity.
+
+Bennett and Oh, Section 1.1 between equations (1.5) and (1.6), identify the
+full-support specialization as the classical multilinear Holder inequality.
+Their subsequent equality paragraph concerns coordinate profiles under the
+incidence separation condition. It is not an exact citation for the Lean
+theorem's AEMeasurable ENNReal endpoints. Those endpoints and the arbitrary
+measure scope are supplied by its proof from Mathlib's arbitrary-measure binary
+equality theorem `ENNReal.lintegral_mul_eq_one_iff_of_lintegral_rpow_eq_one`,
+with real conjugate exponents, and the finite inequality
+`ENNReal.lintegral_prod_norm_pow_le`. A finite-family induction normalizes
+the remaining weights, forces the remaining product's integral to be one,
+and applies the binary equality criterion. The reverse direction integrates
+the almost-everywhere common density. No mathematical originality is claimed.
+
+This criterion applies to normalized factors on a common measure. It supplies
+no recovery theorem across conditional slices of zero mass and does not prove
+the common-coordinate-profile classification for Finner's full marginal chain.
