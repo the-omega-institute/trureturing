@@ -7,6 +7,7 @@
 
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Arithmetic.Euclidean.Division
 
 namespace D5.S0.Computability.ConditionalComplexityFloor
@@ -40,6 +41,8 @@ private inductive One where
 example : Exists (fun _ : One => Exists (fun _ : One => True)) :=
   Exists.intro .only (Exists.intro .only True.intro)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Nat.add Nat.sub Nat.pred in
 /-- A program of length three with overhead two attains complexity five. -/
 example :
     let two := Nat.zero.succ.succ
@@ -53,7 +56,7 @@ example :
   let two := Nat.zero.succ.succ
   let three := two.succ
   let five := three.succ.succ
-  And.intro (Exists.intro .only (Exists.intro .only (And.intro True.intro (Nat.le.refl three))))
-    (And.intro (fun _ _ _ => Nat.le.refl five) (Nat.le.refl three))
+  And.intro (Exists.intro .only (Exists.intro .only (And.intro True.intro (Nat.le_refl three))))
+    (And.intro (fun _ _ _ => Nat.le_refl five) (Nat.le_refl three))
 
 end D5.S0.Computability.ConditionalComplexityFloor

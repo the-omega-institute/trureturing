@@ -37,7 +37,7 @@ def extendedGcd (a b : Nat) : ExtendedGcd := extendedGcdAux b a b
 def gcd (a b : Nat) : Nat := (extendedGcd a b).divisor
 
 private theorem dvd_mul_right {d a : Nat} (h : Dvd d a) (k : Nat) : Dvd d (a.mul k) :=
-  dvd_trans h (Exists.intro k Eq.refl)
+  dvd_trans h (Exists.intro k rfl)
 
 private theorem dvd_add {d a b : Nat} (ha : Dvd d a) (hb : Dvd d b) : Dvd d (a.add b) :=
   ha.elim (fun x hx => hb.elim (fun y hy =>
@@ -47,7 +47,7 @@ private theorem dvd_remainder {d a b r : Nat} (ha : Dvd d a) (hb : Dvd d b)
     (he : Eq a (b.add r)) : Dvd d r :=
   ha.elim (fun x hx => hb.elim (fun y hy =>
     have sub : Eq (Int.ofNat r) (Int.subNatNat a b) :=
-      (Int.subNatNat_add_left b r).symm.trans (congrArg (fun n => Int.subNatNat n b) he.symm)
+      (@Int.subNatNat_add_left b r).symm.trans (congrArg (fun n => Int.subNatNat n b) he.symm)
     have factor : Eq (Int.ofNat r) ((Int.ofNat d).mul (Int.subNatNat x y)) :=
       sub.trans ((Eq.map₂ Int.subNatNat hx hy).trans (Int.ofNat_mul_subNatNat d x y).symm)
     Exists.intro ((Int.subNatNat x y).natAbs)
@@ -82,7 +82,7 @@ private def GcdSpec (a b : Nat) (s : ExtendedGcd) : Prop :=
 private theorem gcd_zero_spec (a b : Nat) (hb : Eq b Nat.zero) :
     GcdSpec a b ⟨a, Int.one, Int.zero⟩ :=
   And.intro (dvd_refl a)
-    (And.intro (Eq.subst (Dvd a) hb.symm (dvd_zero a))
+    (And.intro (Eq.subst (motive := Dvd a) hb.symm (dvd_zero a))
       (And.intro (fun _ ha _ => ha)
         ((Eq.map₂ Int.add (Int.mul_one (Int.ofNat a)) (Int.mul_zero (Int.ofNat b))).trans
           (Int.add_zero (Int.ofNat a)))))
@@ -102,7 +102,7 @@ private theorem extendedGcdAux_spec (fuel a b : Nat) (h : Nat.le b fuel) :
         (fun nonzero =>
           let division := divMod_spec a b (pos_of_ne_zero nonzero)
           let prior := ih b qr.remainder (Nat.le_of_succ_le_succ (Nat.le_trans division.right hb))
-          have da : Dvd s.divisor a := Eq.subst (Dvd s.divisor) division.left.symm
+          have da : Dvd s.divisor a := Eq.subst (motive := Dvd s.divisor) division.left.symm
             (dvd_add (dvd_mul_right prior.left qr.quotient) prior.right.left)
           have greatest : ∀ d, Dvd d a → Dvd d b → Dvd d s.divisor := fun d ha hb =>
             prior.right.right.left d hb (dvd_remainder ha (dvd_mul_right hb qr.quotient) division.left)
@@ -111,7 +111,7 @@ private theorem extendedGcdAux_spec (fuel a b : Nat) (h : Nat.le b fuel) :
           And.intro da (And.intro prior.left (And.intro greatest linear)))) fuel) a b h
 
 private theorem extendedGcd_spec (a b : Nat) : GcdSpec a b (extendedGcd a b) :=
-  extendedGcdAux_spec b a b (Nat.le.refl b)
+  extendedGcdAux_spec b a b (Nat.le_refl b)
 
 theorem gcd_dvd_left (a b : Nat) : Dvd (gcd a b) a := (extendedGcd_spec a b).left
 

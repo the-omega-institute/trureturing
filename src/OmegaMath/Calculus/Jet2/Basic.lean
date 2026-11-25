@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Calculus.Jet2.Scalar
 
 /-!
@@ -204,8 +205,10 @@ theorem mul_add (a b c : Jet2) : Equivalent (a.mul (b.add c)) ((a.mul b).add (a.
           (IntRatio.add_add_add_comm p s q t)) (IntRatio.mul_add a.j2 b.j0 c.j0)).trans
         (IntRatio.add_add_add_comm (p.add q) (s.add t) r u)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem var_cube : Equivalent ((var.mul var).mul var) zero :=
-  And.intro Eq.refl (And.intro Eq.refl Eq.refl)
+  And.intro rfl (And.intro rfl rfl)
 
 end Jet2
 end Omega

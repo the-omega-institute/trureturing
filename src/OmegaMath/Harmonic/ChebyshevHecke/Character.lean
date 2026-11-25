@@ -37,7 +37,7 @@ theorem symmetric_character_step (law : r.Laws) (a b : A) (n : Nat) :
   prove r law (.cons a (.cons b (.cons (symmetricCharacter r a b n)
       (.cons (power r b n.succ) (Variables.nil r)))))
     ((e0.mul previous).add (e1.mul e3))
-    (((e0.add e1).mul previous).sub ((e0.mul e1).mul e2)) Eq.refl
+    (((e0.add e1).mul previous).sub ((e0.mul e1).mul e2)) rfl
 
 theorem symmetric_character_eq_U (law : r.Laws) (a b c : A)
     (sum : r.eqv (r.add a b) (r.mul r.two c)) (product : r.eqv (r.mul a b) r.one)

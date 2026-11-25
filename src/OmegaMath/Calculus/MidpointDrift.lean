@@ -4,6 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
+import OmegaMath.Geometry.BargmannGram.Fractions
 public import OmegaMath.Ternion.Heap.Fidelity
 public import OmegaMath.Calculus.Jet2.Scalar
 
@@ -87,7 +90,7 @@ theorem alpha_step_denominator_invertible (p : Int) (qPred : Nat)
 private theorem succ_pred_of_ne_zero (n : Nat) (h : Not (Eq n Nat.zero)) :
     Eq n.pred.succ n :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Eq n.pred.succ n)
-    (fun h => False.elim (h Eq.refl)) (fun _ _ _ => Eq.refl) n) h
+    (fun h => False.elim (h rfl)) (fun k _ _ => congrArg Nat.succ (Nat.pred_succ k)) n) h
 
 /-- Apply the inverse explicitly using the squared norm of the cleared left factor. -/
 def alphaStep (p : Int) (qPred : Nat) (a x₀ : RationalQuaternion) : RationalQuaternion :=
@@ -158,6 +161,8 @@ private def polynomialSub (a b : Coordinates) : Coordinates :=
 
 private def four : Nat := Nat.zero.succ.succ.succ.succ
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem cleared_difference (t p q : Int) (a b c : Quaternion) :
     Eq (((scalar t).add (scale p a)).mul b |>.sub
           (((scalar t).add (scale (p.sub q) a)).mul c))
@@ -175,23 +180,27 @@ private theorem cleared_difference (t p q : Int) (a b c : Quaternion) :
   let lhs := polynomialSub (L.mul B) (R.mul C)
   let rhs := polynomialAdd ((polynomialSub B C).scale T)
     (A.mul (polynomialAdd (B.scale P) (C.scale (Q.sub P))))
-  Quaternion.ext (lhs.w.sound rhs.w values Eq.refl) (lhs.x.sound rhs.x values Eq.refl)
-    (lhs.y.sound rhs.y values Eq.refl) (lhs.z.sound rhs.z values Eq.refl)
+  Quaternion.ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem dot_add_left (a b c : Quaternion) :
     Eq ((a.add b).dot c) ((a.dot c).add (b.dot c)) :=
   let values := inputs a (inputs b (inputs c .nil))
   let A := Coordinates.variables Nat.zero
   let B := Coordinates.variables four
   let C := Coordinates.variables (four.add four)
-  ((polynomialAdd A B).dot C).sound ((A.dot C).add (B.dot C)) values Eq.refl
+  ((polynomialAdd A B).dot C).sound ((A.dot C).add (B.dot C)) values rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem dot_mul_self_of_pure (a v : Quaternion) (pure : Eq a.w Int.zero) :
     Eq ((a.mul v).dot v) Int.zero :=
   let values := inputs a (inputs v .nil)
   let A := Coordinates.variables Nat.zero
   let V := Coordinates.variables four
-  (((A.mul V).dot V).sound (A.w.mul (V.dot V)) values Eq.refl).trans
+  (((A.mul V).dot V).sound (A.w.mul (V.dot V)) values rfl).trans
     ((congrArg (fun k : Int => k.mul (v.dot v)) pure).trans (Int.zero_mul _))
 
 private theorem zero_of_sub_eq {a b : Quaternion} (h : Eq a b) :
@@ -201,6 +210,8 @@ private theorem zero_of_sub_eq {a b : Quaternion} (h : Eq a b) :
     (Int.sub_eq_zero.mpr (congrArg Quaternion.y h))
     (Int.sub_eq_zero.mpr (congrArg Quaternion.z h))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem zero_dot (v : Quaternion) : Eq (zero.dot v) Int.zero :=
   Eq.map₂ Int.add (Eq.map₂ Int.add (Int.zero_mul v.w) (Int.zero_mul v.x))
     (Eq.map₂ Int.add (Int.zero_mul v.y) (Int.zero_mul v.z))
@@ -221,6 +232,8 @@ private theorem dot_difference (t p q : Int) (a b c : Quaternion)
   Int.eq_of_mul_eq_mul_left ht
     (expansion.symm.trans (fromEquation.trans (Int.mul_zero t).symm))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Polarization isolates the term that vanishes by the step equation. -/
 private theorem norm_difference_identity (p q : Int) (b c : Quaternion) :
     Eq (q.mul ((b.dot b).sub (c.dot c)))
@@ -237,7 +250,7 @@ private theorem norm_difference_identity (p q : Int) (b c : Quaternion) :
   let V := polynomialAdd (B.scale P) (C.scale (Q.sub P))
   let lhs := Q.mul ((B.dot B).sub (C.dot C))
   let rhs := (((Q.sub (two.mul P)).mul (U.dot U)).add (two.mul (U.dot V)))
-  lhs.sound rhs values Eq.refl
+  lhs.sound rhs values rfl
 
 private theorem cleared_norm_drift (p : Int) (qPred : Nat) (a x₀ x : RationalQuaternion)
     (pure : Eq a.num.w Int.zero) (h : AlphaStepEquation p qPred a x₀ x) :
@@ -280,7 +293,7 @@ private theorem normSq_common (x : RationalQuaternion) (extraPred : Nat) :
         ((x.den.mul x.den).mul (extra.mul extra))) :=
     Eq.map₂ IntRatio.value (congrArg Int.ofNat (normSq_scale (Int.ofNat extra) x.num))
       (square_product x.den extra)
-  Eq.subst (fun z => IntRatio.Equivalent z x.normSq) align.symm
+  Eq.subst (motive := fun z => IntRatio.Equivalent z x.normSq) align.symm
     (IntRatio.value_scale_of_ne_zero _ _ _
       (Ternion.nat_mul_ne_zero (Nat.succ_ne_zero extraPred) (Nat.succ_ne_zero extraPred)))
 
@@ -289,9 +302,9 @@ private theorem weight_factor (p : Int) (qPred : Nat) :
       (IntRatio.fraction ((Int.ofNat qPred.succ).sub (Int.two.mul p)) qPred) :=
   let q := Int.ofNat qPred.succ
   let twice := Int.two.mul p
-  (congrArg IntRatio.one.sub (congrArg (IntRatio.fraction twice) (Nat.one_mul qPred))).trans
+  (congrArg IntRatio.one.sub (congrArg (IntRatio.fraction twice) ((Nat.add_zero _).trans (Nat.one_mul qPred)))).trans
     (Eq.map₂ IntRatio.fraction
-      (Eq.map₂ Int.add (Int.one_mul q) (Int.mul_one twice.neg)) (Nat.one_mul qPred))
+      (Eq.map₂ Int.add (Int.one_mul q) (Int.mul_one twice.neg)) ((Nat.add_zero _).trans (Nat.one_mul qPred)))
 
 /-- Every solution satisfies the norm-drift identity, even for a nonunit initial value. -/
 theorem alpha_sampling_norm_drift_of_equation (p : Int) (qPred : Nat)
@@ -308,14 +321,17 @@ theorem alpha_sampling_norm_drift_of_equation (p : Int) (qPred : Nat)
   let leftNum := (Int.ofNat b.normSq).sub (Int.ofNat c.normSq)
   let delta := Int.ofNat (b.sub c).normSq
   let factor := (Int.ofNat q).sub (Int.two.mul p)
-  have bNorm := normSq_common x x₀.denPred
+  have hd : Eq (x.den.mul x₀.den) d := IntRatio.nat_denominator_mul x.denPred x₀.denPred
+  have bNorm := Eq.subst (motive := fun k : Nat =>
+      IntRatio.Equivalent (IntRatio.value (Int.ofNat b.normSq) (k.mul k)) x.normSq)
+    hd (normSq_common x x₀.denPred)
   have cNorm : IntRatio.Equivalent (IntRatio.value (Int.ofNat c.normSq) e) x₀.normSq :=
-    Eq.subst (fun k : Nat =>
+    Eq.subst (motive := fun k : Nat =>
       IntRatio.Equivalent (IntRatio.value (Int.ofNat c.normSq) (k.mul k)) x₀.normSq)
-      (Nat.mul_comm x₀.den x.den) (normSq_common x₀ x.denPred)
+      ((Nat.mul_comm x₀.den x.den).trans hd) (normSq_common x₀ x.denPred)
   have difference : IntRatio.Equivalent (x.normSq.sub x₀.normSq) (IntRatio.value leftNum e) :=
     (IntRatio.sub_congr bNorm.symm cNorm.symm).trans
-      (IntRatio.value_add_same (Int.ofNat b.normSq) (Int.ofNat c.normSq).neg e)
+      (Geometry.BargmannGram.value_sub_same (Int.ofNat b.normSq) (Int.ofNat c.normSq) e)
   have eNe := Ternion.nat_mul_ne_zero (Nat.succ_ne_zero (x.sub x₀).denPred)
     (Nat.succ_ne_zero (x.sub x₀).denPred)
   have cross : Eq (leftNum.mul (Int.ofNat (q.mul e))) ((factor.mul delta).mul (Int.ofNat e)) :=
@@ -330,7 +346,7 @@ theorem alpha_sampling_norm_drift_of_equation (p : Int) (qPred : Nat)
       (IntRatio.value (factor.mul delta) (q.mul e)) :=
     (congrArg (fun v : IntRatio => v.mul (x.sub x₀).normSq) (weight_factor p qPred)).trans
       (IntRatio.value_mul factor delta q e)
-  difference.trans (Eq.subst (IntRatio.Equivalent (IntRatio.value leftNum e)) rightForm.symm drift)
+  difference.trans (Eq.subst (motive := IntRatio.Equivalent (IntRatio.value leftNum e)) rightForm.symm drift)
 
 /-- The drift of a step from a unit quaternion is `(1 − 2α) ‖x − x₀‖²`. -/
 private theorem alpha_sampling_norm_drift_fraction (p : Int) (qPred : Nat) (a x₀ : RationalQuaternion)
@@ -367,16 +383,22 @@ theorem alpha_sampling_norm_drift (weight : IntRatio) (a x₀ : RationalQuaterni
 def midpointStep (a x₀ : RationalQuaternion) : RationalQuaternion :=
   alphaStep Int.one Nat.zero.succ a x₀
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem midpointFactor : IntRatio.Equivalent
+      (IntRatio.one.sub (IntRatio.two.mul (IntRatio.fraction Int.one Nat.zero.succ)))
+      IntRatio.zero :=
+  IntRatio.value_zero Nat.zero.succ.succ (Nat.succ_ne_zero Nat.zero.succ)
+
 theorem midpoint_unit_norm (a x₀ : RationalQuaternion)
     (pure : Eq a.num.w Int.zero) (unit : x₀.IsUnit) : (midpointStep a x₀).IsUnit :=
   let x := midpointStep a x₀
   let y := (x.sub x₀).normSq
-  have finite (z : RationalQuaternion) : z.normSq.Finite := True.intro
-  have factor : IntRatio.Equivalent
-      (IntRatio.one.sub (IntRatio.two.mul (IntRatio.fraction Int.one Nat.zero.succ)))
-      IntRatio.zero := IntRatio.value_zero Nat.zero.succ.succ (Nat.succ_ne_zero Nat.zero.succ)
+  have finite (z : RationalQuaternion) : z.normSq.Finite :=
+    Eq.subst (motive := fun d => (IntRatio.value (Int.ofNat z.num.normSq) d).Finite)
+      (IntRatio.nat_denominator_mul z.denPred z.denPred).symm True.intro
   have vanish := (alpha_sampling_norm_drift (IntRatio.fraction Int.one Nat.one) a x₀ True.intro pure unit).trans
-    ((IntRatio.mul_congr_left factor y).trans (IntRatio.zero_mul (finite (x.sub x₀))))
+    ((IntRatio.mul_congr_left midpointFactor y).trans (IntRatio.zero_mul (finite (x.sub x₀))))
   have recover : IntRatio.Equivalent ((x.normSq.sub IntRatio.one).add IntRatio.one) x.normSq :=
     (IntRatio.add_assoc x.normSq IntRatio.one.neg IntRatio.one).trans
       ((IntRatio.add_congr (IntRatio.equivalent_refl x.normSq)
@@ -399,7 +421,7 @@ theorem kappa_triad_succ (a b : Quaternion) (ha : a.Nonzero) (hb : b.Nonzero) :
       ((congrArg (fun q : Quaternion => q.mul b) (mul_conj_eq_normSq a)).trans (scalar_mul n b))
   have second : Eq (b.mul p) (Ternion.triad b a b) := (mul_assoc b a.conj b).symm
   (Ternion.kappa_mul_right p a b hp).symm.trans
-    (Eq.subst (fun v => IntRatio.Equivalent v (Ternion.kappa b (Ternion.triad b a b)))
+    (Eq.subst (motive := fun v => IntRatio.Equivalent v (Ternion.kappa b (Ternion.triad b a b)))
       (Eq.map₂ Ternion.kappa first second).symm
       (Ternion.kappa_scale_left n b (Ternion.triad b a b) hn))
 

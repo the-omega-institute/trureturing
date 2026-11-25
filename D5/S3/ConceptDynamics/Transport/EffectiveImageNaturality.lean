@@ -35,7 +35,7 @@ public theorem effective_image_naturality
   fun _y inImage => inImage.elim (fun x readout =>
     have commutes := (congrArg Ymap (hFactor x).symm).trans
       ((hTransport x).symm.trans ((hFactorPrime (Xmap x)).trans (congrArg fPrime (hReadout x))))
-    Eq.subst (fun coordinate => Eq (Ymap (f coordinate)) (fPrime (Bmap coordinate)))
+    Eq.subst (motive := fun coordinate => Eq (Ymap (f coordinate)) (fPrime (Bmap coordinate)))
       readout commutes)
 
 /-- Identity maps on the Booleans realize all four pointwise premises. -/
@@ -45,8 +45,8 @@ example :
       (And (∀ x, Eq (readout (readout x)) (readout (readout x)))
         (And (∀ x, Eq (readout x) (readout (readout x)))
           (∀ x, Eq (readout x) (readout (readout x))))) :=
-  And.intro (fun _ => Eq.refl)
-    (And.intro (fun _ => Eq.refl) (And.intro (fun _ => Eq.refl) (fun _ => Eq.refl)))
+  And.intro (fun _ => rfl)
+    (And.intro (fun _ => rfl) (And.intro (fun _ => rfl) (fun _ => rfl)))
 
 example : Bool → Bool := fun x => x
 

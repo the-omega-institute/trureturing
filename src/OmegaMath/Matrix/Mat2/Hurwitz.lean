@@ -1,5 +1,7 @@
 module
 prelude
+import all OmegaInit.Data.Int.Basic
+import all OmegaInit.Prelude
 public import OmegaMath.Matrix.Mat2
 
 /-!
@@ -54,16 +56,20 @@ def recoverCore (q : Coordinates) : Core :=
       .scalar q.w.natAbs.pred)
     q.w.natAbs
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.pred in
 theorem core_recover (u : Core) : Eq (recoverCore u.doubled) u :=
-  Core.rec Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl
-    Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl u
+  Core.rec rfl rfl rfl rfl rfl rfl
+    rfl rfl rfl rfl rfl rfl u
 
 theorem core_distinct {u v : Core} (h : Eq u.doubled v.doubled) : Eq u v :=
   (core_recover u).symm.trans ((congrArg recoverCore h).trans (core_recover v))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem core_unit (u : Core) : Eq u.doubled.normSq (Int.two.mul Int.two) :=
-  Core.rec Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl
-    Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl u
+  Core.rec rfl rfl rfl rfl rfl rfl
+    rfl rfl rfl rfl rfl rfl u
 
 /-- The norm-five primary generators and their quaternion conjugates. -/
 inductive Generator where
@@ -80,9 +86,11 @@ def Generator.coordinates : Generator → Coordinates :=
 def Generator.opposite : Generator → Generator :=
   Generator.rec .iNeg .iPos .jNeg .jPos .kNeg .kPos
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem generator_norm (g : Generator) :
     Eq g.coordinates.normSq ((Int.two.mul Int.two).add Int.one) :=
-  Generator.rec Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl g
+  Generator.rec rfl rfl rfl rfl rfl rfl g
 
 /-- The integer lift of the split matrix, with i sent to diag(2, −2). -/
 def split (q : Coordinates) : Mat2 :=
@@ -150,6 +158,8 @@ def Generator.factors : Generator → Factors :=
     ⟨.one, .three, .one, .two⟩ ⟨.one, .two, .one, .three⟩
     ⟨.one, .four, .one, .four⟩ ⟨.one, .one, .one, .one⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The book's six split images are nonzero outer products modulo five. -/
 theorem split_rank_one (g : Generator) :
     let f := g.factors
@@ -159,8 +169,8 @@ theorem split_rank_one (g : Generator) :
       let f := Generator.factors g
       And (Eq (split5 (Generator.coordinates g)) (Matrix5.outer f.u f.v f.s f.t))
         (Eq (split5 (Generator.coordinates g)).isZero Bool.false))
-    (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl)
-    (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) (And.intro Eq.refl Eq.refl) g
+    (And.intro rfl rfl) (And.intro rfl rfl) (And.intro rfl rfl)
+    (And.intro rfl rfl) (And.intro rfl rfl) (And.intro rfl rfl) g
 
 def Generator.isOpposite (a b : Generator) : Bool :=
   let sameIPos := Generator.rec (motive := fun _ => Bool) .false .true .false .false .false .false
@@ -172,18 +182,20 @@ def Generator.isOpposite (a b : Generator) : Bool :=
   Generator.rec (motive := fun _ => Bool) (sameIPos b) (sameINeg b) (sameJPos b)
     (sameJNeg b) (sameKPos b) (sameKNeg b) a
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- Among the 36 ordered products, exactly the six opposite pairs vanish. -/
 theorem split_product_zero (g h : Generator) :
     Eq ((split5 g.coordinates).mul (split5 h.coordinates)).isZero (g.isOpposite h) :=
   let P := fun (a b : Generator) =>
     Eq ((split5 a.coordinates).mul (split5 b.coordinates)).isZero (a.isOpposite b)
   (Generator.rec (motive := fun a => ∀ b, P a b)
-    (fun b => Generator.rec (motive := P .iPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
-    (fun b => Generator.rec (motive := P .iNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
-    (fun b => Generator.rec (motive := P .jPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
-    (fun b => Generator.rec (motive := P .jNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
-    (fun b => Generator.rec (motive := P .kPos) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
-    (fun b => Generator.rec (motive := P .kNeg) Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl Eq.refl b)
+    (fun b => Generator.rec (motive := P .iPos) rfl rfl rfl rfl rfl rfl b)
+    (fun b => Generator.rec (motive := P .iNeg) rfl rfl rfl rfl rfl rfl b)
+    (fun b => Generator.rec (motive := P .jPos) rfl rfl rfl rfl rfl rfl b)
+    (fun b => Generator.rec (motive := P .jNeg) rfl rfl rfl rfl rfl rfl b)
+    (fun b => Generator.rec (motive := P .kPos) rfl rfl rfl rfl rfl rfl b)
+    (fun b => Generator.rec (motive := P .kNeg) rfl rfl rfl rfl rfl rfl b)
     g) h
 
 end Omega.Hurwitz

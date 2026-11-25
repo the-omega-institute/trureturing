@@ -19,8 +19,12 @@ namespace Omega.Nat
 
 def one : Nat := succ zero
 
-theorem square_mul (a k : Nat) : Eq (mul (mul a k) (mul a k)) (mul (mul a a) (mul k k)) :=
-  (mul_assoc (mul a k) a k).symm.trans
-    ((congrArg (fun x => mul x k) (mul_right_comm a k a)).trans (mul_assoc (mul a a) k k))
+theorem square_mul (a k : Nat) : Eq (Nat.mul (Nat.mul a k) (Nat.mul a k)) (Nat.mul (Nat.mul a a) (Nat.mul k k)) :=
+  (Nat.mul_assoc (Nat.mul a k) a k).symm.trans
+    ((congrArg (fun x => Nat.mul x k) (Nat.mul_right_comm a k a)).trans (Nat.mul_assoc (Nat.mul a a) k k))
 
 end Omega.Nat
+
+namespace Nat
+export _root_.Omega.Nat (square_mul)
+end Nat

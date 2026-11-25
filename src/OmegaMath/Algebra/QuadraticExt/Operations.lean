@@ -1,5 +1,6 @@
 module
 prelude
+import all OmegaInit.Prelude
 public import OmegaMath.Algebra.QuadraticExt.Basic
 
 /-!
@@ -41,12 +42,14 @@ theorem pow_add {r : CommRingOps A rel} (law : r.Laws)
   let l := ringLaws (b := b) (c := c) law
   Nat.rec (motive := fun n =>
     Equivalent r (pow r z (m.add n)) (mul r (pow r z m) (pow r z n)))
-    (symm law (mul_one law (pow r z m)))
+    (Eq.subst (motive := fun i => Equivalent r (pow r z i) (mul r (pow r z m) (one r)))
+      (Nat.add_zero m).symm (symm law (mul_one law (pow r z m))))
     (fun n ih =>
-      l.trans (l.mul_congr (l.refl z) ih)
+      Eq.subst (motive := fun i => Equivalent r (pow r z i) (mul r (pow r z m) (pow r z n.succ)))
+        (Nat.add_succ m n).symm (l.trans (l.mul_congr (l.refl z) ih)
         (l.trans (l.symm (l.mul_assoc z (pow r z m) (pow r z n)))
           (l.trans (l.mul_congr (l.mul_comm z (pow r z m)) (l.refl (pow r z n)))
-            (l.mul_assoc (pow r z m) z (pow r z n))))) n
+            (l.mul_assoc (pow r z m) z (pow r z n)))))) n
 
 theorem alpha_sq {r : CommRingOps A rel} (law : r.Laws) :
     Equivalent r (square r (alpha (b := b) (c := c) r)) (pair c b) :=
@@ -57,8 +60,8 @@ theorem alpha_sq {r : CommRingOps A rel} (law : r.Laws) :
   let o := Polynomial.Expr.one
   let z := Polynomial.Expr.zero
   And.intro
-    (Polynomial.prove r law vars ((z.mul z).add (x.mul (o.mul o))) x Eq.refl)
-    (Polynomial.prove r law vars (((z.mul o).add (o.mul z)).add (y.mul (o.mul o))) y Eq.refl)
+    (Polynomial.prove r law vars ((z.mul z).add (x.mul (o.mul o))) x rfl)
+    (Polynomial.prove r law vars (((z.mul o).add (o.mul z)).add (y.mul (o.mul o))) y rfl)
 
 theorem norm_alpha {r : CommRingOps A rel} (law : r.Laws) :
     r.eqv (norm r (alpha (b := b) (c := c) r)) (r.neg c) :=
@@ -68,7 +71,7 @@ theorem norm_alpha {r : CommRingOps A rel} (law : r.Laws) :
   let o := Polynomial.Expr.one
   Polynomial.prove r law vars
     ((z.square.add (Polynomial.e0.mul (z.mul o))).sub (Polynomial.e1.mul o.square))
-    Polynomial.e1.neg Eq.refl
+    Polynomial.e1.neg rfl
 
 theorem norm_one {r : CommRingOps A rel} (law : r.Laws) :
     r.eqv (norm r (one (b := b) (c := c) r)) r.one :=
@@ -77,7 +80,7 @@ theorem norm_one {r : CommRingOps A rel} (law : r.Laws) :
   let z := Polynomial.Expr.zero
   let o := Polynomial.Expr.one
   Polynomial.prove r law vars
-    ((o.square.add (Polynomial.e0.mul (o.mul z))).sub (Polynomial.e1.mul z.square)) o Eq.refl
+    ((o.square.add (Polynomial.e0.mul (o.mul z))).sub (Polynomial.e1.mul z.square)) o rfl
 
 /-- The norm of a natural power is the same power of the norm. -/
 theorem norm_pow {r : CommRingOps A rel} (law : r.Laws) (z : QuadPoly A b c) (n : Nat) :

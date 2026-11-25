@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 prelude
+import all OmegaInit.Prelude
+import all OmegaInit.Data.Int.Basic
 public import OmegaMath.Geometry.Cayley3D
 
 /-!
@@ -26,9 +28,13 @@ def lift (u : RatVec3) : PythSpinor :=
   let sq := fun (n : Int) => n.natAbs.mul n.natAbs
   let s := (sq u.num.x).add ((sq u.num.y).add (sq u.num.z))
   let k := IntRatio.mulDenPred u.denPred u.denPred
+  have squareDen : Eq (sq d) k.succ :=
+    (Nat.mul_succ u.den u.denPred).trans (Nat.add_succ (u.den.mul u.denPred) u.denPred)
+  have radius : Eq (PythSpinor.liftRadius d u.num.x u.num.y u.num.z) (k.add s).succ :=
+    (congrArg (fun n : Nat => n.add s) squareDen).trans (Nat.succ_add k s)
   PythSpinor.ofNumerator (PythSpinor.liftNum d u.num.x u.num.y u.num.z) (k.add s)
     ((PythSpinor.lift_normSq d u.num.x u.num.y u.num.z).trans
-      (congrArg (fun n : Nat => n.mul n) (Nat.succ_add k s)))
+      (congrArg (fun n : Nat => n.mul n) radius))
 
 def product (u v : RatVec3) : PythSpinor := (lift u).mul (lift v)
 
@@ -44,6 +50,8 @@ def denomMinus (u v : RatVec3) : IntRatio :=
   IntRatio.fraction ((Int.ofNat p.radius).sub p.num.w)
     (IntRatio.mulDenPred p.radiusPred Nat.zero.succ)
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 theorem dual_chart_denom_sum_one (u v : RatVec3) :
     IntRatio.Equivalent ((denomPlus u v).add (denomMinus u v)) (IntRatio.ofInt Int.one) :=
   let p := product u v
@@ -53,11 +61,13 @@ theorem dual_chart_denom_sum_one (u v : RatVec3) :
   let R := Expr.var Nat.zero
   let W := Expr.var Nat.zero.succ
   have sum : Eq ((r.add w).add (r.sub w)) (Int.ofNat k.succ) :=
-    ((R.add W).add (R.sub W)).sound (R.mul Expr.one.double) (.cons r (.cons w .nil)) Eq.refl
+    ((R.add W).add (R.sub W)).sound (R.mul Expr.one.double) (.cons r (.cons w .nil)) rfl
   (IntRatio.value_add_same (r.add w) (r.sub w) k.succ).trans
-    (Eq.subst (fun n => IntRatio.Equivalent (IntRatio.fraction n k) (IntRatio.ofInt Int.one))
+    (Eq.subst (motive := fun n => IntRatio.Equivalent (IntRatio.fraction n k) (IntRatio.ofInt Int.one))
       sum.symm (IntRatio.value_self k.succ (Nat.succ_ne_zero k)))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem half_le_add (k a : Nat) :
     IntRatio.Le (IntRatio.fraction Int.one Nat.zero.succ)
       (IntRatio.fraction ((IntRatio.denominator k).add (Int.ofNat a))
@@ -69,8 +79,8 @@ private theorem half_le_add (k a : Nat) :
   have gap : Eq (((r.add (Int.ofNat a)).mul Int.two).sub (Int.one.mul (r.mul Int.two)))
       ((Int.ofNat a).mul Int.two) :=
     (((R.add A).mul two).sub (Expr.one.mul (R.mul two))).sound
-      (A.mul two) (.cons r (.cons (Int.ofNat a) .nil)) Eq.refl
-  Eq.subst Int.NonNeg gap.symm (Int.NonNeg.mk (a.mul Nat.zero.succ.succ))
+      (A.mul two) (.cons r (.cons (Int.ofNat a) .nil)) rfl
+  Eq.subst (motive := Int.NonNeg) gap.symm (Int.NonNeg.mk (a.mul Nat.zero.succ.succ))
 
 theorem dual_chart_denom_ge_half (u v : RatVec3) :
     let half := IntRatio.fraction Int.one Nat.zero.succ
@@ -102,7 +112,7 @@ theorem output_den (u v : RatVec3) :
 private theorem orient_dot (w : Int) (v : Vec3) :
     Eq ((orientNumerator w v).dot3 (orientNumerator w v)) (v.dot3 v) :=
   Int.rec (motive := fun w => Eq ((orientNumerator w v).dot3 (orientNumerator w v)) (v.dot3 v))
-    (fun _ => Eq.refl)
+    (fun _ => rfl)
     (fun _ => Eq.map₂ Int.add (Int.neg_mul_neg v.x v.x)
       (Eq.map₂ Int.add (Int.neg_mul_neg v.y v.y) (Int.neg_mul_neg v.z v.z))) w
 
@@ -113,6 +123,8 @@ private theorem unit_norm (p : PythSpinor) :
     ((Int.square p.num.y).add (Int.square p.num.z))).symm.trans
     (p.num.normSq_cast.symm.trans (congrArg Int.ofNat p.normSq_eq))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem ball_gap (r a s : Int) :
     Eq ((Int.square (r.add a)).sub s)
       (((Int.square r).sub ((Int.square a).add s)).add ((Int.two.mul a).mul (r.add a))) :=
@@ -121,7 +133,7 @@ private theorem ball_gap (r a s : Int) :
   let S := Expr.var Nat.zero.succ.succ
   ((R.add A).sq.sub S).sound
     ((R.sq.sub (A.sq.add S)).add ((Expr.one.double.mul A).mul (R.add A)))
-    (.cons r (.cons a (.cons s .nil))) Eq.refl
+    (.cons r (.cons a (.cons s .nil))) rfl
 
 /-- The selected chart sends the product into the closed unit ball. -/
 theorem dual_chart_ball_containment (u v : RatVec3) :
@@ -145,8 +157,12 @@ theorem dual_chart_ball_containment (u v : RatVec3) :
         (orient_dot p.num.w imaginary)).trans
         ((ball_gap r a s).trans
           ((congrArg (fun x : Int => x.add gap) cancel).trans (Int.zero_add gap))))
-  Eq.subst Int.NonNeg diff.symm
+  have nonneg := Eq.subst (motive := Int.NonNeg) diff.symm
     (Int.NonNeg.mk ((Nat.zero.succ.succ.mul p.num.w.natAbs).mul (p.radius.add p.num.w.natAbs)))
+  have cross := Eq.subst (motive := fun z => Int.NonNeg ((Int.one.mul z).sub (n.mul Int.one)))
+    (IntRatio.denominator_mul t.denPred t.denPred).symm nonneg
+  Eq.subst (motive := fun z => IntRatio.Le (IntRatio.value n z) (IntRatio.ofInt Int.one))
+    (IntRatio.nat_denominator_mul t.denPred t.denPred).symm cross
 
 /-- The expanded MRP numerator before chart orientation.
 For integer numerators `x, y` and positive denominators `d, e`, it is
@@ -164,6 +180,8 @@ def mrpNumerator (u v : RatVec3) : Vec3 :=
    component x.y y.y ((x.z.mul y.x).sub (x.x.mul y.z)),
    component x.z y.z ((x.x.mul y.y).sub (x.y.mul y.x))⟩
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul in
 theorem mrp_product_imaginary (u v : RatVec3) :
     Eq (Vec3.imaginary (product u v).num) (Vec3.scale Int.two (mrpNumerator u v)) :=
   let x := u.num
@@ -190,11 +208,11 @@ theorem mrp_product_imaginary (u v : RatVec3) :
     (.cons b (.cons y.x (.cons y.y (.cons y.z (.cons d (.cons e .nil)))))))))
   Vec3.ext
     (multiplied.x.sound (component first.x second.x
-      ((first.y.mul second.z).sub (first.z.mul second.y))) values Eq.refl)
+      ((first.y.mul second.z).sub (first.z.mul second.y))) values rfl)
     (multiplied.y.sound (component first.y second.y
-      ((first.z.mul second.x).sub (first.x.mul second.z))) values Eq.refl)
+      ((first.z.mul second.x).sub (first.x.mul second.z))) values rfl)
     (multiplied.z.sound (component first.z second.z
-      ((first.x.mul second.y).sub (first.y.mul second.x))) values Eq.refl)
+      ((first.x.mul second.y).sub (first.y.mul second.x))) values rfl)
 
 theorem mrp_output_num (u v : RatVec3) :
     Eq (output u v).num
@@ -224,6 +242,8 @@ def mrpMinusNum (u v : RatVec3) : Int :=
   (((u.num.dot3 u.num).mul e.square).add (d.square.mul (v.num.dot3 v.num))).add
     (((Int.two.mul d).mul e).mul (u.num.dot3 v.num))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 private theorem product_scalar (u v : RatVec3) :
     let d := Int.ofNat u.den
     let e := Int.ofNat v.den
@@ -251,8 +271,10 @@ private theorem product_scalar (u v : RatVec3) :
   let values := Values.cons (du.square.sub (x.dot3 x)) (.cons x.x (.cons x.y (.cons x.z
     (.cons (dv.square.sub (y.dot3 y)) (.cons y.x (.cons y.y (.cons y.z
       (.cons du (.cons dv .nil)))))))))
-  (liftU.mul liftV).w.sound ((a.mul b).sub ((((two.mul two).mul d).mul e).mul dot)) values Eq.refl
+  (liftU.mul liftV).w.sound ((a.mul b).sub ((((two.mul two).mul d).mul e).mul dot)) values rfl
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
 /-- The normalized quaternion denominators agree with the explicit MRP formulas. -/
 theorem dual_chart_mrp_denominators (u v : RatVec3) :
     let r := (product u v).radiusPred
@@ -266,7 +288,8 @@ theorem dual_chart_mrp_denominators (u v : RatVec3) :
   let y := v.num.dot3 v.num
   let z := u.num.dot3 v.num
   have hr : Eq r ((d.square.add x).mul (e.square.add y)) :=
-    Eq.map₂ Int.mul (lift_radius_cast u) (lift_radius_cast v)
+    (IntRatio.denominator_mul (lift u).radiusPred (lift v).radiusPred).trans
+      (Eq.map₂ Int.mul (lift_radius_cast u) (lift_radius_cast v))
   let D := Expr.var Nat.zero
   let E := Expr.var Nat.zero.succ
   let X := Expr.var Nat.zero.succ.succ
@@ -281,14 +304,14 @@ theorem dual_chart_mrp_denominators (u v : RatVec3) :
   let values := Values.cons d (.cons e (.cons x (.cons y (.cons z .nil))))
   have hp : Eq (r.add p.num.w) ((mrpPlusNum u v).mul Int.two) :=
     (Eq.map₂ Int.add hr (product_scalar u v)).trans
-      ((productRadius.add scalar).sound (mrpPlus.mul two) values Eq.refl)
+      ((productRadius.add scalar).sound (mrpPlus.mul two) values rfl)
   have hm : Eq (r.sub p.num.w) ((mrpMinusNum u v).mul Int.two) :=
     (Eq.map₂ Int.sub hr (product_scalar u v)).trans
-      ((productRadius.sub scalar).sound (mrpMinus.mul two) values Eq.refl)
+      ((productRadius.sub scalar).sound (mrpMinus.mul two) values rfl)
   have cancel : ∀ (a b : Int), Eq a (b.mul Int.two) →
       IntRatio.Equivalent (.fraction a (IntRatio.mulDenPred p.radiusPred Nat.one))
         (.fraction b p.radiusPred) :=
-    fun _a b h => Eq.subst (fun n => IntRatio.Equivalent
+    fun _a b h => Eq.subst (motive := fun n => IntRatio.Equivalent
       (.fraction n (IntRatio.mulDenPred p.radiusPred Nat.one)) (.fraction b p.radiusPred))
       h.symm (IntRatio.value_scale b p.radius Nat.one)
   And.intro (cancel _ _ hp) (cancel _ _ hm)
