@@ -27,17 +27,18 @@ def mesh (q : ℕ) : ℝ := 2 * Real.pi / q
 /-- The cosine at the centered representative of a residue. -/
 def sample {q : ℕ} (i : ZMod q) : ℝ := Real.cos (centeredAngle i)
 
-/-- A centered angle is its integer representative times the mesh. -/
 theorem centeredAngle_eq_mesh {q : ℕ} (i : ZMod q) :
-    centeredAngle i = (i.valMinAbs : ℝ) * mesh q := by
+    let spacing := mesh
+    centeredAngle i = (i.valMinAbs : ℝ) * spacing q := by
+  dsimp only
   unfold centeredAngle mesh
   ring
 
-/-- The angular mesh is positive on a nonzero modulus. -/
-theorem mesh_pos {q : ℕ} [NeZero q] : 0 < mesh q :=
+theorem mesh_pos {q : ℕ} [NeZero q] :
+    let spacing := mesh
+    0 < spacing q :=
   div_pos (by positivity) (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q))
 
-/-- The greatest absolute centered representative gives an angle at most π. -/
 theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
     (↑(q / 2) : ℝ) * mesh q ≤ Real.pi := by
   have hq : 0 < (q : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
@@ -53,7 +54,6 @@ private theorem sample_cast {q : ℕ} [NeZero q] (j : ℤ)
   unfold sample
   rw [centeredAngle_eq_mesh, (ZMod.valMinAbs_spec _ _).mpr ⟨rfl, hlo, hhi⟩]
 
-/-- The positive endpoint of the centered interval attains the antipodal cosine. -/
 theorem sample_antipode {q : ℕ} [NeZero q] :
     sample ((↑(q / 2) : ℤ) : ZMod q) = -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) := by
   have hq : 0 < (q : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
@@ -68,7 +68,6 @@ theorem sample_antipode {q : ℕ} [NeZero q] :
       rw [show 2 * (↑(q / 2) : ℝ) = (q : ℝ) - (↑(q % 2) : ℝ) by linarith only [hhalf]]
     _ = _ := by unfold mesh; field_simp [ne_of_gt hq]
 
-/-- The attained antipodal cosine bounds every grid sample from below. -/
 theorem sample_antipode_le {q : ℕ} [NeZero q] (i : ZMod q) :
     sample ((↑(q / 2) : ℤ) : ZMod q) ≤ sample i := by
   have hqn : 0 < q := NeZero.pos q
@@ -104,7 +103,6 @@ private theorem dual_le_zero_or_positive {c C ρ H Z : ℝ}
   · rintro ⟨hc', hρ⟩
     exact mul_pos (mul_pos hH (sub_pos.mpr hc')) (sub_pos.mpr hρ)
 
-/-- The first two cosine deficits in centered sample coordinates. -/
 theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
     (hmass : ∑ i, v i = 1) :
     (∑ i, v i * (1 - sample i)) = 1 - cosineMoment 1 v ∧
@@ -123,8 +121,8 @@ theorem sum_sample_deficits {q : ℕ} [NeZero q] {v : ZMod q → ℝ}
     ring
 
 /-- On the whole grid the clipped quadratic is positive exactly above both roots.
-The energy separates into the dual bound, a squared distance, and the three
-nonnegative terms for complementary slackness. -/
+The energy separates into the dual bound, a squared distance, and three terms for
+complementary slackness. The terms are nonnegative when the first multiplier is nonnegative. -/
 theorem antipodal_dual_certificate (q : ℕ) [NeZero q] (t H Z a : ℝ)
     (hH : 0 < H) (hZ : 0 < Z)
     (hC : -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q) < 1) :
@@ -200,7 +198,7 @@ private theorem adjusted_sum {q : ℕ} [NeZero q] (w : ZMod q → ℝ) (δ μ ne
     · simp
   simp only [adjusted, add_mul, sub_mul, sum_add_distrib, sum_sub_distrib, hs]
 
-private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 < q) :
+private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 ≤ q) :
     sample (0 : ZMod q) = 1 ∧ sample (1 : ZMod q) = Real.cos (mesh q) ∧
       sample (-1 : ZMod q) = Real.cos (mesh q) := by
   constructor
@@ -209,7 +207,7 @@ private theorem sample_front {q : ℕ} [NeZero q] (hq : 4 < q) :
     · simpa using sample_cast (q := q) 1 (by omega) (by omega)
     · simpa using sample_cast (q := q) (-1) (by omega) (by omega)
 
-private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 < q)
+private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 ≤ q)
     {w : ZMod q → ℝ} {δ μ : ℝ} (hw : ∀ i, 0 ≤ w i)
     (h0 : 0 ≤ w 0 - δ - μ) (h1 : 0 ≤ w 1 + δ / 2) (hneg : 0 ≤ w (-1) + δ / 2)
     (hμ : 0 ≤ μ) : ∀ i, 0 ≤ adjusted w δ μ (δ / 2) i := by
@@ -254,9 +252,9 @@ private theorem adjusted_nonneg {q : ℕ} [NeZero q] (hq : 4 < q)
       Pi.single_eq_of_ne hineg, sub_zero, add_zero]
     exact add_nonneg (hw i) (hrest i)
 
-/-- The three-site mass transfer matches both cosine deficits exactly whenever its
-denominator is nonzero. Nonnegative resulting weights give a feasible comparison. -/
-theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
+/-- The mass transfer matches both cosine deficits exactly. Nonnegative resulting
+weights give a feasible comparison. -/
+theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 ≤ q)
     (w : ZMod q → ℝ) (A : ℝ) (hw : ∀ i, 0 ≤ w i) (hmass : ∑ i, w i = 1) :
     let splitMass := fun x : ℝ => x / 2
     let C := -Real.cos ((↑(q % 2) : ℝ) / 2 * mesh q)
@@ -268,7 +266,6 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
     let V := 2 * (1 - C ^ 2)
     let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
     let μ := (A - D₁ - F * δ) / U
-    U ≠ 0 → G - V * F / U ≠ 0 →
     0 ≤ w 0 - δ - μ → 0 ≤ w 1 + splitMass δ → 0 ≤ w (-1) + splitMass δ → 0 ≤ μ →
     let v := adjusted w δ μ (splitMass δ)
     v ∈ feasible q (1 - A) ∧ cosineMoment 1 v = 1 - A ∧ cosineMoment 2 v = 1 - A := by
@@ -282,9 +279,30 @@ theorem adjusted_matches_moments (q : ℕ) [NeZero q] (hq : 4 < q)
   let V := 2 * (1 - C ^ 2)
   let δ := (A - D₂ - V * (A - D₁) / U) / (G - V * F / U)
   let μ := (A - D₁ - F * δ) / U
-  change U ≠ 0 → G - V * F / U ≠ 0 →
-    0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 → 0 ≤ μ → _
-  intro hU hden h0 h1 hneg hμ
+  change 0 ≤ w 0 - δ - μ → 0 ≤ w 1 + δ / 2 → 0 ≤ w (-1) + δ / 2 → 0 ≤ μ → _
+  intro h0 h1 hneg hμ
+  have hhalf : (1 : ℝ) < (↑(q / 2) : ℝ) := by
+    exact_mod_cast (show 1 < q / 2 by omega)
+  have hmesh : mesh q < (↑(q / 2) : ℝ) * mesh q := by
+    simpa only [one_mul] using mul_lt_mul_of_pos_right hhalf (mesh_pos (q := q))
+  have hcos : Real.cos (mesh q) < 1 := by
+    rw [← Real.cos_zero]
+    exact Real.cos_lt_cos_of_nonneg_of_le_pi (by norm_num)
+      (hmesh.le.trans half_mesh_le_pi) mesh_pos
+  have hC : C < Real.cos (mesh q) := by
+    rw [← show sample ((↑(q / 2) : ℤ) : ZMod q) = C from sample_antipode,
+      sample_cast _ (by omega) (by omega), Int.cast_natCast]
+    exact Real.cos_lt_cos_of_nonneg_of_le_pi mesh_pos.le half_mesh_le_pi hmesh
+  have hU : U ≠ 0 := (sub_pos.mpr (hC.trans hcos)).ne'
+  have hfactor : G - V * F / U =
+      2 * (1 - Real.cos (mesh q)) * (Real.cos (mesh q) - C) := by
+    unfold G V F U
+    rw [Real.cos_two_mul]
+    field_simp [show 1 - C ≠ 0 from hU]
+    ring
+  have hden : G - V * F / U ≠ 0 := by
+    rw [hfactor]
+    exact (mul_pos (mul_pos (by norm_num) (sub_pos.mpr hcos)) (sub_pos.mpr hC)).ne'
   let v := adjusted w δ μ (δ / 2)
   have hvmass : ∑ i, v i = 1 := by
     simpa only [mul_one, hmass, show 1 - (δ + μ) + δ / 2 + δ / 2 + μ = 1 by ring] using

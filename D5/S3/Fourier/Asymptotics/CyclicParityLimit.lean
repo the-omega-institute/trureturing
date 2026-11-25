@@ -25,39 +25,18 @@ namespace D5.S3.Fourier.Asymptotics.CyclicParityLimit
 
 set_option autoImplicit false
 
-private theorem centeredAngle_eq_mesh {q : ℕ} (i : ZMod q) :
-    centeredAngle i = (i.valMinAbs : ℝ) * mesh q := by
-  unfold centeredAngle mesh
-  ring
-
-private theorem mesh_pos {q : ℕ} [NeZero q] : 0 < mesh q :=
-  div_pos (by positivity) (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q))
-
-private theorem half_mesh_le_pi {q : ℕ} [NeZero q] :
-    (↑(q / 2) : ℝ) * mesh q ≤ Real.pi := by
-  have hq : 0 < (q : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
-  have hhalf : (2 : ℝ) * (↑(q / 2) : ℝ) ≤ q := by
-    exact_mod_cast (show 2 * (q / 2) ≤ q by omega)
-  unfold mesh
-  rw [← mul_div_assoc, div_le_iff₀ hq]
-  nlinarith only [mul_le_mul_of_nonneg_left hhalf Real.pi_pos.le]
-
-/-- The fourth-order normalized remainder of the cosine after its quadratic term. -/
 def cosineFourth (x h : ℝ) : ℝ :=
   (Real.cos (x * h) - (1 - (x * h) ^ 2 / 2)) / h ^ 4
 
-/-- The extended second-order normalized cosine deficit. -/
 def cosineSecond (x h : ℝ) : ℝ :=
   x ^ 2 / 2 - h ^ 2 * cosineFourth x h
 
-/-- The normalized deficit recovers the exact cosine deficit at nonzero mesh. -/
 theorem cosineSecond_eq (x : ℝ) {h : ℝ} (hn : h ≠ 0) :
     1 - Real.cos (x * h) = h ^ 2 * cosineSecond x h := by
   unfold cosineSecond cosineFourth
   field_simp [hn]
   ring
 
-/-- The normalized cosine remainder converges to its quartic coefficient. -/
 theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineFourth x (h i)) l (𝓝 (x ^ 4 / 24)) := by
@@ -91,7 +70,6 @@ theorem cosineFourth_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
         ring
   · simpa using (hh.pow 2).const_mul (|x| ^ 6 / 720)
 
-/-- The normalized cosine deficit converges to its quadratic coefficient. -/
 theorem cosineSecond_tendsto {ι : Type*} {l : Filter ι} {h : ι → ℝ}
     (hh : Tendsto h l (𝓝 0)) (hn : ∀ᶠ i in l, h i ≠ 0) (x : ℝ) :
     Tendsto (fun i => cosineSecond x (h i)) l (𝓝 (x ^ 2 / 2)) := by
@@ -131,17 +109,13 @@ private theorem clip_sq_correction {ι : Type*} {l : Filter ι} {s r : ι → �
     field_simp [hi.ne']
     ring
 
-/-- The increasing enumeration of positive moduli of the indicated parity. -/
 def parityModulus (odd : Bool) (k : ℕ) : ℕ := 2 * k + if odd then 1 else 2
 
-/-- The parity enumeration uses positive moduli. -/
 instance parityNeZero (odd : Bool) (k : ℕ) : NeZero (parityModulus odd k) :=
   ⟨by cases odd <;> simp [parityModulus]⟩
 
-/-- The distance of the farthest center from the antipodal position in mesh units. -/
 def parityOffset (odd : Bool) : ℝ := if odd then 1 / 2 else 0
 
-/-- The parity enumeration has the indicated antipodal offset. -/
 theorem parity_offset (odd : Bool) (k : ℕ) :
     (↑(parityModulus odd k % 2) : ℝ) / 2 = parityOffset odd := by
   cases odd <;> simp [parityModulus, parityOffset, Nat.add_mod]
@@ -152,7 +126,6 @@ private theorem parity_modulus_eventually_gt (odd : Bool) (M : ℕ) :
   unfold parityModulus
   omega
 
-/-- The mesh converges to zero along each parity. -/
 theorem mesh_tendsto (odd : Bool) :
     Tendsto (fun k => mesh (parityModulus odd k)) atTop (𝓝 0) := by
   have hq : Tendsto (fun k => parityModulus odd k) atTop atTop :=
@@ -224,20 +197,20 @@ private theorem frontDual_eq (t Z d x : ℝ) {h : ℝ} (hn : h ≠ 0) :
 private theorem centered_sum_window {q : ℕ} [NeZero q] (K : ℕ) (hq : 2 * K < q)
     (f : ZMod q → ℝ) (hf : ∀ i, i.valMinAbs ∉ Icc (-(K : ℤ)) (K : ℤ) → f i = 0) :
     (∑ i, f i) = ∑ j ∈ Icc (-(K : ℤ)) (K : ℤ), f (j : ZMod q) := by
-  let reps := (univ : Finset (ZMod q)).map ⟨ZMod.valMinAbs, ZMod.injective_valMinAbs⟩
-  have hfit : Icc (-(K : ℤ)) (K : ℤ) ⊆ reps := by
-    intro j hj
-    have := mem_Icc.mp hj
-    exact mem_map.mpr ⟨(j : ZMod q), mem_univ _, (ZMod.valMinAbs_spec _ _).mpr
-      ⟨rfl, by constructor <;> omega⟩⟩
-  have hsum : (∑ j ∈ Icc (-(K : ℤ)) (K : ℤ), f (j : ZMod q)) =
-      ∑ j ∈ reps, f (j : ZMod q) := by
-    refine sum_subset hfit ?_
-    intro j hj hn
-    obtain ⟨i, _, rfl⟩ := mem_map.mp hj
-    simpa only [Function.Embedding.coeFn_mk, ZMod.coe_valMinAbs] using hf i hn
-  rw [hsum]
-  simp [reps, sum_map, ZMod.coe_valMinAbs]
+  let S := Icc (-(K : ℤ)) (K : ℤ)
+  let g (j : ℤ) := if j ∈ S then f (j : ZMod q) else 0
+  have hg (j : ℤ) (hj : j ∉ S) : g j = 0 := if_neg hj
+  calc
+    (∑ i, f i) = ∑ i : ZMod q, g i.valMinAbs := by
+      apply sum_congr rfl
+      intro i _
+      by_cases hi : i.valMinAbs ∈ S
+      · simp [g, hi, ZMod.coe_valMinAbs]
+      · rw [hf i hi, hg _ hi]
+    _ = ∑' j, g j := sum_centered_eq_tsum hq g hg
+    _ = ∑ j ∈ S, f (j : ZMod q) := by
+      rw [(hasSum_sum_of_ne_finset_zero hg).tsum_eq]
+      exact sum_congr rfl fun j hj => if_pos hj
 
 private theorem valMinAbs_of_window {q : ℕ} [NeZero q] {K : ℕ} (hq : 2 * K < q)
     {j : ℤ} (hj : j ∈ Icc (-(K : ℤ)) (K : ℤ)) :
@@ -254,10 +227,8 @@ private theorem sample_le_window {q K : ℕ} [NeZero q]
     have h : ¬ (-(K : ℤ) ≤ i.valMinAbs ∧ i.valMinAbs ≤ K) := by simpa using hi
     omega
   have hbound : |(i.valMinAbs : ℝ)| * mesh q ≤ Real.pi := by
-    apply le_trans _ (half_mesh_le_pi (q := q))
-    apply mul_le_mul_of_nonneg_right _ mesh_pos.le
-    rw [← Int.cast_abs, Int.abs_eq_natAbs, Int.cast_natCast]
-    exact_mod_cast ZMod.natAbs_valMinAbs_le i
+    simpa only [centeredAngle_eq_mesh, abs_mul, abs_of_pos mesh_pos]
+      using abs_centeredAngle_le_pi i
   refine Real.cos_le_cos_of_nonneg_of_le_pi (mul_nonneg (Nat.cast_nonneg _) mesh_pos.le) hbound
     (mul_le_mul_of_nonneg_right ?_ mesh_pos.le)
   rw [← Int.cast_abs, Int.abs_eq_natAbs, Int.cast_natCast]
@@ -266,16 +237,16 @@ private theorem sample_le_window {q K : ℕ} [NeZero q]
 private theorem weight_zero_outside {m t Z : ℝ} {w : ℤ → ℝ} {n : ℕ}
     (act : Activation m n t Z w) {j : ℤ} (hj : j ∉ Icc (-((n + 2 : ℕ) : ℤ)) (↑(n + 2) : ℤ)) :
     w j = 0 := by
-  have hnat : n + 1 ≤ j.natAbs := by
-    simp only [mem_Icc] at hj
-    omega
-  have habs : (n : ℝ) + 1 ≤ |(j : ℝ)| := by
-    rw [← Int.cast_abs, Int.abs_eq_natAbs, Int.cast_natCast]
-    exact_mod_cast hnat
-  have hs := (sq_le_sq₀ (by positivity : 0 ≤ (n : ℝ) + 1) (abs_nonneg (j : ℝ))).mpr habs
-  rw [sq_abs] at hs
-  rw [act.law, max_eq_left (sub_nonpos.mpr (act.radius_upper.trans hs)), zero_div]
-
+  apply activation_zero_outside act
+  have hR : latticeSupportRadius n m ≤ n + 2 := by
+    unfold latticeSupportRadius
+    split <;> omega
+  intro h
+  apply hj
+  have hR' : (latticeSupportRadius n m : ℤ) ≤ (↑(n + 2) : ℤ) := by
+    exact_mod_cast hR
+  have bounds := mem_Icc.mp h
+  exact mem_Icc.mpr ⟨by linarith [bounds.1], bounds.2.trans hR'⟩
 
 private def frontWeight (t Z : ℝ) (j : ℤ) : ℝ := (t - (j : ℝ) ^ 2) / Z
 
@@ -295,24 +266,11 @@ private theorem lattice_energy_window {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     (act : Activation m n t Z w) :
     (∑ j ∈ Icc (-((n + 2 : ℕ) : ℤ)) (↑(n + 2) : ℤ), w j ^ 2) = (t - m) / Z ∧
     (∑' j, w j ^ 2) = (t - m) / Z := by
-  let S := Icc (-((n + 2 : ℕ) : ℤ)) (↑(n + 2) : ℤ)
-  have hm : ∑ j ∈ S, w j = 1 := by
-    simpa only [one_mul, act.mass.tsum_eq] using lattice_sum act (fun _ => 1)
-  have hm₂ : ∑ j ∈ S, (j : ℝ) ^ 2 * w j = m :=
-    (lattice_sum act _).trans act.second_moment.tsum_eq
-  have hterm (j : ℤ) : w j ^ 2 = (t * w j - (j : ℝ) ^ 2 * w j) / Z := by
-    by_cases h : 0 ≤ t - (j : ℝ) ^ 2
-    · rw [act.law j, max_eq_right h]
-      ring
-    · rw [act.law j, max_eq_left (le_of_not_ge h)]
-      simp
-  have hsum : (∑ j ∈ S, w j ^ 2) = (t - m) / Z := by
-    simp_rw [hterm]
-    rw [← sum_div, sum_sub_distrib, ← mul_sum, hm, hm₂, mul_one]
-  refine ⟨hsum, ?_⟩
-  have he : (∑ j ∈ S, w j ^ 2) = ∑' j, w j ^ 2 := by
+  have henergy := lattice_energy_eq act
+  have hwindow : (∑ j ∈ Icc (-((n + 2 : ℕ) : ℤ)) (↑(n + 2) : ℤ), w j ^ 2) =
+      ∑' j, w j ^ 2 := by
     simpa only [pow_two] using lattice_sum act w
-  exact he.symm.trans hsum
+  exact ⟨hwindow.trans henergy, henergy⟩
 
 section ParityLimits
 
@@ -677,10 +635,9 @@ private theorem vAt_feasible {m t Z : ℝ} {n : ℕ} {w : ℤ → ℝ}
     simpa using front 0 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrep1 : u 1 = w 1 := by simpa using front 1 (mem_Icc.mpr ⟨by omega, by omega⟩)
   have hrepn : u (-1) = w (-1) := by simpa using front (-1) (mem_Icc.mpr ⟨by omega, by omega⟩)
-  have hv := adjusted_matches_moments q hq u A (fun i => act.nonneg _) (embedded_mass odd act hk)
+  have hv := adjusted_matches_moments q hq.le u A (fun i => act.nonneg _) (embedded_mass odd act hk)
   simp only [q, parity_offset] at hv
-  change U ≠ 0 → G - V * F / U ≠ 0 → _ at hv
-  have hv' := hv hU.ne' (hDen.symm ▸ mul_ne_zero hsne hden.ne')
+  have hv' := hv
   change 0 ≤ u 0 - _ - _ → _ at hv'
   change 0 ≤ u 0 - ((A - (1 - cosineMoment 2 u) - V *
     (A - (1 - cosineMoment 1 u)) / U) / (G - V * F / U)) - _ → _ at hv'

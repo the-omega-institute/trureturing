@@ -78,9 +78,9 @@ internal sealed class CyclicParityCorrectionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let q>4 and let w be nonnegative with mass one. Define Dᵣ=1−Mᵣ(w), F=1−cos(h), " +
+                        "Let q≥4 and let w be nonnegative with mass one. Define Dᵣ=1−Mᵣ(w), F=1−cos(h), " +
                         "G=1−cos(2h), U=1−C and V=2(1−C²). For target deficit A, take " +
-                        "δ=(A−D₂−V(A−D₁)/U)/(G−VF/U) and μ=(A−D₁−Fδ)/U. Both denominators must be nonzero.")),
+                        "δ=(A−D₂−V(A−D₁)/U)/(G−VF/U) and μ=(A−D₁−Fδ)/U. Both denominators are positive for q≥4.")),
                     Paragraph(Text(
                         "Assume w(0)−δ−μ≥0, w(1)+δ/2≥0, w(−1)+δ/2≥0 and μ≥0. " +
                         "The transfer gives a feasible v at threshold 1−A, with equality in both moments. " +
