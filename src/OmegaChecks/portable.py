@@ -317,6 +317,11 @@ def normalize_row(row):
             for key, value in row.items()}
 
 
+def same_measurement(first, second):
+    return ({key: normalize_row(row) for key, row in declaration_rows(first).items()}
+            == {key: normalize_row(row) for key, row in declaration_rows(second).items()})
+
+
 def paired_inventory(official, staged_official, strict, eligible):
     official_by_module = {module["module"]: module for module in staged_official}
     strict_by_module = {module["module"]: module for module in strict}
@@ -328,9 +333,7 @@ def paired_inventory(official, staged_official, strict, eligible):
         if name not in eligible:
             continue
         original = declaration_rows(module)
-        staged = declaration_rows(official_by_module[name])
-        if ({key: normalize_row(row) for key, row in original.items()} !=
-                {key: normalize_row(row) for key, row in staged.items()}):
+        if not same_measurement(module, official_by_module[name]):
             raise RuntimeError(f"staged official measurement differs from canonical measurement: {name}")
         counterpart = declaration_rows(strict_by_module[name])
         for key, row in counterpart.items():
@@ -494,7 +497,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             skipped = plan["mathlibOnly"]
             strict_sources = {n: path for n, path in strict_sources.items() if n not in skipped}
             downstream = [n for n in downstream if n not in skipped]
-            common_modules = [n for n in common_modules if n not in skipped]
+            common_modules = closure(graph, [n for n in common_roots if n not in skipped])
             strict.mkdir()
             if strict_sources:
                 strict_path = backend_artifacts(True, with_reg, strict_sources, strict, packages, lean,
@@ -554,7 +557,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             canonical_by_name = {module["module"]: module for module in canonical}
             for measured in official_rows:
                 name = measured["module"]
-                if name in skipped and measured != canonical_by_name[name]:
+                if name in skipped and not same_measurement(measured, canonical_by_name[name]):
                     raise RuntimeError(f"staged official measurement differs from canonical measurement: {name}")
             inventory, strict_rows, certified = [], [], []
             if eligible:

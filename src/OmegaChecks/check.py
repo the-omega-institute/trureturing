@@ -48,6 +48,27 @@ def terminal_modules(graph, names):
     return sorted(set(names) - imported)
 
 
+def library_backend_candidates(graph, names):
+    # Mixed witnesses can use the concrete strict implementation. Only resolve
+    # their official artifacts if the command is reachable. A D5 import crosses
+    # the boundary of this library graph and can bring compiled markers with it.
+    reachable = {"OmegaBuild.Commands"}
+    for name in names:
+        deps = graph[name]
+        if deps & reachable or any(root(dep) == "D5" for dep in deps):
+            reachable.add(name)
+    return [name for name in names if name in reachable and root(name) in STRICT | {"OmegaChecks"}]
+
+
+def library_mathlib_only(graph, targets):
+    candidates = library_backend_candidates(graph, closure(graph, targets))
+    if not candidates:
+        return {}
+    run("lake", "build", *("+" + name for name in terminal_modules(graph, candidates)))
+    official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+    return portable.backend_plan(official_path, candidates)["mathlibOnly"]
+
+
 def check_library(selected=()):
     graph = library_graph()
     for name in selected:
@@ -58,13 +79,19 @@ def check_library(selected=()):
         modules = sorted(name for name in graph if root(name) in STRICT)
     else:
         modules = [name for name in closure(graph, selected) if root(name) in STRICT]
-    roots = terminal_modules(graph, modules)
-    targets = set(roots) | set(selected)
+    targets = set(modules) | set(selected)
     if not selected:
         # Build every external witness against the actual strict implementation.
-        external = [name for name in graph if root(name) == "OmegaChecks"]
-        targets.update(terminal_modules(graph, external))
-    build(sorted(targets))
+        targets.update(name for name in graph if root(name) == "OmegaChecks")
+    dependencies = closure(graph, targets)
+    skipped = library_mathlib_only(graph, targets)
+    if skipped:
+        modules = [name for name in modules if name not in skipped]
+        targets.update(name for name in dependencies if root(name) == "OmegaChecks")
+        targets.difference_update(skipped)
+    if targets:
+        build(terminal_modules(graph, targets))
+    roots = terminal_modules(graph, modules)
     if roots:
         subprocess.run([AUDIT, "--exact-roots", LIB, *roots, "--", *modules],
                        cwd=ROOT, env=audit_environment(), check=True)
@@ -437,6 +464,8 @@ def check_incremental():
     # Track the strict libraries and every mathematical check importing them.
     imports = {name: set(closure(graph, [name])) for name in graph}
     modules = sorted(name for name, deps in imports.items() if any(root(dep) in STRICT for dep in deps))
+    skipped = library_mathlib_only(graph, modules)
+    modules = [name for name in modules if name not in skipped]
     targets = terminal_modules(graph, modules)
     build(targets)
     artifacts = {name: LIB / (name.replace(".", "/") + ".olean") for name in modules}
@@ -514,6 +543,8 @@ def full_check(incremental=False):
     run("lake", "build", "omegaAudit")
     check_audits()
     run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_plan.py")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_scheduling.py")
     check_fibonacci_reduction()
     if incremental:
         check_incremental()
