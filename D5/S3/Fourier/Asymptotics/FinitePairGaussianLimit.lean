@@ -7,13 +7,14 @@
    digest: Pair fourth moments certify the central Gaussian score profile and its envelope. -/
 
 import D5.S3.Fourier.Concentration.FejerCollisionVariance
-import D5.S3.Fourier.Asymptotics.CyclicGrowingFrontFit
+import D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 
 open Finset Filter
 open scoped Topology
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
-open D5.S3.Fourier.Asymptotics.CyclicGrowingFrontFit
+open D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases
+open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
 open D5.S3.Weil.DirichletPolynomialMeanSquare
 
 noncomputable section
@@ -21,40 +22,75 @@ noncomputable section
 namespace D5.S3.Fourier.Asymptotics.FinitePairGaussianLimit
 
 private theorem cos_global_quartic (x : ℝ) :
-    0 ≤ Real.cos x - (1-x^2/2) ∧ Real.cos x - (1-x^2/2) ≤ x^4/24 := by
-  constructor
-  · exact sub_nonneg.mpr Real.one_sub_sq_div_two_le_cos
-  · have h := scaled_sin_sq_error (x/2) 1 one_ne_zero
-    simp only [mul_one, one_pow, div_one] at h
-    have hcos := Real.cos_two_mul (x/2)
-    rw [show 2*(x/2)=x by ring] at hcos
-    have hleft := (abs_le.mp h).1
-    rw [hcos]
-    linarith only [hleft]
+    0 ≤ Real.cos x - (1-x^2/2) ∧ Real.cos x - (1-x^2/2) ≤ x^4/24 :=
+  ⟨sub_nonneg.mpr Real.one_sub_sq_div_two_le_cos, by linarith only [versine_ge x]⟩
+
+private theorem degree_one_sum {J : Type*} [Fintype J] [DecidableEq J] (f : (J → ℕ) → ℝ) :
+    ∑ m ∈ piAntidiag (univ : Finset J) 1, f m = ∑ j, f (Pi.single j 1) := by
+  have hinj : Function.Injective (fun j : J => Pi.single j (1:ℕ)) := by
+    intro a b h
+    by_contra hab
+    have := congrFun h a
+    simp [Pi.single_eq_same, hab] at this
+  have he : piAntidiag (univ : Finset J) 1 = univ.image (fun j : J => Pi.single j (1:ℕ)) := by
+    ext m
+    constructor
+    · intro hm
+      have hs := (mem_piAntidiag.mp hm).1
+      have hex : ∃ j, m j ≠ 0 := by
+        by_contra! h
+        simp [h] at hs
+      obtain ⟨j,hj⟩ := hex
+      have hle := single_le_sum (f := m) (fun i _ => Nat.zero_le (m i)) (mem_univ j)
+      rw [hs] at hle
+      have hj1 : m j = 1 := by omega
+      have heq : m = Pi.single j 1 := by
+        funext k
+        by_cases hk : k=j
+        · subst k; simp [hj1]
+        · have hk0 : m k=0 := by
+            have ht : m k+m j ≤ ∑ i, m i := by
+              simpa [hk] using sum_le_sum_of_subset_of_nonneg (s := {k,j}) (t := univ)
+                (fun _ _ => mem_univ _) (fun i _ _ => Nat.zero_le (m i))
+            rw [hs] at ht
+            omega
+          simp [Pi.single_eq_of_ne hk,hk0]
+      exact mem_image.mpr ⟨j,mem_univ _,heq.symm⟩
+    · intro hm
+      obtain ⟨j,_,rfl⟩ := mem_image.mp hm
+      simp [mem_piAntidiag,Finset.sum_pi_single']
+  rw [he, sum_image hinj.injOn]
 
 private theorem score_square_cosine {J : Type*} [Fintype J]
     (g w : J → ℝ) (t : ℝ) :
     ‖complexScore g w t‖^2 = ∑ i, ∑ j, w i*w j*Real.cos ((g i-g j)*t) := by
-  have hr := congrArg Complex.re (Complex.mul_conj' (complexScore g w t))
-  rw [← Complex.ofReal_pow,Complex.ofReal_re] at hr
-  rw [← hr]
-  unfold complexScore
-  rw [map_sum, sum_mul]
-  simp_rw [mul_sum, Complex.re_sum, map_mul, Complex.conj_ofReal]
+  classical
+  have h := congrArg Complex.re (score_even_expansion g w t 1)
+  simp only [mul_one,Complex.ofReal_re,Complex.re_sum,Complex.re_ofReal_mul,phase_re] at h
+  rw [degree_one_sum] at h
+  simp_rw [degree_one_sum] at h
+  rw [h]
   apply sum_congr rfl
   intro i _
   apply sum_congr rfl
   intro j _
-  have he : starRingEnd ℂ (phase (g j) t) = phase (-g j) t := by
-    unfold phase
-    rw [← Complex.exp_conj]
-    congr 1
-    simp
-  rw [he, show ((w i:ℂ)*phase (g i) t)*((w j:ℂ)*phase (-g j) t) =
-    ((w i:ℂ)*(w j:ℂ))*(phase (g i) t*phase (-g j) t) by ring,
-    ← character_add]
-  rw [show g i + -g j = g i-g j by ring]
-  simp [phase, Complex.mul_re, Complex.exp_re, Complex.mul_im]
+  have hw (a : J) : monomialWeight w (Pi.single a 1) = w a := by
+    unfold monomialWeight
+    rw [Nat.multinomial_single]
+    norm_num
+    rw [Finset.prod_eq_single a]
+    · simp
+    · intro b _ hb
+      simp [Pi.single_eq_of_ne hb]
+    · simp
+  have hg (f : J → ℝ) (a : J) : monomialFrequency f (Pi.single a 1) = f a := by
+    unfold monomialFrequency
+    rw [Finset.sum_eq_single a]
+    · simp
+    · intro b _ hb; simp [Pi.single_eq_of_ne hb]
+    · simp
+  rw [hw,hw,hg,hg]
+  congr 2
 
 /-- The moment of the ordered pair-frequency differences. -/
 def pairMoment {J : Type*} [Fintype J] (g w : J → ℝ) (p : ℕ) : ℝ :=

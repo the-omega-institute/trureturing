@@ -16,7 +16,7 @@ $$\operatorname{PairNonnegative}\left(w\right) \Rightarrow \left(0 \le \operator
 
 *Commentary.*
 
-Expand the squared norm of the score as the finite weighted cosine sum over ordered frequency differences. The scalar cosine remainder is between zero and x^4/24 by the cosine double-angle formula, the global scaled sine-square error and the quadratic cosine lower bound. Sum the scalar inequalities with the nonnegative pair products.
+Specialize FiniteTailMomentMissingWindow.score_even_expansion to degree one. Each occupation is supported at exactly one index with value one, so its multinomial weight and frequency are the original weight and frequency. Apply FiniteSincCollisionMoment.phase_re to obtain the pair cosine sum. The scalar cosine remainder is between zero and x^4/24 by AccumulatedSagittaPhases.versine_ge and the quadratic cosine lower bound. Sum the scalar inequalities with the nonnegative pair products.
 
 **Theorem 1.2 (Central Gaussian power limit).**
 
@@ -47,5 +47,5 @@ For a single normalized finite family and positive n, write s=sqrt(n M(2)/2) and
 - Truth anchor: `D5/S3/Fourier/Asymptotics/FinitePairGaussianLimit.score_gaussian_envelope`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/FinitePairGaussianLimit.score_gaussian_limit`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/FinitePairGaussianLimit.score_quartic`
-- Dependency: [D5/S3/Fourier/Asymptotics/CyclicGrowingFrontFit](CyclicGrowingFrontFit.md)
+- Dependency: [D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases](../../Analytic/Asymptotics/AccumulatedSagittaPhases.md)
 - Dependency: [D5/S3/Fourier/Concentration/FejerCollisionVariance](../Concentration/FejerCollisionVariance.md)
